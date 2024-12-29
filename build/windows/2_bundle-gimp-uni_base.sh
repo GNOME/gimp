@@ -152,6 +152,8 @@ bundle "$MSYS_PREFIX" share/glib-*/schemas/gschemas.compiled
 bundle "$MSYS_PREFIX" share/icons/Adwaita
 ### Needed by GTK to use icon themes. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/5080
 bundle "$GIMP_PREFIX" share/icons/hicolor
+### Needed for 'th' word breaking in Text tool etc
+bundle "$MSYS_PREFIX" share/libthai
 ### Needed for file-wmf work
 bundle "$MSYS_PREFIX" share/libwmf
 ### Only copy from langs supported in GIMP.
