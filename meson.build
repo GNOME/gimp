@@ -2065,7 +2065,9 @@ pkgconfig.generate(libgimp,
   requires: [
     gdk_pixbuf,
     cairo,
+    pango,
     gegl,
+    gexiv2,
   ],
   libraries: [
     libgimpbase,
