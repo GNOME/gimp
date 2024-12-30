@@ -2063,9 +2063,11 @@ pkgconfig.generate(libgimp,
   description: 'GIMP Library',
   version: gimp_version,
   requires: [
-    gdk_pixbuf,
     cairo,
+    gdk_pixbuf,
     gegl,
+    gexiv2,
+    pango,
   ],
   libraries: [
     libgimpbase,
