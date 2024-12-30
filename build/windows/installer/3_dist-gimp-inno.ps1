@@ -105,8 +105,8 @@ if (-not (Test-Path "$BUILD_DIR\build\windows\installer"))
     exit 1
   }
 
-## Complete Inno source with not released translations
-## Cf. https://jrsoftware.org/files/istrans/
+## Complete Inno source with not released translations: https://jrsoftware.org/files/istrans/
+## NOTE: All the maintenance process is done only in 'iso_639_custom.xml' file
 $xmlObject = New-Object XML
 $xmlObject.Load("$PWD\build\windows\installer\lang\iso_639_custom.xml")
 function download_langs ([array]$langsArray)
