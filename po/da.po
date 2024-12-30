@@ -44,9 +44,9 @@
 # Bevel -> Fas (n.) eller Affase (v.) (se ordnet.dk og https://danskbyggeskik.dk/Publikationer/Ordbog_Danske_bygningsudtryk.pdf)
 # Drawable -> Tegneflade
 #
-# Følgende genvejstaster er IKKE brugt i menuerne (v. 2.99.18):
-# Fil: DHQXYZØ
-# Redigér: MQWXZ (Å brugt to gange)
+# Følgende genvejstaster er IKKE brugt i menuerne (v. 3.0.0 RC2):
+# Fil: DHJQXYZØ
+# Redigér: MQWXZÅ
 # Markering: BCJPQWXYZØÅ
 # Vis: QWXÅ (EVÆ brugt to gange)
 # Billede: CQVWXZØÅ
@@ -60,7 +60,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-12-20 00:17+0000\n"
-"PO-Revision-Date: 2024-12-26 09:32+0100\n"
+"PO-Revision-Date: 2024-12-30 10:27+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -2647,7 +2647,7 @@ msgstr "_Dump vedhæftede data"
 #: app/actions/dialogs-actions.c:47
 msgctxt "windows-action"
 msgid "Tool_box"
-msgstr "_Værktøjskasse"
+msgstr "Værktøjs_kasse"
 
 #: app/actions/dialogs-actions.c:53
 msgctxt "dialogs-action"
@@ -4304,7 +4304,7 @@ msgstr "Eksportér billedet"
 #: app/actions/file-actions.c:162
 msgctxt "file-action"
 msgid "Over_write"
-msgstr "O_verskriv"
+msgstr "Ove_rskriv"
 
 #: app/actions/file-actions.c:163
 msgctxt "file-action"
@@ -4334,7 +4334,7 @@ msgstr "Eksportér til %s"
 #: app/actions/file-actions.c:318
 #, c-format
 msgid "Over_write %s"
-msgstr "O_verskriv %s"
+msgstr "Ove_rskriv %s"
 
 #. TRANSLATORS: the %s will be replaced by the file name of a
 #. * recently opened image.
@@ -4994,7 +4994,7 @@ msgstr "_Sfærisk effekt …"
 #: app/actions/filters-actions.c:641
 msgctxt "filters-action"
 msgid "S_piral..."
-msgstr "S_piral …"
+msgstr "Spi_ral …"
 
 #: app/actions/filters-actions.c:646
 msgctxt "filters-action"
@@ -9495,7 +9495,7 @@ msgstr "Vis billedets farveprøvepunkter"
 #: app/actions/view-actions.c:253
 msgctxt "view-action"
 msgid "Snap to Gu_ides"
-msgstr "_Ret ind efter hjælpelinjer"
+msgstr "Ret ind efter h_jælpelinjer"
 
 #: app/actions/view-actions.c:254
 msgctxt "view-action"
@@ -15512,7 +15512,7 @@ msgstr "Konvertér billedet til en farveprofil"
 #: app/dialogs/convert-indexed-dialog.c:143
 #: app/dialogs/convert-precision-dialog.c:147
 msgid "C_onvert"
-msgstr "K_onvertér"
+msgstr "_Konvertér"
 
 #: app/dialogs/color-profile-dialog.c:158
 #: app/dialogs/color-profile-dialog.c:176
@@ -15935,7 +15935,7 @@ msgstr "Vælg udfyldningsstil"
 
 #: app/dialogs/fill-dialog.c:116
 msgid "_Fill"
-msgstr "_Udfyld"
+msgstr "U_dfyld"
 
 #: app/dialogs/grid-dialog.c:95
 msgid "Configure Grid"
@@ -16180,7 +16180,7 @@ msgstr "y-forskydning:"
 #: app/dialogs/layer-options-dialog.c:380 app/dialogs/resize-dialog.c:510
 #: app/widgets/gimptemplateeditor.c:489
 msgid "_Fill with:"
-msgstr "_Udfyld med:"
+msgstr "U_dfyld med:"
 
 #: app/dialogs/layer-options-dialog.c:395
 #: app/widgets/gimpcolordisplayeditor.c:286
@@ -18283,7 +18283,7 @@ msgstr "Kvalitet"
 
 #: app/dialogs/scale-dialog.c:193
 msgid "I_nterpolation:"
-msgstr "I_nterpolering:"
+msgstr "_Interpolering:"
 
 #: app/dialogs/stroke-dialog.c:123
 msgid "Choose Stroke Style"
@@ -22061,7 +22061,7 @@ msgstr "Vælg primær farve at justere"
 
 #: app/propgui/gimppropgui-hue-saturation.c:229
 msgid "_Overlap"
-msgstr "_Overlap"
+msgstr "Overla_p"
 
 #: app/propgui/gimppropgui-hue-saturation.c:232
 msgid "Adjust Selected Color"
@@ -22069,7 +22069,7 @@ msgstr "Justeŕ valgt farve"
 
 #: app/propgui/gimppropgui-hue-saturation.c:244
 msgid "_Hue"
-msgstr "_Farvetone"
+msgstr "Fa_rvetone"
 
 #: app/propgui/gimppropgui-hue-saturation.c:250
 msgid "_Lightness"
@@ -22597,7 +22597,7 @@ msgstr "_Lysstyrke"
 
 #: app/tools/gimpbrightnesscontrasttool.c:291
 msgid "_Contrast"
-msgstr "Ko_ntrast"
+msgstr "_Kontrast"
 
 #: app/tools/gimpbrightnesscontrasttool.c:297
 msgid "Edit these Settings as Levels"
@@ -22642,7 +22642,7 @@ msgstr ""
 #: app/tools/gimpgradientoptions.c:122 app/tools/gimpregionselectoptions.c:113
 #: app/tools/gimpthresholdtool.c:93
 msgid "Threshold"
-msgstr "Tærskel"
+msgstr "FTærskel"
 
 #: app/tools/gimpbucketfilloptions.c:211 app/tools/gimpbucketfilloptions.c:233
 #: app/tools/gimpregionselectoptions.c:114
@@ -23192,7 +23192,7 @@ msgstr "Justér farvekurver"
 #: app/tools/gimpcurvestool.c:486 app/tools/gimplevelstool.c:367
 #: app/tools/gimpthresholdtool.c:247
 msgid "Cha_nnel:"
-msgstr "Ka_nal:"
+msgstr "_Kanal:"
 
 #: app/tools/gimpcurvestool.c:515 app/tools/gimplevelstool.c:394
 msgid "R_eset Channel"
@@ -23347,7 +23347,7 @@ msgstr "_Forhåndsvisning"
 
 #: app/tools/gimpfilteroptions.c:80
 msgid "Split _view"
-msgstr "Opdelt _visning"
+msgstr "Op_delt visning"
 
 #: app/tools/gimpfilteroptions.c:103
 msgid "On-canvas con_trols"
@@ -24070,7 +24070,7 @@ msgstr "Outputniveauer"
 
 #: app/tools/gimplevelstool.c:589
 msgid "Clamp outpu_t"
-msgstr "Fasthold o_utput"
+msgstr "Fas_thold output"
 
 #. all channels frame
 #: app/tools/gimplevelstool.c:602
@@ -24079,7 +24079,7 @@ msgstr "Alle kanaler"
 
 #: app/tools/gimplevelstool.c:614
 msgid "_Auto Input Levels"
-msgstr "A_uto-inputniveauer"
+msgstr "Auto-in_putniveauer"
 
 #: app/tools/gimplevelstool.c:617
 msgid "Adjust levels for all channels automatically"
@@ -24368,11 +24368,11 @@ msgstr "Kantopførsel"
 # ved passage af f.eks. den højre, foldes rundt til den venstre (med en modulus-operation)
 #: app/tools/gimpoffsettool.c:554
 msgid "W_rap around"
-msgstr "_Fold omkring"
+msgstr "Fo_ld omkring"
 
 #: app/tools/gimpoffsettool.c:560
 msgid "Make _transparent"
-msgstr "Gør _gennemsigtig"
+msgstr "_Gør gennemsigtig"
 
 #: app/tools/gimpoperationtool.c:133
 msgid "Operation Tool: Use an arbitrary GEGL operation"
@@ -28060,7 +28060,7 @@ msgstr ""
 
 #: app/widgets/gimpsavedialog.c:326
 msgid "Save this _XCF file with better but slower compression"
-msgstr "_Gem denne XCF-fil med bedre, men langsommere komprimering"
+msgstr "Gem denne _XCF-fil med bedre, men langsommere komprimering"
 
 # Ikke helt sikker på hvad edge cases betyder
 #: app/widgets/gimpsavedialog.c:328
@@ -29308,7 +29308,7 @@ msgstr "Udvikli_ng"
 #: menus/image-menu.ui.in.in:846
 msgctxt "filters-action"
 msgid "Plug-In _Examples"
-msgstr "Eksempler _på udvidelsesmoduler"
+msgstr "_Eksempler på udvidelsesmoduler"
 
 #: menus/image-menu.ui.in.in:849
 msgctxt "filters-action"
