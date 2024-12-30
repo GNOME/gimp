@@ -227,8 +227,11 @@ foreach ($bundle in $supported_archs)
         Copy-Item "$bundle" "$vfs" -Recurse -Force
 
         ## Set revision on about dialog (this does the same as '-Drevision' build option)
-        (Get-Content "$vfs\share\gimp\*\gimp-release") | Foreach-Object {$_ -replace "revision=0","revision=$revision"} |
-        Set-Content "$vfs\share\gimp\*\gimp-release"
+        if ($gimp_version -notmatch 'RC[0-9]')
+          {
+            (Get-Content "$vfs\share\gimp\*\gimp-release") | Foreach-Object {$_ -replace "revision=0","revision=$revision"} |
+            Set-Content "$vfs\share\gimp\*\gimp-release"
+          }
 
         ## Disable Update check (ONLY FOR RELEASES)
         if ($CI_COMMIT_TAG -match 'GIMP_[0-9]*_[0-9]*_[0-9]*' -or $GIMP_CI_MS_STORE -like 'MSIXUPLOAD*')
