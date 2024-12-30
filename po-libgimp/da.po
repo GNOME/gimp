@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: GIMP libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-10-26 12:26+0000\n"
-"PO-Revision-Date: 2024-12-15 14:59+0100\n"
+"PO-Revision-Date: 2024-12-30 09:36+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -679,7 +679,7 @@ msgstr "Indlæs %s-billede"
 #: libgimpbase/gimpbaseenums.c:31
 msgctxt "add-mask-type"
 msgid "_White (full opacity)"
-msgstr "_Hvid (fuld uigennemsigtighed)"
+msgstr "Hvi_d (fuld uigennemsigtighed)"
 
 #: libgimpbase/gimpbaseenums.c:32
 msgctxt "add-mask-type"
@@ -2362,7 +2362,7 @@ msgstr "Tidligere:"
 
 #: libgimpwidgets/gimpcolorselection.c:327
 msgid "HTML _notation:"
-msgstr "HTML-_notation:"
+msgstr "H_TML-notation:"
 
 #: libgimpwidgets/gimpcontroller.c:114
 msgid "The controller's name"
