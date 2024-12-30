@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: GIMP plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-11-29 00:12+0000\n"
-"PO-Revision-Date: 2024-12-16 19:37+0100\n"
+"PO-Revision-Date: 2024-12-30 10:22+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -347,7 +347,7 @@ msgstr "Nederste kant"
 
 #: plug-ins/common/align-layers.c:235
 msgid "_Grid"
-msgstr "_Gitter"
+msgstr "Gitt_er"
 
 #: plug-ins/common/align-layers.c:236 plug-ins/common/grid.c:817
 #: plug-ins/gfig/gfig-dialog.c:1356 plug-ins/gfig/gfig-menu.ui:31
@@ -358,7 +358,7 @@ msgstr "Gitter"
 
 #: plug-ins/common/align-layers.c:242
 msgid "Ignore the _bottom layer even if visible"
-msgstr "_Ignorér nederste lag, selv hvis det er synligt"
+msgstr "Ignorér nederste lag, _selv hvis det er synligt"
 
 #: plug-ins/common/align-layers.c:243
 msgid "Ignore the bottom layer even if visible"
@@ -1795,7 +1795,7 @@ msgstr "Største skaleringsværdi"
 
 #: plug-ins/common/contrast-retinex.c:204
 msgid "Scale _division"
-msgstr "Skalerings_inddeling"
+msgstr "_Skaleringsinddeling"
 
 #: plug-ins/common/contrast-retinex.c:205
 #: plug-ins/common/wavelet-decompose.c:131
@@ -1824,7 +1824,7 @@ msgstr "Høj"
 
 #: plug-ins/common/contrast-retinex.c:220
 msgid "Dy_namic"
-msgstr "Dy_namisk"
+msgstr "_Dynamisk"
 
 #: plug-ins/common/contrast-retinex.c:221
 msgid "Variance value"
@@ -2533,7 +2533,7 @@ msgstr "Bredde af midlingsfilter"
 
 #: plug-ins/common/destripe.c:147
 msgid "Create _histogram"
-msgstr "Opret _histogram"
+msgstr "O_pret histogram"
 
 #: plug-ins/common/destripe.c:148
 msgid "Output a histogram"
@@ -7090,7 +7090,7 @@ msgstr "PAL"
 
 #: plug-ins/common/hot.c:278
 msgid "_Action"
-msgstr "_Handling"
+msgstr "Han_dling"
 
 #: plug-ins/common/hot.c:279
 msgid "Action"
@@ -7110,7 +7110,7 @@ msgstr "Formørk"
 
 #: plug-ins/common/hot.c:288
 msgid "Create _new layer"
-msgstr "Opret _nyt lag"
+msgstr "O_pret nyt lag"
 
 #: plug-ins/common/hot.c:289
 msgid "Create a new layer"
@@ -7481,7 +7481,7 @@ msgstr "_Fortryd"
 
 #: plug-ins/common/sample-colorize.c:325
 msgid "_Sample Colorize..."
-msgstr "Pr_øvefarvelægning …"
+msgstr "ØPr_øvefarvelægning …"
 
 # "as a guide" virker lidt overflødigt
 #: plug-ins/common/sample-colorize.c:329
@@ -7506,7 +7506,7 @@ msgstr "Bevar lysstyrkens intensitetsniveauer"
 
 #: plug-ins/common/sample-colorize.c:351
 msgid "Original i_ntensity"
-msgstr "_Oprindelig intensitet"
+msgstr "O_prindelig intensitet"
 
 #: plug-ins/common/sample-colorize.c:352
 msgid ""
@@ -7632,7 +7632,7 @@ msgstr "Outputniveauer:"
 
 #: plug-ins/common/sample-colorize.c:1716
 msgid "Get _Sample Colors"
-msgstr "_Hent farveprøver"
+msgstr "H_ent farveprøver"
 
 #: plug-ins/common/sample-colorize.c:2586
 msgid "Sample analyze"
@@ -8060,7 +8060,7 @@ msgstr "Ny (fliselagt) billedbredde"
 
 #: plug-ins/common/tile.c:166
 msgid "New _height"
-msgstr "Ny _højde"
+msgstr "Ny h_øjde"
 
 #: plug-ins/common/tile.c:167
 msgid "New (tiled) image height"
@@ -8068,7 +8068,7 @@ msgstr "Ny (fliselagt) billedhøjde"
 
 #: plug-ins/common/tile.c:172
 msgid "New _image"
-msgstr "_Nyt billede"
+msgstr "N_yt billede"
 
 #: plug-ins/common/tile.c:173 plug-ins/lighting/lighting-main.c:316
 #: plug-ins/map-object/map-object-main.c:334
@@ -8234,7 +8234,7 @@ msgstr "Måleenheder"
 #: plug-ins/fractal-explorer/fractal-explorer.c:1347
 #: plug-ins/gimpressionist/presets.c:1077
 msgid "_Refresh"
-msgstr "_Opdatér"
+msgstr "Op_datér"
 
 #: plug-ins/common/unit-editor.c:252
 msgid "_Help"
@@ -8413,7 +8413,7 @@ msgstr "Pixelforskydningsfaktor"
 
 #: plug-ins/common/warp.c:240
 msgid "Dis_placement Map"
-msgstr "_Forskydningsafbildning"
+msgstr "Forsk_ydningsafbildning"
 
 #: plug-ins/common/warp.c:241
 msgid "Displacement control map"
@@ -8445,7 +8445,7 @@ msgstr "Gradientvektorens rotationsvinkel"
 
 #: plug-ins/common/warp.c:264
 msgid "On ed_ges"
-msgstr "Ved _kanter"
+msgstr "Ve_d kanter"
 
 #: plug-ins/common/warp.c:265
 msgid "Wrap type"
@@ -8498,7 +8498,7 @@ msgstr "Kontrollens farveovergangsafbildning"
 
 #: plug-ins/common/warp.c:299
 msgid "Gradient s_cale"
-msgstr "Far_veovergangsskala"
+msgstr "Farveovergangsska_la"
 
 #: plug-ins/common/warp.c:300
 msgid "Scaling factor for gradient map (0=don't use)"
@@ -11219,7 +11219,7 @@ msgstr "_Lysstyrke"
 
 #: plug-ins/flame/flame.c:199
 msgid "Co_ntrast"
-msgstr "Ko_ntrast"
+msgstr "Kontra_st"
 
 #: plug-ins/flame/flame.c:209
 msgid "Sample _density"
@@ -11227,7 +11227,7 @@ msgstr "Prøve_tæthed"
 
 #: plug-ins/flame/flame.c:214
 msgid "Spa_tial oversample"
-msgstr "_Rumlig oversampling"
+msgstr "R_umlig oversampling"
 
 #: plug-ins/flame/flame.c:219
 msgid "Spatial _filter radius"
@@ -16094,7 +16094,7 @@ msgstr "Vælg et område"
 
 #: plug-ins/screenshot/screenshot.c:202
 msgid "Include _mouse pointer"
-msgstr "Medtag _musemarkør"
+msgstr "M_edtag musemarkør"
 
 #: plug-ins/screenshot/screenshot.c:203
 msgid "Your pointing device's cursor will be part of the image"
@@ -16118,7 +16118,7 @@ msgstr "Ventetid før markeringen af vinduet eller området sker"
 
 #: plug-ins/screenshot/screenshot.c:226
 msgid "Screenshot dela_y"
-msgstr "Sk_ærmbilledventetid"
+msgstr "_Skærmbilledventetid"
 
 #: plug-ins/screenshot/screenshot.c:227
 msgid "Delay before snapping the screenshot"
