@@ -40,15 +40,16 @@ def make_gradient(palette, num_segments, num_colors):
 
     # split one segment into desired count
     # index is zero-based
-    gradient.segment_range_split_uniform( 0, 0, num_segments)
+    gradient.segment_range_split_uniform(0, 0, num_segments)
 
-    for color_number in range(0,num_segments):
+    palette_colors = palette.get_colors()
+    for color_number in range(0, num_segments):
         if color_number == num_colors - 1:
             color_number_next = 0
         else:
             color_number_next = color_number + 1
-        color_left = palette.entry_get_color(color_number)
-        color_right = palette.entry_get_color(color_number_next)
+        color_left = palette_colors[color_number]
+        color_right = palette_colors[color_number_next]
         gradient.segment_set_left_color(color_number, color_left)
         gradient.segment_set_right_color(color_number, color_right)
 
