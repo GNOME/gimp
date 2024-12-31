@@ -147,8 +147,8 @@
             "sources" : [
                 {
                     "type": "archive",
-                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.3.1.tar.gz",
-                    "sha256": "58aad2b32c047070a52f1205b309bdae007442e0f983120e4ff57551eb6f10f1",
+                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.3.2.tar.gz",
+                    "sha256": "5013e964de7399bff1dd328cbf65d239a989a7be53255092fa10b85a8715744d",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 13289,
@@ -199,8 +199,8 @@
                     "sources" : [
                         {
                             "type": "archive",
-                            "url" : "https://github.com/ebiggers/libdeflate/archive/refs/tags/v1.22.zip",
-                            "sha256": "da384a2d96e112c25aca295aea5de5a1e4a6d9fd230bd36f506ffd1a772667a4",
+                            "url" : "https://github.com/ebiggers/libdeflate/archive/refs/tags/v1.23.zip",
+                            "sha256": "e0d9562aa27c6c0d47054002a400dcc17215a41386aee36e72b012b77d95a698",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 242778,
@@ -228,8 +228,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-24.10.0.tar.xz",
-                    "sha256": "58ed1849810f04a10b37c7ff6f3e411845c8a57d731d599d0045acc7a7fff09d",
+                    "url": "https://poppler.freedesktop.org/poppler-24.12.0.tar.xz",
+                    "sha256": "1cf374c3146f3f685d9257701bf0c2866c61d6c202c14d1f5c01a1f3a089028a",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 3686,
@@ -541,8 +541,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_3.6.tar.gz",
-                            "sha256": "663531f341c5389f460d730e62e10a4fcca3428ca2ca109693867bc5fe2e2807",
+                            "url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_4.1.tar.gz",
+                            "sha256": "a31699c6a89806b74b0151e5e6a7df65de4b49050482fe5ebf8a4379d7af8f29",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 7275,
@@ -582,8 +582,8 @@
                             "sources": [
                                 {
                                     "type": "archive",
-                                    "url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_3.6.tar.gz",
-                                    "sha256": "663531f341c5389f460d730e62e10a4fcca3428ca2ca109693867bc5fe2e2807",
+                                    "url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_4.1.tar.gz",
+                                    "sha256": "a31699c6a89806b74b0151e5e6a7df65de4b49050482fe5ebf8a4379d7af8f29",
                                     "x-checker-data": {
                                         "type": "anitya",
                                         "project-id": 7275,
@@ -611,8 +611,8 @@
                             "sources": [
                                 {
                                     "type": "archive",
-                                    "url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_3.6.tar.gz",
-                                    "sha256": "663531f341c5389f460d730e62e10a4fcca3428ca2ca109693867bc5fe2e2807",
+                                    "url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_4.1.tar.gz",
+                                    "sha256": "a31699c6a89806b74b0151e5e6a7df65de4b49050482fe5ebf8a4379d7af8f29",
                                     "x-checker-data": {
                                         "type": "anitya",
                                         "project-id": 7275,
@@ -838,8 +838,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://gitlab.com/graphviz/graphviz/-/archive/12.1.1/graphviz-12.1.2.tar.gz",
-                    "sha256": "4190c51c434c13f718101fbba9e83702d668e20d4eb123c5f4fe059db10d6444",
+                    "url": "https://gitlab.com/graphviz/graphviz/-/archive/12.2.1/graphviz-12.2.1.tar.gz",
+                    "sha256": "91d444b4dabdaf5bfa7c6fcc3a1ee5d41e588af6079ebc030f0acb79e48a56ea",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 1249,
