@@ -59,6 +59,13 @@
   border: 1px solid @stronger-border-color;
 }
 
+/* Define color for drag and drop borders
+ * in Layer/Channel/Path dockables */
+GimpDock .view:drop(active) {
+  border-bottom-color: @dimmed-fg-color;
+  border-top-color: @dimmed-fg-color;
+}
+
 /* Define the mouse-over color for the path
  * buttons in the various file dialogs.
  */
