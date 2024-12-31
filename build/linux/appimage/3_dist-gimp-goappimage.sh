@@ -45,7 +45,7 @@ fi
 if [ "$1" != '--bundle-only' ]; then
   ## standard appimagetool is needed for squashing the .appimage file
   if [ "$GITLAB_CI" ]; then
-    apt-get install -y --no-install-recommends file zsync >/dev/null 2>&1
+    apt-get install -y --no-install-recommends file zsync appstream >/dev/null 2>&1
   fi
   wget "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-${HOST_ARCH}.AppImage" >/dev/null 2>&1
   standard_appimagetool='legacy-appimagetool.AppImage'
