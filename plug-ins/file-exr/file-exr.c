@@ -202,7 +202,7 @@ load_image (GFile                 *file,
   if (! loader)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("Error opening file '%s' for reading"),
+                   _("Error opening file '%s'"),
                    gimp_file_get_utf8_name (file));
       goto out;
     }
