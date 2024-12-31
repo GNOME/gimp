@@ -396,7 +396,7 @@ sed -i "s/Icon=gimp/Icon=$APP_ID/g" "$USR_DIR/share/applications/${APP_ID}.deskt
 gimp_app_version=$(grep GIMP_APP_VERSION $BUILD_DIR/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
 ln -sfr "$USR_DIR/bin/gimp-$gimp_app_version" "$USR_DIR/bin/$APP_ID"
 sed -i "s/gimp-$gimp_app_version/$APP_ID/g" "$USR_DIR/share/applications/${APP_ID}.desktop"
-cp "$USR_DIR/share/applications/${APP_ID}.desktop" $APP_DIR
+ln -sfr "$USR_DIR/share/applications/${APP_ID}.desktop" $APP_DIR
 
 ## 4.4. Configure appdata asset (similarly to flatpaks's 'rename-appdata-file')
 echo "(INFO): configuring $APP_ID.appdata.xml"
@@ -408,9 +408,9 @@ echo -e "\e[0Ksection_end:`date +%s`:${ARCH}_source\r\e[0K"
 # 5. CONSTRUCT .APPIMAGE
 APPIMAGETOOL_APP_NAME="GIMP-${GIMP_VERSION}-${ARCH}.AppImage"
 echo -e "\e[0Ksection_start:`date +%s`:${ARCH}_making[collapsed=true]\r\e[0KSquashing $APPIMAGETOOL_APP_NAME"
-"./$standard_appimagetool" -n $APP_DIR $APPIMAGETOOL_APP_NAME --exclude-file appimageignore-$ARCH \
-                                                              --runtime-file runtime-$ARCH #\
-                                                             #--updateinformation "zsync|https://gitlab.gnome.org/GNOME/gimp/-/jobs/artifacts/master/raw/build/linux/appimage/_Output/${APPIMAGETOOL_APP_NAME}.zsync?job=dist-appimage-weekly"
+"./$standard_appimagetool" $APP_DIR $APPIMAGETOOL_APP_NAME --exclude-file appimageignore-$ARCH \
+                                                           --runtime-file runtime-$ARCH #\
+                                                          #--updateinformation "zsync|https://gitlab.gnome.org/GNOME/gimp/-/jobs/artifacts/master/raw/build/linux/appimage/_Output/${APPIMAGETOOL_APP_NAME}.zsync?job=dist-appimage-weekly"
 file "./$APPIMAGETOOL_APP_NAME"
 echo -e "\e[0Ksection_end:`date +%s`:${ARCH}_making\r\e[0K"
 done
