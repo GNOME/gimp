@@ -84,6 +84,8 @@ struct _EXRLoader
   {
     const Channel* chan;
 
+    can_load = true;
+
     if (channels_.findChannel("R") ||
         channels_.findChannel("G") ||
         channels_.findChannel("B"))
@@ -145,7 +147,7 @@ struct _EXRLoader
           }
         else
           {
-            throw;
+            can_load = false;
           }
       }
 
@@ -252,6 +254,10 @@ struct _EXRLoader
 
   int hasAlpha() const {
     return has_alpha_ ? 1 : 0;
+  }
+
+  int canLoad() const {
+    return can_load ? 1 : 0;
   }
 
   GimpColorProfile *getProfile() const {
@@ -416,6 +422,7 @@ struct _EXRLoader
   int bpc_;
   EXRImageType image_type_;
   bool has_alpha_;
+  bool can_load;
   std::string format_string_;
   std::string unknown_channel_name_;
 };
@@ -430,6 +437,12 @@ exr_loader_new (const char *filename)
     {
       Imf::BlobAttribute::registerAttributeType();
       file = new EXRLoader(filename);
+
+      if (file && ! file->canLoad())
+        {
+          exr_loader_unref (file);
+          file = NULL;
+        }
     }
   catch (...)
     {
