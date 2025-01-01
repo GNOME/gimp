@@ -17,6 +17,8 @@ if (-not $GITLAB_CI)
       }
 
     git submodule update --init
+
+    $NON_RELOCATABLE_OPTION = '-Drelocatable-bundle=no'
   }
 
 
@@ -50,7 +52,7 @@ if (-not (Test-Path _build\build.ninja -Type Leaf))
     #There is no GJS for Windows. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/5891
     meson setup _build -Dprefix="$GIMP_PREFIX" -Djavascript=disabled `
                        -Ddirectx-sdk-dir="$MSYS2_PREFIX/$MSYSTEM_PREFIX" -Denable-default-bin=enabled `
-                       -Dbuild-id='org.gimp.GIMP_official' $INSTALLER_OPTION $STORE_OPTION
+                       -Dbuild-id='org.gimp.GIMP_official' $INSTALLER_OPTION $STORE_OPTION $NON_RELOCATABLE_OPTION
   }
 Set-Location _build
 ninja

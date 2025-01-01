@@ -4,7 +4,7 @@ set -e
 
 if [ -z "$MESON_BUILD_ROOT" ]; then
   # Let's prevent contributors from creating broken bundles
-  echo -e "\033[31m(ERROR)\033[0m: Script called standalone. Please, just build GIMP and this script will be called automatically."
+  echo -e "\033[31m(ERROR)\033[0m: Script called standalone. Please, build GIMP targeting installer or msix creation and this script will be called automatically."
   exit 1
 fi
 
@@ -31,34 +31,25 @@ else
   gimp_mutex_version=$(echo $gimp_app_version | sed 's/^[^0-9]*\([0-9]*\).*$/\1/')
 fi
 
-grep -q 'windows-installer=true' meson-logs/meson-log.txt && export INSTALLER_OPTION_ON=1
-grep -q 'ms-store=true' meson-logs/meson-log.txt && export STORE_OPTION_ON=1
-if [ "$GITLAB_CI" ] || [ "$INSTALLER_OPTION_ON" ] || [ "$STORE_OPTION_ON" ]; then
-  export PERFECT_BUNDLE=1
-fi
-
 ## GIMP prefix: as set at meson configure time
 export GIMP_PREFIX=$(echo $MESON_INSTALL_DESTDIR_PREFIX | sed 's|\\|/|g')
-## System prefix: on Windows shell, it is manually set; on POSIX shell, it is set by crossroad
+## System prefix: on Windows, it is MSYSTEM_PREFIX; on Linux it is set by crossroad
 export MSYS_PREFIX=$(grep 'Main binary:' meson-logs/meson-log.txt | sed 's|Main binary: ||' | sed 's|\\bin\\python.exe||' | sed 's|\\|/|g')
 if [ "$CROSSROAD_PLATFORM" ]; then
-  export MSYS_PREFIX="$GIMP_PREFIX"
+  export MSYS_PREFIX="$CROSSROAD_PREFIX/../msys2"
 fi
-## Bundle dir: normally, we make a quick bundling; on CI, we make a "perfect" bundling
-export GIMP_DISTRIB="$GIMP_PREFIX"
-if [ "$PERFECT_BUNDLE" ]; then
-  #NOTE: The bundling script need to set ARTIFACTS_SUFFIX to our dist scripts
-  #fallback code be able to identify what arch they are distributing
-  #https://github.com/msys2/MSYS2-packages/issues/4960
-  if [[ "$MSYS_PREFIX" =~ "clangarm64" ]]; then
-    export ARTIFACTS_SUFFIX="a64"
-  elif [[ "$MSYS_PREFIX" =~ "clang64" ]] || [ "$CROSSROAD_PLATFORM" = "w64" ]; then
-    export ARTIFACTS_SUFFIX="x64"
-  else # [ "$MSYS_PREFIX" =~ "mingw32" ];
-    export ARTIFACTS_SUFFIX="x86"
-  fi
-  export GIMP_DISTRIB="$GIMP_SOURCE/gimp-${ARTIFACTS_SUFFIX}"
+## Bundle dir: we make a "perfect" bundle separated from GIMP_PREFIX
+#NOTE: The bundling script need to set ARTIFACTS_SUFFIX to our dist scripts
+#fallback code be able to identify what arch they are distributing
+#https://github.com/msys2/MSYS2-packages/issues/4960
+if [[ "$MSYS_PREFIX" =~ "clangarm64" ]]; then
+  export ARTIFACTS_SUFFIX="a64"
+elif [[ "$MSYS_PREFIX" =~ "clang64" ]] || [ "$CROSSROAD_PLATFORM" = "w64" ]; then
+  export ARTIFACTS_SUFFIX="x64"
+else # [ "$MSYS_PREFIX" =~ "mingw32" ];
+  export ARTIFACTS_SUFFIX="x86"
 fi
+export GIMP_DISTRIB="$GIMP_SOURCE/gimp-${ARTIFACTS_SUFFIX}"
 
 bundle ()
 {
@@ -73,9 +64,7 @@ bundle ()
   for target_path in "${bundledArray[@]}"; do
     bundled_path=$(echo $target_path | sed "s|$1/|$GIMP_DISTRIB/|g")
     parent_path=$(dirname $bundled_path)
-    if [ "$1" != "$GIMP_PREFIX" ] || [ "$PERFECT_BUNDLE" ]; then
-      echo "Bundling $target_path to $parent_path"
-    fi
+    echo "Bundling $target_path to $parent_path"
     mkdir -p "$parent_path"
     cp -fru "$target_path" $parent_path >/dev/null 2>&1 || continue
   done
@@ -86,27 +75,23 @@ bundle ()
 
 clean ()
 {
-  if [ "$PERFECT_BUNDLE" ]; then
-    if [[ "$2" =~ '/' ]]; then
-      cleanedArray=($(find $1/${2%/*} -iname ${2##*/}))
-    else
-      cleanedArray=($(find $1/ -iname ${2##*/}))
-    fi
-    for path_dest_full in "${cleanedArray[@]}"; do
-      if [[ "$path_dest_full" = "${cleanedArray[0]}" ]]; then
-        echo "Cleaning $1/$2"
-      fi
-      rm $path_dest_full
-    done
+  if [[ "$2" =~ '/' ]]; then
+    cleanedArray=($(find $1/${2%/*} -iname ${2##*/}))
+  else
+    cleanedArray=($(find $1/ -iname ${2##*/}))
   fi
+  for path_dest_full in "${cleanedArray[@]}"; do
+    if [[ "$path_dest_full" = "${cleanedArray[0]}" ]]; then
+      echo "Cleaning $1/$2"
+    fi
+    rm $path_dest_full
+  done
 }
 
 
 ## Prevent Git going crazy
 mkdir -p $GIMP_DISTRIB
-if [ "$PERFECT_BUNDLE" ]; then
-  echo "*" > $GIMP_DISTRIB/.gitignore
-fi
+echo "*" > $GIMP_DISTRIB/.gitignore
 
 ## Add a wrapper at tree root, less messy than having to look for the
 ## binary inside bin/, in the middle of all the DLLs.
