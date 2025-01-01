@@ -291,9 +291,7 @@ conf_app GIMP3_SYSCONFDIR "etc/gimp/*"
 
 ## Other features and plug-ins
 ### Needed for welcome page
-bund_usr "$GIMP_PREFIX" "share/metainfo/*.xml" --rename $APP_ID.appdata.xml
-sed -i '/kudo/d' $USR_DIR/share/metainfo/$APP_ID.appdata.xml
-sed -i "s/date=\"TODO\"/date=\"`date --iso-8601`\"/" $USR_DIR/share/metainfo/$APP_ID.appdata.xml
+bund_usr "$GIMP_PREFIX" "share/metainfo/*.xml"
 ### mypaint brushes
 bund_usr "$UNIX_PREFIX" "share/mypaint-data/1.0"
 ### Needed for 'th' word breaking in Text tool etc
@@ -336,9 +334,9 @@ wipe_usr ${LIB_DIR}/*.pyc
 ## Other binaries and deps
 bund_usr "$GIMP_PREFIX" 'bin/gimp*'
 bund_usr "$GIMP_PREFIX" "bin/gegl"
-bund_usr "$GIMP_PREFIX" "share/applications/*.desktop" --rename $APP_ID.desktop
+bund_usr "$GIMP_PREFIX" "share/applications/*.desktop"
 #go-appimagetool have too polluted output so we save as log. See: https://github.com/probonopd/go-appimage/issues/314
-"./$go_appimagetool" -s deploy $USR_DIR/share/applications/$APP_ID.desktop &> appimagetool.log || cat appimagetool.log
+"./$go_appimagetool" -s deploy $(echo "$USR_DIR/share/applications/*.desktop") &> appimagetool.log || cat appimagetool.log
 
 ## Manual adjustments (go-appimagetool don't handle Linux FHS gracefully yet)
 ### Undo the mess which breaks babl and GEGL. See: https://github.com/probonopd/go-appimage/issues/315
@@ -356,9 +354,10 @@ for exec in "${exec_array[@]}"; do
     patchelf --set-interpreter "./$LD_LINUX" "$exec" >/dev/null 2>&1 || continue
   fi
 done
-## Unnecessary files created or bundled by go-appimagetool
+## Files unnecessarily created or bundled by go-appimagetool
 mv build/linux/appimage/AppRun $APP_DIR
 mv build/linux/appimage/AppRun.bak build/linux/appimage/AppRun
+rm $APP_DIR/*.desktop
 echo "usr/${LIB_DIR}/${LIB_SUBDIR}gconv
       usr/${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/gdk-pixbuf-query-loaders
       usr/share/doc
@@ -392,16 +391,19 @@ cp -L "$USR_DIR/share/icons/hicolor/scalable/apps/$APP_ID.svg" $APP_DIR
 
 ## 4.3. Configure .desktop asset (similarly to flatpaks's 'rename-desktop-file')
 echo "(INFO): configuring $APP_ID.desktop"
-sed -i "s/Icon=gimp/Icon=$APP_ID/g" "$USR_DIR/share/applications/${APP_ID}.desktop"
+mv $(echo "$USR_DIR/share/applications/*.desktop") "$USR_DIR/share/applications/${APP_ID}.desktop"
 gimp_app_version=$(grep GIMP_APP_VERSION $BUILD_DIR/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
 ln -sfr "$USR_DIR/bin/gimp-$gimp_app_version" "$USR_DIR/bin/$APP_ID"
 sed -i "s/gimp-$gimp_app_version/$APP_ID/g" "$USR_DIR/share/applications/${APP_ID}.desktop"
+sed -i "s/Icon=gimp/Icon=$APP_ID/g" "$USR_DIR/share/applications/${APP_ID}.desktop"
 ln -sfr "$USR_DIR/share/applications/${APP_ID}.desktop" $APP_DIR
 
 ## 4.4. Configure appdata asset (similarly to flatpaks's 'rename-appdata-file')
 echo "(INFO): configuring $APP_ID.appdata.xml"
+mv $(echo "$USR_DIR/share/metainfo/*.xml") "$USR_DIR/share/metainfo/${APP_ID}.appdata.xml"
 sed -i "s/org.gimp.GIMP/${APP_ID}/g" "$USR_DIR/share/metainfo/${APP_ID}.appdata.xml"
 sed -i "s/gimp.desktop/${APP_ID}.desktop/g" "$USR_DIR/share/metainfo/${APP_ID}.appdata.xml"
+sed -i "s/date=\"TODO\"/date=\"`date --iso-8601`\"/" "$USR_DIR/share/metainfo/${APP_ID}.appdata.xml"
 echo -e "\e[0Ksection_end:`date +%s`:${ARCH}_source\r\e[0K"
 
 
