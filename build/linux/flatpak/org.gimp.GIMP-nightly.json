@@ -64,6 +64,29 @@
     },
     "modules": [
         {
+            "name": "libbacktrace",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/ianlancetaylor/libbacktrace.git",
+                    "commit": "1db85642e3fca189cf4e076f840a45d6934b2456"
+                },
+                {
+                    "type": "shell",
+                    "commands": [
+                        "autoreconf -vfi"
+                    ]
+                }
+            ],
+            "config-opts": [
+                "--enable-shared"
+            ],
+            "cleanup": [
+                "/include",
+                "/lib/pkgconfig"
+            ]
+        },
+        {
             "name": "appstream-glib",
             "sources": [
                 {
@@ -773,7 +796,7 @@
             "config-opts": [
                 "-DBLA_VENDOR=OpenBLAS",
                 "-DGRAPHBLAS_COMPACT=ON",
-                "-DSUITESPARSE_USE_OPENMP=OFF",
+                "-DSUITESPARSE_USE_OPENMP=ON",
                 "-DSUITESPARSE_USE_PYTHON=OFF",
                 "-DSUITESPARSE_DEMOS=OFF",
                 "-DBUILD_TESTING=OFF",
@@ -804,7 +827,7 @@
                     "no-autogen": true,
                     "make-args": [
                         "DYNAMIC_ARCH=1",
-                        "USE_OPENMP=0",
+                        "USE_OPENMP=1",
                         "NO_CBLAS=1",
                         "NO_LAPACKE=1"
                     ],
