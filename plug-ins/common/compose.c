@@ -145,6 +145,9 @@ static void        cpn_affine_transform   (GeglBuffer          *buffer,
                                            gdouble              min,
                                            gdouble              max);
 
+static GeglBuffer * get_buffer_with_filters
+                                          (GimpLayer           *layer);
+
 static void   fill_buffer_from_components (GeglBuffer          *temp[MAX_COMPOSE_IMAGES],
                                            GeglBuffer          *dst,
                                            gint                 num_cpn,
@@ -854,6 +857,32 @@ cpn_affine_transform (GeglBuffer *buffer,
     }
 }
 
+static GeglBuffer *
+get_buffer_with_filters (GimpLayer *layer)
+{
+  GimpImage  *image = gimp_item_get_image (GIMP_ITEM (layer));
+  GimpLayer  *temp  = gimp_layer_copy (layer);
+  GeglBuffer *src_buffer;
+  GeglBuffer *dst_buffer;
+
+  gimp_image_insert_layer (image, temp, NULL,
+                           gimp_image_get_item_position (image,
+                                                         GIMP_ITEM (layer)));
+
+  gimp_drawable_merge_filters (GIMP_DRAWABLE (temp));
+
+  src_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (temp));
+  dst_buffer = gegl_buffer_new (gegl_buffer_get_extent (src_buffer),
+                                gegl_buffer_get_format (src_buffer));
+
+  gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dst_buffer, NULL);
+
+  gimp_image_remove_layer (image, temp);
+  g_object_unref (src_buffer);
+
+  return dst_buffer;
+}
+
 static void
 fill_buffer_from_components (GeglBuffer   *temp[MAX_COMPOSE_IMAGES],
                              GeglBuffer   *dst,
@@ -1055,7 +1084,7 @@ compose (const gchar         *compose_type,
       for (j = 0; j < num_images; j++)
         {
           if (inputs[j].is_object)
-            buffer_src[j] = gimp_drawable_get_buffer (inputs[j].comp.object);
+            buffer_src[j] = get_buffer_with_filters (inputs[j].comp.object);
           else
             buffer_src[j] = NULL;
         }
@@ -1097,7 +1126,7 @@ compose (const gchar         *compose_type,
                 }
 
               /* Get drawable for layer */
-              buffer_src[j] = gimp_drawable_get_buffer (GIMP_DRAWABLE (layers[0]));
+              buffer_src[j] = get_buffer_with_filters (layers[0]);
               g_free (layers);
             }
         }
