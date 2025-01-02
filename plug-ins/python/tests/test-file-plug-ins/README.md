@@ -12,61 +12,135 @@ and from the command line in batch mode.
 
 ## Installation and set-up
 
-1. For running as a plug-in in GIMP this plug-in needs to be in a location
-   that GIMP knows of for plug-ins. By default it is only installed for
-   unstable builds. For using the batch version, it is not necessary to
-   have it installed.
-2. There is a `tests` folder inside the plug-in folder for
-   configuration files. The main configuration file is
-   `config.ini` for the plug-in; I use a separate `batch-config.ini` for
-   command line testing, but that's not required.
-   This configuration file is where you define the file import and export
-   plug-ins to test. Each plug-in has its own separate configuration
-   file that defines the tests and test files which should be in the same
-   folder.
-   The location and name of the main configuration file can be changed by
-   setting an environment variable: `GIMP_TESTS_CONFIG_FILE`.
-3. The plug-in specific configuration file, e.g.
-   `png-tests.ini` defines the specific test sets. This configuration file is
-   expected to be in the same location as the main configuration file.
-   Each test set can be enabled/disabled and needs to
-   have a folder set where the test images can be found.
-   This folder is expected to be relative to the base test data folder.
-   By default this is the `./data/` folder, but it can also be
-   changed, see below.
-   The specific test images are defined in a file set in `files=`. These are
-   expected to be in the same folder as the images they are testing.
-   The root folder for all test images is by default `./data/`. This folder can
-   be changed by setting the environment variable `GIMP_TESTS_DATA_FOLDER`.
-4. The file that defines the images to be tested, should be a text file
-   where each line contains the filename of one test image, optionally
-   followed by a ',' and then a code for the expected result.
-   Currently there are four results defined:
-   - `EXPECTED_OK` (the default if omitted, if loading should succeed)
-   - `EXPECTED_FAIL` (if loading should fail)
-   - `EXPECTED_TODO` (if loading is currently expected to fail, but the
-      intention is to fix this in the future)
-   - `SKIP` (this temporarily skips testing a file, useful when a file causes
-     problems working on other test files) Note: this is **only** intended
-     for temporary debugging purposes. They should not be committed like that
-     to our repository.
-   We may add `EXPECTED_NO_CRASH` in the future, to define fuzzed images
-   where we don't care whether they load or not, as long as there is no crash.
+For running as a plug-in in GIMP this plug-in needs to be in a location
+that GIMP knows of for plug-ins. By default, it is only installed for
+unstable builds. For using the batch version, it is not necessary to
+have it installed.
+
+Inside the plugin folder there is a `./tests/` directory that serves
+as default place for
+
+- configuration files
+- test data files
+  - can be changed by `GIMP_TESTS_DATA_FOLDER` environment variable
+  - further marked as `<folder-with-test-data>`
+
+### Configuration
+
+There are 2 types of configuration        
+- **main config** = file, where you define file import and export plug-ins to test.
+  - default configuration is in `config.ini` - by default blank
+  - there is also config that is pre-filled with tests 
+  and run in Gitlab pipeline; it's called `batch-config.ini`
+  - can be changed with `GIMP_TESTS_CONFIG_FILE` environment variable
+- **per-format configs** = specific configurations for different file formats 
+  - example: `png-tests.ini`, `bmp-tests.ini`, ...
+  - defines the specific test sets. This configuration file is expected
+    to be in the same location as the main configuration file. Each test set
+    can be enabled/disabled and needs to have a folder set where the test
+    images can be found. This folder is expected to be relative to the base
+    test data folder. Following example shows the possible testcase:
+ 
+    **File:** `./tests/bmp-tests.ini`
+  
+    ```ini
+    [test-1]
+    enabled=True
+    description=Test loading bmpsuite good images
+    folder=bmp/bmpsuite/g/
+    files=bmpsuite-g-tests.files
+    source=https://github.com/jsummers/bmpsuite
+    ```
+    
+    **Legend**
+      - `folder`: 
+        - is relative to `<folder-with-test-data>`
+        - contains testing images and the `*.files` file 
+      - `files`: 
+        - file with list of images that will be tested in this testcase
+        - usually text file named as  `*.files` 
+
+### Format of the `*.files`
+
+The file that defines the images to be tested (`*.files`), should be a text file
+where each line contains the filename of one test image, optionally
+followed by a ',' and then a code for the expected result.
+
+Currently, there are four results defined:
+
+- `EXPECTED_OK` (the default if omitted, if loading should succeed)
+- `EXPECTED_FAIL` (if loading should fail)
+- `EXPECTED_TODO` (if loading is currently expected to fail, but the
+   intention is to fix this in the future)
+- `SKIP` (this temporarily skips testing a file, useful when a file causes
+  problems working on other test files) Note: this is **only** intended
+  for temporary debugging purposes. They should not be committed like that
+  to our repository.
+
+We may add `EXPECTED_NO_CRASH` in the future, to define fuzzed images
+where we don't care whether they load or not, as long as there is no crash.
+
+#### Example
+
+**File:** `<folder-with-test-data>/bmp/bmpsuite/g/bmpsuite-g-tests.files`
+
+```
+badbitcount.bmp, EXPECTED_FAIL
+badbitssize.bmp
+baddens1.bmp
+baddens2.bmp, SKIP
+```
 
 ## How to run
 
-Start GIMP, then start the plug-in from:
-- Menu Filters, Development, Python-Fu, Test file import plug-ins.
-Note: this plug-in is not installed for stable builds.
+### Prerequisites
 
-Or, from the commandline or a shell script:
+These tests depend on testing images, so in order to run them
+(as configured), you need to download them.
+
+```bash
+git clone git@ssh.gitlab.gnome.org:Infrastructure/gimp-test-images.git <folder-with-test-data>
+
+# as for convenience, during the tests, you can point at <folder-with-test-data> like
+
+export GIMP_TESTS_DATA_FOLDER=<folder-with-test-data>
 ```
-export GIMP_TESTS_CONFIG_FILE="/location/of/config.ini"
-export GIMP_TESTS_LOG_FILE="/location/of/logfile.log"
-export GIMP_TESTS_DATA_FOLDER="/location/of/test-images/rootfolder/"
+
+### Actual testing
+
+#### From the GIMP GUI
+
+Gimp menu: `Filters` > `Development` > `Python-Fu` > `Test file import plug-ins`
+
+_Note: this plug-in is not installed for stable builds._
+
+#### From the terminal / command line
+
+```bash
+# Mandatory - the python script is passed via pipe to stdin and the python interpreter
+# therefore cannot depend on __file__ and __name__ variables to establish the environment,
+# this is especially important here, where it imports external modules.
 export PYTHONPATH="/location/of/your/python/script/"
+
+# Optional
+export GIMP_TESTS_CONFIG_FILE="/location/of/config.ini" # Default: ./tests/config.ini
+export GIMP_TESTS_LOG_FILE="/location/of/logfile.log"   # Default: ./tests/gimp-tests.log
+export GIMP_TESTS_DATA_FOLDER="/location/of/test-images/rootfolder/" # Default: ./tests/
+
 cd location/of/plug-in/gimp-file-plugin-tests
 cat batch-import-tests.py | gimp-console-2.99 -idf --batch-interpreter python-fu-eval -b - --quit
+```
+
+If you are using the Flatpak version of the Gimp, note that the `PYTHONPATH`
+and other environment variables are passed differently:
+
+```bash
+cd location/of/plug-in/gimp-file-plugin-tests
+cat batch-import-tests.py | flatpak run \
+  --env=PYTHONPATH=$(pwd) \
+  --env=GIMP_TESTS_DATA_FOLDER=<folder-with-test-data> \
+  --env=GIMP_TESTS_CONFIG_FILE=$(pwd)/tests/batch-config.ini \
+  org.gimp.GIMP -idf --batch-interpreter=python-fu-eval -b - --quit
 ```
 
 In case you run the batch version, the log file is written to the folder
