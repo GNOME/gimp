@@ -265,27 +265,50 @@ gui_unique_quartz_idle_open (GFile *file)
 - (void) handleEvent: (NSAppleEventDescriptor *) inEvent
         andReplyWith: (NSAppleEventDescriptor *) replyEvent
 {
-  NSAutoreleasePool *urlpool;
-  NSInteger          count;
-  NSInteger          i;
+  NSAutoreleasePool      *urlpool;
+  NSInteger               count;
+  NSInteger               i;
+  NSAppleEventDescriptor *filesList;
 
   urlpool = [[NSAutoreleasePool alloc] init];
 
-  count = [inEvent numberOfItems];
+  filesList = [inEvent paramDescriptorForKeyword:keyDirectObject];
+  g_return_if_fail (filesList);
+
+  count = [filesList numberOfItems];
 
   for (i = 1; i <= count; i++)
     {
-      NSURL       *url;
-      const gchar *path;
-      GSource     *source;
-      GClosure    *closure;
+      const gchar            *path;
+      GSource                *source;
+      GClosure               *closure;
+      NSAppleEventDescriptor *fileDescriptor;
+      NSString               *filePath;
+      NSURL                  *fileURL;
 
-      url = [NSURL URLWithString: [[inEvent descriptorAtIndex: i] stringValue]];
-      path = [[url path] UTF8String];
+      fileDescriptor = [filesList descriptorAtIndex:i];
+      filePath = [[fileDescriptor stringValue] stringByResolvingSymlinksInPath];
+      if (filePath)
+        {
+          fileURL = [NSURL URLWithString:filePath];
+          if ([fileURL isFileURL])
+            {
+              path = [[fileURL path] UTF8String];
+            }
+          else
+            {
+              g_printerr ("Descriptor is not a valid file URL: %s\n", [filePath UTF8String]);
+              continue;
+            }
+        }
+      else
+        {
+          g_printerr ("Could not resolve file path for descriptor\n");
+          continue;
+        }
 
       closure = g_cclosure_new (G_CALLBACK (gui_unique_quartz_idle_open),
-                                g_file_new_for_path (path),
-                                (GClosureNotify) g_object_unref);
+                                g_file_new_for_path (path), (GClosureNotify) g_object_unref);
 
       g_object_watch_closure (G_OBJECT (unique_gimp), closure);
 
