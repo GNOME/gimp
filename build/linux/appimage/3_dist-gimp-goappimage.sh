@@ -98,41 +98,23 @@ echo -e "\e[0Ksection_end:`date +%s`:apmg_info\r\e[0K"
 # 3. GIMP FILES
 if [ "$(ls -dq ./AppDir* 2>/dev/null | wc -l)" != '2' ]; then
 echo -e "\e[0Ksection_start:`date +%s`:apmg_files[collapsed=true]\r\e[0KPreparing GIMP files in AppDir-$HOST_ARCH/usr"
-
-## 3.1. Special re-building (only if needed)
-
-### Prepare env. Universal variables from .gitlab-ci.yml
-if [ -z "$GITLAB_CI" ]; then
-  IFS=$'\n' VAR_ARRAY=($(cat .gitlab-ci.yml | sed -n '/export PATH=/,/GI_TYPELIB_PATH}\"/p' | sed 's/    - //'))
-  IFS=$' \t\n'
-  for VAR in "${VAR_ARRAY[@]}"; do
-    eval "$VAR" || continue
-  done
-fi
-
-### Ensure that GIMP is relocatable
 grep -q 'relocatable-bundle=yes' $BUILD_DIR/meson-logs/meson-log.txt && export RELOCATABLE_BUNDLE_ON=1
 if [ -z "$RELOCATABLE_BUNDLE_ON" ]; then
-  if [ ! -f "$BUILD_DIR/build.ninja" ]; then
-    echo -e "\033[31m(ERROR)\033[0m: No GIMP build found. You can configure GIMP with '-Drelocatable-bundle=yes' to make a build suitable for AppImage."
-  else
-    echo "(INFO): rebuilding GIMP as relocatable"
-    meson configure $BUILD_DIR -Drelocatable-bundle=yes >/dev/null 2>&1
-  fi
-  cd $BUILD_DIR
-  ninja &> ninja.log | rm ninja.log || cat ninja.log
-  ninja install >/dev/null 2>&1
-  ccache --show-stats
-  cd ..
+  echo -e "\033[31m(ERROR)\033[0m: No relocatable GIMP build found. You can build GIMP with '-Drelocatable-bundle=yes' to make a build suitable for AppImage."
+  exit 1
 fi
-
-
-## 3.2. Bundle files
 
 #Prefixes to get files to copy
 UNIX_PREFIX='/usr'
 if [ -z "$GITLAB_CI" ] && [ -z "$GIMP_PREFIX" ]; then
   export GIMP_PREFIX="$PWD/../_install"
+fi
+if [ -z "$GITLAB_CI" ]; then
+  IFS=$'\n' VAR_ARRAY=($(cat .gitlab-ci.yml | sed -n '/multi-os/,/multiarch\"/p' | sed 's/    - //'))
+  IFS=$' \t\n'
+  for VAR in "${VAR_ARRAY[@]}"; do
+    eval "$VAR" || continue
+  done
 fi
 
 #Paths to receive copied files
