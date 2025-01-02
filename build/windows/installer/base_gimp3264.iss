@@ -1386,6 +1386,8 @@ end;
 procedure InstallingFaceLift();
 var lblMessage1,lblURL,lblMessage2: TLabel; //TNewStaticText doesn't support alignment
 begin
+	WizardForm.Bevel.Visible := False;
+
 	with WizardForm.ProgressGauge do
 	begin
 		Height := ScaleY(21);
