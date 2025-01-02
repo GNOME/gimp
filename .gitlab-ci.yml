@@ -1,64 +1,62 @@
-# Default commit CI should only run the following pipelines:
-# - Linux build (base & fast)
-# - Win crossbuild (base & fast)
-# - Execution tests (dynamic code analysis)
-# Scheduled CI ($CI_PIPELINE_SOURCE == "schedule") will run regularly:
-# - Linux GCC build (rare usefulness)
-# - Linux build without vector icons (rare usefulness)
-# - Linux Flatpak build (base but slow)
-# - Win builds: Inno Windows installer and .msixbundle (base but slow)
-# - cppcheck (static code analysis)
-# Releases ($CI_COMMIT_TAG != null) should run only:
-# - Source tarball (base & fast)
-# - Developer documentation (base & fast)
-# - Win builds: Inno Windows installer and .msixupload (base but slow)
-#
-# To force step-specific pipelines without waiting for commits and/or
-# pipelines, these are the variable you should set:
-# - GIMP_CI_MESON_CLANG: trigger the Debian Clang build.
-# - GIMP_CI_MESON_GCC: trigger the Debian GCC build.
-# - GIMP_CI_RASTER_ICONS: trigger the Debian Clang build without vector icons.
-# - GIMP_CI_CROSSROAD_WIN64: trigger the crossroad build for Win 64-bit.
-# - GIMP_CI_MSYS2_WIN_AARCH64: trigger the native MSYS2 build for Win Aarch64.
-# - GIMP_CI_MSYS2_WIN64: trigger the native MSYS2 build for Win 64-bit.
-# - GIMP_CI_MSYS2_WIN32: trigger the native MSYS2 build for Win 32-bit.
-# - GIMP_CI_CPPCHECK: trigger cppcheck static analysis.
-# - GIMP_CI_SOURCES: trigger the Debian Clang build and the source tarball job.
-# - GIMP_CI_APPIMAGE: trigger the appimage making.
-# - GIMP_CI_FLATPAK: trigger the flatpak build and publishing.
-# - GIMP_CI_WIN_INSTALLER: trigger all native MSYS2 builds then creates Inno Windows installer.
-# - GIMP_CI_MS_STORE: trigger arm64 and x64 native MSYS2 builds then creates a .msixbundle.
-
-# Make pipelines auto cancelable when explicity set (e.g. in 'rules')
-# GitLab is quite sensitive about the "if" order so we organize them
-# in a way to avoid as much as possible hardcoding and leaks in "rules"
+# Our pipelines are auto cancelable when explicity set in 'rules'.
+# GitLab is quite sensitive about rules 'if' order so be careful.
 workflow:
   auto_cancel:
     on_new_commit: interruptible
 
-## On merge requests.
+
+# There are five "TYPES" of pipelines on our CI:
+
+## 1. On MERGE REQUESTS, the following are triggered:
+## - Abbreviated Linux Clang build (base & fast)
+## - clang-format (static code analysis)
+## - Execution tests (dynamic code analysis)
 .pipeline_merge: &CI_MERGE
   if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
   interruptible: true
   variables: {}
 
-## Merge requests with appropriate label.
-  #'interruptible: true' needs to be hardcoded
+## 2. LABELED MERGE REQUESTS (search for 'CI_MERGE_REQUEST_LABELS').
+  #'interruptible: true' needs to be hardcoded on job
 
-## On commits except tags.
+## 3. On COMMITS except tags.
+## - Linux Clang build (base & fast)
+## - Execution tests (dynamic code analysis)
+## - Source tarball (base & fast)
+## - Developer documentation (base & fast)
 .pipeline_commit: &CI_COMMIT
   if: '$CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null && $CI_COMMIT_TAG == null'
   interruptible: true
   variables: {}
 
-## On releases.
+## 4. RELEASES.
+## - Source tarball (base & fast)
+## - Developer documentation (base & fast)
+## - Inno Windows installer (base but slow)
+## - MS Store .msixupload (base but slow)
 .pipeline_release: &CI_RELEASE
   if: '$CI_COMMIT_TAG != null'
   interruptible: false
   variables: {}
 
 .default:
-  ## Custom builds though web GUI, API or schedules.
+  ## 5. On CUSTOM builds though web GUI, API or schedules.
+  ## Scheduled CI ($CI_PIPELINE_SOURCE == "schedule") will run regularly:
+  ## - GIMP_CI_MESON_GCC: trigger the Debian GCC build (rare usefulness).
+  ## - GIMP_CI_RASTER_ICONS: trigger the Debian Clang build without vector icons (rare usefulness).
+  ## - GIMP_CI_CPPCHECK: trigger cppcheck (static code analysis).
+  ## - GIMP_CI_APPIMAGE: trigger the appimage making (experimental).
+  ## - GIMP_CI_FLATPAK: trigger the flatpak build and publishing (base but slow).
+  ## - GIMP_CI_WIN_INSTALLER: trigger all native MSYS2 builds then creates Inno Windows installer (base but slow).
+  ## - GIMP_CI_MS_STORE: trigger arm64 and x64 native MSYS2 builds then creates a .msixbundle (base but slow).
+  ## In addition to the variables above, to force step-specific pipelines
+  ## without waiting for commits and/or schedules, these you should set on GUI:
+  ## - GIMP_CI_MESON_CLANG: trigger the Debian Clang build.
+  ## - GIMP_CI_CROSSROAD_WIN64: trigger the crossroad build for Win 64-bit.
+  ## - GIMP_CI_MSYS2_WIN_AARCH64: trigger the native MSYS2 build for Win Aarch64.
+  ## - GIMP_CI_MSYS2_WIN64: trigger the native MSYS2 build for Win 64-bit.
+  ## - GIMP_CI_MSYS2_WIN32: trigger the native MSYS2 build for Win 32-bit.
+  ## - GIMP_CI_SOURCES: trigger the Debian Clang build and the source tarball job.
   interruptible: false
 
 
