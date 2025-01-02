@@ -112,8 +112,8 @@ stages:
     - $RUNNER
   image: $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}
   variables:
-    CC: "ccache clang"
-    CXX: "ccache clang++"
+    CC: "clang"
+    CXX: "clang++"
     CC_LD: lld
     CXX_LD: lld
   before_script:
@@ -161,6 +161,7 @@ image-debian:
     entrypoint: [""]
   variables:
     GIT_STRATEGY: none
+    UMFPACK: libumfpack5
   cache: []
   before_script: []
   script:
@@ -225,12 +226,11 @@ image-debian:
             libpoppler-glib-dev
             libqoi-dev
             libraw-dev
-            libraw20
             librsvg2-dev
             libspiro-dev
             libsuitesparse-dev
             libtiff-dev
-            libumfpack5
+            $UMFPACK
             libunwind-dev
             libwebp-dev
             libwmf-dev
@@ -454,29 +454,39 @@ gimp-flatpak-x64:
   extends: .debian-x64
   rules:
     - <<: *CI_MERGE
-      when: never
     - <<: *CI_COMMIT
-      when: never
     - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
+  variables:
+    DEB_VERSION: testing
+    MSYSTEM_PREFIX: clang64
+  cache: []
+
+image-debian-x64-cross:
+  extends: .win-cross
+  stage: !reference [image-debian, stage]
+  image: !reference [image-debian, image]
+  variables:
+    GIT_STRATEGY: none
+    UMFPACK: libumfpack6
+  cache: !reference [image-debian, cache]
+  before_script:
+   - !reference [image-debian, before_script]
+  script:
+    - !reference [image-debian, script]
 
 deps-win-x64-cross:
   extends: .win-cross
-  needs: ["image-debian-x64"]
+  needs: ["image-debian-x64-cross"]
   stage: dependencies
-  variables:
-    XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
-  cache:
-    - key: ${CI_JOB_NAME}-pkg
-      paths:
-        - .cache/
-    - !reference [.default, cache]
+  before_script: []
   script:
-    - bash build/windows/1_build-deps-crossroad.sh
+    - bash build/windows/1_build-deps-quasimsys2.sh
   artifacts:
     paths:
-      - .local/
-      - babl/_build-cross/meson-logs/meson-log.txt
-      - gegl/_build-cross/meson-logs/meson-log.txt
+      - quasi-msys2/
+      - _install-$MSYSTEM_PREFIX-cross/
+      - babl/_build-$MSYSTEM_PREFIX-cross/meson-logs/meson-log.txt
+      - gegl/_build-$MSYSTEM_PREFIX-cross/meson-logs/meson-log.txt
     expire_in: 2 hours
 
 gimp-win-x64-cross:
@@ -486,13 +496,13 @@ gimp-win-x64-cross:
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
   script:
-    - bash build/windows/2_build-gimp-crossroad.sh
+    - bash build/windows/2_build-gimp-quasimsys2.sh
   artifacts:
     expose_as: 'Windows zip'
     paths:
-      - gimp-x64/
-      - _build-cross/meson-logs/meson-log.txt
-      - _build-cross/done-dll.list
+      - gimp-clang64/
+      - _build-clang64-cross/meson-logs/meson-log.txt
+      - _build-clang64-cross/done-dll.list
     expire_in: 2 days
 
 ## WINDOWS pipelines (native MSYS2) ##

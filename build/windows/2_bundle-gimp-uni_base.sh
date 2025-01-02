@@ -33,15 +33,15 @@ fi
 
 ## GIMP prefix: as set at meson configure time
 export GIMP_PREFIX=$(echo $MESON_INSTALL_DESTDIR_PREFIX | sed 's|\\|/|g')
-## System prefix: on Windows, it is MSYSTEM_PREFIX; on Linux it is set by crossroad
+## System prefix: it is MSYSTEM_PREFIX
 export MSYS_PREFIX=$(grep 'Main binary:' meson-logs/meson-log.txt | sed 's|Main binary: ||' | sed 's|\\bin\\python.exe||' | sed 's|\\|/|g')
-if [ "$CROSSROAD_PLATFORM" ]; then
-  export MSYS_PREFIX="$CROSSROAD_PREFIX/../msys2"
+if [ "$QUASI_MSYS2_ROOT" ]; then
+  export MSYS_PREFIX="$MSYSTEM_PREFIX"
 fi
 ## Bundle dir: we make a "perfect" bundle separated from GIMP_PREFIX
 #NOTE: The bundling script need to set $MSYSTEM_PREFIX to our dist scripts
 #fallback code be able to identify what arch they are distributing
-export GIMP_DISTRIB="$GIMP_SOURCE/gimp-$MSYSTEM_PREFIX"
+export GIMP_DISTRIB="$GIMP_SOURCE/gimp-$(echo $MSYSTEM_PREFIX | sed 's|/||')"
 
 bundle ()
 {
@@ -184,7 +184,7 @@ if [ -z "$GIMP_UNSTABLE" ]; then
 fi
 
 ### Optional binaries for GObject Introspection support
-if [ "$CI_JOB_NAME" != 'gimp-win-x64-cross' ]; then
+if [ -z "$QUASI_MSYS2_ROOT" ]; then
   bundle "$GIMP_PREFIX" lib/girepository-*
   bundle "$MSYS_PREFIX" lib/girepository-*
 
