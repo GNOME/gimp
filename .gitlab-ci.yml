@@ -488,7 +488,7 @@ deps-win-x64-cross:
         - .cache/
     - !reference [.default, cache]
   script:
-    - bash build/windows/1_build-deps-crossroad.sh
+    - bash build/windows/1_build-deps-quasi.sh
   artifacts:
     paths:
       - .local/
