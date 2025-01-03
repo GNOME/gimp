@@ -127,7 +127,8 @@ tips_dialog_create (Gimp *gimp)
 
   tips_dialog = gimp_dialog_new (_("GIMP Tip of the Day"),
                                  "gimp-tip-of-the-day",
-                                 NULL, 0, NULL, NULL,
+                                 NULL, 0, gimp_standard_help_func,
+                                 GIMP_HELP_TIPS_DIALOG,
                                  NULL);
 
   button = gtk_dialog_add_button (GTK_DIALOG (tips_dialog),
@@ -178,6 +179,7 @@ tips_dialog_create (Gimp *gimp)
   gtk_widget_show (image);
 
   tip_label = gtk_label_new (NULL);
+  gtk_label_set_max_width_chars (GTK_LABEL (tip_label), 70);
   gtk_label_set_selectable (GTK_LABEL (tip_label), TRUE);
   gtk_label_set_justify (GTK_LABEL (tip_label), GTK_JUSTIFY_LEFT);
   gtk_label_set_line_wrap (GTK_LABEL (tip_label), TRUE);

@@ -51,7 +51,9 @@
 #include "gui/themes.h"
 
 #include "menus/menus.h"
+
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpprefsbox.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -186,7 +188,8 @@ welcome_dialog_new (Gimp       *gimp,
   dialog = gimp_dialog_new (title,
                             "gimp-welcome-dialog",
                             windows ?  windows->data : NULL,
-                            0, NULL, NULL,
+                            0, gimp_standard_help_func,
+                            GIMP_HELP_WELCOME_DIALOG,
                             _("_Close"), GTK_RESPONSE_CLOSE,
                             NULL);
   g_list_free (windows);

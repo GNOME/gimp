@@ -29,7 +29,9 @@
 #include "dialogs-types.h"
 
 #include "config/gimpcoreconfig.h"
+#include "config/gimpguiconfig.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "about.h"
@@ -212,6 +214,16 @@ about_dialog_create (Gimp           *gimp,
         g_warning ("%s: ooops, no box in this container?", G_STRLOC);
 
       g_list_free (children);
+    }
+
+  if (GIMP_GUI_CONFIG (config)->show_help_button)
+    {
+      gimp_help_connect (dialog.dialog, NULL, gimp_standard_help_func,
+                         GIMP_HELP_ABOUT_DIALOG, NULL, NULL);
+
+      gtk_dialog_add_buttons (GTK_DIALOG (dialog.dialog),
+                              _("_Help"), GTK_RESPONSE_HELP,
+                              NULL);
     }
 
   gtk_style_context_add_class (gtk_widget_get_style_context (dialog.dialog),
