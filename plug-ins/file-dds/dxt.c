@@ -36,6 +36,7 @@
 
 #include <libgimp/gimp.h>
 
+#include "bc7.h"
 #include "dds.h"
 #include "dxt.h"
 #include "endian_rw.h"
@@ -1346,6 +1347,11 @@ dxt_decompress (unsigned char *dst,
             {
               decode_alpha_block_BC3(block, s, width);
               decode_alpha_block_BC3(block + 1, s + 8, width);
+              s += 16;
+            }
+          else if (format == DDS_COMPRESS_BC7)
+            {
+              bc7_decompress (s, size, block);
               s += 16;
             }
 
