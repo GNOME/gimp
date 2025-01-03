@@ -1,3 +1,8 @@
+rtl_icons = [
+  ['go-next', 'go-previous'],
+  ['go-first', 'go-last'],
+]
+
 if have_vector_icons
   # Only process the 64x64 icons for the 2 resource icons.
   size='64'
@@ -86,6 +91,29 @@ foreach install : install_icons
       install_data(wilber_eek,
                    rename: 'image-missing@0@'.format(suffix),
                    install_dir: gimpiconsdir / theme / outdir / 'apps')
+    endif
+
+    # Duplicate RTL relevant icons
+    if suffix == '.svg'
+      foreach rtl : rtl_icons
+        rtl_icon     = '@0@/@1@@2@'.format(indir, rtl[0], suffix)
+        rtl_sym_icon = '@0@/@1@-symbolic@2@'.format(indir, rtl[0], suffix)
+        install_data(rtl_icon,
+                      rename: '@0@-rtl@1@'.format(rtl[1], suffix),
+                      install_dir: gimpiconsdir / theme / outdir / 'apps')
+        install_data(rtl_sym_icon,
+                      rename: '@0@-symbolic-rtl@1@'.format(rtl[1], suffix),
+                      install_dir: gimpiconsdir / theme / outdir / 'apps')
+
+        rtl_icon     = '@0@/@1@@2@'.format(indir, rtl[1], suffix)
+        rtl_sym_icon = '@0@/@1@-symbolic@2@'.format(indir, rtl[1], suffix)
+        install_data(rtl_icon,
+                      rename: '@0@-rtl@1@'.format(rtl[0], suffix),
+                      install_dir: gimpiconsdir / theme / outdir / 'apps')
+        install_data(rtl_sym_icon,
+                      rename: '@0@-symbolic-rtl@1@'.format(rtl[0], suffix),
+                      install_dir: gimpiconsdir / theme / outdir / 'apps')
+      endforeach
     endif
   endforeach
 endforeach
