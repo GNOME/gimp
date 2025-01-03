@@ -1,6 +1,7 @@
 plugin_name = 'file-dds'
 
 plugin_sources = [
+  'bc7.c',
   'dds.c',
   'ddsread.c',
   'ddswrite.c',
@@ -31,7 +32,7 @@ plugin_exe = executable(plugin_name,
                           math,
                           openmp,
                         ],
-                        win_subsystem: 'windows',
+
                         install: true,
                         install_dir: gimpplugindir / 'plug-ins' / plugin_name)
 plugin_executables += [plugin_exe.full_path()]

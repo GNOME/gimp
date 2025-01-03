@@ -289,6 +289,13 @@ read_dds (GFile                *file,
             case DXGI_FORMAT_BC5_SNORM:
               load_info.comp_format = DDS_COMPRESS_BC5;
               break;
+            /* TODO: Implement BC6 format */
+            case DXGI_FORMAT_BC7_TYPELESS:
+            case DXGI_FORMAT_BC7_UNORM:
+            case DXGI_FORMAT_BC7_UNORM_SRGB:
+              load_info.comp_format = DDS_COMPRESS_BC7;
+              break;
+
             default:
               load_info.comp_format = DDS_COMPRESS_MAX;
               break;
@@ -971,6 +978,11 @@ validate_dx10_header (dds_header_dx10_t  *dx10hdr,
     case DXGI_FORMAT_BC5_TYPELESS:
     case DXGI_FORMAT_BC5_UNORM:
     case DXGI_FORMAT_BC5_SNORM:
+    /* TODO: Implement BC6 format */
+    case DXGI_FORMAT_BC7_TYPELESS:
+    case DXGI_FORMAT_BC7_UNORM:
+    case DXGI_FORMAT_BC7_UNORM_SRGB:
+
       /* Return early for supported compressed formats */
       load_info->dxgi_format = dx10hdr->dxgiFormat & 0xFF;
       return TRUE;
