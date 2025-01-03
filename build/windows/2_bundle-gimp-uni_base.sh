@@ -39,17 +39,9 @@ if [ "$CROSSROAD_PLATFORM" ]; then
   export MSYS_PREFIX="$CROSSROAD_PREFIX/../msys2"
 fi
 ## Bundle dir: we make a "perfect" bundle separated from GIMP_PREFIX
-#NOTE: The bundling script need to set ARTIFACTS_SUFFIX to our dist scripts
+#NOTE: The bundling script need to set $MSYSTEM_PREFIX to our dist scripts
 #fallback code be able to identify what arch they are distributing
-#https://github.com/msys2/MSYS2-packages/issues/4960
-if [[ "$MSYS_PREFIX" =~ "clangarm64" ]]; then
-  export ARTIFACTS_SUFFIX="a64"
-elif [[ "$MSYS_PREFIX" =~ "clang64" ]] || [ "$CROSSROAD_PLATFORM" = "w64" ]; then
-  export ARTIFACTS_SUFFIX="x64"
-else # [ "$MSYS_PREFIX" =~ "mingw32" ];
-  export ARTIFACTS_SUFFIX="x86"
-fi
-export GIMP_DISTRIB="$GIMP_SOURCE/gimp-${ARTIFACTS_SUFFIX}"
+export GIMP_DISTRIB="$GIMP_SOURCE/gimp-$MSYSTEM_PREFIX"
 
 bundle ()
 {

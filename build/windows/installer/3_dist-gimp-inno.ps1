@@ -3,17 +3,17 @@
 # Parameters
 param ($revision = "$GIMP_CI_WIN_INSTALLER",
        $GIMP_BASE = "$PWD",
-       $BUILD_DIR = "$GIMP_BASE\_build",
-       $GIMP32 = 'gimp-x86',
-       $GIMP64 = 'gimp-x64',
-       $GIMPA64 = 'gimp-a64')
+       $BUILD_DIR = (Get-ChildItem $GIMP_BASE\_build* | Select-Object -First 1),
+       $GIMP32 = 'gimp-mingw32',
+       $GIMP64 = 'gimp-clang64',
+       $GIMPA64 = 'gimp-clangarm64')
 
 $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $true
 
 
 # This script needs a bit of MSYS2 to work
-Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'MSYS2_PREFIX =' -Context 0,15) -replace '> ','')
+Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'MSYS2_PREFIX =' -Context 0,17) -replace '> ','')
 
 
 # 1. GET INNO
@@ -202,10 +202,10 @@ foreach ($bundle in $supported_archs)
     Set-Content "$bundle\share\gimp\*\gimp-release"
 
     ## Split .debug symbols
-    if ("$bundle" -eq 'gimp-x86')
+    if ("$bundle" -eq "$GIMP32")
       {
         #We do not split 32-bit DWARF symbols here (they were in gimp-win-x86 job)
-        Write-Output "(INFO): skipping (already done) gimp-x86 .debug extracting"
+        Write-Output "(INFO): skipping (already done) $GIMP32 .debug extracting"
       }
     else
       {

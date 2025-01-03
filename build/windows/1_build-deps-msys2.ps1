@@ -26,6 +26,8 @@ $MSYS2_PREFIX = 'C:/msys64'
 if ($MSYSTEM_PREFIX -eq 'mingw32')
   {
     Write-Host '(WARNING): 32-bit builds will be dropped in a future release. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/10922' -ForegroundColor Yellow
+    $MSYSTEM_PREFIX = 'mingw32'
+    $MINGW_PACKAGE_PREFIX = 'mingw-w64-i686'
   }
 elseif ((Get-WmiObject -Class Win32_ComputerSystem).SystemType -like 'ARM64*')
   {
@@ -90,11 +92,11 @@ function self_build ([string]$dep, [string]$option1, [string]$option2)
     git pull
 
     ## Configure and/or build
-    if (-not (Test-Path _build\build.ninja -Type Leaf))
+    if (-not (Test-Path _build-$MSYSTEM_PREFIX\build.ninja -Type Leaf))
       {
-        meson setup _build -Dprefix="$GIMP_PREFIX" $option1 $option2
+        meson setup _build-$MSYSTEM_PREFIX -Dprefix="$GIMP_PREFIX" $option1 $option2
       }
-    Set-Location _build
+    Set-Location _build-$MSYSTEM_PREFIX
     ninja
     ninja install
     if ("$LASTEXITCODE" -gt '0' -or "$?" -eq 'False')

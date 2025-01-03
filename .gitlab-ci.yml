@@ -72,17 +72,13 @@ workflow:
   variables:
     CCACHE_BASEDIR: "$CI_PROJECT_DIR"
     CCACHE_DIR: "$CI_PROJECT_DIR/_ccache"
-    CC: "ccache clang"
-    CXX: "ccache clang++"
-    CC_LD: lld
-    CXX_LD: lld
   cache:
-    key: ${CI_JOB_NAME}${VARIANT}
+    key: ${CI_JOB_NAME_SLUG}${VARIANT}
     paths:
       - _ccache/
   # Common artifacts behavior
   artifacts:
-    name: "${CI_JOB_NAME}${VARIANT}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
+    name: "${CI_JOB_NAME_SLUG}${VARIANT}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
     when: always
 
 variables:
@@ -114,6 +110,11 @@ stages:
   tags:
     - $RUNNER
   image: $CI_REGISTRY_IMAGE:build-debian-latest-${RUNNER}
+  variables:
+    CC: "ccache clang"
+    CXX: "ccache clang++"
+    CC_LD: lld
+    CXX_LD: lld
   before_script:
     - export GIMP_PREFIX="${CI_PROJECT_DIR}/_install-${RUNNER}"
     - echo -e "\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KPreparing build environment"
@@ -514,45 +515,41 @@ gimp-win-x64-cross:
     expire_in: 2 days
 
 ## WINDOWS pipelines (native MSYS2) ##
-## Since our build pipelines are split (for good reasons) into deps and gimp jobs,
-## 'matrix' isn't useful yet: https://gitlab.com/gitlab-org/gitlab/-/issues/396845
 .win:
   extends: .default
   rules:
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Windows Installer.*/ && $CI_MERGE_REQUEST_LABELS =~ /.*5. Microsoft Store.*/'
+    - if: ($CI_MERGE_REQUEST_LABELS =~ /.*5. Windows Installer.*/ && $CI_MERGE_REQUEST_LABELS =~ /.*5. Microsoft Store.*/) || ($GIMP_CI_WIN_INSTALLER != null && $GIMP_CI_MS_STORE != null)
       interruptible: true
       variables:
         INSTALLER_OPTION: '-Dwindows-installer=true'
         STORE_OPTION: '-Dms-store=true'
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Windows Installer.*/'
+    - if: $CI_MERGE_REQUEST_LABELS =~ /.*5. Windows Installer.*/ || $GIMP_CI_WIN_INSTALLER != null
       interruptible: true
       variables:
         INSTALLER_OPTION: '-Dwindows-installer=true'
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Microsoft Store.*/ && $CI_JOB_NAME =~ /.*64.*/'
+    - if: ($CI_MERGE_REQUEST_LABELS =~ /.*5. Microsoft Store.*/ || $GIMP_CI_MS_STORE != null) && $CI_JOB_NAME !~ /.*86.*/ && $CI_JOB_NAME !~ /.*installer.*/
       interruptible: true
-      variables:
-        STORE_OPTION: '-Dms-store=true'
-    - if: '$GIMP_CI_WIN_INSTALLER != null && $GIMP_CI_MS_STORE != null'
-      variables:
-        INSTALLER_OPTION: '-Dwindows-installer=true'
-        STORE_OPTION: '-Dms-store=true'
-    - if: '$GIMP_CI_WIN_INSTALLER != null'
-      variables:
-        INSTALLER_OPTION: '-Dwindows-installer=true'
-    - if: '$GIMP_CI_MS_STORE != null && $CI_JOB_NAME =~ /.*64.*/'
       variables:
         STORE_OPTION: '-Dms-store=true'
     - <<: *CI_RELEASE
       variables:
         INSTALLER_OPTION: '-Dwindows-installer=true'
         STORE_OPTION: '-Dms-store=true'
+  parallel:
+    matrix:
+      - RUNNER: windows-aarch64
+        MSYSTEM_PREFIX: clangarm64
+      - RUNNER: win32-ps
+        MSYSTEM_PREFIX: clang64
+  tags:
+    - $RUNNER
   before_script:
     # MSYS2 config
     - $MSYS2_PREFIX = 'C:/msys64'
     - $env:Path = "$MSYS2_PREFIX/$MSYSTEM_PREFIX/bin;$MSYS2_PREFIX/usr/bin;" + $env:Path
     # Build-time vars
     # FIXME:'gimpenv' have buggy code about Windows paths. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/12284
-    - $GIMP_PREFIX = "$PWD\_install".Replace('\', '/')
+    - $GIMP_PREFIX = "$PWD\_install-$MSYSTEM_PREFIX".Replace('\', '/')
     - Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):win_environ[collapsed=true]$([char]13)$([char]27)[0KPreparing build environment"
     - $env:Path = $env:Path + ";$GIMP_PREFIX/bin"
     - $env:PKG_CONFIG_PATH = "$MSYS2_PREFIX/$MSYSTEM_PREFIX/lib/pkgconfig;$MSYS2_PREFIX/$MSYSTEM_PREFIX/share/pkgconfig;$GIMP_PREFIX/lib/pkgconfig"
@@ -560,21 +557,10 @@ gimp-win-x64-cross:
     - $env:GI_TYPELIB_PATH = "$MSYS2_PREFIX/$MSYSTEM_PREFIX/lib/girepository-1.0;$GIMP_PREFIX/lib/girepository-1.0"
     - Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):win_environ$([char]13)$([char]27)[0K"
 
-## WINDOWS Aarch64 CI (native MSYS2) ##
-.win-a64:
+deps-win:
   extends: .win
   rules:
     - !reference [.win, rules]
-    - if: '$GIMP_CI_MSYS2_WIN_AARCH64 != null'
-  tags:
-    - windows-aarch64
-  variables:
-    MSYSTEM_PREFIX: clangarm64
-
-deps-win-a64:
-  extends: .win-a64
-  rules:
-    - !reference [.win-a64, rules]
   needs: []
   stage: dependencies
   variables:
@@ -583,16 +569,16 @@ deps-win-a64:
     - build/windows/1_build-deps-msys2.ps1
   artifacts:
     paths:
-      - _install/
-      - babl/_build/meson-logs/meson-log.txt
-      - gegl/_build/meson-logs/meson-log.txt
+      - _install-$MSYSTEM_PREFIX/
+      - babl/_build-$MSYSTEM_PREFIX/meson-logs/meson-log.txt
+      - gegl/_build-$MSYSTEM_PREFIX/meson-logs/meson-log.txt
     expire_in: 2 hours
 
-gimp-win-a64:
-  extends: .win-a64
+gimp-win:
+  extends: .win
   rules:
-    - !reference [.win-a64, rules]
-  needs: ["deps-win-a64"]
+    - !reference [.win, rules]
+  needs: ["deps-win"]
   stage: gimp
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
@@ -601,106 +587,49 @@ gimp-win-a64:
     - build/windows/2_build-gimp-msys2.ps1
   artifacts:
     paths:
-      - gimp-a64/
-      - _build/meson-logs/meson-log.txt
-      - _build/done-dll.list
+      - gimp-$MSYSTEM_PREFIX/
+      - _build-$MSYSTEM_PREFIX/meson-logs/meson-log.txt
+      - _build-$MSYSTEM_PREFIX/done-dll.list
       # Needed by dist-installer-weekly and dist-store-weekly
-      - _build/config.h
-      - _build/build/windows/installer/
-      - _build/build/windows/store/
+      - _build-$MSYSTEM_PREFIX/config.h
+      - _build-$MSYSTEM_PREFIX/build/windows/installer/
+      - _build-$MSYSTEM_PREFIX/build/windows/store/
     expire_in: 2 days
 
-## WINDOWS x86_64 CI (native MSYS2) ##
-
-.win-x64:
-  extends: .win
-  rules:
-    - !reference [.win, rules]
-    - if: '$GIMP_CI_MSYS2_WIN64 != null'
-  tags:
-    - win32-ps
-  variables:
-    MSYSTEM_PREFIX: clang64
-
-deps-win-x64:
-  extends: .win-x64
-  rules:
-    - !reference [.win-x64, rules]
-  needs: []
-  stage: dependencies
-  variables:
-    CCACHE_MAXSIZE: 0.25G
-  script:
-    - build/windows/1_build-deps-msys2.ps1
-  artifacts:
-    paths:
-      - _install/
-    expire_in: 2 hours
-
-gimp-win-x64:
-  extends: .win-x64
-  rules:
-    - !reference [.win-x64, rules]
-  needs: ["deps-win-x64"]
-  stage: gimp
-  variables:
-    GIT_SUBMODULE_STRATEGY: recursive
-    CCACHE_MAXSIZE: 0.75G
-  script:
-    - build/windows/2_build-gimp-msys2.ps1
-  artifacts:
-    paths:
-      - gimp-x64/
-      - _build/done-dll.list
-    expire_in: 2 days
-
-## WINDOWS x86 CI (native MSYS2) ##
-
+## WINDOWS x86 legacy CI (native MSYS2) ##
 .win-x86:
   extends: .win
   rules:
     - !reference [.win, rules]
     - if: '$GIMP_CI_MSYS2_WIN32 != null'
-  tags:
-    - win32-ps
-  variables:
-    MSYSTEM_PREFIX: mingw32
-    MINGW_PACKAGE_PREFIX: mingw-w64-i686
-    CC: cc
-    CXX: c++
-    CC_LD: bfd
-    CXX_LD: bfd
+  parallel:
+    matrix:
+      - RUNNER: win32-ps
+        MSYSTEM_PREFIX: mingw32
 
 deps-win-x86:
   extends: .win-x86
   rules:
     - !reference [.win-x86, rules]
   needs: []
-  stage: dependencies
+  stage: !reference [deps-win, stage]
+  variables: !reference [deps-win, variables]
   script:
-    - build/windows/1_build-deps-msys2.ps1
-  artifacts:
-    paths:
-      - _install/
-    expire_in: 2 hours
+    - !reference [deps-win, script]
+  artifacts: !reference [deps-win, artifacts]
 
 gimp-win-x86:
   extends: .win-x86
   rules:
     - !reference [.win-x86, rules]
   needs: ["deps-win-x86"]
-  stage: gimp
-  variables:
-    GIT_SUBMODULE_STRATEGY: recursive
+  stage: !reference [gimp-win, stage]
+  variables: !reference [gimp-win, variables]
   script:
-    - build/windows/2_build-gimp-msys2.ps1
+    - !reference [gimp-win, script]
     # We split 32-bit DWARF symbols here because LLVM-objcopy do NOT support them
-    - bash build/windows/installer/3_dist-gimp-inno_sym.sh gimp-x86
-  artifacts:
-    paths:
-      - gimp-x86/
-      - _build/done-dll.list
-    expire_in: 2 days
+    - bash build/windows/installer/3_dist-gimp-inno_sym.sh gimp-$MSYSTEM_PREFIX
+  artifacts: !reference [gimp-win, artifacts]
 
 
 ## Analysis ##
@@ -908,10 +837,10 @@ dist-flatpak-weekly:
     expire_in: 8 days
 
 dist-installer-weekly:
-  extends: .win
+  extends: .default
   rules:
     - !reference [.win, rules]
-  needs: ["gimp-win-a64", "gimp-win-x64", "gimp-win-x86"]
+  needs: ["gimp-win", "gimp-win-x86"]
   stage: distribution
   tags:
     - windows-aarch64
@@ -926,13 +855,13 @@ dist-installer-weekly:
     expire_in: 8 days
 
 dist-store-weekly:
-  extends: .win
+  extends: .default
   rules:
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Microsoft Store.*/'
       interruptible: true
     - if: '$GIMP_CI_MS_STORE != null'
     - <<: *CI_RELEASE
-  needs: ["gimp-win-a64", "gimp-win-x64"]
+  needs: ["gimp-win"]
   stage: distribution
   tags:
     - win32-ps

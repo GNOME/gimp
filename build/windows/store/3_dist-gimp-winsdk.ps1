@@ -3,9 +3,9 @@
 # Parameters
 param ($revision = "$GIMP_CI_MS_STORE",
        $wack = 'Non-WACK',
-       $build_dir = '_build',
-       $a64_bundle = 'gimp-a64',
-       $x64_bundle = 'gimp-x64')
+       $build_dir = (Get-ChildItem _build* | Select-Object -First 1),
+       $a64_bundle = 'gimp-clangarm64',
+       $x64_bundle = 'gimp-clang64')
 
 $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $true
