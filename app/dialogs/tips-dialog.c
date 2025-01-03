@@ -132,15 +132,17 @@ tips_dialog_create (Gimp *gimp)
 
   button = gtk_dialog_add_button (GTK_DIALOG (tips_dialog),
                                   _("_Previous Tip"), RESPONSE_PREVIOUS);
-  gtk_button_set_image (GTK_BUTTON (button),
-                        gtk_image_new_from_icon_name (GIMP_ICON_GO_PREVIOUS,
-                                                      GTK_ICON_SIZE_BUTTON));
+  image = gtk_image_new_from_icon_name (GIMP_ICON_GO_PREVIOUS,
+                                        GTK_ICON_SIZE_BUTTON);
+  gtk_button_set_image (GTK_BUTTON (button), image);
+  gtk_widget_set_visible (image, TRUE);
 
   button = gtk_dialog_add_button (GTK_DIALOG (tips_dialog),
                                   _("_Next Tip"), RESPONSE_NEXT);
-  gtk_button_set_image (GTK_BUTTON (button),
-                        gtk_image_new_from_icon_name (GIMP_ICON_GO_NEXT,
-                                                      GTK_ICON_SIZE_BUTTON));
+  image = gtk_image_new_from_icon_name (GIMP_ICON_GO_NEXT,
+                                        GTK_ICON_SIZE_BUTTON);
+  gtk_button_set_image (GTK_BUTTON (button), image);
+  gtk_widget_set_visible (image, TRUE);
 
   gtk_dialog_set_response_sensitive (GTK_DIALOG (tips_dialog),
                                      RESPONSE_NEXT, tips_count > 1);
