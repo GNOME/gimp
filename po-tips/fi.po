@@ -10,17 +10,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-09-20 16:59+0000\n"
-"PO-Revision-Date: 2020-02-23 20:19+0200\n"
+"POT-Creation-Date: 2024-12-26 17:00+0000\n"
+"PO-Revision-Date: 2025-01-03 19:31+0200\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 3.4.4\n"
 
-#: ../data/tips/gimp-tips.xml.in.h:1
+#: data/tips/gimp-tips.xml.in:18
 msgid ""
 "You can get context-sensitive help for most of GIMP's features by pressing "
 "the F1 key at any time. This also works inside the menus."
@@ -29,7 +29,7 @@ msgstr ""
 "GIMP-ominaisuudesta myös valikkojen sisältä. Aktivoi ohje painamalla F1-"
 "näppäintä."
 
-#: ../data/tips/gimp-tips.xml.in.h:2
+#: data/tips/gimp-tips.xml.in:24
 msgid ""
 "GIMP uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
@@ -39,7 +39,7 @@ msgstr ""
 "Ajattele tasoa läpinäkyväksi piirtoheitinkalvoksi, joita yhdistämällä saat "
 "eri kalvoille eri elementit kokonaiseksi kuvaksi."
 
-#: ../data/tips/gimp-tips.xml.in.h:3
+#: data/tips/gimp-tips.xml.in:31
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -47,7 +47,7 @@ msgstr ""
 "Voit suorittaa monia tasotoimintoja napsauttamalla tason nimiä oikealla "
 "hiiren painikkeella tasoikkunasta."
 
-#: ../data/tips/gimp-tips.xml.in.h:4
+#: data/tips/gimp-tips.xml.in:37
 msgid ""
 "Saving an image uses XCF, GIMP's native file format (file extension <tt>."
 "xcf</tt>). This preserves the layers and many aspects of your work-in-"
@@ -60,26 +60,26 @@ msgstr ""
 "Kun projekti on valmis, voit viedä sen esimerkiksi JPEG-, PNG- tai GIF-"
 "muotoon."
 
-#: ../data/tips/gimp-tips.xml.in.h:5
+#: data/tips/gimp-tips.xml.in:45
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image→Flatten Image) if you want the plug-"
 "in to work on the whole image."
 msgstr ""
-"Useimmat suotimet toimivat kuvan nykyisessä tasossa. Jos haluat suotimen "
+"Useimmat suodattimet toimivat kuvan nykyisessä tasossa. Jos haluat suotimen "
 "toimivan koko kuvassa, täytyy kaikki tasot yhdistää (Kuva→Yhdistä kuva)."
 
-#: ../data/tips/gimp-tips.xml.in.h:6
+#: data/tips/gimp-tips.xml.in:52
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
 "Layer→Transparency→Add Alpha Channel."
 msgstr ""
 "Jos tason nimi tasoikkunassa näkyy <b>korostettuna</b>, tällä tasolla ei ole "
-"alfa-kanavaa. Voit lisätä alfa-kanavan valikon kohdasta "
+"alfakanavaa. Voit lisätä alfakanavan valikon kohdasta "
 "Taso→Läpinäkyvyys→Lisää alfakanava."
 
-#: ../data/tips/gimp-tips.xml.in.h:7
+#: data/tips/gimp-tips.xml.in:59
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB "
@@ -88,10 +88,10 @@ msgid ""
 msgstr ""
 "Aivan kaikkia suotimia ei voi käyttää kaikilla kuvaformaateilla. Tämän voi "
 "huomata käytöstä poistetusta valikkokohdasta. Tällöin voit joutua vaihtamaan "
-"kuvan väritilan RGB-tilaan (Kuva→Tila→RGB) tai lisätä alfa-kanavan "
-"(Taso→Läpinäkyvyys→Lisää alfa-kanava) tai yhdistää kuvan (Kuva→Yhdistä kuva)."
+"kuvan väritilan RGB-tilaan (Kuva→Tila→RGB) tai lisätä alfakanavan "
+"(Taso→Läpinäkyvyys→Lisää alfakanava) tai yhdistää kuvan (Kuva→Yhdistä kuva)."
 
-#: ../data/tips/gimp-tips.xml.in.h:8
+#: data/tips/gimp-tips.xml.in:68
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Most "
@@ -104,7 +104,7 @@ msgstr ""
 "jättävät <tt>Alt</tt>-näppäimen huomiotta tai käyttävät <tt>Super</tt>-"
 "näppäintä (tai \"Windows-logo\") sen sijaan."
 
-#: ../data/tips/gimp-tips.xml.in.h:9
+#: data/tips/gimp-tips.xml.in:82
 msgid ""
 "You can drag and drop many things in GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
@@ -114,7 +114,7 @@ msgstr ""
 "värin työkalulaatikosta tai paletista kuvan päälle, jolloin kuva tai kohta "
 "täytetään valitulla värillä."
 
-#: ../data/tips/gimp-tips.xml.in.h:10
+#: data/tips/gimp-tips.xml.in:89
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
@@ -122,7 +122,7 @@ msgstr ""
 "Voit siirtyä hiiren keskinapin avulla kuvan eri osiin, tai vaihtoehtoisesti "
 "pitää <tt>Välilyöntiä</tt> pohjassa siirtäessäsi hiirtä."
 
-#: ../data/tips/gimp-tips.xml.in.h:11
+#: data/tips/gimp-tips.xml.in:95
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
@@ -133,7 +133,7 @@ msgstr ""
 "valinnat sidotaan apuviivoihin. Voit poistaa apulinjan kuvasta raahaamalla "
 "sen pois siirtotyökalulla."
 
-#: ../data/tips/gimp-tips.xml.in.h:12
+#: data/tips/gimp-tips.xml.in:102
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -141,19 +141,19 @@ msgstr ""
 "Voit raahata tason tasoikkunasta ja tiputtaa sen työkalupakkiin. Tämä luo "
 "uuden kuvan, joka sisältää ainoastaan raahatun tason."
 
-#: ../data/tips/gimp-tips.xml.in.h:13
+#: data/tips/gimp-tips.xml.in:108
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
-"layer before doing other operations on the image. Click on the &quot;New "
-"Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or "
-"use the menus to do the same."
+"layer before doing other operations on the image. Click on the \"New Layer\" "
+"or the \"Anchor Layer\" button in the Layers dialog, or use the menus to do "
+"the same."
 msgstr ""
 "Kelluva valinta täytyy ankkuroida joko uuteen tasoon tai viimeisimpään "
 "aktiiviseen tasoon, ennen kuin muita toimintoja voidaan tehdä kuvalle. "
-"Napsauta joko \"Uusi taso\"- tai \"Ankkuroi taso\" -painiketta tasoikkunassa "
+"Napsauta joko \"Uusi taso\"- tai \"Ankkuroi taso\"-painiketta tasoikkunassa "
 "tai tee sama toimenpide valikosta."
 
-#: ../data/tips/gimp-tips.xml.in.h:14
+#: data/tips/gimp-tips.xml.in:116
 msgid ""
 "GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
@@ -163,7 +163,7 @@ msgstr ""
 "tt> tiedostonimeen ja kuva tallennetaan pakattuna. Toki GIMP myös avaa "
 "pakatut kuvat yhtä helposti."
 
-#: ../data/tips/gimp-tips.xml.in.h:15
+#: data/tips/gimp-tips.xml.in:124
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -174,7 +174,7 @@ msgstr ""
 "tehtäisiin uusi valinta. Käyttämällä <tt>Ctrl</tt>-näppäintä ennen valinnan "
 "tekemistä poistetaan valinta nykyisestä valinnasta."
 
-#: ../data/tips/gimp-tips.xml.in.h:16
+#: data/tips/gimp-tips.xml.in:132
 msgid ""
 "You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -182,41 +182,41 @@ msgid ""
 msgstr ""
 "Voit piirtää neliöitä tai ympyröitä valitsemalla Muokkaa→Piirrä valinta. "
 "Tämä piirtää nykyisen valinnan reunat. Monimutkaisempia kuvioita voidaan "
-"piirtää käyttämällä Polku-työkalua tai Suotimet→Hahmota→Gfig."
+"piirtää käyttämällä Polku-työkalua tai Suodattimet→Hahmota→Gfig."
 
-#: ../data/tips/gimp-tips.xml.in.h:17
+#: data/tips/gimp-tips.xml.in:139
 msgid ""
 "If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
 "their current settings. You can use the Paintbrush in gradient mode or even "
 "the Eraser or the Smudge tool."
 msgstr ""
 "Jos piirrät polun (Muokkaa→Piirrä polku), maalaustyökaluja voidaan käyttää "
-"nykyisillä asetuksilla. Voit käyttää ruiskua liukuväri-tilassa tai jopa "
+"nykyisillä asetuksilla. Voit käyttää ruiskua liukuväritilassa tai jopa "
 "pyyhekumia tai sormi-työkalua."
 
-#: ../data/tips/gimp-tips.xml.in.h:18
+#: data/tips/gimp-tips.xml.in:146
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
 "selections."
 msgstr ""
-"Voit luoda ja muokata monimutkaisia valintoja polkutyökalulla. Ikkuna Polut "
+"Voit luoda ja muokata monimutkaisia valintoja polkutyökalulla. Polut-ikkuna "
 "mahdollistaa työskentelyn useilla poluilla ja polkujen muuntamisen "
 "valinnoiksi."
 
-#: ../data/tips/gimp-tips.xml.in.h:19
+#: data/tips/gimp-tips.xml.in:153
 msgid ""
-"You can use the paint tools to change the selection. Click on the &quot;"
-"Quick Mask&quot; button at the bottom left of an image window. Change your "
-"selection by painting in the image and click on the button again to convert "
-"it back to a normal selection."
+"You can use the paint tools to change the selection. Click on the \"Quick "
+"Mask\" button at the bottom left of an image window. Change your selection "
+"by painting in the image and click on the button again to convert it back to "
+"a normal selection."
 msgstr ""
-"Voit käyttää maalaustyökaluja valinnan muuttamiseen. Napsauta &quot;"
-"Pikamaski&quot; -painiketta näytön vasemmasta alalaidasta, jolloin voit "
-"muuttaa valintaasi maalaamalla kuvassa ja muuttaa näin valitun alueen "
-"tavalliseksi valinnaksi painamalla samaa nappia uudestaan."
+"Voit käyttää maalaustyökaluja valinnan muuttamiseen. Napsauta \"Pikamaski\"-"
+"painiketta kuvaikkunan vasemmasta alalaidasta, jolloin voit muuttaa "
+"valintaasi maalaamalla kuvassa ja muuttaa näin valitun alueen tavalliseksi "
+"valinnaksi painamalla samaa nappia uudestaan."
 
-#: ../data/tips/gimp-tips.xml.in.h:20
+#: data/tips/gimp-tips.xml.in:161
 msgid ""
 "You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -228,26 +228,7 @@ msgstr ""
 "kanavaikkunassa voit muuttaa kanavan näkyvyyttä ja muuntaa kanavan "
 "valinnaksi."
 
-#: ../data/tips/gimp-tips.xml.in.h:21
-msgid ""
-"After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
-"dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
-"selecting a menu item, and pressing the desired key combination. If &quot;"
-"Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
-"you exit GIMP. You should probably disable &quot;Dynamic Keyboard "
-"Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
-"shortcuts."
-msgstr ""
-"Kun olet valinnut Asetukset-ikkunasta &quot;Käytä dynaamisia näppäimistön "
-"pikavalintoja&quot; voit järjestää pikanäppäimiä uudelleen. Tämä tapahtuu "
-"&quot;Määritä näppäimistön pikavalinnat&quot; -ikkunassa painamalla haluttua "
-"pikanäppäintä tai näppäinyhdistelmää halutun toiminnon kohdalla. Jos &quot;"
-"Tallenna näppäimistön oikopolut&quot; on valittuna, näppäimistöoikopolut "
-"tallennetaan kun lopetat GIMPin. On yleensä suositeltavaa ottaa &quot;Käytä "
-"dynaamisia näppäimistön pikavalintoja&quot; pois käytöstä jälkikäteen, jotta "
-"pikavalintoja ei lisättäisi tai muutettaisi vahingossa."
-
-#: ../data/tips/gimp-tips.xml.in.h:22
+#: data/tips/gimp-tips.xml.in:175
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
@@ -256,7 +237,7 @@ msgstr ""
 "useita kertoja kuvaikkunassa. Tällöin työkalulaatikko ja muut ikkunat "
 "vuoroin piilotetaan tai näytetään."
 
-#: ../data/tips/gimp-tips.xml.in.h:23
+#: data/tips/gimp-tips.xml.in:182
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -265,7 +246,7 @@ msgstr ""
 "tasot paitsi napsautetun, ja <tt>Shift</tt>-napsautus uudestaan näyttää "
 "jälleen muutkin tasot."
 
-#: ../data/tips/gimp-tips.xml.in.h:24
+#: data/tips/gimp-tips.xml.in:188
 msgid ""
 "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
@@ -275,7 +256,7 @@ msgstr ""
 "näyttää tasomaskin efektin. <tt>Alt</tt>-napsautus sen sijaan näyttää ja "
 "piilottaa itse tasomaskin."
 
-#: ../data/tips/gimp-tips.xml.in.h:25
+#: data/tips/gimp-tips.xml.in:195
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -283,7 +264,7 @@ msgstr ""
 "Voit käyttää näppäinyhdistelmää <tt>Ctrl</tt>-<tt>Tab</tt> siirtymiseen "
 "kuvan tasojen välillä, jos ikkunanhallintasi ei käytä tätä yhdistelmää."
 
-#: ../data/tips/gimp-tips.xml.in.h:26
+#: data/tips/gimp-tips.xml.in:201
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
@@ -294,25 +275,43 @@ msgstr ""
 "taustavärillä edustavärin sijasta. Vastaavasti värin poimintatyökalulla "
 "<tt>Ctrl</tt>-napsauttaminen asettaa taustavärin edustavärin sijaan."
 
-#: ../data/tips/gimp-tips.xml.in.h:27
+#: data/tips/gimp-tips.xml.in:209
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
 msgstr ""
 "<tt>Ctrl</tt>-raahaus kiertotyökalulla rajaa kierron 15 asteen kulmiin."
 
-#: ../data/tips/gimp-tips.xml.in.h:28
+#: data/tips/gimp-tips.xml.in:215
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
-"improve their tonal range with the &quot;Auto&quot; button in the Levels "
-"tool (Colors→Levels). If there are any color casts, you can correct them "
-"with the Curves tool (Colors→Curves)."
+"improve their tonal range with the \"Auto\" button in the Levels tool "
+"(Colors→Levels). If there are any color casts, you can correct them with the "
+"Curves tool (Colors→Curves)."
 msgstr ""
 "Mikäli jotkin skannatuista kuvista näyttävät haaleilta, voit helposti "
-"parantaa niiden väritoistoa napsauttamalla &quot;Automaattinen&quot;-"
-"painiketta &quot;Säädä väriarvoja&quot;-työkalusta (Värit→Säätöarvot). Jos "
-"kuvassa on värivääristymiä, voit korjata ne &quot;Käyrät&quot;-työkalulla "
-"(Värit→Käyrät)"
+"parantaa niiden väritoistoa napsauttamalla \"Automaattinen\"-painiketta "
+"\"Säädä väriarvoja\"-työkalusta (Värit→Säätöarvot). Jos kuvassa on "
+"värivääristymiä, voit korjata ne \"Käyrät\"-työkalulla (Värit→Käyrät)"
+
+#~ msgid ""
+#~ "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the "
+#~ "Preferences dialog, you can reassign shortcut keys. Do so by bringing up "
+#~ "the menu, selecting a menu item, and pressing the desired key "
+#~ "combination. If &quot;Save Keyboard Shortcuts&quot; is enabled, the key "
+#~ "bindings are saved when you exit GIMP. You should probably disable &quot;"
+#~ "Dynamic Keyboard Shortcuts&quot; afterwards, to prevent accidentally "
+#~ "assigning/reassigning shortcuts."
+#~ msgstr ""
+#~ "Kun olet valinnut Asetukset-ikkunasta &quot;Käytä dynaamisia näppäimistön "
+#~ "pikavalintoja&quot; voit järjestää pikanäppäimiä uudelleen. Tämä tapahtuu "
+#~ "&quot;Määritä näppäimistön pikavalinnat&quot; -ikkunassa painamalla "
+#~ "haluttua pikanäppäintä tai näppäinyhdistelmää halutun toiminnon kohdalla. "
+#~ "Jos &quot;Tallenna näppäimistön oikopolut&quot; on valittuna, "
+#~ "näppäimistöoikopolut tallennetaan kun lopetat GIMPin. On yleensä "
+#~ "suositeltavaa ottaa &quot;Käytä dynaamisia näppäimistön "
+#~ "pikavalintoja&quot; pois käytöstä jälkikäteen, jotta pikavalintoja ei "
+#~ "lisättäisi tai muutettaisi vahingossa."
 
 #~ msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
 #~ msgstr "<big>Tervetuloa käyttämään GIMPiä!</big>"
