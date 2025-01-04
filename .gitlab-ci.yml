@@ -154,8 +154,6 @@ stages:
 
 image-debian:
   extends: .debian
-  rules:
-    - !reference [.debian, rules]
   stage: prepare
   image:
     name: gcr.io/kaniko-project/executor:debug
@@ -245,8 +243,6 @@ image-debian:
 
 image-debian-x64:
   extends: .debian-x64
-  rules:
-    - !reference [.debian-x64, rules]
   stage: !reference [image-debian, stage]
   image: !reference [image-debian, image]
   variables: !reference [image-debian, variables]
@@ -260,8 +256,6 @@ image-debian-x64:
 
 deps-debian:
   extends: .debian
-  rules:
-    - !reference [.debian, rules]
   needs: ["image-debian"]
   stage: dependencies
   variables:
@@ -314,8 +308,6 @@ deps-debian:
 
 gimp-debian:
   extends: .debian
-  rules:
-    - !reference [.debian, rules]
   needs: ["deps-debian"]
   stage: gimp
   variables:
@@ -345,8 +337,6 @@ gimp-debian:
 
 deps-debian-x64:
   extends: .debian-x64
-  rules:
-    - !reference [.debian-x64, rules]
   needs: ["image-debian-x64"]
   stage: !reference [deps-debian, stage]
   variables: !reference [deps-debian, variables]
@@ -356,8 +346,6 @@ deps-debian-x64:
 
 gimp-debian-x64:
   extends: .debian-x64
-  rules:
-    - !reference [.debian-x64, rules]
   needs: ["deps-debian-x64"]
   stage: !reference [gimp-debian, stage]
   variables: !reference [gimp-debian, variables]
@@ -418,8 +406,6 @@ gimp-debian-x64:
 
 deps-flatpak-x64:
   extends: .flatpak-x64
-  rules:
-    - !reference [.flatpak-x64, rules]
   needs: []
   stage: dependencies
   # FIXME: GitLab CI caching does NOT work with flatpak
@@ -443,8 +429,6 @@ deps-flatpak-x64:
 
 gimp-flatpak-x64:
   extends: .flatpak-x64
-  rules:
-    - !reference [.flatpak-x64, rules]
   needs: ["deps-flatpak-x64"]
   stage: gimp
   # FIXME: GitLab CI caching does NOT work with flatpak
@@ -476,8 +460,6 @@ gimp-flatpak-x64:
 
 deps-win-x64-cross:
   extends: .win-cross
-  rules:
-    - !reference [.win-cross, rules]
   needs: ["image-debian-x64"]
   stage: dependencies
   variables:
@@ -498,8 +480,6 @@ deps-win-x64-cross:
 
 gimp-win-x64-cross:
   extends: .win-cross
-  rules:
-    - !reference [.win-cross, rules]
   needs: ["deps-win-x64-cross", "gimp-debian-x64"]
   stage: gimp
   variables:
@@ -559,8 +539,6 @@ gimp-win-x64-cross:
 
 deps-win:
   extends: .win
-  rules:
-    - !reference [.win, rules]
   needs: []
   stage: dependencies
   variables:
@@ -576,8 +554,6 @@ deps-win:
 
 gimp-win:
   extends: .win
-  rules:
-    - !reference [.win, rules]
   needs: ["deps-win"]
   stage: gimp
   variables:
@@ -609,8 +585,6 @@ gimp-win:
 
 deps-win-x86:
   extends: .win-x86
-  rules:
-    - !reference [.win-x86, rules]
   needs: []
   stage: !reference [deps-win, stage]
   variables: !reference [deps-win, variables]
@@ -620,8 +594,6 @@ deps-win-x86:
 
 gimp-win-x86:
   extends: .win-x86
-  rules:
-    - !reference [.win-x86, rules]
   needs: ["deps-win-x86"]
   stage: !reference [gimp-win, stage]
   variables: !reference [gimp-win, variables]
