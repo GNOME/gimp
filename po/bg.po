@@ -81,6 +81,7 @@
 # ICC profile профил по ICC (International Color Consortium)
 # colormap таблица за цветове
 # flatten image сплескване на изображение
+# path flatness гладкост на пътека
 # layer group група от слоеве
 # line art контур
 # sample point примерна точка
@@ -169,6 +170,7 @@
 # cage transform кофражно трансформиране
 # clip срязване
 # clipping изрезка
+# clipping path пътека за срязване
 # clamp фиксиране (на стойности)
 # bump map карта на неравностите
 # alien map чуждестранна карта
@@ -216,7 +218,7 @@
 # adaptive box адаптивно поле
 # seek позициониране
 # color map цветова карта
-# sub-sampling подотчет
+# subsampling разреждане на отчетите
 # wavelet decompose разлагане по вълнички
 # recompose пресъставяне
 # frame disposal преход между кадри (за анимиран gif/mng)
@@ -224,6 +226,11 @@
 # bitmap растерно изображение
 # root layer основен слой
 # spline сплайн
+# mipmapped image пирамидално изображение
+# magic code/number магичен код
+# baseline jpeg основен jpeg
+# scanline ред
+#
 #
 # TODO:
 # composition guides водачи на композицията
@@ -255,7 +262,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-12-26 16:49+0000\n"
-"PO-Revision-Date: 2024-12-26 21:51+0100\n"
+"PO-Revision-Date: 2025-01-04 14:53+0100\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -14890,7 +14897,7 @@ msgstr "Неизвестен вид файл на палитра: %s"
 #: app/core/gimppalette-load.c:116
 #, c-format
 msgid "Missing magic header."
-msgstr "Магическата заглавна част липсва."
+msgstr "Магичната заглавна част липсва."
 
 #: app/core/gimppalette-load.c:139
 #, c-format
@@ -29533,368 +29540,3 @@ msgstr "Меню за запомнени настройки"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Меню за историята на действията"
-
-#~ msgctxt "undo-type"
-#~ msgid "Bump Map"
-#~ msgstr "Карта на неравностите"
-
-#~ msgctxt "undo-type"
-#~ msgid "Displace"
-#~ msgstr "Изместване"
-
-#~ msgctxt "undo-type"
-#~ msgid "Gaussian Blur"
-#~ msgstr "Гаусово замъгляване"
-
-#~ msgctxt "undo-type"
-#~ msgid "Alien Map"
-#~ msgstr "Чуждестранна карта"
-
-#~ msgctxt "undo-type"
-#~ msgid "Antialias"
-#~ msgstr "Заглаждане"
-
-#~ msgctxt "undo-type"
-#~ msgid "Apply Canvas"
-#~ msgstr "Прилагане на канава"
-
-#~ msgctxt "undo-type"
-#~ msgid "Apply Lens"
-#~ msgstr "Прилагане на леща"
-
-#~ msgctxt "undo-type"
-#~ msgid "Stretch Contrast HSV"
-#~ msgstr "Разтегляне на контраста по HSV"
-
-#~ msgctxt "undo-type"
-#~ msgid "Stretch Contrast"
-#~ msgstr "Разтегляне на контраста"
-
-#~ msgctxt "undo-type"
-#~ msgid "Cartoon"
-#~ msgstr "Комикс"
-
-#~ msgctxt "undo-type"
-#~ msgid "Channel Mixer"
-#~ msgstr "Смесител на канали"
-
-#~ msgctxt "undo-type"
-#~ msgid "Color to Alpha"
-#~ msgstr "Цвят към прозрачност"
-
-#, c-format
-#~ msgid "Array 'matrix' has only %d members, must have 25"
-#~ msgstr "Масивът „matrix“ (матрица) има само %d члена, а трябва да са 25"
-
-#, c-format
-#~ msgid "Array 'channels' has only %d members, must have 5"
-#~ msgstr "Масивът „channels“ (канали) има само %d члена, а трябва да са 5"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convolution Matrix"
-#~ msgstr "Матрица за конволюция"
-
-#~ msgctxt "undo-type"
-#~ msgid "Cubism"
-#~ msgstr "Кубизъм"
-
-#~ msgctxt "undo-type"
-#~ msgid "Deinterlace"
-#~ msgstr "Премахване на презредовост"
-
-#~ msgctxt "undo-type"
-#~ msgid "Diffraction Patterns"
-#~ msgstr "Дифракционни шарки"
-
-#~ msgctxt "undo-type"
-#~ msgid "DoG Edge Detect"
-#~ msgstr "Откриване на граници с гаусови разлики"
-
-#~ msgctxt "undo-type"
-#~ msgid "Normalize"
-#~ msgstr "Нормализация"
-
-#~ msgctxt "undo-type"
-#~ msgid "Edge"
-#~ msgstr "Граници"
-
-#~ msgctxt "undo-type"
-#~ msgid "Emboss"
-#~ msgstr "Щанца"
-
-#~ msgctxt "undo-type"
-#~ msgid "Engrave"
-#~ msgstr "Гравиране"
-
-#~ msgctxt "undo-type"
-#~ msgid "Color Exchange"
-#~ msgstr "Замяна на цветове"
-
-#~ msgctxt "undo-type"
-#~ msgid "Lens Flare"
-#~ msgstr "Отблясъци на леща"
-
-#~ msgctxt "undo-type"
-#~ msgid "Fractal Trace"
-#~ msgstr "Фрактализиране"
-
-#~ msgctxt "undo-type"
-#~ msgid "Glass Tile"
-#~ msgstr "Стъклени плочки"
-
-#~ msgctxt "undo-type"
-#~ msgid "Noise HSV"
-#~ msgstr "Шум по HSV"
-
-#~ msgctxt "undo-type"
-#~ msgid "Illusion"
-#~ msgstr "Илюзия"
-
-#~ msgctxt "undo-type"
-#~ msgid "Laplace"
-#~ msgstr "Лаплас"
-
-#~ msgctxt "undo-type"
-#~ msgid "Lens Distortion"
-#~ msgstr "Дисторсия"
-
-#~ msgctxt "undo-type"
-#~ msgid "Tile Seamless"
-#~ msgstr "Безшевни плочки"
-
-#~ msgctxt "undo-type"
-#~ msgid "Maze"
-#~ msgstr "Лабиринт"
-
-#~ msgctxt "undo-type"
-#~ msgid "Motion Blur"
-#~ msgstr "Замъгляване при движение"
-
-#~ msgctxt "undo-type"
-#~ msgid "Median Blur"
-#~ msgstr "Замъгляване по медианата"
-
-#~ msgctxt "undo-type"
-#~ msgid "Mosaic"
-#~ msgstr "Мозайка"
-
-#~ msgctxt "undo-type"
-#~ msgid "Neon"
-#~ msgstr "Неон"
-
-#~ msgctxt "undo-type"
-#~ msgid "Newsprint"
-#~ msgstr "Вестник"
-
-#~ msgctxt "undo-type"
-#~ msgid "Supernova"
-#~ msgstr "Свръхнова"
-
-#~ msgctxt "undo-type"
-#~ msgid "Oilify"
-#~ msgstr "Омасляване"
-
-#~ msgctxt "undo-type"
-#~ msgid "Paper Tile"
-#~ msgstr "Хартиени плочки"
-
-#~ msgctxt "undo-type"
-#~ msgid "Photocopy"
-#~ msgstr "Фотокопие"
-
-#~ msgctxt "undo-type"
-#~ msgid "Pixelize"
-#~ msgstr "Пикселизация"
-
-#~ msgctxt "undo-type"
-#~ msgid "Plasma"
-#~ msgstr "Плазма"
-
-#~ msgctxt "undo-type"
-#~ msgid "Polar Coordinates"
-#~ msgstr "Полярни координати"
-
-#~ msgctxt "undo-type"
-#~ msgid "Red Eye Removal"
-#~ msgstr "Корекция на червени очи"
-
-#~ msgctxt "undo-type"
-#~ msgid "Random Hurl"
-#~ msgstr "Случаен шум"
-
-#~ msgctxt "undo-type"
-#~ msgid "Random Pick"
-#~ msgstr "Случаен подбор"
-
-#~ msgctxt "undo-type"
-#~ msgid "Random Slur"
-#~ msgstr "Случайно замазване"
-
-#~ msgctxt "undo-type"
-#~ msgid "RGB Noise"
-#~ msgstr "Шум по RGB"
-
-#~ msgctxt "undo-type"
-#~ msgid "Ripple"
-#~ msgstr "Вълнички"
-
-#~ msgctxt "undo-type"
-#~ msgid "Noisify"
-#~ msgstr "Шум"
-
-#~ msgctxt "undo-type"
-#~ msgid "Selective Gaussian Blur"
-#~ msgstr "Избирателно гаусово замъгляване"
-
-#~ msgctxt "undo-type"
-#~ msgid "Semi-Flatten"
-#~ msgstr "Полусплескване"
-
-#~ msgctxt "undo-type"
-#~ msgid "Shift"
-#~ msgstr "Преместване"
-
-#~ msgctxt "undo-type"
-#~ msgid "Sinus"
-#~ msgstr "Синус"
-
-#~ msgctxt "undo-type"
-#~ msgid "Sobel"
-#~ msgstr "Собел"
-
-#~ msgctxt "undo-type"
-#~ msgid "Softglow"
-#~ msgstr "Меко излъчване"
-
-#~ msgctxt "undo-type"
-#~ msgid "Solid Noise"
-#~ msgstr "Плътен шум"
-
-#~ msgctxt "undo-type"
-#~ msgid "Spread"
-#~ msgstr "Дифузия"
-
-#~ msgctxt "undo-type"
-#~ msgid "Threshold Alpha"
-#~ msgstr "Праг за прозрачност"
-
-#~ msgctxt "undo-type"
-#~ msgid "Sharpen (Unsharp Mask)"
-#~ msgstr "Изостряне (маска чрез заглаждане)"
-
-#~ msgctxt "undo-type"
-#~ msgid "Video"
-#~ msgstr "Видео"
-
-#~ msgctxt "undo-type"
-#~ msgid "Value Invert"
-#~ msgstr "Обръщане на стойността"
-
-#~ msgctxt "undo-type"
-#~ msgid "Value Propagate"
-#~ msgstr "Предаване на стойността"
-
-#~ msgctxt "undo-type"
-#~ msgid "Dilate"
-#~ msgstr "Разводняване"
-
-#~ msgctxt "undo-type"
-#~ msgid "Erode"
-#~ msgstr "Разяждане"
-
-#~ msgctxt "undo-type"
-#~ msgid "Waves"
-#~ msgstr "Вълни"
-
-#~ msgctxt "undo-type"
-#~ msgid "Whirl and Pinch"
-#~ msgstr "Защипване и въртене"
-
-#~ msgctxt "undo-type"
-#~ msgid "Wind"
-#~ msgstr "Вятър"
-
-#~ msgid "Fill with _background color"
-#~ msgstr "Запълване с _фоновия цвят"
-
-#~ msgctxt "text-editor-action"
-#~ msgid "Text Editor Toolbar"
-#~ msgstr "Лента с инструменти за редактор на текст"
-
-#~ msgctxt "paths-action"
-#~ msgid "Delete this path"
-#~ msgstr "Изтриване на пътеката"
-
-#~ msgctxt "paths-action"
-#~ msgid "Raise this path"
-#~ msgstr "Повдигане на пътеката"
-
-#~ msgctxt "paths-action"
-#~ msgid "Lower this path"
-#~ msgstr "Снижаване на пътеката"
-
-#~ msgctxt "paths-action"
-#~ msgid "Select the vector below the current path"
-#~ msgstr "Избиране на пътеката под текущата"
-
-#~ msgctxt "unit-singular"
-#~ msgid "pixel"
-#~ msgstr "пиксел"
-
-#~ msgctxt "unit-plural"
-#~ msgid "pixels"
-#~ msgstr "пиксела"
-
-#~ msgctxt "unit-singular"
-#~ msgid "inch"
-#~ msgstr "инч"
-
-#~ msgctxt "unit-plural"
-#~ msgid "inches"
-#~ msgstr "инча"
-
-#~ msgctxt "unit-singular"
-#~ msgid "millimeter"
-#~ msgstr "милиметър"
-
-#~ msgctxt "unit-plural"
-#~ msgid "millimeters"
-#~ msgstr "милиметра"
-
-#~ msgctxt "unit-singular"
-#~ msgid "point"
-#~ msgstr "точка"
-
-#~ msgctxt "unit-plural"
-#~ msgid "points"
-#~ msgstr "точки"
-
-#~ msgctxt "unit-singular"
-#~ msgid "pica"
-#~ msgstr "пика"
-
-#~ msgctxt "unit-plural"
-#~ msgid "picas"
-#~ msgstr "пики"
-
-#~ msgctxt "singular"
-#~ msgid "percent"
-#~ msgstr "процента"
-
-#~ msgctxt "plural"
-#~ msgid "percent"
-#~ msgstr "процента"
-
-#~ msgid "Lock path _strokes"
-#~ msgstr "Заключване на _щрихите на пътя"
-
-#~ msgid "Intelligent _Scissors"
-#~ msgstr "Умни _ножички"
-
-#, c-format
-#~ msgid "%p"
-#~ msgstr "%p "
-
-#~ msgctxt "filters-action"
-#~ msgid "_Goat exercises"
-#~ msgstr "Упражнения за _Goat"
