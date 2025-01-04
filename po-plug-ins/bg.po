@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-12-26 16:55+0000\n"
-"PO-Revision-Date: 2024-12-29 21:43+0100\n"
+"PO-Revision-Date: 2025-01-04 18:47+0100\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -19,6 +19,2725 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: plug-ins/common/align-layers.c:193 plug-ins/common/align-layers.c:215
+#: plug-ins/common/file-ps.c:431 plug-ins/common/file-ps.c:440
+#: plug-ins/file-dds/dds.c:198 plug-ins/file-tiff/file-tiff.c:247
+#: plug-ins/fractal-explorer/fractal-explorer.c:345
+#: plug-ins/fractal-explorer/fractal-explorer.c:355
+#: plug-ins/fractal-explorer/fractal-explorer.c:365
+#: plug-ins/lighting/lighting-main.c:213 plug-ins/lighting/lighting-main.c:336
+#: plug-ins/lighting/lighting-main.c:395 plug-ins/lighting/lighting-main.c:454
+#: plug-ins/lighting/lighting-main.c:513 plug-ins/lighting/lighting-main.c:572
+#: plug-ins/metadata/metadata-tags.c:211 plug-ins/metadata/metadata-tags.c:223
+#: plug-ins/metadata/metadata-tags.c:254
+msgid "None"
+msgstr "Няма"
+
+#: plug-ins/common/cml-explorer.c:2208 plug-ins/common/curve-bend.c:762
+#: plug-ins/common/file-dicom.c:1541 plug-ins/common/file-farbfeld.c:355
+#: plug-ins/common/file-mng.c:875 plug-ins/common/file-mng.c:1225
+#: plug-ins/common/file-pcx.c:1200 plug-ins/common/file-pdf-export.c:680
+#: plug-ins/common/file-png.c:1491 plug-ins/common/file-raw-data.c:1378
+#: plug-ins/common/file-raw-data.c:1407 plug-ins/common/file-sunras.c:614
+#: plug-ins/common/file-tga.c:1225 plug-ins/common/file-xmc.c:1272
+#: plug-ins/common/sphere-designer.c:2205 plug-ins/file-bmp/bmp-export.c:336
+#: plug-ins/file-fli/fli-gimp.c:798 plug-ins/file-icns/file-icns-export.c:436
+#: plug-ins/file-ico/ico-export.c:1355 plug-ins/file-ico/ico-export.c:1577
+#: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2220
+#: plug-ins/file-tiff/file-tiff-export.c:1087
+#: plug-ins/file-tiff/file-tiff-export.c:1176 plug-ins/flame/flame.c:585
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1414
+#: plug-ins/gfig/gfig.c:895 plug-ins/ifs-compose/ifs-compose.c:2468
+#: plug-ins/lighting/lighting-ui.c:808
+#, c-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "„%s“ не може да се отвори за запис: %s"
+
+#: plug-ins/common/curve-bend.c:815 plug-ins/common/file-cel.c:326
+#: plug-ins/common/file-cel.c:378 plug-ins/common/file-dicom.c:360
+#: plug-ins/common/file-farbfeld.c:273 plug-ins/common/file-gif-load.c:416
+#: plug-ins/common/file-iff.c:282 plug-ins/common/file-lnk.c:200
+#: plug-ins/common/file-mng.c:1409 plug-ins/common/file-pcx.c:490
+#: plug-ins/common/file-pcx.c:533 plug-ins/common/file-png.c:639
+#: plug-ins/common/file-ps.c:1159 plug-ins/common/file-ps.c:3739
+#: plug-ins/common/file-psp.c:2620 plug-ins/common/file-psp.c:2670
+#: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:573
+#: plug-ins/common/file-raw-data.c:1710 plug-ins/common/file-sunras.c:435
+#: plug-ins/common/file-svg.c:539 plug-ins/common/file-tga.c:427
+#: plug-ins/common/file-wbmp.c:188 plug-ins/common/file-xbm.c:725
+#: plug-ins/common/file-xmc.c:656 plug-ins/common/file-xmc.c:895
+#: plug-ins/common/file-xwd.c:465 plug-ins/common/sphere-designer.c:2094
+#: plug-ins/file-bmp/bmp-load.c:281 plug-ins/file-dds/ddsread.c:169
+#: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:368
+#: plug-ins/file-fli/fli-gimp.c:439 plug-ins/file-fli/fli-gimp.c:490
+#: plug-ins/file-icns/file-icns-load.c:515
+#: plug-ins/file-icns/file-icns-load.c:567 plug-ins/file-ico/ico-load.c:681
+#: plug-ins/file-ico/ico-load.c:819 plug-ins/file-ico/ico-load.c:1021
+#: plug-ins/file-jpeg/jpeg-load.c:99 plug-ins/file-jpeg/jpeg-load.c:615
+#: plug-ins/file-psd/psd-export.c:2225 plug-ins/file-psd/psd-load.c:189
+#: plug-ins/file-psd/psd-load.c:194 plug-ins/file-psd/psd-thumb-load.c:82
+#: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:539
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1771
+#: plug-ins/fractal-explorer/fractal-explorer.c:1171 plug-ins/gfig/gfig.c:525
+#: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
+#: plug-ins/lighting/lighting-ui.c:952
+#, c-format
+msgid "Could not open '%s' for reading: %s"
+msgstr "„%s“ не може да се отвори за четене: %s"
+
+#: plug-ins/file-dds/dds.c:287 plug-ins/map-object/map-object-main.c:142
+msgid "Box"
+msgstr "Кутия"
+
+#: extensions/goat-exercises/goat-exercise-gjs.js:96
+#: extensions/goat-exercises/goat-exercise-lua.lua:73
+#: extensions/goat-exercises/goat-exercise-py3.py:79
+#: plug-ins/common/cml-explorer.c:1373 plug-ins/common/file-heif.c:2287
+#: plug-ins/common/file-pdf-load.c:586 plug-ins/common/grid.c:822
+#: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:260
+#: plug-ins/file-exr/file-exr.c:437 plug-ins/file-psd/psd-load.c:3817
+#: plug-ins/flame/flame.c:823 plug-ins/fractal-explorer/fractal-explorer.c:1403
+#: plug-ins/gimpressionist/orientmap.c:529
+#: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
+#: plug-ins/gradient-flare/gradient-flare.c:3452
+#: plug-ins/ifs-compose/ifs-compose.c:914
+#: plug-ins/imagemap/imap_default_dialog.c:109
+msgid "_OK"
+msgstr "_Добре"
+
+#.
+#. * Create the "background" layer to hold the image...
+#.
+#: plug-ins/common/blinds.c:260 plug-ins/common/compose.c:1179
+#: plug-ins/common/decompose.c:642 plug-ins/common/file-cel.c:471
+#: plug-ins/common/file-cel.c:476 plug-ins/common/file-dicom.c:728
+#: plug-ins/common/file-farbfeld.c:296 plug-ins/common/file-gegl.c:446
+#: plug-ins/common/file-gif-load.c:1147 plug-ins/common/file-iff.c:408
+#: plug-ins/common/file-jp2-load.c:1272 plug-ins/common/file-pcx.c:710
+#: plug-ins/common/file-pcx.c:718 plug-ins/common/file-pcx.c:726
+#: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:921
+#: plug-ins/common/file-pnm.c:845 plug-ins/common/file-qoi.c:296
+#: plug-ins/common/file-raw-data.c:1873 plug-ins/common/file-sunras.c:1059
+#: plug-ins/common/file-tga.c:1103 plug-ins/common/file-wbmp.c:274
+#: plug-ins/common/file-xbm.c:887 plug-ins/common/film.c:865
+#: plug-ins/common/smooth-palette.c:301 plug-ins/common/tile.c:390
+#: plug-ins/file-bmp/bmp-load.c:799 plug-ins/file-exr/file-exr.c:287
+#: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:673
+#: plug-ins/file-jpeg/jpeg-load.c:231
+#: plug-ins/file-psd/psd-image-res-load.c:1093
+#: plug-ins/file-psd/psd-load.c:2994 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-tiff/file-tiff-load.c:1554
+#: plug-ins/file-tiff/file-tiff-load.c:2359
+#: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:559
+#: plug-ins/gfig/gfig-dialog.c:1286 plug-ins/gimpressionist/general.c:147
+#: plug-ins/map-object/map-object-apply.c:241
+#: plug-ins/screenshot/screenshot-win32.c:310 plug-ins/twain/twain.c:630
+msgid "Background"
+msgstr "Фон"
+
+#: plug-ins/common/decompose.c:214 plug-ins/common/warp.c:268
+#: plug-ins/file-fits/fits.c:203 plug-ins/flame/flame.c:1286
+#: plug-ins/gfig/gfig-dialog.c:1455
+msgid "Black"
+msgstr "Черно"
+
+#: plug-ins/common/file-aa.c:164 plug-ins/file-dds/dds.c:220
+msgid "_Format"
+msgstr "_Формат:"
+
+#. Read file pointer
+#. File header
+#. KiSS file type
+#. Bits per pixel
+#. Dimensions of image
+#. Layer offsets
+#. Number of colors
+#. Image
+#. Layer
+#. Temporary buffer
+#. Pixel data
+#. Buffer for layer
+#. Counters
+#. Number of items read from file
+#. max. rows allocated
+#. column, highest column ever used
+#.
+#. * Open the file for reading...
+#.
+#: plug-ins/common/file-cel.c:369 plug-ins/common/file-dicom.c:352
+#: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:408
+#: plug-ins/common/file-heif.c:853 plug-ins/common/file-jp2-load.c:1046
+#: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
+#: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
+#: plug-ins/common/file-png.c:631 plug-ins/common/file-pnm.c:688
+#: plug-ins/common/file-ps.c:1149 plug-ins/common/file-raw-data.c:1702
+#: plug-ins/common/file-sunras.c:427 plug-ins/common/file-tga.c:419
+#: plug-ins/common/file-wbmp.c:180 plug-ins/common/file-wmf.c:618
+#: plug-ins/common/file-xbm.c:717 plug-ins/common/file-xmc.c:646
+#: plug-ins/common/file-xpm.c:361 plug-ins/common/file-xwd.c:457
+#: plug-ins/file-bmp/bmp-load.c:270 plug-ins/file-exr/file-exr.c:197
+#: plug-ins/file-faxg3/faxg3.c:244 plug-ins/file-fli/fli-gimp.c:482
+#: plug-ins/file-icns/file-icns-load.c:507 plug-ins/file-ico/ico-load.c:673
+#: plug-ins/file-ico/ico-load.c:811 plug-ins/file-jpeg/jpeg-load.c:90
+#: plug-ins/file-psd/psd-load.c:202 plug-ins/file-raw/file-darktable.c:467
+#: plug-ins/file-raw/file-rawtherapee.c:345 plug-ins/file-sgi/sgi.c:315
+#: plug-ins/file-tiff/file-tiff-load.c:299
+#, c-format
+msgid "Opening '%s'"
+msgstr "Отваряне на „%s“"
+
+#. init the progress meter
+#.
+#. * Open the file for writing...
+#.
+#: plug-ins/common/file-cel.c:821 plug-ins/common/file-farbfeld.c:347
+#: plug-ins/common/file-gif-export.c:939 plug-ins/common/file-html-table.c:349
+#: plug-ins/common/file-jpegxl.c:1396 plug-ins/common/file-pcx.c:1083
+#: plug-ins/common/file-pix.c:636 plug-ins/common/file-png.c:1483
+#: plug-ins/common/file-pnm.c:1623 plug-ins/common/file-ps.c:1369
+#: plug-ins/common/file-qoi.c:350 plug-ins/common/file-sunras.c:605
+#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-xbm.c:1026
+#: plug-ins/common/file-xpm.c:682 plug-ins/common/file-xwd.c:693
+#: plug-ins/file-bmp/bmp-export.c:328 plug-ins/file-fits/fits.c:646
+#: plug-ins/file-fli/fli-gimp.c:765 plug-ins/file-icns/file-icns-export.c:621
+#: plug-ins/file-ico/ico-export.c:1347 plug-ins/file-ico/ico-export.c:1561
+#: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2166
+#: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1077
+#, c-format
+msgid "Exporting '%s'"
+msgstr "Изнасяне на „%s“"
+
+#: plug-ins/common/file-dicom.c:1525 plug-ins/common/file-ps.c:1364
+#: plug-ins/common/file-xwd.c:688 plug-ins/file-fits/fits.c:641
+#, c-format
+msgid "Cannot operate on unknown image types."
+msgstr "Не работи върху изображения от непознат вид."
+
+#: plug-ins/common/file-gegl.c:132 plug-ins/file-exr/file-exr.c:111
+msgid "OpenEXR image"
+msgstr "Изображение OpenEXR"
+
+#: plug-ins/common/file-heif.c:262 plug-ins/common/file-heif.c:383
+#: plug-ins/file-jpeg/jpeg.c:210
+msgid "_Quality"
+msgstr "_Качество"
+
+#: plug-ins/common/file-heif.c:268 plug-ins/common/file-heif.c:389
+#: plug-ins/common/file-jpegxl.c:193 plug-ins/file-webp/file-webp.c:191
+msgid "L_ossless"
+msgstr "_Без загуба на качество"
+
+#: plug-ins/common/file-jpegxl.c:233 plug-ins/file-tiff/file-tiff.c:265
+msgid "Export as CMY_K"
+msgstr "Изнасяне като CMY_K"
+
+#: plug-ins/common/file-jpegxl.c:2046 plug-ins/file-jpeg/jpeg-export.c:899
+#: plug-ins/file-psd/psd-export.c:2465
+#: plug-ins/file-tiff/file-tiff-export.c:1318
+msgid "Name of the color profile used for CMYK export."
+msgstr "Името на цветовия профил, използван при изнасяне като CMYK."
+
+#: plug-ins/common/file-jpegxl.c:2065 plug-ins/file-jpeg/jpeg-export.c:910
+#: plug-ins/file-psd/psd-export.c:2476
+#: plug-ins/file-tiff/file-tiff-export.c:1330
+#, c-format
+msgid "Profile: %s"
+msgstr "Профил: %s"
+
+#: plug-ins/common/file-pcx.c:672 plug-ins/common/file-wbmp.c:263
+#: plug-ins/file-bmp/bmp-load.c:598 plug-ins/file-psd/psd-load.c:572
+#, c-format
+msgid "Unsupported or invalid image width: %d"
+msgstr "Неподдържана или грешна широчина на изображението: %d"
+
+#: plug-ins/common/file-pcx.c:679 plug-ins/common/file-wbmp.c:269
+#: plug-ins/file-bmp/bmp-load.c:607 plug-ins/file-psd/psd-load.c:564
+#, c-format
+msgid "Unsupported or invalid image height: %d"
+msgstr "Неподдържана или грешна височина на изображението: %d"
+
+#: plug-ins/common/file-pcx.c:702 plug-ins/file-bmp/bmp-load.c:790
+#, c-format
+msgid "Image dimensions too large: width %d x height %d"
+msgstr "Прекалено големи размери на изображението: широчина %d × височина %d"
+
+#: plug-ins/common/file-pdf-export.c:1219
+#: plug-ins/common/file-pdf-export.c:1292
+#: plug-ins/common/file-pdf-export.c:1390 plug-ins/common/file-ps.c:2218
+#: plug-ins/file-tiff/file-tiff-load.c:1556
+#, c-format
+msgid "Page %d"
+msgstr "Страница %d"
+
+#: plug-ins/common/file-png.c:282 plug-ins/file-tiff/file-tiff.c:258
+msgid "Save color _values from transparent pixels"
+msgstr "Запазване на цветовите _стойности на прозрачните пиксели"
+
+#: plug-ins/common/file-png.c:886 plug-ins/file-exr/file-exr.c:265
+#, c-format
+msgid "Could not create new image for '%s': %s"
+msgstr "Не може да се създаде ново изображение за „%s“: %s"
+
+#: plug-ins/common/file-svg.c:541 plug-ins/file-exr/file-exr.c:358
+#: plug-ins/file-exr/file-exr.c:372
+msgid "Unknown reason"
+msgstr "Неизвестна причина"
+
+#. Begin displaying export progress
+#: plug-ins/common/file-xmc.c:1259 plug-ins/file-webp/file-webp-export.c:199
+#: plug-ins/file-webp/file-webp-export.c:599
+#, c-format
+msgid "Saving '%s'"
+msgstr "Запазване на „%s“"
+
+#: plug-ins/common/warp.c:448 plug-ins/file-jpeg/jpeg-export.c:951
+#: plug-ins/file-webp/file-webp-dialog.c:98
+msgid "Advanced Options"
+msgstr "Допълнителни настройки"
+
+#: plug-ins/file-bmp/bmp-export.c:192 plug-ins/file-bmp/bmp-export.c:225
+msgid "Cannot export indexed image with transparency in BMP file format."
+msgstr ""
+"Индексирано изображение с прозрачност не може да се изнесе във формат BMP."
+
+#: plug-ins/file-bmp/bmp-export.c:194 plug-ins/file-bmp/bmp-export.c:227
+msgid "Alpha channel will be ignored."
+msgstr "Каналът за прозрачност ще бъде пренебрегнат."
+
+#: plug-ins/file-bmp/bmp-export.c:597 plug-ins/file-fli/fli.c:91
+#: plug-ins/file-fli/fli.c:110 plug-ins/file-fli/fli.c:131
+#, c-format
+msgid "Error writing to file."
+msgstr "Грешка при запис на файл."
+
+#: plug-ins/file-bmp/bmp-export.c:1060
+msgid "Compatibility"
+msgstr "Съвместимост"
+
+#: plug-ins/file-bmp/bmp-export.c:1066
+msgid ""
+"Some applications can not read BMP images that include color space "
+"information. GIMP writes color space information by default. Disabling this "
+"option will cause GIMP to not write color space information to the file."
+msgstr ""
+"Някои програми не четат изображения във формат BMP, които съдържат "
+"информация за цветовото пространство. Стандартно GIMP включва тази "
+"информация. Ако изключите опцията, GIMP няма да включи информация за "
+"цветовото пространство."
+
+#: plug-ins/file-bmp/bmp-load.c:198
+msgid "Bad colormap"
+msgstr "Грешна цветова карта"
+
+#: plug-ins/file-bmp/bmp-load.c:295 plug-ins/file-bmp/bmp-load.c:304
+#: plug-ins/file-bmp/bmp-load.c:312 plug-ins/file-bmp/bmp-load.c:321
+#: plug-ins/file-bmp/bmp-load.c:338 plug-ins/file-bmp/bmp-load.c:426
+#: plug-ins/file-bmp/bmp-load.c:435 plug-ins/file-bmp/bmp-load.c:493
+#: plug-ins/file-bmp/bmp-load.c:522 plug-ins/file-bmp/bmp-load.c:557
+#: plug-ins/file-bmp/bmp-load.c:579 plug-ins/file-bmp/bmp-load.c:588
+#: plug-ins/file-bmp/bmp-load.c:615
+#, c-format
+msgid "'%s' is not a valid BMP file"
+msgstr "„%s“ е неправилен файл BMP"
+
+#: plug-ins/file-bmp/bmp-load.c:346 plug-ins/file-bmp/bmp-load.c:465
+#, c-format
+msgid "Error reading BMP file header from '%s'"
+msgstr "Грешка при четене на заглавната част на файл BMP от „%s“"
+
+#: plug-ins/file-bmp/bmp-load.c:531 plug-ins/file-bmp/bmp-load.c:565
+#, c-format
+msgid "Unsupported compression (%u) in BMP file from '%s'"
+msgstr "Неподдържана компресия (%u) във файл BMP от „%s“"
+
+#: plug-ins/file-bmp/bmp-load.c:774
+msgid "Unsupported or invalid bitdepth."
+msgstr "Неподдържана или грешна дълбочина."
+
+#: plug-ins/file-bmp/bmp-load.c:982 plug-ins/file-bmp/bmp-load.c:1014
+#: plug-ins/file-bmp/bmp-load.c:1041 plug-ins/file-bmp/bmp-load.c:1071
+#: plug-ins/file-bmp/bmp-load.c:1102
+msgid "The bitmap ends unexpectedly."
+msgstr "Изображението свършва неочаквано."
+
+#: plug-ins/file-bmp/bmp.c:154 plug-ins/file-bmp/bmp.c:180
+msgid "Windows BMP image"
+msgstr "Изображение Windows BMP"
+
+#: plug-ins/file-bmp/bmp.c:157 plug-ins/file-bmp/bmp.c:158
+msgid "Loads files of Windows BMP file format"
+msgstr "Зареждане на изображения във формат Windows BMP"
+
+#: plug-ins/file-bmp/bmp.c:182
+msgid "BMP"
+msgstr "BMP"
+
+#: plug-ins/file-bmp/bmp.c:185 plug-ins/file-bmp/bmp.c:186
+msgid "Saves files in Windows BMP file format"
+msgstr "Запазване на файлове във формат Windows BMP"
+
+#: plug-ins/file-bmp/bmp.c:206
+msgid "Ru_n-Length Encoded"
+msgstr "Кодирано по дължина (RLE)"
+
+#: plug-ins/file-bmp/bmp.c:207
+msgid ""
+"Use run-length-encoding compression (only valid for 4 and 8-bit indexed "
+"images)"
+msgstr ""
+"Използване на компресиране с кодиране по дължина (важи само за 4 и 8-"
+"битовите изображения)"
+
+#: plug-ins/file-bmp/bmp.c:213
+msgid "_Write color space information"
+msgstr "_Запазване на информация за цветовото пространство"
+
+#: plug-ins/file-bmp/bmp.c:214
+msgid "Whether or not to write BITMAPV5HEADER color space data"
+msgstr ""
+"Дали да се запази информация за цветовото пространство в BITMAPV5HEADER"
+
+#: plug-ins/file-bmp/bmp.c:220
+msgid "R_GB format"
+msgstr "Формат _RGB"
+
+#: plug-ins/file-bmp/bmp.c:221
+msgid "Export format for RGB images"
+msgstr "Формат за изнасянето на изображения в RGB"
+
+#: plug-ins/file-bmp/bmp.c:222
+msgid "16 bit (R5 G6 B5)"
+msgstr "16 бита (R5 G6 B5)"
+
+#: plug-ins/file-bmp/bmp.c:223
+msgid "16 bit (A1 R5 G5 B5)"
+msgstr "16 бита (A1 R5 G5 B5)"
+
+#: plug-ins/file-bmp/bmp.c:224
+msgid "16 bit (X1 R5 G5 B5)"
+msgstr "16 бита (X1 R5 G5 B5)"
+
+#: plug-ins/file-bmp/bmp.c:225
+msgid "24 bit (R8 G8 B8)"
+msgstr "24 бита (R8 G8 B8)"
+
+#: plug-ins/file-bmp/bmp.c:226
+msgid "32 bit (A8 R8 G8 B8)"
+msgstr "32 бита (A8 R8 G8 B8)"
+
+#: plug-ins/file-bmp/bmp.c:227
+msgid "32 bit (X8 R8 G8 B8)"
+msgstr "32 бита (X8 R8 G8 B8)"
+
+#: plug-ins/file-dds/dds.c:130 plug-ins/file-dds/dds.c:168
+msgid "DDS image"
+msgstr "Изображение DDS"
+
+#: plug-ins/file-dds/dds.c:133 plug-ins/file-dds/dds.c:134
+msgid "Loads files in DDS image format"
+msgstr "Зареждане на файлове във формат DDS"
+
+#: plug-ins/file-dds/dds.c:149
+msgid "Load _mipmaps"
+msgstr "Зареждане на _пирамидални изображения"
+
+#: plug-ins/file-dds/dds.c:150
+msgid "Load mipmaps if present"
+msgstr "Зареждане на пирамидални изображение при наличие"
+
+#: plug-ins/file-dds/dds.c:155
+msgid "Flip image _vertically"
+msgstr "Обръщане на изображението по _вертикал"
+
+#: plug-ins/file-dds/dds.c:156
+msgid "Flip the image vertically on import"
+msgstr "Обръщане на изображението по вертикал при внасяне"
+
+#: plug-ins/file-dds/dds.c:170
+msgid "DDS"
+msgstr "DDS"
+
+#: plug-ins/file-dds/dds.c:174 plug-ins/file-dds/dds.c:175
+msgid "Saves files in DDS image format"
+msgstr "Зареждане на изображение във формат DDS"
+
+#: plug-ins/file-dds/dds.c:196
+msgid "Compressio_n"
+msgstr "_Компресия"
+
+#: plug-ins/file-dds/dds.c:197
+msgid "Compression format"
+msgstr "Формат на компресията"
+
+#: plug-ins/file-dds/dds.c:199
+msgid "BC1 / DXT1"
+msgstr "BC1/DXT1"
+
+#: plug-ins/file-dds/dds.c:200
+msgid "BC2 / DXT3"
+msgstr "BC2/DXT3"
+
+#: plug-ins/file-dds/dds.c:201
+msgid "BC3 / DXT5"
+msgstr "BC3/DXT5"
+
+#: plug-ins/file-dds/dds.c:202
+msgid "BC3nm / DXT5nm"
+msgstr "BC3nm/DXT5nm"
+
+#: plug-ins/file-dds/dds.c:203
+msgid "BC4 / ATI1 (3Dc+)"
+msgstr "BC4/ATI1 (3Dc+)"
+
+#: plug-ins/file-dds/dds.c:204
+msgid "BC5 / ATI2 (3Dc)"
+msgstr "BC5/ATI2 (3Dc)"
+
+#: plug-ins/file-dds/dds.c:205
+msgid "RXGB (DXT5)"
+msgstr "RXGB (DXT5)"
+
+#: plug-ins/file-dds/dds.c:206
+msgid "Alpha Exponent (DXT5)"
+msgstr "Експонента за прозрачност (DXT5)"
+
+#: plug-ins/file-dds/dds.c:207
+msgid "YCoCg (DXT5)"
+msgstr "YCoCg (DXT5)"
+
+#: plug-ins/file-dds/dds.c:208
+msgid "YCoCg scaled (DXT5)"
+msgstr "Мащабиране на YCoCg (DXT5)"
+
+#: plug-ins/file-dds/dds.c:214
+msgid "Use percept_ual error metric"
+msgstr "_Перцептуална метрика на грешки"
+
+#: plug-ins/file-dds/dds.c:215
+msgid "Use a perceptual error metric during compression"
+msgstr "Ползване на перцептуална метрика на грешки при компресия"
+
+#: plug-ins/file-dds/dds.c:221
+msgid "Pixel format"
+msgstr "Формат на пикселите"
+
+#: plug-ins/file-dds/dds.c:222 plug-ins/file-dds/dds.c:285
+#: plug-ins/file-dds/dds.c:302 plug-ins/file-webp/file-webp.c:180
+#: plug-ins/gradient-flare/gradient-flare.c:2605
+msgid "Default"
+msgstr "Стандартно"
+
+#: plug-ins/file-dds/dds.c:223
+msgid "RGB8"
+msgstr "RGB8"
+
+#: plug-ins/file-dds/dds.c:224
+msgid "RGBA8"
+msgstr "RGBA8"
+
+#: plug-ins/file-dds/dds.c:225
+msgid "BGR8"
+msgstr "BGR8"
+
+#: plug-ins/file-dds/dds.c:226
+msgid "ABGR8"
+msgstr "ABGR8"
+
+#: plug-ins/file-dds/dds.c:227
+msgid "R5G6B5"
+msgstr "R5G6B5"
+
+#: plug-ins/file-dds/dds.c:228
+msgid "RGBA4"
+msgstr "RGBA4"
+
+#: plug-ins/file-dds/dds.c:229
+msgid "RGB5A1"
+msgstr "RGB5A1"
+
+#: plug-ins/file-dds/dds.c:230
+msgid "RGB10A2"
+msgstr "RGB10A2"
+
+#: plug-ins/file-dds/dds.c:231
+msgid "R3G3B2"
+msgstr "R3G3B2"
+
+#: plug-ins/file-dds/dds.c:232
+msgid "A8"
+msgstr "A8"
+
+#: plug-ins/file-dds/dds.c:233
+msgid "L8"
+msgstr "L8"
+
+#: plug-ins/file-dds/dds.c:234
+msgid "L8A8"
+msgstr "L8A8"
+
+#: plug-ins/file-dds/dds.c:235
+msgid "AEXP"
+msgstr "AEXP"
+
+#: plug-ins/file-dds/dds.c:236
+msgid "YCOCG"
+msgstr "YCOCG"
+
+#: plug-ins/file-dds/dds.c:242
+msgid "Sav_e type"
+msgstr "_Формат при запазване"
+
+#: plug-ins/file-dds/dds.c:243
+msgid "How to save the image"
+msgstr "Как да се запази изображението"
+
+#: plug-ins/file-dds/dds.c:244
+msgid "Selected layer"
+msgstr "Избран слой"
+
+#: plug-ins/file-dds/dds.c:245
+msgid "All visible layers"
+msgstr "Всички видими слоеве"
+
+#: plug-ins/file-dds/dds.c:246
+msgid "As cube map"
+msgstr "Като кубична карта"
+
+#: plug-ins/file-dds/dds.c:247
+msgid "As volume map"
+msgstr "Като обемна карта"
+
+#: plug-ins/file-dds/dds.c:248
+msgid "As texture array"
+msgstr "Като текстурен масив"
+
+#: plug-ins/file-dds/dds.c:254
+msgid "Flip image _vertically on export"
+msgstr "_Обръщане на изображението по вертикал при изнасяне"
+
+#: plug-ins/file-dds/dds.c:255
+msgid "Flip the image vertically on export"
+msgstr "Обръщане на изображението по вертикал при изнасяне"
+
+#: plug-ins/file-dds/dds.c:260
+msgid "Set _transparent color"
+msgstr "Задаване на _цвят за прозрачност"
+
+#: plug-ins/file-dds/dds.c:261
+msgid "Make an indexed color transparent"
+msgstr "Превръщане на цвета с този индекс в прозрачност"
+
+#: plug-ins/file-dds/dds.c:266
+msgid "Transparent inde_x"
+msgstr "_Индекс за прозрачност"
+
+#: plug-ins/file-dds/dds.c:267
+msgid "Index of transparent color or -1 to disable (for indexed images only)."
+msgstr ""
+"Индекс на прозрачния цвят или -1 за изключване (само за индексирани "
+"изображения)."
+
+#: plug-ins/file-dds/dds.c:273
+msgid "_Mipmaps"
+msgstr "_Пирамидални изображения"
+
+#: plug-ins/file-dds/dds.c:274
+msgid "How to handle mipmaps"
+msgstr "Как да се обработват пирамидалните изображения"
+
+#: plug-ins/file-dds/dds.c:275
+msgid "No mipmaps"
+msgstr "Няма пирамидални изображения"
+
+#: plug-ins/file-dds/dds.c:276
+msgid "Generate mipmaps"
+msgstr "Генериране на пирамидални изображения"
+
+#: plug-ins/file-dds/dds.c:277
+msgid "Use existing mipmaps"
+msgstr "Ползване на съществуващи пирамидални изображения"
+
+#: plug-ins/file-dds/dds.c:283
+msgid "F_ilter"
+msgstr "_Филтър"
+
+#: plug-ins/file-dds/dds.c:284
+msgid "Filtering to use when generating mipmaps"
+msgstr "Вид филтриране при генериране на пирамидални изображения"
+
+#: plug-ins/file-dds/dds.c:286
+msgid "Nearest"
+msgstr "Най-близък"
+
+#: plug-ins/file-dds/dds.c:288
+msgid "Triangle"
+msgstr "Триъгълно"
+
+#: plug-ins/file-dds/dds.c:289
+msgid "Quadratic"
+msgstr "Квадратично"
+
+#: plug-ins/file-dds/dds.c:290
+msgid "B-Spline"
+msgstr "B-сплайн"
+
+#: plug-ins/file-dds/dds.c:291
+msgid "Mitchell"
+msgstr "Митчел"
+
+#: plug-ins/file-dds/dds.c:292
+msgid "Catmull-Rom"
+msgstr "Катмул-Ром"
+
+#: plug-ins/file-dds/dds.c:293
+msgid "Lanczos"
+msgstr "Ланцош"
+
+#: plug-ins/file-dds/dds.c:294
+msgid "Kaiser"
+msgstr "Кайзер"
+
+#: plug-ins/file-dds/dds.c:300
+msgid "_Wrap mode"
+msgstr "_Режим на пренасяне"
+
+#: plug-ins/file-dds/dds.c:301
+msgid "Wrap mode to use when generating mipmaps"
+msgstr "Режим на пренасяне при генериране на пирамидални изображения"
+
+#: plug-ins/file-dds/dds.c:303
+msgid "Mirror"
+msgstr "Огледално"
+
+#: plug-ins/file-dds/dds.c:304
+msgid "Repeat"
+msgstr "Повторениe"
+
+#: plug-ins/file-dds/dds.c:305
+msgid "Clamp"
+msgstr "Стяга"
+
+#: plug-ins/file-dds/dds.c:311
+msgid "Appl_y gamma correction"
+msgstr "_Прилагане на гама поправка"
+
+#: plug-ins/file-dds/dds.c:312
+msgid "Use gamma correct mipmap filtering"
+msgstr "Гама корекция при филтриране на пирамидални изображения"
+
+#: plug-ins/file-dds/dds.c:317
+msgid "Use sRG_B colorspace"
+msgstr "_Използване на цветово пространство sRGB"
+
+#: plug-ins/file-dds/dds.c:318
+msgid "Use sRGB colorspace for gamma correction"
+msgstr "Използване на цветово пространство sRGB за гама корекция"
+
+#: plug-ins/file-dds/dds.c:323 plug-ins/flame/flame.c:204
+msgid "_Gamma"
+msgstr "_Гама"
+
+#: plug-ins/file-dds/dds.c:324
+msgid "Gamma value to use for gamma correction (e.g. 2.2)"
+msgstr "Стойност за гама корекция (напр. 2.2)"
+
+#: plug-ins/file-dds/dds.c:329
+msgid "Preserve al_pha test coverage"
+msgstr "Запазване на покритието на _алфа теста"
+
+#: plug-ins/file-dds/dds.c:330
+msgid "Preserve alpha test coverage for alpha channel maps"
+msgstr "Запазване на покритието на алфа тест за каналите с алфа карти"
+
+#: plug-ins/file-dds/dds.c:336
+msgid "Alp_ha test threshold"
+msgstr "Праг на теста за _прозрачност"
+
+#: plug-ins/file-dds/dds.c:337
+msgid ""
+"Alpha test threshold value for which alpha test coverage should be preserved"
+msgstr ""
+"Праг на теста за стойността на прозрачността, при която се запазва "
+"покритието на прозрачността"
+
+#: plug-ins/file-dds/ddsread.c:179
+#, c-format
+msgid "Loading: %s"
+msgstr "Зареждане: %s"
+
+#: plug-ins/file-dds/ddsread.c:250
+#, c-format
+msgid ""
+"Unsupported DDS pixel format:\n"
+"bpp: %d, Rmask: %x, Gmask: %x, Bmask: %x, Amask: %x, flags: %u"
+msgstr ""
+"Неподдържан формат на пиксели за DDS:\n"
+"bpp: %d, Rmask: %x, Gmask: %x, Bmask: %x, Amask: %x, флагове: %u"
+
+#: plug-ins/file-dds/ddsread.c:499
+#, c-format
+msgid "Invalid or corrupted DDS header."
+msgstr "Неправилна или повредена заглавна стойност за DDS."
+
+#: plug-ins/file-dds/ddsread.c:511
+#, c-format
+msgid "Could not allocate a new image."
+msgstr "Не може да се зададе памет за ново изображение."
+
+#: plug-ins/file-dds/ddsread.c:527
+#, c-format
+msgid "Error reading palette."
+msgstr "Грешка при четене на палитра."
+
+#: plug-ins/file-dds/ddsread.c:822
+#, c-format
+msgid "Invalid DDS format magic number."
+msgstr "Неправилен магичен код за форма̀та DDS."
+
+#: plug-ins/file-dds/ddsread.c:838
+msgid ""
+"File lacks expected pixel format flags! Image may not be decoded correctly."
+msgstr ""
+"Във файла липсват очакваните флагове за форма̀та на пикселите! Изображението "
+"може да се декодира неправилно."
+
+#: plug-ins/file-dds/ddsread.c:873
+#, c-format
+msgid "Invalid pixel format."
+msgstr "Неправилен формат на пиксели."
+
+#: plug-ins/file-dds/ddsread.c:898
+#, c-format
+msgid "Unsupported format (FourCC: %c%c%c%c, hex: %08x)"
+msgstr "Неподдържан формат (FourCC: %c%c%c%c, 16-тично: %08x)"
+
+#: plug-ins/file-dds/ddsread.c:920
+#, c-format
+msgid "Invalid bpp value for RGB data: %d"
+msgstr "Неправилна стойност за bpp за данните за RGB: %d"
+
+#: plug-ins/file-dds/ddsread.c:931
+#, c-format
+msgid "Invalid bpp value for luminance data: %d"
+msgstr "Неправилна стойност за bpp за данните за яркостта: %d"
+
+#: plug-ins/file-dds/ddsread.c:953
+#, c-format
+msgid "Invalid DX10 header"
+msgstr "Неправилна заглавна част за DX10."
+
+#: plug-ins/file-dds/ddsread.c:986
+#, c-format
+msgid "Unsupported DXGI Format: %u"
+msgstr "Неподдържан формат DXGI: %u"
+
+#: plug-ins/file-dds/ddsread.c:1174 plug-ins/file-dds/ddsread.c:1238
+#: plug-ins/file-dds/ddsread.c:1258
+#, c-format
+msgid "Requested data exceeds size of file.\n"
+msgstr "Обемът на заявените данни надвишава размера на файла.\n"
+
+#: plug-ins/file-dds/ddsread.c:1182 plug-ins/file-dds/ddsread.c:1264
+#, c-format
+msgid "Unexpected EOF.\n"
+msgstr "Неочакван край на файл (EOF).\n"
+
+#: plug-ins/file-dds/ddsread.c:1590
+msgid "Open DDS"
+msgstr "Отваряне на DDS"
+
+#: plug-ins/file-dds/ddswrite.c:566
+#, c-format
+msgid "Saving: %s"
+msgstr "Запазване: „%s“"
+
+#: plug-ins/file-dds/ddswrite.c:1941
+msgid "Mipmap Options"
+msgstr "Настройки на пирамидални изображения"
+
+#. Translators: Do not translate YCoCg, it's the name of a colorspace
+#: plug-ins/file-dds/misc.c:70
+msgid "Decoding YCoCg pixels..."
+msgstr "Декодиране на пиксели в YCoCg…"
+
+#. Translators: Do not translate YCoCg, it's the name of a colorspace
+#: plug-ins/file-dds/misc.c:137
+msgid "Decoding YCoCg (scaled) pixels..."
+msgstr "Декодиране на (мащабирани) пиксели в YCoCg…"
+
+#: plug-ins/file-dds/misc.c:204
+msgid "Decoding Alpha-exponent pixels..."
+msgstr "Декодиране на пиксели с експоненциална алфа…"
+
+#: plug-ins/file-exr/file-exr.c:114
+msgid "Loads files in the OpenEXR file format"
+msgstr "Зареждане на файлове във формат OpenEXR"
+
+#: plug-ins/file-exr/file-exr.c:205
+#, c-format
+msgid "Error opening file '%s' for reading"
+msgstr "Грешка при отваряне на файла „%s“ за четене"
+
+#: plug-ins/file-exr/file-exr.c:216
+#, c-format
+msgid "Error querying image dimensions from '%s'"
+msgstr "Грешка при търсене на размерите на изображението в „%s“"
+
+#: plug-ins/file-exr/file-exr.c:236
+#, c-format
+msgid "Error querying image precision from '%s'"
+msgstr "Грешка при търсене на точността на изображението в „%s“"
+
+#: plug-ins/file-exr/file-exr.c:255
+#, c-format
+msgid "Error querying image type from '%s'"
+msgstr "Грешка при търсене на вида на изображението в „%s“"
+
+#: plug-ins/file-exr/file-exr.c:318
+#, c-format
+msgid "Error reading pixel data from '%s'"
+msgstr "Грешка при четене на данните за пикселите от „%s“"
+
+#: plug-ins/file-exr/file-exr.c:357 plug-ins/file-exr/file-exr.c:371
+#, c-format
+msgid "Failed to load metadata: %s"
+msgstr "Неуспешно зареждане на метаданните: %s"
+
+#: plug-ins/file-exr/file-exr.c:434
+msgid "Import OpenEXR"
+msgstr "Внасяне на OpenEXR"
+
+#: plug-ins/file-exr/file-exr.c:449
+msgid "Unknown Channel Name"
+msgstr "Име на непознат канал"
+
+#: plug-ins/file-exr/file-exr.c:450
+msgid ""
+"The image contains a single unknown channel.\n"
+"It has been converted to grayscale."
+msgstr ""
+"Изображението съдържа само един, непознат канал.\n"
+"Той е преобразуван до степени на сивото."
+
+#: plug-ins/file-exr/file-exr.c:453
+msgid "Chroma Channels"
+msgstr "Цветови канали"
+
+#: plug-ins/file-exr/file-exr.c:454
+msgid ""
+"OpenEXR chroma channels are not yet supported.\n"
+"They have been discarded."
+msgstr ""
+"Все още не се поддържат цветови канали в OpenEXR.\n"
+"Те са отхвърлени."
+
+#: plug-ins/file-faxg3/faxg3.c:136
+msgid "G3 fax image"
+msgstr "Изображение за факс G3"
+
+#: plug-ins/file-faxg3/faxg3.c:299 plug-ins/file-faxg3/faxg3.c:597
+#, c-format
+msgid "Could not create buffer to process image data."
+msgstr "Не може да се създаде буфер за обработка на данните на изображението."
+
+#: plug-ins/file-faxg3/faxg3.c:564
+#, c-format
+msgid "Invalid image dimensions (%d x %d). Image may be corrupt."
+msgstr "Неправилни размери на изображението (%d×%d). Вероятно е повредено."
+
+#: plug-ins/file-faxg3/faxg3.c:574
+#, c-format
+msgid "Could not create image."
+msgstr "Не може да се създаде изображение."
+
+#: plug-ins/file-fits/fits.c:180 plug-ins/file-fits/fits.c:218
+msgid "Flexible Image Transport System"
+msgstr "Flexible Image Transport System"
+
+#: plug-ins/file-fits/fits.c:183
+msgid "Load file of the FITS file format"
+msgstr "Зареждане на файл във формат FITS"
+
+#: plug-ins/file-fits/fits.c:184
+msgid "Load file of the FITS file format (Flexible Image Transport System)"
+msgstr "Зареждане на файл във формат FITS (Flexible Image Transport System)"
+
+#: plug-ins/file-fits/fits.c:201
+msgid "Re_placement for undefined pixels"
+msgstr "_Заместител на недефинирани пиксели"
+
+#: plug-ins/file-fits/fits.c:202
+msgid "Replacement for undefined pixels"
+msgstr "Заместване на недефинирани пиксели"
+
+#: plug-ins/file-fits/fits.c:204 plug-ins/gfig/gfig-dialog.c:1288
+#: plug-ins/gfig/gfig-dialog.c:1456
+msgid "White"
+msgstr "Бяло"
+
+#: plug-ins/file-fits/fits.c:221
+msgid "Export file in the FITS file format"
+msgstr "Изнасяне на файл във формат FITS"
+
+#: plug-ins/file-fits/fits.c:222
+msgid ""
+"FITS exporting handles all image types except those with alpha channels."
+msgstr "FITS не поддържа изображения с канали на прозрачност."
+
+#: plug-ins/file-fits/fits.c:381
+msgid "Error during opening of FITS file"
+msgstr "Грешка при отваряне на файл във формат FITS"
+
+#: plug-ins/file-fits/fits.c:394 plug-ins/file-fits/fits.c:600
+msgid "FITS file keeps no displayable images"
+msgstr "Файлът във формат FITS не съдържа изображения за показване"
+
+#: plug-ins/file-fits/fits.c:492
+msgid "FITS HDU"
+msgstr "FITS HDU"
+
+#: plug-ins/file-fits/fits.c:630
+msgid "FITS export cannot handle images with alpha channels"
+msgstr "FITS не поддържа изображения с канали на прозрачност"
+
+#: plug-ins/file-fits/fits.c:995
+msgid "Open FITS File"
+msgstr "Отваряне на файл във формат FITS"
+
+#: plug-ins/file-fli/fli.c:45 plug-ins/file-fli/fli.c:59
+#: plug-ins/file-fli/fli.c:75 plug-ins/file-fli/fli.c:924
+#: plug-ins/file-fli/fli.c:1244 plug-ins/file-fli/fli.c:1524
+#, c-format
+msgid "Error reading from file."
+msgstr "Грешка при четене на файл."
+
+#: plug-ins/file-fli/fli.c:157 plug-ins/file-fli/fli.c:167
+#: plug-ins/file-fli/fli.c:179
+msgid "Error reading header. "
+msgstr "Грешка при четене на заглавна част. "
+
+#: plug-ins/file-fli/fli.c:187
+#, c-format
+msgid "Invalid header: not a FLI/FLC animation!"
+msgstr "Неправилна заглавна част: не е анимация FLI/FLC!"
+
+#: plug-ins/file-fli/fli.c:205
+#, c-format
+msgid "Incorrect file size in header: %u, should be: %u."
+msgstr "Неправилен размер на файла в заглавна част: %u, а трябва да е: %u."
+
+#: plug-ins/file-fli/fli.c:213
+msgid "Number of frames is 0. Setting to 2."
+msgstr "Броят кадри е 0. Задава се да е 2."
+
+#: plug-ins/file-fli/fli.c:220
+#, c-format
+msgid "Suspicious frame delay of %ums. Setting delay to 70ms."
+msgstr "Подозрително забавяне на кадър от %ums. Задава се 70ms."
+
+#: plug-ins/file-fli/fli.c:249 plug-ins/file-fli/fli.c:258
+#: plug-ins/file-fli/fli.c:269 plug-ins/file-fli/fli.c:276
+msgid "Error writing header. "
+msgstr "Грешка при запис на заглавна част. "
+
+#: plug-ins/file-fli/fli.c:283
+#, c-format
+msgid "Invalid header: unrecognized magic number!"
+msgstr "Неправилна заглавна част: непознат магичен код!"
+
+#: plug-ins/file-fli/fli.c:313 plug-ins/file-fli/fli.c:345
+msgid "Error reading frame. "
+msgstr "Грешка при четене на кадър. "
+
+#: plug-ins/file-fli/fli.c:323
+#, c-format
+msgid "Invalid frame size points past end of file!"
+msgstr "Неправилен размер на кадър — сочи след края на файла!"
+
+#: plug-ins/file-fli/fli.c:353
+#, c-format
+msgid "Invalid chunk size points past end of file!"
+msgstr "Неправилен размер на парче — сочи след края на файла!"
+
+#: plug-ins/file-fli/fli.c:476
+#, c-format
+msgid "Invalid header: magic number is wrong!"
+msgstr "Неправилна заглавна част: неправилен магичен код!"
+
+#: plug-ins/file-fli/fli.c:513
+msgid "Error writing frame header. "
+msgstr "Грешка при запис на заглавна част на кадър."
+
+#: plug-ins/file-fli/fli.c:537 plug-ins/file-fli/fli.c:547
+#: plug-ins/file-fli/fli.c:556 plug-ins/file-fli/fli.c:575
+#: plug-ins/file-fli/fli.c:715 plug-ins/file-fli/fli.c:726
+#: plug-ins/file-fli/fli.c:735 plug-ins/file-fli/fli.c:756
+msgid "Error reading palette. "
+msgstr "Грешка при четене на палитра. "
+
+#: plug-ins/file-fli/fli.c:611 plug-ins/file-fli/fli.c:619
+#: plug-ins/file-fli/fli.c:657 plug-ins/file-fli/fli.c:666
+#: plug-ins/file-fli/fli.c:685 plug-ins/file-fli/fli.c:789
+#: plug-ins/file-fli/fli.c:797 plug-ins/file-fli/fli.c:832
+#: plug-ins/file-fli/fli.c:842 plug-ins/file-fli/fli.c:862
+msgid "Error writing color map. "
+msgstr "Грешка при запис на цветна карта. "
+
+#: plug-ins/file-fli/fli.c:905
+msgid "Error writing black. "
+msgstr "Грешка при записа на черно. "
+
+#: plug-ins/file-fli/fli.c:944 plug-ins/file-fli/fli.c:955
+#: plug-ins/file-fli/fli.c:965 plug-ins/file-fli/fli.c:1085
+#: plug-ins/file-fli/fli.c:1094 plug-ins/file-fli/fli.c:1108
+#: plug-ins/file-fli/fli.c:1123 plug-ins/file-fli/fli.c:1132
+#: plug-ins/file-fli/fli.c:1146 plug-ins/file-fli/fli.c:1156
+#: plug-ins/file-fli/fli.c:1300 plug-ins/file-fli/fli.c:1327
+#: plug-ins/file-fli/fli.c:1343 plug-ins/file-fli/fli.c:1375
+#: plug-ins/file-fli/fli.c:1385 plug-ins/file-fli/fli.c:1399
+#: plug-ins/file-fli/fli.c:1409
+msgid "Error writing frame. "
+msgstr "Грешка при запис на кадър. "
+
+#: plug-ins/file-fli/fli.c:992 plug-ins/file-fli/fli.c:1004
+#: plug-ins/file-fli/fli.c:1015 plug-ins/file-fli/fli.c:1034
+#: plug-ins/file-fli/fli.c:1186 plug-ins/file-fli/fli.c:1200
+#: plug-ins/file-fli/fli.c:1213 plug-ins/file-fli/fli.c:1226
+#: plug-ins/file-fli/fli.c:1245 plug-ins/file-fli/fli.c:1440
+#: plug-ins/file-fli/fli.c:1456 plug-ins/file-fli/fli.c:1475
+#: plug-ins/file-fli/fli.c:1490 plug-ins/file-fli/fli.c:1503
+#: plug-ins/file-fli/fli.c:1525
+msgid "Error reading compressed data. "
+msgstr "Грешка при четене на компресирани данни. "
+
+#: plug-ins/file-fli/fli.c:1022
+#, c-format
+msgid "Overflow reading compressed data. Possibly corrupt file."
+msgstr ""
+"Препълване при четене на компресирани данни. Вероятно файлът е повреден."
+
+#: plug-ins/file-fli/fli-gimp.c:185 plug-ins/file-fli/fli-gimp.c:222
+msgid "AutoDesk FLIC animation"
+msgstr "Анимация AutoDesk FLIC"
+
+#: plug-ins/file-fli/fli-gimp.c:188
+msgid "Load FLI-movies"
+msgstr "Зареждане на филми във формат FLI"
+
+#: plug-ins/file-fli/fli-gimp.c:189 plug-ins/file-fli/fli-gimp.c:227
+msgid "This is an experimental plug-in to handle FLI movies"
+msgstr "Това е експериментална приставка за обработка на филми във формат FLI"
+
+#: plug-ins/file-fli/fli-gimp.c:203 plug-ins/file-fli/fli-gimp.c:248
+msgid "_From frame"
+msgstr "_От кадър"
+
+#: plug-ins/file-fli/fli-gimp.c:204
+msgid "Load beginning from this frame"
+msgstr "Зареждане от този кадър нататък"
+
+#: plug-ins/file-fli/fli-gimp.c:209 plug-ins/file-fli/fli-gimp.c:254
+msgid "_To frame"
+msgstr "_До кадър"
+
+#: plug-ins/file-fli/fli-gimp.c:210
+msgid "End loading with this frame"
+msgstr "Зареждане до този кадър включително"
+
+#: plug-ins/file-fli/fli-gimp.c:224
+msgid "FLI Animation"
+msgstr "Анимация FLI"
+
+#: plug-ins/file-fli/fli-gimp.c:226
+msgid "Export FLI-movies"
+msgstr "Изнасяне на филм във формат FLI"
+
+#: plug-ins/file-fli/fli-gimp.c:249
+msgid "Export beginning from this frame"
+msgstr "Изнасяне от този кадър нататък"
+
+#: plug-ins/file-fli/fli-gimp.c:255
+msgid "End exporting with this frame (or -1 for all frames)"
+msgstr "Последен кадър за изнасяне (или -1 за всички кадри)"
+
+#: plug-ins/file-fli/fli-gimp.c:567
+#, c-format
+msgid "Frame %d (%ums)"
+msgstr "Кадър %d (%ums)"
+
+#: plug-ins/file-fli/fli-gimp.c:594
+#, c-format
+msgid "Failed to read frame %d. Possibly corrupt animation.\n"
+msgstr "Неуспешно изчитане на кадър %d. Вероятно анимацията е повредена.\n"
+
+#: plug-ins/file-fli/fli-gimp.c:926
+msgid "Open FLIC Animation"
+msgstr "Отваряне на анимация във формат FLIC"
+
+#: plug-ins/file-icns/file-icns-export.c:233
+#, c-format
+msgid ""
+"Invalid icon size. \n"
+"It will not be exported"
+msgstr ""
+"Неправилен размер на икона.\n"
+"Няма да бъде изнесена"
+
+#: plug-ins/file-icns/file-icns-export.c:236
+#, c-format
+msgid ""
+"Duplicate layer size. \n"
+"It will not be exported"
+msgstr ""
+"Слой с повтарящ се размер.\n"
+"Няма да бъде изнесен"
+
+#: plug-ins/file-icns/file-icns-export.c:314
+msgid ""
+"Valid ICNS icons sizes are:\n"
+" 16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,\n"
+"64x64, 128x128, 256x256, 512x512, and 1024x1024.\n"
+"Any other sized layers will be ignored on export."
+msgstr ""
+"Приемат се следните размери на икони във формат ICNS:\n"
+" 16×12, 16×16, 18×18, 24×24, 32×32, 36×36, 48×48,\n"
+"64×64, 128×128, 256×256, 512×512 и 1024×1024.\n"
+"Всички слоеве с други размери се прескачат при изнасяне."
+
+#. Don't show warning by default
+#: plug-ins/file-icns/file-icns-export.c:322
+msgid "Export Icons"
+msgstr "Изнасяне на икони"
+
+#: plug-ins/file-icns/file-icns-export.c:531
+#, c-format
+msgid "Error writing icns: %s"
+msgstr "Грешка при запис на файл във формат ICNS: %s."
+
+#: plug-ins/file-icns/file-icns-export.c:595
+#, c-format
+msgid ""
+"No valid sized layers. Only valid layer sizes are 16x12, 16x16, 18x18, "
+"24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512, or 1024x1024."
+msgstr ""
+"Липсват слоеве с правилни размери. Приемат се само размери: 16×12, 16×16, "
+"18×18, 24×24, 32×32, 36×36, 48×48, 64×64, 128×128, 256×256, 512×512 или "
+"1024×1024."
+
+#: plug-ins/file-icns/file-icns-export.c:613
+#, c-format
+msgid ""
+"Invalid layer size(s). Only valid layer sizes are 16x12, 16x16, 18x18, "
+"24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512, or 1024x1024."
+msgstr ""
+"Неправилни размери на слоеве. Приемат се само размери: 16×12, 16×16, 18×18, "
+"24×24, 32×32, 36×36, 48×48, 64×64, 128×128, 256×256, 512×512 или 1024×1024."
+
+#: plug-ins/file-icns/file-icns-load.c:432
+#, c-format
+msgid "Error trying to open temporary %s file '%s' for icns loading: %s"
+msgstr ""
+"Грешка при опит за отваряне на временен файл %s „%s“ за зареждане на icns: %s"
+
+#. ----- Open PSD file -----
+#: plug-ins/file-icns/file-icns-load.c:559 plug-ins/file-ico/ico-load.c:1013
+#: plug-ins/file-jpeg/jpeg-load.c:601 plug-ins/file-psd/psd-thumb-load.c:72
+#: plug-ins/file-raw/file-darktable.c:620
+#: plug-ins/file-raw/file-rawtherapee.c:459
+#, c-format
+msgid "Opening thumbnail for '%s'"
+msgstr "Отваряне на предварителен преглед за „%s“"
+
+#: plug-ins/file-icns/file-icns.c:133
+msgid "Icns"
+msgstr "Icns"
+
+#: plug-ins/file-icns/file-icns.c:177
+msgid "Apple Icon Image"
+msgstr "Изображение във формат икона на Apple"
+
+#: plug-ins/file-ico/ico-dialog.c:97
+msgid "Animated Cursor Settings"
+msgstr "Настройки на анимиран курсор"
+
+#: plug-ins/file-ico/ico-dialog.c:110
+msgid "_Cursor Name (Optional)"
+msgstr "Име на _курсор (незадължително)"
+
+#: plug-ins/file-ico/ico-dialog.c:127
+msgid "_Author Name (Optional)"
+msgstr "Име на _автор (незадължително)"
+
+#: plug-ins/file-ico/ico-dialog.c:144
+msgid "_Delay between frames:"
+msgstr "_Забавяне между кадрите:"
+
+#: plug-ins/file-ico/ico-dialog.c:154
+msgid " jiffies (16.66 ms)"
+msgstr " джифита (16,66 ms)"
+
+#. Cursor
+#: plug-ins/file-ico/ico-dialog.c:164
+msgid "Icon Details"
+msgstr "Настройки на иконката"
+
+#: plug-ins/file-ico/ico-dialog.c:187
+msgid ""
+"Large icons and compression are not supported by all programs. Older "
+"applications may not open this file correctly."
+msgstr ""
+"Големите икони и компресия не се поддържат от всички програми. По-стари "
+"приложения може да не отворят този файл правилно."
+
+#: plug-ins/file-ico/ico-dialog.c:267
+msgid "1 bpp, 1-bit alpha, 2-slot palette"
+msgstr "1 bpp, 1-битова прозрачност, палитра с 2 цвята"
+
+#: plug-ins/file-ico/ico-dialog.c:268
+msgid "4 bpp, 1-bit alpha, 16-slot palette"
+msgstr "4 bpp, 1-битова прозрачност, палитра с 16 цвята"
+
+#: plug-ins/file-ico/ico-dialog.c:269
+msgid "8 bpp, 1-bit alpha, 256-slot palette"
+msgstr "8 bpp, 1-битова прозрачност, палитра с 256 цвята"
+
+#: plug-ins/file-ico/ico-dialog.c:270
+msgid "24 bpp, 1-bit alpha, no palette"
+msgstr "24 bpp, 1-битова прозрачност, без палитра"
+
+#: plug-ins/file-ico/ico-dialog.c:271
+msgid "32 bpp, 8-bit alpha, no palette"
+msgstr "32 bpp, 8-битова прозрачност, без палитра"
+
+#: plug-ins/file-ico/ico-dialog.c:286
+msgid "Compressed (PNG)"
+msgstr "Компресиран (PNG)"
+
+#: plug-ins/file-ico/ico-dialog.c:562
+msgid "Hot spot _X:"
+msgstr "_X на активната точка:"
+
+#: plug-ins/file-ico/ico-dialog.c:575
+msgid "Hot spot _Y:"
+msgstr "_Y на активната точка:"
+
+#: plug-ins/file-ico/ico-export.c:217
+#, c-format
+msgid ""
+"Called non-interactively with %d and %d hotspot coordinates with an image of "
+"%d icons."
+msgstr ""
+"Извиква се неинтерактивно с координати %d и %d на активната точка с "
+"изображение от %d икони."
+
+#: plug-ins/file-ico/ico-load.c:224
+#, c-format
+msgid "Could not read '%lu' bytes"
+msgstr "Не може да се прочетат „%lu“ байта"
+
+#: plug-ins/file-ico/ico-load.c:252
+#, c-format
+msgid "Icon #%d has zero width or height"
+msgstr "Икона #%d е с нулева широчина или височина"
+
+#: plug-ins/file-ico/ico-load.c:868 plug-ins/file-ico/ico-load.c:899
+#, c-format
+msgid "Invalid ANI metadata"
+msgstr "Неправилни метаданни за ANI"
+
+#: plug-ins/file-ico/ico.c:172 plug-ins/file-ico/ico.c:295
+msgid "Microsoft Windows icon"
+msgstr "Икона за Microsoft Windows"
+
+#: plug-ins/file-ico/ico.c:200 plug-ins/file-ico/ico.c:322
+msgid "Microsoft Windows cursor"
+msgstr "Курсор за Microsoft Windows"
+
+#: plug-ins/file-ico/ico.c:230 plug-ins/file-ico/ico.c:360
+msgid "Microsoft Windows animated cursor"
+msgstr "Анимиран курсор за Microsoft Windows"
+
+#: plug-ins/file-ico/ico.c:234
+msgid "Loads files of Windows ANI file format"
+msgstr "Зарежда файлове във формат Windows ANI"
+
+#: plug-ins/file-ico/ico.c:276
+msgid "Loads a preview from a Windows ANI files"
+msgstr "Зарежда преглед от файлове във формат Windows ANI"
+
+#: plug-ins/file-ico/ico.c:364 plug-ins/file-ico/ico.c:365
+msgid "Saves files in Windows ANI file format"
+msgstr "Запазва файлове във формат Windows ANI"
+
+#: plug-ins/file-ico/ico.c:383
+msgid "Cursor Name (Optional)"
+msgstr "Име на курсор (незадължително)"
+
+#: plug-ins/file-ico/ico.c:389
+msgid "Cursor Author (Optional)"
+msgstr "Автор на курсор (незадължително)"
+
+#: plug-ins/file-jpeg/jpeg-export.c:139 plug-ins/file-jpeg/jpeg-export.c:146
+#, c-format
+msgid "File size: %s"
+msgstr "Размер на файла: %s"
+
+#: plug-ins/file-jpeg/jpeg-export.c:717
+msgid "Calculating file size..."
+msgstr "Изчисляване на размера на файла…"
+
+#: plug-ins/file-jpeg/jpeg-export.c:807 plug-ins/file-jpeg/jpeg-export.c:878
+msgid "File size: unknown"
+msgstr "Размер на файла: неизвестен"
+
+#: plug-ins/file-jpeg/jpeg-export.c:886
+msgid "Enable preview to obtain the file size."
+msgstr "Включете предварителния преглед, за да получите размера на файла."
+
+#: plug-ins/file-jpeg/jpeg-export.c:891 plug-ins/file-psd/psd-export.c:2457
+#: plug-ins/file-tiff/file-tiff-export.c:1310
+msgid "No soft-proofing profile"
+msgstr "Няма профил за коректура"
+
+#: plug-ins/file-jpeg/jpeg-load.c:221
+msgid "JPEG preview"
+msgstr "Предварителен преглед на JPEG"
+
+#: plug-ins/file-jpeg/jpeg-load.c:486
+#, c-format
+msgid ""
+"Error trying to open temporary %s file '%s' for jpeg metadata loading: %s"
+msgstr ""
+"Грешка при опит за отваряне на временен файл %s „%s“ за зареждане на "
+"метаданни за JPEG: %s"
+
+#: plug-ins/file-jpeg/jpeg.c:135 plug-ins/file-jpeg/jpeg.c:182
+msgid "JPEG image"
+msgstr "Изображение JPEG"
+
+#: plug-ins/file-jpeg/jpeg.c:138 plug-ins/file-jpeg/jpeg.c:139
+msgid "Loads files in the JPEG file format"
+msgstr "Зареждане на изображение във формат JPEG"
+
+#: plug-ins/file-jpeg/jpeg.c:163
+msgid "Loads a thumbnail from a JPEG image"
+msgstr "Зареждане на миниатюра от файл във формат JPEG"
+
+#: plug-ins/file-jpeg/jpeg.c:164
+msgid "Loads a thumbnail from a JPEG image, if one exists"
+msgstr "Зареждане на миниатюра от файл във формат JPEG, ако има такава"
+
+#: plug-ins/file-jpeg/jpeg.c:185
+msgid "Exports files in the JPEG file format"
+msgstr "Изнася файлове във формат JPEG"
+
+#: plug-ins/file-jpeg/jpeg.c:186
+msgid "Exports files in the lossy, widely supported JPEG format"
+msgstr ""
+"Изнася файлове в широко поддържаните файловете със загуба на точност JPEG"
+
+#: plug-ins/file-jpeg/jpeg.c:195 plug-ins/file-tiff/file-tiff.c:251
+msgid "JPEG"
+msgstr "JPEG"
+
+#: plug-ins/file-jpeg/jpeg.c:211
+msgid "Quality of exported image"
+msgstr "Качество на изнесеното изображение"
+
+#: plug-ins/file-jpeg/jpeg.c:216
+msgid "S_moothing"
+msgstr "За_глаждане"
+
+#: plug-ins/file-jpeg/jpeg.c:217
+msgid "Smoothing factor for exported image"
+msgstr "Коефициент на заглаждането на изнесеното изображение"
+
+#: plug-ins/file-jpeg/jpeg.c:222
+msgid "Optimi_ze"
+msgstr "_Оптимизиране"
+
+#: plug-ins/file-jpeg/jpeg.c:223
+msgid "Use optimized tables during Huffman coding"
+msgstr "Използване на оптимизирани таблици за кодиране по Хъфман"
+
+#: plug-ins/file-jpeg/jpeg.c:228
+msgid "_Progressive"
+msgstr "_Прогресивно"
+
+#: plug-ins/file-jpeg/jpeg.c:229
+msgid "Create progressive JPEG images"
+msgstr "Създаване на прогресивно JPEG изображение"
+
+#: plug-ins/file-jpeg/jpeg.c:234
+msgid "Export as CM_YK"
+msgstr "_Изнасяне в CMYK"
+
+#: plug-ins/file-jpeg/jpeg.c:235
+msgid "Create a CMYK JPEG image using the soft-proofing color profile"
+msgstr "Създаване на цветова коректура за цветовия профил във формат CMYK JPEG"
+
+#: plug-ins/file-jpeg/jpeg.c:240
+msgid "Su_bsampling"
+msgstr "_Разреждане на отчетите"
+
+#: plug-ins/file-jpeg/jpeg.c:241
+msgid "Sub-sampling type"
+msgstr "Вид разреждане на отчетите"
+
+#: plug-ins/file-jpeg/jpeg.c:242
+msgid "4:4:4 (best quality)"
+msgstr "4:4:4 (най-добро качество)"
+
+#: plug-ins/file-jpeg/jpeg.c:243
+msgid "4:2:2 (chroma halved horizontally)"
+msgstr "4:2:2 (цветността е намалена хоризонтално наполовина)"
+
+#: plug-ins/file-jpeg/jpeg.c:244
+msgid "4:4:0 (chroma halved vertically)"
+msgstr "4:4:0 (цветността е намалена вертикално наполовина)"
+
+#: plug-ins/file-jpeg/jpeg.c:245
+msgid "4:2:0 (chroma quartered)"
+msgstr "4:2:0 (цветността е намалена на четвърт)"
+
+#: plug-ins/file-jpeg/jpeg.c:250
+msgid "Baseline"
+msgstr "Основен"
+
+#: plug-ins/file-jpeg/jpeg.c:251
+msgid ""
+"Force creation of a baseline JPEG (non-baseline JPEGs can't be read by all "
+"decoders)"
+msgstr ""
+"Създаване на основен JPEG (някои декодери не се справят с по-сложните видове)"
+
+#: plug-ins/file-jpeg/jpeg.c:257
+msgid "Inter_val (MCU rows):"
+msgstr "_Интервал (редове за MCU):"
+
+#: plug-ins/file-jpeg/jpeg.c:258
+msgid "Interval of restart markers (in MCU rows, 0 = no restart markers)"
+msgstr ""
+"Интервал на маркерите за рестартиране (в редове за MCU, 0 = без маркери за "
+"рестартиране)"
+
+#: plug-ins/file-jpeg/jpeg.c:264
+msgid "_DCT method"
+msgstr "Метод на DCT"
+
+#: plug-ins/file-jpeg/jpeg.c:265
+msgid "DCT method to use"
+msgstr "Кой метод за DCT да се ползва"
+
+#: plug-ins/file-jpeg/jpeg.c:266
+msgid "Fast Integer"
+msgstr "Бърз целочислен"
+
+#: plug-ins/file-jpeg/jpeg.c:267
+msgid "Integer"
+msgstr "Целочислен"
+
+#: plug-ins/file-jpeg/jpeg.c:268
+msgid "Floating-Point"
+msgstr "Плаваща запетая"
+
+#: plug-ins/file-jpeg/jpeg.c:275
+msgid "_Use quality settings from original image"
+msgstr "Използване на настройките за _качество от първоначалното изображение"
+
+#: plug-ins/file-jpeg/jpeg.c:276
+msgid ""
+"If the original image was loaded from a JPEG file using non-standard quality "
+"settings (quantization tables), enable this option to get almost the same "
+"quality and file size."
+msgstr ""
+"Ако първоначалното изображение е заредено от JPEG с нестандартни настройки "
+"за качество (таблици за квантуване), включете тази настройка, за да получите "
+"почти същото качество и размер на файла."
+
+#: plug-ins/file-jpeg/jpeg.c:298
+msgid "Sho_w preview in image window"
+msgstr "Показване на _предварителен преглед в прозореца на изображението"
+
+#: plug-ins/file-jpeg/jpeg.c:299
+msgid "Creates a temporary layer with an export preview"
+msgstr "Създаване на временен слой с преглед на изнесеното изображение"
+
+#: plug-ins/file-jpeg/jpeg.c:303
+msgid "Use _arithmetic coding"
+msgstr "Използване на _аритметично кодиране"
+
+#: plug-ins/file-jpeg/jpeg.c:304
+msgid "Older software may have trouble opening arithmetic-coded images"
+msgstr ""
+"По-старите програми може да имат проблеми при отваряне на аритметично "
+"кодирани изображения"
+
+#: plug-ins/file-jpeg/jpeg.c:309
+msgid "Use restart mar_kers"
+msgstr "_Маркери за рестартиране"
+
+#: plug-ins/file-psd/psd-export.c:502
+msgid "Error: Can't convert GIMP base imagetype to PSD mode"
+msgstr "ГРЕШКА: базовото изображение на GIMP не може да се преобразува в PSD"
+
+#: plug-ins/file-psd/psd-export.c:2159
+#, c-format
+msgid ""
+"Unable to export '%s'.  The PSD file format does not support images that are "
+"more than 30,000 pixels wide or tall."
+msgstr ""
+"„%s“ не може да се изнесе. Файловият формат PSD не поддържа изображения, "
+"които са над 30 000 пиксела на височина или ширина."
+
+#: plug-ins/file-psd/psd-export.c:2200
+#, c-format
+msgid ""
+"Unable to export '%s'.  The PSD file format does not support images with "
+"layers that are more than 30,000 pixels wide or tall."
+msgstr ""
+"„%s“ не може да се изнесе. Файловият формат PSD не поддържа изображения, "
+"които са със слоеве над 30 000 пиксела на височина или ширина."
+
+#: plug-ins/file-psd/psd-export.c:2453
+msgid "Export Image as PSD"
+msgstr "Изнасяне на изображение във формат PSD"
+
+#: plug-ins/file-psd/psd-export.c:2500
+msgid ""
+"Duotone color space information from the original\n"
+"imported image will be used."
+msgstr ""
+"Ще се ползва информацията за двуцветното цветово пространство\n"
+"от първоначално внесеното изображение."
+
+#: plug-ins/file-psd/psd-export.c:2569
+msgid ""
+"PSD files can store up to 998 paths. \n"
+"The rest will be discarded."
+msgstr ""
+"Изображенията във формат PSD може да съдържат до 998 пътеки. \n"
+"Другите ще бъдат пропуснати."
+
+#: plug-ins/file-psd/psd-export.c:2679
+msgid "Indexed Image Warning"
+msgstr "Предупреждение за индексирано изображение"
+
+#: plug-ins/file-psd/psd-export.c:2680
+msgid ""
+"Photoshop does not support indexed images that have more than one layer. "
+"Layers will be merged on export."
+msgstr ""
+"Photoshop не поддържа индексирани изображения с повече от един слой. При "
+"изнасяне слоевете ще се слеят."
+
+#: plug-ins/file-psd/psd-export.c:2701 plug-ins/file-psd/psd-load.c:3856
+msgid "Compatibility Notice"
+msgstr "Съобщение за съвместимост"
+
+#: plug-ins/file-psd/psd-export.c:2702
+msgid ""
+"Legacy layer modes have better compatibility with Photoshop, but do not "
+"support Clip to Backdrop, which is needed for using Photoshop's 'Blend "
+"Clipped Layers as Group'. If you encounter display issues, consider "
+"switching to those layer modes."
+msgstr ""
+"Остарелите режими на слоевете са с по-добра съвместимост с Photoshop, но не "
+"поддържат срязването до дъно, което е необходимо, за да се ползва "
+"възможността на Photoshop за смесване на срязаните слоеве като група. Ако се "
+"появят проблеми при визуализация, пробвайте да ползвате някой от тях."
+
+#: plug-ins/file-psd/psd-load.c:312 plug-ins/file-psd/psd-thumb-load.c:138
+#, c-format
+msgid "Error loading PSD file: %s"
+msgstr "Грешка при зареждане на файл във формат PSD: %s"
+
+#: plug-ins/file-psd/psd-load.c:464
+#, c-format
+msgid "Invalid PSD metadata layer format"
+msgstr "Неправилен формат на слоя с метаданни на PSD"
+
+#: plug-ins/file-psd/psd-load.c:543
+#, c-format
+msgid "Not a valid Photoshop document file"
+msgstr "Не е файл на Photoshop"
+
+#: plug-ins/file-psd/psd-load.c:550
+#, c-format
+msgid "Unsupported file format version: %d"
+msgstr "Неподдържана версия на файловия формат: %d"
+
+#: plug-ins/file-psd/psd-load.c:557
+#, c-format
+msgid "Too many channels in file: %d"
+msgstr "Прекалено много канали във във файл: %d"
+
+#: plug-ins/file-psd/psd-load.c:581
+#, c-format
+msgid "Unsupported or invalid image size: %dx%d"
+msgstr "Неподдържан или грешен размер на изображение: %d×%d"
+
+#: plug-ins/file-psd/psd-load.c:596 plug-ins/file-psd/psd-load.c:607
+#, c-format
+msgid "Unsupported color mode: %s"
+msgstr "Неподдържан режим на цвета: %s"
+
+#: plug-ins/file-psd/psd-load.c:634
+#, c-format
+msgid "Unsupported bit depth: %d"
+msgstr "Неподдържана дълбочина на цвета: %d"
+
+#: plug-ins/file-psd/psd-load.c:668 plug-ins/file-psd/psd-load.c:678
+#: plug-ins/file-psd/psd-load.c:917 plug-ins/file-psd/psd-load.c:1278
+#, c-format
+msgid "The file is corrupt!"
+msgstr "Повреден файл!"
+
+#: plug-ins/file-psd/psd-load.c:846
+#, c-format
+msgid "Too many channels in layer: %d"
+msgstr "Прекалено много канали в слой: %d"
+
+#: plug-ins/file-psd/psd-load.c:953
+#, c-format
+msgid "Unsupported or invalid layer height: %d"
+msgstr "Неподдържана или грешна височина на слой: %d"
+
+#: plug-ins/file-psd/psd-load.c:962
+#, c-format
+msgid "Unsupported or invalid layer width: %d"
+msgstr "Неподдържана или грешна широчина на слой: %d"
+
+#: plug-ins/file-psd/psd-load.c:972
+#, c-format
+msgid "Unsupported or invalid layer size: %dx%d"
+msgstr "Неподдържан или грешен размер на слой: %d×%d"
+
+#: plug-ins/file-psd/psd-load.c:997
+#, c-format
+msgid "Unsupported or invalid mask info size."
+msgstr "Неподдържан или грешен размер на информация на маската."
+
+#: plug-ins/file-psd/psd-load.c:1180
+#, c-format
+msgid "Unsupported or invalid layer mask height: %d"
+msgstr "Неподдържана или грешна височина на маската на слой: %d"
+
+#: plug-ins/file-psd/psd-load.c:1189
+#, c-format
+msgid "Unsupported or invalid layer mask width: %d"
+msgstr "Неподдържана или грешна широчина на маската на слой: %d"
+
+#: plug-ins/file-psd/psd-load.c:1199
+#, c-format
+msgid "Unsupported or invalid layer mask size: %dx%d"
+msgstr "Неподдържан или грешен размер на маската на слой: %d×%d"
+
+#: plug-ins/file-psd/psd-load.c:2220 plug-ins/file-psd/psd-load.c:2967
+#, c-format
+msgid "Unsupported compression mode: %d"
+msgstr "Неподдържан режим на компресия: %d"
+
+#: plug-ins/file-psd/psd-load.c:3160
+msgid "Extra"
+msgstr "Допълнителни"
+
+#: plug-ins/file-psd/psd-load.c:3383
+#, c-format
+msgid "Unsupported or invalid channel size"
+msgstr "Неподдържан или грешeн размер на канал"
+
+#: plug-ins/file-psd/psd-load.c:3452
+#, c-format
+msgid "Failed to decompress data"
+msgstr "Данните не може да се декомпресират"
+
+#: plug-ins/file-psd/psd-load.c:3833
+msgid "Duotone Import"
+msgstr "Внасяне на двуцветно изображение"
+
+#: plug-ins/file-psd/psd-load.c:3834
+msgid ""
+"Image will be imported as Grayscale.\n"
+"Duotone color space data has been saved\n"
+"and can be reapplied on export."
+msgstr ""
+"Изображението ще се внесе като степени на сивото.\n"
+"Данните за двуцветното цветово пространство са запазени\n"
+"и може да се приложат наново при изнасяне."
+
+#: plug-ins/file-psd/psd-load.c:3857
+msgid ""
+"This PSD file contains features that\n"
+"are not yet fully supported in GIMP:"
+msgstr ""
+"Този файл във формат PSD използва възможности,\n"
+"които все още не се поддържат напълно в GIMP:"
+
+#: plug-ins/file-psd/psd-util.c:176
+#, c-format
+msgid "Error reading data. Most likely unexpected end of file."
+msgstr ""
+"Грешка при четене на данни. Най-вероятно е поради неочакван край на файла."
+
+#: plug-ins/file-psd/psd-util.c:199
+#, c-format
+msgid "Unexpected end of file"
+msgstr "Неочакван край на файл"
+
+#: plug-ins/file-psd/psd.c:135 plug-ins/file-psd/psd.c:215
+msgid "Photoshop image"
+msgstr "Изображение Photoshop"
+
+#: plug-ins/file-psd/psd.c:138 plug-ins/file-psd/psd.c:167
+msgid "Loads images from the Photoshop PSD and PSB file formats"
+msgstr "Зареждане на изображения във форматите Photoshop PSD и PSB "
+
+#: plug-ins/file-psd/psd.c:140
+msgid ""
+"This plug-in loads images in Adobe Photoshop (TM) native PSD and PSB format."
+msgstr ""
+"Тази приставка зарежда изображения във форматите на Adobe Photoshop™ PSD и "
+"PSB."
+
+#: plug-ins/file-psd/psd.c:164
+msgid "Photoshop image (merged)"
+msgstr "Изображение на Photoshop (слято)"
+
+#: plug-ins/file-psd/psd.c:169
+msgid ""
+"This plug-in loads the merged image data in Adobe Photoshop (TM) native PSD "
+"and PSB format."
+msgstr ""
+"Тази приставка зарежда слетите данни на изображения във форматите на Adobe "
+"Photoshop™ PSD и PSB."
+
+#: plug-ins/file-psd/psd.c:196
+msgid "Loads thumbnails from the Photoshop PSD file format"
+msgstr "Зареждане на миниатюри във форма̀та Photoshop PSD"
+
+#: plug-ins/file-psd/psd.c:198
+msgid ""
+"This plug-in loads thumbnail images from Adobe Photoshop (TM) native PSD "
+"format files."
+msgstr ""
+"Тази приставка зарежда миниатюри във форматите на Adobe Photoshop™ PSD и PSB."
+
+#: plug-ins/file-psd/psd.c:218
+msgid "Saves files in the Photoshop (TM) PSD file format"
+msgstr "Запазва на изображения във формат Adobe Photoshop™ PSD"
+
+#: plug-ins/file-psd/psd.c:220
+msgid ""
+"This filter saves files of Adobe Photoshop (TM) native PSD format. These "
+"files may be of any image type supported by GIMP, with or without layers, "
+"layer masks, aux channels and guides."
+msgstr ""
+"Този филтър запазва изображения във формат Adobe Photoshop™ PSD. Може да "
+"правите това с всички видове изображения поддържани от GIMP — с или без "
+"слоеве, маски, допълнителни канари и водачи."
+
+#: plug-ins/file-psd/psd.c:247
+msgid "Assign a Clipping _Path"
+msgstr "_Задаване на пътека за срязване"
+
+#: plug-ins/file-psd/psd.c:248
+msgid "Select a path to be the clipping path"
+msgstr "Избор на пътека за срязване"
+
+#: plug-ins/file-psd/psd.c:254
+msgid "Clipping Path _Name"
+msgstr "_Име на пътека за срязване"
+
+#: plug-ins/file-psd/psd.c:255
+msgid ""
+"Clipping path name\n"
+"(ignored if no clipping path)"
+msgstr ""
+"Име на пътека за срязване\n"
+"(прескача се, ако няма такава пътека)"
+
+#: plug-ins/file-psd/psd.c:261
+msgid "Path _Flatness"
+msgstr "_Гладкост на пътека"
+
+#: plug-ins/file-psd/psd.c:262
+msgid ""
+"Clipping path flatness in device pixels\n"
+"(ignored if no clipping path)"
+msgstr ""
+"Гладкост на пътеката за срязване в пиксели на устройството\n"
+"(прескача се, ако няма такава пътека)"
+
+#: plug-ins/file-psd/psd.c:268
+msgid "Export as _CMYK"
+msgstr "Изнасяне като _CMYK"
+
+#: plug-ins/file-psd/psd.c:269
+msgid "Export a CMYK PSD image using the soft-proofing color profile"
+msgstr ""
+"Изнасяне на изображение във формат PSD като CMYK като се ползва цветовия "
+"профил на коректурата"
+
+#: plug-ins/file-psd/psd.c:274
+msgid "Export as _Duotone"
+msgstr "Изнасяне като _двуцветно изображение"
+
+#: plug-ins/file-psd/psd.c:275
+msgid ""
+"Export as a Duotone PSD file if Duotone color space information was attached "
+"to the image when originally imported."
+msgstr ""
+"Изнасяне като двуцветен файл във формат PSD, ако е добавено такова цветово "
+"пространство при първоначалното внасяне на изображението."
+
+#: plug-ins/file-psd/psd.c:373
+msgid "Import PSD"
+msgstr "Внасяне на PSD"
+
+#: plug-ins/file-psd/psd.c:524
+msgid "Import PSD metadata"
+msgstr "Внасяне на метаданни от PSD"
+
+#: plug-ins/file-psd/psd.c:528
+msgid ""
+"Metadata fill layers are not supported and will show up as empty layers."
+msgstr ""
+"Файловете със запълване от метаданните не се поддържат и ще се визуализират "
+"като празни слоеве."
+
+#: plug-ins/file-raw/file-darktable.c:280
+msgid "Load thumbnail from a raw image via darktable"
+msgstr "Зареждане на миниатюра от необработван файл чрез darktable"
+
+#: plug-ins/file-raw/file-darktable.c:282
+msgid ""
+"This plug-in loads a thumbnail from a raw image by calling darktable-cli."
+msgstr ""
+"Тази приставка зарежда миниатюра от необработвано изображение чрез "
+"програмата darktable-cli."
+
+#: plug-ins/file-raw/file-raw-formats.h:46
+msgid "Raw Canon"
+msgstr "Необработвано, Canon"
+
+#: plug-ins/file-raw/file-raw-formats.h:59
+msgid "Raw Nikon"
+msgstr "Необработвано, Nikon"
+
+#: plug-ins/file-raw/file-raw-formats.h:70
+msgid "Raw Hasselblad"
+msgstr "Необработвано, Hasselblad"
+
+#: plug-ins/file-raw/file-raw-formats.h:81
+msgid "Raw Sony"
+msgstr "Необработвано, Sony"
+
+#: plug-ins/file-raw/file-raw-formats.h:92
+msgid "Raw Casio BAY"
+msgstr "Необработвано, Casio BAY"
+
+#: plug-ins/file-raw/file-raw-formats.h:103
+msgid "Raw Phantom Software CINE"
+msgstr "Необработвано, Phantom Software CINE"
+
+#: plug-ins/file-raw/file-raw-formats.h:114
+msgid "Raw Sinar"
+msgstr "Необработвано, Sinar"
+
+#: plug-ins/file-raw/file-raw-formats.h:125
+msgid "Raw Kodak"
+msgstr "Необработвано, Kodak"
+
+#: plug-ins/file-raw/file-raw-formats.h:136
+msgid "Raw Adobe DNG Digital Negative"
+msgstr "Необработвано, цифров негатив Adobe DNG"
+
+#: plug-ins/file-raw/file-raw-formats.h:147
+msgid "Raw Epson ERF"
+msgstr "Необработвано, Epson ERF"
+
+#: plug-ins/file-raw/file-raw-formats.h:158
+msgid "Raw Phase One"
+msgstr "Необработвано, Phase One"
+
+#: plug-ins/file-raw/file-raw-formats.h:169
+msgid "Raw Minolta"
+msgstr "Необработвано, Minolta"
+
+#: plug-ins/file-raw/file-raw-formats.h:180
+msgid "Raw Mamiya MEF"
+msgstr "Необработвано, Mamiya MEF"
+
+#: plug-ins/file-raw/file-raw-formats.h:190
+msgid "Raw Leaf MOS"
+msgstr "Необработвано, Leaf MOS"
+
+#: plug-ins/file-raw/file-raw-formats.h:201
+msgid "Raw Olympus ORF"
+msgstr "Необработвано, Olympus ORF"
+
+#: plug-ins/file-raw/file-raw-formats.h:212
+msgid "Raw Pentax PEF"
+msgstr "Необработвано, Pentax PEF"
+
+#: plug-ins/file-raw/file-raw-formats.h:223
+msgid "Raw Logitech PXN"
+msgstr "Необработвано, Logitech PXN"
+
+#: plug-ins/file-raw/file-raw-formats.h:234
+msgid "Raw Apple QuickTake QTK"
+msgstr "Необработвано, Apple QuickTake QTK"
+
+#: plug-ins/file-raw/file-raw-formats.h:245
+msgid "Raw Fujifilm RAF"
+msgstr "Необработвано, Fujifilm RAF"
+
+#: plug-ins/file-raw/file-raw-formats.h:256
+msgid "Raw Panasonic"
+msgstr "Необработвано, Panasonic"
+
+#: plug-ins/file-raw/file-raw-formats.h:267
+msgid "Raw Digital Foto Maker RDC"
+msgstr "Необработвано, Digital Foto Maker RDC"
+
+#: plug-ins/file-raw/file-raw-formats.h:278
+msgid "Raw Leica RWL"
+msgstr "Необработвано, Raw Leica RWL"
+
+#: plug-ins/file-raw/file-raw-formats.h:289
+msgid "Raw Samsung SRW"
+msgstr "Необработвано, Samsung SRW"
+
+#: plug-ins/file-raw/file-raw-formats.h:300
+msgid "Raw Sigma X3F"
+msgstr "Необработвано, Sigma X3F"
+
+#: plug-ins/file-raw/file-raw-formats.h:311
+msgid "Raw Arriflex ARI"
+msgstr "Необработвано, Arriflex ARI"
+
+#: plug-ins/file-raw/file-raw-placeholder.c:176
+#, c-format
+msgid ""
+"There is no RAW loader installed to open '%s' files.\n"
+"\n"
+"GIMP currently supports these RAW loaders:\n"
+"- darktable (http://www.darktable.org/), at least 1.7\n"
+"- RawTherapee (http://rawtherapee.com/), at least 5.2\n"
+"\n"
+"Please install one of them in order to load RAW files."
+msgstr ""
+"Липсва програма за зареждане на необработвани изображения „%s“.\n"
+"\n"
+"В момента GIMP поддържа следните програми:\n"
+" ⁃ darktable (http://www.darktable.org/), версия поне 1.7\n"
+" ⁃ RawTherapee (http://rawtherapee.com/), версия поне 5.2\n"
+"\n"
+"Инсталирайте поне една от тях, за да зареждате необработвани файлове."
+
+#: plug-ins/file-sgi/sgi.c:146 plug-ins/file-sgi/sgi.c:173
+msgid "Silicon Graphics IRIS image"
+msgstr "Изображение Silicon Graphics IRIS"
+
+#: plug-ins/file-sgi/sgi.c:149
+msgid "Loads files in SGI image file format"
+msgstr "Зарежда изображения във формат SGI"
+
+#: plug-ins/file-sgi/sgi.c:150
+msgid "This plug-in loads SGI image files."
+msgstr "Тази приставка зарежда изображения във формат SGI."
+
+#: plug-ins/file-sgi/sgi.c:179
+msgid "Exports files in SGI image file format"
+msgstr "Изнася изображения във формат SGI"
+
+#: plug-ins/file-sgi/sgi.c:180
+msgid "This plug-in exports SGI image files."
+msgstr "Тази приставка изнася изображения във формат SGI."
+
+#: plug-ins/file-sgi/sgi.c:200
+msgid "Compression _type"
+msgstr "_Вид на компресията"
+
+#: plug-ins/file-sgi/sgi.c:201
+msgid "Compression level"
+msgstr "Ниво на компресия"
+
+#: plug-ins/file-sgi/sgi.c:202
+msgid "No compression"
+msgstr "Без компресия"
+
+#: plug-ins/file-sgi/sgi.c:203
+msgid "RLE compression"
+msgstr "Компресия с кодиране по дължина (RLE)"
+
+#: plug-ins/file-sgi/sgi.c:204
+msgid "Aggressive RLE (not supported by SGI)"
+msgstr "Агресивно кодиране RLE (не се поддържа от  SGI)"
+
+#: plug-ins/file-sgi/sgi.c:323
+#, c-format
+msgid "Could not open '%s' for reading."
+msgstr "Не може да бъде отворен „%s“ за визуализиране."
+
+#: plug-ins/file-sgi/sgi.c:339
+#, c-format
+msgid "Invalid width: %hu"
+msgstr "Неправилна широчина: %hu"
+
+#: plug-ins/file-sgi/sgi.c:347
+#, c-format
+msgid "Invalid height: %hu"
+msgstr "Неправилна височина: %hu"
+
+#: plug-ins/file-sgi/sgi.c:355
+#, c-format
+msgid "Invalid number of channels: %hu"
+msgstr "Грешен брой канали: %hu"
+
+#: plug-ins/file-sgi/sgi.c:640
+#, c-format
+msgid "Could not open '%s' for writing."
+msgstr "„%s“ не може да бъде отворен за запис."
+
+#: plug-ins/file-tiff/file-tiff.c:164 plug-ins/file-tiff/file-tiff.c:210
+msgid "TIFF or BigTIFF image"
+msgstr "Изображение TIFF или BigTIFF"
+
+#: plug-ins/file-tiff/file-tiff.c:167
+msgid "Loads files of the TIFF and BigTIFF file formats"
+msgstr "Зареждане на изображения във формати TIFF и BigTIFF"
+
+#: plug-ins/file-tiff/file-tiff.c:168
+msgid ""
+"Loads files of the Tag Image File Format (TIFF) and its 64-bit offsets "
+"variant (BigTIFF)"
+msgstr ""
+"Зареждане на файлове във формат TIFF и варианта му с 64-битови отмествания "
+"(BigTIFF)"
+
+#: plug-ins/file-tiff/file-tiff.c:199
+msgid "_Keep empty space around imported layers"
+msgstr "Запазване на _празното пространство около внесените слоеве"
+
+#: plug-ins/file-tiff/file-tiff.c:213
+msgid "Exports files in the TIFF or BigTIFF file formats"
+msgstr "Изнасяне на изображения във формати TIFF и BigTIFF"
+
+#: plug-ins/file-tiff/file-tiff.c:214
+msgid ""
+"Exports files in the Tag Image File Format (TIFF) or its 64-bit offsets "
+"variant (BigTIFF) able to support much bigger file sizes"
+msgstr ""
+"Изнасяне на файлове във формат TIFF и варианта му с 64-битови отмествания "
+"(BigTIFF), който поддържа много по-големи размери на файл"
+
+#: plug-ins/file-tiff/file-tiff.c:226
+msgid "TIFF"
+msgstr "TIFF"
+
+#: plug-ins/file-tiff/file-tiff.c:238
+msgid "Export in _BigTIFF variant file format"
+msgstr "Изнасяне във _варианта BigTIFF"
+
+#: plug-ins/file-tiff/file-tiff.c:239
+msgid ""
+"The BigTIFF variant file format uses 64-bit offsets, hence supporting over "
+"4GiB files and bigger"
+msgstr ""
+"Вариантът BigTIFF използва 64-битови отмествания и така поддържа файлове над "
+"4GiB"
+
+#: plug-ins/file-tiff/file-tiff.c:245
+msgid "Co_mpression"
+msgstr "_Компресия"
+
+#: plug-ins/file-tiff/file-tiff.c:246
+msgid "Compression type"
+msgstr "Вид на компресията"
+
+#: plug-ins/file-tiff/file-tiff.c:248
+msgid "LZW"
+msgstr "LZW"
+
+#: plug-ins/file-tiff/file-tiff.c:249
+msgid "Pack Bits"
+msgstr "Пакетирани битове"
+
+#: plug-ins/file-tiff/file-tiff.c:250
+msgid "Deflate"
+msgstr "Deflate"
+
+#: plug-ins/file-tiff/file-tiff.c:252
+msgid "CCITT Group 3 fax"
+msgstr "Факс CCITT Group 3"
+
+#: plug-ins/file-tiff/file-tiff.c:253
+msgid "CCITT Group 4 fax"
+msgstr "Факс CCITT Group 4"
+
+#: plug-ins/file-tiff/file-tiff.c:259
+msgid ""
+"Keep the color data masked by an alpha channel intact (do not store "
+"premultiplied components)"
+msgstr ""
+"Запазване на цветовите данни маскирани с канал за прозрачност (без запазване "
+"на предварително приложена прозрачност на компонентите)"
+
+#: plug-ins/file-tiff/file-tiff.c:266
+msgid "Create a CMYK TIFF image using the soft-proofing color profile"
+msgstr ""
+"Създаване на изображение TIFF в CMYK чрез цветовия профил на коректурата"
+
+#: plug-ins/file-tiff/file-tiff.c:271
+msgid "Save La_yers"
+msgstr "Запазване на _слоевете"
+
+#: plug-ins/file-tiff/file-tiff.c:272
+msgid "Save Layers"
+msgstr "Запазване на слоевете"
+
+#: plug-ins/file-tiff/file-tiff.c:277
+msgid "Crop L_ayers"
+msgstr "_Отрязване на слоевете"
+
+#: plug-ins/file-tiff/file-tiff.c:278
+msgid "Crop Layers"
+msgstr "Отрязване на слоевете"
+
+#: plug-ins/file-tiff/file-tiff.c:283
+msgid "Save _GeoTIFF data"
+msgstr "Запазване на _данните за GeoTIFF"
+
+#: plug-ins/file-tiff/file-tiff.c:284
+msgid "Save GeoTIFF data"
+msgstr "Запазване на данните за GeoTIFF"
+
+#: plug-ins/file-tiff/file-tiff.c:423
+#, c-format
+msgid "\"Save layers\" option not set while trying to export multiple layers."
+msgstr ""
+"Опцията „Запазване на слоевете“ не е приложена при изнасянето на множество "
+"слоеве."
+
+#: plug-ins/file-tiff/file-tiff-export.c:651
+msgid ""
+"Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
+"Group 3\"."
+msgstr ""
+"Само монохромни изображения може да се компресират като „CCITT Group 4“ или "
+"„CCITT Group 3“."
+
+#: plug-ins/file-tiff/file-tiff-export.c:665
+msgid "Indexed pictures cannot be compressed with \"JPEG\"."
+msgstr "Индексираните изображения не може да се компресират като „JPEG“."
+
+#: plug-ins/file-tiff/file-tiff-export.c:724
+msgid ""
+"The TIFF format only supports comments in\n"
+"7bit ASCII encoding. No comment is saved."
+msgstr ""
+"Форматът TIFF поддържа само коментари в\n"
+"7-битово ASCII кодиране. Не са запазени коментари."
+
+#: plug-ins/file-tiff/file-tiff-export.c:866
+#, c-format
+msgid "Failed a scanline write on row %d"
+msgstr "Неуспешно изчитане на ред при ред %d"
+
+#: plug-ins/file-tiff/file-tiff-export.c:1201
+#, c-format
+msgid "Writing pages with different bit depth is strange."
+msgstr "Неочакван запис на страници с различна дълбочина на цвета."
+
+#: plug-ins/file-tiff/file-tiff-export.c:1276
+msgid ""
+"Warning: maximum TIFF file size exceeded. Retry as BigTIFF or with a "
+"different compression algorithm, or cancel."
+msgstr ""
+"ПРЕДУПРЕЖДЕНИЕ: надхвърлен е максималният размер на файл TIFF. Пробвайте да "
+"изнесете като BigTIFF или ползвайте друг алгоритъм на компресия."
+
+#: plug-ins/file-tiff/file-tiff-export.c:1335
+#, c-format
+msgid ""
+"The assigned soft-proofing profile is not a CMYK profile.\n"
+"This profile will not be included in the exported image."
+msgstr ""
+"Зададеният цветови профил на коректура на CMYK.\n"
+"Този профил няма да се включи в изнесеното изображение."
+
+#: plug-ins/file-tiff/file-tiff-load.c:307
+#, c-format
+msgid "Not a TIFF image or image is corrupt."
+msgstr "Това изображение не е TIFF или е повредено."
+
+#: plug-ins/file-tiff/file-tiff-load.c:334
+#, c-format
+msgid "TIFF '%s' does not contain any directories"
+msgstr "TIFF „%s“ не съдържа директории"
+
+#: plug-ins/file-tiff/file-tiff-load.c:341
+#, c-format
+msgid ""
+"TIFF '%s' directory count by header failed though there seems to be %d page. "
+"Attempting to load the file with this assumption."
+msgid_plural ""
+"TIFF '%s' directory count by header failed though there seem to be %d pages. "
+"Attempting to load the file with this assumption."
+msgstr[0] ""
+"Броят на директориите според заглавните части на файла TIFF „%s“ не може да "
+"се определи, но изглежда има %d страница. Пробва се зареждане на файла с "
+"това допускане."
+msgstr[1] ""
+"Броят на директориите според заглавните части на файла TIFF „%s“ не може да "
+"се определи, но изглежда има %d страници. Пробва се зареждане на файла с "
+"това допускане."
+
+#: plug-ins/file-tiff/file-tiff-load.c:472
+msgid "Extra channels with unspecified data."
+msgstr "Допълнителни канали с неуказани данни."
+
+#. ExtraSamples field not set, yet we have more channels than
+#. * the PhotometricInterpretation field suggests.
+#. * This should not happen as the spec clearly says "This field
+#. * must be present if there are extra samples". So the files
+#. * can be considered non-conformant.
+#. * Let's ask what to do with the channel.
+#.
+#: plug-ins/file-tiff/file-tiff-load.c:484
+msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
+msgstr ""
+"Несъвместими канали на TIFF: има допълнителни канали, в които липсва полето "
+"„ExtraSamples“."
+
+#: plug-ins/file-tiff/file-tiff-load.c:579
+#, c-format
+msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
+msgstr ""
+"Не може да се прочете страница %d от %d. Изображението може да е повредено.\n"
+
+#: plug-ins/file-tiff/file-tiff-load.c:608
+#, c-format
+msgid ""
+"This image has a linear color profile but it was not set on the first layer. "
+"The layers below layer # %d will be interpreted as non linear."
+msgstr ""
+"Това изображение е с линеен цветови профил, но той не е зададен на първия "
+"слой. Приема се, че слоевете под #%d са нелинейни."
+
+#: plug-ins/file-tiff/file-tiff-load.c:616
+msgid ""
+"This image has multiple color profiles. We will use the first one. If this "
+"leads to incorrect results you should consider loading each layer as a "
+"separate image."
+msgstr ""
+"Това изображение е с множество цветови профили. Ще се приложи само първият. "
+"Ако това доведе до неправилни резултати, пробвайте да заредите всеки слой "
+"като отделно изображение."
+
+#: plug-ins/file-tiff/file-tiff-load.c:628
+#, c-format
+msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
+msgstr ""
+"Подозрителна дълбочина на цвета: %d за страница %d. Изображението може да е "
+"повредено."
+
+#: plug-ins/file-tiff/file-tiff-load.c:702
+#, c-format
+msgid "Unsupported bit depth: %d for page %d."
+msgstr "Неподдържана дълбочина на цвета: %d на страница %d."
+
+#: plug-ins/file-tiff/file-tiff-load.c:717
+#, c-format
+msgid "Could not get image width from '%s'"
+msgstr "Широчината на изображението не може да се получи от „%s“"
+
+#: plug-ins/file-tiff/file-tiff-load.c:725
+#, c-format
+msgid "Could not get image length from '%s'"
+msgstr "Височината на изображението не може да се получи от „%s“"
+
+#: plug-ins/file-tiff/file-tiff-load.c:733
+#, c-format
+msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
+msgstr ""
+"Неправилни размери на изображение (%u×%u) за страница %d. Изображението може "
+"да е повредено."
+
+#: plug-ins/file-tiff/file-tiff-load.c:754
+#, c-format
+msgid ""
+"Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
+"is-white"
+msgstr ""
+"Фотометричните данни не може да се заредят от „%s“. Изображението е "
+"компресирано по CCITT. Приема се, че минималната стойност е бяло"
+
+#: plug-ins/file-tiff/file-tiff-load.c:761
+#, c-format
+msgid "Could not get photometric from '%s'. Assuming min-is-black"
+msgstr ""
+"Фотометричните данни не може да се заредят от „%s“. Приема се, че "
+"минималната стойност е бяло"
+
+#. In non-interactive mode, we assume unassociated alpha if unspecified.
+#. * We don't output messages in interactive mode as the user
+#. * has already the ability to choose through a dialog.
+#: plug-ins/file-tiff/file-tiff-load.c:793
+#, c-format
+msgid ""
+"Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
+msgstr ""
+"Не е дефиниран вид канал за прозрачност за „%s“. Приема се, че прозрачността "
+"не е предварително приложена"
+
+#: plug-ins/file-tiff/file-tiff-load.c:818
+#, c-format
+msgid ""
+"Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
+"not set while extra channels are present. Assuming the first extra channel "
+"is non-premultiplied alpha."
+msgstr ""
+"Изображението „%s“ не спазва спецификацията на TIFF: полето „ExtraSamples“ "
+"не е зададено, а присъстват допълнителни канали. Приема се, че първият "
+"допълнителен канал е неприложена прозрачност."
+
+#: plug-ins/file-tiff/file-tiff-load.c:1107
+#, c-format
+msgid "Invalid or unknown compression %u. Setting compression to none."
+msgstr "Неправилна или непозната компресия %u. Задава се, че няма компресия."
+
+#: plug-ins/file-tiff/file-tiff-load.c:1165
+#, c-format
+msgid "Could not create a new image: %s"
+msgstr "Не може да се създаде ново изображение: %s"
+
+#: plug-ins/file-tiff/file-tiff-load.c:1335
+#, c-format
+msgid "Unknown resolution unit type %d, assuming dpi"
+msgstr ""
+"Непозната мерна единица за разделителна способност %d, задава се точки на "
+"инч (dpi)"
+
+#. no res unit tag
+#. old AppleScan software produces these
+#: plug-ins/file-tiff/file-tiff-load.c:1345
+msgid "Warning: resolution specified without unit type, assuming dpi"
+msgstr ""
+"ПРЕДУПРЕЖДЕНИЕ: зададена е разделителна способност без мерна единица, задава "
+"се точки на инч (dpi)"
+
+#. xres but no yres
+#: plug-ins/file-tiff/file-tiff-load.c:1353
+msgid "Warning: no y resolution info, assuming same as x"
+msgstr ""
+"ПРЕДУПРЕЖДЕНИЕ: липсва информация за разделителната способност по Y. Задава "
+"се същата като за X"
+
+#: plug-ins/file-tiff/file-tiff-load.c:1374
+msgid "Invalid image resolution info, using default"
+msgstr ""
+"Неправилна разделителна способност на изображение. Задава се стандартната"
+
+#: plug-ins/file-tiff/file-tiff-load.c:1436
+#, c-format
+msgid "Could not get colormaps from '%s'"
+msgstr "Цветовата карта не може да се получи от „%s“"
+
+#. Validate number of channels to the same maximum as we use for
+#. * Photoshop. A higher number most likely means a corrupt image
+#. * and can cause GIMP to become unresponsive and/or stuck.
+#. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
+#.
+#: plug-ins/file-tiff/file-tiff-load.c:1526
+#, c-format
+msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
+msgstr "Подозрителен брой допълнителни канали: %d. Вероятно файлът е повреден."
+
+#: plug-ins/file-tiff/file-tiff-load.c:1591
+msgid "TIFF Channel"
+msgstr "Канал TIFF"
+
+#: plug-ins/file-tiff/file-tiff-load.c:1749
+#, c-format
+msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
+msgstr ""
+"Никакви данни не може да се прочетат от файла TIFF „%s“. Вероятно файлът е "
+"повреден."
+
+#: plug-ins/file-tiff/file-tiff-load.c:1785
+#: plug-ins/file-tiff/file-tiff-load.c:1828
+#, c-format
+msgid ""
+"Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
+msgstr ""
+"Грешка при опит за отваряне на временен файл %s „%s“ за зареждане на "
+"метаданните на TIFF: %s"
+
+#: plug-ins/file-tiff/file-tiff-load.c:1908
+#, c-format
+msgid "%s: Unsupported image format, no RGBA loader available"
+msgstr ""
+"%s: неподдържан формат на изображение. Липсва модул за зареждане на RGBA"
+
+#: plug-ins/file-tiff/file-tiff-load.c:2023
+#: plug-ins/file-tiff/file-tiff-load.c:2220
+#, c-format
+msgid "Reading tile failed. Image may be corrupt at line %d."
+msgstr ""
+"Неуспешно прочитане на плочка. Изображението може да е повредено на ред %d."
+
+#. Error reading scanline, stop loading
+#: plug-ins/file-tiff/file-tiff-load.c:2032
+#: plug-ins/file-tiff/file-tiff-load.c:2229
+#, c-format
+msgid "Reading scanline failed. Image may be corrupt at line %d."
+msgstr ""
+"Неуспешно изчитане на ред. Изображението може да е повредено на ред %d."
+
+#: plug-ins/file-tiff/file-tiff-load.c:2783
+msgid "Import from TIFF"
+msgstr "Внасяне от TIFF"
+
+#: plug-ins/file-tiff/file-tiff-load.c:2791
+msgid "_Show reduced images"
+msgstr "Показване на _намалени изображения"
+
+#: plug-ins/file-tiff/file-tiff-load.c:2836
+msgid "Process extra channel as:"
+msgstr "Обработка на допълнителния канал като:"
+
+#: plug-ins/file-tiff/file-tiff-load.c:2839
+msgid "_Non-premultiplied alpha"
+msgstr "_Неприложена прозрачност"
+
+#: plug-ins/file-tiff/file-tiff-load.c:2840
+msgid "Pre_multiplied alpha"
+msgstr "_Приложена прозрачност"
+
+#: plug-ins/file-tiff/file-tiff-load.c:2841
+msgid "Channe_l"
+msgstr "_Канал"
+
+#: plug-ins/file-webp/file-webp.c:128 plug-ins/file-webp/file-webp.c:155
+msgid "WebP image"
+msgstr "Изображение WebP"
+
+#: plug-ins/file-webp/file-webp.c:158 plug-ins/file-webp/file-webp.c:159
+msgid "Saves files in the WebP image format"
+msgstr "Запазване на на изображение във формат WebP"
+
+#: plug-ins/file-webp/file-webp.c:168
+msgid "WebP"
+msgstr "WebP"
+
+#: plug-ins/file-webp/file-webp.c:178
+msgid "Source _type"
+msgstr "_Вид източник"
+
+#: plug-ins/file-webp/file-webp.c:179
+msgid "WebP encoder preset"
+msgstr "Предварително зададени настройки на кодера за WebP"
+
+#: plug-ins/file-webp/file-webp.c:181
+msgid "Picture"
+msgstr "Изображение"
+
+#: plug-ins/file-webp/file-webp.c:182
+msgid "Photo"
+msgstr "Фотография"
+
+#: plug-ins/file-webp/file-webp.c:183
+msgid "Drawing"
+msgstr "Рисунка"
+
+#: plug-ins/file-webp/file-webp.c:184
+msgid "Icon"
+msgstr "Икона"
+
+#: plug-ins/file-webp/file-webp.c:185
+msgid "Text"
+msgstr "Текст"
+
+#: plug-ins/file-webp/file-webp.c:192
+msgid "Use lossless encoding"
+msgstr "Кодиране без загуби"
+
+#: plug-ins/file-webp/file-webp.c:197
+msgid "Image _quality"
+msgstr "_Качество на изображението"
+
+#: plug-ins/file-webp/file-webp.c:198
+msgid "Quality of the image"
+msgstr "Качество на изображението"
+
+#: plug-ins/file-webp/file-webp.c:203
+msgid "Alpha q_uality"
+msgstr "Качество на прозрачността"
+
+#: plug-ins/file-webp/file-webp.c:204
+msgid "Quality of the image's alpha channel"
+msgstr "Качество на канала за прозрачност на изображението"
+
+#: plug-ins/file-webp/file-webp.c:209
+msgid "Use Sharp YU_V"
+msgstr "_Контрастни YUV"
+
+#. TRANSLATORS: \xe2\x86\x92 is a Unicode
+#. * "Rightward Arrow" in UTF-8 encoding.
+#.
+#: plug-ins/file-webp/file-webp.c:213
+msgid "Use sharper (but slower) RGB→YUV conversion"
+msgstr "Използване на по-контрастно (но по-бавно) преобразуване RGB→YUV"
+
+#: plug-ins/file-webp/file-webp.c:218
+msgid "Loop _forever"
+msgstr "_Вечно превъртане"
+
+#: plug-ins/file-webp/file-webp.c:219
+msgid "Loop animation infinitely"
+msgstr "Вечно зацикляне на анимацията"
+
+#: plug-ins/file-webp/file-webp.c:224
+msgid "_Minimize output size (slower)"
+msgstr "_Минимизиране на размера (по-бавно)"
+
+#: plug-ins/file-webp/file-webp.c:225
+msgid "Minimize output file size"
+msgstr "Минимизиране на размера на изходния файл"
+
+#: plug-ins/file-webp/file-webp.c:230
+msgid "Max distance between _key-frames"
+msgstr "Максимален интервал между _ключовите кадри"
+
+#: plug-ins/file-webp/file-webp.c:231
+msgid "Maximum distance between keyframes"
+msgstr "Максимален интервал между ключовите кадри"
+
+#: plug-ins/file-webp/file-webp.c:236
+msgid "_Default delay between frames"
+msgstr "Стандартна пауза между кадрите"
+
+#: plug-ins/file-webp/file-webp.c:237
+msgid ""
+"Default delay (in milliseconds) to use when timestamps for frames are not "
+"available or forced."
+msgstr ""
+"Стандартна пауза [ms] между кадрите, когато времената за кадрите липсват или "
+"се заменят."
+
+#: plug-ins/file-webp/file-webp.c:243
+msgid "Use default dela_y for all frames"
+msgstr "_Използване на стандартното забавяне за всички кадри"
+
+#: plug-ins/file-webp/file-webp.c:244
+msgid "Force default delay on all frames"
+msgstr "Замяна на паузата между кадрите със стандартната"
+
+#: plug-ins/file-webp/file-webp.c:249
+msgid "Save a_nimation"
+msgstr "Запазване на _анимация"
+
+#: plug-ins/file-webp/file-webp.c:250
+msgid "Use layers for animation"
+msgstr "Ползване на слоеве за анимацията"
+
+#: plug-ins/file-webp/file-webp-dialog.c:48
+msgid "(no keyframes)"
+msgstr "(липсват ключови кадри)"
+
+#: plug-ins/file-webp/file-webp-dialog.c:52
+msgid "(all frames are keyframes)"
+msgstr "(всички кадри са ключови)"
+
+#: plug-ins/file-webp/file-webp-export.c:101
+msgid "out of memory"
+msgstr "паметта свърши"
+
+#: plug-ins/file-webp/file-webp-export.c:103
+msgid "not enough memory to flush bits"
+msgstr "няма достатъчно памет за изчистване на битовете"
+
+#: plug-ins/file-webp/file-webp-export.c:105
+msgid "NULL parameter"
+msgstr "Параметър NULL"
+
+#: plug-ins/file-webp/file-webp-export.c:107
+msgid "invalid configuration"
+msgstr "неправилна настройка"
+
+#. TRANSLATORS: widthxheight with UTF-8 encoded multiply sign.
+#: plug-ins/file-webp/file-webp-export.c:110
+#, c-format
+msgid "bad image dimensions (maximum: %d×%d)"
+msgstr "неправилни размери на изображението (максимумът е %d×%d)"
+
+#: plug-ins/file-webp/file-webp-export.c:113
+msgid "partition is bigger than 512K"
+msgstr "дялът е по-голям от 512K"
+
+#: plug-ins/file-webp/file-webp-export.c:115
+msgid "partition is bigger than 16M"
+msgstr "дялът е по-голям от 16M"
+
+#: plug-ins/file-webp/file-webp-export.c:117
+msgid "unable to flush bytes"
+msgstr "неуспешно изчистване на байтовете"
+
+#: plug-ins/file-webp/file-webp-export.c:119
+msgid "file is larger than 4GiB"
+msgstr "файл над 4GiB"
+
+#: plug-ins/file-webp/file-webp-export.c:121
+msgid "user aborted encoding"
+msgstr "потребителят преустанови кодирането"
+
+#: plug-ins/file-webp/file-webp-export.c:123
+msgid "list terminator"
+msgstr "край на списъка"
+
+#: plug-ins/file-webp/file-webp-export.c:125
+msgid "unknown error"
+msgstr "неизвестна грешка"
+
+#: plug-ins/file-webp/file-webp-export.c:209
+#: plug-ins/file-webp/file-webp-export.c:609
+#, c-format
+msgid "Unable to open '%s' for writing: %s"
+msgstr "„%s“ не може да се отвори за запис: %s"
+
+#: plug-ins/file-webp/file-webp-export.c:295
+#, c-format
+msgid "WebP error: '%s'"
+msgstr "Грешка в WebP „%s“"
+
+#: plug-ins/file-webp/file-webp-load.c:106
+#, c-format
+msgid "Invalid WebP file '%s'"
+msgstr "Неправилен файл WebP „%s“"
+
+#: plug-ins/file-webp/file-webp-load.c:195
+#, c-format
+msgid "Failed to decode animated WebP file '%s'"
+msgstr "Анимираният файл WebP „%s“ не може да се декодира"
+
+#: plug-ins/file-webp/file-webp-load.c:203
+#, c-format
+msgid "Failed to decode animated WebP information from '%s'"
+msgstr "Неуспешно декодиране на информацията за анимиран WebP файл „%s“"
+
+#: plug-ins/file-webp/file-webp-load.c:222
+#, c-format
+msgid "Failed to decode animated WebP frame from '%s'"
+msgstr "Неуспешно декодиране на анимиран кадър в WebP файл от „%s“"
+
+#: plug-ins/file-webp/file-webp-load.c:227
+#, c-format
+msgid "Frame %d (%dms)"
+msgstr "Кадър %d (%dms)"
 
 #: extensions/goat-exercises/goat-exercise-c.c:148 plug-ins/common/blinds.c:200
 #: plug-ins/common/border-average.c:198 plug-ins/common/checkerboard.c:174
@@ -80,20 +2799,6 @@ msgstr "Процедурата „%s“ работи само с едно нар
 msgid "_Cancel"
 msgstr "_Отказване"
 
-#: plug-ins/common/align-layers.c:193 plug-ins/common/align-layers.c:215
-#: plug-ins/common/file-ps.c:431 plug-ins/common/file-ps.c:440
-#: plug-ins/file-dds/dds.c:198 plug-ins/file-tiff/file-tiff.c:247
-#: plug-ins/fractal-explorer/fractal-explorer.c:345
-#: plug-ins/fractal-explorer/fractal-explorer.c:355
-#: plug-ins/fractal-explorer/fractal-explorer.c:365
-#: plug-ins/lighting/lighting-main.c:213 plug-ins/lighting/lighting-main.c:336
-#: plug-ins/lighting/lighting-main.c:395 plug-ins/lighting/lighting-main.c:454
-#: plug-ins/lighting/lighting-main.c:513 plug-ins/lighting/lighting-main.c:572
-#: plug-ins/metadata/metadata-tags.c:211 plug-ins/metadata/metadata-tags.c:223
-#: plug-ins/metadata/metadata-tags.c:254
-msgid "None"
-msgstr "Няма"
-
 #: plug-ins/common/blinds.c:165 plug-ins/map-object/map-object-ui.c:440
 msgid "Orient_ation"
 msgstr "О_риентация"
@@ -130,61 +2835,9 @@ msgstr "_Отваряне"
 msgid "_Save"
 msgstr "_Запазване"
 
-#: plug-ins/common/cml-explorer.c:2208 plug-ins/common/curve-bend.c:762
-#: plug-ins/common/file-dicom.c:1541 plug-ins/common/file-farbfeld.c:355
-#: plug-ins/common/file-mng.c:875 plug-ins/common/file-mng.c:1225
-#: plug-ins/common/file-pcx.c:1200 plug-ins/common/file-pdf-export.c:680
-#: plug-ins/common/file-png.c:1491 plug-ins/common/file-raw-data.c:1378
-#: plug-ins/common/file-raw-data.c:1407 plug-ins/common/file-sunras.c:614
-#: plug-ins/common/file-tga.c:1225 plug-ins/common/file-xmc.c:1272
-#: plug-ins/common/sphere-designer.c:2205 plug-ins/file-bmp/bmp-export.c:336
-#: plug-ins/file-fli/fli-gimp.c:798 plug-ins/file-icns/file-icns-export.c:436
-#: plug-ins/file-ico/ico-export.c:1355 plug-ins/file-ico/ico-export.c:1577
-#: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2220
-#: plug-ins/file-tiff/file-tiff-export.c:1087
-#: plug-ins/file-tiff/file-tiff-export.c:1176 plug-ins/flame/flame.c:585
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1414
-#: plug-ins/gfig/gfig.c:895 plug-ins/ifs-compose/ifs-compose.c:2468
-#: plug-ins/lighting/lighting-ui.c:808
-#, c-format
-msgid "Could not open '%s' for writing: %s"
-msgstr "„%s“ не може да се отвори за запис: %s"
-
 #: plug-ins/common/curve-bend.c:438 plug-ins/lighting/lighting-main.c:309
 msgid "_Antialiasing"
 msgstr "За_глаждане"
-
-#: plug-ins/common/curve-bend.c:815 plug-ins/common/file-cel.c:326
-#: plug-ins/common/file-cel.c:378 plug-ins/common/file-dicom.c:360
-#: plug-ins/common/file-farbfeld.c:273 plug-ins/common/file-gif-load.c:416
-#: plug-ins/common/file-iff.c:282 plug-ins/common/file-lnk.c:200
-#: plug-ins/common/file-mng.c:1409 plug-ins/common/file-pcx.c:490
-#: plug-ins/common/file-pcx.c:533 plug-ins/common/file-png.c:639
-#: plug-ins/common/file-ps.c:1159 plug-ins/common/file-ps.c:3739
-#: plug-ins/common/file-psp.c:2620 plug-ins/common/file-psp.c:2670
-#: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:573
-#: plug-ins/common/file-raw-data.c:1710 plug-ins/common/file-sunras.c:435
-#: plug-ins/common/file-svg.c:539 plug-ins/common/file-tga.c:427
-#: plug-ins/common/file-wbmp.c:188 plug-ins/common/file-xbm.c:725
-#: plug-ins/common/file-xmc.c:656 plug-ins/common/file-xmc.c:895
-#: plug-ins/common/file-xwd.c:465 plug-ins/common/sphere-designer.c:2094
-#: plug-ins/file-bmp/bmp-load.c:281 plug-ins/file-dds/ddsread.c:169
-#: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:368
-#: plug-ins/file-fli/fli-gimp.c:439 plug-ins/file-fli/fli-gimp.c:490
-#: plug-ins/file-icns/file-icns-load.c:515
-#: plug-ins/file-icns/file-icns-load.c:567 plug-ins/file-ico/ico-load.c:681
-#: plug-ins/file-ico/ico-load.c:819 plug-ins/file-ico/ico-load.c:1021
-#: plug-ins/file-jpeg/jpeg-load.c:99 plug-ins/file-jpeg/jpeg-load.c:615
-#: plug-ins/file-psd/psd-export.c:2225 plug-ins/file-psd/psd-load.c:189
-#: plug-ins/file-psd/psd-load.c:194 plug-ins/file-psd/psd-thumb-load.c:82
-#: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:539
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1771
-#: plug-ins/fractal-explorer/fractal-explorer.c:1171 plug-ins/gfig/gfig.c:525
-#: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
-#: plug-ins/lighting/lighting-ui.c:952
-#, c-format
-msgid "Could not open '%s' for reading: %s"
-msgstr "„%s“ не може да се отвори за четене: %s"
 
 #: plug-ins/common/file-ps.c:423 plug-ins/common/file-xpm.c:488
 #: plug-ins/gimpressionist/color.c:65 plug-ins/gimpressionist/general.c:179
@@ -203,10 +2856,6 @@ msgstr "Завъртане"
 #: plug-ins/map-object/map-object-main.c:334
 msgid "Create a new image"
 msgstr "Създаване на ново изображение"
-
-#: plug-ins/file-dds/dds.c:287 plug-ins/map-object/map-object-main.c:142
-msgid "Box"
-msgstr "Кутия"
 
 #: plug-ins/flame/flame.c:918 plug-ins/lighting/lighting-main.c:176
 msgid "Linear"
@@ -1045,22 +3694,6 @@ msgstr ""
 msgid "Plug-In Example in JavaScript (GJS)"
 msgstr ""
 
-#: extensions/goat-exercises/goat-exercise-gjs.js:96
-#: extensions/goat-exercises/goat-exercise-lua.lua:73
-#: extensions/goat-exercises/goat-exercise-py3.py:79
-#: plug-ins/common/cml-explorer.c:1373 plug-ins/common/file-heif.c:2287
-#: plug-ins/common/file-pdf-load.c:586 plug-ins/common/grid.c:822
-#: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:260
-#: plug-ins/file-exr/file-exr.c:437 plug-ins/file-psd/psd-load.c:3817
-#: plug-ins/flame/flame.c:823 plug-ins/fractal-explorer/fractal-explorer.c:1403
-#: plug-ins/gimpressionist/orientmap.c:529
-#: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
-#: plug-ins/gradient-flare/gradient-flare.c:3452
-#: plug-ins/ifs-compose/ifs-compose.c:914
-#: plug-ins/imagemap/imap_default_dialog.c:109
-msgid "_OK"
-msgstr "_Добре"
-
 #. GIMP - The GNU Image Manipulation Program
 #. Copyright (C) 1995 Spencer Kimball and Peter Mattis
 #.
@@ -1484,36 +4117,6 @@ msgstr "Добавяне на щори"
 #: plug-ins/common/blinds.c:254
 msgid "Blinds"
 msgstr "Щори"
-
-#.
-#. * Create the "background" layer to hold the image...
-#.
-#: plug-ins/common/blinds.c:260 plug-ins/common/compose.c:1179
-#: plug-ins/common/decompose.c:642 plug-ins/common/file-cel.c:471
-#: plug-ins/common/file-cel.c:476 plug-ins/common/file-dicom.c:728
-#: plug-ins/common/file-farbfeld.c:296 plug-ins/common/file-gegl.c:446
-#: plug-ins/common/file-gif-load.c:1147 plug-ins/common/file-iff.c:408
-#: plug-ins/common/file-jp2-load.c:1272 plug-ins/common/file-pcx.c:710
-#: plug-ins/common/file-pcx.c:718 plug-ins/common/file-pcx.c:726
-#: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:921
-#: plug-ins/common/file-pnm.c:845 plug-ins/common/file-qoi.c:296
-#: plug-ins/common/file-raw-data.c:1873 plug-ins/common/file-sunras.c:1059
-#: plug-ins/common/file-tga.c:1103 plug-ins/common/file-wbmp.c:274
-#: plug-ins/common/file-xbm.c:887 plug-ins/common/film.c:865
-#: plug-ins/common/smooth-palette.c:301 plug-ins/common/tile.c:390
-#: plug-ins/file-bmp/bmp-load.c:799 plug-ins/file-exr/file-exr.c:287
-#: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:673
-#: plug-ins/file-jpeg/jpeg-load.c:231
-#: plug-ins/file-psd/psd-image-res-load.c:1093
-#: plug-ins/file-psd/psd-load.c:2994 plug-ins/file-sgi/sgi.c:456
-#: plug-ins/file-tiff/file-tiff-load.c:1554
-#: plug-ins/file-tiff/file-tiff-load.c:2359
-#: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:559
-#: plug-ins/gfig/gfig-dialog.c:1286 plug-ins/gimpressionist/general.c:147
-#: plug-ins/map-object/map-object-apply.c:241
-#: plug-ins/screenshot/screenshot-win32.c:310 plug-ins/twain/twain.c:630
-msgid "Background"
-msgstr "Фон"
 
 #: plug-ins/common/border-average.c:127
 msgid "_Border Average..."
@@ -3062,12 +5665,6 @@ msgstr "Магента"
 msgid "Yellow"
 msgstr "Жълто"
 
-#: plug-ins/common/decompose.c:214 plug-ins/common/warp.c:268
-#: plug-ins/file-fits/fits.c:203 plug-ins/flame/flame.c:1286
-#: plug-ins/gfig/gfig-dialog.c:1455
-msgid "Black"
-msgstr "Черно"
-
 #: plug-ins/common/decompose.c:220
 msgid "YCbCr470"
 msgstr "YCbCr470"
@@ -3345,10 +5942,6 @@ msgstr ""
 "Тази приставка ползва aalib и запазва изображения в степени на сивото като "
 "текст в различни формати"
 
-#: plug-ins/common/file-aa.c:164 plug-ins/file-dds/dds.c:220
-msgid "_Format"
-msgstr "_Формат:"
-
 #: plug-ins/common/file-aa.c:165
 msgid "File type to use"
 msgstr "Вид на файла"
@@ -3384,47 +5977,6 @@ msgstr "Необходим е файл с палитра за изображен
 #, c-format
 msgid "EOF or error while reading image header"
 msgstr "Неочакван край или грешка при четене на заглавна част на изображение"
-
-#. Read file pointer
-#. File header
-#. KiSS file type
-#. Bits per pixel
-#. Dimensions of image
-#. Layer offsets
-#. Number of colors
-#. Image
-#. Layer
-#. Temporary buffer
-#. Pixel data
-#. Buffer for layer
-#. Counters
-#. Number of items read from file
-#. max. rows allocated
-#. column, highest column ever used
-#.
-#. * Open the file for reading...
-#.
-#: plug-ins/common/file-cel.c:369 plug-ins/common/file-dicom.c:352
-#: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:408
-#: plug-ins/common/file-heif.c:853 plug-ins/common/file-jp2-load.c:1046
-#: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
-#: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
-#: plug-ins/common/file-png.c:631 plug-ins/common/file-pnm.c:688
-#: plug-ins/common/file-ps.c:1149 plug-ins/common/file-raw-data.c:1702
-#: plug-ins/common/file-sunras.c:427 plug-ins/common/file-tga.c:419
-#: plug-ins/common/file-wbmp.c:180 plug-ins/common/file-wmf.c:618
-#: plug-ins/common/file-xbm.c:717 plug-ins/common/file-xmc.c:646
-#: plug-ins/common/file-xpm.c:361 plug-ins/common/file-xwd.c:457
-#: plug-ins/file-bmp/bmp-load.c:270 plug-ins/file-exr/file-exr.c:197
-#: plug-ins/file-faxg3/faxg3.c:244 plug-ins/file-fli/fli-gimp.c:482
-#: plug-ins/file-icns/file-icns-load.c:507 plug-ins/file-ico/ico-load.c:673
-#: plug-ins/file-ico/ico-load.c:811 plug-ins/file-jpeg/jpeg-load.c:90
-#: plug-ins/file-psd/psd-load.c:202 plug-ins/file-raw/file-darktable.c:467
-#: plug-ins/file-raw/file-rawtherapee.c:345 plug-ins/file-sgi/sgi.c:315
-#: plug-ins/file-tiff/file-tiff-load.c:299
-#, c-format
-msgid "Opening '%s'"
-msgstr "Отваряне на „%s“"
 
 #: plug-ins/common/file-cel.c:420
 #, c-format
@@ -3481,27 +6033,6 @@ msgstr "„%s“: неправилен брой цветове: %u"
 #, c-format
 msgid "'%s': EOF or error while reading palette data"
 msgstr "'%s': неочакван край на файл или грешка при четене на данни на палитра"
-
-#. init the progress meter
-#.
-#. * Open the file for writing...
-#.
-#: plug-ins/common/file-cel.c:821 plug-ins/common/file-farbfeld.c:347
-#: plug-ins/common/file-gif-export.c:939 plug-ins/common/file-html-table.c:349
-#: plug-ins/common/file-jpegxl.c:1396 plug-ins/common/file-pcx.c:1083
-#: plug-ins/common/file-pix.c:636 plug-ins/common/file-png.c:1483
-#: plug-ins/common/file-pnm.c:1623 plug-ins/common/file-ps.c:1369
-#: plug-ins/common/file-qoi.c:350 plug-ins/common/file-sunras.c:605
-#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-xbm.c:1026
-#: plug-ins/common/file-xpm.c:682 plug-ins/common/file-xwd.c:693
-#: plug-ins/file-bmp/bmp-export.c:328 plug-ins/file-fits/fits.c:646
-#: plug-ins/file-fli/fli-gimp.c:765 plug-ins/file-icns/file-icns-export.c:621
-#: plug-ins/file-ico/ico-export.c:1347 plug-ins/file-ico/ico-export.c:1561
-#: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2166
-#: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1077
-#, c-format
-msgid "Exporting '%s'"
-msgstr "Изнасяне на „%s“"
 
 #: plug-ins/common/file-csource.c:122
 msgid "C source code"
@@ -3680,12 +6211,6 @@ msgstr ""
 msgid "Cannot save images with alpha channel."
 msgstr "Изображения с канал за прозрачност не може да се запазват."
 
-#: plug-ins/common/file-dicom.c:1525 plug-ins/common/file-ps.c:1364
-#: plug-ins/common/file-xwd.c:688 plug-ins/file-fits/fits.c:641
-#, c-format
-msgid "Cannot operate on unknown image types."
-msgstr "Не работи върху изображения от непознат вид."
-
 #: plug-ins/common/file-farbfeld.c:137 plug-ins/common/file-farbfeld.c:163
 msgid "Farbfeld"
 msgstr "Farbfeld"
@@ -3745,10 +6270,6 @@ msgstr "Четка от GIMP"
 #: plug-ins/common/file-gegl.c:116
 msgid "Radiance RGBE"
 msgstr "Блясък RGBE"
-
-#: plug-ins/common/file-gegl.c:132 plug-ins/file-exr/file-exr.c:111
-msgid "OpenEXR image"
-msgstr "Изображение OpenEXR"
 
 #: plug-ins/common/file-gegl.c:356
 #, c-format
@@ -4255,19 +6776,9 @@ msgstr ""
 "Запазване на изображения формат HEIF — високоефективен файлов формат за "
 "изображения (High Efficiency Image File Format)."
 
-#: plug-ins/common/file-heif.c:262 plug-ins/common/file-heif.c:383
-#: plug-ins/file-jpeg/jpeg.c:210
-msgid "_Quality"
-msgstr "_Качество"
-
 #: plug-ins/common/file-heif.c:263 plug-ins/common/file-heif.c:384
 msgid "Quality factor (0 = worst, 100 = best)"
 msgstr "Коефициент на качеството (0 = най-лошо, 100 = най-добро)"
-
-#: plug-ins/common/file-heif.c:268 plug-ins/common/file-heif.c:389
-#: plug-ins/common/file-jpegxl.c:193 plug-ins/file-webp/file-webp.c:191
-msgid "L_ossless"
-msgstr "_Без загуба на качество"
 
 #: plug-ins/common/file-heif.c:269 plug-ins/common/file-heif.c:390
 #: plug-ins/common/file-jpegxl.c:194
@@ -4804,10 +7315,6 @@ msgid "Store ICC profile to exported JXL file"
 msgstr ""
 "Запазване на цветовия профил във формат ICC към изнесения файл във формат JXL"
 
-#: plug-ins/common/file-jpegxl.c:233 plug-ins/file-tiff/file-tiff.c:265
-msgid "Export as CMY_K"
-msgstr "Изнасяне като CMY_K"
-
 #: plug-ins/common/file-jpegxl.c:234
 msgid "Create a CMYK JPEG XL image using the soft-proofing color profile"
 msgstr ""
@@ -4821,19 +7328,6 @@ msgstr "16 бита/канал"
 #: plug-ins/common/file-jpegxl.c:2038
 msgid "CMYK profile required for export"
 msgstr "За изнасянето е необходим профил по CMYK"
-
-#: plug-ins/common/file-jpegxl.c:2046 plug-ins/file-jpeg/jpeg-export.c:899
-#: plug-ins/file-psd/psd-export.c:2465
-#: plug-ins/file-tiff/file-tiff-export.c:1318
-msgid "Name of the color profile used for CMYK export."
-msgstr "Името на цветовия профил, използван при изнасяне като CMYK."
-
-#: plug-ins/common/file-jpegxl.c:2065 plug-ins/file-jpeg/jpeg-export.c:910
-#: plug-ins/file-psd/psd-export.c:2476
-#: plug-ins/file-tiff/file-tiff-export.c:1330
-#, c-format
-msgid "Profile: %s"
-msgstr "Профил: %s"
 
 #: plug-ins/common/file-lnk.c:210 plug-ins/common/file-lnk.c:225
 #: plug-ins/common/file-lnk.c:234 plug-ins/common/file-lnk.c:247
@@ -5117,18 +7611,6 @@ msgstr "Заглавната част на „%s“ не може да се пр
 msgid "'%s' is not a PCX file"
 msgstr "„%s“ не е файл PCX"
 
-#: plug-ins/common/file-pcx.c:672 plug-ins/common/file-wbmp.c:263
-#: plug-ins/file-bmp/bmp-load.c:598 plug-ins/file-psd/psd-load.c:572
-#, c-format
-msgid "Unsupported or invalid image width: %d"
-msgstr "Неподдържана или грешна широчина на изображението: %d"
-
-#: plug-ins/common/file-pcx.c:679 plug-ins/common/file-wbmp.c:269
-#: plug-ins/file-bmp/bmp-load.c:607 plug-ins/file-psd/psd-load.c:564
-#, c-format
-msgid "Unsupported or invalid image height: %d"
-msgstr "Неподдържана или грешна височина на изображението: %d"
-
 #: plug-ins/common/file-pcx.c:687
 #, c-format
 msgid "Invalid number of bytes per line in PCX header"
@@ -5139,11 +7621,6 @@ msgid "Resolution out of bounds in XCX header, using 72x72"
 msgstr ""
 "Разделителната способност в заглавната част XCX е извън диапазона. Ползва се "
 "72×72"
-
-#: plug-ins/common/file-pcx.c:702 plug-ins/file-bmp/bmp-load.c:790
-#, c-format
-msgid "Image dimensions too large: width %d x height %d"
-msgstr "Прекалено големи размери на изображението: широчина %d × височина %d"
 
 #: plug-ins/common/file-pcx.c:841
 #, c-format
@@ -5343,14 +7820,6 @@ msgstr "Изтриване на избраните страници"
 msgid "Add this image"
 msgstr "Добавяне на изображението"
 
-#: plug-ins/common/file-pdf-export.c:1219
-#: plug-ins/common/file-pdf-export.c:1292
-#: plug-ins/common/file-pdf-export.c:1390 plug-ins/common/file-ps.c:2218
-#: plug-ins/file-tiff/file-tiff-load.c:1556
-#, c-format
-msgid "Page %d"
-msgstr "Страница %d"
-
 #: plug-ins/common/file-pdf-export.c:1259
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr ""
@@ -5524,10 +7993,6 @@ msgstr "Запазване на откъс pHYs (метаданни на PNG)"
 msgid "Write tIME chunk (PNG metadata)"
 msgstr "Запазване на откъс tIME (метаданни на PNG)"
 
-#: plug-ins/common/file-png.c:282 plug-ins/file-tiff/file-tiff.c:258
-msgid "Save color _values from transparent pixels"
-msgstr "Запазване на цветовите _стойности на прозрачните пиксели"
-
 #: plug-ins/common/file-png.c:283
 msgid "Preserve color of completely transparent pixels"
 msgstr "Запазване на цвета на напълно прозрачните пиксели"
@@ -5611,11 +8076,6 @@ msgstr "Грешка при четене на „%s“. Файлът може д
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Непознат цветови модел във файл във формат PNG „%s“."
-
-#: plug-ins/common/file-png.c:886 plug-ins/file-exr/file-exr.c:265
-#, c-format
-msgid "Could not create new image for '%s': %s"
-msgstr "Не може да се създаде ново изображение за „%s“: %s"
 
 #: plug-ins/common/file-png.c:954
 msgid ""
@@ -6937,11 +9397,6 @@ msgstr ""
 "Да се пробва ли презареждане без ограниченията срещу анализа на много големи "
 "данни?"
 
-#: plug-ins/common/file-svg.c:541 plug-ins/file-exr/file-exr.c:358
-#: plug-ins/file-exr/file-exr.c:372
-msgid "Unknown reason"
-msgstr "Неизвестна причина"
-
 #: plug-ins/common/file-svg.c:547
 msgid "Rendering SVG"
 msgstr "Визуализиране на SVG"
@@ -7377,13 +9832,6 @@ msgstr ""
 "Номиналният размер няма нищо общо с реалния размер, а се ползва за "
 "определяне на кои кадри зависят от анимираната последователност указана в "
 "ключа „gtk-cursor-theme-size“."
-
-#. Begin displaying export progress
-#: plug-ins/common/file-xmc.c:1259 plug-ins/file-webp/file-webp-export.c:199
-#: plug-ins/file-webp/file-webp-export.c:599
-#, c-format
-msgid "Saving '%s'"
-msgstr "Запазване на „%s“"
 
 #: plug-ins/common/file-xmc.c:1334
 #, c-format
@@ -9353,11 +11801,6 @@ msgstr "Измятане"
 msgid "Basic Options"
 msgstr "Основни настройки"
 
-#: plug-ins/common/warp.c:448 plug-ins/file-jpeg/jpeg-export.c:951
-#: plug-ins/file-webp/file-webp-dialog.c:98
-msgid "Advanced Options"
-msgstr "Допълнителни настройки"
-
 #: plug-ins/common/warp.c:474
 msgid "More Advanced Options"
 msgstr "Фини настройки"
@@ -9570,2455 +12013,6 @@ msgstr "Изтегляне на уеб страницата „%s“"
 #, c-format
 msgid "Transferring webpage image for '%s'"
 msgstr "Пренасяне на изображение за уеб страница „%s“"
-
-#: plug-ins/file-bmp/bmp-export.c:192 plug-ins/file-bmp/bmp-export.c:225
-#, fuzzy
-msgid "Cannot export indexed image with transparency in BMP file format."
-msgstr ""
-"Не може да бъде запазено индексирано изображение с прозрачност във формат "
-"BMP."
-
-#: plug-ins/file-bmp/bmp-export.c:194 plug-ins/file-bmp/bmp-export.c:227
-msgid "Alpha channel will be ignored."
-msgstr "Каналът за прозрачност ще бъде пренебрегнат."
-
-#: plug-ins/file-bmp/bmp-export.c:597 plug-ins/file-fli/fli.c:91
-#: plug-ins/file-fli/fli.c:110 plug-ins/file-fli/fli.c:131
-#, fuzzy, c-format
-msgid "Error writing to file."
-msgstr "Грешка при запис на файл."
-
-#: plug-ins/file-bmp/bmp-export.c:1060
-msgid "Compatibility"
-msgstr ""
-
-#: plug-ins/file-bmp/bmp-export.c:1066
-msgid ""
-"Some applications can not read BMP images that include color space "
-"information. GIMP writes color space information by default. Disabling this "
-"option will cause GIMP to not write color space information to the file."
-msgstr ""
-
-#: plug-ins/file-bmp/bmp-load.c:198
-msgid "Bad colormap"
-msgstr "Грешен цветови режим"
-
-#: plug-ins/file-bmp/bmp-load.c:295 plug-ins/file-bmp/bmp-load.c:304
-#: plug-ins/file-bmp/bmp-load.c:312 plug-ins/file-bmp/bmp-load.c:321
-#: plug-ins/file-bmp/bmp-load.c:338 plug-ins/file-bmp/bmp-load.c:426
-#: plug-ins/file-bmp/bmp-load.c:435 plug-ins/file-bmp/bmp-load.c:493
-#: plug-ins/file-bmp/bmp-load.c:522 plug-ins/file-bmp/bmp-load.c:557
-#: plug-ins/file-bmp/bmp-load.c:579 plug-ins/file-bmp/bmp-load.c:588
-#: plug-ins/file-bmp/bmp-load.c:615
-#, c-format
-msgid "'%s' is not a valid BMP file"
-msgstr "„%s“ не е валиден BMP файл"
-
-#: plug-ins/file-bmp/bmp-load.c:346 plug-ins/file-bmp/bmp-load.c:465
-#, c-format
-msgid "Error reading BMP file header from '%s'"
-msgstr "Грешка при четене началото на BMP файл от „%s“"
-
-#: plug-ins/file-bmp/bmp-load.c:531 plug-ins/file-bmp/bmp-load.c:565
-#, c-format
-msgid "Unsupported compression (%u) in BMP file from '%s'"
-msgstr ""
-
-#: plug-ins/file-bmp/bmp-load.c:774
-msgid "Unsupported or invalid bitdepth."
-msgstr "Неподдържана или грешна дълбочина."
-
-#: plug-ins/file-bmp/bmp-load.c:982 plug-ins/file-bmp/bmp-load.c:1014
-#: plug-ins/file-bmp/bmp-load.c:1041 plug-ins/file-bmp/bmp-load.c:1071
-#: plug-ins/file-bmp/bmp-load.c:1102
-msgid "The bitmap ends unexpectedly."
-msgstr "Изображението свършва неочаквано."
-
-#: plug-ins/file-bmp/bmp.c:154 plug-ins/file-bmp/bmp.c:180
-msgid "Windows BMP image"
-msgstr "Windows BMP изображение"
-
-#: plug-ins/file-bmp/bmp.c:157 plug-ins/file-bmp/bmp.c:158
-msgid "Loads files of Windows BMP file format"
-msgstr ""
-
-#: plug-ins/file-bmp/bmp.c:182
-msgid "BMP"
-msgstr ""
-
-#: plug-ins/file-bmp/bmp.c:185 plug-ins/file-bmp/bmp.c:186
-msgid "Saves files in Windows BMP file format"
-msgstr ""
-
-#: plug-ins/file-bmp/bmp.c:206
-#, fuzzy
-msgid "Ru_n-Length Encoded"
-msgstr "_RLE кодирано"
-
-#: plug-ins/file-bmp/bmp.c:207
-msgid ""
-"Use run-length-encoding compression (only valid for 4 and 8-bit indexed "
-"images)"
-msgstr ""
-
-#: plug-ins/file-bmp/bmp.c:213
-#, fuzzy
-msgid "_Write color space information"
-msgstr "Трансформация на цветове"
-
-#: plug-ins/file-bmp/bmp.c:214
-msgid "Whether or not to write BITMAPV5HEADER color space data"
-msgstr ""
-
-#: plug-ins/file-bmp/bmp.c:220
-#, fuzzy
-msgid "R_GB format"
-msgstr "_Формат:"
-
-#: plug-ins/file-bmp/bmp.c:221
-msgid "Export format for RGB images"
-msgstr ""
-
-#: plug-ins/file-bmp/bmp.c:222
-msgid "16 bit (R5 G6 B5)"
-msgstr ""
-
-#: plug-ins/file-bmp/bmp.c:223
-msgid "16 bit (A1 R5 G5 B5)"
-msgstr ""
-
-#: plug-ins/file-bmp/bmp.c:224
-msgid "16 bit (X1 R5 G5 B5)"
-msgstr ""
-
-#: plug-ins/file-bmp/bmp.c:225
-msgid "24 bit (R8 G8 B8)"
-msgstr ""
-
-#: plug-ins/file-bmp/bmp.c:226
-msgid "32 bit (A8 R8 G8 B8)"
-msgstr ""
-
-#: plug-ins/file-bmp/bmp.c:227
-msgid "32 bit (X8 R8 G8 B8)"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:130 plug-ins/file-dds/dds.c:168
-#, fuzzy
-msgid "DDS image"
-msgstr "SVG изображение"
-
-#: plug-ins/file-dds/dds.c:133 plug-ins/file-dds/dds.c:134
-msgid "Loads files in DDS image format"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:149
-msgid "Load _mipmaps"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:150
-#, fuzzy
-msgid "Load mipmaps if present"
-msgstr "Зареждане настройки на осветлението"
-
-#: plug-ins/file-dds/dds.c:155
-#, fuzzy
-msgid "Flip image _vertically"
-msgstr "Назъбване по _вертикал"
-
-#: plug-ins/file-dds/dds.c:156
-msgid "Flip the image vertically on import"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:170
-msgid "DDS"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:174 plug-ins/file-dds/dds.c:175
-#, fuzzy
-msgid "Saves files in DDS image format"
-msgstr "Зареждане на изображение във формат Wireless BMP"
-
-#: plug-ins/file-dds/dds.c:196
-#, fuzzy
-msgid "Compressio_n"
-msgstr "Компресия"
-
-#: plug-ins/file-dds/dds.c:197
-#, fuzzy
-msgid "Compression format"
-msgstr "Тип на компресията"
-
-#: plug-ins/file-dds/dds.c:199
-msgid "BC1 / DXT1"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:200
-msgid "BC2 / DXT3"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:201
-msgid "BC3 / DXT5"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:202
-msgid "BC3nm / DXT5nm"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:203
-msgid "BC4 / ATI1 (3Dc+)"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:204
-msgid "BC5 / ATI2 (3Dc)"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:205
-msgid "RXGB (DXT5)"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:206
-msgid "Alpha Exponent (DXT5)"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:207
-msgid "YCoCg (DXT5)"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:208
-#, fuzzy
-msgid "YCoCg scaled (DXT5)"
-msgstr "Мащабиране по вертикал (размер)"
-
-#: plug-ins/file-dds/dds.c:214
-msgid "Use percept_ual error metric"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:215
-msgid "Use a perceptual error metric during compression"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:221
-#, fuzzy
-msgid "Pixel format"
-msgstr "пиксела от _горе"
-
-#: plug-ins/file-dds/dds.c:222 plug-ins/file-dds/dds.c:285
-#: plug-ins/file-dds/dds.c:302 plug-ins/file-webp/file-webp.c:180
-#: plug-ins/gradient-flare/gradient-flare.c:2605
-msgid "Default"
-msgstr "Стандартно"
-
-#: plug-ins/file-dds/dds.c:223
-msgid "RGB8"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:224
-#, fuzzy
-msgid "RGBA8"
-msgstr "RGBA"
-
-#: plug-ins/file-dds/dds.c:225
-msgid "BGR8"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:226
-msgid "ABGR8"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:227
-msgid "R5G6B5"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:228
-#, fuzzy
-msgid "RGBA4"
-msgstr "RGBA"
-
-#: plug-ins/file-dds/dds.c:229
-msgid "RGB5A1"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:230
-msgid "RGB10A2"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:231
-msgid "R3G3B2"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:232
-#, fuzzy
-msgid "A8"
-msgstr "A"
-
-#: plug-ins/file-dds/dds.c:233
-#, fuzzy
-msgid "L8"
-msgstr "L"
-
-#: plug-ins/file-dds/dds.c:234
-msgid "L8A8"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:235
-msgid "AEXP"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:236
-msgid "YCOCG"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:242
-#, fuzzy
-msgid "Sav_e type"
-msgstr "Тип на светлинния източник:"
-
-#: plug-ins/file-dds/dds.c:243
-#, fuzzy
-msgid "How to save the image"
-msgstr "Отиване до началната страница"
-
-#: plug-ins/file-dds/dds.c:244
-#, fuzzy
-msgid "Selected layer"
-msgstr "Избрано:"
-
-#: plug-ins/file-dds/dds.c:245
-#, fuzzy
-msgid "All visible layers"
-msgstr "Подравняване на видимите слоеве"
-
-#: plug-ins/file-dds/dds.c:246
-msgid "As cube map"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:247
-msgid "As volume map"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:248
-msgid "As texture array"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:254
-msgid "Flip image _vertically on export"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:255
-msgid "Flip the image vertically on export"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:260
-#, fuzzy
-msgid "Set _transparent color"
-msgstr "Чисто прозрачно"
-
-#: plug-ins/file-dds/dds.c:261
-#, fuzzy
-msgid "Make an indexed color transparent"
-msgstr "Превръщане на посочения цвят в прозрачност"
-
-#: plug-ins/file-dds/dds.c:266
-#, fuzzy
-msgid "Transparent inde_x"
-msgstr "Прозрачно"
-
-#: plug-ins/file-dds/dds.c:267
-msgid "Index of transparent color or -1 to disable (for indexed images only)."
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:273
-#, fuzzy
-msgid "_Mipmaps"
-msgstr "Няма съвпадения"
-
-#: plug-ins/file-dds/dds.c:274
-msgid "How to handle mipmaps"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:275
-#, fuzzy
-msgid "No mipmaps"
-msgstr "Няма съвпадения"
-
-#: plug-ins/file-dds/dds.c:276
-#, fuzzy
-msgid "Generate mipmaps"
-msgstr "_Обръщане стойностите на картата"
-
-#: plug-ins/file-dds/dds.c:277
-#, fuzzy
-msgid "Use existing mipmaps"
-msgstr "Избиране на съществуваща област"
-
-#: plug-ins/file-dds/dds.c:283
-#, fuzzy
-msgid "F_ilter"
-msgstr "Филър"
-
-#: plug-ins/file-dds/dds.c:284
-msgid "Filtering to use when generating mipmaps"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:286
-msgid "Nearest"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:288
-#, fuzzy
-msgid "Triangle"
-msgstr "Триъгълници"
-
-#: plug-ins/file-dds/dds.c:289
-msgid "Quadratic"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:290
-msgid "B-Spline"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:291
-msgid "Mitchell"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:292
-msgid "Catmull-Rom"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:293
-msgid "Lanczos"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:294
-#, fuzzy
-msgid "Kaiser"
-msgstr "Повдигане"
-
-#: plug-ins/file-dds/dds.c:300
-#, fuzzy
-msgid "_Wrap mode"
-msgstr "_Увиване около"
-
-#: plug-ins/file-dds/dds.c:301
-msgid "Wrap mode to use when generating mipmaps"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:303
-#, fuzzy
-msgid "Mirror"
-msgstr "_Огледало"
-
-#: plug-ins/file-dds/dds.c:304
-#, fuzzy
-msgid "Repeat"
-msgstr "_Повторениe:"
-
-#: plug-ins/file-dds/dds.c:305
-msgid "Clamp"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:311
-#, fuzzy
-msgid "Appl_y gamma correction"
-msgstr "Прилагане на спирала"
-
-#: plug-ins/file-dds/dds.c:312
-msgid "Use gamma correct mipmap filtering"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:317
-#, fuzzy
-msgid "Use sRG_B colorspace"
-msgstr "Използване на подцветове"
-
-#: plug-ins/file-dds/dds.c:318
-#, fuzzy
-msgid "Use sRGB colorspace for gamma correction"
-msgstr "Използване на подцветове"
-
-#: plug-ins/file-dds/dds.c:323 plug-ins/flame/flame.c:204
-#, fuzzy
-msgid "_Gamma"
-msgstr "_Гама:"
-
-#: plug-ins/file-dds/dds.c:324
-msgid "Gamma value to use for gamma correction (e.g. 2.2)"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:329
-msgid "Preserve al_pha test coverage"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:330
-msgid "Preserve alpha test coverage for alpha channel maps"
-msgstr ""
-
-#: plug-ins/file-dds/dds.c:336
-#, fuzzy
-msgid "Alp_ha test threshold"
-msgstr "Праг на _прозрачност:"
-
-#: plug-ins/file-dds/dds.c:337
-msgid ""
-"Alpha test threshold value for which alpha test coverage should be preserved"
-msgstr ""
-
-#: plug-ins/file-dds/ddsread.c:179
-#, fuzzy, c-format
-msgid "Loading: %s"
-msgstr "_Водещ"
-
-#: plug-ins/file-dds/ddsread.c:250
-#, c-format
-msgid ""
-"Unsupported DDS pixel format:\n"
-"bpp: %d, Rmask: %x, Gmask: %x, Bmask: %x, Amask: %x, flags: %u"
-msgstr ""
-
-#: plug-ins/file-dds/ddsread.c:499
-#, fuzzy, c-format
-msgid "Invalid or corrupted DDS header."
-msgstr "Невалиден файл."
-
-#: plug-ins/file-dds/ddsread.c:511
-#, fuzzy, c-format
-msgid "Could not allocate a new image."
-msgstr "Не може да бъде създадено ново изображение"
-
-#: plug-ins/file-dds/ddsread.c:527
-#, fuzzy, c-format
-msgid "Error reading palette."
-msgstr "Грешка при четене на файл."
-
-#: plug-ins/file-dds/ddsread.c:822
-#, c-format
-msgid "Invalid DDS format magic number."
-msgstr ""
-
-#: plug-ins/file-dds/ddsread.c:838
-msgid ""
-"File lacks expected pixel format flags! Image may not be decoded correctly."
-msgstr ""
-
-#: plug-ins/file-dds/ddsread.c:873
-#, fuzzy, c-format
-msgid "Invalid pixel format."
-msgstr "Невалиден файл."
-
-#: plug-ins/file-dds/ddsread.c:898
-#, c-format
-msgid "Unsupported format (FourCC: %c%c%c%c, hex: %08x)"
-msgstr ""
-
-#: plug-ins/file-dds/ddsread.c:920
-#, c-format
-msgid "Invalid bpp value for RGB data: %d"
-msgstr ""
-
-#: plug-ins/file-dds/ddsread.c:931
-#, c-format
-msgid "Invalid bpp value for luminance data: %d"
-msgstr ""
-
-#: plug-ins/file-dds/ddsread.c:953
-#, fuzzy, c-format
-msgid "Invalid DX10 header"
-msgstr "Невалиден файл."
-
-#: plug-ins/file-dds/ddsread.c:986
-#, fuzzy, c-format
-msgid "Unsupported DXGI Format: %u"
-msgstr "Неподдържан формат на четка"
-
-#: plug-ins/file-dds/ddsread.c:1174 plug-ins/file-dds/ddsread.c:1238
-#: plug-ins/file-dds/ddsread.c:1258
-#, c-format
-msgid "Requested data exceeds size of file.\n"
-msgstr ""
-
-#: plug-ins/file-dds/ddsread.c:1182 plug-ins/file-dds/ddsread.c:1264
-#, c-format
-msgid "Unexpected EOF.\n"
-msgstr ""
-
-#: plug-ins/file-dds/ddsread.c:1590
-#, fuzzy
-msgid "Open DDS"
-msgstr "Отваряне като"
-
-#: plug-ins/file-dds/ddswrite.c:566
-#, fuzzy, c-format
-msgid "Saving: %s"
-msgstr "Запазване на „%s“"
-
-#: plug-ins/file-dds/ddswrite.c:1941
-#, fuzzy
-msgid "Mipmap Options"
-msgstr "Основни настройки"
-
-#. Translators: Do not translate YCoCg, it's the name of a colorspace
-#: plug-ins/file-dds/misc.c:70
-msgid "Decoding YCoCg pixels..."
-msgstr ""
-
-#. Translators: Do not translate YCoCg, it's the name of a colorspace
-#: plug-ins/file-dds/misc.c:137
-msgid "Decoding YCoCg (scaled) pixels..."
-msgstr ""
-
-#: plug-ins/file-dds/misc.c:204
-msgid "Decoding Alpha-exponent pixels..."
-msgstr ""
-
-#: plug-ins/file-exr/file-exr.c:114
-msgid "Loads files in the OpenEXR file format"
-msgstr ""
-
-#: plug-ins/file-exr/file-exr.c:205
-#, fuzzy, c-format
-msgid "Error opening file '%s' for reading"
-msgstr "Грешка при отваряне на „%s“"
-
-#: plug-ins/file-exr/file-exr.c:216
-#, fuzzy, c-format
-msgid "Error querying image dimensions from '%s'"
-msgstr "Грешка при четене началото на BMP файл от „%s“"
-
-#: plug-ins/file-exr/file-exr.c:236
-#, fuzzy, c-format
-msgid "Error querying image precision from '%s'"
-msgstr "Грешка при четене началото на BMP файл от „%s“"
-
-#: plug-ins/file-exr/file-exr.c:255
-#, fuzzy, c-format
-msgid "Error querying image type from '%s'"
-msgstr "Грешка при четене началото на BMP файл от „%s“"
-
-#: plug-ins/file-exr/file-exr.c:318
-#, fuzzy, c-format
-msgid "Error reading pixel data from '%s'"
-msgstr "Грешка при четене началото на BMP файл от „%s“"
-
-#: plug-ins/file-exr/file-exr.c:357 plug-ins/file-exr/file-exr.c:371
-#, fuzzy, c-format
-msgid "Failed to load metadata: %s"
-msgstr "Неуспешно задаване на етикета „%s“: %s"
-
-#: plug-ins/file-exr/file-exr.c:434
-msgid "Import OpenEXR"
-msgstr ""
-
-#: plug-ins/file-exr/file-exr.c:449
-#, fuzzy
-msgid "Unknown Channel Name"
-msgstr "Непознат елемент <%s>"
-
-#: plug-ins/file-exr/file-exr.c:450
-msgid ""
-"The image contains a single unknown channel.\n"
-"It has been converted to grayscale."
-msgstr ""
-
-#: plug-ins/file-exr/file-exr.c:453
-#, fuzzy
-msgid "Chroma Channels"
-msgstr "Комбиниране на канали"
-
-#: plug-ins/file-exr/file-exr.c:454
-msgid ""
-"OpenEXR chroma channels are not yet supported.\n"
-"They have been discarded."
-msgstr ""
-
-#: plug-ins/file-faxg3/faxg3.c:136
-msgid "G3 fax image"
-msgstr "G3 факс изображение"
-
-#: plug-ins/file-faxg3/faxg3.c:299 plug-ins/file-faxg3/faxg3.c:597
-#, fuzzy, c-format
-msgid "Could not create buffer to process image data."
-msgstr "Не могат да бъдат взети слоеве за изображението %d"
-
-#: plug-ins/file-faxg3/faxg3.c:564
-#, c-format
-msgid "Invalid image dimensions (%d x %d). Image may be corrupt."
-msgstr ""
-
-#: plug-ins/file-faxg3/faxg3.c:574
-#, fuzzy, c-format
-msgid "Could not create image."
-msgstr "Не може да бъде създадено ново изображение"
-
-#: plug-ins/file-fits/fits.c:180 plug-ins/file-fits/fits.c:218
-msgid "Flexible Image Transport System"
-msgstr "Flexible Image Transport System"
-
-#: plug-ins/file-fits/fits.c:183
-#, fuzzy
-msgid "Load file of the FITS file format"
-msgstr "Зареждане на изображение във формат Wireless BMP"
-
-#: plug-ins/file-fits/fits.c:184
-#, fuzzy
-msgid "Load file of the FITS file format (Flexible Image Transport System)"
-msgstr "Flexible Image Transport System"
-
-#: plug-ins/file-fits/fits.c:201
-#, fuzzy
-msgid "Re_placement for undefined pixels"
-msgstr "Заместване на необозначените пиксели"
-
-#: plug-ins/file-fits/fits.c:202
-msgid "Replacement for undefined pixels"
-msgstr "Заместване на необозначените пиксели"
-
-#: plug-ins/file-fits/fits.c:204 plug-ins/gfig/gfig-dialog.c:1288
-#: plug-ins/gfig/gfig-dialog.c:1456
-msgid "White"
-msgstr "Бяло"
-
-#: plug-ins/file-fits/fits.c:221
-#, fuzzy
-msgid "Export file in the FITS file format"
-msgstr "Грешка във GIMP файл с четки „%s“"
-
-#: plug-ins/file-fits/fits.c:222
-#, fuzzy
-msgid ""
-"FITS exporting handles all image types except those with alpha channels."
-msgstr "FITS не поддържа изображения с канали на прозрачност"
-
-#: plug-ins/file-fits/fits.c:381
-#, fuzzy
-msgid "Error during opening of FITS file"
-msgstr "Грешка при отваряне на FITS файл"
-
-#: plug-ins/file-fits/fits.c:394 plug-ins/file-fits/fits.c:600
-msgid "FITS file keeps no displayable images"
-msgstr "FITS файла не съдържа показваеми изображения"
-
-#: plug-ins/file-fits/fits.c:492
-msgid "FITS HDU"
-msgstr ""
-
-#: plug-ins/file-fits/fits.c:630
-#, fuzzy
-msgid "FITS export cannot handle images with alpha channels"
-msgstr "FITS не поддържа изображения с канали на прозрачност"
-
-#: plug-ins/file-fits/fits.c:995
-#, fuzzy
-msgid "Open FITS File"
-msgstr "Отваряне на файл"
-
-#: plug-ins/file-fli/fli.c:45 plug-ins/file-fli/fli.c:59
-#: plug-ins/file-fli/fli.c:75 plug-ins/file-fli/fli.c:924
-#: plug-ins/file-fli/fli.c:1244 plug-ins/file-fli/fli.c:1524
-#, fuzzy, c-format
-msgid "Error reading from file."
-msgstr "Грешка при четене на файл."
-
-#: plug-ins/file-fli/fli.c:157 plug-ins/file-fli/fli.c:167
-#: plug-ins/file-fli/fli.c:179
-#, fuzzy
-msgid "Error reading header. "
-msgstr "Грешка при четене на файл."
-
-#: plug-ins/file-fli/fli.c:187
-#, c-format
-msgid "Invalid header: not a FLI/FLC animation!"
-msgstr ""
-
-#: plug-ins/file-fli/fli.c:205
-#, c-format
-msgid "Incorrect file size in header: %u, should be: %u."
-msgstr ""
-
-#: plug-ins/file-fli/fli.c:213
-msgid "Number of frames is 0. Setting to 2."
-msgstr ""
-
-#: plug-ins/file-fli/fli.c:220
-#, c-format
-msgid "Suspicious frame delay of %ums. Setting delay to 70ms."
-msgstr ""
-
-#: plug-ins/file-fli/fli.c:249 plug-ins/file-fli/fli.c:258
-#: plug-ins/file-fli/fli.c:269 plug-ins/file-fli/fli.c:276
-#, fuzzy
-msgid "Error writing header. "
-msgstr "Грешка при запис на файл."
-
-#: plug-ins/file-fli/fli.c:283
-#, c-format
-msgid "Invalid header: unrecognized magic number!"
-msgstr ""
-
-#: plug-ins/file-fli/fli.c:313 plug-ins/file-fli/fli.c:345
-#, fuzzy
-msgid "Error reading frame. "
-msgstr "Грешка при четене на файл."
-
-#: plug-ins/file-fli/fli.c:323
-#, c-format
-msgid "Invalid frame size points past end of file!"
-msgstr ""
-
-#: plug-ins/file-fli/fli.c:353
-#, c-format
-msgid "Invalid chunk size points past end of file!"
-msgstr ""
-
-#: plug-ins/file-fli/fli.c:476
-#, c-format
-msgid "Invalid header: magic number is wrong!"
-msgstr ""
-
-#: plug-ins/file-fli/fli.c:513
-#, fuzzy
-msgid "Error writing frame header. "
-msgstr "Грешка при запис на файл."
-
-#: plug-ins/file-fli/fli.c:537 plug-ins/file-fli/fli.c:547
-#: plug-ins/file-fli/fli.c:556 plug-ins/file-fli/fli.c:575
-#: plug-ins/file-fli/fli.c:715 plug-ins/file-fli/fli.c:726
-#: plug-ins/file-fli/fli.c:735 plug-ins/file-fli/fli.c:756
-#, fuzzy
-msgid "Error reading palette. "
-msgstr "Грешка при четене на файл."
-
-#: plug-ins/file-fli/fli.c:611 plug-ins/file-fli/fli.c:619
-#: plug-ins/file-fli/fli.c:657 plug-ins/file-fli/fli.c:666
-#: plug-ins/file-fli/fli.c:685 plug-ins/file-fli/fli.c:789
-#: plug-ins/file-fli/fli.c:797 plug-ins/file-fli/fli.c:832
-#: plug-ins/file-fli/fli.c:842 plug-ins/file-fli/fli.c:862
-#, fuzzy
-msgid "Error writing color map. "
-msgstr "Грешка при запис на файл."
-
-#: plug-ins/file-fli/fli.c:905
-#, fuzzy
-msgid "Error writing black. "
-msgstr "Грешка при запис на файл."
-
-#: plug-ins/file-fli/fli.c:944 plug-ins/file-fli/fli.c:955
-#: plug-ins/file-fli/fli.c:965 plug-ins/file-fli/fli.c:1085
-#: plug-ins/file-fli/fli.c:1094 plug-ins/file-fli/fli.c:1108
-#: plug-ins/file-fli/fli.c:1123 plug-ins/file-fli/fli.c:1132
-#: plug-ins/file-fli/fli.c:1146 plug-ins/file-fli/fli.c:1156
-#: plug-ins/file-fli/fli.c:1300 plug-ins/file-fli/fli.c:1327
-#: plug-ins/file-fli/fli.c:1343 plug-ins/file-fli/fli.c:1375
-#: plug-ins/file-fli/fli.c:1385 plug-ins/file-fli/fli.c:1399
-#: plug-ins/file-fli/fli.c:1409
-#, fuzzy
-msgid "Error writing frame. "
-msgstr "Грешка при запис на файл."
-
-#: plug-ins/file-fli/fli.c:992 plug-ins/file-fli/fli.c:1004
-#: plug-ins/file-fli/fli.c:1015 plug-ins/file-fli/fli.c:1034
-#: plug-ins/file-fli/fli.c:1186 plug-ins/file-fli/fli.c:1200
-#: plug-ins/file-fli/fli.c:1213 plug-ins/file-fli/fli.c:1226
-#: plug-ins/file-fli/fli.c:1245 plug-ins/file-fli/fli.c:1440
-#: plug-ins/file-fli/fli.c:1456 plug-ins/file-fli/fli.c:1475
-#: plug-ins/file-fli/fli.c:1490 plug-ins/file-fli/fli.c:1503
-#: plug-ins/file-fli/fli.c:1525
-#, fuzzy
-msgid "Error reading compressed data. "
-msgstr "Грешка при четене на файл."
-
-#: plug-ins/file-fli/fli.c:1022
-#, c-format
-msgid "Overflow reading compressed data. Possibly corrupt file."
-msgstr ""
-
-#: plug-ins/file-fli/fli-gimp.c:185 plug-ins/file-fli/fli-gimp.c:222
-msgid "AutoDesk FLIC animation"
-msgstr "AutoDesk FLIC анимация"
-
-#: plug-ins/file-fli/fli-gimp.c:188
-#, fuzzy
-msgid "Load FLI-movies"
-msgstr "Отваряне на огън"
-
-#: plug-ins/file-fli/fli-gimp.c:189 plug-ins/file-fli/fli-gimp.c:227
-msgid "This is an experimental plug-in to handle FLI movies"
-msgstr ""
-
-#: plug-ins/file-fli/fli-gimp.c:203 plug-ins/file-fli/fli-gimp.c:248
-#, fuzzy
-msgid "_From frame"
-msgstr "От преливка"
-
-#: plug-ins/file-fli/fli-gimp.c:204
-msgid "Load beginning from this frame"
-msgstr ""
-
-#: plug-ins/file-fli/fli-gimp.c:209 plug-ins/file-fli/fli-gimp.c:254
-msgid "_To frame"
-msgstr ""
-
-#: plug-ins/file-fli/fli-gimp.c:210
-msgid "End loading with this frame"
-msgstr ""
-
-#: plug-ins/file-fli/fli-gimp.c:224
-#, fuzzy
-msgid "FLI Animation"
-msgstr "MNG анимация"
-
-#: plug-ins/file-fli/fli-gimp.c:226
-#, fuzzy
-msgid "Export FLI-movies"
-msgstr "Предварителен преглед"
-
-#: plug-ins/file-fli/fli-gimp.c:249
-msgid "Export beginning from this frame"
-msgstr ""
-
-#: plug-ins/file-fli/fli-gimp.c:255
-msgid "End exporting with this frame (or -1 for all frames)"
-msgstr ""
-
-#: plug-ins/file-fli/fli-gimp.c:567
-#, fuzzy, c-format
-msgid "Frame %d (%ums)"
-msgstr "Кадър %d (%d%s)"
-
-#: plug-ins/file-fli/fli-gimp.c:594
-#, c-format
-msgid "Failed to read frame %d. Possibly corrupt animation.\n"
-msgstr ""
-
-#: plug-ins/file-fli/fli-gimp.c:926
-#, fuzzy
-msgid "Open FLIC Animation"
-msgstr "AutoDesk FLIC анимация"
-
-#: plug-ins/file-icns/file-icns-export.c:233
-#, c-format
-msgid ""
-"Invalid icon size. \n"
-"It will not be exported"
-msgstr ""
-
-#: plug-ins/file-icns/file-icns-export.c:236
-#, c-format
-msgid ""
-"Duplicate layer size. \n"
-"It will not be exported"
-msgstr ""
-
-#: plug-ins/file-icns/file-icns-export.c:314
-msgid ""
-"Valid ICNS icons sizes are:\n"
-" 16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,\n"
-"64x64, 128x128, 256x256, 512x512, and 1024x1024.\n"
-"Any other sized layers will be ignored on export."
-msgstr ""
-
-#. Don't show warning by default
-#: plug-ins/file-icns/file-icns-export.c:322
-msgid "Export Icons"
-msgstr ""
-
-#: plug-ins/file-icns/file-icns-export.c:531
-#, fuzzy, c-format
-msgid "Error writing icns: %s"
-msgstr "Грешка при запис на файл."
-
-#: plug-ins/file-icns/file-icns-export.c:595
-#, c-format
-msgid ""
-"No valid sized layers. Only valid layer sizes are 16x12, 16x16, 18x18, "
-"24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512, or 1024x1024."
-msgstr ""
-
-#: plug-ins/file-icns/file-icns-export.c:613
-#, c-format
-msgid ""
-"Invalid layer size(s). Only valid layer sizes are 16x12, 16x16, 18x18, "
-"24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512, or 1024x1024."
-msgstr ""
-
-#: plug-ins/file-icns/file-icns-load.c:432
-#, fuzzy, c-format
-msgid "Error trying to open temporary %s file '%s' for icns loading: %s"
-msgstr ""
-"Грешка при опит за отваряне на временен файл „%s“ за зареждане на "
-"допълнение: %s"
-
-#. ----- Open PSD file -----
-#: plug-ins/file-icns/file-icns-load.c:559 plug-ins/file-ico/ico-load.c:1013
-#: plug-ins/file-jpeg/jpeg-load.c:601 plug-ins/file-psd/psd-thumb-load.c:72
-#: plug-ins/file-raw/file-darktable.c:620
-#: plug-ins/file-raw/file-rawtherapee.c:459
-#, c-format
-msgid "Opening thumbnail for '%s'"
-msgstr "Отваряне на предварителен преглед за „%s“"
-
-#: plug-ins/file-icns/file-icns.c:133
-msgid "Icns"
-msgstr ""
-
-#: plug-ins/file-icns/file-icns.c:177
-msgid "Apple Icon Image"
-msgstr ""
-
-#: plug-ins/file-ico/ico-dialog.c:97
-#, fuzzy
-msgid "Animated Cursor Settings"
-msgstr "Графика на текущите настройки"
-
-#: plug-ins/file-ico/ico-dialog.c:110
-msgid "_Cursor Name (Optional)"
-msgstr ""
-
-#: plug-ins/file-ico/ico-dialog.c:127
-msgid "_Author Name (Optional)"
-msgstr ""
-
-#: plug-ins/file-ico/ico-dialog.c:144
-#, fuzzy
-msgid "_Delay between frames:"
-msgstr "_Пауза между кадрите, където не е посочена:"
-
-#: plug-ins/file-ico/ico-dialog.c:154
-msgid " jiffies (16.66 ms)"
-msgstr ""
-
-#. Cursor
-#: plug-ins/file-ico/ico-dialog.c:164
-msgid "Icon Details"
-msgstr "Настройки на иконката"
-
-#: plug-ins/file-ico/ico-dialog.c:187
-msgid ""
-"Large icons and compression are not supported by all programs. Older "
-"applications may not open this file correctly."
-msgstr ""
-"Големите икони и компресия не се поддържат от всички програми. По-стари "
-"приложения може да не отворят този файл правилно."
-
-#: plug-ins/file-ico/ico-dialog.c:267
-msgid "1 bpp, 1-bit alpha, 2-slot palette"
-msgstr "1 bpp, 1-битова прозрачност, 2-слотова палитра"
-
-#: plug-ins/file-ico/ico-dialog.c:268
-msgid "4 bpp, 1-bit alpha, 16-slot palette"
-msgstr "4 bpp, 1-битова прозрачност, 16-слотова палитра"
-
-#: plug-ins/file-ico/ico-dialog.c:269
-msgid "8 bpp, 1-bit alpha, 256-slot palette"
-msgstr "8 bpp, 1-битова прозрачност, 256-слотова палитра"
-
-#: plug-ins/file-ico/ico-dialog.c:270
-msgid "24 bpp, 1-bit alpha, no palette"
-msgstr "24 bpp, 1-битова прозрачност, без палитра"
-
-#: plug-ins/file-ico/ico-dialog.c:271
-msgid "32 bpp, 8-bit alpha, no palette"
-msgstr "32 bpp, 8-битова прозрачност, без палитра"
-
-#: plug-ins/file-ico/ico-dialog.c:286
-msgid "Compressed (PNG)"
-msgstr "Компресиран (PNG)"
-
-#: plug-ins/file-ico/ico-dialog.c:562
-msgid "Hot spot _X:"
-msgstr "_X на активната точка:"
-
-#: plug-ins/file-ico/ico-dialog.c:575
-msgid "Hot spot _Y:"
-msgstr "_Y на активната точка:"
-
-#: plug-ins/file-ico/ico-export.c:217
-#, c-format
-msgid ""
-"Called non-interactively with %d and %d hotspot coordinates with an image of "
-"%d icons."
-msgstr ""
-
-#: plug-ins/file-ico/ico-load.c:224
-#, fuzzy, c-format
-msgid "Could not read '%lu' bytes"
-msgstr "Не може да се запише „%s“: %s"
-
-#: plug-ins/file-ico/ico-load.c:252
-#, c-format
-msgid "Icon #%d has zero width or height"
-msgstr ""
-
-#: plug-ins/file-ico/ico-load.c:868 plug-ins/file-ico/ico-load.c:899
-#, c-format
-msgid "Invalid ANI metadata"
-msgstr ""
-
-#: plug-ins/file-ico/ico.c:172 plug-ins/file-ico/ico.c:295
-msgid "Microsoft Windows icon"
-msgstr "Microsoft Windows икона"
-
-#: plug-ins/file-ico/ico.c:200 plug-ins/file-ico/ico.c:322
-#, fuzzy
-msgid "Microsoft Windows cursor"
-msgstr "Microsoft Windows икона"
-
-#: plug-ins/file-ico/ico.c:230 plug-ins/file-ico/ico.c:360
-#, fuzzy
-msgid "Microsoft Windows animated cursor"
-msgstr "Microsoft Windows икона"
-
-#: plug-ins/file-ico/ico.c:234
-msgid "Loads files of Windows ANI file format"
-msgstr ""
-
-#: plug-ins/file-ico/ico.c:276
-#, fuzzy
-msgid "Loads a preview from a Windows ANI files"
-msgstr "Зареждане на кривите от файл"
-
-#: plug-ins/file-ico/ico.c:364 plug-ins/file-ico/ico.c:365
-msgid "Saves files in Windows ANI file format"
-msgstr ""
-
-#: plug-ins/file-ico/ico.c:383
-msgid "Cursor Name (Optional)"
-msgstr ""
-
-#: plug-ins/file-ico/ico.c:389
-msgid "Cursor Author (Optional)"
-msgstr ""
-
-#: plug-ins/file-jpeg/jpeg-export.c:139 plug-ins/file-jpeg/jpeg-export.c:146
-#, fuzzy, c-format
-msgid "File size: %s"
-msgstr "_Размер на плочката:"
-
-#: plug-ins/file-jpeg/jpeg-export.c:717
-msgid "Calculating file size..."
-msgstr "Изчисляване на размера на файла…"
-
-#: plug-ins/file-jpeg/jpeg-export.c:807 plug-ins/file-jpeg/jpeg-export.c:878
-msgid "File size: unknown"
-msgstr "Размер на файла: неизвестен"
-
-#: plug-ins/file-jpeg/jpeg-export.c:886
-msgid "Enable preview to obtain the file size."
-msgstr "Включете предварителния преглед, за да получите размера на файла."
-
-#: plug-ins/file-jpeg/jpeg-export.c:891 plug-ins/file-psd/psd-export.c:2457
-#: plug-ins/file-tiff/file-tiff-export.c:1310
-msgid "No soft-proofing profile"
-msgstr ""
-
-#: plug-ins/file-jpeg/jpeg-load.c:221
-msgid "JPEG preview"
-msgstr "JPEG предварителен преглед"
-
-#: plug-ins/file-jpeg/jpeg-load.c:486
-#, fuzzy, c-format
-msgid ""
-"Error trying to open temporary %s file '%s' for jpeg metadata loading: %s"
-msgstr ""
-"Грешка при опит за отваряне на временен файл „%s“ за зареждане на "
-"допълнение: %s"
-
-#: plug-ins/file-jpeg/jpeg.c:135 plug-ins/file-jpeg/jpeg.c:182
-msgid "JPEG image"
-msgstr "JPEG изображение"
-
-#: plug-ins/file-jpeg/jpeg.c:138 plug-ins/file-jpeg/jpeg.c:139
-#, fuzzy
-msgid "Loads files in the JPEG file format"
-msgstr "Зареждане на изображение във формат Wireless BMP"
-
-#: plug-ins/file-jpeg/jpeg.c:163
-#, fuzzy
-msgid "Loads a thumbnail from a JPEG image"
-msgstr "Зареждане на фрактал от файл"
-
-#: plug-ins/file-jpeg/jpeg.c:164
-msgid "Loads a thumbnail from a JPEG image, if one exists"
-msgstr ""
-
-#: plug-ins/file-jpeg/jpeg.c:185
-#, fuzzy
-msgid "Exports files in the JPEG file format"
-msgstr "Грешка във GIMP файл с четки „%s“"
-
-#: plug-ins/file-jpeg/jpeg.c:186
-#, fuzzy
-msgid "Exports files in the lossy, widely supported JPEG format"
-msgstr "Грешка във GIMP файл с четки „%s“"
-
-#: plug-ins/file-jpeg/jpeg.c:195 plug-ins/file-tiff/file-tiff.c:251
-#, fuzzy
-msgid "JPEG"
-msgstr "_JPEG"
-
-#: plug-ins/file-jpeg/jpeg.c:211
-#, fuzzy
-msgid "Quality of exported image"
-msgstr "Изпращане на изображението"
-
-#: plug-ins/file-jpeg/jpeg.c:216
-#, fuzzy
-msgid "S_moothing"
-msgstr "Заглаждане:"
-
-#: plug-ins/file-jpeg/jpeg.c:217
-msgid "Smoothing factor for exported image"
-msgstr ""
-
-#: plug-ins/file-jpeg/jpeg.c:222
-#, fuzzy
-msgid "Optimi_ze"
-msgstr "Оптимизиране"
-
-#: plug-ins/file-jpeg/jpeg.c:223
-msgid "Use optimized tables during Huffman coding"
-msgstr ""
-
-#: plug-ins/file-jpeg/jpeg.c:228
-#, fuzzy
-msgid "_Progressive"
-msgstr "Прогресивно"
-
-#: plug-ins/file-jpeg/jpeg.c:229
-#, fuzzy
-msgid "Create progressive JPEG images"
-msgstr "Създаване на ново изображение"
-
-#: plug-ins/file-jpeg/jpeg.c:234
-#, fuzzy
-msgid "Export as CM_YK"
-msgstr "Запазване като XPM"
-
-#: plug-ins/file-jpeg/jpeg.c:235
-msgid "Create a CMYK JPEG image using the soft-proofing color profile"
-msgstr ""
-
-#: plug-ins/file-jpeg/jpeg.c:240
-#, fuzzy
-msgid "Su_bsampling"
-msgstr "Субсемплиране"
-
-#: plug-ins/file-jpeg/jpeg.c:241
-#, fuzzy
-msgid "Sub-sampling type"
-msgstr "Субсемплиране"
-
-#: plug-ins/file-jpeg/jpeg.c:242
-#, fuzzy
-msgid "4:4:4 (best quality)"
-msgstr "1x1,1x1,1x1 (най-добро качество)"
-
-#: plug-ins/file-jpeg/jpeg.c:243
-msgid "4:2:2 (chroma halved horizontally)"
-msgstr ""
-
-#: plug-ins/file-jpeg/jpeg.c:244
-msgid "4:4:0 (chroma halved vertically)"
-msgstr ""
-
-#: plug-ins/file-jpeg/jpeg.c:245
-msgid "4:2:0 (chroma quartered)"
-msgstr ""
-
-#: plug-ins/file-jpeg/jpeg.c:250
-#, fuzzy
-msgid "Baseline"
-msgstr "Създаване на линия"
-
-#: plug-ins/file-jpeg/jpeg.c:251
-msgid ""
-"Force creation of a baseline JPEG (non-baseline JPEGs can't be read by all "
-"decoders)"
-msgstr ""
-
-#: plug-ins/file-jpeg/jpeg.c:257
-msgid "Inter_val (MCU rows):"
-msgstr ""
-
-#: plug-ins/file-jpeg/jpeg.c:258
-msgid "Interval of restart markers (in MCU rows, 0 = no restart markers)"
-msgstr ""
-
-#: plug-ins/file-jpeg/jpeg.c:264
-#, fuzzy
-msgid "_DCT method"
-msgstr "DCT метод:"
-
-#: plug-ins/file-jpeg/jpeg.c:265
-#, fuzzy
-msgid "DCT method to use"
-msgstr "DCT метод:"
-
-#: plug-ins/file-jpeg/jpeg.c:266
-msgid "Fast Integer"
-msgstr "Бърз целочислен"
-
-#: plug-ins/file-jpeg/jpeg.c:267
-msgid "Integer"
-msgstr "Целочислен"
-
-#: plug-ins/file-jpeg/jpeg.c:268
-msgid "Floating-Point"
-msgstr "Плаваща запетая"
-
-#: plug-ins/file-jpeg/jpeg.c:275
-msgid "_Use quality settings from original image"
-msgstr ""
-
-#: plug-ins/file-jpeg/jpeg.c:276
-msgid ""
-"If the original image was loaded from a JPEG file using non-standard quality "
-"settings (quantization tables), enable this option to get almost the same "
-"quality and file size."
-msgstr ""
-
-#: plug-ins/file-jpeg/jpeg.c:298
-#, fuzzy
-msgid "Sho_w preview in image window"
-msgstr "Показване на _предварителен преглед в прозореца на изображението"
-
-#: plug-ins/file-jpeg/jpeg.c:299
-msgid "Creates a temporary layer with an export preview"
-msgstr ""
-
-#: plug-ins/file-jpeg/jpeg.c:303
-#, fuzzy
-msgid "Use _arithmetic coding"
-msgstr "Използване на _еднобитово кодиране-в-действие"
-
-#: plug-ins/file-jpeg/jpeg.c:304
-msgid "Older software may have trouble opening arithmetic-coded images"
-msgstr ""
-
-#: plug-ins/file-jpeg/jpeg.c:309
-#, fuzzy
-msgid "Use restart mar_kers"
-msgstr "Маркери за рестартиране"
-
-#: plug-ins/file-psd/psd-export.c:502
-msgid "Error: Can't convert GIMP base imagetype to PSD mode"
-msgstr ""
-"Грешка: не може да бъде превърнат базирания на GIMP тип изображение в PSD "
-"режим"
-
-#: plug-ins/file-psd/psd-export.c:2159
-#, fuzzy, c-format
-msgid ""
-"Unable to export '%s'.  The PSD file format does not support images that are "
-"more than 30,000 pixels wide or tall."
-msgstr ""
-"Не може да бъде запазен „%s“.  Файловия формат psd не поддържа изображения, "
-"които са над 30000 пиксела на височина или ширина."
-
-#: plug-ins/file-psd/psd-export.c:2200
-#, fuzzy, c-format
-msgid ""
-"Unable to export '%s'.  The PSD file format does not support images with "
-"layers that are more than 30,000 pixels wide or tall."
-msgstr ""
-"Не може да бъде запазен „%s“. Файловия формат psd не поддържа изображения "
-"със слоеве, които са над 30000 пиксела на височина или ширина."
-
-#: plug-ins/file-psd/psd-export.c:2453
-msgid "Export Image as PSD"
-msgstr ""
-
-#: plug-ins/file-psd/psd-export.c:2500
-msgid ""
-"Duotone color space information from the original\n"
-"imported image will be used."
-msgstr ""
-
-#: plug-ins/file-psd/psd-export.c:2569
-msgid ""
-"PSD files can store up to 998 paths. \n"
-"The rest will be discarded."
-msgstr ""
-
-#: plug-ins/file-psd/psd-export.c:2679
-msgid "Indexed Image Warning"
-msgstr ""
-
-#: plug-ins/file-psd/psd-export.c:2680
-msgid ""
-"Photoshop does not support indexed images that have more than one layer. "
-"Layers will be merged on export."
-msgstr ""
-
-#: plug-ins/file-psd/psd-export.c:2701 plug-ins/file-psd/psd-load.c:3856
-msgid "Compatibility Notice"
-msgstr ""
-
-#: plug-ins/file-psd/psd-export.c:2702
-msgid ""
-"Legacy layer modes have better compatibility with Photoshop, but do not "
-"support Clip to Backdrop, which is needed for using Photoshop's 'Blend "
-"Clipped Layers as Group'. If you encounter display issues, consider "
-"switching to those layer modes."
-msgstr ""
-
-#: plug-ins/file-psd/psd-load.c:312 plug-ins/file-psd/psd-thumb-load.c:138
-#, fuzzy, c-format
-msgid "Error loading PSD file: %s"
-msgstr "Грешка при зареждане на PNG файл: %s"
-
-#: plug-ins/file-psd/psd-load.c:464
-#, fuzzy, c-format
-msgid "Invalid PSD metadata layer format"
-msgstr "Невалиден файл."
-
-#: plug-ins/file-psd/psd-load.c:543
-#, c-format
-msgid "Not a valid Photoshop document file"
-msgstr ""
-
-#: plug-ins/file-psd/psd-load.c:550
-#, fuzzy, c-format
-msgid "Unsupported file format version: %d"
-msgstr "Неподдържана или грешна височина на изображението: %d"
-
-#: plug-ins/file-psd/psd-load.c:557
-#, fuzzy, c-format
-msgid "Too many channels in file: %d"
-msgstr "Изходен канал във файла:"
-
-#: plug-ins/file-psd/psd-load.c:581
-#, fuzzy, c-format
-msgid "Unsupported or invalid image size: %dx%d"
-msgstr "Неподдържана или грешна широчина на изображението: %d"
-
-#: plug-ins/file-psd/psd-load.c:596 plug-ins/file-psd/psd-load.c:607
-#, fuzzy, c-format
-msgid "Unsupported color mode: %s"
-msgstr "Неподдържана дълбочина (%d)!"
-
-#: plug-ins/file-psd/psd-load.c:634
-#, fuzzy, c-format
-msgid "Unsupported bit depth: %d"
-msgstr "Неподдържана дълбочина (%d)!"
-
-#: plug-ins/file-psd/psd-load.c:668 plug-ins/file-psd/psd-load.c:678
-#: plug-ins/file-psd/psd-load.c:917 plug-ins/file-psd/psd-load.c:1278
-#, c-format
-msgid "The file is corrupt!"
-msgstr ""
-
-#: plug-ins/file-psd/psd-load.c:846
-#, fuzzy, c-format
-msgid "Too many channels in layer: %d"
-msgstr "Изходен канал във файла:"
-
-#: plug-ins/file-psd/psd-load.c:953
-#, fuzzy, c-format
-msgid "Unsupported or invalid layer height: %d"
-msgstr "Неподдържана или грешна височина на изображението: %d"
-
-#: plug-ins/file-psd/psd-load.c:962
-#, fuzzy, c-format
-msgid "Unsupported or invalid layer width: %d"
-msgstr "Неподдържана или грешна широчина на изображението: %d"
-
-#: plug-ins/file-psd/psd-load.c:972
-#, fuzzy, c-format
-msgid "Unsupported or invalid layer size: %dx%d"
-msgstr "Неподдържана или грешна широчина на изображението: %d"
-
-#: plug-ins/file-psd/psd-load.c:997
-#, fuzzy, c-format
-msgid "Unsupported or invalid mask info size."
-msgstr "Неподдържана или грешна дълбочина."
-
-#: plug-ins/file-psd/psd-load.c:1180
-#, fuzzy, c-format
-msgid "Unsupported or invalid layer mask height: %d"
-msgstr "Неподдържана или грешна височина на изображението: %d"
-
-#: plug-ins/file-psd/psd-load.c:1189
-#, fuzzy, c-format
-msgid "Unsupported or invalid layer mask width: %d"
-msgstr "Неподдържана или грешна широчина на изображението: %d"
-
-#: plug-ins/file-psd/psd-load.c:1199
-#, fuzzy, c-format
-msgid "Unsupported or invalid layer mask size: %dx%d"
-msgstr "Неподдържана или грешна широчина на изображението: %d"
-
-#: plug-ins/file-psd/psd-load.c:2220 plug-ins/file-psd/psd-load.c:2967
-#, fuzzy, c-format
-msgid "Unsupported compression mode: %d"
-msgstr "Неподдържана или грешна широчина на изображението: %d"
-
-#: plug-ins/file-psd/psd-load.c:3160
-msgid "Extra"
-msgstr ""
-
-#: plug-ins/file-psd/psd-load.c:3383
-#, fuzzy, c-format
-msgid "Unsupported or invalid channel size"
-msgstr "Неподдържана или грешна дълбочина."
-
-#: plug-ins/file-psd/psd-load.c:3452
-#, c-format
-msgid "Failed to decompress data"
-msgstr ""
-
-#: plug-ins/file-psd/psd-load.c:3833
-msgid "Duotone Import"
-msgstr ""
-
-#: plug-ins/file-psd/psd-load.c:3834
-msgid ""
-"Image will be imported as Grayscale.\n"
-"Duotone color space data has been saved\n"
-"and can be reapplied on export."
-msgstr ""
-
-#: plug-ins/file-psd/psd-load.c:3857
-msgid ""
-"This PSD file contains features that\n"
-"are not yet fully supported in GIMP:"
-msgstr ""
-
-#: plug-ins/file-psd/psd-util.c:176
-#, c-format
-msgid "Error reading data. Most likely unexpected end of file."
-msgstr ""
-
-#: plug-ins/file-psd/psd-util.c:199
-#, fuzzy, c-format
-msgid "Unexpected end of file"
-msgstr "Неочакван край на файла."
-
-#: plug-ins/file-psd/psd.c:135 plug-ins/file-psd/psd.c:215
-msgid "Photoshop image"
-msgstr "Photoshop изображение"
-
-#: plug-ins/file-psd/psd.c:138 plug-ins/file-psd/psd.c:167
-#, fuzzy
-#| msgid "Loads images from the Paint Shop Pro PSP file format"
-msgid "Loads images from the Photoshop PSD and PSB file formats"
-msgstr "Зареждане на изображения във форма̀та Paint Shop Pro"
-
-#: plug-ins/file-psd/psd.c:140
-msgid ""
-"This plug-in loads images in Adobe Photoshop (TM) native PSD and PSB format."
-msgstr ""
-
-#: plug-ins/file-psd/psd.c:164
-#, fuzzy
-msgid "Photoshop image (merged)"
-msgstr "Photoshop изображение"
-
-#: plug-ins/file-psd/psd.c:169
-msgid ""
-"This plug-in loads the merged image data in Adobe Photoshop (TM) native PSD "
-"and PSB format."
-msgstr ""
-
-#: plug-ins/file-psd/psd.c:196
-#, fuzzy
-#| msgid "Loads images from the Paint Shop Pro PSP file format"
-msgid "Loads thumbnails from the Photoshop PSD file format"
-msgstr "Зареждане на изображения във форма̀та Paint Shop Pro"
-
-#: plug-ins/file-psd/psd.c:198
-msgid ""
-"This plug-in loads thumbnail images from Adobe Photoshop (TM) native PSD "
-"format files."
-msgstr ""
-
-#: plug-ins/file-psd/psd.c:218
-#, fuzzy
-#| msgid "Saves files in the JPEG XL file format"
-msgid "Saves files in the Photoshop (TM) PSD file format"
-msgstr "Запазване на изображения във формат JPEG XL"
-
-#: plug-ins/file-psd/psd.c:220
-msgid ""
-"This filter saves files of Adobe Photoshop (TM) native PSD format. These "
-"files may be of any image type supported by GIMP, with or without layers, "
-"layer masks, aux channels and guides."
-msgstr ""
-
-#: plug-ins/file-psd/psd.c:247
-msgid "Assign a Clipping _Path"
-msgstr ""
-
-#: plug-ins/file-psd/psd.c:248
-msgid "Select a path to be the clipping path"
-msgstr ""
-
-#: plug-ins/file-psd/psd.c:254
-msgid "Clipping Path _Name"
-msgstr ""
-
-#: plug-ins/file-psd/psd.c:255
-msgid ""
-"Clipping path name\n"
-"(ignored if no clipping path)"
-msgstr ""
-
-#: plug-ins/file-psd/psd.c:261
-msgid "Path _Flatness"
-msgstr ""
-
-#: plug-ins/file-psd/psd.c:262
-msgid ""
-"Clipping path flatness in device pixels\n"
-"(ignored if no clipping path)"
-msgstr ""
-
-#: plug-ins/file-psd/psd.c:268
-msgid "Export as _CMYK"
-msgstr ""
-
-#: plug-ins/file-psd/psd.c:269
-msgid "Export a CMYK PSD image using the soft-proofing color profile"
-msgstr ""
-
-#: plug-ins/file-psd/psd.c:274
-msgid "Export as _Duotone"
-msgstr ""
-
-#: plug-ins/file-psd/psd.c:275
-msgid ""
-"Export as a Duotone PSD file if Duotone color space information was attached "
-"to the image when originally imported."
-msgstr ""
-
-#: plug-ins/file-psd/psd.c:373
-#, fuzzy
-msgid "Import PSD"
-msgstr "Импортиране от PDF"
-
-#: plug-ins/file-psd/psd.c:524
-msgid "Import PSD metadata"
-msgstr ""
-
-#: plug-ins/file-psd/psd.c:528
-msgid ""
-"Metadata fill layers are not supported and will show up as empty layers."
-msgstr ""
-
-#: plug-ins/file-raw/file-darktable.c:280
-#, fuzzy
-msgid "Load thumbnail from a raw image via darktable"
-msgstr "Зареждане на фрактал от файл"
-
-#: plug-ins/file-raw/file-darktable.c:282
-msgid ""
-"This plug-in loads a thumbnail from a raw image by calling darktable-cli."
-msgstr ""
-
-#: plug-ins/file-raw/file-raw-formats.h:46
-msgid "Raw Canon"
-msgstr ""
-
-#: plug-ins/file-raw/file-raw-formats.h:59
-msgid "Raw Nikon"
-msgstr ""
-
-#: plug-ins/file-raw/file-raw-formats.h:70
-msgid "Raw Hasselblad"
-msgstr ""
-
-#: plug-ins/file-raw/file-raw-formats.h:81
-msgid "Raw Sony"
-msgstr ""
-
-#: plug-ins/file-raw/file-raw-formats.h:92
-msgid "Raw Casio BAY"
-msgstr ""
-
-#: plug-ins/file-raw/file-raw-formats.h:103
-msgid "Raw Phantom Software CINE"
-msgstr ""
-
-#: plug-ins/file-raw/file-raw-formats.h:114
-msgid "Raw Sinar"
-msgstr ""
-
-#: plug-ins/file-raw/file-raw-formats.h:125
-msgid "Raw Kodak"
-msgstr ""
-
-#: plug-ins/file-raw/file-raw-formats.h:136
-msgid "Raw Adobe DNG Digital Negative"
-msgstr ""
-
-#: plug-ins/file-raw/file-raw-formats.h:147
-msgid "Raw Epson ERF"
-msgstr ""
-
-#: plug-ins/file-raw/file-raw-formats.h:158
-msgid "Raw Phase One"
-msgstr ""
-
-#: plug-ins/file-raw/file-raw-formats.h:169
-msgid "Raw Minolta"
-msgstr ""
-
-#: plug-ins/file-raw/file-raw-formats.h:180
-msgid "Raw Mamiya MEF"
-msgstr ""
-
-#: plug-ins/file-raw/file-raw-formats.h:190
-msgid "Raw Leaf MOS"
-msgstr ""
-
-#: plug-ins/file-raw/file-raw-formats.h:201
-msgid "Raw Olympus ORF"
-msgstr ""
-
-#: plug-ins/file-raw/file-raw-formats.h:212
-msgid "Raw Pentax PEF"
-msgstr ""
-
-#: plug-ins/file-raw/file-raw-formats.h:223
-msgid "Raw Logitech PXN"
-msgstr ""
-
-#: plug-ins/file-raw/file-raw-formats.h:234
-msgid "Raw Apple QuickTake QTK"
-msgstr ""
-
-#: plug-ins/file-raw/file-raw-formats.h:245
-msgid "Raw Fujifilm RAF"
-msgstr ""
-
-#: plug-ins/file-raw/file-raw-formats.h:256
-msgid "Raw Panasonic"
-msgstr ""
-
-#: plug-ins/file-raw/file-raw-formats.h:267
-msgid "Raw Digital Foto Maker RDC"
-msgstr ""
-
-#: plug-ins/file-raw/file-raw-formats.h:278
-msgid "Raw Leica RWL"
-msgstr ""
-
-#: plug-ins/file-raw/file-raw-formats.h:289
-msgid "Raw Samsung SRW"
-msgstr ""
-
-#: plug-ins/file-raw/file-raw-formats.h:300
-msgid "Raw Sigma X3F"
-msgstr ""
-
-#: plug-ins/file-raw/file-raw-formats.h:311
-msgid "Raw Arriflex ARI"
-msgstr ""
-
-#: plug-ins/file-raw/file-raw-placeholder.c:176
-#, c-format
-msgid ""
-"There is no RAW loader installed to open '%s' files.\n"
-"\n"
-"GIMP currently supports these RAW loaders:\n"
-"- darktable (http://www.darktable.org/), at least 1.7\n"
-"- RawTherapee (http://rawtherapee.com/), at least 5.2\n"
-"\n"
-"Please install one of them in order to load RAW files."
-msgstr ""
-
-#: plug-ins/file-sgi/sgi.c:146 plug-ins/file-sgi/sgi.c:173
-msgid "Silicon Graphics IRIS image"
-msgstr "Silicon Graphics IRIS изображение"
-
-#: plug-ins/file-sgi/sgi.c:149
-msgid "Loads files in SGI image file format"
-msgstr ""
-
-#: plug-ins/file-sgi/sgi.c:150
-msgid "This plug-in loads SGI image files."
-msgstr ""
-
-#: plug-ins/file-sgi/sgi.c:179
-msgid "Exports files in SGI image file format"
-msgstr ""
-
-#: plug-ins/file-sgi/sgi.c:180
-msgid "This plug-in exports SGI image files."
-msgstr ""
-
-#: plug-ins/file-sgi/sgi.c:200
-#, fuzzy
-msgid "Compression _type"
-msgstr "Тип на компресията"
-
-#: plug-ins/file-sgi/sgi.c:201
-#, fuzzy
-#| msgid "Co_mpression level"
-msgid "Compression level"
-msgstr "Ниво на _компресия"
-
-#: plug-ins/file-sgi/sgi.c:202
-msgid "No compression"
-msgstr "Без компресия"
-
-#: plug-ins/file-sgi/sgi.c:203
-msgid "RLE compression"
-msgstr "RLE компресия"
-
-#: plug-ins/file-sgi/sgi.c:204
-#, fuzzy
-msgid "Aggressive RLE (not supported by SGI)"
-msgstr ""
-"Агресивна RLE\n"
-"(не се поддържа от  SGI)"
-
-#: plug-ins/file-sgi/sgi.c:323
-#, c-format
-msgid "Could not open '%s' for reading."
-msgstr "Не може да бъде отворен „%s“ за визуализиране."
-
-#: plug-ins/file-sgi/sgi.c:339
-#, c-format
-msgid "Invalid width: %hu"
-msgstr ""
-
-#: plug-ins/file-sgi/sgi.c:347
-#, fuzzy, c-format
-msgid "Invalid height: %hu"
-msgstr "_Височина на изображението:"
-
-#: plug-ins/file-sgi/sgi.c:355
-#, fuzzy, c-format
-msgid "Invalid number of channels: %hu"
-msgstr "Грешен брой байтове на ред: %hd"
-
-#: plug-ins/file-sgi/sgi.c:640
-#, c-format
-msgid "Could not open '%s' for writing."
-msgstr "„%s“ не може да бъде отворен за запис."
-
-#: plug-ins/file-tiff/file-tiff.c:164 plug-ins/file-tiff/file-tiff.c:210
-#, fuzzy
-msgid "TIFF or BigTIFF image"
-msgstr "TIFF изображение"
-
-#: plug-ins/file-tiff/file-tiff.c:167
-#, fuzzy
-msgid "Loads files of the TIFF and BigTIFF file formats"
-msgstr "Зареждане на изображение във формат Wireless BMP"
-
-#: plug-ins/file-tiff/file-tiff.c:168
-msgid ""
-"Loads files of the Tag Image File Format (TIFF) and its 64-bit offsets "
-"variant (BigTIFF)"
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff.c:199
-msgid "_Keep empty space around imported layers"
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff.c:213
-#, fuzzy
-msgid "Exports files in the TIFF or BigTIFF file formats"
-msgstr "Грешка във GIMP файл с четки „%s“"
-
-#: plug-ins/file-tiff/file-tiff.c:214
-msgid ""
-"Exports files in the Tag Image File Format (TIFF) or its 64-bit offsets "
-"variant (BigTIFF) able to support much bigger file sizes"
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff.c:226
-msgid "TIFF"
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff.c:238
-#, fuzzy
-msgid "Export in _BigTIFF variant file format"
-msgstr "Грешка във GIMP файл с четки „%s“"
-
-#: plug-ins/file-tiff/file-tiff.c:239
-msgid ""
-"The BigTIFF variant file format uses 64-bit offsets, hence supporting over "
-"4GiB files and bigger"
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff.c:245
-#, fuzzy
-msgid "Co_mpression"
-msgstr "Компресия"
-
-#: plug-ins/file-tiff/file-tiff.c:246
-#, fuzzy
-msgid "Compression type"
-msgstr "Тип на компресията"
-
-#: plug-ins/file-tiff/file-tiff.c:248
-#, fuzzy
-msgid "LZW"
-msgstr "_LZW"
-
-#: plug-ins/file-tiff/file-tiff.c:249
-#, fuzzy
-msgid "Pack Bits"
-msgstr "_Пакетирани битове"
-
-#: plug-ins/file-tiff/file-tiff.c:250
-#, fuzzy
-msgid "Deflate"
-msgstr "_Намаляване"
-
-#: plug-ins/file-tiff/file-tiff.c:252
-#, fuzzy
-msgid "CCITT Group 3 fax"
-msgstr "CCITT·Група·_3·факс"
-
-#: plug-ins/file-tiff/file-tiff.c:253
-#, fuzzy
-msgid "CCITT Group 4 fax"
-msgstr "CCITT·Група·_4·факс"
-
-#: plug-ins/file-tiff/file-tiff.c:259
-msgid ""
-"Keep the color data masked by an alpha channel intact (do not store "
-"premultiplied components)"
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff.c:266
-msgid "Create a CMYK TIFF image using the soft-proofing color profile"
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff.c:271
-#, fuzzy
-msgid "Save La_yers"
-msgstr "Запазване на _гама"
-
-#: plug-ins/file-tiff/file-tiff.c:272
-#, fuzzy
-msgid "Save Layers"
-msgstr "Запазване на _гама"
-
-#: plug-ins/file-tiff/file-tiff.c:277
-#, fuzzy
-msgid "Crop L_ayers"
-msgstr "Подвиване на слой"
-
-#: plug-ins/file-tiff/file-tiff.c:278
-#, fuzzy
-msgid "Crop Layers"
-msgstr "Подвиване на слой"
-
-#: plug-ins/file-tiff/file-tiff.c:283
-#, fuzzy
-msgid "Save _GeoTIFF data"
-msgstr "Запазване на EXIF данни"
-
-#: plug-ins/file-tiff/file-tiff.c:284
-#, fuzzy
-msgid "Save GeoTIFF data"
-msgstr "Запазване на EXIF данни"
-
-#: plug-ins/file-tiff/file-tiff.c:423
-#, c-format
-msgid "\"Save layers\" option not set while trying to export multiple layers."
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff-export.c:651
-msgid ""
-"Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
-"Group 3\"."
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff-export.c:665
-msgid "Indexed pictures cannot be compressed with \"JPEG\"."
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff-export.c:724
-msgid ""
-"The TIFF format only supports comments in\n"
-"7bit ASCII encoding. No comment is saved."
-msgstr ""
-"Форматът TIFF поддържа само коментари в\n"
-"7-битово ASCII кодиране. Не са запазени коментари."
-
-#: plug-ins/file-tiff/file-tiff-export.c:866
-#, c-format
-msgid "Failed a scanline write on row %d"
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff-export.c:1201
-#, c-format
-msgid "Writing pages with different bit depth is strange."
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff-export.c:1276
-msgid ""
-"Warning: maximum TIFF file size exceeded. Retry as BigTIFF or with a "
-"different compression algorithm, or cancel."
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff-export.c:1335
-#, c-format
-msgid ""
-"The assigned soft-proofing profile is not a CMYK profile.\n"
-"This profile will not be included in the exported image."
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff-load.c:307
-#, c-format
-msgid "Not a TIFF image or image is corrupt."
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff-load.c:334
-#, c-format
-msgid "TIFF '%s' does not contain any directories"
-msgstr "TIFF·'%s' не съдържа директории"
-
-#: plug-ins/file-tiff/file-tiff-load.c:341
-#, c-format
-msgid ""
-"TIFF '%s' directory count by header failed though there seems to be %d page. "
-"Attempting to load the file with this assumption."
-msgid_plural ""
-"TIFF '%s' directory count by header failed though there seem to be %d pages. "
-"Attempting to load the file with this assumption."
-msgstr[0] ""
-msgstr[1] ""
-
-#: plug-ins/file-tiff/file-tiff-load.c:472
-msgid "Extra channels with unspecified data."
-msgstr ""
-
-#. ExtraSamples field not set, yet we have more channels than
-#. * the PhotometricInterpretation field suggests.
-#. * This should not happen as the spec clearly says "This field
-#. * must be present if there are extra samples". So the files
-#. * can be considered non-conformant.
-#. * Let's ask what to do with the channel.
-#.
-#: plug-ins/file-tiff/file-tiff-load.c:484
-msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff-load.c:579
-#, c-format
-msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff-load.c:608
-#, c-format
-msgid ""
-"This image has a linear color profile but it was not set on the first layer. "
-"The layers below layer # %d will be interpreted as non linear."
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff-load.c:616
-msgid ""
-"This image has multiple color profiles. We will use the first one. If this "
-"leads to incorrect results you should consider loading each layer as a "
-"separate image."
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff-load.c:628
-#, c-format
-msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff-load.c:702
-#, fuzzy, c-format
-msgid "Unsupported bit depth: %d for page %d."
-msgstr "Неподдържана дълбочина (%d)!"
-
-#: plug-ins/file-tiff/file-tiff-load.c:717
-#, fuzzy, c-format
-msgid "Could not get image width from '%s'"
-msgstr "Не може да бъде прочетено началото на „%s“"
-
-#: plug-ins/file-tiff/file-tiff-load.c:725
-#, fuzzy, c-format
-msgid "Could not get image length from '%s'"
-msgstr "Не може да бъде прочетена цветовата информация от „%s“"
-
-#: plug-ins/file-tiff/file-tiff-load.c:733
-#, c-format
-msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff-load.c:754
-#, c-format
-msgid ""
-"Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
-"is-white"
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff-load.c:761
-#, c-format
-msgid "Could not get photometric from '%s'. Assuming min-is-black"
-msgstr ""
-
-#. In non-interactive mode, we assume unassociated alpha if unspecified.
-#. * We don't output messages in interactive mode as the user
-#. * has already the ability to choose through a dialog.
-#: plug-ins/file-tiff/file-tiff-load.c:793
-#, c-format
-msgid ""
-"Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff-load.c:818
-#, c-format
-msgid ""
-"Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
-"not set while extra channels are present. Assuming the first extra channel "
-"is non-premultiplied alpha."
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff-load.c:1107
-#, c-format
-msgid "Invalid or unknown compression %u. Setting compression to none."
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff-load.c:1165
-#, fuzzy, c-format
-msgid "Could not create a new image: %s"
-msgstr "Не може да бъде създадено ново изображение"
-
-#: plug-ins/file-tiff/file-tiff-load.c:1335
-#, c-format
-msgid "Unknown resolution unit type %d, assuming dpi"
-msgstr ""
-
-#. no res unit tag
-#. old AppleScan software produces these
-#: plug-ins/file-tiff/file-tiff-load.c:1345
-msgid "Warning: resolution specified without unit type, assuming dpi"
-msgstr ""
-
-#. xres but no yres
-#: plug-ins/file-tiff/file-tiff-load.c:1353
-msgid "Warning: no y resolution info, assuming same as x"
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff-load.c:1374
-msgid "Invalid image resolution info, using default"
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff-load.c:1436
-#, fuzzy, c-format
-msgid "Could not get colormaps from '%s'"
-msgstr "Не може да бъде прочетена цветовата информация от „%s“"
-
-#. Validate number of channels to the same maximum as we use for
-#. * Photoshop. A higher number most likely means a corrupt image
-#. * and can cause GIMP to become unresponsive and/or stuck.
-#. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
-#.
-#: plug-ins/file-tiff/file-tiff-load.c:1526
-#, c-format
-msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff-load.c:1591
-msgid "TIFF Channel"
-msgstr "TIFF канал"
-
-#: plug-ins/file-tiff/file-tiff-load.c:1749
-#, c-format
-msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff-load.c:1785
-#: plug-ins/file-tiff/file-tiff-load.c:1828
-#, fuzzy, c-format
-msgid ""
-"Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
-msgstr ""
-"Грешка при опит за отваряне на временен файл „%s“ за зареждане на "
-"допълнение: %s"
-
-#: plug-ins/file-tiff/file-tiff-load.c:1908
-#, c-format
-msgid "%s: Unsupported image format, no RGBA loader available"
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff-load.c:2023
-#: plug-ins/file-tiff/file-tiff-load.c:2220
-#, c-format
-msgid "Reading tile failed. Image may be corrupt at line %d."
-msgstr ""
-
-#. Error reading scanline, stop loading
-#: plug-ins/file-tiff/file-tiff-load.c:2032
-#: plug-ins/file-tiff/file-tiff-load.c:2229
-#, c-format
-msgid "Reading scanline failed. Image may be corrupt at line %d."
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff-load.c:2783
-msgid "Import from TIFF"
-msgstr "Внасяне от TIFF"
-
-#: plug-ins/file-tiff/file-tiff-load.c:2791
-#, fuzzy
-msgid "_Show reduced images"
-msgstr "Показване на изображение"
-
-#: plug-ins/file-tiff/file-tiff-load.c:2836
-#, fuzzy
-msgid "Process extra channel as:"
-msgstr "Изходен канал:"
-
-#: plug-ins/file-tiff/file-tiff-load.c:2839
-msgid "_Non-premultiplied alpha"
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff-load.c:2840
-msgid "Pre_multiplied alpha"
-msgstr ""
-
-#: plug-ins/file-tiff/file-tiff-load.c:2841
-#, fuzzy
-msgid "Channe_l"
-msgstr "Канали"
-
-#: plug-ins/file-webp/file-webp.c:128 plug-ins/file-webp/file-webp.c:155
-#, fuzzy
-msgid "WebP image"
-msgstr "PNG изображение"
-
-#: plug-ins/file-webp/file-webp.c:158 plug-ins/file-webp/file-webp.c:159
-#, fuzzy
-msgid "Saves files in the WebP image format"
-msgstr "Зареждане на изображение във формат Wireless BMP"
-
-#: plug-ins/file-webp/file-webp.c:168
-msgid "WebP"
-msgstr ""
-
-#: plug-ins/file-webp/file-webp.c:178
-#, fuzzy
-msgid "Source _type"
-msgstr "Тип на светлинния източник:"
-
-#: plug-ins/file-webp/file-webp.c:179
-#, fuzzy
-#| msgid "Enco_der speed"
-msgid "WebP encoder preset"
-msgstr "_Скорост на кодера"
-
-#: plug-ins/file-webp/file-webp.c:181
-msgid "Picture"
-msgstr ""
-
-#: plug-ins/file-webp/file-webp.c:182
-#, fuzzy
-msgid "Photo"
-msgstr "Фотокопие"
-
-#: plug-ins/file-webp/file-webp.c:183
-#, fuzzy
-msgid "Drawing"
-msgstr "Мрежа за рисуване"
-
-#: plug-ins/file-webp/file-webp.c:184
-#, fuzzy
-msgid "Icon"
-msgstr "Иконка #%i"
-
-#: plug-ins/file-webp/file-webp.c:185
-#, fuzzy
-msgid "Text"
-msgstr "Текстура"
-
-#: plug-ins/file-webp/file-webp.c:192
-msgid "Use lossless encoding"
-msgstr ""
-
-#: plug-ins/file-webp/file-webp.c:197
-#, fuzzy
-msgid "Image _quality"
-msgstr "_Височина на изображението:"
-
-#: plug-ins/file-webp/file-webp.c:198
-#, fuzzy
-msgid "Quality of the image"
-msgstr "Изпращане на изображението"
-
-#: plug-ins/file-webp/file-webp.c:203
-#, fuzzy
-msgid "Alpha q_uality"
-msgstr "_Качество:"
-
-#: plug-ins/file-webp/file-webp.c:204
-#, fuzzy
-msgid "Quality of the image's alpha channel"
-msgstr "Не могат да се запазват изображения с канал за прозрачност."
-
-#: plug-ins/file-webp/file-webp.c:209
-msgid "Use Sharp YU_V"
-msgstr ""
-
-#. TRANSLATORS: \xe2\x86\x92 is a Unicode
-#. * "Rightward Arrow" in UTF-8 encoding.
-#.
-#: plug-ins/file-webp/file-webp.c:213
-msgid "Use sharper (but slower) RGB→YUV conversion"
-msgstr ""
-
-#: plug-ins/file-webp/file-webp.c:218
-#, fuzzy
-msgid "Loop _forever"
-msgstr "_Вечно превъртане"
-
-#: plug-ins/file-webp/file-webp.c:219
-msgid "Loop animation infinitely"
-msgstr ""
-
-#: plug-ins/file-webp/file-webp.c:224
-msgid "_Minimize output size (slower)"
-msgstr ""
-
-#: plug-ins/file-webp/file-webp.c:225
-msgid "Minimize output file size"
-msgstr ""
-
-#: plug-ins/file-webp/file-webp.c:230
-msgid "Max distance between _key-frames"
-msgstr ""
-
-#: plug-ins/file-webp/file-webp.c:231
-msgid "Maximum distance between keyframes"
-msgstr ""
-
-#: plug-ins/file-webp/file-webp.c:236
-#, fuzzy
-msgid "_Default delay between frames"
-msgstr "_Пауза между кадрите, където не е посочена:"
-
-#: plug-ins/file-webp/file-webp.c:237
-msgid ""
-"Default delay (in milliseconds) to use when timestamps for frames are not "
-"available or forced."
-msgstr ""
-
-#: plug-ins/file-webp/file-webp.c:243
-#, fuzzy
-msgid "Use default dela_y for all frames"
-msgstr "_Използване на въведеното забавяне за всички кадри"
-
-#: plug-ins/file-webp/file-webp.c:244
-msgid "Force default delay on all frames"
-msgstr ""
-
-#: plug-ins/file-webp/file-webp.c:249
-#, fuzzy
-msgid "Save a_nimation"
-msgstr "MNG анимация"
-
-#: plug-ins/file-webp/file-webp.c:250
-#, fuzzy
-msgid "Use layers for animation"
-msgstr "Нормална скорост на анимацията"
-
-#: plug-ins/file-webp/file-webp-dialog.c:48
-msgid "(no keyframes)"
-msgstr ""
-
-#: plug-ins/file-webp/file-webp-dialog.c:52
-msgid "(all frames are keyframes)"
-msgstr ""
-
-#: plug-ins/file-webp/file-webp-export.c:101
-msgid "out of memory"
-msgstr ""
-
-#: plug-ins/file-webp/file-webp-export.c:103
-msgid "not enough memory to flush bits"
-msgstr ""
-
-#: plug-ins/file-webp/file-webp-export.c:105
-#, fuzzy
-msgid "NULL parameter"
-msgstr "Параметри"
-
-#: plug-ins/file-webp/file-webp-export.c:107
-#, fuzzy
-msgid "invalid configuration"
-msgstr "Невалидна резолюция по хоризонтал."
-
-#. TRANSLATORS: widthxheight with UTF-8 encoded multiply sign.
-#: plug-ins/file-webp/file-webp-export.c:110
-#, fuzzy, c-format
-msgid "bad image dimensions (maximum: %d×%d)"
-msgstr "Размери на изображението: %d на %d"
-
-#: plug-ins/file-webp/file-webp-export.c:113
-msgid "partition is bigger than 512K"
-msgstr ""
-
-#: plug-ins/file-webp/file-webp-export.c:115
-msgid "partition is bigger than 16M"
-msgstr ""
-
-#: plug-ins/file-webp/file-webp-export.c:117
-msgid "unable to flush bytes"
-msgstr ""
-
-#: plug-ins/file-webp/file-webp-export.c:119
-msgid "file is larger than 4GiB"
-msgstr ""
-
-#: plug-ins/file-webp/file-webp-export.c:121
-msgid "user aborted encoding"
-msgstr ""
-
-#: plug-ins/file-webp/file-webp-export.c:123
-msgid "list terminator"
-msgstr ""
-
-#: plug-ins/file-webp/file-webp-export.c:125
-#, fuzzy
-msgid "unknown error"
-msgstr "Неизвестна причина"
-
-#: plug-ins/file-webp/file-webp-export.c:209
-#: plug-ins/file-webp/file-webp-export.c:609
-#, fuzzy, c-format
-msgid "Unable to open '%s' for writing: %s"
-msgstr "Не може да се отвори „%s“ за записване: %s"
-
-#: plug-ins/file-webp/file-webp-export.c:295
-#, fuzzy, c-format
-msgid "WebP error: '%s'"
-msgstr ""
-"Грешка при четене в „%s“:\n"
-"%s"
-
-#: plug-ins/file-webp/file-webp-load.c:106
-#, fuzzy, c-format
-msgid "Invalid WebP file '%s'"
-msgstr "Невалиден файл."
-
-#: plug-ins/file-webp/file-webp-load.c:195
-#, fuzzy, c-format
-msgid "Failed to decode animated WebP file '%s'"
-msgstr "Грешка при отваряне на GFlare файл „%s“: %s"
-
-#: plug-ins/file-webp/file-webp-load.c:203
-#, c-format
-msgid "Failed to decode animated WebP information from '%s'"
-msgstr ""
-
-#: plug-ins/file-webp/file-webp-load.c:222
-#, fuzzy, c-format
-msgid "Failed to decode animated WebP frame from '%s'"
-msgstr "Грешка при четене на  %s от „%s“: %s"
-
-#: plug-ins/file-webp/file-webp-load.c:227
-#, fuzzy, c-format
-msgid "Frame %d (%dms)"
-msgstr "Кадър %d (%d%s)"
 
 #: plug-ins/flame/flame.c:179
 msgid "_Flame..."
