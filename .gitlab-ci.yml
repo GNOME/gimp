@@ -181,7 +181,6 @@ image-debian:
             desktop-file-utils
             ffmpeg
             gettext
-            ghostscript
             gi-docgen
             git
             gjs
@@ -198,6 +197,7 @@ image-debian:
             libdbus-glib-1-dev
             libgexiv2-dev
             libgirepository1.0-dev
+            libgs10
             libgs-dev
             libgtk-3-bin
             libgtk-3-dev
