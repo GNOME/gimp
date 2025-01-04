@@ -236,7 +236,6 @@ image-debian:
             xauth
             xsltproc
             xvfb
-            xz-utils
             yelp-tools" >> Dockerfile
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-latest-${RUNNER} --cache=true --cache-ttl=120h
 
