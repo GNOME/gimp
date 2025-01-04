@@ -168,24 +168,33 @@ image-debian:
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - echo "FROM debian:bookworm" > Dockerfile
     - echo "RUN apt-get update" >> Dockerfile
-    - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
     # 'ca-certificates' is NOT a gimp dep, it is installed only to our Docker image work
-    - echo "ca-certificates
+    - echo "RUN apt-get install -y --no-install-recommends ca-certificates" >> Dockerfile
+    # Build-time only dependencies
+    - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
+    - echo "appstream
             ccache
             clang
-            lld
-            libomp-dev
-            libunwind-dev
-            appstream
-            at-spi2-core
             desktop-file-utils
-            ffmpeg
-            gettext
             gi-docgen
             git
+            gobject-introspection
+            libgtk-3-bin
+            libtool
+            lld
+            meson
+            valac
+            xauth
+            xsltproc
+            xvfb
+            yelp-tools" >> Dockerfile
+    # Dependencies
+    - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
+    - echo "at-spi2-core
+            ffmpeg
+            gettext
             gjs
             glib-networking
-            gobject-introspection
             graphviz
             graphviz-dev
             hicolor-icon-theme
@@ -198,7 +207,6 @@ image-debian:
             libgirepository1.0-dev
             libgs10
             libgs-dev
-            libgtk-3-bin
             libgtk-3-dev
             libgudev-1.0-dev
             libheif-dev
@@ -209,6 +217,7 @@ image-debian:
             libmaxflow-dev
             libmng-dev
             libmypaint-dev
+            libomp-dev
             libopenexr-dev
             libopenjp2-7-dev
             libpoppler-glib-dev
@@ -220,22 +229,16 @@ image-debian:
             libsuitesparse-dev
             libtiff-dev
             libtiff5-dev
-            libtool
             libumfpack5
+            libunwind-dev
             libwebp-dev
             libwmf-dev
             libxmu-dev
             libxpm-dev
-            meson
             mypaint-brushes
             poppler-data
             python3
-            python3-gi
-            valac
-            xauth
-            xsltproc
-            xvfb
-            yelp-tools" >> Dockerfile
+            python3-gi" >> Dockerfile
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-latest-${RUNNER} --cache=true --cache-ttl=120h
 
 image-debian-x64:
