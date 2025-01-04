@@ -196,7 +196,6 @@ image-debian:
             libbz2-dev
             libcfitsio-dev
             libdbus-glib-1-dev
-            libexif-dev
             libgexiv2-dev
             libgirepository1.0-dev
             libgs-dev
