@@ -33,9 +33,9 @@
 #include "operations/gimpoperationsettings.h"
 
 #include "gimpcontainer.h"
-#include "gimpdrawable.h"
-#include "gimpdrawable-operation.h"
 #include "gimpdrawable-filters.h"
+#include "gimpdrawable-operation.h"
+#include "gimpdrawable.h"
 #include "gimpdrawablefilter.h"
 #include "gimpprogress.h"
 #include "gimpsettings.h"
