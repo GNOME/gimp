@@ -22,7 +22,6 @@ ${MINGW_PACKAGE_PREFIX}-headers-git \
 ${MINGW_PACKAGE_PREFIX}-iso-codes \
 ${MINGW_PACKAGE_PREFIX}-json-glib \
 ${MINGW_PACKAGE_PREFIX}-lcms2 \
-${MINGW_PACKAGE_PREFIX}-lensfun \
 ${MINGW_PACKAGE_PREFIX}-libarchive \
 ${MINGW_PACKAGE_PREFIX}-libheif \
 ${MINGW_PACKAGE_PREFIX}-libiff \
