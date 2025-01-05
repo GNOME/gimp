@@ -81,6 +81,10 @@ if [ "$1" != '' ] && [[ ! "$1" =~ "--" ]]; then
 else
   export BUILD_DIR=$(echo $PWD/_build*$RUNNER)
 fi
+if [ ! -f "$BUILD_DIR/config.h" ]; then
+  echo -e "\033[31m(ERROR)\033[0m: config.h file not found. You can configure GIMP with meson to generate it."
+  exit 1
+fi
 
 ## Get info about GIMP version
 GIMP_VERSION=$(grep GIMP_VERSION $BUILD_DIR/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
