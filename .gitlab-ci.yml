@@ -228,7 +228,6 @@ image-debian:
             libspiro-dev
             libsuitesparse-dev
             libtiff-dev
-            libtiff5-dev
             libumfpack5
             libunwind-dev
             libwebp-dev
