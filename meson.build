@@ -1951,7 +1951,8 @@ subdir('app-tools')
 # tool.
 
 gimp_run_env=environment()
-gimp_run_env.set('GIMP_GLOBAL_BUILD_ROOT', meson.global_build_root())
+gimp_run_env.set('GIMP_GLOBAL_BUILD_ROOT',  meson.global_build_root())
+gimp_run_env.set('GIMP_GLOBAL_SOURCE_ROOT', meson.global_source_root())
 
 if meson.can_run_host_binaries() and have_gobject_introspection
   if enable_console_bin

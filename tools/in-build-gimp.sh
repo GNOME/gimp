@@ -24,7 +24,13 @@ if [ -n "$GIMP_TEMP_UPDATE_RPATH" ]; then
   unset IFS
 fi
 
-cat /dev/stdin | $GIMP_SELF_IN_BUILD "$@"
+if command -v gdb; then
+  echo RUNNING: cat /dev/stdin "|" gdb --batch -x "$GIMP_GLOBAL_SOURCE_ROOT/tools/debug-in-build-gimp.py" --args $GIMP_SELF_IN_BUILD "$@"
+  cat /dev/stdin | gdb --return-child-result --batch -x "$GIMP_GLOBAL_SOURCE_ROOT/tools/debug-in-build-gimp.py" --args $GIMP_SELF_IN_BUILD "$@"
+else
+  echo RUNNING: cat /dev/stdin "|" $GIMP_SELF_IN_BUILD "$@"
+  cat /dev/stdin | $GIMP_SELF_IN_BUILD "$@"
+fi
 
 if [ -n "$GIMP_TEMP_UPDATE_RPATH" ]; then
   export IFS=":"
