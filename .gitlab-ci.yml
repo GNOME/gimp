@@ -201,6 +201,7 @@ image-debian:
             iso-codes
             libaa1-dev
             libappstream-glib-dev
+            libarchive-dev
             libbz2-dev
             libcfitsio-dev
             libgexiv2-dev
