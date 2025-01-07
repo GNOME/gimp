@@ -429,7 +429,8 @@ gtk3_minver       = '3.24.0'
 gtk3              = dependency('gtk+-3.0',           version: '>='+gtk3_minver)
 harfbuzz_minver   = '2.8.2'
 harfbuzz          = dependency('harfbuzz',           version: '>='+harfbuzz_minver)
-json_glib         = dependency('json-glib-1.0',      version: '>=1.2.6')
+json_glib_minver  = '1.2.6'
+json_glib         = dependency('json-glib-1.0',      version: '>='+json_glib_minver)
 lcms_minver       = '2.8'
 lcms              = dependency('lcms2',              version: '>='+lcms_minver)
 libmypaint_minver = '1.3.0'
@@ -1777,6 +1778,7 @@ install_conf.set('GEXIV2_REQUIRED_VERSION',       gexiv2_minver)
 install_conf.set('GLIB_REQUIRED_VERSION',         glib_minver)
 install_conf.set('GTK_REQUIRED_VERSION',          gtk3_minver)
 install_conf.set('HARFBUZZ_REQUIRED_VERSION',     harfbuzz_minver)
+install_conf.set('JSON_GLIB_REQUIRED_VERSION',    json_glib_minver)
 install_conf.set('LCMS_REQUIRED_VERSION',         lcms_minver)
 install_conf.set('LIBHEIF_REQUIRED_VERSION',      libheif_minver)
 install_conf.set('LIBJXL_REQUIRED_VERSION',       jpegxl_minver)

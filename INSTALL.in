@@ -247,6 +247,7 @@ help in that regard:
      GTK                  @GTK_REQUIRED_VERSION@
      gvfs (on Linux)
      HarfBuzz             @HARFBUZZ_REQUIRED_VERSION@
+     json-glib            @JSON_GLIB_REQUIRED_VERSION@
      libbzip2
      libjpeg
      liblzma              @LIBLZMA_REQUIRED_VERSION@
