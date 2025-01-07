@@ -470,6 +470,9 @@ typedef enum _D3DFORMAT
   D3DFMT_A1                   = 118,
   D3DFMT_A2B10G10R10_XR_BIAS  = 119,
   D3DFMT_BINARYBUFFER         = 199,
+
+  /* Unofficial formats added by GIMP */
+  D3DFMT_B8G8R8               = 220,
 } D3DFORMAT;
 
 

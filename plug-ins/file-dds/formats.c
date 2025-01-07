@@ -77,6 +77,9 @@ static const fmt_read_info_t format_read_info[] =
   { D3DFMT_CxV8U8,        DXGI_FORMAT_UNKNOWN,                  {0,1,2,3}, { 8, 8, 0, 0},  8, FALSE, FALSE, TRUE,  GIMP_RGB     },
   { D3DFMT_A1,            DXGI_FORMAT_UNKNOWN,                  {3,2,1,0}, { 1, 0, 0, 0},  8, TRUE,  FALSE, FALSE, GIMP_GRAY    },
 
+  /* Older GIMP wrote this when exporting to BGR8 */
+  { D3DFMT_B8G8R8,        DXGI_FORMAT_UNKNOWN,                  {0,1,2,3}, { 8, 8, 8, 0},  8, FALSE, FALSE, FALSE, GIMP_RGB     },
+
   { D3DFMT_UNKNOWN,       DXGI_FORMAT_R32G32B32A32_FLOAT,       {0,1,2,3}, {32,32,32,32}, 32, TRUE,  TRUE,  TRUE,  GIMP_RGB     },
   { D3DFMT_UNKNOWN,       DXGI_FORMAT_R32G32B32A32_UINT,        {0,1,2,3}, {32,32,32,32}, 32, TRUE,  FALSE, FALSE, GIMP_RGB     },
   { D3DFMT_UNKNOWN,       DXGI_FORMAT_R32G32B32A32_SINT,        {0,1,2,3}, {32,32,32,32}, 32, TRUE,  FALSE, TRUE,  GIMP_RGB     },
@@ -193,6 +196,11 @@ static struct _FMT_MAP
   { D3DFMT_L8,            8, 0x000000FF, 0x00000000, 0x00000000, 0x00000000, DDPF_RGB                                },
   { D3DFMT_A8L8,         16, 0x000000FF, 0x00000000, 0x00000000, 0x0000FF00, DDPF_RGB | DDPF_ALPHAPIXELS             },
   { D3DFMT_L16,          16, 0x0000FFFF, 0x00000000, 0x00000000, 0x00000000, DDPF_RGB                                },
+
+  /* Older versions of GIMP wrote these */
+  { D3DFMT_B8G8R8,       24, 0x000000FF, 0x0000FF00, 0x00FF0000, 0x00000000, DDPF_RGB                                },
+  { D3DFMT_L8,            8, 0x000000FF, 0x000000FF, 0x000000FF, 0x00000000, DDPF_LUMINANCE                          },
+  { D3DFMT_A8L8,         16, 0x000000FF, 0x000000FF, 0x000000FF, 0x0000FF00, DDPF_LUMINANCE | DDPF_ALPHAPIXELS       },
 };
 #define FORMAT_MAP_COUNT  (sizeof (format_map) / sizeof (format_map[0]))
 
@@ -437,6 +445,7 @@ get_bpp_d3d9 (guint fmt)
       return 32;
 
     case D3DFMT_R8G8B8:
+    case D3DFMT_B8G8R8:
       return 24;
 
     case D3DFMT_A4R4G4B4:
