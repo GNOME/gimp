@@ -99,7 +99,7 @@ static struct
 {
   { DDS_FORMAT_RGB8,    DXGI_FORMAT_UNKNOWN,           3, FALSE, 0x00ff0000, 0x0000ff00, 0x000000ff, 0x00000000},
   { DDS_FORMAT_RGBA8,   DXGI_FORMAT_B8G8R8A8_UNORM,    4, TRUE,  0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000},
-  { DDS_FORMAT_BGR8,    DXGI_FORMAT_UNKNOWN,           3, FALSE, 0x000000ff, 0x0000ff00, 0x00ff0000, 0x00000000},
+  { DDS_FORMAT_BGR8,    DXGI_FORMAT_UNKNOWN,           4, FALSE, 0x000000ff, 0x0000ff00, 0x00ff0000, 0x00000000},
   { DDS_FORMAT_ABGR8,   DXGI_FORMAT_R8G8B8A8_UNORM,    4, TRUE,  0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000},
   { DDS_FORMAT_R5G6B5,  DXGI_FORMAT_B5G6R5_UNORM,      2, FALSE, 0x0000f800, 0x000007e0, 0x0000001f, 0x00000000},
   { DDS_FORMAT_RGBA4,   DXGI_FORMAT_B4G4R4A4_UNORM,    2, TRUE,  0x00000f00, 0x000000f0, 0x0000000f, 0x0000f000},
@@ -675,9 +675,10 @@ convert_pixels (guchar *dst,
           dst[4 * i + 3] = a;
           break;
         case DDS_FORMAT_BGR8:
-          dst[3 * i + 0] = r;
-          dst[3 * i + 1] = g;
-          dst[3 * i + 2] = b;
+          dst[4 * i + 0] = r;
+          dst[4 * i + 1] = g;
+          dst[4 * i + 2] = b;
+          dst[4 * i + 3] = 0;
           break;
         case DDS_FORMAT_ABGR8:
           dst[4 * i + 0] = r;
