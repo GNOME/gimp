@@ -80,8 +80,10 @@ static void       gimp_color_frame_image_changed       (GimpColorFrame *frame,
                                                         GimpImage      *image,
                                                         GimpContext    *context);
 
-static void       gimp_color_frame_update_simulation   (GimpImage        *image,
-                                                        GimpColorFrame   *frame);
+static void       gimp_color_frame_update_simulation   (GimpImage      *image,
+                                                        GimpColorFrame *frame);
+static void       gimp_color_frame_image_disconnect    (GimpImage      *image,
+                                                        GimpColorFrame *frame);
 
 G_DEFINE_TYPE (GimpColorFrame, gimp_color_frame, GIMP_TYPE_FRAME)
 
@@ -693,9 +695,11 @@ gimp_color_frame_set_image (GimpColorFrame *frame,
       if (frame->image)
         {
           g_signal_handlers_disconnect_by_func (frame->image,
+                                                gimp_color_frame_image_disconnect,
+                                                frame);
+          g_signal_handlers_disconnect_by_func (frame->image,
                                                 gimp_color_frame_update_simulation,
                                                 frame);
-          g_object_unref (frame->image);
         }
     }
 
@@ -703,8 +707,9 @@ gimp_color_frame_set_image (GimpColorFrame *frame,
 
   if (frame->image)
     {
-      g_object_ref (frame->image);
-
+      g_signal_connect (frame->image, "disconnect",
+                        G_CALLBACK (gimp_color_frame_image_disconnect),
+                        frame);
       g_signal_connect (frame->image, "simulation-profile-changed",
                         G_CALLBACK (gimp_color_frame_update_simulation),
                         frame);
@@ -1237,4 +1242,12 @@ gimp_color_frame_update_simulation (GimpImage      *image,
 
       gimp_color_frame_update (frame);
     }
+}
+
+static void
+gimp_color_frame_image_disconnect (GimpImage      *image,
+                                   GimpColorFrame *frame)
+{
+  if (image == frame->image)
+    gimp_color_frame_set_image (frame, NULL);
 }
