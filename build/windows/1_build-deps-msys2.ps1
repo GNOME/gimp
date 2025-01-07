@@ -111,6 +111,6 @@ function self_build ([string]$dep, [string]$option1, [string]$option2)
 
 #FIXME: babl dev docs are broken. See: https://gitlab.gnome.org/GNOME/babl/-/issues/97
 self_build babl '-Dwith-docs=false'
-self_build gegl '-Dworkshop=true'
+self_build gegl
 
 Set-Location $GIMP_DIR
