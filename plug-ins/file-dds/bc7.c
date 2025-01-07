@@ -1,9 +1,6 @@
 /*
  * DDS GIMP plugin
  *
- * Copyright (C) 2004-2012 Shawn Kirst <skirst@gmail.com>,
- * with parts (C) 2003 Arne Reuter <homepage@arnereuter.de> where specified.
- *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
  * License as published by the Free Software Foundation; either
@@ -34,9 +31,6 @@
 #include "bc7.h"
 
 #define SWAP(a, b)  do { typeof(a) t; t = a; a = b; b = t; } while(0)
-
-/* ImageMagick implementation used as a reference:
- * https://github.com/ImageMagick/ImageMagick/pull/4126/files */
 
 static guchar    get_bits             (const guchar *block,
                                        guchar       *start_bit,
@@ -161,7 +155,7 @@ bc7_decompress (guchar *src,
     {
       guint  weight;
       guint  c0 = 2 * subset_indexes[i];
-      guint  c1 = (2 *subset_indexes[i]) + 1;
+      guint  c1 = (2 * subset_indexes[i]) + 1;
 
       if (i_precision == 2)
         weight = weight_2[rgb_indexes[i]];
@@ -197,7 +191,6 @@ bc7_decompress (guchar *src,
           default:
             break;
          }
-
 
       for (gint j = 0; j < 4; j++)
         block[(i * 4) + j] = rgba[j];
