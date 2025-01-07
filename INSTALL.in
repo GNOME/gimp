@@ -248,6 +248,7 @@ help in that regard:
      gvfs (on Linux)
      HarfBuzz             @HARFBUZZ_REQUIRED_VERSION@
      json-glib            @JSON_GLIB_REQUIRED_VERSION@
+     libarchive
      libbzip2
      libjpeg
      liblzma              @LIBLZMA_REQUIRED_VERSION@
