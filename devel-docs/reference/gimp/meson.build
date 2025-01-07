@@ -7,7 +7,7 @@ gimp_doc_toml = configure_file(
   output: '@BASENAME@',
   configuration: {
     'GIMP_VERSION': gimp_version,
-    'GIMP_LOGO_PATH': '../images/' + (stable ? 'gimp-logo.png' : 'gimp-devel-logo.png'),
+    'GIMP_LOGO_PATH': '../images/gimp-devel-logo.png',
   },
 )
 
