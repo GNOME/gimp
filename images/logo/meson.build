@@ -15,26 +15,27 @@ logo_png = custom_target('gimp-logo.png',
                          install: true,
                          install_dir: gimpdatadir / 'images')
 
-if not stable
-  logo_png = custom_target('gimp-devel-logo.png',
-                           input : 'gimp-devel-logo.svg',
-                           output: 'gimp-devel-logo.png',
-                           command: [
-                             colorsvg2png, '@INPUT@', '@OUTPUT@', '128',
-                           ],
-                           install: true,
-                           install_dir: gimpdatadir / 'images')
+if not stable or gi_docgen.found()
+  devel_logo = custom_target('gimp-devel-logo.png',
+                             input : 'gimp-devel-logo.svg',
+                             output: 'gimp-devel-logo.png',
+                             command: [
+                               colorsvg2png, '@INPUT@', '@OUTPUT@', '128',
+                             ],
+                             install: true,
+                             install_dir: gimpdatadir / 'images')
 
 endif
 
 ## Logo used in API reference documentation ##
 
-installed_image = gimpdatadir / 'images' / fs.name(logo_png.full_path())
-if not fs.is_absolute(installed_image)
-  installed_image = prefix / installed_image
-endif
 if gi_docgen.found()
-  install_symlink(fs.name(logo_png.full_path()),
+  installed_image = gimpdatadir / 'images' / fs.name(devel_logo.full_path())
+  if not fs.is_absolute(installed_image)
+    installed_image = prefix / installed_image
+  endif
+
+  install_symlink(fs.name(devel_logo.full_path()),
                   install_dir: get_option('datadir') / 'doc' / 'gimp-@0@'.format(gimp_app_version) / 'images',
                   pointing_to: installed_image)
 endif
