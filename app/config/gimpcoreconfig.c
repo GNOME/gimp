@@ -1141,8 +1141,11 @@ gimp_core_config_set_property (GObject      *object,
       core_config->last_revision = g_value_get_int (value);
       break;
     case PROP_LAST_KNOWN_RELEASE:
-      g_clear_pointer (&core_config->last_known_release, g_free);
-      core_config->last_known_release = g_value_dup_string (value);
+      if (core_config->last_known_release != g_value_get_string (value))
+        {
+          g_clear_pointer (&core_config->last_known_release, g_free);
+          core_config->last_known_release = g_value_dup_string (value);
+        }
       break;
     case PROP_CONFIG_VERSION:
       g_clear_pointer (&core_config->config_version, g_free);

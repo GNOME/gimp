@@ -31,6 +31,7 @@ gimp_app_version_major = gimp_app_version_arr[0].to_int()
 gimp_app_version_minor = gimp_app_version_arr[1].to_int()
 gimp_app_micro_rc      = gimp_app_version_arr[2].split('-')
 gimp_app_version_micro = gimp_app_micro_rc[0].to_int()
+gimp_app_version_rc    = 0
 gimp_rc_git            = false
 if gimp_app_micro_rc.length() > 1
   if not gimp_app_micro_rc[1].startswith('RC')
@@ -90,6 +91,11 @@ conf.set('GIMP_UNSTABLE', stable ? false : 1)
 # GIMP_RELEASE tells if this is a release or in-between release (git) code.
 release = (gimp_app_version_micro % 2 == 0)
 conf.set('GIMP_RELEASE', release ? 1 : false)
+
+# GIMP_RC_VERSION can only be set on release candidates.
+conf.set('GIMP_RC_VERSION', release and gimp_app_version_rc > 0 ? gimp_app_version_rc : false)
+# GIMP_IS_GIT can only be set during development of a RC.
+conf.set('GIMP_IS_RC_GIT', gimp_rc_git)
 
 versionconfig = configuration_data()
 versionconfig.set('GIMP_FULL_NAME',     full_name)
