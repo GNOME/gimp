@@ -719,6 +719,35 @@ gimp_plug_in_persistent_enable (GimpPlugIn *plug_in)
         g_io_add_watch (priv->read_channel, G_IO_IN | G_IO_PRI,
                         gimp_plug_in_persistent_read,
                         plug_in);
+
+      /* #12631
+       * Similar code in app/plug-in/gimpplugin.c.
+       *
+       * The sequence of events and calls which requires set can_recurse
+       * on the IO source of events:
+       *
+       * - A user choosing a menu item implemented by persistent plugin script-fu
+       *   writes a "run temp proc" msg to the pipe to the plugin.
+       * - On the plugin side, Glib generates an event which invokes the
+       *   handler plug_in_persistent_read, of type GIOFunc .
+       * - The handler ultimately shows a dialog having its own event loop.
+       * - When the dialog has a resource select widget and the user clicks one,
+       *   the plugin creates a temporary PDB procedure for a callback,
+       *   and calls a PDB procedure to open a remote resource chooser widget
+       *   in the app, passing the name of the callback.
+       * - The user choosing a resource in the remote chooser widget
+       *   invokes the callback by writing a second "run temp proc" msg
+       *   to the pipe to the plugin.
+       * - Unless can_recurse is set, the second write (the callback) by the app
+       *   is blocked and does not generate an event in the plugin.
+       * - The dialog event loop receives no event, doesn't read the pipe,
+       *   and fails to update its resource select widget with the user's choice.
+       *   The message in the pipe is then unexpected by the plugin
+       *   for example when the user OKs the dialog.
+       */
+      g_source_set_can_recurse (
+        g_main_context_find_source_by_id (NULL, priv->persistent_source_id),
+        TRUE);
     }
 }
 
