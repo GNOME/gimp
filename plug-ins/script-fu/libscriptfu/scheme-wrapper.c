@@ -728,6 +728,7 @@ ts_load_file (const gchar *dirname,
   return FALSE;
 }
 
+/* Returns pointer to sc->NIL (normal) or pointer to error. */
 static pointer
 script_fu_marshal_arg_to_value (scheme      *sc,
                                 pointer      a,
@@ -1504,7 +1505,13 @@ script_fu_marshal_procedure_call (scheme   *sc,
 
       debug_in_arg (sc, a, i, g_type_name (G_VALUE_TYPE (&value)));
 
-      script_fu_marshal_arg_to_value (sc, a, proc_name, i, arg_spec, &value);
+      return_val = script_fu_marshal_arg_to_value (sc, a, proc_name, i, arg_spec, &value);
+
+      if (return_val != sc->NIL)
+        {
+          g_value_unset (&value);
+          return return_val;
+        }
 
       debug_gvalue (&value);
       if (g_param_value_validate (arg_spec, &value))
