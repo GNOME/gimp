@@ -67,7 +67,7 @@ workflow:
       - 'runner_system_failure'
       - 'scheduler_failure'
   # Default Docker image (unless otherwise defined)
-  image: debian:bookworm
+  image: debian:${DEB_VERSION}
   # Caching support
   variables:
     CCACHE_BASEDIR: "$CI_PROJECT_DIR"
@@ -82,6 +82,7 @@ workflow:
     when: always
 
 variables:
+  DEB_VERSION: "bookworm"
   # Common cloning procedure
   GIT_DEPTH: "1"
   GIT_SUBMODULE_STRATEGY: none
@@ -109,7 +110,7 @@ stages:
       - RUNNER: [aarch64, x86_64_v2]
   tags:
     - $RUNNER
-  image: $CI_REGISTRY_IMAGE:build-debian-latest-${RUNNER}
+  image: $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}
   variables:
     CC: "ccache clang"
     CXX: "ccache clang++"
@@ -166,7 +167,7 @@ image-debian:
     - export container=docker
     - mkdir -p /kaniko/.docker
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
-    - echo "FROM debian:bookworm" > Dockerfile
+    - echo "FROM debian:${DEB_VERSION}" > Dockerfile
     - echo "RUN apt-get update" >> Dockerfile
     # 'ca-certificates' is NOT a gimp dep, it is installed only to our Docker image work
     - echo "RUN apt-get install -y --no-install-recommends ca-certificates" >> Dockerfile
@@ -239,7 +240,7 @@ image-debian:
             poppler-data
             python3
             python3-gi" >> Dockerfile
-    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-latest-${RUNNER} --cache=true --cache-ttl=120h
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER} --cache=true --cache-ttl=120h
 
 image-debian-x64:
   extends: .debian-x64
@@ -252,7 +253,7 @@ image-debian-x64:
   script:
     - !reference [image-debian, script]
 
-## GNU/Linux 64-bit CIs (Debian bookworm) ##
+## GNU/Linux 64-bit CIs (Debian) ##
 
 deps-debian:
   extends: .debian
