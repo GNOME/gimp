@@ -112,7 +112,9 @@
 ; except by proximity in the output.
 (define (test! string)
   (displayln "")
-  (displayln string))
+  (displayln string)
+  ; also to GIMP Error Console
+  (gimp-message string))
 
 
 ; reset testing state when test framework is loaded

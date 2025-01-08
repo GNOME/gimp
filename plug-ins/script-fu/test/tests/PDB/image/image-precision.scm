@@ -45,14 +45,23 @@
 
 ;       New with precision
 
+
+; GAMMA obsolete since 3.0
+; PRECISION-U8-GAMMA
+; PRECISION-U16-GAMMA
+; PRECISION-U32-GAMMA
+; PRECISION-HALF-GAMMA
+; PRECISION-FLOAT-GAMMA
+; PRECISION-DOUBLE-GAMMA
+
 ;         setup
-(define testImageWithPrecision (car (gimp-image-new-with-precision 21 22 RGB PRECISION-DOUBLE-GAMMA)))
+(define testImageWithPrecision (car (gimp-image-new-with-precision 21 22 RGB PRECISION-U8-PERCEPTUAL)))
 
 
 ; image has given precision
 (assert `(=
            (car (gimp-image-get-precision ,testImageWithPrecision))
-           PRECISION-DOUBLE-GAMMA ))
+           PRECISION-U8-PERCEPTUAL ))
 
 
 
@@ -63,9 +72,8 @@
                 ,testImage
                 ,precision))))
 
-; First convert away from first precision in list:
+; Assert precision is not first precision in list:
 ; it will fail if image already that precision
-(gimp-image-convert-precision testImage PRECISION-U8-NON-LINEAR)
 
 (define allPrecisions
   `(PRECISION-U8-LINEAR
@@ -85,13 +93,7 @@
     PRECISION-FLOAT-PERCEPTUAL
     PRECISION-DOUBLE-LINEAR
     PRECISION-DOUBLE-NON-LINEAR
-    PRECISION-DOUBLE-PERCEPTUAL
-    PRECISION-U8-GAMMA
-    PRECISION-U16-GAMMA
-    PRECISION-U32-GAMMA
-    PRECISION-HALF-GAMMA
-    PRECISION-FLOAT-GAMMA
-    PRECISION-DOUBLE-GAMMA))
+    PRECISION-DOUBLE-PERCEPTUAL))
 
 ; sequence through all precisions, converting testImage to them
 (for-each

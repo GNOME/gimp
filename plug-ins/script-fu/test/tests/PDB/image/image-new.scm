@@ -159,7 +159,8 @@
 ; Dimension zero yields error
 ; It does NOT yield invalid ID -1
 (assert-error `(gimp-image-new 0 0 RGB)
-              "argument 1 in call to gimp-image-new has value 0 out of range: 1 to 524288")
+              "Invalid value for argument 0")
+; FORMERLY    "argument 1 in call to gimp-image-new has value 0 out of range: 1 to 524288")
 
 ; Since 3.0, parameter validation catches this earlier.
 ; Formerly,  "Procedure execution of gimp-image-new failed on invalid input arguments: "

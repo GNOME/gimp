@@ -23,7 +23,7 @@
             FALSE) ; not closed
 
 ; make test harder by using float precision
-(gimp-image-convert-precision testImage PRECISION-DOUBLE-GAMMA)
+(gimp-image-convert-precision testImage PRECISION-DOUBLE-NON-LINEAR)
 ; ensure testing is stroking with paint (versus line)
 (gimp-context-set-stroke-method STROKE-PAINT-METHOD)
 ; ensure testing is painting with paintbrush (versus pencil, airbrush, etc.)
@@ -38,7 +38,8 @@
 
 ; introspection: gimp module returns list of names of dynamics
 ; second arg is a regex
-(assert `(list? (gimp-dynamics-get-list "")))
+; FORMERLY get-list
+(assert `(list? (gimp-dynamics-get-name-list "")))
 
 ; refresh: gimp module will load newly installed dynamics
 ; method is void and should never fail.
@@ -67,9 +68,10 @@
 
 
 ; the dynamics setting can be set to the name of a dynamics
-(assert `(gimp-context-set-dynamics "Tilt Angle"))
-; setting to false was effective
-(assert `(string=? (car (gimp-context-get-dynamics))
+(assert `(gimp-context-set-dynamics-name "Tilt Angle"))
+; setting was effective
+; formerly context-[set,get]-dynamics
+(assert `(string=? (car (gimp-context-get-dynamics-name))
                    "Tilt Angle"))
 
 
@@ -81,11 +83,11 @@
 ;    stroke a drawable along a path with current brush and dynamics
 
 
-(define dynamicsList (car (gimp-dynamics-get-list "")))
+(define dynamicsList (car (gimp-dynamics-get-name-list "")))
 
 (define (testDynamics dynamics)
     ; Test that every dynamics can be set on the context
-    (gimp-context-set-dynamics dynamics)
+    (gimp-context-set-dynamics-name dynamics)
 
     (display dynamics)
     ; paint with paintbrush and dynamics, under the test harness
