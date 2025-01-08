@@ -2038,9 +2038,14 @@ gimp_plug_in_destroy_proxies (GimpPlugIn  *plug_in,
            * See #3912.
            */
           if (_gimp_plug_in_manage_memory_manually (plug_in))
-            g_printerr ("%s: ERROR: %s proxy with ID %d was refed "
-                        "by plug-in, it MUST NOT do that!\n",
-                        G_STRFUNC, G_OBJECT_TYPE_NAME (object), id);
+            /* This only MIGHT be a programming error.
+             * Because a plugin keeps temporary procedure instances,
+             * which keep formal args with defaults that can be proxy objects,
+             * and persistent plugins don't destroy their temporary procedures,
+             * such proxy objects can have any refcount, often two.
+             */
+            g_debug ("%s: %s proxy with ID %d has refcount %d.",
+                     G_STRFUNC, G_OBJECT_TYPE_NAME (object), id, object->ref_count);
 
 #if 0
           /* The code used to do this, which is only meaningful when the bug is
