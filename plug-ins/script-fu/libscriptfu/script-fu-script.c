@@ -294,6 +294,7 @@ script_fu_script_reset (SFScript *script,
     }
 }
 
+/* FUTURE: goes away when deprecated script-fu-register is obsoleted. */
 gint
 script_fu_script_collect_standard_args (SFScript             *script,
                                         GParamSpec          **pspecs,
@@ -553,6 +554,7 @@ script_fu_script_infer_drawable_arity (SFScript *script)
  *  Local Functions
  */
 
+/* FUTURE: goes away when deprecated script-fu-register is obsoleted. */
 static gboolean
 script_fu_script_param_init (SFScript             *script,
                              GParamSpec          **pspecs,
@@ -561,7 +563,8 @@ script_fu_script_param_init (SFScript             *script,
                              SFArgType             type,
                              gint                  n)
 {
-  SFArg *arg = &script->args[n];
+  SFArg   *arg    = &script->args[n];
+  gboolean result = FALSE;
 
   if (script->n_args > n &&
       arg->type == type  &&
@@ -573,6 +576,8 @@ script_fu_script_param_init (SFScript             *script,
 
       g_value_init (&value, pspec->value_type);
       g_object_get_property (G_OBJECT (config), pspec->name, &value);
+      /* When value is object, must be unreffed. */
+
       switch (type)
         {
         case SF_IMAGE:
@@ -581,7 +586,7 @@ script_fu_script_param_init (SFScript             *script,
               GimpImage *image = g_value_get_object (&value);
 
               arg->value.sfa_image = gimp_image_get_id (image);
-              return TRUE;
+              result = TRUE;
             }
           break;
 
@@ -591,7 +596,7 @@ script_fu_script_param_init (SFScript             *script,
               GimpItem *item = g_value_get_object (&value);
 
               arg->value.sfa_drawable = gimp_item_get_id (item);
-              return TRUE;
+              result = TRUE;
             }
           break;
 
@@ -601,7 +606,7 @@ script_fu_script_param_init (SFScript             *script,
               GimpItem *item = g_value_get_object (&value);
 
               arg->value.sfa_layer = gimp_item_get_id (item);
-              return TRUE;
+              result = TRUE;
             }
           break;
 
@@ -611,7 +616,7 @@ script_fu_script_param_init (SFScript             *script,
               GimpItem *item = g_value_get_object (&value);
 
               arg->value.sfa_channel = gimp_item_get_id (item);
-              return TRUE;
+              result = TRUE;
             }
           break;
 
@@ -621,7 +626,7 @@ script_fu_script_param_init (SFScript             *script,
               GimpItem *item = g_value_get_object (&value);
 
               arg->value.sfa_vectors = gimp_item_get_id (item);
-              return TRUE;
+              result = TRUE;
             }
           break;
 
@@ -631,17 +636,20 @@ script_fu_script_param_init (SFScript             *script,
               GimpDisplay *display = g_value_get_object (&value);
 
               arg->value.sfa_display = gimp_display_get_id (display);
-              return TRUE;
+              result = TRUE;
             }
           break;
 
         default:
           break;
         }
+
+      /* unset will unref when is-a object. */
       g_value_unset (&value);
     }
+    /* Else not enough args or pspecs */
 
-  return FALSE;
+  return result;
 }
 
 
