@@ -210,7 +210,8 @@ load_image (GFile                 *file,
   width  = exr_loader_get_width (loader);
   height = exr_loader_get_height (loader);
 
-  if ((width < 1) || (height < 1))
+  if (width < 1 || height < 1 ||
+      width > GIMP_MAX_IMAGE_SIZE || height > GIMP_MAX_IMAGE_SIZE)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Error querying image dimensions from '%s'"),
