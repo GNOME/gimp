@@ -60,7 +60,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-12-20 00:17+0000\n"
-"PO-Revision-Date: 2024-12-30 10:27+0100\n"
+"PO-Revision-Date: 2025-01-07 15:39+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -6229,7 +6229,7 @@ msgstr "Aktivér standardhandlingen til redigering af denne type lag"
 #: app/actions/layers-actions.c:58
 msgctxt "layers-action"
 msgid "Edit Te_xt on canvas"
-msgstr "Redigér _tekst på lærredet"
+msgstr "Redigér _tekst på lærred"
 
 #: app/actions/layers-actions.c:59
 msgctxt "layers-action"
@@ -6479,7 +6479,7 @@ msgstr "Ændr lagenes størrelse til omfanget af markeringen"
 #: app/actions/layers-actions.c:219
 msgctxt "layers-action"
 msgid "Crop Layers to C_ontent"
-msgstr "_Beskær lag til indholdet"
+msgstr "_Beskær lag til indhold"
 
 #: app/actions/layers-actions.c:220
 msgctxt "layers-action"
@@ -6561,7 +6561,7 @@ msgstr "Fjern virkningen af lagmaskerne"
 #: app/actions/layers-actions.c:284
 msgctxt "layers-action"
 msgid "Toggle Layer _Visibility"
-msgstr "Gør laget _synligt/usynligt"
+msgstr "Gør lag _synligt/usynligt"
 
 #: app/actions/layers-actions.c:290
 msgctxt "layers-action"
@@ -17623,7 +17623,7 @@ msgstr "_Nulstil gemte vinduers placeringer til standardværdier"
 
 #: app/dialogs/preferences-dialog.c:3010 app/dialogs/preferences-dialog.c:3011
 msgid "Canvas Interaction"
-msgstr "Vekselvirkning på lærred"
+msgstr "Handlinger på lærredet"
 
 #. Space Bar
 #: app/dialogs/preferences-dialog.c:3020
@@ -24350,15 +24350,15 @@ msgstr "Klik og træk for at forskyde tegnefladen"
 
 #: app/tools/gimpoffsettool.c:513
 msgid "By width/_2, height/2"
-msgstr "med bredde/_2, højde/2"
+msgstr "Halv bredde og hø_jde"
 
 #: app/tools/gimpoffsettool.c:525
 msgid "By _width/2"
-msgstr "med _bredde/2"
+msgstr "Halv _bredde"
 
 #: app/tools/gimpoffsettool.c:533
 msgid "By _height/2"
-msgstr "med h_øjde/2"
+msgstr "Halv h_øjde"
 
 #. The edge behavior frame
 #: app/tools/gimpoffsettool.c:547
