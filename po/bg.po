@@ -243,6 +243,7 @@
 # enhance подобрявам
 # combine обединяване
 # selected region избрана област
+# page curl подвита страница
 #
 #
 # msgid "Enable the N-Point Deformation tool."
@@ -262,7 +263,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-12-26 16:49+0000\n"
-"PO-Revision-Date: 2025-01-04 14:53+0100\n"
+"PO-Revision-Date: 2025-01-09 07:25+0100\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
