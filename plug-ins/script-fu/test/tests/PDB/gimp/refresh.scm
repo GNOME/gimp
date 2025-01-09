@@ -18,34 +18,40 @@
 ; gimp-parasite-list => gimp-get-parasite-list
 
 
-;                      refresh
+
+(script-fu-use-v3)
+
+(test! "refresh resources")
 
 ; always succeeds
-; FIXME but wraps result in list (#t)
-(assert `(car (gimp-brushes-refresh)))
-(assert `(car (gimp-dynamics-refresh)))
-(assert `(car (gimp-fonts-refresh)))
-(assert `(car (gimp-gradients-refresh)))
-(assert `(car (gimp-palettes-refresh)))
-(assert `(car (gimp-patterns-refresh)))
+; Returns #t
+(assert `(gimp-brushes-refresh))
+(assert `(gimp-dynamics-refresh))
+(assert `(gimp-fonts-refresh))
+(assert `(gimp-gradients-refresh))
+(assert `(gimp-palettes-refresh))
+(assert `(gimp-patterns-refresh))
 
 
-;                      list
+(test!  "list resources")
 
 ; always succeeds
-; take an optional regex string
-(assert `(list? (car (gimp-brushes-get-list ""))))
-(assert `(list? (car (gimp-dynamics-get-list ""))))
-(assert `(list? (car (gimp-fonts-get-list ""))))
-(assert `(list? (car (gimp-gradients-get-list ""))))
-(assert `(list? (car (gimp-palettes-get-list ""))))
-(assert `(list? (car (gimp-patterns-get-list ""))))
+; Takes an optional regex string.
+; Returns a vector of object ID's.
+; !!! The name says its a list, but its an array
+(assert `(vector? (gimp-brushes-get-list "")))
+(assert `(vector? (gimp-fonts-get-list "")))
+(assert `(vector? (gimp-gradients-get-list "")))
+(assert `(vector? (gimp-palettes-get-list "")))
+(assert `(vector? (gimp-patterns-get-list "")))
 
 
 ;            listing app's collection of things not resources
 ; But taking a regex
 
-(assert `(list? (car (gimp-buffers-get-list ""))))
+; Returns list of names, not a vector of object ID's
+(assert `(list? (gimp-dynamics-get-name-list "")))
+(assert `(list? (gimp-buffers-get-name-list "")))
 
 
 ;           listing app's other collections not resources
@@ -53,14 +59,18 @@
 
 ; FIXME the naming does not follow the pattern, should be plural parasites
 ; Not: (gimp-parasites-get-list "")
-(assert `(list? (car (gimp-get-parasite-list))))
+(assert `(list? (gimp-get-parasite-list)))
 
 ; the app, images, vectors, drawables, items
 ; can all have parasites.
 ; Tested elsewhere.
 
+(test! "get images")
 
 ; gimp-get-images does not follow the pattern:
 ; it doesn't take a regex
-; and it returns a vector of image objects (0 #())
-(assert `(vector? (car (gimp-get-images))))
+; and it returns a vector of image objects #()
+(assert `(vector? (gimp-get-images)))
+
+
+(script-fu-use-v2)

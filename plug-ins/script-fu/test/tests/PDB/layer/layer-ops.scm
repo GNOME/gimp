@@ -79,7 +79,8 @@
 
 ; delete second time fails
 (assert-error `(gimp-item-delete ,testLayer)
-              "runtime: invalid item ID")
+              "Invalid value for argument 0")
+; FORMERLY    "runtime: invalid item ID")
 
 ; Error for flatten:
 ; "Procedure execution of gimp-layer-delete failed on invalid input arguments: "

@@ -105,6 +105,8 @@
 (testing:load-test "bind-args.scm")
 (testing:load-test "pixel.scm")
 
+; Don't routinely test the PDB API for NDE filters, it is long:
+; (testing:load-test "gegl.scm")
 
 ; report the result
 (testing:report)

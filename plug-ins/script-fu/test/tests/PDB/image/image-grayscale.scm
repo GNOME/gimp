@@ -36,7 +36,7 @@
 ; convert precision of grayscale image succeeds
 (assert `(gimp-image-convert-precision
             ,testImage
-            PRECISION-DOUBLE-GAMMA))
+            PRECISION-U8-PERCEPTUAL))
 
 (script-fu-use-v2)
 

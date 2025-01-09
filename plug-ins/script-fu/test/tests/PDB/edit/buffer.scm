@@ -8,9 +8,11 @@
 ; E.G. gimp-edit-named-copy might be better named: "edit-copy-to-named-buffer"
 
 ; The API has no method to determine if the clipboard is empty
-; buffers-get-list only gets the named buffers
+; buffers-get-name-list only gets the named buffers
 
 ; Many calls take a regex string
+
+; FORMERLY buffers-get-list => buffers-get-name-list
 
 
 
@@ -40,10 +42,10 @@
 ; Since no selection, the buffer is same size as image
 
 ; Creation was effective: gimp knows the buffer
-; get-list takes a regex, here empty ""
-; get-list returns  (("bufferName")) : a list of strings
+; get-name-list takes a regex, here empty ""
+; get-name-list returns  (("bufferName")) : a list of strings
 ; and the first string is "bufferName"
-(assert `(string=? (car (gimp-buffers-get-list ""))
+(assert `(string=? (car (gimp-buffers-get-name-list ""))
                     "bufferName"))
 
 ; buffer has same size as image when created with no selection
@@ -74,13 +76,13 @@
                   "renamedName"))
 
 ; Effect renaming: gimp knows the renamed name
-(assert `(string=? (car (gimp-buffers-get-list ""))
+(assert `(string=? (car (gimp-buffers-get-name-list ""))
                     "renamedName"))
 
 ; Renaming does not add another buffer
-(assert `(= (length (gimp-buffers-get-list ""))
+(assert `(= (length (gimp-buffers-get-name-list ""))
             1))
-(display (gimp-buffers-get-list ""))
+(display (gimp-buffers-get-name-list ""))
 
 
 (test! "buffer-delete")
@@ -90,7 +92,7 @@
 
 ; Delete was effective: gimp no longer knows
 ; and returns nil i.e. empty list (())
-(assert `(null? (gimp-buffers-get-list "")))
+(assert `(null? (gimp-buffers-get-name-list "")))
 
 
 ; TODO test two buffers

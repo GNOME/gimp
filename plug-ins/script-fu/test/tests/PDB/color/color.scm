@@ -107,8 +107,10 @@
 ; Note the rgb is black 0,0,0 , same as before conversion to indexed.
 ; Note the image still has an alpha and pixel 1,1 is transparent
 (assert `(equal? (gimp-drawable-get-pixel ,testDrawableIndexed 1 1)
-                 '(139 127 114 0)))
-; FIXME: strange behavior, should be, and sometimes is, '(0 0 0 0)))
+                 '(0 0 0 0)))
+; FIXME: strange behavior:
+; sometimes '(139 127 114 0)))
+; sometimes '(0 0 0 0)))
 
 (display (gimp-drawable-get-pixel testDrawableIndexed 1 1))
 

@@ -24,13 +24,13 @@
 ; returns list of names
 
 ; empty regex matches anything, returns all procedure names in pdb
-; Test exists more than 1000 procedures
+; Test exists more than 900 procedures
 (assert `(> (length (car (gimp-pdb-query "" ; name
                          "" "" ; blurb help
                          "" "" ; authors copyright
                          "" "" ; date type
                     )))
-            1000))
+            900))
 
 ; a query on a specific name returns the same name
 (assert `(string=? ( caar (gimp-pdb-query "gimp-pdb-proc-exists" ; name

@@ -36,10 +36,12 @@
 ;            1 ; push merge to undo stack
 ;          ))
 
+; TODO document that signature changed in v3
 (assert `(gimp-drawable-offset
             ,testDrawable
             1 ; wrap around or fill
             OFFSET-WRAP-AROUND ; OffsetType
+            "white"            ; color to fill background
             -2147483648 -2147483648 ; x, y
             ))
 

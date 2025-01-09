@@ -110,7 +110,7 @@
 ; This is a stress test: a large profile
 (assert `(gimp-image-set-simulation-profile-from-file
             ,testImage
-            "/work/Coated_Fogra39L_VIGC_300.icc"))
+            (testing:path-to-color-profile "Coated_Fogra39L_VIGC_300.icc")))
 ; effective: the vector of the profile is a different length than prior
 ; Not tested, crashes, because TS runs out of memory??? Tried setting CELL_SEGSIZE to 100k, did not help
 ;(assert `(= (vector-length (car (gimp-image-get-simulation-profile ,testImage)))

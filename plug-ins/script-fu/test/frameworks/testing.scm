@@ -441,7 +441,7 @@
 ; FUTURE: platform independent path
 ; FUTURE: color profile test files in the repo
 (define (testing:path-to-color-profile name)
-  (string-append "/work/" name))
+  (string-append "/work/colorProfilesICC/" name))
 
 
 ; float comparison utility

@@ -1,14 +1,47 @@
 
-; Test the PDB procedures that wrap GEGL plugins
+; Test GEGL plugins
 
 ; This can also be stress test for GIMP itself: opens hundreds of images
 
-; The procedures defined in /pdb/groups/plug_in_compat.pdb
-; Not all GEGL filters are wrapped.
+; WORK IN PROGRESS
+; This is brute force, it doesn't test effects, mainly tests for crashes.
+; The API is very new and subject to change.
+
+; HISTORY
+; For plugin authors porting older plugins.
+;
+; In GIMP 2 (say about 2.8) many filters were moved to GEGL
+; and in GIMP, wrapper plugins were defined in the PDB.
+; The wrappers were defined in /pdb/groups/plug_in_compat.pdb
+; A wrapper procedure was named like plug-in-antialias,
+; where "anti-alias" is a name of a wrapped filter in GEGL
+; Not all GEGL filters were wrapped.
+;
 ; Some GEGL filters appear in the GUI (apart from Gegl Ops menu.)
 ; via app/actions/filters-actions.c and image-menu.ui (xml)
-; Here we are calling the wrapped GEGL filters non-interactively.
+;
+; Since GIMP 3, new procedures were added to the PDB for a plugin
+; to "use" a GEGL filter.
+; Filters are "added" to a layer.  They are initially NDE (non-destructive)
+; After adding a filter, they can be "merged" meaning convert to destructive
+; (the effect becomes more permanent, the parameters of the filter
+; can no longer be tweaked, i.e. the filter is no longer parameterized.)
+;
+; The new API in the PDB is:
+; gimp-drawable-filter-new etc.
+; ScriptFu also has new functions (not in the PDB):
+; gimp-drawable-filter-configure, gimp-drawable-filter-set-aux-input,
+; gimp-drawable-merge-filter, gimp-drawable-append-filter, etc.
+;
+; The wrappers also declared ranges for formal args, matching GEGL declared ranges.
+; Since wrappers no longer exist, GEGL declared ranges are the only ones effective.
+;
+; The new API lets an author call ANY Gegl plugin.
+; Formerly, some Gegl filters had no wrapper, so you could not call them.
 
+
+; ABOUT THE TESTS
+;
 ; Each test is a simple call.
 ; No test for effectiveness, only that a call succeeds.
 
@@ -127,179 +160,278 @@
 )
 
 
+; Functions to create filters
+; Filters are now objects with methods.
 
+; Returns a filter on the global testLayer
+; The filter is configured minimally.
+(define (createGeglFilter name-suffix)
+  (let* ((filter-name (string-append "gegl:" name-suffix))
+         (filter (gimp-drawable-filter-new
+            testLayer
+            filter-name
+            ""    ; user given "effect name"
+            )))
+    ; configure the filter.
+    ; ??? Do these default?
+    (gimp-drawable-filter-configure filter
+      LAYER-MODE-REPLACE   ; blend mode
+      1.0)                 ; opacity
+
+    ; Return the filter
+    filter))
+
+
+; CRUFT to call wrappers, now obsolete.
+;(assert `(
+;    ; form the full name of the plugin, as a symbol
+;  ,(string->symbol (string-append "plug-in-" name-suffix))
+;   RUN-NONINTERACTIVE ,testImage ,testLayer))
 
 
 ; Define test harness functions
 
-; Function to call gegl wrapper plugin with "usual" arguments
+; Function to "add" and "merge" GEGL filter with "usual" arguments
 ; Omitting most arguments, which are defaulted.
-(define (testGeglWrapper name-suffix)
+(define (testGeglFilter name-suffix)
   (test! name-suffix)
 
   ; new image for each test
   (testImageCreator)
 
-  (assert `(
-      ; form the full name of the plugin, as a symbol
-     ,(string->symbol (string-append "plug-in-" name-suffix))
-     RUN-NONINTERACTIVE ,testImage ,testLayer))
+  (let* ((filter (createGeglFilter name-suffix))
+
+    ; key/value pairs for other args
+    ;"amount-x" 0.0 "amount-x" 0.0 "abyss-policy" "loop"
+    ;"sampler-type" "cubic" "displace-mode" "cartesian")
+
+    ; The filter is floating, i.e. not on the layer until we append it
+    ; FIXME: why isn't it named attach like other PDB functions?
+    (gimp-drawable-append-filter testLayer filter)
+
+    ; Make the filter destructive i.e. effects permanent
+    ;(gimp-drawable-merge-filter testLayer filter)
+  ) ; end let*
 
   ; not essential, but nice, to display result images
   (gimp-display-new testImage)
   (gimp-displays-flush)
-  )
+  ))
+
 
 ; Function to call gegl plugin with "usual" arguments plus another arg
 ; Omitting trailing arguments.
-(define (testGeglWrapper2 name-suffix other-arg)
+(define (testGeglFilterAuxInput name-suffix aux-input)
   (test! name-suffix)
   (testImageCreator)
-  (assert `(
-     ,(string->symbol (string-append "plug-in-" name-suffix))
-     RUN-NONINTERACTIVE ,testImage ,testLayer
-     ,other-arg))
+
+  (let* ((filter (createGeglFilter name-suffix))
+    ;
+    (gimp-drawable-filter-set-aux-input filter "aux" aux-input)
+    (gimp-drawable-merge-filter testLayer filter)))
+
   (gimp-display-new testImage)
   (gimp-displays-flush)
   )
 
-; !!! autocrop layer is not a GEGL wrapper
+; NOTES
+; These notes are about historical renaming and can be wrong....
+; Certain filters named like plug-in- are compatibility plugins but not GEGL wrappers:
+;    autocrop
+;    autocrop-layer
+; Certain GEGL wrappers were on the same GEGL plugin:
+;    plug-in-bump-map-tiled a second wrapper of gegl:bump-map
+; Certain GEGL wrappers had names not the same as the wrapped GEGL plugin:
+;    apply-canvas    texturize-canvas
+;    applylens       apply-lens
+;    autostretch-hsv stretch-contrast-hsv
+;    c-astretch      stretch-contrast
+;    colortoalpha    color-to-alpha
+;    colors-channel-mixer channel-mixer
+;    diffraction     diffraction-patterns
+;    dog             difference-of-gaussians
+;    exchange        color-exchange
+;    flarefx         lens-flare
+;    gauss           gaussian-blur
+;    glasstile       tile-glass
+;    hsv-noise       noise-hsv
+;    laplace         edge-laplace
+;    make-seamless   seamless-clone or seamless-clone-compose
+;    neon            edge-neon
+;    noisify         ???
+;    polar-coords    polar-coordinates
+;    randomize-hurl  noise-hurl
+;    randomize-pick  noise-pick
+;    randomize-slur  noise-slur
+;    rgb-noise       noise-rgb
+;    sel-gauss       gaussian-blur-selective
+;    sobel           edge-sobel
+;    softglow        soft-light ???
+;    solid-noise     simplex-noise ???
+;    spread          noise-spread
+;    video           video-degradation
+;    vinvert         value-invert
+;    vpropagate      value-propagate
+;
+; Certain filters are GIMP operations, no longer wrapped and callable from SF?
+;     semi-flatten
+;     threshold-alpha      ; requires alpha
+;
+; Certain compatibility procedures might have been specialized calls of gegl filters
+; (with special, non-default parameters)
+;    dilate          value-propagate, specialized?
+;    erode           value-propagate, specialized?
+;    mblur-inward    mblur specialized?
+;    normalize       stretch-contrast specialized?
+;    oilify-enhanced oilify specialized?
 
-; list of names of all gegl wrappers that take no args, or args that properly default
-; in alphabetical order.
-(define gegl-wrapper-names
+
+
+; list of names of all gegl filters
+; That take no args, or args that properly default.
+; In alphabetical order.
+; This list is hand-built from former wrapper names, and may be incomplete.
+; FIXME it should be extracted from GEGL but there is no API?
+
+; a short list for use while developing tests
+(define gegl-filter-names2
+  (list
+    "antialias" ))
+
+(define gegl-filter-names
   (list
     "antialias"
-    "apply-canvas"
-    "applylens"
-    "autocrop"
-    "autostretch-hsv"
-    "c-astretch"
+    "alpha-clip"   ; see threshold-alpha, similar ?
+    "apply-lens"
+    ; "bump-map" tested separately, requires aux input
     "cartoon"
-    "colors-channel-mixer"
+    "channel-mixer"
+    "color-to-alpha"   ; color defaultable?
+    "color-exchange"
     "cubism"
     "deinterlace"
-    "diffraction"
-    "dog"
+    "diffraction-patterns"
+    ; "displace" tested separately, requires two aux inputs
+    "difference-of-gaussians"  ; an edge detect
     "edge"
+    "edge-laplace"
+    "edge-neon"
+    "edge-sobel"
     "emboss"
     "engrave"
-    "exchange"
-    "flarefx"
     "fractal-trace"
-    "gauss"
-    "glasstile"
-    "hsv-noise"
+    "gaussian-blur"
+    "gaussian-blur-selective"
     "illusion"
-    "laplace"
+    "image-gradient"   ; an edge detect
+    "invert-linear"
     "lens-distortion"
-    "make-seamless"
+    "lens-flare"
     "maze"
     "mblur"
-    "mblur-inward"
     "median-blur"
     "mosaic"
-    "neon"
     "newsprint"
-    "normalize"
+    "noise-hsv"
+    "noise-hurl"
+    "noise-pick"
+    "noise-spread"
+    "noise-slur"
+    "noise-rgb"
+    ; TODO more noise- not wrapped e.g. iCH
     "oilify"
-    "oilify-enhanced"
     "photocopy"
     "pixelize"
     "plasma"
-    "polar-coords"
-    "randomize-hurl"
-    "randomize-pick"
-    "randomize-slur"
+    "polar-coordinates"
     "red-eye-removal"
-    "rgb-noise"
     "ripple"
-    "rotate"
-    "noisify"
-    "sel-gauss"
-    "semiflatten" ; requires alpha and returns error otherwise
+    ; FIXME crashes SF "rotate"
+    "seamless-clone"
+    "seamless-clone-compose"
     "shift"
-    "sobel"
-    "softglow"
-    "solid-noise"
-    "spread"
-    "threshold-alpha"  ; requires alpha
+    "soft-light"
+    "spherize"
+    "simplex-noise"
+    "stretch-contrast"
+    "stretch-contrast-hsv"
+    "texturize-canvas"
+    "tile-glass"
     "unsharp-mask"
-    "video"
-    "vinvert"
-    "vpropagate"
-    "dilate"
-    "erode"
+    "value-invert"
+    "value-propagate"
+    "video-degradation"
+    ; distorts, see also engrave, ripple, shift, spherize
     "waves"
     "whirl-pinch"
     "wind"))
 
 
-(define (testGeglWrappersTakingNoArg)
-  (map testGeglWrapper gegl-wrapper-names))
+(define (testGeglFiltersTakingNoArg)
+  (map testGeglFilter gegl-filter-names))
 
-; tests Gegl wrappers with one other arg
-(define (testGeglWrappersTakingOneArg)
-  ; These require a non-defaultable arg: bump map
+; tests Gegl wrappers taking an aux input
+; Most filters have input a single layer
+; An aux input is an argument that is a second input, another layer
+(define (testGeglFiltersTakingAuxInput)
+  ; These require a non-defaultable aux input arg: bump map
   ; TODO using the testLayer as bump map produces little visible effect?
-  (testGeglWrapper2 "bump-map" testLayer)
-  (testGeglWrapper2 "bump-map-tiled" testLayer)
+  (testGeglFilterAuxInput "bump-map" testLayer)
+  ; "bump-map-tiled" was a wrapper but calls "bump-map"
 
   ; Requires an explicit color arg, until we fix defaulting colors in the PDB machinery
-  (testGeglWrapper2 "colortoalpha" "red")
+  ; TODO (testGeglFilter2 "colortoalpha" "red")
   )
 
-(define (testGeglWrappers)
-  (testGeglWrappersTakingNoArg)
-  (testGeglWrappersTakingOneArg)
-  (testSpecialGeglWrappers))
+(define (testGeglFilters)
+  (testGeglFiltersTakingNoArg)
+  (testGeglFiltersTakingAuxInput)
+  (testSpecialGeglFilters))
 
 
 
 ; Tests of gegl wrappers by image modes
 ; Note you can't just redefine testImageCreator,
 ; it is not in scope, you must set a global.
-(define (testGeglWrappersRGBA)
+(define (testGeglFiltersRGBA)
   (test! "Test GEGL wrappers on RGBA")
   (set! testImageCreator createRGBATestImage)
-  (testGeglWrappers))
+  (testGeglFilters))
 
-(define (testGeglWrappersSmallRGBA)
+(define (testGeglFiltersSmallRGBA)
   (test! "Test GEGL wrappers on small image")
   (set! testImageCreator createSmallTestImage)
-  (testGeglWrappers))
+  (testGeglFilters))
 
-(define (testGeglWrappersSmallGRAY)
+(define (testGeglFiltersSmallGRAY)
   (test! "Test GEGL wrappers on small gray image")
   (set! testImageCreator createSmallGrayTestImage)
-  (testGeglWrappers))
+  (testGeglFilters))
 
-(define (testGeglWrappersINDEXED)
+(define (testGeglFiltersINDEXED)
   (test! "Test GEGL wrappers on INDEXED image")
   (set! testImageCreator createIndexedImage)
-  (testGeglWrappers))
+  (testGeglFilters))
 
 
 
 
 
 ; test GEGL wrappers having args that don't default
-(define (testSpecialGeglWrappers)
+(define (testSpecialGeglFilters)
   (test! "Special test GEGL wrappers")
 
-  ; Requires non-defaultable maps.
+  ; "displace" requires two non-defaultable aux inputs i.e. maps.
   ; We can never add test auto-defaulting the args.
   ; These are NOT the declared defaults.
   (test! "displace")
   (testImageCreator)
-  (let* ((filter (car (gimp-drawable-filter-new ,testLayer "gegl:displace" ""))))
-    (gimp-drawable-filter-configure filter LAYER-MODE-REPLACE 1.0
-                                    "amount-x" 0.0 "amount-x" 0.0 "abyss-policy" "loop"
-                                    "sampler-type" "cubic" "displace-mode" "cartesian")
-    (gimp-drawable-filter-set-aux-input filter "aux" ,testLayer)
-    (gimp-drawable-filter-set-aux-input filter "aux2" ,testLayer)
-    (gimp-drawable-merge-filter ,testLayer filter)
-  )
+  (let* ((filter (createGeglFilter "displace"))
+    ; using testLayer as both aux inputs
+    (gimp-drawable-filter-set-aux-input filter "aux" testLayer)
+    (gimp-drawable-filter-set-aux-input filter "aux2" testLayer)
+    (gimp-drawable-merge-filter testLayer filter)))
+
   (gimp-display-new testImage)
   (gimp-displays-flush)
 )
@@ -311,20 +443,28 @@
 ; Testing them all creates about 300 images
 
 ; tests on RGBA
-(testGeglWrappersRGBA)
+(testGeglFiltersRGBA)
 
 ; tests of small images is an edge test
 ; and don't seem to reveal any bugs, even for a 1x1 image
-(testGeglWrappersSmallRGBA)
+(testGeglFiltersSmallRGBA)
 
 ; tests of other image modes tests conversions i.e babl
-(testGeglWrappersSmallGRAY)
+(testGeglFiltersSmallGRAY)
 
 ; FIXME some throw CRITICAL
-(testGeglWrappersINDEXED)
+(testGeglFiltersINDEXED)
 
 ; Not testing image without alpha.
 ; It only shows that semiflatten and thresholdalpha return errors,
 ; because they require alpha.
 
 ; Not testing other image precisions and color profiles.
+
+
+(test! "Non-existing filter")
+; test creating filter for an invalid name
+; TODO
+; Procedure execution of gimp-drawable-filter-new failed on invalid input arguments:
+; drawable_filter_new_invoker: the filter "gegl:bump-map-tiled" is not installed.
+

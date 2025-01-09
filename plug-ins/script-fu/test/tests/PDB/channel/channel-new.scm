@@ -89,7 +89,8 @@
 ; Delete throws error when channel already removed
 ; gimp-channel-delete is deprecated
 (assert-error `(gimp-item-delete ,testChannel)
-              "runtime: invalid item ID"  )
+               "Invalid value for argument 0")
+; FORMERLY     "runtime: invalid item ID"  )
 
 
 (test! "item-delete on channel")

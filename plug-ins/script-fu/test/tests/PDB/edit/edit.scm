@@ -38,7 +38,7 @@
                               (make-vector 1 testLayer)
                               "testBufferName"))
 ; There is one named buffer
-(assert `(= (length (gimp-buffers-get-list "")) 1))
+(assert `(= (length (gimp-buffers-get-name-list "")) 1))
 
 
 
@@ -97,7 +97,7 @@
 (test! "named-paste")
 
 ; There is one named buffer
-(assert `(= (length (gimp-buffers-get-list "")) 1))
+(assert `(= (length (gimp-buffers-get-name-list "")) 1))
 
 ; named-paste returns just the floating sel
 (assert `(gimp-edit-named-paste
@@ -159,7 +159,7 @@
 ; There are still two layers
 (assert `(= (vector-length (gimp-image-get-layers ,testImage)) 2))
 ; There is two named buffer
-(assert `(= (length (gimp-buffers-get-list ""))
+(assert `(= (length (gimp-buffers-get-name-list ""))
             2))
 
 

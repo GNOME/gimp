@@ -118,7 +118,7 @@
 ; convert precision of indexed images yields error
 (assert-error `(gimp-image-convert-precision
                   ,newTestImage
-                  PRECISION-DOUBLE-GAMMA)
+                  PRECISION-U8-PERCEPTUAL)
                "Procedure execution of gimp-image-convert-precision failed on invalid input arguments: ")
                ; "Image '[Untitled]' (4) must not be of type 'indexed'"
 
