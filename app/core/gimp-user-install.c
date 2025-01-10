@@ -1073,9 +1073,10 @@ user_update_tool_presets (const GMatchInfo *matched_value,
  * well as "toolrc" (but this one is skipped anyway).
  */
 #define CONTEXTRC_UPDATE_PATTERN \
-  "gimp-blend-tool"           "|" \
-  "dynamics \"Dynamics Off\"" "|" \
-  "\\(dynamics-expanded yes\\)"
+  "gimp-blend-tool"             "|" \
+  "dynamics \"Dynamics Off\""   "|" \
+  "\\(dynamics-expanded yes\\)" "|" \
+  "\\(color-options-expanded [^)]*\\)"
 
 static gboolean
 user_update_contextrc_over20 (const GMatchInfo *matched_value,
@@ -1095,6 +1096,10 @@ user_update_contextrc_over20 (const GMatchInfo *matched_value,
   else if (g_strcmp0 (match, "(dynamics-expanded yes)") == 0)
     {
       /* This option just doesn't exist anymore. */
+    }
+  else if (g_str_has_prefix (match, "(color-options-expanded "))
+    {
+      /* This option was removed with the gamma-hack. Cf. #12577. */
     }
   else
     {
