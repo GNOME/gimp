@@ -408,7 +408,6 @@ prefs_color_management_reset (GtkWidget *widget,
 
   gimp_config_reset (GIMP_CONFIG (core_config->color_management));
   gimp_config_reset_property (config, "color-profile-policy");
-  gimp_config_reset_property (config, "filter-tool-show-color-options");
 }
 
 static void
@@ -434,7 +433,6 @@ prefs_dialog_defaults_reset (GtkWidget *widget,
 
   gimp_config_reset_property (config, "filter-tool-max-recent");
   gimp_config_reset_property (config, "filter-tool-use-last-settings");
-  gimp_config_reset_property (config, "filter-tool-show-color-options");
 
   g_object_thaw_notify (config);
 
@@ -1506,14 +1504,6 @@ prefs_dialog_new (Gimp       *gimp,
                                        _("_File Open behavior:"),
                                        GTK_GRID (grid), 0, size_group);
 
-    /*  Filter Dialogs  */
-    vbox2 = prefs_frame_new (_("Filter Dialogs"), GTK_CONTAINER (vbox),
-                             FALSE);
-
-    button = prefs_check_button_add (object, "filter-tool-show-color-options",
-                                     _("Show _advanced color options"),
-                                     GTK_BOX (vbox2));
-
     g_clear_object (&size_group);
 
     g_object_unref (store);
@@ -2430,9 +2420,6 @@ prefs_dialog_new (Gimp       *gimp,
 
   button = prefs_check_button_add (object, "filter-tool-use-last-settings",
                                    _("Default to the last used settings"),
-                                   GTK_BOX (vbox2));
-  button = prefs_check_button_add (object, "filter-tool-show-color-options",
-                                   _("Show advanced color options"),
                                    GTK_BOX (vbox2));
 
   /*  Canvas Size Dialog  */

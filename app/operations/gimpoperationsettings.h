@@ -43,7 +43,6 @@ struct _GimpOperationSettings
   GimpFilterRegion     region;
   GimpLayerMode        mode;
   gdouble              opacity;
-  gboolean             gamma_hack;
 };
 
 struct _GimpOperationSettingsClass

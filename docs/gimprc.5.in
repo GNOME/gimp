@@ -874,11 +874,6 @@ Default to the last used settings in filter tools.  Possible values are yes
 and no.
 
 .TP
-(filter-tool-show-color-options no)
-
-Show advanced color options in filter tools.  Possible values are yes and no.
-
-.TP
 (trust-dirty-flag no)
 
 When enabled, GIMP will not save an image if it has not been changed since it

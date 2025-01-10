@@ -51,7 +51,6 @@ enum
   PROP_MOVE_TOOL_CHANGES_ACTIVE,
   PROP_FILTER_TOOL_MAX_RECENT,
   PROP_FILTER_TOOL_USE_LAST_SETTINGS,
-  PROP_FILTER_TOOL_SHOW_COLOR_OPTIONS,
   PROP_TRUST_DIRTY_FLAG,
   PROP_SAVE_DEVICE_STATUS,
   PROP_DEVICES_SHARE_TOOL,
@@ -162,13 +161,6 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                             "filter-tool-use-last-settings",
                             "Use last used settings in filters",
                             FILTER_TOOL_USE_LAST_SETTINGS_BLURB,
-                            FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
-
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FILTER_TOOL_SHOW_COLOR_OPTIONS,
-                            "filter-tool-show-color-options",
-                            "Show advanced color options in filters",
-                            FILTER_TOOL_SHOW_COLOR_OPTIONS_BLURB,
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
@@ -632,9 +624,6 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_FILTER_TOOL_USE_LAST_SETTINGS:
       gui_config->filter_tool_use_last_settings = g_value_get_boolean (value);
       break;
-    case PROP_FILTER_TOOL_SHOW_COLOR_OPTIONS:
-      gui_config->filter_tool_show_color_options = g_value_get_boolean (value);
-      break;
     case PROP_TRUST_DIRTY_FLAG:
       gui_config->trust_dirty_flag = g_value_get_boolean (value);
       break;
@@ -818,9 +807,6 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_FILTER_TOOL_USE_LAST_SETTINGS:
       g_value_set_boolean (value, gui_config->filter_tool_use_last_settings);
-      break;
-    case PROP_FILTER_TOOL_SHOW_COLOR_OPTIONS:
-      g_value_set_boolean (value, gui_config->filter_tool_show_color_options);
       break;
     case PROP_TRUST_DIRTY_FLAG:
       g_value_set_boolean (value, gui_config->trust_dirty_flag);

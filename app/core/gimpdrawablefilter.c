@@ -97,7 +97,6 @@ struct _GimpDrawableFilter
   GimpLayerCompositeMode  composite_mode;
   gboolean                add_alpha;
   gboolean                color_managed;
-  gboolean                gamma_hack;
 
   gboolean                override_constraints;
 
@@ -106,8 +105,6 @@ struct _GimpDrawableFilter
 
   GeglNode               *translate;
   GeglNode               *crop_before;
-  GeglNode               *cast_before;
-  GeglNode               *cast_after;
   GeglNode               *crop_after;
   GimpApplicator         *applicator;
 };
@@ -140,7 +137,6 @@ static void       gimp_drawable_filter_sync_mode             (GimpDrawableFilter
 static void       gimp_drawable_filter_sync_affect           (GimpDrawableFilter  *filter);
 static void       gimp_drawable_filter_sync_format           (GimpDrawableFilter  *filter);
 static void       gimp_drawable_filter_sync_mask             (GimpDrawableFilter  *filter);
-static void       gimp_drawable_filter_sync_gamma_hack       (GimpDrawableFilter  *filter);
 
 static gboolean   gimp_drawable_filter_is_added              (GimpDrawableFilter  *filter);
 static gboolean   gimp_drawable_filter_is_active             (GimpDrawableFilter  *filter);
@@ -386,28 +382,18 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
                                                  "operation", "gegl:crop",
                                                  NULL);
 
-      filter->cast_before = gegl_node_new_child (node,
-                                                 "operation", "gegl:nop",
-                                                 NULL);
-
       gegl_node_link_many (input,
                            filter->translate,
                            filter->crop_before,
-                           filter->cast_before,
                            filter->operation,
                            NULL);
     }
-
-  filter->cast_after = gegl_node_new_child (node,
-                                            "operation", "gegl:nop",
-                                            NULL);
 
   filter->crop_after = gegl_node_new_child (node,
                                             "operation", "gegl:crop",
                                             NULL);
 
   gegl_node_link_many (filter->operation,
-                       filter->cast_after,
                        filter->crop_after,
                        NULL);
 
@@ -1016,23 +1002,6 @@ gimp_drawable_filter_set_add_alpha (GimpDrawableFilter *filter,
 }
 
 void
-gimp_drawable_filter_set_gamma_hack (GimpDrawableFilter *filter,
-                                     gboolean            gamma_hack)
-{
-  g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
-
-  if (gamma_hack != filter->gamma_hack)
-    {
-      filter->gamma_hack = gamma_hack;
-
-      gimp_drawable_filter_sync_gamma_hack (filter);
-
-      if (gimp_drawable_filter_is_active (filter))
-        gimp_drawable_filter_update_drawable (filter, NULL);
-    }
-}
-
-void
 gimp_drawable_filter_set_override_constraints (GimpDrawableFilter *filter,
                                                gboolean            override_constraints)
 {
@@ -1596,62 +1565,6 @@ gimp_drawable_filter_sync_mask (GimpDrawableFilter *filter)
     }
 }
 
-static void
-gimp_drawable_filter_sync_gamma_hack (GimpDrawableFilter *filter)
-{
-  if (filter->gamma_hack)
-    {
-      const Babl  *drawable_format;
-      const Babl  *cast_format;
-      GimpTRCType  trc = GIMP_TRC_LINEAR;
-
-      switch (gimp_drawable_get_trc (filter->drawable))
-        {
-        case GIMP_TRC_LINEAR:     trc = GIMP_TRC_NON_LINEAR; break;
-        case GIMP_TRC_NON_LINEAR: trc = GIMP_TRC_LINEAR;     break;
-        case GIMP_TRC_PERCEPTUAL: trc = GIMP_TRC_LINEAR;     break;
-        }
-
-      drawable_format =
-        gimp_drawable_get_format_with_alpha (filter->drawable);
-
-      cast_format =
-        gimp_babl_format (gimp_babl_format_get_base_type (drawable_format),
-                          gimp_babl_precision (gimp_babl_format_get_component_type (drawable_format),
-                                               trc),
-                          TRUE,
-                          babl_format_get_space (drawable_format));
-
-      if (filter->has_input)
-        {
-          gegl_node_set (filter->cast_before,
-                         "operation",     "gegl:cast-format",
-                         "input-format",  drawable_format,
-                         "output-format", cast_format,
-                         NULL);
-        }
-
-      gegl_node_set (filter->cast_after,
-                     "operation",     "gegl:cast-format",
-                     "input-format",  cast_format,
-                     "output-format", drawable_format,
-                     NULL);
-    }
-  else
-    {
-      if (filter->has_input)
-        {
-          gegl_node_set (filter->cast_before,
-                         "operation", "gegl:nop",
-                         NULL);
-        }
-
-      gegl_node_set (filter->cast_after,
-                     "operation", "gegl:nop",
-                     NULL);
-    }
-}
-
 static gboolean
 gimp_drawable_filter_is_added (GimpDrawableFilter *filter)
 {
@@ -1690,7 +1603,6 @@ gimp_drawable_filter_add_filter (GimpDrawableFilter *filter)
       gimp_drawable_filter_sync_mode (filter);
       gimp_drawable_filter_sync_affect (filter);
       gimp_drawable_filter_sync_format (filter);
-      gimp_drawable_filter_sync_gamma_hack (filter);
 
       gimp_drawable_add_filter (filter->drawable,
                                 GIMP_FILTER (filter));

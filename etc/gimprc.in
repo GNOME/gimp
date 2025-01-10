@@ -684,11 +684,6 @@
 # 
 # (filter-tool-use-last-settings no)
 
-# Show advanced color options in filter tools.  Possible values are yes and
-# no.
-# 
-# (filter-tool-show-color-options no)
-
 # When enabled, GIMP will not save an image if it has not been changed since
 # it was opened.  Possible values are yes and no.
 # 

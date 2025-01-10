@@ -1090,8 +1090,7 @@ gimp_filter_tool_real_config_notify (GimpFilterTool   *filter_tool,
         {
           if (! strcmp (pspec->name, "gimp-clip")    ||
               ! strcmp (pspec->name, "gimp-mode")    ||
-              ! strcmp (pspec->name, "gimp-opacity") ||
-              ! strcmp (pspec->name, "gimp-gamma-hack"))
+              ! strcmp (pspec->name, "gimp-opacity"))
             {
               gimp_filter_tool_update_filter (filter_tool);
             }
@@ -1381,9 +1380,7 @@ gimp_filter_tool_dialog (GimpFilterTool *filter_tool)
 static void
 gimp_filter_tool_update_dialog_operation_settings (GimpFilterTool *filter_tool)
 {
-  GimpTool          *tool    = GIMP_TOOL (filter_tool);
   GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
-  GimpImage         *image   = gimp_display_get_image (tool->display);
 
   if (filter_tool->operation_settings_box)
     {
@@ -1398,7 +1395,6 @@ gimp_filter_tool_update_dialog_operation_settings (GimpFilterTool *filter_tool)
           GtkWidget *vbox2;
           GtkWidget *mode_box;
           GtkWidget *scale;
-          GtkWidget *toggle;
 
           vbox = filter_tool->operation_settings_box;
 
@@ -1459,35 +1455,6 @@ gimp_filter_tool_update_dialog_operation_settings (GimpFilterTool *filter_tool)
           gtk_box_pack_start (GTK_BOX (vbox2), scale,
                               FALSE, FALSE, 0);
           gtk_widget_show (scale);
-
-          /*  The Color Options expander  */
-          expander = gtk_expander_new (_("Advanced Color Options"));
-          gtk_box_pack_start (GTK_BOX (vbox), expander,
-                              FALSE, FALSE, 0);
-
-          g_object_bind_property (image->gimp->config,
-                                  "filter-tool-show-color-options",
-                                  expander, "visible",
-                                  G_BINDING_SYNC_CREATE);
-          g_object_bind_property (options,  "color-options-expanded",
-                                  expander, "expanded",
-                                  G_BINDING_SYNC_CREATE |
-                                  G_BINDING_BIDIRECTIONAL);
-
-          frame = gimp_frame_new (NULL);
-          gtk_container_add (GTK_CONTAINER (expander), frame);
-          gtk_widget_show (frame);
-
-          vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-          gtk_container_add (GTK_CONTAINER (frame), vbox2);
-          gtk_widget_show (vbox2);
-
-          /*  The gamma hack toggle  */
-          toggle = gimp_prop_check_button_new (filter_tool->config,
-                                               "gimp-gamma-hack", NULL);
-          gtk_box_pack_start (GTK_BOX (vbox2), toggle,
-                              FALSE, FALSE, 0);
-          gtk_widget_show (toggle);
         }
     }
 }
