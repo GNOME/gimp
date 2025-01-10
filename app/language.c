@@ -773,7 +773,15 @@ language_init (const gchar  *language,
   else
     {
       g_setenv ("LANGUAGE", language, TRUE);
+#ifdef G_OS_WIN32
+      /* Adding this fixed broken localization (for some languages) on
+       * Windows. See MR !1551.
+       * But it turned out it broke localization of plug-ins on Linux
+       * outputting a "Locale not supported by C library" error. Looks
+       * like LANG needs to be fully qualified (region and encoding).
+       */
       g_setenv ("LANG", language, TRUE);
+#endif
       setlocale (LC_ALL, ".UTF-8");
 
       actual_language = g_strdup (language);
