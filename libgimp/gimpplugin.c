@@ -1103,6 +1103,9 @@ _gimp_plug_in_set_i18n (GimpPlugIn   *plug_in,
                       use_gettext = FALSE;
                     }
 
+                  g_free (*catalog_dir);
+                  *catalog_dir = g_file_get_path (catalog_file);
+
                   g_free (rootdir);
                   g_object_unref (root_file);
                   g_clear_object (&parent);
