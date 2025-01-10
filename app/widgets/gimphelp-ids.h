@@ -295,6 +295,12 @@
 #define GIMP_HELP_PATH_EXPORT                     "gimp-path-export"
 #define GIMP_HELP_PATH_EDIT                       "gimp-path-edit"
 
+#define GIMP_HELP_PATH_TOOL_DELETE_ANCHOR         "gimp-path-path-tool-delete-anchor"
+#define GIMP_HELP_PATH_TOOL_DELETE_SEGMENT        "gimp-path-path-tool-delete-segment"
+#define GIMP_HELP_PATH_TOOL_INSERT_ANCHOR         "gimp-path-path-tool-insert-anchor"
+#define GIMP_HELP_PATH_TOOL_REVERSE_STROKE        "gimp-path-path-tool-reverse-stroke"
+#define GIMP_HELP_PATH_TOOL_SHIFT_START           "gimp-path-path-tool-shift-start"
+
 #define GIMP_HELP_TEXT_TOOL_CUT                   "gimp-text-tool-cut"
 #define GIMP_HELP_TEXT_TOOL_COPY                  "gimp-text-tool-copy"
 #define GIMP_HELP_TEXT_TOOL_PASTE                 "gimp-text-tool-paste"

@@ -44,24 +44,24 @@ static const GimpActionEntry vector_toolpath_actions[] =
   { "vector-toolpath-delete-anchor", GIMP_ICON_PATH,
     NC_("vector-toolpath-action", "_Delete Anchor"), NULL, { NULL }, NULL,
     vector_toolpath_delete_anchor_cmd_callback,
-    NULL },
+    GIMP_HELP_PATH_TOOL_DELETE_ANCHOR },
   { "vector-toolpath-shift-start", GIMP_ICON_PATH,
     NC_("vector-toolpath-action", "Shift S_tart"), NULL, { NULL }, NULL,
     vector_toolpath_shift_start_cmd_callback,
-    NULL },
+    GIMP_HELP_PATH_TOOL_SHIFT_START },
 
   { "vector-toolpath-insert-anchor", GIMP_ICON_PATH,
     NC_("vector-toolpath-action", "_Insert Anchor"), NULL, { NULL }, NULL,
     vector_toolpath_insert_anchor_cmd_callback,
-    NULL },
+    GIMP_HELP_PATH_TOOL_INSERT_ANCHOR },
   { "vector-toolpath-delete-segment", GIMP_ICON_PATH,
     NC_("vector-toolpath-action", "Delete _Segment"), NULL, { NULL }, NULL,
     vector_toolpath_delete_segment_cmd_callback,
-    NULL },
+    GIMP_HELP_PATH_TOOL_DELETE_SEGMENT },
   { "vector-toolpath-reverse-stroke", GIMP_ICON_PATH,
     NC_("vector-toolpath-action", "_Reverse Stroke"), NULL, { NULL }, NULL,
     vector_toolpath_reverse_stroke_cmd_callback,
-    NULL }
+    GIMP_HELP_PATH_TOOL_REVERSE_STROKE }
 };
 
 
