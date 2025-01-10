@@ -1075,6 +1075,7 @@ _gimp_plug_in_set_i18n (GimpPlugIn   *plug_in,
                   gchar *rootdir   = g_path_get_dirname (gimp_get_progname ());
                   GFile *root_file = g_file_new_for_path (rootdir);
                   GFile *catalog_file;
+                  GFile *parent_p  = NULL;
                   GFile *parent;
 
                   catalog_file = g_file_resolve_relative_path (root_file, *catalog_dir);
@@ -1086,9 +1087,10 @@ _gimp_plug_in_set_i18n (GimpPlugIn   *plug_in,
                   parent = g_file_dup (catalog_file);
                   do
                     {
+                      g_clear_object (&parent_p);
                       if (g_file_equal (parent, root_file))
                         break;
-                      g_clear_object (&parent);
+                      parent_p = parent;
                     }
                   while ((parent = g_file_get_parent (parent)));
 
@@ -1104,6 +1106,7 @@ _gimp_plug_in_set_i18n (GimpPlugIn   *plug_in,
                   g_free (rootdir);
                   g_object_unref (root_file);
                   g_clear_object (&parent);
+                  g_clear_object (&parent_p);
                   g_object_unref (catalog_file);
                 }
             }
