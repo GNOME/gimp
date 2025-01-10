@@ -955,7 +955,8 @@ user_update_sessionrc (const GMatchInfo *matched_value,
   "\\(theme [^)]*\\)"          "|" \
   "^ *\\(.*-path \".*\"\\) *$" "|" \
   "\\(style solid\\)"          "|" \
-  "\\(precision (.*)-gamma\\)"
+  "\\(precision (.*)-gamma\\)" "|" \
+  "\\(filter-tool-show-color-options [^)]*\\)"
 
 static gboolean
 user_update_gimprc (const GMatchInfo *matched_value,
@@ -983,6 +984,10 @@ user_update_gimprc (const GMatchInfo *matched_value,
   else
     {
       /* Do not migrate paths and themes from GIMP < 3.0. */
+
+      /* Do not migrate the advanced color options which was the gamma
+       * hack removed for GIMP 3.0. Cf. #12577.
+       */
     }
 
   g_free (match);
