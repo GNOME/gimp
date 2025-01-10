@@ -759,9 +759,14 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (box2), options->line_art_busy_box,
                       FALSE, FALSE, 0);
 
-  box2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+  box2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 3);
   gtk_container_add (GTK_CONTAINER (frame), box2);
   gtk_widget_show (box2);
+
+  /*  Line Art: stroke threshold */
+  scale = gimp_prop_spin_scale_new (config, "line-art-threshold",
+                                    0.05, 0.1, 2);
+  gtk_box_pack_start (GTK_BOX (box2), scale, FALSE, FALSE, 0);
 
   /*  Line Art: source combo (replace sample merged!) */
   combo = gimp_prop_enum_combo_box_new (config, "line-art-source", 0, 0);
@@ -773,11 +778,6 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
                                        _("Detect opacity rather than grayscale"));
   options->priv->line_art_detect_opacity = widget;
   gtk_box_pack_start (GTK_BOX (box2), widget, FALSE, FALSE, 0);
-
-  /*  Line Art: stroke threshold */
-  scale = gimp_prop_spin_scale_new (config, "line-art-threshold",
-                                    0.05, 0.1, 2);
-  gtk_box_pack_start (GTK_BOX (box2), scale, FALSE, FALSE, 0);
 
   /* Line Art Closure frame */
   frame = gimp_frame_new (NULL);
