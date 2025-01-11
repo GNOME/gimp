@@ -2160,7 +2160,6 @@ xcf_save_effect (XcfInfo     *info,
       gchar *empty = '\0';
 
       xcf_write_string_check_error (info, (gchar **) &empty, 1, ;);
-      g_free (empty);
     }
   g_free (name);
 
