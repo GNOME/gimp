@@ -2157,7 +2157,7 @@ xcf_save_effect (XcfInfo     *info,
     }
   else
     {
-      gchar *empty = '\0';
+      gchar *empty = NULL;
 
       xcf_write_string_check_error (info, (gchar **) &empty, 1, ;);
     }
