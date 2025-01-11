@@ -86,6 +86,9 @@
 (testing:load-test "refresh.scm")
 ; test methods on PDBProcedure
 (testing:load-test "procedures.scm")
+; test methods on DrawableFilter
+(testing:load-test "filters.scm")
+(testing:load-test "filter-ops.scm")
 
 ; Only run when not headless
 ; (testing:load-test "display.scm")

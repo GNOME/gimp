@@ -75,6 +75,9 @@ test_scripts = [
   'tests' / 'PDB' / 'gimp' / 'refresh.scm',
   'tests' / 'PDB' / 'gimp' / 'procedures.scm',
 
+  'tests' / 'PDB' / 'filter' / 'filter.scm',
+  'tests' / 'PDB' / 'filter' / 'filter-ops.scm',
+
   # uncategorized tests
   'tests' / 'PDB' / 'misc.scm',
   'tests' / 'PDB' / 'enums.scm',

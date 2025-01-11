@@ -209,6 +209,10 @@
     ; FIXME: why isn't it named attach like other PDB functions?
     (gimp-drawable-append-filter testLayer filter)
 
+    ; Make the filter visible in the GUI
+    ; TODO and effective?
+    (gimp_drawable_filter_set_visible filter #t)
+
     ; Make the filter destructive i.e. effects permanent
     ;(gimp-drawable-merge-filter testLayer filter)
   ) ; end let*
@@ -368,7 +372,7 @@
 
 
 (define (testGeglFiltersTakingNoArg)
-  (map testGeglFilter gegl-filter-names))
+  (map testGeglFilter gegl-filter-names2))
 
 ; tests Gegl wrappers taking an aux input
 ; Most filters have input a single layer
