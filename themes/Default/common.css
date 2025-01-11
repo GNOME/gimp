@@ -342,6 +342,7 @@ GimpSamplePointEditor box.vertical {
 
 entry {
   background-color: @extreme-bg-color;
+  background-image: none;
   color: @fg-color;
 }
 
@@ -686,6 +687,7 @@ list row:hover {
 
 switch {
   background-color: @bg-color;
+  background-image: none;
   border: 1px solid @stronger-border-color;
 }
 
