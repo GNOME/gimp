@@ -1,6 +1,7 @@
 plugin_name = 'file-dds'
 
 plugin_sources = [
+  'bc7.c',
   'dds.c',
   'ddsread.c',
   'ddswrite.c',
