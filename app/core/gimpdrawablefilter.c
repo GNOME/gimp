@@ -66,6 +66,7 @@ enum
   PROP_ID,
   PROP_DRAWABLE,
   PROP_MASK,
+  PROP_CUSTOM_NAME,
   N_PROPS
 };
 
@@ -81,6 +82,7 @@ struct _GimpDrawableFilter
   GeglNode               *operation;
 
   gboolean                has_input;
+  gboolean                has_custom_name;
 
   gboolean                clip;
   GimpFilterRegion        region;
@@ -204,6 +206,12 @@ gimp_drawable_filter_class_init (GimpDrawableFilterClass *klass)
                                                               GIMP_TYPE_DRAWABLE,
                                                               GIMP_PARAM_READWRITE);
 
+  drawable_filter_props[PROP_CUSTOM_NAME] = g_param_spec_boolean ("custom-name",
+                                                                  NULL, NULL,
+                                                                  FALSE,
+                                                                  GIMP_PARAM_READWRITE);
+
+
   g_object_class_install_properties (object_class, N_PROPS, drawable_filter_props);
 }
 
@@ -255,6 +263,10 @@ gimp_drawable_filter_set_property (GObject      *object,
         }
       break;
 
+    case PROP_CUSTOM_NAME:
+      filter->has_custom_name = g_value_get_boolean (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -276,6 +288,9 @@ gimp_drawable_filter_get_property (GObject    *object,
       break;
     case PROP_MASK:
       g_value_set_object (value, gimp_drawable_filter_get_mask (filter));
+      break;
+    case PROP_CUSTOM_NAME:
+      g_value_set_boolean (value, filter->has_custom_name);
       break;
 
     default:
@@ -324,26 +339,32 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
   GimpDrawableFilter *filter;
   GimpImage          *image;
   GeglNode           *node;
+  GeglOperation      *op;
+  GeglOperationClass *opclass;
+  gboolean            custom_name = TRUE;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (GEGL_IS_NODE (operation), NULL);
   g_return_val_if_fail (gegl_node_has_pad (operation, "output"), NULL);
 
+  op      = gegl_node_get_gegl_operation (operation);
+  opclass = GEGL_OPERATION_GET_CLASS (op);
+
   if (undo_desc == NULL || strlen (undo_desc) == 0)
     {
-      GeglOperation *op;
-      GeglOperationClass *opclass;
-
-      op        = gegl_node_get_gegl_operation (operation);
-      opclass   = GEGL_OPERATION_GET_CLASS (op);
-      undo_desc = gegl_operation_class_get_key (opclass, "title");
+      undo_desc   = gegl_operation_class_get_key (opclass, "title");
+      custom_name = FALSE;
     }
+  
+  if (! g_strcmp0 (undo_desc, gegl_operation_class_get_key (opclass, "title")))
+    custom_name = FALSE;
 
   filter = g_object_new (GIMP_TYPE_DRAWABLE_FILTER,
-                         "name",      undo_desc,
-                         "icon-name", icon_name,
-                         "drawable",  drawable,
-                         "mask",      NULL,
+                         "name",        undo_desc,
+                         "icon-name",   icon_name,
+                         "custom-name", custom_name,
+                         "drawable",    drawable,
+                         "mask",        NULL,
                          NULL);
 
   filter->operation = g_object_ref (operation);

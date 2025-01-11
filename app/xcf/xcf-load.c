@@ -1087,6 +1087,19 @@ xcf_load_add_effects (XcfInfo   *info,
                 {
                   GimpDrawableFilter *filter = NULL;
 
+                  if (! data->name)
+                    {
+                      GeglOperation      *op;
+                      GeglOperationClass *opclass;
+                      const gchar        *opname;
+
+                      op      = gegl_node_get_gegl_operation (data->operation);
+                      opclass = GEGL_OPERATION_GET_CLASS (op);
+                      opname  = gegl_operation_class_get_key (opclass, "title");
+
+                      data->name = g_strdup_printf ("%s", opname);
+                    }
+
                   if (! data->icon_name)
                     data->icon_name = g_strdup ("gimp-gegl");
 

@@ -2128,6 +2128,7 @@ xcf_save_effect (XcfInfo     *info,
 {
   gchar              *name;
   gchar              *icon;
+  gboolean            has_custom_name;
   GimpDrawableFilter *filter_drawable;
   GeglNode           *node;
   gchar              *operation;
@@ -2144,12 +2145,23 @@ xcf_save_effect (XcfInfo     *info,
                  NULL);
 
   g_object_get (filter,
-                "name",      &name,
-                "icon-name", &icon,
+                "name",        &name,
+                "icon-name",   &icon,
+                "custom-name", &has_custom_name,
                 NULL);
 
   /* Write out effect name */
-  xcf_write_string_check_error (info, (gchar **) &name, 1, ;);
+  if (has_custom_name)
+    {
+      xcf_write_string_check_error (info, (gchar **) &name, 1, ;);
+    }
+  else
+    {
+      gchar *empty = '\0';
+
+      xcf_write_string_check_error (info, (gchar **) &empty, 1, ;);
+      g_free (empty);
+    }
   g_free (name);
 
   /* Write out effect icon */
