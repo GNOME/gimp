@@ -285,17 +285,20 @@ welcome_dialog_new (Gimp       *gimp,
   if (! show_welcome_page)
     gtk_stack_set_visible_child_name (GTK_STACK (stack), "gimp-welcome-create");
 
-  main_vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                       "gimp-wilber",
-                                       _("Release Notes"),
-                                       _("Release Notes"),
-                                       "gimp-welcome-release_notes",
-                                       NULL,
-                                       &top_iter);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  if (gimp_welcome_dialog_n_items > 0)
+    {
+      main_vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                           "gimp-wilber",
+                                           _("Release Notes"),
+                                           _("Release Notes"),
+                                           "gimp-welcome-release_notes",
+                                           NULL,
+                                           &top_iter);
+      gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
 
-  welcome_dialog_create_release_page (gimp, dialog, main_vbox);
-  gtk_widget_set_visible (main_vbox, TRUE);
+      welcome_dialog_create_release_page (gimp, dialog, main_vbox);
+      gtk_widget_set_visible (main_vbox, TRUE);
+    }
 
   return dialog;
 }
