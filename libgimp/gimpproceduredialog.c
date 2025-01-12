@@ -796,16 +796,33 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
   else if (G_PARAM_SPEC_TYPE (pspec) == GIMP_TYPE_PARAM_COLOR ||
            G_PARAM_SPEC_TYPE (pspec) == GEGL_TYPE_PARAM_COLOR)
     {
+      gboolean has_alpha = TRUE;
+
+      if (G_PARAM_SPEC_TYPE (pspec) == GIMP_TYPE_PARAM_COLOR)
+        has_alpha = gimp_param_spec_color_has_alpha (pspec);
+
       if (widget_type == G_TYPE_NONE || widget_type == GIMP_TYPE_LABEL_COLOR)
         {
           widget = gimp_prop_label_color_new (G_OBJECT (priv->config),
                                               property, TRUE);
+
+          if (! has_alpha)
+            {
+              GtkWidget *color_button;
+
+              color_button =
+                gimp_label_color_get_color_widget (GIMP_LABEL_COLOR (widget));
+              gimp_color_button_set_type (GIMP_COLOR_BUTTON (color_button),
+                                          GIMP_COLOR_AREA_FLAT);
+            }
         }
       else if (widget_type == GIMP_TYPE_COLOR_AREA)
         {
           widget = gimp_prop_color_area_new (G_OBJECT (priv->config),
                                              property, 20, 20,
-                                             GIMP_COLOR_AREA_SMALL_CHECKS);
+                                             has_alpha ?
+                                             GIMP_COLOR_AREA_SMALL_CHECKS :
+                                             GIMP_COLOR_AREA_FLAT);
           gtk_widget_set_vexpand (widget, FALSE);
           gtk_widget_set_hexpand (widget, FALSE);
         }
@@ -813,7 +830,9 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
         {
           widget = gimp_prop_color_select_new (G_OBJECT (priv->config),
                                                property, 20, 20,
-                                               GIMP_COLOR_AREA_SMALL_CHECKS);
+                                               has_alpha ?
+                                               GIMP_COLOR_AREA_SMALL_CHECKS :
+                                               GIMP_COLOR_AREA_FLAT);
           gtk_widget_set_vexpand (widget, FALSE);
           gtk_widget_set_hexpand (widget, FALSE);
         }
@@ -972,8 +991,9 @@ gimp_procedure_dialog_get_color_widget (GimpProcedureDialog *dialog,
                                         GimpColorAreaType    type)
 {
   GimpProcedureDialogPrivate *priv;
-  GtkWidget                  *widget = NULL;
+  GtkWidget                  *widget    = NULL;
   GParamSpec                 *pspec;
+  gboolean                    has_alpha = TRUE;
 
   g_return_val_if_fail (property != NULL, NULL);
 
@@ -993,6 +1013,9 @@ gimp_procedure_dialog_get_color_widget (GimpProcedureDialog *dialog,
                  G_STRFUNC, property);
       return NULL;
     }
+
+  if (G_PARAM_SPEC_TYPE (pspec) == GIMP_TYPE_PARAM_COLOR)
+    has_alpha = gimp_param_spec_color_has_alpha (pspec);
 
   if (G_PARAM_SPEC_TYPE (pspec) == GIMP_TYPE_PARAM_COLOR ||
       G_PARAM_SPEC_TYPE (pspec) == GEGL_TYPE_PARAM_COLOR)
@@ -1018,6 +1041,16 @@ gimp_procedure_dialog_get_color_widget (GimpProcedureDialog *dialog,
       gtk_size_group_add_widget (priv->label_group, label);
       if (tooltip)
         gimp_help_set_help_data (label, tooltip, NULL);
+    }
+
+  if (! has_alpha)
+    {
+      GtkWidget *color_button;
+
+      color_button =
+        gimp_label_color_get_color_widget (GIMP_LABEL_COLOR (widget));
+      gimp_color_button_set_type (GIMP_COLOR_BUTTON (color_button),
+                                  GIMP_COLOR_AREA_FLAT);
     }
 
   gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
