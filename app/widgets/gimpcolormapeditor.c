@@ -313,7 +313,11 @@ gimp_colormap_editor_is_color_deletable (GimpColormapEditor *editor)
 
   image     = GIMP_IMAGE_EDITOR (editor)->image;
   selection = GIMP_COLORMAP_SELECTION (editor->selection);
-  index     = gimp_colormap_selection_get_index (selection, NULL);
+
+  if (! selection)
+    return FALSE;
+
+  index = gimp_colormap_selection_get_index (selection, NULL);
 
   if (index == -1)
     /* No colormap. */
