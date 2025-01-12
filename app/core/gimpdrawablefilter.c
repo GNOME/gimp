@@ -163,6 +163,11 @@ static void       gimp_drawable_filter_drawable_removed      (GimpDrawable      
 static void       gimp_drawable_filter_lock_alpha_changed    (GimpLayer           *layer,
                                                               GimpDrawableFilter  *filter);
 
+static void       gimp_drawable_filter_reorder               (GimpFilterStack    *stack,
+                                                              GimpDrawableFilter *reordered_filter,
+                                                              gint                new_index,
+                                                              GimpDrawableFilter *filter);
+
 
 G_DEFINE_TYPE (GimpDrawableFilter, gimp_drawable_filter, GIMP_TYPE_FILTER)
 
@@ -1628,7 +1633,8 @@ gimp_drawable_filter_add_filter (GimpDrawableFilter *filter)
 {
   if (! gimp_drawable_filter_is_added (filter))
     {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (filter->drawable));
+      GimpImage     *image = gimp_item_get_image (GIMP_ITEM (filter->drawable));
+      GimpContainer *filters;
 
       gimp_viewable_preview_freeze (GIMP_VIEWABLE (filter->drawable));
 
@@ -1677,6 +1683,11 @@ gimp_drawable_filter_add_filter (GimpDrawableFilter *filter)
                                    filter, 0);
         }
 
+      filters = gimp_drawable_get_filters (filter->drawable);
+      g_signal_connect_object (G_OBJECT (filters), "reorder",
+                               G_CALLBACK (gimp_drawable_filter_reorder),
+                               filter, 0);
+
       return TRUE;
     }
 
@@ -1688,8 +1699,14 @@ gimp_drawable_filter_remove_filter (GimpDrawableFilter *filter)
 {
   if (gimp_drawable_filter_is_added (filter))
     {
-      GimpImage    *image    = gimp_item_get_image (GIMP_ITEM (filter->drawable));
-      GimpDrawable *drawable = filter->drawable;
+      GimpImage     *image    = gimp_item_get_image (GIMP_ITEM (filter->drawable));
+      GimpDrawable  *drawable = filter->drawable;
+      GimpContainer *filters;
+
+      filters = gimp_drawable_get_filters (filter->drawable);
+      g_signal_handlers_disconnect_by_func (filters,
+                                            G_CALLBACK (gimp_drawable_filter_reorder),
+                                            filter);
 
       if (GIMP_IS_LAYER (drawable))
         g_signal_handlers_disconnect_by_func (drawable,
@@ -1831,4 +1848,21 @@ gimp_drawable_filter_lock_alpha_changed (GimpLayer          *layer,
 {
   gimp_drawable_filter_sync_affect (filter);
   gimp_drawable_filter_update_drawable (filter, NULL);
+}
+
+static void
+gimp_drawable_filter_reorder (GimpFilterStack    *stack,
+                              GimpDrawableFilter *reordered_filter,
+                              gint                new_index,
+                              GimpDrawableFilter *filter)
+{
+  if (reordered_filter == filter)
+    {
+      gimp_drawable_filter_sync_format (filter);
+
+      g_return_if_fail (GIMP_LIST (stack)->queue->head != NULL);
+
+      if (GIMP_LIST (stack)->queue->head->data != filter)
+        gimp_drawable_filter_sync_format (GIMP_LIST (stack)->queue->head->data);
+    }
 }
