@@ -339,24 +339,26 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
   GimpDrawableFilter *filter;
   GimpImage          *image;
   GeglNode           *node;
-  GeglOperation      *op;
-  GeglOperationClass *opclass;
+  GeglOperation      *op          = NULL;
+  GeglOperationClass *opclass     = NULL;
   gboolean            custom_name = TRUE;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (GEGL_IS_NODE (operation), NULL);
   g_return_val_if_fail (gegl_node_has_pad (operation, "output"), NULL);
 
-  op      = gegl_node_get_gegl_operation (operation);
-  opclass = GEGL_OPERATION_GET_CLASS (op);
+  op = gegl_node_get_gegl_operation (operation);
+  if (op != NULL)
+    opclass = GEGL_OPERATION_GET_CLASS (op);
 
   if (undo_desc == NULL || strlen (undo_desc) == 0)
     {
       undo_desc   = gegl_operation_class_get_key (opclass, "title");
       custom_name = FALSE;
     }
-  
-  if (! g_strcmp0 (undo_desc, gegl_operation_class_get_key (opclass, "title")))
+
+  if (opclass &&
+      ! g_strcmp0 (undo_desc, gegl_operation_class_get_key (opclass, "title")))
     custom_name = FALSE;
 
   filter = g_object_new (GIMP_TYPE_DRAWABLE_FILTER,
