@@ -370,9 +370,17 @@ gimp_operation_mask_components_prepare (GeglOperation *operation)
 {
   GimpOperationMaskComponents *self = GIMP_OPERATION_MASK_COMPONENTS (operation);
   const Babl                  *format;
+  const Babl                  *aux_format;
 
-  format = gimp_operation_mask_components_get_format (
-    gegl_operation_get_source_format (operation, "input"));
+  format = gimp_operation_mask_components_get_format (gegl_operation_get_source_format (operation, "input"));
+  aux_format = gimp_operation_mask_components_get_format (gegl_operation_get_source_format (operation, "aux"));
+
+  if (babl_format_get_bytes_per_pixel (aux_format) / babl_format_get_n_components (aux_format) >
+      babl_format_get_bytes_per_pixel (format) / babl_format_get_n_components (format))
+    /* Use the higher bit-depth format as possible for processing and
+     * output.
+     */
+    format = aux_format;
 
   gegl_operation_set_format (operation, "input",  format);
   gegl_operation_set_format (operation, "aux",    format);

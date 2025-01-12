@@ -51,6 +51,7 @@
 #include "gimpidtable.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
+#include "gimplist.h"
 #include "gimpprogress.h"
 
 
@@ -1522,17 +1523,37 @@ gimp_drawable_filter_sync_affect (GimpDrawableFilter *filter)
 static void
 gimp_drawable_filter_sync_format (GimpDrawableFilter *filter)
 {
-  const Babl *format;
+  const Babl    *format = NULL;
+  GimpContainer *filters;
 
-  if (filter->add_alpha                                &&
-      (gimp_drawable_supports_alpha (filter->drawable) ||
-       filter->override_constraints))
+  filters = gimp_drawable_get_filters (filter->drawable);
+
+  g_return_if_fail (GIMP_LIST (filters)->queue->head != NULL);
+
+  if (filter == GIMP_LIST (filters)->queue->head->data)
     {
-      format = gimp_drawable_get_format_with_alpha (filter->drawable);
-    }
-  else
-    {
-      format = gimp_drawable_get_format (filter->drawable);
+      /* We only want to convert back to the source format at the very
+       * end, and keep an as-high-bit-depth as possible format during
+       * multi-filter processing.
+       */
+      GimpDrawableFilter *next_filter = NULL;
+
+      if (GIMP_LIST (filters)->queue->head->next)
+        next_filter = GIMP_LIST (filters)->queue->head->next->data;
+
+      if (filter->add_alpha                                &&
+          (gimp_drawable_supports_alpha (filter->drawable) ||
+           filter->override_constraints))
+        {
+          format = gimp_drawable_get_format_with_alpha (filter->drawable);
+        }
+      else
+        {
+          format = gimp_drawable_get_format (filter->drawable);
+        }
+
+      if (next_filter)
+        gimp_drawable_filter_sync_format (next_filter);
     }
 
   gimp_applicator_set_output_format (filter->applicator, format);
@@ -1625,10 +1646,10 @@ gimp_drawable_filter_add_filter (GimpDrawableFilter *filter)
       gimp_drawable_filter_sync_opacity (filter);
       gimp_drawable_filter_sync_mode (filter);
       gimp_drawable_filter_sync_affect (filter);
-      gimp_drawable_filter_sync_format (filter);
 
       gimp_drawable_add_filter (filter->drawable,
                                 GIMP_FILTER (filter));
+      gimp_drawable_filter_sync_format (filter);
 
       gimp_drawable_update_bounding_box (filter->drawable);
 
