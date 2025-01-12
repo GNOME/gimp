@@ -1041,16 +1041,16 @@ gimp_procedure_dialog_get_color_widget (GimpProcedureDialog *dialog,
       gtk_size_group_add_widget (priv->label_group, label);
       if (tooltip)
         gimp_help_set_help_data (label, tooltip, NULL);
+    }
 
-      if (! has_alpha)
-        {
-          GtkWidget *color_button;
+  if (! has_alpha)
+    {
+      GtkWidget *color_button;
 
-          color_button =
-            gimp_label_color_get_color_widget (GIMP_LABEL_COLOR (widget));
-          gimp_color_button_set_type (GIMP_COLOR_BUTTON (color_button),
-                                      GIMP_COLOR_AREA_FLAT);
-        }
+      color_button =
+        gimp_label_color_get_color_widget (GIMP_LABEL_COLOR (widget));
+      gimp_color_button_set_type (GIMP_COLOR_BUTTON (color_button),
+                                  GIMP_COLOR_AREA_FLAT);
     }
 
   gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
