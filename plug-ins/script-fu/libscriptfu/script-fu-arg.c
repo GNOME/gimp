@@ -242,7 +242,7 @@ script_fu_add_resource_arg_default_from_context (
             FALSE,  /* none OK */
             NULL,   /* default */
             TRUE,   /* default_from_context */
-            G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
+            G_PARAM_READWRITE);
 }
 
 
@@ -259,7 +259,7 @@ script_fu_add_resource_arg_with_default (
             FALSE,  /* none OK */
             default_resource,
             FALSE,   /* default_from_context */
-            G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
+            G_PARAM_READWRITE);
 }
 
 
