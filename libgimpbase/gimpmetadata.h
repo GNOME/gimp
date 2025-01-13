@@ -142,6 +142,8 @@ void           gimp_metadata_set_resolution      (GimpMetadata           *metada
                                                   gdouble                 xres,
                                                   gdouble                 yres,
                                                   GimpUnit               *unit);
+void           gimp_metadata_set_creation_date   (GimpMetadata           *metadata,
+                                                  GDateTime              *datetime);
 
 GimpMetadataColorspace
                gimp_metadata_get_colorspace      (GimpMetadata           *metadata);

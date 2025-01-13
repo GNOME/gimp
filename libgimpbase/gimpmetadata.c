@@ -1682,6 +1682,98 @@ gimp_metadata_set_resolution (GimpMetadata *metadata,
 }
 
 /**
+ * gimp_metadata_set_creation_date:
+ * @metadata: A #GimpMetadata instance.
+ * @datetime: A #GDateTime value
+ *
+ * Sets `Iptc.Application2.DateCreated`, `Iptc.Application2.TimeCreated`,
+ * `Exif.Image.DateTime`, `Exif.Image.DateTimeOriginal`,
+ * `Exif.Photo.DateTimeOriginal`, `Exif.Photo.DateTimeDigitized`,
+ * `Exif.Photo.OffsetTime`, `Exif.Photo.OffsetTimeOriginal`,
+ * `Exif.Photo.OffsetTimeDigitized`, `Xmp.xmp.CreateDate`, `Xmp.xmp.ModifyDate`,
+ * `Xmp.xmp.MetadataDate`, `Xmp.photoshop.DateCreated` of @metadata.
+ *
+ * Since: 3.0
+ */
+void
+gimp_metadata_set_creation_date (GimpMetadata *metadata,
+                                 GDateTime    *datetime)
+{
+  gchar          *datetime_buf = NULL;
+  GExiv2Metadata *g2metadata   = GEXIV2_METADATA (metadata);
+
+  g_return_if_fail (GIMP_IS_METADATA (metadata));
+
+  /* IPTC: set creation date and time; there is no tag for modified date/time. */
+
+  datetime_buf = g_date_time_format (datetime, "%Y-%m-%d");
+  gexiv2_metadata_try_set_tag_string (g2metadata,
+                                      "Iptc.Application2.DateCreated",
+                                      datetime_buf, NULL);
+  g_free (datetime_buf);
+
+  /* time and timezone */
+  datetime_buf = g_date_time_format (datetime, "%T\%:z");
+  gexiv2_metadata_try_set_tag_string (g2metadata,
+                                      "Iptc.Application2.TimeCreated",
+                                      datetime_buf, NULL);
+  g_free (datetime_buf);
+
+  /* Exif: Exif.Image.DateTime = Modified datetime
+   * Exif.Image.DateTimeOriginal and Exif.Photo.DateTimeOriginal = When the
+   *   original image data was generated.
+   * Exif.Photo.DateTimeDigitized = when the image was stored as digital data.
+   */
+  datetime_buf = g_date_time_format (datetime, "%Y:%m:%d %T");
+
+  gexiv2_metadata_try_set_tag_string (g2metadata,
+                                      "Exif.Image.DateTime",
+                                      datetime_buf, NULL);
+  gexiv2_metadata_try_set_tag_string (g2metadata,
+                                      "Exif.Image.DateTimeOriginal",
+                                      datetime_buf, NULL);
+  gexiv2_metadata_try_set_tag_string (g2metadata,
+                                      "Exif.Photo.DateTimeOriginal",
+                                      datetime_buf, NULL);
+  gexiv2_metadata_try_set_tag_string (g2metadata,
+                                      "Exif.Photo.DateTimeDigitized",
+                                      datetime_buf, NULL);
+  g_free (datetime_buf);
+
+  /* Timezone is separate */
+  datetime_buf = g_date_time_format (datetime, "\%:z");
+  gexiv2_metadata_try_set_tag_string (g2metadata,
+                                      "Exif.Photo.OffsetTime",
+                                      datetime_buf, NULL);
+  gexiv2_metadata_try_set_tag_string (g2metadata,
+                                      "Exif.Photo.OffsetTimeOriginal",
+                                      datetime_buf, NULL);
+  gexiv2_metadata_try_set_tag_string (g2metadata,
+                                      "Exif.Photo.OffsetTimeDigitized",
+                                      datetime_buf, NULL);
+  g_free (datetime_buf);
+
+  /* XMP: Xmp.photoshop.DateCreated = date when the original image was
+   *   taken, this can be before Xmp.xmp.CreateDate. */
+  datetime_buf = g_date_time_format (datetime, "%Y:%m:%dT%T\%:z");
+
+  gexiv2_metadata_try_set_tag_string (g2metadata,
+                                      "Xmp.xmp.CreateDate",
+                                      datetime_buf, NULL);
+  gexiv2_metadata_try_set_tag_string (g2metadata,
+                                      "Xmp.xmp.ModifyDate",
+                                      datetime_buf, NULL);
+  gexiv2_metadata_try_set_tag_string (g2metadata,
+                                      "Xmp.xmp.MetadataDate",
+                                      datetime_buf, NULL);
+  gexiv2_metadata_try_set_tag_string (g2metadata,
+                                      "Xmp.photoshop.DateCreated",
+                                      datetime_buf, NULL);
+
+  g_free (datetime_buf);
+}
+
+/**
  * gimp_metadata_get_colorspace:
  * @metadata: A #GimpMetadata instance.
  *

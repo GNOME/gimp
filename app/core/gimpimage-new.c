@@ -43,6 +43,7 @@
 #include "gimpimage.h"
 #include "gimpimage-color-profile.h"
 #include "gimpimage-colormap.h"
+#include "gimpimage-metadata.h"
 #include "gimpimage-new.h"
 #include "gimpimage-undo.h"
 #include "gimplayer.h"
@@ -99,6 +100,26 @@ gimp_image_new_set_last_template (Gimp         *gimp,
 
   gimp_config_sync (G_OBJECT (template),
                     G_OBJECT (gimp->image_new_last_template), 0);
+}
+
+void
+gimp_image_new_add_creation_metadata (GimpImage *image)
+{
+  GimpMetadata *metadata;
+
+  metadata = gimp_image_get_metadata (image);
+  if (! metadata)
+    {
+      g_critical ("Metadata not found. Should not happen!");
+    }
+  else
+    {
+      GDateTime *datetime;
+
+      datetime = g_date_time_new_now_local ();
+      gimp_metadata_set_creation_date (metadata, datetime);
+      g_date_time_unref (datetime);
+    }
 }
 
 GimpImage *
@@ -181,6 +202,8 @@ gimp_image_new_from_template (Gimp         *gimp,
                       context, gimp_template_get_fill_type (template));
 
   gimp_image_add_layer (image, layer, NULL, 0, FALSE);
+
+  gimp_image_new_add_creation_metadata (image);
 
   gimp_image_undo_enable (image);
   gimp_image_clean_all (image);
@@ -284,6 +307,8 @@ gimp_image_new_from_drawable (Gimp         *gimp,
     }
 
   gimp_image_add_layer (new_image, new_layer, NULL, 0, TRUE);
+
+  gimp_image_new_add_creation_metadata (new_image);
 
   gimp_image_undo_enable (new_image);
 
@@ -535,6 +560,8 @@ gimp_image_new_from_drawables (Gimp     *gimp,
 
   gimp_image_new_copy_drawables (image, drawables, new_image, tag_copies, NULL, NULL, NULL, NULL);
 
+  gimp_image_new_add_creation_metadata (new_image);
+
   gimp_image_undo_enable (new_image);
 
   return new_image;
@@ -580,6 +607,8 @@ gimp_image_new_from_component (Gimp            *gimp,
                          g_strdup_printf (_("%s Channel Copy"), desc));
 
   gimp_image_add_layer (new_image, layer, NULL, 0, TRUE);
+
+  gimp_image_new_add_creation_metadata (new_image);
 
   gimp_image_undo_enable (new_image);
 
@@ -629,6 +658,8 @@ gimp_image_new_from_buffer (Gimp       *gimp,
                                       gimp_image_get_default_new_layer_mode (image));
 
   gimp_image_add_layer (image, layer, NULL, 0, TRUE);
+
+  gimp_image_new_add_creation_metadata (image);
 
   gimp_image_undo_enable (image);
 
@@ -690,6 +721,8 @@ gimp_image_new_from_pixbuf (Gimp        *gimp,
                                       gimp_image_get_default_new_layer_mode (new_image));
 
   gimp_image_add_layer (new_image, layer, NULL, 0, TRUE);
+
+  gimp_image_new_add_creation_metadata (new_image);
 
   gimp_image_undo_enable (new_image);
 
