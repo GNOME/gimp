@@ -995,7 +995,6 @@ gimp_dock_window_image_changed (GimpDockWindow *dock_window,
                                 GimpImage      *image,
                                 GimpContext    *context)
 {
-  GimpContainer *image_container   = dock_window->p->image_container;
   GimpContainer *display_container = dock_window->p->display_container;
 
   /*  make sure auto-follow-active works both ways  */

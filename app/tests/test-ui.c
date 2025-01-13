@@ -174,7 +174,6 @@ keyboard_zoom_focus (gconstpointer data)
   Gimp              *gimp    = GIMP (data);
   GimpDisplay       *display = GIMP_DISPLAY (gimp_get_display_iter (gimp)->data);
   GimpDisplayShell  *shell   = gimp_display_get_shell (display);
-  GimpImageWindow   *window  = gimp_display_shell_get_window (shell);
   gint               image_x;
   gint               image_y;
   gint               shell_x_before_zoom;
