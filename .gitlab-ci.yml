@@ -199,7 +199,6 @@ image-debian:
             glib-networking
             graphviz
             graphviz-dev
-            hicolor-icon-theme
             iso-codes
             libaa1-dev
             libappstream-glib-dev
