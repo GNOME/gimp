@@ -24,6 +24,8 @@
 
 #include "actions-types.h"
 
+#include "operations/gimpoperationsettings.h"
+
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimpdrawable.h"
@@ -309,9 +311,13 @@ procedure_commands_get_display_args (GimpProcedure *procedure,
         }
     }
 
+  /* Some filters have a settings object (see filters_settings_actions
+   * list), which we want to pass around, but we don't want to pass
+   * other types of object data.
+   */
   if (gimp_value_array_length (args) > n_args &&
       g_type_is_a (G_PARAM_SPEC_VALUE_TYPE (procedure->args[n_args]),
-                   GIMP_TYPE_OBJECT))
+                   GIMP_TYPE_OPERATION_SETTINGS))
     {
       g_value_set_object (gimp_value_array_index (args, n_args), settings);
       n_args++;
