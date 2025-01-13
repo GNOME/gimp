@@ -385,38 +385,37 @@ gimp_drawable_filter_update (GimpDrawableFilter *filter)
   GStrv                auxnames;
   const GimpDrawable **auxinputs;
   guint                n_aux;
+  GObjectClass        *klass;
+  GParamSpec         **pspecs;
+  guint                n_pspecs;
 
-  if (filter->config)
+  if (! filter->config)
+    gimp_drawable_filter_get_config (filter);
+
+  g_return_if_fail (filter->config != NULL);
+
+  klass  = G_OBJECT_GET_CLASS (filter->config);
+  pspecs = g_object_class_list_properties (klass, &n_pspecs);
+  values = gimp_value_array_new (n_pspecs);
+
+  for (guint i = 0; i < n_pspecs; i++)
     {
-      GObjectClass  *klass;
-      GParamSpec   **pspecs;
-      guint          n_pspecs;
+      GParamSpec *pspec = pspecs[i];
+      GValue      value = G_VALUE_INIT;
 
-      klass  = G_OBJECT_GET_CLASS (filter->config);
-      pspecs = g_object_class_list_properties (klass, &n_pspecs);
-      values = gimp_value_array_new (n_pspecs);
+      g_value_init (&value, pspec->value_type);
+      g_object_get_property (G_OBJECT (filter->config), pspec->name, &value);
 
-      for (guint i = 0; i < n_pspecs; i++)
+      if (g_param_value_defaults (pspec, &value))
         {
-          GParamSpec *pspec = pspecs[i];
-          GValue      value = G_VALUE_INIT;
-
-          g_value_init (&value, pspec->value_type);
-          g_object_get_property (G_OBJECT (filter->config), pspec->name, &value);
-
-          if (g_param_value_defaults (pspec, &value))
-            {
-              g_value_unset (&value);
-              continue;
-            }
-
-          g_strv_builder_add (builder, pspec->name);
-          gimp_value_array_append (values, &value);
-
           g_value_unset (&value);
+          continue;
         }
 
-      g_free (pspecs);
+      g_strv_builder_add (builder, pspec->name);
+      gimp_value_array_append (values, &value);
+
+      g_value_unset (&value);
     }
 
   propnames = g_strv_builder_end (builder);
@@ -431,6 +430,7 @@ gimp_drawable_filter_update (GimpDrawableFilter *filter)
                                 filter->composite_mode, filter->composite_space,
                                 (const gchar **) auxnames, auxinputs);
 
+  g_free (pspecs);
   g_strfreev (propnames);
   g_strv_builder_unref (builder);
   gimp_value_array_unref (values);
