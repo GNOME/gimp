@@ -480,17 +480,20 @@ icns_export_image (GFile        *file,
 
           procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (), "file-png-export");
           return_vals = gimp_procedure_run (procedure,
-                                            "run-mode",         GIMP_RUN_NONINTERACTIVE,
-                                            "image",            temp_image,
-                                            "file",             temp_file,
-                                            "interlaced",       FALSE,
-                                            "compression",      9,
-                                            "bkgd",             FALSE,
-                                            "offs",             FALSE,
-                                            "phys",             FALSE,
-                                            "time",             FALSE,
-                                            "save-transparent", FALSE,
-                                            "optimize-palette", FALSE,
+                                            "run-mode",           GIMP_RUN_NONINTERACTIVE,
+                                            "image",              temp_image,
+                                            "file",               temp_file,
+                                            "interlaced",         FALSE,
+                                            "compression",        9,
+                                            "bkgd",               FALSE,
+                                            "offs",               FALSE,
+                                            "phys",               FALSE,
+                                            "time",               FALSE,
+                                            "save-transparent",   FALSE,
+                                            "optimize-palette",   FALSE,
+#if defined(PNG_iCCP_SUPPORTED)
+                                            "save-color-profile", TRUE,
+#endif
                                             NULL);
           gimp_image_delete (temp_image);
 
