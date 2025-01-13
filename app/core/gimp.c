@@ -63,6 +63,7 @@
 #include "gimpgradient.h"
 #include "gimpidtable.h"
 #include "gimpimage.h"
+#include "gimpimage-metadata.h"
 #include "gimpimagefile.h"
 #include "gimplist.h"
 #include "gimpmarshal.h"
@@ -1036,11 +1037,16 @@ gimp_create_image (Gimp              *gimp,
                    GimpPrecision      precision,
                    gboolean           attach_comment)
 {
-  GimpImage *image;
+  GimpImage    *image;
+  GimpMetadata *metadata;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   image = gimp_image_new (gimp, width, height, type, precision);
+
+  metadata = gimp_metadata_new ();
+  gimp_image_set_metadata (image, metadata, FALSE);
+  g_object_unref (metadata);
 
   if (attach_comment)
     {
