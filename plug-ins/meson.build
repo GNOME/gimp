@@ -1,4 +1,5 @@
 subdir('common')
+subdir('file-bmp')
 subdir('file-dds')
 subdir('file-exr')
 subdir('file-faxg3')
@@ -31,7 +32,3 @@ subdir('screenshot')
 subdir('script-fu')
 subdir('selection-to-path')
 subdir('twain')
-
-if not meson.is_cross_build()
-  subdir('file-bmp')
-endif

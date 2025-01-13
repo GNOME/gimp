@@ -1,7 +1,8 @@
 plugin_name = 'file-bmp'
 
 gen_huffman = executable('generate-huffman',
-                         'generate-huffman.c'
+                         'generate-huffman.c',
+                         native: true
 )
 
 huffman = custom_target('huffman.h',
