@@ -457,6 +457,7 @@ gimp-flatpak-x64:
     - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
   variables:
     DEB_VERSION: testing
+    DEBIAN_FRONTEND: noninteractive
     MSYSTEM_PREFIX: clang64
   cache: []
 

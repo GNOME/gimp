@@ -25,11 +25,11 @@ fi
 ## Install quasi-msys2 and its deps
 # Beginning of install code block
 if [ "$GITLAB_CI" ]; then
-  apt-get update -y >/dev/null
+  apt-get update -y &> apt.log || cat apt.log
   apt-get install -y --no-install-recommends \
                      clang                   \
                      lld                     \
-                     llvm >/dev/null
+                     llvm &>> apt.log || cat apt.log
   apt-get install -y --no-install-recommends \
                      gawk                    \
                      gpg                     \
@@ -37,7 +37,7 @@ if [ "$GITLAB_CI" ]; then
                      sudo                    \
                      tar                     \
                      wget                    \
-                     zstd >/dev/null
+                     zstd &>> apt.log | rm apt.log || cat apt.log
 fi
 # End of install code block
 if [ ! -d 'quasi-msys2' ]; then
