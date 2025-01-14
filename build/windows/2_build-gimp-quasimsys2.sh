@@ -80,7 +80,6 @@ echo -e "\e[0Ksection_end:`date +%s`:cross_environ\r\e[0K"
 
 ## Build GIMP
 echo -e "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP"
-echo 'needs_exe_wrapper = true' >> ${PARENT_DIR}quasi-msys2/env/config/meson_cross_file.ini
 if [ ! -f "_build-$(echo $MSYSTEM_PREFIX | sed 's|/||')-cross/build.ninja" ]; then
   meson setup _build-$(echo $MSYSTEM_PREFIX | sed 's|/||')-cross -Dprefix="$GIMP_PREFIX" -Dgi-docgen=disabled \
                                                                  -Djavascript=disabled -Dvala=disabled -Dms-store=true
