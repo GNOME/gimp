@@ -1,8 +1,10 @@
+subdir('its')
+
 # First we use the XML file to be able to do gettext translation
 ms_installer_config_xml = i18n.merge_file(
   input : 'setup.isl.xml.in',
   output: '@BASENAME@',
-  data_dirs: meson.current_source_dir(),
+  data_dirs: [meson.current_source_dir(), meson.current_build_dir()],
   po_dir: po_windows_installer_dir,
   install: false,
 )
