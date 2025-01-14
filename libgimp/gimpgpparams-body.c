@@ -56,6 +56,18 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
       if (! strcmp (param_def->type_name, "GimpParamDoubleArray"))
         return gimp_param_spec_double_array (name, nick, blurb, flags);
 
+      if (! strcmp (param_def->type_name, "GimpParamValueArray"))
+        /* FIXME: ideally we should add a GP_PARAM_DEF_TYPE_VALUE_ARRAY
+         * def type which should recursively contain another
+         * GPParamDefType so that we'd recreate the spec as it was
+         * initially created (limiting the array to specific types,
+         * possibly further limited).
+         * For now, we just create a value array which accepts
+         * everything.
+         */
+        return gimp_param_spec_value_array (name, nick, blurb,
+                                            NULL, flags);
+
       if (! strcmp (param_def->type_name, "GimpParamParasite"))
         return gimp_param_spec_parasite (name, nick, blurb, flags);
 
