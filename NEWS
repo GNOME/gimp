@@ -6,6 +6,64 @@
 This is the unstable branch of GIMP.
 
 
+Overview of Changes from GIMP 3.0.0-RC2 to GIMP 3.0.0-RC3
+=========================================================
+
+Core:
+
+  - Filters:
+    * Apply noninteractive filters direct to drawable.
+    * Gamma hack removed.
+    * Filter names are not stored in XCF anymore unless it was
+      explicitly set.
+    * Major image graph update so that we don't cast back to storage
+      pixel format in-between filters making non-destructive filters a
+      lot more powerful.
+  - More robust program loading even on systems with no fonts at all.
+  - Various missing help-ids added.
+  - The debugging infrastructure was not getting backtraces for all
+    threads (only the main thread) since 2.99.10 because of a hanging
+    bug in gdb. This is now reverted as a test.
+  - Reworking of projection flushing to make it thread-safe (e.g. when
+    projection updates are requested from the "paint" thread).
+
+Graphical User Interface:
+
+  - Show icons in Tips Dialog on Windows.
+  - Add Help buttons to About/Tips/Welcome dialogs.
+  - macOS: open files from Finder on macOS 15 (Sonoma) and higher with
+    new implementation.
+  - Various theming tweaks improving usability.
+  - Don't show Release Notes in Welcome dialog when none exist.
+  - Various icons now have RTL variants (by inverting the opposite
+    icons, e.g. go-next/go-previous).
+
+Plug-ins:
+
+  - DDS:
+    * Various improvements to BGR8 and other formats.
+    * New support for importing DDS BC7 compression.
+  - BMP: various import improvements and code cleanup.
+  - EXR: more robust EXR file import, especially regarding invalid files
+    (e.g. fuzzed ones).
+
+Translations:
+
+  - New Swedish language support for the Windows installer.
+
+Build:
+
+  - Massive cleanup of useless dependencies and adding back some missing
+    runtime dependencies in CI and packages.
+  - In-build GIMP process is now run through gdb (when available) to
+    help debug crashes of GIMP during the build.
+  - API docs now use the development logo.
+  - New CMYK PAM tests (for test-file-plug-ins testing infrastructure).
+  - Improve shared Docker Debian versioning in the CI and make it branch
+    aware.
+  - Crossbuild jobs are back in CI and with UCRT.
+
+
 Overview of Changes from GIMP 3.0.0-RC1 to GIMP 3.0.0-RC2
 =========================================================
 
