@@ -56,7 +56,7 @@ foreach menu_filegen : [ 'dockable-menu.ui', 'image-menu.ui', ]
   if menu_filegen == 'dockable-menu.ui'
     group = 'dockable'
   else
-    group = 'dialogs'
+    group = 'app'
   endif
   conf.set('GROUP', group)
   included_file = configure_file(
