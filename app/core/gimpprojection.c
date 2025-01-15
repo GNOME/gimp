@@ -125,7 +125,7 @@ static void        gimp_projection_add_update_area       (GimpProjection  *proj,
                                                           gint             w,
                                                           gint             h);
 static void        gimp_projection_update_priority_rect  (GimpProjection  *proj);
-static gboolean    gimp_projection_chunk_render_start    (GimpProjection  *proj);
+static gboolean    gimp_projection_chunk_render_start    (GWeakRef        *proj_ref);
 static void        gimp_projection_chunk_render_stop     (GimpProjection  *proj,
                                                           gboolean         merge);
 static gboolean    gimp_projection_chunk_render_callback (GimpProjection  *proj);
@@ -502,12 +502,15 @@ gimp_projection_stop_rendering (GimpProjection *proj)
 void
 gimp_projection_flush (GimpProjection *proj)
 {
+  GWeakRef *proj_ref = g_new (GWeakRef, 1);;
+
   g_return_if_fail (GIMP_IS_PROJECTION (proj));
 
+  g_weak_ref_init (proj_ref, proj);
   /* Construct in chunks - asynchronously in the main thread */
   g_idle_add_full (G_PRIORITY_HIGH_IDLE,
                    (GSourceFunc) gimp_projection_chunk_render_start,
-                   proj, NULL);
+                   proj_ref, NULL);
 }
 
 /**
@@ -680,8 +683,17 @@ gimp_projection_update_priority_rect (GimpProjection *proj)
 }
 
 static gboolean
-gimp_projection_chunk_render_start (GimpProjection *proj)
+gimp_projection_chunk_render_start (GWeakRef *proj_ref)
 {
+  GimpProjection *proj;
+
+  proj = g_weak_ref_get (proj_ref);
+  g_weak_ref_clear (proj_ref);
+  g_free (proj_ref);
+
+  if (proj == NULL)
+    return G_SOURCE_REMOVE;
+
   if (proj->priv->update_region)
     {
       cairo_region_t *region             = proj->priv->update_region;
@@ -753,6 +765,8 @@ gimp_projection_chunk_render_start (GimpProjection *proj)
 
       gimp_projectable_invalidate_preview (proj->priv->projectable);
     }
+
+  g_object_unref (proj);
 
   return G_SOURCE_REMOVE;
 }
