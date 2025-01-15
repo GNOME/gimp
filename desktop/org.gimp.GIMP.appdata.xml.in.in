@@ -74,6 +74,20 @@
   </provides>
 
   <releases>
+    <release version="3.0.0~rc3" date="TODO" type="development">
+      <description>
+        <p>
+        While GIMP 3.0 is getting more and more robust with this
+        third release candidate, some core changes require more testing.
+        Some of the highlights of this version are:
+        </p>
+        <ul>
+          <li>Reworked image graph for even less destructive filters</li>
+          <li>BC7 compression support for DDS file import</li>
+          <li>Many bug fixes and a much more robust base overall</li>
+        </ul>
+      </description>
+    </release>
     <release version="3.0.0~rc2" date="2024-12-27" type="development">
       <description>
         <p>
