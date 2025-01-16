@@ -109,8 +109,7 @@ function self_build ([string]$dep, [string]$option1, [string]$option2)
     Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):${dep}_build$([char]13)$([char]27)[0K"
   }
 
-#FIXME: babl dev docs are broken. See: https://gitlab.gnome.org/GNOME/babl/-/issues/97
-self_build babl '-Dwith-docs=false'
+self_build babl
 self_build gegl
 
 Set-Location $GIMP_DIR
