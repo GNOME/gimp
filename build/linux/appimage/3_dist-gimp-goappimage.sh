@@ -324,6 +324,7 @@ wipe_usr ${LIB_DIR}/*.pyc
 #conf_app LUA_CPATH "\$HERE/usr/${LIB_DIR}/${LIB_SUBDIR}lua/5.1/?.so" --no-expand
 #bund_usr "$UNIX_PREFIX" "share/lua/5.1"
 #conf_app LUA_PATH "\$HERE/usr/share/lua/5.1/?.lua;\$HERE/usr/share/lua/5.1/lgi/?.lua;\$HERE/usr/share/lua/5.1/lgi/override/?.lua" --no-expand
+
 ## Other binaries and deps
 bund_usr "$GIMP_PREFIX" 'bin/gimp*'
 bund_usr "$GIMP_PREFIX" "bin/gegl"
