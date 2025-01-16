@@ -70,6 +70,11 @@ GimpPDBStatusType  icns_export_image     (GFile                *file,
                                           GimpImage            *image,
                                           GError              **error);
 
+static guchar    * icns_compress         (guint                 width,
+                                          guint                 height,
+                                          guchar               *rgba,
+                                          gint                 *out_size);
+
 static void        icns_save_info_free   (IcnsSaveInfo *info);
 
 /* Referenced from plug-ins/file-ico/ico-dialog.c */
@@ -460,70 +465,54 @@ icns_export_image (GFile        *file,
       /* MacOS X format icons */
       if (match != -1 && duplicates[match] == 0)
         {
-          GimpProcedure     *procedure;
-          GimpValueArray    *return_vals;
-          GimpImage         *temp_image;
-          GimpLayer         *temp_layer;
-          GFile             *temp_file = NULL;
-          FILE              *temp_fp;
-          gint               temp_size;
-          gint               macos_size;
+          gint temp_size;
+          gint macos_size;
 
-          temp_file  = gimp_temp_file ("png");
-
-          /* TODO: Use GimpExportOptions for this when available */
-          temp_image = gimp_image_new (width, height,
-                                       gimp_image_get_base_type (image));
-          temp_layer = gimp_layer_new_from_drawable (GIMP_DRAWABLE (iter->data),
-                                                     temp_image);
-          gimp_image_insert_layer (temp_image, temp_layer, NULL, 0);
-
-          procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (), "file-png-export");
-          return_vals = gimp_procedure_run (procedure,
-                                            "run-mode",         GIMP_RUN_NONINTERACTIVE,
-                                            "image",            temp_image,
-                                            "file",             temp_file,
-                                            "interlaced",       FALSE,
-                                            "compression",      9,
-                                            "bkgd",             FALSE,
-                                            "offs",             FALSE,
-                                            "phys",             FALSE,
-                                            "time",             FALSE,
-                                            "save-transparent", FALSE,
-                                            "optimize-palette", FALSE,
-                                            NULL);
-          gimp_image_delete (temp_image);
-
-          if (GIMP_VALUES_GET_ENUM (return_vals, 0) != GIMP_PDB_SUCCESS)
+          /* icp4 - 6 types (16x16, 32x32 and 48x48 icons) do not render well
+           * in applications if saved as PNGs. Therefore, we will save those
+           * in the older format for compatibility. */
+          if (! g_strcmp0 (iconTypes[match].type, "icp4") ||
+              ! g_strcmp0 (iconTypes[match].type, "icp5") ||
+              ! g_strcmp0 (iconTypes[match].type, "icp6"))
             {
-              icns_save_info_free (info);
-              g_set_error (error, 0, 0,
-                           "Running procedure 'file-png-export' "
-                           "for icns export failed: %s",
-                           gimp_pdb_get_last_error (gimp_get_pdb ()));
+              GeglBuffer *buffer;
+              guchar     *pixels;
+              guchar     *alpha     = NULL;
+              guchar     *output    = NULL;
+              gint        compat_id = -1;
 
-              return GIMP_PDB_EXECUTION_ERROR;
-            }
+              macos_size = 0;
 
-          temp_fp = g_fopen (g_file_peek_path (temp_file), "rb");
-          fseek (temp_fp, 0L, SEEK_END);
-          temp_size = ftell (temp_fp);
-          fseek (temp_fp, 0L, SEEK_SET);
+              for (compat_id = 0; iconTypes[compat_id].type; compat_id++)
+                {
+                  if (iconTypes[compat_id].width == width   &&
+                      iconTypes[compat_id].height == height &&
+                      iconTypes[compat_id].bits == 32)
+                    break;
+                }
 
-          g_file_delete (temp_file, NULL, NULL);
-          g_object_unref (temp_file);
+              fwrite (iconTypes[compat_id].type, sizeof (gchar), 4, fp);
+              temp_size = width * height * 4;
 
-          fwrite (iconTypes[match].type, sizeof (gchar), 4, fp);
-          macos_size = GUINT32_TO_BE (temp_size + 8);
-          fwrite (&macos_size, sizeof (macos_size), 1, fp);
+              buffer = gimp_drawable_get_buffer (iter->data);
+              pixels = g_malloc (temp_size);
+              alpha  = g_malloc (width * height);
 
-          if (temp_size > 0)
-            {
-              guchar buf[temp_size];
+              gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, width, height),
+                               1.0, babl_format ("R'G'B'A u8"), pixels,
+                               GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+              gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, width, height),
+                               1.0, babl_format ("A u8"), alpha,
+                               GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-              fread (buf, 1, sizeof (buf), temp_fp);
+              output = icns_compress (width, height, pixels, &macos_size);
 
-              if (fwrite (buf, 1, temp_size, fp) < temp_size)
+              /* ---------------------- */
+
+              temp_size = GUINT32_TO_BE (macos_size + 8);
+              fwrite (&temp_size, sizeof (temp_size), 1, fp);
+
+              if (fwrite (output, 1, macos_size, fp) < macos_size)
                 {
                   icns_save_info_free (info);
                   g_set_error (error, G_FILE_ERROR,
@@ -532,10 +521,108 @@ icns_export_image (GFile        *file,
                                g_strerror (errno));
                   return GIMP_PDB_EXECUTION_ERROR;
                 }
-            }
-          fclose (temp_fp);
 
-          file_size += temp_size + 8;
+              file_size += macos_size + 8;
+
+              /* Write uncompressed mask */
+              fwrite (iconTypes[compat_id].mask, sizeof (gchar), 4, fp);
+              macos_size = GUINT32_TO_BE ((width * height) + 8);
+              fwrite (&macos_size, sizeof (macos_size), 1, fp);
+              macos_size = width * height;
+
+              if (fwrite (alpha, 1, macos_size, fp) < macos_size)
+                {
+                  icns_save_info_free (info);
+                  g_set_error (error, G_FILE_ERROR,
+                               g_file_error_from_errno (errno),
+                               _("Error writing icns: %s"),
+                               g_strerror (errno));
+                  return GIMP_PDB_EXECUTION_ERROR;
+                }
+
+              file_size += (width * height) + 8;
+
+              g_free (pixels);
+              g_free (alpha);
+              g_object_unref (buffer);
+            }
+          else
+            {
+              GimpProcedure  *procedure;
+              GimpValueArray *return_vals;
+              GimpImage      *temp_image;
+              GimpLayer      *temp_layer;
+              GFile          *temp_file = NULL;
+              FILE           *temp_fp;
+
+              temp_file  = gimp_temp_file ("png");
+
+              /* TODO: Use GimpExportOptions for this when available */
+              temp_image = gimp_image_new (width, height,
+                                           gimp_image_get_base_type (image));
+              temp_layer = gimp_layer_new_from_drawable (GIMP_DRAWABLE (iter->data),
+                                                         temp_image);
+              gimp_image_insert_layer (temp_image, temp_layer, NULL, 0);
+
+              procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (), "file-png-export");
+              return_vals = gimp_procedure_run (procedure,
+                                                "run-mode",         GIMP_RUN_NONINTERACTIVE,
+                                                "image",            temp_image,
+                                                "file",             temp_file,
+                                                "interlaced",       FALSE,
+                                                "compression",      9,
+                                                "bkgd",             FALSE,
+                                                "offs",             FALSE,
+                                                "phys",             FALSE,
+                                                "time",             FALSE,
+                                                "save-transparent", FALSE,
+                                                "optimize-palette", FALSE,
+                                                NULL);
+              gimp_image_delete (temp_image);
+
+              if (GIMP_VALUES_GET_ENUM (return_vals, 0) != GIMP_PDB_SUCCESS)
+                {
+                  icns_save_info_free (info);
+                  g_set_error (error, 0, 0,
+                               "Running procedure 'file-png-export' "
+                               "for icns export failed: %s",
+                               gimp_pdb_get_last_error (gimp_get_pdb ()));
+
+                  return GIMP_PDB_EXECUTION_ERROR;
+                }
+
+              temp_fp = g_fopen (g_file_peek_path (temp_file), "rb");
+              fseek (temp_fp, 0L, SEEK_END);
+              temp_size = ftell (temp_fp);
+              fseek (temp_fp, 0L, SEEK_SET);
+
+              g_file_delete (temp_file, NULL, NULL);
+              g_object_unref (temp_file);
+
+              fwrite (iconTypes[match].type, sizeof (gchar), 4, fp);
+              macos_size = GUINT32_TO_BE (temp_size + 8);
+              fwrite (&macos_size, sizeof (macos_size), 1, fp);
+
+              if (temp_size > 0)
+                {
+                  guchar buf[temp_size];
+
+                  fread (buf, 1, sizeof (buf), temp_fp);
+
+                  if (fwrite (buf, 1, temp_size, fp) < temp_size)
+                    {
+                      icns_save_info_free (info);
+                      g_set_error (error, G_FILE_ERROR,
+                                   g_file_error_from_errno (errno),
+                                   _("Error writing icns: %s"),
+                                   g_strerror (errno));
+                      return GIMP_PDB_EXECUTION_ERROR;
+                    }
+                }
+              fclose (temp_fp);
+
+              file_size += temp_size + 8;
+          }
           duplicates[match] = 1;
         }
 
@@ -552,6 +639,100 @@ icns_export_image (GFile        *file,
   icns_save_info_free (info);
   fclose (fp);
   return GIMP_PDB_SUCCESS;
+}
+
+static guchar *
+icns_compress (guint   width,
+               guint   height,
+               guchar *rgba,
+               gint   *out_size)
+{
+  const guint npixels  = width * height;
+  const guint max_size = (npixels * 3) + ((npixels * 3) / 4);
+
+  const guint min_run = 3;   /* Shorter run must be stored as uncompressed */
+  const guint max_run = 130; /* Longest same-value run that can be stored */
+  const guint min_raw = 1;
+  const guint max_raw = 128; /* Longest run of non-matching pixels */
+
+  guint   i;
+  guint   j;
+  guint   size;
+  guint   channel;
+  guint   run;
+  guint   marker;
+  guchar *out_data;
+  guchar *run_length;
+
+  run_length = g_new (guchar, npixels);
+  if (! run_length)
+    {
+      g_warning ("icns_compress: couldn't allocate run count buffer (%d bytes)", npixels);
+      return NULL;
+    }
+
+  out_data = g_new (guchar, max_size);
+  if (! out_data)
+    {
+      g_free (run_length);
+      return NULL;
+    }
+
+  size = 0;
+  /* For some reason 128x128 icons have an extra 4 bytes at the start */
+  if (width == 128 && height == 128)
+    {
+      out_data[size++] = 0;
+      out_data[size++] = 0;
+      out_data[size++] = 0;
+      out_data[size++] = 0;
+    }
+
+  for (channel = 0; channel < 3; channel++)
+    {
+      /* Count all run lengths */
+      for (i = 0; i < npixels; i++)
+        {
+          for (run = 1; run < max_run && (run + i - 1) < npixels; run++)
+            if (rgba[i * 4 + channel] != rgba[(i + run) * 4 + channel])
+              break;
+
+          run_length[i] = run;
+        }
+
+      for (i = 0; i < npixels; i++)
+        {
+          if (run_length[i] >= min_run)
+            {
+              /* Compressable! Store and skip ahead */
+              out_data[size++] = (run_length[i] - min_run) | 0x80;
+              out_data[size++] = rgba[i * 4 + channel];
+              i += run_length[i] - 1;
+            }
+          else
+            {
+              /* Too short: stuff together as many as you can in a raw run */
+              marker = size++;
+              run = 0;
+              while (run < max_raw && i < npixels && run_length[i] < min_run)
+                {
+                  for (j = 0; j < run_length[i]; j++)
+                    {
+                      out_data[size++] = rgba[(i + j) * 4 + channel];
+                      run++;
+                    }
+                  i += run_length[i];
+                }
+              out_data[marker] = run - min_raw;
+              i--;
+            }
+        }
+    }
+
+  g_free (run_length);
+  *out_size = size;
+
+  return out_data;
 }
 
 static void
