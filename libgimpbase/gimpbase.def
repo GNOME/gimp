@@ -273,6 +273,7 @@ EXPORTS
 	gimp_value_take_double_array
 	gimp_value_take_int32_array
 	gimp_wire_clear_error
+  gimp_wire_count_bytes_ready
 	gimp_wire_destroy
 	gimp_wire_error
 	gimp_wire_flush

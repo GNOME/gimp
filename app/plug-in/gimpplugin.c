@@ -180,6 +180,10 @@ gimp_plug_in_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
+/* Always returns TRUE.
+ * This is of type GIOFunc, for which returning TRUE
+ * means the IO event source should not be removed.
+ */
 static gboolean
 gimp_plug_in_recv_message (GIOChannel   *channel,
                            GIOCondition  cond,
@@ -193,6 +197,18 @@ gimp_plug_in_recv_message (GIOChannel   *channel,
    * reason...
    */
   if (cond == 0)
+    return TRUE;
+#endif
+
+#ifdef __APPLE__
+  /* Workaround for #12711:
+   * sometimes we get an IO event of type G_IO_IN when the pipe is empty.
+   *
+   * There must be at least 4 bytes of message type
+   * else reads will hang, and the app appear non-responsive.
+   */
+
+  if (gimp_wire_count_bytes_ready (channel) < 4)
     return TRUE;
 #endif
 
