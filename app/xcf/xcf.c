@@ -418,6 +418,14 @@ xcf_load_invoker (GimpProcedure         *procedure,
   return return_vals;
 }
 
+#define GIMP_TIMER_START() \
+  { GTimer *_timer = g_timer_new ();
+
+#define GIMP_TIMER_END(message) \
+  g_printerr ("%s: %s took %0.4f seconds\n", \
+              G_STRFUNC, message, g_timer_elapsed (_timer, NULL)); \
+  g_timer_destroy (_timer); }
+
 static GimpValueArray *
 xcf_save_invoker (GimpProcedure         *procedure,
                   Gimp                  *gimp,
@@ -444,8 +452,24 @@ xcf_save_invoker (GimpProcedure         *procedure,
 
   if (output)
     {
-      success = xcf_save_stream (gimp, image, output, file, progress, error);
+      GOutputStream  *buffered = NULL;
 
+      buffered = g_buffered_output_stream_new (output);
+      if (buffered)
+        {
+          g_printerr ("Saving using buffered stream.\n");
+          GIMP_TIMER_START ();
+          success = xcf_save_stream (gimp, image, buffered, file, progress, error);
+          GIMP_TIMER_END ("Writing xcf save stream");
+          g_object_unref (buffered);
+        }
+      else
+        {
+          g_printerr ("Saving unbuffered stream.\n");
+          GIMP_TIMER_START ();
+          success = xcf_save_stream (gimp, image, output, file, progress, error);
+          GIMP_TIMER_END ("Writing xcf save stream");
+        }
       g_object_unref (output);
     }
   else
