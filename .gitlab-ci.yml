@@ -326,7 +326,7 @@ gimp-debian:
     - echo -e "\e[0Ksection_start:`date +%s`:gimp_bundle[collapsed=true]\r\e[0KCreating bundle"
     - ninja install &> ninja_install.log || cat ninja_install.log
     - cd ..
-    - bash build/linux/appimage/3_dist-gimp-goappimage.sh --bundle-only &> goappimage.log || cat goappimage.log
+    - bash -x build/linux/appimage/3_dist-gimp-goappimage.sh --bundle-only
     - echo -e "\e[0Ksection_end:`date +%s`:gimp_bundle\r\e[0K"
   artifacts:
     paths:
@@ -457,7 +457,7 @@ gimp-flatpak-x64:
     - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
   variables:
     DEB_VERSION: testing
-    MSYSTEM_PREFIX: clang64
+    MSYSTEM_PREFIX: ucrt64
   cache: []
 
 image-debian-x64-cross:
@@ -499,9 +499,9 @@ gimp-win-x64-cross:
   artifacts:
     expose_as: 'Windows zip'
     paths:
-      - gimp-clang64/
-      - _build-clang64-cross/meson-logs/meson-log.txt
-      - _build-clang64-cross/done-dll.list
+      - gimp-ucrt64/
+      - _build-ucrt64-cross/meson-logs/meson-log.txt
+      - _build-ucrt6464-cross/done-dll.list
     expire_in: 2 days
 
 ## WINDOWS pipelines (native MSYS2) ##

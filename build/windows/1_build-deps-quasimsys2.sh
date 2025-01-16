@@ -25,11 +25,14 @@ fi
 ## Install quasi-msys2 and its deps
 # Beginning of install code block
 if [ "$GITLAB_CI" ]; then
+  echo "deb https://deb.debian.org/debian experimental main" | tee -a /etc/apt/sources.list
   apt-get update -y >/dev/null
+  apt-get remove -y clang lld
+  apt-get -t experimental install -y gcc-mingw-w64-ucrt64 g++-mingw-w64-ucrt64
   apt-get install -y --no-install-recommends \
-                     clang                   \
-                     lld                     \
-                     llvm >/dev/null
+                     build-essential         \
+                     binutils                \
+                     binutils-mingw-w64-ucrt64
   apt-get install -y --no-install-recommends \
                      gawk                    \
                      gpg                     \
@@ -51,10 +54,11 @@ cd ..
 ## Install the required (pre-built) packages for babl, GEGL and GIMP
 echo -e "\e[0Ksection_start:`date +%s`:deps_install[collapsed=true]\r\e[0KInstalling dependencies provided by MSYS2"
 echo ${MSYSTEM_PREFIX^^} > quasi-msys2/msystem.txt
-deps=$(cat ${GIMP_DIR}build/windows/all-deps-uni.txt | sed 's/toolchain/clang/g' |
+deps=$(cat ${GIMP_DIR}build/windows/all-deps-uni.txt | sed 's/toolchain/gcc/g' |
        sed "s/\${MINGW_PACKAGE_PREFIX}-/_/g"         | sed 's/\\//g')
 cd quasi-msys2
-make install _clang $deps || $true
+make install $deps || $true
+
 cd ..
 sudo ln -nfs "$PWD/quasi-msys2/root/$MSYSTEM_PREFIX" /$MSYSTEM_PREFIX
 
@@ -91,6 +95,14 @@ echo -e "\e[0Ksection_end:`date +%s`:deps_install\r\e[0K"
 
 # QUASI-MSYS2 ENV
 echo -e "\e[0Ksection_start:`date +%s`:cross_environ[collapsed=true]\r\e[0KPreparing cross-build environment"
+unset CC
+unset CXX
+unset CC_LD
+unset CXX_LD
+unset PKG_CONFIG_SYSTEM_INCLUDE_PATH
+unset PKG_CONFIG_SYSTEM_LIBRARY_PATH
+export WIN_CC='x86_64-w64-mingw32ucrt-gcc'
+export WIN_CXX='x86_64-w64-mingw32ucrt-g++'
 bash -c "source quasi-msys2/env/all.src && bash ${GIMP_DIR}build/windows/1_build-deps-quasimsys2.sh"
 else
 export GIMP_PREFIX="$PWD/_install-$(echo $MSYSTEM_PREFIX | sed 's|/||')-cross"
@@ -104,6 +116,8 @@ for VAR in "${VAR_ARRAY[@]}"; do
 done
 echo -e "\e[0Ksection_end:`date +%s`:cross_environ\r\e[0K"
 
+export CFLAGS="-L$MSYSTEM_PREFIX/lib -I$MSYSTEM_PREFIX/include"
+export CXXFLAGS="-L$MSYSTEM_PREFIX/lib -I$MSYSTEM_PREFIX/include"
 
 ## Build babl and GEGL
 self_build ()

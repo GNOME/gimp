@@ -64,6 +64,12 @@ sudo ln -nfs "$PWD/${PARENT_DIR}quasi-msys2/root/$MSYSTEM_PREFIX" /$MSYSTEM_PREF
 
 # QUASI-MSYS2 ENV
 echo -e "\e[0Ksection_start:`date +%s`:cross_environ[collapsed=true]\r\e[0KPreparing cross-build environment"
+unset CC
+unset CXX
+unset CC_LD
+unset CXX_LD
+export WIN_CC='x86_64-w64-mingw32ucrt-gcc'
+export WIN_CXX='x86_64-w64-mingw32ucrt-g++'
 bash -c "source ${PARENT_DIR}quasi-msys2/env/all.src && bash build/windows/2_build-gimp-quasimsys2.sh"
 else
 export GIMP_PREFIX="$PWD/${PARENT_DIR}_install-$(echo $MSYSTEM_PREFIX | sed 's|/||')-cross"
@@ -77,6 +83,9 @@ for VAR in "${VAR_ARRAY[@]}"; do
 done
 echo -e "\e[0Ksection_end:`date +%s`:cross_environ\r\e[0K"
 
+
+export CFLAGS="-L$MSYSTEM_PREFIX/lib -I$MSYSTEM_PREFIX/include"
+export CXXFLAGS="-L$MSYSTEM_PREFIX/lib -I$MSYSTEM_PREFIX/include"
 
 ## Build GIMP
 echo -e "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP"
