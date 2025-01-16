@@ -33,6 +33,7 @@ if [ "$GITLAB_CI" ]; then
   apt-get install -y --no-install-recommends \
                      gawk                    \
                      gpg                     \
+                     gpgv                    \
                      make                    \
                      sudo                    \
                      tar                     \
