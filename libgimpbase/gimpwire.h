@@ -80,6 +80,8 @@ gboolean  gimp_wire_write_msg     (GIOChannel          *channel,
 
 void      gimp_wire_destroy       (GimpWireMessage     *msg);
 
+guint     gimp_wire_count_bytes_ready (GIOChannel      *channel);
+
 
 /*  for internal use in libgimpbase  */
 
