@@ -204,9 +204,14 @@ conf_app ()
   esac
 
   #Set expanded var in AppRun (and temporarely in environ if needed by this script)
-  var_path=$(echo $prefix/$2 | sed "s|${prefix}/||g")
-  sed -i "s|${1}_WILD|usr/${var_path}|" build/linux/appimage/AppRun
-  eval $1="usr/$var_path"
+  if [ "$3" != '--no-expand' ]; then
+    var_path="usr/$(echo $prefix/$2 | sed "s|${prefix}/||g")"
+  else
+    export HERE='$HERE'
+    var_path="$2"
+  fi
+  sed -i "s|${1}_WILD|${var_path}|" build/linux/appimage/AppRun
+  eval $1="$var_path" || $true
 }
 
 wipe_usr ()
@@ -312,11 +317,13 @@ bund_usr "$UNIX_PREFIX" "lib/gjs/girepository-1.0/Gjs*" --dest "${LIB_DIR}/${LIB
 bund_usr "$UNIX_PREFIX" "bin/python*"
 bund_usr "$UNIX_PREFIX" "lib/python*"
 wipe_usr ${LIB_DIR}/*.pyc
-#### Lua plug-ins support (NOT WORKING and buggy)
-#bund_usr "$UNIX_PREFIX" "bin/luajit*"
-#bund_usr "$UNIX_PREFIX" "lib/lua"
-#bund_usr "$UNIX_PREFIX" "share/lua"
-
+####FIXME: lua crashes with loop: See: https://gitlab.gnome.org/GNOME/gimp/-/issues/11895
+#bund_usr "$UNIX_PREFIX" "bin/luajit" --rename "lua"
+#bund_usr "$UNIX_PREFIX" "lib/liblua5.1-lgi*"
+#bund_usr "$UNIX_PREFIX" "lib/lua/5.1"
+#conf_app LUA_CPATH "\$HERE/usr/${LIB_DIR}/${LIB_SUBDIR}lua/5.1/?.so" --no-expand
+#bund_usr "$UNIX_PREFIX" "share/lua/5.1"
+#conf_app LUA_PATH "\$HERE/usr/share/lua/5.1/?.lua;\$HERE/usr/share/lua/5.1/lgi/?.lua;\$HERE/usr/share/lua/5.1/lgi/override/?.lua" --no-expand
 ## Other binaries and deps
 bund_usr "$GIMP_PREFIX" 'bin/gimp*'
 bund_usr "$GIMP_PREFIX" "bin/gegl"
@@ -340,6 +347,12 @@ for exec in "${exec_array[@]}"; do
     patchelf --set-interpreter "./$LD_LINUX" "$exec" >/dev/null 2>&1 || continue
   fi
 done
+### We can't set LD_LIBRARY_PATH partly to not break patchelf trick so we need 'ln' for Lua
+#cd $APP_DIR
+#lua_cpath_tweaked="$(echo $LUA_CPATH | sed -e 's|$HERE/||' -e 's|/?.so||')/lgi"
+#find "usr/${LIB_DIR}/${LIB_SUBDIR}" -maxdepth 1 -iname *.so* -exec ln -sf $(realpath "{}" --relative-to "$lua_cpath_tweaked") "$lua_cpath_tweaked" \;
+#cd ..
+
 ## Files unnecessarily created or bundled by go-appimagetool
 mv build/linux/appimage/AppRun $APP_DIR
 mv build/linux/appimage/AppRun.bak build/linux/appimage/AppRun
