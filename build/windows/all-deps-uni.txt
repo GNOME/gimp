@@ -5,6 +5,7 @@ ${MINGW_PACKAGE_PREFIX}-gobject-introspection \
 ${MINGW_PACKAGE_PREFIX}-headers-git \
 ${MINGW_PACKAGE_PREFIX}-libxslt \
 ${MINGW_PACKAGE_PREFIX}-meson \
+${MINGW_PACKAGE_PREFIX}-toolchain
 ${MINGW_PACKAGE_PREFIX}-vala \
 
 ${MINGW_PACKAGE_PREFIX}-aalib \

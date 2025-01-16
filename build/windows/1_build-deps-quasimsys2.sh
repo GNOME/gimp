@@ -51,7 +51,7 @@ cd ..
 ## Install the required (pre-built) packages for babl, GEGL and GIMP
 echo -e "\e[0Ksection_start:`date +%s`:deps_install[collapsed=true]\r\e[0KInstalling dependencies provided by MSYS2"
 echo ${MSYSTEM_PREFIX^^} > quasi-msys2/msystem.txt
-deps=$(cat ${GIMP_DIR}build/windows/all-deps-uni.txt |
+deps=$(cat ${GIMP_DIR}build/windows/all-deps-uni.txt | sed 's/toolchain/clang/g' |
        sed "s/\${MINGW_PACKAGE_PREFIX}-/_/g"         | sed 's/\\//g')
 cd quasi-msys2
 make install _clang $deps || $true

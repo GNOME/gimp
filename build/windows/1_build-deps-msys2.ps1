@@ -46,7 +46,7 @@ if ("$PSCommandPath" -like "*1_build-deps-msys2.ps1*" -or "$CI_JOB_NAME" -like "
   {
     pacman --noconfirm -Suy
   }
-pacman --noconfirm -S --needed $MINGW_PACKAGE_PREFIX-toolchain (Get-Content build/windows/all-deps-uni.txt).Replace('${MINGW_PACKAGE_PREFIX}',$MINGW_PACKAGE_PREFIX).Replace(' \','')
+pacman --noconfirm -S --needed (Get-Content build/windows/all-deps-uni.txt).Replace('${MINGW_PACKAGE_PREFIX}',$MINGW_PACKAGE_PREFIX).Replace(' \','')
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):deps_install$([char]13)$([char]27)[0K"
 
 
