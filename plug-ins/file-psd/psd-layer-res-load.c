@@ -128,6 +128,7 @@
 #include <errno.h>
 
 #include <glib/gstdio.h>
+#include <json-glib/json-glib.h>
 #include <libgimp/gimp.h>
 
 #include "psd.h"
@@ -224,6 +225,7 @@ static gint     parse_text_info       (PSDlayer              *lyr_a,
 
 static gint     load_descriptor       (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
+                                       JsonNode              *base_node,
                                        GInputStream          *input,
                                        GError               **error);
 
@@ -421,9 +423,6 @@ load_layer_resource (PSDlayerres   *res_a,
 
       load_resource_lfx (res_a, lyr_a, input, error);
     }
-
-  else if (memcmp (res_a->key, PSD_LFX_FX, 4) == 0)
-    load_resource_lrfx (res_a, lyr_a, input, error);
 
   else if (memcmp (res_a->key, PSD_LTYP_TYPE, 4) == 0
            || memcmp (res_a->key, PSD_LTYP_TYPE2, 4) == 0)
@@ -647,12 +646,12 @@ load_resource_lpla (const PSDlayerres  *res_a,
       IFDBG(3) g_debug ("Descriptor version: %u",
                         descriptor_version);
 
-      if (load_descriptor (res_a, lyr_a, input, error) < 0)
+      if (load_descriptor (res_a, lyr_a, NULL, input, error) < 0)
         return -1;
     }
   else if (version == 5)
     {
-      if (load_descriptor (res_a, lyr_a, input, error) < 0)
+      if (load_descriptor (res_a, lyr_a, NULL, input, error) < 0)
         return -1;
     }
 
@@ -777,8 +776,11 @@ load_resource_lfx (const PSDlayerres  *res_a,
 
   if (memcmp (res_a->key, PSD_LFX_FX2, 4) == 0)
     {
-      guint32 oe_version, desc_version;
-      gint32  res;
+      guint32    oe_version, desc_version;
+      gint32     res;
+      JsonNode  *root = NULL;
+      JsonArray  *arr = NULL;
+      JsonObject *obj = NULL;
 
       if (psd_read (input, &oe_version, 4, error) < 4 ||
           psd_read (input, &desc_version, 4, error) < 4)
@@ -791,7 +793,33 @@ load_resource_lfx (const PSDlayerres  *res_a,
 
       IFDBG(3) g_debug ("Objects based effects layer info: object effects version: %u, descriptor version: %u", oe_version, desc_version);
 
-      res = load_descriptor (res_a, lyr_a, input, error);
+      g_printerr ("create root object\n");
+      root = json_node_new (JSON_NODE_OBJECT);
+      if (! root)
+        {
+          return -1;
+        }
+      obj = json_object_new ();
+      json_node_init_object (root, obj);
+      //obj = json_node_get_object (root);
+/*
+      g_printerr ("create array\n");
+      arr = json_array_new ();
+      if (! arr)
+        {
+          json_node_unref (root);
+          return -1;
+        }
+      g_printerr ("set array as member of root\n");
+      json_object_set_array_member (obj, "lfx2", arr);
+*/
+
+      lyr_a->layer_effects = g_new (PSDLayerEffects, 1);
+      lyr_a->layer_effects->effects = root;
+
+      g_printerr ("load descriptor...\n");
+
+      res = load_descriptor (res_a, lyr_a, root, input, error);
       if (res < 0)
         return res;
     }
@@ -913,7 +941,7 @@ load_resource_ltyp (const PSDlayerres  *res_a,
                                       res_a->ibm_pc_format, input, error);
       IFDBG(2) g_debug ("Unicode name: %s", classID);
 */
-      res = load_descriptor (res_a, lyr_a, input, error);
+      res = load_descriptor (res_a, lyr_a, NULL, input, error);
       /*
        * This descriptor seems to have a lot of text formatting etc related
        * data in a format that is not described in the online specs...
@@ -935,7 +963,7 @@ load_resource_ltyp (const PSDlayerres  *res_a,
       IFDBG(2) g_debug ("Warp version: %d, descriptor version: %d",
                         warp_version, warp_desc_version);
 
-      res = load_descriptor (res_a, lyr_a, input, error);
+      res = load_descriptor (res_a, lyr_a, NULL, input, error);
       if (res < 0)
         return -1;
 /*
@@ -1506,7 +1534,7 @@ load_resource_cinf (const PSDlayerres  *res_a,
   version = GUINT32_FROM_BE (version);
   IFDBG(3) g_debug ("Descriptor version (expecting 16): %u", version);
 
-  if (load_descriptor (res_a, lyr_a, input, error) < 0)
+  if (load_descriptor (res_a, lyr_a, NULL, input, error) < 0)
     return -1;
 
   return 0;
@@ -1733,6 +1761,7 @@ static gint parse_text_info (PSDlayer  *lyr_a,
 static gint
 load_descriptor (const PSDlayerres  *res_a,
                  PSDlayer           *lyr_a,
+                 JsonNode           *base_node,
                  GInputStream       *input,
                  GError            **error)
 {
@@ -1741,11 +1770,31 @@ load_descriptor (const PSDlayerres  *res_a,
   guint32  num_items;
   gint32   bread, bwritten;
   gint     i;
+  JsonObject *obj = NULL;
+  JsonArray  *arr = NULL;
+
+  //// FOR NOW:
+  JsonNode *dummy = NULL;
+  JsonNode *root  = NULL;
+
+  if (! base_node)
+    {
+
+      dummy = json_node_new (JSON_NODE_OBJECT);
+      obj = json_object_new ();
+      json_node_init_object (root, obj);
+    }
+  else
+    {
+      root = base_node;
+      obj = json_node_get_object (root);
+    }
 
   IFDBG(3) g_debug ("start load_descriptor - Offset: %" G_GOFFSET_FORMAT, PSD_TELL(input));
   /* Read unicode string */
   uniqueID = fread_unicode_string (&bread, &bwritten, 1, res_a->ibm_pc_format,
                                    input, error);
+  /* uniqueID seems to always be empty at the root */
   if (! uniqueID)
     {
       psd_set_error (error);
@@ -1755,7 +1804,10 @@ load_descriptor (const PSDlayerres  *res_a,
 
   IFDBG(3) g_debug ("Offset: %" G_GOFFSET_FORMAT, PSD_TELL(input));
   classID_string = load_key (input, error);
+  /* root class ID seems to always be 'null' */
   IFDBG(3) g_debug ("Class ID: %s", classID_string);
+
+  json_object_set_string_member (obj, "classID", classID_string);
 
   IFDBG(3) g_debug ("Offset: %" G_GOFFSET_FORMAT, PSD_TELL(input));
   if (psd_read (input, &num_items, 4, error) < 4)
@@ -1766,6 +1818,14 @@ load_descriptor (const PSDlayerres  *res_a,
     }
   num_items = GUINT32_FROM_BE (num_items);
   IFDBG(3) g_debug ("Number of items: %u", num_items);
+  json_object_set_int_member (obj, "count", num_items);
+
+  g_printerr ("create array\n");
+  arr = json_array_new ();
+  // FIXME: Add error checking here and elsewhere!
+
+  g_printerr ("set array as member of object\n");
+  json_object_set_array_member (obj, "descriptor", arr);
 
   for (i = 0; i < num_items; i++)
     {
@@ -1858,7 +1918,7 @@ load_type (const PSDlayerres  *res_a,
       gint res;
 
       IFDBG(3) g_debug ("Objc Descriptor begin");
-      res = load_descriptor (res_a, lyr_a, input, error);
+      res = load_descriptor (res_a, lyr_a, NULL, input, error);
       IFDBG(3) g_debug ("Objc Descriptor end");
       if (res < 0)
         return res;
@@ -2114,7 +2174,7 @@ load_type (const PSDlayerres  *res_a,
       IFDBG(3) g_debug ("Descriptor version: %u", count);
 
       IFDBG(3) g_debug ("Descriptor array begin");
-      res = load_descriptor (res_a, lyr_a, input, error);
+      res = load_descriptor (res_a, lyr_a, NULL, input, error);
       IFDBG(3) g_debug ("Descriptor array end");
       if (res < 0)
         return res;

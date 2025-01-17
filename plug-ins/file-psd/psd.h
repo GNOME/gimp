@@ -21,6 +21,8 @@
 #ifndef __PSD_H__
 #define __PSD_H__
 
+#include <json-glib/json-glib.h>
+
 
 /* Set to the level of debugging output you want, 0 for none.
  *   Setting higher than 2 will result in a very large amount of debug
@@ -594,10 +596,10 @@ typedef struct
 {
   guint32    size;
   guint32    ver;
-  guint32    blur;
-  guint32    intensity;
-  gint32     angle;
-  guint32    distance;
+  gfloat     blur;
+  gfloat     intensity;
+  gfloat     angle;
+  gfloat     distance;
   guint16    color[5];
   gchar      blendsig[4];
   guint32    effect;
@@ -673,6 +675,12 @@ typedef struct
   PSDLayerStyleSolidFill     sofi; /* Solid Fill */
 } PSDLayerStyles;
 
+typedef struct
+{
+  JsonNode                  *effects;
+} PSDLayerEffects;
+
+
 /* Partially or Unsupported Features */
 typedef struct
 {
@@ -718,6 +726,7 @@ typedef struct
   guchar                group_type;             /* 0 -> not a group; 1 -> open folder; 2 -> closed folder; 3 -> end of group */
   guint16               color_tag[4];           /* 4 * 16 bit color components */
   PSDLayerStyles       *layer_styles;           /* Older format of layer styles */
+  PSDLayerEffects      *layer_effects;
 
   PSDSupport           *unsupported_features;
 } PSDlayer;
