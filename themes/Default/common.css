@@ -645,6 +645,10 @@ menu separator {
   margin: 0;
 }
 
+actionbar {
+  background-color: @bg-color;
+}
+
 /* Defines the border around the Save Image actionbar options */
 actionbar revealer box {
   border-width: 0px;
@@ -687,8 +691,8 @@ list row:hover {
 
 switch {
   background-color: @bg-color;
-  background-image: none;
   border: 1px solid @stronger-border-color;
+  border-radius: 14px;
 }
 
 /* The switch button is hard to understand without color.
