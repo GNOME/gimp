@@ -957,8 +957,8 @@
                 "-Denable-default-bin=enabled"
             ],
             "cleanup": [
-                "/bin/gimp-console-*",
-                "/bin/gimptool-*"
+                "/bin/gimp-console*",
+                "/bin/gimptool*"
             ]
         }
     ]
