@@ -447,9 +447,23 @@ gimp_thumb_box_take_file (GimpThumbBox *box,
 
   if (file)
     {
-      gchar *basename = g_path_get_basename (gimp_file_get_utf8_name (file));
+      GFileInfo *info;
+      gchar     *basename;
+
+      info = g_file_query_info (file,
+                                G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME,
+                                0, NULL, NULL);
+
+      if (info != NULL)
+        basename =
+          g_file_info_get_attribute_as_string (info,
+                                               G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME);
+      else
+        basename = g_path_get_basename (gimp_file_get_utf8_name (file));
+
       gtk_label_set_text (GTK_LABEL (box->filename), basename);
       g_free (basename);
+      g_clear_object (&info);
     }
   else
     {
@@ -663,11 +677,23 @@ gimp_thumb_box_create_thumbnail (GimpThumbBox      *box,
                                  GimpProgress      *progress)
 {
   GimpThumbnail *thumb = gimp_imagefile_get_thumbnail (box->imagefile);
+  GFileInfo     *info;
   gchar         *basename;
 
-  basename = g_path_get_basename (gimp_file_get_utf8_name (file));
+  info = g_file_query_info (file,
+                                G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME,
+                                0, NULL, NULL);
+
+  if (info != NULL)
+    basename =
+      g_file_info_get_attribute_as_string (info,
+                                           G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME);
+  else
+    basename = g_path_get_basename (gimp_file_get_utf8_name (file));
+
   gtk_label_set_text (GTK_LABEL (box->filename), basename);
   g_free (basename);
+  g_clear_object (&info);
 
   gimp_imagefile_set_file (box->imagefile, file);
 

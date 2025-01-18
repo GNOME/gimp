@@ -771,6 +771,11 @@ gimp_file_get_extension (GFile *file)
 
   g_clear_object (&info);
 
+  /* When making a temporary file for saving/exporting, we may not
+   * have the display-name yet, so let's fallback to the URI */
+  if (! basename)
+    basename = g_file_get_uri (file);
+
   basename_len = strlen (basename);
 
   if (g_str_has_suffix (basename, ".gz"))
