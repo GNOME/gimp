@@ -69,6 +69,7 @@ struct _PDBQuery
 
   gchar   **list_of_procs;
   gboolean  querying_compat;
+  gboolean  querying_private;
 };
 
 typedef struct _PDBStrings PDBStrings;
@@ -213,9 +214,10 @@ gimp_pdb_query (GimpPDB       *pdb,
 
   success = TRUE;
 
-  pdb_query.pdb             = pdb;
-  pdb_query.list_of_procs   = g_new0 (gchar *, 1);
-  pdb_query.querying_compat = FALSE;
+  pdb_query.pdb              = pdb;
+  pdb_query.list_of_procs    = g_new0 (gchar *, 1);
+  pdb_query.querying_private = FALSE;
+  pdb_query.querying_compat  = FALSE;
 
   g_hash_table_foreach (pdb->procedures,
                         gimp_pdb_query_entry, &pdb_query);
@@ -293,6 +295,8 @@ gimp_pdb_query_entry (gpointer key,
     return;
 
   procedure = list->data;
+  if (! pdb_query->querying_private && procedure->is_private)
+    return;
 
   gimp_pdb_get_strings (&strings, procedure, pdb_query->querying_compat);
 
