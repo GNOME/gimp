@@ -25,7 +25,8 @@ pointer       marshal_ID_to_item               (scheme   *sc,
 
 pointer       marshal_vector_to_item_array     (scheme   *sc,
                                                 pointer   a,
-                                                GValue   *value);
+                                                GValue   *value,
+                                                gchar   **strvalue);
 
 void          marshal_path_string_to_gfile     (scheme   *sc,
                                                 pointer   a,
@@ -38,7 +39,8 @@ pointer       marshal_returned_object_array_to_vector (scheme   *sc,
 gchar*        marshal_returned_gfile_to_string        (GValue   *value);
 
 GeglColor*    marshal_component_list_to_color (scheme    *sc,
-                                               pointer    list);
+                                               pointer    list,
+                                               gchar    **strvalue);
 pointer       marshal_color_to_component_list (scheme    *sc,
                                                GeglColor *color);
 

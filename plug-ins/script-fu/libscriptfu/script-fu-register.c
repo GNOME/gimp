@@ -269,7 +269,7 @@ script_fu_parse_default_spec (scheme   *sc,
       else if (sc->vptr->is_list (sc, default_spec))
         {
           /* default_spec is list of numbers. */
-          GeglColor *color = marshal_component_list_to_color (sc, default_spec);
+          GeglColor *color = marshal_component_list_to_color (sc, default_spec, NULL);
 
           if (color == NULL)
             {

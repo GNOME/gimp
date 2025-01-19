@@ -200,6 +200,7 @@ struct scheme_interface {
   pointer (*mk_vector)(scheme *sc, int len);
   pointer (*mk_foreign_func)(scheme *sc, foreign_func f);
   pointer (*mk_closure)(scheme *sc, pointer c, pointer e);
+  pointer (*mk_arg_name)(scheme *sc, const char *str);
   void (*putstr)(scheme *sc, const char *s);
   void (*putcharacter)(scheme *sc, gunichar c);
 
@@ -249,6 +250,8 @@ struct scheme_interface {
   int (*is_environment)(pointer p);
   int (*is_immutable)(pointer p);
   void (*setimmutable)(pointer p);
+
+  int (*is_arg_name)(pointer p);
 
   void (*load_file)(scheme *sc, FILE *fin);
   void (*load_string)(scheme *sc, const char *input);

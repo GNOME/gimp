@@ -79,11 +79,13 @@ marshal_ID_to_item (scheme   *sc,
  * Requires ID's of instances of GimpItem
  */
 pointer
-marshal_vector_to_item_array (scheme  *sc,
-                              pointer  vector,
-                              GValue  *value)
+marshal_vector_to_item_array (scheme   *sc,
+                              pointer   vector,
+                              GValue   *value,
+                              gchar   **strvalue)
 {
   GObject **object_array;
+  GString  *v = NULL;
   gint      id;
   pointer   error;
 
@@ -92,6 +94,8 @@ marshal_vector_to_item_array (scheme  *sc,
   /* empty vector will produce empty GimpObjectArray */
 
   object_array = g_new0 (GObject *, num_elements + 1);
+  if (strvalue)
+    v = g_string_new ("");
 
   for (int j = 0; j < num_elements; ++j)
     {
@@ -100,6 +104,8 @@ marshal_vector_to_item_array (scheme  *sc,
       if (!sc->vptr->is_number (element))
         {
           g_free (object_array);
+          if (v)
+            g_string_free (v, TRUE);
           return script_error (sc, "Expected numeric in vector of ID", vector);
           /* FUTURE more detailed error msg:
            * return script_type_error_in_container (sc, "numeric", i, j, proc_name, vector);
@@ -111,8 +117,13 @@ marshal_vector_to_item_array (scheme  *sc,
       if (error)
         {
           g_free (object_array);
+          if (v)
+            g_string_free (v, TRUE);
           return error;
         }
+
+      if (v)
+        g_string_append_printf (v, "%s%d", j == 0 ? "" : " ", id);
     }
 
   /* Shallow copy.
@@ -122,6 +133,11 @@ marshal_vector_to_item_array (scheme  *sc,
    * and fails if we default to G_TYPE_INVALID but passes if ITEM.
    */
   g_value_set_boxed (value, (gpointer) object_array);
+  if (v)
+    {
+      *strvalue = g_strdup_printf ("(%s)", v->str);
+      g_string_free (v, TRUE);
+    }
 
   g_free (object_array);
 
@@ -258,12 +274,18 @@ get_item_from_ID_in_script (scheme   *sc,
  * A list longer than expected (>4) is not an error, but extra list is not used.
  */
 static void
-marshal_list_of_numeric_to_rgba (scheme  *sc,
-                                 pointer  color_list,
-                                 guchar   (*rgba)[4],  /* OUT */
-                                 guint   *length)      /* OUT */
+marshal_list_of_numeric_to_rgba (scheme   *sc,
+                                 pointer   color_list,
+                                 guchar    (*rgba)[4],  /* OUT */
+                                 guint    *length,      /* OUT */
+                                 gchar   **strvalue)
 {
+  GString *v = NULL;
+
   *length = 0;
+  if (strvalue)
+    v = g_string_new ("");
+
   for (guint i=0; i<4; i++)
     {
       if (sc->vptr->is_number (sc->vptr->pair_car (color_list)))
@@ -272,14 +294,31 @@ marshal_list_of_numeric_to_rgba (scheme  *sc,
                               0, 255);
           *length = *length + 1;
           color_list = sc->vptr->pair_cdr (color_list);
+
+          if (v)
+            g_string_append_printf (v, "%s%d", i == 0 ? "" : " ", (*rgba)[i]);
         }
       else
         {
           /* Reached end of list or non-numeric. */
+          if (v)
+            {
+              if (*length != 0)
+                *strvalue = g_strdup_printf ("'(%s)", v->str);
+
+              g_string_free (v, TRUE);
+            }
+
           return;
         }
     }
   /* *length is in [0,4] and *rgba is filled in with same count. */
+
+  if (v)
+    {
+      *strvalue = g_strdup_printf ("'(%s)", v->str);
+      g_string_free (v, TRUE);
+    }
 }
 
 /* Walk a C array of bytes (rgba) creating Scheme list of numeric.
@@ -313,16 +352,15 @@ marshal_rgba_to_list_of_numeric (scheme   *sc,
  *  - list elements not numbers.
  */
 GeglColor *
-marshal_component_list_to_color (scheme  *sc,
-                                 pointer  color_list)
+marshal_component_list_to_color (scheme   *sc,
+                                 pointer   color_list,
+                                 gchar   **strvalue)
 {
   GeglColor *color_result;
   guchar     rgba[4];
   guint      list_length;
 
-
-
-  marshal_list_of_numeric_to_rgba (sc, color_list, &rgba, &list_length);
+  marshal_list_of_numeric_to_rgba (sc, color_list, &rgba, &list_length, strvalue);
   /* list_length is the count of numerics used. */
 
   /* Dispatch on list length and create different format colors */

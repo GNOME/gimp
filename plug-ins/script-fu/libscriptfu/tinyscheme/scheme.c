@@ -116,6 +116,7 @@ ts_get_error_string (scheme *sc)
 #define TOK_SHARP_CONST 11
 #define TOK_VEC     12
 #define TOK_USCORE  13
+#define TOK_ARG     14
 
 #define BACKQUOTE '`'
 #define DELIMITERS  "()\";\f\t\v\n\r "
@@ -198,7 +199,8 @@ enum scheme_types {
   T_PROMISE=13,
   T_ENVIRONMENT=14,
   T_BYTE=15,
-  T_LAST_SYSTEM_TYPE=15
+  T_ARG_SLOT=16,
+  T_LAST_SYSTEM_TYPE=16
 };
 
 /* ADJ is enough slack to align cells in a TYPE_BITS-bit boundary */
@@ -241,6 +243,7 @@ static num num_one;
 #define type(p)          (typeflag(p)&T_MASKTYPE)
 
 INTERFACE INLINE int is_string(pointer p)     { return (type(p)==T_STRING); }
+INTERFACE INLINE int is_arg_name(pointer p)   { return (type(p)==T_ARG_SLOT); }
 #define strvalue(p)      ((p)->_object._string._svalue)
 #define strlength(p)     ((p)->_object._string._length)
 
@@ -442,6 +445,7 @@ static gunichar inchar(scheme *sc);
 static void backchar(scheme *sc, gunichar c);
 static char *readstr_upto(scheme *sc, char *delim);
 static pointer readstrexp(scheme *sc);
+static pointer read_arg_name_exp(scheme *sc);
 static INLINE int skipspace(scheme *sc);
 static int token(scheme *sc);
 static void printslashstring(scheme *sc, char *s, int len);
@@ -1157,6 +1161,21 @@ INTERFACE pointer mk_counted_string(scheme *sc, const char *str, int len) {
      strvalue(x) = store_string(sc,len,str,0);
      strlength(x) = len;
      return (x);
+}
+
+INTERFACE pointer
+mk_arg_name (scheme     *sc,
+             const char *str)
+{
+  gint len = strlen (str);
+
+  pointer x = get_cell (sc, sc->NIL, sc->NIL);
+
+  typeflag(x)  = (T_ARG_SLOT | T_ATOM);
+  strvalue(x)  = store_string (sc, len, str, 0);
+  strlength(x) = len;
+
+  return (x);
 }
 
 /* len is the length for the empty string in characters */
@@ -1989,6 +2008,35 @@ static pointer readstrexp(scheme *sc) {
   }
 }
 
+static pointer
+read_arg_name_exp (scheme *sc)
+{
+   char     *p = sc->strbuff;
+   gunichar  c;
+
+   while (TRUE)
+     {
+       c = inchar (sc);
+       if (c == EOF || p - sc->strbuff > sizeof (sc->strbuff) - 1)
+         {
+           *p = 0;
+           return sc->F;
+         }
+       else if (g_unichar_isspace (c))
+         {
+           *p = 0;
+           return mk_arg_name (sc, sc->strbuff);
+         }
+       else
+         {
+           gint len;
+
+           len = g_unichar_to_utf8 (c, p);
+           p += len;
+         }
+     }
+}
+
 /* check c is in chars */
 static INLINE int is_one_of(char *s, gunichar c) {
   if (c==EOF)
@@ -2097,6 +2145,8 @@ static int token(scheme *sc) {
              { return (TOK_EOF); }
            else
              { return (token(sc));}
+          } else if (c == ':') {
+               return (TOK_ARG);
           } else {
                backchar(sc,c);
                if(is_one_of(" tfodxb\\",c)) {
@@ -4649,6 +4699,14 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
                } else {
                     s_return(sc,x);
                }
+          case TOK_ARG: {
+               x = read_arg_name_exp(sc);
+               if (x == sc->F) {
+                 Error_0 (sc, "Error reading argument slot name");
+               }
+               setimmutable(x);
+               s_return(sc,x);
+          }
           case TOK_RPAREN:
                Error_1 (sc, "syntax error: unexpected right parenthesis", 0);
           case TOK_DOT:
@@ -5097,6 +5155,7 @@ static struct scheme_interface vtbl ={
   mk_vector,
   mk_foreign_func,
   mk_closure,
+  mk_arg_name,
   putstr,
   putcharacter,
 
@@ -5144,6 +5203,8 @@ static struct scheme_interface vtbl ={
   is_environment,
   is_immutable,
   setimmutable,
+
+  is_arg_name,
 
   scheme_load_file,
   scheme_load_string
