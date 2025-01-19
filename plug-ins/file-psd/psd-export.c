@@ -1989,10 +1989,13 @@ save_data (GOutputStream  *output,
 
   IFDBG(1) g_debug ("Function: save_data");
 
-  ChanCount = (PSDImageData.nChannels +
-               nChansLayer (PSDImageData.baseType,
-                            gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)),
-                            0));
+  if (! export_cmyk)
+    chan = nChansLayer (PSDImageData.baseType,
+                        gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)), 0);
+  else
+    chan = gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)) ? 5 : 4;
+
+  ChanCount = PSDImageData.nChannels + chan;
 
   imageHeight = gimp_image_get_height (image);
 
@@ -2009,9 +2012,6 @@ save_data (GOutputStream  *output,
   IFDBG(1) g_debug ("\t\tWriting compressed image data");
   write_pixel_data (output, image, GIMP_DRAWABLE (PSDImageData.merged_layer),
                     NULL, offset, FALSE, export_cmyk);
-
-  chan = nChansLayer (PSDImageData.baseType,
-                      gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)), 0);
 
   for (iter = PSDImageData.lChannels; iter; iter = g_list_next (iter))
     {
