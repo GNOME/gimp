@@ -242,9 +242,18 @@ themes_apply_theme (Gimp          *gimp,
   GOutputStream *output;
   GError        *error = NULL;
   gboolean       prefer_dark_theme;
+  gboolean       differentiate_without_color;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_GUI_CONFIG (config));
+
+  /* macOS has a "Differentiate without Color" option, which shows
+   * 1/0 on GtkSwitches to distinguish their on/off state */
+  differentiate_without_color = FALSE;
+#ifdef GDK_WINDOWING_QUARTZ
+  differentiate_without_color =
+    ([[NSWorkspace sharedWorkspace] accessibilityDifferentiateWithoutColor]);
+#endif
 
   prefer_dark_theme = (config->theme_scheme != GIMP_THEME_LIGHT);
   theme_css = gimp_directory_file ("theme.css", NULL);
@@ -515,6 +524,17 @@ themes_apply_theme (Gimp          *gimp,
                                   g_ascii_dtostr (font_size_string,
                                                   G_ASCII_DTOSTR_BUF_SIZE,
                                                   config->font_relative_size));
+        }
+
+      if (! error && ! differentiate_without_color)
+        {
+          g_output_stream_printf (
+            output, NULL, NULL, &error,
+            "\n"
+            "/* This hides the 1/0 labels inside the switch slider */\n"
+            " switch image {\n"
+            "  color: transparent;\n"
+            " }");
         }
 
       if (! error)

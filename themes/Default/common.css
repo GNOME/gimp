@@ -571,7 +571,7 @@ border {
 
 /* Define popover image button padding */
 popover button {
-  padding: 4px 9px;     
+  padding: 4px 9px;
 }
 
 /* Top menu items  */
@@ -702,10 +702,9 @@ switch:checked {
   background-color: @fg-color;
 }
 
-/* This prevents the 1/0 labels from appearing inside the switch slider */
-switch image {
-  color: transparent;
-}
+/* Style for showing 1/0 images in GtkSwitch is affected by
+ * macOS 'Differentiate without Color' setting, so it is added
+ * during runtime at /app/gui/themes.c */
 
 headerbar {
   min-height: 36px;
