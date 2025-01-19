@@ -1170,20 +1170,17 @@ MIMEtypes += 'image/openraster'
 
 ## Javascript
 
-gjs = find_program('gjs', required: get_option('javascript'))
+gjs = find_program('gjs', required: false)
 have_javascript = get_option('javascript').enabled() or (gjs.found() and get_option('javascript').auto())
 if not gjs.found() and have_javascript
-  gjs = find_program('gjs', required: false)
-  if not gjs.found()
-    js_warning = '''
-    GJS was not found.
-    JavaScript plug-ins will be installed anyway but you should make sure that
-    the JavaScript interpreter GJS is available at installation, otherwise
-    installed plug-ins won't be usable.
-    '''
-    warning(js_warning)
-    warnings += js_warning
-  endif
+  js_warning = '''
+  GJS was not found.
+  JavaScript plug-ins will be installed anyway but you should make sure that
+  the JavaScript interpreter GJS is available at installation, otherwise
+  installed plug-ins won't be usable.
+  '''
+  warning(js_warning)
+  warnings += js_warning
 endif
 
 ## Lua
