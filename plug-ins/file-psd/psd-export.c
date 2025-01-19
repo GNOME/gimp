@@ -1999,6 +1999,8 @@ save_data (GOutputStream  *output,
                nChansLayer (PSDImageData.baseType,
                             gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)),
                             0));
+  if (export_cmyk)
+    ChanCount++;
 
   imageHeight = gimp_image_get_height (image);
 
@@ -2018,6 +2020,8 @@ save_data (GOutputStream  *output,
 
   chan = nChansLayer (PSDImageData.baseType,
                       gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)), 0);
+  if (export_cmyk)
+    chan++;
 
   for (iter = PSDImageData.lChannels; iter; iter = g_list_next (iter))
     {
