@@ -96,7 +96,7 @@ register_patterns_procs (GimpPDB *pdb)
   /*
    * gimp-patterns-refresh
    */
-  procedure = gimp_procedure_new (patterns_refresh_invoker);
+  procedure = gimp_procedure_new (patterns_refresh_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-patterns-refresh");
   gimp_procedure_set_static_help (procedure,
@@ -113,7 +113,7 @@ register_patterns_procs (GimpPDB *pdb)
   /*
    * gimp-patterns-get-list
    */
-  procedure = gimp_procedure_new (patterns_get_list_invoker);
+  procedure = gimp_procedure_new (patterns_get_list_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-patterns-get-list");
   gimp_procedure_set_static_help (procedure,

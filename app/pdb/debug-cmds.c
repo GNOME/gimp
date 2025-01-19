@@ -97,7 +97,7 @@ register_debug_procs (GimpPDB *pdb)
   /*
    * gimp-debug-timer-start
    */
-  procedure = gimp_procedure_new (debug_timer_start_invoker);
+  procedure = gimp_procedure_new (debug_timer_start_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-debug-timer-start");
   gimp_procedure_set_static_help (procedure,
@@ -117,7 +117,7 @@ register_debug_procs (GimpPDB *pdb)
   /*
    * gimp-debug-timer-end
    */
-  procedure = gimp_procedure_new (debug_timer_end_invoker);
+  procedure = gimp_procedure_new (debug_timer_end_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-debug-timer-end");
   gimp_procedure_set_static_help (procedure,

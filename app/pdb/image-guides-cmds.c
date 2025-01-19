@@ -269,7 +269,7 @@ register_image_guides_procs (GimpPDB *pdb)
   /*
    * gimp-image-add-hguide
    */
-  procedure = gimp_procedure_new (image_add_hguide_invoker);
+  procedure = gimp_procedure_new (image_add_hguide_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-add-hguide");
   gimp_procedure_set_static_help (procedure,
@@ -304,7 +304,7 @@ register_image_guides_procs (GimpPDB *pdb)
   /*
    * gimp-image-add-vguide
    */
-  procedure = gimp_procedure_new (image_add_vguide_invoker);
+  procedure = gimp_procedure_new (image_add_vguide_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-add-vguide");
   gimp_procedure_set_static_help (procedure,
@@ -339,7 +339,7 @@ register_image_guides_procs (GimpPDB *pdb)
   /*
    * gimp-image-delete-guide
    */
-  procedure = gimp_procedure_new (image_delete_guide_invoker);
+  procedure = gimp_procedure_new (image_delete_guide_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-delete-guide");
   gimp_procedure_set_static_help (procedure,
@@ -368,7 +368,7 @@ register_image_guides_procs (GimpPDB *pdb)
   /*
    * gimp-image-find-next-guide
    */
-  procedure = gimp_procedure_new (image_find_next_guide_invoker);
+  procedure = gimp_procedure_new (image_find_next_guide_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-find-next-guide");
   gimp_procedure_set_static_help (procedure,
@@ -403,7 +403,7 @@ register_image_guides_procs (GimpPDB *pdb)
   /*
    * gimp-image-get-guide-orientation
    */
-  procedure = gimp_procedure_new (image_get_guide_orientation_invoker);
+  procedure = gimp_procedure_new (image_get_guide_orientation_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-guide-orientation");
   gimp_procedure_set_static_help (procedure,
@@ -441,7 +441,7 @@ register_image_guides_procs (GimpPDB *pdb)
   /*
    * gimp-image-get-guide-position
    */
-  procedure = gimp_procedure_new (image_get_guide_position_invoker);
+  procedure = gimp_procedure_new (image_get_guide_position_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-guide-position");
   gimp_procedure_set_static_help (procedure,

@@ -362,7 +362,7 @@ register_image_select_procs (GimpPDB *pdb)
   /*
    * gimp-image-select-color
    */
-  procedure = gimp_procedure_new (image_select_color_invoker);
+  procedure = gimp_procedure_new (image_select_color_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-select-color");
   gimp_procedure_set_static_help (procedure,
@@ -409,7 +409,7 @@ register_image_select_procs (GimpPDB *pdb)
   /*
    * gimp-image-select-contiguous-color
    */
-  procedure = gimp_procedure_new (image_select_contiguous_color_invoker);
+  procedure = gimp_procedure_new (image_select_contiguous_color_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-select-contiguous-color");
   gimp_procedure_set_static_help (procedure,
@@ -461,7 +461,7 @@ register_image_select_procs (GimpPDB *pdb)
   /*
    * gimp-image-select-rectangle
    */
-  procedure = gimp_procedure_new (image_select_rectangle_invoker);
+  procedure = gimp_procedure_new (image_select_rectangle_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-select-rectangle");
   gimp_procedure_set_static_help (procedure,
@@ -517,7 +517,7 @@ register_image_select_procs (GimpPDB *pdb)
   /*
    * gimp-image-select-round-rectangle
    */
-  procedure = gimp_procedure_new (image_select_round_rectangle_invoker);
+  procedure = gimp_procedure_new (image_select_round_rectangle_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-select-round-rectangle");
   gimp_procedure_set_static_help (procedure,
@@ -585,7 +585,7 @@ register_image_select_procs (GimpPDB *pdb)
   /*
    * gimp-image-select-ellipse
    */
-  procedure = gimp_procedure_new (image_select_ellipse_invoker);
+  procedure = gimp_procedure_new (image_select_ellipse_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-select-ellipse");
   gimp_procedure_set_static_help (procedure,
@@ -641,7 +641,7 @@ register_image_select_procs (GimpPDB *pdb)
   /*
    * gimp-image-select-polygon
    */
-  procedure = gimp_procedure_new (image_select_polygon_invoker);
+  procedure = gimp_procedure_new (image_select_polygon_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-select-polygon");
   gimp_procedure_set_static_help (procedure,
@@ -678,7 +678,7 @@ register_image_select_procs (GimpPDB *pdb)
   /*
    * gimp-image-select-item
    */
-  procedure = gimp_procedure_new (image_select_item_invoker);
+  procedure = gimp_procedure_new (image_select_item_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-select-item");
   gimp_procedure_set_static_help (procedure,

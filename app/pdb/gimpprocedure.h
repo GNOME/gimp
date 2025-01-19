@@ -67,6 +67,9 @@ struct _GimpProcedure
   GParamSpec      **values;         /* Array of return values         */
 
   GimpMarshalFunc   marshal_func;   /* Marshaller for internal procs  */
+
+  gboolean          is_core;        /* Created by core for libgimp    */
+  gboolean          is_private;     /* Invisible procedure            */
 };
 
 struct _GimpProcedureClass
@@ -98,7 +101,9 @@ struct _GimpProcedureClass
 
 GType            gimp_procedure_get_type           (void) G_GNUC_CONST;
 
-GimpProcedure  * gimp_procedure_new                (GimpMarshalFunc   marshal_func);
+GimpProcedure  * gimp_procedure_new                (GimpMarshalFunc   marshal_func,
+                                                    gboolean          is_core,
+                                                    gboolean          is_private);
 
 void             gimp_procedure_set_help           (GimpProcedure    *procedure,
                                                     const gchar      *blurb,

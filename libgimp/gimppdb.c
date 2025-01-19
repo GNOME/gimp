@@ -143,10 +143,12 @@ gboolean
 gimp_pdb_procedure_exists (GimpPDB     *pdb,
                            const gchar *procedure_name)
 {
+  gboolean is_core;
+
   g_return_val_if_fail (GIMP_IS_PDB (pdb), FALSE);
   g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), FALSE);
 
-  return _gimp_pdb_proc_exists (procedure_name);
+  return _gimp_pdb_proc_exists (procedure_name, &is_core);
 }
 
 /**
@@ -168,6 +170,7 @@ gimp_pdb_lookup_procedure (GimpPDB     *pdb,
                            const gchar *procedure_name)
 {
   GimpProcedure *procedure;
+  gboolean       is_core = FALSE;
 
   g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
   g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
@@ -175,9 +178,9 @@ gimp_pdb_lookup_procedure (GimpPDB     *pdb,
   procedure = g_hash_table_lookup (pdb->procedures, procedure_name);
 
   if (! procedure && gimp_is_canonical_identifier (procedure_name) &&
-      gimp_pdb_procedure_exists (pdb, procedure_name))
+      _gimp_pdb_proc_exists (procedure_name, &is_core))
     {
-      procedure = _gimp_pdb_procedure_new (pdb, procedure_name);
+      procedure = _gimp_pdb_procedure_new (pdb, procedure_name, is_core);
 
       if (procedure)
         g_hash_table_insert (pdb->procedures,

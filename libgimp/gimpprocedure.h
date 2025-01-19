@@ -212,6 +212,8 @@ void             gimp_procedure_persistent_ready   (GimpProcedure        *proced
 GimpProcedureConfig *
                  gimp_procedure_create_config      (GimpProcedure        *procedure);
 
+gboolean         gimp_procedure_is_core            (GimpProcedure        *procedure);
+
 
 /* Internal use */
 

@@ -152,7 +152,7 @@ register_fonts_procs (GimpPDB *pdb)
   /*
    * gimp-fonts-refresh
    */
-  procedure = gimp_procedure_new (fonts_refresh_invoker);
+  procedure = gimp_procedure_new (fonts_refresh_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-fonts-refresh");
   gimp_procedure_set_static_help (procedure,
@@ -169,7 +169,7 @@ register_fonts_procs (GimpPDB *pdb)
   /*
    * gimp-fonts-get-custom-configs
    */
-  procedure = gimp_procedure_new (fonts_get_custom_configs_invoker);
+  procedure = gimp_procedure_new (fonts_get_custom_configs_invoker, TRUE, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-fonts-get-custom-configs");
   gimp_procedure_set_static_help (procedure,
@@ -213,7 +213,7 @@ register_fonts_procs (GimpPDB *pdb)
   /*
    * gimp-fonts-get-list
    */
-  procedure = gimp_procedure_new (fonts_get_list_invoker);
+  procedure = gimp_procedure_new (fonts_get_list_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-fonts-get-list");
   gimp_procedure_set_static_help (procedure,

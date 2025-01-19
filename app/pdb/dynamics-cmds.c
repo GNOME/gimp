@@ -91,7 +91,7 @@ register_dynamics_procs (GimpPDB *pdb)
   /*
    * gimp-dynamics-refresh
    */
-  procedure = gimp_procedure_new (dynamics_refresh_invoker);
+  procedure = gimp_procedure_new (dynamics_refresh_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-dynamics-refresh");
   gimp_procedure_set_static_help (procedure,
@@ -108,7 +108,7 @@ register_dynamics_procs (GimpPDB *pdb)
   /*
    * gimp-dynamics-get-name-list
    */
-  procedure = gimp_procedure_new (dynamics_get_name_list_invoker);
+  procedure = gimp_procedure_new (dynamics_get_name_list_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-dynamics-get-name-list");
   gimp_procedure_set_static_help (procedure,

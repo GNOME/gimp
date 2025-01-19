@@ -157,7 +157,9 @@ HELP
 
     @outargs = (
 	{ name => 'exists', type => 'boolean',
-	  desc => 'Whether a procedure of that name is registered' }
+	  desc => 'Whether a procedure of that name is registered' },
+	{ name => 'is_core', type => 'boolean',
+	  desc => 'Whether the procedure is a core procedure' }
     );
 
     %invoke = (
@@ -178,6 +180,8 @@ HELP
         }
 
       exists = (proc != NULL);
+      if (exists)
+        is_core = proc->is_core;
     }
   else
     success = FALSE;

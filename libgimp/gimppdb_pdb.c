@@ -169,6 +169,7 @@ _gimp_pdb_query (const gchar   *name,
 /**
  * _gimp_pdb_proc_exists:
  * @procedure_name: The procedure name.
+ * @is_core: (out): Whether the procedure is a core procedure.
  *
  * Checks if the specified procedure exists in the procedural database
  *
@@ -180,7 +181,8 @@ _gimp_pdb_query (const gchar   *name,
  * Since: 2.6
  **/
 gboolean
-_gimp_pdb_proc_exists (const gchar *procedure_name)
+_gimp_pdb_proc_exists (const gchar *procedure_name,
+                       gboolean    *is_core)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -196,7 +198,10 @@ _gimp_pdb_proc_exists (const gchar *procedure_name)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    exists = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+    {
+      exists = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+      *is_core = GIMP_VALUES_GET_BOOLEAN (return_vals, 2);
+    }
 
   gimp_value_array_unref (return_vals);
 

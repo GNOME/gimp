@@ -938,6 +938,7 @@ EXPORTS
 	gimp_procedure_get_return_values
 	gimp_procedure_get_sensitivity_mask
 	gimp_procedure_get_type
+	gimp_procedure_is_core
 	gimp_procedure_new
 	gimp_procedure_new_return_values
 	gimp_procedure_persistent_ready

@@ -34,6 +34,7 @@
 #include "gimppdb-private.h"
 #include "gimpplugin-private.h"
 #include "gimppdb_pdb.h"
+#include "gimppdbprocedure.h"
 #include "gimpplugin-private.h"
 #include "gimpplugin_pdb.h"
 #include "gimpprocedureconfig-private.h"
@@ -102,6 +103,7 @@ typedef struct _GimpProcedurePrivate
   GDestroyNotify    run_data_destroy;
 
   gboolean          installed;
+  gboolean          is_core;
 } GimpProcedurePrivate;
 
 
@@ -196,6 +198,9 @@ gimp_procedure_class_init (GimpProcedureClass *klass)
 static void
 gimp_procedure_init (GimpProcedure *procedure)
 {
+  GimpProcedurePrivate *priv = gimp_procedure_get_instance_private (procedure);
+
+  priv->is_core = FALSE;
 }
 
 static void
@@ -2227,6 +2232,17 @@ gimp_procedure_create_config (GimpProcedure *procedure)
                                                    "GimpProcedureConfig",
                                                    priv->args,
                                                    priv->n_args);
+}
+
+gboolean
+gimp_procedure_is_core (GimpProcedure *procedure)
+{
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), FALSE);
+
+  if (GIMP_IS_PDB_PROCEDURE (procedure))
+    return _gimp_pdb_procedure_is_core (GIMP_PDB_PROCEDURE (procedure));
+  else
+    return FALSE;
 }
 
 /**

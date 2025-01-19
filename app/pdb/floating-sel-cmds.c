@@ -188,7 +188,7 @@ register_floating_sel_procs (GimpPDB *pdb)
   /*
    * gimp-floating-sel-remove
    */
-  procedure = gimp_procedure_new (floating_sel_remove_invoker);
+  procedure = gimp_procedure_new (floating_sel_remove_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-floating-sel-remove");
   gimp_procedure_set_static_help (procedure,
@@ -211,7 +211,7 @@ register_floating_sel_procs (GimpPDB *pdb)
   /*
    * gimp-floating-sel-anchor
    */
-  procedure = gimp_procedure_new (floating_sel_anchor_invoker);
+  procedure = gimp_procedure_new (floating_sel_anchor_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-floating-sel-anchor");
   gimp_procedure_set_static_help (procedure,
@@ -234,7 +234,7 @@ register_floating_sel_procs (GimpPDB *pdb)
   /*
    * gimp-floating-sel-to-layer
    */
-  procedure = gimp_procedure_new (floating_sel_to_layer_invoker);
+  procedure = gimp_procedure_new (floating_sel_to_layer_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-floating-sel-to-layer");
   gimp_procedure_set_static_help (procedure,
@@ -257,7 +257,7 @@ register_floating_sel_procs (GimpPDB *pdb)
   /*
    * gimp-floating-sel-attach
    */
-  procedure = gimp_procedure_new (floating_sel_attach_invoker);
+  procedure = gimp_procedure_new (floating_sel_attach_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-floating-sel-attach");
   gimp_procedure_set_static_help (procedure,

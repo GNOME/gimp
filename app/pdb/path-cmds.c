@@ -1140,7 +1140,7 @@ register_path_procs (GimpPDB *pdb)
   /*
    * gimp-path-new
    */
-  procedure = gimp_procedure_new (path_new_invoker);
+  procedure = gimp_procedure_new (path_new_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-path-new");
   gimp_procedure_set_static_help (procedure,
@@ -1176,7 +1176,7 @@ register_path_procs (GimpPDB *pdb)
   /*
    * gimp-path-new-from-text-layer
    */
-  procedure = gimp_procedure_new (path_new_from_text_layer_invoker);
+  procedure = gimp_procedure_new (path_new_from_text_layer_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-path-new-from-text-layer");
   gimp_procedure_set_static_help (procedure,
@@ -1211,7 +1211,7 @@ register_path_procs (GimpPDB *pdb)
   /*
    * gimp-path-copy
    */
-  procedure = gimp_procedure_new (path_copy_invoker);
+  procedure = gimp_procedure_new (path_copy_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-path-copy");
   gimp_procedure_set_static_help (procedure,
@@ -1240,7 +1240,7 @@ register_path_procs (GimpPDB *pdb)
   /*
    * gimp-path-get-strokes
    */
-  procedure = gimp_procedure_new (path_get_strokes_invoker);
+  procedure = gimp_procedure_new (path_get_strokes_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-path-get-strokes");
   gimp_procedure_set_static_help (procedure,
@@ -1268,7 +1268,7 @@ register_path_procs (GimpPDB *pdb)
   /*
    * gimp-path-stroke-get-length
    */
-  procedure = gimp_procedure_new (path_stroke_get_length_invoker);
+  procedure = gimp_procedure_new (path_stroke_get_length_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-path-stroke-get-length");
   gimp_procedure_set_static_help (procedure,
@@ -1309,7 +1309,7 @@ register_path_procs (GimpPDB *pdb)
   /*
    * gimp-path-stroke-get-point-at-dist
    */
-  procedure = gimp_procedure_new (path_stroke_get_point_at_dist_invoker);
+  procedure = gimp_procedure_new (path_stroke_get_point_at_dist_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-path-stroke-get-point-at-dist");
   gimp_procedure_set_static_help (procedure,
@@ -1374,7 +1374,7 @@ register_path_procs (GimpPDB *pdb)
   /*
    * gimp-path-remove-stroke
    */
-  procedure = gimp_procedure_new (path_remove_stroke_invoker);
+  procedure = gimp_procedure_new (path_remove_stroke_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-path-remove-stroke");
   gimp_procedure_set_static_help (procedure,
@@ -1403,7 +1403,7 @@ register_path_procs (GimpPDB *pdb)
   /*
    * gimp-path-stroke-close
    */
-  procedure = gimp_procedure_new (path_stroke_close_invoker);
+  procedure = gimp_procedure_new (path_stroke_close_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-path-stroke-close");
   gimp_procedure_set_static_help (procedure,
@@ -1432,7 +1432,7 @@ register_path_procs (GimpPDB *pdb)
   /*
    * gimp-path-stroke-reverse
    */
-  procedure = gimp_procedure_new (path_stroke_reverse_invoker);
+  procedure = gimp_procedure_new (path_stroke_reverse_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-path-stroke-reverse");
   gimp_procedure_set_static_help (procedure,
@@ -1461,7 +1461,7 @@ register_path_procs (GimpPDB *pdb)
   /*
    * gimp-path-stroke-translate
    */
-  procedure = gimp_procedure_new (path_stroke_translate_invoker);
+  procedure = gimp_procedure_new (path_stroke_translate_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-path-stroke-translate");
   gimp_procedure_set_static_help (procedure,
@@ -1502,7 +1502,7 @@ register_path_procs (GimpPDB *pdb)
   /*
    * gimp-path-stroke-scale
    */
-  procedure = gimp_procedure_new (path_stroke_scale_invoker);
+  procedure = gimp_procedure_new (path_stroke_scale_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-path-stroke-scale");
   gimp_procedure_set_static_help (procedure,
@@ -1543,7 +1543,7 @@ register_path_procs (GimpPDB *pdb)
   /*
    * gimp-path-stroke-rotate
    */
-  procedure = gimp_procedure_new (path_stroke_rotate_invoker);
+  procedure = gimp_procedure_new (path_stroke_rotate_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-path-stroke-rotate");
   gimp_procedure_set_static_help (procedure,
@@ -1590,7 +1590,7 @@ register_path_procs (GimpPDB *pdb)
   /*
    * gimp-path-stroke-flip
    */
-  procedure = gimp_procedure_new (path_stroke_flip_invoker);
+  procedure = gimp_procedure_new (path_stroke_flip_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-path-stroke-flip");
   gimp_procedure_set_static_help (procedure,
@@ -1634,7 +1634,7 @@ register_path_procs (GimpPDB *pdb)
   /*
    * gimp-path-stroke-flip-free
    */
-  procedure = gimp_procedure_new (path_stroke_flip_free_invoker);
+  procedure = gimp_procedure_new (path_stroke_flip_free_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-path-stroke-flip-free");
   gimp_procedure_set_static_help (procedure,
@@ -1687,7 +1687,7 @@ register_path_procs (GimpPDB *pdb)
   /*
    * gimp-path-stroke-get-points
    */
-  procedure = gimp_procedure_new (path_stroke_get_points_invoker);
+  procedure = gimp_procedure_new (path_stroke_get_points_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-path-stroke-get-points");
   gimp_procedure_set_static_help (procedure,
@@ -1734,7 +1734,7 @@ register_path_procs (GimpPDB *pdb)
   /*
    * gimp-path-stroke-new-from-points
    */
-  procedure = gimp_procedure_new (path_stroke_new_from_points_invoker);
+  procedure = gimp_procedure_new (path_stroke_new_from_points_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-path-stroke-new-from-points");
   gimp_procedure_set_static_help (procedure,
@@ -1781,7 +1781,7 @@ register_path_procs (GimpPDB *pdb)
   /*
    * gimp-path-stroke-interpolate
    */
-  procedure = gimp_procedure_new (path_stroke_interpolate_invoker);
+  procedure = gimp_procedure_new (path_stroke_interpolate_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-path-stroke-interpolate");
   gimp_procedure_set_static_help (procedure,
@@ -1827,7 +1827,7 @@ register_path_procs (GimpPDB *pdb)
   /*
    * gimp-path-bezier-stroke-new-moveto
    */
-  procedure = gimp_procedure_new (path_bezier_stroke_new_moveto_invoker);
+  procedure = gimp_procedure_new (path_bezier_stroke_new_moveto_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-path-bezier-stroke-new-moveto");
   gimp_procedure_set_static_help (procedure,
@@ -1868,7 +1868,7 @@ register_path_procs (GimpPDB *pdb)
   /*
    * gimp-path-bezier-stroke-lineto
    */
-  procedure = gimp_procedure_new (path_bezier_stroke_lineto_invoker);
+  procedure = gimp_procedure_new (path_bezier_stroke_lineto_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-path-bezier-stroke-lineto");
   gimp_procedure_set_static_help (procedure,
@@ -1909,7 +1909,7 @@ register_path_procs (GimpPDB *pdb)
   /*
    * gimp-path-bezier-stroke-conicto
    */
-  procedure = gimp_procedure_new (path_bezier_stroke_conicto_invoker);
+  procedure = gimp_procedure_new (path_bezier_stroke_conicto_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-path-bezier-stroke-conicto");
   gimp_procedure_set_static_help (procedure,
@@ -1962,7 +1962,7 @@ register_path_procs (GimpPDB *pdb)
   /*
    * gimp-path-bezier-stroke-cubicto
    */
-  procedure = gimp_procedure_new (path_bezier_stroke_cubicto_invoker);
+  procedure = gimp_procedure_new (path_bezier_stroke_cubicto_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-path-bezier-stroke-cubicto");
   gimp_procedure_set_static_help (procedure,
@@ -2027,7 +2027,7 @@ register_path_procs (GimpPDB *pdb)
   /*
    * gimp-path-bezier-stroke-new-ellipse
    */
-  procedure = gimp_procedure_new (path_bezier_stroke_new_ellipse_invoker);
+  procedure = gimp_procedure_new (path_bezier_stroke_new_ellipse_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-path-bezier-stroke-new-ellipse");
   gimp_procedure_set_static_help (procedure,

@@ -609,7 +609,7 @@ register_drawable_filter_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-filter-id-is-valid
    */
-  procedure = gimp_procedure_new (drawable_filter_id_is_valid_invoker);
+  procedure = gimp_procedure_new (drawable_filter_id_is_valid_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-filter-id-is-valid");
   gimp_procedure_set_static_help (procedure,
@@ -638,7 +638,7 @@ register_drawable_filter_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-filter-new
    */
-  procedure = gimp_procedure_new (drawable_filter_new_invoker);
+  procedure = gimp_procedure_new (drawable_filter_new_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-filter-new");
   gimp_procedure_set_static_help (procedure,
@@ -683,7 +683,7 @@ register_drawable_filter_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-filter-get-name
    */
-  procedure = gimp_procedure_new (drawable_filter_get_name_invoker);
+  procedure = gimp_procedure_new (drawable_filter_get_name_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-filter-get-name");
   gimp_procedure_set_static_help (procedure,
@@ -714,7 +714,7 @@ register_drawable_filter_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-filter-get-operation-name
    */
-  procedure = gimp_procedure_new (drawable_filter_get_operation_name_invoker);
+  procedure = gimp_procedure_new (drawable_filter_get_operation_name_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-filter-get-operation-name");
   gimp_procedure_set_static_help (procedure,
@@ -744,7 +744,7 @@ register_drawable_filter_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-filter-get-visible
    */
-  procedure = gimp_procedure_new (drawable_filter_get_visible_invoker);
+  procedure = gimp_procedure_new (drawable_filter_get_visible_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-filter-get-visible");
   gimp_procedure_set_static_help (procedure,
@@ -773,7 +773,7 @@ register_drawable_filter_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-filter-set-visible
    */
-  procedure = gimp_procedure_new (drawable_filter_set_visible_invoker);
+  procedure = gimp_procedure_new (drawable_filter_set_visible_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-filter-set-visible");
   gimp_procedure_set_static_help (procedure,
@@ -803,7 +803,7 @@ register_drawable_filter_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-filter-get-opacity
    */
-  procedure = gimp_procedure_new (drawable_filter_get_opacity_invoker);
+  procedure = gimp_procedure_new (drawable_filter_get_opacity_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-filter-get-opacity");
   gimp_procedure_set_static_help (procedure,
@@ -832,7 +832,7 @@ register_drawable_filter_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-filter-get-blend-mode
    */
-  procedure = gimp_procedure_new (drawable_filter_get_blend_mode_invoker);
+  procedure = gimp_procedure_new (drawable_filter_get_blend_mode_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-filter-get-blend-mode");
   gimp_procedure_set_static_help (procedure,
@@ -862,7 +862,7 @@ register_drawable_filter_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-filter-update
    */
-  procedure = gimp_procedure_new (drawable_filter_update_invoker);
+  procedure = gimp_procedure_new (drawable_filter_update_invoker, TRUE, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-filter-update");
   gimp_procedure_set_static_help (procedure,
@@ -945,7 +945,7 @@ register_drawable_filter_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-filter-get-number-arguments
    */
-  procedure = gimp_procedure_new (drawable_filter_get_number_arguments_invoker);
+  procedure = gimp_procedure_new (drawable_filter_get_number_arguments_invoker, TRUE, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-filter-get-number-arguments");
   gimp_procedure_set_static_help (procedure,
@@ -976,7 +976,7 @@ register_drawable_filter_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-filter-get-pspec
    */
-  procedure = gimp_procedure_new (drawable_filter_get_pspec_invoker);
+  procedure = gimp_procedure_new (drawable_filter_get_pspec_invoker, TRUE, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-filter-get-pspec");
   gimp_procedure_set_static_help (procedure,
@@ -1012,7 +1012,7 @@ register_drawable_filter_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-filter-get-arguments
    */
-  procedure = gimp_procedure_new (drawable_filter_get_arguments_invoker);
+  procedure = gimp_procedure_new (drawable_filter_get_arguments_invoker, TRUE, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-filter-get-arguments");
   gimp_procedure_set_static_help (procedure,
@@ -1047,7 +1047,7 @@ register_drawable_filter_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-filter-delete
    */
-  procedure = gimp_procedure_new (drawable_filter_delete_invoker);
+  procedure = gimp_procedure_new (drawable_filter_delete_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-filter-delete");
   gimp_procedure_set_static_help (procedure,

@@ -235,7 +235,7 @@ register_image_transform_procs (GimpPDB *pdb)
   /*
    * gimp-image-resize
    */
-  procedure = gimp_procedure_new (image_resize_invoker);
+  procedure = gimp_procedure_new (image_resize_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-resize");
   gimp_procedure_set_static_help (procedure,
@@ -282,7 +282,7 @@ register_image_transform_procs (GimpPDB *pdb)
   /*
    * gimp-image-resize-to-layers
    */
-  procedure = gimp_procedure_new (image_resize_to_layers_invoker);
+  procedure = gimp_procedure_new (image_resize_to_layers_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-resize-to-layers");
   gimp_procedure_set_static_help (procedure,
@@ -305,7 +305,7 @@ register_image_transform_procs (GimpPDB *pdb)
   /*
    * gimp-image-scale
    */
-  procedure = gimp_procedure_new (image_scale_invoker);
+  procedure = gimp_procedure_new (image_scale_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-scale");
   gimp_procedure_set_static_help (procedure,
@@ -340,7 +340,7 @@ register_image_transform_procs (GimpPDB *pdb)
   /*
    * gimp-image-crop
    */
-  procedure = gimp_procedure_new (image_crop_invoker);
+  procedure = gimp_procedure_new (image_crop_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-crop");
   gimp_procedure_set_static_help (procedure,
@@ -387,7 +387,7 @@ register_image_transform_procs (GimpPDB *pdb)
   /*
    * gimp-image-flip
    */
-  procedure = gimp_procedure_new (image_flip_invoker);
+  procedure = gimp_procedure_new (image_flip_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-flip");
   gimp_procedure_set_static_help (procedure,
@@ -419,7 +419,7 @@ register_image_transform_procs (GimpPDB *pdb)
   /*
    * gimp-image-rotate
    */
-  procedure = gimp_procedure_new (image_rotate_invoker);
+  procedure = gimp_procedure_new (image_rotate_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-rotate");
   gimp_procedure_set_static_help (procedure,

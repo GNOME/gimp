@@ -95,7 +95,7 @@ register_palettes_procs (GimpPDB *pdb)
   /*
    * gimp-palettes-refresh
    */
-  procedure = gimp_procedure_new (palettes_refresh_invoker);
+  procedure = gimp_procedure_new (palettes_refresh_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-palettes-refresh");
   gimp_procedure_set_static_help (procedure,
@@ -112,7 +112,7 @@ register_palettes_procs (GimpPDB *pdb)
   /*
    * gimp-palettes-get-list
    */
-  procedure = gimp_procedure_new (palettes_get_list_invoker);
+  procedure = gimp_procedure_new (palettes_get_list_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-palettes-get-list");
   gimp_procedure_set_static_help (procedure,

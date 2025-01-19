@@ -236,7 +236,7 @@ register_gimp_procs (GimpPDB *pdb)
   /*
    * gimp-version
    */
-  procedure = gimp_procedure_new (version_invoker);
+  procedure = gimp_procedure_new (version_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-version");
   gimp_procedure_set_static_help (procedure,
@@ -260,7 +260,7 @@ register_gimp_procs (GimpPDB *pdb)
   /*
    * gimp-getpid
    */
-  procedure = gimp_procedure_new (getpid_invoker);
+  procedure = gimp_procedure_new (getpid_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-getpid");
   gimp_procedure_set_static_help (procedure,
@@ -283,7 +283,7 @@ register_gimp_procs (GimpPDB *pdb)
   /*
    * gimp-quit
    */
-  procedure = gimp_procedure_new (quit_invoker);
+  procedure = gimp_procedure_new (quit_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-quit");
   gimp_procedure_set_static_help (procedure,
@@ -306,7 +306,7 @@ register_gimp_procs (GimpPDB *pdb)
   /*
    * gimp-attach-parasite
    */
-  procedure = gimp_procedure_new (attach_parasite_invoker);
+  procedure = gimp_procedure_new (attach_parasite_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-attach-parasite");
   gimp_procedure_set_static_help (procedure,
@@ -328,7 +328,7 @@ register_gimp_procs (GimpPDB *pdb)
   /*
    * gimp-detach-parasite
    */
-  procedure = gimp_procedure_new (detach_parasite_invoker);
+  procedure = gimp_procedure_new (detach_parasite_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-detach-parasite");
   gimp_procedure_set_static_help (procedure,
@@ -352,7 +352,7 @@ register_gimp_procs (GimpPDB *pdb)
   /*
    * gimp-get-parasite
    */
-  procedure = gimp_procedure_new (get_parasite_invoker);
+  procedure = gimp_procedure_new (get_parasite_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-get-parasite");
   gimp_procedure_set_static_help (procedure,
@@ -381,7 +381,7 @@ register_gimp_procs (GimpPDB *pdb)
   /*
    * gimp-get-parasite-list
    */
-  procedure = gimp_procedure_new (get_parasite_list_invoker);
+  procedure = gimp_procedure_new (get_parasite_list_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-get-parasite-list");
   gimp_procedure_set_static_help (procedure,
@@ -404,7 +404,7 @@ register_gimp_procs (GimpPDB *pdb)
   /*
    * gimp-temp-file
    */
-  procedure = gimp_procedure_new (temp_file_invoker);
+  procedure = gimp_procedure_new (temp_file_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-temp-file");
   gimp_procedure_set_static_help (procedure,

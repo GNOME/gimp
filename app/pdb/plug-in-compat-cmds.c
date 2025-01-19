@@ -180,7 +180,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   /*
    * gimp-plug-in-autocrop
    */
-  procedure = gimp_procedure_new (plug_in_autocrop_invoker);
+  procedure = gimp_procedure_new (plug_in_autocrop_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-autocrop");
   gimp_procedure_set_static_help (procedure,
@@ -216,7 +216,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   /*
    * gimp-plug-in-autocrop-layer
    */
-  procedure = gimp_procedure_new (plug_in_autocrop_layer_invoker);
+  procedure = gimp_procedure_new (plug_in_autocrop_layer_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-autocrop-layer");
   gimp_procedure_set_static_help (procedure,
