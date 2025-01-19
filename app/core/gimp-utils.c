@@ -745,31 +745,54 @@ gimp_file_is_executable (GFile *file)
 gchar *
 gimp_file_get_extension (GFile *file)
 {
-  gchar *uri;
-  gint   uri_len;
-  gchar *ext = NULL;
-  gint   search_len;
+  GFileInfo *info;
+  gchar     *basename;
+  gint       basename_len;
+  gchar     *ext = NULL;
+  gint       search_len;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
 
-  uri     = g_file_get_uri (file);
-  uri_len = strlen (uri);
+  /* Certain cloud providers return a blob name rather than the
+   * actual file with g_file_get_uri (). Since we don't check
+   * the magic numbers for remote files, we can't open it. The
+   * actual name is stored as "display-name" in all cases, so we
+   * use that instead. */
+  info = g_file_query_info (file,
+                            G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME,
+                            0, NULL, NULL);
 
-  if (g_str_has_suffix (uri, ".gz"))
-    search_len = uri_len - 3;
-  else if (g_str_has_suffix (uri, ".bz2"))
-    search_len = uri_len - 4;
-  else if (g_str_has_suffix (uri, ".xz"))
-    search_len = uri_len - 3;
+  if (info != NULL)
+    basename =
+      g_file_info_get_attribute_as_string (info,
+                                           G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME);
   else
-    search_len = uri_len;
+    basename = g_file_get_basename (file);
 
-  ext = g_strrstr_len (uri, search_len, ".");
+  g_clear_object (&info);
+
+  /* When making a temporary file for saving/exporting, we may not
+   * have the display-name yet, so let's fallback to the URI */
+  if (! basename)
+    basename = g_file_get_uri (file);
+
+  basename_len = strlen (basename);
+
+  if (g_str_has_suffix (basename, ".gz"))
+    search_len = basename_len - 3;
+  else if (g_str_has_suffix (basename, ".bz2"))
+    search_len = basename_len - 4;
+  else if (g_str_has_suffix (basename, ".xz"))
+    search_len = basename_len - 3;
+  else
+    search_len = basename_len;
+
+  ext = g_strrstr_len (basename, search_len, ".");
 
   if (ext)
     ext = g_strdup (ext);
 
-  g_free (uri);
+  g_free (basename);
 
   return ext;
 }
