@@ -29,13 +29,13 @@ def export_scaled_img(img_width, img_height, scale):
   Gimp.Procedure.run(procedure, config)
 
 # https://jrsoftware.org/ishelp/index.php?topic=setup_wizardsmallimagefile
-export_scaled_img(55, 55, '100')
-export_scaled_img(64, 68, '125')
-export_scaled_img(83, 80, '150')
-export_scaled_img(92, 97, '175')
-export_scaled_img(110, 106, '200')
-export_scaled_img(119, 123, '225')
-export_scaled_img(138, 140, '250')
+export_scaled_img(58, 58, '100')
+export_scaled_img(71, 71, '125')
+export_scaled_img(85, 85, '150')
+export_scaled_img(103, 103, '175')
+export_scaled_img(112, 112, '200')
+export_scaled_img(129, 129, '225')
+export_scaled_img(147, 147, '250')
 
 # Avoid the images being re-generated at each build.
 pathlib.Path('gimp-data/images/logo/stamp-installicon.bmp').touch()
