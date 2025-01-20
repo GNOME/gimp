@@ -1176,6 +1176,29 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
     case GIMP_VIEW_BG_WHITE:
       cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
       break;
+
+    case GIMP_VIEW_BG_USE_STYLE:
+      {
+        GtkStyleContext *style;
+        GdkRGBA         *color = NULL;
+
+        style = gtk_widget_get_style_context (widget);
+        gtk_style_context_get (style, gtk_style_context_get_state (style),
+                               GTK_STYLE_PROPERTY_BACKGROUND_COLOR, &color,
+                               NULL);
+
+        if (color)
+          {
+            cairo_set_source_rgb (cr, color->red, color->green, color->blue);
+
+            gdk_rgba_free (color);
+          }
+        else
+          {
+            cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+          }
+      }
+      break;
     }
 
   cairo_paint (cr);
@@ -1204,6 +1227,10 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
 
         case GIMP_VIEW_BG_WHITE:
           cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+          break;
+
+        case GIMP_VIEW_BG_USE_STYLE:
+        default:
           break;
         }
 

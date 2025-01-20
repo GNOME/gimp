@@ -119,8 +119,8 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
       gimp_view_renderer_render_temp_buf (renderer, widget, temp_buf,
                                           temp_buf_x, temp_buf_y,
                                           -1,
-                                          GIMP_VIEW_BG_WHITE,
-                                          GIMP_VIEW_BG_WHITE);
+                                          GIMP_VIEW_BG_USE_STYLE,
+                                          GIMP_VIEW_BG_USE_STYLE);
 
       gimp_temp_buf_unref (temp_buf);
 
@@ -139,8 +139,8 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
   gimp_view_renderer_render_temp_buf (renderer, widget, temp_buf,
                                       temp_buf_x, temp_buf_y,
                                       -1,
-                                      GIMP_VIEW_BG_WHITE,
-                                      GIMP_VIEW_BG_WHITE);
+                                      GIMP_VIEW_BG_USE_STYLE,
+                                      GIMP_VIEW_BG_USE_STYLE);
 
   gimp_temp_buf_unref (temp_buf);
 }
@@ -193,8 +193,8 @@ gimp_view_renderer_brush_render_timeout (gpointer data)
   gimp_view_renderer_render_temp_buf (renderer, renderbrush->widget, temp_buf,
                                       temp_buf_x, temp_buf_y,
                                       -1,
-                                      GIMP_VIEW_BG_WHITE,
-                                      GIMP_VIEW_BG_WHITE);
+                                      GIMP_VIEW_BG_USE_STYLE,
+                                      GIMP_VIEW_BG_USE_STYLE);
 
   gimp_temp_buf_unref (temp_buf);
 
