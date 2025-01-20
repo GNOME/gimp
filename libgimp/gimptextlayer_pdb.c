@@ -37,7 +37,7 @@
 
 
 /**
- * _gimp_text_layer_new:
+ * gimp_text_layer_new:
  * @image: The image.
  * @text: The text to generate (in UTF-8 encoding).
  * @font: The font to write the text with.
@@ -46,23 +46,29 @@
  *
  * Creates a new text layer.
  *
- * This procedure creates a new text layer. The arguments are kept as
- * simple as necessary for the normal case. All text attributes,
- * however, can be modified with the appropriate
- * gimp_text_layer_set_*() procedures. The new layer still needs to be
- * added to the image, as this is not automatic. Add the new layer
- * using gimp_image_insert_layer().
+ * This procedure creates a new text layer displaying the specified
+ * @text. By default the width and height of the layer will be
+ * determined by the @text contents, the @font, @size and @unit.
  *
- * Returns: (transfer none): The new text layer.
+ * The new layer still needs to be added to the image as this is not
+ * automatic. Add the new layer with the [method@Image.insert_layer]
+ * method.
+ *
+ * The arguments are kept as simple as necessary for the basic case.
+ * All text attributes, however, can be modified with the appropriate
+ * `gimp_text_layer_set_*()` procedures.
+ *
+ * Returns: (transfer none):
+ *          The new text layer. The object belongs to libgimp and you should not free it.
  *
  * Since: 2.6
  **/
 GimpTextLayer *
-_gimp_text_layer_new (GimpImage   *image,
-                      const gchar *text,
-                      GimpFont    *font,
-                      gdouble      size,
-                      GimpUnit    *unit)
+gimp_text_layer_new (GimpImage   *image,
+                     const gchar *text,
+                     GimpFont    *font,
+                     gdouble      size,
+                     GimpUnit    *unit)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;

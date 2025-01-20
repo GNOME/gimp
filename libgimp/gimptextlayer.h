@@ -40,12 +40,6 @@ G_DECLARE_FINAL_TYPE (GimpTextLayer, gimp_text_layer, GIMP, TEXT_LAYER, GimpLaye
 
 GimpTextLayer * gimp_text_layer_get_by_id (gint32       layer_id);
 
-GimpTextLayer * gimp_text_layer_new       (GimpImage   *image,
-                                           const gchar *text,
-                                           GimpFont    *font,
-                                           gdouble      size,
-                                           GimpUnit    *unit) G_GNUC_WARN_UNUSED_RESULT;
-
 
 G_END_DECLS
 
