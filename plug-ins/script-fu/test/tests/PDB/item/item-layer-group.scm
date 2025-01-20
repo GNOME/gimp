@@ -26,7 +26,7 @@
 ; group-new not throw
 ; This is setup, not an assert, because we need to capture the group's ID
 ; Note the ID is not wrapped in list
-(define testGroup (gimp-group-layer-new testImage))
+(define testGroup (gimp-group-layer-new testImage ""))
 
 
 

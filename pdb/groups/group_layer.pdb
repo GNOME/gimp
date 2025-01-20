@@ -19,9 +19,17 @@ sub group_layer_new {
     $blurb = 'Create a new group layer.';
 
     $help = <<'HELP';
-This procedure creates a new group layer. Attributes such as layer mode
-and opacity should be set with explicit procedure calls. Add the new
-group layer (which is a kind of layer) with [method@image.insert_layer].
+This procedure creates a new group layer with a given @name. If @name is
+%NULL, GIMP will choose a name using its default layer name algorithm.
+
+
+The new group layer still needs to be added to the image, as this is
+not automatic. Add the new layer with the [method@Image.insert_layer]
+method.
+
+Other attributes such as layer mask, modes and offsets should be set
+with explicit procedure calls.
+
 
 Other procedures useful with group layers: [method@image_reorder_item],
 [method@item.get_parent], [method@item.get_children], [method@item.is_group].
@@ -29,11 +37,11 @@ HELP
 
     &barak_pdb_misc('2010', '2.8');
 
-    $lib_private = 1;
-
     @inargs = (
 	{ name => 'image', type => 'image',
-	  desc => 'The image to which to add the group layer' }
+	  desc => 'The image to which to add the group layer' },
+	{ name => 'name', type => 'string', none_ok => 1,
+	  desc => "The group layer name" }
     );
 
     @outargs = (
@@ -46,7 +54,13 @@ HELP
   group_layer = GIMP_GROUP_LAYER (gimp_group_layer_new (image));
 
   if (! group_layer)
-    success = FALSE;
+    {
+      success = FALSE;
+    }
+  else if (name != NULL && strlen (name) > 0)
+    {
+      gimp_item_rename (GIMP_ITEM (group_layer), name, error);
+    }
 }
 CODE
     );

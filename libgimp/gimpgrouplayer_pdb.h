@@ -32,8 +32,9 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-G_GNUC_INTERNAL GimpGroupLayer* _gimp_group_layer_new  (GimpImage      *image);
-GimpLayer*                      gimp_group_layer_merge (GimpGroupLayer *group_layer);
+GimpGroupLayer* gimp_group_layer_new   (GimpImage      *image,
+                                        const gchar    *name);
+GimpLayer*      gimp_group_layer_merge (GimpGroupLayer *group_layer);
 
 
 G_END_DECLS

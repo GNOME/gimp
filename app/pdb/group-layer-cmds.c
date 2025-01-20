@@ -59,16 +59,24 @@ group_layer_new_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
+  const gchar *name;
   GimpGroupLayer *group_layer = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
+  name = g_value_get_string (gimp_value_array_index (args, 1));
 
   if (success)
     {
       group_layer = GIMP_GROUP_LAYER (gimp_group_layer_new (image));
 
       if (! group_layer)
-        success = FALSE;
+        {
+          success = FALSE;
+        }
+      else if (name != NULL && strlen (name) > 0)
+        {
+          gimp_item_rename (GIMP_ITEM (group_layer), name, error);
+        }
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -128,12 +136,16 @@ register_group_layer_procs (GimpPDB *pdb)
   /*
    * gimp-group-layer-new
    */
-  procedure = gimp_procedure_new (group_layer_new_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (group_layer_new_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-group-layer-new");
   gimp_procedure_set_static_help (procedure,
                                   "Create a new group layer.",
-                                  "This procedure creates a new group layer. Attributes such as layer mode and opacity should be set with explicit procedure calls. Add the new group layer (which is a kind of layer) with [method@image.insert_layer].\n"
+                                  "This procedure creates a new group layer with a given @name. If @name is %NULL, GIMP will choose a name using its default layer name algorithm.\n"
+                                  "\n"
+                                  "The new group layer still needs to be added to the image, as this is not automatic. Add the new layer with the [method@Image.insert_layer] method.\n"
+                                  "Other attributes such as layer mask, modes and offsets should be set with explicit procedure calls.\n"
+                                  "\n"
                                   "Other procedures useful with group layers: [method@image_reorder_item], [method@item.get_parent], [method@item.get_children], [method@item.is_group].",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
@@ -146,6 +158,13 @@ register_group_layer_procs (GimpPDB *pdb)
                                                       "The image to which to add the group layer",
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The group layer name",
+                                                       FALSE, TRUE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_group_layer ("group-layer",
                                                                 "group layer",

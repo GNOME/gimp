@@ -73,37 +73,3 @@ gimp_group_layer_get_by_id (gint32 layer_id)
 
   return NULL;
 }
-
-/**
- * gimp_group_layer_new:
- * @image:            The image to which to add the layer.
- * @name: (nullable): The group layer name.
- *
- * Create a new group layer.
- *
- * This procedure creates a new group layer with a given @name. If @name is
- * %NULL, GIMP will choose a name using its default layer name algorithm.
- *
- * The new group layer still needs to be added to the image, as this is
- * not automatic. Add the new layer with the [method@Image.insert_layer]
- * method.
- *
- * Other attributes such as layer mask modes, and offsets should be set
- * with explicit procedure calls.
- *
- * Returns: (transfer none): The newly created group layer.
- *          The object belongs to libgimp and you should not free it.
- *
- * Since: 3.0
- */
-GimpGroupLayer *
-gimp_group_layer_new (GimpImage   *image,
-                      const gchar *name)
-{
-  GimpGroupLayer *layer = _gimp_group_layer_new (image);
-
-  if (name != NULL)
-    gimp_item_set_name (GIMP_ITEM (layer), name);
-
-  return layer;
-}

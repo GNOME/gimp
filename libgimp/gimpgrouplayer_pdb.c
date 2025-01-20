@@ -37,15 +37,22 @@
 
 
 /**
- * _gimp_group_layer_new:
+ * gimp_group_layer_new:
  * @image: The image to which to add the group layer.
+ * @name: (nullable): The group layer name.
  *
  * Create a new group layer.
  *
- * This procedure creates a new group layer. Attributes such as layer
- * mode and opacity should be set with explicit procedure calls. Add
- * the new group layer (which is a kind of layer) with
- * [method@image.insert_layer].
+ * This procedure creates a new group layer with a given @name. If
+ * @name is %NULL, GIMP will choose a name using its default layer name
+ * algorithm.
+ *
+ * The new group layer still needs to be added to the image, as this is
+ * not automatic. Add the new layer with the
+ * [method@Image.insert_layer] method.
+ * Other attributes such as layer mask, modes and offsets should be set
+ * with explicit procedure calls.
+ *
  * Other procedures useful with group layers:
  * [method@image_reorder_item], [method@item.get_parent],
  * [method@item.get_children], [method@item.is_group].
@@ -55,7 +62,8 @@
  * Since: 2.8
  **/
 GimpGroupLayer *
-_gimp_group_layer_new (GimpImage *image)
+gimp_group_layer_new (GimpImage   *image,
+                      const gchar *name)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -63,6 +71,7 @@ _gimp_group_layer_new (GimpImage *image)
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
