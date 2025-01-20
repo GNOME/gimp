@@ -85,6 +85,9 @@ static void          gimp_image_duplicate_parasites        (GimpImage *image,
                                                             GimpImage *new_image);
 static void          gimp_image_duplicate_color_profile    (GimpImage *image,
                                                             GimpImage *new_image);
+static void          gimp_image_duplicate_simulation_profile
+                                                           (GimpImage *image,
+                                                            GimpImage *new_image);
 
 
 GimpImage *
@@ -117,6 +120,9 @@ gimp_image_duplicate (GimpImage *image)
   /*  Copy parasites first so we have a color profile  */
   gimp_image_duplicate_parasites (image, new_image);
   gimp_image_duplicate_color_profile (image, new_image);
+
+  /*  Copy the simulation profile settings */
+  gimp_image_duplicate_simulation_profile (image, new_image);
 
   /*  Copy the colormap if necessary  */
   gimp_image_duplicate_colormap (image, new_image);
@@ -584,4 +590,21 @@ gimp_image_duplicate_color_profile (GimpImage *image,
 
   gimp_image_set_color_profile (new_image, profile, NULL);
   _gimp_image_set_hidden_profile (new_image, hidden, FALSE);
+}
+
+static void
+gimp_image_duplicate_simulation_profile (GimpImage *image,
+                                         GimpImage *new_image)
+{
+  GimpColorProfile         *profile;
+  GimpColorRenderingIntent  intent;
+  gboolean                  bpc;
+
+  profile = gimp_image_get_simulation_profile (image);
+  intent  = gimp_image_get_simulation_intent (image);
+  bpc     = gimp_image_get_simulation_bpc (image);
+
+  gimp_image_set_simulation_profile (new_image, profile);
+  gimp_image_set_simulation_intent (new_image, intent);
+  gimp_image_set_simulation_bpc (new_image, bpc);
 }
