@@ -220,7 +220,8 @@
     (gimp-context-set-background '(255 255 255))
     (gimp-drawable-edit-fill layer-mask FILL-BACKGROUND)
 
-    (set! layer2 (gimp-layer-copy layer1 #t))
+    (set! layer2 (gimp-layer-copy layer1))
+    (gimp-layer-add-alpha layer2)
     (gimp-image-insert-layer img layer2 0 0)
 
     (gimp-brush-set-shape brush BRUSH-GENERATED-CIRCLE)

@@ -50,7 +50,7 @@
 
   (while (> remaining-frames 1)
     (let* (
-          (waves-layer (car (gimp-layer-copy source-layer TRUE)))
+          (waves-layer (car (gimp-layer-copy source-layer)))
           (layer-name (string-append "Frame "
                                      (number->string
                                        (- (+ num-frames 2)
@@ -62,6 +62,7 @@
           (height (car (gimp-drawable-get-height waves-layer)))
           (aspect (/ width height))
           )
+    (gimp-layer-add-alpha waves-layer)
     (gimp-layer-set-lock-alpha waves-layer FALSE)
     (gimp-image-insert-layer image waves-layer 0 -1)
     (gimp-item-set-name waves-layer layer-name)

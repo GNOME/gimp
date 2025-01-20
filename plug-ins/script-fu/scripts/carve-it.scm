@@ -182,7 +182,8 @@
     (gimp-context-set-background '(255 255 255))
     (gimp-drawable-edit-fill csl-mask FILL-BACKGROUND)
 
-    (set! inset-layer (car (gimp-layer-copy layer1 TRUE)))
+    (set! inset-layer (car (gimp-layer-copy layer1)))
+    (gimp-layer-add-alpha inset-layer)
     (gimp-image-insert-layer img inset-layer 0 1)
 
     (set! il-mask (car (gimp-layer-create-mask inset-layer ADD-MASK-BLACK)))

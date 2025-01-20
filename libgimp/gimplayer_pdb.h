@@ -32,71 +32,70 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-GimpLayer*                 gimp_layer_new                  (GimpImage              *image,
-                                                            const gchar            *name,
-                                                            gint                    width,
-                                                            gint                    height,
-                                                            GimpImageType           type,
-                                                            gdouble                 opacity,
-                                                            GimpLayerMode           mode);
-GimpLayer*                 gimp_layer_new_from_visible     (GimpImage              *image,
-                                                            GimpImage              *dest_image,
-                                                            const gchar            *name);
-GimpLayer*                 gimp_layer_new_from_drawable    (GimpDrawable           *drawable,
-                                                            GimpImage              *dest_image);
-G_GNUC_INTERNAL GimpLayer* _gimp_layer_copy                (GimpLayer              *layer,
-                                                            gboolean                add_alpha);
-gboolean                   gimp_layer_add_alpha            (GimpLayer              *layer);
-gboolean                   gimp_layer_flatten              (GimpLayer              *layer);
-gboolean                   gimp_layer_scale                (GimpLayer              *layer,
-                                                            gint                    new_width,
-                                                            gint                    new_height,
-                                                            gboolean                local_origin);
-gboolean                   gimp_layer_resize               (GimpLayer              *layer,
-                                                            gint                    new_width,
-                                                            gint                    new_height,
-                                                            gint                    offx,
-                                                            gint                    offy);
-gboolean                   gimp_layer_resize_to_image_size (GimpLayer              *layer);
-gboolean                   gimp_layer_set_offsets          (GimpLayer              *layer,
-                                                            gint                    offx,
-                                                            gint                    offy);
-GimpLayerMask*             gimp_layer_create_mask          (GimpLayer              *layer,
-                                                            GimpAddMaskType         mask_type);
-GimpLayerMask*             gimp_layer_get_mask             (GimpLayer              *layer);
-GimpLayer*                 gimp_layer_from_mask            (GimpLayerMask          *mask);
-gboolean                   gimp_layer_add_mask             (GimpLayer              *layer,
-                                                            GimpLayerMask          *mask);
-gboolean                   gimp_layer_remove_mask          (GimpLayer              *layer,
-                                                            GimpMaskApplyMode       mode);
-gboolean                   gimp_layer_is_floating_sel      (GimpLayer              *layer);
-gboolean                   gimp_layer_get_lock_alpha       (GimpLayer              *layer);
-gboolean                   gimp_layer_set_lock_alpha       (GimpLayer              *layer,
-                                                            gboolean                lock_alpha);
-gboolean                   gimp_layer_get_apply_mask       (GimpLayer              *layer);
-gboolean                   gimp_layer_set_apply_mask       (GimpLayer              *layer,
-                                                            gboolean                apply_mask);
-gboolean                   gimp_layer_get_show_mask        (GimpLayer              *layer);
-gboolean                   gimp_layer_set_show_mask        (GimpLayer              *layer,
-                                                            gboolean                show_mask);
-gboolean                   gimp_layer_get_edit_mask        (GimpLayer              *layer);
-gboolean                   gimp_layer_set_edit_mask        (GimpLayer              *layer,
-                                                            gboolean                edit_mask);
-gdouble                    gimp_layer_get_opacity          (GimpLayer              *layer);
-gboolean                   gimp_layer_set_opacity          (GimpLayer              *layer,
-                                                            gdouble                 opacity);
-GimpLayerMode              gimp_layer_get_mode             (GimpLayer              *layer);
-gboolean                   gimp_layer_set_mode             (GimpLayer              *layer,
-                                                            GimpLayerMode           mode);
-GimpLayerColorSpace        gimp_layer_get_blend_space      (GimpLayer              *layer);
-gboolean                   gimp_layer_set_blend_space      (GimpLayer              *layer,
-                                                            GimpLayerColorSpace     blend_space);
-GimpLayerColorSpace        gimp_layer_get_composite_space  (GimpLayer              *layer);
-gboolean                   gimp_layer_set_composite_space  (GimpLayer              *layer,
-                                                            GimpLayerColorSpace     composite_space);
-GimpLayerCompositeMode     gimp_layer_get_composite_mode   (GimpLayer              *layer);
-gboolean                   gimp_layer_set_composite_mode   (GimpLayer              *layer,
-                                                            GimpLayerCompositeMode  composite_mode);
+GimpLayer*             gimp_layer_new                  (GimpImage              *image,
+                                                        const gchar            *name,
+                                                        gint                    width,
+                                                        gint                    height,
+                                                        GimpImageType           type,
+                                                        gdouble                 opacity,
+                                                        GimpLayerMode           mode);
+GimpLayer*             gimp_layer_new_from_visible     (GimpImage              *image,
+                                                        GimpImage              *dest_image,
+                                                        const gchar            *name);
+GimpLayer*             gimp_layer_new_from_drawable    (GimpDrawable           *drawable,
+                                                        GimpImage              *dest_image);
+GimpLayer*             gimp_layer_copy                 (GimpLayer              *layer);
+gboolean               gimp_layer_add_alpha            (GimpLayer              *layer);
+gboolean               gimp_layer_flatten              (GimpLayer              *layer);
+gboolean               gimp_layer_scale                (GimpLayer              *layer,
+                                                        gint                    new_width,
+                                                        gint                    new_height,
+                                                        gboolean                local_origin);
+gboolean               gimp_layer_resize               (GimpLayer              *layer,
+                                                        gint                    new_width,
+                                                        gint                    new_height,
+                                                        gint                    offx,
+                                                        gint                    offy);
+gboolean               gimp_layer_resize_to_image_size (GimpLayer              *layer);
+gboolean               gimp_layer_set_offsets          (GimpLayer              *layer,
+                                                        gint                    offx,
+                                                        gint                    offy);
+GimpLayerMask*         gimp_layer_create_mask          (GimpLayer              *layer,
+                                                        GimpAddMaskType         mask_type);
+GimpLayerMask*         gimp_layer_get_mask             (GimpLayer              *layer);
+GimpLayer*             gimp_layer_from_mask            (GimpLayerMask          *mask);
+gboolean               gimp_layer_add_mask             (GimpLayer              *layer,
+                                                        GimpLayerMask          *mask);
+gboolean               gimp_layer_remove_mask          (GimpLayer              *layer,
+                                                        GimpMaskApplyMode       mode);
+gboolean               gimp_layer_is_floating_sel      (GimpLayer              *layer);
+gboolean               gimp_layer_get_lock_alpha       (GimpLayer              *layer);
+gboolean               gimp_layer_set_lock_alpha       (GimpLayer              *layer,
+                                                        gboolean                lock_alpha);
+gboolean               gimp_layer_get_apply_mask       (GimpLayer              *layer);
+gboolean               gimp_layer_set_apply_mask       (GimpLayer              *layer,
+                                                        gboolean                apply_mask);
+gboolean               gimp_layer_get_show_mask        (GimpLayer              *layer);
+gboolean               gimp_layer_set_show_mask        (GimpLayer              *layer,
+                                                        gboolean                show_mask);
+gboolean               gimp_layer_get_edit_mask        (GimpLayer              *layer);
+gboolean               gimp_layer_set_edit_mask        (GimpLayer              *layer,
+                                                        gboolean                edit_mask);
+gdouble                gimp_layer_get_opacity          (GimpLayer              *layer);
+gboolean               gimp_layer_set_opacity          (GimpLayer              *layer,
+                                                        gdouble                 opacity);
+GimpLayerMode          gimp_layer_get_mode             (GimpLayer              *layer);
+gboolean               gimp_layer_set_mode             (GimpLayer              *layer,
+                                                        GimpLayerMode           mode);
+GimpLayerColorSpace    gimp_layer_get_blend_space      (GimpLayer              *layer);
+gboolean               gimp_layer_set_blend_space      (GimpLayer              *layer,
+                                                        GimpLayerColorSpace     blend_space);
+GimpLayerColorSpace    gimp_layer_get_composite_space  (GimpLayer              *layer);
+gboolean               gimp_layer_set_composite_space  (GimpLayer              *layer,
+                                                        GimpLayerColorSpace     composite_space);
+GimpLayerCompositeMode gimp_layer_get_composite_mode   (GimpLayer              *layer);
+gboolean               gimp_layer_set_composite_mode   (GimpLayer              *layer,
+                                                        GimpLayerCompositeMode  composite_mode);
 
 
 G_END_DECLS

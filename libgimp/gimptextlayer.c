@@ -30,8 +30,6 @@ struct _GimpTextLayer
 };
 
 
-static GimpLayer * gimp_text_layer_copy (GimpLayer *layer);
-
 
 G_DEFINE_TYPE (GimpTextLayer, gimp_text_layer, GIMP_TYPE_LAYER)
 
@@ -41,9 +39,6 @@ G_DEFINE_TYPE (GimpTextLayer, gimp_text_layer, GIMP_TYPE_LAYER)
 static void
 gimp_text_layer_class_init (GimpTextLayerClass *klass)
 {
-  GimpLayerClass *layer_class = GIMP_LAYER_CLASS (klass);
-
-  layer_class->copy = gimp_text_layer_copy;
 }
 
 static void
@@ -78,28 +73,4 @@ gimp_text_layer_get_by_id (gint32 layer_id)
     return (GimpTextLayer *) item;
 
   return NULL;
-}
-
-
-/*  private functions  */
-
-static GimpLayer *
-gimp_text_layer_copy (GimpLayer *layer)
-{
-  GimpTextLayer *new_layer;
-  gchar         *text;
-  GimpFont      *font;
-  gdouble        size;
-  GimpUnit      *unit;
-
-  g_return_val_if_fail (GIMP_IS_TEXT_LAYER (layer), NULL);
-
-  text      = gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer));
-  font      = gimp_text_layer_get_font (GIMP_TEXT_LAYER (layer));
-  size      = gimp_text_layer_get_font_size (GIMP_TEXT_LAYER (layer), &unit);
-  new_layer = gimp_text_layer_new (gimp_item_get_image (GIMP_ITEM (layer)),
-                                   text, font, size, unit);
-  g_free (text);
-
-  return GIMP_LAYER (new_layer);
 }

@@ -33,7 +33,7 @@
                                     "independent" FALSE "red" 0.7 "alpha" 0.7
                                     "correlated" FALSE "seed" (msrg-rand) "linear" TRUE)
 
-    (set! layer-two (car (gimp-layer-copy layer-one 0)))
+    (set! layer-two (car (gimp-layer-copy layer-one)))
     (gimp-layer-set-mode layer-two LAYER-MODE-MULTIPLY)
     (gimp-image-insert-layer img layer-two 0 0)
 

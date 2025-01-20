@@ -42,7 +42,7 @@
 
   (while (> inFrames n)
     (set! n (+ n 1))
-    (set! theFrame (car (gimp-layer-copy theLayer FALSE)))
+    (set! theFrame (car (gimp-layer-copy theLayer)))
     (gimp-image-insert-layer theImage theFrame 0 0)
     (gimp-item-set-name theFrame
                          (string-append "Anim Frame: "

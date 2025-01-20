@@ -71,10 +71,11 @@
 
           ;--- process image horizontal with pixel-speed
           (while (< bl-x (+ source-layer-width bl-width))
-              (set! bl-layer (car (gimp-layer-copy source-layer TRUE)))
+              (set! bl-layer (car (gimp-layer-copy source-layer)))
               (set! bl-layer-name (string-append "fr-nr"
                                                  (number->string frame-nr 10) ) )
 
+              (gimp-layer-add-alpha bl-layer)
               (gimp-image-insert-layer img bl-layer 0 -2)
               (gimp-item-set-name bl-layer bl-layer-name)
               (gimp-item-set-visible bl-layer TRUE)
@@ -169,7 +170,7 @@
 		  )
 
               ;--- merge with bg layer
-              (set! bg-layer (car (gimp-layer-copy bg-source-layer FALSE)))
+              (set! bg-layer (car (gimp-layer-copy bg-source-layer)))
               (gimp-image-insert-layer img bg-layer 0 -1)
               (gimp-image-lower-item img bg-layer)
               (set! bg-layer-name (string-append "bg-"

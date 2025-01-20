@@ -303,11 +303,9 @@ layer_copy_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpLayer *layer;
-  gboolean add_alpha;
   GimpLayer *layer_copy = NULL;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
-  add_alpha = g_value_get_boolean (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -316,9 +314,6 @@ layer_copy_invoker (GimpProcedure         *procedure,
       if (layer_copy)
         {
           GimpContainer *filters;
-
-          if (add_alpha)
-            gimp_layer_add_alpha (layer_copy);
 
           filters = gimp_drawable_get_filters (GIMP_DRAWABLE (layer));
           if (gimp_container_get_n_children (filters) > 0)
@@ -1448,12 +1443,12 @@ register_layer_procs (GimpPDB *pdb)
   /*
    * gimp-layer-copy
    */
-  procedure = gimp_procedure_new (layer_copy_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (layer_copy_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-layer-copy");
   gimp_procedure_set_static_help (procedure,
                                   "Copy a layer.",
-                                  "This procedure copies the specified layer and returns the copy. The newly copied layer is for use within the original layer's image. It should not be subsequently added to any other image. The copied layer can optionally have an added alpha channel. This is useful if the background layer in an image is being copied and added to the same image.",
+                                  "This procedure copies the specified layer and returns the copy. The newly copied layer is for use within the original layer's image. It should not be subsequently added to any other image.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
@@ -1465,16 +1460,10 @@ register_layer_procs (GimpPDB *pdb)
                                                       "The layer to copy",
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("add-alpha",
-                                                     "add alpha",
-                                                     "Add an alpha channel to the copied layer",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_layer ("layer-copy",
                                                           "layer copy",
-                                                          "The newly copied layer",
+                                                          "The newly copied layer. The object belongs to libgimp and you should not free it.",
                                                           FALSE,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

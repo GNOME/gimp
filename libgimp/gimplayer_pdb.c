@@ -186,24 +186,20 @@ gimp_layer_new_from_drawable (GimpDrawable *drawable,
 }
 
 /**
- * _gimp_layer_copy:
+ * gimp_layer_copy:
  * @layer: The layer to copy.
- * @add_alpha: Add an alpha channel to the copied layer.
  *
  * Copy a layer.
  *
  * This procedure copies the specified layer and returns the copy. The
  * newly copied layer is for use within the original layer's image. It
- * should not be subsequently added to any other image. The copied
- * layer can optionally have an added alpha channel. This is useful if
- * the background layer in an image is being copied and added to the
- * same image.
+ * should not be subsequently added to any other image.
  *
- * Returns: (transfer none): The newly copied layer.
+ * Returns: (transfer none):
+ *          The newly copied layer. The object belongs to libgimp and you should not free it.
  **/
 GimpLayer *
-_gimp_layer_copy (GimpLayer *layer,
-                  gboolean   add_alpha)
+gimp_layer_copy (GimpLayer *layer)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -211,7 +207,6 @@ _gimp_layer_copy (GimpLayer *layer,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_LAYER, layer,
-                                          G_TYPE_BOOLEAN, add_alpha,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),

@@ -271,25 +271,19 @@ sub layer_copy {
     $help = <<'HELP';
 This procedure copies the specified layer and returns the copy. The newly
 copied layer is for use within the original layer's image. It should not be
-subsequently added to any other image. The copied layer can optionally have an
-added alpha channel. This is useful if the background layer in an image is
-being copied and added to the same image.
+subsequently added to any other image.
 HELP
 
     &std_pdb_misc;
 
-    $lib_private = 1;
-
     @inargs = (
 	{ name => 'layer', type => 'layer',
-	  desc => 'The layer to copy' },
-	{ name => 'add_alpha', type => 'boolean',
-	  desc => 'Add an alpha channel to the copied layer' }
+	  desc => 'The layer to copy' }
     );
 
     @outargs = (
 	{ name => 'layer_copy', type => 'layer',
-	  desc => 'The newly copied layer' }
+	  desc => 'The newly copied layer. The object belongs to libgimp and you should not free it.' }
     );
 
     %invoke = (
@@ -300,9 +294,6 @@ HELP
   if (layer_copy)
     {
       GimpContainer *filters;
-
-      if (add_alpha)
-        gimp_layer_add_alpha (layer_copy);
 
       filters = gimp_drawable_get_filters (GIMP_DRAWABLE (layer));
       if (gimp_container_get_n_children (filters) > 0)

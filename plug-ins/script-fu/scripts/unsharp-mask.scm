@@ -48,9 +48,12 @@
      (gimp-floating-sel-anchor floating-sel)
     )
 
-    (set! original-layer-for-darker (car (gimp-layer-copy original-layer TRUE)))
-    (set! original-layer-for-lighter (car (gimp-layer-copy original-layer TRUE)))
-    (set! blurred-layer-for-darker (car (gimp-layer-copy original-layer TRUE)))
+    (set! original-layer-for-darker (car (gimp-layer-copy original-layer)))
+    (gimp-layer-add-alpha original-layer-for-darker)
+    (set! original-layer-for-lighter (car (gimp-layer-copy original-layer)))
+    (gimp-layer-add-alpha original-layer-for-lighter)
+    (set! blurred-layer-for-darker (car (gimp-layer-copy original-layer)))
+    (gimp-layer-add-alpha blurred-layer-for-darker)
     (gimp-item-set-visible original-layer FALSE)
     (gimp-display-new new-image)
 
@@ -58,7 +61,8 @@
     (gimp-image-insert-layer new-image blurred-layer-for-darker 0 -1)
     (gimp-drawable-merge-new-filter blurred-layer-for-darker "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0 "std-dev-x" (* 0.32 mask-size) "std-dev-y" (* 0.32 mask-size) "filter" "auto")
     (set! blurred-layer-for-lighter
-          (car (gimp-layer-copy blurred-layer-for-darker TRUE)))
+          (car (gimp-layer-copy blurred-layer-for-darker)))
+    (gimp-layer-add-alpha blurred-layer-for-lighter)
     (gimp-image-insert-layer new-image original-layer-for-darker 0 -1)
     (gimp-layer-set-mode original-layer-for-darker LAYER-MODE-SUBTRACT)
     (set! darker-layer
