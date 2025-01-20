@@ -254,8 +254,8 @@ export_image (GFile                *file,
                 "use-arithmetic-coding",     &use_arithmetic_coding,
                 "use-restart",               &use_restart,
 
-                "save-color-profile",        &save_profile,
-                "save-comment",              &save_comment,
+                "include-color-profile",     &save_profile,
+                "include-comment",           &save_comment,
                 "gimp-comment",              &comment,
 
                 NULL);

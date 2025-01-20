@@ -185,7 +185,7 @@ gimp_export_procedure_dialog_fill_end (GimpProcedureDialog *dialog,
       if (gimp_export_procedure_get_support_exif (export_procedure))
         {
           widget = gimp_prop_check_button_new (G_OBJECT (config),
-                                               "save-exif", NULL);
+                                               "include-exif", NULL);
           gtk_grid_attach (GTK_GRID (grid), widget,
                            left, 0, 6 / n_metadata, 1);
           left += 6 / n_metadata;
@@ -195,7 +195,7 @@ gimp_export_procedure_dialog_fill_end (GimpProcedureDialog *dialog,
       if (gimp_export_procedure_get_support_iptc (export_procedure))
         {
           widget = gimp_prop_check_button_new (G_OBJECT (config),
-                                               "save-iptc", NULL);
+                                               "include-iptc", NULL);
           gtk_grid_attach (GTK_GRID (grid), widget,
                            left, 0, 6 / n_metadata, 1);
           left += 6 / n_metadata;
@@ -205,7 +205,7 @@ gimp_export_procedure_dialog_fill_end (GimpProcedureDialog *dialog,
       if (gimp_export_procedure_get_support_xmp (export_procedure))
         {
           widget = gimp_prop_check_button_new (G_OBJECT (config),
-                                               "save-xmp", NULL);
+                                               "include-xmp", NULL);
           gtk_grid_attach (GTK_GRID (grid), widget,
                            left, 0, 6 / n_metadata, 1);
           left += 6 / n_metadata;
@@ -219,7 +219,7 @@ gimp_export_procedure_dialog_fill_end (GimpProcedureDialog *dialog,
       if (gimp_export_procedure_get_support_profile (export_procedure))
         {
           widget = gimp_prop_check_button_new (G_OBJECT (config),
-                                               "save-color-profile", NULL);
+                                               "include-color-profile", NULL);
           gtk_grid_attach (GTK_GRID (grid), widget,
                            left, top, 6 / n_metadata, 1);
           left += 6 / n_metadata;
@@ -228,7 +228,7 @@ gimp_export_procedure_dialog_fill_end (GimpProcedureDialog *dialog,
       if (gimp_export_procedure_get_support_thumbnail (export_procedure))
         {
           widget = gimp_prop_check_button_new (G_OBJECT (config),
-                                               "save-thumbnail", NULL);
+                                               "include-thumbnail", NULL);
           gtk_grid_attach (GTK_GRID (grid), widget,
                            left, top, 6 / n_metadata, 1);
           left += 6 / n_metadata;
@@ -269,7 +269,7 @@ gimp_export_procedure_dialog_fill_end (GimpProcedureDialog *dialog,
 
           frame2 = gimp_frame_new (NULL);
           title  = gimp_prop_check_button_new (G_OBJECT (config),
-                                               "save-comment", NULL);
+                                               "include-comment", NULL);
           gtk_frame_set_label_widget (GTK_FRAME (frame2), title);
           gtk_widget_show (title);
 
@@ -328,17 +328,17 @@ gimp_export_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
       gchar *propname = iter->data;
 
       if ((gimp_export_procedure_get_support_exif (export_procedure) &&
-           g_strcmp0 (propname, "save-exif") == 0)                 ||
+           g_strcmp0 (propname, "include-exif") == 0)                 ||
           (gimp_export_procedure_get_support_iptc (export_procedure) &&
-           g_strcmp0 (propname, "save-iptc") == 0)                 ||
+           g_strcmp0 (propname, "include-iptc") == 0)                 ||
           (gimp_export_procedure_get_support_xmp (export_procedure) &&
-           g_strcmp0 (propname, "save-xmp") == 0)                  ||
+           g_strcmp0 (propname, "include-xmp") == 0)                  ||
           (gimp_export_procedure_get_support_profile (export_procedure) &&
-           g_strcmp0 (propname, "save-color-profile") == 0)        ||
+           g_strcmp0 (propname, "include-color-profile") == 0)        ||
           (gimp_export_procedure_get_support_thumbnail (export_procedure) &&
-           g_strcmp0 (propname, "save-thumbnail") == 0)            ||
+           g_strcmp0 (propname, "include-thumbnail") == 0)            ||
           (gimp_export_procedure_get_support_comment (export_procedure) &&
-           (g_strcmp0 (propname, "save-comment") == 0 ||
+           (g_strcmp0 (propname, "include-comment") == 0 ||
             g_strcmp0 (propname, "gimp-comment") == 0))            ||
           g_list_find (export_dialog->additional_metadata, propname))
         /* Ignoring the standards and custom metadata. */

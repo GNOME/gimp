@@ -327,10 +327,10 @@ save_layer (TIFF        *tif,
 
   g_object_get (config,
                 "gimp-comment",            &config_comment,
-                "save-comment",            &config_save_comment,
+                "include-comment",         &config_save_comment,
                 "save-transparent-pixels", &config_save_transp_pixels,
                 "save-geotiff",            &config_save_geotiff_tags,
-                "save-color-profile",      &config_save_profile,
+                "include-color-profile",   &config_save_profile,
                 "cmyk",                    &config_cmyk,
                 NULL);
 
@@ -1064,10 +1064,10 @@ export_image (GFile         *file,
   gboolean          config_cmyk;
 
   g_object_get (config,
-                "bigtiff",            &bigtiff,
-                "save-color-profile", &config_save_profile,
-                "save-thumbnail",     &config_save_thumbnail,
-                "cmyk",               &config_cmyk,
+                "bigtiff",               &bigtiff,
+                "include-color-profile", &config_save_profile,
+                "include-thumbnail",     &config_save_thumbnail,
+                "cmyk",                  &config_cmyk,
                 NULL);
 
   layers = gimp_image_list_layers (image);

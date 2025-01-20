@@ -117,12 +117,12 @@ static const struct
 }
 metadata_properties[] =
 {
-  { "save-exif",          GIMP_METADATA_SAVE_EXIF          },
-  { "save-xmp",           GIMP_METADATA_SAVE_XMP           },
-  { "save-iptc",          GIMP_METADATA_SAVE_IPTC          },
-  { "save-thumbnail",     GIMP_METADATA_SAVE_THUMBNAIL     },
-  { "save-color-profile", GIMP_METADATA_SAVE_COLOR_PROFILE },
-  { "save-comment",       GIMP_METADATA_SAVE_COMMENT       }
+  { "include-exif",          GIMP_METADATA_SAVE_EXIF          },
+  { "include-xmp",           GIMP_METADATA_SAVE_XMP           },
+  { "include-iptc",          GIMP_METADATA_SAVE_IPTC          },
+  { "include-thumbnail",     GIMP_METADATA_SAVE_THUMBNAIL     },
+  { "include-color-profile", GIMP_METADATA_SAVE_COLOR_PROFILE },
+  { "include-comment",       GIMP_METADATA_SAVE_COMMENT       }
 };
 
 
@@ -1048,12 +1048,12 @@ _gimp_procedure_config_end_run (GimpProcedureConfig *config,
  * The following boolean arguments of the used [class@ExportProcedure] are
  * synced. The procedure can but must not provide these arguments.
  *
- * - "save-exif" for %GIMP_METADATA_SAVE_EXIF.
- * - "save-xmp" for %GIMP_METADATA_SAVE_XMP.
- * - "save-iptc" for %GIMP_METADATA_SAVE_IPTC.
- * - "save-thumbnail" for %GIMP_METADATA_SAVE_THUMBNAIL.
- * - "save-color-profile" for %GIMP_METADATA_SAVE_COLOR_PROFILE.
- * - "save-comment" for %GIMP_METADATA_SAVE_COMMENT.
+ * - "include-exif" for %GIMP_METADATA_SAVE_EXIF.
+ * - "include-xmp" for %GIMP_METADATA_SAVE_XMP.
+ * - "include-iptc" for %GIMP_METADATA_SAVE_IPTC.
+ * - "include-thumbnail" for %GIMP_METADATA_SAVE_THUMBNAIL.
+ * - "include-color-profile" for %GIMP_METADATA_SAVE_COLOR_PROFILE.
+ * - "include-comment" for %GIMP_METADATA_SAVE_COMMENT.
  *
  * The values from the [flags@MetadataSaveFlags] will only ever be used
  * to set these properties to %FALSE, overriding the user's saved

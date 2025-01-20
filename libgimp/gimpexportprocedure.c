@@ -532,38 +532,38 @@ gimp_export_procedure_add_metadata (GimpExportProcedure *export_procedure)
     return;
 
   if (export_procedure->supports_exif)
-    gimp_procedure_add_boolean_aux_argument (procedure, "save-exif",
+    gimp_procedure_add_boolean_aux_argument (procedure, "include-exif",
                                              _("Save _Exif"),
                                              _("Save Exif (Exchangeable image file format) metadata"),
                                              gimp_export_exif (),
                                              G_PARAM_READWRITE);
   if (export_procedure->supports_iptc)
-    gimp_procedure_add_boolean_aux_argument (procedure, "save-iptc",
+    gimp_procedure_add_boolean_aux_argument (procedure, "include-iptc",
                                              _("Save _IPTC"),
                                              _("Save IPTC (International Press Telecommunications Council) metadata"),
                                              gimp_export_iptc (),
                                              G_PARAM_READWRITE);
   if (export_procedure->supports_xmp)
-    gimp_procedure_add_boolean_aux_argument (procedure, "save-xmp",
+    gimp_procedure_add_boolean_aux_argument (procedure, "include-xmp",
                                              _("Save _XMP"),
                                              _("Save XMP (Extensible Metadata Platform) metadata"),
                                              gimp_export_xmp (),
                                              G_PARAM_READWRITE);
   if (export_procedure->supports_profile)
-    gimp_procedure_add_boolean_aux_argument (procedure, "save-color-profile",
+    gimp_procedure_add_boolean_aux_argument (procedure, "include-color-profile",
                                              _("Save color _profile"),
                                              _("Save the ICC color profile as metadata"),
                                              gimp_export_color_profile (),
                                              G_PARAM_READWRITE);
   if (export_procedure->supports_thumbnail)
-    gimp_procedure_add_boolean_aux_argument (procedure, "save-thumbnail",
+    gimp_procedure_add_boolean_aux_argument (procedure, "include-thumbnail",
                                              _("Save _thumbnail"),
                                              _("Save a smaller representation of the image as metadata"),
                                              gimp_export_thumbnail (),
                                              G_PARAM_READWRITE);
   if (export_procedure->supports_comment)
     {
-      gimp_procedure_add_boolean_aux_argument (procedure, "save-comment",
+      gimp_procedure_add_boolean_aux_argument (procedure, "include-comment",
                                                _("Save c_omment"),
                                                _("Save a comment as metadata"),
                                                gimp_export_comment (),
@@ -732,7 +732,7 @@ gimp_export_procedure_set_capabilities (GimpExportProcedure           *procedure
  *
  * This will have several consequences:
  *
- * - Automatically adds a standard auxiliary argument "save-exif" in the
+ * - Automatically adds a standard auxiliary argument "include-exif" in the
  *   end of the argument list of @procedure, with relevant blurb and
  *   description.
  * - If used with other gimp_export_procedure_set_support_*() functions,
@@ -771,7 +771,7 @@ gimp_export_procedure_set_support_exif (GimpExportProcedure *procedure,
  *
  * This will have several consequences:
  *
- * - Automatically adds a standard auxiliary argument "save-iptc" in the
+ * - Automatically adds a standard auxiliary argument "include-iptc" in the
  *   end of the argument list of @procedure, with relevant blurb and
  *   description.
  * - If used with other gimp_export_procedure_set_support_*() functions,
@@ -810,7 +810,7 @@ gimp_export_procedure_set_support_iptc (GimpExportProcedure *procedure,
  *
  * This will have several consequences:
  *
- * - Automatically adds a standard auxiliary argument "save-xmp" in the
+ * - Automatically adds a standard auxiliary argument "include-xmp" in the
  *   end of the argument list of @procedure, with relevant blurb and
  *   description.
  * - If used with other gimp_export_procedure_set_support_*() functions,
@@ -850,7 +850,7 @@ gimp_export_procedure_set_support_xmp (GimpExportProcedure *procedure,
  * This will have several consequences:
  *
  * - Automatically adds a standard auxiliary argument
- *   "save-color-profile" in the end of the argument list of @procedure,
+ *   "include-color-profile" in the end of the argument list of @procedure,
  *   with relevant blurb and description.
  * - If used with other gimp_export_procedure_set_support_*() functions,
  *   they will always be ordered the same (the order of the calls don't
@@ -888,7 +888,7 @@ gimp_export_procedure_set_support_profile (GimpExportProcedure *procedure,
  *
  * This will have several consequences:
  *
- * - Automatically adds a standard auxiliary argument "save-thumbnail"
+ * - Automatically adds a standard auxiliary argument "include-thumbnail"
  *   in the end of the argument list of @procedure, with relevant blurb
  *   and description.
  * - If used with other gimp_export_procedure_set_support_*() functions,
@@ -928,7 +928,7 @@ gimp_export_procedure_set_support_thumbnail (GimpExportProcedure *procedure,
  *
  * This will have several consequences:
  *
- * - Automatically adds a standard auxiliary argument "save-comment"
+ * - Automatically adds a standard auxiliary argument "include-comment"
  *   in the end of the argument list of @procedure, with relevant blurb
  *   and description.
  * - If used with other gimp_export_procedure_set_support_*() functions,

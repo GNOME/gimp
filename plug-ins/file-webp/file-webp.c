@@ -354,10 +354,10 @@ webp_export (GimpProcedure        *procedure,
 
       /* WebP doesn't support iptc natively and sets it via xmp */
       g_object_get (config,
-                    "save-xmp", &save_xmp,
+                    "include-xmp", &save_xmp,
                     NULL);
       g_object_set (config,
-                    "save-iptc", save_xmp,
+                    "include-iptc", save_xmp,
                     NULL);
 
       gimp_metadata_set_bits_per_sample (metadata, 8);

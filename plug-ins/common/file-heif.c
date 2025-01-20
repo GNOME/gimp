@@ -270,7 +270,7 @@ heif_create_procedure (GimpPlugIn  *plug_in,
                                            FALSE,
                                            G_PARAM_READWRITE);
 
-      gimp_procedure_add_boolean_aux_argument (procedure, "save-color-profile",
+      gimp_procedure_add_boolean_aux_argument (procedure, "include-color-profile",
                                                _("Save color prof_ile"),
                                                _("Save the image's color profile"),
                                                gimp_export_color_profile (),
@@ -302,13 +302,13 @@ heif_create_procedure (GimpPlugIn  *plug_in,
                                           "balanced",
                                           G_PARAM_READWRITE);
 
-      gimp_procedure_add_boolean_argument (procedure, "save-exif",
+      gimp_procedure_add_boolean_argument (procedure, "include-exif",
                                            _("Save Exi_f"),
                                            _("Toggle saving Exif data"),
                                            gimp_export_exif (),
                                            G_PARAM_READWRITE);
 
-      gimp_procedure_add_boolean_argument (procedure, "save-xmp",
+      gimp_procedure_add_boolean_argument (procedure, "include-xmp",
                                            _("Save _XMP"),
                                            _("Toggle saving XMP data"),
                                            gimp_export_xmp (),
@@ -391,7 +391,7 @@ heif_create_procedure (GimpPlugIn  *plug_in,
                                            FALSE,
                                            G_PARAM_READWRITE);
 
-      gimp_procedure_add_boolean_aux_argument (procedure, "save-color-profile",
+      gimp_procedure_add_boolean_aux_argument (procedure, "include-color-profile",
                                                _("Save color prof_ile"),
                                                _("Save the image's color profile"),
                                                gimp_export_color_profile (),
@@ -423,13 +423,13 @@ heif_create_procedure (GimpPlugIn  *plug_in,
                                           "balanced",
                                           G_PARAM_READWRITE);
 
-      gimp_procedure_add_boolean_argument (procedure, "save-exif",
+      gimp_procedure_add_boolean_argument (procedure, "include-exif",
                                            _("Save Exi_f"),
                                            _("Toggle saving Exif data"),
                                            gimp_export_exif (),
                                            G_PARAM_READWRITE);
 
-      gimp_procedure_add_boolean_argument (procedure, "save-xmp",
+      gimp_procedure_add_boolean_argument (procedure, "include-xmp",
                                            _("Save _XMP"),
                                            _("Toggle saving XMP data"),
                                            gimp_export_xmp (),
@@ -1438,9 +1438,9 @@ export_image (GFile                        *file,
                 "lossless",           &lossless,
                 "quality",            &quality,
                 "save-bit-depth",     &save_bit_depth,
-                "save-color-profile", &save_profile,
-                "save-exif", &save_exif,
-                "save-xmp", &save_xmp,
+                "include-color-profile", &save_profile,
+                "include-exif", &save_exif,
+                "include-xmp", &save_xmp,
                 NULL);
   pixel_format =
     gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
@@ -2454,8 +2454,8 @@ save_dialog (GimpProcedure *procedure,
                               "lossless", "quality",
                               "pixel-format",
                               "save-bit-depth", "encoder-speed",
-                              "save-color-profile",
-                              "save-exif", "save-xmp", NULL);
+                              "include-color-profile",
+                              "include-exif", "include-xmp", NULL);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 

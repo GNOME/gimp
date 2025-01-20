@@ -243,7 +243,7 @@ gif_create_procedure (GimpPlugIn  *plug_in,
                                            FALSE,
                                            G_PARAM_READWRITE);
 
-      gimp_procedure_add_boolean_aux_argument (procedure, "save-comment",
+      gimp_procedure_add_boolean_aux_argument (procedure, "include-comment",
                                                _("Sa_ve comment"),
                                                _("Save the image comment in the GIF file"),
                                                gimp_export_comment (),
@@ -796,7 +796,7 @@ export_image (GFile         *file,
                 "force-delay",       &config_use_default_delay,
                 "force-dispose",     &config_use_default_dispose,
                 "as-animation",      &config_as_animation,
-                "save-comment",      &config_save_comment,
+                "include-comment",   &config_save_comment,
                 "gimp-comment",      &config_comment,
                 NULL);
   config_default_dispose =
@@ -1305,7 +1305,7 @@ save_dialog (GimpImage     *image,
                                               "gimp-comment");
 
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
-                                    "comment-frame", "save-comment", FALSE,
+                                    "comment-frame", "include-comment", FALSE,
                                     "comment-scrolled");
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),

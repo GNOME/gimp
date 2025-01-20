@@ -1329,22 +1329,22 @@ export_image (GFile        *file,
 
 #if !defined(PNG_iCCP_SUPPORTED)
   g_object_set (config,
-                "save-color-profile", FALSE,
+                "include-color-profile", FALSE,
                 NULL);
 #endif
 
   g_object_get (config,
-                "interlaced",         &save_interlaced,
-                "bkgd",               &save_bkgd,
-                "offs",               &save_offs,
-                "phys",               &save_phys,
-                "time",               &save_time,
-                "save-comment",       &save_comment,
-                "gimp-comment",       &comment,
-                "save-transparent",   &save_transp_pixels,
-                "optimize-palette",   &optimize_palette,
-                "compression",        &compression_level,
-                "save-color-profile", &save_profile,
+                "interlaced",            &save_interlaced,
+                "bkgd",                  &save_bkgd,
+                "offs",                  &save_offs,
+                "phys",                  &save_phys,
+                "time",                  &save_time,
+                "include-comment",       &save_comment,
+                "gimp-comment",          &comment,
+                "save-transparent",      &save_transp_pixels,
+                "optimize-palette",      &optimize_palette,
+                "compression",           &compression_level,
+                "include-color-profile", &save_profile,
                 NULL);
 
   export_format = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config), "format");

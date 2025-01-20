@@ -215,7 +215,7 @@ xbm_create_procedure (GimpPlugIn  *plug_in,
                                               GIMP_EXPORT_CAN_HANDLE_ALPHA,
                                               NULL, NULL, NULL);
 
-      gimp_procedure_add_boolean_argument (procedure, "save-comment",
+      gimp_procedure_add_boolean_argument (procedure, "include-comment",
                                            _("_Write comment"),
                                            _("Write a comment at the beginning of the file."),
                                            FALSE, /* *NOT* gimp_export_comment() */
@@ -967,12 +967,12 @@ export_image (GFile         *file,
   gint           config_y_hot;
 
   g_object_get (config,
-                "save-comment", &config_save_comment,
-                "gimp-comment", &config_comment,
-                "x10-format",   &config_x10_format,
-                "use-hot-spot", &config_use_hot,
-                "hot-spot-x",   &config_x_hot,
-                "hot-spot-y",   &config_y_hot,
+                "include-comment", &config_save_comment,
+                "gimp-comment",    &config_comment,
+                "x10-format",      &config_x10_format,
+                "use-hot-spot",    &config_use_hot,
+                "hot-spot-x",      &config_x_hot,
+                "hot-spot-y",      &config_y_hot,
                 NULL);
 
 #if 0
@@ -1246,7 +1246,7 @@ save_dialog (GimpImage     *image,
   gtk_widget_set_margin_end (hint, 24);
 
   frame = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
-                                            "comment-frame", "save-comment",
+                                            "comment-frame", "include-comment",
                                             FALSE, "comment-vbox");
 
   /* hotspot toggle */

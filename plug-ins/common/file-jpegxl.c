@@ -235,13 +235,13 @@ jpegxl_create_procedure (GimpPlugIn  *plug_in,
                                            FALSE,
                                            G_PARAM_READWRITE);
 
-      gimp_procedure_add_boolean_argument (procedure, "save-exif",
+      gimp_procedure_add_boolean_argument (procedure, "include-exif",
                                            _("Save Exi_f"),
                                            _("Toggle saving Exif data"),
                                            gimp_export_exif (),
                                            G_PARAM_READWRITE);
 
-      gimp_procedure_add_boolean_argument (procedure, "save-xmp",
+      gimp_procedure_add_boolean_argument (procedure, "include-xmp",
                                            _("Save _XMP"),
                                            _("Toggle saving XMP data"),
                                            gimp_export_xmp (),
@@ -1402,8 +1402,8 @@ export_image (GFile               *file,
                 "save-bit-depth",        &bit_depth,
                 "cmyk",                  &cmyk,
                 "uses-original-profile", &uses_original_profile,
-                "save-exif",             &save_exif,
-                "save-xmp",              &save_xmp,
+                "include-exif",          &save_exif,
+                "include-xmp",           &save_xmp,
                 NULL);
   speed = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
                                                "speed");
@@ -2093,7 +2093,7 @@ save_dialog (GimpImage     *image,
                               "speed", "save-bit-depth",
                               "cmyk-frame",
                               "uses-original-profile",
-                              "save-exif", "save-xmp",
+                              "include-exif", "include-xmp",
                               NULL);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));

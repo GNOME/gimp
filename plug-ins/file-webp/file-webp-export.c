@@ -862,7 +862,7 @@ webp_decide_output (GimpImage         *image,
   g_return_if_fail (profile && *profile == NULL);
 
   g_object_get (config,
-                "save-color-profile", &save_profile,
+                "include-color-profile", &save_profile,
                 NULL);
 
   *out_linear = FALSE;
