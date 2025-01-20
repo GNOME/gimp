@@ -695,12 +695,6 @@ save_resources (GOutputStream        *output,
 
   IFDBG(1) g_debug ("Function: save_resources");
 
-
-  /* Get the image title from its filename */
-
-  IFDBG(1) g_debug ("\tImage title: %s",
-                    g_file_peek_path (gimp_image_get_file (image)));
-
   /* Get the selected layers */
 
   SelLayers = gimp_image_list_selected_layers (image);

@@ -1398,7 +1398,7 @@ read_layer_block (PSDimage      *img_a,
                 return NULL;
 
               cur_ofs = PSD_TELL(input);
-              if (img_a->mask_layer_start + block_len != cur_ofs)
+              if (img_a->mask_layer_start + block_len != cur_ofs && ! img_a->merged_image_only)
                 {
                   g_debug ("Unexpected offset after reading layer info: %" G_GOFFSET_FORMAT
                           " instead of %" G_GOFFSET_FORMAT,
