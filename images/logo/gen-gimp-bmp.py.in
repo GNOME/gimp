@@ -6,7 +6,7 @@ def export_scaled_img(img_width, img_height, scale):
   procedure   = Gimp.get_pdb().lookup_procedure("file-svg-load")
   config      = procedure.create_config()
   config.set_property("file", Gio.file_new_for_path('@SRCDIR@/gimp-logo.svg'))
-  logo_dim    = img_height * 0.75
+  logo_dim    = img_height * 0.71
   config.set_property("width",  logo_dim)
   config.set_property("height", logo_dim)
   Gimp.Procedure.run(procedure, config)
