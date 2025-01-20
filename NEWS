@@ -26,6 +26,7 @@ Core:
     bug in gdb. This is now reverted as a test.
   - Reworking of projection flushing to make it thread-safe (e.g. when
     projection updates are requested from the "paint" thread).
+  - Improved support for cloud providers' file loading.
 
 Graphical User Interface:
 
@@ -46,6 +47,20 @@ Plug-ins:
   - BMP: various import improvements and code cleanup.
   - EXR: more robust EXR file import, especially regarding invalid files
     (e.g. fuzzed ones).
+  - Script-Fu: new named argument syntax for non-core (i.e. plug-in
+    created) PDB procedures allowing arguments to be set in any order
+    and more semantically.
+
+API:
+
+  - Changes in libgimpbase:
+    * Creation time metadata are added (for various tags in IPTC, XMP
+      and Exif) when first creating a new image.
+    * New function gimp_metadata_set_creation_date() allowing to set
+      a custom creation date.
+  - Changes in libgimp:
+    * New function gimp_procedure_is_core()
+    * gimp_pdb_query() doesn't return private PDB procedures anymore.
 
 Translations:
 
