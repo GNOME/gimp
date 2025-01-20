@@ -1845,13 +1845,13 @@ static pointer
 script_fu_marshal_drawable_filter_configure (scheme             *sc,
                                              pointer             a,
                                              const gchar        *proc_name,
+                                             gint                arg_index,
                                              GimpDrawableFilter *filter)
 {
   pointer                   return_val  = sc->NIL;
   GimpLayerMode             mode        = GIMP_LAYER_MODE_REPLACE;
   gdouble                   opacity     = 1.0;
   GimpDrawableFilterConfig *config;
-  gint                      arg_index;
   gchar                     error_str[1024];
 
   if (sc->vptr->list_length (sc, a) > 0)
@@ -1868,13 +1868,20 @@ script_fu_marshal_drawable_filter_configure (scheme             *sc,
   gimp_drawable_filter_set_opacity (filter, opacity);
   gimp_drawable_filter_set_blend_mode (filter, mode);
 
-  config    = gimp_drawable_filter_get_config (filter);
-  arg_index = 3;
+  config = gimp_drawable_filter_get_config (filter);
   while (sc->vptr->list_length (sc, a) > 1)
     {
       gchar      *argname;
       GParamSpec *arg_spec;
       GValue      value = G_VALUE_INIT;
+
+      if (! sc->vptr->is_arg_name (sc->vptr->pair_car (a)) &&
+          ! sc->vptr->is_string (sc->vptr->pair_car (a)))
+        {
+          g_snprintf (error_str, sizeof (error_str),
+                      "Expected argument name for argument %d", arg_index);
+          return script_error (sc, error_str, 0);
+        }
 
       argname  = g_strdup (sc->vptr->string_value (sc->vptr->pair_car (a)));
       arg_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), argname);
@@ -1985,7 +1992,7 @@ script_fu_marshal_drawable_create_filter (scheme              *sc,
     }
   g_free (operation_name);
 
-  return script_fu_marshal_drawable_filter_configure (sc, a, proc_name, *filter);
+  return script_fu_marshal_drawable_filter_configure (sc, a, proc_name, 5, *filter);
 }
 
 static pointer
@@ -2037,7 +2044,7 @@ script_fu_marshal_drawable_filter_configure_call (scheme  *sc,
       a = sc->vptr->pair_cdr (a);
     }
 
-  return script_fu_marshal_drawable_filter_configure (sc, a, proc_name, filter);
+  return script_fu_marshal_drawable_filter_configure (sc, a, proc_name, 3, filter);
 }
 
 static pointer
