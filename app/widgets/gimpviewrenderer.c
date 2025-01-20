@@ -1182,10 +1182,26 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
         GtkStyleContext *style;
         GdkRGBA         *color = NULL;
 
-        style = gtk_widget_get_style_context (widget);
+        /* Try to get the parent's color first to prevent issues with
+         * changes in preselected backgrounds. If not set though, go for
+         * the current's widget's color instead */
+        style = gtk_widget_get_style_context (gtk_widget_get_parent (widget));
         gtk_style_context_get (style, gtk_style_context_get_state (style),
                                GTK_STYLE_PROPERTY_BACKGROUND_COLOR, &color,
                                NULL);
+
+        if (color             &&
+            color->red   == 0 &&
+            color->green == 0 &&
+            color->blue  == 0)
+          {
+            gdk_rgba_free (color);
+
+            style = gtk_widget_get_style_context (widget);
+            gtk_style_context_get (style, gtk_style_context_get_state (style),
+                                   GTK_STYLE_PROPERTY_BACKGROUND_COLOR, &color,
+                                   NULL);
+          }
 
         if (color)
           {

@@ -437,6 +437,20 @@ paned menu separator {
     padding: 0px;
 }
 
+
+/* Highlight icons in Grid View when hovered over */
+iconview:hover {
+  border: 2px solid @dimmed-fg-color;
+}
+
+iconview:selected {
+  border: 2px solid @fg-color;
+}
+
+GimpContainerIconView scrolledwindow {
+  background-color: @extreme-bg-color;
+}
+
 .view button {
   background-color: @bg-color;
   border-color: @border-color;
