@@ -69,10 +69,10 @@
 
         ; Bumpmap has a one pixel border on each side
         (bump-layer (car (gimp-layer-new image
+                                         _"Bumpmap"
                                          (+ width 2)
                                          (+ height 2)
                                          RGB-IMAGE
-                                         _"Bumpmap"
                                          100
                                          LAYER-MODE-NORMAL)))
 

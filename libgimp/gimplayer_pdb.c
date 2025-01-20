@@ -37,35 +37,39 @@
 
 
 /**
- * _gimp_layer_new:
+ * gimp_layer_new:
  * @image: The image to which to add the layer.
+ * @name: (nullable): The layer name.
  * @width: The layer width.
  * @height: The layer height.
  * @type: The layer type.
- * @name: (nullable): The layer name.
  * @opacity: The layer opacity.
  * @mode: The layer combination mode.
  *
  * Create a new layer.
  *
- * This procedure creates a new layer with the specified width, height,
- * and type. If @name is %NULL, a default layer name will be used.
- * Opacity, and mode are also supplied parameters. The new layer still
- * needs to be added to the image, as this is not automatic. Add the
- * new layer with the gimp_image_insert_layer() command. Other
- * attributes such as layer mask modes, and offsets should be set with
- * explicit procedure calls.
+ * This procedure creates a new layer with the specified @width,
+ * @height and @type. If @name is %NULL, a default layer name will be
+ * used. @opacity and @mode are also supplied parameters.
  *
- * Returns: (transfer none): The newly created layer.
+ * The new layer still needs to be added to the image as this is not
+ * automatic. Add the new layer with the [method@Image.insert_layer]
+ * method.
+ *
+ * Other attributes such as layer mask modes and offsets should be set
+ * with explicit procedure calls.
+ *
+ * Returns: (transfer none):
+ *          The newly created layer. The object belongs to libgimp and you should not free it.
  **/
 GimpLayer *
-_gimp_layer_new (GimpImage     *image,
-                 gint           width,
-                 gint           height,
-                 GimpImageType  type,
-                 const gchar   *name,
-                 gdouble        opacity,
-                 GimpLayerMode  mode)
+gimp_layer_new (GimpImage     *image,
+                const gchar   *name,
+                gint           width,
+                gint           height,
+                GimpImageType  type,
+                gdouble        opacity,
+                GimpLayerMode  mode)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -73,10 +77,10 @@ _gimp_layer_new (GimpImage     *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_INT, width,
                                           G_TYPE_INT, height,
                                           GIMP_TYPE_IMAGE_TYPE, type,
-                                          G_TYPE_STRING, name,
                                           G_TYPE_DOUBLE, opacity,
                                           GIMP_TYPE_LAYER_MODE, mode,
                                           G_TYPE_NONE);

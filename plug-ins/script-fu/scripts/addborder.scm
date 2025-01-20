@@ -118,10 +118,10 @@
                (set! innerwidth (- imagewidth (* 2 xsize)))
                (set! innerheight (- imageheight (* 2 ysize)))))
 
-         (let* ((layer (car (gimp-layer-new aimg
+         (let* ((layer (car (gimp-layer-new aimg _"Border Layer"
                                             outerwidth outerheight
                                             (car (gimp-drawable-type-with-alpha first-layer))
-                                            _"Border Layer" 100 LAYER-MODE-NORMAL))))
+                                            100 LAYER-MODE-NORMAL))))
 
            (gimp-context-push)
            (gimp-context-set-antialias FALSE)

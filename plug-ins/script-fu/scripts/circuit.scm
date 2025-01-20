@@ -69,10 +69,10 @@
     (if (= separate-layer TRUE)
         (begin
           (set! effect-layer (car (gimp-layer-new image
+                                                  _"Effect layer"
                                                   select-width
                                                   select-height
                                                   type
-                                                  _"Effect layer"
                                                   100
                                                   LAYER-MODE-NORMAL)))
 

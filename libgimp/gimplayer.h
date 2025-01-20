@@ -58,14 +58,6 @@ struct _GimpLayerClass
 
 GimpLayer * gimp_layer_get_by_id          (gint32           layer_id);
 
-GimpLayer * gimp_layer_new                (GimpImage       *image,
-                                           const gchar     *name,
-                                           gint             width,
-                                           gint             height,
-                                           GimpImageType    type,
-                                           gdouble          opacity,
-                                           GimpLayerMode    mode) G_GNUC_WARN_UNUSED_RESULT;
-
 GimpLayer * gimp_layer_new_from_pixbuf    (GimpImage       *image,
                                            const gchar     *name,
                                            GdkPixbuf       *pixbuf,

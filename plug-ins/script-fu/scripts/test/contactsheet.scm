@@ -199,9 +199,9 @@
 
     (gimp-image-undo-disable sheet-img)
 
-    (set! sheet-layer (car (gimp-layer-new sheet-img sheet-width sheet-height
-                            RGB-IMAGE "Background"
-                            100 LAYER-MODE-NORMAL)))
+    (set! sheet-layer (car (gimp-layer-new sheet-img "Background"
+                                           sheet-width sheet-height
+                                           RGB-IMAGE 100 LAYER-MODE-NORMAL)))
     (gimp-image-insert-layer sheet-img sheet-layer 0 0)
 
     (init-sheet-img sheet-img sheet-num sheet-width border-y off-y)

@@ -74,10 +74,10 @@
             (if (= separate-layer TRUE)
                 (begin
                   (set! lava-layer (car (gimp-layer-new image
+                                                        "Lava Layer"
                                                         select-width
                                                         select-height
                                                         type
-                                                        "Lava Layer"
                                                         100
                                                         LAYER-MODE-NORMAL-LEGACY)))
 

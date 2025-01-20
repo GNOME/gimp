@@ -48,8 +48,8 @@
         (width (* radius 3.75))
         (height (* radius 2.5))
         (img (gimp-image-new width height RGB)) ; v3 >>> elide car
-        (drawable (gimp-layer-new img width height RGB-IMAGE
-                                  "Sphere Layer" 100 LAYER-MODE-NORMAL))
+        (drawable (gimp-layer-new img "Sphere Layer" width height RGB-IMAGE
+                                  100 LAYER-MODE-NORMAL))
         (radians (/ (* light *pi*) 180))
         (cx (/ width 2))
         (cy (/ height 2))

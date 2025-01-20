@@ -90,9 +90,10 @@
                         (* labels (* label-size num-fonts))))
         (img         (car (gimp-image-new width height (if (= colors 0)
                                                            GRAY RGB))))
-        (drawable    (car (gimp-layer-new img width height (if (= colors 0)
-                                                               GRAY-IMAGE RGB-IMAGE)
-                                          "Background" 100 LAYER-MODE-NORMAL)))
+        (drawable    (car (gimp-layer-new img "Background"
+                                          width height (if (= colors 0)
+                                                         GRAY-IMAGE RGB-IMAGE)
+                                          100 LAYER-MODE-NORMAL)))
         (count       0)
         (font        "")
         (font-object '())
@@ -112,10 +113,10 @@
 
     (if (= labels TRUE)
         (begin
-          (set! drawable (car (gimp-layer-new img width height
+          (set! drawable (car (gimp-layer-new img "Labels" width height
                                               (if (= colors 0)
                                                   GRAYA-IMAGE RGBA-IMAGE)
-                                              "Labels" 100 LAYER-MODE-NORMAL)))
+                                              100 LAYER-MODE-NORMAL)))
           (gimp-image-insert-layer img drawable 0 -1)))
           (gimp-drawable-edit-clear drawable)
 

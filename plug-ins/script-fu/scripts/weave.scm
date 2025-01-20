@@ -50,8 +50,8 @@
   (let* ((tile-size (+ (* 2 ribbon-width) (* 2 ribbon-spacing)))
          (darkness (* 255 (/ (- 100 shadow-darkness) 100)))
          (img (car (gimp-image-new tile-size tile-size RGB)))
-         (drawable (car (gimp-layer-new img tile-size tile-size RGB-IMAGE
-                                        "Weave tile" 100 LAYER-MODE-NORMAL))))
+         (drawable (car (gimp-layer-new img "Weave tile" tile-size tile-size RGB-IMAGE
+                                        100 LAYER-MODE-NORMAL))))
 
     (gimp-image-undo-disable img)
     (gimp-image-insert-layer img drawable 0 0)
@@ -174,8 +174,8 @@
                           r3-height)
   (let* ((tile-size (+ (* 2 ribbon-width) (* 2 ribbon-spacing)))
          (img (car (gimp-image-new tile-size tile-size RGB)))
-         (drawable (car (gimp-layer-new img tile-size tile-size RGB-IMAGE
-                                        "Mask" 100 LAYER-MODE-NORMAL))))
+         (drawable (car (gimp-layer-new img "Mask" tile-size tile-size RGB-IMAGE
+                                        100 LAYER-MODE-NORMAL))))
     (gimp-image-undo-disable img)
     (gimp-image-insert-layer img drawable 0 0)
 
@@ -277,8 +277,8 @@
                               length
                               density
                               orientation)
-  (let* ((drawable (car (gimp-layer-new img width height RGBA-IMAGE
-                                        "Threads" 100 LAYER-MODE-NORMAL)))
+  (let* ((drawable (car (gimp-layer-new img "Threads" width height RGBA-IMAGE
+                                        100 LAYER-MODE-NORMAL)))
          (dense (/ density 100.0)))
     (gimp-image-insert-layer img drawable 0 -1)
     (gimp-context-set-background '(255 255 255))

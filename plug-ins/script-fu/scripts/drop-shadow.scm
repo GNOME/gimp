@@ -123,10 +123,10 @@
     )
 
     (set! shadow-layer (car (gimp-layer-new image
+                                            "Drop Shadow"
                                             shadow-width
                                             shadow-height
                                             type
-                                            "Drop Shadow"
                                             shadow-opacity
                                             LAYER-MODE-NORMAL)))
     (gimp-image-set-selected-layers image (make-vector 1 drawable))

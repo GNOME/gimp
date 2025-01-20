@@ -57,10 +57,10 @@
       (set! theMode RGBA-IMAGE)
     )
     (set! theLayer (car (gimp-layer-new theImage
+                                        "Distress Scratch Layer"
                                         theWidth
                                         theHeight
                                         theMode
-                                        "Distress Scratch Layer"
                                         100
                                         LAYER-MODE-NORMAL)))
 

@@ -38,8 +38,8 @@
 
     (while (> theNumber 0)
       (set! theNumber (- theNumber 1))
-      (set! theStain (gimp-layer-new theImage theSize theSize
-                                     RGBA-IMAGE _"Stain" 100
+      (set! theStain (gimp-layer-new theImage _"Stain" theSize theSize
+                                     RGBA-IMAGE 100
                                      ; inDark is [0, 1] not [#f, #t]
                                      (if (= inDark TRUE)
                                         LAYER-MODE-DARKEN-ONLY

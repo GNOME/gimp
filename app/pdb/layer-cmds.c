@@ -71,19 +71,19 @@ layer_new_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
+  const gchar *name;
   gint width;
   gint height;
   gint type;
-  const gchar *name;
   gdouble opacity;
   gint mode;
   GimpLayer *layer = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
-  width = g_value_get_int (gimp_value_array_index (args, 1));
-  height = g_value_get_int (gimp_value_array_index (args, 2));
-  type = g_value_get_enum (gimp_value_array_index (args, 3));
-  name = g_value_get_string (gimp_value_array_index (args, 4));
+  name = g_value_get_string (gimp_value_array_index (args, 1));
+  width = g_value_get_int (gimp_value_array_index (args, 2));
+  height = g_value_get_int (gimp_value_array_index (args, 3));
+  type = g_value_get_enum (gimp_value_array_index (args, 4));
   opacity = g_value_get_double (gimp_value_array_index (args, 5));
   mode = g_value_get_enum (gimp_value_array_index (args, 6));
 
@@ -1299,12 +1299,16 @@ register_layer_procs (GimpPDB *pdb)
   /*
    * gimp-layer-new
    */
-  procedure = gimp_procedure_new (layer_new_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (layer_new_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-layer-new");
   gimp_procedure_set_static_help (procedure,
                                   "Create a new layer.",
-                                  "This procedure creates a new layer with the specified width, height, and type. If @name is %NULL, a default layer name will be used. Opacity, and mode are also supplied parameters. The new layer still needs to be added to the image, as this is not automatic. Add the new layer with the 'gimp-image-insert-layer' command. Other attributes such as layer mask modes, and offsets should be set with explicit procedure calls.",
+                                  "This procedure creates a new layer with the specified @width, @height and @type. If @name is %NULL, a default layer name will be used. @opacity and @mode are also supplied parameters.\n"
+                                  "\n"
+                                  "The new layer still needs to be added to the image as this is not automatic. Add the new layer with the [method@Image.insert_layer] method.\n"
+                                  "\n"
+                                  "Other attributes such as layer mask modes and offsets should be set with explicit procedure calls.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
@@ -1316,6 +1320,13 @@ register_layer_procs (GimpPDB *pdb)
                                                       "The image to which to add the layer",
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The layer name",
+                                                       FALSE, TRUE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("width",
                                                  "width",
@@ -1336,13 +1347,6 @@ register_layer_procs (GimpPDB *pdb)
                                                   GIMP_RGB_IMAGE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The layer name",
-                                                       FALSE, TRUE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("opacity",
                                                     "opacity",
                                                     "The layer opacity",
@@ -1358,7 +1362,7 @@ register_layer_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_layer ("layer",
                                                           "layer",
-                                                          "The newly created layer",
+                                                          "The newly created layer. The object belongs to libgimp and you should not free it.",
                                                           FALSE,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

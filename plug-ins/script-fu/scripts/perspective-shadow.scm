@@ -96,10 +96,10 @@
 
 
       (set! shadow-layer (car (gimp-layer-new image
+                                              "Perspective Shadow"
                                               select-width
                                               select-height
                                               type
-                                              "Perspective Shadow"
                                               shadow-opacity
                                               LAYER-MODE-NORMAL)))
 

@@ -67,10 +67,10 @@
     )
 
     (set! theLayer (car (gimp-layer-new theImage
+                                        "layer 1"
                                         theWidth
                                         theHeight
                                         RGBA-IMAGE
-                                        "layer 1"
                                         100
                                         LAYER-MODE-NORMAL)))
 

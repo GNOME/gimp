@@ -79,17 +79,17 @@
         (hole-radius (/ hole-width 4))
         (hole-start (- (/ (random 1000) 1000) 0.5))
         (film-layer (car (gimp-layer-new image
+                                         "Film"
                                          width
                                          height
                                          type
-                                         "Film"
                                          100
                                          LAYER-MODE-NORMAL)))
         (bg-layer (car (gimp-layer-new image
+                                       "Background"
                                        width
                                        height
                                        type
-                                       "Background"
                                        100
                                        LAYER-MODE-NORMAL)))
         (pic-layer (vector-ref (car (gimp-image-get-selected-drawables image)) 0))

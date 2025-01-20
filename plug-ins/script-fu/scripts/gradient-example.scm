@@ -23,8 +23,8 @@
                                     gradient-reverse)
   (let* (
         (img (car (gimp-image-new width height RGB)))
-        (drawable (car (gimp-layer-new img width height RGB
-                                       "Gradient example" 100 LAYER-MODE-NORMAL)))
+        (drawable (car (gimp-layer-new img "Gradient example" width height RGB
+                                       100 LAYER-MODE-NORMAL)))
 
         ; Calculate colors for checkerboard... just like in the gradient editor
 

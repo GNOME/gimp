@@ -20,30 +20,33 @@ sub layer_new {
     $blurb = 'Create a new layer.';
 
     $help = <<'HELP';
-This procedure creates a new layer with the specified width, height,
-and type. If @name is %NULL, a default layer name will be used.
-Opacity, and mode are also supplied parameters. The
-new layer still needs to be added to the image, as this is not
-automatic. Add the new layer with the gimp_image_insert_layer()
-command. Other attributes such as layer mask modes, and offsets should
-be set with explicit procedure calls.
+This procedure creates a new layer with the specified @width, @height
+and @type. If @name is %NULL, a default layer name will be used.
+@opacity and @mode are also supplied parameters.
+
+
+The new layer still needs to be added to the image as this is not
+automatic. Add the new layer with the [method@Image.insert_layer]
+method.
+
+
+Other attributes such as layer mask modes and offsets should be set
+with explicit procedure calls.
 HELP
 
     &std_pdb_misc;
 
-    $lib_private = 1;
-
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image to which to add the layer' },
+	{ name => 'name', type => 'string',
+	  desc => 'The layer name', none_ok => 0 },
 	{ name => 'width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
 	  desc => 'The layer width' },
 	{ name => 'height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
 	  desc => 'The layer height' },
 	{ name => 'type', type => 'enum GimpImageType',
 	  desc => 'The layer type' },
-	{ name => 'name', type => 'string',
-	  desc => 'The layer name', none_ok => 0 },
 	{ name => 'opacity', type => '0 <= double <= 100',
 	  desc => 'The layer opacity' },
 	{ name => 'mode', type => 'enum GimpLayerMode',
@@ -53,7 +56,7 @@ HELP
 
     @outargs = (
 	{ name => 'layer', type => 'layer',
-	  desc => 'The newly created layer' }
+	  desc => 'The newly created layer. The object belongs to libgimp and you should not free it.' }
     );
 
     %invoke = (

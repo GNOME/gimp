@@ -104,10 +104,10 @@
   ; optionally add a background
   (if (= background-toggle TRUE)
       (let* ((bg-layer (car (gimp-layer-new image
+                                            "Background"
                                             width
                                             height
                                             type
-                                            "Background"
                                             100
                                             LAYER-MODE-NORMAL))))
         (gimp-drawable-fill bg-layer FILL-BACKGROUND)

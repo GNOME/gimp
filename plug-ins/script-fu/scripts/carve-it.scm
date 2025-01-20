@@ -70,7 +70,7 @@
         (bg-height (car (gimp-drawable-get-height src-layer)))
         (bg-type (car (gimp-drawable-type src-layer)))
         (bg-image (car (gimp-item-get-image src-layer)))
-        (layer1 (car (gimp-layer-new img bg-width bg-height bg-type "Layer1" 100 LAYER-MODE-NORMAL)))
+        (layer1 (car (gimp-layer-new img "Layer1" bg-width bg-height bg-type 100 LAYER-MODE-NORMAL)))
         )
 
     (gimp-context-push)

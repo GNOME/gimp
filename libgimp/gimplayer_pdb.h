@@ -32,11 +32,11 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-G_GNUC_INTERNAL GimpLayer* _gimp_layer_new                 (GimpImage              *image,
+GimpLayer*                 gimp_layer_new                  (GimpImage              *image,
+                                                            const gchar            *name,
                                                             gint                    width,
                                                             gint                    height,
                                                             GimpImageType           type,
-                                                            const gchar            *name,
                                                             gdouble                 opacity,
                                                             GimpLayerMode           mode);
 GimpLayer*                 gimp_layer_new_from_visible     (GimpImage              *image,

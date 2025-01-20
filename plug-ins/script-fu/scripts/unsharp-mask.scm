@@ -21,9 +21,9 @@
         (drawable-width (car (gimp-drawable-get-width drw)))
         (drawable-height (car (gimp-drawable-get-height drw)))
         (new-image (car (gimp-image-new drawable-width drawable-height RGB)))
-        (original-layer (car (gimp-layer-new new-image
+        (original-layer (car (gimp-layer-new new-image "Original"
                                              drawable-width drawable-height
-                                             RGB-IMAGE "Original"
+                                             RGB-IMAGE
                                              100 LAYER-MODE-NORMAL)))
         (original-layer-for-darker 0)
         (original-layer-for-lighter 0)

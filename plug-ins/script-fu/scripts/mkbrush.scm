@@ -24,9 +24,9 @@
 (define (script-fu-make-brush-rectangular name width height spacing)
   (let* (
         (img (car (gimp-image-new width height GRAY)))
-        (drawable (car (gimp-layer-new img
+        (drawable (car (gimp-layer-new img "MakeBrush"
                                        width height GRAY-IMAGE
-                                       "MakeBrush" 100 LAYER-MODE-NORMAL)))
+                                       100 LAYER-MODE-NORMAL)))
         (filename (string-append gimp-directory
                                  "/brushes/r"
                                  (number->string width)
@@ -81,9 +81,9 @@
         (widthplus (+ width feathering))
         (heightplus (+ height feathering))
         (img (car (gimp-image-new widthplus heightplus GRAY)))
-        (drawable (car (gimp-layer-new img
+        (drawable (car (gimp-layer-new img "MakeBrush"
                                        widthplus heightplus GRAY-IMAGE
-                                       "MakeBrush" 100 LAYER-MODE-NORMAL)))
+                                       100 LAYER-MODE-NORMAL)))
         (filename (string-append gimp-directory
                                  "/brushes/r"
                                  (number->string width)
@@ -147,9 +147,9 @@
 (define (script-fu-make-brush-elliptical name width height spacing)
   (let* (
         (img (car (gimp-image-new width height GRAY)))
-        (drawable (car (gimp-layer-new img
+        (drawable (car (gimp-layer-new img "MakeBrush"
                                        width height GRAY-IMAGE
-                                       "MakeBrush" 100 LAYER-MODE-NORMAL)))
+                                       100 LAYER-MODE-NORMAL)))
         (filename (string-append gimp-directory
                                  "/brushes/e"
                                  (number->string width)
@@ -204,9 +204,9 @@
         (widthplus (+ feathering width)) ; add 3 for blurring
         (heightplus (+ feathering height))
         (img (car (gimp-image-new widthplus heightplus GRAY)))
-        (drawable (car (gimp-layer-new img
+        (drawable (car (gimp-layer-new img "MakeBrush"
                                        widthplus heightplus GRAY-IMAGE
-                                       "MakeBrush" 100 LAYER-MODE-NORMAL)))
+                                       100 LAYER-MODE-NORMAL)))
         (filename (string-append gimp-directory
                                  "/brushes/e"
                                  (number->string width)

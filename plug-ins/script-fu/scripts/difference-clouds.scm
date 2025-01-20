@@ -38,8 +38,8 @@
     (gimp-image-undo-group-start image)
 
     ; Create the cloud layer
-    (set! diff-clouds (car (gimp-layer-new image width height type
-                                             "Clouds" 100 LAYER-MODE-DIFFERENCE)))
+    (set! diff-clouds (car (gimp-layer-new image "Clouds" width height type
+                                           100 LAYER-MODE-DIFFERENCE)))
 
     ; Add the cloud layer above the current layer
     (gimp-image-insert-layer image diff-clouds 0 -1)

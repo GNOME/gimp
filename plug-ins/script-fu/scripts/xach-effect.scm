@@ -66,7 +66,7 @@
           (set! from-selection TRUE)
           (set! active-selection (car (gimp-selection-save image)))))
 
-    (set! hl-layer (car (gimp-layer-new image image-width image-height type _"Highlight" 100 LAYER-MODE-NORMAL)))
+    (set! hl-layer (car (gimp-layer-new image _"Highlight" image-width image-height type 100 LAYER-MODE-NORMAL)))
     (gimp-image-insert-layer image hl-layer 0 -1)
 
     (gimp-selection-none image)
@@ -87,10 +87,10 @@
     (gimp-drawable-edit-fill mask FILL-BACKGROUND)
 
     (set! shadow-layer (car (gimp-layer-new image
+                                            _"Shadow"
                                             image-width
                                             image-height
                                             type
-                                            _"Shadow"
                                             ds-opacity
                                             LAYER-MODE-NORMAL)))
     (gimp-image-insert-layer image shadow-layer 0 -1)

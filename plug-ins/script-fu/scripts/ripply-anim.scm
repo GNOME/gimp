@@ -16,10 +16,10 @@
                                           (quotient (car (gimp-drawable-type drawable))
                                                     2))))
          (map-layer (car (gimp-layer-new work-image
+                                         "Ripple Map"
                                          width
                                          height
                                          (car (gimp-drawable-type drawable))
-                                         "Ripple Map"
                                          100
                                          LAYER-MODE-NORMAL))))
     (gimp-context-push)
