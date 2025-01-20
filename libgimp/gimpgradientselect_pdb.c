@@ -41,8 +41,8 @@
  * gimp_gradients_popup:
  * @gradient_callback: The callback PDB proc to call when user chooses a gradient.
  * @popup_title: Title of the gradient selection dialog.
- * @initial_gradient: The initial gradient choice.
- * @parent_window: An optional parent window handle for the popup to be set transient to.
+ * @initial_gradient: (nullable): The initial gradient choice.
+ * @parent_window: (nullable): An optional parent window handle for the popup to be set transient to.
  *
  * Invokes the Gimp gradients selection dialog.
  *

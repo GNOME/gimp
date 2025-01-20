@@ -349,7 +349,7 @@ _gimp_pdb_get_proc_return_value (const gchar *procedure_name,
 /**
  * _gimp_pdb_set_proc_image_types:
  * @procedure_name: The procedure for which to install the menu path.
- * @image_types: The procedure's supported image types.
+ * @image_types: (nullable): The procedure's supported image types.
  *
  * Set the supported image types for a plug-in procedure.
  *
@@ -658,9 +658,9 @@ _gimp_pdb_set_proc_icon (const gchar  *procedure_name,
 /**
  * _gimp_pdb_set_proc_documentation:
  * @procedure_name: The procedure for which to install the menu path.
- * @blurb: A short blurb.
- * @help: Detailed procedure help.
- * @help_id: The procedure help_id.
+ * @blurb: (nullable): A short blurb.
+ * @help: (nullable): Detailed procedure help.
+ * @help_id: (nullable): The procedure help_id.
  *
  * Set the documentation for a plug-in procedure.
  *
@@ -756,9 +756,9 @@ _gimp_pdb_get_proc_documentation (const gchar  *procedure_name,
 /**
  * _gimp_pdb_set_proc_attribution:
  * @procedure_name: The procedure for which to install the menu path.
- * @authors: Authors of the procedure.
- * @copyright: The copyright.
- * @date: Copyright date.
+ * @authors: (nullable): Authors of the procedure.
+ * @copyright: (nullable): The copyright.
+ * @date: (nullable): Copyright date.
  *
  * Set the attribution for a plug-in procedure.
  *

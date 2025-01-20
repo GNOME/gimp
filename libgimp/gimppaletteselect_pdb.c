@@ -41,8 +41,8 @@
  * gimp_palettes_popup:
  * @palette_callback: The callback PDB proc to call when user chooses a palette.
  * @popup_title: Title of the palette selection dialog.
- * @initial_palette: The palette to set as the initial choice.
- * @parent_window: An optional parent window handle for the popup to be set transient to.
+ * @initial_palette: (nullable): The palette to set as the initial choice.
+ * @parent_window: (nullable): An optional parent window handle for the popup to be set transient to.
  *
  * Invokes the Gimp palette selection dialog.
  *

@@ -42,7 +42,7 @@
  * @width: The layer width.
  * @height: The layer height.
  * @type: The layer type.
- * @name: The layer name.
+ * @name: (nullable): The layer name.
  * @opacity: The layer opacity.
  * @mode: The layer combination mode.
  *
@@ -98,7 +98,7 @@ _gimp_layer_new (GimpImage     *image,
  * gimp_layer_new_from_visible:
  * @image: The source image from where the content is copied.
  * @dest_image: The destination image to which to add the layer.
- * @name: The layer name.
+ * @name: (nullable): The layer name.
  *
  * Create a new layer from what is visible in an image.
  *

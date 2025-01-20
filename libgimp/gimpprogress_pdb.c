@@ -38,7 +38,7 @@
 
 /**
  * _gimp_progress_init:
- * @message: Message to use in the progress dialog.
+ * @message: (nullable): Message to use in the progress dialog.
  * @gdisplay: (nullable): GimpDisplay to update progressbar in, or %NULL for a separate window.
  *
  * Initializes the progress bar for the current plug-in.
@@ -146,7 +146,7 @@ gimp_progress_pulse (void)
 
 /**
  * gimp_progress_set_text:
- * @message: Message to use in the progress dialog.
+ * @message: (nullable): Message to use in the progress dialog.
  *
  * Changes the text in the progress bar for the current plug-in.
  *

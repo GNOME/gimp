@@ -49,7 +49,7 @@ HELP
     &neo_pdb_misc('2003');
 
     @inargs = (
-	{ name => 'filter', type => 'string', null_ok => 1,
+	{ name => 'filter', type => 'string', none_ok => 1,
           desc => 'An optional regular expression used to filter the list' }
     );
 

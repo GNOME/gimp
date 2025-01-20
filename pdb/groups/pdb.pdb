@@ -360,7 +360,7 @@ HELP
     @inargs = (
 	{ name => 'procedure_name', type => 'string', non_empty => 1,
 	  desc => 'The procedure for which to install the menu path' },
-	{ name => 'image_types', type => 'string', null_ok => 1,
+	{ name => 'image_types', type => 'string', none_ok => 1,
 	  desc => "The procedure's supported image types" }
     );
 
@@ -700,11 +700,11 @@ HELP
     @inargs = (
 	{ name => 'procedure_name', type => 'string', non_empty => 1,
 	  desc => 'The procedure for which to install the menu path' },
-	{ name => 'blurb', type => 'string', null_ok => 1,
+	{ name => 'blurb', type => 'string', none_ok => 1,
 	  desc => 'A short blurb' },
-	{ name => 'help', type => 'string', null_ok => 1,
+	{ name => 'help', type => 'string', none_ok => 1,
 	  desc => 'Detailed procedure help' },
-	{ name => 'help_id', type => 'string', null_ok => 1,
+	{ name => 'help_id', type => 'string', none_ok => 1,
 	  desc => 'The procedure help_id' }
     );
 
@@ -792,11 +792,11 @@ HELP
     @inargs = (
 	{ name => 'procedure_name', type => 'string', non_empty => 1,
 	  desc => 'The procedure for which to install the menu path' },
-	{ name => 'authors', type => 'string', null_ok => 1,
+	{ name => 'authors', type => 'string', none_ok => 1,
 	  desc => 'Authors of the procedure' },
-	{ name => 'copyright', type => 'string', null_ok => 1,
+	{ name => 'copyright', type => 'string', none_ok => 1,
 	  desc => 'The copyright' },
-	{ name => 'date', type => 'string', null_ok => 1,
+	{ name => 'date', type => 'string', none_ok => 1,
 	  desc => 'Copyright date' }
     );
 

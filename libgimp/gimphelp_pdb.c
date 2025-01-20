@@ -38,7 +38,7 @@
 
 /**
  * gimp_help:
- * @help_domain: The help domain in which help_id is registered.
+ * @help_domain: (nullable): The help domain in which help_id is registered.
  * @help_id: The help page's ID.
  *
  * Load a help page.

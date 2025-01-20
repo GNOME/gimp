@@ -41,8 +41,8 @@
  * gimp_patterns_popup:
  * @pattern_callback: The callback PDB proc to call when the user chooses a pattern.
  * @popup_title: Title of the pattern selection dialog.
- * @initial_pattern: The pattern to set as the initial choice.
- * @parent_window: An optional parent window handle for the popup to be set transient to.
+ * @initial_pattern: (nullable): The pattern to set as the initial choice.
+ * @parent_window: (nullable): An optional parent window handle for the popup to be set transient to.
  *
  * Invokes the Gimp pattern selection.
  *

@@ -43,7 +43,7 @@ HELP
 	{ name => 'type', type => 'enum GimpImageType',
 	  desc => 'The layer type' },
 	{ name => 'name', type => 'string',
-	  desc => 'The layer name', null_ok => 0 },
+	  desc => 'The layer name', none_ok => 0 },
 	{ name => 'opacity', type => '0 <= double <= 100',
 	  desc => 'The layer opacity' },
 	{ name => 'mode', type => 'enum GimpLayerMode',
@@ -144,7 +144,7 @@ HELP
 	{ name => 'dest_image', type => 'image',
 	  desc => 'The destination image to which to add the layer' },
 	{ name => 'name', type => 'string',
-	  desc => 'The layer name', null_ok => 1 }
+	  desc => 'The layer name', none_ok => 1 }
      );
 
     @outargs = (

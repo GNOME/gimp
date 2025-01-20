@@ -175,7 +175,7 @@ register_font_select_procs (GimpPDB *pdb)
                                gimp_param_spec_font ("initial-font",
                                                      "initial font",
                                                      "The name of the initial font choice.",
-                                                     FALSE,
+                                                     TRUE,
                                                      NULL,
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));

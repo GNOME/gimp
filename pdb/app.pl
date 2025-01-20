@@ -587,14 +587,14 @@ CODE
     }
     elsif ($pdbtype eq 'string') {
 	$allow_non_utf8 = exists $arg->{allow_non_utf8} ? 'TRUE' : 'FALSE';
-	$null_ok = exists $arg->{null_ok} ? 'TRUE' : 'FALSE';
+	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$non_empty = exists $arg->{non_empty} ? 'TRUE' : 'FALSE';
 	$default = exists $arg->{default} ? $arg->{default} : NULL;
 	$pspec = <<CODE;
 gimp_param_spec_string ("$name",
                         "$nick",
                         "$blurb",
-                        $allow_non_utf8, $null_ok, $non_empty,
+                        $allow_non_utf8, $none_ok, $non_empty,
                         $default,
                         $flags)
 CODE

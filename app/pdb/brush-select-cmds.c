@@ -173,7 +173,7 @@ register_brush_select_procs (GimpPDB *pdb)
                                gimp_param_spec_brush ("initial-brush",
                                                       "initial brush",
                                                       "The brush to set as the initial choice",
-                                                      FALSE,
+                                                      TRUE,
                                                       NULL,
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));

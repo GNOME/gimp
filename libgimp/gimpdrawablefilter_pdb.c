@@ -77,7 +77,7 @@ gimp_drawable_filter_id_is_valid (gint filter_id)
  * gimp_drawable_filter_new:
  * @drawable: The drawable.
  * @operation_name: The GEGL operation's name.
- * @name: The effect name.
+ * @name: (nullable): The effect name.
  *
  * Create a new drawable filter.
  *

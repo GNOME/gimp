@@ -179,7 +179,7 @@ register_gradient_select_procs (GimpPDB *pdb)
                                gimp_param_spec_gradient ("initial-gradient",
                                                          "initial gradient",
                                                          "The initial gradient choice",
-                                                         FALSE,
+                                                         TRUE,
                                                          NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));

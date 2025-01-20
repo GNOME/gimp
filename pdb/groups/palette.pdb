@@ -202,9 +202,6 @@ CODE
     );
 }
 
-
-# FIXME null_ok should allow None in Python for name, but fails.
-
 sub palette_add_entry {
     $blurb = 'Appends an entry to the palette.';
 
@@ -220,7 +217,7 @@ HELP
 
     @inargs = (
         ${palette_arg_spec},
-        { name => 'entry_name', type => 'string', null_ok => 1,
+        { name => 'entry_name', type => 'string', none_ok => 1,
           desc => 'A name for the entry' },
         { name => 'color', type => 'geglcolor',
           desc => 'The color for the added entry.' }
@@ -414,7 +411,7 @@ HELP
         ${palette_arg_spec},
         { name => 'entry_num', type => 'int32',
           desc => 'The entry to get' },
-        { name => 'entry_name', type => 'string', null_ok => 1,
+        { name => 'entry_name', type => 'string', none_ok => 1,
           desc => 'The new name' }
     );
 

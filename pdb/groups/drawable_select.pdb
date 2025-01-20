@@ -27,9 +27,9 @@ sub drawables_popup {
         desc => 'Title of the drawable selection dialog' },
       { name => 'drawable_type', type => 'string', non_empty => 1,
         desc => 'The name of the GIMP_TYPE_DRAWABLE subtype' },
-      { name => 'initial_drawable', type => 'drawable', null_ok => 1, no_validate => 1,
+      { name => 'initial_drawable', type => 'drawable', none_ok => 1, no_validate => 1,
         desc => 'The drawable to set as the initial choice' },
-      { name => 'parent_window', type => 'bytes', null_ok => 1,
+      { name => 'parent_window', type => 'bytes', none_ok => 1,
         desc => 'An optional parent window handle for the popup to be set transient to' }
     );
 

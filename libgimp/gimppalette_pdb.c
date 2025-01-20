@@ -266,7 +266,7 @@ gimp_palette_set_columns (GimpPalette *palette,
 /**
  * gimp_palette_add_entry:
  * @palette: The palette.
- * @entry_name: A name for the entry.
+ * @entry_name: (nullable): A name for the entry.
  * @color: The color for the added entry.
  * @entry_num: (out): The index of the added entry.
  *
@@ -488,7 +488,7 @@ gimp_palette_get_entry_name (GimpPalette  *palette,
  * gimp_palette_set_entry_name:
  * @palette: The palette.
  * @entry_num: The entry to get.
- * @entry_name: The new name.
+ * @entry_name: (nullable): The new name.
  *
  * Sets the name of an entry in the palette.
  *

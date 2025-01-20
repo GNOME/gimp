@@ -41,8 +41,8 @@
  * gimp_brushes_popup:
  * @brush_callback: The callback PDB proc to call when user chooses a brush.
  * @popup_title: Title of the brush selection dialog.
- * @initial_brush: The brush to set as the initial choice.
- * @parent_window: An optional parent window handle for the popup to be set transient to.
+ * @initial_brush: (nullable): The brush to set as the initial choice.
+ * @parent_window: (nullable): An optional parent window handle for the popup to be set transient to.
  *
  * Invokes the GIMP brush selection dialog.
  *

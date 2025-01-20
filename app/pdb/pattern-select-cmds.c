@@ -173,7 +173,7 @@ register_pattern_select_procs (GimpPDB *pdb)
                                gimp_param_spec_pattern ("initial-pattern",
                                                         "initial pattern",
                                                         "The pattern to set as the initial choice",
-                                                        FALSE,
+                                                        TRUE,
                                                         NULL,
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));

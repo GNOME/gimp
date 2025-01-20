@@ -200,7 +200,7 @@ HELP
 
     @inargs = (
         { name => 'extension', type => 'string',
-	  allow_non_utf8 => 1, null_ok => 1,
+	  allow_non_utf8 => 1, none_ok => 1,
           desc => 'The extension the file will have' }
     );
 

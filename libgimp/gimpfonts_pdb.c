@@ -117,7 +117,7 @@ _gimp_fonts_get_custom_configs (gchar  **sysconfig,
 
 /**
  * gimp_fonts_get_list:
- * @filter: An optional regular expression used to filter the list.
+ * @filter: (nullable): An optional regular expression used to filter the list.
  *
  * Retrieve the list of loaded fonts.
  *

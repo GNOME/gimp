@@ -29,7 +29,7 @@ HELP
     $lib_private = 1;
 
     @inargs = (
-	{ name => 'message', type => 'string', null_ok => 1,
+	{ name => 'message', type => 'string', none_ok => 1,
 	  desc => 'Message to use in the progress dialog' },
 	{ name => 'gdisplay', type => 'display', none_ok => 1,
 	  desc => 'GimpDisplay to update progressbar in, or %NULL for a separate
@@ -130,7 +130,7 @@ HELP
     &neo_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'message', type => 'string', null_ok => 1,
+	{ name => 'message', type => 'string', none_ok => 1,
 	  desc => 'Message to use in the progress dialog' }
     );
 

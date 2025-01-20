@@ -64,7 +64,7 @@ HELP
 	{ name => 'operation_name', type => 'string',
 	  desc => "The GEGL operation's name" },
 	{ name => 'name', type => 'string',
-	  desc => 'The effect name', null_ok => 0 },
+	  desc => 'The effect name', none_ok => 0 },
     );
 
     @outargs = (

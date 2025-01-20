@@ -38,7 +38,7 @@
 
 /**
  * gimp_buffers_get_name_list:
- * @filter: An optional regular expression used to filter the list.
+ * @filter: (nullable): An optional regular expression used to filter the list.
  *
  * Retrieve a complete listing of the available buffers.
  *

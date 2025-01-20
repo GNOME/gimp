@@ -173,7 +173,7 @@ register_palette_select_procs (GimpPDB *pdb)
                                gimp_param_spec_palette ("initial-palette",
                                                         "initial palette",
                                                         "The palette to set as the initial choice.",
-                                                        FALSE,
+                                                        TRUE,
                                                         NULL,
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));

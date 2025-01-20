@@ -28,9 +28,9 @@ sub gradients_popup {
         desc => 'The callback PDB proc to call when user chooses a gradient' },
       { name => 'popup_title', type => 'string',
         desc => 'Title of the gradient selection dialog' },
-      { name => 'initial_gradient', type => 'gradient', null_ok => 1,
+      { name => 'initial_gradient', type => 'gradient', none_ok => 1,
         desc => 'The initial gradient choice' },
-      { name => 'parent_window', type => 'bytes', null_ok => 1,
+      { name => 'parent_window', type => 'bytes', none_ok => 1,
         desc => 'An optional parent window handle for the popup to be set transient to' }
       );
 

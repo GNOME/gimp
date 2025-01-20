@@ -28,9 +28,9 @@ sub fonts_popup {
         desc => 'The callback PDB proc to call when user chooses a font' },
       { name => 'popup_title', type => 'string',
         desc => 'Title of the font selection dialog' },
-      { name => 'initial_font', type => 'font', null_ok => 1,
+      { name => 'initial_font', type => 'font', none_ok => 1,
         desc => 'The name of the initial font choice.' },
-      { name => 'parent_window', type => 'bytes', null_ok => 1,
+      { name => 'parent_window', type => 'bytes', none_ok => 1,
         desc => 'An optional parent window handle for the popup to be set transient to' }
     );
 

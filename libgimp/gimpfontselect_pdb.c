@@ -49,8 +49,8 @@
  * gimp_fonts_popup:
  * @font_callback: The callback PDB proc to call when user chooses a font.
  * @popup_title: Title of the font selection dialog.
- * @initial_font: The name of the initial font choice.
- * @parent_window: An optional parent window handle for the popup to be set transient to.
+ * @initial_font: (nullable): The name of the initial font choice.
+ * @parent_window: (nullable): An optional parent window handle for the popup to be set transient to.
  *
  * Invokes the Gimp font selection dialog.
  *

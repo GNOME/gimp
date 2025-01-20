@@ -253,7 +253,7 @@ gimp_get_parasite_list (void)
 
 /**
  * gimp_temp_file:
- * @extension: The extension the file will have.
+ * @extension: (nullable): The extension the file will have.
  *
  * Generates a unique temporary file.
  *

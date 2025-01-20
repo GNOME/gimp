@@ -41,8 +41,8 @@
  * @callback: The callback PDB proc to call when user chooses an drawable.
  * @popup_title: Title of the drawable selection dialog.
  * @drawable_type: The name of the GIMP_TYPE_DRAWABLE subtype.
- * @initial_drawable: The drawable to set as the initial choice.
- * @parent_window: An optional parent window handle for the popup to be set transient to.
+ * @initial_drawable: (nullable): The drawable to set as the initial choice.
+ * @parent_window: (nullable): An optional parent window handle for the popup to be set transient to.
  *
  * Invokes the drawable selection dialog.
  *

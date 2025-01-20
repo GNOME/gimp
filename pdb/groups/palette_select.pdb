@@ -27,9 +27,9 @@ sub palettes_popup {
         desc => 'The callback PDB proc to call when user chooses a palette' },
       { name => 'popup_title', type => 'string',
         desc => 'Title of the palette selection dialog' },
-      { name => 'initial_palette', type => 'palette', null_ok => 1,
+      { name => 'initial_palette', type => 'palette', none_ok => 1,
         desc => 'The palette to set as the initial choice.' },
-      { name => 'parent_window', type => 'bytes', null_ok => 1,
+      { name => 'parent_window', type => 'bytes', none_ok => 1,
         desc => 'An optional parent window handle for the popup to be set transient to' }
     );
 

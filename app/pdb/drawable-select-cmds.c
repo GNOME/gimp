@@ -172,7 +172,7 @@ register_drawable_select_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable ("initial-drawable",
                                                          "initial drawable",
                                                          "The drawable to set as the initial choice",
-                                                         FALSE,
+                                                         TRUE,
                                                          GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boxed ("parent-window",

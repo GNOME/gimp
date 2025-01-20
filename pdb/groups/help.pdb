@@ -31,7 +31,7 @@ HELP
     &mitch_pdb_misc('2000');
 
     @inargs = (
-	{ name => 'help_domain', type => 'string', null_ok => 1,
+	{ name => 'help_domain', type => 'string', none_ok => 1,
 	  desc => "The help domain in which help_id is registered" },
 	{ name => 'help_id', type => 'string',
 	  desc => "The help page's ID" }
