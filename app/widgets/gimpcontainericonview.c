@@ -132,6 +132,8 @@ gimp_container_icon_view_class_init (GimpContainerIconViewClass *klass)
 
   widget_class->unmap       = gimp_container_icon_view_unmap;
   widget_class->popup_menu  = gimp_container_icon_view_popup_menu;
+
+  gtk_widget_class_set_css_name (widget_class, "GimpContainerIconView");
 }
 
 static void
