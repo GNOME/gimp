@@ -164,6 +164,8 @@ gimp_view_class_init (GimpViewClass *klass)
   klass->clicked                     = NULL;
   klass->double_clicked              = NULL;
   klass->context                     = NULL;
+
+  gtk_widget_class_set_css_name (widget_class, "GimpView");
 }
 
 static void
