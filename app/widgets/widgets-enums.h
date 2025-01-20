@@ -128,7 +128,8 @@ typedef enum
 typedef enum  /*< skip >*/
 {
   GIMP_VIEW_BG_CHECKS,
-  GIMP_VIEW_BG_WHITE
+  GIMP_VIEW_BG_WHITE,
+  GIMP_VIEW_BG_USE_STYLE
 } GimpViewBG;
 
 typedef enum  /*< skip >*/
