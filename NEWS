@@ -47,9 +47,14 @@ Plug-ins:
   - BMP: various import improvements and code cleanup.
   - EXR: more robust EXR file import, especially regarding invalid files
     (e.g. fuzzed ones).
-  - Script-Fu: new named argument syntax for non-core (i.e. plug-in
-    created) PDB procedures allowing arguments to be set in any order
-    and more semantically.
+  - Script-Fu:
+    * new named argument syntax for non-core (i.e. plug-in
+      created) PDB procedures allowing arguments to be set in any order
+      and more semantically.
+    * The new named argument syntax can also be used for arguments of
+      filters (though string still works as there is no confusion
+      possible with another syntax).
+  - PSD: metadata export now supported.
 
 API:
 
@@ -61,6 +66,8 @@ API:
   - Changes in libgimp:
     * New function gimp_procedure_is_core()
     * gimp_pdb_query() doesn't return private PDB procedures anymore.
+    * The various "save-*" PDB procedure arguments for export plug-ins
+      were renamed to "include-*" and made public.
 
 Translations:
 
