@@ -213,6 +213,8 @@ psd_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_image_types (procedure, "*");
 
       gimp_procedure_set_menu_label (procedure, _("Photoshop image"));
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("Photoshop image"));
 
       gimp_procedure_set_documentation (procedure,
                                         _("Saves files in the Photoshop (TM) "
