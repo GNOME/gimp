@@ -26,6 +26,9 @@
 
 #include "core-types.h"
 
+#include "config/gimpguiconfig.h"
+
+#include "gimp.h"
 #include "gimpbezierdesc.h"
 #include "gimpbrush.h"
 #include "gimpbrush-boundary.h"
@@ -37,6 +40,7 @@
 #include "gimpbrushcache.h"
 #include "gimpbrushgenerated.h"
 #include "gimpbrushpipe.h"
+#include "gimpcontext.h"
 #include "gimptagged.h"
 #include "gimptempbuf.h"
 
@@ -366,13 +370,21 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
     }
   else
     {
+      GimpGuiConfig *config;
+      guint8         rgb[3] = {0, 0, 0};
+
+      config = GIMP_GUI_CONFIG (context->gimp->config);
+
+      if (config->theme_scheme == GIMP_THEME_DARK)
+        rgb[0] = rgb[1] = rgb[2] = 255;
+
       for (y = 0; y < mask_height; y++)
         {
           for (x = 0; x < mask_width ; x++)
             {
-              *buf++ = 0;
-              *buf++ = 0;
-              *buf++ = 0;
+              *buf++ = rgb[0];
+              *buf++ = rgb[1];
+              *buf++ = rgb[2];
               *buf++ = *mask++;
             }
         }

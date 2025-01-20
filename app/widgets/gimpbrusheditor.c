@@ -81,11 +81,14 @@ gimp_brush_editor_class_init (GimpBrushEditorClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
   GimpDataEditorClass *editor_class = GIMP_DATA_EDITOR_CLASS (klass);
+  GtkWidgetClass      *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->constructed = gimp_brush_editor_constructed;
 
   editor_class->set_data    = gimp_brush_editor_set_data;
   editor_class->title       = _("Brush Editor");
+
+  gtk_widget_class_set_css_name (widget_class, "GimpBrushEditor");
 }
 
 static void
