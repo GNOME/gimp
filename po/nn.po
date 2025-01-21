@@ -29009,7 +29009,7 @@ msgstr "_Tidlegare lukka dokkpanel"
 #: menus/image-menu.ui.in.in:866
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
-msgstr "_Dialogvindauge som kan limast inn"
+msgstr "_Dokkpanel"
 
 #: menus/image-menu.ui.in.in:898
 msgctxt "help-action"
