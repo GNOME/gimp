@@ -2816,7 +2816,6 @@ add_merged_image (GimpImage     *image,
   gint                  i;
   gboolean              alpha_visible;
   gboolean              alpha_channel = FALSE;
-  gboolean              original_mode_CMYK = FALSE;
   GeglBuffer           *buffer;
   GimpImageType         image_type;
   GeglColor            *alpha_rgb;
@@ -2846,19 +2845,6 @@ add_merged_image (GimpImage     *image,
             total_channels > 4)
     {
       extra_channels = total_channels - 4;
-    }
-
-  if (img_a->merged_image_only &&
-      img_a->color_mode == PSD_CMYK &&
-      img_a->num_layers > 0)
-    {
-      /* In this case there is no conversion. Merged image is RGB. */
-      img_a->color_mode = PSD_RGB;
-      original_mode_CMYK = TRUE;
-      if (! img_a->transparency)
-        {
-          total_channels--;
-        }
     }
 
   if (extra_channels > 0)
@@ -3027,37 +3013,6 @@ add_merged_image (GimpImage     *image,
                                    dst0, pixels,
                                    img_a->columns, img_a->rows,
                                    img_a->transparency || alpha_channel);
-          g_free (pixels);
-          pixels = dst0;
-        }
-      else if (original_mode_CMYK && img_a->transparency)
-        {
-          gint    irow;
-          guchar *dst0, *dst;
-          guchar *data;
-
-          dst0 = g_malloc (base_channels * layer_size * sizeof(guchar));
-          dst  = dst0;
-          data = pixels;
-
-          /* CMYKA layers: 5 channels but merged image is RGBA
-           * with RGB in the first 3 layers and A in 5th layer.
-           * Move A to 4th layer. */
-          for (irow = 0; irow < img_a->rows; irow++)
-            {
-              gint icol;
-
-              for (icol = 0; icol < img_a->columns; icol++)
-                {
-                  dst[0] = data[0];
-                  dst[1] = data[1];
-                  dst[2] = data[2];
-                  dst[3] = data[4];
-
-                  dst  += 4;
-                  data += 5;
-                }
-            }
           g_free (pixels);
           pixels = dst0;
         }
