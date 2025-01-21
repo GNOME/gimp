@@ -403,7 +403,7 @@ edit_paste_cmd_callback (GimpAction *action,
                             GIMP_PASTE_TYPE_NEW_LAYER :
                             GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE;
 
-          edit_paste (display, converted_type, merged, FALSE);
+          edit_paste (display, converted_type, merged, TRUE);
         }
       g_list_free (drawables);
 
