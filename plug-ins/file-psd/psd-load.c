@@ -600,8 +600,7 @@ read_header_block (PSDimage      *img_a,
 
   if (img_a->color_mode == PSD_CMYK || img_a->color_mode == PSD_LAB)
     {
-      if (img_a->bps != 8 &&
-         (img_a->bps != 16 || img_a->color_mode == PSD_LAB))
+      if (img_a->bps != 8 && img_a->bps != 16)
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Unsupported color mode: %s"),
@@ -1606,7 +1605,7 @@ create_gimp_image (PSDimage *img_a,
         break;
 
       case 16:
-        if (img_a->color_mode == PSD_CMYK)
+        if (img_a->color_mode == PSD_CMYK || img_a->color_mode == PSD_LAB)
           precision = GIMP_PRECISION_FLOAT_NON_LINEAR;
         else
           precision = GIMP_PRECISION_U16_NON_LINEAR;
@@ -1765,11 +1764,17 @@ psd_convert_lab_to_srgb (PSDimage *img_a,
                          gboolean  alpha)
 {
   const Babl *fish;
+  const Babl *base_format = NULL;
+
+  if (img_a->bps == 8)
+    base_format = babl_format (alpha ? "CIE Lab alpha u8" : "CIE Lab u8");
+  else
+    base_format = babl_format (alpha ? "CIE Lab alpha u16" : "CIE Lab u16");
 
   if (alpha)
-    fish = babl_fish ("CIE Lab alpha u8", "R'G'B'A float");
+    fish = babl_fish (base_format, "R'G'B'A float");
   else
-    fish = babl_fish ("CIE Lab u8", "R'G'B' float");
+    fish = babl_fish (base_format, "R'G'B' float");
 
   babl_process (fish, src, dst, width * height);
 
@@ -3684,7 +3689,8 @@ get_layer_format (PSDimage *img_a,
           break;
 
         case 16:
-          format = babl_format (img_a->color_mode == PSD_CMYK ? "R'G'B' float" : "R'G'B' u16");
+          format = babl_format ((img_a->color_mode == PSD_CMYK || img_a->color_mode == PSD_LAB) ?
+                                "R'G'B' float" : "R'G'B' u16");
           break;
 
         case 8:
@@ -3707,7 +3713,8 @@ get_layer_format (PSDimage *img_a,
           break;
 
         case 16:
-          format = babl_format (img_a->color_mode == PSD_CMYK ? "R'G'B'A float" : "R'G'B'A u16");
+          format = babl_format ((img_a->color_mode == PSD_CMYK || img_a->color_mode == PSD_LAB) ?
+                                "R'G'B'A float" : "R'G'B'A u16");
           break;
 
         case 8:
