@@ -353,9 +353,9 @@ gimp_export_procedure_install (GimpProcedure *procedure)
   gimp_export_procedure_add_metadata (GIMP_EXPORT_PROCEDURE (procedure));
   GIMP_PROCEDURE_CLASS (parent_class)->install (procedure);
 
-  _gimp_pdb_set_file_proc_save_handler (gimp_procedure_get_name (procedure),
-                                        gimp_file_procedure_get_extensions (file_proc),
-                                        gimp_file_procedure_get_prefixes (file_proc));
+  _gimp_pdb_set_file_proc_export_handler (gimp_procedure_get_name (procedure),
+                                          gimp_file_procedure_get_extensions (file_proc),
+                                          gimp_file_procedure_get_prefixes (file_proc));
 
   if (gimp_file_procedure_get_handles_remote (file_proc))
     _gimp_pdb_set_file_proc_handles_remote (gimp_procedure_get_name (procedure));

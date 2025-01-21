@@ -499,8 +499,9 @@ register_file_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-file-save");
   gimp_procedure_set_static_help (procedure,
-                                  "Saves a file by extension.",
-                                  "This procedure invokes the correct file save handler according to the file's extension and/or prefix.\n"
+                                  "Saves to XCF or export @image to any supported format by extension.",
+                                  "This procedure invokes the correct file save/export handler according to @file's extension and/or prefix.\n"
+                                  "\n"
                                   "The @options argument is currently unused and should be set to %NULL right now.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
@@ -523,7 +524,7 @@ register_file_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_object ("file",
                                                     "file",
-                                                    "The file to save the image in",
+                                                    "The file to save or export the image in",
                                                     G_TYPE_FILE,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,

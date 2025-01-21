@@ -918,12 +918,12 @@ CODE
     );
 }
 
-sub pdb_set_file_proc_save_handler {
-    $blurb = 'Registers a file save handler procedure.';
+sub pdb_set_file_proc_export_handler {
+    $blurb = 'Registers a file export handler procedure.';
 
     $help = <<'HELP';
-Registers a procedural database procedure to be called to save files in a
-particular file format.
+Registers a procedural database procedure to be called to export files
+in a particular file format.
 HELP
 
     &std_pdb_misc;
@@ -935,10 +935,10 @@ HELP
           desc => 'The name of the procedure to be used for saving' },
         { name => 'extensions', type => 'string', no_validate => 1,
           desc => 'comma separated list of extensions this handler
-                   can save (i.e. "jpg,jpeg")' },
+                   can export as (i.e. "jpg,jpeg")' },
         { name => 'prefixes', type => 'string', no_validate => 1,
           desc => 'comma separated list of prefixes this handler
-                   can save (i.e. "http:,ftp:")' }
+                   can export to (i.e. "http:,ftp:")' }
     );
 
     %invoke = (
@@ -1007,10 +1007,10 @@ sub pdb_set_file_proc_mime_types {
 
     $help = <<'HELP';
 Registers MIME types for a file handler procedure. This allows GIMP to
-determine the MIME type of the file opened or saved using this
+determine the MIME type of the file opened or exported using this
 procedure. It is recommended that only one MIME type is registered per
 file procedure; when registering more than one MIME type, GIMP will
-associate the first one with files opened or saved with this procedure.
+associate the first one with files opened or exported with this procedure.
 HELP
 
     &neo_pdb_misc('2004', '2.2');
@@ -1086,7 +1086,7 @@ sub pdb_set_file_proc_handles_raw {
     $help = <<'HELP';
 Registers a file handler procedure as capable of handling raw digital
 camera files. Use this procedure only to register raw load handlers,
-calling it on a save handler will generate an error.
+calling it on an export handler will generate an error.
 HELP
 
     &mitch_pdb_misc('2017', '2.10');
@@ -1387,7 +1387,7 @@ CODE
             pdb_set_proc_attribution
             pdb_get_proc_attribution
             pdb_set_file_proc_load_handler
-            pdb_set_file_proc_save_handler
+            pdb_set_file_proc_export_handler
             pdb_set_file_proc_priority
             pdb_set_file_proc_mime_types
             pdb_set_file_proc_handles_remote

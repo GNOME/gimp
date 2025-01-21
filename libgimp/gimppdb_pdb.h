@@ -86,7 +86,7 @@ G_GNUC_INTERNAL gboolean    _gimp_pdb_set_file_proc_load_handler     (const gcha
                                                                       const gchar       *extensions,
                                                                       const gchar       *prefixes,
                                                                       const gchar       *magics);
-G_GNUC_INTERNAL gboolean    _gimp_pdb_set_file_proc_save_handler     (const gchar       *procedure_name,
+G_GNUC_INTERNAL gboolean    _gimp_pdb_set_file_proc_export_handler   (const gchar       *procedure_name,
                                                                       const gchar       *extensions,
                                                                       const gchar       *prefixes);
 G_GNUC_INTERNAL gboolean    _gimp_pdb_set_file_proc_priority         (const gchar       *procedure_name,

@@ -218,11 +218,12 @@ CODE
 }
 
 sub file_save {
-    $blurb = 'Saves a file by extension.';
+    $blurb = 'Saves to XCF or export @image to any supported format by extension.';
 
     $help = <<'HELP';
-This procedure invokes the correct file save handler according to the
-file's extension and/or prefix.
+This procedure invokes the correct file save/export handler according to
+@file's extension and/or prefix.
+
 
 The @options argument is currently unused and should be set to %NULL
 right now.
@@ -236,7 +237,7 @@ HELP
         { name => 'image', type => 'image',
           desc => 'Input image' },
         { name => 'file', type => 'file',
-          desc => 'The file to save the image in' },
+          desc => 'The file to save or export the image in' },
         { name => 'options', type => 'export_options',
           desc => 'Export option settings' }
     );
@@ -410,7 +411,7 @@ CODE
 
 $desc = 'File Operations';
 $doc_title = 'gimpfile';
-$doc_short_desc = 'Image file operations (load, save, etc.)';
-$doc_long_desc = 'Image file operations (load, save, etc.)';
+$doc_short_desc = 'Image file operations (load, export, etc.)';
+$doc_long_desc = 'Image file operations (load, export, etc.)';
 
 1;

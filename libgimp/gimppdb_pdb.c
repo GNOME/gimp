@@ -895,22 +895,22 @@ _gimp_pdb_set_file_proc_load_handler (const gchar *procedure_name,
 }
 
 /**
- * _gimp_pdb_set_file_proc_save_handler:
+ * _gimp_pdb_set_file_proc_export_handler:
  * @procedure_name: The name of the procedure to be used for saving.
- * @extensions: comma separated list of extensions this handler can save (i.e. \"jpg,jpeg\").
- * @prefixes: comma separated list of prefixes this handler can save (i.e. \"http:,ftp:\").
+ * @extensions: comma separated list of extensions this handler can export as (i.e. \"jpg,jpeg\").
+ * @prefixes: comma separated list of prefixes this handler can export to (i.e. \"http:,ftp:\").
  *
- * Registers a file save handler procedure.
+ * Registers a file export handler procedure.
  *
- * Registers a procedural database procedure to be called to save files
- * in a particular file format.
+ * Registers a procedural database procedure to be called to export
+ * files in a particular file format.
  *
  * Returns: TRUE on success.
  **/
 gboolean
-_gimp_pdb_set_file_proc_save_handler (const gchar *procedure_name,
-                                      const gchar *extensions,
-                                      const gchar *prefixes)
+_gimp_pdb_set_file_proc_export_handler (const gchar *procedure_name,
+                                        const gchar *extensions,
+                                        const gchar *prefixes)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -923,7 +923,7 @@ _gimp_pdb_set_file_proc_save_handler (const gchar *procedure_name,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-pdb-set-file-proc-save-handler",
+                                               "gimp-pdb-set-file-proc-export-handler",
                                                args);
   gimp_value_array_unref (args);
 
@@ -984,10 +984,10 @@ _gimp_pdb_set_file_proc_priority (const gchar *procedure_name,
  * Associates MIME types with a file handler procedure.
  *
  * Registers MIME types for a file handler procedure. This allows GIMP
- * to determine the MIME type of the file opened or saved using this
+ * to determine the MIME type of the file opened or exported using this
  * procedure. It is recommended that only one MIME type is registered
  * per file procedure; when registering more than one MIME type, GIMP
- * will associate the first one with files opened or saved with this
+ * will associate the first one with files opened or exported with this
  * procedure.
  *
  * Returns: TRUE on success.
@@ -1066,7 +1066,7 @@ _gimp_pdb_set_file_proc_handles_remote (const gchar *procedure_name)
  *
  * Registers a file handler procedure as capable of handling raw
  * digital camera files. Use this procedure only to register raw load
- * handlers, calling it on a save handler will generate an error.
+ * handlers, calling it on an export handler will generate an error.
  *
  * Returns: TRUE on success.
  *

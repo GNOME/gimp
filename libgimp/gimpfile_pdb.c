@@ -30,9 +30,9 @@
 /**
  * SECTION: gimpfile
  * @title: gimpfile
- * @short_description: Image file operations (load, save, etc.)
+ * @short_description: Image file operations (load, export, etc.)
  *
- * Image file operations (load, save, etc.)
+ * Image file operations (load, export, etc.)
  **/
 
 
@@ -171,13 +171,14 @@ gimp_file_load_layers (GimpRunMode  run_mode,
  * gimp_file_save:
  * @run_mode: The run mode.
  * @image: Input image.
- * @file: The file to save the image in.
+ * @file: The file to save or export the image in.
  * @options: (nullable): Export option settings.
  *
- * Saves a file by extension.
+ * Saves to XCF or export @image to any supported format by extension.
  *
- * This procedure invokes the correct file save handler according to
- * the file's extension and/or prefix.
+ * This procedure invokes the correct file save/export handler
+ * according to @file's extension and/or prefix.
+ *
  * The @options argument is currently unused and should be set to %NULL
  * right now.
  *
