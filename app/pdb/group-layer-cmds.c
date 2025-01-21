@@ -146,7 +146,7 @@ register_group_layer_procs (GimpPDB *pdb)
                                   "The new group layer still needs to be added to the image, as this is not automatic. Add the new layer with the [method@Image.insert_layer] method.\n"
                                   "Other attributes such as layer mask, modes and offsets should be set with explicit procedure calls.\n"
                                   "\n"
-                                  "Other procedures useful with group layers: [method@image_reorder_item], [method@item.get_parent], [method@item.get_children], [method@item.is_group].",
+                                  "Other procedures useful with group layers: [method@Image.reorder_item], [method@Item.get_parent], [method@Item.get_children], [method@Item.is_group].",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Barak Itkin <lightningismyname@gmail.com>",

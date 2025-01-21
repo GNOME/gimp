@@ -54,8 +54,8 @@
  * with explicit procedure calls.
  *
  * Other procedures useful with group layers:
- * [method@image_reorder_item], [method@item.get_parent],
- * [method@item.get_children], [method@item.is_group].
+ * [method@Image.reorder_item], [method@Item.get_parent],
+ * [method@Item.get_children], [method@Item.is_group].
  *
  * Returns: (transfer none): The newly created group layer.
  *
