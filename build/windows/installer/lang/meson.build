@@ -58,11 +58,14 @@ languages = [
 # Then, we generate the .isl file for each language using some xsltproc magic
 foreach language : languages
   lang_code = language.get('code')
+  # Since gettext 0.23, outputted xml:lang by msgfmt conforms to W3C
+  # standard. Try both with underscore and hyphens.
+  web_lang_code = lang_code.replace('_', '-')
 
   if 'default' in language
     lang_check = 'value[not(@xml:lang)]'
   else
-    lang_check = 'value[lang(\'@0@\')]'.format(lang_code)
+    lang_check = 'value[lang(\'@0@\')] | value[lang(\'@1@\')]'.format(lang_code, web_lang_code)
   endif
 
   gimp_ms_installer_lang_xsl = configure_file(
