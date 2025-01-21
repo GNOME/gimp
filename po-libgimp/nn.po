@@ -614,7 +614,7 @@ msgid ""
 "data."
 msgstr ""
 "dimensjonane kunne ikkje trekkjast ut eller reknast ut frå dataa i "
-"vektorbildet."
+"vektorbiletet."
 
 #: libgimp/gimpvectorloadprocedure.c:373
 msgid "Vector image loading plug-in failed: "
@@ -1198,7 +1198,7 @@ msgstr "Dobbelstipla"
 #: libgimpbase/gimpbaseenums.c:763
 msgctxt "grid-style"
 msgid "Solid"
-msgstr "Heiltrukke"
+msgstr "Heiltrekt"
 
 #: libgimpbase/gimpbaseenums.c:833
 msgctxt "icon-type"
