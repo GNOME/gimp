@@ -338,12 +338,12 @@ file_load_thumbnail_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-file_save_thumbnail_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
-                             GError               **error)
+file_create_thumbnail_invoker (GimpProcedure         *procedure,
+                               Gimp                  *gimp,
+                               GimpContext           *context,
+                               GimpProgress          *progress,
+                               const GimpValueArray  *args,
+                               GError               **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -577,14 +577,17 @@ register_file_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-file-save-thumbnail
+   * gimp-file-create-thumbnail
    */
-  procedure = gimp_procedure_new (file_save_thumbnail_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (file_create_thumbnail_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-file-save-thumbnail");
+                               "gimp-file-create-thumbnail");
   gimp_procedure_set_static_help (procedure,
-                                  "Saves a thumbnail for the given image",
-                                  "This procedure saves a thumbnail for the given image according to the Free Desktop Thumbnail Managing Standard. The thumbnail is saved so that it belongs to the given file. This means you have to save the image under this name first, otherwise this procedure will fail. This procedure may become useful if you want to explicitly save a thumbnail with a file.",
+                                  "Creates a thumbnail of @image for the given @file",
+                                  "This procedure creates a thumbnail for the given @file and stores it according to relevant standards.\n"
+                                  "In particular, it will follow the [Free Desktop Thumbnail Managing Standard](https://specifications.freedesktop.org/thumbnail-spec/latest/thumbsave.html) when relevant.\n"
+                                  "\n"
+                                  "The thumbnail is stored so that it belongs to the given @file. This means you have to save @image under this name first. As a fallback, the call will work if @image was exported or imported as @file. In any other case, this procedure will fail.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Josh MacDonald",

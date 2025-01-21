@@ -268,7 +268,7 @@ gimp_thumb_get_thumb_dir_local (const gchar   *dirname,
  * do this for you.
  *
  * Returns: %TRUE is the directory exists, %FALSE if it could not
- *               be created
+ *          be created
  **/
 gboolean
 gimp_thumb_ensure_thumb_dir (GimpThumbSize   size,

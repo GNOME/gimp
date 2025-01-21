@@ -1116,8 +1116,8 @@ gimp_thumbnail_load_thumb (GimpThumbnail  *thumbnail,
  * to the global thumbnail repository.
  *
  * The caller is responsible for setting the image file location, it's
- * filesize, modification time. One way to set this info is to is to
- * call gimp_thumbnail_set_uri() followed by gimp_thumbnail_peek_image().
+ * filesize, modification time. One way to set this info is to call
+ * gimp_thumbnail_set_uri() followed by gimp_thumbnail_peek_image().
  * Since this won't work for remote images, it is left to the user of
  * gimp_thumbnail_save_thumb() to do this or to set the information
  * using the @thumbnail object properties.
@@ -1126,7 +1126,7 @@ gimp_thumbnail_load_thumb (GimpThumbnail  *thumbnail,
  * set in order to be stored with the preview image.
  *
  * Returns: %TRUE if a thumbnail was successfully written,
- *               %FALSE otherwise
+ *          %FALSE otherwise
  **/
 gboolean
 gimp_thumbnail_save_thumb (GimpThumbnail  *thumbnail,

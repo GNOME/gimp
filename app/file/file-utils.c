@@ -222,6 +222,10 @@ file_utils_save_thumbnail (GimpImage *image,
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
 
   image_file = gimp_image_get_file (image);
+  if (! image_file)
+    image_file = gimp_image_get_exported_file (image);
+  if (! image_file)
+    image_file = gimp_image_get_imported_file (image);
 
   if (image_file)
     {

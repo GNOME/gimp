@@ -214,24 +214,28 @@ gimp_file_save (GimpRunMode        run_mode,
 }
 
 /**
- * gimp_file_save_thumbnail:
+ * gimp_file_create_thumbnail:
  * @image: The image.
  * @file: The file the thumbnail belongs to.
  *
- * Saves a thumbnail for the given image
+ * Creates a thumbnail of @image for the given @file
  *
- * This procedure saves a thumbnail for the given image according to
- * the Free Desktop Thumbnail Managing Standard. The thumbnail is saved
- * so that it belongs to the given file. This means you have to save
- * the image under this name first, otherwise this procedure will fail.
- * This procedure may become useful if you want to explicitly save a
- * thumbnail with a file.
+ * This procedure creates a thumbnail for the given @file and stores it
+ * according to relevant standards.
+ * In particular, it will follow the [Free Desktop Thumbnail Managing
+ * Standard](https://specifications.freedesktop.org/thumbnail-spec/late
+ * st/thumbsave.html) when relevant.
+ *
+ * The thumbnail is stored so that it belongs to the given @file. This
+ * means you have to save @image under this name first. As a fallback,
+ * the call will work if @image was exported or imported as @file. In
+ * any other case, this procedure will fail.
  *
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_file_save_thumbnail (GimpImage *image,
-                          GFile     *file)
+gimp_file_create_thumbnail (GimpImage *image,
+                            GFile     *file)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -243,7 +247,7 @@ gimp_file_save_thumbnail (GimpImage *image,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-file-save-thumbnail",
+                                               "gimp-file-create-thumbnail",
                                                args);
   gimp_value_array_unref (args);
 

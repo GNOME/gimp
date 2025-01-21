@@ -482,7 +482,7 @@ export_image (const CompressorEntry  *compressor,
 
   /* ask the core to save a thumbnail for compressed XCF files */
   if (strcmp (ext, ".xcf") == 0)
-    gimp_file_save_thumbnail (image, file);
+    gimp_file_create_thumbnail (image, file);
 
   return GIMP_PDB_SUCCESS;
 }
