@@ -3940,6 +3940,7 @@ load_dialog (const gchar *title,
       gtk_label_set_markup (GTK_LABEL (label), message);
       gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+      gtk_label_set_selectable (GTK_LABEL (label), TRUE);
       gtk_label_set_yalign (GTK_LABEL (label), 0.0);
       gtk_container_add (GTK_CONTAINER (scrolled_window), label);
       gtk_widget_show (label);
