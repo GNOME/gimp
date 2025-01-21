@@ -5794,7 +5794,7 @@ msgstr "SRTM-3 (3 bogesekund)"
 
 #: plug-ins/common/file-raw-data.c:506 plug-ins/common/file-raw-data.c:507
 msgid "Dump images to disk in raw format"
-msgstr "Dump bilder til disk i raw-format"
+msgstr "Dump bilete til disk i raw-format"
 
 #: plug-ins/common/file-raw-data.c:525
 msgid "Planar configuration"
