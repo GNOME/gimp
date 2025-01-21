@@ -25,8 +25,8 @@
            (font-object '())
            (extents     '()))
       (while (< count list-cnt)
-        (set! font (car list))
-        (set! font-object (car (gimp-font-get-by-name font)))
+        (set! font-object (vector-ref list count))
+        (set! font (car (gimp-font-get-lookup-name font-object)))
 
         (if (= use-name TRUE)
             (set! text font))
@@ -37,7 +37,6 @@
         (if (> width maxwidth)
             (set! maxwidth width))
 
-        (set! list (cdr list))
         (set! count (+ count 1))
       )
 
@@ -53,8 +52,8 @@
            (font-object '())
            (extents     '()))
       (while (< count list-cnt)
-        (set! font (car list))
-        (set! font-object (car (gimp-font-get-by-name font)))
+        (set! font-object (vector-ref list count))
+        (set! font (car (gimp-font-get-lookup-name font-object)))
 
         (if (= use-name TRUE)
             (set! text font)
@@ -67,7 +66,6 @@
             (set! maxheight height)
         )
 
-        (set! list (cdr list))
         (set! count (+ count 1))
       )
 
@@ -79,7 +77,7 @@
         ; gimp-fonts-get-list returns a one element list of results,
         ; the only element is itself a list of fonts, possibly empty.
         (font-list   (car (gimp-fonts-get-list font-filter)))
-        (num-fonts   (length font-list))
+        (num-fonts   (vector-length font-list))
         (label-size  (/ font-size 2))
         (border      (+ border (* labels (/ label-size 2))))
         (y           border)
@@ -121,8 +119,8 @@
           (gimp-drawable-edit-clear drawable)
 
     (while (< count num-fonts)
-      (set! font (car font-list))
-      (set! font-object (car (gimp-font-get-by-name font)))
+      (set! font-object (vector-ref font-list count))
+      (set! font (car (gimp-font-get-lookup-name font-object)))
 
       (if (= use-name TRUE)
           (set! text font))
@@ -151,7 +149,6 @@
           )
       )
 
-      (set! font-list (cdr font-list))
       (set! count (+ count 1))
     )
 
