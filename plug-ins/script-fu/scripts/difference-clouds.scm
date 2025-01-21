@@ -19,7 +19,13 @@
 ;
 
 (define (script-fu-difference-clouds image
-                                     drawables)
+                                     drawables
+                                     seed
+                                     detail
+                                     tileable
+                                     turbulent
+                                     x_size
+                                     y_size)
 
   (let* ((layer (vector-ref drawables 0))
          (draw-offset-x (car (gimp-drawable-get-offsets layer)))
@@ -55,11 +61,11 @@
     (if (gimp-item-id-is-layer layer)
       (gimp-item-transform-translate diff-clouds offset-x offset-y))
 
-    ; Show the solid noise dialog
+    ; Run GEGL Solid Noise filter
     (let* ((cloud-width  (cadddr (gimp-drawable-mask-intersect diff-clouds)))
            (cloud-height (caddr (cddr (gimp-drawable-mask-intersect diff-clouds)))))
-      (gimp-drawable-merge-new-filter diff-clouds "gegl:noise-solid" 0 LAYER-MODE-REPLACE 1.0 "tileable" FALSE "turbulent" FALSE "seed" 0
-                                                                                               "detail" 1 "x-size" 4.0 "y-size" 4.0
+      (gimp-drawable-merge-new-filter diff-clouds "gegl:noise-solid" 0 LAYER-MODE-REPLACE 1.0 "tileable" tileable "turbulent" turbulent "seed" seed
+                                                                                               "detail" detail "x-size" x_size "y-size" y_size
                                                                                                "width" cloud-width "height" cloud-height)
     )
 
@@ -79,7 +85,14 @@
                            "Martin Nordholts"
                            "2006/10/25"
                            "RGB* GRAY*"
-                           SF-ONE-OR-MORE-DRAWABLE)
+                           SF-ONE-OR-MORE-DRAWABLE
+                           SF-ADJUSTMENT            _"Random Seed" '(0 0 1024 1 10 0 1)
+                           SF-ADJUSTMENT             "Detail"      '(1 0 15 1 10 0 1)
+                           SF-TOGGLE                _"Tileable"    FALSE
+                           SF-TOGGLE                 "Turbulent"   FALSE
+                           SF-ADJUSTMENT            _"X"           '(4 0.1 16 0.1 1 1 0)
+                           SF-ADJUSTMENT            _"Y"           '(4 0.1 16 0.1 1 1 0)
+                         )
 
 (script-fu-menu-register "script-fu-difference-clouds"
 			 "<Image>/Filters/Render/Noise")
