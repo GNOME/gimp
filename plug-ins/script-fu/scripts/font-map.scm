@@ -26,7 +26,7 @@
            (extents     '()))
       (while (< count list-cnt)
         (set! font-object (vector-ref list count))
-        (set! font (car (gimp-font-get-lookup-name font-object)))
+        (set! font (car (gimp-resource-get-name font-object)))
 
         (if (= use-name TRUE)
             (set! text font))
@@ -53,7 +53,7 @@
            (extents     '()))
       (while (< count list-cnt)
         (set! font-object (vector-ref list count))
-        (set! font (car (gimp-font-get-lookup-name font-object)))
+        (set! font (car (gimp-resource-get-name font-object)))
 
         (if (= use-name TRUE)
             (set! text font)
@@ -120,7 +120,7 @@
 
     (while (< count num-fonts)
       (set! font-object (vector-ref font-list count))
-      (set! font (car (gimp-font-get-lookup-name font-object)))
+      (set! font (car (gimp-resource-get-name font-object)))
 
       (if (= use-name TRUE)
           (set! text font))
