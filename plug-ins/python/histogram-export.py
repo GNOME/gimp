@@ -222,7 +222,8 @@ class HistogramExport(Gimp.PlugIn):
             # TODO: GFile props still don't have labels + only load existing files
             # (here we likely want to create a new file).
             procedure.add_file_argument ("file", _("Histogram File"),
-                                         _("Histogram export file"), GObject.ParamFlags.READWRITE)
+                                         _("Histogram export file"), Gimp.FileChooserAction.SAVE,
+                                         False, None, GObject.ParamFlags.READWRITE)
             procedure.add_double_argument ("bucket-size", _("_Bucket Size"), _("Bucket Size"),
                                            0.001, 1.0, 0.01, GObject.ParamFlags.READWRITE)
             procedure.add_boolean_argument ("sample-average", _("Sample _Average"), _("Sample Average"),

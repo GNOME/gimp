@@ -233,7 +233,8 @@ class ColorXhtml(Gimp.PlugIn):
                                             False, GObject.ParamFlags.READWRITE)
             #GUI only, used to create a widget to open a file if source-file is enabled
             procedure.add_file_aux_argument ("aux-file", _("Choose File"),
-                                             "", GObject.ParamFlags.READWRITE)
+                                             "", Gimp.FileChooserAction.SAVE,
+                                             False, None, GObject.ParamFlags.READWRITE)
 
         return procedure
 

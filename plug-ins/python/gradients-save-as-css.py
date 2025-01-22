@@ -207,7 +207,8 @@ class GradientsSaveAsCSS (Gimp.PlugIn):
                                              None, True, # Default to context.
                                              GObject.ParamFlags.READWRITE)
             procedure.add_file_argument ("file", _("_File"),
-                                         "", GObject.ParamFlags.READWRITE)
+                                         "", Gimp.FileChooserAction.SAVE,
+                                         False, None, GObject.ParamFlags.READWRITE)
         return procedure
 
 Gimp.main(GradientsSaveAsCSS.__gtype__, sys.argv)
