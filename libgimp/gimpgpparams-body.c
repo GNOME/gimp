@@ -352,7 +352,7 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
             file  = g_file_new_for_uri (param_def->meta.m_file.default_uri);
 
           pspec = gimp_param_spec_file (name, nick, blurb,
-                                        param_def->meta.m_file.action,
+                                        (GimpFileChooserAction) param_def->meta.m_file.action,
                                         param_def->meta.m_file.none_ok,
                                         file, flags);
           g_clear_object (&file);
@@ -673,6 +673,7 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
 
       param_def->param_def_type = GP_PARAM_DEF_TYPE_FILE;
 
+      param_def->meta.m_file.action      = (gint32) fspec->action;
       param_def->meta.m_file.none_ok     = fspec->none_ok;
       param_def->meta.m_file.default_uri =
         ospec->_default_value ?  g_file_get_uri (G_FILE (ospec->_default_value)) : NULL;

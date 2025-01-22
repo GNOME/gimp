@@ -243,9 +243,10 @@ struct _GPParamDefResource
 
 struct _GPParamDefFile
 {
-  GimpFileChooserAction  action;
-  gint32                 none_ok;
-  gchar                 *default_uri;
+  /* action is a GimpFileChooserAction casted to gint32. */
+  gint32  action;
+  gint32  none_ok;
+  gchar  *default_uri;
 };
 
 struct _GPParamDef
