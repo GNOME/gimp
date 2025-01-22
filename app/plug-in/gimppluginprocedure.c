@@ -447,13 +447,6 @@ GIMP_IS_PARAM_SPEC_RUN_MODE (GParamSpec *pspec)
           pspec->value_type == GIMP_TYPE_RUN_MODE);
 }
 
-static inline gboolean
-GIMP_IS_PARAM_SPEC_FILE (GParamSpec *pspec)
-{
-  return (G_IS_PARAM_SPEC_OBJECT (pspec) &&
-          pspec->value_type == G_TYPE_FILE);
-}
-
 static gboolean
 gimp_plug_in_procedure_validate_args (GimpPlugInProcedure *proc,
                                       Gimp                *gimp,

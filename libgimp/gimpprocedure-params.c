@@ -2276,50 +2276,64 @@ gimp_procedure_add_path_return_value (GimpProcedure *procedure,
 
 /**
  * gimp_procedure_add_file_argument:
- * @procedure:   the #GimpProcedure.
- * @name:        the name of the argument to be created.
- * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
- * @flags:       argument flags.
+ * @procedure:     The #GimpProcedure.
+ * @name:          The name of the argument to be created.
+ * @nick:          The label used in #GimpProcedureDialog.
+ * @blurb:         A more detailed help description.
+ * @action:        The type of file to expect.
+ * @none_ok:       Whether %NULL is allowed.
+ * @default_file: (nullable): File to use if none is assigned.
+ * @flags:         Argument flags.
  *
  * Add a new #GFile argument to @procedure.
  *
  * Since: 3.0
  **/
 void
-gimp_procedure_add_file_argument (GimpProcedure *procedure,
-                                  const gchar   *name,
-                                  const gchar   *nick,
-                                  const gchar   *blurb,
-                                  GParamFlags    flags)
+gimp_procedure_add_file_argument (GimpProcedure         *procedure,
+                                  const gchar           *name,
+                                  const gchar           *nick,
+                                  const gchar           *blurb,
+                                  GimpFileChooserAction  action,
+                                  gboolean               none_ok,
+                                  GFile                 *default_file,
+                                  GParamFlags            flags)
 {
   _gimp_procedure_add_argument (procedure,
-                                g_param_spec_object (name, nick, blurb,
-                                                     G_TYPE_FILE, flags));
+                                gimp_param_spec_file (name, nick, blurb,
+                                                      action, none_ok,
+                                                      default_file, flags));
 }
 
 /**
  * gimp_procedure_add_file_aux_argument:
- * @procedure:   the #GimpProcedure.
- * @name:        the name of the argument to be created.
- * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
- * @flags:       argument flags.
+ * @procedure:    The #GimpProcedure.
+ * @name:         The name of the argument to be created.
+ * @nick:         The label used in #GimpProcedureDialog.
+ * @blurb:        A more detailed help description.
+ * @action:       The type of file to expect.
+ * @none_ok:      Whether %NULL is allowed.
+ * @default_file: (nullable): File to use if none is assigned.
+ * @flags:        Argument flags.
  *
  * Add a new #GFile auxiliary argument to @procedure.
  *
  * Since: 3.0
  **/
 void
-gimp_procedure_add_file_aux_argument (GimpProcedure *procedure,
-                                      const gchar   *name,
-                                      const gchar   *nick,
-                                      const gchar   *blurb,
-                                      GParamFlags    flags)
+gimp_procedure_add_file_aux_argument (GimpProcedure         *procedure,
+                                      const gchar           *name,
+                                      const gchar           *nick,
+                                      const gchar           *blurb,
+                                      GimpFileChooserAction  action,
+                                      gboolean               none_ok,
+                                      GFile                 *default_file,
+                                      GParamFlags            flags)
 {
   _gimp_procedure_add_aux_argument (procedure,
-                                    g_param_spec_object (name, nick, blurb,
-                                                         G_TYPE_FILE, flags));
+                                    gimp_param_spec_file (name, nick, blurb,
+                                                          action, none_ok,
+                                                          default_file, flags));
 }
 
 /**
@@ -2342,8 +2356,9 @@ gimp_procedure_add_file_return_value (GimpProcedure *procedure,
                                       GParamFlags    flags)
 {
   _gimp_procedure_add_return_value (procedure,
-                                    g_param_spec_object (name, nick, blurb,
-                                                         G_TYPE_FILE, flags));
+                                    gimp_param_spec_file (name, nick, blurb,
+                                                          GIMP_FILE_CHOOSER_ACTION_ANY,
+                                                          TRUE, NULL, flags));
 }
 
 /**

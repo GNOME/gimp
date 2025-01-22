@@ -25,6 +25,7 @@
 #include <string.h>
 
 #include <gegl.h>
+#include <gio/gio.h>
 #include <glib-object.h>
 
 #include "gimpbasetypes.h"

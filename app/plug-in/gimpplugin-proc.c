@@ -292,8 +292,11 @@ GIMP_IS_PARAM_SPEC_RUN_MODE (GParamSpec *pspec)
 }
 
 static inline gboolean
-GIMP_IS_PARAM_SPEC_FILE (GParamSpec *pspec)
+gimp_plug_in_is_file_spec (GParamSpec *pspec)
 {
+  /* This will work both for GimpParamSpecFile specs and
+   * GParamSpecObject with a GFile value.
+   */
   return (G_IS_PARAM_SPEC_OBJECT (pspec) &&
           pspec->value_type == G_TYPE_FILE);
 }
@@ -334,7 +337,7 @@ gimp_plug_in_set_file_proc_load_handler (GimpPlugIn   *plug_in,
   if (((procedure->num_args   < 2)                        ||
        (procedure->num_values < 1)                        ||
        ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
-       ! GIMP_IS_PARAM_SPEC_FILE     (procedure->args[1]) ||
+       ! gimp_plug_in_is_file_spec   (procedure->args[1]) ||
        (! proc->generic_file_proc &&
         ! GIMP_IS_PARAM_SPEC_IMAGE (procedure->values[0]))))
     {
@@ -393,7 +396,7 @@ gimp_plug_in_set_file_proc_save_handler (GimpPlugIn   *plug_in,
   if ((procedure->num_args < 4)                                ||
       ! GIMP_IS_PARAM_SPEC_RUN_MODE       (procedure->args[0]) ||
       ! GIMP_IS_PARAM_SPEC_IMAGE          (procedure->args[1]) ||
-      ! GIMP_IS_PARAM_SPEC_FILE           (procedure->args[2]) ||
+      ! gimp_plug_in_is_file_spec         (procedure->args[2]) ||
       ! GIMP_IS_PARAM_SPEC_EXPORT_OPTIONS (procedure->args[3]))
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_FAILED,
@@ -592,7 +595,7 @@ gimp_plug_in_set_file_proc_handles_vector (GimpPlugIn   *plug_in,
   if (procedure->num_args < 4                            ||
       procedure->num_values < 1                          ||
       ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
-      ! GIMP_IS_PARAM_SPEC_FILE     (procedure->args[1]) ||
+      ! gimp_plug_in_is_file_spec   (procedure->args[1]) ||
       ! G_IS_PARAM_SPEC_INT         (procedure->args[2]) ||
       ! G_IS_PARAM_SPEC_INT         (procedure->args[3]) ||
       ! GIMP_IS_PARAM_SPEC_IMAGE (procedure->values[0]))

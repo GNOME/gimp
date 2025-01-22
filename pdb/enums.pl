@@ -652,6 +652,20 @@ package Gimp::CodeGen::enums;
 		       GIMP_EXPORT_NEEDS_ALPHA => '1 << 9',
 		       GIMP_EXPORT_NEEDS_CROP => '1 << 10' }
 	},
+    GimpFileChooserAction =>
+	{ contig => 0,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_FILE_CHOOSER_ACTION_ANY
+			  GIMP_FILE_CHOOSER_ACTION_OPEN
+			  GIMP_FILE_CHOOSER_ACTION_SAVE
+			  GIMP_FILE_CHOOSER_ACTION_SELECT_FOLDER
+			  GIMP_FILE_CHOOSER_ACTION_CREATE_FOLDER) ],
+	  mapping => { GIMP_FILE_CHOOSER_ACTION_ANY => '-1',
+		       GIMP_FILE_CHOOSER_ACTION_OPEN => '0',
+		       GIMP_FILE_CHOOSER_ACTION_SAVE => '1',
+		       GIMP_FILE_CHOOSER_ACTION_SELECT_FOLDER => '2',
+		       GIMP_FILE_CHOOSER_ACTION_CREATE_FOLDER => '3' }
+	},
     GimpColorManagementMode =>
 	{ contig => 1,
 	  header => 'libgimpconfig/gimpconfigenums.h',

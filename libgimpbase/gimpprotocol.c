@@ -19,6 +19,7 @@
 #include "config.h"
 
 #include <gegl.h>
+#include <gio/gio.h>
 #include <glib-object.h>
 
 #include "gimpbasetypes.h"
@@ -1293,6 +1294,21 @@ _gp_param_def_read (GIOChannel *channel,
                                    user_data))
         return FALSE;
       break;
+
+    case GP_PARAM_DEF_TYPE_FILE:
+      if (! _gimp_wire_read_int32 (channel,
+                                   (guint32 *) &param_def->meta.m_file.action, 1,
+                                   user_data))
+        return FALSE;
+      if (! _gimp_wire_read_int32 (channel,
+                                   (guint32 *) &param_def->meta.m_file.none_ok, 1,
+                                   user_data))
+        return FALSE;
+      if (! _gimp_wire_read_string (channel,
+                                    &param_def->meta.m_file.default_uri, 1,
+                                    user_data))
+        return FALSE;
+      break;
     }
 
   return TRUE;
@@ -1348,6 +1364,10 @@ _gp_param_def_destroy (GPParamDef *param_def)
       break;
 
     case GP_PARAM_DEF_TYPE_RESOURCE:
+      break;
+
+    case GP_PARAM_DEF_TYPE_FILE:
+      g_free (param_def->meta.m_file.default_uri);
       break;
     }
 }
@@ -1639,6 +1659,21 @@ _gp_param_def_write (GIOChannel *channel,
       if (! _gimp_wire_write_int32 (channel,
                                     (guint32 *) &param_def->meta.m_resource.default_resource_id, 1,
                                     user_data))
+        return FALSE;
+      break;
+
+    case GP_PARAM_DEF_TYPE_FILE:
+      if (! _gimp_wire_write_int32 (channel,
+                                    (guint32 *) &param_def->meta.m_file.action, 1,
+                                    user_data))
+        return FALSE;
+      if (! _gimp_wire_write_int32 (channel,
+                                    (guint32 *) &param_def->meta.m_file.none_ok, 1,
+                                    user_data))
+        return FALSE;
+      if (! _gimp_wire_write_string (channel,
+                                     &param_def->meta.m_file.default_uri, 1,
+                                     user_data))
         return FALSE;
       break;
     }

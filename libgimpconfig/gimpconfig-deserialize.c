@@ -1135,7 +1135,7 @@ gimp_config_deserialize_file_value (GValue     *value,
 
       if (path)
         {
-          GFile *file = g_file_new_for_path (path);
+          GFile *file = g_file_new_for_uri (path);
 
           g_value_take_object (value, file);
           g_free (path);

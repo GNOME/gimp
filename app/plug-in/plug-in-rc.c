@@ -1014,6 +1014,22 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
           goto error;
         }
       break;
+
+    case GP_PARAM_DEF_TYPE_FILE:
+      if (! gimp_scanner_parse_int (scanner,
+                                    (gint *) &param_def.meta.m_file.action) ||
+          ! gimp_scanner_parse_int (scanner,
+                                    &param_def.meta.m_file.none_ok))
+        {
+          token = G_TOKEN_INT;
+          goto error;
+        }
+      if (! gimp_scanner_parse_string (scanner,
+                                       &param_def.meta.m_file.default_uri))
+        {
+          token = G_TOKEN_STRING;
+          goto error;
+        }
       break;
     }
 
@@ -1081,6 +1097,10 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
       break;
 
     case GP_PARAM_DEF_TYPE_RESOURCE:
+      break;
+
+    case GP_PARAM_DEF_TYPE_FILE:
+      g_free (param_def.meta.m_file.default_uri);
       break;
     }
 
@@ -1272,6 +1292,14 @@ plug_in_rc_write_proc_arg (GimpConfigWriter *writer,
                                  param_def.meta.m_resource.none_ok,
                                  param_def.meta.m_resource.default_to_context,
                                  param_def.meta.m_resource.default_resource_id);
+      break;
+
+    case GP_PARAM_DEF_TYPE_FILE:
+      gimp_config_writer_printf (writer, "%d %d",
+                                 param_def.meta.m_file.action,
+                                 param_def.meta.m_file.none_ok);
+      gimp_config_writer_string (writer,
+                                 param_def.meta.m_file.default_uri);
       break;
     }
 

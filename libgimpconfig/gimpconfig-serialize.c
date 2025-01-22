@@ -642,7 +642,7 @@ gimp_config_serialize_value (const GValue *value,
 
       if (file)
         {
-          gchar *path     = g_file_get_path (file);
+          gchar *path     = g_file_get_uri (file);
           gchar *unexpand = NULL;
 
           if (path)

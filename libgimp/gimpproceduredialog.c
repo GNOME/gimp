@@ -657,11 +657,14 @@ gimp_procedure_dialog_set_ok_label (GimpProcedureDialog *dialog,
  *         non-editable color area with a label.
  *     * %GIMP_TYPE_COLOR_BUTTON: a color button with no label.
  *     * %GIMP_TYPE_COLOR_AREA: a color area with no label.
+ * - %GIMP_TYPE_PARAM_FILE:
+ *     * %GTK_FILE_CHOOSER_BUTTON (default): generic file chooser widget
+ *       using the action mode of the param spec.
  * - %G_TYPE_PARAM_FILE:
  *     * %GTK_FILE_CHOOSER_BUTTON (default): generic file chooser button
- *     in %GTK_FILE_CHOOSER_ACTION_OPEN mode. Please use
- *     gimp_procedure_dialog_get_file_chooser() to create buttons in
- *     other modes.
+ *       in %GTK_FILE_CHOOSER_ACTION_OPEN mode. Please use
+ *       [method@ProcedureDialog.get_file_chooser] to create buttons in
+ *       other modes or better, use a %GIMP_TYPE_PARAM_FILE argument.
  *
  * If the @widget_type is not supported for the actual type of
  * @property, the function will fail. To keep the default, set to
@@ -836,6 +839,13 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
           gtk_widget_set_vexpand (widget, FALSE);
           gtk_widget_set_hexpand (widget, FALSE);
         }
+    }
+  else if (GIMP_IS_PARAM_SPEC_FILE (pspec))
+    {
+      GimpParamSpecFile *fspec = GIMP_PARAM_SPEC_FILE (pspec);
+
+      widget = gimp_procedure_dialog_get_file_chooser (dialog, property,
+                                                       (GtkFileChooserAction) fspec->action);
     }
   else if (G_IS_PARAM_SPEC_OBJECT (pspec) && pspec->value_type == G_TYPE_FILE)
     {
@@ -1618,6 +1628,12 @@ gimp_procedure_dialog_get_label (GimpProcedureDialog *dialog,
  * If a widget has already been created for this procedure, it will be
  * returned instead (whatever its actual widget type).
  *
+ * Note: it doesn't work for [enum@Gtk.FileChooserAction.SAVE] and
+ * [enum@Gtk.FileChooserAction.CREATE_FOLDER] @action yet.
+ *
+ * As for [enum@Gimp.FileChooserAction.ANY], it should never be used for
+ * a procedure argument if you intend to display a widget for it.
+ *
  * Returns: (transfer none): the #GtkWidget representing @property. The
  *                           object belongs to @dialog and must not be
  *                           freed.
@@ -1633,6 +1649,9 @@ gimp_procedure_dialog_get_file_chooser (GimpProcedureDialog  *dialog,
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE_DIALOG (dialog), NULL);
   g_return_val_if_fail (property != NULL, NULL);
+  g_return_val_if_fail (action != GIMP_FILE_CHOOSER_ACTION_ANY &&
+                        action != GIMP_FILE_CHOOSER_ACTION_SAVE &&
+                        action != GIMP_FILE_CHOOSER_ACTION_CREATE_FOLDER, NULL);
 
   priv  = gimp_procedure_dialog_get_instance_private (dialog);
   pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (priv->config),
@@ -1646,7 +1665,7 @@ gimp_procedure_dialog_get_file_chooser (GimpProcedureDialog  *dialog,
     }
 
   g_return_val_if_fail (GIMP_IS_PARAM_SPEC_CONFIG_PATH (pspec) ||
-                          (G_IS_PARAM_SPEC_OBJECT (pspec) && pspec->value_type == G_TYPE_FILE),
+                        (G_IS_PARAM_SPEC_OBJECT (pspec) && pspec->value_type == G_TYPE_FILE),
                         NULL);
 
   /* First check if it already exists. */

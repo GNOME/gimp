@@ -114,6 +114,8 @@ gimp_load_procedure_constructed (GObject *object)
   gimp_procedure_add_file_argument (procedure, "file",
                                     "File",
                                     "The file to load",
+                                    GIMP_FILE_CHOOSER_ACTION_OPEN,
+                                    FALSE, NULL,
                                     GIMP_PARAM_READWRITE);
 
   gimp_procedure_add_image_return_value (procedure, "image",

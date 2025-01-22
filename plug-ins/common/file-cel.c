@@ -157,6 +157,8 @@ cel_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_add_file_argument (procedure, "palette-file",
                                         _("_Palette file"),
                                         _("KCF file to load palette from"),
+                                        GIMP_FILE_CHOOSER_ACTION_OPEN,
+                                        FALSE, NULL,
                                         G_PARAM_READWRITE);
     }
   else if (! strcmp (name, EXPORT_PROC))
@@ -193,6 +195,8 @@ cel_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_add_file_argument (procedure, "palette-file",
                                         _("_Palette file"),
                                         _("File to save palette to"),
+                                        GIMP_FILE_CHOOSER_ACTION_SAVE,
+                                        FALSE, NULL,
                                         G_PARAM_READWRITE);
     }
 

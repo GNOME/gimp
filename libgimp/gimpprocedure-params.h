@@ -994,21 +994,27 @@ void gimp_procedure_add_path_return_value              (GimpProcedure *procedure
                                                         gboolean       none_ok,
                                                         GParamFlags    flags);
 
-void gimp_procedure_add_file_argument                  (GimpProcedure *procedure,
-                                                        const gchar   *name,
-                                                        const gchar   *nick,
-                                                        const gchar   *blurb,
-                                                        GParamFlags    flags);
-void gimp_procedure_add_file_aux_argument              (GimpProcedure *procedure,
-                                                        const gchar   *name,
-                                                        const gchar   *nick,
-                                                        const gchar   *blurb,
-                                                        GParamFlags    flags);
-void gimp_procedure_add_file_return_value              (GimpProcedure *procedure,
-                                                        const gchar   *name,
-                                                        const gchar   *nick,
-                                                        const gchar   *blurb,
-                                                        GParamFlags    flags);
+void gimp_procedure_add_file_argument                  (GimpProcedure         *procedure,
+                                                        const gchar           *name,
+                                                        const gchar           *nick,
+                                                        const gchar           *blurb,
+                                                        GimpFileChooserAction  action,
+                                                        gboolean               none_ok,
+                                                        GFile                 *default_value,
+                                                        GParamFlags            flags);
+void gimp_procedure_add_file_aux_argument              (GimpProcedure         *procedure,
+                                                        const gchar           *name,
+                                                        const gchar           *nick,
+                                                        const gchar           *blurb,
+                                                        GimpFileChooserAction  action,
+                                                        gboolean               none_ok,
+                                                        GFile                 *default_value,
+                                                        GParamFlags            flags);
+void gimp_procedure_add_file_return_value              (GimpProcedure         *procedure,
+                                                        const gchar           *name,
+                                                        const gchar           *nick,
+                                                        const gchar           *blurb,
+                                                        GParamFlags            flags);
 
 void gimp_procedure_add_resource_argument              (GimpProcedure *procedure,
                                                         const gchar   *name,

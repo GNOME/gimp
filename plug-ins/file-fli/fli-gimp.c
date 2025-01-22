@@ -273,9 +273,10 @@ fli_create_procedure (GimpPlugIn  *plug_in,
                                       "Jens Ch. Restemeier",
                                       "1997");
 
-      gimp_procedure_add_file_argument (procedure, "file",
-                                        "File",
+      gimp_procedure_add_file_argument (procedure, "file", "File",
                                         "The local file to get info about",
+                                        GIMP_FILE_CHOOSER_ACTION_OPEN,
+                                        FALSE, NULL,
                                         G_PARAM_READWRITE);
 
       gimp_procedure_add_int_return_value (procedure, "width",

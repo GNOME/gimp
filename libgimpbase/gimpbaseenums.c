@@ -1960,6 +1960,42 @@ gimp_export_capabilities_get_type (void)
   return type;
 }
 
+GType
+gimp_file_chooser_action_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_FILE_CHOOSER_ACTION_ANY, "GIMP_FILE_CHOOSER_ACTION_ANY", "any" },
+    { GIMP_FILE_CHOOSER_ACTION_OPEN, "GIMP_FILE_CHOOSER_ACTION_OPEN", "open" },
+    { GIMP_FILE_CHOOSER_ACTION_SAVE, "GIMP_FILE_CHOOSER_ACTION_SAVE", "save" },
+    { GIMP_FILE_CHOOSER_ACTION_SELECT_FOLDER, "GIMP_FILE_CHOOSER_ACTION_SELECT_FOLDER", "select-folder" },
+    { GIMP_FILE_CHOOSER_ACTION_CREATE_FOLDER, "GIMP_FILE_CHOOSER_ACTION_CREATE_FOLDER", "create-folder" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_FILE_CHOOSER_ACTION_ANY, "GIMP_FILE_CHOOSER_ACTION_ANY", NULL },
+    { GIMP_FILE_CHOOSER_ACTION_OPEN, "GIMP_FILE_CHOOSER_ACTION_OPEN", NULL },
+    { GIMP_FILE_CHOOSER_ACTION_SAVE, "GIMP_FILE_CHOOSER_ACTION_SAVE", NULL },
+    { GIMP_FILE_CHOOSER_ACTION_SELECT_FOLDER, "GIMP_FILE_CHOOSER_ACTION_SELECT_FOLDER", NULL },
+    { GIMP_FILE_CHOOSER_ACTION_CREATE_FOLDER, "GIMP_FILE_CHOOSER_ACTION_CREATE_FOLDER", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpFileChooserAction", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_type_set_translation_context (type, "file-chooser-action");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
 
 /* Generated data ends here */
 

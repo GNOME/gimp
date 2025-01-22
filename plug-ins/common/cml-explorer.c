@@ -535,6 +535,8 @@ explorer_create_procedure (GimpPlugIn  *plug_in,
                                         _("Parameter File"),
                                         _("The parameter file from which CML_explorer makes an image. "
                                           "This argument is only used in non-interactive runs."),
+                                        GIMP_FILE_CHOOSER_ACTION_OPEN,
+                                        FALSE, NULL,
                                         G_PARAM_READWRITE);
 
       gimp_procedure_add_bytes_aux_argument (procedure, "settings-data",

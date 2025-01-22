@@ -431,6 +431,8 @@ raw_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_add_file_argument (procedure, "palette-file",
                                         _("_Palette File"),
                                         _("The file containing palette data"),
+                                        GIMP_FILE_CHOOSER_ACTION_OPEN,
+                                        TRUE, NULL,
                                         G_PARAM_READWRITE);
     }
   else if (! strcmp (name, LOAD_HGT_PROC))
@@ -490,6 +492,8 @@ raw_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_add_file_argument (procedure, "palette-file",
                                         _("_Palette File"),
                                         _("The file containing palette data"),
+                                        GIMP_FILE_CHOOSER_ACTION_OPEN,
+                                        TRUE, NULL,
                                         G_PARAM_READWRITE);
     }
   else if (! strcmp (name, EXPORT_PROC))

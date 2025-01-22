@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /* Increment every time the protocol changes
  */
-#define GIMP_PROTOCOL_VERSION  0x0114
+#define GIMP_PROTOCOL_VERSION  0x0115
 
 
 enum
@@ -60,7 +60,8 @@ typedef enum
   GP_PARAM_DEF_TYPE_ID,
   GP_PARAM_DEF_TYPE_ID_ARRAY,
   GP_PARAM_DEF_TYPE_EXPORT_OPTIONS,
-  GP_PARAM_DEF_TYPE_RESOURCE
+  GP_PARAM_DEF_TYPE_RESOURCE,
+  GP_PARAM_DEF_TYPE_FILE
 } GPParamDefType;
 
 typedef enum
@@ -100,6 +101,7 @@ typedef struct _GPParamDefGeglColor      GPParamDefGeglColor;
 typedef struct _GPParamDefID             GPParamDefID;
 typedef struct _GPParamDefIDArray        GPParamDefIDArray;
 typedef struct _GPParamDefResource       GPParamDefResource;
+typedef struct _GPParamDefFile           GPParamDefFile;
 typedef struct _GPParam                  GPParam;
 typedef struct _GPParamArray             GPParamArray;
 typedef struct _GPParamIDArray           GPParamIDArray;
@@ -239,6 +241,13 @@ struct _GPParamDefResource
   gint32 default_resource_id;
 };
 
+struct _GPParamDefFile
+{
+  GimpFileChooserAction  action;
+  gint32                 none_ok;
+  gchar                 *default_uri;
+};
+
 struct _GPParamDef
 {
   GPParamDefType  param_def_type;
@@ -262,6 +271,7 @@ struct _GPParamDef
     GPParamDefIDArray          m_id_array;
     GPParamDefChoice           m_choice;
     GPParamDefResource         m_resource;
+    GPParamDefFile             m_file;
   } meta;
 };
 

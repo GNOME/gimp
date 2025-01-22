@@ -368,8 +368,9 @@ script_fu_arg_add_argument (SFArg         *arg,
                             const gchar   *name,
                             const gchar   *nick)
 {
-  GString *blurb_gstring = script_fu_arg_get_blurb (arg);
-  gchar   *blurb         = blurb_gstring->str;
+  GString               *blurb_gstring = script_fu_arg_get_blurb (arg);
+  gchar                 *blurb         = blurb_gstring->str;
+  GimpFileChooserAction  action        = GIMP_FILE_CHOOSER_ACTION_ANY;
 
   switch (arg->type)
     {
@@ -492,17 +493,21 @@ script_fu_arg_add_argument (SFArg         *arg,
       break;
 
     case SF_FILENAME:
+      action = GIMP_FILE_CHOOSER_ACTION_OPEN;
     case SF_DIRNAME:
         {
           GParamSpec *pspec = NULL;
 
+          if (action == GIMP_FILE_CHOOSER_ACTION_ANY)
+            action = GIMP_FILE_CHOOSER_ACTION_SELECT_FOLDER;
+
           gimp_procedure_add_file_argument (procedure, name,
                                             nick, blurb,
+                                            action, TRUE, NULL,
                                             G_PARAM_READWRITE |
                                             GIMP_PARAM_NO_VALIDATE);
           pspec = gimp_procedure_find_argument (procedure, name);
           pspec_set_default_file (pspec, arg->default_value.sfa_file.filename);
-          /* FUTURE: Default not now appear in PDB browser, but appears in widgets? */
         }
       break;
 
@@ -953,18 +958,14 @@ script_fu_arg_generate_name_and_nick (SFArg        *arg,
 static void
 pspec_set_default_file (GParamSpec *pspec, const gchar *filepath)
 {
-  GValue  gvalue = G_VALUE_INIT;
-  GFile  *gfile  = NULL;
+  GFile *gfile  = NULL;
 
-  g_value_init (&gvalue, G_TYPE_FILE);
-  gfile = g_file_new_for_path (filepath);
-  g_value_set_object (&gvalue, gfile);
-  /* FIXME this is not correct.
-   * value_set_default sets the value, not the pspec.
-   * Should be something like:
-   * gimp_param_spec_file_set_default (pspec, gfile);
-   */
-  g_param_value_set_default (pspec, &gvalue);
+  if (filepath != NULL && strlen (filepath) > 0)
+    gfile = g_file_new_for_path (filepath);
+
+  gimp_param_spec_object_set_default (pspec, G_OBJECT (gfile));
+
+  g_clear_object (&gfile);
 }
 
 /* Append a string repr of an integer valued gvalue to given GString.

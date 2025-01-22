@@ -1338,6 +1338,33 @@ typedef enum
 } GimpExportCapabilities;
 
 
+/**
+ * GimpFileChooserAction:
+ * @GIMP_FILE_CHOOSER_ACTION_ANY:           No restriction.
+ * @GIMP_FILE_CHOOSER_ACTION_OPEN:          Opens an existing file.
+ * @GIMP_FILE_CHOOSER_ACTION_SAVE:          Saves a file (over a new file or an existing one.
+ * @GIMP_FILE_CHOOSER_ACTION_SELECT_FOLDER: Picks an existing folder.
+ * @GIMP_FILE_CHOOSER_ACTION_CREATE_FOLDER: Picks an existing or new folder.
+ *
+ * A type of file to choose from when actions are expected to choose a
+ * file. This is basically a mapping to %GtkFileChooserAction except for
+ * [enum@Gimp.FileChooserAction.ANY] which should not be used for any
+ * GUI functions since we can't know what you are looking for.
+ **/
+#define GIMP_TYPE_FILE_CHOOSER_ACTION (gimp_file_chooser_action_get_type ())
+
+GType gimp_file_chooser_action_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_FILE_CHOOSER_ACTION_ANY           = -1,
+  GIMP_FILE_CHOOSER_ACTION_OPEN          = 0,
+  GIMP_FILE_CHOOSER_ACTION_SAVE          = 1,
+  GIMP_FILE_CHOOSER_ACTION_SELECT_FOLDER = 2,
+  GIMP_FILE_CHOOSER_ACTION_CREATE_FOLDER = 3,
+} GimpFileChooserAction;
+
+
 G_END_DECLS
 
 #endif  /* __GIMP_BASE_ENUMS_H__ */

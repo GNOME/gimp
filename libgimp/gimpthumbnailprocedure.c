@@ -85,6 +85,8 @@ gimp_thumbnail_procedure_constructed (GObject *object)
   gimp_procedure_add_file_argument (procedure, "file",
                                     "File",
                                     "The file to load the thumbnail from",
+                                    GIMP_FILE_CHOOSER_ACTION_OPEN,
+                                    FALSE, NULL,
                                     GIMP_PARAM_READWRITE);
 
   gimp_procedure_add_int_argument (procedure, "thumb-size",

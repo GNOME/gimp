@@ -248,6 +248,8 @@ gimp_export_procedure_constructed (GObject *object)
   gimp_procedure_add_file_argument (procedure, "file",
                                     "File",
                                     "The file to export to",
+                                    GIMP_FILE_CHOOSER_ACTION_SAVE,
+                                    FALSE, NULL,
                                     GIMP_PARAM_READWRITE);
 
   _gimp_procedure_add_argument (procedure,

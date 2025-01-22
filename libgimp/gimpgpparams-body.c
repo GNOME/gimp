@@ -340,6 +340,25 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
                                          flags);
 
       break;
+
+    case GP_PARAM_DEF_TYPE_FILE:
+      if (! strcmp (param_def->type_name, "GimpParamFile"))
+        {
+          GFile      *file = NULL;
+          GParamSpec *pspec;
+
+          if (param_def->meta.m_file.default_uri &&
+              strlen (param_def->meta.m_file.default_uri) > 0)
+            file  = g_file_new_for_uri (param_def->meta.m_file.default_uri);
+
+          pspec = gimp_param_spec_file (name, nick, blurb,
+                                        param_def->meta.m_file.action,
+                                        param_def->meta.m_file.none_ok,
+                                        file, flags);
+          g_clear_object (&file);
+          return pspec;
+        }
+      break;
     }
 
   g_warning ("%s: GParamSpec type unsupported '%s'", G_STRFUNC,
@@ -646,6 +665,17 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
         param_def->meta.m_resource.default_resource_id = get_resource_id (default_value);
       else
         param_def->meta.m_resource.default_resource_id = 0;
+    }
+  else if (pspec_type == GIMP_TYPE_PARAM_FILE)
+    {
+      GimpParamSpecFile   *fspec = GIMP_PARAM_SPEC_FILE (pspec);
+      GimpParamSpecObject *ospec = GIMP_PARAM_SPEC_OBJECT (pspec);
+
+      param_def->param_def_type = GP_PARAM_DEF_TYPE_FILE;
+
+      param_def->meta.m_file.none_ok     = fspec->none_ok;
+      param_def->meta.m_file.default_uri =
+        ospec->_default_value ?  g_file_get_uri (G_FILE (ospec->_default_value)) : NULL;
     }
   else if (GIMP_IS_PARAM_SPEC_CORE_OBJECT_ARRAY (pspec))
     {

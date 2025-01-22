@@ -62,6 +62,7 @@ EXPORTS
 	gimp_escape_uline
 	gimp_export_capabilities_get_type
 	gimp_export_options_get_type
+	gimp_file_chooser_action_get_type
 	gimp_file_get_utf8_name
 	gimp_file_has_extension
 	gimp_file_show_in_file_manager
@@ -132,6 +133,7 @@ EXPORTS
 	gimp_param_core_object_array_get_type
 	gimp_param_double_array_get_type
 	gimp_param_export_options_get_type
+	gimp_param_file_get_type
 	gimp_param_int32_array_get_type
 	gimp_param_memsize_get_type
 	gimp_param_object_get_type
@@ -141,6 +143,7 @@ EXPORTS
 	gimp_param_spec_core_object_array
 	gimp_param_spec_double_array
 	gimp_param_spec_export_options
+	gimp_param_spec_file
 	gimp_param_spec_int32_array
 	gimp_param_spec_memsize
 	gimp_param_spec_object_duplicate
