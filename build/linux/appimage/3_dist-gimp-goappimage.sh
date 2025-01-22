@@ -142,7 +142,7 @@ bund_usr ()
     #Paths where to search
     case $2 in
       bin*)
-        search_path=("$1/bin" "/usr/sbin" "/usr/libexec")
+        search_path=("$1/bin" "$1/sbin" "$1/libexec")
         ;;
       lib*)
         search_path=("$(dirname $(echo $2 | sed "s|lib/|$1/${LIB_DIR}/${LIB_SUBDIR}|g" | sed "s|*|no_scape|g"))"
@@ -155,7 +155,7 @@ bund_usr ()
     for path in "${search_path[@]}"; do
       expanded_path=$(echo $(echo $path | sed "s|no_scape|*|g"))
       if [ ! -d "$expanded_path" ]; then
-        break
+        continue
       fi
 
       #Copy found targets from search_path to bundle dir
@@ -303,9 +303,8 @@ if [ "$GIMP_UNSTABLE" ]; then
   bund_usr "$UNIX_PREFIX" "lib/libGL*"
   bund_usr "$UNIX_PREFIX" "lib/dri*"
 fi
-### FIXME: Debug dialog (NOT WORKING)
-#bund_usr "$UNIX_PREFIX" "bin/lldb*"
-#bund_usr "$GIMP_PREFIX" "libexec/gimp-debug-tool*"
+### Debug dialog
+bund_usr "$GIMP_PREFIX" "bin/gimp-debug-tool*" --dest "libexec"
 ### Introspected plug-ins
 bund_usr "$GIMP_PREFIX" "lib/girepository-*"
 bund_usr "$UNIX_PREFIX" "lib/girepository-*"
