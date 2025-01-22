@@ -1000,7 +1000,7 @@ void gimp_procedure_add_file_argument                  (GimpProcedure         *p
                                                         const gchar           *blurb,
                                                         GimpFileChooserAction  action,
                                                         gboolean               none_ok,
-                                                        GFile                 *default_value,
+                                                        GFile                 *default_file,
                                                         GParamFlags            flags);
 void gimp_procedure_add_file_aux_argument              (GimpProcedure         *procedure,
                                                         const gchar           *name,
@@ -1008,7 +1008,7 @@ void gimp_procedure_add_file_aux_argument              (GimpProcedure         *p
                                                         const gchar           *blurb,
                                                         GimpFileChooserAction  action,
                                                         gboolean               none_ok,
-                                                        GFile                 *default_value,
+                                                        GFile                 *default_file,
                                                         GParamFlags            flags);
 void gimp_procedure_add_file_return_value              (GimpProcedure         *procedure,
                                                         const gchar           *name,
