@@ -359,7 +359,7 @@ msgstr "Peikarinformasjon"
 
 #: app/actions/actions.c:134 app/dialogs/dialogs.c:332
 msgid "Dashboard"
-msgstr "Dashboard"
+msgstr "Dashbord"
 
 #: app/actions/actions.c:137
 msgid "Debug"
@@ -2925,7 +2925,7 @@ msgstr "Dialogvindauget for _verktøyforval"
 #: app/actions/dialogs-actions.c:242
 msgctxt "dialogs-action"
 msgid "Tool Pre_sets"
-msgstr "Verktøyet _verktøyforval"
+msgstr "_Verktøyforval"
 
 #: app/actions/dialogs-actions.c:244
 msgctxt "dialogs-action"
@@ -3020,12 +3020,12 @@ msgstr "Opna feilkonsollen"
 #: app/actions/dialogs-actions.c:297 app/actions/dialogs-actions.c:298
 msgctxt "dialogs-action"
 msgid "_Dashboard"
-msgstr "_Dashboard"
+msgstr "_Dashbord"
 
 #: app/actions/dialogs-actions.c:300
 msgctxt "dialogs-action"
 msgid "Open the dashboard"
-msgstr "Opnar dashboardet"
+msgstr "Opnar dashbordet"
 
 #: app/actions/dialogs-actions.c:311 app/actions/dialogs-actions.c:312
 msgctxt "dialogs-action"
@@ -28620,7 +28620,7 @@ msgstr "Meny for peikarinformasjon"
 #: menus/dashboard-menu.ui:6
 msgctxt "dashboard-action"
 msgid "Dashboard Menu"
-msgstr "Dashboardmenyen"
+msgstr "Dashbordmenyen"
 
 #: menus/dashboard-menu.ui:9
 msgctxt "dashboard-action"
