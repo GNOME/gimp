@@ -3116,17 +3116,27 @@ gimp_prop_file_chooser_button_notify (GObject        *config,
                                       GParamSpec     *param_spec,
                                       GtkFileChooser *button)
 {
-  gchar *value;
   GFile *file = NULL;
 
-  g_object_get (config,
-                param_spec->name, &value,
-                NULL);
-
-  if (value)
+  if (GIMP_IS_PARAM_SPEC_CONFIG_PATH (param_spec))
     {
-      file = gimp_file_new_for_config_path (value, NULL);
-      g_free (value);
+      gchar *value = NULL;
+
+      g_object_get (config,
+                    param_spec->name, &value,
+                    NULL);
+
+      if (value)
+        {
+          file = gimp_file_new_for_config_path (value, NULL);
+          g_free (value);
+        }
+    }
+  else
+    {
+      g_object_get (config,
+                    param_spec->name, &file,
+                    NULL);
     }
 
   g_signal_handlers_block_by_func (button,
