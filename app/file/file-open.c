@@ -121,8 +121,7 @@ file_open_image (Gimp                *gimp,
     }
 
   /* FIXME enable these tests for remote files again, needs testing */
-  if (g_file_is_native (file) &&
-      g_file_query_exists (file, NULL))
+  if (g_file_is_native (file))
     {
       GFileInfo *info;
 
@@ -131,27 +130,35 @@ file_open_image (Gimp                *gimp,
                                 G_FILE_ATTRIBUTE_ACCESS_CAN_READ,
                                 G_FILE_QUERY_INFO_NONE,
                                 NULL, error);
-      if (! info)
-        return NULL;
 
-      if (g_file_info_get_attribute_uint32 (info, G_FILE_ATTRIBUTE_STANDARD_TYPE) != G_FILE_TYPE_REGULAR)
+      if (info != NULL)
         {
-          g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                               _("Not a regular file"));
+          if (g_file_info_get_attribute_uint32 (info, G_FILE_ATTRIBUTE_STANDARD_TYPE) != G_FILE_TYPE_REGULAR)
+            {
+              g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                                   _("Not a regular file"));
+              g_object_unref (info);
+              return NULL;
+            }
+
+          if (! g_file_info_get_attribute_boolean (info,
+                                                   G_FILE_ATTRIBUTE_ACCESS_CAN_READ))
+            {
+              g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                                   _("Permission denied"));
+              g_object_unref (info);
+              return NULL;
+            }
+
           g_object_unref (info);
+        }
+      else
+        {
+          /* File likely does not exists. error will already have a more
+           * accurate reason.
+           */
           return NULL;
         }
-
-      if (! g_file_info_get_attribute_boolean (info,
-                                               G_FILE_ATTRIBUTE_ACCESS_CAN_READ))
-        {
-          g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                               _("Permission denied"));
-          g_object_unref (info);
-          return NULL;
-        }
-
-      g_object_unref (info);
     }
 
   if (! file_proc)

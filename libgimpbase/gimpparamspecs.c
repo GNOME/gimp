@@ -293,7 +293,7 @@ gimp_param_spec_file_validate (GParamSpec *pspec,
     {
       modifying = TRUE;
     }
-  else if (file != NULL)
+  else if (file != NULL && g_file_is_native (file))
     {
       gboolean  exists = g_file_query_exists (file, NULL);
       GFileType type   = g_file_query_file_type (file, G_FILE_QUERY_INFO_NONE, NULL);
