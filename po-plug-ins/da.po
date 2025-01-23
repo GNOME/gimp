@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: GIMP plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-11-29 00:12+0000\n"
-"PO-Revision-Date: 2024-12-30 10:22+0100\n"
+"PO-Revision-Date: 2025-01-20 19:08+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -12323,7 +12323,7 @@ msgstr "Ændrer gammaværdien (lysstyrken) for den valgte pensel"
 
 #: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:1377
 msgid "Select:"
-msgstr "Markering:"
+msgstr "Vælg:"
 
 #: plug-ins/gimpressionist/brush.c:601
 msgid "Save _as"
@@ -15253,7 +15253,7 @@ msgstr "Kilde"
 
 #: plug-ins/metadata/metadata-editor.c:533
 msgid "Usage Terms"
-msgstr "Brugstermer"
+msgstr "Brugsbetingelser"
 
 #: plug-ins/metadata/metadata-editor.c:539
 msgid "Person Shown"
@@ -15283,7 +15283,7 @@ msgstr "Begivenhed"
 # overskriften for modulet
 #: plug-ins/metadata/metadata-editor.c:553
 msgid "Artwork or Object"
-msgstr "Grafik eller objekt"
+msgstr "Grafik eller genstand"
 
 #: plug-ins/metadata/metadata-editor.c:556
 msgid "Additional Model Info"
@@ -15310,7 +15310,7 @@ msgstr "Identifikator for standardkontrakt"
 
 #: plug-ins/metadata/metadata-editor.c:563
 msgid "Image Supplier Name"
-msgstr "Billedleverandørens navn"
+msgstr "Billedleverandørs navn"
 
 #: plug-ins/metadata/metadata-editor.c:564
 msgid "Image Supplier ID"
@@ -15318,7 +15318,7 @@ msgstr "Billedleverandør-ID"
 
 #: plug-ins/metadata/metadata-editor.c:565
 msgid "Supplier's Image ID"
-msgstr "Billedleverandørs ID"
+msgstr "Leverandørs billed-ID"
 
 #: plug-ins/metadata/metadata-editor.c:566
 msgid "Registry Entry"
@@ -15473,7 +15473,7 @@ msgstr "Patientens køn"
 
 #: plug-ins/metadata/metadata-editor.c:704
 msgid "Study ID"
-msgstr "Studie-ID"
+msgstr "Undersøgelses-ID"
 
 #: plug-ins/metadata/metadata-editor.c:705
 msgid "Referring Physician"
@@ -15481,7 +15481,7 @@ msgstr "Henvisende læge"
 
 #: plug-ins/metadata/metadata-editor.c:706
 msgid "Study Date"
-msgstr "Studiedato"
+msgstr "Undersøgelsesbeskrivelse"
 
 #: plug-ins/metadata/metadata-editor.c:708
 msgid "Study Description"
