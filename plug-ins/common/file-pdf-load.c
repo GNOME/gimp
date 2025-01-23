@@ -1048,13 +1048,15 @@ load_dialog (PopplerDocument     *doc,
 
   gint        i;
   gint        n_pages;
+  gchar      *title_text;
 
   gboolean    run;
 
   GimpPageSelectorTarget  target;
   gboolean                white_background;
 
-  n_pages = poppler_document_get_n_pages (doc);
+  n_pages    = poppler_document_get_n_pages (doc);
+  title_text = poppler_document_get_title (doc);
 
   dialog = gimp_vector_load_procedure_dialog_new (GIMP_VECTOR_LOAD_PROCEDURE (procedure),
                                                   GIMP_PROCEDURE_CONFIG (config),
@@ -1072,13 +1074,19 @@ load_dialog (PopplerDocument     *doc,
   gtk_widget_show (vbox);
 
   /* Title */
-  title = gimp_prop_label_new (G_OBJECT (doc), "title");
-  gtk_label_set_ellipsize (GTK_LABEL (title), PANGO_ELLIPSIZE_END);
-  gtk_box_pack_start (GTK_BOX (vbox), title, FALSE, FALSE, 0);
+  if (title_text && strlen (g_strstrip (title_text)) > 0)
+    {
+      title = gtk_label_new (title_text);
+      gtk_label_set_ellipsize (GTK_LABEL (title), PANGO_ELLIPSIZE_END);
+      gtk_box_pack_start (GTK_BOX (vbox), title, FALSE, FALSE, 0);
+      gtk_widget_set_visible (title, TRUE);
+
+      g_free (title_text);
+    }
 
   /* Page Selector */
   selector = gimp_page_selector_new ();
-  gtk_widget_set_size_request (selector, 380, 360);
+  gtk_widget_set_size_request (selector, 380, 300);
   gtk_box_pack_start (GTK_BOX (vbox), selector, TRUE, TRUE, 0);
   gtk_widget_show (selector);
 

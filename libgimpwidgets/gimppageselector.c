@@ -280,42 +280,6 @@ gimp_page_selector_init (GimpPageSelector *selector)
   gtk_box_pack_start (GTK_BOX (vbox), selector->count_label, FALSE, FALSE, 0);
   gtk_widget_show (selector->count_label);
 
-  /*  Select all button & range entry  */
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (selector), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  hbbox = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
-  gtk_box_pack_start (GTK_BOX (hbox), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
-
-  button = gtk_button_new_with_mnemonic (_("Select _All"));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (gimp_page_selector_select_all),
-                            selector);
-
-  selector->range_entry = gtk_entry_new ();
-  gtk_widget_set_size_request (selector->range_entry, 80, -1);
-  gtk_box_pack_end (GTK_BOX (hbox), selector->range_entry, TRUE, TRUE, 0);
-  gtk_widget_show (selector->range_entry);
-
-  g_signal_connect (selector->range_entry, "focus-out-event",
-                    G_CALLBACK (gimp_page_selector_range_focus_out),
-                    selector);
-  g_signal_connect (selector->range_entry, "activate",
-                    G_CALLBACK (gimp_page_selector_range_activate),
-                    selector);
-
-  label = gtk_label_new_with_mnemonic (_("Select _range:"));
-  gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), selector->range_entry);
-
   /*  Target combo  */
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
@@ -331,6 +295,38 @@ gimp_page_selector_init (GimpPageSelector *selector)
   gtk_widget_show (combo);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
+
+  /*  Select all button & range entry  */
+
+  label = gtk_label_new_with_mnemonic (_("Select _range:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  selector->range_entry = gtk_entry_new ();
+  gtk_widget_set_size_request (selector->range_entry, 40, -1);
+  gtk_box_pack_start (GTK_BOX (hbox), selector->range_entry, TRUE, TRUE, 0);
+  gtk_widget_show (selector->range_entry);
+
+  g_signal_connect (selector->range_entry, "focus-out-event",
+                    G_CALLBACK (gimp_page_selector_range_focus_out),
+                    selector);
+  g_signal_connect (selector->range_entry, "activate",
+                    G_CALLBACK (gimp_page_selector_range_activate),
+                    selector);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), selector->range_entry);
+
+  hbbox = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
+  gtk_box_pack_end (GTK_BOX (hbox), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+
+  button = gtk_button_new_with_mnemonic (_("Select _All"));
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (gimp_page_selector_select_all),
+                            selector);
 
   selector->default_thumbnail =
     gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
