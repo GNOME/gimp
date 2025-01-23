@@ -152,6 +152,7 @@ stages:
   parallel:
     matrix:
       - RUNNER: x86_64_v2
+  tags: []
 
 image-debian:
   extends: .debian
