@@ -352,7 +352,6 @@ gimp-debian-x64:
     # Check building
     - echo -e "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP"
     - meson setup _build-${RUNNER} -Dprefix="${GIMP_PREFIX}"
-                                   -Dg-ir-doc=true
                                    -Dfile-plug-ins-test=true
                                    $MESON_OPTIONS
     - cd _build-${RUNNER}
