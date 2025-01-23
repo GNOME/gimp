@@ -60,7 +60,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2025-01-10 22:27+0000\n"
-"PO-Revision-Date: 2025-01-11 10:46+0100\n"
+"PO-Revision-Date: 2025-01-21 19:45+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -2727,7 +2727,7 @@ msgstr "Åbn dialogen kanaler"
 #: app/actions/dialogs-actions.c:93
 msgctxt "dialogs-action"
 msgid "_Paths Dialog"
-msgstr "Dialogen k_urve"
+msgstr "Dialogen k_urver"
 
 #: app/actions/dialogs-actions.c:94
 msgctxt "dialogs-action"
@@ -12751,17 +12751,17 @@ msgstr "Vis som gitter"
 #: app/core/core-enums.c:1503
 msgctxt "select-method"
 msgid "Selection by basic text search"
-msgstr "Udvælg baseret på grundlæggende tekstsøgning"
+msgstr "Udvælgelse baseret på grundlæggende tekstsøgning"
 
 #: app/core/core-enums.c:1504
 msgctxt "select-method"
 msgid "Selection by regular expression search"
-msgstr "Udvælg baseret på søgning efter regulært udtryk"
+msgstr "Udvælgelse baseret på søgning efter regulært udtryk"
 
 #: app/core/core-enums.c:1505
 msgctxt "select-method"
 msgid "Selection by glob pattern search"
-msgstr "Udvælgelse baseret på global mønstersøgning"
+msgstr "Udvælgelse baseret på glob-mønstersøgning"
 
 # dækker nogenlunde
 #. initialize babl fishes
@@ -29169,11 +29169,12 @@ msgctxt "image-action"
 msgid "_Map"
 msgstr "Af_bildning"
 
-# På wikipedia bruger de fleste sprog, inkl. dansk, bare Tone Mapping
+# Adobe bruger både Tonekortlægning og Tonetilknytnng (https://helpx.adobe.com/dk/camera-raw/using/gain-map.html)
+# Tonekortlægning lader til at være mest brugt
 #: menus/image-menu.ui.in.in:578
 msgctxt "image-action"
 msgid "_Tone Mapping"
-msgstr "_Tone mapping"
+msgstr "_Tonekortlægning"
 
 #: menus/image-menu.ui.in.in:585
 msgctxt "image-action"
