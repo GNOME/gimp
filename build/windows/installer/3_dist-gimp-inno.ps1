@@ -188,6 +188,7 @@ foreach ($bundle in $supported_archs)
     Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):${bundle}_files[collapsed=true]$([char]13)$([char]27)[0KPreparing GIMP files in $bundle bundle"
 
     ## Get GIMP versions used in some versioned files and dirs
+    ## FIXME: This should be done with Inno scripting
     $gimp_version = Get-Content "$CONFIG_PATH"                               | Select-String 'GIMP_VERSION'        |
                     Foreach-Object {$_ -replace '#define GIMP_VERSION "',''} | Foreach-Object {$_ -replace '"',''} |
                     Foreach-Object {$_ -replace '(.+?)-.+','$1'}
