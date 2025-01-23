@@ -844,8 +844,9 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
     {
       GimpParamSpecFile *fspec = GIMP_PARAM_SPEC_FILE (pspec);
 
-      widget = gimp_procedure_dialog_get_file_chooser (dialog, property,
-                                                       (GtkFileChooserAction) fspec->action);
+      widget = gimp_prop_file_chooser_button_new (G_OBJECT (priv->config),
+                                                  property, NULL,
+                                                  (GtkFileChooserAction) fspec->action);
     }
   else if (G_IS_PARAM_SPEC_OBJECT (pspec) && pspec->value_type == G_TYPE_FILE)
     {
@@ -963,6 +964,8 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
 
       g_hash_table_remove (priv->sensitive_data, property);
     }
+
+  g_return_val_if_fail (g_hash_table_lookup_extended (priv->widgets, property, NULL, NULL) == FALSE, NULL);
 
   gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
   g_hash_table_insert (priv->widgets, g_strdup (property), widget);
