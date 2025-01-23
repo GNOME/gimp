@@ -188,8 +188,7 @@ image-debian:
             valac
             xauth
             xsltproc
-            xvfb
-            yelp-tools" >> Dockerfile
+            xvfb" >> Dockerfile
     # Dependencies
     - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
     - echo "at-spi2-core
