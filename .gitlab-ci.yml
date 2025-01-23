@@ -383,7 +383,6 @@ gimp-debian-x64:
       - _build-${RUNNER}/meson-logs/meson-log.txt
       - _build-${RUNNER}/meson-dist/
       - _build-${RUNNER}/config.h
-      - _build-${RUNNER}/devel-docs/
     reports:
       junit: "_build-${RUNNER}/meson-logs/testlog.junit.xml"
     expire_in: 2 days
@@ -763,7 +762,6 @@ dev-docs:
       DIR_NAME=gimp-api-docs-$GIMP_VER                                                       &&
       mkdir $DIR_NAME                                                                        &&
       mv "${GIMP_PREFIX}/share/doc/gimp-$APP_VER" $DIR_NAME/reference                        &&
-      mv _build*/devel-docs/g-ir-docs $DIR_NAME/                                             &&
       TAR_NAME="$DIR_NAME.tar.xz"                                                            &&
       tar --dereference -cJf ${TAR_NAME} $DIR_NAME                                           &&
       sha256sum $TAR_NAME > ${TAR_NAME}.SHA256SUMS                                           &&
