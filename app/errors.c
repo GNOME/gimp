@@ -331,6 +331,9 @@ gimp_eek (const gchar *reason,
           const gchar *gimpdebug = "gimp-debug-tool-" GIMP_TOOL_VERSION ".exe";
 #elif defined (PLATFORM_OSX)
           const gchar *gimpdebug = "gimp-debug-tool-" GIMP_TOOL_VERSION;
+#elif !defined (G_OS_WIN32) && !defined (PLATFORM_OSX) && defined ENABLE_RELOCATABLE_RESOURCES
+          const gchar *gimpdebug = g_build_filename (gimp_installation_directory (),
+                                   "libexec", "gimp-debug-tool-" GIMP_TOOL_VERSION, NULL);
 #else
           const gchar *gimpdebug = LIBEXECDIR "/gimp-debug-tool-" GIMP_TOOL_VERSION;
 #endif
