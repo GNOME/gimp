@@ -87,9 +87,9 @@
                            "RGB* GRAY*"
                            SF-ONE-OR-MORE-DRAWABLE
                            SF-ADJUSTMENT            _"Random Seed" '(0 0 1024 1 10 0 1)
-                           SF-ADJUSTMENT             "Detail"      '(1 0 15 1 10 0 1)
+                           SF-ADJUSTMENT            _"Levels"      '(1 0 15 1 10 0 1)
                            SF-TOGGLE                _"Tileable"    FALSE
-                           SF-TOGGLE                 "Turbulent"   FALSE
+                           SF-TOGGLE                _"Turbulence"  FALSE
                            SF-ADJUSTMENT            _"X"           '(4 0.1 16 0.1 1 1 0)
                            SF-ADJUSTMENT            _"Y"           '(4 0.1 16 0.1 1 1 0)
                          )
