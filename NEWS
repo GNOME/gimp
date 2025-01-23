@@ -54,7 +54,14 @@ Plug-ins:
     * The new named argument syntax can also be used for arguments of
       filters (though string still works as there is no confusion
       possible with another syntax).
-  - PSD: metadata export now supported.
+    * SF-FILENAME and SF-DIRNAME args now create a GimpParamSpecFile
+      argument with the proper action type.
+  - PSD:
+    * Metadata export now supported.
+    * 16-bit per channel LAB PSD are now supported at import.
+    * PSD compatibility messages are now selectable for easy copy-paste.
+    * Store proper merged image when exporting CMYK PSD files.
+  - All plug-ins with a GFile argument now use a GimpParamSpecFile spec.
 
 API:
 
@@ -63,11 +70,17 @@ API:
       and Exif) when first creating a new image.
     * New function gimp_metadata_set_creation_date() allowing to set
       a custom creation date.
+    * New GimpFileChooserAction enum type.
+    * New GimpParamSpecFile param spec type.
   - Changes in libgimp:
     * New function gimp_procedure_is_core()
     * gimp_pdb_query() doesn't return private PDB procedures anymore.
     * The various "save-*" PDB procedure arguments for export plug-ins
       were renamed to "include-*" and made public.
+    * gimp_file_save_thumbnail() renamed gimp_file_create_thumbnail()
+      and now supporting when the file is the export or import image.
+    * GFile arguments are now stored as URI rather than path in config
+      files.
 
 Translations:
 
@@ -84,6 +97,7 @@ Build:
   - Improve shared Docker Debian versioning in the CI and make it branch
     aware.
   - Crossbuild jobs are back in CI and with UCRT.
+  - Meson option -Dg-ir-doc was removed.
 
 
 Overview of Changes from GIMP 3.0.0-RC1 to GIMP 3.0.0-RC2
