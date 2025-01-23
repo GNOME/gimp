@@ -949,7 +949,6 @@
             ],
             "buildsystem": "meson",
             "config-opts": [
-                "-Dg-ir-doc=false",
                 "-Dgi-docgen=disabled",
                 "-Dicc-directory=/run/host/usr/share/color/icc/",
                 "-Dcheck-update=no",

@@ -1268,11 +1268,6 @@ appstreamcli = find_program('appstreamcli', version: '>=0.15.3', required: get_o
 
 gi_docgen = find_program('gi-docgen', required: get_option('gi-docgen'))
 
-if get_option('g-ir-doc')
-  gir_doc_tool = find_program('g-ir-doc-tool', required: true)
-  yelp_build   = find_program('yelp-build', required: true)
-endif
-
 # Check for vector icons
 have_vector_icons = get_option('vector-icons')
 if have_vector_icons
@@ -2226,7 +2221,6 @@ final_message = [
 '',
 '''Documentation:''',
 '''  libgimp API Reference: @0@'''.format(gi_docgen.found() and have_gobject_introspection),
-'''  GObject Introspection: @0@'''.format(get_option('g-ir-doc')),
 '',
 '''Bug report URL: @0@'''.format(bug_report_url),
 ]

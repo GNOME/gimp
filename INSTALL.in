@@ -386,10 +386,6 @@ These are:
   -Dgi-docgen=enabled|disabled  This option controls whether the libgimp
      C API references will be created using gi-docgen.
 
-  -Dg-ir-doc=true  This option controls whether the libgimp API
-     references for some binding languages will be created using
-     g-ir-doc-tool and yelp-build.
-
   -Denable-multiproc=false This option allows you to disable support for
      multiple processors. It is enabled by default.
 

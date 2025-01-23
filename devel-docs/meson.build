@@ -11,7 +11,3 @@ mkdb_args_common = [
 if gi_docgen.found() and have_gobject_introspection
   subdir('reference')
 endif
-
-if get_option('g-ir-doc')
-  subdir('g-ir-docs')
-endif

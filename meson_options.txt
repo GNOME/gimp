@@ -59,7 +59,6 @@ option('file-plug-ins-test', type: 'boolean', value: 'false', description: 'Alwa
 option('can-crosscompile-gir', type: 'boolean', value: false, description: 'GIR is buildable even if crosscompiling')
 
 option('gi-docgen',         type: 'feature', value: 'auto', description: 'Build developer documentation (uses gi-docgen)')
-option('g-ir-doc',          type: 'boolean', value: false,  description: 'Build developer documentation for introspected API')
 
 option('linux-input',       type: 'feature', value: 'auto', description: 'Linux input event controller module')
 option('vector-icons',      type: 'boolean', value: true,   description: 'Use vector icons rather than raster ones')

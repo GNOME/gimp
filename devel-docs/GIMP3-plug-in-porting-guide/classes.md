@@ -3,19 +3,8 @@
 Here's a guide to the modules you're likely to need.
 It's a work in progress: feel free to add to it.
 
-Eventually we'll have online documentation for these classes.
-In the meantime, you can generate your own:
-```
-HTMLDOCDIR=/path/to/doc/dir
-g-ir-doc-tool -I /path/to/share/gir-1.0/ --language=Python -o $HTMLDOCDIR Gimp-3.0.gir
-```
-Then browse $HTMLDOCDIR with yelp, or generate HTML from it:
-```
-cd $HTMLDOCDIR
-yelp-build cache *.page
-yelp-build html .
-
-```
+Online documentation for our libraries can be found at:
+https://developer.gimp.org/api/3.0/
 
 You can also get some information in GIMP's Python console with
 *help(module)* or *help(object)*, and you can get a list of functions
