@@ -225,6 +225,9 @@ static void         gimp_param_file_init           (GimpParamSpecFile        *fs
 
 static gboolean     gimp_param_spec_file_validate  (GParamSpec               *pspec,
                                                     GValue                   *value);
+static gint         gimp_param_spec_file_cmp       (GParamSpec               *pspec,
+                                                    const GValue             *value1,
+                                                    const GValue             *value2);
 static GParamSpec * gimp_param_spec_file_duplicate (GParamSpec               *pspec);
 
 
@@ -270,6 +273,7 @@ gimp_param_file_class_init (GimpParamSpecObjectClass *klass)
 
   pclass->value_type     = G_TYPE_FILE;
   pclass->value_validate = gimp_param_spec_file_validate;
+  pclass->values_cmp     = gimp_param_spec_file_cmp;
   oclass->duplicate      = gimp_param_spec_file_duplicate;
 }
 
@@ -324,6 +328,31 @@ gimp_param_spec_file_validate (GParamSpec *pspec,
     }
 
   return modifying;
+}
+
+static gint
+gimp_param_spec_file_cmp (GParamSpec   *pspec,
+                          const GValue *value1,
+                          const GValue *value2)
+{
+  GFile *file1 = g_value_get_object (value1);
+  GFile *file2 = g_value_get_object (value2);
+  gchar *uri1;
+  gchar *uri2;
+  gint   retval;
+
+  if (! file1 || ! file2)
+    return file2 ? -1 : (file1 ? 1 : 0);
+
+  uri1 = g_file_get_uri (file1);
+  uri2 = g_file_get_uri (file2);
+
+  retval = g_strcmp0 (uri1, uri2);
+
+  g_free (uri1);
+  g_free (uri2);
+
+  return retval;
 }
 
 static GParamSpec *
