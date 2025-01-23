@@ -2186,8 +2186,9 @@ gimp_filter_tool_set_config (GimpFilterTool *filter_tool,
         }
 
       g_object_set (filter_tool->filter,
-                    "name", name,
-                    "mask", mask,
+                    "name",      name,
+                    "mask",      mask,
+                    "temporary", TRUE,
                     NULL);
     }
 }

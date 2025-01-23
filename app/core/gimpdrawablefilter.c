@@ -68,6 +68,7 @@ enum
   PROP_DRAWABLE,
   PROP_MASK,
   PROP_CUSTOM_NAME,
+  PROP_TEMPORARY,
   N_PROPS
 };
 
@@ -110,6 +111,8 @@ struct _GimpDrawableFilter
   GeglNode               *crop_before;
   GeglNode               *crop_after;
   GimpApplicator         *applicator;
+
+  gboolean                is_temporary;
 };
 
 static void       gimp_drawable_filter_set_property          (GObject             *object,
@@ -217,6 +220,11 @@ gimp_drawable_filter_class_init (GimpDrawableFilterClass *klass)
                                                                   FALSE,
                                                                   GIMP_PARAM_READWRITE);
 
+  drawable_filter_props[PROP_TEMPORARY] = g_param_spec_boolean ("temporary",
+                                                                NULL, NULL,
+                                                                FALSE,
+                                                                GIMP_PARAM_READWRITE);
+
 
   g_object_class_install_properties (object_class, N_PROPS, drawable_filter_props);
 }
@@ -273,6 +281,10 @@ gimp_drawable_filter_set_property (GObject      *object,
       filter->has_custom_name = g_value_get_boolean (value);
       break;
 
+    case PROP_TEMPORARY:
+      filter->is_temporary = g_value_get_boolean (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -297,6 +309,9 @@ gimp_drawable_filter_get_property (GObject    *object,
       break;
     case PROP_CUSTOM_NAME:
       g_value_set_boolean (value, filter->has_custom_name);
+      break;
+    case PROP_TEMPORARY:
+      g_value_set_boolean (value, filter->is_temporary);
       break;
 
     default:

@@ -2357,6 +2357,7 @@ gimp_item_tree_view_effects_clicked (GtkCellRendererToggle *toggle,
           GtkTreeViewColumn     *column;
           GimpContainerTreeView *filter_tree_view = NULL;
           GtkWidget             *scrolled_window  = NULL;
+          gboolean               is_editing       = FALSE;
 
           filter_view = gimp_container_tree_view_new (filters,
                                                       gimp_container_view_get_context (GIMP_CONTAINER_VIEW (view)),
@@ -2402,8 +2403,18 @@ gimp_item_tree_view_effects_clicked (GtkCellRendererToggle *toggle,
                filter_list = g_list_previous (filter_list))
             {
               if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
-                gimp_item_tree_view_filter_active_changed (GIMP_FILTER (filter_list->data),
-                                                           filter_tree_view);
+                {
+                  gboolean is_temporary;
+
+                  gimp_item_tree_view_filter_active_changed (GIMP_FILTER (filter_list->data),
+                                                             filter_tree_view);
+
+                  g_object_get (filter_list->data,
+                                "temporary", &is_temporary,
+                                NULL);
+                  if (is_temporary)
+                    is_editing = TRUE;
+                }
             }
 
           g_signal_connect (filter_tree_view, "select-items",
@@ -2433,6 +2444,9 @@ gimp_item_tree_view_effects_clicked (GtkCellRendererToggle *toggle,
 
           gimp_item_tree_view_filters_changed (item, view);
           gtk_widget_show (view->priv->effects_popover);
+
+          /* Lock filter options if we're actively editing a filter */
+          gimp_item_tree_effects_set_sensitive (view, ! is_editing);
         }
     }
 }
