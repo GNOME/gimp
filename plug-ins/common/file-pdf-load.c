@@ -1080,9 +1080,9 @@ load_dialog (PopplerDocument     *doc,
       gtk_label_set_ellipsize (GTK_LABEL (title), PANGO_ELLIPSIZE_END);
       gtk_box_pack_start (GTK_BOX (vbox), title, FALSE, FALSE, 0);
       gtk_widget_set_visible (title, TRUE);
-
-      g_free (title_text);
     }
+  if (title_text)
+    g_free (title_text);
 
   /* Page Selector */
   selector = gimp_page_selector_new ();
