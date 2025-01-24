@@ -824,14 +824,14 @@ gimp_config_deserialize_value_array (GValue     *value,
                                      GParamSpec *prop_spec,
                                      GScanner   *scanner)
 {
-  GimpParamSpecValueArray *array_spec;
-  GimpValueArray          *array;
-  GValue                   array_value = G_VALUE_INIT;
-  gint                     n_values;
-  GTokenType               token;
-  gint                     i;
+  GParamSpec     *element_spec;
+  GimpValueArray *array;
+  GValue          array_value = G_VALUE_INIT;
+  gint            n_values;
+  GTokenType      token;
+  gint            i;
 
-  array_spec = GIMP_PARAM_SPEC_VALUE_ARRAY (prop_spec);
+  element_spec = gimp_param_spec_value_array_get_element_spec (prop_spec);
 
   if (! gimp_scanner_parse_int (scanner, &n_values))
     return G_TOKEN_INT;
@@ -840,12 +840,10 @@ gimp_config_deserialize_value_array (GValue     *value,
 
   for (i = 0; i < n_values; i++)
     {
-      g_value_init (&array_value, array_spec->element_spec->value_type);
+      g_value_init (&array_value, element_spec->value_type);
 
-      token = gimp_config_deserialize_value (&array_value,
-                                             config,
-                                             array_spec->element_spec,
-                                             scanner);
+      token = gimp_config_deserialize_value (&array_value, config,
+                                             element_spec, scanner);
 
       if (token == G_TOKEN_RIGHT_PAREN)
         gimp_value_array_append (array, &array_value);

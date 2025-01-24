@@ -158,6 +158,7 @@ EXPORTS
 	gimp_param_spec_unit_percent_allowed
 	gimp_param_spec_unit_pixel_allowed
 	gimp_param_spec_value_array
+	gimp_param_spec_value_array_get_element_spec
 	gimp_param_unit_get_type
 	gimp_param_value_array_get_type
 	gimp_parasite_compare

@@ -85,33 +85,17 @@ void             gimp_value_array_truncate              (GimpValueArray        *
 
 #define GIMP_TYPE_PARAM_VALUE_ARRAY           (gimp_param_value_array_get_type ())
 #define GIMP_IS_PARAM_SPEC_VALUE_ARRAY(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_VALUE_ARRAY))
-#define GIMP_PARAM_SPEC_VALUE_ARRAY(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_VALUE_ARRAY, GimpParamSpecValueArray))
 
-typedef struct _GimpParamSpecValueArray GimpParamSpecValueArray;
 
-/**
- * GimpParamSpecValueArray:
- * @parent_instance:  private #GParamSpec portion
- * @element_spec:     the #GParamSpec of the array elements
- * @fixed_n_elements: default length of the array
- *
- * A #GParamSpec derived structure that contains the meta data for
- * value array properties.
- **/
-struct _GimpParamSpecValueArray
-{
-  GParamSpec  parent_instance;
-  GParamSpec *element_spec;
-  gint        fixed_n_elements;
-};
+GType        gimp_param_value_array_get_type              (void) G_GNUC_CONST;
 
-GType        gimp_param_value_array_get_type (void) G_GNUC_CONST;
+GParamSpec * gimp_param_spec_value_array                  (const gchar    *name,
+                                                           const gchar    *nick,
+                                                           const gchar    *blurb,
+                                                           GParamSpec     *element_spec,
+                                                           GParamFlags     flags);
 
-GParamSpec * gimp_param_spec_value_array     (const gchar    *name,
-                                              const gchar    *nick,
-                                              const gchar    *blurb,
-                                              GParamSpec     *element_spec,
-                                              GParamFlags     flags);
+GParamSpec * gimp_param_spec_value_array_get_element_spec (GParamSpec *pspec);
 
 
 G_END_DECLS
