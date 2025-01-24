@@ -450,7 +450,7 @@ gimp_procedure_config_save_metadata (GimpProcedureConfig *config,
 /**
  * gimp_procedure_config_get_core_object_array:
  * @config:        a #GimpProcedureConfig
- * @property_name: the name of a [struct@ParamSpecCoreObjectArray] param spec.
+ * @property_name: the name of a #GimpParamSpecCoreObjectArray param spec.
  *
  * A function for bindings to get a [type@CoreObjectArray] property. Getting
  * these with [method@GObject.Object.get] or [method@GObject.Object.get_property] won't
@@ -501,7 +501,7 @@ gimp_procedure_config_get_core_object_array (GimpProcedureConfig  *config,
 /**
  * gimp_procedure_config_set_core_object_array:
  * @config:        a #GimpProcedureConfig
- * @property_name: the name of a [struct@ParamSpecCoreObjectArray] param spec.
+ * @property_name: the name of a #GimpParamSpecCoreObjectArray param spec.
  * @objects: (array length=n_objects) (transfer none): an array of #GObjects.
  * @n_objects: the numbers of @objects.
  *
@@ -560,7 +560,7 @@ gimp_procedure_config_set_core_object_array (GimpProcedureConfig  *config,
 /**
  * gimp_procedure_config_get_color_array:
  * @config:        a #GimpProcedureConfig
- * @property_name: the name of a [struct@ParamSpecCoreObjectArray] param spec.
+ * @property_name: the name of a #GParamSpecBoxed param spec with [type@ColorArray] value type.
  *
  * A function for bindings to get a [type@ColorArray] property. Getting
  * these with [method@GObject.Object.get] or [method@GObject.Object.get_property] won't
@@ -612,7 +612,7 @@ gimp_procedure_config_get_color_array (GimpProcedureConfig  *config,
 /**
  * gimp_procedure_config_set_color_array:
  * @config:        a #GimpProcedureConfig
- * @property_name: the name of a [struct@ParamSpecCoreObjectArray] param spec.
+ * @property_name: the name of a #GParamSpecBoxed param spec with [type@ColorArray] value type.
  * @colors: (array length=n_colors) (transfer none): an array of [class@Gegl.Color].
  * @n_colors: the numbers of @colors.
  *

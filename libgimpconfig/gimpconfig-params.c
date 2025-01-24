@@ -295,10 +295,8 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
     }
   else if (GIMP_IS_PARAM_SPEC_CORE_OBJECT_ARRAY (pspec))
     {
-      GimpParamSpecCoreObjectArray *spec = GIMP_PARAM_SPEC_CORE_OBJECT_ARRAY (pspec);
-
       copy = gimp_param_spec_core_object_array (name, nick, blurb,
-                                                spec->object_type,
+                                                gimp_param_spec_core_object_array_get_object_type (pspec),
                                                 flags);
     }
   else if (GIMP_IS_PARAM_SPEC_EXPORT_OPTIONS (pspec))

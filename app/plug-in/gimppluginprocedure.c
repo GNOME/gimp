@@ -672,8 +672,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
         }
       else
         {
-          GimpParamSpecCoreObjectArray *spec      = GIMP_PARAM_SPEC_CORE_OBJECT_ARRAY (procedure->args[2]);
-          const gchar                  *type_name = g_type_name (spec->object_type);
+          const gchar *type_name = g_type_name (gimp_param_spec_core_object_array_get_object_type (procedure->args[2]));
 
           if (g_strcmp0 (type_name, "GimpDrawable") != 0 &&
               g_strcmp0 (type_name, "GimpLayer")    != 0)
@@ -695,8 +694,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
         }
       else
         {
-          GimpParamSpecCoreObjectArray *spec      = GIMP_PARAM_SPEC_CORE_OBJECT_ARRAY (procedure->args[2]);
-          const gchar                  *type_name = g_type_name (spec->object_type);
+          const gchar *type_name = g_type_name (gimp_param_spec_core_object_array_get_object_type (procedure->args[2]));
 
           if (g_strcmp0 (type_name, "GimpDrawable") != 0 &&
               g_strcmp0 (type_name, "GimpChannel")  != 0)

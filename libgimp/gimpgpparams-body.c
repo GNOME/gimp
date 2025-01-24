@@ -685,7 +685,7 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       param_def->param_def_type = GP_PARAM_DEF_TYPE_ID_ARRAY;
 
       param_def->meta.m_id_array.type_name =
-        (gchar *) g_type_name (GIMP_PARAM_SPEC_CORE_OBJECT_ARRAY (pspec)->object_type);
+        (gchar *) g_type_name (gimp_param_spec_core_object_array_get_object_type (pspec));
     }
   else if (pspec_type == GIMP_TYPE_PARAM_EXPORT_OPTIONS)
     {
@@ -1090,7 +1090,7 @@ gimp_gp_param_to_value (gpointer        gimp,
         }
       else if (pspec != NULL)
         {
-          object_type = GIMP_PARAM_SPEC_CORE_OBJECT_ARRAY (pspec)->object_type;
+          object_type = gimp_param_spec_core_object_array_get_object_type (pspec);
         }
 
       if (param->data.d_id_array.size > 1 && ! g_type_is_a (object_type, G_TYPE_OBJECT))

@@ -1323,6 +1323,17 @@ gimp_core_object_array_copy (GimpCoreObjectArray array)
  * GIMP_TYPE_PARAM_CORE_OBJECT_ARRAY
  */
 
+#define GIMP_PARAM_SPEC_CORE_OBJECT_ARRAY(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_CORE_OBJECT_ARRAY, GimpParamSpecCoreObjectArray))
+
+typedef struct _GimpParamSpecCoreObjectArray GimpParamSpecCoreObjectArray;
+
+struct _GimpParamSpecCoreObjectArray
+{
+  GParamSpecBoxed parent_instance;
+
+  GType           object_type;
+};
+
 static void       gimp_param_core_object_array_class_init  (GParamSpecClass *klass);
 static void       gimp_param_core_object_array_init        (GParamSpec      *pspec);
 static gboolean   gimp_param_core_object_array_validate    (GParamSpec      *pspec,
@@ -1462,4 +1473,20 @@ gimp_param_spec_core_object_array (const gchar *name,
   array_spec->object_type = object_type;
 
   return G_PARAM_SPEC (array_spec);
+}
+
+/**
+ * gimp_param_spec_core_object_array_get_object_type:
+ * @pspec: a #GParamSpec to hold a #GimpParamSpecCoreObjectArray value.
+ *
+ * Returns: the type for objects in the object array.
+ *
+ * Since: 3.0
+ **/
+GType
+gimp_param_spec_core_object_array_get_object_type (GParamSpec *pspec)
+{
+  g_return_val_if_fail (GIMP_IS_PARAM_SPEC_CORE_OBJECT_ARRAY (pspec), G_TYPE_NONE);
+
+  return GIMP_PARAM_SPEC_CORE_OBJECT_ARRAY (pspec)->object_type;
 }
