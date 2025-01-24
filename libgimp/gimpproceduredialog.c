@@ -665,6 +665,8 @@ gimp_procedure_dialog_set_ok_label (GimpProcedureDialog *dialog,
  *       in %GTK_FILE_CHOOSER_ACTION_OPEN mode. Please use
  *       [method@ProcedureDialog.get_file_chooser] to create buttons in
  *       other modes or better, use a %GIMP_TYPE_PARAM_FILE argument.
+ * - %G_TYPE_PARAM_UNIT:
+ *     * %GIMP_TYPE_UNIT_COMBO_BOX
  *
  * If the @widget_type is not supported for the actual type of
  * @property, the function will fail. To keep the default, set to
@@ -898,7 +900,7 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
     {
       widget = gimp_prop_drawable_chooser_new (G_OBJECT (priv->config), property, NULL);
     }
-  else  if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_ENUM)
+  else if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_ENUM)
     {
       GimpIntStore *store;
 
@@ -911,6 +913,10 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
       gtk_widget_set_hexpand (widget, TRUE);
       widget = gimp_label_int_widget_new (g_param_spec_get_nick (pspec),
                                           widget);
+    }
+  else if (G_PARAM_SPEC_TYPE (pspec) == GIMP_TYPE_PARAM_UNIT)
+    {
+      widget = gimp_prop_unit_combo_box_new (G_OBJECT (priv->config), property);
     }
   else
     {
