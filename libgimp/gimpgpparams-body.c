@@ -430,12 +430,15 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
   else if (pspec_type == GIMP_TYPE_PARAM_UNIT)
     {
       GimpParamSpecUnit *uspec = GIMP_PARAM_SPEC_UNIT (pspec);
+      GObject           *default_value;
+
+      default_value = gimp_param_spec_object_get_default (pspec);
 
       param_def->param_def_type = GP_PARAM_DEF_TYPE_UNIT;
 
       param_def->meta.m_unit.allow_pixels  = uspec->allow_pixel;
       param_def->meta.m_unit.allow_percent = uspec->allow_percent;
-      param_def->meta.m_unit.default_val   = gimp_unit_get_id (uspec->default_value);
+      param_def->meta.m_unit.default_val   = gimp_unit_get_id (GIMP_UNIT (default_value));
     }
 #ifndef LIBGIMP_COMPILATION
   /* This trick is only for core side when it needs to send the param

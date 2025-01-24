@@ -98,7 +98,6 @@ struct _GimpParamSpecUnit
 
   gboolean             allow_pixel;
   gboolean             allow_percent;
-  GimpUnit            *default_value;
 };
 
 GType        gimp_param_unit_get_type (void) G_GNUC_CONST;

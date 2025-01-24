@@ -933,8 +933,6 @@ gimp_units_to_points (gdouble   value,
 static void         gimp_param_unit_class_init  (GimpParamSpecObjectClass *klass);
 static void         gimp_param_unit_init        (GParamSpec               *pspec);
 static GParamSpec * gimp_param_unit_duplicate   (GParamSpec               *pspec);
-static void         gimp_param_unit_set_default (GParamSpec               *pspec,
-                                                 GValue                   *value);
 static gboolean     gimp_param_unit_validate    (GParamSpec               *pspec,
                                                  GValue                   *value);
 
@@ -980,18 +978,19 @@ gimp_param_unit_class_init (GimpParamSpecObjectClass *klass)
   klass->duplicate          = gimp_param_unit_duplicate;
 
   pclass->value_type        = GIMP_TYPE_UNIT;
-  pclass->value_set_default = gimp_param_unit_set_default;
   pclass->value_validate    = gimp_param_unit_validate;
 }
 
 static void
 gimp_param_unit_init (GParamSpec *pspec)
 {
-  GimpParamSpecUnit *uspec = GIMP_PARAM_SPEC_UNIT (pspec);
+  GimpParamSpecUnit   *uspec = GIMP_PARAM_SPEC_UNIT (pspec);
+  GimpParamSpecObject *ospec = GIMP_PARAM_SPEC_OBJECT (pspec);
 
-  uspec->allow_pixel   = TRUE;
-  uspec->allow_percent = TRUE;
-  uspec->default_value = gimp_unit_inch ();
+  uspec->allow_pixel    = TRUE;
+  uspec->allow_percent  = TRUE;
+  ospec->_default_value = g_object_ref (G_OBJECT (gimp_unit_inch ()));
+  ospec->_has_default   = TRUE;
 }
 
 static GParamSpec *
@@ -1008,24 +1007,15 @@ gimp_param_unit_duplicate (GParamSpec *pspec)
                                     g_param_spec_get_blurb (pspec),
                                     uspec->allow_pixel,
                                     uspec->allow_percent,
-                                    uspec->default_value,
+                                    GIMP_UNIT (gimp_param_spec_object_get_default (pspec)),
                                     pspec->flags);
 
   return duplicate;
 }
 
-static void
-gimp_param_unit_set_default (GParamSpec *pspec,
-                              GValue     *value)
-{
-  GimpParamSpecUnit *uspec = GIMP_PARAM_SPEC_UNIT (pspec);
-
-  g_value_set_object (value, uspec->default_value);
-}
-
 static gboolean
 gimp_param_unit_validate (GParamSpec *pspec,
-                           GValue     *value)
+                          GValue     *value)
 {
   GimpParamSpecUnit *uspec = GIMP_PARAM_SPEC_UNIT (pspec);
   GObject            *unit = value->data[0].v_pointer;
@@ -1035,7 +1025,7 @@ gimp_param_unit_validate (GParamSpec *pspec,
       (! uspec->allow_pixel   && value->data[0].v_pointer == gimp_unit_pixel ()))
     {
       g_clear_object (&unit);
-      value->data[0].v_pointer = g_object_ref (uspec->default_value);
+      value->data[0].v_pointer = g_object_ref (gimp_param_spec_object_get_default (pspec));
       return TRUE;
     }
 
@@ -1065,7 +1055,7 @@ gimp_param_spec_unit (const gchar *name,
                       const gchar *blurb,
                       gboolean     allow_pixel,
                       gboolean     allow_percent,
-                      GimpUnit   *default_value,
+                      GimpUnit    *default_value,
                       GParamFlags  flags)
 {
   GimpParamSpecUnit *uspec;
@@ -1079,7 +1069,7 @@ gimp_param_spec_unit (const gchar *name,
 
   uspec->allow_pixel   = allow_pixel;
   uspec->allow_percent = allow_percent;
-  uspec->default_value = default_value;
+  gimp_param_spec_object_set_default (G_PARAM_SPEC (uspec), G_OBJECT (default_value));
 
   return G_PARAM_SPEC (uspec);
 }
