@@ -27,7 +27,7 @@ Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-St
 
 if ($GITLAB_CI)
   {
-    Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'deps_install\[' -Context 0,6) -replace '> ','')
+    Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'deps_install\[' -Context 0,10) -replace '> ','')
   }
 
 
@@ -55,7 +55,6 @@ if (-not (Test-Path _build-$MSYSTEM_PREFIX\build.ninja -Type Leaf))
   }
 Set-Location _build-$MSYSTEM_PREFIX
 ninja
-ccache --show-stats
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):gimp_build$([char]13)$([char]27)[0K"
 
 

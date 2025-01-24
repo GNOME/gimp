@@ -68,14 +68,6 @@ workflow:
       - 'scheduler_failure'
   # Default Docker image (unless otherwise defined)
   image: debian:${DEB_VERSION}
-  # Caching support
-  variables:
-    CCACHE_BASEDIR: "$CI_PROJECT_DIR"
-    CCACHE_DIR: "$CI_PROJECT_DIR/_ccache"
-  cache:
-    key: ${CI_JOB_NAME_SLUG}${VARIANT}
-    paths:
-      - _ccache/
   # Common artifacts behavior
   artifacts:
     name: "${CI_JOB_NAME_SLUG}${VARIANT}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
@@ -137,8 +129,8 @@ stages:
       variables: {}
     - if: '$GIMP_CI_MESON_GCC != null'
       variables:
-        CC: "ccache cc"
-        CXX: "ccache c++"
+        CC: "cc"
+        CXX: "c++"
         CC_LD: bfd
         CXX_LD: bfd
         VARIANT: "-gcc"
@@ -163,7 +155,6 @@ image-debian:
   variables:
     GIT_STRATEGY: none
     UMFPACK: libumfpack5
-  cache: []
   before_script: []
   script:
     - export container=docker
@@ -246,7 +237,6 @@ image-debian-x64:
   stage: !reference [image-debian, stage]
   image: !reference [image-debian, image]
   variables: !reference [image-debian, variables]
-  cache: !reference [image-debian, cache]
   before_script:
    - !reference [image-debian, before_script]
   script:
@@ -260,7 +250,6 @@ deps-debian:
   stage: dependencies
   variables:
     GIT_STRATEGY: none
-    CCACHE_MAXSIZE: 0.25G
   script:
     # Clone and build babl
     - echo -e "\e[0Ksection_start:`date +%s`:babl_build[collapsed=true]\r\e[0KBuilding babl"
@@ -277,7 +266,6 @@ deps-debian:
     - cd _build-${RUNNER}
     - ninja
     - ninja install
-    - ccache --show-stats
     - cd ../..
     - echo -e "\e[0Ksection_end:`date +%s`:babl_build\r\e[0K"
     # Clone and build gegl
@@ -295,7 +283,6 @@ deps-debian:
     - cd _build-${RUNNER}
     - ninja
     - ninja install
-    - ccache --show-stats
     - echo -e "\e[0Ksection_end:`date +%s`:gegl_build\r\e[0K"
   artifacts:
     paths:
@@ -312,7 +299,6 @@ gimp-debian:
   stage: gimp
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
-    CCACHE_MAXSIZE: 0.75G
   script:
     # Build GIMP
     - echo -e "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP"
@@ -320,7 +306,6 @@ gimp-debian:
                                    -Drelocatable-bundle=yes
     - cd _build-${RUNNER}
     - ninja
-    - ccache --show-stats
     - echo -e "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K"
     # Create bundle
     - echo -e "\e[0Ksection_start:`date +%s`:gimp_bundle[collapsed=true]\r\e[0KCreating bundle"
@@ -357,7 +342,6 @@ gimp-debian-x64:
                                    $MESON_OPTIONS
     - cd _build-${RUNNER}
     - ninja
-    - ccache --show-stats
     - echo -e "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K"
     # Check execution
     - echo -e "\e[0Ksection_start:`date +%s`:gimp_test[collapsed=true]\r\e[0KTesting GIMP execution"
@@ -406,15 +390,11 @@ deps-flatpak-x64:
   extends: .flatpak-x64
   needs: []
   stage: dependencies
-  # FIXME: GitLab CI caching does NOT work with flatpak
-  # See: https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/1502
-  cache: []
-    # key: ${CI_JOB_NAME}-pkg
-    # paths:
-        # .flatpak-builder/
-    # key: $CI_JOB_NAME
-    # paths:
-        # _ccache/
+  #https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/1502
+  #cache:
+    #key: ${CI_JOB_NAME_SLUG}
+    #paths:
+      #- .flatpak-builder/
   script:
     - bash build/linux/flatpak/1_build-deps-flatpak.sh
   artifacts:
@@ -429,12 +409,6 @@ gimp-flatpak-x64:
   extends: .flatpak-x64
   needs: ["deps-flatpak-x64"]
   stage: gimp
-  # FIXME: GitLab CI caching does NOT work with flatpak
-  # See: https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/1502
-  cache: []
-    # key: $CI_JOB_NAME
-    # paths:
-        # _ccache/
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
   script:
@@ -456,7 +430,6 @@ gimp-flatpak-x64:
   variables:
     DEB_VERSION: testing
     MSYSTEM_PREFIX: clang64
-  cache: []
 
 image-debian-x64-cross:
   extends: .win-cross
@@ -465,7 +438,6 @@ image-debian-x64-cross:
   variables:
     GIT_STRATEGY: none
     UMFPACK: libumfpack6
-  cache: !reference [image-debian, cache]
   before_script:
    - !reference [image-debian, before_script]
   script:
@@ -475,6 +447,11 @@ deps-win-x64-cross:
   extends: .win-cross
   needs: ["image-debian-x64-cross"]
   stage: dependencies
+  #https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/1461
+  #cache:
+    #key: ${CI_JOB_NAME_SLUG}
+    #paths:
+      #- quasi-msys2/
   before_script: []
   script:
     - bash build/windows/1_build-deps-quasimsys2.sh
@@ -549,8 +526,6 @@ deps-win:
   extends: .win
   needs: []
   stage: dependencies
-  variables:
-    CCACHE_MAXSIZE: 0.25G
   script:
     - build/windows/1_build-deps-msys2.ps1
   artifacts:
@@ -566,7 +541,6 @@ gimp-win:
   stage: gimp
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
-    CCACHE_MAXSIZE: 0.75G
   script:
     - build/windows/2_build-gimp-msys2.ps1
   artifacts:
@@ -595,7 +569,6 @@ deps-win-x86:
   extends: .win-x86
   needs: []
   stage: !reference [deps-win, stage]
-  variables: !reference [deps-win, variables]
   script:
     - !reference [deps-win, script]
   artifacts: !reference [deps-win, artifacts]
@@ -630,9 +603,9 @@ file-plug-in-tests:
     GIMP_TESTS_LOG_FILE: "$CI_PROJECT_DIR/_log/import-tests.log"
     REGRESSION_STRING: "Total number of regressions: 0"
   cache:
-    - key: $CI_JOB_NAME
-      paths:
-        - _data
+    key: $CI_JOB_NAME
+    paths:
+      - _data
   script:
     - API_VER=$(grep GIMP_PKGCONFIG_VERSION _build*/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
     - APP_VER=$(grep GIMP_APP_VERSION _build*/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
@@ -663,7 +636,6 @@ clang-format:
     - <<: *CI_MERGE
   needs: []
   stage: analysis
-  cache: []
   script:
     - apt-get update
     - apt-get install -y clang-format
@@ -683,12 +655,11 @@ cppcheck:
     - if: '$GIMP_CI_CPPCHECK != null'
   needs: []
   stage: analysis
-  cache: []
   script:
     - apt-get update
     - apt-get install -y cppcheck
     - cppcheck -q -j8 --enable=all --force --output-file=cppcheck.xml --xml --xml-version=2
-        -i _build -i _build-cross -i babl -i gegl -i _install -i .local -i .cache -i _ccache -i gimp-x64 .
+        -i _build -i _build-cross -i babl -i gegl -i _install -i .local -i .cache -i gimp-x64 .
     - mkdir report
     - cppcheck-htmlreport --source-dir=. --title=gimp --file=cppcheck.xml --report-dir=report
   artifacts:
@@ -707,7 +678,6 @@ sources-debian:
     - <<: *CI_RELEASE
   needs: ["gimp-debian-x64"]
   stage: distribution
-  cache: []
   variables:
     GIT_STRATEGY: none
   script:
@@ -730,7 +700,6 @@ dev-docs:
     - <<: *CI_RELEASE
   needs: ["deps-debian-x64", "gimp-debian-x64"]
   stage: distribution
-  cache: []
   variables:
     GIT_STRATEGY: none
   script:
@@ -786,7 +755,6 @@ dist-appimage-weekly:
     - !reference [.debian, rules]
   needs: ["gimp-debian"]
   stage: distribution
-  cache: []
   script:
     - bash build/linux/appimage/3_dist-gimp-goappimage.sh _build-x86_64_v2
   artifacts:
@@ -806,7 +774,6 @@ dist-flatpak-weekly:
     - if: '$GIMP_CI_FLATPAK != null'
   needs: ["gimp-flatpak-x64"]
   stage: distribution
-  cache: []
   script:
     - bash build/linux/flatpak/3_dist-gimp-flatpak.sh
   artifacts:
@@ -823,7 +790,6 @@ dist-installer-weekly:
   stage: distribution
   tags:
     - windows-aarch64
-  cache: []
   script:
     - build/windows/installer/3_dist-gimp-inno.ps1
   artifacts:
@@ -844,7 +810,6 @@ dist-store-weekly:
   stage: distribution
   tags:
     - win32-ps
-  cache: []
   script:
     - build\windows\store\3_dist-gimp-winsdk.ps1
   artifacts:
