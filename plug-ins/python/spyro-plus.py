@@ -498,26 +498,41 @@ def get_gradient_samples(num_samples):
     gradient = Gimp.context_get_gradient()
     reverse_mode = Gimp.context_get_gradient_reverse()
     repeat_mode = Gimp.context_get_gradient_repeat_mode()
+    color_samples = []
 
     if repeat_mode == Gimp.RepeatMode.TRIANGULAR:
+        color_samples2 = []
         # Get two uniform samples, which are reversed from each other, and connect them.
 
         sample_count = num_samples/2 + 1
-        success, color_samples  = gradient.get_uniform_samples(sample_count, reverse_mode)
+        gegl_color_samples = gradient.get_uniform_samples(sample_count, reverse_mode)
 
-        del color_samples[-4:]   # Delete last color because it will appear in the next sample
+        # Don't copy over the last color because it will appear in the next sample
+        for i in range(len(gegl_color_samples) - 1):
+            rgba = gegl_color_samples[i].get_rgba()
+            for channel in rgba:
+                color_samples.append(channel)
 
         # If num_samples is odd, lets get an extra sample this time.
         if num_samples % 2 == 1:
             sample_count += 1
 
-        success, color_samples2 = gradient.get_uniform_samples(sample_count, 1 - reverse_mode)
+        gegl_color_samples2 = gradient.get_uniform_samples(sample_count, 1 - reverse_mode)
 
-        del color_samples2[-4:]  # Delete last color because it will appear in the very first sample
+        # Don't copy over the last color because it will appear in the very first sample
+        for i in range(len(gegl_color_samples2) - 1):
+            rgba = gegl_color_samples2[i].get_rgba()
+            for channel in rgba:
+                color_samples2.append(channel)
 
+        color_samples.extend(color_samples2)
         color_samples = tuple(color_samples)
     else:
-        success, color_samples = gradient.get_uniform_samples(num_samples, reverse_mode)
+        gegl_color_samples = gradient.get_uniform_samples(num_samples, reverse_mode)
+        for sample in gegl_color_samples:
+            rgba = sample.get_rgba()
+            for channel in rgba:
+                color_samples.append(channel)
 
     return color_samples
 
