@@ -48,15 +48,14 @@ gimp_param_spec_boolean_desc (GParamSpec *pspec)
 static gchar *
 gimp_param_spec_unit_desc (GParamSpec *pspec)
 {
-  GimpParamSpecUnit *uspec = GIMP_PARAM_SPEC_UNIT (pspec);
-  GObject           *default_value;
+  GObject *default_value;
 
   default_value = gimp_param_spec_object_get_default (pspec);
 
   return g_strdup_printf ("<i>(default %s%s%s)</i>",
                           gimp_unit_get_abbreviation (GIMP_UNIT (default_value)),
-                          uspec->allow_pixel ? ", pixel allowed": "",
-                          uspec->allow_percent ? ", percent allowed": "");
+                          gimp_param_spec_unit_pixel_allowed (pspec) ? ", pixel allowed": "",
+                          gimp_param_spec_unit_percent_allowed (pspec) ? ", percent allowed": "");
 }
 
 static gchar *

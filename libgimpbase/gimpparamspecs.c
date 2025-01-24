@@ -220,6 +220,19 @@ gimp_param_spec_object_duplicate (GParamSpec *pspec)
  * GIMP_TYPE_PARAM_FILE
  */
 
+#define GIMP_PARAM_SPEC_FILE(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_FILE, GimpParamSpecFile))
+
+typedef struct _GimpParamSpecFile GimpParamSpecFile;
+
+struct _GimpParamSpecFile
+{
+  GimpParamSpecObject   parent_instance;
+
+  /*< private >*/
+  GimpFileChooserAction action;
+  gboolean              none_ok;
+};
+
 static void         gimp_param_file_class_init     (GimpParamSpecObjectClass *klass);
 static void         gimp_param_file_init           (GimpParamSpecFile        *fspec);
 
@@ -425,6 +438,37 @@ gimp_param_spec_file (const gchar           *name,
   return G_PARAM_SPEC (fspec);
 }
 
+/**
+ * gimp_param_spec_file_get_action:
+ * @pspec: a #GParamSpec to hold a #GFile value.
+ *
+ * Returns: the file action tied to @pspec.
+ *
+ * Since: 3.0
+ **/
+GimpFileChooserAction
+gimp_param_spec_file_get_action (GParamSpec *pspec)
+{
+  g_return_val_if_fail (GIMP_IS_PARAM_SPEC_FILE (pspec), GIMP_FILE_CHOOSER_ACTION_ANY);
+
+  return GIMP_PARAM_SPEC_FILE (pspec)->action;
+}
+
+/**
+ * gimp_param_spec_file_none_allowed:
+ * @pspec: a #GParamSpec to hold a #GFile value.
+ *
+ * Returns: %TRUE if a %NULL value is allowed.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_param_spec_file_none_allowed (GParamSpec *pspec)
+{
+  g_return_val_if_fail (GIMP_IS_PARAM_SPEC_FILE (pspec), FALSE);
+
+  return GIMP_PARAM_SPEC_FILE (pspec)->none_ok;
+}
 
 /*
  * GIMP_TYPE_ARRAY

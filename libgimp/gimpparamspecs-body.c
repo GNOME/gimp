@@ -1069,6 +1069,18 @@ gimp_param_spec_display (const gchar *name,
  * GIMP_TYPE_PARAM_RESOURCE
  */
 
+#define GIMP_PARAM_SPEC_RESOURCE(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_RESOURCE, GimpParamSpecResource))
+
+typedef struct _GimpParamSpecResource GimpParamSpecResource;
+
+struct _GimpParamSpecResource
+{
+  GimpParamSpecObject  parent_instance;
+
+  gboolean             none_ok;
+  gboolean             default_to_context;
+};
+
 static void         gimp_param_resource_class_init  (GimpParamSpecObjectClass *klass);
 static void         gimp_param_resource_init        (GParamSpec               *pspec);
 static GParamSpec * gimp_param_resource_duplicate   (GParamSpec               *pspec);
@@ -1118,7 +1130,8 @@ gimp_param_resource_init (GParamSpec *pspec)
 {
   GimpParamSpecResource *rspec = GIMP_PARAM_SPEC_RESOURCE (pspec);
 
-  rspec->none_ok = FALSE;
+  rspec->none_ok            = FALSE;
+  rspec->default_to_context = FALSE;
 }
 
 static GParamSpec *
@@ -1291,6 +1304,22 @@ gimp_param_spec_resource (const gchar  *name,
     gimp_param_spec_object_set_default (G_PARAM_SPEC (rspec), G_OBJECT (default_value));
 
   return G_PARAM_SPEC (rspec);
+}
+
+gboolean
+gimp_param_spec_resource_none_allowed (GParamSpec *pspec)
+{
+  g_return_val_if_fail (GIMP_IS_PARAM_SPEC_RESOURCE (pspec), FALSE);
+
+  return GIMP_PARAM_SPEC_RESOURCE (pspec)->none_ok;
+}
+
+gboolean
+gimp_param_spec_resource_defaults_to_context (GParamSpec *pspec)
+{
+  g_return_val_if_fail (GIMP_IS_PARAM_SPEC_RESOURCE (pspec), FALSE);
+
+  return GIMP_PARAM_SPEC_RESOURCE (pspec)->default_to_context;
 }
 
 

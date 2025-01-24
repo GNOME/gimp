@@ -736,6 +736,8 @@ EXPORTS
 	gimp_param_spec_path
 	gimp_param_spec_pattern
 	gimp_param_spec_resource
+	gimp_param_spec_resource_defaults_to_context
+	gimp_param_spec_resource_none_allowed
 	gimp_param_spec_selection
 	gimp_param_spec_text_layer
 	gimp_param_text_layer_get_type

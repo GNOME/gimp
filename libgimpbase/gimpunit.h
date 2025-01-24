@@ -87,29 +87,21 @@ gdouble       gimp_units_to_points                   (gdouble      value,
 #define GIMP_VALUE_HOLDS_UNIT(value)   (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_UNIT))
 
 #define GIMP_TYPE_PARAM_UNIT           (gimp_param_unit_get_type ())
-#define GIMP_PARAM_SPEC_UNIT(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_UNIT, GimpParamSpecUnit))
 #define GIMP_IS_PARAM_SPEC_UNIT(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_UNIT))
 
-typedef struct _GimpParamSpecUnit GimpParamSpecUnit;
 
-struct _GimpParamSpecUnit
-{
-  GimpParamSpecObject  parent_instance;
+GType        gimp_param_unit_get_type             (void) G_GNUC_CONST;
 
-  gboolean             allow_pixel;
-  gboolean             allow_percent;
-};
+GParamSpec * gimp_param_spec_unit                 (const gchar *name,
+                                                   const gchar *nick,
+                                                   const gchar *blurb,
+                                                   gboolean     allow_pixel,
+                                                   gboolean     allow_percent,
+                                                   GimpUnit    *default_value,
+                                                   GParamFlags  flags);
 
-GType        gimp_param_unit_get_type (void) G_GNUC_CONST;
-
-GParamSpec * gimp_param_spec_unit     (const gchar *name,
-                                       const gchar *nick,
-                                       const gchar *blurb,
-                                       gboolean     allow_pixel,
-                                       gboolean     allow_percent,
-                                       GimpUnit    *default_value,
-                                       GParamFlags  flags);
-
+gboolean     gimp_param_spec_unit_pixel_allowed   (GParamSpec  *pspec);
+gboolean     gimp_param_spec_unit_percent_allowed (GParamSpec  *pspec);
 
 G_END_DECLS
 

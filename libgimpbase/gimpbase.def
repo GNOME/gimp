@@ -144,6 +144,8 @@ EXPORTS
 	gimp_param_spec_double_array
 	gimp_param_spec_export_options
 	gimp_param_spec_file
+	gimp_param_spec_file_get_action
+	gimp_param_spec_file_none_allowed
 	gimp_param_spec_int32_array
 	gimp_param_spec_memsize
 	gimp_param_spec_object_duplicate
@@ -152,6 +154,8 @@ EXPORTS
 	gimp_param_spec_object_set_default
 	gimp_param_spec_parasite
 	gimp_param_spec_unit
+	gimp_param_spec_unit_percent_allowed
+	gimp_param_spec_unit_pixel_allowed
 	gimp_param_spec_value_array
 	gimp_param_unit_get_type
 	gimp_param_value_array_get_type

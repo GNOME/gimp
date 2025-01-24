@@ -70,8 +70,9 @@ gboolean       gimp_color_is_out_of_gamut           (GeglColor      *color,
  * GIMP_TYPE_PARAM_COLOR
  */
 
+#define GIMP_VALUE_HOLDS_COLOR(value)   (G_TYPE_CHECK_VALUE_TYPE ((value), GEGL_TYPE_COLOR))
+
 #define GIMP_TYPE_PARAM_COLOR           (gimp_param_color_get_type ())
-#define GIMP_PARAM_SPEC_COLOR(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_COLOR, GimpParamSpecColor))
 #define GIMP_IS_PARAM_SPEC_COLOR(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_COLOR))
 
 GType        gimp_param_color_get_type         (void) G_GNUC_CONST;

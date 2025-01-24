@@ -33,8 +33,6 @@ typedef struct _GimpColorManaged   GimpColorManaged;  /* dummy typedef */
 typedef struct _GimpColorProfile   GimpColorProfile;
 typedef struct _GimpColorTransform GimpColorTransform;
 
-typedef struct _GimpParamSpecColor GimpParamSpecColor;
-
 
 G_END_DECLS
 

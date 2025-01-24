@@ -429,15 +429,14 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
     }
   else if (pspec_type == GIMP_TYPE_PARAM_UNIT)
     {
-      GimpParamSpecUnit *uspec = GIMP_PARAM_SPEC_UNIT (pspec);
-      GObject           *default_value;
+      GObject *default_value;
 
       default_value = gimp_param_spec_object_get_default (pspec);
 
       param_def->param_def_type = GP_PARAM_DEF_TYPE_UNIT;
 
-      param_def->meta.m_unit.allow_pixels  = uspec->allow_pixel;
-      param_def->meta.m_unit.allow_percent = uspec->allow_percent;
+      param_def->meta.m_unit.allow_pixels  = gimp_param_spec_unit_pixel_allowed (pspec);
+      param_def->meta.m_unit.allow_percent = gimp_param_spec_unit_percent_allowed (pspec);
       param_def->meta.m_unit.default_val   = gimp_unit_get_id (GIMP_UNIT (default_value));
     }
 #ifndef LIBGIMP_COMPILATION
@@ -654,30 +653,30 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
     }
   else if (GIMP_IS_PARAM_SPEC_RESOURCE (pspec))
     {
-      GimpParamSpecResource *rspec         = GIMP_PARAM_SPEC_RESOURCE (pspec);
-      GObject               *default_value = NULL;
+      GObject  *default_value = NULL;
+      gboolean  default_to_context;
 
       param_def->param_def_type = GP_PARAM_DEF_TYPE_RESOURCE;
 
       if (gimp_param_spec_object_has_default (pspec))
         default_value = gimp_param_spec_object_get_default (pspec);
 
-      param_def->meta.m_resource.none_ok = rspec->none_ok;
-      param_def->meta.m_resource.default_to_context = rspec->default_to_context;
-      if (default_value != NULL && ! rspec->default_to_context)
+      param_def->meta.m_resource.none_ok = gimp_param_spec_resource_none_allowed (pspec);
+      default_to_context = gimp_param_spec_resource_defaults_to_context (pspec);
+      param_def->meta.m_resource.default_to_context = default_to_context;
+      if (default_value != NULL && ! default_to_context)
         param_def->meta.m_resource.default_resource_id = get_resource_id (default_value);
       else
         param_def->meta.m_resource.default_resource_id = 0;
     }
   else if (pspec_type == GIMP_TYPE_PARAM_FILE)
     {
-      GimpParamSpecFile   *fspec = GIMP_PARAM_SPEC_FILE (pspec);
       GimpParamSpecObject *ospec = GIMP_PARAM_SPEC_OBJECT (pspec);
 
       param_def->param_def_type = GP_PARAM_DEF_TYPE_FILE;
 
-      param_def->meta.m_file.action      = (gint32) fspec->action;
-      param_def->meta.m_file.none_ok     = fspec->none_ok;
+      param_def->meta.m_file.action      = (gint32) gimp_param_spec_file_get_action (pspec);
+      param_def->meta.m_file.none_ok     = gimp_param_spec_file_none_allowed (pspec);
       param_def->meta.m_file.default_uri =
         ospec->_default_value ?  g_file_get_uri (G_FILE (ospec->_default_value)) : NULL;
     }

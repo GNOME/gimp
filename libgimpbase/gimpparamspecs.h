@@ -159,29 +159,22 @@ GParamSpec * gimp_param_spec_object_duplicate   (GParamSpec  *pspec);
 #define GIMP_VALUE_HOLDS_FILE(value)   (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_FILE))
 
 #define GIMP_TYPE_PARAM_FILE           (gimp_param_file_get_type ())
-#define GIMP_PARAM_SPEC_FILE(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_FILE, GimpParamSpecFile))
 #define GIMP_IS_PARAM_SPEC_FILE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_FILE))
 
-typedef struct _GimpParamSpecFile GimpParamSpecFile;
 
-struct _GimpParamSpecFile
-{
-  GimpParamSpecObject   parent_instance;
+GType                   gimp_param_file_get_type          (void) G_GNUC_CONST;
 
-  /*< private >*/
-  GimpFileChooserAction action;
-  gboolean              none_ok;
-};
+GParamSpec            * gimp_param_spec_file              (const gchar           *name,
+                                                           const gchar           *nick,
+                                                           const gchar           *blurb,
+                                                           GimpFileChooserAction  action,
+                                                           gboolean               none_ok,
+                                                           GFile                 *default_value,
+                                                           GParamFlags            flags);
 
-GType        gimp_param_file_get_type (void) G_GNUC_CONST;
+GimpFileChooserAction   gimp_param_spec_file_get_action   (GParamSpec            *pspec);
+gboolean                gimp_param_spec_file_none_allowed (GParamSpec            *pspec);
 
-GParamSpec * gimp_param_spec_file     (const gchar           *name,
-                                       const gchar           *nick,
-                                       const gchar           *blurb,
-                                       GimpFileChooserAction  action,
-                                       gboolean               none_ok,
-                                       GFile                 *default_value,
-                                       GParamFlags            flags);
 
 
 /*

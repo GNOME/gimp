@@ -305,29 +305,21 @@ GParamSpec * gimp_param_spec_display     (const gchar  *name,
 #define GIMP_VALUE_HOLDS_RESOURCE(value)   (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_RESOURCE))
 
 #define GIMP_TYPE_PARAM_RESOURCE           (gimp_param_resource_get_type ())
-#define GIMP_PARAM_SPEC_RESOURCE(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_RESOURCE, GimpParamSpecResource))
 #define GIMP_IS_PARAM_SPEC_RESOURCE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_RESOURCE))
 
-typedef struct _GimpParamSpecResource GimpParamSpecResource;
+GType        gimp_param_resource_get_type                 (void) G_GNUC_CONST;
 
-struct _GimpParamSpecResource
-{
-  GimpParamSpecObject  parent_instance;
+GParamSpec * gimp_param_spec_resource                     (const gchar  *name,
+                                                           const gchar  *nick,
+                                                           const gchar  *blurb,
+                                                           GType         resource_type,
+                                                           gboolean      none_ok,
+                                                           GimpResource *default_value,
+                                                           gboolean      default_to_context,
+                                                           GParamFlags   flags);
 
-  gboolean             none_ok;
-  gboolean             default_to_context;
-};
-
-GType        gimp_param_resource_get_type (void) G_GNUC_CONST;
-
-GParamSpec * gimp_param_spec_resource     (const gchar  *name,
-                                           const gchar  *nick,
-                                           const gchar  *blurb,
-                                           GType         resource_type,
-                                           gboolean      none_ok,
-                                           GimpResource *default_value,
-                                           gboolean      default_to_context,
-                                           GParamFlags   flags);
+gboolean     gimp_param_spec_resource_none_allowed        (GParamSpec   *pspec);
+gboolean     gimp_param_spec_resource_defaults_to_context (GParamSpec   *pspec);
 
 
 /*

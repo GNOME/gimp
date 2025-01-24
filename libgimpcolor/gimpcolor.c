@@ -329,16 +329,9 @@ gimp_color_is_out_of_gamut (GeglColor  *color,
  * GIMP_TYPE_PARAM_COLOR
  */
 
-static void         gimp_param_color_class_init     (GimpParamSpecObjectClass *klass);
-static void         gimp_param_color_init           (GParamSpec               *pspec);
-static GParamSpec * gimp_param_color_duplicate      (GParamSpec               *pspec);
-static gboolean     gimp_param_color_validate       (GParamSpec               *pspec,
-                                                     GValue                   *value);
-static void         gimp_param_color_set_default    (GParamSpec               *pspec,
-                                                     GValue                   *value);
-static gint         gimp_param_color_cmp            (GParamSpec               *param_spec,
-                                                     const GValue             *value1,
-                                                     const GValue             *value2);
+#define GIMP_PARAM_SPEC_COLOR(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_COLOR, GimpParamSpecColor))
+
+typedef struct _GimpParamSpecColor GimpParamSpecColor;
 
 struct _GimpParamSpecColor
 {
@@ -361,6 +354,17 @@ struct _GimpParamSpecColor
   gboolean              none_ok;
   gboolean              validate;
 };
+
+static void         gimp_param_color_class_init     (GimpParamSpecObjectClass *klass);
+static void         gimp_param_color_init           (GParamSpec               *pspec);
+static GParamSpec * gimp_param_color_duplicate      (GParamSpec               *pspec);
+static gboolean     gimp_param_color_validate       (GParamSpec               *pspec,
+                                                     GValue                   *value);
+static void         gimp_param_color_set_default    (GParamSpec               *pspec,
+                                                     GValue                   *value);
+static gint         gimp_param_color_cmp            (GParamSpec               *param_spec,
+                                                     const GValue             *value1,
+                                                     const GValue             *value2);
 
 GType
 gimp_param_color_get_type (void)
@@ -507,8 +511,7 @@ gimp_param_color_cmp (GParamSpec   *param_spec,
  *
  * Creates a new #GParamSpec instance specifying a #GeglColor property.
  * Note that the @default_color is duplicated, so reusing object will
- * not change the default color of the returned
- * [struct@Gimp.ParamSpecColor].
+ * not change the default color of the returned %GimpParamSpecColor.
  *
  * Returns: (transfer full): a newly created parameter specification
  */

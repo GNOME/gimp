@@ -844,11 +844,9 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
     }
   else if (GIMP_IS_PARAM_SPEC_FILE (pspec))
     {
-      GimpParamSpecFile *fspec = GIMP_PARAM_SPEC_FILE (pspec);
-
       widget = gimp_prop_file_chooser_button_new (G_OBJECT (priv->config),
                                                   property, NULL,
-                                                  (GtkFileChooserAction) fspec->action);
+                                                  (GtkFileChooserAction) gimp_param_spec_file_get_action (pspec));
     }
   else if (G_IS_PARAM_SPEC_OBJECT (pspec) && pspec->value_type == G_TYPE_FILE)
     {

@@ -954,9 +954,9 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                 }
               else if (GIMP_IS_PARAM_SPEC_UNIT (pspec) &&
                        ((GIMP_UNIT (old_value) == gimp_unit_pixel () &&
-                         ! GIMP_PARAM_SPEC_UNIT (pspec)->allow_pixel) ||
+                         ! gimp_param_spec_unit_pixel_allowed (pspec)) ||
                         (GIMP_UNIT (old_value) == gimp_unit_percent () &&
-                         ! GIMP_PARAM_SPEC_UNIT (pspec)->allow_percent)))
+                         ! gimp_param_spec_unit_percent_allowed (pspec))))
                 {
                   if (return_vals)
                     {
