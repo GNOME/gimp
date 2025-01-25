@@ -1607,14 +1607,14 @@ mng_save_dialog (GimpImage     *image,
 
   if (num_layers == 1)
     {
-      GimpParamSpecChoice *cspec;
+      GParamSpec *cspec;
+      GimpChoice *choice;
 
-      cspec =
-        GIMP_PARAM_SPEC_CHOICE (g_object_class_find_property (G_OBJECT_GET_CLASS (config),
-                                                              "default-chunks"));
+      cspec  = g_object_class_find_property (G_OBJECT_GET_CLASS (config), "default-chunks");
+      choice = gimp_param_spec_choice_get_choice (cspec);
 
-      gimp_choice_set_sensitive (cspec->choice, "all-png", FALSE);
-      gimp_choice_set_sensitive (cspec->choice, "all-jng", FALSE);
+      gimp_choice_set_sensitive (choice, "all-png", FALSE);
+      gimp_choice_set_sensitive (choice, "all-jng", FALSE);
     }
 
   combo = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),

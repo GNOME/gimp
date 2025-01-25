@@ -401,6 +401,17 @@ gimp_choice_desc_free (GimpChoiceDesc *desc)
  * GIMP_TYPE_PARAM_CHOICE
  */
 
+#define GIMP_PARAM_SPEC_CHOICE(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_CHOICE, GimpParamSpecChoice))
+
+typedef struct _GimpParamSpecChoice GimpParamSpecChoice;
+
+struct _GimpParamSpecChoice
+{
+  GParamSpecString  parent_instance;
+
+  GimpChoice       *choice;
+};
+
 static void       gimp_param_choice_class_init        (GParamSpecClass *klass);
 static void       gimp_param_choice_init              (GParamSpec      *pspec);
 static void       gimp_param_choice_finalize          (GParamSpec      *pspec);
@@ -567,4 +578,40 @@ gimp_param_spec_choice (const gchar *name,
   string_spec->default_value = g_strdup (default_value);
 
   return G_PARAM_SPEC (choice_spec);
+}
+
+/**
+ * gimp_param_spec_choice_get_choice:
+ * @pspec: a #GParamSpec to hold a #GimpParamSpecChoice value.
+ *
+ * Returns: (transfer none): the choice object defining the valid values.
+ *
+ * Since: 3.0
+ **/
+GimpChoice *
+gimp_param_spec_choice_get_choice (GParamSpec *pspec)
+{
+  g_return_val_if_fail (GIMP_IS_PARAM_SPEC_CHOICE (pspec), NULL);
+
+  return GIMP_PARAM_SPEC_CHOICE (pspec)->choice;
+}
+
+/**
+ * gimp_param_spec_choice_get_default:
+ * @pspec: a #GParamSpec to hold a #GimpParamSpecChoice value.
+ *
+ * Returns: the default value.
+ *
+ * Since: 3.0
+ **/
+const gchar *
+gimp_param_spec_choice_get_default (GParamSpec *pspec)
+{
+  const GValue *value;
+
+  g_return_val_if_fail (GIMP_IS_PARAM_SPEC_CHOICE (pspec), NULL);
+
+  value = g_param_spec_get_default_value (pspec);
+
+  return g_value_get_string (value);
 }

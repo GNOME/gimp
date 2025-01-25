@@ -936,11 +936,12 @@ open_dialog (GimpProcedure    *procedure,
              gint              num_components,
              GError          **error)
 {
-  const gchar         *title;
-  GtkWidget           *dialog;
-  gboolean             run;
-  GimpParamSpecChoice *cspec;
-  OPJ_COLOR_SPACE      color_space = OPJ_CLRSPC_SRGB;
+  const gchar     *title;
+  GtkWidget       *dialog;
+  gboolean         run;
+  GParamSpec      *cspec;
+  GimpChoice      *choice;
+  OPJ_COLOR_SPACE  color_space = OPJ_CLRSPC_SRGB;
 
   if (format == OPJ_CODEC_J2K)
     /* Not having color information is expected. */
@@ -955,21 +956,19 @@ open_dialog (GimpProcedure    *procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
                                       _(title));
 
-  cspec =
-    GIMP_PARAM_SPEC_CHOICE (g_object_class_find_property (G_OBJECT_GET_CLASS (config),
-                                                          "colorspace"));
-
+  cspec  = g_object_class_find_property (G_OBJECT_GET_CLASS (config), "colorspace");
+  choice = gimp_param_spec_choice_get_choice (cspec);
 
   if (num_components == 3)
     {
       /* Can be RGB, YUV and YCC. */
-      gimp_choice_set_sensitive (cspec->choice, "grayscale", FALSE);
-      gimp_choice_set_sensitive (cspec->choice, "cmyk", FALSE);
+      gimp_choice_set_sensitive (choice, "grayscale", FALSE);
+      gimp_choice_set_sensitive (choice, "cmyk", FALSE);
     }
   else if (num_components == 4)
     {
       /* Can be RGB, YUV and YCC with alpha or CMYK. */
-      gimp_choice_set_sensitive (cspec->choice, "grayscale", FALSE);
+      gimp_choice_set_sensitive (choice, "grayscale", FALSE);
     }
   else
     {
@@ -984,7 +983,7 @@ open_dialog (GimpProcedure    *procedure,
   if (num_components == 3 || num_components == 4)
     {
       /* By default, RGB is active. */
-      gimp_choice_set_sensitive (cspec->choice, "unknown", FALSE);
+      gimp_choice_set_sensitive (choice, "unknown", FALSE);
       g_object_set (config, "colorspace", "srgb", NULL);
 
       gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),

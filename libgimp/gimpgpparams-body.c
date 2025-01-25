@@ -537,13 +537,12 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
   /* Must be before G_IS_PARAM_SPEC_STRING() because it's a parent. */
   else if (pspec_type == GIMP_TYPE_PARAM_CHOICE)
     {
-      GimpParamSpecChoice *cspec = GIMP_PARAM_SPEC_CHOICE (pspec);
-      GParamSpecString    *sspec = G_PARAM_SPEC_STRING (pspec);
+      GParamSpecString *sspec = G_PARAM_SPEC_STRING (pspec);
 
       param_def->param_def_type = GP_PARAM_DEF_TYPE_CHOICE;
 
       param_def->meta.m_choice.default_val = sspec->default_value;
-      param_def->meta.m_choice.choice      = cspec->choice;
+      param_def->meta.m_choice.choice      = gimp_param_spec_choice_get_choice (pspec);
     }
   else if (G_IS_PARAM_SPEC_STRING (pspec) &&
 #ifdef LIBGIMP_COMPILATION

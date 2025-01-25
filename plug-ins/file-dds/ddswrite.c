@@ -1748,8 +1748,9 @@ config_notify (GimpProcedureConfig *config,
     }
   else if (! strcmp (pspec->name, "save-type"))
     {
-      gint                 savetype;
-      GimpParamSpecChoice *pspec;
+      GParamSpec *cspec;
+      GimpChoice *choice;
+      gint        savetype;
 
       savetype = gimp_procedure_config_get_choice_id (config, "save-type");
 
@@ -1774,9 +1775,9 @@ config_notify (GimpProcedureConfig *config,
           break;
         }
 
-      pspec = GIMP_PARAM_SPEC_CHOICE (g_object_class_find_property (G_OBJECT_GET_CLASS (config),
-                                                                    "mipmaps"));
-      gimp_choice_set_sensitive (pspec->choice, "existing", check_mipmaps (savetype));
+      cspec  = g_object_class_find_property (G_OBJECT_GET_CLASS (config), "mipmaps");
+      choice = gimp_param_spec_choice_get_choice (cspec);
+      gimp_choice_set_sensitive (choice, "existing", check_mipmaps (savetype));
     }
   else if (! strcmp (pspec->name, "mipmaps"))
     {
@@ -1906,10 +1907,11 @@ save_dialog (GimpImage           *image,
              GimpProcedure       *procedure,
              GimpProcedureConfig *config)
 {
-  GtkWidget           *dialog;
-  GimpParamSpecChoice *cspec;
-  GimpImageBaseType    base_type;
-  gboolean             run;
+  GtkWidget         *dialog;
+  GParamSpec        *cspec;
+  GimpChoice        *choice;
+  GimpImageBaseType  base_type;
+  gboolean           run;
 
   base_type = gimp_image_get_base_type (image);
 
@@ -1956,17 +1958,17 @@ save_dialog (GimpImage           *image,
 
   gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
                                     "save-type", G_TYPE_NONE);
-  cspec = GIMP_PARAM_SPEC_CHOICE (g_object_class_find_property (G_OBJECT_GET_CLASS (config),
-                                                                "save-type"));
-  gimp_choice_set_sensitive (cspec->choice, "cube",   is_cubemap);
-  gimp_choice_set_sensitive (cspec->choice, "volume", is_volume);
-  gimp_choice_set_sensitive (cspec->choice, "array",  is_array);
+  cspec  = g_object_class_find_property (G_OBJECT_GET_CLASS (config), "save-type");
+  choice = gimp_param_spec_choice_get_choice (cspec);
+  gimp_choice_set_sensitive (choice, "cube",   is_cubemap);
+  gimp_choice_set_sensitive (choice, "volume", is_volume);
+  gimp_choice_set_sensitive (choice, "array",  is_array);
 
   gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
                                     "mipmaps", G_TYPE_NONE);
-  cspec = GIMP_PARAM_SPEC_CHOICE (g_object_class_find_property (G_OBJECT_GET_CLASS (config),
-                                                                "mipmaps"));
-  gimp_choice_set_sensitive (cspec->choice, "existing",
+  cspec  = g_object_class_find_property (G_OBJECT_GET_CLASS (config), "mipmaps");
+  choice = gimp_param_spec_choice_get_choice (cspec);
+  gimp_choice_set_sensitive (choice, "existing",
                              ! (is_volume || is_cubemap) && is_mipmap_chain_valid);
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),

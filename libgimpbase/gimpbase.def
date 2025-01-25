@@ -140,6 +140,8 @@ EXPORTS
 	gimp_param_parasite_get_type
 	gimp_param_spec_array
 	gimp_param_spec_choice
+	gimp_param_spec_choice_get_choice
+	gimp_param_spec_choice_get_default
 	gimp_param_spec_core_object_array
 	gimp_param_spec_core_object_array_get_object_type
 	gimp_param_spec_double_array

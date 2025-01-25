@@ -1234,22 +1234,22 @@ save_dialog (GimpImage     *image,
              gboolean       is_multi_layer,
              gboolean       classic_tiff_failed)
 {
-  GtkWidget           *dialog;
-  GtkWidget           *profile_label;
-  gchar              **parasites;
-  GimpCompression      compression;
-  gboolean             run;
-  gboolean             has_geotiff  = FALSE;
-  gint                 i;
-  GimpColorProfile    *cmyk_profile = NULL;
-  GParamSpec          *comp_spec;
-  GimpParamSpecChoice *cspec;
+  GtkWidget        *dialog;
+  GtkWidget        *profile_label;
+  gchar           **parasites;
+  GimpCompression   compression;
+  gboolean          run;
+  gboolean          has_geotiff  = FALSE;
+  gint              i;
+  GimpColorProfile *cmyk_profile = NULL;
+  GParamSpec       *cspec;
+  GimpChoice       *choice;
 
-  comp_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), "compression");
-  cspec     = GIMP_PARAM_SPEC_CHOICE (comp_spec);
-  gimp_choice_set_sensitive (cspec->choice, "ccittfax3", is_monochrome);
-  gimp_choice_set_sensitive (cspec->choice, "ccittfax4", is_monochrome);
-  gimp_choice_set_sensitive (cspec->choice, "jpeg",      ! is_indexed);
+  cspec  = g_object_class_find_property (G_OBJECT_GET_CLASS (config), "compression");
+  choice = gimp_param_spec_choice_get_choice (cspec);
+  gimp_choice_set_sensitive (choice, "ccittfax3", is_monochrome);
+  gimp_choice_set_sensitive (choice, "ccittfax4", is_monochrome);
+  gimp_choice_set_sensitive (choice, "jpeg",      ! is_indexed);
 
   parasites = gimp_image_get_parasite_list (image);
   for (i = 0; i < g_strv_length (parasites); i++)

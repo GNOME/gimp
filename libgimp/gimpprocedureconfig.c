@@ -671,11 +671,11 @@ gimp_procedure_config_set_color_array (GimpProcedureConfig  *config,
 /**
  * gimp_procedure_config_get_choice_id:
  * @config:        a #GimpProcedureConfig
- * @property_name: the name of a [struct@ParamSpecChoice] property.
+ * @property_name: the name of a #GimpParamSpecChoice property.
  *
  * A utility function which will get the current string value of a
- * [struct@ParamSpecChoice] property in @config and convert it to the integer ID
- * mapped to this value.
+ * #GimpParamSpecChoice property in @config and convert it to the
+ * integer ID mapped to this value.
  * This makes it easy to work with an Enum type locally, within a plug-in code.
  *
  * Since: 3.0
@@ -684,10 +684,10 @@ gint
 gimp_procedure_config_get_choice_id (GimpProcedureConfig *config,
                                      const gchar         *property_name)
 {
-  GParamSpec          *param_spec;
-  GimpParamSpecChoice *cspec;
-  gchar               *value = NULL;
-  gint                 id;
+  GParamSpec *param_spec;
+  GimpChoice *choice;
+  gchar      *value = NULL;
+  gint        id;
 
   param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
                                              property_name);
@@ -711,11 +711,11 @@ gimp_procedure_config_get_choice_id (GimpProcedureConfig *config,
       return 0;
     }
 
-  cspec = GIMP_PARAM_SPEC_CHOICE (param_spec);
+  choice = gimp_param_spec_choice_get_choice (param_spec);
   g_object_get (config,
                 property_name, &value,
                 NULL);
-  id = gimp_choice_get_id (cspec->choice, value);
+  id = gimp_choice_get_id (choice, value);
 
   g_free (value);
 

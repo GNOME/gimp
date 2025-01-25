@@ -2622,12 +2622,12 @@ GtkWidget *
 gimp_prop_choice_combo_box_new (GObject     *config,
                                 const gchar *property_name)
 {
-  GParamSpec          *param_spec;
-  GimpParamSpecChoice *cspec;
-  GtkWidget           *combo_box;
-  GtkListStore        *store;
-  GList               *values;
-  GList               *iter;
+  GParamSpec   *param_spec;
+  GimpChoice   *choice;
+  GtkWidget    *combo_box;
+  GtkListStore *store;
+  GList        *values;
+  GList        *iter;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
@@ -2637,14 +2637,14 @@ gimp_prop_choice_combo_box_new (GObject     *config,
   if (! param_spec)
     return NULL;
 
-  cspec  = GIMP_PARAM_SPEC_CHOICE (param_spec);
-  values = gimp_choice_list_nicks (cspec->choice);
+  choice = gimp_param_spec_choice_get_choice (param_spec);
+  values = gimp_choice_list_nicks (choice);
   store  = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
 
   for (iter = values; iter; iter = iter->next)
     {
       const gchar *nick  = iter->data;
-      const gchar *label = gimp_choice_get_label (cspec->choice, nick);
+      const gchar *label = gimp_choice_get_label (choice, nick);
 
       gtk_list_store_insert_with_values (store, NULL, -1,
                                          0, nick,
@@ -2658,8 +2658,8 @@ gimp_prop_choice_combo_box_new (GObject     *config,
 
   gimp_string_combo_box_set_sensitivity (GIMP_STRING_COMBO_BOX (combo_box),
                                          (GimpStringSensitivityFunc) gimp_prop_choice_combo_box_is_sensitive,
-                                         cspec->choice, NULL);
-  g_signal_connect_swapped (cspec->choice, "sensitivity-changed",
+                                         choice, NULL);
+  g_signal_connect_swapped (choice, "sensitivity-changed",
                             G_CALLBACK (gtk_widget_queue_draw),
                             combo_box);
 
@@ -2764,12 +2764,12 @@ GtkWidget *
 gimp_prop_choice_radio_frame_new (GObject     *config,
                                   const gchar *property_name)
 {
-  GParamSpec          *param_spec;
-  GimpParamSpecChoice *cspec;
-  GtkWidget           *frame;
-  GimpIntStore        *store;
-  GList               *values;
-  GList               *iter;
+  GParamSpec   *param_spec;
+  GimpChoice   *choice;
+  GtkWidget    *frame;
+  GimpIntStore *store;
+  GList        *values;
+  GList        *iter;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
@@ -2779,15 +2779,15 @@ gimp_prop_choice_radio_frame_new (GObject     *config,
   if (! param_spec)
     return NULL;
 
-  cspec  = GIMP_PARAM_SPEC_CHOICE (param_spec);
-  values = gimp_choice_list_nicks (cspec->choice);
+  choice = gimp_param_spec_choice_get_choice (param_spec);
+  values = gimp_choice_list_nicks (choice);
   store = g_object_new (GIMP_TYPE_INT_STORE, NULL);
 
   for (iter = values; iter; iter = iter->next)
     {
       const gchar *nick  = iter->data;
-      const gchar *label = gimp_choice_get_label (cspec->choice, nick);
-      gint         id    = gimp_choice_get_id (cspec->choice, nick);
+      const gchar *label = gimp_choice_get_label (choice, nick);
+      gint         id    = gimp_choice_get_id (choice, nick);
 
       gtk_list_store_insert_with_values (GTK_LIST_STORE (store), NULL, -1,
                                          GIMP_INT_STORE_VALUE, id,
@@ -2803,14 +2803,14 @@ gimp_prop_choice_radio_frame_new (GObject     *config,
 
   gimp_int_radio_frame_set_sensitivity (GIMP_INT_RADIO_FRAME (frame),
                                         (GimpIntRadioFrameSensitivityFunc) gimp_prop_widget_choice_is_sensitive,
-                                        cspec->choice, NULL);
+                                        choice, NULL);
 
   g_object_bind_property_full (config,  property_name,
                                frame,   "value",
                                G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE,
                                gimp_prop_widget_choice_string_to_int,
                                gimp_prop_widget_choice_int_to_string,
-                               cspec->choice, NULL);
+                               choice, NULL);
 
   gimp_widget_set_bound_property (frame, config, property_name);
 
