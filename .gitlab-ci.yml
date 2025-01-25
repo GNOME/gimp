@@ -66,6 +66,7 @@ workflow:
     when:
       - 'runner_system_failure'
       - 'scheduler_failure'
+  needs: []
   # Default Docker image (unless otherwise defined)
   image: debian:${DEB_VERSION}
   # Common artifacts behavior
@@ -388,7 +389,6 @@ gimp-debian-x64:
 
 deps-flatpak-x64:
   extends: .flatpak-x64
-  needs: []
   stage: dependencies
   #https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/1502
   #cache:
@@ -524,7 +524,6 @@ gimp-win-x64-cross:
 
 deps-win:
   extends: .win
-  needs: []
   stage: dependencies
   script:
     - build/windows/1_build-deps-msys2.ps1
@@ -567,7 +566,6 @@ gimp-win:
 
 deps-win-x86:
   extends: .win-x86
-  needs: []
   stage: !reference [deps-win, stage]
   script:
     - !reference [deps-win, script]
@@ -634,7 +632,6 @@ clang-format:
   extends: .default
   rules:
     - <<: *CI_MERGE
-  needs: []
   stage: analysis
   script:
     - apt-get update
@@ -653,7 +650,6 @@ cppcheck:
   extends: .default
   rules:
     - if: '$GIMP_CI_CPPCHECK != null'
-  needs: []
   stage: analysis
   script:
     - apt-get update
