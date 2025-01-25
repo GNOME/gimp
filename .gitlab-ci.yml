@@ -90,8 +90,7 @@ stages:
   - analysis
   - distribution
 
-## prepare build-oriented Docker images ##
-
+## AppImage CI (Debian) ##
 .debian:
   extends: .default
   rules:
@@ -120,32 +119,6 @@ stages:
     - export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"
     - export GI_TYPELIB_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}girepository-1.0${GI_TYPELIB_PATH:+:$GI_TYPELIB_PATH}"
     - echo -e "\e[0Ksection_end:`date +%s`:environ\r\e[0K"
-
-.debian-x64:
-  extends: .debian
-  rules:
-    - <<: *CI_MERGE
-    - <<: *CI_COMMIT
-    - if: '$GIMP_CI_MESON_CLANG != null'
-      variables: {}
-    - if: '$GIMP_CI_MESON_GCC != null'
-      variables:
-        CC: "cc"
-        CXX: "c++"
-        CC_LD: bfd
-        CXX_LD: bfd
-        VARIANT: "-gcc"
-    - if: '$GIMP_CI_RASTER_ICONS != null'
-      variables:
-        MESON_OPTIONS: "-Dvector-icons=false"
-        VARIANT: "-raster"
-    - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
-    - if: '$GIMP_CI_SOURCES != null'
-    - <<: *CI_RELEASE
-  parallel:
-    matrix:
-      - RUNNER: x86_64_v2
-  tags: []
 
 image-debian:
   extends: .debian
@@ -233,18 +206,6 @@ image-debian:
             python3-gi" >> Dockerfile
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER} --cache=true --cache-ttl=120h
 
-image-debian-x64:
-  extends: .debian-x64
-  stage: !reference [image-debian, stage]
-  image: !reference [image-debian, image]
-  variables: !reference [image-debian, variables]
-  before_script:
-   - !reference [image-debian, before_script]
-  script:
-    - !reference [image-debian, script]
-
-## GNU/Linux 64-bit CIs (Debian) ##
-
 deps-debian:
   extends: .debian
   needs: ["image-debian"]
@@ -321,6 +282,44 @@ gimp-debian:
       - _build-${RUNNER}/config.h
     expire_in: 2 days
 
+
+## GNU/Linux 64-bit CIs (Debian) ##
+.debian-x64:
+  extends: .debian
+  rules:
+    - <<: *CI_MERGE
+    - <<: *CI_COMMIT
+    - if: '$GIMP_CI_MESON_CLANG != null'
+      variables: {}
+    - if: '$GIMP_CI_MESON_GCC != null'
+      variables:
+        CC: "cc"
+        CXX: "c++"
+        CC_LD: bfd
+        CXX_LD: bfd
+        VARIANT: "-gcc"
+    - if: '$GIMP_CI_RASTER_ICONS != null'
+      variables:
+        MESON_OPTIONS: "-Dvector-icons=false"
+        VARIANT: "-raster"
+    - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
+    - if: '$GIMP_CI_SOURCES != null'
+    - <<: *CI_RELEASE
+  parallel:
+    matrix:
+      - RUNNER: x86_64_v2
+  tags: []
+
+image-debian-x64:
+  extends: .debian-x64
+  stage: !reference [image-debian, stage]
+  image: !reference [image-debian, image]
+  variables: !reference [image-debian, variables]
+  before_script:
+   - !reference [image-debian, before_script]
+  script:
+    - !reference [image-debian, script]
+
 deps-debian-x64:
   extends: .debian-x64
   needs: ["image-debian-x64"]
@@ -373,8 +372,8 @@ gimp-debian-x64:
       junit: "_build-${RUNNER}/meson-logs/testlog.junit.xml"
     expire_in: 2 days
 
-## Flatpak CI ##
 
+## Flatpak CI ##
 .flatpak-x64:
   extends: .default
   rules:
@@ -419,8 +418,8 @@ gimp-flatpak-x64:
       - gimp-meson-log.tar
     expire_in: 2 days
 
-## WINDOWS 64-bit CI (cross-build crossroad) ##
 
+## WINDOWS 64-bit CI (cross-build crossroad) ##
 .win-cross:
   extends: .debian-x64
   rules:
@@ -478,6 +477,7 @@ gimp-win-x64-cross:
       - _build-clang64-cross/meson-logs/meson-log.txt
       - _build-clang64-cross/done-dll.list
     expire_in: 2 days
+
 
 ## WINDOWS pipelines (native MSYS2) ##
 .win:
@@ -552,6 +552,7 @@ gimp-win:
       - _build-$MSYSTEM_PREFIX/build/windows/installer/
       - _build-$MSYSTEM_PREFIX/build/windows/store/
     expire_in: 2 days
+
 
 ## WINDOWS x86 legacy CI (native MSYS2) ##
 .win-x86:
