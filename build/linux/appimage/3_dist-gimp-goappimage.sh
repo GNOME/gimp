@@ -148,7 +148,7 @@ bund_usr ()
         search_path=("$(dirname $(echo $2 | sed "s|lib/|$1/${LIB_DIR}/${LIB_SUBDIR}|g" | sed "s|*|no_scape|g"))"
                      "$(dirname $(echo $2 | sed "s|lib/|/usr/${LIB_DIR}/|g" | sed "s|*|no_scape|g"))")
         ;;
-      share*|etc*)
+      share*|include*|etc*)
         search_path=("$(dirname $(echo $2 | sed "s|${2%%/*}|$1/${2%%/*}|g" | sed "s|*|no_scape|g"))")
         ;;
     esac
@@ -305,6 +305,12 @@ if [ "$GIMP_UNSTABLE" ]; then
 fi
 ### Debug dialog
 bund_usr "$GIMP_PREFIX" "bin/gimp-debug-tool*" --dest "libexec"
+### headers for gimptool
+bund_usr "$GIMP_PREFIX" "include/gimp-*"
+bund_usr "$GIMP_PREFIX" "include/babl-*"
+bund_usr "$GIMP_PREFIX" "include/gegl-*"
+bund_usr "$UNIX_PREFIX" "include/exiv*"
+bund_usr "$UNIX_PREFIX" "include/gexiv*"
 ### Introspected plug-ins
 bund_usr "$GIMP_PREFIX" "lib/girepository-*"
 bund_usr "$UNIX_PREFIX" "lib/girepository-*"

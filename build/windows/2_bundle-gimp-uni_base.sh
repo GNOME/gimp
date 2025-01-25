@@ -96,10 +96,12 @@ bundle "$GIMP_PREFIX" etc/gimp
 bundle "$MSYS_PREFIX" etc/fonts
 
 
-## Headers.
+## Headers (for use of gimptool).
 bundle "$GIMP_PREFIX" include/gimp-*
 bundle "$GIMP_PREFIX" include/babl-*
 bundle "$GIMP_PREFIX" include/gegl-*
+bundle "$GIMP_PREFIX" include/exiv*
+bundle "$GIMP_PREFIX" include/gexiv*
 
 
 ## Library data.
