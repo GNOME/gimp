@@ -100,8 +100,8 @@ bundle "$MSYS_PREFIX" etc/fonts
 bundle "$GIMP_PREFIX" include/gimp-*
 bundle "$GIMP_PREFIX" include/babl-*
 bundle "$GIMP_PREFIX" include/gegl-*
-bundle "$GIMP_PREFIX" include/exiv*
-bundle "$GIMP_PREFIX" include/gexiv*
+bundle "$MSYS_PREFIX" include/exiv*
+bundle "$MSYS_PREFIX" include/gexiv*
 
 
 ## Library data.
