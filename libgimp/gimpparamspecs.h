@@ -38,25 +38,17 @@ G_BEGIN_DECLS
                                          GIMP_TYPE_IMAGE))
 
 #define GIMP_TYPE_PARAM_IMAGE           (gimp_param_image_get_type ())
-#define GIMP_PARAM_SPEC_IMAGE(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_IMAGE, GimpParamSpecImage))
 #define GIMP_IS_PARAM_SPEC_IMAGE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_IMAGE))
 
-typedef struct _GimpParamSpecImage GimpParamSpecImage;
+GType        gimp_param_image_get_type          (void) G_GNUC_CONST;
 
-struct _GimpParamSpecImage
-{
-  GParamSpecObject  parent_instance;
+GParamSpec * gimp_param_spec_image              (const gchar  *name,
+                                                 const gchar  *nick,
+                                                 const gchar  *blurb,
+                                                 gboolean      none_ok,
+                                                 GParamFlags   flags);
 
-  gboolean          none_ok;
-};
-
-GType        gimp_param_image_get_type (void) G_GNUC_CONST;
-
-GParamSpec * gimp_param_spec_image     (const gchar  *name,
-                                        const gchar  *nick,
-                                        const gchar  *blurb,
-                                        gboolean      none_ok,
-                                        GParamFlags   flags);
+gboolean     gimp_param_spec_image_none_allowed (GParamSpec   *pspec);
 
 
 /*
@@ -67,25 +59,17 @@ GParamSpec * gimp_param_spec_image     (const gchar  *name,
                                         GIMP_TYPE_ITEM))
 
 #define GIMP_TYPE_PARAM_ITEM           (gimp_param_item_get_type ())
-#define GIMP_PARAM_SPEC_ITEM(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_ITEM, GimpParamSpecItem))
 #define GIMP_IS_PARAM_SPEC_ITEM(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_ITEM))
 
-typedef struct _GimpParamSpecItem GimpParamSpecItem;
+GType        gimp_param_item_get_type          (void) G_GNUC_CONST;
 
-struct _GimpParamSpecItem
-{
-  GParamSpecObject  parent_instance;
+GParamSpec * gimp_param_spec_item              (const gchar  *name,
+                                                const gchar  *nick,
+                                                const gchar  *blurb,
+                                                gboolean      none_ok,
+                                                GParamFlags   flags);
 
-  gboolean          none_ok;
-};
-
-GType        gimp_param_item_get_type (void) G_GNUC_CONST;
-
-GParamSpec * gimp_param_spec_item     (const gchar  *name,
-                                       const gchar  *nick,
-                                       const gchar  *blurb,
-                                       gboolean      none_ok,
-                                       GParamFlags   flags);
+gboolean     gimp_param_spec_item_none_allowed (GParamSpec   *pspec);
 
 
 /*
@@ -248,25 +232,17 @@ GParamSpec * gimp_param_spec_path     (const gchar  *name,
                                                                             GIMP_TYPE_DRAWABLE_FILTER))
 
 #define GIMP_TYPE_PARAM_DRAWABLE_FILTER           (gimp_param_drawable_filter_get_type ())
-#define GIMP_PARAM_SPEC_DRAWABLE_FILTER(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_DRAWABLE_FILTER, GimpParamSpecDrawableFilter))
 #define GIMP_IS_PARAM_SPEC_DRAWABLE_FILTER(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_DRAWABLE_FILTER))
 
-typedef struct _GimpParamSpecDrawableFilter GimpParamSpecDrawableFilter;
+GType        gimp_param_drawable_filter_get_type          (void) G_GNUC_CONST;
 
-struct _GimpParamSpecDrawableFilter
-{
-  GParamSpecObject  parent_instance;
+GParamSpec * gimp_param_spec_drawable_filter              (const gchar  *name,
+                                                           const gchar  *nick,
+                                                           const gchar  *blurb,
+                                                           gboolean      none_ok,
+                                                           GParamFlags   flags);
 
-  gboolean          none_ok;
-};
-
-GType        gimp_param_drawable_filter_get_type (void) G_GNUC_CONST;
-
-GParamSpec * gimp_param_spec_drawable_filter     (const gchar  *name,
-                                                  const gchar  *nick,
-                                                  const gchar  *blurb,
-                                                  gboolean      none_ok,
-                                                  GParamFlags   flags);
+gboolean      gimp_param_spec_drawable_filter_none_allowed (GParamSpec *pspec);
 
 
 /*
@@ -277,25 +253,17 @@ GParamSpec * gimp_param_spec_drawable_filter     (const gchar  *name,
                                            GIMP_TYPE_DISPLAY))
 
 #define GIMP_TYPE_PARAM_DISPLAY           (gimp_param_display_get_type ())
-#define GIMP_PARAM_SPEC_DISPLAY(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_DISPLAY, GimpParamSpecDisplay))
 #define GIMP_IS_PARAM_SPEC_DISPLAY(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_DISPLAY))
 
-typedef struct _GimpParamSpecDisplay GimpParamSpecDisplay;
+GType        gimp_param_display_get_type         (void) G_GNUC_CONST;
 
-struct _GimpParamSpecDisplay
-{
-  GParamSpecObject  parent_instance;
+GParamSpec * gimp_param_spec_display             (const gchar  *name,
+                                                  const gchar  *nick,
+                                                  const gchar  *blurb,
+                                                  gboolean      none_ok,
+                                                  GParamFlags   flags);
 
-  gboolean          none_ok;
-};
-
-GType        gimp_param_display_get_type (void) G_GNUC_CONST;
-
-GParamSpec * gimp_param_spec_display     (const gchar  *name,
-                                          const gchar  *nick,
-                                          const gchar  *blurb,
-                                          gboolean      none_ok,
-                                          GParamFlags   flags);
+gboolean     gimp_param_spec_display_none_allowed (GParamSpec *pspec);
 
 
 /*

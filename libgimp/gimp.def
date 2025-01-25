@@ -722,14 +722,18 @@ EXPORTS
 	gimp_param_spec_brush
 	gimp_param_spec_channel
 	gimp_param_spec_display
+	gimp_param_spec_display_none_allowed
 	gimp_param_spec_drawable
 	gimp_param_spec_drawable_filter
+	gimp_param_spec_drawable_filter_none_allowed
 	gimp_param_spec_font
 	gimp_param_spec_get_desc
 	gimp_param_spec_gradient
 	gimp_param_spec_group_layer
 	gimp_param_spec_image
+	gimp_param_spec_image_none_allowed
 	gimp_param_spec_item
+	gimp_param_spec_item_none_allowed
 	gimp_param_spec_layer
 	gimp_param_spec_layer_mask
 	gimp_param_spec_palette

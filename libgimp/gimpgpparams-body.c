@@ -620,35 +620,27 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
     }
   else if (pspec_type == GIMP_TYPE_PARAM_IMAGE)
     {
-      GimpParamSpecImage *ispec = GIMP_PARAM_SPEC_IMAGE (pspec);
-
       param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
 
-      param_def->meta.m_id.none_ok = ispec->none_ok;
+      param_def->meta.m_id.none_ok = gimp_param_spec_image_none_allowed (pspec);
     }
   else if (GIMP_IS_PARAM_SPEC_ITEM (pspec))
     {
-      GimpParamSpecItem *ispec = GIMP_PARAM_SPEC_ITEM (pspec);
-
       param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
 
-      param_def->meta.m_id.none_ok = ispec->none_ok;
+      param_def->meta.m_id.none_ok = gimp_param_spec_item_none_allowed (pspec);
     }
   else if (GIMP_IS_PARAM_SPEC_DRAWABLE_FILTER (pspec))
     {
-      GimpParamSpecDrawableFilter *fspec = GIMP_PARAM_SPEC_DRAWABLE_FILTER (pspec);
-
       param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
 
-      param_def->meta.m_id.none_ok = fspec->none_ok;
+      param_def->meta.m_id.none_ok = gimp_param_spec_drawable_filter_none_allowed (pspec);
     }
   else if (pspec_type == GIMP_TYPE_PARAM_DISPLAY)
     {
-      GimpParamSpecDisplay *ispec = GIMP_PARAM_SPEC_DISPLAY (pspec);
-
       param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
 
-      param_def->meta.m_id.none_ok = ispec->none_ok;
+      param_def->meta.m_id.none_ok = gimp_param_spec_display_none_allowed (pspec);
     }
   else if (GIMP_IS_PARAM_SPEC_RESOURCE (pspec))
     {
