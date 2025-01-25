@@ -68,12 +68,27 @@ API:
   - Changes in libgimpbase:
     * Creation time metadata are added (for various tags in IPTC, XMP
       and Exif) when first creating a new image.
-    * New function gimp_metadata_set_creation_date() allowing to set
-      a custom creation date.
+    * New functions:
+      + gimp_metadata_set_creation_date() allowing to set a custom creation date.
+      + gimp_param_spec_file_get_action()
+      + gimp_param_spec_file_none_allowed()
+      + gimp_param_spec_unit_percent_allowed()
+      + gimp_param_spec_unit_pixel_allowed()
+      + gimp_param_spec_core_object_array_get_object_type()
+      + gimp_param_spec_value_array_get_element_spec()
+      + gimp_param_spec_choice_get_choice()
+      + gimp_param_spec_choice_get_default()
     * New GimpFileChooserAction enum type.
     * New GimpParamSpecFile param spec type.
   - Changes in libgimp:
-    * New function gimp_procedure_is_core()
+    * New functions:
+      + gimp_procedure_is_core()
+      + gimp_param_spec_resource_defaults_to_context()
+      + gimp_param_spec_resource_none_allowed()
+      + gimp_param_spec_display_none_allowed()
+      + gimp_param_spec_drawable_filter_none_allowed()
+      + gimp_param_spec_image_none_allowed()
+      + gimp_param_spec_item_none_allowed()
     * gimp_pdb_query() doesn't return private PDB procedures anymore.
     * The various "save-*" PDB procedure arguments for export plug-ins
       were renamed to "include-*" and made public.
@@ -81,6 +96,8 @@ API:
       and now supporting when the file is the export or import image.
     * GFile arguments are now stored as URI rather than path in config
       files.
+    * gimp_procedure_dialog_get_widget() now supports GimpParamSpecUnit
+      arguments.
 
 Translations:
 
@@ -98,6 +115,8 @@ Build:
     aware.
   - Crossbuild jobs are back in CI and with UCRT.
   - Meson option -Dg-ir-doc was removed.
+  - No build attempt to use build caching in CI. It was just making
+    problems with no clear gain.
 
 
 Overview of Changes from GIMP 3.0.0-RC1 to GIMP 3.0.0-RC2
