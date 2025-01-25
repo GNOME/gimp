@@ -147,7 +147,6 @@ image-debian:
             git
             gobject-introspection
             libgtk-3-bin
-            libtool
             lld
             meson
             valac
