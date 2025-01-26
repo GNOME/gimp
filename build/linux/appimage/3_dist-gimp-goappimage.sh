@@ -33,7 +33,7 @@ export APPIMAGE_EXTRACT_AND_RUN=1
 if [ "$(ls -dq ./AppDir* 2>/dev/null | wc -l)" != '2' ]; then
   ## For now, we always use the latest go-appimagetool for bundling. See: https://github.com/probonopd/go-appimage/issues/275
   if [ "$GITLAB_CI" ]; then
-    apt-get install -y --no-install-recommends patchelf >/dev/null 2>&1
+    apt-get install -y --no-install-recommends file patchelf >/dev/null 2>&1
   fi
   wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-${HOST_ARCH}.AppImage" | head -n 1 | cut -d '"' -f 2) >/dev/null 2>&1
   go_appimagetool_text="go-appimagetool build: $(echo appimagetool-*.AppImage | sed -e 's/appimagetool-//' -e "s/-${HOST_ARCH}.AppImage//")"
