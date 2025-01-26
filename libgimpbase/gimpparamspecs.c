@@ -455,6 +455,24 @@ gimp_param_spec_file_get_action (GParamSpec *pspec)
 }
 
 /**
+ * gimp_param_spec_file_set_action:
+ * @pspec:  a #GParamSpec to hold a #GFile value.
+ * @action: new action for @pspec.
+ *
+ * Change the file action tied to @pspec.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_param_spec_file_set_action (GParamSpec            *pspec,
+                                 GimpFileChooserAction  action)
+{
+  g_return_if_fail (GIMP_IS_PARAM_SPEC_FILE (pspec));
+
+  GIMP_PARAM_SPEC_FILE (pspec)->action = action;
+}
+
+/**
  * gimp_param_spec_file_none_allowed:
  * @pspec: a #GParamSpec to hold a #GFile value.
  *

@@ -149,6 +149,7 @@ EXPORTS
 	gimp_param_spec_file
 	gimp_param_spec_file_get_action
 	gimp_param_spec_file_none_allowed
+	gimp_param_spec_file_set_action
 	gimp_param_spec_int32_array
 	gimp_param_spec_memsize
 	gimp_param_spec_object_duplicate

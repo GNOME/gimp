@@ -173,6 +173,8 @@ GParamSpec            * gimp_param_spec_file              (const gchar          
                                                            GParamFlags            flags);
 
 GimpFileChooserAction   gimp_param_spec_file_get_action   (GParamSpec            *pspec);
+void                    gimp_param_spec_file_set_action   (GParamSpec            *pspec,
+                                                           GimpFileChooserAction  action);
 gboolean                gimp_param_spec_file_none_allowed (GParamSpec            *pspec);
 
 
