@@ -209,6 +209,7 @@ gimp_file_chooser_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (chooser), chooser->label_widget, FALSE, FALSE, 0);
   if (chooser->label)
     gtk_label_set_text_with_mnemonic (GTK_LABEL (chooser->label_widget), chooser->label);
+  gtk_label_set_xalign (GTK_LABEL (chooser->label_widget), 0.0);
   gtk_widget_set_visible (chooser->label_widget, chooser->label != NULL);
 
   gimp_file_chooser_set_action (chooser, chooser->action);
