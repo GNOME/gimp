@@ -57,6 +57,9 @@ elif [ "$GITLAB_CI" ] || [ "$1" = '--ci' ]; then
   echo -e "\e[0Ksection_start:`date +%s`:gimp_bundle[collapsed=true]\r\e[0KCreating OSTree repo"
   flatpak-builder --user --disable-rofiles-fuse --finish-only --repo=repo \
                   "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
+
+  flatpak build-commit-from --src-ref=app/org.gimp.GIMP/x86_64/master^ repo app/org.gimp.GIMP/x86_64/master --end-of-life-rebase=org.gimp.GIMP=org.gimp.GIMP.Nightly
+
   if [ "$GITLAB_CI"  ]; then
     tar cf repo.tar repo/
   fi
