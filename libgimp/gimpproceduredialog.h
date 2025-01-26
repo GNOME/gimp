@@ -100,9 +100,6 @@ GtkWidget * gimp_procedure_dialog_get_label         (GimpProcedureDialog *dialog
                                                      const gchar         *text,
                                                      gboolean             is_markup,
                                                      gboolean             with_mnemonic);
-GtkWidget * gimp_procedure_dialog_get_file_chooser  (GimpProcedureDialog *dialog,
-                                                     const gchar         *property,
-                                                     GtkFileChooserAction action);
 
 GtkWidget * gimp_procedure_dialog_get_drawable_preview
                                                     (GimpProcedureDialog *dialog,

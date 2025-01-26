@@ -660,11 +660,10 @@ gimp_procedure_dialog_set_ok_label (GimpProcedureDialog *dialog,
  * - %GIMP_TYPE_PARAM_FILE:
  *     * %GTK_FILE_CHOOSER_BUTTON (default): generic file chooser widget
  *       using the action mode of the param spec.
- * - %G_TYPE_PARAM_FILE:
- *     * %GTK_FILE_CHOOSER_BUTTON (default): generic file chooser button
- *       in %GTK_FILE_CHOOSER_ACTION_OPEN mode. Please use
- *       [method@ProcedureDialog.get_file_chooser] to create buttons in
- *       other modes or better, use a %GIMP_TYPE_PARAM_FILE argument.
+ *       Note that it won't work with a [enum@Gimp.FileChooserAction.ANY]
+ *       action. If you intend to display a widget for a file param
+ *       spec, you should always set it to a more specific action.
+ *       See [method@Gimp.Procedure.add_file_argument].
  * - %G_TYPE_PARAM_UNIT:
  *     * %GIMP_TYPE_UNIT_COMBO_BOX
  *
@@ -844,15 +843,8 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
     }
   else if (GIMP_IS_PARAM_SPEC_FILE (pspec))
     {
-      widget = gimp_prop_file_chooser_button_new (G_OBJECT (priv->config),
-                                                  property, NULL,
-                                                  (GtkFileChooserAction) gimp_param_spec_file_get_action (pspec));
-    }
-  else if (G_IS_PARAM_SPEC_OBJECT (pspec) && pspec->value_type == G_TYPE_FILE)
-    {
-      widget = gimp_prop_file_chooser_button_new (G_OBJECT (priv->config),
-                                                  property, NULL,
-                                                  GTK_FILE_CHOOSER_ACTION_OPEN);
+      widget = gimp_prop_file_chooser_new (G_OBJECT (priv->config), property, NULL, NULL);
+      label  = gimp_file_chooser_get_label_widget (GIMP_FILE_CHOOSER (widget));
     }
   else if (G_PARAM_SPEC_TYPE (pspec) == GIMP_TYPE_PARAM_CHOICE)
     {
@@ -1615,85 +1607,6 @@ gimp_procedure_dialog_get_label (GimpProcedureDialog *dialog,
     g_object_ref_sink (label);
 
   return label;
-}
-
-/**
- * gimp_procedure_dialog_get_file_chooser:
- * @dialog:   the associated #GimpProcedureDialog.
- * @property: name of the %GimpParamConfigPath or %GParamObject of value
- *            type %GFile property to build a #GtkFileChooserButton for.
- *            It must be a property of the #GimpProcedure @dialog has
- *            been created for.
- * @action:   The open mode for the widget.
- *
- * Creates a new %GtkFileChooserButton for @property which must
- * necessarily be a config path or %GFile property.
- * This can be used instead of gimp_procedure_dialog_get_widget() in
- * particular if you want to create a button in non-open modes (i.e. to
- * save files, and select or create folders).
- *
- * If a widget has already been created for this procedure, it will be
- * returned instead (whatever its actual widget type).
- *
- * Note: it doesn't work for [enum@Gtk.FileChooserAction.SAVE] and
- * [enum@Gtk.FileChooserAction.CREATE_FOLDER] @action yet.
- *
- * As for [enum@Gimp.FileChooserAction.ANY], it should never be used for
- * a procedure argument if you intend to display a widget for it.
- *
- * Returns: (transfer none): the #GtkWidget representing @property. The
- *                           object belongs to @dialog and must not be
- *                           freed.
- */
-GtkWidget *
-gimp_procedure_dialog_get_file_chooser (GimpProcedureDialog  *dialog,
-                                        const gchar          *property,
-                                        GtkFileChooserAction  action)
-{
-  GimpProcedureDialogPrivate *priv;
-  GtkWidget                  *widget = NULL;
-  GParamSpec                 *pspec;
-
-  g_return_val_if_fail (GIMP_IS_PROCEDURE_DIALOG (dialog), NULL);
-  g_return_val_if_fail (property != NULL, NULL);
-  g_return_val_if_fail (action != GIMP_FILE_CHOOSER_ACTION_ANY &&
-                        action != GIMP_FILE_CHOOSER_ACTION_SAVE &&
-                        action != GIMP_FILE_CHOOSER_ACTION_CREATE_FOLDER, NULL);
-
-  priv  = gimp_procedure_dialog_get_instance_private (dialog);
-  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (priv->config),
-                                        property);
-
-  if (! pspec)
-    {
-      g_warning ("%s: parameter %s does not exist.",
-                 G_STRFUNC, property);
-      return NULL;
-    }
-
-  g_return_val_if_fail (GIMP_IS_PARAM_SPEC_CONFIG_PATH (pspec) ||
-                        (G_IS_PARAM_SPEC_OBJECT (pspec) && pspec->value_type == G_TYPE_FILE),
-                        NULL);
-
-  /* First check if it already exists. */
-  widget = g_hash_table_lookup (priv->widgets, property);
-
-  if (widget)
-    return widget;
-
-  widget = gimp_prop_file_chooser_button_new (G_OBJECT (priv->config),
-                                              property, NULL, action);
-
-  /* TODO: make is a file chooser with label. */
-  /*gtk_size_group_add_widget (priv->label_group,
-                             gimp_labeled_get_label (GIMP_LABELED (widget)));
-
-  gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);*/
-  g_hash_table_insert (priv->widgets, g_strdup (property), widget);
-  if (g_object_is_floating (widget))
-    g_object_ref_sink (widget);
-
-  return widget;
 }
 
 /**
@@ -2850,6 +2763,10 @@ gimp_procedure_dialog_check_mnemonic (GimpProcedureDialog *dialog,
   else if (GIMP_IS_DRAWABLE_CHOOSER (widget))
     {
       label = gimp_drawable_chooser_get_label (GIMP_DRAWABLE_CHOOSER (widget));
+    }
+  else if (GIMP_IS_FILE_CHOOSER (widget))
+    {
+      label = gimp_file_chooser_get_label_widget (GIMP_FILE_CHOOSER (widget));
     }
   else
     {

@@ -50,7 +50,6 @@ EXPORTS
 	gimp_procedure_dialog_fill_scrolled_window
 	gimp_procedure_dialog_get_color_widget
 	gimp_procedure_dialog_get_drawable_preview
-	gimp_procedure_dialog_get_file_chooser
 	gimp_procedure_dialog_get_int_combo
 	gimp_procedure_dialog_get_int_radio
 	gimp_procedure_dialog_get_label

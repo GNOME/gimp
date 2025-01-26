@@ -79,7 +79,6 @@ sf_arg_type_is_custom (SFScript *script,
 
   switch (script->args[arg_index].type)
     {
-    case SF_DIRNAME:
     case SF_OPTION:
       result = TRUE;
       break;
@@ -151,26 +150,6 @@ sf_widget_custom_option (GimpProcedureDialog *dialog,
                                        GIMP_INT_STORE (store));
 }
 
-/* Adds widget for arg of type SF-DIRNAME to the dialog.
- * Widget is a GtkFileChooserButton.
- * Specializes the widget to be in mode for user to choose a directory.
- *
- * Note that this is implemented by gtk_file_chooser_button,
- * which does not support ACTION_SAVE, and which becomes obsolete in Gtk4.
- * Thus, we don't have SF-SAVE-FILENAME.
- * To offer save, a script must use two widgets:
- * SF-STRING for user to name a file to save,
- * and SF-DIRNAME for user to choose directory to save to.
- */
-static void
-sf_widget_custom_dirname (GimpProcedureDialog *dialog,
-                         SFArg                *arg)
-{
-  gimp_procedure_dialog_get_file_chooser (dialog,
-                                          arg->property_name,
-                                          GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER);
-}
-
 /* Adds widget for arg of type SF-ADJUSTMENT:SF_SLIDER to the dialog.
  * Specializes the widget: slider instead of entry, and a spinner
  */
@@ -200,9 +179,6 @@ sf_widget_custom_add_to_dialog (GimpProcedureDialog *dialog,
     {
     case SF_OPTION:
       sf_widget_custom_option (dialog, arg);
-      break;
-    case SF_DIRNAME:
-      sf_widget_custom_dirname (dialog, arg);
       break;
     case SF_ADJUSTMENT:
       /* We already know sfa_adjustment.type == SF_SLIDER. */
