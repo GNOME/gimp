@@ -165,7 +165,7 @@ rm -f done-dll.list
 bundle "$GIMP_PREFIX" bin/gimp*.exe
 bundle "$GIMP_PREFIX" bin/libgimp*.dll
 ### Bundled just to promote GEGL. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/10580
-bundle "$GIMP_PREFIX" bin/gegl*.exe
+bundle "$GIMP_PREFIX" bin/gegl.exe
 if [ "$GIMP_UNSTABLE" ] && [[ ! "$MSYS_PREFIX" =~ "32" ]]; then
   ### Needed for 'Show image graph'.
   #### See: https://gitlab.gnome.org/GNOME/gimp/-/issues/6045
