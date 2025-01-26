@@ -26,8 +26,6 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>  /* gimp_ui_init */
 
-#include "libscriptfu/script-fu-intl.h"
-
 #include "script-fu-interpreter.h"
 
 
@@ -86,8 +84,6 @@ int main (int argc, char *argv[])
   g_debug ("Exit script-fu-interpreter.");
 }
 
-DEFINE_STD_SET_I18N
-
 static void
 script_fu_interpreter_class_init (ScriptFuInterpreterClass *klass)
 {
@@ -95,7 +91,18 @@ script_fu_interpreter_class_init (ScriptFuInterpreterClass *klass)
 
   plug_in_class->query_procedures = script_fu_interpreter_query_procedures;
   plug_in_class->create_procedure = script_fu_interpreter_create_procedure;
-  plug_in_class->set_i18n         = STD_SET_I18N;
+
+  /* Do not override virtual method set_i18n.
+   * Default implementation finds translations in:
+   * GIMP's .../plug-ins/<plugin_name>/locale/<lang>/LC_MESSAGES/<plugin_name>.mo
+   *
+   * For any plugin interpreted by self:
+   * plugin file name is plugin-<foo>.scm (it has shebang)
+   * progname is the same (not the name of the interpreter)
+   * plugin name is plugin-<foo>
+   * PDB procedure name is plugin-<foo>
+   * run_func in Scheme is named plugin-<foo> (not script-fu-<foo>)
+   */
 }
 
 
