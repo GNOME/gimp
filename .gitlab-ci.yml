@@ -623,7 +623,9 @@ file-plug-in-tests:
     - mkdir _data && cd _data
     - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/Infrastructure/gimp-test-images.git gimp-test-images
     - cd ..
-    - cat ${PLUG_IN_DIR}test-file-plug-ins/batch-import-tests.py | gimp-console-${APP_VER} -idf --batch-interpreter python-fu-eval -b - --quit
+    - apt-get update
+    - apt-get install -y --no-install-recommends gdb
+    - cat ${PLUG_IN_DIR}test-file-plug-ins/batch-import-tests.py | gimp-console-${APP_VER} --stack-trace-mode=always -idf --batch-interpreter python-fu-eval -b - --quit
     - if [ $(grep -c "${REGRESSION_STRING}" "${GIMP_TESTS_LOG_FILE}") -ne 1 ]; then
         echo "There are file import regressions. Check the log at ${GIMP_TESTS_LOG_FILE}!";
         exit 1;
