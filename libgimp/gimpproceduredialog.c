@@ -940,8 +940,18 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
           else if (GIMP_IS_DRAWABLE_CHOOSER (widget))
             label = gimp_drawable_chooser_get_label (GIMP_DRAWABLE_CHOOSER (widget));
         }
+
       if (label != NULL)
-        gtk_size_group_add_widget (priv->label_group, label);
+        {
+          gtk_size_group_add_widget (priv->label_group, label);
+
+          /* Make sure all labels have consistent alignment and margin. */
+          gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+          gtk_widget_set_margin_end (GTK_WIDGET (label), 4);
+          gtk_widget_set_margin_start (GTK_WIDGET (label), 0);
+          gtk_widget_set_margin_top (GTK_WIDGET (label), 0);
+          gtk_widget_set_margin_bottom (GTK_WIDGET (label), 0);
+        }
     }
 
   if ((binding = g_hash_table_lookup (priv->sensitive_data, property)))
