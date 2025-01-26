@@ -592,7 +592,7 @@ file-plug-in-tests:
     # Don't run on release since the plug-in doesn't get installed in releases
     - <<: *CI_MERGE
     - <<: *CI_COMMIT
-  needs: ["deps-debian-x64", "gimp-debian-x64"]
+  needs: ["gimp-debian-x64"]
   stage: analysis
   variables:
     GIT_STRATEGY: none
