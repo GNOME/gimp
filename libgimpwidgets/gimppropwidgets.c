@@ -2894,6 +2894,84 @@ static void        gimp_prop_file_chooser_button_notify   (GObject        *confi
 
 
 /**
+ * gimp_prop_file_chooser_new:
+ * @config:            Object to which property is attached.
+ * @property_name:     Name of a %GimpParamSpecFile property.
+ * @label: (nullable): Label of the widget.
+ * @title: (nullable): Title of the file dialog.
+ *
+ * Creates a [class@GimpUi.FileChooser] to edit the specified file
+ * property. @property_name must be a %GimpParamSpecFile with an action
+ * other than [enum@Gimp.FileChooserAction.ANY].
+ *
+ * If @label is %NULL, @property_name's `nick` text will be used
+ * instead.
+ *
+ * Returns: (transfer full): A new #GtkFileChooserButton.
+ *
+ * Since: 3.0
+ */
+GtkWidget *
+gimp_prop_file_chooser_new (GObject     *config,
+                            const gchar *property_name,
+                            const gchar *label,
+                            const gchar *title)
+{
+  GimpFileChooserAction  action;
+  GParamSpec            *pspec;
+  GtkWidget             *widget;
+  GFile                 *file = NULL;
+  const gchar           *tooltip;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
+
+  pspec = find_param_spec (config, property_name, G_STRFUNC);
+  if (! pspec)
+    {
+      g_warning ("%s: %s has no property named '%s'",
+                 G_STRFUNC, g_type_name (G_TYPE_FROM_INSTANCE (config)),
+                 property_name);
+      return NULL;
+    }
+
+  if (! GIMP_IS_PARAM_SPEC_FILE (pspec))
+    {
+      g_warning ("%s: property '%s' of %s is not a GIMP_PARAM_SPEC_FILE.",
+                 G_STRFUNC, pspec->name, g_type_name (pspec->owner_type));
+      return NULL;
+    }
+
+  action = gimp_param_spec_file_get_action (pspec);
+  if (action == GIMP_FILE_CHOOSER_ACTION_ANY)
+    {
+      g_warning ("%s: property '%s' of %s must not use action GIMP_FILE_CHOOSER_ACTION_ANY.",
+                 G_STRFUNC, pspec->name, g_type_name (pspec->owner_type));
+      return NULL;
+    }
+
+  if (! label)
+    label = g_param_spec_get_nick (pspec);
+
+  g_object_get (config,
+                property_name, &file,
+                NULL);
+
+  widget = gimp_file_chooser_new (action, label, title, file);
+
+  tooltip = g_param_spec_get_blurb (pspec);
+  gimp_help_set_help_data (widget, tooltip, NULL);
+
+  g_object_bind_property (config, property_name,
+                          widget, "file",
+                          G_BINDING_BIDIRECTIONAL);
+
+  g_clear_object (&file);
+
+  return widget;
+}
+
+/**
  * gimp_prop_file_chooser_button_new:
  * @config:        object to which property is attached.
  * @property_name: name of path property.

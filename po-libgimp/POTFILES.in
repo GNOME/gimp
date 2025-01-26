@@ -56,6 +56,7 @@ libgimpwidgets/gimpcolorselect.c
 libgimpwidgets/gimpcolorselection.c
 libgimpwidgets/gimpcontroller.c
 libgimpwidgets/gimpdialog.c
+libgimpwidgets/gimpfilechooser.c
 libgimpwidgets/gimpfileentry.c
 libgimpwidgets/gimphelpui.c
 libgimpwidgets/gimpicons.c

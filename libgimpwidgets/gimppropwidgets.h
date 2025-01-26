@@ -174,6 +174,11 @@ GtkWidget *     gimp_prop_choice_radio_frame_new  (GObject       *config,
 
 /*  GimpParamPath  */
 
+GtkWidget     * gimp_prop_file_chooser_new        (GObject               *config,
+                                                   const gchar           *property_name,
+                                                   const gchar           *label,
+                                                   const gchar           *title);
+
 GtkWidget     * gimp_prop_file_chooser_button_new (GObject              *config,
                                                    const gchar          *property_name,
                                                    const gchar          *title,
