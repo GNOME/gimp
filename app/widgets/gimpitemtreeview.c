@@ -25,12 +25,14 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 #include "libgimpwidgets/gimpwidgets-private.h"
 
 #include "gimphelp-ids.h"
 #include "widgets-types.h"
+#include "tools/tools-types.h"
 
 #include "actions/gimpgeglprocedure.h"
 #include "actions/filters-commands.h"
@@ -55,6 +57,8 @@
 #include "core/gimptoolinfo.h"
 #include "core/gimptreehandler.h"
 #include "core/gimpundostack.h"
+
+#include "tools/tool_manager.h"
 
 #include "vectors/gimppath.h"
 
@@ -2801,7 +2805,7 @@ gimp_item_tree_view_effects_merged_clicked (GtkWidget        *widget,
       ! GIMP_IS_DRAWABLE_FILTER (view->priv->effects_filter))
     return;
 
-  /* Don't merge if certain tools with active filters are in use */
+  /* Commit GEGL-based tools before trying to merge filters */
   context     = gimp_container_view_get_context (GIMP_CONTAINER_VIEW (view));
   active_tool = gimp_context_get_tool (context);
 
@@ -2809,12 +2813,8 @@ gimp_item_tree_view_effects_merged_clicked (GtkWidget        *widget,
       ! strcmp (gimp_object_get_name (active_tool), "gimp-gradient-tool") ||
       ! strcmp (gimp_object_get_name (active_tool), "gimp-warp-tool"))
     {
-      view->priv->effects_filter = NULL;
-      gimp_message_literal (view->priv->image->gimp, G_OBJECT (view),
-                            GIMP_MESSAGE_ERROR,
-                            _("Effects from active tools can not be merged."));
-
-      return;
+      tool_manager_control_active (context->gimp, GIMP_TOOL_ACTION_COMMIT,
+                                   gimp_context_get_display (context));
     }
 
   if (view->priv->effects_drawable &&
