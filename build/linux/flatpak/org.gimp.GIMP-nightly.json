@@ -760,15 +760,12 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://src.fedoraproject.org/repo/pkgs/cfitsio/cfitsio-4.4.0.tar.gz/sha512/9358b1ed94fdc456cf8c0ddcb346c08f6bc97ee862c31366f3fae2d1be8d5278ffc79da01e41ceebf67ebc831f58bce3551e087c883bbf6b396133110d74b076/cfitsio-4.4.0.tar.gz",
-                    "sha256": "95900cf95ae760839e7cb9678a7b2fad0858d6ac12234f934bd1cb6bfc246ba9"
+                    "url": "https://src.fedoraproject.org/repo/pkgs/cfitsio/cfitsio-4.5.0.tar.gz/sha512/03746bf49cfcd97991be54f3e4dd51fb45c7b3a75f581dc6ab9ee5726a342dc11b651667807fd67e5318576d9b15e3580dd62ceab02fd684feff7ee6bb2edc7c/cfitsio-4.5.0.tar.gz",
+                    "sha256": "e4854fc3365c1462e493aa586bfaa2f3d0bb8c20b75a524955db64c27427ce09"
                 }
             ],
             "config-opts": [
                 "--enable-reentrant"
-            ],
-            "make-args": [
-                "shared"
             ],
             "cleanup": [
                 "/include",
