@@ -316,14 +316,22 @@ if (-not $GITLAB_CI -and $wack -eq 'WACK')
     $xml_artifact = "$MSIX_ARTIFACT" -replace '.msix', '-report.xml' -replace 'bundle', ''
 
     ## Generate detailed report
-    ## (appcert only works with admin rights so let's use sudo, which needs:
-    ## - Windows 24H2 build
-    ## - be configured in normal mode: https://github.com/microsoft/sudo/issues/108
-    ## - run in an admin account: https://github.com/microsoft/sudo/discussions/68)
+    ## (appcert only works with admin rights so let's use sudo)
     $nt_build = [System.Environment]::OSVersion.Version | Select-Object -ExpandProperty Build
     if ($nt_build -lt '26052')
       {
         Write-Host "(ERROR): Certification from CLI requires 'sudo' (available only for build 10.0.26052.0 and above)" -ForegroundColor Red
+        exit 1
+      }
+    $sudo_mode = Get-ItemProperty Registry::'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Sudo' | Select-Object -ExpandProperty Enabled
+    if ($sudo_mode -eq '0')
+      {
+        Write-Host "(ERROR): 'sudo' is disabled. Please enable it in Settings." -ForegroundColor Red
+        exit 1
+      }
+    elseif ($sudo_mode -ne '3')
+      {
+        Write-Host "(ERROR): 'sudo' is not in normal/inline mode. Please change it in Settings." -ForegroundColor Red
         exit 1
       }
     Write-Output "(INFO): certifying $MSIX_ARTIFACT with WACK"
