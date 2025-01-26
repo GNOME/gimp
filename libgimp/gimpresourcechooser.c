@@ -233,6 +233,7 @@ gimp_resource_chooser_init (GimpResourceChooser *self)
   gtk_box_set_spacing (GTK_BOX (self), 6);
 
   priv->label_widget = gtk_label_new (NULL);
+  gtk_label_set_xalign (GTK_LABEL (priv->label_widget), 0.0);
   gtk_box_pack_start (GTK_BOX (self), priv->label_widget, FALSE, FALSE, 0);
 }
 
