@@ -517,6 +517,7 @@ tiff_io_close (thandle_t handle)
 
   if (io->input && ! io->output)
     {
+      g_printerr ("Close input stream...\n");
       closed = g_input_stream_close (io->input, NULL, &error);
     }
   else
@@ -548,14 +549,19 @@ tiff_io_close (thandle_t handle)
       g_printerr ("%s", error->message);
       g_clear_error (&error);
     }
+  else
+    g_printerr ("stream closing\n");
 
   g_object_unref (io->stream);
+  g_printerr ("stream closed\n");
   io->stream = NULL;
   io->input  = NULL;
   io->output = NULL;
 
+  g_printerr ("free io buffer\n");
   g_free (io->buffer);
   io->buffer = NULL;
+  g_printerr ("done\n");
 
   io->allocated = 0;
   io->used      = 0;

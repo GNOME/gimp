@@ -1787,10 +1787,10 @@ load_image (GimpProcedure        *procedure,
           g_printerr ("close tif file\n");
           if (! (error && *error))
             {
-              g_printerr ("set error...\n");
+              g_printerr ("(don't as test) set error...\n");
+              /*
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            "No image data could be salvaged. File is probably corrupt!");
-              /*
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            _("No data could be read from TIFF '%s'. The file is probably corrupted."),
                            gimp_file_get_utf8_name (file));
@@ -1798,7 +1798,9 @@ load_image (GimpProcedure        *procedure,
             }
           else
             g_printerr ("error already exists: %s\n", (*error)->message);
+          g_printerr ("call TIFFclose\n");
           TIFFClose (tif);
+          g_printerr ("done\n");
 
           return GIMP_PDB_EXECUTION_ERROR;
         }
