@@ -323,7 +323,7 @@ gimp_drawable_filter_get_config (GimpDrawableFilter *filter)
   canonical_name   = gimp_canonicalize_identifier (op_name);
   config_type_name = g_strdup_printf ("GimpDrawableFilterConfig-%s", canonical_name);
   config_type      = g_type_from_name (config_type_name);
-  n_args           = _gimp_drawable_filter_get_number_arguments (op_name);
+  n_args           = _gimp_drawable_filter_get_number_arguments (filter);
 
   if (! config_type)
     {
@@ -335,7 +335,7 @@ gimp_drawable_filter_get_config (GimpDrawableFilter *filter)
         {
           GParamSpec *pspec;
 
-          pspec = _gimp_drawable_filter_get_pspec (op_name, i);
+          pspec = _gimp_drawable_filter_get_pspec (filter, i);
           config_args[i] = pspec;
         }
 

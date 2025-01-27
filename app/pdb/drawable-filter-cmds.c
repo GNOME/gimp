@@ -39,6 +39,8 @@
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpitem.h"
 #include "core/gimpparamspecs.h"
+#include "operations/gimp-operation-config.h"
+#include "operations/gimpoperationsettings.h"
 
 #include "gimppdb.h"
 #include "gimppdberror.h"
@@ -387,18 +389,46 @@ drawable_filter_get_number_arguments_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  const gchar *operation_name;
+  GimpDrawableFilter *filter;
   gint num_args = 0;
 
-  operation_name = g_value_get_string (gimp_value_array_index (args, 0));
+  filter = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      if (gegl_has_operation (operation_name))
+      GeglNode    *node;
+      const gchar *opname;
+
+      node   = gimp_drawable_filter_get_operation (filter);
+      opname = gegl_node_get_operation (node);
+
+      if (gegl_has_operation (opname))
         {
           guint n_properties;
 
-          g_free (gegl_operation_list_properties (operation_name, &n_properties));
+          if (gimp_operation_config_is_custom (gimp, opname))
+            {
+              GimpObject   *settings = NULL;
+              GObjectClass *klass;
+              GObjectClass *parent_klass;
+              guint         n_parent_properties;
+
+              gegl_node_get (node,
+                             "config", &settings,
+                             NULL);
+              klass        = G_OBJECT_GET_CLASS (settings);
+              parent_klass = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
+
+              g_free (g_object_class_list_properties (parent_klass, &n_parent_properties));
+              g_free (g_object_class_list_properties (klass, &n_properties));
+              g_clear_object (&settings);
+              n_properties -= n_parent_properties;
+            }
+          else
+            {
+              g_free (gegl_operation_list_properties (opname, &n_properties));
+            }
+
           num_args = (gint) n_properties;
         }
       else
@@ -426,25 +456,49 @@ drawable_filter_get_pspec_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  const gchar *operation_name;
+  GimpDrawableFilter *filter;
   gint arg_num;
   GParamSpec *param_spec = NULL;
 
-  operation_name = g_value_get_string (gimp_value_array_index (args, 0));
+  filter = g_value_get_object (gimp_value_array_index (args, 0));
   arg_num = g_value_get_int (gimp_value_array_index (args, 1));
 
   if (success)
     {
-      if (gegl_has_operation (operation_name))
+      GimpObject  *settings = NULL;
+      GeglNode    *node;
+      const gchar *opname;
+
+      node   = gimp_drawable_filter_get_operation (filter);
+      opname = gegl_node_get_operation (node);
+
+      if (gegl_has_operation (opname))
         {
-          GParamSpec **specs;
-          guint        n_properties;
+          GParamSpec  **specs;
+          guint         n_properties;
+          guint         n_parent_properties = 0;
 
-          specs = gegl_operation_list_properties (operation_name, &n_properties);
-
-          if (arg_num >= 0 && arg_num < n_properties)
+          if (gimp_operation_config_is_custom (gimp, opname))
             {
-              param_spec = g_param_spec_ref (specs[arg_num]);
+              GObjectClass *klass;
+              GObjectClass *parent_klass;
+
+              gegl_node_get (node,
+                             "config", &settings,
+                             NULL);
+              klass        = G_OBJECT_GET_CLASS (settings);
+              parent_klass = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
+              g_free (g_object_class_list_properties (parent_klass, &n_parent_properties));
+            }
+
+          if (settings != NULL)
+            specs = g_object_class_list_properties (G_OBJECT_GET_CLASS (settings), &n_properties);
+          else
+            specs = gegl_operation_list_properties (opname, &n_properties);
+
+          if (arg_num >= 0 && n_parent_properties + arg_num < n_properties)
+            {
+              param_spec = g_param_spec_ref (specs[n_parent_properties + arg_num]);
             }
           else
             {
@@ -457,6 +511,8 @@ drawable_filter_get_pspec_invoker (GimpProcedure         *procedure,
         {
           success = FALSE;
         }
+
+      g_clear_object (&settings);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -490,23 +546,50 @@ drawable_filter_get_arguments_invoker (GimpProcedure         *procedure,
       const gchar  *opname;
       GParamSpec  **specs;
       guint         n_specs;
+      guint         n_parent_properties = 0;
       GStrvBuilder *names_builder;
+      GimpObject   *settings = NULL;
 
       node   = gimp_drawable_filter_get_operation (filter);
       opname = gegl_node_get_operation (node);
 
-      specs = gegl_operation_list_properties (opname, &n_specs);
+      if (gegl_has_operation (opname) &&
+          gimp_operation_config_is_custom (gimp, opname))
+        {
+          GObjectClass *klass;
+          GObjectClass *parent_klass;
+
+          gegl_node_get (node,
+                         "config", &settings,
+                         NULL);
+          klass        = G_OBJECT_GET_CLASS (settings);
+          parent_klass = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
+          g_free (g_object_class_list_properties (parent_klass, &n_parent_properties));
+        }
+
+      if (settings != NULL)
+        {
+          specs = g_object_class_list_properties (G_OBJECT_GET_CLASS (settings), &n_specs);
+          n_specs -= n_parent_properties;
+        }
+      else
+       {
+         specs = gegl_operation_list_properties (opname, &n_specs);
+       }
 
       names_builder = g_strv_builder_new ();
       values        = gimp_value_array_new (n_specs);
 
       for (gint i = 0; i < n_specs; i++)
         {
-          GParamSpec *pspec = specs[i];
+          GParamSpec *pspec = specs[n_parent_properties + i];
           GValue      value = G_VALUE_INIT;
 
           g_value_init (&value, pspec->value_type);
-          gegl_node_get_property (node, pspec->name, &value);
+          if (settings != NULL)
+            g_object_get_property (G_OBJECT (settings), pspec->name, &value);
+          else
+            gegl_node_get_property (node, pspec->name, &value);
 
           if (GEGL_IS_PARAM_SPEC_ENUM (pspec))
             {
@@ -553,6 +636,7 @@ drawable_filter_get_arguments_invoker (GimpProcedure         *procedure,
 
       g_strv_builder_unref (names_builder);
       g_free (specs);
+      g_clear_object (&settings);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -958,12 +1042,11 @@ register_drawable_filter_procs (GimpPDB *pdb)
                                          "Jehan",
                                          "2024");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("operation-name",
-                                                       "operation name",
-                                                       "The procedure name",
-                                                       FALSE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable_filter ("filter",
+                                                                "filter",
+                                                                "The filter",
+                                                                FALSE,
+                                                                GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("num-args",
                                                      "num args",
@@ -988,12 +1071,11 @@ register_drawable_filter_procs (GimpPDB *pdb)
                                          "Jehan",
                                          "2024");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("operation-name",
-                                                       "operation name",
-                                                       "The procedure name",
-                                                       FALSE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable_filter ("filter",
+                                                                "filter",
+                                                                "The filter",
+                                                                FALSE,
+                                                                GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("arg-num",
                                                  "arg num",

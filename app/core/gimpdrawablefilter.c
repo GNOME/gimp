@@ -38,6 +38,8 @@
 
 #include "core-types.h"
 
+#include "operations/gimp-operation-config.h"
+
 #include "gegl/gimp-babl.h"
 #include "gegl/gimpapplicator.h"
 #include "gegl/gimp-gegl-utils.h"
@@ -769,9 +771,12 @@ gimp_drawable_filter_set_preview_split (GimpDrawableFilter  *filter,
     }
 }
 
-/* This function is mostly for usage by libgimp API. The idea is to have
+/* This function is **ONLY** for usage by libgimp API. The idea is to have
  * a single function which updates a bunch of settings in a single call
  * and in particular a single rendering update.
+ *
+ * Also it does some funky config object switch for custom operations
+ * which is only needed libgimp-side.
  */
 gboolean
 gimp_drawable_filter_update (GimpDrawableFilter      *filter,
@@ -786,8 +791,12 @@ gimp_drawable_filter_update (GimpDrawableFilter      *filter,
                              const GimpDrawable     **auxinputs,
                              GError                 **error)
 {
+  GimpImage    *image;
+  GimpObject   *settings        = NULL;
+  GeglNode     *node            = NULL;
   GParamSpec  **pspecs;
   gchar        *opname;
+  guint         n_parent_pspecs = 0;
   guint         n_pspecs;
   gint          n_values;
   gint          n_auxinputs;
@@ -822,14 +831,55 @@ gimp_drawable_filter_update (GimpDrawableFilter      *filter,
 
   gegl_node_get (filter->operation, "operation", &opname, NULL);
 
-  pspecs = gegl_operation_list_properties (opname, &n_pspecs);
-  for (gint i = 0; i < n_pspecs; i++)
+  image = gimp_item_get_image (GIMP_ITEM (filter->drawable));
+  node  = gimp_drawable_filter_get_operation (filter);
+  if (gimp_operation_config_is_custom (image->gimp, opname))
     {
+      GObjectClass *klass;
+      GObjectClass *parent_klass;
+
+      gegl_node_get (node,
+                     "config", &settings,
+                     NULL);
+      klass        = G_OBJECT_GET_CLASS (settings);
+      parent_klass = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
+      g_free (g_object_class_list_properties (parent_klass, &n_parent_pspecs));
+      pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (settings), &n_pspecs);
+    }
+  else
+    {
+      pspecs = gegl_operation_list_properties (opname, &n_pspecs);
+    }
+
+  for (gint i = n_parent_pspecs; i < n_pspecs; i++)
+    {
+      GParamSpec *target_pspec;
       GParamSpec *pspec     = pspecs[i];
       GValue      old_value = G_VALUE_INIT;
       gint        j;
 
-      gegl_node_get_property (filter->operation, pspec->name, &old_value);
+      if (settings)
+        target_pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (settings), pspec->name);
+      else
+        target_pspec = gegl_node_find_property (node, pspec->name);
+      if (! target_pspec)
+        {
+          /* If this ever happens, this is more likely a bug in our
+           * PDB code, unless someone tried to call the PDB procedure
+           * directly with bad data.
+           */
+          g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                       /* TODO: localize after string freeze. */
+                       "GEGL operation '%s' has been called with a "
+                       "non-existent argument name '%s' (#%d).",
+                       opname, pspec->name, i);
+          break;
+        }
+
+      if (settings)
+        g_object_get_property (G_OBJECT (settings), pspec->name, &old_value);
+      else
+        gegl_node_get_property (node, pspec->name, &old_value);
 
       for (j = 0; j < n_values; j++)
         if (g_strcmp0 (pspec->name, propnames[j]) == 0)
@@ -897,7 +947,10 @@ gimp_drawable_filter_update (GimpDrawableFilter      *filter,
 
           if (g_param_values_cmp (pspec, new_value, &old_value) != 0)
             {
-              gegl_node_set_property (filter->operation, pspec->name, new_value);
+              if (settings)
+                g_object_set_property (G_OBJECT (settings), pspec->name, new_value);
+              else
+                gegl_node_set_property (node, pspec->name, new_value);
               changed = TRUE;
             }
 
@@ -913,7 +966,10 @@ gimp_drawable_filter_update (GimpDrawableFilter      *filter,
 
           g_value_init (&default_value, pspec->value_type);
           g_param_value_set_default (pspec, &default_value);
-          gegl_node_set_property (filter->operation, pspec->name, &default_value);
+          if (settings)
+            g_object_set_property (G_OBJECT (settings), pspec->name, &default_value);
+          else
+            gegl_node_set_property (node, pspec->name, &default_value);
           changed = TRUE;
 
           g_value_unset (&default_value);
@@ -951,7 +1007,7 @@ gimp_drawable_filter_update (GimpDrawableFilter      *filter,
           GeglNode   *src_node;
           GeglBuffer *buffer;
 
-          if (! gegl_node_has_pad (filter->operation, auxinputnames[i]))
+          if (! gegl_node_has_pad (node, auxinputnames[i]))
             {
               g_set_error (error, GIMP_ERROR, GIMP_FAILED,
                            /* TODO: localize after string freeze. */
@@ -964,18 +1020,22 @@ gimp_drawable_filter_update (GimpDrawableFilter      *filter,
 
           buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (auxinputs[i]));
           g_object_ref (buffer);
-          src_node = gegl_node_new_child (gegl_node_get_parent (filter->operation),
+          src_node = gegl_node_new_child (gegl_node_get_parent (node),
                                           "operation", "gegl:buffer-source",
                                           "buffer",    buffer,
                                           NULL);
           g_object_unref (buffer);
 
-          gegl_node_connect (src_node, "output", filter->operation, auxinputnames[i]);
+          gegl_node_connect (src_node, "output", node, auxinputnames[i]);
         }
     }
 
+  if (settings)
+    gegl_node_set (node, "config", settings, NULL);
+
   g_object_thaw_notify (G_OBJECT (filter));
 
+  g_clear_object (&settings);
   g_free (pspecs);
   g_free (opname);
 

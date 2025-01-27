@@ -53,8 +53,8 @@ G_GNUC_INTERNAL gboolean    _gimp_drawable_filter_update               (GimpDraw
                                                                         GimpLayerColorSpace      composite_space,
                                                                         const gchar            **auxinputnames,
                                                                         const GimpDrawable     **auxinputs);
-G_GNUC_INTERNAL gint        _gimp_drawable_filter_get_number_arguments (const gchar             *operation_name);
-G_GNUC_INTERNAL GParamSpec* _gimp_drawable_filter_get_pspec            (const gchar             *operation_name,
+G_GNUC_INTERNAL gint        _gimp_drawable_filter_get_number_arguments (GimpDrawableFilter      *filter);
+G_GNUC_INTERNAL GParamSpec* _gimp_drawable_filter_get_pspec            (GimpDrawableFilter      *filter,
                                                                         gint                     arg_num);
 G_GNUC_INTERNAL gchar**     _gimp_drawable_filter_get_arguments        (GimpDrawableFilter      *filter,
                                                                         GimpValueArray         **values);

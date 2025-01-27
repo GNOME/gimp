@@ -416,7 +416,7 @@ _gimp_drawable_filter_update (GimpDrawableFilter      *filter,
 
 /**
  * _gimp_drawable_filter_get_number_arguments:
- * @operation_name: The procedure name.
+ * @filter: The filter.
  *
  * Queries for the number of arguments on the specified filter.
  *
@@ -430,14 +430,14 @@ _gimp_drawable_filter_update (GimpDrawableFilter      *filter,
  * Since: 3.0
  **/
 gint
-_gimp_drawable_filter_get_number_arguments (const gchar *operation_name)
+_gimp_drawable_filter_get_number_arguments (GimpDrawableFilter *filter)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint num_args = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, operation_name,
+                                          GIMP_TYPE_DRAWABLE_FILTER, filter,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -455,7 +455,7 @@ _gimp_drawable_filter_get_number_arguments (const gchar *operation_name)
 
 /**
  * _gimp_drawable_filter_get_pspec:
- * @operation_name: The procedure name.
+ * @filter: The filter.
  * @arg_num: The argument number.
  *
  * Queries for information on the specified filter's argument.
@@ -468,15 +468,15 @@ _gimp_drawable_filter_get_number_arguments (const gchar *operation_name)
  * Since: 3.0
  **/
 GParamSpec *
-_gimp_drawable_filter_get_pspec (const gchar *operation_name,
-                                 gint         arg_num)
+_gimp_drawable_filter_get_pspec (GimpDrawableFilter *filter,
+                                 gint                arg_num)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   GParamSpec *param_spec = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, operation_name,
+                                          GIMP_TYPE_DRAWABLE_FILTER, filter,
                                           G_TYPE_INT, arg_num,
                                           G_TYPE_NONE);
 
