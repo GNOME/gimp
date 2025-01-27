@@ -595,6 +595,7 @@ load_image (GimpProcedure        *procedure,
       profile = load_profile (tif);
       if (! profile && first_profile)
         {
+          g_printerr ("profile = first_profile\n");
           profile = first_profile;
           g_object_ref (profile);
         }
@@ -605,6 +606,7 @@ load_image (GimpProcedure        *procedure,
 
           if (! first_profile)
             {
+              g_printerr ("first_profile = profile\n");
               first_profile = profile;
               g_object_ref (first_profile);
 
@@ -1203,6 +1205,7 @@ load_image (GimpProcedure        *procedure,
           if (pages.target == GIMP_PAGE_SELECTOR_TARGET_IMAGES || profile == first_profile)
             gimp_image_set_color_profile (*image, profile);
 
+          g_printerr ("unref profile\n");
           g_object_unref (profile);
         }
 
@@ -1799,13 +1802,18 @@ load_image (GimpProcedure        *procedure,
 
       /* resize image to bounding box of all layers */
       if (! sketchbook_layers)
-        gimp_image_resize (*image,
-                           max_col - min_col, max_row - min_row,
-                           -min_col, -min_row);
+        {
+          g_printerr ("image resize\n");
+          gimp_image_resize (*image,
+                            max_col - min_col, max_row - min_row,
+                            -min_col, -min_row);
+        }
 
+      g_printerr ("undo enable\n");
       gimp_image_undo_enable (*image);
     }
 
+  g_printerr ("load photoshop metadata if present\n");
   /* Load Photoshop layer metadata */
   if (TIFFGetField (tif, TIFFTAG_PHOTOSHOP, &photoshop_len, &photoshop_data))
     {
@@ -1814,6 +1822,7 @@ load_image (GimpProcedure        *procedure,
       GimpProcedure  *procedure;
       GimpValueArray *return_vals = NULL;
 
+      g_printerr ("yes it is present\n");
       temp_file = gimp_temp_file ("tmp");
       fp = g_fopen (g_file_peek_path (temp_file), "wb");
 
@@ -1852,6 +1861,7 @@ load_image (GimpProcedure        *procedure,
       GimpProcedure  *procedure;
       GimpValueArray *return_vals = NULL;
 
+      g_printerr ("photoshop data block present\n");
       /* Photoshop metadata starts with 'Adobe Photoshop Document Data Block'
        * so we need to skip past that for the data. */
       photoshop_data += 36;
@@ -1893,7 +1903,9 @@ load_image (GimpProcedure        *procedure,
       *ps_metadata_loaded = TRUE;
     }
 
+  g_printerr ("free pages.pages\n");
   g_free (pages.pages);
+  g_printerr ("close tif\n");
   TIFFClose (tif);
 
   return GIMP_PDB_SUCCESS;
