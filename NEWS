@@ -38,6 +38,7 @@ Graphical User Interface:
   - Don't show Release Notes in Welcome dialog when none exist.
   - Various icons now have RTL variants (by inverting the opposite
     icons, e.g. go-next/go-previous).
+  - Various usability improvements.
 
 Plug-ins:
 
@@ -56,6 +57,9 @@ Plug-ins:
       possible with another syntax).
     * SF-FILENAME and SF-DIRNAME args now create a GimpParamSpecFile
       argument with the proper action type.
+    * Script-Fu third-party scripts using the standalone interpreter can
+      now be localized properly with the same default logic as other
+      plug-ins.
   - PSD:
     * Metadata export now supported.
     * 16-bit per channel LAB PSD are now supported at import.
@@ -71,6 +75,7 @@ API:
     * New functions:
       + gimp_metadata_set_creation_date() allowing to set a custom creation date.
       + gimp_param_spec_file_get_action()
+      + gimp_param_spec_file_set_action()
       + gimp_param_spec_file_none_allowed()
       + gimp_param_spec_unit_percent_allowed()
       + gimp_param_spec_unit_pixel_allowed()
@@ -98,6 +103,31 @@ API:
       files.
     * gimp_procedure_dialog_get_widget() now supports GimpParamSpecUnit
       arguments.
+    * Filters based off GIMP-made GEGL operations with a custom
+      configuration object are now configurable through the PDB/libgimp,
+      like any other filters.
+  - Changes in libgimpwidgets:
+    * New GimpFileChooser widget.
+    * New functions:
+      +  gimp_file_chooser_get_action()
+      +  gimp_file_chooser_get_file()
+      +  gimp_file_chooser_get_label()
+      +  gimp_file_chooser_get_label_widget()
+      +  gimp_file_chooser_get_title()
+      +  gimp_file_chooser_get_type()
+      +  gimp_file_chooser_new()
+      +  gimp_file_chooser_set_action()
+      +  gimp_file_chooser_set_file()
+      +  gimp_file_chooser_set_label()
+      +  gimp_file_chooser_set_title()
+      +  gimp_prop_file_chooser_new()
+  - Changes in libgimpui:
+    * GimpProcedureDialog now create automatically a GimpFileChooser
+      with UI adapted to the requested action for the argument (through
+      gimp_procedure_dialog_get_widget()), such as opening/creating a
+      file/folder.
+    * Removed functions:
+      + gimp_procedure_dialog_get_file_chooser()
 
 Translations:
 
