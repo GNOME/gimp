@@ -842,6 +842,7 @@ load_image (GimpProcedure        *procedure,
         }
 
       extra = get_extra_channels_count (photomet, spp, alpha);
+      g_printerr ("photomet: %u, spp: %u, alpha: %u, extra: %u\n", photomet, spp, alpha, extra);
 
       tiff_mode = GIMP_TIFF_DEFAULT;
       is_signed = sampleformat == SAMPLEFORMAT_INT;
@@ -1080,6 +1081,7 @@ load_image (GimpProcedure        *procedure,
           break;
         }
 
+      g_printerr ("check compression...\n");
       /* attach a parasite containing the compression */
       {
         guint16 compression = COMPRESSION_NONE;
@@ -1156,6 +1158,7 @@ load_image (GimpProcedure        *procedure,
 
       if ((pages.target == GIMP_PAGE_SELECTOR_TARGET_IMAGES) || (! *image))
         {
+          g_printerr ("create new image...\n");
           *image = gimp_image_new_with_precision (cols, rows, image_type,
                                                   image_precision);
 
@@ -1176,6 +1179,7 @@ load_image (GimpProcedure        *procedure,
       /* attach CMYK profile to GimpImage if applicable */
       if (profile && gimp_color_profile_is_cmyk (profile))
         {
+          g_printerr ("cmyk profile...\n");
           gimp_image_set_simulation_profile (*image, profile);
           g_clear_object (&profile);
         }
@@ -1183,11 +1187,14 @@ load_image (GimpProcedure        *procedure,
       /* attach non-CMYK color profile */
       if (profile)
         {
+          g_printerr ("normal profile...\n");
           if (pages.target == GIMP_PAGE_SELECTOR_TARGET_IMAGES || profile == first_profile)
             gimp_image_set_color_profile (*image, profile);
 
           g_object_unref (profile);
         }
+
+      g_printerr ("attach parasites...\n");
 
       /* attach parasites */
       {
@@ -1234,6 +1241,7 @@ load_image (GimpProcedure        *procedure,
       }
 
 
+      g_printerr ("geoTIFF...\n");
       /* Attach GeoTIFF Tags as Parasite, If available */
       {
         GimpParasite *parasite    = NULL;
@@ -1300,6 +1308,8 @@ load_image (GimpProcedure        *procedure,
             gimp_parasite_free (parasite);
           }
       }
+
+      g_printerr ("check resolution...\n");
 
       /* any resolution info in the file? */
       {
@@ -1532,6 +1542,7 @@ load_image (GimpProcedure        *procedure,
       if (sketchbook_layers)
         break;
 
+      g_printerr ("allocate channel data...\n");
       /* Allocate ChannelData for all channels, even the background layer */
       channel = g_new0 (ChannelData, extra + 1);
 
@@ -1540,6 +1551,7 @@ load_image (GimpProcedure        *procedure,
 
       if (name)
         {
+          g_printerr ("create new named layer...\n");
           layer = gimp_layer_new (*image, name,
                                   cols, rows,
                                   layer_type,
@@ -1555,6 +1567,7 @@ load_image (GimpProcedure        *procedure,
           else
             name = g_strdup_printf (_("Page %d"), ilayer);
 
+          g_printerr ("create new background layer...\n");
           layer = gimp_layer_new (*image, name,
                                   cols, rows,
                                   layer_type,
@@ -1588,6 +1601,7 @@ load_image (GimpProcedure        *procedure,
             {
               GeglColor *color = gegl_color_new ("black");
 
+              g_printerr ("extra channel %i...\n", i);
               channel[i].drawable = GIMP_DRAWABLE (gimp_channel_new (*image, _("TIFF Channel"),
                                                                      cols, rows, 100.0, color));
               g_object_unref (color);
@@ -1623,15 +1637,18 @@ load_image (GimpProcedure        *procedure,
         }
       else if (planar == PLANARCONFIG_CONTIG)
         {
+          g_printerr ("load contiguous...\n");
           load_contiguous (tif, channel, type, bps, spp,
                            tiff_mode, is_signed, extra);
         }
       else
         {
+          g_printerr ("load separate...\n");
           load_separate (tif, channel, type, bps, spp,
                          tiff_mode, is_signed, extra);
         }
 
+      g_printerr ("create orientation...\n");
       if (TIFFGetField (tif, TIFFTAG_ORIENTATION, &orientation))
         {
           gboolean flip_horizontal = FALSE;
