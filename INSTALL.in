@@ -1,6 +1,6 @@
----------------------------------------
+--------------------------------------
 Installation instructions for GIMP @GIMP_APP_VERSION@
----------------------------------------
+--------------------------------------
 
 There are some basic steps to building and installing GIMP.
 
@@ -103,7 +103,7 @@ help in that regard:
      be installed. All these libraries are required dependencies.
 
   8. For metadata access GIMP requires the gexiv2 @GEXIV2_REQUIRED_VERSION@ or newer library.
-     It is hosted at: https://wiki.gnome.org/Projects/gexiv2
+     It is hosted at: https://gitlab.gnome.org/GNOME/gexiv2/
 
   9. libpng, libjpeg, libtiff, librsvg and lcms are hard dependencies
      that can not be disabled. poppler is also a hard dependency because
@@ -175,7 +175,7 @@ help in that regard:
      For HTTP support (and many other schemes), on Linux at least, you
      should install `gvfs`:
 
-        https://wiki.gnome.org/Projects/gvfs
+        https://gitlab.gnome.org/GNOME/gvfs/
 
      It is unclear whether `gvfs` can be built and installed on other
      platforms such as Windows and macOS.
@@ -345,9 +345,10 @@ These are:
      a convenience for developers.
 
   -Dgimpdir=DIR.  This option changes the default directory GIMP uses to
-     search for its configuration files from ~/.config/GIMP/@GIMP_APP_VERSION@ (the
-     directory .config/GIMP/@GIMP_APP_VERSION@ in the user's home directory) to
-     ~/.config/DIR/@GIMP_APP_VERSION@.
+     search for its configuration files from $XDG_CONFIG_HOME/GIMP/@GIMP_APP_VERSION@/
+     (per XDG Base Directory Specification, $XDG_CONFIG_HOME defaults to
+     the directory .config/ in the user's home directory) to
+     $XDG_CONFIG_HOME/DIR/@GIMP_APP_VERSION@/.
      If DIR is an absolute path, the directory will be changed to DIR.
 
   -Dshmem-type=[none|sysv|posix|win32|auto].  This option allows you to
