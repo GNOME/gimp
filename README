@@ -81,11 +81,11 @@ also included in that page.
 The look of GIMP's interface can be customized like any other GTK+ app
 by editing files in `${XDG_CONFIG_HOME}/gtk-3.0/` (settings.ini and
 gtk.css in particular) or by using "themes" (ready-made customizations).
-Additionally, GIMP reads `${XDG_CONFIG_HOME}/GIMP/2.99/gimp.css` so you
+Additionally, GIMP reads `${XDG_CONFIG_HOME}/GIMP/3.0/gimp.css` so you
 can have settings that only apply to GIMP.
 
 You can also manually change the keybindings to any of your choice by
-editing: `${XDG_CONFIG_HOME}/GIMP/2.99/shortcutsrc`.
+editing: `${XDG_CONFIG_HOME}/GIMP/3.0/shortcutsrc`.
 
 
 Have fun,
