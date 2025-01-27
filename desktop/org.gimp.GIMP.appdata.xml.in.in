@@ -84,6 +84,9 @@
         <ul>
           <li>Reworked image graph for even less destructive filters</li>
           <li>BC7 compression support for DDS file import</li>
+          <li>Improved PSD support (16-bit per channel LAB import, metadata, etc.)</li>
+          <li>Various API improvements for plug-in developers</li>
+          <li>Script-Fu: new named-argument syntax for functions generated from PDB procedures</li>
           <li>Many bug fixes and a much more robust base overall</li>
         </ul>
       </description>
