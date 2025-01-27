@@ -547,8 +547,12 @@ add_cursor_image (GimpImage  *image,
 gboolean
 screenshot_x11_available (void)
 {
-  return (gdk_display_get_default () &&
-          GDK_IS_X11_DISPLAY (gdk_display_get_default ()));
+  int         major_opcode, first_event, first_error;
+  GdkDisplay *d = gdk_display_get_default ();
+
+  return (d && GDK_IS_X11_DISPLAY (d) &&
+          ! XQueryExtension (GDK_DISPLAY_XDISPLAY (d), "XWAYLAND",
+                             &major_opcode, &first_event, &first_error));
 }
 
 ScreenshotCapabilities
