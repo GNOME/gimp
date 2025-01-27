@@ -1836,6 +1836,8 @@ gimp_procedure_new_return_values (GimpProcedure     *procedure,
 
   g_return_val_if_fail (status != GIMP_PDB_PASS_THROUGH, NULL);
 
+  g_printerr ("gimp_procedure_new_return_values\n");
+
   priv = gimp_procedure_get_instance_private (procedure);
 
   switch (status)
@@ -1874,6 +1876,7 @@ gimp_procedure_new_return_values (GimpProcedure     *procedure,
       if (error && error->message)
         {
           g_value_init (&value, G_TYPE_STRING);
+          g_printerr ("error message: %s\n", error->message);
           g_value_set_string (&value, error->message);
           gimp_value_array_append (args, &value);
           g_value_unset (&value);
@@ -1884,6 +1887,7 @@ gimp_procedure_new_return_values (GimpProcedure     *procedure,
       g_return_val_if_reached (NULL);
     }
 
+  g_printerr ("clear error\n");
   g_clear_error (&error);
 
   return args;
