@@ -539,6 +539,8 @@ load_image (GimpProcedure        *procedure,
   /* We will loop through the all pages in case of multipage TIFF
    * and load every page as a separate layer.
    */
+
+  g_printerr ("number of pages: %d...\n", pages.n_pages);
   for (li = 0; li < pages.n_pages; li++)
     {
       gint              ilayer;
@@ -1120,7 +1122,7 @@ load_image (GimpProcedure        *procedure,
         gimp_compression = tiff_compression_to_gimp_compression (compression);
       }
 
-      g_printerr ("check worst case...\n");
+      g_printerr ("check worst case %u...\n", worst_case);
       if (worst_case)
         {
           image_type  = GIMP_RGB;
@@ -1148,14 +1150,17 @@ load_image (GimpProcedure        *procedure,
             }
         }
 
+      g_printerr ("check if target == layers...\n");
       if (pages.target == GIMP_PAGE_SELECTOR_TARGET_LAYERS)
         {
+          g_printerr ("yes it is...\n");
           if (li == 0)
             {
               first_image_type = image_type;
             }
           else if (image_type != first_image_type)
             {
+              g_printerr ("continue to next iteration...\n");
               continue;
             }
         }
@@ -1743,11 +1748,15 @@ load_image (GimpProcedure        *procedure,
       gimp_progress_update (1.0);
     }
 
+  g_printerr ("loop finished ...\n");
+
   /* If this TIF was created in Alias/AutoDesk Sketchbook, it may have layers. */
   if (sketchbook_layers)
     load_sketchbook_layers (tif, *image);
 
+  g_printerr ("clear first profile...\n");
   g_clear_object (&first_profile);
+  g_printerr ("profile cleared...\n");
 
   if (pages.target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
     {
@@ -1769,6 +1778,7 @@ load_image (GimpProcedure        *procedure,
     }
   else
     {
+      g_printerr ("check if image exists...\n");
       if (! (*image))
         {
           TIFFClose (tif);
