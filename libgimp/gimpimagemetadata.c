@@ -226,6 +226,7 @@ _gimp_image_metadata_load_finish (GimpImage             *image,
             }
           else
             {
+              g_printerr ("comment: %s\n", comment);
               comment = gimp_image_metadata_interpret_comment (comment);
             }
         }
@@ -247,6 +248,8 @@ _gimp_image_metadata_load_finish (GimpImage             *image,
         {
           GimpParasite *parasite;
 
+          g_printerr ("set comment parasite: '%s'\n", comment);
+
           parasite = gimp_parasite_new ("gimp-comment",
                                         GIMP_PARASITE_PERSISTENT,
                                         strlen (comment) + 1,
@@ -254,10 +257,12 @@ _gimp_image_metadata_load_finish (GimpImage             *image,
           g_free (comment);
 
           gimp_image_attach_parasite (image, parasite);
+          g_printerr ("free parasite\n");
           gimp_parasite_free (parasite);
         }
     }
 
+  g_printerr ("resolution\n");
   if (flags & GIMP_METADATA_LOAD_RESOLUTION)
     {
       gdouble   xres;
@@ -271,6 +276,7 @@ _gimp_image_metadata_load_finish (GimpImage             *image,
         }
     }
 
+  g_printerr ("orientation\n");
   if (! (flags & GIMP_METADATA_LOAD_ORIENTATION))
     {
       gexiv2_metadata_try_set_orientation (GEXIV2_METADATA (metadata),
@@ -278,6 +284,7 @@ _gimp_image_metadata_load_finish (GimpImage             *image,
                                            NULL);
     }
 
+  g_printerr ("color profile\n");
   if (flags & GIMP_METADATA_LOAD_COLORSPACE)
     {
       GimpColorProfile *profile = gimp_image_get_color_profile (image);
@@ -312,6 +319,7 @@ _gimp_image_metadata_load_finish (GimpImage             *image,
         g_object_unref (profile);
     }
 
+  g_printerr ("set metadata\n");
   gimp_image_set_metadata (image, metadata);
 }
 
