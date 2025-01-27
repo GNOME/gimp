@@ -1758,7 +1758,7 @@ load_image (GimpProcedure        *procedure,
     load_sketchbook_layers (tif, *image);
 
   g_printerr ("clear first profile...\n");
-  g_clear_object (&first_profile);
+  //g_clear_object (&first_profile);
   g_printerr ("profile cleared...\n");
 
   if (pages.target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
@@ -1784,7 +1784,9 @@ load_image (GimpProcedure        *procedure,
       g_printerr ("check if image exists...\n");
       if (! (*image))
         {
+          g_printerr ("close tif file\n");
           TIFFClose (tif);
+          g_printerr ("set error...\n");
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("No data could be read from TIFF '%s'. The file is probably corrupted."),
                        gimp_file_get_utf8_name (file));
