@@ -164,6 +164,7 @@ _gimp_image_metadata_load_finish (GimpImage             *image,
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GEXIV2_IS_METADATA (metadata));
 
+  g_printerr ("metadata load finish...\n");
   if (flags & GIMP_METADATA_LOAD_COMMENT)
     {
       gchar  *comment;

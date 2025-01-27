@@ -683,7 +683,10 @@ gimp_image_set_metadata (GimpImage    *image,
   success = _gimp_image_set_metadata (image, metadata_string);
 
   if (metadata_string)
-    g_free (metadata_string);
+    {
+      g_printerr ("free metadata string: success = %d\n", success);
+      g_free (metadata_string);
+    }
 
   return success;
 }

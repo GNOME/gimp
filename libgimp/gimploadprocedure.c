@@ -247,6 +247,7 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
 
   if (metadata == NULL)
     metadata = gimp_metadata_new ();
+  g_printerr ("metadata: %lx\n", metadata);
 
   _gimp_procedure_config_begin_run (config, image, run_mode, remaining, NULL);
 
@@ -255,6 +256,7 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
                                   config, priv->run_data);
 
   g_printerr ("returned from run_func\n");
+  g_printerr ("metadata: %lx\n", metadata);
   if (return_values != NULL                       &&
       gimp_value_array_length (return_values) > 0 &&
       G_VALUE_HOLDS_ENUM (gimp_value_array_index (return_values, 0)))
@@ -300,6 +302,7 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
   g_printerr ("unref config\n");
   g_object_unref (config);
   g_printerr ("clear metadata\n");
+  g_printerr ("metadata: %lx\n", metadata);
   g_clear_object (&metadata);
   g_printerr ("array unref remaining\n");
   gimp_value_array_unref (remaining);
