@@ -619,6 +619,7 @@ file-plug-in-tests:
     - pkg-config --variable=gimplibdir gimp-${API_VER} 2>/dev/null | grep . && PLUG_IN_DIR=$(echo $(pkg-config --variable=gimplibdir gimp-${API_VER})'/plug-ins/')
     - export PYTHONPATH="${PLUG_IN_DIR}test-file-plug-ins"
     - export GIMP_TESTS_CONFIG_FILE="${PLUG_IN_DIR}test-file-plug-ins/tests/batch-config.ini"
+    - export GEGL_DEBUG=buffer-alloc
     - mkdir _log
     - mkdir _data && cd _data
     - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/Infrastructure/gimp-test-images.git gimp-test-images
