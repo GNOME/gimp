@@ -574,6 +574,8 @@ load_image (GimpProcedure        *procedure,
       gint              gimp_compression = GIMP_COMPRESSION_NONE;
       const gchar      *name;
 
+      g_printerr ("page %d.\n", li);
+
       if (TIFFSetDirectory (tif, pages.pages[li]) == 0)
         {
           g_message (_("Couldn't read page %d of %d. Image might be corrupt.\n"),
@@ -1114,9 +1116,11 @@ load_image (GimpProcedure        *procedure,
               }
           }
 
+        g_printerr ("convert compression %u...\n", compression);
         gimp_compression = tiff_compression_to_gimp_compression (compression);
       }
 
+      g_printerr ("check worst case...\n");
       if (worst_case)
         {
           image_type  = GIMP_RGB;
@@ -1175,7 +1179,10 @@ load_image (GimpProcedure        *procedure,
           if (pages.target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
             images_list = g_list_prepend (images_list, *image);
         }
+      else
+        g_printerr ("not first...\n");
 
+      g_printerr ("check profile...\n");
       /* attach CMYK profile to GimpImage if applicable */
       if (profile && gimp_color_profile_is_cmyk (profile))
         {
@@ -1696,6 +1703,7 @@ load_image (GimpProcedure        *procedure,
             g_object_unref (channel[i].buffer);
         }
 
+      g_printerr ("free channel...\n");
       g_free (channel);
       channel = NULL;
 
@@ -1722,6 +1730,7 @@ load_image (GimpProcedure        *procedure,
             }
         }
 
+      g_printerr ("insert layer...\n");
       gimp_image_insert_layer (*image, layer, NULL, -1);
 
       if (pages.target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
@@ -1730,6 +1739,7 @@ load_image (GimpProcedure        *procedure,
           gimp_image_clean_all (*image);
         }
 
+      g_printerr ("progress update...\n");
       gimp_progress_update (1.0);
     }
 
