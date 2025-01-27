@@ -1889,6 +1889,7 @@ gimp_procedure_new_return_values (GimpProcedure     *procedure,
 
   g_printerr ("clear error\n");
   g_clear_error (&error);
+  g_printerr ("clear error done\n");
 
   return args;
 }

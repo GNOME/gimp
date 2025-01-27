@@ -254,12 +254,15 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
                                   file, metadata, &flags,
                                   config, priv->run_data);
 
+  g_printerr ("returned from run_func\n");
   if (return_values != NULL                       &&
       gimp_value_array_length (return_values) > 0 &&
       G_VALUE_HOLDS_ENUM (gimp_value_array_index (return_values, 0)))
     status = GIMP_VALUES_GET_ENUM (return_values, 0);
 
+  g_printerr ("do end_run\n");
   _gimp_procedure_config_end_run (config, status);
+  g_printerr ("end_run done\n");
 
   if (status == GIMP_PDB_SUCCESS)
     {
@@ -287,16 +290,21 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
   /* This is debug printing to help plug-in developers figure out best
    * practices.
    */
+  g_printerr ("get plug_in\n");
   plug_in = gimp_procedure_get_plug_in (procedure);
   if (G_OBJECT (config)->ref_count > 1 &&
       _gimp_plug_in_manage_memory_manually (plug_in))
     g_printerr ("%s: ERROR: the GimpExportProcedureConfig object was refed "
                 "by plug-in, it MUST NOT do that!\n", G_STRFUNC);
 
+  g_printerr ("unref config\n");
   g_object_unref (config);
+  g_printerr ("clear metadata\n");
   g_clear_object (&metadata);
+  g_printerr ("array unref remaining\n");
   gimp_value_array_unref (remaining);
 
+  g_printerr ("return values\n");
   return return_values;
 }
 
