@@ -223,12 +223,6 @@ jpegxl_create_procedure (GimpPlugIn  *plug_in,
                                           "squirrel",
                                           G_PARAM_READWRITE);
 
-      gimp_procedure_add_boolean_argument (procedure, "uses-original-profile",
-                                           _("Save ori_ginal profile"),
-                                           _("Store ICC profile to exported JXL file"),
-                                           FALSE,
-                                           G_PARAM_READWRITE);
-
       gimp_procedure_add_boolean_argument (procedure, "cmyk",
                                            _("Export as CMY_K"),
                                            _("Create a CMYK JPEG XL image using the soft-proofing color profile"),
@@ -1389,7 +1383,6 @@ export_image (GFile               *file,
   gint                     speed = 7;
   gint                     bit_depth = 8;
   gboolean                 cmyk = FALSE;
-  gboolean                 uses_original_profile = FALSE;
   gboolean                 save_exif = FALSE;
   gboolean                 save_xmp = FALSE;
 
@@ -1401,29 +1394,16 @@ export_image (GFile               *file,
                 "compression",           &compression,
                 "save-bit-depth",        &bit_depth,
                 "cmyk",                  &cmyk,
-                "uses-original-profile", &uses_original_profile,
                 "include-exif",          &save_exif,
                 "include-xmp",           &save_xmp,
                 NULL);
   speed = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
                                                "speed");
 
-  if (lossless || cmyk)
+  if (cmyk)
     {
-      /* JPEG XL developers recommend enabling uses_original_profile
-       * for better lossless compression efficiency.
-       * Profile must be saved for CMYK export */
-      uses_original_profile = TRUE;
-    }
-  else
-    {
-      /* 0.1 is actually minimal value for lossy in libjxl 0.5
-       * 0.01 is allowed in libjxl 0.6 but
-       * using too low value with lossy compression is not wise */
-      if (compression < 0.1)
-        {
-          compression = 0.1;
-        }
+      /* CMYK is allways saved as lossless */
+      lossless = TRUE;
     }
 
   drawable_type   = gimp_drawable_type (drawable);
@@ -1432,7 +1412,7 @@ export_image (GFile               *file,
 
   JxlEncoderInitBasicInfo(&output_info);
 
-  if (uses_original_profile)
+  if (lossless)
     {
       output_info.uses_original_profile = JXL_TRUE;
 
@@ -1464,6 +1444,14 @@ export_image (GFile               *file,
     }
   else
     {
+      /* 0.1 is actually minimal value for lossy in libjxl 0.5
+       * 0.01 is allowed in libjxl 0.6 but
+       * using too low value with lossy compression is not wise */
+      if (compression < 0.1)
+        {
+          compression = 0.1;
+        }
+
       output_info.uses_original_profile = JXL_FALSE;
       space = babl_space ("sRGB");
       out_linear = FALSE;
@@ -1529,7 +1517,7 @@ export_image (GFile               *file,
       switch (drawable_type)
         {
         case GIMP_GRAYA_IMAGE:
-          if (uses_original_profile && out_linear)
+          if (lossless && out_linear)
             {
               file_format = babl_format ( (bit_depth > 8) ? "YA u16" : "YA u8");
               JxlColorEncodingSetToLinearSRGB (&color_profile, JXL_TRUE);
@@ -1545,10 +1533,14 @@ export_image (GFile               *file,
           output_info.alpha_exponent_bits = 0;
           output_info.num_extra_channels = 1;
 
-          uses_original_profile = FALSE;
+          if (profile)
+            {
+              g_object_unref (profile);
+              profile = NULL;
+            }
           break;
         case GIMP_GRAY_IMAGE:
-          if (uses_original_profile && out_linear)
+          if (lossless && out_linear)
             {
               file_format = babl_format ( (bit_depth > 8) ? "Y u16" : "Y u8");
               JxlColorEncodingSetToLinearSRGB (&color_profile, JXL_TRUE);
@@ -1562,7 +1554,11 @@ export_image (GFile               *file,
           output_info.num_color_channels = 1;
           output_info.alpha_bits = 0;
 
-          uses_original_profile = FALSE;
+          if (profile)
+            {
+              g_object_unref (profile);
+              profile = NULL;
+            }
           break;
         case GIMP_RGBA_IMAGE:
           if (bit_depth > 8)
@@ -1714,7 +1710,7 @@ export_image (GFile               *file,
       return FALSE;
     }
 
-  if (uses_original_profile)
+  if (profile)
     {
       const uint8_t *icc_data = NULL;
       size_t         icc_length = 0;
@@ -1736,12 +1732,6 @@ export_image (GFile               *file,
     }
   else
     {
-      if (profile)
-        {
-          g_object_unref (profile);
-          profile = NULL;
-        }
-
       status = JxlEncoderSetColorEncoding (encoder, &color_profile);
       if (status != JXL_ENC_SUCCESS)
         {
@@ -2005,7 +1995,6 @@ save_dialog (GimpImage     *image,
   GtkWidget        *dialog;
   GtkListStore     *store;
   GtkWidget        *compression_scale;
-  GtkWidget        *orig_profile_check;
   GtkWidget        *profile_label;
   GimpColorProfile *cmyk_profile = NULL;
   gboolean          run;
@@ -2079,20 +2068,10 @@ save_dialog (GimpImage     *image,
                                        cmyk_profile != NULL,
                                        NULL, NULL, FALSE);
 
-  orig_profile_check = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
-                                                         "uses-original-profile",
-                                                         GTK_TYPE_CHECK_BUTTON);
-
-  g_object_bind_property (config,             "lossless",
-                          orig_profile_check, "sensitive",
-                          G_BINDING_SYNC_CREATE |
-                          G_BINDING_INVERT_BOOLEAN);
-
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
                               "lossless", "compression",
                               "speed", "save-bit-depth",
                               "cmyk-frame",
-                              "uses-original-profile",
                               "include-exif", "include-xmp",
                               NULL);
 
