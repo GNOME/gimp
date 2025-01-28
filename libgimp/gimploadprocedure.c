@@ -217,6 +217,7 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
 
   config   = _gimp_procedure_create_run_config (procedure);
   mimetype = (gchar *) gimp_file_procedure_get_mime_types (GIMP_FILE_PROCEDURE (procedure));
+  g_printerr ("config %lx, ref count %u\n", config, G_OBJECT (config)->ref_count);
 
   if (mimetype != NULL)
     {
@@ -247,16 +248,17 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
 
   if (metadata == NULL)
     metadata = gimp_metadata_new ();
-  g_printerr ("metadata: %lx, config %lx\n", metadata, config);
+  g_printerr ("metadata: %lx, ref count %u, config %lx\n", metadata, G_OBJECT (metadata)->ref_count, config);
 
   _gimp_procedure_config_begin_run (config, image, run_mode, remaining, NULL);
 
   return_values = priv->run_func (procedure, run_mode,
                                   file, metadata, &flags,
                                   config, priv->run_data);
-
   g_printerr ("returned from run_func\n");
-  g_printerr ("metadata: %lx, config %lx\n", metadata, config);
+
+  g_printerr ("config %lx, ref count %u\n", config, G_OBJECT (config)->ref_count);
+  g_printerr ("metadata: %lx, ref count %u\n", metadata, G_OBJECT (metadata)->ref_count);
   if (return_values != NULL                       &&
       gimp_value_array_length (return_values) > 0 &&
       G_VALUE_HOLDS_ENUM (gimp_value_array_index (return_values, 0)))
@@ -303,7 +305,7 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
   g_printerr ("unref config\n");
   g_object_unref (config);
   g_printerr ("clear metadata\n");
-  g_printerr ("metadata: %lx\n", metadata);
+  g_printerr ("metadata: %lx, ref count %u\n", metadata, G_OBJECT (metadata)->ref_count);
   {
 /*
     gchar *metadata_string = NULL;
