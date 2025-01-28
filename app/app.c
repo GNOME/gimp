@@ -242,7 +242,14 @@ app_run (const gchar         *full_prog_name,
   g_clear_object (&default_folder);
 
 #ifndef GIMP_CONSOLE_COMPILATION
-  app = gimp_app_new (gimp, no_splash, quit, as_new, filenames, batch_interpreter, batch_commands);
+  if (no_interface)
+    {
+      app = gimp_console_app_new (gimp, quit, as_new, filenames, batch_interpreter, batch_commands);
+    }
+  else
+    {
+      app = gimp_app_new (gimp, no_splash, quit, as_new, filenames, batch_interpreter, batch_commands);
+    }
 #else
   app = gimp_console_app_new (gimp, quit, as_new, filenames, batch_interpreter, batch_commands);
 #endif
