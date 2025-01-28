@@ -6,7 +6,7 @@
 # Pedro Barreira <almufadado@gmail.com>, 2010.
 # Tiago Santos <tiagofsantos81@sapo.pt>, 2014 - 2017.
 # Pedro Albuquerque <palbuquerque73o@gmail.com>, 2015.
-# Sara Campos <lalocas@protonmail.com>, 2021, 2022.
+# Sara Campos <lalocas@protonmail.com>, 2021, 2022, 2025.
 # Hugo Carvalho <hugokarvalho@hotmail.com>, 2021, 2022, 2023, 2024.
 # Lara Viegas <viegaslara07@gmail.com>, 2024.
 #
@@ -14,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-12-04 07:44+0000\n"
-"PO-Revision-Date: 2024-12-10 00:01+0000\n"
-"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
+"POT-Creation-Date: 2025-01-28 19:55+0000\n"
+"PO-Revision-Date: 2025-01-28 20:05+0000\n"
+"Last-Translator: Sara Campos <lalocas@protonmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
@@ -43,14 +43,14 @@ msgstr "O complemento “%s” não consegue manipular camadas"
 #: libgimp/gimpexportoptions.c:342 libgimp/gimpexportoptions.c:351
 #: libgimp/gimpexportoptions.c:360 libgimp/gimpexportoptions.c:378
 msgid "Merge Visible Layers"
-msgstr "Unir camadas visíveis"
+msgstr "Fundir camadas visíveis"
 
 #: libgimp/gimpexportoptions.c:350
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
-"O complemento “%s” não consegue manipular desvios, tamanho ou opacidade de "
-"camadas"
+"O complemento “%s” não consegue manipular deslocamentos, tamanho ou "
+"opacidade de camadas"
 
 #: libgimp/gimpexportoptions.c:359 libgimp/gimpexportoptions.c:368
 #, c-format
@@ -73,21 +73,18 @@ msgid "%s plug-in can't handle transparency"
 msgstr "O complemento “%s” não consegue manipular transparência"
 
 #: libgimp/gimpexportoptions.c:395
-#, fuzzy, c-format
-#| msgid "%s plug-in can't handle layers"
+#, c-format
 msgid "%s plug-in can't handle layer effects"
-msgstr "O complemento “%s” não consegue manipular camadas"
+msgstr "O complemento “%s” não consegue manipular efeitos de camada"
 
 #: libgimp/gimpexportoptions.c:396
-#, fuzzy
-#| msgid "Merge Visible Layers"
 msgid "Merge Layer Effects"
-msgstr "Unir camadas visíveis"
+msgstr "Fundir efeitos de camada"
 
 #: libgimp/gimpexportoptions.c:404
 #, c-format
 msgid "%s plug-in can't handle transparent layers"
-msgstr "O complemento %s não consegue manipular a transparência"
+msgstr "O complemento %s não consegue manipular camadas transparentes"
 
 #: libgimp/gimpexportoptions.c:413
 #, c-format
@@ -136,8 +133,8 @@ msgstr ""
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
-"O complemento “%s” só consegue manipular imagens mapas de bit (bitmap) "
-"indexados (duas cores)"
+"O complemento “%s” só consegue manipular imagens mapas de bits (bitmap) "
+"indexadas (duas cores)"
 
 #: libgimp/gimpexportoptions.c:451
 msgid ""
@@ -187,70 +184,63 @@ msgstr "Recortar camadas"
 msgid "Resize Image to Layers"
 msgstr "Redimensionar imagem às camadas"
 
-#: libgimp/gimpexportprocedure.c:536
+#: libgimp/gimpexportprocedure.c:550
 msgid "Save _Exif"
 msgstr "Guardar _Exif"
 
-#: libgimp/gimpexportprocedure.c:537
+#: libgimp/gimpexportprocedure.c:551
 msgid "Save Exif (Exchangeable image file format) metadata"
-msgstr "Guardar Exif (Formato de ficheiro de imagem intercambiável) metadados"
+msgstr "Guardar metadados Exif (formato de ficheiro de imagem intercambiável)"
 
-#: libgimp/gimpexportprocedure.c:542
+#: libgimp/gimpexportprocedure.c:559
 msgid "Save _IPTC"
 msgstr "Guardar _IPTC"
 
-#: libgimp/gimpexportprocedure.c:543
+#: libgimp/gimpexportprocedure.c:560
 msgid "Save IPTC (International Press Telecommunications Council) metadata"
 msgstr ""
-"Guardar IPTC (Conselho Internacional de Imprensa e Telecomunicações) "
-"metadados"
+"Guardar metadados IPTC (Conselho Internacional de Imprensa e "
+"Telecomunicações)"
 
-#: libgimp/gimpexportprocedure.c:548
-#, fuzzy
-#| msgid "Save as"
+#: libgimp/gimpexportprocedure.c:568
 msgid "Save _XMP"
-msgstr "Gravar como"
+msgstr "Guardar _XMP"
 
-#: libgimp/gimpexportprocedure.c:549
+#: libgimp/gimpexportprocedure.c:569
 msgid "Save XMP (Extensible Metadata Platform) metadata"
-msgstr "Guardar XMP (Plataforma de Metadados Extensível) metadados"
+msgstr "Guardar metadados XMP (Plataforma de Metadados Extensível)"
 
-#: libgimp/gimpexportprocedure.c:554
-#, fuzzy
-#| msgid "Monitor profile"
+#: libgimp/gimpexportprocedure.c:577
 msgid "Save color _profile"
-msgstr "Perfil de monitor"
+msgstr "Guardar _perfil de monitor"
 
-#: libgimp/gimpexportprocedure.c:555
+#: libgimp/gimpexportprocedure.c:578
 msgid "Save the ICC color profile as metadata"
 msgstr "Guardar o perfil de cor ICC como metadados"
 
-#: libgimp/gimpexportprocedure.c:560
+#: libgimp/gimpexportprocedure.c:586
 msgid "Save _thumbnail"
-msgstr "Guardar _thumnail"
+msgstr "Guardar minia_tura de imagem"
 
-#: libgimp/gimpexportprocedure.c:561
+#: libgimp/gimpexportprocedure.c:587
 msgid "Save a smaller representation of the image as metadata"
 msgstr "Guardar uma representação mais pequena da imagem como metadados"
 
-#: libgimp/gimpexportprocedure.c:567
+#: libgimp/gimpexportprocedure.c:595
 msgid "Save c_omment"
 msgstr "Guardar c_omentário"
 
-#: libgimp/gimpexportprocedure.c:568
+#: libgimp/gimpexportprocedure.c:596
 msgid "Save a comment as metadata"
 msgstr "Guardar um comentário como metadados"
 
-#: libgimp/gimpexportprocedure.c:572
+#: libgimp/gimpexportprocedure.c:600
 msgid "Comment"
 msgstr "Comentar"
 
-#: libgimp/gimpexportprocedure.c:573
-#, fuzzy
-#| msgctxt "icon-type"
-#| msgid "Image file"
+#: libgimp/gimpexportprocedure.c:601
 msgid "Image comment"
-msgstr "Ficheiro de imagem"
+msgstr "Comentário da imagem"
 
 #: libgimp/gimpexportproceduredialog.c:150
 msgid "Metadata"
@@ -278,37 +268,37 @@ msgstr "Fundo"
 msgid "GIMP"
 msgstr "GIMP"
 
-#: libgimp/gimploadprocedure.c:271 libgimp/gimpvectorloadprocedure.c:445
+#: libgimp/gimploadprocedure.c:273 libgimp/gimpvectorloadprocedure.c:445
 #, c-format
 msgid ""
 "This file loading plug-in returned SUCCESS as a status without an image. "
 "This is a bug in the plug-in code. Contact the plug-in developer."
 msgstr ""
-"Este plug-in de carregamento de ficheiro devolveu SUCESSO como um estado sem "
-"uma imagem. Este é um bug no código do plug-in. Contacte o programador do "
-"plug-in."
+"Este complemento (plug-in) de carregamento de ficheiros devolveu SUCCESS "
+"como um estado sem uma imagem. Trata-se de um erro no código do complemento. "
+"Contacte o programador do complemento."
 
-#: libgimp/gimpparamspecs-desc.c:65
+#: libgimp/gimpparamspecs-desc.c:68
 msgid "Allowed values:"
 msgstr "Valores permitidos:"
 
 #. procedure executed successfully
-#: libgimp/gimppdb.c:337
+#: libgimp/gimppdb.c:340
 msgid "success"
 msgstr "sucesso"
 
 #. procedure execution failed
-#: libgimp/gimppdb.c:341
+#: libgimp/gimppdb.c:344
 msgid "execution error"
 msgstr "erro de execução"
 
 #. procedure called incorrectly
-#: libgimp/gimppdb.c:345
+#: libgimp/gimppdb.c:348
 msgid "calling error"
 msgstr "erro de chamada"
 
 #. procedure execution cancelled
-#: libgimp/gimppdb.c:349
+#: libgimp/gimppdb.c:352
 msgid "cancelled"
 msgstr "cancelado"
 
@@ -368,7 +358,7 @@ msgstr "A pesquisar por ajuda"
 
 #: libgimp/gimpprocbrowserdialog.c:419
 msgid "Searching by authors"
-msgstr "Pesquisar por autores"
+msgstr "A pesquisar por autores"
 
 #: libgimp/gimpprocbrowserdialog.c:427
 msgid "Searching by copyright"
@@ -400,30 +390,30 @@ msgid_plural "%d procedures match your query"
 msgstr[0] "%d procedimento encontrado"
 msgstr[1] "%d procedimentos encontrados"
 
-#: libgimp/gimpprocedure.c:2158
+#: libgimp/gimpprocedure.c:2163
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "O procedimento \"%s\" não devolveu nenhum valor"
 
-#: libgimp/gimpprocedure.c:2335
+#: libgimp/gimpprocedure.c:2351
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr ""
 "O procedimento \"%s\" devolveu um valor de tipo incorreto para o valor "
-"\"%s\" (n°%d). Esperado %s, obtido %s."
+"\"%s\" (n°%d). Esperado: %s, obtido: %s."
 
-#: libgimp/gimpprocedure.c:2347
+#: libgimp/gimpprocedure.c:2363
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' "
 "(#%d). Expected %s, got %s."
 msgstr ""
 "O procedimento \"%s\" foi chamado com um valor de tipo incorreto para o "
-"argumento \"%s\" (n°%d). Esperado %s, obtido %s."
+"argumento \"%s\" (n°%d). Esperado: %s, obtido: %s."
 
-#: libgimp/gimpprocedure.c:2382
+#: libgimp/gimpprocedure.c:2398
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -432,7 +422,7 @@ msgstr ""
 "O procedimento \"%s\" devolveu \"%s\" como valor de retorno \"%s\" (nº %d, "
 "tipo %s). Este valor está fora dos limites permitidos."
 
-#: libgimp/gimpprocedure.c:2396
+#: libgimp/gimpprocedure.c:2412
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -441,14 +431,14 @@ msgstr ""
 "O procedimento \"%s\" foi chamado com o valor \"%s\" para o argumento \"%s\" "
 "(nº %d, tipo %s). Este valor está fora dos limites permitidos."
 
-#: libgimp/gimpprocedure.c:2440
+#: libgimp/gimpprocedure.c:2456
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
 "O procedimento \"%s\" devolveu uma expressão UTF-8 inválida para o argumento "
 "“%s”."
 
-#: libgimp/gimpprocedure.c:2450
+#: libgimp/gimpprocedure.c:2466
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -467,9 +457,10 @@ msgid "_Export"
 msgstr "_Exportar"
 
 #: libgimp/gimpproceduredialog.c:318 libgimp/gimpproceduredialog.c:617
-#: libgimpwidgets/gimpcolorbutton.c:553 libgimpwidgets/gimpfileentry.c:466
-#: libgimpwidgets/gimpquerybox.c:274 libgimpwidgets/gimpquerybox.c:337
-#: libgimpwidgets/gimpquerybox.c:403 libgimpwidgets/gimpquerybox.c:479
+#: libgimpwidgets/gimpcolorbutton.c:553 libgimpwidgets/gimpfilechooser.c:707
+#: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:274
+#: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
+#: libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_OK"
 
@@ -480,15 +471,15 @@ msgstr "_Repor"
 #: libgimp/gimpproceduredialog.c:344 libgimpwidgets/gimpcolorbutton.c:552
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:172
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:182
-#: libgimpwidgets/gimpfileentry.c:465 libgimpwidgets/gimpquerybox.c:274
-#: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
-#: libgimpwidgets/gimpquerybox.c:479
+#: libgimpwidgets/gimpfilechooser.c:708 libgimpwidgets/gimpfileentry.c:465
+#: libgimpwidgets/gimpquerybox.c:274 libgimpwidgets/gimpquerybox.c:337
+#: libgimpwidgets/gimpquerybox.c:403 libgimpwidgets/gimpquerybox.c:479
 msgid "_Cancel"
 msgstr "_Cancelar"
 
 #: libgimp/gimpproceduredialog.c:379
 msgid "_Load Saved Settings"
-msgstr "Carregar definições guardadas"
+msgstr "Carregar de_finições guardadas"
 
 #: libgimp/gimpproceduredialog.c:380
 msgid "Load settings saved with \"Save Settings\" button"
@@ -502,31 +493,31 @@ msgstr "_Guardar definições"
 msgid "Store current settings for later reuse"
 msgstr "Armazenar as definições atuais para usar mais tarde"
 
-#: libgimp/gimpproceduredialog.c:847
+#: libgimp/gimpproceduredialog.c:869
 msgid "Brush Chooser"
 msgstr "Seletor de pincel"
 
-#: libgimp/gimpproceduredialog.c:851
+#: libgimp/gimpproceduredialog.c:873
 msgid "Font Chooser"
 msgstr "Seletor de tipo de letra"
 
-#: libgimp/gimpproceduredialog.c:855
+#: libgimp/gimpproceduredialog.c:877
 msgid "Gradient Chooser"
 msgstr "Seletor de gradiente"
 
-#: libgimp/gimpproceduredialog.c:859
+#: libgimp/gimpproceduredialog.c:881
 msgid "Palette Chooser"
 msgstr "Seletor de paleta"
 
-#: libgimp/gimpproceduredialog.c:863
+#: libgimp/gimpproceduredialog.c:885
 msgid "Pattern Chooser"
-msgstr "Seletor de padrão"
+msgstr "Seletor de textura"
 
-#: libgimp/gimpproceduredialog.c:2665
+#: libgimp/gimpproceduredialog.c:2647
 msgid "Reset to _Initial Values"
 msgstr "Repor definições _iniciais"
 
-#: libgimp/gimpproceduredialog.c:2674
+#: libgimp/gimpproceduredialog.c:2656
 msgid "Reset to _Factory Defaults"
 msgstr "Repor definições de _fábrica"
 
@@ -569,18 +560,17 @@ msgstr "Direitos de autor:"
 #: libgimp/gimppropwidgets.c:191
 #, c-format
 msgid "Choose layer: %s"
-msgstr "Selecione camada: %s"
+msgstr "Selecione a camada: %s"
 
 #: libgimp/gimppropwidgets.c:193
-#, fuzzy, c-format
-#| msgid "Channel:"
+#, c-format
 msgid "Choose channel: %s"
-msgstr "Canal:"
+msgstr "Selecione o canal: %s"
 
 #: libgimp/gimppropwidgets.c:195
 #, c-format
 msgid "Choose drawable: %s"
-msgstr "Selecione o drawable: %s"
+msgstr "Selecione o desenhável: %s"
 
 #: libgimp/gimpresolutionentry-private.c:136
 msgid ""
@@ -593,20 +583,18 @@ msgstr ""
 #: libgimp/gimpresolutionentry-private.c:144
 #: libgimp/gimpvectorloadprocedure.c:125
 msgid "_Keep aspect ratio"
-msgstr "_Manter relação de aspeto"
+msgstr "_Manter proporção"
 
 #: libgimp/gimpresolutionentry-private.c:145
 #: libgimp/gimpvectorloadprocedure.c:126
 msgid "Force dimensions with aspect ratio"
-msgstr "Forçar dimensões com relação de aspeto"
+msgstr "Forçar dimensões na mesma proporção"
 
 #: libgimp/gimpresolutionentry-private.c:199
 #: libgimp/gimpresolutionentry-private.c:200
-#, fuzzy, c-format
-#| msgctxt "size-type"
-#| msgid "Pixels"
+#, c-format
 msgid "pixels/%a"
-msgstr "Píxeis"
+msgstr "píxeis/%a"
 
 #: libgimp/gimpvectorloadprocedure.c:111
 msgid "_Width (pixels)"
@@ -626,7 +614,7 @@ msgstr "Carregar e usar dimensões do ficheiro de origem"
 
 #: libgimp/gimpvectorloadprocedure.c:139
 msgid "Resolu_tion"
-msgstr "Resolu_ção"
+msgstr "Reso_lução"
 
 #: libgimp/gimpvectorloadprocedure.c:140
 msgid "Pixel Density: number of pixels per physical unit"
@@ -657,8 +645,8 @@ msgid ""
 "Dimensions cannot be 0 and no native dimensions could be extracted from the "
 "vector image."
 msgstr ""
-"As dimensões não podem ser 0 e não foi possível extraír nenhumas dimensões "
-"nativasdo vetor da imagem."
+"As dimensões não podem ser 0 e não foi possível extrair as dimensões nativas "
+"da imagem vetorial."
 
 #. TRANSLATORS: the %s is a vector format name, e.g. "SVG" or "PDF",
 #. * followed by 2D dimensions with unit, e.g. "200 inch x 400 inch"
@@ -666,24 +654,24 @@ msgstr ""
 #: libgimp/gimpvectorloadproceduredialog.c:131
 #, c-format
 msgid "Source %s file size: %%.%df %s × %%.%df %s"
-msgstr "Tamanho do ficheiro fonte %s: %%.%df %s × %%.%df %s"
+msgstr "Tamanho do ficheiro %s de origem: %%.%df %s × %%.%df %s"
 
 #. TRANSLATOR: the %s is a vector format name, e.g. "SVG" or "PDF".
 #: libgimp/gimpvectorloadproceduredialog.c:168
 #, c-format
 msgid "Source %s file's aspect ratio: %%.%df × %%.%df"
-msgstr "Relação de aspeto do ficheiro fonte %s: %%.%df × %%.%df"
+msgstr "Proporção do ficheiro %s de origem: %%.%df × %%.%df"
 
 #: libgimp/gimpvectorloadproceduredialog.c:176
 #, c-format
 msgid "Approximated source %s file size: %%.%df %s × %%.%df %s"
-msgstr "Tamanho aproximado do ficheiro fonte %s: %%.%df %s × %%.%df %s"
+msgstr "Tamanho aproximado do ficheiro %s de origem: %%.%df %s × %%.%df %s"
 
 #. TRANSLATOR: the %s is a vector format name, e.g. "SVG" or "PDF".
 #: libgimp/gimpvectorloadproceduredialog.c:189
 #, c-format
 msgid "The source %s file does not specify a size!"
-msgstr "O ficheiro fonte %s não especifíca um tamanho!"
+msgstr "O ficheiro %s de origem não especifica um tamanho!"
 
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
 #: libgimp/gimpvectorloadproceduredialog.c:330
@@ -1019,7 +1007,7 @@ msgstr "Cor de fundo"
 #: libgimpbase/gimpbaseenums.c:521
 msgctxt "fill-type"
 msgid "Middle Gray (CIELAB)"
-msgstr "Cinzento Médio (CIELAB)"
+msgstr "Cinzento médio (CIELAB)"
 
 #: libgimpbase/gimpbaseenums.c:522
 msgctxt "fill-type"
@@ -1154,7 +1142,7 @@ msgstr "Cónico (simétrico)"
 #: libgimpbase/gimpbaseenums.c:711
 msgctxt "gradient-type"
 msgid "Conical (sym)"
-msgstr "Cónico (simétrico)"
+msgstr "Cónico (sim.)"
 
 #: libgimpbase/gimpbaseenums.c:712
 msgctxt "gradient-type"
@@ -1166,7 +1154,7 @@ msgstr "Cónico (assimétrico)"
 #: libgimpbase/gimpbaseenums.c:715
 msgctxt "gradient-type"
 msgid "Conical (asym)"
-msgstr "Cónico (assimétrico)"
+msgstr "Cónico (assim.)"
 
 #: libgimpbase/gimpbaseenums.c:716
 msgctxt "gradient-type"
@@ -1404,12 +1392,9 @@ msgid "GIMP Plug-In"
 msgstr "Complemento do GIMP"
 
 #: libgimpbase/gimpbaseenums.c:1257
-#, fuzzy
-#| msgctxt "pdb-proc-type"
-#| msgid "GIMP Plug-In"
 msgctxt "pdb-proc-type"
 msgid "GIMP Persistent Plug-In"
-msgstr "Complemento do GIMP"
+msgstr "Complemento persistente do GIMP"
 
 #: libgimpbase/gimpbaseenums.c:1258
 msgctxt "pdb-proc-type"
@@ -1512,12 +1497,9 @@ msgid "None (extend)"
 msgstr "Nenhuma (estendida)"
 
 #: libgimpbase/gimpbaseenums.c:1462
-#, fuzzy
-#| msgctxt "repeat-mode"
-#| msgid "None (extend)"
 msgctxt "repeat-mode"
 msgid "None (truncate)"
-msgstr "Nenhuma (estendida)"
+msgstr "Nenhuma (truncar)"
 
 #: libgimpbase/gimpbaseenums.c:1463
 msgctxt "repeat-mode"
@@ -1727,69 +1709,69 @@ msgstr "Recortar"
 #: libgimpbase/gimpbaseenums.c:1869
 msgctxt "transform-resize"
 msgid "Crop to result"
-msgstr "Recortar para o resultado"
+msgstr "Recortar o resultado"
 
 #: libgimpbase/gimpbaseenums.c:1870
 msgctxt "transform-resize"
 msgid "Crop with aspect"
-msgstr "Recortar com proporção"
+msgstr "Recortar mantendo a proporção"
 
-#: libgimpbase/gimpmetadata.c:1215
+#: libgimpbase/gimpmetadata.c:1218
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Pode carregar metadados só de ficheiros locais"
 
-#: libgimpbase/gimpmetadata.c:1271
+#: libgimpbase/gimpmetadata.c:1274
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Pode guardar metadados só de ficheiros locais"
 
-#: libgimpbase/gimpmetadata.c:1320
+#: libgimpbase/gimpmetadata.c:1323
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Tamanho dos dados Exif inválido."
 
-#: libgimpbase/gimpmetadata.c:1365
+#: libgimpbase/gimpmetadata.c:1368
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Falha ao processar os dados EXIF."
 
-#: libgimpbase/gimpmetadata.c:1417
+#: libgimpbase/gimpmetadata.c:1420
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Falha ao processar os dados IPTC."
 
-#: libgimpbase/gimpmetadata.c:1465
+#: libgimpbase/gimpmetadata.c:1468
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Falha ao processar os dados XMP."
 
-#: libgimpbase/gimpunit.c:81
+#: libgimpbase/gimpunit.c:82
 msgctxt "unit-plural"
 msgid "pixels"
 msgstr "píxeis"
 
-#: libgimpbase/gimpunit.c:88
+#: libgimpbase/gimpunit.c:89
 msgctxt "unit-plural"
 msgid "inches"
 msgstr "polegadas"
 
-#: libgimpbase/gimpunit.c:94
+#: libgimpbase/gimpunit.c:95
 msgctxt "unit-plural"
 msgid "millimeters"
 msgstr "milímetros"
 
-#: libgimpbase/gimpunit.c:101
+#: libgimpbase/gimpunit.c:102
 msgctxt "unit-plural"
 msgid "points"
 msgstr "pontos"
 
-#: libgimpbase/gimpunit.c:107
+#: libgimpbase/gimpunit.c:108
 msgctxt "unit-plural"
 msgid "picas"
-msgstr ""
+msgstr "picas"
 
-#: libgimpbase/gimpunit.c:117
+#: libgimpbase/gimpunit.c:118
 msgctxt "unit-plural"
 msgid "percent"
 msgstr "percentagem"
@@ -1805,8 +1787,8 @@ msgstr "Caminho do ficheiro é NULL"
 #: libgimpbase/gimputils.c:403
 msgid "Error converting UTF-8 filename to wide char"
 msgstr ""
-"Erro ao converter nome do ficheiro em UTF-8 para caracteres alargados (mais "
-"de 8 bits)"
+"Erro ao converter o nome do ficheiro em UTF-8 para caracteres alargados "
+"(mais de 8 bits)"
 
 #: libgimpbase/gimputils.c:411
 msgid "ILCreateFromPath() failed"
@@ -1905,7 +1887,7 @@ msgstr "Como as imagens são apresentadas no ecrã."
 
 #: libgimpconfig/gimpcolorconfig.c:55
 msgid "The color profile of your (primary) monitor."
-msgstr "O perfil de cor do seu monitor principa."
+msgstr "O perfil de cor do seu monitor principal."
 
 #: libgimpconfig/gimpcolorconfig.c:58
 msgid ""
@@ -1955,18 +1937,18 @@ msgid ""
 "LUT monitor profile (most monitor profiles are matrix), choosing perceptual "
 "intent really gives you relative colorimetric."
 msgstr ""
-"Como as cores são convertidas do espaço de cor da imagem para o dispositivo "
-"de visualização. Colorimétrico relativo é normalmente a melhor escolha. A "
-"não ser que use um perfil de monitor LUT (a maioria dos perfis de cor de "
-"monitores são matriz), escolher intenção percetual dá-lhe realmente o "
-"colorimétrico relativo."
+"A forma como as cores são convertidas do espaço de cor da sua imagem para o "
+"seu dispositivo de visualização. O colorimétrico relativo é normalmente a "
+"melhor escolha. A não ser que utilize um perfil de monitor LUT (a maioria "
+"dos perfis de monitor são matriciais), a escolha da intenção percetual dá-"
+"lhe realmente uma colorimetria relativa."
 
 #: libgimpconfig/gimpcolorconfig.c:86
 msgid ""
 "Do use black point compensation (unless you know you have a reason not to)."
 msgstr ""
-"Use compensação de ponto preto (a não ser que tenha uma boa razão para não o "
-"fazer)."
+"Utilize a compensação do ponto preto (a não ser que tenha uma boa razão para "
+"não o fazer)."
 
 #: libgimpconfig/gimpcolorconfig.c:90
 msgid ""
@@ -2022,7 +2004,7 @@ msgstr ""
 msgid ""
 "When enabled, set the color scales to display HSV blend mode instead of LCh"
 msgstr ""
-"Quando ativado, defina as escalas de cores para mostrar o modo de mistura "
+"Quando ativado, definir as escalas de cores para mostrar o modo de mistura "
 "HSV em vez de LCh"
 
 #: libgimpconfig/gimpcolorconfig.c:225
@@ -2111,13 +2093,14 @@ msgstr "O perfil de cor \"%s\" não é para espaço de cor CMYK."
 #: libgimpconfig/gimpconfig-deserialize.c:124
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
-msgstr "valor do token %s não é uma expressão UTF-8 válida"
+msgstr "valor do token \"%s\" não é uma expressão UTF-8 válida"
 
 #. please don't translate 'yes' and 'no'
 #: libgimpconfig/gimpconfig-deserialize.c:505
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
-msgstr "esperado \"sim\" ou \"não\" para o token booleano %s, obtido \"%s\""
+msgstr ""
+"esperado \"sim\" ou \"não\" para o token booleano %s, foi obtido \"%s\""
 
 #: libgimpconfig/gimpconfig-deserialize.c:620
 #, c-format
@@ -2177,7 +2160,7 @@ msgstr "expressão UTF-8 inválida"
 #: libgimpconfig/gimpscanner.c:651
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
-msgstr "esperado \"sim\" ou \"não\" para o token booleano, obtido \"%s\""
+msgstr "esperado \"sim\" ou \"não\" para o token booleano, foi obtido \"%s\""
 
 #: libgimpconfig/gimpscanner.c:991
 #, c-format
@@ -2189,7 +2172,7 @@ msgstr "Erro ao processar \"%s\" na linha %d: %s"
 #: libgimpmodule/gimpmodule.c:589
 #, c-format
 msgid "Module '%s' load error: %s"
-msgstr "Erro ao carregamento o módulo \"%s\": %s"
+msgstr "Erro ao carregar o módulo \"%s\": %s"
 
 #: libgimpmodule/gimpmoduledb.c:450
 msgid "Module error"
@@ -2213,23 +2196,23 @@ msgid ""
 "Cannot determine a valid thumbnails directory.\n"
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
-"Não é possível determinar uma pasta de miniaturas válida.\n"
+"Não é possível determinar uma pasta de miniaturas de imagens válida.\n"
 "As miniaturas serão guardadas na pasta de ficheiros temporários (%s)."
 
 #: libgimpthumb/gimpthumb-utils.c:299 libgimpthumb/gimpthumb-utils.c:367
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr "Falha ao criar a pasta \"%s\" para as miniaturas."
+msgstr "Falha ao criar a pasta \"%s\" para as miniaturas de imagens."
 
 #: libgimpthumb/gimpthumbnail.c:523
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
-msgstr "A miniatura não contém a etiqueta Thumb::URI"
+msgstr "A miniatura de imagem não contém a etiqueta Thumb::URI"
 
 #: libgimpthumb/gimpthumbnail.c:920
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
-msgstr "Não foi possível criar a miniatura de \"%s\": %s"
+msgstr "Não foi possível criar a miniatura de imagem de \"%s\": %s"
 
 #: libgimpwidgets/gimpbrowser.c:134
 msgid "_Search:"
@@ -2342,17 +2325,16 @@ msgstr "Perfil: <i>desconhecido</i>"
 #: libgimpwidgets/gimpcolorselect.c:530 libgimpwidgets/gimpcolorselect.c:809
 #: libgimpwidgets/gimpcolorselect.c:826
 msgid "Soft-Proof Profile: <i>unknown</i>"
-msgstr ""
+msgstr "Perfil de prova de cor no monitor: <i>desconhecido</i>"
 
 #: libgimpwidgets/gimpcolorselect.c:793
 msgid "Soft-Proof Profile: sRGB"
-msgstr ""
+msgstr "Perfil de prova de cor no monitor: sRGB"
 
 #: libgimpwidgets/gimpcolorselect.c:800
-#, fuzzy, c-format
-#| msgid "Profile: %s"
+#, c-format
 msgid "Soft-Proof Profile: %s"
-msgstr "Perfil: %s"
+msgstr "Perfil de prova de cor no monitor: %s"
 
 #: libgimpwidgets/gimpcolorselection.c:233
 msgid "Current:"
@@ -2360,7 +2342,7 @@ msgstr "Atual:"
 
 #: libgimpwidgets/gimpcolorselection.c:242
 msgid "Old:"
-msgstr "Antigo:"
+msgstr "Anterior:"
 
 #: libgimpwidgets/gimpcolorselection.c:327
 msgid "HTML _notation:"
@@ -2435,55 +2417,50 @@ msgid "Gibibyte"
 msgstr "Gibibyte"
 
 #: libgimpwidgets/gimppageselector.c:182
-#, fuzzy
-#| msgctxt "page-selector-target"
-#| msgid "Images"
 msgid "N Pages"
-msgstr "Imagens"
+msgstr "N páginas"
 
 #: libgimpwidgets/gimppageselector.c:183
 msgid "The number of pages to open"
 msgstr "O número de páginas a abrir"
 
 #: libgimpwidgets/gimppageselector.c:196
-#, fuzzy
-#| msgctxt "check-size"
-#| msgid "Large"
 msgid "Target"
-msgstr "Grande"
+msgstr "Alvo"
 
 #: libgimpwidgets/gimppageselector.c:197
 msgid "the target to open to"
-msgstr "o objetivo a abrir"
+msgstr "o alvo a abrir"
 
 #. Count label
-#: libgimpwidgets/gimppageselector.c:275 libgimpwidgets/gimppageselector.c:1018
+#: libgimpwidgets/gimppageselector.c:275 libgimpwidgets/gimppageselector.c:1014
 msgid "Nothing selected"
 msgstr "Nada selecionado"
 
-#: libgimpwidgets/gimppageselector.c:293
-msgid "Select _All"
-msgstr "Selecionar _tudo"
-
-#: libgimpwidgets/gimppageselector.c:313
-msgid "Select _range:"
-msgstr "Selecionar _intervalo:"
-
-#: libgimpwidgets/gimppageselector.c:325
+#: libgimpwidgets/gimppageselector.c:289
 msgid "Open _pages as"
 msgstr "Abrir _páginas como"
 
-#: libgimpwidgets/gimppageselector.c:448 libgimpwidgets/gimppageselector.c:625
+#. Select all button & range entry
+#: libgimpwidgets/gimppageselector.c:301
+msgid "Select _range:"
+msgstr "Selecionar _intervalo:"
+
+#: libgimpwidgets/gimppageselector.c:323
+msgid "Select _All"
+msgstr "Selecionar _tudo"
+
+#: libgimpwidgets/gimppageselector.c:444 libgimpwidgets/gimppageselector.c:621
 #, c-format
 msgid "Page %d"
 msgstr "Página %d"
 
-#: libgimpwidgets/gimppageselector.c:1023
+#: libgimpwidgets/gimppageselector.c:1019
 msgid "One page selected"
 msgstr "Uma página selecionada"
 
+#: libgimpwidgets/gimppageselector.c:1026
 #: libgimpwidgets/gimppageselector.c:1030
-#: libgimpwidgets/gimppageselector.c:1034
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
@@ -2492,7 +2469,7 @@ msgstr[1] "Todas as %d páginas selecionadas"
 
 #: libgimpwidgets/gimppatheditor.c:199
 msgid "Add a new folder"
-msgstr "Adiciona uma nova pasta"
+msgstr "Adicionar uma nova pasta"
 
 #: libgimpwidgets/gimppatheditor.c:217
 msgid "Move the selected folder up"
@@ -2525,19 +2502,19 @@ msgstr "_Pré-visualização"
 
 #: libgimpwidgets/gimppreviewarea.c:154
 msgid "Check Size"
-msgstr "Tamanho do padrão"
+msgstr "Tamanho do xadrez"
 
 #: libgimpwidgets/gimppreviewarea.c:162
 msgid "Check Style"
-msgstr "Estilo do padrão"
+msgstr "Estilo do xadrez"
 
 #: libgimpwidgets/gimppreviewarea.c:170
 msgid "Custom Checks Color 1"
-msgstr "Verificações personalizadas Cor 1"
+msgstr "Cor personalizada do xadrez 1"
 
 #: libgimpwidgets/gimppreviewarea.c:177
 msgid "Custom Checks Color 2"
-msgstr "Verificações personalizadas Cor 2"
+msgstr "Cor personalizada do xadrez 2"
 
 #: libgimpwidgets/gimppropwidgets.c:2474
 #, c-format
@@ -2703,7 +2680,7 @@ msgstr "LCH"
 
 #: libgimpwidgets/gimpwidgetsenums.c:170
 msgid "CIE LCh color model"
-msgstr "Modelo de cores CIE LCh"
+msgstr "Modelo de cor CIE LCh"
 
 #: libgimpwidgets/gimpwidgetsenums.c:171
 msgctxt "color-selector-model"
