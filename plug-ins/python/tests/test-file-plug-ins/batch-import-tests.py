@@ -27,11 +27,11 @@ from gimplogger import GimpLogger
 from gimptestframework import GimpTestRunner
 
 
-#DEBUGGING=True
-DEBUGGING=False
+DEBUGGING=True
+#DEBUGGING=False
 
-#PRINT_VERBOSE = True
-PRINT_VERBOSE = False
+PRINT_VERBOSE = True
+#PRINT_VERBOSE = False
 
 LOG_APPEND = False
 

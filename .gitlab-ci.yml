@@ -70,7 +70,7 @@ workflow:
   # Default Docker image (unless otherwise defined)
   image: debian:${DEB_VERSION}
   variables:
-    DEB_VERSION: "bookworm"
+    DEB_VERSION: "testing"
     # Common cloning procedure
     GIT_DEPTH: "1"
     GIT_SUBMODULE_STRATEGY: none
@@ -127,7 +127,7 @@ image-debian:
     entrypoint: [""]
   variables:
     GIT_STRATEGY: none
-    UMFPACK: libumfpack5
+    UMFPACK: libumfpack6
   before_script: []
   script:
     - export container=docker
@@ -619,11 +619,13 @@ file-plug-in-tests:
     - pkg-config --variable=gimplibdir gimp-${API_VER} 2>/dev/null | grep . && PLUG_IN_DIR=$(echo $(pkg-config --variable=gimplibdir gimp-${API_VER})'/plug-ins/')
     - export PYTHONPATH="${PLUG_IN_DIR}test-file-plug-ins"
     - export GIMP_TESTS_CONFIG_FILE="${PLUG_IN_DIR}test-file-plug-ins/tests/batch-config.ini"
+    - export GEGL_DEBUG=buffer-alloc
+    - export GIMP_DEBUG=all
     - mkdir _log
     - mkdir _data && cd _data
     - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/Infrastructure/gimp-test-images.git gimp-test-images
     - cd ..
-    - cat ${PLUG_IN_DIR}test-file-plug-ins/batch-import-tests.py | gimp-console-${APP_VER} -idf --batch-interpreter python-fu-eval -b - --quit
+    - cat ${PLUG_IN_DIR}test-file-plug-ins/batch-import-tests.py | gimp-console-${APP_VER} --stack-trace-mode=always -idf --batch-interpreter python-fu-eval -b - --quit
     - if [ $(grep -c "${REGRESSION_STRING}" "${GIMP_TESTS_LOG_FILE}") -ne 1 ]; then
         echo "There are file import regressions. Check the log at ${GIMP_TESTS_LOG_FILE}!";
         exit 1;
