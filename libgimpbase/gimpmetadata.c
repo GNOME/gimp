@@ -870,8 +870,10 @@ gimp_metadata_append_tag (GString     *string,
     {
       if (base64)
         {
-          g_string_append_printf (string, "  <tag name=\"%s\" encoding=\"base64\">%s</tag>\n",
-                                  name, value);
+//          g_string_append_printf (string, "  <tag name=\"%s\" encoding=\"base64\">%s</tag>\n",
+//                                  name, value);
+            /* do not append invalid tag */
+            // COULD ALSO BE USED FOR VALID DATA NEEDING BASE64!
         }
       else
         {

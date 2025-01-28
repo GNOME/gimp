@@ -303,6 +303,15 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
   g_object_unref (config);
   g_printerr ("clear metadata\n");
   g_printerr ("metadata: %lx\n", metadata);
+  {
+    gchar *metadata_string = NULL;
+    if (metadata)
+      {
+        metadata_string = gimp_metadata_serialize (metadata);
+        g_printerr ("\n%s\n", metadata_string);
+        g_free (metadata_string);
+      }
+  }
   g_clear_object (&metadata);
   g_printerr ("array unref remaining\n");
   gimp_value_array_unref (remaining);
