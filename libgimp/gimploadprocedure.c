@@ -247,7 +247,7 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
 
   if (metadata == NULL)
     metadata = gimp_metadata_new ();
-  g_printerr ("metadata: %lx\n", metadata);
+  g_printerr ("metadata: %lx, config %lx\n", metadata, config);
 
   _gimp_procedure_config_begin_run (config, image, run_mode, remaining, NULL);
 
@@ -256,7 +256,7 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
                                   config, priv->run_data);
 
   g_printerr ("returned from run_func\n");
-  g_printerr ("metadata: %lx\n", metadata);
+  g_printerr ("metadata: %lx, config %lx\n", metadata, config);
   if (return_values != NULL                       &&
       gimp_value_array_length (return_values) > 0 &&
       G_VALUE_HOLDS_ENUM (gimp_value_array_index (return_values, 0)))
@@ -294,6 +294,7 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
    */
   g_printerr ("get plug_in\n");
   plug_in = gimp_procedure_get_plug_in (procedure);
+  g_printerr ("config %lx, ref count %u\n", config, G_OBJECT (config)->ref_count);
   if (G_OBJECT (config)->ref_count > 1 &&
       _gimp_plug_in_manage_memory_manually (plug_in))
     g_printerr ("%s: ERROR: the GimpExportProcedureConfig object was refed "
@@ -304,6 +305,7 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
   g_printerr ("clear metadata\n");
   g_printerr ("metadata: %lx\n", metadata);
   {
+/*
     gchar *metadata_string = NULL;
     if (metadata)
       {
@@ -311,6 +313,7 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
         g_printerr ("\n%s\n", metadata_string);
         g_free (metadata_string);
       }
+*/
   }
   g_clear_object (&metadata);
   g_printerr ("array unref remaining\n");
