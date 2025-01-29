@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-01-22 18:26+0000\n"
-"PO-Revision-Date: 2024-02-24 21:26+0100\n"
+"POT-Creation-Date: 2025-01-23 20:09+0000\n"
+"PO-Revision-Date: 2025-01-29 12:09+0100\n"
 "Last-Translator: GJR <g.j.roelvink@proton.me>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -24,16 +24,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.5\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:113
 msgid "Plug-In Example in _C"
-msgstr ""
+msgstr "Plug-In Voorbeeld in _C"
 
 #: extensions/goat-exercises/goat-exercise-c.c:119
 #: extensions/goat-exercises/goat-exercise-c.c:120
 msgid "Plug-in example in C"
-msgstr ""
+msgstr "Plug-in voorbeeld in C"
 
 #: extensions/goat-exercises/goat-exercise-c.c:148 plug-ins/common/blinds.c:200
 #: plug-ins/common/border-average.c:198 plug-ins/common/checkerboard.c:174
@@ -61,7 +61,7 @@ msgstr "Procedure '%s' werkt alleen met één tekengebied."
 
 #: extensions/goat-exercises/goat-exercise-c.c:178
 msgid "Plug-In Example in C"
-msgstr ""
+msgstr "Plug-In Voorbeeld in C"
 
 #: extensions/goat-exercises/goat-exercise-c.c:182
 #: extensions/goat-exercises/goat-exercise-gjs.js:94
@@ -132,16 +132,16 @@ msgstr ""
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:63
 msgid "Plug-In Example in _JavaScript"
-msgstr ""
+msgstr "Plug-In Voorbeeld in _JavaScript"
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:67
 #: extensions/goat-exercises/goat-exercise-gjs.js:68
 msgid "Plug-in example in JavaScript (GJS)"
-msgstr ""
+msgstr "Plug-in voorbeeld in Javascript (GJS)"
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:90
 msgid "Plug-In Example in JavaScript (GJS)"
-msgstr ""
+msgstr "Plug-In Voorbeeld in Javascript (GJS)"
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
@@ -183,26 +183,26 @@ msgstr "_OK"
 #. against Gimp.RunMode.INTERACTIVE.
 #: extensions/goat-exercises/goat-exercise-lua.lua:67
 msgid "Plug-In Example in Lua"
-msgstr ""
+msgstr "Plug-In Voorbeeld in Lua"
 
 #. CANCEL, CLOSE, DELETE_EVENT
 #: extensions/goat-exercises/goat-exercise-lua.lua:172
 msgid "Plug-In Example in _Lua"
-msgstr ""
+msgstr "Plug-In Voorbeeld in _Lua"
 
 #: extensions/goat-exercises/goat-exercise-lua.lua:176
 #: extensions/goat-exercises/goat-exercise-lua.lua:177
 msgid "Plug-in example in Lua"
-msgstr ""
+msgstr "Plug-in voorbeeld in Lua"
 
 #: extensions/goat-exercises/goat-exercise-py3.py:46
 msgid "Plug-In Example in _Python 3"
-msgstr ""
+msgstr "Plug-In Voorbeeld in _Python 3"
 
 #: extensions/goat-exercises/goat-exercise-py3.py:50
 #: extensions/goat-exercises/goat-exercise-py3.py:51
 msgid "Plug-in example in Python 3"
-msgstr ""
+msgstr "Plug-in voorbeeld in _Python 3"
 
 #: extensions/goat-exercises/goat-exercise-py3.py:59
 msgid "Procedure '{}' only works with one drawable."
@@ -210,20 +210,20 @@ msgstr "Procedure '{}' werkt alleen met één tekengebied."
 
 #: extensions/goat-exercises/goat-exercise-py3.py:74
 msgid "Plug-In Example in Python 3"
-msgstr ""
+msgstr "Plug-In Voorbeeld in Python 3"
 
 #: extensions/goat-exercises/goat-exercise-vala.vala:45
 msgid "Plug-In Example in _Vala"
-msgstr ""
+msgstr "Plug-In Voorbeeld in _Vala"
 
 #: extensions/goat-exercises/goat-exercise-vala.vala:46
 #: extensions/goat-exercises/goat-exercise-vala.vala:47
 msgid "Plug-in example in Vala"
-msgstr ""
+msgstr "Plug-in voorbeeld in Vala"
 
 #: extensions/goat-exercises/goat-exercise-vala.vala:67
 msgid "Plug-In Example in Vala"
-msgstr ""
+msgstr "Plug-In Voorbeeld in Vala"
 
 #: extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in:5
 msgid "Goat Exercises"
@@ -256,8 +256,6 @@ msgid "Align all visible layers of the image"
 msgstr "Alle zichtbare lagen van de afbeelding uitlijnen"
 
 #: plug-ins/common/align-layers.c:183
-#, fuzzy
-#| msgid "Align Visible Layers"
 msgid "Align visible layers"
 msgstr "Zichtbare lagen uitlijnen"
 
@@ -664,16 +662,12 @@ msgid "Bucket Si_ze"
 msgstr "_Emmergrootte"
 
 #: plug-ins/common/border-average.c:151
-#, fuzzy
-#| msgid "Bits for bucket size (default=4: 16 Levels)"
 msgid "Bits for bucket size"
-msgstr "Aantal bits voor emmergrootte (standaard=4: 16 Nivo's)"
+msgstr "Aantal bits voor emmergrootte"
 
 #: plug-ins/common/border-average.c:152
-#, fuzzy
-#| msgid "10"
 msgid "1"
-msgstr "10"
+msgstr "1"
 
 #: plug-ins/common/border-average.c:153 plug-ins/metadata/metadata-tags.c:254
 msgid "2"
@@ -684,38 +678,28 @@ msgid "4"
 msgstr "4"
 
 #: plug-ins/common/border-average.c:155
-#, fuzzy
-#| msgid "A8"
 msgid "8"
-msgstr "A8"
+msgstr "8"
 
 #: plug-ins/common/border-average.c:156
-#, fuzzy
-#| msgid "1:6"
 msgid "16"
-msgstr "1:6"
+msgstr "16"
 
 #: plug-ins/common/border-average.c:157
-#, fuzzy
-#| msgid "2"
 msgid "32"
-msgstr "2"
+msgstr "32"
 
 #: plug-ins/common/border-average.c:158
-#, fuzzy
-#| msgid "4"
 msgid "64"
-msgstr "4"
+msgstr "64"
 
 #: plug-ins/common/border-average.c:159
-#, fuzzy
-#| msgid "1:2"
 msgid "128"
-msgstr "1:2"
+msgstr "128"
 
 #: plug-ins/common/border-average.c:160
 msgid "256"
-msgstr ""
+msgstr "256"
 
 #: plug-ins/common/border-average.c:166 plug-ins/common/border-average.c:167
 msgid "The average color of the specified border."
@@ -1383,10 +1367,9 @@ msgid "Second (other) index in the colormap"
 msgstr "Tweede index in de kleurenkaart"
 
 #: plug-ins/common/colormap-remap.c:267
-#, fuzzy, c-format
-#| msgid "Procedure '%s' only works with one drawable."
+#, c-format
 msgid "Procedure '%s' only works with indexed images."
-msgstr "Procedure '%s' werkt alleen met één tekengebied."
+msgstr "Procedure '%s' werkt alleen met geïndexeerde afbeeldingen."
 
 #: plug-ins/common/colormap-remap.c:600
 msgid "Rearrange Colors"
@@ -1413,17 +1396,12 @@ msgid "Reset Order"
 msgstr "Volgorde herstellen"
 
 #: plug-ins/common/colormap-remap.c:664
-#, fuzzy
-#| msgid ""
-#| "Drag and drop colors to rearrange the colormap.  The numbers shown are "
-#| "the original indices.  Right-click for a menu with sort options."
 msgid ""
 "Drag and drop colors to rearrange the colormap.\n"
 "The numbers shown are the original indices."
 msgstr ""
-"Sleep en zet kleuren neer om de kleurenkaart te herordenen. De getoonde "
-"nummers zijn de oorspronkelijke aanduidingen. Rechts-klik voor een menu met "
-"sorteeropties."
+"Sleep en zet kleuren neer om de kleurenkaart te herordenen.\n"
+"De getoonde nummers zijn de oorspronkelijke aanduidingen."
 
 #: plug-ins/common/colormap-remap.c:726
 msgid "Rearranging the colormap"
@@ -1444,275 +1422,275 @@ msgstr "_Groen:"
 msgid "_Blue:"
 msgstr "_Blauw:"
 
-#: plug-ins/common/compose.c:211
+#: plug-ins/common/compose.c:208
 msgid "_Alpha:"
 msgstr "_Alfa:"
 
-#: plug-ins/common/compose.c:213 plug-ins/common/compose.c:217
+#: plug-ins/common/compose.c:210 plug-ins/common/compose.c:214
 msgid "_Hue:"
 msgstr "_Tint:"
 
-#: plug-ins/common/compose.c:214 plug-ins/common/compose.c:218
+#: plug-ins/common/compose.c:211 plug-ins/common/compose.c:215
 msgid "_Saturation:"
 msgstr "Ver_zadiging:"
 
-#: plug-ins/common/compose.c:215
+#: plug-ins/common/compose.c:212
 msgid "_Value:"
 msgstr "_Waarde:"
 
-#: plug-ins/common/compose.c:219
+#: plug-ins/common/compose.c:216
 msgid "_Lightness:"
 msgstr "_Helderheid:"
 
-#: plug-ins/common/compose.c:221
+#: plug-ins/common/compose.c:218
 msgid "_Cyan:"
 msgstr "_Cyaan:"
 
-#: plug-ins/common/compose.c:222
+#: plug-ins/common/compose.c:219
 msgid "_Magenta:"
 msgstr "_Magenta:"
 
-#: plug-ins/common/compose.c:223
+#: plug-ins/common/compose.c:220
 msgid "_Yellow:"
 msgstr "_Geel:"
 
-#: plug-ins/common/compose.c:224
+#: plug-ins/common/compose.c:221
 msgid "_Black:"
 msgstr "_Zwart:"
 
-#: plug-ins/common/compose.c:226
+#: plug-ins/common/compose.c:223
 msgid "_L:"
 msgstr "_L:"
 
-#: plug-ins/common/compose.c:227
+#: plug-ins/common/compose.c:224
 msgid "_A:"
 msgstr "_A:"
 
-#: plug-ins/common/compose.c:228
+#: plug-ins/common/compose.c:225
 msgid "_B:"
 msgstr "_B:"
 
-#: plug-ins/common/compose.c:230
+#: plug-ins/common/compose.c:227
 msgid "_L"
 msgstr "_L"
 
-#: plug-ins/common/compose.c:231
+#: plug-ins/common/compose.c:228
 msgid "_C"
 msgstr "_C"
 
-#: plug-ins/common/compose.c:232
+#: plug-ins/common/compose.c:229
 msgid "_H"
 msgstr "_H"
 
-#: plug-ins/common/compose.c:234
+#: plug-ins/common/compose.c:231
 msgid "_Luma y470:"
 msgstr "_Luma_y470:"
 
-#: plug-ins/common/compose.c:235
+#: plug-ins/common/compose.c:232
 msgid "_Blueness cb470:"
 msgstr "_Blauwheid cb470:"
 
-#: plug-ins/common/compose.c:236
+#: plug-ins/common/compose.c:233
 msgid "_Redness cr470:"
 msgstr "_Roodheid cr470:"
 
-#: plug-ins/common/compose.c:238
+#: plug-ins/common/compose.c:235
 msgid "_Luma y709:"
 msgstr "_Luma y709:"
 
-#: plug-ins/common/compose.c:239
+#: plug-ins/common/compose.c:236
 msgid "_Blueness cb709:"
 msgstr "_Blauwheid cb709:"
 
-#: plug-ins/common/compose.c:240
+#: plug-ins/common/compose.c:237
 msgid "_Redness cr709:"
 msgstr "_Roodheid cr709:"
 
-#: plug-ins/common/compose.c:246 plug-ins/common/compose.c:440
-#: plug-ins/common/compose.c:503 plug-ins/common/decompose.c:192
+#: plug-ins/common/compose.c:243 plug-ins/common/compose.c:437
+#: plug-ins/common/compose.c:500 plug-ins/common/decompose.c:192
 #: plug-ins/common/decompose.c:299 plug-ins/common/file-heif.c:288
 #: plug-ins/common/file-heif.c:409
 msgid "RGB"
 msgstr "RGB"
 
-#: plug-ins/common/compose.c:253 plug-ins/common/compose.c:441
-#: plug-ins/common/compose.c:504 plug-ins/common/decompose.c:193
+#: plug-ins/common/compose.c:250 plug-ins/common/compose.c:438
+#: plug-ins/common/compose.c:501 plug-ins/common/decompose.c:193
 #: plug-ins/common/decompose.c:300
 msgid "RGBA"
 msgstr "RGBA"
 
-#: plug-ins/common/compose.c:261 plug-ins/common/compose.c:442
-#: plug-ins/common/compose.c:505 plug-ins/common/decompose.c:200
+#: plug-ins/common/compose.c:258 plug-ins/common/compose.c:439
+#: plug-ins/common/compose.c:502 plug-ins/common/decompose.c:200
 #: plug-ins/common/decompose.c:302
 msgid "HSV"
 msgstr "HSV"
 
-#: plug-ins/common/compose.c:268 plug-ins/common/compose.c:443
-#: plug-ins/common/compose.c:506 plug-ins/common/decompose.c:205
+#: plug-ins/common/compose.c:265 plug-ins/common/compose.c:440
+#: plug-ins/common/compose.c:503 plug-ins/common/decompose.c:205
 #: plug-ins/common/decompose.c:303
 msgid "HSL"
 msgstr "HSL"
 
-#: plug-ins/common/compose.c:275 plug-ins/common/compose.c:444
-#: plug-ins/common/compose.c:507 plug-ins/common/decompose.c:210
+#: plug-ins/common/compose.c:272 plug-ins/common/compose.c:441
+#: plug-ins/common/compose.c:504 plug-ins/common/decompose.c:210
 #: plug-ins/common/decompose.c:304 plug-ins/common/file-jp2-load.c:255
 msgid "CMYK"
 msgstr "CMYK"
 
-#: plug-ins/common/compose.c:283 plug-ins/common/compose.c:445
-#: plug-ins/common/compose.c:508 plug-ins/common/decompose.c:216
+#: plug-ins/common/compose.c:280 plug-ins/common/compose.c:442
+#: plug-ins/common/compose.c:505 plug-ins/common/decompose.c:216
 #: plug-ins/common/decompose.c:305
 msgid "LAB"
 msgstr "LAB"
 
-#: plug-ins/common/compose.c:290 plug-ins/common/compose.c:446
-#: plug-ins/common/compose.c:509 plug-ins/common/decompose.c:218
+#: plug-ins/common/compose.c:287 plug-ins/common/compose.c:443
+#: plug-ins/common/compose.c:506 plug-ins/common/decompose.c:218
 #: plug-ins/common/decompose.c:306
 msgid "LCH"
 msgstr "LCH"
 
-#: plug-ins/common/compose.c:297
+#: plug-ins/common/compose.c:294
 msgid "YCbCr_ITU_R470"
 msgstr "YCbCr_ITU_R470"
 
-#: plug-ins/common/compose.c:304
+#: plug-ins/common/compose.c:301
 msgid "YCbCr_ITU_R709"
 msgstr "YCbCr_ITU_R709"
 
-#: plug-ins/common/compose.c:311
+#: plug-ins/common/compose.c:308
 msgid "YCbCr_ITU_R470_256"
 msgstr "YCbCr_ITU_R470_256"
 
-#: plug-ins/common/compose.c:318
+#: plug-ins/common/compose.c:315
 msgid "YCbCr_ITU_R709_256"
 msgstr "YCbCr_ITU_R709_256"
 
 # Wavelet, letterlijk: golfjes
 # Maar wavelet-ontleding is een begrip, dus laat ik het onvertaald.
 # pm
-#: plug-ins/common/compose.c:380
+#: plug-ins/common/compose.c:377
 msgid "What to compose: "
 msgstr "Wat samen te stellen: "
 
-#: plug-ins/common/compose.c:405
+#: plug-ins/common/compose.c:402
 msgid "C_ompose..."
 msgstr "_Samenstellen..."
 
-#: plug-ins/common/compose.c:409
+#: plug-ins/common/compose.c:406
 msgid "Create an image using multiple gray images as color channels"
 msgstr ""
 "Een afbeelding aanmaken uit verschillende grijswaardenafbeeldingen als "
 "kleurkanalen"
 
-#: plug-ins/common/compose.c:411
+#: plug-ins/common/compose.c:408
 msgid "This function creates a new image from multiple gray images"
 msgstr ""
 "Deze functie maakt een afbeelding door verschillende "
 "grijswaardenafbeeldingen te gebruiken als kleurkanalen"
 
-#: plug-ins/common/compose.c:420
+#: plug-ins/common/compose.c:417
 msgid "Image 2"
 msgstr "Afbeelding 2"
 
-#: plug-ins/common/compose.c:421
+#: plug-ins/common/compose.c:418
 msgid "Second input image"
 msgstr "Tweede bron afbeelding"
 
-#: plug-ins/common/compose.c:426
+#: plug-ins/common/compose.c:423
 msgid "Image 3"
 msgstr "Afbeelding 3"
 
-#: plug-ins/common/compose.c:427
+#: plug-ins/common/compose.c:424
 msgid "Third input image"
 msgstr "Derde bron afbeelding"
 
-#: plug-ins/common/compose.c:432
+#: plug-ins/common/compose.c:429
 msgid "Image 4"
 msgstr "Afbeelding 4"
 
-#: plug-ins/common/compose.c:433
+#: plug-ins/common/compose.c:430
 msgid "Fourth input image"
 msgstr "Vierde bron afbeelding"
 
-#: plug-ins/common/compose.c:438 plug-ins/common/compose.c:501
+#: plug-ins/common/compose.c:435 plug-ins/common/compose.c:498
 #: plug-ins/common/decompose.c:297
 msgid "Color _model"
 msgstr "Kleur_model"
 
-#: plug-ins/common/compose.c:447 plug-ins/common/compose.c:510
+#: plug-ins/common/compose.c:444 plug-ins/common/compose.c:507
 #: plug-ins/common/decompose.c:307
 msgid "YCbCr ITU R470"
 msgstr "YCbCr ITU R470"
 
-#: plug-ins/common/compose.c:448 plug-ins/common/compose.c:511
+#: plug-ins/common/compose.c:445 plug-ins/common/compose.c:508
 #: plug-ins/common/decompose.c:308
 msgid "YCbCr ITU R709"
 msgstr "YCbCr ITU R709"
 
-#: plug-ins/common/compose.c:449 plug-ins/common/compose.c:512
+#: plug-ins/common/compose.c:446 plug-ins/common/compose.c:509
 #: plug-ins/common/decompose.c:309
 msgid "YCbCr ITU R470 256"
 msgstr "YCbCr ITU R470 256"
 
-#: plug-ins/common/compose.c:450 plug-ins/common/compose.c:513
+#: plug-ins/common/compose.c:447 plug-ins/common/compose.c:510
 #: plug-ins/common/decompose.c:310
 msgid "YCbCr ITU R709 256"
 msgstr "YCbCr ITU R709 256"
 
-#: plug-ins/common/compose.c:456 plug-ins/common/compose.c:519
+#: plug-ins/common/compose.c:453 plug-ins/common/compose.c:516
 #: plug-ins/common/smooth-palette.c:158
 msgid "New image"
 msgstr "Nieuwe afbeelding"
 
-#: plug-ins/common/compose.c:457 plug-ins/common/compose.c:520
+#: plug-ins/common/compose.c:454 plug-ins/common/compose.c:517
 #: plug-ins/common/smooth-palette.c:159
 msgid "Output image"
 msgstr "Nieuwe afbeelding"
 
-#: plug-ins/common/compose.c:472
+#: plug-ins/common/compose.c:469
 msgid "Compose an image from multiple drawables of gray images"
 msgstr "Een afbeelding samenstellen uit verschillende grijswaardenafbeeldingen"
 
-#: plug-ins/common/compose.c:474
+#: plug-ins/common/compose.c:471
 msgid ""
 "This function creates a new image from multiple drawables of gray images"
 msgstr ""
 "Deze functie maakt een afbeelding door verschillende "
 "grijswaardenafbeeldingen te gebruiken als kleurkanalen"
 
-#: plug-ins/common/compose.c:483
+#: plug-ins/common/compose.c:480
 msgid "Drawable 2"
 msgstr "Tekening 2"
 
-#: plug-ins/common/compose.c:484
+#: plug-ins/common/compose.c:481
 msgid "Second input drawable"
 msgstr "Tweede gebruikte tekening"
 
-#: plug-ins/common/compose.c:489
+#: plug-ins/common/compose.c:486
 msgid "Drawable 3"
 msgstr "Tekening 3"
 
-#: plug-ins/common/compose.c:490
+#: plug-ins/common/compose.c:487
 msgid "Third input drawable"
 msgstr "Derde gebruikte tekening"
 
-#: plug-ins/common/compose.c:495
+#: plug-ins/common/compose.c:492
 msgid "Drawable 4"
 msgstr "Tekening 4"
 
-#: plug-ins/common/compose.c:496
+#: plug-ins/common/compose.c:493
 msgid "Fourth input drawable"
 msgstr "Vierde gebruikte tekening"
 
-#: plug-ins/common/compose.c:536
+#: plug-ins/common/compose.c:533
 msgid "R_ecompose"
 msgstr "O_pnieuw samenstellen"
 
-#: plug-ins/common/compose.c:540
+#: plug-ins/common/compose.c:537
 msgid "Recompose an image that was previously decomposed"
 msgstr "Een afbeelding opnieuw samenstellen die eerder ontleed was"
 
-#: plug-ins/common/compose.c:542
+#: plug-ins/common/compose.c:539
 msgid ""
 "This function recombines the grayscale layers produced by Decompose into a "
 "single RGB or RGBA layer, and replaces the originally decomposed layer with "
@@ -1722,7 +1700,7 @@ msgstr ""
 "opnieuw in een enkele RGB- of RGBA-laag, en vervangt de oorspronkelijk "
 "ontlede laag door het resultaat."
 
-#: plug-ins/common/compose.c:605
+#: plug-ins/common/compose.c:602
 msgid ""
 "You can only run 'Recompose' if the active image was originally produced by "
 "'Decompose'."
@@ -1730,68 +1708,68 @@ msgstr ""
 "U kunt 'Opnieuw samenstellen' enkel uitvoeren als de huidige afbeelding "
 "oorspronkelijk aangemaakt is met 'Ontleden'."
 
-#: plug-ins/common/compose.c:636
+#: plug-ins/common/compose.c:633
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
 msgstr ""
 "Fout bij het doorzoeken van de 'decompose-data'-parasiet: er zijn te weinig "
 "lagen gevonden"
 
-#: plug-ins/common/compose.c:651
+#: plug-ins/common/compose.c:648
 #, c-format
 msgid "Cannot recompose: Specified source layer ID %d not found"
 msgstr ""
 "Opnieuw samenstellen mislukt, de opgegeven bronlaag-ID %d niet gevonden"
 
-#: plug-ins/common/compose.c:671
+#: plug-ins/common/compose.c:668
 #, c-format
 msgid "Cannot recompose: Specified layer #%d ID %d not found"
 msgstr ""
 "Opnieuw samenstellen mislukt, de opgegeven laag #%d ID %d niet gevonden"
 
 # What is the Dutch translation of the term 'Compose'?
-#: plug-ins/common/compose.c:700
+#: plug-ins/common/compose.c:697
 #, c-format
 msgid "Could not get layers for image %d"
 msgstr "Kon geen lagen krijgen voor afbeelding %d"
 
-#: plug-ins/common/compose.c:777
+#: plug-ins/common/compose.c:770
 msgid "Composing"
 msgstr "Afbeelding wordt samengesteld"
 
-#: plug-ins/common/compose.c:1057 plug-ins/common/compose.c:1457
+#: plug-ins/common/compose.c:1024 plug-ins/common/compose.c:1424
 msgid "At least one image is needed to compose"
 msgstr "Er is minstens één afbeelding nodig om samen te stellen"
 
 # What is the Dutch translation of the term 'Compose'?
 # What is the Dutch translation of the term 'drawable'?
-#: plug-ins/common/compose.c:1078
+#: plug-ins/common/compose.c:1045
 msgid "Drawables have different size"
 msgstr "Tekengebieden hebben verschillende afmetingen"
 
 # What is the Dutch translation of the term 'Compose'?
-#: plug-ins/common/compose.c:1106
+#: plug-ins/common/compose.c:1073
 msgid "Images have different size"
 msgstr "Afbeeldingen hebben verschillende afmetingen"
 
 # What is the Dutch translation of the term 'Compose'?
-#: plug-ins/common/compose.c:1124
+#: plug-ins/common/compose.c:1091
 msgid "Error in getting layer IDs"
 msgstr "Fout tijdens verkrijgen laag-id's"
 
-#: plug-ins/common/compose.c:1257
+#: plug-ins/common/compose.c:1224
 msgid "Compose"
 msgstr "Samenstellen"
 
-#: plug-ins/common/compose.c:1272
+#: plug-ins/common/compose.c:1239
 msgid "Compose Channels"
 msgstr "Kanalen samenstellen"
 
 #. Channel representation grid
-#: plug-ins/common/compose.c:1287
+#: plug-ins/common/compose.c:1254
 msgid "Channel Representations"
 msgstr "Kanaalrepresentaties"
 
-#: plug-ins/common/compose.c:1347
+#: plug-ins/common/compose.c:1314
 msgid "Mask value"
 msgstr "Maskerwaarde"
 
@@ -1840,11 +1818,8 @@ msgid "Le_vel"
 msgstr "Ni_vo"
 
 #: plug-ins/common/contrast-retinex.c:211
-#, fuzzy
-#| msgid ""
-#| "Retinex distribution through scales { Uniform (0), Low (1), High (2) }"
 msgid "Retinex distribution through scales"
-msgstr "Retinexverdeling via schalen { Uniform (0), Laag (1), Hoog (2) }"
+msgstr "Retinexverdeling via schalen"
 
 #: plug-ins/common/contrast-retinex.c:212
 msgid "Uniform"
@@ -1965,31 +1940,26 @@ msgid "Copy the drawable and bend the copy"
 msgstr "De tekening kopiëren en de kopie buigen"
 
 #: plug-ins/common/curve-bend.c:450
-#, fuzzy
-#| msgid "Curve Type"
 msgid "Cur_ve Type"
-msgstr "Type curve"
+msgstr "Type cur_ve"
 
 #: plug-ins/common/curve-bend.c:451
 msgid ""
 "Whether to use Smooth (17 points) or Freehand (256 points) to draw the curve"
 msgstr ""
+"Keuze om een gladde (17 punten) of vrije hand (256 punten) curve te gebruiken"
 
 #: plug-ins/common/curve-bend.c:453
 msgid "Smooth"
 msgstr "Glad"
 
 #: plug-ins/common/curve-bend.c:454
-#, fuzzy
-#| msgid "Free"
 msgid "Freehand"
-msgstr "Vrij"
+msgstr "Vrije hand"
 
 #: plug-ins/common/curve-bend.c:460
-#, fuzzy
-#| msgid "Curve for Border"
 msgid "Curve for _Border"
-msgstr "Curve voor rand"
+msgstr "Curve voor _Rand"
 
 #: plug-ins/common/curve-bend.c:461
 msgid "Choose the active border line to edit"
@@ -2325,28 +2295,23 @@ msgid "Black"
 msgstr "Zwart"
 
 #: plug-ins/common/decompose.c:220
-#, fuzzy
-#| msgid "YCbCr"
 msgid "YCbCr470"
-msgstr "YCbCr"
+msgstr "YCbCr470"
 
 #: plug-ins/common/decompose.c:221
-#, fuzzy
 #| msgid "YCbCr"
 msgid "YCbCr470f"
-msgstr "YCbCr"
+msgstr "YCbCr470f"
 
 #: plug-ins/common/decompose.c:223
-#, fuzzy
 #| msgid "YCbCr"
 msgid "YCbCr709"
-msgstr "YCbCr"
+msgstr "YCbCr709"
 
 #: plug-ins/common/decompose.c:224
-#, fuzzy
 #| msgid "YCbCr"
 msgid "YCbCr709f"
-msgstr "YCbCr"
+msgstr "YCbCr709f"
 
 # Wavelet, letterlijk: golfjes
 # Maar wavelet-ontleding is een begrip, dus laat ik het onvertaald.
@@ -2368,10 +2333,8 @@ msgstr ""
 # Maar wavelet-ontleding is een begrip, dus laat ik het onvertaald.
 # pm
 #: plug-ins/common/decompose.c:298
-#, fuzzy
-#| msgid "What to decompose: "
 msgid "The model to decompose to"
-msgstr "Wat te ontleden: "
+msgstr "Waar naartoe ontleden"
 
 #: plug-ins/common/decompose.c:316
 msgid "_Decompose to layers"
@@ -2386,19 +2349,14 @@ msgid "_Foreground as registration color"
 msgstr "_Voorgrondkleur als registratiekleur"
 
 #: plug-ins/common/decompose.c:323
-#, fuzzy
-#| msgid ""
-#| "Pixels in the foreground color will appear black in all output images.  "
-#| "This can be used for things like crop marks that have to show up on all "
-#| "channels."
 msgid ""
 "When enabled, pixels in the foreground color will appear black in all output "
 "images. This can be used for things like crop marks that have to show up on "
 "all channels."
 msgstr ""
-"Beeldpunten in de voorgrondkleur zullen als zwart weergegeven worden in alle "
-"uitvoerafbeeldingen. Dit kan gebruikt worden voor zaken zoals snijtekens die "
-"op alle kanalen moeten verschijnen."
+"Wanneer dit ingeschakeld is zullen beeldpunten in de voorgrondkleur als "
+"zwart weergegeven worden in alle uitvoerafbeeldingen. Dit kan gebruikt "
+"worden voor zaken zoals snijtekens die op alle kanalen moeten verschijnen."
 
 #: plug-ins/common/decompose.c:400
 msgid "Decomposing"
@@ -2529,10 +2487,8 @@ msgid "_Filter Type"
 msgstr "_Filter Type"
 
 #: plug-ins/common/despeckle.c:193
-#, fuzzy
-#| msgid "_Filter Type"
 msgid "Filter type"
-msgstr "_Filter Type"
+msgstr "Filter type"
 
 # What is a radian?
 #: plug-ins/common/despeckle.c:194
@@ -2647,11 +2603,9 @@ msgstr "Pal_etbestand"
 msgid "KCF file to load palette from"
 msgstr "KCF bestand om palet uit te selecteren"
 
-#: plug-ins/common/file-cel.c:197
-#, fuzzy
-#| msgid "KCF file to load palette from"
+#: plug-ins/common/file-cel.c:195
 msgid "File to save palette to"
-msgstr "KCF bestand om palet uit te selecteren"
+msgstr "Bestand om palet in op te slaan"
 
 #. Let user choose KCF palette (cancel ignores)
 #: plug-ins/common/file-cel.c:236
@@ -2663,8 +2617,8 @@ msgstr "KISS-palet inladen"
 msgid "This KISS CEL image requires a palette file."
 msgstr "Voor deze KISS CEL-afbeelding is een paletbestand vereist."
 
-#: plug-ins/common/file-cel.c:342 plug-ins/common/file-cel.c:394
-#: plug-ins/common/file-cel.c:415
+#: plug-ins/common/file-cel.c:338 plug-ins/common/file-cel.c:390
+#: plug-ins/common/file-cel.c:411
 #, c-format
 msgid "EOF or error while reading image header"
 msgstr "EOF of fout tijdens lezen afbeeldings-header"
@@ -2755,13 +2709,13 @@ msgstr "‘%s’ is geen KCF paletbestand"
 msgid "'%s': illegal bpp value in palette: %hhu"
 msgstr "‘%s’: ongeldige bpp-waarde in palet: %hhu"
 
-#: plug-ins/common/file-cel.c:693
+#: plug-ins/common/file-cel.c:689
 #, c-format
 msgid "'%s': illegal number of colors: %u"
 msgstr "‘%s’: ongeldig aantal kleuren: %u"
 
-#: plug-ins/common/file-cel.c:709 plug-ins/common/file-cel.c:737
-#: plug-ins/common/file-cel.c:768
+#: plug-ins/common/file-cel.c:705 plug-ins/common/file-cel.c:733
+#: plug-ins/common/file-cel.c:764
 #, c-format
 msgid "'%s': EOF or error while reading palette data"
 msgstr "‘%s’: EOF of fout tijdens lezen paletdata"
@@ -2770,18 +2724,18 @@ msgstr "‘%s’: EOF of fout tijdens lezen paletdata"
 #.
 #. * Open the file for writing...
 #.
-#: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:347
+#: plug-ins/common/file-cel.c:821 plug-ins/common/file-farbfeld.c:347
 #: plug-ins/common/file-gif-export.c:939 plug-ins/common/file-html-table.c:349
 #: plug-ins/common/file-jpegxl.c:1396 plug-ins/common/file-pcx.c:1083
 #: plug-ins/common/file-pix.c:636 plug-ins/common/file-png.c:1483
-#: plug-ins/common/file-pnm.c:1623 plug-ins/common/file-ps.c:1369
+#: plug-ins/common/file-pnm.c:1607 plug-ins/common/file-ps.c:1369
 #: plug-ins/common/file-qoi.c:350 plug-ins/common/file-sunras.c:605
 #: plug-ins/common/file-tga.c:1217 plug-ins/common/file-xbm.c:1026
 #: plug-ins/common/file-xpm.c:682 plug-ins/common/file-xwd.c:693
 #: plug-ins/file-bmp/bmp-export.c:328 plug-ins/file-fits/fits.c:646
-#: plug-ins/file-fli/fli-gimp.c:766 plug-ins/file-icns/file-icns-export.c:621
-#: plug-ins/file-ico/ico-export.c:1347 plug-ins/file-ico/ico-export.c:1561
-#: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2160
+#: plug-ins/file-fli/fli-gimp.c:765 plug-ins/file-icns/file-icns-export.c:621
+#: plug-ins/file-ico/ico-export.c:1355 plug-ins/file-ico/ico-export.c:1569
+#: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2166
 #: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1077
 #, c-format
 msgid "Exporting '%s'"
@@ -2917,10 +2871,8 @@ msgid "DICOM image"
 msgstr "DICOM-afbeelding"
 
 #: plug-ins/common/file-dicom.c:178
-#, fuzzy
-#| msgid "Load file of the FITS file format"
 msgid "Loads files of the dicom file format"
-msgstr "Inladen van bestanden in de FITS-bestandsindeling"
+msgstr "Inladen van bestanden in de dicom-bestandsindeling"
 
 #: plug-ins/common/file-dicom.c:179
 msgid ""
@@ -2928,16 +2880,17 @@ msgid ""
 "medical.nema.org/. The plug-in currently only supports reading images with "
 "uncompressed pixel sections."
 msgstr ""
+"Inladen van een bestand in de DICOM-bestandsindeling. Deze standaard is "
+"vastgelegd in http://medical.nema.org/. De plug-in ondersteunt alleen nog "
+"het lezen van afbeeldingen met ongecomprimeerde pixel secties."
 
 #: plug-ins/common/file-dicom.c:207
 msgid "Digital Imaging and Communications in Medicine image"
 msgstr "Digital Imaging and Communications in Medicine-afbeelding"
 
 #: plug-ins/common/file-dicom.c:211
-#, fuzzy
-#| msgid "Load file in the IFF file format"
 msgid "Save file in the DICOM file format"
-msgstr "Inladen van bestand in de IFF-bestandsindeling"
+msgstr "Een bestand opslaan in de DICOM-bestandsindeling"
 
 #: plug-ins/common/file-dicom.c:212
 msgid ""
@@ -2946,6 +2899,11 @@ msgid ""
 "10 of the standard. The files are saved uncompressed and the compulsory "
 "DICOM tags are filled with default dummy values."
 msgstr ""
+"Een bestand opslaan in de medische standaard DICOM-bestandsindeling. Deze "
+"standaard is vastgelegd in http://medical.nema.org/. De bestandsindeling is "
+"vastgelegd in sectie 10 van de standaard. De bestanden worden "
+"ongecomprimeerd opgeslagen en de verplichte DICOM tags worden gevuld met "
+"standaard dummy-waarden."
 
 #: plug-ins/common/file-dicom.c:386
 #, c-format
@@ -3116,14 +3074,8 @@ msgid "Frame disposal _when unspecified"
 msgstr "_Frames wissen indien niet apart opgegeven"
 
 #: plug-ins/common/file-gif-export.c:219
-#, fuzzy
-#| msgid ""
-#| "(animated gif) Default disposal type (0=`don't care`, 1=combine, "
-#| "2=replace)"
 msgid "(animated gif) Default disposal type"
-msgstr ""
-"(gif animatie) default overgangsmethode (0=maakt niet uit, 1=combineren, "
-"2=vervangen)"
+msgstr "(gif animatie) default overgangsmethode"
 
 #: plug-ins/common/file-gif-export.c:220
 msgid "I don't care"
@@ -3189,6 +3141,8 @@ msgid ""
 "Unable to export '%s'.  Please convert your image to 8 bit integer "
 "precision, as the GIF file format does not support higher precisions."
 msgstr ""
+"Kon '%s' niet exporteren. Om de afbeelding in GIF formaat te kunnen opslaan "
+"moet u hem converteren naar maximaal 8-bits integer nauwkeurigheid."
 
 #: plug-ins/common/file-gif-export.c:816
 msgid ""
@@ -3236,6 +3190,9 @@ msgid ""
 "The GIF format only supports 8 bit integer precision.\n"
 "Your image will be converted on export, which may change the pixel values."
 msgstr ""
+"Het GIF formaat ondersteunt alleen 8-bit integer nauwkeurigheid.\n"
+"Uw afbeelding zal voor export worden geconverteerd, wat de pixelwaarden kan "
+"veranderen."
 
 #: plug-ins/common/file-gif-export.c:1347 plug-ins/common/file-mng.c:1645
 msgid "milliseconds"
@@ -3418,10 +3375,8 @@ msgid "GIMP brush (animated)"
 msgstr "GIMP-penseel (bewegend)"
 
 #: plug-ins/common/file-gih.c:159
-#, fuzzy
-#| msgid "Exports files in the GIMP brush file format"
 msgid "Exports images in GIMP Brush Pipe format"
-msgstr "Bestand exporteren in de GIMP penseel-bestandsindeling"
+msgstr "Bestand exporteren in de GIMP-penseelpijp bestandsindeling"
 
 #: plug-ins/common/file-gih.c:161
 msgid ""
@@ -3430,6 +3385,10 @@ msgid ""
 "masks. The image can be multi-layered, and additionally the layers can be "
 "divided into a rectangular array of brushes."
 msgstr ""
+"Deze plug-in exporteert een afbeelding in het GIMP-penseelpijpformaat. Voor "
+"een gekleurde penseelpijp worden RGBA-lagen gebruikt, anders moeten de lagen "
+"uit grijswaarden bestaan. De afbeelding kan meerdere lagen bevatten en "
+"bovendien kunnen de lagen worden verdeeld in een rechthoekige reeks penselen."
 
 #: plug-ins/common/file-gih.c:178
 msgid "Brush Pipe"
@@ -3476,10 +3435,8 @@ msgid "Ranks of the dimensions"
 msgstr "Volgorde van de beeldafmetingen"
 
 #: plug-ins/common/file-gih.c:227 plug-ins/common/file-gih.c:228
-#, fuzzy
-#| msgid "Selection d_elay"
 msgid "Selection modes"
-msgstr "V_ertraging selectie"
+msgstr "Selectie modus"
 
 #: plug-ins/common/file-gih.c:234
 msgid "Display as"
@@ -3521,7 +3478,7 @@ msgstr "C-broncode header"
 
 #: plug-ins/common/file-header.c:120
 msgid "Saves files as C unsigned character array"
-msgstr ""
+msgstr "Slaat bestanden op als een C unsigned character array"
 
 #: plug-ins/common/file-heif.c:195 plug-ins/common/file-heif.c:235
 msgid "HEIF/HEIC"
@@ -3920,20 +3877,16 @@ msgid "Color s_pace"
 msgstr "_Kleurruimte"
 
 #: plug-ins/common/file-jp2-load.c:250
-#, fuzzy
-#| msgid "Color s_pace"
 msgid "Color space"
-msgstr "_Kleurruimte"
+msgstr "Kleurruimte"
 
 #: plug-ins/common/file-jp2-load.c:251
 msgid "sRGB"
 msgstr "sRGB"
 
 #: plug-ins/common/file-jp2-load.c:252
-#, fuzzy
-#| msgid "Grayscale 2-bit"
 msgid "Grayscale"
-msgstr "2-bit Grijstinten"
+msgstr "Grijstinten"
 
 #: plug-ins/common/file-jp2-load.c:253
 msgid "YCbCr"
@@ -4202,10 +4155,8 @@ msgid "Default chunks t_ype"
 msgstr "Standaard blokt_ype"
 
 #: plug-ins/common/file-mng.c:324
-#, fuzzy
-#| msgid "Default chunks t_ype"
 msgid "(ANIMATED MNG) Default chunks type"
-msgstr "Standaard blokt_ype"
+msgstr "(Bewegende MNG) Standaard bloktype"
 
 #: plug-ins/common/file-mng.c:325
 msgid "PNG + delta PNG"
@@ -4228,12 +4179,8 @@ msgid "De_fault frame disposal"
 msgstr "Standaard_overgang tussen frames"
 
 #: plug-ins/common/file-mng.c:335
-#, fuzzy
-#| msgid "(ANIMATED MNG) Default dispose type (0 = combine; 1 = replace)"
 msgid "(ANIMATED MNG) Default dispose type"
-msgstr ""
-"(Bewegende MNG) standaardmanier van overgang naar volgende frame (0 = "
-"combineren; 1 = vervangen)"
+msgstr "(Bewegende MNG) standaardmanier van overgang naar volgende frame"
 
 #: plug-ins/common/file-mng.c:336
 msgid "Combine"
@@ -4341,16 +4288,16 @@ msgid "Loads files in Zsoft PCX file format"
 msgstr "Inladen van bestanden in de Zsoft PCX-bestandsindeling"
 
 #: plug-ins/common/file-pcx.c:223 plug-ins/common/file-pcx.c:257
-#, fuzzy
-#| msgid "Palette Options"
 msgid "_Palette Options"
-msgstr "Paletopties"
+msgstr "_Paletopties"
 
 #: plug-ins/common/file-pcx.c:224 plug-ins/common/file-pcx.c:258
 msgid ""
 "Whether to use the built-in palette or a black and white palette for 1 bit "
 "images."
 msgstr ""
+"Of het ingebouwde palet of een zwart-witpalet gebruiken voor 1-"
+"bitsafbeeldingen."
 
 #: plug-ins/common/file-pcx.c:226 plug-ins/common/file-pcx.c:260
 msgid "Use PCX image's built-in palette"
@@ -4369,16 +4316,12 @@ msgid "Loads files in Zsoft DCX file format"
 msgstr "Inladen van bestanden in de Zsoft DCX-bestandsindeling"
 
 #: plug-ins/common/file-pcx.c:284
-#, fuzzy
-#| msgid "Loads files in Zsoft PCX file format"
 msgid "Exports files in ZSoft PCX file format"
-msgstr "Inladen van bestanden in de Zsoft PCX-bestandsindeling"
+msgstr "Exporteren van bestanden in de Zsoft PCX-bestandsindeling"
 
 #: plug-ins/common/file-pcx.c:502
-#, fuzzy
-#| msgid "Could not load PCX image"
 msgid "Could not load PCX image: "
-msgstr "Kan de PCX afbeelding niet openen"
+msgstr "Kan de PCX afbeelding niet openen: "
 
 #: plug-ins/common/file-pcx.c:549
 #, c-format
@@ -4386,10 +4329,8 @@ msgid "DCX image offset exceeds the file size"
 msgstr "De DCX-beeldverschuiving overschrijdt de bestandsgrootte"
 
 #: plug-ins/common/file-pcx.c:560
-#, fuzzy
-#| msgid "Could not load DCX image"
 msgid "Could not load DCX image: "
-msgstr "Kan de DCX afbeelding niet openen"
+msgstr "Kan de DCX afbeelding niet openen: "
 
 #: plug-ins/common/file-pcx.c:582
 #, c-format
@@ -4484,10 +4425,8 @@ msgid "Portable Document Format"
 msgstr "Portable Document Format"
 
 #: plug-ins/common/file-pdf-export.c:324 plug-ins/common/file-pdf-export.c:410
-#, fuzzy
-#| msgid "Saves files in DDS image format"
 msgid "Save files in PDF format"
-msgstr "Opslaan van bestanden in de DDS-indeling"
+msgstr "Opslaan van bestanden in de PDF-indeling"
 
 #: plug-ins/common/file-pdf-export.c:325 plug-ins/common/file-pdf-export.c:411
 msgid ""
@@ -4495,6 +4434,9 @@ msgid ""
 "easily processed by a variety of different platforms, and is a distant "
 "cousin of PostScript."
 msgstr ""
+"Opslaan van bestanden in Adobe's Portable Document Format. PDF is ontworpen "
+"om eenvoudig te kunnen worden gebruikt op allerlei soorten computers, en is "
+"een soort verwant van PostScript."
 
 #: plug-ins/common/file-pdf-export.c:337 plug-ins/common/file-pdf-load.c:214
 msgid "PDF"
@@ -4506,23 +4448,19 @@ msgstr "_Bitmaps naar vectorafbeeldingen converteren waar mogelijk"
 
 #: plug-ins/common/file-pdf-export.c:348 plug-ins/common/file-pdf-export.c:438
 msgid "Convert bitmaps to vector graphics where possible"
-msgstr "B_itmaps naar vectorafbeeldingen converteren waar mogelijk"
+msgstr "Bitmaps naar vectorafbeeldingen converteren waar mogelijk"
 
 #: plug-ins/common/file-pdf-export.c:353 plug-ins/common/file-pdf-export.c:443
-#, fuzzy
-#| msgid "Omit hidden layers and layers with zero opacity"
 msgid "O_mit hidden layers and layers with zero opacity"
-msgstr "Laat _verborgen lagen en lagen met volledige transparantie weg"
+msgstr "Laat verb_orgen lagen en lagen met volledige transparantie weg"
 
 #: plug-ins/common/file-pdf-export.c:354 plug-ins/common/file-pdf-export.c:444
 msgid "Non-visible layers will not be exported"
 msgstr "Onzichtbare lagen worden niet geëxporteerd"
 
 #: plug-ins/common/file-pdf-export.c:359 plug-ins/common/file-pdf-export.c:449
-#, fuzzy
-#| msgid "Apply layer masks"
 msgid "_Apply layer masks"
-msgstr "_Laagmaskers toepassen"
+msgstr "L_aagmaskers toepassen"
 
 #: plug-ins/common/file-pdf-export.c:360 plug-ins/common/file-pdf-export.c:450
 msgid ""
@@ -4533,39 +4471,31 @@ msgstr ""
 "niet wijzigen, alleen de PDF-structuur)"
 
 #: plug-ins/common/file-pdf-export.c:366
-#, fuzzy
-#| msgid "Layers as pages"
 msgid "La_yers as pages"
-msgstr "Lagen als pagina's"
+msgstr "_Lagen als pagina's"
 
 #: plug-ins/common/file-pdf-export.c:367
 msgid "Layers as pages (bottom layers first)."
 msgstr "Lagen als pagina's (onderste lagen eerst)."
 
 #: plug-ins/common/file-pdf-export.c:372
-#, fuzzy
-#| msgid "Reverse order"
 msgid "Re_verse order"
-msgstr "Volgorde omkeren"
+msgstr "_Volgorde omkeren"
 
 #: plug-ins/common/file-pdf-export.c:373
 msgid "Reverse the pages order (top layers first)."
 msgstr "Paginavolgorde omkeren (bovenste lagen eerst)."
 
 #: plug-ins/common/file-pdf-export.c:378
-#, fuzzy
-#| msgid "Root layers only"
 msgid "Roo_t layers only"
-msgstr "Alleen hoofdlagen"
+msgstr "Alleen _hoofdlagen"
 
 #: plug-ins/common/file-pdf-export.c:379
 msgid "Only the root layers are considered pages"
 msgstr "Alleen de hoofdlagen worden als pagina beschouwd"
 
-# What is the Dutch translation of the term 'Compose'?
+# What is the Dutch translation of the term 'Compose'? Dat is Samenstellen
 #: plug-ins/common/file-pdf-export.c:384
-#, fuzzy
-#| msgid "Convert text layers to image"
 msgid "Convert te_xt layers to image"
 msgstr "Tekstlagen naar afbeelding _converteren"
 
@@ -4588,16 +4518,12 @@ msgid "_Create multipage PDF..."
 msgstr "Aanmaken PDF met _meerdere pagina's…"
 
 #: plug-ins/common/file-pdf-export.c:463
-#, fuzzy
-#| msgid "Save to:"
 msgid "Save to"
-msgstr "Bewaren naar:"
+msgstr "Opslaan naar"
 
 #: plug-ins/common/file-pdf-export.c:464
-#, fuzzy
-#| msgid "The name of the file to save the image in"
 msgid "The URI of the file to save to"
-msgstr "De bestandsnaam voor de afbeelding"
+msgstr "De URI voor de afbeelding om op te slaan"
 
 #: plug-ins/common/file-pdf-export.c:691
 #, c-format
@@ -4625,10 +4551,8 @@ msgstr ""
 "niet goed."
 
 #: plug-ins/common/file-pdf-export.c:1050
-#, fuzzy
-#| msgid "Export Image as PSD"
 msgid "Export Image as Multi-Page PDF"
-msgstr "Afbeelding als PSD exporteren"
+msgstr "Afbeelding exporteren als PDF van meerdere pagina's"
 
 #: plug-ins/common/file-pdf-export.c:1051
 #: plug-ins/metadata/metadata-editor.c:5602
@@ -4766,16 +4690,16 @@ msgid "Alias Pix image"
 msgstr "Alias Pix-afbeelding"
 
 #: plug-ins/common/file-pix.c:176 plug-ins/common/file-pix.c:178
-#, fuzzy
-#| msgid "Loads files in Zsoft PCX file format"
 msgid "Loads files of the Alias|Wavefront or Esm Software Pix file format"
-msgstr "Inladen van bestanden in de Zsoft PCX-bestandsindeling"
+msgstr ""
+"Inladen van bestanden in het Alias|Wavefront of Esm Software Pix-"
+"bestandsformaat"
 
 #: plug-ins/common/file-pix.c:207 plug-ins/common/file-pix.c:209
-#, fuzzy
-#| msgid "Exports files in the PAM file format"
 msgid "Export file in the Alias|Wavefront pix/matte file format"
-msgstr "Exporteren van bestanden in de PAM-bestandsindeling"
+msgstr ""
+"Exporteren van bestanden in het Alias|Wavefront of Esm Software Pix-"
+"bestandsformaat"
 
 #  Do not rely on librsvg setting GError on failure!
 #: plug-ins/common/file-pix.c:564
@@ -4977,129 +4901,125 @@ msgstr "Fout tijdens exporteren van '%s'. Kon geen PNG-header aanmaken."
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Fout tijdens exporteren van '%s'. Kon afbeelding niet exporteren."
 
-#: plug-ins/common/file-pnm.c:320
+#: plug-ins/common/file-pnm.c:319
 msgid "PNM Image"
 msgstr "PNM-afbeelding"
 
-#: plug-ins/common/file-pnm.c:323
+#: plug-ins/common/file-pnm.c:322
 msgid "Loads files in the PNM file format"
 msgstr "Inladen van bestanden in de PNM-bestandsindeling"
 
-#: plug-ins/common/file-pnm.c:324
+#: plug-ins/common/file-pnm.c:323
 msgid "This plug-in loads files in the various Netpbm portable file formats."
 msgstr ""
 "Deze plug-in laadt bestanden in de verschillende overdraagbare Netpbm-"
 "bestandsformaten."
 
-#: plug-ins/common/file-pnm.c:353
+#: plug-ins/common/file-pnm.c:352
 msgid "PNM image"
 msgstr "PNM-afbeelding"
 
-#: plug-ins/common/file-pnm.c:355
+#: plug-ins/common/file-pnm.c:354
 msgid "PNM"
 msgstr "PNM"
 
-#: plug-ins/common/file-pnm.c:358
+#: plug-ins/common/file-pnm.c:357
 msgid "Exports files in the PNM file format"
 msgstr "Exporteren van bestanden in de PNM-bestandsindeling"
 
-#: plug-ins/common/file-pnm.c:359
+#: plug-ins/common/file-pnm.c:358
 msgid "PNM export handles all image types without transparency."
 msgstr "PNM kan afbeeldingen zonder transparantie (alphakanaal) opslaan."
 
+#: plug-ins/common/file-pnm.c:380 plug-ins/common/file-pnm.c:423
+#: plug-ins/common/file-pnm.c:466 plug-ins/common/file-pnm.c:510
+msgid "_Data formatting"
+msgstr "_Gegevensopmaak"
+
 #: plug-ins/common/file-pnm.c:381 plug-ins/common/file-pnm.c:424
 #: plug-ins/common/file-pnm.c:467 plug-ins/common/file-pnm.c:511
-#, fuzzy
-#| msgid "Data formatting"
-msgid "_Data formatting"
-msgstr "Gegevensopmaak"
+msgid "Whether to export ASCII or raw output"
+msgstr "ASCII of ruwe gegevens exporteren"
 
 #: plug-ins/common/file-pnm.c:382 plug-ins/common/file-pnm.c:425
 #: plug-ins/common/file-pnm.c:468 plug-ins/common/file-pnm.c:512
-msgid "Whether to export ASCII or raw output"
-msgstr ""
+msgid "ASCII"
+msgstr "ASCII"
 
 #: plug-ins/common/file-pnm.c:383 plug-ins/common/file-pnm.c:426
 #: plug-ins/common/file-pnm.c:469 plug-ins/common/file-pnm.c:513
-#, fuzzy
-#| msgid "_ASCII"
-msgid "ASCII"
-msgstr "_ASCII"
-
-#: plug-ins/common/file-pnm.c:384 plug-ins/common/file-pnm.c:427
-#: plug-ins/common/file-pnm.c:470 plug-ins/common/file-pnm.c:514
 msgid "Raw"
-msgstr "Raw"
+msgstr "Ruwe beelddata"
 
-#: plug-ins/common/file-pnm.c:399
+#: plug-ins/common/file-pnm.c:398
 msgid "PBM"
 msgstr "PBM"
 
-#: plug-ins/common/file-pnm.c:400
+#: plug-ins/common/file-pnm.c:399
 msgid "PBM image"
 msgstr "PBM-afbeelding"
 
-#: plug-ins/common/file-pnm.c:403
+#: plug-ins/common/file-pnm.c:402
 msgid "Exports files in the PBM file format"
 msgstr "Exporteren van bestanden in de PBM-bestandsindeling"
 
-#: plug-ins/common/file-pnm.c:404
+#: plug-ins/common/file-pnm.c:403
 msgid "PBM exporting produces mono images without transparency."
 msgstr "PBM-export produceert monochroom afbeeldingen zonder transparantie."
 
-#: plug-ins/common/file-pnm.c:442
+#: plug-ins/common/file-pnm.c:441
 msgid "PGM image"
 msgstr "PGM-afbeelding"
 
-#: plug-ins/common/file-pnm.c:444
+#: plug-ins/common/file-pnm.c:443
 msgid "PGM"
 msgstr "PGM"
 
-#: plug-ins/common/file-pnm.c:446
+#: plug-ins/common/file-pnm.c:445
 msgid "Exports files in the PGM file format"
 msgstr "Exporteren van bestanden in de PGM-bestandsindeling"
 
-#: plug-ins/common/file-pnm.c:447
+#: plug-ins/common/file-pnm.c:446
 msgid "PGM exporting produces grayscale images without transparency."
 msgstr "PGM-export produceert grijswaardenafbeeldingen zonder transparantie."
 
-#: plug-ins/common/file-pnm.c:485
+#: plug-ins/common/file-pnm.c:484
 msgid "PPM image"
 msgstr "PPM-afbeelding"
 
-#: plug-ins/common/file-pnm.c:487
+#: plug-ins/common/file-pnm.c:486
 msgid "PPM"
 msgstr "PPM"
 
-#: plug-ins/common/file-pnm.c:489
+#: plug-ins/common/file-pnm.c:488
 msgid "Exports files in the PPM file format"
 msgstr "Exporteren van bestanden in de PPM-bestandsindeling"
 
-#: plug-ins/common/file-pnm.c:490
+#: plug-ins/common/file-pnm.c:489
 msgid "PPM export handles RGB images without transparency."
 msgstr "PPM kan RGB afbeeldingen zonder transparantie (alphakanaal) opslaan."
 
-#: plug-ins/common/file-pnm.c:529
+#: plug-ins/common/file-pnm.c:528
 msgid "PAM image"
 msgstr "PAM-afbeelding"
 
-#: plug-ins/common/file-pnm.c:532
+#: plug-ins/common/file-pnm.c:531
 msgid "Exports files in the PAM file format"
 msgstr "Exporteren van bestanden in de PAM-bestandsindeling"
 
-#: plug-ins/common/file-pnm.c:533
+#: plug-ins/common/file-pnm.c:532
 msgid "PAM export handles RGB images with or without transparency."
 msgstr "PAM kan RGB afbeeldingen met of zonder transparantie opslaan."
 
-#: plug-ins/common/file-pnm.c:565
+#: plug-ins/common/file-pnm.c:564
 msgid "PFM image"
 msgstr "PFM-afbeelding"
 
-#: plug-ins/common/file-pnm.c:568
+#: plug-ins/common/file-pnm.c:567
 msgid "Exports files in the PFM file format"
 msgstr "Exporteren van bestanden in de PFM-bestandsindeling"
 
-#: plug-ins/common/file-pnm.c:569
+#: plug-ins/common/file-pnm.c:568
 msgid "PFM export handles all images without transparency."
 msgstr "PFM kan RGB afbeeldingen zonder transparantie opslaan."
 
@@ -5133,43 +5053,43 @@ msgstr "Afbeeldingshoogte is groter dan GIMP aankan."
 
 # burk!
 # pm
-#: plug-ins/common/file-pnm.c:783
+#: plug-ins/common/file-pnm.c:780
 msgid "Bogus scale factor."
 msgstr "Schaalfactor fingeren."
 
-#: plug-ins/common/file-pnm.c:785
+#: plug-ins/common/file-pnm.c:782
 msgid "Unsupported scale factor."
 msgstr "Niet-ondersteunde schaalfactor."
 
-#: plug-ins/common/file-pnm.c:799
+#: plug-ins/common/file-pnm.c:796
 msgid "Unsupported maximum value."
 msgstr "Niet-ondersteunde maximumwaarde."
 
-#: plug-ins/common/file-pnm.c:928
+#: plug-ins/common/file-pnm.c:917
 msgid "PAM: Unsupported unofficial PNM variant."
 msgstr "PAM: niet-ondersteunde onofficiële PNM-variant."
 
-#: plug-ins/common/file-pnm.c:932
+#: plug-ins/common/file-pnm.c:921
 msgid "PAM: Premature end of file."
 msgstr "PAM: Voortijdig einde bestand."
 
-#: plug-ins/common/file-pnm.c:936
+#: plug-ins/common/file-pnm.c:925
 msgid "PAM: Invalid X resolution."
 msgstr "PAM: Ongeldige X-resolutie."
 
-#: plug-ins/common/file-pnm.c:938
+#: plug-ins/common/file-pnm.c:927
 msgid "PAM: Invalid Y resolution."
 msgstr "PAM: Ongeldige Y-resolutie."
 
-#: plug-ins/common/file-pnm.c:940
+#: plug-ins/common/file-pnm.c:929
 msgid "PAM: Invalid maximum value."
 msgstr "PAM: Ongeldige maximumwaarde."
 
-#: plug-ins/common/file-pnm.c:942
+#: plug-ins/common/file-pnm.c:931
 msgid "PAM: Invalid depth."
 msgstr "PAM: Ongeldige diepte."
 
-#: plug-ins/common/file-pnm.c:944
+#: plug-ins/common/file-pnm.c:933
 msgid "PAM: Unsupported tupltype."
 msgstr "PAM: Niet-ondersteund gegevenstype."
 
@@ -5178,10 +5098,8 @@ msgid "PostScript document"
 msgstr "PostScript-document"
 
 #: plug-ins/common/file-ps.c:365 plug-ins/common/file-ps.c:366
-#, fuzzy
-#| msgid "PostScript document"
 msgid "Load PostScript documents"
-msgstr "PostScript-document"
+msgstr "PostScript-documenten inladen"
 
 #: plug-ins/common/file-ps.c:370
 msgid "PostScript"
@@ -5192,10 +5110,8 @@ msgid "Encapsulated PostScript image"
 msgstr "Encapsulated PostScript-afbeelding"
 
 #: plug-ins/common/file-ps.c:384 plug-ins/common/file-ps.c:385
-#, fuzzy
-#| msgid "Encapsulated PostScript image"
 msgid "Load Encapsulated PostScript images"
-msgstr "Encapsulated PostScript-afbeelding"
+msgstr "Encapsulated PostScript-afbeelding inladen"
 
 #: plug-ins/common/file-ps.c:389 plug-ins/common/file-ps.c:490
 msgid "Encapsulated PostScript"
@@ -5224,16 +5140,12 @@ msgid "Pages to load (e.g.: 1,3,5-7)"
 msgstr "Te laden pagina's (bijv. 1,3,5-7)"
 
 #: plug-ins/common/file-ps.c:419
-#, fuzzy
-#| msgid "Coloring"
 msgid "Colorin_g"
-msgstr "Inkleuren"
+msgstr "In_kleuren"
 
 #: plug-ins/common/file-ps.c:420
-#, fuzzy
-#| msgid "Export in X10 format"
 msgid "Import color format"
-msgstr "Export in X10 formaat"
+msgstr "Kleurformaat importeren"
 
 #: plug-ins/common/file-ps.c:421
 msgid "B/W"
@@ -5253,16 +5165,12 @@ msgid "Color"
 msgstr "Kleur"
 
 #: plug-ins/common/file-ps.c:429
-#, fuzzy
-#| msgid "Text antialiasing"
 msgid "Te_xt anti-aliasing"
-msgstr "Anti-aliasing tekst"
+msgstr "Anti-aliasing te_kst"
 
 #: plug-ins/common/file-ps.c:430
-#, fuzzy
-#| msgid "Text antialiasing"
 msgid "Text anti-aliasing strength"
-msgstr "Anti-aliasing tekst"
+msgstr "Kracht van anti-aliasing tekst"
 
 #: plug-ins/common/file-ps.c:432 plug-ins/common/file-ps.c:441
 msgid "Weak"
@@ -5273,36 +5181,27 @@ msgid "Strong"
 msgstr "Sterk"
 
 #: plug-ins/common/file-ps.c:438
-#, fuzzy
-#| msgid "Graphic antialiasing"
 msgid "Gra_phic anti-aliasing"
-msgstr "Anti-aliasing afbeeldingen"
+msgstr "Anti-aliasing _afbeeldingen"
 
 #: plug-ins/common/file-ps.c:439
-#, fuzzy
-#| msgid "Graphic antialiasing"
 msgid "Graphic anti-aliasing strength"
-msgstr "Anti-aliasing afbeeldingen"
+msgstr "Kracht van anti-aliasing afbeeldingen"
 
 #: plug-ins/common/file-ps.c:453
 msgid "Loads a small preview from a PostScript or PDF document"
-msgstr ""
+msgstr "Toont een voorbeeld van een PostScript of PDF document"
 
 #: plug-ins/common/file-ps.c:474
-#, fuzzy
-#| msgid "PostScript document"
 msgid "Export image as PostScript document"
-msgstr "PostScript-document"
+msgstr "Afbeelding exporteren als PostScript-document"
 
 #: plug-ins/common/file-ps.c:475 plug-ins/common/file-ps.c:495
-#, fuzzy
-#| msgid ""
-#| "FITS exporting handles all image types except those with alpha channels."
 msgid ""
 "PostScript exporting handles all image types except those with alpha "
 "channels."
 msgstr ""
-"FITS export kan alle soorten afbeeldingen exporteren behalve die met "
+"PostScript export kan alle soorten afbeeldingen exporteren behalve die met "
 "alfakanalen."
 
 #: plug-ins/common/file-ps.c:481
@@ -5310,10 +5209,8 @@ msgid "PS"
 msgstr "PS"
 
 #: plug-ins/common/file-ps.c:493
-#, fuzzy
-#| msgid "Encapsulated PostScript image"
 msgid "Export image as Encapsulated PostScript image"
-msgstr "Encapsulated PostScript-afbeelding"
+msgstr "Afbeelding exporteren als Encapsulated PostScript-afbeelding"
 
 #: plug-ins/common/file-ps.c:501
 msgid "EPS"
@@ -5348,24 +5245,20 @@ msgid "Y-offset to image from lower left corner"
 msgstr "Verticale verschuiving van de afbeelding vanaf de onder-kantlijn"
 
 #: plug-ins/common/file-ps.c:551
-#, fuzzy
-#| msgid "Unit"
 msgid "_Unit"
-msgstr "Eenheid"
+msgstr "_Eenheid"
 
 #: plug-ins/common/file-ps.c:552
 msgid "Unit of measure for offset values"
-msgstr ""
+msgstr "Meeteenheid voor de verschuiving"
 
 #: plug-ins/common/file-ps.c:553
 msgid "Inch"
 msgstr "Duim"
 
 #: plug-ins/common/file-ps.c:554
-#, fuzzy
-#| msgid "_Millimeter"
 msgid "Millimeter"
-msgstr "_Millimeter"
+msgstr "Millimeter"
 
 # What is the Dutch translation of 'aspect ratio'?
 # vormverhouding/verhouding
@@ -5378,6 +5271,8 @@ msgid ""
 "If enabled, aspect ratio will be maintained on export. Otherwise, the width "
 "and height values will be used."
 msgstr ""
+"Indien ingeschakeld dan worden hoogte en breedte in de juiste verhouding "
+"gehouden, anders houdt elk een eigen waarde."
 
 #: plug-ins/common/file-ps.c:566 plug-ins/map-object/map-object-ui.c:739
 msgid "Rotation"
@@ -5392,6 +5287,8 @@ msgid ""
 "If enabled, export in PostScript Level 2 format. Otherwise, export in "
 "PostScript Level 1 format."
 msgstr ""
+"Indien ingeschakeld dan wordt de export in PostScript Level 2 formaat "
+"gemaakt. Anders in PostScript Level 1."
 
 #: plug-ins/common/file-ps.c:579
 msgid "Encapsula_ted PostScript"
@@ -5402,6 +5299,8 @@ msgid ""
 "If enabled, export as Encapsulated PostScript. Otherwise, export as "
 "PostScript."
 msgstr ""
+"Indien ingeschakeld dan Encapsulated PostScript exporteren. anders "
+"exporteren als PostScript."
 
 #: plug-ins/common/file-ps.c:586 plug-ins/imagemap/imap_grid.c:301
 msgid "_Preview"
@@ -5417,7 +5316,7 @@ msgstr "Voorbeeld_grootte"
 
 #: plug-ins/common/file-ps.c:593
 msgid "Maximum size of preview. Set to 0 for no preview."
-msgstr ""
+msgstr "Maximum afmeting van het voorbeeld. Kies 0 voor geen voorbeeld."
 
 #: plug-ins/common/file-ps.c:1170
 #, c-format
@@ -5503,30 +5402,25 @@ msgstr ""
 "geïmplementeerd."
 
 #: plug-ins/common/file-psp.c:726
-#, fuzzy
-#| msgid "Compressio_n"
 msgid "_Data Compression"
-msgstr "C_ompressie"
+msgstr "Gegevens C_ompressie"
 
 #: plug-ins/common/file-psp.c:727
-#, fuzzy
-#| msgid "No compression"
 msgid "Type of compression"
-msgstr "Geen compressie"
+msgstr "Type compressie"
 
 #: plug-ins/common/file-psp.c:728
 msgid "none"
-msgstr ""
+msgstr "geen"
 
 #: plug-ins/common/file-psp.c:729
-#, fuzzy
 #| msgid "red"
 msgid "rle"
-msgstr "rood"
+msgstr "rle"
 
 #: plug-ins/common/file-psp.c:730
 msgid "lz77"
-msgstr ""
+msgstr "lz77"
 
 #: plug-ins/common/file-psp.c:920
 #, c-format
@@ -5779,15 +5673,13 @@ msgstr "Afbeelding exporteren in de QOI-bestandsindeling (Quite OK Image)"
 msgid "Failed to read QOI file"
 msgstr "Kon QOI bestand niet lezen"
 
-#: plug-ins/common/file-raw-data.c:335 plug-ins/common/file-raw-data.c:507
+#: plug-ins/common/file-raw-data.c:335 plug-ins/common/file-raw-data.c:503
 msgid "Raw image data"
 msgstr "Ruwe beelddata"
 
 #: plug-ins/common/file-raw-data.c:338 plug-ins/common/file-raw-data.c:340
-#, fuzzy
-#| msgid "Loads files in DDS image format"
 msgid "Load raw images, specifying image information"
-msgstr "Inladen van bestanden in de DDS-bestandsindeling"
+msgstr "Ruwe beelddata inladen met opgave van de afbeeldingsinformatie"
 
 #: plug-ins/common/file-raw-data.c:355
 msgid "Image width in number of pixels"
@@ -5802,10 +5694,8 @@ msgid "Offset to beginning of image in raw data"
 msgstr "Beginpunt van de ruwe data van de afbeelding"
 
 #: plug-ins/common/file-raw-data.c:370
-#, fuzzy
-#| msgid "Pixel format"
 msgid "Pi_xel format"
-msgstr "Beeldpunt formaat"
+msgstr "_Beeldpunt formaat"
 
 #: plug-ins/common/file-raw-data.c:371
 msgid "The layout of pixel data, such as components and their order"
@@ -5888,14 +5778,12 @@ msgid "Indexed Alpha"
 msgstr "Geïndexeerd alfa"
 
 #: plug-ins/common/file-raw-data.c:394
-#, fuzzy
-#| msgid "Data t_ype"
 msgid "_Data type"
 msgstr "_Datatype"
 
 #: plug-ins/common/file-raw-data.c:395
 msgid "Data type used to represent pixel values"
-msgstr ""
+msgstr "Datatype om de pixelwaarden mee weer te geven"
 
 #: plug-ins/common/file-raw-data.c:396
 msgid "Unsigned Integer"
@@ -5910,14 +5798,12 @@ msgid "Floating Point"
 msgstr "Drijvende komma-getal"
 
 #: plug-ins/common/file-raw-data.c:402
-#, fuzzy
-#| msgid "Endianness"
 msgid "_Endianness"
-msgstr "Endian-waarde"
+msgstr "_Endian-waarde"
 
 #: plug-ins/common/file-raw-data.c:403
 msgid "Order of sequences of bytes"
-msgstr ""
+msgstr "Volgorde van bytesequenties"
 
 #: plug-ins/common/file-raw-data.c:404
 msgid "Little Endian"
@@ -5928,47 +5814,39 @@ msgid "Big Endian"
 msgstr "Big Endian"
 
 #: plug-ins/common/file-raw-data.c:409
-#, fuzzy
-#| msgid "Planar configuration"
 msgid "Planar confi_guration"
-msgstr "Vlakke configuratie"
+msgstr "Vlakke confi_guratie"
 
-#: plug-ins/common/file-raw-data.c:410 plug-ins/common/file-raw-data.c:530
+#: plug-ins/common/file-raw-data.c:410 plug-ins/common/file-raw-data.c:526
 msgid "How color pixel data are stored"
-msgstr ""
+msgstr "Hoe de kleurgegevens van de pixels zijn opgeslagen"
 
-#: plug-ins/common/file-raw-data.c:411 plug-ins/common/file-raw-data.c:531
+#: plug-ins/common/file-raw-data.c:411 plug-ins/common/file-raw-data.c:527
 msgid "Contiguous"
 msgstr "Aangrenzend"
 
 # gelaagd RGB
-#: plug-ins/common/file-raw-data.c:412 plug-ins/common/file-raw-data.c:532
+#: plug-ins/common/file-raw-data.c:412 plug-ins/common/file-raw-data.c:528
 msgid "Planar"
 msgstr "Planair"
 
-#: plug-ins/common/file-raw-data.c:419 plug-ins/common/file-raw-data.c:480
+#: plug-ins/common/file-raw-data.c:419 plug-ins/common/file-raw-data.c:478
 msgid "Palette Offse_t"
 msgstr "Palet-positie"
 
-#: plug-ins/common/file-raw-data.c:420 plug-ins/common/file-raw-data.c:481
+#: plug-ins/common/file-raw-data.c:420 plug-ins/common/file-raw-data.c:479
 msgid "Offset to beginning of data in the palette file"
 msgstr "Beginpunt van de data in het palet-bestand"
 
-#: plug-ins/common/file-raw-data.c:425 plug-ins/common/file-raw-data.c:486
-#: plug-ins/common/file-raw-data.c:537
+#: plug-ins/common/file-raw-data.c:425 plug-ins/common/file-raw-data.c:484
+#: plug-ins/common/file-raw-data.c:533
 msgid "Palette's la_yout"
 msgstr "Layout van het palet"
 
-#: plug-ins/common/file-raw-data.c:426 plug-ins/common/file-raw-data.c:487
-#: plug-ins/common/file-raw-data.c:538
-#, fuzzy
-#| msgid ""
-#| "The layout for the palette's color channels { RAW_PALETTE_RGB (0), "
-#| "RAW_PALETTE_BGR (1) }"
+#: plug-ins/common/file-raw-data.c:426 plug-ins/common/file-raw-data.c:485
+#: plug-ins/common/file-raw-data.c:534
 msgid "The layout for the palette's color channels"
-msgstr ""
-"De layout de kleurkanalen van het palet { RAW_PALETTE_RGB (0), "
-"RAW_PALETTE_BGR (1) }"
+msgstr "De layout de kleurkanalen van het palet"
 
 #: plug-ins/common/file-raw-data.c:427 plug-ins/common/file-raw-data.c:488
 #: plug-ins/common/file-raw-data.c:539
@@ -5992,13 +5870,11 @@ msgstr "Het bestand dat het palet bevat"
 msgid "Digital Elevation Model data"
 msgstr "Digital Elevation Model-data"
 
-#: plug-ins/common/file-raw-data.c:448
-#, fuzzy
-#| msgid "Loads HEIF images"
+#: plug-ins/common/file-raw-data.c:446
 msgid "Load HGT data as images"
-msgstr "HEIF-afbeeldingen inladen"
+msgstr "HGT-gegevens inladen als afbeeldingen"
 
-#: plug-ins/common/file-raw-data.c:449
+#: plug-ins/common/file-raw-data.c:447
 msgid ""
 "Load Digital Elevation Model data in HGT format from the Shuttle Radar "
 "Topography Mission as images. Though the output image will be RGB, all "
@@ -6006,42 +5882,38 @@ msgid ""
 "earth relief. Therefore you will likely want to remap elevation to colors as "
 "a second step, for instance with the \"Gradient Map\" plug-in."
 msgstr ""
+"Digital Elevation Model data in HGT format van de Shuttle Radar Topography "
+"Mission inladen als afbeeldingen. Hoewel de uitvoer een RGB afbeelding is "
+"worden standaard alle kleuren als grijswaarden ingevuld en zal het contrast "
+"vrij laag zijn op het meeste reliëf van de aarde. Daarom zult u "
+"waarschijnlijk als tweede stap de kleuren opnieuw willen indelen, "
+"bijvoorbeeld met de \"Gradient Map\" plug-in."
+
+#: plug-ins/common/file-raw-data.c:467
+msgid "Sa_mple spacing"
+msgstr "Be_monstering afstand"
+
+#: plug-ins/common/file-raw-data.c:468
+msgid "The sample spacing of the data."
+msgstr "De afstanden tussen de monsterpunten."
 
 #: plug-ins/common/file-raw-data.c:469
-#, fuzzy
-#| msgid "_Sample spacing"
-msgid "Sa_mple spacing"
-msgstr "_Monsterafstand"
+msgid "Auto-Detect"
+msgstr "Automatisch bepalen"
 
 #: plug-ins/common/file-raw-data.c:470
-#, fuzzy
-#| msgid "The file containing palette data"
-msgid "The sample spacing of the data."
-msgstr "Het bestand dat het palet bevat"
-
-#: plug-ins/common/file-raw-data.c:471
-#, fuzzy
-#| msgid "Automatic"
-msgid "Auto-Detect"
-msgstr "Automatisch"
-
-#: plug-ins/common/file-raw-data.c:472
-#, fuzzy
-#| msgid "SRTM-1 (1 arc-second)"
 msgid "SRTM-1 (1 arc second)"
 msgstr "SRTM-1 (1 boogseconde)"
 
-#: plug-ins/common/file-raw-data.c:473
-#, fuzzy
-#| msgid "SRTM-3 (3 arc-seconds)"
+#: plug-ins/common/file-raw-data.c:471
 msgid "SRTM-3 (3 arc seconds)"
 msgstr "SRTM-3 (3 boogseconden)"
 
-#: plug-ins/common/file-raw-data.c:510 plug-ins/common/file-raw-data.c:511
+#: plug-ins/common/file-raw-data.c:506 plug-ins/common/file-raw-data.c:507
 msgid "Dump images to disk in raw format"
-msgstr ""
+msgstr "Ruwe beelddata dumpen op de schijf"
 
-#: plug-ins/common/file-raw-data.c:529
+#: plug-ins/common/file-raw-data.c:525
 msgid "Planar configuration"
 msgstr "Vlakke configuratie"
 
@@ -6129,25 +6001,18 @@ msgid "SUN Rasterfile image"
 msgstr "SUN rasterbestand"
 
 #: plug-ins/common/file-sunras.c:279 plug-ins/common/file-sunras.c:280
-#, fuzzy
-#| msgid "Load file of the FITS file format"
 msgid "Load file of the SunRaster file format"
-msgstr "Inladen van bestanden in de FITS-bestandsindeling"
+msgstr "Inladen van bestanden in de SunRaster-bestandsindeling"
 
 #: plug-ins/common/file-sunras.c:305
-#, fuzzy
-#| msgid "Export file in the FITS file format"
 msgid "Export file in the SunRaster file format"
-msgstr "Exporteren van bestanden in de FITS-bestandsindeling"
+msgstr "Exporteren van bestanden in de SunRaster-bestandsindeling"
 
 #: plug-ins/common/file-sunras.c:307
-#, fuzzy
-#| msgid ""
-#| "FITS exporting handles all image types except those with alpha channels."
 msgid ""
 "SUNRAS exporting handles all image types except those with alpha channels."
 msgstr ""
-"FITS export kan alle soorten afbeeldingen exporteren behalve die met "
+"SunRas export kan alle soorten afbeeldingen exporteren behalve die met "
 "alfakanalen."
 
 #: plug-ins/common/file-sunras.c:317
@@ -6155,20 +6020,14 @@ msgid "SUNRAS"
 msgstr "SUNRAS"
 
 #: plug-ins/common/file-sunras.c:330
-#, fuzzy
-#| msgid "Data Formatting"
 msgid "_Data Formatting"
-msgstr "Gegevens formatteren"
+msgstr "Gegevensformaat"
 
 #: plug-ins/common/file-sunras.c:331
-#, fuzzy
-#| msgid "Use standard (0) or Run-Length Encoded (1) output"
 msgid "Use standard or Run-Length Encoded output"
-msgstr "Gebruik standaard (0) of Run-Length Encoded (1) uitvoer"
+msgstr "Gebruik standaard of Run-Length Encoded uitvoer"
 
 #: plug-ins/common/file-sunras.c:333
-#, fuzzy
-#| msgid "R_un-Length Encoded"
 msgid "Run-Length Encoding"
 msgstr "Run_Length-gecodeerd (RLE)"
 
@@ -6259,10 +6118,9 @@ msgid "SVG image"
 msgstr "SVG-afbeelding"
 
 #: plug-ins/common/file-svg.c:180
-#, fuzzy
 #| msgid "HSV"
 msgid "SVG"
-msgstr "HSV"
+msgstr "SVG"
 
 #: plug-ins/common/file-svg.c:189
 msgid "_Paths"
@@ -6272,16 +6130,16 @@ msgstr "_Paden"
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
 msgstr ""
-"Wel/niet/hoe paden uit het SVG-bestand importeren zodat ze met het GIMP-"
-"padgereedschap gebruikt kunnen worden"
+"Wel of niet en hoe de paden uit het SVG-bestand importeren zodat ze met het "
+"GIMP-padgereedschap gebruikt kunnen worden"
 
 #: plug-ins/common/file-svg.c:191
 msgid "Don't import paths"
-msgstr "Paden nie_t importeren"
+msgstr "Paden niet importeren"
 
 #: plug-ins/common/file-svg.c:192
 msgid "Import paths individually"
-msgstr "Paden _importeren"
+msgstr "Paden individueel importeren"
 
 #: plug-ins/common/file-svg.c:193
 msgid "Merge imported paths"
@@ -6369,10 +6227,8 @@ msgid "Ori_gin"
 msgstr "_Beginpunt"
 
 #: plug-ins/common/file-tga.c:321
-#, fuzzy
-#| msgid "Image Composing"
 msgid "Image origin"
-msgstr "Afbeelding samenstellen"
+msgstr "Afbeelding origineel"
 
 #: plug-ins/common/file-tga.c:322
 msgid "Bottom left"
@@ -6428,7 +6284,7 @@ msgstr "Microsoft WMF-bestand"
 
 #: plug-ins/common/file-wmf.c:189
 msgid "WMF"
-msgstr ""
+msgstr "WMF"
 
 #: plug-ins/common/file-wmf.c:631
 msgid "Rendered WMF"
@@ -6598,148 +6454,111 @@ msgid "X11 Mouse Cursor"
 msgstr "X11 Muiscursor"
 
 #: plug-ins/common/file-xmc.c:303
-#, fuzzy
-#| msgid "Loads files of Windows BMP file format"
 msgid "Loads files of X11 Mouse Cursor file format"
-msgstr "Inladen van bestanden in de Windows BMP-bestandsindeling"
+msgstr "Inladen van bestanden in de X11 Muis Cursor-bestandsindeling"
 
 #: plug-ins/common/file-xmc.c:305
-#, fuzzy
-#| msgid "This plug-in loads SGI image files."
 msgid "This plug-in loads X11 Mouse Cursor (XMC) files."
-msgstr "Deze plug-in laadt van bestanden in de SGI-bestandsindeling."
+msgstr ""
+"Deze plug-in laadt van bestanden in de X11 Muis Cursor (XMC) "
+"bestandsindeling."
 
 #: plug-ins/common/file-xmc.c:330
 msgid ""
 "Loads only first frame of X11 Mouse Cursor's animation sequence which "
 "nominal size is the closest of thumb-size to be used as a thumbnail"
 msgstr ""
+"Laadt alleen de eerste frame van een X11 Muis Cursor-bestand van de "
+"sequentie waarvan de grootte het best past bij de afmeting om als pictogram "
+"te gebruiken"
 
 #: plug-ins/common/file-xmc.c:354
-#, fuzzy
-#| msgid "Exports files in the PNM file format"
 msgid "Exports files of X11 cursor file"
-msgstr "Exporteren van bestanden in de PNM-bestandsindeling"
+msgstr "Exporteren van bestanden in de X11 Muis Cursor-bestandsindeling"
 
 #: plug-ins/common/file-xmc.c:355
-#, fuzzy
-#| msgid "This plug-in exports SGI image files."
 msgid "This plug-in exports X11 Mouse Cursor (XMC) files"
-msgstr "Een afbeelding exporteren in de SGI-bestandsindeling."
+msgstr ""
+"Deze plug-in exporteert een afbeelding in de X11 Muis Cursor-"
+"bestandsindeling (XMC)"
 
 # What does 'Hot Spot' mean here?
 #: plug-ins/common/file-xmc.c:376
-#, fuzzy
-#| msgid "Hot spot _X:"
 msgid "Hot spot _X"
-msgstr "Hot spot _X:"
+msgstr "Hot spot _X"
 
 #: plug-ins/common/file-xmc.c:377
 msgid "X-coordinate of hot spot (use -1, -1 to keep original hot spot)"
 msgstr ""
+"X-coördinaat van de hot spot (gebruik -1, -1 om de originele hot spot te "
+"behouden)"
 
 #: plug-ins/common/file-xmc.c:384
 msgid "Y-coordinate of hot spot (use -1, -1 to keep original hot spot)"
 msgstr ""
+"Y-coördinaat van de hot spot (gebruik -1, -1 om de originele hot spot te "
+"behouden)"
 
 #: plug-ins/common/file-xmc.c:390
-#, fuzzy
-#| msgid "_Auto-Crop all frames"
 msgid "_Auto Crop all frames"
 msgstr "_Alle frames automatisch bijsnijden"
 
 #: plug-ins/common/file-xmc.c:391
-#, fuzzy
-#| msgid "Remove empty borders from the image"
 msgid "Remove the empty borders of all frames."
-msgstr "Lege randen van de afbeelding verwijderen"
+msgstr "Lege randen van alle frames verwijderen."
 
 #: plug-ins/common/file-xmc.c:396
-#, fuzzy
-#| msgid ""
-#| "_Size where\n"
-#| "unspecified:"
 msgid "Si_ze where unspecified"
-msgstr ""
-"_Afmeting indien\n"
-"niet opgegeven:"
+msgstr "A_fmeting indien niet opgegeven"
 
 #: plug-ins/common/file-xmc.c:397
-#, fuzzy
-#| msgid "_Delay between frames when unspecified"
 msgid "Default frame size if unspecified"
-msgstr "_Vertraging tussen frames, indien niet apart opgegeven"
+msgstr "Standaard afmetingen van frames, indien niet apart opgegeven"
 
 #: plug-ins/common/file-xmc.c:411
-#, fuzzy
-#| msgid "Use default dela_y for all frames"
 msgid "_Use default size for all frames"
-msgstr "D_eze vertraging voor alle frames gebruiken"
+msgstr "D_eze afmetingen voor alle frames gebruiken"
 
 #: plug-ins/common/file-xmc.c:412
-#, fuzzy
-#| msgid "Use default dela_y for all frames"
 msgid "Use default size for all frames"
-msgstr "D_eze vertraging voor alle frames gebruiken"
+msgstr "Deze afmetingen voor alle frames gebruiken"
 
 #: plug-ins/common/file-xmc.c:417
-#, fuzzy
-#| msgid ""
-#| "_Delay where\n"
-#| "unspecified:"
 msgid "_Delay where unspecified"
-msgstr ""
-"_Vertraging tussen frames\n"
-"indien niet opgegeven:"
+msgstr "_Vertraging tussen frames indien niet apart opgegeven"
 
 #: plug-ins/common/file-xmc.c:418
-#, fuzzy
-#| msgid "Enter time span in milliseconds in which each frame is rendered."
 msgid "Default time span in milliseconds in which each frame is rendered"
 msgstr ""
-"Geef tijdspanne in milliseconden op waarbinnen elk frame wordt opgebouwd."
+"Geef tijdspanne in milliseconden op waarbinnen elk frame wordt opgebouwd"
 
 #: plug-ins/common/file-xmc.c:424
-#, fuzzy
-#| msgid "Use default dela_y for all frames"
 msgid "Use default delay for all _frames"
-msgstr "D_eze vertraging voor alle frames gebruiken"
+msgstr "Deze ve_rtraging voor alle frames gebruiken"
 
 #: plug-ins/common/file-xmc.c:425
-#, fuzzy
-#| msgid "Use default dela_y for all frames"
 msgid "Use default delay for all frames"
-msgstr "D_eze vertraging voor alle frames gebruiken"
+msgstr "Standaard vertraging voor alle frames gebruiken"
 
 #: plug-ins/common/file-xmc.c:430
-#, fuzzy
-#| msgid "_Copyright:"
 msgid "C_opyright"
-msgstr "Auteursre_cht:"
+msgstr "Auteursre_cht"
 
 #: plug-ins/common/file-xmc.c:431
-#, fuzzy
-#| msgid "Enter copyright information."
 msgid "Copyright information"
-msgstr "Geef Auteursrecht-info op."
+msgstr "Geef Auteursrecht-informatie op"
 
 #: plug-ins/common/file-xmc.c:439
-#, fuzzy
-#| msgid "_License:"
 msgid "Lice_nse"
-msgstr "_Licentie:"
+msgstr "Lice_ntie"
 
 #: plug-ins/common/file-xmc.c:440
-#, fuzzy
-#| msgid "Enter license information."
 msgid "License information"
-msgstr "Geef licentie-informatie op."
+msgstr "Geef licentie-informatie op"
 
 #: plug-ins/common/file-xmc.c:449
-#, fuzzy
-#| msgid "Save comment"
 msgid "Optional comment"
-msgstr "Commentaar opslaan"
+msgstr "Optioneel commentaar"
 
 #: plug-ins/common/file-xmc.c:560
 #, c-format
@@ -6911,10 +6730,8 @@ msgid "X PixMap image"
 msgstr "X PixMap-afbeelding"
 
 #: plug-ins/common/file-xpm.c:201
-#, fuzzy
-#| msgid "Loads files in DDS image format"
 msgid "Load files in XPM (X11 Pixmap) format."
-msgstr "Inladen van bestanden in de DDS-bestandsindeling"
+msgstr "Inladen van bestanden in de XPM (X11 Pixmap)-bestandsindeling."
 
 #: plug-ins/common/file-xpm.c:202
 msgid ""
@@ -6924,13 +6741,15 @@ msgid ""
 "instead. XPM supports colored images, unlike the XBM format which XPM was "
 "designed to replace."
 msgstr ""
+"Inladen van bestanden in de XPM (X11 Pixmap)-bestandsindeling. XPM is een "
+"overdraagbaar afbeeldingsformaat dat is ontworpen om te worden opgenomen in "
+"C-broncode. XLib biedt functies om dit formaat te lezen. Nieuwere code zou "
+"echter gdk-pixbuf-csource moeten gebruiken. XPM ondersteunt gekleurde "
+"afbeeldingen, in tegenstelling tot het XBM-formaat dat XPM moest vervangen."
 
 #: plug-ins/common/file-xpm.c:236
-#, fuzzy
-#| msgid "Export a file in X10 or X11 bitmap (XBM) file format"
 msgid "Export files in XPM (X11 Pixmap) format."
-msgstr ""
-"Exporteren van bestanden in de X10 of X11 bitmap (XBM) bestandsindeling"
+msgstr "Exporteren van bestanden in de XPM (X11 Pixmap)-bestandsindeling."
 
 #: plug-ins/common/file-xpm.c:237
 msgid ""
@@ -6940,6 +6759,12 @@ msgid ""
 "instead. XPM supports colored images, unlike the XBM format which XPM was "
 "designed to replace."
 msgstr ""
+"Exporteren van bestanden in de XPM (X11 Pixmap)-bestandsindeling. XPM is een "
+"overdraagbaar afbeeldingsformaat dat is ontworpen om te worden opgenomen in "
+"C-broncode. XLib biedt hulpprogrammafuncties om dit formaat te lezen. "
+"Nieuwere code zou echter gdk-pixbuf-csource moeten gebruiken. XPM "
+"ondersteunt gekleurde afbeeldingen, in tegenstelling tot het XBM-formaat dat "
+"XPM moest vervangen."
 
 #: plug-ins/common/file-xpm.c:254
 msgid "XPM"
@@ -7340,54 +7165,41 @@ msgid "Find and fix pixels that may be unsafely bright"
 msgstr "Extreem heldere beeldpunten zoeken en herstellen"
 
 #: plug-ins/common/hot.c:269
-#, fuzzy
-#| msgid "Mode"
 msgid "_Mode"
-msgstr "Modus"
+msgstr "_Modus"
 
 #: plug-ins/common/hot.c:270
-#, fuzzy
-#| msgid "Paint mode:"
 msgid "Signal mode"
-msgstr "Tekenmodus:"
+msgstr "Signaal modus"
 
 #: plug-ins/common/hot.c:271
 msgid "NTSC"
-msgstr ""
+msgstr "NTSC"
 
 #: plug-ins/common/hot.c:272
-#, fuzzy
 #| msgid "_PAL"
 msgid "PAL"
-msgstr "_PAL"
+msgstr "PAL"
 
 #: plug-ins/common/hot.c:278
-#, fuzzy
-#| msgid "Action"
 msgid "_Action"
-msgstr "Bewerking"
+msgstr "_Bewerking"
 
 #: plug-ins/common/hot.c:279
 msgid "Action"
 msgstr "Bewerking"
 
 #: plug-ins/common/hot.c:280
-#, fuzzy
-#| msgid "Reduce _Luminance"
 msgid "Reduce Luminance"
-msgstr "_Helderheid verminderen"
+msgstr "Helderheid verminderen"
 
 #: plug-ins/common/hot.c:281
-#, fuzzy
-#| msgid "Reduce _Saturation"
 msgid "Reduce Saturation"
-msgstr "_Verzadiging verminderen"
+msgstr "Verzadiging verminderen"
 
 #: plug-ins/common/hot.c:282
-#, fuzzy
-#| msgid "_Blacken"
 msgid "Blacken"
-msgstr "_Zwarter maken"
+msgstr "Zwarter maken"
 
 #: plug-ins/common/hot.c:288
 msgid "Create _new layer"
@@ -7420,7 +7232,7 @@ msgstr "_Horizontaal"
 
 #: plug-ins/common/jigsaw.c:413
 msgid "Number of pieces going across"
-msgstr "Horizontaal"
+msgstr "Horizontaal aantal stukken"
 
 #: plug-ins/common/jigsaw.c:418 plug-ins/common/tile-small.c:513
 msgid "_Vertical"
@@ -7428,19 +7240,15 @@ msgstr "_Verticaal"
 
 #: plug-ins/common/jigsaw.c:419
 msgid "Number of pieces going down"
-msgstr "Verticaal"
+msgstr "Verticaal aantal stukken"
 
 #: plug-ins/common/jigsaw.c:424
-#, fuzzy
-#| msgid "Jigsaw Style"
 msgid "_Jigsaw Style"
-msgstr "Legpuzzelstijl"
+msgstr "_Legpuzzelstijl"
 
 #: plug-ins/common/jigsaw.c:425
-#, fuzzy
-#| msgid "The style/shape of the jigsaw puzzle { Square (0), Curved (1) }"
 msgid "The style/shape of the jigsaw puzzle"
-msgstr "De stijl en vorm van de legpuzzel { Vierkant (0), Gekromd (1) }"
+msgstr "De stijl en vorm van de legpuzzel"
 
 #: plug-ins/common/jigsaw.c:426
 msgid "Square"
@@ -7594,16 +7402,12 @@ msgid "The filter radius"
 msgstr "Straal van ruimtelijk filter"
 
 #: plug-ins/common/nl-filter.c:185
-#, fuzzy
-#| msgid "Filter"
 msgid "_Filter"
-msgstr "Filter"
+msgstr "_Filter"
 
 #: plug-ins/common/nl-filter.c:186
-#, fuzzy
-#| msgid "The filter radius"
 msgid "The Filter to Run"
-msgstr "Straal van ruimtelijk filter"
+msgstr "Het filter om te gebruiken"
 
 #: plug-ins/common/nl-filter.c:187
 msgid "Alpha trimmed mean"
@@ -7730,18 +7534,17 @@ msgid ""
 "10/95, page 326). It generates modern art pictures from a random genetic "
 "formula."
 msgstr ""
+"Deze Plug-in is gebaseerd op een artikel van Jörn Loviscach in tijdschrift "
+"c't 10/95, pagina 326). Hij genereert moderne kunst uit een willekeurige "
+"genetische formule."
 
 #: plug-ins/common/qbist.c:204
-#, fuzzy
-#| msgid "_Antialiasing"
 msgid "_Anti-aliasing"
 msgstr "_Anti-aliasing"
 
 #: plug-ins/common/qbist.c:205
-#, fuzzy
-#| msgid "Antialias using the Scale3X edge-extrapolation algorithm"
 msgid "Enable anti-aliasing using an oversampling algorithm"
-msgstr "Anti-alias met gebruik van het Scale3X-algoritme voor randextrapolatie"
+msgstr "Anti-aliasing inschakelen met behulp van een oversampling-algoritme"
 
 #: plug-ins/common/qbist.c:219
 msgid "Any file which will be used as source for pattern generation"
@@ -8107,16 +7910,12 @@ msgid "Draw a border of spikes around the image"
 msgstr "Een rand van pieken rond de afbeeldingen tekenen"
 
 #: plug-ins/common/sparkle.c:270
-#, fuzzy
-#| msgid "Color type"
 msgid "_Color type"
-msgstr "Kleur type"
+msgstr "_Kleur type"
 
 #: plug-ins/common/sparkle.c:271
-#, fuzzy
-#| msgid "Color s_pace"
 msgid "Color of sparkles"
-msgstr "_Kleurruimte"
+msgstr "Kleur van de fonkeling"
 
 #: plug-ins/common/sparkle.c:272
 msgid "Natural color"
@@ -8460,13 +8259,10 @@ msgstr ""
 "als deze kolom is aangevinkt."
 
 #: plug-ins/common/unit-editor.c:114
-#, fuzzy
-#| msgid ""
-#| "This string will be used to identify a unit in GIMP's configuration files."
 msgid "The name to be used to identify this unit in the graphical interface"
 msgstr ""
-"Deze string wordt gebruikt om een eenheid te identificeren in de "
-"configuratiebestanden van GIMP."
+"Deze naam wordt gebruikt om een eenheid te identificeren in de grafische "
+"interface van GIMP"
 
 #: plug-ins/common/unit-editor.c:116
 msgid "Factor"
@@ -8550,10 +8346,8 @@ msgid "Add a New Unit"
 msgstr "Een nieuwe eenheid toevoegen"
 
 #: plug-ins/common/unit-editor.c:452
-#, fuzzy
-#| msgid "Name"
 msgid "_Name:"
-msgstr "Naam"
+msgstr "_Naam:"
 
 #: plug-ins/common/unit-editor.c:464
 msgid "_Factor:"
@@ -8699,77 +8493,58 @@ msgid ""
 "control matrix. The effect can look like brushstrokes of acrylic or "
 "watercolor paint, in some cases."
 msgstr ""
+"Smeert een afbeelding uit langs vectorpaden die zijn berekend als de "
+"gradiënt van een aparte controlematrix. Het effect kan in sommige gevallen "
+"lijken op penseelstreken van acryl- of waterverf."
 
 #: plug-ins/common/warp.c:234
-#, fuzzy
-#| msgid "Step size:"
 msgid "Step si_ze"
-msgstr "Stapgrootte:"
+msgstr "Stap_grootte"
 
 #: plug-ins/common/warp.c:235
-#, fuzzy
-#| msgid "Displacement map:"
 msgid "Pixel displacement multiplier"
-msgstr "Verplaatsingskaart:"
+msgstr "Pixel verplaatsing factor"
 
 #: plug-ins/common/warp.c:240
-#, fuzzy
-#| msgid "Displacement map:"
 msgid "Dis_placement Map"
-msgstr "Verplaatsingskaart:"
+msgstr "Ver_plaatsingskaart"
 
 #: plug-ins/common/warp.c:241
-#, fuzzy
-#| msgid "Displacement map:"
 msgid "Displacement control map"
-msgstr "Verplaatsingskaart:"
+msgstr "Kaart die verplaatsing stuurt"
 
 #: plug-ins/common/warp.c:246
-#, fuzzy
-#| msgid "Iterations:"
 msgid "I_terations"
-msgstr "Herhalingen:"
+msgstr "H_erhalingen"
 
 #: plug-ins/common/warp.c:247
-#, fuzzy
-#| msgid "Filter Iteration Co_unt"
 msgid "Iteration count"
-msgstr "_Aantal filter herhalingen"
+msgstr "Aantal herhalingen"
 
 # What is the Dutch translation of 'dither'?
 #: plug-ins/common/warp.c:252
-#, fuzzy
-#| msgid "Dither size:"
 msgid "_Dither size"
-msgstr "Dithergrootte:"
+msgstr "Ruis grootte"
 
 #: plug-ins/common/warp.c:253
-#, fuzzy
-#| msgid "R_andom saturation"
 msgid "Random dither amount"
-msgstr "Willekeurige _verzadiging"
+msgstr "Hoeveelheid willekeurige ruis"
 
 #: plug-ins/common/warp.c:258
-#, fuzzy
-#| msgid "Rotation angle:"
 msgid "Rotatio_n angle"
-msgstr "Draaiingshoek:"
+msgstr "Draaiingshoek"
 
 #: plug-ins/common/warp.c:259
 msgid "Angle of gradient vector rotation"
-msgstr ""
+msgstr "Draaiingshoek van het verloop"
 
 #: plug-ins/common/warp.c:264
-#, fuzzy
-#| msgid "On edges:"
 msgid "On ed_ges"
-msgstr "Bij randen:"
+msgstr "Bij randen"
 
 #: plug-ins/common/warp.c:265
-#, fuzzy
-#| msgid "_Map type:"
 msgid "Wrap type"
-msgstr "_Projectietype"
+msgstr "Omlooptype"
 
 #: plug-ins/common/warp.c:266
 msgid "Wrap"
@@ -8780,26 +8555,18 @@ msgid "Smear"
 msgstr "Smeren"
 
 #: plug-ins/common/warp.c:269
-#, fuzzy
-#| msgid "Foreground color"
 msgid "Foreground Color"
 msgstr "Voorgrondkleur"
 
 #: plug-ins/common/warp.c:275
-#, fuzzy
-#| msgid "Magnitude map:"
 msgid "_Magnitude Map"
-msgstr "Groottekaart:"
+msgstr "Groottekaart"
 
 #: plug-ins/common/warp.c:276
-#, fuzzy
-#| msgid "Magnitude map:"
 msgid "Magnitude control map"
-msgstr "Groottekaart:"
+msgstr "Groottekaart"
 
 #: plug-ins/common/warp.c:281
-#, fuzzy
-#| msgid "Use magnitude map"
 msgid "_Use magnitude map"
 msgstr "Groottekaart gebruiken"
 
@@ -8808,66 +8575,52 @@ msgid "Use magnitude map"
 msgstr "Groottekaart gebruiken"
 
 #: plug-ins/common/warp.c:287
-#, fuzzy
-#| msgid "Substeps:"
 msgid "Su_bsteps"
-msgstr "Substappen:"
+msgstr "Su_bstappen"
 
 #: plug-ins/common/warp.c:288
 msgid "Substeps between image updates"
-msgstr ""
+msgstr "Substappen tussen updates van de afbeelding"
 
 #: plug-ins/common/warp.c:293
-#, fuzzy
-#| msgid "Gradient Map"
 msgid "Gradient Ma_p"
-msgstr "_Kleurverloopprojectie"
+msgstr "Kleurverloop_projectie"
 
 #: plug-ins/common/warp.c:294
-#, fuzzy
-#| msgid "Gradient Map"
 msgid "Gradient control map"
-msgstr "_Kleurverloopprojectie"
+msgstr "Kleurverloopprojectie"
 
 #: plug-ins/common/warp.c:299
-#, fuzzy
-#| msgid "Gradient scale:"
 msgid "Gradient s_cale"
-msgstr "Kleurverloopschaal:"
+msgstr "Kleurverloopschaal"
 
 #: plug-ins/common/warp.c:300
 msgid "Scaling factor for gradient map (0=don't use)"
-msgstr ""
+msgstr "Schaalfactor voor gradiëntkaart (0=niet gebruiken)"
 
 #: plug-ins/common/warp.c:305
-#, fuzzy
-#| msgid "Vector mag:"
 msgid "_Vector Map"
-msgstr "Vectorgrootte:"
+msgstr "Kleurverloop _vector"
 
 #: plug-ins/common/warp.c:306
 msgid "Fixed vector control map"
-msgstr ""
+msgstr "Vaste vectorkaart"
 
 #: plug-ins/common/warp.c:311
-#, fuzzy
-#| msgid "Vector mag:"
 msgid "Vector magn_itude"
-msgstr "Vectorgrootte:"
+msgstr "Vectorgrootte"
 
 #: plug-ins/common/warp.c:312
 msgid "Scaling factor for fixed vector map (0=don't use)"
-msgstr ""
+msgstr "Schaalfactor voor de Vaste vectorkaart (0=niet gebruiken)"
 
 #: plug-ins/common/warp.c:317
-#, fuzzy
-#| msgid "Ang_le offset:"
 msgid "Ang_le"
-msgstr "_Hoekverspringing:"
+msgstr "_Hoek"
 
 #: plug-ins/common/warp.c:318
 msgid "Angle for fixed vector map"
-msgstr ""
+msgstr "Hoek voor de Vaste vectorkaart"
 
 #: plug-ins/common/warp.c:399
 msgid "Warp"
@@ -9102,7 +8855,8 @@ msgstr "Downloaden webpagina-afbeelding voor ‘%s’"
 #: plug-ins/file-bmp/bmp-export.c:192 plug-ins/file-bmp/bmp-export.c:225
 msgid "Cannot export indexed image with transparency in BMP file format."
 msgstr ""
-"Kan geïndexeerde afbeelding met alfakanaal niet exporteren naar BMP-formaat."
+"Kan geïndexeerde afbeelding met alfakanaal niet exporteren naar BMP-"
+"bestandsindeling."
 
 #: plug-ins/file-bmp/bmp-export.c:194 plug-ins/file-bmp/bmp-export.c:227
 msgid "Alpha channel will be ignored."
@@ -9208,7 +8962,7 @@ msgstr "R_GB-Formaat"
 
 #: plug-ins/file-bmp/bmp.c:221
 msgid "Export format for RGB images"
-msgstr ""
+msgstr "Export formaat voor RGB afbeeldingen"
 
 #: plug-ins/file-bmp/bmp.c:222
 msgid "16 bit (R5 G6 B5)"
@@ -9666,19 +9420,17 @@ msgstr "Mipmap-opties"
 
 #. Translators: Do not translate YCoCg, it's the name of a colorspace
 #: plug-ins/file-dds/misc.c:70
-#, fuzzy
-#| msgid "Decode YCoCg"
 msgid "Decoding YCoCg pixels..."
-msgstr "Decoderen YCoCg"
+msgstr "Decoderen YCoCg pixels..."
 
 #. Translators: Do not translate YCoCg, it's the name of a colorspace
 #: plug-ins/file-dds/misc.c:137
 msgid "Decoding YCoCg (scaled) pixels..."
-msgstr ""
+msgstr "Decoderen YCoCg (geschaalde) pixels..."
 
 #: plug-ins/file-dds/misc.c:204
 msgid "Decoding Alpha-exponent pixels..."
-msgstr ""
+msgstr "Alfa-exponentpixels decoderen..."
 
 #: plug-ins/file-exr/file-exr.c:114
 msgid "Loads files in the OpenEXR file format"
@@ -9711,11 +9463,10 @@ msgstr "Fout tijdens opvragen beeldformaat van '%s'"
 msgid "Error reading pixel data from '%s'"
 msgstr "Fout bij het lezen van pixelgegevens van '%s'"
 
-#: plug-ins/file-exr/file-exr.c:358 plug-ins/file-exr/file-exr.c:372
-#, fuzzy, c-format
-#| msgid "Failed to set metadata tag %s: %s"
+#: plug-ins/file-exr/file-exr.c:357 plug-ins/file-exr/file-exr.c:371
+#, c-format
 msgid "Failed to load metadata: %s"
-msgstr "Kon metagegevens-tag niet instellen %s: %s"
+msgstr "Kon metagegevens niet inladen: %s"
 
 #: plug-ins/file-exr/file-exr.c:435
 msgid "Import OpenEXR"
@@ -9733,17 +9484,17 @@ msgstr ""
 "De afbeelding bevat één onbekend kanaal.\n"
 "Het is omgezet naar grijswaarden."
 
-#: plug-ins/file-exr/file-exr.c:454
-#, fuzzy
-#| msgid "Compose Channels"
+#: plug-ins/file-exr/file-exr.c:453
 msgid "Chroma Channels"
-msgstr "Kanalen samenstellen"
+msgstr "Chroma kanalen"
 
-#: plug-ins/file-exr/file-exr.c:455
+#: plug-ins/file-exr/file-exr.c:454
 msgid ""
 "OpenEXR chroma channels are not yet supported.\n"
 "They have been discarded."
 msgstr ""
+"OpenEXR chroma worden nog niet ondersteund\n"
+"deze zijn overgeslagen."
 
 #: plug-ins/file-faxg3/faxg3.c:136
 msgid "G3 fax image"
@@ -9782,10 +9533,8 @@ msgstr ""
 "System)"
 
 #: plug-ins/file-fits/fits.c:201
-#, fuzzy
-#| msgid "Replacement for undefined pixels"
 msgid "Re_placement for undefined pixels"
-msgstr "Vervanging voor ongedefinieerde beeldpunten"
+msgstr "Ve_rvanging voor ongedefinieerde beeldpunten"
 
 #: plug-ins/file-fits/fits.c:202
 msgid "Replacement for undefined pixels"
@@ -10247,32 +9996,24 @@ msgid "JPEG image"
 msgstr "JPEG-afbeelding"
 
 #: plug-ins/file-jpeg/jpeg.c:138 plug-ins/file-jpeg/jpeg.c:139
-#, fuzzy
-#| msgid "Loads files in the JPEG XL file format"
 msgid "Loads files in the JPEG file format"
-msgstr "Inladen van bestanden in de JPEG XL-bestandsindeling"
+msgstr "Inladen van bestanden in de JPEG bestandsindeling"
 
 #: plug-ins/file-jpeg/jpeg.c:163
-#, fuzzy
-#| msgid "Load a fractal from file"
 msgid "Loads a thumbnail from a JPEG image"
-msgstr "Een fractal uit een bestand inladen"
+msgstr "Een miniatuur uit een JPEG afbeelding inladen"
 
 #: plug-ins/file-jpeg/jpeg.c:164
 msgid "Loads a thumbnail from a JPEG image, if one exists"
-msgstr ""
+msgstr "Een miniatuur uit een JPEG afbeelding inladen als die bestaat"
 
 #: plug-ins/file-jpeg/jpeg.c:185
-#, fuzzy
-#| msgid "Exports files in the PGM file format"
 msgid "Exports files in the JPEG file format"
-msgstr "Exporteren van bestanden in de PGM-bestandsindeling"
+msgstr "Exporteren van bestanden in de JPEG-bestandsindeling"
 
 #: plug-ins/file-jpeg/jpeg.c:186
-#, fuzzy
-#| msgid "Exports files in the PNM file format"
 msgid "Exports files in the lossy, widely supported JPEG format"
-msgstr "Exporteren van bestanden in de PNM-bestandsindeling"
+msgstr "Exporteren van bestanden in de alom bekende JPEG-bestandsindeling"
 
 #: plug-ins/file-jpeg/jpeg.c:195 plug-ins/file-tiff/file-tiff.c:251
 msgid "JPEG"
@@ -10319,10 +10060,8 @@ msgid "Su_bsampling"
 msgstr "_Subsampling"
 
 #: plug-ins/file-jpeg/jpeg.c:241
-#, fuzzy
-#| msgid "Su_bsampling"
 msgid "Sub-sampling type"
-msgstr "_Subsampling"
+msgstr "Subsampling type"
 
 #: plug-ins/file-jpeg/jpeg.c:242
 msgid "4:4:4 (best quality)"
@@ -10366,10 +10105,8 @@ msgid "_DCT method"
 msgstr "_DCT methode"
 
 #: plug-ins/file-jpeg/jpeg.c:265
-#, fuzzy
-#| msgid "_DCT method"
 msgid "DCT method to use"
-msgstr "_DCT methode"
+msgstr "Te gebruiken DCT methode"
 
 #: plug-ins/file-jpeg/jpeg.c:266
 msgid "Fast Integer"
@@ -10428,19 +10165,23 @@ msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
 "more than 30,000 pixels wide or tall."
 msgstr ""
-"Kon '%s' niet opslaan. Het PSD-bestandsformaat ondersteunt geen afbeeldingen "
+"Kon '%s' niet opslaan. De PSD-bestandsindeling ondersteunt geen afbeeldingen "
 "die meer dan 30.000 beeldpunten breed of hoog zijn."
 
-#: plug-ins/file-psd/psd-export.c:2194
+#: plug-ins/file-psd/psd-export.c:2200
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
 "layers that are more than 30,000 pixels wide or tall."
 msgstr ""
-"Kon '%s' niet opslaan. Het PSD-bestandsformaat ondersteunt geen afbeeldingen "
+"Kon '%s' niet opslaan. De PSD-bestandsindeling ondersteunt geen afbeeldingen "
 "met lagen die meer dan 30.000 beeldpunten breed of hoog zijn."
 
-#: plug-ins/file-psd/psd-export.c:2494
+#: plug-ins/file-psd/psd-export.c:2453
+msgid "Export Image as PSD"
+msgstr "Afbeelding als PSD exporteren"
+
+#: plug-ins/file-psd/psd-export.c:2500
 msgid ""
 "Duotone color space information from the original\n"
 "imported image will be used."
@@ -10456,17 +10197,19 @@ msgstr ""
 "PSD-bestanden kunnen maximaal 998 paden opslaan.\n"
 "De rest wordt weggelaten."
 
-#: plug-ins/file-psd/psd-export.c:2673
+#: plug-ins/file-psd/psd-export.c:2679
 msgid "Indexed Image Warning"
-msgstr ""
+msgstr "Waarschuwing geïndexeerd bestand"
 
-#: plug-ins/file-psd/psd-export.c:2674
+#: plug-ins/file-psd/psd-export.c:2680
 msgid ""
 "Photoshop does not support indexed images that have more than one layer. "
 "Layers will be merged on export."
 msgstr ""
+"Photoshop ondersteunt geen geïndexeerde bestanden met meer dan een laag. De "
+"lagen zullen bij exporteren worden samengevoegd."
 
-#: plug-ins/file-psd/psd-export.c:2695 plug-ins/file-psd/psd-load.c:3818
+#: plug-ins/file-psd/psd-export.c:2701 plug-ins/file-psd/psd-load.c:3783
 msgid "Compatibility Notice"
 msgstr "Compatibiliteitsmelding"
 
@@ -10500,7 +10243,7 @@ msgstr "Geen geldig Photoshop-bestand"
 #: plug-ins/file-psd/psd-load.c:550
 #, c-format
 msgid "Unsupported file format version: %d"
-msgstr "Niet-ondersteunde versie van bestandsformaat: %d"
+msgstr "Niet-ondersteunde versie van bestandsindeling: %d"
 
 #: plug-ins/file-psd/psd-load.c:557
 #, c-format
@@ -10627,15 +10370,15 @@ msgid "Photoshop image"
 msgstr "Photoshop-afbeelding"
 
 #: plug-ins/file-psd/psd.c:138 plug-ins/file-psd/psd.c:167
-#, fuzzy
-#| msgid "Loads images from the Paint Shop Pro PSP file format"
 msgid "Loads images from the Photoshop PSD and PSB file formats"
-msgstr "Inladen van bestanden in de Paint Shop Pro PSP-bestandsindeling"
+msgstr "Inladen van bestanden in de Photoshop PSD en PSB bestandsindeling"
 
 #: plug-ins/file-psd/psd.c:140
 msgid ""
 "This plug-in loads images in Adobe Photoshop (TM) native PSD and PSB format."
 msgstr ""
+"Deze plug-in laadt afbeeldingen in de PSD en PSB bestandsindelingen van "
+"Adobe Photoshop (TM)."
 
 #: plug-ins/file-psd/psd.c:164
 msgid "Photoshop image (merged)"
@@ -10646,31 +10389,34 @@ msgid ""
 "This plug-in loads the merged image data in Adobe Photoshop (TM) native PSD "
 "and PSB format."
 msgstr ""
+"Deze plug-in laadt samengevoegde afbeeldingsinformatie in de PSD en PSB "
+"bestandsindelingen van Adobe Photoshop (TM)."
 
 #: plug-ins/file-psd/psd.c:196
-#, fuzzy
-#| msgid "Loads images from the Paint Shop Pro PSP file format"
 msgid "Loads thumbnails from the Photoshop PSD file format"
-msgstr "Inladen van bestanden in de Paint Shop Pro PSP-bestandsindeling"
+msgstr "Inladen van miniaturen in de PSD-bestandsindeling van Photoshop"
 
 #: plug-ins/file-psd/psd.c:198
 msgid ""
 "This plug-in loads thumbnail images from Adobe Photoshop (TM) native PSD "
 "format files."
 msgstr ""
+"Deze plug-in laadt Miniatuurafbeeldingen in de PSD bestandsindeling van "
+"Adobe Photoshop (TM)."
+
+#: plug-ins/file-psd/psd.c:218
+msgid "Saves files in the Photoshop (TM) PSD file format"
+msgstr "Opslaan van bestanden in de PSD indeling van Adobe Photoshop (TM)"
 
 #: plug-ins/file-psd/psd.c:220
-#, fuzzy
-#| msgid "Saves files in the JPEG XL file format"
-msgid "Saves files in the Photoshop (TM) PSD file format"
-msgstr "Opslaan van bestanden in de JPEG XL-indeling"
-
-#: plug-ins/file-psd/psd.c:222
 msgid ""
 "This filter saves files of Adobe Photoshop (TM) native PSD format. These "
 "files may be of any image type supported by GIMP, with or without layers, "
 "layer masks, aux channels and guides."
 msgstr ""
+"Dit filter slaat bestanden op in de PSD bestandsindeling van Adobe Photoshop "
+"(TM). Deze bestanden kunnen van elk afbeeldingstype zijn dat door GIMP wordt "
+"ondersteund, met of zonder lagen, laagmaskers, extra kanalen en hulplijnen."
 
 #: plug-ins/file-psd/psd.c:249
 msgid "Assign a Clipping _Path"
@@ -10734,22 +10480,23 @@ msgstr "PSD importeren"
 msgid "Import PSD metadata"
 msgstr "PSD-metagegevens importeren"
 
-#: plug-ins/file-psd/psd.c:536
-#, fuzzy
-#| msgid "Metadata fill layers are not supported and will be dropped."
+#: plug-ins/file-psd/psd.c:528
 msgid ""
 "Metadata fill layers are not supported and will show up as empty layers."
 msgstr ""
-"Metagegevensopvullagen worden niet ondersteund en zullen worden genegeerd."
+"Metagegevens opvullagen worden niet ondersteund en zullen als lege laag "
+"worden getoond."
 
 #: plug-ins/file-raw/file-darktable.c:280
 msgid "Load thumbnail from a raw image via darktable"
-msgstr ""
+msgstr "laadt een miniatuurafbeelding uit een raw afbeelding via darktable"
 
 #: plug-ins/file-raw/file-darktable.c:282
 msgid ""
 "This plug-in loads a thumbnail from a raw image by calling darktable-cli."
 msgstr ""
+"Deze plug-in laadt een miniatuurafbeelding uit een raw afbeelding door "
+"darktable-cli te gebruiken."
 
 #: plug-ins/file-raw/file-raw-formats.h:46
 msgid "Raw Canon"
@@ -10894,10 +10641,8 @@ msgid "Compression _type"
 msgstr "Compressie_type"
 
 #: plug-ins/file-sgi/sgi.c:201
-#, fuzzy
-#| msgid "Co_mpression level"
 msgid "Compression level"
-msgstr "Co_mpressieniveau"
+msgstr "Compressieniveau"
 
 #: plug-ins/file-sgi/sgi.c:202
 msgid "No compression"
@@ -10941,32 +10686,32 @@ msgid "TIFF or BigTIFF image"
 msgstr "TIFF- of BigTIFF-afbeelding"
 
 #: plug-ins/file-tiff/file-tiff.c:167
-#, fuzzy
-#| msgid "Load file of the FITS file format"
 msgid "Loads files of the TIFF and BigTIFF file formats"
-msgstr "Inladen van bestanden in de FITS-bestandsindeling"
+msgstr "Inladen van bestanden in de bestandsindelingen TIFF en BigTiff"
 
 #: plug-ins/file-tiff/file-tiff.c:168
 msgid ""
 "Loads files of the Tag Image File Format (TIFF) and its 64-bit offsets "
 "variant (BigTIFF)"
 msgstr ""
+"Inladen van bestanden in de bestandsindelingen Tag Image File Format en de "
+"64-bit variant BigTiff"
 
 #: plug-ins/file-tiff/file-tiff.c:199
 msgid "_Keep empty space around imported layers"
 msgstr "Lege _ruimte rond geïmporteerde lagen behouden"
 
 #: plug-ins/file-tiff/file-tiff.c:213
-#, fuzzy
-#| msgid "Exports files in the PBM file format"
 msgid "Exports files in the TIFF or BigTIFF file formats"
-msgstr "Exporteren van bestanden in de PBM-bestandsindeling"
+msgstr "Exporteren van bestanden in de bestandsindelingen TIFF en BigTiff"
 
 #: plug-ins/file-tiff/file-tiff.c:214
 msgid ""
 "Exports files in the Tag Image File Format (TIFF) or its 64-bit offsets "
 "variant (BigTIFF) able to support much bigger file sizes"
 msgstr ""
+"Exporteren van bestanden in de bestandsindelingen Tag Image File Format en "
+"de 64-bit variant BigTiff waarin veel grotere bestanden worden ondersteund"
 
 #: plug-ins/file-tiff/file-tiff.c:226
 msgid "TIFF"
@@ -10981,7 +10726,7 @@ msgid ""
 "The BigTIFF variant file format uses 64-bit offsets, hence supporting over "
 "4GiB files and bigger"
 msgstr ""
-"Het BigTIFF-bestandsformaat maakt gebruik van 64-bit adressen en ondersteunt "
+"De BigTIFF-bestandsindeling maakt gebruik van 64-bit adressen en ondersteunt "
 "dus bestanden van 4GiB en groter"
 
 #: plug-ins/file-tiff/file-tiff.c:245
@@ -11072,7 +10817,7 @@ msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
 msgstr ""
-"Het TIFF-formaat ondersteunt slechts commentaren in \n"
+"De TIFF-bestandsindeling ondersteunt slechts commentaren in \n"
 "7-bits ASCII. Geen commentaar opgeslagen."
 
 #: plug-ins/file-tiff/file-tiff-export.c:866
@@ -11304,7 +11049,7 @@ msgstr ""
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr ""
-"%s: Niet-ondersteund afbeelding formaat, geen RGBA conversie beschikbaar"
+"%s: Niet-ondersteunde bestandsindeling, geen RGBA conversie beschikbaar"
 
 #: plug-ins/file-tiff/file-tiff-load.c:2023
 #: plug-ins/file-tiff/file-tiff-load.c:2220
@@ -11349,10 +11094,8 @@ msgid "WebP image"
 msgstr "WebP-afbeelding"
 
 #: plug-ins/file-webp/file-webp.c:158 plug-ins/file-webp/file-webp.c:159
-#, fuzzy
-#| msgid "Saves files in DDS image format"
 msgid "Saves files in the WebP image format"
-msgstr "Opslaan van bestanden in de DDS-indeling"
+msgstr "Opslaan van bestanden in de WebP-indeling"
 
 #: plug-ins/file-webp/file-webp.c:168
 msgid "WebP"
@@ -11363,8 +11106,6 @@ msgid "Source _type"
 msgstr "Soor_t bron"
 
 #: plug-ins/file-webp/file-webp.c:179
-#, fuzzy
-#| msgid "WebP encoder \"preset\""
 msgid "WebP encoder preset"
 msgstr "Voorinstelling WebP-codering"
 
@@ -11582,10 +11323,8 @@ msgid "Co_ntrast"
 msgstr "Co_ntrast"
 
 #: plug-ins/flame/flame.c:209
-#, fuzzy
-#| msgid "Sample _density:"
 msgid "Sample _density"
-msgstr "Monster_dichtheid:"
+msgstr "Monster_dichtheid"
 
 # What is 'oversample' in Dutch?
 #: plug-ins/flame/flame.c:214
@@ -11593,8 +11332,6 @@ msgid "Spa_tial oversample"
 msgstr "Ruim_telijke overbemonstering"
 
 #: plug-ins/flame/flame.c:219
-#, fuzzy
-#| msgid "The filter radius"
 msgid "Spatial _filter radius"
 msgstr "Straal van ruimtelijk filter"
 
@@ -12031,10 +11768,10 @@ msgid "Color mode"
 msgstr "Kleurmodus"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:315
-#, fuzzy
-#| msgid "Apply active gradient to final image"
 msgid "Apply specified color map or active gradient to final image"
-msgstr "Actief kleurverloop toepassen op uiteindelijke afbeelding"
+msgstr ""
+"Opgegeven kleurenkaart of actief kleurverloop toepassen op uiteindelijke "
+"afbeelding"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:316
 msgid "As specified above"
@@ -14548,7 +14285,7 @@ msgstr "Algemene voorkeuren"
 
 #: plug-ins/imagemap/imap_preview.c:313
 msgid "Shortcut Menu"
-msgstr ""
+msgstr "Sneltoets menu"
 
 #: plug-ins/imagemap/imap_rectangle.c:68
 msgid "_Rectangle"
@@ -14618,21 +14355,19 @@ msgstr "_Beschrijving:"
 
 #: plug-ins/imagemap/imap_settings.c:127
 msgid "Map File Format"
-msgstr "Bestandsformaat voor afbeeldingskaart"
+msgstr "Bestandsindeling voor afbeeldingskaart"
 
 #: plug-ins/imagemap/imap_source.c:68
 msgid "View Source"
 msgstr "Broncode bekijken"
 
 #: plug-ins/imagemap/imap_statusbar.c:55
-#, fuzzy
-#| msgid "Polar Coordinates"
 msgid "Coordinates:"
-msgstr "P_oolcoördinaten"
+msgstr "Coördinaten:"
 
 #: plug-ins/imagemap/imap_statusbar.c:70
 msgid "Active Area Size:"
-msgstr ""
+msgstr "Afmetingen actief gebied:"
 
 #: plug-ins/imagemap/imap-menu.ui:16
 msgid "Save As"
@@ -14663,22 +14398,19 @@ msgid "Zoom To"
 msgstr "Zoomen naar"
 
 #: plug-ins/imagemap/imap-menu.ui:119
-#, fuzzy
 #| msgid "1:1"
 msgid "8:1"
-msgstr "1:1"
+msgstr "8:1"
 
 #: plug-ins/imagemap/imap-menu.ui:124
-#, fuzzy
 #| msgid "1:1"
 msgid "4:1"
-msgstr "1:1"
+msgstr "4:1"
 
 #: plug-ins/imagemap/imap-menu.ui:129
-#, fuzzy
 #| msgid "1:1"
 msgid "2:1"
-msgstr "1:1"
+msgstr "2:1"
 
 #: plug-ins/imagemap/imap-menu.ui:134
 msgid "1:1"
@@ -15473,11 +15205,9 @@ msgstr "Tweede as"
 msgid "Intensity Levels"
 msgstr "Intensiteitsniveaus"
 
-#: plug-ins/map-object/map-object-ui.c:676
-#, fuzzy
-#| msgid "_Reflective"
+#: plug-ins/map-object/map-object-ui.c:675
 msgid "Reflectivity"
-msgstr "Reflecterend"
+msgstr "Mate van weerspiegeling"
 
 #: plug-ins/map-object/map-object-ui.c:779
 #: plug-ins/map-object/map-object-ui.c:879
@@ -15926,12 +15656,14 @@ msgstr "Metagegevens bewerken (IPTC, Exif, XMP)"
 
 #: plug-ins/metadata/metadata-editor.c:773
 msgid "Parent's window handle"
-msgstr ""
+msgstr "Handvat van omvattende venster"
 
 #: plug-ins/metadata/metadata-editor.c:774
 msgid ""
 "The opaque handle of the window to set this plug-in's dialog transient to"
 msgstr ""
+"Het dialoogvenster van deze plug-in instellen op de dekkende handgreep van "
+"dit venster"
 
 #: plug-ins/metadata/metadata-editor.c:1178
 #, c-format
@@ -16489,11 +16221,11 @@ msgstr "Een afbeelding aanmaken van een deel van het scherm"
 
 #: plug-ins/screenshot/screenshot.c:166
 msgid "Shoot _area"
-msgstr "Te knippen _gebied"
+msgstr "Af te drukken _gebied"
 
 #: plug-ins/screenshot/screenshot.c:167
 msgid "The shoot type"
-msgstr ""
+msgstr "Het afdruk type"
 
 #: plug-ins/screenshot/screenshot.c:168
 msgid "Take a screenshot of a single window"
@@ -16871,7 +16603,7 @@ msgstr "_Scanner / camera..."
 #: plug-ins/twain/twain.c:412
 #, c-format
 msgid "TWAIN driver not found, scanning not available"
-msgstr ""
+msgstr "Scannen niet mogelijk omdat er geen TWAIN driver is gevonden"
 
 #. Initialize our progress dialog
 #: plug-ins/twain/twain.c:490
