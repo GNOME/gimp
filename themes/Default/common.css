@@ -133,6 +133,11 @@ combobox arrow, combobox button * {
   -gtk-icon-shadow: none;
 }
 
+combobox button:hover {
+  color: @fg-color;
+  background-color: @selected-color;
+}
+
 /* Define colors so the nib handle appears in Gimp Ink Options */
 GimpBlobEditor {
   color: @fg-color;
@@ -453,6 +458,11 @@ spinbutton button.up, spinbutton button.down {
   -gtk-icon-shadow: none;
 }
 
+spinbutton button:hover {
+  color: @fg-color;
+  background-color: @selected-color;
+}
+
 GimpSpinScale {
   border-radius: 6px;
   box-shadow:    0px 0.5px @stronger-border-color;
@@ -571,7 +581,7 @@ border {
 
 /* Define popover image button padding */
 popover button {
-  padding: 4px 9px;     
+  padding: 4px 9px;
 }
 
 /* Top menu items  */
