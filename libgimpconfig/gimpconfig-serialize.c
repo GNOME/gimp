@@ -522,10 +522,10 @@ gimp_config_serialize_value (const GValue *value,
 
   if (G_VALUE_HOLDS_BOOLEAN (value))
     {
-      gboolean bool;
+      gboolean boolean;
 
-      bool = g_value_get_boolean (value);
-      g_string_append (str, bool ? "yes" : "no");
+      boolean = g_value_get_boolean (value);
+      g_string_append (str, boolean ? "yes" : "no");
       return TRUE;
     }
 
