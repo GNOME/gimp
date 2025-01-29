@@ -110,16 +110,16 @@ class PaletteOffset (Gimp.PlugIn):
         num_colors = palette.get_color_count()
         tmp_entry_array = []
         for i in range (num_colors):
-            tmp_entry_array.append  ((palette.entry_get_name(i)[1],
-                                      palette.entry_get_color(i)))
+            tmp_entry_array.append  ((palette.get_entry_name(i)[1],
+                                      palette.get_entry_color(i)))
         for i in range (num_colors):
             target_index = i + amount
             if target_index >= num_colors:
                 target_index -= num_colors
             elif target_index < 0:
                 target_index += num_colors
-            palette.entry_set_name(target_index, tmp_entry_array[i][0])
-            palette.entry_set_color(target_index, tmp_entry_array[i][1])
+            palette.set_entry_name(target_index, tmp_entry_array[i][0])
+            palette.set_entry_color(target_index, tmp_entry_array[i][1])
 
         retval = procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
         value = GObject.Value(Gimp.Palette, palette)

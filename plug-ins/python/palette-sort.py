@@ -202,7 +202,7 @@ def palette_sort(palette, selection, slice_expr, channel1, ascending1,
     if selection == "auto-slice":
         def find_index(color, startindex=0):
             for i in range(startindex, num_colors):
-                c = palette.entry_get_color(i)
+                c = palette.get_entry_color(i)
                 rgba = c.get_rgba()
 
                 if rgba[0] == color[1].r and rgba[1] == color[1].g and rgba[2] == color[1].b:
@@ -250,8 +250,8 @@ def palette_sort(palette, selection, slice_expr, channel1, ascending1,
     def get_colors(start, end):
         result = []
         for i in range(start, end):
-            entry =  (palette.entry_get_name(i)[1],
-                      palette.entry_get_color(i))
+            entry =  (palette.get_entry_name(i)[1],
+                      palette.get_entry_color(i))
             index1 = channels_getter_1(entry[1], i)
             index2 = channels_getter_2(entry[1], i)
             index = ((index1 - (index1 % grain1)) * (1 if ascending1 else -1),
@@ -265,8 +265,8 @@ def palette_sort(palette, selection, slice_expr, channel1, ascending1,
         entry_list = get_colors(0, num_colors)
         entry_list.sort(key=lambda v: v[0])
         for i in range(num_colors):
-            palette.entry_set_name(i, entry_list[i][1][0])
-            palette.entry_set_color(i, entry_list[i][1][1])
+            palette.set_entry_name(i, entry_list[i][1][0])
+            palette.set_entry_color(i, entry_list[i][1][1])
 
     elif selection == "partitioned":
         if num_colors < (start + length * nrows) - 1:
@@ -277,11 +277,11 @@ def palette_sort(palette, selection, slice_expr, channel1, ascending1,
         for row in range(nrows):
             partition_spans = [1]
             rowstart = start + (row * length)
-            old_color = palette.entry_get_color(rowstart)
+            old_color = palette.get_entry_color(rowstart)
             old_partition = pchannels_getter(old_color, rowstart)
             old_partition = old_partition - (old_partition % pgrain)
             for i in range(rowstart + 1, rowstart + length):
-                this_color = palette.entry_get_color(i)
+                this_color = palette.get_entry_color(i)
                 this_partition = pchannels_getter(this_color, i)
                 this_partition = this_partition - (this_partition % pgrain)
                 if this_partition == old_partition:
@@ -308,8 +308,8 @@ def palette_sort(palette, selection, slice_expr, channel1, ascending1,
             sublist = get_colors(row_start, row_start + stride)
             sublist.sort(key=lambda v: v[0])
             for i, entry in zip(range(row_start, row_start + stride), sublist):
-                palette.entry_set_name(i, entry[1][0])
-                palette.entry_set_color(i, entry[1][1])
+                palette.set_entry_name(i, entry[1][0])
+                palette.set_entry_color(i, entry[1][1])
 
     return palette
 

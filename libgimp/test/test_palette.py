@@ -35,7 +35,7 @@ assert palette_bears.get_columns() == 0
 colors = palette_bears.get_colors()
 assert len(colors) == 256
 # color of first entry is as expected
-success, color = palette_bears.entry_get_color(0)
+success, color = palette_bears.get_entry_color(0)
 assert success
 assert color.r == 0.03137254901960784
 assert color.g == 0.03137254901960784
@@ -105,7 +105,7 @@ assert index == 0
 # After adding an entry, color count is incremented
 assert palette_new.get_color_count() == 1
 # The color of the new entry equals what we passed
-success, color = palette_new.entry_get_color(0)
+success, color = palette_new.get_entry_color(0)
 assert success == True
 assert foreground_color.r == color.r
 
@@ -118,7 +118,7 @@ assert palette_new.get_color_count() == 2
 
 # An added entry for which the provided name was empty string is empty string
 # TODO C code seems to suggest that it should be named "Untitled"
-success, name = palette_new.entry_get_name(1)
+success, name = palette_new.get_entry_name(1)
 assert success
 assert name == ""
 
@@ -129,7 +129,7 @@ assert palette_new.delete_entry(1) == True
 # Delete entry decrements the color count
 assert palette_new.get_color_count() == 1
 # A deleted entry no longer is gettable
-success, name = palette_new.entry_get_name(1)
+success, name = palette_new.get_entry_name(1)
 assert not success
 assert name == None
 
