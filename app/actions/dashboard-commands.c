@@ -111,6 +111,8 @@ dashboard_log_record_cmd_callback (GimpAction *action,
           GtkWidget              *label;
           GtkWidget              *spinbutton;
           GtkWidget              *toggle;
+          GDateTime              *datetime;
+          gchar                  *default_filename;
 
           dialog = gtk_file_chooser_dialog_new (
             "Record Performance Log", NULL, GTK_FILE_CHOOSER_ACTION_SAVE,
@@ -168,8 +170,15 @@ dashboard_log_record_cmd_callback (GimpAction *action,
                 GTK_FILE_CHOOSER (dialog), info->folder, NULL);
             }
 
+          datetime  = g_date_time_new_now_local ();
+
+          default_filename = g_strdup_printf ("gimp-performance[%d].log",
+                                              g_date_time_to_unix (datetime));
+          g_date_time_unref (datetime);
+
           gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog),
-                                             "gimp-performance.log");
+                                             default_filename);
+          g_free (default_filename);
 
           hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 8);
           gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), hbox);
