@@ -202,18 +202,19 @@ def palette_sort(palette, selection, slice_expr, channel1, ascending1,
     if selection == "auto-slice":
         def find_index(color, startindex=0):
             for i in range(startindex, num_colors):
-                c = palette.get_entry_color(i)
-                rgba = c.get_rgba()
+                rgba = palette.get_entry_color(i)
 
-                if rgba[0] == color[1].r and rgba[1] == color[1].g and rgba[2] == color[1].b:
+                if hexcolor(rgba) == hexcolor(color):
                     return i
             return None
         def hexcolor(c):
+            rgba = c.get_rgba()
             return "#%02x%02x%02x" % (int(255 * rgba[0]), int(255 * rgba[1]), int(255 * rgba[2]))
         fg = Gimp.context_get_foreground()
         bg = Gimp.context_get_background()
         start = find_index(fg)
         end = find_index(bg)
+
         if start is None:
             raise ValueError("Couldn't find foreground color %s in palette" % hexcolor(fg))
         if end is None:
@@ -260,7 +261,6 @@ def palette_sort(palette, selection, slice_expr, channel1, ascending1,
             result.append((index, entry))
         return result
 
-    print (selection)
     if selection == "all":
         entry_list = get_colors(0, num_colors)
         entry_list.sort(key=lambda v: v[0])
