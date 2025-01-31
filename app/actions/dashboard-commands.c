@@ -112,6 +112,7 @@ dashboard_log_record_cmd_callback (GimpAction *action,
           GtkWidget              *spinbutton;
           GtkWidget              *toggle;
           GDateTime              *datetime;
+          gchar                  *timestamp;
           gchar                  *default_filename;
 
           dialog = gtk_file_chooser_dialog_new (
@@ -172,9 +173,13 @@ dashboard_log_record_cmd_callback (GimpAction *action,
 
           datetime  = g_date_time_new_now_local ();
 
-          default_filename = g_strdup_printf ("gimp-performance[%d].log",
-                                              g_date_time_to_unix (datetime));
+          /* Since Windows doesn't allow colons in filenames,
+           * we use ISO 8601 basic format for the timestamp */
+          timestamp = g_date_time_format (datetime, "%Y%m%dT%H%M%SZ");
+          default_filename = g_strdup_printf ("gimp-performance-%s.log",
+                                              timestamp);
           g_date_time_unref (datetime);
+          g_free (timestamp);
 
           gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog),
                                              default_filename);
