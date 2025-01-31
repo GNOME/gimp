@@ -131,6 +131,14 @@ file_open_dialog_response (GtkWidget *dialog,
   if (file_dialog->image)
     g_object_ref (file_dialog->image);
 
+  /* If we open multiple files as layers, compress the undos */
+  if (file_dialog->image          &&
+      open_dialog->open_as_layers &&
+      g_slist_length (files) > 1)
+    gimp_image_undo_group_start (file_dialog->image,
+                                 GIMP_UNDO_GROUP_LAYER_ADD,
+                                 _("Open layers"));
+
   for (list = files; list; list = g_slist_next (list))
     {
       GFile *file = list->data;
@@ -150,6 +158,12 @@ file_open_dialog_response (GtkWidget *dialog,
               if (file_dialog->image)
                 {
                   g_object_ref (file_dialog->image);
+
+                  if (g_slist_length (files) > 1)
+                    gimp_image_undo_group_start (file_dialog->image,
+                                                 GIMP_UNDO_GROUP_LAYER_ADD,
+                                                 _("Open layers"));
+
                   success = TRUE;
                 }
             }
@@ -180,6 +194,11 @@ file_open_dialog_response (GtkWidget *dialog,
       if (file_dialog->canceled)
         break;
     }
+
+  if (file_dialog->image          &&
+      open_dialog->open_as_layers &&
+      g_slist_length (files) > 1)
+    gimp_image_undo_group_end (file_dialog->image);
 
   if (success)
     {
