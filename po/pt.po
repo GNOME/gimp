@@ -5,16 +5,16 @@
 # Pedro Barreira <almufado@gmail.com>, 2010.
 # Pedro Albuquerque <palbuquerque73@gmail.com>, 2015.
 # Tiago Santos <tiagofsantos81@sapo.pt>, 2014-2017.
-# Hugo Carvalho <hugokarvalho@hotmail.com>, 2020, 2021, 2022, 2023.
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2020, 2021, 2022, 2023, 2024, 2025.
 # Sara Campos <lalocas@protonmail.com>, 2021, 2022, 2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-01-28 19:55+0000\n"
-"PO-Revision-Date: 2025-01-28 20:22+0000\n"
-"Last-Translator: Sara Campos <lalocas@protonmail.com>\n"
+"POT-Creation-Date: 2025-01-30 01:53+0000\n"
+"PO-Revision-Date: 2025-01-31 01:00+0000\n"
+"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
@@ -12990,16 +12990,12 @@ msgstr[0] "Cortar camada"
 msgstr[1] "Cortar %d camadas"
 
 #: app/core/gimp-edit.c:212
-#, fuzzy
-#| msgid "Cannot cut because the selected region is empty."
 msgid "Cannot cut because multiple channels are selected."
-msgstr "Não é possível cortar porque a região selecionada está vazia."
+msgstr "Não é possível cortar porque estão selecionados vários canais."
 
 #: app/core/gimp-edit.c:216
-#, fuzzy
-#| msgid "Cannot crop because the current selection is empty."
 msgid "Cannot copy because multiple channels are selected."
-msgstr "Não foi possível recortar porque a região selecionada está vazia."
+msgstr "Não é possível copiar porque estão selecionados vários canais."
 
 #: app/core/gimp-edit.c:252
 msgid "Cannot cut because the selected region is empty."
