@@ -1,4 +1,4 @@
-# translation of gimp-script-fu.HEAD.po to
+# Portuguese translation for gimp-script-fu
 # gimp-script-fu's Portuguese translation.
 # Copyright © 2002, 2003, 2004, 2008 gimp
 # This file is distributed under the same license as the GIMP package
@@ -6,14 +6,14 @@
 # Bruno Queiros <brunomiguelqueiros@sapo.pt>, 2008.
 # Pedro Barreira <almufadado@gmail.com>, 2010
 # Pedro Albuquerque <palbuquerque73@gmail.com>, 2015.
-# Hugo Carvalho <hugokarvalho@hotmail.com>, 2021.
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2021-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-10-07 20:10+0000\n"
-"PO-Revision-Date: 2021-10-07 21:32+0100\n"
+"POT-Creation-Date: 2025-01-12 15:34+0000\n"
+"PO-Revision-Date: 2025-01-31 01:10+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.5\n"
 
 #: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
@@ -349,7 +349,7 @@ msgstr "Quadros Intermediários"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:237
 msgid "Max. blur radius"
-msgstr "Raio de Desfoc. Máx."
+msgstr "Raio da desfocagem máxima"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:238
 msgid "Looped"
@@ -821,88 +821,93 @@ msgstr "Peso da sombra (%)"
 msgid "Flatten image"
 msgstr "Alisar Imagem"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:63
 msgid "Using _Paths"
 msgstr "Utilizando _Caminhos"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:64
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:77
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:90
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:103
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:116
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:129
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:142
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:155
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:167
 msgid "Bookmark to the user manual"
 msgstr "Favorito para o manual do utilizador"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:76
 msgid "_Preparing your Images for the Web"
 msgstr "_Preparando as suas imagens para a Web"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:89
 msgid "_Working with Digital Camera Photos"
 msgstr "_Trabalhando com Fotos de Camera Digital"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:102
 msgid "Create, Open and Save _Files"
 msgstr "Criar, Abrir e Gravar _Ficheiros"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:115
 msgid "_Basic Concepts"
 msgstr "_Conceitos Básicos"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:128
 msgid "How to Use _Dialogs"
 msgstr "Como Utilizar _Dialogos"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:141
 msgid "Drawing _Simple Objects"
 msgstr "Desenhando Objectos _Simples"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:154
 msgid "Create and Use _Selections"
 msgstr "Criar e Utilizar _Selecções"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:190
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:166
+msgid "_[Table of Contents]"
+msgstr "_[Tabela de conteúdos]"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:206
 msgid "_Main Web Site"
 msgstr "_Página Web Principal"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:256
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:207
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:220
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:272
 msgid "Bookmark to the GIMP web site"
 msgstr "Favorito para a página web do GIMP"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:203
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:219
 msgid "_Developer Web Site"
 msgstr "Página Web do _Criador"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:216
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:232
 msgid "_Roadmap"
 msgstr "_Calendário de implementações"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:233
 msgid "Bookmark to the roadmap of GIMP"
 msgstr "Favorito para o calendário de implementações (roadmap) do GIMP"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:229
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:245
 msgid "_Wiki"
 msgstr "_Wiki"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:230
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:246
 msgid "Bookmark to the wiki of GIMP"
 msgstr "Favorito para a wiki do GIMP"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:242
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:258
 msgid "_Bug Reports and Feature Requests"
 msgstr "_Erros reportados e pedidos de funcionalidades"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:243
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:259
 msgid "Bookmark to the bug tracker of GIMP"
 msgstr "Favorito para o rastreador de erros do GIMP"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:255
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:271
 msgid "_User Manual Web Site"
 msgstr "_Página Web do Manual do Utilizador"
 
@@ -1730,7 +1735,7 @@ msgstr "Opacidade Sombra Projectada"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:135
 msgid "Drop shadow blur radius"
-msgstr "Raio de suavização da sombra proj."
+msgstr "Raio da desfocagem da sombra projetada"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:136
 msgid "Drop shadow X offset"
