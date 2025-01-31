@@ -48,6 +48,7 @@
 
 #define LOAD_PROC      "file-raw-load"
 #define LOAD_HGT_PROC  "file-hgt-load"
+#define LOAD_HRZ_PROC  "file-hrz-load"
 #define EXPORT_PROC    "file-raw-export"
 #define PLUG_IN_BINARY "file-raw-data"
 #define PLUG_IN_ROLE   "gimp-file-raw-data"
@@ -177,6 +178,14 @@ static GimpValueArray * raw_export           (GimpProcedure            *procedur
                                               GFile                    *file,
                                               GimpExportOptions        *options,
                                               GimpMetadata             *metadata,
+                                              GimpProcedureConfig      *config,
+                                              gpointer                  run_data);
+
+static GimpValueArray * hrz_load             (GimpProcedure            *procedure,
+                                              GimpRunMode               run_mode,
+                                              GFile                    *file,
+                                              GimpMetadata             *metadata,
+                                              GimpMetadataLoadFlags    *flags,
                                               GimpProcedureConfig      *config,
                                               gpointer                  run_data);
 
@@ -315,6 +324,7 @@ raw_query_procedures (GimpPlugIn *plug_in)
 
   list = g_list_append (list, g_strdup (LOAD_PROC));
   list = g_list_append (list, g_strdup (LOAD_HGT_PROC));
+  list = g_list_append (list, g_strdup (LOAD_HRZ_PROC));
   list = g_list_append (list, g_strdup (EXPORT_PROC));
 
   return list;
@@ -438,8 +448,8 @@ raw_create_procedure (GimpPlugIn  *plug_in,
   else if (! strcmp (name, LOAD_HGT_PROC))
     {
       procedure = gimp_load_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            raw_load, NULL, NULL);
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           raw_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure,
                                      _("Digital Elevation Model data"));
@@ -495,6 +505,27 @@ raw_create_procedure (GimpPlugIn  *plug_in,
                                         GIMP_FILE_CHOOSER_ACTION_OPEN,
                                         TRUE, NULL,
                                         G_PARAM_READWRITE);
+    }
+  else if (! strcmp (name, LOAD_HRZ_PROC))
+    {
+      procedure = gimp_load_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           hrz_load, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure,
+                                     "Slow-scan television data");
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Load HRZ data as images",
+                                        NULL,
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Albert Cahalan",
+                                      "Albert Cahalan",
+                                      "1997");
+
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "hrz");
     }
   else if (! strcmp (name, EXPORT_PROC))
     {
@@ -729,6 +760,98 @@ raw_export (GimpProcedure        *procedure,
 
   g_list_free (drawables);
   return gimp_procedure_new_return_values (procedure, status, error);
+}
+
+static GimpValueArray *
+hrz_load (GimpProcedure         *procedure,
+          GimpRunMode            run_mode,
+          GFile                 *file,
+          GimpMetadata          *metadata,
+          GimpMetadataLoadFlags *flags,
+          GimpProcedureConfig   *config,
+          gpointer               run_data)
+{
+  GimpValueArray    *return_vals;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  RawGimpData       *data;
+  GimpLayer         *layer;
+  guchar            *pixels;
+  gint               pixel_len = 256 * 240 * 3;
+  gsize              file_size;
+  GError            *error  = NULL;
+
+  gegl_init (NULL, NULL);
+
+  data = g_new0 (RawGimpData, 1);
+
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_file_get_utf8_name (file));
+
+  data->fp = g_fopen (g_file_peek_path (file), "rb");
+
+  if (! data->fp)
+    {
+      status = GIMP_PDB_EXECUTION_ERROR;
+      g_set_error (&error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
+      return gimp_procedure_new_return_values (procedure, status, error);
+    }
+
+  /* Check file size - it must be exactly 184,320 bytes */
+  fseek (data->fp, 0, SEEK_END);
+  file_size = ftell (data->fp);
+  fseek (data->fp, 0, SEEK_SET);
+
+  if (file_size != 184320)
+    {
+      fclose (data->fp);
+
+      status = GIMP_PDB_EXECUTION_ERROR;
+      g_set_error (&error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Invalid file."));
+      return gimp_procedure_new_return_values (procedure, status, error);
+    }
+
+  /* HRZ files are always exactly 256 x 240 pixels */
+  data->image = gimp_image_new_with_precision (256, 240, GIMP_RGB,
+                                               GIMP_PRECISION_U8_NON_LINEAR);
+
+  layer = gimp_layer_new (data->image, _("Background"),
+                          256, 240, GIMP_RGB_IMAGE, 100,
+                          gimp_image_get_default_new_layer_mode (data->image));
+  gimp_image_insert_layer (data->image, layer, NULL, 0);
+
+  data->buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+
+  raw_load_standard (data, 256, 240, 3, 0, RAW_RGB_8BPC,
+                     TRUE, TRUE, FALSE);
+
+  fclose (data->fp);
+
+  /* HRZ file values range from 0 to 63. We need to scale them to 0 - 255. */
+  pixels = (guchar *) g_malloc (pixel_len);
+  gegl_buffer_get (data->buffer, GEGL_RECTANGLE (0, 0, 256, 240), 1.0,
+                   babl_format ("R'G'B' u8"), pixels,
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
+  for (gint i = 0; i < pixel_len; i++)
+    pixels[i] = (pixels[i] >> 4) | (pixels[i] << 2);
+
+  gegl_buffer_set (data->buffer, GEGL_RECTANGLE (0, 0, 256, 240), 0,
+                   babl_format ("R'G'B' u8"), pixels,
+                   GEGL_AUTO_ROWSTRIDE);
+
+  g_object_unref (data->buffer);
+  g_free (pixels);
+
+  return_vals = gimp_procedure_new_return_values (procedure,
+                                                  GIMP_PDB_SUCCESS,
+                                                  NULL);
+
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, data->image);
+
+  return return_vals;
 }
 
 /* get file size from a filen */
