@@ -7,13 +7,13 @@
 # Nathan Follens <nfollens@gnome.org>, 2019, 2022.
 # Marcia van den Hout <mvdh1176@gmail.com>, 2021
 # Paul Mathijsse <paul.matthijsse@wanadoo.fr>, 2021.
-# GJR <g.j.roelvink@proton.me>, 2024.
+# GJR <g.j.roelvink@proton.me>, 2024-2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-01-22 16:56+0000\n"
-"PO-Revision-Date: 2024-05-29 11:09+0200\n"
+"POT-Creation-Date: 2025-01-30 01:53+0000\n"
+"PO-Revision-Date: 2025-01-30 15:32+0100\n"
 "Last-Translator: GJR <g.j.roelvink@proton.me>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 # Kan ook 'browsen' zijn
 # of misschien 'Overzicht' (een overzicht van alle beschikbare patronen
@@ -211,7 +211,7 @@ msgstr "XMP (Extensible Metadata Platform) metadata opslaan"
 
 #: libgimp/gimpexportprocedure.c:577
 msgid "Save color _profile"
-msgstr "kleurprofiel opslaan"
+msgstr "Kleurprofiel o_pslaan"
 
 #: libgimp/gimpexportprocedure.c:578
 msgid "Save the ICC color profile as metadata"
@@ -277,7 +277,7 @@ msgstr ""
 "zonder afbeelding. Dit is een fout in de plug-in-code. Neem contact op met "
 "de ontwikkelaar van de plug-in."
 
-#: libgimp/gimpparamspecs-desc.c:65
+#: libgimp/gimpparamspecs-desc.c:68
 msgid "Allowed values:"
 msgstr "Toegestane waarden:"
 
@@ -458,9 +458,10 @@ msgid "_Export"
 msgstr "_Exporteren"
 
 #: libgimp/gimpproceduredialog.c:318 libgimp/gimpproceduredialog.c:617
-#: libgimpwidgets/gimpcolorbutton.c:553 libgimpwidgets/gimpfileentry.c:466
-#: libgimpwidgets/gimpquerybox.c:274 libgimpwidgets/gimpquerybox.c:337
-#: libgimpwidgets/gimpquerybox.c:403 libgimpwidgets/gimpquerybox.c:479
+#: libgimpwidgets/gimpcolorbutton.c:553 libgimpwidgets/gimpfilechooser.c:707
+#: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:274
+#: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
+#: libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_Oké"
 
@@ -471,9 +472,9 @@ msgstr "_Opnieuw instellen"
 #: libgimp/gimpproceduredialog.c:344 libgimpwidgets/gimpcolorbutton.c:552
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:172
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:182
-#: libgimpwidgets/gimpfileentry.c:465 libgimpwidgets/gimpquerybox.c:274
-#: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
-#: libgimpwidgets/gimpquerybox.c:479
+#: libgimpwidgets/gimpfilechooser.c:708 libgimpwidgets/gimpfileentry.c:465
+#: libgimpwidgets/gimpquerybox.c:274 libgimpwidgets/gimpquerybox.c:337
+#: libgimpwidgets/gimpquerybox.c:403 libgimpwidgets/gimpquerybox.c:479
 msgid "_Cancel"
 msgstr "_Annuleren"
 
@@ -493,31 +494,31 @@ msgstr "Instellingen op_slaan"
 msgid "Store current settings for later reuse"
 msgstr "Bewaar de huidige instellingen voor later gebruik"
 
-#: libgimp/gimpproceduredialog.c:876
+#: libgimp/gimpproceduredialog.c:869
 msgid "Brush Chooser"
 msgstr "Penseelkiezer"
 
-#: libgimp/gimpproceduredialog.c:880
+#: libgimp/gimpproceduredialog.c:873
 msgid "Font Chooser"
 msgstr "Lettertypekiezer"
 
-#: libgimp/gimpproceduredialog.c:884
+#: libgimp/gimpproceduredialog.c:877
 msgid "Gradient Chooser"
 msgstr "Verloopkiezer"
 
-#: libgimp/gimpproceduredialog.c:888
+#: libgimp/gimpproceduredialog.c:881
 msgid "Palette Chooser"
 msgstr "Paletkiezer"
 
-#: libgimp/gimpproceduredialog.c:892
+#: libgimp/gimpproceduredialog.c:885
 msgid "Pattern Chooser"
 msgstr "Patroonkiezer"
 
-#: libgimp/gimpproceduredialog.c:2717
+#: libgimp/gimpproceduredialog.c:2647
 msgid "Reset to _Initial Values"
 msgstr "Terugzetten op beg_inwaarden"
 
-#: libgimp/gimpproceduredialog.c:2726
+#: libgimp/gimpproceduredialog.c:2656
 msgid "Reset to _Factory Defaults"
 msgstr "Terugzetten naar _fabriekswaarden"
 
@@ -594,7 +595,7 @@ msgstr "De afmetingen in de bestaande verhouding houden"
 #: libgimp/gimpresolutionentry-private.c:200
 #, c-format
 msgid "pixels/%a"
-msgstr "Pixels/%a"
+msgstr "pixels/%a"
 
 #: libgimp/gimpvectorloadprocedure.c:111
 msgid "_Width (pixels)"
@@ -633,16 +634,20 @@ msgid ""
 "dimensions could neither be extracted nor computed from the vector image's "
 "data."
 msgstr ""
+"afmetingen kunnen niet worden gevonden of berekend uit de gegevens van de "
+"vectorafbeelding."
 
 #: libgimp/gimpvectorloadprocedure.c:373
 msgid "Vector image loading plug-in failed: "
-msgstr ""
+msgstr "Plug-in om vectorafbeelding te laden faalde: "
 
 #: libgimp/gimpvectorloadprocedure.c:397
 msgid ""
 "Dimensions cannot be 0 and no native dimensions could be extracted from the "
 "vector image."
 msgstr ""
+"De afmetingen kunnen niet 0 zijn en er konden geen eigen afmetingen uit de "
+"vectorafbeelding worden gehaald."
 
 #. TRANSLATORS: the %s is a vector format name, e.g. "SVG" or "PDF",
 #. * followed by 2D dimensions with unit, e.g. "200 inch x 400 inch"
@@ -650,30 +655,30 @@ msgstr ""
 #: libgimp/gimpvectorloadproceduredialog.c:131
 #, c-format
 msgid "Source %s file size: %%.%df %s × %%.%df %s"
-msgstr ""
+msgstr "Grootte van bron afbeelding %s : %%.%df %s × %%.%df %s"
 
 #. TRANSLATOR: the %s is a vector format name, e.g. "SVG" or "PDF".
 #: libgimp/gimpvectorloadproceduredialog.c:168
 #, c-format
 msgid "Source %s file's aspect ratio: %%.%df × %%.%df"
-msgstr ""
+msgstr "Breedte-hoogte verhouding van bron afbeelding %s : %%.%df × %%.%df"
 
 #: libgimp/gimpvectorloadproceduredialog.c:176
 #, c-format
 msgid "Approximated source %s file size: %%.%df %s × %%.%df %s"
-msgstr ""
+msgstr "Grootte van bron afbeelding %s bij benadering: %%.%df %s × %%.%df %s"
 
 #. TRANSLATOR: the %s is a vector format name, e.g. "SVG" or "PDF".
 #: libgimp/gimpvectorloadproceduredialog.c:189
 #, c-format
 msgid "The source %s file does not specify a size!"
-msgstr ""
+msgstr "Het bronbestand %s bevat geen grootte informatie!"
 
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
 #: libgimp/gimpvectorloadproceduredialog.c:330
 #, c-format
 msgid "Load %s Image"
-msgstr "Laden afbeelding %s"
+msgstr "%s afbeelding laden"
 
 # full niet meevertaald
 #: libgimpbase/gimpbaseenums.c:30
@@ -1407,12 +1412,9 @@ msgid "GIMP Plug-In"
 msgstr "GIMP-plug-in"
 
 #: libgimpbase/gimpbaseenums.c:1257
-#, fuzzy
-#| msgctxt "pdb-proc-type"
-#| msgid "GIMP Plug-In"
 msgctxt "pdb-proc-type"
 msgid "GIMP Persistent Plug-In"
-msgstr "GIMP-plug-in"
+msgstr "Blijvende GIMP-plug-in"
 
 #: libgimpbase/gimpbaseenums.c:1258
 msgctxt "pdb-proc-type"
@@ -1766,39 +1768,31 @@ msgid "Parsing XMP data failed."
 msgstr "Verwerken van XMP-gegevens mislukt."
 
 #: libgimpbase/gimpunit.c:82
-#, fuzzy
-#| msgctxt "size-type"
-#| msgid "Pixels"
 msgctxt "unit-plural"
 msgid "pixels"
-msgstr "Pixels"
+msgstr "beeldpunten"
 
 #: libgimpbase/gimpunit.c:89
 msgctxt "unit-plural"
 msgid "inches"
-msgstr ""
+msgstr "inches"
 
 #: libgimpbase/gimpunit.c:95
 msgctxt "unit-plural"
 msgid "millimeters"
-msgstr ""
+msgstr "millimeter"
 
 #: libgimpbase/gimpunit.c:102
-#, fuzzy
-#| msgctxt "size-type"
-#| msgid "Points"
 msgctxt "unit-plural"
 msgid "points"
-msgstr "Punten"
+msgstr "punten"
 
 #: libgimpbase/gimpunit.c:108
 msgctxt "unit-plural"
 msgid "picas"
-msgstr ""
+msgstr "pica’s"
 
 #: libgimpbase/gimpunit.c:118
-#, fuzzy
-#| msgid "percent"
 msgctxt "unit-plural"
 msgid "percent"
 msgstr "procent"
@@ -1878,7 +1872,7 @@ msgstr "Kleurbeheerd beeldscherm"
 #: libgimpconfig/gimpconfigenums.c:27
 msgctxt "color-management-mode"
 msgid "Soft-proofing"
-msgstr "Renderintentie"
+msgstr "Afdrukvoorbeeld"
 
 # 29/02/08: oudere vertalingen waren "gevoelsmatig" en "waarneembaar?"
 # "Perceptueel" is de term die in de Nederlandse versies van alle Adobe-programma's (Photoshop, Indesign, ...) gebruikt wordt voor dit mechanisme.
@@ -1955,8 +1949,8 @@ msgid ""
 "some other color space, including soft-proofing to a printer or other output "
 "device profile."
 msgstr ""
-"Het te gebruiken kleurprofiel voor renderintentie van de kleurruimte van de "
-"afbeelding naar een andere kleurruimte, inclusief printers of andere "
+"Het te gebruiken kleurprofiel voor afdrukvoorbeelden van de kleurruimte van "
+"de afbeelding naar een andere kleurruimte, inclusief printers of andere "
 "uitvoerprofielen."
 
 #: libgimpconfig/gimpcolorconfig.c:79
@@ -2006,8 +2000,8 @@ msgstr ""
 msgid ""
 "When disabled, soft-proofing might be of better quality at the cost of speed."
 msgstr ""
-"Indien uitgeschakeld kan de renderintentie verbeteren, ten koste van "
-"snelheid."
+"Indien uitgeschakeld kan het de kwaliteit van het afdrukvoorbeeld "
+"verbeteren, ten koste van snelheid."
 
 #: libgimpconfig/gimpcolorconfig.c:107
 msgid ""
@@ -2063,7 +2057,7 @@ msgstr "Standaardbeeldschermprofiel gebruiken"
 
 #: libgimpconfig/gimpcolorconfig.c:268
 msgid "Simulation profile for soft-proofing"
-msgstr "Simulatieprofiel voor soft-proofing"
+msgstr "Simulatieprofiel voor afdrukvoorbeeld"
 
 #: libgimpconfig/gimpcolorconfig.c:275
 msgid "Display rendering intent"
@@ -2081,15 +2075,15 @@ msgstr "Kleurtransformaties beeldscherm optimaliseren"
 
 #: libgimpconfig/gimpcolorconfig.c:297
 msgid "Soft-proofing rendering intent"
-msgstr "Renderintentie afdruksimulatie"
+msgstr "Renderintentie afdrukvoorbeeld"
 
 #: libgimpconfig/gimpcolorconfig.c:305
 msgid "Use black point compensation for soft-proofing"
-msgstr "Zwartpuntcompensatie voor afdruksimulatie gebruiken"
+msgstr "Zwartpuntcompensatie voor afdrukvoorbeeld gebruiken"
 
 #: libgimpconfig/gimpcolorconfig.c:312
 msgid "Optimize soft-proofing color transformations"
-msgstr "Kleurtransformaties beeldscherm optimaliseren"
+msgstr "Kleurtransformaties afdrukvoorbeeld optimaliseren"
 
 #: libgimpconfig/gimpcolorconfig.c:319
 msgid "Mark out of gamut colors"
@@ -2469,36 +2463,37 @@ msgstr "Doel"
 
 #: libgimpwidgets/gimppageselector.c:197
 msgid "the target to open to"
-msgstr "Het doel om ze in te openen"
+msgstr "het doel om ze in te openen"
 
 #. Count label
-#: libgimpwidgets/gimppageselector.c:275 libgimpwidgets/gimppageselector.c:1018
+#: libgimpwidgets/gimppageselector.c:275 libgimpwidgets/gimppageselector.c:1014
 msgid "Nothing selected"
 msgstr "Niets geselecteerd"
 
-#: libgimpwidgets/gimppageselector.c:293
-msgid "Select _All"
-msgstr "_Alles selecteren"
-
-#: libgimpwidgets/gimppageselector.c:313
-msgid "Select _range:"
-msgstr "Be_reik selecteren:"
-
-#: libgimpwidgets/gimppageselector.c:325
+#: libgimpwidgets/gimppageselector.c:289
 msgid "Open _pages as"
 msgstr "_Pagina’s openen als"
 
-#: libgimpwidgets/gimppageselector.c:448 libgimpwidgets/gimppageselector.c:625
+#. Select all button & range entry
+#: libgimpwidgets/gimppageselector.c:301
+msgid "Select _range:"
+msgstr "Be_reik selecteren:"
+
+#: libgimpwidgets/gimppageselector.c:323
+msgid "Select _All"
+msgstr "_Alles selecteren"
+
+#: libgimpwidgets/gimppageselector.c:444 libgimpwidgets/gimppageselector.c:621
 #, c-format
 msgid "Page %d"
 msgstr "Pagina %d"
 
-#: libgimpwidgets/gimppageselector.c:1023
+#: libgimpwidgets/gimppageselector.c:1019
 msgid "One page selected"
 msgstr "Eén pagina geselecteerd"
 
+#: libgimpwidgets/gimppageselector.c:1026
 #: libgimpwidgets/gimppageselector.c:1030
-#: libgimpwidgets/gimppageselector.c:1034
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
