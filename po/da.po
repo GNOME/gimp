@@ -60,7 +60,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2025-01-10 22:27+0000\n"
-"PO-Revision-Date: 2025-01-27 18:47+0100\n"
+"PO-Revision-Date: 2025-02-01 15:58+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -21902,7 +21902,7 @@ msgstr "Blå kanal"
 
 #: app/propgui/gimppropgui-color-balance.c:94
 msgid "Select Range to Adjust"
-msgstr "Vælg område der skal justeres"
+msgstr "Vælg område, der skal justeres"
 
 #: app/propgui/gimppropgui-color-balance.c:98 app/tools/gimplevelstool.c:269
 msgid "Adjust Color Levels"
@@ -21946,7 +21946,7 @@ msgstr "Blå"
 
 #: app/propgui/gimppropgui-color-balance.c:129
 msgid "R_eset Range"
-msgstr "N_ulstil interval"
+msgstr "N_ulstil område"
 
 #: app/propgui/gimppropgui-color-balance.c:139
 msgid "Preserve _luminosity"
@@ -22606,7 +22606,7 @@ msgstr "_Kontrast"
 
 #: app/tools/gimpbrightnesscontrasttool.c:297
 msgid "Edit these Settings as Levels"
-msgstr "Redigér indstillingerne som niveauer"
+msgstr "Redigér som Niveauer med disse indstillinger"
 
 #: app/tools/gimpbucketfilloptions.c:155
 msgid "Fill selection"
