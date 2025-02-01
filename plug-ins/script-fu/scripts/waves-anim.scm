@@ -70,7 +70,7 @@
     (while (< phi 0)
       (set! phi (+ phi 360.0))
     )
-    (set! phi (/ (- (modulo phase 360.0) 180.0) 180.0))
+    (set! phi (/ (- (modulo (round phase) 360.0) 180.0) 180.0))
     (if (< aspect 0.1)
       (set! aspect 0.1))
     (if (> aspect 10.0)
@@ -96,7 +96,7 @@
     (while (< phi 0)
       (set! phi (+ phi 360.0))
     )
-    (set! phi (/ (- (modulo phase 360.0) 180.0) 180.0))
+    (set! phi (/ (- (modulo (round phase) 360.0) 180.0) 180.0))
 
     (if (< aspect 0.1)
       (set! aspect 0.1))
