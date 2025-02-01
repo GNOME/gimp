@@ -8,812 +8,1008 @@
 # bevel          afgeschuind/3d/uitspringend/inspringend
 # render         renderen/tekenen
 msgid ""
-msgstr ""
-"Project-Id-Version: GIMP 2.0\n"
+msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-02-17 22:15+0000\n"
-"PO-Revision-Date: 2022-03-29 17:41+0200\n"
-"Last-Translator: Nathan Follens <nfollens@gnome.org>\n"
-"Language-Team: Dutch <gnome-nl-list@gnome.org>\n"
+"POT-Creation-Date: 2025-01-31 03:56+0000\n"
+"PO-Revision-Date: 2025-02-01 12:41+0200\n"
+"Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
+"Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Omegat 6.1.0\n"
 
-#: ../plug-ins/python/colorxhtml.py:89
+#: plug-ins/python/colorxhtml.py:78
 msgid "Save as colored HTML text..."
 msgstr "Opslaan als gekleurde HTML-tekst…"
 
-#: ../plug-ins/python/colorxhtml.py:94
-msgid "Read characters from file..."
-msgstr "Lees tekens van bestand…"
-
-#: ../plug-ins/python/colorxhtml.py:113
-msgid "Characters"
-msgstr "Tekens"
-
-#: ../plug-ins/python/colorxhtml.py:114
-msgid "Characters that will be used as colored pixels. "
-msgstr "Tekens die als gekleurde pixels worden gebruikt. "
-
-#: ../plug-ins/python/colorxhtml.py:123
-msgid "Characters or file location"
-msgstr "Tekst of bestandslocatie"
-
-#: ../plug-ins/python/colorxhtml.py:129
-msgid "Read characters from file"
-msgstr "Lees de tekst uit bestand"
-
-# Wat een woordenbrij! - Nathan
-#: ../plug-ins/python/colorxhtml.py:132
-msgid ""
-"If set, the Characters text entry will be used as a file name, from which "
-"the characters will be read. Otherwise, the characters in the text entry "
-"will be used to render the image."
-msgstr ""
-"Indien ingesteld worden de tekens van de tekstinvoer gebruikt als "
-"bestandsnaam waaruit de tekens gelezen worden. Anders worden de tekens van "
-"de tekstinvoer gebruikt om de afbeelding te tekenen."
-
-#: ../plug-ins/python/colorxhtml.py:138
-msgid "Choose file"
-msgstr "Bestand kiezen"
-
-#: ../plug-ins/python/colorxhtml.py:145
-msgid "Font Size(px)"
-msgstr "Lettergrootte (px)"
-
-#: ../plug-ins/python/colorxhtml.py:157
-msgid "Write separate CSS file"
-msgstr "Afzonderlijk CSS-bestand maken"
-
-#: ../plug-ins/python/colorxhtml.py:210
+#: plug-ins/python/colorxhtml.py:137
 msgid "Saving as colored XHTML"
 msgstr "Wordt opgeslagen als gekleurde XHTML"
 
-#: ../plug-ins/python/colorxhtml.py:279 ../plug-ins/python/colorxhtml.py:280
-msgid "_Read characters from file, if true, or use text entry"
-msgstr "Lees de tekst uit een bestand indien ja, anders gebruik deze tekst"
-
-#: ../plug-ins/python/colorxhtml.py:284 ../plug-ins/python/colorxhtml.py:285
-msgid "_File to read or characters to use"
-msgstr "_Bestand om te lezen of tekens om te gebruiken"
-
-#: ../plug-ins/python/colorxhtml.py:289 ../plug-ins/python/colorxhtml.py:290
-msgid "Fo_nt size in pixels"
-msgstr "Lettergrootte in beeldpunten"
-
-#: ../plug-ins/python/colorxhtml.py:294 ../plug-ins/python/colorxhtml.py:295
-msgid "_Write a separate CSS file"
-msgstr "Afzonderlijk CSS-bestand _opslaan"
-
-#: ../plug-ins/python/colorxhtml.py:314
+#: plug-ins/python/colorxhtml.py:211
 msgid "Save as colored HTML text"
 msgstr "Opslaan als gekleurde HTML"
 
-#: ../plug-ins/python/colorxhtml.py:317
+#: plug-ins/python/colorxhtml.py:214
 msgid "Colored HTML text"
 msgstr "Gekleurde HTML"
 
-#: ../plug-ins/python/foggify.py:104
-msgid "Layer _name"
-msgstr "Laag_naam"
+#: plug-ins/python/colorxhtml.py:222
+msgid "Rea_d characters from file"
+msgstr "Lee_s tekst uit bestand"
 
-#: ../plug-ins/python/foggify.py:105
-msgid "Layer name"
-msgstr "Laagnaam"
+#: plug-ins/python/colorxhtml.py:223
+msgid "Read characters from file, if true, or use text entry"
+msgstr "Lees de tekst uit bestand indien true, gebruik anders deze tekst"
 
-#: ../plug-ins/python/foggify.py:106
-msgid "Clouds"
-msgstr "Wolken"
+#: plug-ins/python/colorxhtml.py:225
+msgid "Charac_ters"
+msgstr "Teke_ns"
 
-#: ../plug-ins/python/foggify.py:109
-msgid "_Turbulence"
-msgstr "_Turbulentie"
+#: plug-ins/python/colorxhtml.py:226
+msgid "Characters that will be used as colored pixels."
+msgstr "Tekens die als gekleurde pixels zullen worden gebruikt."
 
-#: ../plug-ins/python/foggify.py:110
-msgid "Turbulence"
-msgstr "Turbulentie"
+#: plug-ins/python/colorxhtml.py:228
+msgid "Fo_nt size in pixels"
+msgstr "Lettergrootte in beeldpunten"
 
-#: ../plug-ins/python/foggify.py:114
-msgid "O_pacity"
-msgstr "D_ekking"
+#: plug-ins/python/colorxhtml.py:229
+msgid "Font size in pixels"
+msgstr "Grootte lettertype in pixels"
 
-#: ../plug-ins/python/foggify.py:115
-msgid "Opacity"
-msgstr "Dekking"
+#: plug-ins/python/colorxhtml.py:231
+msgid "_Write a separate CSS file"
+msgstr "Afzonderlijk CSS-bestand _opslaan"
 
-#: ../plug-ins/python/foggify.py:124
-msgid "_Fog color"
-msgstr "_Mistkleur"
+#: plug-ins/python/colorxhtml.py:232
+msgid "Write a separate CSS file"
+msgstr "Schrijf naar een afzonderlijk CSS-bestand"
 
-#: ../plug-ins/python/foggify.py:125
-msgid "Fog color"
-msgstr "Mistkleur"
+#. GUI only, used to create a widget to open a file if source-file is enabled
+#: plug-ins/python/colorxhtml.py:235
+msgid "Choose File"
+msgstr "Bestand kiezen"
 
-#: ../plug-ins/python/foggify.py:141
+#: plug-ins/python/foggify.py:119
 msgid "Add a layer of fog"
 msgstr "Een laag mist toevoegen"
 
-#: ../plug-ins/python/foggify.py:144
+#: plug-ins/python/foggify.py:120
+msgid "Adds a layer of fog to the image."
+msgstr "Voegt een laag mist toe aan de afbeelding."
+
+#: plug-ins/python/foggify.py:122
 msgid "_Fog..."
 msgstr "_Mist…"
 
-#: ../plug-ins/python/gradients-save-as-css.py:81
-msgid "CSS file..."
-msgstr "CSS-bestand…"
+#: plug-ins/python/foggify.py:128
+msgid "Layer _name"
+msgstr "Laag_naam"
 
-#: ../plug-ins/python/gradients-save-as-css.py:144
-msgid "Gradient to use"
-msgstr "Te gebruiken verloop"
+#: plug-ins/python/foggify.py:128
+msgid "Layer name"
+msgstr "Laagnaam"
 
-#: ../plug-ins/python/gradients-save-as-css.py:147
-msgid "File"
-msgstr "Bestand"
+#: plug-ins/python/foggify.py:129
+msgid "Clouds"
+msgstr "Wolken"
 
-#: ../plug-ins/python/histogram-export.py:94
-msgid "Pixel count"
-msgstr "Aantal pixels"
+#: plug-ins/python/foggify.py:130
+msgid "_Fog color"
+msgstr "_Mistkleur"
 
-#: ../plug-ins/python/histogram-export.py:95
-msgid "Normalized"
-msgstr "Genormaliseerd"
+#: plug-ins/python/foggify.py:130
+msgid "Fog color"
+msgstr "Mistkleur"
 
-#: ../plug-ins/python/histogram-export.py:96
-msgid "Percent"
-msgstr "Procent"
+#: plug-ins/python/foggify.py:132
+msgid "_Turbulence"
+msgstr "_Turbulentie"
 
-#: ../plug-ins/python/histogram-export.py:166
+#: plug-ins/python/foggify.py:132
+msgid "Turbulence"
+msgstr "Turbulentie"
+
+#: plug-ins/python/foggify.py:134
+msgid "O_pacity"
+msgstr "D_ekking"
+
+#: plug-ins/python/foggify.py:134
+msgid "Opacity"
+msgstr "Dekking"
+
+#: plug-ins/python/gradients-save-as-css.py:130
+#: plug-ins/python/gradients-save-as-css.py:131
+msgid "Creates a new palette from a given gradient"
+msgstr "Maakt een nieuw palet uit een opgegeven kleurverloop"
+
+#: plug-ins/python/gradients-save-as-css.py:133
+msgid "Save Gradient as CSS..."
+msgstr "Kleurverloop opslaan als CSS…"
+
+#: plug-ins/python/gradients-save-as-css.py:139
+#: plug-ins/python/palette-offset.py:55 plug-ins/python/palette-sort.py:354
+#: plug-ins/python/palette-to-gradient.py:144
+#: plug-ins/python/python-console/python-console.py:320
+msgid "Run mode"
+msgstr "Modus Uitvoeren"
+
+#: plug-ins/python/gradients-save-as-css.py:140
+#: plug-ins/python/palette-offset.py:56 plug-ins/python/palette-sort.py:355
+#: plug-ins/python/palette-to-gradient.py:145
+#: plug-ins/python/python-console/python-console.py:321
+msgid "The run mode"
+msgstr "De modus Uitvoeren"
+
+#: plug-ins/python/gradients-save-as-css.py:143
+msgid "_Gradient to use"
+msgstr "Te gebruiken _kleurverloop"
+
+#: plug-ins/python/gradients-save-as-css.py:147
+msgid "_File"
+msgstr "_Bestand"
+
+#: plug-ins/python/histogram-export.py:153
 msgid "File is either a directory or file name is empty."
 msgstr "Bestand is een map of de bestandsnaam is leeg."
 
-#: ../plug-ins/python/histogram-export.py:169
+#: plug-ins/python/histogram-export.py:156
 msgid "Directory not found."
 msgstr "Map niet gevonden."
 
-#: ../plug-ins/python/histogram-export.py:203
+#: plug-ins/python/histogram-export.py:170
 msgid "Histogram Export..."
 msgstr "Histogram exporteren…"
 
-#: ../plug-ins/python/histogram-export.py:230
-msgid "_File..."
-msgstr "_Bestand…"
-
-#: ../plug-ins/python/histogram-export.py:238
-msgid "Choose export file..."
-msgstr "Kies bestand om te exporteren…"
-
-#: ../plug-ins/python/histogram-export.py:244
-msgid "Histogram Export file..."
-msgstr "Histogram-exportbestand…"
-
-#. Bucket size parameter
-#: ../plug-ins/python/histogram-export.py:250
-#: ../plug-ins/python/histogram-export.py:320
-msgid "_Bucket Size"
-msgstr "_Emmergrootte"
-
-#. Sample average parameter
-#: ../plug-ins/python/histogram-export.py:258
-#: ../plug-ins/python/histogram-export.py:325
-msgid "Sample _Average"
-msgstr "_Monstergemiddelde"
-
-#: ../plug-ins/python/histogram-export.py:259
-msgid ""
-"If checked, the histogram is generated from merging all visible layers. "
-"Otherwise, the histogram is only for the current layer."
-msgstr ""
-"Indien aangevinkt wordt het histogram gemaakt door alle zichtbare lagen "
-"samen te voegen. Anders is het histogram alleen van de huidige laag."
-
-#. Output format parameter
-#: ../plug-ins/python/histogram-export.py:265
-msgid "_Output Format"
-msgstr "_Uitvoerformaat"
-
-#: ../plug-ins/python/histogram-export.py:316
-msgid "Histogram _File"
-msgstr "Histogram_bestand"
-
-#: ../plug-ins/python/histogram-export.py:330
-msgid "Output format"
-msgstr "Uitvoerformaat"
-
-#: ../plug-ins/python/histogram-export.py:351
+#: plug-ins/python/histogram-export.py:213
 msgid "Exports the image histogram to a text file (CSV)"
-msgstr "Exporteert het beeldhistogram naar een tekstbestand (CSV)"
+msgstr "Exporteert het histogram van de afbeelding naar een tekstbestand (CSV)"
 
-#: ../plug-ins/python/histogram-export.py:354
+#: plug-ins/python/histogram-export.py:216
 msgid "_Export histogram..."
 msgstr "Histogram _exporteren…"
 
-#: ../plug-ins/python/palette-offset.py:46
-#: ../plug-ins/python/palette-offset.py:47
-#: ../plug-ins/python/palette-sort.py:340
-#: ../plug-ins/python/palette-sort.py:399
-#: ../plug-ins/python/palette-to-gradient.py:103
-msgid "Palette"
-msgstr "Palet"
+#. TODO: GFile props still don't have labels + only load existing files
+#. (here we likely want to create a new file).
+#: plug-ins/python/histogram-export.py:224
+msgid "Histogram File"
+msgstr "Histogram-bestand"
 
-#: ../plug-ins/python/palette-offset.py:58
-msgid "Off_set"
-msgstr "Ver_schuiving"
+#: plug-ins/python/histogram-export.py:225
+msgid "Histogram export file"
+msgstr "Histogram-exportbestand…"
 
-#: ../plug-ins/python/palette-offset.py:59
-msgid "Offset"
-msgstr "Verschuiving"
+#: plug-ins/python/histogram-export.py:227
+msgid "_Bucket Size"
+msgstr "_Emmergrootte"
 
-#: ../plug-ins/python/palette-offset.py:92
+#: plug-ins/python/histogram-export.py:227
+msgid "Bucket Size"
+msgstr "Emmergrootte"
+
+#: plug-ins/python/histogram-export.py:229
+msgid "Sample _Average"
+msgstr "_Monstergemiddelde"
+
+#: plug-ins/python/histogram-export.py:229
+msgid "Sample Average"
+msgstr "Monstergemiddelde"
+
+#: plug-ins/python/histogram-export.py:232
+msgid "Pixel Count"
+msgstr "Aantal pixels"
+
+#: plug-ins/python/histogram-export.py:233
+msgid "Normalized"
+msgstr "Genormaliseerd"
+
+#: plug-ins/python/histogram-export.py:234
+msgid "Percent"
+msgstr "Procent"
+
+#: plug-ins/python/histogram-export.py:235
+msgid "Output _format"
+msgstr "_Indeling uitvoer"
+
+#: plug-ins/python/histogram-export.py:235
+msgid "Output format"
+msgstr "Indeling uitvoer"
+
+#: plug-ins/python/palette-offset.py:48
 msgid "_Offset Palette..."
 msgstr "_Verschuiving palet…"
 
-#: ../plug-ins/python/palette-offset.py:93
+#: plug-ins/python/palette-offset.py:49
 msgid "Offset the colors in a palette"
 msgstr "De kleuren in een palet verschuiven"
 
-#: ../plug-ins/python/palette-offset.py:141
-msgid "Offset Palette..."
-msgstr "Verschuiving palet…"
+#: plug-ins/python/palette-offset.py:59 plug-ins/python/palette-sort.py:358
+#: plug-ins/python/palette-to-gradient.py:148
+msgid "_Palette"
+msgstr "_Palet"
 
-#: ../plug-ins/python/palette-sort.py:41
+#: plug-ins/python/palette-offset.py:60 plug-ins/python/palette-sort.py:359
+#: plug-ins/python/palette-sort.py:400 plug-ins/python/palette-sort.py:401
+#: plug-ins/python/palette-to-gradient.py:149
+msgid "Palette"
+msgstr "Palet"
+
+#: plug-ins/python/palette-offset.py:63
+msgid "O_ffset"
+msgstr "Verschui_ving"
+
+#: plug-ins/python/palette-offset.py:63
+msgid "Offset"
+msgstr "Verschuiving"
+
+#: plug-ins/python/palette-offset.py:65
+msgid "The edited palette"
+msgstr "Het bewerkte palet"
+
+#: plug-ins/python/palette-offset.py:66
+msgid "The newly created palette when read-only, otherwise the input palette"
+msgstr "Het nieuw gemaakte palet indien alleen-lezen, anders het palet van de invoer"
+
+#. TODO: Re-incorporate LAB and LCHab options with GeglColor
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:464
 msgid "Red"
 msgstr "Rood"
 
-#: ../plug-ins/python/palette-sort.py:41
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:465
 msgid "Green"
 msgstr "Groen"
 
-#: ../plug-ins/python/palette-sort.py:41
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:466
 msgid "Blue"
 msgstr "Blauw"
 
-#: ../plug-ins/python/palette-sort.py:42
+#: plug-ins/python/palette-sort.py:46 plug-ins/python/palette-sort.py:467
 msgid "Luma (Y)"
 msgstr "Luma (Y)"
 
-#: ../plug-ins/python/palette-sort.py:43
+#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:468
 msgid "Hue"
 msgstr "Tint"
 
-#: ../plug-ins/python/palette-sort.py:43
+#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:469
 msgid "Saturation"
 msgstr "Verzadiging"
 
-#: ../plug-ins/python/palette-sort.py:43
+#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:470
 msgid "Value"
 msgstr "Waarde"
 
-#: ../plug-ins/python/palette-sort.py:44
+#: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:471
 msgid "Saturation (HSL)"
 msgstr "Verzadiging (HSL)"
 
-#: ../plug-ins/python/palette-sort.py:44
+#: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:472
 msgid "Lightness (HSL)"
 msgstr "Lichtheid (HSL)"
 
-#: ../plug-ins/python/palette-sort.py:45
+#: plug-ins/python/palette-sort.py:49 plug-ins/python/palette-sort.py:473
 msgid "Index"
 msgstr "Index"
 
-#: ../plug-ins/python/palette-sort.py:46
+#: plug-ins/python/palette-sort.py:50 plug-ins/python/palette-sort.py:474
 msgid "Random"
 msgstr "Willekeurig"
 
-#: ../plug-ins/python/palette-sort.py:91
-msgid "Lightness (LAB)"
-msgstr "Lichtheid (LAB)"
+#: plug-ins/python/palette-sort.py:94
+msgid ""
+"\n"
+"    Format is 'start:nrows,length' . All items are optional.\n"
+"\n"
+"    The empty string selects all items, as does ':'\n"
+"    ':4,' makes a 4-row selection out of all colors (length auto-"
+"determined)\n"
+"    ':4' also.\n"
+"    ':1,4' selects the first 4 colors\n"
+"    ':,4' selects rows of 4 colors (nrows auto-determined)\n"
+"    ':3,4' selects 3 rows of 4 colors\n"
+"    '4:' selects a single row of all colors after 4, inclusive.\n"
+"    '3:,4' selects rows of 4 colors, starting at 3 (nrows auto-determined)\n"
+"    '2:3,4' selects 3 rows of 4 colors (12 colors total), beginning at index "
+"2.\n"
+"    '4' is illegal (ambiguous)\n"
+msgstr "\n"
+"    Indeling is 'start:nrows,length' . Alle items zijn optioneel.\n"
+"\n"
+"    De lege tekenreeks selecteert alle items, net als ':'\n"
+"    ':4,' maakt een 4-rij selectie uit alle kleuren (lengte wordt automatisch bepaald)\n"
+"    ':4' ook.\n"
+"    ':1,4' selecteert de eerste 4 kleuren\n"
+"    ':,4' selecteert rijen met 4 kleuren (nrows wordt automatisch bepaald)\n"
+"    ':3,4' selecteert 3 rijen met 4 kleuren\n"
+"    '4:' selecteert een enkele rij van alle kleuren na 4, inclusief.\n"
+"    '3:,4' selecteert rijen van 4 kleuren, beginnend met 3 (nrows automatisch bepaald)\n"
+"    '2:3,4' selecteert 3 rijen met 4 kleuren (totaal 12 kleuren), beginnend met index 2.\n"
+"    '4' is ongeldig (niet duidelijk genoeg)\n"
 
-#: ../plug-ins/python/palette-sort.py:92
-msgid "A-color"
-msgstr "A-kleur"
-
-#: ../plug-ins/python/palette-sort.py:92
-msgid "B-color"
-msgstr "B-kleur"
-
-#: ../plug-ins/python/palette-sort.py:93
-msgid "Chroma (LCHab)"
-msgstr "Chroma (LCHab)"
-
-#: ../plug-ins/python/palette-sort.py:94
-msgid "Hue (LCHab)"
-msgstr "Tint (LCHab)"
-
-#: ../plug-ins/python/palette-sort.py:328
-msgid "All"
-msgstr "Alle"
-
-#: ../plug-ins/python/palette-sort.py:328
-msgid "Slice / Array"
-msgstr "Segment / matrix"
-
-#: ../plug-ins/python/palette-sort.py:328
-msgid "Autoslice (fg->bg)"
-msgstr "Autosegment (vg -> ag)"
-
-#: ../plug-ins/python/palette-sort.py:328
-msgid "Partitioned"
-msgstr "Opgedeeld"
-
-#: ../plug-ins/python/palette-sort.py:345
-msgid "Se_lections"
-msgstr "Se_lecties"
-
-#: ../plug-ins/python/palette-sort.py:352
-msgid "Slice _expression"
-msgstr "S_egmentuitdrukking"
-
-#: ../plug-ins/python/palette-sort.py:359
-msgid "Channel to _sort"
-msgstr "Kanaal om te _sorteren"
-
-#: ../plug-ins/python/palette-sort.py:364
-#: ../plug-ins/python/palette-sort.py:376
-msgid "_Ascending"
-msgstr "_Oplopend"
-
-#: ../plug-ins/python/palette-sort.py:371
-msgid "Secondary Channel to s_ort"
-msgstr "Tweede kanaal om te s_orteren"
-
-#: ../plug-ins/python/palette-sort.py:381
-msgid "_Quantization"
-msgstr "_Kwantisering"
-
-#: ../plug-ins/python/palette-sort.py:387
-msgid "_Partitioning channel"
-msgstr "_Partitiekanaal"
-
-# Burk, wat een Nederlands!
-# pm
-#: ../plug-ins/python/palette-sort.py:392
-msgid "Partition q_uantization"
-msgstr "Partitiek_wantisering"
-
-#: ../plug-ins/python/palette-sort.py:417
+#: plug-ins/python/palette-sort.py:343
 msgid "_Sort Palette..."
 msgstr "Palet _sorteren…"
 
-#: ../plug-ins/python/palette-sort.py:422
+#: plug-ins/python/palette-sort.py:345
 msgid "Sort the colors in a palette"
 msgstr "De kleuren in een palet sorteren"
 
-#: ../plug-ins/python/palette-to-gradient.py:139
+#: plug-ins/python/palette-sort.py:364
+msgid "All"
+msgstr "Alle"
+
+#: plug-ins/python/palette-sort.py:365
+msgid "Slice / Array"
+msgstr "Segment / matrix"
+
+#: plug-ins/python/palette-sort.py:366
+msgid "Autoslice (fg->bg)"
+msgstr "Autosegment (vg -> ag)"
+
+#: plug-ins/python/palette-sort.py:367
+msgid "Partitioned"
+msgstr "Opgedeeld"
+
+#: plug-ins/python/palette-sort.py:368
+msgid "Select_ions"
+msgstr "Select_ies"
+
+#: plug-ins/python/palette-sort.py:368
+msgid "Selections"
+msgstr "Selecties"
+
+#. TODO: It would be much simpler to replace the slice expression with three
+#. separate parameters: start-index, number-of-rows, row_length
+#: plug-ins/python/palette-sort.py:372
+msgid "Slice _expression"
+msgstr "S_egmentuitdrukking"
+
+#: plug-ins/python/palette-sort.py:377
+msgid "Channel _to sort"
+msgstr "Te sor_teren kanaal"
+
+#: plug-ins/python/palette-sort.py:377
+msgid "Channel to sort"
+msgstr "Te sorteren kanaal"
+
+#: plug-ins/python/palette-sort.py:379
+msgid "_Ascending"
+msgstr "_Oplopend"
+
+#: plug-ins/python/palette-sort.py:379 plug-ins/python/palette-sort.py:386
+msgid "Ascending"
+msgstr "Oplopend"
+
+#: plug-ins/python/palette-sort.py:383
+msgid "Secondary C_hannel to sort"
+msgstr "Secundaire te sorteren _kanaal"
+
+#: plug-ins/python/palette-sort.py:384
+msgid "Secondary Channel to sort"
+msgstr "Secundaire te sorteren kanaal"
+
+#: plug-ins/python/palette-sort.py:386
+msgid "Ascen_ding"
+msgstr "Oplopen_d"
+
+#: plug-ins/python/palette-sort.py:388
+msgid "_Quantization"
+msgstr "_Kwantisering"
+
+#: plug-ins/python/palette-sort.py:389
+msgid "Quantization"
+msgstr "Kwantisering"
+
+#: plug-ins/python/palette-sort.py:393
+msgid "Partitionin_g channel"
+msgstr "Opdelin_g kanaal"
+
+#: plug-ins/python/palette-sort.py:394
+msgid "Partitioning channel"
+msgstr "Opdelen kanaal"
+
+# Burk, wat een Nederlands!
+# pm
+#: plug-ins/python/palette-sort.py:396
+msgid "Partition q_uantization"
+msgstr "K_wantisering partitie"
+
+# Burk, wat een Nederlands!
+# pm
+#: plug-ins/python/palette-sort.py:397
+msgid "Partition quantization"
+msgstr "Kwantisering partitie"
+
+#: plug-ins/python/palette-sort.py:475
+msgid "Lightness (LAB)"
+msgstr "Lichtheid (LAB)"
+
+#: plug-ins/python/palette-sort.py:476
+msgid "A-color"
+msgstr "A-kleur"
+
+#: plug-ins/python/palette-sort.py:477
+msgid "B-color"
+msgstr "B-kleur"
+
+#: plug-ins/python/palette-sort.py:478
+msgid "Chroma (LCHab)"
+msgstr "Chroma (LCHab)"
+
+#: plug-ins/python/palette-sort.py:479
+msgid "Hue (LCHab)"
+msgstr "Tint (LCHab)"
+
+#: plug-ins/python/palette-to-gradient.py:128
 msgid "Palette to _Gradient"
 msgstr "Palet naar _kleurverloop"
 
-#: ../plug-ins/python/palette-to-gradient.py:140
+#: plug-ins/python/palette-to-gradient.py:129
 msgid "Create a gradient using colors from the palette"
 msgstr "Een kleurverloop aanmaken met de kleuren van het palet"
 
-#: ../plug-ins/python/palette-to-gradient.py:144
+#: plug-ins/python/palette-to-gradient.py:130
+msgid "Create a new gradient using colors from the palette."
+msgstr "Maak een nieuw kleurverloop met kleuren uit het palet."
+
+#: plug-ins/python/palette-to-gradient.py:133
 msgid "Palette to _Repeating Gradient"
 msgstr "Palet naar he_rhalend kleurverloop"
 
-#: ../plug-ins/python/palette-to-gradient.py:145
+#: plug-ins/python/palette-to-gradient.py:134
 msgid "Create a repeating gradient using colors from the palette"
-msgstr "Een herhalend kleurverloop aanmaken met de kleuren van het palet"
+msgstr "Een herhalend kleurverloop maken met de kleuren van het palet"
 
-#: ../plug-ins/python/python-console/python-console.py:75
+#: plug-ins/python/palette-to-gradient.py:135
+msgid "Create a new repeating gradient using colors from the palette."
+msgstr "Maak een herhalend kleurverloop met de kleuren van het palet."
+
+#: plug-ins/python/palette-to-gradient.py:152
+#: plug-ins/python/palette-to-gradient.py:153
+msgid "The newly created gradient"
+msgstr "Het nieuw gemaakte kleurverloop"
+
+#: plug-ins/python/python-console/python-console.py:80
 msgid "Python Console"
 msgstr "Python-opdrachtregel"
 
-#: ../plug-ins/python/python-console/python-console.py:79
+#: plug-ins/python/python-console/python-console.py:82
+#: plug-ins/python/python-console/python-console.py:277
+msgid "_Save"
+msgstr "Op_slaan"
+
+#: plug-ins/python/python-console/python-console.py:83
+msgid "Cl_ear"
+msgstr "_Wissen"
+
+#: plug-ins/python/python-console/python-console.py:84
 msgid "_Browse..."
 msgstr "_Verkennen…"
 
-#: ../plug-ins/python/python-console/python-console.py:255
+#: plug-ins/python/python-console/python-console.py:85
+#: plug-ins/python/python-console/python-console.py:225
+msgid "_Close"
+msgstr "_Sluiten"
+
+#: plug-ins/python/python-console/python-console.py:222
 msgid "Python Procedure Browser"
 msgstr "Python-procedureverkenner"
 
-#: ../plug-ins/python/python-console/python-console.py:283
+#: plug-ins/python/python-console/python-console.py:224
+msgid "_Apply"
+msgstr "Toep_assen"
+
+#: plug-ins/python/python-console/python-console.py:250
 #, python-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Kon ‘%s’ niet openen om te schrijven: %s"
+msgstr "Kon '%s' niet openen om te schrijven: %s"
 
-#: ../plug-ins/python/python-console/python-console.py:298
+#: plug-ins/python/python-console/python-console.py:265
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Kon niet schrijven naar ‘%s’: %s"
 
-#: ../plug-ins/python/python-console/python-console.py:307
+#: plug-ins/python/python-console/python-console.py:274
 msgid "Save Python-Fu Console Output"
 msgstr "Uitvoer van Python-Fu-opdrachtregel opslaan"
 
-#: ../plug-ins/python/python-console/python-console.py:356
+#: plug-ins/python/python-console/python-console.py:276
+#: plug-ins/python/spyro-plus.py:1750
+msgid "_Cancel"
+msgstr "_Annuleren"
+
+#: plug-ins/python/python-console/python-console.py:313
 msgid "Python _Console"
 msgstr "Python-opdra_chtregel"
 
-#: ../plug-ins/python/python-console/python-console.py:357
+#: plug-ins/python/python-console/python-console.py:314
 msgid "Interactive GIMP Python interpreter"
-msgstr "Interactieve GIMP-Python- interpreteerder"
+msgstr "Interactieve GIMP-Python- interpreter"
 
-#: ../plug-ins/python/spyro-plus.py:50
+#: plug-ins/python/python-console/python-console.py:315
+msgid "Type in commands and see results"
+msgstr "Typ opdrachten in en bekijk de resultaten"
+
+#: plug-ins/python/spyro-plus.py:51
 msgid "Spyro Layer"
 msgstr "Spirolaag"
 
-#: ../plug-ins/python/spyro-plus.py:51
+#: plug-ins/python/spyro-plus.py:52
 msgid "Spyro Path"
-msgstr "Spirograafpad"
+msgstr "Pad Spirograaf"
 
-#: ../plug-ins/python/spyro-plus.py:61
+#: plug-ins/python/spyro-plus.py:62
 msgid "As New Layer"
 msgstr "Als nieuwe laag"
 
-#: ../plug-ins/python/spyro-plus.py:62
+#: plug-ins/python/spyro-plus.py:63
 msgid "Redraw on last active layer"
 msgstr "Opnieuw tekenen op de actieve laag"
 
-#: ../plug-ins/python/spyro-plus.py:63
+#: plug-ins/python/spyro-plus.py:64
 msgid "As Path"
 msgstr "Als pad"
 
-#: ../plug-ins/python/spyro-plus.py:111
+#: plug-ins/python/spyro-plus.py:112 plug-ins/python/spyro-plus.py:2270
 msgid "Circle"
 msgstr "Cirkel"
 
-#: ../plug-ins/python/spyro-plus.py:147
+#: plug-ins/python/spyro-plus.py:148 plug-ins/python/spyro-plus.py:2274
 msgid "Polygon-Star"
 msgstr "Veelhoekige ster"
 
 #. Sine wave on a circle ring.
-#: ../plug-ins/python/spyro-plus.py:163 ../plug-ins/python/spyro-plus.py:990
+#: plug-ins/python/spyro-plus.py:164 plug-ins/python/spyro-plus.py:1011
+#: plug-ins/python/spyro-plus.py:2265 plug-ins/python/spyro-plus.py:2275
 msgid "Sine"
 msgstr "Sinus"
 
 #. Semi-circles, based on a polygon
-#: ../plug-ins/python/spyro-plus.py:173
+#: plug-ins/python/spyro-plus.py:174 plug-ins/python/spyro-plus.py:2276
 msgid "Bumps"
 msgstr "Bobbels"
 
-#: ../plug-ins/python/spyro-plus.py:278
+#: plug-ins/python/spyro-plus.py:279
 msgid "Rack"
 msgstr "Rek"
 
-#: ../plug-ins/python/spyro-plus.py:322
+#: plug-ins/python/spyro-plus.py:323
 msgid "Frame"
-msgstr "Kader"
+msgstr "Frame"
 
-#: ../plug-ins/python/spyro-plus.py:439
+#: plug-ins/python/spyro-plus.py:436 plug-ins/python/spyro-plus.py:2273
 msgid "Selection"
 msgstr "Selectie"
 
-#: ../plug-ins/python/spyro-plus.py:526
+#: plug-ins/python/spyro-plus.py:541 plug-ins/python/spyro-plus.py:2310
 msgid "Pencil"
 msgstr "Potlood"
 
-#: ../plug-ins/python/spyro-plus.py:542
+#: plug-ins/python/spyro-plus.py:557 plug-ins/python/spyro-plus.py:2311
 msgid "AirBrush"
 msgstr "Verfspuit"
 
-#: ../plug-ins/python/spyro-plus.py:602
+#: plug-ins/python/spyro-plus.py:624 plug-ins/python/spyro-plus.py:2308
 msgid "Preview"
 msgstr "Voorbeeld"
 
-#: ../plug-ins/python/spyro-plus.py:607
+#: plug-ins/python/spyro-plus.py:629 plug-ins/python/spyro-plus.py:2312
 msgid "Stroke"
-msgstr "Streek"
+msgstr "Lijn"
 
-#: ../plug-ins/python/spyro-plus.py:654
+#: plug-ins/python/spyro-plus.py:676 plug-ins/python/spyro-plus.py:2309
 msgid "PaintBrush"
 msgstr "Penseel"
 
-#: ../plug-ins/python/spyro-plus.py:656
+#: plug-ins/python/spyro-plus.py:680 plug-ins/python/spyro-plus.py:2313
 msgid "Ink"
-msgstr "Inkt"
+msgstr "Inktpot"
 
-#: ../plug-ins/python/spyro-plus.py:657
+#: plug-ins/python/spyro-plus.py:681 plug-ins/python/spyro-plus.py:2314
 msgid "MyPaintBrush"
 msgstr "MijnPenseel"
 
-#: ../plug-ins/python/spyro-plus.py:976
+#: plug-ins/python/spyro-plus.py:997 plug-ins/python/spyro-plus.py:2263
 msgid "Spyrograph"
 msgstr "Spirograaf"
 
-#: ../plug-ins/python/spyro-plus.py:983
+#: plug-ins/python/spyro-plus.py:1004 plug-ins/python/spyro-plus.py:2264
 msgid "Epitrochoid"
 msgstr "Epitrochoïde"
 
-#: ../plug-ins/python/spyro-plus.py:1010
+#: plug-ins/python/spyro-plus.py:1031 plug-ins/python/spyro-plus.py:2266
 msgid "Lissajous"
 msgstr "Lissajousfiguur"
 
-#: ../plug-ins/python/spyro-plus.py:1457
+#: plug-ins/python/spyro-plus.py:1487 plug-ins/python/spyro-plus.py:2267
 msgid "Curve Type"
-msgstr "Type kromme"
+msgstr "Type boog"
 
-#: ../plug-ins/python/spyro-plus.py:1458
+#: plug-ins/python/spyro-plus.py:1488
 msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
-msgstr ""
-"Een epitrochoïde-patroon ontstaat wanneer de bewegende cirkel zich aan de "
-"buitenzijde van de vaste cirkel bevindt."
+msgstr "Een epitrochoïde-patroon ontstaat wanneer de bewegende cirkel zich aan de buitenzijde van de vaste cirkel bevindt."
 
-#: ../plug-ins/python/spyro-plus.py:1463
+#. TODO: Add Clone option once it's fixed
+#: plug-ins/python/spyro-plus.py:1493 plug-ins/python/spyro-plus.py:2316
 msgid "Tool"
 msgstr "Gereedschap"
 
-#: ../plug-ins/python/spyro-plus.py:1464
+#: plug-ins/python/spyro-plus.py:1494
 msgid ""
 "The tool with which to draw the pattern. The Preview tool just draws quickly."
-msgstr ""
-"Het gereedschap waarmee het patroon moet worden getekend. Het "
-"voorbeeldgereedschap tekent dit snel."
+msgstr "Het gereedschap waarmee het patroon moet worden getekend. Het gereedschap Voorbeeld tekent alleen maar snel."
 
-#: ../plug-ins/python/spyro-plus.py:1469
+#: plug-ins/python/spyro-plus.py:1499
 msgid "Long Gradient"
-msgstr "Lang verloop"
+msgstr "Lang kleurverloop"
 
-#: ../plug-ins/python/spyro-plus.py:1471
+#: plug-ins/python/spyro-plus.py:1501
 msgid ""
 "When unchecked, the current tool settings will be used. When checked, will "
 "use a long gradient to match the length of the pattern, based on current "
 "gradient and repeat mode from the gradient tool settings."
-msgstr ""
-"Indien uitgevinkt worden de huidige gereedschapsinstellingen gebruikt. "
-"Indien aangevinkt wordt een lang verloop gebruikt ter lengte van het "
-"patroon, gebaseerd op het huidige verloop en op de herhaalmodus van het "
-"verloopgereedschap."
+msgstr "Indien niet geselecteerd zullen de huidige instellingen van het gereedschap worden gebruikt. Indien geselecteerd zal het een lang kleurverloop gebruiken om overeen te komen met de lengte van het patroon, gebaseerd op het huidige kleurverloop en modus Herhalen uit de instellingen van het gereedschap Kleurverloop."
 
-#: ../plug-ins/python/spyro-plus.py:1491
+#: plug-ins/python/spyro-plus.py:1521
 msgid "Specify pattern using one of the following tabs:"
 msgstr "Geef patroon op via een van de volgende tabs:"
 
-#: ../plug-ins/python/spyro-plus.py:1493
+#: plug-ins/python/spyro-plus.py:1523
 msgid ""
 "The pattern is specified only by the active tab. Toy Kit is similar to "
 "Gears, but it uses gears and hole numbers which are found in toy kits. If "
 "you follow the instructions from the toy kit manuals, results should be "
 "similar."
-msgstr ""
-"Het patroon wordt alleen door de actieve tab bepaald. Speelgoedkit lijkt op "
-"Tandwielen, maar het gebruikt tandwielen en genummerde gaten zoals in "
-"speelgoedkits. Als u de instructies in de handleiding van deze speelgoedkits "
-"volgt, moet u soortgelijke resultaten verkrijgen."
+msgstr "Het patroon wordt alleen door de actieve tab gespecificeerd. Speelgoedkit is soortgelijk aan Tandwielen, maar het gebruikt tandwielen en gatnummers die te vinden zijn in speelgoedkits. Als u de instructies van de handleidingen van de speelgoedkit volgt, zouden de resultaten soortgelijk moeten zijn."
 
-#: ../plug-ins/python/spyro-plus.py:1517
+#: plug-ins/python/spyro-plus.py:1547
 msgid ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
-msgstr ""
-"Aantal tanden van vaste tandwielen. De grootte daarvan is proportioneel met "
-"het aantal tanden."
+msgstr "Aantal tanden van vaste tandwielen. De grootte van het vaste tandwiel is proportioneel ten opzichte van het aantal tanden."
 
-#: ../plug-ins/python/spyro-plus.py:1520 ../plug-ins/python/spyro-plus.py:1548
+#: plug-ins/python/spyro-plus.py:1550 plug-ins/python/spyro-plus.py:1578
 msgid "Fixed Gear Teeth"
-msgstr "Tanden vaste tandwielen"
+msgstr "Tanden vaste tandwiel"
 
-#: ../plug-ins/python/spyro-plus.py:1528
+#: plug-ins/python/spyro-plus.py:1558
 msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
-msgstr ""
-"Aantal tanden van bewegende tandwielen. De grootte van de bewegende "
-"tandwielen is proportioneel met het aantal tanden."
+msgstr "Aantal tanden van bewegend tandwiel. De grootte van het bewegend tandwiel is proportioneel ten opzichte van het aantal tanden."
 
-#: ../plug-ins/python/spyro-plus.py:1531 ../plug-ins/python/spyro-plus.py:1553
+#: plug-ins/python/spyro-plus.py:1561 plug-ins/python/spyro-plus.py:1583
 msgid "Moving Gear Teeth"
-msgstr "Tanden bewegend tandwielen"
+msgstr "Tanden bewegend tandwiel"
 
-#: ../plug-ins/python/spyro-plus.py:1536
+#: plug-ins/python/spyro-plus.py:1566
 msgid "Hole percent"
 msgstr "Gat (percentage)"
 
-#: ../plug-ins/python/spyro-plus.py:1537
+#: plug-ins/python/spyro-plus.py:1567
 msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
-msgstr ""
-"Hoe ver het gat verwijderd is van het centrum van de bewegende tandwielen. "
-"100% betekent dat het gat aan de rand van het tandwiel is."
+msgstr "Hoe ver staat het gat vanaf het middelpunt van het bewegend tandwiel. 100% betekent dat het gat op de rand van het tandwiel staat."
 
-#: ../plug-ins/python/spyro-plus.py:1558
+#: plug-ins/python/spyro-plus.py:1588
 msgid "Hole Number"
 msgstr "Gatnummer"
 
-#: ../plug-ins/python/spyro-plus.py:1559
+#: plug-ins/python/spyro-plus.py:1589
 msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
-msgstr ""
-"Gat 1 bevindt zich aan de rand van de tandwielen. De maximale gatwaarde is "
-"bij het centrum. De maximale gatwaarde is voor elk tandwiel verschillend."
+msgstr "Gat #1 ligt aan de rand van het tandwiel. Het maximale gatnummer ligt nabij het middelpunt. Het maximale gatnummer is voor elk tandwiel anders."
 
-#: ../plug-ins/python/spyro-plus.py:1570
+#: plug-ins/python/spyro-plus.py:1600
 msgid "Flower Petals"
 msgstr "Bloemblaadjes"
 
-#: ../plug-ins/python/spyro-plus.py:1571
+#: plug-ins/python/spyro-plus.py:1601
 msgid "The number of petals in the pattern."
 msgstr "Aantal blaadjes van het patroon."
 
-#: ../plug-ins/python/spyro-plus.py:1576
+#: plug-ins/python/spyro-plus.py:1606
 msgid "Petal Skip"
 msgstr "Blaadjes overslaan"
 
-#: ../plug-ins/python/spyro-plus.py:1577
+#: plug-ins/python/spyro-plus.py:1607
 msgid "The number of petals to advance for drawing the next petal."
-msgstr ""
-"Het aantal bloemblaadjes dat vooruit moet om het volgende bloemblad te "
-"tekenen."
+msgstr "Het aantal bloemblaadjes dat vooruit moet worden gegaan om het volgende bloemblad te tekenen."
 
-#: ../plug-ins/python/spyro-plus.py:1582
+#: plug-ins/python/spyro-plus.py:1612
 msgid "Hole Radius(%)"
 msgstr "Straal van het gat (%)"
 
-#: ../plug-ins/python/spyro-plus.py:1583
+#: plug-ins/python/spyro-plus.py:1613
 msgid ""
 "The radius of the hole in the center of the pattern where nothing will be "
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
 "produce no hole. A Value of 99 will produce a thin line on the edge."
-msgstr ""
-"Straal van het gat in het midden waar niet getekend zal worden. Opgegeven "
-"als een percentage van de straal van het hele patroon. Een waarde 0 zal dus "
-"geen gat opleveren, een waarde 99 zal resulteren in alleen een dunne cirkel "
-"aan de rand."
+msgstr "De straal van het gat in het middelpunt  van het patroon waar niets zal worden getekend. Gegeven als een percentage van de grootte van het patroon. Een waarde van 0 zal geen gat produceren. Een waarde van 99 zal een dunne lijn op de rand produceren."
 
-#: ../plug-ins/python/spyro-plus.py:1604
+#: plug-ins/python/spyro-plus.py:1634
 msgid "Width(%)"
 msgstr "Breedte (%)"
 
-#: ../plug-ins/python/spyro-plus.py:1605
+#: plug-ins/python/spyro-plus.py:1635
 msgid ""
 "The width of the pattern as a percentage of the size of the pattern. A Value "
 "of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
 "fixed gear."
-msgstr ""
-"De breedte van het patroon als percentage van de straal van de hele "
-"afbeelding. Een waarde 1 zal een minimaal patroon tekenen, een waarde 100 "
-"zal de hele afbeelding vullen."
+msgstr "De breedte van het patroon als een percentage van de grootte van het patroon. Een waarde van 1 zal slechts een dun patroon tekenen. Een waarde van 100 zal het gehele vaste tandwiel vullen."
 
-#: ../plug-ins/python/spyro-plus.py:1616
+#: plug-ins/python/spyro-plus.py:1646
 msgid "Visual"
 msgstr "Visueel"
 
-#: ../plug-ins/python/spyro-plus.py:1622
+#: plug-ins/python/spyro-plus.py:1652
 msgid "Toy Kit"
 msgstr "Speelgoedkit"
 
-#: ../plug-ins/python/spyro-plus.py:1628
+#: plug-ins/python/spyro-plus.py:1658
 msgid "Gears"
 msgstr "Tandwielen"
 
-#: ../plug-ins/python/spyro-plus.py:1641 ../plug-ins/python/spyro-plus.py:1685
+#: plug-ins/python/spyro-plus.py:1671 plug-ins/python/spyro-plus.py:1715
 msgid "Rotation"
 msgstr "Draaiing"
 
-#: ../plug-ins/python/spyro-plus.py:1642
+#: plug-ins/python/spyro-plus.py:1672
 msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
-msgstr ""
-"Draaiing van het patroon, in graden. De startpositie van het bewegende "
-"tandwiel in het vaste tandwiel."
+msgstr "Draaiing van het patroon, in graden. De beginpositie van het bewegend tandwiel in het vaste tandwiel."
 
-#: ../plug-ins/python/spyro-plus.py:1665
+#: plug-ins/python/spyro-plus.py:1695 plug-ins/python/spyro-plus.py:2277
 msgid "Shape"
 msgstr "Vorm"
 
-#: ../plug-ins/python/spyro-plus.py:1666
+#: plug-ins/python/spyro-plus.py:1696
 msgid ""
 "The shape of the fixed gear to be used inside current selection. Rack is a "
 "long round-edged shape provided in the toy kits. Frame hugs the boundaries "
 "of the rectangular selection, use hole=100 in Gear notation to touch "
 "boundary. Selection will hug boundaries of current selection - try something "
 "non-rectangular."
-msgstr ""
-"De vorm van het te gebruiken vaste tandwiel in de huidige selectie. Rek is "
-"een lange vorm met afgeronde hoeken. Kader gaat tegen de randen van de "
-"rechthoekige selectie aan, gebruik gat=100 in Tandwielnotatie om de rand te "
-"raken. Selectie gaat tegen de randen van de huidige selectie aan - probeer "
-"niet-rechthoekige vormen."
+msgstr "De vorm van het te gebruiken vaste tandwiel binnen de huidige selectie. Rek is een langwerpige vorm met ronde hoeken die wordt verschaft in de speelgoedkits. Frame knuffelt de grenzen van de rechthoekige selectie, gebruik gat=100 in notatie van Tandwiel om de grens te raken. Selectie zal de grenzen van de huidige selectie knuffelen - probeer iets dat niet rechthoekig is."
 
-#: ../plug-ins/python/spyro-plus.py:1675
+#: plug-ins/python/spyro-plus.py:1705
 msgid "Sides"
 msgstr "Zijden"
 
-#: ../plug-ins/python/spyro-plus.py:1675
+#: plug-ins/python/spyro-plus.py:1705
 msgid "Number of sides of the shape."
 msgstr "Aantal zijden van de vorm."
 
-#: ../plug-ins/python/spyro-plus.py:1680
+#: plug-ins/python/spyro-plus.py:1710
 msgid "Morph"
 msgstr "Transformeren"
 
-#: ../plug-ins/python/spyro-plus.py:1680
+#: plug-ins/python/spyro-plus.py:1710
 msgid "Morph fixed gear shape. Only affects some of the shapes."
-msgstr ""
-"Vormverandering van de vaste tandwielen. Heeft alleen effect op sommige "
-"vormen."
+msgstr "Vorm vaste tandwiel transformeren. Beïnvloedt slechts enkele vormen."
 
-#: ../plug-ins/python/spyro-plus.py:1685
+#: plug-ins/python/spyro-plus.py:1715
 msgid "Rotation of the fixed gear, in degrees"
 msgstr "Draaiing van de vaste tandwielen, in graden"
 
-#: ../plug-ins/python/spyro-plus.py:1700
+#: plug-ins/python/spyro-plus.py:1730
 msgid "Margin (px)"
 msgstr "Marge (px)"
 
-#: ../plug-ins/python/spyro-plus.py:1700
+#: plug-ins/python/spyro-plus.py:1730
 msgid "Margin from edge of selection."
 msgstr "Marge vanaf de rand van de selectie."
 
-#: ../plug-ins/python/spyro-plus.py:1705
+#: plug-ins/python/spyro-plus.py:1735 plug-ins/python/spyro-plus.py:2298
+#: plug-ins/python/spyro-plus.py:2299
 msgid "Make width and height equal"
 msgstr "Maak breedte en hoogte gelijk"
 
-#: ../plug-ins/python/spyro-plus.py:1707
+#: plug-ins/python/spyro-plus.py:1737
 msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
-msgstr ""
-"Indien uitgevinkt zal het patroon de huidige afbeelding of selectie vullen. "
-"Indien aangevinkt heeft het patroon dezelfde breedte en hoogte en is "
-"gecentreerd."
+msgstr "Indien niet geselecteerd zal het patroon de huidige afbeelding of selectie vullen. Indien geselecteerd zal het patroon dezelfde breedte en hoogte hebben en zal zijn gecentreerd."
 
-#: ../plug-ins/python/spyro-plus.py:1722
+#: plug-ins/python/spyro-plus.py:1751
+msgid "_OK"
+msgstr "_Oké"
+
+#: plug-ins/python/spyro-plus.py:1752
 msgid "Re_draw"
 msgstr "Opnieuw _tekenen"
 
-#: ../plug-ins/python/spyro-plus.py:1724
+#: plug-ins/python/spyro-plus.py:1754
 msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
-msgstr ""
-"Als u de instellingen van een gereedschap verandert, of de kleur of de "
-"selectie, klik dan hier om een voorbeeld te zien hoe het patroon eruit zal "
-"zien."
+msgstr "Als u de instellingen van een gereedschap verandert, of de kleur of de selectie, klik dan hier om een voorbeeld te zien hoe het patroon eruit zal zien."
 
-#: ../plug-ins/python/spyro-plus.py:1727
+#: plug-ins/python/spyro-plus.py:1757
 msgid "_Reset"
 msgstr "Te_rug naar standaardwaarden"
 
-#: ../plug-ins/python/spyro-plus.py:1735
+#: plug-ins/python/spyro-plus.py:1765
 msgid "Save"
 msgstr "Opslaan"
 
-#: ../plug-ins/python/spyro-plus.py:1736
+#: plug-ins/python/spyro-plus.py:1766
 msgid ""
 "Choose whether to save as new layer, redraw on last active layer, or save to "
 "path"
-msgstr ""
-"Kies uit opslaan als nieuwe laag, opnieuw tekenen op de actieve laag of "
-"opslaan als nieuw pad"
+msgstr "Kies uit opslaan als nieuwe laag, opnieuw tekenen op de actieve laag of opslaan als nieuw pad"
 
-#: ../plug-ins/python/spyro-plus.py:1750
+#: plug-ins/python/spyro-plus.py:1780
 msgid "Spyrogimp"
 msgstr "Spirogimp"
 
-#: ../plug-ins/python/spyro-plus.py:1759 ../plug-ins/python/spyro-plus.py:2297
+#: plug-ins/python/spyro-plus.py:1789 plug-ins/python/spyro-plus.py:2252
 msgid "Draw spyrographs using current tool settings and selection."
-msgstr "Teken spirografen met de huidige gereedschapsinstellingen en selectie."
+msgstr "Teken spirografen met de huidige instellingen van gereedschappen en selectie."
 
-#: ../plug-ins/python/spyro-plus.py:1772
+#: plug-ins/python/spyro-plus.py:1802
 msgid "Curve Pattern"
-msgstr "Curvepatroon"
+msgstr "Boog-patroon"
 
-#: ../plug-ins/python/spyro-plus.py:1775
+#: plug-ins/python/spyro-plus.py:1805
 msgid "Fixed Gear"
 msgstr "Vaste tandwielen"
 
-#: ../plug-ins/python/spyro-plus.py:1778
+#: plug-ins/python/spyro-plus.py:1808
 msgid "Size"
 msgstr "Grootte"
 
-#: ../plug-ins/python/spyro-plus.py:2134
+#: plug-ins/python/spyro-plus.py:2164
 msgid "Rendering Pattern"
 msgstr "Opbouwen patroon"
 
-#: ../plug-ins/python/spyro-plus.py:2146
+#: plug-ins/python/spyro-plus.py:2176
 msgid "Please wait : Rendering Pattern"
 msgstr "Even geduld, het patroon wordt opgebouwd"
 
-#: ../plug-ins/python/spyro-plus.py:2301
+#: plug-ins/python/spyro-plus.py:2253
+msgid ""
+"Uses current tool settings to draw Spyrograph patterns. The size and "
+"location of the pattern is based on the current selection."
+msgstr "Gebruikt huidige instellingen van gereedschappen om patronen Spirograaf te tekenen. De grootte en locatie van het patroon is gebaseerd op de huidige selectie."
+
+#: plug-ins/python/spyro-plus.py:2256
 msgid "Spyrogimp..."
 msgstr "Spirogimp…"
+
+#: plug-ins/python/spyro-plus.py:2271
+msgid "rack"
+msgstr "rek"
+
+#: plug-ins/python/spyro-plus.py:2272
+msgid "frame"
+msgstr "frame"
+
+#: plug-ins/python/spyro-plus.py:2279
+msgid "Si_des"
+msgstr "Zij_den"
+
+#: plug-ins/python/spyro-plus.py:2280
+msgid "Number of sides of fixed gear (3 or greater). Only used by some shapes."
+msgstr "Aantal zijden vaste tandwiel (3 of meer). Alleen gebruikt door sommige vormen."
+
+#: plug-ins/python/spyro-plus.py:2282
+msgid "_Morph"
+msgstr "_Transformeren"
+
+#: plug-ins/python/spyro-plus.py:2283
+msgid "Morph shape of fixed gear, between 0 and 1. Only used by some shapes."
+msgstr "Vorm van vaste tandwiel transformeren, tussen 0 en 1. Alleen gebruikt door sommige vormen."
+
+#: plug-ins/python/spyro-plus.py:2285
+msgid "Fi_xed Gear Teeth"
+msgstr "Ta_nden vaste tandwiel"
+
+#: plug-ins/python/spyro-plus.py:2286 plug-ins/python/spyro-plus.py:2289
+msgid "Number of teeth for fixed gear."
+msgstr "Aantal tanden van vaste tandwiel."
+
+#: plug-ins/python/spyro-plus.py:2288
+msgid "Mo_ving Gear Teeth"
+msgstr "Tanden be_wegend tandwiel"
+
+#: plug-ins/python/spyro-plus.py:2291
+msgid "_Hole Radius (%)"
+msgstr "Straa_l gat (%)"
+
+#: plug-ins/python/spyro-plus.py:2292
+msgid ""
+"Location of hole in moving gear in percent, where 100 means that the hole is "
+"at the edge of the gear, and 0 means the hole is at the center"
+msgstr "Locatie van het gat in het bewegend tandwiel, in percentage, waar 100 betekent dat het gat aan de rand van het tandwiel zit en 0 betekent dat het gat in het midden zit"
+
+#: plug-ins/python/spyro-plus.py:2295
+msgid "Margin (_px)"
+msgstr "Marge (_px)"
+
+#: plug-ins/python/spyro-plus.py:2296
+msgid "Margin from selection, in pixels"
+msgstr "Marge van selectie, in pixels"
+
+#: plug-ins/python/spyro-plus.py:2301 plug-ins/python/spyro-plus.py:2304
+msgid "_Rotation"
+msgstr "D_raaien"
+
+#: plug-ins/python/spyro-plus.py:2302
+msgid "Pattern rotation, in degrees"
+msgstr "Draaien van patroon, in graden"
+
+#: plug-ins/python/spyro-plus.py:2305
+msgid "Shape rotation of fixed gear, in degrees"
+msgstr "Draaien van vorm van vaste tandwiel, in graden"
+
+#: plug-ins/python/spyro-plus.py:2319
+msgid "Long _Gradient"
+msgstr "Lang _kleurverloop"
+
+#: plug-ins/python/spyro-plus.py:2320
+msgid ""
+"Whether to apply a long gradient to match the length of the pattern. Only "
+"applicable to some of the tools."
+msgstr "Of een lang kleurverloop moet worden toegepast om overeen te komen met de lengte van het patroon. Alleen van toepassing voor enkele gereedschappen."
+
+#~ msgid "Read characters from file..."
+#~ msgstr "Lees tekens van bestand…"
+
+#~ msgid "Characters or file location"
+#~ msgstr "Tekst of bestandslocatie"
+
+# Wat een woordenbrij! - Nathan
+#~ msgid ""
+#~ "If set, the Characters text entry will be used as a file name, from which "
+#~ "the characters will be read. Otherwise, the characters in the text entry "
+#~ "will be used to render the image."
+#~ msgstr ""
+#~ "Indien ingesteld worden de tekens van de tekstinvoer gebruikt als "
+#~ "bestandsnaam waaruit de tekens gelezen worden. Anders worden de tekens "
+#~ "van de tekstinvoer gebruikt om de afbeelding te tekenen."
+
+#~ msgid "Font Size(px)"
+#~ msgstr "Lettergrootte (px)"
+
+#~ msgid "Write separate CSS file"
+#~ msgstr "Afzonderlijk CSS-bestand maken"
+
+#~ msgid "_File to read or characters to use"
+#~ msgstr "_Bestand om te lezen of tekens om te gebruiken"
+
+#~ msgid "CSS file..."
+#~ msgstr "CSS-bestand…"
+
+#~ msgid "_File..."
+#~ msgstr "_Bestand…"
+
+#~ msgid "Choose export file..."
+#~ msgstr "Kies bestand om te exporteren…"
+
+#~ msgid ""
+#~ "If checked, the histogram is generated from merging all visible layers. "
+#~ "Otherwise, the histogram is only for the current layer."
+#~ msgstr ""
+#~ "Indien aangevinkt wordt het histogram gemaakt door alle zichtbare lagen "
+#~ "samen te voegen. Anders is het histogram alleen van de huidige laag."
+
+#~ msgid "_Output Format"
+#~ msgstr "_Uitvoerformaat"
+
+#~ msgid "Off_set"
+#~ msgstr "Ver_schuiving"
+
+#~ msgid "Offset Palette..."
+#~ msgstr "Verschuiving palet…"
 
 #~ msgid "Fog _color"
 #~ msgstr "Mist_kleur"
@@ -919,12 +1115,6 @@ msgstr "Spirogimp…"
 #~ msgid "_Console"
 #~ msgstr "_Console"
 
-#~ msgid "_Cancel"
-#~ msgstr "_Annuleer"
-
-#~ msgid "_OK"
-#~ msgstr "_OK"
-
 #~ msgid ""
 #~ "Keep\n"
 #~ "Layer"
@@ -957,6 +1147,5 @@ msgstr "Spirogimp…"
 #~ msgid "Blue or Value"
 #~ msgstr "Blauw of waarde"
 
-#, fuzzy
 #~ msgid "Gimp-Python Console"
 #~ msgstr "Python Console"
