@@ -15,5 +15,8 @@ EXPORTS
   script_fu_register_quit_callback
   script_fu_register_post_command_callback
   script_fu_search_path
-  script_fu_find_scripts_create_PDB_proc_plugin
+  script_fu_create_PDB_proc_plugin
   script_fu_find_scripts_list_proc_names
+  script_fu_is_scripts_loaded
+  script_fu_load_scripts_into_tree
+  script_fu_get_i18n_for_proc

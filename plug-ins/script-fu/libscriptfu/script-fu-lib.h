@@ -36,6 +36,9 @@ void         script_fu_init_embedded_interpreter (GList          *paths,
                                                   gboolean        allow_register,
                                                   GimpRunMode     run_mode,
                                                   gboolean        report_progress);
+void         script_fu_load_scripts_into_tree    (GimpPlugIn     *plugin,
+                                                  GList          *paths);
+gboolean     script_fu_is_scripts_loaded         (void);
 
 void         script_fu_set_print_flag            (gboolean        should_print);
 void         script_fu_redirect_output_to_gstr   (GString        *output);
@@ -52,10 +55,14 @@ void         script_fu_run_read_eval_print_loop  (void);
 void         script_fu_register_quit_callback         (void (*func) (void));
 void         script_fu_register_post_command_callback (void (*func) (void));
 
-GimpProcedure *script_fu_find_scripts_create_PDB_proc_plugin (GimpPlugIn  *plug_in,
-                                                              GList       *paths,
-                                                              const gchar *name);
 GList         *script_fu_find_scripts_list_proc_names        (GimpPlugIn  *plug_in,
                                                               GList       *paths);
+
+GimpProcedure *script_fu_create_PDB_proc_plugin (GimpPlugIn  *plug_in,
+                                                 const gchar *name);
+void           script_fu_get_i18n_for_proc      (const gchar *proc_name,
+                                                 gchar      **declared_i18n_domain,
+                                                 gchar      **declared_i18n_catalog);
+
 
 #endif /* __SCRIPT_FU_LIB_H__ */

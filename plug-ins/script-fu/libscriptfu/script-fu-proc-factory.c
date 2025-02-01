@@ -50,34 +50,22 @@ static void  script_fu_add_menu_to_procedure (GimpProcedure *procedure,
 
 
 /* Create and return a single PDB procedure of type PLUGIN,
- * for the given proc name, by reading the script file in the given paths.
+ * for the given proc name, from script_tree already loaded.
  * Also add a menu for the procedure.
  *
  * PDB proc of type PLUGIN has permanent lifetime, unlike type TEMPORARY.
  *
- * The list of paths is usually just one directory, a subdir of /plug-ins.
- * The directory may contain many .scm files.
- * The plugin manager only queries one .scm file,
- * having the same name as its parent dir and and having execute permission.
- * But here we read all the .scm files in the directory.
- * Each .scm file may register (and define run func for) many PDB procedures.
- *
- * Here, one name is passed, and though we load all the .scm files,
- * we only create a PDB procedure for the passed name.
+ * Loaded .scm file(s) may have defined many procedures.
+ * Create a PDB procedure only for the one passed name.
  */
 GimpProcedure *
 script_fu_proc_factory_make_PLUGIN (GimpPlugIn  *plug_in,
-                                    GList       *paths,
                                     const gchar *proc_name)
 {
   SFScript      * script    = NULL;
   GimpProcedure * procedure = NULL;
 
-  /* Reads all .scm files at paths, even though only one is pertinent.
-   * The returned script_tree is also in the state of the interpreter,
-   * we don't need the result here.
-  */
-  (void) script_fu_find_scripts_into_tree (plug_in, paths);
+  /* Require SFScripts already defined, one or more. */
 
   /* Get the pertinent script from the tree. */
   script = script_fu_find_script (proc_name);
@@ -138,7 +126,7 @@ script_fu_proc_factory_list_names (GimpPlugIn *plug_in,
   GTree * script_tree = NULL;
 
   /* Load (eval) all .scm files in all dirs in paths. */
-  script_tree = script_fu_find_scripts_into_tree (plug_in, paths);
+  script_tree = script_fu_scripts_load_into_tree (plug_in, paths);
 
   /* Iterate over the tree, adding each script name to result list */
   g_tree_foreach (script_tree,

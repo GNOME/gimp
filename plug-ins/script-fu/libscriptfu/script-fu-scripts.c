@@ -73,10 +73,34 @@ static GList *script_menu_list = NULL;
  *  Function definitions
  */
 
+
+
+/* A method on the internal tree of scripts.
+ *
+ * Uninstall any PDB procedures declared by the scripts,
+ * and free the tree of scripts.
+ *
+ * For some phases of the plugin protocol
+ * the PDB procedures declared by the scripts were not installed.
+ * In other words, uninstall is a try that may have no effect.
+ */
+static void
+script_fu_scripts_clear_tree ( GimpPlugIn *plug_in)
+{
+  if (script_tree != NULL)
+    {
+      g_tree_foreach (script_tree,
+                      (GTraverseFunc) script_fu_remove_script,
+                      plug_in);
+      g_tree_destroy (script_tree);
+    }
+}
+
+
 /* Traverse list of paths, finding .scm files.
  * Load and eval any found script texts.
- * Script texts will call Scheme functions script-fu-register
- * and script-fu-menu-register,
+ * Script texts will call ScriptFu registration functions
+ * e.g. script-fu-register and script-fu-menu-register,
  * which insert a SFScript record into script_tree,
  * and insert a SFMenu record into script_menu_list.
  * These are side effects on the state of the outer (SF) interpreter.
@@ -85,20 +109,29 @@ static GList *script_menu_list = NULL;
  * The other result (script_menu_list) is not returned, see script_fu_get_menu_list.
  *
  * Caller should free script_tree and script_menu_list,
- * This should only be called once.
+ * but we usually don't, the interpreter just exits.
+ *
+ * This can be called more than once but does not accumulate into the tree:
+ * it clears the tree on every call before reloading it.
+ *
+ * When we load plugin script files (.scm)
+ * the list of paths can be just one directory,
+ * a plugin's subdir of /plug-ins (independent interpreter).
+ * The plugin manager only queries one .scm file,
+ * having the same name as its parent dir and and having execute permission.
+ *
+ * But the list of paths can be many:
+ * the sys and user /scripts dirs(extension-script-fu).
+ *
+ * Any dir in the paths may contain many .scm files.
+ * We read all the .scm files in the directory.
+ * Each .scm file may register (and define run func for) many PDB procedures.
  */
 GTree *
-script_fu_find_scripts_into_tree ( GimpPlugIn *plug_in,
+script_fu_scripts_load_into_tree ( GimpPlugIn *plug_in,
                                    GList      *paths)
 {
-  /*  Clear any existing scripts  */
-  if (script_tree != NULL)
-    {
-      g_tree_foreach (script_tree,
-                      (GTraverseFunc) script_fu_remove_script,
-                      plug_in);
-      g_tree_destroy (script_tree);
-    }
+  script_fu_scripts_clear_tree (plug_in);
 
   script_tree = g_tree_new ((GCompareFunc) g_utf8_collate);
 
@@ -138,7 +171,7 @@ void
 script_fu_find_scripts (GimpPlugIn *plug_in,
                         GList      *path)
 {
-  script_fu_find_scripts_into_tree (plug_in, path);
+  script_fu_scripts_load_into_tree (plug_in, path);
 
   /*  Now that all scripts are read in and sorted, tell gimp about them  */
   g_tree_foreach (script_tree,
@@ -335,6 +368,97 @@ script_fu_add_menu (scheme  *sc,
   return sc->NIL;
 }
 
+/* For a call to script-fu-register-i18n,
+ * marshall scheme values into local SFScript struct.
+ *
+ * Returns sc->NIL on success, else a foreign_error.
+ * Many kinds of failure will not prevent the plugin from registering and working,
+ * only prevent the plugin from being translated properly.
+ *
+ * Although the set_18n callback is called many times in the same interpreter session,
+ * before create proc and run proc, the script is only interpreted for it's registrations once.
+ * However, an ill-formed script can call script-fu-register-i18n
+ * many times for the same procedure, see below.
+ */
+pointer
+script_fu_add_i18n (scheme  *sc,
+                    pointer  a)
+{
+  SFScript    *script;
+  const gchar *proc_name;
+
+  gchar *i18n_domain                = NULL;
+  gchar *i18n_catalog_relative_path = NULL;
+
+  g_debug ("%s", G_STRFUNC);
+
+  /*  Check arg count  */
+  if (sc->vptr->list_length (sc, a) < 2)
+    return foreign_error (sc, "script-fu-register-i18n takes two or three args", 0);
+
+  /* PDB procedure name. */
+  if (sc->vptr->is_string (sc->vptr->pair_car (a)))
+    {
+      proc_name = sc->vptr->string_value (sc->vptr->pair_car (a));
+      a = sc->vptr->pair_cdr (a);
+    }
+  else
+    {
+      return foreign_error (sc, "script-fu-register-i18n requires first arg is string script name", 0);
+    }
+
+  script = script_fu_find_script (proc_name);
+
+  if (! script)
+    return foreign_error (sc, "script-fu-register-i18n called with invalid procedure name", 0);
+
+  /* Not an error to interpret script-fu-register-i18n twice for the same procedure.
+   * When there are two calls to script-fu-register-i18n for the same procedure
+   * in one script, the latter will have effect.
+   */
+  if (script->i18n_domain_name != NULL || script->i18n_catalog_relative_path != NULL)
+    g_warning ("%s called twice for same procedure %s", G_STRFUNC, proc_name);
+
+  /*  i18n domain name  */
+  if (sc->vptr->is_string (sc->vptr->pair_car (a)))
+    {
+      i18n_domain = sc->vptr->string_value (sc->vptr->pair_car (a));
+      a = sc->vptr->pair_cdr (a);
+    }
+  else
+    {
+      return foreign_error (sc, "script-fu-register-i18n requires second arg is string domain name", 0);
+    }
+
+  /* optional catalog path */
+  if (a != sc->NIL)
+    {
+      if (sc->vptr->is_string (sc->vptr->pair_car (a)))
+        {
+          i18n_catalog_relative_path = sc->vptr->string_value (sc->vptr->pair_car (a));
+          a = sc->vptr->pair_cdr (a);
+        }
+      else
+        {
+          return foreign_error (sc, "script-fu-register-i18n requires optional third arg is catalog path", 0);
+        }
+    }
+
+  /* Call setter from local vars, strings owned by inner interpreter TS. */
+  script_fu_script_set_i18n (script, i18n_domain, i18n_catalog_relative_path);
+
+  return sc->NIL; /* success */
+}
+
+/* Have one or more SFScript (global data structs) been created?
+ * i.e. one or more script files loaded, i.e. interpreted for their registration functions.
+ * Returns a state of the interpreter.
+ */
+gboolean
+script_fu_scripts_are_loaded (void)
+{
+  return (script_tree != NULL);
+}
 
 /*  private functions  */
 
@@ -478,8 +602,11 @@ script_fu_install_menu (SFMenu *menu)
   g_slice_free (SFMenu, menu);
 }
 
-/*
- *  The following function is a GTraverseFunction.
+/* Traverse list of scripts, uninstalling from PDB and
+ * freeing the script data.
+ * Then free the list, now empty of content.
+ *
+ * This function has type GTraverseFunction.
  */
 static gboolean
 script_fu_remove_script (gpointer  foo G_GNUC_UNUSED,
@@ -488,6 +615,8 @@ script_fu_remove_script (gpointer  foo G_GNUC_UNUSED,
 {
   GimpPlugIn *plug_in = data;
   GList      *list;
+
+  g_debug ("%s", G_STRFUNC);
 
   for (list = scripts; list; list = g_list_next (list))
     {

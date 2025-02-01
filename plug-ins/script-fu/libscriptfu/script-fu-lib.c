@@ -25,6 +25,7 @@
 #include "script-fu-types.h"     /* SFScript */
 #include "scheme-wrapper.h"      /* tinyscheme_init etc, */
 #include "script-fu-scripts.h"   /* script_fu_find_scripts */
+#include "script-fu-script.h"    /* script_fu_script_get_i18n */
 #include "script-fu-interface.h" /* script_fu_interface_is_active */
 #include "script-fu-proc-factory.h"
 
@@ -105,19 +106,36 @@ script_fu_init_embedded_interpreter (GList       *paths,
   tinyscheme_init (paths, allow_register);
   ts_set_run_mode (run_mode);
   /*
-   * Ensure the embedded interpreter is running
-   * and has loaded its internal Scheme scripts
-   * and has defined existing PDB procs as Scheme foreign functions
-   * (is ready to interpret PDB-like function calls in scheme scripts.)
+   * Ensure the embedded interpreter is running and:
+   *    loaded its internal Scheme scripts e.g. init.scm
+   *    defined existing PDB procs as Scheme foreign functions
+   *      (is ready to interpret PDB-like function calls in scheme scripts.)
+   *    has loaded other init and compat scripts in /scripts/init
+   *      e.g. script-fu-compat.scm
    *
-   * scripts/...init and scripts/...compat.scm are loaded
-   * iff paths includes the "/scripts" dir.
-   *
-   * The .scm file(s) for plugins are loaded
-   * iff paths includes their parent directory (e.g. /scripts)
-   * Loaded does not imply yet registered in the PDB
-   * (yet, they soon might be for some phases of the plugin.)
+   * The .scm file(s) for plugins in /scripts are NOT loaded.
+   * Any util scripts in /scripts are NOT loaded, e.g. script-fu-utils.scm.
    */
+}
+
+/* Load script files at paths.
+ * Side effect: create state script_tree.
+ * Requires interpreter initialized.
+ */
+void
+script_fu_load_scripts_into_tree (GimpPlugIn *plugin,
+                                  GList      *paths)
+{
+  script_fu_scripts_load_into_tree (plugin, paths);
+}
+
+/* Has the interpreter been initialized and a script loaded
+ * i.e. interpreted for registration into interpreter state: script_tree.
+ */
+gboolean
+script_fu_is_scripts_loaded (void)
+{
+  return script_fu_scripts_are_loaded ();
 }
 
 void
@@ -337,13 +355,16 @@ script_fu_is_init_directory (GFile *dir)
   return result;
 }
 
+/* Create a PDB procedure from the SFScript for the given proc name.
+ * Does not register into the PDB.
+ * Requires scripts already loaded i.e. SFScript exist.
+ */
 GimpProcedure *
-script_fu_find_scripts_create_PDB_proc_plugin (GimpPlugIn  *plug_in,
-                                               GList       *paths,
-                                               const gchar *name)
+script_fu_create_PDB_proc_plugin (GimpPlugIn  *plug_in,
+                                  const gchar *name)
 {
   /* Delegate to factory. */
-  return script_fu_proc_factory_make_PLUGIN (plug_in, paths, name);
+  return script_fu_proc_factory_make_PLUGIN (plug_in, name);
 }
 
 GList *
@@ -352,4 +373,14 @@ script_fu_find_scripts_list_proc_names (GimpPlugIn *plug_in,
 {
   /* Delegate to factory. */
   return script_fu_proc_factory_list_names (plug_in, paths);
+}
+
+/* Requires scripts already loaded. */
+void
+script_fu_get_i18n_for_proc (const gchar *proc_name,
+                             gchar      **declared_i18n_domain,
+                             gchar      **declared_i18n_catalog)
+{
+  SFScript *script = script_fu_find_script (proc_name);
+  script_fu_script_get_i18n (script, declared_i18n_domain, declared_i18n_catalog);
 }

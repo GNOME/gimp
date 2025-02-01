@@ -112,6 +112,8 @@ static pointer  script_fu_register_call_procedure                 (scheme       
                                                                    pointer               a);
 static pointer  script_fu_menu_register_call                      (scheme               *sc,
                                                                    pointer               a);
+static pointer  script_fu_register_i18n_call                      (scheme               *sc,
+                                                                   pointer               a);
 static pointer  script_fu_use_v3_call                             (scheme               *sc,
                                                                    pointer               a);
 static pointer  script_fu_use_v2_call                             (scheme               *sc,
@@ -553,6 +555,7 @@ ts_define_procedure (sc, "load-extension", scm_load_ext);
       ts_define_procedure (sc, "script-fu-register-filter", script_fu_register_call_filter);
       ts_define_procedure (sc, "script-fu-register-procedure", script_fu_register_call_procedure);
       ts_define_procedure (sc, "script-fu-menu-register",   script_fu_menu_register_call);
+      ts_define_procedure (sc, "script-fu-register-i18n",   script_fu_register_i18n_call);
     }
   else
     {
@@ -560,6 +563,7 @@ ts_define_procedure (sc, "load-extension", scm_load_ext);
       ts_define_procedure (sc, "script-fu-register-filter", script_fu_nil_call);
       ts_define_procedure (sc, "script-fu-register-procedure", script_fu_nil_call);
       ts_define_procedure (sc, "script-fu-menu-register",   script_fu_nil_call);
+      ts_define_procedure (sc, "script-fu-register-i18n",   script_fu_nil_call);
     }
 
   ts_define_procedure (sc, "script-fu-use-v3",    script_fu_use_v3_call);
@@ -2344,6 +2348,13 @@ script_fu_menu_register_call (scheme  *sc,
                               pointer  a)
 {
   return script_fu_add_menu (sc, a);
+}
+
+static pointer
+script_fu_register_i18n_call (scheme  *sc,
+                              pointer  a)
+{
+  return script_fu_add_i18n (sc, a);
 }
 
 static pointer

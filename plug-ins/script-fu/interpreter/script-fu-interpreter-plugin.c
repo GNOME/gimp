@@ -52,6 +52,18 @@ G_DEFINE_TYPE (ScriptFuInterpreter, script_fu_interpreter, GIMP_TYPE_PLUG_IN)
  */
 static gchar * path_to_this_script;
 
+
+/* For any plugin interpreted by self, these are the names, not always enforced:
+ *    plugin file name is plugin-<foo>.scm (it has shebang)
+ *    progname is the same (not the name of the interpreter)
+ *    plugin name is plugin-<foo>
+ *    PDB procedure name is plugin-<foo>
+ *    run_func in Scheme is named plugin-<foo> (not script-fu-<foo>)
+ *    C run func called by GIMP is e.g. script_fu_run_image_procedure
+ */
+
+
+
 /* Connect to Gimp.  See libgimp/gimp.c.
  *
  * Can't use GIMP_MAIN macro, it doesn't omit argv[0].
@@ -84,6 +96,79 @@ int main (int argc, char *argv[])
   g_debug ("Exit script-fu-interpreter.");
 }
 
+/* A callback from GIMP.
+ * A method of GimpPlugin.
+ * GIMP calls often, before any phase (query, create, init, run.)
+ *
+ * It is only necessary before the create phase,
+ * when we declare args and menu item possibly requiring i18n.
+ * FUTURE: avoid this work for phases other than create and run.
+ *
+ * Since it is *before* the create phase,
+ * SF has not read the script and interpreted it's registration functions,
+ * especially a call to script-fu-register-i18n
+ * We must do that to get the declared i18n domain and catalog.
+ */
+static gboolean
+script_fu_set_i18n (GimpPlugIn   *plug_in,
+                    const gchar  *procedure_name,
+                    gchar       **gettext_domain,
+                    gchar       **catalog_dir)
+{
+  gchar   *declared_i18n_domain  = NULL;
+  gchar   *declared_i18n_catalog = NULL;
+  gboolean result;
+
+  /* assert that *gettext_domain and *catalog_dir are NULL and don't need free. */
+
+  g_debug ("%s", G_STRFUNC);
+
+  /* Get script author's declared i18n into local vars.*/
+  script_fu_interpreter_get_i18n ( plug_in,
+                                   procedure_name,
+                                   path_to_this_script,
+                                   &declared_i18n_domain,
+                                   &declared_i18n_catalog);
+
+  /* Convert script declared i18n keywords to other values. */
+  if (declared_i18n_domain == NULL ||
+      g_strcmp0 (declared_i18n_domain, "None") == 0)
+    {
+      /* The script has not called script-fu-register-i18n.
+       * OR with domain_name of "None".
+       * Return FALSE to mean: no translations.
+       */
+      *gettext_domain = NULL;
+      result = FALSE;
+    }
+  else if ( g_strcmp0 (declared_i18n_domain, "Standard") == 0)
+    {
+      /* Script author wants default domain name and catalog.
+       * Set to NULL, and return TRUE tells GimpPlugin to use default.
+       */
+      *gettext_domain = NULL;
+      *catalog_dir    = NULL;
+      result = TRUE; /* want translation. */
+    }
+  else
+    {
+      /* Script author provided non-standard domain and catalog.
+       * Return allocated copy to caller.
+       */
+      *gettext_domain = g_strdup (declared_i18n_domain);
+      *catalog_dir    = g_strdup (declared_i18n_catalog);
+      result = TRUE; /* want translation. */
+    }
+
+  g_debug ("%s returns %d domain %s catalog %s",
+           G_STRFUNC, result, declared_i18n_domain, declared_i18n_catalog);
+
+  g_free (declared_i18n_domain);
+  g_free (declared_i18n_catalog);
+
+  return result;
+}
+
 static void
 script_fu_interpreter_class_init (ScriptFuInterpreterClass *klass)
 {
@@ -92,17 +177,12 @@ script_fu_interpreter_class_init (ScriptFuInterpreterClass *klass)
   plug_in_class->query_procedures = script_fu_interpreter_query_procedures;
   plug_in_class->create_procedure = script_fu_interpreter_create_procedure;
 
-  /* Do not override virtual method set_i18n.
+  /* Override virtual method set_i18n.
    * Default implementation finds translations in:
    * GIMP's .../plug-ins/<plugin_name>/locale/<lang>/LC_MESSAGES/<plugin_name>.mo
-   *
-   * For any plugin interpreted by self:
-   * plugin file name is plugin-<foo>.scm (it has shebang)
-   * progname is the same (not the name of the interpreter)
-   * plugin name is plugin-<foo>
-   * PDB procedure name is plugin-<foo>
-   * run_func in Scheme is named plugin-<foo> (not script-fu-<foo>)
+   * and throws error to console when not exists.
    */
+  plug_in_class->set_i18n = script_fu_set_i18n;
 }
 
 
@@ -121,7 +201,7 @@ script_fu_interpreter_query_procedures (GimpPlugIn *plug_in)
 {
   GList *result = NULL;
 
-  g_debug ("queried");
+  g_debug ("%s", G_STRFUNC);
 
   /* Init ui, gegl, babl.
    * Need gegl in registration phase, to get defaults for color formal args.
@@ -154,7 +234,5 @@ script_fu_interpreter_create_procedure (GimpPlugIn  *plug_in,
    */
   gimp_ui_init ("script-fu-interpreter");
 
-  return script_fu_interpreter_create_proc_at_path (plug_in,
-                                                    proc_name,
-                                                    path_to_this_script);
+  return script_fu_interpreter_create_proc (plug_in, proc_name, path_to_this_script);
 }

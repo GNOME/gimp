@@ -15,6 +15,10 @@ elif get_option('buildtype') != 'debug'
 endif
 
 
+# test of i18n is in its own subdir
+subdir('testi18n')
+
+
 # scripts interpreted by extension-script-fu, installed to /scripts
 scripts = [
   'contactsheet.scm',
