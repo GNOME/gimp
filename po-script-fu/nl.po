@@ -10,1144 +10,1001 @@
 # bevel          afgeschuind/3d/uitspringend/inspringend
 # render         renderen/tekenen
 msgid ""
-msgstr ""
-"Project-Id-Version: GIMP 2.0\n"
+msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-03-25 19:11+0000\n"
-"PO-Revision-Date: 2022-03-29 17:57+0200\n"
-"Last-Translator: Nathan Follens <nfollens@gnome.org>\n"
-"Language-Team: Dutch <gnome-nl-list@gnome.org>\n"
+"POT-Creation-Date: 2025-01-31 03:57+0000\n"
+"PO-Revision-Date: 2025-02-01 13:41+0200\n"
+"Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
+"Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Omegat 6.1.0\n"
 
-#: ../plug-ins/script-fu/script-fu.c:138
+#: plug-ins/script-fu/script-fu.c:119
 msgid "Script-Fu _Console"
-msgstr "Script-Fu-opdrachtregel"
+msgstr "Script-Fu opdra_chtregel"
 
-#: ../plug-ins/script-fu/script-fu.c:143
+#: plug-ins/script-fu/script-fu.c:124
 msgid "Interactive console for Script-Fu development"
-msgstr "Interactieve opdrachtregel voor Script-Fu-ontwikkeling"
+msgstr "Interactieve opdrachtregel voor ontwikkelen van Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:190
-msgid "_Start Server..."
-msgstr "_Server opstarten…"
-
-#: ../plug-ins/script-fu/script-fu.c:195
-msgid "Server for remote Script-Fu operation"
-msgstr "Server voor Script-Fu-bewerkingen op afstand"
-
-#: ../plug-ins/script-fu/script-fu.c:394
+#: plug-ins/script-fu/script-fu.c:317
 msgid "_GIMP Online"
 msgstr "_GIMP online"
 
-#: ../plug-ins/script-fu/script-fu.c:395
+#: plug-ins/script-fu/script-fu.c:318
 msgid "_User Manual"
-msgstr "Gebr_uikershandleiding"
+msgstr "Gebruikers_handleiding"
 
-#: ../plug-ins/script-fu/script-fu.c:398
+#: plug-ins/script-fu/script-fu.c:321
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:400
+#: plug-ins/script-fu/script-fu.c:323
 msgid "_Test"
 msgstr "_Testen"
 
-#: ../plug-ins/script-fu/script-fu.c:403
+#: plug-ins/script-fu/script-fu.c:326
 msgid "_Buttons"
 msgstr "_Knoppen"
 
-#: ../plug-ins/script-fu/script-fu.c:405
+#: plug-ins/script-fu/script-fu.c:328
 msgid "_Logos"
 msgstr "_Logo’s"
 
-#: ../plug-ins/script-fu/script-fu.c:407
+#: plug-ins/script-fu/script-fu.c:330
 msgid "_Patterns"
 msgstr "_Patronen"
 
-#: ../plug-ins/script-fu/script-fu.c:410
+#: plug-ins/script-fu/script-fu.c:333
 msgid "_Web Page Themes"
-msgstr "_Webpaginathema’s"
+msgstr "Thema’s _webpagina"
 
-#: ../plug-ins/script-fu/script-fu.c:412
+#: plug-ins/script-fu/script-fu.c:335
 msgid "_Alien Glow"
 msgstr "Buitenaardse _gloed"
 
-#: ../plug-ins/script-fu/script-fu.c:414
+#: plug-ins/script-fu/script-fu.c:337
 msgid "_Beveled Pattern"
 msgstr "_Afgeschuind patroon"
 
-#: ../plug-ins/script-fu/script-fu.c:416
+#: plug-ins/script-fu/script-fu.c:339
 msgid "_Classic.Gimp.Org"
 msgstr "_Klassiek.Gimp.org"
 
-#: ../plug-ins/script-fu/script-fu.c:419
+#: plug-ins/script-fu/script-fu.c:342
 msgid "Alpha to _Logo"
 msgstr "Alfa naar l_ogo"
 
-#: ../plug-ins/script-fu/script-fu.c:425
-msgid "_Refresh Scripts"
-msgstr "S_cripts verversen"
+#: plug-ins/script-fu/script-fu-eval.c:52
+msgid "Script-Fu evaluation mode only allows non-interactive invocation"
+msgstr "De modus Script-Fu-evaluatie staat alleen een niet-interactieve aanroep toe"
 
-#: ../plug-ins/script-fu/script-fu.c:430
-msgid "Re-read all available Script-Fu scripts"
-msgstr "Alle beschikbare Script-Fu-scripts opnieuw inlezen"
+#: plug-ins/script-fu/console/script-fu-console.c:119
+msgid "Script Console"
+msgstr "Script-console"
 
-#: ../plug-ins/script-fu/script-fu.c:456
-msgid ""
-"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
-"Please close all Script-Fu windows and try again."
-msgstr ""
-"U kunt ‘Scripts verversen’ niet gebruiken terwijl er een Script-Fu-"
-"dialoogvenster open is. Sluit alle Script-Fu-vensters en probeer het opnieuw."
-
-#: ../plug-ins/script-fu/script-fu-console.c:110
-#: ../plug-ins/script-fu/script-fu-console.c:177
-msgid "Script-Fu Console"
-msgstr "Script-Fu-opdrachtregel"
-
-#: ../plug-ins/script-fu/script-fu-console.c:115
-#: ../plug-ins/script-fu/script-fu-console.c:281
+#: plug-ins/script-fu/console/script-fu-console.c:124
+#: plug-ins/script-fu/console/script-fu-console.c:251
 msgid "_Save"
 msgstr "Op_slaan"
 
-#: ../plug-ins/script-fu/script-fu-console.c:116
+#: plug-ins/script-fu/console/script-fu-console.c:125
 msgid "C_lear"
 msgstr "Wi_ssen"
 
-#: ../plug-ins/script-fu/script-fu-console.c:117
-#: ../plug-ins/script-fu/script-fu-console.c:359
+#: plug-ins/script-fu/console/script-fu-console.c:126
+#: plug-ins/script-fu/console/script-fu-console.c:324
 msgid "_Close"
 msgstr "_Sluiten"
 
-#: ../plug-ins/script-fu/script-fu-console.c:173
-msgid "Welcome to TinyScheme"
-msgstr "Welkom bij TinyScheme"
-
-#: ../plug-ins/script-fu/script-fu-console.c:179
-msgid "Interactive Scheme Development"
-msgstr "Interactieve ontwikkeling in Scheme"
-
-#: ../plug-ins/script-fu/script-fu-console.c:215
+#: plug-ins/script-fu/console/script-fu-console.c:187
 msgid "_Browse..."
 msgstr "_Verkennen…"
 
-#: ../plug-ins/script-fu/script-fu-console.c:276
+#: plug-ins/script-fu/console/script-fu-console.c:246
 msgid "Save Script-Fu Console Output"
-msgstr "Script-Fu-opdrachtregeluitvoer opslaan"
+msgstr "Uitvoer Script-Fu opdrachtregel opslaan"
 
-#: ../plug-ins/script-fu/script-fu-console.c:280
-#: ../plug-ins/script-fu/script-fu-interface.c:239
-#: ../plug-ins/script-fu/script-fu-server.c:834
+#: plug-ins/script-fu/console/script-fu-console.c:250
+#: plug-ins/script-fu/server/script-fu-server.c:922
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:167
 msgid "_Cancel"
 msgstr "_Annuleren"
 
-#: ../plug-ins/script-fu/script-fu-console.c:325
+#: plug-ins/script-fu/console/script-fu-console.c:293
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Kon ‘%s’ niet openen om te schrijven: %s"
+msgstr "Kon '%s' niet openen om te schrijven: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:354
+#: plug-ins/script-fu/console/script-fu-console.c:319
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu-procedureverkenner"
 
-#: ../plug-ins/script-fu/script-fu-console.c:358
+#: plug-ins/script-fu/console/script-fu-console.c:323
 msgid "_Apply"
 msgstr "Toep_assen"
 
-#: ../plug-ins/script-fu/script-fu-eval.c:53
-msgid "Script-Fu evaluation mode only allows non-interactive invocation"
-msgstr ""
-"De Script-Fu-evaluatiemodus staat alleen een niet-interactieve aanroep toe"
+#: plug-ins/script-fu/console/script-fu-console-total.c:89
+msgid "Welcome to TinyScheme"
+msgstr "Welkom bij TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:203
+#: plug-ins/script-fu/console/script-fu-console-total.c:93
+msgid "Scripting GIMP in the Scheme language"
+msgstr "Scripten met GIMP in de taal Scheme"
+
+#: plug-ins/script-fu/server/script-fu-server.c:918
+msgid "Script-Fu Server Options"
+msgstr "Script-Fu serveropties"
+
+#: plug-ins/script-fu/server/script-fu-server.c:923
+msgid "_Start Server"
+msgstr "_Server opstarten"
+
+#: plug-ins/script-fu/server/script-fu-server.c:956
+msgid "Listen on IP:"
+msgstr "Luister op IP:"
+
+#: plug-ins/script-fu/server/script-fu-server.c:963
+msgid "Server port:"
+msgstr "Serverpoort:"
+
+#: plug-ins/script-fu/server/script-fu-server.c:969
+msgid "Server logfile:"
+msgstr "Serverlogbestand:"
+
+#: plug-ins/script-fu/server/script-fu-server.c:982
+msgid ""
+"Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
+"allow attackers to remotely execute arbitrary code on this machine."
+msgstr "Luisteren op een IP-adres anders dan 127.0.0.1 (vooral 0.0.0.0) kan aanvallers in staat stellen om van afstand code op deze machine uit te voeren."
+
+#: plug-ins/script-fu/server/script-fu-server-plugin.c:91
+msgid "_Start Server..."
+msgstr "_Server opstarten…"
+
+#: plug-ins/script-fu/server/script-fu-server-plugin.c:96
+msgid "Server for remote Script-Fu operation"
+msgstr "Server voor Script-Fu-bewerkingen op afstand"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:140
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu kan niet twee processen tegelijkertijd uitvoeren."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:205
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:142
 #, c-format
 msgid "You are already running the \"%s\" script."
-msgstr "U voert het script ‘%s’ al uit."
+msgstr "U voert het script \"%s\" al uit."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:231
-#, c-format
-msgid "Script-Fu: %s"
-msgstr "Script-Fu: %s"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:238
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:166
 msgid "_Reset"
-msgstr "Te_rugzetten"
+msgstr "Te_rug naar standaardwaarden"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:240
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:168
 msgid "_OK"
-msgstr "_OK"
+msgstr "_Oké"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:294
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:344
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:273
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu-kleurselectie"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:463
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:405
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu-bestandsselectie"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:466
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:408
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu-mapselectie"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:479
-msgid "Script-Fu Font Selection"
-msgstr "Script-Fu-lettertypeselectie"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:487
-msgid "Script-Fu Palette Selection"
-msgstr "Script-Fu-paletselectie"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:496
-msgid "Script-Fu Pattern Selection"
-msgstr "Script-Fu-patroonselectie"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:505
-msgid "Script-Fu Gradient Selection"
-msgstr "Script-Fu-verloopselectie"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:514
-msgid "Script-Fu Brush Selection"
-msgstr "Script-Fu-penseelselectie"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:893
+#. Log to stdout.  Later to Gimp.
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:817
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Fout tijdens uitvoeren van %s:"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:148
-msgid "Too few arguments to 'script-fu-register' call"
-msgstr "Te weinig parameters voor ‘script-fu-register’-oproep"
-
-#: ../plug-ins/script-fu/script-fu-scripts.c:647
+#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:417
 #, c-format
 msgid "Error while loading %s:"
 msgstr "Fout tijdens laden van %s:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:830
-msgid "Script-Fu Server Options"
-msgstr "Script-Fu serveropties"
-
-#: ../plug-ins/script-fu/script-fu-server.c:835
-msgid "_Start Server"
-msgstr "_Server opstarten"
-
-#: ../plug-ins/script-fu/script-fu-server.c:868
-msgid "Listen on IP:"
-msgstr "Luister op IP:"
-
-#: ../plug-ins/script-fu/script-fu-server.c:875
-msgid "Server port:"
-msgstr "Serverpoort:"
-
-#: ../plug-ins/script-fu/script-fu-server.c:881
-msgid "Server logfile:"
-msgstr "Serverlogbestand:"
-
-#: ../plug-ins/script-fu/script-fu-server.c:894
-msgid ""
-"Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
-"allow attackers to remotely execute arbitrary code on this machine."
-msgstr ""
-"Luisteren op een IP-adres anders dan 127.0.0.1 (vooral 0.0.0.0) kan "
-"aanvallers in staat stellen om van afstand code op deze machine uit te "
-"voeren."
-
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:76
+#: plug-ins/script-fu/scripts/add-bevel.scm:72
 msgid "Bumpmap"
 msgstr "Bumpprojectie"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:189
+#: plug-ins/script-fu/scripts/add-bevel.scm:199
 msgid "Add B_evel..."
 msgstr "_Afschuining toevoegen…"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:190
+#: plug-ins/script-fu/scripts/add-bevel.scm:200
 msgid "Add a beveled border to an image"
 msgstr "Een afgeschuinde rand toevoegen aan een afbeelding"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:197
-msgid "Thickness"
-msgstr "Dikte"
+#. v3 >>> additional argument
+#: plug-ins/script-fu/scripts/add-bevel.scm:206
+msgid "_Thickness"
+msgstr "_Dikte"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:198
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:163
-#: ../plug-ins/script-fu/scripts/old-photo.scm:104
-#: ../plug-ins/script-fu/scripts/round-corners.scm:145
-#: ../plug-ins/script-fu/scripts/slide.scm:257
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:106
-msgid "Work on copy"
-msgstr "Op kopie werken"
+#: plug-ins/script-fu/scripts/add-bevel.scm:207
+msgid "_Work on copy"
+msgstr "_Werken op kopie"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:199
-msgid "Keep bump layer"
-msgstr "Bumplaag bewaren"
+#: plug-ins/script-fu/scripts/add-bevel.scm:208
+msgid "_Keep bump layer"
+msgstr "_Bump-laag behouden"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:108
+#: plug-ins/script-fu/scripts/addborder.scm:121
 msgid "Border Layer"
 msgstr "Randlaag"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:162
+#: plug-ins/script-fu/scripts/addborder.scm:174
 msgid "Add _Border..."
 msgstr "_Rand toevoegen…"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:163
+#: plug-ins/script-fu/scripts/addborder.scm:175
 msgid "Add a border around an image"
 msgstr "Een rand toevoegen aan een afbeelding"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:170
+#: plug-ins/script-fu/scripts/addborder.scm:181
 msgid "Border X size"
 msgstr "X-grootte rand"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:171
+#: plug-ins/script-fu/scripts/addborder.scm:182
 msgid "Border Y size"
 msgstr "Y-grootte rand"
 
 # los van elkaar
 # 26/03/08: waarom?
-#: ../plug-ins/script-fu/scripts/addborder.scm:172
+#: plug-ins/script-fu/scripts/addborder.scm:183
 msgid "Border color"
 msgstr "Rand kleur"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:173
+#: plug-ins/script-fu/scripts/addborder.scm:184
 msgid "Delta value on color"
 msgstr "Deltawaarde op kleur"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:206
+#: plug-ins/script-fu/scripts/addborder.scm:185
+#: plug-ins/script-fu/scripts/drop-shadow.scm:182
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:210
+msgid "Allow resizing"
+msgstr "Herschalen toestaan"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm:202
 msgid "Frame"
 msgstr "Frame"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:222
+#: plug-ins/script-fu/scripts/blend-anim.scm:218
 msgid "Blend Animation needs at least three source layers"
-msgstr "‘Animatie mengen’ heeft minstens drie bronlagen nodig"
+msgstr "Animatie mengen heeft minstens drie bronlagen nodig"
 
 # vloeien/samenvloeien/mengen
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:228
+#: plug-ins/script-fu/scripts/blend-anim.scm:224
 msgid "_Blend..."
 msgstr "_Mengen…"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:229
+#: plug-ins/script-fu/scripts/blend-anim.scm:225
 msgid ""
 "Create intermediate layers to blend two or more layers over a background as "
 "an animation"
-msgstr ""
-"Tussenliggende lagen aanmaken om twee of meer lagen over een achtergrond met "
-"elkaar te mengen zoals een animatie"
+msgstr "Tussenliggende lagen aanmaken om twee of meer lagen over een achtergrond met elkaar te mengen zoals in een animatie"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:236
+#: plug-ins/script-fu/scripts/blend-anim.scm:231
 msgid "Intermediate frames"
 msgstr "Tussenliggende frames"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:237
+#: plug-ins/script-fu/scripts/blend-anim.scm:232
 msgid "Max. blur radius"
-msgstr "Maximum vervagingsstraal"
+msgstr "Max. vervagingsstraal"
 
 # herhaald
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:238
+#: plug-ins/script-fu/scripts/blend-anim.scm:233
 msgid "Looped"
-msgstr "Gelust"
+msgstr "Herhalen"
 
 #. --- false form of "if-1"
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:217
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:218
 msgid ""
 "The Burn-In script needs two layers in total. A foreground layer with "
 "transparency and a background layer."
-msgstr ""
-"Het script ‘Doordrukken’ heeft in totaal twee lagen nodig: een voorgrondlaag "
-"met transparantie en een achtergrondlaag."
+msgstr "Het script Inbranden heeft in totaal twee lagen nodig. Een voorgrondlaag met transparantie en een achtergrondlaag."
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:224
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:225
 msgid "B_urn-In..."
 msgstr "_Inbranden…"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:225
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:226
 msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
-msgstr ""
-"Tussenliggende lagen aanmaken om een geanimeerde doordrukovergang te "
-"produceren tussen de twee lagen"
+msgstr "Tussenliggende lagen aanmaken om een geanimeerde overgang 'inbranden' te produceren tussen de twee lagen"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:232
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:232
 msgid "Glow color"
 msgstr "Gloeikleur"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:233
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:233
 msgid "Fadeout"
 msgstr "Uitvloei"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:234
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:234
 msgid "Fadeout width"
 msgstr "Uitvloeibreedte"
 
 # corona/kroon/krans
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:235
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:235
 msgid "Corona width"
 msgstr "Kransbreedte"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:236
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:236
 msgid "After glow"
 msgstr "Nagloeien"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:237
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:237
 msgid "Add glowing"
 msgstr "Gloed toevoegen"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:238
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:238
 msgid "Prepare for GIF"
 msgstr "Voor GIF voorbereiden"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:239
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:239
 msgid "Speed (pixels/frame)"
 msgstr "Snelheid (beeldpunten/frame)"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:176
+#: plug-ins/script-fu/scripts/carve-it.scm:202
 msgid "Carved Surface"
 msgstr "Gekerfde oppervlakte"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:177
+#: plug-ins/script-fu/scripts/carve-it.scm:203
 msgid "Bevel Shadow"
 msgstr "Schaduw schuine rand"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:178
+#: plug-ins/script-fu/scripts/carve-it.scm:204
 msgid "Bevel Highlight"
-msgstr "Hoge lichten schuine rand"
+msgstr "Hooglichten schuine rand"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:179
+#: plug-ins/script-fu/scripts/carve-it.scm:205
 msgid "Cast Shadow"
-msgstr "Werp schaduw"
+msgstr "Schaduw werpen"
 
 # Goed?
 # pm
-#: ../plug-ins/script-fu/scripts/carve-it.scm:180
+#: plug-ins/script-fu/scripts/carve-it.scm:206
 msgid "Inset"
 msgstr "Inzet"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:192
+#: plug-ins/script-fu/scripts/carve-it.scm:218
 msgid "Stencil C_arve..."
 msgstr "_Kerven…"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:193
+#: plug-ins/script-fu/scripts/carve-it.scm:219
 msgid ""
 "Use the specified drawable as a stencil to carve from the specified image."
-msgstr ""
-"Gebruik het opgegeven tekengebied als stencil om de afbeelding te kerven."
+msgstr "Gebruik het opgegeven tekengebied als stencil om de afbeelding te kerven."
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:200
-msgid "Image to carve"
-msgstr "Afbeelding naar kerving"
+#: plug-ins/script-fu/scripts/carve-it.scm:226
+msgid "Mask drawable"
+msgstr "Tekengebied-masker"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:201
+#: plug-ins/script-fu/scripts/carve-it.scm:227
 msgid "Carve white areas"
 msgstr "Witte gebieden kerven"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:93
+#: plug-ins/script-fu/scripts/chrome-it.scm:153
 msgid "Background"
 msgstr "Achtergrond"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:94
+#: plug-ins/script-fu/scripts/chrome-it.scm:154
 msgid "Layer 1"
 msgstr "Laag 1"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:95
+#: plug-ins/script-fu/scripts/chrome-it.scm:155
 msgid "Layer 2"
 msgstr "Laag 2"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:96
+#: plug-ins/script-fu/scripts/chrome-it.scm:156
 msgid "Layer 3"
 msgstr "Laag 3"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:97
+#: plug-ins/script-fu/scripts/chrome-it.scm:157
 msgid "Drop Shadow"
 msgstr "Slagschaduw"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:217
+#: plug-ins/script-fu/scripts/chrome-it.scm:286
 msgid "Chrome"
 msgstr "Chroom"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:218
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:68
+#: plug-ins/script-fu/scripts/chrome-it.scm:287
+#: plug-ins/script-fu/scripts/xach-effect.scm:69
 msgid "Highlight"
 msgstr "Oplichten"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:232
+#: plug-ins/script-fu/scripts/chrome-it.scm:307
 msgid "Stencil C_hrome..."
 msgstr "C_hroom…"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:233
+#: plug-ins/script-fu/scripts/chrome-it.scm:308
 msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
-msgstr ""
-"Een chroomeffect toevoegen aan het geselecteerde gebied (of alfa) met een "
-"opgegeven (grijswaarden) stencil"
+msgstr "Een chroomeffect toevoegen aan het geselecteerde gebied (of alfa) met een opgegeven (grijswaarden) stencil"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:240
+#: plug-ins/script-fu/scripts/chrome-it.scm:314
 msgid "Chrome saturation"
 msgstr "Chroomverzadiging"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:241
+#: plug-ins/script-fu/scripts/chrome-it.scm:315
 msgid "Chrome lightness"
 msgstr "Chroomlichtheid"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:242
+#: plug-ins/script-fu/scripts/chrome-it.scm:316
 msgid "Chrome factor"
 msgstr "Chroomfactor"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:243
+#: plug-ins/script-fu/scripts/chrome-it.scm:317
 msgid "Environment map"
 msgstr "Omgevingsprojectie"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:246
+#: plug-ins/script-fu/scripts/chrome-it.scm:320
 msgid "Highlight balance"
-msgstr "Hoge-lichtenbalans"
+msgstr "Hooglichten balans"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:247
+#: plug-ins/script-fu/scripts/chrome-it.scm:321
 msgid "Chrome balance"
 msgstr "Chroombalans"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:248
+#: plug-ins/script-fu/scripts/chrome-it.scm:322
 msgid "Chrome white areas"
 msgstr "Chroom witte gebieden"
 
 # afzonderlijke laag
-#: ../plug-ins/script-fu/scripts/circuit.scm:74
+#: plug-ins/script-fu/scripts/circuit.scm:72
 msgid "Effect layer"
 msgstr "Effectlaag"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:127
+#: plug-ins/script-fu/scripts/circuit.scm:135
 msgid "_Circuit..."
 msgstr "_Circuit…"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:128
+#: plug-ins/script-fu/scripts/circuit.scm:136
 msgid ""
 "Fill the selected region (or alpha) with traces like those on a circuit board"
-msgstr ""
-"Het geselecteerde gebied (of alfa) vullen met sporen zoals op een printplaat"
+msgstr "Het geselecteerde gebied (of alfa) vullen met sporen zoals op een printplaat"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:135
+#: plug-ins/script-fu/scripts/circuit.scm:142
 msgid "Oilify mask size"
 msgstr "Maskergrootte voor olieverf"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:136
+#: plug-ins/script-fu/scripts/circuit.scm:143
 msgid "Circuit seed"
 msgstr "Startwaarde circuit"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:137
+#: plug-ins/script-fu/scripts/circuit.scm:144
 msgid "No background (only for separate layer)"
-msgstr "Geen achtergrond (enkel voor aparte laag)"
+msgstr "Geen achtergrond (alleen voor aparte laag)"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:138
-#: ../plug-ins/script-fu/scripts/lava.scm:141
-#: ../plug-ins/script-fu/scripts/predator.scm:132
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:138
+#: plug-ins/script-fu/scripts/circuit.scm:145
+#: plug-ins/script-fu/scripts/lava.scm:144
+#: plug-ins/script-fu/scripts/xach-effect.scm:139
 msgid "Keep selection"
 msgstr "Selectie behouden"
 
 # afzonderlijke laag
-#: ../plug-ins/script-fu/scripts/circuit.scm:139
-#: ../plug-ins/script-fu/scripts/lava.scm:142
-#: ../plug-ins/script-fu/scripts/predator.scm:133
+#: plug-ins/script-fu/scripts/circuit.scm:146
+#: plug-ins/script-fu/scripts/lava.scm:145
 msgid "Separate layer"
 msgstr "Aparte laag"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:52
+#: plug-ins/script-fu/scripts/clothify.scm:65
 msgid "_Clothify..."
 msgstr "_Textieldruk…"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:53
+#: plug-ins/script-fu/scripts/clothify.scm:66
 msgid "Add a cloth-like texture to the selected region (or alpha)"
 msgstr "Een textielstructuur toevoegen aan het geselecteerde gebied (of alfa)"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:60
+#: plug-ins/script-fu/scripts/clothify.scm:72
 msgid "Blur X"
 msgstr "X-vervaging"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:61
+#: plug-ins/script-fu/scripts/clothify.scm:73
 msgid "Blur Y"
 msgstr "Y-vervaging"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:62
+#: plug-ins/script-fu/scripts/clothify.scm:74
 msgid "Azimuth"
 msgstr "Azimut"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:63
+#: plug-ins/script-fu/scripts/clothify.scm:75
 msgid "Elevation"
-msgstr "Verhoging"
+msgstr "Hoogte"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:64
+#: plug-ins/script-fu/scripts/clothify.scm:76
 msgid "Depth"
 msgstr "Diepte"
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:36
+#: plug-ins/script-fu/scripts/coffee.scm:41
 msgid "Stain"
 msgstr "Vlekken"
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:82
-msgid "_Coffee Stain..."
-msgstr "Ko_ffievlek…"
+#: plug-ins/script-fu/scripts/coffee.scm:132
+msgid "_Stain..."
+msgstr "_Vlekken…"
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:83
-msgid "Add realistic looking coffee stains to the image"
-msgstr "Realistische koffievlekken toevoegen aan de afbeelding"
+#: plug-ins/script-fu/scripts/coffee.scm:133
+msgid "Add layers of stain or blotch marks"
+msgstr "Lagen met markeringen van vlekken of klodders toevoegen"
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:90
-msgid "Stains"
-msgstr "Vlekken"
+#: plug-ins/script-fu/scripts/coffee.scm:139
+msgid "Number of stains to add"
+msgstr "Aantal toe te voegen vlekken"
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:91
+#: plug-ins/script-fu/scripts/coffee.scm:140
 msgid "Darken only"
 msgstr "Enkel donkerder"
 
+#: plug-ins/script-fu/scripts/coffee.scm:141
+msgid "Gradient to color stains"
+msgstr "Kleurverloop om vlekken te kleuren"
+
 # wat doet dit precies?
-#: ../plug-ins/script-fu/scripts/difference-clouds.scm:70
-msgid "_Difference Clouds..."
-msgstr "_Verschilwolken…"
+#: plug-ins/script-fu/scripts/difference-clouds.scm:76
+msgid "_Difference Clouds"
+msgstr "_Verschil-wolken…"
 
-#: ../plug-ins/script-fu/scripts/difference-clouds.scm:71
+#: plug-ins/script-fu/scripts/difference-clouds.scm:77
 msgid "Solid noise applied with Difference layer mode"
-msgstr "Aaneengesloten ruis die toegepast wordt in de laagmodus ‘Verschil’"
+msgstr "Aaneengesloten ruis die toegepast wordt in de laagmodus Verschil"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:105
+#: plug-ins/script-fu/scripts/distress-selection.scm:112
 msgid "_Distort..."
 msgstr "_Vervormen…"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:106
+#: plug-ins/script-fu/scripts/distress-selection.scm:113
 msgid "Distress the selection"
 msgstr "Selectie verruwen"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:113
-msgid "_Threshold (bigger 1<-->254 smaller)"
-msgstr "Drempel (gro_ter 1<-->254 kleiner)"
+#: plug-ins/script-fu/scripts/distress-selection.scm:119
+msgid "_Threshold"
+msgstr "_Drempel"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:114
+#: plug-ins/script-fu/scripts/distress-selection.scm:120
 msgid "_Spread"
 msgstr "_Spreiding"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:115
+#: plug-ins/script-fu/scripts/distress-selection.scm:121
 msgid "_Granularity (1 is low)"
 msgstr "Korreli_gheid (1 is laag)"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:116
+#: plug-ins/script-fu/scripts/distress-selection.scm:122
 msgid "S_mooth"
 msgstr "_Glad"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:117
+#: plug-ins/script-fu/scripts/distress-selection.scm:123
 msgid "Smooth hor_izontally"
 msgstr "Hor_izontaal gladmaken"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:118
+#: plug-ins/script-fu/scripts/distress-selection.scm:124
 msgid "Smooth _vertically"
 msgstr "_Verticaal gladmaken"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:170
+#: plug-ins/script-fu/scripts/drop-shadow.scm:170
 msgid "_Drop Shadow (legacy)..."
 msgstr "Slagscha_duw (verouderd)…"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:171
+#: plug-ins/script-fu/scripts/drop-shadow.scm:171
 msgid "Add a drop shadow to the selected region (or alpha)"
 msgstr "Een slagschaduw toevoegen aan het geselecteerde gebied (of alfa)"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:178
+#: plug-ins/script-fu/scripts/drop-shadow.scm:177
 msgid "Offset X"
-msgstr "X-verschuiving"
+msgstr "Verschuiving X"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:179
+#: plug-ins/script-fu/scripts/drop-shadow.scm:178
 msgid "Offset Y"
-msgstr "Y-verschuiving"
+msgstr "Verschuiving Y"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:180
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:208
-#: ../plug-ins/script-fu/scripts/round-corners.scm:143
+#: plug-ins/script-fu/scripts/drop-shadow.scm:179
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:206
+#: plug-ins/script-fu/scripts/round-corners.scm:143
 msgid "Blur radius"
 msgstr "Vervagingsstraal"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:181
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:157
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:209
+#: plug-ins/script-fu/scripts/drop-shadow.scm:180
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:147
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:207
 msgid "Color"
 msgstr "Kleur"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:182
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:210
+#: plug-ins/script-fu/scripts/drop-shadow.scm:181
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:208
 msgid "Opacity"
 msgstr "Dekking"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:183
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:212
-msgid "Allow resizing"
-msgstr "Herschalen toestaan"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:42
-msgid "_Erase Every Nth Row..."
-msgstr "_Elke n-de rij wissen…"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:43
-msgid "Erase every nth row or column"
-msgstr "Elke n-de rij of kolom wissen"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
-msgid "Rows/cols"
-msgstr "Rijen/Kolommen"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
-msgid "Rows"
-msgstr "Rijen"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
-msgid "Columns"
-msgstr "Kolommen"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
-msgid "Erase/fill"
-msgstr "Wissen/vullen"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
-msgid "Erase"
-msgstr "Wissen"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
-msgid "Fill with BG"
-msgstr "Vullen met AG"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:57
-msgid "_Erase Every Other Row..."
-msgstr "_Elke andere rij wissen…"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:58
-msgid "Erase every other row or column"
-msgstr "_Elke andere rij of kolom wissen"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
-msgid "Even/odd"
-msgstr "Even/oneven"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
-msgid "Even"
-msgstr "Even"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
-msgid "Odd"
-msgstr "Oneven"
-
-#: ../plug-ins/script-fu/scripts/font-map.scm:152
+#: plug-ins/script-fu/scripts/font-map.scm:165
 msgid "Render _Font Map..."
 msgstr "_Lettertypenmap renderen…"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:153
+#: plug-ins/script-fu/scripts/font-map.scm:166
 msgid ""
 "Create an image filled with previews of fonts matching a fontname filter"
-msgstr ""
-"Een afbeelding aanmaken met voorvertoningen van lettertypes die aan een "
-"bepaalde filter voor lettertypenamen voldoen"
+msgstr "Een afbeelding aanmaken met voorbeelden van lettertypes die overeenkomen met een filter van een naam van een lettertype"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:158
+#: plug-ins/script-fu/scripts/font-map.scm:169
 msgid "_Text"
 msgstr "_Tekst"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:159
+#: plug-ins/script-fu/scripts/font-map.scm:170
 msgid "Use font _name as text"
-msgstr "Gebruik lettertype_naam als tekst"
+msgstr "Gebruik _naam lettertype als tekst"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:160
+#: plug-ins/script-fu/scripts/font-map.scm:171
 msgid "_Labels"
 msgstr "_Labels"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:161
+#: plug-ins/script-fu/scripts/font-map.scm:172
 msgid "_Filter (regexp)"
 msgstr "_Filter (regexp)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:162
+#: plug-ins/script-fu/scripts/font-map.scm:173
 msgid "Font _size (pixels)"
 msgstr "Lettertype_grootte (beeldpunten)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:163
+#: plug-ins/script-fu/scripts/font-map.scm:174
 msgid "_Border (pixels)"
 msgstr "_Rand (beeldpunten)"
 
 # kleurenschema
-#: ../plug-ins/script-fu/scripts/font-map.scm:164
+#: plug-ins/script-fu/scripts/font-map.scm:175
 msgid "_Color scheme"
 msgstr "_Kleurschema"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:164
+#: plug-ins/script-fu/scripts/font-map.scm:175
 msgid "Black on white"
 msgstr "Zwart op wit"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:164
+#: plug-ins/script-fu/scripts/font-map.scm:175
 msgid "Active colors"
 msgstr "Actieve kleuren"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:149
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:140
 msgid "_Fuzzy Border..."
 msgstr "_Vage rand…"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:150
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:141
 msgid "Add a jagged, fuzzy border to an image"
 msgstr "Een gekartelde, vage rand toevoegen aan een afbeelding"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:158
-#: ../plug-ins/script-fu/scripts/old-photo.scm:98
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:148
+#: plug-ins/script-fu/scripts/old-photo.scm:99
 msgid "Border size"
 msgstr "Randgrootte"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:159
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:149
 msgid "Blur border"
 msgstr "Vervagingsrand"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:160
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:150
 msgid "Granularity (1 is Low)"
 msgstr "Korreligheid (1 is laag)"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:161
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:151
 msgid "Add shadow"
 msgstr "Schaduw toevoegen"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:162
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:152
 msgid "Shadow weight (%)"
-msgstr "Schaduwgewicht (%)"
+msgstr "Schaduw gewicht (%)"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:164
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:153
+#: plug-ins/script-fu/scripts/old-photo.scm:105
+#: plug-ins/script-fu/scripts/round-corners.scm:145
+#: plug-ins/script-fu/scripts/slide.scm:268
+#: plug-ins/script-fu/scripts/spinning-globe.scm:111
+msgid "Work on copy"
+msgstr "Op kopie werken"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:154
 msgid "Flatten image"
 msgstr "Alle lagen samenvoegen"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
-msgid "Using _Paths"
-msgstr "_Paden gebruiken"
+#: plug-ins/script-fu/scripts/gimp-online.scm:63
+msgid "_Using Paths"
+msgstr "Paden _gebruiken"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+#: plug-ins/script-fu/scripts/gimp-online.scm:64
+#: plug-ins/script-fu/scripts/gimp-online.scm:75
+#: plug-ins/script-fu/scripts/gimp-online.scm:86
+#: plug-ins/script-fu/scripts/gimp-online.scm:97
+#: plug-ins/script-fu/scripts/gimp-online.scm:108
+#: plug-ins/script-fu/scripts/gimp-online.scm:119
+#: plug-ins/script-fu/scripts/gimp-online.scm:130
+#: plug-ins/script-fu/scripts/gimp-online.scm:141
+#: plug-ins/script-fu/scripts/gimp-online.scm:151
 msgid "Bookmark to the user manual"
 msgstr "Bladwijzer naar de gebruikershandleiding"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+#: plug-ins/script-fu/scripts/gimp-online.scm:74
 msgid "_Preparing your Images for the Web"
 msgstr "_Uw afbeeldingen voorbereiden voor het web"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+#: plug-ins/script-fu/scripts/gimp-online.scm:85
 msgid "_Working with Digital Camera Photos"
 msgstr "_Werken met foto’s van een digitale camera"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+#: plug-ins/script-fu/scripts/gimp-online.scm:96
 msgid "Create, Open and Save _Files"
 msgstr "_Bestanden aanmaken, openen en opslaan"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+#: plug-ins/script-fu/scripts/gimp-online.scm:107
 msgid "_Basic Concepts"
 msgstr "_Basisconcepten"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+#: plug-ins/script-fu/scripts/gimp-online.scm:118
 msgid "How to Use _Dialogs"
 msgstr "Hoe _dialoogvensters gebruiken"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+#: plug-ins/script-fu/scripts/gimp-online.scm:129
 msgid "Drawing _Simple Objects"
 msgstr "_Eenvoudige objecten tekenen"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
-msgid "Create and Use _Selections"
-msgstr "_Selecties aanmaken en gebruiken"
+#: plug-ins/script-fu/scripts/gimp-online.scm:140
+msgid "_Create and Use Selections"
+msgstr "_Maken en gebruiken van selecties"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:190
+#: plug-ins/script-fu/scripts/gimp-online.scm:150
+msgid "_Table of Contents"
+msgstr "_Inhoudsopgave"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:184
 msgid "_Main Web Site"
 msgstr "_Hoofdwebsite"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:256
+#: plug-ins/script-fu/scripts/gimp-online.scm:185
+#: plug-ins/script-fu/scripts/gimp-online.scm:196
+#: plug-ins/script-fu/scripts/gimp-online.scm:229
 msgid "Bookmark to the GIMP web site"
-msgstr "Bladwijzer naar de GIMP-website"
+msgstr "Bladwijzer naar de website van GIMP"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:203
+#: plug-ins/script-fu/scripts/gimp-online.scm:195
 msgid "_Developer Web Site"
 msgstr "_Ontwikkelaarswebsite"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:216
-msgid "_Roadmap"
-msgstr "_Routekaart"
+#: plug-ins/script-fu/scripts/gimp-online.scm:206
+msgid "_Roadmaps"
+msgstr "_Routekaarten"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "Bookmark to the roadmap of GIMP"
-msgstr "Bladwijzer naar de routekaart van GIMP"
+#: plug-ins/script-fu/scripts/gimp-online.scm:207
+msgid "Bookmark to the roadmaps of GIMP"
+msgstr "Bladwijzer naar de routekaarten van GIMP"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:229
-msgid "_Wiki"
-msgstr "_Wiki"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:230
-msgid "Bookmark to the wiki of GIMP"
-msgstr "Bladwijzer naar de wiki van GIMP"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:242
+#: plug-ins/script-fu/scripts/gimp-online.scm:217
 msgid "_Bug Reports and Feature Requests"
 msgstr "_Bugmeldingen en verzoeken om nieuwe functies"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:243
+#: plug-ins/script-fu/scripts/gimp-online.scm:218
 msgid "Bookmark to the bug tracker of GIMP"
 msgstr "Bladwijzer naar de bug-tracker van GIMP"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:255
+#: plug-ins/script-fu/scripts/gimp-online.scm:228
 msgid "_User Manual Web Site"
-msgstr "_Gebruikershandleidingwebsite"
+msgstr "_Gebruikershandleiding website"
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:69
+#: plug-ins/script-fu/scripts/gradient-example.scm:69
 msgid "Custom _Gradient..."
-msgstr "_Eigen verloop…"
+msgstr "Aan_gepast kleurverloop…"
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:70
+#: plug-ins/script-fu/scripts/gradient-example.scm:70
 msgid "Create an image filled with an example of the current gradient"
-msgstr ""
-"Een afbeelding aanmaken die gevuld is met een voorbeeld van het huidige "
-"verloop"
+msgstr "Een afbeelding maken die gevuld is met een voorbeeld van het huidige kleurverloop"
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:75
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:70
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:140
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:196
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:265
+#: plug-ins/script-fu/scripts/gradient-example.scm:73
+#: plug-ins/script-fu/scripts/mkbrush.scm:69
+#: plug-ins/script-fu/scripts/mkbrush.scm:137
+#: plug-ins/script-fu/scripts/mkbrush.scm:191
+#: plug-ins/script-fu/scripts/mkbrush.scm:258
 msgid "Width"
 msgstr "Breedte"
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:76
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:71
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:141
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:197
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:266
+#: plug-ins/script-fu/scripts/gradient-example.scm:74
+#: plug-ins/script-fu/scripts/mkbrush.scm:70
+#: plug-ins/script-fu/scripts/mkbrush.scm:138
+#: plug-ins/script-fu/scripts/mkbrush.scm:192
+#: plug-ins/script-fu/scripts/mkbrush.scm:259
 msgid "Height"
 msgstr "Hoogte"
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:77
+#: plug-ins/script-fu/scripts/gradient-example.scm:75
 msgid "Gradient reverse"
-msgstr "Omgekeerd verloop"
+msgstr "Omgekeerd kleurverloop"
 
-#: ../plug-ins/script-fu/scripts/grid-system.scm:84
-msgid "_Grid..."
-msgstr "_Raster…"
-
-#: ../plug-ins/script-fu/scripts/grid-system.scm:85
-msgid ""
-"Draw a grid as specified by the lists of X and Y locations using the current "
-"brush"
-msgstr ""
-"Een raster tekenen met het huidige penseel, op basis van de lijsten van X- "
-"en Y-locaties"
-
-#: ../plug-ins/script-fu/scripts/grid-system.scm:92
-msgid "X divisions"
-msgstr "X-delen"
-
-#: ../plug-ins/script-fu/scripts/grid-system.scm:93
-msgid "Y divisions"
-msgstr "Y-delen"
-
-#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:32
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:32
 msgid "New Guides from _Selection"
-msgstr "Nieuwe hulplijnen vanaf _selectie"
+msgstr "Nieuwe hulplijnen uit _selectie"
 
-#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:33
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:33
 msgid "Create four guides around the bounding box of the current selection"
-msgstr "Creëer vier hulplijnen rond het begrenzingsvak van de huidige selectie"
+msgstr "Maak vier hulplijnen rond het begrenzingsvak van de huidige selectie"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:27
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:30
 msgid "New Guide (by _Percent)..."
 msgstr "Nieuwe hulplijn (op _percentage)…"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:28
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:31
 msgid "Add a guide at the position specified as a percentage of the image size"
-msgstr ""
-"Een hulplijn toevoegen op de positie die opgegeven is als een percentage van "
-"de afbeeldingsgrootte"
+msgstr "Een hulplijn toevoegen op de positie die opgegeven is als een percentage van de afbeeldingsgrootte"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+#. doesn't matter how many drawables are selected
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "_Direction"
 msgstr "_Richting"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "Horizontal"
 msgstr "Horizontaal"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:36
-#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:38
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "Vertical"
 msgstr "Verticaal"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:39
 msgid "_Position (in %)"
 msgstr "_Positie (in %)"
 
-#: ../plug-ins/script-fu/scripts/guides-new.scm:27
+#: plug-ins/script-fu/scripts/guides-new.scm:26
 msgid "New _Guide..."
 msgstr "Nieuwe _hulplijn…"
 
-#: ../plug-ins/script-fu/scripts/guides-new.scm:28
+#: plug-ins/script-fu/scripts/guides-new.scm:27
 msgid "Add a guide at the orientation and position specified (in pixels)"
-msgstr ""
-"Een hulplijn toevoegen op de oriëntatie en de positie die opgegeven is in "
-"beeldpunten"
+msgstr "Een hulplijn toevoegen op de oriëntatie en de positie die opgegeven is (in beeldpunten)"
 
-#: ../plug-ins/script-fu/scripts/guides-new.scm:36
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "_Position"
 msgstr "_Positie"
 
-#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:19
+#: plug-ins/script-fu/scripts/guides-remove-all.scm:19
 msgid "_Remove all Guides"
 msgstr "Alle hulplijnen _verwijderen"
 
-#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:20
+#: plug-ins/script-fu/scripts/guides-remove-all.scm:20
 msgid "Remove all horizontal and vertical guides"
 msgstr "Alle horizontale en verticale hulplijnen verwijderen"
 
 #. else
-#: ../plug-ins/script-fu/scripts/lava.scm:123
+#: plug-ins/script-fu/scripts/lava.scm:127
 msgid "Lava works with exactly one selected layer"
 msgstr "Lava werkt met precies één geselecteerde laag"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:129
+#: plug-ins/script-fu/scripts/lava.scm:133
 msgid "_Lava..."
 msgstr "_Lava…"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:130
+#: plug-ins/script-fu/scripts/lava.scm:134
 msgid "Fill the current selection with lava"
 msgstr "De huidige selectie met lava vullen"
 
 # beginwaarde
-#: ../plug-ins/script-fu/scripts/lava.scm:137
+#: plug-ins/script-fu/scripts/lava.scm:140
 msgid "Seed"
 msgstr "Startwaarde"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:138
+#: plug-ins/script-fu/scripts/lava.scm:141
 msgid "Size"
 msgstr "Grootte"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:139
+#: plug-ins/script-fu/scripts/lava.scm:142
 msgid "Roughness"
 msgstr "Ruwheid"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:140
+#: plug-ins/script-fu/scripts/lava.scm:143
 msgid "Gradient"
-msgstr "Verloop"
+msgstr "Kleurverlopen"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:143
+#: plug-ins/script-fu/scripts/lava.scm:146
 msgid "Use current gradient"
-msgstr "Gebruik huidig verloop"
+msgstr "Gebruik huidig kleurverloop"
 
 # nova met lijnen
-#: ../plug-ins/script-fu/scripts/line-nova.scm:108
+#: plug-ins/script-fu/scripts/line-nova.scm:117
 msgid "Line _Nova..."
 msgstr "_Lijnennova…"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:109
+#: plug-ins/script-fu/scripts/line-nova.scm:118
 msgid ""
 "Fill a layer with rays emanating outward from its center using the "
 "foreground color"
-msgstr ""
-"Een laag vullen met stralen in de voorgrondkleur die vanuit het middelpunt "
-"naar buiten stralen"
+msgstr "Een laag vullen met stralen in de voorgrondkleur die vanuit het middelpunt naar buiten stralen"
 
 # regels/lijnen
-#: ../plug-ins/script-fu/scripts/line-nova.scm:116
-msgid "Number of lines"
-msgstr "Aantal lijnen"
+#: plug-ins/script-fu/scripts/line-nova.scm:124
+msgid "_Number of lines"
+msgstr "_Aantal lijnen"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:117
-msgid "Sharpness (degrees)"
-msgstr "Scherpte (graden)"
+#: plug-ins/script-fu/scripts/line-nova.scm:125
+msgid "S_harpness (degrees)"
+msgstr "Sc_herpte (graden)"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:118
-msgid "Offset radius"
-msgstr "Verschuivingsstraal"
+#: plug-ins/script-fu/scripts/line-nova.scm:126
+msgid "O_ffset radius"
+msgstr "Straal _verschuiving"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:119
-msgid "Randomness"
-msgstr "Willekeurigheid"
+#: plug-ins/script-fu/scripts/line-nova.scm:127
+msgid "Ran_domness"
+msgstr "Wille_keurigheid"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:63
+#: plug-ins/script-fu/scripts/mkbrush.scm:64
 msgid "_Rectangular..."
 msgstr "_Rechthoekig…"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:64
+#: plug-ins/script-fu/scripts/mkbrush.scm:65
 msgid "Create a rectangular brush"
-msgstr "Een rechthoekig penseel aanmaken"
+msgstr "Maak een rechthoekig penseel"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:69
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:139
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:195
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:264
+#: plug-ins/script-fu/scripts/mkbrush.scm:68
+#: plug-ins/script-fu/scripts/mkbrush.scm:136
+#: plug-ins/script-fu/scripts/mkbrush.scm:190
+#: plug-ins/script-fu/scripts/mkbrush.scm:257
 msgid "Name"
 msgstr "Naam"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:72
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:143
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:198
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:268
+#: plug-ins/script-fu/scripts/mkbrush.scm:71
+#: plug-ins/script-fu/scripts/mkbrush.scm:140
+#: plug-ins/script-fu/scripts/mkbrush.scm:193
+#: plug-ins/script-fu/scripts/mkbrush.scm:261
 msgid "Spacing"
-msgstr "Spatiëring"
+msgstr "Tussenruimte"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:133
+#: plug-ins/script-fu/scripts/mkbrush.scm:132
 msgid "Re_ctangular, Feathered..."
-msgstr "Re_chthoekig, vervaagd…"
+msgstr "Re_chthoekig, verzacht…"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:134
+#: plug-ins/script-fu/scripts/mkbrush.scm:133
 msgid "Create a rectangular brush with feathered edges"
-msgstr "Een rechthoekig penseel met verzachte randen aanmaken"
+msgstr "Maak een rechthoekig penseel met verzachte randen"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:142
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:267
+#: plug-ins/script-fu/scripts/mkbrush.scm:139
+#: plug-ins/script-fu/scripts/mkbrush.scm:260
 msgid "Feathering"
-msgstr "Vervaging"
+msgstr "Zachte randen"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:189
+#: plug-ins/script-fu/scripts/mkbrush.scm:186
 msgid "_Elliptical..."
 msgstr "_Ovaal…"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:190
+#: plug-ins/script-fu/scripts/mkbrush.scm:187
 msgid "Create an elliptical brush"
-msgstr "Een ovaal penseel aanmaken"
+msgstr "Maak een ovaal penseel"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:258
+#: plug-ins/script-fu/scripts/mkbrush.scm:253
 msgid "Elli_ptical, Feathered..."
-msgstr "_Ovaal, vervaagd…"
+msgstr "_Ovaal, verzacht…"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:259
+#: plug-ins/script-fu/scripts/mkbrush.scm:254
 msgid "Create an elliptical brush with feathered edges"
-msgstr "Een ovaal penseel met verzachte randen aanmaken"
+msgstr "Maak een ovaal penseel met verzachte randen"
 
-#: ../plug-ins/script-fu/scripts/old-photo.scm:89
+#: plug-ins/script-fu/scripts/old-photo.scm:91
 msgid "_Old Photo..."
 msgstr "_Oude foto…"
 
-#: ../plug-ins/script-fu/scripts/old-photo.scm:90
+#: plug-ins/script-fu/scripts/old-photo.scm:92
 msgid "Make an image look like an old photo"
 msgstr "Een afbeelding op een oude foto doen lijken"
 
-#: ../plug-ins/script-fu/scripts/old-photo.scm:97
+#: plug-ins/script-fu/scripts/old-photo.scm:98
 msgid "Defocus"
 msgstr "Ontfocus"
 
@@ -1155,498 +1012,623 @@ msgstr "Ontfocus"
 #. since this plug-in uses the fuzzy-border plug-in, I used the
 #. values of the latter, with the exception of the initial value
 #. and the 'minimum' value.
-#: ../plug-ins/script-fu/scripts/old-photo.scm:102
+#: plug-ins/script-fu/scripts/old-photo.scm:103
 msgid "Sepia"
 msgstr "Sepia"
 
-#: ../plug-ins/script-fu/scripts/old-photo.scm:103
+#: plug-ins/script-fu/scripts/old-photo.scm:104
 msgid "Mottle"
-msgstr "Bevlek"
+msgstr "Bevlekken"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:226
-msgid "Folder for the output file"
-msgstr "Map voor het uitvoerbestand"
-
-#: ../plug-ins/script-fu/scripts/palette-export.scm:227
-msgid ""
-"The name of the file to create (if a file with this name already exist, it "
-"will be replaced)"
-msgstr ""
-"De naam van het aan te maken bestand (als een bestand met deze naam al "
-"bestaat, wordt het overschreven)"
-
-#: ../plug-ins/script-fu/scripts/palette-export.scm:235
+#: plug-ins/script-fu/scripts/palette-export.scm:162
 msgid "The filename you entered is not a suitable name for a file."
 msgstr "De opgegeven bestandsnaam is niet geldig."
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:237
+#: plug-ins/script-fu/scripts/palette-export.scm:164
 msgid ""
 "All characters in the name are either white-spaces or characters which can "
 "not appear in filenames."
-msgstr ""
-"Alle karakters in de naam zijn of witruimtes of mogen niet in bestandnamen "
-"worden gebruikt."
+msgstr "Alle tekens in de naam zijn ofwel witruimte of zijn tekens die niet in bestandsnamen mogen worden gebruikt."
+
+#. Side effect.
+#. Tell the user the mangled path, might be different than user entered.
+#. The user should not need to search for the file.
+#: plug-ins/script-fu/scripts/palette-export.scm:199
+msgid "Exported palette to file: "
+msgstr "Geëxporteerd palet naar bestand: "
+
+#: plug-ins/script-fu/scripts/palette-export.scm:287
+msgid "Folder for the output file"
+msgstr "Map voor het uitvoerbestand"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:288
+msgid ""
+"The name of the file to create (if a file with this name already exist, it "
+"will be replaced)"
+msgstr "De naam van het aan te maken bestand (als een bestand met deze naam al bestaat, wordt het overschreven)"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:317
+msgid "_CSS stylesheet..."
+msgstr "_CSS stylesheet..."
 
 # kleuringangsnaam, burk, wie weet wat beters?
 # pm
-#: ../plug-ins/script-fu/scripts/palette-export.scm:265
+#: plug-ins/script-fu/scripts/palette-export.scm:318
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
 "their class name, and the color itself as the color attribute"
-msgstr ""
-"Exporteer het actieve palet als een CSS-stylesheet met de kleuringangsnaam "
-"als de klassenaam, en de kleur zelf als het kleurattribuut"
+msgstr "Exporteer het actieve palet als een CSS-stylesheet met de kleuringangsnaam als de klassenaam, en de kleur zelf als het kleurattribuut"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:291
+#: plug-ins/script-fu/scripts/palette-export.scm:338
+msgid "P_HP dictionary..."
+msgstr "P_HP dictionary..."
+
+#: plug-ins/script-fu/scripts/palette-export.scm:339
 msgid "Export the active palette as a PHP dictionary (name => color)"
 msgstr "Exporteer het actieve palet als een PHP-woordenboek (naam => kleur)"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:323
+#: plug-ins/script-fu/scripts/palette-export.scm:363
+msgid "_Python dictionary..."
+msgstr "_Python dictionary..."
+
+#: plug-ins/script-fu/scripts/palette-export.scm:364
 msgid "Export the active palette as a Python dictionary (name: color)"
 msgstr "Exporteer het actieve palet als een Python-woordenboek (naam: kleur)"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:352
+# cirkeltekst
+#: plug-ins/script-fu/scripts/palette-export.scm:385
+msgid "_Text file..."
+msgstr "_Tekstbestand…"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:386
 msgid ""
 "Write all the colors in a palette to a text file, one hexadecimal value per "
 "line (no names)"
-msgstr ""
-"Schrijf alle kleuren in een palet naar een tekstbestand, één hexadecimale "
-"waarde per regel (geen namen)"
+msgstr "Schrijf alle kleuren in een palet naar een tekstbestand, één hexadecimale waarde per regel (geen namen)"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:399
-msgid "Export the active palette as a java.util.Hashtable<String, Color>"
-msgstr "Exporteer het actieve palet als een java.util.Hashtable<String, Color>"
+#: plug-ins/script-fu/scripts/palette-export.scm:425
+msgid "J_ava map..."
+msgstr "J_ava kaart…"
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:56
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:44
+#: plug-ins/script-fu/scripts/palette-export.scm:426
+msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
+msgstr "Exporteer het actieve palet als een java.util.Hashtable&lt;String,Color&gt;"
+
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:59
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:45
 msgid "There is no image data in the clipboard to paste."
-msgstr "Er zijn geen afbeeldingsgegevens in het klembord om te plakken."
+msgstr "Er staan in het klembord geen afbeeldingsgegevens om te plakken."
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:62
-msgid "New _Brush..."
-msgstr "Nieuw _penseel…"
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:65
+msgid "Paste as New _Brush..."
+msgstr "Plakken als nieuw _penseel..."
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:63
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:66
 msgid "Paste the clipboard contents into a new brush"
 msgstr "De inhoud van het klembord in een nieuw penseel plakken"
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:145
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:69
 msgid "_Brush name"
 msgstr "_Penseelnaam"
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:69
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:146
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:69
+msgid "My Brush"
+msgstr "Mijn penseel"
+
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 msgid "_File name"
 msgstr "_Bestandsnaam"
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:147
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+msgid "mybrush"
+msgstr "mijnpenseel"
+
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
 msgid "_Spacing"
-msgstr "_Spatiëring"
+msgstr "_Afstand"
 
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:50
-msgid "New _Pattern..."
-msgstr "Nieuw pa_troon…"
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:51
+msgid "Paste as New _Pattern..."
+msgstr "Plakken als nieuw patroon…"
 
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:51
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:52
 msgid "Paste the clipboard contents into a new pattern"
 msgstr "De inhoud van het klembord in een nieuw patroon plakken"
 
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
 msgid "_Pattern name"
 msgstr "_Patroonnaam"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:197
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
+msgid "My Pattern"
+msgstr "Mijn patroon"
+
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
+msgid "mypattern"
+msgstr "mijnpatroon"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:196
 msgid "_Perspective..."
 msgstr "_Perspectief…"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:198
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:197
 msgid "Add a perspective shadow to the selected region (or alpha)"
-msgstr ""
-"Een perspectiefschaduw toevoegen aan het geselecteerde gebied (of alfa)"
+msgstr "Een perspectiefschaduw toevoegen aan het geselecteerde gebied (of alfa)"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:205
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:203
 msgid "Angle"
 msgstr "Hoek"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:206
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:204
 msgid "Relative distance of horizon"
 msgstr "Relatieve horizonafstand"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:207
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:205
 msgid "Relative length of shadow"
 msgstr "Relatieve schaduwlengte"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:211
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:209
 msgid "Interpolation"
 msgstr "Interpolatie"
 
-#: ../plug-ins/script-fu/scripts/predator.scm:121
-msgid "_Predator..."
-msgstr "_Predator…"
-
-#: ../plug-ins/script-fu/scripts/predator.scm:122
-msgid "Add a 'Predator' effect to the selected region (or alpha)"
-msgstr "Een ‘Predator’-effect toevoegen aan het geselecteerde gebied (of alfa)"
-
-#: ../plug-ins/script-fu/scripts/predator.scm:129
-msgid "Edge amount"
-msgstr "Randgrootte"
-
-#: ../plug-ins/script-fu/scripts/predator.scm:130
-msgid "Pixelize"
-msgstr "Pixeliseren"
-
-#: ../plug-ins/script-fu/scripts/predator.scm:131
-msgid "Pixel amount"
-msgstr "Beeldpunthoeveelheid"
-
-#: ../plug-ins/script-fu/scripts/reverse-layers.scm:42
+#: plug-ins/script-fu/scripts/reverse-layers.scm:41
 msgid "Reverse Layer _Order"
 msgstr "Laagv_olgorde omkeren"
 
-#: ../plug-ins/script-fu/scripts/reverse-layers.scm:43
+#: plug-ins/script-fu/scripts/reverse-layers.scm:42
 msgid "Reverse the order of layers in the image"
 msgstr "De volgorde van de lagen in de afbeelding omkeren"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:69
+#: plug-ins/script-fu/scripts/ripply-anim.scm:83
 msgid "_Rippling..."
 msgstr "_Rimpelend…"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:70
+#: plug-ins/script-fu/scripts/ripply-anim.scm:84
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current layer"
-msgstr ""
-"Een afbeelding met meerdere lagen aanmaken door een rimpeleffect toe te "
-"voegen aan de huidige laag"
+msgstr "Een afbeelding met meerdere lagen maken door een rimpeleffect toe te voegen aan de huidige laag"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
-msgid "Rippling strength"
-msgstr "Rimpelkracht"
+#: plug-ins/script-fu/scripts/ripply-anim.scm:90
+msgid "Ri_ppling strength"
+msgstr "Sterkte ri_mpeling"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:78
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:105
-msgid "Number of frames"
-msgstr "Aantal frames"
+#: plug-ins/script-fu/scripts/ripply-anim.scm:91
+msgid "_Number of frames"
+msgstr "_Aantal frames"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
-msgid "Edge behavior"
-msgstr "Randgedrag"
+#: plug-ins/script-fu/scripts/ripply-anim.scm:92
+msgid "Edge _behavior"
+msgstr "Rand_gedrag"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
+#: plug-ins/script-fu/scripts/ripply-anim.scm:92
 msgid "Wrap"
 msgstr "Omloop"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
+#: plug-ins/script-fu/scripts/ripply-anim.scm:92
 msgid "Smear"
 msgstr "Smeren"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
+#: plug-ins/script-fu/scripts/ripply-anim.scm:92
 msgid "Black"
 msgstr "Zwart"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:131
+#: plug-ins/script-fu/scripts/round-corners.scm:132
 msgid "_Round Corners..."
 msgstr "_Ronde hoeken…"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:132
+#: plug-ins/script-fu/scripts/round-corners.scm:133
 msgid ""
 "Round the corners of an image and optionally add a drop-shadow and background"
-msgstr ""
-"De hoeken van een afbeelding afronden en eventueel een slagschaduw en een "
-"achtergrond toevoegen"
+msgstr "De hoeken van een afbeelding afronden en eventueel een slagschaduw en een achtergrond toevoegen"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:139
+#: plug-ins/script-fu/scripts/round-corners.scm:139
 msgid "Edge radius"
-msgstr "Randstraal"
+msgstr "Straal rand"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:140
+#: plug-ins/script-fu/scripts/round-corners.scm:140
 msgid "Add drop-shadow"
 msgstr "Slagschaduw toevoegen"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:141
+#: plug-ins/script-fu/scripts/round-corners.scm:141
 msgid "Shadow X offset"
 msgstr "X-verschuiving schaduw"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:142
+#: plug-ins/script-fu/scripts/round-corners.scm:142
 msgid "Shadow Y offset"
 msgstr "Y-verschuiving schaduw"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:144
+#: plug-ins/script-fu/scripts/round-corners.scm:144
 msgid "Add background"
 msgstr "Achtergrond toevoegen"
 
-#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
 msgid "Se_t Colormap..."
 msgstr "Kleurenkaart ins_tellen…"
 
-#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
 msgid "Change the colormap of an image to the colors in a specified palette."
-msgstr ""
-"De kleurenkaart van een afbeelding veranderen naar de kleuren van een "
-"ingesteld palet."
+msgstr "De kleurenkaart van een afbeelding veranderen naar de kleuren van een ingesteld palet."
 
-#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:60
 msgid "Palette"
 msgstr "Palet"
 
-#: ../plug-ins/script-fu/scripts/selection-round.scm:139
+#: plug-ins/script-fu/scripts/selection-round.scm:143
 msgid "Rounded R_ectangle..."
 msgstr "A_fgeronde rechthoek…"
 
-#: ../plug-ins/script-fu/scripts/selection-round.scm:140
+#: plug-ins/script-fu/scripts/selection-round.scm:144
 msgid "Round the corners of the current selection"
 msgstr "De hoeken van de huidige selectie afronden"
 
-#: ../plug-ins/script-fu/scripts/selection-round.scm:147
+#: plug-ins/script-fu/scripts/selection-round.scm:150
 msgid "R_adius (%)"
 msgstr "Str_aal (%)"
 
-#: ../plug-ins/script-fu/scripts/selection-round.scm:148
+#: plug-ins/script-fu/scripts/selection-round.scm:151
 msgid "Co_ncave"
 msgstr "Co_ncaaf"
 
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:137
-msgid "To _Brush..."
-msgstr "Naar _penseel…"
-
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:138
-msgid "Convert a selection to a brush"
-msgstr "Een selectie naar een penseel omzetten"
-
-#: ../plug-ins/script-fu/scripts/select-to-image.scm:81
-msgid "To _Image"
-msgstr "Naar _afbeelding"
-
-#: ../plug-ins/script-fu/scripts/select-to-image.scm:82
-msgid "Convert a selection to an image"
-msgstr "Een selectie naar een afbeelding omzetten"
-
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:93
-msgid "To _Pattern..."
-msgstr "Naar pa_troon…"
-
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:94
-msgid "Convert a selection to a pattern"
-msgstr "Een selectie naar een patroon omzetten"
-
-#: ../plug-ins/script-fu/scripts/slide.scm:245
+#: plug-ins/script-fu/scripts/slide.scm:257
 msgid "_Slide..."
 msgstr "_Dia…"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:246
+#: plug-ins/script-fu/scripts/slide.scm:258
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
-msgstr ""
-"Een kader, perforaties en labels toevoegen aan een afbeelding zodat die op "
-"een filmdia lijkt"
+msgstr "Een kader, perforaties en labels toevoegen aan een afbeelding zodat die op een filmdia lijkt"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:253
+#: plug-ins/script-fu/scripts/slide.scm:264
 msgid "Text"
 msgstr "Tekst"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:254
+#: plug-ins/script-fu/scripts/slide.scm:265
 msgid "Number"
 msgstr "Getal"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:255
+#: plug-ins/script-fu/scripts/slide.scm:266
 msgid "Font"
 msgstr "Lettertype"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:256
+#: plug-ins/script-fu/scripts/slide.scm:267
 msgid "Font color"
 msgstr "Lettertypekleur"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:94
+#: plug-ins/script-fu/scripts/spinning-globe.scm:99
 msgid "_Spinning Globe..."
 msgstr "_Draaiende bol…"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:95
+#: plug-ins/script-fu/scripts/spinning-globe.scm:100
 msgid "Create an animation by mapping the current image onto a spinning sphere"
-msgstr ""
-"Een animatie aanmaken door de huidige afbeelding op een ronddraaiende bol te "
-"projecteren"
+msgstr "Een animatie aanmaken door de huidige afbeelding op een ronddraaiende bol te projecteren"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:102
+#: plug-ins/script-fu/scripts/spinning-globe.scm:107
 msgid "Frames"
 msgstr "Frames"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:103
+#: plug-ins/script-fu/scripts/spinning-globe.scm:108
 msgid "Turn from left to right"
 msgstr "Draai van links naar rechts"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:104
+#: plug-ins/script-fu/scripts/spinning-globe.scm:109
 msgid "Transparent background"
 msgstr "Transparante achtergrond"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:105
+#: plug-ins/script-fu/scripts/spinning-globe.scm:110
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "Indexeren naar n kleuren (0 = behoud RGB)"
 
-#: ../plug-ins/script-fu/scripts/test-sphere.scm:272
-msgid "_Sphere..."
-msgstr "_Bol…"
+#. Translator: this means "in the Scheme programming language" aka ScriptFu.
+#: plug-ins/script-fu/scripts/test-sphere-v3.scm:154
+msgid "Plug-In Example in _Scheme"
+msgstr "Voorbeeld plug-in in _Scheme"
+
+#: plug-ins/script-fu/scripts/test-sphere-v3.scm:155
+msgid "Plug-in example in Scheme"
+msgstr "Voorbeeld plug-in in Scheme"
 
 # What is the correct translation of the verb 'tile'?
-#: ../plug-ins/script-fu/scripts/tileblur.scm:68
+#: plug-ins/script-fu/scripts/tileblur.scm:77
 msgid "_Tileable Blur..."
 msgstr "_Naadloos vervagen…"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:69
+#: plug-ins/script-fu/scripts/tileblur.scm:78
 msgid "Blur the edges of an image so the result tiles seamlessly"
-msgstr ""
-"De randen van een afbeelding vervagen zodat het resultaat naadloos getegeld "
-"kan worden"
+msgstr "De randen van een afbeelding vervagen zodat het resultaat naadloos getegeld kan worden"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:76
-msgid "Radius"
-msgstr "Straal"
+#: plug-ins/script-fu/scripts/tileblur.scm:84
+msgid "Ra_dius"
+msgstr "Straa_l"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:77
-msgid "Blur vertically"
-msgstr "Verticaal vervagen"
+#: plug-ins/script-fu/scripts/tileblur.scm:85
+msgid "Blur _vertically"
+msgstr "_Verticaal vervagen"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:78
-msgid "Blur horizontally"
-msgstr "Horizontaal vervagen"
+#: plug-ins/script-fu/scripts/tileblur.scm:86
+msgid "Blur _horizontally"
+msgstr "_Horizontaal vervagen"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:79
-msgid "Blur type"
-msgstr "Vervagingstype"
+#: plug-ins/script-fu/scripts/tileblur.scm:87
+msgid "Blur _type"
+msgstr "_Type vervagen"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+#: plug-ins/script-fu/scripts/tileblur.scm:87
 msgid "IIR"
 msgstr "IIR"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+#: plug-ins/script-fu/scripts/tileblur.scm:87
 msgid "RLE"
 msgstr "RLE"
 
-#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:82
+#: plug-ins/script-fu/scripts/unsharp-mask.scm:103
 msgid "Mask size"
 msgstr "Maskergrootte"
 
-#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:83
+#: plug-ins/script-fu/scripts/unsharp-mask.scm:104
 msgid "Mask opacity"
 msgstr "Maskerdekking"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:95
+#: plug-ins/script-fu/scripts/waves-anim.scm:116
 msgid "_Waves..."
-msgstr "_Golven…"
+msgstr "_Golven..."
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:96
+#: plug-ins/script-fu/scripts/waves-anim.scm:117
 msgid ""
 "Create a multi-layer image with an effect like a stone was thrown into the "
 "current image"
-msgstr ""
-"Maak een afbeelding met meerdere lagen aan met een effect alsof er een steen "
-"in de huidige afbeelding geworpen is"
+msgstr "Maak een afbeelding met meerdere lagen met een effect alsof er een steen in de huidige afbeelding geworpen is"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:103
+#: plug-ins/script-fu/scripts/waves-anim.scm:123
 msgid "Amplitude"
 msgstr "Amplitude"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:104
+#: plug-ins/script-fu/scripts/waves-anim.scm:124
 msgid "Wavelength"
 msgstr "Golflengte"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:106
+#: plug-ins/script-fu/scripts/waves-anim.scm:125
+msgid "Number of frames"
+msgstr "Aantal frames"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm:126
 msgid "Invert direction"
 msgstr "Richting omdraaien"
 
 # geweefte/weefgetouw/weven/geweefsel
-#: ../plug-ins/script-fu/scripts/weave.scm:397
+#: plug-ins/script-fu/scripts/weave.scm:421
 msgid "_Weave..."
 msgstr "_Weven…"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:398
+#: plug-ins/script-fu/scripts/weave.scm:422
 msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
-msgstr ""
-"Een nieuwe laag aanmaken die gevuld is met een vlechteffect om als een "
-"bedekking of een bumpprojectie te gebruiken"
+msgstr "Een nieuwe laag maken die gevuld is met een vlechteffect om als een bedekking of een bumpprojectie te gebruiken"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:405
+#: plug-ins/script-fu/scripts/weave.scm:428
 msgid "Ribbon width"
-msgstr "Lintbreedte"
+msgstr "Lint breedte"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:406
+#: plug-ins/script-fu/scripts/weave.scm:429
 msgid "Ribbon spacing"
-msgstr "Linttussenruimte"
+msgstr "Lint tussenruimte"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:407
+#: plug-ins/script-fu/scripts/weave.scm:430
 msgid "Shadow darkness"
-msgstr "Schaduwdonkerte"
+msgstr "Schaduw donkerte"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:408
+#: plug-ins/script-fu/scripts/weave.scm:431
 msgid "Shadow depth"
-msgstr "Schaduwdiepte"
+msgstr "Schaduw diepte"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:409
+#: plug-ins/script-fu/scripts/weave.scm:432
 msgid "Thread length"
-msgstr "Draadlengte"
+msgstr "Draad lengte"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:410
+#: plug-ins/script-fu/scripts/weave.scm:433
 msgid "Thread density"
-msgstr "Draaddichtheid"
+msgstr "Draad dichtheid"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:411
+#: plug-ins/script-fu/scripts/weave.scm:434
 msgid "Thread intensity"
-msgstr "Draadintensiteit"
+msgstr "Draad intensiteit"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:92
+#: plug-ins/script-fu/scripts/xach-effect.scm:90
 msgid "Shadow"
 msgstr "Schaduw"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:121
+#: plug-ins/script-fu/scripts/xach-effect.scm:123
 msgid "_Xach-Effect..."
 msgstr "_Xach-effect…"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:122
+#: plug-ins/script-fu/scripts/xach-effect.scm:124
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
-msgstr ""
-"Een subtiel doorschijnend 3D-effect toevoegen aan het geselecteerde gebied "
-"(of alfa)"
+msgstr "Een subtiel doorschijnend 3D-effect toevoegen aan het geselecteerde gebied (of alfa)"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:129
+#: plug-ins/script-fu/scripts/xach-effect.scm:130
 msgid "Highlight X offset"
-msgstr "X-verschuiving hoge lichten"
+msgstr "X-verschuiving hooglichten"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:130
+#: plug-ins/script-fu/scripts/xach-effect.scm:131
 msgid "Highlight Y offset"
-msgstr "Y-verschuiving hoge lichten"
+msgstr "Y-verschuiving hooglichten"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:131
+#: plug-ins/script-fu/scripts/xach-effect.scm:132
 msgid "Highlight color"
-msgstr "Hoge-lichtenkleur"
+msgstr "Kleur hooglichten"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:132
+#: plug-ins/script-fu/scripts/xach-effect.scm:133
 msgid "Highlight opacity"
-msgstr "Dekking hoge lichten"
+msgstr "Helderheid buiten selectie"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:133
+#: plug-ins/script-fu/scripts/xach-effect.scm:134
 msgid "Drop shadow color"
 msgstr "Kleur slagschaduw"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:134
+#: plug-ins/script-fu/scripts/xach-effect.scm:135
 msgid "Drop shadow opacity"
 msgstr "Dekking slagschaduw"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:135
+#: plug-ins/script-fu/scripts/xach-effect.scm:136
 msgid "Drop shadow blur radius"
 msgstr "Vervagingsstraal slagschaduw"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:136
+#: plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow X offset"
 msgstr "X-verschuiving van slagschaduw"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:137
+#: plug-ins/script-fu/scripts/xach-effect.scm:138
 msgid "Drop shadow Y offset"
-msgstr "Y-verschuiving slagschadow"
+msgstr "Y-verschuiving slagschaduw"
+
+#~ msgid "_Refresh Scripts"
+#~ msgstr "S_cripts verversen"
+
+#~ msgid "Re-read all available Script-Fu scripts"
+#~ msgstr "Alle beschikbare Script-Fu-scripts opnieuw inlezen"
+
+#~ msgid ""
+#~ "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is "
+#~ "open.  Please close all Script-Fu windows and try again."
+#~ msgstr ""
+#~ "U kunt ‘Scripts verversen’ niet gebruiken terwijl er een Script-Fu-"
+#~ "dialoogvenster open is. Sluit alle Script-Fu-vensters en probeer het "
+#~ "opnieuw."
+
+#~ msgid "Interactive Scheme Development"
+#~ msgstr "Interactieve ontwikkeling in Scheme"
+
+#, c-format
+#~ msgid "Script-Fu: %s"
+#~ msgstr "Script-Fu: %s"
+
+#~ msgid "Script-Fu Font Selection"
+#~ msgstr "Script-Fu-lettertypeselectie"
+
+#~ msgid "Script-Fu Palette Selection"
+#~ msgstr "Script-Fu-paletselectie"
+
+#~ msgid "Script-Fu Pattern Selection"
+#~ msgstr "Script-Fu-patroonselectie"
+
+#~ msgid "Script-Fu Gradient Selection"
+#~ msgstr "Script-Fu-verloopselectie"
+
+#~ msgid "Script-Fu Brush Selection"
+#~ msgstr "Script-Fu-penseelselectie"
+
+#~ msgid "Too few arguments to 'script-fu-register' call"
+#~ msgstr "Te weinig parameters voor ‘script-fu-register’-oproep"
+
+#~ msgid "Image to carve"
+#~ msgstr "Afbeelding naar kerving"
+
+#~ msgid "Add realistic looking coffee stains to the image"
+#~ msgstr "Realistische koffievlekken toevoegen aan de afbeelding"
+
+#~ msgid "Stains"
+#~ msgstr "Vlekken"
+
+#~ msgid "_Threshold (bigger 1<-->254 smaller)"
+#~ msgstr "Drempel (gro_ter 1<-->254 kleiner)"
+
+#~ msgid "_Erase Every Nth Row..."
+#~ msgstr "_Elke n-de rij wissen…"
+
+#~ msgid "Erase every nth row or column"
+#~ msgstr "Elke n-de rij of kolom wissen"
+
+#~ msgid "Rows/cols"
+#~ msgstr "Rijen/Kolommen"
+
+#~ msgid "Rows"
+#~ msgstr "Rijen"
+
+#~ msgid "Columns"
+#~ msgstr "Kolommen"
+
+#~ msgid "Erase/fill"
+#~ msgstr "Wissen/vullen"
+
+#~ msgid "Erase"
+#~ msgstr "Wissen"
+
+#~ msgid "Fill with BG"
+#~ msgstr "Vullen met AG"
+
+#~ msgid "_Erase Every Other Row..."
+#~ msgstr "_Elke andere rij wissen…"
+
+#~ msgid "Erase every other row or column"
+#~ msgstr "_Elke andere rij of kolom wissen"
+
+#~ msgid "Even/odd"
+#~ msgstr "Even/oneven"
+
+#~ msgid "Even"
+#~ msgstr "Even"
+
+#~ msgid "Odd"
+#~ msgstr "Oneven"
+
+#~ msgid "_Wiki"
+#~ msgstr "_Wiki"
+
+#~ msgid "Bookmark to the wiki of GIMP"
+#~ msgstr "Bladwijzer naar de wiki van GIMP"
+
+#~ msgid "_Grid..."
+#~ msgstr "_Raster…"
+
+#~ msgid ""
+#~ "Draw a grid as specified by the lists of X and Y locations using the "
+#~ "current brush"
+#~ msgstr ""
+#~ "Een raster tekenen met het huidige penseel, op basis van de lijsten van "
+#~ "X- en Y-locaties"
+
+#~ msgid "X divisions"
+#~ msgstr "X-delen"
+
+#~ msgid "Y divisions"
+#~ msgstr "Y-delen"
+
+#~ msgid "_Predator..."
+#~ msgstr "_Predator…"
+
+#~ msgid "Add a 'Predator' effect to the selected region (or alpha)"
+#~ msgstr ""
+#~ "Een ‘Predator’-effect toevoegen aan het geselecteerde gebied (of alfa)"
+
+#~ msgid "Edge amount"
+#~ msgstr "Randgrootte"
+
+#~ msgid "Pixelize"
+#~ msgstr "Pixeliseren"
+
+#~ msgid "Pixel amount"
+#~ msgstr "Beeldpunthoeveelheid"
+
+#~ msgid "To _Brush..."
+#~ msgstr "Naar _penseel…"
+
+#~ msgid "Convert a selection to a brush"
+#~ msgstr "Een selectie naar een penseel omzetten"
+
+#~ msgid "To _Image"
+#~ msgstr "Naar _afbeelding"
+
+#~ msgid "Convert a selection to an image"
+#~ msgstr "Een selectie naar een afbeelding omzetten"
+
+#~ msgid "To _Pattern..."
+#~ msgstr "Naar pa_troon…"
+
+#~ msgid "Convert a selection to a pattern"
+#~ msgstr "Een selectie naar een patroon omzetten"
+
+#~ msgid "_Sphere..."
+#~ msgstr "_Bol…"
 
 #~ msgid "_Console"
 #~ msgstr "_Console"
@@ -1726,12 +1708,6 @@ msgstr "Y-verschuiving slagschadow"
 #~ msgid "Pencil"
 #~ msgstr "Potlood"
 
-#~ msgid "Brush"
-#~ msgstr "Penseel"
-
-#~ msgid "Airbrush"
-#~ msgstr "Verfspuit"
-
 #~ msgid "Color method"
 #~ msgstr "Kleurmethode"
 
@@ -1780,9 +1756,6 @@ msgstr "Y-verschuiving slagschadow"
 #~ msgstr ""
 #~ "Het geselecteerde gebied (of alfa) met een patroon vullen en een "
 #~ "slagschaduw toevoegen"
-
-#~ msgid "Pattern"
-#~ msgstr "Patroon"
 
 #~ msgid "Shadow blur radius"
 #~ msgstr "Vervagingsstraal van schaduw"
@@ -2493,9 +2466,6 @@ msgstr "Y-verschuiving slagschadow"
 #~ msgid "Create an image filled with a swirly pattern"
 #~ msgstr "Een afbeelding aanmaken met een wervelend patroon"
 
-#~ msgid "Number of times to whirl"
-#~ msgstr "Aantal keren te wervelen"
-
 #~ msgid "Quarter size"
 #~ msgstr "Kwartgrootte"
 
@@ -2540,10 +2510,6 @@ msgstr "Y-verschuiving slagschadow"
 
 #~ msgid "Fill angle"
 #~ msgstr "Vulhoek"
-
-# cirkeltekst
-#~ msgid "Text C_ircle..."
-#~ msgstr "Te_kstcirkel..."
 
 #~ msgid ""
 #~ "Create a textured logo with highlights, shadows, and a mosaic background"
