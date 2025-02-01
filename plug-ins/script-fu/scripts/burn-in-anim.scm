@@ -199,7 +199,7 @@
                 (gimp-image-convert-indexed img CONVERT-DITHER-FS CONVERT-PALETTE-WEB 250 FALSE TRUE "")
                 (set! img (car (plug-in-animationoptimize RUN-NONINTERACTIVE
                                                           img
-                                                          blended-layer)))
+                                                          (vector blended-layer))))
               )
           )
 
