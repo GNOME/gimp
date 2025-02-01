@@ -92,6 +92,8 @@ class PaletteOffset (Gimp.PlugIn):
             GimpUi.init ("palette-offset.py")
 
             dialog = GimpUi.ProcedureDialog(procedure=procedure, config=config)
+
+            config.set_property("palette", None)
             dialog.fill(["palette", "amount"])
             if not dialog.run():
                 dialog.destroy()

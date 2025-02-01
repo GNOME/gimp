@@ -66,6 +66,7 @@ def run(procedure, config, data):
         dialog = GimpUi.ProcedureDialog(procedure=procedure, config=config)
 
         # Add palette button
+        config.set_property("palette", None)
         dialog.fill (["palette"])
 
         if not dialog.run():

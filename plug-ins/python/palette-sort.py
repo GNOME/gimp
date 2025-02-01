@@ -424,6 +424,7 @@ class PaletteSort (Gimp.PlugIn):
             GimpUi.init('python-fu-palette-sort')
             dialog = GimpUi.ProcedureDialog(procedure=procedure, config=config)
 
+            config.set_property("palette", None)
             dialog.fill (["palette"])
             dialog.fill (["selections","slice-expr"])
             dialog.fill (["channel1", "ascending1"])

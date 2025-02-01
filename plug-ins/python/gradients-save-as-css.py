@@ -66,6 +66,7 @@ def gradient_css_save(procedure, config, data):
         dialog = GimpUi.ProcedureDialog(procedure=procedure, config=config)
 
         # Fill the dialog.
+        config.set_property("gradient", None)
         dialog.fill (["gradient", "file"])
 
         if not dialog.run():
