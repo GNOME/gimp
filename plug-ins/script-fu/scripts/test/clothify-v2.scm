@@ -78,7 +78,7 @@
   SF-ADJUSTMENT "Blur X"         '(9 3 100 1 10 0 1)
   SF-ADJUSTMENT "Blur Y"         '(9 3 100 1 10 0 1)
   SF-ADJUSTMENT "Azimuth"        '(135 0 360 1 10 1 0)
-  SF-ADJUSTMENT "Elevation"      '(45 0 90 1 10 1 0)
+  SF-ADJUSTMENT "Elevation"      '(45 0.5 90 1 10 1 0)
   SF-ADJUSTMENT "Depth"          '(3 1 50 1 10 0 1)
 )
 
