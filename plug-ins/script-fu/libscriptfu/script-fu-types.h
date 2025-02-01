@@ -88,6 +88,8 @@ typedef struct
   gchar        *copyright;
   gchar        *date;
   gchar        *image_types;
+  gchar        *i18n_domain_name;
+  gchar        *i18n_catalog_relative_path;
 
   gint          n_args;
   SFArg        *args;

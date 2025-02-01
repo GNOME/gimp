@@ -28,9 +28,12 @@ pointer  script_fu_add_script_regular (scheme     *sc,
                                        pointer     a);
 pointer   script_fu_add_menu      (scheme     *sc,
                                    pointer     a);
+pointer   script_fu_add_i18n      (scheme     *sc,
+                                   pointer     a);
 
-GTree          * script_fu_find_scripts_into_tree (GimpPlugIn  *plug_in,
+GTree          * script_fu_scripts_load_into_tree (GimpPlugIn  *plug_in,
                                                    GList       *path);
+gboolean         script_fu_scripts_are_loaded     (void);
 SFScript       * script_fu_find_script            (const gchar *name);
 GList          * script_fu_get_menu_list          (void);
 

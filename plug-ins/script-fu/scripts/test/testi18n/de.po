@@ -1,0 +1,17 @@
+# A file for testing.
+# For domain "scriptfu-test"
+
+# Not actually from translators, hacked together by Lloyd Konneker
+
+msgid ""
+msgstr ""
+
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+#: source line not identified, is used in test-i18n.scm
+msgid "Orientation"
+msgstr "Orientflugel"
+
+msgid "Elevation"
+msgstr "Eleveflugel"

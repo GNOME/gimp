@@ -19,7 +19,6 @@
 #define __SCRIPT_FU_PDB_PROC_FACTORY_H__
 
 GimpProcedure *script_fu_proc_factory_make_PLUGIN (GimpPlugIn  *plug_in,
-                                                   GList       *paths,
                                                    const gchar *name);
 GList         *script_fu_proc_factory_list_names  (GimpPlugIn  *plug_in,
                                                    GList       *paths);

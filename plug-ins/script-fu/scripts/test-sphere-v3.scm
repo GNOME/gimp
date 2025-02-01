@@ -189,3 +189,6 @@
 
 (script-fu-menu-register "script-fu-test-sphere-v3"
                          "<Image>/Filters/Development/Plug-In Examples")
+
+; Use the translations data common to all Scheme plugins distributed with GIMP.
+(script-fu-register-i18n "script-fu-test-sphere-v3" "gimp30-script-fu" )

@@ -65,4 +65,11 @@ void       script_fu_script_set_drawable_arity_none   (SFScript           *scrip
 void       script_fu_script_set_is_old_style          (SFScript           *script);
 gboolean   script_fu_script_get_is_old_style          (SFScript           *script);
 
+void       script_fu_script_set_i18n                  (SFScript           *script,
+                                                       gchar              *domain,
+                                                       gchar              *catalog);
+void       script_fu_script_get_i18n                  (SFScript           *script,
+                                                       gchar             **domain,
+                                                       gchar             **catalog);
+
 #endif /*  __SCRIPT_FU_SCRIPT__  */

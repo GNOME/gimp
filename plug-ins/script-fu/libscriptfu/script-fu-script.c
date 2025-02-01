@@ -80,6 +80,8 @@ script_fu_script_new (const gchar *name,
   script->copyright   = g_strdup (copyright);
   script->date        = g_strdup (date);
   script->image_types = g_strdup (image_types);
+  script->i18n_domain_name           = NULL;
+  script->i18n_catalog_relative_path = NULL;
 
   script->n_args = n_args;
   script->args   = g_new0 (SFArg, script->n_args);
@@ -103,6 +105,8 @@ script_fu_script_free (SFScript *script)
   g_free (script->copyright);
   g_free (script->date);
   g_free (script->image_types);
+  g_free (script->i18n_domain_name);
+  g_free (script->i18n_catalog_relative_path);
 
   for (i = 0; i < script->n_args; i++)
     {
@@ -746,3 +750,35 @@ script_fu_script_get_is_old_style (SFScript *script)
 {
   return script->is_old_style;
 }
+
+/* Set script's i18n from strings owned by inner interpreter.
+ * First free any existing data since might have been set already:
+ * a script author may mistakenly call script-fu-register-i18n twice
+ * for the same procedure.
+ */
+void
+script_fu_script_set_i18n (SFScript  *script,
+                           gchar     *domain,
+                           gchar     *catalog)
+{
+  g_free (script->i18n_domain_name);
+  g_free (script->i18n_catalog_relative_path);
+  script->i18n_domain_name           = g_strdup (domain);
+  script->i18n_catalog_relative_path = g_strdup (catalog);
+}
+
+/* Return a copy of script's i18n, to the handles.
+ *
+ * Require *handles is NULL, not already allocated.
+ *
+ * May return NULL, when script author has not called script-fu-register-i18n.
+ */
+void
+script_fu_script_get_i18n (SFScript  *script,
+                           gchar    **domain,
+                           gchar    **catalog)
+{
+  *domain  = g_strdup (script->i18n_domain_name);
+  *catalog = g_strdup (script->i18n_catalog_relative_path);
+}
+
