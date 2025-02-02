@@ -46,9 +46,7 @@ gimp_image_get_preview_format (GimpImage *image)
     {
     case GIMP_RGB:
     case GIMP_GRAY:
-      return gimp_babl_format_change_component_type (
-        gimp_projectable_get_format (GIMP_PROJECTABLE (image)),
-        GIMP_COMPONENT_TYPE_U8);
+      return gimp_projectable_get_format (GIMP_PROJECTABLE (image));
 
     case GIMP_INDEXED:
       return babl_format ("R'G'B'A u8");
