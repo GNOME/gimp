@@ -540,10 +540,10 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                     statusbar);
 
   combo_store =
-    gimp_int_store_new ("Perceptual",            GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
-                        "Relative Colorimetric", GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                        "Saturation",            GIMP_COLOR_RENDERING_INTENT_SATURATION,
-                        "Absolute Colorimetric", GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC,
+    gimp_int_store_new (_("Perceptual"),            GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                        _("Relative Colorimetric"), GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                        _("Saturation"),            GIMP_COLOR_RENDERING_INTENT_SATURATION,
+                        _("Absolute Colorimetric"), GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC,
                         NULL);
   statusbar->rendering_intent_combo = g_object_new (GIMP_TYPE_INT_COMBO_BOX,
                             "model", combo_store,
