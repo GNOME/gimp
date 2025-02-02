@@ -163,13 +163,10 @@ gimp_drawable_get_preview_format (GimpDrawable *drawable)
 
   switch (gimp_drawable_get_base_type (drawable))
     {
-    case GIMP_GRAY:
-      return gimp_babl_format (GIMP_GRAY,
-                               gimp_babl_precision (GIMP_COMPONENT_TYPE_U8,
-                                                    trc),
-                               alpha, space);
-
     case GIMP_RGB:
+    case GIMP_GRAY:
+      return gimp_drawable_get_format (drawable);
+
     case GIMP_INDEXED:
       return gimp_babl_format (GIMP_RGB,
                                gimp_babl_precision (GIMP_COMPONENT_TYPE_U8,
