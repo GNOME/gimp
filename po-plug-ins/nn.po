@@ -1783,11 +1783,11 @@ msgstr "Einsarta"
 
 #: plug-ins/common/contrast-retinex.c:214 plug-ins/metadata/metadata-tags.c:254
 msgid "Low"
-msgstr "Lågt"
+msgstr "Låg"
 
 #: plug-ins/common/contrast-retinex.c:215 plug-ins/metadata/metadata-tags.c:254
 msgid "High"
-msgstr "Høgt"
+msgstr "Høg"
 
 #: plug-ins/common/contrast-retinex.c:221
 msgid "Dy_namic"
@@ -8289,19 +8289,19 @@ msgstr "Effektbilete"
 
 #: plug-ins/common/van-gogh-lic.c:193
 msgid "Fil_ter length"
-msgstr "_Filterlengde"
+msgstr "_Filterlengd"
 
 #: plug-ins/common/van-gogh-lic.c:194
 msgid "Filter length"
-msgstr "Filterlengde"
+msgstr "Filterlengd"
 
 #: plug-ins/common/van-gogh-lic.c:199
 msgid "_Noise Magnitude"
-msgstr "_Støymengde"
+msgstr "_Støymengd"
 
 #: plug-ins/common/van-gogh-lic.c:200
 msgid "Noise Magnitude"
-msgstr "Støymengde"
+msgstr "Støymengd"
 
 #: plug-ins/common/van-gogh-lic.c:205
 msgid "Inte_gration steps"
