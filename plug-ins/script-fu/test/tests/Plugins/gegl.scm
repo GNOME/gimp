@@ -108,10 +108,10 @@
   (set! testLayer
     (gimp-layer-new
             testImage
+            "LayerNew"
             4
             4
             RGB-IMAGE
-            "LayerNew"
             50.0
             LAYER-MODE-MULTIPLY)) ; NORMAL
   ; must insert layer in image
@@ -129,10 +129,10 @@
   (set! testLayer
     (gimp-layer-new
             testImage
+            "LayerNew"
             4
             4
             GRAY-IMAGE  ; GRAY
-            "LayerNew"
             50.0
             LAYER-MODE-NORMAL))
   ; must insert layer in image
@@ -372,7 +372,8 @@
 
 
 (define (testGeglFiltersTakingNoArg)
-  (map testGeglFilter gegl-filter-names2))
+  ; change this to names2 for a shorter test
+  (map testGeglFilter gegl-filter-names))
 
 ; tests Gegl wrappers taking an aux input
 ; Most filters have input a single layer

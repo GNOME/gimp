@@ -3,9 +3,9 @@
 
 ; Generally speaking, prefix is "gimp-get"
 
-
+; since 3.0rc2 get-color-configuration is private to libgimp
 ; The serialized color configuration is a string
-(assert '(string? (car (gimp-get-color-configuration))))
+; (assert '(string? (car (gimp-get-color-configuration))))
 
 ; The default comment on images is a string
 (assert '(string? (car (gimp-get-default-comment))))

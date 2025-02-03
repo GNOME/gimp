@@ -59,11 +59,13 @@
 ; That is, a method on named subclass of Filter, not on an instance.
 ; The name is qualified by "gegl:"
 
-(test! "get number arguments")
+; since 3.0rc2 filter-get-number-arguments private to libgimp
+;(test! "get number arguments")
 ; This is a class method on the "subclass" of Filter, not on an instance.
-(assert `(=  (gimp-drawable-filter-get-number-arguments "gegl:ripple")
-             8))
+;(assert `(=  (gimp-drawable-filter-get-number-arguments "gegl:ripple")
+;             8))
 
+; since 3.0rc2 filter-get-pspec private to libgimp
 ; get the pspec for the first argument
 ; FIXME: fails SF unhandled return type GParam
 ; (gimp-drawable-filter-get-pspec "gegl:ripple" 1)
@@ -91,7 +93,7 @@
 
 
 ; optional display result images
-(gimp-display-new testImage)
-(gimp-displays-flush)
+;(gimp-display-new testImage)
+;(gimp-displays-flush)
 
 (script-fu-use-v2)

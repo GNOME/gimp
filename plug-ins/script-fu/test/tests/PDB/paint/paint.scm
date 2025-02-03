@@ -14,6 +14,9 @@
 ; only that the operations says it succeeded.
 
 
+(script-fu-use-v3)
+
+
 ; Define an aux testing function
 ; that tests the "-default" kind of paint operation.
 ; Takes an operation (first-class function)
@@ -23,23 +26,14 @@
   ; the PDB procedure paint-op succeeds
   (assert `(,paint-op
               ,testLayer      ; target
-              #(4.0 4.0))))    ; float array))
+              #(4.0 4.0))))    ; float array
 
 
 
 
-;              setup
-(define testImage (car (gimp-image-new 21 22 RGB)))
-
-(define
-  testLayer (car (gimp-layer-new
-                    testImage
-                    21
-                    22
-                    RGB-IMAGE
-                    "LayerNew"
-                    50.0
-                    LAYER-MODE-NORMAL)))
+; setup
+(define testImage (gimp-image-new 21 22 RGB))
+(define testLayer (testing:layer-new testImage))
 ; assert layer is not inserted in image
 
 
@@ -188,3 +182,5 @@
                   50.0 ; pressure
                   `(4.0 49.0))  ; strokes
                 "in script, expected type: vector for argument 3 to gimp-airbrush")
+
+(script-fu-use-v2)

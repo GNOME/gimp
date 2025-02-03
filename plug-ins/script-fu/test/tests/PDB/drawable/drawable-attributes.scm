@@ -1,52 +1,56 @@
 ; test get/set attributes of drawable
 
+; The test script uses v3 binding of return values
+(script-fu-use-v3)
+
 
 ; setup
 
-(define testImage (testing:load-test-image "gimp-logo.png"))
-; Wilber has one layer
-; car is vector, first element is a drawable
-(define testDrawable (vector-ref (car (gimp-image-get-layers testImage)) 0))
+(define testImage (testing:load-test-image-basic-v3))
+; Loaded "gimp-logo.png" i.e. Wilber having one layer
+(define testDrawable (vector-ref (gimp-image-get-layers testImage) 0))
 
 
 
 
 ; a drawable is represented by an ID
 ; As an item, it is type Drawable
-(assert-PDB-true `(gimp-item-id-is-drawable ,testDrawable))
+(assert `(gimp-item-id-is-drawable ,testDrawable))
 
 
 
 
-; getters
+(test! "getters of Drawable")
 
 ; only testing getters that are not of the superclass Item
 
-; Returned single values are wrapped in a list.
-
 ; bytes per pixel
-(assert `(number? (car (gimp-drawable-get-bpp ,testDrawable))))
+(assert `(number? (gimp-drawable-get-bpp ,testDrawable)))
 ; height and width are single numbers
-(assert `(number? (car (gimp-drawable-get-height ,testDrawable))))
-(assert `(number? (car (gimp-drawable-get-width ,testDrawable))))
+(assert `(number? (gimp-drawable-get-height ,testDrawable)))
+(assert `(number? (gimp-drawable-get-width ,testDrawable)))
 ; offset is list of two numbers
 (assert `(list? (gimp-drawable-get-offsets ,testDrawable)))
+
+; since 3.0rc2 drawable-get-format is private to libgimp
 ; formats are strings encoded for babl
-(assert `(string? (car (gimp-drawable-get-format ,testDrawable))))
-(assert `(string? (car (gimp-drawable-get-thumbnail-format ,testDrawable))))
+; (assert `(string? (gimp-drawable-get-format ,testDrawable)))
+
+; Since 3.0rc2, this is private to libgimp
+;(assert `(string? (gimp-drawable-get-thumbnail-format ,testDrawable)))
 
 
 ; the test drawable has transparency
 ; FUTURE: inconsistent naming, should be gimp-drawable-get-alpha?
-(assert-PDB-true `(gimp-drawable-has-alpha ,testDrawable))
+(assert `(gimp-drawable-has-alpha ,testDrawable))
 
 ; the test drawable has image base type RGB
-(assert-PDB-true `(gimp-drawable-is-rgb ,testDrawable))
-(assert-PDB-false `(gimp-drawable-is-gray ,testDrawable))
-(assert-PDB-false `(gimp-drawable-is-indexed ,testDrawable))
+(assert `(gimp-drawable-is-rgb ,testDrawable))
+(assert `(not (gimp-drawable-is-gray ,testDrawable)))
+(assert `(not (gimp-drawable-is-indexed ,testDrawable)))
 
 ; the test drawable has type RGBA
-(assert `(= (car (gimp-drawable-type ,testDrawable))
+(assert `(= (gimp-drawable-type ,testDrawable)
             RGBA-IMAGE))
 
 
@@ -64,3 +68,5 @@
 
 ; TODO setters
 
+
+(script-fu-use-v2)

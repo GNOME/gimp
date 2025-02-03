@@ -9,18 +9,9 @@
 
 (script-fu-use-v3)
 
-;        setup
-;
+; setup
 (define testImage (gimp-image-new 21 22 RGB))
-
-(define testLayer (gimp-layer-new
-                    testImage
-                    21
-                    22
-                    RGB-IMAGE
-                    "LayerNew"
-                    50.0
-                    LAYER-MODE-NORMAL))
+(define testLayer (testing:layer-new testImage))
 ; assert layer is not inserted in image
 
 

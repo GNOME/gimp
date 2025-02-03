@@ -48,18 +48,18 @@
 
 
 ; thumbnails
+; Since 3.0 rc2 these are private to  libgimp
+;(assert `(gimp-drawable-thumbnail
+;            ,testDrawable
+;            1 1 ; thumbnail width height
+;          ))
 
-(assert `(gimp-drawable-thumbnail
-            ,testDrawable
-            1 1 ; thumbnail width height
-          ))
-
-(assert `(gimp-drawable-sub-thumbnail
-            ,testDrawable
-            1 1 ; origin
-            2 2 ; width, height
-            2 2 ; thumbnail width height
-          ))
+;(assert `(gimp-drawable-sub-thumbnail
+;            ,testDrawable
+;            1 1 ; origin
+;            2 2 ; width, height
+;            2 2 ; thumbnail width height
+;          ))
 
 
 ;gimp-drawable-extract-component is tested drawable-ops

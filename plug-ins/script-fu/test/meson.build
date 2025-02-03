@@ -69,6 +69,10 @@ test_scripts = [
   'tests' / 'PDB' / 'edit' / 'buffer.scm',
   'tests' / 'PDB' / 'edit' / 'edit.scm',
   'tests' / 'PDB' / 'edit' / 'edit-multi-layer.scm',
+  'tests' / 'PDB' / 'edit' / 'edit-cut.scm',
+  # this is on old test script, that crashes GIMP
+  # if the crash is fixed, don't install this script
+  'tests' / 'PDB' / 'edit' / 'edit-crash.scm',
 
   'tests' / 'PDB' / 'gimp' / 'gimp.scm',
   'tests' / 'PDB' / 'gimp' / 'PDB.scm',

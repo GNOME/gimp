@@ -90,8 +90,6 @@
           (gimp-image-get-floating-sel ,testImage)
           -1))
 
-; TODO floating-sel-attached-to
-
 
 
 ; new image has unit having ID 1
@@ -104,14 +102,16 @@
             (gimp-image-get-name ,testImage)
             "[Untitled]"))
 
+; since 3.0rc image-get-metadata private to libgimp
 ; new image has empty metadata string
-(assert `(string=?
-            (gimp-image-get-metadata ,testImage)
-            ""))
+;(assert `(string=?
+;            (gimp-image-get-metadata ,testImage)
+;            ""))
 
 
-(test! "new image has an effective color profile")
-(assert `(gimp-image-get-effective-color-profile ,testImage))
+; since 3.0rc image-get-metadata private to libgimp
+;(test! "new image has an effective color profile")
+;(assert `(gimp-image-get-effective-color-profile ,testImage))
 
 
 

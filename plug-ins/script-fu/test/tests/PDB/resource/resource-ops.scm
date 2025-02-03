@@ -8,19 +8,23 @@
 ; since subsequent test scripts expect v2
 (script-fu-use-v3)
 
+
+
+; Since 3.0rc2 resource-get-by-name is private to libgimp
+
 ; setup
-(define systemFont (gimp-resource-get-by-name "GimpFont" "Sans-serif"))
-(define systemBrush (gimp-resource-get-by-name "GimpBrush" "2. Star"))
+(define systemFont (gimp-font-get-by-name "Sans-serif"))
+(define systemBrush (gimp-brush-get-by-name "2. Star"))
 
 
 
-(test! "resource get by name")
+(test! "<resource> get by name")
 
 ; get-by-name, which is generic and takes a "resource type name"
 
 ; get-by-name on non-existent name returns C NULL i.e. invalid ID
-(assert `(= (gimp-resource-get-by-name "GimpBrush" "Agate")
-            -1))
+;(assert `(= (gimp-resource-get-by-name "GimpBrush" "Agate")
+;            -1))
 
 ; each of the specific get-by-name returns C NULL i.e. invalid ID
 ; on invalid name
@@ -39,8 +43,8 @@
 ;             "Error")
 
 ; get-by-name on existent name returns valid positive ID
-(assert `(> (gimp-resource-get-by-name "GimpFont" "Sans-serif")
-            0))
+;(assert `(> (gimp-resource-get-by-name "GimpFont" "Sans-serif")
+;            0))
 
 (assert `(> (gimp-brush-get-by-name    "2. Star")      0))
 (assert `(> (gimp-font-get-by-name     "Sans-serif")   0))

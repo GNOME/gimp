@@ -18,20 +18,9 @@
 (assert `(= (gimp-image-get-width ,testImage)
             128))
 
-; Add a layer
-(define testLayer2 (gimp-layer-new
-                    testImage
-                    21
-                    22
-                    RGB-IMAGE
-                    "LayerNew"
-                    50.0
-                    LAYER-MODE-NORMAL))
-; Insert new layer
-(assert `(gimp-image-insert-layer
-            ,testImage
-            ,testLayer2
-            0 0))  ; parent, position within parent
+; Add a layer already inserted in image
+(define testLayer2 (testing:layer-new-inserted testImage))
+
 
 ; get all the root layers
 ; testImage has two layers at root.

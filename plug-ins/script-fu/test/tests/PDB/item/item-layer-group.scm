@@ -13,14 +13,7 @@
 ; gimp-logo.png has only one layer
 
 ; another layer for reorder tests
-(define testLayer2 (gimp-layer-new
-                    testImage
-                    21
-                    22
-                    RGB-IMAGE
-                    "LayerNew"
-                    50.0
-                    LAYER-MODE-NORMAL))
+(define testLayer2 (testing:layer-new testImage))
 
 
 ; group-new not throw

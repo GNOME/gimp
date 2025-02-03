@@ -443,11 +443,31 @@
 (define (testing:path-to-color-profile name)
   (string-append "/work/colorProfilesICC/" name))
 
+; Return a new layer in the given image, not inserted.
+; The new layer initial attributes are hard-coded.
+; The new layer is not added i.e. inserted in the image.
+(define (testing:layer-new testImage)
+  (gimp-layer-new
+    testImage
+    "LayerNew"  ; name
+    21 22      ; dimensions
+    RGB-IMAGE   ; mode
+    50.0        ; opacity
+    LAYER-MODE-NORMAL))
+
+; Return a new layer in the given image, inserted.
+; The new layer initial attributes are hard-coded.
+(define (testing:layer-new-inserted testImage)
+  (let ((newLayer (testing:layer-new testImage)))
+    (gimp-image-insert-layer
+            testImage
+            newLayer
+            0 0) ; parent, position within parent
+    newLayer))
+
 
 ; float comparison utility
-
 ; are a and b relatively equal, to within epsilon?
-
 (define (equal-relative? a b epsilon)
   (<= (abs (- a b))
       (* epsilon (max (abs a) (abs b)))))

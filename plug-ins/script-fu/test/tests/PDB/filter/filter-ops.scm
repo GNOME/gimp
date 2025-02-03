@@ -196,9 +196,8 @@
 
 
 (test! "optional display result images")
-
-(gimp-display-new testImage)
-(gimp-displays-flush)
+;(gimp-display-new testImage)
+;(gimp-displays-flush)
 
 ; The result should be one image, with ripple applied destructively,
 ; and with the background layer having two NDE effects: spherize and engrave NDE.

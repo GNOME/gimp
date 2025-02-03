@@ -81,10 +81,12 @@
 (assert `(equal? (gimp-brush-get-info ,testNewBrush)
                 `(11 11 1 0)))
 
+; Since 3.0rc2 brush-get-pixels is private to libgimp
+
 ; get-pixels returns a list of attributes
 ; It is is long so we don't compare.
 ; This test is just that it doesn't crash or return #f.
-(assert `(gimp-brush-get-pixels ,testNewBrush))
+; (assert `(gimp-brush-get-pixels ,testNewBrush))
 
 
 
@@ -100,12 +102,15 @@
 
 
 
-;       Kind non-generated brush
+(test! "Kind non-generated brush")
 
 ; Brush named "z Pepper" is non-generated and is a system brush always installed
 
+; Since 3.0rc2 resource-get-by-name is private to libgimp
+; (gimp-resource-get-by-name "GimpBrush" "z Pepper"))
+
 ; setup, not an assert
-(define testNongenBrush (gimp-resource-get-by-name "GimpBrush" "z Pepper"))
+(define testNongenBrush (gimp-brush-get-by-name "z Pepper"))
 
 ; brush says itself is not generated
 

@@ -11,15 +11,19 @@
 
 ; Testing has visible results: displays appear as tabs in the GIMP app
 
-; Testing throws GLib CRITICAL; must not export G_DEBUG=fatal_criticals
+; Testing might throw GLib CRITICAL; must not export G_DEBUG=fatal_criticals
+
+(script-fu-use-v3)
+
 
 
 ; setup
 
 ; an image
-(define testImage (testing:load-test-image "gimp-logo.png"))
+(define testImage (testing:load-test-image-basic-v3))
+; loaded "gimp-logo.png"
 ; a second image
-(define testImage2 (car (gimp-image-new 21 22 RGB)))
+(define testImage2 (gimp-image-new 21 22 RGB))
 
 
 ; new
@@ -28,11 +32,10 @@
 (assert `(gimp-display-new ,testImage))
 
 ; store the ID of another new display on same image
-; FUTURE: not wrapped in a list
-(define testDisplay (car (gimp-display-new testImage)))
+(define testDisplay (gimp-display-new testImage))
 
 ; new display has a valid ID
-(assert-PDB-true `(gimp-display-id-is-valid ,testDisplay))
+(assert `(gimp-display-id-is-valid ,testDisplay))
 
 ; can get many displays of same image
 (assert `(gimp-display-new ,testImage))
@@ -40,7 +43,7 @@
 
 
 ; id-is-valid returns false for an invalid ID
-(assert-PDB-false `(gimp-display-id-is-valid 666))
+(assert `(not (gimp-display-id-is-valid 666)))
 
 
 ; misc
@@ -49,7 +52,7 @@
 ; FIXME the docs for the API says the type varies by platform, but it is always GBytes?
 ; What varies is the interpretations of the GBytes:
 ; as sequence of characters, or as sequence of bytes of a multi-bit number
-(assert `(vector? (car (gimp-display-get-window-handle ,testDisplay))))
+(assert `(vector? (gimp-display-get-window-handle ,testDisplay)))
 ; get-window-handle is safe from invalid ID
 (assert-error `(gimp-display-get-window-handle 666)
                 "Invalid value for argument 0")
@@ -86,7 +89,7 @@
 ; Make displays of gimp-logo now show the testImage2 that is not now displayed
 (assert `(gimp-displays-reconnect ,testImage ,testImage2 ))
 ; display ID is still valid
-(assert-PDB-true `(gimp-display-id-is-valid ,testDisplay))
+(assert `(gimp-display-id-is-valid ,testDisplay))
 ; effective.  TODO no API to know what image is in a display.
 
 ; reconnect is safe from invalid image ID
@@ -100,10 +103,12 @@
 ; succeeds
 (assert `(gimp-display-delete ,testDisplay))
 ; effective: display ID is no longer valid
-(assert-PDB-false `(gimp-display-id-is-valid ,testDisplay))
+(assert `(not (gimp-display-id-is-valid ,testDisplay)))
 ; safe from invalid ID
 (assert-error `(gimp-display-delete ,testDisplay)
               "Invalid value for argument 0")
 
 
 ; Testing leaves two displays visible in GIMP app
+
+(script-fu-use-v2)

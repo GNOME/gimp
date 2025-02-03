@@ -1,6 +1,10 @@
 ; test combinations of mode conversion
 ; COLOR=>GRAY=>INDEXED=>GRAY
 
+
+; Since 3.0rc3, getters of color profile are private to libgimp
+
+
 ; setup
 (define testImage (testing:load-test-image "gimp-logo.png"))
 
@@ -15,8 +19,8 @@
 (assert `(= (car (gimp-image-get-base-type ,testImage))
                  GRAY))
 ; effective color profile is the built-in one for GRAY
-(assert `(= (vector-length (car (gimp-image-get-effective-color-profile ,testImage)))
-            544))
+;(assert `(= (vector-length (car (gimp-image-get-effective-color-profile ,testImage)))
+;            544))
 
 ; convert GRAY=>INDEXED
 (assert `(gimp-image-convert-indexed
@@ -32,8 +36,8 @@
 (assert `(= (car (gimp-image-get-base-type ,testImage))
                  INDEXED))
 ; effective color profile is the built-in one for COLOR
-(assert `(= (vector-length (car (gimp-image-get-effective-color-profile ,testImage)))
-            672))
+;(assert `(= (vector-length (car (gimp-image-get-effective-color-profile ,testImage)))
+;            672))
 
 ; convert INDEXED=>GRAY
 (assert `(gimp-image-convert-grayscale ,testImage))
@@ -41,8 +45,8 @@
 (assert `(= (car (gimp-image-get-base-type ,testImage))
                  GRAY))
 ; effective color profile is the built-in one for GRAY
-(assert `(= (vector-length (car (gimp-image-get-effective-color-profile ,testImage)))
-            544))
+;(assert `(= (vector-length (car (gimp-image-get-effective-color-profile ,testImage)))
+;            544))
 
 ; convert GRAY=>COLOR
 (assert `(gimp-image-convert-rgb ,testImage))
@@ -50,8 +54,8 @@
 (assert `(= (car (gimp-image-get-base-type ,testImage))
                  RGB))
 ; effective color profile is the built-in one for RGB
-(assert `(= (vector-length (car (gimp-image-get-effective-color-profile ,testImage)))
-            672))
+;(assert `(= (vector-length (car (gimp-image-get-effective-color-profile ,testImage)))
+;            672))
 
 
 
