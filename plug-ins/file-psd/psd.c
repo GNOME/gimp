@@ -219,7 +219,7 @@ psd_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation (procedure,
                                         _("Saves files in the Photoshop (TM) "
                                           "PSD file format"),
-                                        _("This filter saves files of Adobe "
+                                        _("This plug-in saves files of Adobe "
                                           "Photoshop (TM) native PSD format. "
                                           "These files may be of any image type "
                                           "supported by GIMP, with or without "
