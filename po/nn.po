@@ -6388,7 +6388,7 @@ msgctxt "layers-action"
 msgid ""
 "Crop the layers to the extents of their content (remove empty borders from "
 "the layer)"
-msgstr "Beskjer laget til omrisset av utvalet (fjern tomme kantar frå laget)"
+msgstr "Beskjer laget til omfanget av innhaldet (fjern tomme kantar frå laget)"
 
 #: app/actions/layers-actions.c:225 app/actions/layers-actions.c:235
 msgctxt "layers-action"
@@ -8423,7 +8423,7 @@ msgstr "Tekst til _bane"
 #: app/actions/text-tool-actions.c:83
 msgctxt "text-tool-action"
 msgid "Create a path from the outlines of the current text"
-msgstr "Opprett ein bane frå tekstomrisset"
+msgstr "Opprett ein bane frå omrisset av den gjeldande teksten"
 
 #: app/actions/text-tool-actions.c:88
 msgctxt "text-tool-action"
@@ -10309,7 +10309,7 @@ msgstr "Ved avstand"
 #: app/config/config-enums.c:283
 msgctxt "drag-zoom-mode"
 msgid "By duration"
-msgstr "Ved lengd"
+msgstr "Ved tid"
 
 #: app/config/config-enums.c:312
 msgctxt "space-bar-action"
@@ -10344,12 +10344,12 @@ msgstr "Alltid øvst"
 #: app/config/config-enums.c:373
 msgctxt "zoom-quality"
 msgid "Low"
-msgstr "Lågt"
+msgstr "Låg"
 
 #: app/config/config-enums.c:374
 msgctxt "zoom-quality"
 msgid "High"
-msgstr "Høgt"
+msgstr "Høg"
 
 #: app/config/config-enums.c:403
 msgctxt "theme-scheme"
@@ -16705,7 +16705,7 @@ msgstr "Generelt"
 
 #: app/dialogs/preferences-dialog.c:1732
 msgid "Allow _editing on non-visible layers"
-msgstr "Tillat redigering av ikkje-synlege ag"
+msgstr "Tillat redigering av ikkje-synlege lag"
 
 #: app/dialogs/preferences-dialog.c:1736
 msgid "_Save tool options on exit"
@@ -28924,7 +28924,7 @@ msgstr "Finn _kantar"
 #: menus/image-menu.ui.in.in:767
 msgctxt "filters-action"
 msgid "_Generic"
-msgstr "_Generelle"
+msgstr "_Ymse"
 
 #: menus/image-menu.ui.in.in:778
 msgctxt "filters-action"
