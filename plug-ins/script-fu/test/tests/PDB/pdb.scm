@@ -80,6 +80,7 @@
 (testing:load-test "buffer.scm")
 (testing:load-test "edit-cut.scm")
 
+(testing:load-test "file.scm")
 
 ; gimp module, gimp-get methods
 
@@ -100,7 +101,6 @@
 ; when testing is interactive using SF Console
 (testing:load-test "display.scm")
 
-; TODO gimp-file- ops
 ; TODO undo
 ; TODO progress
 
@@ -115,6 +115,9 @@
 (testing:load-test "enums.scm")
 (testing:load-test "bind-args.scm")
 (testing:load-test "pixel.scm")
+
+; tested last, randome and time-consuming
+(testing:load-test "file-export.scm")
 
 ; Don't routinely test the PDB API for NDE filters, it is long:
 ; (testing:load-test "gegl.scm")

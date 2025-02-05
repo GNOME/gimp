@@ -74,6 +74,9 @@ test_scripts = [
   # if the crash is fixed, don't install this script
   'tests' / 'PDB' / 'edit' / 'edit-crash.scm',
 
+  'tests' / 'PDB' / 'file' / 'file.scm',
+  'tests' / 'PDB' / 'file' / 'file-export.scm',
+
   'tests' / 'PDB' / 'gimp' / 'gimp.scm',
   'tests' / 'PDB' / 'gimp' / 'PDB.scm',
   'tests' / 'PDB' / 'gimp' / 'refresh.scm',
