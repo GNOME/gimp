@@ -2821,33 +2821,29 @@ gimp_item_tree_view_effects_merged_clicked (GtkWidget        *widget,
       ! gimp_viewable_get_children (GIMP_VIEWABLE (view->priv->effects_drawable)))
     {
       GimpImage *image = view->priv->image;
-      GeglNode  *op    = gimp_drawable_filter_get_operation (view->priv->effects_filter);
 
       /* Don't merge if the layer is currently locked */
       if (gimp_item_get_lock_content (GIMP_ITEM (view->priv->effects_drawable)))
         {
-          gimp_message_literal (view->priv->image->gimp, G_OBJECT (view),
+          gimp_message_literal (image->gimp, G_OBJECT (view),
                                 GIMP_MESSAGE_WARNING,
                                 _("The layer to merge down to is locked."));
           return;
         }
 
-      if (op)
-        {
-          gimp_drawable_merge_filters (GIMP_DRAWABLE (view->priv->effects_drawable));
-          gimp_drawable_clear_filters (GIMP_DRAWABLE (view->priv->effects_drawable));
+      gimp_drawable_merge_filters (GIMP_DRAWABLE (view->priv->effects_drawable));
+      gimp_drawable_clear_filters (GIMP_DRAWABLE (view->priv->effects_drawable));
 
-          view->priv->effects_filter = NULL;
+      view->priv->effects_filter = NULL;
 
-          /* Close NDE pop-over on successful merge */
-          gtk_widget_set_visible (view->priv->effects_popover, FALSE);
+      /* Close NDE pop-over on successful merge */
+      gtk_widget_set_visible (view->priv->effects_popover, FALSE);
 
-          /* Hack to make the effects visibly change */
-          gimp_item_set_visible (GIMP_ITEM (view->priv->effects_drawable), FALSE, FALSE);
-          gimp_image_flush (image);
-          gimp_item_set_visible (GIMP_ITEM (view->priv->effects_drawable), TRUE, FALSE);
-          gimp_image_flush (image);
-        }
+      /* Hack to make the effects visibly change */
+      gimp_item_set_visible (GIMP_ITEM (view->priv->effects_drawable), FALSE, FALSE);
+      gimp_image_flush (image);
+      gimp_item_set_visible (GIMP_ITEM (view->priv->effects_drawable), TRUE, FALSE);
+      gimp_image_flush (image);
     }
 }
 
