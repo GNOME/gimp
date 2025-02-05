@@ -48,30 +48,47 @@
                          (string-append "Anim Frame: "
                                         (number->string (- inFrames n) 10)
                                         " (replace)"))
-    (plug-in-map-object RUN-NONINTERACTIVE
-                        theImage             ; mapping image
-                        (vector theFrame)    ; mapping drawables
-                        "map-sphere"         ; sphere
-                        0.5 0.5 2.0          ; viewpoint
-                        0.5 0.5 0.0          ; object pos
-                        1.0 0.0 0.0          ; first axis
-                        0.0 1.0 0.0          ; 2nd axis
-                        0.0 (* n ang) 0.0    ; axis rotation
-                        "point-light"        ; light type
-                        '(255 255 255)       ; light color
-                        -0.5 -0.5 2.0        ; light position
-                        -1.0 -1.0 1.0        ; light direction
-                        0.3 1.0 0.5 0.0 27.0 ; material (amb, diff, refl, spec, high)
-                        TRUE                 ; antialias
-                        3.0                  ; depth
-                        0.25                 ; threshold
-                        FALSE                ; tile
-                        FALSE                ; new image
-                        FALSE                ; new layer
-                        inTransparent        ; transparency
-                        0.25                 ; radius
-                        1.0 1.0 1.0 1.0      ; unused parameters
-                        -1 -1 0.5 0.5 0.5 -1 -1 0.25 0.25
+    ;(gimp-message "Now call map-object")
+    (plug-in-map-object #:run-mode              RUN-NONINTERACTIVE
+                        #:image                 theImage              ; mapping image
+                        #:drawables             (vector theFrame)     ; mapping drawables
+                        #:map-type              "map-sphere"          ; sphere
+                        #:viewpoint-x           0.5                   ; viewpoint
+                        #:viewpoint-y           0.5
+                        #:viewpoint-z           2.0
+                        #:position-x            0.5                   ; object pos
+                        #:position-y            0.5
+                        #:position-z            0.0
+                        #:first-axis-x          1.0                   ; first axis
+                        #:first-axis-y          0.0
+                        #:first-axis-z          0.0
+                        #:second-axis-x         0.0                   ; 2nd axis
+                        #:second-axis-y         1.0
+                        #:second-axis-z         0.0
+                        #:rotation-angle-x      0.0                   ; axis rotation
+                        #:rotation-angle-y      (* n ang)
+                        #:rotation-angle-z      0.0
+                        #:light-type            "point-light"         ; light type
+                        #:light-color           '(255 255 255)        ; light color
+                        #:light-position-x      -0.5                  ; light position
+                        #:light-position-y      -0.5
+                        #:light-position-z       2.0
+                        #:light-direction-x     -1.0                  ; light direction
+                        #:light-direction-y     -1.0
+                        #:light-direction-z      1.0
+                        #:ambient-intensity      0.3                  ; material (amb, diff, refl, spec, high)
+                        #:diffuse-intensity      1.0
+                        #:diffuse-reflectivity   0.5
+                        #:specular-reflectivity  0.0
+                        #:highlight              27.0
+                        #:antialiasing           TRUE                 ; antialias
+                        #:depth                  3.0                  ; depth
+                        #:threshold              0.25                 ; threshold
+                        #:tiled                  FALSE                ; tile
+                        #:new-image              FALSE                ; new image
+                        #:new-layer              FALSE                ; new layer
+                        #:transparent-background inTransparent        ; transparency
+                        #:sphere-radius          0.25                 ; radius
     )
   )
 
@@ -94,7 +111,7 @@
   )
 )
 
-(script-fu-register
+(script-fu-register-filter
   "script-fu-spinning-globe"
   _"_Spinning Globe..."
   _"Create an animation by mapping the current image onto a spinning sphere"
@@ -102,8 +119,7 @@
   "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
   "16th April 1998"
   "RGB* GRAY*"
-  SF-IMAGE       "The Image"               0
-  SF-DRAWABLE    "The Layer"               0
+  SF-ONE-OR-MORE-DRAWABLE
   SF-ADJUSTMENT _"Frames"                  '(10 1 360 1 10 0 1)
   SF-TOGGLE     _"Turn from left to right" FALSE
   SF-TOGGLE     _"Transparent background"  TRUE

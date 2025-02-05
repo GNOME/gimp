@@ -34,7 +34,7 @@
     (gimp-drawable-merge-new-filter map-layer "gegl:noise-rgb" 0 LAYER-MODE-REPLACE 1.0
                                     "independent" FALSE "red" 1.0 "alpha" 0.0
                                     "correlated" FALSE "seed" (msrg-rand) "linear" TRUE)
-    (plug-in-tile RUN-NONINTERACTIVE work-image (vector map-layer) (* width 3) (* height 3) FALSE)
+    (plug-in-tile #:run-mode RUN-NONINTERACTIVE #:image work-image #:drawables (vector map-layer) #:new-width (* width 3) #:new-height (* height 3) #:new-image FALSE)
     (gimp-drawable-merge-new-filter map-layer "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0 "std-dev-x" 11.2 "std-dev-y" 11.2 "filter" "auto")
     (gimp-drawable-equalize map-layer TRUE)
     (gimp-drawable-merge-new-filter map-layer "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0 "std-dev-x" 1.6 "std-dev-y" 1.6 "filter" "auto")

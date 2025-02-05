@@ -152,7 +152,7 @@
                                   shadow-depth))
          (tile-img (car tile))
          (tile-layer (cadr tile))
-          (weaving (plug-in-tile RUN-NONINTERACTIVE tile-img (vector tile-layer) width height TRUE)))
+          (weaving (plug-in-tile #:run-mode RUN-NONINTERACTIVE #:image tile-img #:drawables (vector tile-layer) #:new-width width #:new-height height #:new-image TRUE)))
     (gimp-image-delete tile-img)
     weaving))
 
@@ -218,8 +218,12 @@
                                  r3-x1 r3-y1 r3-width r3-height))
          (tile-img (car tile))
          (tile-layer (cadr tile))
-         (mask (plug-in-tile RUN-NONINTERACTIVE tile-img (vector tile-layer) final-width final-height
-                             TRUE)))
+         (mask (plug-in-tile #:run-mode   RUN-NONINTERACTIVE
+                             #:image      tile-img
+                             #:drawables  (vector tile-layer)
+                             #:new-width  final-width
+                             #:new-height final-height
+                             #:new-image  TRUE)))
     (gimp-image-delete tile-img)
     mask))
 

@@ -109,7 +109,7 @@
             (gimp-drawable-merge-new-filter active-layer "gegl:oilify" 0 LAYER-MODE-REPLACE 1.0 "mask-radius" (max 1 (/ mask_size 2)) "use-inten" FALSE)
             (gimp-drawable-merge-new-filter active-layer "gegl:edge" 0 LAYER-MODE-REPLACE 1.0 "amount" 2.0 "border-behavior" "none" "algorithm" "sobel")
             (gimp-drawable-merge-new-filter active-layer "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0 "std-dev-x" 0.64 "std-dev-y" 0.64 "filter" "auto")
-            (plug-in-gradmap RUN-NONINTERACTIVE image selected-layers-array)
+            (plug-in-gradmap #:run-mode RUN-NONINTERACTIVE #:image image #:drawables selected-layers-array)
 
             (if (= keep-selection FALSE)
                 (gimp-selection-none image)
