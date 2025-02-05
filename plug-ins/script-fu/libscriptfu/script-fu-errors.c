@@ -40,7 +40,7 @@
     "T_STRING",    "T_NUMBER",     "T_SYMBOL",       "T_PROC",
     "T_PAIR",      "T_CLOSURE",    "T_CONTINUATION", "T_FOREIGN",
     "T_CHARACTER", "T_PORT",       "T_VECTOR",       "T_MACRO",
-    "T_PROMISE",   "T_ENVIRONMENT","T_ARRAY"
+    "T_PROMISE",   "T_ENVIRONMENT","T_ARRAY",        "T_ARG_SLOT"
   };
 
 
@@ -272,11 +272,18 @@ debug_in_arg (scheme           *sc,
               const guint       arg_index,
               const gchar      *type_name )
 {
+  pointer arg_val;
+
+  if (sc->vptr->is_pair (a))
+    arg_val = sc->vptr->pair_car (a);
+  else
+    arg_val = a;
+
   g_debug ("param:%d, formal C type:%s, actual scheme type:%s (%d)",
            arg_index + 1,
            type_name,
-           ts_types[ type(sc->vptr->pair_car (a)) ],
-           type(sc->vptr->pair_car (a)));
+           ts_types[ type (arg_val) ],
+           type (arg_val));
 }
 
 /* Log GValue: its value and its GType
