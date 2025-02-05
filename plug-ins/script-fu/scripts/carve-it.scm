@@ -88,7 +88,12 @@
     (gimp-edit-copy (vector mask-drawable))
     (gimp-image-insert-channel img mask -1 0)
 
-    (plug-in-tile RUN-NONINTERACTIVE img (vector layer1) width height FALSE)
+    (plug-in-tile #:run-mode   RUN-NONINTERACTIVE
+                  #:image      img
+                  #:drawables  (vector layer1)
+                  #:new-width  width
+                  #:new-height height
+                  #:new-image  FALSE)
     (let* (
            (pasted (car (gimp-edit-paste mask FALSE)))
            (floating-sel (vector-ref pasted(- (vector-length pasted) 1)))

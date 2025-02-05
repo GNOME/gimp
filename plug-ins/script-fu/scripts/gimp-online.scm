@@ -18,7 +18,7 @@
 ; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 (define (gimp-online-docs-web-site)
-  (plug-in-web-browser "https://docs.gimp.org/")
+  (plug-in-web-browser #:url "https://docs.gimp.org/")
 )
 
 (define (gimp-help-main)
@@ -160,23 +160,23 @@
 ;; Links to GIMP related web sites
 
 (define (gimp-online-main-web-site)
-  (plug-in-web-browser "https://www.gimp.org/")
+  (plug-in-web-browser #:url "https://www.gimp.org/")
 )
 
 (define (gimp-online-developer-web-site)
-  (plug-in-web-browser "https://developer.gimp.org/")
+  (plug-in-web-browser #:url "https://developer.gimp.org/")
 )
 
 (define (gimp-online-roadmap)
-  (plug-in-web-browser "https://developer.gimp.org/core/roadmap/")
+  (plug-in-web-browser #:url "https://developer.gimp.org/core/roadmap/")
 )
 
 (define (gimp-online-bugs-features)
-  (plug-in-web-browser "https://gitlab.gnome.org/GNOME/gimp/issues")
+  (plug-in-web-browser #:url "https://gitlab.gnome.org/GNOME/gimp/issues")
 )
 
 ; (define (gimp-online-plug-in-web-site)
-;   (plug-in-web-browser "https://registry.gimp.org/")
+;   (plug-in-web-browser #:url "https://registry.gimp.org/")
 ; )
 
 

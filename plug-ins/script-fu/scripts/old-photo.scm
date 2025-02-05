@@ -42,8 +42,16 @@
       (gimp-drawable-merge-new-filter theLayer "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0 "std-dev-x" 0.48 "std-dev-y" 0.48 "filter" "auto")
   )
   (if (> inBorderSize 0)
-      (script-fu-fuzzy-border theImage (vector theLayer) '(255 255 255)
-                              inBorderSize TRUE 8 FALSE 100 FALSE TRUE )
+      (script-fu-fuzzy-border #:image        theImage
+                              #:drawables    (vector theLayer)
+                              #:color        '(255 255 255)
+                              #:adjustment   inBorderSize
+                              #:toggle       TRUE
+                              #:adjustment-2 8
+                              #:toggle-2     FALSE
+                              #:adjustment-3 100
+                              #:toggle-3     FALSE
+                              #:toggle-4     TRUE)
   )
   (set! theLayer (car (gimp-image-flatten theImage)))
 

@@ -41,7 +41,11 @@
 
     (gimp-context-set-foreground (list fg-color fg-color fg-color))
     (gimp-context-set-background (list bg-color bg-color bg-color))
-    (plug-in-checkerboard RUN-NONINTERACTIVE img (vector drawable) 0 8)
+    (plug-in-checkerboard #:run-mode    RUN-NONINTERACTIVE
+                          #:image       img
+                          #:drawables   (vector drawable)
+                          #:psychobilly 0
+                          #:check-size  8)
 
     (gimp-context-pop)
 
