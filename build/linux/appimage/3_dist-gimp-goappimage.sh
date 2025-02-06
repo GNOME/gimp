@@ -6,6 +6,8 @@
 
 set -e
 
+export CI_COMMIT_TAG='true'
+
 if [ -z "$GITLAB_CI" ]; then
   # Make the script work locally
   if [ "$0" != 'build/linux/appimage/3_dist-gimp-goappimage.sh' ] && [ ${PWD/*\//} != 'appimage' ]; then
@@ -92,7 +94,7 @@ GIMP_APP_VERSION=$(grep GIMP_APP_VERSION $BUILD_DIR/config.h | head -1 | sed 's/
 grep -q '#define GIMP_UNSTABLE' $BUILD_DIR/config.h && export GIMP_UNSTABLE=1
 if [ -z "$CI_COMMIT_TAG" ] && [ "$GIMP_UNSTABLE" ] || [[ "$GIMP_VERSION" =~ 'git' ]]; then
   export CHANNEL="Continuous"
-elif [ "$CI_COMMIT_TAG" ] && [ "$GIMP_UNSTABLE" ] || [[ "$GIMP_VERSION" =~ 'rc' ]]; then
+elif [ "$CI_COMMIT_TAG" ] && [ "$GIMP_UNSTABLE" ] || [[ "$GIMP_VERSION" =~ 'RC' ]]; then
   export CHANNEL="Pre"
 else
   export CHANNEL="Stable"
