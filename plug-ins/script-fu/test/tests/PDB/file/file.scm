@@ -41,21 +41,17 @@
 ; It is not clear whether this loads the file and creates a thumbnail,
 ; or finds a thumbnail stored separately, for the desktop.
 
-(define testThumbnail (gimp-file-load-thumbnail (path-to-test-images "gimp-logo.png")))
-
+; We don't do this, because the framework doesn't handle quoted lists.
 ; FIXME This fails with illegal function, but works in the SF Console
-; Possibly something wrong in the testing framework?
-; The vector is 50k bytes long, possibly related?
+; (define (testThumbnail) (gimp-file-load-thumbnail (path-to-test-images "gimp-logo.png")))
+; (assert `(list? ,testThumbnail))
 
 ; testThumbnail is list
-;;(assert `(list? ,testThumbnail))
+(assert `(list? (gimp-file-load-thumbnail (,path-to-test-images "gimp-logo.png"))))
 
-; first element is width
-;;(assert `(= (car ,testThumbnail)
-;;            128))
+; first element is width, 128
+; third element is 50k vector of bytes, RGB data
 
-; third element is vector of bytes, RGB data
-;;(assert `(vector? (caddr ,testThumbnail)))
 
 
 
