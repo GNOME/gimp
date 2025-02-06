@@ -85,7 +85,7 @@ static const GimpActionEntry image_actions[] =
     NC_("image-action", "_Soft-proof Profile..."), NULL, { NULL },
     NC_("image-action", "Set the soft-proofing profile"),
     image_softproof_profile_cmd_callback,
-    GIMP_HELP_VIEW_COLOR_MANAGEMENT },
+    GIMP_HELP_IMAGE_SOFT_PROOF_PROFILE_ASSIGN },
 
   { "image-color-profile-save", NULL,
     NC_("image-action", "_Save Color Profile to File..."), NULL, { NULL },
@@ -176,7 +176,7 @@ static const GimpToggleActionEntry image_toggle_actions[] =
     NC_("image-action", "Use black point compensation for soft-proofing"),
     image_softproof_bpc_cmd_callback,
     TRUE,
-    GIMP_HELP_VIEW_COLOR_MANAGEMENT }
+    GIMP_HELP_IMAGE_SOFT_PROOF_BLACK_POINT }
 };
 
 static const GimpRadioActionEntry image_convert_base_type_actions[] =
@@ -299,25 +299,25 @@ static const GimpRadioActionEntry image_softproof_intent_actions[] =
     NC_("image-action", "_Perceptual"), NULL, { NULL },
     NC_("image-action", "Soft-proofing rendering intent is perceptual"),
     GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
-    GIMP_HELP_VIEW_COLOR_MANAGEMENT },
+    GIMP_HELP_IMAGE_SOFT_PROOF_RENDERING_INTENT },
 
   { "image-softproof-intent-relative-colorimetric", NULL,
     NC_("image-action", "_Relative Colorimetric"), NULL, { NULL },
     NC_("image-action", "Soft-proofing rendering intent is relative colorimetric"),
     GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-    GIMP_HELP_VIEW_COLOR_MANAGEMENT },
+    GIMP_HELP_IMAGE_SOFT_PROOF_RENDERING_INTENT },
 
   { "image-softproof-intent-saturation", NULL,
     NC_("image-action", "_Saturation"), NULL, { NULL },
     NC_("image-action", "Soft-proofing rendering intent is saturation"),
     GIMP_COLOR_RENDERING_INTENT_SATURATION,
-    GIMP_HELP_VIEW_COLOR_MANAGEMENT },
+    GIMP_HELP_IMAGE_SOFT_PROOF_RENDERING_INTENT },
 
   { "image-softproof-intent-absolute-colorimetric", NULL,
     NC_("image-action", "_Absolute Colorimetric"), NULL, { NULL },
     NC_("image-action", "Soft-proofing rendering intent is absolute colorimetric"),
     GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC,
-    GIMP_HELP_VIEW_COLOR_MANAGEMENT }
+    GIMP_HELP_IMAGE_SOFT_PROOF_RENDERING_INTENT }
 };
 
 

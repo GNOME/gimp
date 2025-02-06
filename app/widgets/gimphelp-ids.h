@@ -169,6 +169,10 @@
 #define GIMP_HELP_IMAGE_COLOR_PROFILE_USE_SRGB    "gimp-image-color-profile-use-srgb"
 #define GIMP_HELP_IMAGE_COLOR_PROFILE_SAVE        "gimp-image-color-profile-save"
 #define GIMP_HELP_IMAGE_COLOR_PROFILE_IMPORT      "gimp-image-color-profile-import"
+#define GIMP_HELP_IMAGE_SOFT_PROOF_PROFILE_ASSIGN "gimp-image-soft-proof-profile-assign"
+#define GIMP_HELP_IMAGE_SOFT_PROOF_BLACK_POINT    "gimp-image-soft-proof-black-point"
+#define GIMP_HELP_IMAGE_SOFT_PROOF_RENDERING_INTENT "gimp-image-soft-proof-rendering-intent"
+
 #define GIMP_HELP_IMAGE_METADATA_ROTATION_IMPORT  "gimp-image-metadata-rotation-import"
 #define GIMP_HELP_IMAGE_GRID                      "gimp-image-grid"
 #define GIMP_HELP_IMAGE_PROPERTIES                "gimp-image-properties"
