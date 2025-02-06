@@ -88,13 +88,16 @@ fi
 
 ## Get info about GIMP version
 GIMP_VERSION=$(grep GIMP_VERSION $BUILD_DIR/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
+GIMP_APP_VERSION=$(grep GIMP_APP_VERSION $BUILD_DIR/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
 grep -q '#define GIMP_UNSTABLE' $BUILD_DIR/config.h && export GIMP_UNSTABLE=1
 if [ -z "$CI_COMMIT_TAG" ] && [ "$GIMP_UNSTABLE" ] || [[ "$GIMP_VERSION" =~ 'git' ]]; then
-  export APP_ID="org.gimp.GIMP.Continuous"
+  export CHANNEL="Continuous"
+elif [ "$CI_COMMIT_TAG" ] && [ "$GIMP_UNSTABLE" ] || [[ "$GIMP_VERSION" =~ 'RC' ]]; then
+  export CHANNEL="Pre"
 else
-  echo -e "\033[31m(ERROR)\033[0m: AppImage releases are NOT supported yet. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/7661"
-  exit 1
+  export CHANNEL="Stable"
 fi
+export APP_ID="org.gimp.GIMP.$CHANNEL"
 echo "(INFO): App ID: $APP_ID | Version: $GIMP_VERSION"
 echo -e "\e[0Ksection_end:`date +%s`:apmg_info\r\e[0K"
 
@@ -163,8 +166,12 @@ bund_usr ()
       for target_path in "${target_array[@]}"; do
         dest_path="$(dirname $(echo $target_path | sed "s|$1/|${USR_DIR}/|g"))"
         output_dest_path="$dest_path"
-        if [ "$3" = '--dest' ]; then
-          output_dest_path="${USR_DIR}/$4"
+        if [ "$3" = '--dest' ] || [ "$3" = '--rename' ]; then
+          if [ "$3" = '--dest' ]; then
+            output_dest_path="${USR_DIR}/$4"
+          elif [ "$3" = '--rename' ]; then
+            output_dest_path="${USR_DIR}/${4%/*}"
+          fi
           dest_path="$output_dest_path/tmp"
         fi
         mkdir -p $dest_path
@@ -172,11 +179,9 @@ bund_usr ()
         cp -ru $target_path $dest_path >/dev/null 2>&1 || continue
 
         #Additional parameters for special situations
-        if [ "$3" = '--dest' ]; then
-          mv $dest_path/${2##*/} $(dirname $dest_path)
+        if [ "$3" = '--dest' ] || [ "$3" = '--rename' ]; then
+          mv $dest_path/${2##*/} $USR_DIR/$4
           rm -r "$dest_path"
-        elif [ "$3" = '--rename' ]; then
-          mv $dest_path/${2##*/} $dest_path/$4
         fi
       done
     done
@@ -398,9 +403,8 @@ cp -L "$USR_DIR/share/icons/hicolor/scalable/apps/$APP_ID.svg" $APP_DIR
 ## 4.3. Configure .desktop asset (similarly to flatpaks's 'rename-desktop-file')
 echo "(INFO): configuring $APP_ID.desktop"
 mv $(echo "$USR_DIR/share/applications/*.desktop") "$USR_DIR/share/applications/${APP_ID}.desktop"
-gimp_app_version=$(grep GIMP_APP_VERSION $BUILD_DIR/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
-ln -sfr "$USR_DIR/bin/gimp-$gimp_app_version" "$USR_DIR/bin/$APP_ID"
-sed -i "s/gimp-$gimp_app_version/$APP_ID/g" "$USR_DIR/share/applications/${APP_ID}.desktop"
+ln -sfr "$USR_DIR/bin/gimp-$GIMP_APP_VERSION" "$USR_DIR/bin/$APP_ID"
+sed -i "s/gimp-$GIMP_APP_VERSION/$APP_ID/g" "$USR_DIR/share/applications/${APP_ID}.desktop"
 sed -i "s/Icon=gimp/Icon=$APP_ID/g" "$USR_DIR/share/applications/${APP_ID}.desktop"
 ln -sfr "$USR_DIR/share/applications/${APP_ID}.desktop" $APP_DIR
 
@@ -416,10 +420,16 @@ echo -e "\e[0Ksection_end:`date +%s`:${ARCH}_source\r\e[0K"
 # 5. CONSTRUCT .APPIMAGE
 APPIMAGETOOL_APP_NAME="GIMP-${GIMP_VERSION}-${ARCH}.AppImage"
 echo -e "\e[0Ksection_start:`date +%s`:${ARCH}_making[collapsed=true]\r\e[0KSquashing $APPIMAGETOOL_APP_NAME"
+#updateinformation is not compatible with our server. See: https://github.com/AppImage/appimagetool/issues/91
+#if [ "$CI_COMMIT_TAG" ]; then
+#  update_info="--updateinformation zsync|https://download.gimp.org/gimp/v{$GIMP_APP_VERSION}/linux/GIMP-${CHANNEL}-${ARCH}.AppImage.zsync"
+#fi
 "./$standard_appimagetool" $APP_DIR $APPIMAGETOOL_APP_NAME --exclude-file appimageignore-$ARCH \
-                                                           --runtime-file runtime-$ARCH #\
-                                                          #--updateinformation "zsync|https://gitlab.gnome.org/GNOME/gimp/-/jobs/artifacts/master/raw/build/linux/appimage/_Output/${APPIMAGETOOL_APP_NAME}.zsync?job=dist-appimage-weekly"
+                                                           --runtime-file runtime-$ARCH $update_info
 file "./$APPIMAGETOOL_APP_NAME"
+#if [ "$CI_COMMIT_TAG" ]; then
+#  mv ${APPIMAGETOOL_APP_NAME}.zsync GIMP-${CHANNEL}-${ARCH}.AppImage.zsync
+#fi
 echo -e "\e[0Ksection_end:`date +%s`:${ARCH}_making\r\e[0K"
 done
 

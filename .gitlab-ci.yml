@@ -264,6 +264,7 @@ gimp-debian:
     - echo -e "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP"
     - meson setup _build-${RUNNER} -Dprefix="${GIMP_PREFIX}"
                                    -Drelocatable-bundle=yes
+                                   -Dcheck-update=yes
     - cd _build-${RUNNER}
     - ninja
     - echo -e "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K"
@@ -758,6 +759,7 @@ dist-appimage-weekly:
   extends: .default
   rules:
     - !reference [.debian, rules]
+    - <<: *CI_RELEASE
   needs: ["gimp-debian"]
   stage: distribution
   script:
