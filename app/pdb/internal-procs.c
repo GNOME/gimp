@@ -65,6 +65,7 @@ internal_procs_init (GimpPDB *pdb)
   register_group_layer_procs (pdb);
   register_help_procs (pdb);
   register_image_procs (pdb);
+  register_image_autocrop_procs (pdb);
   register_image_color_profile_procs (pdb);
   register_image_convert_procs (pdb);
   register_image_grid_procs (pdb);
@@ -87,7 +88,6 @@ internal_procs_init (GimpPDB *pdb)
   register_patterns_procs (pdb);
   register_pdb_procs (pdb);
   register_plug_in_procs (pdb);
-  register_plug_in_compat_procs (pdb);
   register_progress_procs (pdb);
   register_resource_procs (pdb);
   register_selection_procs (pdb);

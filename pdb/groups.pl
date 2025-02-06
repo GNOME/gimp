@@ -28,6 +28,7 @@
     group_layer
     help
     image
+    image_autocrop
     image_color_profile
     image_convert
     image_grid
@@ -50,7 +51,6 @@
     patterns
     pdb
     plug_in
-    plug_in_compat
     progress
     resource
     selection

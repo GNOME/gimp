@@ -2478,13 +2478,8 @@ load_sketchbook_layers (TIFF      *tif,
                * offset. Since the layer width can also shrink due to the
                * crop, we calculate the before and after difference and
                * adjust the x offset too. */
-              procedure = gimp_pdb_lookup_procedure (gimp_get_pdb (),
-                                                     "plug-in-autocrop-layer");
-              gimp_procedure_run (procedure,
-                                  "run-mode", GIMP_RUN_NONINTERACTIVE,
-                                  "image",    image,
-                                  "drawable", layer,
-                                  NULL);
+              (void) gimp_image_autocrop (image, layer);
+
 
               x_pos += (layer_width - gimp_drawable_get_width (GIMP_DRAWABLE (layer)));
               y_pos = image_height - gimp_drawable_get_height (GIMP_DRAWABLE (layer)) - y_pos;

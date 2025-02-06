@@ -93,7 +93,7 @@
   )
 
   (gimp-image-remove-layer theImage theLayer)
-  (plug-in-autocrop RUN-NONINTERACTIVE theImage theFrame)
+  (gimp-image-autocrop theImage theFrame)
 
   (if (= inIndex 0)
       ()

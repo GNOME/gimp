@@ -55,6 +55,7 @@
 #include <libgimp/gimpgrouplayer_pdb.h>
 #include <libgimp/gimphelp_pdb.h>
 #include <libgimp/gimpimage_pdb.h>
+#include <libgimp/gimpimageautocrop_pdb.h>
 #include <libgimp/gimpimagecolorprofile_pdb.h>
 #include <libgimp/gimpimageconvert_pdb.h>
 #include <libgimp/gimpimagegrid_pdb.h>

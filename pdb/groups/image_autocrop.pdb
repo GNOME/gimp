@@ -17,12 +17,7 @@
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
 
-# The declared ranges generate min/max in GParamSpecs
-# and the min becomes the default in the GParamSpecs.
-# A declared range must correspond with range declared in GEGL
-# else args defaulted from min may generate out-of-range warnings.
-
-sub plug_in_autocrop {
+sub image_autocrop {
     $blurb = 'Remove empty borders from the image';
 
     $help = <<'HELP';
@@ -33,8 +28,6 @@ HELP
     $date = '1997';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
-	  desc => 'The run mode' },
 	{ name => 'image', type => 'image',
 	  desc => 'Input image)' },
 	{ name => 'drawable', type => 'drawable',
@@ -89,7 +82,7 @@ CODE
     );
 }
 
-sub plug_in_autocrop_layer {
+sub image_autocrop_layer {
     $blurb = 'Crop the selected layers based on empty borders of the input drawable';
 
     $help = <<'HELP';
@@ -101,8 +94,6 @@ HELP
     $date = '1997';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
-	  desc => 'The run mode' },
 	{ name => 'image', type => 'image',
 	  desc => 'Input image)' },
 	{ name => 'drawable', type => 'drawable',
@@ -165,14 +156,14 @@ CODE
               "gimppdb-utils.h"
               "gimp-intl.h");
 
-@procs = qw(plug_in_autocrop
-            plug_in_autocrop_layer);
+@procs = qw(image_autocrop
+            image_autocrop_layer);
 
-%exports = (app => [@procs], lib => []);
+%exports = (app => [@procs], lib => [@procs]);
 
-$desc = 'Plug-in Compat';
-$doc_title = 'gimpplugincompat';
-$doc_short_desc = 'Compatibility for removed plug-ins.';
-$doc_long_desc = 'Functions that perform the operation of removed plug-ins using GEGL operations or other GIMP internal functions.';
+$desc = 'Image Autocrop';
+$doc_title = 'gimpimageautocrop';
+$doc_short_desc = 'Functions that crop images to a layer.';
+$doc_long_desc =  'Functions that crop images to a layer.';
 
 1;

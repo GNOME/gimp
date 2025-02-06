@@ -47,19 +47,19 @@
 
 
 static GimpValueArray *
-plug_in_autocrop_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
-                          GError               **error)
+image_autocrop_invoker (GimpProcedure         *procedure,
+                        Gimp                  *gimp,
+                        GimpContext           *context,
+                        GimpProgress          *progress,
+                        const GimpValueArray  *args,
+                        GError               **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
   GimpDrawable *drawable;
 
-  image = g_value_get_object (gimp_value_array_index (args, 1));
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
+  image = g_value_get_object (gimp_value_array_index (args, 0));
+  drawable = g_value_get_object (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -110,19 +110,19 @@ plug_in_autocrop_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-plug_in_autocrop_layer_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
-                                GError               **error)
+image_autocrop_layer_invoker (GimpProcedure         *procedure,
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
   GimpDrawable *drawable;
 
-  image = g_value_get_object (gimp_value_array_index (args, 1));
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
+  image = g_value_get_object (gimp_value_array_index (args, 0));
+  drawable = g_value_get_object (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -173,16 +173,16 @@ plug_in_autocrop_layer_invoker (GimpProcedure         *procedure,
 }
 
 void
-register_plug_in_compat_procs (GimpPDB *pdb)
+register_image_autocrop_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 
   /*
-   * gimp-plug-in-autocrop
+   * gimp-image-autocrop
    */
-  procedure = gimp_procedure_new (plug_in_autocrop_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_autocrop_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "plug-in-autocrop");
+                               "gimp-image-autocrop");
   gimp_procedure_set_static_help (procedure,
                                   "Remove empty borders from the image",
                                   "Remove empty borders from the image.",
@@ -191,13 +191,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1997");
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("run-mode",
-                                                  "run mode",
-                                                  "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -214,11 +207,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-autocrop-layer
+   * gimp-image-autocrop-layer
    */
-  procedure = gimp_procedure_new (plug_in_autocrop_layer_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_autocrop_layer_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "plug-in-autocrop-layer");
+                               "gimp-image-autocrop-layer");
   gimp_procedure_set_static_help (procedure,
                                   "Crop the selected layers based on empty borders of the input drawable",
                                   "Crop the selected layers of the input \"image\" based on empty borders of the input \"drawable\". \n\nThe input drawable serves as a base for detecting cropping extents (transparency or background color), and is not necessarily among the cropped layers (the current selected layers).",
@@ -227,13 +220,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1997");
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("run-mode",
-                                                  "run mode",
-                                                  "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
