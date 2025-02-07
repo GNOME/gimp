@@ -296,8 +296,8 @@ conf_app LIBTHAI_DICTDIR "share/libthai"
 ### Needed for full CJK and Cyrillic support in file-pdf
 bund_usr "$UNIX_PREFIX" "share/poppler"
 ### file-wmf support
-bund_usr "$UNIX_PREFIX" "share/fonts/type1/urw-base35/*.t1" --dest "share/libwmf/fonts"
-bund_usr "$UNIX_PREFIX" "share/fonts/type1/urw-base35/*.afm" --dest "share/libwmf/fonts"
+bund_usr "$UNIX_PREFIX" "share/fonts/type1/urw-base35/Nimbus*" --dest "share/libwmf/fonts"
+bund_usr "$UNIX_PREFIX" "share/fonts/type1/urw-base35/StandardSymbols*" --dest "share/libwmf/fonts"
 if [ "$GIMP_UNSTABLE" ]; then
   ### Image graph support
   bund_usr "$UNIX_PREFIX" "bin/libgvc*" --rename "bin/dot"
