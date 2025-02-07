@@ -60,7 +60,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2025-01-10 22:27+0000\n"
-"PO-Revision-Date: 2025-02-01 15:58+0100\n"
+"PO-Revision-Date: 2025-02-07 19:21+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -14197,7 +14197,7 @@ msgstr "Farvekort for billede nr. %d (%s)"
 #: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:904
 msgctxt "undo-type"
 msgid "Set Colormap"
-msgstr "Sæt farvekort"
+msgstr "Angiv farvekort"
 
 #: app/core/gimpimage-colormap.c:305
 msgctxt "undo-type"
@@ -21962,15 +21962,15 @@ msgstr "Invertér område"
 
 #: app/propgui/gimppropgui-color-rotate.c:131
 msgid "Select All"
-msgstr "Markér alt"
+msgstr "Vælg alt"
 
 #: app/propgui/gimppropgui-color-rotate.c:211
 msgid "Source Range"
-msgstr "Kildeinterval"
+msgstr "Kildeområde"
 
 #: app/propgui/gimppropgui-color-rotate.c:221
 msgid "Destination Range"
-msgstr "Destinationsinterval"
+msgstr "Destinationsområde"
 
 #: app/propgui/gimppropgui-color-rotate.c:231
 msgid "Gray Handling"
