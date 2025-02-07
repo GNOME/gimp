@@ -659,7 +659,13 @@ gimp_file_chooser_button_selection_changed (GtkFileChooser  *widget,
   GFile *file;
 
   file = gtk_file_chooser_get_file (widget);
+  g_signal_handlers_block_by_func (chooser->button,
+                                   G_CALLBACK (gimp_file_chooser_button_selection_changed),
+                                   chooser);
   gimp_file_chooser_set_file (chooser, file);
+  g_signal_handlers_unblock_by_func (chooser->button,
+                                     G_CALLBACK (gimp_file_chooser_button_selection_changed),
+                                     chooser);
   g_clear_object (&file);
 }
 
