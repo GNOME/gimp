@@ -320,7 +320,7 @@ icns_decompress (guchar       *dest,
 
               for (run -= 125; run > 0; run--)
                 {
-                  if (out >= max)
+                  if (out > max)
                     {
                       g_message ("Corrupt icon? compressed run overflows output size.");
                       return FALSE;
@@ -338,7 +338,7 @@ icns_decompress (guchar       *dest,
                       g_message ("Corrupt icon: uncompressed run overflows input size.");
                       return FALSE;
                     }
-                  if (out >= max)
+                  if (out > max)
                     {
                       g_message ("Corrupt icon: uncompressed run overflows output size.");
                       return FALSE;
