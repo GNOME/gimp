@@ -124,7 +124,7 @@ void         gimp_applicator_set_mode          (GimpApplicator       *applicator
 void         gimp_applicator_set_affect        (GimpApplicator       *applicator,
                                                 GimpComponentMask     affect);
 
-void         gimp_applicator_set_output_format (GimpApplicator       *applicator,
+gboolean     gimp_applicator_set_output_format (GimpApplicator       *applicator,
                                                 const Babl           *format);
 const Babl * gimp_applicator_get_output_format (GimpApplicator       *applicator);
 

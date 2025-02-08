@@ -929,6 +929,10 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
           gimp_item_set_visible (GIMP_ITEM (drawable), TRUE, FALSE);
           gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
         }
+
+      g_object_set (filter_tool->filter,
+                    "to-be-merged", filter_options->merge_filter,
+                    NULL);
     }
   else if (! strcmp (pspec->name, "controller") &&
            filter_tool->widget)
@@ -1534,6 +1538,10 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
    * aux nodes can be non-destructive */
   if (gegl_node_has_pad (filter_tool->operation, "aux"))
     options->merge_filter = TRUE;
+
+  g_object_set (filter_tool->filter,
+                "to-be-merged", options->merge_filter,
+                NULL);
 
   if (options->merge_filter)
     {

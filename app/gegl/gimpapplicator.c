@@ -466,14 +466,18 @@ gimp_applicator_set_affect (GimpApplicator    *applicator,
     }
 }
 
-void
+gboolean
 gimp_applicator_set_output_format (GimpApplicator *applicator,
                                    const Babl     *format)
 {
-  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
+  gboolean changed = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_APPLICATOR (applicator), FALSE);
 
   if (applicator->output_format != format)
     {
+      changed = TRUE;
+
       if (format)
         {
           if (! applicator->output_format)
@@ -499,6 +503,8 @@ gimp_applicator_set_output_format (GimpApplicator *applicator,
 
       applicator->output_format = format;
     }
+
+  return changed;
 }
 
 const Babl *

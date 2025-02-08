@@ -71,6 +71,7 @@ enum
   PROP_MASK,
   PROP_CUSTOM_NAME,
   PROP_TEMPORARY,
+  PROP_TO_BE_MERGED,
   N_PROPS
 };
 
@@ -115,6 +116,8 @@ struct _GimpDrawableFilter
   GimpApplicator         *applicator;
 
   gboolean                is_temporary;
+  /* This is mirroring merge_filter option of GimpFilterOptions. */
+  gboolean                to_be_merged;
 };
 
 static void       gimp_drawable_filter_set_property          (GObject             *object,
@@ -227,6 +230,10 @@ gimp_drawable_filter_class_init (GimpDrawableFilterClass *klass)
                                                                 FALSE,
                                                                 GIMP_PARAM_READWRITE);
 
+  drawable_filter_props[PROP_TO_BE_MERGED] = g_param_spec_boolean ("to-be-merged",
+                                                                   NULL, NULL,
+                                                                   FALSE,
+                                                                   GIMP_PARAM_READWRITE);
 
   g_object_class_install_properties (object_class, N_PROPS, drawable_filter_props);
 }
@@ -287,6 +294,11 @@ gimp_drawable_filter_set_property (GObject      *object,
       filter->is_temporary = g_value_get_boolean (value);
       break;
 
+    case PROP_TO_BE_MERGED:
+      filter->to_be_merged = g_value_get_boolean (value);
+      gimp_drawable_filter_sync_format (filter);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -314,6 +326,9 @@ gimp_drawable_filter_get_property (GObject    *object,
       break;
     case PROP_TEMPORARY:
       g_value_set_boolean (value, filter->is_temporary);
+      break;
+    case PROP_TO_BE_MERGED:
+      g_value_set_boolean (value, filter->to_be_merged);
       break;
 
     default:
@@ -1097,11 +1112,7 @@ gimp_drawable_filter_set_add_alpha (GimpDrawableFilter *filter,
   if (add_alpha != filter->add_alpha)
     {
       filter->add_alpha = add_alpha;
-
       gimp_drawable_filter_sync_format (filter);
-
-      if (gimp_drawable_filter_is_active (filter))
-        gimp_drawable_filter_update_drawable (filter, NULL);
     }
 }
 
@@ -1603,40 +1614,35 @@ gimp_drawable_filter_sync_affect (GimpDrawableFilter *filter)
 static void
 gimp_drawable_filter_sync_format (GimpDrawableFilter *filter)
 {
-  const Babl    *format = NULL;
-  GimpContainer *filters;
+  const Babl *format = NULL;
+  gboolean    changed;
 
-  filters = gimp_drawable_get_filters (filter->drawable);
-
-  g_return_if_fail (GIMP_LIST (filters)->queue->head != NULL);
-
-  if (filter == GIMP_LIST (filters)->queue->head->data)
+  /* We only convert back to drawable format when the filter is planned
+   * to be merged, to simulate how it would look like once it happens.
+   *
+   * On the other hand, when a filter is meant to stay on the stack,
+   * non-destructively, the output might be higher bit depth and there
+   * is no reason to demote it back.
+   *
+   * XXX: actually we might want to do this after the last layer mode
+   * node, no? Otherwise the display render might be better in some case
+   * than when the whole image is actually flattened into a single
+   * buffer. But maybe that's what some people would want?
+   */
+  if (filter->to_be_merged)
     {
-      /* We only want to convert back to the source format at the very
-       * end, and keep an as-high-bit-depth as possible format during
-       * multi-filter processing.
-       */
-      GimpDrawableFilter *next_filter = NULL;
-
-      if (GIMP_LIST (filters)->queue->head->next)
-        next_filter = GIMP_LIST (filters)->queue->head->next->data;
-
       if (filter->add_alpha                                &&
           (gimp_drawable_supports_alpha (filter->drawable) ||
            filter->override_constraints))
-        {
-          format = gimp_drawable_get_format_with_alpha (filter->drawable);
-        }
+        format = gimp_drawable_get_format_with_alpha (filter->drawable);
       else
-        {
-          format = gimp_drawable_get_format (filter->drawable);
-        }
-
-      if (next_filter)
-        gimp_drawable_filter_sync_format (next_filter);
+        format = gimp_drawable_get_format (filter->drawable);
     }
 
-  gimp_applicator_set_output_format (filter->applicator, format);
+  changed = gimp_applicator_set_output_format (filter->applicator, format);
+
+  if (changed && gimp_drawable_filter_is_active (filter))
+    gimp_drawable_filter_update_drawable (filter, NULL);
 }
 
 static void
