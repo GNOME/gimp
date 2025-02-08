@@ -96,6 +96,7 @@ stages:
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. AppImage package.*/'
       interruptible: true
     - if: '$GIMP_CI_APPIMAGE != null'
+    - <<: *CI_RELEASE
   parallel:
     matrix:
       - RUNNER: [aarch64, x86_64_v2]
@@ -759,7 +760,6 @@ dist-appimage-weekly:
   extends: .default
   rules:
     - !reference [.debian, rules]
-    - <<: *CI_RELEASE
   needs: ["gimp-debian"]
   stage: distribution
   script:
