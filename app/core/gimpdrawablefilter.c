@@ -1384,6 +1384,30 @@ gimp_drawable_filter_sync_clip (GimpDrawableFilter *filter,
 static void
 gimp_drawable_filter_sync_region (GimpDrawableFilter *filter)
 {
+  GimpContainer *filters;
+  gboolean       first_filter = FALSE;
+
+  filters = gimp_drawable_get_filters (filter->drawable);
+
+  /* The first test is because the filter might not be added yet. */
+  if (GIMP_LIST (filters)->queue->tail != NULL &&
+      filter == GIMP_LIST (filters)->queue->tail->data)
+    {
+      GimpDrawableFilter *next_filter = NULL;
+
+      if (GIMP_LIST (filters)->queue->head->next)
+        next_filter = GIMP_LIST (filters)->queue->tail->prev->data;
+
+      if (next_filter)
+        /* If the current filter became the first after a reorder, we
+         * want to re-sync the next filter which was the first filter
+         * just before.
+         */
+        gimp_drawable_filter_sync_region (next_filter);
+
+      first_filter = TRUE;
+    }
+
   if (filter->region == GIMP_FILTER_REGION_SELECTION)
     {
       if (filter->has_input)
@@ -1393,10 +1417,16 @@ gimp_drawable_filter_sync_region (GimpDrawableFilter *filter)
                          "y", (gdouble) -filter->filter_area.y,
                          NULL);
 
-          gegl_node_set (filter->crop_before,
-                         "width",  (gdouble) filter->filter_area.width,
-                         "height", (gdouble) filter->filter_area.height,
-                         NULL);
+          if (first_filter)
+            gegl_node_set (filter->crop_before,
+                           "operation", "gegl:crop",
+                           "width",     (gdouble) filter->filter_area.width,
+                           "height",    (gdouble) filter->filter_area.height,
+                           NULL);
+          else
+            gegl_node_set (filter->crop_before,
+                           "operation", "gegl:nop",
+                           NULL);
         }
 
       if (filter->filter_clip)
@@ -1433,10 +1463,15 @@ gimp_drawable_filter_sync_region (GimpDrawableFilter *filter)
                          "y", (gdouble) 0.0,
                          NULL);
 
-          gegl_node_set (filter->crop_before,
-                         "width",  width,
-                         "height", height,
-                         NULL);
+          if (first_filter)
+            gegl_node_set (filter->crop_before,
+                           "width",  width,
+                           "height", height,
+                           NULL);
+          else
+            gegl_node_set (filter->crop_before,
+                           "operation", "gegl:nop",
+                           NULL);
         }
 
       if (filter->filter_clip)
