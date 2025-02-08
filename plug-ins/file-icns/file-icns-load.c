@@ -320,10 +320,10 @@ icns_decompress (guchar       *dest,
 
               for (run -= 125; run > 0; run--)
                 {
-                  if (out >= max)
+                  if (out > max)
                     {
-                      g_debug ("Corrupt icon? compressed run overflows output size.");
-                      break;
+                      g_message ("Corrupt icon? compressed run overflows output size.");
+                      return FALSE;
                     }
                   dest[out++ * 4 + channel] = val;
                 }
@@ -338,10 +338,10 @@ icns_decompress (guchar       *dest,
                       g_message ("Corrupt icon: uncompressed run overflows input size.");
                       return FALSE;
                     }
-                  if (out >= max)
+                  if (out > max)
                     {
-                      g_debug ("Corrupt icon: uncompressed run overflows output size.");
-                      break;
+                      g_message ("Corrupt icon: uncompressed run overflows output size.");
+                      return FALSE;
                     }
                   dest[out++ * 4 + channel] = image->data[image->cursor++];
                 }
