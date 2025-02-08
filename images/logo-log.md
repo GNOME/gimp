@@ -1,11 +1,33 @@
 # Historical GIMP logos
 
+This page inventorizes historical, official variants of our software's
+logo/mascot: Wilber.
+
+Note that the Wilber-s here have not all necessarily been in use in the
+software itself. Some variants were only used on the website, or "for
+fun", or in other ways. The actual usage will be written next to each
+image when known.
+
+This page is kept up-to-date mostly for "Free Software archeologists"
+who want to discover the evolution of the project. It also allows to
+easily delete images from the website while keeping easy-to-retrieve
+links.
+
 ## Logos
 
 * [GIMP 3.0](logo/README.md) by Aryeom in 2024, under [Creative Commons
   Attribution-ShareAlike 4.0](https://creativecommons.org/licenses/by-sa/3.0/) license:
 
   ![Current GIMP logo](logo/gimp-logo.svg)
+
+  The new developer logo introduced in the same time, also by Aryeom in
+  2024 with the same license, is:
+
+  ![Current GIMP developer logo](logo/gimp-devel-logo.svg)
+
+  Among other usage, it is being used as logo in the [API
+  references](https://developer.gimp.org/api/3.0/libgimp/) or in the
+  `About` dialog for unstable builds.
 
 * [GIMP 2.6, 2.8 and 2.10](https://gitlab.gnome.org/GNOME/gimp/-/blob/f73c4ed397d797ec1b5175f27b5c0f3538a87714/data/images/gimp-logo.png)
   by Jakub Steiner in 2008 under [Creative Commons by-sa 3.0](https://creativecommons.org/licenses/by-sa/3.0/):
@@ -33,16 +55,34 @@
 
   ![pre-GIMP 2.4 logo](https://gitlab.gnome.org/GNOME/gimp/-/raw/0268c69940ef0ec39b80011b8d8ab3ed415031b0/data/images/gimp-logo.png)
 
-* [Wizard Wilber](https://gitlab.gnome.org/GNOME/gimp/-/blob/a93fbc682e5574ea68eef58a09de609fb1cc5cc8/data/images/wilber-wizard.png)
-  was added in 2002 for the user installation dialog but is not used anymore in
-  modern GIMP (we just use the "gimp-wilber-eek" icon instead).
+* Link buttons: authorship and creation dates are unsure. The oldest
+  found reference was [from a 2003
+  commit](https://gitlab.gnome.org/Infrastructure/gimp-web/-/commit/0753589d15a12a71ea0d36f2724207703da91341)
+  already calling these images "old". They used to be proposed on a
+  "*Linking to Us*" page on `gimp.org` for third-party websites wishing
+  to link to our website. These buttons have been hidden away in 2025,
+  though we left them in the `images/` directory just in case some
+  websites still use them directly.
 
-  ![Wizard Wilber](https://gitlab.gnome.org/GNOME/gimp/-/raw/0d83d2008d4f80f87be898bbff9b6c652c74157e/data/images/wilber-wizard.png)
+  !["Graphics by GIMP" link button](https://www.gimp.org/images/gfx_by_gimp.png)
+  !["GIMP - Free" link button](https://www.gimp.org/images/gimp_free_button.png)
 
 * [Wilber Construction Kit](https://gitlab.gnome.org/GNOME/gimp/-/commit/f9ea72123880de1976e8bace2fbca015ac312845)
   adding accessories to the original Wilber by various team members, between
-  2000 to 2005: Jens Lautenbacher, Sven Neumann, Seth Burgess, Ville Pätsi,
-  Guillermo S. Romero, Carol Spears…
+  2000 to 2005: Simon Budig (hard hat), Raphaël Quinet (wizard hat),
+  Jens Lautenbacher, Sven Neumann, Seth Burgess, Ville Pätsi, Guillermo
+  S. Romero, Carol Spears…
+
+  ![Wilber, the GIMP mascot](https://gitlab.gnome.org/Infrastructure/gimp-web/-/raw/50b10b2e81062028bafe354a836c05aa00be214b/content/images/wilber_the_gimp.png)
+  ![Wilber, the GIMP mascot](https://gitlab.gnome.org/Infrastructure/gimp-web/-/raw/50b10b2e81062028bafe354a836c05aa00be214b/content/images/wilber_the_gimp2.png)
+  ![Wilber painter](https://gitlab.gnome.org/Infrastructure/gimp-web/-/raw/50b10b2e81062028bafe354a836c05aa00be214b/content/images/wilber_painter.png)
+  ![Wilber worker](https://gitlab.gnome.org/Infrastructure/gimp-web/-/raw/50b10b2e81062028bafe354a836c05aa00be214b/content/images/wilber_work.png)
+  ![Wilber wizard](https://gitlab.gnome.org/Infrastructure/gimp-web/-/raw/50b10b2e81062028bafe354a836c05aa00be214b/content/images/wilber_wizard.png)
+
+  The [Wizard Wilber](https://gitlab.gnome.org/GNOME/gimp/-/blob/a93fbc682e5574ea68eef58a09de609fb1cc5cc8/data/images/wilber-wizard.png)
+  was added in 2002 for the user installation dialog but is not used
+  anymore in modern GIMP (we just use the "gimp-wilber-eek" icon
+  instead).
 
 * [SVG variant](https://gitlab.gnome.org/GNOME/gimp/-/blob/e33ff2b0895f8622051f310ca000f48ad45b5981/docs/Wilber.svg)
   by Simon Budig in 2000.
