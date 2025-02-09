@@ -1465,8 +1465,9 @@ gimp_drawable_filter_sync_region (GimpDrawableFilter *filter)
 
           if (first_filter)
             gegl_node_set (filter->crop_before,
-                           "width",  width,
-                           "height", height,
+                           "operation", "gegl:crop",
+                           "width",     width,
+                           "height",    height,
                            NULL);
           else
             gegl_node_set (filter->crop_before,
