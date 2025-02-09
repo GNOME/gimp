@@ -30,9 +30,9 @@
 /**
  * SECTION: gimpimageautocrop
  * @title: gimpimageautocrop
- * @short_description: Functions that crop images to a layer.
+ * @short_description: Functions that crop images or layers.
  *
- * Functions that crop images to a layer.
+ * Functions that crop images or layers.
  **/
 
 
@@ -43,7 +43,11 @@
  *
  * Remove empty borders from the image
  *
- * Remove empty borders from the image.
+ * Remove empty borders from the @image based on empty borders of the
+ * input @drawable.
+ *
+ * The input drawable serves as a base for detecting cropping extents
+ * (transparency or background color).
  *
  * Returns: TRUE on success.
  **/
@@ -73,24 +77,24 @@ gimp_image_autocrop (GimpImage    *image,
 }
 
 /**
- * gimp_image_autocrop_layer:
+ * gimp_image_autocrop_selected_layers:
  * @image: Input image).
  * @drawable: Input drawable.
  *
  * Crop the selected layers based on empty borders of the input
  * drawable
  *
- * Crop the selected layers of the input \"image\" based on empty
- * borders of the input \"drawable\". \n\nThe input drawable serves as
- * a base for detecting cropping extents (transparency or background
- * color), and is not necessarily among the cropped layers (the current
- * selected layers).
+ * Crop the selected layers of the input @image based on empty borders
+ * of the input @drawable.
+ * The input drawable serves as a base for detecting cropping extents
+ * (transparency or background color), and is not necessarily among the
+ * cropped layers (the current selected layers).
  *
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_autocrop_layer (GimpImage    *image,
-                           GimpDrawable *drawable)
+gimp_image_autocrop_selected_layers (GimpImage    *image,
+                                     GimpDrawable *drawable)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -102,7 +106,7 @@ gimp_image_autocrop_layer (GimpImage    *image,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-image-autocrop-layer",
+                                               "gimp-image-autocrop-selected-layers",
                                                args);
   gimp_value_array_unref (args);
 

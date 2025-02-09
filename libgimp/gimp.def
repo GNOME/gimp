@@ -408,8 +408,8 @@ EXPORTS
 	gimp_image_add_sample_point
 	gimp_image_add_vguide
 	gimp_image_attach_parasite
-  gimp_image_autocrop
-  gimp_image_autocrop_layer
+	gimp_image_autocrop
+	gimp_image_autocrop_selected_layers
 	gimp_image_clean_all
 	gimp_image_convert_color_profile
 	gimp_image_convert_color_profile_from_file

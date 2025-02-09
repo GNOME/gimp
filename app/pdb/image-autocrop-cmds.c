@@ -110,12 +110,12 @@ image_autocrop_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-image_autocrop_layer_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
-                              GError               **error)
+image_autocrop_selected_layers_invoker (GimpProcedure         *procedure,
+                                        Gimp                  *gimp,
+                                        GimpContext           *context,
+                                        GimpProgress          *progress,
+                                        const GimpValueArray  *args,
+                                        GError               **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -185,7 +185,9 @@ register_image_autocrop_procs (GimpPDB *pdb)
                                "gimp-image-autocrop");
   gimp_procedure_set_static_help (procedure,
                                   "Remove empty borders from the image",
-                                  "Remove empty borders from the image.",
+                                  "Remove empty borders from the @image based on empty borders of the input @drawable.\n"
+                                  "\n"
+                                  "The input drawable serves as a base for detecting cropping extents (transparency or background color).",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
@@ -207,14 +209,15 @@ register_image_autocrop_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-image-autocrop-layer
+   * gimp-image-autocrop-selected-layers
    */
-  procedure = gimp_procedure_new (image_autocrop_layer_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_autocrop_selected_layers_invoker, TRUE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-autocrop-layer");
+                               "gimp-image-autocrop-selected-layers");
   gimp_procedure_set_static_help (procedure,
                                   "Crop the selected layers based on empty borders of the input drawable",
-                                  "Crop the selected layers of the input \"image\" based on empty borders of the input \"drawable\". \n\nThe input drawable serves as a base for detecting cropping extents (transparency or background color), and is not necessarily among the cropped layers (the current selected layers).",
+                                  "Crop the selected layers of the input @image based on empty borders of the input @drawable.\n"
+                                  "The input drawable serves as a base for detecting cropping extents (transparency or background color), and is not necessarily among the cropped layers (the current selected layers).",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",

@@ -32,10 +32,10 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_image_autocrop       (GimpImage    *image,
-                                    GimpDrawable *drawable);
-gboolean gimp_image_autocrop_layer (GimpImage    *image,
-                                    GimpDrawable *drawable);
+gboolean gimp_image_autocrop                 (GimpImage    *image,
+                                              GimpDrawable *drawable);
+gboolean gimp_image_autocrop_selected_layers (GimpImage    *image,
+                                              GimpDrawable *drawable);
 
 
 G_END_DECLS

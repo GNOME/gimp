@@ -21,7 +21,11 @@ sub image_autocrop {
     $blurb = 'Remove empty borders from the image';
 
     $help = <<'HELP';
-Remove empty borders from the image.
+Remove empty borders from the @image based on empty borders of the input @drawable.
+
+
+The input drawable serves as a base for detecting cropping extents
+(transparency or background color).
 HELP
 
     &std_pdb_misc;
@@ -82,12 +86,15 @@ CODE
     );
 }
 
-sub image_autocrop_layer {
+sub image_autocrop_selected_layers {
     $blurb = 'Crop the selected layers based on empty borders of the input drawable';
 
     $help = <<'HELP';
-Crop the selected layers of the input "image" based on empty borders of the input "drawable".
-\n\nThe input drawable serves as a base for detecting cropping extents (transparency or background color), and is not necessarily among the cropped layers (the current selected layers).
+Crop the selected layers of the input @image based on empty borders of the input @drawable.
+
+The input drawable serves as a base for detecting cropping extents
+(transparency or background color), and is not necessarily among the
+cropped layers (the current selected layers).
 HELP
 
     &std_pdb_misc;
@@ -157,13 +164,13 @@ CODE
               "gimp-intl.h");
 
 @procs = qw(image_autocrop
-            image_autocrop_layer);
+            image_autocrop_selected_layers);
 
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Image Autocrop';
 $doc_title = 'gimpimageautocrop';
-$doc_short_desc = 'Functions that crop images to a layer.';
-$doc_long_desc =  'Functions that crop images to a layer.';
+$doc_short_desc = 'Functions that crop images or layers.';
+$doc_long_desc =  'Functions that crop images or layers.';
 
 1;
