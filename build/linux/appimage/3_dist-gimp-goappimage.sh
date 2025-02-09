@@ -90,9 +90,9 @@ fi
 GIMP_VERSION=$(grep GIMP_VERSION $BUILD_DIR/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
 GIMP_APP_VERSION=$(grep GIMP_APP_VERSION $BUILD_DIR/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
 grep -q '#define GIMP_UNSTABLE' $BUILD_DIR/config.h && export GIMP_UNSTABLE=1
-if [ -z "$CI_COMMIT_TAG" ] && [ "$GIMP_UNSTABLE" ] || [[ "$GIMP_VERSION" =~ 'git' ]]; then
+if [ "$CI_COMMIT_TAG" != "$(git describe --all | sed 's|tags/||')" ] && [ "$GIMP_UNSTABLE" ] || [[ "$GIMP_VERSION" =~ 'git' ]]; then
   export CHANNEL="Continuous"
-elif [ "$CI_COMMIT_TAG" ] && [ "$GIMP_UNSTABLE" ] || [[ "$GIMP_VERSION" =~ 'RC' ]]; then
+elif [ "$CI_COMMIT_TAG" = "$(git describe --all | sed 's|tags/||')" ] && [ "$GIMP_UNSTABLE" ] || [[ "$GIMP_VERSION" =~ 'RC' ]]; then
   export CHANNEL="Pre"
 else
   export CHANNEL="Stable"
@@ -421,19 +421,26 @@ echo -e "\e[0Ksection_end:`date +%s`:${ARCH}_source\r\e[0K"
 APPIMAGETOOL_APP_NAME="GIMP-${GIMP_VERSION}-${ARCH}.AppImage"
 echo -e "\e[0Ksection_start:`date +%s`:${ARCH}_making[collapsed=true]\r\e[0KSquashing $APPIMAGETOOL_APP_NAME"
 #updateinformation is not compatible with our server. See: https://github.com/AppImage/appimagetool/issues/91
-#if [ "$CI_COMMIT_TAG" ]; then
+#if [ "$CI_COMMIT_TAG" = "$(git describe --all | sed 's|tags/||')" ]; then
 #  update_info="--updateinformation zsync|https://download.gimp.org/gimp/v{$GIMP_APP_VERSION}/linux/GIMP-${CHANNEL}-${ARCH}.AppImage.zsync"
 #fi
 "./$standard_appimagetool" $APP_DIR $APPIMAGETOOL_APP_NAME --exclude-file appimageignore-$ARCH \
                                                            --runtime-file runtime-$ARCH $update_info
 file "./$APPIMAGETOOL_APP_NAME"
-#if [ "$CI_COMMIT_TAG" ]; then
+#if [ "$CI_COMMIT_TAG" = "$(git describe --all | sed 's|tags/||')" ]; then
 #  mv ${APPIMAGETOOL_APP_NAME}.zsync GIMP-${CHANNEL}-${ARCH}.AppImage.zsync
 #fi
-echo -e "\e[0Ksection_end:`date +%s`:${ARCH}_making\r\e[0K"
-done
 
 if [ "$GITLAB_CI" ]; then
-  mkdir -p build/linux/appimage/_Output/
-  mv GIMP*.AppImage* build/linux/appimage/_Output/
+  output_dir='build/linux/appimage/_Output'
+  mkdir -p $output_dir
+  mv GIMP*.AppImage* $output_dir
+
+  if [ "$CI_COMMIT_TAG" = "$(git describe --all | sed 's|tags/||')" ]; then
+    echo "(INFO): generating checksums for $APPIMAGETOOL_APP_NAME"
+    sha256sum $output_dir/$APPIMAGETOOL_APP_NAME > $output_dir/$APPIMAGETOOL_APP_NAME.SHA256SUMS
+    sha512sum $output_dir/$APPIMAGETOOL_APP_NAME > $output_dir/$APPIMAGETOOL_APP_NAME.SHA512SUMS
+  fi
 fi
+echo -e "\e[0Ksection_end:`date +%s`:${ARCH}_making\r\e[0K"
+done
