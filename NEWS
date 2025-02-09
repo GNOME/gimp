@@ -83,6 +83,7 @@ Plug-ins:
       il32, and ih32 24-bit RGB formats (with 8 bit masks) instead of
       the newer PNG formats for those sized icons.
     * Support loading ARGB ICNS icons.
+    * Support loading pre-OSX ICNS with no masks.
 
 API:
 
@@ -168,6 +169,8 @@ Build:
   - No build attempt to use build caching in CI. It was just making
     problems with no clear gain.
   - AppImage packages (x86_64 and AArch64) are now official packages.
+  - MS Store version is now automatically uploaded through the CI.
+  - Minimum dependency requirement update: GEGL 0.4.54.
 
 
 Overview of Changes from GIMP 3.0.0-RC1 to GIMP 3.0.0-RC2
