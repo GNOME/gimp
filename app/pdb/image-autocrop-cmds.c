@@ -63,22 +63,41 @@ image_autocrop_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error))
+      gint x, y, width, height;
+
+      if (drawable != NULL)
         {
-          gint x, y, width, height;
-          gint off_x, off_y;
+          if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                         GIMP_PDB_ITEM_CONTENT, error))
+            {
+              gint off_x, off_y;
 
-          gimp_pickable_auto_shrink (GIMP_PICKABLE (drawable),
+              gimp_pickable_auto_shrink (GIMP_PICKABLE (drawable),
+                                         0, 0,
+                                         gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                         gimp_item_get_height (GIMP_ITEM (drawable)),
+                                         &x, &y, &width, &height);
+
+              gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+              x += off_x;
+              y += off_y;
+            }
+          else
+            {
+              success = FALSE;
+            }
+        }
+      else
+        {
+          gimp_pickable_auto_shrink (GIMP_PICKABLE (image),
                                      0, 0,
-                                     gimp_item_get_width  (GIMP_ITEM (drawable)),
-                                     gimp_item_get_height (GIMP_ITEM (drawable)),
+                                     gimp_image_get_width  (image),
+                                     gimp_image_get_height (image),
                                      &x, &y, &width, &height);
+        }
 
-          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
-          x += off_x;
-          y += off_y;
-
+      if (success)
+        {
           gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
                                        _("Autocrop image"));
 
@@ -101,8 +120,6 @@ image_autocrop_invoker (GimpProcedure         *procedure,
 
           gimp_image_undo_group_end (image);
         }
-      else
-        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -126,45 +143,25 @@ image_autocrop_selected_layers_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error))
-        {
-          GList *layers = gimp_image_get_selected_layers (image);
-          GList *iter;
-          gint   x, y, width, height;
+      GimpAutoShrink shrink;
+      gint           x, y, width, height;
 
-          if (layers)
+      if (drawable != NULL)
+        {
+          if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                         GIMP_PDB_ITEM_CONTENT, error))
             {
               gint off_x, off_y;
 
+              shrink = gimp_pickable_auto_shrink (GIMP_PICKABLE (drawable),
+                                                  0, 0,
+                                                  gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                                  gimp_item_get_height (GIMP_ITEM (drawable)),
+                                                  &x, &y, &width, &height);
+
               gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
-
-              switch (gimp_pickable_auto_shrink (GIMP_PICKABLE (drawable),
-                                                 0, 0,
-                                                 gimp_item_get_width  (GIMP_ITEM (drawable)),
-                                                 gimp_item_get_height (GIMP_ITEM (drawable)),
-                                                 &x, &y, &width, &height))
-                {
-                case GIMP_AUTO_SHRINK_SHRINK:
-                  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
-                                               _("Autocrop layer"));
-
-                  for (iter = layers; iter; iter = iter->next)
-                    {
-                      gint layer_off_x, layer_off_y;
-
-                      gimp_item_get_offset (GIMP_ITEM (iter->data), &layer_off_x, &layer_off_y);
-                      gimp_item_resize (GIMP_ITEM (iter->data),
-                                        context, GIMP_FILL_TRANSPARENT,
-                                        width, height, layer_off_x - (off_x + x), layer_off_y - (off_y + y));
-                     }
-
-                  gimp_image_undo_group_end (image);
-                  break;
-
-                default:
-                  break;
-                }
+              x += off_x;
+              y += off_y;
             }
           else
             {
@@ -173,7 +170,43 @@ image_autocrop_selected_layers_invoker (GimpProcedure         *procedure,
         }
       else
         {
-          success = FALSE;
+          shrink = gimp_pickable_auto_shrink (GIMP_PICKABLE (image),
+                                              0, 0,
+                                              gimp_image_get_width  (image),
+                                              gimp_image_get_height (image),
+                                              &x, &y, &width, &height);
+        }
+
+      if (success && shrink != GIMP_AUTO_SHRINK_SHRINK)
+        success = FALSE;
+
+      if (success)
+        {
+          GList *layers = gimp_image_get_selected_layers (image);
+
+          if (layers)
+            {
+              GList *iter;
+
+              gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
+                                           _("Autocrop layer"));
+
+              for (iter = layers; iter; iter = iter->next)
+                {
+                  gint layer_off_x, layer_off_y;
+
+                  gimp_item_get_offset (GIMP_ITEM (iter->data), &layer_off_x, &layer_off_y);
+                  gimp_item_resize (GIMP_ITEM (iter->data),
+                                    context, GIMP_FILL_TRANSPARENT,
+                                    width, height, layer_off_x - x, layer_off_y - y);
+                 }
+
+              gimp_image_undo_group_end (image);
+            }
+          else
+            {
+              success = FALSE;
+            }
         }
     }
 
@@ -196,7 +229,8 @@ register_image_autocrop_procs (GimpPDB *pdb)
                                   "Remove empty borders from the image",
                                   "Remove empty borders from the @image based on empty borders of the input @drawable.\n"
                                   "\n"
-                                  "The input drawable serves as a base for detecting cropping extents (transparency or background color).",
+                                  "The input drawable serves as a base for detecting cropping extents (transparency or background color).\n"
+                                  "With a %NULL input drawable, the image itself will serve as a base for detecting cropping extents.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
@@ -212,7 +246,7 @@ register_image_autocrop_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
-                                                         FALSE,
+                                                         TRUE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -226,7 +260,8 @@ register_image_autocrop_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Crop the selected layers based on empty borders of the input drawable",
                                   "Crop the selected layers of the input @image based on empty borders of the input @drawable.\n"
-                                  "The input drawable serves as a base for detecting cropping extents (transparency or background color), and is not necessarily among the cropped layers (the current selected layers).",
+                                  "The input drawable serves as a base for detecting cropping extents (transparency or background color), and is not necessarily among the cropped layers (the current selected layers).\n"
+                                  "With a %NULL input drawable, the image itself will serve as a base for detecting cropping extents.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
@@ -235,14 +270,14 @@ register_image_autocrop_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
-                                                      "Input image)",
+                                                      "Input image",
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
-                                                         FALSE,
+                                                         TRUE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

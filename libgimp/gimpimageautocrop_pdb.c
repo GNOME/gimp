@@ -39,7 +39,7 @@
 /**
  * gimp_image_autocrop:
  * @image: Input image).
- * @drawable: Input drawable.
+ * @drawable: (nullable): Input drawable.
  *
  * Remove empty borders from the image
  *
@@ -48,6 +48,8 @@
  *
  * The input drawable serves as a base for detecting cropping extents
  * (transparency or background color).
+ * With a %NULL input drawable, the image itself will serve as a base
+ * for detecting cropping extents.
  *
  * Returns: TRUE on success.
  **/
@@ -78,8 +80,8 @@ gimp_image_autocrop (GimpImage    *image,
 
 /**
  * gimp_image_autocrop_selected_layers:
- * @image: Input image).
- * @drawable: Input drawable.
+ * @image: Input image.
+ * @drawable: (nullable): Input drawable.
  *
  * Crop the selected layers based on empty borders of the input
  * drawable
@@ -89,6 +91,8 @@ gimp_image_autocrop (GimpImage    *image,
  * The input drawable serves as a base for detecting cropping extents
  * (transparency or background color), and is not necessarily among the
  * cropped layers (the current selected layers).
+ * With a %NULL input drawable, the image itself will serve as a base
+ * for detecting cropping extents.
  *
  * Returns: TRUE on success.
  **/
