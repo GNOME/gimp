@@ -74,7 +74,7 @@
   </provides>
 
   <releases>
-    <release version="3.0.0~rc3" date="TODO" type="development">
+    <release version="3.0.0~rc3" date="2025-02-09" type="development">
       <description>
         <p>
         While GIMP 3.0 is getting more and more robust with this
