@@ -54,6 +54,7 @@ void           icns_slurp        (guchar       *dest,
 
 gboolean       icns_decompress   (guchar       *dest,
                                   IconType     *icontype,
+                                  gint          n_channels,
                                   IcnsResource *image,
                                   IcnsResource *mask);
 
@@ -283,6 +284,7 @@ icns_slurp (guchar       *dest,
 gboolean
 icns_decompress (guchar       *dest,
                  IconType     *icontype,
+                 gint          n_channels,
                  IcnsResource *image,
                  IcnsResource *mask)
 {
@@ -291,7 +293,6 @@ icns_decompress (guchar       *dest,
   guint  out;
   guchar run;
   guchar val;
-  gint   n_channels = 3;
 
   max = icontype->width * icontype->height;
   memset (dest, 255, max * 4);
@@ -349,15 +350,31 @@ icns_decompress (guchar       *dest,
         }
     }
 
-    if (mask)
-      {
-        gchar typestring[5];
-        fourcc_get_string (mask->type, typestring);
+  /* If we have four channels, this is compressed ARGB data and
+     we need to rotate the channels */
+  if (n_channels == 4)
+    {
+      gint pixel_max = max * 4;
 
-        for (out = 0; out < max; out++)
-          dest[out * 4 + 3] = mask->data[mask->cursor++];
-      }
-    return TRUE;
+      for (gint i = 0; i < pixel_max; i += 4)
+        {
+          guchar alpha = dest[i];
+
+          for (gint j = 0; j < 3; j++)
+            dest[i + j] = dest[i + j + 1];
+
+          dest[i + 3] = alpha;
+        }
+    }
+  else if (mask)
+    {
+      gchar typestring[5];
+      fourcc_get_string (mask->type, typestring);
+
+      for (out = 0; out < max; out++)
+        dest[out * 4 + 3] = mask->data[mask->cursor++];
+    }
+  return TRUE;
 }
 
 void
@@ -419,6 +436,12 @@ icns_attach_image (GimpImage    *image,
           temp_file_type = "jp2";
           procedure_name = "file-jp2-load";
         }
+      /* ARGB (compressed */
+      else if (! strncmp (image_type, "ARGB", 4))
+        {
+          icns->cursor += 4;
+          icns_decompress (dest, icontype, 4, icns, FALSE);
+        }
 
       if (temp_file_type && procedure_name)
         {
@@ -469,7 +492,7 @@ icns_attach_image (GimpImage    *image,
       if (icontype->bits != 32 || expected_size == icns->size)
         icns_slurp (dest, icontype, icns, mask);
       else
-        icns_decompress (dest, icontype, icns, mask);
+        icns_decompress (dest, icontype, 3, icns, mask);
     }
 
   if (! layer_loaded)

@@ -76,6 +76,7 @@ IconType iconTypes[] =
 
   /* ARGB, PNG, or JPEG 2000 */
   {"ic04",   16,   16, 0, "N/A", TRUE},
+  {"ic05",   32,   32, 0, "N/A", TRUE},
   {"icsb",   18,   18, 0, "N/A", TRUE},
 
   {0, 0, 0, 0, 0}
