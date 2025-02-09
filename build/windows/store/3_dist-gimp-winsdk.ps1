@@ -434,6 +434,7 @@ if ($GITLAB_CI)
 # 7. SUBMIT .MSIXUPLOAD TO MS STORE (ONLY FOR RELEASES)
 if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags/',''}))
   {
+    Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):msix_submission[collapsed=true]$([char]13)$([char]27)[0KSubmitting $MSIX_ARTIFACT to Microsoft Store"
     ## Connect with Microsoft Entra credentials (stored on GitLab)
     ## (The last one can be revoked at any time in MS Entra Admin center)
     msstore reconfigure --tenantId $TENANT_ID --sellerId $SELLER_ID --clientId $CLIENT_ID --clientSecret $CLIENT_SECRET
@@ -499,4 +500,5 @@ if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags
 
     ## Start certification then publishing
     msstore submission publish $PRODUCT_ID
+    Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):msix_submission$([char]13)$([char]27)[0K"
   }
