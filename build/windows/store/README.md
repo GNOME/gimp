@@ -13,7 +13,10 @@ Base rule to update the "GIMP (Preview)" entry:
 
 ## Maintaining the MSIX
 
-If the submission from CI does not work, you need to do the following yourself:
+If the submission from CI does not work, check on MS Entra Admin Center for the
+client secret of 'GITLAB_CI' app. If expired, create a new one and add it on
+GitLab as a masked, hidden and protected variable. Then, retrigger the Store job.
+That is usually faster than doing a manual submission as per instructions below:
 
 1. The link above will open 'Partner Center', the frontend to submit .msixupload
 
