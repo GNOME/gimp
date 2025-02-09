@@ -25,7 +25,7 @@ if [ -f "*appimagetool*.AppImage" ]; then
 fi
 if [ "$GITLAB_CI" ]; then
   apt-get update >/dev/null 2>&1
-  apt-get install -y --no-install-recommends ca-certificates wget curl >/dev/null 2>&1
+  apt-get install -y --no-install-recommends ca-certificates wget curl git >/dev/null 2>&1
 fi
 export HOST_ARCH=$(uname -m)
 export APPIMAGE_EXTRACT_AND_RUN=1
