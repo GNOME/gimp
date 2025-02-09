@@ -18,7 +18,11 @@ Core:
       explicitly set.
     * Major image graph update so that we don't cast back to storage
       pixel format in-between filters making non-destructive filters a
-      lot more powerful.
+      lot more powerful. We now only cast during preview of filters when
+      "Merge filter" checkbox is checked.
+    * More image graph update: we only crop before the first effect on a
+      filter stack for a given drawable. Further pre-crops are now no-op
+      nodes.
   - More robust program loading even on systems with no fonts at all.
   - Various missing help-ids added.
   - The debugging infrastructure was not getting backtraces for all
@@ -27,6 +31,8 @@ Core:
   - Reworking of projection flushing to make it thread-safe (e.g. when
     projection updates are requested from the "paint" thread).
   - Improved support for cloud providers' file loading.
+  - Dashboard: performance log filenames now contain the timestamp in
+    ISO-8601 basic format.
 
 Graphical User Interface:
 
@@ -66,6 +72,17 @@ Plug-ins:
     * PSD compatibility messages are now selectable for easy copy-paste.
     * Store proper merged image when exporting CMYK PSD files.
   - All plug-ins with a GFile argument now use a GimpParamSpecFile spec.
+  - JPEG-XL: export options were simplified:
+    * CMYK is always saved as lossless: lossy CMYK is discouraged by
+      libjxl developers and results in visible artifacts.
+    * "Save original profile" option is removed. We now simply follow
+      the profile settings of the image.
+  - ICNS:
+    * ipc4, ipc5, and ipc6 type ICNS icons do not render well when
+      included in an app as part of a bundle. We now use older is32,
+      il32, and ih32 24-bit RGB formats (with 8 bit masks) instead of
+      the newer PNG formats for those sized icons.
+    * Support loading ARGB ICNS icons.
 
 API:
 
@@ -106,6 +123,9 @@ API:
     * Filters based off GIMP-made GEGL operations with a custom
       configuration object are now configurable through the PDB/libgimp,
       like any other filters.
+    * Filters created by libgimp are always set as "unclipped".
+      Functions to control this settings will likely happen after 3.0.0
+      release.
   - Changes in libgimpwidgets:
     * New GimpFileChooser widget.
     * New functions:
@@ -147,6 +167,7 @@ Build:
   - Meson option -Dg-ir-doc was removed.
   - No build attempt to use build caching in CI. It was just making
     problems with no clear gain.
+  - AppImage packages (x86_64 and AArch64) are now official packages.
 
 
 Overview of Changes from GIMP 3.0.0-RC1 to GIMP 3.0.0-RC2
