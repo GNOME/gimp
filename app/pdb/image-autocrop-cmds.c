@@ -135,6 +135,10 @@ image_autocrop_selected_layers_invoker (GimpProcedure         *procedure,
 
           if (layers)
             {
+              gint off_x, off_y;
+
+              gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+
               switch (gimp_pickable_auto_shrink (GIMP_PICKABLE (drawable),
                                                  0, 0,
                                                  gimp_item_get_width  (GIMP_ITEM (drawable)),
@@ -146,9 +150,14 @@ image_autocrop_selected_layers_invoker (GimpProcedure         *procedure,
                                                _("Autocrop layer"));
 
                   for (iter = layers; iter; iter = iter->next)
+                    {
+                      gint layer_off_x, layer_off_y;
+
+                      gimp_item_get_offset (GIMP_ITEM (iter->data), &layer_off_x, &layer_off_y);
                       gimp_item_resize (GIMP_ITEM (iter->data),
                                         context, GIMP_FILL_TRANSPARENT,
-                                        width, height, -x, -y);
+                                        width, height, layer_off_x - (off_x + x), layer_off_y - (off_y + y));
+                     }
 
                   gimp_image_undo_group_end (image);
                   break;
