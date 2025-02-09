@@ -182,7 +182,7 @@ icns_load (IcnsResource *icns,
 
       if ((icns = resource_find (resources, iconTypes[i].type, nResources)))
         {
-          if (! iconTypes[i].isModern)
+          if (! iconTypes[i].isModern && iconTypes[i].mask)
             mask = resource_find (resources, iconTypes[i].mask, nResources);
 
           icns_attach_image (image, &iconTypes[i], icns, mask, iconTypes[i].isModern);
@@ -224,6 +224,8 @@ icns_slurp (guchar       *dest,
             dest[out * 4]     = bit;
             dest[out * 4 + 1] = bit;
             dest[out * 4 + 2] = bit;
+            if (! mask)
+              dest[out * 4 + 3] = 255;
           }
         break;
       case 4:
@@ -644,7 +646,7 @@ icns_load_thumbnail_image (GFile   *file,
     {
       icns = resource_find (resources, iconTypes[match].type, nResources);
 
-      if (! iconTypes[match].isModern)
+      if (! iconTypes[match].isModern && iconTypes[i].mask)
         mask = resource_find (resources, iconTypes[match].mask, nResources);
 
       icns_attach_image (image, &iconTypes[match], icns, mask, iconTypes[match].isModern);
