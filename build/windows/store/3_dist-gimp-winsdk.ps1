@@ -26,7 +26,7 @@ $win_sdk_version = Get-ItemProperty Registry::'HKEY_LOCAL_MACHINE\SOFTWARE\WOW64
 $win_sdk_path = Get-ItemProperty Registry::'HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Microsoft SDKs\Windows\v10.0' | Select-Object -ExpandProperty InstallationFolder
 $env:Path = "${win_sdk_path}bin\${win_sdk_version}.0\$cpu_arch;${win_sdk_path}App Certification Kit;" + $env:Path
 # msstore-cli (ONLY FOR RELEASES)
-if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags/',''}))
+if ($CI_COMMIT_TAG -match 'GIMP_[0-9]*_[0-9]*_[0-9]*' -or $GIMP_CI_MS_STORE -like 'MSIXUPLOAD*')
   {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
@@ -432,12 +432,13 @@ if ($GITLAB_CI)
 
 
 # 7. SUBMIT .MSIXUPLOAD TO MS STORE (ONLY FOR RELEASES)
-if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags/',''}))
+if ($CI_COMMIT_TAG -match 'GIMP_[0-9]*_[0-9]*_[0-9]*' -or $GIMP_CI_MS_STORE -like 'MSIXUPLOAD*')
   {
     Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):msix_submission[collapsed=true]$([char]13)$([char]27)[0KSubmitting $MSIX_ARTIFACT to Microsoft Store"
     ## Connect with Microsoft Entra credentials (stored on GitLab)
     ## (The last one can be revoked at any time in MS Entra Admin center)
-    msstore reconfigure --tenantId $TENANT_ID --sellerId $SELLER_ID --clientId $CLIENT_ID --clientSecret $CLIENT_SECRET
+    Write-Output "TENANT_ID is $TENANT_ID, SELLER_ID is $SELLER_ID, CLIENT_ID is $CLIENT_ID, CLIENT_SECRET is secret"
+    msstore reconfigure --tenantId $TENANT_ID --sellerId $SELLER_ID --clientId $CLIENT_ID --clientSecret $CLIENT_SECRET -v
 
     ## Set product_id (which is not confidential) needed by HTTP calls of some commands
     if ($dev)
@@ -450,7 +451,8 @@ if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags
       }
 
     ## Create submission and upload .msixupload file to it
-    msstore publish $OUTPUT_DIR\$MSIX_ARTIFACT -id $PRODUCT_ID -nc
+    Write-Output "PRODUCT_ID is $PRODUCT_ID"
+    msstore publish $OUTPUT_DIR\$MSIX_ARTIFACT -id $PRODUCT_ID -nc -v
 
     ## FIXME: Update submission info. See: https://github.com/microsoft/msstore-cli/issues/70
     ###Get changelog from Linux appdata
@@ -499,6 +501,6 @@ if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags
     #msstore submission update $PRODUCT_ID $final_json
 
     ## Start certification then publishing
-    msstore submission publish $PRODUCT_ID
+    msstore submission publish $PRODUCT_ID -v
     Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):msix_submission$([char]13)$([char]27)[0K"
   }
