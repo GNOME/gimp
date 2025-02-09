@@ -127,6 +127,16 @@ API:
     * Filters created by libgimp are always set as "unclipped".
       Functions to control this settings will likely happen after 3.0.0
       release.
+    * Compat PDB-only procedure plug-in-autocrop is now transformed to
+      proper gimp-image-autocrop procedure with corresponding libgimp
+      function gimp_image_autocrop().
+    * Compat PDB-only procedure plug-in-autocrop-layer is now
+      transformed to proper gimp-image-autocrop-selected-layers
+      procedure with corresponding libgimp function
+      gimp_image_autocrop_selected_layers().
+    * Both the new autocrop procedures now allow a NULL input drawable
+      and will use the image for determining cropping extents in this
+      case.
   - Changes in libgimpwidgets:
     * New GimpFileChooser widget.
     * New functions:
