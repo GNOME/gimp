@@ -149,6 +149,13 @@ drawable_filter_new_invoker (GimpProcedure         *procedure,
                          "operation", operation_name,
                          NULL);
           filter = gimp_drawable_filter_new (drawable, name, operation, NULL);
+          /* We don't have a libgimp function for setting the clipping
+           * behavior. I want to look further into the whole logic first.
+           * In the meantime if all API-made filters must have a single
+           * clipping behavior, I believe that not-clipping (adjusting) is
+           * the nicer default.
+           */
+          gimp_drawable_filter_set_clip (filter, FALSE);
           g_clear_object (&operation);
         }
     }
