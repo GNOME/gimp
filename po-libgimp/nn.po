@@ -2036,11 +2036,11 @@ msgstr "Optimaliser fargeomforminga for utskriftssimuleringa"
 
 #: libgimpconfig/gimpcolorconfig.c:320
 msgid "Mark out of gamut colors"
-msgstr "Merk ikkje meir gamut-farge"
+msgstr "Merk fargane som er utanfor gamut-fargane"
 
 #: libgimpconfig/gimpcolorconfig.c:327
 msgid "Out of gamut warning color"
-msgstr "Ikkje meir gamut åtvaringsfarge"
+msgstr "Åtvaringsfarge for fargane som er utanfor gamut-fargane"
 
 #: libgimpconfig/gimpcolorconfig.c:335
 msgid "Show RGB 0..255 scales"
