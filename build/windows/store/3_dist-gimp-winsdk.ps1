@@ -392,7 +392,7 @@ if (-not $GITLAB_CI -and $wack -eq 'WACK')
 # (Partner Center does the same thing, for free, before publishing)
 if ($CI_COMMIT_TAG -notmatch 'GIMP_[0-9]*_[0-9]*_[0-9]*' -and $GIMP_CI_MS_STORE -notlike 'MSIXUPLOAD*' -and $MSIX_ARTIFACT -notlike "*msixupload")
   {
-    Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):msix_sign${msix_arch}[collapsed=true]$([char]13)$([char]27)[0KSelf-signing $MSIX_ARTIFACT (for testing purposes)"
+    Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):msix_trust${msix_arch}[collapsed=true]$([char]13)$([char]27)[0KSelf-signing $MSIX_ARTIFACT (for testing purposes)"
     signtool sign /debug /fd sha256 /a /f $(Resolve-Path build\windows\store\pseudo-gimp*.pfx) /p eek $MSIX_ARTIFACT
     if ("$LASTEXITCODE" -gt '0' -or "$?" -eq 'False')
       {
@@ -400,7 +400,13 @@ if ($CI_COMMIT_TAG -notmatch 'GIMP_[0-9]*_[0-9]*_[0-9]*' -and $GIMP_CI_MS_STORE 
         exit 1
       }
     Copy-Item build\windows\store\pseudo-gimp*.pfx pseudo-gimp.pfx -Recurse
-    Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):msix_sign${msix_arch}$([char]13)$([char]27)[0K"
+
+    ## Generate checksums
+    $sha256 = (Get-FileHash $MSIX_ARTIFACT -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()
+    Write-Output "(INFO): $MSIX_ARTIFACT SHA-256: $sha256"
+    $sha512 = (Get-FileHash $MSIX_ARTIFACT -Algorithm SHA512 | Select-Object -ExpandProperty Hash).ToLower()
+    Write-Output "(INFO): $MSIX_ARTIFACT SHA-512: $sha512"
+    Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):msix_trust${msix_arch}$([char]13)$([char]27)[0K"
   }
 
 
@@ -413,20 +419,6 @@ if ($GITLAB_CI)
     if ($CI_COMMIT_TAG -notmatch 'GIMP_[0-9]*_[0-9]*_[0-9]*' -and $GIMP_CI_MS_STORE -notlike 'MSIXUPLOAD*' -and $MSIX_ARTIFACT -notlike "*msixupload")
       {
         Copy-Item pseudo-gimp.pfx $OUTPUT_DIR
-      }
-
-    # Generate checksums in common "sha*sum" format
-    if ($CI_COMMIT_TAG -match 'GIMP_[0-9]*_[0-9]*_[0-9]*')
-      {
-        Write-Output "(INFO): generating checksums for $MSIX_ARTIFACT"
-        # (We use .NET directly because 'sha*sum' does NOT support BOM from pre-PS6 'Set-Content')
-        $Utf8NoBomEncoding = New-Object -TypeName System.Text.UTF8Encoding -ArgumentList $False
-
-        [System.IO.File]::WriteAllText("$OUTPUT_DIR\$MSIX_ARTIFACT.SHA256SUMS", "$((Get-FileHash $OUTPUT_DIR\$MSIX_ARTIFACT -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()) *$MSIX_ARTIFACT", $Utf8NoBomEncoding)
-        #Set-Content $OUTPUT_DIR\$MSIX_ARTIFACT.SHA256SUMS "$((Get-FileHash $OUTPUT_DIR\$MSIX_ARTIFACT -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()) *$MSIX_ARTIFACT" -Encoding utf8NoBOM -NoNewline
-
-        [System.IO.File]::WriteAllText("$OUTPUT_DIR\$MSIX_ARTIFACT.SHA512SUMS", "$((Get-FileHash $OUTPUT_DIR\$MSIX_ARTIFACT -Algorithm SHA512 | Select-Object -ExpandProperty Hash).ToLower()) *$MSIX_ARTIFACT", $Utf8NoBomEncoding)
-        #Set-Content $OUTPUT_DIR\$MSIX_ARTIFACT.SHA512SUMS "$((Get-FileHash $OUTPUT_DIR\$MSIX_ARTIFACT -Algorithm SHA512 | Select-Object -ExpandProperty Hash).ToLower()) *$MSIX_ARTIFACT" -Encoding utf8NoBOM -NoNewline
       }
   }
 

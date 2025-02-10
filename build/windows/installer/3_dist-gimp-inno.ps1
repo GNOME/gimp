@@ -233,7 +233,6 @@ if ("$LASTEXITCODE" -gt '0' -or "$?" -eq 'False')
 Set-Location $GIMP_BASE
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_making$([char]13)$([char]27)[0K"
 
-
 # Clean changes in the bundles and Inno installation
 ## Revert revisioning
 foreach ($bundle in $supported_archs)
@@ -251,22 +250,31 @@ Move-Item "$twain_list_file.bak" $twain_list_file
 Remove-Item "$INNO_PATH\Languages\Unofficial" -Recurse -Force
 
 
+# 6. GENERATE CHECKSUMS IN GNU FORMAT
+Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):installer_trust[collapsed=true]$([char]13)$([char]27)[0KChecksumming $INSTALLER"
+## (We use .NET directly because 'sha*sum' does NOT support BOM from pre-PS6 'Set-Content')
+$Utf8NoBomEncoding = New-Object -TypeName System.Text.UTF8Encoding -ArgumentList $False
+$sha256 = (Get-FileHash $INSTALLER -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()
+if ($CI_COMMIT_TAG)
+  {
+    [System.IO.File]::WriteAllText("$GIMP_BASE\$INSTALLER.SHA256SUMS", "$sha256 *$INSTALLER", $Utf8NoBomEncoding)
+    #Set-Content $INSTALLER.SHA256SUMS "$sha256 *$INSTALLER" -Encoding utf8NoBOM -NoNewline
+  }
+Write-Output "(INFO): $INSTALLER SHA-256: $sha256"
+$sha512 = (Get-FileHash $INSTALLER -Algorithm SHA512 | Select-Object -ExpandProperty Hash).ToLower()
+if ($CI_COMMIT_TAG)
+  {
+    [System.IO.File]::WriteAllText("$GIMP_BASE\$INSTALLER.SHA512SUMS", "$sha512 *$INSTALLER", $Utf8NoBomEncoding)
+    #Set-Content $INSTALLER.SHA512SUMS "$sha512 *$INSTALLER" -Encoding utf8NoBOM -NoNewline
+  }
+Write-Output "(INFO): $INSTALLER SHA-512: $sha512"
+Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_trust$([char]13)$([char]27)[0K"
+
+
 if ($GITLAB_CI)
   {
     # GitLab doesn't support wildcards when using "expose_as" so let's move to a dir
     $output_dir = "$GIMP_BASE\build\windows\installer\_Output"
     New-Item $output_dir -ItemType Directory | Out-Null
-    Move-Item $GIMP_BASE\$INSTALLER $output_dir
-
-    # Generate checksums in common "sha*sum" format
-    if ($CI_COMMIT_TAG)
-      {
-        Write-Output "(INFO): generating checksums for $INSTALLER"
-        # (We use .NET directly because 'sha*sum' does NOT support BOM from pre-PS6 'Set-Content')
-        $Utf8NoBomEncoding = New-Object -TypeName System.Text.UTF8Encoding -ArgumentList $False
-        [System.IO.File]::WriteAllText("$output_dir\$INSTALLER.SHA256SUMS", "$((Get-FileHash $output_dir\$INSTALLER -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()) *$INSTALLER", $Utf8NoBomEncoding)
-        #Set-Content $output_dir\$INSTALLER.SHA256SUMS "$((Get-FileHash $output_dir\$INSTALLER -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()) *$INSTALLER" -Encoding utf8NoBOM -NoNewline
-        [System.IO.File]::WriteAllText("$output_dir\$INSTALLER.SHA512SUMS", "$((Get-FileHash $output_dir\$INSTALLER -Algorithm SHA512 | Select-Object -ExpandProperty Hash).ToLower()) *$INSTALLER", $Utf8NoBomEncoding)
-        #Set-Content $output_dir\$INSTALLER.SHA512SUMS "$((Get-FileHash $output_dir\$INSTALLER -Algorithm SHA512 | Select-Object -ExpandProperty Hash).ToLower()) *$INSTALLER" -Encoding utf8NoBOM -NoNewline
-      }
+    Move-Item $GIMP_BASE\$INSTALLER* $output_dir
   }

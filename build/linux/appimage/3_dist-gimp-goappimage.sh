@@ -430,17 +430,25 @@ file "./$APPIMAGETOOL_APP_NAME"
 #if [ "$CI_COMMIT_TAG" = "$(git describe --all | sed 's|tags/||')" ]; then
 #  mv ${APPIMAGETOOL_APP_NAME}.zsync GIMP-${CHANNEL}-${ARCH}.AppImage.zsync
 #fi
+echo -e "\e[0Ksection_end:`date +%s`:${ARCH}_making\r\e[0K"
+
+
+# 6. GENERATE SHASUMS
+echo -e "\e[0Ksection_start:`date +%s`:${ARCH}_trust[collapsed=true]\r\e[0KChecksumming $APPIMAGETOOL_APP_NAME"
+if [ "$CI_COMMIT_TAG" = "$(git describe --all | sed 's|tags/||')" ]; then
+  sha256sum $APPIMAGETOOL_APP_NAME > $APPIMAGETOOL_APP_NAME.SHA256SUMS
+fi
+echo "(INFO): $APPIMAGETOOL_APP_NAME SHA-256: $(sha256sum $APPIMAGETOOL_APP_NAME | cut -d ' ' -f 1)"
+if [ "$CI_COMMIT_TAG" = "$(git describe --all | sed 's|tags/||')" ]; then
+  sha512sum $APPIMAGETOOL_APP_NAME > $APPIMAGETOOL_APP_NAME.SHA512SUMS
+fi
+echo "(INFO): $APPIMAGETOOL_APP_NAME SHA-512: $(sha512sum $APPIMAGETOOL_APP_NAME | cut -d ' ' -f 1)"
+echo -e "\e[0Ksection_end:`date +%s`:${ARCH}_trust\r\e[0K"
+
 
 if [ "$GITLAB_CI" ]; then
   output_dir='build/linux/appimage/_Output'
   mkdir -p $output_dir
   mv GIMP*.AppImage* $output_dir
-
-  if [ "$CI_COMMIT_TAG" = "$(git describe --all | sed 's|tags/||')" ]; then
-    echo "(INFO): generating checksums for $APPIMAGETOOL_APP_NAME"
-    sha256sum $output_dir/$APPIMAGETOOL_APP_NAME > $output_dir/$APPIMAGETOOL_APP_NAME.SHA256SUMS
-    sha512sum $output_dir/$APPIMAGETOOL_APP_NAME > $output_dir/$APPIMAGETOOL_APP_NAME.SHA512SUMS
-  fi
 fi
-echo -e "\e[0Ksection_end:`date +%s`:${ARCH}_making\r\e[0K"
 done
