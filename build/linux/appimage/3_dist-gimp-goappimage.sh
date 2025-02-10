@@ -25,7 +25,7 @@ if [ -f "*appimagetool*.AppImage" ]; then
 fi
 if [ "$GITLAB_CI" ]; then
   apt-get update >/dev/null 2>&1
-  apt-get install -y --no-install-recommends ca-certificates wget curl git >/dev/null 2>&1
+  apt-get install -y --no-install-recommends ca-certificates wget curl >/dev/null 2>&1
 fi
 export HOST_ARCH=$(uname -m)
 export APPIMAGE_EXTRACT_AND_RUN=1
@@ -86,19 +86,29 @@ if [ ! -f "$BUILD_DIR/config.h" ]; then
   exit 1
 fi
 
-## Get info about GIMP version
-GIMP_VERSION=$(grep GIMP_VERSION $BUILD_DIR/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
-GIMP_APP_VERSION=$(grep GIMP_APP_VERSION $BUILD_DIR/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
+## Figure out if GIMP is unstable
 grep -q '#define GIMP_UNSTABLE' $BUILD_DIR/config.h && export GIMP_UNSTABLE=1
-if [ "$CI_COMMIT_TAG" != "$(git describe --all | sed 's|tags/||')" ] && [ "$GIMP_UNSTABLE" ] || [[ "$GIMP_VERSION" =~ 'git' ]]; then
+grep -q '#define GIMP_RC_VERSION' $BUILD_DIR/config.h && export GIMP_RC_VERSION=1
+grep -q '#define GIMP_IS_RC_GIT' $BUILD_DIR/config.h && export GIMP_IS_RC_GIT=1
+grep -q '#define GIMP_RELEASE' $BUILD_DIR/config.h && export GIMP_RELEASE=1
+
+## Set proper AppImage update channel and App ID
+if [ -z "$GIMP_RELEASE" ] && [ "$GIMP_UNSTABLE" ] || [ "$GIMP_IS_RC_GIT" ]; then
   export CHANNEL="Continuous"
-elif [ "$CI_COMMIT_TAG" = "$(git describe --all | sed 's|tags/||')" ] && [ "$GIMP_UNSTABLE" ] || [[ "$GIMP_VERSION" =~ 'RC' ]]; then
+elif [ "$GIMP_RELEASE" ] && [ "$GIMP_UNSTABLE" ] || [ "$GIMP_RC_VERSION" ]; then
   export CHANNEL="Pre"
 else
   export CHANNEL="Stable"
 fi
 export APP_ID="org.gimp.GIMP.$CHANNEL"
-echo "(INFO): App ID: $APP_ID | Version: $GIMP_VERSION"
+
+## Get info about GIMP version
+GIMP_VERSION=$(grep GIMP_VERSION $BUILD_DIR/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
+GIMP_APP_VERSION=$(grep GIMP_APP_VERSION $BUILD_DIR/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
+if [[ "$GIMP_CI_APPIMAGE" =~ [1-9] ]] && [ "$CI_PIPELINE_SOURCE" != 'schedule' ]; then
+  export REVISION="-$GIMP_CI_APPIMAGE"
+fi
+echo "(INFO): App ID: $APP_ID | Version: ${GIMP_VERSION}${REVISION}"
 echo -e "\e[0Ksection_end:`date +%s`:apmg_info\r\e[0K"
 
 
@@ -418,16 +428,16 @@ echo -e "\e[0Ksection_end:`date +%s`:${ARCH}_source\r\e[0K"
 
 
 # 5. CONSTRUCT .APPIMAGE
-APPIMAGETOOL_APP_NAME="GIMP-${GIMP_VERSION}-${ARCH}.AppImage"
+APPIMAGETOOL_APP_NAME="GIMP-${GIMP_VERSION}${REVISION}-${ARCH}.AppImage"
 echo -e "\e[0Ksection_start:`date +%s`:${ARCH}_making[collapsed=true]\r\e[0KSquashing $APPIMAGETOOL_APP_NAME"
 #updateinformation is not compatible with our server. See: https://github.com/AppImage/appimagetool/issues/91
-#if [ "$CI_COMMIT_TAG" = "$(git describe --all | sed 's|tags/||')" ]; then
+#if [ "$GIMP_RELEASE" ] && [ -z "$GIMP_IS_RC_GIT" ]; then
 #  update_info="--updateinformation zsync|https://download.gimp.org/gimp/v{$GIMP_APP_VERSION}/linux/GIMP-${CHANNEL}-${ARCH}.AppImage.zsync"
 #fi
 "./$standard_appimagetool" $APP_DIR $APPIMAGETOOL_APP_NAME --exclude-file appimageignore-$ARCH \
                                                            --runtime-file runtime-$ARCH $update_info
 file "./$APPIMAGETOOL_APP_NAME"
-#if [ "$CI_COMMIT_TAG" = "$(git describe --all | sed 's|tags/||')" ]; then
+#if [ "$GIMP_RELEASE" ] && [ -z "$GIMP_IS_RC_GIT" ]; then
 #  mv ${APPIMAGETOOL_APP_NAME}.zsync GIMP-${CHANNEL}-${ARCH}.AppImage.zsync
 #fi
 echo -e "\e[0Ksection_end:`date +%s`:${ARCH}_making\r\e[0K"
@@ -435,11 +445,11 @@ echo -e "\e[0Ksection_end:`date +%s`:${ARCH}_making\r\e[0K"
 
 # 6. GENERATE SHASUMS
 echo -e "\e[0Ksection_start:`date +%s`:${ARCH}_trust[collapsed=true]\r\e[0KChecksumming $APPIMAGETOOL_APP_NAME"
-if [ "$CI_COMMIT_TAG" = "$(git describe --all | sed 's|tags/||')" ]; then
+if [ "$GIMP_RELEASE" ] && [ -z "$GIMP_IS_RC_GIT" ]; then
   sha256sum $APPIMAGETOOL_APP_NAME > $APPIMAGETOOL_APP_NAME.SHA256SUMS
 fi
 echo "(INFO): $APPIMAGETOOL_APP_NAME SHA-256: $(sha256sum $APPIMAGETOOL_APP_NAME | cut -d ' ' -f 1)"
-if [ "$CI_COMMIT_TAG" = "$(git describe --all | sed 's|tags/||')" ]; then
+if [ "$GIMP_RELEASE" ] && [ -z "$GIMP_IS_RC_GIT" ]; then
   sha512sum $APPIMAGETOOL_APP_NAME > $APPIMAGETOOL_APP_NAME.SHA512SUMS
 fi
 echo "(INFO): $APPIMAGETOOL_APP_NAME SHA-512: $(sha512sum $APPIMAGETOOL_APP_NAME | cut -d ' ' -f 1)"

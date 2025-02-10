@@ -64,6 +64,10 @@ if (-not (Test-Path "$CONFIG_PATH"))
     exit 1
   }
 
+## Figure out if a release is being done
+if (Get-Content "$CONFIG_PATH" | Select-String '#define GIMP_IS_RC_GIT') { $GIMP_IS_RC_GIT='1' }
+if (Get-Content "$CONFIG_PATH" | Select-String '#define GIMP_RELEASE') { $GIMP_RELEASE='1' }
+
 ## Get CUSTOM_GIMP_VERSION (GIMP version as we display for users in installer)
 $CUSTOM_GIMP_VERSION = Get-Content "$CONFIG_PATH"                               | Select-String 'GIMP_VERSION'        |
                        Foreach-Object {$_ -replace '#define GIMP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
@@ -255,14 +259,14 @@ Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0)
 ## (We use .NET directly because 'sha*sum' does NOT support BOM from pre-PS6 'Set-Content')
 $Utf8NoBomEncoding = New-Object -TypeName System.Text.UTF8Encoding -ArgumentList $False
 $sha256 = (Get-FileHash $INSTALLER -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()
-if ($CI_COMMIT_TAG)
+if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)
   {
     [System.IO.File]::WriteAllText("$GIMP_BASE\$INSTALLER.SHA256SUMS", "$sha256 *$INSTALLER", $Utf8NoBomEncoding)
     #Set-Content $INSTALLER.SHA256SUMS "$sha256 *$INSTALLER" -Encoding utf8NoBOM -NoNewline
   }
 Write-Output "(INFO): $INSTALLER SHA-256: $sha256"
 $sha512 = (Get-FileHash $INSTALLER -Algorithm SHA512 | Select-Object -ExpandProperty Hash).ToLower()
-if ($CI_COMMIT_TAG)
+if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)
   {
     [System.IO.File]::WriteAllText("$GIMP_BASE\$INSTALLER.SHA512SUMS", "$sha512 *$INSTALLER", $Utf8NoBomEncoding)
     #Set-Content $INSTALLER.SHA512SUMS "$sha512 *$INSTALLER" -Encoding utf8NoBOM -NoNewline
