@@ -5593,7 +5593,7 @@ msgstr "Fjern fargprofilen for biletet"
 #: app/actions/image-actions.c:85
 msgctxt "image-action"
 msgid "_Soft-proof Profile..."
-msgstr "Vel –fargeprofil for utskriftssimuleringa …"
+msgstr "Vel fargeprofil for utskriftssimuleringa …"
 
 #: app/actions/image-actions.c:86
 msgctxt "image-action"
