@@ -2467,35 +2467,45 @@ gimp_item_tree_view_effects_filters_selected (GimpContainerView  *view,
       item_view->priv->effects_drawable &&
       GIMP_IS_DRAWABLE (item_view->priv->effects_drawable))
     {
-      GimpDrawableFilter *filter = filters->data;
+      GimpDrawableFilter *filter;
       GimpContainer      *container;
-      gint                index;
+      gint                index = -1;
       gint                n_children;
-      gboolean            is_tool_op = FALSE;
+      gboolean            is_blocked_op = FALSE;
       GeglNode           *op_node    = NULL;
 
-      item_view->priv->effects_filter = filter;
+      /* Don't set floating selection as active filter */
+      if (GIMP_IS_DRAWABLE_FILTER (filters->data))
+        {
+          filter = filters->data;
 
-      container =
-        gimp_drawable_get_filters (GIMP_DRAWABLE (item_view->priv->effects_drawable));
+          item_view->priv->effects_filter = filter;
 
-      index = gimp_container_get_child_index (container,
-                                              GIMP_OBJECT (filter));
+          container =
+            gimp_drawable_get_filters (GIMP_DRAWABLE (item_view->priv->effects_drawable));
 
-      n_children = gimp_container_get_n_children (container);
+          index = gimp_container_get_child_index (container,
+                                                  GIMP_OBJECT (filter));
 
-      /* TODO: For now, prevent raising/lowering tool operations like Warp. */
-      op_node = gimp_drawable_filter_get_operation (filter);
-      if (op_node &&
-          ! strcmp (gegl_node_get_operation (op_node), "GraphNode"))
-        is_tool_op = TRUE;
+          n_children = gimp_container_get_n_children (container);
+
+          /* TODO: For now, prevent raising/lowering tool operations like Warp. */
+          op_node = gimp_drawable_filter_get_operation (filter);
+          if (op_node &&
+              ! strcmp (gegl_node_get_operation (op_node), "GraphNode"))
+            is_blocked_op = TRUE;
+        }
+      else
+        {
+          is_blocked_op = TRUE;
+        }
 
       gtk_widget_set_sensitive (item_view->priv->effects_remove_button,
-                                ! is_tool_op);
+                                ! is_blocked_op);
       gtk_widget_set_sensitive (item_view->priv->effects_raise_button,
-                                (index != 0) && ! is_tool_op);
+                                (index != 0) && ! is_blocked_op);
       gtk_widget_set_sensitive (item_view->priv->effects_lower_button,
-                                (index != n_children - 1) && ! is_tool_op);
+                                (index != n_children - 1) && ! is_blocked_op);
     }
 
   return TRUE;
@@ -2771,6 +2781,11 @@ gimp_item_tree_view_effects_lowered_clicked (GtkWidget        *widget,
 
       if (index < gimp_container_get_n_children (filters))
         {
+          /* Don't rearrange filters with floating selection */
+          if (! GIMP_IS_DRAWABLE_FILTER (
+                  gimp_container_get_child_by_index (filters, index)))
+            return;
+
           gimp_image_undo_push_filter_reorder (image, _("Reorder filter"),
                                                drawable,
                                                view->priv->effects_filter);
