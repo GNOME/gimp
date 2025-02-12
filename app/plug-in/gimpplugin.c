@@ -107,10 +107,6 @@ static gboolean   gimp_plug_in_write         (GIOChannel   *channel,
 static gboolean   gimp_plug_in_flush         (GIOChannel   *channel,
                                               gpointer      data);
 
-#ifdef __APPLE__
-static gboolean   gimp_plug_in_should_recv_message (GimpPlugIn *plug_in);
-#endif
-
 #if defined G_OS_WIN32 && defined WIN32_32BIT_DLL_FOLDER
 static void       gimp_plug_in_set_dll_directory (const gchar *path);
 #endif
@@ -202,12 +198,6 @@ gimp_plug_in_recv_message (GIOChannel   *channel,
 
   if (plug_in->my_read == NULL)
     return TRUE;
-
-#ifdef __APPLE__
-  /* Workaround for #12711 */
-  if (! gimp_plug_in_should_recv_message (plug_in))
-    return TRUE;
-#endif
 
   g_object_ref (plug_in);
 
@@ -346,60 +336,6 @@ gimp_plug_in_flush (GIOChannel *channel,
 
   return TRUE;
 }
-
-#ifdef __APPLE__
-
-/* Is self in a state where the remote plugin process
- * should be sending msgs to core on self's read pipe?
- *
- * This is only necessary for #12711,
- * where spurious IO events are sent when the pipe is empty
- * i.e. no actual msg to receive.
- * This might not be correct for any other use.
- * Upstream bug: https://gitlab.gnome.org/GNOME/glib/-/issues/3454
- *
- * Self is-a plugin facade in core to a remote plugin process.
- * Is self:
- *    - to a persistent plugin
- *    - has called the main proc of the remote
- *    - not waiting for the remote persistent plugin to ack ready
- *    - has called no temporary procs of the remote
- * Typically facade to plugin script-fu with main proc extension-script-fu.
- * Then the plugin should not be sending messages.
- * A persistent plugin remote process after it has acked "ready"
- * should only send messages when self has called
- * a temporary proc and that proc is RPC'ing back a different PDB proc, a "run" msg,
- * or when the temporary proc completes, sending a "return" msg.
- */
-static gboolean
-gimp_plug_in_should_recv_message (GimpPlugIn *plug_in)
-{
-  /* Plugin is persistent when its main proc has type PERSISTENT.
-   * Plugin has acked ready when ext_main_loop is NULL.
-   * Self has not called a remote temporary procedure when self's stack
-   * (actually a list) of temporary procedure calls frames is empty.
-   */
-  if ((plug_in->ext_main_loop == NULL) &&
-      (plug_in->main_proc_frame.procedure != NULL) &&
-      (plug_in->main_proc_frame.procedure->proc_type == GIMP_PDB_PROC_TYPE_PERSISTENT) &&
-      (plug_in->temp_proc_frames == NULL))
-    {
-      g_debug ("%s persistent plugin %s in idle but ready state",
-               G_STRFUNC, gimp_object_get_name (plug_in->main_proc_frame.procedure));
-      return FALSE;
-    }
-  else
-    {
-      /* The remote process is not persistent,
-       * or is persistent but not ready,
-       * or is persistent and ready and one of its temp procs was called.
-       * Can expect remote process to send msgs: a new RPC from the remote
-       * or a return from an RPC to the remote.
-       */
-      return TRUE;
-    }
-}
-#endif
 
 #if defined G_OS_WIN32 && defined WIN32_32BIT_DLL_FOLDER
 static void
