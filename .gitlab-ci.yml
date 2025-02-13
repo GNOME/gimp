@@ -240,7 +240,7 @@ deps-debian:
       fi
     - git clone $gegl_branch --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git
     - cd gegl
-    - meson setup _build-${RUNNER} -Dprefix="${GIMP_PREFIX}" -Dworkshop=true
+    - meson setup _build-${RUNNER} -Dprefix="${GIMP_PREFIX}" $WORKSHOP_OPTION
     - cd _build-${RUNNER}
     - ninja
     - ninja install
@@ -324,7 +324,9 @@ deps-debian-x64:
   extends: .debian-x64
   needs: ["image-debian-x64"]
   stage: !reference [deps-debian, stage]
-  variables: !reference [deps-debian, variables]
+  variables:
+    GIT_STRATEGY: none
+    WORKSHOP_OPTION: '-Dworkshop=true'
   script:
     - !reference [deps-debian, script]
   artifacts: !reference [deps-debian, artifacts]
