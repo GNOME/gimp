@@ -50,9 +50,15 @@ static void
 export_merge (GimpImage  *image,
               GList     **drawables)
 {
-  GList  *layers;
-  GList  *iter;
-  gint32  nvisible = 0;
+  GList     *layers;
+  GList     *iter;
+  GimpLayer *floating_sel;
+  gint32     nvisible = 0;
+
+  /* Convert floating selection to layer if it exists */
+  floating_sel = gimp_image_get_floating_sel (image);
+  if (floating_sel)
+    gimp_floating_sel_to_layer (floating_sel);
 
   layers = gimp_image_list_layers (image);
 
