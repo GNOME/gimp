@@ -750,7 +750,7 @@ gimp_procedure_get_proc_type (GimpProcedure *procedure)
  *
  * This is a comma separated list of image types, or actually drawable
  * types, that this procedure can deal with. Wildcards are possible
- * here, so you could say "RGB*" instead of "RGB, RGBA" or "*" for all
+ * here, so you could say "RGB\*" instead of "RGB, RGBA" or "\*" for all
  * image types.
  *
  * Supported types are "RGB", "GRAY", "INDEXED" and their variants
