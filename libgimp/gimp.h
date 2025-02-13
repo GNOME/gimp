@@ -99,6 +99,9 @@ G_BEGIN_DECLS
  *
  * at the toplevel of your file. No semicolon should be used.
  *
+ * Non-C plug-ins won't have this function and should use
+ * [func@Gimp.main] instead.
+ *
  * Since: 3.0
  **/
 
