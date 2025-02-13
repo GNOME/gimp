@@ -802,9 +802,10 @@ gimp_procedure_get_image_types (GimpProcedure *procedure)
 /**
  * gimp_procedure_set_sensitivity_mask:
  * @procedure:        A #GimpProcedure.
- * @sensitivity_mask: A binary mask of #GimpProcedureSensitivityMask.
+ * @sensitivity_mask: A binary mask of [flags@Gimp.ProcedureSensitivityMask].
  *
- * Sets the case when @procedure is supposed to be sensitive or not.
+ * Sets the cases when @procedure is supposed to be sensitive or not.
+ *
  * Note that it will be used by the core to determine whether to show a
  * procedure as sensitive (hence forbid running it otherwise), yet it
  * will not forbid thid-party plug-ins for instance to run manually your
@@ -818,8 +819,8 @@ gimp_procedure_get_image_types (GimpProcedure *procedure)
  *
  * Note that by default, a procedure works on an image with a single
  * drawable selected. Hence not setting the mask, setting it with 0 or
- * setting it with a mask of %GIMP_PROCEDURE_SENSITIVE_DRAWABLE only are
- * equivalent.
+ * setting it with [flags@Gimp.ProcedureSensitivityMask.DRAWABLE] only
+ * are equivalent.
  *
  * Since: 3.0
  **/
