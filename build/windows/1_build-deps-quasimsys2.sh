@@ -54,7 +54,7 @@ echo ${MSYSTEM_PREFIX^^} > quasi-msys2/msystem.txt
 deps=$(cat ${GIMP_DIR}build/windows/all-deps-uni.txt | sed 's/toolchain/clang/g' |
        sed "s/\${MINGW_PACKAGE_PREFIX}-/_/g"         | sed 's/\\//g')
 cd quasi-msys2
-make install _clang $deps || $true
+make install $deps || make install $deps
 cd ..
 sudo ln -nfs "$PWD/quasi-msys2/root/$MSYSTEM_PREFIX" /$MSYSTEM_PREFIX
 
