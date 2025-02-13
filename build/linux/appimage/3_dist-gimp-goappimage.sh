@@ -430,16 +430,19 @@ echo -e "\e[0Ksection_end:`date +%s`:${ARCH}_source\r\e[0K"
 # 5. CONSTRUCT .APPIMAGE
 APPIMAGETOOL_APP_NAME="GIMP-${GIMP_VERSION}${REVISION}-${ARCH}.AppImage"
 echo -e "\e[0Ksection_start:`date +%s`:${ARCH}_making[collapsed=true]\r\e[0KSquashing $APPIMAGETOOL_APP_NAME"
-#updateinformation is not compatible with our server. See: https://github.com/AppImage/appimagetool/issues/91
-#if [ "$GIMP_RELEASE" ] && [ -z "$GIMP_IS_RC_GIT" ]; then
-#  update_info="--updateinformation zsync|https://download.gimp.org/gimp/v{$GIMP_APP_VERSION}/linux/GIMP-${CHANNEL}-${ARCH}.AppImage.zsync"
-#fi
+if [ "$GIMP_RELEASE" ] && [ -z "$GIMP_IS_RC_GIT" ]; then
+  update_info="--updateinformation zsync|https://download.gimp.org/gimp/GIMP-${CHANNEL}-${ARCH}.AppImage.zsync"
+fi
 "./$standard_appimagetool" $APP_DIR $APPIMAGETOOL_APP_NAME --exclude-file appimageignore-$ARCH \
                                                            --runtime-file runtime-$ARCH $update_info
 file "./$APPIMAGETOOL_APP_NAME"
-#if [ "$GIMP_RELEASE" ] && [ -z "$GIMP_IS_RC_GIT" ]; then
-#  mv ${APPIMAGETOOL_APP_NAME}.zsync GIMP-${CHANNEL}-${ARCH}.AppImage.zsync
-#fi
+#updateinformation is not compatible with our server. See: https://github.com/AppImage/appimagetool/issues/91
+if [ -f "${APPIMAGETOOL_APP_NAME}.zsync" ]; then
+  before=$(cat "$APPIMAGETOOL_APP_NAME.zsync" | grep -a "URL: ")
+  after=$(cat "$APPIMAGETOOL_APP_NAME.zsync" | grep -a "URL: " | sed "s|$APPIMAGETOOL_APP_NAME|v$GIMP_APP_VERSION/linux/$APPIMAGETOOL_APP_NAME|")
+  sed -i "s|$before|$after|" "$APPIMAGETOOL_APP_NAME.zsync" >/dev/null 2>&1
+  mv ${APPIMAGETOOL_APP_NAME}.zsync GIMP-${CHANNEL}-${ARCH}.AppImage.zsync
+fi
 echo -e "\e[0Ksection_end:`date +%s`:${ARCH}_making\r\e[0K"
 
 
