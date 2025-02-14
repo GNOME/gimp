@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI translations master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-02-03 15:11+0000\n"
+"POT-Creation-Date: 2025-02-09 16:27+0000\n"
 "PO-Revision-Date: 2025-02-03 18:44+0300\n"
 "Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
@@ -130,13 +130,13 @@ msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
-"GIMP özgür yazılımdır, Özgür Yazılım Vakfı'nın yayınladığı GNU Genel Kamu "
-"Lisansı'nın 3. veya daha sonraki sürümlerindeki şartlar altında "
+"GIMP özgür yazılımdır, Özgür Yazılım Vakfının yayınladığı GNU Genel Kamu "
+"Lisansı’nın 3. ya da daha sonraki sürümlerindeki koşullar altında "
 "dağıtılabilir ve/veya değiştirilebilir. \n"
 "\n"
-"GIMP faydalı olacağı umut edilerek dağıtılmaktadır, fakat HİÇBİR GARANTİSİ "
+"GIMP yararlı olacağı umut edilerek dağıtılmaktadır, ancak HİÇBİR GARANTİSİ "
 "YOKTUR; hatta ÜRÜN DEĞERİ ya da BİR AMACA UYGUNLUK gibi garantiler de "
-"vermez. Lütfen daha çok ayrıntı için GNU Genel Kamu Lisansı'nı inceleyin. \n"
+"vermez. Lütfen daha çok ayrıntı için GNU Genel Kamu Lisansı’nı inceleyin. \n"
 "\n"
 "GIMP ile beraber GNU Genel Kamu Lisansını da almış olmalısınız; eğer "
 "almadıysanız, https://www.gnu.org/licenses/ adresine bakın."
@@ -218,19 +218,19 @@ msgstr "Özel işlemci hızlandırma işlevleri kullanma"
 
 #: app/main.c:216
 msgid "Use an alternate sessionrc file"
-msgstr "Başka bir sessionrc dosyası kullan"
+msgstr "Başka sessionrc dosyası kullan"
 
 #: app/main.c:221
 msgid "Use an alternate user gimprc file"
-msgstr "Başka bir kullanıcının gimprc dosyasını kullan"
+msgstr "Başka kullanıcının gimprc dosyasını kullan"
 
 #: app/main.c:226
 msgid "Use an alternate system gimprc file"
-msgstr "Başka bir sistem gimprc dosyası kullan"
+msgstr "Başka sistem gimprc dosyası kullan"
 
 #: app/main.c:231
 msgid "Batch command to run (can be used multiple times)"
-msgstr "Çalıştırılacak toplu komut (birçok defa kullanılabilir)"
+msgstr "Çalıştırılacak toplu komut (birçok kez kullanılabilir)"
 
 #: app/main.c:236
 msgid "The procedure to process batch commands with"
@@ -13973,8 +13973,8 @@ msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Yüzen Seçimi Kaldır"
 
-#: app/core/gimpimage.c:5352 app/pdb/drawable-filter-cmds.c:674
-#: app/widgets/gimpitemtreeview.c:2868
+#: app/core/gimpimage.c:5352 app/pdb/drawable-filter-cmds.c:681
+#: app/widgets/gimpitemtreeview.c:2864
 msgid "Remove filter"
 msgstr "Etkiyi kaldır"
 
@@ -14215,7 +14215,7 @@ msgstr "Görünmez katman aşağı birleştirilemez."
 msgid "Cannot merge down to a layer group."
 msgstr "Katman kümesi aşağı birleştirilemez."
 
-#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2831
+#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2830
 msgid "The layer to merge down to is locked."
 msgstr "Birleştirilecek katman kilitli."
 
@@ -15250,7 +15250,7 @@ msgstr "GIMP Hakkında"
 
 #: app/dialogs/about-dialog.c:165
 msgid "Visit the GIMP website"
-msgstr "GIMP web sitesini ziyaret edin"
+msgstr "GIMP web sitesine git"
 
 #. Translators: insert your names here,
 #. separated by newline
@@ -15273,7 +15273,7 @@ msgstr "Güncelleme var!"
 #: app/dialogs/about-dialog.c:421
 #, c-format
 msgid "Download GIMP %s revision %d (released on %s)\n"
-msgstr "GIMP %s revizyon %d (%s tarihinde yayınlandı) indir\n"
+msgstr "GIMP %s revizyon %d (%s tarihli) indir\n"
 
 #. Translators: <> tags are Pango markup. Please keep these
 #. * markups in your translation.
@@ -15303,7 +15303,7 @@ msgstr "Son denetim: %s %s"
 
 #: app/dialogs/about-dialog.c:730
 msgid "GIMP is brought to you by"
-msgstr "GIMP’i sizlere sunanlar"
+msgstr "GIMP’i size sunanlar"
 
 #: app/dialogs/about-dialog.c:805
 #, c-format
@@ -15312,7 +15312,7 @@ msgid ""
 "commit %s"
 msgstr ""
 "Bu, kararsız bir geliştirme sürümüdür\n"
-"commit %s"
+"%s işlemesi"
 
 #: app/dialogs/action-search-dialog.c:68
 msgid "Search Actions"
@@ -18695,10 +18695,10 @@ msgid ""
 msgstr ""
 "<big>Kararsız Geliştirme Sürümü</big>\n"
 "\n"
-"<small>commit <tt>%s</tt></small>\n"
+"<small><tt>%s</tt> işlemesi</small>\n"
 "\n"
-"<small>Lütfen bu sürüm ile ilgili hataları bildirmeden önce\n"
-"git master dalını en son hali ile inşa edin.</small>"
+"<small>Lütfen bu sürümle ilgili hataları bildirmeden önce\n"
+"git master dalını en son haliyle inşa edin.</small>"
 
 #: app/display/gimpdisplayshell-close.c:170
 #: app/display/gimpdisplayshell-close.c:268
@@ -20345,7 +20345,7 @@ msgid "Turn colors into shades of gray"
 msgstr "Renkleri gri tonlara dönüştür"
 
 #: app/operations/gimpoperationdesaturate.c:91
-#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1445
+#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1449
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
 #: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:281
@@ -20390,7 +20390,7 @@ msgstr "Kısmi saydamlığı bir renk ile değiştir"
 msgid "The color"
 msgstr "Renk"
 
-#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1408
+#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1412
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:109
 #: app/tools/gimptransformoptions.c:262
 msgid "Clipping"
@@ -20923,7 +20923,7 @@ msgstr "Sabit"
 msgid "Combine Masks"
 msgstr "Maskeleri Birleştir"
 
-#: app/pdb/drawable-cmds.c:655 app/tools/gimpfiltertool.c:1332
+#: app/pdb/drawable-cmds.c:655 app/tools/gimpfiltertool.c:1336
 msgid "Add filter"
 msgstr "Süzgeç ekle"
 
@@ -22478,7 +22478,7 @@ msgstr "Eşik"
 #: app/tools/gimpbucketfilloptions.c:211 app/tools/gimpbucketfilloptions.c:233
 #: app/tools/gimpregionselectoptions.c:114
 msgid "Maximum color difference"
-msgstr "En fazla renk farklılığı"
+msgstr "Azami renk farklılığı"
 
 #: app/tools/gimpbucketfilloptions.c:218
 msgid "Source image for line art computation"
@@ -23227,21 +23227,21 @@ msgid "%s: switch horizontal and vertical"
 msgstr "%s: yatay ve dikey arasında geçiş yap"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1421
+#: app/tools/gimpfiltertool.c:1425
 msgid "Blending Options"
 msgstr "Harmanlama Seçenekleri"
 
-#: app/tools/gimpfiltertool.c:1923 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1931 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "'%s' Ayarlarını İçe Aktar"
 
-#: app/tools/gimpfiltertool.c:1925 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1933 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "'%s' Ayarlarını Dışa Aktar"
 
-#: app/tools/gimpfiltertool.c:2163
+#: app/tools/gimpfiltertool.c:2171
 msgid "Editing filter..."
 msgstr "Süzgeç düzenleme..."
 
@@ -25283,11 +25283,9 @@ msgstr "Seçili yolun konumu kilitli."
 msgid "The selected path has no strokes."
 msgstr "Seçili yol darbe içermiyor."
 
-# Anlama kolaylığı için current kelimesi burada farklı çevirildi
-# Alternatif çeviri: Geçerli dönüşüm geçersiz
 #: app/tools/gimptransformtool.c:833
 msgid "The current transform is invalid"
-msgstr "Mevcut dönüşüm geçersiz"
+msgstr "Şu anki dönüşüm geçersiz"
 
 #: app/tools/gimpunifiedtransformtool.c:89
 msgid "Unified Transform"
@@ -27643,53 +27641,53 @@ msgstr "Düzenlenmekte olan süzgeç yeniden sıralanamaz."
 msgid "Reorder filter"
 msgstr "Etkiyi yeniden sırala"
 
-#: app/widgets/gimpitemtreeview.c:3394
+#: app/widgets/gimpitemtreeview.c:3390
 msgid "No layer set stored"
 msgstr "Depolanmış katman takımı yok"
 
-#: app/widgets/gimpitemtreeview.c:3416
+#: app/widgets/gimpitemtreeview.c:3412
 msgid "New layer set's name"
 msgstr "Yeni katman takımının adı"
 
-#: app/widgets/gimpitemtreeview.c:3458 app/widgets/gimpitemtreeview.c:3473
+#: app/widgets/gimpitemtreeview.c:3454 app/widgets/gimpitemtreeview.c:3469
 msgid "Select layers by text search"
 msgstr "Metin aramasıyla katmanları seç"
 
-#: app/widgets/gimpitemtreeview.c:3460 app/widgets/gimpitemtreeview.c:3475
+#: app/widgets/gimpitemtreeview.c:3456 app/widgets/gimpitemtreeview.c:3471
 msgid "Text search"
 msgstr "Metin ara"
 
-#: app/widgets/gimpitemtreeview.c:3479
+#: app/widgets/gimpitemtreeview.c:3475
 msgid "Select layers by glob patterns"
 msgstr "Glob örüntüleriyle katmanları seç"
 
-#: app/widgets/gimpitemtreeview.c:3481
+#: app/widgets/gimpitemtreeview.c:3477
 msgid "Glob pattern search"
 msgstr "Glob örüntü arama"
 
-#: app/widgets/gimpitemtreeview.c:3485
+#: app/widgets/gimpitemtreeview.c:3481
 msgid "Select layers by regular expressions"
 msgstr "Düzenli ifadelerle katmanları seç"
 
-#: app/widgets/gimpitemtreeview.c:3487
+#: app/widgets/gimpitemtreeview.c:3483
 msgid "Regular Expression search"
 msgstr "Düzenli İfade ara"
 
-#: app/widgets/gimpitemtreeview.c:3542
+#: app/widgets/gimpitemtreeview.c:3538
 msgid "search"
 msgstr "ara"
 
 # Glob burada program adı: https://man7.org/linux/man-pages/man7/glob.7.html
-#: app/widgets/gimpitemtreeview.c:3543
+#: app/widgets/gimpitemtreeview.c:3539
 msgid "glob"
 msgstr "glob"
 
 # Kurallı ifade programının adı, çevirmeyin!
-#: app/widgets/gimpitemtreeview.c:3543
+#: app/widgets/gimpitemtreeview.c:3539
 msgid "regexp"
 msgstr "regexp"
 
-#: app/widgets/gimpitemtreeview.c:3712
+#: app/widgets/gimpitemtreeview.c:3708
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "Geçersiz düzenli ifade: %s\n"
@@ -28633,8 +28631,8 @@ msgid ""
 "This should not happen. You should report the issue to the filter's "
 "developers."
 msgstr ""
-"XCF Uyarısı: \"%2$s\" süzgecinin %1$s sürümünde %3$s özelliği yok. "
-"Özellik göz ardı edildi ve süzgeç düzgün oluşturulamayabilir.\n"
+"XCF Uyarısı: \"%2$s\" süzgecinin %1$s sürümünde %3$s özelliği yok. Özellik "
+"göz ardı edildi ve süzgeç düzgün oluşturulamayabilir.\n"
 "Bu olmamalıydı. Sorunu süzgecin geliştiricilerine bildirmelisiniz."
 
 #: app/xcf/xcf-load.c:3497
@@ -28648,8 +28646,8 @@ msgid ""
 msgstr ""
 "XCF Uyarısı: '%2$s' süzgecinin '%1$s' sürümü desteklenmiyor. Süzgeç gözden "
 "çıkarıldı.\n"
-"Bu, süzgecin eski sürümünü kullandığınız ya da uygun sürüm yönetimi "
-"olmadan güncellendiği anlamına gelir. İkinci durumda, sorunu süzgecin "
+"Bu, süzgecin eski sürümünü kullandığınız ya da uygun sürüm yönetimi olmadan "
+"güncellendiği anlamına gelir. İkinci durumda, sorunu süzgecin "
 "geliştiricilerine bildirmelisiniz."
 
 #: app/xcf/xcf-read.c:195
