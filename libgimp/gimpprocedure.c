@@ -817,10 +817,10 @@ gimp_procedure_get_image_types (GimpProcedure *procedure)
  * a procedure with [method@Procedure.get_sensitivity_mask] when running
  * with dynamic contents.
  *
- * Note that by default, a procedure works on an image with a single
- * drawable selected. Hence not setting the mask, setting it with 0 or
- * setting it with [flags@Gimp.ProcedureSensitivityMask.DRAWABLE] only
- * are equivalent.
+ * Note that by default, a procedure works on an image with one or more
+ * drawables selected. Hence not setting the mask, setting it with 0 or
+ * setting it with `GIMP_PROCEDURE_SENSITIVE_DRAWABLE |
+ * GIMP_PROCEDURE_SENSITIVE_DRAWABLES` are equivalent.
  *
  * Since: 3.0
  **/

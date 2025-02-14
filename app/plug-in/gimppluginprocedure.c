@@ -142,7 +142,7 @@ gimp_plug_in_procedure_init (GimpPlugInProcedure *proc)
   GIMP_PROCEDURE (proc)->proc_type = GIMP_PDB_PROC_TYPE_PLUGIN;
 
   proc->icon_data_length = -1;
-  proc->sensitivity_mask = GIMP_PROCEDURE_SENSITIVE_DRAWABLE;
+  proc->sensitivity_mask = GIMP_PROCEDURE_SENSITIVE_DRAWABLE | GIMP_PROCEDURE_SENSITIVE_DRAWABLES;
 }
 
 static void
@@ -1101,7 +1101,7 @@ gimp_plug_in_procedure_set_sensitivity_mask (GimpPlugInProcedure *proc,
   g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
 
   if (sensitivity_mask == 0)
-    proc->sensitivity_mask = GIMP_PROCEDURE_SENSITIVE_DRAWABLE;
+    proc->sensitivity_mask = GIMP_PROCEDURE_SENSITIVE_DRAWABLE | GIMP_PROCEDURE_SENSITIVE_DRAWABLES;
   else
     proc->sensitivity_mask = sensitivity_mask;
 }
