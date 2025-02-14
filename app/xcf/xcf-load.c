@@ -1102,11 +1102,12 @@ xcf_load_add_effects (XcfInfo   *info,
                   gimp_drawable_filter_set_clip (filter, data->clip);
                   gimp_drawable_filter_set_region (filter, data->region);
 
-                  gimp_drawable_filter_apply (filter, NULL);
-
                   g_object_set (filter,
                                 "mask", data->mask,
                                 NULL);
+
+                  gimp_drawable_filter_apply_with_mask (filter, data->mask,
+                                                        NULL);
 
                   gimp_drawable_filter_commit (filter, TRUE, NULL, FALSE);
 
