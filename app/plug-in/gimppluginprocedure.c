@@ -142,6 +142,7 @@ gimp_plug_in_procedure_init (GimpPlugInProcedure *proc)
   GIMP_PROCEDURE (proc)->proc_type = GIMP_PDB_PROC_TYPE_PLUGIN;
 
   proc->icon_data_length = -1;
+  proc->sensitivity_mask = GIMP_PROCEDURE_SENSITIVE_DRAWABLE;
 }
 
 static void
@@ -318,37 +319,45 @@ gimp_plug_in_procedure_get_sensitive (GimpProcedure  *procedure,
       image_type = gimp_babl_format_get_image_type (format);
     }
 
-  switch (image_type)
+  if (proc->image_types_val)
     {
-    case GIMP_RGB_IMAGE:
-      sensitive = proc->image_types_val & GIMP_PLUG_IN_RGB_IMAGE;
-      break;
-    case GIMP_RGBA_IMAGE:
-      sensitive = proc->image_types_val & GIMP_PLUG_IN_RGBA_IMAGE;
-      break;
-    case GIMP_GRAY_IMAGE:
-      sensitive = proc->image_types_val & GIMP_PLUG_IN_GRAY_IMAGE;
-      break;
-    case GIMP_GRAYA_IMAGE:
-      sensitive = proc->image_types_val & GIMP_PLUG_IN_GRAYA_IMAGE;
-      break;
-    case GIMP_INDEXED_IMAGE:
-      sensitive = proc->image_types_val & GIMP_PLUG_IN_INDEXED_IMAGE;
-      break;
-    case GIMP_INDEXEDA_IMAGE:
-      sensitive = proc->image_types_val & GIMP_PLUG_IN_INDEXEDA_IMAGE;
-      break;
-    default:
-      break;
+      switch (image_type)
+        {
+        case GIMP_RGB_IMAGE:
+          sensitive = proc->image_types_val & GIMP_PLUG_IN_RGB_IMAGE;
+          break;
+        case GIMP_RGBA_IMAGE:
+          sensitive = proc->image_types_val & GIMP_PLUG_IN_RGBA_IMAGE;
+          break;
+        case GIMP_GRAY_IMAGE:
+          sensitive = proc->image_types_val & GIMP_PLUG_IN_GRAY_IMAGE;
+          break;
+        case GIMP_GRAYA_IMAGE:
+          sensitive = proc->image_types_val & GIMP_PLUG_IN_GRAYA_IMAGE;
+          break;
+        case GIMP_INDEXED_IMAGE:
+          sensitive = proc->image_types_val & GIMP_PLUG_IN_INDEXED_IMAGE;
+          break;
+        case GIMP_INDEXEDA_IMAGE:
+          sensitive = proc->image_types_val & GIMP_PLUG_IN_INDEXEDA_IMAGE;
+          break;
+        default:
+          sensitive = FALSE;
+          break;
+        }
+    }
+  else
+    {
+      sensitive = (image_type != -1);
     }
 
   if (! image &&
       (proc->sensitivity_mask & GIMP_PROCEDURE_SENSITIVE_NO_IMAGE) != 0)
     sensitive = TRUE;
-  else if (g_list_length (drawables) == 1 && proc->sensitivity_mask != 0 &&
+  else if (g_list_length (drawables) == 1 &&
            (proc->sensitivity_mask & GIMP_PROCEDURE_SENSITIVE_DRAWABLE) == 0)
     sensitive = FALSE;
-  else if (g_list_length (drawables) == 0 &&
+  else if (image && g_list_length (drawables) == 0 &&
            (proc->sensitivity_mask & GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES) == 0)
     sensitive = FALSE;
   else if (g_list_length (drawables) > 1 &&
@@ -1091,7 +1100,10 @@ gimp_plug_in_procedure_set_sensitivity_mask (GimpPlugInProcedure *proc,
 {
   g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
 
-  proc->sensitivity_mask = sensitivity_mask;
+  if (sensitivity_mask == 0)
+    proc->sensitivity_mask = GIMP_PROCEDURE_SENSITIVE_DRAWABLE;
+  else
+    proc->sensitivity_mask = sensitivity_mask;
 }
 
 static GSList *

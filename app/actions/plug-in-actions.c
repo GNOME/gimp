@@ -117,9 +117,7 @@ plug_in_actions_update (GimpActionGroup *group,
     {
       GimpPlugInProcedure *proc = list->data;
 
-      if (proc->menu_label  &&
-          ! proc->file_proc &&
-          proc->image_types_val)
+      if (proc->menu_label && ! proc->file_proc)
         {
           GimpProcedure *procedure = GIMP_PROCEDURE (proc);
           gboolean       sensitive;
