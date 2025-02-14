@@ -3,16 +3,16 @@
 # This file is distributed under the same license as the GIMP package.
 #
 # Muhammet Kara <muhammetk@gmail.com>, 2017.
-# Emin Tufan Çetin <etcetin@gmail.com>, 2018, 2022, 2024.
 # Sabri Ünal <yakushabb@gmail.com>, 2019, 2022, 2024.
+# Emin Tufan Çetin <etcetin@gmail.com>, 2018, 2022, 2024, 2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP windows installer master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-25 19:26+0000\n"
-"PO-Revision-Date: 2024-03-11 12:17+0300\n"
-"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
+"POT-Creation-Date: 2025-01-15 09:23+0000\n"
+"PO-Revision-Date: 2025-02-14 08:00+0300\n"
+"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -27,14 +27,14 @@ msgstr "Lisans Sözleşmesi"
 
 #: build/windows/installer/lang/setup.isl.xml.in:10
 msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
-msgstr "Kurulum; Jernej Simonèiè, jernej-gimp@ena.si tarafından inşa edildi"
+msgstr "Kurulum inşacısı: Jernej Simonèiè, jernej-gimp@ena.si"
 
 #: build/windows/installer/lang/setup.isl.xml.in:13
 #: build/windows/installer/lang/setup.isl.xml.in:16
 msgid ""
 "This version of GIMP requires Windows 10, or a newer version of Windows."
 msgstr ""
-"GIMP'in bu sürümü Windows 10 veya Windows'un daha yeni sürümünü gerektirir."
+"GIMP’in bu sürümü Windows 10 ya da Windows’un daha yeni sürümünü gerektirir."
 
 #: build/windows/installer/lang/setup.isl.xml.in:23
 msgid "Development version"
@@ -50,11 +50,11 @@ msgid ""
 "gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
 "installation anyway?"
 msgstr ""
-"Bu, GIMP'in bazı özelliklerinin bitmemiş veya kararsız olabileceği bir "
-"geliştirme sürümüdür.%nGIMP'in bu sürümü kararsız olabileceğinden günlük "
+"Bu, GIMP’in bazı özelliklerinin bitmemiş ya da kararsız olabileceği bir "
+"geliştirme sürümüdür.%nGIMP’in bu sürümü kararsız olabileceğinden günlük "
 "işlere yönelik değildir ve işinizi yitirebilirsiniz.%nEğer herhangi bir "
-"sorunla karşılaşırsanız, geliştiricilere başvurmadan veya GIMP gitlab'e "
-"bildirmeden önce sorunun GIT'te çözülmediğinden emin olun:%n_https://gitlab."
+"sorunla karşılaşırsanız, geliştiricilere başvurmadan ya da GIMP gitlab’e "
+"bildirmeden önce sorunun GIT’te çözülmediğinden emin olun:%n_https://gitlab."
 "gnome.org/GNOME/gimp/issues%n%nYine de kurulumu sürdürmek istiyor musunuz?"
 
 #: build/windows/installer/lang/setup.isl.xml.in:31
@@ -69,7 +69,7 @@ msgstr "Çık"
 #: build/windows/installer/lang/setup.isl.xml.in:44
 msgid ""
 "This version of GIMP requires a processor that supports SSE instructions."
-msgstr "GIMP'in bu sürümü SSE yönergelerini destekleyen işlemci gerektirir."
+msgstr "GIMP’in bu sürümü SSE yönergelerini destekleyen işlemci gerektirir."
 
 #: build/windows/installer/lang/setup.isl.xml.in:48
 msgid "Display settings problem"
@@ -82,9 +82,9 @@ msgid ""
 "it's recommended to change the display colour depth to 32BPP before "
 "continuing."
 msgstr ""
-"Kurulum, Windows'unuzun piksel başına 32 bit görüntü kipinde çalışmadığını "
+"Kurulum, Windows’unuzun piksel başına 32 bit görüntü kipinde çalışmadığını "
 "saptadı. Bunun GIMP ile kararlılık sorunları oluşturduğu bilinmektedir, "
-"sürdürmeden önce görüntü renk derinliğini 32BPP'ye geçirmeniz önerilir."
+"sürdürmeden önce görüntü renk derinliğini 32BPP’ye geçirmeniz önerilir."
 
 #: build/windows/installer/lang/setup.isl.xml.in:57
 msgid "E&xit"
@@ -97,7 +97,7 @@ msgid ""
 "have more control over what gets installed."
 msgstr ""
 "GIMP kuruluma hazır. Öntanımlı seçenekleri kullanarak kurmak için Kur "
-"düğmesine veya nelerin kurulacağıyla ilgili daha çoğunu denetlemek "
+"düğmesine ya da nelerin kurulacağıyla ilgili daha çoğunu denetlemek "
 "istiyorsanız Özelleştir düğmesine tıklayın."
 
 #: build/windows/installer/lang/setup.isl.xml.in:64
@@ -140,7 +140,7 @@ msgstr "Çalışma zamanı kütüphaneleri"
 msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
 msgstr ""
 "GIMP tarafından kullanılan çalışma zamanı kütüphaneleri, GTK Çalışma Zamanı "
-"Ortamı'nı içerir"
+"Ortamı’nı içerir"
 
 #: build/windows/installer/lang/setup.isl.xml.in:105
 msgid "Debug symbols"
@@ -185,7 +185,7 @@ msgstr "PostScript desteği"
 
 #: build/windows/installer/lang/setup.isl.xml.in:149
 msgid "Allow GIMP to load PostScript files"
-msgstr "GIMP'in PostScript dosyalarını yüklemesine izin ver"
+msgstr "GIMP’in PostScript dosyalarını yüklemesini sağla"
 
 #: build/windows/installer/lang/setup.isl.xml.in:153
 msgid "Support for 32-bit plug-ins"
@@ -221,7 +221,7 @@ msgid ""
 "loading the plug-ins, try uninstalling and re-installing GIMP."
 msgstr ""
 "%1 içindeki GIMP ortamı güncellenirken hata oldu. Eğer eklentileri yüklerken "
-"herhangi bir hata alırsanız, lütfen GIMP'i kaldırmayı ve yeniden kurmayı "
+"herhangi bir hata alırsanız, lütfen GIMP’i kaldırmayı ve yeniden kurmayı "
 "deneyin."
 
 #: build/windows/installer/lang/setup.isl.xml.in:183
@@ -242,7 +242,7 @@ msgstr "%1 güncellenirken hata."
 
 #: build/windows/installer/lang/setup.isl.xml.in:199
 msgid "There was an error updating GIMP's configuration file %1."
-msgstr "GIMP'in yapılandırma dosyası %1 güncellenirken hata."
+msgstr "GIMP’in yapılandırma dosyası %1 güncellenirken hata."
 
 #: build/windows/installer/lang/setup.isl.xml.in:204
 msgid "Edit with GIMP"
@@ -265,7 +265,7 @@ msgid ""
 "This will make selected files open in GIMP when you double-click them in "
 "Explorer."
 msgstr ""
-"Bu, seçili dosyaların Explorer'da çift tıkladığınızda GIMP ile açılmasını "
+"Bu, seçili dosyaların Explorer’da çift tıkladığınızda GIMP ile açılmasını "
 "sağlar."
 
 #: build/windows/installer/lang/setup.isl.xml.in:225
@@ -274,7 +274,7 @@ msgstr "&Tümünü Seç"
 
 #: build/windows/installer/lang/setup.isl.xml.in:229
 msgid "Unselect &All"
-msgstr "&Tümünün Seçimini Kaldır"
+msgstr "&Tüm Seçimini Kaldır"
 
 #: build/windows/installer/lang/setup.isl.xml.in:233
 msgid "Select &Unused"
@@ -286,7 +286,7 @@ msgstr "GIMP ile eşleştirilecek dosya türleri:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:242
 msgid "Removing previous version of GIMP:"
-msgstr "GIMP'in önceki sürümü kaldırılıyor:"
+msgstr "GIMP’in önceki sürümü kaldırılıyor:"
 
 # Folder: Komut satırında Dizin, Arayüzde Klasör
 #: build/windows/installer/lang/setup.isl.xml.in:246
@@ -299,7 +299,7 @@ msgid ""
 msgstr ""
 "GIMP %1, şu anda kurulu olan GIMP sürümünüz üzerine kurulamıyor ve eski "
 "sürümün kendiliğinden kaldırılması başarısız oldu.%n%nBu sürümü %2 içine "
-"kurmadan önce eski GIMP sürümünü kendiniz kaldırın veya Özel kurulumu ve "
+"kurmadan önce eski GIMP sürümünü kendiniz kaldırın ya da Özel kurulumu ve "
 "başka kurulum klasörü seçin.%n%nKurulum şimdi çıkacak."
 
 # Folder: Komut satırında Dizin, Arayüzde Klasör
@@ -314,7 +314,7 @@ msgstr ""
 "GIMP %1, şu anda kurulu olan GIMP sürümünüz üzerine kurulamıyor. Kurulum, "
 "eski sürümü nasıl kaldıracağını kendiliğinden saptayamıyor.%n%nBu sürümü %2 "
 "içine kurmadan önce tüm eklentileri ve önceki GIMP sürümünü kendiniz "
-"kaldırın veya Özel kurulumu ve başka kurulum klasörü seçin.%n%nKurulum şimdi "
+"kaldırın ya da Özel kurulumu ve başka kurulum klasörü seçin.%n%nKurulum şimdi "
 "çıkacak."
 
 #: build/windows/installer/lang/setup.isl.xml.in:254
@@ -324,7 +324,7 @@ msgid ""
 "Setup will continue next time an administrator logs in."
 msgstr ""
 "Önceki GIMP sürümü başarıyla kaldırıldı, ancak Kurulum sürmeden önce "
-"Windows'un yeniden başlatılması gerekiyor.%n%nBilgisayarınız yeniden "
+"Windows’un yeniden başlatılması gerekiyor.%n%nBilgisayarınız yeniden "
 "başladıktan sonra yönetici giriş yaptığında kurulum sürecek."
 
 #: build/windows/installer/lang/setup.isl.xml.in:259
@@ -337,11 +337,11 @@ msgstr "Eski dosyalar temizleniyor..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:268
 msgid "Remember: GIMP is Free Software.%n%nPlease visit"
-msgstr "Unutmayın: GIMP, Özgür Yazılımdır.%n%nÜcretsiz güncellemeler için"
+msgstr "Unutmayın: GIMP, Özgür Yazılımdır.%n%nÜcretsiz güncellemeler için lütfen"
 
 #: build/windows/installer/lang/setup.isl.xml.in:272
 msgid "for free updates."
-msgstr "adresini lütfen ziyaret edin."
+msgstr "adresini ziyaret edin."
 
 #: build/windows/installer/lang/setup.isl.xml.in:276
 msgid "Setting up file associations..."
@@ -365,7 +365,7 @@ msgstr "32-bit eklenti desteği için GIMP yapılandırması ayarlanıyor..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:293
 msgid "Launch GIMP"
-msgstr "GIMP'i başlat"
+msgstr "GIMP’i başlat"
 
 #: build/windows/installer/lang/setup.isl.xml.in:298
 msgid "Removing add-on"
