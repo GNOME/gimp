@@ -9,16 +9,16 @@
 # Alper Ersoy <aersoy@tfz.net>, 2001.
 # Muhammet Kara <muhammetk@gmail.com>, 2014.
 # Sabri Ünal <libreajans@gmail.com>, 2019, 2020, 2022.
-# Emin Tufan Çetin <etcetin@gmail.com>, 2019.
+# Emin Tufan Çetin <etcetin@gmail.com>, 2019, 2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-22 23:36+0000\n"
-"PO-Revision-Date: 2023-10-24 02:23+0300\n"
-"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
-"Language-Team: Türkçe <gnome-turk@gnome.org>\n"
+"POT-Creation-Date: 2025-02-10 23:25+0000\n"
+"PO-Revision-Date: 2025-02-14 08:00+0300\n"
+"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
+"Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -105,7 +105,7 @@ msgid ""
 "Please close all Script-Fu windows and try again."
 msgstr ""
 "Bir Script-Fu iletişim kutusu açıkken \"Betikleri Yenile\"yi "
-"kullanamazsınız. Lütfen bütün Script-Fu pencerelerini kapatın ve yeniden "
+"kullanamazsınız. Lütfen tüm Script-Fu pencerelerini kapatın ve yeniden "
 "deneyin."
 
 #: ../plug-ins/script-fu/script-fu-console.c:127
@@ -729,7 +729,7 @@ msgstr "AA ile Doldur"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:57
 msgid "_Erase Every Other Row..."
-msgstr "Öteki Bütün Satırları _Sil..."
+msgstr "Öteki Tüm Satırları _Sil..."
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:58
 msgid "Erase every other row or column"
@@ -874,7 +874,7 @@ msgstr "_Seçim Oluşturmak ve Kullanmak"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:166
 msgid "_[Table of Contents]"
-msgstr ""
+msgstr "_[İçerikler Tablosu]"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:206
 msgid "_Main Web Site"
@@ -1018,11 +1018,11 @@ msgstr "_Konum"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm:19
 msgid "_Remove all Guides"
-msgstr "Bütün Kılavuzları _Kaldır"
+msgstr "Tüm Kılavuzları _Kaldır"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm:20
 msgid "Remove all horizontal and vertical guides"
-msgstr "Bütün yatay ve dikey kılavuzları kaldır"
+msgstr "Tüm yatay ve dikey kılavuzları kaldır"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:117
 msgid "_Lava..."
