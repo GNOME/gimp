@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-02-09 17:11+0000\n"
+"POT-Creation-Date: 2025-02-14 06:10+0000\n"
 "PO-Revision-Date: 2025-02-14 08:00+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
@@ -994,6 +994,10 @@ msgid ""
 "of a parameter file is passed as the 4th arg. You can control CML_explorer "
 "via parameter file."
 msgstr ""
+"Coupled-Map Lattice’nin resmini yap. CML, süregelen (değer) alanda "
+"bir tür hücresel otomattır. GIMP_RUN_NONINTERACTIVE içinde, parametre "
+"dosyasının adı 4. argüman olarak geçirilir. CML_explorer’ı parametre "
+"dosyasıyla denetleyebilirsiniz."
 
 #: plug-ins/common/cml-explorer.c:535
 msgid "Parameter File"
@@ -1849,6 +1853,17 @@ msgid ""
 "handled layer. This plug-in sets the offsets of the handled layer to keep "
 "its center at the same position."
 msgstr ""
+"Bu eklenti aktif katmanı büker. Eğer geçerli seçim varsa, bu kayan noktalı "
+"seçime kopyalanır ve curve_bend bozunumu kayan noktalı seçiminde gerçeklenir. "
+"Eğer work_on_copy parameter parametresi TRUE (doğru) ise, curve_bend bozunumu "
+"aktif katmanın (ya da kayan noktalı seçimi) kopyasında gerçeklenir. "
+"En üst ve en alt köşeler 2 spline eğrisi biçiminde bükülür. Her iki "
+"(en üst ve en alt) eğri 17 noktaya ya da curve_type == 1 (serbest el kipi) ise "
+"256 Y-Değerine dek saptanır. Eğer rotation (döndürme) 0 değilse, katman önce "
+"döndürülür ve bükme işleminden sonra geri döndürülür. Bu, dikey dışında diğer "
+"yönlerde bükmeyi sağlar. Bükme, genellikle ele alınan katmanın boyutunu "
+"değiştirir. Bu eklenti, ele alınan katmanı kendi merkezinde aynı konumda tutmak "
+"için ofsetleri belirler."
 
 #: plug-ins/common/curve-bend.c:425
 msgid "Rotat_e"
@@ -4340,8 +4355,8 @@ msgid ""
 "cousin of PostScript."
 msgstr ""
 "Dosyaları Adobe Taşınabilir Belge Biçiminde kaydeder. PDF, türlü "
-"platformlarca kolayca işlenecek biçimde tasarlanmıştır ve "
-"PostScriptʼin uzak bir türevidir."
+"platformlarca kolayca işlenecek biçimde tasarlanmıştır ve PostScriptʼin uzak "
+"bir türevidir."
 
 #: plug-ins/common/file-pdf-export.c:337 plug-ins/common/file-pdf-load.c:214
 msgid "PDF"
@@ -5151,8 +5166,8 @@ msgid ""
 "If enabled, aspect ratio will be maintained on export. Otherwise, the width "
 "and height values will be used."
 msgstr ""
-"Etkinleştirilirse, dışa aktarma sırasında en boy oranı korunur. Diğer durumlarda "
-", genişlik ve yükseklik değerleri kullanılır."
+"Etkinleştirilirse, dışa aktarma sırasında en boy oranı korunur. Diğer "
+"durumlarda , genişlik ve yükseklik değerleri kullanılır."
 
 #: plug-ins/common/file-ps.c:566 plug-ins/map-object/map-object-ui.c:739
 msgid "Rotation"
@@ -5751,6 +5766,11 @@ msgid ""
 "earth relief. Therefore you will likely want to remap elevation to colors as "
 "a second step, for instance with the \"Gradient Map\" plug-in."
 msgstr ""
+"Shuttle Radar Topography Mission’dan HGT biçimindeki Digital Elevation Model "
+"verisini resim olarak yükle. Çıktı resmi RGB olacaktır ancak öntanımlı olarak "
+"tüm renkler gri tonlamalıdır ve çoğu dünya rölyefinde karşıtlık epey düşük "
+"olacaktır. Bu nedenle ikinci adım olarak yüksekliği renklere yeniden eşlemek "
+"isteyebilirsiniz, örneğin \"Renk Geçişi Eşlemi\" eklentisini kullanabilirsiniz."
 
 #: plug-ins/common/file-raw-data.c:469
 msgid "Sa_mple spacing"
@@ -6319,6 +6339,8 @@ msgid ""
 "Loads only first frame of X11 Mouse Cursor's animation sequence which "
 "nominal size is the closest of thumb-size to be used as a thumbnail"
 msgstr ""
+"X11 Fare İmleci animasyon kesitinin yalnızca ilk karesini yükler; bu kare, "
+"küçük resim olarak kullanılmak için nominal boyutu küçük boyuta en yakın olanıdır."
 
 #: plug-ins/common/file-xmc.c:354
 msgid "Exports files of X11 cursor file"
@@ -6583,6 +6605,11 @@ msgid ""
 "instead. XPM supports colored images, unlike the XBM format which XPM was "
 "designed to replace."
 msgstr ""
+"XPM (X11 Pixmap) biçimindeki dosyaları yükler. XPM, C kaynak kodunda "
+"içerilmesi için tasarlanmış taşınabilir resim biçimidir. XLib, bu biçimi "
+"okumak için araç işlevlerini sağlar. Yine de, yeni kodlar gdk-pixbuf-csource "
+"kullanmalıdır. XBM biçiminin yerini alması için tasarlanan XPM, öncülünün tersine "
+"renkli resimleri destekler."
 
 #: plug-ins/common/file-xpm.c:236
 msgid "Export files in XPM (X11 Pixmap) format."
@@ -6596,6 +6623,11 @@ msgid ""
 "instead. XPM supports colored images, unlike the XBM format which XPM was "
 "designed to replace."
 msgstr ""
+"Dosyaları XPM (X11 Pixmap) biçiminde dışa aktar. XPM, C kaynak kodunda "
+"içerilmesi için tasarlanmış taşınabilir resim biçimidir. XLib, bu biçimi "
+"okumak için araç işlevlerini sağlar. Yine de, yeni kodlar gdk-pixbuf-csource "
+"kullanmalıdır. XBM biçiminin yerini alması için tasarlanan XPM, öncülünün tersine "
+"renkli resimleri destekler."
 
 #: plug-ins/common/file-xpm.c:254
 msgid "XPM"
@@ -10001,8 +10033,8 @@ msgid ""
 "Photoshop does not support indexed images that have more than one layer. "
 "Layers will be merged on export."
 msgstr ""
-"Photoshop birden çok katmanlı indeksli görüntüleri desteklemez. "
-"Katmanlar dışa aktarma sırasında birleştirilecek."
+"Photoshop birden çok katmanlı indeksli görüntüleri desteklemez. Katmanlar "
+"dışa aktarma sırasında birleştirilecek."
 
 #: plug-ins/file-psd/psd-export.c:2695 plug-ins/file-psd/psd-load.c:3818
 msgid "Compatibility Notice"
@@ -10487,6 +10519,8 @@ msgid ""
 "Loads files of the Tag Image File Format (TIFF) and its 64-bit offsets "
 "variant (BigTIFF)"
 msgstr ""
+"Tag Image File Format (TIFF) dosyalarını ve 64 bit ofset değişkelerini (BigTIFF) "
+"yükler"
 
 #: plug-ins/file-tiff/file-tiff.c:199
 msgid "_Keep empty space around imported layers"
@@ -10501,6 +10535,8 @@ msgid ""
 "Exports files in the Tag Image File Format (TIFF) or its 64-bit offsets "
 "variant (BigTIFF) able to support much bigger file sizes"
 msgstr ""
+"Dosyaları Tag Image File Format (TIFF) ya da daha büyük dosya boyutlarını destekleyen "
+"64 bit ofset değişkesi (BigTIFF) olarak dışa aktarır"
 
 #: plug-ins/file-tiff/file-tiff.c:226
 msgid "TIFF"
@@ -10508,14 +10544,14 @@ msgstr "TIFF"
 
 #: plug-ins/file-tiff/file-tiff.c:238
 msgid "Export in _BigTIFF variant file format"
-msgstr "Görüntüyü _BigTIFF varyant dosyası biçiminde dışa aktar"
+msgstr "Görüntüyü _BigTIFF değişke dosyası biçiminde dışa aktar"
 
 #: plug-ins/file-tiff/file-tiff.c:239
 msgid ""
 "The BigTIFF variant file format uses 64-bit offsets, hence supporting over "
 "4GiB files and bigger"
 msgstr ""
-"BigTIFF türev dosya biçimi 64 bitlik ofsetler kullanır, dolayısıyla 4GiB ve "
+"BigTIFF değişke dosya biçimi 64 bitlik ofsetler kullanır, dolayısıyla 4GiB ve "
 "daha büyük dosyaları destekler"
 
 #: plug-ins/file-tiff/file-tiff.c:245
@@ -12706,7 +12742,7 @@ msgstr "Özgün görüntüye geri döndür"
 
 #: plug-ins/gimpressionist/size.c:107
 msgid "Size variants:"
-msgstr "Boyut değişkeni:"
+msgstr "Boyut değişkeleri:"
 
 #: plug-ins/gimpressionist/size.c:109
 msgid "The number of sizes of brushes to use"
@@ -15380,6 +15416,7 @@ msgstr "Ebeveynin pencere tutamacı"
 msgid ""
 "The opaque handle of the window to set this plug-in's dialog transient to"
 msgstr ""
+"Bu eklentinin iletişim penceresi geçişini belirleyecek pencerenin mat tutamacı"
 
 #: plug-ins/metadata/metadata-editor.c:1178
 #, c-format
