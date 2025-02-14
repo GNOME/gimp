@@ -276,6 +276,7 @@ foreach ($bundle in $supported_archs)
         $APPXSYM = "${IDENTITY_NAME}_${CUSTOM_GIMP_VERSION}_$msix_arch.appxsym"
         #if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)
         #  {
+        #    Write-Output "(INFO): putting .pdb symbols into $APPXSYM"
         #    Get-ChildItem $msix_arch -Filter *.pdb -Recurse |
         #    Compress-Archive -DestinationPath "${IDENTITY_NAME}_${CUSTOM_GIMP_VERSION}_$msix_arch.zip"
         #    Get-ChildItem *.zip | Rename-Item -NewName $APPXSYM
@@ -315,6 +316,7 @@ if (((Test-Path $a64_bundle) -and (Test-Path $x64_bundle)) -and (Get-ChildItem *
     ## Make .msixupload (ONLY FOR RELEASES)
     if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)
       {
+        Write-Output "(INFO): creating $MSIXUPLOAD for submission"
         Get-ChildItem *.msixbundle | ForEach-Object { Compress-Archive -Path "$($_.Basename).msixbundle" -DestinationPath "$($_.Basename).zip" }
         Get-ChildItem *.zip | Rename-Item -NewName $MSIXUPLOAD
         #Get-ChildItem *.appxsym | Remove-Item -Recurse -Force
