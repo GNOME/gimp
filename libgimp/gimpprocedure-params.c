@@ -35,7 +35,7 @@
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @value:       the default value.
  * @flags:       argument flags.
  *
@@ -61,7 +61,7 @@ gimp_procedure_add_boolean_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @value:       the default value.
  * @flags:       argument flags.
  *
@@ -87,7 +87,7 @@ gimp_procedure_add_boolean_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @value:       the default value.
  * @flags:       argument flags.
  *
@@ -113,7 +113,7 @@ gimp_procedure_add_boolean_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @min:         the minimum value for this argument
  * @max:         the maximum value for this argument
  * @value:       the default value.
@@ -144,7 +144,7 @@ gimp_procedure_add_int_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @min:         the minimum value for this argument
  * @max:         the maximum value for this argument
  * @value:       the default value.
@@ -175,7 +175,7 @@ gimp_procedure_add_int_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @min:         the minimum value for this argument
  * @max:         the maximum value for this argument
  * @value:       the default value.
@@ -206,7 +206,7 @@ gimp_procedure_add_int_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @min:         the minimum value for this argument
  * @max:         the maximum value for this argument
  * @value:       the default value.
@@ -237,7 +237,7 @@ gimp_procedure_add_uint_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @min:         the minimum value for this argument
  * @max:         the maximum value for this argument
  * @value:       the default value.
@@ -268,7 +268,7 @@ gimp_procedure_add_uint_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @min:         the minimum value for this argument
  * @max:         the maximum value for this argument
  * @value:       the default value.
@@ -299,7 +299,7 @@ gimp_procedure_add_uint_return_value (GimpProcedure *procedure,
  * @procedure:    the #GimpProcedure.
  * @name:         the name of the argument to be created.
  * @nick:         the label used in #GimpProcedureDialog.
- * @blurb:        a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @show_pixels:  whether to allow pixels as a valid option
  * @show_percent: whether to allow percent as a valid option
  * @value:        the default value.
@@ -330,7 +330,7 @@ gimp_procedure_add_unit_argument (GimpProcedure *procedure,
  * @procedure:    the #GimpProcedure.
  * @name:         the name of the argument to be created.
  * @nick:         the label used in #GimpProcedureDialog.
- * @blurb:        a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @show_pixels:  whether to allow pixels as a valid option
  * @show_percent: whether to allow percent as a valid option
  * @value:        the default value.
@@ -361,7 +361,7 @@ gimp_procedure_add_unit_aux_argument (GimpProcedure *procedure,
  * @procedure:    the #GimpProcedure.
  * @name:         the name of the argument to be created.
  * @nick:         the label used in #GimpProcedureDialog.
- * @blurb:        a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @show_pixels:  whether to allow pixels as a valid option
  * @show_percent: whether to allow percent as a valid option
  * @value:        the default value.
@@ -392,7 +392,7 @@ gimp_procedure_add_unit_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @min:         the minimum value for this argument
  * @max:         the maximum value for this argument
  * @value:       the default value.
@@ -423,7 +423,7 @@ gimp_procedure_add_double_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @min:         the minimum value for this argument
  * @max:         the maximum value for this argument
  * @value:       the default value.
@@ -454,7 +454,7 @@ gimp_procedure_add_double_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @min:         the minimum value for this argument
  * @max:         the maximum value for this argument
  * @value:       the default value.
@@ -485,7 +485,7 @@ gimp_procedure_add_double_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @enum_type:   the #GType for this argument
  * @value:       the default value.
  * @flags:       argument flags.
@@ -514,7 +514,7 @@ gimp_procedure_add_enum_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @enum_type:   the #GType for this argument
  * @value:       the default value.
  * @flags:       argument flags.
@@ -543,7 +543,7 @@ gimp_procedure_add_enum_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @enum_type:   the #GType for this argument
  * @value:       the default value.
  * @flags:       argument flags.
@@ -572,7 +572,7 @@ gimp_procedure_add_enum_return_value (GimpProcedure *procedure,
  * @procedure:               the #GimpProcedure.
  * @name:                    the name of the argument to be created.
  * @nick:                    the label used in #GimpProcedureDialog.
- * @blurb:                   a more detailed help description.
+ * @blurb: (nullable):       a more detailed help description.
  * @choice: (transfer full): the #GimpChoice
  * @value:                   the default value for #GimpChoice.
  * @flags:                   argument flags.
@@ -600,7 +600,7 @@ gimp_procedure_add_choice_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @choice:      the #GimpChoice
  * @value:       the default value for #GimpChoice.
  * @flags:       argument flags.
@@ -628,7 +628,7 @@ gimp_procedure_add_choice_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @choice:      the #GimpChoice
  * @value:       the default value for #GimpChoice.
  * @flags:       argument flags.
@@ -656,7 +656,7 @@ gimp_procedure_add_choice_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @value:       the default value.
  * @flags:       argument flags.
  *
@@ -682,7 +682,7 @@ gimp_procedure_add_string_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @value:       the default value.
  * @flags:       argument flags.
  *
@@ -708,7 +708,7 @@ gimp_procedure_add_string_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @value:       the default value.
  * @flags:       argument flags.
  *
@@ -734,7 +734,7 @@ gimp_procedure_add_string_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @has_alpha:   whether the argument has transparency.
  * @value:       the default #GeglColor value.
  * @flags:       argument flags.
@@ -762,7 +762,7 @@ gimp_procedure_add_color_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @has_alpha:   whether the argument has transparency.
  * @value:       the default #GeglColor value.
  * @flags:       argument flags.
@@ -790,7 +790,7 @@ gimp_procedure_add_color_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @has_alpha:   whether the argument has transparency.
  * @value:       the default #GeglColor value.
  * @flags:       argument flags.
@@ -818,7 +818,7 @@ gimp_procedure_add_color_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @has_alpha:   whether the argument has transparency.
  * @value:       the default #GeglColor value.
  * @flags:       argument flags.
@@ -847,7 +847,7 @@ gimp_procedure_add_color_from_string_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @has_alpha:   whether the argument has transparency.
  * @value:       the default #GeglColor value.
  * @flags:       argument flags.
@@ -876,7 +876,7 @@ gimp_procedure_add_color_from_string_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @has_alpha:   whether the argument has transparency.
  * @value:       the default #GeglColor value.
  * @flags:       argument flags.
@@ -905,7 +905,7 @@ gimp_procedure_add_color_from_string_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @flags:       argument flags.
  *
  * Add a new #GimpParasite argument to @procedure.
@@ -929,7 +929,7 @@ gimp_procedure_add_parasite_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @flags:       argument flags.
  *
  * Add a new #GimpParasite auxiliary argument to @procedure.
@@ -953,7 +953,7 @@ gimp_procedure_add_parasite_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @flags:       argument flags.
  *
  * Add a new #GimpParasite return value to @procedure.
@@ -977,7 +977,7 @@ gimp_procedure_add_parasite_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @param_type:  the #GPParamType for this argument
  * @flags:       argument flags.
  *
@@ -1003,7 +1003,7 @@ gimp_procedure_add_param_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @param_type:  the #GPParamType for this argument
  * @flags:       argument flags.
  *
@@ -1029,7 +1029,7 @@ gimp_procedure_add_param_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @param_type:  the #GPParamType for this argument
  * @flags:       argument flags.
  *
@@ -1055,7 +1055,7 @@ gimp_procedure_add_param_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @flags:       argument flags.
  *
  * Add a new #GBytes argument to @procedure.
@@ -1079,7 +1079,7 @@ gimp_procedure_add_bytes_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @flags:       argument flags.
  *
  * Add a new #GBytes auxiliary argument to @procedure.
@@ -1103,7 +1103,7 @@ gimp_procedure_add_bytes_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @flags:       argument flags.
  *
  * Add a new #GBytes return value to @procedure.
@@ -1127,7 +1127,7 @@ gimp_procedure_add_bytes_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @flags:       argument flags.
  *
  * Add a new integer array argument to @procedure.
@@ -1151,7 +1151,7 @@ gimp_procedure_add_int32_array_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @flags:       argument flags.
  *
  * Add a new integer array auxiliary argument to @procedure.
@@ -1175,7 +1175,7 @@ gimp_procedure_add_int32_array_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @flags:       argument flags.
  *
  * Add a new integer array return value to @procedure.
@@ -1199,7 +1199,7 @@ gimp_procedure_add_int32_array_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @flags:       argument flags.
  *
  * Add a new double array argument to @procedure.
@@ -1223,7 +1223,7 @@ gimp_procedure_add_double_array_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @flags:       argument flags.
  *
  * Add a new double array auxiliary argument to @procedure.
@@ -1247,7 +1247,7 @@ gimp_procedure_add_double_array_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @flags:       argument flags.
  *
  * Add a new double array return value to @procedure.
@@ -1271,7 +1271,7 @@ gimp_procedure_add_double_array_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @flags:       argument flags.
  *
  * Add a new string array argument to @procedure.
@@ -1295,7 +1295,7 @@ gimp_procedure_add_string_array_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @flags:       argument flags.
  *
  * Add a new string array auxiliary argument to @procedure.
@@ -1319,7 +1319,7 @@ gimp_procedure_add_string_array_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @flags:       argument flags.
  *
  * Add a new string array return value to @procedure.
@@ -1343,7 +1343,7 @@ gimp_procedure_add_string_array_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @object_type  the type of object stored in the array
  * @flags:       argument flags.
  *
@@ -1369,7 +1369,7 @@ gimp_procedure_add_core_object_array_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @object_type  the type of object stored in the array
  * @flags:       argument flags.
  *
@@ -1395,7 +1395,7 @@ gimp_procedure_add_core_object_array_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @object_type  the type of object stored in the array
  * @flags:       argument flags.
  *
@@ -1421,7 +1421,7 @@ gimp_procedure_add_core_object_array_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -1447,7 +1447,7 @@ gimp_procedure_add_display_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -1473,7 +1473,7 @@ gimp_procedure_add_display_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -1499,7 +1499,7 @@ gimp_procedure_add_display_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -1525,7 +1525,7 @@ gimp_procedure_add_image_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -1551,7 +1551,7 @@ gimp_procedure_add_image_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -1577,7 +1577,7 @@ gimp_procedure_add_image_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -1603,7 +1603,7 @@ gimp_procedure_add_item_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -1629,7 +1629,7 @@ gimp_procedure_add_item_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -1655,7 +1655,7 @@ gimp_procedure_add_item_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -1681,7 +1681,7 @@ gimp_procedure_add_drawable_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -1707,7 +1707,7 @@ gimp_procedure_add_drawable_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -1733,7 +1733,7 @@ gimp_procedure_add_drawable_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -1759,7 +1759,7 @@ gimp_procedure_add_layer_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -1785,7 +1785,7 @@ gimp_procedure_add_layer_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -1811,7 +1811,7 @@ gimp_procedure_add_layer_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -1837,7 +1837,7 @@ gimp_procedure_add_text_layer_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -1863,7 +1863,7 @@ gimp_procedure_add_text_layer_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -1889,7 +1889,7 @@ gimp_procedure_add_text_layer_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -1915,7 +1915,7 @@ gimp_procedure_add_group_layer_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -1941,7 +1941,7 @@ gimp_procedure_add_group_layer_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -1967,7 +1967,7 @@ gimp_procedure_add_group_layer_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -1993,7 +1993,7 @@ gimp_procedure_add_channel_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -2019,7 +2019,7 @@ gimp_procedure_add_channel_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -2045,7 +2045,7 @@ gimp_procedure_add_channel_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -2071,7 +2071,7 @@ gimp_procedure_add_layer_mask_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -2097,7 +2097,7 @@ gimp_procedure_add_layer_mask_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -2123,7 +2123,7 @@ gimp_procedure_add_layer_mask_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -2149,7 +2149,7 @@ gimp_procedure_add_selection_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -2175,7 +2175,7 @@ gimp_procedure_add_selection_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -2201,7 +2201,7 @@ gimp_procedure_add_selection_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -2227,7 +2227,7 @@ gimp_procedure_add_path_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -2253,7 +2253,7 @@ gimp_procedure_add_path_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
@@ -2279,7 +2279,7 @@ gimp_procedure_add_path_return_value (GimpProcedure *procedure,
  * @procedure:     The #GimpProcedure.
  * @name:          The name of the argument to be created.
  * @nick:          The label used in #GimpProcedureDialog.
- * @blurb:         A more detailed help description.
+ * @blurb: (nullable): A more detailed help description.
  * @action:        The type of file to expect.
  * @none_ok:       Whether %NULL is allowed.
  * @default_file: (nullable): File to use if none is assigned.
@@ -2310,7 +2310,7 @@ gimp_procedure_add_file_argument (GimpProcedure         *procedure,
  * @procedure:    The #GimpProcedure.
  * @name:         The name of the argument to be created.
  * @nick:         The label used in #GimpProcedureDialog.
- * @blurb:        A more detailed help description.
+ * @blurb: (nullable): A more detailed help description.
  * @action:       The type of file to expect.
  * @none_ok:      Whether %NULL is allowed.
  * @default_file: (nullable): File to use if none is assigned.
@@ -2341,7 +2341,7 @@ gimp_procedure_add_file_aux_argument (GimpProcedure         *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @flags:       argument flags.
  *
  * Add a new #GFile return value to @procedure.
@@ -2366,7 +2366,7 @@ gimp_procedure_add_file_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     whether %NULL is a valid value.
  * @default_value: (nullable): default value.
  * @flags:       argument flags.
@@ -2398,7 +2398,7 @@ gimp_procedure_add_resource_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @default_value: (nullable): default value.
  * @flags:       argument flags.
  *
@@ -2428,7 +2428,7 @@ gimp_procedure_add_resource_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @flags:       argument flags.
  *
  * Add a new #GimpResource return value to @procedure.
@@ -2453,7 +2453,7 @@ gimp_procedure_add_resource_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     whether %NULL is a valid value.
  * @default_value: (nullable): default value
  * @default_to_context: Use the context's brush as default value.
@@ -2486,7 +2486,7 @@ gimp_procedure_add_brush_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @default_value: (nullable): default value
  * @default_to_context: Use the context's brush as default value.
  * @flags:       argument flags.
@@ -2517,7 +2517,7 @@ gimp_procedure_add_brush_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @flags:       argument flags.
  *
  * Add a new #GimpBrush return value to @procedure.
@@ -2541,7 +2541,7 @@ gimp_procedure_add_brush_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     whether %NULL is a valid value.
  * @default_value: (nullable): default value
  * @default_to_context: Use the context's font as default value.
@@ -2574,7 +2574,7 @@ gimp_procedure_add_font_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @default_value: (nullable): default value
  * @default_to_context: Use the context's font as default value.
  * @flags:       argument flags.
@@ -2605,7 +2605,7 @@ gimp_procedure_add_font_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @flags:       argument flags.
  *
  * Add a new #GimpFont return value to @procedure.
@@ -2629,7 +2629,7 @@ gimp_procedure_add_font_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     whether %NULL is a valid value.
  * @default_value: (nullable): default value
  * @default_to_context: Use the context's gradient as default value.
@@ -2662,7 +2662,7 @@ gimp_procedure_add_gradient_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @default_value: (nullable): default value
  * @default_to_context: Use the context's gradient as default value.
  * @flags:       argument flags.
@@ -2693,7 +2693,7 @@ gimp_procedure_add_gradient_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @flags:       argument flags.
  *
  * Add a new #GimpGradient return value to @procedure.
@@ -2717,7 +2717,7 @@ gimp_procedure_add_gradient_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     whether %NULL is a valid value.
  * @default_value: (nullable): default value
  * @default_to_context: Use the context's palette as default value.
@@ -2750,7 +2750,7 @@ gimp_procedure_add_palette_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @default_value: (nullable): default value
  * @default_to_context: Use the context's palette as default value.
  * @flags:       argument flags.
@@ -2781,7 +2781,7 @@ gimp_procedure_add_palette_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @flags:       argument flags.
  *
  * Add a new #GimpPalette return value to @procedure.
@@ -2805,7 +2805,7 @@ gimp_procedure_add_palette_return_value (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @none_ok:     whether %NULL is a valid value.
  * @default_value: (nullable): default value
  * @default_to_context: Use the context's pattern as default value.
@@ -2838,7 +2838,7 @@ gimp_procedure_add_pattern_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @default_value: (nullable): default value
  * @default_to_context: Use the context's pattern as default value.
  * @flags:       argument flags.
@@ -2869,7 +2869,7 @@ gimp_procedure_add_pattern_aux_argument (GimpProcedure *procedure,
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
- * @blurb:       a more detailed help description.
+ * @blurb: (nullable): a more detailed help description.
  * @flags:       argument flags.
  *
  * Add a new #GimpPattern return value to @procedure.
