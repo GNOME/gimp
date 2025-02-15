@@ -345,7 +345,7 @@ HELP
           desc => 'The text layer' },
         { name => 'font_size', type => '0.0 <= double <= 8192.0',
           desc => 'The font size' },
-        { name => 'unit', type => 'unit',
+        { name => 'unit', type => 'unit', allow_pixel => 1,
           desc => 'The unit to use for the font size' }
     );
 
