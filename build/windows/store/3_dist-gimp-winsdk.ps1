@@ -159,13 +159,13 @@ foreach ($bundle in $supported_archs)
         Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):${msix_arch}_making[collapsed=true]$([char]13)$([char]27)[0KMaking ${temp_text}$msix_arch MSIX"
 
         ## Prevent Git going crazy
-        if (-not (Test-Path .gitignore.bak -Type Leaf))
-          {
-            Copy-Item .gitignore .gitignore.bak
-          }
         $ig_content = "`n$msix_arch`n*.appxsym`n*.zip"
         if (Test-Path .gitignore -Type Leaf)
           {
+            if (-not (Test-Path .gitignore.bak -Type Leaf))
+              {
+                Copy-Item .gitignore .gitignore.bak
+              }
             Add-Content .gitignore "$ig_content"
           }
         else
@@ -326,7 +326,10 @@ if (((Test-Path $a64_bundle) -and (Test-Path $x64_bundle)) -and (Get-ChildItem *
   }
 
 Remove-Item .gitignore
-Rename-Item .gitignore.bak .gitignore
+if (Test-Path .gitignore.bak -Type Leaf)
+  {
+    Rename-Item .gitignore.bak .gitignore
+  }
 
 
 # 6.A. CERTIFY .MSIX OR .MSIXBUNDLE WITH WACK (OPTIONAL)
