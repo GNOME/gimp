@@ -266,6 +266,7 @@ bund_usr "$UNIX_PREFIX" "lib/libibus*"
 prep_pkg "ibus-gtk3"
 prep_pkg "libcanberra-gtk3-module"
 prep_pkg "libxapp-gtk3-module"
+prep_pkg "packagekit-gtk3-module"
 bund_usr "$UNIX_PREFIX" "lib/gtk-*" --go
 conf_app GTK_PATH "${LIB_DIR}/${LIB_SUBDIR}gtk-3.0"
 conf_app GTK_IM_MODULE_FILE "${LIB_DIR}/${LIB_SUBDIR}gtk-3.0/*.*.*"
@@ -358,6 +359,8 @@ bund_usr "$GIMP_PREFIX" "share/applications/*.desktop"
 ### Undo the mess which breaks babl and GEGL. See: https://github.com/probonopd/go-appimage/issues/315
 cp -r $APP_DIR/lib/* $USR_DIR/${LIB_DIR}
 rm -r $APP_DIR/lib
+### Fix not fully bundled GTK canberra module. See: https://github.com/probonopd/go-appimage/issues/332
+find "$USR_DIR/${LIB_DIR}/${LIB_SUBDIR}gtk-3.0/modules" -iname *canberra*.so -execdir ln -sf "{}" libcanberra-gtk-module.so \;
 ### Ensure that LD is in right dir. See: https://github.com/probonopd/go-appimage/issues/49
 if [ "$HOST_ARCH" = 'x86_64' ]; then
   cp -r $APP_DIR/lib64 $USR_DIR
