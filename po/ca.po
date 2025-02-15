@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2025-01-27 06:16+0000\n"
-"PO-Revision-Date: 2025-01-28 16:47+0200\n"
+"PO-Revision-Date: 2025-02-15 16:47+0200\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -520,7 +520,7 @@ msgstr "Eines"
 
 #: app/actions/actions.c:239
 msgid "Path Toolpath"
-msgstr "Eina camí del camí"
+msgstr "Camí de l'Eina camí"
 
 #: app/actions/actions.c:242 app/dialogs/dialogs.c:384
 #: app/tools/gimpvectortool.c:167
@@ -640,27 +640,27 @@ msgstr "_Enganxa la memòria intermèdia com a imatge nova"
 #: app/actions/buffers-actions.c:43
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new image"
-msgstr "Enganxa l'objecte en una imatge nova"
+msgstr "Enganxa la memòria intermèdia seleccionada en una imatge nova"
 
 #: app/actions/buffers-actions.c:48
 msgctxt "buffers-action"
 msgid "_Delete Buffer"
-msgstr "_Suprimeix l'objecte"
+msgstr "_Suprimeix la memòria intermèdia"
 
 #: app/actions/buffers-actions.c:49
 msgctxt "buffers-action"
 msgid "Delete the selected buffer"
-msgstr "Suprimeix l'objecte seleccionat"
+msgstr "Suprimeix la memòria intermèdia seleccionada"
 
 #: app/actions/buffers-actions.c:57
 msgctxt "buffers-action"
 msgid "_Paste Buffer"
-msgstr "En_ganxa l'objecte"
+msgstr "En_ganxa la memòria intermèdia"
 
 #: app/actions/buffers-actions.c:58
 msgctxt "buffers-action"
 msgid "Paste the selected buffer"
-msgstr "Enganxa l'objecte seleccionat"
+msgstr "Enganxa la memòria intermèdia seleccionada"
 
 #: app/actions/buffers-actions.c:63
 msgctxt "buffers-action"
@@ -680,7 +680,7 @@ msgstr "_Enganxeu la memòria intermèdia dins la selecció"
 #: app/actions/buffers-actions.c:70
 msgctxt "buffers-action"
 msgid "Paste the selected buffer into the selection"
-msgstr "Enganxa l'objecte dins la selecció"
+msgstr "Enganxa la memòria intermèdia seleccionada dins la selecció"
 
 #: app/actions/buffers-actions.c:75
 msgctxt "buffers-action"
@@ -690,7 +690,7 @@ msgstr "Enganxa la memòria intermèdia al lloc dins la selecció"
 #: app/actions/buffers-actions.c:77
 msgctxt "buffers-action"
 msgid "Paste the selected buffer into the selection at its original position"
-msgstr "Enganxa la memòria intermèdia dins la selecció a la posició original"
+msgstr "Enganxa la memòria intermèdia seleccionada dins la selecció a la posició original"
 
 #: app/actions/buffers-actions.c:82
 msgctxt "buffers-action"
@@ -784,7 +784,7 @@ msgstr "Apuja aquests canals un pas a la pila de canals"
 #: app/actions/channels-actions.c:82
 msgctxt "channels-action"
 msgid "Raise Channels to _Top"
-msgstr "_Mou els canals al capdamunt"
+msgstr "_Apuja els canals al capdamunt"
 
 #: app/actions/channels-actions.c:84
 msgctxt "channels-action"
@@ -1033,8 +1033,8 @@ msgstr[1] "Apuja el canal"
 #: app/actions/channels-commands.c:283
 msgid "Raise Channel to Top"
 msgid_plural "Raise Channels to Top"
-msgstr[0] "Mou el canal a la part superior"
-msgstr[1] "Mou els canals a la part superior"
+msgstr[0] "Apuja el canal a la part superior"
+msgstr[1] "Apuja els canals a la part superior"
 
 #: app/actions/channels-commands.c:328
 msgid "Lower Channel"
@@ -2360,7 +2360,7 @@ msgstr "_Avís d'espai d'intercanvi baix"
 #: app/actions/dashboard-actions.c:75
 msgctxt "dashboard-action"
 msgid "Raise the dashboard when the swap size approaches its limit"
-msgstr "Puja el tauler de control quan la mida d'intercanvi s'apropa al límit"
+msgstr "Apuja el tauler de control quan la mida d'intercanvi s'apropa al límit"
 
 #: app/actions/dashboard-actions.c:85
 msgctxt "dashboard-update-interval"
@@ -3155,7 +3155,7 @@ msgstr "_Caixa d'eines"
 
 #: app/actions/dialogs-actions.c:449
 msgid "Raise the toolbox"
-msgstr "Mostra la caixa d'eines"
+msgstr "Apuja la caixa d'eines"
 
 #: app/actions/dialogs-actions.c:453
 msgid "New Tool_box"
