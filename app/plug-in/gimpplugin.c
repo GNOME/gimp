@@ -43,6 +43,10 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
+#ifdef __APPLE__
+#include <sys/ioctl.h>
+#endif
+
 #if defined(G_OS_WIN32) || defined(G_WITH_CYGWIN)
 
 #define STRICT
@@ -95,26 +99,30 @@
 #include "gimp-intl.h"
 
 
-static void       gimp_plug_in_finalize      (GObject      *object);
+static void       gimp_plug_in_finalize               (GObject      *object);
 
-static gboolean   gimp_plug_in_recv_message  (GIOChannel   *channel,
-                                              GIOCondition  cond,
-                                              gpointer      data);
-static gboolean   gimp_plug_in_write         (GIOChannel   *channel,
-                                              const guint8 *buf,
-                                              gulong        count,
-                                              gpointer      data);
-static gboolean   gimp_plug_in_flush         (GIOChannel   *channel,
-                                              gpointer      data);
+static gboolean   gimp_plug_in_recv_message           (GIOChannel   *channel,
+                                                       GIOCondition  cond,
+                                                       gpointer      data);
+static gboolean   gimp_plug_in_write                  (GIOChannel   *channel,
+                                                       const guint8 *buf,
+                                                       gulong        count,
+                                                       gpointer      data);
+static gboolean   gimp_plug_in_flush                  (GIOChannel   *channel,
+                                                       gpointer      data);
 
 #if defined G_OS_WIN32 && defined WIN32_32BIT_DLL_FOLDER
-static void       gimp_plug_in_set_dll_directory (const gchar *path);
+static void       gimp_plug_in_set_dll_directory      (const gchar  *path);
 #endif
 
 #ifndef G_OS_WIN32
-static void       gimp_plug_in_close_waitpid     (GPid         pid,
-                                                  gint         status,
-                                                  GimpPlugIn  *plug_in);
+static void       gimp_plug_in_close_waitpid          (GPid          pid,
+                                                       gint          status,
+                                                       GimpPlugIn   *plug_in);
+#endif
+
+#ifdef __APPLE__
+static guint      gimp_plug_in_wire_count_bytes_ready (GIOChannel   *channel);
 #endif
 
 
@@ -208,7 +216,7 @@ gimp_plug_in_recv_message (GIOChannel   *channel,
    * else reads will hang, and the app appear non-responsive.
    */
 
-  if (gimp_wire_count_bytes_ready (channel) < 4)
+  if (gimp_plug_in_wire_count_bytes_ready (channel) < 4)
     return TRUE;
 #endif
 
@@ -404,6 +412,43 @@ gimp_plug_in_close_waitpid (GPid        pid,
   g_clear_error (&error);
 
   g_spawn_close_pid (pid);
+}
+#endif
+
+#ifdef __APPLE__
+/* Returns the count of bytes in the channel.
+ * Bytes that can be read without blocking.
+ *
+ * Returns zero on an IO error.
+ * Also may return zero if the channel is empty.
+ *
+ * Requires channel is a pipe open for reading.
+ *
+ * This should only be used in extraordinary situations.
+ * It is only for UNIX-like platforms; might not be portable to MSWindows.
+ * It can also be used for debugging the protocol, to know message lengths.
+ *
+ * Used on MacOS for a seeming bug in IO events.
+ * Usually, on an IO event on condition G_IO_IN,
+ * you can assume the pipe is not empty and a read will not block.
+ */
+static guint
+gimp_plug_in_wire_count_bytes_ready (GIOChannel *channel)
+{
+  int   err = 0;
+  guint result;
+  int   fd;
+
+  fd  = g_io_channel_unix_get_fd (channel);
+  err = ioctl (fd, FIONREAD, &result);
+  if (err < 0)
+    {
+      g_warning ("%s ioctl failed.", G_STRFUNC);
+      result = 0;
+    }
+
+  g_debug ("%s bytes ready: %d", G_STRFUNC, result);
+  return result;
 }
 #endif
 
