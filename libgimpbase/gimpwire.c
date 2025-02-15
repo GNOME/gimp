@@ -21,7 +21,6 @@
 #include <string.h>
 
 #include <glib-object.h>
-#include <sys/ioctl.h>
 
 #include <libgimpcolor/gimpcolortypes.h>
 
@@ -309,41 +308,6 @@ gimp_wire_destroy (GimpWireMessage *msg)
              msg->type);
 
   (* handler->destroy_func) (msg);
-}
-
-/* Returns the count of bytes in the channel.
- * Bytes that can be read without blocking.
- *
- * Returns zero on an IO error.
- * Also may return zero if the channel is empty.
- *
- * Requires channel is a pipe open for reading.
- *
- * This should only be used in extraordinary situations.
- * It is only for UNIX-like platforms; might not be portable to MSWindows.
- * It can also be used for debugging the protocol, to know message lengths.
- *
- * Used on MacOS for a seeming bug in IO events.
- * Usually, on an IO event on condition G_IO_IN,
- * you can assume the pipe is not empty and a read will not block.
- */
-guint
-gimp_wire_count_bytes_ready (GIOChannel *channel)
-{
-  int   err = 0;
-  guint result;
-  int   fd;
-
-  fd = g_io_channel_unix_get_fd (channel);
-  err = ioctl (fd, FIONREAD, &result);
-  if (err < 0)
-    {
-      g_warning ("%s ioctl failed.", G_STRFUNC);
-      result = 0;
-    }
-
-  g_debug ("%s bytes ready: %d", G_STRFUNC, result);
-  return result;
 }
 
 gboolean
