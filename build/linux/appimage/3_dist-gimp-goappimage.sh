@@ -244,7 +244,8 @@ else
 fi
 
 ## Bundle base (bare minimum to run GTK apps)
-### Glib needed files (to be able to use file dialogs)
+### Glib needed files (to be able to use URIs and file dialogs)
+bund_usr "$UNIX_PREFIX" "lib/glib-*/gio-launch-desktop" --dest "bin"
 bund_usr "$UNIX_PREFIX" "share/glib-*/schemas"
 ### Glib commonly required modules
 prep_pkg "gvfs"
