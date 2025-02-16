@@ -981,9 +981,12 @@ gimp_brush_load_abr_brush_v6 (GDataInputStream  *input,
 
           for (gint i = 0; i < size; i += 2)
             {
-              guint16 temp = (((guint16) mask_f[i + 1]) << 8) | mask_f[i];
+              guint16 *temp   = (guint16 *) &mask_f[i];
+              gfloat   temp_f = (gfloat) GUINT16_FROM_LE (temp[0]);
 
-              mask[i / 2] = (guchar) (((gfloat) temp / G_MAXUINT16) * 255);
+              temp_f = CLAMP (temp_f / G_MAXUINT16, 0.0, 1.0);
+
+              mask[i / 2] = (guchar) (temp_f * 255);
             }
 
           g_free (mask_f);
