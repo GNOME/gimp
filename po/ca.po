@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2025-01-27 06:16+0000\n"
-"PO-Revision-Date: 2025-02-15 16:47+0200\n"
+"PO-Revision-Date: 2025-02-16 16:47+0200\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -165,7 +165,7 @@ msgstr "Mostra informació de la llicència i surt"
 
 #: app/main.c:171
 msgid "Be more verbose"
-msgstr "Escriu més informació"
+msgstr "Dona més detalls"
 
 #: app/main.c:176
 msgid "Start a new GIMP instance"
@@ -181,7 +181,7 @@ msgstr "Executa sense interfície d'usuari"
 
 #: app/main.c:191
 msgid "Do not load brushes, gradients, patterns, ..."
-msgstr "No carreguis pinzells, degradats, paletes, patrons..."
+msgstr "No carreguis pinzells, degradats, patrons..."
 
 #: app/main.c:196
 msgid "Do not load any fonts"
