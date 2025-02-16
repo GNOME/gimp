@@ -905,9 +905,10 @@ gimp_brush_load_abr_brush_v6 (GDataInputStream  *input,
               width, height, depth, compress);
 #endif
 
-  if (width  < 1 || width  > 10000 ||
-      height < 1 || height > 10000 ||
-      depth  < 1 || depth  > 1     ||
+  if (width  < 1 || width  > 10000             ||
+      height < 1 || height > 10000             ||
+      (compress && depth != 1)                 ||
+      (! compress && (depth < 1 || depth > 2)) ||
       G_MAXSIZE / width / height / depth < 1)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
@@ -952,13 +953,40 @@ gimp_brush_load_abr_brush_v6 (GDataInputStream  *input,
       /* not compressed - read raw bytes as brush data */
       gsize bytes_read;
 
-      if (! g_input_stream_read_all (G_INPUT_STREAM (input),
-                                     mask, size,
-                                     &bytes_read, NULL, error) ||
-          bytes_read != size)
+      if (depth == 1)
         {
-          g_object_unref (brush);
-          return NULL;
+          if (! g_input_stream_read_all (G_INPUT_STREAM (input),
+                                         mask, size,
+                                         &bytes_read, NULL, error) ||
+              bytes_read != size)
+            {
+              g_object_unref (brush);
+              return NULL;
+            }
+        }
+      else if (depth == 2)
+        {
+          /* TODO: For now, convert to 8 bit representation */
+          guchar *mask_f = g_new0 (guchar, width * height * depth);
+
+          if (! g_input_stream_read_all (G_INPUT_STREAM (input),
+                                         mask_f, size,
+                                         &bytes_read, NULL, error) ||
+              bytes_read != size)
+            {
+              g_object_unref (brush);
+              g_free (mask_f);
+              return NULL;
+            }
+
+          for (gint i = 0; i < size; i += 2)
+            {
+              guint16 temp = (((guint16) mask_f[i + 1]) << 8) | mask_f[i];
+
+              mask[i / 2] = (guchar) (((gfloat) temp / G_MAXUINT16) * 255);
+            }
+
+          g_free (mask_f);
         }
     }
   else
