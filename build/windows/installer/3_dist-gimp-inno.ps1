@@ -77,7 +77,7 @@ if ($revision -notmatch '[1-9]' -or $CI_PIPELINE_SOURCE -eq 'schedule')
   }
 else
   {
-    $CUSTOM_GIMP_VERSION = "$CUSTOM_GIMP_VERSION.$revision"
+    $CUSTOM_GIMP_VERSION = "$CUSTOM_GIMP_VERSION-$revision"
   }
 Write-Output "(INFO): GIMP version: $CUSTOM_GIMP_VERSION"
 
@@ -200,11 +200,6 @@ foreach ($bundle in $supported_archs)
                         Foreach-Object {$_ -replace '#define GIMP_APP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
     $gimp_api_version = Get-Content "$CONFIG_PATH"                                         | Select-String 'GIMP_PKGCONFIG_VERSION' |
                         Foreach-Object {$_ -replace '#define GIMP_PKGCONFIG_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
-
-    ## GIMP revision on about dialog (this does the same as '-Drevision' build option)
-    ## FIXME: This should be done with Inno scripting
-    (Get-Content "$bundle\share\gimp\*\gimp-release") | Foreach-Object {$_ -replace "revision=0","revision=$revision"} |
-    Set-Content "$bundle\share\gimp\*\gimp-release"
 
     ## Split .debug symbols
     if ("$bundle" -eq "$GIMP32")

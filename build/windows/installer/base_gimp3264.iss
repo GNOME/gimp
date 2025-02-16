@@ -1528,7 +1528,7 @@ end; //PrepareInterp
 
 //Create .env files
 procedure PrepareGimpEnvironment();
-var EnvFile,Env: String;
+var EnvFile,Env,sTemp: String;
 begin
 	StatusLabel(CustomMessage('SettingUpEnvironment'),'');
 
@@ -1551,6 +1551,20 @@ begin
 	if not SaveStringToUTF8File(EnvFile,Env,True) then
 	begin
 		DebugMsg('PrepareGimpEnvironment','Problem appending');
+		SuppressibleMsgBox(FmtMessage(CustomMessage('ErrorChangingEnviron'),[EnvFile]),mbInformation,mb_ok,IDOK);
+	end;
+
+	// Set revision
+	EnvFile := ExpandConstant('{app}\share\gimp\{#GIMP_API_VERSION}\gimp-release');
+	DebugMsg('SetRevision','Seting revision number {#REVISION} in ' + EnvFile);
+
+	//LoadStringFromUTF8File(EnvFile,Env);
+  //sTemp := Replace('=0','={#REVISION}',Env);
+	sTemp := 'revision={#REVISION}' + #10;
+
+	if not SaveStringToUTF8File(EnvFile,sTemp,False) then
+	begin
+		DebugMsg('PrepareGimpEnvironment','Problem seting revision');
 		SuppressibleMsgBox(FmtMessage(CustomMessage('ErrorChangingEnviron'),[EnvFile]),mbInformation,mb_ok,IDOK);
 	end;
 
