@@ -6,6 +6,19 @@
 This is the unstable branch of GIMP.
 
 
+Overview of Changes from GIMP 3.0.0-RC3 to GIMP 3.0.0
+=====================================================
+
+Core:
+
+  - Blacklisted GEGL operations:
+    * gegl:pack
+    * json:dropshadow
+    * json:grey2
+  - Default sensibility mask for plug-ins is now:
+    GIMP_PROCEDURE_SENSITIVE_DRAWABLE | GIMP_PROCEDURE_SENSITIVE_DRAWABLES
+
+
 Overview of Changes from GIMP 3.0.0-RC2 to GIMP 3.0.0-RC3
 =========================================================
 
