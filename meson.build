@@ -95,7 +95,7 @@ conf.set('GIMP_RELEASE', release ? 1 : false)
 # GIMP_RC_VERSION can only be set on release candidates.
 conf.set('GIMP_RC_VERSION', release and gimp_app_version_rc > 0 ? gimp_app_version_rc : false)
 # GIMP_IS_GIT can only be set during development of a RC.
-conf.set('GIMP_IS_RC_GIT', gimp_rc_git)
+conf.set('GIMP_IS_RC_GIT', gimp_rc_git ? 1 : false)
 
 versionconfig = configuration_data()
 versionconfig.set('GIMP_FULL_NAME',     full_name)

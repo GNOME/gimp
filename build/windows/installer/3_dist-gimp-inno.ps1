@@ -63,14 +63,13 @@ if (-not (Test-Path "$CONFIG_PATH"))
     Write-Host "(ERROR): config.h file not found. You can run 'build\windows\2_build-gimp-msys2.ps1' or configure GIMP to generate it.'" -ForegroundColor red
     exit 1
   }
-
-## Figure out if a release is being done
-if (Get-Content "$CONFIG_PATH" | Select-String '#define GIMP_IS_RC_GIT') { $GIMP_IS_RC_GIT='1' }
-if (Get-Content "$CONFIG_PATH" | Select-String '#define GIMP_RELEASE') { $GIMP_RELEASE='1' }
+ForEach ($line in $(Select-String 'define' $CONFIG_PATH -AllMatches))
+  {
+    Invoke-Expression $($line -replace '^.*#' -replace 'define ','$' -replace ' ','=')
+  }
 
 ## Get CUSTOM_GIMP_VERSION (GIMP version as we display for users in installer)
-$CUSTOM_GIMP_VERSION = Get-Content "$CONFIG_PATH"                               | Select-String 'GIMP_VERSION'        |
-                       Foreach-Object {$_ -replace '#define GIMP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
+$CUSTOM_GIMP_VERSION = $GIMP_VERSION
 if ($revision -notmatch '[1-9]' -or $CI_PIPELINE_SOURCE -eq 'schedule')
   {
     $revision = '0'
@@ -193,13 +192,7 @@ foreach ($bundle in $supported_archs)
 
     ## Get GIMP versions used in some versioned files and dirs
     ## FIXME: This should be done with Inno scripting
-    $gimp_version = Get-Content "$CONFIG_PATH"                               | Select-String 'GIMP_VERSION'        |
-                    Foreach-Object {$_ -replace '#define GIMP_VERSION "',''} | Foreach-Object {$_ -replace '"',''} |
-                    Foreach-Object {$_ -replace '(.+?)-.+','$1'}
-    $gimp_app_version = Get-Content "$CONFIG_PATH"                                   | Select-String 'GIMP_APP_VERSION "'  |
-                        Foreach-Object {$_ -replace '#define GIMP_APP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
-    $gimp_api_version = Get-Content "$CONFIG_PATH"                                         | Select-String 'GIMP_PKGCONFIG_VERSION' |
-                        Foreach-Object {$_ -replace '#define GIMP_PKGCONFIG_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
+    $gimp_version = $GIMP_VERSION -replace '(.+?)-.+','$1'
 
     ## Split .debug symbols
     if ("$bundle" -eq "$GIMP32")
@@ -219,11 +212,11 @@ foreach ($bundle in $supported_archs)
 $INSTALLER="gimp-${CUSTOM_GIMP_VERSION}-setup.exe"
 Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):installer_making[collapsed=true]$([char]13)$([char]27)[0KConstructing $INSTALLER installer"
 Set-Location build\windows\installer
-if ($CUSTOM_GIMP_VERSION -match 'RC[1-9]')
+if ($GIMP_RC_VERSION)
   {
     $devel_warning='-DDEVEL_WARNING'
   }
-iscc -DCUSTOM_GIMP_VERSION="$CUSTOM_GIMP_VERSION" -DGIMP_VERSION="$gimp_version" -DREVISION="$revision" -DGIMP_APP_VERSION="$gimp_app_version" -DGIMP_API_VERSION="$gimp_api_version" -DBUILD_DIR="$BUILD_DIR" -DGIMP_DIR="$GIMP_BASE" -DDIR32="$GIMP32" -DDIR64="$GIMP64" -DDIRA64="$GIMPA64" -DDEPS_DIR="$GIMP_BASE" -DDDIR32="$GIMP32" -DDDIR64="$GIMP64" -DDDIRA64="$GIMPA64" -DDEBUG_SYMBOLS -DPYTHON $devel_warning base_gimp3264.iss | Out-Null
+iscc -DCUSTOM_GIMP_VERSION="$CUSTOM_GIMP_VERSION" -DGIMP_VERSION="$gimp_version" -DREVISION="$revision" -DGIMP_APP_VERSION="$GIMP_APP_VERSION" -DGIMP_API_VERSION="$GIMP_PKGCONFIG_VERSION" -DBUILD_DIR="$BUILD_DIR" -DGIMP_DIR="$GIMP_BASE" -DDIR32="$GIMP32" -DDIR64="$GIMP64" -DDIRA64="$GIMPA64" -DDEPS_DIR="$GIMP_BASE" -DDDIR32="$GIMP32" -DDDIR64="$GIMP64" -DDDIRA64="$GIMPA64" -DDEBUG_SYMBOLS -DPYTHON $devel_warning base_gimp3264.iss | Out-Null
 if ("$LASTEXITCODE" -gt '0' -or "$?" -eq 'False')
   {
     ## We need to manually check failures in pre-7.4 PS
@@ -233,12 +226,6 @@ Set-Location $GIMP_BASE
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_making$([char]13)$([char]27)[0K"
 
 # Clean changes in the bundles and Inno installation
-## Revert revisioning
-foreach ($bundle in $supported_archs)
-  {
-    (Get-Content "$bundle\share\gimp\*\gimp-release") | Foreach-Object {$_ -replace "revision=$revision","revision=0"} |
-    Set-Content "$bundle\share\gimp\*\gimp-release"
-  }
 fix_msg "$INNO_PATH" revert
 fix_msg "$INNO_PATH\Languages" revert
 fix_msg "$INNO_PATH\Languages\Unofficial" revert

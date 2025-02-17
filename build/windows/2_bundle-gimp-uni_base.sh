@@ -23,12 +23,11 @@ fi
 # Bundle deps and GIMP files
 export GIMP_SOURCE=$(echo $MESON_SOURCE_ROOT | sed 's|\\|/|g')
 
-grep -q '#define GIMP_UNSTABLE' config.h && export GIMP_UNSTABLE=1
-gimp_app_version=$(grep GIMP_APP_VERSION config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
+eval $(sed -n 's/^#define  *\([^ ]*\)  *\(.*\) *$/export \1=\2/p' config.h)
 if [ "$GIMP_UNSTABLE" ]; then
-  gimp_mutex_version="$gimp_app_version"
+  gimp_mutex_version="$GIMP_APP_VERSION"
 else
-  gimp_mutex_version=$(echo $gimp_app_version | sed 's/^[^0-9]*\([0-9]*\).*$/\1/')
+  gimp_mutex_version=$(echo $GIMP_APP_VERSION | sed 's/^[^0-9]*\([0-9]*\).*$/\1/')
 fi
 
 ## GIMP prefix: as set at meson configure time

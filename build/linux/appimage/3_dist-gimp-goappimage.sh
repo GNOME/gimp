@@ -85,12 +85,7 @@ if [ ! -f "$BUILD_DIR/config.h" ]; then
   echo -e "\033[31m(ERROR)\033[0m: config.h file not found. You can configure GIMP with meson to generate it."
   exit 1
 fi
-
-## Figure out if GIMP is unstable
-grep -q '#define GIMP_UNSTABLE' $BUILD_DIR/config.h && export GIMP_UNSTABLE=1
-grep -q '#define GIMP_RC_VERSION' $BUILD_DIR/config.h && export GIMP_RC_VERSION=1
-grep -q '#define GIMP_IS_RC_GIT' $BUILD_DIR/config.h && export GIMP_IS_RC_GIT=1
-grep -q '#define GIMP_RELEASE' $BUILD_DIR/config.h && export GIMP_RELEASE=1
+eval $(sed -n 's/^#define  *\([^ ]*\)  *\(.*\) *$/export \1=\2/p' $BUILD_DIR/config.h)
 
 ## Set proper AppImage update channel and App ID
 if [ -z "$GIMP_RELEASE" ] && [ "$GIMP_UNSTABLE" ] || [ "$GIMP_IS_RC_GIT" ]; then
@@ -103,8 +98,6 @@ fi
 export APP_ID="org.gimp.GIMP.$CHANNEL"
 
 ## Get info about GIMP version
-GIMP_VERSION=$(grep GIMP_VERSION $BUILD_DIR/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
-GIMP_APP_VERSION=$(grep GIMP_APP_VERSION $BUILD_DIR/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
 if [[ "$GIMP_CI_APPIMAGE" =~ [1-9] ]] && [ "$CI_PIPELINE_SOURCE" != 'schedule' ]; then
   export REVISION="-$GIMP_CI_APPIMAGE"
 fi

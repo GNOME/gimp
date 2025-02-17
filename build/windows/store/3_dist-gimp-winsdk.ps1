@@ -66,12 +66,10 @@ if (-not (Test-Path "$config_path"))
     Write-Host "(ERROR): config.h file not found. You can run 'build/windows/2_build-gimp-msys2.ps1' or configure GIMP to generate it." -ForegroundColor red
     exit 1
   }
-
-## Figure out if GIMP is unstable (dev version)
-if (Get-Content "$config_path" | Select-String '#define GIMP_UNSTABLE') { $GIMP_UNSTABLE='1' }
-if (Get-Content "$config_path" | Select-String '#define GIMP_RC_VERSION') { $GIMP_RC_VERSION='1' }
-if (Get-Content "$config_path" | Select-String '#define GIMP_IS_RC_GIT') { $GIMP_IS_RC_GIT='1' }
-if (Get-Content "$config_path" | Select-String '#define GIMP_RELEASE') { $GIMP_RELEASE='1' }
+ForEach ($line in $(Select-String 'define' $config_path -AllMatches))
+  {
+    Invoke-Expression $($line -replace '^.*#' -replace 'define ','$' -replace ' ','=')
+  }
 
 ## Get Identity Name (the dir shown in Explorer)
 if ($GIMP_UNSTABLE -or $GIMP_RC_VERSION)
@@ -85,15 +83,11 @@ else
 
 ## Get custom GIMP version (major.minor.micro+revision.0), a compliant way to publish to Partner Center:
 ## https://learn.microsoft.com/en-us/windows/apps/publish/publish-your-app/msix/app-package-requirements)
-$gimp_version = Get-Content "$config_path"                               | Select-String 'GIMP_VERSION'        |
-                Foreach-Object {$_ -replace '#define GIMP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
 ### Get GIMP app version (major.minor)
-$gimp_app_version = Get-Content "$config_path"                                   | Select-String 'GIMP_APP_VERSION "'  |
-                    Foreach-Object {$_ -replace '#define GIMP_APP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
-$major = ($gimp_app_version.Split('.'))[0]
-$minor = ($gimp_app_version.Split('.'))[-1]
+$major = ($GIMP_APP_VERSION.Split('.'))[0]
+$minor = ($GIMP_APP_VERSION.Split('.'))[-1]
 ### Get GIMP micro version
-$micro = ($gimp_version.Split('.'))[-1] -replace '(.+?)-.+','$1'
+$micro = ($GIMP_VERSION.Split('.'))[-1] -replace '(.+?)-.+','$1'
 if ($micro -ne '0')
   {
     $micro_digit = $micro
@@ -104,9 +98,9 @@ if ($revision -match '[1-9]' -and $CI_PIPELINE_SOURCE -ne 'schedule')
     $revision = $revision -replace 'MSIXUPLOAD_',''
     $revision_text = ", revision: $revision"
   }
-elseif ($gimp_version -match 'RC[0-9]')
+elseif ($GIMP_RC_VERSION)
   {
-    $revision = $gimp_version -replace '\+git','' -replace '^.*(?=.{1}$)'
+    $revision = $GIMP_RC_VERSION
     $revision_text = ", RC: $revision"
   }
 else
@@ -114,7 +108,7 @@ else
     $wack = "$revision"
     $revision = "0"
   }
-$CUSTOM_GIMP_VERSION = "$gimp_app_version.${micro_digit}${revision}.0"
+$CUSTOM_GIMP_VERSION = "$GIMP_APP_VERSION.${micro_digit}${revision}.0"
 
 Write-Output "(INFO): Identity: $IDENTITY_NAME | Version: $CUSTOM_GIMP_VERSION (major: $major, minor: $minor, micro: ${micro}${revision_text})"
 
@@ -210,7 +204,7 @@ foreach ($bundle in $supported_archs)
         ### Set GIMP mutex version (major.minor or major)
         if ($GIMP_UNSTABLE)
           {
-            $gimp_mutex_version="$gimp_app_version"
+            $gimp_mutex_version="$GIMP_APP_VERSION"
           }
         else
           {
@@ -251,7 +245,7 @@ foreach ($bundle in $supported_archs)
         Copy-Item "$bundle" "$vfs" -Recurse -Force
 
         ## Set revision on about dialog (this does the same as '-Drevision' build option)
-        if ($gimp_version -notmatch 'RC[0-9]')
+        if (-not $GIMP_RC_VERSION)
           {
             (Get-Content "$vfs\share\gimp\*\gimp-release") | Foreach-Object {$_ -replace "revision=0","revision=$revision"} |
             Set-Content "$vfs\share\gimp\*\gimp-release"
@@ -447,7 +441,7 @@ if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags
     ###Get changelog from Linux appdata
     #$xmlObject = New-Object XML
     #$xmlObject.Load("desktop\org.gimp.GIMP.appdata.xml.in.in")
-    #if ($xmlObject.component.releases.release[0].version -ne ("$gimp_version".ToLower() -replace '-','~'))
+    #if ($xmlObject.component.releases.release[0].version -ne ("$GIMP_VERSION".ToLower() -replace '-','~'))
     #  {
     #    Write-Host "(ERROR): appdata does not match main meson file. Submission can't be done." -ForegroundColor red
     #    exit 1
