@@ -21,15 +21,16 @@ if (-not $GITLAB_CI)
 
 
 # Install the required (pre-built) packages for babl, GEGL and GIMP
-#MSYS2 forces us to presume 'InstallLocation'. See: https://github.com/msys2/msys2-installer/issues/85
-$MSYS_ROOT = 'C:/msys64'
-if ($MSYSTEM_PREFIX -eq 'mingw32')
+if (-not $MSYS_ROOT)
   {
-    Write-Host '(WARNING): 32-bit builds will be dropped in a future release. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/10922' -ForegroundColor Yellow
-    $MSYSTEM_PREFIX = 'mingw32'
-    $MINGW_PACKAGE_PREFIX = 'mingw-w64-i686'
+    $MSYS_ROOT = $(Get-ChildItem HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall -Recurse | ForEach-Object { Get-ItemProperty $_.PSPath -ErrorAction SilentlyContinue } | Where-Object { $_.PSObject.Properties.Value -like "*The MSYS2 Developers*" } | ForEach-Object { return "$($_.InstallLocation)" }) -replace '\\','/'
+    if ("$MSYS_ROOT" -eq '')
+      {
+        Write-Host '(ERROR): MSYS2 installation not found. Please, install it with: winget install MSYS2.MSYS2' -ForegroundColor Red
+        exit 1
+      }
   }
-elseif ((Get-WmiObject -Class Win32_ComputerSystem).SystemType -like 'ARM64*')
+if ((Get-WmiObject -Class Win32_ComputerSystem).SystemType -like 'ARM64*')
   {
     $MSYSTEM_PREFIX = 'clangarm64'
     $MINGW_PACKAGE_PREFIX = 'mingw-w64-clang-aarch64'

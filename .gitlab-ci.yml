@@ -799,6 +799,8 @@ dist-installer-weekly:
   stage: distribution
   tags:
     - windows-aarch64
+  variables:
+    MSYS_ROOT: 'C:/msys64'
   script:
     - build/windows/installer/3_dist-gimp-inno.ps1
   artifacts:
