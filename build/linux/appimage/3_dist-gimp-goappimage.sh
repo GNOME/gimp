@@ -381,6 +381,11 @@ echo "usr/${LIB_DIR}/${LIB_SUBDIR}gconv
       usr/share/doc
       usr/share/themes
       etc" > appimageignore-$HOST_ARCH
+
+## Revision (if there is one)
+if [[ "$GIMP_CI_APPIMAGE" =~ [1-9] ]] && [ "$CI_PIPELINE_SOURCE" != 'schedule' ]; then
+  sed -i "s/revision=0/revision=$REVISION/" "$(echo $USR_DIR/share/gimp/*/gimp-release)"
+fi
 echo -e "\e[0Ksection_end:`date +%s`:apmg_files\r\e[0K"
 fi
 if [ "$1" = '--bundle-only' ] || [ "$2" = '--bundle-only' ]; then
