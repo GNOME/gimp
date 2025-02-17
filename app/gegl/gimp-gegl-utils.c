@@ -616,6 +616,7 @@ gimp_gegl_op_blacklisted (const gchar *name,
     "gegl:ditto", /* pointless */
     "gegl:fill-path",
     "gegl:gray", /* we use gimp's op */
+    "gegl:hstack", /* deleted from GEGL and replaced by gegl:pack */
     "gegl:introspect", /* pointless */
     "gegl:layer", /* we use gimp's ops */
     "gegl:lcms-from-profile", /* not usable here */
