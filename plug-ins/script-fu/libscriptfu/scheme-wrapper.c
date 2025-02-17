@@ -1150,6 +1150,25 @@ script_fu_marshal_arg_to_value (scheme       *sc,
             *strvalue = g_strdup_printf ("%d", id);
         }
     }
+  else if (GIMP_VALUE_HOLDS_UNIT (value))
+    {
+      if (! sc->vptr->is_number (arg_val))
+        {
+          return script_type_error (sc, "numeric", arg_index, proc_name);
+        }
+      else
+        {
+          GimpUnit *unit;
+          gint      id = sc->vptr->ivalue (arg_val);
+
+          unit = gimp_unit_get_by_id (id);
+
+          g_value_set_object (value, unit);
+
+          if (strvalue)
+            *strvalue = g_strdup_printf ("%d", id);
+        }
+    }
   else if (GIMP_VALUE_HOLDS_INT32_ARRAY (value))
     {
       vector = arg_val;
