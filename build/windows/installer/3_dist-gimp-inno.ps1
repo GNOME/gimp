@@ -108,10 +108,15 @@ if (-not (Test-Path "$BUILD_DIR\build\windows\installer"))
     exit 1
   }
 
-## Complete Inno source with not released translations: https://jrsoftware.org/files/istrans/
+## Inno installer strings translations
 ## NOTE: All the maintenance process is done only in 'iso_639_custom.xml' file
 $xmlObject = New-Object XML
 $xmlObject.Load("$PWD\build\windows\installer\lang\iso_639_custom.xml")
+$langsArray_Official = $xmlObject.iso_639_entries.iso_639_entry | Select-Object -ExpandProperty inno_code     |
+                       Where-Object { $_ -like "*Languages*" }  | Where-Object { $_ -notlike "*Unofficial*" }
+$langsArray_unofficial = $xmlObject.iso_639_entries.iso_639_entry | Select-Object -ExpandProperty inno_code |
+                         Where-Object { $_ -like "*Unofficial*" }
+### Complete Inno source with not released translations: https://jrsoftware.org/files/istrans/
 function download_langs ([array]$langsArray)
 {
   foreach ($langfile in $langsArray)
@@ -125,27 +130,19 @@ function download_langs ([array]$langsArray)
         }
     }
 }
-### Official translations not present in a Inno release yet
-$langsArray_Official = $xmlObject.iso_639_entries.iso_639_entry | Select-Object -ExpandProperty inno_code     |
-                       Where-Object { $_ -like "*Languages*" }  | Where-Object { $_ -notlike "*Unofficial*" }
 download_langs $langsArray_Official
-### unofficial translations (of unknown quality and maintenance)
 New-Item "$INNO_PATH\Languages\Unofficial" -ItemType Directory -Force | Out-Null
-$langsArray_unofficial = $xmlObject.iso_639_entries.iso_639_entry | Select-Object -ExpandProperty inno_code |
-                         Where-Object { $_ -like "*Unofficial*" }
 download_langs $langsArray_unofficial
-
-## Patch 'AppVer*' against Inno pervasive behavior: https://groups.google.com/g/innosetup/c/w0sebw5YAeg
-function fix_msg ([string]$langsdir, [string]$AppVer)
+### Patch 'AppVer*' against Inno pervasive behavior: https://groups.google.com/g/innosetup/c/w0sebw5YAeg
+function fix_msg ([array]$langsArray, [string]$AppVer)
 {
-  $langsArray_local = Get-ChildItem $langsdir -Filter *.isl -Name
-  foreach ($langfile in $langsArray_local)
+  foreach ($langfile in $langsArray)
     {
-      $langfilePath = "$langsdir\$langfile"
+      $langfilePath = "$INNO_PATH\$langfile"
 
       if ($AppVer -ne 'revert')
         {
-          Copy-Item "$langfilePath" "$Env:Tmp\$langfile.bak" -Force
+          Copy-Item "$langfilePath" "$Env:Tmp\$(Split-Path $langfile -Leaf).bak" -Force
 
           #Prefer MSYS2 since PowerShell/.NET doesn't handle well files with mixed encodings
           $langfilePathUnix = "$langfilePath" -replace '\\','/' -replace '//','/'
@@ -163,13 +160,13 @@ function fix_msg ([string]$langsdir, [string]$AppVer)
 
       else #($AppVer -eq 'revert')
         {
-          Move-Item "$Env:Tmp\$langfile.bak" "$langfilePath" -Force
+          Move-Item "$Env:Tmp\$(Split-Path $langfile -Leaf).bak" "$langfilePath" -Force
         }
     }
 }
-fix_msg "$INNO_PATH" $CUSTOM_GIMP_VERSION
-fix_msg "$INNO_PATH\Languages" $CUSTOM_GIMP_VERSION
-fix_msg "$INNO_PATH\Languages\Unofficial" $CUSTOM_GIMP_VERSION
+fix_msg 'Default.isl' $CUSTOM_GIMP_VERSION
+fix_msg $langsArray_Official $CUSTOM_GIMP_VERSION
+fix_msg $langsArray_unofficial $CUSTOM_GIMP_VERSION
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_source$([char]13)$([char]27)[0K"
 
 
@@ -226,9 +223,9 @@ Set-Location $GIMP_BASE
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_making$([char]13)$([char]27)[0K"
 
 # Clean changes in the bundles and Inno installation
-fix_msg "$INNO_PATH" revert
-fix_msg "$INNO_PATH\Languages" revert
-fix_msg "$INNO_PATH\Languages\Unofficial" revert
+fix_msg 'Default.isl' revert
+fix_msg $langsArray_Official revert
+fix_msg $langsArray_unofficial revert
 ## Revert change done in TWAIN list
 Remove-Item $twain_list_file
 Move-Item "$twain_list_file.bak" $twain_list_file
