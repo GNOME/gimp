@@ -13,7 +13,7 @@ $PSNativeCommandUseErrorActionPreference = $true
 
 
 # This script needs a bit of MSYS2 to work
-Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'MSYS2_PREFIX =' -Context 0,17) -replace '> ','')
+Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'MSYS_ROOT =' -Context 0,17) -replace '> ','')
 
 
 # 1. GET INNO
@@ -176,7 +176,7 @@ Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):i
 Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):installer_files[collapsed=true]$([char]13)$([char]27)[0KGenerating 32-bit TWAIN dependencies list"
 $twain_list_file = 'build\windows\installer\base_twain32on64.list'
 Copy-Item $twain_list_file "$twain_list_file.bak"
-$twain_list = (python3 build/windows/2_bundle-gimp-uni_dep.py --debug debug-only $(Resolve-Path $GIMP32/lib/gimp/*/plug-ins/twain/twain.exe) $MSYS2_PREFIX/mingw32/ $GIMP32/ 32 |
+$twain_list = (python3 build/windows/2_bundle-gimp-uni_dep.py --debug debug-only $(Resolve-Path $GIMP32/lib/gimp/*/plug-ins/twain/twain.exe) $MSYS_ROOT/mingw32/ $GIMP32/ 32 |
               Select-String 'Installed' -CaseSensitive -Context 0,1000) -replace "  `t- ",'bin\'
 (Get-Content $twain_list_file) | Foreach-Object {$_ -replace "@DEPS_GENLIST@","$twain_list"} | Set-Content $twain_list_file
 (Get-Content $twain_list_file) | Select-string 'Installed' -notmatch | Set-Content $twain_list_file
