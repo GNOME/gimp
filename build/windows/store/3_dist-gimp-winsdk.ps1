@@ -164,7 +164,7 @@ foreach ($bundle in $supported_archs)
           }
         else
           {
-            New-Item .gitignore
+            New-Item .gitignore | Out-Null
             Set-Content .gitignore "$ig_content"
           }
 
