@@ -23,7 +23,7 @@ if (-not $GITLAB_CI)
 
 
 # Install the required (pre-built) packages for babl, GEGL and GIMP (again)
-Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'MSYS2_PREFIX =' -Context 0,17) -replace '> ','')
+Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'MSYS_ROOT =' -Context 0,17) -replace '> ','')
 
 if ($GITLAB_CI)
   {
@@ -50,7 +50,7 @@ if (-not (Test-Path _build-$MSYSTEM_PREFIX\build.ninja -Type Leaf))
   {
     #FIXME: There is no GJS for Windows. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/5891
     meson setup _build-$MSYSTEM_PREFIX -Dprefix="$GIMP_PREFIX" -Djavascript=disabled `
-                                       -Ddirectx-sdk-dir="$MSYS2_PREFIX/$MSYSTEM_PREFIX" -Denable-default-bin=enabled `
+                                       -Ddirectx-sdk-dir="$MSYS_ROOT/$MSYSTEM_PREFIX" -Denable-default-bin=enabled `
                                        -Dbuild-id='org.gimp.GIMP_official' $INSTALLER_OPTION $STORE_OPTION $NON_RELOCATABLE_OPTION
   }
 Set-Location _build-$MSYSTEM_PREFIX

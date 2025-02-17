@@ -22,7 +22,7 @@ if (-not $GITLAB_CI)
 
 # Install the required (pre-built) packages for babl, GEGL and GIMP
 #MSYS2 forces us to presume 'InstallLocation'. See: https://github.com/msys2/msys2-installer/issues/85
-$MSYS2_PREFIX = 'C:/msys64'
+$MSYS_ROOT = 'C:/msys64'
 if ($MSYSTEM_PREFIX -eq 'mingw32')
   {
     Write-Host '(WARNING): 32-bit builds will be dropped in a future release. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/10922' -ForegroundColor Yellow
@@ -39,7 +39,7 @@ elseif ((Get-WmiObject -Class Win32_ComputerSystem).SystemType -like 'x64*')
     $MSYSTEM_PREFIX = 'clang64'
     $MINGW_PACKAGE_PREFIX = 'mingw-w64-clang-x86_64'
   }
-$env:Path = "$MSYS2_PREFIX/$MSYSTEM_PREFIX/bin;$MSYS2_PREFIX/usr/bin;" + $env:Path
+$env:Path = "$MSYS_ROOT/$MSYSTEM_PREFIX/bin;$MSYS_ROOT/usr/bin;" + $env:Path
 
 Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):deps_install[collapsed=true]$([char]13)$([char]27)[0KInstalling dependencies provided by MSYS2"
 if ("$PSCommandPath" -like "*1_build-deps-msys2.ps1*" -or "$CI_JOB_NAME" -like "*deps*")

@@ -522,16 +522,16 @@ gimp-win-x64-cross:
     - $RUNNER
   before_script:
     # MSYS2 config
-    - $MSYS2_PREFIX = 'C:/msys64'
-    - $env:Path = "$MSYS2_PREFIX/$MSYSTEM_PREFIX/bin;$MSYS2_PREFIX/usr/bin;" + $env:Path
+    - $MSYS_ROOT = 'C:/msys64'
+    - $env:Path = "$MSYS_ROOT/$MSYSTEM_PREFIX/bin;$MSYS_ROOT/usr/bin;" + $env:Path
     # Build-time vars
     # FIXME:'gimpenv' have buggy code about Windows paths. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/12284
     - $GIMP_PREFIX = "$PWD\_install-$MSYSTEM_PREFIX".Replace('\', '/')
     - Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):win_environ[collapsed=true]$([char]13)$([char]27)[0KPreparing build environment"
     - $env:Path = $env:Path + ";$GIMP_PREFIX/bin"
-    - $env:PKG_CONFIG_PATH = "$MSYS2_PREFIX/$MSYSTEM_PREFIX/lib/pkgconfig;$MSYS2_PREFIX/$MSYSTEM_PREFIX/share/pkgconfig;$GIMP_PREFIX/lib/pkgconfig"
-    - $env:XDG_DATA_DIRS = "$MSYS2_PREFIX/$MSYSTEM_PREFIX/share;$GIMP_PREFIX/share"
-    - $env:GI_TYPELIB_PATH = "$MSYS2_PREFIX/$MSYSTEM_PREFIX/lib/girepository-1.0;$GIMP_PREFIX/lib/girepository-1.0"
+    - $env:PKG_CONFIG_PATH = "$MSYS_ROOT/$MSYSTEM_PREFIX/lib/pkgconfig;$MSYS_ROOT/$MSYSTEM_PREFIX/share/pkgconfig;$GIMP_PREFIX/lib/pkgconfig"
+    - $env:XDG_DATA_DIRS = "$MSYS_ROOT/$MSYSTEM_PREFIX/share;$GIMP_PREFIX/share"
+    - $env:GI_TYPELIB_PATH = "$MSYS_ROOT/$MSYSTEM_PREFIX/lib/girepository-1.0;$GIMP_PREFIX/lib/girepository-1.0"
     - Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):win_environ$([char]13)$([char]27)[0K"
 
 deps-win:

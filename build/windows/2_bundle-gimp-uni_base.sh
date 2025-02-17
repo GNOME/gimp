@@ -23,24 +23,17 @@ fi
 # Bundle deps and GIMP files
 export GIMP_SOURCE=$(echo $MESON_SOURCE_ROOT | sed 's|\\|/|g')
 
-eval $(sed -n 's/^#define  *\([^ ]*\)  *\(.*\) *$/export \1=\2/p' config.h)
-if [ "$GIMP_UNSTABLE" ]; then
-  gimp_mutex_version="$GIMP_APP_VERSION"
-else
-  gimp_mutex_version=$(echo $GIMP_APP_VERSION | sed 's/^[^0-9]*\([0-9]*\).*$/\1/')
-fi
-
-## GIMP prefix: as set at meson configure time
-export GIMP_PREFIX=$(echo $MESON_INSTALL_DESTDIR_PREFIX | sed 's|\\|/|g')
-## System prefix: it is MSYSTEM_PREFIX
-export MSYS_PREFIX=$(grep 'Main binary:' meson-logs/meson-log.txt | sed 's|Main binary: ||' | sed 's|\\bin\\python.exe||' | sed 's|\\|/|g')
-if [ "$QUASI_MSYS2_ROOT" ]; then
-  export MSYS_PREFIX="$MSYSTEM_PREFIX"
-fi
 ## Bundle dir: we make a "perfect" bundle separated from GIMP_PREFIX
 #NOTE: The bundling script need to set $MSYSTEM_PREFIX to our dist scripts
 #fallback code be able to identify what arch they are distributing
 export GIMP_DISTRIB="$GIMP_SOURCE/gimp-$(echo $MSYSTEM_PREFIX | sed 's|/||')"
+
+## GIMP prefix: as set at meson configure time
+export GIMP_PREFIX=$(echo $MESON_INSTALL_DESTDIR_PREFIX | sed 's|\\|/|g')
+## System prefix: it is MSYSTEM_PREFIX
+if [ -z "$QUASI_MSYS2_ROOT" ]; then
+  export MSYSTEM_PREFIX=$(grep 'Main binary:' meson-logs/meson-log.txt | sed 's|Main binary: ||' | sed 's|\\bin\\python.exe||' | sed 's|\\|/|g')
+fi
 
 bundle ()
 {
@@ -86,21 +79,27 @@ echo "*" > $GIMP_DISTRIB/.gitignore
 
 ## Add a wrapper at tree root, less messy than having to look for the
 ## binary inside bin/, in the middle of all the DLLs.
+eval $(sed -n 's/^#define  *\([^ ]*\)  *\(.*\) *$/export \1=\2/p' config.h)
+if [ "$GIMP_UNSTABLE" ]; then
+  gimp_mutex_version="$GIMP_APP_VERSION"
+else
+  gimp_mutex_version=$(echo $GIMP_APP_VERSION | sed 's/^[^0-9]*\([0-9]*\).*$/\1/')
+fi
 echo "bin\gimp-$gimp_mutex_version.exe" > $GIMP_DISTRIB/gimp.cmd
 
 
 ## Settings.
 bundle "$GIMP_PREFIX" etc/gimp
 ### Needed for fontconfig
-bundle "$MSYS_PREFIX" etc/fonts
+bundle "$MSYSTEM_PREFIX" etc/fonts
 
 
 ## Headers (for use of gimptool).
 bundle "$GIMP_PREFIX" include/gimp-*
 bundle "$GIMP_PREFIX" include/babl-*
 bundle "$GIMP_PREFIX" include/gegl-*
-bundle "$MSYS_PREFIX" include/exiv*
-bundle "$MSYS_PREFIX" include/gexiv*
+bundle "$MSYSTEM_PREFIX" include/exiv*
+bundle "$MSYSTEM_PREFIX" include/gexiv*
 
 
 ## Library data.
@@ -108,51 +107,51 @@ bundle "$GIMP_PREFIX" lib/gimp
 bundle "$GIMP_PREFIX" lib/babl-*
 bundle "$GIMP_PREFIX" lib/gegl-*
 ### Needed to open remote files
-bundle "$MSYS_PREFIX" lib/gio
+bundle "$MSYSTEM_PREFIX" lib/gio
 ### Needed to loading icons in GUI
-bundle "$MSYS_PREFIX" lib/gdk-pixbuf-*/*/loaders.cache
-bundle "$MSYS_PREFIX" lib/gdk-pixbuf-*/*/loaders/libpixbufloader-png.dll
-bundle "$MSYS_PREFIX" lib/gdk-pixbuf-*/*/loaders/pixbufloader_svg.dll
+bundle "$MSYSTEM_PREFIX" lib/gdk-pixbuf-*/*/loaders.cache
+bundle "$MSYSTEM_PREFIX" lib/gdk-pixbuf-*/*/loaders/libpixbufloader-png.dll
+bundle "$MSYSTEM_PREFIX" lib/gdk-pixbuf-*/*/loaders/pixbufloader_svg.dll
 ### Support for legacy Win clipboard images: https://gitlab.gnome.org/GNOME/gimp/-/issues/4802
-bundle "$MSYS_PREFIX" lib/gdk-pixbuf-*/*/loaders/libpixbufloader-bmp.dll
+bundle "$MSYSTEM_PREFIX" lib/gdk-pixbuf-*/*/loaders/libpixbufloader-bmp.dll
 ### Support for non .PAT patterns: https://gitlab.gnome.org/GNOME/gimp/-/issues/12351
-bundle "$MSYS_PREFIX" lib/gdk-pixbuf-*/*/loaders/libpixbufloader-jpeg.dll
-bundle "$MSYS_PREFIX" lib/gdk-pixbuf-*/*/loaders/libpixbufloader-gif.dll
-bundle "$MSYS_PREFIX" lib/gdk-pixbuf-*/*/loaders/libpixbufloader-tiff.dll
+bundle "$MSYSTEM_PREFIX" lib/gdk-pixbuf-*/*/loaders/libpixbufloader-jpeg.dll
+bundle "$MSYSTEM_PREFIX" lib/gdk-pixbuf-*/*/loaders/libpixbufloader-gif.dll
+bundle "$MSYSTEM_PREFIX" lib/gdk-pixbuf-*/*/loaders/libpixbufloader-tiff.dll
 clean "$GIMP_DISTRIB" lib/*.a
 
 
 ## Resources.
 bundle "$GIMP_PREFIX" share/gimp
 ### Needed for file dialogs
-bundle "$MSYS_PREFIX" share/glib-*/schemas/gschemas.compiled
+bundle "$MSYSTEM_PREFIX" share/glib-*/schemas/gschemas.compiled
 ### Needed to not crash UI. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/6165
-bundle "$MSYS_PREFIX" share/icons/Adwaita
+bundle "$MSYSTEM_PREFIX" share/icons/Adwaita
 ### Needed by GTK to use icon themes. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/5080
 bundle "$GIMP_PREFIX" share/icons/hicolor
 ### Needed for 'th' word breaking in Text tool etc
-bundle "$MSYS_PREFIX" share/libthai
+bundle "$MSYSTEM_PREFIX" share/libthai
 ### Needed for file-wmf work
-bundle "$MSYS_PREFIX" share/libwmf
+bundle "$MSYSTEM_PREFIX" share/libwmf
 ### Only copy from langs supported in GIMP.
 lang_array=($(echo $(ls $GIMP_SOURCE/po/*.po |
               sed -e "s|$GIMP_SOURCE/po/||g" -e 's|.po||g' | sort) |
               tr '\n\r' ' '))
 for lang in "${lang_array[@]}"; do
   bundle "$GIMP_PREFIX" share/locale/$lang/LC_MESSAGES/*.mo
-  if [ -d "$MSYS_PREFIX/share/locale/$lang/LC_MESSAGES/" ]; then
+  if [ -d "$MSYSTEM_PREFIX/share/locale/$lang/LC_MESSAGES/" ]; then
     # Needed for eventually used widgets, GTK inspector etc
-    bundle "$MSYS_PREFIX" share/locale/$lang/LC_MESSAGES/gtk*.mo
+    bundle "$MSYSTEM_PREFIX" share/locale/$lang/LC_MESSAGES/gtk*.mo
     # For language list in text tool options
-    bundle "$MSYS_PREFIX" share/locale/$lang/LC_MESSAGES/iso_639_3.mo
+    bundle "$MSYSTEM_PREFIX" share/locale/$lang/LC_MESSAGES/iso_639_3.mo
   fi
 done
 ### Needed for welcome page
 bundle "$GIMP_PREFIX" share/metainfo/org.gimp*.xml
 ### mypaint brushes
-bundle "$MSYS_PREFIX" share/mypaint-data
+bundle "$MSYSTEM_PREFIX" share/mypaint-data
 ### Needed for full CJK and Cyrillic support in file-pdf
-bundle "$MSYS_PREFIX" share/poppler
+bundle "$MSYSTEM_PREFIX" share/poppler
 
 
 ## Executables and DLLs.
@@ -165,42 +164,42 @@ bundle "$GIMP_PREFIX" bin/gimp*.exe
 bundle "$GIMP_PREFIX" bin/libgimp*.dll
 ### Bundled just to promote GEGL. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/10580
 bundle "$GIMP_PREFIX" bin/gegl.exe
-if [ "$GIMP_UNSTABLE" ] && [[ ! "$MSYS_PREFIX" =~ "32" ]]; then
+if [ "$GIMP_UNSTABLE" ] && [[ ! "$MSYSTEM_PREFIX" =~ "32" ]]; then
   ### Needed for 'Show image graph'.
   #### See: https://gitlab.gnome.org/GNOME/gimp/-/issues/6045
-  bundle "$MSYS_PREFIX" bin/dot.exe
+  bundle "$MSYSTEM_PREFIX" bin/dot.exe
   #### See: https://gitlab.gnome.org/GNOME/gimp/-/issues/12119
-  bundle "$MSYS_PREFIX" bin/libgvplugin_dot*.dll
-  bundle "$MSYS_PREFIX" bin/libgvplugin_pango*.dll
-  bundle "$MSYS_PREFIX" bin/config6
+  bundle "$MSYSTEM_PREFIX" bin/libgvplugin_dot*.dll
+  bundle "$MSYSTEM_PREFIX" bin/libgvplugin_pango*.dll
+  bundle "$MSYSTEM_PREFIX" bin/config6
 fi
 ### Needed to not pollute output. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/8877
-bundle "$MSYS_PREFIX" bin/gdbus.exe
+bundle "$MSYSTEM_PREFIX" bin/gdbus.exe
 ### Needed for hyperlink support etc... See: https://gitlab.gnome.org/GNOME/gimp/-/issues/12288
 #...when running from `gimp*.exe --verbose`
-bundle "$MSYS_PREFIX" bin/gspawn*-console.exe
+bundle "$MSYSTEM_PREFIX" bin/gspawn*-console.exe
 if [ -z "$GIMP_UNSTABLE" ]; then
   #...when running from `gimp*.exe`
-  bundle "$MSYS_PREFIX" bin/gspawn*-helper.exe
+  bundle "$MSYSTEM_PREFIX" bin/gspawn*-helper.exe
 fi
 
 ### Optional binaries for GObject Introspection support
 if [ -z "$QUASI_MSYS2_ROOT" ]; then
   bundle "$GIMP_PREFIX" lib/girepository-*
-  bundle "$MSYS_PREFIX" lib/girepository-*
+  bundle "$MSYSTEM_PREFIX" lib/girepository-*
 
   #FIXME: luajit crashes at startup: See: https://gitlab.gnome.org/GNOME/gimp/-/issues/11597
-  #bundle "$MSYS_PREFIX" bin/luajit.exe
-  #bundle "$MSYS_PREFIX" lib/lua
-  #bundle "$MSYS_PREFIX" share/lua
+  #bundle "$MSYSTEM_PREFIX" bin/luajit.exe
+  #bundle "$MSYSTEM_PREFIX" lib/lua
+  #bundle "$MSYSTEM_PREFIX" share/lua
 
   #python.exe is needed for plug-ins output in `gimp-console*.exe`
-  bundle "$MSYS_PREFIX" bin/python.exe
+  bundle "$MSYSTEM_PREFIX" bin/python.exe
   if [ -z "$GIMP_UNSTABLE" ]; then
     #pythonw.exe is needed to run plug-ins silently in `gimp*.exe`
-    bundle "$MSYS_PREFIX" bin/pythonw.exe
+    bundle "$MSYSTEM_PREFIX" bin/pythonw.exe
   fi
-  bundle "$MSYS_PREFIX" lib/python*
+  bundle "$MSYSTEM_PREFIX" lib/python*
   clean "$GIMP_DISTRIB" lib/python*/*.pyc
 else
   # Just to ensure there is no introspected files that will output annoying warnings
@@ -212,15 +211,15 @@ else
 fi
 
 ### Deps (DLLs) of the binaries in 'bin' and 'lib' dirs
-echo "Searching for dependencies of $GIMP_DISTRIB/bin in $MSYS_PREFIX and $GIMP_PREFIX"
+echo "Searching for dependencies of $GIMP_DISTRIB/bin in $MSYSTEM_PREFIX and $GIMP_PREFIX"
 binArray=($(find "$GIMP_DISTRIB/bin" \( -iname '*.dll' -or -iname '*.exe' \)))
 for dep in "${binArray[@]}"; do
-  python3 $GIMP_SOURCE/build/windows/2_bundle-gimp-uni_dep.py $dep $MSYS_PREFIX/ $GIMP_PREFIX/ $GIMP_DISTRIB --output-dll-list done-dll.list;
+  python3 $GIMP_SOURCE/build/windows/2_bundle-gimp-uni_dep.py $dep $MSYSTEM_PREFIX/ $GIMP_PREFIX/ $GIMP_DISTRIB --output-dll-list done-dll.list;
 done
-echo "Searching for dependencies of $GIMP_DISTRIB/lib in $MSYS_PREFIX and $GIMP_PREFIX"
+echo "Searching for dependencies of $GIMP_DISTRIB/lib in $MSYSTEM_PREFIX and $GIMP_PREFIX"
 libArray=($(find "$GIMP_DISTRIB/lib" \( -iname '*.dll' -or -iname '*.exe' \)))
 for dep in "${libArray[@]}"; do
-  python3 $GIMP_SOURCE/build/windows/2_bundle-gimp-uni_dep.py $dep $MSYS_PREFIX/ $GIMP_PREFIX/ $GIMP_DISTRIB --output-dll-list done-dll.list;
+  python3 $GIMP_SOURCE/build/windows/2_bundle-gimp-uni_dep.py $dep $MSYSTEM_PREFIX/ $GIMP_PREFIX/ $GIMP_DISTRIB --output-dll-list done-dll.list;
 done
 
 ### .pdb (CodeView) debug symbols
