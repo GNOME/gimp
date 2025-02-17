@@ -1,7 +1,7 @@
 # This is the Italian catalog for The GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 2000-2002
-# Marco Ciampa <ciampix@posteo.net>, 2003-2024
+# Marco Ciampa <ciampix@posteo.net>, 2003-2025
 # Alessandro Falappa <alessandro@falappa.net>, 2007-2008
 #
 # Convenzioni adottate per GIMP (per lo più derivate dal mondo della grafica e della fotografia italiano):
@@ -43,8 +43,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-02-03 15:04+0000\n"
-"PO-Revision-Date: 2025-02-05 12:33+0100\n"
+"POT-Creation-Date: 2025-02-09 16:27+0000\n"
+"PO-Revision-Date: 2025-02-17 15:30+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -11372,11 +11372,15 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:629
 msgid "Sets the default composite space for the 'New Layer' dialog."
-msgstr "Imposta lo spazio composito predefinito per la finestra di dialogo \"Nuovo livello\"."
+msgstr ""
+"Imposta lo spazio composito predefinito per la finestra di dialogo \"Nuovo "
+"livello\"."
 
 #: app/config/gimprc-blurbs.h:632
 msgid "Sets the default composite mode for the 'New Layer' dialog."
-msgstr "Imposta la modalità composita predefinita per la finestra di dialogo \"Nuovo livello\"."
+msgstr ""
+"Imposta la modalità composita predefinita per la finestra di dialogo \"Nuovo "
+"livello\"."
 
 #: app/config/gimprc-blurbs.h:635
 msgid "Sets the default opacity for the 'New Layer' dialog."
@@ -14107,8 +14111,8 @@ msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Rimuovi selezione fluttuante"
 
-#: app/core/gimpimage.c:5352 app/pdb/drawable-filter-cmds.c:674
-#: app/widgets/gimpitemtreeview.c:2868
+#: app/core/gimpimage.c:5352 app/pdb/drawable-filter-cmds.c:681
+#: app/widgets/gimpitemtreeview.c:2864
 msgid "Remove filter"
 msgstr "Rimuovi filtro"
 
@@ -14352,7 +14356,7 @@ msgstr "Impossibile fondere un livello invisibile."
 msgid "Cannot merge down to a layer group."
 msgstr "Impossibile fondere in un gruppo di livelli."
 
-#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2831
+#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2830
 msgid "The layer to merge down to is locked."
 msgstr "Il livello da fondere in basso è bloccato."
 
@@ -15057,7 +15061,8 @@ msgstr "Nessuna selezione da disegnare."
 
 #: app/core/gimpselection.c:753
 msgid "Unable to cut or copy because the selected region is empty."
-msgstr "Impossibile a tagliare o copiare perché la regione selezionata è vuota."
+msgstr ""
+"Impossibile a tagliare o copiare perché la regione selezionata è vuota."
 
 #: app/core/gimpselection.c:897
 msgid "Cannot float selection because the selected region is empty."
@@ -17021,7 +17026,7 @@ msgstr "Dimensione anteprima na_vigazione:"
 #. Item
 #: app/dialogs/preferences-dialog.c:1909
 msgid "Item search"
-msgstr "Ricerca elemento"
+msgstr "Ricerca elementi"
 
 #. Keyboard Shortcuts
 #: app/dialogs/preferences-dialog.c:1916
@@ -17777,7 +17782,7 @@ msgstr "_Modalità puntatore:"
 
 #: app/dialogs/preferences-dialog.c:3342
 msgid "Pointer _handedness:"
-msgstr "Durez_za del puntatore:"
+msgstr "_Mano del puntatore:"
 
 #: app/dialogs/preferences-dialog.c:3346
 msgid "Paint Tools"
@@ -20454,7 +20459,7 @@ msgid "Turn colors into shades of gray"
 msgstr "Trasforma i colori in scala di grigi"
 
 #: app/operations/gimpoperationdesaturate.c:91
-#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1445
+#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1449
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
 #: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:281
@@ -20499,7 +20504,7 @@ msgstr "Sostituisce una parziale trasparenza con un colore"
 msgid "The color"
 msgstr "Il colore"
 
-#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1408
+#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1412
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:109
 #: app/tools/gimptransformoptions.c:262
 msgid "Clipping"
@@ -21036,7 +21041,7 @@ msgstr "Fisso"
 msgid "Combine Masks"
 msgstr "Combina maschere"
 
-#: app/pdb/drawable-cmds.c:655 app/tools/gimpfiltertool.c:1332
+#: app/pdb/drawable-cmds.c:655 app/tools/gimpfiltertool.c:1336
 msgid "Add filter"
 msgstr "Aggiungi filtro"
 
@@ -23377,21 +23382,21 @@ msgid "%s: switch horizontal and vertical"
 msgstr "%s: commuta orizzontale e verticale"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1421
+#: app/tools/gimpfiltertool.c:1425
 msgid "Blending Options"
 msgstr "Opzioni di fusione"
 
-#: app/tools/gimpfiltertool.c:1923 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1931 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importa impostazioni '%s'"
 
-#: app/tools/gimpfiltertool.c:1925 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1933 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Esporta impostazioni '%s'"
 
-#: app/tools/gimpfiltertool.c:2163
+#: app/tools/gimpfiltertool.c:2171
 msgid "Editing filter..."
 msgstr "Modifica filtro..."
 
@@ -27822,51 +27827,51 @@ msgstr "Impossibile riordinare un filtro in fase di modifica."
 msgid "Reorder filter"
 msgstr "Riordina filtro"
 
-#: app/widgets/gimpitemtreeview.c:3394
+#: app/widgets/gimpitemtreeview.c:3390
 msgid "No layer set stored"
 msgstr "Nessun set livelli memorizzato"
 
-#: app/widgets/gimpitemtreeview.c:3416
+#: app/widgets/gimpitemtreeview.c:3412
 msgid "New layer set's name"
 msgstr "Nuovo nome del set livelli"
 
-#: app/widgets/gimpitemtreeview.c:3458 app/widgets/gimpitemtreeview.c:3473
+#: app/widgets/gimpitemtreeview.c:3454 app/widgets/gimpitemtreeview.c:3469
 msgid "Select layers by text search"
 msgstr "Seleziona livelli per ricerca testuale"
 
-#: app/widgets/gimpitemtreeview.c:3460 app/widgets/gimpitemtreeview.c:3475
+#: app/widgets/gimpitemtreeview.c:3456 app/widgets/gimpitemtreeview.c:3471
 msgid "Text search"
 msgstr "Ricerca testuale"
 
-#: app/widgets/gimpitemtreeview.c:3479
+#: app/widgets/gimpitemtreeview.c:3475
 msgid "Select layers by glob patterns"
 msgstr "Seleziona livelli per caratteri jolly"
 
-#: app/widgets/gimpitemtreeview.c:3481
+#: app/widgets/gimpitemtreeview.c:3477
 msgid "Glob pattern search"
 msgstr "Ricerca per caratteri jolly"
 
-#: app/widgets/gimpitemtreeview.c:3485
+#: app/widgets/gimpitemtreeview.c:3481
 msgid "Select layers by regular expressions"
 msgstr "Seleziona livelli per espressione regolare"
 
-#: app/widgets/gimpitemtreeview.c:3487
+#: app/widgets/gimpitemtreeview.c:3483
 msgid "Regular Expression search"
 msgstr "Ricerca per espressione regolare"
 
-#: app/widgets/gimpitemtreeview.c:3542
+#: app/widgets/gimpitemtreeview.c:3538
 msgid "search"
 msgstr "cerca"
 
-#: app/widgets/gimpitemtreeview.c:3543
+#: app/widgets/gimpitemtreeview.c:3539
 msgid "glob"
 msgstr "glob"
 
-#: app/widgets/gimpitemtreeview.c:3543
+#: app/widgets/gimpitemtreeview.c:3539
 msgid "regexp"
 msgstr "regexp"
 
-#: app/widgets/gimpitemtreeview.c:3712
+#: app/widgets/gimpitemtreeview.c:3708
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "Espressione regolare non valida: %s\n"
