@@ -76,28 +76,42 @@ text_layer_new_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpText  *gimp_text;
-      GeglColor *color;
-
-      color = gimp_context_get_foreground (context);
-
-      gimp_text = g_object_new (GIMP_TYPE_TEXT,
-                                "text",           text,
-                                "font",           font,
-                                "font-size",      size,
-                                "font-size-unit", unit,
-                                "color",          color,
-                                NULL);
-
-      layer = GIMP_TEXT_LAYER (gimp_text_layer_new (image, gimp_text));
-      g_object_unref (gimp_text);
-
-      if (! layer)
+      if (font == NULL || unit == NULL)
         {
           g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                       /* TODO: write a more explicit error message after
+                        * string freeze.
+                        */
                        _("Failed to create text layer"));
 
           success = FALSE;
+        }
+
+      if (success)
+        {
+          GimpText  *gimp_text;
+          GeglColor *color;
+
+          color = gimp_context_get_foreground (context);
+
+          gimp_text = g_object_new (GIMP_TYPE_TEXT,
+                                    "text",           text,
+                                    "font",           font,
+                                    "font-size",      size,
+                                    "font-size-unit", unit,
+                                    "color",          color,
+                                    NULL);
+
+          layer = GIMP_TEXT_LAYER (gimp_text_layer_new (image, gimp_text));
+          g_object_unref (gimp_text);
+
+          if (! layer)
+            {
+              g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                           _("Failed to create text layer"));
+
+              success = FALSE;
+            }
         }
     }
 
