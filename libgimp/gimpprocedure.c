@@ -213,6 +213,8 @@ gimp_procedure_constructed (GObject *object)
 
   g_assert (GIMP_IS_PLUG_IN (priv->plug_in));
   g_assert (priv->name != NULL);
+
+  gimp_procedure_set_sensitivity_mask (procedure, GIMP_PROCEDURE_SENSITIVE_ALWAYS);
 }
 
 static void

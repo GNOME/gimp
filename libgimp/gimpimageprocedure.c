@@ -123,6 +123,10 @@ gimp_image_procedure_constructed (GObject *object)
                                                  "The input drawables",
                                                  GIMP_TYPE_DRAWABLE,
                                                  G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
+
+  gimp_procedure_set_sensitivity_mask (GIMP_PROCEDURE (procedure),
+                                       GIMP_PROCEDURE_SENSITIVE_DRAWABLE |
+                                       GIMP_PROCEDURE_SENSITIVE_DRAWABLES);
 }
 
 static void
@@ -224,12 +228,16 @@ gimp_image_procedure_set_sensitivity (GimpProcedure *procedure,
   g_return_val_if_fail (GIMP_IS_IMAGE_PROCEDURE (procedure), FALSE);
 
   pspec = gimp_procedure_find_argument (procedure, "image");
-  g_return_val_if_fail (pspec, FALSE);
-
-  if (sensitivity_mask & GIMP_PROCEDURE_SENSITIVE_NO_IMAGE)
-    pspec->flags |= GIMP_PARAM_NO_VALIDATE;
-  else
-    pspec->flags &= ~GIMP_PARAM_NO_VALIDATE;
+  /* The pspec may not exist yet while we are constructing the
+   * procedure.
+   */
+  if (pspec)
+    {
+      if (sensitivity_mask & GIMP_PROCEDURE_SENSITIVE_NO_IMAGE)
+        pspec->flags |= GIMP_PARAM_NO_VALIDATE;
+      else
+        pspec->flags &= ~GIMP_PARAM_NO_VALIDATE;
+    }
 
   return TRUE;
 }
