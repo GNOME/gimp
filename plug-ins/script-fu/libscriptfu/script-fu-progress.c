@@ -35,6 +35,7 @@
  */
 
 
+static gchar *main_proc_title      = NULL;
 static gchar *last_command         = NULL;
 static gint   command_count        = 0;
 static gint   consec_command_count = 0;
@@ -56,18 +57,33 @@ script_fu_interface_progress_update (const gchar *text)
 {
   g_debug ("%s calling progress_set_text", G_STRFUNC);
   gimp_progress_set_text (text);
+  gimp_progress_pulse ();
 }
 
 /* Called when start a script run.
  * Not necessarily when a plugin process is starting.
  */
 void
-script_fu_progress_init (void)
+script_fu_progress_init (const gchar *title)
 {
-  /* FUTURE: show the script's menu item?
-   * Or the name of the procedure, but user's don't know the names.
-   */
-  gimp_progress_init ( "Script-Fu");
+  g_free (main_proc_title);
+  if (title)
+    {
+      gchar *ellipsis;
+
+      main_proc_title = gimp_strip_uline (title);
+      main_proc_title = g_strstrip (main_proc_title);
+      ellipsis = g_strrstr (main_proc_title, "...");
+
+      if (ellipsis && ellipsis - main_proc_title == strlen (main_proc_title) - 3)
+        *ellipsis = '\0';
+    }
+  else
+    {
+      main_proc_title = g_strdup ("Script-Fu");
+    }
+
+  gimp_progress_init (main_proc_title);
 
   /* If this is the long running extension-script-fu, reset these vars.
    *
@@ -110,8 +126,11 @@ script_fu_progress_report (const gchar *command)
         {
           gchar *new_command;
 
-          new_command = g_strdup_printf ("%s <%d>", command, command_count);
-          script_fu_interface_progress_update (command);
+          if (main_proc_title)
+            new_command = g_strdup_printf ("%s: %s <%d>", main_proc_title, command, command_count);
+          else
+            new_command = g_strdup_printf ("%s <%d>", command, command_count);
+          script_fu_interface_progress_update (new_command);
           g_free (new_command);
         }
     }
@@ -124,9 +143,22 @@ script_fu_progress_report (const gchar *command)
       last_command = g_strdup (command);
 
       if (! g_str_has_prefix (command, "gimp-progress-"))
-        script_fu_interface_progress_update (command);
+        {
+          gchar *new_command;
+
+          if (main_proc_title)
+            new_command = g_strdup_printf ("%s: %s", main_proc_title, command);
+          else
+            new_command = g_strdup (command);
+
+          script_fu_interface_progress_update (new_command);
+
+          g_free (new_command);
+        }
       else
-        script_fu_interface_progress_update ("");
+        {
+          script_fu_interface_progress_update ("");
+        }
     }
 
   /* In v2, ScriptFu was displaying progress to its own progress bar

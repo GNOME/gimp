@@ -18,7 +18,7 @@
 #ifndef __SCRIPT_FU_PROGRESS_H__
 #define __SCRIPT_FU_PROGRESS_H__
 
-void script_fu_progress_init   (void);
+void script_fu_progress_init   (const gchar *title);
 void script_fu_progress_report (const gchar *command);
 
 #endif /*  __SCRIPT_FU_PROGRESS__  */

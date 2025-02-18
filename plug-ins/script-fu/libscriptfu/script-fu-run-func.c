@@ -86,7 +86,7 @@ script_fu_run_image_procedure (GimpProcedure        *procedure, /* GimpImageProc
 
   begin_interpret_default_dialect ();
 
-  script_fu_progress_init ();
+  script_fu_progress_init (gimp_procedure_get_menu_label (procedure));
 
   switch (run_mode)
     {
@@ -172,7 +172,7 @@ script_fu_run_regular_procedure (GimpProcedure        *procedure,
 
   begin_interpret_default_dialect ();
 
-  script_fu_progress_init ();
+  script_fu_progress_init (gimp_procedure_get_menu_label (procedure));
 
   switch (run_mode)
     {
@@ -259,7 +259,7 @@ script_fu_run_procedure (GimpProcedure       *procedure,
 
   begin_interpret_default_dialect ();
 
-  script_fu_progress_init ();
+  script_fu_progress_init (gimp_procedure_get_menu_label (procedure));
 
   switch (run_mode)
     {
