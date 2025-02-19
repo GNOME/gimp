@@ -3140,7 +3140,7 @@ msgstr "Mostra l'avís per a píxels amb un component negatiu"
 
 #: modules/display-filter-clip-warning.c:173
 msgid "Shadows color"
-msgstr "Mostra el color"
+msgstr "Color de les ombres"
 
 #: modules/display-filter-clip-warning.c:174
 msgid "Shadows warning color"

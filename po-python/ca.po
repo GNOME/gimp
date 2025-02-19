@@ -379,7 +379,7 @@ msgstr "Tall automàtic (fg->bg)"
 
 #: plug-ins/python/palette-sort.py:366
 msgid "Partitioned"
-msgstr "Partició"
+msgstr "Particionat"
 
 #: plug-ins/python/palette-sort.py:367
 msgid "Select_ions"

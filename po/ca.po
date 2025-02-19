@@ -235,7 +235,7 @@ msgstr ""
 #: app/main.c:252
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr ""
-"Mode de compatibilitat de la base de dades de procediments (off|on|warn)"
+"Mode de compatibilitat PDB (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
 #: app/main.c:258
@@ -8119,12 +8119,12 @@ msgstr "Engrandeix l'àrea seleccionada"
 #: app/actions/select-actions.c:99
 msgctxt "select-action"
 msgid "Bo_rder..."
-msgstr "Només la vo_ra..."
+msgstr "Vo_ra..."
 
 #: app/actions/select-actions.c:100
 msgctxt "select-action"
 msgid "Replace the selection by its border"
-msgstr "Selecciona només el contorn de la selecció actual"
+msgstr "Selecciona només la vora de la selecció actual"
 
 #: app/actions/select-actions.c:105
 msgctxt "select-action"
@@ -8527,7 +8527,7 @@ msgstr "Ha fallat el text a sobre del camí: %s"
 #: app/actions/tool-options-actions.c:58
 msgctxt "tool-options-action"
 msgid "_New Tool Preset..."
-msgstr "Valor predefinit de l'eina _nou..."
+msgstr "Valor _nou predefinit de l'eina..."
 
 #: app/actions/tool-options-actions.c:63
 msgctxt "tool-options-action"
@@ -16843,7 +16843,7 @@ msgstr "Exporta el tipus de fitxer"
 
 #: app/dialogs/preferences-dialog.c:1604
 msgid "Default export file t_ype:"
-msgstr "_Exporta per defecte el tipus de fitxer:"
+msgstr "_Tipus de fitxer per defecte a exportar:"
 
 #. Raw Image Importer
 #: app/dialogs/preferences-dialog.c:1608
@@ -18377,7 +18377,7 @@ msgstr ""
 
 #: app/dialogs/user-install-dialog.c:100
 msgid "Installation Log"
-msgstr "Registre de la instal·lació personalitzada"
+msgstr "Registre de la instal·lació"
 
 #: app/dialogs/path-export-dialog.c:85
 msgid "Export Path to SVG"

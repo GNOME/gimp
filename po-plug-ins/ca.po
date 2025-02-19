@@ -5172,7 +5172,7 @@ msgstr "Exporta la imatge com a imatge PostScript encapsulat"
 
 #: plug-ins/common/file-ps.c:501
 msgid "EPS"
-msgstr "GPS"
+msgstr "EPS"
 
 #: plug-ins/common/file-ps.c:526
 msgid "Width of the image in PostScript file (0: use input image size)"
