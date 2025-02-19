@@ -576,6 +576,8 @@ gimp-win:
     matrix:
       - RUNNER: win32-ps
         MSYSTEM_PREFIX: mingw32
+  variables:
+    MINGW_PACKAGE_PREFIX: mingw-w64-i686
 
 deps-win-x86:
   extends: .win-x86
@@ -588,7 +590,8 @@ gimp-win-x86:
   extends: .win-x86
   needs: ["deps-win-x86"]
   stage: !reference [gimp-win, stage]
-  variables: !reference [gimp-win, variables]
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
   script:
     - !reference [gimp-win, script]
     # We split 32-bit DWARF symbols here because LLVM-objcopy do NOT support them

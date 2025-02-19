@@ -30,14 +30,23 @@ if (-not $MSYS_ROOT)
         exit 1
       }
   }
-if ((Get-WmiObject -Class Win32_ComputerSystem).SystemType -like 'ARM64*')
+if (-not $MSYSTEM_PREFIX)
   {
-    $MSYSTEM_PREFIX = 'clangarm64'
+    if ((Get-WmiObject Win32_ComputerSystem).SystemType -like 'ARM64*')
+      {
+        $MSYSTEM_PREFIX = 'clangarm64'
+      }
+    elseif ((Get-WmiObject Win32_ComputerSystem).SystemType -like 'x64*')
+      {
+        $MSYSTEM_PREFIX = 'clang64'
+      }
+  }
+if ($MSYSTEM_PREFIX -eq 'clangarm64')
+  {
     $MINGW_PACKAGE_PREFIX = 'mingw-w64-clang-aarch64'
   }
-elseif ((Get-WmiObject -Class Win32_ComputerSystem).SystemType -like 'x64*')
+elseif ($MSYSTEM_PREFIX -eq 'clang64')
   {
-    $MSYSTEM_PREFIX = 'clang64'
     $MINGW_PACKAGE_PREFIX = 'mingw-w64-clang-x86_64'
   }
 $env:Path = "$MSYS_ROOT/$MSYSTEM_PREFIX/bin;$MSYS_ROOT/usr/bin;" + $env:Path
