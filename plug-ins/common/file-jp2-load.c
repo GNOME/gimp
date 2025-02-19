@@ -797,8 +797,6 @@ color_cmyk_to_rgb (opj_image_t *image)
       image->comps[2].data[i] = (int) (255.0f * Y * K); /* B */
     }
 
-  free (image->comps[3].data);
-  image->comps[3].data = NULL;
   image->comps[0].prec = 8;
   image->comps[1].prec = 8;
   image->comps[2].prec = 8;
@@ -810,6 +808,10 @@ color_cmyk_to_rgb (opj_image_t *image)
       memcpy(&(image->comps[i]), &(image->comps[i + 1]),
              sizeof (image->comps[i]));
     }
+
+  /* Restore the count so the OpenJPEG destroy function works
+   * properly */
+  image->numcomps += 1;
 
   return TRUE;
 }
@@ -1212,6 +1214,8 @@ load_image (GimpProcedure     *procedure,
                        gimp_file_get_utf8_name (file));
           goto out;
         }
+
+      num_components--;
     }
   else if (image->color_space == OPJ_CLRSPC_EYCC)
     {
