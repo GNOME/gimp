@@ -26,6 +26,15 @@
   '( "rgb-565" "rgba-5551" "rgb-555" "rgb-888" "rgba-8888" "rgbx-8888"))
 (define webp-encoder-strings
   '("default" "picture" "photo" "drawing" "icon" "text"))
+; omitting two compresison strings not compatible with all imgage types
+; "ccittfax3" "ccittfax4" only for B/W images?
+(define tiff-compression-strings
+  '("none" "lzw" "packbits" "adobe_deflate" "jpeg" ))
+
+(define raw-planarity-strings
+  '("contiguous" "planar" ))
+(define raw-palette-type-strings
+  '("rgb" "bgr" ))
 
 (define (random-dct-method)
   ; (random 3) is [1 2 3], list index is [0 1 2]
@@ -44,6 +53,14 @@
 (define (random-webp-encoder)
   (list-ref webp-encoder-strings (- (random 6) 1)))
 
+(define (random-tiff-compression)
+  (list-ref tiff-compression-strings (- (random 5) 1)))
+
+(define (random-raw-planarity)
+  (list-ref raw-planarity-strings (- (random 2) 1)))
+
+(define (random-raw-palette-type)
+  (list-ref raw-planarity-strings (- (random 2) 1)))
 
 ; returns 0 or 1
 (define (random-bool)
@@ -121,11 +138,75 @@
     ; rest are defaulted
     ))
 
+; Not totally randomizeable: certain combinations not permitted.
+(define (randomize-tiff-export sourceImage tempTestFile)
+  (file-tiff-export
+    RUN-NONINTERACTIVE
+    sourceImage
+    tempTestFile       ; file destination
+    -1                 ; NULL for export options
+    (random-bool)      ; BigTiff
+    (random-tiff-compression)
+    (random-bool)      ; keep transparent, pixels not alpha
+    ; Not randomizing, not compatible with all compression choices.
+    #f                 ; cmyk
+    (random-bool)      ; include exif
+    (random-bool)      ; include iptc
+    (random-bool)      ; include xmp
+    (random-bool)      ; include color profile
+    (random-bool)      ; include thumbnail
+    (random-bool)      ; include comment
+    ))
+
+
+; gih is essentially sequence of gbr.
+; we don't yet test gbr separately
+(define (randomize-gih-export sourceImage tempTestFile)
+  (file-gih-export
+    RUN-NONINTERACTIVE
+    sourceImage
+    tempTestFile       ; file destination
+    -1                 ; NULL for export options
+    (random 10)        ; spacing.  Actual limit is 1000, but save time.
+    "dummy description"
+    (random 64)        ; cell width.  Actual limit is huge.
+    ; rest default
+  ))
+
+; TODO randomize
+(define (randomize-gif-export sourceImage tempTestFile)
+  (file-gif-export
+    RUN-NONINTERACTIVE
+    sourceImage
+    tempTestFile       ; file destination
+    -1                 ; NULL for export options
+    ; rest default
+  ))
+
+; TODO randomize
+(define (randomize-pdf-export sourceImage tempTestFile)
+  (file-pdf-export
+    RUN-NONINTERACTIVE
+    sourceImage
+    tempTestFile       ; file destination
+    -1                 ; NULL for export options
+    ; rest default
+  ))
+
+(define (randomize-raw-export sourceImage tempTestFile)
+  (file-pdf-export
+    RUN-NONINTERACTIVE
+    sourceImage
+    tempTestFile       ; file destination
+    -1                 ; NULL for export options
+    (random-raw-planarity)
+    (random-raw-palette-type)
+  ))
 
 
 
 
-; Repeatedly call a randomizing export function
+; Repeatedly call a randomizing exporter function
 (define (iterate-exporter exporter testImage tempTestFile count)
   (while (>= count 0)
     (test! (string-append tempTestFile ": " (number->string count)))
@@ -168,7 +249,32 @@
 (define tempTestFile (gimp-temp-file "webp"))
 (iterate-exporter randomize-webp-export testImage tempTestFile 10)
 
-; GIF PDF TIFF XCF
+; TIFF
+; Passes, but warns to GIMP Error Console
+(define tempTestFile (gimp-temp-file "tiff"))
+(iterate-exporter randomize-tiff-export testImage tempTestFile 10)
+
+; GIH brush pipe
+(define tempTestFile (gimp-temp-file "gih"))
+(iterate-exporter randomize-gih-export testImage tempTestFile 10)
+
+; TODO until randomized, only call once
+; GIF
+(define tempTestFile (gimp-temp-file "gif"))
+(iterate-exporter randomize-gif-export testImage tempTestFile 1)
+
+; PDF
+(define tempTestFile (gimp-temp-file "pdf"))
+(iterate-exporter randomize-pdf-export testImage tempTestFile 1)
+
+; RAW
+; requires a separate loader app installed: RawTherapee or darktable
+;(define tempTestFile (gimp-temp-file "raw"))
+;(iterate-exporter randomize-raw-export testImage tempTestFile 10)
+
+; XCF has no options yet, and is tested elsewhere
+
+; TODO: GBR etc.
 
 ; Only the last created file still exists (of each image format.)
 ; We were overwriting it.

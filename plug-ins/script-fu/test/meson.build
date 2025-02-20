@@ -90,6 +90,7 @@ test_scripts = [
   'tests' / 'PDB' / 'enums.scm',
   'tests' / 'PDB' / 'bind-args.scm',
   'tests' / 'PDB' / 'pixel.scm',
+  'tests' / 'PDB' / 'named-args.scm',
 
   # comprehensive, total test
   'tests' / 'PDB' / 'pdb.scm',

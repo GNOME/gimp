@@ -115,8 +115,9 @@
 (testing:load-test "enums.scm")
 (testing:load-test "bind-args.scm")
 (testing:load-test "pixel.scm")
+(testing:load-test "named-args.scm")
 
-; tested last, randome and time-consuming
+; tested last, random and time-consuming
 (testing:load-test "file-export.scm")
 
 ; Don't routinely test the PDB API for NDE filters, it is long:
