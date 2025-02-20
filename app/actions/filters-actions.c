@@ -824,6 +824,9 @@ filters_actions_setup (GimpActionGroup *group)
       entry.value     = op_class->name;
       entry.help_id   = GIMP_HELP_TOOL_GEGL;
 
+      if (gegl_operation_class_get_key (op_class, "gimp:help-id"))
+        entry.help_id = gegl_operation_class_get_key (op_class, "gimp:help-id");
+
       gimp_action_group_add_string_actions (group, "filters-action",
                                             &entry, 1,
                                             filters_apply_interactive_cmd_callback);
