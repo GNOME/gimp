@@ -32,14 +32,7 @@ if (-not $MSYS_ROOT)
   }
 if (-not $MSYSTEM_PREFIX)
   {
-    if ((Get-WmiObject Win32_ComputerSystem).SystemType -like 'ARM64*')
-      {
-        $MSYSTEM_PREFIX = 'clangarm64'
-      }
-    elseif ((Get-WmiObject Win32_ComputerSystem).SystemType -like 'x64*')
-      {
-        $MSYSTEM_PREFIX = 'clang64'
-      }
+    $MSYSTEM_PREFIX = if ((Get-WmiObject Win32_ComputerSystem).SystemType -like 'ARM64*') { 'clangarm64' } else { 'clang64' }
   }
 if ($MSYSTEM_PREFIX -eq 'clangarm64')
   {
