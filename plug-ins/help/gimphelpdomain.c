@@ -42,8 +42,21 @@
 #endif
 
 
+typedef struct
+{
+  gboolean          *success;
+
+  GimpHelpLocale    *locale;
+  const gchar       *uri;
+  const gchar       *domain;
+  GimpHelpProgress  *progress;
+  GCancellable      *cancellable;
+  GError           **error;
+} HelpThreadData;
+
 /*  local function prototypes  */
 
+static gboolean   parse_thread_func   (HelpThreadData    *data);
 static gboolean   domain_locale_parse (GimpHelpDomain    *domain,
                                        GimpHelpLocale    *locale,
                                        GimpHelpProgress  *progress,
@@ -228,14 +241,34 @@ gimp_help_domain_map (GimpHelpDomain    *domain,
 
 /*  private functions  */
 
+G_LOCK_DEFINE (success);
+
+static gboolean
+parse_thread_func (HelpThreadData *data)
+{
+  gboolean success = FALSE;
+
+  success = gimp_help_locale_parse (data->locale, data->uri, data->domain,
+                                    data->progress, data->cancellable, data->error);
+  G_LOCK (success);
+  *data->success = success;
+  G_UNLOCK (success);
+
+  return success;
+}
+
 static gboolean
 domain_locale_parse (GimpHelpDomain    *domain,
                      GimpHelpLocale    *locale,
                      GimpHelpProgress  *progress,
                      GError           **error)
 {
-  gchar    *uri;
-  gboolean  success;
+  GCancellable   *cancellable;
+  gchar          *uri;
+  GThread        *thread;
+  GTimer         *timer;
+  gboolean        success = FALSE;
+  HelpThreadData  data;
 
   g_return_val_if_fail (domain != NULL, FALSE);
   g_return_val_if_fail (locale != NULL, FALSE);
@@ -244,10 +277,40 @@ domain_locale_parse (GimpHelpDomain    *domain,
   uri = g_strdup_printf ("%s/%s/gimp-help.xml",
                          domain->help_uri, locale->locale_id);
 
-  success = gimp_help_locale_parse (locale, uri, domain->help_domain,
-                                    progress, error);
+  timer            = g_timer_new ();
+  cancellable      = g_cancellable_new ();
+  data.success     = &success;
+  data.locale      = locale;
+  data.uri         = uri;
+  data.domain      = domain->help_domain;
+  data.progress    = progress;
+  data.cancellable = cancellable;
+  data.error       = error;
+  thread           = g_thread_new (NULL, (GThreadFunc) parse_thread_func, &data);
+
+  while (TRUE)
+    {
+      gboolean exit;
+
+      G_LOCK (success);
+      exit = success;
+      G_UNLOCK (success);
+
+      if (! exit && g_timer_elapsed (timer, NULL) > 10.0)
+        {
+          g_cancellable_cancel (cancellable);
+          exit = TRUE;
+        }
+
+      if (exit)
+        break;
+    }
+
+  g_thread_join (thread);
 
   g_free (uri);
+  g_timer_destroy (timer);
+  g_object_unref (cancellable);
 
   return success;
 }

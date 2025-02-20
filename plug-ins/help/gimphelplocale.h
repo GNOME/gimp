@@ -45,6 +45,7 @@ gboolean         gimp_help_locale_parse (GimpHelpLocale    *locale,
                                          const gchar       *uri,
                                          const gchar       *help_domain,
                                          GimpHelpProgress  *progress,
+                                         GCancellable      *cancellable,
                                          GError           **error);
 
 
