@@ -13,7 +13,7 @@ $PSNativeCommandUseErrorActionPreference = $true
 
 
 # This script needs a bit of MSYS2 to work
-Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'MSYS_ROOT\)' -Context 0,28) -replace '> ','')
+Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'MSYS_ROOT\)' -Context 0,21) -replace '> ','')
 
 
 # 1. GET INNO
