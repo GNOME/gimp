@@ -429,8 +429,12 @@ gimp-flatpak-x64:
     - <<: *CI_COMMIT
     - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
   variables:
-    DEB_VERSION: testing
     MSYSTEM_PREFIX: clang64
+    #To match Debian Testing compiler with MSYS2 compiler resources
+    DEB_VERSION: testing
+    #To avoid noisy 'apt' warnings
+    DEBIAN_FRONTEND: noninteractive
+    TERM: dumb
 
 image-debian-x64-cross:
   extends: .win-cross
