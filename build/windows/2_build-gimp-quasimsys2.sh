@@ -44,7 +44,7 @@ if [ ! -d "$BUILD_DIR" ] || [ ! -d "$GIMP_PREFIX" ]; then
   exit 1
 fi
 if [ -z $GITLAB_CI ]; then
-  IFS=$'\n' VAR_ARRAY=($(cat .gitlab-ci.yml | sed -n '/export PATH=/,/GI_TYPELIB_PATH}\"/p' | sed 's/    - //'))
+  IFS=$'\n' VAR_ARRAY=($(cat .gitlab-ci.yml | sed -n '/multi-os/,/GI_TYPELIB_PATH}\"/p' | sed 's/    - //' | sed '/#/d'))
   IFS=$' \t\n'
   for VAR in "${VAR_ARRAY[@]}"; do
     eval "$VAR" || continue
@@ -67,7 +67,7 @@ echo -e "\e[0Ksection_start:`date +%s`:cross_environ[collapsed=true]\r\e[0KPrepa
 bash -c "source ${PARENT_DIR}quasi-msys2/env/all.src && bash build/windows/2_build-gimp-quasimsys2.sh"
 else
 export GIMP_PREFIX="$PWD/${PARENT_DIR}_install-$(echo $MSYSTEM_PREFIX | sed 's|/||')-cross"
-IFS=$'\n' VAR_ARRAY=($(cat .gitlab-ci.yml | sed -n '/export PATH=/,/GI_TYPELIB_PATH}\"/p' | sed 's/    - //'))
+IFS=$'\n' VAR_ARRAY=($(cat .gitlab-ci.yml | sed -n '/multi-os/,/GI_TYPELIB_PATH}\"/p' | sed 's/    - //' | sed '/#/d'))
 IFS=$' \t\n'
 for VAR in "${VAR_ARRAY[@]}"; do
   if [[ ! "$VAR" =~ 'multiarch' ]]; then

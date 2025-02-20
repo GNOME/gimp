@@ -94,7 +94,7 @@ echo -e "\e[0Ksection_start:`date +%s`:cross_environ[collapsed=true]\r\e[0KPrepa
 bash -c "source quasi-msys2/env/all.src && bash ${GIMP_DIR}build/windows/1_build-deps-quasimsys2.sh"
 else
 export GIMP_PREFIX="$PWD/_install-$(echo $MSYSTEM_PREFIX | sed 's|/||')-cross"
-IFS=$'\n' VAR_ARRAY=($(cat ${GIMP_DIR}.gitlab-ci.yml | sed -n '/export PATH=/,/GI_TYPELIB_PATH}\"/p' | sed 's/    - //'))
+IFS=$'\n' VAR_ARRAY=($(cat ${GIMP_DIR}.gitlab-ci.yml | sed -n '/multi-os/,/GI_TYPELIB_PATH}\"/p' | sed 's/    - //' | sed '/#/d'))
 IFS=$' \t\n'
 for VAR in "${VAR_ARRAY[@]}"; do
   if [[ ! "$VAR" =~ 'multiarch' ]]; then

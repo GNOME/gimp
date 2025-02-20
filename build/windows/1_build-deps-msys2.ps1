@@ -76,7 +76,7 @@ if (-not $GITLAB_CI)
         $GIMP_PREFIX = "$PWD\_install"
       }
 
-    Invoke-Expression ((Get-Content $GIMP_DIR\.gitlab-ci.yml | Select-String 'win_environ\[' -Context 0,5) -replace '> ','' -replace '- ','')
+    Invoke-Expression ((Get-Content $GIMP_DIR\.gitlab-ci.yml | Select-String 'win_environ\[' -Context 0,7) -replace '> ','' -replace '- ','')
   }
 
 

@@ -111,12 +111,14 @@ stages:
   before_script:
     - export GIMP_PREFIX="${CI_PROJECT_DIR}/_install-${RUNNER}"
     - echo -e "\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KPreparing build environment"
-    - export PATH="$GIMP_PREFIX/bin:$PATH"
     - gcc -print-multi-os-directory 2>/dev/null | grep ./ && export LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || export LIB_DIR="lib"
     - gcc -print-multiarch 2>/dev/null | grep . && export LIB_SUBDIR=$(echo $(gcc -print-multiarch)'/')
+    # Build-time vars
     - export PKG_CONFIG_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
-    - export LD_LIBRARY_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
     - export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"
+    # Runtime vars
+    - export PATH="${GIMP_PREFIX}/bin:$PATH"
+    - export LD_LIBRARY_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
     - export GI_TYPELIB_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}girepository-1.0${GI_TYPELIB_PATH:+:$GI_TYPELIB_PATH}"
     - echo -e "\e[0Ksection_end:`date +%s`:environ\r\e[0K"
 
@@ -525,16 +527,16 @@ gimp-win-x64-cross:
   tags:
     - $RUNNER
   before_script:
-    # MSYS2 config
     - $MSYS_ROOT = 'C:/msys64'
     - $env:Path = "$MSYS_ROOT/$MSYSTEM_PREFIX/bin;$MSYS_ROOT/usr/bin;" + $env:Path
-    # Build-time vars
     # FIXME:'gimpenv' have buggy code about Windows paths. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/12284
     - $GIMP_PREFIX = "$PWD\_install-$MSYSTEM_PREFIX".Replace('\', '/')
     - Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):win_environ[collapsed=true]$([char]13)$([char]27)[0KPreparing build environment"
-    - $env:Path = "$GIMP_PREFIX/bin;" + $env:Path
+    # Build-time vars
     - $env:PKG_CONFIG_PATH = "$GIMP_PREFIX/lib/pkgconfig;$MSYS_ROOT/$MSYSTEM_PREFIX/lib/pkgconfig;$MSYS_ROOT/$MSYSTEM_PREFIX/share/pkgconfig"
     - $env:XDG_DATA_DIRS = "$GIMP_PREFIX/share;$MSYS_ROOT/$MSYSTEM_PREFIX/share"
+    # Runtime vars
+    - $env:Path = "$GIMP_PREFIX/bin;" + $env:Path
     - $env:GI_TYPELIB_PATH = "$GIMP_PREFIX/lib/girepository-1.0;$MSYS_ROOT/$MSYSTEM_PREFIX/lib/girepository-1.0"
     - Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):win_environ$([char]13)$([char]27)[0K"
 
