@@ -27,7 +27,7 @@ Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-St
 
 if ($GITLAB_CI)
   {
-    Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'deps_install\[' -Context 0,10) -replace '> ','')
+    Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'deps_install\[' -Context 0,6) -replace '> ','')
   }
 
 

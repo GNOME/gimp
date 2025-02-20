@@ -526,6 +526,9 @@ gimp-win-x64-cross:
         MSYSTEM_PREFIX: clang64
   tags:
     - $RUNNER
+  variables:
+    CC: cc
+    CXX: c++
   before_script:
     - $MSYS_ROOT = 'C:/msys64'
     - $env:Path = "$MSYS_ROOT/$MSYSTEM_PREFIX/bin;$MSYS_ROOT/usr/bin;" + $env:Path
@@ -584,6 +587,8 @@ gimp-win:
         MSYSTEM_PREFIX: mingw32
   variables:
     MINGW_PACKAGE_PREFIX: mingw-w64-i686
+    CC: cc
+    CXX: c++
 
 deps-win-x86:
   extends: .win-x86
