@@ -48,6 +48,8 @@
 #include "core/gimpsettings.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimphelp-ids.h"
+
 #include "tools/gimpoperationtool.h"
 #include "tools/tool_manager.h"
 
@@ -64,6 +66,7 @@ static gint64   gimp_gegl_procedure_get_memsize         (GimpObject     *object,
 static gchar  * gimp_gegl_procedure_get_description     (GimpViewable   *viewable,
                                                          gchar         **tooltip);
 
+static const gchar * gimp_gegl_procedure_get_help_id    (GimpProcedure  *procedure);
 static const gchar * gimp_gegl_procedure_get_menu_label (GimpProcedure  *procedure);
 static gboolean      gimp_gegl_procedure_get_sensitive  (GimpProcedure  *procedure,
                                                          GimpObject     *object,
@@ -103,6 +106,7 @@ gimp_gegl_procedure_class_init (GimpGeglProcedureClass *klass)
   viewable_class->default_icon_name = "gimp-gegl";
   viewable_class->get_description   = gimp_gegl_procedure_get_description;
 
+  proc_class->get_help_id           = gimp_gegl_procedure_get_help_id;
   proc_class->get_menu_label        = gimp_gegl_procedure_get_menu_label;
   proc_class->get_sensitive         = gimp_gegl_procedure_get_sensitive;
   proc_class->execute               = gimp_gegl_procedure_execute;
@@ -151,6 +155,17 @@ gimp_gegl_procedure_get_description (GimpViewable  *viewable,
     *tooltip = g_strdup (gimp_procedure_get_blurb (procedure));
 
   return g_strdup (gimp_procedure_get_label (procedure));
+}
+
+static const gchar *
+gimp_gegl_procedure_get_help_id (GimpProcedure *procedure)
+{
+  GimpGeglProcedure *proc = GIMP_GEGL_PROCEDURE (procedure);
+
+  if (gegl_operation_get_key (proc->operation, "gimp:help-id"))
+    return gegl_operation_get_key (proc->operation, "gimp:help-id");
+
+  return GIMP_HELP_TOOL_GEGL;
 }
 
 static const gchar *
