@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2025-01-27 06:16+0000\n"
-"PO-Revision-Date: 2025-02-16 16:47+0200\n"
+"PO-Revision-Date: 2025-02-19 16:47+0200\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -7265,7 +7265,7 @@ msgstr "_Edita el color..."
 #: app/actions/palette-editor-actions.c:45
 msgctxt "palette-editor-action"
 msgid "Edit this entry"
-msgstr "Edita el degradat"
+msgstr "Edita aquesta entrada"
 
 #: app/actions/palette-editor-actions.c:50
 msgctxt "palette-editor-action"
@@ -7275,7 +7275,7 @@ msgstr "_Suprimeix color"
 #: app/actions/palette-editor-actions.c:51
 msgctxt "palette-editor-action"
 msgid "Delete this entry"
-msgstr "Suprimeix aquesta capa"
+msgstr "Suprimeix aquesta entrada"
 
 #: app/actions/palette-editor-actions.c:59
 msgctxt "palette-editor-action"
@@ -23201,8 +23201,7 @@ msgstr "%s: afegeix punts de control a tots els canals"
 # explicativa de la funció.
 #: app/tools/gimpcurvestool.c:441
 msgid "Adjust Color Curves"
-msgstr ""
-"Ajusta els colors definint una corba de transformació per a cada canal"
+msgstr "Ajusta els colors de les corbes"
 
 #: app/tools/gimpcurvestool.c:486 app/tools/gimplevelstool.c:367
 #: app/tools/gimpthresholdtool.c:247
@@ -24039,7 +24038,7 @@ msgstr "Modifica la corba de les tisores"
 
 #: app/tools/gimplevelstool.c:140
 msgid "_Levels..."
-msgstr "Nive_lls de color..."
+msgstr "Nive_lls..."
 
 #: app/tools/gimplevelstool.c:293
 msgid "Pick black point for all channels"
@@ -26424,7 +26423,7 @@ msgstr "Habilitat"
 
 #: app/widgets/gimpcontrollerinfo.c:120
 msgid "Debug events"
-msgstr "Depura esdeveniment"
+msgstr "Depura esdeveniments"
 
 #: app/widgets/gimpcontrollerkeyboard.c:69
 #: app/widgets/gimpcontrollerkeyboard.c:72
@@ -26765,7 +26764,7 @@ msgstr "El GIMP ha trobat un error: %s"
 #: app/widgets/gimpcriticaldialog.c:576
 #, c-format
 msgid "GIMP encountered several critical errors!"
-msgstr "GIMP ha trobat errors greus crítics!"
+msgstr "GIMP ha trobat diversos errors crítics!"
 
 #: app/widgets/gimpcriticaldialog.c:628
 msgid "_Restart GIMP"
@@ -27402,7 +27401,7 @@ msgstr "Massa missatges d'error!"
 
 #: app/widgets/gimperrordialog.c:177
 msgid "Messages are redirected to stderr."
-msgstr "Els missatges són redirigits a la sortida estàndard."
+msgstr "Els missatges són redirigits a la sortida d'error."
 
 #. %s is a message domain,
 #. * like "GIMP Message" or
@@ -27663,7 +27662,7 @@ msgstr "Percentil:"
 
 #: app/widgets/gimphistogrameditor.c:166
 msgid "Histogram channel"
-msgstr "Escala de l'histograma"
+msgstr "Canal de l'histograma"
 
 #: app/widgets/gimpiconpicker.c:246
 msgid "From File..."
@@ -28510,7 +28509,7 @@ msgstr "[ Imatge base ]"
 
 #: app/widgets/gimppathtreeview.c:116
 msgid "Lock path"
-msgstr "Bloqueja el canal"
+msgstr "Bloqueja el camí"
 
 #: app/widgets/gimppathtreeview.c:119
 msgid "Lock path position"
