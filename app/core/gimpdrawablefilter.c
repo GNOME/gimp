@@ -1979,7 +1979,14 @@ gimp_drawable_filter_reorder (GimpFilterStack    *stack,
 
       g_return_if_fail (GIMP_LIST (stack)->queue->head != NULL);
 
-      if (GIMP_LIST (stack)->queue->head->data != filter)
+      if (GIMP_LIST (stack)->queue->head->data != filter &&
+          /* When there is a floating selection, there will be a
+           * GimpFilter (but not a drawable filter) in the stack.
+           * XXX For now, let's fix the crash (#12851) but eventually we
+           * really want to clean up this list and understand better how
+           * it's organized.
+           */
+          GIMP_IS_DRAWABLE_FILTER (GIMP_LIST (stack)->queue->head->data))
         gimp_drawable_filter_sync_format (GIMP_LIST (stack)->queue->head->data);
     }
 }
