@@ -117,9 +117,11 @@ gimp_help_domain_lookup_locale (GimpHelpDomain    *domain,
     return locale;
 
   locale = gimp_help_locale_new (locale_id);
-  g_hash_table_insert (domain->help_locales, g_strdup (locale_id), locale);
 
-  domain_locale_parse (domain, locale, progress, NULL);
+  if (! domain_locale_parse (domain, locale, progress, NULL))
+    g_clear_pointer (&locale, gimp_help_locale_free);
+  else
+    g_hash_table_insert (domain->help_locales, g_strdup (locale_id), locale);
 
   return locale;
 }
@@ -149,6 +151,11 @@ gimp_help_domain_map (GimpHelpDomain    *domain,
       locale = gimp_help_domain_lookup_locale (domain,
                                                (const gchar *) list->data,
                                                progress);
+      if (locale == NULL)
+        {
+          *fatal_error = TRUE;
+          return NULL;
+        }
       ref = gimp_help_locale_map (locale, help_id);
     }
 
