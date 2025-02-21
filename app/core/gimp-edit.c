@@ -136,8 +136,9 @@ gimp_edit_cut (GimpImage     *image,
 
           /* Remove layers from source image. */
           for (iter = drawables; iter; iter = iter->next)
-            gimp_image_remove_layer (image, GIMP_LAYER (iter->data),
-                                     TRUE, NULL);
+            if (! gimp_layer_is_floating_sel (iter->data))
+              gimp_image_remove_layer (image, GIMP_LAYER (iter->data),
+                                       TRUE, NULL);
 
           g_list_free (drawables);
         }
