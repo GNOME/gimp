@@ -80,6 +80,11 @@ load_image (GFile        *file,
   gint               i;
   guchar            *photoshop_data = NULL;
   guint              photoshop_len  = 0;
+  gboolean           support_12_bit = FALSE;
+
+#if LIBJPEG_TURBO_VERSION_NUMBER >= 1003000
+  support_12_bit = TRUE;
+#endif
 
   /* We set up the normal JPEG error routines. */
   cinfo.err = jpeg_std_error (&jerr.pub);
@@ -181,7 +186,7 @@ load_image (GFile        *file,
   /* temporary buffer */
   tile_height = gimp_tile_height ();
 
-  if (cinfo.data_precision == 8)
+  if (cinfo.data_precision == 8 || ! support_12_bit)
     {
       buf = g_new (guchar,
                    tile_height * cinfo.output_width * cinfo.output_components);
@@ -247,7 +252,7 @@ load_image (GFile        *file,
 
       layer_name = _("Background");
 
-      if (cinfo.data_precision > 8)
+      if (cinfo.data_precision > 8 && support_12_bit)
         precision = GIMP_PRECISION_U16_NON_LINEAR;
 
       image = gimp_image_new_with_precision (cinfo.output_width,
@@ -398,9 +403,19 @@ load_image (GFile        *file,
   else
     {
       if (image_type == GIMP_RGB)
-        encoding = (cinfo.data_precision == 8) ? "R'G'B' u8" : "R'G'B' u16";
+        {
+          if (cinfo.data_precision == 8 || ! support_12_bit)
+            encoding = "R'G'B' u8";
+          else
+            encoding = "R'G'B' u16";
+        }
       else
-        encoding = (cinfo.data_precision == 8) ? "Y' u8" : "Y' u16";
+        {
+          if (cinfo.data_precision == 8 || ! support_12_bit)
+            encoding = "Y' u8";
+          else
+            encoding = "Y' u16";
+        }
       space = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
     }
   format = babl_format_with_space (encoding, space);
@@ -427,7 +442,7 @@ load_image (GFile        *file,
           goto set_buffer;
         }
 
-      if (cinfo.data_precision == 8)
+      if (cinfo.data_precision == 8 || ! support_12_bit)
         {
           for (i = 0; i < scanlines; i++)
             jpeg_read_scanlines (&cinfo, (JSAMPARRAY) &rowbuf[i], 1);
@@ -446,7 +461,7 @@ load_image (GFile        *file,
         }
 
     set_buffer:
-      if (cinfo.data_precision == 8)
+      if (cinfo.data_precision == 8 || ! support_12_bit)
         gegl_buffer_set (buffer,
                          GEGL_RECTANGLE (0, start, cinfo.output_width, scanlines),
                          0,
@@ -492,7 +507,7 @@ load_image (GFile        *file,
   g_object_unref (buffer);
 
   /* free up the temporary buffers */
-  if (cinfo.data_precision == 8)
+  if (cinfo.data_precision == 8 || ! support_12_bit)
     {
       g_free (rowbuf);
       g_free (buf);
