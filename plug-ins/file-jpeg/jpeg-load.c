@@ -447,8 +447,10 @@ load_image (GFile        *file,
           for (i = 0; i < scanlines; i++)
             jpeg_read_scanlines (&cinfo, (JSAMPARRAY) &rowbuf[i], 1);
         }
+#if LIBJPEG_TURBO_VERSION_NUMBER >= 1003000
       else
         {
+
           for (i = 0; i < scanlines; i++)
             jpeg12_read_scanlines (&cinfo, (J12SAMPARRAY) &rowbuf_12[i], 1);
 
@@ -459,6 +461,7 @@ load_image (GFile        *file,
                 rowbuf_12[i][j] = GUINT16_FROM_LE (rowbuf_12[i][j]) << 4;
             }
         }
+#endif
 
     set_buffer:
       if (cinfo.data_precision == 8 || ! support_12_bit)
