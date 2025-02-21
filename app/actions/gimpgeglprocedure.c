@@ -48,7 +48,11 @@
 #include "core/gimpsettings.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpaction.h"
+#include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpstringaction.h"
+#include "widgets/gimpuimanager.h"
 
 #include "tools/gimpoperationtool.h"
 #include "tools/tool_manager.h"
@@ -161,13 +165,35 @@ static const gchar *
 gimp_gegl_procedure_get_help_id (GimpProcedure *procedure)
 {
   GimpGeglProcedure *proc = GIMP_GEGL_PROCEDURE (procedure);
+  GList             *managers;
+  GimpActionGroup   *group;
+  const gchar       *help_id = NULL;
+
+  managers = gimp_ui_managers_from_name ("<Image>");
+  group    = gimp_ui_manager_get_action_group (managers->data, "filters");
 
   if (procedure->help_id)
-    return procedure->help_id;
-  else if (gegl_operation_get_key (proc->operation, "gimp:help-id"))
-    return gegl_operation_get_key (proc->operation, "gimp:help-id");
+    {
+      return procedure->help_id;
+    }
+  else if (group)
+    {
+      GList *actions;
+      GList *iter;
 
-  return GIMP_HELP_TOOL_GEGL;
+      actions = gimp_action_group_list_actions (group);
+      for (iter = actions; iter; iter = iter->next)
+        if (GIMP_IS_STRING_ACTION (iter->data) &&
+            g_strcmp0 (GIMP_STRING_ACTION (iter->data)->value, proc->operation) == 0)
+          {
+            help_id = gimp_action_get_help_id (iter->data);
+            break;
+          }
+
+      g_list_free (actions);
+    }
+
+  return help_id == NULL ? GIMP_HELP_TOOL_GEGL : help_id;
 }
 
 static const gchar *

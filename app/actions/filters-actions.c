@@ -804,7 +804,6 @@ filters_actions_setup (GimpActionGroup *group)
           g_free (action_name);
           action_name = g_strdup_printf ("filters-%s-%d", formatted_op_name, i++);
         }
-      g_free (formatted_op_name);
 
       title   = gegl_operation_class_get_key (op_class, "title");
       op_name = op_class->name;
@@ -824,8 +823,12 @@ filters_actions_setup (GimpActionGroup *group)
       entry.value     = op_class->name;
       entry.help_id   = GIMP_HELP_TOOL_GEGL;
 
-      if (gegl_operation_class_get_key (op_class, "gimp:help-id"))
-        entry.help_id = gegl_operation_class_get_key (op_class, "gimp:help-id");
+      if (gegl_operation_class_get_key (op_class, "gimp:menu-path") &&
+          g_str_has_prefix (op_class->name, "gegl:"))
+        /* We automatically create an help ID from the operation name
+         * for all core GEGL operations with a menu path key.
+         */
+        entry.help_id = formatted_op_name;
 
       gimp_action_group_add_string_actions (group, "filters-action",
                                             &entry, 1,
@@ -859,6 +862,7 @@ filters_actions_setup (GimpActionGroup *group)
 
       g_free (label);
       g_free (action_name);
+      g_free (formatted_op_name);
     }
 
   g_object_set_data_full (G_OBJECT (group),
