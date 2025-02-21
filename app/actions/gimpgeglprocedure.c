@@ -162,7 +162,9 @@ gimp_gegl_procedure_get_help_id (GimpProcedure *procedure)
 {
   GimpGeglProcedure *proc = GIMP_GEGL_PROCEDURE (procedure);
 
-  if (gegl_operation_get_key (proc->operation, "gimp:help-id"))
+  if (procedure->help_id)
+    return procedure->help_id;
+  else if (gegl_operation_get_key (proc->operation, "gimp:help-id"))
     return gegl_operation_get_key (proc->operation, "gimp:help-id");
 
   return GIMP_HELP_TOOL_GEGL;
