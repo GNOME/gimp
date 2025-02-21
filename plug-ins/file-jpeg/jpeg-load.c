@@ -82,7 +82,7 @@ load_image (GFile        *file,
   guint              photoshop_len  = 0;
   gboolean           support_12_bit = FALSE;
 
-#if LIBJPEG_TURBO_VERSION_NUMBER >= 1003000
+#if LIBJPEG_TURBO_VERSION_NUMBER >= 3000000
   support_12_bit = TRUE;
 #endif
 
@@ -447,7 +447,7 @@ load_image (GFile        *file,
           for (i = 0; i < scanlines; i++)
             jpeg_read_scanlines (&cinfo, (JSAMPARRAY) &rowbuf[i], 1);
         }
-#if LIBJPEG_TURBO_VERSION_NUMBER >= 1003000
+#if LIBJPEG_TURBO_VERSION_NUMBER >= 3000000
       else
         {
 
