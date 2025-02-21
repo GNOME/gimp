@@ -576,28 +576,7 @@ app_exit_after_callback (Gimp         *gimp,
   if (gimp->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);
 
-  /*
-   *  In releases, we simply call exit() here. This speeds up the
-   *  process of quitting GIMP and also works around the problem that
-   *  plug-ins might still be running.
-   *
-   *  In unstable releases, we shut down GIMP properly in an attempt
-   *  to catch possible problems in our finalizers.
-   */
-
-#ifdef GIMP_RELEASE
-
-  gimp_gegl_exit (gimp);
-
-  gegl_exit ();
-
-  exit (gimp_core_app_get_exit_status (GIMP_CORE_APP (app)));
-
-#else
-
   g_application_quit (G_APPLICATION (app));
-
-#endif
 
   return FALSE;
 }
