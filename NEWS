@@ -15,8 +15,24 @@ Core:
     * gegl:pack
     * json:dropshadow
     * json:grey2
-  - Default sensibility mask for plug-ins is now:
-    GIMP_PROCEDURE_SENSITIVE_DRAWABLE | GIMP_PROCEDURE_SENSITIVE_DRAWABLES
+  - Add support for uncompressed 16 bit ABR brushes.
+  - Get rid of different code paths for exiting GIMP depending on being
+    a release build or not. Now we always exit GIMP the clean way.
+  - Core GEGL operations with a "gimp:menu-path" will now have a
+    generated help ID, constructed from the operation's name.
+
+Plug-ins:
+
+  - Improve Script-Fu progress notifications.
+  - Help: gimp-help.xml remote file is loaded in a thread to make it
+    cancellable in case it gets stuck.
+
+API:
+
+  - Changes in libgimp:
+    * Default sensitivity masks:
+      + for image procedures: GIMP_PROCEDURE_SENSITIVE_DRAWABLE | GIMP_PROCEDURE_SENSITIVE_DRAWABLES
+      + for other procedures: GIMP_PROCEDURE_SENSITIVE_ALWAYS
 
 
 Overview of Changes from GIMP 3.0.0-RC2 to GIMP 3.0.0-RC3
