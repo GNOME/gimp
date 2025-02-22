@@ -106,7 +106,7 @@ msgstr "Tan_ca"
 
 #: plug-ins/script-fu/console/script-fu-console.c:187
 msgid "_Browse..."
-msgstr "_Cerca..."
+msgstr "_Navega..."
 
 #: plug-ins/script-fu/console/script-fu-console.c:246
 msgid "Save Script-Fu Console Output"
@@ -839,7 +839,7 @@ msgstr "Alçada"
 
 #: plug-ins/script-fu/scripts/gradient-example.scm:75
 msgid "Gradient reverse"
-msgstr "Degradat invertit"
+msgstr "Degradat invers"
 
 #: plug-ins/script-fu/scripts/guides-from-selection.scm:32
 msgid "New Guides from _Selection"
