@@ -604,7 +604,12 @@ xcf_load_image (Gimp     *gimp,
       GList     *item_path = NULL;
 
       /* read in the offset of the next layer */
-      xcf_read_offset (info, &offset, 1);
+      if (xcf_read_offset (info, &offset, 1) < info->bytes_per_offset)
+        {
+          GIMP_LOG (XCF, "Failed to read layer offset"
+                    " at offset: %" G_GOFFSET_FORMAT, info->cp);
+          break;
+        }
 
       /* if the offset is 0 then we are at the end
        *  of the layer list.
