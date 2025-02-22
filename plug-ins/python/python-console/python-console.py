@@ -176,6 +176,9 @@ def run(procedure, config, data):
               if arg.name == 'run-mode':
                 # Special handling for run mode.
                 cmd += "config.set_property('" + arg.name + "', Gimp.RunMode.INTERACTIVE); "
+              elif type(arg) == Gimp.ParamCoreObjectArray:
+                # Special handling for GimpCoreObjectArray parameters
+                cmd += "config.set_core_object_array('" + arg.name + "', " + arg.name.replace('-', '_') + "); "
               else:
                 cmd += "config.set_property('" + arg.name + "', " + arg.name.replace('-', '_') + "); "
 
