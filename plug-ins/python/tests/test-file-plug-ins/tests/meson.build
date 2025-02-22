@@ -27,6 +27,7 @@ install_data([
     'tga-tests.ini',
     'tif-tests.ini',
     'webp-tests.ini',
+    'xcf-tests.ini',
     # file format specific config files for export testing
     'bmp-export-tests.ini',
   ],
