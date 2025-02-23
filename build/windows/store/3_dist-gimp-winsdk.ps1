@@ -22,6 +22,8 @@ if (-not $GITLAB_CI)
       {
         Set-Location ..\..\..
       }
+
+    $PARENT_DIR = '..\'
   }
 
 
@@ -53,18 +55,18 @@ if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags
     if (-not (Test-Path "$Env:ProgramFiles\dotnet\shared\Microsoft.NETCore.App\$dotnet_major*\"))
       {
         Write-Output "(INFO): downloading .NET v$dotnet_tag"
-        Invoke-WebRequest https://download.visualstudio.microsoft.com/download/pr/92f9abc6-1e19-40cd-82cf-670be98d3533/46e1346503f4b54418bf9d5f861f1d43/dotnet-runtime-$dotnet_tag-win-x64.zip -OutFile ..\dotnet-runtime.zip
-        Expand-Archive ..\dotnet-runtime.zip ..\dotnet-runtime -Force
-        $env:Path = "$(Resolve-Path $PWD\..\dotnet-runtime);" + $env:Path
-        $env:DOTNET_ROOT = "$(Resolve-Path $PWD\..\dotnet-runtime)"
+        Invoke-WebRequest https://aka.ms/dotnet/$dotnet_major/dotnet-runtime-win-$cpu_arch.zip -OutFile ${PARENT_DIR}dotnet-runtime.zip
+        Expand-Archive ${PARENT_DIR}dotnet-runtime.zip ${PARENT_DIR}dotnet-runtime -Force
+        $env:Path = "$(Resolve-Path $PWD\${PARENT_DIR}dotnet-runtime);" + $env:Path
+        $env:DOTNET_ROOT = "$(Resolve-Path $PWD\${PARENT_DIR}dotnet-runtime)"
       }
 
     if (-not (Test-Path Registry::'HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\App Paths\MSStore.exe'))
       {
         Write-Output "(INFO): downloading MSStoreCLI $msstore_tag"
-        Invoke-WebRequest https://github.com/microsoft/msstore-cli/releases/download/$msstore_tag/MSStoreCLI-win-$cpu_arch.zip -OutFile ..\MSStoreCLI.zip
-        Expand-Archive ..\MSStoreCLI.zip ..\MSStoreCLI -Force
-        $env:Path = "$(Resolve-Path $PWD\..\MSStoreCLI);" + $env:Path
+        Invoke-WebRequest https://github.com/microsoft/msstore-cli/releases/download/$msstore_tag/MSStoreCLI-win-$cpu_arch.zip -OutFile ${PARENT_DIR}MSStoreCLI.zip
+        Expand-Archive ${PARENT_DIR}MSStoreCLI.zip ${PARENT_DIR}MSStoreCLI -Force
+        $env:Path = "$(Resolve-Path $PWD\${PARENT_DIR}MSStoreCLI);" + $env:Path
       }
     $msstore_text = " | Installed MSStoreCLI: $(msstore --version)"
   }
