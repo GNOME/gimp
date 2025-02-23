@@ -144,18 +144,25 @@ function fix_msg ([array]$langsArray, [string]$AppVer)
         {
           Copy-Item "$langfilePath" "$Env:Tmp\$(Split-Path $langfile -Leaf).bak" -Force
 
-          #Prefer MSYS2 since PowerShell/.NET doesn't handle well files with mixed encodings
+          #Prefer MSYS2 since PowerShell (even 7.1+) doesn't handle well files with mixed encodings
           $langfilePathUnix = "$langfilePath" -replace '\\','/' -replace '//','/'
           bash build/windows/installer/lang/fix_msg.sh "$langfilePathUnix" $AppVer
 
-          #$msg = Get-Content $langfilePath
+          #Write-Output "(INFO): temporarily patching $($langfilePath -replace '\\\\','\') with $AppVer"
+          #$Encoding = 'utf8NoBOM'
+          #$bytes = $(Get-Content $langfilePath -AsByteStream)[0..1]
+          #if ("$bytes" -eq "239 187")
+          #  {
+          #    $Encoding = 'utf8BOM'
+          #  }
+          #$msg = Get-Content $langfilePath -Encoding $Encoding
           #$linenumber = $msg | Select-String 'SetupWindowTitle' | Select-Object -ExpandProperty LineNumber
           #$msg | ForEach-Object { If ($_.ReadCount -eq $linenumber) {$_ -Replace "%1", "%1 $AppVer"} Else {$_} } |
-          #       Set-Content "$langfilePath" -Encoding UTF8
-          #$msg = Get-Content $langfilePath
+          #       Set-Content "$langfilePath" -Encoding $Encoding
+          #$msg = Get-Content $langfilePath -Encoding $Encoding
           #$linenumber = $msg | Select-String 'UninstallAppFullTitle' | Select-Object -ExpandProperty LineNumber
           #$msg | ForEach-Object { If ($_.ReadCount -eq $linenumber) {$_ -Replace "%1", "%1 $AppVer"} Else {$_} } |
-          #       Set-Content "$langfilePath" -Encoding UTF8
+          #       Set-Content "$langfilePath" -Encoding $Encoding
         }
 
       else #($AppVer -eq 'revert')
