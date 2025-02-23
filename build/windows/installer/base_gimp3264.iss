@@ -81,21 +81,32 @@
 
 
 ;2 GLOBAL VARIABLES SET BY PARAMS
+;Meson don't support C++ style comments. See: https://github.com/mesonbuild/meson/issues/14260
+#include BUILD_DIR + "\build\windows\installer\config_clean.h"
 
-;Required Build-time vars are set in 'iscc' call of .ps1 file, except these two:
+;Main GIMP versions:
 ;Get GIMP_MUTEX_VERSION (used for internal versioning control)
-#define MAJOR=Copy(GIMP_VERSION,1,Pos(".",GIMP_VERSION)-1)
-#define MINOR=Copy(GIMP_VERSION,Pos(".",GIMP_VERSION)+1)
-#expr MINOR=Copy(MINOR,1,Pos(".",MINOR)-1)
-#if Int(MINOR) % 2 == 1
-  #define GIMP_UNSTABLE="-dev"
+#if Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != ""
 	#define GIMP_MUTEX_VERSION GIMP_APP_VERSION
 #else
-	#define GIMP_UNSTABLE=""
-	#define GIMP_MUTEX_VERSION MAJOR
+	#define GIMP_MUTEX_VERSION=Copy(GIMP_APP_VERSION,1,Pos(".",GIMP_APP_VERSION)-1)
 #endif
 ;Get FULL_GIMP_VERSION (used by ITs)
-#define FULL_GIMP_VERSION GIMP_VERSION + "." + REVISION
+#define ORIGINAL_GIMP_VERSION GIMP_VERSION
+#if Defined(GIMP_RC_VERSION) && GIMP_RC_VERSION != ""
+	#define GIMP_VERSION=Copy(GIMP_VERSION,1,Pos("-",GIMP_VERSION)-1)
+#endif
+#if !Defined(REVISION) || REVISION=="0" || REVISION==""
+	#define FULL_GIMP_VERSION GIMP_VERSION + "." + "0"
+#else
+	#define FULL_GIMP_VERSION GIMP_VERSION + "." + REVISION
+#endif
+;Get CUSTOM_GIMP_VERSION (that the users see)
+#if !Defined(REVISION) || REVISION=="0" || REVISION==""
+	#define CUSTOM_GIMP_VERSION ORIGINAL_GIMP_VERSION
+#else
+	#define CUSTOM_GIMP_VERSION ORIGINAL_GIMP_VERSION + "-" + REVISION
+#endif
 
 ;Optional Build-time params: DEBUG_SYMBOLS, LUA, PYTHON, NOCOMPRESSION, NOFILES, DEVEL_WARNING
 
@@ -297,11 +308,11 @@ Source: "{#ASSETS_DIR}\installsplash_small.bmp"; Flags: dontcopy
 #define GIMP_ARCHS="gimp32 or gimp64 or gimpARM64"
 #define OPTIONAL_EXT="*.debug,*.lua,*.py"
 Source: "{#GIMP_DIR32}\etc\gimp\*"; DestDir: "{app}\etc\gimp"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
-Source: "{#GIMP_DIR32}\include\gimp-{#GIMP_API_VERSION}\*"; DestDir: "{app}\include\gimp-{#GIMP_API_VERSION}"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
-Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\environ\default.env"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\environ"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
-Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\interpreters\gimp-script-fu-interpreter.interp"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\interpreters"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
-Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\extensions\*"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\extensions"; Excludes: "*.dll,*.exe,{#OPTIONAL_EXT}"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
-Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\plug-ins\*"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\plug-ins"; Excludes: "*.dll,*.exe,{#OPTIONAL_EXT}"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
+Source: "{#GIMP_DIR32}\include\gimp-{#GIMP_PKGCONFIG_VERSION}\*"; DestDir: "{app}\include\gimp-{#GIMP_PKGCONFIG_VERSION}"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
+Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ\default.env"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
+Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\gimp-script-fu-interpreter.interp"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
+Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\extensions\*"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\extensions"; Excludes: "*.dll,*.exe,{#OPTIONAL_EXT}"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
+Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins\*"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins"; Excludes: "*.dll,*.exe,{#OPTIONAL_EXT}"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
 Source: "{#GIMP_DIR32}\share\gimp\*"; DestDir: "{app}\share\gimp"; Excludes: "{#OPTIONAL_EXT}"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS} createallsubdirs
 Source: "{#GIMP_DIR32}\share\icons\hicolor\*"; DestDir: "{app}\share\icons\hicolor"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
 Source: "{#GIMP_DIR32}\share\metainfo\*"; DestDir: "{app}\share\metainfo"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
@@ -312,12 +323,12 @@ Source: "{#DEPS_DIR32}\share\*"; DestDir: "{app}\share"; Excludes: "gimp,icons\h
 
 ;Optional arch-neutral files (full install)
 #ifdef LUA
-Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\interpreters\lua.interp"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\interpreters"; Components: (lua32 or lua64 or luaARM64); Flags: {#COMMON_FLAGS}
+Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\lua.interp"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters"; Components: (lua32 or lua64 or luaARM64); Flags: {#COMMON_FLAGS}
 Source: "{#GIMP_DIR32}\*.lua"; DestDir: "{app}"; Components: (lua32 or lua64 or luaARM64); Flags: {#COMMON_FLAGS}
 #endif
 #ifdef PYTHON
-Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\environ\py*.env"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\environ"; Components: (py32 or py64 or pyARM64); Flags: {#COMMON_FLAGS}
-Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\interpreters\pygimp.interp"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\interpreters"; Components: (py32 or py64 or pyARM64); Flags: {#COMMON_FLAGS}
+Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ\py*.env"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ"; Components: (py32 or py64 or pyARM64); Flags: {#COMMON_FLAGS}
+Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\pygimp.interp"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters"; Components: (py32 or py64 or pyARM64); Flags: {#COMMON_FLAGS}
 Source: "{#GIMP_DIR32}\*.py"; DestDir: "{app}"; Components: (py32 or py64 or pyARM64); Flags: {#COMMON_FLAGS}
 #endif
 Source: "{#GIMP_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: dontcopy {#COMMON_FLAGS}
@@ -329,7 +340,7 @@ Source: "{#DEPS_DIR32}\share\mypaint-data\*"; DestDir: "{app}\share\mypaint-data
 #define PLATFORM X86
 #include "base_executables.isi"
 ;TWAIN is always installed in the 32-bit version of GIMP
-Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\plug-ins\twain.exe"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\plug-ins"; Components: gimp32; Flags: {#COMMON_FLAGS}
+Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins\twain.exe"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins"; Components: gimp32; Flags: {#COMMON_FLAGS}
 ;x86_64
 #define PLATFORM X64
 #include "base_executables.isi"
@@ -339,7 +350,7 @@ Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\plug-ins\twain.exe"; DestDir
 
 ;Optional 32-bit specific bins for TWAIN, since x64 and arm64 twain drivers are rare
 #include "base_twain32on64.isi"
-Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\plug-ins\twain"; Components: gimp32on64; Flags: {#COMMON_FLAGS}
+Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins\twain"; Components: gimp32on64; Flags: {#COMMON_FLAGS}
 
 ;upgrade zlib1.dll in System32 if it's present there to avoid breaking plugins
 ;sharedfile flag will ensure that the upgraded file is left behind on uninstall to avoid breaking other programs that use the file
@@ -366,7 +377,7 @@ Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\32\{#ConfigDir}
   #endif
 #endsub
 #define public BaseDir GIMP_DIR32
-#define public ConfigDir "etc\gimp\" + GIMP_API_VERSION
+#define public ConfigDir "etc\gimp\" + GIMP_PKGCONFIG_VERSION
 #expr ProcessConfigDir
 #define public ConfigDir "etc\fonts"
 #expr ProcessConfigDir
@@ -401,8 +412,8 @@ Type: files; Name: "{app}\bin\python3*.exe"
 
 [UninstallDelete]
 Type: files; Name: "{app}\uninst\uninst.inf"
-Type: files; Name: "{app}\lib\gimp\{#GIMP_API_VERSION}\interpreters\lua.interp"
-Type: files; Name: "{app}\lib\gimp\{#GIMP_API_VERSION}\environ\pygimp.env"
+Type: files; Name: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\lua.interp"
+Type: files; Name: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ\pygimp.env"
 
 
 ;4.3 KEYS TO BE REGISTERED
@@ -590,7 +601,7 @@ begin
 end;
 
 function InitializeSetup(): Boolean;
-#if (Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != "") || Defined(DEVEL_WARNING)
+#if (Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != "") || (Defined(GIMP_RC_VERSION) && GIMP_RC_VERSION != "") || Defined(DEVEL_WARNING)
 var Message,Buttons: TArrayOfString;
 #endif
 begin
@@ -607,7 +618,7 @@ begin
 		exit;
 
 //Unstable version warning
-#if (Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != "") || Defined(DEVEL_WARNING)
+#if (Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != "") || (Defined(GIMP_RC_VERSION) && GIMP_RC_VERSION != "") || Defined(DEVEL_WARNING)
 	Explode(Message, CustomMessage('DevelopmentWarning'), #13#10);
 	SetArrayLength(Buttons,2);
 	Buttons[0] := CustomMessage('DevelopmentButtonContinue');
@@ -1461,7 +1472,7 @@ begin
 	begin
 		StatusLabel(CustomMessage('SettingUpPyGimp'),'');
 
-		InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_API_VERSION}\interpreters\pygimp.interp');
+		InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\pygimp.interp');
     DebugMsg('PrepareInterp','Writing interpreter file for gimp-python: ' + InterpFile);
 
 #if Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != ""
@@ -1489,7 +1500,7 @@ begin
 #ifdef LUA
 	if IsComponentSelected('lua32') or IsComponentSelected('lua64') or IsComponentSelected('luaARM64') then
 	begin
-		InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_API_VERSION}\interpreters\lua.interp');
+		InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\lua.interp');
     DebugMsg('PrepareInterp','Writing interpreter file for lua: ' + InterpFile);
 
 		LuaBin := 'luajit.exe'
@@ -1510,13 +1521,13 @@ begin
 
 // !!! use comma for binfmt delimiter and full Windows path in interpreter field of binfmt
 begin
-	InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_API_VERSION}\interpreters\gimp-script-fu-interpreter.interp');
+	InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\gimp-script-fu-interpreter.interp');
 	DebugMsg('PrepareInterp','Writing interpreter file for gimp-script-fu-interpreter: ' + InterpFile);
 
-	InterpContent := 'gimp-script-fu-interpreter=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_API_VERSION}.exe') + #10 +
-						       'gimp-script-fu-interpreter-{#GIMP_API_VERSION}=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_API_VERSION}.exe') + #10 +
-						       '/usr/bin/gimp-script-fu-interpreter=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_API_VERSION}.exe') + #10 +
-						       ',ScriptFu,E,,scm,,' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_API_VERSION}.exe') + ','#10;
+	InterpContent := 'gimp-script-fu-interpreter=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}.exe') + #10 +
+						       'gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}.exe') + #10 +
+						       '/usr/bin/gimp-script-fu-interpreter=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}.exe') + #10 +
+						       ',ScriptFu,E,,scm,,' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}.exe') + ','#10;
 
 	if not SaveStringToUTF8File(InterpFile,InterpContent,False) then
 	begin
@@ -1533,7 +1544,7 @@ begin
 	StatusLabel(CustomMessage('SettingUpEnvironment'),'');
 
 	//set PATH to be used by plug-ins
-	EnvFile := ExpandConstant('{app}\lib\gimp\{#GIMP_API_VERSION}\environ\default.env');
+	EnvFile := ExpandConstant('{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ\default.env');
 	DebugMsg('PrepareGimpEnvironment','Setting environment in ' + EnvFile);
 
 	Env := #10'PATH=${gimp_installation_dir}\bin';
@@ -1555,7 +1566,7 @@ begin
 	end;
 
 	// Set revision
-	EnvFile := ExpandConstant('{app}\share\gimp\{#GIMP_API_VERSION}\gimp-release');
+	EnvFile := ExpandConstant('{app}\share\gimp\{#GIMP_PKGCONFIG_VERSION}\gimp-release');
 	DebugMsg('SetRevision','Seting revision number {#REVISION} in ' + EnvFile);
 
 	//LoadStringFromUTF8File(EnvFile,Env);
@@ -1571,7 +1582,7 @@ begin
 	// Disable check-update when run with specific option
   if ExpandConstant('{param:disablecheckupdate|false}') = 'true' then
 	begin
-		EnvFile := ExpandConstant('{app}\share\gimp\{#GIMP_API_VERSION}\gimp-release');
+		EnvFile := ExpandConstant('{app}\share\gimp\{#GIMP_PKGCONFIG_VERSION}\gimp-release');
 		DebugMsg('DisableCheckUpdate','Disabling check-update in ' + EnvFile);
 
     Env := 'check-update=false'

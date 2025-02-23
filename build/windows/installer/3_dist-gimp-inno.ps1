@@ -2,8 +2,8 @@
 
 # Parameters
 param ($revision = "$GIMP_CI_WIN_INSTALLER",
+       $BUILD_DIR = (Get-ChildItem $PWD\_build* | Select-Object -First 1),
        $GIMP_BASE = "$PWD",
-       $BUILD_DIR = (Get-ChildItem $GIMP_BASE\_build* | Select-Object -First 1),
        $GIMP32 = 'gimp-mingw32',
        $GIMP64 = 'gimp-clang64',
        $GIMPA64 = 'gimp-clangarm64')
@@ -194,10 +194,6 @@ foreach ($bundle in $supported_archs)
   {
     Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):${bundle}_files[collapsed=true]$([char]13)$([char]27)[0KPreparing GIMP files in $bundle bundle"
 
-    ## Get GIMP versions used in some versioned files and dirs
-    ## FIXME: This should be done with Inno scripting
-    $gimp_version = $GIMP_VERSION -replace '(.+?)-.+','$1'
-
     ## Split .debug symbols
     if ("$bundle" -eq "$GIMP32")
       {
@@ -216,11 +212,7 @@ foreach ($bundle in $supported_archs)
 $INSTALLER="gimp-${CUSTOM_GIMP_VERSION}-setup.exe"
 Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):installer_making[collapsed=true]$([char]13)$([char]27)[0KConstructing $INSTALLER installer"
 Set-Location build\windows\installer
-if ($GIMP_RC_VERSION)
-  {
-    $devel_warning='-DDEVEL_WARNING'
-  }
-iscc -DCUSTOM_GIMP_VERSION="$CUSTOM_GIMP_VERSION" -DGIMP_VERSION="$gimp_version" -DREVISION="$revision" -DGIMP_APP_VERSION="$GIMP_APP_VERSION" -DGIMP_API_VERSION="$GIMP_PKGCONFIG_VERSION" -DBUILD_DIR="$BUILD_DIR" -DGIMP_DIR="$GIMP_BASE" -DDIR32="$GIMP32" -DDIR64="$GIMP64" -DDIRA64="$GIMPA64" -DDEPS_DIR="$GIMP_BASE" -DDDIR32="$GIMP32" -DDDIR64="$GIMP64" -DDDIRA64="$GIMPA64" -DDEBUG_SYMBOLS -DPYTHON $devel_warning base_gimp3264.iss | Out-Null
+iscc -DREVISION="$revision" -DBUILD_DIR="$BUILD_DIR" -DGIMP_DIR="$GIMP_BASE" -DDIR32="$GIMP32" -DDIR64="$GIMP64" -DDIRA64="$GIMPA64" -DDEPS_DIR="$GIMP_BASE" -DDDIR32="$GIMP32" -DDDIR64="$GIMP64" -DDDIRA64="$GIMPA64" -DDEBUG_SYMBOLS -DPYTHON base_gimp3264.iss | Out-Null
 if ("$LASTEXITCODE" -gt '0' -or "$?" -eq 'False')
   {
     ## We need to manually check failures in pre-7.4 PS
