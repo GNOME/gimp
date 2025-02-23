@@ -2,7 +2,7 @@
 
 # Parameters
 param ($revision = "$GIMP_CI_WIN_INSTALLER",
-       $BUILD_DIR = (Get-ChildItem $PWD\_build* | Select-Object -First 1),
+       $BUILD_DIR,
        $GIMP_BASE = "$PWD",
        $GIMP32 = 'gimp-mingw32',
        $GIMP64 = 'gimp-clang64',
@@ -71,6 +71,10 @@ Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):i
 
 # 2. GET GLOBAL INFO
 Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):installer_info$([char]13)$([char]27)[0KGetting installer global info"
+if (-not $BUILD_DIR)
+  {
+    $BUILD_DIR = Get-ChildItem _build* | Select-Object -First 1
+  }
 $CONFIG_PATH = "$BUILD_DIR\config.h"
 if (-not (Test-Path "$CONFIG_PATH"))
   {

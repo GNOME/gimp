@@ -3,12 +3,26 @@
 # Parameters
 param ($revision = "$GIMP_CI_MS_STORE",
        $wack = 'Non-WACK',
-       $build_dir = (Get-ChildItem _build* | Select-Object -First 1),
+       $build_dir,
        $a64_bundle = 'gimp-clangarm64',
        $x64_bundle = 'gimp-clang64')
 
 $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $true
+
+if (-not $GITLAB_CI)
+  {
+    # Make the script work locally
+    if (-not (Test-Path build\windows\store) -and -not (Test-Path 3_dist-gimp-winsdk.ps1 -Type Leaf) -or $PSScriptRoot -notlike "*build\windows\store*")
+      {
+        Write-Host '(ERROR): Script called from wrong dir. Please, call the script from gimp source.' -ForegroundColor Red
+        exit 1
+      }
+    elseif (Test-Path 3_dist-gimp-winsdk.ps1 -Type Leaf)
+      {
+        Set-Location ..\..\..
+      }
+  }
 
 
 # 1. AUTODECTET LATEST WINDOWS SDK AND MSSTORE-CLI
@@ -60,6 +74,10 @@ Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):m
 
 # 2. GLOBAL VARIABLES
 Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):msix_info$([char]13)$([char]27)[0KGetting MSIX global info"
+if (-not $build_dir)
+  {
+    $build_dir = Get-ChildItem _build* | Select-Object -First 1
+  }
 $config_path = "$build_dir\config.h"
 if (-not (Test-Path "$config_path"))
   {
