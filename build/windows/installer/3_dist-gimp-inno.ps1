@@ -11,6 +11,20 @@ param ($revision = "$GIMP_CI_WIN_INSTALLER",
 $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $true
 
+if (-not $GITLAB_CI)
+  {
+    # Make the script work locally
+    if (-not (Test-Path build\windows\installer) -and -not (Test-Path 3_dist-gimp-inno.ps1 -Type Leaf) -or $PSScriptRoot -notlike "*build\windows\installer*")
+      {
+        Write-Host '(ERROR): Script called from wrong dir. Please, call the script from gimp source.' -ForegroundColor Red
+        exit 1
+      }
+    elseif (Test-Path 3_dist-gimp-inno.ps1 -Type Leaf)
+      {
+        Set-Location ..\..\..
+      }
+  }
+
 
 # This script needs a bit of MSYS2 to work
 Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'MSYS_ROOT\)' -Context 0,21) -replace '> ','')
