@@ -1251,6 +1251,8 @@ gimp_menu_model_ui_removed (GimpUIManager *manager,
   gchar    *section_name = NULL;
   gboolean  removed      = FALSE;
 
+  g_return_val_if_fail (GIMP_IS_MENU_MODEL (model), FALSE);
+
   if (gimp_utils_are_menu_path_identical (path, model->priv->path, NULL, NULL, &section_name))
     {
       GApplication *app         = model->priv->manager->gimp->app;
@@ -1265,7 +1267,7 @@ gimp_menu_model_ui_removed (GimpUIManager *manager,
 
       for (iter = model->priv->items; iter; iter = iter->next)
         {
-          const gchar *action;
+          const gchar *cur_action_name;
 
           subsection = g_menu_item_get_link (iter->data, G_MENU_LINK_SECTION);
 
@@ -1279,9 +1281,9 @@ gimp_menu_model_ui_removed (GimpUIManager *manager,
             }
           else if (g_menu_item_get_attribute (iter->data,
                                               G_MENU_ATTRIBUTE_ACTION,
-                                              "&s", &action))
+                                              "&s", &cur_action_name))
             {
-              gchar *dot = strstr (action, ".");
+              gchar *dot = strstr (cur_action_name, ".");
 
               g_return_val_if_fail (dot, FALSE);
 
