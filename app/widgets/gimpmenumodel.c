@@ -135,7 +135,7 @@ static void         gimp_menu_model_action_notify_visible    (GimpAction        
                                                               GimpMenuModel       *model);
 static void         gimp_menu_model_action_notify_label      (GimpAction          *action,
                                                               GParamSpec          *pspec,
-                                                              GMenuItem           *item);
+                                                              GimpMenuModel       *model);
 
 static gboolean     gimp_menu_model_ui_added                 (GimpUIManager       *manager,
                                                               const gchar         *path,
@@ -800,11 +800,11 @@ gimp_menu_model_initialize (GimpMenuModel *model,
           g_signal_connect_object (action,
                                    "notify::short-label",
                                    G_CALLBACK (gimp_menu_model_action_notify_label),
-                                   item, 0);
+                                   model, 0);
           g_signal_connect_object (action,
                                    "notify::label",
                                    G_CALLBACK (gimp_menu_model_action_notify_label),
-                                   item, 0);
+                                   model, 0);
 
           /* We want GimpRadioAction to be GTK_MENU_TRACKER_ITEM_ROLE_RADIO,
            * in order to be displayed as radio menu items (as used to be
@@ -1078,20 +1078,32 @@ gimp_menu_model_action_notify_visible (GimpAction    *action,
 }
 
 static void
-gimp_menu_model_action_notify_label (GimpAction *action,
-                                     GParamSpec *pspec,
-                                     GMenuItem  *item)
+gimp_menu_model_action_notify_label (GimpAction    *action,
+                                     GParamSpec    *pspec,
+                                     GimpMenuModel *model)
 {
-  gchar *label_variant = NULL;
+  gchar     *label_variant = NULL;
+  GMenuItem *item;
+  gint       pos;
+  gboolean   visible;
 
   g_return_if_fail (GIMP_IS_ACTION (action));
-  g_return_if_fail (G_IS_MENU_ITEM (item));
+  g_return_if_fail (GIMP_IS_MENU_MODEL (model));
+
+  pos  = gimp_menu_model_get_position (model, gimp_action_get_name (action), &visible);
+  item = g_list_nth_data (model->priv->items, pos);
+
+  g_return_if_fail (item != NULL);
 
   g_menu_item_get_attribute (item, "label-variant", "s", &label_variant);
   if (g_strcmp0 (label_variant, "long") == 0)
     g_menu_item_set_label (item, gimp_action_get_label (action));
   else
     g_menu_item_set_label (item, gimp_action_get_short_label (action));
+
+  if (visible)
+    g_menu_model_items_changed (G_MENU_MODEL (model), pos, 1, 1);
+
   g_free (label_variant);
 }
 
@@ -1179,11 +1191,11 @@ gimp_menu_model_ui_added (GimpUIManager *manager,
           g_signal_connect_object (action,
                                    "notify::short-label",
                                    G_CALLBACK (gimp_menu_model_action_notify_label),
-                                   item, 0);
+                                   mod_model, 0);
           g_signal_connect_object (action,
                                    "notify::label",
                                    G_CALLBACK (gimp_menu_model_action_notify_label),
-                                   item, 0);
+                                   mod_model, 0);
           g_menu_model_items_changed (G_MENU_MODEL (mod_model), position, 0, 1);
         }
       else
@@ -1300,7 +1312,7 @@ gimp_menu_model_ui_removed (GimpUIManager *manager,
                                                     model);
               g_signal_handlers_disconnect_by_func (action,
                                                     G_CALLBACK (gimp_menu_model_action_notify_label),
-                                                    item);
+                                                    model);
             }
           g_object_unref (item);
 

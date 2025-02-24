@@ -1266,12 +1266,26 @@ filters_actions_history_changed (Gimp            *gimp,
         sensitive = gimp_action_get_sensitive (actual_action, NULL);
 
       g_object_set (action,
-                    "visible",   TRUE,
                     "sensitive", sensitive,
                     "procedure", proc,
                     "label",     label,
                     "icon-name", gimp_viewable_get_icon_name (GIMP_VIEWABLE (proc)),
                     "tooltip",   gimp_procedure_get_blurb (proc),
+                    /* It is very important that "visible" is set at the
+                     * end, because the docs says that:
+                     *
+                     * > "notify" signals are queued and only emitted (in reverse order) after all properties have been set.
+                     *
+                     * If "visible" is set before "label" in particular,
+                     * we end up in the inconsistent situation where the
+                     * "visible" callbacks have not been run yet, so
+                     * menus don't have the corresponding item whereas
+                     * the action already shows as visible. In
+                     * particular, g_menu_model_items_changed() may
+                     * crash on an empty item list in GIMP_GTK_MENUBAR
+                     * codepath.
+                     */
+                    "visible",   TRUE,
                     NULL);
     }
 
