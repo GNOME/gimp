@@ -47,6 +47,7 @@ if ("$broken_inno" -or "$inno_version" -ne "$inno_version_downloaded")
     if ("$broken_inno")
       {
         Write-Output '(INFO): repairing Inno'
+        Remove-Item "$(Get-ItemProperty Registry::'HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup*' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty InstallLocation)Languages" -Recurse -Force -ErrorAction SilentlyContinue
       }
     elseif ("$inno_version" -notlike "*.*")
       {
@@ -156,7 +157,7 @@ function fix_msg ([array]$langsArray, [string]$AppVer)
 {
   foreach ($langfile in $langsArray)
     {
-      $langfilePath = "$INNO_PATH\$langfile"
+      $langfilePath = "$INNO_PATH\$langfile" -replace '\\\\','\'
 
       if ($AppVer -ne 'revert')
         {
@@ -166,7 +167,7 @@ function fix_msg ([array]$langsArray, [string]$AppVer)
           $langfilePathUnix = "$langfilePath" -replace '\\','/' -replace '//','/'
           bash build/windows/installer/lang/fix_msg.sh "$langfilePathUnix" $AppVer
 
-          #Write-Output "(INFO): temporarily patching $($langfilePath -replace '\\\\','\') with $AppVer"
+          #Write-Output "(INFO): temporarily patching $langfilePath with $AppVer"
           #$Encoding = 'utf8NoBOM'
           #$bytes = $(Get-Content $langfilePath -AsByteStream)[0..1]
           #if ("$bytes" -eq "239 187")
@@ -239,13 +240,13 @@ if ("$LASTEXITCODE" -gt '0' -or "$?" -eq 'False')
 Set-Location $GIMP_BASE
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_making$([char]13)$([char]27)[0K"
 
-# Clean changes in the bundles and Inno installation
-fix_msg 'Default.isl' revert
-fix_msg $langsArray_Official revert
-fix_msg $langsArray_unofficial revert
 ## Revert change done in TWAIN list
 Remove-Item $twain_list_file
 Move-Item "$twain_list_file.bak" $twain_list_file
+## Clean changes in Inno installation
+fix_msg 'Default.isl' revert
+fix_msg $langsArray_Official revert
+fix_msg $langsArray_unofficial revert
 ## We delete only unofficial langs because the downloaded official ones will be kept by Inno updates
 Remove-Item "$INNO_PATH\Languages\Unofficial" -Recurse -Force
 
