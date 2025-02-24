@@ -238,7 +238,7 @@ gih_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_add_int_aux_argument (procedure, "dimension",
                                            _("D_imension"),
                                            _("How many dimensions the animated brush has"),
-                                           1, 1000, 1,
+                                           1, GIMP_PIXPIPE_MAXDIM, 1,
                                            GIMP_PARAM_READWRITE);
 
       gimp_procedure_add_int32_array_aux_argument (procedure, "guides",
