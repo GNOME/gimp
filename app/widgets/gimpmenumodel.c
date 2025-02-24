@@ -1306,7 +1306,8 @@ gimp_menu_model_ui_removed (GimpUIManager *manager,
 
           model->priv->items = g_list_delete_link (model->priv->items, iter);
 
-          g_menu_model_items_changed (G_MENU_MODEL (model), position, 1, 0);
+          if (! action || gimp_action_is_visible (GIMP_ACTION (action)))
+            g_menu_model_items_changed (G_MENU_MODEL (model), position, 1, 0);
         }
       else
         {
