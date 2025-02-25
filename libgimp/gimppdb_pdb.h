@@ -42,8 +42,7 @@ G_GNUC_INTERNAL gboolean    _gimp_pdb_query                          (const gcha
                                                                       const gchar       *date,
                                                                       const gchar       *proc_type,
                                                                       gchar           ***procedure_names);
-G_GNUC_INTERNAL gboolean    _gimp_pdb_proc_exists                    (const gchar       *procedure_name,
-                                                                      gboolean          *is_internal);
+G_GNUC_INTERNAL gboolean    _gimp_pdb_proc_exists                    (const gchar       *procedure_name);
 G_GNUC_INTERNAL gboolean    _gimp_pdb_get_proc_info                  (const gchar       *procedure_name,
                                                                       GimpPDBProcType   *proc_type,
                                                                       gint              *num_args,

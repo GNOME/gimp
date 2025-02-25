@@ -2251,9 +2251,15 @@ gimp_procedure_is_internal (GimpProcedure *procedure)
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), FALSE);
 
   if (GIMP_IS_PDB_PROCEDURE (procedure))
-    return _gimp_pdb_procedure_is_internal (GIMP_PDB_PROCEDURE (procedure));
+    {
+      GimpProcedurePrivate *priv = gimp_procedure_get_instance_private (procedure);
+
+      return (priv->proc_type == GIMP_PDB_PROC_TYPE_INTERNAL);
+    }
   else
-    return FALSE;
+    {
+      return FALSE;
+    }
 }
 
 /**

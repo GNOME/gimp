@@ -157,9 +157,7 @@ HELP
 
     @outargs = (
 	{ name => 'exists', type => 'boolean',
-	  desc => 'Whether a procedure of that name is registered' },
-	{ name => 'is_internal', type => 'boolean',
-	  desc => 'Whether the procedure is an internal procedure' }
+	  desc => 'Whether a procedure of that name is registered' }
     );
 
     %invoke = (
@@ -180,11 +178,11 @@ HELP
         }
 
       exists = (proc != NULL);
-      if (exists)
-        is_internal = (proc->proc_type == GIMP_PDB_PROC_TYPE_INTERNAL);
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
 }
 CODE
     );

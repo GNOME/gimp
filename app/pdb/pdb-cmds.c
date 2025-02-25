@@ -176,7 +176,6 @@ pdb_proc_exists_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   const gchar *procedure_name;
   gboolean exists = FALSE;
-  gboolean is_internal = FALSE;
 
   procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
 
@@ -197,21 +196,18 @@ pdb_proc_exists_invoker (GimpProcedure         *procedure,
             }
 
           exists = (proc != NULL);
-          if (exists)
-            is_internal = (proc->proc_type == GIMP_PDB_PROC_TYPE_INTERNAL);
         }
       else
-        success = FALSE;
+        {
+          success = FALSE;
+        }
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      g_value_set_boolean (gimp_value_array_index (return_vals, 1), exists);
-      g_value_set_boolean (gimp_value_array_index (return_vals, 2), is_internal);
-    }
+    g_value_set_boolean (gimp_value_array_index (return_vals, 1), exists);
 
   return return_vals;
 }
@@ -1387,12 +1383,6 @@ register_pdb_procs (GimpPDB *pdb)
                                    g_param_spec_boolean ("exists",
                                                          "exists",
                                                          "Whether a procedure of that name is registered",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_boolean ("is-internal",
-                                                         "is internal",
-                                                         "Whether the procedure is an internal procedure",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
