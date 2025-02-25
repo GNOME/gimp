@@ -83,6 +83,8 @@ static pointer  script_fu_marshal_procedure_call_permissive       (scheme       
                                                                    pointer              a);
 static pointer  script_fu_marshal_procedure_call_deprecated       (scheme              *sc,
                                                                    pointer              a);
+static pointer  script_fu_marshal_procedure_exists                (scheme              *sc,
+                                                                   pointer              a);
 
 static pointer  script_fu_marshal_drawable_create_filter          (scheme              *sc,
                                                                    pointer              a,
@@ -570,6 +572,8 @@ ts_define_procedure (sc, "load-extension", scm_load_ext);
   ts_define_procedure (sc, "gimp-proc-db-call",   script_fu_marshal_procedure_call_strict);
   ts_define_procedure (sc, "-gimp-proc-db-call",  script_fu_marshal_procedure_call_permissive);
   ts_define_procedure (sc, "--gimp-proc-db-call", script_fu_marshal_procedure_call_deprecated);
+
+  ts_define_procedure (sc, "gimp-pdb-procedure-exists", script_fu_marshal_procedure_exists);
 
   ts_define_procedure (sc, "gimp-drawable-filter-configure", script_fu_marshal_drawable_filter_configure_call);
   ts_define_procedure (sc, "gimp-drawable-filter-set-aux-input", script_fu_marshal_drawable_filter_set_aux_call);
@@ -1851,6 +1855,45 @@ script_fu_marshal_procedure_call_permissive (scheme  *sc,
                                              pointer  a)
 {
   return script_fu_marshal_procedure_call (sc, a, TRUE, FALSE);
+}
+
+static pointer
+script_fu_marshal_procedure_exists (scheme  *sc,
+                                    pointer  a)
+{
+  const gchar *proc_name  = "gimp-pdb-procedure-exists";
+  const gchar *test_proc_name;
+  gboolean     exists     = FALSE;
+  gchar        error_str[1024];
+
+  if (a == sc->NIL)
+    {
+      g_snprintf (error_str, sizeof (error_str),
+                  "(%s) was called with no arguments. "
+                  "A procedure name must be specified.",
+                  proc_name);
+
+      return implementation_error (sc, error_str, 0);
+    }
+
+  if (sc->vptr->list_length (sc, a) != 1)
+    {
+      g_snprintf (error_str, sizeof (error_str),
+                  "(%s) was called with %d arguments. "
+                  "Only a procedure name must be specified.",
+                  proc_name, sc->vptr->list_length (sc, a));
+
+      return implementation_error (sc, error_str, 0);
+    }
+
+  if (! sc->vptr->is_string (sc->vptr->pair_car (a)))
+    return script_type_error (sc, "string", 1, proc_name);
+
+  test_proc_name = sc->vptr->string_value (sc->vptr->pair_car (a));
+
+  exists = gimp_pdb_procedure_exists (gimp_get_pdb (), test_proc_name);
+
+  return sc->vptr->mk_integer (sc, exists);
 }
 
 static pointer
