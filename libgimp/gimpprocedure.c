@@ -2233,6 +2233,18 @@ gimp_procedure_create_config (GimpProcedure *procedure)
                                                    priv->n_args);
 }
 
+/**
+ * gimp_procedure_is_internal:
+ * @procedure: A #GimpProcedure
+ *
+ * Provide the information if @procedure is an internal procedure. Only
+ * a procedure looked up in the [class@Gimp.PDB] can be internal.
+ * Procedures created by a plug-in in particular are never internal.
+ *
+ * Returns: Whether @procedure is an internal procedure or not.
+ *
+ * Since: 3.0
+ **/
 gboolean
 gimp_procedure_is_internal (GimpProcedure *procedure)
 {

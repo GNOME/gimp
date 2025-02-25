@@ -304,8 +304,6 @@ _gimp_pdb_error_quark (void)
 }
 
 
-/*  Temporary API, to go away before 3.0  */
-
 /**
  * gimp_pdb_get_last_error:
  * @pdb: a #GimpPDB.
