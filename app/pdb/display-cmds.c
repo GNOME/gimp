@@ -240,7 +240,7 @@ register_display_procs (GimpPDB *pdb)
   /*
    * gimp-display-id-is-valid
    */
-  procedure = gimp_procedure_new (display_id_is_valid_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (display_id_is_valid_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-display-id-is-valid");
   gimp_procedure_set_static_help (procedure,
@@ -271,7 +271,7 @@ register_display_procs (GimpPDB *pdb)
   /*
    * gimp-display-new
    */
-  procedure = gimp_procedure_new (display_new_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (display_new_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-display-new");
   gimp_procedure_set_static_help (procedure,
@@ -300,7 +300,7 @@ register_display_procs (GimpPDB *pdb)
   /*
    * gimp-display-delete
    */
-  procedure = gimp_procedure_new (display_delete_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (display_delete_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-display-delete");
   gimp_procedure_set_static_help (procedure,
@@ -323,7 +323,7 @@ register_display_procs (GimpPDB *pdb)
   /*
    * gimp-display-get-window-handle
    */
-  procedure = gimp_procedure_new (display_get_window_handle_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (display_get_window_handle_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-display-get-window-handle");
   gimp_procedure_set_static_help (procedure,
@@ -353,7 +353,7 @@ register_display_procs (GimpPDB *pdb)
   /*
    * gimp-display-present
    */
-  procedure = gimp_procedure_new (display_present_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (display_present_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-display-present");
   gimp_procedure_set_static_help (procedure,
@@ -376,7 +376,7 @@ register_display_procs (GimpPDB *pdb)
   /*
    * gimp-displays-flush
    */
-  procedure = gimp_procedure_new (displays_flush_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (displays_flush_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-displays-flush");
   gimp_procedure_set_static_help (procedure,
@@ -393,7 +393,7 @@ register_display_procs (GimpPDB *pdb)
   /*
    * gimp-displays-reconnect
    */
-  procedure = gimp_procedure_new (displays_reconnect_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (displays_reconnect_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-displays-reconnect");
   gimp_procedure_set_static_help (procedure,

@@ -1013,7 +1013,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-new
    */
-  procedure = gimp_procedure_new (text_layer_new_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_new_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-new");
   gimp_procedure_set_static_help (procedure,
@@ -1075,7 +1075,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-get-text
    */
-  procedure = gimp_procedure_new (text_layer_get_text_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_get_text_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-text");
   gimp_procedure_set_static_help (procedure,
@@ -1105,7 +1105,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-set-text
    */
-  procedure = gimp_procedure_new (text_layer_set_text_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_set_text_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-set-text");
   gimp_procedure_set_static_help (procedure,
@@ -1135,7 +1135,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-get-markup
    */
-  procedure = gimp_procedure_new (text_layer_get_markup_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_get_markup_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-markup");
   gimp_procedure_set_static_help (procedure,
@@ -1165,7 +1165,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-set-markup
    */
-  procedure = gimp_procedure_new (text_layer_set_markup_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_set_markup_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-set-markup");
   gimp_procedure_set_static_help (procedure,
@@ -1196,7 +1196,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-get-font
    */
-  procedure = gimp_procedure_new (text_layer_get_font_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_get_font_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-font");
   gimp_procedure_set_static_help (procedure,
@@ -1227,7 +1227,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-set-font
    */
-  procedure = gimp_procedure_new (text_layer_set_font_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_set_font_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-set-font");
   gimp_procedure_set_static_help (procedure,
@@ -1258,7 +1258,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-get-font-size
    */
-  procedure = gimp_procedure_new (text_layer_get_font_size_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_get_font_size_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-font-size");
   gimp_procedure_set_static_help (procedure,
@@ -1295,7 +1295,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-set-font-size
    */
-  procedure = gimp_procedure_new (text_layer_set_font_size_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_set_font_size_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-set-font-size");
   gimp_procedure_set_static_help (procedure,
@@ -1332,7 +1332,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-get-antialias
    */
-  procedure = gimp_procedure_new (text_layer_get_antialias_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_get_antialias_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-antialias");
   gimp_procedure_set_static_help (procedure,
@@ -1361,7 +1361,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-set-antialias
    */
-  procedure = gimp_procedure_new (text_layer_set_antialias_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_set_antialias_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-set-antialias");
   gimp_procedure_set_static_help (procedure,
@@ -1390,7 +1390,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-get-hint-style
    */
-  procedure = gimp_procedure_new (text_layer_get_hint_style_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_get_hint_style_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-hint-style");
   gimp_procedure_set_static_help (procedure,
@@ -1420,7 +1420,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-set-hint-style
    */
-  procedure = gimp_procedure_new (text_layer_set_hint_style_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_set_hint_style_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-set-hint-style");
   gimp_procedure_set_static_help (procedure,
@@ -1450,7 +1450,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-get-kerning
    */
-  procedure = gimp_procedure_new (text_layer_get_kerning_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_get_kerning_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-kerning");
   gimp_procedure_set_static_help (procedure,
@@ -1479,7 +1479,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-set-kerning
    */
-  procedure = gimp_procedure_new (text_layer_set_kerning_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_set_kerning_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-set-kerning");
   gimp_procedure_set_static_help (procedure,
@@ -1508,7 +1508,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-get-language
    */
-  procedure = gimp_procedure_new (text_layer_get_language_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_get_language_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-language");
   gimp_procedure_set_static_help (procedure,
@@ -1538,7 +1538,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-set-language
    */
-  procedure = gimp_procedure_new (text_layer_set_language_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_set_language_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-set-language");
   gimp_procedure_set_static_help (procedure,
@@ -1568,7 +1568,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-get-base-direction
    */
-  procedure = gimp_procedure_new (text_layer_get_base_direction_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_get_base_direction_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-base-direction");
   gimp_procedure_set_static_help (procedure,
@@ -1598,7 +1598,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-set-base-direction
    */
-  procedure = gimp_procedure_new (text_layer_set_base_direction_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_set_base_direction_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-set-base-direction");
   gimp_procedure_set_static_help (procedure,
@@ -1628,7 +1628,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-get-justification
    */
-  procedure = gimp_procedure_new (text_layer_get_justification_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_get_justification_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-justification");
   gimp_procedure_set_static_help (procedure,
@@ -1658,7 +1658,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-set-justification
    */
-  procedure = gimp_procedure_new (text_layer_set_justification_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_set_justification_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-set-justification");
   gimp_procedure_set_static_help (procedure,
@@ -1688,7 +1688,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-get-color
    */
-  procedure = gimp_procedure_new (text_layer_get_color_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_get_color_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-color");
   gimp_procedure_set_static_help (procedure,
@@ -1718,7 +1718,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-set-color
    */
-  procedure = gimp_procedure_new (text_layer_set_color_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_set_color_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-set-color");
   gimp_procedure_set_static_help (procedure,
@@ -1748,7 +1748,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-get-indent
    */
-  procedure = gimp_procedure_new (text_layer_get_indent_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_get_indent_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-indent");
   gimp_procedure_set_static_help (procedure,
@@ -1777,7 +1777,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-set-indent
    */
-  procedure = gimp_procedure_new (text_layer_set_indent_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_set_indent_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-set-indent");
   gimp_procedure_set_static_help (procedure,
@@ -1806,7 +1806,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-get-line-spacing
    */
-  procedure = gimp_procedure_new (text_layer_get_line_spacing_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_get_line_spacing_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-line-spacing");
   gimp_procedure_set_static_help (procedure,
@@ -1835,7 +1835,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-set-line-spacing
    */
-  procedure = gimp_procedure_new (text_layer_set_line_spacing_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_set_line_spacing_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-set-line-spacing");
   gimp_procedure_set_static_help (procedure,
@@ -1864,7 +1864,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-get-letter-spacing
    */
-  procedure = gimp_procedure_new (text_layer_get_letter_spacing_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_get_letter_spacing_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-letter-spacing");
   gimp_procedure_set_static_help (procedure,
@@ -1893,7 +1893,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-set-letter-spacing
    */
-  procedure = gimp_procedure_new (text_layer_set_letter_spacing_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_set_letter_spacing_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-set-letter-spacing");
   gimp_procedure_set_static_help (procedure,
@@ -1922,7 +1922,7 @@ register_text_layer_procs (GimpPDB *pdb)
   /*
    * gimp-text-layer-resize
    */
-  procedure = gimp_procedure_new (text_layer_resize_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (text_layer_resize_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-resize");
   gimp_procedure_set_static_help (procedure,

@@ -1155,7 +1155,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-get-format
    */
-  procedure = gimp_procedure_new (drawable_get_format_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (drawable_get_format_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-get-format");
   gimp_procedure_set_static_help (procedure,
@@ -1186,7 +1186,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-get-thumbnail-format
    */
-  procedure = gimp_procedure_new (drawable_get_thumbnail_format_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (drawable_get_thumbnail_format_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-get-thumbnail-format");
   gimp_procedure_set_static_help (procedure,
@@ -1217,7 +1217,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-get-pixel
    */
-  procedure = gimp_procedure_new (drawable_get_pixel_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_get_pixel_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-get-pixel");
   gimp_procedure_set_static_help (procedure,
@@ -1259,7 +1259,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-set-pixel
    */
-  procedure = gimp_procedure_new (drawable_set_pixel_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_set_pixel_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-set-pixel");
   gimp_procedure_set_static_help (procedure,
@@ -1301,7 +1301,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-type
    */
-  procedure = gimp_procedure_new (drawable_type_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_type_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-type");
   gimp_procedure_set_static_help (procedure,
@@ -1331,7 +1331,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-type-with-alpha
    */
-  procedure = gimp_procedure_new (drawable_type_with_alpha_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_type_with_alpha_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-type-with-alpha");
   gimp_procedure_set_static_help (procedure,
@@ -1367,7 +1367,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-has-alpha
    */
-  procedure = gimp_procedure_new (drawable_has_alpha_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_has_alpha_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-has-alpha");
   gimp_procedure_set_static_help (procedure,
@@ -1396,7 +1396,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-is-rgb
    */
-  procedure = gimp_procedure_new (drawable_is_rgb_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_is_rgb_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-is-rgb");
   gimp_procedure_set_static_help (procedure,
@@ -1425,7 +1425,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-is-gray
    */
-  procedure = gimp_procedure_new (drawable_is_gray_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_is_gray_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-is-gray");
   gimp_procedure_set_static_help (procedure,
@@ -1454,7 +1454,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-is-indexed
    */
-  procedure = gimp_procedure_new (drawable_is_indexed_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_is_indexed_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-is-indexed");
   gimp_procedure_set_static_help (procedure,
@@ -1483,7 +1483,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-get-bpp
    */
-  procedure = gimp_procedure_new (drawable_get_bpp_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_get_bpp_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-get-bpp");
   gimp_procedure_set_static_help (procedure,
@@ -1512,7 +1512,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-get-width
    */
-  procedure = gimp_procedure_new (drawable_get_width_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_get_width_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-get-width");
   gimp_procedure_set_static_help (procedure,
@@ -1541,7 +1541,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-get-height
    */
-  procedure = gimp_procedure_new (drawable_get_height_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_get_height_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-get-height");
   gimp_procedure_set_static_help (procedure,
@@ -1570,7 +1570,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-get-offsets
    */
-  procedure = gimp_procedure_new (drawable_get_offsets_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_get_offsets_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-get-offsets");
   gimp_procedure_set_static_help (procedure,
@@ -1605,7 +1605,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-mask-bounds
    */
-  procedure = gimp_procedure_new (drawable_mask_bounds_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_mask_bounds_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-mask-bounds");
   gimp_procedure_set_static_help (procedure,
@@ -1659,7 +1659,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-mask-intersect
    */
-  procedure = gimp_procedure_new (drawable_mask_intersect_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_mask_intersect_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-mask-intersect");
   gimp_procedure_set_static_help (procedure,
@@ -1713,7 +1713,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-append-filter-private
    */
-  procedure = gimp_procedure_new (drawable_append_filter_private_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (drawable_append_filter_private_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-append-filter-private");
   gimp_procedure_set_static_help (procedure,
@@ -1745,7 +1745,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-merge-filter-private
    */
-  procedure = gimp_procedure_new (drawable_merge_filter_private_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (drawable_merge_filter_private_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-merge-filter-private");
   gimp_procedure_set_static_help (procedure,
@@ -1777,7 +1777,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-get-filters
    */
-  procedure = gimp_procedure_new (drawable_get_filters_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_get_filters_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-get-filters");
   gimp_procedure_set_static_help (procedure,
@@ -1806,7 +1806,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-merge-filters
    */
-  procedure = gimp_procedure_new (drawable_merge_filters_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_merge_filters_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-merge-filters");
   gimp_procedure_set_static_help (procedure,
@@ -1829,7 +1829,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-merge-shadow
    */
-  procedure = gimp_procedure_new (drawable_merge_shadow_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_merge_shadow_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-merge-shadow");
   gimp_procedure_set_static_help (procedure,
@@ -1858,7 +1858,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-free-shadow
    */
-  procedure = gimp_procedure_new (drawable_free_shadow_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_free_shadow_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-free-shadow");
   gimp_procedure_set_static_help (procedure,
@@ -1881,7 +1881,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-update
    */
-  procedure = gimp_procedure_new (drawable_update_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_update_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-update");
   gimp_procedure_set_static_help (procedure,
@@ -1928,7 +1928,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-fill
    */
-  procedure = gimp_procedure_new (drawable_fill_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_fill_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-fill");
   gimp_procedure_set_static_help (procedure,
@@ -1959,7 +1959,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-offset
    */
-  procedure = gimp_procedure_new (drawable_offset_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_offset_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-offset");
   gimp_procedure_set_static_help (procedure,
@@ -2014,7 +2014,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-thumbnail
    */
-  procedure = gimp_procedure_new (drawable_thumbnail_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (drawable_thumbnail_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-thumbnail");
   gimp_procedure_set_static_help (procedure,
@@ -2073,7 +2073,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-sub-thumbnail
    */
-  procedure = gimp_procedure_new (drawable_sub_thumbnail_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (drawable_sub_thumbnail_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-sub-thumbnail");
   gimp_procedure_set_static_help (procedure,
@@ -2156,7 +2156,7 @@ register_drawable_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-foreground-extract
    */
-  procedure = gimp_procedure_new (drawable_foreground_extract_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_foreground_extract_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-foreground-extract");
   gimp_procedure_set_static_help (procedure,

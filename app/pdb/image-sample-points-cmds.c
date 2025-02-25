@@ -207,7 +207,7 @@ register_image_sample_points_procs (GimpPDB *pdb)
   /*
    * gimp-image-add-sample-point
    */
-  procedure = gimp_procedure_new (image_add_sample_point_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_add_sample_point_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-add-sample-point");
   gimp_procedure_set_static_help (procedure,
@@ -248,7 +248,7 @@ register_image_sample_points_procs (GimpPDB *pdb)
   /*
    * gimp-image-delete-sample-point
    */
-  procedure = gimp_procedure_new (image_delete_sample_point_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_delete_sample_point_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-delete-sample-point");
   gimp_procedure_set_static_help (procedure,
@@ -277,7 +277,7 @@ register_image_sample_points_procs (GimpPDB *pdb)
   /*
    * gimp-image-find-next-sample-point
    */
-  procedure = gimp_procedure_new (image_find_next_sample_point_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_find_next_sample_point_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-find-next-sample-point");
   gimp_procedure_set_static_help (procedure,
@@ -312,7 +312,7 @@ register_image_sample_points_procs (GimpPDB *pdb)
   /*
    * gimp-image-get-sample-point-position
    */
-  procedure = gimp_procedure_new (image_get_sample_point_position_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_get_sample_point_position_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-sample-point-position");
   gimp_procedure_set_static_help (procedure,

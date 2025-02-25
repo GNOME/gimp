@@ -108,7 +108,6 @@ static void
 gimp_procedure_init (GimpProcedure *procedure)
 {
   procedure->proc_type   = GIMP_PDB_PROC_TYPE_INTERNAL;
-  procedure->is_internal = FALSE;
   procedure->is_private  = FALSE;
 }
 
@@ -285,7 +284,6 @@ gimp_procedure_real_execute_async (GimpProcedure  *procedure,
 
 GimpProcedure  *
 gimp_procedure_new (GimpMarshalFunc marshal_func,
-                    gboolean        is_internal,
                     gboolean        is_private)
 {
   GimpProcedure *procedure;
@@ -295,7 +293,6 @@ gimp_procedure_new (GimpMarshalFunc marshal_func,
   procedure = g_object_new (GIMP_TYPE_PROCEDURE, NULL);
 
   procedure->marshal_func = marshal_func;
-  procedure->is_internal  = is_internal;
   procedure->is_private   = is_private;
 
   return procedure;
@@ -769,7 +766,7 @@ gimp_procedure_create_override (GimpProcedure   *procedure,
   const gchar   *name          = NULL;
   int            i             = 0;
 
-  new_procedure = gimp_procedure_new (new_marshal_func, procedure->is_internal, procedure->is_private);
+  new_procedure = gimp_procedure_new (new_marshal_func, procedure->is_private);
   name          = gimp_object_get_name (procedure);
 
   gimp_object_set_static_name (GIMP_OBJECT (new_procedure), name);

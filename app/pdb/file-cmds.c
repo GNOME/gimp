@@ -369,7 +369,7 @@ register_file_procs (GimpPDB *pdb)
   /*
    * gimp-file-load
    */
-  procedure = gimp_procedure_new (file_load_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (file_load_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-file-load");
   gimp_procedure_set_static_help (procedure,
@@ -407,7 +407,7 @@ register_file_procs (GimpPDB *pdb)
   /*
    * gimp-file-load-layer
    */
-  procedure = gimp_procedure_new (file_load_layer_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (file_load_layer_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-file-load-layer");
   gimp_procedure_set_static_help (procedure,
@@ -451,7 +451,7 @@ register_file_procs (GimpPDB *pdb)
   /*
    * gimp-file-load-layers
    */
-  procedure = gimp_procedure_new (file_load_layers_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (file_load_layers_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-file-load-layers");
   gimp_procedure_set_static_help (procedure,
@@ -495,7 +495,7 @@ register_file_procs (GimpPDB *pdb)
   /*
    * gimp-file-save
    */
-  procedure = gimp_procedure_new (file_save_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (file_save_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-file-save");
   gimp_procedure_set_static_help (procedure,
@@ -538,7 +538,7 @@ register_file_procs (GimpPDB *pdb)
   /*
    * gimp-file-load-thumbnail
    */
-  procedure = gimp_procedure_new (file_load_thumbnail_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (file_load_thumbnail_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-file-load-thumbnail");
   gimp_procedure_set_static_help (procedure,
@@ -579,7 +579,7 @@ register_file_procs (GimpPDB *pdb)
   /*
    * gimp-file-create-thumbnail
    */
-  procedure = gimp_procedure_new (file_create_thumbnail_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (file_create_thumbnail_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-file-create-thumbnail");
   gimp_procedure_set_static_help (procedure,

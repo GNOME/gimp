@@ -270,7 +270,7 @@ register_image_convert_procs (GimpPDB *pdb)
   /*
    * gimp-image-convert-rgb
    */
-  procedure = gimp_procedure_new (image_convert_rgb_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_convert_rgb_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-convert-rgb");
   gimp_procedure_set_static_help (procedure,
@@ -293,7 +293,7 @@ register_image_convert_procs (GimpPDB *pdb)
   /*
    * gimp-image-convert-grayscale
    */
-  procedure = gimp_procedure_new (image_convert_grayscale_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_convert_grayscale_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-convert-grayscale");
   gimp_procedure_set_static_help (procedure,
@@ -316,7 +316,7 @@ register_image_convert_procs (GimpPDB *pdb)
   /*
    * gimp-image-convert-indexed
    */
-  procedure = gimp_procedure_new (image_convert_indexed_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_convert_indexed_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-convert-indexed");
   gimp_procedure_set_static_help (procedure,
@@ -378,7 +378,7 @@ register_image_convert_procs (GimpPDB *pdb)
   /*
    * gimp-image-convert-set-dither-matrix
    */
-  procedure = gimp_procedure_new (image_convert_set_dither_matrix_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_convert_set_dither_matrix_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-convert-set-dither-matrix");
   gimp_procedure_set_static_help (procedure,
@@ -413,7 +413,7 @@ register_image_convert_procs (GimpPDB *pdb)
   /*
    * gimp-image-convert-precision
    */
-  procedure = gimp_procedure_new (image_convert_precision_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_convert_precision_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-convert-precision");
   gimp_procedure_set_static_help (procedure,

@@ -198,7 +198,7 @@ pdb_proc_exists_invoker (GimpProcedure         *procedure,
 
           exists = (proc != NULL);
           if (exists)
-            is_internal = proc->is_internal;
+            is_internal = (proc->proc_type == GIMP_PDB_PROC_TYPE_INTERNAL);
         }
       else
         success = FALSE;
@@ -1246,7 +1246,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-temp-name
    */
-  procedure = gimp_procedure_new (pdb_temp_name_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_temp_name_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-temp-name");
   gimp_procedure_set_static_help (procedure,
@@ -1270,7 +1270,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-dump
    */
-  procedure = gimp_procedure_new (pdb_dump_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_dump_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-dump");
   gimp_procedure_set_static_help (procedure,
@@ -1293,7 +1293,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-query
    */
-  procedure = gimp_procedure_new (pdb_query_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_query_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-query");
   gimp_procedure_set_static_help (procedure,
@@ -1365,7 +1365,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-proc-exists
    */
-  procedure = gimp_procedure_new (pdb_proc_exists_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_proc_exists_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-proc-exists");
   gimp_procedure_set_static_help (procedure,
@@ -1401,7 +1401,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-get-proc-info
    */
-  procedure = gimp_procedure_new (pdb_get_proc_info_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_get_proc_info_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-get-proc-info");
   gimp_procedure_set_static_help (procedure,
@@ -1444,7 +1444,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-get-proc-argument
    */
-  procedure = gimp_procedure_new (pdb_get_proc_argument_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_get_proc_argument_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-get-proc-argument");
   gimp_procedure_set_static_help (procedure,
@@ -1480,7 +1480,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-get-proc-return-value
    */
-  procedure = gimp_procedure_new (pdb_get_proc_return_value_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_get_proc_return_value_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-get-proc-return-value");
   gimp_procedure_set_static_help (procedure,
@@ -1516,7 +1516,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-set-proc-image-types
    */
-  procedure = gimp_procedure_new (pdb_set_proc_image_types_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_set_proc_image_types_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-set-proc-image-types");
   gimp_procedure_set_static_help (procedure,
@@ -1547,7 +1547,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-get-proc-image-types
    */
-  procedure = gimp_procedure_new (pdb_get_proc_image_types_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_get_proc_image_types_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-get-proc-image-types");
   gimp_procedure_set_static_help (procedure,
@@ -1578,7 +1578,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-set-proc-sensitivity-mask
    */
-  procedure = gimp_procedure_new (pdb_set_proc_sensitivity_mask_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_set_proc_sensitivity_mask_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-set-proc-sensitivity-mask");
   gimp_procedure_set_static_help (procedure,
@@ -1608,7 +1608,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-set-proc-menu-label
    */
-  procedure = gimp_procedure_new (pdb_set_proc_menu_label_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_set_proc_menu_label_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-set-proc-menu-label");
   gimp_procedure_set_static_help (procedure,
@@ -1639,7 +1639,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-get-proc-menu-label
    */
-  procedure = gimp_procedure_new (pdb_get_proc_menu_label_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_get_proc_menu_label_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-get-proc-menu-label");
   gimp_procedure_set_static_help (procedure,
@@ -1670,7 +1670,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-add-proc-menu-path
    */
-  procedure = gimp_procedure_new (pdb_add_proc_menu_path_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_add_proc_menu_path_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-add-proc-menu-path");
   gimp_procedure_set_static_help (procedure,
@@ -1701,7 +1701,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-get-proc-menu-paths
    */
-  procedure = gimp_procedure_new (pdb_get_proc_menu_paths_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_get_proc_menu_paths_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-get-proc-menu-paths");
   gimp_procedure_set_static_help (procedure,
@@ -1731,7 +1731,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-set-proc-icon
    */
-  procedure = gimp_procedure_new (pdb_set_proc_icon_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_set_proc_icon_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-set-proc-icon");
   gimp_procedure_set_static_help (procedure,
@@ -1768,7 +1768,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-set-proc-documentation
    */
-  procedure = gimp_procedure_new (pdb_set_proc_documentation_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_set_proc_documentation_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-set-proc-documentation");
   gimp_procedure_set_static_help (procedure,
@@ -1813,7 +1813,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-get-proc-documentation
    */
-  procedure = gimp_procedure_new (pdb_get_proc_documentation_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_get_proc_documentation_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-get-proc-documentation");
   gimp_procedure_set_static_help (procedure,
@@ -1858,7 +1858,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-set-proc-attribution
    */
-  procedure = gimp_procedure_new (pdb_set_proc_attribution_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_set_proc_attribution_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-set-proc-attribution");
   gimp_procedure_set_static_help (procedure,
@@ -1903,7 +1903,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-get-proc-attribution
    */
-  procedure = gimp_procedure_new (pdb_get_proc_attribution_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_get_proc_attribution_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-get-proc-attribution");
   gimp_procedure_set_static_help (procedure,
@@ -1948,7 +1948,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-set-file-proc-load-handler
    */
-  procedure = gimp_procedure_new (pdb_set_file_proc_load_handler_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_set_file_proc_load_handler_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-set-file-proc-load-handler");
   gimp_procedure_set_static_help (procedure,
@@ -1993,7 +1993,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-set-file-proc-export-handler
    */
-  procedure = gimp_procedure_new (pdb_set_file_proc_export_handler_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_set_file_proc_export_handler_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-set-file-proc-export-handler");
   gimp_procedure_set_static_help (procedure,
@@ -2031,7 +2031,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-set-file-proc-priority
    */
-  procedure = gimp_procedure_new (pdb_set_file_proc_priority_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_set_file_proc_priority_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-set-file-proc-priority");
   gimp_procedure_set_static_help (procedure,
@@ -2061,7 +2061,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-set-file-proc-mime-types
    */
-  procedure = gimp_procedure_new (pdb_set_file_proc_mime_types_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_set_file_proc_mime_types_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-set-file-proc-mime-types");
   gimp_procedure_set_static_help (procedure,
@@ -2092,7 +2092,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-set-file-proc-handles-remote
    */
-  procedure = gimp_procedure_new (pdb_set_file_proc_handles_remote_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_set_file_proc_handles_remote_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-set-file-proc-handles-remote");
   gimp_procedure_set_static_help (procedure,
@@ -2116,7 +2116,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-set-file-proc-handles-raw
    */
-  procedure = gimp_procedure_new (pdb_set_file_proc_handles_raw_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_set_file_proc_handles_raw_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-set-file-proc-handles-raw");
   gimp_procedure_set_static_help (procedure,
@@ -2140,7 +2140,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-set-file-proc-handles-vector
    */
-  procedure = gimp_procedure_new (pdb_set_file_proc_handles_vector_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_set_file_proc_handles_vector_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-set-file-proc-handles-vector");
   gimp_procedure_set_static_help (procedure,
@@ -2164,7 +2164,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-set-file-proc-thumbnail-loader
    */
-  procedure = gimp_procedure_new (pdb_set_file_proc_thumbnail_loader_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_set_file_proc_thumbnail_loader_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-set-file-proc-thumbnail-loader");
   gimp_procedure_set_static_help (procedure,
@@ -2195,7 +2195,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-set-batch-interpreter
    */
-  procedure = gimp_procedure_new (pdb_set_batch_interpreter_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_set_batch_interpreter_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-set-batch-interpreter");
   gimp_procedure_set_static_help (procedure,
@@ -2226,7 +2226,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-get-data
    */
-  procedure = gimp_procedure_new (pdb_get_data_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_get_data_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-get-data");
   gimp_procedure_set_static_help (procedure,
@@ -2256,7 +2256,7 @@ register_pdb_procs (GimpPDB *pdb)
   /*
    * gimp-pdb-set-data
    */
-  procedure = gimp_procedure_new (pdb_set_data_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pdb_set_data_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-set-data");
   gimp_procedure_set_static_help (procedure,

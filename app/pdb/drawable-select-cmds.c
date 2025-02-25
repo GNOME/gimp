@@ -136,7 +136,7 @@ register_drawable_select_procs (GimpPDB *pdb)
   /*
    * gimp-drawables-popup
    */
-  procedure = gimp_procedure_new (drawables_popup_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawables_popup_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawables-popup");
   gimp_procedure_set_static_help (procedure,
@@ -186,7 +186,7 @@ register_drawable_select_procs (GimpPDB *pdb)
   /*
    * gimp-drawables-close-popup
    */
-  procedure = gimp_procedure_new (drawables_close_popup_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawables_close_popup_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawables-close-popup");
   gimp_procedure_set_static_help (procedure,
@@ -210,7 +210,7 @@ register_drawable_select_procs (GimpPDB *pdb)
   /*
    * gimp-drawables-set-popup
    */
-  procedure = gimp_procedure_new (drawables_set_popup_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawables_set_popup_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawables-set-popup");
   gimp_procedure_set_static_help (procedure,

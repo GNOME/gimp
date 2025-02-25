@@ -95,7 +95,7 @@ register_gradients_procs (GimpPDB *pdb)
   /*
    * gimp-gradients-refresh
    */
-  procedure = gimp_procedure_new (gradients_refresh_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (gradients_refresh_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradients-refresh");
   gimp_procedure_set_static_help (procedure,
@@ -112,7 +112,7 @@ register_gradients_procs (GimpPDB *pdb)
   /*
    * gimp-gradients-get-list
    */
-  procedure = gimp_procedure_new (gradients_get_list_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (gradients_get_list_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradients-get-list");
   gimp_procedure_set_static_help (procedure,

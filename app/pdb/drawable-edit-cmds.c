@@ -383,7 +383,7 @@ register_drawable_edit_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-edit-clear
    */
-  procedure = gimp_procedure_new (drawable_edit_clear_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_edit_clear_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-edit-clear");
   gimp_procedure_set_static_help (procedure,
@@ -408,7 +408,7 @@ register_drawable_edit_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-edit-fill
    */
-  procedure = gimp_procedure_new (drawable_edit_fill_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_edit_fill_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-edit-fill");
   gimp_procedure_set_static_help (procedure,
@@ -440,7 +440,7 @@ register_drawable_edit_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-edit-bucket-fill
    */
-  procedure = gimp_procedure_new (drawable_edit_bucket_fill_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_edit_bucket_fill_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-edit-bucket-fill");
   gimp_procedure_set_static_help (procedure,
@@ -485,7 +485,7 @@ register_drawable_edit_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-edit-gradient-fill
    */
-  procedure = gimp_procedure_new (drawable_edit_gradient_fill_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_edit_gradient_fill_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-edit-gradient-fill");
   gimp_procedure_set_static_help (procedure,
@@ -571,7 +571,7 @@ register_drawable_edit_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-edit-stroke-selection
    */
-  procedure = gimp_procedure_new (drawable_edit_stroke_selection_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_edit_stroke_selection_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-edit-stroke-selection");
   gimp_procedure_set_static_help (procedure,
@@ -596,7 +596,7 @@ register_drawable_edit_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-edit-stroke-item
    */
-  procedure = gimp_procedure_new (drawable_edit_stroke_item_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_edit_stroke_item_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-edit-stroke-item");
   gimp_procedure_set_static_help (procedure,

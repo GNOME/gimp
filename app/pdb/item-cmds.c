@@ -1056,7 +1056,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-id-is-valid
    */
-  procedure = gimp_procedure_new (item_id_is_valid_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_id_is_valid_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-id-is-valid");
   gimp_procedure_set_static_help (procedure,
@@ -1087,7 +1087,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-id-is-drawable
    */
-  procedure = gimp_procedure_new (item_id_is_drawable_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_id_is_drawable_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-id-is-drawable");
   gimp_procedure_set_static_help (procedure,
@@ -1118,7 +1118,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-id-is-layer
    */
-  procedure = gimp_procedure_new (item_id_is_layer_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_id_is_layer_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-id-is-layer");
   gimp_procedure_set_static_help (procedure,
@@ -1163,7 +1163,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-id-is-text-layer
    */
-  procedure = gimp_procedure_new (item_id_is_text_layer_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_id_is_text_layer_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-id-is-text-layer");
   gimp_procedure_set_static_help (procedure,
@@ -1194,7 +1194,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-id-is-group-layer
    */
-  procedure = gimp_procedure_new (item_id_is_group_layer_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_id_is_group_layer_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-id-is-group-layer");
   gimp_procedure_set_static_help (procedure,
@@ -1225,7 +1225,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-id-is-channel
    */
-  procedure = gimp_procedure_new (item_id_is_channel_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_id_is_channel_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-id-is-channel");
   gimp_procedure_set_static_help (procedure,
@@ -1256,7 +1256,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-id-is-layer-mask
    */
-  procedure = gimp_procedure_new (item_id_is_layer_mask_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_id_is_layer_mask_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-id-is-layer-mask");
   gimp_procedure_set_static_help (procedure,
@@ -1287,7 +1287,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-id-is-path
    */
-  procedure = gimp_procedure_new (item_id_is_path_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_id_is_path_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-id-is-path");
   gimp_procedure_set_static_help (procedure,
@@ -1318,7 +1318,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-id-is-selection
    */
-  procedure = gimp_procedure_new (item_id_is_selection_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_id_is_selection_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-id-is-selection");
   gimp_procedure_set_static_help (procedure,
@@ -1349,7 +1349,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-get-image
    */
-  procedure = gimp_procedure_new (item_get_image_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_get_image_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-get-image");
   gimp_procedure_set_static_help (procedure,
@@ -1378,7 +1378,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-delete
    */
-  procedure = gimp_procedure_new (item_delete_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_delete_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-delete");
   gimp_procedure_set_static_help (procedure,
@@ -1401,7 +1401,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-is-group
    */
-  procedure = gimp_procedure_new (item_is_group_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_is_group_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-is-group");
   gimp_procedure_set_static_help (procedure,
@@ -1430,7 +1430,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-get-parent
    */
-  procedure = gimp_procedure_new (item_get_parent_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_get_parent_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-get-parent");
   gimp_procedure_set_static_help (procedure,
@@ -1459,7 +1459,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-get-children
    */
-  procedure = gimp_procedure_new (item_get_children_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_get_children_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-get-children");
   gimp_procedure_set_static_help (procedure,
@@ -1488,7 +1488,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-get-expanded
    */
-  procedure = gimp_procedure_new (item_get_expanded_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_get_expanded_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-get-expanded");
   gimp_procedure_set_static_help (procedure,
@@ -1517,7 +1517,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-set-expanded
    */
-  procedure = gimp_procedure_new (item_set_expanded_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_set_expanded_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-set-expanded");
   gimp_procedure_set_static_help (procedure,
@@ -1546,7 +1546,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-get-name
    */
-  procedure = gimp_procedure_new (item_get_name_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_get_name_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-get-name");
   gimp_procedure_set_static_help (procedure,
@@ -1576,7 +1576,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-set-name
    */
-  procedure = gimp_procedure_new (item_set_name_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_set_name_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-set-name");
   gimp_procedure_set_static_help (procedure,
@@ -1606,7 +1606,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-get-visible
    */
-  procedure = gimp_procedure_new (item_get_visible_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_get_visible_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-get-visible");
   gimp_procedure_set_static_help (procedure,
@@ -1635,7 +1635,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-set-visible
    */
-  procedure = gimp_procedure_new (item_set_visible_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_set_visible_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-set-visible");
   gimp_procedure_set_static_help (procedure,
@@ -1664,7 +1664,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-get-lock-content
    */
-  procedure = gimp_procedure_new (item_get_lock_content_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_get_lock_content_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-get-lock-content");
   gimp_procedure_set_static_help (procedure,
@@ -1693,7 +1693,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-set-lock-content
    */
-  procedure = gimp_procedure_new (item_set_lock_content_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_set_lock_content_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-set-lock-content");
   gimp_procedure_set_static_help (procedure,
@@ -1722,7 +1722,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-get-lock-position
    */
-  procedure = gimp_procedure_new (item_get_lock_position_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_get_lock_position_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-get-lock-position");
   gimp_procedure_set_static_help (procedure,
@@ -1751,7 +1751,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-set-lock-position
    */
-  procedure = gimp_procedure_new (item_set_lock_position_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_set_lock_position_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-set-lock-position");
   gimp_procedure_set_static_help (procedure,
@@ -1780,7 +1780,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-get-lock-visibility
    */
-  procedure = gimp_procedure_new (item_get_lock_visibility_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_get_lock_visibility_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-get-lock-visibility");
   gimp_procedure_set_static_help (procedure,
@@ -1809,7 +1809,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-set-lock-visibility
    */
-  procedure = gimp_procedure_new (item_set_lock_visibility_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_set_lock_visibility_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-set-lock-visibility");
   gimp_procedure_set_static_help (procedure,
@@ -1838,7 +1838,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-get-color-tag
    */
-  procedure = gimp_procedure_new (item_get_color_tag_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_get_color_tag_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-get-color-tag");
   gimp_procedure_set_static_help (procedure,
@@ -1868,7 +1868,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-set-color-tag
    */
-  procedure = gimp_procedure_new (item_set_color_tag_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_set_color_tag_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-set-color-tag");
   gimp_procedure_set_static_help (procedure,
@@ -1898,7 +1898,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-get-tattoo
    */
-  procedure = gimp_procedure_new (item_get_tattoo_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_get_tattoo_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-get-tattoo");
   gimp_procedure_set_static_help (procedure,
@@ -1927,7 +1927,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-set-tattoo
    */
-  procedure = gimp_procedure_new (item_set_tattoo_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_set_tattoo_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-set-tattoo");
   gimp_procedure_set_static_help (procedure,
@@ -1956,7 +1956,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-attach-parasite
    */
-  procedure = gimp_procedure_new (item_attach_parasite_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_attach_parasite_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-attach-parasite");
   gimp_procedure_set_static_help (procedure,
@@ -1984,7 +1984,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-detach-parasite
    */
-  procedure = gimp_procedure_new (item_detach_parasite_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_detach_parasite_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-detach-parasite");
   gimp_procedure_set_static_help (procedure,
@@ -2014,7 +2014,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-get-parasite
    */
-  procedure = gimp_procedure_new (item_get_parasite_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_get_parasite_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-get-parasite");
   gimp_procedure_set_static_help (procedure,
@@ -2049,7 +2049,7 @@ register_item_procs (GimpPDB *pdb)
   /*
    * gimp-item-get-parasite-list
    */
-  procedure = gimp_procedure_new (item_get_parasite_list_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_get_parasite_list_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-get-parasite-list");
   gimp_procedure_set_static_help (procedure,

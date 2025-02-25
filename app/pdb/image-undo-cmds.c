@@ -289,7 +289,7 @@ register_image_undo_procs (GimpPDB *pdb)
   /*
    * gimp-image-undo-group-start
    */
-  procedure = gimp_procedure_new (image_undo_group_start_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_undo_group_start_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-undo-group-start");
   gimp_procedure_set_static_help (procedure,
@@ -312,7 +312,7 @@ register_image_undo_procs (GimpPDB *pdb)
   /*
    * gimp-image-undo-group-end
    */
-  procedure = gimp_procedure_new (image_undo_group_end_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_undo_group_end_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-undo-group-end");
   gimp_procedure_set_static_help (procedure,
@@ -335,7 +335,7 @@ register_image_undo_procs (GimpPDB *pdb)
   /*
    * gimp-image-undo-is-enabled
    */
-  procedure = gimp_procedure_new (image_undo_is_enabled_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_undo_is_enabled_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-undo-is-enabled");
   gimp_procedure_set_static_help (procedure,
@@ -364,7 +364,7 @@ register_image_undo_procs (GimpPDB *pdb)
   /*
    * gimp-image-undo-disable
    */
-  procedure = gimp_procedure_new (image_undo_disable_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_undo_disable_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-undo-disable");
   gimp_procedure_set_static_help (procedure,
@@ -393,7 +393,7 @@ register_image_undo_procs (GimpPDB *pdb)
   /*
    * gimp-image-undo-enable
    */
-  procedure = gimp_procedure_new (image_undo_enable_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_undo_enable_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-undo-enable");
   gimp_procedure_set_static_help (procedure,
@@ -422,7 +422,7 @@ register_image_undo_procs (GimpPDB *pdb)
   /*
    * gimp-image-undo-freeze
    */
-  procedure = gimp_procedure_new (image_undo_freeze_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_undo_freeze_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-undo-freeze");
   gimp_procedure_set_static_help (procedure,
@@ -451,7 +451,7 @@ register_image_undo_procs (GimpPDB *pdb)
   /*
    * gimp-image-undo-thaw
    */
-  procedure = gimp_procedure_new (image_undo_thaw_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_undo_thaw_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-undo-thaw");
   gimp_procedure_set_static_help (procedure,

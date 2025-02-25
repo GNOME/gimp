@@ -107,7 +107,7 @@ register_font_procs (GimpPDB *pdb)
   /*
    * gimp-font-get-lookup-name
    */
-  procedure = gimp_procedure_new (font_get_lookup_name_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (font_get_lookup_name_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-font-get-lookup-name");
   gimp_procedure_set_static_help (procedure,
@@ -139,7 +139,7 @@ register_font_procs (GimpPDB *pdb)
   /*
    * gimp-font-get-by-name
    */
-  procedure = gimp_procedure_new (font_get_by_name_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (font_get_by_name_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-font-get-by-name");
   gimp_procedure_set_static_help (procedure,

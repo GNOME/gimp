@@ -119,7 +119,7 @@ register_message_procs (GimpPDB *pdb)
   /*
    * gimp-message
    */
-  procedure = gimp_procedure_new (message_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (message_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-message");
   gimp_procedure_set_static_help (procedure,
@@ -143,7 +143,7 @@ register_message_procs (GimpPDB *pdb)
   /*
    * gimp-message-get-handler
    */
-  procedure = gimp_procedure_new (message_get_handler_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (message_get_handler_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-message-get-handler");
   gimp_procedure_set_static_help (procedure,
@@ -167,7 +167,7 @@ register_message_procs (GimpPDB *pdb)
   /*
    * gimp-message-set-handler
    */
-  procedure = gimp_procedure_new (message_set_handler_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (message_set_handler_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-message-set-handler");
   gimp_procedure_set_static_help (procedure,

@@ -377,7 +377,7 @@ register_channel_procs (GimpPDB *pdb)
   /*
    * gimp-channel-new
    */
-  procedure = gimp_procedure_new (channel_new_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (channel_new_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-new");
   gimp_procedure_set_static_help (procedure,
@@ -444,7 +444,7 @@ register_channel_procs (GimpPDB *pdb)
   /*
    * gimp-channel-new-from-component
    */
-  procedure = gimp_procedure_new (channel_new_from_component_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (channel_new_from_component_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-new-from-component");
   gimp_procedure_set_static_help (procedure,
@@ -488,7 +488,7 @@ register_channel_procs (GimpPDB *pdb)
   /*
    * gimp-channel-copy
    */
-  procedure = gimp_procedure_new (channel_copy_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (channel_copy_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-copy");
   gimp_procedure_set_static_help (procedure,
@@ -518,7 +518,7 @@ register_channel_procs (GimpPDB *pdb)
   /*
    * gimp-channel-combine-masks
    */
-  procedure = gimp_procedure_new (channel_combine_masks_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (channel_combine_masks_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-combine-masks");
   gimp_procedure_set_static_help (procedure,
@@ -566,7 +566,7 @@ register_channel_procs (GimpPDB *pdb)
   /*
    * gimp-channel-get-show-masked
    */
-  procedure = gimp_procedure_new (channel_get_show_masked_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (channel_get_show_masked_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-get-show-masked");
   gimp_procedure_set_static_help (procedure,
@@ -595,7 +595,7 @@ register_channel_procs (GimpPDB *pdb)
   /*
    * gimp-channel-set-show-masked
    */
-  procedure = gimp_procedure_new (channel_set_show_masked_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (channel_set_show_masked_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-set-show-masked");
   gimp_procedure_set_static_help (procedure,
@@ -624,7 +624,7 @@ register_channel_procs (GimpPDB *pdb)
   /*
    * gimp-channel-get-opacity
    */
-  procedure = gimp_procedure_new (channel_get_opacity_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (channel_get_opacity_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-get-opacity");
   gimp_procedure_set_static_help (procedure,
@@ -653,7 +653,7 @@ register_channel_procs (GimpPDB *pdb)
   /*
    * gimp-channel-set-opacity
    */
-  procedure = gimp_procedure_new (channel_set_opacity_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (channel_set_opacity_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-set-opacity");
   gimp_procedure_set_static_help (procedure,
@@ -682,7 +682,7 @@ register_channel_procs (GimpPDB *pdb)
   /*
    * gimp-channel-get-color
    */
-  procedure = gimp_procedure_new (channel_get_color_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (channel_get_color_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-get-color");
   gimp_procedure_set_static_help (procedure,
@@ -712,7 +712,7 @@ register_channel_procs (GimpPDB *pdb)
   /*
    * gimp-channel-set-color
    */
-  procedure = gimp_procedure_new (channel_set_color_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (channel_set_color_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-set-color");
   gimp_procedure_set_static_help (procedure,

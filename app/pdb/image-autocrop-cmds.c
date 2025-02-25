@@ -222,7 +222,7 @@ register_image_autocrop_procs (GimpPDB *pdb)
   /*
    * gimp-image-autocrop
    */
-  procedure = gimp_procedure_new (image_autocrop_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_autocrop_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-autocrop");
   gimp_procedure_set_static_help (procedure,
@@ -254,7 +254,7 @@ register_image_autocrop_procs (GimpPDB *pdb)
   /*
    * gimp-image-autocrop-selected-layers
    */
-  procedure = gimp_procedure_new (image_autocrop_selected_layers_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_autocrop_selected_layers_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-autocrop-selected-layers");
   gimp_procedure_set_static_help (procedure,

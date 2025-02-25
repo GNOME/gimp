@@ -136,7 +136,7 @@ register_group_layer_procs (GimpPDB *pdb)
   /*
    * gimp-group-layer-new
    */
-  procedure = gimp_procedure_new (group_layer_new_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (group_layer_new_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-group-layer-new");
   gimp_procedure_set_static_help (procedure,
@@ -177,7 +177,7 @@ register_group_layer_procs (GimpPDB *pdb)
   /*
    * gimp-group-layer-merge
    */
-  procedure = gimp_procedure_new (group_layer_merge_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (group_layer_merge_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-group-layer-merge");
   gimp_procedure_set_static_help (procedure,

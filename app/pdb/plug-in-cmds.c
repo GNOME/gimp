@@ -219,7 +219,7 @@ register_plug_in_procs (GimpPDB *pdb)
   /*
    * gimp-plug-ins-query
    */
-  procedure = gimp_procedure_new (plug_ins_query_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (plug_ins_query_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-plug-ins-query");
   gimp_procedure_set_static_help (procedure,
@@ -266,7 +266,7 @@ register_plug_in_procs (GimpPDB *pdb)
   /*
    * gimp-plug-in-help-register
    */
-  procedure = gimp_procedure_new (plug_in_help_register_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (plug_in_help_register_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-plug-in-help-register");
   gimp_procedure_set_static_help (procedure,
@@ -296,7 +296,7 @@ register_plug_in_procs (GimpPDB *pdb)
   /*
    * gimp-plug-in-menu-branch-register
    */
-  procedure = gimp_procedure_new (plug_in_menu_branch_register_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (plug_in_menu_branch_register_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-plug-in-menu-branch-register");
   gimp_procedure_set_static_help (procedure,
@@ -327,7 +327,7 @@ register_plug_in_procs (GimpPDB *pdb)
   /*
    * gimp-plug-in-set-pdb-error-handler
    */
-  procedure = gimp_procedure_new (plug_in_set_pdb_error_handler_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (plug_in_set_pdb_error_handler_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-plug-in-set-pdb-error-handler");
   gimp_procedure_set_static_help (procedure,
@@ -351,7 +351,7 @@ register_plug_in_procs (GimpPDB *pdb)
   /*
    * gimp-plug-in-get-pdb-error-handler
    */
-  procedure = gimp_procedure_new (plug_in_get_pdb_error_handler_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (plug_in_get_pdb_error_handler_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-plug-in-get-pdb-error-handler");
   gimp_procedure_set_static_help (procedure,

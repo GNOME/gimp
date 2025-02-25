@@ -221,7 +221,7 @@ register_gimprc_procs (GimpPDB *pdb)
   /*
    * gimp-gimprc-query
    */
-  procedure = gimp_procedure_new (gimprc_query_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (gimprc_query_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gimprc-query");
   gimp_procedure_set_static_help (procedure,
@@ -252,7 +252,7 @@ register_gimprc_procs (GimpPDB *pdb)
   /*
    * gimp-gimprc-set
    */
-  procedure = gimp_procedure_new (gimprc_set_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (gimprc_set_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gimprc-set");
   gimp_procedure_set_static_help (procedure,
@@ -283,7 +283,7 @@ register_gimprc_procs (GimpPDB *pdb)
   /*
    * gimp-get-default-comment
    */
-  procedure = gimp_procedure_new (get_default_comment_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (get_default_comment_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-get-default-comment");
   gimp_procedure_set_static_help (procedure,
@@ -307,7 +307,7 @@ register_gimprc_procs (GimpPDB *pdb)
   /*
    * gimp-get-default-unit
    */
-  procedure = gimp_procedure_new (get_default_unit_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (get_default_unit_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-get-default-unit");
   gimp_procedure_set_static_help (procedure,
@@ -332,7 +332,7 @@ register_gimprc_procs (GimpPDB *pdb)
   /*
    * gimp-get-monitor-resolution
    */
-  procedure = gimp_procedure_new (get_monitor_resolution_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (get_monitor_resolution_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-get-monitor-resolution");
   gimp_procedure_set_static_help (procedure,
@@ -361,7 +361,7 @@ register_gimprc_procs (GimpPDB *pdb)
   /*
    * gimp-get-color-configuration
    */
-  procedure = gimp_procedure_new (get_color_configuration_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (get_color_configuration_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-get-color-configuration");
   gimp_procedure_set_static_help (procedure,
@@ -385,7 +385,7 @@ register_gimprc_procs (GimpPDB *pdb)
   /*
    * gimp-get-module-load-inhibit
    */
-  procedure = gimp_procedure_new (get_module_load_inhibit_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (get_module_load_inhibit_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-get-module-load-inhibit");
   gimp_procedure_set_static_help (procedure,

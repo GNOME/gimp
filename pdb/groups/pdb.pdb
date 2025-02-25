@@ -181,7 +181,7 @@ HELP
 
       exists = (proc != NULL);
       if (exists)
-        is_internal = proc->is_internal;
+        is_internal = (proc->proc_type == GIMP_PDB_PROC_TYPE_INTERNAL);
     }
   else
     success = FALSE;

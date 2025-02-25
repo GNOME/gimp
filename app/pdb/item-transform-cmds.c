@@ -948,7 +948,7 @@ register_item_transform_procs (GimpPDB *pdb)
   /*
    * gimp-item-transform-translate
    */
-  procedure = gimp_procedure_new (item_transform_translate_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_transform_translate_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-translate");
   gimp_procedure_set_static_help (procedure,
@@ -989,7 +989,7 @@ register_item_transform_procs (GimpPDB *pdb)
   /*
    * gimp-item-transform-flip-simple
    */
-  procedure = gimp_procedure_new (item_transform_flip_simple_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_transform_flip_simple_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-flip-simple");
   gimp_procedure_set_static_help (procedure,
@@ -1045,7 +1045,7 @@ register_item_transform_procs (GimpPDB *pdb)
   /*
    * gimp-item-transform-flip
    */
-  procedure = gimp_procedure_new (item_transform_flip_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_transform_flip_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-flip");
   gimp_procedure_set_static_help (procedure,
@@ -1104,7 +1104,7 @@ register_item_transform_procs (GimpPDB *pdb)
   /*
    * gimp-item-transform-perspective
    */
-  procedure = gimp_procedure_new (item_transform_perspective_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_transform_perspective_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-perspective");
   gimp_procedure_set_static_help (procedure,
@@ -1190,7 +1190,7 @@ register_item_transform_procs (GimpPDB *pdb)
   /*
    * gimp-item-transform-rotate-simple
    */
-  procedure = gimp_procedure_new (item_transform_rotate_simple_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_transform_rotate_simple_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-rotate-simple");
   gimp_procedure_set_static_help (procedure,
@@ -1251,7 +1251,7 @@ register_item_transform_procs (GimpPDB *pdb)
   /*
    * gimp-item-transform-rotate
    */
-  procedure = gimp_procedure_new (item_transform_rotate_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_transform_rotate_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-rotate");
   gimp_procedure_set_static_help (procedure,
@@ -1311,7 +1311,7 @@ register_item_transform_procs (GimpPDB *pdb)
   /*
    * gimp-item-transform-scale
    */
-  procedure = gimp_procedure_new (item_transform_scale_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_transform_scale_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-scale");
   gimp_procedure_set_static_help (procedure,
@@ -1373,7 +1373,7 @@ register_item_transform_procs (GimpPDB *pdb)
   /*
    * gimp-item-transform-shear
    */
-  procedure = gimp_procedure_new (item_transform_shear_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_transform_shear_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-shear");
   gimp_procedure_set_static_help (procedure,
@@ -1426,7 +1426,7 @@ register_item_transform_procs (GimpPDB *pdb)
   /*
    * gimp-item-transform-2d
    */
-  procedure = gimp_procedure_new (item_transform_2d_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_transform_2d_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-2d");
   gimp_procedure_set_static_help (procedure,
@@ -1506,7 +1506,7 @@ register_item_transform_procs (GimpPDB *pdb)
   /*
    * gimp-item-transform-matrix
    */
-  procedure = gimp_procedure_new (item_transform_matrix_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (item_transform_matrix_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-matrix");
   gimp_procedure_set_static_help (procedure,

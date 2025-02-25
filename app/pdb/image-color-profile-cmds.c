@@ -549,7 +549,7 @@ register_image_color_profile_procs (GimpPDB *pdb)
   /*
    * gimp-image-get-color-profile
    */
-  procedure = gimp_procedure_new (image_get_color_profile_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (image_get_color_profile_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-color-profile");
   gimp_procedure_set_static_help (procedure,
@@ -578,7 +578,7 @@ register_image_color_profile_procs (GimpPDB *pdb)
   /*
    * gimp-image-get-effective-color-profile
    */
-  procedure = gimp_procedure_new (image_get_effective_color_profile_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (image_get_effective_color_profile_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-effective-color-profile");
   gimp_procedure_set_static_help (procedure,
@@ -607,7 +607,7 @@ register_image_color_profile_procs (GimpPDB *pdb)
   /*
    * gimp-image-set-color-profile
    */
-  procedure = gimp_procedure_new (image_set_color_profile_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (image_set_color_profile_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-set-color-profile");
   gimp_procedure_set_static_help (procedure,
@@ -636,7 +636,7 @@ register_image_color_profile_procs (GimpPDB *pdb)
   /*
    * gimp-image-set-color-profile-from-file
    */
-  procedure = gimp_procedure_new (image_set_color_profile_from_file_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_set_color_profile_from_file_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-set-color-profile-from-file");
   gimp_procedure_set_static_help (procedure,
@@ -665,7 +665,7 @@ register_image_color_profile_procs (GimpPDB *pdb)
   /*
    * gimp-image-get-simulation-profile
    */
-  procedure = gimp_procedure_new (image_get_simulation_profile_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (image_get_simulation_profile_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-simulation-profile");
   gimp_procedure_set_static_help (procedure,
@@ -694,7 +694,7 @@ register_image_color_profile_procs (GimpPDB *pdb)
   /*
    * gimp-image-set-simulation-profile
    */
-  procedure = gimp_procedure_new (image_set_simulation_profile_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (image_set_simulation_profile_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-set-simulation-profile");
   gimp_procedure_set_static_help (procedure,
@@ -723,7 +723,7 @@ register_image_color_profile_procs (GimpPDB *pdb)
   /*
    * gimp-image-set-simulation-profile-from-file
    */
-  procedure = gimp_procedure_new (image_set_simulation_profile_from_file_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_set_simulation_profile_from_file_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-set-simulation-profile-from-file");
   gimp_procedure_set_static_help (procedure,
@@ -752,7 +752,7 @@ register_image_color_profile_procs (GimpPDB *pdb)
   /*
    * gimp-image-get-simulation-intent
    */
-  procedure = gimp_procedure_new (image_get_simulation_intent_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_get_simulation_intent_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-simulation-intent");
   gimp_procedure_set_static_help (procedure,
@@ -782,7 +782,7 @@ register_image_color_profile_procs (GimpPDB *pdb)
   /*
    * gimp-image-set-simulation-intent
    */
-  procedure = gimp_procedure_new (image_set_simulation_intent_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_set_simulation_intent_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-set-simulation-intent");
   gimp_procedure_set_static_help (procedure,
@@ -812,7 +812,7 @@ register_image_color_profile_procs (GimpPDB *pdb)
   /*
    * gimp-image-get-simulation-bpc
    */
-  procedure = gimp_procedure_new (image_get_simulation_bpc_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_get_simulation_bpc_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-simulation-bpc");
   gimp_procedure_set_static_help (procedure,
@@ -841,7 +841,7 @@ register_image_color_profile_procs (GimpPDB *pdb)
   /*
    * gimp-image-set-simulation-bpc
    */
-  procedure = gimp_procedure_new (image_set_simulation_bpc_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_set_simulation_bpc_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-set-simulation-bpc");
   gimp_procedure_set_static_help (procedure,
@@ -870,7 +870,7 @@ register_image_color_profile_procs (GimpPDB *pdb)
   /*
    * gimp-image-convert-color-profile
    */
-  procedure = gimp_procedure_new (image_convert_color_profile_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (image_convert_color_profile_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-convert-color-profile");
   gimp_procedure_set_static_help (procedure,
@@ -912,7 +912,7 @@ register_image_color_profile_procs (GimpPDB *pdb)
   /*
    * gimp-image-convert-color-profile-from-file
    */
-  procedure = gimp_procedure_new (image_convert_color_profile_from_file_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (image_convert_color_profile_from_file_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-convert-color-profile-from-file");
   gimp_procedure_set_static_help (procedure,

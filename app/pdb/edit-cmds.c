@@ -656,7 +656,7 @@ register_edit_procs (GimpPDB *pdb)
   /*
    * gimp-edit-cut
    */
-  procedure = gimp_procedure_new (edit_cut_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (edit_cut_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-edit-cut");
   gimp_procedure_set_static_help (procedure,
@@ -686,7 +686,7 @@ register_edit_procs (GimpPDB *pdb)
   /*
    * gimp-edit-copy
    */
-  procedure = gimp_procedure_new (edit_copy_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (edit_copy_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-edit-copy");
   gimp_procedure_set_static_help (procedure,
@@ -717,7 +717,7 @@ register_edit_procs (GimpPDB *pdb)
   /*
    * gimp-edit-copy-visible
    */
-  procedure = gimp_procedure_new (edit_copy_visible_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (edit_copy_visible_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-edit-copy-visible");
   gimp_procedure_set_static_help (procedure,
@@ -746,7 +746,7 @@ register_edit_procs (GimpPDB *pdb)
   /*
    * gimp-edit-paste
    */
-  procedure = gimp_procedure_new (edit_paste_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (edit_paste_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-edit-paste");
   gimp_procedure_set_static_help (procedure,
@@ -782,7 +782,7 @@ register_edit_procs (GimpPDB *pdb)
   /*
    * gimp-edit-paste-as-new-image
    */
-  procedure = gimp_procedure_new (edit_paste_as_new_image_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (edit_paste_as_new_image_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-edit-paste-as-new-image");
   gimp_procedure_set_static_help (procedure,
@@ -805,7 +805,7 @@ register_edit_procs (GimpPDB *pdb)
   /*
    * gimp-edit-named-cut
    */
-  procedure = gimp_procedure_new (edit_named_cut_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (edit_named_cut_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-edit-named-cut");
   gimp_procedure_set_static_help (procedure,
@@ -842,7 +842,7 @@ register_edit_procs (GimpPDB *pdb)
   /*
    * gimp-edit-named-copy
    */
-  procedure = gimp_procedure_new (edit_named_copy_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (edit_named_copy_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-edit-named-copy");
   gimp_procedure_set_static_help (procedure,
@@ -879,7 +879,7 @@ register_edit_procs (GimpPDB *pdb)
   /*
    * gimp-edit-named-copy-visible
    */
-  procedure = gimp_procedure_new (edit_named_copy_visible_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (edit_named_copy_visible_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-edit-named-copy-visible");
   gimp_procedure_set_static_help (procedure,
@@ -916,7 +916,7 @@ register_edit_procs (GimpPDB *pdb)
   /*
    * gimp-edit-named-paste
    */
-  procedure = gimp_procedure_new (edit_named_paste_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (edit_named_paste_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-edit-named-paste");
   gimp_procedure_set_static_help (procedure,
@@ -958,7 +958,7 @@ register_edit_procs (GimpPDB *pdb)
   /*
    * gimp-edit-named-paste-as-new-image
    */
-  procedure = gimp_procedure_new (edit_named_paste_as_new_image_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (edit_named_paste_as_new_image_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-edit-named-paste-as-new-image");
   gimp_procedure_set_static_help (procedure,

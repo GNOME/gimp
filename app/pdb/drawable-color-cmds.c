@@ -838,7 +838,7 @@ register_drawable_color_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-brightness-contrast
    */
-  procedure = gimp_procedure_new (drawable_brightness_contrast_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_brightness_contrast_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-brightness-contrast");
   gimp_procedure_set_static_help (procedure,
@@ -873,7 +873,7 @@ register_drawable_color_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-color-balance
    */
-  procedure = gimp_procedure_new (drawable_color_balance_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_color_balance_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-color-balance");
   gimp_procedure_set_static_help (procedure,
@@ -927,7 +927,7 @@ register_drawable_color_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-colorize-hsl
    */
-  procedure = gimp_procedure_new (drawable_colorize_hsl_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_colorize_hsl_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-colorize-hsl");
   gimp_procedure_set_static_help (procedure,
@@ -968,7 +968,7 @@ register_drawable_color_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-curves-explicit
    */
-  procedure = gimp_procedure_new (drawable_curves_explicit_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_curves_explicit_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-curves-explicit");
   gimp_procedure_set_static_help (procedure,
@@ -1003,7 +1003,7 @@ register_drawable_color_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-curves-spline
    */
-  procedure = gimp_procedure_new (drawable_curves_spline_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_curves_spline_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-curves-spline");
   gimp_procedure_set_static_help (procedure,
@@ -1038,7 +1038,7 @@ register_drawable_color_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-extract-component
    */
-  procedure = gimp_procedure_new (drawable_extract_component_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_extract_component_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-extract-component");
   gimp_procedure_set_static_help (procedure,
@@ -1079,7 +1079,7 @@ register_drawable_color_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-desaturate
    */
-  procedure = gimp_procedure_new (drawable_desaturate_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_desaturate_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-desaturate");
   gimp_procedure_set_static_help (procedure,
@@ -1109,7 +1109,7 @@ register_drawable_color_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-equalize
    */
-  procedure = gimp_procedure_new (drawable_equalize_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_equalize_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-equalize");
   gimp_procedure_set_static_help (procedure,
@@ -1138,7 +1138,7 @@ register_drawable_color_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-histogram
    */
-  procedure = gimp_procedure_new (drawable_histogram_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_histogram_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-histogram");
   gimp_procedure_set_static_help (procedure,
@@ -1216,7 +1216,7 @@ register_drawable_color_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-hue-saturation
    */
-  procedure = gimp_procedure_new (drawable_hue_saturation_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_hue_saturation_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-hue-saturation");
   gimp_procedure_set_static_help (procedure,
@@ -1270,7 +1270,7 @@ register_drawable_color_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-invert
    */
-  procedure = gimp_procedure_new (drawable_invert_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_invert_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-invert");
   gimp_procedure_set_static_help (procedure,
@@ -1299,7 +1299,7 @@ register_drawable_color_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-levels
    */
-  procedure = gimp_procedure_new (drawable_levels_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_levels_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-levels");
   gimp_procedure_set_static_help (procedure,
@@ -1371,7 +1371,7 @@ register_drawable_color_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-levels-stretch
    */
-  procedure = gimp_procedure_new (drawable_levels_stretch_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_levels_stretch_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-levels-stretch");
   gimp_procedure_set_static_help (procedure,
@@ -1394,7 +1394,7 @@ register_drawable_color_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-shadows-highlights
    */
-  procedure = gimp_procedure_new (drawable_shadows_highlights_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_shadows_highlights_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-shadows-highlights");
   gimp_procedure_set_static_help (procedure,
@@ -1459,7 +1459,7 @@ register_drawable_color_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-posterize
    */
-  procedure = gimp_procedure_new (drawable_posterize_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_posterize_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-posterize");
   gimp_procedure_set_static_help (procedure,
@@ -1488,7 +1488,7 @@ register_drawable_color_procs (GimpPDB *pdb)
   /*
    * gimp-drawable-threshold
    */
-  procedure = gimp_procedure_new (drawable_threshold_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (drawable_threshold_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-threshold");
   gimp_procedure_set_static_help (procedure,

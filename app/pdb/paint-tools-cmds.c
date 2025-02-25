@@ -943,7 +943,7 @@ register_paint_tools_procs (GimpPDB *pdb)
   /*
    * gimp-airbrush
    */
-  procedure = gimp_procedure_new (airbrush_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (airbrush_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-airbrush");
   gimp_procedure_set_static_help (procedure,
@@ -977,7 +977,7 @@ register_paint_tools_procs (GimpPDB *pdb)
   /*
    * gimp-airbrush-default
    */
-  procedure = gimp_procedure_new (airbrush_default_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (airbrush_default_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-airbrush-default");
   gimp_procedure_set_static_help (procedure,
@@ -1005,7 +1005,7 @@ register_paint_tools_procs (GimpPDB *pdb)
   /*
    * gimp-clone
    */
-  procedure = gimp_procedure_new (clone_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (clone_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-clone");
   gimp_procedure_set_static_help (procedure,
@@ -1058,7 +1058,7 @@ register_paint_tools_procs (GimpPDB *pdb)
   /*
    * gimp-clone-default
    */
-  procedure = gimp_procedure_new (clone_default_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (clone_default_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-clone-default");
   gimp_procedure_set_static_help (procedure,
@@ -1086,7 +1086,7 @@ register_paint_tools_procs (GimpPDB *pdb)
   /*
    * gimp-convolve
    */
-  procedure = gimp_procedure_new (convolve_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (convolve_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-convolve");
   gimp_procedure_set_static_help (procedure,
@@ -1127,7 +1127,7 @@ register_paint_tools_procs (GimpPDB *pdb)
   /*
    * gimp-convolve-default
    */
-  procedure = gimp_procedure_new (convolve_default_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (convolve_default_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-convolve-default");
   gimp_procedure_set_static_help (procedure,
@@ -1155,7 +1155,7 @@ register_paint_tools_procs (GimpPDB *pdb)
   /*
    * gimp-dodgeburn
    */
-  procedure = gimp_procedure_new (dodgeburn_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (dodgeburn_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-dodgeburn");
   gimp_procedure_set_static_help (procedure,
@@ -1203,7 +1203,7 @@ register_paint_tools_procs (GimpPDB *pdb)
   /*
    * gimp-dodgeburn-default
    */
-  procedure = gimp_procedure_new (dodgeburn_default_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (dodgeburn_default_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-dodgeburn-default");
   gimp_procedure_set_static_help (procedure,
@@ -1231,7 +1231,7 @@ register_paint_tools_procs (GimpPDB *pdb)
   /*
    * gimp-eraser
    */
-  procedure = gimp_procedure_new (eraser_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (eraser_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-eraser");
   gimp_procedure_set_static_help (procedure,
@@ -1273,7 +1273,7 @@ register_paint_tools_procs (GimpPDB *pdb)
   /*
    * gimp-eraser-default
    */
-  procedure = gimp_procedure_new (eraser_default_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (eraser_default_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-eraser-default");
   gimp_procedure_set_static_help (procedure,
@@ -1301,7 +1301,7 @@ register_paint_tools_procs (GimpPDB *pdb)
   /*
    * gimp-heal
    */
-  procedure = gimp_procedure_new (heal_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (heal_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-heal");
   gimp_procedure_set_static_help (procedure,
@@ -1347,7 +1347,7 @@ register_paint_tools_procs (GimpPDB *pdb)
   /*
    * gimp-heal-default
    */
-  procedure = gimp_procedure_new (heal_default_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (heal_default_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-heal-default");
   gimp_procedure_set_static_help (procedure,
@@ -1375,7 +1375,7 @@ register_paint_tools_procs (GimpPDB *pdb)
   /*
    * gimp-paintbrush
    */
-  procedure = gimp_procedure_new (paintbrush_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (paintbrush_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-paintbrush");
   gimp_procedure_set_static_help (procedure,
@@ -1422,7 +1422,7 @@ register_paint_tools_procs (GimpPDB *pdb)
   /*
    * gimp-paintbrush-default
    */
-  procedure = gimp_procedure_new (paintbrush_default_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (paintbrush_default_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-paintbrush-default");
   gimp_procedure_set_static_help (procedure,
@@ -1450,7 +1450,7 @@ register_paint_tools_procs (GimpPDB *pdb)
   /*
    * gimp-pencil
    */
-  procedure = gimp_procedure_new (pencil_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (pencil_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pencil");
   gimp_procedure_set_static_help (procedure,
@@ -1478,7 +1478,7 @@ register_paint_tools_procs (GimpPDB *pdb)
   /*
    * gimp-smudge
    */
-  procedure = gimp_procedure_new (smudge_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (smudge_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-smudge");
   gimp_procedure_set_static_help (procedure,
@@ -1512,7 +1512,7 @@ register_paint_tools_procs (GimpPDB *pdb)
   /*
    * gimp-smudge-default
    */
-  procedure = gimp_procedure_new (smudge_default_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (smudge_default_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-smudge-default");
   gimp_procedure_set_static_help (procedure,

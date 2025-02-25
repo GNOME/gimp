@@ -190,7 +190,7 @@ register_unit_procs (GimpPDB *pdb)
   /*
    * gimp-unit-new
    */
-  procedure = gimp_procedure_new (unit_new_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (unit_new_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-unit-new");
   gimp_procedure_set_static_help (procedure,
@@ -248,7 +248,7 @@ register_unit_procs (GimpPDB *pdb)
   /*
    * gimp-unit-get-data
    */
-  procedure = gimp_procedure_new (unit_get_data_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (unit_get_data_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-unit-get-data");
   gimp_procedure_set_static_help (procedure,
@@ -304,7 +304,7 @@ register_unit_procs (GimpPDB *pdb)
   /*
    * gimp-unit-get-deletion-flag
    */
-  procedure = gimp_procedure_new (unit_get_deletion_flag_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (unit_get_deletion_flag_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-unit-get-deletion-flag");
   gimp_procedure_set_static_help (procedure,
@@ -335,7 +335,7 @@ register_unit_procs (GimpPDB *pdb)
   /*
    * gimp-unit-set-deletion-flag
    */
-  procedure = gimp_procedure_new (unit_set_deletion_flag_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (unit_set_deletion_flag_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-unit-set-deletion-flag");
   gimp_procedure_set_static_help (procedure,

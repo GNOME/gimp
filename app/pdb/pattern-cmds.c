@@ -176,7 +176,7 @@ register_pattern_procs (GimpPDB *pdb)
   /*
    * gimp-pattern-get-by-name
    */
-  procedure = gimp_procedure_new (pattern_get_by_name_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (pattern_get_by_name_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pattern-get-by-name");
   gimp_procedure_set_static_help (procedure,
@@ -208,7 +208,7 @@ register_pattern_procs (GimpPDB *pdb)
   /*
    * gimp-pattern-get-info
    */
-  procedure = gimp_procedure_new (pattern_get_info_invoker, TRUE, FALSE);
+  procedure = gimp_procedure_new (pattern_get_info_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pattern-get-info");
   gimp_procedure_set_static_help (procedure,
@@ -251,7 +251,7 @@ register_pattern_procs (GimpPDB *pdb)
   /*
    * gimp-pattern-get-pixels
    */
-  procedure = gimp_procedure_new (pattern_get_pixels_invoker, TRUE, TRUE);
+  procedure = gimp_procedure_new (pattern_get_pixels_invoker, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pattern-get-pixels");
   gimp_procedure_set_static_help (procedure,

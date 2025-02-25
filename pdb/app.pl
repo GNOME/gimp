@@ -934,7 +934,7 @@ sub generate {
   /*
    * gimp-$proc->{canonical_name}
    */
-  procedure = gimp_procedure_new (${name}_invoker, TRUE, $procedure_is_private);
+  procedure = gimp_procedure_new (${name}_invoker, $procedure_is_private);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "$procedure_name");
   gimp_procedure_set_static_help (procedure,
