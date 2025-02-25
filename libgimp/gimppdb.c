@@ -170,7 +170,7 @@ gimp_pdb_lookup_procedure (GimpPDB     *pdb,
                            const gchar *procedure_name)
 {
   GimpProcedure *procedure;
-  gboolean       is_core = FALSE;
+  gboolean       is_internal = FALSE;
 
   g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
   g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
@@ -178,9 +178,9 @@ gimp_pdb_lookup_procedure (GimpPDB     *pdb,
   procedure = g_hash_table_lookup (pdb->procedures, procedure_name);
 
   if (! procedure && gimp_is_canonical_identifier (procedure_name) &&
-      _gimp_pdb_proc_exists (procedure_name, &is_core))
+      _gimp_pdb_proc_exists (procedure_name, &is_internal))
     {
-      procedure = _gimp_pdb_procedure_new (pdb, procedure_name, is_core);
+      procedure = _gimp_pdb_procedure_new (pdb, procedure_name, is_internal);
 
       if (procedure)
         g_hash_table_insert (pdb->procedures,

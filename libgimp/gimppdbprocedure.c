@@ -40,7 +40,7 @@ struct _GimpPDBProcedure
   GimpProcedure  parent_instance;
 
   GimpPDB       *pdb;
-  gboolean       is_core;
+  gboolean       is_internal;
 };
 
 
@@ -98,7 +98,7 @@ _gimp_pdb_procedure_class_init (GimpPDBProcedureClass *klass)
 static void
 _gimp_pdb_procedure_init (GimpPDBProcedure *procedure)
 {
-  procedure->is_core = FALSE;
+  procedure->is_internal = FALSE;
 }
 
 static void
@@ -190,7 +190,7 @@ gimp_pdb_procedure_run (GimpProcedure        *procedure,
 GimpProcedure  *
 _gimp_pdb_procedure_new (GimpPDB     *pdb,
                          const gchar *name,
-                         gboolean     is_core)
+                         gboolean     is_internal)
 {
   GimpProcedure   *procedure;
   gchar           *blurb;
@@ -215,7 +215,7 @@ _gimp_pdb_procedure_new (GimpPDB     *pdb,
                             "procedure-type", type,
                             "pdb",            pdb,
                             NULL);
-  GIMP_PDB_PROCEDURE (procedure)->is_core = is_core;
+  GIMP_PDB_PROCEDURE (procedure)->is_internal = is_internal;
 
   _gimp_pdb_get_proc_documentation (name,      &blurb, &help, &help_id);
   gimp_procedure_set_documentation (procedure,  blurb,  help,  help_id);
@@ -273,9 +273,9 @@ _gimp_pdb_procedure_new (GimpPDB     *pdb,
 }
 
 gboolean
-_gimp_pdb_procedure_is_core (GimpPDBProcedure *procedure)
+_gimp_pdb_procedure_is_internal (GimpPDBProcedure *procedure)
 {
   g_return_val_if_fail (GIMP_IS_PDB_PROCEDURE (procedure), FALSE);
 
-  return procedure->is_core;
+  return procedure->is_internal;
 }

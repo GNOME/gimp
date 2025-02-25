@@ -1642,7 +1642,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
    * Extra supplied args can be discarded.
    * Formerly, this was a deprecated behavior depending on "permissive".
    */
-  if (gimp_procedure_is_core (procedure))
+  if (gimp_procedure_is_internal (procedure))
     {
       if (actual_arg_count > n_arg_specs)
         {
@@ -1658,12 +1658,12 @@ script_fu_marshal_procedure_call (scheme   *sc,
     }
 
   /*  Marshall the supplied arguments  */
-  if (gimp_procedure_is_core (procedure) ||
+  if (gimp_procedure_is_internal (procedure) ||
       ! sc->vptr->is_arg_name (sc->vptr->pair_car (a)))
     {
       GString *deprecation_warning = NULL;
 
-      if (! gimp_procedure_is_core (procedure))
+      if (! gimp_procedure_is_internal (procedure))
         {
           deprecation_warning = g_string_new ("Calling Plug-In PDB procedures with arguments as an ordered list is deprecated.\n"
                                               "Please use named arguments: (");

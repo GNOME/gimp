@@ -31,11 +31,11 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (GimpPDBProcedure, _gimp_pdb_procedure, GIMP, PDB_PROCEDURE, GimpProcedure)
 
 
-G_GNUC_INTERNAL GimpProcedure * _gimp_pdb_procedure_new     (GimpPDB          *pdb,
-                                                             const gchar      *name,
-                                                             gboolean          is_core);
+G_GNUC_INTERNAL GimpProcedure * _gimp_pdb_procedure_new         (GimpPDB          *pdb,
+                                                                 const gchar      *name,
+                                                                 gboolean          is_internal);
 
-G_GNUC_INTERNAL gboolean        _gimp_pdb_procedure_is_core (GimpPDBProcedure *procedure);
+G_GNUC_INTERNAL gboolean        _gimp_pdb_procedure_is_internal (GimpPDBProcedure *procedure);
 
 
 G_END_DECLS

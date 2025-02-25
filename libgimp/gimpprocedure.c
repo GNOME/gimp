@@ -103,7 +103,6 @@ typedef struct _GimpProcedurePrivate
   GDestroyNotify    run_data_destroy;
 
   gboolean          installed;
-  gboolean          is_core;
 } GimpProcedurePrivate;
 
 
@@ -198,9 +197,6 @@ gimp_procedure_class_init (GimpProcedureClass *klass)
 static void
 gimp_procedure_init (GimpProcedure *procedure)
 {
-  GimpProcedurePrivate *priv = gimp_procedure_get_instance_private (procedure);
-
-  priv->is_core = FALSE;
 }
 
 static void
@@ -2238,12 +2234,12 @@ gimp_procedure_create_config (GimpProcedure *procedure)
 }
 
 gboolean
-gimp_procedure_is_core (GimpProcedure *procedure)
+gimp_procedure_is_internal (GimpProcedure *procedure)
 {
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), FALSE);
 
   if (GIMP_IS_PDB_PROCEDURE (procedure))
-    return _gimp_pdb_procedure_is_core (GIMP_PDB_PROCEDURE (procedure));
+    return _gimp_pdb_procedure_is_internal (GIMP_PDB_PROCEDURE (procedure));
   else
     return FALSE;
 }
