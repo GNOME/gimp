@@ -195,7 +195,7 @@ pdb_proc_exists_invoker (GimpProcedure         *procedure,
                 proc = gimp_pdb_lookup_procedure (gimp->pdb, procedure_name);
             }
 
-          exists = (proc != NULL);
+          exists = (proc != NULL && ! proc->is_private);
         }
       else
         {
