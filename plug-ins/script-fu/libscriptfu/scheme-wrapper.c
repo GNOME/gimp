@@ -2101,8 +2101,7 @@ script_fu_marshal_drawable_filter_set_aux_call (scheme  *sc,
   a = sc->vptr->pair_cdr (a);
 
   if (! sc->vptr->is_string (sc->vptr->pair_car (a)))
-    /*return script_type_error (sc, "string", 1, proc_name);*/
-    return script_type_error (sc, "string", 1, "BLAAA");
+    return script_type_error (sc, "string", 1, proc_name);
 
   pad_name = g_strdup (sc->vptr->string_value (sc->vptr->pair_car (a)));
   a = sc->vptr->pair_cdr (a);
