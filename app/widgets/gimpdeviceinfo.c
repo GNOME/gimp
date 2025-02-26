@@ -866,13 +866,17 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
                   "which already has a device\n",
                   G_STRFUNC, gdk_device_get_name (device));
 
-#ifdef G_OS_WIN32
-      /*  This is a very weird/dirty difference we make between Win32 and
-       *  Linux. On Linux, we had breakage because of duplicate devices,
-       *  fixed by overwriting the info's old device (assuming it to be
-       *  dead) with the new one. Unfortunately doing this on Windows
-       *  too broke a lot of devices (which used to work with the old
-       *  way). See the regression bug #2495.
+      /*  We had breakage because of duplicate devices, fixed by
+       *  overwriting the info's old device (assuming it to be
+       *  dead) with the new one.
+       *
+       *  Previously, see #2495, there was an exception made for Windows,
+       *  due to breaking a lot of devices. However, it seems that things
+       *  on Windows changed, since we had a new issue #12475 where
+       *  returning early here caused devices not to be recognized
+       *  separately. Which is the reason that we now remove this
+       *  Windows only exception and hope this now works across all
+       *  platforms and devices.
        *
        *  NOTE that this only happens if something is wrong on the USB
        *  or udev or libinput or whatever side and the same device is
@@ -880,12 +884,7 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
        *  absolute single "solution" to this problem (well there is, but
        *  probably not in GIMP, where we can only react). This is more
        *  of an experimenting-in-real-life kind of bug.
-       *  Also we had no clear report on macOS or BSD (AFAIK) of broken
-       *  tablets with any of the version of the code. So let's keep
-       *  these similar to Linux for now.
        */
-      return FALSE;
-#endif /* G_OS_WIN32 */
     }
   else if (! device && ! info->priv->device)
     {
