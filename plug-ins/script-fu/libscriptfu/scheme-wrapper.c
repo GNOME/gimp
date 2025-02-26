@@ -1682,6 +1682,15 @@ script_fu_marshal_procedure_call (scheme   *sc,
 
           consumed_arg_count++;
 
+          if (gimp_procedure_is_internal (procedure) &&
+              sc->vptr->is_arg_name (sc->vptr->pair_car (a)))
+            {
+              g_snprintf (error_str, sizeof (error_str),
+                          "Calling Internal PDB procedures with named arguments is not authorized.\n"
+                          "Only use the named arguments syntax for Plug-In PDB procedures.");
+              return script_error (sc, error_str, 0);
+            }
+
           if (consumed_arg_count > actual_arg_count)
             {
               /* Exhausted supplied arguments before formal specs. */
