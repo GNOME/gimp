@@ -123,6 +123,7 @@ xcf_read_offset (XcfInfo *info,
 {
   guint total = 0;
 
+  *data = 0;
   if (count > 0)
     {
       if (info->bytes_per_offset == 4)

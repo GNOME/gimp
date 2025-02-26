@@ -604,7 +604,12 @@ xcf_load_image (Gimp     *gimp,
       GList     *item_path = NULL;
 
       /* read in the offset of the next layer */
-      xcf_read_offset (info, &offset, 1);
+      if (xcf_read_offset (info, &offset, 1) < info->bytes_per_offset)
+        {
+          GIMP_LOG (XCF, "Failed to read layer offset"
+                    " at offset: %" G_GOFFSET_FORMAT, info->cp);
+          break;
+        }
 
       /* if the offset is 0 then we are at the end
        *  of the layer list.
@@ -751,7 +756,12 @@ xcf_load_image (Gimp     *gimp,
       GimpChannel *channel;
 
       /* read in the offset of the next channel */
-      xcf_read_offset (info, &offset, 1);
+      if (xcf_read_offset (info, &offset, 1) < info->bytes_per_offset)
+        {
+          GIMP_LOG (XCF, "Failed to read channel offset"
+                    " at offset: %" G_GOFFSET_FORMAT, info->cp);
+          break;
+        }
 
       /* if the offset is 0 then we are at the end
        *  of the channel list.
@@ -831,7 +841,12 @@ xcf_load_image (Gimp     *gimp,
           GimpPath *vectors;
 
           /* read in the offset of the next path */
-          xcf_read_offset (info, &offset, 1);
+          if (xcf_read_offset (info, &offset, 1) < info->bytes_per_offset)
+            {
+              GIMP_LOG (XCF, "Failed to read path offset"
+                        " at offset: %" G_GOFFSET_FORMAT, info->cp);
+              break;
+            }
 
           /* if the offset is 0 then we are at the end
            *  of the path list.
@@ -3280,7 +3295,12 @@ xcf_load_layer (XcfInfo    *info,
         goto error;
 
       /* read in the offset of the next effect */
-      xcf_read_offset (info, &effects_offset, 1);
+      if (xcf_read_offset (info, &effects_offset, 1) < info->bytes_per_offset)
+        {
+          GIMP_LOG (XCF, "Failed to read effects offset"
+                    " at offset: %" G_GOFFSET_FORMAT, info->cp);
+          break;
+        }
     }
 
   if (filter_count > 0)
@@ -3893,7 +3913,12 @@ xcf_load_level (XcfInfo    *info,
    *  if it is '0', then this tile level is empty
    *  and we can simply return.
    */
-  xcf_read_offset (info, &offset, 1);
+  if (xcf_read_offset (info, &offset, 1) < info->bytes_per_offset)
+    {
+      GIMP_LOG (XCF, "Failed to read tile offset"
+                " at offset: %" G_GOFFSET_FORMAT, info->cp);
+      return FALSE;
+    }
   if (offset == 0)
     return TRUE;
 
@@ -3923,7 +3948,12 @@ xcf_load_level (XcfInfo    *info,
       /* read in the offset of the next tile so we can calculate the amount
        * of data needed for this tile
        */
-      xcf_read_offset (info, &offset2, 1);
+      if (xcf_read_offset (info, &offset2, 1) < info->bytes_per_offset)
+        {
+          GIMP_LOG (XCF, "Failed to read tile offset"
+                    " at offset: %" G_GOFFSET_FORMAT, info->cp);
+          return FALSE;
+        }
 
       /* if the offset is 0 then we need to read in the maximum possible
        * allowing for negative compression
@@ -3992,7 +4022,12 @@ xcf_load_level (XcfInfo    *info,
         return FALSE;
 
       /* read in the offset of the next tile */
-      xcf_read_offset (info, &offset, 1);
+      if (xcf_read_offset (info, &offset, 1) < info->bytes_per_offset)
+        {
+          GIMP_LOG (XCF, "Failed to read tile offset"
+                    " at offset: %" G_GOFFSET_FORMAT, info->cp);
+          return FALSE;
+        }
     }
 
   if (offset != 0)
