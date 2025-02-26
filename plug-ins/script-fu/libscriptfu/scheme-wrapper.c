@@ -1903,7 +1903,10 @@ script_fu_marshal_procedure_exists (scheme  *sc,
 
   exists = gimp_pdb_procedure_exists (gimp_get_pdb (), test_proc_name);
 
-  return sc->vptr->mk_integer (sc, exists);
+  if (is_interpret_v3_dialect ())
+    return exists ? sc->T : sc->F;
+  else
+    return sc->vptr->mk_integer (sc, exists);
 }
 
 static pointer
