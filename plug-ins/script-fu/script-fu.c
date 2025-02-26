@@ -298,12 +298,12 @@ script_fu_run_init (GimpProcedure *procedure,
       script_fu_extension_init (plug_in);
 
       /*  Init the interpreter, allow register scripts */
-      script_fu_init_embedded_interpreter (path, TRUE, run_mode);
+      script_fu_init_embedded_interpreter (path, TRUE, run_mode, TRUE);
     }
   else
     {
       /*  Init the interpreter, not allow register scripts */
-      script_fu_init_embedded_interpreter (path, FALSE, run_mode);
+      script_fu_init_embedded_interpreter (path, FALSE, run_mode, FALSE);
     }
 
   script_fu_find_and_register_scripts (plug_in, path);

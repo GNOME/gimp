@@ -235,7 +235,7 @@ script_fu_server_run_init (GimpProcedure *procedure,
   /* Init the interpreter, not allow scripts to register in the PDB.
    * This loads init and compat scripts, but not /scripts.
    */
-  script_fu_init_embedded_interpreter (path, FALSE, run_mode);
+  script_fu_init_embedded_interpreter (path, FALSE, run_mode, FALSE);
 
   /* Load /scripts, their defined run functions.
    * Then a call to a script is not a PDB call, and does not require run_mode arg.

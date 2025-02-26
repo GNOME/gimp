@@ -1617,7 +1617,8 @@ script_fu_marshal_procedure_call (scheme   *sc,
                deprecated_name_for (proc_name),
                proc_name);
 
-  script_fu_progress_report (proc_name);
+  if (script_fu_report_progress ())
+    script_fu_progress_report (proc_name);
 
   /*  Attempt to fetch the procedure from the database  */
   procedure = gimp_pdb_lookup_procedure (gimp_get_pdb (), proc_name);

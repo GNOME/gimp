@@ -78,7 +78,7 @@ script_fu_interpreter_list_defined_proc_names (GimpPlugIn  *plug_in,
    * second argument TRUE means define script-fu-register into the interpreter.
    */
   path_list = script_fu_search_path ();
-  script_fu_init_embedded_interpreter (path_list, TRUE, GIMP_RUN_NONINTERACTIVE);
+  script_fu_init_embedded_interpreter (path_list, TRUE, GIMP_RUN_NONINTERACTIVE, FALSE);
   script_fu_free_path_list (&path_list);
 
   /* Reuse path_list, now a list of one path, the parent dir of the queried script. */
@@ -137,7 +137,7 @@ script_fu_interpreter_create_proc_at_path (GimpPlugIn  *plug_in,
   /* path_list are the /scripts dir, for .init and compat.scm, plus the path to this.
    * second arg TRUE means define script-fu-register so it is effective.
    */
-  script_fu_init_embedded_interpreter (path_list, TRUE, GIMP_RUN_NONINTERACTIVE);
+  script_fu_init_embedded_interpreter (path_list, TRUE, GIMP_RUN_NONINTERACTIVE, FALSE);
 
   /* Reuse path_list, now a list of only the path to this script. */
   script_fu_free_path_list (&path_list);

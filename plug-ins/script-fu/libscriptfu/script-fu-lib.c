@@ -39,6 +39,19 @@
  * and some call functions not in scheme_wrapper.c
  */
 
+static gboolean _script_fu_report_progress = FALSE;
+
+/**
+ * script_fu_report_progress:
+ *
+ * Returns: whether we should report progress status automatically
+ *          (normally only within the "extension-script-fu" persistent plug-in).
+ */
+gboolean
+script_fu_report_progress (void)
+{
+  return _script_fu_report_progress;
+}
 
 /*
  * Return whether extension-script-fu has an open dialog.
@@ -82,11 +95,13 @@ script_fu_find_and_register_scripts ( GimpPlugIn     *plugin,
  * allow_register doesn't affect that.
  */
 void
-script_fu_init_embedded_interpreter ( GList          *paths,
-                                      gboolean        allow_register,
-                                      GimpRunMode     run_mode)
+script_fu_init_embedded_interpreter (GList       *paths,
+                                     gboolean     allow_register,
+                                     GimpRunMode  run_mode,
+                                     gboolean     report_progress)
 {
   g_debug ("script_fu_init_embedded_interpreter");
+  _script_fu_report_progress = report_progress;
   tinyscheme_init (paths, allow_register);
   ts_set_run_mode (run_mode);
   /*

@@ -18,6 +18,8 @@
 #ifndef __SCRIPT_FU_LIB_H__
 #define __SCRIPT_FU_LIB_H__
 
+gboolean     script_fu_report_progress           (void);
+
 gboolean     script_fu_extension_is_busy         (void);
 
 GList *      script_fu_search_path               (void);
@@ -32,7 +34,8 @@ void         script_fu_find_and_register_scripts (GimpPlugIn     *plugin,
 void         script_fu_set_run_mode              (GimpRunMode     run_mode);
 void         script_fu_init_embedded_interpreter (GList          *paths,
                                                   gboolean        allow_register,
-                                                  GimpRunMode     run_mode);
+                                                  GimpRunMode     run_mode,
+                                                  gboolean        report_progress);
 
 void         script_fu_set_print_flag            (gboolean        should_print);
 void         script_fu_redirect_output_to_gstr   (GString        *output);
