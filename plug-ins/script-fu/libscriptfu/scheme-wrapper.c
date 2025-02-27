@@ -1906,7 +1906,9 @@ script_fu_marshal_procedure_exists (scheme  *sc,
   if (is_interpret_v3_dialect ())
     return exists ? sc->T : sc->F;
   else
-    return sc->vptr->mk_integer (sc, exists);
+    return sc->vptr->cons (sc,
+                           sc->vptr->mk_integer (sc, exists),
+                           sc->NIL);
 }
 
 static pointer
