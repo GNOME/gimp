@@ -289,6 +289,8 @@ static gint     gimp_image_layer_stack_cmp         (GList           *layers1,
 static void gimp_image_rec_remove_layer_stack_dups (GimpImage       *image,
                                                     GSList          *start);
 static void     gimp_image_clean_layer_stack       (GimpImage       *image);
+static void     gimp_image_rec_filter_remove_undo  (GimpImage       *image,
+                                                    GimpLayer       *layer);
 static void     gimp_image_remove_from_layer_stack (GimpImage       *image,
                                                     GimpLayer       *layer);
 static gint     gimp_image_selected_is_descendant  (GimpViewable    *selected,
@@ -2028,6 +2030,50 @@ gimp_image_clean_layer_stack (GimpImage *image)
   private->layer_stack = g_slist_remove_all (private->layer_stack, NULL);
   /* Then remove all duplicates. */
   gimp_image_rec_remove_layer_stack_dups (image, private->layer_stack);
+}
+
+static void
+gimp_image_rec_filter_remove_undo (GimpImage *image,
+                                   GimpLayer *layer)
+{
+  GimpContainer *filters;
+
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
+    {
+      GimpContainer *stack = gimp_viewable_get_children (GIMP_VIEWABLE (layer));
+      GList         *children;
+      GList         *iter;
+
+      children = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (stack));
+
+      for (iter = children; iter; iter = iter->next)
+        {
+          GimpLayer *child = iter->data;
+
+          gimp_image_rec_filter_remove_undo (image, child);
+        }
+    }
+
+  filters = gimp_drawable_get_filters (GIMP_DRAWABLE (layer));
+
+  if (gimp_container_get_n_children (filters) > 0)
+    {
+      GList *filter_list;
+
+      for (filter_list = GIMP_LIST (filters)->queue->tail; filter_list;
+           filter_list = g_list_previous (filter_list))
+        {
+          if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
+            {
+              GimpDrawableFilter *filter = filter_list->data;
+
+              gimp_image_undo_push_filter_remove (image,
+                                                  _("Remove filter"),
+                                                  GIMP_DRAWABLE (layer),
+                                                  filter);
+            }
+        }
+    }
 }
 
 static void
@@ -5333,29 +5379,7 @@ gimp_image_remove_layer (GimpImage *image,
 
   if (push_undo)
     {
-      GimpContainer *filters;
-
-      filters = gimp_drawable_get_filters (GIMP_DRAWABLE (layer));
-
-      if (gimp_container_get_n_children (filters) > 0)
-        {
-          GList *filter_list;
-
-          for (filter_list = GIMP_LIST (filters)->queue->tail; filter_list;
-               filter_list = g_list_previous (filter_list))
-            {
-              if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
-                {
-                  GimpDrawableFilter *filter = filter_list->data;
-
-                  gimp_image_undo_push_filter_remove (image,
-                                                      _("Remove filter"),
-                                                      GIMP_DRAWABLE (layer),
-                                                      filter);
-                }
-            }
-        }
-
+      gimp_image_rec_filter_remove_undo (image, layer);
       gimp_image_undo_push_layer_remove (image, undo_desc, layer,
                                          gimp_layer_get_parent (layer),
                                          gimp_item_get_index (GIMP_ITEM (layer)),
