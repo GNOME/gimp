@@ -4,6 +4,17 @@
 # https://github.com/AppImage/AppImageSpec/blob/master/draft.md
 # https://gitlab.com/inkscape/inkscape/-/commit/b280917568051872793a0c7223b8d3f3928b7d26
 
+# Parameters
+REVISION="$1"
+if [[ "$GIMP_CI_APPIMAGE" =~ [1-9] ]] && [ "$CI_PIPELINE_SOURCE" != 'schedule' ]; then
+  export REVISION="$GIMP_CI_APPIMAGE"
+fi
+MODE="$2"
+if [ "$REVISION" = '--bundle-only' ]; then
+  export MODE="$REVISION"
+fi
+BUILD_DIR="$3"
+
 set -e
 
 if [ -z "$GITLAB_CI" ]; then
@@ -14,15 +25,15 @@ if [ -z "$GITLAB_CI" ]; then
   elif [ ${PWD/*\//} = 'appimage' ]; then
     cd ../../..
   fi
+
+  export PARENT_DIR='../'
 fi
 
 
 # 1. INSTALL GO-APPIMAGETOOL AND COMPLEMENTARY TOOLS
 echo -e "\e[0Ksection_start:`date +%s`:apmg_tlkt\r\e[0KInstalling (go)appimagetool and other tools"
-if [ -f "*appimagetool*.AppImage" ]; then
-  rm *appimagetool*.AppImage
-  rm runtime*
-fi
+GIMP_DIR="$PWD/"
+cd ${GIMP_DIR}${PARENT_DIR}
 if [ "$GITLAB_CI" ]; then
   apt-get update >/dev/null 2>&1
   apt-get install -y --no-install-recommends ca-certificates wget curl >/dev/null 2>&1
@@ -30,35 +41,35 @@ fi
 export HOST_ARCH=$(uname -m)
 export APPIMAGE_EXTRACT_AND_RUN=1
 
-if [ "$(ls -dq ./AppDir* 2>/dev/null | wc -l)" != '2' ]; then
+if [ "$(ls -dq ${GIMP_DIR}AppDir* 2>/dev/null | wc -l)" != '2' ]; then
   ## For now, we always use the latest go-appimagetool for bundling. See: https://github.com/probonopd/go-appimage/issues/275
   if [ "$GITLAB_CI" ]; then
     apt-get install -y --no-install-recommends file patchelf >/dev/null 2>&1
   fi
+  go_appimagetool="$PWD/go-appimagetool.AppImage"
+  rm -f "$go_appimagetool" >/dev/null
   wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-${HOST_ARCH}.AppImage" | head -n 1 | cut -d '"' -f 2) >/dev/null 2>&1
   go_appimagetool_text="go-appimagetool build: $(echo appimagetool-*.AppImage | sed -e 's/appimagetool-//' -e "s/-${HOST_ARCH}.AppImage//")"
-  go_appimagetool='go-appimagetool.AppImage'
   mv appimagetool-*.AppImage $go_appimagetool
   chmod +x "$go_appimagetool"
 fi
 
-if [ "$1" != '--bundle-only' ]; then
+if [ "$MODE" != '--bundle-only' ]; then
   ## standard appimagetool is needed for squashing the .appimage file
   if [ "$GITLAB_CI" ]; then
     apt-get install -y --no-install-recommends file zsync appstream >/dev/null 2>&1
   fi
-  wget "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-${HOST_ARCH}.AppImage" >/dev/null 2>&1
-  standard_appimagetool='legacy-appimagetool.AppImage'
-  mv appimagetool-*.AppImage $standard_appimagetool
+  standard_appimagetool="$PWD/standard-appimagetool.AppImage"
+  wget "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-${HOST_ARCH}.AppImage" -O $standard_appimagetool >/dev/null 2>&1
   chmod +x "$standard_appimagetool"
-  standard_appimagetool_version=$("./$standard_appimagetool" --version 2>&1 | sed -e 's/.*version \(.*\)), build.*/\1/')
+  standard_appimagetool_version=$("$standard_appimagetool" --version 2>&1 | sed -e 's/.*version \(.*\)), build.*/\1/')
 
   ## static runtime to be squashed by appimagetool with the files bundled by go-appimagetool
   static_runtime_version_online=$(curl -s 'https://api.github.com/repos/AppImage/type2-runtime/releases' |
                                   grep -Po '"target_commitish":.*?[^\\]",' | head -1 |
                                   sed -e 's|target_commitish||g' -e 's|"||g' -e 's|:||g' -e 's|,||g' -e 's| ||g')
-  wget https://github.com/AppImage/type2-runtime/releases/download/continuous/runtime-aarch64 >/dev/null 2>&1
-  wget https://github.com/AppImage/type2-runtime/releases/download/continuous/runtime-x86_64 >/dev/null 2>&1
+  wget https://github.com/AppImage/type2-runtime/releases/download/continuous/runtime-aarch64 -O runtime-aarch64 >/dev/null 2>&1
+  wget https://github.com/AppImage/type2-runtime/releases/download/continuous/runtime-x86_64 -O runtime-x86_64 >/dev/null 2>&1
   chmod +x "./runtime-$HOST_ARCH"
   static_runtime_version_downloaded=$("./runtime-$HOST_ARCH" --appimage-version 2>&1)
   chmod -x "./runtime-$HOST_ARCH"
@@ -67,19 +78,18 @@ if [ "$1" != '--bundle-only' ]; then
   fi
   standard_appimagetool_text="appimagetool commit: $standard_appimagetool_version | type2-runtime commit: ${static_runtime_version_downloaded#*commit/}"
 fi
-if [ "$(ls -dq ./AppDir* 2>/dev/null | wc -l)" != '2' ] && [ "$1" != '--bundle-only' ]; then
+if [ "$(ls -dq ${GIMP_DIR}AppDir* 2>/dev/null | wc -l)" != '2' ] && [ "$MODE" != '--bundle-only' ]; then
   separator=' | '
 fi
+cd $GIMP_DIR
 echo "(INFO): ${go_appimagetool_text}${separator}${standard_appimagetool_text}"
 echo -e "\e[0Ksection_end:`date +%s`:apmg_tlkt\r\e[0K"
 
 
 # 2. GET GLOBAL VARIABLES
 echo -e "\e[0Ksection_start:`date +%s`:apmg_info\r\e[0KGetting AppImage global info"
-if [ "$1" != '' ] && [[ ! "$1" =~ "--" ]]; then
-  export BUILD_DIR="$1"
-else
-  export BUILD_DIR=$(echo $PWD/_build*$RUNNER)
+if [ "$BUILD_DIR" = '' ]; then
+  export BUILD_DIR=$(find $PWD -maxdepth 1 -iname "_build*$RUNNER" | head -n 1)
 fi
 if [ ! -f "$BUILD_DIR/config.h" ]; then
   echo -e "\033[31m(ERROR)\033[0m: config.h file not found. You can configure GIMP with meson to generate it."
@@ -98,10 +108,13 @@ fi
 export APP_ID="org.gimp.GIMP.$CHANNEL"
 
 ## Get info about GIMP version
-if [[ "$GIMP_CI_APPIMAGE" =~ [1-9] ]] && [ "$CI_PIPELINE_SOURCE" != 'schedule' ]; then
-  export REVISION="-$GIMP_CI_APPIMAGE"
+export CUSTOM_GIMP_VERSION="$GIMP_VERSION"
+if [[ ! "$REVISION" =~ [1-9] ]]; then
+  export REVISION="0"
+else
+  export CUSTOM_GIMP_VERSION="${GIMP_VERSION}-${REVISION}"
 fi
-echo "(INFO): App ID: $APP_ID | Version: ${GIMP_VERSION}${REVISION}"
+echo "(INFO): App ID: $APP_ID | Version: $CUSTOM_GIMP_VERSION"
 echo -e "\e[0Ksection_end:`date +%s`:apmg_info\r\e[0K"
 
 
@@ -120,7 +133,7 @@ if [ -z "$GITLAB_CI" ] && [ -z "$GIMP_PREFIX" ]; then
   export GIMP_PREFIX="$PWD/../_install"
 fi
 if [ -z "$GITLAB_CI" ]; then
-  IFS=$'\n' VAR_ARRAY=($(cat .gitlab-ci.yml | sed -n '/multi-os/,/multiarch\"/p' | sed 's/    - //'))
+  IFS=$'\n' VAR_ARRAY=($(cat .gitlab-ci.yml | sed -n '/multi-os/,/multiarch/p' | sed 's/    - //'))
   IFS=$' \t\n'
   for VAR in "${VAR_ARRAY[@]}"; do
     eval "$VAR" || continue
@@ -229,6 +242,7 @@ wipe_usr ()
 
 ## Prepare AppDir
 mkdir -p $APP_DIR
+echo '*' > $APP_DIR/.gitignore
 bund_usr "$UNIX_PREFIX" "lib*/ld-*.so.*" --go
 if [ "$HOST_ARCH" = 'aarch64' ]; then
   conf_app LD_LINUX "lib/ld-*.so.*"
@@ -346,7 +360,7 @@ bund_usr "$GIMP_PREFIX" 'bin/gimp*'
 bund_usr "$GIMP_PREFIX" "bin/gegl"
 bund_usr "$GIMP_PREFIX" "share/applications/*.desktop"
 #go-appimagetool have too polluted output so we save as log. See: https://github.com/probonopd/go-appimage/issues/314
-"./$go_appimagetool" -s deploy $(echo "$USR_DIR/share/applications/*.desktop") &> appimagetool.log || cat appimagetool.log
+"$go_appimagetool" -s deploy $(echo "$USR_DIR/share/applications/*.desktop") &> appimagetool.log || cat appimagetool.log
 
 ## Manual adjustments (go-appimagetool don't handle Linux FHS gracefully yet)
 ### Undo the mess which breaks babl and GEGL. See: https://github.com/probonopd/go-appimage/issues/315
@@ -380,15 +394,16 @@ echo "usr/${LIB_DIR}/${LIB_SUBDIR}gconv
       usr/${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/gdk-pixbuf-query-loaders
       usr/share/doc
       usr/share/themes
-      etc" > appimageignore-$HOST_ARCH
+      etc
+      .gitignore" > appimageignore-$HOST_ARCH
 
-## Revision (if there is one)
-if [[ "$GIMP_CI_APPIMAGE" =~ [1-9] ]] && [ "$CI_PIPELINE_SOURCE" != 'schedule' ]; then
-  sed -i "s/revision=0/revision=$(echo $REVISION | sed 's/-//')/" "$(echo $USR_DIR/share/gimp/*/gimp-release)"
-fi
+## Revision (this does the same as '-Drevision' build option)
+before=$(cat "$(echo $USR_DIR/share/gimp/*/gimp-release)" | grep 'revision')
+after="revision=$REVISION"
+sed -i "s|$before|$after|" "$(echo $USR_DIR/share/gimp/*/gimp-release)"
 echo -e "\e[0Ksection_end:`date +%s`:apmg_files\r\e[0K"
 fi
-if [ "$1" = '--bundle-only' ] || [ "$2" = '--bundle-only' ]; then
+if [ "$MODE" = '--bundle-only' ]; then
   exit 0
 fi
 
@@ -408,13 +423,13 @@ chmod +x $APP_DIR/AppRun
 
 ## 4.2. Copy icon assets (similarly to flatpaks's 'rename-icon')
 echo "(INFO): copying $APP_ID.svg asset to AppDir"
-find "$USR_DIR/share/icons/hicolor" -iname *.svg -execdir ln -sf "{}" $APP_ID.svg \;
-find "$USR_DIR/share/icons/hicolor" -iname *.png -execdir ln -sf "{}" $APP_ID.png \;
+find "$USR_DIR/share/icons/hicolor" \( -iname *.svg -and ! -iname $APP_ID*.svg \) -execdir ln -sf "{}" $APP_ID.svg \;
+find "$USR_DIR/share/icons/hicolor" \( -iname *.png -and ! -iname $APP_ID*.png \) -execdir ln -sf "{}" $APP_ID.png \;
 cp -L "$USR_DIR/share/icons/hicolor/scalable/apps/$APP_ID.svg" $APP_DIR
 
 ## 4.3. Configure .desktop asset (similarly to flatpaks's 'rename-desktop-file')
 echo "(INFO): configuring $APP_ID.desktop"
-mv $(echo "$USR_DIR/share/applications/*.desktop") "$USR_DIR/share/applications/${APP_ID}.desktop"
+find "$USR_DIR/share/applications" \( -iname *.desktop -and ! -iname $APP_ID*.desktop \) -execdir mv "{}" $APP_ID.desktop \;
 ln -sfr "$USR_DIR/bin/gimp-$GIMP_APP_VERSION" "$USR_DIR/bin/$APP_ID"
 sed -i "s/gimp-$GIMP_APP_VERSION/$APP_ID/g" "$USR_DIR/share/applications/${APP_ID}.desktop"
 sed -i "s/Icon=gimp/Icon=$APP_ID/g" "$USR_DIR/share/applications/${APP_ID}.desktop"
@@ -422,21 +437,21 @@ ln -sfr "$USR_DIR/share/applications/${APP_ID}.desktop" $APP_DIR
 
 ## 4.4. Configure appdata asset (similarly to flatpaks's 'rename-appdata-file')
 echo "(INFO): configuring $APP_ID.appdata.xml"
-mv $(echo "$USR_DIR/share/metainfo/*.xml") "$USR_DIR/share/metainfo/${APP_ID}.appdata.xml"
-sed -i "s/org.gimp.GIMP/${APP_ID}/g" "$USR_DIR/share/metainfo/${APP_ID}.appdata.xml"
+find "$USR_DIR/share/metainfo" \( -iname *.appdata.xml -and ! -iname $APP_ID*.appdata.xml \) -execdir mv "{}" $APP_ID.appdata.xml \;
+sed -i "s/org.gimp.GIMP</${APP_ID}</g" "$USR_DIR/share/metainfo/${APP_ID}.appdata.xml"
 sed -i "s/gimp.desktop/${APP_ID}.desktop/g" "$USR_DIR/share/metainfo/${APP_ID}.appdata.xml"
 sed -i "s/date=\"TODO\"/date=\"`date --iso-8601`\"/" "$USR_DIR/share/metainfo/${APP_ID}.appdata.xml"
 echo -e "\e[0Ksection_end:`date +%s`:${ARCH}_source\r\e[0K"
 
 
 # 5. CONSTRUCT .APPIMAGE
-APPIMAGETOOL_APP_NAME="GIMP-${GIMP_VERSION}${REVISION}-${ARCH}.AppImage"
+APPIMAGETOOL_APP_NAME="GIMP-${CUSTOM_GIMP_VERSION}-${ARCH}.AppImage"
 echo -e "\e[0Ksection_start:`date +%s`:${ARCH}_making[collapsed=true]\r\e[0KSquashing $APPIMAGETOOL_APP_NAME"
 if [ "$GIMP_RELEASE" ] && [ -z "$GIMP_IS_RC_GIT" ]; then
   update_info="--updateinformation zsync|https://download.gimp.org/gimp/GIMP-${CHANNEL}-${ARCH}.AppImage.zsync"
 fi
-"./$standard_appimagetool" $APP_DIR $APPIMAGETOOL_APP_NAME --exclude-file appimageignore-$ARCH \
-                                                           --runtime-file runtime-$ARCH $update_info
+"$standard_appimagetool" $APP_DIR $APPIMAGETOOL_APP_NAME --exclude-file appimageignore-$ARCH \
+                                                         --runtime-file ${PARENT_DIR}runtime-$ARCH $update_info
 file "./$APPIMAGETOOL_APP_NAME"
 #updateinformation is not compatible with our server. See: https://github.com/AppImage/appimagetool/issues/91
 if [ -f "${APPIMAGETOOL_APP_NAME}.zsync" ]; then
