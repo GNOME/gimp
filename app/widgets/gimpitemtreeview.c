@@ -1885,17 +1885,20 @@ gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
 {
   GimpItemTreeViewClass *item_view_class;
   GimpItemTreeView      *item_view              = GIMP_ITEM_TREE_VIEW (tree_view);
+  GList                 *dropped_viewables;
+  GList                 *dup_children           = NULL;
   GList                 *iter;
   GimpImage             *src_image              = NULL;
   GType                  src_viewable_type      = G_TYPE_NONE;
   gint                   dest_index             = -1;
-  gboolean               src_viewables_reversed = FALSE;
 
   g_return_if_fail (g_list_length (src_viewables) > 0);
 
+  dropped_viewables = g_list_copy (src_viewables);
+
   item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view);
 
-  for (iter = src_viewables; iter; iter = iter->next)
+  for (iter = dropped_viewables; iter; iter = iter->next)
     {
       GimpViewable *src_viewable = iter->data;
 
@@ -1903,7 +1906,9 @@ gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
        * from the same source image.
        */
       if (src_viewable_type == G_TYPE_NONE)
-        src_viewable_type = G_TYPE_FROM_INSTANCE (src_viewable);
+        {
+          src_viewable_type = G_TYPE_FROM_INSTANCE (src_viewable);
+        }
       else
         {
           if (g_type_is_a (src_viewable_type,
@@ -1924,13 +1929,38 @@ gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
         g_return_if_fail (src_image == gimp_item_get_image (GIMP_ITEM (iter->data)));
     }
 
+  /* What does it mean when an item and a children of this item are
+   * dropped together? Does it mean we want to copy the tree structure
+   * but only this child? What when it's not a copy but a move?
+   * These are complicated questions for UX discussions. For the time
+   * being, we just do the simple answer: all children of a group item
+   * are implied, so we can just remove any descendant from the list of
+   * viewables.
+   */
+  for (iter = dropped_viewables; iter; iter = iter->next)
+    {
+      GList *iter2;
+
+      for (iter2 = dropped_viewables; iter2; iter2 = iter2->next)
+        {
+          if (iter->data != iter2->data &&
+              gimp_viewable_is_ancestor (iter2->data, iter->data))
+            {
+              dup_children = g_list_prepend (dup_children, iter->data);
+              break;
+            }
+        }
+    }
+  for (iter = dup_children; iter; iter = iter->next)
+    dropped_viewables = g_list_remove (dropped_viewables, iter->data);
+  g_list_free (dup_children);
+
   if (drop_pos == GTK_TREE_VIEW_DROP_AFTER ||
       (drop_pos == GTK_TREE_VIEW_DROP_INTO_OR_AFTER &&
        dest_viewable                                &&
        gimp_viewable_get_children (dest_viewable)))
     {
-      src_viewables_reversed = TRUE;
-      src_viewables = g_list_reverse (src_viewables);
+      dropped_viewables = g_list_reverse (dropped_viewables);
     }
 
   if (item_view->priv->image != src_image ||
@@ -1942,7 +1972,7 @@ gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
                                    GIMP_UNDO_GROUP_LAYER_ADD,
                                    _("Drop layers"));
 
-      for (iter = src_viewables; iter; iter = iter->next)
+      for (iter = dropped_viewables; iter; iter = iter->next)
         {
           GimpViewable *src_viewable = iter->data;
           GimpItem     *new_item;
@@ -1966,9 +1996,9 @@ gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
     {
       gimp_image_undo_group_start (item_view->priv->image,
                                    GIMP_UNDO_GROUP_IMAGE_ITEM_REORDER,
-                                   GIMP_ITEM_GET_CLASS (src_viewables->data)->reorder_desc);
+                                   GIMP_ITEM_GET_CLASS (dropped_viewables->data)->reorder_desc);
 
-      for (iter = src_viewables; iter; iter = iter->next)
+      for (iter = dropped_viewables; iter; iter = iter->next)
         {
           GimpViewable *src_viewable = iter->data;
           GimpItem     *src_parent;
@@ -1997,17 +2027,10 @@ gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
         }
     }
 
-  if (src_viewables_reversed)
-    /* The caller keeps a copy to src_viewables to free it. If we
-     * reverse it, the pointer stays valid yet ends up pointing to the
-     * now last (previously first) element of the list. So we leak the
-     * whole list but this element. Let's reverse back the list to have
-     * next and prev pointers same as call time.
-     */
-    src_viewables = g_list_reverse (src_viewables);
-
   gimp_image_undo_group_end (item_view->priv->image);
   gimp_image_flush (item_view->priv->image);
+
+  g_list_free (dropped_viewables);
 }
 
 
