@@ -281,6 +281,7 @@ gimp-debian:
     paths:
       - AppDir*/
       - appimageignore*
+      - _build-${RUNNER}/meson-logs/meson-log.txt
       - _build-${RUNNER}/config.h
     expire_in: 2 days
 
