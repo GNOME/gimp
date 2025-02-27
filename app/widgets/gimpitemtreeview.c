@@ -2469,10 +2469,10 @@ gimp_item_tree_view_effects_filters_selected (GimpContainerView  *view,
     {
       GimpDrawableFilter *filter;
       GimpContainer      *container;
-      gint                index = -1;
-      gint                n_children;
+      gint                index         = -1;
+      gint                n_children    = 0;
       gboolean            is_blocked_op = FALSE;
-      GeglNode           *op_node    = NULL;
+      GeglNode           *op_node       = NULL;
 
       /* Don't set floating selection as active filter */
       if (GIMP_IS_DRAWABLE_FILTER (filters->data))
