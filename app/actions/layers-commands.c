@@ -999,7 +999,7 @@ layers_delete_cmd_callback (GimpAction *action,
   removed_layers = g_list_copy (layers);
 
   /* Removing children layers (they will be removed anyway by removing
-   * the parent.
+   * the parent).
    */
   for (iter = removed_layers; iter; iter = iter->next)
     {
