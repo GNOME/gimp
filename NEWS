@@ -23,7 +23,15 @@ Core:
 
 Plug-ins:
 
-  - Improve Script-Fu progress notifications.
+  - Script-Fu:
+    * Improve Script-Fu progress notifications.
+    * Added wrapper (gimp-pdb-procedure-exists) to the corresponding
+      libgimp function.
+    * Progress report for every called PDB procedure now only happens
+      automatically for scripts running over "extension-script-fu". The
+      new independent Script-Fu plug-ins in particular should use
+      (gimp-progress-set-text) like plug-ins in other programming
+      languages.
   - Help: gimp-help.xml remote file is loaded in a thread to make it
     cancellable in case it gets stuck.
 
@@ -33,6 +41,13 @@ API:
     * Default sensitivity masks:
       + for image procedures: GIMP_PROCEDURE_SENSITIVE_DRAWABLE | GIMP_PROCEDURE_SENSITIVE_DRAWABLES
       + for other procedures: GIMP_PROCEDURE_SENSITIVE_ALWAYS
+    * gimp_procedure_is_core() renamed gimp_procedure_is_internal()
+
+Build:
+
+  - More robust InnoSetup scripts grabbing data directly from meson.
+  - New -Ddebug-self-in-build meson option for debugging the in-build
+    GIMP runs with gdb.
 
 
 Overview of Changes from GIMP 3.0.0-RC2 to GIMP 3.0.0-RC3
