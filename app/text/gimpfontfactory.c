@@ -800,7 +800,6 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
       gchar                *newname          = NULL;
       gchar                *escaped_fullname = NULL;
       gchar                *fullname         = NULL;
-      gchar                *fullname2        = NULL;
       gchar                *escaped_file     = NULL;
       gchar                *file             = NULL;
       hb_blob_t            *blob             = NULL;
@@ -857,14 +856,6 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
       FcPatternGetInteger (fontset->fonts[i], FC_INDEX,           0,              &index);
       FcPatternGetInteger (fontset->fonts[i], FC_SLANT,           0,              &slant);
       FcPatternGetInteger (fontset->fonts[i], FC_FONTVERSION,     0,              &fontversion);
-
-      /* Sometimes a font has more than one fullname,
-       * sometimes the second is more appropriate for display,
-       * in such cases we use it instead of the first.
-       */
-      if (FcPatternGetString (fontset->fonts[i], FC_FULLNAME, 1, (FcChar8 **) &fullname2) != FcResultMatch ||
-          ! g_utf8_validate (fullname2, -1, NULL))
-        fullname2 = NULL;
 
       /* this is for backward compatibility*/
       pattern_pfd      = pango_fc_font_description_from_pattern (fontset->fonts[i], FALSE);
@@ -1044,9 +1035,6 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
       FcConfigParseAndLoadFromMemory (FcConfigGetCurrent (), (const FcChar8 *) xml->str, FcTrue);
 
       pfd = pango_font_description_from_string (newname);
-
-      if (fullname2 != NULL && g_str_is_ascii (fullname2))
-        fullname = fullname2;
 
       gimp_font_factory_add_font (container, context, pfd, fullname, (const gchar *) file, font_info);
 
