@@ -439,16 +439,16 @@ gimp_device_manager_display_opened (GdkDisplayManager *disp_manager,
 
   g_list_free (devices);
 
-  g_signal_connect (seat, "device-added",
-                    G_CALLBACK (gimp_device_manager_device_added),
-                    manager);
-  g_signal_connect (seat, "device-removed",
-                    G_CALLBACK (gimp_device_manager_device_removed),
-                    manager);
+  g_signal_connect_object (seat, "device-added",
+                           G_CALLBACK (gimp_device_manager_device_added),
+                           manager, 0);
+  g_signal_connect_object (seat, "device-removed",
+                           G_CALLBACK (gimp_device_manager_device_removed),
+                           manager, 0);
 
-  g_signal_connect (display, "closed",
-                    G_CALLBACK (gimp_device_manager_display_closed),
-                    manager);
+  g_signal_connect_object (display, "closed",
+                           G_CALLBACK (gimp_device_manager_display_closed),
+                           manager, 0);
 }
 
 static void
