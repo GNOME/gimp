@@ -1966,8 +1966,6 @@ gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
   if (item_view->priv->image != src_image ||
       ! g_type_is_a (src_viewable_type, item_view_class->item_type))
     {
-      GType item_type = item_view_class->item_type;
-
       gimp_image_undo_group_start (item_view->priv->image,
                                    GIMP_UNDO_GROUP_LAYER_ADD,
                                    _("Drop layers"));
@@ -1977,6 +1975,7 @@ gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
           GimpViewable *src_viewable = iter->data;
           GimpItem     *new_item;
           GimpItem     *parent;
+          GType         item_type    = item_view_class->item_type;
 
           if (g_type_is_a (src_viewable_type, item_type))
             item_type = G_TYPE_FROM_INSTANCE (src_viewable);
