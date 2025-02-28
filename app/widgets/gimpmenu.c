@@ -182,10 +182,10 @@ static void
 gimp_menu_append (GimpMenuShell *shell,
                   GimpMenuModel *model)
 {
-  static GtkRadioMenuItem *group   = NULL;
-  GimpMenu                *menu    = GIMP_MENU (shell);
-  GimpUIManager           *manager = gimp_menu_shell_get_manager (GIMP_MENU_SHELL (shell));
-  gint                     n_items;
+  GtkRadioMenuItem *group   = NULL;
+  GimpMenu         *menu    = GIMP_MENU (shell);
+  GimpUIManager    *manager = gimp_menu_shell_get_manager (GIMP_MENU_SHELL (shell));
+  gint              n_items;
 
   g_return_if_fail (GTK_IS_CONTAINER (shell));
 
