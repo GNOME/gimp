@@ -1,5 +1,5 @@
 # Hungarian translation for gimp-python.
-# Copyright (C) 2001, 2003, 2004, 2007, 2008, 2012, 2013, 2014, 2018, 2019, 2020, 2021, 2022, 2023, 2024 Free Software Foundation, Inc.
+# Copyright (C) 2001, 2003, 2004, 2007, 2008, 2012, 2013, 2014, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp-python package.
 #
 # Andras Timar <timar at gnome dot hu>, 2001, 2003.
@@ -7,372 +7,387 @@
 # Laszlo Dvornik <dvornik at gnome dot hu>, 2004.
 # Arpad Biro <biro arpad  at gmail dot com>, 2004, 2007, 2008.
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2007, 2008, 2012.
-# Balázs Úr <ur.balazs at fsf dot hu>, 2013, 2014, 2019, 2020, 2021, 2022, 2023, 2024.
-# Balázs Meskó <mesko.balazs at fsf dot hu>, 2018, 2019, 2020, 2021, 2022.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2013, 2014, 2019, 2020, 2021, 2022, 2023, 2024, 2025.
+# Balázs Meskó <mesko.balazs at fsf dot hu>, 2018, 2019, 2020, 2021, 2022, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-05-19 01:23+0000\n"
-"PO-Revision-Date: 2024-05-19 11:56+0200\n"
-"Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
+"POT-Creation-Date: 2025-02-25 16:31+0000\n"
+"PO-Revision-Date: 2025-02-28 20:21+0100\n"
+"Last-Translator: Balázs Meskó <mesko.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 23.08.5\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: plug-ins/python/colorxhtml.py:85
+#: plug-ins/python/colorxhtml.py:78
 msgid "Save as colored HTML text..."
 msgstr "Mentés színes HTML szövegként…"
 
-#: plug-ins/python/colorxhtml.py:86 plug-ins/python/colorxhtml.py:92
-#: plug-ins/python/gradients-save-as-css.py:113
-#: plug-ins/python/palette-offset.py:135
-#: plug-ins/python/python-console/python-console.py:272
-#: plug-ins/python/spyro-plus.py:1719
-msgid "_Cancel"
-msgstr "_Mégse"
-
-#: plug-ins/python/colorxhtml.py:87 plug-ins/python/colorxhtml.py:93
-#: plug-ins/python/gradients-save-as-css.py:114
-#: plug-ins/python/palette-offset.py:136 plug-ins/python/spyro-plus.py:1720
-msgid "_OK"
-msgstr "_OK"
-
-#: plug-ins/python/colorxhtml.py:90
-msgid "Read characters from file..."
-msgstr "Karakterek beolvasása fájlból…"
-
-#: plug-ins/python/colorxhtml.py:109
-msgid "Characters"
-msgstr "Karakterek"
-
-#: plug-ins/python/colorxhtml.py:110
-msgid "Characters that will be used as colored pixels. "
-msgstr "A színes képpontokként használandó karakterek. "
-
-#: plug-ins/python/colorxhtml.py:119
-msgid "Characters or file location"
-msgstr "Karakterek vagy fájl helye"
-
-#: plug-ins/python/colorxhtml.py:125
-msgid "Read characters from file"
-msgstr "Karakterek olvasása fájlból"
-
-#: plug-ins/python/colorxhtml.py:128
-msgid ""
-"If set, the Characters text entry will be used as a file name, from which "
-"the characters will be read. Otherwise, the characters in the text entry "
-"will be used to render the image."
-msgstr ""
-"Ha meg van adva, akkor a Karakterek szövegmező tartalma lesz fájlnévként "
-"használva, és a karakterek onnan lesznek kiolvasva. Egyébként a "
-"szövegmezőben lévő karakterek lesznek használva a kép megjelenítéséhez."
-
-#: plug-ins/python/colorxhtml.py:134
-msgid "Choose file"
-msgstr "Fájl kiválasztása"
-
-#: plug-ins/python/colorxhtml.py:141
-msgid "Font Size(px)"
-msgstr "Betűméret (px)"
-
-#: plug-ins/python/colorxhtml.py:153
-msgid "Write separate CSS file"
-msgstr "Különálló CSS-fájl írása"
-
-#: plug-ins/python/colorxhtml.py:209
+#: plug-ins/python/colorxhtml.py:137
 msgid "Saving as colored XHTML"
 msgstr "Mentés színes XHTML-ként"
 
-#: plug-ins/python/colorxhtml.py:271 plug-ins/python/colorxhtml.py:272
-msgid "_Read characters from file, if true, or use text entry"
-msgstr "Karakterek ki_olvasása fájlból, ha igaz, vagy a szövegmező használata"
-
-#: plug-ins/python/colorxhtml.py:276 plug-ins/python/colorxhtml.py:277
-msgid "_File to read or characters to use"
-msgstr "_Olvasandó fájl vagy használandó karakterek"
-
-#: plug-ins/python/colorxhtml.py:281 plug-ins/python/colorxhtml.py:282
-msgid "Fo_nt size in pixels"
-msgstr "Betű_méret képpontokban"
-
-#: plug-ins/python/colorxhtml.py:286 plug-ins/python/colorxhtml.py:287
-msgid "_Write a separate CSS file"
-msgstr "Önálló _CSS fájl írása"
-
-#: plug-ins/python/colorxhtml.py:307
+#: plug-ins/python/colorxhtml.py:211
 msgid "Save as colored HTML text"
 msgstr "Mentés színes HTML szövegként"
 
-#: plug-ins/python/colorxhtml.py:310
+#: plug-ins/python/colorxhtml.py:214
 msgid "Colored HTML text"
 msgstr "Színes HTML szöveg"
 
-#: plug-ins/python/foggify.py:111
-msgid "Layer _name"
-msgstr "Réteg _neve"
+#: plug-ins/python/colorxhtml.py:222
+#| msgid "Read characters from file"
+msgid "Rea_d characters from file"
+msgstr "Karakterek _olvasása fájlból"
 
-#: plug-ins/python/foggify.py:112
-msgid "Layer name"
-msgstr "Réteg neve"
+#: plug-ins/python/colorxhtml.py:223
+#| msgid "_Read characters from file, if true, or use text entry"
+msgid "Read characters from file, if true, or use text entry"
+msgstr "Karakterek olvasása fájlból, ha igaz, vagy a szövegmező használata"
 
-#: plug-ins/python/foggify.py:113
-msgid "Clouds"
-msgstr "Felhők"
+#: plug-ins/python/colorxhtml.py:225
+#| msgid "Characters"
+msgid "Charac_ters"
+msgstr "Karak_terek"
 
-#: plug-ins/python/foggify.py:116
-msgid "_Turbulence"
-msgstr "Ö_rvénylés"
+#: plug-ins/python/colorxhtml.py:226
+#| msgid "Characters that will be used as colored pixels. "
+msgid "Characters that will be used as colored pixels."
+msgstr "A színes képpontokként használandó karakterek."
 
-#: plug-ins/python/foggify.py:117
-msgid "Turbulence"
-msgstr "Örvénylés"
+#: plug-ins/python/colorxhtml.py:228
+msgid "Fo_nt size in pixels"
+msgstr "Betű_méret képpontokban"
 
-#: plug-ins/python/foggify.py:121
-msgid "O_pacity"
-msgstr "Átlátszat_lanság"
+#: plug-ins/python/colorxhtml.py:229
+#| msgid "Fo_nt size in pixels"
+msgid "Font size in pixels"
+msgstr "Betűméret képpontokban"
 
-#: plug-ins/python/foggify.py:122
-msgid "Opacity"
-msgstr "Átlátszatlanság"
+#: plug-ins/python/colorxhtml.py:231
+msgid "_Write a separate CSS file"
+msgstr "Önálló _CSS-fájl írása"
 
-#: plug-ins/python/foggify.py:131
-msgid "_Fog color"
-msgstr "_Köd színe"
+#: plug-ins/python/colorxhtml.py:232
+#| msgid "_Write a separate CSS file"
+msgid "Write a separate CSS file"
+msgstr "Önálló CSS-fájl írása"
 
-#: plug-ins/python/foggify.py:132
-msgid "Fog color"
-msgstr "Köd színe"
+#. GUI only, used to create a widget to open a file if source-file is enabled
+#: plug-ins/python/colorxhtml.py:235
+#| msgid "Choose file"
+msgid "Choose File"
+msgstr "Fájl kiválasztása"
 
-#: plug-ins/python/foggify.py:148
+#: plug-ins/python/foggify.py:119
 msgid "Add a layer of fog"
 msgstr "Ködréteg hozzáadása"
 
-#: plug-ins/python/foggify.py:149
+#: plug-ins/python/foggify.py:120
 msgid "Adds a layer of fog to the image."
 msgstr "Ködréteget ad hozzá a képhez."
 
-#: plug-ins/python/foggify.py:151
+#: plug-ins/python/foggify.py:122
 msgid "_Fog..."
 msgstr "_Köd…"
 
-#: plug-ins/python/gradients-save-as-css.py:94
-msgid "_File..."
-msgstr "_Fájl…"
+#: plug-ins/python/foggify.py:128
+msgid "Layer _name"
+msgstr "Réteg _neve"
 
-#: plug-ins/python/gradients-save-as-css.py:102
-msgid "Choose CSS file..."
-msgstr "CSS-fájl kiválasztása…"
+#: plug-ins/python/foggify.py:128
+msgid "Layer name"
+msgstr "Réteg neve"
 
-#: plug-ins/python/gradients-save-as-css.py:111
-msgid "Save as CSS file..."
-msgstr "Mentés CSS-fájlként…"
+#: plug-ins/python/foggify.py:129
+msgid "Clouds"
+msgstr "Felhők"
 
-#: plug-ins/python/gradients-save-as-css.py:183
-#: plug-ins/python/palette-sort.py:356
-#: plug-ins/python/python-console/python-console.py:300
-msgid "Run mode"
-msgstr "Futtatási mód"
+#: plug-ins/python/foggify.py:130
+msgid "_Fog color"
+msgstr "_Köd színe"
 
-#: plug-ins/python/gradients-save-as-css.py:184
-#: plug-ins/python/python-console/python-console.py:300
-msgid "The run mode"
-msgstr "A futtatási mód"
+#: plug-ins/python/foggify.py:130
+msgid "Fog color"
+msgstr "Köd színe"
 
-#: plug-ins/python/gradients-save-as-css.py:188
-msgid "_Gradient to use"
-msgstr "Használandó _színátmenet"
+#: plug-ins/python/foggify.py:132
+msgid "_Turbulence"
+msgstr "Ö_rvénylés"
 
-#: plug-ins/python/gradients-save-as-css.py:191
-msgid "_File"
-msgstr "_Fájl"
+#: plug-ins/python/foggify.py:132
+msgid "Turbulence"
+msgstr "Örvénylés"
 
-#: plug-ins/python/gradients-save-as-css.py:207
-#: plug-ins/python/gradients-save-as-css.py:208
+#: plug-ins/python/foggify.py:134
+msgid "O_pacity"
+msgstr "Átlátszat_lanság"
+
+#: plug-ins/python/foggify.py:134
+msgid "Opacity"
+msgstr "Átlátszatlanság"
+
+#: plug-ins/python/gradients-save-as-css.py:131
+#: plug-ins/python/gradients-save-as-css.py:132
 msgid "Creates a new palette from a given gradient"
 msgstr "Új palettát hoz létre az adott színátmenetből"
 
-#: plug-ins/python/gradients-save-as-css.py:210
+#: plug-ins/python/gradients-save-as-css.py:134
 msgid "Save Gradient as CSS..."
 msgstr "Színátmenet mentése CSS-ként…"
 
-#: plug-ins/python/histogram-export.py:92
-msgid "Pixel count"
-msgstr "Képpontszám"
+#: plug-ins/python/gradients-save-as-css.py:140
+#: plug-ins/python/palette-offset.py:55 plug-ins/python/palette-sort.py:354
+#: plug-ins/python/palette-to-gradient.py:145
+#: plug-ins/python/python-console/python-console.py:323
+msgid "Run mode"
+msgstr "Futtatási mód"
 
-#: plug-ins/python/histogram-export.py:93
-msgid "Normalized"
-msgstr "Normalizált"
+#: plug-ins/python/gradients-save-as-css.py:141
+#: plug-ins/python/palette-offset.py:56 plug-ins/python/palette-sort.py:355
+#: plug-ins/python/palette-to-gradient.py:146
+#: plug-ins/python/python-console/python-console.py:324
+msgid "The run mode"
+msgstr "A futtatási mód"
 
-#: plug-ins/python/histogram-export.py:94
-msgid "Percent"
-msgstr "Százalék"
+#: plug-ins/python/gradients-save-as-css.py:144
+msgid "_Gradient to use"
+msgstr "Használandó _színátmenet"
 
-#: plug-ins/python/histogram-export.py:161
+#: plug-ins/python/gradients-save-as-css.py:148
+msgid "_File"
+msgstr "_Fájl"
+
+#: plug-ins/python/histogram-export.py:153
 msgid "File is either a directory or file name is empty."
 msgstr "A fájl vagy egy könyvtár, vagy a fájlnév üres."
 
-#: plug-ins/python/histogram-export.py:164
+#: plug-ins/python/histogram-export.py:156
 msgid "Directory not found."
 msgstr "A könyvtár nem található."
 
-#: plug-ins/python/histogram-export.py:179
+#: plug-ins/python/histogram-export.py:170
 msgid "Histogram Export..."
 msgstr "Hisztogram exportálása…"
 
-#: plug-ins/python/histogram-export.py:209
-msgid "Histogram File"
-msgstr "Hisztogram fájl"
-
 #: plug-ins/python/histogram-export.py:213
-msgid "_Bucket Size"
-msgstr "Vö_dör mérete"
-
-#: plug-ins/python/histogram-export.py:218
-msgid "Sample _Average"
-msgstr "Minta átl_ag"
-
-#: plug-ins/python/histogram-export.py:223
-msgid "Output _format"
-msgstr "Kimeneti _formátum"
-
-#: plug-ins/python/histogram-export.py:245
 msgid "Exports the image histogram to a text file (CSV)"
 msgstr "A kép hisztogramot exportálja szövegfájlba (CSV)"
 
-#: plug-ins/python/histogram-export.py:248
+#: plug-ins/python/histogram-export.py:216
 msgid "_Export histogram..."
 msgstr "Hisztogram _exportálása…"
 
-#: plug-ins/python/palette-offset.py:50 plug-ins/python/palette-offset.py:51
-#: plug-ins/python/palette-sort.py:362 plug-ins/python/palette-sort.py:414
-#: plug-ins/python/palette-sort.py:415
+#. TODO: GFile props still don't have labels + only load existing files
+#. (here we likely want to create a new file).
+#: plug-ins/python/histogram-export.py:224
+msgid "Histogram File"
+msgstr "Hisztogram fájl"
+
+#: plug-ins/python/histogram-export.py:225
+#| msgid "Histogram Export..."
+msgid "Histogram export file"
+msgstr "Hisztogram exportálási fájlja"
+
+#: plug-ins/python/histogram-export.py:227
+msgid "_Bucket Size"
+msgstr "Vö_dör mérete"
+
+#: plug-ins/python/histogram-export.py:227
+#| msgid "_Bucket Size"
+msgid "Bucket Size"
+msgstr "Vödör mérete"
+
+#: plug-ins/python/histogram-export.py:229
+msgid "Sample _Average"
+msgstr "Minta átl_ag"
+
+#: plug-ins/python/histogram-export.py:229
+#| msgid "Sample _Average"
+msgid "Sample Average"
+msgstr "Minta átlaga"
+
+#: plug-ins/python/histogram-export.py:232
+#| msgid "Pixel count"
+msgid "Pixel Count"
+msgstr "Képpontszám"
+
+#: plug-ins/python/histogram-export.py:233
+msgid "Normalized"
+msgstr "Normalizált"
+
+#: plug-ins/python/histogram-export.py:234
+msgid "Percent"
+msgstr "Százalék"
+
+#: plug-ins/python/histogram-export.py:235
+msgid "Output _format"
+msgstr "Kimeneti _formátum"
+
+#: plug-ins/python/histogram-export.py:235
+#| msgid "Output _format"
+msgid "Output format"
+msgstr "Kimeneti formátum"
+
+#: plug-ins/python/palette-offset.py:48
+msgid "_Offset Palette..."
+msgstr "Paletta _eltolása…"
+
+#: plug-ins/python/palette-offset.py:49
+msgid "Offset the colors in a palette"
+msgstr "Színek eltolása egy palettában"
+
+#: plug-ins/python/palette-offset.py:59 plug-ins/python/palette-sort.py:358
+#: plug-ins/python/palette-to-gradient.py:149
+msgid "_Palette"
+msgstr "_Paletta"
+
+#: plug-ins/python/palette-offset.py:60 plug-ins/python/palette-sort.py:359
+#: plug-ins/python/palette-sort.py:400 plug-ins/python/palette-sort.py:401
+#: plug-ins/python/palette-to-gradient.py:150
 msgid "Palette"
 msgstr "Paletta"
 
-#: plug-ins/python/palette-offset.py:62
-msgid "Off_set"
-msgstr "_Eltolás"
+#: plug-ins/python/palette-offset.py:63
+#| msgid "Offset"
+msgid "O_ffset"
+msgstr "E_ltolás"
 
-#: plug-ins/python/palette-offset.py:63 plug-ins/python/palette-offset.py:143
+#: plug-ins/python/palette-offset.py:63
 msgid "Offset"
 msgstr "Eltolás"
 
-#: plug-ins/python/palette-offset.py:73
+#: plug-ins/python/palette-offset.py:65
 msgid "The edited palette"
 msgstr "A szerkesztett paletta"
 
-#: plug-ins/python/palette-offset.py:74
+#: plug-ins/python/palette-offset.py:66
 msgid "The newly created palette when read-only, otherwise the input palette"
 msgstr ""
 "Az újonnan létrehozott paletta, ha csak olvasható, különben a bemeneti "
 "paletta"
 
-#: plug-ins/python/palette-offset.py:94
-msgid "_Offset Palette..."
-msgstr "Paletta _eltolása…"
-
-#: plug-ins/python/palette-offset.py:95
-msgid "Offset the colors in a palette"
-msgstr "Színek eltolása egy palettában"
-
-#: plug-ins/python/palette-offset.py:133
-msgid "Offset Palette..."
-msgstr "Paletta eltolása…"
-
-#: plug-ins/python/palette-sort.py:45
+#. TODO: Re-incorporate LAB and LCHab options with GeglColor
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:465
 msgid "Red"
 msgstr "Vörös"
 
-#: plug-ins/python/palette-sort.py:45
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:466
 msgid "Green"
 msgstr "Zöld"
 
-#: plug-ins/python/palette-sort.py:45
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:467
 msgid "Blue"
 msgstr "Kék"
 
-#: plug-ins/python/palette-sort.py:46
+#: plug-ins/python/palette-sort.py:46 plug-ins/python/palette-sort.py:468
 msgid "Luma (Y)"
 msgstr "Fényesség (Y)"
 
-#: plug-ins/python/palette-sort.py:47
+#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:469
 msgid "Hue"
 msgstr "Árnyalat"
 
-#: plug-ins/python/palette-sort.py:47
+#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:470
 msgid "Saturation"
 msgstr "Telítettség"
 
-#: plug-ins/python/palette-sort.py:47
+#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:471
 msgid "Value"
 msgstr "Érték"
 
-#: plug-ins/python/palette-sort.py:48
+#: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:472
 msgid "Saturation (HSL)"
 msgstr "Telítettség (HSL)"
 
-#: plug-ins/python/palette-sort.py:48
+#: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:473
 msgid "Lightness (HSL)"
 msgstr "Fényesség (HSL)"
 
-#: plug-ins/python/palette-sort.py:49
+#: plug-ins/python/palette-sort.py:49 plug-ins/python/palette-sort.py:474
 msgid "Index"
 msgstr "Index"
 
-#: plug-ins/python/palette-sort.py:50
+#: plug-ins/python/palette-sort.py:50 plug-ins/python/palette-sort.py:475
 msgid "Random"
 msgstr "Véletlen"
 
-#: plug-ins/python/palette-sort.py:95
-msgid "Lightness (LAB)"
-msgstr "Fényesség (LAB)"
+#: plug-ins/python/palette-sort.py:94
+msgid ""
+"\n"
+"    Format is 'start:nrows,length' . All items are optional.\n"
+"\n"
+"    The empty string selects all items, as does ':'\n"
+"    ':4,' makes a 4-row selection out of all colors (length auto-"
+"determined)\n"
+"    ':4' also.\n"
+"    ':1,4' selects the first 4 colors\n"
+"    ':,4' selects rows of 4 colors (nrows auto-determined)\n"
+"    ':3,4' selects 3 rows of 4 colors\n"
+"    '4:' selects a single row of all colors after 4, inclusive.\n"
+"    '3:,4' selects rows of 4 colors, starting at 3 (nrows auto-determined)\n"
+"    '2:3,4' selects 3 rows of 4 colors (12 colors total), beginning at index "
+"2.\n"
+"    '4' is illegal (ambiguous)\n"
+msgstr ""
+"\n"
+"    A formátum: „kezdés:sorok_száma,hossz”. Az elemek nem kötelezőek.\n"
+"\n"
+"    Az üres szöveg kiválasztja az összes elemet, csakúgy mint a „:”.\n"
+"    A „:4,” 4 sort választ ki az összes színből (a hossz automatikusan van "
+"meghatározva).\n"
+"    A „:4” ugyanezt teszi.\n"
+"    A „:1,4” az első 4 színt választja ki.\n"
+"    A „:,4” 4 szín sorát választja ki (a sorok_száma automatikusan van "
+"meghatározva).\n"
+"    A „:3,4” 4 szín 3 sorát választja ki.\n"
+"    A „4:” egyetlen sort választ ki a 4. és utána következő összes színből.\n"
+"    A „3:,4” 4 szín sorait választja ki, a 3.-tól kezdve (a sorok_száma "
+"automatikusan van meghatározva).\n"
+"    A „2:3,4” 4 szín 3 sorát választja ki (összesen 12 színt), a 2.-tól "
+"kezdve.\n"
+"    A „4” nem megengedett (nem egyértelmű).\n"
 
-#: plug-ins/python/palette-sort.py:96
-msgid "A-color"
-msgstr "A-szín"
+#: plug-ins/python/palette-sort.py:343
+msgid "_Sort Palette..."
+msgstr "Paletta _rendezése…"
 
-#: plug-ins/python/palette-sort.py:96
-msgid "B-color"
-msgstr "B-szín"
+#: plug-ins/python/palette-sort.py:345
+msgid "Sort the colors in a palette"
+msgstr "Paletta színeinek rendezése"
 
-#: plug-ins/python/palette-sort.py:97
-msgid "Chroma (LCHab)"
-msgstr "Színesség (LCHab)"
-
-#: plug-ins/python/palette-sort.py:98
-msgid "Hue (LCHab)"
-msgstr "Árnyalat (LCHab)"
-
-#: plug-ins/python/palette-sort.py:351
+#: plug-ins/python/palette-sort.py:364
 msgid "All"
 msgstr "Összes"
 
-#: plug-ins/python/palette-sort.py:351
+#: plug-ins/python/palette-sort.py:365
 msgid "Slice / Array"
 msgstr "Szelet / Tömb"
 
-#: plug-ins/python/palette-sort.py:351
+#: plug-ins/python/palette-sort.py:366
 msgid "Autoslice (fg->bg)"
 msgstr "Automatikus szeletelés (előtér->háttér)"
 
-#: plug-ins/python/palette-sort.py:351
+#: plug-ins/python/palette-sort.py:367
 msgid "Partitioned"
 msgstr "Felosztott"
 
-#: plug-ins/python/palette-sort.py:361
-#: plug-ins/python/palette-to-gradient.py:129
-msgid "_Palette"
-msgstr "_Paletta"
-
-#: plug-ins/python/palette-sort.py:365
+#: plug-ins/python/palette-sort.py:368
 msgid "Select_ions"
 msgstr "_Kijelölések"
 
+#: plug-ins/python/palette-sort.py:368
+#| msgid "Select_ions"
+msgid "Selections"
+msgstr "Kijelölések"
+
+#. TODO: It would be much simpler to replace the slice expression with three
+#. separate parameters: start-index, number-of-rows, row_length
 #: plug-ins/python/palette-sort.py:372
 msgid "Slice _expression"
 msgstr "Szeletelés ki_fejezés"
@@ -381,135 +396,166 @@ msgstr "Szeletelés ki_fejezés"
 msgid "Channel _to sort"
 msgstr "Rendezendő _csatorna"
 
-#: plug-ins/python/palette-sort.py:382
+#: plug-ins/python/palette-sort.py:377
+#| msgid "Channel _to sort"
+msgid "Channel to sort"
+msgstr "Rendezendő csatorna"
+
+#: plug-ins/python/palette-sort.py:379
 msgid "_Ascending"
 msgstr "Nö_vekvő"
 
-#: plug-ins/python/palette-sort.py:383 plug-ins/python/palette-sort.py:393
+#: plug-ins/python/palette-sort.py:379 plug-ins/python/palette-sort.py:386
 msgid "Ascending"
 msgstr "Növekvő"
 
-#: plug-ins/python/palette-sort.py:387
+#: plug-ins/python/palette-sort.py:383
 msgid "Secondary C_hannel to sort"
 msgstr "_Rendezendő másodlagos csatorna"
 
-#: plug-ins/python/palette-sort.py:392
+#: plug-ins/python/palette-sort.py:384
+#| msgid "Secondary C_hannel to sort"
+msgid "Secondary Channel to sort"
+msgstr "Rendezendő másodlagos csatorna"
+
+#: plug-ins/python/palette-sort.py:386
 msgid "Ascen_ding"
 msgstr "_Növekvő"
 
-#: plug-ins/python/palette-sort.py:397
+#: plug-ins/python/palette-sort.py:388
 msgid "_Quantization"
 msgstr "_Kvantálás"
 
-#: plug-ins/python/palette-sort.py:398
+#: plug-ins/python/palette-sort.py:389
 msgid "Quantization"
 msgstr "Kvantálás"
 
-#: plug-ins/python/palette-sort.py:402
-#| msgid "_Partitioning channel"
+#: plug-ins/python/palette-sort.py:393
 msgid "Partitionin_g channel"
 msgstr "Csatorna _felosztása"
 
-#: plug-ins/python/palette-sort.py:407
+#: plug-ins/python/palette-sort.py:394
+#| msgid "Partitionin_g channel"
+msgid "Partitioning channel"
+msgstr "Csatorna felosztása"
+
+#: plug-ins/python/palette-sort.py:396
 msgid "Partition q_uantization"
 msgstr "Felosztás k_vantálása"
 
-#: plug-ins/python/palette-sort.py:408
+#: plug-ins/python/palette-sort.py:397
 msgid "Partition quantization"
 msgstr "Felosztás kvantálása"
 
-#: plug-ins/python/palette-sort.py:432
-msgid "_Sort Palette..."
-msgstr "Paletta _rendezése…"
+#: plug-ins/python/palette-sort.py:476
+msgid "Lightness (LAB)"
+msgstr "Fényesség (LAB)"
 
-#: plug-ins/python/palette-sort.py:434
-msgid "Sort the colors in a palette"
-msgstr "Paletta színeinek rendezése"
+#: plug-ins/python/palette-sort.py:477
+msgid "A-color"
+msgstr "A-szín"
 
-#: plug-ins/python/palette-to-gradient.py:141
-#: plug-ins/python/palette-to-gradient.py:142
-msgid "The newly created gradient"
-msgstr "Az újonnan létrehozott színátmenet"
+#: plug-ins/python/palette-sort.py:478
+msgid "B-color"
+msgstr "B-szín"
 
-#: plug-ins/python/palette-to-gradient.py:164
+#: plug-ins/python/palette-sort.py:479
+msgid "Chroma (LCHab)"
+msgstr "Színesség (LCHab)"
+
+#: plug-ins/python/palette-sort.py:480
+msgid "Hue (LCHab)"
+msgstr "Árnyalat (LCHab)"
+
+#: plug-ins/python/palette-to-gradient.py:129
 msgid "Palette to _Gradient"
 msgstr "Palettát színátme_netté"
 
-#: plug-ins/python/palette-to-gradient.py:165
+#: plug-ins/python/palette-to-gradient.py:130
 msgid "Create a gradient using colors from the palette"
 msgstr "Színátmenet létrehozása a paletta színeit felhasználva"
 
-#: plug-ins/python/palette-to-gradient.py:166
+#: plug-ins/python/palette-to-gradient.py:131
 msgid "Create a new gradient using colors from the palette."
 msgstr "Új színátmenet létrehozása a palettából származó színek használatával."
 
-#: plug-ins/python/palette-to-gradient.py:169
+#: plug-ins/python/palette-to-gradient.py:134
 msgid "Palette to _Repeating Gradient"
 msgstr "Palettát is_métlődő színátmenetté"
 
-#: plug-ins/python/palette-to-gradient.py:170
+#: plug-ins/python/palette-to-gradient.py:135
 msgid "Create a repeating gradient using colors from the palette"
 msgstr "Ismétlődő színátmenet létrehozása a paletta színeit felhasználva"
 
-#: plug-ins/python/palette-to-gradient.py:171
+#: plug-ins/python/palette-to-gradient.py:136
 msgid "Create a new repeating gradient using colors from the palette."
 msgstr ""
 "Új ismétlődő színátmenet létrehozása a palettából származó színek "
 "használatával."
 
-#: plug-ins/python/python-console/python-console.py:79
+#: plug-ins/python/palette-to-gradient.py:153
+#: plug-ins/python/palette-to-gradient.py:154
+msgid "The newly created gradient"
+msgstr "Az újonnan létrehozott színátmenet"
+
+#: plug-ins/python/python-console/python-console.py:80
 msgid "Python Console"
 msgstr "Python-konzol"
 
-#: plug-ins/python/python-console/python-console.py:81
-#: plug-ins/python/python-console/python-console.py:273
+#: plug-ins/python/python-console/python-console.py:82
+#: plug-ins/python/python-console/python-console.py:280
 msgid "_Save"
 msgstr "_Mentés"
 
-#: plug-ins/python/python-console/python-console.py:82
+#: plug-ins/python/python-console/python-console.py:83
 msgid "Cl_ear"
 msgstr "Tö_rlés"
 
-#: plug-ins/python/python-console/python-console.py:83
+#: plug-ins/python/python-console/python-console.py:84
 msgid "_Browse..."
 msgstr "_Tallózás…"
 
-#: plug-ins/python/python-console/python-console.py:84
-#: plug-ins/python/python-console/python-console.py:221
+#: plug-ins/python/python-console/python-console.py:85
+#: plug-ins/python/python-console/python-console.py:228
 msgid "_Close"
 msgstr "_Bezárás"
 
-#: plug-ins/python/python-console/python-console.py:218
+#: plug-ins/python/python-console/python-console.py:225
 msgid "Python Procedure Browser"
 msgstr "Python eljárásböngésző"
 
-#: plug-ins/python/python-console/python-console.py:220
+#: plug-ins/python/python-console/python-console.py:227
 msgid "_Apply"
 msgstr "_Alkalmaz"
 
-#: plug-ins/python/python-console/python-console.py:246
+#: plug-ins/python/python-console/python-console.py:253
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "„%s” nem nyitható meg írásra: %s"
 
-#: plug-ins/python/python-console/python-console.py:261
+#: plug-ins/python/python-console/python-console.py:268
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "„%s” nem írható: %s"
 
-#: plug-ins/python/python-console/python-console.py:270
+#: plug-ins/python/python-console/python-console.py:277
 msgid "Save Python-Fu Console Output"
 msgstr "A Python-Fu konzolkimenetének mentése"
 
-#: plug-ins/python/python-console/python-console.py:321
+#: plug-ins/python/python-console/python-console.py:279
+#: plug-ins/python/spyro-plus.py:1750
+msgid "_Cancel"
+msgstr "_Mégse"
+
+#: plug-ins/python/python-console/python-console.py:316
 msgid "Python _Console"
 msgstr "Python-_konzol"
 
-#: plug-ins/python/python-console/python-console.py:322
+#: plug-ins/python/python-console/python-console.py:317
 msgid "Interactive GIMP Python interpreter"
 msgstr "Interaktív GIMP-Python-fordító"
 
-#: plug-ins/python/python-console/python-console.py:323
+#: plug-ins/python/python-console/python-console.py:318
 msgid "Type in commands and see results"
 msgstr "Írjon be parancsokat, és nézze meg az eredményt"
 
@@ -533,21 +579,22 @@ msgstr "Az utolsó aktív réteg újrarajzolása"
 msgid "As Path"
 msgstr "Útvonalként"
 
-#: plug-ins/python/spyro-plus.py:112
+#: plug-ins/python/spyro-plus.py:112 plug-ins/python/spyro-plus.py:2270
 msgid "Circle"
 msgstr "Kör"
 
-#: plug-ins/python/spyro-plus.py:148
+#: plug-ins/python/spyro-plus.py:148 plug-ins/python/spyro-plus.py:2274
 msgid "Polygon-Star"
 msgstr "Sokszög-csillag"
 
 #. Sine wave on a circle ring.
-#: plug-ins/python/spyro-plus.py:164 plug-ins/python/spyro-plus.py:989
+#: plug-ins/python/spyro-plus.py:164 plug-ins/python/spyro-plus.py:1011
+#: plug-ins/python/spyro-plus.py:2265 plug-ins/python/spyro-plus.py:2275
 msgid "Sine"
 msgstr "Szinusz"
 
 #. Semi-circles, based on a polygon
-#: plug-ins/python/spyro-plus.py:174
+#: plug-ins/python/spyro-plus.py:174 plug-ins/python/spyro-plus.py:2276
 msgid "Bumps"
 msgstr "Buckák"
 
@@ -559,55 +606,55 @@ msgstr "Állvány"
 msgid "Frame"
 msgstr "Keret"
 
-#: plug-ins/python/spyro-plus.py:436
+#: plug-ins/python/spyro-plus.py:436 plug-ins/python/spyro-plus.py:2273
 msgid "Selection"
 msgstr "Kijelölés"
 
-#: plug-ins/python/spyro-plus.py:521
+#: plug-ins/python/spyro-plus.py:541 plug-ins/python/spyro-plus.py:2310
 msgid "Pencil"
 msgstr "Ceruza"
 
-#: plug-ins/python/spyro-plus.py:537
+#: plug-ins/python/spyro-plus.py:557 plug-ins/python/spyro-plus.py:2311
 msgid "AirBrush"
 msgstr "Festékszóró"
 
-#: plug-ins/python/spyro-plus.py:604
+#: plug-ins/python/spyro-plus.py:624 plug-ins/python/spyro-plus.py:2308
 msgid "Preview"
 msgstr "Előnézet"
 
-#: plug-ins/python/spyro-plus.py:609
+#: plug-ins/python/spyro-plus.py:629 plug-ins/python/spyro-plus.py:2312
 msgid "Stroke"
 msgstr "Vonal"
 
-#: plug-ins/python/spyro-plus.py:656
+#: plug-ins/python/spyro-plus.py:676 plug-ins/python/spyro-plus.py:2309
 msgid "PaintBrush"
 msgstr "Festőecset"
 
-#: plug-ins/python/spyro-plus.py:658
+#: plug-ins/python/spyro-plus.py:680 plug-ins/python/spyro-plus.py:2313
 msgid "Ink"
 msgstr "Tus"
 
-#: plug-ins/python/spyro-plus.py:659
+#: plug-ins/python/spyro-plus.py:681 plug-ins/python/spyro-plus.py:2314
 msgid "MyPaintBrush"
 msgstr "MyPaint ecset"
 
-#: plug-ins/python/spyro-plus.py:975
+#: plug-ins/python/spyro-plus.py:997 plug-ins/python/spyro-plus.py:2263
 msgid "Spyrograph"
 msgstr "Spirográf"
 
-#: plug-ins/python/spyro-plus.py:982
+#: plug-ins/python/spyro-plus.py:1004 plug-ins/python/spyro-plus.py:2264
 msgid "Epitrochoid"
 msgstr "Epitrochoid"
 
-#: plug-ins/python/spyro-plus.py:1009
+#: plug-ins/python/spyro-plus.py:1031 plug-ins/python/spyro-plus.py:2266
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: plug-ins/python/spyro-plus.py:1456
+#: plug-ins/python/spyro-plus.py:1487 plug-ins/python/spyro-plus.py:2267
 msgid "Curve Type"
 msgstr "Görbe típusa"
 
-#: plug-ins/python/spyro-plus.py:1457
+#: plug-ins/python/spyro-plus.py:1488
 msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
@@ -615,22 +662,23 @@ msgstr ""
 "Az epitrochoid minta olyan, mint amikor egy mozgó fogaskerék egy fix "
 "fogaskerék körül forog."
 
-#: plug-ins/python/spyro-plus.py:1462
+#. TODO: Add Clone option once it's fixed
+#: plug-ins/python/spyro-plus.py:1493 plug-ins/python/spyro-plus.py:2316
 msgid "Tool"
 msgstr "Eszköz"
 
-#: plug-ins/python/spyro-plus.py:1463
+#: plug-ins/python/spyro-plus.py:1494
 msgid ""
 "The tool with which to draw the pattern. The Preview tool just draws quickly."
 msgstr ""
 "Az eszköz, amellyel ki kell rajzolni a mintát. Az Előnézet eszköz csak "
 "gyorsan rajzol."
 
-#: plug-ins/python/spyro-plus.py:1468
+#: plug-ins/python/spyro-plus.py:1499
 msgid "Long Gradient"
 msgstr "Hosszú színátmenet"
 
-#: plug-ins/python/spyro-plus.py:1470
+#: plug-ins/python/spyro-plus.py:1501
 msgid ""
 "When unchecked, the current tool settings will be used. When checked, will "
 "use a long gradient to match the length of the pattern, based on current "
@@ -641,11 +689,11 @@ msgstr ""
 "illeszkedjen a minta hosszához), amely a színátmenet-eszköz beállításaiban "
 "szereplő jelenlegi színátmenetre és ismétlési módra épül."
 
-#: plug-ins/python/spyro-plus.py:1490
+#: plug-ins/python/spyro-plus.py:1521
 msgid "Specify pattern using one of the following tabs:"
 msgstr "Adja meg a mintát a következő lapok egyikének használatával:"
 
-#: plug-ins/python/spyro-plus.py:1492
+#: plug-ins/python/spyro-plus.py:1523
 msgid ""
 "The pattern is specified only by the active tab. Toy Kit is similar to "
 "Gears, but it uses gears and hole numbers which are found in toy kits. If "
@@ -657,7 +705,7 @@ msgstr ""
 "megtalálhatóak a játékkészletetekben. Ha követi a játékkészletek leírásaiban "
 "lévő utasításokat, akkor az eredmények hasonlóak lesznek."
 
-#: plug-ins/python/spyro-plus.py:1516
+#: plug-ins/python/spyro-plus.py:1547
 msgid ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
@@ -665,11 +713,11 @@ msgstr ""
 "A rögzített fogaskerék fogainak száma. A rögzített fogaskerék mérete arányos "
 "a fogak számával."
 
-#: plug-ins/python/spyro-plus.py:1519 plug-ins/python/spyro-plus.py:1547
+#: plug-ins/python/spyro-plus.py:1550 plug-ins/python/spyro-plus.py:1578
 msgid "Fixed Gear Teeth"
 msgstr "Rögzített fogaskerék fog"
 
-#: plug-ins/python/spyro-plus.py:1527
+#: plug-ins/python/spyro-plus.py:1558
 msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
@@ -677,15 +725,15 @@ msgstr ""
 "A mozgó fogaskerék fogainak száma. A mozgó fogaskerék mérete arányos a fogak "
 "számával."
 
-#: plug-ins/python/spyro-plus.py:1530 plug-ins/python/spyro-plus.py:1552
+#: plug-ins/python/spyro-plus.py:1561 plug-ins/python/spyro-plus.py:1583
 msgid "Moving Gear Teeth"
 msgstr "Mozgó fogaskerék fog"
 
-#: plug-ins/python/spyro-plus.py:1535
+#: plug-ins/python/spyro-plus.py:1566
 msgid "Hole percent"
 msgstr "Furat százaléka"
 
-#: plug-ins/python/spyro-plus.py:1536
+#: plug-ins/python/spyro-plus.py:1567
 msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
@@ -693,11 +741,11 @@ msgstr ""
 "Milyen messze van a furat a mozgó fogaskerék közepétől. A 100% azt jelenti, "
 "hogy a furat a fogaskerék szélén van."
 
-#: plug-ins/python/spyro-plus.py:1557
+#: plug-ins/python/spyro-plus.py:1588
 msgid "Hole Number"
 msgstr "Furat száma"
 
-#: plug-ins/python/spyro-plus.py:1558
+#: plug-ins/python/spyro-plus.py:1589
 msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
@@ -705,27 +753,27 @@ msgstr ""
 "Az 1-es furat a fogaskerék szélénél van. A maximális furatszám a középpont "
 "közelében van. A maximális furatszám minden egyes fogaskeréknél különböző."
 
-#: plug-ins/python/spyro-plus.py:1569
+#: plug-ins/python/spyro-plus.py:1600
 msgid "Flower Petals"
 msgstr "Virágszirmok"
 
-#: plug-ins/python/spyro-plus.py:1570
+#: plug-ins/python/spyro-plus.py:1601
 msgid "The number of petals in the pattern."
 msgstr "A szirmok száma a mintában."
 
-#: plug-ins/python/spyro-plus.py:1575
+#: plug-ins/python/spyro-plus.py:1606
 msgid "Petal Skip"
 msgstr "Szirom kihagyása"
 
-#: plug-ins/python/spyro-plus.py:1576
+#: plug-ins/python/spyro-plus.py:1607
 msgid "The number of petals to advance for drawing the next petal."
 msgstr "A szirmok száma a következő szirom rajzolásához való lépéshez."
 
-#: plug-ins/python/spyro-plus.py:1581
+#: plug-ins/python/spyro-plus.py:1612
 msgid "Hole Radius(%)"
 msgstr "Lyuk sugara (%)"
 
-#: plug-ins/python/spyro-plus.py:1582
+#: plug-ins/python/spyro-plus.py:1613
 msgid ""
 "The radius of the hole in the center of the pattern where nothing will be "
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
@@ -735,11 +783,11 @@ msgstr ""
 "méretének százalékában van megadva. A 0 érték nem hoz létre lyukat. A 99 "
 "érték egy vékony vonalat eredményez a szélen."
 
-#: plug-ins/python/spyro-plus.py:1603
+#: plug-ins/python/spyro-plus.py:1634
 msgid "Width(%)"
 msgstr "Szélesség (%)"
 
-#: plug-ins/python/spyro-plus.py:1604
+#: plug-ins/python/spyro-plus.py:1635
 msgid ""
 "The width of the pattern as a percentage of the size of the pattern. A Value "
 "of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
@@ -749,23 +797,23 @@ msgstr ""
 "vékony mintát fog rajzolni. A 100 érték kitölti a teljes rögzített "
 "fogaskereket."
 
-#: plug-ins/python/spyro-plus.py:1615
+#: plug-ins/python/spyro-plus.py:1646
 msgid "Visual"
 msgstr "Látható"
 
-#: plug-ins/python/spyro-plus.py:1621
+#: plug-ins/python/spyro-plus.py:1652
 msgid "Toy Kit"
 msgstr "Játékkészlet"
 
-#: plug-ins/python/spyro-plus.py:1627
+#: plug-ins/python/spyro-plus.py:1658
 msgid "Gears"
 msgstr "Fogaskerekek"
 
-#: plug-ins/python/spyro-plus.py:1640 plug-ins/python/spyro-plus.py:1684
+#: plug-ins/python/spyro-plus.py:1671 plug-ins/python/spyro-plus.py:1715
 msgid "Rotation"
 msgstr "Forgatás"
 
-#: plug-ins/python/spyro-plus.py:1641
+#: plug-ins/python/spyro-plus.py:1672
 msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
@@ -773,11 +821,11 @@ msgstr ""
 "A minta forgatása fokokban. A mozgó fogaskerék kezdőpozíciója a rögzített "
 "fogaskerékben."
 
-#: plug-ins/python/spyro-plus.py:1664
+#: plug-ins/python/spyro-plus.py:1695 plug-ins/python/spyro-plus.py:2277
 msgid "Shape"
 msgstr "Alak"
 
-#: plug-ins/python/spyro-plus.py:1665
+#: plug-ins/python/spyro-plus.py:1696
 msgid ""
 "The shape of the fixed gear to be used inside current selection. Rack is a "
 "long round-edged shape provided in the toy kits. Frame hugs the boundaries "
@@ -792,40 +840,41 @@ msgstr ""
 "A kiválasztás körbeöleli a jelenlegi kiválasztás határait – próbáljon ki "
 "valamilyen nem négyzetes alakzatot."
 
-#: plug-ins/python/spyro-plus.py:1674
+#: plug-ins/python/spyro-plus.py:1705
 msgid "Sides"
 msgstr "Oldalak"
 
-#: plug-ins/python/spyro-plus.py:1674
+#: plug-ins/python/spyro-plus.py:1705
 msgid "Number of sides of the shape."
 msgstr "Az alakzat oldalainak száma."
 
-#: plug-ins/python/spyro-plus.py:1679
+#: plug-ins/python/spyro-plus.py:1710
 msgid "Morph"
 msgstr "Torzítás"
 
-#: plug-ins/python/spyro-plus.py:1679
+#: plug-ins/python/spyro-plus.py:1710
 msgid "Morph fixed gear shape. Only affects some of the shapes."
 msgstr ""
 "A rögzített fogaskerékalak torzítása. Csak egyes alakzatokra van hatása."
 
-#: plug-ins/python/spyro-plus.py:1684
+#: plug-ins/python/spyro-plus.py:1715
 msgid "Rotation of the fixed gear, in degrees"
 msgstr "A rögzített fogaskerék forgatása szögben"
 
-#: plug-ins/python/spyro-plus.py:1699
+#: plug-ins/python/spyro-plus.py:1730
 msgid "Margin (px)"
 msgstr "Margó (képpont)"
 
-#: plug-ins/python/spyro-plus.py:1699
+#: plug-ins/python/spyro-plus.py:1730
 msgid "Margin from edge of selection."
 msgstr "Margó a kijelölés szélétől."
 
-#: plug-ins/python/spyro-plus.py:1704
+#: plug-ins/python/spyro-plus.py:1735 plug-ins/python/spyro-plus.py:2298
+#: plug-ins/python/spyro-plus.py:2299
 msgid "Make width and height equal"
 msgstr "A szélesség és magasság egyenlővé tétele"
 
-#: plug-ins/python/spyro-plus.py:1706
+#: plug-ins/python/spyro-plus.py:1737
 msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
@@ -834,11 +883,15 @@ msgstr ""
 "kiválasztást. Ha be van jelölve, akkor a minta egyforma szélességű és "
 "magasságú lesz, valamint középre lesz igazítva."
 
-#: plug-ins/python/spyro-plus.py:1721
+#: plug-ins/python/spyro-plus.py:1751
+msgid "_OK"
+msgstr "_OK"
+
+#: plug-ins/python/spyro-plus.py:1752
 msgid "Re_draw"
 msgstr "Újra_rajzolás"
 
-#: plug-ins/python/spyro-plus.py:1723
+#: plug-ins/python/spyro-plus.py:1754
 msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
@@ -846,15 +899,15 @@ msgstr ""
 "Ha változtat egy eszköz beállításain, változtat a színen vagy változtat a "
 "kijelölésen, akkor nyomja ezt meg, hogy megnézze a minta előnézetet."
 
-#: plug-ins/python/spyro-plus.py:1726
+#: plug-ins/python/spyro-plus.py:1757
 msgid "_Reset"
 msgstr "_Visszaállítás"
 
-#: plug-ins/python/spyro-plus.py:1734
+#: plug-ins/python/spyro-plus.py:1765
 msgid "Save"
 msgstr "Mentés"
 
-#: plug-ins/python/spyro-plus.py:1735
+#: plug-ins/python/spyro-plus.py:1766
 msgid ""
 "Choose whether to save as new layer, redraw on last active layer, or save to "
 "path"
@@ -862,102 +915,36 @@ msgstr ""
 "Válassza ki, hogy új rétegként mentse, újrarajzolja a legutolsó aktív "
 "rétegen vagy útvonalba mentse"
 
-#: plug-ins/python/spyro-plus.py:1749
+#: plug-ins/python/spyro-plus.py:1780
 msgid "Spyrogimp"
 msgstr "Spirogimp"
 
-#: plug-ins/python/spyro-plus.py:1758 plug-ins/python/spyro-plus.py:2295
+#: plug-ins/python/spyro-plus.py:1789 plug-ins/python/spyro-plus.py:2252
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr ""
 "Spirográfok rajzolása a jelenlegi eszköz beállításaival és kijelölésével."
 
-#: plug-ins/python/spyro-plus.py:1771
+#: plug-ins/python/spyro-plus.py:1802
 msgid "Curve Pattern"
 msgstr "Ívminta"
 
-#: plug-ins/python/spyro-plus.py:1774
+#: plug-ins/python/spyro-plus.py:1805
 msgid "Fixed Gear"
 msgstr "Rögzített fogaskerék"
 
-#: plug-ins/python/spyro-plus.py:1777
+#: plug-ins/python/spyro-plus.py:1808
 msgid "Size"
 msgstr "Méret"
 
-#: plug-ins/python/spyro-plus.py:2133
+#: plug-ins/python/spyro-plus.py:2164
 msgid "Rendering Pattern"
 msgstr "Minta megjelenítése"
 
-#: plug-ins/python/spyro-plus.py:2145
+#: plug-ins/python/spyro-plus.py:2176
 msgid "Please wait : Rendering Pattern"
 msgstr "Kis türelmet: Minta megjelenítése"
 
-#: plug-ins/python/spyro-plus.py:2211 plug-ins/python/spyro-plus.py:2212
-msgid ""
-"The curve type { Spyrograph (0), Epitrochoid (1), Sine (2), Lissajous(3) }"
-msgstr ""
-"A görbe típusa { Spirográf (0), Epitrochoid (1), Szinusz (2), Lissajous (3) }"
-
-#: plug-ins/python/spyro-plus.py:2216 plug-ins/python/spyro-plus.py:2217
-msgid "Shape of fixed gear"
-msgstr "A rögzített fogaskerék alakja"
-
-#: plug-ins/python/spyro-plus.py:2221 plug-ins/python/spyro-plus.py:2222
-msgid "Number of sides of fixed gear (3 or greater). Only used by some shapes."
-msgstr ""
-"A rögzített fogaskerék oldalainak száma (3 vagy nagyobb). Csak néhány "
-"alakzat használja."
-
-#: plug-ins/python/spyro-plus.py:2226 plug-ins/python/spyro-plus.py:2227
-msgid "Morph shape of fixed gear, between 0 and 1. Only used by some shapes."
-msgstr ""
-"A rögzített fogaskerék alakjának torzítása 0 és 1 között. Csak néhány "
-"alakzat használja."
-
-#: plug-ins/python/spyro-plus.py:2231 plug-ins/python/spyro-plus.py:2232
-msgid "Number of teeth for fixed gear"
-msgstr "A rögzített fogaskerék fogainak száma"
-
-#: plug-ins/python/spyro-plus.py:2236 plug-ins/python/spyro-plus.py:2237
-msgid "Number of teeth for moving gear"
-msgstr "A mozgó fogaskerék fogainak száma"
-
-#: plug-ins/python/spyro-plus.py:2241 plug-ins/python/spyro-plus.py:2243
-msgid ""
-"Location of hole in moving gear in percent, where 100 means that the hole is "
-"at the edge of the gear, and 0 means the hole is at the center"
-msgstr ""
-"A mozgó fogaskerék furatának helye százalékban, ahol a 100 azt jelenti, hogy "
-"a furat a fogaskerék szélén van, a 0 pedig azt, hogy a közepén"
-
-#: plug-ins/python/spyro-plus.py:2248 plug-ins/python/spyro-plus.py:2249
-msgid "Margin from selection, in pixels"
-msgstr "A kijelöléstől számított margó képpontban"
-
-#: plug-ins/python/spyro-plus.py:2253 plug-ins/python/spyro-plus.py:2254
-msgid "Make height and width equal"
-msgstr "A szélesség és magasság egyenlővé tétele"
-
-#: plug-ins/python/spyro-plus.py:2258 plug-ins/python/spyro-plus.py:2259
-msgid "Pattern rotation, in degrees"
-msgstr "A minta forgatása szögben"
-
-#: plug-ins/python/spyro-plus.py:2263 plug-ins/python/spyro-plus.py:2264
-msgid "Shape rotation of fixed gear, in degrees"
-msgstr "A rögzített fogaskerék alakforgatása szögben"
-
-#: plug-ins/python/spyro-plus.py:2268 plug-ins/python/spyro-plus.py:2269
-msgid "Tool to use for drawing the pattern."
-msgstr "A minta rajzolásához használandó eszköz."
-
-#: plug-ins/python/spyro-plus.py:2273 plug-ins/python/spyro-plus.py:2275
-msgid ""
-"Whether to apply a long gradient to match the length of the pattern. Only "
-"applicable to some of the tools."
-msgstr ""
-"Hosszú színátmenet legyen-e alkalmazva, hogy megfeleljen a minta hosszának. "
-"Csak egyes eszközök esetén alkalmazható."
-
-#: plug-ins/python/spyro-plus.py:2296
+#: plug-ins/python/spyro-plus.py:2253
 msgid ""
 "Uses current tool settings to draw Spyrograph patterns. The size and "
 "location of the pattern is based on the current selection."
@@ -965,6 +952,99 @@ msgstr ""
 "A jelenlegi eszközbeállításokat használja a spirográf minták rajzolásához. A "
 "minta mérete és helye a jelenlegi kijelölésen múlik."
 
-#: plug-ins/python/spyro-plus.py:2299
+#: plug-ins/python/spyro-plus.py:2256
 msgid "Spyrogimp..."
 msgstr "Spirogimp…"
+
+#: plug-ins/python/spyro-plus.py:2271
+msgid "rack"
+msgstr "fogazott vonalzó"
+
+#: plug-ins/python/spyro-plus.py:2272
+#| msgid "Frame"
+msgid "frame"
+msgstr "keret"
+
+#: plug-ins/python/spyro-plus.py:2279
+msgid "Si_des"
+msgstr "Ol_dalak"
+
+#: plug-ins/python/spyro-plus.py:2280
+msgid "Number of sides of fixed gear (3 or greater). Only used by some shapes."
+msgstr ""
+"A rögzített fogaskerék oldalainak száma (3 vagy nagyobb). Csak néhány "
+"alakzat használja."
+
+#: plug-ins/python/spyro-plus.py:2282
+#| msgid "Morph"
+msgid "_Morph"
+msgstr "_Torzítás"
+
+#: plug-ins/python/spyro-plus.py:2283
+msgid "Morph shape of fixed gear, between 0 and 1. Only used by some shapes."
+msgstr ""
+"A rögzített fogaskerék alakjának torzítása 0 és 1 között. Csak néhány "
+"alakzat használja."
+
+#: plug-ins/python/spyro-plus.py:2285
+#| msgid "Fixed Gear Teeth"
+msgid "Fi_xed Gear Teeth"
+msgstr "_Rögzített fogaskerékfog"
+
+#: plug-ins/python/spyro-plus.py:2286 plug-ins/python/spyro-plus.py:2289
+#| msgid "Number of teeth for fixed gear"
+msgid "Number of teeth for fixed gear."
+msgstr "A rögzített fogaskerék fogainak száma."
+
+#: plug-ins/python/spyro-plus.py:2288
+#| msgid "Moving Gear Teeth"
+msgid "Mo_ving Gear Teeth"
+msgstr "_Mozgó fogaskerékfog"
+
+#: plug-ins/python/spyro-plus.py:2291
+#| msgid "Hole Radius(%)"
+msgid "_Hole Radius (%)"
+msgstr "_Lyuk sugara (%)"
+
+#: plug-ins/python/spyro-plus.py:2292
+msgid ""
+"Location of hole in moving gear in percent, where 100 means that the hole is "
+"at the edge of the gear, and 0 means the hole is at the center"
+msgstr ""
+"A mozgó fogaskerék furatának helye százalékban, ahol a 100 azt jelenti, hogy "
+"a furat a fogaskerék szélén van, a 0 pedig azt, hogy a közepén"
+
+#: plug-ins/python/spyro-plus.py:2295
+#| msgid "Margin (px)"
+msgid "Margin (_px)"
+msgstr "Margó (_képpont)"
+
+#: plug-ins/python/spyro-plus.py:2296
+msgid "Margin from selection, in pixels"
+msgstr "A kijelöléstől számított margó képpontban"
+
+#: plug-ins/python/spyro-plus.py:2301 plug-ins/python/spyro-plus.py:2304
+#| msgid "Rotation"
+msgid "_Rotation"
+msgstr "_Forgatás"
+
+#: plug-ins/python/spyro-plus.py:2302
+msgid "Pattern rotation, in degrees"
+msgstr "A minta forgatása szögben"
+
+#: plug-ins/python/spyro-plus.py:2305
+msgid "Shape rotation of fixed gear, in degrees"
+msgstr "A rögzített fogaskerék alakforgatása szögben"
+
+#: plug-ins/python/spyro-plus.py:2319
+#| msgid "Long Gradient"
+msgid "Long _Gradient"
+msgstr "_Hosszú színátmenet"
+
+#: plug-ins/python/spyro-plus.py:2320
+msgid ""
+"Whether to apply a long gradient to match the length of the pattern. Only "
+"applicable to some of the tools."
+msgstr ""
+"Hosszú színátmenet legyen-e alkalmazva, hogy megfeleljen a minta hosszának. "
+"Csak egyes eszközök esetén alkalmazható."
