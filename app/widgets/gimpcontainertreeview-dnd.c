@@ -26,6 +26,7 @@
 #include "widgets-types.h"
 
 #include "core/gimpcontainer.h"
+#include "core/gimpitem.h"
 #include "core/gimpviewable.h"
 
 #include "gimpcontainertreestore.h"
@@ -61,11 +62,15 @@ gimp_container_tree_view_viewable_sort (GimpViewable          *v1,
     container1 = gimp_viewable_get_children (parent1);
   else if (gimp_container_have (container, GIMP_OBJECT (v1)))
     container1 = container;
+  else
+    container1 = gimp_item_get_container (GIMP_ITEM (v1));
 
   if (parent2)
     container2 = gimp_viewable_get_children (parent2);
   else if (gimp_container_have (container, GIMP_OBJECT (v2)))
     container2 = container;
+  else
+    container2 = gimp_item_get_container (GIMP_ITEM (v2));
 
   g_return_val_if_fail (container1 && container2, 0);
 
