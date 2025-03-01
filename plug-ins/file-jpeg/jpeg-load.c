@@ -65,9 +65,9 @@ load_image (GFile        *file,
   jpeg_saved_marker_ptr         marker;
   FILE              *infile;
   guchar            *buf;
-  guint16           *buf_12;
+  guint16           *buf_16;
   guchar           **rowbuf;
-  guint16          **rowbuf_12;
+  guint16          **rowbuf_16;
   GimpImageBaseType  image_type;
   GimpImageType      layer_type;
   GeglBuffer        *buffer         = NULL;
@@ -185,8 +185,7 @@ load_image (GFile        *file,
 
   /* temporary buffer */
   tile_height = gimp_tile_height ();
-
-  if (cinfo.data_precision == 8 || ! support_12_bit)
+  if (cinfo.data_precision <= 8 || ! support_12_bit)
     {
       buf = g_new (guchar,
                    tile_height * cinfo.output_width * cinfo.output_components);
@@ -198,13 +197,13 @@ load_image (GFile        *file,
     }
   else
     {
-      buf_12 = g_new (guint16,
+      buf_16 = g_new (guint16,
                       tile_height * cinfo.output_width * cinfo.output_components);
 
-      rowbuf_12 = g_new (guint16 *, tile_height);
+      rowbuf_16 = g_new (guint16 *, tile_height);
 
       for (i = 0; i < tile_height; i++)
-        rowbuf_12[i] = buf_12 + cinfo.output_width * cinfo.output_components * i;
+        rowbuf_16[i] = buf_16 + cinfo.output_width * cinfo.output_components * i;
     }
 
   switch (cinfo.output_components)
@@ -404,14 +403,14 @@ load_image (GFile        *file,
     {
       if (image_type == GIMP_RGB)
         {
-          if (cinfo.data_precision == 8 || ! support_12_bit)
+          if (cinfo.data_precision <= 8 || ! support_12_bit)
             encoding = "R'G'B' u8";
           else
             encoding = "R'G'B' u16";
         }
       else
         {
-          if (cinfo.data_precision == 8 || ! support_12_bit)
+          if (cinfo.data_precision <= 8 || ! support_12_bit)
             encoding = "Y' u8";
           else
             encoding = "Y' u16";
@@ -442,7 +441,7 @@ load_image (GFile        *file,
           goto set_buffer;
         }
 
-      if (cinfo.data_precision == 8 || ! support_12_bit)
+      if (cinfo.data_precision <= 8 || ! support_12_bit)
         {
           for (i = 0; i < scanlines; i++)
             jpeg_read_scanlines (&cinfo, (JSAMPARRAY) &rowbuf[i], 1);
@@ -455,20 +454,32 @@ load_image (GFile        *file,
           if (shift < 0)
             shift = 0;
 
-          for (i = 0; i < scanlines; i++)
-            jpeg12_read_scanlines (&cinfo, (J12SAMPARRAY) &rowbuf_12[i], 1);
+          if (cinfo.data_precision <= 12)
+            {
+              for (i = 0; i < scanlines; i++)
+                jpeg12_read_scanlines (&cinfo, (J12SAMPARRAY) &rowbuf_16[i],
+                                       1);
+            }
+          else
+            {
+              for (i = 0; i < scanlines; i++)
+                jpeg16_read_scanlines (&cinfo, (J16SAMPARRAY) &rowbuf_16[i],
+                                       1);
+            }
 
-          /* Normalize 12 bit to 16 bit range */
+          /* Normalize to 16 bit range */
           for (i = 0; i < scanlines; i++)
             {
-              for (gint j = 0; j < cinfo.output_width * 3; j++)
-                rowbuf_12[i][j] = GUINT16_FROM_LE (rowbuf_12[i][j]) << shift;
+              for (gint j = 0;
+                   j < cinfo.output_width * cinfo.output_components;
+                   j++)
+                rowbuf_16[i][j] = GUINT16_FROM_LE (rowbuf_16[i][j]) << shift;
             }
         }
 #endif
 
     set_buffer:
-      if (cinfo.data_precision == 8 || ! support_12_bit)
+      if (cinfo.data_precision <= 8 || ! support_12_bit)
         gegl_buffer_set (buffer,
                          GEGL_RECTANGLE (0, start, cinfo.output_width, scanlines),
                          0,
@@ -481,7 +492,7 @@ load_image (GFile        *file,
                            GEGL_RECTANGLE (0, start, cinfo.output_width, scanlines),
                            0,
                            format,
-                           buf_12,
+                           buf_16,
                            GEGL_AUTO_ROWSTRIDE);
         }
 
@@ -514,15 +525,15 @@ load_image (GFile        *file,
   g_object_unref (buffer);
 
   /* free up the temporary buffers */
-  if (cinfo.data_precision == 8 || ! support_12_bit)
+  if (cinfo.data_precision <= 8 || ! support_12_bit)
     {
       g_free (rowbuf);
       g_free (buf);
     }
   else
     {
-      g_free (rowbuf_12);
-      g_free (buf_12);
+      g_free (rowbuf_16);
+      g_free (buf_16);
     }
 
   /* After finish_decompress, we can close the input file.
