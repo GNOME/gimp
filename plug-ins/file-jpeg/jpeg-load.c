@@ -487,14 +487,12 @@ load_image (GFile        *file,
                          buf,
                          GEGL_AUTO_ROWSTRIDE);
       else
-        {
-          gegl_buffer_set (buffer,
-                           GEGL_RECTANGLE (0, start, cinfo.output_width, scanlines),
-                           0,
-                           format,
-                           buf_16,
-                           GEGL_AUTO_ROWSTRIDE);
-        }
+        gegl_buffer_set (buffer,
+                         GEGL_RECTANGLE (0, start, cinfo.output_width, scanlines),
+                         0,
+                         format,
+                         buf_16,
+                         GEGL_AUTO_ROWSTRIDE);
 
       if (image_truncated)
         /*  jumping to finish skips jpeg_finish_decompress(), its state
