@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
@@ -8,10 +8,10 @@ if [ -z "$QUASI_MSYS2_ROOT" ]; then
 
 if [ -z "$GITLAB_CI" ]; then
   # Make the script work locally
-  if [ "$0" != 'build/windows/1_build-deps-quasimsys2.sh' ] && [ ${PWD/*\//} != 'windows' ]; then
+  if [[ "$0" != 'build/windows/1_build-deps-quasimsys2.sh' ]] && [ ${PWD/*\//} != 'windows' ]; then
     echo -e '\033[31m(ERROR)\033[0m: Script called from wrong dir. Please, read: https://developer.gimp.org/core/setup/build/windows/'
     exit 1
-  elif [ ${PWD/*\//} = 'windows' ]; then
+  elif [[ ${PWD/*\//} = 'windows' ]]; then
     cd ../..
   fi
 
@@ -21,10 +21,11 @@ if [ -z "$GITLAB_CI" ]; then
   cd $(dirname $PWD)
 fi
 
+GIMP_DIR=$(echo $0 | sed 's|build/windows/1_build-deps-quasimsys2.sh||')
 
 ## Install quasi-msys2 and its deps
 # Beginning of install code block
-if [ "$GITLAB_CI" ]; then
+if [ "$(whoami)" = 'root' ]; then
   apt-get update -y >/dev/null
   apt-get install -y --no-install-recommends \
                      clang                   \
