@@ -172,6 +172,8 @@ static void            gimp_group_layer_convert_type (GimpLayer         *layer,
                                                       GimpProgress      *progress);
 static GeglNode   * gimp_group_layer_get_source_node (GimpDrawable      *drawable);
 
+static void         gimp_group_layer_filters_changed (GimpDrawable      *drawable);
+
 static void         gimp_group_layer_opacity_changed (GimpLayer         *layer);
 static void  gimp_group_layer_effective_mode_changed (GimpLayer         *layer);
 static void
@@ -301,6 +303,7 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   drawable_class->estimate_memsize       = gimp_group_layer_estimate_memsize;
   drawable_class->update_all             = gimp_group_layer_update_all;
   drawable_class->get_source_node        = gimp_group_layer_get_source_node;
+  drawable_class->filters_changed        = gimp_group_layer_filters_changed;
 
   layer_class->opacity_changed           = gimp_group_layer_opacity_changed;
   layer_class->effective_mode_changed    = gimp_group_layer_effective_mode_changed;
@@ -1183,6 +1186,15 @@ gimp_group_layer_get_source_node (GimpDrawable *drawable)
 }
 
 static void
+gimp_group_layer_filters_changed (GimpDrawable *drawable)
+{
+  gimp_layer_update_effective_mode (GIMP_LAYER (drawable));
+
+  if (GIMP_DRAWABLE_CLASS (parent_class)->filters_changed)
+    GIMP_DRAWABLE_CLASS (parent_class)->filters_changed (drawable);
+}
+
+static void
 gimp_group_layer_opacity_changed (GimpLayer *layer)
 {
   gimp_layer_update_effective_mode (layer);
@@ -1275,6 +1287,7 @@ gimp_group_layer_get_effective_mode (GimpLayer              *layer,
    * cheaper.
    */
   if (gimp_layer_get_mode (layer) == GIMP_LAYER_MODE_PASS_THROUGH &&
+      ! gimp_drawable_has_visible_filters (GIMP_DRAWABLE (layer)) &&
       ! no_pass_through_strength_reduction)
     {
       /* we perform the strength-reduction if:
