@@ -65,7 +65,9 @@ load_image (GFile        *file,
   jpeg_saved_marker_ptr         marker;
   FILE              *infile;
   guchar            *buf;
+  guint16           *buf_16;
   guchar           **rowbuf;
+  guint16          **rowbuf_16;
   GimpImageBaseType  image_type;
   GimpImageType      layer_type;
   GeglBuffer        *buffer         = NULL;
@@ -78,6 +80,11 @@ load_image (GFile        *file,
   gint               i;
   guchar            *photoshop_data = NULL;
   guint              photoshop_len  = 0;
+  gboolean           support_12_bit = FALSE;
+
+#if LIBJPEG_TURBO_VERSION_NUMBER >= 3000000
+  support_12_bit = TRUE;
+#endif
 
   /* We set up the normal JPEG error routines. */
   cinfo.err = jpeg_std_error (&jerr.pub);
@@ -178,13 +185,26 @@ load_image (GFile        *file,
 
   /* temporary buffer */
   tile_height = gimp_tile_height ();
-  buf = g_new (guchar,
-               tile_height * cinfo.output_width * cinfo.output_components);
+  if (cinfo.data_precision <= 8 || ! support_12_bit)
+    {
+      buf = g_new (guchar,
+                   tile_height * cinfo.output_width * cinfo.output_components);
 
-  rowbuf = g_new (guchar *, tile_height);
+      rowbuf = g_new (guchar *, tile_height);
 
-  for (i = 0; i < tile_height; i++)
-    rowbuf[i] = buf + cinfo.output_width * cinfo.output_components * i;
+      for (i = 0; i < tile_height; i++)
+        rowbuf[i] = buf + cinfo.output_width * cinfo.output_components * i;
+    }
+  else
+    {
+      buf_16 = g_new (guint16,
+                      tile_height * cinfo.output_width * cinfo.output_components);
+
+      rowbuf_16 = g_new (guint16 *, tile_height);
+
+      for (i = 0; i < tile_height; i++)
+        rowbuf_16[i] = buf_16 + cinfo.output_width * cinfo.output_components * i;
+    }
 
   switch (cinfo.output_components)
     {
@@ -224,16 +244,20 @@ load_image (GFile        *file,
     }
   else
     {
-      GString *comment_buffer = NULL;
-      guint8  *icc_data       = NULL;
-      guint    icc_length     = 0;
+      GString       *comment_buffer = NULL;
+      guint8        *icc_data       = NULL;
+      guint          icc_length     = 0;
+      GimpPrecision  precision      = GIMP_PRECISION_U8_NON_LINEAR;
 
       layer_name = _("Background");
+
+      if (cinfo.data_precision > 8 && support_12_bit)
+        precision = GIMP_PRECISION_U16_NON_LINEAR;
 
       image = gimp_image_new_with_precision (cinfo.output_width,
                                              cinfo.output_height,
                                              image_type,
-                                             GIMP_PRECISION_U8_NON_LINEAR);
+                                             precision);
 
       gimp_image_undo_disable (image);
 
@@ -378,9 +402,19 @@ load_image (GFile        *file,
   else
     {
       if (image_type == GIMP_RGB)
-        encoding = "R'G'B' u8";
+        {
+          if (cinfo.data_precision <= 8 || ! support_12_bit)
+            encoding = "R'G'B' u8";
+          else
+            encoding = "R'G'B' u16";
+        }
       else
-        encoding = "Y' u8";
+        {
+          if (cinfo.data_precision <= 8 || ! support_12_bit)
+            encoding = "Y' u8";
+          else
+            encoding = "Y' u16";
+        }
       space = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
     }
   format = babl_format_with_space (encoding, space);
@@ -407,16 +441,58 @@ load_image (GFile        *file,
           goto set_buffer;
         }
 
-      for (i = 0; i < scanlines; i++)
-        jpeg_read_scanlines (&cinfo, (JSAMPARRAY) &rowbuf[i], 1);
+      if (cinfo.data_precision <= 8 || ! support_12_bit)
+        {
+          for (i = 0; i < scanlines; i++)
+            jpeg_read_scanlines (&cinfo, (JSAMPARRAY) &rowbuf[i], 1);
+        }
+#if LIBJPEG_TURBO_VERSION_NUMBER >= 3000000
+      else
+        {
+          gint shift = 16 - cinfo.data_precision;
+
+          if (shift < 0)
+            shift = 0;
+
+          if (cinfo.data_precision <= 12)
+            {
+              for (i = 0; i < scanlines; i++)
+                jpeg12_read_scanlines (&cinfo, (J12SAMPARRAY) &rowbuf_16[i],
+                                       1);
+            }
+          else
+            {
+              for (i = 0; i < scanlines; i++)
+                jpeg16_read_scanlines (&cinfo, (J16SAMPARRAY) &rowbuf_16[i],
+                                       1);
+            }
+
+          /* Normalize to 16 bit range */
+          for (i = 0; i < scanlines; i++)
+            {
+              for (gint j = 0;
+                   j < cinfo.output_width * cinfo.output_components;
+                   j++)
+                rowbuf_16[i][j] = GUINT16_FROM_LE (rowbuf_16[i][j]) << shift;
+            }
+        }
+#endif
 
     set_buffer:
-      gegl_buffer_set (buffer,
-                       GEGL_RECTANGLE (0, start, cinfo.output_width, scanlines),
-                       0,
-                       format,
-                       buf,
-                       GEGL_AUTO_ROWSTRIDE);
+      if (cinfo.data_precision <= 8 || ! support_12_bit)
+        gegl_buffer_set (buffer,
+                         GEGL_RECTANGLE (0, start, cinfo.output_width, scanlines),
+                         0,
+                         format,
+                         buf,
+                         GEGL_AUTO_ROWSTRIDE);
+      else
+        gegl_buffer_set (buffer,
+                         GEGL_RECTANGLE (0, start, cinfo.output_width, scanlines),
+                         0,
+                         format,
+                         buf_16,
+                         GEGL_AUTO_ROWSTRIDE);
 
       if (image_truncated)
         /*  jumping to finish skips jpeg_finish_decompress(), its state
@@ -447,8 +523,16 @@ load_image (GFile        *file,
   g_object_unref (buffer);
 
   /* free up the temporary buffers */
-  g_free (rowbuf);
-  g_free (buf);
+  if (cinfo.data_precision <= 8 || ! support_12_bit)
+    {
+      g_free (rowbuf);
+      g_free (buf);
+    }
+  else
+    {
+      g_free (rowbuf_16);
+      g_free (buf_16);
+    }
 
   /* After finish_decompress, we can close the input file.
    * Here we postpone it until after no more JPEG errors are possible,
