@@ -244,6 +244,9 @@ gimp_container_editor_constructed (GObject *object)
       gimp_assert_not_reached ();
     }
 
+  gimp_editor_set_show_name (GIMP_EDITOR (editor->view),
+                             (editor->priv->view_type == GIMP_VIEW_TYPE_GRID));
+
   if (GIMP_IS_LIST (editor->priv->container))
     gimp_container_view_set_reorderable (GIMP_CONTAINER_VIEW (editor->view),
                                          ! gimp_list_get_sort_func (GIMP_LIST (editor->priv->container)));
@@ -459,6 +462,14 @@ gimp_container_editor_select_items (GimpContainerView   *view,
       if (signal_name)
         gimp_context_set_by_type (editor->priv->context, children_type,
                                   GIMP_OBJECT (viewable));
+    }
+
+  if (viewable)
+    {
+      gchar *desc = gimp_viewable_get_description (viewable, NULL);
+
+      gimp_editor_set_name (GIMP_EDITOR (editor->view), desc);
+      g_free (desc);
     }
 
   if (gimp_editor_get_ui_manager (GIMP_EDITOR (editor->view)))
