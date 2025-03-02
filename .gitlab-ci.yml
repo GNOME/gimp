@@ -429,7 +429,9 @@ gimp-flatpak-x64:
   extends: .debian-x64
   rules:
     - <<: *CI_MERGE
+      when: never
     - <<: *CI_COMMIT
+      when: never
     - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
   variables:
     MSYSTEM_PREFIX: clang64
