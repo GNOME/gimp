@@ -1805,6 +1805,9 @@ gimp_drawable_filter_add_filter (GimpDrawableFilter *filter)
                                G_CALLBACK (gimp_drawable_filter_reorder),
                                filter, 0);
 
+      g_signal_connect_object (G_OBJECT (filter->operation), "notify",
+                               G_CALLBACK (gimp_drawable_filters_changed),
+                               filter->drawable, G_CONNECT_SWAPPED);
       g_signal_connect_object (G_OBJECT (filter), "active-changed",
                                G_CALLBACK (gimp_drawable_filters_changed),
                                filter->drawable, G_CONNECT_SWAPPED);
