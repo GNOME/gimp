@@ -27,6 +27,7 @@
 #include "gimp-memsize.h"
 #include "gimpimage.h"
 #include "gimpdrawable.h"
+#include "gimpdrawable-filters.h"
 #include "gimpdrawableundo.h"
 
 
@@ -186,13 +187,17 @@ gimp_drawable_undo_pop (GimpUndo            *undo,
                         GimpUndoAccumulator *accum)
 {
   GimpDrawableUndo *drawable_undo = GIMP_DRAWABLE_UNDO (undo);
+  GimpDrawable     *drawable      = GIMP_DRAWABLE (GIMP_ITEM_UNDO (undo)->item);
 
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
-  gimp_drawable_swap_pixels (GIMP_DRAWABLE (GIMP_ITEM_UNDO (undo)->item),
+  gimp_drawable_swap_pixels (drawable,
                              drawable_undo->buffer,
                              drawable_undo->x,
                              drawable_undo->y);
+
+  if (gimp_drawable_has_visible_filters (drawable))
+    gimp_drawable_update (drawable, 0, 0, -1, -1);
 }
 
 static void

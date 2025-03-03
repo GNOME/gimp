@@ -194,7 +194,19 @@ gimp_drawable_edit_fill (GimpDrawable    *drawable,
     {
       gimp_drawable_edit_fill_direct (drawable, options, undo_desc);
 
-      gimp_drawable_update (drawable, x, y, width, height);
+      if (gimp_drawable_has_visible_filters (drawable))
+        {
+          /* For drawables with filters, update the bounding box then
+           * let the drawable update everything, because the filtered
+           * render may be bigger than the filled part.
+           */
+          gimp_drawable_update_bounding_box (drawable);
+          gimp_drawable_update (drawable, 0, 0, -1, -1);
+        }
+      else
+        {
+          gimp_drawable_update (drawable, x, y, width, height);
+        }
     }
   else
     {
