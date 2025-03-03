@@ -151,12 +151,8 @@ gimp_help_domain_map (GimpHelpDomain    *domain,
       locale = gimp_help_domain_lookup_locale (domain,
                                                (const gchar *) list->data,
                                                progress);
-      if (locale == NULL)
-        {
-          *fatal_error = TRUE;
-          return NULL;
-        }
-      ref = gimp_help_locale_map (locale, help_id);
+      if (locale != NULL)
+        ref = gimp_help_locale_map (locale, help_id);
     }
 
   /*  second pass: look for a fallback                 */
