@@ -83,7 +83,6 @@ workflow:
 
 
 stages:
-  - prepare
   - dependencies
   - gimp
   - analysis
@@ -110,38 +109,41 @@ stages:
     CXX_LD: lld
   before_script:
     - export GIMP_PREFIX="${CI_PROJECT_DIR}/_install-${RUNNER}"
-    - echo -e "\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KPreparing build environment"
-    - gcc -print-multi-os-directory 2>/dev/null | grep ./ && export LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || export LIB_DIR="lib"
-    - gcc -print-multiarch 2>/dev/null | grep . && export LIB_SUBDIR=$(echo $(gcc -print-multiarch)'/')
-    # Build-time vars
-    - export PKG_CONFIG_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
-    - export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"
-    # Runtime vars
-    - export PATH="${GIMP_PREFIX}/bin:$PATH"
-    - export LD_LIBRARY_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
-    - export GI_TYPELIB_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}girepository-1.0${GI_TYPELIB_PATH:+:$GI_TYPELIB_PATH}"
-    - echo -e "\e[0Ksection_end:`date +%s`:environ\r\e[0K"
 
-image-debian:
+.debian_environ: &ENVIRON
+- echo -e "\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KPreparing build environment"
+- gcc -print-multi-os-directory 2>/dev/null | grep ./ && export LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || export LIB_DIR="lib"
+- gcc -print-multiarch 2>/dev/null | grep . && export LIB_SUBDIR=$(echo $(gcc -print-multiarch)'/')
+## Build-time vars
+- export PKG_CONFIG_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+- export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"
+## Runtime vars
+- export PATH="${GIMP_PREFIX}/bin:$PATH"
+- export LD_LIBRARY_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+- export GI_TYPELIB_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}girepository-1.0${GI_TYPELIB_PATH:+:$GI_TYPELIB_PATH}"
+- echo -e "\e[0Ksection_end:`date +%s`:environ\r\e[0K"
+
+deps-debian:
   extends: .debian
-  stage: prepare
+  stage: dependencies
   image:
     name: gcr.io/kaniko-project/executor:debug
     entrypoint: [""]
   variables:
     GIT_STRATEGY: none
     UMFPACK: libumfpack5
-  before_script: []
   script:
     - export container=docker
     - mkdir -p /kaniko/.docker
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    # Install deps
     - echo "FROM debian:${DEB_VERSION}" > Dockerfile
-    - echo "RUN apt-get update" >> Dockerfile
-    # 'ca-certificates' is NOT a gimp dep, it is installed only to our Docker image work
-    - echo "RUN apt-get install -y --no-install-recommends ca-certificates" >> Dockerfile
-    # Build-time only dependencies
-    - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
+    - echo "RUN echo -e \"\e[0Ksection_start:0000000001:deps_install[collapsed=true]\r\e[0KInstalling dependencies provided by Debian $DEB_VERSION\"" >> Dockerfile
+    - echo "RUN apt-get update -qq" >> Dockerfile
+    ## 'ca-certificates' is NOT a gimp dep, it is installed only to our Docker image work
+    - echo "RUN apt-get install -qq -y --no-install-recommends ca-certificates" >> Dockerfile
+    ## Build-time only dependencies
+    - echo "RUN apt-get install -qq -y --no-install-recommends \\" >> Dockerfile
     - echo "appstream
             ccache
             clang
@@ -156,8 +158,8 @@ image-debian:
             xauth
             xsltproc
             xvfb" >> Dockerfile
-    # Dependencies
-    - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
+    ## Runtime dependencies
+    - echo "RUN apt-get install -qq -y --no-install-recommends \\" >> Dockerfile
     - echo "at-spi2-core
             ffmpeg
             gettext
@@ -205,48 +207,37 @@ image-debian:
             poppler-data
             python3
             python3-gi" >> Dockerfile
-    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER} --cache=true --cache-ttl=120h
-
-deps-debian:
-  extends: .debian
-  needs: ["image-debian"]
-  stage: dependencies
-  variables:
-    GIT_STRATEGY: none
-  script:
-    # Clone and build babl
-    - echo -e "\e[0Ksection_start:`date +%s`:babl_build[collapsed=true]\r\e[0KBuilding babl"
-    - if [ "$CI_COMMIT_TAG" != "" ]; then
-        repo=https://gitlab.gnome.org/GNOME/babl.git;
-        babl_tag=$(git ls-remote --tags --exit-code --refs "$repo" |
-                   grep -oi "BABL_[0-9]*_[0-9]*_[0-9]*"            |
-                   sort --version-sort | tail -1);
-        babl_branch="--branch=$babl_tag";
+    - echo "RUN echo -e \"\e[0Ksection_end:0000000002:deps_install\r\e[0K\"" >> Dockerfile
+    # Build some deps
+    - if [[ ! "$CI_JOB_NAME" =~ 'cross' ]]; then
+        echo "FROM $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}" > Dockerfile2;
+        echo "RUN echo -e \"\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KPreparing build environment\"" >> Dockerfile2;
+        export LIB_DIR="lib";
+        export LIB_SUBDIR=$([ "$(uname -m)" = 'aarch64' ] && echo "aarch64-linux-gnu/" || echo "x86_64-linux-gnu/");
+        echo "ENV PKG_CONFIG_PATH=\"${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}\"" >> Dockerfile2;
+        echo "ENV XDG_DATA_DIRS=\"${GIMP_PREFIX}/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}\"" >> Dockerfile2;
+        echo "ENV CC=\"$CC\"" >> Dockerfile2;
+        echo "ENV CXX=\"$CXX\"" >> Dockerfile2;
+        echo "ENV CC_LD=\"$CC_LD\"" >> Dockerfile2;
+        echo "ENV CXX_LD=\"$CXX_LD\"" >> Dockerfile2;
+        echo "RUN echo -e \"\e[0Ksection_end:`date +%s`:environ\r\e[0K\"" >> Dockerfile2;
+        echo "RUN echo -e \"\e[0Ksection_start:`date +%s`:babl_build[collapsed=true]\r\e[0KBuilding babl\"" >> Dockerfile2;
+        babl_branch=$([ "$CI_COMMIT_TAG" ] && echo "$(git ls-remote --tags --exit-code --refs "https://gitlab.gnome.org/GNOME/babl.git" | grep -oi "BABL_[0-9]*_[0-9]*_[0-9]*" | sort --version-sort | tail -1)" || echo "master");
+        echo "RUN git clone --branch $babl_branch --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git" $CI_PROJECT_DIR/babl >> Dockerfile2;
+        echo "RUN meson setup $CI_PROJECT_DIR/babl/_build-${RUNNER} $CI_PROJECT_DIR/babl -Dprefix=\"${GIMP_PREFIX}\"" >> Dockerfile2;
+        echo "RUN ninja -C $CI_PROJECT_DIR/babl/_build-${RUNNER}" >> Dockerfile2;
+        echo "RUN ninja -C $CI_PROJECT_DIR/babl/_build-${RUNNER} install" >> Dockerfile2;
+        echo "RUN echo -e \"\e[0Ksection_end:`date +%s`:babl_build\r\e[0K\"" >> Dockerfile2;
+        echo "RUN echo -e \"\e[0Ksection_start:`date +%s`:gegl_build[collapsed=true]\r\e[0KBuilding gegl\"" >> Dockerfile2;
+        gegl_branch=$([ "$CI_COMMIT_TAG" ] && echo "$(git ls-remote --tags --exit-code --refs "https://gitlab.gnome.org/GNOME/gegl.git" | grep -oi "GEGL_[0-9]*_[0-9]*_[0-9]*" | sort --version-sort | tail -1)" || echo "master");
+        echo "RUN git clone --branch $gegl_branch --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git" $CI_PROJECT_DIR/gegl >> Dockerfile2;
+        echo "RUN meson setup $CI_PROJECT_DIR/gegl/_build-${RUNNER} $CI_PROJECT_DIR/gegl -Dprefix=\"${GIMP_PREFIX}\" $WORKSHOP_OPTION" >> Dockerfile2;
+        echo "RUN ninja -C $CI_PROJECT_DIR/gegl/_build-${RUNNER}" >> Dockerfile2;
+        echo "RUN ninja -C $CI_PROJECT_DIR/gegl/_build-${RUNNER} install" >> Dockerfile2;
+        echo "RUN echo -e \"\e[0Ksection_end:`date +%s`:gegl_build\r\e[0K\"" >> Dockerfile2;
       fi
-    - git clone $babl_branch --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git
-    - cd babl
-    - meson setup _build-${RUNNER} -Dprefix="${GIMP_PREFIX}"
-    - cd _build-${RUNNER}
-    - ninja
-    - ninja install
-    - cd ../..
-    - echo -e "\e[0Ksection_end:`date +%s`:babl_build\r\e[0K"
-    # Clone and build gegl
-    - echo -e "\e[0Ksection_start:`date +%s`:gegl_build[collapsed=true]\r\e[0KBuilding gegl"
-    - if [ "$CI_COMMIT_TAG" != "" ]; then
-        repo=https://gitlab.gnome.org/GNOME/gegl.git;
-        gegl_tag=$(git ls-remote --tags --exit-code --refs "$repo" |
-                   grep -oi "GEGL_[0-9]*_[0-9]*_[0-9]*"            |
-                   sort --version-sort | tail -1);
-        gegl_branch="--branch=$gegl_tag";
-      fi
-    - git clone $gegl_branch --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git
-    - cd gegl
-    - meson setup _build-${RUNNER} -Dprefix="${GIMP_PREFIX}" $WORKSHOP_OPTION
-    - cd _build-${RUNNER}
-    - ninja
-    - ninja install
-    - echo -e "\e[0Ksection_end:`date +%s`:gegl_build\r\e[0K"
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER} --cache=true --cache-ttl=120h --verbosity=warn
+    - if [ -f 'Dockerfile2' ]; then /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile2 --destination build-debian-${DEB_VERSION}-${RUNNER}-temp --cache=false --no-push --verbosity=warn; fi
   artifacts:
     paths:
       - _install-${RUNNER}/
@@ -263,6 +254,7 @@ gimp-debian:
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
   script:
+    - *ENVIRON
     # Build GIMP
     - echo -e "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP"
     - meson setup _build-${RUNNER} -Dprefix="${GIMP_PREFIX}"
@@ -313,20 +305,10 @@ gimp-debian:
       - RUNNER: x86_64_v2
   tags: []
 
-image-debian-x64:
-  extends: .debian-x64
-  stage: !reference [image-debian, stage]
-  image: !reference [image-debian, image]
-  variables: !reference [image-debian, variables]
-  before_script:
-   - !reference [image-debian, before_script]
-  script:
-    - !reference [image-debian, script]
-
 deps-debian-x64:
   extends: .debian-x64
-  needs: ["image-debian-x64"]
   stage: !reference [deps-debian, stage]
+  image: !reference [deps-debian, image]
   variables:
     GIT_STRATEGY: none
     WORKSHOP_OPTION: '-Dworkshop=true'
@@ -340,6 +322,7 @@ gimp-debian-x64:
   stage: !reference [gimp-debian, stage]
   variables: !reference [gimp-debian, variables]
   script:
+    - *ENVIRON
     # Check building
     - echo -e "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP"
     - meson setup _build-${RUNNER} -Dprefix="${GIMP_PREFIX}"
@@ -441,22 +424,12 @@ gimp-flatpak-x64:
     DEBIAN_FRONTEND: noninteractive
     TERM: dumb
 
-image-debian-x64-cross:
-  extends: .win-cross
-  stage: !reference [image-debian, stage]
-  image: !reference [image-debian, image]
-  variables:
-    GIT_STRATEGY: none
-    UMFPACK: libumfpack6
-  before_script:
-   - !reference [image-debian, before_script]
-  script:
-    - !reference [image-debian, script]
-
 deps-win-x64-cross:
   extends: .win-cross
-  needs: ["image-debian-x64-cross"]
-  stage: dependencies
+  stage: !reference [deps-debian, stage]
+  image: !reference [deps-debian, image]
+  variables:
+    UMFPACK: libumfpack6
   #https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/1461
   #cache:
     #key: ${CI_JOB_NAME_SLUG}
@@ -637,6 +610,7 @@ file-plug-in-tests:
   script:
     - API_VER=$(grep GIMP_PKGCONFIG_VERSION _build*/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
     - APP_VER=$(grep GIMP_APP_VERSION _build*/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
+    - *ENVIRON
     - pkg-config --variable=gimplibdir gimp-${API_VER} 2>/dev/null | grep . && PLUG_IN_DIR=$(echo $(pkg-config --variable=gimplibdir gimp-${API_VER})'/plug-ins/')
     - export PYTHONPATH="${PLUG_IN_DIR}test-file-plug-ins"
     - export GIMP_TESTS_CONFIG_FILE="${PLUG_IN_DIR}test-file-plug-ins/tests/batch-config.ini"
