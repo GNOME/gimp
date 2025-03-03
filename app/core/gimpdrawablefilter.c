@@ -1805,6 +1805,10 @@ gimp_drawable_filter_add_filter (GimpDrawableFilter *filter)
                                G_CALLBACK (gimp_drawable_filter_reorder),
                                filter, 0);
 
+      g_signal_connect_object (G_OBJECT (filter), "active-changed",
+                               G_CALLBACK (gimp_drawable_filters_changed),
+                               filter->drawable, G_CONNECT_SWAPPED);
+
       return TRUE;
     }
 
@@ -1819,6 +1823,10 @@ gimp_drawable_filter_remove_filter (GimpDrawableFilter *filter)
       GimpImage     *image    = gimp_item_get_image (GIMP_ITEM (filter->drawable));
       GimpDrawable  *drawable = filter->drawable;
       GimpContainer *filters;
+
+      g_signal_handlers_disconnect_by_func (G_OBJECT (filter),
+                                            G_CALLBACK (gimp_drawable_filters_changed),
+                                            filter->drawable);
 
       filters = gimp_drawable_get_filters (filter->drawable);
       g_signal_handlers_disconnect_by_func (filters,

@@ -167,6 +167,7 @@ static void       gimp_drawable_real_update        (GimpDrawable      *drawable,
                                                     gint               width,
                                                     gint               height);
 
+static void    gimp_drawable_real_filters_changed  (GimpDrawable      *drawable);
 static gint64  gimp_drawable_real_estimate_memsize (GimpDrawable      *drawable,
                                                     GimpComponentType  component_type,
                                                     gint               width,
@@ -310,7 +311,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   klass->format_changed           = NULL;
   klass->alpha_changed            = NULL;
   klass->bounding_box_changed     = NULL;
-  klass->filters_changed          = NULL;
+  klass->filters_changed          = gimp_drawable_real_filters_changed;
   klass->estimate_memsize         = gimp_drawable_real_estimate_memsize;
   klass->update_all               = gimp_drawable_real_update_all;
   klass->invalidate_boundary      = NULL;
@@ -869,6 +870,12 @@ gimp_drawable_real_update (GimpDrawable *drawable,
                            gint          height)
 {
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (drawable));
+}
+
+static void
+gimp_drawable_real_filters_changed (GimpDrawable *drawable)
+{
+  gimp_drawable_update_bounding_box (drawable);
 }
 
 static gint64
