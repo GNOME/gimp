@@ -41,7 +41,7 @@ fi
 export HOST_ARCH=$(uname -m)
 export APPIMAGE_EXTRACT_AND_RUN=1
 
-if [ "$(ls -dq ${GIMP_DIR}AppDir* 2>/dev/null | wc -l)" != '2' ]; then
+if [ ! "$(find $GIMP_DIR -maxdepth 1 -iname "AppDir*")" ] || [ "$MODE" = '--bundle-only' ]; then
   ## For now, we always use the latest go-appimagetool for bundling. See: https://github.com/probonopd/go-appimage/issues/275
   if [ "$GITLAB_CI" ]; then
     apt-get install -y --no-install-recommends file patchelf >/dev/null 2>&1
@@ -78,7 +78,7 @@ if [ "$MODE" != '--bundle-only' ]; then
   fi
   standard_appimagetool_text="appimagetool commit: $standard_appimagetool_version | type2-runtime commit: ${static_runtime_version_downloaded#*commit/}"
 fi
-if [ "$(ls -dq ${GIMP_DIR}AppDir* 2>/dev/null | wc -l)" != '2' ] && [ "$MODE" != '--bundle-only' ]; then
+if [ ! "$(find $GIMP_DIR -maxdepth 1 -iname "AppDir*")" ] && [ "$MODE" != '--bundle-only' ]; then
   separator=' | '
 fi
 cd $GIMP_DIR
@@ -118,8 +118,8 @@ echo "(INFO): App ID: $APP_ID | Version: $CUSTOM_GIMP_VERSION"
 echo -e "\e[0Ksection_end:`date +%s`:apmg_info\r\e[0K"
 
 
-# 3. GIMP FILES
-if [ "$(ls -dq ./AppDir* 2>/dev/null | wc -l)" != '2' ]; then
+# 3. GIMP FILES (IN APPDIR)
+if [ ! "$(find . -maxdepth 1 -iname "AppDir*")" ] || [ "$MODE" = '--bundle-only' ]; then
 echo -e "\e[0Ksection_start:`date +%s`:apmg_files[collapsed=true]\r\e[0KPreparing GIMP files in AppDir-$HOST_ARCH/usr"
 grep -q 'relocatable-bundle=yes' $BUILD_DIR/meson-logs/meson-log.txt && export RELOCATABLE_BUNDLE_ON=1
 if [ -z "$RELOCATABLE_BUNDLE_ON" ]; then
