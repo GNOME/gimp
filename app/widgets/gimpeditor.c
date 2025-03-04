@@ -816,8 +816,9 @@ gimp_editor_set_name (GimpEditor  *editor,
 {
   g_return_if_fail (GIMP_IS_EDITOR (editor));
 
-  gtk_label_set_text (GTK_LABEL (editor->priv->name_label),
-                      name ? name : _("(None)"));
+  if (editor->priv->name_label && GTK_IS_LABEL (editor->priv->name_label))
+    gtk_label_set_text (GTK_LABEL (editor->priv->name_label),
+                        name ? name : _("(None)"));
 }
 
 void
