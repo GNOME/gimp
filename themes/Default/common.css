@@ -301,6 +301,16 @@ scale contents trough
   border-color: @strong-border-color;
   background-color: @ruler-color;
 }
+scale contents trough highlight
+{
+  background-color: @scrollbar-slider-color;
+  border-color:     @scrollbar-slider-color;
+}
+scale contents trough highlight:disabled
+{
+  background-color: transparent;
+  border-color:     transparent;
+}
 
 scrollbar {
   background-color: @bg-color;
