@@ -309,14 +309,34 @@ file_actions_update (GimpActionGroup *group,
 
   if (export)
     {
-      gchar *label = file_actions_create_label (_("Export to %s"), export);
+      GimpAction *action;
+      gchar      *label = file_actions_create_label (_("Export to %s"),
+                                                     export);
+
       gimp_action_group_set_action_label (group, "file-export", label);
+
+      action = gimp_action_group_get_action (group, "file-export");
+      g_object_set (action,
+                    "ellipsize",       PANGO_ELLIPSIZE_MIDDLE,
+                    "max-width-chars", 40,
+                    NULL);
+
       g_free (label);
     }
   else if (show_overwrite)
     {
-      gchar *label = file_actions_create_label (_("Over_write %s"), source);
+      GimpAction *action;
+      gchar      *label = file_actions_create_label (_("Over_write %s"),
+                                                     source);
+
       gimp_action_group_set_action_label (group, "file-overwrite", label);
+
+      action = gimp_action_group_get_action (group, "file-overwrite");
+      g_object_set (action,
+                    "ellipsize",       PANGO_ELLIPSIZE_MIDDLE,
+                    "max-width-chars", 40,
+                    NULL);
+
       g_free (label);
     }
   else
@@ -381,11 +401,13 @@ file_actions_last_opened_update (GimpContainer   *container,
               label   = g_strdup_printf (_("Open \"%s\""), escaped);
 
               g_object_set (action,
-                            "label",       label,
-                            "short-label", escaped,
-                            "tooltip",     name,
-                            "visible",     TRUE,
-                            "viewable",    imagefile,
+                            "label",           label,
+                            "short-label",     escaped,
+                            "tooltip",         name,
+                            "visible",         TRUE,
+                            "viewable",        imagefile,
+                            "ellipsize",       PANGO_ELLIPSIZE_MIDDLE,
+                            "max-width-chars", 40,
                             NULL);
 
               g_free (label);
@@ -395,10 +417,12 @@ file_actions_last_opened_update (GimpContainer   *container,
       else
         {
           g_object_set (action,
-                        "label",    name,
-                        "tooltip",  NULL,
-                        "visible",  FALSE,
-                        "viewable", NULL,
+                        "label",           name,
+                        "tooltip",         NULL,
+                        "visible",         FALSE,
+                        "viewable",        NULL,
+                        "ellipsize",       PANGO_ELLIPSIZE_MIDDLE,
+                        "max-width-chars", 40,
                         NULL);
         }
 

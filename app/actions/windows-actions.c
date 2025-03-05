@@ -451,6 +451,11 @@ windows_actions_update_display_accels (GimpActionGroup *group)
           gchar       *tooltip;
           gchar       *accel;
 
+          g_object_set (action,
+                        "ellipsize",       PANGO_ELLIPSIZE_MIDDLE,
+                        "max-width-chars", 40,
+                        NULL);
+
           if (i < 9)
             accel = gtk_accelerator_name (GDK_KEY_1 + i, GDK_MOD1_MASK);
           else
