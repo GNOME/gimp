@@ -220,6 +220,7 @@ deps-debian:
         echo "ENV CXX=\"$CXX\"" >> Dockerfile2;
         echo "ENV CC_LD=\"$CC_LD\"" >> Dockerfile2;
         echo "ENV CXX_LD=\"$CXX_LD\"" >> Dockerfile2;
+        echo "ENV CLICOLOR_FORCE=\"1\"" >> Dockerfile2;
         echo "RUN echo -e \"\e[0Ksection_end:`date +%s`:environ\r\e[0K\"" >> Dockerfile2;
         echo "RUN echo -e \"\e[0Ksection_start:`date +%s`:babl_build[collapsed=true]\r\e[0KBuilding babl\"" >> Dockerfile2;
         babl_branch=$([ "$CI_COMMIT_TAG" ] && echo "$(git ls-remote --tags --exit-code --refs "https://gitlab.gnome.org/GNOME/babl.git" | grep -oi "BABL_[0-9]*_[0-9]*_[0-9]*" | sort --version-sort | tail -1)" || echo "master");
