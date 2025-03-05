@@ -178,6 +178,10 @@ notebook header button {
   box-shadow: none;
 }
 
+notebook header tabs {
+  background-color: transparent;
+}
+
 /* Use this to make a border or padding around each tab */
 notebook header tabs tab {
   background-color: @bg-color;
@@ -199,6 +203,10 @@ notebook header tabs tab:checked {
 
 notebook header tabs tab:hover {
   background-color: @hover-color;
+}
+
+notebook header tabs arrow:disabled {
+  background-color: @widget-bg-color;
 }
 
 /* Add margin to image tabs so the close button fits */
@@ -245,10 +253,17 @@ notebook header tabs tab > box > button
   background-color: @hover-color;
 }
 
+toolbutton button {
+  padding: 4px 5px;
+  border:  1px solid transparent;
+}
+toolbutton button:hover {
+  border-color: @strong-border-color;
+}
+
 /* .flat covers the tool buttons and the buttons at the bottom
  * of the Toolbox window.
 */
-
 toolbutton button.flat {
   background-color: @bg-color;
   color: @fg-color;
@@ -489,6 +504,7 @@ GimpSpinScale entry {
 
 GimpSpinScale entry progress {
   background-color: @extreme-bg-color;
+  background-image: none;
   border-width:     0px;
   border-radius:    3px 0px 0px 3px;
   margin:           0px -8px 0px -5px;
