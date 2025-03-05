@@ -17,6 +17,8 @@ if (-not $GITLAB_CI)
       }
 
     $GIT_DEPTH = '1'
+
+    $PARENT_DIR = '\..'
   }
 
 
@@ -55,18 +57,14 @@ Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):d
 
 # Prepare env
 $GIMP_DIR = $PWD
+Set-Location ${GIMP_DIR}${PARENT_DIR}
 
-if (-not $GITLAB_CI)
+if (-not $GIMP_PREFIX)
   {
-    Set-Location ..
-
-    if (-not $GIMP_PREFIX)
-      {
-        $GIMP_PREFIX = "$PWD\_install"
-      }
-
-    Invoke-Expression ((Get-Content $GIMP_DIR\.gitlab-ci.yml | Select-String 'win_environ\[' -Context 0,7) -replace '> ','' -replace '- ','')
+    $GIMP_PREFIX = "$PWD\_install"
   }
+
+Invoke-Expression ((Get-Content $GIMP_DIR\.gitlab-ci.yml | Select-String 'win_environ\[' -Context 0,7) -replace '> ','' -replace '- ','')
 
 
 # Build babl and GEGL
