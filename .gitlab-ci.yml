@@ -109,6 +109,7 @@ stages:
     CXX_LD: lld
   before_script:
     - export GIMP_PREFIX="${CI_PROJECT_DIR}/_install-${RUNNER}"
+  timeout: 20m
 
 .debian_environ: &ENVIRON
 - echo -e "\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KPreparing build environment"
@@ -374,6 +375,7 @@ gimp-debian-x64:
   image: 'quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master'
   before_script:
     - export GIMP_PREFIX="${CI_PROJECT_DIR}/_install"
+  timeout: 40m
 
 deps-flatpak-x64:
   extends: .flatpak-x64
@@ -511,6 +513,7 @@ gimp-win-x64-cross:
     - $env:Path = "$MSYS_ROOT/$MSYSTEM_PREFIX/bin;$MSYS_ROOT/usr/bin;" + $env:Path
     # FIXME:'gimpenv' have buggy code about Windows paths. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/12284
     - $GIMP_PREFIX = "$PWD\_install-$MSYSTEM_PREFIX".Replace('\', '/')
+  timeout: 60m
 
 .win_environ: &WIN_ENVIRON
 - Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):win_environ[collapsed=true]$([char]13)$([char]27)[0KPreparing build environment"
