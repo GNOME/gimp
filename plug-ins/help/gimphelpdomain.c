@@ -145,26 +145,24 @@ gimp_help_domain_map (GimpHelpDomain    *domain,
   if (fatal_error)
     *fatal_error = FALSE;
 
-  /*  first pass: look for a reference matching the help_id  */
+  /*  Look for a reference matching the help_id  */
   for (list = help_locales; list && !ref; list = list->next)
     {
       locale = gimp_help_domain_lookup_locale (domain,
                                                (const gchar *) list->data,
                                                progress);
-      if (locale != NULL)
-        ref = gimp_help_locale_map (locale, help_id);
+      if (locale)
+        {
+          ref = gimp_help_locale_map (locale, help_id);
+          /* It doesn't make sense to keep looking since all available locales
+           * have the same pages available. If the first locale present
+           * doesn't have it, the others won't have it either. */
+          if (! ref)
+            ref = locale->help_missing;
+        }
     }
 
-  /*  second pass: look for a fallback                 */
-  for (list = help_locales; list && !ref; list = list->next)
-    {
-      locale = gimp_help_domain_lookup_locale (domain,
-                                               (const gchar *) list->data,
-                                               progress);
-      ref = locale->help_missing;
-    }
-
-  if (ret_locale)
+  if (ret_locale && locale)
     *ret_locale = locale;
 
   if (ref)
@@ -186,7 +184,7 @@ gimp_help_domain_map (GimpHelpDomain    *domain,
       locale = gimp_help_domain_lookup_locale (domain,
                                                GIMP_HELP_DEFAULT_LOCALE, NULL);
 
-      if (! domain_locale_parse (domain, locale, NULL, &error))
+      if (locale && ! domain_locale_parse (domain, locale, NULL, &error))
         {
           switch (error->code)
             {
