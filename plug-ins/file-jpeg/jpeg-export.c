@@ -842,6 +842,7 @@ save_dialog (GimpProcedure       *procedure,
 {
   GtkWidget        *dialog;
   GtkWidget        *widget;
+  GtkWidget        *box;
   GtkWidget        *profile_label;
   GimpColorProfile *cmyk_profile = NULL;
   gint              orig_quality;
@@ -856,6 +857,10 @@ save_dialog (GimpProcedure       *procedure,
   dialog = gimp_export_procedure_dialog_new (GIMP_EXPORT_PROCEDURE (procedure),
                                              GIMP_PROCEDURE_CONFIG (config),
                                              gimp_item_get_image (GIMP_ITEM (drawable)));
+
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                   "option-title", _("Options"),
+                                   FALSE, FALSE);
 
   /* custom quantization tables - now used also for original quality */
   gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
@@ -966,11 +971,24 @@ save_dialog (GimpProcedure       *procedure,
                         NULL);
     }
 
+  /* Put options in two column form so the dialog fits on
+   * smaller screens. */
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "options",
+                                  "quality",
+                                  "use-original-quality",
+                                  "preview-size",
+                                  "show-preview",
+                                  "progressive",
+                                  "cmyk-frame",
+                                  NULL);
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "option-frame", "option-title", FALSE,
+                                    "options");
+
   gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                   "advanced-options",
                                   "smoothing",
-                                  "progressive",
-                                  "cmyk-frame",
 #ifdef C_ARITH_CODING_SUPPORTED
                                   "arithmetic-frame",
 #else
@@ -984,13 +1002,15 @@ save_dialog (GimpProcedure       *procedure,
                                     "advanced-frame", "advanced-title", FALSE,
                                     "advanced-options");
 
-  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
-                              "quality", "use-original-quality",
-                              "preview-size", "show-preview",
-                              "advanced-frame",
-                              NULL);
+  box = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                        "jpeg-hbox", "option-frame",
+                                        "advanced-frame", NULL);
+  gtk_box_set_spacing (GTK_BOX (box), 12);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (box),
+                                  GTK_ORIENTATION_HORIZONTAL);
 
-  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "jpeg-hbox", NULL);
 
   /* Run make_preview() when various config are changed. */
   g_signal_connect (config, "notify",
