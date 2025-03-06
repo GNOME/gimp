@@ -45,6 +45,7 @@
 typedef struct
 {
   gboolean          *success;
+  gboolean          *done;
 
   GimpHelpLocale    *locale;
   const gchar       *uri;
@@ -242,20 +243,19 @@ gimp_help_domain_map (GimpHelpDomain    *domain,
 
 /*  private functions  */
 
-G_LOCK_DEFINE (success);
+G_LOCK_DEFINE (done);
 
 static gboolean
 parse_thread_func (HelpThreadData *data)
 {
-  gboolean success = FALSE;
 
-  success = gimp_help_locale_parse (data->locale, data->uri, data->domain,
-                                    data->progress, data->cancellable, data->error);
-  G_LOCK (success);
-  *data->success = success;
-  G_UNLOCK (success);
+  *data->success = gimp_help_locale_parse (data->locale, data->uri, data->domain,
+                                           data->progress, data->cancellable, data->error);
+  G_LOCK (done);
+  *data->done = TRUE;
+  G_UNLOCK (done);
 
-  return success;
+  return *data->success;
 }
 
 static gboolean
@@ -269,6 +269,7 @@ domain_locale_parse (GimpHelpDomain    *domain,
   GThread        *thread;
   GTimer         *timer;
   gboolean        success = FALSE;
+  gboolean        done    = FALSE;
   HelpThreadData  data;
 
   g_return_val_if_fail (domain != NULL, FALSE);
@@ -280,6 +281,7 @@ domain_locale_parse (GimpHelpDomain    *domain,
 
   timer            = g_timer_new ();
   cancellable      = g_cancellable_new ();
+  data.done        = &done;
   data.success     = &success;
   data.locale      = locale;
   data.uri         = uri;
@@ -293,9 +295,9 @@ domain_locale_parse (GimpHelpDomain    *domain,
     {
       gboolean exit;
 
-      G_LOCK (success);
-      exit = success;
-      G_UNLOCK (success);
+      G_LOCK (done);
+      exit = *data.done;
+      G_UNLOCK (done);
 
       if (! exit && g_timer_elapsed (timer, NULL) > 10.0)
         {
