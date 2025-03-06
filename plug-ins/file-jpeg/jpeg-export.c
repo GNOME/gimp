@@ -858,6 +858,10 @@ save_dialog (GimpProcedure       *procedure,
                                              GIMP_PROCEDURE_CONFIG (config),
                                              gimp_item_get_image (GIMP_ITEM (drawable)));
 
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                   "option-title", _("Options"),
+                                   FALSE, FALSE);
+
   /* custom quantization tables - now used also for original quality */
   gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
                                        "use-original-quality",
@@ -967,50 +971,46 @@ save_dialog (GimpProcedure       *procedure,
                         NULL);
     }
 
+  /* Put options in two column form so the dialog fits on
+   * smaller screens. */
   gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
-                                  "advanced-options-1",
+                                  "options",
+                                  "quality",
+                                  "use-original-quality",
+                                  "preview-size",
+                                  "show-preview",
                                   "progressive",
                                   "cmyk-frame",
+                                  NULL);
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "option-frame", "option-title", FALSE,
+                                    "options");
+
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "advanced-options",
+                                  "smoothing",
 #ifdef C_ARITH_CODING_SUPPORTED
                                   "arithmetic-frame",
 #else
                                   "optimize",
 #endif
-                                  NULL);
-
-  /* Put options in two column form so the dialog fits on
-   * smaller screens. */
-  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
-                                  "advanced-options-2",
                                   "restart-frame",
                                   "sub-sampling",
                                   "dct",
                                   NULL);
-
-  box = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
-                                        "advanced-options-horizontal",
-                                        "advanced-options-1",
-                                        "advanced-options-2",
-                                        NULL);
-  gtk_orientable_set_orientation (GTK_ORIENTABLE (box),
-                                  GTK_ORIENTATION_HORIZONTAL);
-  gtk_box_set_spacing (GTK_BOX (box), 12);
-
-  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
-                                        "advanced-options",
-                                        "smoothing",
-                                        "advanced-options-horizontal",
-                                        NULL);
-
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
                                     "advanced-frame", "advanced-title", FALSE,
                                     "advanced-options");
 
+  box = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                        "jpeg-hbox", "option-frame",
+                                        "advanced-frame", NULL);
+  gtk_box_set_spacing (GTK_BOX (box), 12);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (box),
+                                  GTK_ORIENTATION_HORIZONTAL);
+
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
-                              "quality", "use-original-quality",
-                              "preview-size", "show-preview",
-                              "advanced-frame",
-                              NULL);
+                              "jpeg-hbox", NULL);
 
   /* Run make_preview() when various config are changed. */
   g_signal_connect (config, "notify",
