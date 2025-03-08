@@ -798,6 +798,7 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
       gchar                *style            = NULL;
       gchar                *psname           = NULL;
       gchar                *newname          = NULL;
+      gchar                *display_name     = NULL;
       gchar                *escaped_fullname = NULL;
       gchar                *fullname         = NULL;
       gchar                *escaped_file     = NULL;
@@ -951,6 +952,7 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
 
       if (style != NULL && g_utf8_validate (style, -1, NULL))
         {
+          display_name = g_strdup_printf ("%s %s", (gchar *)font_info[PROP_FAMILY], style);
           style = g_markup_escape_text (style, -1);
           g_string_append_printf (xml,
                                   "<edit name=\"style\" mode=\"assign\" binding=\"strong\"><string>%s</string></edit>",
@@ -1036,7 +1038,15 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
 
       pfd = pango_font_description_from_string (newname);
 
-      gimp_font_factory_add_font (container, context, pfd, fullname, (const gchar *) file, font_info);
+      if (display_name != NULL)
+        {
+          gimp_font_factory_add_font (container, context, pfd, display_name, (const gchar *) file, font_info);
+          g_free (display_name);
+        }
+      else
+        {
+          gimp_font_factory_add_font (container, context, pfd, fullname, (const gchar *) file, font_info);
+        }
 
       g_string_append (global_xml, xml->str);
       g_string_append (global_xml, xml_bold_variant->str);
