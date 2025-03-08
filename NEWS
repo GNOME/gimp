@@ -20,6 +20,13 @@ Core:
     a release build or not. Now we always exit GIMP the clean way.
   - Core GEGL operations with a "gimp:menu-path" will now have a
     generated help ID, constructed from the operation's name.
+  - Render-after-filters is used when selecting by color.
+  - When drag'n dropping items containing groups and descendant, just
+    drop the group with all descendants.
+
+Graphical User Interface:
+
+  - Long file names are now ellipsized in the File and Windows submenus.
 
 Plug-ins:
 
@@ -34,6 +41,11 @@ Plug-ins:
       languages.
   - Help: gimp-help.xml remote file is loaded in a thread to make it
     cancellable in case it gets stuck.
+  - JPEG:
+    * When using jpeg-turbo >= 3.0.0, loading 12 and 16bpc JPEG is
+      now supported.
+    * Some options in the export dialog are now displayed in a second
+      column to avoid overlong dialog.
 
 API:
 
@@ -48,6 +60,8 @@ Build:
   - More robust InnoSetup scripts grabbing data directly from meson.
   - New -Ddebug-self-in-build meson option for debugging the in-build
     GIMP runs with gdb.
+  - Debian package images are now created in the dependency job building
+    babl and GEGL.
 
 
 Overview of Changes from GIMP 3.0.0-RC2 to GIMP 3.0.0-RC3
