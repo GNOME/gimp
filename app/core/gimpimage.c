@@ -4947,7 +4947,10 @@ gimp_image_set_selected_layers (GimpImage *image,
 
   /*  Make sure the floating_sel always is the active layer  */
   if (floating_sel && (g_list_length (layers2) != 1 || layers2->data != floating_sel))
-    return;
+    {
+      g_list_free (layers2);
+      return;
+    }
 
   selected_layers = gimp_image_get_selected_layers (image);
 
@@ -4966,21 +4969,26 @@ gimp_image_set_selected_layers (GimpImage *image,
 
   if (selection_changed)
     {
+      GList *layers3;
+
       /*  Don't cache selection info for the previous active layer  */
       if (selected_layers)
         gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (selected_layers->data));
 
+      layers3 = g_list_copy (layers2);
       gimp_item_tree_set_selected_items (private->layers, layers2);
 
       /* We cannot edit masks with multiple selected layers. */
-      if (g_list_length (layers2) > 1)
+      if (g_list_length (layers3) > 1)
         {
-          for (iter = layers2; iter; iter = iter->next)
+          for (iter = layers3; iter; iter = iter->next)
             {
               if (gimp_layer_get_mask (iter->data))
                 gimp_layer_set_edit_mask (iter->data, FALSE);
             }
         }
+
+      g_list_free (layers3);
     }
   else
     {
