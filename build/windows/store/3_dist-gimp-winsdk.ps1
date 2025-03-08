@@ -98,7 +98,7 @@ if ($GIMP_UNSTABLE -or $GIMP_RC_VERSION)
   }
 else
   {
-    $IDENTITY_NAME="GIMP.GIMP"
+    $IDENTITY_NAME="GIMP.43237F745459"
   }
 
 ## Get custom GIMP version (major.minor.micro+revision.0), a compliant way to publish to Partner Center:
