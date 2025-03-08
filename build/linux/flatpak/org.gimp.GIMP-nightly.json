@@ -145,8 +145,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/Exiv2/exiv2/archive/refs/tags/v0.28.3.tar.gz",
-                            "sha256": "1315e17d454bf4da3cc0edb857b1d2c143670f3485b537d0f946d9ed31d87b70",
+                            "url": "https://github.com/Exiv2/exiv2/archive/refs/tags/v0.28.5.tar.gz",
+                            "sha256": "e1671f744e379a87ba0c984617406fdf8c0ad0c594e5122f525b2fb7c28d394d",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 769,
@@ -251,8 +251,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-24.12.0.tar.xz",
-                    "sha256": "1cf374c3146f3f685d9257701bf0c2866c61d6c202c14d1f5c01a1f3a089028a",
+                    "url": "https://poppler.freedesktop.org/poppler-25.03.0.tar.xz",
+                    "sha256": "97da4ff88517a6bbd729529f195f85c8d7a0c3bb4a3d57cb0c685cbb052fe837",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 3686,
@@ -463,12 +463,12 @@
                                 "project-id": 1385,
                                 "stable-only": true,
                                 "url-template": "https://launchpad.net/intltool/trunk/$version/+download/intltool-$version.tar.gz"
-                            }
+                }
                         }
                     ],
                     "cleanup": [
                         "*"
-                    ]
+            ]
                 }
             ]
         },
@@ -496,8 +496,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/strukturag/libheif/releases/download/v1.18.2/libheif-1.18.2.tar.gz",
-                    "sha256": "c4002a622bec9f519f29d84bfdc6024e33fd67953a5fb4dc2c2f11f67d5e45bf",
+                    "url": "https://github.com/strukturag/libheif/releases/download/v1.19.7/libheif-1.19.7.tar.gz",
+                    "sha256": "161c042d2102665fcee3ded851c78a0eb5f2d4bfe39fba48ba6e588fd6e964f3",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 64439,
@@ -779,8 +779,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v7.8.3.tar.gz",
-                    "sha256": "ce39b28d4038a09c14f21e02c664401be73c0cb96a9198418d6a98a7db73a259",
+                    "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v7.9.0.tar.gz",
+                    "sha256": "bc0b3987a502913959581614ab67098f9f203a45bb424870f2342375f96dbcb7",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 4908,
@@ -812,8 +812,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.28.tar.gz",
-                            "sha256": "f1003466ad074e9b0c8d421a204121100b0751c96fc6fcf3d1456bd12f8a00a1",
+                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.29.tar.gz",
+                            "sha256": "38240eee1b29e2bde47ebb5d61160207dc68668a54cac62c076bb5032013b1eb",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 2540,
@@ -822,15 +822,17 @@
                             }
                         }
                     ],
-                    "no-autogen": true,
-                    "make-args": [
-                        "DYNAMIC_ARCH=1",
-                        "USE_OPENMP=1",
-                        "NO_CBLAS=1",
-                        "NO_LAPACKE=1"
-                    ],
-                    "make-install-args": [
-                        "PREFIX=/app"
+                    "buildsystem": "cmake-ninja",
+                    "config-opts": [
+                        "-DCMAKE_C_COMPILER_LAUNCHER=ccache",
+                        "-DCMAKE_C_COMPILER=cc",
+                        "-DCMAKE_Fortran_COMPILER_LAUNCHER=ccache",
+                        "-DCMAKE_Fortran_COMPILER=gfortran",
+                        "-DBUILD_SHARED_LIBS=ON",
+                        "-DDYNAMIC_ARCH=ON",
+                        "-DUSE_OPENMP=ON",
+                        "-DBUILD_WITHOUT_CBLAS=ON",
+                        "-DNO_LAPACKE=1"
                     ],
                     "cleanup": [
                         "/include",
