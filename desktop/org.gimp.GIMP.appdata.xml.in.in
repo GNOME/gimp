@@ -74,6 +74,56 @@
   </provides>
 
   <releases>
+    <release version="3.0.0" date="TODO">
+      <description>
+        <p>
+        Our initial release for the next generation in image manipulation!
+        While GIMP 3.0 has too many improvements to make an exhaustive list, here are
+        some of the highlights:
+        </p>
+        <ul>
+          <li demo="layer-list">Multi-selection of layers in the Layers dockable</li>
+          <li>Proper high pixel density display support</li>
+          <li>Improved graphics tablets support</li>
+          <li>Wayland support</li>
+          <li>New soft-proofing toggle in the status bar, with pop-over settings on right click</li>
+
+          <li demo="layer-list,
+                    layer-list:item-effect-header-icon">
+          Initial UI for non-destructive layer effects
+          </li>
+          <li demo="toolbox:paintbrush,
+                    tool-options:expand-use">
+          Paint tools now have an "Expand Layers" option and sub-options to auto-expand layers when painting over their boundaries
+          </li>
+          <li demo="toolbox:align,
+                    tool-options">
+          Align and Distribute tool: completely reworked usage
+          </li>
+          <li demo="toolbox:text,
+                    tool-options:outline=2,
+                    tool-options:text-outline-settings">
+          Text tool: new "Outlined" and "Outlined and filled" options
+          </li>
+          <li demo="toolbox:bucket-fill,
+                    tool-options:fill-area=2,
+                    tool-options:line-art-stroke-border=1">
+          New "Stroke borders" option in Bucket Fill tool's "Fill by line art detection"
+          </li>
+          <li demo="toolbox:bucket-fill,
+                    tool-options:fill-area=2,
+                    tool-options:line-art-settings">
+          Redesigned and reorganized "Fill by line art detection" settings
+          </li>
+
+          <li>Deeply reworked API for plug-in developers</li>
+          <li>Plug-in API now available in C/C++, Python 3, Javascript, Lua, Vala and more</li>
+
+          <li>Improved support of many image formats</li>
+        </ul>
+      </description>
+    </release>
+
     <release version="3.0.0~rc3" date="2025-02-09" type="development">
       <description>
         <p>
