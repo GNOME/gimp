@@ -879,9 +879,9 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
       xml = g_string_new ("<match>");
 
       /*We can't use faux bold (sometimes real bold) unless it is specified in fontconfig*/
-      xml_bold_variant   = g_string_new ("<?xml version=\"1.0\"?>\n<match>");
-      xml_italic_variant = g_string_new ("<?xml version=\"1.0\"?>\n<match>");
-      xml_bold_italic_variant = g_string_new ("<?xml version=\"1.0\"?>\n<match>");
+      xml_bold_variant   = g_string_new ("<match>");
+      xml_italic_variant = g_string_new ("<match>");
+      xml_bold_italic_variant = g_string_new ("<match>");
 
       g_string_append_printf (xml,
                               "<test name=\"family\"><string>%s</string></test>",
@@ -1048,10 +1048,10 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
           gimp_font_factory_add_font (container, context, pfd, fullname, (const gchar *) file, font_info);
         }
 
-      g_string_append (global_xml, xml->str);
-      g_string_append (global_xml, xml_bold_variant->str);
-      g_string_append (global_xml, xml_italic_variant->str);
       g_string_append (global_xml, xml_bold_italic_variant->str);
+      g_string_append (global_xml, xml_italic_variant->str);
+      g_string_append (global_xml, xml_bold_variant->str);
+      g_string_append (global_xml, xml->str);
 
       pango_font_description_free (pattern_pfd);
       g_free (pattern_pfd_desc);
