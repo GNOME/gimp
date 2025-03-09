@@ -1,16 +1,14 @@
                    ------------------------------
                    GNU Image Manipulation Program
-                       3.0 Release Candidate
+                         3.0 Stable Branch
                    ------------------------------
 
-This is a release candidate for upcoming version 3.0.0 of GIMP.
-This is not considered stable yet, unless testing tell us it is.
-Therefore save your work early and often. If you want a stable
-version, please use GIMP 2.10 instead.
+This is a stable release in the GIMP 3.0 series.
 
-If you think you found a bug in this version, please report it! We are
-at the verge of releasing the next major version of GIMP, so any report
-helps.
+If you think you found a bug in this version, please make sure that it
+hasn't been reported earlier and that it is not just new stuff that is
+still being worked on and obviously not quite finished yet. If neither
+of these, please report it!
 
 If you want to hack on GIMP, please read the file devel-docs/README.md.
 For detailed installation instructions, see the file INSTALL.
@@ -24,7 +22,7 @@ GIMP's home page is at:
 	https://www.gimp.org/
 
 Please be sure to visit this site for information, documentation,
-tutorials, news, etc.  All things GIMP-ish are available from there.
+tutorials, news, etc. All things GIMP-ish are available from there.
 
 The latest version of GIMP can be found at:
 
