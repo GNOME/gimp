@@ -1307,9 +1307,29 @@ save_clipping_path (GOutputStream  *output,
     g_string_append_len (data, "\x00", 1);
   g_string_append_c (data, len + 6 + 1);
 
-  g_string_append_c (data, (gchar) MIN (len, 255));
-  g_string_append_len (data, tmpname, MIN (len, 255));
-  g_free (tmpname);
+  if (tmpname && err == NULL)
+    {
+      g_string_append_c (data, (gchar) MIN (len, 255));
+      g_string_append_len (data, tmpname, MIN (len, 255));
+      g_free (tmpname);
+    }
+  else
+    {
+      gchar *nameend;
+      /* conversion failed, we fall back to UTF-8 */
+      len = g_utf8_strlen (path_name, 255 - 3);  /* need three marker-bytes */
+
+      nameend = g_utf8_offset_to_pointer (path_name, len);
+      len = nameend - path_name; /* in bytes */
+      g_assert (len + 3 <= 255);
+
+      g_string_append_c (data, len + 3);
+      g_string_append_len (data, "\xEF\xBB\xBF", 3); /* Unicode 0xfeff */
+      g_string_append_len (data, path_name, len);
+
+      if (tmpname)
+        g_free (tmpname);
+    }
 
   if (data->len % 2)  /* padding to even size */
     g_string_append_c (data, 0);
