@@ -374,8 +374,6 @@ gimp_dispose (GObject *object)
   g_clear_object (&gimp->edit_config);
   g_clear_object (&gimp->config);
 
-  gimp_contexts_exit (gimp);
-
   g_clear_object (&gimp->image_new_last_template);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -912,6 +910,8 @@ gimp_exit (Gimp     *gimp,
 
   if (handled)
     return;
+
+  gimp_contexts_exit (gimp);
 
   g_idle_add_full (G_PRIORITY_LOW,
                    (GSourceFunc) gimp_exit_idle_cleanup_stray_images,
