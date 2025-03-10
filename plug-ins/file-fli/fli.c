@@ -1529,7 +1529,7 @@ fli_read_lc_2 (FILE          *f,
               xc += len << 1;
             }
         }
-      if (lpf)
+      if (lpf && xc < n)
         pos[xc] = lpn;
       yc++;
     }
