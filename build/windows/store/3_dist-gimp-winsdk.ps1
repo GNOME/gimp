@@ -214,11 +214,11 @@ foreach ($bundle in $supported_archs)
         ### Set Display Name (the name shown in MS Store)
         if (-not $GIMP_RELEASE -and $GIMP_UNSTABLE -or $GIMP_IS_RC_GIT)
           {
-            $IDENTITY_NAME="GIMP (Insider)"
+            $display_name='GIMP (Insider)'
           }
         elseif ($GIMP_RELEASE -and $GIMP_UNSTABLE -or $GIMP_RC_VERSION)
           {
-            $IDENTITY_NAME="GIMP (Preview)"
+            $display_name='GIMP (Preview)'
           }
         else
           {
