@@ -31,8 +31,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-01-31 03:49+0000\n"
-"PO-Revision-Date: 2025-02-01 11:46+0200\n"
+"POT-Creation-Date: 2025-02-26 20:30+0000\n"
+"PO-Revision-Date: 2025-02-27 11:00+0100\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -3953,7 +3953,7 @@ msgstr "Pixels naar het klembord gekopieerd."
 #: app/actions/edit-commands.c:444 app/actions/edit-commands.c:734
 #: app/tools/gimpseamlessclonetool.c:303
 msgid "There is no image data in the clipboard to paste."
-msgstr "Er zijn geen afbeeldingsgegevens in het klembord om te plakken."
+msgstr "Er staan in het klembord geen afbeeldingsgegevens om te plakken."
 
 #: app/actions/edit-commands.c:460
 msgid "Cut Named"
@@ -5036,30 +5036,30 @@ msgstr "Het dialoogvenster van de laatst gebruikte plug-in opnieuw tonen"
 #. * which we append "..." as the standardized labelling to indicate
 #. * that this action raises a dialog.
 #.
-#: app/actions/filters-actions.c:848
+#: app/actions/filters-actions.c:854
 #, c-format
 msgid "%s..."
 msgstr "%s..."
 
-#: app/actions/filters-actions.c:1179
+#: app/actions/filters-actions.c:1186
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "\"%s\" herhalen"
 
-#: app/actions/filters-actions.c:1180
+#: app/actions/filters-actions.c:1187
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "Opni_euw tonen \"%s\""
 
-#: app/actions/filters-actions.c:1218
+#: app/actions/filters-actions.c:1225
 msgid "Repeat Last"
 msgstr "Laatste herhalen"
 
-#: app/actions/filters-actions.c:1220
+#: app/actions/filters-actions.c:1227
 msgid "Re-Show Last"
 msgstr "Laatste opnieuw tonen"
 
-#: app/actions/filters-actions.c:1223 app/actions/filters-actions.c:1225
+#: app/actions/filters-actions.c:1230 app/actions/filters-actions.c:1232
 msgid "No last used filters"
 msgstr "Geen laatst gebruikte filters"
 
@@ -5073,7 +5073,7 @@ msgctxt "fonts-action"
 msgid "Rescan the installed fonts"
 msgstr "Geïnstalleerde lettertypen opnieuw inlezen"
 
-#: app/actions/gimpgeglprocedure.c:305
+#: app/actions/gimpgeglprocedure.c:348
 #, c-format
 msgid "There are no last settings for '%s', showing the filter dialog instead."
 msgstr "Er zijn geen laatste instellingen voor '%s', daarom wordt de filterdialoog getoond."
@@ -12204,12 +12204,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Zwevende selectie verankeren"
 
-#: app/core/core-enums.c:1336 app/core/gimp-edit.c:886
+#: app/core/core-enums.c:1336 app/core/gimp-edit.c:887
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Plakken"
 
-#: app/core/core-enums.c:1337 app/core/gimp-edit.c:1265
+#: app/core/core-enums.c:1337 app/core/gimp-edit.c:1266
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Knippen"
@@ -12618,27 +12618,27 @@ msgid_plural "Cut %d Layers"
 msgstr[0] "Knip laag"
 msgstr[1] "Knip %d lagen"
 
-#: app/core/gimp-edit.c:212
+#: app/core/gimp-edit.c:213
 msgid "Cannot cut because multiple channels are selected."
 msgstr "Kan niet knippen omdat meerdere kanalen zijn geselecteerd."
 
-#: app/core/gimp-edit.c:216
+#: app/core/gimp-edit.c:217
 msgid "Cannot copy because multiple channels are selected."
 msgstr "Kan niet kopiëren omdat meerdere kanalen zijn geselecteerd."
 
-#: app/core/gimp-edit.c:252
+#: app/core/gimp-edit.c:253
 msgid "Cannot cut because the selected region is empty."
 msgstr "Kan niet knippen omdat het geselecteerde gebied leeg is."
 
-#: app/core/gimp-edit.c:255
+#: app/core/gimp-edit.c:256
 msgid "Cannot copy because the selected region is empty."
 msgstr "Kan niet kopiëren omdat het geselecteerde gebied leeg is."
 
-#: app/core/gimp-edit.c:656 app/core/gimpimage-new.c:656
+#: app/core/gimp-edit.c:657 app/core/gimpimage-new.c:656
 msgid "Pasted Layer"
 msgstr "Geplakte laag"
 
-#: app/core/gimp-edit.c:1282
+#: app/core/gimp-edit.c:1283
 msgid "Global Buffer"
 msgstr "Algemene buffer"
 
@@ -12901,7 +12901,7 @@ msgstr "Kan versie %d van abr-formaat niet decoderen."
 msgid "Fatal parse error in brush file: Brush size value corrupt."
 msgstr "Fatale fout met penseelbestand: penseelgrootte ongeldig."
 
-#: app/core/gimpbrush-load.c:724 app/core/gimpbrush-load.c:914
+#: app/core/gimpbrush-load.c:724 app/core/gimpbrush-load.c:915
 #, c-format
 msgid "Fatal parse error in brush file: Brush dimensions out of range."
 msgstr "Fatale fout met penseelbestand: brede penselen buiten bereik."
@@ -12915,18 +12915,18 @@ msgstr "Fatale fout met penseelbestand: brede penselen worden niet ondersteund."
 msgid "Fatal parse error in brush file: File appears truncated: "
 msgstr "Fatale fout met penseelbestand: bestand lijkt te zijn beschadigd: "
 
-#: app/core/gimpbrush-load.c:922
+#: app/core/gimpbrush-load.c:923
 #, c-format
 msgid "Fatal parse error in brush file: Unknown compression method."
 msgstr "Fatale fout met penseelbestand: onbekende compressiemethode."
 
-#: app/core/gimpbrush-load.c:1059
+#: app/core/gimpbrush-load.c:1090
 #, c-format
 msgid ""
 "Fatal parse error in brush file: Unable to decode abr format version %d."
 msgstr "Fatale fout met penseelbestand: kon versie %d van abr-formaat niet decoderen."
 
-#: app/core/gimpbrush-load.c:1209
+#: app/core/gimpbrush-load.c:1240
 #, c-format
 msgid "Fatal parse error in brush file: RLE compressed brush data corrupt."
 msgstr "Fatale fout met penseelbestand: RLE-gecomprimeerde penseelgegevens gecorrumpeerd."
@@ -13821,8 +13821,8 @@ msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Zwevende selectie verwijderen"
 
-#: app/core/gimpimage.c:5352 app/pdb/drawable-filter-cmds.c:674
-#: app/widgets/gimpitemtreeview.c:2868
+#: app/core/gimpimage.c:5352 app/pdb/drawable-filter-cmds.c:681
+#: app/widgets/gimpitemtreeview.c:2879
 msgid "Remove filter"
 msgstr "Filter verwijderen"
 
@@ -14061,7 +14061,7 @@ msgstr "Kan geen onzichtbare laag samenvoegen."
 msgid "Cannot merge down to a layer group."
 msgstr "Kan niet naar een laaggroep samenvoegen."
 
-#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2831
+#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2845
 msgid "The layer to merge down to is locked."
 msgstr "De samen te voegen laag is vergrendeld."
 
@@ -14188,7 +14188,7 @@ msgstr "Kon miniatuurbestand '%s' niet openen: %s"
 #: app/core/gimpitem.c:1883 app/core/gimpitem.c:1950
 #: app/display/gimpdisplayshell-dnd.c:413 app/tools/gimptransformtool.c:704
 #: app/tools/gimpvectortool.c:757 app/tools/gimpvectortool.c:846
-#: app/widgets/gimpitemtreeview.c:2639
+#: app/widgets/gimpitemtreeview.c:2649
 msgid "A selected layer's pixels are locked."
 msgstr "De pixels van een geselecteerde laag zijn vergrendeld."
 
@@ -17921,7 +17921,7 @@ msgstr "Afdrukresolutie voor sjabloon en afbeelding komen niet overeen.\n"
 #: app/tools/gimpoffsettool.c:130 app/tools/gimpoffsettool.c:472
 #: app/tools/gimptransform3dtool.c:342 app/widgets/gimpgrideditor.c:210
 msgid "Offset"
-msgstr "Verschuiven"
+msgstr "Verschuiving"
 
 #: app/dialogs/resize-dialog.c:400 app/tools/gimpoffsettool.c:496
 #: app/tools/gimptransform3dtool.c:270 app/tools/gimptransform3dtool.c:382
@@ -18611,12 +18611,12 @@ msgstr "De afbeelding is geëxporteerd naar '%s'."
 #: app/display/gimpdisplayshell-dnd.c:739
 #: app/display/gimpdisplayshell-dnd.c:798
 msgid "Drop New Layer"
-msgstr "Nieuwe laag weggooien"
+msgstr "Nieuwe laag neerzetten"
 
 # drag and drop
 #: app/display/gimpdisplayshell-dnd.c:329
 msgid "Drop New Path"
-msgstr "Nieuw pad weggooien"
+msgstr "Nieuw pad neerzetten"
 
 #: app/display/gimpdisplayshell-dnd.c:404 app/tools/gimpbucketfilltool.c:610
 #: app/tools/gimpcagetool.c:243 app/tools/gimpgradienttool.c:276
@@ -18627,7 +18627,7 @@ msgstr "Kan de beeldpunten van laaggroepen niet wijzigen."
 
 #: app/display/gimpdisplayshell-dnd.c:423 app/tools/gimpfiltertool.c:333
 #: app/tools/gimppainttool.c:371 app/tools/gimptransformtool.c:713
-#: app/widgets/gimpitemtreeview.c:2632
+#: app/widgets/gimpitemtreeview.c:2642
 msgid "A selected layer is not visible."
 msgstr "Een geselecteerde laag is niet zichtbaar."
 
@@ -18637,25 +18637,25 @@ msgstr "Een geselecteerde laag is niet zichtbaar."
 #: app/widgets/gimpdrawabletreeview.c:381
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
-msgstr "Patroon naar laag weggooien"
+msgstr "Patroon naar laag neerzetten"
 
 #: app/display/gimpdisplayshell-dnd.c:501
 #: app/widgets/gimpdrawabletreeview.c:298
 #: app/widgets/gimpdrawabletreeview.c:401
 msgctxt "undo-type"
 msgid "Drop color to layer"
-msgstr "Kleur naar laag weggooien"
+msgstr "Kleur naar laag neerzetten"
 
 #: app/display/gimpdisplayshell-dnd.c:629 app/widgets/gimpitemtreeview.c:1943
 #: app/widgets/gimplayertreeview.c:811
 msgid "Drop layers"
-msgstr "Lagen weggooien"
+msgstr "Lagen neerzetten"
 
 #: app/display/gimpdisplayshell-dnd.c:772
 #: app/display/gimpdisplayshell-dnd.c:789 app/widgets/gimplayertreeview.c:888
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
-msgstr "Weggegooide buffer"
+msgstr "Neergezette buffer"
 
 #: app/display/gimpdisplayshell-filter-dialog.c:79
 msgid "Color Display Filters"
@@ -19343,7 +19343,7 @@ msgstr "GIMP-uitbreiding"
 #: app/gegl/gimp-babl.c:193 app/gegl/gimp-babl.c:194 app/gegl/gimp-babl.c:195
 #: app/gegl/gimp-babl.c:196 app/gegl/gimp-babl.c:197 app/gegl/gimp-babl.c:198
 #: app/gegl/gimp-babl.c:199 app/gegl/gimp-babl.c:200 app/gegl/gimp-babl.c:201
-#: app/plug-in/gimppluginprocedure.c:1013
+#: app/plug-in/gimppluginprocedure.c:1022
 msgid "RGB"
 msgstr "RGB"
 
@@ -19362,7 +19362,7 @@ msgstr "RGB-alfa"
 #: app/gegl/gimp-babl.c:231 app/gegl/gimp-babl.c:232 app/gegl/gimp-babl.c:233
 #: app/gegl/gimp-babl.c:234 app/gegl/gimp-babl.c:235 app/gegl/gimp-babl.c:236
 #: app/gegl/gimp-babl.c:237 app/gegl/gimp-babl.c:238 app/gegl/gimp-babl.c:239
-#: app/plug-in/gimppluginprocedure.c:1031
+#: app/plug-in/gimppluginprocedure.c:1040
 msgid "Grayscale"
 msgstr "Grijswaarden"
 
@@ -19415,7 +19415,7 @@ msgstr "Alfacomponent"
 msgid "Indexed-alpha"
 msgstr "Geïndexeerd-alfa"
 
-#: app/gegl/gimp-babl.c:352 app/plug-in/gimppluginprocedure.c:1049
+#: app/gegl/gimp-babl.c:352 app/plug-in/gimppluginprocedure.c:1058
 msgid "Indexed"
 msgstr "Geïndexeerd"
 
@@ -19820,7 +19820,7 @@ msgstr "Aftrekken"
 #: app/operations/operations-enums.c:257
 msgctxt "layer-mode"
 msgid "Darken only"
-msgstr "Enkel donkerder maken"
+msgstr "Enkel donkerder"
 
 #: app/operations/operations-enums.c:258
 msgctxt "layer-mode"
@@ -20184,7 +20184,7 @@ msgid "Turn colors into shades of gray"
 msgstr "Kleuren omzetten naar grijstinten"
 
 #: app/operations/gimpoperationdesaturate.c:91
-#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1445
+#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1449
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
 #: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:281
@@ -20229,7 +20229,7 @@ msgstr "Transparante delen vervangen door een kleur"
 msgid "The color"
 msgstr "De kleur"
 
-#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1408
+#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1412
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:109
 #: app/tools/gimptransformoptions.c:262
 msgid "Clipping"
@@ -20765,7 +20765,7 @@ msgstr "Vast"
 msgid "Combine Masks"
 msgstr "Maskers combineren"
 
-#: app/pdb/drawable-cmds.c:655 app/tools/gimpfiltertool.c:1332
+#: app/pdb/drawable-cmds.c:655 app/tools/gimpfiltertool.c:1336
 msgid "Add filter"
 msgstr "Filter toevoegen"
 
@@ -21140,106 +21140,114 @@ msgstr "Transformatie: herschalen"
 msgid "Distance metric"
 msgstr "Afstandsmetriek"
 
-#: app/pdb/gimpprocedure.c:567 app/plug-in/gimppluginprocframe.c:191
+#: app/pdb/gimpprocedure.c:564 app/plug-in/gimppluginprocframe.c:191
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Procedure '%s' gaf geen waarden terug"
 
-#: app/pdb/gimpprocedure.c:854
+#: app/pdb/gimpprocedure.c:851
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr "Procedure '%s' gaf een verkeerd type waarde terug voor de terug te geven waarde '%s' (#%d). Verwacht %s, kreeg %s."
 
-#: app/pdb/gimpprocedure.c:866
+#: app/pdb/gimpprocedure.c:863
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' "
 "(#%d). Expected %s, got %s."
 msgstr "Procedure '%s' is aangeroepen met een verkeerd type van de waarde voor argument '%s' (#%d). Verwacht %s, kreeg %s."
 
-#: app/pdb/gimpprocedure.c:903
+#: app/pdb/gimpprocedure.c:900
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on a layer that doesn't exist any longer."
 msgstr "Procedure '%s' gaf een ongeldig ID terug voor argument '%s'. Meest waarschijnlijk is dat een plug-in probeert te werken op een laag die niet langer meer bestaat."
 
-#: app/pdb/gimpprocedure.c:916
+#: app/pdb/gimpprocedure.c:913
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on a layer that doesn't exist any longer."
 msgstr "Procedure '%s' werd aangeroepen met een ongeldig ID voor argument '%s'. Meest waarschijnlijk is dat een plug-in probeert te werken op een laag die niet langer meer bestaat."
 
-#: app/pdb/gimpprocedure.c:933
+#: app/pdb/gimpprocedure.c:930
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on an image that doesn't exist any longer."
 msgstr "Procedure '%s' gaf een ongeldig ID terug voor argument '%s'. Meest waarschijnlijk is dat een plug-in probeert te werken op een afbeelding die niet langer meer bestaat."
 
-#: app/pdb/gimpprocedure.c:946
+#: app/pdb/gimpprocedure.c:943
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on an image that doesn't exist any longer."
 msgstr "Procedure '%s' werd aangeroepen met een ongeldig ID voor argument '%s'. Meest waarschijnlijk is dat een plug-in probeert te werken op een afbeelding die niet langer meer bestaat."
 
-#: app/pdb/gimpprocedure.c:967
+#: app/pdb/gimpprocedure.c:964
 #, c-format
 msgid ""
 "Procedure '%s' returned `gimp_unit_pixel()` as GimpUnit return value #%d "
 "'%s'. This return value does not allow pixel unit."
 msgstr "Procedure '%s' gaf `gimp_unit_pixel()` terug als terug te geven waarde voor GimpUnit #%d '%s'. Deze terug te geven waarde staat geen eenheid pixel toe."
 
-#: app/pdb/gimpprocedure.c:976
+#: app/pdb/gimpprocedure.c:973
 #, c-format
 msgid ""
 "Procedure '%s' returned `gimp_unit_percent()` as GimpUnit return value #%d "
 "'%s'. This return value does not allow percent unit."
 msgstr "Procedure '%s' gaf `gimp_unit_percent()` terug als terug te geven waarde voor GimpUnit #%d '%s'. Deze terug te geven waarde staat geen eenheid percentage toe."
 
-#: app/pdb/gimpprocedure.c:988
+#: app/pdb/gimpprocedure.c:985
 #, c-format
 msgid ""
 "Procedure '%s' has been called with `gimp_unit_pixel()` for GimpUnit "
 "argument #%d '%s'. This argument does not allow pixel unit."
 msgstr "Procedure '%s' werd aangeroepen met `gimp_unit_pixel()` voor het argument GimpUnit #%d '%s'. Dit argument staat geen eenheid pixel toe."
 
-#: app/pdb/gimpprocedure.c:998
+#: app/pdb/gimpprocedure.c:995
 #, c-format
 msgid ""
 "Procedure '%s' has been called with `gimp_unit_percent()` for GimpUnit "
 "argument #%d '%s'. This argument does not allow percent unit."
 msgstr "Procedure '%s' werd aangeroepen met `gimp_unit_percent()` voor het argument GimpUnit #%d '%s'. Dit argument staat geen eenheid percentage toe."
 
-#: app/pdb/gimpprocedure.c:1018
+#: app/pdb/gimpprocedure.c:1015
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr "Procedure '%s' gaf '%s' terug als terug te geven waarde '%s' (#%d, type %s). Deze waarde ligt buiten het bereik."
 
-#: app/pdb/gimpprocedure.c:1032
+#: app/pdb/gimpprocedure.c:1029
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr "Procedure '%s' werd aangeroepen met de waarde '%s' voor argument '%s' (#%d, type %s). Deze waarde ligt buiten het bereik."
 
-#: app/pdb/gimpprocedure.c:1088
+#: app/pdb/gimpprocedure.c:1085
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Procedure '%s' gaf een ongeldige UTF-8 tekenreeks terug voor argument '%s'."
 
-#: app/pdb/gimpprocedure.c:1098
+#: app/pdb/gimpprocedure.c:1095
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
 "'%s'."
 msgstr "Procedure '%s' werd aangeroepen met een ongeldige UTF-8 tekenreeks voor argument '%s'."
+
+#: app/pdb/image-autocrop-cmds.c:102
+msgid "Autocrop image"
+msgstr "Afbeelding automatisch bijsnijden"
+
+#: app/pdb/image-autocrop-cmds.c:192
+msgid "Autocrop layer"
+msgstr "Laag automatisch bijsnijden"
 
 #: app/pdb/image-cmds.c:2556
 msgid ""
@@ -21305,40 +21313,35 @@ msgstr "Padlijn toevoegen"
 msgid "Extend path stroke"
 msgstr "Padlijn uitbreiden"
 
-#: app/pdb/pdb-cmds.c:1189 app/pdb/pdb-cmds.c:1231
+#: app/pdb/pdb-cmds.c:1185 app/pdb/pdb-cmds.c:1227
 #, c-format
 msgid "Data label '%s' is not a canonical identifier"
 msgstr "Gegevenslabel '%s' is geen bekende naam"
-
-#: app/pdb/plug-in-compat-cmds.c:83
-msgid "Autocrop image"
-msgstr "Afbeelding automatisch bijsnijden"
-
-#: app/pdb/plug-in-compat-cmds.c:146
-msgid "Autocrop layer"
-msgstr "Laag automatisch bijsnijden"
 
 #: app/pdb/resource-cmds.c:467
 #, c-format
 msgid "Resource '%s' is not renamable"
 msgstr "Object '%s' kan niet hernoemd worden"
 
-#: app/pdb/text-layer-cmds.c:98
+#. TODO: write a more explicit error message after
+#. * string freeze.
+#.
+#: app/pdb/text-layer-cmds.c:85 app/pdb/text-layer-cmds.c:111
 #, c-format
 msgid "Failed to create text layer"
 msgstr "Kon geen tekstlaag aanmaken"
 
-#: app/pdb/text-layer-cmds.c:162 app/pdb/text-layer-cmds.c:300
-#: app/pdb/text-layer-cmds.c:365 app/pdb/text-layer-cmds.c:424
-#: app/pdb/text-layer-cmds.c:482 app/pdb/text-layer-cmds.c:540
-#: app/pdb/text-layer-cmds.c:598 app/pdb/text-layer-cmds.c:656
-#: app/pdb/text-layer-cmds.c:714 app/pdb/text-layer-cmds.c:770
-#: app/pdb/text-layer-cmds.c:828 app/pdb/text-layer-cmds.c:886
-#: app/pdb/text-layer-cmds.c:944 app/pdb/text-layer-cmds.c:979
+#: app/pdb/text-layer-cmds.c:176 app/pdb/text-layer-cmds.c:314
+#: app/pdb/text-layer-cmds.c:379 app/pdb/text-layer-cmds.c:438
+#: app/pdb/text-layer-cmds.c:496 app/pdb/text-layer-cmds.c:554
+#: app/pdb/text-layer-cmds.c:612 app/pdb/text-layer-cmds.c:670
+#: app/pdb/text-layer-cmds.c:728 app/pdb/text-layer-cmds.c:784
+#: app/pdb/text-layer-cmds.c:842 app/pdb/text-layer-cmds.c:900
+#: app/pdb/text-layer-cmds.c:958 app/pdb/text-layer-cmds.c:993
 msgid "Set text layer attribute"
 msgstr "Tekstlaagattributen instellen"
 
-#: app/pdb/text-layer-cmds.c:231
+#: app/pdb/text-layer-cmds.c:245
 msgid "Set text layer markup"
 msgstr "Tekstlaag opmaak instellen"
 
@@ -21362,7 +21365,7 @@ msgstr "Verwijzing naar foutieve interpreter in interpreter-bestand %s: %s"
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Foutieve binaire opmaaktekenreeks in interpreter-bestand %s"
 
-#: app/plug-in/gimpplugin.c:238
+#: app/plug-in/gimpplugin.c:262
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -21451,35 +21454,35 @@ msgstr "Plug-ins worden geïnitialiseerd"
 msgid "Starting Extensions"
 msgstr "Uitbreidingen starten"
 
-#: app/plug-in/gimppluginprocedure.c:1017
+#: app/plug-in/gimppluginprocedure.c:1026
 msgid "RGB without alpha"
 msgstr "RGB zonder alfa"
 
-#: app/plug-in/gimppluginprocedure.c:1021
+#: app/plug-in/gimppluginprocedure.c:1030
 msgid "RGB with alpha"
 msgstr "RGB met alfa"
 
-#: app/plug-in/gimppluginprocedure.c:1035
+#: app/plug-in/gimppluginprocedure.c:1044
 msgid "Grayscale without alpha"
 msgstr "Grijswaarden zonder alfa"
 
-#: app/plug-in/gimppluginprocedure.c:1039
+#: app/plug-in/gimppluginprocedure.c:1048
 msgid "Grayscale with alpha"
 msgstr "Grijswaarden met alfa"
 
-#: app/plug-in/gimppluginprocedure.c:1053
+#: app/plug-in/gimppluginprocedure.c:1062
 msgid "Indexed without alpha"
 msgstr "Geïndexeerd zonder alfa"
 
-#: app/plug-in/gimppluginprocedure.c:1057
+#: app/plug-in/gimppluginprocedure.c:1066
 msgid "Indexed with alpha"
 msgstr "Geïndexeerd met alfa"
 
-#: app/plug-in/gimppluginprocedure.c:1068
+#: app/plug-in/gimppluginprocedure.c:1077
 msgid "This plug-in only works on the following layer types:"
 msgstr "Deze plug-in werkt alleen op de volgende laagsoorten:"
 
-#: app/plug-in/gimppluginprocedure.c:1309
+#: app/plug-in/gimppluginprocedure.c:1321
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -21487,7 +21490,7 @@ msgid ""
 msgstr "Aanroepfout voor '%s':\n"
 "%s"
 
-#: app/plug-in/gimppluginprocedure.c:1321
+#: app/plug-in/gimppluginprocedure.c:1333
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -22998,21 +23001,21 @@ msgid "%s: switch horizontal and vertical"
 msgstr "%s: wisselen horizontaal en verticaal"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1421
+#: app/tools/gimpfiltertool.c:1425
 msgid "Blending Options"
 msgstr "Mengopties"
 
-#: app/tools/gimpfiltertool.c:1923 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1931 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importeren '%s'-instellingen"
 
-#: app/tools/gimpfiltertool.c:1925 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1933 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Exporteren '%s'-instellingen"
 
-#: app/tools/gimpfiltertool.c:2163
+#: app/tools/gimpfiltertool.c:2171
 msgid "Editing filter..."
 msgstr "Filter be_werken..."
 
@@ -25175,7 +25178,7 @@ msgstr "Aantal animatieframes"
 #. the stroke frame
 #: app/tools/gimpwarpoptions.c:350
 msgid "Stroke"
-msgstr "Penseelstreek"
+msgstr "Lijn"
 
 #. the animation frame
 #: app/tools/gimpwarpoptions.c:372
@@ -27385,59 +27388,59 @@ msgid_plural "%d items selected"
 msgstr[0] "%d item geselecteerd"
 msgstr[1] "%d items geselecteerd"
 
-#: app/widgets/gimpitemtreeview.c:2701 app/widgets/gimpitemtreeview.c:2756
+#: app/widgets/gimpitemtreeview.c:2711 app/widgets/gimpitemtreeview.c:2766
 msgid "Cannot reorder a filter that is being edited."
 msgstr "Kan een filter die bewerkt wordt niet herschikken."
 
-#: app/widgets/gimpitemtreeview.c:2719 app/widgets/gimpitemtreeview.c:2774
+#: app/widgets/gimpitemtreeview.c:2729 app/widgets/gimpitemtreeview.c:2789
 msgid "Reorder filter"
 msgstr "Filter opnieuw sorteren"
 
-#: app/widgets/gimpitemtreeview.c:3394
+#: app/widgets/gimpitemtreeview.c:3405
 msgid "No layer set stored"
 msgstr "Geen lagenset opgeslagen"
 
-#: app/widgets/gimpitemtreeview.c:3416
+#: app/widgets/gimpitemtreeview.c:3427
 msgid "New layer set's name"
 msgstr "Naam van de nieuwe lagenset"
 
-#: app/widgets/gimpitemtreeview.c:3458 app/widgets/gimpitemtreeview.c:3473
+#: app/widgets/gimpitemtreeview.c:3469 app/widgets/gimpitemtreeview.c:3484
 msgid "Select layers by text search"
 msgstr "Lagen selecteren met tekst zoekopdracht"
 
-#: app/widgets/gimpitemtreeview.c:3460 app/widgets/gimpitemtreeview.c:3475
+#: app/widgets/gimpitemtreeview.c:3471 app/widgets/gimpitemtreeview.c:3486
 msgid "Text search"
 msgstr "Tekst zoeken"
 
-#: app/widgets/gimpitemtreeview.c:3479
+#: app/widgets/gimpitemtreeview.c:3490
 msgid "Select layers by glob patterns"
 msgstr "Lagen selecteren op glob-patronen"
 
-#: app/widgets/gimpitemtreeview.c:3481
+#: app/widgets/gimpitemtreeview.c:3492
 msgid "Glob pattern search"
 msgstr "Globaal patroon zoeken"
 
-#: app/widgets/gimpitemtreeview.c:3485
+#: app/widgets/gimpitemtreeview.c:3496
 msgid "Select layers by regular expressions"
 msgstr "Lagen selecteren met reguliere expressies"
 
-#: app/widgets/gimpitemtreeview.c:3487
+#: app/widgets/gimpitemtreeview.c:3498
 msgid "Regular Expression search"
 msgstr "Reguliere expressie zoeken"
 
-#: app/widgets/gimpitemtreeview.c:3542
+#: app/widgets/gimpitemtreeview.c:3553
 msgid "search"
 msgstr "zoeken"
 
-#: app/widgets/gimpitemtreeview.c:3543
+#: app/widgets/gimpitemtreeview.c:3554
 msgid "glob"
 msgstr "glob"
 
-#: app/widgets/gimpitemtreeview.c:3543
+#: app/widgets/gimpitemtreeview.c:3554
 msgid "regexp"
 msgstr "regexp"
 
-#: app/widgets/gimpitemtreeview.c:3712
+#: app/widgets/gimpitemtreeview.c:3723
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "Ongeldige reguliere expressie: %s\n"
@@ -28324,31 +28327,31 @@ msgid ""
 msgstr "Corrupte XMP-metadata, opgeslagen door een oudere versie van GIMP, kon niet worden geconverteerd en zal worden genegeerd.\n"
 "Als u niet weet wat XMP is, heeft u het hoogstwaarschijnlijk niet nodig. Gerapporteerde fout: %s."
 
-#: app/xcf/xcf-load.c:908
+#: app/xcf/xcf-load.c:923
 msgid "Linked Layers"
 msgstr "Gekoppelde lagen"
 
-#: app/xcf/xcf-load.c:918
+#: app/xcf/xcf-load.c:933
 msgid "Linked Channels"
 msgstr "Gekoppelde kanalen"
 
-#: app/xcf/xcf-load.c:943
+#: app/xcf/xcf-load.c:958
 msgid "Linked Paths"
 msgstr "Gekoppelde paden"
 
-#: app/xcf/xcf-load.c:990
+#: app/xcf/xcf-load.c:1005
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 msgstr "Dit XCF-bestand is corrupt!  Ik heb er zoveel mogelijk van geladen als ik kon, maar het is niet volledig."
 
-#: app/xcf/xcf-load.c:1010
+#: app/xcf/xcf-load.c:1025
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr "Dit XCF-bestand is corrupt!  Ik kon er zelfs geen gedeeltelijke gegevens van de afbeelding van redden."
 
-#: app/xcf/xcf-load.c:1167
+#: app/xcf/xcf-load.c:1183
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -28357,7 +28360,7 @@ msgstr "XCF waarschuwing: versie 0 van bestandsindeling XCF\n"
 "sloeg de geïndexeerde kleurenkaarten niet correct op.\n"
 "Kaart met grijswaarden vervangen."
 
-#: app/xcf/xcf-load.c:2560
+#: app/xcf/xcf-load.c:2576
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -28367,7 +28370,7 @@ msgid ""
 msgstr "XCF Waarschuwing: versie %s van filter \"%s\" heeft niet de eigenschap %s. De eigenschap werd genegeerd en het filter zou niet juist kunnen renderen.\n"
 "Dit zou niet moeten gebeuren. U zou het probleem moeten rapporteren bij de ontwikkelaars van het filter."
 
-#: app/xcf/xcf-load.c:3497
+#: app/xcf/xcf-load.c:3518
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
@@ -28378,7 +28381,7 @@ msgid ""
 msgstr "XCF Warschuwing: versie '%s' van filter '%s' wordt niet ondersteund. Het filter werd verwijderd.\n"
 "Het betekent dat u ofwel een oude versie van het filter gebruikt of dat het werd bijgewerkt zonder het juiste versiebeheer. In het laatste geval zou u het probleem moeten rapporteren bij de ontwikkelaars van het filter."
 
-#: app/xcf/xcf-read.c:195
+#: app/xcf/xcf-read.c:196
 msgid "Invalid UTF-8 string in XCF file"
 msgstr "Ongeldige UTF-8-tekenreeks in XCF-bestand"
 
