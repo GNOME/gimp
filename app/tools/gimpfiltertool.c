@@ -1345,9 +1345,13 @@ gimp_filter_tool_commit (GimpFilterTool *filter_tool,
 
       gimp_filter_tool_remove_guide (filter_tool);
 
-      gimp_item_set_visible (GIMP_ITEM (drawable), FALSE, FALSE);
-      gimp_image_flush (gimp_display_get_image (tool->display));
-      gimp_item_set_visible (GIMP_ITEM (drawable), TRUE, FALSE);
+      /* TODO: Review when we can apply NDE filters to channels/layer masks */
+      if (GIMP_IS_LAYER (drawable))
+        {
+          gimp_item_set_visible (GIMP_ITEM (drawable), FALSE, FALSE);
+          gimp_image_flush (gimp_display_get_image (tool->display));
+          gimp_item_set_visible (GIMP_ITEM (drawable), TRUE, FALSE);
+        }
       gimp_image_flush (gimp_display_get_image (tool->display));
 
       if (filter_tool->config && filter_tool->has_settings)
