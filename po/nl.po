@@ -29,8 +29,8 @@
 msgid ""
 msgstr "Project-Id-Version: gimp-2.1.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-02-14 18:20+0000\n"
-"PO-Revision-Date: 2025-02-19 14:33+0100\n"
+"POT-Creation-Date: 2025-02-25 09:43+0000\n"
+"PO-Revision-Date: 2025-02-25 12:36+0100\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -38,7 +38,7 @@ msgstr "Project-Id-Version: gimp-2.1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: OmegaT 6.1.0\n"
+"X-Generator: OmegaT 6.0.1\n"
 
 # Waarom niet: beeldbewerkingsprogramma of beeldmanipulatieprogramma? - Hannie
 # Omdat het de naam van het programma is?
@@ -21269,7 +21269,7 @@ msgstr "Waarden wijzigen"
 #: ../app/pdb/plug-in-compat-cmds.c:4654
 msgctxt "undo-type"
 msgid "Dilate"
-msgstr "Vervorm lichtere delen van het beeld"
+msgstr "Lichtere delen lichter maken"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4701
 msgctxt "undo-type"
@@ -25755,7 +25755,9 @@ msgid ""
 "There can only be one active mouse controller.\n"
 "\n"
 "You already have a mouse controller in your list of active controllers."
-msgstr ""
+msgstr "Er kan slechts één muiswiel actief zijn.\n"
+"\n"
+"De lijst met actieve invoerapparaten bevat al een actief muiswiel."
 
 #: ../app/widgets/gimpcontrollerlist.c:558
 msgid "Remove Controller?"
