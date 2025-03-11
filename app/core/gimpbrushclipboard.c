@@ -31,8 +31,11 @@
 #include "gimpbuffer.h"
 #include "gimpbrush-private.h"
 #include "gimpbrushclipboard.h"
+#include "gimpchannel.h"
+#include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimppickable.h"
+#include "gimpselection.h"
 #include "gimptempbuf.h"
 
 #include "gimp-intl.h"
@@ -203,7 +206,8 @@ gimp_brush_clipboard_changed (Gimp      *gimp,
                               GimpBrush *brush)
 {
   GimpObject *paste;
-  GeglBuffer *buffer = NULL;
+  GeglBuffer *buffer       = NULL;
+  gboolean    unref_buffer = FALSE;
   gint        width;
   gint        height;
 
@@ -214,8 +218,37 @@ gimp_brush_clipboard_changed (Gimp      *gimp,
 
   if (GIMP_IS_IMAGE (paste))
     {
+      GimpContext *context = gimp_get_user_context (gimp);
+
       gimp_pickable_flush (GIMP_PICKABLE (paste));
-      buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (paste));
+      if (context)
+        {
+          GimpChannel *mask = gimp_image_get_mask (GIMP_IMAGE (paste));
+
+          if (! gimp_channel_is_empty (mask))
+            {
+              GList *pickables;
+              gint   offset_x;
+              gint   offset_y;
+
+              pickables = g_list_prepend (NULL, GIMP_IMAGE (paste));
+              buffer = gimp_selection_extract (GIMP_SELECTION (mask),
+                                               pickables, context,
+                                               FALSE, FALSE, FALSE,
+                                               &offset_x, &offset_y,
+                                               NULL);
+              g_list_free (pickables);
+              unref_buffer = TRUE;
+            }
+          else
+            {
+              buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (paste));
+            }
+        }
+      else
+        {
+          buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (paste));
+        }
     }
   else if (GIMP_IS_BUFFER (paste))
     {
@@ -280,6 +313,9 @@ gimp_brush_clipboard_changed (Gimp      *gimp,
                            gimp_temp_buf_get_data (brush->priv->pixmap),
                            GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
         }
+
+      if (unref_buffer)
+        g_object_unref (buffer);
     }
   else
     {
