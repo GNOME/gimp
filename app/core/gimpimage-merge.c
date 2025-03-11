@@ -410,10 +410,11 @@ GimpLayer *
 gimp_image_merge_group_layer (GimpImage      *image,
                               GimpGroupLayer *group)
 {
-  GimpLayer *parent;
-  GimpLayer *layer;
-  gboolean   is_pass_through = FALSE;
-  gint       index;
+  GimpLayer  *parent;
+  GimpLayer  *layer;
+  GeglBuffer *pass_through_buffer = NULL;
+  gboolean    is_pass_through     = FALSE;
+  gint        index;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_GROUP_LAYER (group), NULL);
@@ -428,6 +429,16 @@ gimp_image_merge_group_layer (GimpImage      *image,
 
   is_pass_through = (gimp_layer_get_mode (GIMP_LAYER (group)) == GIMP_LAYER_MODE_PASS_THROUGH &&
                      gimp_item_get_visible (GIMP_ITEM (group)));
+  if (is_pass_through && gimp_layer_get_opacity (GIMP_LAYER (group)) < 1.0)
+    {
+      GimpDrawable  *drawable  = GIMP_DRAWABLE (group);
+      GeglNode      *mode_node = gimp_drawable_get_mode_node (drawable);
+      GeglRectangle  rect;
+
+      rect = gegl_node_get_bounding_box (mode_node);
+      pass_through_buffer = gegl_buffer_new (&rect, gimp_drawable_get_format (drawable));
+      gegl_node_blit_buffer (mode_node, pass_through_buffer, NULL, 0, GEGL_ABYSS_NONE);
+    }
 
   /* Merge down filter effects */
   gimp_drawable_merge_filters (GIMP_DRAWABLE (group));
@@ -440,6 +451,20 @@ gimp_image_merge_group_layer (GimpImage      *image,
 
   gimp_image_remove_layer (image, GIMP_LAYER (group), TRUE, NULL);
   gimp_image_add_layer (image, layer, parent, index, TRUE);
+
+  /* Pass-through groups are a very special case. The duplicate works
+   * out if the original was at full opacity. But with lower opacity,
+   * what we want is in fact the output of the "gimp:pass-through" mode
+   * (similar to "gimp:replace") because we can't reproduce the same
+   * render otherwise.
+   * This works well, since anyway the merged layer is ensured to be the
+   * bottomest one on its own level.
+   */
+   if (pass_through_buffer)
+    {
+      gimp_drawable_set_buffer (GIMP_DRAWABLE (layer), FALSE, NULL, pass_through_buffer);
+      g_object_unref (pass_through_buffer);
+    }
 
   /* For pass-through group layers, we must remove all "big sister"
    * layers, i.e. all layers on the same level below the newly merged
