@@ -432,7 +432,9 @@ gimp_image_merge_group_layer (GimpImage      *image,
 
   is_pass_through = (gimp_layer_get_mode (GIMP_LAYER (group)) == GIMP_LAYER_MODE_PASS_THROUGH &&
                      gimp_item_get_visible (GIMP_ITEM (group)));
-  if (is_pass_through && gimp_layer_get_opacity (GIMP_LAYER (group)) < 1.0)
+  if (is_pass_through &&
+      (gimp_layer_get_opacity (GIMP_LAYER (group)) < 1.0 ||
+       ! gimp_drawable_has_visible_filters (GIMP_DRAWABLE (group))))
     {
       GimpDrawable  *drawable  = GIMP_DRAWABLE (group);
       GeglNode      *mode_node = gimp_drawable_get_mode_node (drawable);
@@ -456,12 +458,15 @@ gimp_image_merge_group_layer (GimpImage      *image,
   gimp_image_add_layer (image, layer, parent, index, TRUE);
 
   /* Pass-through groups are a very special case. The duplicate works
-   * out if the original was at full opacity. But with lower opacity,
-   * what we want is in fact the output of the "gimp:pass-through" mode
-   * (similar to "gimp:replace") because we can't reproduce the same
-   * render otherwise.
-   * This works well, since anyway the merged layer is ensured to be the
-   * bottomest one on its own level.
+   * only if both these points are true:
+   * - The group is at full opacity: with lower opacity, what we want is
+   *   in fact the output of the "gimp:pass-through" mode (similar to
+   *   "gimp:replace") because we can't reproduce the same render
+   *   otherwise. This works well, since anyway the merged layer is
+   *   ensured to be the bottomest one on its own level.
+   * - The group has filters: gimp_drawable_merge_filters() will
+   *   actually set the end-rendering to the drawable (kinda rasterizing
+   *   the group layer).
    */
    if (pass_through_buffer)
     {
@@ -661,12 +666,13 @@ gimp_image_merge_layers (GimpImage     *image,
   GimpLayer        *bottom_layer;
   GimpLayer        *merge_layer;
   gint              position;
+  gint              n_bottom_removed = 0;
   GeglNode         *node;
   GeglNode         *source_node;
   GeglNode         *flatten_node;
   GeglNode         *offset_node;
   GeglNode         *last_node;
-  GeglNode         *last_node_source;
+  GeglNode         *last_node_source = NULL;
   GimpParasiteList *parasites;
   GSList           *trimmed_list;
 
@@ -857,11 +863,16 @@ gimp_image_merge_layers (GimpImage     *image,
       gegl_node_link_many (source_node, offset_node, NULL);
     }
 
-  /*  Disconnect the bottom-layer node's input  */
-  last_node        = gimp_filter_get_node (GIMP_FILTER (bottom_layer));
-  last_node_source = gegl_node_get_producer (last_node, "input", NULL);
+  /*  Disconnect the bottom-layer node's input, unless it's a
+   *  pass-through group.
+   */
+  if (gimp_layer_get_mode (bottom_layer) != GIMP_LAYER_MODE_PASS_THROUGH)
+    {
+      last_node        = gimp_filter_get_node (GIMP_FILTER (bottom_layer));
+      last_node_source = gegl_node_get_producer (last_node, "input", NULL);
 
-  gegl_node_disconnect (last_node, "input");
+      gegl_node_disconnect (last_node, "input");
+    }
 
   /*  Render the graph into the merge layer  */
   gimp_gegl_apply_operation (NULL, progress, undo_desc, offset_node,
@@ -910,9 +921,13 @@ gimp_image_merge_layers (GimpImage     *image,
             {
               if (iter->data == layers->data)
                 remove = TRUE;
-              else if (remove)
+              else if (remove && gimp_item_get_visible (GIMP_ITEM (iter->data)))
                 to_remove = g_list_prepend (to_remove, iter->data);
             }
+
+          if (layers->data == bottom_layer)
+            n_bottom_removed = g_list_length (to_remove);
+
           for (iter = to_remove; iter; iter = iter->next)
             gimp_image_remove_layer (image, iter->data, TRUE, NULL);
 
@@ -945,8 +960,8 @@ gimp_image_merge_layers (GimpImage     *image,
     {
       /*  Add the layer to the image  */
       gimp_image_add_layer (image, merge_layer, parent,
-                            gimp_container_get_n_children (container) -
-                            position + 1,
+                            gimp_container_get_n_children (container) +
+                            n_bottom_removed - position + 1,
                             TRUE);
     }
 
