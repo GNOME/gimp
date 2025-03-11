@@ -412,6 +412,7 @@ gimp_image_merge_group_layer (GimpImage      *image,
 {
   GimpLayer *parent;
   GimpLayer *layer;
+  gboolean   is_pass_through = FALSE;
   gint       index;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
@@ -425,28 +426,8 @@ gimp_image_merge_group_layer (GimpImage      *image,
   parent = gimp_layer_get_parent (GIMP_LAYER (group));
   index  = gimp_item_get_index (GIMP_ITEM (group));
 
-  /* if this is a pass-through group, change its mode to NORMAL *before*
-   * duplicating it, since PASS_THROUGH mode is invalid for regular layers.
-   * see bug #793714.
-   */
-  if (gimp_layer_get_mode (GIMP_LAYER (group)) == GIMP_LAYER_MODE_PASS_THROUGH)
-    {
-      GimpLayerColorSpace    blend_space;
-      GimpLayerColorSpace    composite_space;
-      GimpLayerCompositeMode composite_mode;
-
-      /* keep the group's current blend space, composite space, and composite
-       * mode.
-       */
-      blend_space     = gimp_layer_get_blend_space     (GIMP_LAYER (group));
-      composite_space = gimp_layer_get_composite_space (GIMP_LAYER (group));
-      composite_mode  = gimp_layer_get_composite_mode  (GIMP_LAYER (group));
-
-      gimp_layer_set_mode            (GIMP_LAYER (group), GIMP_LAYER_MODE_NORMAL, TRUE);
-      gimp_layer_set_blend_space     (GIMP_LAYER (group), blend_space,            TRUE);
-      gimp_layer_set_composite_space (GIMP_LAYER (group), composite_space,        TRUE);
-      gimp_layer_set_composite_mode  (GIMP_LAYER (group), composite_mode,         TRUE);
-    }
+  is_pass_through = (gimp_layer_get_mode (GIMP_LAYER (group)) == GIMP_LAYER_MODE_PASS_THROUGH &&
+                     gimp_item_get_visible (GIMP_ITEM (group)));
 
   /* Merge down filter effects */
   gimp_drawable_merge_filters (GIMP_DRAWABLE (group));
@@ -459,6 +440,39 @@ gimp_image_merge_group_layer (GimpImage      *image,
 
   gimp_image_remove_layer (image, GIMP_LAYER (group), TRUE, NULL);
   gimp_image_add_layer (image, layer, parent, index, TRUE);
+
+  /* For pass-through group layers, we must remove all "big sister"
+   * layers, i.e. all layers on the same level below the newly merged
+   * layer, because their render is already integrated in the merged
+   * layer. Therefore keeping them would change the whole image's
+   * rendering.
+   */
+  if (is_pass_through)
+    {
+      GimpContainer *stack;
+      GList         *iter;
+      GList         *new_selected = g_list_prepend (NULL, layer);
+      GList         *to_remove    = NULL;
+      gboolean       remove       = FALSE;
+
+      if (parent)
+        stack = gimp_viewable_get_children (GIMP_VIEWABLE (parent));
+      else
+        stack = gimp_image_get_layers (image);
+
+      for (iter = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (stack)); iter; iter = iter->next)
+        {
+          if (iter->data == layer)
+            remove = TRUE;
+          else if (remove && gimp_item_get_visible (iter->data))
+            to_remove = g_list_prepend (to_remove, iter->data);
+        }
+
+      for (iter = to_remove; iter; iter = iter->next)
+        gimp_image_remove_layer (image, GIMP_LAYER (iter->data), TRUE, new_selected);
+
+      g_list_free (new_selected);
+    }
 
   gimp_image_undo_group_end (image);
 

@@ -937,16 +937,46 @@ gimp_layer_duplicate (GimpItem *item,
       GimpLayer *layer     = GIMP_LAYER (item);
       GimpLayer *new_layer = GIMP_LAYER (new_item);
 
-      gimp_layer_set_mode            (new_layer,
-                                      gimp_layer_get_mode (layer), FALSE);
-      gimp_layer_set_blend_space     (new_layer,
-                                      gimp_layer_get_blend_space (layer), FALSE);
-      gimp_layer_set_composite_space (new_layer,
-                                      gimp_layer_get_composite_space (layer), FALSE);
-      gimp_layer_set_composite_mode  (new_layer,
-                                      gimp_layer_get_composite_mode (layer), FALSE);
-      gimp_layer_set_opacity         (new_layer,
-                                      gimp_layer_get_opacity (layer), FALSE);
+      /* PASS_THROUGH mode is invalid for regular layers.
+       * We used to change the mode to NORMAL *before* duplicating (see
+       * #793714 on bugzilla) but it would change the image's render.
+       * Instead we first duplicate so that the group's render is used
+       * as-is for the non-group duplicate layer. Then we set NORMAL
+       * mode.
+       */
+      if (gimp_layer_get_mode (layer) == GIMP_LAYER_MODE_PASS_THROUGH &&
+          ! GIMP_IS_GROUP_LAYER (new_item))
+        {
+          GimpLayerColorSpace    blend_space;
+          GimpLayerColorSpace    composite_space;
+          GimpLayerCompositeMode composite_mode;
+
+          /* keep the group's current blend space, composite space, and composite
+           * mode.
+           */
+          blend_space     = gimp_layer_get_blend_space     (layer);
+          composite_space = gimp_layer_get_composite_space (layer);
+          composite_mode  = gimp_layer_get_composite_mode  (layer);
+
+          gimp_layer_set_mode            (new_layer, GIMP_LAYER_MODE_NORMAL, FALSE);
+          gimp_layer_set_blend_space     (new_layer, blend_space,            FALSE);
+          gimp_layer_set_composite_space (new_layer, composite_space,        FALSE);
+          gimp_layer_set_composite_mode  (new_layer, composite_mode,         FALSE);
+          gimp_layer_set_opacity         (new_layer, 1.0,                    FALSE);
+        }
+      else
+        {
+          gimp_layer_set_mode            (new_layer,
+                                          gimp_layer_get_mode (layer), FALSE);
+          gimp_layer_set_blend_space     (new_layer,
+                                          gimp_layer_get_blend_space (layer), FALSE);
+          gimp_layer_set_composite_space (new_layer,
+                                          gimp_layer_get_composite_space (layer), FALSE);
+          gimp_layer_set_composite_mode  (new_layer,
+                                          gimp_layer_get_composite_mode (layer), FALSE);
+          gimp_layer_set_opacity         (new_layer,
+                                          gimp_layer_get_opacity (layer), FALSE);
+        }
 
       if (gimp_layer_can_lock_alpha (new_layer))
         gimp_layer_set_lock_alpha (new_layer,
