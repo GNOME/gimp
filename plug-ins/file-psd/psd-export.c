@@ -1164,7 +1164,7 @@ save_paths (GOutputStream  *output,
        iter = g_list_next (iter), v++)
     {
       GString *data;
-      gchar   *name, *nameend;
+      gchar   *name;
       gsize    len;
       gint     lenpos;
       gchar    pointrecord[26] = { 0, };
@@ -1177,7 +1177,7 @@ save_paths (GOutputStream  *output,
 
       /*
        * - use iso8859-1 if possible
-       * - otherwise use UTF-8, prepended with \xef\xbb\xbf (Byte-Order-Mark)
+       * - otherwise use ASCII
        */
       name = gimp_item_get_name (iter->data);
       tmpname = g_convert (name, -1, "ISO-8859-1", "UTF-8", NULL, &len, &err);
@@ -1190,17 +1190,15 @@ save_paths (GOutputStream  *output,
         }
       else
         {
-          /* conversion failed, we fall back to UTF-8 */
-          len = g_utf8_strlen (name, 255 - 3);  /* need three marker-bytes */
+          /* conversion failed, we fall back to ASCII */
+          gchar *ascii_name = g_str_to_ascii (name, NULL);
 
-          nameend = g_utf8_offset_to_pointer (name, len);
-          len = nameend - name; /* in bytes */
-          g_assert (len + 3 <= 255);
+          len = g_utf8_strlen (ascii_name, 255);
 
-          g_string_append_c (data, len + 3);
-          g_string_append_len (data, "\xEF\xBB\xBF", 3); /* Unicode 0xfeff */
-          g_string_append_len (data, name, len);
+          g_string_append_c (data, (gchar) MIN (len, 255));
+          g_string_append_len (data, ascii_name, MIN (len, 255));
 
+          g_free (ascii_name);
           if (tmpname)
             g_free (tmpname);
         }
