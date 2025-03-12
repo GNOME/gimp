@@ -1299,36 +1299,25 @@ save_clipping_path (GOutputStream  *output,
   g_string_append_c (data, id % 256);
 
   tmpname = g_convert (path_name, -1, "ISO-8859-1", "UTF-8", NULL, &len, &err);
-
-  g_string_append_len (data, "\x00\x00\x00\x00", 4);
-
-  if (tmpname && err == NULL)
-    {
-      if ((len + 6 + 1) <= 255)
-        g_string_append_len (data, "\x00", 1);
-      g_string_append_c (data, len + 6 + 1);
-
-      g_string_append_c (data, (gchar) MIN (len, 255));
-      g_string_append_len (data, tmpname, MIN (len, 255));
-      g_free (tmpname);
-    }
-  else
+  if (err != NULL || tmpname == NULL)
     {
       /* conversion failed, we fall back to ASCII */
-      gchar *ascii_name = g_str_to_ascii (path_name, NULL);
-
-      len = g_utf8_strlen (ascii_name, 255);
-      if ((len + 6 + 1) <= 255)
-        g_string_append_len (data, "\x00", 1);
-      g_string_append_c (data, len + 6 + 1);
-
-      g_string_append_c (data, (gchar) MIN (len, 255));
-      g_string_append_len (data, ascii_name, MIN (len, 255));
-
-      g_free (ascii_name);
       if (tmpname)
         g_free (tmpname);
+
+      tmpname = g_str_to_ascii (path_name, NULL);
+      len     = g_utf8_strlen (tmpname, 255);
     }
+
+  g_string_append_len (data, "\x00\x00\x00\x00", 4);
+  if ((len + 6 + 1) <= 255)
+    g_string_append_len (data, "\x00", 1);
+  /* The number of bytes for the two values after the path name is 6 */
+  g_string_append_c (data, len + 6 + 1);
+
+  g_string_append_c (data, (gchar) MIN (len, 255));
+  g_string_append_len (data, tmpname, MIN (len, 255));
+  g_free (tmpname);
 
   if (data->len % 2)  /* padding to even size */
     g_string_append_c (data, 0);
