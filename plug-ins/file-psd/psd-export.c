@@ -1164,7 +1164,7 @@ save_paths (GOutputStream  *output,
        iter = g_list_next (iter), v++)
     {
       GString *data;
-      gchar   *name, *nameend;
+      gchar   *name;
       gsize    len;
       gint     lenpos;
       gchar    pointrecord[26] = { 0, };
@@ -1177,10 +1177,10 @@ save_paths (GOutputStream  *output,
 
       /*
        * - use iso8859-1 if possible
-       * - otherwise use UTF-8, prepended with \xef\xbb\xbf (Byte-Order-Mark)
+       * - otherwise use ASCII
        */
       name = gimp_item_get_name (iter->data);
-      tmpname = g_convert (name, -1, "iso8859-1", "utf-8", NULL, &len, &err);
+      tmpname = g_convert (name, -1, "ISO-8859-1", "UTF-8", NULL, &len, &err);
 
       if (tmpname && err == NULL)
         {
@@ -1190,17 +1190,15 @@ save_paths (GOutputStream  *output,
         }
       else
         {
-          /* conversion failed, we fall back to UTF-8 */
-          len = g_utf8_strlen (name, 255 - 3);  /* need three marker-bytes */
+          /* conversion failed, we fall back to ASCII */
+          gchar *ascii_name = g_str_to_ascii (name, NULL);
 
-          nameend = g_utf8_offset_to_pointer (name, len);
-          len = nameend - name; /* in bytes */
-          g_assert (len + 3 <= 255);
+          len = g_utf8_strlen (ascii_name, 255);
 
-          g_string_append_c (data, len + 3);
-          g_string_append_len (data, "\xEF\xBB\xBF", 3); /* Unicode 0xfeff */
-          g_string_append_len (data, name, len);
+          g_string_append_c (data, (gchar) MIN (len, 255));
+          g_string_append_len (data, ascii_name, MIN (len, 255));
 
+          g_free (ascii_name);
           if (tmpname)
             g_free (tmpname);
         }
@@ -1300,11 +1298,21 @@ save_clipping_path (GOutputStream  *output,
   g_string_append_c (data, id / 256);
   g_string_append_c (data, id % 256);
 
-  tmpname = g_convert (path_name, -1, "iso8859-1", "utf-8", NULL, &len, &err);
+  tmpname = g_convert (path_name, -1, "ISO-8859-1", "UTF-8", NULL, &len, &err);
+  if (err != NULL || tmpname == NULL)
+    {
+      /* conversion failed, we fall back to ASCII */
+      if (tmpname)
+        g_free (tmpname);
+
+      tmpname = g_str_to_ascii (path_name, NULL);
+      len     = g_utf8_strlen (tmpname, 255);
+    }
 
   g_string_append_len (data, "\x00\x00\x00\x00", 4);
   if ((len + 6 + 1) <= 255)
     g_string_append_len (data, "\x00", 1);
+  /* The number of bytes for the two values after the path name is 6 */
   g_string_append_c (data, len + 6 + 1);
 
   g_string_append_c (data, (gchar) MIN (len, 255));

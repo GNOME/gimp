@@ -1739,8 +1739,11 @@ load_resource_2999 (const PSDimageres  *res_a,
   gint32        write_len;
 
   path_name = fread_pascal_string (&read_len, &write_len, 2, input, error);
-  if (*error)
-    return -1;
+  if (*error || ! path_name)
+    {
+      g_printerr ("psd-load: Unable to read clipping path name.");
+      return -1;
+    }
 
   /* Convert from fixed to floating point */
   if (psd_read (input, &path_flatness_int, 2, error) < 2 ||
