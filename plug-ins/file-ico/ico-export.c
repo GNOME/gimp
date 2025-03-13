@@ -708,7 +708,6 @@ ico_cmap_contains_black (GimpPalette *cmap)
           success = TRUE;
           break;
         }
-      g_object_unref (color);
     }
 
   return success;
@@ -762,8 +761,11 @@ ico_image_get_reduced_buf (GimpDrawable *layer,
 
   if (bpp <= 8 || bpp == 24 || babl_format_get_bytes_per_pixel (format) != 4)
     {
-      GimpImage  *image = gimp_item_get_image (GIMP_ITEM (layer));
-      GeglBuffer *tmp;
+      GimpImage   *image = gimp_item_get_image (GIMP_ITEM (layer));
+      GeglBuffer  *tmp;
+      gint         num_colors;
+      gint         entry_num;
+      GeglColor  **colors;
 
       tmp_image = gimp_image_new (w, h, gimp_image_get_base_type (image));
       gimp_image_undo_disable (tmp_image);
@@ -836,6 +838,16 @@ ico_image_get_reduced_buf (GimpDrawable *layer,
               palette = gimp_image_get_palette (tmp_image);
             }
 
+          /* Copy the palette over now - otherwise, it goes away when we
+           * convert the image to RGB */
+          *cmap_out  = gimp_palette_new ("ICO");
+          num_colors = gimp_palette_get_color_count (palette);
+          colors     = gimp_palette_get_colors (palette);
+
+          for (gint i = 0; i < num_colors; i++)
+            gimp_palette_add_entry (*cmap_out, NULL,  colors[i], &entry_num);
+          gimp_color_array_free (colors);
+
           gimp_image_convert_rgb (tmp_image);
         }
       else if (bpp == 24)
@@ -868,7 +880,6 @@ ico_image_get_reduced_buf (GimpDrawable *layer,
 
   g_object_unref (buffer);
 
-  *cmap_out = palette;
   *buf_out = buf;
 }
 
@@ -968,7 +979,7 @@ ico_write_icon (FILE         *fp,
   width = gimp_drawable_get_width (layer);
   height = gimp_drawable_get_height (layer);
 
-  header.header_size     = 40;
+  header.header_size    = 40;
   header.width          = width;
   header.height         = 2 * height;
   header.planes         = 1;
