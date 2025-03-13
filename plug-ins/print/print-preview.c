@@ -842,12 +842,12 @@ print_preview_get_thumbnail (GimpDrawable *drawable,
       temp_image =
         gimp_image_duplicate (gimp_item_get_image (GIMP_ITEM (drawable)));
       gimp_image_convert_precision (temp_image, GIMP_PRECISION_U8_NON_LINEAR);
-      gimp_image_merge_visible_layers (temp_image, GIMP_EXPAND_AS_NECESSARY);
+      gimp_image_merge_visible_layers (temp_image, GIMP_CLIP_TO_IMAGE);
 
       layers = gimp_image_list_layers (temp_image);
-      data = gimp_drawable_get_thumbnail_data (GIMP_DRAWABLE (layers->data),
-                                               width, height,
-                                               &width, &height, &bpp);
+      data   = gimp_drawable_get_thumbnail_data (GIMP_DRAWABLE (layers->data),
+                                                 width, height,
+                                                 &width, &height, &bpp);
 
       g_list_free (layers);
       gimp_image_delete (temp_image);
