@@ -175,6 +175,16 @@ gimp_image_duplicate (GimpImage *image)
   /*  Explicitly mark image as dirty, so that its dirty time is set  */
   gimp_image_dirty (new_image, GIMP_DIRTY_ALL);
 
+  /* XXX Without flushing the duplicated image, we had at least one case
+   * where it wouldn't properly render the image (with empty
+   * pass-through groups with layer effects, which I think is because we
+   * have code believing the group is smaller that it really is, because
+   * of the specificity of pass-through groups). See #13057.
+   * So I'm not entirely happy of calling this here, which feels more
+   * like a workaround than a real fix. But it will do for now.
+   */
+  gimp_image_flush (new_image);
+
   return new_image;
 }
 
