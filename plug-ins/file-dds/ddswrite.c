@@ -1403,8 +1403,8 @@ write_image (FILE                *fp,
           fmtbpp = 2;
           has_alpha = TRUE;
           rmask = 0x000000ff;
-          gmask = 0x000000ff;
-          bmask = 0x000000ff;
+          gmask = 0x00000000;
+          bmask = 0x00000000;
           amask = 0x0000ff00;
         }
     }
@@ -1500,16 +1500,12 @@ write_image (FILE                *fp,
         }
       else
         {
-          if (bpp == 1)
+          if (bpp == 1 || bpp == 2)
             {
               if (basetype == GIMP_INDEXED)
                 pflags |= DDPF_PALETTEINDEXED8;
               else
                 pflags |= DDPF_LUMINANCE;
-            }
-          else if ((bpp == 2) && (basetype == GIMP_INDEXED))
-            {
-              pflags |= DDPF_PALETTEINDEXED8;
             }
           else
             {

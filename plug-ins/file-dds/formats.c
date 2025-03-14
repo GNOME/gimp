@@ -201,6 +201,7 @@ static struct _FMT_MAP
   { D3DFMT_B8G8R8,       24, 0x000000FF, 0x0000FF00, 0x00FF0000, 0x00000000, DDPF_RGB                                },
   { D3DFMT_L8,            8, 0x000000FF, 0x000000FF, 0x000000FF, 0x00000000, DDPF_LUMINANCE                          },
   { D3DFMT_A8L8,         16, 0x000000FF, 0x000000FF, 0x000000FF, 0x0000FF00, DDPF_LUMINANCE | DDPF_ALPHAPIXELS       },
+  { D3DFMT_A8L8,         16, 0x000000FF, 0x000000FF, 0x000000FF, 0x0000FF00, DDPF_RGB | DDPF_ALPHAPIXELS             },
 };
 #define FORMAT_MAP_COUNT  (sizeof (format_map) / sizeof (format_map[0]))
 
