@@ -23,6 +23,25 @@ Core:
   - Render-after-filters is used when selecting by color.
   - When drag'n dropping items containing groups and descendant, just
     drop the group with all descendants.
+  - Merging pass-through group layers now merges the actual render of
+    the group (which contains the rendering of layers *below* the group
+    too, by definition). This way, the rendering is the same before and
+    after merging the group (though it will get rid of more layers than
+    other mode merging would do).
+
+Tools:
+
+  - Text tool:
+    * bold/italic buttons don't mean necessarily "faux" bold or italic
+      (respectively) anymore, because it is different from 2.10 where it
+      may mean real bold/italic variant for the font, if available. We
+      might get back to these buttons meaning only the "faux" styles
+      (since the actual variants are also available through the font
+      list so you have both worlds) later, but for now, we want to make
+      sure we don't break rendering of existing XCF files.
+    * In font list, we use the "family style" as display name when
+      available which is often more suitable for display than the
+      "fullname".
 
 Graphical User Interface:
 
@@ -46,6 +65,7 @@ Plug-ins:
       now supported.
     * Some options in the export dialog are now displayed in a second
       column to avoid overlong dialog.
+  - FLI: fixing ZDI-CAN-25100.
 
 API:
 
@@ -62,6 +82,8 @@ Build:
     GIMP runs with gdb.
   - Debian package images are now created in the dependency job building
     babl and GEGL.
+  - Depends on babl 0.1.112.
+  - More file format testing in the test-plug-ins infrastructure.
 
 
 Overview of Changes from GIMP 3.0.0-RC2 to GIMP 3.0.0-RC3
