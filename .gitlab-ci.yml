@@ -261,6 +261,7 @@ gimp-debian:
     - meson setup _build-${RUNNER} -Dprefix="${GIMP_PREFIX}"
                                    -Drelocatable-bundle=yes
                                    -Dcheck-update=yes
+                                   -Dbuild-id=org.gimp.GIMP_official.AppImage.$(uname -m)
     - cd _build-${RUNNER}
     - ninja
     - echo -e "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K"
