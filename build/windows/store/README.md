@@ -1,14 +1,15 @@
 # GIMP MSIX HowTo
 
-## Development releases
+## Stable and Development releases
 
-The MS Store/Partner Center hosts our development point releases:
-https://partner.microsoft.com/dashboard/products/9NZVDVP54JMR/overview
+The MS Store/Partner Center hosts our stable and development point releases:
+https://partner.microsoft.com/dashboard/apps-and-games/overview
 
-Base rule to update the "GIMP (Preview)" entry:
+Base rule to update the "GIMP" or "GIMP (Preview)" entry:
 
 * Regularly, a .msixupload will be generated at each tagged commit. It also can be
-  with a custom pipeline valuating `GIMP_CI_MS_STORE` to `MSIXUPLOAD_${REVISION}`.
+  with a custom pipeline valuating `GIMP_CI_MS_STORE` variable to `${REVISION}` as
+  briefly explained in ["Versioning the MSIX"](#versioning-the-msix) section.
   In the process, it will be auto submitted (without changelog) to Partner Center.
 
 ## Maintaining the MSIX
