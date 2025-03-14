@@ -348,7 +348,7 @@ bund_usr "$UNIX_PREFIX" "lib/gjs/girepository-1.0/Gjs*" --dest "${LIB_DIR}/${LIB
 bund_usr "$UNIX_PREFIX" "bin/python*"
 bund_usr "$UNIX_PREFIX" "lib/python*"
 wipe_usr ${LIB_DIR}/*.pyc
-####FIXME: lua crashes with loop: See: https://gitlab.gnome.org/GNOME/gimp/-/issues/11895
+####FIXME: lua crashes with loop: See: #11895
 #bund_usr "$UNIX_PREFIX" "bin/luajit" --rename "lua"
 #bund_usr "$UNIX_PREFIX" "lib/liblua5.1-lgi*"
 #bund_usr "$UNIX_PREFIX" "lib/lua/5.1"
