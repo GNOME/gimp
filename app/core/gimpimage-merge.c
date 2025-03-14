@@ -413,11 +413,12 @@ GimpLayer *
 gimp_image_merge_group_layer (GimpImage      *image,
                               GimpGroupLayer *group)
 {
-  GimpLayer  *parent;
-  GimpLayer  *layer;
-  GeglBuffer *pass_through_buffer = NULL;
-  gboolean    is_pass_through     = FALSE;
-  gint        index;
+  GimpLayer     *parent;
+  GimpLayer     *layer;
+  GeglBuffer    *pass_through_buffer = NULL;
+  gboolean       is_pass_through     = FALSE;
+  gint           index;
+  GeglRectangle  rect;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_GROUP_LAYER (group), NULL);
@@ -438,11 +439,10 @@ gimp_image_merge_group_layer (GimpImage      *image,
     {
       GimpDrawable  *drawable  = GIMP_DRAWABLE (group);
       GeglNode      *mode_node = gimp_drawable_get_mode_node (drawable);
-      GeglRectangle  rect;
 
       rect = gegl_node_get_bounding_box (mode_node);
       pass_through_buffer = gegl_buffer_new (&rect, gimp_drawable_get_format (drawable));
-      gegl_node_blit_buffer (mode_node, pass_through_buffer, NULL, 0, GEGL_ABYSS_NONE);
+      gegl_node_blit_buffer (mode_node, pass_through_buffer, &rect, 0, GEGL_ABYSS_NONE);
     }
 
   /* Merge down filter effects */
@@ -470,7 +470,19 @@ gimp_image_merge_group_layer (GimpImage      *image,
    */
    if (pass_through_buffer)
     {
-      gimp_drawable_set_buffer (GIMP_DRAWABLE (layer), FALSE, NULL, pass_through_buffer);
+      if (rect.x != 0 || rect.y != 0)
+        {
+          GeglBuffer *buffer;
+
+          buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, rect.width, rect.height),
+                                    gimp_drawable_get_format (GIMP_DRAWABLE (layer)));
+          gegl_buffer_copy (pass_through_buffer, &rect, GEGL_ABYSS_NONE,
+                            buffer, GEGL_RECTANGLE (0, 0, rect.width, rect.height));
+          g_object_unref (pass_through_buffer);
+          pass_through_buffer = buffer;
+        }
+      gimp_drawable_set_buffer_full (GIMP_DRAWABLE (layer), FALSE, NULL,
+                                     pass_through_buffer, &rect, TRUE);
       g_object_unref (pass_through_buffer);
     }
 
