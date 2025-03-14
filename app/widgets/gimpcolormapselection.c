@@ -796,12 +796,12 @@ gimp_colormap_selection_image_changed (GimpColormapSelection *selection,
 
   if (image)
     {
-      g_signal_connect_swapped (image, "colormap-changed",
-                                G_CALLBACK (gimp_colormap_selection_colormap_changed),
-                                selection);
-      g_signal_connect_swapped (image, "mode-changed",
-                                G_CALLBACK (gimp_colormap_selection_set_palette),
-                                selection);
+      g_signal_connect_object (image, "colormap-changed",
+                               G_CALLBACK (gimp_colormap_selection_colormap_changed),
+                               selection, G_CONNECT_SWAPPED);
+      g_signal_connect_object (image, "mode-changed",
+                               G_CALLBACK (gimp_colormap_selection_set_palette),
+                               selection, G_CONNECT_SWAPPED);
     }
 
   gimp_colormap_selection_set_palette (selection);
