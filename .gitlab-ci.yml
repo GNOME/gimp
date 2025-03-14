@@ -207,7 +207,8 @@ deps-debian:
             mypaint-brushes
             poppler-data
             python3
-            python3-gi" >> Dockerfile
+            python3-gi
+            python3-gi-cairo" >> Dockerfile
     - echo "RUN echo -e \"\e[0Ksection_end:0000000002:deps_install\r\e[0K\"" >> Dockerfile
     # Build some deps
     - if [[ ! "$CI_JOB_NAME" =~ 'cross' ]]; then
