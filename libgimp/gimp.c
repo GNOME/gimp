@@ -459,7 +459,7 @@ gimp_main (GType  plug_in_type,
 
     gint i;
 
-    for (i = 0; i < G_N_ELEMENTS (init_types); i++, i++)
+    for (i = 0; i < G_N_ELEMENTS (init_types); i++)
       {
         GType type = init_types[i];
 
