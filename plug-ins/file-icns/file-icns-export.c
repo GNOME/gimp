@@ -68,6 +68,7 @@ static gboolean    icns_check_compat     (GtkWidget            *dialog,
 GimpPDBStatusType  icns_export_image     (GFile                *file,
                                           IcnsSaveInfo         *info,
                                           GimpImage            *image,
+                                          gboolean              include_color_profile,
                                           GError              **error);
 
 static guchar    * icns_compress         (guint                 width,
@@ -311,7 +312,7 @@ icns_dialog_new (IcnsSaveInfo        *info,
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
+  gtk_widget_set_visible (main_vbox, TRUE);
 
   warning = g_object_new (GIMP_TYPE_HINT_BOX,
                           "icon-name", GIMP_ICON_DIALOG_WARNING,
@@ -326,17 +327,18 @@ icns_dialog_new (IcnsSaveInfo        *info,
 
   frame = gimp_frame_new (_("Export Icons"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 4);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
   gtk_container_add (GTK_CONTAINER (frame), scrolled_window);
-  gtk_widget_show (scrolled_window);
+  gtk_widget_set_size_request (scrolled_window, -1, 256);
+  gtk_widget_set_visible (scrolled_window, TRUE);
 
   viewport = gtk_viewport_new (NULL, NULL);
   gtk_container_add (GTK_CONTAINER (scrolled_window), viewport);
-  gtk_widget_show (viewport);
+  gtk_widget_set_visible (viewport, TRUE);
 
   flowbox = gtk_flow_box_new ();
   gtk_flow_box_set_column_spacing (GTK_FLOW_BOX (flowbox), 6);
@@ -344,7 +346,7 @@ icns_dialog_new (IcnsSaveInfo        *info,
   gtk_flow_box_set_selection_mode (GTK_FLOW_BOX (flowbox), GTK_SELECTION_NONE);
   g_object_set_data (G_OBJECT (dialog), "icons_flowbox", flowbox);
   gtk_container_add (GTK_CONTAINER (viewport), flowbox);
-  gtk_widget_show (flowbox);
+  gtk_widget_set_visible (flowbox, TRUE);
 
   g_object_set_data (G_OBJECT (dialog), "warning", warning);
 
@@ -421,6 +423,7 @@ GimpPDBStatusType
 icns_export_image (GFile        *file,
                    IcnsSaveInfo *info,
                    GimpImage    *image,
+                   gboolean      include_color_profile,
                    GError      **error)
 {
   FILE           *fp;
@@ -564,19 +567,29 @@ icns_export_image (GFile        *file,
                                                          temp_image);
               gimp_image_insert_layer (temp_image, temp_layer, NULL, 0);
 
+              if (include_color_profile &&
+                  gimp_image_get_color_profile (image))
+                {
+                  GimpColorProfile *profile;
+
+                  profile =  gimp_image_get_color_profile (image);
+                  gimp_image_set_color_profile (temp_image, profile);
+                }
+
               procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (), "file-png-export");
               return_vals = gimp_procedure_run (procedure,
-                                                "run-mode",         GIMP_RUN_NONINTERACTIVE,
-                                                "image",            temp_image,
-                                                "file",             temp_file,
-                                                "interlaced",       FALSE,
-                                                "compression",      9,
-                                                "bkgd",             FALSE,
-                                                "offs",             FALSE,
-                                                "phys",             FALSE,
-                                                "time",             FALSE,
-                                                "save-transparent", FALSE,
-                                                "optimize-palette", FALSE,
+                                                "run-mode",              GIMP_RUN_NONINTERACTIVE,
+                                                "image",                 temp_image,
+                                                "file",                  temp_file,
+                                                "interlaced",            FALSE,
+                                                "compression",           9,
+                                                "bkgd",                  FALSE,
+                                                "offs",                  FALSE,
+                                                "phys",                  FALSE,
+                                                "time",                  FALSE,
+                                                "save-transparent",      FALSE,
+                                                "optimize-palette",      FALSE,
+                                                "include-color-profile", include_color_profile,
                                                 NULL);
               gimp_image_delete (temp_image);
 
@@ -752,7 +765,8 @@ icns_save_image (GFile                *file,
 {
   IcnsSaveInfo  info;
   GList        *iter;
-  gboolean      isValidLayers = FALSE;
+  gboolean      isValidLayers         = FALSE;
+  gboolean      include_color_profile = FALSE;
   gint          i;
 
   info.layers    = gimp_image_list_layers (image);
@@ -799,8 +813,12 @@ icns_save_image (GFile                *file,
         }
     }
 
+  g_object_get (config,
+                "include-color-profile", &include_color_profile,
+                NULL);
+
   gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_file_get_utf8_name (file));
 
-  return icns_export_image (file, &info, image, error);
+  return icns_export_image (file, &info, image, include_color_profile, error);
 }

@@ -192,6 +192,8 @@ icns_create_procedure (GimpPlugIn  *plug_in,
                                           "image/x-icns");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "icns");
+
+      gimp_export_procedure_set_support_profile (GIMP_EXPORT_PROCEDURE (procedure), TRUE);
     }
 
   return procedure;

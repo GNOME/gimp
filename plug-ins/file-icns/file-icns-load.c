@@ -483,6 +483,18 @@ icns_attach_image (GimpImage    *image,
 
           layer_loaded = TRUE;
 
+          /* Use the first color profile we encounter */
+          if (! gimp_image_get_color_profile (image) &&
+              gimp_image_get_color_profile (temp_image))
+            {
+              GimpColorProfile *profile;
+
+              profile = gimp_image_get_color_profile (temp_image);
+              gimp_image_set_color_profile (image, profile);
+
+              g_object_unref (profile);
+            }
+
           g_file_delete (temp_file, NULL, NULL);
           g_object_unref (temp_file);
           g_free (layers);
