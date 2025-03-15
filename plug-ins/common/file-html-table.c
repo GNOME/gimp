@@ -170,6 +170,11 @@ html_create_procedure (GimpPlugIn  *plug_in,
                                           "text/html");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "html,htm");
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_RGB  |
+                                              GIMP_EXPORT_CAN_HANDLE_GRAY |
+                                              GIMP_EXPORT_CAN_HANDLE_ALPHA,
+                                              NULL, NULL, NULL);
 
       gimp_procedure_add_boolean_aux_argument (procedure, "use-caption",
                                                _("Use c_aption"),
@@ -263,10 +268,11 @@ html_export (GimpProcedure        *procedure,
              GimpProcedureConfig  *config,
              gpointer              run_data)
 {
-  GimpPDBStatusType  status    = GIMP_PDB_SUCCESS;
-  GList             *drawables = gimp_image_list_layers (image);
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export = GIMP_EXPORT_IGNORE;
+  GList             *drawables;
   GeglBuffer        *buffer;
-  GError            *error     = NULL;
+  GError            *error  = NULL;
 
   gegl_init (NULL, NULL);
 
@@ -280,13 +286,18 @@ html_export (GimpProcedure        *procedure,
                                              GIMP_PDB_CANCEL,
                                              NULL);
 
-  buffer = gimp_drawable_get_buffer (drawables->data);
+  export    = gimp_export_options_get_image (options, &image);
+  drawables = gimp_image_list_layers (image);
+  buffer    = gimp_drawable_get_buffer (drawables->data);
 
   if (! export_image (file, buffer, G_OBJECT (config),
                       &error))
     {
       status = GIMP_PDB_EXECUTION_ERROR;
     }
+
+  if (export == GIMP_EXPORT_EXPORT)
+    gimp_image_delete (image);
 
   g_object_unref (buffer);
 
