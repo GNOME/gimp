@@ -3187,6 +3187,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
     case 20:
     case 21:
     case 22:
+    case 23:
       if (gimp_version)   *gimp_version   = 300;
       if (version_string) *version_string = "GIMP 3.0";
       break;
