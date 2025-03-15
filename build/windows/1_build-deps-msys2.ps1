@@ -36,14 +36,6 @@ if (-not $MSYSTEM_PREFIX)
   {
     $MSYSTEM_PREFIX = if ((Get-WmiObject Win32_ComputerSystem).SystemType -like 'ARM64*') { 'clangarm64' } else { 'clang64' }
   }
-if ($MSYSTEM_PREFIX -eq 'clangarm64')
-  {
-    $MINGW_PACKAGE_PREFIX = 'mingw-w64-clang-aarch64'
-  }
-elseif ($MSYSTEM_PREFIX -eq 'clang64')
-  {
-    $MINGW_PACKAGE_PREFIX = 'mingw-w64-clang-x86_64'
-  }
 $env:Path = "$MSYS_ROOT/$MSYSTEM_PREFIX/bin;$MSYS_ROOT/usr/bin;" + $env:Path
 
 Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):deps_install[collapsed=true]$([char]13)$([char]27)[0KInstalling dependencies provided by MSYS2"
@@ -51,7 +43,7 @@ if ("$PSCommandPath" -like "*1_build-deps-msys2.ps1*" -or "$CI_JOB_NAME" -like "
   {
     pacman --noconfirm -Suy
   }
-pacman --noconfirm -S --needed (Get-Content build/windows/all-deps-uni.txt).Replace('${MINGW_PACKAGE_PREFIX}',$MINGW_PACKAGE_PREFIX).Replace(' \','')
+pacman --noconfirm -S --needed (Get-Content build/windows/all-deps-uni.txt).Replace('${MINGW_PACKAGE_PREFIX}',$(if ($MINGW_PACKAGE_PREFIX) { "$MINGW_PACKAGE_PREFIX" } elseif ($MSYSTEM_PREFIX -eq 'clangarm64') { 'mingw-w64-clang-aarch64' } else { 'mingw-w64-clang-x86_64' })).Replace(' \','')
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):deps_install$([char]13)$([char]27)[0K"
 
 
