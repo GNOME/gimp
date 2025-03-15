@@ -417,6 +417,20 @@ if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
     if ("$LASTEXITCODE" -gt '0' -or "$?" -eq 'False')
       {
         ## We need to manually check failures in pre-7.4 PS
+        $pseudo_gimp = "pseudo-gimp_$(Get-Date -UFormat %s -Millisecond 0)"
+        New-SelfSignedCertificate -Type Custom -Subject "$(([xml](Get-Content build\windows\store\AppxManifest.xml)).Package.Identity.Publisher)" -KeyUsage DigitalSignature -FriendlyName "$pseudo_gimp" -CertStoreLocation "Cert:\CurrentUser\My" -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.3", "2.5.29.19={text}") | Out-Null
+        Export-PfxCertificate -Cert "Cert:\CurrentUser\My\$(Get-ChildItem Cert:\CurrentUser\My | Where-Object FriendlyName -EQ "$pseudo_gimp" | Select-Object -ExpandProperty Thumbprint)" -FilePath "build/windows/store/${pseudo_gimp}.pfx" -Password (ConvertTo-SecureString -String eek -Force -AsPlainText) | Out-Null
+        Remove-Item "Cert:\CurrentUser\My\$(Get-ChildItem Cert:\CurrentUser\My | Where-Object FriendlyName -EQ "$pseudo_gimp" | Select-Object -ExpandProperty Thumbprint)"
+        if ($GITLAB_CI)
+          {
+            $OUTPUT_DIR = 'build\windows\store\_Output\'
+            $OUTPUT_DIR_PARTIAL = '_Output\'
+            New-Item $OUTPUT_DIR -ItemType Directory -Force | Out-Null
+            Move-Item build\windows\store\$pseudo_gimp.pfx $OUTPUT_DIR
+          }
+        Write-Host "(ERROR): Self-signing certificate expired. Please commit the generated '${OUTPUT_DIR}${pseudo_gimp}.pfx' on 'build\windows\store\'." -ForegroundColor red
+        $sha256 = (Get-FileHash build\windows\store\${OUTPUT_DIR_PARTIAL}${pseudo_gimp}.pfx -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()
+        Write-Output "(INFO): ${pseudo_gimp}.pfx SHA-256: $sha256"
         exit 1
       }
     Copy-Item build\windows\store\pseudo-gimp*.pfx pseudo-gimp.pfx -Recurse
