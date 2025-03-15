@@ -218,6 +218,9 @@ def export_ora(procedure, run_mode, image, file, options, metadata, config, data
 
         width, height = drawable.get_width(), drawable.get_height()
         tmp_img = Gimp.Image.new(width, height, image.get_base_type())
+        if (image.get_base_type() == Gimp.ImageBaseType.INDEXED):
+            tmp_img.set_palette(image.get_palette())
+
         tmp_layer = Gimp.Layer.new_from_drawable (drawable, tmp_img)
         tmp_img.insert_layer (tmp_layer, None, 0)
 
