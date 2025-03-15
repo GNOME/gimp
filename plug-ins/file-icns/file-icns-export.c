@@ -563,6 +563,10 @@ icns_export_image (GFile        *file,
               /* TODO: Use GimpExportOptions for this when available */
               temp_image = gimp_image_new (width, height,
                                            gimp_image_get_base_type (image));
+              if (gimp_image_get_base_type (image) == GIMP_INDEXED)
+                gimp_image_set_palette (temp_image,
+                                        gimp_image_get_palette (image));
+
               temp_layer = gimp_layer_new_from_drawable (GIMP_DRAWABLE (iter->data),
                                                          temp_image);
               gimp_image_insert_layer (temp_image, temp_layer, NULL, 0);
