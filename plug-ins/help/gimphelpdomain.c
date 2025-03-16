@@ -42,22 +42,8 @@
 #endif
 
 
-typedef struct
-{
-  gboolean          *success;
-  gboolean          *done;
-
-  GimpHelpLocale    *locale;
-  const gchar       *uri;
-  const gchar       *domain;
-  GimpHelpProgress  *progress;
-  GCancellable      *cancellable;
-  GError           **error;
-} HelpThreadData;
-
 /*  local function prototypes  */
 
-static gboolean   parse_thread_func   (HelpThreadData    *data);
 static gboolean   domain_locale_parse (GimpHelpDomain    *domain,
                                        GimpHelpLocale    *locale,
                                        GimpHelpProgress  *progress,
@@ -118,11 +104,9 @@ gimp_help_domain_lookup_locale (GimpHelpDomain    *domain,
     return locale;
 
   locale = gimp_help_locale_new (locale_id);
+  g_hash_table_insert (domain->help_locales, g_strdup (locale_id), locale);
 
-  if (! domain_locale_parse (domain, locale, progress, NULL))
-    g_clear_pointer (&locale, gimp_help_locale_free);
-  else
-    g_hash_table_insert (domain->help_locales, g_strdup (locale_id), locale);
+  domain_locale_parse (domain, locale, progress, NULL);
 
   return locale;
 }
@@ -146,24 +130,25 @@ gimp_help_domain_map (GimpHelpDomain    *domain,
   if (fatal_error)
     *fatal_error = FALSE;
 
-  /*  Look for a reference matching the help_id  */
+  /*  first pass: look for a reference matching the help_id  */
   for (list = help_locales; list && !ref; list = list->next)
     {
       locale = gimp_help_domain_lookup_locale (domain,
                                                (const gchar *) list->data,
                                                progress);
-      if (locale)
-        {
-          ref = gimp_help_locale_map (locale, help_id);
-          /* It doesn't make sense to keep looking since all available locales
-           * have the same pages available. If the first locale present
-           * doesn't have it, the others won't have it either. */
-          if (! ref)
-            ref = locale->help_missing;
-        }
+      ref = gimp_help_locale_map (locale, help_id);
     }
 
-  if (ret_locale && locale)
+  /*  second pass: look for a fallback                 */
+  for (list = help_locales; list && !ref; list = list->next)
+    {
+      locale = gimp_help_domain_lookup_locale (domain,
+                                               (const gchar *) list->data,
+                                               progress);
+      ref = locale->help_missing;
+    }
+
+  if (ret_locale)
     *ret_locale = locale;
 
   if (ref)
@@ -185,7 +170,7 @@ gimp_help_domain_map (GimpHelpDomain    *domain,
       locale = gimp_help_domain_lookup_locale (domain,
                                                GIMP_HELP_DEFAULT_LOCALE, NULL);
 
-      if (locale && ! domain_locale_parse (domain, locale, NULL, &error))
+      if (! domain_locale_parse (domain, locale, NULL, &error))
         {
           switch (error->code)
             {
@@ -243,34 +228,14 @@ gimp_help_domain_map (GimpHelpDomain    *domain,
 
 /*  private functions  */
 
-G_LOCK_DEFINE (done);
-
-static gboolean
-parse_thread_func (HelpThreadData *data)
-{
-
-  *data->success = gimp_help_locale_parse (data->locale, data->uri, data->domain,
-                                           data->progress, data->cancellable, data->error);
-  G_LOCK (done);
-  *data->done = TRUE;
-  G_UNLOCK (done);
-
-  return *data->success;
-}
-
 static gboolean
 domain_locale_parse (GimpHelpDomain    *domain,
                      GimpHelpLocale    *locale,
                      GimpHelpProgress  *progress,
                      GError           **error)
 {
-  GCancellable   *cancellable;
-  gchar          *uri;
-  GThread        *thread;
-  GTimer         *timer;
-  gboolean        success = FALSE;
-  gboolean        done    = FALSE;
-  HelpThreadData  data;
+  gchar    *uri;
+  gboolean  success;
 
   g_return_val_if_fail (domain != NULL, FALSE);
   g_return_val_if_fail (locale != NULL, FALSE);
@@ -279,41 +244,10 @@ domain_locale_parse (GimpHelpDomain    *domain,
   uri = g_strdup_printf ("%s/%s/gimp-help.xml",
                          domain->help_uri, locale->locale_id);
 
-  timer            = g_timer_new ();
-  cancellable      = g_cancellable_new ();
-  data.done        = &done;
-  data.success     = &success;
-  data.locale      = locale;
-  data.uri         = uri;
-  data.domain      = domain->help_domain;
-  data.progress    = progress;
-  data.cancellable = cancellable;
-  data.error       = error;
-  thread           = g_thread_new (NULL, (GThreadFunc) parse_thread_func, &data);
-
-  while (TRUE)
-    {
-      gboolean exit;
-
-      G_LOCK (done);
-      exit = *data.done;
-      G_UNLOCK (done);
-
-      if (! exit && g_timer_elapsed (timer, NULL) > 10.0)
-        {
-          g_cancellable_cancel (cancellable);
-          exit = TRUE;
-        }
-
-      if (exit)
-        break;
-    }
-
-  g_thread_join (thread);
+  success = gimp_help_locale_parse (locale, uri, domain->help_domain,
+                                    progress, error);
 
   g_free (uri);
-  g_timer_destroy (timer);
-  g_object_unref (cancellable);
 
   return success;
 }

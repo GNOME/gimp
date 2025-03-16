@@ -169,11 +169,11 @@ gimp_help_locale_parse (GimpHelpLocale    *locale,
                         const gchar       *uri,
                         const gchar       *help_domain,
                         GimpHelpProgress  *progress,
-                        GCancellable      *cancellable,
                         GError           **error)
 {
   GMarkupParseContext *context;
   GFile               *file        = NULL;
+  GCancellable        *cancellable = NULL;
   LocaleParser         parser      = { NULL, };
 #ifdef PLATFORM_OSX
   NSURL               *fileURL;
@@ -213,15 +213,12 @@ gimp_help_locale_parse (GimpHelpLocale    *locale,
     {
       gchar *name = g_file_get_parse_name (file);
 
+      cancellable = g_cancellable_new ();
       _gimp_help_progress_start (progress, cancellable,
                                  _("Loading index from '%s'"), name);
 
+      g_clear_object (&cancellable);
       g_free (name);
-      if (g_cancellable_is_cancelled (cancellable))
-        {
-          _gimp_help_progress_finish (progress);
-          return FALSE;
-        }
     }
 
 #ifdef PLATFORM_OSX
@@ -241,8 +238,6 @@ gimp_help_locale_parse (GimpHelpLocale    *locale,
       locale_set_error (error,
                         _("Could not load data from '%s': %s"), file);
       g_object_unref (file);
-      if (progress)
-        _gimp_help_progress_finish (progress);
       return FALSE;
     }
 
@@ -254,13 +249,12 @@ gimp_help_locale_parse (GimpHelpLocale    *locale,
       GFileInfo *info = g_file_query_info (file,
                                            G_FILE_ATTRIBUTE_STANDARD_SIZE, 0,
                                            cancellable, error);
-      if (! info || g_cancellable_is_cancelled (cancellable))
+      if (! info)
         {
           locale_set_error (error,
                             _("Could not open '%s' for reading: %s"), file);
           g_object_unref (file);
 
-          _gimp_help_progress_finish (progress);
           return FALSE;
         }
 
@@ -271,14 +265,11 @@ gimp_help_locale_parse (GimpHelpLocale    *locale,
 
   stream = g_file_read (file, cancellable, error);
 
-  if (! stream || g_cancellable_is_cancelled (cancellable))
+  if (! stream)
     {
       locale_set_error (error,
                         _("Could not open '%s' for reading: %s"), file);
       g_object_unref (file);
-
-      if (progress)
-        _gimp_help_progress_finish (progress);
 
       return FALSE;
     }
@@ -316,7 +307,7 @@ gimp_help_locale_parse (GimpHelpLocale    *locale,
   g_string_free (parser.value, TRUE);
   g_free (parser.id_attr_name);
 
-  if (! success || g_cancellable_is_cancelled (cancellable))
+  if (! success)
     locale_set_error (error, _("Parse error in '%s':\n%s"), file);
 
   g_object_unref (file);
