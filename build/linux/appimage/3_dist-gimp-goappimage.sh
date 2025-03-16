@@ -331,7 +331,6 @@ if [ "$GIMP_UNSTABLE" ]; then
   bund_usr "$UNIX_PREFIX" "lib/dri*"
 fi
 ### Debug dialog
-conf_app DEBUGINFOD_URLS "https://debuginfod.debian.net" --no-expand
 bund_usr "$GIMP_PREFIX" "bin/gimp-debug-tool*" --dest "libexec"
 ### headers for gimptool
 bund_usr "$GIMP_PREFIX" "include/gimp-*"
