@@ -82,7 +82,7 @@
   </provides>
 
   <releases>
-    <release version="3.0.0" date="TODO">
+    <release version="3.0.0" date="2025-03-16">
       <description>
         <p>
         Our initial release for the next generation in image manipulation!
