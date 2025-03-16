@@ -97,18 +97,18 @@ less /usr/manifest.json
 
 ## Versioning the flatpaks
 
-* For the development releases and nightly builds, we added the
-  `desktop-file-name-prefix` property. For a stable release, the property line
-  can be removed from the manifest.
+Aside from bumping commits of babl, gegl and gimp modules (an
+process specific of the org.gimp.GIMP repo on flathub), we:
 
-* For a stable release, set top `"branch":"stable"`, and inside the
-  "gimp", "babl" and "gegl" modules, set "tag" to the git tag (ex:
-  `GIMP_2_10_34`) and "commit" to the git commit hash for this tag.
+* For a **nightly** build, add "nightly" on "tags",
+  use "nightly" on build-id at gimp module "config-opts",
+  set "Nightly" on "desktop-file-name-prefix", and
+  add "app-id":"org.gimp.GIMP.Nightly" and top "branch":"master".
 
-* For a development release, set top `"branch":"beta"`, and inside the
-  "gimp", "babl" and "gegl" modules, set "tag" to the git tag (ex:
-  `GIMP_2_99_14`) and "commit" to the git commit hash for this tag.
+* For a new **development** series, add "development" on "tags",
+  use "dev" on build-id at gimp module "config-opts", and
+  set "beta" on "desktop-file-name-prefix".
 
-* For a nightly build, set top `"branch":"master"`, and inside the
-  "gimp", "babl" and "gegl" modules, set "branch" to "master", and
-  remove any "commit" line.
+* For a new **stable** series, add "stable" on "tags",
+  use "stable" on build-id at gimp module "config-opts", and
+  remove "desktop-file-name-prefix".
