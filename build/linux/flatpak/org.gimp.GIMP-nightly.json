@@ -953,12 +953,11 @@
                 "-Dgi-docgen=disabled",
                 "-Dicc-directory=/run/host/usr/share/color/icc/",
                 "-Dcheck-update=no",
-                "-Dbuild-id=org.gimp.GIMP.flatpak.nightly",
-                "-Denable-default-bin=enabled"
+                "-Denable-default-bin=enabled",
+                "-Dbuild-id=org.gimp.GIMP.flatpak.nightly"
             ],
             "cleanup": [
-                "/bin/gimp-console*",
-                "/bin/gimptool*"
+                "/bin/gimp-console*"
             ]
         }
     ]
