@@ -44,12 +44,16 @@
   <url type="contribute">https://www.gimp.org/develop/</url>
   <screenshots>
     <screenshot type="default">
-      <image>https://www.gimp.org/screenshots/Screenshot-gimp-2.10-painting.jpg</image>
-      <caption>Painting in GIMP</caption>
+      <image>https://www.gimp.org/screenshots/Screenshot-gimp-3.0-painting.jpg</image>
+      <caption>Scene 4 cut 15 of "ZeMarmot" being edited in GIMP. Illustration by Aryeom (CC by-sa 4.0 International)</caption>
     </screenshot>
     <screenshot type="default">
-      <image>https://www.gimp.org/screenshots/Screenshot-gimp-2.10-photo-editing.jpg</image>
-      <caption>Photo editing in GIMP</caption>
+      <image>https://www.gimp.org/screenshots/Screenshot-gimp-3.0-photo-editing-1.jpg</image>
+      <caption>Gull on beach photograph being edited in GIMP. Photo by Iana (CC by-sa 4.0 International)</caption>
+    </screenshot>
+    <screenshot type="default">
+      <image>https://www.gimp.org/screenshots/Screenshot-gimp-3.0-photo-editing-2.jpg</image>
+      <caption>Portrait of Sofiia being edited in GIMP. Photo by Sofia (CC by-sa 4.0 International)</caption>
     </screenshot>
   </screenshots>
   <update_contact>gimp-developer-list_at_gnome.org</update_contact>
