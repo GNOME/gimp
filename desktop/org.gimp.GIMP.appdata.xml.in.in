@@ -55,6 +55,10 @@
       <image>https://www.gimp.org/screenshots/Screenshot-gimp-3.0-photo-editing-2.jpg</image>
       <caption>Portrait of Sofiia being edited in GIMP. Photo by Sofia (CC by-sa 4.0 International)</caption>
     </screenshot>
+    <screenshot type="default">
+      <image>https://www.gimp.org/screenshots/Screenshot-gimp-3.0-engraving.jpg</image>
+      <caption>Scanned engraving being edited in GIMP. Artwork by Liam (CC0)</caption>
+    </screenshot>
   </screenshots>
   <update_contact>gimp-developer-list_at_gnome.org</update_contact>
   <keywords>
