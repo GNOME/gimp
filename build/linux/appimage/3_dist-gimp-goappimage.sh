@@ -405,6 +405,7 @@ mv build/linux/appimage/AppRun.bak build/linux/appimage/AppRun
 rm $APP_DIR/*.desktop
 echo "usr/${LIB_DIR}/${LIB_SUBDIR}gconv
       usr/${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/gdk-pixbuf-query-loaders
+      usr/${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/*.debug
       usr/share/doc
       usr/share/themes
       etc
