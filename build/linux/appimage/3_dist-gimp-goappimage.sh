@@ -36,7 +36,7 @@ GIMP_DIR="$PWD/"
 cd ${GIMP_DIR}${PARENT_DIR}
 if [ "$GITLAB_CI" ]; then
   apt-get update >/dev/null 2>&1
-  apt-get install -y --no-install-recommends ca-certificates wget curl >/dev/null 2>&1
+  apt-get install -y --no-install-recommends ca-certificates wget curl binutils debuginfod >/dev/null 2>&1
 fi
 export HOST_ARCH=$(uname -m)
 export APPIMAGE_EXTRACT_AND_RUN=1
@@ -134,10 +134,10 @@ if [ -z "$GITLAB_CI" ] && [ -z "$GIMP_PREFIX" ]; then
   export GIMP_PREFIX="$PWD/../_install"
 fi
 if [ -z "$GITLAB_CI" ]; then
-  IFS=$'\n' VAR_ARRAY=($(cat .gitlab-ci.yml | sed -n '/multi-os/,/multiarch/p' | sed 's/    - //'))
+  IFS=$'\n' VAR_ARRAY=($(cat .gitlab-ci.yml | sed -n '/multi-os/,/multiarch/p' | sed 's/- //'))
   IFS=$' \t\n'
   for VAR in "${VAR_ARRAY[@]}"; do
-    eval "$VAR" || continue
+    eval "$VAR"
   done
 fi
 
@@ -331,6 +331,7 @@ if [ "$GIMP_UNSTABLE" ]; then
   bund_usr "$UNIX_PREFIX" "lib/dri*"
 fi
 ### Debug dialog
+conf_app DEBUGINFOD_URLS "https://debuginfod.debian.net" --no-expand
 bund_usr "$GIMP_PREFIX" "bin/gimp-debug-tool*" --dest "libexec"
 ### headers for gimptool
 bund_usr "$GIMP_PREFIX" "include/gimp-*"
@@ -387,6 +388,17 @@ done
 #lua_cpath_tweaked="$(echo $LUA_CPATH | sed -e 's|$HERE/||' -e 's|/?.so||')/lgi"
 #find "usr/${LIB_DIR}/${LIB_SUBDIR}" -maxdepth 1 -iname *.so* -exec ln -sf $(realpath "{}" --relative-to "$lua_cpath_tweaked") "$lua_cpath_tweaked" \;
 #cd ..
+
+## Debug symbols
+if [ "$GITLAB_CI" ]; then
+  export DEBUGINFOD_URLS="https://debuginfod.debian.net"
+fi
+bin_array=($(find "$USR_DIR/bin" "$USR_DIR/$LIB_DIR" ! -iname "*.dumb*" -type f -exec head -c 4 {} \; -exec echo " {}" \;  | grep ^.ELF))
+for bin in "${bin_array[@]}"; do
+  if [[ ! "$bin" =~ 'ELF' ]] && [[ ! "$bin" =~ '.debug' ]]; then
+    grep -a -q '.gnu_debuglink' $bin && echo "(INFO): bundling $bin debug symbols to $(dirname $bin)" && cp -f $(debuginfod-find debuginfo $bin) "$(dirname $bin)/$(readelf --string-dump=.gnu_debuglink $bin | sed -n '/]/{s/.* //;p;q}')" || $true
+  fi
+done
 
 ## Files unnecessarily created or bundled by go-appimagetool
 mv build/linux/appimage/AppRun $APP_DIR
