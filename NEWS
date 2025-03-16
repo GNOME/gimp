@@ -58,14 +58,14 @@ Plug-ins:
       new independent Script-Fu plug-ins in particular should use
       (gimp-progress-set-text) like plug-ins in other programming
       languages.
-  - Help: gimp-help.xml remote file is loaded in a thread to make it
-    cancellable in case it gets stuck.
   - JPEG:
     * When using jpeg-turbo >= 3.0.0, loading 12 and 16bpc JPEG is
       now supported.
     * Some options in the export dialog are now displayed in a second
       column to avoid overlong dialog.
   - FLI: fixing ZDI-CAN-25100.
+  - ICNS: PNG-based ICNS files now support color profiles at loading and
+    exporting.
 
 API:
 
@@ -82,7 +82,7 @@ Build:
     GIMP runs with gdb.
   - Debian package images are now created in the dependency job building
     babl and GEGL.
-  - Depends on babl 0.1.112.
+  - Depends on babl 0.1.112 and GEGL 0.4.56.
   - More file format testing in the test-plug-ins infrastructure.
 
 
