@@ -40,10 +40,6 @@
     </config>
     -->
 
-    <config name="SSERequired">
-      <value>This version of GIMP requires a processor that supports SSE instructions.</value>
-    </config>
-
     <config name="Require32BPPTitle">
       <value>Display settings problem</value>
     </config>
@@ -57,9 +53,6 @@
       <value>E&amp;xit</value>
     </config>
 
-    <config name="InstallOrCustomize">
-      <value>GIMP is now ready to be installed. Click the Install now button to install using the default settings, or click the Customize button if you'd like to have more control over what gets installed.</value>
-    </config>
     <config name="Install">
       <value>&amp;Install</value>
     </config>
@@ -165,14 +158,6 @@
     <config name="AdditionalIconsDesktop">
       <value>Create a &amp;desktop icon</value>
     </config>
-    <!-- Additional installation tasks -->
-    <config name="AdditionalIconsQuickLaunch">
-      <value>Create a &amp;Quick Launch icon</value>
-    </config>
-
-    <config name="RemoveOldGIMP">
-      <value>Remove previous GIMP version</value>
-    </config>
 
     <!-- %1 is replaced by file name; this message should never appear (unless user runs out of disk space at the exact right moment) -->
     <config name="ErrorChangingEnviron">
@@ -185,57 +170,6 @@
     <!-- This message should never appear (unless user runs out of disk space at the exact right moment) -->
     <config name="ErrorUpdatingPython">
       <value>Error updating Python interpreter info.</value>
-    </config>
-    <!-- This message should never appear (unless user runs out of disk space at the exact right moment) -->
-    <config name="ErrorUpdatingMyPaint">
-      <value>Error updating MyPaint brushes info.</value>
-    </config>
-    <!-- %1 is replaced by file name; this message should never appear (unless user runs out of disk space at the exact right moment) -->
-    <config name="ErrorReadingGimpRC">
-      <value>There was an error updating %1.</value>
-    </config>
-    <!-- %1 is replaced by file name; this message should never appear (unless user runs out of disk space at the exact right moment) -->
-    <config name="ErrorUpdatingGimpRC">
-      <value>There was an error updating GIMP's configuration file %1.</value>
-    </config>
-
-    <!-- Displayed in Explorer's right-click menu -->
-    <config name="OpenWithGimp">
-      <value>Edit with GIMP</value>
-    </config>
-
-    <!-- File associations page -->
-    <config name="SelectAssociationsCaption">
-      <value>Select file associations</value>
-    </config>
-    <!-- File associations page -->
-    <config name="SelectAssociationsExtensions">
-      <value>Extensions:</value>
-    </config>
-    <!-- File associations page -->
-    <config name="SelectAssociationsInfo1">
-      <value>Select the file types you wish to associate with GIMP</value>
-    </config>
-    <!-- File associations page -->
-    <config name="SelectAssociationsInfo2">
-      <value>This will make selected files open in GIMP when you double-click them in Explorer.</value>
-    </config>
-    <!-- File associations page -->
-    <config name="SelectAssociationsSelectAll">
-      <value>Select &amp;All</value>
-    </config>
-    <!-- File associations page -->
-    <config name="SelectAssociationsUnselectAll">
-      <value>Unselect &amp;All</value>
-    </config>
-    <!-- File associations page -->
-    <config name="SelectAssociationsSelectUnused">
-      <value>Select &amp;Unused</value>
-    </config>
-
-    <!-- Shown on summary screen just before starting the install -->
-    <config name="ReadyMemoAssociations">
-      <value>File types to associate with GIMP:</value>
     </config>
 
     <config name="RemovingOldVersion">
@@ -272,20 +206,11 @@
       <value>for free updates.</value>
     </config>
 
-    <config name="SettingUpAssociations">
-      <value>Setting up file associations...</value>
-    </config>
     <config name="SettingUpPyGimp">
       <value>Setting up environment for GIMP Python extension...</value>
     </config>
-    <config name="SettingUpMyPaint">
-      <value>Setting up MyPaint brushes...</value>
-    </config>
     <config name="SettingUpEnvironment">
       <value>Setting up GIMP environment...</value>
-    </config>
-    <config name="SettingUpGimpRC">
-      <value>Setting up GIMP configuration for 32-bit plug-in support...</value>
     </config>
 
     <!-- Displayed on last page -->
@@ -300,11 +225,6 @@
 
     <config name="InternalError">
       <value>Internal error (%1).</value>
-    </config>
-
-    <!-- Used by installer for add-ons (currently only help) -->
-    <config name="DirNotGimp">
-      <value>GIMP does not appear to be installed in the selected directory. Continue anyway?</value>
     </config>
   </section>
 </gimp-ms-installer-config>
