@@ -472,7 +472,7 @@ if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags
       }
     else
       {
-        #$PRODUCT_ID="NONE_YET"
+        $PRODUCT_ID="9PNSJCLXDZ0V"
       }
 
     ## Create submission and upload .msixupload file to it
