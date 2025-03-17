@@ -1,0 +1,3519 @@
+                   ------------------------------
+                   GNU Image Manipulation Program
+                         Development Branch
+                   ------------------------------
+
+This used to be the development branch that lead to GIMP 3.0.
+
+
+Overview of Changes from GIMP 3.0.0-RC3 to GIMP 3.0.0
+=====================================================
+
+Core:
+
+  - Blacklisted GEGL operations:
+    * gegl:pack
+    * json:dropshadow
+    * json:grey2
+  - Add support for uncompressed 16 bit ABR brushes.
+  - Get rid of different code paths for exiting GIMP depending on being
+    a release build or not. Now we always exit GIMP the clean way.
+  - Core GEGL operations with a "gimp:menu-path" will now have a
+    generated help ID, constructed from the operation's name.
+  - Render-after-filters is used when selecting by color.
+  - When drag'n dropping items containing groups and descendant, just
+    drop the group with all descendants.
+  - Merging pass-through group layers now merges the actual render of
+    the group (which contains the rendering of layers *below* the group
+    too, by definition). This way, the rendering is the same before and
+    after merging the group (though it will get rid of more layers than
+    other mode merging would do).
+
+Tools:
+
+  - Text tool:
+    * bold/italic buttons don't mean necessarily "faux" bold or italic
+      (respectively) anymore, because it is different from 2.10 where it
+      may mean real bold/italic variant for the font, if available. We
+      might get back to these buttons meaning only the "faux" styles
+      (since the actual variants are also available through the font
+      list so you have both worlds) later, but for now, we want to make
+      sure we don't break rendering of existing XCF files.
+    * In font list, we use the "family style" as display name when
+      available which is often more suitable for display than the
+      "fullname".
+
+Graphical User Interface:
+
+  - Long file names are now ellipsized in the File and Windows submenus.
+
+Plug-ins:
+
+  - Script-Fu:
+    * Improve Script-Fu progress notifications.
+    * Added wrapper (gimp-pdb-procedure-exists) to the corresponding
+      libgimp function.
+    * Progress report for every called PDB procedure now only happens
+      automatically for scripts running over "extension-script-fu". The
+      new independent Script-Fu plug-ins in particular should use
+      (gimp-progress-set-text) like plug-ins in other programming
+      languages.
+  - JPEG:
+    * When using jpeg-turbo >= 3.0.0, loading 12 and 16bpc JPEG is
+      now supported.
+    * Some options in the export dialog are now displayed in a second
+      column to avoid overlong dialog.
+  - FLI: fixing ZDI-CAN-25100.
+  - ICNS: PNG-based ICNS files now support color profiles at loading and
+    exporting.
+
+API:
+
+  - Changes in libgimp:
+    * Default sensitivity masks:
+      + for image procedures: GIMP_PROCEDURE_SENSITIVE_DRAWABLE | GIMP_PROCEDURE_SENSITIVE_DRAWABLES
+      + for other procedures: GIMP_PROCEDURE_SENSITIVE_ALWAYS
+    * gimp_procedure_is_core() renamed gimp_procedure_is_internal()
+
+Build:
+
+  - More robust InnoSetup scripts grabbing data directly from meson.
+  - New -Ddebug-self-in-build meson option for debugging the in-build
+    GIMP runs with gdb.
+  - Debian package images are now created in the dependency job building
+    babl and GEGL.
+  - Depends on babl 0.1.112 and GEGL 0.4.56.
+  - More file format testing in the test-plug-ins infrastructure.
+
+
+Overview of Changes from GIMP 3.0.0-RC2 to GIMP 3.0.0-RC3
+=========================================================
+
+Core:
+
+  - Filters:
+    * Apply noninteractive filters direct to drawable.
+    * Gamma hack removed.
+    * Filter names are not stored in XCF anymore unless it was
+      explicitly set.
+    * Major image graph update so that we don't cast back to storage
+      pixel format in-between filters making non-destructive filters a
+      lot more powerful. We now only cast during preview of filters when
+      "Merge filter" checkbox is checked.
+    * More image graph update: we only crop before the first effect on a
+      filter stack for a given drawable. Further pre-crops are now no-op
+      nodes.
+  - More robust program loading even on systems with no fonts at all.
+  - Various missing help-ids added.
+  - The debugging infrastructure was not getting backtraces for all
+    threads (only the main thread) since 2.99.10 because of a hanging
+    bug in gdb. This is now reverted as a test.
+  - Reworking of projection flushing to make it thread-safe (e.g. when
+    projection updates are requested from the "paint" thread).
+  - Improved support for cloud providers' file loading.
+  - Dashboard: performance log filenames now contain the timestamp in
+    ISO-8601 basic format.
+
+Graphical User Interface:
+
+  - Show icons in Tips Dialog on Windows.
+  - Add Help buttons to About/Tips/Welcome dialogs.
+  - macOS: open files from Finder on macOS 15 (Sonoma) and higher with
+    new implementation.
+  - Various theming tweaks improving usability.
+  - Don't show Release Notes in Welcome dialog when none exist.
+  - Various icons now have RTL variants (by inverting the opposite
+    icons, e.g. go-next/go-previous).
+  - Various usability improvements.
+
+Plug-ins:
+
+  - DDS:
+    * Various improvements to BGR8 and other formats.
+    * New support for importing DDS BC7 compression.
+  - BMP: various import improvements and code cleanup.
+  - EXR: more robust EXR file import, especially regarding invalid files
+    (e.g. fuzzed ones).
+  - Script-Fu:
+    * new named argument syntax for non-core (i.e. plug-in
+      created) PDB procedures allowing arguments to be set in any order
+      and more semantically.
+    * The new named argument syntax can also be used for arguments of
+      filters (though string still works as there is no confusion
+      possible with another syntax).
+    * SF-FILENAME and SF-DIRNAME args now create a GimpParamSpecFile
+      argument with the proper action type.
+    * Script-Fu third-party scripts using the standalone interpreter can
+      now be localized properly with the same default logic as other
+      plug-ins.
+  - PSD:
+    * Metadata export now supported.
+    * 16-bit per channel LAB PSD are now supported at import.
+    * PSD compatibility messages are now selectable for easy copy-paste.
+    * Store proper merged image when exporting CMYK PSD files.
+  - All plug-ins with a GFile argument now use a GimpParamSpecFile spec.
+  - JPEG-XL: export options were simplified:
+    * CMYK is always saved as lossless: lossy CMYK is discouraged by
+      libjxl developers and results in visible artifacts.
+    * "Save original profile" option is removed. We now simply follow
+      the profile settings of the image.
+  - ICNS:
+    * ipc4, ipc5, and ipc6 type ICNS icons do not render well when
+      included in an app as part of a bundle. We now use older is32,
+      il32, and ih32 24-bit RGB formats (with 8 bit masks) instead of
+      the newer PNG formats for those sized icons.
+    * Support loading ARGB ICNS icons.
+    * Support loading pre-OSX ICNS with no masks.
+
+API:
+
+  - Changes in libgimpbase:
+    * Creation time metadata are added (for various tags in IPTC, XMP
+      and Exif) when first creating a new image.
+    * New functions:
+      + gimp_metadata_set_creation_date() allowing to set a custom creation date.
+      + gimp_param_spec_file_get_action()
+      + gimp_param_spec_file_set_action()
+      + gimp_param_spec_file_none_allowed()
+      + gimp_param_spec_unit_percent_allowed()
+      + gimp_param_spec_unit_pixel_allowed()
+      + gimp_param_spec_core_object_array_get_object_type()
+      + gimp_param_spec_value_array_get_element_spec()
+      + gimp_param_spec_choice_get_choice()
+      + gimp_param_spec_choice_get_default()
+    * New GimpFileChooserAction enum type.
+    * New GimpParamSpecFile param spec type.
+  - Changes in libgimp:
+    * New functions:
+      + gimp_procedure_is_core()
+      + gimp_param_spec_resource_defaults_to_context()
+      + gimp_param_spec_resource_none_allowed()
+      + gimp_param_spec_display_none_allowed()
+      + gimp_param_spec_drawable_filter_none_allowed()
+      + gimp_param_spec_image_none_allowed()
+      + gimp_param_spec_item_none_allowed()
+    * gimp_pdb_query() doesn't return private PDB procedures anymore.
+    * The various "save-*" PDB procedure arguments for export plug-ins
+      were renamed to "include-*" and made public.
+    * gimp_file_save_thumbnail() renamed gimp_file_create_thumbnail()
+      and now supporting when the file is the export or import image.
+    * GFile arguments are now stored as URI rather than path in config
+      files.
+    * gimp_procedure_dialog_get_widget() now supports GimpParamSpecUnit
+      arguments.
+    * Filters based off GIMP-made GEGL operations with a custom
+      configuration object are now configurable through the PDB/libgimp,
+      like any other filters.
+    * Filters created by libgimp are always set as "unclipped".
+      Functions to control this settings will likely happen after 3.0.0
+      release.
+    * Compat PDB-only procedure plug-in-autocrop is now transformed to
+      proper gimp-image-autocrop procedure with corresponding libgimp
+      function gimp_image_autocrop().
+    * Compat PDB-only procedure plug-in-autocrop-layer is now
+      transformed to proper gimp-image-autocrop-selected-layers
+      procedure with corresponding libgimp function
+      gimp_image_autocrop_selected_layers().
+    * Both the new autocrop procedures now allow a NULL input drawable
+      and will use the image for determining cropping extents in this
+      case.
+  - Changes in libgimpwidgets:
+    * New GimpFileChooser widget.
+    * New functions:
+      +  gimp_file_chooser_get_action()
+      +  gimp_file_chooser_get_file()
+      +  gimp_file_chooser_get_label()
+      +  gimp_file_chooser_get_label_widget()
+      +  gimp_file_chooser_get_title()
+      +  gimp_file_chooser_get_type()
+      +  gimp_file_chooser_new()
+      +  gimp_file_chooser_set_action()
+      +  gimp_file_chooser_set_file()
+      +  gimp_file_chooser_set_label()
+      +  gimp_file_chooser_set_title()
+      +  gimp_prop_file_chooser_new()
+  - Changes in libgimpui:
+    * GimpProcedureDialog now create automatically a GimpFileChooser
+      with UI adapted to the requested action for the argument (through
+      gimp_procedure_dialog_get_widget()), such as opening/creating a
+      file/folder.
+    * Removed functions:
+      + gimp_procedure_dialog_get_file_chooser()
+
+Translations:
+
+  - New Swedish language support for the Windows installer.
+
+Build:
+
+  - Massive cleanup of useless dependencies and adding back some missing
+    runtime dependencies in CI and packages.
+  - In-build GIMP process is now run through gdb (when available) to
+    help debug crashes of GIMP during the build.
+  - API docs now use the development logo.
+  - New CMYK PAM tests (for test-file-plug-ins testing infrastructure).
+  - Improve shared Docker Debian versioning in the CI and make it branch
+    aware.
+  - Crossbuild jobs are back in CI and with UCRT.
+  - Meson option -Dg-ir-doc was removed.
+  - No build attempt to use build caching in CI. It was just making
+    problems with no clear gain.
+  - AppImage packages (x86_64 and AArch64) are now official packages.
+  - MS Store version is now automatically uploaded through the CI.
+  - Minimum dependency requirement update: GEGL 0.4.54.
+
+
+Overview of Changes from GIMP 3.0.0-RC1 to GIMP 3.0.0-RC2
+=========================================================
+
+Core:
+
+  - Histogram now takes into account the image color space for more
+    correct results.
+  - Unsupported fonts stderr message is not shown anymore on stable
+    builds as it is confusing to people (who see often huge numbers,
+    because there are indeed a lot of font types, especially the legacy
+    bitmap fonts whose support got broked by Pango, which are not
+    supported by GIMP, at least for now).
+  - Drag'n drop color fills now forbidden when "Allow editing on
+    non-visible layers" is OFF and the target layer is set invisible.
+  - Improved font matching heuristic for old XCF files, to find the
+    closest font candidate.
+  - The "RGB (perceptual)" blend/composite space got renamed "RGB (from
+    color space)" and a new/real "RGB (perceptual)" blend/composite
+    space was added.
+  - The following layer modes' default blend space was changed to the
+    new "RGB (perceptual)" space: Overlay, Screen, Difference, Dodge,
+    Burn, Hard light, Soft light, Grain extract, Grain merge, Vivid
+    light, Pin light, Linear light, Hard mix, Exclusion and Linear burn.
+    It doesn't break existing XCF files since the actual blend space
+    used is stored in the file (even when left to "Auto", the XCF format
+    knows what "Auto" meant at save time).
+
+Graphical User Interface:
+
+  - "Check for Updates" button is not shown in About dialog anymore when
+    "check-release" build option is FALSE.
+  - Stable (or stable-like such as RCs) builds should not open the debug
+    console on Windows.
+  - Some "Default" icon theme icons are used within the "Legacy" icon
+    theme when missing there, as a temporary workaround to avoid missing
+    icons ugliness.
+  - "Layer Name" field in the Layer dialogue is now explicitly focused
+    on dialog creation (this was the case in 2.10, but there it was
+    probably "by chance", now it's "by design") because layer names is
+    often the most common thing people want to change in this dialog.
+    So it allows quick workflow of opening the dialog, typing a layer
+    name and hitting Enter.
+  - GimpSpinScale CSS styling improved for better readability.
+  - Color Profile labels in the GimpColorSelect widget are now
+    ellipsized to prevent over-wide container widgets/dockables when an
+    image has a profile with a long name.
+  - GimpStatusBar is now aware of icon size changes (soft-proofing
+    buttons and current tool icons are resized when relevant).
+  - GimpHandleBar now uses the system's foreground color for its
+    outline.
+  - New RC2 splash screen by Sevenix.
+  - New icons: view-shrink-wrap, view-zoom-fill.
+  - Updated icons: zoom-fit, zoom-in, zoom-original, zoom-out.
+
+Plug-ins:
+
+  - Python Console:
+    * PageUp/Down usable as alternate of Up/Down to scroll history.
+    * Ctrl-R and Ctrl-S are now usable for searching respectively
+      backward and forward through the console command history, with
+      nice prompt-updating visual feedback.
+  - BMP import overhaul (for more details, see informative commit
+    messages in !1932 since this MR got mistakenly squashed into a
+    single commit):
+    * 8/16/32 bit-per-channel, int or float, are now imported lossessly
+      into the corresponding precision.
+    * New support for 2-bit indexed and ALPHABITFIELDS files.
+    * More lenient with regards to file header specs.
+    * Correctly identify OS/2 Huffman encoding.
+    * Add RLE24 support (RLE24 is a OS/2 variant of bmp compression).
+    * Add Huffman compression support (another compression variant for
+      OS/2 bmps). The source code contains a human readable version of
+      the Huffman code tables (generate-huffman.h). During build, the
+      actual header huffman.h is generated which includes a digested
+      form of these tables.
+    * Load bmp chunk-wise instead of whole image: loads image
+      tile-height lines at a time to reduce memory allocation for
+      temporary image buffer.
+    * Unify RLE24 with RLE4/8 decoding.
+    * RLE: add alpha channel for undefined pixels: RLE-bmps can have
+      undefined pixels. Load those bmps with an alpha channel
+      (GIMP_INDEXEDA_IMAGE) and make undefined pixels transparent.
+    * Convert gamma/endpoint values in V4 headers to floating point.
+    * Various fixes and code reorganization.
+  - Metadata viewer now correctly shows various custom brand markernote
+    tags as interpreted strings (instead of opaque bytes).
+  - CMYK PAM files can now be imported.
+  - Windows shortcut (.link): new plug-in file-lnk (Windows-only) to
+    support loading shortcuts. This is mostly a wrapper plug-in like the
+    file-compressor one which redirects to the correct plug-in for the
+    specific image type.
+  - Script-fu:
+    * Do not warn anymore on not exact argument count for
+      PDB-marshalled procedures (it becomes an info message).
+    * Script-fu dialogs are now properly activated on macOS through
+      platform-specific code.
+    * On macOS, a script-fu dock icon is now only shown when a script
+      has a dialog.
+    * GimpDrawableFilter's IDs are now usable to take full advantage of
+      the various new PDB procedures working on filters.
+    * Adding a few custom wrappers to libgimp (non-PDB) functions:
+      - gimp-drawable-merge-new-filter: variable argument procedure
+        working like libgimp gimp_drawable_merge_new_filter().
+      - gimp-drawable-append-new-filter: variable argument procedure
+        working like libgimp gimp_drawable_append_new_filter().
+      - gimp-drawable-filter-configure: wrapping getting a
+        GimpDrawableFilterConfig and setting its properties as a
+        variable arg script-fu procedure.
+      - gimp-drawable-merge-filter: wrapping
+        gimp_drawable_merge_filter().
+      - gimp-drawable-append-filter: wrapping
+        gimp_drawable_append_filter().
+      - gimp-drawable-filter-set-aux-input: wrapping
+        gimp_drawable_filter_set_aux_input().
+  - PSD: legacy Color Overlay layer styles (legacy 'sofi' data) are now
+    loaded by GIMP as Color Overlay layer filters.
+
+API:
+
+  - Changes in libgimp:
+    * gimp_drawable_offset() signature changed, with an added GeglColor
+      argument used when the fill_type is GIMP_OFFSET_COLOR.
+    * New GimpDrawableFilter and GimpDrawableFilterConfig classes. These
+      come with ability to create/destroy a filter and various methods
+      to configure filters, then either append them to the list of
+      non-destructive filters of a layer, or merge them on any drawable.
+    * Auxiliary input pads are also supported for GimpDrawableFilter,
+      though filters with aux input can only be merged (same as in the
+      GUI), not applied non-destructively for the time being.
+    * New methods:
+      - gimp_drawable_get_filters()
+      - gimp_drawable_append_filter()
+      - gimp_drawable_merge_filter()
+      - gimp_drawable_append_new_filter()
+      - gimp_drawable_merge_new_filter()
+    * GIMP_LAYER_MODE_REPLACE is now visible/usable in libgimp and PDB
+     as part of the GimpLayerMode enum type.
+  - Changes in libgimpbase:
+    * GimpOffsetType changed: GIMP_OFFSET_BACKGROUND value replaced with
+      GIMP_OFFSET_COLOR.
+    * Exif.SonyMisc3c tags are now excluded at export because they cause
+      a failure of Exiv2 which was having all metadata export fail (see
+      issue #2670 on Exiv2 tracker).
+  - Changes in PDB:
+    * All compat PDB procedures which were special-casing specific GEGL
+      operations have now been removed. Any usage of these in various
+      scripts and plug-ins has been replaced by the new
+      GimpDrawableFilter generic API.
+    * GeglParamSeed can now be passed through the PDB so that filters
+      with a seed argument work as expected.
+    * Compat PDB procedures plug-in-rotate deleted and its usage in
+      scripts replaced with gimp-image-rotate or
+      gimp-item-transform-rotate-simple.
+
+Build:
+
+  - So many build and packaging improvements that we can't list them
+    all. :-D
+  - Our AppImage now supports much more distributions, though we still
+    consider it experimental.
+  - AppImage build is now a weekly scheduled job.
+  - Several unit tests improved with better UI-testing API.
+  - Pango >= 1.55.0 is now recommended on macOS because of fix pango!745
+    which fixes a major GUI issue on this platform.
+  - CI job logs now have collapsed sections for better readability.
+  - The Windows Installer will not check for SSE anymore since SSE2
+    instructions are required already for any supported Windows
+    versions.
+  - The app-ID of our nightly flatpak (on gnome-nightly repository) is
+    now "org.gimp.GIMP.Nightly". This will allow the nightly flatpak to
+    be side-by-side visible next to the stable or dev flatpak without
+    needed CLI commands.
+  - AppImage also have its own app-ID too: "org.gimp.GIMP.Continuous"
+  - Windows installer now defaults to user-mode installs, which is the
+    recommended defaults by Microsoft since Windows 7. It is obviously
+    still possible to install system-wide, but won't be the defaults
+    anymore.
+  - There is now also an Aarch64 AppImage.
+  - Minimum dependency version bump: GEGL 0.4.52.
+
+
+Overview of Changes from GIMP 2.99.18 to GIMP 3.0.0-RC1
+=======================================================
+
+Core:
+
+  - Conversion to Indexed:
+    * color precision increased;
+    * error diffusion in linear RGB while keeping palette generation as
+      CIE Lab.
+  - GIMP's GEGL operations:
+    * Posterize operates with a perceptual gamma;
+    * Threshold: processing with non-linear RGB;
+    * Hue-Saturation: using HSLA float as processing space which should be
+      quicker than previous implementation.
+  - Welcome dialog:
+    * Multiple images can be selected and opened at once with Enter key.
+    * "Show on Start" is now displayed specifically in the "Create" tab.
+  - Non-destructive layer effects:
+    * can now be applied on group layers;
+    * cannot be reordered anymore while being edited.
+  - More GimpRGB code replaced by GeglColor (space invasion).
+  - New official software logo!
+    See: https://gitlab.gnome.org/GNOME/gimp-data/-/blob/main/images/logo/README.md
+  - Internal procedures are not shown as search actions.
+  - Non-destructive layer effects are copied together with the layer they belong
+    to.
+  - Accessibility: if the "Reduced Motion" (or other names for the same
+    feature depending on OS/desktop) is checked in macOS, Windows, GNOME
+    or KDE, then the following animations are disabled: animated credits
+    in About dialog and some easter eggs.
+  - New actions:
+    * layers-select-flattened-previous: moving the selection up visually
+      in the layers list.
+    * layers-select-flattened-next: moving the selection down visually
+      in the layers list.
+  - The default icon for GimpViewable is now gimp-image rather than
+    dialog-question. In particular this shows up in some interfaces like
+    GEGL filters with aux nodes (when the aux input has not been chosen
+    yet).
+  - XCF 22: the GEGL Operation version is now stored for each layer
+    filter.
+  - GIMP doesn't quit when running non-interactively (i.e. as
+    gimp-console or with --no-interface) without CLI option `--quit`.
+    The process can be interrupted anytime with SIGINT (Ctrl-C) which
+    will trigger a clean exit.
+  - "Luma Lighten/Darken Only" default blend space is now linear
+    (instead of perceptual).
+  - execinfo.h (backtrace() API) is made non-mandatory on Linux, with
+    proper meson summary showing that the Dashboard backtrace feature
+    (performance logs) will not work.
+  - `gimp -v` and crash debug dialog now contain Exiv2 and GExiv2
+    version information.
+  - XCF will now refuse to load some types of GEGL ops as
+    non-destructive layer filters:
+    * GeglOperationSink operations;
+    * GEGL Graph ("gegl:gegl") except if the environment variable
+      GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT is set.
+  - On UNIX-like OSes, at first startup, if a 2.10 folder was not found
+    in the usual $XDG_CONFIG_HOME, we now lookup the flatpak folder
+    ~/.var/app/org.gimp.GIMP/config/ so that we are able to migrate from
+    a config created by a flatpak 2.10. Not only this, but we also look
+    in /var/config/ which is a mount to the same folder, from the host,
+    inside the flatpak sandbox. This way, both a 3.0 flatpak and
+    non-flatpak will find the config of the 2.10 flatpak despite the
+    change done to the flatpak manifest to always use $XDG_CONFIG_HOME
+    (see Build section).
+
+Tools:
+
+  - Gradient tool: the "Repeat" mode "Truncate" has been renamed "None
+    (truncate)" and reordered to be second in the list, just after "None
+    (extend)".
+  - Measure tool: guides can now be created off-canvas.
+  - Scissors Select: consistently name the tool "Scissors Select" by
+    dropping the alternate name "Intelligent Scissors" which was only
+    used in menus.
+  - GEGL filters:
+    * new "Merge filter" checkbox in the dialog to directly apply a
+      filter destructively (like in 2.10 and older).
+    * Filters with aux nodes can only be merged (no non-destructive
+      workflow possible for such filters yet).
+    * Auxiliary nodes now have their nicer name printed in the GUI.
+  - Paint Select tool now handles the standard Shift/Ctrl modifier for
+    adding or subtracting to selection. The tool is still experimental
+    and disabled by default though.
+  - Color Balance and Hue-Saturation effects work in sRGB space.
+
+Graphical User Interface:
+
+  - New "gimp-effects" icon (used in the Layers dockable for non-destructive
+    layer effects).
+  - GimpSpinScale text area height is now reduced to improve usability (it is
+    now easier to find the area to *grab* the scale vs. area to edit the text;
+    the cursor changing helping to make out one from the other).
+  - Some cleanups done with test plug-ins and scripts in menus.
+  - Add option for "Huge" Preview Size in dockable menu.
+  - Usage of Up/Down and PageUp/Down keys in items tree views are now
+    multi-item selection aware. Up/Down keys select items in visual
+    order, walking through item groups (in and out), except when they
+    are collapsed. PageUp/Down keys select items while not leaving
+    previously selected items' group level.
+  - Dockbook: tab scrolling behavior (using scroll to switch between
+    dockable tabs) which was removed from GtkNotebook in GTK+3 got
+    reimplemented in our code.
+  - Palette colors are shown in their own space.
+  - GimpColorSelect widget (the default color selection tab on the left
+    of the color selection dialog) now displays the selected color model
+    (RGB, HSV or LCh) and not only the space/profile (the latter is not
+    even displayed anymore in LCh which is CIELAB-based).
+  - Legacy icon theme's tool icons are now all vector.
+
+Plug-ins:
+
+  - Plug-ins ported to GimpProcedureDialog: Warp, decompose,
+    file-pdf-save-multi, qbist, file-xmc, file-tiff-load, file-icns,
+    file-ico, lava.scm.
+  - Script-Fu scripts ported to GimpProcedureDialog: addborder,
+    blend-anim, burn-in-anim, carve-it, chrome-it, circuit, clothify,
+    coffee, difference-clouds, distress-selection, drop-shadow,
+    fuzzyborder, old-photo, perspective-shadow, round-corners,
+    script-fu-set-cmap, selection-round, slide, unsharp-mask,
+    waves-anim, weave, xach-effect.
+  - PSD:
+    * unsupported layers are not dropped anymore (they will usually show
+      empty instead).
+    * add warning when exporting multi-layer indexed image (layers will
+      be merged because PSD does not support multi-layer indexed images,
+      unlike XCF).
+  - Script-Fu:
+    * "Refresh Scripts" (Filters > Development > Script-Fu) is now hidden. It
+      was broken and anyway not an ideal design choice.
+    * New call-with-output-string, call-with-input-string and any->string
+      functions.
+    * SF-VALUE type was removed.
+    * script-fu-register-procedure scheme function was added to create
+      procedures which are not image procedure. These Scheme plug-ins
+      will use GimpProcedureDialog. The legacy script-fu-register
+      function still works but is considered deprecated.
+    * Various plug-ins ported to script-fu-register-procedure:
+      gimp-online, gradient-example, mkbrush, palette-export,
+      paste-as-brush, paste-as-pattern, ts-helloworld.
+    * Colors can now be represented as grayscale with a list of 1 or 2
+      numerical values.
+  - All "file-*-save" (and "file-*-save-internal) plug-in procedures have been
+    renamed to "file-*-export" (respectively "file-*-export-internal").
+  - Ported to GimpVectorLoadProcedure: file-pdf-load, file-ps, file-svg
+    and file-wmf-load.
+  - Arguments ported to GimpChoice in the following plug-ins:
+    file-raw-data, file-jpeg, file-ps, decompose, blinds, curve-bend,
+    file-pcx, file-pnm, file-psp, hot, jigsaw, nl-filter, fits,
+    align-layer, border-average, contrast-retinex, despeckle,
+    screenshot, file-gif-export, file-heif, file-jp2-load, file-jpegxl,
+    file-mng, file-tga, file-bmp, file-sgi, file-webp.
+  - New file-plug-in testing framework. It comes with Gitlab junit reports.
+  - JPEG XL: half-float import support.
+  - file-darktable: use the new API which darktable developed from us
+    since version 4.6 (a new `--gimp` flag on command line). Fallback to
+    old usage for older versions.
+  - guides-new: guides can now be created off-canvas.
+  - ImageMap: zoom factor is now floating point allowing zooming out
+    past the 1:1 ratio.
+  - TIFF:
+    * Added support for loading Sketchbook TIFF layers.
+  - Goat Exercises:
+    * Renamed to "Plug-In Examples".
+    * "Sphere v3..." is now "Plug-in example in Scheme", showing up the
+      new types of Script-Fu scripts (with a standalone interpreter
+      rather than as scripts running on the Script-Fu always-on
+      extension). It is not the same as the historical Goat Exercises,
+      but it is our best "new Script-Fu" example.
+    * All other test plug-ins/scripts are hidden in stable releases.
+  - GIH: max size increased to GIMP_MAX_IMAGE_SIZE.
+  - Metadata Editor: add ability to set itself transient to any other
+    window (even across process).
+  - file-raw-data can now be run interactively.
+  - The lua binding is now marked experimental because of the too many
+    unstabilities we experienced.
+  - Script-fu:
+    * resource argument defaults are set as a string which is
+      the name of a resource, or the empty string or "from context" to
+      default to the context resource.
+    * Various compat aliases to ancient PDB procedures were removed.
+  - Python Console: history of commands is saved between runs.
+  - BMP: new support for loading 64bpp BMPs. Each channel uses 13 bits
+    (2^13 max value), so it's scaled to fit our 16 bit integer image
+    mode.
+  - gradient-save-as-css renamed python-fu-gradient-save-as-css and
+    histogram-export renamed python-fu-histogram-export for consistent
+    naming.
+  - python-fu-eval is now robust to failing script. Instead of crashing
+    too, it simply returns with a CALLING_ERROR status and pass along
+    the Python error to the core for proper output.
+
+API:
+
+  - All public classes were marked as derivable or final through GObject
+    macros G_DECLARE_(DERIVABLE|FINAL)_TYPE. It will make it easier to
+    update them in the future without API/ABI breakage.
+  - Changes in libgimp:
+    * gimp_procedure_run_config() can run with no config objects (equivalent to
+      run the procedure with default arguments).
+    * New GimpParamColor type (obsoleting GeglParamColor within GIMP) which has
+      the additional setting `has_alpha` to advertize whether your plug-in
+      argument accepts only opaque colors or transparent ones (hence generated
+      GUI can be set accordingly).
+    * GimpSaveProcedure renamed to GimpExportProcedure.
+    * GimpSaveProcedureDialog renamed to GimpExportProcedureDialog.
+    * GimpExportProcedure does not have "drawables" and "num-drawables"
+      arguments anymore: after much reflection, these arguments were
+      mostly confusing and many plug-ins were already just using
+      gimp_image_list_layers() instead. For future advanced usage which
+      may come in the future, we will add a `GimpExportOptions` argument
+      instead.
+    * gimp_export_image() was simplified by removing the interactive
+      case (which was already hidden hence unused anyway).
+    * New GimpVectorLoadProcedure class: to be used specifically for
+      vector-based formats. It will allow to share a common graphical
+      interface (through the new GimpVectorLoadProcedureDialog), and
+      will also allow the core application to know which export
+      procedure is for a vector format, hence special-casing vector
+      file handling.
+    * GimpProcedureDialog: new fill_start() and fill_end() class methods
+      which are ensured to be run exactly once, unlike fill_list().
+    * gimp_image_add_(h|v)guide() functions can now create off-canvas
+      guides (same as we can in GUI, now).
+    * GimpChoice arguments can now generate a GimpIntRadioFrame as
+      alternative widget in a GimpProcedureDialog (combo box is still
+      the default widget).
+    * All GIMP_PROC_ARG_*() macros are now proper gimp_procedure_add_*_argument()
+      functions (same for aux argument and return value macros).
+    * gimp_procedure_add_*_from_property() functions were removed.
+    * gimp_procedure_add_argument(), gimp_procedure_add_aux_argument()
+      and gimp_procedure_add_return_value() were removed from public API.
+    * The skipping of _get_ functions by bindings in GIMP
+      2.99.12, in favor of their _list_ variant, was reverted. Now the
+      _list_ variants are skipped instead. The original reason was a
+      limitation of pygobject which is now fixed, and since _get_
+      functions are historically more common and consistent in our API,
+      this is what should take precedence.
+    * New GimpGroupLayer class (subclass of GimpLayer).
+    * GimpVectors was renamed to GimpPath and all gimp_vectors_ function
+      renamed gimp_path_ accordingly.
+    * gimp_buffer_get_image_type() return type is now GimpImageBaseType.
+    * New GimpExportOptions class and a better infrastructure to handle
+      intermediate image creation at export, replacing
+      gimp_export_image() with gimp_export_options_get_image(). This is
+      also a preparation for future API allowing generic settings during
+      export (resizing, cropping, adding filters or other actions at
+      export time).
+    * New functions:
+      - gimp_window_set_transient_for()
+      - gimp_palette_get_colormap()
+      - gimp_palette_set_colormap()
+      - gimp_image_set_palette()
+      - gimp_context_get_emulate_brush_dynamics()
+      - gimp_context_set_emulate_brush_dynamics()
+      - gimp_procedure_config_get_color_array()
+      - gimp_procedure_config_set_color_array()
+      - gimp_procedure_config_get_core_object_array()
+      - gimp_procedure_config_set_core_object_array()
+    * Renamed functions:
+      - gimp_path_export_to_file() to gimp_image_export_path_to_file()
+      - gimp_path_export_to_string() to gimp_image_export_path_to_string()
+      - gimp_path_import_from_file() to gimp_image_import_paths_from_file()
+      - gimp_path_import_from_string() to gimp_image_import_paths_from_string()
+      - gimp_palette_entry_get_color() to gimp_palette_get_entry_color()
+      - gimp_palette_entry_get_name() to gimp_palette_get_entry_name()
+      - gimp_palette_entry_set_color() to gimp_palette_set_entry_color()
+      - gimp_palette_entry_set_name() to gimp_palette_set_entry_name()
+      - gimp_plug_in_extension_enable() to gimp_plug_in_persistent_enable()
+      - gimp_plug_in_extension_process() to gimp_plug_in_persistent_process()
+      - gimp_procedure_extension_ready() to gimp_procedure_persistent_ready()
+      - gimp_buffers_get_list() to gimp_buffers_get_name_list()
+      - gimp_context_get_dynamics() to gimp_context_get_dynamics_name()
+      - gimp_context_set_dynamics() to gimp_context_set_dynamics_name()
+      - gimp_dynamics_get_list() to gimp_dynamics_get_name_list()
+    * Removed functions:
+      - gimp_image_get_colormap()
+      - gimp_image_set_colormap()
+      - gimp_image_metadata_load_prepare()
+      - gimp_image_metadata_load_finish()
+      - gimp_image_metadata_save_finish()
+      - gimp_resource_chooser_set_clickable()
+      - gimp_resource_chooser_set_drag_target()
+      - gimp_resource_select_new()
+      - gimp_resource_select_set()
+      + gimp_fonts_get_by_name()
+    * GimpResource:
+      - The ParamSpec arguments (including every subtype) may now have a
+        default value.
+      - The ParamSpec arguments now have a default_to_context parameter,
+        which overrides any default value with a dynamic one
+        (context-dependant).
+    * GimpBrushSelect now chooses only a brush (no more widgets to
+      select a spacing, opacity or paint mode).
+    * All arrays of items, drawables, layers, channels, paths, resources
+      (and each specific subtypes of resources) and images as argument
+      in a libgimp function were now changed to NULL-terminated arrays.
+    * GimpRunImageFunc (the run() signature for GimpImageProcedure)
+      doesn't have a n_drawables argument anymore. The drawables
+      argument is simply NULL-terminated, consistently to other changes
+      in PDB.
+    * Various functions now return arrays of GeglColor or arrays of
+      specific resource types when relevant.
+  - Changes in libgimpwidgets:
+    * GimpColorArea: dropped colors are now passed as GeglColor.
+    * New functions:
+      - gimp_prop_choice_radio_frame_new()
+      - gimp_int_radio_frame_set_title()
+      - gimp_widget_animation_enabled()
+    * Updated functions:
+      - gimp_help_connect() has a new `tooltip` argument as a proper
+        advanced version of gimp_help_set_help_data().
+    * GimpFileEntry was made private because it is still used internally
+      but the whole API was deprecated since 2006.
+  - Changes in libgimpbase:
+    * GimpRGB and GimpRGB arrays are not supported anymore in the PDB and GIMP
+      Protocol (only GeglColor and GimpColorArray).
+    * GimpUnit:
+      - now a proper class instead of a weird int type extending an enum
+        type of the same name. This also makes unit parameters actually
+        introspectable.
+      - concepts of singular/plural removed from this class because it
+        just doesn't work out with proper internationalization.
+    * New functions:
+      - gimp_int32_array_get_values()
+      - gimp_int32_array_set_values()
+      - gimp_float_array_get_values()
+      - gimp_float_array_set_values()
+      - gimp_value_array_get_core_object_array()
+    * Removed functions:
+      - gimp_unit_get_singular()
+      - gimp_unit_get_plural()
+      - gimp_env_init()
+      - gimp_cpu_accel_set_use()
+      - gimp_signal_private()
+    * Renamed functions:
+      - gimp_unit_get_identifier() to gimp_unit_get_name()
+      - gimp_float_array_get_values() to gimp_double_array_get_values()
+      - gimp_float_array_set_values() to gimp_double_array_set_values()
+      - gimp_param_float_array_get_type() to gimp_param_double_array_get_type()
+      - gimp_param_spec_float_array() to gimp_param_spec_double_array()
+      - gimp_value_dup_float_array() to gimp_value_dup_double_array()
+      - gimp_value_get_float_array() to gimp_value_get_double_array()
+      - gimp_value_set_float_array() to gimp_value_set_double_array()
+      - gimp_value_set_static_float_array() to gimp_value_set_static_double_array()
+      - gimp_value_take_float_array() to gimp_value_take_double_array()
+    * New argument flag GIMP_PARAM_DONT_SERIALIZE.
+    * New type GimpParamSpecObject, which is basically a
+      GParamSpecObject with a default value. It is now used as parent
+      type for GimpParamSpecColor, GimpParamSpecUnit and all
+      GimpParamSpecResource subtypes.
+    * GIMP_PDB_PROC_TYPE_EXTENSION renamed GIMP_PDB_PROC_TYPE_PERSISTENT.
+    * GimpCoreObjectArray: new alias to NULL-terminated core objects,
+      such as images, items, etc. The main reason is to make it a boxed
+      type for proper handling as object properties and PDB argument.
+    * GimpObjectArray was removed.
+    * Deprecated GIMP_PRECISION_*_GAMMA enum values have been removed.
+  - Changes in libgimpcolor:
+    * All gimp_rgb_parse_*() functions now become gimp_color_parse_*() functions
+      (GeglColor based rather than GimpRGB).
+    * GimpRGB, GimpCMYK, GimpHSV, GimpHSL type and all usage was
+      removed. Related API were deleted too.
+    * GIMP_RGB_LUMINANCE* macros were made private. They are still used
+      internally by some core plug-ins but are not exposed anymore as
+      official API.
+  - Changes in libgimpconfig:
+    * Removed functions:
+      - gimp_config_serialize_strv()
+      - gimp_config_deserialize_strv()
+    * Renamed functions:
+      - gimp_scanner_parse_float() to gimp_scanner_parse_double()
+  - PDB:
+    * Triple-backtick blocks in PDB-generated functions' descriptions is
+      now recognized so that pre-formatted code is kept as-is. E.g.
+      indentation is not broken anymore in code samples on the gi-docgen
+      API documentation.
+    * New "format" PDB type to pass Babl format arguments.
+    * Most compat PDB procedures were removed, except the few ones we
+      still use in some of our core plug-ins or scripts.
+    * All int32 and float arrays are now passed through the PDB without
+      requiring a size argument preceding it.
+
+Translations:
+
+  - New Bengali language support.
+
+Build:
+
+  - Minimum dependency version bumps:
+    * babl 0.1.110
+    * GEGL 0.4.50
+    * harfbuzz 2.8.2
+  - Started a skeleton for unit testing framework for libgimp (only a few tests
+    so far but we eventually target exhaustivity).
+  - CI:
+    * Main CI jobs are now compiled with Clang, as well as Windows installer,
+      MSIX and Flatpak. Some benchmarks run by Øyvind show we can gain a bit
+      of performance in some situations in babl/GEGL/ctx codepaths, thanks to
+      better auto-vectorization support.
+    * x86 (32-bit) cross-build job for Windows removed.
+    * "packaging" stage merged back with "build" stage.
+    * "gimp-debian-x64" job now also generates an AppImage for every commit.
+    * LLD linker now used in all build jobs (except scheduled GCC and legacy
+      32-bit Windows jobs).
+    * Windows cross-builds are not triggered anymore until after GIMP
+      3.0 (when we'll handle the issues).
+    * Lua-related files are not shipped anymore with any of the official
+      builds.
+  - New gimp-data repository used as a git submodule:
+    * Various data were moved to gimp-data: icons, cursors, patterns, brushes
+      and application icon/logo.
+    * Various files are generated from the source logo: wilber.ico (for Windows
+      installer), gimp.icns (macOS), desktop application icons for Unix-like
+      systems, Wilber icons of the "Default" icon theme within the application.
+    * Splash image and Windows installer's BMP images are generated from the
+      splash image contributed as XCF.
+  - Support for .pdb debug symbol files (Visual Studio) was added for
+    Windows.
+  - Windows installer: new option to launch GIMP after install.
+  - Nightly flatpak: HEIC support is now an extension as in our beta
+    flatpak.
+  - macOS minimal support was bumped to version 11.
+  - Python plug-ins are made mandatory, not optional anymore.
+  - Our flatpak-s will now use $XDG_CONFIG_HOME config folder
+    unconditionally (not the `~/.var` folder). It won't depend anymore
+    on whether this config folder already existed or not.
+  - Only Lua 5.1 and luajit are supported. Later versions have
+    incompatibilities breaking Lua plug-ins. The detection of the lua
+    version (by parsing `lua -v output` if needed) is also improved.
+  - List of languages is now pre-parsed during build, which accelerates
+    startup a bit (especially on Windows).
+  - Better error messaging of the configure step when gimp-data
+    submodule was not initialized or when it is out-of-sync.
+  - Improved AppStream metadata file validation taking care of the case
+    when the release date is not yet known.
+  - The last of deprecated gdk_pointer_grab() calls are now removed.
+  - Build made more portables for non-GLibc or non-GNU coreutils
+    environments.
+  - enable-default-bin meson option now also installs a symlink for a
+    gimp-3 binary (additionally to default gimp-3.0 and gimp symlink),
+    or a renamed copy on Windows.
+  - Installer for Windows will use the new gimp-3.exe binary so that it
+    can properly register a registry entry based on the major version
+    only.
+
+
+Overview of Changes from GIMP 2.99.16 to GIMP 2.99.18
+=====================================================
+
+Core:
+
+  - New snapping options:
+    * "Snap to Bounding Boxes": allows on-canvas snapping to either layer
+      borders or center.
+    * "Snap to Equidistance": allows to snap a layer to be at the same distance
+      from a second one that this second one is to a third one, either
+      horizontally or vertically.
+  - GIMP is now able to use fonts with custom styles, which Pango is unable to
+    work with.
+  - Font names are not unique anymore, which means that GIMP doesn't rename
+    identically named fonts with #1 or #2, etc. as it used to do. These fonts
+    with same name are now properly working despite the name clash.
+  - GimpData now have a concept of collection, which is either a controlled name
+    for internal data, or a string constructed from the local file path for
+    external data. This will be used to serialize data objects hence easily
+    retrieve the proper data even when some data may have duplicate names.
+  - New palette import support: SwatchBooker.
+  - Artificially set PANGOCAIRO_BACKEND=fc when running on Windows to use the
+    fontconfig backend, which enables anti-aliasing on Windows, unlike the
+    default pangocairo backend.
+  - XCF:
+    * Font information are more accurately stored (not only the font name, but
+      also storing various other attributes and even a file hash in the ideal
+      case where the exact same font file is available), allowing to find the
+      right font (if installed) on load with less errors.
+    * As a consequence of the previous point, new files with text layers will be
+      saved as a bumped XCF 19 version.
+    * Older XCF versions with text layers can still be saved using older XCF
+      versions as long as the text layers are untouched in an edit session.
+  - "view-zoom-*" actions are not radio actions anymore.
+  - Improve thumbnail loading algorithm:
+    1. If there is a GimpThumbnailProcedure, it is run first.
+    2. Otherwise we check if a thumbnail is in the metadata.
+    3. As last resort, we just load the full image.
+  - Generic inter-process transient window reimplemented using opaque GBytes
+    window identifiers instead of guint32. The goal is to have windows created
+    by plug-ins be transient to the calling core image window, but also the
+    other way around: some core dialogs are generated through PDB calls (in
+    particular resource and drawable chooser dialogs created by gimp_*_popup()
+    functions) and should be transient to plug-in dialogs.
+    This works on X11 and Wayland (the Wayland implementation is new, previous
+    code was X11-only). It should work on Windows too (code exists) but this was
+    left disabled as it leads to core process hanging (as described in
+    https://bugzilla.gnome.org/show_bug.cgi?id=359538) and is pending debugging.
+    There is no macOS implementation yet, and it seems to be missing from GDK as
+    well.
+  - Indexed images' colormap:
+    * Now possible to delete colors if unused.
+  - Updates for floating data's actions:
+    * New actions "edit-paste-float" and "edit-paste-float-in-place" for pasting
+      the contents of the clipboard as floating data with default positioning
+      algorithm or in-place respectively;
+    * renames "select-float" to "select-cut-float" which does a cut and paste as
+      float in one action;
+    * adds "select-copy-float" which does a copy and paste as float in one
+      action;
+    * reorganize a bit the `Edit > Paste as` submenu with sections for the
+      floating data variants;
+    * add a "Float" submenu in "Select" root menu, containing the 2 variant
+      actions "select-cut-float" and "select-copy-float".
+  - GEGL operation filters are now non-destructive by default: running these
+    filters create layer effects. The UI is still basic and will be improved
+    through iterations after GIMP 3 release.
+  - FG/BG color action code (e.g. "Increase the red channel") are made
+    contextual, relatively to the active image, working relatively to the
+    correct color space and TRC.
+  - Device Status dockable shows context-sensitive colors (the color profile's
+    name is displayed as tooltip when hovering a fg/bg color status).
+  - Palettes are now GeglColor-based and are stored with a lot more precision.
+    Older low-precision palettes are still loaded fine. A single palette can
+    contain mixed formats (different models and space). A concept of format
+    restriction was added, yet is currently only used for indexed images'
+    palettes (whose colors are always and only in the image's format).
+  - Color History is now space-invaded (colors are stored in their original
+    format and space).
+  - Various color selectors (core or modules) are now space-invaded when
+    relevant. For instance, they show colors in the active image space (not just
+    sRGB) and display the profile's name when relevant. Also when simulation is
+    active, some of the color selectors will update their out-of-gamut zone, not
+    only to be within the image's gamut, but also the soft-proof gamut.
+
+Graphical User Interface:
+
+  - "Merge menu and title bar" option is not shown on macOS as it is not usable
+    there (the main menu is anyway out of the window from the start).
+  - Top menu has been special-cased for macOS (some items are removed with
+    "hidden-when" attribute set to "macos-menubar" value) for items which are
+    also available in the application menu.
+  - Menu section can now be named with the "section-name" attribute in
+    GtkBuilder ".ui" files. This can be used as a replacement of the former
+    "Placeholder" concept which we used to have (and has now been completely
+    removed).
+    Plug-ins or GEGL operations which want to make use of sections can use the
+    "[Section]" syntax. For instance installing a plug-in in the menu path
+    "<Image>/File/[Open]" will install the menu item at the end of the Open
+    section (i.e. after the various other open-file actions at the top of the
+    File menu).
+  - Some string or naming consistencies were fixed in source strings.
+  - GimpContainerEntry don't have inline completion anymore. Instead the result
+    pop-up always appear, even for one result. This is because a limitation of
+    GtkEntryCompletion: we cannot remove the case sensitivity search (see
+    gtk#275) which was very bad usage experience because when we reached a
+    single result, suddenly nothing happened anymore (no popup, no completion)
+    if case was different on any letter. It's just better to always have popup
+    with case insensitivity.
+    This widget is used for instance for on-canvas font selection.
+  - Some icons were modified with an added light border to make them better
+    visible on dark themes: gimp-tool-text icons in Color and Legacy icon themes
+    and gimp-tool-dodge in Color theme.
+  - Help menu rearranged to be better organized and also to move "About GIMP" as
+    the last item, which is its more conventional position.
+  - Many fixes to the default themes (including several cases of CSS rules
+    leaking from system themes).
+  - New settings in Preferences to set the interface base font size (this won't
+    work as well, or at all, for themes which would set absolute font sizes).
+  - "gimp-wilber-eek" icon is now reused as generic "image-missing" icon too.
+  - In dockables' grid view, the hovered icon is now highlighted with a
+    contrasted border.
+  - GimpPdbDialog (e.g. resource chooser dialogs) are now set to system defaults
+    for whether or not they use a header bar.
+  - Shift+Number-row default shortcuts are now transformed into the actual key
+    in the currently used layout (reciprocally, if numbers are direct access
+    key, their counterpart shortcuts are similarly updated).
+  - Colormap dockable:
+    * New "Delete" button available and sensitive only when selecting an unused
+      color in the palette.
+  - Windows: title bar will be switched to light or dark mode based on the
+    current theme.
+  - The quit dialog now adjusts its size relatively to monitor height.
+  - The heuristic to set a cursor when single or multi-selecting items in a tree
+    view got reviewed in order to avoid unnecessary scroll. As a general rule,
+    the cursor is always set to one of the selected elements, ideally the last
+    clicked element unless it is not selected (e.g. removed with Ctrl-click),
+    then a closest selected element is chosen to avoid unnecessarily scroll of
+    the item list.
+  - Pad buttons can now be configured in the "Input Devices" configuration dialog
+    to run any actions directly (without mapping shortcut key combinations as
+    intermediate). This only works on Wayland for the time being (yet may work on
+    more platforms in the future, depending on GTK evolution).
+  - Themes can now be proposed with up to 3 variants: dark, light and middle
+    gray, through gimp-dark.css, gimp-light.css and gimp-gray.css CSS files
+    respectively.
+  - As a consequence of the previous point, our Default and Gray themes are
+    merged as one with 3 possible variants.
+  - Our Color and Symbolic icon themes are merged as a single icon theme named
+    "Default".
+  - The "prefer-symbolic-icons" property which can be set in Preferences is only
+    used when the selected icon theme has both Color and Symbolic styles.
+    Otherwise the chosen icon theme style prevails. The presence of a style is
+    determined by the presence of the "gimp-wilber" icon (which becomes
+    therefore a de-facto mandatory icon in an icon theme) and/or its symbolic
+    variant.
+  - When "Override icon sizes" is checked, a few padding values are also
+    overridden by code in the loaded CSS.
+  - As a consequence of the previous point, we removed the "Compact" theme which
+    is now simply possible by overriding sizes to "Small" in Preferences (when
+    the theme is "Default", it will display the same as the former "Compact"
+    theme, though it will also work with any other theme).
+  - "Darker" theme is removed for lack of contributors actually caring for it.
+    It could be revived in the future as a "Contrast" theme with both a dark and
+    light variants at the very least.
+  - The search function in Layers dockable was moved over the Layers list (with
+    headers), the "link" icon replaced by "search" icon, and is now available
+    for both Layers, Channels and Vectors dockables (though unsaved for Vectors
+    because of lack in XCF support).
+  - The Welcome dialog was improved and its cases extended:
+    * A new "Personalize" tab contains duplicate settings taken from the
+      Preferences, in particular the more controversial settings, such as theme
+      or icon themes, HiPPI support (icon/font sizing), merged menu and title
+      bar, tool groups or update check.
+    * A new "Contribute" tab displays a few of the main links for people to
+      contribute to GIMP.
+    * A new "Create" tab proposes buttons to create new images or open existing
+      ones, as well as displaying a list of the last 8 opened images for easy
+      re-opening.
+    * A new checkbox (checked by default) allows the welcome dialog to be shown
+      at each and every startup. Except on new installations or version updates,
+      the first shown tab will be the new "Create" tab, which is probably the
+      most useful for day-to-day first dialog shown at startup (on updates, the
+      "Welcome" tab featuring the new splash screen and a small welcome text is
+      shown).
+
+Tools:
+
+  - Text tool:
+    * improve markup creation logic when replacing selected text in
+      order not to create useless styling markup interfering with other
+      features.
+    * Alignment for RTL languages is now more consistent with how it works in
+      other software (such as LibreOffice or Scribus).
+    * Text layers can now be rendered in the full image's gamut (not sRGB only
+      anymore), though colors are trimmed to the gamut and are always 8-bit.
+    * Text outline colors are now rendered in float in the full image's gamut,
+      without precision loss.
+  - Paint tools: all painting tools now have an "Expand Layers" option
+    allowing to auto-expand layers when painting across layer
+    boundaries. A few additional sub-options customize how this
+    expansion happens (by how many pixels, filling with transparency,
+    color, pattern).
+    Expansion does not grow over canvas boundaries, unless "Show All" is
+    checked too.
+  - Color Picker:
+    * Picked color is internally kept as a GeglColor, doing only last-minute
+      conversion to the output model/space, hence with better precision.
+    * RGB, Grayscale and Pixel modes display the profile name of the output
+      color space (the active image's color space if relevant).
+  - The Gradient tool now uses GeglColor internally, though GIMP's gradient
+    format (GGR) still uses old RGB format.
+
+Plug-ins:
+
+  - Farbfeld: new image format import/export support.
+  - OpenEXR:
+    * Files with single channels are always treated as grayscale, even when
+      they use non-conventional channel names. A notice message is also
+      presented to the user in a dialog for information.
+  - Metadata Editor:
+    * Various code cleanups and improvements;
+    * GUI improvements;
+    * Xmp.plus.ImageSupplierName can now only have one value;
+    * Improved Creation date handling;
+    * Synchronization (both for reading and writing) added between some Exif,
+      Xmp and Iptc equivalent tags. On reading, when equivalent tags have
+      different values at load, a terminal warning is now outputted.
+  - Script-fu:
+    * Generated dialog's titles are not prefixed with "Script-Fu: " anymore.
+    * Several scripts were removed and moved to gimp-data-extras: erase-rows,
+      grid-system, select-to-brush, select-to-image, select-to-pattern.
+    * script-fu-copy-visible was removed (and not moved to gimp-data-extras).
+    * New test scripts.
+  - New gimp-help-main script to link to the "Table of Contents" of the manual,
+    added to the "Help > User Manual" submenu.
+  - PSP:
+    * added support to load PSP ICC Profile data.
+    * fixed vulnerabilities: ZDI-CAN-22096, ZDI-CAN-22097.
+    * load active selection from PSP file.
+    * Load guides and grid info.
+  - Image Map: two new fields to the HTML Link tab and one new field to the
+    Javascript tab for area properties:
+    * accesskey: The same as the mnemonic key shortcuts in GTK, to activate an
+      area of the image map. Depending on the OS, you either hold ALT or
+      ALT+SHIFT and this key.
+    * tabindex: What order to select the area when the user presses Tab.
+    * onClick: Run a Javascript function when the user clicks on the area.
+  - Esm Software PIX: new import support.
+  - All plug-ins were ported to the new Gimp*Procedure API using
+    GimpProcedureConfig instead of GimpValueArray arguments.
+  - Add Border (script-fu): add a 'Allow resizing' toggle.
+  - Plug-ins ported to GimpProcedureDialog: van-gogh-lic, dds-write, flame,
+    histogram-export, lighting, fractal-explorer, map-object, sample-colorize,
+    compose, curve-bend, depth-merge, selection-to-path, pagecurl, file-cel,
+    file-svg, file-wmf, smooth-palette, small-tile, film, gradient-flare, tile,
+    web-page, screenshot.
+  - JPEG-XL:
+    * Load metadata via libjxl exclusively.
+    * Disable GIMP EXIF orientation support, using orientation stored in
+      codestream instead.
+  - HEIF:
+    * Load metadata via libheif exclusively.
+    * Disable GIMP EXIF orientation support.
+  - PDF:
+    * "Layers as Pages" works now for a single layer group with multiple
+      sub-layers.
+  - DDS:
+    * Add support for loading DDS 16- and 32-bit per channel RGBA. Loading is
+      supported for 16-bit half float, 32-bit float, 16 and 32-bit unsigned and
+      signed int.
+      This supports both the DX10 formats and the D3D FOURCC versions.
+      16- and 32-bit per channel images with less than 4 channels are not yet
+      supported.
+    * Add DDS support for loading R8G8, R16 and R16G16 formats.
+      GIMP can load DXGI variants as well as the older D3DF versions, including
+      handling of the signed versions.
+      We also set signed when the pixelformat flag DDPF_BUMPDUDV is set.
+    * New option to vertically flip dds image on import. This is needed by some
+      game engines.
+    * All mipmap generation is done at 32-bit floating-point precision.
+    * A new cubic filter has also been added (Catmull-Rom) which
+      rounds-out the existing lineup of cubic filters.
+    * Better handling of DX10+ files in ddsread.
+    * Always interpret BC1 cutout pixels as black pixels with 0 alpha,
+      per the official format specification.
+    * Import code was rewritten and improved for maintainability and
+      readability. Importer now supports nearly all non-video
+      uncompressed formats.
+  - GIF:
+    * Remember when a file was stored as a GIF animation to be reused when
+      overwriting.
+   - PNG:
+    * Import/export safe-to-copy PNG chunks.
+   - HEJ2: new import support. HEJ2 is JPEG 2000 image coded images in HEIF
+     containers.
+   - PSD: better wording of the export warning for the path of less surprise.
+   - Python Console uses theme colors for font colors instead of hardcoded
+     colors which don't work well on darker themes.
+
+Data:
+
+  - Clarified our capitalization rule for data titles: part of titles
+    inside parentheses also follow title casing.
+  - "(Hardedge)" generated gradients got renamed "(Hard Edge)".
+
+Translations:
+
+  - Many non-translatable strings were made translatable. Various other
+    localization bugs were handled.
+  - New Belarusian translation in the Windows installer.
+
+API:
+
+  - Changes in libgimpconfig:
+    * GimpConfig serialization doesn't break anymore if one property
+      serialization fails. GIMP will now continue to serialize the rest. In
+      particular, it will allow to retrieve as many arguments as possible
+      between plug-in runs.
+    * GBytes (de)serialization support added. It supports gracefully a NULL
+      GBytes value.
+    * GeglColor (de)serialization support added. Former GimpRGB properties can
+      be gracefully converted to GeglColor properties when needed (e.g. to be
+      able to convert old property or resource files, containing GimpRGB values,
+      to newer GeglColor).
+  - Changes in libgimp:
+    * GimpResource can now be (de)serialized using the data name and collection
+      so that we are now able to retrieve a used resource quite reliably between
+      runs.
+    * For GimpProcedure with no run-mode parameter, the run-mode is considered
+      non-interactive (e.g. for decision algorithm about whether to reuse
+      previous settings or not).
+    * Arguments of type GimpResource and its subtypes are now supported and
+      GimpProcedureDialog will generate appropriate chooser widgets.
+    * Arguments of type GimpLayer and GimpChannel will have a proper widget
+      generated (GimpDrawableChooser) by GimpProcedureDialog, limited to only
+      the proper drawable subtype.
+    * All GimpProcedure and its subtypes now have a run() method using a
+      GimpConfig instead of a GimpValueArray. In particular, the type of the run
+      argument changed in gimp_procedure_new(), gimp_batch_procedure_new(),
+      gimp_image_procedure_new(), gimp_load_procedure_new(),
+      gimp_save_procedure_new() and gimp_thumbnail_procedure_new().
+      The following 2 run function types had further evolutions:
+      + GimpRunLoadFunc: by default, a GimpLoadProcedure will try and load
+        metadata from a file (if Exiv2 knows the format). The run() function
+        will be allowed to edit the GimpMetadata object but also the load flags
+        before it is actually attached to the image, allowing plug-ins to have
+        custom metadata handling code when needed.
+      + GimpRunSaveFunc: metadata handling is integrated in this new version of
+        the API, since the run() function will pass a prepared metadata object,
+        which can be modified by plug-in code (if needed). This GimpMetadata
+        object will be stored automatically by the GimpSaveProcedure
+        infrastructure if the mimetype argument is set in
+        gimp_save_procedure_new().
+    * On plug-in exit, we do not display memory reference hold warnings for Lua,
+      Javascript and Python plug-ins anymore. The GObject-Introspection bindings
+      for these languages seem to hold references of their own in some
+      conditions and anyway plug-in developers don't have any memory management
+      capabilities available in the chosen languages. It's not like they can do
+      anything.
+    * New functions:
+      + gimp_procedure_dialog_set_sensitive_if_in()
+      + gimp_procedure_dialog_set_ok_label()
+      + gimp_procedure_dialog_fill_notebook()
+      + gimp_procedure_dialog_fill_notebook_list()
+      + gimp_procedure_dialog_fill_paned()
+      + gimp_procedure_config_get_choice_id()
+      + gimp_prop_brush_chooser_new()
+      + gimp_prop_font_chooser_new()
+      + gimp_prop_gradient_chooser_new()
+      + gimp_prop_palette_chooser_new()
+      + gimp_prop_pattern_chooser_new()
+      + gimp_resource_select_button_get_label()
+      + gimp_pattern_get_buffer()
+      + gimp_drawables_close_popup()
+      + gimp_drawables_popup()
+      + gimp_drawables_set_popup()
+      + gimp_prop_drawable_chooser_new()
+      + gimp_font_get_pango_font_description()
+      + gimp_fonts_get_by_name()
+      + gimp_image_get_palette()
+      + gimp_procedure_run_config()
+      + gimp_procedure_run_valist()
+      + gimp_procedure_dialog_get_drawable_preview()
+    * Removed functions:
+      + gimp_procedure_config_begin_run()
+      + gimp_procedure_config_end_run()
+      + gimp_procedure_config_begin_export()
+      + gimp_procedure_config_end_export()
+      + gimp_procedure_config_get_values()
+      + gimp_procedure_config_set_values()
+      + gimp_pdb_run_procedure_argv()
+      + gimp_pdb_run_procedure()
+      + gimp_pdb_run_procedure_valist()
+      + gimp_pdb_run_procedure_array()
+      + gimp_pdb_run_procedure_config()
+      + gimp_procedure_new_arguments()
+      + gimp_pdb_set_data() a.k.a. gimp_set_data()
+      + gimp_pdb_get_data() a.k.a. gimp_get_data()
+      + gimp_pdb_get_data_size() a.k.a. gimp_get_data_size()
+    * Modified functions:
+      + gimp_procedure_dialog_get_label():
+        1. Added `is_markup` and `with_mnemonic` boolean arguments.
+        2. `label_id` argument can be a string property to sync to, or a new
+           widget ID to create, using `text` as initialization contents.
+      + gimp_label_spin_set_increments(): made more generic and robust to handle
+        integer spin or modifiable min/max.
+      + gimp_param_spec_get_desc():
+        - Also handles new GimpChoice arguments by listing all valid string
+          values for a given argument.
+        - Returned string is now pango-markup formatted.
+      + gimp_display_get_window_handle() and gimp_progress_get_window_handle():
+        the return value is now an opaque GBytes which is to be interpreted
+        differently depending on the running platform.
+      + All gimp_*_popup() functions now have a `parent_window` argument which
+        is the opaque window handle of the calling plug-in dialog, such as can
+        be returned by gimp_dialog_get_native_handle().
+      + gimp_brush_get_pixels() replaced by gimp_brush_get_buffer() and
+        gimp_brush_get_mask().
+      + gimp_text_layer_set_font() now uses a GimpFont.
+      + gimp_text_layer_get_font() now returns a GimpFont.
+      + gimp_text_layer_new() now uses a GimpFont.
+      + gimp_text_fontname() renamed gimp_text_font().
+      + gimp_text_get_extents_fontname() renamed gimp_text_get_extents_font().
+      + gimp_ui_init() now implies a gegl_init().
+      + gimp_procedure_run() now uses a variable argument list of (name, value)
+        pairs.
+    * New classes:
+      + GimpPickableSelect
+      + GimpDrawableChooser
+    * Modified classes or structure:
+      + GimpProgress:
+        - GimpProgressVtableGetWindowFunc function type now returns GBytes.
+        - get_window() abstract method is renamed get_window_handle().
+      + GimpResourceSelectButton:
+        - Class made abstract.
+        - It now has a label which is used in the size group in
+          GimpProcedureDialog.
+      + GimpBrushSelectButton: big UX improvements.
+      + GimpPatternSelectButton: big UX improvements.
+      + All Gimp*SelectButton widgets were renamed to Gimp*Chooser.
+    * New GimpProcedure argument types:
+      + GimpChoice: this will replace cases when we used to use int arguments to
+        represent custom enum types, which was particularly non-usable when the
+        list of valid choices was long and the string docs was not kept
+        up-to-date.
+        It comes with GIMP_PROC_ARG_CHOICE(), GIMP_PROC_AUX_ARG_CHOICE(),
+        GIMP_PROC_VAL_CHOICE(), GIMP_VALUES_GET_CHOICE() and
+        GIMP_VALUES_SET_CHOICE() macros.
+        The advantages of this new type:
+        - No need to keep the list of valid choices up-to-date anymore within
+          the docs string.
+        - Since the docs string doesn't contain long list of arguments, we don't
+          have long opaque and non-understandable tooltips assigned to graphical
+          interface widgets.
+        - Calling a PDB procedure with a human-readable string is much more
+          understandable than with an opaque int.
+        - This type handles invalid input for generic error handling.
+        - We can easily generate a list of the valid string values. E.g. this is
+          now used in the Procedure Browser through gimp_param_spec_get_desc().
+        - Choices can be made insensitive if needed.
+        - A proper widget (GimpStringComboBox) will be generated by
+          GimpProcedureDialog by default.
+    * PDB: the big change in the PDB is that we decided not to warrant argument
+      orders anymore. In particular, it means that the libgimp functions to run
+      PDB procedures are not based on an ordered array of arguments anymore but
+      on named arguments only.
+      + The first consequence is that it will be possible to add arguments, and
+        even order them however we want in the list of arguments. For
+        backward-compatibility, what will matter is only that the procedure
+        using the default values for the new arguments will behave the same way
+        it did when it used not to have said arguments. Then scripts won't break
+        as we add new arguments and we won't have to create alternative v2 or v3
+        PDB procedures each time we wish to add a new feature.
+      + The second consequence is that calling PDB procedures is now much more
+        semantic. Firstly we can ignore arguments for which we keep the default
+        values; secondly every argument will be accompanied by a name instead of
+        being a long list of int or boolean values.
+        Typically while we used to call a PDB like this:
+```C
+        gimp_pdb_run_procedure (gimp_get_pdb (),
+                                "file-png-save",
+                                GIMP_TYPE_RUN_MODE,     GIMP_RUN_NONINTERACTIVE,
+                                GIMP_TYPE_IMAGE,        image,
+                                G_TYPE_INT,             1,
+                                GIMP_TYPE_OBJECT_ARRAY, args,
+                                G_TYPE_FILE,            file,
+                                G_TYPE_BOOLEAN,         FALSE,
+                                G_TYPE_INT,             9,
+                                G_TYPE_BOOLEAN,         FALSE,
+                                G_TYPE_BOOLEAN,         FALSE,
+                                G_TYPE_BOOLEAN,         FALSE,
+                                G_TYPE_BOOLEAN,         FALSE,
+                                G_TYPE_BOOLEAN,         FALSE,
+                                G_TYPE_BOOLEAN,         FALSE,
+                                G_TYPE_NONE);
+```
+        We can now call it like this (with a shorter list of arguments, ignoring
+        all the ones which we keep default, not bothering about arg order and
+        tagging each arg with a semantic name):
+```C
+        gimp_procedure_run (gimp_pdb_lookup_procedure (gimp_get_pdb (),
+                                                       "file-png-save"),
+                            "run-mode",         GIMP_RUN_NONINTERACTIVE,
+                            "image",            image,
+                            "num-drawables",    1,
+                            "drawables",        drawables,
+                            "file",             file,
+                            "bkgd",             FALSE,
+                            "phys",             FALSE,
+                            "time",             FALSE,
+                            NULL);
+```
+      + The few libgimp functions of the form `gimp_pdb_run_procedure*()` were
+        removed and moved directly to `gimp_procedure_run*()` variant. The
+        presence of both interfaces was making it confusing.
+      + For bindings not able to replicate variable arguments functions, the
+        bindable function will be gimp_procedure_run_config() only, which will
+        be renamed to gimp_procedure_run() in bindings.
+      + Note that internally the argument order is still relevant for any system
+        which interfaces directly with the PDB instead of libgimp. In other
+        words, it is still relevant for script-fu which generates functions out
+        of PDB procedures directly (not libgimp).
+      + GimpObjectArray arguments now allow NULL through the pipe as meaning an
+        empty array.
+  - Changes in libgimpbase:
+    * New classes:
+      + GimpChoice: meant to represent a list of allowed strings values.
+    * GimpRotationType values were changed by prepending "DEGREES" without
+      hyphen before the numeric value (e.g.: GIMP_ROTATE_90 becomes
+      GIMP_ROTATE_DEGREES90), because the older naming breaks introspection for
+      some languages, such as Python where Gimp.RotationType.90 syntax would be
+      forbidden.
+    * GIMP Protocol can now exchange GeglColor values across the wire.
+  - Changes in libgimpwidgets:
+    * New functions:
+      + gimp_widget_set_native_handle()
+      + gimp_dialog_get_native_handle()
+      + gimp_preview_area_reset()
+      + gimp_cairo_set_source_color()
+      + gimp_color_selection_set_format()
+    * New classes:
+      + GimpLabelStringWidget: makes any widget with a "value" string property
+        into a GimpLabeled.
+    * Modified classes:
+      + GimpStringComboBox:
+        - add a "value" string property to GimpStringComboBox (which makes it
+          usable by GimpLabelStringWidget).
+        - New method gimp_string_combo_box_set_sensitivity()
+    * Several widgets are now space-invaded, using GeglColor instead of GimpRGB:
+      + GimpColorArea
+      + GimpColorScale
+      + GimpColorScales
+      + GimpColorSelect
+      + GimpLabelColor
+      + GimpPreviewArea
+      + GimpColorButton
+      + GimpColorHexEntry
+      + GimpColorSelection
+      + GimpColorNotebook
+      + GimpColorSelect
+      + GimpColorSelector
+      + GimpColorNotebook
+  - Changes in libgimpui:
+    * Modified functions:
+      + gimp_window_set_transient_for_display() and gimp_window_set_transient()
+        now use an internal implementation similar to core
+        gimp_window_set_transient_for(), with the same improvements (works even
+        at construction when the window is not visible yet + works for Wayland
+        too).
+    * Removed functions:
+      - gimp_ui_get_progress_window()
+      - gimp_ui_get_display_window()
+  - Changes in libgimpcolor:
+    * New functions:
+      + gimp_color_set_alpha()
+      + gimp_color_is_perceptually_identical()
+      + gimp_color_is_out_of_gamut()
+      + gimp_color_is_out_of_self_gamut()
+      + gimp_color_parse_hex()
+      + gimp_color_parse_name()
+
+Build:
+
+  - Windows 10 becomes the new minimal support for the 3.0 stable series on
+    Windows. This bump happens because of end-of-support by Microsoft itself,
+    and also by MSYS2 project which is our base for the official installers.
+  - CI now generates babl and GEGL API reference HTML as artifact tarballs.
+  - New meson options -Dfits and -Dopenmp to enable/disable respectively FITS or
+    OpenMP support more explicitly (allowing to bypass auto-detection).
+  - Pango 1.50 or higher is now required as a result of using
+    pango_attribute_as_font_desc(). Also pango, pangocairo and pangoft2 now use
+    the same minimum version requirement.
+  - New Aarch64/Windows build jobs in CI.
+  - The universal Windows installer generated by the CI now detects and installs
+    a native Aarch64 build on ARM 64-bit architecture.
+  - Meson: alternatively to luajit, we now search also lua5.1, then 5.2 and 5.3
+    (5.1 first, because apart luajit, it is the only one with lua-lgi support in
+    MSYS2 right now).
+  - CI: unify jobs naming and order.
+  - Windows builds: various cleanups, code factorization and more.
+  - Windows installer: the desktop shortcut option is now checked by default
+    because of the fact too many people could not find GIMP after installation.
+  - New .vscode/ config folder for Visual Studio Code settings to follow our
+    coding style.
+  - 'gegl.exe' binary is now installed by the Windows installer.
+  - Minimum libheif requirement bumped: libheif >= 1.15.1.
+  - GEGL requirement bumped to GEGL 0.4.48.
+
+
+Overview of Changes from GIMP 2.99.14 to GIMP 2.99.16
+=====================================================
+
+Core:
+
+  - "Anchor" tooltip changing depending on whether we are floating over a layer
+    or layer mask.
+  - GIMP_TIMER_START|END are no-op on release builds.
+  - Ctrl-F overridden in our item dockables to trigger our item search popover
+    (multi-item selection, ability to use regexp or glob search by enabling these
+    in Preferences, etc.) rather than the default GTK selection popup for tree
+    views.
+  - All code is now multi-item aware (even though it might mean specifically
+    forbidding using some features on multiple items).
+  - Better support of non-ASCII characters in paths on Windows and other fixes
+    for Windows: API un-deprecation, unicode variants of functions…
+  - Copy|Cut-Paste code reworked further.
+  - Action "Crop to Selection" renamed to "Resize Layers to Selection".
+  - Action "Crop to Content" renamed to "Crop Layers to Content".
+  - If any opened image (with a display) is dirty, then GIMP will now inhibit the
+    log-out event on OSes which support it.
+  - Port from GtkAction/GtkUIManager to GAction/GMenu finished.
+  - The action search now shows the top menu path for actions when available.
+  - Actions can now be attributed multiple shortcuts. The duplicate actions
+    ending in `-accel` were removed in favor of multiple shortcuts and a few
+    secondary (semantic) shortcuts were added such as `Copy`/`Cut`/`Paste`
+    buttons for relevant actions, or `ZoomIn`/`ZoomOut` for canvas zoom,
+    `Forward`/`Back` to navigate through image tabs, but also some numpad
+    shortcuts like the `/` divide from the numpad for the action search
+    (additionally to the base keyboard `/` key).
+    It is not possible to attribute several shortcuts from GUI yet.
+  - An action is automatically generated for all GEGL operations which would
+    normally appear in the GEGL Operation tool. This includes in particular
+    third-party GEGL operations which might be user-installed. It makes these
+    filters also searchable in the action search, usable in menus and shortcuts
+    can be assigned as well.
+  - If present, the GEGL key "gimp:menu-label" will be used to set the short
+    label of the generated action (short labels are typically used in menus since
+    the menu path can serve as context). Otherwise the "title" with appended
+    "..." is used.
+  - GimpAction now have a concept of short vs. long labels, which can be used in
+    different places. In particular, in action search, we usually want the long
+    label, whereas in menus, we usually want the short label as we have context
+    (though the latter can be tweaked by a custom "label-variant" attribute in
+    .ui files).
+  - New "Middle Gray (CIELAB)" fill option (new image or new layer).
+  - Stroke Selection: "Line" and "Paint tool" styles are now in a stack
+    switcher instead of radio buttons. More advanced options are not "hidden"
+    anymore in a foldable widget.
+  - New grayscale color picking mode.
+  - .aco palettes are now imported with babl. As a result, it is now possible to
+    import CIE Lab palettes (colorspace 7)
+  - Action search now displays a "help" icon which can be clicked to show the
+    currently selected action's manual page (or the action search manual page if
+    no actions are selected). Alternatively the F1 shortcut will do the same.
+  - Basic matrix operations code was optimized.
+  - Fill/Stroke Path/Selection split the "Solid color" option into a "Foreground
+    color" and "Background color".
+  - Standardize to "X-bit" wording (e.g. "32-bit floating point" rather "32 bit
+    floating point").
+
+Tools:
+
+  - GEGL Operation: auto-activate when enabled.
+  - Transform tools and GEGL operation don't auto-activate when opening a new
+    image or changing the active image.
+  - Align tool: "use extents of layer contents" also applies to the alignment
+    reference (not only the target objects).
+  - Color picker: pick in the image's RGB space.
+  - Text tool: new tool option "Show on-canvas editor" to toggle the visibility
+    of the on-canvas dialog.
+  - Unified Transform tool: the transform matrix is now selectable in the
+    on-canvas dialog (for instance to be easily re-usable in other software).
+
+Graphical User Interface:
+
+  - Default, Compact and Gray themes now display a three-dot handle to paned
+    separators to improve accessibility and discoverability of the drag ability.
+  - The paned separator width is also increased a bit for accessibility (though
+    the Compact theme keeps a smaller separator width).
+  - Consistently use "Soft-proofing" wording instead of "Softproofing" or "Soft
+    proofing"
+  - The "GEGL Operation…" item was moved out of the "Filters > Generic" menu and
+    into the "Tools" menu.
+  - If present, the GEGL key "gimp:menu-path" will now be used by GIMP to create
+    a menu item for an operation in a given menu path.
+  - Default theme is less dark and the previous Default theme is renamed
+    "Darker".
+  - "Default" theme does not use smaller font size (than system theme) anymore;
+    but the "Compact" theme now does.
+  - New option "Merge menu and title bar" in Preferences > Image Windows: this
+    is basically an option to switch to Client Side Decoration for the image
+    windows (menu will be inside the title bar). It is OFF by default.
+
+Actions:
+
+  - "tools-rotate-arbitrary" and "tools-rotate-image-arbitrary" are now disabled
+    when no image is opened.
+
+Plug-ins:
+
+  - JPEG-XL:
+    * Initial support for CMYK/A JPEGXL export: Key and Alpha data is saved in
+      extra channels, and the simulation profile is saved as well.
+      Per the specification developers, the format does not support 'naive' CMYK
+      conversion, so a profile is required for export. The option will be
+      disabled if not set.
+    * Support libjxl 0.9: some API were removed which would have broken
+      the plug-in build. Now it should work both with old and new
+      version.
+  - Script-fu:
+    * Byte support: add a new type 'byte' to be able to handle binary data while
+      still retaining the utf8 char and string behavior.
+    * Enum values are now generated from GIR.
+  - Script-fu console: command history now persists across GIMP sessions.
+  - PSD:
+    * PSD clipping paths: import and export support.
+    * Unsupported features are now listed in a dialog on import.
+    * Add compatibility notice on export: some people have noted that legacy
+      layer modes have better compatibility when exporting PSDs and reopening
+      them in Photoshop.
+    * New "file-psd-load-metadata" procedure to be used by other plug-ins in
+      order to load Photoshop-format metadata. Some formats in particular allow
+      PSD style metadata (e.g. see TIFF and JPEG).
+  - TIFF:
+    * PSD metadata (both in image or layer level) can now be loaded by calling
+      the new "file-psd-load-metadata" PDB procedure.
+    * IBM PC Formatted TIFF layers are now supported on import.
+  - JPEG:
+    * PSD metadata (image level only, e.g. paths) can now be loaded by calling
+      the new "file-psd-load-metadata" PDB procedure.
+    * Clipping path import added.
+    * Option "4:2:2 horizontal (chroma halved)" renamed to "4:2:2 (chroma halved
+      horizontally)" and "4:2:2 vertical (chroma halved)" renamed to "4:4:0
+      (chroma halved vertically)". Research indicates it to be the most usual
+      notation for these options.
+  - DDS:
+    * OpenMP support enabled when available on the build machine.
+  - All Python 3 plug-ins whose Python 2 variants used to have a GUI now also
+    have one.
+  - Script "Predator" removed.
+  - PAM: import and export (formats: GRAYSCALE, GRAYSCALE_ALPHA, RGB, RGB_ALPHA)
+    support added. PAM files are essentially PPM files with a different header
+    format and alpha/16 bit support.
+  - GIF:
+    * Load error message handling improved.
+    * Keep GIF's full palette on import (sometimes needed for consistency when
+      used in a specific pipeline, e.g. a videogame engine with fixed palette).
+  - PCX:
+    * new radio option "override-palette" to override PCX 1 bit palette.
+    * 8bpp with 4 planes in PCX/DC import support added (we were only supporting
+      3 planes).
+  - QOI: new format support (import and export).
+  - Amiga IFF/ILBM: initial support for importing indexed ILBM, Amiga PBM, and
+    ACBM images.
+  - DCX: new import support (DCX files are containers that store up to 1023 PCX
+    files).
+  - Plug-ins ported to GAction: animation-play, colormap-remap, ifs-compose,
+    gfig, ImageMap.
+  - Plug-ins ported to GimpProcedureConfig and GimpProcedureDialog:
+    align-layers, hot, wavelet-decompose, file-sunras, file-heif, file-tga,
+    file-pat, file-xpm, file-csource, file-jp2-load, file-dds (import),
+    file-sgi, file-fli, file-pnm, file-gbr, file-psp, file-aa, bmp-save,
+    despeckle, blinds, contrast-retinex, jigsaw, nl-filter, destripe, file-mng,
+    file-html-table, file-xbm, file-pdf-load, file-gif-save, file-ps,
+    border-average, mail, checkerboard.
+  - metadata-viewer and metadata-editor: graphical interfaces are not built from
+    GtkBuilder .ui files anymore. These were the last instances of using this
+    format (except for our new menus!) for creating full GUIs as we don't want
+    to go this way anymore!
+  - FITS:
+    * Ported to cfitsio library for loading/exporting. This allows us to
+      import compressed FITS files (GZIP, HCOMP, PLIO, RICE) in 8/16/32
+      bit and float/double precision.
+    * As a result of the port, this plug-in is now optional.
+  - ILBM: "Hold and Modify" (HAM) mode use control bits to increase the
+    palette beyond what's stored in the CMAP chunk. We now check if HAM
+    mode is set and then interprets the plane bits accordingly.
+
+API:
+
+  - Changes in libgimpwidgets:
+    * New functions:
+      + gimp_int_store_new_array(): variant of gimp_int_store_new() which will
+        work in bindings.
+      + gimp_spin_scale_get_mnemonic_keyval()
+    * Improved annotations or usage:
+      + gimp_procedure_dialog_get_spin_scale(): factor must be 1.0 for integer
+        properties.
+  - Changes in libgimp:
+    * New classes:
+      + GimpResource: with unique int ID, instead of data name. Actual data will
+        be one of the following subclasses:
+        + GimpBrush
+        + GimpFont
+        + GimpGradient
+        + GimpPalette
+        + GimpPattern
+    * New functions:
+      + gimp_procedure_dialog_fill_scrolled_window()
+      + gimp_procedure_dialog_get_size_entry()
+    * Improved annotations or usage:
+      + set_i18n() method of GimpPlugIn expects a UTF-8 catalog directory.
+      + clarify gimp_image_set_file() usage (only for XCF files).
+      + gimp_image_add_sample_point()
+      + gimp_image_get_sample_point_position()
+  - Changes in libgimpbase:
+    * New functions:
+      + gimp_bind_text_domain()
+      + gimp_value_array_copy()
+    * Improved annotations or usage:
+      + gimp_locale_directory() returns a string in the OS encoding for all but
+        Windows (UTF-8), i.e. GLib "filename" encoding.
+      + Metadata "Exif.Image.ImageResources" and "Exif.Image.0x935c" are not
+        exported anymore. These are specific to Photoshop, and while we cannot
+        modify them, they can contain sensitive information (e.g. a thumbnail).
+      + Exif.Photo.PixelXDimension and Exif.Photo.PixelYDimension metadata tags
+        will now be updated (if they already exist in the image) when resizing
+        and exporting.
+  - Changes in libgimpconfig:
+    GStrv config properties are now properly serialized and deserialized for use
+    as plug-ins arguments.
+    * New functions:
+      + gimp_config_serialize_strv()
+      + gimp_config_deserialize_strv()
+   - PDB:
+     * Remove GimpUint8Array in favor of GBytes.
+
+Build:
+
+  - MacPorts support for macOS added (this is even now the official support as we
+    build our new packages with MacPorts).
+  - meson: make sure libgimp does not depend on GTK+.
+  - GLib requirement bumped to version 2.70 as minimum.
+  - Improved C99 compatibility of IPC_RMID check.
+  - Windows: port fileicon.ico from gimp-2-10 with additional sizes for clearer
+    icons on different resolutions and displays.
+  - Improve our build scripts to better handle sanitizer tools.
+  - Fix some broken unit tests in the meson build.
+  - Meson build options 'lua', 'javascript' and 'python' are now features, and
+    not boolean. I.e. use option values 'enabled'/'disabled' (defaulting to
+    'auto') instead of true/false.
+  - Meson build 'vala-plugins' option was renamed to simply 'vala'.
+  - Added dependency to Exiv2 0.27.4.
+  - JUnit reports from Meson for the CI build.
+  - autotools was fully dropped!
+  - Debian 12 bookworm is now our base platform for CI, but also for deciding
+    whether we can bump a dependency minimum required version or not. This is a
+    consequence of approaching GIMP 3.0 release so we don't want to bump minimum
+    versions too high.
+  - GEGL requirement bumped to GEGL 0.4.46.
+  - Windows installer's welcome image is now generated in several sizes
+    from our splash screen image, avoiding discrepancies as well as
+    unnecessarily filling our repository with a history of duplicate
+    images.
+  - Add some logic to common/ and python/ plug-ins to facilitate running
+    GIMP from the build directory (without being installed) while still
+    able to load all plug-ins.
+  - gtk-mac-integration was dropped as a dependency on macOS. It made problems
+    and is apparently less needed with GTK+3.
+  - Supported macOS version was bumped from macOS 10.12 to macOS 10.13.
+
+Debugging:
+
+  - New --runtime option to `flatpak-releases` debugging script (a dev tool
+    allowing for instance to bisect issues through flatpak builds). This option
+    allows to list the runtime builds (additionally to the main GIMP flatpaks).
+
+Documentation:
+
+  - More developer docs is being moved to the new developer website.
+  - Better clarify licensing of files under data/.
+  - Improve flatpak maintenance doc (build/linux/flatpak/README.md).
+
+Translations:
+
+  - 25 translations were updated: Basque, Bulgarian, Catalan, Chinese (China),
+    Chinese (Taiwan), Danish, Esperanto, French, Georgian, German, Greek,
+    Hungarian, Icelandic, Italian, Lithuanian, Persian, Polish, Portuguese,
+    Romanian, Russian, Slovenian, Spanish, Swedish, Turkish, Ukrainian.
+
+
+Overview of Changes from GIMP 2.99.12 to GIMP 2.99.14
+=====================================================
+
+Core:
+
+  - The download button in About dialog when a new version is available
+    will now show the development download page when running unstable
+    branch code.
+  - The update check on macOS now uses native HTTPS-able API, so that we
+    don't have to wait for GIO to have HTTPS modules for macOS.
+  - The main process is now run as a GimpApp which is a new class derived from
+    GtkApplication. The main process of `gimp-console` on the other hand is a
+    `GimpConsoleApp` which is derived from GApplication. Both new classes share
+    a same GimpCoreApp interface. This is a main step for the GTK+3 port.
+  - Various improvements on awareness of multi-item selection across core
+    features. A notable fix is the preview when transforming multiple layers at
+    once (with various transform tools). Various actions are now multi-drawable
+    aware as well.
+  - New "Vectors Structure" in the XCF format: XCF files (format bumped to
+    version 18) can now store and load all the usual and common properties of
+    other items. In other words, it makes XCF now able to store locks, color
+    tags and several selected paths.
+  - XCF saving with RLE and zlib encoding are now multi-threaded and therefore
+    much faster in most cases.
+  - Pasting an image now creates a new layer by default (not a Floating Layer
+    anymore). The only 3 cases where we still have floating items are:
+    * when pasting into a layer mask;
+    * when doing quick copy/cut paste on-canvas with the Alt modifiers;
+    * when floating layers explicitly with the "Float" action.
+  - Copy-paste code was deeply reviewed and re-specified in the light of
+    multi-item selection; it's still a WIP:
+    * When pasting several drawables, we currently paste them over the top
+      selected layer (visually in Layers dockable).
+    * Pasted data position was rewritten, based on existing logic, but taking
+      into account the multiple selected items.
+    * Pasting a selected area from multiple layers still creates multiple
+      layers, not merged pixel contents as a single layer.
+    * New layers created when copying from a selection are consistently the
+      offset and dimensions of the bounding box of the dimension.
+    * When a layer and one of its group layer parent are selected, it is
+      equivalent to have only the child layer selected.
+  - 2 new actions were added: "Paste as Single Layer" and "Paste as Single Layer
+    in Place" under the "Paste as" submenu of Edit menu. These paste the copied
+    layers as a single merged layer, instead of as several layers (as "Paste"
+    and "Paste in Place" do).
+
+Graphical User Interface:
+
+  - New "Gray" theme based on a 18.42% luminance middle-gray background, which
+    should be a good neutral environment for color work.
+  - The foreground/background editor in the toolbox will now take into account
+    the toolbox icon size and resize itself accordingly (live, as you change
+    theme). This allows to have really narrow toolbox when you use small icons.
+  - Theme-override icon size selection in Preferences > Themes: this allows to
+    override theme-set icon sizes, with a global concept of small, medium, large
+    and huge. The following widgets are so far modified: toolbox icons, fg/bg
+    editor in toolbox, fg/bg editor in Colors dockable, dockables tab icons,
+    bottom buttons (in the button box) of dockables, header eye and lock icons
+    above item trees, and eye and lock icon switches in item tree cells.
+  - Symmetry dockable contents is now shown, yet deactivated, when no images are
+    opened, improving discoverability.
+  - Reworked the "Convert to * Working Space?" dialog into a "Keep the Embedded
+    Working Space?" one. Keeping an image working space is now the recommended
+    and default action. "Convert" became an explicit action requiring to click
+    (neither mapped to Enter nor Escape keys).
+  - "Floating Selection" renamed to "Floating Layer" or "Floating Mask"
+    depending on the type of item it applies to.
+  - "Floating Masks" are now drawn above the layer mask in the Layers dockable,
+    making the fact that they would anchor to the below layer mask (not the
+    layer) much more obvious.
+  - "Paste into Selection" and "Paste into Selection in Place" were moved under
+    the "Paste as" submenu of Edit menu.
+
+Tools:
+
+  - Text tool: new "Outlined" and "Outlined and filled" options, with various
+    sub-options to choose the outline style, color, pattern, width, cap and join
+    styles, miter limit, anti-aliasing and dash pattern.
+  - Align tool:
+    * now multi-item aware, it is much more usable than it used to be when we
+      had to click on canvas to select items.
+    * On-canvas clicks are now only needed to select guides (Alt or Alt-Shift
+      click and selected guide colors change) or for the reference object
+      (normal click).
+    * Also the reference object gets on-canvas handles and the name is written
+      in the dockable, making it obvious if you selected the right reference or
+      not.
+    * Moreover the selected reference will now loop when layers are stacked on
+      each other, which allow to select a bottom layer, even if there are layers
+      above it everywhere.
+    * New option "Use extents of layer contents" to Align tool: this is similar
+      to first run "Crop to Content" on every layer to align or distribute
+      (without actually cropping the layers).
+    * Fine-grained align/distribute button sensitivity to make it more obvious
+      when an action would not make any change anyway.
+    * New anchor point setting (pivot widget) to choose which part of the target
+      items will be aligned or distributed.
+    * Get rid of various broken distribution actions.
+    * Distribution actions don't move the 2 extreme (top/bottom or left/right
+      depending on distribution direction) targets, but distribute all other
+      targets within their range. It is more consistent with how it works in
+      other software.
+    * Adding 2 "Distribute with evenly (horizontal|vertical) gaps" actions,
+      which distribute by keeping a common gap between objects instead of
+      between anchor points.
+    * Offset settings have been removed.
+  - Transform tools are now auto-activated on selection (and when switching
+    images or item selection).
+
+Plug-ins:
+
+  - PDF:
+    * Export code was ported to GimpProcedureDialog.
+    * New "root-layers-only" argument to "file-pdf-save", which comes
+      with a checkbox in the export dialog to allow exporting as pages
+      the root layers only. The main usage is to organize your pages'
+      contents in layer groups.
+  - AVIF:
+    * RGB AVIF compatibility with Safari on iOS 16.0: Some AVIF images are
+      rendered differently in Apple's implementation compared to implementations
+      of Google and Mozilla. See: https://github.com/AOMediaCodec/av1-avif/issues/195
+      This changes requires libheif 1.10.0 though the plug-in can still build
+      with older libheif.
+  - PSD:
+    * export of CMYK(A) files added, with 8 or 16-bit precision per channel,
+      using a CMYK soft-proof profile for conversion.
+    * Paths are now exported with PSD files.
+  - JPEG-XL:
+    * Metadata import/export now supported (requires libjxl 0.7.0).
+  - Python-Console:
+    * sys.stdout.flush() implemented as a no-op inside the console, to be able
+      to easily copy-paste code, or using libraries which flush the output.
+  - ICNS:
+    * Initial support for loading and exporting.
+  - TIFF:
+    * New toggle to optionally load reduced pages. We keep a heuristic to try
+      and guess whether these are thumbnails (single reduced image in the second
+      position), but it's only used to decide whether the option is checked by
+      default or not. It is now up to anyone to decide or not whether they want
+      to load these reduced images.
+
+API:
+
+  - Changes in libgimp:
+    * Abstract method get_window() of GimpProgressVtable had its signature
+      changed. The window ID is now a guint64.
+    * New functions:
+      + gimp_text_layer_set_markup()
+      + gimp_image_get_selected_channels()
+      + gimp_image_get_selected_vectors()
+      + gimp_image_list_selected_channels()
+      + gimp_image_list_selected_vectors()
+      + gimp_image_set_selected_channels()
+      + gimp_image_set_selected_vectors()
+      + gimp_image_take_selected_channels()
+      + gimp_image_take_selected_vectors()
+      + gimp_image_list_selected_drawables()
+    * Updated functions:
+      + gimp_vectors_stroke_translate() now uses offsets in double type.
+    * New classes:
+      + GimpTextLayer: child class of GimpLayer.
+  - Changes in libgimpwidgets:
+    * Updated widgets:
+      + GimpPickButton now has a specific implementation for Windows. In
+        particular it improves color picking with multi-monitor and scales
+        different than 100%.
+
+Build:
+
+  - meson requirement bump to meson 0.56.0.
+  - Many fixes to the meson build scripts, making it closer to be our
+    official build for GIMP 3.0.
+  - The CI now generates a tarball containing the GIMP references,
+    generated by gi-docgen and g-ir-doc.
+  - Improved Clang 15.0.0 support.
+  - "win*-nightly" jobs were added back and are now more efficient with the
+    --output-dll-list option.
+  - babl requirement bumped to babl 0.1.98.
+  - GEGL requirement bumped to GEGL 0.4.40.
+  - GIMP macOS builds (gimp-macos-build repository) was moved to using MacPorts
+    in order to take advantage of a bigger community to maintain our
+    dependencies.
+  - GIMP now has an Apple Silicon build.
+
+
+Overview of Changes from GIMP 2.99.10 to GIMP 2.99.12
+=====================================================
+
+Core:
+
+  - Added concept of "hidden item" to a GimpImage. This would allow to
+    process non attached items for internal processing more easily.
+  - Do not show a crosshair anymore when "Show brush outline" is
+    checked and "Show pointer for paint tools" is unchecked, if the
+    brush outline cannot be drawn (in which case a fallback 4-arcs
+    generic outline showing the size is displayed), for instance because
+    using a dynamic changing the size.
+  - When both "Show brush outline" and "Show pointer for paint tools"
+    are unchecked, show a minimal visual feedback of a few pixels only,
+    as inconspicuous as possible, instead of a crosshair.
+  - Move and reorganize pointer-related settings in Preferences from
+    "Image Windows" to "Input Devices" tabs.
+  - On macOS, delay opening new images dropped on the application icon
+    in the dock to after GIMP is fully initialized.
+  - Some code reorganization and factorization of image colormap and
+    palette handling.
+  - Language changes will trigger plug-in query() call at next GIMP
+    restart. This allows to have strings in query() and stored in GIMP
+    config being re-localized. This implies both explicit language
+    changes in Preferences or system language changes when GIMP is set
+    to follow system language.
+  - Keyboard grab removed from the canvas display, hence getting rid of
+    annoying grab permission warnings on Wayland.
+  - Preferences > Display > Transparency > Check style has now a new
+    option "Custom checks" allowing to select any RGB colors.
+  - Full migration from intltool to gettext only.
+  - The soft-proof profile, soft-proofing rendering intent and whether
+    black point compensation is used when soft-proofing are now image
+    data. These have also been moved to the Image menu (out of View).
+    These 3 simulation data are also stored in the XCF file now.
+  - Hacks on canvas rulers and statusbar added in GIMP 2.99.10 for macOS
+    triggering too big redraws were removed. This depends on patches
+    added to upcoming GTK+ 3.24.35.
+  - CMYK color picking and sample point now use babl and the space
+    specified by the soft-proof profile set on the image, if any.
+  - The "Create New Image" dialog now has settings for the simulation
+    profile, intent and black point compensation. This is also shown in
+    templates and the "Default Image" tab in Preferences, and has been
+    removed from the "Color Management" tab, because these are now first
+    and foremost image data.
+  - GimpColorFrame is now current image's simulation profile/intent/bpc
+    aware. In other words, CMYK shown by the color picker or in sample
+    point shows values in the correct simulation space (not in some
+    default CMYK space).
+  - A new default action to change the current brush size was mapped to
+    Alt + right button click.
+  - Some Preferences settings have been moved to a new Preferences >
+    Canvas Interaction tab.
+  - All on-canvas interactions (panning, canvas rotation, etc.) are now
+    customizable in Preferences > Canvas Interaction > Modifiers tab. It
+    allows to switch/change the modifiers used for an action, or even
+    just remove some modifiers mapping (when you never use an action,
+    e.g. some people say the canvas rotation is not useful to them).
+  - GtkAction-s can also be mapped to modifiers now through the same
+    settings.
+  - GIMP themes can now have a "gimp-dark.css" file which will be used
+    if the "Use dark theme variant if available" option was checked.
+  - The FG/BG editor area in the toolbox is now sized relatively to
+    toolbox icon size, allowing for it to be much bigger when using big
+    icons, or smaller when using small icons (which can e.g. be aligned
+    on a very narrow single column for people who appreciate this
+    organization).
+  - The Welcome dialog can now show "demo" bullet points, from scenarios
+    written within the Appstream metadata.
+
+Tools:
+
+  - The "Fill by line art detection" mode of the Bucket Fill tool got
+    the following improvements:
+    * New "Stroke borders" option where you can select a paint tool
+      (except source tools) to stroke the fill mask before filling with
+      the color. The settings will be the ones as set on the
+      corresponding tool (except for the color).
+    * The options got reorganized in 3 sections (Line Art Detection,
+      Line Art Closure and Fill Borders) and some options were reworded.
+      This should hopefully make the now many options more
+      understandable.
+  - Full text layer's text size will now be changed when changing font
+    size in the text editor window, when no text is selected.
+  - Raise tool options before blinking specific settings widgets when
+    some tools fail to work because of various tool options settings
+    (e.g. selection tool cannot remove from an empty selection; warp
+    tool cannot stroke; move tool cannot move because of the types of
+    object to move isn't selected; and so on).
+
+Graphical User Interface:
+
+  - New "Drag to Zoom" mode and speed settings in Preferences. Existing
+    drag-to-zoom behavior was linear depending only on pointer direction
+    (which makes it more or less time-based if we consider that pointer
+    events are regular). The new mode will take the actual distance
+    moved into account allowing to go faster or slower by dragging
+    further or not. The "speed" settings allows a finer zoom speed
+    control for both the old and new modes.
+  - Touchpad gesture rotation (2-finger pinch) on canvas now
+    implemented. Note that rotation or scaling by pinch are exclusive so
+    GIMP will detect the expected behavior through the initial movement
+    and will therefore lock on either rotation or scaling for the whole
+    duration of the pinch.
+  - Slight tweak of the "You will have to restart GIMP" popup: the list
+    now uses nicer "bullet point" characters and the nick (short
+    description) is shown rather than the internal property name.
+  - New soft-proof toggle in status bar to see the soft-proofing status
+    and enable/disable it. It is only active when a soft-proof profile
+    was set.
+  - GimpContainerTreeView (e.g. Layers/Channels/Vectors dockables) now
+    have zooming through ctrl+mouse wheel (for preview size).
+  - GimpContainerTreeView (e.g. Layers/Channels/Vectors dockables) now
+    have zooming with touchpad pinch (touchscreen pinch now kinda exists
+    but is not so usable in our tests, at least on Linux through
+    libinput) for preview size.
+  - Gradient editor now has zooming with touchpad pinch (touchscreen
+    pinch not so fancy either, at least on Linux through libinput,
+    similar to GimpContainerTreeView case).
+  - A new soft-proofing pop-over dialog appears when right-clicking the
+    new soft-proof toggle in the status bar. It allows to view or change
+    all soft-proofing related settings (whether they are associated to
+    the image, such as the profile, intent or black-point compensation;
+    or to the view, such as the out-of-gamut check) very easily.
+  - New "Default" theme containing a dark and light variant. As the name
+    implies, this theme is now made the default theme on new
+    installations.
+  - New "Compact" theme containing a dark and light variant.
+
+Command Line Interface:
+
+  - Unless only one batch interpreter is available, there is no default
+    interpreter anymore (it used to be script-fu). Therefore if you set
+    `--batch` but not `--batch-interpreter`, GIMP will output an error
+    message and will list the available interpreters.
+  - GIMP will stop running the batch commands as soon as one command
+    fails (it won't try the following ones).
+  - A new `--quit` option allows you to quit GIMP immediately after
+    running the batch commands.
+  - If `--quit` is set and batch commands are run, the GIMP binary exit
+    code will propagate errors from any batch failure. Exit codes are
+    taken from common Linux error codes: 0 for success, 69 for service
+    unavailable (e.g. setting a non-existing interpreter name), 64 for
+    usage (e.g. not specifying any interpreter or calling errors), 70
+    for execution errors (bugs in the interpreter plug-in) and 130 for
+    canceling the call.
+
+Plug-ins:
+
+  - BigTIFF: our TIFF plug-in now officially supports BigTIFF import and
+    export.
+    * Import was actually already working transparently if you had
+      a recent enough libtiff. Now the recent libtiff is enforced by
+      dependency requirements.
+    * Export support was added with a checkbox in the interactive dialog
+      and a new "bigtiff" argument in the "file-tiff-save" PDB
+      procedure.
+    * When an interactive export of ClassicTIFF fails for the explicit
+      reason of "Maximum TIFF file size exceeded", the export dialog is
+      raised again with a message proposing to try again as BigTIFF or
+      trying another compression algorithm.
+      This allows because discoverability and understandibility of the
+      issue, while not forcing BigTIFF export (since it might not be
+      supported everywhere).
+  - GIF: new option to specify a number of repeat for animated GIF
+    (rather than single run vs. infinite loop only).
+  - help-browser: rewritten to use GtkAction and GtkApplication, even
+    though it's now a deprecated plug-in (though it's a good example for
+    porting other plug-ins the same way).
+  - PNG:
+    * the format does not have any flag for linear RGB, but it can
+      simply include a linear profile (or a 1.0 gAMA chunk). Therefore
+      since we always attach the profile when importing (or transform
+      the gAMA chunk into a profile), we now always load PNG images as
+      non-linear backend.
+    * Add toggle to choose PNG bit depth behavior.
+  - python-fu-eval and plug-in-script-fu-eval ported to new
+    GimpBatchProcedure class.
+  - JPEG:
+    * CMYK export is now possible. It uses the "Soft-proofing"
+      profile set on the image.
+    * CMYK import ported to GEGL/babl conversion. The CMYK profile in
+      the JPEG image will be stored as soft-proof profile on the image.
+  - WebP:
+    * new option "Use Sharp YUV" available in non-lossless export.
+      It renders sharper edges at the cost of a slower export.
+    * On export, the "bad image dimensions" error message is now more
+      accurate and tells the max dimension possible for WebP images
+      (16383 as it's stored on 14 bits).
+  - DDS:
+    * 16-bit masks now supported.
+    * DDS images with single 16-bit channel support added.
+    * DDS images with 2 16-bit channels correctly converted to 16-bit
+      RGB images.
+    * More robust DDS loading.
+  - script-fu:
+    * Various updates to get the API back in shape.
+    * Porting doc updated.
+    * "script-fu-server" was now extracted into its own separate
+      plug-in so that it doesn't need to run permanently with the
+      script-fu extension (could be seen as security hazard too) and it
+      also makes each of these plug-ins more robust by being on their
+      own process each.
+    * A new `gimp-script-fu-interpreter-3.0` binary is installed
+      globally to be used to create Scheme plug-ins, similarly to other
+      plug-ins, in particular in the plug-ins/ directory, not the
+      scripts/ directory anymore. Moreover it makes the whole script-fu
+      infrastructure much more robust as script-fu individual scripts
+      won't crash the whole script-fu extension any longer (they only
+      crash themselves).
+      Note: this is not a GObject Introspected Scheme binding, just our
+      own binding based on script-fu interpreter. Script-fu plug-ins
+      still don't have access to the whole of libgimp.
+    * New function 'script-fu-register-filter' to declare a multi-layer
+      capable script.
+    * Many script-fu scripts were ported to newer API.
+  - FLI:
+    * Internal type usage improvements, mnemonics added, etc.
+    * 1-frame animation now loaded correctly (it's not really an
+      animation then, yet it should still open!).
+    * Better error handling.
+    * Layer names now include the delay in ms.
+    * More robust FLI/FLC loading, double-checking data rather than
+      assuming that the file writer properly followed the specs.
+  - Several plug-ins now follow the user-set checkboard color
+    preferences, when relevant.
+  - RAW data:
+    * Improved export dialog with better labels and ported to new dialog
+      generation API.
+    * Improved import dialog, ported to new dialog generation API, with
+      factorized code to more easily handle more cases.
+    * High bit depth import/export support.
+    * All the exportable formats can now be loaded back.
+    * "file-raw-load" and "file-raw-save" procedures API are now much
+      better with all relevant arguments.
+    * "file-hgt-load" doesn't show a dialog anymore when sample spacing
+      detection worked correctly since we already have all the necessary
+      information.
+  - WBMP: new plug-in to load WBPM image files. It is still limited
+    support and doesn't support all types of WBMP images.
+  - TIFF:
+    * 8 and 16-bit CMYK(A) TIFF files can be exported, using the
+      image soft-proof profile.
+    * Imported CMYK TIFF profiles are now set as soft-proof profile
+      on the image.
+  - SVG: on import, when parsing fails, GIMP will propose to disable
+    size parsing limitations, while explaining this has security
+    implications and should only be done on SVG files from trusted
+    sources.
+  - PSD:
+    * Import now uses babl conversion inconditionally, even for CMYK
+      images, using the soft-proof profile set on the image.
+    * Improved error logging during load.
+    * CMYK profile on a CMYK PSD file is now stored as soft-proof
+      profile in the image.
+    * Added support for extra layer mask: According to the specs the
+      extra mask (which they call real user supplied layer mask) is used
+      "when both a user mask and a vector mask are present".
+      We haven't seen an example that has the extra mask, so not sure
+      which of the masks would appear first.
+      For now assuming that the extra mask will be first. The advantage
+      of adding this here now, is that we won't try to add a mask
+      channel as a normal channel.
+    * Minimal support of duotone data: on import, a duotone image will
+      be imported as grayscale image with an alert and the color
+      information will be stored in a parasite; on export, a dialog will
+      propose you to re-include the duotone data if the image is still
+      grayscale. This allows for a roundtrip in GIMP without losing the
+      duotone information.
+  - ANI: new import/export support.
+
+API:
+
+  - Changes in libgimpbase:
+    * gimp_checks_get_colors() added.
+    * gimp_checks_get_shades() removed (replaced by gimp_checks_get_colors())
+  - Changes in libgimpcolor:
+    * New functions:
+      + gimp_color_managed_get_simulation_profile()
+      + gimp_color_managed_simulation_profile_changed()
+      + gimp_color_managed_get_simulation_bpc()
+      + gimp_color_managed_get_simulation_intent()
+      + gimp_color_managed_simulation_bpc_changed()
+      + gimp_color_managed_simulation_intent_changed()
+  - Changes in libgimp:
+    * New functions:
+      + gimp_image_metadata_save_filter()
+      + gimp_check_custom_color1()
+      + gimp_check_custom_color2()
+      + gimp_procedure_dialog_get_int_radio()
+      + gimp_procedure_dialog_get_file_chooser()
+      + gimp_image_get_simulation_profile()
+      + gimp_image_set_simulation_profile()
+      + gimp_image_set_simulation_profile_from_file()
+      + gimp_image_get_selected_drawables()
+      + gimp_image_get_simulation_bpc()
+      + gimp_image_get_simulation_intent()
+      + gimp_image_set_simulation_bpc()
+      + gimp_image_set_simulation_intent()
+    * Removed functions:
+      + gimp_plug_in_set_translation_domain()
+      + image_get_active_drawable()
+      + image_get_active_layer()
+      + image_set_active_layer()
+      + image_get_active_channel()
+      + image_set_active_channel()
+      + image_get_active_vectors()
+      + image_set_active_vectors()
+    * Updated functions:
+      + gimp_procedure_dialog_get_widget() now supports
+        %G_TYPE_PARAM_FILE and %G_TYPE_PARAM_ENUM properties.
+      + gimp_prop_file_chooser_button_new() now works with
+        G_PARAM_SPEC_OBJECT having a value_type == G_TYPE_FILE
+        (additionally to GIMP_PARAM_SPEC_CONFIG_PATH properties).
+    * Functions skipped by bindings:
+      + gimp_get_images() (in favor of gimp_list_*() variant)
+      + gimp_image_get_layers() (in favor of gimp_image_list_*() variant)
+      + gimp_image_get_channels() (in favor of gimp_image_list_*() variant)
+      + gimp_image_get_vectors() (in favor of gimp_image_list_*() variant)
+      + gimp_image_get_selected_layers() (in favor of gimp_image_list_*()
+        variant)
+      + gimp_item_get_children() (in favor of gimp_item_list_*() variant)
+    * New class:
+      + GimpBatchProcedure: procedure usable as a batch interpreter on
+        command line.
+    * Protocol bumped to handle the check colors passed at call time on
+      the wire.
+    * Plug-ins are now expected to have their localization in a Gettext
+      catalog folder locale/ under their main directory, named the same
+      way as this directory (i.e. usually the plug-in name). If the
+      catalog is absent, a message will be outputted on stderr. To
+      override this behavior, a GimpPlugIn is encouraged to override the
+      new set_i18n() method. If it returns FALSE, localization is
+      disabled (or it may be implemented in a different way, for
+      instance with another system than Gettext); if it returns TRUE,
+      you can set a different subfolder and catalog name.
+    * The core does not localize menu items from plug-ins anymore. All
+      plug-ins are now expected to handle their localization within
+      their code. In particular gimp_procedure_set_menu_label() and
+      gimp_procedure_set_documentation() should now pass the localized
+      text. With gettext, it usually means passing arguments through
+      gettext() and not just marking them with N_().
+  - Changes in libgimpwidgets:
+    * Freedesktop portal implementation of GimpPickButton now checks the
+      version of the XDG portal since `PickColor()` API only got added
+      in version 2.
+    * New classes:
+      + GimpIntRadioFrame
+    * New functions:
+      + gimp_color_notebook_set_simulation()
+      + gimp_color_selection_set_simulation()
+      + gimp_color_selector_set_simulation()
+    * Removed functions:
+      + gimp_prop_int_radio_box_new()
+    * Updated functions:
+      + GimpColorNotebook, GimpColorSelection and GimpColorSelector are
+        now ported to babl code and are simulation space aware.
+      + GimpPickButton will now use the X11 color picking API as a
+        default when GIMP is running on X11 (instead of trying the
+        portals first), because it has color space information of the
+        display (so we can convert back the color from display space to
+        image space); and also on some desktop, the portal looks
+        available while it's actually not implemented (hence picking
+        fails).
+        This fixes or improves the color picking in the Colors dockable,
+        in Change Foreground/Background Color dialogs, etc.
+  - Changes in PDB:
+    * gimp-plug-in-domain-register removed.
+
+Modules:
+
+  - The CMYK color selector is now simulation space aware, i.e. that it
+    shows CMYK values in the soft-proof profile space if a soft-proof
+    profile has been set.
+
+Translations:
+
+  - New Galician and Georgian translations for the installer.
+
+Build:
+
+  - libtiff dependency's minimum required version bumped to 4.0.0.
+  - gexiv2 dependency's minimum required version bumped to 0.14.0.
+  - Our meson/Debian CI now runs `meson dist` too.
+  - gvfs is marked as an expected dependency for GIMP (as a GIO module)
+    on Linux, since it seems we wouldn't have HTTP support without. This
+    is only written in the INSTALL file though, no tests are run on
+    configure time.
+  - The distribution stage now has a new `dev-docs` job containing both
+    the C API reference (gi-docgen) and the Python and Javascript (gjs)
+    ones (g-ir-doc).
+  - The `pdbgen` (generation of PDB source files) build step is finally
+    ported to meson too, which is a major step to one day consider this
+    build system out of the "experimental" zone.
+  - Windows installer's gettext files (.po) will now also contain
+    extracted comments from the source to give more context to
+    translators.
+  - Flatpak manifest upgraded with new version constraints so that the
+    flatpak-external-data-checker does not warn wrongly on major update
+    when we don't want to or can't update immediately.
+  - meson is now recommended for Windows and macOS builds and our
+    official installer and DMG respectively are now built (still from
+    CI) with meson.
+  - Flatpak manifest improved with version constraints for dependencies
+    where we should not update just yet (hence don't want new version
+    notifications).
+  - appstream-util replaced by appstreamcli for AppStream file testing
+    (requires appstreamcli 0.15.3 or over).
+  - gi-docgen API documentation will now properly link to other API
+    namespaces thanks to a new urlmap file.
+  - Separate libgimp-scriptfu-3.0 library for a future where it will be
+    shared by several binaries.
+  - GEGL dependency's minimum required version bumped to 0.4.38.
+  - "flatpak" job now uses a gnome-runtime-images migrated to Quay.
+  - "win*-nightly" jobs removed.
+  - Improved meson infrastructure to support Windows installer languages
+    which don't have base language files provided by upstream InnoSetup.
+    We started using it for Kabyle (which was showing up as "English"
+    otherwise!).
+  - After various fixes and implementations of missing build features to
+    the meson scripts, we are going to start advising packagers (for all
+    platforms) to build GIMP 2.99.12 with meson as a trial by fire to
+    make it the new default build system.
+  - New "sources-meson" CI job to distribute a tarball built with the
+    meson scripts.
+  - INSTALL now targets meson build as a test recommendation. We'll see
+    if any issue arises from packagers!
+  - Improved support for homebrew build on macOS.
+
+Documentation:
+
+  - Draft devel doc for scriptfu v3 script authors.
+
+
+Overview of Changes from GIMP 2.99.8 to GIMP 2.99.10
+====================================================
+
+Core:
+
+  - Linked layers concept replaced by named sets of layers:
+    * One can now store your current selection of layers under any given
+      name and select it again later.
+    * You can also search for layers by their names with patterns
+      (as configured in Preferences, see next news item) and save this
+      pattern search if desired.
+  - Preferences > Interface now has an "Item search" with a dropdown
+    settings proposing the following values:
+    * Basic text search: this search does tokenization, case-folding and
+      UTF-8 normalization. Moreover ASCII alternates are compared, which
+      means that e.g. "e" would matched accented versions (such as "é"
+      or others).
+    * Glob pattern search: this is the GLib implementation of this
+      pattern syntax. It matches '*' (wildcard) and '?' (joker). GLib
+      docs notes also: "Note that in contrast to glob(), the '/'
+      character can be matched by the wildcards, there are no '[...]'
+      character ranges and '*' and '?' can not be escaped to include
+      them literally in a pattern."
+    * Regular expression search: Perl-compatible regular expressions as
+      implemented in GLib.
+  - New item visibility lock: forbidding to change the state of
+    visibility of a given item. This is useful when shift-clicking
+    massively items visibility, but you want to exclude some specific
+    items from the visibility switch.
+  - New internal API gimp_widget_blink_rect() to blink only specific
+    area of a widget, which may be useful for various notification-type
+    exchanges. This is used in particular to blink lock cells in
+    GimpItemTreeView in order to point attention to the reason why an
+    action is forbidden (e.g. when trying to paint on a layer with
+    pixels locked, a message would be shown on status bar and the "Lock
+    pixels" icon would blink).
+  - XCF version 16 with support of item sets.
+  - Wayland:
+    * Clean some popup code out of gtk_menu_popup() which is deprecated
+      and won't work anymore on Wayland (wrong positionning).
+    * Use GtkGestureDrag in ColorWheel module and ScrolledPreview widget
+      to avoid unwanted popups and make us future-proof for GTK4.
+  - macOS: various improvements for macOS support of the development
+    version. In particular the slowness issues have been solved and
+    various bugs have been fixed.
+  - The debug dialog only gets a backtrace of the main thread now,
+    because of some bugs in GDB locking GIMP when trying to get a full
+    backtrace for all threads.
+  - The line art data is now stored for a few additional minutes in the
+    user context after closing the bucket fill tool. This allows quick
+    switch between tools without forcing a recomputation of the line
+    art.
+  - Stroking a path with source tools (Clone, Heal…) is now possible
+    when the tool is active and a source was selected.
+    Technically it's more of a bug fix because the GUI existed as though
+    it was meant to work, but since the report has existed for more than
+    13 years and I'm not sure it has ever worked, it's worth writing it
+    here.
+  - Block the statusbar from needlessly triggering full canvas redraws
+    by not propagating its resize requests. This is quite a useful
+    optimization for macOS in particular (but any OS in general too).
+  - Alpha and position locks can now be set on layer groups. Alpha lock
+    on groups mostly works like pixel lock (except for the alpha channel
+    only). Position lock work both ways by forbidding moving child
+    layers but also parent layers.
+  - XCF version 17 with support of visibility locks, as well as ability
+    to set alpha or position locks on layer groups.
+
+User Interface:
+
+  - Link icon removed from the Layers dockable.
+  - Lock icon its now made visible next to the "Eye" icon (visibility)
+    on each item row, where the Link icon was. It raises a popover to
+    switch all available locks (contents, position, visibility, alpha):
+    * This makes locks much more obvious rather than when they were at
+      the dockable header.
+    * This also works better with multiple selection of items (when one
+      selected item is locked and another is not, the lock button were
+      ending up in inconsistent state).
+    * This is clearer by showing or not icons (rather than always
+      showing several icons, yet with toggle design which is not even so
+      understandable depending on the theme used). If no locks are set,
+      nothing is shown; if only one lock is set, a specific icon is
+      shown; if several locks are set, a multi-lock icon is shown (and
+      one need to click to get the list of locks).
+    * Locks can now be set massively with shift and alt-click (see next
+      item) with the same logics as you can change visibility massively
+      on the eye button.
+  - Visibility (eye icon) and lock columns in the item dockables are
+    given an icon header to be more discoverable.
+  - Alt-click on eye and lock icons allows to massively switch
+    visibility/lock state but only within selected items (unlike
+    shift-click which switch within all items at same level).
+  - Channels and vectors are now multi-selectable (though actions may
+    have not been all updated yet to handle multiple items).
+  - On-hover indicators around inactive/unset eye/locked toggles in
+    Layer/Channels/Paths dialogs.
+  - GimpSpinScale made more compact.
+  - New "Welcome dialog" which appears only after a new installation or
+    an update, will show a few common links, and the release notes
+    (taken from the AppStream data, so they can even be localized).
+  - The new "Welcome dialog" comes with a new splash screen by Aryeom.
+
+Tools:
+
+  - It is now possible to enable/disable dynamics in a single checkbox.
+    The dynamics "Dynamics Off" which used to be in the default list has
+    been removed as disabling dynamics is now equivalent and much faster
+    (it's also faster to get back to whatever dynamics you were using
+    before).
+  - A new action "context-dynamics-toggle" is available, allowing to
+    switch dynamics ON/OFF (see previous news item) with a shortcut.
+  - New option "Allow closing lines in selected layer" in the "Fill by
+    line art detection" mode of bucket fill tool. Basically this allows
+    to use the fill color (foreground or background color) as closure
+    color in the drawable to be filled. This is an additional step after
+    the line art computation to allow fast usage.
+
+Plug-ins:
+
+  - PSD:
+    * new support for loading 16-bit per channel CMYK images.
+    * new support for files in LAB colorspace.
+    * new support for loading 32-bit per channel images (some code
+      existed yet may have never really worked).
+    * Add extra layer groups when loading PSD images with clipping
+      layers: PhotoShop handles clipping layers in a different way than
+      GIMP. The only way to have it look the same is by adding extra
+      layer groups. PSD layers that have clipping set, combined with the
+      first non clipping layer below it are grouped together in a new
+      layer group. Doing this results in the same image as the PSD
+      merged image unless there are other PSD elements in play that we
+      don't handle yet.
+    * PSD layers with clipping set need clip to backdrop as composite
+      mode: Certain PSD layers have a flag called clipping set to 1. We
+      were not handling this flag and had some reports about colors
+      bleeding where they were not supposed to. We are going to set
+      GIMP's layer composite_mode to GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP,
+      which is the closest we can get to PhotoShop's clipping. With
+      this, the colors won't bleed anymore.
+  - JPEG XL:
+    * Bit depth now selectable in JXL export.
+    * Import in 8-bit and 16-bit integer precision now possible for
+      lossless images. (GIMP used to import all JXL images as 32-bit float
+      precision images).
+    * New very fast export settings: thunder and lightning (fastest).
+    * Compression slider is disabled for lossless.
+  - Screenshot:
+    * Remove KDE and GNOME screenshot portal in favor of Freedesktop
+      portal. Security restrictions make them more and more unsuable on
+      recent KDE and GNOME versions.
+    * Set the "interactive" option to TRUE for the Freedesktop API, so
+      that the screenshot options are presented immediately (instead of
+      taking a screenshot, then only proposing options to try again).
+      This is more consistent to how our non-D-Bus screenshot plug-in
+      used to work.
+    * Windows: cursor capture option now available.
+  - CUR: added load and export support for Microsoft Windows cursor
+    (.cur) files.
+  - HEIF: bit depth heuristic removed for the settings. The plug-in just
+    stores and set back the last used values as for other settings
+    instead of trying to be "clever".
+  - help-browser and webpage are now marked "unmaintained" and building
+    them is discouraged, except for developers. The reasons are: the
+    multiple problems for building, while it is not even available on
+    Windows anymore (and unsure if it will ever be solved anytime soon),
+    bringing features which nowadays most people have with browsers
+    installed by default on systems (allowing to read the manual and
+    take full webpage screenshots).
+
+Build:
+
+  - Improved Coding Style document with commit message styling, git
+    usage, comment styling, natural language text rules, localization
+    and some section reorganization.
+  - GExiv2 dependency bumped to 0.12.2 (fixing bothersome warnings on
+    some unknown metadata domains).
+  - libjxl dependency bumped to 0.6.1.
+  - New meson option -Dcan-crosscompile-gir=true to force
+    GObject-Introspection generation even when cross-compiling (some
+    people manage to do it, e.g. with Yocto).
+  - Added .clang-format file and new CI pipeline to verify coding-style
+    issues in merge requests.
+  - New tool `flatpak-releases` to easily list and install specific
+    versions of our flatpak builds, which can be a great help when
+    debugging or trying to bisect with released binaries.
+  - Important refactoring of icon builds:
+    * Whether using meson or autotools, and whether installing vector
+      icons or raster ones (with --disable-vector-icons), the same lists
+      are always used and no icons are missing. The new custom tool
+      tools/generate-icon-makefiles.py makes sure the Makefile list is
+      in sync with the meson one.
+      The lists are committed in icons/icon-lists/ with a "usage
+      grouping" logics when possible.
+    * PNG versions for Color and Symbolic icon themes should not be
+      committed anymore. The Symbolic PNG version are generated with
+      GTK tool gtk-encode-symbolic-svg and the Color PNG version are
+      rendered with a new custom tool tools/colorsvg2png.c.
+    * New weekly CI to build with raster icons on meson and autotools
+      and making sure the build systems are well synced.
+    * Meson's -Dvec-icons option renamed to -Dvector-icons.
+  - meson dependency bumped to 0.53.0.
+  - We recommend fontconfig 2.13.95 or over on Windows where support for
+    user-installed fonts (feature appeared in Windows 1809) was
+    implemented. GIMP had its own workaround until now, which got
+    removed in this version.
+  - Optimization of the DLL search script for creating the Windows
+    installer, which made the "packaging-win*-native" jobs in particular
+    run from over 2 hours in some cases to about 10 minutes. So it's a
+    big gain for the creation wait for the Windows installer.
+  - GEGL minimum required version bumped to 0.4.36.
+
+API:
+
+  - Vala bindings gimp-3.vapi and gimp-ui-3.vapi were renamed to
+    gimp-3.0.vapi and gimp-ui-3.0.vapi respectively in the autotools
+    build (now consistent with meson).
+  - Changes in libgimp:
+    * GimpStringArray type was removed in favor of GStrv. Various libgimp
+      API were updated to use GStrv, and relevant plug-in procedures with
+      GStrv arguments or return values were updated as well.
+    * New functions:
+      + gimp_context_are_dynamics_enabled()
+      + gimp_context_enable_dynamics().
+      + gimp_item_get_lock_visibility()
+      + gimp_item_set_lock_visibility()
+      + gimp_pdb_run_procedure_config()
+    * Removed functions:
+      + gimp_item_get_linked()
+      + gimp_item_set_linked()
+  - Changes in libgimpui:
+    * New widgets:
+      + GimpLabelColor (now used by default for GimpRGB properties in
+        GimpProcedureDialog)
+      + GimpLabelEntry (now used by default for string properties in
+        GimpProcedureDialog)
+      + GimpSpinScale (formerly a core-only widget, e.g. used by the
+        "Opacity" slider on the Layers dockable, moved to libgimpui to be
+        usable by plug-ins)
+    * New functions:
+      + gimp_color_area_enable_drag()
+      + gimp_event_triggers_context_menu(): alternative to
+        gdk_event_triggers_context_menu() with the additional ability of
+        using button release events as contextual menu triggering
+        (instead of press events), which might be prefered in some
+        cases. Other than this, it uses exactly the same conditions as
+        its GDK counterpart.
+      + gimp_procedure_dialog_get_spin_scale()
+      + gimp_prop_label_color_new().
+      + gimp_prop_label_entry_new()
+      + gimp_prop_spin_scale_new()
+      + gimp_prop_widget_set_factor()
+    * Improved functions:
+      + gimp_procedure_dialog_get_widget() can now generate widgets of
+        type GimpSpinScale (for int/double properties) and GimpLabelColor
+        or GimpColorButton (for GimpRGB properties).
+      + gimp_procedure_dialog_get_color_widget() now only return
+        GimpLabelColor widgets (editable or not).
+
+
+Documentation:
+
+  - API documentation is now built with `gi-docgen` instead of
+    `gtk-doc`. The syntax for in-comment documentation is slightly
+    changed.
+  - Important rework of the developer documentation has started in
+    devel-docs/.
+
+Translations:
+
+  - 20 translations were updated: Basque, British English, Catalan,
+    Chinese (China), Danish, German, Greek, Hungarian, Italian, Kabyle,
+    Latvian, Lithuanian, Polish, Portuguese, Russian, Slovenian,
+    Spanish, Swedish, Ukrainian, Vietnamese.
+
+
+Overview of Changes from GIMP 2.99.6 to GIMP 2.99.8
+===================================================
+
+Core:
+
+  - Selection display implementation now updated to more modern display
+    server logics when drawing to display buffer. This fixes selection
+    drawing in Wayland and macOS Big Sur.
+  - "Create a New Image" default action is "OK" so that hitting Enter in
+    text/number fields is equivalent to clicking OK.
+  - Paint tool core code can now receive multiple drawables as input
+    though it is disabled by default, unless a tool calls
+    gimp_paint_tool_enable_multi_paint() in its init() method. This is
+    only used in source tools so far.
+  - Clicking anywhere on toolbox empty space (dead areas between
+    buttons) or on Wilber's drop area, as well as on the toolbox buttons
+    themselves, actively focuses the canvas (similarly to the `Esc`
+    shortcut).
+  - Config folder migration for GIMP 3 with initial implementation.
+  - Action "view-rotate-reset" renamed to "view-reset" (resets both
+    flipping and rotate). New "view-rotate-reset" and "view-flip-reset"
+    for resetting rotation and flipping respectively.
+  - New GimpEarlyRc class replacing GimpLangRc for very early config
+    parsing (it used to be for language setting, now also for the
+    pointer input API choice on Windows).
+  - All g_memdup() ported to g_memdup2() thanks to GLib version bump.
+  - Various leaks and other bugs fixed, notably with several static
+    analyzer results
+  - Add metadata preference for saving thumbnail by default: saving a
+    thumbnail is closely related to the other metadata preferences,
+    but so far this was the only one that didn't have a preference for a
+    default user value. A new settings in the "Image Import & Export"
+    section of the Preferences allows to select whether thumbnail saving
+    should be enabled by default or not.
+  - Preferences now allows to select the input device API on Windows
+    (Wintab or Windows Ink), as Windows Pointer Input Stack (Windows
+    Ink) support was added recently in GTK3.
+
+Tools:
+
+  - Clone, Heal and Perspective clone now work on multiple selected
+    layers. There are 2 new modes:
+    * When cloning while multiple drawables are being selected, each
+      drawable clones from itself to itself, i.e. every drawable is both
+      its source and target.
+    * When sourcing from multiple drawables then cloning into a single
+      drawable, the source is the composited image. This is similar to
+      "Sample Merged", except limited to a list of drawables.
+
+User Interface:
+
+  - Layout of the Canvas Size dialog re-designed a bit more horizontally
+    after the template selector feature made it too high.
+  - Thumbnail icon feature was dropped: when images were opened, the
+    application icon used to be a composition of the active image and
+    the application icon (Wilber). This was confusing, hard to
+    distinguish and working on less and less platforms because of recent
+    OS and desktop rules or logics changes.
+
+API:
+
+  - New gimp_display_present() function to present a specific display at
+    the top of the image display stack.
+  - New gimp_procedure_dialog_fill_expander() to create a GtkExpander in
+    procedure dialogs.
+  - All widgets within a same container in a GimpProcedureDialog are
+    added to their own GtkSizeGroup.
+  - New function gimp_export_thumbnail() to query the user settings (as
+    set in Preferences) on whether or not a file plug-in should export
+    the image thumbnail.
+
+Plug-ins:
+
+  - PSD now supports bigger-than-4GiB files. File support was ported to
+    GIO API with 64-bit offsets, hence allowing loading correctly very
+    big files.
+  - PSD now supports loading up to 99 channels (specs say that 56 is the
+    max but some sample PSD files have more channels).
+  - PSB file format is now supported for loading.
+  - Scriptfu now handles GFile and GimpObjectArray types.
+  - 16-bit SGI images now supported (until now, they were loaded as
+    8-bit).
+  - file-webp ported to GimpSaveProcedureDialog.
+  - New JPEG XL plug-in (loading and exporting).
+  - Various cleaning replacing g_file_get_path() with g_file_peek_path()
+
+Translations:
+
+  - New Vietnamese, Lithuanian and Portuguese translations for the
+    installer.
+
+Build:
+
+  - Windows installer scripts updated to all supported languages.
+  - New "windows-installer-langs" unit test to detect discrepancies of
+    langs listed in build system, installer and gettext files.
+  - New CI jobs for Windows native builds with MSYS2.
+  - Less critical CI jobs (meson/clang build and cppcheck static
+    analysis) moved to a scheduled run for resource saving, and 32-bit
+    cross-built Windows job now only runnable manually.
+  - Windows installer now built as a CI job. The installer is not
+    signed. The installer creation happens on tags for releases and at
+    regular scheduled intervals for tests.
+  - Improved tag handling in the CI for transparent release process.
+  - New flatpak job (on scheduled interval) published on GNOME Nightly
+    repository.
+  - Windows installer and test flatpak (to download, no repository) can
+    now be built by a merge request CI when the labels "5. Windows
+    Installer" and/or "5. Flatpak package" are respectively set in the
+    MR labels.
+  - Scalable GIMP application icon is installed too.
+  - Generate SHA* checksums for CI-generated Windows installers.
+  - New `CODING_STYLE.md` document in repository for our coding style
+    rules.
+  - Configure: --enable-check-update now has an "auto" value.
+    Meson: -Dcheck-update is now a yes|no|platform-default combo.
+    The auto/platform-default value defaults to "yes" on Windows and
+    macOS and "no" on other platforms.
+  - GLib dependency's minimum required version bumped to 2.68.0.
+  - GEGL minimum required version bumped to 0.4.32.
+  - Flatpak nightly build now uses the new "fallback-x11" permission
+    instead of "x11" to prevent unnecessary X11 access while in Wayland.
+  - Fixes to codebase making GIMP 2.99 finally building and running on
+    macOS.
+  - Our flatpak manifests now use the flatpak-external-data-checker tool
+    with the Anitya backend allowing to monitor our dependencies and
+    ensure they are always up-to-date. All dependencies have been
+    updated accordingly.
+  - Our desktop file now lists a `StartupWMClass` tag to better
+    associate running GIMP windows with the application icon (and
+    possibly other metadata).
+
+
+Overview of Changes from GIMP 2.99.4 to GIMP 2.99.6
+===================================================
+
+Core:
+
+  - Various fixes for Wayland support.
+  - Canvas Size dialog now displays a template selector to simply
+    resize the canvas to a known template. When the image's and
+    template's pixel density don't match, a choice will be proposed to
+    set the image's PPI to the template's one or to scale the template's
+    pixel size with the image's pixel density.
+  - Off-canvas guides are now allowed. Guides are not deleted anymore
+    when dropped off-canvas, but when dropped off-viewport.
+  - Pinch gesture is now possible on canvas for zooming in/out (works on
+    Wayland, not on X11; untested yet on *BSD, macOS, Windows and
+    others).
+  - GimpAction core class now stores a reason for explaining being
+    disabled. This can be used later for giving better hints on why some
+    effects or plug-ins are not usable in some situations. We already
+    had this feature, but by tweaking the action's tooltip, which
+    prevented this to have proper styling on GUIs and disrupted action
+    search (as the reason text was searched, hence may return actions it
+    should not).
+  - Copy|Cut-Paste could already operate on multiple layers, by merging
+    the result into a single layer. It will still do this when a
+    selection exists, yet will paste layers as-is otherwise. This makes
+    an alternative way to move layers, which is sometimes easier than
+    drag'n dropping (especially between separate images).
+
+Tools:
+
+  - Paint Select tool got various improvements:
+    * apply a threshold on the image mask before triggering the
+      automatic expansion to simplify mask handling in the gegl
+      paint-select operation.
+    * enable viewport-based local selection.
+  - GEGL Operation tool is now moved into Filters > Generic menu because
+    it behaves more like a generic filter conceptually. As other
+    filters, the GEGL Operation action is now only active when there are
+    opened images.
+
+API:
+
+  - The generate "Metadata" frame layout in a GimpSaveProcedureDialog
+    has been improved to always show the same number of columns to avoid
+    ugly layout with options on 3 columns, then 2 columns on the next
+    line (for instance).
+  - The "Reset" button in GimpProcedureDialog shows a down arrow to show
+    this is actually a button menu.
+  - "Save|Load Defaults" in GimpProcedureDialog are renamed as "Save
+    Settings" and "Load Saved Settings". The term "defaults" was not
+    very clear and could be confused with "factory defaults". Moreover
+    tooltips were added and the "Load Defaults" button is now only
+    sensitive if "Save Defaults" buttion has been hit at least once.
+  - Annotations improved.
+  - Drop g_object_notify() in favor of g_object_notify_by_pspec() in
+    various implementations to avoid a slight performance hit because of
+    a global lock.
+  - New function gimp_parasite_get_data() replacing gimp_parasite_data()
+    and gimp_parasite_data_size() in a GObject Introspection friendly
+    way.
+  - gimp_procedure_dialog_new() now allows a NULL title if a menu label
+    was set on the GimpProcedure with gimp_procedure_set_menu_label().
+  - gimp_progress_update() improved: do not update more than 20 times
+    per second and do not warn on stderr when too many progression steps
+    are outputted. Indeed we should not place the burden of deciding
+    whether there are too much or not enough progression updates on
+    plug-in developers. On the opposite, they should be encouraged to
+    update the progression as often as possible while libgimp will
+    handle the decision on whether it actually ignores the progression
+    step or not. This makes easier plug-in development and good
+    progression feedback of long process.
+  - GimpInt16Array was removed: it was used neither by GIMP core nor any
+    core plug-ins. If third-party plug-ins really need this type, they
+    may easily reintroduce it through GimpUint8Array (array of bytes) or
+    GimpInt32Array (using only a subrange).
+  - New function gimp_image_take_selected_layers() similar to
+    gimp_image_set_selected_layers() except that it takes a GList
+    (instead of a C array) and it takes ownership of the list pointer.
+  - New functions: gimp_procedure_set_sensitivity_mask() and
+    gimp_procedure_get_sensitivity_mask() for plug-ins to advertize when
+    a procedure should be sensitive (in particular relatively to
+    multi-drawable selection).
+  - GimpImageProcedure's run() functions now have an array of drawables
+    as argument (instead of a single drawable), to be consistent with
+    multi-drawable selection ability.
+  - New gimp_plug_in_error_quark() as a generic GQuark/GError domain for
+    plug-ins.
+  - Several functions were renamed to be consistent with our naming
+    scheme:
+    * s/gimp_parasite_name/gimp_parasite_get_name/
+    * s/gimp_parasite_flags/gimp_parasite_get_flags/
+    * s/gimp_image_base_type/gimp_image_get_base_type/
+    * s/gimp_image_width/gimp_image_get_width/
+    * s/gimp_image_height/gimp_image_get_height/
+    * s/gimp_drawable_bpp/gimp_drawable_get_bpp/
+    * s/gimp_drawable_width/gimp_drawable_get_width/
+    * s/gimp_drawable_height/gimp_drawable_get_height/
+    * s/gimp_drawable_offsets/gimp_drawable_get_offsets/
+  - gimp_parasite_data() and gimp_parasite_data_size() are replaced by
+    gimp_parasite_get_data() which is introspection friendly.
+  - libgimpconfig: GimpParasite can now be serialized. This is useful
+    when using a GimpParasite procedure argument, whose random contents
+    (possibly binary) can be stored across sessions.
+  - Move public classes to G_DECLARE_DERIVABLE_TYPE and
+    G_DECLARE_FINAL_TYPE in order not to expose useless variables to
+    plug-in developers.
+  - New function gimp_procedure_dialog_set_sensitive() sets
+    GimpProcedureDialog's widget sensitive value or binding.
+  - PDB procedure 'plug-in-autocrop-layer' multi-layer aware.
+  - GimpProcedureDialog now handles GimpRGB arguments.
+
+Plug-ins:
+
+  - We dropped the dialog for the Freedesktop portal implementation of
+    the screenshot plug-in. Basically the Freedesktop portal provides
+    its own GUI with most options, so also showing ours is redundant.
+    Just directly call the portal and wait for the image in return.
+  - Color profile and comment is saved on each layer of a TIFF file to
+    prevent any ambiguity as TIFF allows its layers to have different
+    profiles.
+  - On PNG import, create an ICC profile out of the gAMA and/or cHRM
+    chunks, if any of them are present, if no color profile is set and
+    if the sRGB chunk is not present. This happens for RGB images as
+    well as grayscale images (creating respectively a RGB or grayscale
+    color profile).
+  - Improve PNG export in no-profile case with gAMA and cHRM chunks
+    (additionally to the sRGB chunk) according to PNG spec
+    recommendations. Moreover the "gamma" option has now been removed
+    because we just have proper core support of this metadata through
+    ICC profile creation now, which is just more powerful.
+  - "gamma" option for PNG export was removed (from GUI and
+    file-png-load PDB API) because it is now redundant as we have proper
+    support for this metadata.
+  - Various fixes and improvements to OpenRaster image support.
+  - PDF export now has progression.
+  - PSD import/export got multi-layer selection support.
+  - Qbist:
+    * make the applied pattern a bit more prominent by adding a
+      label about the center pattern of the 9x9 grid (which is the
+      selected one meant to be applied).
+    * last used values now stored with the new API, hence surviving
+      across sessions.
+  - benchmark-foreground-extract.py moved to gimp-data-extras.
+  - Various plug-ins now work with multiple selected drawables when
+    relevant.
+
+Devel docs:
+
+  - Python 3 and Javascript API documentation are now generated inside
+    the build directory devel-docs/g-ir-docs/html/ (not installed right
+    now) if you configure the build with option --enable-g-ir-doc
+    (alternative for the meson build: -Dg-ir-doc=true but the docs ends
+    up incomplete so autotools build is advised, cf. #6362).
+
+Translations:
+
+  - New Hebrew translation for the installer.
+
+Build:
+
+  - Bumping minimum GEGL to version 0.4.30.
+
+
+Overview of Changes from GIMP 2.99.2 to GIMP 2.99.4
+===================================================
+
+Core:
+
+  - Action search now always show all actions, even inactive ones. In
+    order not to clutter the results, inactive ones are shown after
+    active results (following the same match quality level).
+    Consequently the "Show unavailable actions" checkbox has been
+    removed from the `Preferences > Help System` dialog.
+  - Improve sample text logics for CJK fonts, showing different
+    sample characters for Korean and Japanese, making detection
+    at-a-glance of such fonts easier.
+  - With "Ask what to do" color profile policy, profile conversion at
+    image loading is not proposed anymore when the image's profile is
+    the preferred profile set in Preferences for the current image type
+    (currently it would only be discarded if the image's profile was the
+    built-in profile, now GIMP accounts for both cases).
+  - When file loading plug-ins are run, the file chooser dialog is now
+    hidden until the plug-in returns.
+  - GIMP tries to keep error dialogs above to raise awareness when they
+    arrive (not discovered later under other dialogs).
+
+User Interface:
+
+  - GimpSpinScale widget improvements:
+    * The widget will grab focus when starting to edit the entry, and
+      in particular the current number will be fully selected (because
+      often we want to just type down a completely different number
+      accurately).
+    * Also when giving focus to the entry with middle click (from
+      anywhere inside the widget), the scale value doesn't change in the
+      same time anymore.
+    * Finally we can now target-click accurately the entry current value
+      to edit the entry (again, without changing the value and selecting
+      existing number fully) with the main button (usually left button).
+      Even though middle click is simpler because we don't have to be
+      accurate (we can middle-click anywhere in the spin scale widget),
+      it is hardly discoverable, whereas clicking a number entry which
+      is meant to be editable is the most common GUI interaction
+      expectation.
+    * To help feature discoverability, when hovering the widget, the
+      cursor will change and show a "grab" cursor when a click would
+      start an absolute edit (the cursor changes to "grabbing" when
+      actually clicking and dragging the scale) or a "text" cursor when
+      a click would focus the number entry. When Shift key is being
+      hold, the cursor is the one for the relative edit, wherever the
+      position over the widget. This should make discovering possible
+      interactions with the widget a lot easier.
+  - Various improvements in the Layers dockable (and similar tree view
+    widgets):
+    * The bigger thumbnail popup on long click (e.g. on a layer or mask
+      thumbnail) does not pop out when any modifier is hold (such as
+      Shift/Ctrl for multi-selection or any other modifier used for
+      alternative actions).
+    * Alternative actions which were available with modifier-clicks on
+      layer or mask thumbnails have been moved to an Alt+ modifier when
+      necessary, in order to not clash with multi-layer selection
+      interaction. In particular:
+      + Ctrl-click on a mask to enable/disable it now moved to
+        Alt-Ctrl-click.
+    * The Shift+click and Ctrl+click actions on a layer thumbnail to add
+      and remove respectively a layer mask have been removed because the
+      much older feature for "Alpha to Selection" already use all the
+      Alt+ modifier combinations.
+    * The alternative Alt+ actions now only operate on the clicked layer
+      and not on the selection unlike the corresponding actions
+      (available through buttons, actions and menus). Also they do not
+      change the selection.  So you can Alt+click a layer for "Alpha to
+      Selection", same as you can Alt+click a mask for showing it
+      without triggering a selection change. This allows these
+      alternative actions to not be redundant of the equivalent actions
+      but complementary with a slightly different targeting behavior.
+    * The various interactions with modifiers now catch the exact
+      modifier combination they require, hence avoiding interaction
+      cases running several actions (e.g. Alt-Ctrl on a layer thumbnail
+      removes the clicked layer's alpha channel from the selection
+      without modifying the selected layer while Ctrl only would modify
+      the selection).
+
+Tools:
+
+  - New Paint Select tool in the playground. This is a tool prototype
+    which would hopefully end up as a quick binary selection tool.
+  - The new default dynamics is: "Pressure Size". This doesn't change
+    anything for common input devices (mouses, touchpad) yet would allow
+    tablet devices to directly show that pressure input is working on
+    first use. Until now, people would have the impression that tablets
+    are not working (even though GIMP 3 will have hotplug so it is
+    actually working from scratch) just because "Dynamics Off" was the
+    default.
+
+Input Devices:
+
+  - Various improvements to the Input Devices editor:
+    * Do not show virtual devices and XTEST API (Linux/X11) device in
+      the Input Devices editor as they are useless from a configuration
+      standpoint.
+    * Only show the axes returned by GDK instead of the whole
+      list of possible axes, which made no sense.
+    * Show better names for axes, as returned by GDK, for instance a X
+      axis becomes often "Abs X" on a graphics tablet and "Rel X" on a
+      mouse or other devices made to work relatively.
+    * Don't show an empty list for devices with no axes, just don't show
+      the list widget at all.
+    * For each device, select by default the first axis with curve
+      ability, if any, (i.e. the Pressure axis if the device has one) in
+      order to make the dialog directly more useful and usable.
+  - Default tool have been set on different device sources:
+    * Pen devices (tablet styluses main input) now default to the
+      paintbrush tool.
+    * Eraser devices (tablet styluses back input) still defaults to
+      eraser tool.
+    * Touch screen (finger) defaults to Smudge tool.
+    * All other devices defaults to paintbrush (this was already the
+      case, but was broken for as long as I remember, now it should work
+      properly).
+
+API:
+
+  - GimpFileEntry public variables were made private and a new function
+    has been added: gimp_file_entry_get_entry().
+  - New GimpScaleEntry and GimpColorScaleEntry widget classes and new
+    relevant API for these objects, replacing the former functions
+    creating various widgets and attaching them to a GtkGrid. This makes
+    for easier to use and less constrained GUI functions (with a lot
+    less arguments, as we try now to smartly generate appropriate
+    defaults for many options; gimp_scale_entry_new() in particular went
+    down from 17 arguments to 5), also better introspectability for
+    bindings, and finally it will be useful for automatic dialog
+    generation for plug-ins.
+  - New GimpLabeled class and subclasses: GimpLabelSpin,
+    GimpLabelIntWidget.
+  - Several new functions for GimpProcedureDialog for automatic dialog
+    generation based on input arguments. Though not mandatory, the
+    various functions allow to organize better the widgets.
+  - The GimpProcedureDialog class will now check that mnemonics are
+    present on every option, and also that there is no duplicate
+    mnemonics. It will print messages on stderr if any of these test
+    fails (so that it won't bother users but developers and translators
+    should be able to get feedback about missing/duplicate mnemonics).
+  - GimpSaveProcedure now has generic metadata support (with an API so
+    that an export procedure can declare whether it supports given
+    metadata types or contents).
+    Combined with a new subclass GimpSaveProcedureDialog (child of
+    GimpProcedureDialog), this ensures that:
+    * If a format supports a given metadata, they will always have an
+      auxiliary argument with the same name across plug-ins.
+    * The label and tooltips will also be always the same in the GUI.
+    * Order of metadata widgets will also stay consistent.
+    * The widgets will work the same (no more "Comment" text view
+      missing in one plug-in but present in another, or with an entry
+      here, and a text view there, and so on).
+    * The metadata frame will show an "(edit)" link which will run the
+      "plug-in-metadata-editor" plug-in. The eventual goal is to move
+      some generic logics to the metadata editor (when it makes sense)
+      and to raise awareness for metadata edition and viewing abilities.
+      This is still a work-in-progress which requires much more
+      improvements in said abilities.
+  - New gimp_get_num_processors() function for plug-ins to be able to
+    set their own multi-threading operations as configured in
+    Preferences.
+
+Plug-ins:
+
+  - file-fli, file-tiff, file-jpeg and file-png updated to new dialog
+    generation API. In the most complicated case (file-jpeg), this
+    shaved 600 lines out of the plug-in code.
+  - file-heif:
+    - now uses gimp_get_num_processors() instead of
+      g_get_num_processors() (allowing to bypass system thread info).
+    - Realtime parameter is set for AOM encoder when Fast encoding
+      speed is selected by user.
+    - Ability to set pixel format (YUV444, RGB) is enabled
+      for >= libheif 1.10 to avoid issues in older versions.
+  - file-jp2 is now able to decode JPEG2000 files faster with
+    multi-threading, using the thread number settings returned by
+    gimp_get_num_processors().
+  - Improved plug-in debugging helper infrastructure: GIMP_PLUGIN_DEBUG
+    has a new `fatal-criticals` option and better defaults. Developer
+    documentation got some rewriting and debugging code benefited from
+    refactorization.
+  - py-slice.py moved to gimp-data-extras.
+
+Installer:
+
+  - Various updates to adapt to the GIMP 2.99/3 build.
+  - Lua made optional.
+
+Devel docs:
+
+  - Documentation to port GIMP 2.10 plug-ins to GIMP 3.0 has been
+    started in `devel-docs/GIMP3-plug-in-porting-guide/`. It is also
+    visible directly on out Gitlab instance with visual styling:
+    https://gitlab.gnome.org/GNOME/gimp/-/tree/master/devel-docs/GIMP3-plug-in-porting-guide
+
+Build:
+
+  - Bumping minimum harfbuzz version to 1.0.5 for hb_ft_font_set_funcs().
+  - Bumping minimum pango version to 1.44.0 for pango_font_has_char().
+  - Bumping minimum GEGL to version 0.4.28.
+
+
+Overview of Changes from GIMP 2.10.x to GIMP 2.99.2
+===================================================
+
+Core:
+
+  - Improved "space invasion".
+  - New extension format support (.gex a.k.a. GIMP Extension) which is
+    an archive containing various supported data. So far, it can
+    package: brushes, MyPaint brushes, dynamics, patterns, gradients,
+    palettes, tool presets, plug-ins, splash images and themes.
+  - New extension manager allowing to enable, disable or uninstall
+    installed extensions, with a dialog available in `Edit > Manage
+    Extensions`.
+  - Multi selection of layers now possible. Various tools and features
+    are now multi-selection aware.
+  - XCF format bumped to version 14 with awareness of multiple layer
+    selection.
+  - All code is year-2038-safe with deprecated time API replaced.
+  - "Alpha to Selection" various actions warn when the result selection
+    is empty.
+  - Color Profile Policy (import) now exposes a "Convert to Preferred
+    Profile" (fourth) choice and the import dialog default "Convert"
+    action will convert the image to the preferred profile (if any was
+    set, otherwise it falls back to the built-in profile). Converting to
+    the built-in profile will be still available as secondary action.
+  - A new "Metadata Rotation Policy" is now exposed in the Preferences
+    dialog, next to the "Color Profile Policy" (in page `Preferences >
+    Image Import & Export`) with 3 options: "Ask what to do", "Discard
+    metadata without rotating" and "Rotate the image then discard
+    metadata".
+    This policy used to be handled API-size, with a dialog generated by
+    libgimpui gimp_image_metadata_load_finish(), and saved in a global
+    parasite. The whole logics and GUI has been moved as core logics,
+    similar to the "Color Profile Policy".
+
+User Interface:
+
+  - Whole interface ported to GTK+3:
+    * Proper HiDPI support, which will follow the system's scale factor
+      for all widgets. This is a core toolkit support, unlike the basic
+      better-than-nothing hacks from GIMP 2.10.x.
+    * GTK+3 CSS-like support. All themes for former versions are
+      therefore not working anymore.
+    * GTK+3 themes have the concept of "dark variant", so a same theme
+      may propose both a light and a dark versions. Preference for dark
+      variants can now be checked in `Preferences > Themes > Use dark
+      theme variant if available` checkbox, allowing for instance to use
+      your system theme in its light variant everywhere except in GIMP.
+      This option is checked by default as graphics software are often
+      preferred in dark modes.
+    * Symbolic icon themes are now recolored automatically according to
+      the theme colors (no theme and icon theme tweaking anymore to end
+      up with dark on dark or light on light interfaces), except for
+      color elements whose SVG style is marked as "!important".
+    * Native Wayland support.
+    * Various dialogs now use Client-Side decorations and modern GTK+
+      widgets are being used when relevant (e.g. GtkSwitch which gives a
+      better feeling of a general "ON/OFF state").
+    * Progressive/smooth scroll actions (e.g. ctrl+scroll for zooming)
+      are now possible.
+  - Image display rendered faster with a render cache that keeps the
+    result of scaling, color management, display filters and shell mask
+    (for tools like fuzzy select).
+  - Shift-click on layer GimpContainerTreeView (typically the Layers
+    dockable) allows to expand/collapse all item groups but the clicked
+    one.
+  - Compact GimpSpinScale is now the only available version.
+  - Scalable symbolic icons "switch-on", "switch-off" (from GTK
+    repository) and "software-update-available" (from Adwaita
+    repository) are now bundled with GIMP in a "hicolor" overlay so that
+    they are available even if missing from the custom theme.
+
+Devices:
+
+  - Device hotplug supported (thanks to GTK+3). In particular:
+    * you don't need to have your tablets and other devices plugged
+      before you start GIMP anymore;
+    * enabling your devices in the "Configure Input Devices" dialog is
+      not needed anymore. Tablets will work out-of-the box;
+    * you can safely unplug and replug the same or other input devices
+      while GIMP is running.
+  - "Input Devices" dialog improved:
+    * "Save" and "Close" buttons replaced by "OK" (save and exit),
+      "Cancel" (reset and exit) and "Reset" (reset to previous settings
+      but keep the dialog open).
+    * "Keys" list has been discontinued. The "key" concept is
+      associated to "keyboard" devices (a tablet being a "pointing
+      device" with buttons, not keys) so this list was actually useless
+      and only confusing.
+
+Plug-ins:
+
+  - Major rewrite of the API (see below). So GIMP 2.10.x plug-ins and
+    below must be ported to the new API.
+  - Every introspected binding which we test comes with a "Goat
+    Exercise", which is a demo plug-in popping a dialog and showing its
+    own source code. It processes a simple "gegl:invert" operation on a
+    drawable. All "Goat Exercises" must do the same thing in the same
+    way, simply in their respective languages, as documentation/example
+    code for a language binding.
+  - The Goat Exercise plug-ins are themselves installed as a GIMP
+    Extension, as a demo for extension creation.
+  - Plug-ins must be installed in their own subdirectory in
+    `$XDG_CONFIG_HOME/GIMP/2.99/plug-ins/`, thus preventing data mess
+    (with plug-ins coming with data and installing it all in the root
+    plug-ins/ directory) and DLL hell. The main plug-in executable must
+    be named the same as the directory (possibly with an added
+    extension).
+    E.g.: `plug-ins/my-cool-plug-in/my-cool-plug-in.py`
+  - HEIF export allows selecting color subsampling/pixel format (YUV444,
+    YUV420, RGB) and encoder speed (Slow, Balanced, Fast).
+    Lossless option delivers visually lossless output.
+  - New "file-heif-av1-load" procedure separate from "file-heif-load"
+    for AVIF only.
+  - shadow_bevel.py, sphere.py, whirlpinch.py and clothify.py moved to
+    gimp-data-extras.
+
+API:
+
+  - `GimpPDB` is now a class to represent the PDB communication channel
+    with GIMP. It is a singleton which exist exactly once per running
+    plug-in, hence it is not meant to be manually instantiated and can
+    only be returned by gimp_get_pdb(). It is mostly used to look up
+    procedures declared by other plug-ins or by GIMP core, check if a
+    given procedure exist and run the procedures.
+  - `GimpPlugIn` is a class which every plug-in should now subclass as a
+    way to create their plug-in, and override at least the methods
+    query_procedures() and create_procedure(). Two other methods
+    (init_procedures() and quit()) can be optionally overridden.
+    The new subclass must be declared to gimp by calling gimp_main() to
+    make it available to the core (PDB procedure, menu items, etc.).
+    A plug-in can obtain its own GimpPlugIn instance with
+    gimp_get_plug_in(). This is a singleton object which belongs to
+    libgimp.
+  - Plug-In procedures are now represented by a class `GimpProcedure`.
+    * The subclass `GimpFileProcedure` handles file-related procedures,
+      and its own subclasses `GimpLoadProcedure` and `GimpSaveProcedure`
+      handle load/export procedures (file format support).
+    * The subclass `GimpThumbnailProcedure` for procedures run during
+      the lifetime of the GIMP session each time a plug-in thumbnail
+      procedure is called.
+    * The subclass `GimpImageProcedure` handles `GimpImage`-related
+      procedures, i.e. any procedure which want to work on the opened
+      image (GIMP core will pass through the active image and selected
+      drawables to the plug-in procedure).
+    * Objects of the subclass `GimpPDBProcedure` are not meant to be
+      created or freed by plug-ins, they represent any `GimpProcedure`
+      and are returned by `gimp_pdb_lookup_procedure()` by looking it up
+      by name on the singleton `GimpPDB` object.
+  - `GimpProcedureConfig` is the base class to represent the arguments
+    when running a `GimpProcedure`. It implements the `GimpConfig`
+    interface and will provide proper management of saved settings
+    (including the last used values) and generated GUI using
+    prop_widgets to plug-ins. This is still a work-in-progress.
+    Currently `GimpProcedure` run function is called with a
+    `GimpValueArray` whose values can be transferred into a
+    `GimpProcedureConfig` by calling `gimp_procedure_config_begin_run()`
+    or `gimp_procedure_config_begin_export()`.
+  - `GimpDisplay` is now a class of its own.
+  - `GimpImage` is now a class to represent an opened image.
+  - `GimpItem` is now a class to represent various `GimpImage` items.
+    * `GimpVectors` subclass represents an image path.
+    * `GimpDrawable` subclass represents drawable object but is a
+      simili-abstract class as it won't be a finale object class, which
+      can be so far either a:
+      + `GimpLayer` represents image layers.
+      + `GimpChannel` represents a `GimpImage` channel which is
+         typically in GIMP a named channel which can be added into a
+         `GimpImage` channel stack (the "Channels" dockable in the GUI)
+         with `gimp_image_insert_channel()`. This class is not really
+         used to represent a color space component though this is
+         conceptually the same thing (so maybe some day) and named
+         channel can actually be created from an image color component
+         with `gimp_channel_new_from_component()`.
+         Some other specific usages have their own subclasses:
+        - `GimpLayerMask` subclass is used for a `GimpLayer` mask.
+        - `GimpSelection` subclass is used for a `GimpImage` selection.
+  - GimpImage, GimpItem and GimpDisplay (and their various subclasses)
+    represent objects which can be passed through the PDB. They are
+    managed by libgimp and should not be freed by plug-ins.
+  - The PDB-passing classes still have IDs which can be obtained with
+    gimp_image_get_id(), gimp_item_get_id() and gimp_display_get_id()
+    respectively. Conversely you can get back the object with
+    gimp_image_get_by_id(), gimp_item_get_by_id() and
+    gimp_display_get_by_id().
+    Specific variants exist to get back an item object from its ID, such
+    as gimp_layer_get_by_id(), which do additional class verification
+    (other than this, they are similar to gimp_item_get_by_id()).
+    **NOTE**: since objects are managed by libgimp, you are ensured that
+    a `*_get_by_id()` call returns you exactly the same object you had
+    previously for a given object. Consequently you can do pointer
+    comparison of objects to compare images, items or displays during a
+    given run. This will work because objects are unique (these are not
+    several object copies representing the same remote object).
+  - Type validation function which used to work on IDs now work directly
+    with object arguments while new function with added `*_id*` have
+    been created to validate from an object ID instead, GIMP 2.10-style.
+    To verify if an ID exist:
+    * gimp_image_is_valid() / gimp_image_id_is_valid()
+    * gimp_item_is_valid() / gimp_item_id_is_valid()
+    * gimp_display_is_valid() / gimp_display_id_is_valid()
+    To check if GimpItem are from specific subclasses:
+    * gimp_item_is_drawable() / gimp_item_id_is_drawable()
+    * gimp_item_is_layer() / gimp_item_id_is_layer()
+    * gimp_item_is_text_layer() / gimp_item_id_is_text_layer()
+    * gimp_item_is_channel() / gimp_item_id_is_channel()
+    * gimp_item_is_layer_mask() / gimp_item_id_is_layer_mask()
+    * gimp_item_is_selection() / gimp_item_id_is_selection()
+    * gimp_item_is_vectors() / gimp_item_id_is_vectors()
+
+    **NOTE**: since these are GObject classes, you can also use the
+    GObject style macros such as GIMP_IS_LAYER(). Yet these macros do
+    not do any ID verification (which is not a problem anyway in most
+    cases as you got the object from API calls) and will not exist in
+    bindings.
+
+    **IMPORTANT**: using IDs is mostly for internal usage and actually
+    there are very few reasons to ever need to get an object ID from a
+    plug-in. Usually you should rather just work only with the unique
+    object pointers returned by the API.
+  - The whole API has been updated to use objects instead of object IDs
+    when relevant. For instance all existing libgimp functions from 2.10
+    which were called on an image ID are now called on a GimpImage
+    object instead.
+  - All file paths procedure parameters are now handled by GIO's `GFile`
+    which simplify various file handling issues (path formats, encoding,
+    etc.) and brings new features (remote access, secure protocol
+    support, etc.). We also got rid of the "filename" vs "raw_filename"
+    differentiation in parameters. Hence all libgimp* functions with
+    these parameters have been updated as well.
+  - gimp_image_metadata_load_finish() is now fully GUI/GTK-code free.
+    The first consequence is that it is not in libgimpui anymore, but in
+    libgimp, as it should. The second consequence is that the boolean
+    `interactive` argument has been removed. Now all image rotation
+    logics (the part which needed a GUI) has been moved into core and
+    will be automatically run when normally loading images from GIMP's
+    interface, similarly as to how color profiles was already handled.
+  - 2 new libgimp functions: gimp_image_policy_rotate() and
+    gimp_image_policy_color_profile() are now available to explicitly
+    call the Preferences-set policy on an image. This may result in a
+    dialog being presented to the user if `interactive` is TRUE and
+    settings is "Ask what to do".
+    It is unnecessary to call these functions when developing a new
+    GimpLoadProcedure because the core will automatically do the right
+    thing and call these on normal image loading workflow.
+    Instead if a plug-in calls such GimpLoadProcedure through the PDB,
+    no such functions will be run automatically. It is up to the plug-in
+    to decide what to do (no conversion, mandatory conversion, or using
+    user settings, possibly with a dialog to decide, hence calling these
+    functions explicitly).
+  - New function gimp_export_comment() to query the user settings (as
+    set in Preferences) on whether or not a file plug-in should export
+    the image's comment.
+  - Several functions which are returning C-array of objects with a size
+    output argument now also have a GList counterpart (not as
+    replacement, but as additional API):
+    * gimp_get_images() -> gimp_list_images()
+    * gimp_image_get_layers() -> gimp_image_list_layers()
+    * gimp_image_get_selected_layers() -> gimp_image_list_selected_layers()
+    * gimp_image_get_channels() -> gimp_image_list_channels()
+    * gimp_image_get_vectors() -> gimp_image_list_vectors()
+    * gimp_item_get_children() -> gimp_item_list_children()
+  - New function gimp_vectors_stroke_reverse() to reverse a specified
+    stroke in a given GimpVectors.
+  - In GIMP 2.10, functions gimp_drawable_preview_get_drawable() and
+    gimp_zoom_preview_get_drawable() got deprecated in favor of
+    respectively gimp_drawable_preview_get_drawable_id() and
+    gimp_zoom_preview_get_drawable_id(). The original names have been
+    reinstated and now returns a GimpDrawable object, whereas the newer
+    functions got removed.
+    Similarly gimp_zoom_preview_new_from_drawable_id() and
+    gimp_drawable_preview_new_from_drawable_id() are replaced by
+    respectively gimp_zoom_preview_new_from_drawable() and
+    gimp_drawable_preview_new_from_drawable().
+  - Deprecated functions in GIMP 2.10.x have been removed. To get a list
+    of these function, this file should hopefully map most of them to a
+    replacement equivalent:
+    devel-docs/GIMP3-plug-in-porting-guide/removed_functions.md
+  - gimp_spin_button_new() had some weird compatibility macro to expand
+    to a newer or older signature depending on the number of arguments.
+    Now only the newer signature with 3 arguments is available.
+  - Properties removed from custom widgets:
+    * GimpAspectPreview, GimpDrawablePreview and GimpZoomPreview had a
+      deprecated "drawable" property in favor of "drawable-id" property.
+      The "drawable" property got reinstated (and the "drawable-id"
+      removed) and obviously now stores a GimpDrawable object rather
+      than an integer.
+    * The property "stock-id" was removed from GimpHintBox and
+      GimpCellRendererToggle. Use "icon-name" instead.
+  - Note: there are likely more API changes, unfortunately we haven't
+    kept the NEWS file up-to-start from scratch. The best is to look at
+    the API generated documentation.
+  - The full API is GObject Introspected into 2 modules: Gimp and
+    GimpUi. This means plug-ins can be written in various non-C
+    languages. So far the following languages have been tested and work
+    well: Python 3, Lua, Javascript and Vala.
+    (Note: Python 2 is also working, but considering that this language
+    is end-of-life since 2020, we don't really care).
+  - All pygimp specific Python API does not exist anymore. Python will
+    use the same API as C plug-ins, introspected through GObject
+    Introspection.
+
+Documentation:
+
+  - `devel-docs/xcf.txt` updated to handle XCF 14.
+
+Build:
+
+  - New meson build system. Still deemed "experimental" for the time
+    being. Packagers are recommended to continue using the autotools
+    build system in order to avoid build system-specific bugs.
+  - Continuous integration in Gitlab with:
+    - an autotools build with GCC on a Debian/testing runner
+    - an autotools distcheck build on a Debian/testing runner
+    - a meson build with GCC on a Debian/testing runner
+    - a meson build with Clang on a Debian/testing runner
+    - a meson cross-build with Mingw-w64 for Windows 32-bit
+    - a meson cross-build with Mingw-w64 for Windows 64-bit
+    - static code analysis with cppcheck
+    - a source tarball distribution job (tar.bz2 and tar.xz)
+    - a ready-to-run Windows 64-bit test archive
+    - a ready-to-run Windows 32-bit test archive
+
+Known blocker issues:
+
+  - GTK+3 port is functional but not complete as some deprecated APIs
+    are still being used.
+  - Space invasion is still a work-in-progress.
+  - Plug-ins API update is still a work-in-progress.
+  - GIMP extensions are still a work-in-progress.
+  - Multiple layer selection is still work-in-progress. Some issues are
+    expected, and possibly even some crashes in code paths which were
+    not updated yet.
+  - No custom theme yet, in particular we want a neutral gray theme with
+    light/dark variants, and a middle-gray theme too.
+  - We probably want to revive a "Small" theme as well with smaller
+    icons (useful on smaller displays, or mid-high density displays or
+    simply depending on tastes).
+  - Various blocking bugs happen on Wayland only.
