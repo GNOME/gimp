@@ -339,7 +339,7 @@ if (((Test-Path $a64_bundle) -and (Test-Path $x64_bundle)) -and (Get-ChildItem *
       {
         Write-Output "(INFO): creating $MSIXUPLOAD for submission"
         Get-ChildItem *.msixbundle | ForEach-Object { Compress-Archive -Path "$($_.Basename).msixbundle" -DestinationPath "$($_.Basename).zip" }
-        Get-ChildItem *.zip | Rename-Item -NewName $MSIXUPLOAD
+        Get-ChildItem ${IDENTITY_NAME}*.zip | Rename-Item -NewName $MSIXUPLOAD
         #Get-ChildItem *.appxsym | Remove-Item -Recurse -Force
         Get-ChildItem *.msixbundle | Remove-Item -Recurse -Force
       }
@@ -472,7 +472,7 @@ if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags
       }
     else
       {
-        $PRODUCT_ID="9PNSJCLXDZ0V"
+        #$PRODUCT_ID="NONE_YET"
       }
 
     ## Create submission and upload .msixupload file to it
