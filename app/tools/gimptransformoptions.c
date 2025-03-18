@@ -27,6 +27,7 @@
 #include "tools-types.h"
 
 #include "config/gimpcoreconfig.h"
+#include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
 #include "core/gimptoolinfo.h"
@@ -52,14 +53,17 @@ enum
 
 static void     gimp_transform_options_config_iface_init (GimpConfigInterface *config_iface);
 
-static void     gimp_transform_options_set_property (GObject         *object,
-                                                     guint            property_id,
-                                                     const GValue    *value,
-                                                     GParamSpec      *pspec);
-static void     gimp_transform_options_get_property (GObject         *object,
-                                                     guint            property_id,
-                                                     GValue          *value,
-                                                     GParamSpec      *pspec);
+static void     gimp_transform_options_set_property  (GObject         *object,
+                                                      guint            property_id,
+                                                      const GValue    *value,
+                                                      GParamSpec      *pspec);
+static void     gimp_transform_options_get_property  (GObject         *object,
+                                                      guint            property_id,
+                                                      GValue          *value,
+                                                      GParamSpec      *pspec);
+static void     gimp_transform_options_style_updated (GimpGuiConfig   *config,
+                                                      GParamSpec      *pspec,
+                                                      GtkWidget       *box);
 
 static void     gimp_transform_options_reset        (GimpConfig      *config);
 
@@ -183,6 +187,35 @@ gimp_transform_options_get_property (GObject    *object,
 }
 
 static void
+gimp_transform_options_style_updated (GimpGuiConfig *config,
+                                      GParamSpec    *pspec,
+                                      GtkWidget     *box)
+{
+  GtkIconSize icon_size = GTK_ICON_SIZE_MENU;
+
+  if (config->override_icon_size)
+    {
+      switch (config->custom_icon_size)
+        {
+        case GIMP_ICON_SIZE_LARGE:
+          icon_size = GTK_ICON_SIZE_LARGE_TOOLBAR;
+          break;
+
+        case GIMP_ICON_SIZE_HUGE:
+          icon_size = GTK_ICON_SIZE_DND;
+          break;
+
+        case GIMP_ICON_SIZE_MEDIUM:
+        case GIMP_ICON_SIZE_SMALL:
+        default:
+          icon_size = GTK_ICON_SIZE_MENU;
+        }
+    }
+
+  gimp_enum_icon_box_set_icon_size (box, icon_size);
+}
+
+static void
 gimp_transform_options_reset (GimpConfig *config)
 {
   GimpToolOptions *tool_options = GIMP_TOOL_OPTIONS (config);
@@ -215,9 +248,11 @@ gimp_transform_options_gui (GimpToolOptions *tool_options,
                             gboolean         interpolation,
                             gboolean         clipping)
 {
-  GObject              *config  = G_OBJECT (tool_options);
-  GimpTransformOptions *options = GIMP_TRANSFORM_OPTIONS (tool_options);
-  GtkWidget            *vbox    = gimp_tool_options_gui (tool_options);
+  GObject              *config     = G_OBJECT (tool_options);
+  GimpContext          *context    = GIMP_CONTEXT (tool_options);
+  GimpGuiConfig        *gui_config = GIMP_GUI_CONFIG (context->gimp->config);
+  GimpTransformOptions *options    = GIMP_TRANSFORM_OPTIONS (tool_options);
+  GtkWidget            *vbox       = gimp_tool_options_gui (tool_options);
   GtkWidget            *hbox;
   GtkWidget            *box;
   GtkWidget            *label;
@@ -236,6 +271,16 @@ gimp_transform_options_gui (GimpToolOptions *tool_options,
 
   box = gimp_prop_enum_icon_box_new (config, "type", "gimp", 0, 0);
   gtk_box_pack_start (GTK_BOX (hbox), box, FALSE, FALSE, 0);
+
+  g_signal_connect_object (gui_config,
+                           "notify::override-theme-icon-size",
+                           G_CALLBACK (gimp_transform_options_style_updated),
+                           box, G_CONNECT_AFTER);
+  g_signal_connect_object (gui_config,
+                           "notify::custom-icon-size",
+                           G_CALLBACK (gimp_transform_options_style_updated),
+                           box, G_CONNECT_AFTER);
+  gimp_transform_options_style_updated (gui_config, NULL, box);
 
   if (direction)
     {

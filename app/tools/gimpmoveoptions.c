@@ -26,6 +26,10 @@
 
 #include "tools-types.h"
 
+#include "config/gimpguiconfig.h"
+
+#include "core/gimp.h"
+
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpmoveoptions.h"
@@ -42,14 +46,17 @@ enum
 };
 
 
-static void   gimp_move_options_set_property (GObject      *object,
-                                              guint         property_id,
-                                              const GValue *value,
-                                              GParamSpec   *pspec);
-static void   gimp_move_options_get_property (GObject      *object,
-                                              guint         property_id,
-                                              GValue       *value,
-                                              GParamSpec   *pspec);
+static void   gimp_move_options_set_property  (GObject         *object,
+                                               guint            property_id,
+                                               const GValue    *value,
+                                               GParamSpec      *pspec);
+static void   gimp_move_options_get_property  (GObject         *object,
+                                               guint            property_id,
+                                               GValue          *value,
+                                               GParamSpec      *pspec);
+static void   gimp_move_options_style_updated (GimpGuiConfig   *config,
+                                               GParamSpec      *pspec,
+                                               GtkWidget       *box);
 
 
 G_DEFINE_TYPE (GimpMoveOptions, gimp_move_options, GIMP_TYPE_TOOL_OPTIONS)
@@ -127,6 +134,35 @@ gimp_move_options_get_property (GObject    *object,
 }
 
 static void
+gimp_move_options_style_updated (GimpGuiConfig *config,
+                                 GParamSpec    *pspec,
+                                 GtkWidget     *box)
+{
+  GtkIconSize icon_size = GTK_ICON_SIZE_MENU;
+
+  if (config->override_icon_size)
+    {
+      switch (config->custom_icon_size)
+        {
+        case GIMP_ICON_SIZE_LARGE:
+          icon_size = GTK_ICON_SIZE_LARGE_TOOLBAR;
+          break;
+
+        case GIMP_ICON_SIZE_HUGE:
+          icon_size = GTK_ICON_SIZE_DND;
+          break;
+
+        case GIMP_ICON_SIZE_MEDIUM:
+        case GIMP_ICON_SIZE_SMALL:
+        default:
+          icon_size = GTK_ICON_SIZE_MENU;
+        }
+    }
+
+  gimp_enum_icon_box_set_icon_size (box, icon_size);
+}
+
+static void
 gimp_move_options_notify_type (GimpMoveOptions *move_options,
                                GParamSpec      *pspec,
                                GtkWidget       *frame)
@@ -180,9 +216,11 @@ gimp_move_options_notify_type (GimpMoveOptions *move_options,
 GtkWidget *
 gimp_move_options_gui (GimpToolOptions *tool_options)
 {
-  GObject         *config  = G_OBJECT (tool_options);
-  GimpMoveOptions *options = GIMP_MOVE_OPTIONS (tool_options);
-  GtkWidget       *vbox    = gimp_tool_options_gui (tool_options);
+  GObject         *config     = G_OBJECT (tool_options);
+  GimpContext     *context    = GIMP_CONTEXT (tool_options);
+  GimpGuiConfig   *gui_config = GIMP_GUI_CONFIG (context->gimp->config);
+  GimpMoveOptions *options     = GIMP_MOVE_OPTIONS (tool_options);
+  GtkWidget       *vbox        = gimp_tool_options_gui (tool_options);
   GtkWidget       *hbox;
   GtkWidget       *box;
   GtkWidget       *label;
@@ -204,6 +242,16 @@ gimp_move_options_gui (GimpToolOptions *tool_options)
                                      GIMP_TRANSFORM_TYPE_PATH);
   gtk_box_pack_start (GTK_BOX (hbox), box, FALSE, FALSE, 0);
   gtk_widget_show (box);
+
+  g_signal_connect_object (gui_config,
+                           "notify::override-theme-icon-size",
+                           G_CALLBACK (gimp_move_options_style_updated),
+                           box, G_CONNECT_AFTER);
+  g_signal_connect_object (gui_config,
+                           "notify::custom-icon-size",
+                           G_CALLBACK (gimp_move_options_style_updated),
+                           box, G_CONNECT_AFTER);
+  gimp_move_options_style_updated (gui_config, NULL, box);
 
   /*  tool toggle  */
   title =
