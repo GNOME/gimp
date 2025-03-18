@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2025-02-25 09:46+0000\n"
-"PO-Revision-Date: 2025-03-18 12:05+0000\n"
+"PO-Revision-Date: 2025-03-18 13:14+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -429,7 +429,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:200
 msgid "Image to carve"
-msgstr ""
+msgstr "Mynd sem á að skera út"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:201
 msgid "Carve white areas"
@@ -504,7 +504,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:74
 msgid "Effect layer"
-msgstr ""
+msgstr "Sjónbrellulag"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:127
 msgid "_Circuit..."
@@ -525,7 +525,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:137
 msgid "No background (only for separate layer)"
-msgstr ""
+msgstr "Enginn bakgrunnur (aðeins fyrir aðskilið lag)"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:138
 #: ../plug-ins/script-fu/scripts/lava.scm:129
@@ -606,7 +606,7 @@ msgstr "Toga í myndvalið"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:113
 msgid "_Threshold (bigger 1<-->254 smaller)"
-msgstr ""
+msgstr "_Litmörk (stærra 1<-->254 minna)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:114
 #| msgid "Spread"
@@ -733,12 +733,12 @@ msgstr "Odda"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:152
 msgid "Render _Font Map..."
-msgstr ""
+msgstr "M_yndgera leturkort..."
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:153
 msgid ""
 "Create an image filled with previews of fonts matching a fontname filter"
-msgstr ""
+msgstr "Búa til mynd fyllta með forskoðun leturs sem samsvarar síu leturheita"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:158
 msgid "_Text"
@@ -905,7 +905,7 @@ msgstr "Sérsniðinn _litstigull..."
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm:70
 msgid "Create an image filled with an example of the current gradient"
-msgstr ""
+msgstr "Búa til mynd fyllta með dæmi um fyrirliggjandi litstigul"
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm:75
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:70
@@ -1131,7 +1131,7 @@ msgstr "Sepía"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:103
 msgid "Mottle"
-msgstr ""
+msgstr "Mottle"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:226
 msgid "Folder for the output file"
@@ -1258,7 +1258,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/predator.scm:129
 msgid "Edge amount"
-msgstr ""
+msgstr "Magn brúnar"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:130
 msgid "Pixelize"
@@ -1288,7 +1288,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
 msgid "Rippling strength"
-msgstr ""
+msgstr "Styrkur gárunar"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:78
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:105
@@ -1444,11 +1444,11 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:240
 msgid "Rendering Spyro"
-msgstr ""
+msgstr "Myndgerð Spyro"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
 msgid "_Spyrogimp (older script-fu version)..."
-msgstr ""
+msgstr "_Spyrogimp (eldri útgáfa script-fu)..."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
 msgid "This procedure is deprecated! Use 'plug-in-spyrogimp' instead."
@@ -1468,7 +1468,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:325
 msgid "Lissajous"
-msgstr ""
+msgstr "Lissajous"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
 msgid "Shape"
@@ -1549,7 +1549,7 @@ msgstr "Sprauta"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
 msgid "Color method"
-msgstr ""
+msgstr "Litunaraðferð"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
 msgid "Solid Color"
