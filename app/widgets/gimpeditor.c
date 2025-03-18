@@ -216,11 +216,11 @@ gimp_editor_init (GimpEditor *editor)
   editor->priv->popup_data      = editor;
   editor->priv->show_button_bar = TRUE;
 
-  editor->priv->name_label = g_object_new (GTK_TYPE_LABEL,
-                                           "xalign",    0.0,
-                                           "yalign",    0.5,
-                                           "ellipsize", PANGO_ELLIPSIZE_END,
-                                           NULL);
+  editor->priv->name_label = gtk_label_new (NULL);
+  gtk_label_set_xalign (GTK_LABEL (editor->priv->name_label), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (editor->priv->name_label), 0.5);
+  gtk_label_set_ellipsize (GTK_LABEL (editor->priv->name_label),
+                           PANGO_ELLIPSIZE_END);
   gimp_label_set_attributes (GTK_LABEL (editor->priv->name_label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
