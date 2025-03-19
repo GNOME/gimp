@@ -10,18 +10,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-03-16 21:59+0000\n"
-"PO-Revision-Date: 2025-03-17 02:09+0100\n"
+"POT-Creation-Date: 2025-03-19 19:27+0000\n"
+"PO-Revision-Date: 2025-03-19 21:55+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
-"n%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
+"%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
 msgid "The GIMP team"
@@ -10491,8 +10491,8 @@ msgstr "Barva prosojnosti po meri 2"
 #: app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to "
-"focus\"."
+"receives the focus. This is useful for window managers using \"click to focus"
+"\"."
 msgstr ""
 "Če je omogočeno, bo slika postala aktivna, ko njeno okno dobi pozornost. To "
 "je uporabno za upravljalnike oken, ki uporabljajo »klikni za "
@@ -18967,6 +18967,25 @@ msgstr "Profil preverjanja videza"
 msgid "_Soft-proofing Profile: "
 msgstr "_Barvni profil preverjanja videza: "
 
+#: app/display/gimpstatusbar.c:543
+msgid "Perceptual"
+msgstr "Zaznavno"
+
+#: app/display/gimpstatusbar.c:544
+msgid "Relative Colorimetric"
+msgstr "Relativne barvne vrednosti (kolorimetrično)"
+
+#: app/display/gimpstatusbar.c:545 app/operations/gimphuesaturationconfig.c:107
+#: app/operations/gimphuesaturationconfig.c:108
+#: app/operations/gimpoperationcolorize.c:106
+#: app/operations/gimpoperationcolorize.c:107
+msgid "Saturation"
+msgstr "Nasičenost"
+
+#: app/display/gimpstatusbar.c:546
+msgid "Absolute Colorimetric"
+msgstr "Absolutne barvne vrednosti (kolorimetrično)"
+
 #: app/display/gimpstatusbar.c:553
 msgid "_Rendering Intent: "
 msgstr "_Namen upodabljanja: "
@@ -20225,13 +20244,6 @@ msgstr "Pisanje datoteke krivulj je spodletelo: "
 msgid "Hue"
 msgstr "Obarvanost"
 
-#: app/operations/gimphuesaturationconfig.c:107
-#: app/operations/gimphuesaturationconfig.c:108
-#: app/operations/gimpoperationcolorize.c:106
-#: app/operations/gimpoperationcolorize.c:107
-msgid "Saturation"
-msgstr "Nasičenost"
-
 #: app/operations/gimphuesaturationconfig.c:113
 #: app/operations/gimphuesaturationconfig.c:114
 #: app/operations/gimpoperationcolorize.c:112
@@ -21324,11 +21336,11 @@ msgstr ""
 #: app/pdb/gimpprocedure.c:863
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument "
-"'%s' (#%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
+"%d). Expected %s, got %s."
 msgstr ""
-"Procedura »%s« je bila priklicana z napačno vrsto vrednosti argumenta "
-"»%s« (#%d). Pričakovano %s, prejeto %s."
+"Procedura »%s« je bila priklicana z napačno vrsto vrednosti argumenta »%s« (#"
+"%d). Pričakovano %s, prejeto %s."
 
 #: app/pdb/gimpprocedure.c:900
 #, c-format
@@ -21372,8 +21384,8 @@ msgid ""
 "Procedure '%s' returned `gimp_unit_pixel()` as GimpUnit return value #%d "
 "'%s'. This return value does not allow pixel unit."
 msgstr ""
-"Procedura »%s« je vrnila »gimp_unit_pixel()« kot vrnjeno vrednost GimpUnit "
-"#%d '%s'. Ta vrnjena vrednost ne dovoli enot slikovnih točk."
+"Procedura »%s« je vrnila »gimp_unit_pixel()« kot vrnjeno vrednost GimpUnit #"
+"%d '%s'. Ta vrnjena vrednost ne dovoli enot slikovnih točk."
 
 #: app/pdb/gimpprocedure.c:973
 #, c-format
