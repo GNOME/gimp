@@ -1571,7 +1571,7 @@ begin
 
 	//LoadStringFromUTF8File(EnvFile,Env);
   //sTemp := Replace('=0','={#REVISION}',Env);
-	sTemp := 'revision={#REVISION}' + #10;
+	sTemp := '[package]' + #10 + 'revision={#REVISION}' + #10
 
 	if not SaveStringToUTF8File(EnvFile,sTemp,False) then
 	begin
