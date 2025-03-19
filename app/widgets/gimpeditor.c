@@ -221,6 +221,7 @@ gimp_editor_init (GimpEditor *editor)
                                            "yalign",    0.5,
                                            "ellipsize", PANGO_ELLIPSIZE_END,
                                            NULL);
+  g_object_ref_sink (editor->priv->name_label);
   gimp_label_set_attributes (GTK_LABEL (editor->priv->name_label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
@@ -270,6 +271,7 @@ gimp_editor_dispose (GObject *object)
   g_clear_pointer (&editor->priv->menu_identifier, g_free);
   g_clear_pointer (&editor->priv->ui_path, g_free);
   g_clear_weak_pointer (&editor->priv->ui_manager);
+  g_clear_object (&editor->priv->name_label);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
