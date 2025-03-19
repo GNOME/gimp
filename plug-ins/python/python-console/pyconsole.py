@@ -194,8 +194,15 @@ class _ReadLine(object):
         b = int (font_color.blue * 255)
         hex_font_color = "#" + '{r:02x}{g:02x}{b:02x}'.format (r = r, g = g, b = b)
 
+        #Choose an error text color based on background luminance
+        bg_color = self.get_style_context().get_property('background-color', Gtk.StateFlags.NORMAL)
+        lum = (bg_color.red * 0.22248840) + (bg_color.green * 0.71690369) + (bg_color.blue * 0.06060791)
+        background_color = "#B00000"
+        if (lum < 0.4):
+          background_color = "#FF6161"
+
         self.stdout_tag = self.buffer.create_tag("stdout", foreground=hex_font_color)
-        self.stderr_tag = self.buffer.create_tag("stderr", foreground="#B00000")
+        self.stderr_tag = self.buffer.create_tag("stderr", foreground=background_color)
         self._stdout = _ReadLine.Output(self, "stdout")
         self._stderr = _ReadLine.Output(self, "stderr")
 
