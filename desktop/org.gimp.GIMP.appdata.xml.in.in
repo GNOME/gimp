@@ -82,6 +82,14 @@
   </provides>
 
   <releases>
+    <release version="3.0.2" date="2025-03-23">
+      <description>
+        <p>
+        As could be expected from a major release, a few critical bugs slipped through our testing!
+        This first micro-point release fix such bugs.
+        </p>
+      </description>
+    </release>
     <release version="3.0.0" date="2025-03-16">
       <description>
         <p>
