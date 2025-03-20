@@ -647,6 +647,13 @@ menu menuitem:hover {
   background-color: @extreme-bg-color;
 }
 
+/* Prevent jitter on menu hover */
+menu menuitem, menu menuitem:hover {
+  padding:    4px 6px;
+  min-height: 16px;
+  min-width:  40px;
+}
+
 menuitem *:hover {
   color: @fg-color;
   background: @extreme-selected-color;
