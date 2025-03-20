@@ -437,13 +437,21 @@ gimp_container_editor_select_items (GimpContainerView   *view,
                                     GList               *paths,
                                     GimpContainerEditor *editor)
 {
-  GimpContainerEditorClass *klass    = GIMP_CONTAINER_EDITOR_GET_CLASS (editor);
-  GimpViewable             *viewable = NULL;
+  GimpContainerEditorClass *klass       = GIMP_CONTAINER_EDITOR_GET_CLASS (editor);
+  GimpViewable             *viewable    = NULL;
+  GimpEditor               *editor_view = NULL;
 
   /* XXX Right now a GimpContainerEditor only supports 1 item selected
    * at once. Let's see later if we want to allow more.
    */
   /*g_return_val_if_fail (g_list_length (items) < 2, FALSE);*/
+
+  /* The editor view may get destroyed through a chain of signals when
+   * changing the context viewables with gimp_context_set_by_type().
+   * We make sure it still exists before working on it with a weak
+   * pointer.
+   */
+  g_set_weak_pointer (&editor_view, GIMP_EDITOR (editor->view));
 
   if (items)
     viewable = items->data;
@@ -464,17 +472,19 @@ gimp_container_editor_select_items (GimpContainerView   *view,
                                   GIMP_OBJECT (viewable));
     }
 
-  if (viewable)
+  if (viewable && editor_view)
     {
       gchar *desc = gimp_viewable_get_description (viewable, NULL);
 
-      gimp_editor_set_name (GIMP_EDITOR (editor->view), desc);
+      gimp_editor_set_name (editor_view, desc);
       g_free (desc);
     }
 
-  if (gimp_editor_get_ui_manager (GIMP_EDITOR (editor->view)))
-    gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor->view)),
-                            gimp_editor_get_popup_data (GIMP_EDITOR (editor->view)));
+  if (editor_view && gimp_editor_get_ui_manager (editor_view))
+    gimp_ui_manager_update (gimp_editor_get_ui_manager (editor_view),
+                            gimp_editor_get_popup_data (editor_view));
+
+  g_clear_weak_pointer (&editor_view);
 
   return TRUE;
 }
