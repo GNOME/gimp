@@ -30,6 +30,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
+#include "core/gimplayer-floating-selection.h"
 #include "core/gimpimage.h"
 #include "core/gimpselection.h"
 
@@ -97,6 +98,11 @@ select_none_cmd_callback (GimpAction *action,
   return_if_no_image (image, data);
 
   gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
+
+  /* Commit floating selection (if any) */
+  if (gimp_image_get_floating_selection (image))
+    floating_sel_anchor (gimp_image_get_floating_selection (image));
+
   gimp_image_flush (image);
 }
 

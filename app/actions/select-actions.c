@@ -186,7 +186,7 @@ select_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 
   SET_SENSITIVE ("select-all",    image && ! sel_all);
-  SET_SENSITIVE ("select-none",   image && sel);
+  SET_SENSITIVE ("select-none",   image && (sel || fs));
   SET_SENSITIVE ("select-invert", image);
 
   SET_SENSITIVE ("select-cut-float",  g_list_length (drawables) == 1 && sel                 &&
