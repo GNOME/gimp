@@ -382,13 +382,23 @@ entry selection {
 }
 
 paned separator {
-  color: @border-color;
   background-image: none;
   background-color: @border-color;
   background-position: center;
   background-repeat: no-repeat;
   background-size: auto;
-  padding: 3px;
+  color: @border-color;
+}
+
+paned.horizontal > separator
+{
+  padding-left:  1px;
+  padding-right: 1px;
+}
+
+paned.vertical > separator {
+  padding-top:    1px;
+  padding-bottom: 1px;
 }
 
 paned menu separator {
