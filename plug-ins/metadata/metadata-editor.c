@@ -1714,10 +1714,12 @@ on_date_button_clicked (GtkButton *widget,
 
   if (gtk_dialog_run (GTK_DIALOG (calendar_dialog)) == GTK_RESPONSE_OK)
     {
-      gchar date[25];
+      GString *date;
       gtk_calendar_get_date (GTK_CALENDAR (calendar), &year, &month, &day);
-      g_sprintf ((gchar*) &date, "%u-%02u-%02uT00:00:00+00:00", year, month+1, day);
-      gtk_entry_set_text (GTK_ENTRY (entry_widget), date);
+      date = g_string_new ("");
+      g_string_printf (date, "%u-%02u-%02uT00:00:00+00:00", year, month + 1, day);
+      gtk_entry_set_text (GTK_ENTRY (entry_widget), date->str);
+      (void) g_string_free (date, TRUE);
     }
 
   gtk_widget_destroy (calendar_dialog);
