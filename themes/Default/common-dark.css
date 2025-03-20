@@ -33,3 +33,12 @@ button:not(.flat) {
 button:not(.flat):hover {
   box-shadow: none;
 }
+
+/* Define GimpSpinScale slider colors */
+GimpSpinScale entry {
+  background-color: @widget-bg-color;
+}
+
+GimpSpinScale entry progress {
+  background-color:   @hover-color;
+}
