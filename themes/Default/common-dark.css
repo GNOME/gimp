@@ -20,12 +20,12 @@ iconview:hover {
  */
 paned.horizontal > separator {
   background-image: url("ui/separator-handle-v-dark.svg");
-  background-color: @bg-color;
+  background-color: @stronger-border-color;
 }
 
 paned.vertical > separator {
   background-image: url("ui/separator-handle-h-dark.svg");
-  background-color: @bg-color;
+  background-color: @stronger-border-color;
 }
 
 /* Top highlight for buttons */
