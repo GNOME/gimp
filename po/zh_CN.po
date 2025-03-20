@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-03-16 21:59+0000\n"
-"PO-Revision-Date: 2025-03-17 18:32+0800\n"
+"POT-Creation-Date: 2025-03-19 19:27+0000\n"
+"PO-Revision-Date: 2025-03-20 18:48+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -18619,6 +18619,25 @@ msgstr "软打样特性文件"
 msgid "_Soft-proofing Profile: "
 msgstr "软打样特性文件(_S)："
 
+#: app/display/gimpstatusbar.c:543
+msgid "Perceptual"
+msgstr "感知"
+
+#: app/display/gimpstatusbar.c:544
+msgid "Relative Colorimetric"
+msgstr "相对色度"
+
+#: app/display/gimpstatusbar.c:545 app/operations/gimphuesaturationconfig.c:107
+#: app/operations/gimphuesaturationconfig.c:108
+#: app/operations/gimpoperationcolorize.c:106
+#: app/operations/gimpoperationcolorize.c:107
+msgid "Saturation"
+msgstr "饱和度"
+
+#: app/display/gimpstatusbar.c:546
+msgid "Absolute Colorimetric"
+msgstr "绝对色度"
+
 #: app/display/gimpstatusbar.c:553
 msgid "_Rendering Intent: "
 msgstr "再现意图(_R)："
@@ -19871,13 +19890,6 @@ msgstr "写入曲线文件失败："
 #: app/operations/gimpoperationcolorize.c:101
 msgid "Hue"
 msgstr "色相"
-
-#: app/operations/gimphuesaturationconfig.c:107
-#: app/operations/gimphuesaturationconfig.c:108
-#: app/operations/gimpoperationcolorize.c:106
-#: app/operations/gimpoperationcolorize.c:107
-msgid "Saturation"
-msgstr "饱和度"
 
 #: app/operations/gimphuesaturationconfig.c:113
 #: app/operations/gimphuesaturationconfig.c:114
