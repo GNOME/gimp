@@ -30,12 +30,3 @@ paned.vertical > separator {
 button:not(.flat) {
   box-shadow: 0 1px @extreme-bg-color inset;
 }
-
-/* Define GimpSpinScale slider colors */
-GimpSpinScale entry {
-  background-color: @extreme-bg-color;
-}
-
-GimpSpinScale entry progress {
-  background-color: @widget-bg-color;
-}
