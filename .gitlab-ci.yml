@@ -302,10 +302,10 @@ gimp-debian:
     - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
     - if: '$GIMP_CI_SOURCES != null'
     - <<: *CI_RELEASE
-  parallel: 1
+  parallel:
+    matrix:
+      - RUNNER: x86_64_v2
   tags: []
-  variables:
-    RUNNER: x86_64_v2
 
 deps-debian-x64:
   extends: .debian-x64
@@ -415,9 +415,7 @@ gimp-flatpak-x64:
   extends: .debian-x64
   rules:
     - <<: *CI_MERGE
-      when: never
     - <<: *CI_COMMIT
-      when: never
     - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
   variables:
     MSYSTEM_PREFIX: clang64
@@ -440,7 +438,18 @@ deps-win-x64-cross:
       #- quasi-msys2/
   before_script: []
   script:
-    - bash build/windows/1_build-deps-quasimsys2.sh
+    - !reference [deps-debian, script]
+    - echo "FROM $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}" > Dockerfile2;
+    - export LIB_DIR="lib";
+    - export LIB_SUBDIR=$([ "$(uname -m)" = 'aarch64' ] && echo "aarch64-linux-gnu/" || echo "x86_64-linux-gnu/");
+    - echo "ENV CC=\"$CC\"" >> Dockerfile2;
+    - echo "ENV CXX=\"$CXX\"" >> Dockerfile2;
+    - echo "ENV CC_LD=\"$CC_LD\"" >> Dockerfile2;
+    - echo "ENV CXX_LD=\"$CXX_LD\"" >> Dockerfile2;
+    - echo "ENV CLICOLOR_FORCE=\"1\"" >> Dockerfile2;
+    - echo "ENV GITLAB_CI=\"1\"" >> Dockerfile2;
+    - echo "RUN bash build/windows/1_build-deps-quasimsys2.sh" >> Dockerfile2;
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile2 --destination build-debian-${DEB_VERSION}-${RUNNER}-temp --cache=false --no-push --verbosity=warn
   artifacts:
     paths:
       - quasi-msys2/
@@ -563,10 +572,11 @@ gimp-win:
   rules:
     - !reference [.win, rules]
     - if: '$GIMP_CI_MSYS2_WIN32 != null'
-  parallel: 1
+  parallel:
+    matrix:
+      - RUNNER: win32-ps
+        MSYSTEM_PREFIX: mingw32
   variables:
-    RUNNER: win32-ps
-    MSYSTEM_PREFIX: mingw32
     MINGW_PACKAGE_PREFIX: mingw-w64-i686
     CC: cc
     CXX: c++
