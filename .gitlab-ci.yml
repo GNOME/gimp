@@ -302,10 +302,10 @@ gimp-debian:
     - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
     - if: '$GIMP_CI_SOURCES != null'
     - <<: *CI_RELEASE
-  parallel:
-    matrix:
-      - RUNNER: x86_64_v2
+  parallel: 1
   tags: []
+  variables:
+    RUNNER: x86_64_v2
 
 deps-debian-x64:
   extends: .debian-x64
@@ -563,11 +563,10 @@ gimp-win:
   rules:
     - !reference [.win, rules]
     - if: '$GIMP_CI_MSYS2_WIN32 != null'
-  parallel:
-    matrix:
-      - RUNNER: win32-ps
-        MSYSTEM_PREFIX: mingw32
+  parallel: 1
   variables:
+    RUNNER: win32-ps
+    MSYSTEM_PREFIX: mingw32
     MINGW_PACKAGE_PREFIX: mingw-w64-i686
     CC: cc
     CXX: c++
