@@ -102,11 +102,6 @@ stages:
   tags:
     - $RUNNER
   image: $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}
-  variables:
-    CC: "clang"
-    CXX: "clang++"
-    CC_LD: lld
-    CXX_LD: lld
   before_script:
     - export GIMP_PREFIX="${CI_PROJECT_DIR}/_install-${RUNNER}"
   timeout: 20m
@@ -148,13 +143,12 @@ deps-debian:
     - echo "RUN apt-get install -qq -y --no-install-recommends \\" >> Dockerfile
     - echo "appstream
             ccache
-            clang
+            build-essential
             desktop-file-utils
             gi-docgen
             git
             gobject-introspection
             libgtk-3-bin
-            lld
             meson
             valac
             xauth
@@ -417,12 +411,10 @@ gimp-flatpak-x64:
   extends: .debian-x64
   rules:
     - <<: *CI_MERGE
-      when: never
     - <<: *CI_COMMIT
-      when: never
     - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
   variables:
-    MSYSTEM_PREFIX: clang64
+    MSYSTEM_PREFIX: ucrt64
     #To match Debian Testing compiler with MSYS2 compiler resources
     DEB_VERSION: testing
     #To avoid noisy 'apt' warnings
@@ -442,7 +434,22 @@ deps-win-x64-cross:
       #- quasi-msys2/
   before_script: []
   script:
-    - bash build/windows/1_build-deps-quasimsys2.sh
+    - !reference [deps-debian, script]
+    - echo "FROM $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}" > Dockerfile2;
+    - export LIB_DIR="lib";
+    - echo "ENV PKG_CONFIG_PATH=\"${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}\"" >> Dockerfile2;
+    - echo "ENV XDG_DATA_DIRS=\"${GIMP_PREFIX}/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}\"" >> Dockerfile2;
+    - echo "ENV CC=\"$CC\"" >> Dockerfile2;
+    - echo "ENV CXX=\"$CXX\"" >> Dockerfile2;
+    - echo "ENV CC_LD=\"$CC_LD\"" >> Dockerfile2;
+    - echo "ENV CXX_LD=\"$CXX_LD\"" >> Dockerfile2;
+    - echo "ENV CLICOLOR_FORCE=\"1\"" >> Dockerfile2;
+    - echo "ENV GITLAB_CI=\"1\"" >> Dockerfile2;
+    - echo "ENV GIT_DEPTH=\"1\"" >> Dockerfile2;
+    - echo "ENV CI_PROJECT_DIR=\"$CI_PROJECT_DIR/\"" >> Dockerfile2;
+    - echo "ENV MSYSTEM_PREFIX=\"$MSYSTEM_PREFIX\"" >> Dockerfile2;
+    - echo "RUN bash -x $PWD/build/windows/1_build-deps-quasimsys2.sh" >> Dockerfile2;
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile2 --destination build-debian-${DEB_VERSION}-${RUNNER}-temp --cache=false --no-push --verbosity=warn
   artifacts:
     paths:
       - quasi-msys2/
@@ -462,9 +469,9 @@ gimp-win-x64-cross:
   artifacts:
     expose_as: 'Windows zip'
     paths:
-      - gimp-clang64/
-      - _build-clang64-cross/meson-logs/meson-log.txt
-      - _build-clang64-cross/done-dll.list
+      - gimp-ucrt64/
+      - _build-ucrt64-cross/meson-logs/meson-log.txt
+      - _build-ucrt64-cross/done-dll.list
     expire_in: 2 days
 
 

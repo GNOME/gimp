@@ -17,19 +17,23 @@ if [ -z "$GITLAB_CI" ]; then
 
   export GIT_DEPTH=1
 
-  export GIMP_DIR=$(echo "$PWD/")
-  cd $(dirname $PWD)
+  export PARENT_DIR='/..'
 fi
 
 
 ## Install quasi-msys2 and its deps
 # Beginning of install code block
+if [ "$MSYSTEM_PREFIX" =~ 'ucrt' ] || [ -z "$CC" ] || [ "$CC" = 'cc' ] || [ "$CC" = 'gcc' ]; then
+  export CROSS_COMPILER="gcc-mingw-w64-ucrt64 g++-mingw-w64-ucrt64"
+else
+  export CROSS_COMPILER="clang lld llvm"
+  export CROSS_COMPILER_RESOURCES='_clang'
+fi
+
 if [ "$GITLAB_CI" ]; then
   apt-get update -y >/dev/null
   apt-get install -y --no-install-recommends \
-                     clang                   \
-                     lld                     \
-                     llvm >/dev/null
+                     $CROSS_COMPILER >/dev/null
   apt-get install -y --no-install-recommends \
                      gawk                    \
                      gpg                     \
@@ -51,12 +55,12 @@ cd ..
 ## Install the required (pre-built) packages for babl, GEGL and GIMP
 echo -e "\e[0Ksection_start:`date +%s`:deps_install[collapsed=true]\r\e[0KInstalling dependencies provided by MSYS2"
 echo ${MSYSTEM_PREFIX^^} > quasi-msys2/msystem.txt
-deps=$(cat ${GIMP_DIR}build/windows/all-deps-uni.txt | sed 's/toolchain/clang/g' |
+deps=$(cat ${CI_PROJECT_DIR}build/windows/all-deps-uni.txt | sed "s/\${MINGW_PACKAGE_PREFIX}-toolchain/$CROSS_COMPILER_RESOURCES/g" |
        sed "s/\${MINGW_PACKAGE_PREFIX}-/_/g"         | sed 's/\\//g')
 cd quasi-msys2
 make install $deps || make install $deps
 cd ..
-sudo ln -nfs "$PWD/quasi-msys2/root/$MSYSTEM_PREFIX" /$MSYSTEM_PREFIX
+sudo ln -nfs "quasi-msys2/root/$MSYSTEM_PREFIX" /$MSYSTEM_PREFIX
 
 ## Manually build gio 'giomodule.cache' to fix fatal error about
 ## absent libgiognutls.dll that prevents generating loaders.cache
@@ -91,10 +95,10 @@ echo -e "\e[0Ksection_end:`date +%s`:deps_install\r\e[0K"
 
 # QUASI-MSYS2 ENV
 echo -e "\e[0Ksection_start:`date +%s`:cross_environ[collapsed=true]\r\e[0KPreparing cross-build environment"
-bash -c "source quasi-msys2/env/all.src && bash ${GIMP_DIR}build/windows/1_build-deps-quasimsys2.sh"
+bash -c "source quasi-msys2/env/all.src && bash ${CI_PROJECT_DIR}build/windows/1_build-deps-quasimsys2.sh"
 else
-export GIMP_PREFIX="$PWD/_install-$(echo $MSYSTEM_PREFIX | sed 's|/||')-cross"
-IFS=$'\n' VAR_ARRAY=($(cat ${GIMP_DIR}.gitlab-ci.yml | sed -n '/multi-os/,/GI_TYPELIB_PATH}\"/p' | sed 's/    - //' | sed '/#/d'))
+export GIMP_PREFIX="${CI_PROJECT_DIR}_install-$(echo $MSYSTEM_PREFIX | sed 's|/||')-cross"
+IFS=$'\n' VAR_ARRAY=($(cat ${CI_PROJECT_DIR}.gitlab-ci.yml | sed -n '/multi-os/,/GI_TYPELIB_PATH}\"/p' | sed 's/- //' | sed '/#/d'))
 IFS=$' \t\n'
 for VAR in "${VAR_ARRAY[@]}"; do
   if [[ ! "$VAR" =~ 'multiarch' ]]; then
@@ -102,6 +106,7 @@ for VAR in "${VAR_ARRAY[@]}"; do
     eval "$VAR" || continue
   fi
 done
+echo "PKG_CONFIG IS $PKG_CONFIG_PATH"
 echo -e "\e[0Ksection_end:`date +%s`:cross_environ\r\e[0K"
 
 
@@ -117,13 +122,11 @@ self_build ()
   cd $1
   git pull
 
-  if [ ! -f "_build-$(echo $MSYSTEM_PREFIX | sed 's|/||')-cross/build.ninja" ]; then
-    meson setup _build-$(echo $MSYSTEM_PREFIX | sed 's|/||')-cross -Dprefix="$GIMP_PREFIX" $2
+  if [ ! -f "${CI_PROJECT_DIR}${1}/_build-$(echo $MSYSTEM_PREFIX | sed 's|/||')-cross/build.ninja" ]; then
+    meson setup ${CI_PROJECT_DIR}${1}/_build-$(echo $MSYSTEM_PREFIX | sed 's|/||')-cross . -Dprefix="$GIMP_PREFIX" $2
   fi
-  cd _build-$(echo $MSYSTEM_PREFIX | sed 's|/||')-cross
-  ninja
-  ninja install
-  cd ../..
+  ninja -C ${CI_PROJECT_DIR}${1}/_build-$(echo $MSYSTEM_PREFIX | sed 's|/||')-cross
+  ninja -C ${CI_PROJECT_DIR}${1}/_build-$(echo $MSYSTEM_PREFIX | sed 's|/||')-cross install
   echo -e "\e[0Ksection_end:`date +%s`:${1}_build\r\e[0K"
 }
 
