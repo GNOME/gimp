@@ -2143,7 +2143,7 @@ calc_get_gradient (guchar *pix, guchar *gradient, gdouble pos)
   gdouble       frac;
   gint          i;
 
-  if (pos < 0 || pos > 1)
+  if (isnan (pos) || pos < 0.0001 || pos > 1)
     {
       pix[0] = pix[1] = pix[2] = pix[3] = 0;
       return;
