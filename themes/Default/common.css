@@ -394,11 +394,13 @@ paned.horizontal > separator
 {
   padding-left:  1px;
   padding-right: 1px;
+  box-shadow:    0px 0px 0px 1px @strong-border-color;
 }
 
 paned.vertical > separator {
   padding-top:    1px;
   padding-bottom: 1px;
+  box-shadow:     0px -1px 0px -0px @strong-border-color;
 }
 
 paned menu separator {
