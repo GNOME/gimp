@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor-private.h"
 #include "libgimpmath/gimpmath.h"
 
 #include "widgets-types.h"
@@ -306,6 +307,7 @@ gimp_histogram_view_draw (GtkWidget *widget,
   gdouble            max    = 0.0;
   gdouble            bg_max = 0.0;
   gint               xstop;
+  gfloat             lum;
   GdkRGBA            grid_color;
   GdkRGBA            color_in;
   GdkRGBA            color_out;
@@ -334,6 +336,25 @@ gimp_histogram_view_draw (GtkWidget *widget,
   gtk_style_context_get_color (style, gtk_style_context_get_state (style),
                                &grid_color);
   gtk_style_context_remove_class (style, "grid");
+
+  /* Alter the border so the histogram stands out against it */
+  if (view->histogram)
+    {
+      lum = GIMP_RGB_LUMINANCE (grid_color.red, grid_color.green,
+                                grid_color.blue);
+      if (lum > 0.5)
+        {
+          grid_color.red   = CLAMP (grid_color.red - 0.33, 0, 1);
+          grid_color.green = CLAMP (grid_color.green - 0.33, 0, 1);
+          grid_color.blue  = CLAMP (grid_color.blue - 0.33, 0, 1);
+        }
+      else
+        {
+          grid_color.red   = CLAMP (grid_color.red + 0.33, 0, 1);
+          grid_color.green = CLAMP (grid_color.green + 0.33, 0, 1);
+          grid_color.blue  = CLAMP (grid_color.blue + 0.33, 0, 1);
+        }
+    }
 
   gdk_cairo_set_source_rgba (cr, &grid_color);
   cairo_rectangle (cr, border, border, width - 1, height - 1);
