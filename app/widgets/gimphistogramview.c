@@ -344,15 +344,15 @@ gimp_histogram_view_draw (GtkWidget *widget,
                                 grid_color.blue);
       if (lum > 0.5)
         {
-          grid_color.red   = CLAMP (grid_color.red - 0.3, 0, 1);
-          grid_color.green = CLAMP (grid_color.green - 0.3, 0, 1);
-          grid_color.blue  = CLAMP (grid_color.blue - 0.3, 0, 1);
+          grid_color.red   = CLAMP (grid_color.red - 0.33, 0, 1);
+          grid_color.green = CLAMP (grid_color.green - 0.33, 0, 1);
+          grid_color.blue  = CLAMP (grid_color.blue - 0.33, 0, 1);
         }
       else
         {
-          grid_color.red   = CLAMP (grid_color.red + 0.3, 0, 1);
-          grid_color.green = CLAMP (grid_color.green + 0.3, 0, 1);
-          grid_color.blue  = CLAMP (grid_color.blue + 0.3, 0, 1);
+          grid_color.red   = CLAMP (grid_color.red + 0.33, 0, 1);
+          grid_color.green = CLAMP (grid_color.green + 0.33, 0, 1);
+          grid_color.blue  = CLAMP (grid_color.blue + 0.33, 0, 1);
         }
     }
 
