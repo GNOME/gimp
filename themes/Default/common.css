@@ -756,6 +756,10 @@ headerbar:backdrop * {
   color: @disabled-fg-color;
 }
 
+headerbar:backdrop menuitem {
+  background-color: transparent;
+}
+
 /* Prevent overlapping menu/header borderlines for CSD */
 headerbar button.titlebutton, headerbar > menubar {
   box-shadow: none;
