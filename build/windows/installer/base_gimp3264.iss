@@ -483,6 +483,7 @@ const
 
 var
 	//pgSimple: TWizardPage;
+  InstallType: String;
   InstallMode: (imNone, imSimple, imCustom, imRebootContinue);
   ConfigOverride: (coUndefined, coOverride, coDontOverride);
 	Force32bitInstall: Boolean;
@@ -600,6 +601,47 @@ begin
 		Result := True;
 end;
 
+//Check what type of installation is being done
+procedure CheckInstallType;
+var
+	isInstalled: String;
+	InstallLocation: String;
+	Installed_AppVersion: String;
+	Installed_AppVersionInt: Int64;
+	Installer_AppVersionInt: Int64;
+begin
+	isInstalled := 'notInstalled';
+	if RegQueryStringValue(HKCU, 'Software\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1',
+                           'DisplayVersion', Installed_AppVersion) then begin
+	    RegQueryStringValue(HKCU, 'Software\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1',
+                           'InstallLocation', InstallLocation);
+		StrToVersion(Installed_AppVersion, Installed_AppVersionInt);
+		isInstalled := 'Installed';
+	end;
+	if RegQueryStringValue(HKLM, 'Software\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1',
+                           'DisplayVersion', Installed_AppVersion) then begin
+	    RegQueryStringValue(HKLM, 'Software\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1',
+                           'InstallLocation', InstallLocation);
+	    StrToVersion(Installed_AppVersion, Installed_AppVersionInt);
+		isInstalled := 'Installed';
+	end;
+
+	StrToVersion('{#FULL_GIMP_VERSION}', Installer_AppVersionInt);
+
+	if (isInstalled = 'Installed') and (not DirExists(InstallLocation)) then begin
+        InstallType := 'itRepair';
+    end else if isInstalled = 'notInstalled' then begin
+	    InstallType := 'itInstall';
+	end else if ComparePackedVersion(Installer_AppVersionInt, Installed_AppVersionInt) = 0 then begin
+		InstallType := 'itReinstall';
+    end else if ComparePackedVersion(Installer_AppVersionInt, Installed_AppVersionInt) > 0 then begin
+	    InstallType := 'itUpdate';
+    end else begin
+	    InstallType := 'itDowngrade';
+	end;
+	DebugMsg('CheckInstallType','Installed GIMP {#GIMP_MUTEX_VERSION} is: ' + Installed_AppVersion + ', installer is: {#FULL_GIMP_VERSION}. So Install type is: ' + InstallType);
+end;
+
 function InitializeSetup(): Boolean;
 #if (Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != "") || (Defined(GIMP_RC_VERSION) && GIMP_RC_VERSION != "") || Defined(DEVEL_WARNING)
 var Message,Buttons: TArrayOfString;
@@ -715,7 +757,9 @@ begin
 
 		btnInstall.Visible := True;
 		btnInstall.TabOrder := 1;
-		btnCustomize.Visible := True;
+		if InstallType = 'itInstall' then begin
+		    btnCustomize.Visible := True;
+		end;
 
 		WizardForm.Bevel.Visible := False;
 		WizardForm.WelcomeLabel1.Visible := False;
@@ -729,7 +773,9 @@ procedure CleanUpCustomWelcome();
 begin
 	WizardForm.NextButton.Visible := True;
 	btnInstall.Visible := False;
-	btnCustomize.Visible := False;
+	if InstallType = 'itInstall' then begin
+	     btnCustomize.Visible := False;
+    end;
 
 	WizardForm.Bevel.Visible := True;
 	WelcomeBitmapBottom.Visible := False;
@@ -771,7 +817,14 @@ begin
 		Height := WizardForm.NextButton.Height;
 		Left := WizardForm.NextButton.Left;
 		Top := WizardForm.NextButton.Top;
-		Caption := CustomMessage('Install');
+	    CheckInstallType;
+		if InstallType = 'itInstall' then begin
+		    Caption := CustomMessage('Install');
+	    end else if InstallType = 'itReinstall' then begin
+		    Caption := CustomMessage('Reinstall');
+	    end else if InstallType = 'itUpdate' then begin
+		    Caption := CustomMessage('Update');
+		end;
 		Default := True;
 		Visible := False;
 
@@ -810,6 +863,7 @@ begin
 	end;
 
 	MeasureLabel.Free;
+	
 end;
 
 

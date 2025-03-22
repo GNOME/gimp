@@ -50,6 +50,12 @@
     <config name="Install">
       <value>&amp;Install</value>
     </config>
+    <config name="Reinstall">
+      <value>&amp;Reinstall</value>
+    </config>
+    <config name="Update">
+      <value>&amp;Update</value>
+    </config>
     <config name="Customize">
       <value>&amp;Customize</value>
     </config>
