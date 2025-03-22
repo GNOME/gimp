@@ -286,7 +286,6 @@ gimp_edit_copy (GimpImage     *image,
       clip_image = gimp_image_new_from_drawables (image->gimp, drawables, TRUE, TRUE);
       gimp_container_remove (image->gimp->images, GIMP_OBJECT (clip_image));
       gimp_set_clipboard_image (image->gimp, clip_image);
-      g_object_unref (clip_image);
       g_list_free (drawables);
 
       clip_selection = gimp_image_get_mask (clip_image);
@@ -340,10 +339,14 @@ gimp_edit_copy (GimpImage     *image,
             }
           g_list_free (all_items);
 
-          /* We need to keep the image size as-is, because even after cropping
-           * layers to selection, their offset stay important for in-place paste
-           * variants. Yet we also need to store the dimensions where we'd have
-           * cropped the image for the "Paste as New Image" action.
+          gimp_image_undo_disable (clip_image);
+          gimp_image_resize_to_layers (clip_image, context, NULL, NULL, NULL,
+                                       NULL, NULL);
+          gimp_image_undo_enable (clip_image);
+
+          /* We need to store the original offsets before the image was
+           * resized, in order to move it into the correct location for
+           * in-place pasting.
            */
           g_object_set_data (G_OBJECT (clip_image),
                              "gimp-edit-new-image-x",
@@ -351,15 +354,10 @@ gimp_edit_copy (GimpImage     *image,
           g_object_set_data (G_OBJECT (clip_image),
                              "gimp-edit-new-image-y",
                              GINT_TO_POINTER (selection_bounds.y));
-          g_object_set_data (G_OBJECT (clip_image),
-                             "gimp-edit-new-image-width",
-                             GINT_TO_POINTER (selection_bounds.width));
-          g_object_set_data (G_OBJECT (clip_image),
-                             "gimp-edit-new-image-height",
-                             GINT_TO_POINTER (selection_bounds.height));
         }
       /* Remove selection from the clipboard image. */
       gimp_channel_clear (clip_selection, NULL, FALSE);
+      g_object_unref (clip_image);
 
       return GIMP_OBJECT (gimp_get_clipboard_image (image->gimp));
     }
@@ -1063,7 +1061,16 @@ gimp_edit_paste (GimpImage     *image,
 
   if (gimp_edit_paste_is_in_place (paste_type))
     {
-      if (GIMP_IS_BUFFER (paste))
+      offset_x = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (paste),
+                                                     "gimp-edit-new-image-x"));
+      offset_y = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (paste),
+                                                     "gimp-edit-new-image-y"));
+
+      if (offset_x != 0 || offset_y != 0)
+        {
+          use_offset = TRUE;
+        }
+      else if (GIMP_IS_BUFFER (paste))
         {
           GimpBuffer *buffer = GIMP_BUFFER (paste);
 
@@ -1102,35 +1109,9 @@ gimp_edit_paste_as_new_image (Gimp        *gimp,
   g_return_val_if_fail (GIMP_IS_IMAGE (paste) || GIMP_IS_BUFFER (paste), NULL);
 
   if (GIMP_IS_IMAGE (paste))
-    {
-      gint offset_x;
-      gint offset_y;
-      gint new_width;
-      gint new_height;
-
-      offset_x   = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (paste),
-                                                       "gimp-edit-new-image-x"));
-      offset_y   = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (paste),
-                                                       "gimp-edit-new-image-y"));
-      new_width  = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (paste),
-                                                       "gimp-edit-new-image-width"));
-      new_height = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (paste),
-                                                       "gimp-edit-new-image-height"));
-      image = gimp_image_duplicate (GIMP_IMAGE (paste));
-      if (new_width > 0 && new_height > 0)
-        {
-          gimp_image_undo_disable (image);
-          gimp_image_resize (image, context,
-                             new_width, new_height,
-                             -offset_x, -offset_y,
-                             NULL);
-          gimp_image_undo_enable (image);
-        }
-    }
+    image = gimp_image_duplicate (GIMP_IMAGE (paste));
   else if (GIMP_IS_BUFFER (paste))
-    {
-      image = gimp_image_new_from_buffer (gimp, GIMP_BUFFER (paste));
-    }
+    image = gimp_image_new_from_buffer (gimp, GIMP_BUFFER (paste));
 
   return image;
 }
