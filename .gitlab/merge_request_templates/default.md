@@ -6,4 +6,7 @@
 - Make sure no trailing spaces or tabs are left out.
 
 - Check the following option when making your request:
-  "*Allow commits from members who can merge to the target branch.*" -->
+  "*Allow commits from members who can merge to the target branch.*"
+
+- No AI-generated contents allowed (neither code nor text, images…).
+  Only human created works please! -->
