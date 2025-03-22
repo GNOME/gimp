@@ -653,7 +653,7 @@ gimp_text_options_notify_font (GimpContext *context,
                                GParamSpec  *pspec,
                                GimpText    *text)
 {
-  if (gimp_context_get_font (context) == text->font)
+  if (gimp_context_get_font (context) == text->font || gimp_context_get_font (context) == NULL)
     return;
 
   g_signal_handlers_block_by_func (text,
@@ -672,6 +672,9 @@ gimp_text_options_notify_text_font (GimpText    *text,
                                     GParamSpec  *pspec,
                                     GimpContext *context)
 {
+  if (context->font == NULL)
+    return;
+
   g_signal_handlers_block_by_func (context,
                                    gimp_text_options_notify_font, text);
 

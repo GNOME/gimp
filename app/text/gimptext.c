@@ -585,7 +585,7 @@ gimp_text_set_property (GObject      *object,
       {
         GimpFont *font = g_value_get_object (value);
 
-        if (font != text->font)
+        if (font != text->font && font != NULL)
           g_set_object (&text->font, font);
       }
       break;
