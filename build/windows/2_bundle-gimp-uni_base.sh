@@ -212,12 +212,12 @@ fi
 
 ### Deps (DLLs) of the binaries in 'bin' and 'lib' dirs
 echo "Searching for dependencies of $GIMP_DISTRIB/bin in $MSYSTEM_PREFIX and $GIMP_PREFIX"
-binArray=($(find "$GIMP_DISTRIB/bin" \( -iname '*.dll' -or -iname '*.exe' \)))
+binArray=($(find "$GIMP_DISTRIB/bin" \( -iname '*.dll' -or -iname '*.exe' -or -iname '*.pyd' \)))
 for dep in "${binArray[@]}"; do
   python3 $GIMP_SOURCE/build/windows/2_bundle-gimp-uni_dep.py $dep $MSYSTEM_PREFIX/ $GIMP_PREFIX/ $GIMP_DISTRIB --output-dll-list done-dll.list;
 done
 echo "Searching for dependencies of $GIMP_DISTRIB/lib in $MSYSTEM_PREFIX and $GIMP_PREFIX"
-libArray=($(find "$GIMP_DISTRIB/lib" \( -iname '*.dll' -or -iname '*.exe' \)))
+libArray=($(find "$GIMP_DISTRIB/lib" \( -iname '*.dll' -or -iname '*.exe' -or -iname '*.pyd' \)))
 for dep in "${libArray[@]}"; do
   python3 $GIMP_SOURCE/build/windows/2_bundle-gimp-uni_dep.py $dep $MSYSTEM_PREFIX/ $GIMP_PREFIX/ $GIMP_DISTRIB --output-dll-list done-dll.list;
 done
