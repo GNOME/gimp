@@ -5,3 +5,51 @@
 
 This is the development branch of GIMP.
 
+
+Overview of Changes from GIMP 3.0.0 to GIMP 3.0.2
+=================================================
+
+This is a bug-fix only release.
+
+Core:
+
+  - Mark some strings translatable.
+  - Fix crash when choosing a brush in grid view.
+  - Windows: temporary revert of some Input Device handling code which
+    was breaking pressure sensitivity for some graphics tablets (though
+    this revert may make issues with the eraser tip).
+  - Fix crash when choosing a non-existing font in text tool options.
+
+Tools:
+
+  - Reorder Line Art Detection options per design decision.
+
+Graphical User Interface:
+
+  - Keep headerbar color consistent when out of focus.
+  - Histogram uses the luminance value of the foreground color as a
+    threshold to lighten or darken the border color for contrast with
+    the histogram itself.
+  - Improve separation between panels in dark theme.
+  - Add default response for GimpQueryBox dialogues.
+  - Spacing between toolbox widgets improved.
+  - GimpSpinScale slider colors inverted.
+  - New icons: "gimp-toggle-on" and "gimp-toggle-off" and using them in
+    the Search Action's list as icons for toggle actions.
+
+Plug-ins:
+
+  - Python Console uses the luminance of the background color for error
+    text.
+  - Metadata Editor: fix buffer overflow.
+  - Gradient Flare: fix crash when setting the size to 0.
+  - Screenshot: X11 implementation is bypassed (in favor of portals)
+    when running on XWayland.
+
+Build:
+
+  - Various packaging fixes and cleanup.
+  - The Windows installer now prompts (only in user installation) about
+    deleting GIMP config files when uninstalling.
+  - GEGL 0.4.58 is now our minimum requirement.
+  - Windows installer: create Restore Point on system-wide install.
