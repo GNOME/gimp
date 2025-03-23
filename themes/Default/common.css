@@ -383,7 +383,7 @@ entry selection {
 
 paned separator {
   background-image: none;
-  background-color: @widget-bg-color;
+  background-color: @bg-color;
   background-position: center;
   background-repeat: no-repeat;
   background-size: auto;
