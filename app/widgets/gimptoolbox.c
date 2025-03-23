@@ -278,6 +278,8 @@ gimp_toolbox_constructed (GObject *object)
   toolbox->p->area_box = gtk_flow_box_new ();
   gtk_flow_box_set_selection_mode (GTK_FLOW_BOX (toolbox->p->area_box),
                                    GTK_SELECTION_NONE);
+  gtk_flow_box_set_max_children_per_line (GTK_FLOW_BOX (toolbox->p->area_box),
+                                          3);
   gtk_box_pack_start (GTK_BOX (toolbox->p->vbox), toolbox->p->area_box,
                       FALSE, FALSE, 0);
   gtk_widget_set_visible (toolbox->p->area_box, TRUE);
