@@ -132,12 +132,12 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
 
   const gchar *gimp_histogram_editor_labels[] =
     {
-      N_("Mean:"),
-      N_("Std dev:"),
-      N_("Median:"),
-      N_("Pixels:"),
-      N_("Count:"),
-      N_("Percentile:")
+      N_("Mean: "),
+      N_("Std dev: "),
+      N_("Median: "),
+      N_("Pixels: "),
+      N_("Count: "),
+      N_("Percentile: ")
     };
 
   editor->box = gimp_histogram_box_new ();
@@ -221,6 +221,30 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
       gtk_grid_attach (GTK_GRID (grid), label, x + 1, y, 1, 1);
       gtk_widget_show (label);
     }
+
+  editor->toggle = gtk_check_button_new_with_label (_("Compute unique colors:"));
+  gimp_label_set_attributes (GTK_LABEL (gtk_bin_get_child (GTK_BIN (editor->toggle))),
+                             PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,
+                             -1);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (editor->toggle), FALSE);
+  g_signal_connect_swapped (editor->toggle, "toggled",
+                            G_CALLBACK (gimp_histogram_editor_info_update),
+                            editor);
+  gtk_widget_set_margin_start (gtk_bin_get_child (GTK_BIN (editor->toggle)), 6);
+  gtk_widget_set_halign (editor->toggle, GTK_ALIGN_END);
+  gtk_grid_attach (GTK_GRID (grid), editor->toggle, 0, 3, 1, 1);
+  gtk_widget_show (editor->toggle);
+
+  editor->labels[6] = label = g_object_new (GTK_TYPE_LABEL,
+                                            "xalign",      0.0,
+                                            "yalign",      0.5,
+                                            "width-chars", 9,
+                                            NULL);
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,
+                             -1);
+  gtk_grid_attach (GTK_GRID (grid), label, 1, 3, 1, 1);
+  gtk_widget_show (label);
 }
 
 static void
@@ -767,12 +791,23 @@ gimp_histogram_editor_info_update (GimpHistogramEditor *editor)
                                                  (100.0 * count / pixels) :
                                                  0.0));
       gtk_label_set_text (GTK_LABEL (editor->labels[5]), text);
+
+      if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (editor->toggle)))
+        {
+          g_snprintf (text, sizeof (text), "%d",
+                      gimp_histogram_unique_colors (editor->drawable));
+          gtk_label_set_text (GTK_LABEL (editor->labels[6]), text);
+        }
+      else
+        {
+          gtk_label_set_text (GTK_LABEL (editor->labels[6]), "n/a");
+        }
     }
   else
     {
       gint i;
 
-      for (i = 0; i < 6; i++)
+      for (i = 0; i < 7; i++)
         gtk_label_set_text (GTK_LABEL (editor->labels[i]), NULL);
     }
 }

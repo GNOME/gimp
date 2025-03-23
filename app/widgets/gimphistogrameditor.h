@@ -51,7 +51,8 @@ struct _GimpHistogramEditor
 
   GtkWidget            *menu;
   GtkWidget            *box;
-  GtkWidget            *labels[6];
+  GtkWidget            *labels[7];
+  GtkWidget            *toggle;
 };
 
 struct _GimpHistogramEditorClass

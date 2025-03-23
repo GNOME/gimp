@@ -37,6 +37,7 @@
 #include "gimp-atomic.h"
 #include "gimp-parallel.h"
 #include "gimpasync.h"
+#include "gimpdrawable.h"
 #include "gimphistogram.h"
 #include "gimpwaitable.h"
 
@@ -119,6 +120,9 @@ static void       gimp_histogram_calculate_area           (const GeglRectangle  
                                                            CalculateData        *data);
 static void       gimp_histogram_calculate_async_callback (GimpAsync            *async,
                                                            CalculateContext     *context);
+static guint      hash_color_bytes                        (gpointer             *key);
+static gboolean   color_bytes_equal                       (gpointer             *key1,
+                                                           gpointer             *key2);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpHistogram, gimp_histogram, GIMP_TYPE_OBJECT)
@@ -227,6 +231,49 @@ gimp_histogram_get_memsize (GimpObject *object,
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
+}
+
+static guint
+hash_color_bytes (gpointer *key)
+{
+  GBytes       *bytes     = (GBytes *) key;
+  gsize         size;
+  const guint8 *data;
+  guint64       max_value = 0;
+  guint64       value     = 0;
+  guint         hash;
+
+  data = g_bytes_get_data (bytes, &size);
+
+  for (gsize i = 0; i < size; ++i)
+    {
+      value     = value * 256 + data[i];
+      max_value = max_value * 256 + 255;
+    }
+
+  if (max_value == 0)
+    return 0;
+
+  hash = (guint) ((value * (guint64) G_MAXUINT) / max_value);
+
+  return hash;
+}
+
+static gboolean
+color_bytes_equal (gpointer *key1,
+                   gpointer *key2)
+{
+  GBytes       *bytes1 = (GBytes *) key1;
+  GBytes       *bytes2 = (GBytes *) key2;
+  gsize         size1;
+  gsize         size2;
+  const guint8 *data1  = g_bytes_get_data (bytes1, &size1);
+  const guint8 *data2  = g_bytes_get_data (bytes2, &size2);
+
+  if (size1 != size2)
+    return FALSE;
+
+  return memcmp (data1, data2, size1) == 0;
 }
 
 /*  public functions  */
@@ -1229,4 +1276,53 @@ gimp_histogram_calculate_async_callback (GimpAsync        *async,
     g_object_unref (context->mask);
 
   g_slice_free (CalculateContext, context);
+}
+
+guint
+gimp_histogram_unique_colors (GimpDrawable *drawable)
+{
+  const Babl         *format;
+  guint               bpp;
+  GeglBufferIterator *iter;
+  GHashTable         *hash_table;
+  GBytes             *key     = NULL;
+  guint               uniques = 0;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), 0);
+
+  format = gimp_drawable_get_format (drawable);
+  bpp    = babl_format_get_bytes_per_pixel (format);
+
+  iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (drawable),
+                                   NULL, 0, format,
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
+
+
+  hash_table = g_hash_table_new ((GHashFunc)  hash_color_bytes,
+                                 (GEqualFunc) color_bytes_equal);
+
+  while (gegl_buffer_iterator_next (iter))
+    {
+      guint8 *data   = iter->items[0].data;
+      guint   length = iter->length;
+
+      while (length--)
+        {
+          key = g_bytes_new (data, bpp);
+
+          if (! g_hash_table_lookup (hash_table, key))
+            {
+              g_hash_table_insert (hash_table, key, key);
+              key = NULL;
+              uniques++;
+            }
+
+          data += bpp;
+        }
+    }
+
+  g_hash_table_destroy (hash_table);
+  g_bytes_unref (key);
+
+  return uniques;
 }
