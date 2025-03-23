@@ -650,13 +650,19 @@ menubar > menuitem:hover {
 
 /* Top menubar subitem style */
 menu menuitem {
-  color: @fg-color;
   background-color: @bg-color;
 }
 
 menu menuitem:hover {
-  color: @fg-color;
   background-color: @extreme-bg-color;
+}
+
+menu menuitem, menu menuitem:hover {
+  border-width: 0px;
+  color:        @fg-color;
+  min-height:   16px;
+  min-width:    40px;
+  padding:      4px 6px;
 }
 
 menuitem *:hover {
