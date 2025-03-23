@@ -183,10 +183,11 @@ if [ -z "$GIMP_UNSTABLE" ]; then
   bundle "$MSYSTEM_PREFIX" bin/gspawn*-helper.exe
 fi
 
-### Optional binaries for GObject Introspection support
+### Optional binaries for GObject Introspection support. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/13170
 if [ -z "$QUASI_MSYS2_ROOT" ]; then
   bundle "$GIMP_PREFIX" lib/girepository-*
   bundle "$MSYSTEM_PREFIX" lib/girepository-*
+  bundle "$MSYSTEM_PREFIX" lib/libgirepository-*.dll
 
   #FIXME: luajit crashes at startup: See: https://gitlab.gnome.org/GNOME/gimp/-/issues/11597
   #bundle "$MSYSTEM_PREFIX" bin/luajit.exe
@@ -212,12 +213,12 @@ fi
 
 ### Deps (DLLs) of the binaries in 'bin' and 'lib' dirs
 echo "Searching for dependencies of $GIMP_DISTRIB/bin in $MSYSTEM_PREFIX and $GIMP_PREFIX"
-binArray=($(find "$GIMP_DISTRIB/bin" \( -iname '*.dll' -or -iname '*.exe' -or -iname '*.pyd' \)))
+binArray=($(find "$GIMP_DISTRIB/bin" \( -iname '*.dll' -or -iname '*.exe' \)))
 for dep in "${binArray[@]}"; do
   python3 $GIMP_SOURCE/build/windows/2_bundle-gimp-uni_dep.py $dep $MSYSTEM_PREFIX/ $GIMP_PREFIX/ $GIMP_DISTRIB --output-dll-list done-dll.list;
 done
 echo "Searching for dependencies of $GIMP_DISTRIB/lib in $MSYSTEM_PREFIX and $GIMP_PREFIX"
-libArray=($(find "$GIMP_DISTRIB/lib" \( -iname '*.dll' -or -iname '*.exe' -or -iname '*.pyd' \)))
+libArray=($(find "$GIMP_DISTRIB/lib" \( -iname '*.dll' -or -iname '*.exe' \)))
 for dep in "${libArray[@]}"; do
   python3 $GIMP_SOURCE/build/windows/2_bundle-gimp-uni_dep.py $dep $MSYSTEM_PREFIX/ $GIMP_PREFIX/ $GIMP_DISTRIB --output-dll-list done-dll.list;
 done
