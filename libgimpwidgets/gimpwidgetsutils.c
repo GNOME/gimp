@@ -1362,6 +1362,9 @@ gimp_widget_set_handle_on_mapped (GtkWidget    *widget,
       handle = g_bytes_new (&id, sizeof (Window));
     }
 #endif
+
+  *phandle = handle;
+
 #ifdef GDK_WINDOWING_WAYLAND
   if (GDK_IS_WAYLAND_WINDOW (surface))
     {
@@ -1378,8 +1381,6 @@ gimp_widget_set_handle_on_mapped (GtkWidget    *widget,
                     G_STRFUNC);
     }
 #endif
-
-  *phandle = handle;
 
   return FALSE;
 }
