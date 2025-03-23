@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-03-16 21:59+0000\n"
-"PO-Revision-Date: 2025-03-18 03:40+0100\n"
+"POT-Creation-Date: 2025-03-23 11:06+0000\n"
+"PO-Revision-Date: 2025-03-23 12:12+0100\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -26,7 +26,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.5\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
 msgid "The GIMP team"
@@ -12262,7 +12262,7 @@ msgstr "No lineal"
 #: app/core/core-enums.c:1093
 msgctxt "trc-type"
 msgid "Perceptual"
-msgstr "Perceptual"
+msgstr "Perceptivo"
 
 #: app/core/core-enums.c:1296
 msgctxt "undo-type"
@@ -19131,6 +19131,25 @@ msgstr "Perfil de prueba de impresión"
 msgid "_Soft-proofing Profile: "
 msgstr "Perfil de la _prueba: "
 
+#: app/display/gimpstatusbar.c:543
+msgid "Perceptual"
+msgstr "Perceptivo"
+
+#: app/display/gimpstatusbar.c:544
+msgid "Relative Colorimetric"
+msgstr "Colorimétrico relativo"
+
+#: app/display/gimpstatusbar.c:545 app/operations/gimphuesaturationconfig.c:107
+#: app/operations/gimphuesaturationconfig.c:108
+#: app/operations/gimpoperationcolorize.c:106
+#: app/operations/gimpoperationcolorize.c:107
+msgid "Saturation"
+msgstr "Saturación"
+
+#: app/display/gimpstatusbar.c:546
+msgid "Absolute Colorimetric"
+msgstr "Colorimétrico absoluto"
+
 #: app/display/gimpstatusbar.c:553
 msgid "_Rendering Intent: "
 msgstr "Intención de _renderizado: "
@@ -20397,13 +20416,6 @@ msgstr "Falló al escribir el archivo de curvas: "
 msgid "Hue"
 msgstr "Tono"
 
-#: app/operations/gimphuesaturationconfig.c:107
-#: app/operations/gimphuesaturationconfig.c:108
-#: app/operations/gimpoperationcolorize.c:106
-#: app/operations/gimpoperationcolorize.c:107
-msgid "Saturation"
-msgstr "Saturación"
-
 #: app/operations/gimphuesaturationconfig.c:113
 #: app/operations/gimphuesaturationconfig.c:114
 #: app/operations/gimpoperationcolorize.c:112
@@ -20687,7 +20699,7 @@ msgid "No patterns available for use with this tool."
 msgstr "No hay patrones disponibles que usar con esta herramienta."
 
 #: app/paint/gimpcloneoptions.c:67 app/tools/gimpbucketfilloptions.c:217
-#: app/tools/gimpbucketfilloptions.c:768 app/tools/gimpcloneoptions-gui.c:246
+#: app/tools/gimpbucketfilloptions.c:773 app/tools/gimpcloneoptions-gui.c:246
 msgid "Source"
 msgstr "Origen"
 
@@ -21498,8 +21510,8 @@ msgstr ""
 #: app/pdb/gimpprocedure.c:863
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument "
-"'%s' (#%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' "
+"(#%d). Expected %s, got %s."
 msgstr ""
 "El procedimiento «%s» se ha llamado con un valor con un tipo erróneo para el "
 "argumento «%s» (#%d). Se esperaba %s pero se obtuvo %s."
@@ -21596,8 +21608,8 @@ msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr ""
-"El procedimiento «%s» se ha llamado con un valor «%s» para el argumento "
-"«%s» (#%d, tipo %s). Este valor está fuera de los límites."
+"El procedimiento «%s» se ha llamado con un valor «%s» para el argumento «%s» "
+"(#%d, tipo %s). Este valor está fuera de los límites."
 
 #: app/pdb/gimpprocedure.c:1085
 #, c-format
@@ -22775,7 +22787,7 @@ msgstr "Detección del arte lineal"
 msgid "(computing...)"
 msgstr "(calculando…)"
 
-#: app/tools/gimpbucketfilloptions.c:773
+#: app/tools/gimpbucketfilloptions.c:778
 msgid "Detect opacity rather than grayscale"
 msgstr "Detectar la opacidad en lugar de la escala de grises"
 
