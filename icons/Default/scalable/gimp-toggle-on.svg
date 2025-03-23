@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="32"
+   height="32"
+   fill="none"
+   version="1.1"
+   id="svg9"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <path
+     fill="url(#a)"
+     d="M31 16c0 4.9706-4.0294 9-9 9H10c-4.97056 0-9-4.0294-9-9s4.02944-9 9-9h12c4.9706 0 9 4.0294 9 9Z"
+     id="path1" />
+  <circle
+     cx="22"
+     cy="16"
+     r="6"
+     fill="#559223"
+     id="circle1"
+     style="display:inline" />
+  <path
+     fill="#bceb7d"
+     d="m 25.366,13.2787 c -0.44114,-0.3864 -1.15887,-0.38482 -1.5879,0.1055 l -2.459,3.0947 -0.7283,-0.5697 c -0.43845,-0.43824 -1.15236,-0.43824 -1.5908,0 -0.43824,0.43844 -0.43824,1.15236 0,1.5908 l 1.5794,1.4208 c 0.45875,0.45875 1.21443,0.43414 1.6421,-0.0542 l 3.25,-4 c 0.42977,-0.49066 0.33528,-1.20222 -0.1055,-1.5879 z"
+     style="display:inline;stroke:#bceb7d;stroke-width:0.4;stroke-dasharray:none;stroke-opacity:1"
+     id="path2" />
+  <path
+     fill="url(#b)"
+     fill-rule="evenodd"
+     d="m 22,25 c 4.9706,0 9,-4.0294 9,-9 0,-4.9706 -4.0294,-9 -9,-9 H 10 c -4.97056,0 -9,4.0294 -9,9 0,4.9706 4.02944,9 9,9 z m 0,-1 c 4.4183,0 8,-3.5817 8,-8 0,-4.4183 -3.5817,-8 -8,-8 H 10 c -4.41828,0 -8,3.5817 -8,8 0,4.4183 3.58172,8 8,8 z"
+     clip-rule="evenodd"
+     id="path3"
+     style="display:inline" />
+  <path
+     fill="#487b1e"
+     fill-rule="evenodd"
+     d="M 22,26 C 27.5228,26 32,21.5228 32,16 32,10.4772 27.5228,6 22,6 H 10 C 4.47715,6 0,10.4772 0,16 0,21.5228 4.47715,26 10,26 Z m 0,-1 c 4.9706,0 9,-4.0294 9,-9 0,-4.9706 -4.0294,-9 -9,-9 H 10 c -4.97056,0 -9,4.0294 -9,9 0,4.9706 4.02944,9 9,9 z"
+     clip-rule="evenodd"
+     id="path4"
+     style="display:inline" />
+  <defs
+     id="defs9">
+    <linearGradient
+       id="a"
+       x1="16"
+       x2="16"
+       y1="7"
+       y2="25"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         stop-color="#B5EA6C"
+         id="stop4" />
+      <stop
+         offset="1"
+         stop-color="#8BCF45"
+         id="stop5" />
+    </linearGradient>
+    <linearGradient
+       id="b"
+       x1="-204.625"
+       x2="-204.625"
+       y1="25.3014"
+       y2="6.76473"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         stop-color="white"
+         stop-opacity=".5"
+         id="stop6" />
+      <stop
+         offset=".50776"
+         stop-color="white"
+         stop-opacity=".12"
+         id="stop7" />
+      <stop
+         offset=".83457"
+         stop-color="white"
+         stop-opacity=".09"
+         id="stop8" />
+      <stop
+         offset="1"
+         stop-color="white"
+         stop-opacity=".26"
+         id="stop9" />
+    </linearGradient>
+  </defs>
+</svg>
