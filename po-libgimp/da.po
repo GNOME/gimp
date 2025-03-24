@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: GIMP libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-10-26 12:26+0000\n"
-"PO-Revision-Date: 2025-03-24 17:19+0100\n"
+"PO-Revision-Date: 2025-03-24 17:23+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -3201,7 +3201,7 @@ msgstr "Vis advarsel for pixels med NaN eller uendelig komponent"
 
 #: modules/display-filter-clip-warning.c:215
 msgid "Bogus color"
-msgstr "Farve for falske"
+msgstr "Farve for udefinerede"
 
 #: modules/display-filter-clip-warning.c:216
 msgid "Bogus warning color"
