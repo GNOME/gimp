@@ -22,8 +22,6 @@ sub plug_ins_query {
 
     &andy_pdb_misc('1998');
 
-    $lib_private = 1;
-
     @inargs = (
 	{ name  => 'search_string', type => 'string', no_validate => 1,
 	  desc  => 'If not an empty string then use this as a search pattern' }
