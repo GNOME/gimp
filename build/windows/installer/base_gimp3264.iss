@@ -204,7 +204,7 @@ PrivilegesRequiredOverridesAllowed=dialog
 ShowLanguageDialog=auto
 DisableWelcomePage=no
 InfoBeforeFile=gpl+python.rtf
-DisableDirPage=auto
+DisableDirPage=no
 FlatComponentsList=yes
 DisableProgramGroupPage=yes
 AllowNoIcons=no
@@ -755,9 +755,11 @@ begin
 	begin
 		WizardForm.NextButton.Visible := False;
 
-		btnInstall.Visible := True;
+		if not (InstallType = 'itRepair') then begin
+		    btnInstall.Visible := True;
+		end;
 		btnInstall.TabOrder := 1;
-		if InstallType = 'itInstall' then begin
+		if (InstallType = 'itRepair') or (InstallType = 'itInstall') then begin
 		    btnCustomize.Visible := True;
 		end;
 
@@ -772,8 +774,10 @@ end;
 procedure CleanUpCustomWelcome();
 begin
 	WizardForm.NextButton.Visible := True;
-	btnInstall.Visible := False;
-	if InstallType = 'itInstall' then begin
+	if not (InstallType = 'itRepair') then begin
+	     btnInstall.Visible := False;
+	end;
+	if (InstallType = 'itRepair') or (InstallType = 'itInstall') then begin
 	     btnCustomize.Visible := False;
     end;
 
@@ -809,6 +813,8 @@ var	i,ButtonWidth: Integer;
 begin
 	DebugMsg('InitCustomPages','wpLicense');
 
+	CheckInstallType;
+
 	btnInstall := TNewButton.Create(WizardForm);
 	with btnInstall do
 	begin
@@ -817,7 +823,6 @@ begin
 		Height := WizardForm.NextButton.Height;
 		Left := WizardForm.NextButton.Left;
 		Top := WizardForm.NextButton.Top;
-	    CheckInstallType;
 		if InstallType = 'itInstall' then begin
 		    Caption := CustomMessage('Install');
 	    end else if InstallType = 'itReinstall' then begin
@@ -839,7 +844,11 @@ begin
 		Left := 0;
 		Top := 0;
 		AutoSize := True;
-		Caption := CustomMessage('Customize');
+		if InstallType = 'itRepair' then begin
+		    Caption := CustomMessage('Repair');
+		end else if InstallType = 'itInstall' then begin
+		    Caption := CustomMessage('Customize');
+		end;
 	end;
 
 	btnCustomize := TNewButton.Create(WizardForm);
@@ -857,8 +866,12 @@ begin
 		Top := WizardForm.NextButton.Top;
 		Visible := False;
 
-		Caption := CustomMessage('Customize');
-
+		if InstallType = 'itRepair' then begin
+		    Caption := CustomMessage('Repair');
+		end else if InstallType = 'itInstall' then begin
+		    Caption := CustomMessage('Customize');
+		end;
+		   
 		OnClick := @CustomizeOnClick;
 	end;
 

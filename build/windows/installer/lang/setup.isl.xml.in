@@ -47,6 +47,9 @@
       <value>E&amp;xit</value>
     </config>
 
+    <config name="Repair">
+      <value>&amp;Repair</value>
+    </config>    
     <config name="Install">
       <value>&amp;Install</value>
     </config>
