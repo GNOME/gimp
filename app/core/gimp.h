@@ -19,6 +19,7 @@
 #define __GIMP_H__
 
 
+#include <libportal/portal.h>
 #include "gimpobject.h"
 #include "gimp-gui.h"
 
@@ -60,6 +61,8 @@ struct _Gimp
   GimpPDBCompatMode       pdb_compat_mode;
 
   GimpGui                 gui;         /* gui vtable */
+  XdpPortal              *portal;      /* libportal instantiates when compiled
+                                        * with a GUI */
 
   gboolean                restored;    /* becomes TRUE in gimp_restore() */
   gboolean                initialized; /* Fully initialized (only set once at start). */
