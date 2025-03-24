@@ -219,7 +219,7 @@ register_plug_in_procs (GimpPDB *pdb)
   /*
    * gimp-plug-ins-query
    */
-  procedure = gimp_procedure_new (plug_ins_query_invoker, TRUE);
+  procedure = gimp_procedure_new (plug_ins_query_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-plug-ins-query");
   gimp_procedure_set_static_help (procedure,
