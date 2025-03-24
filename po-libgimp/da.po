@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: GIMP libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-10-26 12:26+0000\n"
-"PO-Revision-Date: 2024-12-30 09:36+0100\n"
+"PO-Revision-Date: 2025-03-24 17:19+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -3193,7 +3193,7 @@ msgstr "Advarselsfarve for overeksponerede områder"
 
 #: modules/display-filter-clip-warning.c:206
 msgid "Show bogus"
-msgstr "Vis falske"
+msgstr "Vis udefinerede"
 
 #: modules/display-filter-clip-warning.c:207
 msgid "Show warning for pixels with an infinite or NaN component"
