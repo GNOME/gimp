@@ -132,7 +132,8 @@ G_DEFINE_TYPE (GimpDeviceStatus, gimp_device_status, GIMP_TYPE_EDITOR)
 static void
 gimp_device_status_class_init (GimpDeviceStatusClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->constructed  = gimp_device_status_constructed;
   object_class->dispose      = gimp_device_status_dispose;
@@ -143,6 +144,8 @@ gimp_device_status_class_init (GimpDeviceStatusClass *klass)
                                                         GIMP_TYPE_GIMP,
                                                         GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+
+  gtk_widget_class_set_css_name (widget_class, "GimpDeviceStatus");
 }
 
 static void

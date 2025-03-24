@@ -310,6 +310,14 @@ GimpDock frame:first-child label {
   color: @fg-color;
 }
 
+/* Assign the highlight color for the active GimpDeviceStatus option */
+GimpDeviceStatus widget:selected, GimpDeviceStatus widget:selected box {
+  background-color: @selected-color;
+  padding:           4px;
+  margin:           -4px;
+  border-radius:     4px;
+}
+
 /* Defining slider scale border and trough */
 scale contents trough
 {
