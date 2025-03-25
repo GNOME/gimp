@@ -1648,7 +1648,7 @@ begin
 
 	// Set revision
 	EnvFile := ExpandConstant('{app}\share\gimp\{#GIMP_PKGCONFIG_VERSION}\gimp-release');
-	DebugMsg('SetRevision','Setting revision number {#REVISION} in ' + EnvFile);
+	DebugMsg('PrepareGimpEnvironment','Setting revision number {#REVISION} in ' + EnvFile);
 
 	//LoadStringFromUTF8File(EnvFile,Env);
   //sTemp := Replace('=0','={#REVISION}',Env);
