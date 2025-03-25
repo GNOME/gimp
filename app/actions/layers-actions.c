@@ -200,15 +200,15 @@ static const GimpActionEntry layers_actions[] =
     GIMP_HELP_LAYER_TEXT_ALONG_PATH },
 
   { "layers-vector-fill-stroke", NULL,
-    N_("Fill / Stroke"), NULL, { NULL },
-    N_("Edit the fill and stroke of this vector layer"),
+    NC_("layers-action", "Fill / Stroke"), NULL, { NULL },
+    NC_("layers-action", "Edit the fill and stroke of this vector layer"),
     layers_vector_fill_stroke_cmd_callback,
     NULL },
 
   { "layers-vector-discard", NULL,
-    N_("Discard Vector Information"), NULL, { NULL },
-    N_("Turn this vector layer into a normal layer"),
-   layers_vector_discard_cmd_callback,
+    NC_("layers-action", "Discard Vector Information"), NULL, { NULL },
+    NC_("layers-action", "Turn this vector layer into a normal layer"),
+    layers_vector_discard_cmd_callback,
     NULL },
 
   { "layers-resize", GIMP_ICON_OBJECT_RESIZE,
