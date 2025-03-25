@@ -265,5 +265,14 @@ windows_menu_recent_remove (GimpContainer   *container,
                             GimpSessionInfo *info,
                             GimpUIManager   *manager)
 {
-  gimp_ui_manager_remove_uis (manager, "windows-recent-");
+  gchar *action_name;
+  gint   info_id;
+
+  info_id = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (info), "recent-action-id"));
+
+  action_name = g_strdup_printf ("windows-recent-%04d", info_id);
+
+  gimp_ui_manager_remove_uis (manager, action_name);
+
+  g_free (action_name);
 }
