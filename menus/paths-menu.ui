@@ -29,6 +29,7 @@
         <item><attribute name="action">app.paths-merge-visible</attribute></item>
       </section>
       <section>
+        <item><attribute name="action">app.paths-to-vector-layer</attribute></item>
         <item><attribute name="action">app.paths-selection-replace</attribute></item>
         <item><attribute name="action">app.paths-selection-add</attribute></item>
         <item><attribute name="action">app.paths-selection-subtract</attribute></item>

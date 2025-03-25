@@ -73,6 +73,8 @@
 #include "path/gimpbezierstroke.h"
 #include "path/gimppath.h"
 #include "path/gimppath-compat.h"
+#include "path/gimpvectorlayer.h"
+#include "path/gimpvectorlayer-xcf.h"
 
 #include "text/gimptextlayer.h"
 #include "text/gimptextlayer-xcf.h"
@@ -3149,7 +3151,7 @@ xcf_load_layer (XcfInfo    *info,
 
   xcf_progress_update (info);
 
-  /* call the evil text layer hack that might change our layer pointer */
+  /* call the evil text and vector layer hack that might change our layer pointer */
   selected = g_list_find (info->selected_layers, layer);
   linked   = g_list_find (info->linked_layers, layer);
   floating = (info->floating_sel == layer);
@@ -3168,6 +3170,16 @@ xcf_load_layer (XcfInfo    *info,
         {
           info->linked_layers = g_list_delete_link (info->linked_layers, linked);
           info->linked_layers = g_list_prepend (info->linked_layers, layer);
+        }
+      if (floating)
+        info->floating_sel = layer;
+    }
+  else if (gimp_vector_layer_xcf_load_hack (&layer))
+    {
+      if (selected)
+        {
+          info->selected_layers = g_list_delete_link (info->selected_layers, selected);
+          info->selected_layers = g_list_prepend (info->selected_layers, layer);
         }
       if (floating)
         info->floating_sel = layer;
