@@ -192,7 +192,7 @@ gimp_path_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_sensitive (button, FALSE);
   gimp_help_set_help_data (button, str, GIMP_HELP_PATH_SELECTION_REPLACE);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_free (str);
 
@@ -202,7 +202,7 @@ gimp_path_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_sensitive (button, FALSE);
   gimp_help_set_help_data (button, NULL, GIMP_HELP_PATH_FILL);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   options->fill_button = button;
 
@@ -210,9 +210,17 @@ gimp_path_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_sensitive (button, FALSE);
   gimp_help_set_help_data (button, NULL, GIMP_HELP_PATH_STROKE);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   options->stroke_button = button;
+
+  button = gtk_button_new_with_label (_("Create Vector Layer"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_set_sensitive (button, FALSE);
+  gimp_help_set_help_data (button, NULL, NULL);
+  gtk_widget_set_visible (button, TRUE);
+
+  options->vector_layer_button = button;
 
   return vbox;
 }
