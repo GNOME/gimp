@@ -152,7 +152,7 @@ static const GimpActionEntry paths_actions[] =
     GIMP_HELP_PATH_IMPORT },
 
   { "paths-to-vector-layer", NULL,
-    NC_("paths-actions", "Path to Vector Layer"), NULL, { NULL }, NULL,
+    NC_("paths-action", "Path to Vector Layer"), NULL, { NULL }, NULL,
     path_to_vector_layer_cmd_callback,
     NULL },
 };
