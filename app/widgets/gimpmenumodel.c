@@ -980,6 +980,11 @@ gimp_menu_model_get_item (GimpMenuModel *model,
           action = gimp_ui_manager_find_action (model->priv->manager, NULL,
                                                 action_name);
 
+          if (! action)
+            {
+              g_critical ("Invalid action '%s'", action_name);
+              continue;
+            }
           if (gimp_action_is_visible (action))
             cur++;
         }
