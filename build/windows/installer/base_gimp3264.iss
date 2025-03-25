@@ -1648,7 +1648,7 @@ begin
 
 	// Set revision
 	EnvFile := ExpandConstant('{app}\share\gimp\{#GIMP_PKGCONFIG_VERSION}\gimp-release');
-	DebugMsg('SetRevision','Seting revision number {#REVISION} in ' + EnvFile);
+	DebugMsg('SetRevision','Setting revision number {#REVISION} in ' + EnvFile);
 
 	//LoadStringFromUTF8File(EnvFile,Env);
   //sTemp := Replace('=0','={#REVISION}',Env);
@@ -1656,7 +1656,7 @@ begin
 
 	if not SaveStringToUTF8File(EnvFile,sTemp,False) then
 	begin
-		DebugMsg('PrepareGimpEnvironment','Problem seting revision');
+		DebugMsg('PrepareGimpEnvironment','Problem setting revision');
 		SuppressibleMsgBox(FmtMessage(CustomMessage('ErrorChangingEnviron'),[EnvFile]),mbInformation,mb_ok,IDOK);
 	end;
 
