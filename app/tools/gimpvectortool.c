@@ -41,6 +41,8 @@
 #include "paint/gimppaintoptions.h" /* GIMP_PAINT_OPTIONS_CONTEXT_MASK */
 
 #include "vectors/gimppath.h"
+#include "vectors/gimpvectorlayer.h"
+#include "vectors/gimpvectorlayeroptions.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdockcontainer.h"
@@ -146,6 +148,10 @@ static void     gimp_vector_tool_stroke_callback (GtkWidget             *dialog,
                                                   GimpContext           *context,
                                                   GimpStrokeOptions     *options,
                                                   gpointer               data);
+
+static void     gimp_vector_tool_create_vector_layer 
+                                                 (GimpVectorTool        *vector_tool,
+						                          GtkWidget             *button);
 
 
 G_DEFINE_TYPE (GimpVectorTool, gimp_vector_tool, GIMP_TYPE_DRAW_TOOL)
@@ -609,6 +615,14 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
                                                 gimp_vector_tool_stroke_vectors,
                                                 tool);
         }
+
+      if (options->vector_layer_button)
+        {
+          gtk_widget_set_sensitive (options->vector_layer_button, FALSE);
+          g_signal_handlers_disconnect_by_func (options->vector_layer_button,
+                                                gimp_vector_tool_create_vector_layer,
+                                                tool);
+        }
     }
 
   if (! vectors ||
@@ -655,6 +669,15 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
                                 G_CALLBACK (gimp_vector_tool_stroke_vectors),
                                 tool);
       gtk_widget_set_sensitive (options->stroke_button, TRUE);
+    }
+
+  if (options->vector_layer_button)
+    {
+      g_signal_connect_swapped (options->vector_layer_button, "clicked",
+				                G_CALLBACK (gimp_vector_tool_create_vector_layer),
+				                tool);
+      
+      gtk_widget_set_sensitive (options->vector_layer_button, TRUE);
     }
 
   if (tool->display)
@@ -897,4 +920,31 @@ gimp_vector_tool_stroke_callback (GtkWidget         *dialog,
   gimp_image_undo_group_end (image);
   gimp_image_flush (image);
   gtk_widget_destroy (dialog);
+}
+
+
+static void
+gimp_vector_tool_create_vector_layer (GimpVectorTool *vector_tool,
+				                      GtkWidget      *button)
+{
+  GimpImage       *image;
+  GimpVectorLayer *layer;
+
+  if (! vector_tool->vectors)
+    return;
+
+  image = gimp_item_get_image (GIMP_ITEM (vector_tool->vectors));
+
+  layer = gimp_vector_layer_new (image, vector_tool->vectors,
+				                 gimp_get_user_context (image->gimp));
+
+  gimp_image_add_layer (image,
+                        GIMP_LAYER (layer),
+                        GIMP_IMAGE_ACTIVE_PARENT,
+                        -1,
+                        TRUE);
+  
+  gimp_vector_layer_refresh (layer);
+
+  gimp_image_flush (image);
 }
