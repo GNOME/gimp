@@ -111,10 +111,10 @@
                 "-Dintrospection=false"
             ],
             "cleanup": [
-              "/bin",
-              "/include",
-              "/lib/pkgconfig",
-              "/share"
+                "/bin",
+                "/include",
+                "/lib/pkgconfig",
+                "/share"
             ]
         },
         {
@@ -167,7 +167,7 @@
         },
         {
             "name": "openexr",
-            "sources" : [
+            "sources": [
                 {
                     "type": "archive",
                     "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.3.2.tar.gz",
@@ -180,8 +180,8 @@
                     }
                 }
             ],
-            "buildsystem" : "cmake-ninja",
-            "builddir" : true,
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
             "config-opts": [
                 "-DOPENEXR_BUILD_TOOLS=OFF",
                 "-DOPENEXR_BUILD_EXAMPLES=OFF",
@@ -193,11 +193,11 @@
             ],
             "modules": [
                 {
-                    "name" : "imath",
-                    "sources" : [
+                    "name": "imath",
+                    "sources": [
                         {
                             "type": "archive",
-                            "url" : "https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v3.1.12.tar.gz",
+                            "url": "https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v3.1.12.tar.gz",
                             "sha256": "8a1bc258f3149b5729c2f4f8ffd337c0e57f09096e4ba9784329f40c4a9035da",
                             "x-checker-data": {
                                 "type": "anitya",
@@ -207,8 +207,8 @@
                             }
                         }
                     ],
-                    "buildsystem" : "cmake-ninja",
-                    "builddir" : true,
+                    "buildsystem": "cmake-ninja",
+                    "builddir": true,
                     "config-opts": [
                         "-DBUILD_TESTING=OFF"
                     ],
@@ -218,11 +218,11 @@
                     ]
                 },
                 {
-                    "name" : "libdeflate",
-                    "sources" : [
+                    "name": "libdeflate",
+                    "sources": [
                         {
                             "type": "archive",
-                            "url" : "https://github.com/ebiggers/libdeflate/archive/refs/tags/v1.23.zip",
+                            "url": "https://github.com/ebiggers/libdeflate/archive/refs/tags/v1.23.zip",
                             "sha256": "e0d9562aa27c6c0d47054002a400dcc17215a41386aee36e72b012b77d95a698",
                             "x-checker-data": {
                                 "type": "anitya",
@@ -232,8 +232,8 @@
                             }
                         }
                     ],
-                    "buildsystem" : "cmake-ninja",
-                    "builddir" : true,
+                    "buildsystem": "cmake-ninja",
+                    "builddir": true,
                     "config-opts": [
                         "-DLIBDEFLATE_BUILD_STATIC_LIB=OFF",
                         "-DLIBDEFLATE_GZIP_SUPPORT=OFF",
@@ -779,8 +779,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v7.9.0.tar.gz",
-                    "sha256": "bc0b3987a502913959581614ab67098f9f203a45bb424870f2342375f96dbcb7",
+                    "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v7.10.1.tar.gz",
+                    "sha256": "9e2974e22dba26a3cffe269731339ae8e01365cfe921b06be6359902bd05862c",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 4908,
