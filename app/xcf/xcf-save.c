@@ -70,6 +70,8 @@
 #include "vectors/gimppath.h"
 #include "vectors/gimpstroke.h"
 #include "vectors/gimppath-compat.h"
+#include "vectors/gimpvectorlayer.h"
+#include "vectors/gimpvectorlayer-xcf.h"
 
 #include "xcf-private.h"
 #include "xcf-read.h"
@@ -719,6 +721,12 @@ xcf_save_layer_props (XcfInfo    *info,
         xcf_check_error (xcf_save_prop (info,
                                         image, PROP_TEXT_LAYER_FLAGS, error,
                                         flags), ;);
+    }
+  else if (GIMP_IS_VECTOR_LAYER (layer) && GIMP_VECTOR_LAYER (layer)->options)
+    {
+      GimpVectorLayer *vector_layer = GIMP_VECTOR_LAYER (layer);
+
+      gimp_vector_layer_xcf_save_prepare (vector_layer);
     }
 
   if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))

@@ -25,6 +25,9 @@ void   layers_edit_cmd_callback               (GimpAction *action,
 void   layers_edit_text_cmd_callback          (GimpAction *action,
                                                GVariant   *value,
                                                gpointer    data);
+void   layers_edit_vector_cmd_callback        (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
 void   layers_edit_attributes_cmd_callback    (GimpAction *action,
                                                GVariant   *value,
                                                gpointer    data);
@@ -82,6 +85,12 @@ void   layers_text_to_vectors_cmd_callback    (GimpAction *action,
                                                GVariant   *value,
                                                gpointer    data);
 void   layers_text_along_vectors_cmd_callback (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_vector_fill_stroke_cmd_callback (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_vector_discard_cmd_callback     (GimpAction *action,
                                                GVariant   *value,
                                                gpointer    data);
 

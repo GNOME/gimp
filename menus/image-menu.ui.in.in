@@ -434,6 +434,10 @@
         <item><attribute name="action">app.layers-text-along-vectors</attribute></item>
       </section>
       <section>
+        <item><attribute name="action">app.layers-vector-fill-stroke</attribute></item>
+        <item><attribute name="action">app.layers-vector-discard</attribute></item>
+      </section>
+      <section>
         <submenu>
           <attribute name="label" translatable="yes" context="layers-action">Stac_k</attribute>
           <section>
