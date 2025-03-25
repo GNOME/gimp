@@ -187,7 +187,7 @@ fi
 if [ -z "$QUASI_MSYS2_ROOT" ]; then
   bundle "$GIMP_PREFIX" lib/girepository-*
   bundle "$MSYSTEM_PREFIX" lib/girepository-*
-  bundle "$MSYSTEM_PREFIX" lib/libgirepository-*.dll
+  bundle "$MSYSTEM_PREFIX" bin/libgirepository-*.dll
 
   #FIXME: luajit crashes at startup: See: https://gitlab.gnome.org/GNOME/gimp/-/issues/11597
   #bundle "$MSYSTEM_PREFIX" bin/luajit.exe
