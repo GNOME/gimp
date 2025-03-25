@@ -58,6 +58,8 @@
 #include "path/gimppath.h"
 #include "path/gimppath-warp.h"
 #include "path/gimpstroke.h"
+#include "path/gimpvectorlayer.h"
+#include "path/gimpvectorlayeroptions.h"
 
 #include "text/gimptext.h"
 #include "text/gimptext-path.h"
@@ -73,6 +75,7 @@
 #include "display/gimpimagewindow.h"
 
 #include "tools/gimptexttool.h"
+#include "tools/gimpvectortool.h"
 #include "tools/tool_manager.h"
 
 #include "dialogs/dialogs.h"
@@ -80,6 +83,7 @@
 #include "dialogs/layer-options-dialog.h"
 #include "dialogs/resize-dialog.h"
 #include "dialogs/scale-dialog.h"
+#include "dialogs/vector-layer-options-dialog.h"
 
 #include "actions.h"
 #include "items-commands.h"
@@ -249,6 +253,52 @@ layers_edit_text_cmd_callback (GimpAction *action,
           gtk_widget_grab_focus (shell->canvas);
         }
     }
+}
+
+void
+layers_edit_vector_cmd_callback (GimpAction *action,
+                                 GVariant   *value,
+                                 gpointer    data)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+  GList     *layers;
+  GtkWidget *widget;
+  GimpTool  *active_tool;
+  return_if_no_layers (image, layers, data);
+  return_if_no_widget (widget, data);
+
+  if (g_list_length (layers) != 1)
+    return;
+
+  layer = layers->data;
+
+  if (! gimp_drawable_is_vector_layer (GIMP_DRAWABLE (layer)))
+    {
+      layers_edit_attributes_cmd_callback (action, value, data);
+      return;
+    }
+
+  active_tool = tool_manager_get_active (image->gimp);
+
+  if (! GIMP_IS_VECTOR_TOOL (active_tool))
+    {
+      GimpToolInfo *tool_info;
+
+      tool_info = (GimpToolInfo *)
+        gimp_container_get_child_by_name (image->gimp->tool_info_list,
+                                          "gimp-vector-tool");
+
+      if (GIMP_IS_TOOL_INFO (tool_info))
+        {
+          gimp_context_set_tool (action_data_get_context (data), tool_info);
+          active_tool = tool_manager_get_active (image->gimp);
+        }
+    }
+
+  if (GIMP_IS_VECTOR_TOOL (active_tool))
+    gimp_vector_tool_set_vectors (GIMP_VECTOR_TOOL (active_tool),
+                                  GIMP_VECTOR_LAYER (layer)->options->path);
 }
 
 void
@@ -2589,6 +2639,56 @@ layers_scale_callback (GtkWidget             *dialog,
       g_warning ("Scale Error: "
                  "Both width and height must be greater than zero.");
     }
+}
+
+void
+layers_vector_fill_stroke_cmd_callback (GimpAction *action,
+                                        GVariant   *value,
+                                        gpointer    data)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+  GList     *layers;
+  GtkWidget *widget;
+  return_if_no_layers (image, layers, data);
+  return_if_no_widget (widget, data);
+
+  if (g_list_length (layers) != 1)
+    return;
+
+  layer = layers->data;
+
+  if (GIMP_IS_VECTOR_LAYER (layer))
+    {
+      GtkWidget *dialog;
+
+      dialog = vector_layer_options_dialog_new (GIMP_VECTOR_LAYER (layer),
+                                                action_data_get_context (data),
+                                                _("Fill / Stroke"),
+                                                "gimp-vector-layer-stroke",
+                                                NULL,
+                                                widget);
+      gtk_widget_show (dialog);
+    }
+}
+
+void
+layers_vector_discard_cmd_callback (GimpAction *action,
+                                    GVariant   *value,
+                                    gpointer    data)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+  GList     *layers;
+  return_if_no_layers (image, layers, data);
+
+  if (g_list_length (layers) != 1)
+    return;
+
+  layer = layers->data;
+
+  if (GIMP_IS_VECTOR_LAYER (layer))
+    gimp_vector_layer_discard (GIMP_VECTOR_LAYER (layer));
 }
 
 static void
