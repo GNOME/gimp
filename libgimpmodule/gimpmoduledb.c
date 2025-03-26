@@ -404,11 +404,17 @@ static void
 gimp_module_db_load_module (GimpModuleDB *db,
                             GFile        *file)
 {
+  gchar      *filename;
   GimpModule *module;
   gboolean   load_inhibit;
 
-  if (! gimp_file_has_extension (file, "." G_MODULE_SUFFIX))
-    return;
+  filename = g_file_get_path (file);
+  if (! g_module_open (filename, G_MODULE_BIND_LAZY))
+    {
+      g_free (filename);
+      return;
+    }
+  g_free (filename);
 
   /* don't load if we already know about it */
   if (gimp_module_db_module_find_by_file (db, file))
