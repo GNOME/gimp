@@ -97,8 +97,8 @@ if build_ico_files
   # explicitly by maintainers as part of the procedure when updating the logo.
 
   gen_ico_conf = configuration_data()
-  gen_ico_conf.set('PARENT_TOP_SRCDIR', meson.global_source_root())
-  gen_ico_conf.set('SRCDIR', meson.current_source_dir())
+  gen_ico_conf.set('PARENT_TOP_SRCDIR', meson.global_source_root().replace('\\', '/'))
+  gen_ico_conf.set('SRCDIR', meson.current_source_dir().replace('\\', '/'))
 
   gen_gimp_ico_py = configure_file(input : 'gen-gimp-ico.py.in',
                                    output : 'gen-gimp-ico.py',

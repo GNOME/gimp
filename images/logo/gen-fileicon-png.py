@@ -2,7 +2,6 @@ import pathlib
 import os
 import sys
 
-base_path = '../gimp-data/images/logo/fileicon-base.svg'
 wilber_path = '../gimp-data/images/logo/gimp-logo-shadow.svg'
 export_dir = 'build/windows/store/Assets/'
 
@@ -49,7 +48,7 @@ def export_relative_img(scale):
     config    = procedure.create_config()
     drawables = image.get_selected_drawables()
     config.set_property("image", image)
-    config.set_property("file", Gio.file_new_for_path(export_dir + 'fileicon.png'))
+    config.set_property("file", Gio.file_new_for_path(export_dir + 'fileicon' + variant + '.png'))
     Gimp.Procedure.run(procedure, config)
 
   procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
@@ -57,7 +56,7 @@ def export_relative_img(scale):
   drawables = image.get_selected_drawables()
   config.set_property("image", image)
   scale_str = str(scale)
-  config.set_property("file", Gio.file_new_for_path(export_dir + 'fileicon.scale-' + scale_str + '.png'))
+  config.set_property("file", Gio.file_new_for_path(export_dir + 'fileicon' + variant + '.scale-' + scale_str + '.png'))
   Gimp.Procedure.run(procedure, config)
 
 
@@ -102,7 +101,7 @@ def export_absolute_img(size):
     config    = procedure.create_config()
     drawables = image.get_selected_drawables()
     config.set_property("image", image)
-    config.set_property("file", Gio.file_new_for_path(export_dir + 'fileicon.png'))
+    config.set_property("file", Gio.file_new_for_path(export_dir + 'fileicon' + variant + '.png'))
     Gimp.Procedure.run(procedure, config)
 
   else:
@@ -111,33 +110,37 @@ def export_absolute_img(size):
     drawables = image.get_selected_drawables()
     config.set_property("image", image)
     size_str = str(size)
-    config.set_property("file", Gio.file_new_for_path(export_dir + 'fileicon.targetsize-' + size_str + '.png'))
+    config.set_property("file", Gio.file_new_for_path(export_dir + 'fileicon' + variant + '.targetsize-' + size_str + '.png'))
     Gimp.Procedure.run(procedure, config)
 
 
-export_relative_img(100)
-export_relative_img(125)
-export_relative_img(150)
-export_relative_img(200)
-export_relative_img(400)
+variants = ['-xcf', '']
+for variant in variants:
+    base_path = '../gimp-data/images/logo/fileicon-base' + variant + '.svg' 
 
-export_absolute_img(44)
-export_absolute_img(16)
-export_absolute_img(20)
-export_absolute_img(24)
-export_absolute_img(30)
-export_absolute_img(32)
-export_absolute_img(36)
-export_absolute_img(40)
-export_absolute_img(48)
-export_absolute_img(56)
-export_absolute_img(60)
-export_absolute_img(64)
-export_absolute_img(72)
-export_absolute_img(80)
-export_absolute_img(96)
-export_absolute_img(128)
-export_absolute_img(256)
+    export_relative_img(100)
+    export_relative_img(125)
+    export_relative_img(150)
+    export_relative_img(200)
+    export_relative_img(400)
+
+    export_absolute_img(44)
+    export_absolute_img(16)
+    export_absolute_img(20)
+    export_absolute_img(24)
+    export_absolute_img(30)
+    export_absolute_img(32)
+    export_absolute_img(36)
+    export_absolute_img(40)
+    export_absolute_img(48)
+    export_absolute_img(56)
+    export_absolute_img(60)
+    export_absolute_img(64)
+    export_absolute_img(72)
+    export_absolute_img(80)
+    export_absolute_img(96)
+    export_absolute_img(128)
+    export_absolute_img(256)
 
 
 # Avoid the images being re-generated at each build.
