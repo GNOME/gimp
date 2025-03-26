@@ -2395,20 +2395,19 @@ load_sketchbook_layers (TIFF      *tif,
           if (TIFFGetField (tif, TIFFTAG_ALIAS_LAYER_METADATA, &alias_sublayer_len, &alias_sublayer_info) &&
               g_utf8_validate (alias_sublayer_info, -1, NULL))
             {
-              gchar         **layer_settings;
-              GimpProcedure  *procedure;
-              GimpLayer      *layer;
-              GeglBuffer     *buffer;
-              const gchar    *layer_name;
-              guint32         layer_width = 0;
-              guint32         layer_height = 0;
-              gfloat          x_pos   = 0;
-              gfloat          y_pos   = 0;
-              gfloat          opacity = 100;
-              gboolean        visible = TRUE;
-              gboolean        locked  = FALSE;
-              guint32        *pixels;
-              guint32         row;
+              gchar       **layer_settings;
+              GimpLayer    *layer;
+              GeglBuffer   *buffer;
+              const gchar  *layer_name;
+              guint32       layer_width = 0;
+              guint32       layer_height = 0;
+              gfloat        x_pos   = 0;
+              gfloat        y_pos   = 0;
+              gfloat        opacity = 100;
+              gboolean      visible = TRUE;
+              gboolean      locked  = FALSE;
+              guint32      *pixels;
+              guint32       row;
 
               layer_settings = g_strsplit (alias_sublayer_info, ", ", 10);
 
