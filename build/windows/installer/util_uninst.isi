@@ -298,7 +298,7 @@ begin
 				gimp_directory := ExpandConstant('{userappdata}\GIMP\{#GIMP_APP_VERSION}');
 			end;
 			if DirExists(gimp_directory + '\') then begin
-				if SuppressibleMsgBox(CustomMessage('UninstallConfig'), mbConfirmation, MB_YESNO or MB_DEFBUTTON2, IDNO) = IDYES then begin
+				if SuppressibleMsgBox(CustomMessage('UninstallConfig'), mbError, MB_YESNO or MB_DEFBUTTON2, IDNO) = IDYES then begin
 					DelTree(gimp_directory, True, True, True);
 				end;
 			end;
