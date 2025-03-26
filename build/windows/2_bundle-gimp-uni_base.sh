@@ -92,6 +92,8 @@ echo "bin\gimp-$gimp_mutex_version.exe" > $GIMP_DISTRIB/gimp.cmd
 bundle "$GIMP_PREFIX" etc/gimp
 ### Needed for fontconfig
 bundle "$MSYSTEM_PREFIX" etc/fonts
+#### Avoid other programs breaking the cache. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/1366
+sed -i "s|LOCAL_APPDATA_FONTCONFIG_CACHE|~/AppData/Local/GIMP/$GIMP_APP_VERSION/fontconfig/cache|" "$GIMP_DISTRIB/etc/fonts/fonts.conf"
 
 
 ## Headers (for use of gimptool).
