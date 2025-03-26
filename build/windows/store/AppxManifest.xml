@@ -43,7 +43,7 @@
         <uap3:Extension Category="windows.fileTypeAssociation">
           <uap3:FileTypeAssociation Name="xcf">
             <uap:DisplayName>eXperimental Computing Facility file</uap:DisplayName>
-            <uap:Logo>Assets\fileicon.png</uap:Logo>
+            <uap:Logo>Assets\fileicon-xcf.png</uap:Logo>
             <uap:SupportedFileTypes>
               <uap:FileType>.xcf</uap:FileType>
             </uap:SupportedFileTypes>
