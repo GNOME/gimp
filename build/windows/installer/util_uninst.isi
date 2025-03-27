@@ -275,6 +275,78 @@ end;
 
 #define API_MAJOR=Copy(GIMP_PKGCONFIG_VERSION,1,Pos(".",GIMP_PKGCONFIG_VERSION)-1)
 
+;Taken from https://github.com/GrayWorldFinex/InnoSetupScripts/blob/main/Src%20Code/cdx-gridberd.iss
+Procedure MoveFile(SourceFile, DestFile: {#defined UNICODE ? "Ansi" : ""}String);
+  Begin
+   FileCopy(SourceFile, DestFile, False);
+  End;
+
+Function ProcessFiles(S: {#defined UNICODE ? "Ansi" : ""}String): array of {#defined UNICODE ? "Ansi" : ""}String;
+  var
+   i, k: Integer;
+  Begin
+   repeat
+    i := Pos(',', S);
+    k := GetArrayLength(Result);
+    SetArrayLength(Result, k + 1);
+    If (i > 0) then begin
+     Result[k] := Copy(S, 1, i - 1);
+     Delete(S, 1, i); end
+    else begin
+     Result[k] := S;
+     SetLength(S, 0);
+    end;
+   until (Length(S) = 0);
+  End;
+
+Procedure CopyFiles(SourceDir, DestDir, ExcludeFiles: {#defined UNICODE ? "Ansi" : ""}String);
+  var
+   FSR, DSR: TFindRec;
+   FindResult, Exclude: Boolean;
+   SourceFile, DestFile:{#defined UNICODE ? "Ansi" : ""}String;
+   i, k: Integer;
+   SS: Array of {#defined UNICODE ? "Ansi" : ""}String;
+  Begin
+   SetArrayLength(SS, 0);
+   SS := ProcessFiles(ExcludeFiles);
+   k := GetArrayLength(SS);
+   If not DirExists(DestDir) Then Begin
+    CreateDir(DestDir);
+   End;
+   FindResult := FindFirst(AddBackslash(SourceDir) + '*.*', FSR);
+   Try
+    While FindResult Do Begin
+     If FSR.Attributes and FILE_ATTRIBUTE_DIRECTORY = 0 Then Begin
+      Exclude := False;
+      For i := 0 To k - 1 Do Begin
+       If AnsiLowercase(SS[i]) = AnsiLowercase(FSR.Name) Then Begin
+        Exclude := True;
+        Break;
+       End;
+      End;
+      If not Exclude Then Begin
+       SourceFile := AddBackslash(SourceDir) + FSR.Name;
+       DestFile := AddBackslash(DestDir) + FSR.Name;
+       MoveFile(SourceFile, DestFile);
+      End;
+     End;
+     FindResult := FindNext(FSR);
+    End;
+    FindResult := FindFirst(AddBackslash(SourceDir) + '*.*', DSR);
+    While FindResult Do Begin
+     If ((DSR.Attributes and FILE_ATTRIBUTE_DIRECTORY) = FILE_ATTRIBUTE_DIRECTORY) and not ((DSR.Name = '.') or (DSR.Name = '..')) Then Begin
+      CopyFiles(AddBackslash(SourceDir) + DSR.Name, AddBackslash(DestDir) + DSR.Name, ExcludeFiles);
+     End;
+     FindResult := FindNext(DSR);
+    End;
+   Finally
+    FindClose(FSR);
+    FindClose(DSR);
+   End;
+  End;
+
+function Time(ATimerPtr: integer): integer; external '_time32@ucrtbase.dll cdecl';
+
 procedure CurUninstallStepChanged(CurStep: TUninstallStep);
 var
 	gimp_directory: String;
@@ -299,6 +371,7 @@ begin
 			end;
 			if DirExists(gimp_directory + '\') then begin
 				if SuppressibleMsgBox(CustomMessage('UninstallConfig'), mbError, MB_YESNO or MB_DEFBUTTON2, IDNO) = IDYES then begin
+					CopyFiles(gimp_directory, ExpandConstant('{userdesktop}\gimp_{#GIMP_APP_VERSION}_backup_' + Format('%d', [Time(0)])), '');
 					DelTree(gimp_directory, True, True, True);
 				end;
 			end;
