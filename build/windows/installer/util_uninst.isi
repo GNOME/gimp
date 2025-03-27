@@ -275,7 +275,7 @@ end;
 
 #define API_MAJOR=Copy(GIMP_PKGCONFIG_VERSION,1,Pos(".",GIMP_PKGCONFIG_VERSION)-1)
 
-;Taken from https://github.com/GrayWorldFinex/InnoSetupScripts/blob/main/Src%20Code/cdx-gridberd.iss
+//Taken from https://github.com/GrayWorldFinex/InnoSetupScripts/blob/main/Src%20Code/cdx-gridberd.iss
 Procedure MoveFile(SourceFile, DestFile: {#defined UNICODE ? "Ansi" : ""}String);
   Begin
    FileCopy(SourceFile, DestFile, False);
