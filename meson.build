@@ -431,8 +431,6 @@ conf.set('G_DISABLE_DEPRECATED', glib.version().version_compare('>=2.57'))
 gobject           = dependency('gobject-2.0',        version: '>='+glib_minver)
 gmodule           = dependency('gmodule-no-export-2.0')
 
-libportal_minver  = '0.8.0'
-libportal         = dependency('libportal',          version: '>='+libportal_minver)
 gtk3_minver       = '3.24.0'
 gtk3              = dependency('gtk+-3.0',           version: '>='+gtk3_minver)
 harfbuzz_minver   = '2.8.2'
@@ -484,6 +482,11 @@ if platform_osx
   endif
 else
   pango = no_dep
+endif
+
+if platform_linux
+  libportal_minver = '0.8.0'
+  libportal        = dependency('libportal', version: '>='+libportal_minver)
 endif
 
 if not pango.found()

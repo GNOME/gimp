@@ -21,8 +21,11 @@
 
 #include <gegl.h>
 #include <gtk/gtk.h>
+
+#ifdef __linux__
 #include <libportal/portal.h>
 #include <libportal/settings.h>
+#endif
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
@@ -58,11 +61,13 @@ static void   themes_theme_change_notify               (GimpGuiConfig          *
 static void   themes_theme_paths_notify                (GimpExtensionManager   *manager,
                                                         GParamSpec             *pspec,
                                                         Gimp                   *gimp);
+#ifdef __linux__
 static void   themes_system_color_scheme_change_notify (XdpSettings *settings,
                                                         const gchar *namespace,
                                                         const gchar *key,
                                                         GVariant    *value,
                                                         Gimp        *gimp);
+#endif
 
 
 /*  private variables  */
@@ -77,19 +82,22 @@ void
 themes_init (Gimp *gimp)
 {
   GimpGuiConfig *config;
-  XdpSettings   *settings;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   config = GIMP_GUI_CONFIG (gimp->config);
 
+#ifdef __linux__
   if (gimp->portal)
     {
+      XdpSettings *settings;
+
       settings = xdp_portal_get_settings (gimp->portal);
       g_signal_connect (settings, "changed",
                         G_CALLBACK (themes_system_color_scheme_change_notify),
                         gimp);
     }
+#endif
 
   /* Check for theme extensions. */
   themes_theme_paths_notify (gimp->extension_manager, NULL, gimp);
@@ -254,7 +262,6 @@ static void
 themes_apply_theme (Gimp          *gimp,
                     GimpGuiConfig *config)
 {
-  XdpSettings   *settings;
   GFile         *theme_css;
   GOutputStream *output;
   GError        *error = NULL;
@@ -264,8 +271,11 @@ themes_apply_theme (Gimp          *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_GUI_CONFIG (config));
 
+#ifdef __linux__
   if (gimp->portal && config->theme_scheme == GIMP_THEME_SYSTEM)
     {
+      XdpSettings   *settings;
+
       settings = xdp_portal_get_settings (gimp->portal);
       color_scheme = xdp_settings_read_uint (settings,
                                              "org.freedesktop.appearance",
@@ -286,6 +296,7 @@ themes_apply_theme (Gimp          *gimp,
         }
     }
   else
+#endif
     {
       prefer_dark_theme = (config->theme_scheme == GIMP_THEME_DARK ||
                            config->theme_scheme == GIMP_THEME_GRAY);
@@ -657,6 +668,7 @@ themes_theme_change_notify (GimpGuiConfig *config,
 #endif
 }
 
+#ifdef __linux__
 static void
 themes_system_color_scheme_change_notify (XdpSettings *settings,
                                           const gchar *namespace,
@@ -668,6 +680,7 @@ themes_system_color_scheme_change_notify (XdpSettings *settings,
 
   themes_theme_change_notify (GIMP_GUI_CONFIG (gimp->config), NULL, gimp);
 }
+#endif
 
 static void
 themes_theme_paths_notify (GimpExtensionManager *manager,

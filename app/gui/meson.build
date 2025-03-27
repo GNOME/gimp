@@ -25,13 +25,15 @@ libappgui_sources = [
 # Workaround for generated header included in other directories.
 configInclude = include_directories('.')
 
+libappgui_dependencies = [cairo, gegl, gdk_pixbuf, gio_specific, gtk3]
+if platform_linux
+  libappgui_dependencies += libportal
+endif
 
 libappgui = static_library('appgui',
   libappgui_sources,
   include_directories: [ rootInclude, rootAppInclude, ],
   c_args: '-DG_LOG_DOMAIN="Gimp-GUI"',
-  dependencies: [
-    cairo, gegl, gdk_pixbuf, gio_specific, gtk3, libportal
-  ],
+  dependencies: libappgui_dependencies,
   install: false,
 )

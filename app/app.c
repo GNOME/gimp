@@ -30,7 +30,10 @@
 #include <unistd.h>
 #endif
 
+#ifdef __linux__
 #include <libportal/portal.h>
+#endif
+
 #include <glib/gstdio.h>
 #include <gio/gio.h>
 #include <gegl.h>
@@ -203,13 +206,15 @@ app_run (const gchar         *full_prog_name,
          const gchar         *backtrace_file)
 {
   Gimp               *gimp           = NULL;
-  XdpPortal          *portal         = NULL;
   GApplication       *app            = NULL;
   GFile              *default_folder = NULL;
   GFile              *gimpdir        = NULL;
   const gchar        *abort_message  = NULL;
-  GError             *error          = NULL;
   gint                retval         = EXIT_SUCCESS;
+#ifdef __linux__
+  XdpPortal          *portal         = NULL;
+  GError             *error          = NULL;
+#endif
 
   if (filenames && filenames[0] && ! filenames[1] &&
       g_file_test (filenames[0], G_FILE_TEST_IS_DIR))
@@ -253,6 +258,8 @@ app_run (const gchar         *full_prog_name,
 
 #ifndef GIMP_CONSOLE_COMPILATION
   app = gimp_app_new (gimp, no_splash, quit, as_new, filenames, batch_interpreter, batch_commands);
+
+#ifdef __linux__
   portal = xdp_portal_initable_new (&error);
 
   if (error)
@@ -260,12 +267,16 @@ app_run (const gchar         *full_prog_name,
       g_printerr ("Error when initializing Xdp.Portal: %s\n", error->message);
       g_clear_error (&error);
     }
+  else
+    {
+      gimp->portal = portal;
+    }
+#endif /* #ifdef __linux__ */
 #else
   app = gimp_console_app_new (gimp, quit, as_new, filenames, batch_interpreter, batch_commands);
-#endif
+#endif /* #ifndef GIMP_CONSOLE_COMPILATION */
 
   gimp->app = app;
-  gimp->portal = portal;
 
   gimp_cpu_accel_set_use (use_cpu_accel);
 
