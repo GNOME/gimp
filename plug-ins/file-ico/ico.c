@@ -310,6 +310,14 @@ ico_create_procedure (GimpPlugIn  *plug_in,
                                           "image/x-ico");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "ico");
+
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_RGB     |
+                                              GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                                              GIMP_EXPORT_CAN_HANDLE_ALPHA   |
+                                              GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                              GIMP_EXPORT_CAN_HANDLE_LAYERS,
+                                              NULL, NULL, NULL);
     }
   else if (! strcmp (name, EXPORT_CUR_PROC))
     {
@@ -339,6 +347,14 @@ ico_create_procedure (GimpPlugIn  *plug_in,
                                           "image/vnd.microsoft.icon");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "cur");
+
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_RGB     |
+                                              GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                                              GIMP_EXPORT_CAN_HANDLE_ALPHA   |
+                                              GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                              GIMP_EXPORT_CAN_HANDLE_LAYERS,
+                                              NULL, NULL, NULL);
 
       gimp_procedure_add_int32_array_argument (procedure, "hot-spot-x",
                                                "Hot spot X",
@@ -377,6 +393,14 @@ ico_create_procedure (GimpPlugIn  *plug_in,
                                           "application/x-navi-animation");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "ani");
+
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_RGB     |
+                                              GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                                              GIMP_EXPORT_CAN_HANDLE_ALPHA   |
+                                              GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                              GIMP_EXPORT_CAN_HANDLE_LAYERS,
+                                              NULL, NULL, NULL);
 
       gimp_procedure_add_string_argument (procedure, "cursor-name",
                                           "Cursor Name",
@@ -562,11 +586,16 @@ ico_export (GimpProcedure        *procedure,
             gpointer              run_data)
 {
   GimpPDBStatusType  status;
-  GError            *error = NULL;
+  GimpExportReturn   export = GIMP_EXPORT_IGNORE;
+  GError            *error  = NULL;
 
   gegl_init (NULL, NULL);
 
+  export = gimp_export_options_get_image (options, &image);
   status = ico_export_image (file, image, procedure, config, run_mode, &error);
+
+  if (export == GIMP_EXPORT_EXPORT)
+    gimp_image_delete (image);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }
@@ -582,6 +611,7 @@ cur_export (GimpProcedure        *procedure,
             gpointer              run_data)
 {
   GimpPDBStatusType  status;
+  GimpExportReturn   export       = GIMP_EXPORT_IGNORE;
   GError            *error        = NULL;
   GimpArray         *x_array      = NULL;
   GimpArray         *y_array      = NULL;
@@ -602,6 +632,7 @@ cur_export (GimpProcedure        *procedure,
   hot_spot_x = gimp_int32_array_get_values (x_array, &n_hot_spot_x);
   hot_spot_y = gimp_int32_array_get_values (y_array, &n_hot_spot_y);
 
+  export = gimp_export_options_get_image (options, &image);
   status = cur_export_image (file, image, procedure, config, run_mode,
                              &n_hot_spot_x, hot_spot_x, &new_hot_spot_x,
                              &n_hot_spot_y, hot_spot_y, &new_hot_spot_y,
@@ -619,6 +650,9 @@ cur_export (GimpProcedure        *procedure,
       g_free (new_hot_spot_y);
     }
 
+  if (export == GIMP_EXPORT_EXPORT)
+    gimp_image_delete (image);
+
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 
@@ -633,6 +667,7 @@ ani_export (GimpProcedure        *procedure,
             gpointer              run_data)
 {
   GimpPDBStatusType  status;
+  GimpExportReturn   export         = GIMP_EXPORT_IGNORE;
   GError            *error          = NULL;
   gchar             *inam           = NULL;
   gchar             *iart           = NULL;
@@ -666,6 +701,7 @@ ani_export (GimpProcedure        *procedure,
   hot_spot_x = gimp_int32_array_get_values (x_array, &n_hot_spot_x);
   hot_spot_y = gimp_int32_array_get_values (y_array, &n_hot_spot_y);
 
+  export = gimp_export_options_get_image (options, &image);
   status = ani_export_image (file, image, procedure, config, run_mode,
                              &n_hot_spot_x, hot_spot_x, &new_hot_spot_x,
                              &n_hot_spot_y, hot_spot_y, &new_hot_spot_y,
@@ -691,6 +727,9 @@ ani_export (GimpProcedure        *procedure,
       g_free (ani_info.iart);
       memset (&ani_info, 0, sizeof (AniSaveInfo));
     }
+
+  if (export == GIMP_EXPORT_EXPORT)
+    gimp_image_delete (image);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }
