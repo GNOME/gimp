@@ -389,15 +389,15 @@ done
 #cd ..
 
 ## Debug symbols
-if [ "$GITLAB_CI" ]; then
-  export DEBUGINFOD_URLS="https://debuginfod.debian.net"
-fi
-bin_array=($(find "$USR_DIR/bin" "$USR_DIR/$LIB_DIR" "$(dirname $APP_DIR/$LD_LINUX)" ! -iname "*.dumb*" -type f -exec head -c 4 {} \; -exec echo " {}" \;  | grep ^.ELF))
-for bin in "${bin_array[@]}"; do
-  if [[ ! "$bin" =~ 'ELF' ]] && [[ ! "$bin" =~ '.debug' ]]; then
-    grep -a -q '.gnu_debuglink' $bin && echo "(INFO): bundling $bin debug symbols to $(dirname $bin)" && cp -f $(debuginfod-find debuginfo $bin) "$(dirname $bin)/$(readelf --string-dump=.gnu_debuglink $bin | sed -n '/]/{s/.* //;p;q}')" || $true
-  fi
-done
+#if [ "$GITLAB_CI" ]; then
+#  export DEBUGINFOD_URLS="https://debuginfod.debian.net"
+#fi
+#bin_array=($(find "$USR_DIR/bin" "$USR_DIR/$LIB_DIR" "$(dirname $APP_DIR/$LD_LINUX)" ! -iname "*.dumb*" -type f -exec head -c 4 {} \; -exec echo " {}" \;  | grep ^.ELF))
+#for bin in "${bin_array[@]}"; do
+#  if [[ ! "$bin" =~ 'ELF' ]] && [[ ! "$bin" =~ '.debug' ]]; then
+#    grep -a -q '.gnu_debuglink' $bin && echo "(INFO): bundling $bin debug symbols to $(dirname $bin)" && cp -f $(debuginfod-find debuginfo $bin) "$(dirname $bin)/$(readelf --string-dump=.gnu_debuglink $bin | sed -n '/]/{s/.* //;p;q}')" || $true
+#  fi
+#done
 
 ## Files unnecessarily created or bundled by go-appimagetool
 mv build/linux/appimage/AppRun $APP_DIR
