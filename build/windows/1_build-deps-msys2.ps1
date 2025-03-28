@@ -87,7 +87,7 @@ function self_build ([string]$dep, [string]$option1, [string]$option2)
     ## Configure and/or build
     if (-not (Test-Path _build-$MSYSTEM_PREFIX\build.ninja -Type Leaf))
       {
-        meson setup _build-$MSYSTEM_PREFIX -Dprefix="$GIMP_PREFIX" $option1 $option2
+        meson setup _build-$MSYSTEM_PREFIX -Dprefix="$GIMP_PREFIX" $PKGCONF_RELOCATABLE_OPTION $option1 $option2
       }
     Set-Location _build-$MSYSTEM_PREFIX
     ninja

@@ -258,6 +258,10 @@ Name: debug32; Description: "{cm:ComponentsDebug}"; Types: full custom; Flags: d
 Name: debug64; Description: "{cm:ComponentsDebug}"; Types: full custom; Flags: disablenouninstallwarning; Check: Check3264('x64')
 Name: debugARM64; Description: "{cm:ComponentsDebug}"; Types: full custom; Flags: disablenouninstallwarning; Check: Check3264('arm64')
 #endif
+;Development files
+Name: dev32; Description: "{cm:ComponentsDev}"; Types: full custom; Flags: disablenouninstallwarning; Check: Check3264('32')
+Name: dev64; Description: "{cm:ComponentsDev}"; Types: full custom; Flags: disablenouninstallwarning; Check: Check3264('x64')
+Name: devARM64; Description: "{cm:ComponentsDev}"; Types: full custom; Flags: disablenouninstallwarning; Check: Check3264('arm64')
 ;PostScript support
 Name: gs32; Description: "{cm:ComponentsGhostscript}"; Types: full custom; Check: Check3264('32')
 Name: gs64; Description: "{cm:ComponentsGhostscript}"; Types: full custom; Check: Check3264('x64')
@@ -318,7 +322,6 @@ Source: "{#GIMP_DIR32}\share\icons\hicolor\*"; DestDir: "{app}\share\icons\hicol
 Source: "{#GIMP_DIR32}\share\metainfo\*"; DestDir: "{app}\share\metainfo"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
 #define DEPS_ARCHS="deps32 or deps64 or depsARM64"
 Source: "{#DEPS_DIR32}\etc\*"; DestDir: "{app}\etc"; Excludes: "gimp"; Components: {#DEPS_ARCHS}; Flags: {#COMMON_FLAGS}
-Source: "{#DEPS_DIR32}\include\*"; DestDir: "{app}\include"; Excludes: "gimp*"; Components: {#DEPS_ARCHS}; Flags: {#COMMON_FLAGS}
 Source: "{#DEPS_DIR32}\share\*"; DestDir: "{app}\share"; Excludes: "gimp,icons\hicolor,metainfo,locale\*,mypaint-data"; Components: {#DEPS_ARCHS}; Flags: {#COMMON_FLAGS} createallsubdirs
 
 ;Optional arch-neutral files (full install)
@@ -403,12 +406,15 @@ Type: files; Name: "{autodesktop}\{reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVer
 ;remove old babl and gegl plugins
 Type: filesandordirs; Name: "{app}\lib\babl-0.1"
 Type: filesandordirs; Name: "{app}\lib\gegl-0.4"
-;This was bunbled in RC1 but not needed since the "Debug" menu is hidden in stable releases
+;This was bunbled in 3.0 RC1 but not needed since the "Debug" menu is hidden in stable releases
 #if (!Defined(GIMP_UNSTABLE) || GIMP_UNSTABLE=="")
 	Type: files; Name: "{app}\bin\dot.exe"
 #endif
-;No need to all these python binaries shipped in RC1
+;No need to all these python binaries shipped in 3.0 RC1
 Type: files; Name: "{app}\bin\python3*.exe"
+;Uneeded shipped headers in 3.0 RC3 (we now ship only babl, gegl and gimp)
+Type: filesandordirs; Name: "{app}\include\exiv2"
+Type: filesandordirs; Name: "{app}\include\gexiv2"
 
 [UninstallDelete]
 Type: files; Name: "{app}\uninst\uninst.inf"
@@ -958,7 +964,7 @@ var i,j: Integer;
 begin
 	DebugMsg('ComponentsListOnClick','');
 
-	Components := ['Gimp','Deps','Debug', 'Ghostscript','Lua','Python','Translations','MyPaint','Gimp32'];
+	Components := ['Gimp','Deps','Debug','Dev','Ghostscript','Lua','Python','Translations','MyPaint','Gimp32'];
 	ComponentDesc := '';
 
 	for i := 0 to TNewCheckListBox(pSender).Items.Count - 1 do

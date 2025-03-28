@@ -105,6 +105,14 @@
       <value>Include information to help with debugging GIMP</value>
     </config>
     <!-- Components -->
+    <config name="ComponentsDev">
+      <value>Resource development files</value>
+    </config>
+    <!-- Components -->
+    <config name="ComponentsDevDescription">
+      <value>Include some files to help with building GEGL filters and GIMP plug-ins in MSYS2</value>
+    </config>
+    <!-- Components -->
     <config name="ComponentsTranslations">
       <value>Translations</value>
     </config>
