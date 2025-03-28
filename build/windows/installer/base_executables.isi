@@ -30,12 +30,16 @@ Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\*.exe"; DestDir: "{app}\lib\gimp"; Excludes
 Source: "{#GIMP_DIR}\{#DIR}\lib\girepository-1.0\Gimp*.typelib"; DestDir: "{app}\lib\girepository-1.0"; Components: gimp{#COMPONENT}; Flags: {#COMMON_FLAGS}
 
 Source: "{#DEPS_DIR}\{#DDIR}\bin\*"; DestDir: "{app}\bin"; Excludes: "libgimp*.dll,gimp*.exe,*.debug,{#OPTIONAL_DLL},{#OPTIONAL_EXE}"; Components: deps{#COMPONENT}; Flags: {#COMMON_FLAGS}
-Source: "{#DEPS_DIR}\{#DDIR}\lib\*"; DestDir: "{app}\lib"; Excludes: "gimp,Gimp*.typelib,*.debug,lua,gluas.dll,python3.12"; Components: deps{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#DEPS_DIR}\{#DDIR}\lib\*"; DestDir: "{app}\lib"; Excludes: "gimp,Gimp*.typelib,*.debug,*.a,*.pc,lua,gluas.dll,python3.12"; Components: deps{#COMPONENT}; Flags: {#COMMON_FLAGS}
 
 ;Optional arch-specific components (full installation)
 #ifdef DEBUG_SYMBOLS
 Source: "{#GIMP_DIR}\{#DIR}\*.debug"; DestDir: "{app}"; Components: debug{#COMPONENT}; Flags: {#COMMON_FLAGS}
 #endif
+
+Source: "{#GIMP_DIR}\{#DIR}\*.h"; DestDir: "{app}"; Components: dev{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#GIMP_DIR}\{#DIR}\*.a"; DestDir: "{app}"; Components: dev{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#GIMP_DIR}\{#DIR}\*.pc"; DestDir: "{app}"; Components: dev{#COMPONENT}; Flags: {#COMMON_FLAGS}
 
 Source: "{#DEPS_DIR}\{#DDIR}\bin\libgs*.dll"; DestDir: "{app}\bin"; Components: gs{#COMPONENT}; Flags: {#COMMON_FLAGS}
 Source: "{#GIMP_DIR}\{#DIR}\lib\file-ps.exe"; DestDir: "{app}\lib"; Components: gs{#COMPONENT}; Flags: {#COMMON_FLAGS}

@@ -48,7 +48,7 @@ if (-not (Test-Path _build-$MSYSTEM_PREFIX\build.ninja -Type Leaf))
     #FIXME: There is no GJS for Windows. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/5891
     meson setup _build-$MSYSTEM_PREFIX -Dprefix="$GIMP_PREFIX" -Djavascript=disabled `
                                        -Ddirectx-sdk-dir="$MSYS_ROOT/$MSYSTEM_PREFIX" -Denable-default-bin=enabled `
-                                       -Dbuild-id='org.gimp.GIMP_official' $INSTALLER_OPTION $STORE_OPTION $NON_RELOCATABLE_OPTION
+                                       -Dbuild-id='org.gimp.GIMP_official' $INSTALLER_OPTION $STORE_OPTION $PKGCONF_RELOCATABLE_OPTION $NON_RELOCATABLE_OPTION
   }
 Set-Location _build-$MSYSTEM_PREFIX
 ninja

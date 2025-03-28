@@ -96,14 +96,6 @@ bundle "$MSYSTEM_PREFIX" etc/fonts
 sed -i "s|LOCAL_APPDATA_FONTCONFIG_CACHE|~/AppData/Local/GIMP/$GIMP_APP_VERSION/fontconfig/cache|" "$GIMP_DISTRIB/etc/fonts/fonts.conf"
 
 
-## Headers (for use of gimptool).
-bundle "$GIMP_PREFIX" include/gimp-*
-bundle "$GIMP_PREFIX" include/babl-*
-bundle "$GIMP_PREFIX" include/gegl-*
-bundle "$MSYSTEM_PREFIX" include/exiv*
-bundle "$MSYSTEM_PREFIX" include/gexiv*
-
-
 ## Library data.
 bundle "$GIMP_PREFIX" lib/gimp
 bundle "$GIMP_PREFIX" lib/babl-*
@@ -120,7 +112,6 @@ bundle "$MSYSTEM_PREFIX" lib/gdk-pixbuf-*/*/loaders/libpixbufloader-bmp.dll
 bundle "$MSYSTEM_PREFIX" lib/gdk-pixbuf-*/*/loaders/libpixbufloader-jpeg.dll
 bundle "$MSYSTEM_PREFIX" lib/gdk-pixbuf-*/*/loaders/libpixbufloader-gif.dll
 bundle "$MSYSTEM_PREFIX" lib/gdk-pixbuf-*/*/loaders/libpixbufloader-tiff.dll
-clean "$GIMP_DISTRIB" lib/*.a
 
 
 ## Resources.
@@ -230,3 +221,15 @@ done
 #if [ "$CI_JOB_NAME" != "gimp-win-x64-cross" ]; then
 #  cp -fr ${GIMP_PREFIX}/bin/*.pdb ${GIMP_DISTRIB}/bin/
 #fi
+
+## Development files (to build GEGL filters and GIMP plug-ins).
+clean "$GIMP_DISTRIB" lib/*.a
+bundle "$GIMP_PREFIX" include/gimp-*
+bundle "$GIMP_PREFIX" include/babl-*
+bundle "$GIMP_PREFIX" include/gegl-*
+bundle "$GIMP_PREFIX" lib/libgimp*.a
+bundle "$GIMP_PREFIX" lib/libbabl*.a
+bundle "$GIMP_PREFIX" lib/libgegl*.a
+bundle "$GIMP_PREFIX" lib/pkgconfig/gimp-*
+bundle "$GIMP_PREFIX" lib/pkgconfig/babl-*
+bundle "$GIMP_PREFIX" lib/pkgconfig/gegl-*

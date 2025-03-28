@@ -508,6 +508,8 @@ gimp-win-x64-cross:
   variables:
     CC: cc
     CXX: c++
+    #meson.build forces non-relocatable .pc. See: https://github.com/mesonbuild/meson/issues/14346
+    PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   before_script:
     - $MSYS_ROOT = 'C:/msys64'
     - $env:Path = "$MSYS_ROOT/$MSYSTEM_PREFIX/bin;$MSYS_ROOT/usr/bin;" + $env:Path
