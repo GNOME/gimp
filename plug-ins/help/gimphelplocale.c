@@ -238,6 +238,8 @@ gimp_help_locale_parse (GimpHelpLocale    *locale,
       locale_set_error (error,
                         _("Could not load data from '%s': %s"), file);
       g_object_unref (file);
+      if (progress)
+        _gimp_help_progress_finish (progress);
       return FALSE;
     }
 
@@ -254,6 +256,7 @@ gimp_help_locale_parse (GimpHelpLocale    *locale,
           locale_set_error (error,
                             _("Could not open '%s' for reading: %s"), file);
           g_object_unref (file);
+          _gimp_help_progress_finish (progress);
 
           return FALSE;
         }
@@ -270,6 +273,8 @@ gimp_help_locale_parse (GimpHelpLocale    *locale,
       locale_set_error (error,
                         _("Could not open '%s' for reading: %s"), file);
       g_object_unref (file);
+      if (progress)
+        _gimp_help_progress_finish (progress);
 
       return FALSE;
     }
