@@ -6,6 +6,31 @@
 This is the development branch of GIMP.
 
 
+Overview of Changes from GIMP 3.0.2 to GIMP 3.0.4
+=================================================
+
+Graphical User Interface:
+
+  - Highlight selected device in GimpDeviceStatus.
+
+Plug-ins:
+
+  - Restore GUI to Difference Clouds script. This had been lost since
+    GIMP 2.8!
+
+Build:
+
+  - Make Windows installer aware of Install, Reinstall and Update modes.
+  - Add Repair mode to Windows installer: in particular we can now fix
+    installations when the previous install directory cannot be
+    accessed anymore.
+  - The feature to delete the config folder on Windows uninstall will
+    now make a backup on the Desktop first (allowing people to delete it
+    themselves, move it, or even restore it later if needed).
+  - Our AppImage won't ship debug symbols anymore. Better debugging can
+    be set with: export DEBUGINFOD_URLS="https://debuginfod.debian.net"
+
+
 Overview of Changes from GIMP 3.0.0 to GIMP 3.0.2
 =================================================
 
