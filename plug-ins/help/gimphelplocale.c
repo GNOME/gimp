@@ -217,7 +217,7 @@ gimp_help_locale_parse (GimpHelpLocale    *locale,
       _gimp_help_progress_start (progress, cancellable,
                                  _("Loading index from '%s'"), name);
 
-      g_clear_object (&cancellable);
+      //g_clear_object (&cancellable);
       g_free (name);
     }
 
@@ -239,7 +239,10 @@ gimp_help_locale_parse (GimpHelpLocale    *locale,
                         _("Could not load data from '%s': %s"), file);
       g_object_unref (file);
       if (progress)
-        _gimp_help_progress_finish (progress);
+        {
+          _gimp_help_progress_finish (progress);
+          g_clear_object (&cancellable);
+        }
       return FALSE;
     }
 
@@ -251,12 +254,20 @@ gimp_help_locale_parse (GimpHelpLocale    *locale,
       GFileInfo *info = g_file_query_info (file,
                                            G_FILE_ATTRIBUTE_STANDARD_SIZE, 0,
                                            cancellable, error);
+      if (g_cancellable_is_cancelled (cancellable))
+        {
+          /* Temporary separation to see if we get cancelled here */
+          g_printerr ("Query operation was cancelled!\n");
+          g_object_unref (info);
+          info = NULL;
+        }
       if (! info)
         {
           locale_set_error (error,
                             _("Could not open '%s' for reading: %s"), file);
           g_object_unref (file);
           _gimp_help_progress_finish (progress);
+          g_clear_object (&cancellable);
 
           return FALSE;
         }
@@ -268,6 +279,13 @@ gimp_help_locale_parse (GimpHelpLocale    *locale,
 
   stream = g_file_read (file, cancellable, error);
 
+  if (g_cancellable_is_cancelled (cancellable))
+    {
+      /* Temporary separation to see if we get cancelled here */
+      g_printerr ("Read operation was cancelled!\n");
+      g_object_unref (stream);
+      stream = NULL;
+    }
   if (! stream)
     {
       locale_set_error (error,
@@ -275,6 +293,7 @@ gimp_help_locale_parse (GimpHelpLocale    *locale,
       g_object_unref (file);
       if (progress)
         _gimp_help_progress_finish (progress);
+      g_clear_object (&cancellable);
 
       return FALSE;
     }
@@ -306,6 +325,7 @@ gimp_help_locale_parse (GimpHelpLocale    *locale,
 #endif /* ! PLATFORM_OSX */
   if (progress)
     _gimp_help_progress_finish (progress);
+  g_clear_object (&cancellable);
 
   g_markup_parse_context_free (context);
 
