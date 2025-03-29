@@ -63,6 +63,7 @@
 #include "vectors/gimppath.h"
 
 #include "gimpaction.h"
+#include "gimpcellrendererbutton.h"
 #include "gimpcontainertreestore.h"
 #include "gimpcontainerview.h"
 #include "gimpdnd.h"
@@ -78,6 +79,7 @@
 
 
 #define COLUMN_EFFECTS_ACTIVE 3
+#define COLUMN_EFFECTS_REMOVE 4
 
 
 enum
@@ -109,11 +111,10 @@ struct _GimpItemTreeViewPrivate
   GtkWidget       *effects_options;
 
   GtkWidget       *effects_visible_button;
-  GtkWidget       *effects_edit_button;
+  //GtkWidget       *effects_edit_button;
   GtkWidget       *effects_raise_button;
   GtkWidget       *effects_lower_button;
   GtkWidget       *effects_merge_button;
-  GtkWidget       *effects_remove_button;
   GimpDrawable    *effects_drawable;
   GimpDrawableFilter
                   *effects_filter;
@@ -292,23 +293,28 @@ static void   gimp_item_tree_view_effects_visible_toggled
                                                      GimpContainerTreeView *view);
 
 static void   gimp_item_tree_view_effects_visible_all_toggled
-                                                    (GtkWidget         *widget,
-                                                     GimpItemTreeView  *view);
+                                                    (GtkWidget             *widget,
+                                                     GimpItemTreeView      *view);
 static void   gimp_item_tree_view_effects_edited_clicked
-                                                    (GtkWidget         *widget,
-                                                     GimpItemTreeView  *view);
+                                                    (GtkCellRendererToggle *toggle,
+                                                     gchar                 *path_str,
+                                                     GdkModifierType        state,
+                                                     GimpContainerTreeView *view);
 static void   gimp_item_tree_view_effects_raised_clicked
-                                                    (GtkWidget         *widget,
-                                                     GimpItemTreeView  *view);
+                                                    (GtkWidget             *widget,
+                                                     GimpItemTreeView      *view);
 static void   gimp_item_tree_view_effects_lowered_clicked
-                                                    (GtkWidget         *widget,
-                                                     GimpItemTreeView  *view);
+                                                    (GtkWidget             *widget,
+                                                     GimpItemTreeView      *view);
 static void   gimp_item_tree_view_effects_merged_clicked
-                                                    (GtkWidget         *widget,
-                                                     GimpItemTreeView  *view);
+                                                    (GtkWidget             *widget,
+                                                     GimpItemTreeView      *view);
 static void   gimp_item_tree_view_effects_removed_clicked
-                                                    (GtkWidget         *widget,
-                                                     GimpItemTreeView  *view);
+                                                    (GtkCellRendererToggle *toggle,
+                                                     gchar                 *path_str,
+                                                     GdkModifierType        state,
+                                                     GimpContainerTreeView *view);
+
 static gboolean gimp_item_tree_view_lock_button_release (GtkWidget        *widget,
                                                          GdkEvent         *event,
                                                          GimpItemTreeView *view);
@@ -793,7 +799,7 @@ gimp_item_tree_view_constructed (GObject *object)
       gtk_widget_set_visible (image, TRUE);
       gtk_widget_set_visible (item_view->priv->effects_visible_button, TRUE);
 
-      item_view->priv->effects_edit_button =
+      /*item_view->priv->effects_edit_button =
         gtk_button_new_from_icon_name (GIMP_ICON_EDIT,
                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
       gimp_help_set_help_data (item_view->priv->effects_edit_button,
@@ -804,7 +810,7 @@ gimp_item_tree_view_constructed (GObject *object)
                         item_view);
       gtk_box_pack_start (GTK_BOX (item_view->priv->effects_options),
                           item_view->priv->effects_edit_button, TRUE, TRUE, 0);
-      gtk_widget_set_visible (item_view->priv->effects_edit_button, TRUE);
+      gtk_widget_set_visible (item_view->priv->effects_edit_button, TRUE);*/
 
       item_view->priv->effects_raise_button =
         gtk_button_new_from_icon_name (GIMP_ICON_GO_UP,
@@ -844,19 +850,6 @@ gimp_item_tree_view_constructed (GObject *object)
       gtk_box_pack_start (GTK_BOX (item_view->priv->effects_options),
                           item_view->priv->effects_merge_button, TRUE, TRUE, 0);
       gtk_widget_set_visible (item_view->priv->effects_merge_button, TRUE);
-
-      item_view->priv->effects_remove_button =
-        gtk_button_new_from_icon_name (GIMP_ICON_EDIT_DELETE,
-                                       GTK_ICON_SIZE_SMALL_TOOLBAR);
-      gimp_help_set_help_data (item_view->priv->effects_remove_button,
-                               _("Remove the selected filter."),
-                               GIMP_HELP_LAYER_EFFECTS);
-      g_signal_connect (item_view->priv->effects_remove_button, "clicked",
-                        G_CALLBACK (gimp_item_tree_view_effects_removed_clicked),
-                        item_view);
-      gtk_box_pack_start (GTK_BOX (item_view->priv->effects_options),
-                          item_view->priv->effects_remove_button, TRUE, TRUE, 0);
-      gtk_widget_set_visible (item_view->priv->effects_remove_button, TRUE);
 
       label = gtk_label_new (NULL);
       text = g_strdup_printf ("<b>%s</b>",
@@ -2424,6 +2417,38 @@ gimp_item_tree_view_effects_clicked (GtkCellRendererToggle *toggle,
                                    G_CALLBACK (gimp_item_tree_view_effects_visible_toggled),
                                    filter_tree_view, 0);
 
+          /* Set up individual edit button */
+          column   = gtk_tree_view_column_new ();
+          renderer = gimp_cell_renderer_button_new ();
+          g_object_set (renderer,
+                        "icon-name", GIMP_ICON_EDIT,
+                        NULL);
+          gtk_tree_view_column_pack_end (column, renderer, FALSE);
+          gtk_tree_view_append_column (filter_tree_view->view,
+                                       column);
+          gimp_container_tree_view_add_toggle_cell (filter_tree_view,
+                                                    renderer);
+
+          g_signal_connect_object (renderer, "clicked",
+                                   G_CALLBACK (gimp_item_tree_view_effects_edited_clicked),
+                                   filter_tree_view, 0);
+
+          /* Set up individual remove button */
+          column   = gtk_tree_view_column_new ();
+          renderer = gimp_cell_renderer_button_new ();
+          g_object_set (renderer,
+                        "icon-name", GIMP_ICON_EDIT_DELETE,
+                        NULL);
+          gtk_tree_view_column_pack_end (column, renderer, FALSE);
+          gtk_tree_view_append_column (filter_tree_view->view,
+                                       column);
+          gimp_container_tree_view_add_toggle_cell (filter_tree_view,
+                                                    renderer);
+
+          g_signal_connect_object (renderer, "clicked",
+                                   G_CALLBACK (gimp_item_tree_view_effects_removed_clicked),
+                                   filter_tree_view, 0);
+
           /* Update filter visible icon */
           for (filter_list = GIMP_LIST (filters)->queue->tail; filter_list;
                filter_list = g_list_previous (filter_list))
@@ -2522,8 +2547,6 @@ gimp_item_tree_view_effects_filters_selected (GimpContainerView  *view,
           is_blocked_op = TRUE;
         }
 
-      gtk_widget_set_sensitive (item_view->priv->effects_remove_button,
-                                ! is_blocked_op);
       gtk_widget_set_sensitive (item_view->priv->effects_raise_button,
                                 (index != 0) && ! is_blocked_op);
       gtk_widget_set_sensitive (item_view->priv->effects_lower_button,
@@ -2539,8 +2562,8 @@ gimp_item_tree_view_effects_activate_filter (GtkWidget         *widget,
                                              gpointer           insert_data,
                                              GimpItemTreeView  *view)
 {
-  if (gtk_widget_get_sensitive (view->priv->effects_edit_button))
-    gimp_item_tree_view_effects_edited_clicked (widget, view);
+  //if (gtk_widget_get_sensitive (view->priv->effects_edit_button))
+    //gimp_item_tree_view_effects_edited_clicked (widget, view);
 }
 
 static void
@@ -2641,79 +2664,91 @@ gimp_item_tree_view_effects_visible_all_toggled (GtkWidget        *widget,
 }
 
 static void
-gimp_item_tree_view_effects_edited_clicked (GtkWidget        *widget,
-                                            GimpItemTreeView *view)
+gimp_item_tree_view_effects_edited_clicked (GtkCellRendererToggle *toggle,
+                                            gchar                 *path_str,
+                                            GdkModifierType        state,
+                                            GimpContainerTreeView *view)
 {
-  GimpImage    *image = view->priv->image;
-  GimpDrawable *drawable;
-  GeglNode     *op;
+  GtkTreePath *path;
+  GtkTreeIter  iter;
 
-  if (! view->priv->effects_filter ||
-      ! GIMP_IS_DRAWABLE_FILTER (view->priv->effects_filter))
-    return;
+  path = gtk_tree_path_new_from_string (path_str);
 
-  drawable = gimp_drawable_filter_get_drawable (view->priv->effects_filter);
-
-  if (drawable && GIMP_IS_DRAWABLE (drawable))
+  if (gtk_tree_model_get_iter (view->model, &iter, path))
     {
-      if (! gimp_item_is_visible (GIMP_ITEM (drawable)) &&
-          ! GIMP_GUI_CONFIG (image->gimp->config)->edit_non_visible)
-        {
-          gimp_message_literal (image->gimp, G_OBJECT (view),
-                                GIMP_MESSAGE_ERROR,
-                               _("A selected layer is not visible."));
-          return;
-        }
-      else if (gimp_item_get_lock_content (GIMP_ITEM (drawable)))
-        {
-          gimp_message_literal (view->priv->image->gimp, G_OBJECT (view),
-                                GIMP_MESSAGE_WARNING,
-                                _("A selected layer's pixels are locked."));
-          return;
-        }
+      GimpViewRenderer       *renderer;
+      GimpContainerTreeStore *store;
+      GimpDrawableFilter     *filter;
+      GimpDrawable           *drawable;
+      GimpImage              *image;
+      GeglNode               *op;
 
-      op = gimp_drawable_filter_get_operation (view->priv->effects_filter);
-      if (op)
+      store = GIMP_CONTAINER_TREE_STORE (view->model);
+      renderer = gimp_container_tree_store_get_renderer (store, &iter);
+      filter = GIMP_DRAWABLE_FILTER (renderer->viewable);
+      g_object_unref (renderer);
+
+      drawable = gimp_drawable_filter_get_drawable (filter);
+      image    = gimp_item_get_image (GIMP_ITEM (drawable));
+
+      if (drawable && GIMP_IS_DRAWABLE (drawable))
         {
-          GimpProcedure *procedure;
-          GVariant      *variant;
-          gchar         *operation;
-          gchar         *name;
-
-          g_object_get (view->priv->effects_filter,
-                        "name", &name,
-                        NULL);
-          g_object_get (op,
-                        "operation", &operation,
-                        NULL);
-
-          if (operation)
+          if (! gimp_item_is_visible (GIMP_ITEM (drawable)) &&
+              ! GIMP_GUI_CONFIG (image->gimp->config)->edit_non_visible)
             {
-              procedure = gimp_gegl_procedure_new (image->gimp,
-                                                   view->priv->effects_filter,
-                                                   GIMP_RUN_INTERACTIVE, NULL,
-                                                   operation,
-                                                   name,
-                                                   name,
-                                                   NULL, NULL, NULL);
-
-              variant = g_variant_new_uint64 (GPOINTER_TO_SIZE (procedure));
-              g_variant_take_ref (variant);
-              filters_run_procedure (image->gimp,
-                                     gimp_context_get_display (gimp_get_user_context (image->gimp)),
-                                     procedure, GIMP_RUN_INTERACTIVE);
-
-              g_variant_unref (variant);
-              g_object_unref (procedure);
-
-              /* Disable buttons until we're done editing */
-              gimp_item_tree_effects_set_sensitive (view, FALSE);
+              gimp_message_literal (image->gimp, G_OBJECT (view),
+                                    GIMP_MESSAGE_ERROR,
+                                   _("A selected layer is not visible."));
+              return;
+            }
+          else if (gimp_item_get_lock_content (GIMP_ITEM (drawable)))
+            {
+              gimp_message_literal (image->gimp, G_OBJECT (view),
+                                    GIMP_MESSAGE_WARNING,
+                                    _("A selected layer's pixels are locked."));
+              return;
             }
 
-          g_free (name);
-          g_free (operation);
-        }
-    }
+          op = gimp_drawable_filter_get_operation (filter);
+          if (op)
+            {
+              GimpProcedure *procedure;
+              GVariant      *variant;
+              gchar         *operation;
+              gchar         *name;
+
+              g_object_get (filter, "name", &name, NULL);
+              g_object_get (op, "operation", &operation, NULL);
+
+              if (operation)
+                {
+                  procedure = gimp_gegl_procedure_new (image->gimp,
+                                                       filter,
+                                                       GIMP_RUN_INTERACTIVE,
+                                                       NULL,
+                                                       operation,
+                                                       name,
+                                                       name,
+                                                       NULL, NULL, NULL);
+
+                  variant = g_variant_new_uint64 (GPOINTER_TO_SIZE (procedure));
+                  g_variant_take_ref (variant);
+                  filters_run_procedure (image->gimp,
+                                         gimp_context_get_display (gimp_get_user_context (image->gimp)),
+                                         procedure, GIMP_RUN_INTERACTIVE);
+
+                  g_variant_unref (variant);
+                  g_object_unref (procedure);
+
+                  /* Disable buttons until we're done editing */
+                  //gimp_item_tree_effects_set_sensitive (view, FALSE);
+                }
+
+              g_free (name);
+              g_free (operation);
+            }
+          }
+      }
 }
 
 static void
@@ -2755,12 +2790,12 @@ gimp_item_tree_view_effects_raised_clicked (GtkWidget        *widget,
           gimp_container_reorder (filters, GIMP_OBJECT (view->priv->effects_filter),
                                   index);
 
-          if (gtk_widget_get_sensitive (view->priv->effects_edit_button))
-            {
-              gtk_widget_set_sensitive (view->priv->effects_lower_button, TRUE);
-              if (index == 0)
-                gtk_widget_set_sensitive (view->priv->effects_raise_button, FALSE);
-            }
+          //if (gtk_widget_get_sensitive (view->priv->effects_edit_button))
+            //{
+              //gtk_widget_set_sensitive (view->priv->effects_lower_button, TRUE);
+              //if (index == 0)
+                //gtk_widget_set_sensitive (view->priv->effects_raise_button, FALSE);
+            //}
 
           /* Hack to make the effects visibly change */
           gimp_item_set_visible (GIMP_ITEM (drawable), FALSE, FALSE);
@@ -2815,12 +2850,12 @@ gimp_item_tree_view_effects_lowered_clicked (GtkWidget        *widget,
           gimp_container_reorder (filters, GIMP_OBJECT (view->priv->effects_filter),
                                   index);
 
-          if (gtk_widget_get_sensitive (view->priv->effects_edit_button))
-            {
-              gtk_widget_set_sensitive (view->priv->effects_raise_button, TRUE);
-              if (index == gimp_container_get_n_children (filters) - 1)
-                gtk_widget_set_sensitive (view->priv->effects_lower_button, FALSE);
-            }
+          //if (gtk_widget_get_sensitive (view->priv->effects_edit_button))
+            //{
+              //gtk_widget_set_sensitive (view->priv->effects_raise_button, TRUE);
+              //if (index == gimp_container_get_n_children (filters) - 1)
+                //gtk_widget_set_sensitive (view->priv->effects_lower_button, FALSE);
+            //}
 
           /* Hack to make the effects visibly change */
           gimp_item_set_visible (GIMP_ITEM (drawable), FALSE, FALSE);
@@ -2885,34 +2920,42 @@ gimp_item_tree_view_effects_merged_clicked (GtkWidget        *widget,
 }
 
 static void
-gimp_item_tree_view_effects_removed_clicked (GtkWidget        *widget,
-                                             GimpItemTreeView *view)
+gimp_item_tree_view_effects_removed_clicked (GtkCellRendererToggle *toggle,
+                                             gchar                 *path_str,
+                                             GdkModifierType        state,
+                                             GimpContainerTreeView *view)
 {
-  if (view->priv->effects_drawable)
+  GtkTreePath *path;
+  GtkTreeIter  iter;
+
+  path = gtk_tree_path_new_from_string (path_str);
+
+  if (gtk_tree_model_get_iter (view->model, &iter, path))
     {
-      GimpImage     *image   = view->priv->image;
-      GimpContainer *filters = NULL;
+      GimpImage              *image;
+      GimpViewRenderer       *renderer;
+      GimpContainerTreeStore *store;
+      GimpDrawableFilter     *filter;
+      GimpDrawable           *drawable;
 
-      filters = gimp_drawable_get_filters (view->priv->effects_drawable);
+      /* Update the filter state. */
+      store = GIMP_CONTAINER_TREE_STORE (view->model);
+      renderer = gimp_container_tree_store_get_renderer (store, &iter);
+      filter = GIMP_DRAWABLE_FILTER (renderer->viewable);
+      g_object_unref (renderer);
 
-      if (filters != NULL &&
-          gimp_container_have (filters, GIMP_OBJECT (view->priv->effects_filter)))
-        {
-          gimp_image_undo_push_filter_remove (image, _("Remove filter"),
-                                              view->priv->effects_drawable,
-                                              view->priv->effects_filter);
+      drawable = gimp_drawable_filter_get_drawable (filter);
+      image    = gimp_item_get_image (GIMP_ITEM (drawable));
 
-          gimp_drawable_filter_abort (view->priv->effects_filter);
+      gimp_image_undo_push_filter_remove (image, _("Remove filter"),
+                                          drawable, filter);
 
-          /* Toggle the popover off if all effects are deleted */
-          if (gimp_container_get_n_children (filters) == 0)
-            gtk_widget_set_visible (view->priv->effects_popover, FALSE);
-        }
+      gimp_drawable_filter_abort (filter);
 
       /* Hack to make the effects visibly change */
-      gimp_item_set_visible (GIMP_ITEM (view->priv->effects_drawable), FALSE, FALSE);
+      gimp_item_set_visible (GIMP_ITEM (drawable), FALSE, FALSE);
       gimp_image_flush (image);
-      gimp_item_set_visible (GIMP_ITEM (view->priv->effects_drawable), TRUE, FALSE);
+      gimp_item_set_visible (GIMP_ITEM (drawable), TRUE, FALSE);
       gimp_image_flush (image);
     }
 }
@@ -3021,6 +3064,10 @@ gimp_item_tree_view_filters_changed (GimpItem         *item,
             fs_disabled = TRUE;
         }
     }
+
+  /* Hide popover if we have no more filters */
+  if (n_filters == 0)
+    gtk_widget_set_visible (view->priv->effects_popover, FALSE);
 
   if (n_filters == 0 || fs_disabled)
     view->priv->effects_filter = NULL;
@@ -3370,12 +3417,11 @@ gimp_item_tree_effects_set_sensitive (GimpItemTreeView *view,
 
   gtk_widget_set_sensitive (view->priv->effects_box, is_sensitive);
   gtk_widget_set_sensitive (view->priv->effects_visible_button, is_sensitive);
-  gtk_widget_set_sensitive (view->priv->effects_edit_button, is_sensitive);
+  //gtk_widget_set_sensitive (view->priv->effects_edit_button, is_sensitive);
   gtk_widget_set_sensitive (view->priv->effects_raise_button, is_sensitive);
   gtk_widget_set_sensitive (view->priv->effects_lower_button, is_sensitive);
   gtk_widget_set_sensitive (view->priv->effects_merge_button,
                             (is_sensitive && ! is_group));
-  gtk_widget_set_sensitive (view->priv->effects_remove_button, is_sensitive);
 }
 
 /* Functions for the item search/selection feature. */
