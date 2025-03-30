@@ -129,7 +129,9 @@ NotRecognizedMessagesWarning=no
 
 
 ;3.2.1 INNO INTERNAL VERSIONING (used to rule how different versions are installed)
-;Inno installer identifier: https://github.com/jrsoftware/issrc/pull/461
+;GIMP process identifier for Inno
+AppMutex=GIMP-{#GIMP_MUTEX_VERSION}
+;Inno installer identifier
 SetupMutex=GIMP-{#GIMP_MUTEX_VERSION}
 ;Inno installer (default) install location
 DefaultDirName={autopf}\GIMP {#GIMP_MUTEX_VERSION}
