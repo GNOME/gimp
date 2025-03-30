@@ -204,8 +204,7 @@ check_mipmaps (gint savetype)
 static gboolean
 check_cubemap (GimpImage *image)
 {
-  GList         *layers;
-  GList         *list;
+  GimpLayer    **layers;
   gint           num_layers;
   gboolean       cubemap = TRUE;
   gint           i, j, k;
@@ -213,11 +212,14 @@ check_cubemap (GimpImage *image)
   gchar         *layer_name;
   GimpImageType  type;
 
-  layers = gimp_image_list_layers (image);
-  num_layers = g_list_length (layers);
+  layers     = gimp_image_get_layers (image);
+  num_layers = gimp_core_object_array_get_length ((GObject **) layers);
 
   if (num_layers < 6)
-    return FALSE;
+    {
+      g_free (layers);
+      return FALSE;
+    }
 
   /* Check for a valid cubemap with mipmap layers */
   if (num_layers > 6)
@@ -234,11 +236,9 @@ check_cubemap (GimpImage *image)
       w = gimp_image_get_width (image);
       h = gimp_image_get_height (image);
 
-      for (i = 0, list = layers;
-           i < num_layers;
-           ++i, list = g_list_next (list))
+      for (i = 0; i < num_layers; ++i)
         {
-          GimpDrawable *drawable = list->data;
+          GimpDrawable *drawable = GIMP_DRAWABLE (layers[i]);
 
           if ((gimp_drawable_get_width  (drawable) != w) ||
               (gimp_drawable_get_height (drawable) != h))
@@ -289,13 +289,9 @@ check_cubemap (GimpImage *image)
       for (i = 0; i < 6; ++i)
         cubemap_faces[i] = NULL;
 
-      for (i = 0, list = layers;
-           i < 6;
-           ++i, list = g_list_next (layers))
+      for (i = 0; i < num_layers; ++i)
         {
-          GimpLayer *layer = list->data;
-
-          layer_name = (gchar *) gimp_item_get_name (GIMP_ITEM (layer));
+          layer_name = (gchar *) gimp_item_get_name (GIMP_ITEM (layers[i]));
 
           for (j = 0; j < 6; ++j)
             {
@@ -305,7 +301,7 @@ check_cubemap (GimpImage *image)
                     {
                       if (cubemap_faces[j] == NULL)
                         {
-                          cubemap_faces[j] = layer;
+                          cubemap_faces[j] = layers[i];
                           break;
                         }
                     }
@@ -348,6 +344,7 @@ check_cubemap (GimpImage *image)
             }
         }
     }
+  g_free (layers);
 
   return cubemap;
 }
