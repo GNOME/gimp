@@ -429,7 +429,6 @@ welcome_dialog_create_welcome_page (Gimp      *gimp,
   widget = gtk_label_new (NULL);
   gtk_label_set_markup (GTK_LABEL (widget), markup);
   g_free (markup);
-  gtk_label_set_selectable (GTK_LABEL (widget), TRUE);
   gtk_label_set_justify (GTK_LABEL (widget), GTK_JUSTIFY_CENTER);
   gtk_label_set_line_wrap (GTK_LABEL (widget), FALSE);
   gtk_widget_set_margin_bottom (widget, 10);
