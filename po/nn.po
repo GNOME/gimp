@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-03-15 18:23+0000\n"
-"PO-Revision-Date: 2025-03-16 18:07+0100\n"
+"POT-Creation-Date: 2025-03-26 14:52+0000\n"
+"PO-Revision-Date: 2025-03-30 18:00+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -68,12 +68,31 @@ msgstr ""
 "Windows og OS X."
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:48
-msgid "Painting in GIMP"
-msgstr "Teikna i GIMP"
+msgid ""
+"Scene 4 cut 15 of \"ZeMarmot\" being edited in GIMP. Illustration by Aryeom "
+"(CC by-sa 4.0 International)"
+msgstr ""
+"Scene 4 utsnitt 15 av «ZeMarmot» redigert i GIMP. Illustrasjon av Aryeom (CC "
+"by-sa 4.0 International)"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:52
-msgid "Photo editing in GIMP"
-msgstr "Fotoredigering i GIMP"
+msgid ""
+"Gull on beach photograph being edited in GIMP. Photo by Iana (CC by-sa 4.0 "
+"International)"
+msgstr ""
+"Måke på strand er redigert i GIMP. Foto v Iana (CC by-sa 4.0 International)"
+
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:56
+msgid ""
+"Portrait of Sofiia being edited in GIMP. Photo by Sofia (CC by-sa 4.0 "
+"International)"
+msgstr ""
+"Portrett av Sofiia redigert i GIMP. Foto av Sofia (CC by-sa 4.0 "
+"International)"
+
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:60
+msgid "Scanned engraving being edited in GIMP. Artwork by Liam (CC0)"
+msgstr "Scanna gravering redigert i GIMP. Kunstverk av Liam (CC0)k"
 
 #: desktop/gimp.desktop.in.in:6
 msgid "Image Editor"
@@ -2515,7 +2534,7 @@ msgstr "Skriv inn ei beskriving av markøren"
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
 #: app/dialogs/welcome-dialog.c:1247 app/display/gimpdisplayshell-dnd.c:680
-#: app/widgets/gimplayertreeview.c:820 app/widgets/gimptoolbox.c:826
+#: app/widgets/gimplayertreeview.c:820 app/widgets/gimptoolbox.c:828
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -13356,7 +13375,7 @@ msgid "Palette"
 msgstr "Palett"
 
 #: app/core/gimpcontext.c:741 app/core/gimpcontext.c:742
-#: app/tools/gimptextoptions.c:796
+#: app/tools/gimptextoptions.c:799
 msgid "Font"
 msgstr "Skrifttype"
 
@@ -13386,7 +13405,7 @@ msgstr "kopier"
 msgid "%s copy"
 msgstr "Kopi av «%s»"
 
-#: app/core/gimpdatafactory.c:638 app/tools/gimptextoptions.c:777
+#: app/core/gimpdatafactory.c:638 app/tools/gimptextoptions.c:780
 #: app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
 msgstr "Lastar skrifttypar (dette kan ta litt tid)"
@@ -16926,7 +16945,7 @@ msgid "Use symbolic icons if available"
 msgstr "Bruk ikonsymbol om tilgjengelege"
 
 #: app/dialogs/preferences-dialog.c:2257 app/dialogs/preferences-dialog.c:2258
-#: app/widgets/gimptoolbox.c:523
+#: app/widgets/gimptoolbox.c:525
 msgid "Toolbox"
 msgstr "Verktøykassen"
 
@@ -18835,7 +18854,7 @@ msgstr "(tomt)"
 #: app/display/gimpdisplayshell-title.c:410
 #: app/display/gimpdisplayshell-title.c:419 app/widgets/gimpactiongroup.c:1205
 #: app/widgets/gimpbuffersourcebox.c:166 app/widgets/gimpbuffersourcebox.c:296
-#: app/widgets/gimpdeviceinfo.c:1147 app/widgets/gimpdeviceinfo.c:1172
+#: app/widgets/gimpdeviceinfo.c:1148 app/widgets/gimpdeviceinfo.c:1173
 msgid "(none)"
 msgstr "(ingen)"
 
@@ -18882,6 +18901,25 @@ msgstr "Profil for utskriftssimuleringa"
 #: app/display/gimpstatusbar.c:534
 msgid "_Soft-proofing Profile: "
 msgstr "_Profil for utskriftssimulering: "
+
+#: app/display/gimpstatusbar.c:543
+msgid "Perceptual"
+msgstr "Perseptuell"
+
+#: app/display/gimpstatusbar.c:544
+msgid "Relative Colorimetric"
+msgstr "Relativt kolorimetrisk"
+
+#: app/display/gimpstatusbar.c:545 app/operations/gimphuesaturationconfig.c:107
+#: app/operations/gimphuesaturationconfig.c:108
+#: app/operations/gimpoperationcolorize.c:106
+#: app/operations/gimpoperationcolorize.c:107
+msgid "Saturation"
+msgstr "Metning"
+
+#: app/display/gimpstatusbar.c:546
+msgid "Absolute Colorimetric"
+msgstr "Absolutt kolorimetrisk"
 
 #: app/display/gimpstatusbar.c:553
 msgid "_Rendering Intent: "
@@ -20142,13 +20180,6 @@ msgstr "Fekk ikkje skrive kurvefila: "
 msgid "Hue"
 msgstr "Kulør"
 
-#: app/operations/gimphuesaturationconfig.c:107
-#: app/operations/gimphuesaturationconfig.c:108
-#: app/operations/gimpoperationcolorize.c:106
-#: app/operations/gimpoperationcolorize.c:107
-msgid "Saturation"
-msgstr "Metning"
-
 #: app/operations/gimphuesaturationconfig.c:113
 #: app/operations/gimphuesaturationconfig.c:114
 #: app/operations/gimpoperationcolorize.c:112
@@ -20435,7 +20466,7 @@ msgid "No patterns available for use with this tool."
 msgstr "Ingen mønsterelement er tilgjengelege for bruk med dette verktøyet."
 
 #: app/paint/gimpcloneoptions.c:67 app/tools/gimpbucketfilloptions.c:217
-#: app/tools/gimpbucketfilloptions.c:768 app/tools/gimpcloneoptions-gui.c:246
+#: app/tools/gimpbucketfilloptions.c:773 app/tools/gimpcloneoptions-gui.c:246
 msgid "Source"
 msgstr "Kjelde"
 
@@ -22498,7 +22529,7 @@ msgstr "Oppdag strekteikning"
 msgid "(computing...)"
 msgstr "(reknar ut …)"
 
-#: app/tools/gimpbucketfilloptions.c:773
+#: app/tools/gimpbucketfilloptions.c:778
 msgid "Detect opacity rather than grayscale"
 msgstr "Oppdagar dekkevne i staden fro gråtoner"
 
@@ -23497,7 +23528,7 @@ msgid "Y:"
 msgstr "Y:"
 
 #. the color label
-#: app/tools/gimpgradienttool-editor.c:1345 app/tools/gimptextoptions.c:852
+#: app/tools/gimpgradienttool-editor.c:1345 app/tools/gimptextoptions.c:855
 msgid "Color:"
 msgstr "Farge:"
 
@@ -24352,7 +24383,7 @@ msgstr "Noverande"
 msgid "Fixed"
 msgstr "Fast"
 
-#: app/tools/gimprectangleoptions.c:1006 app/tools/gimptextoptions.c:810
+#: app/tools/gimprectangleoptions.c:1006 app/tools/gimptextoptions.c:813
 msgid "Size:"
 msgstr "Storleik:"
 
@@ -24728,31 +24759,31 @@ msgstr "Eining for omrissbreidda"
 msgid "Outline miter limit"
 msgstr "Gjæringsgrense for omriss"
 
-#: app/tools/gimptextoptions.c:841
+#: app/tools/gimptextoptions.c:844
 msgid "Hinting:"
 msgstr "Hinting:"
 
-#: app/tools/gimptextoptions.c:845
+#: app/tools/gimptextoptions.c:848
 msgid "Text Color"
 msgstr "Tekstfarge"
 
-#: app/tools/gimptextoptions.c:858
+#: app/tools/gimptextoptions.c:861
 msgid "Style:"
 msgstr "Stil:"
 
-#: app/tools/gimptextoptions.c:862
+#: app/tools/gimptextoptions.c:865
 msgid "Outline Options"
 msgstr "Innstillingar for omriss"
 
-#: app/tools/gimptextoptions.c:883
+#: app/tools/gimptextoptions.c:886
 msgid "Justify:"
 msgstr "Justering:"
 
-#: app/tools/gimptextoptions.c:913
+#: app/tools/gimptextoptions.c:916
 msgid "Box:"
 msgstr "Boks:"
 
-#: app/tools/gimptextoptions.c:953
+#: app/tools/gimptextoptions.c:956
 msgid "Language:"
 msgstr "Språk:"
 
@@ -26890,11 +26921,11 @@ msgstr "Trykk-kurve"
 msgid "Pad actions"
 msgstr "Felthandlingar"
 
-#: app/widgets/gimpdeviceinfo.c:1132 app/widgets/gimpdeviceinfo.c:1157
+#: app/widgets/gimpdeviceinfo.c:1133 app/widgets/gimpdeviceinfo.c:1158
 msgid "(Device not present)"
 msgstr "(Eininga er ikkje til stades)"
 
-#: app/widgets/gimpdeviceinfo.c:1140 app/widgets/gimpdeviceinfo.c:1165
+#: app/widgets/gimpdeviceinfo.c:1141 app/widgets/gimpdeviceinfo.c:1166
 msgid "(Virtual device)"
 msgstr "(Virtuell eining)"
 
@@ -26979,26 +27010,26 @@ msgstr "Stripp %d"
 msgid "Select Pad Event Action"
 msgstr "Vel hendingshandling for feltet"
 
-#: app/widgets/gimpdevicestatus.c:161
+#: app/widgets/gimpdevicestatus.c:164
 msgid "Save device status"
 msgstr "Lagra status for eininga"
 
-#: app/widgets/gimpdevicestatus.c:629
+#: app/widgets/gimpdevicestatus.c:632
 #, c-format
 msgid "Foreground: %d, %d, %d (in color space of \"%s\")"
 msgstr "Forgrunn: %d, %d, %d (i fargerommet til «%s»)"
 
-#: app/widgets/gimpdevicestatus.c:633
+#: app/widgets/gimpdevicestatus.c:636
 #, c-format
 msgid "Foreground: %d, %d, %d (in sRGB)"
 msgstr "Forgrunn: %d, %d, %d (i sRGB)"
 
-#: app/widgets/gimpdevicestatus.c:640
+#: app/widgets/gimpdevicestatus.c:643
 #, c-format
 msgid "Background: %d, %d, %d (in color space of \"%s\")"
 msgstr "Bakgrunn: %d, %d, %d (i fargerommet til «%s»)"
 
-#: app/widgets/gimpdevicestatus.c:644
+#: app/widgets/gimpdevicestatus.c:647
 #, c-format
 msgid "Background: %d, %d, %d (in sRGB)"
 msgstr "Bakgrunn: %d, %d, %d (i sRGB)"
@@ -29131,6 +29162,12 @@ msgstr "Meny for verktøyinnstillingane"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Angre angreloggen"
+
+#~ msgid "Painting in GIMP"
+#~ msgstr "Teikna i GIMP"
+
+#~ msgid "Photo editing in GIMP"
+#~ msgstr "Fotoredigering i GIMP"
 
 #~ msgid "Show _advanced color options"
 #~ msgstr "Vis _avanserte fargeinnstillingar"
