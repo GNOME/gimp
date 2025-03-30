@@ -103,6 +103,13 @@ endif
 # GIMP_IS_GIT can only be set during development of a RC.
 conf.set('GIMP_IS_RC_GIT', gimp_rc_git ? 1 : false)
 
+# Mutex version
+if gimp_unstable != false
+  conf.set_quoted('GIMP_MUTEX_VERSION', gimp_app_version)
+else
+  conf.set_quoted('GIMP_MUTEX_VERSION', gimp_app_version_major.to_string())
+endif
+
 versionconfig = configuration_data()
 versionconfig.set('GIMP_FULL_NAME',     full_name)
 versionconfig.set('GIMP_MAJOR_VERSION', gimp_app_version_major)

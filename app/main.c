@@ -595,6 +595,10 @@ main (int    argc,
   gimp_init_signal_handlers (&backtrace_file);
 
 #ifdef G_OS_WIN32
+  /* Make Inno installer aware of gimp process */
+  wchar_t *name = g_strdup_printf ("gimp-%s", GIMP_MUTEX_VERSION);
+  CreateMutex (NULL, FALSE, name);
+  
   /* Enable Anti-Aliasing*/
   g_setenv ("PANGOCAIRO_BACKEND", "fc", TRUE);
 
