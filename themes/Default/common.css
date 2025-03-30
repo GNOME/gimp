@@ -326,6 +326,7 @@ scale contents trough
 }
 scale contents trough highlight
 {
+  background-image: none;
   background-color: @scrollbar-slider-color;
   border-color:     @scrollbar-slider-color;
 }
@@ -333,6 +334,10 @@ scale contents trough highlight:disabled
 {
   background-color: transparent;
   border-color:     transparent;
+}
+scale slider {
+  min-height: 26px;
+  min-width:  22px;
 }
 
 scrollbar {
@@ -355,7 +360,12 @@ scrollbar slider {
 }
 
 scrolledwindow {
-  border-color: @edge-border-color;
+  border-color:        @edge-border-color;
+  border-image-source: none;
+}
+
+scrolledwindow viewport {
+  background-color: @bg-color;
 }
 
 /* Removes black border around scrolled windows */
@@ -367,6 +377,12 @@ scrolledwindow viewport grid, scrolledwindow viewport box {
 /* Defining background color for About Dialog credits box */
 .gimp-about-dialog box box stack scrolledwindow viewport grid {
   background-color: @extreme-bg-color;
+}
+
+/* Define background on items in Preferences header */
+GimpPrefsBox widget box label,
+GimpPrefsBox widget box image {
+  background-color: transparent;
 }
 
 GimpRuler {
@@ -573,13 +589,23 @@ checkbutton:checked label, radiobutton:checked label {
   font-weight: bold;
 }
 
+check {
+  background-clip: padding-box;
+  margin:          0px 4px;
+  min-width:       14px;
+  min-height:      14px;
+  padding:         0px;
+}
+
 /* Some plugins have radio buttons, e.g. Fractal Explorer */
 radio {
-  background-image: none;
   background-color: @extreme-bg-color;
-  border: 1px solid @stronger-border-color;
-  border-radius: 100%;
-  color: @fg-color;
+  background-image: none;
+  border:           1px solid @stronger-border-color;
+  border-radius:    100%;
+  color:            @fg-color;
+  min-width:        14px;
+  min-height:       14px;
 }
 
 /* Removes "blurred" effect from tooltip label */
