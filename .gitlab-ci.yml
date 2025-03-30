@@ -508,13 +508,12 @@ gimp-win-x64-cross:
   tags:
     - $RUNNER
   variables:
+    MSYS_ROOT: 'C:/msys64'
     CC: cc
     CXX: c++
     #meson.build forces non-relocatable .pc. See: https://github.com/mesonbuild/meson/issues/14346
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   before_script:
-    - $MSYS_ROOT = 'C:/msys64'
-    - $env:Path = "$MSYS_ROOT/$MSYSTEM_PREFIX/bin;$MSYS_ROOT/usr/bin;" + $env:Path
     # FIXME:'gimpenv' have buggy code about Windows paths. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/12284
     - $GIMP_PREFIX = "$PWD\_install-$MSYSTEM_PREFIX".Replace('\', '/')
   timeout: 60m
@@ -592,6 +591,7 @@ gimp-win-x86:
   script:
     - !reference [gimp-win, script]
     # We split 32-bit DWARF symbols here because LLVM-objcopy do NOT support them
+    - $env:Path = "$MSYS_ROOT/$MSYSTEM_PREFIX/bin;$MSYS_ROOT/usr/bin;" + $env:Path
     - bash build/windows/installer/3_dist-gimp-inno_sym.sh gimp-$MSYSTEM_PREFIX
   artifacts: !reference [gimp-win, artifacts]
 
