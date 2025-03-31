@@ -743,7 +743,7 @@ xcf_save_layer_props (XcfInfo    *info,
     }
 
   if (GIMP_IS_LINK_LAYER (layer))
-    xcf_check_error (xcf_save_prop (info, image, PROP_LINK_LAYER_DATA, error, layer));
+    xcf_check_error (xcf_save_prop (info, image, PROP_LINK_LAYER_DATA, error, layer), ;);
 
   if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
     {
@@ -1742,11 +1742,11 @@ xcf_save_prop (XcfInfo    *info,
 
         size = 4 + strlen (path) ? strlen (path) + 5 : 4;
 
-        xcf_write_prop_type_check_error (info, prop_type);
-        xcf_write_int32_check_error (info, &size, 1);
+        xcf_write_prop_type_check_error (info, prop_type, va_end (args));
+        xcf_write_int32_check_error (info, &size, 1, va_end (args));
 
-        xcf_write_int32_check_error (info, &flags, 1);
-        xcf_write_string_check_error (info, (gchar **) &path, 1);
+        xcf_write_int32_check_error (info, &flags, 1, va_end (args));
+        xcf_write_string_check_error (info, (gchar **) &path, 1, va_end (args));
       }
       break;
 

@@ -336,6 +336,7 @@ gimp_link_get_buffer (GimpLink      *link,
                                gimp_get_user_context (link->p->gimp),
                                progress,
                                link->p->file,
+                               link->p->width, link->p->height,
                                FALSE, NULL,
                                /* XXX We might want interactive opening
                                 * for a first opening (when done through
@@ -346,7 +347,13 @@ gimp_link_get_buffer (GimpLink      *link,
 
       if (image && status == GIMP_PDB_SUCCESS)
         {
-          gimp_projection_finish_draw (gimp_image_get_projection (image));
+          /* If we don't flush the projection first, the buffer may be empty.
+           * I do wonder if the flushing and updating of the link could
+           * not be multi-threaded with gimp_projection_flush() instead,
+           * then notifying the update through signals. For very heavy
+           * images, would it be a better UX? XXX
+           */
+          gimp_projection_flush_now (gimp_image_get_projection (image), TRUE);
           buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (image));
           g_object_ref (buffer);
         }
