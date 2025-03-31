@@ -301,14 +301,45 @@ gimp_link_layer_duplicate (GimpItem *item,
       GimpLinkLayer *layer     = GIMP_LINK_LAYER (item);
       GimpLinkLayer *new_layer = GIMP_LINK_LAYER (new_item);
 
-      gimp_config_sync (G_OBJECT (layer), G_OBJECT (new_layer), 0);
-
       if (layer->p->link)
         {
           GimpLink *link = gimp_link_duplicate (layer->p->link);
 
+          /* XXX Shouldn't we block rendering it, and just always copy
+           * the buffer? This should be faster.
+           */
           gimp_link_layer_set_link (new_layer, link, FALSE);
         }
+
+      gimp_config_sync (G_OBJECT (layer), G_OBJECT (new_layer), 0);
+
+      if (layer->p->modified)
+        {
+          GeglBuffer *buffer;
+          gint            width;
+          gint            height;
+
+          buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+          width  = gegl_buffer_get_width (buffer);
+          height = gegl_buffer_get_height (buffer);
+
+          if (width  != gimp_item_get_width  (GIMP_ITEM (new_layer)) ||
+              height != gimp_item_get_height (GIMP_ITEM (new_layer)))
+            {
+              GeglBuffer *new_buffer;
+
+              new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
+                                            gimp_drawable_get_format (GIMP_DRAWABLE (new_layer)));
+              gimp_drawable_set_buffer (GIMP_DRAWABLE (new_layer), FALSE, NULL, new_buffer);
+              g_object_unref (new_buffer);
+            }
+
+          gimp_gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE,
+                                 gimp_drawable_get_buffer (GIMP_DRAWABLE (new_layer)), NULL);
+        }
+
+      new_layer->p->modified    = layer->p->modified;
+      new_layer->p->scaled_only = layer->p->scaled_only;
     }
 
   return new_item;
