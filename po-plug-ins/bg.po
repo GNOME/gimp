@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-01-25 00:31+0000\n"
-"PO-Revision-Date: 2025-01-25 11:59+0100\n"
+"POT-Creation-Date: 2025-03-31 11:24+0000\n"
+"PO-Revision-Date: 2025-03-31 16:43+0300\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -88,8 +88,8 @@ msgstr "Примерна приставка на C"
 #: plug-ins/imagemap/imap_file.c:128 plug-ins/lighting/lighting-ui.c:738
 #: plug-ins/lighting/lighting-ui.c:882 plug-ins/metadata/metadata-editor.c:1185
 #: plug-ins/metadata/metadata-editor.c:1687
-#: plug-ins/metadata/metadata-editor.c:5566
-#: plug-ins/metadata/metadata-editor.c:5601
+#: plug-ins/metadata/metadata-editor.c:5568
+#: plug-ins/metadata/metadata-editor.c:5603
 msgid "_Cancel"
 msgstr "_Отказване"
 
@@ -605,7 +605,7 @@ msgstr "Щори"
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:728
 #: plug-ins/common/file-farbfeld.c:296 plug-ins/common/file-gegl.c:446
 #: plug-ins/common/file-gif-load.c:1147 plug-ins/common/file-iff.c:408
-#: plug-ins/common/file-jp2-load.c:1271 plug-ins/common/file-pcx.c:710
+#: plug-ins/common/file-jp2-load.c:1275 plug-ins/common/file-pcx.c:710
 #: plug-ins/common/file-pcx.c:718 plug-ins/common/file-pcx.c:726
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:921
 #: plug-ins/common/file-pnm.c:845 plug-ins/common/file-qoi.c:296
@@ -615,7 +615,7 @@ msgstr "Щори"
 #: plug-ins/common/smooth-palette.c:301 plug-ins/common/tile.c:390
 #: plug-ins/file-bmp/bmp-load.c:809 plug-ins/file-exr/file-exr.c:288
 #: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:673
-#: plug-ins/file-jpeg/jpeg-load.c:231
+#: plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1093
 #: plug-ins/file-psd/psd-load.c:2985 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1554
@@ -1237,9 +1237,9 @@ msgstr "Запазване на параметрите за CML"
 #: plug-ins/common/file-raw-data.c:1411 plug-ins/common/file-sunras.c:614
 #: plug-ins/common/file-tga.c:1225 plug-ins/common/file-xmc.c:1272
 #: plug-ins/common/sphere-designer.c:2205 plug-ins/file-bmp/bmp-export.c:336
-#: plug-ins/file-fli/fli-gimp.c:799 plug-ins/file-icns/file-icns-export.c:436
-#: plug-ins/file-ico/ico-export.c:1355 plug-ins/file-ico/ico-export.c:1577
-#: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2214
+#: plug-ins/file-fli/fli-gimp.c:799 plug-ins/file-icns/file-icns-export.c:444
+#: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1588
+#: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2222
 #: plug-ins/file-tiff/file-tiff-export.c:1087
 #: plug-ins/file-tiff/file-tiff-export.c:1176 plug-ins/flame/flame.c:585
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1414
@@ -2010,11 +2010,11 @@ msgstr "Не работи върху празни селекции."
 #: plug-ins/file-bmp/bmp-load.c:276 plug-ins/file-dds/ddsread.c:169
 #: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:368
 #: plug-ins/file-fli/fli-gimp.c:440 plug-ins/file-fli/fli-gimp.c:491
-#: plug-ins/file-icns/file-icns-load.c:515
-#: plug-ins/file-icns/file-icns-load.c:567 plug-ins/file-ico/ico-load.c:681
+#: plug-ins/file-icns/file-icns-load.c:552
+#: plug-ins/file-icns/file-icns-load.c:604 plug-ins/file-ico/ico-load.c:681
 #: plug-ins/file-ico/ico-load.c:819 plug-ins/file-ico/ico-load.c:1021
-#: plug-ins/file-jpeg/jpeg-load.c:99 plug-ins/file-jpeg/jpeg-load.c:615
-#: plug-ins/file-psd/psd-export.c:2219 plug-ins/file-psd/psd-load.c:189
+#: plug-ins/file-jpeg/jpeg-load.c:106 plug-ins/file-jpeg/jpeg-load.c:699
+#: plug-ins/file-psd/psd-export.c:2227 plug-ins/file-psd/psd-load.c:189
 #: plug-ins/file-psd/psd-load.c:194 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:539
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1771
@@ -2034,7 +2034,8 @@ msgstr "Грешка при четене на „%s“. %s"
 msgid "Curve Bend"
 msgstr "Деформиране по крива"
 
-#: plug-ins/common/curve-bend.c:1063 plug-ins/gfig/gfig-dialog.c:1211
+#: plug-ins/common/curve-bend.c:1063 plug-ins/file-jpeg/jpeg-export.c:862
+#: plug-ins/gfig/gfig-dialog.c:1211
 msgid "Options"
 msgstr "Настройки"
 
@@ -2489,7 +2490,7 @@ msgstr "Премахване на вертикалните черти от из�
 msgid "This plug-in tries to remove vertical stripes from an image."
 msgstr "Тази приставка премахва вертикалните черти от изображението"
 
-#: plug-ins/common/destripe.c:140 plug-ins/common/file-html-table.c:194
+#: plug-ins/common/destripe.c:140 plug-ins/common/file-html-table.c:199
 #: plug-ins/common/file-ps.c:525 plug-ins/common/file-raw-data.c:354
 #: plug-ins/common/smooth-palette.c:134 plug-ins/imagemap/imap_grid.c:258
 msgid "_Width"
@@ -2592,7 +2593,7 @@ msgstr "Неочакван край или грешка при четене на
 #.
 #: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:352
 #: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:408
-#: plug-ins/common/file-heif.c:853 plug-ins/common/file-jp2-load.c:1045
+#: plug-ins/common/file-heif.c:853 plug-ins/common/file-jp2-load.c:1047
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
 #: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
 #: plug-ins/common/file-png.c:631 plug-ins/common/file-pnm.c:688
@@ -2603,8 +2604,8 @@ msgstr "Неочакван край или грешка при четене на
 #: plug-ins/common/file-xpm.c:361 plug-ins/common/file-xwd.c:457
 #: plug-ins/file-bmp/bmp-load.c:265 plug-ins/file-exr/file-exr.c:197
 #: plug-ins/file-faxg3/faxg3.c:244 plug-ins/file-fli/fli-gimp.c:483
-#: plug-ins/file-icns/file-icns-load.c:507 plug-ins/file-ico/ico-load.c:673
-#: plug-ins/file-ico/ico-load.c:811 plug-ins/file-jpeg/jpeg-load.c:90
+#: plug-ins/file-icns/file-icns-load.c:544 plug-ins/file-ico/ico-load.c:673
+#: plug-ins/file-ico/ico-load.c:811 plug-ins/file-jpeg/jpeg-load.c:97
 #: plug-ins/file-psd/psd-load.c:202 plug-ins/file-raw/file-darktable.c:467
 #: plug-ins/file-raw/file-rawtherapee.c:345 plug-ins/file-sgi/sgi.c:315
 #: plug-ins/file-tiff/file-tiff-load.c:299
@@ -2673,17 +2674,17 @@ msgstr "'%s': неочакван край на файл или грешка пр
 #. * Open the file for writing...
 #.
 #: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:347
-#: plug-ins/common/file-gif-export.c:939 plug-ins/common/file-html-table.c:349
-#: plug-ins/common/file-jpegxl.c:1396 plug-ins/common/file-pcx.c:1083
+#: plug-ins/common/file-gif-export.c:939 plug-ins/common/file-html-table.c:360
+#: plug-ins/common/file-jpegxl.c:1389 plug-ins/common/file-pcx.c:1083
 #: plug-ins/common/file-pix.c:636 plug-ins/common/file-png.c:1483
 #: plug-ins/common/file-pnm.c:1623 plug-ins/common/file-ps.c:1369
 #: plug-ins/common/file-qoi.c:350 plug-ins/common/file-sunras.c:605
 #: plug-ins/common/file-tga.c:1217 plug-ins/common/file-xbm.c:1026
 #: plug-ins/common/file-xpm.c:682 plug-ins/common/file-xwd.c:693
 #: plug-ins/file-bmp/bmp-export.c:328 plug-ins/file-fits/fits.c:646
-#: plug-ins/file-fli/fli-gimp.c:766 plug-ins/file-icns/file-icns-export.c:621
-#: plug-ins/file-ico/ico-export.c:1347 plug-ins/file-ico/ico-export.c:1561
-#: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2160
+#: plug-ins/file-fli/fli-gimp.c:766 plug-ins/file-icns/file-icns-export.c:824
+#: plug-ins/file-ico/ico-export.c:1358 plug-ins/file-ico/ico-export.c:1572
+#: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2168
 #: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1077
 #, c-format
 msgid "Exporting '%s'"
@@ -3517,22 +3518,22 @@ msgid "Fast"
 msgstr "Бързо"
 
 #: plug-ins/common/file-heif.c:306 plug-ins/common/file-heif.c:427
-#: plug-ins/common/file-jpegxl.c:239
+#: plug-ins/common/file-jpegxl.c:233
 msgid "Save Exi_f"
 msgstr "Запазване на _метаданните по EXIF"
 
 #: plug-ins/common/file-heif.c:307 plug-ins/common/file-heif.c:428
-#: plug-ins/common/file-jpegxl.c:240
+#: plug-ins/common/file-jpegxl.c:234
 msgid "Toggle saving Exif data"
 msgstr "Превключване на запазването на метаданните по EXIF"
 
 #: plug-ins/common/file-heif.c:312 plug-ins/common/file-heif.c:433
-#: plug-ins/common/file-jpegxl.c:245
+#: plug-ins/common/file-jpegxl.c:239
 msgid "Save _XMP"
 msgstr "Запазване на м_етаданните по XMP"
 
 #: plug-ins/common/file-heif.c:313 plug-ins/common/file-heif.c:434
-#: plug-ins/common/file-jpegxl.c:246
+#: plug-ins/common/file-jpegxl.c:240
 msgid "Toggle saving XMP data"
 msgstr "Превключване на запазването на метаданните по XMP"
 
@@ -3607,7 +3608,7 @@ msgstr "Зареждане на изображение във формат HEIF"
 msgid "Select Image"
 msgstr "Избор на изображение"
 
-#: plug-ins/common/file-heif.c:2445 plug-ins/common/file-jpegxl.c:2029
+#: plug-ins/common/file-heif.c:2445 plug-ins/common/file-jpegxl.c:2018
 msgid "8 bit/channel"
 msgstr "8 бита/канал"
 
@@ -3637,49 +3638,49 @@ msgstr ""
 "Позволява чертането на таблици чрез HTML в GIMP. За повече информация вижте "
 "в помощта."
 
-#: plug-ins/common/file-html-table.c:175
+#: plug-ins/common/file-html-table.c:180
 msgid "Use c_aption"
 msgstr "_Ползване на заглавие"
 
-#: plug-ins/common/file-html-table.c:176
+#: plug-ins/common/file-html-table.c:181
 msgid "Enable if you would like to have the table captioned."
 msgstr "Включете, ако искате заглавие на таблицата."
 
-#: plug-ins/common/file-html-table.c:182
+#: plug-ins/common/file-html-table.c:187
 msgid "Capt_ion"
 msgstr "_Заглавие"
 
-#: plug-ins/common/file-html-table.c:183
+#: plug-ins/common/file-html-table.c:188
 msgid "The text for the table caption."
 msgstr "Текстът за заглавието на таблицата."
 
-#: plug-ins/common/file-html-table.c:188
+#: plug-ins/common/file-html-table.c:193
 msgid "Cell con_tent"
 msgstr "_Съдържание на клетка"
 
-#: plug-ins/common/file-html-table.c:189
+#: plug-ins/common/file-html-table.c:194
 msgid "The text to go into each cell."
 msgstr "Текстът за всяка клетка."
 
-#: plug-ins/common/file-html-table.c:195
+#: plug-ins/common/file-html-table.c:200
 msgid "The width for each table cell. Can be a number or a percent."
 msgstr "Широчината на всяка клетка от таблицата. Може да е число или процент."
 
-#: plug-ins/common/file-html-table.c:201 plug-ins/common/file-ps.c:532
+#: plug-ins/common/file-html-table.c:206 plug-ins/common/file-ps.c:532
 #: plug-ins/common/file-raw-data.c:359 plug-ins/common/smooth-palette.c:140
 #: plug-ins/imagemap/imap_grid.c:264
 msgid "_Height"
 msgstr "_Височина"
 
-#: plug-ins/common/file-html-table.c:202
+#: plug-ins/common/file-html-table.c:207
 msgid "The height for each table cell. Can be a number or a percent."
 msgstr "Височината на всяка клетка от таблицата. Може да е число или процент."
 
-#: plug-ins/common/file-html-table.c:208
+#: plug-ins/common/file-html-table.c:213
 msgid "_Generate full HTML document"
 msgstr "_Генериране на пълен документ в HTML"
 
-#: plug-ins/common/file-html-table.c:209
+#: plug-ins/common/file-html-table.c:214
 msgid ""
 "If enabled GTM will output a full HTML document with <HTML>, <BODY>, etc. "
 "tags instead of just the table html."
@@ -3687,19 +3688,19 @@ msgstr ""
 "Ако е избрано, приставката ще създаде цял документ на HTML с всички "
 "необходими етикети като <HTML>, <BODY> и т.н., а не само таблица в HTML."
 
-#: plug-ins/common/file-html-table.c:216
+#: plug-ins/common/file-html-table.c:221
 msgid "_Border"
 msgstr "_Кант:"
 
-#: plug-ins/common/file-html-table.c:217
+#: plug-ins/common/file-html-table.c:222
 msgid "The number of pixels in the table border."
 msgstr "Брой пиксели в канта на таблицата."
 
-#: plug-ins/common/file-html-table.c:222
+#: plug-ins/common/file-html-table.c:227
 msgid "_Use cellspan"
 msgstr "_Обединяване на клетки"
 
-#: plug-ins/common/file-html-table.c:223
+#: plug-ins/common/file-html-table.c:228
 msgid ""
 "If enabled GTM will replace any rectangular sections of identically colored "
 "blocks with one large cell with ROWSPAN and COLSPAN values."
@@ -3708,11 +3709,11 @@ msgstr ""
 "оцветени участъци с една голяма клетка със съответните стойности на ROWSPAN "
 "и COLSPAN."
 
-#: plug-ins/common/file-html-table.c:231
+#: plug-ins/common/file-html-table.c:236
 msgid "Co_mpress TD tags"
 msgstr "_Компресия на етикетите „TD“"
 
-#: plug-ins/common/file-html-table.c:232
+#: plug-ins/common/file-html-table.c:237
 msgid ""
 "Enabling this will cause GTM to leave no whitespace between the TD tags and "
 "the cell content. This is only necessary for pixel level positioning control."
@@ -3721,23 +3722,23 @@ msgstr ""
 "етикетите TD и съдържанието на клетките. Това е необходимо само за контрол "
 "на позиционирането до пиксел."
 
-#: plug-ins/common/file-html-table.c:241
+#: plug-ins/common/file-html-table.c:246
 msgid "Cell-pa_dding"
 msgstr "_Уплътняване на клетките"
 
-#: plug-ins/common/file-html-table.c:242
+#: plug-ins/common/file-html-table.c:247
 msgid "The amount of cell padding."
 msgstr "Количество уплътняване на клетките."
 
-#: plug-ins/common/file-html-table.c:247
+#: plug-ins/common/file-html-table.c:252
 msgid "Cell spaci_ng"
 msgstr "_Разстояние между клетките"
 
-#: plug-ins/common/file-html-table.c:248
+#: plug-ins/common/file-html-table.c:253
 msgid "The amount of cell spacing."
 msgstr "Количество отстояние между клетките."
 
-#: plug-ins/common/file-html-table.c:599
+#: plug-ins/common/file-html-table.c:610
 msgid ""
 "You are about to create a huge\n"
 "HTML file which will most likely\n"
@@ -3746,19 +3747,19 @@ msgstr ""
 "Ще създадете голям файл в HTML,\n"
 "който вероятно ще блокира браузъра."
 
-#: plug-ins/common/file-html-table.c:617
+#: plug-ins/common/file-html-table.c:628
 msgid "Warning"
 msgstr "Предупреждение"
 
-#: plug-ins/common/file-html-table.c:631
+#: plug-ins/common/file-html-table.c:642
 msgid "HTML Page Options"
 msgstr "Настройки на страницата с HTML"
 
-#: plug-ins/common/file-html-table.c:642
+#: plug-ins/common/file-html-table.c:653
 msgid "Table Creation Options"
 msgstr "Настройки за създаване на таблица"
 
-#: plug-ins/common/file-html-table.c:662
+#: plug-ins/common/file-html-table.c:673
 msgid "Table Options"
 msgstr "Настройки на таблицата"
 
@@ -3838,74 +3839,74 @@ msgstr "xvYCC"
 msgid "Unknown"
 msgstr "Неизвестно"
 
-#: plug-ins/common/file-jp2-load.c:976
+#: plug-ins/common/file-jp2-load.c:978
 #, c-format
 msgid "Unsupported JPEG 2000%s '%s' with %d components."
 msgstr "Неподдържан JPEG 2000%s „%s“ с %d компонента."
 
-#: plug-ins/common/file-jp2-load.c:1053 plug-ins/common/file-wmf.c:238
+#: plug-ins/common/file-jp2-load.c:1055 plug-ins/common/file-wmf.c:238
 #: plug-ins/common/file-wmf.c:596
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr "„%s“ не може да се отвори за четене"
 
-#: plug-ins/common/file-jp2-load.c:1062
+#: plug-ins/common/file-jp2-load.c:1064
 #, c-format
 msgid "Failed to initialize decoder for '%s', out of memory?"
 msgstr "Декодерът за „%s“ не може да се инициализира. Паметта ли свърши?"
 
-#: plug-ins/common/file-jp2-load.c:1078
+#: plug-ins/common/file-jp2-load.c:1080
 #, c-format
 msgid "Couldn't set parameters on decoder for '%s'."
 msgstr "Параметрите на декодера за „%s“ не може да се зададат."
 
-#: plug-ins/common/file-jp2-load.c:1086
+#: plug-ins/common/file-jp2-load.c:1088
 #, c-format
 msgid "Couldn't read JP2 header from '%s'."
 msgstr "Заглавната част за JP2 не може да се прочете от „%s“."
 
-#: plug-ins/common/file-jp2-load.c:1094
+#: plug-ins/common/file-jp2-load.c:1096
 #, c-format
 msgid "Couldn't decode JP2 image in '%s'."
 msgstr "Изображението във формат JP2 „%s“ не може да се декодира."
 
-#: plug-ins/common/file-jp2-load.c:1102
+#: plug-ins/common/file-jp2-load.c:1104
 #, c-format
 msgid "Couldn't decompress JP2 image in '%s'."
 msgstr "Изображението във формат JP2 „%s“ не може да се разкомпресира."
 
-#: plug-ins/common/file-jp2-load.c:1133
+#: plug-ins/common/file-jp2-load.c:1135
 #, c-format
 msgid "Couldn't decode CIELAB JP2 image in '%s'."
 msgstr "Изображението във формат CIELAB JP2 „%s“ не може да се декодира."
 
-#: plug-ins/common/file-jp2-load.c:1190
+#: plug-ins/common/file-jp2-load.c:1192
 #, c-format
 msgid "Unknown color space in JP2 codestream '%s'."
 msgstr "Непознат цветови модел в потока във формат JP2 в „%s“."
 
-#: plug-ins/common/file-jp2-load.c:1201
+#: plug-ins/common/file-jp2-load.c:1203
 #, c-format
 msgid "Couldn't convert YCbCr JP2 image '%s' to RGB."
 msgstr ""
 "Изображението във формат JP2 в цветови модел YCbCr „%s“ не може да се "
 "преобразува в RGB."
 
-#: plug-ins/common/file-jp2-load.c:1211
+#: plug-ins/common/file-jp2-load.c:1213
 #, c-format
 msgid "Couldn't convert CMYK JP2 image in '%s' to RGB."
 msgstr ""
 "Изображението във формат JP2 в цветови модел CMYK „%s“ не може да се "
 "преобразува в RGB."
 
-#: plug-ins/common/file-jp2-load.c:1221
+#: plug-ins/common/file-jp2-load.c:1225
 #, c-format
 msgid "Couldn't convert xvYCC JP2 image in '%s' to RGB."
 msgstr ""
 "Изображението във формат JP2 в цветови модел xvYCC „%s“ не може да се "
 "преобразува в RGB."
 
-#: plug-ins/common/file-jp2-load.c:1248
+#: plug-ins/common/file-jp2-load.c:1252
 #, c-format
 msgid "Unsupported color space in JP2 image '%s'."
 msgstr "Непознат цветови модел в изображение във формат JP2 „%s“."
@@ -3978,41 +3979,32 @@ msgstr "коте"
 msgid "tortoise (slower)"
 msgstr "костенурка (най-бавно)"
 
-#: plug-ins/common/file-jpegxl.c:227
-msgid "Save ori_ginal profile"
-msgstr "_Запазване на първоначалния профил"
-
-#: plug-ins/common/file-jpegxl.c:228
-msgid "Store ICC profile to exported JXL file"
-msgstr ""
-"Запазване на цветовия профил във формат ICC към изнесения файл във формат JXL"
-
-#: plug-ins/common/file-jpegxl.c:233 plug-ins/file-tiff/file-tiff.c:265
+#: plug-ins/common/file-jpegxl.c:227 plug-ins/file-tiff/file-tiff.c:265
 msgid "Export as CMY_K"
 msgstr "Изнасяне като CMY_K"
 
-#: plug-ins/common/file-jpegxl.c:234
+#: plug-ins/common/file-jpegxl.c:228
 msgid "Create a CMYK JPEG XL image using the soft-proofing color profile"
 msgstr ""
 "Създаване на изображение във формат CMYK JPEG XL с ползване на профил за "
 "коректура"
 
-#: plug-ins/common/file-jpegxl.c:2030
+#: plug-ins/common/file-jpegxl.c:2019
 msgid "16 bit/channel"
 msgstr "16 бита/канал"
 
-#: plug-ins/common/file-jpegxl.c:2038
+#: plug-ins/common/file-jpegxl.c:2027
 msgid "CMYK profile required for export"
 msgstr "За изнасянето е необходим профил по CMYK"
 
-#: plug-ins/common/file-jpegxl.c:2046 plug-ins/file-jpeg/jpeg-export.c:899
-#: plug-ins/file-psd/psd-export.c:2459
+#: plug-ins/common/file-jpegxl.c:2035 plug-ins/file-jpeg/jpeg-export.c:904
+#: plug-ins/file-psd/psd-export.c:2467
 #: plug-ins/file-tiff/file-tiff-export.c:1318
 msgid "Name of the color profile used for CMYK export."
 msgstr "Името на цветовия профил, използван при изнасяне като CMYK."
 
-#: plug-ins/common/file-jpegxl.c:2065 plug-ins/file-jpeg/jpeg-export.c:910
-#: plug-ins/file-psd/psd-export.c:2470
+#: plug-ins/common/file-jpegxl.c:2054 plug-ins/file-jpeg/jpeg-export.c:915
+#: plug-ins/file-psd/psd-export.c:2478
 #: plug-ins/file-tiff/file-tiff-export.c:1330
 #, c-format
 msgid "Profile: %s"
@@ -4496,7 +4488,7 @@ msgid "Export Image as Multi-Page PDF"
 msgstr "Изнасяне на изображение като PDF с много страници"
 
 #: plug-ins/common/file-pdf-export.c:1051
-#: plug-ins/metadata/metadata-editor.c:5602
+#: plug-ins/metadata/metadata-editor.c:5604
 msgid "_Export"
 msgstr "_Изнасяне"
 
@@ -4619,7 +4611,7 @@ msgstr "Неправилна парола! Въведете отново:"
 msgid "Could not load '%s': %s"
 msgstr "„%s“ не може да се зареди: %s"
 
-#: plug-ins/common/file-pdf-load.c:1087
+#: plug-ins/common/file-pdf-load.c:1095
 msgid "Error getting number of pages from the given PDF file."
 msgstr ""
 "Грешка при определянето на броя страници в дадения файл във формат PDF."
@@ -8515,7 +8507,7 @@ msgstr "Измятане"
 msgid "Basic Options"
 msgstr "Основни настройки"
 
-#: plug-ins/common/warp.c:448 plug-ins/file-jpeg/jpeg-export.c:951
+#: plug-ins/common/warp.c:448 plug-ins/file-jpeg/jpeg-export.c:956
 #: plug-ins/file-webp/file-webp-dialog.c:98
 msgid "Advanced Options"
 msgstr "Допълнителни настройки"
@@ -9289,12 +9281,12 @@ msgstr "Неочакван край на файл (EOF).\n"
 msgid "Open DDS"
 msgstr "Отваряне на DDS"
 
-#: plug-ins/file-dds/ddswrite.c:566
+#: plug-ins/file-dds/ddswrite.c:563
 #, c-format
 msgid "Saving: %s"
 msgstr "Запазване: „%s“"
 
-#: plug-ins/file-dds/ddswrite.c:1944
+#: plug-ins/file-dds/ddswrite.c:1937
 msgid "Mipmap Options"
 msgstr "Настройки на пирамидални изображения"
 
@@ -9612,7 +9604,7 @@ msgstr "Неуспешно изчитане на кадър %d. Вероятно
 msgid "Open FLIC Animation"
 msgstr "Отваряне на анимация във формат FLIC"
 
-#: plug-ins/file-icns/file-icns-export.c:233
+#: plug-ins/file-icns/file-icns-export.c:239
 #, c-format
 msgid ""
 "Invalid icon size. \n"
@@ -9621,7 +9613,7 @@ msgstr ""
 "Неправилен размер на икона.\n"
 "Няма да се изнесе"
 
-#: plug-ins/file-icns/file-icns-export.c:236
+#: plug-ins/file-icns/file-icns-export.c:242
 #, c-format
 msgid ""
 "Duplicate layer size. \n"
@@ -9630,7 +9622,7 @@ msgstr ""
 "Слой с повтарящ се размер.\n"
 "Няма да се изнесе"
 
-#: plug-ins/file-icns/file-icns-export.c:314
+#: plug-ins/file-icns/file-icns-export.c:320
 msgid ""
 "Valid ICNS icons sizes are:\n"
 " 16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,\n"
@@ -9643,16 +9635,18 @@ msgstr ""
 "Всички слоеве с други размери се прескачат при изнасяне."
 
 #. Don't show warning by default
-#: plug-ins/file-icns/file-icns-export.c:322
+#: plug-ins/file-icns/file-icns-export.c:328
 msgid "Export Icons"
 msgstr "Изнасяне на икони"
 
-#: plug-ins/file-icns/file-icns-export.c:531
+#: plug-ins/file-icns/file-icns-export.c:523
+#: plug-ins/file-icns/file-icns-export.c:541
+#: plug-ins/file-icns/file-icns-export.c:634
 #, c-format
 msgid "Error writing icns: %s"
 msgstr "Грешка при запис на файл във формат ICNS: %s."
 
-#: plug-ins/file-icns/file-icns-export.c:595
+#: plug-ins/file-icns/file-icns-export.c:794
 #, c-format
 msgid ""
 "No valid sized layers. Only valid layer sizes are 16x12, 16x16, 18x18, "
@@ -9662,7 +9656,7 @@ msgstr ""
 "18×18, 24×24, 32×32, 36×36, 48×48, 64×64, 128×128, 256×256, 512×512 или "
 "1024×1024."
 
-#: plug-ins/file-icns/file-icns-export.c:613
+#: plug-ins/file-icns/file-icns-export.c:812
 #, c-format
 msgid ""
 "Invalid layer size(s). Only valid layer sizes are 16x12, 16x16, 18x18, "
@@ -9671,15 +9665,15 @@ msgstr ""
 "Неправилни размери на слоеве. Приемат се само размери: 16×12, 16×16, 18×18, "
 "24×24, 32×32, 36×36, 48×48, 64×64, 128×128, 256×256, 512×512 или 1024×1024."
 
-#: plug-ins/file-icns/file-icns-load.c:432
+#: plug-ins/file-icns/file-icns-load.c:457
 #, c-format
 msgid "Error trying to open temporary %s file '%s' for icns loading: %s"
 msgstr ""
 "Грешка при опит за отваряне на временен файл %s „%s“ за зареждане на icns: %s"
 
 #. ----- Open PSD file -----
-#: plug-ins/file-icns/file-icns-load.c:559 plug-ins/file-ico/ico-load.c:1013
-#: plug-ins/file-jpeg/jpeg-load.c:601 plug-ins/file-psd/psd-thumb-load.c:72
+#: plug-ins/file-icns/file-icns-load.c:596 plug-ins/file-ico/ico-load.c:1013
+#: plug-ins/file-jpeg/jpeg-load.c:685 plug-ins/file-psd/psd-thumb-load.c:72
 #: plug-ins/file-raw/file-darktable.c:620
 #: plug-ins/file-raw/file-rawtherapee.c:459
 #, c-format
@@ -9787,11 +9781,11 @@ msgstr "Неправилни метаданни за ANI"
 msgid "Microsoft Windows icon"
 msgstr "Икона за Microsoft Windows"
 
-#: plug-ins/file-ico/ico.c:200 plug-ins/file-ico/ico.c:322
+#: plug-ins/file-ico/ico.c:200 plug-ins/file-ico/ico.c:330
 msgid "Microsoft Windows cursor"
 msgstr "Курсор за Microsoft Windows"
 
-#: plug-ins/file-ico/ico.c:230 plug-ins/file-ico/ico.c:360
+#: plug-ins/file-ico/ico.c:230 plug-ins/file-ico/ico.c:376
 msgid "Microsoft Windows animated cursor"
 msgstr "Анимиран курсор за Microsoft Windows"
 
@@ -9803,15 +9797,15 @@ msgstr "Зарежда файлове във формат Windows ANI"
 msgid "Loads a preview from a Windows ANI files"
 msgstr "Зарежда преглед от файлове във формат Windows ANI"
 
-#: plug-ins/file-ico/ico.c:364 plug-ins/file-ico/ico.c:365
+#: plug-ins/file-ico/ico.c:380 plug-ins/file-ico/ico.c:381
 msgid "Saves files in Windows ANI file format"
 msgstr "Запазва файлове във формат Windows ANI"
 
-#: plug-ins/file-ico/ico.c:383
+#: plug-ins/file-ico/ico.c:407
 msgid "Cursor Name (Optional)"
 msgstr "Име на курсор (незадължително)"
 
-#: plug-ins/file-ico/ico.c:389
+#: plug-ins/file-ico/ico.c:413
 msgid "Cursor Author (Optional)"
 msgstr "Автор на курсор (незадължително)"
 
@@ -9824,24 +9818,24 @@ msgstr "Размер на файла: %s"
 msgid "Calculating file size..."
 msgstr "Изчисляване на размера на файла…"
 
-#: plug-ins/file-jpeg/jpeg-export.c:807 plug-ins/file-jpeg/jpeg-export.c:878
+#: plug-ins/file-jpeg/jpeg-export.c:807 plug-ins/file-jpeg/jpeg-export.c:883
 msgid "File size: unknown"
 msgstr "Размер на файла: неизвестен"
 
-#: plug-ins/file-jpeg/jpeg-export.c:886
+#: plug-ins/file-jpeg/jpeg-export.c:891
 msgid "Enable preview to obtain the file size."
 msgstr "Включете предварителния преглед, за да получите размера на файла."
 
-#: plug-ins/file-jpeg/jpeg-export.c:891 plug-ins/file-psd/psd-export.c:2451
+#: plug-ins/file-jpeg/jpeg-export.c:896 plug-ins/file-psd/psd-export.c:2459
 #: plug-ins/file-tiff/file-tiff-export.c:1310
 msgid "No soft-proofing profile"
 msgstr "Няма профил за коректура"
 
-#: plug-ins/file-jpeg/jpeg-load.c:221
+#: plug-ins/file-jpeg/jpeg-load.c:241
 msgid "JPEG preview"
 msgstr "Предварителен преглед на JPEG"
 
-#: plug-ins/file-jpeg/jpeg-load.c:486
+#: plug-ins/file-jpeg/jpeg-load.c:570
 #, c-format
 msgid ""
 "Error trying to open temporary %s file '%s' for jpeg metadata loading: %s"
@@ -10019,7 +10013,7 @@ msgstr "_Маркери за рестартиране"
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "ГРЕШКА: базовото изображение на GIMP не може да се преобразува в PSD"
 
-#: plug-ins/file-psd/psd-export.c:2153
+#: plug-ins/file-psd/psd-export.c:2161
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -10028,7 +10022,7 @@ msgstr ""
 "„%s“ не може да се изнесе. Файловият формат PSD не поддържа изображения, "
 "които са над 30 000 пиксела на височина или ширина."
 
-#: plug-ins/file-psd/psd-export.c:2194
+#: plug-ins/file-psd/psd-export.c:2202
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -10037,7 +10031,7 @@ msgstr ""
 "„%s“ не може да се изнесе. Файловият формат PSD не поддържа изображения, "
 "които са със слоеве над 30 000 пиксела на височина или ширина."
 
-#: plug-ins/file-psd/psd-export.c:2494
+#: plug-ins/file-psd/psd-export.c:2502
 msgid ""
 "Duotone color space information from the original\n"
 "imported image will be used."
@@ -10045,7 +10039,7 @@ msgstr ""
 "Ще се ползва информацията за двуцветното цветово пространство\n"
 "от първоначално внесеното изображение."
 
-#: plug-ins/file-psd/psd-export.c:2563
+#: plug-ins/file-psd/psd-export.c:2571
 msgid ""
 "PSD files can store up to 998 paths. \n"
 "The rest will be discarded."
@@ -10053,11 +10047,11 @@ msgstr ""
 "Изображенията във формат PSD може да съдържат до 998 пътеки. \n"
 "Другите ще се прескочат."
 
-#: plug-ins/file-psd/psd-export.c:2673
+#: plug-ins/file-psd/psd-export.c:2681
 msgid "Indexed Image Warning"
 msgstr "Предупреждение за индексирано изображение"
 
-#: plug-ins/file-psd/psd-export.c:2674
+#: plug-ins/file-psd/psd-export.c:2682
 msgid ""
 "Photoshop does not support indexed images that have more than one layer. "
 "Layers will be merged on export."
@@ -10065,11 +10059,11 @@ msgstr ""
 "Photoshop не поддържа индексирани изображения с повече от един слой. При "
 "изнасяне слоевете ще се слеят."
 
-#: plug-ins/file-psd/psd-export.c:2695 plug-ins/file-psd/psd-load.c:3818
+#: plug-ins/file-psd/psd-export.c:2703 plug-ins/file-psd/psd-load.c:3818
 msgid "Compatibility Notice"
 msgstr "Съобщение за съвместимост"
 
-#: plug-ins/file-psd/psd-export.c:2696
+#: plug-ins/file-psd/psd-export.c:2704
 msgid ""
 "Legacy layer modes have better compatibility with Photoshop, but do not "
 "support Clip to Backdrop, which is needed for using Photoshop's 'Blend "
@@ -10264,13 +10258,13 @@ msgstr "Запазва изображения във формат Adobe Photosho
 
 #: plug-ins/file-psd/psd.c:222
 msgid ""
-"This filter saves files of Adobe Photoshop (TM) native PSD format. These "
+"This plug-in saves files of Adobe Photoshop (TM) native PSD format. These "
 "files may be of any image type supported by GIMP, with or without layers, "
 "layer masks, aux channels and guides."
 msgstr ""
 "Този филтър запазва изображения във формат Adobe Photoshop™ PSD. Може да "
 "правите това с всички видове изображения поддържани от GIMP — с или без "
-"слоеве, маски, допълнителни канари и водачи."
+"слоеве, маски, допълнителни канали и водачи."
 
 #: plug-ins/file-psd/psd.c:249
 msgid "Assign a Clipping _Path"
@@ -10932,27 +10926,27 @@ msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 "Неуспешно изчитане на ред. Изображението може да е повредено на ред %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:2783
+#: plug-ins/file-tiff/file-tiff-load.c:2777
 msgid "Import from TIFF"
 msgstr "Внасяне от TIFF"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2791
+#: plug-ins/file-tiff/file-tiff-load.c:2785
 msgid "_Show reduced images"
 msgstr "Показване на _намалени изображения"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2836
+#: plug-ins/file-tiff/file-tiff-load.c:2830
 msgid "Process extra channel as:"
 msgstr "Обработка на допълнителния канал като:"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2839
+#: plug-ins/file-tiff/file-tiff-load.c:2833
 msgid "_Non-premultiplied alpha"
 msgstr "_Неприложена прозрачност"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2840
+#: plug-ins/file-tiff/file-tiff-load.c:2834
 msgid "Pre_multiplied alpha"
 msgstr "_Приложена прозрачност"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2841
+#: plug-ins/file-tiff/file-tiff-load.c:2835
 msgid "Channe_l"
 msgstr "_Канал"
 
@@ -15519,7 +15513,7 @@ msgstr "Избор на дата"
 msgid "Set Date"
 msgstr "Задаване на дата"
 
-#: plug-ins/metadata/metadata-editor.c:2422
+#: plug-ins/metadata/metadata-editor.c:2424
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -15535,7 +15529,7 @@ msgstr ""
 "„10.45“.\n"
 "Изтрийте целия текст, за да изтриете стойността."
 
-#: plug-ins/metadata/metadata-editor.c:2428
+#: plug-ins/metadata/metadata-editor.c:2430
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -15551,24 +15545,24 @@ msgstr ""
 "[ft].\n"
 "Изтрийте целия текст, за да изтриете стойността."
 
-#: plug-ins/metadata/metadata-editor.c:2562
+#: plug-ins/metadata/metadata-editor.c:2564
 msgid "Unrated"
 msgstr "Без оценка"
 
-#: plug-ins/metadata/metadata-editor.c:4672
+#: plug-ins/metadata/metadata-editor.c:4674
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "Неуспешно задаване на етикета „%s“: %s"
 
-#: plug-ins/metadata/metadata-editor.c:5563
+#: plug-ins/metadata/metadata-editor.c:5565
 msgid "Import Metadata File"
 msgstr "Внасяне на файл с метаданни"
 
-#: plug-ins/metadata/metadata-editor.c:5567
+#: plug-ins/metadata/metadata-editor.c:5569
 msgid "_Import"
 msgstr "_Внасяне"
 
-#: plug-ins/metadata/metadata-editor.c:5598
+#: plug-ins/metadata/metadata-editor.c:5600
 msgid "Export Metadata File"
 msgstr "Изнасяне на файл с метаданни"
 
@@ -16108,7 +16102,7 @@ msgstr "Вмъкване снимка на екрана"
 msgid "Mouse Pointer"
 msgstr "Показалец на мишката"
 
-#: plug-ins/screenshot/screenshot-x11.c:664
+#: plug-ins/screenshot/screenshot-x11.c:668
 msgid "Specified window not found"
 msgstr "Посоченият прозорец не е намерен"
 
@@ -16394,3 +16388,11 @@ msgstr "Липсва драйвер за TWAIN, не може да се скан
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "Прехвърляне на данни от скенер/фотоапарат"
+
+#~ msgid "Save ori_ginal profile"
+#~ msgstr "_Запазване на първоначалния профил"
+
+#~ msgid "Store ICC profile to exported JXL file"
+#~ msgstr ""
+#~ "Запазване на цветовия профил във формат ICC към изнесения файл във формат "
+#~ "JXL"
