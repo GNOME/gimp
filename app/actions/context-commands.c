@@ -719,7 +719,7 @@ context_brush_radius_cmd_callback (GimpAction *action,
 
       radius = action_select_value (select_type,
                                     radius,
-                                    min_radius, 4000.0, min_radius,
+                                    min_radius, GIMP_BRUSH_GENERATED_MAX_RADIUS, min_radius,
                                     0.1, 1.0, 10.0, 0.05, FALSE);
       gimp_brush_generated_set_radius (generated, radius);
 

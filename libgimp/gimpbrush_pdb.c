@@ -494,8 +494,8 @@ gimp_brush_get_radius (GimpBrush *brush,
  *
  * Sets the radius of a generated brush.
  *
- * Sets the radius for a generated brush. Clamps radius to [0.0,
- * 32767.0]. Returns the clamped value. Returns an error when brush is
+ * Sets the radius for a generated brush. Clamps radius to [0.1,
+ * 4000.0]. Returns the clamped value. Returns an error when brush is
  * non-parametric or not editable.
  *
  * Returns: TRUE on success.
