@@ -116,8 +116,6 @@ static void       gimp_link_layer_convert_type   (GimpLayer         *layer,
 
 static void       gimp_link_layer_link_changed   (GimpLinkLayer     *layer);
 static gboolean   gimp_link_layer_render         (GimpLinkLayer     *layer);
-static void       gimp_link_layer_render_buffer  (GimpLinkLayer     *layer,
-                                                  GeglBuffer        *buffer);
 
 static void       gimp_link_layer_set_xcf_flags  (GimpLinkLayer     *layer,
                                                   guint32            flags);
@@ -701,7 +699,8 @@ gimp_link_layer_render (GimpLinkLayer *layer)
         }
     }
 
-  gimp_link_layer_render_buffer (layer, buffer);
+  gimp_gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE,
+                         gimp_drawable_get_buffer (drawable), NULL);
   g_object_unref (buffer);
 
   g_object_thaw_notify (G_OBJECT (drawable));
@@ -710,27 +709,6 @@ gimp_link_layer_render (GimpLinkLayer *layer)
   gimp_image_flush (image);
 
   return (width > 0 && height > 0);
-}
-
-static void
-gimp_link_layer_render_buffer (GimpLinkLayer *layer,
-                               GeglBuffer    *buffer)
-{
-  GimpDrawable       *drawable = GIMP_DRAWABLE (layer);
-  GimpItem           *item     = GIMP_ITEM (layer);
-  GimpImage          *image    = gimp_item_get_image (item);
-  GimpColorTransform *transform;
-
-  transform = gimp_image_get_color_transform_from_srgb_u8 (image);
-  if (transform)
-    gimp_color_transform_process_buffer (transform,
-                                         buffer,
-                                         NULL,
-                                         gimp_drawable_get_buffer (drawable),
-                                         NULL);
-  else
-    gimp_gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE,
-                           gimp_drawable_get_buffer (drawable), NULL);
 }
 
 static void
