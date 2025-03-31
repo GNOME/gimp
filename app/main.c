@@ -864,10 +864,10 @@ gimp_open_console_window (void)
        (HANDLE) _get_osfhandle (fileno (stderr)) == INVALID_HANDLE_VALUE) && AllocConsole ())
     {
       if ((HANDLE) _get_osfhandle (fileno (stdout)) == INVALID_HANDLE_VALUE)
-        freopen ("CONOUT$", "w", stdout);
+        freopen ("CONOUT$", "w+", stdout);
 
       if ((HANDLE) _get_osfhandle (fileno (stderr)) == INVALID_HANDLE_VALUE)
-        freopen ("CONOUT$", "w", stderr);
+        freopen ("CONOUT$", "w+", stderr);
 
       SetConsoleTitleW (g_utf8_to_utf16 (_("GIMP output. You can minimize this window, but don't close it."), -1, NULL, NULL, NULL));
 
