@@ -63,13 +63,15 @@ enum
   PROP_0,
   PROP_LINK,
   PROP_AUTO_RENAME,
-  PROP_MODIFIED
+  PROP_MODIFIED,
+  PROP_SCALED_ONLY
 };
 
 struct _GimpLinkLayerPrivate
 {
   GimpLink *link;
   gboolean  modified;
+  gboolean  scaled_only;
   gboolean  auto_rename;
 };
 
@@ -187,6 +189,12 @@ gimp_link_layer_class_init (GimpLinkLayerClass *klass)
                             NULL, NULL,
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SCALED_ONLY,
+                            "scaled-only",
+                            NULL, NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -225,6 +233,9 @@ gimp_link_layer_get_property (GObject      *object,
     case PROP_MODIFIED:
       g_value_set_boolean (value, layer->p->modified);
       break;
+    case PROP_SCALED_ONLY:
+      g_value_set_boolean (value, layer->p->scaled_only);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -250,6 +261,9 @@ gimp_link_layer_set_property (GObject      *object,
       break;
     case PROP_MODIFIED:
       layer->p->modified = g_value_get_boolean (value);
+      break;
+    case PROP_SCALED_ONLY:
+      layer->p->scaled_only = g_value_get_boolean (value);
       break;
 
     default:
@@ -351,17 +365,36 @@ gimp_link_layer_scale (GimpItem              *item,
   if (queue)
     gimp_object_queue_pop (queue);
 
-  if (link_layer->p->modified || ! gimp_link_is_vector (link_layer->p->link))
+  if (gimp_link_is_vector (link_layer->p->link) && ! link_layer->p->modified)
     {
+      /* Non-modified vector images are always recomputed from the
+       * source file and therefore are always sharp.
+       */
+      gimp_link_set_size (link_layer->p->link, new_width, new_height);
+      gimp_link_layer_render (link_layer);
+    }
+  else
+    {
+      gboolean scaled_only = FALSE;
+
+      if (! link_layer->p->modified || link_layer->p->scaled_only)
+        {
+          /* Raster images whose only modification are previous scaling
+           * are scaled back from the source file. Though they are still
+           * considered "modified" after a scaling (unlike vector
+           * images) and therefore are demoted to work like normal
+           * layers, scaling is still special-cased for better image
+           * quality.
+           */
+          gimp_link_layer_render (link_layer);
+          scaled_only = TRUE;
+        }
+
       GIMP_ITEM_CLASS (parent_class)->scale (GIMP_ITEM (layer),
                                              new_width, new_height,
                                              new_offset_x, new_offset_y,
                                              interpolation_type, progress);
-    }
-  else
-    {
-      gimp_link_set_size (link_layer->p->link, new_width, new_height);
-      gimp_link_layer_render (link_layer);
+      g_object_set (layer, "scaled-only", scaled_only, NULL);
     }
 
   if (layer->mask)
@@ -402,6 +435,7 @@ gimp_link_layer_set_buffer (GimpDrawable        *drawable,
       gimp_image_undo_push_link_layer (image, NULL, layer);
 
       g_object_set (drawable, "modified", TRUE, NULL);
+      g_object_set (drawable, "scaled-only", FALSE, NULL);
 
       gimp_image_undo_group_end (image);
     }
