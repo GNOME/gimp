@@ -542,7 +542,7 @@ sub brush_set_radius {
 
     $help = <<'HELP';
 Sets the radius for a generated brush.
-Clamps radius to [0.0, 32767.0].
+Clamps radius to [0.1, 4000.0].
 Returns the clamped value.
 Returns an error when brush is non-parametric or not editable.
 HELP

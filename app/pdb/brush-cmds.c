@@ -1144,7 +1144,7 @@ register_brush_procs (GimpPDB *pdb)
                                "gimp-brush-set-radius");
   gimp_procedure_set_static_help (procedure,
                                   "Sets the radius of a generated brush.",
-                                  "Sets the radius for a generated brush. Clamps radius to [0.0, 32767.0]. Returns the clamped value. Returns an error when brush is non-parametric or not editable.",
+                                  "Sets the radius for a generated brush. Clamps radius to [0.1, 4000.0]. Returns the clamped value. Returns an error when brush is non-parametric or not editable.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Bill Skaggs <weskaggs@primate.ucdavis.edu>",

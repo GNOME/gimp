@@ -32,6 +32,10 @@
 #define GIMP_BRUSH_GENERATED_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BRUSH_GENERATED, GimpBrushGeneratedClass))
 
 
+/* When changing these values, also update it in pdb/groups/brush.pdb */
+#define GIMP_BRUSH_GENERATED_MIN_RADIUS         0.1
+#define GIMP_BRUSH_GENERATED_MAX_RADIUS      4000.0
+
 typedef struct _GimpBrushGeneratedClass GimpBrushGeneratedClass;
 
 struct _GimpBrushGenerated

@@ -150,7 +150,10 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
   gtk_widget_show (box);
 
   /*  brush radius scale  */
-  editor->radius_data = gtk_adjustment_new (0.0, 0.1, 1000.0, 1.0, 10.0, 0.0);
+  editor->radius_data = gtk_adjustment_new (0.0,
+                                            GIMP_BRUSH_GENERATED_MIN_RADIUS,
+                                            GIMP_BRUSH_GENERATED_MAX_RADIUS,
+                                            1.0, 10.0, 0.0);
   scale = gimp_spin_scale_new (editor->radius_data, _("Radius"), 1);
   gtk_box_pack_start (GTK_BOX (editor->options_box), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
