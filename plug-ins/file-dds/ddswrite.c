@@ -1675,7 +1675,7 @@ write_image (FILE                *fp,
     {
       for (i = 0, list = layers;
            i < num_layers;
-           ++i, list = g_list_next (layers))
+           ++i, list = g_list_next (list))
         {
           write_layer (fp, image, list->data, config,
                        w, h, bpp, fmtbpp, 1);
@@ -1690,7 +1690,7 @@ write_image (FILE                *fp,
     {
       for (i = 0, list = layers;
            i < num_layers;
-           ++i, list = g_list_next (layers))
+           ++i, list = g_list_next (list))
         {
           if ((gimp_drawable_get_width  (list->data) == w) &&
               (gimp_drawable_get_height (list->data) == h))
