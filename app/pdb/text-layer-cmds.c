@@ -96,6 +96,7 @@ text_layer_new_invoker (GimpProcedure         *procedure,
 
           gimp_text = g_object_new (GIMP_TYPE_TEXT,
                                     "text",           text,
+                                    "gimp",           gimp,
                                     "font",           font,
                                     "font-size",      size,
                                     "font-size-unit", unit,
