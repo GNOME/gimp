@@ -261,8 +261,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-03-17 10:35+0000\n"
-"PO-Revision-Date: 2025-03-17 12:04+0100\n"
+"POT-Creation-Date: 2025-03-31 11:19+0000\n"
+"PO-Revision-Date: 2025-03-31 16:41+0300\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -2796,8 +2796,8 @@ msgstr "Въведете описание на маркера"
 #: app/dialogs/file-open-dialog.c:288
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/dialogs/welcome-dialog.c:1247 app/display/gimpdisplayshell-dnd.c:680
-#: app/widgets/gimplayertreeview.c:820 app/widgets/gimptoolbox.c:826
+#: app/dialogs/welcome-dialog.c:1246 app/display/gimpdisplayshell-dnd.c:680
+#: app/widgets/gimplayertreeview.c:820 app/widgets/gimptoolbox.c:828
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -8656,7 +8656,7 @@ msgstr "Отваряне на текстов файл (UTF-8)"
 
 #: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:125
 #: app/dialogs/file-open-location-dialog.c:81
-#: app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:718
+#: app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:717
 #: app/widgets/gimpiconpicker.c:490 app/widgets/gimpopendialog.c:87
 #: app/widgets/gimpsettingsbox.c:718
 msgid "_Open"
@@ -13712,7 +13712,7 @@ msgid "Palette"
 msgstr "Палитра"
 
 #: app/core/gimpcontext.c:741 app/core/gimpcontext.c:742
-#: app/tools/gimptextoptions.c:796
+#: app/tools/gimptextoptions.c:799
 msgid "Font"
 msgstr "Шрифт"
 
@@ -13742,7 +13742,7 @@ msgstr "копиране"
 msgid "%s copy"
 msgstr "копиране на „%s“"
 
-#: app/core/gimpdatafactory.c:638 app/tools/gimptextoptions.c:777
+#: app/core/gimpdatafactory.c:638 app/tools/gimptextoptions.c:780
 #: app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
 msgstr "Зареждане на шрифтовете (може да продължи дълго…)"
@@ -16167,7 +16167,7 @@ msgstr "Сливане само в _активните групи"
 msgid "_Discard invisible layers"
 msgstr "_Пропускане на невидимите слоеве"
 
-#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:703
+#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:702
 msgid "Create a New Image"
 msgstr "Създаване на ново изображение"
 
@@ -17242,7 +17242,7 @@ msgstr "Премахване на _всички клавишни комбина�
 
 #. Themes
 #: app/dialogs/preferences-dialog.c:1959 app/dialogs/preferences-dialog.c:1960
-#: app/dialogs/welcome-dialog.c:547
+#: app/dialogs/welcome-dialog.c:546
 msgid "Theme"
 msgstr "Тема"
 
@@ -17254,45 +17254,45 @@ msgstr "Избор на тема"
 msgid "Color scheme variant (if available)"
 msgstr "Вариант на цвета на темата (при наличие)"
 
-#: app/dialogs/preferences-dialog.c:2051 app/dialogs/welcome-dialog.c:599
+#: app/dialogs/preferences-dialog.c:2051 app/dialogs/welcome-dialog.c:598
 msgid "_Override icon sizes set by the theme"
 msgstr "_Промяна на зададения от темата размер на иконите"
 
-#: app/dialogs/preferences-dialog.c:2064 app/dialogs/welcome-dialog.c:608
+#: app/dialogs/preferences-dialog.c:2064 app/dialogs/welcome-dialog.c:607
 msgid "Small"
 msgstr "Малък"
 
-#: app/dialogs/preferences-dialog.c:2066 app/dialogs/welcome-dialog.c:610
+#: app/dialogs/preferences-dialog.c:2066 app/dialogs/welcome-dialog.c:609
 msgid "Medium"
 msgstr "Среден"
 
-#: app/dialogs/preferences-dialog.c:2068 app/dialogs/welcome-dialog.c:612
+#: app/dialogs/preferences-dialog.c:2068 app/dialogs/welcome-dialog.c:611
 msgid "Large"
 msgstr "Голям"
 
-#: app/dialogs/preferences-dialog.c:2070 app/dialogs/welcome-dialog.c:614
+#: app/dialogs/preferences-dialog.c:2070 app/dialogs/welcome-dialog.c:613
 msgid "Huge"
 msgstr "Преголям"
 
 #. Font sizes.
-#: app/dialogs/preferences-dialog.c:2083 app/dialogs/welcome-dialog.c:630
+#: app/dialogs/preferences-dialog.c:2083 app/dialogs/welcome-dialog.c:629
 msgid "Font Scaling"
 msgstr "Мащабиране на шрифт"
 
-#: app/dialogs/preferences-dialog.c:2085 app/dialogs/welcome-dialog.c:632
+#: app/dialogs/preferences-dialog.c:2085 app/dialogs/welcome-dialog.c:631
 msgid "Font scaling will not work with themes using absolute sizes."
 msgstr ""
 "Мащабирането на шрифта не работи за теми с абсолютни размери на шрифта."
 
-#: app/dialogs/preferences-dialog.c:2091 app/dialogs/welcome-dialog.c:638
+#: app/dialogs/preferences-dialog.c:2091 app/dialogs/welcome-dialog.c:637
 msgid "50%"
 msgstr "50%"
 
-#: app/dialogs/preferences-dialog.c:2093 app/dialogs/welcome-dialog.c:640
+#: app/dialogs/preferences-dialog.c:2093 app/dialogs/welcome-dialog.c:639
 msgid "100%"
 msgstr "100%"
 
-#: app/dialogs/preferences-dialog.c:2095 app/dialogs/welcome-dialog.c:642
+#: app/dialogs/preferences-dialog.c:2095 app/dialogs/welcome-dialog.c:641
 msgid "200%"
 msgstr "200%"
 
@@ -17308,12 +17308,12 @@ msgstr "Тема на иконите"
 msgid "Select an Icon Theme"
 msgstr "Избор на тема на иконите"
 
-#: app/dialogs/preferences-dialog.c:2247 app/dialogs/welcome-dialog.c:592
+#: app/dialogs/preferences-dialog.c:2247 app/dialogs/welcome-dialog.c:591
 msgid "Use symbolic icons if available"
 msgstr "Ползване на фигурални икони при наличие"
 
 #: app/dialogs/preferences-dialog.c:2257 app/dialogs/preferences-dialog.c:2258
-#: app/widgets/gimptoolbox.c:523
+#: app/widgets/gimptoolbox.c:525
 msgid "Toolbox"
 msgstr "Кутия с инструменти"
 
@@ -17339,7 +17339,7 @@ msgstr "Показване на активните _четка, шарка и п
 msgid "Show active _image"
 msgstr "Показване на текущото _изображение"
 
-#: app/dialogs/preferences-dialog.c:2291 app/dialogs/welcome-dialog.c:678
+#: app/dialogs/preferences-dialog.c:2291 app/dialogs/welcome-dialog.c:677
 msgid "Use tool _groups"
 msgstr "_Групиране на инструментите"
 
@@ -18514,7 +18514,7 @@ msgid "_Next Tip"
 msgstr "_Следващ съвет"
 
 #. a link to the related section in the user manual
-#: app/dialogs/tips-dialog.c:196 app/dialogs/welcome-dialog.c:1093
+#: app/dialogs/tips-dialog.c:196 app/dialogs/welcome-dialog.c:1092
 msgid "Learn more"
 msgstr "Още информация"
 
@@ -18625,7 +18625,7 @@ msgid "You installed GIMP %s!"
 msgstr "Инсталирахте GIMP %s!"
 
 #. Welcome message: left
-#: app/dialogs/welcome-dialog.c:441
+#: app/dialogs/welcome-dialog.c:440
 msgid ""
 "GIMP is Free Software for image authoring and manipulation.\n"
 "Want to know more?"
@@ -18633,22 +18633,22 @@ msgstr ""
 "GIMP е свободен софтуер за създаване и редактиране на изображения.\n"
 "Искате ли да научите още?"
 
-#: app/dialogs/welcome-dialog.c:470
+#: app/dialogs/welcome-dialog.c:469
 msgid "GIMP website"
 msgstr "Посещаване на сайта на GIMP"
 
-#: app/dialogs/welcome-dialog.c:474
+#: app/dialogs/welcome-dialog.c:473
 msgid "Tutorials"
 msgstr "Уроци"
 
-#: app/dialogs/welcome-dialog.c:479
+#: app/dialogs/welcome-dialog.c:478
 msgid "Documentation"
 msgstr "Документация"
 
 #. XXX: should we add API docs for plug-in developers once it's
 #. * properly set up?
 #. Welcome message: right
-#: app/dialogs/welcome-dialog.c:487
+#: app/dialogs/welcome-dialog.c:486
 msgid ""
 "GIMP is Community Software under the GNU general public license v3.\n"
 "Want to contribute?"
@@ -18656,77 +18656,77 @@ msgstr ""
 "GIMP е софтуер на общността под Общ публичен лиценз на GNU, версия v3.\n"
 "Искате ли да помогнете?"
 
-#: app/dialogs/welcome-dialog.c:512
+#: app/dialogs/welcome-dialog.c:511
 msgid "Contributing"
 msgstr "Допринасяне"
 
-#: app/dialogs/welcome-dialog.c:517
+#: app/dialogs/welcome-dialog.c:516
 msgid "Donating"
 msgstr "Даряване"
 
-#: app/dialogs/welcome-dialog.c:557
+#: app/dialogs/welcome-dialog.c:556
 msgid "Color scheme"
 msgstr "Цветова схема"
 
-#: app/dialogs/welcome-dialog.c:583
+#: app/dialogs/welcome-dialog.c:582
 msgid "Icon theme"
 msgstr "Тема на иконите"
 
-#: app/dialogs/welcome-dialog.c:596
+#: app/dialogs/welcome-dialog.c:595
 msgid "Icon Scaling"
 msgstr "Мащабиране на шрифт"
 
-#: app/dialogs/welcome-dialog.c:655
+#: app/dialogs/welcome-dialog.c:654
 msgid "GUI Language (requires restart)"
 msgstr "Език на интерфейса (изисква рестартиране)"
 
-#: app/dialogs/welcome-dialog.c:660
+#: app/dialogs/welcome-dialog.c:659
 msgid "Additional Customizations"
 msgstr "Допълнително персонализиране"
 
-#: app/dialogs/welcome-dialog.c:664
+#: app/dialogs/welcome-dialog.c:663
 msgid "Merge menu and title bar (requires restart)"
 msgstr ""
 "Сливане на лентата за меню и заглавната лента (изисква рестартиране на "
 "програмата)"
 
-#: app/dialogs/welcome-dialog.c:672
+#: app/dialogs/welcome-dialog.c:671
 msgid "Enable check for updates (requires internet)"
 msgstr "Включване на проверка за обновления (необходим е Интернет)"
 
-#: app/dialogs/welcome-dialog.c:706
+#: app/dialogs/welcome-dialog.c:705
 msgid "C_reate"
 msgstr "_Създаване"
 
-#: app/dialogs/welcome-dialog.c:715
+#: app/dialogs/welcome-dialog.c:714
 msgid "Open an Existing Image"
 msgstr "Отваряне на съществуващо изображение"
 
 #. Recent Files
-#: app/dialogs/welcome-dialog.c:727
+#: app/dialogs/welcome-dialog.c:726
 msgid "Recent Images"
 msgstr "Скорошни изображения"
 
-#: app/dialogs/welcome-dialog.c:819
+#: app/dialogs/welcome-dialog.c:818
 msgid "O_pen Selected Images"
 msgstr "_Отваряне на избраните изображения"
 
-#: app/dialogs/welcome-dialog.c:828
+#: app/dialogs/welcome-dialog.c:827
 msgid ""
 "Show on Start (You can show the Welcome dialog again from the \"Help\" menu)"
 msgstr ""
 "Показване при стартиране. Може да го покажете отново от менюто „Помощ“."
 
-#: app/dialogs/welcome-dialog.c:856
+#: app/dialogs/welcome-dialog.c:855
 #, c-format
 msgid "Ways to contribute"
 msgstr "Начини да помогнете"
 
-#: app/dialogs/welcome-dialog.c:865 app/dialogs/welcome-dialog.c:876
+#: app/dialogs/welcome-dialog.c:864 app/dialogs/welcome-dialog.c:875
 msgid "Report Bugs"
 msgstr "Докладване на грешки"
 
-#: app/dialogs/welcome-dialog.c:867
+#: app/dialogs/welcome-dialog.c:866
 #, c-format
 msgid ""
 "As any application, GIMP is not bug-free, so reporting bugs that you "
@@ -18735,50 +18735,50 @@ msgstr ""
 "Както всяка друга програма и в GIMP има грешки. Докладването им е ключово за "
 "по-нататъшната разработка."
 
-#: app/dialogs/welcome-dialog.c:880 app/dialogs/welcome-dialog.c:890
+#: app/dialogs/welcome-dialog.c:879 app/dialogs/welcome-dialog.c:889
 msgid "Write Code"
 msgstr "Програмиране"
 
-#: app/dialogs/welcome-dialog.c:882
+#: app/dialogs/welcome-dialog.c:881
 #, c-format
 msgid ""
 "Our Developer Website is where you want to start learning about being a code "
 "contributor."
 msgstr "Уебсайтът за разработчици ще ви помогне да станете сътрудник по кода."
 
-#: app/dialogs/welcome-dialog.c:894 app/dialogs/welcome-dialog.c:904
+#: app/dialogs/welcome-dialog.c:893 app/dialogs/welcome-dialog.c:903
 msgid "Translate"
 msgstr "Превод"
 
-#: app/dialogs/welcome-dialog.c:896
+#: app/dialogs/welcome-dialog.c:895
 #, c-format
 msgid "Contact the respective translation team for your language"
 msgstr "Свържете се с екипа за превод на езика ви"
 
-#: app/dialogs/welcome-dialog.c:908
+#: app/dialogs/welcome-dialog.c:907
 msgid "Donate"
 msgstr "Даряване"
 
-#: app/dialogs/welcome-dialog.c:910
+#: app/dialogs/welcome-dialog.c:909
 #, c-format
 msgid "Donating money is important: it makes GIMP sustainable."
 msgstr "Даряването на средства позволява на GIMP да съществува."
 
-#: app/dialogs/welcome-dialog.c:918
+#: app/dialogs/welcome-dialog.c:917
 msgid "Donate via Liberapay"
 msgstr "Даряване през Liberapay"
 
-#: app/dialogs/welcome-dialog.c:921
+#: app/dialogs/welcome-dialog.c:920
 msgid "Other donation options"
 msgstr "Други варианти за дарения"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:955
+#: app/dialogs/welcome-dialog.c:954
 #, c-format
 msgid "GIMP %s Release Notes"
 msgstr "Бележки за версия %s GIMP"
 
-#: app/dialogs/welcome-dialog.c:1066
+#: app/dialogs/welcome-dialog.c:1065
 #, c-format
 msgid "Click on release items with a %s bullet point to get a tour."
 msgstr ""
@@ -19225,7 +19225,7 @@ msgstr "(изчистване)"
 #: app/display/gimpdisplayshell-title.c:410
 #: app/display/gimpdisplayshell-title.c:419 app/widgets/gimpactiongroup.c:1205
 #: app/widgets/gimpbuffersourcebox.c:166 app/widgets/gimpbuffersourcebox.c:296
-#: app/widgets/gimpdeviceinfo.c:1147 app/widgets/gimpdeviceinfo.c:1172
+#: app/widgets/gimpdeviceinfo.c:1148 app/widgets/gimpdeviceinfo.c:1173
 msgid "(none)"
 msgstr "(нищо)"
 
@@ -19273,6 +19273,25 @@ msgstr "Профил на коректура"
 #: app/display/gimpstatusbar.c:534
 msgid "_Soft-proofing Profile: "
 msgstr "_Профил на коректура:"
+
+#: app/display/gimpstatusbar.c:543
+msgid "Perceptual"
+msgstr "Перцептуален"
+
+#: app/display/gimpstatusbar.c:544
+msgid "Relative Colorimetric"
+msgstr "Относително колориметричен"
+
+#: app/display/gimpstatusbar.c:545 app/operations/gimphuesaturationconfig.c:107
+#: app/operations/gimphuesaturationconfig.c:108
+#: app/operations/gimpoperationcolorize.c:106
+#: app/operations/gimpoperationcolorize.c:107
+msgid "Saturation"
+msgstr "Насищане"
+
+#: app/display/gimpstatusbar.c:546
+msgid "Absolute Colorimetric"
+msgstr "Абсолютно колориметричен"
 
 #: app/display/gimpstatusbar.c:553
 msgid "_Rendering Intent: "
@@ -20538,13 +20557,6 @@ msgstr "Неуспешен запис на файл с криви:"
 msgid "Hue"
 msgstr "Нюанс"
 
-#: app/operations/gimphuesaturationconfig.c:107
-#: app/operations/gimphuesaturationconfig.c:108
-#: app/operations/gimpoperationcolorize.c:106
-#: app/operations/gimpoperationcolorize.c:107
-msgid "Saturation"
-msgstr "Насищане"
-
 #: app/operations/gimphuesaturationconfig.c:113
 #: app/operations/gimphuesaturationconfig.c:114
 #: app/operations/gimpoperationcolorize.c:112
@@ -20832,7 +20844,7 @@ msgid "No patterns available for use with this tool."
 msgstr "Няма налични четки за този инструмент."
 
 #: app/paint/gimpcloneoptions.c:67 app/tools/gimpbucketfilloptions.c:217
-#: app/tools/gimpbucketfilloptions.c:768 app/tools/gimpcloneoptions-gui.c:246
+#: app/tools/gimpbucketfilloptions.c:773 app/tools/gimpcloneoptions-gui.c:246
 msgid "Source"
 msgstr "Източник"
 
@@ -21840,22 +21852,22 @@ msgstr "Името на ресурса „%s“ не може да се пром
 #. TODO: write a more explicit error message after
 #. * string freeze.
 #.
-#: app/pdb/text-layer-cmds.c:85 app/pdb/text-layer-cmds.c:111
+#: app/pdb/text-layer-cmds.c:85 app/pdb/text-layer-cmds.c:112
 #, c-format
 msgid "Failed to create text layer"
 msgstr "Неуспешно създаване на текстови слой"
 
-#: app/pdb/text-layer-cmds.c:176 app/pdb/text-layer-cmds.c:314
-#: app/pdb/text-layer-cmds.c:379 app/pdb/text-layer-cmds.c:438
-#: app/pdb/text-layer-cmds.c:496 app/pdb/text-layer-cmds.c:554
-#: app/pdb/text-layer-cmds.c:612 app/pdb/text-layer-cmds.c:670
-#: app/pdb/text-layer-cmds.c:728 app/pdb/text-layer-cmds.c:784
-#: app/pdb/text-layer-cmds.c:842 app/pdb/text-layer-cmds.c:900
-#: app/pdb/text-layer-cmds.c:958 app/pdb/text-layer-cmds.c:993
+#: app/pdb/text-layer-cmds.c:177 app/pdb/text-layer-cmds.c:315
+#: app/pdb/text-layer-cmds.c:380 app/pdb/text-layer-cmds.c:439
+#: app/pdb/text-layer-cmds.c:497 app/pdb/text-layer-cmds.c:555
+#: app/pdb/text-layer-cmds.c:613 app/pdb/text-layer-cmds.c:671
+#: app/pdb/text-layer-cmds.c:729 app/pdb/text-layer-cmds.c:785
+#: app/pdb/text-layer-cmds.c:843 app/pdb/text-layer-cmds.c:901
+#: app/pdb/text-layer-cmds.c:959 app/pdb/text-layer-cmds.c:994
 msgid "Set text layer attribute"
 msgstr "Промяна на настройките на слоя"
 
-#: app/pdb/text-layer-cmds.c:245
+#: app/pdb/text-layer-cmds.c:246
 msgid "Set text layer markup"
 msgstr "Задаване на маркирането на текста на слоя"
 
@@ -22909,7 +22921,7 @@ msgstr "Засичане на контури"
 msgid "(computing...)"
 msgstr "(изчисляване…)"
 
-#: app/tools/gimpbucketfilloptions.c:773
+#: app/tools/gimpbucketfilloptions.c:778
 msgid "Detect opacity rather than grayscale"
 msgstr "Засичане на непрозрачността, а не сивостта"
 
@@ -23902,7 +23914,7 @@ msgid "Y:"
 msgstr "Y:"
 
 #. the color label
-#: app/tools/gimpgradienttool-editor.c:1345 app/tools/gimptextoptions.c:852
+#: app/tools/gimpgradienttool-editor.c:1345 app/tools/gimptextoptions.c:855
 msgid "Color:"
 msgstr "Цвят:"
 
@@ -24757,7 +24769,7 @@ msgstr "Текущ"
 msgid "Fixed"
 msgstr "Постоянен"
 
-#: app/tools/gimprectangleoptions.c:1006 app/tools/gimptextoptions.c:810
+#: app/tools/gimprectangleoptions.c:1006 app/tools/gimptextoptions.c:813
 msgid "Size:"
 msgstr "Размер:"
 
@@ -25134,31 +25146,31 @@ msgstr "Широчина на линията за очертанията"
 msgid "Outline miter limit"
 msgstr "Ограничение на скосяването на очертанията"
 
-#: app/tools/gimptextoptions.c:841
+#: app/tools/gimptextoptions.c:844
 msgid "Hinting:"
 msgstr "Заглаждане:"
 
-#: app/tools/gimptextoptions.c:845
+#: app/tools/gimptextoptions.c:848
 msgid "Text Color"
 msgstr "Цвят на текста"
 
-#: app/tools/gimptextoptions.c:858
+#: app/tools/gimptextoptions.c:861
 msgid "Style:"
 msgstr "Стил:"
 
-#: app/tools/gimptextoptions.c:862
+#: app/tools/gimptextoptions.c:865
 msgid "Outline Options"
 msgstr "Настройки на очертанията"
 
-#: app/tools/gimptextoptions.c:883
+#: app/tools/gimptextoptions.c:886
 msgid "Justify:"
 msgstr "Подравняване:"
 
-#: app/tools/gimptextoptions.c:913
+#: app/tools/gimptextoptions.c:916
 msgid "Box:"
 msgstr "Поле:"
 
-#: app/tools/gimptextoptions.c:953
+#: app/tools/gimptextoptions.c:956
 msgid "Language:"
 msgstr "Език:"
 
@@ -27305,11 +27317,11 @@ msgstr "Крива на натиска:"
 msgid "Pad actions"
 msgstr "Действие на контролера"
 
-#: app/widgets/gimpdeviceinfo.c:1132 app/widgets/gimpdeviceinfo.c:1157
+#: app/widgets/gimpdeviceinfo.c:1133 app/widgets/gimpdeviceinfo.c:1158
 msgid "(Device not present)"
 msgstr "(липсва устройство)"
 
-#: app/widgets/gimpdeviceinfo.c:1140 app/widgets/gimpdeviceinfo.c:1165
+#: app/widgets/gimpdeviceinfo.c:1141 app/widgets/gimpdeviceinfo.c:1166
 msgid "(Virtual device)"
 msgstr "(виртуално устройство)"
 
@@ -27394,26 +27406,26 @@ msgstr "Ивица %d"
 msgid "Select Pad Event Action"
 msgstr "Избор на действие за този контролер"
 
-#: app/widgets/gimpdevicestatus.c:161
+#: app/widgets/gimpdevicestatus.c:164
 msgid "Save device status"
 msgstr "Запазване състоянието на устройството"
 
-#: app/widgets/gimpdevicestatus.c:629
+#: app/widgets/gimpdevicestatus.c:632
 #, c-format
 msgid "Foreground: %d, %d, %d (in color space of \"%s\")"
 msgstr "Цвят за рисуване: %d, %d, %d (в цветово пространство „%s“)"
 
-#: app/widgets/gimpdevicestatus.c:633
+#: app/widgets/gimpdevicestatus.c:636
 #, c-format
 msgid "Foreground: %d, %d, %d (in sRGB)"
 msgstr "Цвят за рисуване: %d, %d, %d (в sRGB)"
 
-#: app/widgets/gimpdevicestatus.c:640
+#: app/widgets/gimpdevicestatus.c:643
 #, c-format
 msgid "Background: %d, %d, %d (in color space of \"%s\")"
 msgstr "Фон: %d, %d, %d (в цветово пространство „%s“)"
 
-#: app/widgets/gimpdevicestatus.c:644
+#: app/widgets/gimpdevicestatus.c:647
 #, c-format
 msgid "Background: %d, %d, %d (in sRGB)"
 msgstr "Фон: %d, %d, %d (в sRGB)"
