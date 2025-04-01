@@ -494,6 +494,11 @@ const
 	CP_ACP = 0;
 	CP_UTF8 = 65001;
   COLOR_HOTLIGHT = 26;
+#if Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != ""
+	GIMP_URL = 'https://gimp.org/downloads/devel/';
+#else
+	GIMP_URL = 'https://gimp.org/downloads/';
+#endif
 
 var
 	//pgSimple: TWizardPage;
@@ -657,10 +662,21 @@ begin
 end;
 
 function InitializeSetup(): Boolean;
+var
+    ErrorCode: Integer;
 #if (Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != "") || (Defined(GIMP_RC_VERSION) && GIMP_RC_VERSION != "") || Defined(DEVEL_WARNING)
-var Message,Buttons: TArrayOfString;
+    Message,Buttons: TArrayOfString;
 #endif
 begin
+	CheckInstallType;
+
+	if (not WizardSilent) and (InstallType = 'itDowngrade') then begin
+	    if SuppressibleMsgBox(CustomMessage('DowngradeError'), [Installed_AppVersion, '{#FULL_GIMP_VERSION}']), mbCriticalError, MB_OK, IDOK) = IDOK then begin
+			ShellExecAsOriginalUser('',GIMP_URL,'','',SW_SHOW,ewNoWait,ErrorCode);
+			Exit;
+		end;
+	end;
+	
 	ConfigOverride := coUndefined;
 
 	Check32bitOverride;
@@ -1451,14 +1467,6 @@ end;
 
 
 //7.2 INSTALL: show GIMP text (aka billboard) above progress bar
-#if Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != ""
-	const
-		GIMP_URL = 'https://gimp.org/downloads/devel/';
-#else
-	const
-		GIMP_URL = 'https://gimp.org/downloads/';
-#endif
-
 procedure lblURL_OnClick(Sender: TObject);
 var ErrorCode: Integer;
 begin
