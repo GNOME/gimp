@@ -65,6 +65,7 @@ $assemble_matrix
 
       if (GIMP_IS_DRAWABLE (item)                             &&
           item != GIMP_ITEM (mask)                            &&
+          ! GIMP_IS_TEXT_LAYER (item)                         &&
           ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
           ! gimp_channel_is_empty (mask))
         {
@@ -213,6 +214,7 @@ HELP
 
       if (GIMP_IS_DRAWABLE (item)                             &&
           item != GIMP_ITEM (mask)                            &&
+          ! GIMP_IS_TEXT_LAYER (item)                         &&
           ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
           ! gimp_channel_is_empty (mask))
         {
@@ -451,6 +453,7 @@ HELP
 
       if (GIMP_IS_DRAWABLE (item)                             &&
           item != GIMP_ITEM (mask)                            &&
+          ! GIMP_IS_TEXT_LAYER (item)                         &&
           ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
           ! gimp_channel_is_empty (mask))
         {
@@ -808,6 +811,7 @@ CODE
               "core/gimpdrawable-transform.h"
               "core/gimpimage.h"
               "core/gimpprogress.h"
+              "text/gimptextlayer.h"
               "gimppdb-utils.h"
               "gimppdbcontext.h"
               "gimp-intl.h");

@@ -30,6 +30,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "text-types.h"
 
@@ -38,6 +39,7 @@
 #include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp.h"
+#include "core/gimp-transform-resize.h"
 #include "core/gimp-utils.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
@@ -53,6 +55,7 @@
 
 #include "gimptext.h"
 #include "gimptextlayer.h"
+#include "gimptextlayer-transform.h"
 #include "gimptextlayout.h"
 #include "gimptextlayout-render.h"
 
@@ -146,14 +149,10 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
 
   item_class->duplicate             = gimp_text_layer_duplicate;
   item_class->rename                = gimp_text_layer_rename;
-
-#if 0
   item_class->scale                 = gimp_text_layer_scale;
   item_class->flip                  = gimp_text_layer_flip;
   item_class->rotate                = gimp_text_layer_rotate;
   item_class->transform             = gimp_text_layer_transform;
-#endif
-
   item_class->default_name          = _("Text Layer");
   item_class->rename_desc           = _("Rename Text Layer");
   item_class->translate_desc        = _("Move Text Layer");
@@ -691,6 +690,81 @@ gimp_text_layer_text_changed (GimpTextLayer *layer)
 }
 
 static gboolean
+gimp_text_layer_resize_buffer (GimpTextLayer  *layer,
+                               GimpTextLayout *layout)
+{
+  GimpItem     *item     = GIMP_ITEM (layer);
+  GimpDrawable *drawable = GIMP_DRAWABLE (layer);
+  gint          x;
+  gint          y;
+  gint          X;
+  gint          Y;
+  gint          width    = 0;
+  gint          height   = 0;
+
+  if (gimp_text_layout_get_size (layout, &width, &height))
+    {
+      GimpMatrix3 matrix;
+
+      gimp_text_get_transformation (layer->text, &matrix);
+      gimp_transform_resize_boundary (&matrix, GIMP_TRANSFORM_RESIZE_ADJUST,
+                                      0, 0, width, height,
+                                      &x, &y, &X, &Y);
+
+      if (x != 0 || y != 0)
+        {
+          gimp_matrix3_translate (&matrix, -x, -y);
+
+          g_object_set (layer->text,
+                        "offset-x", matrix.coeff[0][2],
+                        "offset-y", matrix.coeff[1][2],
+                        NULL);
+        }
+
+      if (x != 0 || y != 0 ||
+          ! gimp_drawable_has_alpha (drawable)   ||
+          (X - x) != gimp_item_get_width  (item) ||
+          (Y - y) != gimp_item_get_height (item))
+        {
+          const gint  new_x = x + gimp_item_get_offset_x (item);
+          const gint  new_y = y + gimp_item_get_offset_y (item);
+          const gint  new_width = X - x;
+          const gint  new_height = Y - y;
+          GeglBuffer *new_buffer;
+
+          new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
+                                        gimp_text_layer_get_format (layer));
+          gimp_drawable_set_buffer (drawable, FALSE, NULL, new_buffer);
+          g_object_unref (new_buffer);
+
+          if (gimp_layer_get_mask (GIMP_LAYER (layer)))
+            {
+              GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (layer));
+
+              static GimpContext *unused_eek = NULL;
+
+              if (! unused_eek)
+                {
+                  GimpImage *image = gimp_item_get_image(item);
+
+                  unused_eek = gimp_context_new (image->gimp,
+                                                 "eek", NULL);
+                }
+
+              gimp_item_resize (GIMP_ITEM (mask), unused_eek,
+                                GIMP_FILL_TRANSPARENT, new_width, new_height,
+                                new_x, new_y);
+            }
+        }
+
+      layer->layout_width = width;
+      layer->layout_height = height;
+    }
+
+  return width > 0 && height > 0;
+}
+
+static gboolean
 gimp_text_layer_render (GimpTextLayer *layer)
 {
   GimpDrawable   *drawable;
@@ -700,8 +774,7 @@ gimp_text_layer_render (GimpTextLayer *layer)
   GimpTextLayout *layout;
   gdouble         xres;
   gdouble         yres;
-  gint            width;
-  gint            height;
+  gboolean        result;
   GError         *error = NULL;
 
   if (! layer->text)
@@ -733,33 +806,7 @@ gimp_text_layer_render (GimpTextLayer *layer)
 
   g_object_freeze_notify (G_OBJECT (drawable));
 
-  if (gimp_text_layout_get_size (layout, &width, &height) &&
-      (width  != gimp_item_get_width  (item) ||
-       height != gimp_item_get_height (item) ||
-       gimp_text_layer_get_format (layer) !=
-       gimp_drawable_get_format (drawable)))
-    {
-      GeglBuffer *new_buffer;
-
-      new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
-                                    gimp_text_layer_get_format (layer));
-      gimp_drawable_set_buffer (drawable, FALSE, NULL, new_buffer);
-      g_object_unref (new_buffer);
-
-      if (gimp_layer_get_mask (GIMP_LAYER (layer)))
-        {
-          GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (layer));
-
-          static GimpContext *unused_eek = NULL;
-
-          if (! unused_eek)
-            unused_eek = gimp_context_new (image->gimp, "eek", NULL);
-
-          gimp_item_resize (GIMP_ITEM (mask),
-                            unused_eek, GIMP_FILL_TRANSPARENT,
-                            width, height, 0, 0);
-        }
-    }
+  result = gimp_text_layer_resize_buffer (layer, layout);
 
   if (layer->auto_rename)
     {
@@ -795,14 +842,14 @@ gimp_text_layer_render (GimpTextLayer *layer)
         }
     }
 
-  if (width > 0 && height > 0)
+  if (result)
     gimp_text_layer_render_layout (layer, layout);
 
   g_object_unref (layout);
 
   g_object_thaw_notify (G_OBJECT (drawable));
 
-  return (width > 0 && height > 0);
+  return result;
 }
 
 static void

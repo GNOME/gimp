@@ -27,6 +27,7 @@
 
 #include "text-types.h"
 
+#include "core/gimp-transform-resize.h"
 #include "core/gimp-transform-utils.h"
 #include "core/gimpimage-undo.h"
 
@@ -43,6 +44,33 @@ static gboolean  gimp_text_layer_set_transformation  (GimpTextLayer *layer,
                                                       GimpMatrix3   *matrix);
 
 
+static gboolean
+gimp_text_layer_transform_scale (GimpTextLayer *layer,
+                                 gint           new_width,
+                                 gint           new_height,
+                                 gint           new_offset_x,
+                                 gint           new_offset_y)
+{
+  GimpItem    *item = GIMP_ITEM (layer);
+  GimpMatrix3   matrix;
+  GimpMatrix3   scale;
+
+  if (! gimp_text_layer_get_transformation (layer, &matrix))
+    return FALSE;
+
+  gimp_transform_matrix_scale (&scale,
+                               gimp_item_get_offset_x (item),
+                               gimp_item_get_offset_y (item),
+                               gimp_item_get_width (item),
+                               gimp_item_get_height (item),
+                               new_offset_x, new_offset_y,
+                               new_width, new_height);
+
+  gimp_matrix3_mult (&scale, &matrix);
+
+  return gimp_text_layer_set_transformation (layer, &matrix);
+}
+
 void
 gimp_text_layer_scale (GimpItem               *item,
                        gint                    new_width,
@@ -52,7 +80,25 @@ gimp_text_layer_scale (GimpItem               *item,
                        GimpInterpolationType   interpolation_type,
                        GimpProgress           *progress)
 {
-  /*  TODO  */
+  GimpTextLayer *layer = GIMP_TEXT_LAYER (item);
+
+  if (gimp_text_layer_transform_scale (layer, new_width, new_height,
+                                       new_offset_x, new_offset_y))
+    {
+      GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (layer));
+
+      if (mask)
+        gimp_item_scale (GIMP_ITEM (mask),
+                         new_width, new_height,
+                         new_offset_x, new_offset_y,
+                         interpolation_type, progress);
+    }
+  else
+    {
+      gimp_text_layer_parent_class ()->scale (item, new_width, new_height,
+                                              new_offset_x, new_offset_y,
+                                              interpolation_type, progress);
+    }
 }
 
 static gboolean
@@ -120,8 +166,8 @@ gimp_text_layer_rotate (GimpItem         *item,
 {
   GimpTextLayer *layer = GIMP_TEXT_LAYER (item);
 
-  if (! gimp_text_layer_transform_rotate (layer,
-                                          rotate_type, center_x, center_y))
+  if (gimp_text_layer_transform_rotate (layer,
+                                        rotate_type, center_x, center_y))
     {
       GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (layer));
 
@@ -137,17 +183,52 @@ gimp_text_layer_rotate (GimpItem         *item,
     }
 }
 
+static gboolean
+gimp_text_layer_transform_matrix (GimpTextLayer          *layer,
+                                  const GimpMatrix3      *matrix,
+                                  GimpTransformDirection  direction)
+{
+  GimpMatrix3 left = *matrix;
+  GimpMatrix3 right;
+
+  if (! gimp_text_layer_get_transformation (layer, &right))
+    return FALSE;
+
+  if (direction == GIMP_TRANSFORM_BACKWARD)
+    gimp_matrix3_invert (&left);
+
+  gimp_matrix3_mult (&left, &right);
+
+  return gimp_text_layer_set_transformation (layer, &right);
+}
+
 void
 gimp_text_layer_transform (GimpItem               *item,
                            GimpContext            *context,
                            const GimpMatrix3      *matrix,
                            GimpTransformDirection  direction,
                            GimpInterpolationType   interpolation_type,
-                           gboolean                supersample,
                            GimpTransformResize     clip_result,
                            GimpProgress           *progress)
 {
-  /*  TODO  */
+  GimpTextLayer *layer = GIMP_TEXT_LAYER (item);
+
+  if (gimp_text_layer_transform_matrix (layer, matrix, direction))
+    {
+      GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (layer));
+
+      if (mask)
+        gimp_item_transform (GIMP_ITEM (mask), context,
+                             matrix, direction, interpolation_type,
+                             clip_result, progress);
+    }
+  else
+    {
+      gimp_text_layer_parent_class ()->transform (item, context,
+                                                  matrix, direction,
+                                                  interpolation_type,
+                                                  clip_result, progress);
+    }
 }
 
 static GimpItemClass *
@@ -174,6 +255,11 @@ gimp_text_layer_get_transformation (GimpTextLayer *layer,
 
   gimp_text_get_transformation (layer->text, matrix);
 
+  gimp_matrix3_translate (matrix,
+                          gimp_item_get_offset_x (GIMP_ITEM (layer)),
+                          gimp_item_get_offset_y (GIMP_ITEM (layer)));
+
+
   return TRUE;
 }
 
@@ -181,17 +267,36 @@ static gboolean
 gimp_text_layer_set_transformation (GimpTextLayer *layer,
                                     GimpMatrix3   *matrix)
 {
-  GimpMatrix2  trafo;
+  GimpMatrix2 trafo;
+  gint        x;
+  gint        y;
+  gint        unused;
 
   if (! gimp_matrix3_is_affine (matrix))
     return FALSE;
+
+  gimp_transform_resize_boundary (matrix,
+                                  GIMP_TRANSFORM_RESIZE_ADJUST,
+                                  0, 0, layer->layout_width,
+                                  layer->layout_height, &x, &y,
+                                  &unused, &unused);
+
+
+  gimp_item_translate (GIMP_ITEM (layer),
+                       x - gimp_item_get_offset_x (GIMP_ITEM (layer)),
+                       y - gimp_item_get_offset_y (GIMP_ITEM (layer)),
+                       FALSE);
+
+  gimp_matrix3_translate (matrix,
+                          - gimp_item_get_offset_x (GIMP_ITEM (layer)),
+                          - gimp_item_get_offset_y (GIMP_ITEM (layer)));
 
   trafo.coeff[0][0] = matrix->coeff[0][0];
   trafo.coeff[0][1] = matrix->coeff[0][1];
   trafo.coeff[1][0] = matrix->coeff[1][0];
   trafo.coeff[1][1] = matrix->coeff[1][1];
 
-  gimp_text_layer_set (GIMP_TEXT_LAYER (layer), NULL,
+  gimp_text_layer_set (layer, NULL,
                        "transformation", &trafo,
                        "offset-x",       matrix->coeff[0][2],
                        "offset-y",       matrix->coeff[1][2],

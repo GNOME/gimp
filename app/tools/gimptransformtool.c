@@ -39,6 +39,8 @@
 #include "core/gimpprogress.h"
 #include "core/gimp-transform-resize.h"
 
+#include "text/gimptextlayer.h"
+
 #include "vectors/gimppath.h"
 
 #include "display/gimpdisplay.h"
@@ -856,7 +858,8 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   switch (options->type)
     {
     case GIMP_TRANSFORM_TYPE_LAYER:
-      if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
+      if (! GIMP_IS_TEXT_LAYER (selected_objects->data) &&
+          ! gimp_channel_is_empty (gimp_image_get_mask (image)))
         {
           orig_buffer = gimp_drawable_transform_cut (
             selected_objects,

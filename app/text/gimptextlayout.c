@@ -394,8 +394,8 @@ gimp_text_layout_get_transform (GimpTextLayout *layout,
   matrix->xy = text->transformation.coeff[0][1] * 1.0;
   matrix->yx = text->transformation.coeff[1][0] * norm;
   matrix->yy = text->transformation.coeff[1][1] * 1.0;
-  matrix->x0 = 0;
-  matrix->y0 = 0;
+  matrix->x0 = text->offset_x;
+  matrix->y0 = text->offset_y;
 }
 
 void

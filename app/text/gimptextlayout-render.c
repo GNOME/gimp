@@ -67,6 +67,7 @@ gimp_text_layout_render (GimpTextLayout    *layout,
     }
 
   pango_layout = gimp_text_layout_get_pango_layout (layout);
+  pango_cairo_update_layout (cr, pango_layout);
 
   if (path)
     pango_cairo_layout_path (cr, pango_layout);

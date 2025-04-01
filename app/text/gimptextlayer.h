@@ -48,6 +48,8 @@ struct _GimpTextLayer
   gboolean      text_parasite_is_old; /* Format before XCF 19. */
   gboolean      auto_rename;
   gboolean      modified;
+  gint          layout_width;
+  gint          layout_height;
 
   const Babl   *convert_format;
 

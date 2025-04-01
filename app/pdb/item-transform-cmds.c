@@ -39,6 +39,7 @@
 #include "core/gimpitem.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimpprogress.h"
+#include "text/gimptextlayer.h"
 
 #include "gimppdb.h"
 #include "gimppdb-utils.h"
@@ -130,6 +131,7 @@ item_transform_flip_simple_invoker (GimpProcedure         *procedure,
 
           if (GIMP_IS_DRAWABLE (item)                             &&
               item != GIMP_ITEM (mask)                            &&
+              ! GIMP_IS_TEXT_LAYER (item)                         &&
               ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
               ! gimp_channel_is_empty (mask))
             {
@@ -215,6 +217,7 @@ item_transform_flip_invoker (GimpProcedure         *procedure,
 
           if (GIMP_IS_DRAWABLE (item)                             &&
               item != GIMP_ITEM (mask)                            &&
+              ! GIMP_IS_TEXT_LAYER (item)                         &&
               ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
               ! gimp_channel_is_empty (mask))
             {
@@ -319,6 +322,7 @@ item_transform_perspective_invoker (GimpProcedure         *procedure,
 
           if (GIMP_IS_DRAWABLE (item)                             &&
               item != GIMP_ITEM (mask)                            &&
+              ! GIMP_IS_TEXT_LAYER (item)                         &&
               ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
               ! gimp_channel_is_empty (mask))
             {
@@ -407,6 +411,7 @@ item_transform_rotate_simple_invoker (GimpProcedure         *procedure,
 
           if (GIMP_IS_DRAWABLE (item)                             &&
               item != GIMP_ITEM (mask)                            &&
+              ! GIMP_IS_TEXT_LAYER (item)                         &&
               ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
               ! gimp_channel_is_empty (mask))
             {
@@ -500,6 +505,7 @@ item_transform_rotate_invoker (GimpProcedure         *procedure,
 
           if (GIMP_IS_DRAWABLE (item)                             &&
               item != GIMP_ITEM (mask)                            &&
+              ! GIMP_IS_TEXT_LAYER (item)                         &&
               ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
               ! gimp_channel_is_empty (mask))
             {
@@ -596,6 +602,7 @@ item_transform_scale_invoker (GimpProcedure         *procedure,
 
           if (GIMP_IS_DRAWABLE (item)                             &&
               item != GIMP_ITEM (mask)                            &&
+              ! GIMP_IS_TEXT_LAYER (item)                         &&
               ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
               ! gimp_channel_is_empty (mask))
             {
@@ -687,6 +694,7 @@ item_transform_shear_invoker (GimpProcedure         *procedure,
 
           if (GIMP_IS_DRAWABLE (item)                             &&
               item != GIMP_ITEM (mask)                            &&
+              ! GIMP_IS_TEXT_LAYER (item)                         &&
               ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
               ! gimp_channel_is_empty (mask))
             {
@@ -789,6 +797,7 @@ item_transform_2d_invoker (GimpProcedure         *procedure,
 
           if (GIMP_IS_DRAWABLE (item)                             &&
               item != GIMP_ITEM (mask)                            &&
+              ! GIMP_IS_TEXT_LAYER (item)                         &&
               ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
               ! gimp_channel_is_empty (mask))
             {
@@ -899,6 +908,7 @@ item_transform_matrix_invoker (GimpProcedure         *procedure,
 
           if (GIMP_IS_DRAWABLE (item)                             &&
               item != GIMP_ITEM (mask)                            &&
+              ! GIMP_IS_TEXT_LAYER (item)                         &&
               ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
               ! gimp_channel_is_empty (mask))
             {
