@@ -18,6 +18,11 @@
   </section>
 
   <section name="CustomMessages">
+    <!-- Shown when the user tries to downgrade without unninstalling GIMP -->
+    <config name="DowngradeError">
+      <value>You are trying to directly downgrade from GIMP %1 to %2.%n%nPlease remove GIMP yourself before installing this version.</value>
+    </config>
+
     <!-- Shown before the wizard starts on development versions of GIMP -->
     <config name="DevelopmentWarningTitle">
       <value>Development version</value>

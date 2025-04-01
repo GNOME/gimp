@@ -623,6 +623,7 @@ var
 	Installed_AppVersion: String;
 	Installed_AppVersionInt: Int64;
 	Installer_AppVersionInt: Int64;
+	ErrorCode: Integer;
 begin
 	isInstalled := 'notInstalled';
 	if RegQueryStringValue(HKCU, 'Software\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1',
@@ -654,6 +655,13 @@ begin
 	    InstallType := 'itDowngrade';
 	end;
 	DebugMsg('CheckInstallType','Installed GIMP {#GIMP_MUTEX_VERSION} is: ' + Installed_AppVersion + ', installer is: {#FULL_GIMP_VERSION}. So Install type is: ' + InstallType);
+	
+	if (not WizardSilent) and (InstallType = 'itDowngrade') then begin 
+	    if SuppressibleMsgBox(FmtMessage(CustomMessage('DowngradeError'), [Installed_AppVersion, '{#FULL_GIMP_VERSION}']), mbCriticalError, MB_OK, IDOK) = IDOK then begin
+			ShellExecAsOriginalUser('','ms-settings:appsfeatures','','',SW_SHOW,ewNoWait,ErrorCode);
+			Abort;
+		end;
+	end;
 end;
 
 function InitializeSetup(): Boolean;
@@ -661,6 +669,8 @@ function InitializeSetup(): Boolean;
 var Message,Buttons: TArrayOfString;
 #endif
 begin
+	CheckInstallType;
+	
 	ConfigOverride := coUndefined;
 
 	Check32bitOverride;
@@ -1452,11 +1462,11 @@ end;
 
 //7.2 INSTALL: show GIMP text (aka billboard) above progress bar
 #if Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != ""
-	const
-		GIMP_URL = 'https://gimp.org/downloads/devel/';
+const
+	GIMP_URL = 'https://gimp.org/downloads/devel/';
 #else
-	const
-		GIMP_URL = 'https://gimp.org/downloads/';
+const
+	GIMP_URL = 'https://gimp.org/downloads/';
 #endif
 
 procedure lblURL_OnClick(Sender: TObject);
