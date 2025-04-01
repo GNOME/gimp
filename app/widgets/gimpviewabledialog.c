@@ -278,6 +278,11 @@ gimp_viewable_dialog_new (GList        *viewables,
   gimp_dialog_add_buttons_valist (GIMP_DIALOG (dialog), args);
   va_end (args);
 
+  /* Set the default response to OK if set */
+  if (gtk_dialog_get_widget_for_response (GTK_DIALOG (dialog),
+                                          GTK_RESPONSE_OK))
+    gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+
   return GTK_WIDGET (dialog);
 }
 
