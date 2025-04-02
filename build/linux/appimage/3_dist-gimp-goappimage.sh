@@ -99,7 +99,7 @@ fi
 eval $(sed -n 's/^#define  *\([^ ]*\)  *\(.*\) *$/export \1=\2/p' $BUILD_DIR/config.h)
 
 ## Set proper AppImage update channel and App ID
-if [ -z "$GIMP_RELEASE" ] && [ "$GIMP_UNSTABLE" ] || [ "$GIMP_IS_RC_GIT" ]; then
+if [ -z "$GIMP_RELEASE" ] || [ "$GIMP_IS_RC_GIT" ]; then
   export CHANNEL="Continuous"
 elif [ "$GIMP_RELEASE" ] && [ "$GIMP_UNSTABLE" ] || [ "$GIMP_RC_VERSION" ]; then
   export CHANNEL="Pre"
@@ -324,7 +324,9 @@ bund_usr "$UNIX_PREFIX" "share/poppler"
 ### file-wmf support
 bund_usr "$UNIX_PREFIX" "share/fonts/type1/urw-base35/Nimbus*" --dest "share/libwmf/fonts"
 bund_usr "$UNIX_PREFIX" "share/fonts/type1/urw-base35/StandardSymbols*" --dest "share/libwmf/fonts"
-if [ "$GIMP_UNSTABLE" ]; then
+# Note: we want the same test as around the global variable
+# show_debug_menu in app/main.c
+if [ "$GIMP_UNSTABLE" ] || [ -z "$GIMP_RELEASE" ]; then
   ### Image graph support
   bund_usr "$UNIX_PREFIX" "bin/libgvc*" --rename "bin/dot"
   bund_usr "$UNIX_PREFIX" "lib/graphviz/config*"

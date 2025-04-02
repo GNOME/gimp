@@ -157,7 +157,9 @@ bundle "$GIMP_PREFIX" bin/gimp*.exe
 bundle "$GIMP_PREFIX" bin/libgimp*.dll
 ### Bundled just to promote GEGL. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/10580
 bundle "$GIMP_PREFIX" bin/gegl.exe
-if [ "$GIMP_UNSTABLE" ] && [[ ! "$MSYSTEM_PREFIX" =~ "32" ]]; then
+# Note: we want the same test as around the global variable
+# show_debug_menu in app/main.c
+if [ "$GIMP_UNSTABLE" ] || [ -z "$GIMP_RELEASE" ] && [[ ! "$MSYSTEM_PREFIX" =~ "32" ]]; then
   ### Needed for 'Show image graph'.
   #### See: https://gitlab.gnome.org/GNOME/gimp/-/issues/6045
   bundle "$MSYSTEM_PREFIX" bin/dot.exe
@@ -171,7 +173,7 @@ bundle "$MSYSTEM_PREFIX" bin/gdbus.exe
 ### Needed for hyperlink support etc... See: https://gitlab.gnome.org/GNOME/gimp/-/issues/12288
 #...when running from `gimp*.exe --verbose`
 bundle "$MSYSTEM_PREFIX" bin/gspawn*-console.exe
-if [ -z "$GIMP_UNSTABLE" ]; then
+if [ -z "$GIMP_UNSTABLE" ] && [ "$GIMP_RELEASE" ]; then
   #...when running from `gimp*.exe`
   bundle "$MSYSTEM_PREFIX" bin/gspawn*-helper.exe
 fi
@@ -189,7 +191,7 @@ if [ -z "$QUASI_MSYS2_ROOT" ]; then
 
   #python.exe is needed for plug-ins output in `gimp-console*.exe`
   bundle "$MSYSTEM_PREFIX" bin/python.exe
-  if [ -z "$GIMP_UNSTABLE" ]; then
+  if [ -z "$GIMP_UNSTABLE" ] && [ "$GIMP_RELEASE" ]; then
     #pythonw.exe is needed to run plug-ins silently in `gimp*.exe`
     bundle "$MSYSTEM_PREFIX" bin/pythonw.exe
   fi
