@@ -408,7 +408,7 @@ Type: files; Name: "{autodesktop}\{reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVer
 Type: filesandordirs; Name: "{app}\lib\babl-0.1"
 Type: filesandordirs; Name: "{app}\lib\gegl-0.4"
 ;This was bunbled in 3.0 RC1 but not needed since the "Debug" menu is hidden in stable releases
-#if (!Defined(GIMP_UNSTABLE) || GIMP_UNSTABLE=="")
+#if (!Defined(GIMP_UNSTABLE) || GIMP_UNSTABLE=="") && (Defined(GIMP_RELEASE) && GIMP_RELEASE != "")
 	Type: files; Name: "{app}\bin\dot.exe"
 #endif
 ;No need to all these python binaries shipped in 3.0 RC1
@@ -665,7 +665,7 @@ begin
 end;
 
 function InitializeSetup(): Boolean;
-#if (Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != "") || (Defined(GIMP_RC_VERSION) && GIMP_RC_VERSION != "") || Defined(DEVEL_WARNING)
+#if (Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != "") || (Defined(GIMP_RC_VERSION) && GIMP_RC_VERSION != "") || (!Defined(GIMP_RELEASE) || GIMP_RELEASE=="") || Defined(DEVEL_WARNING)
 var Message,Buttons: TArrayOfString;
 #endif
 begin
@@ -684,7 +684,7 @@ begin
 		exit;
 
 //Unstable version warning
-#if (Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != "") || (Defined(GIMP_RC_VERSION) && GIMP_RC_VERSION != "") || Defined(DEVEL_WARNING)
+#if (Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != "") || (Defined(GIMP_RC_VERSION) && GIMP_RC_VERSION != "") || (!Defined(GIMP_RELEASE) || GIMP_RELEASE=="") || Defined(DEVEL_WARNING)
 	Explode(Message, CustomMessage('DevelopmentWarning'), #13#10);
 	SetArrayLength(Buttons,2);
 	Buttons[0] := CustomMessage('DevelopmentButtonContinue');
@@ -1580,7 +1580,7 @@ begin
 		InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\pygimp.interp');
     DebugMsg('PrepareInterp','Writing interpreter file for gimp-python: ' + InterpFile);
 
-#if Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != ""
+#if (Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != "") || (!Defined(GIMP_RELEASE) || GIMP_RELEASE=="")
 		//python.exe is prefered in unstable versions because of error output
 		#define PYTHON="python.exe"
 #else
