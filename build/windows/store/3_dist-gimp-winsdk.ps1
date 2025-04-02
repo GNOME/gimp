@@ -92,7 +92,7 @@ ForEach ($line in $(Select-String 'define' $config_path -AllMatches))
   }
 
 ## Get Identity Name (the dir shown in Explorer)
-if (-not $GIMP_RELEASE -and $GIMP_UNSTABLE -or $GIMP_IS_RC_GIT)
+if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
   {
     $IDENTITY_NAME="GIMP.GIMPInsider"
   }
@@ -211,11 +211,11 @@ foreach ($bundle in $supported_archs)
         (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@IDENTITY_NAME@","$IDENTITY_NAME"} |
         Set-Content $msix_arch\AppxManifest.xml
         ### Set Display Name (the name shown in MS Store)
-        if (-not $GIMP_RELEASE -and $GIMP_UNSTABLE -or $GIMP_IS_RC_GIT)
+        if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
           {
             $display_name='GIMP (Insider)'
           }
-        elseif ($GIMP_RELEASE -and $GIMP_UNSTABLE -or $GIMP_RC_VERSION)
+        elseif (($GIMP_RELEASE -and $GIMP_UNSTABLE) -or $GIMP_RC_VERSION)
           {
             $display_name='GIMP (Preview)'
           }
