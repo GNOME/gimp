@@ -353,9 +353,19 @@ svg_extract (GimpProcedure        *procedure,
 
   if (out_has_width && out_has_height)
     {
-      /* "width" and "height" present: the viewbox has no importance (it's only
-       * a coordinate remapping.
-       */
+      /* Starting in librsvg 2.54, rsvg_handle_get_intrinsic_dimensions ()
+       * always returns TRUE for width/height. If width/height default to 100%,
+       * we should check the viewport dimensions */
+      gdouble viewbox_width  = 0;
+      gdouble viewbox_height = 0;
+
+      if (out_has_viewbox)
+        {
+          viewbox_width  = out_viewbox.width - out_viewbox.x;
+          viewbox_height = out_viewbox.height - out_viewbox.y;
+        }
+
+      /* "width" and "height" present */
       if (svg_rsvg_to_gimp_unit (out_width.unit)  != NULL &&
           svg_rsvg_to_gimp_unit (out_height.unit) != NULL)
         {
@@ -364,6 +374,11 @@ svg_extract (GimpProcedure        *procedure,
           extracted_dimensions->width_unit   = svg_rsvg_to_gimp_unit (out_width.unit);
           extracted_dimensions->height       = out_height.length;
           extracted_dimensions->height_unit  = svg_rsvg_to_gimp_unit (out_height.unit);
+
+          if (out_width.length < viewbox_width)
+            extracted_dimensions->width = viewbox_width;
+          if (out_height.length < viewbox_height)
+            extracted_dimensions->height = viewbox_height;
 
           extracted_dimensions->exact_width  = TRUE;
           extracted_dimensions->exact_height = TRUE;
