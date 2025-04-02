@@ -1084,7 +1084,7 @@ gimp_paint_core_expand_drawable (GimpPaintCore    *core,
       core->canvas_buffer = new_buffer;
 
       gimp_get_fill_params (context, fill_type, &color, &pattern, NULL);
-      if (! gimp_drawable_has_alpha (drawable))
+      if (color && ! gimp_drawable_has_alpha (drawable))
         gimp_color_set_alpha (color, 1.0);
 
       undo_buffer = g_hash_table_lookup (core->undo_buffers, drawable);
