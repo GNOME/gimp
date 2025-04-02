@@ -223,6 +223,7 @@ read_dds (GFile                *file,
           fclose (fp);
           return GIMP_PDB_EXECUTION_ERROR;
         }
+      load_info.array_items = dx10hdr.arraySize;
     }
 
   /* If format search was successful, get info needed to parse the file */
@@ -345,8 +346,6 @@ read_dds (GFile                *file,
       if ((dx10hdr.resourceDimension == D3D10_RESOURCE_DIMENSION_TEXTURE2D) &&
           (dx10hdr.miscFlag & D3D10_RESOURCE_MISC_TEXTURECUBE))
         load_info.cubemap_faces = DDSCAPS2_CUBEMAP_ALL_FACES;
-
-      load_info.array_items = dx10hdr.arraySize;
     }
   else
     {
