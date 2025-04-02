@@ -665,7 +665,7 @@ begin
 end;
 
 function InitializeSetup(): Boolean;
-#if (Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != "") || (Defined(GIMP_RC_VERSION) && GIMP_RC_VERSION != "") || Defined(DEVEL_WARNING)
+#if (Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != "") || !Defined(GIMP_RELEASE) || GIMP_RELEASE == "" || (Defined(GIMP_IS_RC_GIT) && GIMP_IS_RC_GIT != "") || Defined(DEVEL_WARNING)
 var Message,Buttons: TArrayOfString;
 #endif
 begin
@@ -684,7 +684,7 @@ begin
 		exit;
 
 //Unstable version warning
-#if (Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != "") || (Defined(GIMP_RC_VERSION) && GIMP_RC_VERSION != "") || Defined(DEVEL_WARNING)
+#if (Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != "") || !Defined(GIMP_RELEASE) || GIMP_RELEASE == "" || (Defined(GIMP_IS_RC_GIT) && GIMP_IS_RC_GIT != "") || Defined(DEVEL_WARNING)
 	Explode(Message, CustomMessage('DevelopmentWarning'), #13#10);
 	SetArrayLength(Buttons,2);
 	Buttons[0] := CustomMessage('DevelopmentButtonContinue');

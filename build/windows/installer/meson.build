@@ -6,6 +6,9 @@ installer_conf.set('GIMP_APP_VERSION',  gimp_app_version)
 installer_conf.set('GIMP_VERSION',  gimp_version)
 installer_conf.set('GIMP_PKGCONFIG_VERSION',  gimp_api_version)
 
+installer_conf.set('GIMP_RELEASE', release ? 1 : '')
+installer_conf.set('GIMP_IS_RC_GIT', gimp_rc_git ? 1 : '')
+
 if gimp_unstable != false
   installer_conf.set('GIMP_UNSTABLE', gimp_unstable)
 endif
