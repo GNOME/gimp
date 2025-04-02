@@ -182,6 +182,8 @@ deps-debian:
             libgtk-3-dev
             libgudev-1.0-dev
             libheif-dev
+            libheif-plugin-libde265
+            libheif-plugin-aomenc
             libjson-glib-dev
             libjxl-dev
             liblcms2-dev
