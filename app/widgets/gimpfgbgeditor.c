@@ -123,7 +123,8 @@ static void     gimp_fg_bg_editor_draw_color_frame  (GimpFgBgEditor   *editor,
                                                      gint              width,
                                                      gint              height,
                                                      gint              corner_dx,
-                                                     gint              corner_dy);
+                                                     gint              corner_dy,
+                                                     gboolean          is_active_color);
 
 G_DEFINE_TYPE (GimpFgBgEditor, gimp_fg_bg_editor, GTK_TYPE_EVENT_BOX)
 
@@ -463,6 +464,10 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
   if (editor->context)
     {
       GeglColor *color;
+      gboolean   is_active_color;
+
+      is_active_color =
+        (editor->active_color == GIMP_ACTIVE_COLOR_FOREGROUND);
 
       /*  draw the background frame  */
       color = gimp_context_get_background (editor->context);
@@ -471,7 +476,8 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
       gimp_fg_bg_editor_draw_color_frame (editor, cr, color,
                                           rect.x,     rect.y,
                                           rect.width, rect.height,
-                                          -1,         -1);
+                                          -1,         -1,
+                                          ! is_active_color);
 
       /*  draw the foreground frame  */
       color = gimp_context_get_foreground (editor->context);
@@ -480,7 +486,8 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
       gimp_fg_bg_editor_draw_color_frame (editor, cr, color,
                                           rect.x,     rect.y,
                                           rect.width, rect.height,
-                                          +1,         +1);
+                                          +1,         +1,
+                                          is_active_color);
     }
 
   gtk_style_context_restore (style);
@@ -864,7 +871,8 @@ gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
                                     gint            width,
                                     gint            height,
                                     gint            corner_dx,
-                                    gint            corner_dy)
+                                    gint            corner_dy,
+                                    gboolean        is_active_color)
 {
   GimpPalette       *colormap_palette = NULL;
   GimpImageBaseType  base_type        = GIMP_RGB;
@@ -932,9 +940,12 @@ gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
   cairo_rectangle (cr, x + 0.5, y + 0.5, width - 1.0, height - 1.0);
   cairo_stroke (cr);
 
-  cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
-  cairo_rectangle (cr, x + 1.5, y + 1.5, width - 3.0, height - 3.0);
-  cairo_stroke (cr);
+  if (is_active_color)
+    {
+      cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+      cairo_rectangle (cr, x + 1.5, y + 1.5, width - 3.0, height - 3.0);
+      cairo_stroke (cr);
+    }
 
   cairo_restore (cr);
 }
