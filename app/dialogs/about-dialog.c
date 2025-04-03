@@ -95,10 +95,10 @@ static gboolean    about_dialog_anim_draw     (GtkWidget       *widget,
 static void        about_dialog_reshuffle     (GimpAboutDialog *dialog);
 static gboolean    about_dialog_timer         (gpointer         data);
 
-#ifdef GIMP_UNSTABLE
+#ifndef GIMP_RELEASE
 static void        about_dialog_add_unstable_message
                                               (GtkWidget       *vbox);
-#endif /* GIMP_UNSTABLE */
+#endif /* ! GIMP_RELEASE */
 
 static void        about_dialog_last_release_changed
                                               (GimpCoreConfig   *config,
@@ -202,9 +202,9 @@ about_dialog_create (Gimp           *gimp,
         {
           if (dialog.use_animation)
             about_dialog_add_animation (children->data, &dialog);
-#ifdef GIMP_UNSTABLE
+#ifndef GIMP_RELEASE
           about_dialog_add_unstable_message (children->data);
-#endif /* GIMP_UNSTABLE */
+#endif /* ! GIMP_RELEASE */
 #ifdef CHECK_UPDATE
           if (gimp_version_check_update ())
             about_dialog_add_update (&dialog, config);
@@ -794,7 +794,7 @@ about_dialog_timer (gpointer data)
   return G_SOURCE_CONTINUE;
 }
 
-#ifdef GIMP_UNSTABLE
+#ifndef GIMP_RELEASE
 
 static void
 about_dialog_add_unstable_message (GtkWidget *vbox)
@@ -802,7 +802,7 @@ about_dialog_add_unstable_message (GtkWidget *vbox)
   GtkWidget *label;
   gchar     *text;
 
-  text = g_strdup_printf (_("This is an unstable development release\n"
+  text = g_strdup_printf (_("This is a development build\n"
                             "commit %s"), GIMP_GIT_VERSION_ABBREV);
   label = gtk_label_new (text);
   g_free (text);
@@ -817,7 +817,7 @@ about_dialog_add_unstable_message (GtkWidget *vbox)
   gtk_widget_show (label);
 }
 
-#endif /* GIMP_UNSTABLE */
+#endif /* ! GIMP_RELEASE */
 
 static void
 about_dialog_last_release_changed (GimpCoreConfig   *config,
