@@ -471,21 +471,21 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
 
       /*  draw the background frame  */
       color = gimp_context_get_background (editor->context);
-      rect.x = width  - rect.width  - border.right;
-      rect.y = height - rect.height - border.bottom;
+      rect.x = width  - rect.width  - border.right - 1;
+      rect.y = height - rect.height - border.bottom - 1;
       gimp_fg_bg_editor_draw_color_frame (editor, cr, color,
                                           rect.x,     rect.y,
-                                          rect.width, rect.height,
+                                          rect.width - 2, rect.height - 2,
                                           -1,         -1,
                                           ! is_active_color);
 
       /*  draw the foreground frame  */
       color = gimp_context_get_foreground (editor->context);
-      rect.x = border.left;
-      rect.y = border.top;
+      rect.x = border.left + 1;
+      rect.y = border.top + 1;
       gimp_fg_bg_editor_draw_color_frame (editor, cr, color,
                                           rect.x,     rect.y,
-                                          rect.width, rect.height,
+                                          rect.width - 2, rect.height - 2,
                                           +1,         +1,
                                           is_active_color);
     }
@@ -876,6 +876,8 @@ gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
 {
   GimpPalette       *colormap_palette = NULL;
   GimpImageBaseType  base_type        = GIMP_RGB;
+  GtkStyleContext   *style;
+  GdkRGBA            style_color;
   gboolean           is_out_of_gamut;
 
   if (editor->active_image)
@@ -936,16 +938,20 @@ gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
 
   cairo_set_line_width (cr, 1.0);
 
+  /* Get foreground color for border */
+  style = gtk_widget_get_style_context (GTK_WIDGET (editor));
+  gtk_style_context_get_color (style, gtk_style_context_get_state (style),
+                               &style_color);
+  if (is_active_color)
+    {
+      gdk_cairo_set_source_rgba (cr, &style_color);
+      cairo_rectangle (cr, x, y, width, height);
+      cairo_stroke (cr);
+    }
+
   cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
   cairo_rectangle (cr, x + 0.5, y + 0.5, width - 1.0, height - 1.0);
   cairo_stroke (cr);
-
-  if (is_active_color)
-    {
-      cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
-      cairo_rectangle (cr, x + 1.5, y + 1.5, width - 3.0, height - 3.0);
-      cairo_stroke (cr);
-    }
 
   cairo_restore (cr);
 }
