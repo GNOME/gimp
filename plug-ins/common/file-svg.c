@@ -375,13 +375,19 @@ svg_extract (GimpProcedure        *procedure,
           extracted_dimensions->height       = out_height.length;
           extracted_dimensions->height_unit  = svg_rsvg_to_gimp_unit (out_height.unit);
 
-          if (out_width.length < viewbox_width)
-            extracted_dimensions->width = viewbox_width;
-          if (out_height.length < viewbox_height)
-            extracted_dimensions->height = viewbox_height;
-
-          extracted_dimensions->exact_width  = TRUE;
-          extracted_dimensions->exact_height = TRUE;
+          if ((out_width.length == 1.0 && out_width.unit == RSVG_UNIT_PERCENT) &&
+              (out_height.length == 1.0 && out_height.unit == RSVG_UNIT_PERCENT))
+            {
+              extracted_dimensions->width        = viewbox_width;
+              extracted_dimensions->height       = viewbox_height;
+              extracted_dimensions->exact_width  = FALSE;
+              extracted_dimensions->exact_height = FALSE;
+            }
+          else
+            {
+              extracted_dimensions->exact_width  = TRUE;
+              extracted_dimensions->exact_height = TRUE;
+            }
         }
       else
         {
