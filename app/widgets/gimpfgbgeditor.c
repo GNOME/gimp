@@ -27,6 +27,7 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpcolor/gimpcolor-private.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -469,23 +470,26 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
       is_active_color =
         (editor->active_color == GIMP_ACTIVE_COLOR_FOREGROUND);
 
+      rect.width  -= 4;
+      rect.height -= 4;
+
       /*  draw the background frame  */
       color = gimp_context_get_background (editor->context);
-      rect.x = width  - rect.width  - border.right - 1;
-      rect.y = height - rect.height - border.bottom - 1;
+      rect.x = width  - rect.width  - border.right - 2;
+      rect.y = height - rect.height - border.bottom - 2;
       gimp_fg_bg_editor_draw_color_frame (editor, cr, color,
                                           rect.x,     rect.y,
-                                          rect.width - 2, rect.height - 2,
+                                          rect.width, rect.height,
                                           -1,         -1,
                                           ! is_active_color);
 
       /*  draw the foreground frame  */
       color = gimp_context_get_foreground (editor->context);
-      rect.x = border.left + 1;
-      rect.y = border.top + 1;
+      rect.x = border.left + 2;
+      rect.y = border.top + 2;
       gimp_fg_bg_editor_draw_color_frame (editor, cr, color,
                                           rect.x,     rect.y,
-                                          rect.width - 2, rect.height - 2,
+                                          rect.width, rect.height,
                                           +1,         +1,
                                           is_active_color);
     }
@@ -876,8 +880,6 @@ gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
 {
   GimpPalette       *colormap_palette = NULL;
   GimpImageBaseType  base_type        = GIMP_RGB;
-  GtkStyleContext   *style;
-  GdkRGBA            style_color;
   gboolean           is_out_of_gamut;
 
   if (editor->active_image)
@@ -936,18 +938,14 @@ gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
       g_object_unref (out_of_gamut_color);
     }
 
-  cairo_set_line_width (cr, 1.0);
-
-  /* Get foreground color for border */
-  style = gtk_widget_get_style_context (GTK_WIDGET (editor));
-  gtk_style_context_get_color (style, gtk_style_context_get_state (style),
-                               &style_color);
   if (is_active_color)
     {
-      gdk_cairo_set_source_rgba (cr, &style_color);
-      cairo_rectangle (cr, x, y, width, height);
+      cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+      cairo_rectangle (cr, x - 1, y - 1, width + 2, height + 2);
       cairo_stroke (cr);
     }
+
+  cairo_set_line_width (cr, 1.0);
 
   cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
   cairo_rectangle (cr, x + 0.5, y + 0.5, width - 1.0, height - 1.0);
