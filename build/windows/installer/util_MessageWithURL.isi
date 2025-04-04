@@ -46,7 +46,8 @@ function GetDialogBaseUnits(): Integer; external 'GetDialogBaseUnits@User32 stdc
 
 //function GetSysColor(nIndex: Integer): DWORD; external 'GetSysColor@user32.dll stdcall';
 
-function LoadIcon(hInstance: Integer; lpIconName: Integer): Integer; external 'LoadIconW@user32 stdcall';
+function ExtractIcon(hInstance: Integer; lpszExeFileName: String; nIconIndex: Integer): Integer; external 'ExtractIconW@shell32.dll stdcall';
+//function LoadIcon(hInstance: Integer; lpIconName: Integer): Integer; external 'LoadIconW@user32 stdcall';
 //function LoadImage(hinst: Integer; lpszName: Integer; uType: Cardinal; cxDesired, cyDesired: Integer; fuLoad: Cardinal): Integer; external 'LoadImageW@user32 stdcall';
 function DrawIcon(hdc: HBitmap; x,y: Integer; hIcon: Integer): Integer; external 'DrawIcon@user32 stdcall';
 //function DrawIconEx(hdc: HBitmap; xLeft,yTop: Integer; hIcon: Integer; cxWidth, cyWidth: Integer; istepIfAniCur: Cardinal; hbrFlickerFreeDraw: Integer; diFlags: Cardinal): Integer; external 'DrawIconEx@user32 stdcall';
@@ -80,11 +81,6 @@ const
 	SM_CYICONSPACING = 39;
 
 	//COLOR_HOTLIGHT = 26;
-
-	OIC_HAND = 32513;
-	OIC_QUES = 32514;
-	OIC_BANG = 32515;
-	OIC_NOTE = 32516;
 
 	LR_DEFAULTSIZE = $00000040;
 	LR_SHARED = $00008000;
@@ -205,19 +201,21 @@ begin
 	TypRect.Right := GetSystemMetrics(SM_CXICON);
 	TypRect.Bottom := GetSystemMetrics(SM_CYICON);
 
+	//Icon index from imageres.dll
 	case Typ of
 	mbInformation:
-		TypIcon := OIC_NOTE;
+		TypIcon := 76;
 	mbConfirmation:
-		TypIcon := OIC_QUES;
+		TypIcon := 94;
 	mbError:
-		TypIcon := OIC_BANG;
+		TypIcon := 79;
 	else
-		TypIcon := OIC_HAND;
+		TypIcon := 93;
 	end;
 
 	//TODO: icon loads with wrong size when using Large Fonts (SM_CXICON/CYICON is 40, but 32x32 icon loads - find out how to get the right size)
-	Icon := LoadIcon(0,TypIcon);
+	Icon := ExtractIcon(0,'imageres.dll',TypIcon)
+	//Icon := LoadIcon(0,TypIcon);
 	//Icon := LoadImage(0,TypIcon,IMAGE_ICON,0,0,LR_SHARED or LR_DEFAULTSIZE);
 	with TypImg do
 	begin
