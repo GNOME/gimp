@@ -283,7 +283,7 @@ gimp_buffer_source_box_update_node (GimpBufferSourceBox *box)
            * the operation.  see issue #1283.
            */
           buffer = gimp_gegl_buffer_dup (
-            gimp_pickable_get_buffer (box->priv->pickable));
+            gimp_pickable_get_buffer_with_effects (box->priv->pickable));
         }
 
       desc = gimp_viewable_get_description (GIMP_VIEWABLE (box->priv->pickable),
