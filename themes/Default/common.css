@@ -336,8 +336,8 @@ scale contents trough highlight:disabled
   border-color:     transparent;
 }
 scale slider {
-  min-height: 26px;
-  min-width:  22px;
+  min-height: 18px;
+  min-width:  18px;
 }
 
 scrollbar {
@@ -448,13 +448,6 @@ button:disabled, button:disabled image {
   color: @disabled-button-color;
 }
 
-/* E.g. the currently active action of a dialog will slightly stand out so that
- * people know what action is activated when they will just hit Enter.
- */
-button.default {
-  border: 1px solid shade(@fg-color, 0.7);
-}
-
 button:not(.flat)
 {
   border-color: @edge-border-color;
@@ -486,6 +479,13 @@ button.suggested-action {
  */
 button.destructive-action {
   border: 1px dashed shade(@fg-color, 0.8)
+}
+
+/* E.g. the currently active action of a dialog will slightly stand out so that
+ * people know what action is activated when they will just hit Enter.
+ */
+button.default {
+  border: 1px solid shade(@fg-color, 0.7);
 }
 
 /* Spinbuttons: there are two kinds:
