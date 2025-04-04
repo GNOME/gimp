@@ -2125,8 +2125,7 @@ gimp_text_tool_apply (GimpTextTool *text_tool,
                                              GIMP_DRAWABLE (layer), TRUE);
         }
 
-      if (pspec)
-        gimp_image_undo_push_text_layer (image, NULL, layer, pspec);
+      gimp_image_undo_push_text_layer (image, NULL, layer, pspec);
     }
 
   gimp_text_tool_apply_list (text_tool, list);
