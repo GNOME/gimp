@@ -154,6 +154,8 @@ gimp_grid_editor_constructed (GObject *object)
   gtk_widget_set_halign (color_button, GTK_ALIGN_START);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (color_button),
                                 editor->context);
+  gimp_color_panel_set_user_context_aware  (GIMP_COLOR_PANEL (color_button),
+                                            FALSE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("_Foreground color:"), 0.0, 0.5,
                             color_button, 1);
@@ -166,6 +168,8 @@ gimp_grid_editor_constructed (GObject *object)
   gtk_widget_set_halign (color_button, GTK_ALIGN_START);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (color_button),
                                 editor->context);
+  gimp_color_panel_set_user_context_aware  (GIMP_COLOR_PANEL (color_button),
+                                            FALSE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
                             _("_Background color:"), 0.0, 0.5,
                             color_button, 1);

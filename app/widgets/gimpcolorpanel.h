@@ -35,6 +35,8 @@ struct _GimpColorPanel
 
   GimpContext     *context;
   GtkWidget       *color_dialog;
+
+  gboolean         user_context_aware;
 };
 
 struct _GimpColorPanelClass
@@ -57,6 +59,10 @@ GtkWidget * gimp_color_panel_new             (const gchar          *title,
 
 void        gimp_color_panel_set_context     (GimpColorPanel       *panel,
                                               GimpContext          *context);
+
+void        gimp_color_panel_set_user_context_aware
+                                             (GimpColorPanel       *panel,
+                                              gboolean              user_context_aware);
 
 void        gimp_color_panel_dialog_response (GimpColorPanel       *panel,
                                               GimpColorDialogState  state);
