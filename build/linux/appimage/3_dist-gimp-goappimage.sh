@@ -226,8 +226,10 @@ conf_app ()
 
   #Get expanded var
   if [ "$3" != '--no-expand' ]; then
+    appdir_path='${APPDIR}/usr/'
     var_path="$(echo $prefix/$2 | sed "s|${prefix}/||g")"
   else
+    unset appdir_path
     var_path="$2"
   fi
   
@@ -237,7 +239,7 @@ conf_app ()
     if [ ! -f "$apprun.bak" ]; then
       cp $apprun "$apprun.bak"
     fi
-    echo "export $1=\"\${APPDIR}/usr/$var_path\"" >> "$apprun"
+    echo "export $1=\"${appdir_path}${var_path}\"" >> "$apprun"
   fi
   eval export $1="${prefix}/$var_path" || $true
 }
