@@ -103,7 +103,7 @@ gimp_color_panel_init (GimpColorPanel *panel)
 {
   panel->context             = NULL;
   panel->color_dialog        = NULL;
-   panel->user_context_aware = TRUE;
+  panel->user_context_aware  = TRUE;
 }
 
 static void
@@ -184,17 +184,14 @@ gimp_color_panel_clicked (GtkButton *button)
       GimpColorButton *color_button = GIMP_COLOR_BUTTON (button);
 
       panel->color_dialog =
-        gimp_color_dialog_new (NULL, panel->context, TRUE,
+        gimp_color_dialog_new (NULL, panel->context,
+                               panel->user_context_aware,
                                gimp_color_button_get_title (color_button),
                                NULL, NULL,
                                GTK_WIDGET (button),
                                NULL, NULL, color,
                                gimp_color_button_get_update (color_button),
                                gimp_color_button_has_alpha (color_button));
-     /* For some GUI elements like grids, we may not want to force the colors
-      * to match the image mode */
-     GIMP_COLOR_DIALOG (panel->color_dialog)->user_context_aware =
-       panel->user_context_aware;
 
       g_signal_connect (panel->color_dialog, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),
