@@ -8,39 +8,17 @@
 
 set -e
 
+if [ -z "$APPDIR" ]; then
+  export APPDIR="$(dirname "$(readlink -f "${0}")")"
+  echo "Running without the runtime. AppDir is $APPDIR"
+fi
 
-# PATHS MAPPING
-HERE="$(dirname "$(readlink -f "${0}")")"
 
 ## Minimum runtime paths
-export PATH="$HERE"/usr/bin/:"$PATH"
-export XDG_DATA_DIRS="$HERE"/usr/share/:"$XDG_DATA_DIRS"
-LD_LINUX="$HERE/LD_LINUX_WILD"
-
-## GTK-related paths
-export GIO_MODULE_DIR="$HERE"/GIO_MODULE_DIR_WILD/modules
-export GDK_PIXBUF_MODULEDIR="$HERE"/GDK_PIXBUF_MODULEDIR_WILD/loaders
-export GDK_PIXBUF_MODULE_FILE="$HERE"/GDK_PIXBUF_MODULE_FILE_WILD/loaders.cache
-export GTK_PATH="$HERE"/GTK_PATH_WILD
-export GTK_IM_MODULE_FILE="$HERE"/GTK_IM_MODULE_FILE_WILD/immodules.cache
-
-## GIMP-specific paths
-export BABL_PATH="$HERE"/BABL_PATH_WILD
-export GEGL_PATH="$HERE"/GEGL_PATH_WILD
-export GIMP3_PLUGINDIR="$HERE"/GIMP3_PLUGINDIR_WILD
-export GIMP3_DATADIR="$HERE"/GIMP3_DATADIR_WILD
-export GIMP3_LOCALEDIR="$HERE"/GIMP3_LOCALEDIR_WILD
-export GIMP3_SYSCONFDIR="$HERE"/GIMP3_SYSCONFDIR_WILD
-
-## Other paths (feature-related)
-export LIBTHAI_DICTDIR="$HERE"/LIBTHAI_DICTDIR_WILD
-export GI_TYPELIB_PATH="$HERE"/GI_TYPELIB_PATH_WILD:"$GI_TYPELIB_PATH"
-export PYTHONDONTWRITEBYTECODE=1
-#export LUA_CPATH="LUA_CPATH_WILD"
-#export LUA_PATH="LUA_PATH_WILD"
+export PATH="$APPDIR"/usr/bin/:"$PATH"
+export XDG_DATA_DIRS="$APPDIR"/usr/share/:"$XDG_DATA_DIRS"
 
 
-# RUN MAIN_BIN
-# FIXME: We need to run on squash-fs dir since LD is hardlinked into executables
-cd "$HERE"
-exec "${LD_LINUX}" --inhibit-cache "$HERE"/usr/bin/APP_ID "$@"
+## Other needed runtime paths (added by 3_dist-gimp-goappimage.sh)
+### FIXME: We need to run on squash-fs dir since LD is hardlinked into executables
+cd "$APPDIR"

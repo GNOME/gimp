@@ -30,8 +30,8 @@ if [ -z "$GITLAB_CI" ]; then
 fi
 
 
-# 1. INSTALL GO-APPIMAGETOOL AND COMPLEMENTARY TOOLS
-echo -e "\e[0Ksection_start:`date +%s`:apmg_tlkt\r\e[0KInstalling (go)appimagetool and other tools"
+# 1. INSTALL BUNDLING TOOL AND STANDARD APPIMAGE DISTRIBUTION TOOLS
+echo -e "\e[0Ksection_start:`date +%s`:apmg_tlkt\r\e[0KInstalling appimage tools"
 GIMP_DIR="$PWD/"
 cd ${GIMP_DIR}${PARENT_DIR}
 if [ "$GITLAB_CI" ]; then
@@ -46,12 +46,12 @@ if [ ! "$(find $GIMP_DIR -maxdepth 1 -iname "AppDir*")" ] || [ "$MODE" = '--bund
   if [ "$GITLAB_CI" ]; then
     apt-get install -y --no-install-recommends file patchelf >/dev/null 2>&1
   fi
-  go_appimagetool="$PWD/go-appimagetool.AppImage"
-  rm -f "$go_appimagetool" >/dev/null
+  bundler="$PWD/go-appimagetool.AppImage"
+  rm -f "$bundler" >/dev/null
   wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-${HOST_ARCH}.AppImage" | head -n 1 | cut -d '"' -f 2) >/dev/null 2>&1
-  go_appimagetool_text="go-appimagetool build: $(echo appimagetool-*.AppImage | sed -e 's/appimagetool-//' -e "s/-${HOST_ARCH}.AppImage//")"
-  mv appimagetool-*.AppImage $go_appimagetool
-  chmod +x "$go_appimagetool"
+  bundler_text="go-appimagetool build: $(echo appimagetool-*.AppImage | sed -e 's/appimagetool-//' -e "s/-${HOST_ARCH}.AppImage//")"
+  mv appimagetool-*.AppImage $bundler
+  chmod +x "$bundler"
 fi
 
 if [ "$MODE" != '--bundle-only' ]; then
@@ -64,7 +64,7 @@ if [ "$MODE" != '--bundle-only' ]; then
   chmod +x "$standard_appimagetool"
   standard_appimagetool_version=$("$standard_appimagetool" --version 2>&1 | sed -e 's/.*version \(.*\)), build.*/\1/')
 
-  ## static runtime to be squashed by appimagetool with the files bundled by go-appimagetool
+  ## static runtime to be squashed by appimagetool with the files bundled by the bundler
   static_runtime_version_online=$(curl -s 'https://api.github.com/repos/AppImage/type2-runtime/releases' |
                                   grep -Po '"target_commitish":.*?[^\\]",' | head -1 |
                                   sed -e 's|target_commitish||g' -e 's|"||g' -e 's|:||g' -e 's|,||g' -e 's| ||g')
@@ -83,7 +83,7 @@ if [ ! "$(find $GIMP_DIR -maxdepth 1 -iname "AppDir*")" ] && [ "$MODE" != '--bun
   separator=' | '
 fi
 cd $GIMP_DIR
-echo "(INFO): ${go_appimagetool_text}${separator}${standard_appimagetool_text}"
+echo "(INFO): ${bundler_text}${separator}${standard_appimagetool_text}"
 echo -e "\e[0Ksection_end:`date +%s`:apmg_tlkt\r\e[0K"
 
 
@@ -154,45 +154,46 @@ prep_pkg ()
 
 bund_usr ()
 {
-  if [ "$3" != '--go' ]; then
-    #Prevent unwanted expansion
-    mkdir -p limbo
-    cd limbo
+  #Prevent unwanted expansion
+  mkdir -p limbo
+  cd limbo
 
-    #Paths where to search
-    case $2 in
-      bin*)
-        search_path=("$1/bin" "$1/sbin" "$1/libexec")
-        ;;
-      lib*)
-        search_path=("$(dirname $(echo $2 | sed "s|lib/|$1/${LIB_DIR}/${LIB_SUBDIR}|g" | sed "s|*|no_scape|g"))"
-                     "$(dirname $(echo $2 | sed "s|lib/|/usr/${LIB_DIR}/|g" | sed "s|*|no_scape|g"))")
-        ;;
-      share*|include*|etc*)
-        search_path=("$(dirname $(echo $2 | sed "s|${2%%/*}|$1/${2%%/*}|g" | sed "s|*|no_scape|g"))")
-        ;;
-    esac
-    for path in "${search_path[@]}"; do
-      expanded_path=$(echo $(echo $path | sed "s|no_scape|*|g"))
-      if [ ! -d "$expanded_path" ]; then
-        continue
-      fi
+  #Paths where to search
+  case $2 in
+    bin*)
+      search_path=("$1/bin" "$1/sbin" "$1/libexec")
+      ;;
+    lib*)
+      search_path=("$(dirname $(echo $2 | sed "s|lib/|$1/${LIB_DIR}/${LIB_SUBDIR}|g" | sed "s|*|no_scape|g"))"
+                   "$(dirname $(echo $2 | sed "s|lib/|/usr/${LIB_DIR}/|g" | sed "s|*|no_scape|g"))")
+      ;;
+    share*|include*|etc*)
+      search_path=("$(dirname $(echo $2 | sed "s|${2%%/*}|$1/${2%%/*}|g" | sed "s|*|no_scape|g"))")
+      ;;
+  esac
+  for path in "${search_path[@]}"; do
+    expanded_path=$(echo $(echo $path | sed "s|no_scape|*|g"))
+    if [ ! -d "$expanded_path" ]; then
+      continue
+    fi
 
-      #Copy found targets from search_path to bundle dir
-      target_array=($(find $expanded_path -maxdepth 1 -name ${2##*/}))
-      for target_path in "${target_array[@]}"; do
-        dest_path="$(dirname $(echo $target_path | sed "s|$1/|${USR_DIR}/|g"))"
-        output_dest_path="$dest_path"
-        if [ "$3" = '--dest' ] || [ "$3" = '--rename' ]; then
-          if [ "$3" = '--dest' ]; then
-            output_dest_path="${USR_DIR}/$4"
-          elif [ "$3" = '--rename' ]; then
-            output_dest_path="${USR_DIR}/${4%/*}"
-          fi
-          dest_path="$output_dest_path/tmp"
+    #Copy found targets from search_path to bundle dir
+    target_array=($(find $expanded_path -maxdepth 1 -name ${2##*/}))
+    for target_path in "${target_array[@]}"; do
+      dest_path="$(dirname $(echo $target_path | sed "s|$1/|${USR_DIR}/|g"))"
+      output_dest_path="$dest_path"
+      if [ "$3" = '--dest' ] || [ "$3" = '--rename' ]; then
+        if [ "$3" = '--dest' ]; then
+          output_dest_path="${USR_DIR}/$4"
+        elif [ "$3" = '--rename' ]; then
+          output_dest_path="${USR_DIR}/${4%/*}"
         fi
-        mkdir -p $dest_path
+        dest_path="$output_dest_path/tmp"
+      fi
+      
+      if [ "$3" != '--bundler' ] && [ "$5" != '--bundler' ]; then
         echo "(INFO): bundling $target_path to $output_dest_path"
+        mkdir -p $dest_path
         cp -ru $target_path $dest_path >/dev/null 2>&1 || continue
 
         #Additional parameters for special situations
@@ -200,24 +201,22 @@ bund_usr ()
           mv $dest_path/${2##*/} $USR_DIR/$4
           rm -r "$dest_path"
         fi
-      done
+      else
+        echo "(INFO): skipping $target_path (will be bundled by the tool)"
+        if [[ "$target_path" =~ 'bin' ]] || [[ "$target_path" =~ '.so' ]]; then
+          export APPENDED_LIST+="$target_path "
+        fi
+      fi
     done
+  done
 
-    #Undo the tweak done above
-    cd ..
-    rm -r limbo
-  else
-    echo "(INFO): skipping $1/$2 (will be bundled by go-appimagetool)"
-  fi
+  #Undo the tweak done above
+  cd ..
+  rm -r limbo
 }
 
 conf_app ()
 {
-  #Make backup of AppRun before changing it
-  if [ ! -f 'build/linux/appimage/AppRun.bak' ]; then
-    cp build/linux/appimage/AppRun build/linux/appimage/AppRun.bak
-  fi
-
   #Prefix from which to expand the var
   prefix=$UNIX_PREFIX
   case $1 in
@@ -225,15 +224,22 @@ conf_app ()
       prefix=$GIMP_PREFIX
   esac
 
-  #Set expanded var in AppRun (and temporarely in environ if needed by this script)
+  #Get expanded var
   if [ "$3" != '--no-expand' ]; then
-    var_path="usr/$(echo $prefix/$2 | sed "s|${prefix}/||g")"
+    var_path="$(echo $prefix/$2 | sed "s|${prefix}/||g")"
   else
-    export HERE='$HERE'
     var_path="$2"
   fi
-  sed -i "s|${1}_WILD|${var_path}|" build/linux/appimage/AppRun
-  eval $1="$var_path" || $true
+  
+  #Set expanded var in AppRun (and in environ if needed by this script or by the bundler)
+  if [ "$3" != '--bundler' ] && [ "$4" != '--bundler' ]; then
+    apprun="build/linux/appimage/AppRun"
+    if [ ! -f "$apprun.bak" ]; then
+      cp $apprun "$apprun.bak"
+    fi
+    echo "export $1=\"\${APPDIR}/usr/$var_path\"" >> "$apprun"
+  fi
+  eval export $1="${prefix}/$var_path" || $true
 }
 
 wipe_usr ()
@@ -244,7 +250,7 @@ wipe_usr ()
 ## Prepare AppDir
 mkdir -p $APP_DIR
 echo '*' > $APP_DIR/.gitignore
-bund_usr "$UNIX_PREFIX" "lib*/ld-*.so.*" --go
+bund_usr "$UNIX_PREFIX" "lib*/ld-*.so.*" --bundler
 if [ "$HOST_ARCH" = 'aarch64' ]; then
   conf_app LD_LINUX "lib/ld-*.so.*"
 else
@@ -258,34 +264,33 @@ prep_pkg "xapps-common"
 bund_usr "$UNIX_PREFIX" "share/glib-*/schemas" 
 ### Glib commonly required modules
 prep_pkg "gvfs"
-bund_usr "$UNIX_PREFIX" "lib/gvfs*"
 bund_usr "$UNIX_PREFIX" "bin/gvfs*" --dest "${LIB_DIR}/gvfs"
-bund_usr "$UNIX_PREFIX" "lib/gio*"
-conf_app GIO_MODULE_DIR "${LIB_DIR}/${LIB_SUBDIR}gio"
+bund_usr "$UNIX_PREFIX" "lib/gvfs/*.so"
+bund_usr "$UNIX_PREFIX" "lib/gio/modules"
+conf_app GIO_MODULE_DIR "${LIB_DIR}/${LIB_SUBDIR}gio/modules"
 ### GTK needed files (to be able to load icons)
 bund_usr "$UNIX_PREFIX" "share/icons/Adwaita"
 bund_usr "$GIMP_PREFIX" "share/icons/hicolor"
 bund_usr "$UNIX_PREFIX" "share/mime"
-bund_usr "$UNIX_PREFIX" "lib/gdk-pixbuf-*" --go
-conf_app GDK_PIXBUF_MODULEDIR "${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/*.*.*"
-conf_app GDK_PIXBUF_MODULE_FILE "${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/*.*.*"
+bund_usr "$UNIX_PREFIX" "lib/gdk-pixbuf-*/*.*.*/loaders/*.so" --bundler
+conf_app GDK_PIXBUF_MODULEDIR "${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/*.*.*/loaders"
+conf_app GDK_PIXBUF_MODULE_FILE "${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/*.*.*/loaders.cache"
 ### GTK commonly required modules
-prep_pkg "libibus-1.0-5"
-bund_usr "$UNIX_PREFIX" "lib/libibus*"
-prep_pkg "ibus-gtk3"
 prep_pkg "libcanberra-gtk3-module"
 prep_pkg "libxapp-gtk3-module"
 prep_pkg "packagekit-gtk3-module"
-bund_usr "$UNIX_PREFIX" "lib/gtk-*" --go
+bund_usr "$UNIX_PREFIX" "lib/gtk-3.0/modules/*.so" --bundler
 conf_app GTK_PATH "${LIB_DIR}/${LIB_SUBDIR}gtk-3.0"
-conf_app GTK_IM_MODULE_FILE "${LIB_DIR}/${LIB_SUBDIR}gtk-3.0/*.*.*"
+prep_pkg "ibus-gtk3"
+bund_usr "$UNIX_PREFIX" "lib/gtk-3.0/*.*.*/immodules/*.so" --bundler
+conf_app GTK_IM_MODULE_FILE "${LIB_DIR}/${LIB_SUBDIR}gtk-3.0/*.*.*/immodules.cache"
 
 ## Core features
 bund_usr "$GIMP_PREFIX" "lib/libbabl*"
-bund_usr "$GIMP_PREFIX" "lib/babl-*"
+bund_usr "$GIMP_PREFIX" "lib/babl-*/*.so"
 conf_app BABL_PATH "${LIB_DIR}/${LIB_SUBDIR}babl-*"
 bund_usr "$GIMP_PREFIX" "lib/libgegl*"
-bund_usr "$GIMP_PREFIX" "lib/gegl-*"
+bund_usr "$GIMP_PREFIX" "lib/gegl-*/*.so"
 conf_app GEGL_PATH "${LIB_DIR}/${LIB_SUBDIR}gegl-*"
 bund_usr "$GIMP_PREFIX" "lib/libgimp*"
 bund_usr "$GIMP_PREFIX" "lib/gimp"
@@ -350,20 +355,21 @@ bund_usr "$UNIX_PREFIX" "lib/gjs/girepository-1.0/Gjs*" --dest "${LIB_DIR}/${LIB
 bund_usr "$UNIX_PREFIX" "bin/python*"
 bund_usr "$UNIX_PREFIX" "lib/python*"
 wipe_usr ${LIB_DIR}/*.pyc
+conf_app PYTHONDONTWRITEBYTECODE "1" --no-expand
 ####FIXME: lua crashes with loop: See: #11895
 #bund_usr "$UNIX_PREFIX" "bin/luajit" --rename "lua"
 #bund_usr "$UNIX_PREFIX" "lib/liblua5.1-lgi*"
 #bund_usr "$UNIX_PREFIX" "lib/lua/5.1"
-#conf_app LUA_CPATH "\$HERE/usr/${LIB_DIR}/${LIB_SUBDIR}lua/5.1/?.so" --no-expand
+#conf_app LUA_CPATH "\${APPDIR}/usr/${LIB_DIR}/${LIB_SUBDIR}lua/5.1/?.so" --no-expand
 #bund_usr "$UNIX_PREFIX" "share/lua/5.1"
-#conf_app LUA_PATH "\$HERE/usr/share/lua/5.1/?.lua;\$HERE/usr/share/lua/5.1/lgi/?.lua;\$HERE/usr/share/lua/5.1/lgi/override/?.lua" --no-expand
+#conf_app LUA_PATH "\${APPDIR}/usr/share/lua/5.1/?.lua;\${APPDIR}/usr/share/lua/5.1/lgi/?.lua;\${APPDIR}/usr/share/lua/5.1/lgi/override/?.lua" --no-expand
 
 ## Other binaries and deps
 bund_usr "$GIMP_PREFIX" 'bin/gimp*'
 bund_usr "$GIMP_PREFIX" "bin/gegl"
 bund_usr "$GIMP_PREFIX" "share/applications/*.desktop"
 #go-appimagetool have too polluted output so we save as log. See: https://github.com/probonopd/go-appimage/issues/314
-"$go_appimagetool" -s deploy $(echo "$USR_DIR/share/applications/*.desktop") &> appimagetool.log || cat appimagetool.log
+"$bundler" -s deploy $(echo "$USR_DIR/share/applications/*.desktop") &> appimagetool.log || cat appimagetool.log
 
 ## Manual adjustments (go-appimagetool don't handle Linux FHS gracefully yet)
 ### Undo the mess which breaks babl and GEGL. See: https://github.com/probonopd/go-appimage/issues/315
@@ -432,8 +438,8 @@ export USR_DIR="$APP_DIR/usr"
 
 ## 4.1. Finish AppRun configuration
 echo '(INFO): finishing AppRun configuration'
-sed -i '/_WILD/d' "$APP_DIR/AppRun"
-sed -i "s/APP_ID/$APP_ID/" "$APP_DIR/AppRun"
+ln -sfr "$USR_DIR/bin/gimp-$GIMP_APP_VERSION" "$USR_DIR/bin/$APP_ID"
+printf "\nexec \"\${LD_LINUX}\" --inhibit-cache \"\$APPDIR\"/usr/bin/$APP_ID \"\$@\"" >> "$APP_DIR/AppRun"
 chmod +x $APP_DIR/AppRun
 
 ## 4.2. Copy icon assets (similarly to flatpaks's 'rename-icon')
@@ -445,7 +451,6 @@ cp -L "$USR_DIR/share/icons/hicolor/scalable/apps/$APP_ID.svg" $APP_DIR
 ## 4.3. Configure .desktop asset (similarly to flatpaks's 'rename-desktop-file')
 echo "(INFO): configuring $APP_ID.desktop"
 find "$USR_DIR/share/applications" \( -iname *.desktop -and ! -iname $APP_ID*.desktop \) -execdir mv "{}" $APP_ID.desktop \;
-ln -sfr "$USR_DIR/bin/gimp-$GIMP_APP_VERSION" "$USR_DIR/bin/$APP_ID"
 sed -i "s/gimp-$GIMP_APP_VERSION/$APP_ID/g" "$USR_DIR/share/applications/${APP_ID}.desktop"
 sed -i "s/Icon=gimp/Icon=$APP_ID/g" "$USR_DIR/share/applications/${APP_ID}.desktop"
 ln -sfr "$USR_DIR/share/applications/${APP_ID}.desktop" $APP_DIR
