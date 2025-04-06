@@ -38,15 +38,13 @@ export HOST_ARCH=$(uname -m)
 export APPIMAGE_EXTRACT_AND_RUN=1
 
 if [ ! "$(find $GIMP_DIR -maxdepth 1 -iname "AppDir*")" ] || [ "$MODE" = '--bundle-only' ]; then
-  ## For now, we always use the latest go-appimagetool for bundling. See: https://github.com/probonopd/go-appimage/issues/275
-  if [ "$GITLAB_CI" ]; then
-    apt-get install -y --no-install-recommends file patchelf >/dev/null 2>&1
-  fi
-  bundler="$PWD/go-appimagetool.AppImage"
+  bundler="$PWD/sharun"
   rm -f "$bundler" >/dev/null
-  wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-${HOST_ARCH}.AppImage" | head -n 1 | cut -d '"' -f 2) >/dev/null 2>&1
-  bundler_text="go-appimagetool build: $(echo appimagetool-*.AppImage | sed -e 's/appimagetool-//' -e "s/-${HOST_ARCH}.AppImage//")"
-  mv appimagetool-*.AppImage $bundler
+  bundler_version_online=$(curl -s 'https://api.github.com/repos/VHSgunzo/sharun/releases' |
+                          grep -Po '"tag_name":.*?[^\\]",' | head -1 |
+                          sed -e 's|tag_name||g' -e 's|"||g' -e 's|:||g' -e 's|,||g' -e 's| ||g')
+  wget "https://github.com/VHSgunzo/sharun/releases/download/$bundler_version_online/sharun-${HOST_ARCH}-aio" -O $bundler >/dev/null 2>&1
+  bundler_text="sharun version: $(echo $bundler_version_online | sed 's/v//')"
   chmod +x "$bundler"
 fi
 
@@ -222,7 +220,7 @@ conf_app ()
 
   #Get expanded var
   if [ "$3" != '--no-expand' ]; then
-    appdir_path='${APPDIR}/usr/'
+    appdir_path='${SHARUN_DIR}/'
     var_path="$(echo $prefix/$2 | sed "s|${prefix}/||g")"
   else
     unset appdir_path
@@ -231,9 +229,9 @@ conf_app ()
   
   #Set expanded var in AppRun (and in environ if needed by this script or by the bundler)
   if [ "$3" != '--bundler' ] && [ "$4" != '--bundler' ]; then
-    apprun="build/linux/appimage/AppRun"
-    if [ ! -f "$apprun.bak" ]; then
-      cp $apprun "$apprun.bak"
+    apprun="$USR_DIR/.env"
+    if [ ! -f "$apprun" ]; then
+      touch "$apprun"
     fi
     echo "export $1=\"${appdir_path}${var_path}\"" >> "$apprun"
   fi
@@ -249,48 +247,43 @@ wipe_usr ()
 mkdir -p $APP_DIR
 echo '*' > $APP_DIR/.gitignore
 bund_usr "$UNIX_PREFIX" "lib*/ld-*.so.*" --bundler
-if [ "$HOST_ARCH" = 'aarch64' ]; then
-  conf_app LD_LINUX "lib/ld-*.so.*"
-else
-  conf_app LD_LINUX "lib64/ld-*.so.*"
-fi
 
 ## Bundle base (bare minimum to run GTK apps)
 ### Glib needed files (to be able to use URIs and file dialogs). See: #12937 and #13082
 bund_usr "$UNIX_PREFIX" "lib/glib-*/gio-launch-desktop" --dest "bin"
 prep_pkg "xapps-common" 
-bund_usr "$UNIX_PREFIX" "share/glib-*/schemas" 
+bund_usr "$UNIX_PREFIX" "share/glib-*/schemas" --bundler
 ### Glib commonly required modules
 prep_pkg "gvfs"
 bund_usr "$UNIX_PREFIX" "bin/gvfs*" --dest "${LIB_DIR}/gvfs"
 bund_usr "$UNIX_PREFIX" "lib/gvfs/*.so"
-bund_usr "$UNIX_PREFIX" "lib/gio/modules/*"
-conf_app GIO_MODULE_DIR "${LIB_DIR}/${LIB_SUBDIR}gio/modules"
+bund_usr "$UNIX_PREFIX" "lib/gio/modules/*" --bundler
+conf_app GIO_MODULE_DIR "${LIB_DIR}/${LIB_SUBDIR}gio/modules" --bundler
 ### GTK needed files (to be able to load icons)
 bund_usr "$UNIX_PREFIX" "share/icons/Adwaita"
 bund_usr "$GIMP_PREFIX" "share/icons/hicolor"
 bund_usr "$UNIX_PREFIX" "share/mime"
 bund_usr "$UNIX_PREFIX" "lib/gdk-pixbuf-*/*.*.*/loaders/*.so" --bundler
-conf_app GDK_PIXBUF_MODULEDIR "${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/*.*.*/loaders"
-conf_app GDK_PIXBUF_MODULE_FILE "${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/*.*.*/loaders.cache"
+conf_app GDK_PIXBUF_MODULEDIR "${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/*.*.*/loaders" --bundler
+conf_app GDK_PIXBUF_MODULE_FILE "${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/*.*.*/loaders.cache" --bundler
 ### GTK commonly required modules
 prep_pkg "libcanberra-gtk3-module"
 prep_pkg "libxapp-gtk3-module"
 prep_pkg "packagekit-gtk3-module"
 bund_usr "$UNIX_PREFIX" "lib/gtk-3.0/modules/*.so" --bundler
 bund_usr "$UNIX_PREFIX" "lib/gtk-3.0/*.*.*/printbackends/*.so" --bundler
-conf_app GTK_PATH "${LIB_DIR}/${LIB_SUBDIR}gtk-3.0"
+conf_app GTK_PATH "${LIB_DIR}/${LIB_SUBDIR}gtk-3.0" --bundler
 prep_pkg "ibus-gtk3"
 bund_usr "$UNIX_PREFIX" "lib/gtk-3.0/*.*.*/immodules/*.so" --bundler
-conf_app GTK_IM_MODULE_FILE "${LIB_DIR}/${LIB_SUBDIR}gtk-3.0/*.*.*/immodules.cache"
+conf_app GTK_IM_MODULE_FILE "${LIB_DIR}/${LIB_SUBDIR}gtk-3.0/*.*.*/immodules.cache" --bundler
 
 ## Core features
 bund_usr "$GIMP_PREFIX" "lib/libbabl*"
-bund_usr "$GIMP_PREFIX" "lib/babl-*/*.so"
-conf_app BABL_PATH "${LIB_DIR}/${LIB_SUBDIR}babl-*"
+bund_usr "$GIMP_PREFIX" "lib/babl-*/*.so" --bundler
+conf_app BABL_PATH "${LIB_DIR}/${LIB_SUBDIR}babl-*" --bundler
 bund_usr "$GIMP_PREFIX" "lib/libgegl*"
-bund_usr "$GIMP_PREFIX" "lib/gegl-*/*.so"
-conf_app GEGL_PATH "${LIB_DIR}/${LIB_SUBDIR}gegl-*"
+bund_usr "$GIMP_PREFIX" "lib/gegl-*/*.so" --bundler
+conf_app GEGL_PATH "${LIB_DIR}/${LIB_SUBDIR}gegl-*" --bundler
 bund_usr "$GIMP_PREFIX" "lib/libgimp*"
 bund_usr "$GIMP_PREFIX" "lib/gimp"
 bund_usr "$GIMP_PREFIX" "share/gimp"
@@ -312,8 +305,8 @@ bund_usr "$GIMP_PREFIX" "share/metainfo/*.xml"
 ### mypaint brushes
 bund_usr "$UNIX_PREFIX" "share/mypaint-data/1.0"
 ### Needed for 'th' word breaking in Text tool etc
-bund_usr "$UNIX_PREFIX" "share/libthai"
-conf_app LIBTHAI_DICTDIR "share/libthai"
+bund_usr "$UNIX_PREFIX" "share/libthai" --bundler
+conf_app LIBTHAI_DICTDIR "share/libthai" --bundler
 ### Needed for full CJK and Cyrillic support in file-pdf
 bund_usr "$UNIX_PREFIX" "share/poppler"
 ### file-wmf support
@@ -332,7 +325,7 @@ if [ "$GIMP_UNSTABLE" ] || [ -z "$GIMP_RELEASE" ]; then
   bund_usr "$UNIX_PREFIX" "lib/libGL*"
   bund_usr "$UNIX_PREFIX" "lib/dri*"
   #TODO: remove this on Debian Trixie (which have Mesa 24.2)
-  conf_app LIBGL_DRIVERS_PATH "${LIB_DIR}/${LIB_SUBDIR}dri"
+  conf_app LIBGL_DRIVERS_PATH "${LIB_DIR}/${LIB_SUBDIR}dri" --bundler
 fi
 ### Debug dialog
 bund_usr "$GIMP_PREFIX" "bin/gimp-debug-tool*" --dest "libexec"
@@ -346,7 +339,7 @@ bund_usr "$GIMP_PREFIX" "lib/pkgconfig/gegl-*"
 ### Introspected plug-ins
 bund_usr "$GIMP_PREFIX" "lib/girepository-*"
 bund_usr "$UNIX_PREFIX" "lib/girepository-*"
-conf_app GI_TYPELIB_PATH "${LIB_DIR}/${LIB_SUBDIR}girepository-*"
+conf_app GI_TYPELIB_PATH "${LIB_DIR}/${LIB_SUBDIR}girepository-*" --bundler
 #### JavaScript plug-ins support
 bund_usr "$UNIX_PREFIX" "bin/gjs*"
 bund_usr "$UNIX_PREFIX" "lib/gjs/girepository-1.0/Gjs*" --dest "${LIB_DIR}/${LIB_SUBDIR}girepository-1.0"
@@ -354,7 +347,7 @@ bund_usr "$UNIX_PREFIX" "lib/gjs/girepository-1.0/Gjs*" --dest "${LIB_DIR}/${LIB
 bund_usr "$UNIX_PREFIX" "bin/python*"
 bund_usr "$UNIX_PREFIX" "lib/python*"
 wipe_usr ${LIB_DIR}/*.pyc
-conf_app PYTHONDONTWRITEBYTECODE "1" --no-expand
+conf_app PYTHONDONTWRITEBYTECODE "1" --no-expand --bundler
 ####FIXME: lua crashes with loop: See: #11895
 #bund_usr "$UNIX_PREFIX" "bin/luajit" --rename "lua"
 #bund_usr "$UNIX_PREFIX" "lib/liblua5.1-lgi*"
@@ -367,26 +360,26 @@ conf_app PYTHONDONTWRITEBYTECODE "1" --no-expand
 bund_usr "$GIMP_PREFIX" 'bin/gimp*'
 bund_usr "$GIMP_PREFIX" "bin/gegl"
 bund_usr "$GIMP_PREFIX" "share/applications/*.desktop"
-#go-appimagetool have too polluted output so we save as log. See: https://github.com/probonopd/go-appimage/issues/314
-"$bundler" -s deploy $(echo "$USR_DIR/share/applications/*.desktop") &> appimagetool.log || cat appimagetool.log
+#Sharun does not support Debian multi-arch subdir so let's move it. See: https://github.com/VHSgunzo/sharun/issues/25
+cp -fr $USR_DIR/${LIB_DIR}/${LIB_SUBDIR}* $USR_DIR/${LIB_DIR} && rm -r $USR_DIR/${LIB_DIR}/${LIB_SUBDIR}
+conf_app GIMP3_PLUGINDIR "${LIB_DIR}/${LIB_SUBDIR}gimp/*" && sed -i "s|${LIB_SUBDIR}||g" $USR_DIR/.env
+bin_list=$(find $(echo $USR_DIR/*bin) $(echo $USR_DIR/lib*) ! -iname "*.dumb*" -type f -exec head -c 4 {} \; -exec echo " {}" \;  | grep ^.ELF)
+DST_DIR="${USR_DIR}" "$bundler" l -p -k -g $(echo $bin_list | sed 's/ELF //g' | strings) $APPENDED_LIST
 
 ## Manual adjustments after running the bundling tool
-### Undo the mess which breaks babl and GEGL. See: https://github.com/probonopd/go-appimage/issues/315
-cp -r $APP_DIR/lib/* $USR_DIR/${LIB_DIR}
-rm -r $APP_DIR/lib
-### Fix not fully bundled GTK canberra module. See: https://github.com/probonopd/go-appimage/issues/332
-find "$USR_DIR/${LIB_DIR}/${LIB_SUBDIR}gtk-3.0/modules" -iname *canberra*.so -execdir ln -sf "{}" libcanberra-gtk-module.so \;
-### Ensure that LD is in right dir. See: https://github.com/probonopd/go-appimage/issues/49
-if [ "$HOST_ARCH" = 'x86_64' ]; then
-  cp -r $APP_DIR/lib64 $USR_DIR
-  rm -r $APP_DIR/lib64
-fi
-chmod +x "$APP_DIR/$LD_LINUX"
-exec_array=($(find "$USR_DIR/bin" "$USR_DIR/$LIB_DIR" ! -iname "*.so*" -type f -exec head -c 4 {} \; -exec echo " {}" \;  | grep ^.ELF))
-for exec in "${exec_array[@]}"; do
-  if [[ ! "$exec" =~ 'ELF' ]]; then
-    patchelf --set-interpreter "./$LD_LINUX" "$exec" >/dev/null 2>&1 || continue
+## gimp-debug-tool is not expected to be on PATH so let's remove it
+rm $USR_DIR/bin/gimp-debug-tool* && mv "$USR_DIR/libexec/gimp-debug-tool-$GIMP_APP_VERSION" $USR_DIR/shared/bin && ln -frs $USR_DIR/sharun "$USR_DIR/libexec/gimp-debug-tool-$GIMP_APP_VERSION"
+### gimpextension does not allow symlinks due to sandboxing so let's hardlink them
+plugins_bin_array=($(find "$USR_DIR/$LIB_DIR/gimp" ! -iname "*.so*" -type f -exec head -c 4 {} \; -exec echo " {}" \;  | grep ^.ELF))
+for plugin in "${plugins_bin_array[@]}"; do
+  if [[ ! "$plugin" =~ 'ELF' ]]; then
+    rm $USR_DIR/bin/${plugin##*/} && mv "$plugin" $USR_DIR/shared/bin && ln -f $USR_DIR/sharun "$plugin"
   fi
+done
+### libgimpbase forces problematic LD_LIBRARY_PATH so let's unset it
+libgimpbase_array=($(find "$USR_DIR/$LIB_DIR" -iname "libgimpbase*"))
+for libgimpbase in "${libgimpbase_array[@]}"; do
+    sed -i 's|LD_LIBRARY_PATH|LD_LIBRARY_DETH|g' "$libgimpbase" || $true
 done
 ### We can't set LD_LIBRARY_PATH partly to not break patchelf trick so we need 'ln' for Lua
 #cd $APP_DIR
@@ -406,15 +399,9 @@ done
 #done
 
 ## Files unnecessarily created or bundled by the tool
-mv build/linux/appimage/AppRun $APP_DIR
-mv build/linux/appimage/AppRun.bak build/linux/appimage/AppRun
-rm $APP_DIR/*.desktop
-echo "usr/${LIB_DIR}/${LIB_SUBDIR}gconv
-      usr/${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/gdk-pixbuf-query-loaders
-      usr/${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/*.debug
-      usr/share/doc
-      usr/share/themes
-      etc
+echo "usr/share/tabset
+      usr/share/terminfo
+      usr/share/X11
       .gitignore" > appimageignore-$HOST_ARCH
 
 ## Revision (this does the same as '-Drevision' build option)
@@ -437,8 +424,9 @@ export USR_DIR="$APP_DIR/usr"
 
 ## 4.1. Finish AppRun configuration
 echo '(INFO): finishing AppRun configuration'
-ln -sfr "$USR_DIR/bin/gimp-$GIMP_APP_VERSION" "$USR_DIR/bin/$APP_ID"
-printf "\nexec \"\${LD_LINUX}\" --inhibit-cache \"\$APPDIR\"/usr/bin/$APP_ID \"\$@\"" >> "$APP_DIR/AppRun"
+ln -f "$USR_DIR/shared/bin/gimp-$GIMP_APP_VERSION" "$USR_DIR/shared/bin/$APP_ID"
+ln -f "$USR_DIR/bin/gimp-$GIMP_APP_VERSION" "$USR_DIR/bin/$APP_ID"
+ln -sfr "$USR_DIR/bin/$APP_ID" "$APP_DIR/AppRun"
 chmod +x $APP_DIR/AppRun
 
 ## 4.2. Copy icon assets (similarly to flatpaks's 'rename-icon')
