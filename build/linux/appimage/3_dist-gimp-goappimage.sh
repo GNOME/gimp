@@ -266,7 +266,7 @@ bund_usr "$UNIX_PREFIX" "share/glib-*/schemas"
 prep_pkg "gvfs"
 bund_usr "$UNIX_PREFIX" "bin/gvfs*" --dest "${LIB_DIR}/gvfs"
 bund_usr "$UNIX_PREFIX" "lib/gvfs/*.so"
-bund_usr "$UNIX_PREFIX" "lib/gio/modules"
+bund_usr "$UNIX_PREFIX" "lib/gio/modules/*"
 conf_app GIO_MODULE_DIR "${LIB_DIR}/${LIB_SUBDIR}gio/modules"
 ### GTK needed files (to be able to load icons)
 bund_usr "$UNIX_PREFIX" "share/icons/Adwaita"
@@ -364,14 +364,14 @@ conf_app PYTHONDONTWRITEBYTECODE "1" --no-expand
 #bund_usr "$UNIX_PREFIX" "share/lua/5.1"
 #conf_app LUA_PATH "\${APPDIR}/usr/share/lua/5.1/?.lua;\${APPDIR}/usr/share/lua/5.1/lgi/?.lua;\${APPDIR}/usr/share/lua/5.1/lgi/override/?.lua" --no-expand
 
-## Other binaries and deps
+## Other binaries and deps (bundle them and do fine-tuning with bundling tool)
 bund_usr "$GIMP_PREFIX" 'bin/gimp*'
 bund_usr "$GIMP_PREFIX" "bin/gegl"
 bund_usr "$GIMP_PREFIX" "share/applications/*.desktop"
 #go-appimagetool have too polluted output so we save as log. See: https://github.com/probonopd/go-appimage/issues/314
 "$bundler" -s deploy $(echo "$USR_DIR/share/applications/*.desktop") &> appimagetool.log || cat appimagetool.log
 
-## Manual adjustments (go-appimagetool don't handle Linux FHS gracefully yet)
+## Manual adjustments after running the bundling tool
 ### Undo the mess which breaks babl and GEGL. See: https://github.com/probonopd/go-appimage/issues/315
 cp -r $APP_DIR/lib/* $USR_DIR/${LIB_DIR}
 rm -r $APP_DIR/lib
@@ -406,7 +406,7 @@ done
 #  fi
 #done
 
-## Files unnecessarily created or bundled by go-appimagetool
+## Files unnecessarily created or bundled by the tool
 mv build/linux/appimage/AppRun $APP_DIR
 mv build/linux/appimage/AppRun.bak build/linux/appimage/AppRun
 rm $APP_DIR/*.desktop
@@ -447,6 +447,7 @@ echo "(INFO): copying $APP_ID.svg asset to AppDir"
 find "$USR_DIR/share/icons/hicolor" \( -iname *.svg -and ! -iname $APP_ID*.svg \) -execdir ln -sf "{}" $APP_ID.svg \;
 find "$USR_DIR/share/icons/hicolor" \( -iname *.png -and ! -iname $APP_ID*.png \) -execdir ln -sf "{}" $APP_ID.png \;
 cp -L "$USR_DIR/share/icons/hicolor/scalable/apps/$APP_ID.svg" $APP_DIR
+ln -sfr "$APP_DIR/$APP_ID.svg" $APP_DIR/.DirIcon
 
 ## 4.3. Configure .desktop asset (similarly to flatpaks's 'rename-desktop-file')
 echo "(INFO): configuring $APP_ID.desktop"
