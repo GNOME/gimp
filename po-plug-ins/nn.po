@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2025-03-30 14:57+0000\n"
-"PO-Revision-Date: 2025-03-30 18:06+0200\n"
+"PO-Revision-Date: 2025-04-07 21:17+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -532,7 +532,7 @@ msgstr "Klarte ikkje tildela minne til rammebehaldaren."
 
 #: plug-ins/common/animation-play.c:1078
 msgid "Invalid image. Did you close it?"
-msgstr "Ugyldig bilete. Lukka du det?"
+msgstr "Ugyldig bilete. Har du lukka det?"
 
 #: plug-ins/common/animation-play.c:1190
 #, c-format
