@@ -16,6 +16,7 @@ fi
 
 ## Minimum runtime paths
 export PATH="$APPDIR"/usr/bin/:"$PATH"
+unset LD_LIBRARY_PATH
 export XDG_DATA_DIRS="$APPDIR"/usr/share/:"$XDG_DATA_DIRS"
 
 
