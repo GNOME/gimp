@@ -752,7 +752,11 @@ gimp_curves_tool_settings_import (GimpFilterTool  *filter_tool,
                                  &bytes_read, NULL, error) ||
       bytes_read != sizeof (header))
     {
-      g_prefix_error (error, _("Could not read header: "));
+      if (error && *error)
+        g_prefix_error (error, _("Could not read header: "));
+      else
+        g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                     _("Could not read header: "));
       return FALSE;
     }
 
