@@ -34,7 +34,6 @@ import pyconsole
 
 import gettext
 textdomain = "gimp30-python"
-gettext.bindtextdomain(textdomain, Gimp.locale_directory())
 gettext.textdomain(textdomain)
 _ = gettext.gettext
 
@@ -303,6 +302,7 @@ def run(procedure, config, data):
 class PythonConsole (Gimp.PlugIn):
     ## GimpPlugIn virtual methods ##
     def do_set_i18n(self, name):
+        gettext.bindtextdomain(textdomain, Gimp.locale_directory())
         return True, 'gimp30-python', None
 
     def do_query_procedures(self):
