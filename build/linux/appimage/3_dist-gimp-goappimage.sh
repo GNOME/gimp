@@ -1,9 +1,5 @@
 #!/bin/sh
 
-# Loosely based on:
-# https://github.com/AppImage/AppImageSpec/blob/master/draft.md
-# https://gitlab.com/inkscape/inkscape/-/commit/b280917568051872793a0c7223b8d3f3928b7d26
-
 # Parameters
 REVISION="$1"
 if [[ "$GIMP_CI_APPIMAGE" =~ [1-9] ]] && [ "$CI_PIPELINE_SOURCE" != 'schedule' ]; then
@@ -296,9 +292,7 @@ bund_usr "$GIMP_PREFIX" "lib/gegl-*/*.so"
 conf_app GEGL_PATH "${LIB_DIR}/${LIB_SUBDIR}gegl-*"
 bund_usr "$GIMP_PREFIX" "lib/libgimp*"
 bund_usr "$GIMP_PREFIX" "lib/gimp"
-conf_app GIMP3_PLUGINDIR "${LIB_DIR}/${LIB_SUBDIR}gimp/*"
 bund_usr "$GIMP_PREFIX" "share/gimp"
-conf_app GIMP3_DATADIR "share/gimp/*"
 lang_array=($(echo $(ls po/*.po |
               sed -e 's|po/||g' -e 's|.po||g' | sort) |
               tr '\n\r' ' '))
@@ -309,9 +303,7 @@ for lang in "${lang_array[@]}"; do
   # For language list in text tool options
   bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/iso_639*3.mo
 done
-conf_app GIMP3_LOCALEDIR "share/locale"
 bund_usr "$GIMP_PREFIX" "etc/gimp"
-conf_app GIMP3_SYSCONFDIR "etc/gimp/*"
 
 ## Other features and plug-ins
 ### Needed for welcome page

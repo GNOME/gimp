@@ -1,11 +1,5 @@
 #!/bin/sh
 
-# Loosely based on:
-# https://appimage-builder.readthedocs.io/en/latest/examples/gimp_path_mapping.html
-# https://github.com/aferrero2707/gimp-appimage
-# https://github.com/ivan-hc/GIMP-appimage
-# https://github.com/sudo-give-me-coffee/PhotoMP/
-
 set -e
 
 if [ -z "$APPDIR" ]; then
