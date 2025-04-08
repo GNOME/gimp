@@ -661,6 +661,9 @@ begin
 			ShellExecAsOriginalUser('','ms-settings:appsfeatures','','',SW_SHOW,ewNoWait,ErrorCode);
 			Abort;
 		end;
+	end else if (WizardSilent) and (InstallType = 'itDowngrade') then begin 
+	    DebugMsg('CheckInstallType',CustomMessage('DowngradeError'));
+		Abort;
 	end;
 end;
 
