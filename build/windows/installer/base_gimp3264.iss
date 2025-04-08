@@ -915,8 +915,39 @@ begin
 end;
 
 
-//3. INSTALL DIR (no customizations)
+//3. INSTALL DIR: override Inno custom dir icon
+procedure NativeDirIcon();
+var TypRect: TRect;
+    Icon: THandle;
+	IconSize: Integer;
+begin
+    WizardForm.SelectDirBitmapImage.Visible := False;
 
+	Icon := ExtractIcon(0,'imageres.dll',3)
+    with TBitmapImage.Create(WizardForm.SelectDirPage) do begin
+        Parent := WizardForm.SelectDirPage;
+	   	with Bitmap do begin
+            Left := 0;
+	        Top := 0;
+	        AutoSize := True;
+			Center := True;
+			Width := ScaleY(32);
+            Height := ScaleY(32);
+			Canvas.FillRect(TypRect);
+		        
+			if WizardForm.Font.PixelsPerInch >= 168 then begin          //175% scaling
+				IconSize := 64;
+			end else if WizardForm.Font.PixelsPerInch >= 144 then begin //150% scaling
+				IconSize := 48;
+			end else if WizardForm.Font.PixelsPerInch >= 120 then begin //125% scaling
+				IconSize := 32;
+			end else begin                                              //100% scaling
+				IconSize := 32;
+			end;
+			DrawIconEx(Canvas.Handle, 0, 0, Icon, IconSize, IconSize, 0, 0, DI_NORMAL);
+        end;
+    end;
+end;
 
 //4. COMPONENTS: Add panel with description on click, to the right of the list
 var
@@ -1742,6 +1773,7 @@ procedure InitializeWizard();
 begin
 	UpdateWizardImages();
 	InitCustomPages();
+	NativeDirIcon();
 end;
 
 function ShouldSkipPage(pPageID: Integer): Boolean;
