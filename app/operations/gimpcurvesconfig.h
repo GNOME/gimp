@@ -77,5 +77,8 @@ gboolean   gimp_curves_config_save_cruft          (GimpCurvesConfig  *config,
                                                    GOutputStream     *output,
                                                    GError           **error);
 
+gboolean   gimp_curves_config_load_acv            (GimpCurvesConfig  *config,
+                                                   GInputStream      *input,
+                                                   GError           **error);
 
 #endif /* __GIMP_CURVES_CONFIG_H__ */

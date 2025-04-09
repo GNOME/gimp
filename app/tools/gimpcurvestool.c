@@ -752,6 +752,16 @@ gimp_curves_tool_settings_import (GimpFilterTool  *filter_tool,
                                  &bytes_read, NULL, error) ||
       bytes_read != sizeof (header))
     {
+      /* A Photoshop .acv curves preset file might be smaller than
+       * 64 bytes, so we'll check if that's the case */
+      if (bytes_read > 2 && header[0] == 0 &&
+          (header[1] == 1 || header[1] == 4))
+        {
+          g_seekable_seek (G_SEEKABLE (input), 0, G_SEEK_SET, NULL, NULL);
+
+          return gimp_curves_config_load_acv (config, input, error);
+        }
+
       if (error && *error)
         g_prefix_error (error, _("Could not read header: "));
       else
@@ -764,6 +774,10 @@ gimp_curves_tool_settings_import (GimpFilterTool  *filter_tool,
 
   if (g_str_has_prefix (header, "# GIMP Curves File\n"))
     return gimp_curves_config_load_cruft (config, input, error);
+
+  if (bytes_read > 2 && header[0] == 0 &&
+      (header[1] == 1 || header[1] == 4))
+    return gimp_curves_config_load_acv (config, input, error);
 
   return GIMP_FILTER_TOOL_CLASS (parent_class)->settings_import (filter_tool,
                                                                  input,

@@ -712,3 +712,101 @@ gimp_curves_config_save_cruft (GimpCurvesConfig  *config,
 
   return TRUE;
 }
+
+#define PS_CURVE_N_MAX_POINTS 19
+
+/* Loads Photoshop .acv Curves preset */
+gboolean
+gimp_curves_config_load_acv (GimpCurvesConfig  *config,
+                             GInputStream      *input,
+                             GError           **error)
+{
+  GDataInputStream *data_input;
+  guint16           version = 0;
+  guint16           count   = 0;
+  gint              in[5][PS_CURVE_N_MAX_POINTS];
+  gint              out[5][PS_CURVE_N_MAX_POINTS];
+
+  g_return_val_if_fail (GIMP_IS_CURVES_CONFIG (config), FALSE);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  data_input = g_data_input_stream_new (input);
+
+  g_data_input_stream_set_byte_order (data_input,
+                                      G_DATA_STREAM_BYTE_ORDER_BIG_ENDIAN);
+
+  version = g_data_input_stream_read_uint16 (data_input, NULL, error);
+  if (! version)
+    goto error;
+
+  count = g_data_input_stream_read_uint16 (data_input, NULL, error);
+  if (! count)
+    goto error;
+
+  count = CLAMP (count, 1, 5);
+  for (gint i = 0; i < count; i++)
+    {
+      guint16 points = 0;
+
+      points = g_data_input_stream_read_uint16 (data_input, NULL, error);
+      if (! points || points > PS_CURVE_N_MAX_POINTS)
+        goto error;
+
+      for (gint j = 0; j < points; j++)
+        {
+          /* Curves can start at 0, 0, so we'll check for an error instead */
+          out[i][j] = g_data_input_stream_read_uint16 (data_input, NULL, error);
+          if (error && *error)
+            goto error;
+
+          in[i][j] = g_data_input_stream_read_uint16 (data_input, NULL, error);
+          if (error && *error)
+            goto error;
+        }
+      if (points < PS_CURVE_N_MAX_POINTS)
+        {
+          in[i][points]  = -1;
+          out[i][points] = -1;
+        }
+    }
+
+  g_object_unref (data_input);
+  g_object_freeze_notify (G_OBJECT (config));
+
+  for (gint i = 0; i < count; i++)
+    {
+      GimpCurve *curve = config->curve[i];
+
+      gimp_data_freeze (GIMP_DATA (curve));
+
+      gimp_curve_set_curve_type (curve, GIMP_CURVE_SMOOTH);
+      gimp_curve_clear_points (curve);
+
+      for (gint j = 0; j < PS_CURVE_N_MAX_POINTS; j++)
+        {
+          if (in[i][j] > -1 && out[i][j] > -1)
+            gimp_curve_add_point (curve, in[i][j] / 255.0, out[i][j] / 255.0);
+          else
+            break;
+        }
+      gimp_data_thaw (GIMP_DATA (curve));
+    }
+
+  config->trc = GIMP_TRC_NON_LINEAR;
+  g_object_notify (G_OBJECT (config), "trc");
+
+  g_object_thaw_notify (G_OBJECT (config));
+
+  return TRUE;
+
+  error:
+      if (error && *error)
+        g_prefix_error (error, _("Could not read header: "));
+      else
+        g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                     _("Could not read header: "));
+    g_object_unref (data_input);
+
+    return FALSE;
+}
