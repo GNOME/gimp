@@ -15,9 +15,11 @@ AlignConsecutiveBitFields: AcrossComments
 AlignConsecutiveMacros: AcrossComments
 AlignEscapedNewlines: Left
 
+AllowAllArgumentsOnNextLine: false
 AllowAllParametersOfDeclarationOnNextLine: false
 AlwaysBreakAfterReturnType: AllDefinitions
-BinPackParameters: false
+BinPackArguments: true
+BinPackParameters: AlwaysOnePerLine
 BreakBeforeBinaryOperators: None
 BreakBeforeBraces: GNU
 BreakBeforeTernaryOperators: false
