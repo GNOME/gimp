@@ -772,7 +772,7 @@ package Gimp::CodeGen::enums;
 			  GIMP_LAYER_MODE_COLOR_ERASE GIMP_LAYER_MODE_ERASE
 			  GIMP_LAYER_MODE_MERGE GIMP_LAYER_MODE_SPLIT
 			  GIMP_LAYER_MODE_PASS_THROUGH
-			  GIMP_LAYER_MODE_REPLACE) ],
+			  GIMP_LAYER_MODE_REPLACE GIMP_LAYER_MODE_OVERWRITE) ],
 	  mapping => { GIMP_LAYER_MODE_NORMAL_LEGACY => '0',
 		       GIMP_LAYER_MODE_DISSOLVE => '1',
 		       GIMP_LAYER_MODE_BEHIND_LEGACY => '2',
@@ -835,7 +835,8 @@ package Gimp::CodeGen::enums;
 		       GIMP_LAYER_MODE_MERGE => '59',
 		       GIMP_LAYER_MODE_SPLIT => '60',
 		       GIMP_LAYER_MODE_PASS_THROUGH => '61',
-		       GIMP_LAYER_MODE_REPLACE => '62' }
+		       GIMP_LAYER_MODE_REPLACE => '62',
+		       GIMP_LAYER_MODE_OVERWRITE => '63' }
 	},
     GimpConvertDitherType =>
 	{ contig => 1,

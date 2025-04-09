@@ -33,6 +33,7 @@ libapplayermodes_sources = files(
   'gimpoperationmerge.c',
   'gimpoperationnormal.c',
   'gimpoperationpassthrough.c',
+  'gimpoperationoverwrite.c',
   'gimpoperationreplace.c',
   'gimpoperationsplit.c',
 )

@@ -147,6 +147,7 @@ gimp_layer_mode_get_type (void)
     { GIMP_LAYER_MODE_SPLIT, "GIMP_LAYER_MODE_SPLIT", "split" },
     { GIMP_LAYER_MODE_PASS_THROUGH, "GIMP_LAYER_MODE_PASS_THROUGH", "pass-through" },
     { GIMP_LAYER_MODE_REPLACE, "GIMP_LAYER_MODE_REPLACE", "replace" },
+    { GIMP_LAYER_MODE_OVERWRITE, "GIMP_LAYER_MODE_OVERWRITE", "overwrite" },
     { GIMP_LAYER_MODE_ANTI_ERASE, "GIMP_LAYER_MODE_ANTI_ERASE", "anti-erase" },
     { 0, NULL, NULL }
   };
@@ -288,6 +289,7 @@ gimp_layer_mode_get_type (void)
     { GIMP_LAYER_MODE_SPLIT, NC_("layer-mode", "Split"), NULL },
     { GIMP_LAYER_MODE_PASS_THROUGH, NC_("layer-mode", "Pass through"), NULL },
     { GIMP_LAYER_MODE_REPLACE, NC_("layer-mode", "Replace"), NULL },
+    { GIMP_LAYER_MODE_OVERWRITE, NC_("layer-mode", "Overwrite"), NULL },
     { GIMP_LAYER_MODE_ANTI_ERASE, NC_("layer-mode", "Anti erase"), NULL },
     { 0, NULL, NULL }
   };

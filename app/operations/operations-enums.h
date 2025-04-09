@@ -129,6 +129,9 @@ typedef enum
   /*  Mode only used for drawable filters. */
   GIMP_LAYER_MODE_REPLACE,               /*< desc="Replace"                                                 >*/
 
+  /*  Since 3.0 (paint mode only) */
+  GIMP_LAYER_MODE_OVERWRITE,             /*< desc="Overwrite"                                               >*/
+
   /*  Internal modes, not available to the PDB, must be kept at the end  */
   GIMP_LAYER_MODE_ANTI_ERASE,            /*< pdb-skip, desc="Anti erase"                                    >*/
 
