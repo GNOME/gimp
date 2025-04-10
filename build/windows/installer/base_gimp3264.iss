@@ -656,6 +656,7 @@ begin
 	end;
 	DebugMsg('CheckInstallType','Installed GIMP {#GIMP_MUTEX_VERSION} is: ' + Installed_AppVersion + ', installer is: {#FULL_GIMP_VERSION}. So Install type is: ' + InstallType);
 	
+	//Inno does not support direct downgrade so let's block it to not break installs
 	if (not WizardSilent) and (InstallType = 'itDowngrade') then begin 
 	    if SuppressibleMsgBox(FmtMessage(CustomMessage('DowngradeError'), [Installed_AppVersion, '{#FULL_GIMP_VERSION}']), mbCriticalError, MB_OK, IDOK) = IDOK then begin
 			ShellExecAsOriginalUser('','ms-settings:appsfeatures','','',SW_SHOW,ewNoWait,ErrorCode);
@@ -786,6 +787,9 @@ begin
 		    btnInstall.Visible := True;
 		end;
 		btnInstall.TabOrder := 1;
+
+		//Inno does not support "repairing" a lost install so let's show Customize button to allow to repair installs
+		//Inno does not support changing components at reinstall or update so let's hide Customize to not break installs
 		if (InstallType = 'itRepair') or (InstallType = 'itInstall') then begin
 		    btnCustomize.Visible := True;
 		end;

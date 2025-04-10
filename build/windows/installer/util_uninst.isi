@@ -355,15 +355,18 @@ begin
 	case CurStep of
 	usUninstall:
 	begin
+		//Try to make restore point before unninstalling (like before installing, see RestorePoint() on *gimp3264.iss)
 		if IsAdminInstallMode() then begin
 		    RestorePointU();
 			UninstallProgressForm.StatusLabel.Caption := FmtMessage(SetupMessage(msgStatusUninstalling),['GIMP']);
 		end;
+
 		LoadStringsFromFile(ExpandConstant('{app}\uninst\uninst.inf'),asUninstInf);
 		ParseUninstInf();
 	end;
 	usPostUninstall:
 	begin
+		//Offer option to remove %AppData%/GIMP/GIMP_APP_VERSION dir so have a future clean install
 		if not IsAdminInstallMode() then begin
             gimp_directory := GetEnv('GIMP{#API_MAJOR}_DIRECTORY');
 			if gimp_directory = '' then begin
