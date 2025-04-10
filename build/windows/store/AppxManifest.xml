@@ -57,6 +57,14 @@
             </uap:SupportedFileTypes>
           </uap:FileTypeAssociation>
         </uap:Extension>
+        <!--make association for .ico files but do not set uap:Logo since their content is the uap:Logo-->
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="ico">
+            <uap:SupportedFileTypes>
+              <uap:FileType>.ico</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
         <uap5:Extension Category="windows.appExecutionAlias" EntryPoint="Windows.FullTrustApplication">
             <uap5:AppExecutionAlias>
               <uap5:ExecutionAlias Alias="gimp-@GIMP_MUTEX_VERSION@.exe"/>
