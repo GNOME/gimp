@@ -4,16 +4,16 @@ set -e
 
 if [ -z "$APPDIR" ]; then
   export APPDIR="$(dirname "$(readlink -f "${0}")")"
-  echo "Running without the runtime. AppDir is $APPDIR"
+  echo "Running without type2-runtime. AppDir is $APPDIR"
 fi
 
 
-## Minimum runtime paths
+## Minimum runtime paths. See: #13603
 export PATH="$APPDIR"/usr/bin/:"$PATH"
 unset LD_LIBRARY_PATH
 export XDG_DATA_DIRS="$APPDIR"/usr/share/:"$XDG_DATA_DIRS"
 
 
 ## Other needed runtime paths (added by 3_dist-gimp-goappimage.sh)
-### FIXME: We need to run on squash-fs dir since LD is hardlinked into executables
+### FIXME: We need to run on squash-fs dir due to LD linux interpreter. See 3_dist-gimp-goappimage.sh
 cd "$APPDIR"
