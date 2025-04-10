@@ -193,16 +193,16 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
+      hbox = gimp_paint_options_gui_scale_with_buttons
+        (config, "brush-hardness", "brush-link-hardness",
+         _("Reset hardness to brush's native hardness"),
+         0.1, 1.0, 1, 0.0, 100.0, 100.0, 1.0,
+         G_CALLBACK (gimp_paint_options_gui_reset_hardness), link_group);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
+
       if (tool_type != GIMP_TYPE_PENCIL_TOOL)
         {
-          hbox = gimp_paint_options_gui_scale_with_buttons
-            (config, "brush-hardness", "brush-link-hardness",
-             _("Reset hardness to brush's native hardness"),
-             0.1, 1.0, 1, 0.0, 100.0, 100.0, 1.0,
-             G_CALLBACK (gimp_paint_options_gui_reset_hardness), link_group);
-          gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-            gtk_widget_set_visible (hbox, TRUE);
-
           hbox = gimp_paint_options_gui_scale_with_buttons
             (config, "brush-force", NULL,
              _("Reset force to default"),
