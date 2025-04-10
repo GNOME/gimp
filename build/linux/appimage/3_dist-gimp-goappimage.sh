@@ -278,6 +278,7 @@ prep_pkg "libcanberra-gtk3-module"
 prep_pkg "libxapp-gtk3-module"
 prep_pkg "packagekit-gtk3-module"
 bund_usr "$UNIX_PREFIX" "lib/gtk-3.0/modules/*.so" --bundler
+bund_usr "$UNIX_PREFIX" "lib/gtk-3.0/*.*.*/printbackends/*.so" --bundler
 conf_app GTK_PATH "${LIB_DIR}/${LIB_SUBDIR}gtk-3.0"
 prep_pkg "ibus-gtk3"
 bund_usr "$UNIX_PREFIX" "lib/gtk-3.0/*.*.*/immodules/*.so" --bundler
