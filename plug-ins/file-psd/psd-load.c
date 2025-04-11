@@ -1966,10 +1966,17 @@ mark_clipping_groups (PSDimage  *img_a,
                                             clipping_group_stack->len - 1);
                       if (parent_info.group_index > -1)
                         {
+                          /* We can be nested multiple levels deep, in which
+                           * case the parent group is also without clipping.
+                           * (Issue 13642) */
+                          if (parent_info.last_index == -1)
+                            {
+                              IFDBG(4) g_debug ("[%d] No clipping group ending, going level up", lidx);
+                            }
                           /* Test if we were in a group that was the start of a
                            * clipping group, but is itself not clipping!
                            * (example image layers 96-27) */
-                          if (lyr_a[parent_info.last_index]->clipping == 0)
+                          else if (lyr_a[parent_info.last_index]->clipping == 0)
                             {
                               /* found the bottom of the clipping group */
                               lyr_a[lidx]->clipping_group_type = 1; /* start clipping group */
