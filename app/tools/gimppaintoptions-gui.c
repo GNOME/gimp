@@ -201,16 +201,18 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
-      hbox = gimp_paint_options_gui_scale_with_buttons
-        (config, "brush-force", NULL,
-         _("Reset force to default"),
-         0.1, 1.0, 1, 0.0, 100.0, 100.0, 1.0,
-         G_CALLBACK (gimp_paint_options_gui_reset_force), link_group);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
-
-      if (tool_type == GIMP_TYPE_PENCIL_TOOL)
-        gtk_widget_set_sensitive (hbox, FALSE);
+      if (tool_type != GIMP_TYPE_PENCIL_TOOL)
+        {
+          hbox = gimp_paint_options_gui_scale_with_buttons (config, "brush-force",
+                                                            NULL,
+                                                            _("Reset force to default"),
+                                                            0.1, 1.0, 1, 0.0,
+                                                            100.0, 100.0, 1.0,
+                                                            G_CALLBACK (gimp_paint_options_gui_reset_force),
+                                                            link_group);
+          gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+          gtk_widget_set_visible (hbox, TRUE);
+        }
 
       g_object_unref (link_group);
 
