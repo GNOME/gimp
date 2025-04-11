@@ -200,10 +200,22 @@ help in that regard:
 
         https://github.com/strukturag/libheif
 
-     Make sure you build libheif with libde265 and libx265 support (for
-     respectively decoding and encoding of HEVC, i.e. HEIC files), and
-     libaom decoder and encoder (for AV1, i.e. AVIF files), otherwise
-     the plug-in is mostly useless.
+     GIMP supports several HEIF variants (different coding formats in
+     the HEIF container), so you should make sure you build libheif with
+     proper encoders and decoders for these:
+
+     * HEIC: e.g. libde265 and libx265 support (for
+             respectively decoding and encoding of HEVC).
+     * AVIF: e.g. libaom decoder and encoder (for AV1 encoding and
+             decoding), prefered over rav1e.
+     * HEJ2: OpenJPEG (for JPEG2000 inside HEIF).
+
+     If you don't compile libheif with the correct flags (see libheif
+     README which has a table of supported codecs), the plug-in is
+     mostly useless.
+     If HEIF support doesn't look like it works on relocatable
+     environments, the environment variable LIBHEIF_PLUGIN_PATH may be
+     what you are looking for.
 
  15. GObject Introspection requires the following dependencies to be
      built and installed with introspection as well: babl, cairo,
