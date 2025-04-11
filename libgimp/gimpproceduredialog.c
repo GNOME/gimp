@@ -1106,7 +1106,7 @@ gimp_procedure_dialog_get_color_widget (GimpProcedureDialog *dialog,
  *
  * Creates a new #GimpCoordinates for @x_property and @y_property which
  * must necessarily be an integer or double property.
- * The associated @unit_property must be a GimpUnit or integer property.
+ * The associated @unit_property must be a GimpUnit property.
  *
  * If a widget has already been created for this procedure, it will be
  * returned instead (whatever its actual widget type).
