@@ -49,6 +49,7 @@ EXPORTS
 	gimp_procedure_dialog_fill_paned
 	gimp_procedure_dialog_fill_scrolled_window
 	gimp_procedure_dialog_get_color_widget
+	gimp_procedure_dialog_get_coordinates
 	gimp_procedure_dialog_get_drawable_preview
 	gimp_procedure_dialog_get_int_combo
 	gimp_procedure_dialog_get_int_radio
