@@ -290,9 +290,14 @@ Name: gimp32on64; Description: "{cm:ComponentsGimp32}"; Types: full custom; Flag
 
 [Files]
 ;setup files
-Source: "{#ASSETS_DIR}\install-end.scale-100.bmp"; Flags: dontcopy
-Source: "{#ASSETS_DIR}\installsplash.bmp"; Flags: dontcopy
-Source: "{#ASSETS_DIR}\installsplash_small.bmp"; Flags: dontcopy
+Source: "{#ASSETS_DIR}\installsplash_top.scale-100.bmp"; Flags: dontcopy
+Source: "{#ASSETS_DIR}\installsplash_top.scale-125.bmp"; Flags: dontcopy
+Source: "{#ASSETS_DIR}\installsplash_top.scale-150.bmp"; Flags: dontcopy
+Source: "{#ASSETS_DIR}\installsplash_top.scale-175.bmp"; Flags: dontcopy
+Source: "{#ASSETS_DIR}\installsplash_top.scale-200.bmp"; Flags: dontcopy
+Source: "{#ASSETS_DIR}\installsplash_top.scale-225.bmp"; Flags: dontcopy
+Source: "{#ASSETS_DIR}\installsplash_top.scale-250.bmp"; Flags: dontcopy
+Source: "{#ASSETS_DIR}\installsplash_bottom.bmp"; Flags: dontcopy
 
 #ifndef NOFILES
 #define X86 1
@@ -702,9 +707,14 @@ begin
 #endif
 
 	try
-		ExtractTemporaryFile('install-end.scale-100.bmp');
-		ExtractTemporaryFile('installsplash.bmp');
-		ExtractTemporaryFile('installsplash_small.bmp');
+		ExtractTemporaryFile('installsplash_top.scale-100.bmp');
+		ExtractTemporaryFile('installsplash_top.scale-125.bmp');
+		ExtractTemporaryFile('installsplash_top.scale-150.bmp');
+		ExtractTemporaryFile('installsplash_top.scale-175.bmp');
+		ExtractTemporaryFile('installsplash_top.scale-200.bmp');
+		ExtractTemporaryFile('installsplash_top.scale-225.bmp');
+		ExtractTemporaryFile('installsplash_top.scale-250.bmp');
+		ExtractTemporaryFile('installsplash_bottom.bmp');
 	except
 		DebugMsg('InitializeSetup','Error extracting temporary file: ' + GetExceptionMessage);
 		MsgBox(CustomMessage('ErrorExtractingTemp') + #13#13 + GetExceptionMessage,mbError,MB_OK);
@@ -719,12 +729,54 @@ end;
 
 //1. WELCOME: add splash image with buttons in non-default positions
 var
+  WelcomeBitmapTop: TBitmapImage;
   WelcomeBitmapBottom: TBitmapImage;
   btnInstall, btnCustomize: TNewButton;
 
 procedure UpdateWizardImages();
-var NewBitmap1,NewBitmap2: TFileStream;
+var TopBitmap,BottomBitmap: TFileStream;
 begin
+	//Automatically scaled splash image
+	WelcomeBitmapTop := TBitmapImage.Create(WizardForm.WelcomePage);
+	with WelcomeBitmapTop do
+	begin
+		Parent := WizardForm.WelcomePage;
+		Width := WizardForm.WelcomePage.ClientWidth
+		Height := 1080 * Width / 1920
+		Left := 0;
+		Top := (WizardForm.ClientHeight - Height) / 2;
+		AutoSize := False;
+		Stretch := True;
+		Center := True;
+	end;
+	try
+		if WelcomeBitmapTop.Height <= 314 then begin
+			TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-100.bmp'),fmOpenRead);
+		end else if WelcomeBitmapTop.Height <= 386 then begin
+			TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-125.bmp'),fmOpenRead);
+		end else if WelcomeBitmapTop.Height <= 459 then begin
+			TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-150.bmp'),fmOpenRead);
+		end else if WelcomeBitmapTop.Height <= 556 then begin
+			TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-175.bmp'),fmOpenRead);
+		end else if WelcomeBitmapTop.Height <= 604 then begin
+			TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-200.bmp'),fmOpenRead);
+		end else if WelcomeBitmapTop.Height <= 700 then begin
+			TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-225.bmp'),fmOpenRead);
+		end else begin
+			TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-250.bmp'),fmOpenRead);
+		end;
+		DebugMsg('UpdateWizardImages','Height: ' + IntToStr(WelcomeBitmapTop.Height));
+		WizardForm.WizardBitmapImage.Bitmap.LoadFromStream(TopBitmap);
+		WelcomeBitmapTop.Bitmap := WizardForm.WizardBitmapImage.Bitmap;
+	except
+		DebugMsg('UpdateWizardImages','Error loading image: ' + GetExceptionMessage);
+	finally
+		if TopBitmap <> nil then
+			TopBitmap.Free;
+	end;
+	WizardForm.WelcomePage.Color := clNone;
+
+	//Blurred background
 	WelcomeBitmapBottom := TBitmapImage.Create(WizardForm);
 	with WelcomeBitmapBottom do
 	begin
@@ -735,43 +787,15 @@ begin
 		Height := WizardForm.ClientHeight;
 		Stretch := True;
 	end;
-
-	DebugMsg('UpdateWizardImages','Height: ' + IntToStr(WizardForm.WizardBitmapImage.Height));
-
-	if WizardForm.WizardBitmapImage.Height < 386 then //use smaller image when not using Large Fonts
-	begin
-		try
-			NewBitmap1 := TFileStream.Create(ExpandConstant('{tmp}\installsplash_small.bmp'),fmOpenRead);
-			WizardForm.WizardBitmapImage.Bitmap.LoadFromStream(NewBitmap1);
-			WelcomeBitmapBottom.Bitmap := WizardForm.WizardBitmapImage.Bitmap;
-			try
-				NewBitmap2 := TFileStream.Create(ExpandConstant('{tmp}\install-end.scale-100.bmp'),fmOpenRead);
-				WizardForm.WizardBitmapImage2.Bitmap.LoadFromStream(NewBitmap2);
-			except
-				DebugMsg('UpdateWizardImages','Error loading image: ' + GetExceptionMessage);
-			finally
-				if NewBitmap2 <> nil then
-					NewBitmap2.Free;
-			end;
-		except
-			DebugMsg('UpdateWizardImages','Error loading image: ' + GetExceptionMessage);
-		finally
-			if NewBitmap1 <> nil then
-				NewBitmap1.Free;
-		end;
-	end
-	else
-	begin
-		try
-			NewBitmap1 := TFileStream.Create(ExpandConstant('{tmp}\installsplash.bmp'),fmOpenRead);
-			WizardForm.WizardBitmapImage.Bitmap.LoadFromStream(NewBitmap1);
-			WelcomeBitmapBottom.Bitmap := WizardForm.WizardBitmapImage.Bitmap;
-		except
-			DebugMsg('UpdateWizardImages','Error loading image: ' + GetExceptionMessage);
-		finally
-			if NewBitmap1 <> nil then
-				NewBitmap1.Free;
-		end;
+	try
+		BottomBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_bottom.bmp'),fmOpenRead);
+		WizardForm.WizardBitmapImage.Bitmap.LoadFromStream(BottomBitmap);
+		WelcomeBitmapBottom.Bitmap := WizardForm.WizardBitmapImage.Bitmap;
+	except
+		DebugMsg('UpdateWizardImages','Error loading image: ' + GetExceptionMessage);
+	finally
+		if BottomBitmap <> nil then
+			BottomBitmap.Free;
 	end;
 	WizardForm.WizardBitmapImage.Width := WizardForm.ClientWidth;
 	WizardForm.WizardBitmapImage.Height := WizardForm.ClientHeight;
@@ -941,7 +965,7 @@ begin
 			Width := ScaleY(32);
             Height := ScaleY(32);
 			Canvas.FillRect(TypRect);
-		        
+
 			if WizardForm.Font.PixelsPerInch >= 168 then begin          //175% scaling
 				IconSize := 64;
 			end else if WizardForm.Font.PixelsPerInch >= 144 then begin //150% scaling
