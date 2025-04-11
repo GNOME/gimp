@@ -1090,6 +1090,115 @@ gimp_procedure_dialog_get_color_widget (GimpProcedureDialog *dialog,
 }
 
 /**
+ * gimp_procedure_dialog_get_coordinates:
+ * @dialog:            the associated #GimpProcedureDialog.
+ * @coordinates_id:    Identifier for #GimpCoordinates widget.
+ * @x_property:        Name of int or double property for X coordinate.
+ * @y_property:        Name of int or double property for Y coordinate.
+ * @unit_property:     Name of unit property.
+ * @unit_format:       A printf-like unit-format string as is used with
+ *                     gimp_unit_menu_new().
+ * @update_policy:     How the automatic pixel <-> real-world-unit
+ *                     calculations should be done.
+ * @x_resolution:      The resolution (in dpi) for the X coordinate.
+ * @y_resolution:      The resolution (in dpi) for the Y coordinate.
+
+ *
+ * Creates a new #GimpCoordinates for @x_property and @y_property which
+ * must necessarily be an integer or double property.
+ * The associated @unit_property must be a GimpUnit or integer property.
+ *
+ * If a widget has already been created for this procedure, it will be
+ * returned instead (whatever its actual widget type).
+ *
+ * Returns: (transfer none): the #GtkWidget representing @coordinates_id.
+ *                           The object belongs to @dialog and must not be
+ *                           freed.
+ */
+GtkWidget *
+gimp_procedure_dialog_get_coordinates (GimpProcedureDialog *dialog,
+                                       const gchar         *coordinates_id,
+                                       const gchar         *x_property,
+                                       const gchar         *y_property,
+                                       const gchar         *unit_property,
+                                       const gchar         *unit_format,
+                                       GimpSizeEntryUpdatePolicy
+                                                            update_policy,
+                                       gdouble              x_resolution,
+                                       gdouble              y_resolution)
+{
+  GimpProcedureDialogPrivate *priv;
+  GtkWidget                  *widget = NULL;
+  GtkWidget                  *label  = NULL;
+  GParamSpec                 *pspec_x;
+  GParamSpec                 *pspec_y;
+  GParamSpec                 *pspec_unit;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE_DIALOG (dialog), NULL);
+  g_return_val_if_fail (coordinates_id != NULL, NULL);
+  g_return_val_if_fail (x_property != NULL, NULL);
+  g_return_val_if_fail (y_property != NULL, NULL);
+  g_return_val_if_fail (unit_property != NULL, NULL);
+
+  priv       = gimp_procedure_dialog_get_instance_private (dialog);
+  pspec_x    = g_object_class_find_property (G_OBJECT_GET_CLASS (priv->config),
+                                             x_property);
+  pspec_y    = g_object_class_find_property (G_OBJECT_GET_CLASS (priv->config),
+                                             y_property);
+  pspec_unit = g_object_class_find_property (G_OBJECT_GET_CLASS (priv->config),
+                                             unit_property);
+
+  if (! pspec_x)
+    {
+      g_warning ("%s: parameter %s does not exist.",
+                 G_STRFUNC, x_property);
+      return NULL;
+    }
+  if (! pspec_y)
+    {
+      g_warning ("%s: parameter %s does not exist.",
+                 G_STRFUNC, y_property);
+      return NULL;
+    }
+  if (! pspec_unit)
+    {
+      g_warning ("%s: unit parameter %s does not exist.",
+                 G_STRFUNC, unit_property);
+      return NULL;
+    }
+
+  g_return_val_if_fail (G_PARAM_SPEC_TYPE (pspec_x) == G_TYPE_PARAM_INT ||
+                        G_PARAM_SPEC_TYPE (pspec_x) == G_TYPE_PARAM_DOUBLE, NULL);
+  g_return_val_if_fail (G_PARAM_SPEC_TYPE (pspec_y) == G_TYPE_PARAM_INT ||
+                        G_PARAM_SPEC_TYPE (pspec_y) == G_TYPE_PARAM_DOUBLE, NULL);
+  g_return_val_if_fail (G_PARAM_SPEC_TYPE (pspec_unit) == GIMP_TYPE_PARAM_UNIT, NULL);
+
+  /* First check if it already exists. */
+  widget = g_hash_table_lookup (priv->widgets, coordinates_id);
+
+  if (widget)
+    return widget;
+
+  widget = gimp_prop_coordinates_new (G_OBJECT (priv->config), x_property,
+                                      y_property, unit_property, unit_format,
+                                      update_policy, x_resolution,
+                                      y_resolution, TRUE);
+  /* Add labels */
+  label = gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (widget),
+                                        g_param_spec_get_nick (pspec_x), 0, 1, 0.0);
+  gtk_widget_set_margin_end (label, 6);
+  label = gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (widget),
+                                        g_param_spec_get_nick (pspec_y), 0, 2, 0.0);
+  gtk_widget_set_margin_end (label, 6);
+
+  g_hash_table_insert (priv->widgets, g_strdup (coordinates_id), widget);
+  if (g_object_is_floating (widget))
+    g_object_ref_sink (widget);
+
+  return widget;
+}
+
+/**
  * gimp_procedure_dialog_get_int_combo:
  * @dialog:   the associated #GimpProcedureDialog.
  * @property: name of the int property to build a combo for. It must be

@@ -168,6 +168,12 @@ tile_create_procedure (GimpPlugIn  *plug_in,
                                        1, GIMP_MAX_IMAGE_SIZE, 1,
                                        G_PARAM_READWRITE);
 
+      gimp_procedure_add_unit_aux_argument (procedure, "tile-size-unit",
+                                            _("Tile size unit of measure"),
+                                            _("Tile size unit of measure"),
+                                            TRUE, TRUE, gimp_unit_pixel (),
+                                            GIMP_PARAM_READWRITE);
+
       gimp_procedure_add_boolean_argument (procedure, "new-image",
                                            _("New _image"),
                                            _("Create a new image"),
@@ -452,12 +458,16 @@ tile_dialog (GimpProcedure       *procedure,
   GtkWidget *dlg;
   gint       width;
   gint       height;
+  gdouble    xres;
+  gdouble    yres;
   gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
   width  = gimp_drawable_get_width (drawable);
   height = gimp_drawable_get_height (drawable);
+
+  gimp_image_get_resolution (image, &xres, &yres);
 
   g_object_set (config,
                 "new-width",  width,
@@ -470,17 +480,16 @@ tile_dialog (GimpProcedure       *procedure,
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dlg),
                                    "new-size-label", _("Tile to New Size"),
                                    FALSE, FALSE);
-  /* TODO: we should have a new GimpProcedureDialog widget which would tie 2
-   * arguments for dimensions (or coordinates), and possibly more aux args for
-   * the constrain boolean choice, the unit, etc.
-   */
-  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dlg),
-                                  "new-size-box",
-                                  "new-width", "new-height",
-                                  NULL);
+
+  gimp_procedure_dialog_get_coordinates (GIMP_PROCEDURE_DIALOG (dlg),
+                                         "coordinates", "new-width",
+                                         "new-height", "tile-size-unit",
+                                         "%a", GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                         xres, yres);
+
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dlg),
                                     "new-size-frame", "new-size-label", FALSE,
-                                    "new-size-box");
+                                    "coordinates");
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dlg), "new-size-frame", "new-image", NULL);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dlg));

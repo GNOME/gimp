@@ -75,6 +75,16 @@ GtkWidget * gimp_procedure_dialog_get_color_widget  (GimpProcedureDialog *dialog
                                                      const gchar         *property,
                                                      gboolean             editable,
                                                      GimpColorAreaType    type);
+GtkWidget * gimp_procedure_dialog_get_coordinates   (GimpProcedureDialog *dialog,
+                                                     const gchar         *coordinates_id,
+                                                     const gchar         *x_property,
+                                                     const gchar         *y_property,
+                                                     const gchar         *unit_property,
+                                                     const gchar         *unit_format,
+                                                     GimpSizeEntryUpdatePolicy
+                                                                          update_policy,
+                                                     gdouble              x_resolution,
+                                                     gdouble              y_resolution);
 GtkWidget * gimp_procedure_dialog_get_int_combo     (GimpProcedureDialog *dialog,
                                                      const gchar         *property,
                                                      GimpIntStore        *store);
