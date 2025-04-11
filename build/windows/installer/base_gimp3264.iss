@@ -643,7 +643,7 @@ begin
 
 	StrToVersion('{#FULL_GIMP_VERSION}', Installer_AppVersionInt);
 
-	if (isInstalled = 'Installed') and (not DirExists(InstallLocation)) then begin
+	if (isInstalled = 'Installed') and not DirExists(ExtractFilePath(RemoveBackslashUnlessRoot(InstallLocation))) then begin
         InstallType := 'itRepair';
     end else if isInstalled = 'notInstalled' then begin
 	    InstallType := 'itInstall';
