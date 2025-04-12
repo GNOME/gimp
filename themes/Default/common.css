@@ -817,6 +817,11 @@ headerbar button.titlebutton, headerbar > menubar {
   box-shadow: none;
 }
 
+/* Define icon colors for merged headerbar buttons */
+.minimize image, .maximize image, .close image {
+  color: @scrollbar-slider-color;
+}
+
 .titlebar {
   padding-top: 0px;
   padding-bottom: 0px;
