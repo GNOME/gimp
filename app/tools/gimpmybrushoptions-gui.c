@@ -52,11 +52,33 @@ gimp_mybrush_options_gui (GimpToolOptions *tool_options)
   GtkWidget *combo_box;
   GtkWidget *frame;
 
+  /* Since MyPaint Brushes have their own custom sliders for brush options,
+   * we'll need to shift them up to match the layout of other brushes */
+  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
+  gtk_widget_set_visible (vbox2, TRUE);
+  gtk_box_reorder_child (GTK_BOX (vbox), vbox2, 2);
+
   /* the brush */
   button = gimp_prop_mybrush_box_new (NULL, GIMP_CONTEXT (tool_options),
                                       _("Brush"), 2,
                                       NULL, NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+
+  /* radius */
+  scale = gimp_prop_spin_scale_new (config, "radius",
+                                    0.1, 1.0, 2);
+  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
+
+  /* opaque */
+  scale = gimp_prop_spin_scale_new (config, "opaque",
+                                    0.1, 1.0, 2);
+  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
+
+  /* hardness */
+  scale = gimp_prop_spin_scale_new (config, "hardness",
+                                    0.1, 1.0, 2);
+  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
 
   /* erase mode */
   scale = gimp_prop_check_button_new (config, "eraser", NULL);
@@ -64,21 +86,6 @@ gimp_mybrush_options_gui (GimpToolOptions *tool_options)
 
   /* no erasing */
   scale = gimp_prop_check_button_new (config, "no-erasing", NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-
-  /* radius */
-  scale = gimp_prop_spin_scale_new (config, "radius",
-                                    0.1, 1.0, 2);
-  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-
-  /* opaque */
-  scale = gimp_prop_spin_scale_new (config, "opaque",
-                                    0.1, 1.0, 2);
-  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-
-  /* hardness */
-  scale = gimp_prop_spin_scale_new (config, "hardness",
-                                    0.1, 1.0, 2);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
   /* Expand layer options */
