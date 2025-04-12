@@ -55,7 +55,7 @@ typedef struct
 struct _GimpGradientChooser
 {
   GimpResourceChooser      parent_instance;
-  GimpGradientPreviewData *local_grad_data;
+  GimpGradientPreviewData  local_grad_data;
   GtkWidget               *preview;
 };
 
@@ -77,6 +77,7 @@ static gboolean gimp_gradient_select_model_change_handler  (GimpGradientChooser 
                                                             gboolean   is_closing);
 
 static void     local_grad_data_new                         (GimpGradientChooser *self);
+static void     local_grad_data_free                        (GimpGradientChooser *self);
 static gboolean local_grad_data_exists                      (GimpGradientChooser *self);
 static gboolean local_grad_data_refresh                     (GimpGradientChooser *self,
                                                              GimpGradient        *gradient);
@@ -140,8 +141,7 @@ gimp_gradient_chooser_finalize (GObject *object)
 {
   GimpGradientChooser *self = GIMP_GRADIENT_CHOOSER (object);
 
-  g_free (self->local_grad_data->data);
-  g_slice_free (GimpGradientPreviewData, self->local_grad_data);
+  local_grad_data_free (self);
 
   /* chain up. */
   G_OBJECT_CLASS (gimp_gradient_chooser_parent_class)->finalize (object);
@@ -347,9 +347,9 @@ gimp_gradient_select_preview_draw_handler (GtkWidget           *widget,
 
   /* Width in pixels of src, since BPP is 4. */
   gimp_gradient_select_preview_draw (cr,
-                                     self->local_grad_data->n_samples,
-                                     self->local_grad_data->allocation_width,
-                                     self->local_grad_data->data);
+                                     self->local_grad_data.n_samples,
+                                     self->local_grad_data.allocation_width,
+                                     self->local_grad_data.data);
 
   return FALSE;
 }
@@ -387,13 +387,27 @@ gimp_gradient_select_model_change_handler (GimpGradientChooser *self,
 static gboolean
 local_grad_data_exists (GimpGradientChooser *self)
 {
-  return self->local_grad_data->data != 0;
+  return self->local_grad_data.data != NULL;
 }
 
 static void
 local_grad_data_new (GimpGradientChooser *self)
 {
-  self->local_grad_data = g_slice_new0 (GimpGradientPreviewData);
+  self->local_grad_data.data             = NULL;
+  self->local_grad_data.n_samples        = 0;
+  self->local_grad_data.allocation_width = 0;
+}
+
+static void
+local_grad_data_free (GimpGradientChooser *self)
+{
+  /* More robust when set to NULL.
+   * g_free(NULL) is safe but g_free twice is not.
+   */
+  g_free (self->local_grad_data.data);
+  self->local_grad_data.data = NULL;
+
+  self->local_grad_data.n_samples = 0;
 }
 
 /* Called at initial draw to get local data for the model gradient.
@@ -408,10 +422,10 @@ local_grad_data_refresh (GimpGradientChooser *self, GimpGradient *gradient)
   gsize    n_samples;
 
   /* Must not be called before widget is allocated. */
-  g_assert (self->local_grad_data->allocation_width != 0);
+  g_assert (self->local_grad_data.allocation_width != 0);
 
   if (!get_gradient_data (gradient,
-                          self->local_grad_data->allocation_width,
+                          self->local_grad_data.allocation_width,
                           &n_samples,
                           &src))
     {
@@ -420,9 +434,9 @@ local_grad_data_refresh (GimpGradientChooser *self, GimpGradient *gradient)
     }
   else
     {
-      g_free (self->local_grad_data->data);
-      self->local_grad_data->data = src;
-      self->local_grad_data->n_samples = n_samples;
+      local_grad_data_free (self);
+      self->local_grad_data.data = src;
+      self->local_grad_data.n_samples = n_samples;
       return TRUE;
     }
 }
@@ -430,5 +444,5 @@ local_grad_data_refresh (GimpGradientChooser *self, GimpGradient *gradient)
 static void
 local_grad_data_set_allocation_width (GimpGradientChooser *self, gint width)
 {
-  self->local_grad_data->allocation_width = width;
+  self->local_grad_data.allocation_width = width;
 }
