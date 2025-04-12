@@ -89,5 +89,8 @@ gboolean   gimp_levels_config_save_cruft       (GimpLevelsConfig      *config,
                                                 GOutputStream         *output,
                                                 GError               **error);
 
+gboolean   gimp_levels_config_load_alv         (GimpLevelsConfig      *config,
+                                                GInputStream          *input,
+                                                GError               **error);
 
 #endif /* __GIMP_LEVELS_CONFIG_H__ */
