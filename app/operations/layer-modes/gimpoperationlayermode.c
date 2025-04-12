@@ -68,6 +68,7 @@ typedef void (* CompositeFunc) (const gfloat *in,
                                 gint          samples);
 
 
+static void            gimp_operation_layer_mode_finalize            (GObject                *object);
 static void            gimp_operation_layer_mode_set_property        (GObject                *object,
                                                                       guint                   property_id,
                                                                       const GValue           *value,
@@ -117,8 +118,11 @@ static gboolean        process_last_node                             (GeglOperat
                                                                       const GeglRectangle *roi,
                                                                       gint                 level);
 
-static void            gimp_operation_layer_mode_cache_fishes        (GimpOperationLayerMode *op,
-                                                                      const Babl             *preferred_format);
+static void            gimp_operation_layer_mode_cache_fishes        (GimpOperationLayerMode  *op,
+                                                                      const Babl              *preferred_format,
+                                                                      const Babl             **out_format,
+                                                                      const Babl             **composite_to_blend_fish,
+                                                                      const Babl             **blend_to_composite_fish);
 
 
 G_DEFINE_TYPE (GimpOperationLayerMode, gimp_operation_layer_mode,
@@ -147,6 +151,7 @@ gimp_operation_layer_mode_class_init (GimpOperationLayerModeClass *klass)
   gegl_operation_class_set_keys (operation_class,
                                  "name", "gimp:layer-mode", NULL);
 
+  object_class->finalize            = gimp_operation_layer_mode_finalize;
   object_class->set_property        = gimp_operation_layer_mode_set_property;
   object_class->get_property        = gimp_operation_layer_mode_get_property;
 
@@ -210,6 +215,17 @@ gimp_operation_layer_mode_class_init (GimpOperationLayerModeClass *klass)
 static void
 gimp_operation_layer_mode_init (GimpOperationLayerMode *self)
 {
+  g_mutex_init (&self->cache_mutex);
+}
+
+static void
+gimp_operation_layer_mode_finalize (GObject *object)
+{
+  GimpOperationLayerMode *mode = GIMP_OPERATION_LAYER_MODE (object);
+
+  g_mutex_clear (&mode->cache_mutex);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -344,13 +360,7 @@ gimp_operation_layer_mode_prepare (GeglOperation *operation)
 
   self->has_mask = mask_extent && ! gegl_rectangle_is_empty (mask_extent);
 
-  gimp_operation_layer_mode_cache_fishes (self, preferred_format);
-
-  format = gimp_layer_mode_get_format (self->layer_mode,
-                                       self->blend_space,
-                                       self->composite_space,
-                                       self->composite_mode,
-                                       preferred_format);
+  gimp_operation_layer_mode_cache_fishes (self, preferred_format, &format, NULL, NULL);
 
   gegl_operation_set_format (operation, "input",  format);
   gegl_operation_set_format (operation, "output", format);
@@ -615,8 +625,6 @@ gimp_operation_layer_mode_real_process (GeglOperation       *operation,
   gfloat                 *layer                   = layer_p;
   gfloat                 *mask                    = mask_p;
   gfloat                  opacity                 = layer_mode->opacity;
-  GimpLayerColorSpace     blend_space             = layer_mode->blend_space;
-  GimpLayerColorSpace     composite_space         = layer_mode->composite_space;
   GimpLayerCompositeMode  composite_mode          = layer_mode->composite_mode;
   GimpLayerModeBlendFunc  blend_function          = layer_mode->blend_function;
   gboolean                composite_needs_in_color;
@@ -655,21 +663,12 @@ gimp_operation_layer_mode_real_process (GeglOperation       *operation,
   blend_layer = layer;
   blend_out   = out;
 
-  if (blend_space != GIMP_LAYER_COLOR_SPACE_AUTO)
-    {
-      gimp_assert (composite_space >= 1 && composite_space < 5);
-      gimp_assert (blend_space     >= 1 && blend_space     < 5);
-
-      /* Make sure the cache is set up from the start as the
-       * operation's prepare() method may have not been run yet.
-       */
-      gimp_operation_layer_mode_cache_fishes (layer_mode, NULL);
-      composite_to_blend_fish = layer_mode->space_fish [composite_space - 1]
-                                                       [blend_space     - 1];
-
-      blend_to_composite_fish = layer_mode->space_fish [blend_space     - 1]
-                                                       [composite_space - 1];
-    }
+  /* Make sure the cache is set up from the start as the
+   * operation's prepare() method may have not been run yet.
+   */
+  gimp_operation_layer_mode_cache_fishes (layer_mode, NULL, NULL,
+                                          &composite_to_blend_fish,
+                                          &blend_to_composite_fish);
 
   /* if we need to convert the samples between the composite and blend
    * spaces...
@@ -874,10 +873,26 @@ process_last_node (GeglOperation       *operation,
 }
 
 static void
-gimp_operation_layer_mode_cache_fishes (GimpOperationLayerMode *op,
-                                        const Babl             *preferred_format)
+gimp_operation_layer_mode_cache_fishes (GimpOperationLayerMode  *op,
+                                        const Babl              *preferred_format,
+                                        const Babl             **layer_mode_format,
+                                        const Babl             **composite_to_blend_fish,
+                                        const Babl             **blend_to_composite_fish)
 {
   const Babl *format;
+
+  g_mutex_lock (&op->cache_mutex);
+
+  gimp_assert (op->composite_space >= GIMP_LAYER_COLOR_SPACE_AUTO &&
+               op->composite_space < GIMP_LAYER_COLOR_SPACE_LAST);
+  gimp_assert (op->blend_space     >= GIMP_LAYER_COLOR_SPACE_AUTO &&
+               op->blend_space     < GIMP_LAYER_COLOR_SPACE_LAST);
+
+  /* XXX I am not why but some old code already had some assert that the
+   * composite_space would not be AUTO when blend_space is not.
+   */
+  if (op->blend_space != GIMP_LAYER_COLOR_SPACE_AUTO)
+    gimp_assert (op->composite_space != GIMP_LAYER_COLOR_SPACE_AUTO);
 
   if (! preferred_format)
     {
@@ -972,6 +987,27 @@ gimp_operation_layer_mode_cache_fishes (GimpOperationLayerMode *op,
           babl_fish (babl_format_with_space("R'G'B'A float", format),
                      babl_format_with_space ( "R~G~B~A float", format));
     }
+
+  if (layer_mode_format)
+    *layer_mode_format = format;
+  if (composite_to_blend_fish)
+    {
+      if (op->blend_space != GIMP_LAYER_COLOR_SPACE_AUTO &&
+          op->composite_space != GIMP_LAYER_COLOR_SPACE_AUTO)
+        *composite_to_blend_fish = op->space_fish[op->composite_space - 1][op->blend_space - 1];
+      else
+        *composite_to_blend_fish = NULL;
+    }
+  if (blend_to_composite_fish)
+    {
+      if (op->blend_space != GIMP_LAYER_COLOR_SPACE_AUTO &&
+          op->composite_space != GIMP_LAYER_COLOR_SPACE_AUTO)
+        *blend_to_composite_fish = op->space_fish[op->blend_space - 1][op->composite_space - 1];
+      else
+        *blend_to_composite_fish = NULL;
+    }
+
+  g_mutex_unlock (&op->cache_mutex);
 }
 
 
