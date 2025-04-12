@@ -832,6 +832,7 @@ layers_duplicate_cmd_callback (GimpAction *action,
                             gimp_layer_get_parent (iter->data),
                             gimp_item_get_index (iter->data),
                             TRUE);
+      gimp_drawable_enable_resize_undo (GIMP_DRAWABLE (new_layer));
       new_layers = g_list_prepend (new_layers, new_layer);
 
       /* Import any attached layer effects */
