@@ -314,6 +314,8 @@ bund_usr "$UNIX_PREFIX" "share/mypaint-data/1.0"
 ### Needed for 'th' word breaking in Text tool etc
 bund_usr "$UNIX_PREFIX" "share/libthai"
 conf_app LIBTHAI_DICTDIR "share/libthai"
+### Needed for support of some formats by file-heif. See: #13527
+conf_app LIBHEIF_PLUGIN_PATH "${LIB_DIR}/${LIB_SUBDIR}libheif/plugins"
 ### Needed for full CJK and Cyrillic support in file-pdf
 bund_usr "$UNIX_PREFIX" "share/poppler"
 ### file-wmf support
