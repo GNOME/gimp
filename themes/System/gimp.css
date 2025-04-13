@@ -111,14 +111,14 @@ spinbutton entry {
 GimpSpinScale entry {
     /* Important: prevent overhigh spin scale */
     min-height: 16px;
-    padding:    0px 8px 0px 5px;
+    padding:    0px;
 }
 
 GimpSpinScale entry progress {
     background-color: @theme_selected_bg_color;
     border-width:     0px;
     border-radius:    3px;
-    margin:           0px -8px 0px -5px;
+    margin:           0px;
 }
 
 GimpSpinScale button {

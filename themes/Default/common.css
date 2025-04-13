@@ -579,7 +579,7 @@ GimpSpinScale entry {
   border-radius:      5px 0px 0px 5px;
   border-right-width: 0px;
   box-shadow:         none;
-  padding:            0px 8px 0px 5px;
+  padding:            0px;
 }
 
 GimpSpinScale entry progress {
@@ -587,7 +587,7 @@ GimpSpinScale entry progress {
   background-image: none;
   border-width:     0px;
   border-radius:    3px 0px 0px 3px;
-  margin:           0px -8px 0px -5px;
+  margin:           0px;
 }
 
 GimpSpinScale button {
