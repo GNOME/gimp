@@ -504,23 +504,24 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
                                                   TRUE);
         }
 
-      gimp_gegl_smudge_with_paint (accum_buffer,
-                                   GEGL_RECTANGLE (paint_buffer_x - x,
-                                                   paint_buffer_y - y,
-                                                   paint_buffer_width,
-                                                   paint_buffer_height),
-                                   gimp_pickable_get_buffer (dest_pickable),
-                                   GEGL_RECTANGLE (paint_buffer_x +
-                                                   dest_pickable_off_x,
-                                                   paint_buffer_y +
-                                                   dest_pickable_off_y,
-                                                   paint_buffer_width,
-                                                   paint_buffer_height),
-                                   brush_color,
-                                   paint_buffer,
-                                   options->no_erasing,
-                                   flow,
-                                   rate);
+      if (accum_buffer)
+        gimp_gegl_smudge_with_paint (accum_buffer,
+                                     GEGL_RECTANGLE (paint_buffer_x - x,
+                                                     paint_buffer_y - y,
+                                                     paint_buffer_width,
+                                                     paint_buffer_height),
+                                     gimp_pickable_get_buffer (dest_pickable),
+                                     GEGL_RECTANGLE (paint_buffer_x +
+                                                     dest_pickable_off_x,
+                                                     paint_buffer_y +
+                                                     dest_pickable_off_y,
+                                                     paint_buffer_width,
+                                                     paint_buffer_height),
+                                     brush_color,
+                                     paint_buffer,
+                                     options->no_erasing,
+                                     flow,
+                                     rate);
 
       if (gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_FORCE))
         force = gimp_dynamics_get_linear_value (dynamics,
@@ -553,10 +554,19 @@ gimp_smudge_accumulator_coords (GimpPaintCore    *paint_core,
   GimpSmudge *smudge = GIMP_SMUDGE (paint_core);
   GeglBuffer *accum_buffer;
 
-  accum_buffer = g_list_nth_data (smudge->accum_buffers, stroke);
+  *x = (gint) coords->x;
+  *y = (gint) coords->y;
 
-  *x = (gint) coords->x - gegl_buffer_get_width  (accum_buffer) / 2;
-  *y = (gint) coords->y - gegl_buffer_get_height (accum_buffer) / 2;
+  if (smudge->accum_buffers)
+    {
+      accum_buffer = g_list_nth_data (smudge->accum_buffers, stroke);
+
+      if (accum_buffer)
+        {
+          *x -= gegl_buffer_get_width  (accum_buffer) / 2;
+          *y -= gegl_buffer_get_height (accum_buffer) / 2;
+        }
+    }
 }
 
 static void
