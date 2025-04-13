@@ -52,7 +52,6 @@ workflow:
   ## In addition to the variables above, to force step-specific pipelines
   ## without waiting for commits and/or schedules, these you should set on GUI:
   ## - GIMP_CI_MESON_CLANG: trigger the Debian Clang build.
-  ## - GIMP_CI_CROSSROAD_WIN64: trigger the crossroad build for Win 64-bit.
   ## - GIMP_CI_MSYS2_WIN_AARCH64: trigger the native MSYS2 build for Win Aarch64.
   ## - GIMP_CI_MSYS2_WIN64: trigger the native MSYS2 build for Win 64-bit.
   ## - GIMP_CI_MSYS2_WIN32: trigger the native MSYS2 build for Win 32-bit.
@@ -211,33 +210,34 @@ deps-debian:
             python3-gi
             python3-gi-cairo" >> Dockerfile
     - echo "RUN echo -e \"\e[0Ksection_end:0000000002:deps_install\r\e[0K\"" >> Dockerfile
-    # Build some deps
-    - if [[ ! "$CI_JOB_NAME" =~ 'cross' ]]; then
-        echo "FROM $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}" > Dockerfile2;
-        echo "RUN echo -e \"\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KPreparing build environment\"" >> Dockerfile2;
-        export LIB_DIR="lib";
-        export LIB_SUBDIR=$([ "$(uname -m)" = 'aarch64' ] && echo "aarch64-linux-gnu/" || echo "x86_64-linux-gnu/");
-        echo "ENV PKG_CONFIG_PATH=\"${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}\"" >> Dockerfile2;
-        echo "ENV XDG_DATA_DIRS=\"${GIMP_PREFIX}/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}\"" >> Dockerfile2;
-        echo "ENV CC=\"$CC\"" >> Dockerfile2;
-        echo "ENV CXX=\"$CXX\"" >> Dockerfile2;
-        echo "ENV CC_LD=\"$CC_LD\"" >> Dockerfile2;
-        echo "ENV CXX_LD=\"$CXX_LD\"" >> Dockerfile2;
-        echo "ENV CLICOLOR_FORCE=\"1\"" >> Dockerfile2;
-        echo "RUN echo -e \"\e[0Ksection_end:`date +%s`:environ\r\e[0K\"" >> Dockerfile2;
-        echo "RUN echo -e \"\e[0Ksection_start:`date +%s`:babl_build[collapsed=true]\r\e[0KBuilding babl\"" >> Dockerfile2;
-        echo "RUN git clone --branch \"\$([ \"$CI_COMMIT_TAG\" ] && echo \"\$(git ls-remote --tags --exit-code --refs https://gitlab.gnome.org/GNOME/babl.git | grep -oi \"BABL_[0-9]*_[0-9]*_[0-9]*\" | sort --version-sort | tail -1)\" || echo \"master\")\" --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git" $CI_PROJECT_DIR/babl >> Dockerfile2;
-        echo "RUN meson setup $CI_PROJECT_DIR/babl/_build-${RUNNER} $CI_PROJECT_DIR/babl -Dprefix=\"${GIMP_PREFIX}\" $PKGCONF_RELOCATABLE_OPTION" >> Dockerfile2;
-        echo "RUN ninja -C $CI_PROJECT_DIR/babl/_build-${RUNNER}" >> Dockerfile2;
-        echo "RUN ninja -C $CI_PROJECT_DIR/babl/_build-${RUNNER} install" >> Dockerfile2;
-        echo "RUN echo -e \"\e[0Ksection_end:`date +%s`:babl_build\r\e[0K\"" >> Dockerfile2;
-        echo "RUN echo -e \"\e[0Ksection_start:`date +%s`:gegl_build[collapsed=true]\r\e[0KBuilding gegl\"" >> Dockerfile2;
-        echo "RUN git clone --branch \"\$([ \"$CI_COMMIT_TAG\" ] && echo \"\$(git ls-remote --tags --exit-code --refs https://gitlab.gnome.org/GNOME/gegl.git | grep -oi \"GEGL_[0-9]*_[0-9]*_[0-9]*\" | sort --version-sort | tail -1)\" || echo \"master\")\" --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git" $CI_PROJECT_DIR/gegl >> Dockerfile2;
-        echo "RUN meson setup $CI_PROJECT_DIR/gegl/_build-${RUNNER} $CI_PROJECT_DIR/gegl -Dprefix=\"${GIMP_PREFIX}\" $PKGCONF_RELOCATABLE_OPTION $WORKSHOP_OPTION" >> Dockerfile2;
-        echo "RUN ninja -C $CI_PROJECT_DIR/gegl/_build-${RUNNER}" >> Dockerfile2;
-        echo "RUN ninja -C $CI_PROJECT_DIR/gegl/_build-${RUNNER} install" >> Dockerfile2;
-        echo "RUN echo -e \"\e[0Ksection_end:`date +%s`:gegl_build\r\e[0K\"" >> Dockerfile2;
-      fi
+    # Prepare environ
+    - echo "FROM $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}" > Dockerfile2;
+    - echo "RUN echo -e \"\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KPreparing build environment\"" >> Dockerfile2;
+    - export LIB_DIR="lib";
+    - export LIB_SUBDIR=$([ "$(uname -m)" = 'aarch64' ] && echo "aarch64-linux-gnu/" || echo "x86_64-linux-gnu/");
+    - echo "ENV PKG_CONFIG_PATH=\"${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}\"" >> Dockerfile2;
+    - echo "ENV XDG_DATA_DIRS=\"${GIMP_PREFIX}/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}\"" >> Dockerfile2;
+    - echo "ENV CC=\"$CC\"" >> Dockerfile2;
+    - echo "ENV CXX=\"$CXX\"" >> Dockerfile2;
+    - echo "ENV CC_LD=\"$CC_LD\"" >> Dockerfile2;
+    - echo "ENV CXX_LD=\"$CXX_LD\"" >> Dockerfile2;
+    - echo "ENV CLICOLOR_FORCE=\"1\"" >> Dockerfile2;
+    - echo "RUN echo -e \"\e[0Ksection_end:`date +%s`:environ\r\e[0K\"" >> Dockerfile2;
+    # Build some dependencies
+    ## Build babl
+    - echo "RUN echo -e \"\e[0Ksection_start:`date +%s`:babl_build[collapsed=true]\r\e[0KBuilding babl\"" >> Dockerfile2;
+    - echo "RUN git clone --branch \"\$([ \"$CI_COMMIT_TAG\" ] && echo \"\$(git ls-remote --tags --exit-code --refs https://gitlab.gnome.org/GNOME/babl.git | grep -oi \"BABL_[0-9]*_[0-9]*_[0-9]*\" | sort --version-sort | tail -1)\" || echo \"master\")\" --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git" $CI_PROJECT_DIR/babl >> Dockerfile2;
+    - echo "RUN meson setup $CI_PROJECT_DIR/babl/_build-${RUNNER} $CI_PROJECT_DIR/babl -Dprefix=\"${GIMP_PREFIX}\" $PKGCONF_RELOCATABLE_OPTION" >> Dockerfile2;
+    - echo "RUN ninja -C $CI_PROJECT_DIR/babl/_build-${RUNNER}" >> Dockerfile2;
+    - echo "RUN ninja -C $CI_PROJECT_DIR/babl/_build-${RUNNER} install" >> Dockerfile2;
+    - echo "RUN echo -e \"\e[0Ksection_end:`date +%s`:babl_build\r\e[0K\"" >> Dockerfile2;
+    ## Build GEGL
+    - echo "RUN echo -e \"\e[0Ksection_start:`date +%s`:gegl_build[collapsed=true]\r\e[0KBuilding gegl\"" >> Dockerfile2;
+    - echo "RUN git clone --branch \"\$([ \"$CI_COMMIT_TAG\" ] && echo \"\$(git ls-remote --tags --exit-code --refs https://gitlab.gnome.org/GNOME/gegl.git | grep -oi \"GEGL_[0-9]*_[0-9]*_[0-9]*\" | sort --version-sort | tail -1)\" || echo \"master\")\" --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git" $CI_PROJECT_DIR/gegl >> Dockerfile2;
+    - echo "RUN meson setup $CI_PROJECT_DIR/gegl/_build-${RUNNER} $CI_PROJECT_DIR/gegl -Dprefix=\"${GIMP_PREFIX}\" $PKGCONF_RELOCATABLE_OPTION $WORKSHOP_OPTION" >> Dockerfile2;
+    - echo "RUN ninja -C $CI_PROJECT_DIR/gegl/_build-${RUNNER}" >> Dockerfile2;
+    - echo "RUN ninja -C $CI_PROJECT_DIR/gegl/_build-${RUNNER} install" >> Dockerfile2;
+    - echo "RUN echo -e \"\e[0Ksection_end:`date +%s`:gegl_build\r\e[0K\"" >> Dockerfile2;
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER} --cache=true --cache-ttl=120h --image-fs-extract-retry 1 --verbosity=warn
     - if [ -f 'Dockerfile2' ]; then /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile2 --destination build-debian-${DEB_VERSION}-${RUNNER}-temp --cache=false --no-push --verbosity=warn; fi
   artifacts:
@@ -301,7 +301,6 @@ gimp-debian:
       variables:
         MESON_OPTIONS: "-Dvector-icons=false"
         VARIANT: "-raster"
-    - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
     - if: '$GIMP_CI_SOURCES != null'
     - <<: *CI_RELEASE
   parallel:
@@ -409,62 +408,6 @@ gimp-flatpak-x64:
     paths:
       - repo.tar
       - gimp-meson-log.tar
-    expire_in: 2 days
-
-
-## WINDOWS 64-bit CI (cross-build crossroad) ##
-.win-cross:
-  extends: .debian-x64
-  rules:
-    - <<: *CI_MERGE
-      when: never
-    - <<: *CI_COMMIT
-      when: never
-    - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
-  variables:
-    MSYSTEM_PREFIX: clang64
-    #To match Debian Testing compiler with MSYS2 compiler resources
-    DEB_VERSION: testing
-    #To avoid noisy 'apt' warnings
-    DEBIAN_FRONTEND: noninteractive
-    TERM: dumb
-
-deps-win-x64-cross:
-  extends: .win-cross
-  stage: !reference [deps-debian, stage]
-  image: !reference [deps-debian, image]
-  variables:
-    UMFPACK: libumfpack6
-  #https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/1461
-  #cache:
-    #key: ${CI_JOB_NAME_SLUG}
-    #paths:
-      #- quasi-msys2/
-  before_script: []
-  script:
-    - bash build/windows/1_build-deps-quasimsys2.sh
-  artifacts:
-    paths:
-      - quasi-msys2/
-      - _install-$MSYSTEM_PREFIX-cross/
-      - babl/_build-$MSYSTEM_PREFIX-cross/meson-logs/meson-log.txt
-      - gegl/_build-$MSYSTEM_PREFIX-cross/meson-logs/meson-log.txt
-    expire_in: 2 hours
-
-gimp-win-x64-cross:
-  extends: .win-cross
-  needs: ["deps-win-x64-cross", "gimp-debian-x64"]
-  stage: gimp
-  variables:
-    GIT_SUBMODULE_STRATEGY: recursive
-  script:
-    - bash build/windows/2_build-gimp-quasimsys2.sh
-  artifacts:
-    expose_as: 'Windows zip'
-    paths:
-      - gimp-clang64/
-      - _build-clang64-cross/meson-logs/meson-log.txt
-      - _build-clang64-cross/done-dll.list
     expire_in: 2 days
 
 
@@ -669,7 +612,7 @@ cppcheck:
     - apt-get update
     - apt-get install -y cppcheck
     - cppcheck -q -j8 --enable=all --force --output-file=cppcheck.xml --xml --xml-version=2
-        -i _build -i _build-cross -i babl -i gegl -i _install -i .local -i .cache -i gimp-x64 .
+        -i _build -i babl -i gegl -i _install -i .local -i .cache -i gimp-x64 .
     - mkdir report
     - cppcheck-htmlreport --source-dir=. --title=gimp --file=cppcheck.xml --report-dir=report
   artifacts:
