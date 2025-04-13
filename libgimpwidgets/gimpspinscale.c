@@ -425,9 +425,9 @@ gimp_spin_scale_draw (GtkWidget *widget,
       gtk_entry_get_layout_offsets (GTK_ENTRY (widget), NULL, &layout_offset_y);
 
       if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
-        layout_offset_x = text_area.x + text_area.width - ink.width - 2;
+        layout_offset_x = text_area.x + text_area.width - ink.width - 6;
       else
-        layout_offset_x = text_area.x + 2;
+        layout_offset_x = text_area.x + 6;
 
       layout_offset_x -= ink.x;
 
@@ -632,7 +632,7 @@ static void
 gimp_spin_scale_update_cursor (GtkWidget *widget,
                                GdkWindow *window)
 {
-  GimpSpinScale *scale = GIMP_SPIN_SCALE (widget);
+  GimpSpinScale *scale   = GIMP_SPIN_SCALE (widget);
   GdkDisplay    *display = gtk_widget_get_display (widget);
   GdkCursor     *cursor  = NULL;
 
@@ -643,13 +643,10 @@ gimp_spin_scale_update_cursor (GtkWidget *widget,
       break;
 
     case TARGET_GRAB:
-      cursor = gdk_cursor_new_from_name (display, "grab");
+      cursor = gdk_cursor_new_from_name (display, "pointer");
       break;
 
     case TARGET_GRABBING:
-      cursor = gdk_cursor_new_from_name (display, "grabbing");
-      break;
-
     case TARGET_RELATIVE:
       cursor = gdk_cursor_new_from_name (display, "col-resize");
       break;
