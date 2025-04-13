@@ -287,22 +287,18 @@ foreach ($bundle in $supported_archs)
         ## Remove uneeded files (to match the Inno Windows Installer artifact)
         Get-ChildItem "$vfs" -Recurse -Include (".gitignore", "gimp.cmd") | Remove-Item -Recurse
 
-        ## Remove uncompliant files (to avoid WACK/'signtool' issues)
-        Get-ChildItem "$vfs" -Recurse -Include ("*.debug", "*.tar") | Remove-Item -Recurse
-
 
         # 5.A. MAKE .MSIX AND CORRESPONDING .APPXSYM
 
         ## Make .appxsym for each msix_arch (ONLY FOR RELEASES)
         $APPXSYM = "${IDENTITY_NAME}_${CUSTOM_GIMP_VERSION}_$msix_arch.appxsym"
-        #if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)
-        #  {
-        #    Write-Output "(INFO): putting .pdb symbols into $APPXSYM"
-        #    Get-ChildItem $msix_arch -Filter *.pdb -Recurse |
-        #    Compress-Archive -DestinationPath "${IDENTITY_NAME}_${CUSTOM_GIMP_VERSION}_$msix_arch.zip"
-        #    Get-ChildItem *.zip | Rename-Item -NewName $APPXSYM
-        #    Get-ChildItem $msix_arch -Include *.pdb -Recurse -Force | Remove-Item -Recurse -Force
-        #  }
+        if ($CI_COMMIT_TAG -match 'GIMP_[0-9]*_[0-9]*_[0-9]*' -or $GIMP_CI_MS_STORE -like 'MSIXUPLOAD*')
+          {
+            Write-Output "(INFO): making $APPXSYM"
+            Get-ChildItem $msix_arch -Filter *.pdb -Recurse | Compress-Archive -DestinationPath "$APPXSYM.zip"
+            Get-ChildItem *.zip | Rename-Item -NewName $APPXSYM
+            Get-ChildItem $msix_arch -Include *.pdb -Recurse -Force | Remove-Item -Recurse -Force
+          }
 
         ## Make .msix from each msix_arch
         $MSIX_ARTIFACT = $APPXSYM -replace '.appxsym','.msix'
@@ -338,10 +334,10 @@ if (((Test-Path $a64_bundle) -and (Test-Path $x64_bundle)) -and (Get-ChildItem *
     if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)
       {
         Write-Output "(INFO): creating $MSIXUPLOAD for submission"
-        Get-ChildItem *.msixbundle | ForEach-Object { Compress-Archive -Path "$($_.Basename).msixbundle" -DestinationPath "$($_.Basename).zip" }
+        Compress-Archive -Path "*.appxsym","*.msixbundle" -DestinationPath "$MSIXUPLOAD.zip"
         Get-ChildItem ${IDENTITY_NAME}*.zip | Rename-Item -NewName $MSIXUPLOAD
-        #Get-ChildItem *.appxsym | Remove-Item -Recurse -Force
-        Get-ChildItem *.msixbundle | Remove-Item -Recurse -Force
+        Remove-Item *.appxsym -Force
+        Remove-Item *.msixbundle -Force
       }
     Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):msix_making$([char]13)$([char]27)[0K"
   }

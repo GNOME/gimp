@@ -53,6 +53,7 @@ void
 gimp_init_signal_handlers (gchar **backtrace_file)
 {
   time_t   t;
+  gchar   *codeview_path;
   gchar   *filename;
   gchar   *dir;
 #if defined (G_OS_WIN32) && defined (HAVE_EXCHNDL)
@@ -60,6 +61,12 @@ gimp_init_signal_handlers (gchar **backtrace_file)
 #endif
 
 #ifdef G_OS_WIN32
+  /* FIXME: https://github.com/jrfonseca/drmingw/issues/91 */
+  codeview_path = g_build_filename (gimp_installation_directory (),
+                                    "bin", NULL);
+  g_setenv ("_NT_SYMBOL_PATH", codeview_path, TRUE);
+  g_free (codeview_path);
+
   /* This has to be the non-roaming directory (i.e., the local
      directory) as backtraces correspond to the binaries on this
      system. */

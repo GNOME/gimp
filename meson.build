@@ -333,12 +333,12 @@ if platform_windows and cc.get_id() == 'clang'
   compiler_args += '-fansi-escape-codes'
 endif
 
-# Generate .pdb (CodeView) debug symbols (makes possible to debug with DIA SDK)
-#pdb_support = cc.has_argument('-gcodeview') and cc.has_link_argument('-Wl,--pdb=')
-#if platform_windows and pdb_support
-#  compiler_args += '-gcodeview'
-#  linker_args += '-Wl,--pdb='
-#endif
+# Generate native .pdb (CodeView) debug symbols (for DIA or DbgHelp debuggers and LLDB)
+pdb_support = cc.has_argument('-gcodeview') and cc.has_link_argument('-Wl,--pdb=')
+if platform_windows and pdb_support
+  compiler_args += '-gcodeview'
+  linker_args += '-Wl,--pdb='
+endif
 
 
 conf.set('HAVE__NL_MEASUREMENT_MEASUREMENT',
@@ -2140,10 +2140,10 @@ pkgconfig.generate(libgimpui,
 # Install native debug data (.pdb) on Windows
 # Ideally meson should take care of it automatically.
 # See: https://github.com/mesonbuild/meson/issues/12977
-#if platform_windows and pdb_support
-#  install_win_debug_script = find_program('./meson_install_win_debug.sh')
-#  meson.add_install_script(install_win_debug_script)
-#endif
+if platform_windows and pdb_support
+  install_win_debug_script = find_program('build/windows/2_bundle-gimp-uni_sym.sh')
+  meson.add_install_script(install_win_debug_script)
+endif
 
 # On Windows, install deps in a bundle before distributing
 if get_option('windows-installer') or get_option('ms-store')

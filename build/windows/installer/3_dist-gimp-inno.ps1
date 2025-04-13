@@ -208,24 +208,6 @@ $twain_list = (python3 build/windows/2_bundle-gimp-uni_dep.py --debug debug-only
 (Get-Content $twain_list_file) | Select-string 'Installed' -notmatch | Set-Content $twain_list_file
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_files$([char]13)$([char]27)[0K"
 
-## Do arch-specific things
-foreach ($bundle in $supported_archs)
-  {
-    Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):${bundle}_files[collapsed=true]$([char]13)$([char]27)[0KPreparing GIMP files in $bundle bundle"
-
-    ## Split .debug symbols
-    if ("$bundle" -eq "$GIMP32")
-      {
-        #We do not split 32-bit DWARF symbols here (they were in gimp-win-x86 job)
-        Write-Output "(INFO): skipping (already done) $GIMP32 .debug extracting"
-      }
-    else
-      {
-        bash build/windows/installer/3_dist-gimp-inno_sym.sh $bundle
-      }
-    Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):${bundle}_files$([char]13)$([char]27)[0K"
-  }
-
 
 # 5. COMPILE .EXE INSTALLER
 $INSTALLER="gimp-${CUSTOM_GIMP_VERSION}-setup.exe"

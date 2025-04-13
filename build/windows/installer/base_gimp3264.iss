@@ -312,7 +312,7 @@ Source: "{#ASSETS_DIR}\installsplash_small.bmp"; Flags: dontcopy
 
 ;Required arch-neutral files (compact install)
 #define GIMP_ARCHS="gimp32 or gimp64 or gimpARM64"
-#define OPTIONAL_EXT="*.debug,*.lua,*.py"
+#define OPTIONAL_EXT="*.pdb,*.lua,*.py"
 Source: "{#GIMP_DIR32}\etc\gimp\*"; DestDir: "{app}\etc\gimp"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
 Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ\default.env"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
 Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\gimp-script-fu-interpreter.interp"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
@@ -1331,7 +1331,7 @@ begin
 	end;
 end;
 
-//remove .debug files from previous installs
+//remove .pdb files from previous installs
 //there's no built-in way in Inno to recursively delete files with wildcard+extension
 procedure RemoveDebugFilesFromDir(pDir: String; var pDirectories: TArrayOfString);
 var FindRec: TFindRec;
@@ -1344,7 +1344,15 @@ begin
 			repeat
 				if FindRec.Attributes and FILE_ATTRIBUTE_DIRECTORY = 0 then
 				begin
+					//Up to GIMP 3.0.2 we shipped only DWARF .debug symbols
 					if (Length(FindRec.Name) > 6) and (LowerCase(Copy(FindRec.Name, Length(FindRec.Name) - 5, 6)) = '.debug') then
+					begin
+						DebugMsg('RemoveDebugFilesFromDir', '> ' + FindRec.Name);
+						DeleteFile(AddBackSlash(pDir) + FindRec.Name);
+					end;
+
+					//Starting with GIMP 3.0.4 we ship native CodeView .pdb symbols
+					if (Length(FindRec.Name) > 4) and (LowerCase(Copy(FindRec.Name, Length(FindRec.Name) - 3, 4)) = '.pdb') then
 					begin
 						DebugMsg('RemoveDebugFilesFromDir', '> ' + FindRec.Name);
 						DeleteFile(AddBackSlash(pDir) + FindRec.Name);

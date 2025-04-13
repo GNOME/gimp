@@ -218,11 +218,17 @@ for dep in "${libArray[@]}"; do
   python3 $GIMP_SOURCE/build/windows/2_bundle-gimp-uni_dep.py $dep $MSYSTEM_PREFIX/ $GIMP_PREFIX/ $GIMP_DISTRIB --output-dll-list done-dll.list;
 done
 
-### .pdb (CodeView) debug symbols
-### crossroad don't have LLVM/Clang backend yet
-#if [ "$CI_JOB_NAME" != "gimp-win-x64-cross" ]; then
-#  cp -fr ${GIMP_PREFIX}/bin/*.pdb ${GIMP_DISTRIB}/bin/
-#fi
+### .pdb (CodeView) debug symbols from babl, gegl and GIMP binaries
+bundle "$GIMP_PREFIX" bin/*.pdb
+### Remove ancient COFF symbol table (not used for debugging) from MSYS2 binaries
+binArray=($(find $GIMP_DISTRIB \( -iname '*.dll' -or -iname '*.exe' -or -iname '*.pyd' \) -type f))
+for bin in "${binArray[@]}"; do
+  if [[ ! "$(grep -a RSDS $bin)" ]]; then
+    echo "(INFO): stripping COFF symbols from ${bin##*/}"
+    strip $bin
+  fi
+done
+
 
 ## Development files (to build GEGL filters and GIMP plug-ins).
 clean "$GIMP_DISTRIB" lib/*.a
