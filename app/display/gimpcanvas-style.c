@@ -232,7 +232,7 @@ gimp_canvas_set_guide_style (GtkWidget      *canvas,
                              gdouble         offset_y)
 {
   const Babl      *render_space;
-  GimpColorConfig *config;
+  GimpColorConfig *config = NULL;
   cairo_pattern_t *pattern;
   GeglColor       *normal_fg;
   GeglColor       *normal_bg;
@@ -284,7 +284,8 @@ gimp_canvas_set_guide_style (GtkWidget      *canvas,
 
   cairo_set_line_width (cr, line_width);
 
-  config = GIMP_CORE_CONFIG (GIMP_CANVAS (canvas)->config)->color_management;
+  if (GIMP_IS_CANVAS (canvas))
+    config = GIMP_CORE_CONFIG (GIMP_CANVAS (canvas)->config)->color_management;
   render_space = gimp_widget_get_render_space (canvas, config);
   if (active)
     pattern = gimp_cairo_pattern_create_stipple (active_fg, active_bg, 0,
@@ -324,7 +325,7 @@ gimp_canvas_set_grid_style (GtkWidget *canvas,
                             gdouble    offset_y)
 {
   const Babl      *render_space;
-  GimpColorConfig *config;
+  GimpColorConfig *config = NULL;
   GeglColor       *fg;
   GeglColor       *bg;
 
@@ -336,7 +337,8 @@ gimp_canvas_set_grid_style (GtkWidget *canvas,
 
   fg = gimp_grid_get_fgcolor (grid);
 
-  config = GIMP_CORE_CONFIG (GIMP_CANVAS (canvas)->config)->color_management;
+  if (GIMP_IS_CANVAS (canvas))
+    config = GIMP_CORE_CONFIG (GIMP_CANVAS (canvas)->config)->color_management;
   render_space = gimp_widget_get_render_space (canvas, config);
   switch (gimp_grid_get_style (grid))
     {
@@ -403,7 +405,7 @@ gimp_canvas_set_layer_style (GtkWidget *canvas,
                              gdouble    offset_y)
 {
   const Babl      *render_space;
-  GimpColorConfig *config;
+  GimpColorConfig *config = NULL;
   cairo_pattern_t *pattern;
 
   g_return_if_fail (GTK_IS_WIDGET (canvas));
@@ -413,7 +415,8 @@ gimp_canvas_set_layer_style (GtkWidget *canvas,
   cairo_set_line_width (cr, 1.0);
   cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
 
-  config = GIMP_CORE_CONFIG (GIMP_CANVAS (canvas)->config)->color_management;
+  if (GIMP_IS_CANVAS (canvas))
+    config = GIMP_CORE_CONFIG (GIMP_CANVAS (canvas)->config)->color_management;
   render_space = gimp_widget_get_render_space (canvas, config);
   if (gimp_layer_get_mask (layer) &&
       gimp_layer_get_edit_mask (layer))
@@ -445,7 +448,7 @@ gimp_canvas_set_canvas_style (GtkWidget *canvas,
                               gdouble    offset_y)
 {
   const Babl      *render_space;
-  GimpColorConfig *config;
+  GimpColorConfig *config = NULL;
   cairo_pattern_t *pattern;
 
   g_return_if_fail (GTK_IS_WIDGET (canvas));
@@ -454,7 +457,8 @@ gimp_canvas_set_canvas_style (GtkWidget *canvas,
   cairo_set_line_width (cr, 1.0);
   cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
 
-  config = GIMP_CORE_CONFIG (GIMP_CANVAS (canvas)->config)->color_management;
+  if (GIMP_IS_CANVAS (canvas))
+    config = GIMP_CORE_CONFIG (GIMP_CANVAS (canvas)->config)->color_management;
   render_space = gimp_widget_get_render_space (canvas, config);
   pattern = gimp_cairo_pattern_create_stipple (canvas_fg, canvas_bg, 0,
                                                offset_x, offset_y, render_space);
@@ -470,7 +474,7 @@ gimp_canvas_set_selection_out_style (GtkWidget *canvas,
                                      gdouble    offset_y)
 {
   const Babl      *render_space;
-  GimpColorConfig *config;
+  GimpColorConfig *config = NULL;
   cairo_pattern_t *pattern;
 
   g_return_if_fail (GTK_IS_WIDGET (canvas));
@@ -479,7 +483,8 @@ gimp_canvas_set_selection_out_style (GtkWidget *canvas,
   cairo_set_line_width (cr, 1.0);
   cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
 
-  config = GIMP_CORE_CONFIG (GIMP_CANVAS (canvas)->config)->color_management;
+  if (GIMP_IS_CANVAS (canvas))
+    config = GIMP_CORE_CONFIG (GIMP_CANVAS (canvas)->config)->color_management;
   render_space = gimp_widget_get_render_space (canvas, config);
   pattern = gimp_cairo_pattern_create_stipple (selection_out_fg, selection_out_bg, 0,
                                                offset_x, offset_y, render_space);
@@ -495,7 +500,7 @@ gimp_canvas_set_selection_in_style (GtkWidget *canvas,
                                     gdouble    offset_y)
 {
   const Babl      *render_space;
-  GimpColorConfig *config;
+  GimpColorConfig *config = NULL;
   cairo_pattern_t *pattern;
 
   g_return_if_fail (GTK_IS_WIDGET (canvas));
@@ -504,7 +509,8 @@ gimp_canvas_set_selection_in_style (GtkWidget *canvas,
   cairo_set_line_width (cr, 1.0);
   cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
 
-  config = GIMP_CORE_CONFIG (GIMP_CANVAS (canvas)->config)->color_management;
+  if (GIMP_IS_CANVAS (canvas))
+    config = GIMP_CORE_CONFIG (GIMP_CANVAS (canvas)->config)->color_management;
   render_space = gimp_widget_get_render_space (canvas, config);
   pattern = gimp_cairo_pattern_create_stipple (selection_in_fg, selection_in_bg, index,
                                                offset_x, offset_y, render_space);
