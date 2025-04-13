@@ -447,7 +447,7 @@ gimp-flatpak-x64:
       - RUNNER: windows-aarch64
         MSYSTEM_PREFIX: clangarm64
       - RUNNER: win32-ps
-        MSYSTEM_PREFIX: clang64
+        MSYSTEM_PREFIX: ucrt64
   tags:
     - $RUNNER
   variables:
