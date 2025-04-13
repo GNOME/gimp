@@ -665,6 +665,10 @@ menubar {
   box-shadow: 0 -1px @edge-border-color inset;
 }
 
+menubar:backdrop menuitem {
+  background-color: transparent;
+}
+
 menuitem:hover, menuitem:selected
 {
   border: 0px solid transparent;
