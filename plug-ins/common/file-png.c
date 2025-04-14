@@ -19,6 +19,9 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ *   APNG code referenced from APNG Disassembler by Max Stepin at
+ *   http://apngdis.sourceforge.net
  */
 
 #include "config.h"
@@ -38,6 +41,7 @@
 
 
 #define LOAD_PROC       "file-png-load"
+#define LOAD_APNG_PROC  "file-apng-load"
 #define EXPORT_PROC     "file-png-export"
 #define PLUG_IN_BINARY  "file-png"
 #define PLUG_IN_ROLE    "gimp-file-png"
@@ -47,6 +51,14 @@
 
 #define DEFAULT_GAMMA   2.20
 
+/* APNG */
+#define id_IHDR 0x52444849
+#define id_tRNS 0x534E5274
+#define id_acTL 0x4C546361
+#define id_fcTL 0x4C546366
+#define id_IDAT 0x54414449
+#define id_fdAT 0x54416466
+#define id_IEND 0x444E4549
 
 typedef enum _PngExportformat
 {
@@ -62,6 +74,25 @@ typedef enum _PngExportformat
 } PngExportFormat;
 
 static GSList *safe_to_copy_chunks;
+
+typedef struct
+{
+  guchar *data;
+  guint   size;
+} APNGChunk;
+
+typedef struct {
+  guchar  *pixels;
+  guint    width;
+  guint    height;
+  guint    bpp;
+  guint    offset_x;
+  guint    offset_y;
+  guint16  delay_num;
+  guint16  delay_den;
+
+  guint    image_width;
+} APNGFrame;
 
 typedef struct _Png      Png;
 typedef struct _PngClass PngClass;
@@ -93,6 +124,13 @@ static GimpValueArray * png_load             (GimpProcedure         *procedure,
                                               GimpMetadataLoadFlags *flags,
                                               GimpProcedureConfig   *config,
                                               gpointer               run_data);
+static GimpValueArray * apng_load            (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpMetadataLoadFlags *flags,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
 static GimpValueArray * png_export           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GimpImage             *image,
@@ -106,6 +144,11 @@ static GimpImage * load_image                (GFile                 *file,
                                               gboolean               report_progress,
                                               gboolean              *resolution_loaded,
                                               gboolean              *profile_loaded,
+                                              gboolean              *is_apng,
+                                              GError               **error);
+static gboolean    load_apng_image           (GFile                 *file,
+                                              GimpImage             *image,
+                                              gboolean               report_progress,
                                               GError               **error);
 static gboolean    export_image              (GFile                 *file,
                                               GimpImage             *image,
@@ -134,6 +177,38 @@ static gboolean    ia_has_transparent_pixels (GeglBuffer            *buffer);
 
 static gint        find_unused_ia_color      (GeglBuffer            *buffer,
                                               gint                  *colors);
+
+static void        add_alpha_to_indexed      (GimpLayer             *layer,
+                                              guchar                *alpha);
+
+static gboolean    restart_apng_processing   (png_structp           *png_ptr,
+                                              png_infop             *info_ptr,
+                                              void                  *frame_ptr,
+                                              gboolean               fctl_read,
+                                              APNGChunk             *ihdr_chunk,
+                                              GList                 *apng_chunks);
+static gboolean     process_apng_data        (png_structp            png_ptr,
+                                              png_infop              info_ptr,
+                                              guchar                *data,
+                                              guint                  size);
+static gboolean     end_apng_processing      (png_structp            png_ptr,
+                                              png_infop              info_ptr);
+static void         read_apng_header         (png_structp            png_ptr,
+                                              png_infop              info_ptr);
+static void         read_apng_row            (png_structp            png_ptr,
+                                              png_bytep              new_row,
+                                              png_uint_32            row_num,
+                                              gint                   pass);
+static inline guint read_apng_chunk          (FILE                  *f,
+                                              APNGChunk             *chunk);
+static void         create_apng_layer        (GimpImage             *image,
+                                              APNGFrame             *apng_frame,
+                                              guchar                *prior_pixels,
+                                              GimpImageType          image_type,
+                                              guchar                *alpha,
+                                              gboolean               is_indexed_alpha,
+                                              gint                   dispose_op,
+                                              gint                   blend_op);
 
 static gint        read_unknown_chunk        (png_structp            png_ptr,
                                               png_unknown_chunkp     chunk);
@@ -166,6 +241,7 @@ png_query_procedures (GimpPlugIn *plug_in)
   GList *list = NULL;
 
   list = g_list_append (list, g_strdup (LOAD_PROC));
+  list = g_list_append (list, g_strdup (LOAD_APNG_PROC));
   list = g_list_append (list, g_strdup (EXPORT_PROC));
 
   return list;
@@ -204,6 +280,29 @@ png_create_procedure (GimpPlugIn  *plug_in,
                                           "png");
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                       "0,string,\211PNG\r\n\032\n");
+    }
+  else if (! strcmp (name, LOAD_APNG_PROC))
+    {
+      procedure = gimp_load_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           apng_load, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, _("APNG image"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Loads files in APNG file format",
+                                        "This plug-in loads Animated Portable Network "
+                                        "Graphics (APNG) files.",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Alx Sa",
+                                      "Alx Sa",
+                                      "2025");
+
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/apng");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "apng");
     }
   else if (! strcmp (name, EXPORT_PROC))
     {
@@ -333,6 +432,7 @@ png_load (GimpProcedure         *procedure,
   gboolean        report_progress   = FALSE;
   gboolean        resolution_loaded = FALSE;
   gboolean        profile_loaded    = FALSE;
+  gboolean        is_apng           = FALSE;
   GimpImage      *image;
   GError         *error = NULL;
 
@@ -348,12 +448,72 @@ png_load (GimpProcedure         *procedure,
                       report_progress,
                       &resolution_loaded,
                       &profile_loaded,
+                      &is_apng,
                       &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              error);
+
+  /* Some APNGs have .png extensions */
+  if (is_apng)
+    load_apng_image (file, image, report_progress, &error);
+
+  if (resolution_loaded)
+    *flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
+
+  if (profile_loaded)
+    *flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
+
+  return_vals = gimp_procedure_new_return_values (procedure,
+                                                  GIMP_PDB_SUCCESS,
+                                                  NULL);
+
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+apng_load (GimpProcedure         *procedure,
+           GimpRunMode            run_mode,
+           GFile                 *file,
+           GimpMetadata          *metadata,
+           GimpMetadataLoadFlags *flags,
+           GimpProcedureConfig   *config,
+           gpointer               run_data)
+{
+  GimpValueArray *return_vals;
+  gboolean        report_progress   = FALSE;
+  gboolean        resolution_loaded = FALSE;
+  gboolean        profile_loaded    = FALSE;
+  gboolean        is_apng           = TRUE;
+  GimpImage      *image;
+  GError         *error = NULL;
+
+  gegl_init (NULL, NULL);
+
+  if (run_mode != GIMP_RUN_NONINTERACTIVE)
+    {
+      gimp_ui_init (PLUG_IN_BINARY);
+      report_progress = TRUE;
+    }
+
+  /* Load PNG first to handle set-up, then we'll add frames later */
+  image = load_image (file,
+                      report_progress,
+                      &resolution_loaded,
+                      &profile_loaded,
+                      &is_apng,
+                      &error);
+
+  if (! image)
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             error);
+
+  load_apng_image (file, image, report_progress, &error);
 
   if (resolution_loaded)
     *flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
@@ -551,6 +711,7 @@ load_image (GFile        *file,
             gboolean      report_progress,
             gboolean     *resolution_loaded,
             gboolean     *profile_loaded,
+            gboolean     *is_apng,
             GError      **error)
 {
   gint              i;                    /* Looping var */
@@ -1137,34 +1298,7 @@ load_image (GFile        *file,
   fclose (fp);
 
   if (trns)
-    {
-      GeglBufferIterator *iter;
-      gint                n_components;
-
-      gimp_layer_add_alpha (layer);
-      buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
-      file_format = gegl_buffer_get_format (buffer);
-
-      iter = gegl_buffer_iterator_new (buffer, NULL, 0, file_format,
-                                       GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
-      n_components = babl_format_get_n_components (file_format);
-      g_warn_if_fail (n_components == 2);
-
-      while (gegl_buffer_iterator_next (iter))
-        {
-          guchar *data   = iter->items[0].data;
-          gint    length = iter->length;
-
-          while (length--)
-            {
-              data[1] = alpha[data[0]];
-
-              data += n_components;
-            }
-        }
-
-      g_object_unref (buffer);
-    }
+    add_alpha_to_indexed (layer, alpha);
 
   /* If any safe-to-copy chunks were saved,
    * store them in the image as parasite */
@@ -1176,7 +1310,10 @@ load_image (GFile        *file,
         {
           GimpParasite *parasite = iter->data;
 
-          gimp_image_attach_parasite ((GimpImage *) image, parasite);
+          if (strcmp (gimp_parasite_get_name (parasite), "png/fcTL") == 0)
+            *is_apng = TRUE;
+          else
+            gimp_image_attach_parasite ((GimpImage *) image, parasite);
           gimp_parasite_free (parasite);
         }
 
@@ -1184,6 +1321,293 @@ load_image (GFile        *file,
     }
 
   return (GimpImage *) image;
+}
+
+static gboolean
+load_apng_image (GFile      *file,
+                 GimpImage  *image,
+                 gboolean    report_progress,
+                 GError    **error)
+{
+  GimpLayer     **layers;
+  GimpImageType   image_type;
+  gint            bpp;
+  guchar          sig[8];
+  guchar          trns[256];
+  FILE           *fp;
+  png_structp     pp;
+  png_infop       info;
+  /* APNG specific data */
+  gboolean        is_indexed_alpha = FALSE;
+  gboolean        is_animated      = FALSE;
+  gboolean        idat_read        = FALSE;
+  gint            frame_start      = 0;
+  guint           sequence_num     = 0;
+  guint           frame_no;
+  guint           playback_no;
+  guint           frame_data_size  = 0;
+
+  layers     = gimp_image_get_layers (image);
+  image_type = gimp_drawable_type (GIMP_DRAWABLE (layers[0]));
+  bpp        = gimp_drawable_get_bpp (GIMP_DRAWABLE (layers[0]));
+  g_free (layers);
+
+  if (image_type == GIMP_INDEXEDA_IMAGE)
+    {
+      image_type       = GIMP_INDEXED_IMAGE;
+      bpp              = 1;
+      is_indexed_alpha = TRUE;
+
+      for (gint i = 0; i < 256; i++)
+        trns[i] = 255;
+    }
+
+  fp = g_fopen (g_file_peek_path (file), "rb");
+
+  if (fp == NULL)
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
+      return FALSE;
+    }
+
+  if (report_progress)
+    gimp_progress_init_printf (_("Importing APNG frames from '%s'"),
+                               gimp_file_get_utf8_name (file));
+
+  if (fread (sig, 1, 8, fp)   == 8 &&
+      png_sig_cmp (sig, 0, 8) == 0)
+    {
+      guint      png_id       = 0;
+      APNGChunk  ihdr_chunk;
+      APNGChunk  chunk;
+      APNGFrame  apng_frame;
+      guchar    *prior_pixels;
+      guchar     dispose_op   = 0;
+      guchar     blend_op     = 0;
+      GList     *other_chunks = NULL;
+
+      png_id = read_apng_chunk (fp, &ihdr_chunk);
+      if (! png_id)
+        {
+          fclose (fp);
+          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Could not read APNG frames. "
+                         "They will be discarded."));
+
+          return FALSE;
+        }
+
+      /* Set initial frame information */
+      if (png_id == id_IHDR)
+        {
+          gdouble image_width  = gimp_image_get_width (image);
+          gdouble image_height = gimp_image_get_height (image);
+
+          frame_data_size = image_width * image_height * bpp;
+
+          apng_frame.bpp         = bpp;
+          apng_frame.image_width = image_width;
+          apng_frame.pixels      = g_malloc0 (frame_data_size);
+          prior_pixels           = g_malloc0 (frame_data_size);
+
+          /* In case we have IDAT before fcTL chunk, set the frame defaults */
+          apng_frame.width     = image_width;
+          apng_frame.height    = image_height;
+          apng_frame.offset_x  = 0;
+          apng_frame.offset_y  = 0;
+          apng_frame.delay_num = 0;
+          apng_frame.delay_den = 100;
+
+          dispose_op = 0;
+          blend_op   = 0;
+        }
+      else
+        {
+          fclose (fp);
+          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Could not read APNG frames. "
+                         "They will be discarded."));
+
+          return FALSE;
+        }
+
+      /* libpng will only read one image chunk for PNG, and will warn that
+       * there is extra compressed data instead of reading the rest. So,
+       * each time we want to read a new frame, we'll recreate the PNG
+       * reader and trick it into thinking it is reading a single frame. */
+      if (restart_apng_processing (&pp, &info, &apng_frame, FALSE, &ihdr_chunk,
+                                   NULL))
+        {
+          while (! feof (fp))
+            {
+              png_id = read_apng_chunk (fp, &chunk);
+              if (! png_id)
+                {
+                  fclose (fp);
+                  g_free (apng_frame.pixels);
+                  g_free (prior_pixels);
+
+                  g_set_error (error, G_FILE_ERROR,
+                               g_file_error_from_errno (errno),
+                               _("Could not read APNG frames. "
+                                 "They will be discarded."));
+
+                  return FALSE;
+                }
+
+              if (png_id == id_acTL)
+                {
+                  GimpParasite *parasite;
+                  gchar        *str;
+
+                  is_animated = TRUE;
+                  frame_no    = png_get_uint_32 (chunk.data + 8);
+                  playback_no = png_get_uint_32 (chunk.data + 12);
+
+                  str = g_strdup_printf ("%d %d", frame_no, playback_no);
+                  parasite = gimp_parasite_new ("apng-image-data",
+                                                GIMP_PARASITE_PERSISTENT,
+                                                strlen (str) + 1, (gpointer) str);
+                  g_free (str);
+                  gimp_image_attach_parasite (image, parasite);
+                  gimp_parasite_free (parasite);
+
+                }
+              else if (png_id == id_fcTL && (! idat_read || is_animated))
+                {
+                  /* Check if we've gotten past the first frame (standard PNG),
+                   * and are reading in the remaining APNG frames */
+                  if (idat_read)
+                    {
+                      /* Skipping the first frame because we've already loaded
+                       * it with load_png () */
+                      if (end_apng_processing (pp, info) && sequence_num > frame_start)
+                        {
+                          create_apng_layer (image, &apng_frame, prior_pixels,
+                                             image_type, trns, is_indexed_alpha,
+                                             dispose_op, blend_op);
+                          memcpy (prior_pixels, apng_frame.pixels, frame_data_size);
+                        }
+                    }
+                  else
+                    {
+                      frame_start++;
+                    }
+
+                  apng_frame.width     = png_get_uint_32 (chunk.data + 12);
+                  apng_frame.height    = png_get_uint_32 (chunk.data + 16);
+                  apng_frame.offset_x  = png_get_uint_32 (chunk.data + 20);
+                  apng_frame.offset_y  = png_get_uint_32 (chunk.data + 24);
+                  apng_frame.delay_num = png_get_uint_16 (chunk.data + 28);
+                  apng_frame.delay_den = png_get_uint_16 (chunk.data + 30);
+
+                  dispose_op = chunk.data[32];
+                  blend_op   = chunk.data[33];
+
+                  /* Trick libpng into thinking we're loading the next frame
+                   * at the start of a new PNG */
+                  if (idat_read)
+                    {
+                      memcpy (ihdr_chunk.data + 8, chunk.data + 12, 8);
+
+                      if (! restart_apng_processing (&pp, &info, &apng_frame,
+                                                     idat_read, &ihdr_chunk,
+                                                     other_chunks))
+                        break;
+                    }
+                  sequence_num++;
+                }
+              else if (png_id == id_fdAT && is_animated)
+                {
+                  /* Remove sequence number and rename chunk so that
+                   * libpng thinks this is a regular IDAT chunk */
+                  png_save_uint_32 (chunk.data + 4, chunk.size - 16);
+                  memcpy (chunk.data + 8, "IDAT", 4);
+
+                  if (! process_apng_data (pp, info, chunk.data + 4,
+                                           chunk.size - 4))
+                    break;
+                }
+              else if (png_id == id_IDAT)
+                {
+                  idat_read = TRUE;
+
+                  if (! is_animated)
+                    {
+                      fclose (fp);
+                      g_free (apng_frame.pixels);
+                      g_free (prior_pixels);
+
+                      g_set_error (error, G_FILE_ERROR,
+                                   g_file_error_from_errno (errno),
+                                   _("Invalid APNG: Image data appeared "
+                                     "before actTL chunk."));
+
+                      return FALSE;
+                    }
+
+                  if (! process_apng_data (pp, info, chunk.data, chunk.size))
+                    break;
+                }
+              else if (png_id == id_tRNS)
+                {
+                  for (gint i = 0; i < chunk.size; i++)
+                    trns[i] = chunk.data[i + 8];
+                }
+              else if (png_id == id_IEND)
+                {
+                  if (idat_read && end_apng_processing (pp, info))
+                    {
+                      create_apng_layer (image, &apng_frame, prior_pixels,
+                                         image_type, trns, is_indexed_alpha,
+                                         dispose_op, blend_op);
+                      memcpy (prior_pixels, apng_frame.pixels, frame_data_size);
+                    }
+
+                  break;
+                }
+              else if (! idat_read)
+                {
+                  APNGChunk *other_chunk = g_malloc (sizeof (APNGChunk));
+
+                  other_chunk->data = g_malloc0 (chunk.size);
+
+                  memcpy (other_chunk->data, chunk.data, chunk.size);
+                  other_chunk->size = chunk.size;
+
+                  if (! process_apng_data (pp, info, chunk.data, chunk.size))
+                    break;
+
+                  other_chunks = g_list_append (other_chunks, other_chunk);
+                }
+
+              g_free (chunk.data);
+            }
+        }
+
+      /* Clear out lingering chunks like palette */
+      if (other_chunks)
+        {
+          GList *iter;
+
+          for (iter = other_chunks; iter; iter = iter->next)
+            {
+              APNGChunk *chunk = iter->data;
+
+              g_free (chunk->data);
+            }
+          g_list_free (other_chunks);
+        }
+    }
+
+  fclose (fp);
+
+  if (report_progress)
+    gimp_progress_update (1.0);
+
+  return TRUE;
 }
 
 /*
@@ -2235,6 +2659,39 @@ find_unused_ia_color (GeglBuffer *buffer,
   return -1;
 }
 
+static void
+add_alpha_to_indexed (GimpLayer *layer,
+                      guchar    *alpha)
+{
+  GeglBufferIterator *iter;
+  GeglBuffer         *buffer;
+  const Babl         *format;
+  gint                n_components;
+
+  gimp_layer_add_alpha (layer);
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  format = gegl_buffer_get_format (buffer);
+
+  iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,
+                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
+  n_components = babl_format_get_n_components (format);
+  g_warn_if_fail (n_components == 2);
+
+  while (gegl_buffer_iterator_next (iter))
+    {
+      guchar *data   = iter->items[0].data;
+      gint    length = iter->length;
+
+      while (length--)
+        {
+          data[1] = alpha[data[0]];
+
+          data += n_components;
+        }
+    }
+  g_object_unref (buffer);
+}
+
 static int
 respin_cmap (png_structp   pp,
              png_infop     info,
@@ -2341,7 +2798,8 @@ read_unknown_chunk (png_structp        png_ptr,
 {
   /* Chunks with a lowercase letter in the 4th byte
    * are safe to copy */
-  if (g_ascii_islower (chunk->name[3]))
+  if (g_ascii_islower (chunk->name[3]) ||
+      strcmp ((gchar *) chunk->name, "fcTL") == 0)
     {
       GimpParasite *parasite;
       gchar         pname[255];
@@ -2355,6 +2813,194 @@ read_unknown_chunk (png_structp        png_ptr,
     }
 
   return 0;
+}
+
+/* APNG specific functions */
+
+static gboolean
+restart_apng_processing (png_structp *png_ptr,
+                         png_infop   *info_ptr,
+                         void        *frame_ptr,
+                         gboolean     idat_read,
+                         APNGChunk   *ihdr_chunk,
+                         GList       *apng_chunks)
+{
+  guchar  header[8] = { 137, 80, 78, 71, 13, 10, 26, 10 };
+  GList  *iter;
+
+  *png_ptr  = png_create_read_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+  *info_ptr = png_create_info_struct (*png_ptr);
+  if (! *png_ptr || ! *info_ptr)
+    return FALSE;
+
+  if (setjmp (png_jmpbuf (*png_ptr)))
+    {
+      png_destroy_read_struct (png_ptr, info_ptr, 0);
+      return FALSE;
+    }
+
+#ifdef PNG_BENIGN_ERRORS_SUPPORTED
+  png_set_benign_errors (*png_ptr, TRUE);
+  png_set_option (*png_ptr, PNG_SKIP_sRGB_CHECK_PROFILE, PNG_OPTION_ON);
+#endif
+
+  png_set_crc_action (*png_ptr, PNG_CRC_QUIET_USE, PNG_CRC_QUIET_USE);
+  png_set_progressive_read_fn (*png_ptr, frame_ptr, read_apng_header,
+                               read_apng_row, NULL);
+
+  png_process_data (*png_ptr, *info_ptr, header, 8);
+  png_process_data (*png_ptr, *info_ptr, ihdr_chunk->data, ihdr_chunk->size);
+
+  /* Load any other required chunks (like palette) before next image chunk */
+  if (idat_read)
+    for (iter = apng_chunks; iter; iter = iter->next)
+      {
+        APNGChunk *apng_chunk = iter->data;
+
+        png_process_data (*png_ptr, *info_ptr, apng_chunk->data,
+                          apng_chunk->size);
+      }
+
+  return TRUE;
+}
+
+static gboolean
+process_apng_data (png_structp  png_ptr,
+                   png_infop    info_ptr,
+                   guchar      *data,
+                   guint        size)
+{
+  if (! png_ptr || ! info_ptr)
+    return FALSE;
+
+  if (setjmp (png_jmpbuf (png_ptr)))
+    {
+      png_destroy_read_struct (&png_ptr, &info_ptr, 0);
+      return FALSE;
+    }
+
+  png_process_data (png_ptr, info_ptr, data, size);
+  return TRUE;
+}
+
+static gboolean
+end_apng_processing (png_structp png_ptr,
+                     png_infop   info_ptr)
+{
+  unsigned char footer[12] = {0, 0, 0, 0, 73, 69, 78, 68, 174, 66, 96, 130};
+
+  if (! png_ptr || ! info_ptr)
+    return FALSE;
+
+  if (setjmp (png_jmpbuf (png_ptr)))
+    {
+      png_destroy_read_struct(&png_ptr, &info_ptr, 0);
+      return FALSE;
+    }
+
+  png_process_data (png_ptr, info_ptr, footer, 12);
+  png_destroy_read_struct (&png_ptr, &info_ptr, 0);
+
+  return TRUE;
+}
+
+static void
+read_apng_header (png_structp png_ptr,
+                  png_infop   info_ptr)
+{
+  (void) png_set_interlace_handling (png_ptr);
+
+  png_read_update_info (png_ptr, info_ptr);
+}
+
+static void
+read_apng_row (png_structp png_ptr,
+               png_bytep   new_row,
+               png_uint_32 row_num,
+               gint        pass)
+{
+  APNGFrame *apng_frame = (APNGFrame *) png_get_progressive_ptr (png_ptr);
+  gsize      row_offset;
+
+  row_offset = row_num * apng_frame->bpp * apng_frame->width;
+  png_progressive_combine_row (png_ptr,
+                               apng_frame->pixels + row_offset,
+                               new_row);
+}
+
+static inline guint
+read_apng_chunk (FILE      *f,
+                 APNGChunk *chunk)
+{
+  guchar len[4];
+
+  chunk->size = 0;
+  chunk->data = NULL;
+
+  if (fread (&len, 4, 1, f) == 1)
+    {
+      chunk->size = png_get_uint_32 (len);
+
+      if (chunk->size > PNG_USER_CHUNK_MALLOC_MAX)
+        return 0;
+
+      chunk->size += 12;
+
+      chunk->data = g_malloc (chunk->size);
+      memcpy (chunk->data, len, 4);
+
+      if (fread (chunk->data + 4, chunk->size - 4, 1, f) == 1)
+        return *(guint *) (chunk->data + 4);
+    }
+
+  return 0;
+}
+
+static void
+create_apng_layer (GimpImage     *image,
+                   APNGFrame     *apng_frame,
+                   guchar        *prior_pixels,
+                   GimpImageType  image_type,
+                   guchar        *alpha,
+                   gboolean       is_indexed_alpha,
+                   gint           dispose_op,
+                   gint           blend_op)
+{
+  GimpLayer    *layer;
+  GeglBuffer   *buffer;
+  GimpParasite *parasite;
+  gchar        *str;
+
+  layer = gimp_layer_new (image, NULL,
+                          apng_frame->width, apng_frame->height,
+                          image_type, 100,
+                          gimp_image_get_default_new_layer_mode (image));
+  gimp_layer_set_offsets (layer, apng_frame->offset_x, apng_frame->offset_y);
+  gimp_image_insert_layer (image, layer, NULL, 0);
+
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+
+  gegl_buffer_set (buffer,
+                   GEGL_RECTANGLE (0, 0, apng_frame->width, apng_frame->height),
+                   0, NULL, apng_frame->pixels,
+                   GEGL_AUTO_ROWSTRIDE);
+  g_object_unref (buffer);
+
+  if (is_indexed_alpha)
+    add_alpha_to_indexed (layer, alpha);
+
+  str = g_strdup_printf ("%d %d %d %d",
+                         apng_frame->delay_num,
+                         apng_frame->delay_den,
+                         dispose_op,
+                         blend_op);
+  parasite = gimp_parasite_new ("apng-frame-data",
+                                GIMP_PARASITE_PERSISTENT,
+                                strlen (str) + 1,
+                                (gpointer) str);
+  g_free (str);
+  gimp_item_attach_parasite (GIMP_ITEM (layer), parasite);
+  gimp_parasite_free (parasite);
 }
 
 static gboolean
