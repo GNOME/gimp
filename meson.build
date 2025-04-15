@@ -2147,7 +2147,7 @@ endif
 
 # On Windows, install deps in a bundle before distributing
 if get_option('windows-installer') or get_option('ms-store')
-  install_win_bundling_script = find_program('build/windows/2_bundle-gimp-uni_base.sh')
+  install_win_bundling_script = find_program('build/windows/2_bundle-gimp-uni_base.py')
   meson.add_install_script(install_win_bundling_script)
 endif
 
