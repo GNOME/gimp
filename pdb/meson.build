@@ -106,12 +106,12 @@ groups_pl = custom_target('groups.pl',
   capture: true,
 )
 
-enumgen_run  = find_program('meson-enumgen.sh')
-pdbgen_run   = find_program('meson-pdbgen.sh')
-enumcode_run = find_program('meson-enumcode.sh')
+enumgen_run  = find_program('meson-enumgen.py')
+pdbgen_run   = find_program('meson-pdbgen.py')
+enumcode_run = find_program('meson-enumcode.py')
 
 enums_pl = custom_target('enums.pl',
-  input : [ 'meson-enumgen.sh', 'enumgen.pl', 'enums-external.pl', enum_headers, ],
+  input : [ 'meson-enumgen.py', 'enumgen.pl', 'enums-external.pl', enum_headers, ],
   output: [ 'stamp-enumgen.h', ],
   env: perl_env,
   command: [
@@ -124,7 +124,7 @@ enums_pl = custom_target('enums.pl',
 pdbgen = custom_target('stamp-pdbgen.h',
   input : [
     files(
-      'meson-pdbgen.sh',
+      'meson-pdbgen.py',
       'pdbgen.pl',
 
       'app.pl',
@@ -148,7 +148,7 @@ pdbgen = custom_target('stamp-pdbgen.h',
 stamp_enumcode = custom_target('gimpenums.h',
   input : [
     files(
-      'meson-enumcode.sh',
+      'meson-enumcode.py',
       'enumcode.pl',
       'enumgen.pl',
 
