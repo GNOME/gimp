@@ -105,7 +105,16 @@ foreach language : languages
 endforeach
 
 # Generate lang lists for Inno
-gen_list = find_program('list-installer-langs.sh')
+gen_list = find_program('list-installer-langs.py')
+
+custom_target('base_po-msg',
+  input : [ 'iso_639_custom.xml' ],
+  output: [ 'base_po-msg.list', ],
+  command: [
+    gen_list, 'msg', '@SOURCE_ROOT@'
+  ],
+  build_by_default: true,
+)
 
 custom_target('base_po-cmp',
   input : [ 'iso_639_custom.xml' ],
@@ -121,15 +130,6 @@ custom_target('base_po-files',
   output: [ 'base_po-files.list', ],
   command: [
     gen_list, 'files', '@SOURCE_ROOT@'
-  ],
-  build_by_default: true,
-)
-
-custom_target('base_po-msg',
-  input : [ 'iso_639_custom.xml' ],
-  output: [ 'base_po-msg.list', ],
-  command: [
-    gen_list, 'msg', '@SOURCE_ROOT@'
   ],
   build_by_default: true,
 )
