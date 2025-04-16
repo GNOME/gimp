@@ -1823,7 +1823,7 @@ if is_git_repository
   endif
 
   if git.found()
-    git_submodule_check = run_command(meson.project_source_root() / 'build/meson/check-gimp-data.sh',
+    git_submodule_check = run_command(meson.project_source_root() / 'build/meson/check-gimp-data.py',
                                       check: false)
     if git_submodule_check.returncode() != 0
       submodule_warning = 'gimp-data submodule seems outdated. Possibly run from the source repository: git submodule update'
