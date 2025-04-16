@@ -933,7 +933,7 @@ gimp_display_shell_set_initial_scale (GimpDisplayShell *shell,
 
   image = gimp_display_get_image (shell->display);
 
-  gdk_monitor_get_workarea (shell->initial_monitor, &workarea);
+  gdk_monitor_get_workarea (gimp_widget_get_monitor (GTK_WIDGET (shell)), &workarea);
 
   image_width  = gimp_image_get_width  (image);
   image_height = gimp_image_get_height (image);
