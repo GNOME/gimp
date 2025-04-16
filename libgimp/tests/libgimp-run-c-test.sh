@@ -10,4 +10,4 @@ cmd="import os; import sys; sys.path.insert(0, '$SRC_DIR'); from pygimp.utils im
 cmd="$cmd proc = Gimp.get_pdb().lookup_procedure('$TEST_NAME'); gimp_c_assert('$TEST_FILE', 'Test PDB procedure does not exist: {}'.format('$TEST_NAME'), proc is not None);"
 cmd="$cmd result = proc.run(None);"
 cmd="$cmd print('SUCCESS') if result.index(0) == Gimp.PDBStatusType.SUCCESS else gimp_c_assert('$TEST_FILE', result.index(1), False);"
-echo "$cmd" | "$GIMP_EXE" -nis --batch-interpreter "python-fu-eval" -b - --quit
+echo "$cmd" | python3 "$GIMP_EXE" -nis --batch-interpreter "python-fu-eval" -b - --quit

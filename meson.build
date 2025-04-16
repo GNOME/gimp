@@ -2053,7 +2053,7 @@ else
   gimp_exe_depends = []
 endif
 
-gimp_exe = find_program('tools'/'in-build-gimp.sh')
+gimp_exe = find_program('tools'/'in-build-gimp.py')
 
 ################################################################################
 # Subdirs: part 2
