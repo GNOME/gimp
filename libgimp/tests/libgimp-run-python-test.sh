@@ -24,4 +24,4 @@ fi
 header="import os; import sys; sys.path.insert(0, '$SRC_DIR'); from pygimp.utils import gimp_assert;"
 header="$header import pygimp.utils; pygimp.utils.gimp_test_filename = '$TEST_FILE'"
 
-(echo "$header" && tail -n +2 "$TEST_FILE") | "$GIMP_EXE" -nis --batch-interpreter "python-fu-eval" -b - --quit
+(echo "$header" && tail -n +2 "$TEST_FILE") | python3 "$GIMP_EXE" -nis --batch-interpreter "python-fu-eval" -b - --quit
