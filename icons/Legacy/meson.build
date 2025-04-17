@@ -546,7 +546,7 @@ xml_content += '</gresources>\n'
 
 xml_file = configure_file(
   output: resourcename + '.gresource.xml',
-  command: [ 'echo', xml_content ],
+  command: [ 'python3','-c','import sys; sys.stdout.write(sys.argv[1])',xml_content ],
   capture: true,
 )
 # icons_core_sources = gnome.compile_resources(
@@ -568,7 +568,7 @@ xml_content += '</gresources>\n'
 
 xml_file = configure_file(
   output: resourcename + '.gresource.xml',
-  command: [ 'echo', xml_content ],
+  command: [ 'python3','-c','import sys; sys.stdout.write(sys.argv[1])',xml_content ],
   capture: true,
 )
 # icons_imgs_sources = gnome.compile_resources(
