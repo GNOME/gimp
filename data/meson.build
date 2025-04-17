@@ -8,8 +8,8 @@ subdir('tips')
 subdir('tool-presets')
 
 
-meson.add_install_script('sh', '-c',
-  'mkdir -p $MESON_INSTALL_DESTDIR_PREFIX/@0@'.format(gimpdatadir / 'fonts')
+meson.add_install_script('python3', '-c',
+  'from pathlib import Path; from sys import argv; Path(argv[1]).mkdir(parents=True, exist_ok=True)', get_option('prefix') / gimpdatadir / 'fonts'
 )
 
 release_conf = configuration_data()
