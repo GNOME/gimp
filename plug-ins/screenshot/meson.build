@@ -24,7 +24,7 @@ xml_content += '</gresources>\n'
 
 xml_file = configure_file(
   output: resourcename + '.gresource.xml',
-  command: [ 'python3','-c','import sys; sys.stdout.write(sys.argv[1])',xml_content ],
+  command: [ python,'-c','import sys; sys.stdout.write(sys.argv[1])',xml_content ],
   capture: true,
 )
 

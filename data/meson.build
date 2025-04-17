@@ -8,7 +8,7 @@ subdir('tips')
 subdir('tool-presets')
 
 
-meson.add_install_script('python3', '-c',
+meson.add_install_script(python, '-c',
   'from pathlib import Path; from sys import argv; Path(argv[1]).mkdir(parents=True, exist_ok=True)', get_option('prefix') / gimpdatadir / 'fonts'
 )
 
