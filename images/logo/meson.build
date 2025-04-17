@@ -73,8 +73,8 @@ foreach size : desktop_sizes
                            ],
                            build_by_default: true,
                            install: false)
-  meson.add_install_script('sh', '-c',
-                           'mkdir -p "$MESON_INSTALL_DESTDIR_PREFIX/@1@/" && cp -f "@0@" "$MESON_INSTALL_DESTDIR_PREFIX/@1@/gimp.png"'.format(app_icon.full_path(), installdir))
+  meson.add_install_script('python3', '-c',
+                           'from pathlib import Path; from shutil import copy2; from sys import argv; target_dir = Path(argv[2]); target_dir.mkdir(parents=True, exist_ok=True); copy2(argv[1], target_dir / "gimp.png")', app_icon.full_path(), get_option('prefix') / installdir)
 endforeach
 
 install_data('gimp-logo.svg',
