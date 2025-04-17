@@ -19,7 +19,6 @@ result = subprocess.run(
   stderr=subprocess.PIPE
 )
 if result.returncode == 0:
-  timestamp = datetime.now().strftime("%a %b %d %H:%M:%S %Z %Y")
   with open(os.path.join(top_builddir, 'pdb', 'stamp-enumgen.h'), 'w') as f:
-    f.write(f"/* Generated on {timestamp}. */\n")
+    f.write(f"/* Generated on {datetime.now().strftime('%a %b %d %H:%M:%S %Z %Y')}. */\n")
 sys.exit(result.returncode)

@@ -1426,7 +1426,7 @@ module_dependencies = find_program('tools'/'module-dependencies.py')
 meson_install_subdir= find_program('tools'/'meson_install_subdir.py')
 
 gimp_mkenums = find_program('tools' / 'gimp-mkenums')
-mkenums_wrap = find_program(meson.current_source_dir() / 'tools' / 'meson-mkenums.sh')
+mkenums_wrap = find_program(meson.current_source_dir() / 'tools' / 'meson-mkenums.py')
 
 libgimp_mkenums_dtails = \
     '    { 0, NULL, NULL }\n'                                                      + \
