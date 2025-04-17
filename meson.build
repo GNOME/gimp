@@ -1867,7 +1867,7 @@ custom_target('AUTHORS',
   ],
   build_by_default: false,
 )
-date = run_command('date', '-u', '+%Y-%m-%dT%H:%M:%SZ', check: true)
+date = run_command(python, '-c', 'import datetime; print(datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"))', check: true)
 custom_target('authors.md',
   input : [ 'authors4gimp-web.xsl', 'authors.xml', ],
   output: 'authors.md',
@@ -1877,7 +1877,7 @@ custom_target('authors.md',
     '-o', '@OUTPUT@',
     '@INPUT@',
   ],
-  build_by_default: false,
+  build_by_default: true,
 )
 
 if xmllint.found()
