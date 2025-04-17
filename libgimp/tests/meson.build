@@ -25,7 +25,6 @@ test_env.set('GIMP_TESTING_ABS_TOP_SRCDIR', meson.project_source_root())
 
 run_python_test = find_program('./libgimp-run-python-test.sh')
 run_c_test      = find_program('./libgimp-run-c-test.sh')
-cat             = find_program('cat')
 foreach test_name : tests
   basename = 'test-' + test_name
 
@@ -40,7 +39,7 @@ foreach test_name : tests
   c_test = custom_target(c_test_name,
                          input: [ 'c-test-header.c', c_test_name ],
                          output: c_test_name,
-                         command: [cat, '@INPUT@'],
+                         command: [python, '-c', 'import sys; [sys.stdout.write(open(f).read()) for f in sys.argv[1:]]','@INPUT@'],
                          capture: true,
                          install: false)
   c_test_exe = executable(basename,

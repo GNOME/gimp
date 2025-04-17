@@ -48,7 +48,7 @@ gimpenums_notail = custom_target('gimpenums.c.notail',
 gimpenums = custom_target('gimpenums.c',
   input : [ gimpenums_notail, 'gimpenums.c.tail', ],
   output: [ 'gimpenums.c', ],
-  command: [ 'cat', '@INPUT@' ],
+  command: [python, '-c', 'import sys; [sys.stdout.write(open(f).read()) for f in sys.argv[1:]]','@INPUT@'],
   capture: true,
 )
 
