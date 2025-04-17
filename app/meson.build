@@ -240,12 +240,10 @@ if enable_default_bin
                     pointing_to: fs.name(gimpmain_exe.full_path()),
                     install_dir: get_option('bindir'))
   else
-    meson.add_install_script('sh', '-c',
-                             'cp -f "@0@" "$MESON_INSTALL_DESTDIR_PREFIX/bin/@1@"'.format(gimpmain_exe.full_path(),
-                                                                                          fs.name(gimpmain_exe.name()).replace(exec_ver, '.exe')))
-    meson.add_install_script('sh', '-c',
-                             'cp -f "@0@" "$MESON_INSTALL_DESTDIR_PREFIX/bin/@1@"'.format(gimpmain_exe.full_path(),
-                                                                                          fs.name(gimpmain_exe.name()).replace(exec_ver, '-@0@.exe'.format(api_version_major))))
+    meson.add_install_script('python3', '-c', 'from shutil import copy2; from pathlib import Path; from sys import argv; copy2(argv[1], str(Path(argv[2]) / "bin" / argv[3]))',
+                             gimpmain_exe.full_path(), get_option('prefix'), fs.name(gimpmain_exe.name()).replace(exec_ver, '.exe'))
+    meson.add_install_script('python3', '-c', 'from shutil import copy2; from pathlib import Path; from sys import argv; copy2(argv[1], str(Path(argv[2]) / "bin" / argv[3].replace("@0@", argv[4])))',
+                             gimpmain_exe.full_path(), get_option('prefix'), fs.name(gimpmain_exe.name()).replace(exec_ver, '-@0@.exe'), api_version_major.to_string())
   endif
   if enable_console_bin
     if not platform_windows
@@ -256,12 +254,10 @@ if enable_default_bin
                       pointing_to: fs.name(gimpconsole_exe.full_path()),
                       install_dir: get_option('bindir'))
     else
-      meson.add_install_script('sh', '-c',
-                               'cp -f "@0@" "$MESON_INSTALL_DESTDIR_PREFIX/bin/@1@"'.format(gimpconsole_exe.full_path(),
-                                                                                            fs.name(gimpconsole_exe.name()).replace(exec_ver, '.exe')))
-      meson.add_install_script('sh', '-c',
-                               'cp -f "@0@" "$MESON_INSTALL_DESTDIR_PREFIX/bin/@1@"'.format(gimpconsole_exe.full_path(),
-                                                                                            fs.name(gimpconsole_exe.name()).replace(exec_ver, '-@0@.exe'.format(api_version_major))))
+      meson.add_install_script('python3', '-c', 'from shutil import copy2; from pathlib import Path; from sys import argv; copy2(argv[1], str(Path(argv[2]) / "bin" / argv[3]))',
+                               gimpconsole_exe.full_path(), get_option('prefix'), fs.name(gimpconsole_exe.name()).replace(exec_ver, '.exe'))
+      meson.add_install_script('python3', '-c', 'from shutil import copy2; from pathlib import Path; from sys import argv; copy2(argv[1], str(Path(argv[2]) / "bin" / argv[3].replace("@0@", argv[4])))',
+                               gimpconsole_exe.full_path(), get_option('prefix'), fs.name(gimpconsole_exe.name()).replace(exec_ver, '-@0@.exe'), api_version_major.to_string())
     endif
   endif
 endif

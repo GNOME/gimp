@@ -32,11 +32,9 @@ if enable_default_bin
                     pointing_to: fs.name(gimp_debug_tool.full_path()),
                     install_dir: gimp_debug_tool_dir)
   else
-    meson.add_install_script('sh', '-c',
-                             'cp -f "@0@" "$MESON_INSTALL_DESTDIR_PREFIX/bin/@1@"'.format(gimp_debug_tool.full_path(),
-                                                                                          fs.name(gimp_debug_tool.name()).replace(exec_ver, '.exe')))
-    meson.add_install_script('sh', '-c',
-                             'cp -f "@0@" "$MESON_INSTALL_DESTDIR_PREFIX/bin/@1@"'.format(gimp_debug_tool.full_path(),
-                                                                                          fs.name(gimp_debug_tool.name()).replace(exec_ver, '-@0@.exe'.format(api_version_major))))
+    meson.add_install_script('python3', '-c', 'from shutil import copy2; from pathlib import Path; from sys import argv; copy2(argv[1], str(Path(argv[2]) / "bin" / argv[3]))',
+                             gimp_debug_tool.full_path(), get_option('prefix'), fs.name(gimp_debug_tool.name()).replace(exec_ver, '.exe'))
+    meson.add_install_script('python3', '-c', 'from shutil import copy2; from pathlib import Path; from sys import argv; copy2(argv[1], str(Path(argv[2]) / "bin" / argv[3].replace("@0@", argv[4])))',
+                             gimp_debug_tool.full_path(), get_option('prefix'), fs.name(gimp_debug_tool.name()).replace(exec_ver, '-@0@.exe'), api_version_major.to_string())
   endif
 endif
