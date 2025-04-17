@@ -1877,7 +1877,7 @@ custom_target('authors.md',
     '-o', '@OUTPUT@',
     '@INPUT@',
   ],
-  build_by_default: true,
+  build_by_default: false,
 )
 
 if xmllint.found()
