@@ -8,7 +8,7 @@ for dir in files gimpdir gimpdir-empty; do
 done
 
 # Link to Color icon theme for tests
-IconsRoot="${MESON_SOURCE_ROOT}/icons/Color"
+IconsRoot="${MESON_SOURCE_ROOT}/gimp-data/icons/Default"
 IconsDirs=$(find "${IconsRoot}" -name [0-9]* -type d -printf '%f\n' | sort -n)
 for dir in ${IconsDirs} ; do
     mkdir  "${MESON_BUILD_ROOT}/${MESON_SUBDIR}/gimp-test-icon-theme/hicolor/${dir}x${dir}" -p
