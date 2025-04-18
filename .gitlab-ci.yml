@@ -459,7 +459,7 @@ gimp-flatpak-x64:
   before_script:
     # FIXME:'gimpenv' have buggy code about Windows paths. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/12284
     - $GIMP_PREFIX = "$PWD\_install-$MSYSTEM_PREFIX".Replace('\', '/')
-  timeout: 60m
+  timeout: 40m
 
 .win_environ: &WIN_ENVIRON
 - Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):win_environ[collapsed=true]$([char]13)$([char]27)[0KPreparing build environment"
