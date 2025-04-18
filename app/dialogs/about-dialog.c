@@ -76,6 +76,9 @@ typedef struct
   gboolean        visible;
 } GimpAboutDialog;
 
+static void        about_dialog_response      (GtkDialog       *dialog,
+                                               gint             response_id,
+                                               gpointer         user_data);
 #ifdef G_OS_WIN32
 static void        about_dialog_realize       (GtkWidget       *widget,
                                                GimpAboutDialog *dialog);
@@ -180,7 +183,7 @@ about_dialog_create (Gimp           *gimp,
       g_set_weak_pointer (&dialog.dialog, widget);
 
       g_signal_connect (widget, "response",
-                        G_CALLBACK (gtk_widget_destroy),
+                        G_CALLBACK (about_dialog_response),
                         NULL);
 #ifdef G_OS_WIN32
       g_signal_connect (widget, "realize",
@@ -230,6 +233,17 @@ about_dialog_create (Gimp           *gimp,
                                "gimp-about-dialog");
 
   return dialog.dialog;
+}
+
+static void
+about_dialog_response (GtkDialog *dialog,
+                       gint       response_id,
+                       gpointer   user_data)
+{
+  if (response_id == GTK_RESPONSE_HELP)
+    gimp_standard_help_func (GIMP_HELP_ABOUT_DIALOG, NULL);
+  else
+    gtk_widget_destroy (GTK_WIDGET (dialog));
 }
 
 #ifdef G_OS_WIN32
