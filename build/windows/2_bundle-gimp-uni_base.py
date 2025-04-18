@@ -206,6 +206,7 @@ for bin_path in GIMP_DISTRIB.rglob("*"):
         except:
           continue
 
+
 ## Development files (to build GEGL filters and GIMP plug-ins).
 clean(GIMP_DISTRIB, "lib/*.a")
 bundle(GIMP_PREFIX, "include/gimp-*")
