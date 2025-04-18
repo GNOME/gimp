@@ -46,10 +46,13 @@ def bundle(src_root, pattern):
 
 def clean(base_path, pattern):
   base_path = Path(base_path)
+  first_found = False
   for parent_path in base_path.glob(os.path.dirname(pattern)):
     for path in parent_path.rglob(os.path.basename(pattern)):
       if path.exists():
-        print(f"Cleaning {path}")
+        if not first_found:
+           print(f"Cleaning {base_path}/{pattern}")
+           first_found = True
         if path.is_dir():
           shutil.rmtree(path)
         else:
