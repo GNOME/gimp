@@ -57,13 +57,6 @@ Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):g
 
 # Bundle GIMP
 Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):gimp_bundle[collapsed=true]$([char]13)$([char]27)[0KCreating bundle"
-ninja install | Out-File ninja_install.log
-if ("$LASTEXITCODE" -gt '0' -or "$?" -eq 'False')
-  {
-    ## We need to manually check failures in pre-7.4 PS
-    Get-Content ninja_install.log
-    exit 1
-  }
-Remove-Item ninja_install.log
+ninja install
 Set-Location ..
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):gimp_bundle$([char]13)$([char]27)[0K"
