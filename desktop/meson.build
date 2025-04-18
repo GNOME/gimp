@@ -46,7 +46,7 @@ endif
 
 if appstreamcli.found()
   test('appdata_file',
-    find_program('test-appdata.sh', required: true, dirs: [meson.current_source_dir()]),
+    find_program('test-appdata.py', required: true, dirs: [meson.current_source_dir()]),
     env: [
       'GIMP_TESTING_BUILDDIR=' + meson.current_build_dir(),
       'GIMP_RELEASE=' + (release and not gimp_rc_git ? '1' : '0'),
