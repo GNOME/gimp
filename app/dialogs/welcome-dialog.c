@@ -115,6 +115,22 @@ static void   welcome_open_activated_callback        (GtkListBox     *listbox,
                                                       GtkWidget      *welcome_dialog);
 static void   welcome_open_images_callback           (GtkWidget      *button,
                                                       GtkListBox     *listbox);
+static void   welcome_dialog_new_image_accelerator   (GtkAccelGroup  *accel_group,
+                                                      GObject        *accelerator_widget,
+                                                      guint           keyval,
+                                                      GdkModifierType mods,
+                                                      gpointer        user_data);
+static void   welcome_dialog_open_image_dialog_accelerator
+                                                     (GtkAccelGroup  *accel_group,
+                                                      GObject        *accelerator_widget,
+                                                      guint           keyval,
+                                                      GdkModifierType mods,
+                                                      gpointer        user_data);
+static void   welcome_dialog_open_image_accelerator  (GtkAccelGroup  *accel_group,
+                                                      GObject        *accelerator_widget,
+                                                      guint           keyval,
+                                                      GdkModifierType mods,
+                                                      gpointer        user_data);
 
 static gboolean welcome_scrollable_resize            (gpointer        data);
 
@@ -170,17 +186,22 @@ welcome_dialog_new (Gimp       *gimp,
                     GimpConfig *config,
                     gboolean    show_welcome_page)
 {
-  GtkWidget   *dialog;
-  GList       *windows;
-  GtkWidget   *switcher;
-  GtkWidget   *stack;
-  GtkWidget   *tree_view;
-  GtkTreeIter  top_iter;
+  GtkWidget      *dialog;
+  GList          *windows;
+  GtkWidget      *switcher;
+  GtkWidget      *stack;
+  GtkWidget      *tree_view;
+  GtkTreeIter     top_iter;
 
-  GtkWidget   *prefs_box;
-  GtkWidget   *main_vbox;
+  GtkWidget      *prefs_box;
+  GtkWidget      *main_vbox;
 
-  gchar       *title;
+  gchar          *title;
+
+  GtkAccelGroup  *accel_group = gtk_accel_group_new ();
+  guint           accel_key;
+  GdkModifierType accel_mods;
+  gchar         **accels;
 
   /* Translators: the %s string will be the version, e.g. "3.0". */
   title = g_strdup_printf (_("Welcome to GIMP %s"), GIMP_VERSION);
@@ -298,6 +319,58 @@ welcome_dialog_new (Gimp       *gimp,
 
       welcome_dialog_create_release_page (gimp, dialog, main_vbox);
       gtk_widget_set_visible (main_vbox, TRUE);
+    }
+
+  /*************/
+  /* Shortcuts */
+  /*************/
+  /* XXX: GtkAccelGroup will be deprecated in GTK4
+   * See: https://docs.gtk.org/gtk4/migrating-3to4.html#use-the-new-apis-for-keyboard-shortcuts
+   * This GtkAccelGroup must be converted to a GtkShortcutController
+   */
+  accel_group = gtk_accel_group_new ();
+  gtk_window_add_accel_group (GTK_WINDOW (dialog), accel_group);
+
+  accels = gtk_application_get_accels_for_action (GTK_APPLICATION (gimp->app),
+                                                  "app.image-new");
+  if (accels && accels[0])
+    {
+      gtk_accelerator_parse (accels[0], &accel_key, &accel_mods);
+      gtk_accel_group_connect (accel_group,
+                              accel_key, accel_mods, 0,
+                              g_cclosure_new (G_CALLBACK (welcome_dialog_new_image_accelerator),
+                                              dialog, NULL));
+      g_strfreev (accels);
+    }
+
+  accels = gtk_application_get_accels_for_action (GTK_APPLICATION (gimp->app),
+                                                  "app.file-open");
+  if (accels && accels[0])
+    {
+      gtk_accelerator_parse (accels[0], &accel_key, &accel_mods);
+      gtk_accel_group_connect (accel_group,
+                              accel_key, accel_mods, 0,
+                              g_cclosure_new (G_CALLBACK (welcome_dialog_open_image_dialog_accelerator),
+                                              dialog, NULL));
+      g_strfreev (accels);
+    }
+
+  for (guint i = 0; i < 10; i++)
+    {
+      gchar accel_str[24];
+
+      g_snprintf (accel_str, sizeof (accel_str), "app.file-open-recent-%02u", i + 1);
+      accels = gtk_application_get_accels_for_action (GTK_APPLICATION (gimp->app),
+                                                      accel_str);
+      if (accels && accels[0])
+        {
+          gtk_accelerator_parse (accels[0], &accel_key, &accel_mods);
+          gtk_accel_group_connect (accel_group,
+                                  accel_key, accel_mods, 0,
+                                  g_cclosure_new (G_CALLBACK (welcome_dialog_open_image_accelerator),
+                                                  GUINT_TO_POINTER (i), NULL));
+          g_strfreev (accels);
+        }
     }
 
   return dialog;
@@ -1489,4 +1562,94 @@ welcome_scrollable_resize (gpointer data)
     }
 
   return G_SOURCE_REMOVE;
+}
+
+static void
+welcome_dialog_new_image_accelerator (GtkAccelGroup  *accel_group,
+                                      GObject        *accelerator_widget,
+                                      guint           keyval,
+                                      GdkModifierType mods,
+                                      gpointer        user_data)
+{
+  GtkWidget *dialog = GTK_WIDGET (user_data);
+
+  welcome_dialog_new_image_dialog (NULL, dialog);
+}
+
+static void
+welcome_dialog_open_image_dialog_accelerator (GtkAccelGroup  *accel_group,
+                                              GObject        *accelerator_widget,
+                                              guint           keyval,
+                                              GdkModifierType mods,
+                                              gpointer        user_data)
+{
+  GtkWidget *dialog = GTK_WIDGET (user_data);
+
+  welcome_dialog_open_image_dialog (NULL, dialog);
+}
+
+static void
+welcome_dialog_open_image_accelerator (GtkAccelGroup  *accel_group,
+                                       GObject        *accelerator_widget,
+                                       guint           keyval,
+                                       GdkModifierType mods,
+                                       gpointer        user_data)
+{
+  Gimp          *gimp   = NULL;
+  guint          index;
+  GtkWidget     *parent;
+  gboolean       opened = FALSE;
+  GimpImagefile *imagefile;
+
+  if (! welcome_dialog)
+    return;
+
+  gimp = g_object_get_data (G_OBJECT (welcome_dialog), "gimp");
+
+  parent = gtk_widget_get_parent (welcome_dialog);
+
+  index = GPOINTER_TO_UINT (user_data);
+
+  imagefile = (GimpImagefile *) gimp_container_get_child_by_index (gimp->documents, index);
+
+  if (imagefile)
+    {
+      GimpPDBStatusType status;
+      GError           *error  = NULL;
+      GFile            *file;
+      GimpImage        *image;
+
+      g_object_ref (imagefile);
+
+      file = gimp_imagefile_get_file (imagefile);
+
+      image = file_open_with_display (gimp, gimp_get_user_context (gimp),
+                                      NULL, file, FALSE, NULL, &status,
+                                      &error);
+
+      if (! image && status != GIMP_PDB_CANCEL)
+        {
+          gimp_message (gimp, G_OBJECT (parent), GIMP_MESSAGE_ERROR,
+                        _("Opening '%s' failed:\n\n%s"),
+                        gimp_file_get_utf8_name (file), error->message);
+          g_clear_error (&error);
+        }
+      else
+        {
+          opened = TRUE;
+        }
+      g_object_unref (imagefile);
+    }
+
+  if (opened)
+    {
+      gtk_widget_set_visible (welcome_dialog, FALSE);
+      gtk_window_present (GTK_WINDOW(parent));
+
+      g_signal_connect (parent, "destroy",
+                        G_CALLBACK(welcome_dialog_open_dialog_close),
+                        welcome_dialog);
+    }
+  else
+      gtk_widget_set_sensitive (welcome_dialog, TRUE);
 }
