@@ -2040,11 +2040,12 @@ filter_new (GimpTransformGridTool *tg_tool,
 
       gimp_gegl_node_set_underlying_operation (node, filter->transform_node);
 
-      filter->filter = gimp_drawable_filter_new (
-        drawable,
-        GIMP_TRANSFORM_TOOL_GET_CLASS (tg_tool)->undo_desc,
-        node,
-        gimp_tool_get_icon_name (GIMP_TOOL (tg_tool)));
+      filter->filter =
+        gimp_drawable_filter_new (drawable,
+                                  GIMP_TRANSFORM_TOOL_GET_CLASS (tg_tool)->undo_desc,
+                                  node,
+                                  gimp_tool_get_icon_name (GIMP_TOOL (tg_tool)));
+      g_object_set (filter->filter, "temporary", TRUE, NULL);
 
       gimp_drawable_filter_set_clip (filter->filter, FALSE);
       gimp_drawable_filter_set_override_constraints (filter->filter, TRUE);
