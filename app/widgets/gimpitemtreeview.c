@@ -3003,6 +3003,7 @@ gimp_item_tree_view_filters_changed (GimpItem         *item,
   GList                 *filter_list    = NULL;
   gint                   n_filters      = 0;
   gboolean               fs_disabled    = FALSE;
+  gboolean               temporary_only = TRUE;
 
   iter = gimp_container_view_lookup (container_view,
                                      (GimpViewable *) item);
@@ -3016,11 +3017,25 @@ gimp_item_tree_view_filters_changed (GimpItem         *item,
            filter_list = g_list_previous (filter_list))
         {
           if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
-            n_filters++;
+            {
+              n_filters++;
+
+              if (temporary_only)
+                g_object_get (filter_list->data,
+                              "temporary", &temporary_only,
+                              NULL);
+            }
           else
-            fs_disabled = TRUE;
+            {
+              fs_disabled = TRUE;
+            }
         }
     }
+
+  /* Don't show icon if we only have a temporary filter
+   * like a tool-based filter */
+  if (temporary_only)
+    n_filters = 0;
 
   if (n_filters == 0 || fs_disabled)
     view->priv->effects_filter = NULL;
