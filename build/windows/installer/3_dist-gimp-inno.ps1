@@ -26,8 +26,12 @@ if (-not $GITLAB_CI)
   }
 
 
-# This script needs a bit of MSYS2 to work
-Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'MSYS_ROOT\)' -Context 0,13) -replace '> ','')
+# This script needs a bit of Python to work
+#FIXME: Restore the condition when TWAIN 32-bit support is dropped
+#if (-not (Get-Command "python" -ErrorAction SilentlyContinue) -or "$(Get-Command "python" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source)" -like '*WindowsApps*')
+#  {
+    Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'MSYS_ROOT\)' -Context 0,13) -replace '> ','')
+#  }
 
 
 # 1. GET INNO
@@ -163,25 +167,8 @@ function fix_msg ([array]$langsArray, [string]$AppVer)
         {
           Copy-Item "$langfilePath" "$Env:Tmp\$(Split-Path $langfile -Leaf).bak" -Force
 
-          #Prefer MSYS2 since PowerShell (even 7.1+) doesn't handle well files with mixed encodings
-          $langfilePathUnix = "$langfilePath" -replace '\\','/' -replace '//','/'
-          bash build/windows/installer/lang/fix_msg.sh "$langfilePathUnix" $AppVer
-
-          #Write-Output "(INFO): temporarily patching $langfilePath with $AppVer"
-          #$Encoding = 'utf8NoBOM'
-          #$bytes = $(Get-Content $langfilePath -AsByteStream)[0..1]
-          #if ("$bytes" -eq "239 187")
-          #  {
-          #    $Encoding = 'utf8BOM'
-          #  }
-          #$msg = Get-Content $langfilePath -Encoding $Encoding
-          #$linenumber = $msg | Select-String 'SetupWindowTitle' | Select-Object -ExpandProperty LineNumber
-          #$msg | ForEach-Object { If ($_.ReadCount -eq $linenumber) {$_ -Replace "%1", "%1 $AppVer"} Else {$_} } |
-          #       Set-Content "$langfilePath" -Encoding $Encoding
-          #$msg = Get-Content $langfilePath -Encoding $Encoding
-          #$linenumber = $msg | Select-String 'UninstallAppFullTitle' | Select-Object -ExpandProperty LineNumber
-          #$msg | ForEach-Object { If ($_.ReadCount -eq $linenumber) {$_ -Replace "%1", "%1 $AppVer"} Else {$_} } |
-          #       Set-Content "$langfilePath" -Encoding $Encoding
+          #Prefer Python since PowerShell/.NET doesn't handle well files with different encodings
+          python build\windows\installer\lang\fix_msg.py "$langfilePath" $AppVer
         }
 
       else #($AppVer -eq 'revert')
@@ -202,7 +189,7 @@ Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):i
 Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):installer_files[collapsed=true]$([char]13)$([char]27)[0KGenerating 32-bit TWAIN dependencies list"
 $twain_list_file = 'build\windows\installer\base_twain32on64.list'
 Copy-Item $twain_list_file "$twain_list_file.bak"
-$twain_list = (python3 build/windows/2_bundle-gimp-uni_dep.py --debug debug-only $(Resolve-Path $GIMP32/lib/gimp/*/plug-ins/twain/twain.exe) $MSYS_ROOT/mingw32/ $GIMP32/ 32 |
+$twain_list = (python build\windows\2_bundle-gimp-uni_dep.py --debug debug-only $(Resolve-Path $GIMP32/lib/gimp/*/plug-ins/twain/twain.exe) $MSYS_ROOT/mingw32/ $GIMP32/ 32 |
               Select-String 'Installed' -CaseSensitive -Context 0,1000) -replace "  `t- ",'bin\'
 (Get-Content $twain_list_file) | Foreach-Object {$_ -replace "@DEPS_GENLIST@","$twain_list"} | Set-Content $twain_list_file
 (Get-Content $twain_list_file) | Select-string 'Installed' -notmatch | Set-Content $twain_list_file
