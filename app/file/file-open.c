@@ -749,6 +749,11 @@ static void
 file_open_sanitize_image (GimpImage *image,
                           gboolean   as_new)
 {
+  /* This should never occur, but apparently it does sometimes #13702
+   * Avoids infinite loop in the while statement below.
+   */
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
   if (as_new)
     gimp_image_set_file (image, NULL);
 
