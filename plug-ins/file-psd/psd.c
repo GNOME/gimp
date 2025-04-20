@@ -315,7 +315,14 @@ psd_create_procedure (GimpPlugIn  *plug_in,
                                            "If the metadata contains image or "
                                            "layer PSD resources.",
                                            FALSE,
-                                           G_PARAM_READWRITE);
+                                           GIMP_PARAM_READWRITE);
+      gimp_procedure_add_file_argument (procedure, "layer-file",
+                                        "Layer file",
+                                        "File containing layer metadata "
+                                        "(if supported)",
+                                        GIMP_FILE_CHOOSER_ACTION_OPEN,
+                                        FALSE, NULL,
+                                        G_PARAM_READWRITE);
       gimp_procedure_add_boolean_argument (procedure, "cmyk",
                                            "CMYK",
                                            "If the layer metadata needs to be "
@@ -493,9 +500,10 @@ psd_load_metadata (GimpProcedure         *procedure,
   GimpImage      *image;
   gint            data_length;
   PSDSupport      unsupported_features;
-  gboolean        is_layer = FALSE;
-  gboolean        is_cmyk  = FALSE;
-  GError         *error    = NULL;
+  GFile          *layer_file = NULL;
+  gboolean        is_layer   = FALSE;
+  gboolean        is_cmyk    = FALSE;
+  GError         *error      = NULL;
 
   gegl_init (NULL, NULL);
 
@@ -504,11 +512,12 @@ psd_load_metadata (GimpProcedure         *procedure,
                 "image",         &image,
                 "size",          &data_length,
                 "metadata-type", &is_layer,
+                "layer-file",    &layer_file,
                 "cmyk",          &is_cmyk,
                 NULL);
 
-  image = load_image_metadata (file, data_length, image, is_layer, is_cmyk,
-                               &unsupported_features, &error);
+  image = load_image_metadata (file, layer_file, data_length, image, is_layer,
+                               is_cmyk, &unsupported_features, &error);
 
   /* Check for unsupported layers */
 

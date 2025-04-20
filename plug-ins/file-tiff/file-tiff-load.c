@@ -1769,13 +1769,16 @@ load_image (GimpProcedure        *procedure,
       gimp_image_undo_enable (*image);
     }
 
-  /* Load Photoshop layer metadata */
+  /* Load Photoshop image and layer metadata */
   if (TIFFGetField (tif, TIFFTAG_PHOTOSHOP, &photoshop_len, &photoshop_data))
     {
-      FILE           *fp;
-      GFile          *temp_file   = NULL;
       GimpProcedure  *procedure;
-      GimpValueArray *return_vals = NULL;
+      FILE           *fp;
+      guchar         *ps_layer_data;
+      gint            ps_layer_len;
+      GFile          *temp_file       = NULL;
+      GFile          *layer_temp_file = NULL;
+      GimpValueArray *return_vals     = NULL;
 
       temp_file = gimp_temp_file ("tmp");
       fp = g_fopen (g_file_peek_path (temp_file), "wb");
@@ -1791,66 +1794,49 @@ load_image (GimpProcedure        *procedure,
       fwrite (photoshop_data, sizeof (guchar), photoshop_len, fp);
       fclose (fp);
 
-      procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (),
-                                               "file-psd-load-metadata");
-      return_vals = gimp_procedure_run (procedure,
-                                        "run-mode",      GIMP_RUN_NONINTERACTIVE,
-                                        "file",          temp_file,
-                                        "size",          photoshop_len,
-                                        "image",         *image,
-                                        "metadata-type", FALSE,
-                                        NULL);
-
-      g_file_delete (temp_file, NULL, NULL);
-      g_object_unref (temp_file);
-      gimp_value_array_unref (return_vals);
-
-      *ps_metadata_loaded = TRUE;
-    }
-
-  if (TIFFGetField (tif, TIFFTAG_IMAGESOURCEDATA, &photoshop_len, &photoshop_data))
-    {
-      FILE           *fp;
-      GFile          *temp_file   = NULL;
-      GimpProcedure  *procedure;
-      GimpValueArray *return_vals = NULL;
-
-      /* Photoshop metadata starts with 'Adobe Photoshop Document Data Block'
-       * so we need to skip past that for the data. */
-      photoshop_data += 36;
-      photoshop_len  -= 36;
-
-      temp_file = gimp_temp_file ("tmp");
-      fp = g_fopen (g_file_peek_path (temp_file), "wb");
-
-      if (! fp)
+      /* Check if we also have layer metadata */
+      if (TIFFGetField (tif, TIFFTAG_IMAGESOURCEDATA, &ps_layer_len,
+                        &ps_layer_data))
         {
-          g_message (_("Error trying to open temporary %s file '%s' "
-                       "for tiff metadata loading: %s"),
-                     "tmp", gimp_file_get_utf8_name (temp_file),
-                     g_strerror (errno));
+          /* Photoshop metadata starts with 'Adobe Photoshop Document Data
+           * Block' so we need to skip past that for the data. */
+          ps_layer_data += 36;
+          ps_layer_len  -= 36;
+
+          layer_temp_file = gimp_temp_file ("tmp");
+          fp = g_fopen (g_file_peek_path (layer_temp_file), "wb");
+
+          if (! fp)
+            {
+              g_message (_("Error trying to open temporary %s file '%s' "
+                           "for tiff metadata loading: %s"),
+                         "tmp", gimp_file_get_utf8_name (layer_temp_file),
+                         g_strerror (errno));
+            }
+
+          fwrite (ps_layer_data, sizeof (guchar), ps_layer_len, fp);
+          fclose (fp);
         }
 
-      fwrite (photoshop_data, sizeof (guchar), photoshop_len, fp);
-      fclose (fp);
-
       procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (),
                                                "file-psd-load-metadata");
-      /* We would like to use run_mode below. That way we could show a dialog
-       * when unsupported Photoshop data is detected in interactive mode.
-       * However, in interactive mode saved config values take precedence over
-       * these values set below, so that won't work. */
       return_vals = gimp_procedure_run (procedure,
                                         "run-mode",      GIMP_RUN_NONINTERACTIVE,
                                         "file",          temp_file,
+                                        "layer-file",    layer_temp_file,
                                         "size",          photoshop_len,
                                         "image",         *image,
-                                        "metadata-type", TRUE,
+                                        "metadata-type", (layer_temp_file != NULL),
                                         "cmyk",          is_cmyk,
                                         NULL);
 
       g_file_delete (temp_file, NULL, NULL);
       g_object_unref (temp_file);
+      if (layer_temp_file)
+        {
+          g_file_delete (layer_temp_file, NULL, NULL);
+          g_object_unref (layer_temp_file);
+        }
       gimp_value_array_unref (return_vals);
 
       *ps_metadata_loaded = TRUE;

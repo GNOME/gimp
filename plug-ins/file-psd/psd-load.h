@@ -31,6 +31,7 @@ GimpImage * load_image  (GFile        *file,
 
 GimpImage * load_image_metadata
                         (GFile        *file,
+                         GFile        *layer_file,
                          gint          data_length,
                          GimpImage    *image,
                          gboolean      for_layers,

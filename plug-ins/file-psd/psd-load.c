@@ -326,6 +326,7 @@ load_image (GFile        *file,
 /* Loading metadata for external file formats */
 GimpImage *
 load_image_metadata (GFile        *file,
+                     GFile        *layer_file,
                      gint          data_length,
                      GimpImage    *image,
                      gboolean      for_layers,
@@ -367,7 +368,7 @@ load_image_metadata (GFile        *file,
   initialize_unsupported (unsupported_features);
   img_a.unsupported_features = unsupported_features;
 
-  if (! for_layers)
+  if (! for_layers || layer_file)
     {
       PSDimageres res_a;
 
@@ -389,11 +390,23 @@ load_image_metadata (GFile        *file,
             break;
         }
     }
-  else
+
+  if (for_layers)
     {
       PSDlayer  **lyr_a = NULL;
       gchar       sig[4];
       gchar       key[4];
+
+      if (input)
+        g_object_unref (input);
+
+      /* Convert layer metadata file to input stream */
+      input = G_INPUT_STREAM (g_file_read (layer_file, NULL, error));
+      if (! input)
+        {
+          g_object_unref (input);
+          return image;
+        }
 
       if (psd_read (input, &sig, 4, error) < 4)
         {
@@ -2750,7 +2763,8 @@ add_layers (GimpImage     *image,
   g_array_free (parent_group_stack, FALSE);
 
   /* Set the selected layers */
-  gimp_image_take_selected_layers (image, selected_layers);
+  if (selected_layers)
+    gimp_image_take_selected_layers (image, selected_layers);
   g_list_free (img_a->layer_selection);
 
   return 0;
