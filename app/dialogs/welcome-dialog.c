@@ -198,7 +198,7 @@ welcome_dialog_new (Gimp       *gimp,
 
   gchar          *title;
 
-  GtkAccelGroup  *accel_group = gtk_accel_group_new ();
+  GtkAccelGroup  *accel_group;
   guint           accel_key;
   GdkModifierType accel_mods;
   gchar         **accels;
@@ -822,6 +822,7 @@ welcome_dialog_create_creation_page (Gimp       *gimp,
       GimpThumbnail *icon;
       const gchar   *name;
       gchar         *basename;
+      gchar          action_name[20];
 
       imagefile = (GimpImagefile *)
         gimp_container_get_child_by_index (gimp->documents, i);
@@ -847,6 +848,9 @@ welcome_dialog_create_creation_page (Gimp       *gimp,
       g_object_set_data_full (G_OBJECT (row),
                               "file", file,
                               NULL);
+
+      g_snprintf (action_name, sizeof (action_name), "file-open-recent-%02u", i + 1);
+      g_object_set_data_full (G_OBJECT (row), "action_name", g_strdup (action_name), NULL);
 
       grid = gtk_grid_new ();
       gtk_grid_set_column_spacing (GTK_GRID (grid), 12);
@@ -1204,12 +1208,13 @@ static void
 welcome_dialog_open_image_dialog (GtkWidget *button,
                                   GtkWidget *welcome_dialog)
 {
-  Gimp      *gimp = g_object_get_data (G_OBJECT (welcome_dialog), "gimp");
-  GtkWidget *dialog;
+  Gimp          *gimp    = g_object_get_data (G_OBJECT (welcome_dialog), "gimp");
+  GtkWidget     *dialog  = file_open_dialog_new (gimp);
+  GimpUIManager *manager = menus_get_image_manager_singleton (gimp);
 
-  dialog = file_open_dialog_new (gimp);
-
-  if (dialog)
+  if (gimp_ui_manager_activate_action (manager, "file", "file-open") &&
+      (dialog = gimp_dialog_factory_find_widget (gimp_dialog_factory_get_singleton (),
+                                                 "gimp-file-open-dialog")))
     {
       gtk_widget_set_visible (welcome_dialog, FALSE);
 
@@ -1281,18 +1286,17 @@ static void
 welcome_open_images_callback (GtkWidget  *button,
                               GtkListBox *listbox)
 {
-  GList     *rows   = NULL;
-  Gimp      *gimp   = NULL;
-  GError    *error  = NULL;
-  gboolean   opened = FALSE;
-  GtkWidget *parent;
+  GList         *rows   = NULL;
+  Gimp          *gimp   = NULL;
+  gboolean       opened = FALSE;
+  gchar         *action_name;
+  GimpUIManager *manager;
 
   if (! welcome_dialog)
     return;
 
   gimp = g_object_get_data (G_OBJECT (welcome_dialog), "gimp");
-
-  parent = gtk_widget_get_parent (welcome_dialog);
+  manager = menus_get_image_manager_singleton (gimp);
 
   rows = gtk_list_box_get_selected_rows (listbox);
   if (rows)
@@ -1301,30 +1305,10 @@ welcome_open_images_callback (GtkWidget  *button,
 
       for (GList *iter = rows; iter; iter = iter->next)
         {
-          GFile             *file  = NULL;
-          GimpImage         *image = NULL;
-          const gchar       *name;
-          GimpPDBStatusType  status;
+          action_name = (gchar *) g_object_get_data (G_OBJECT (iter->data), "action_name");
 
-          file = g_object_get_data (G_OBJECT (iter->data), "file");
-          name = gimp_file_get_utf8_name (file);
-
-          if (file && g_file_test (name, G_FILE_TEST_IS_REGULAR))
-            image = file_open_with_display (gimp, gimp_get_user_context (gimp),
-                                            NULL, file, FALSE, NULL, &status,
-                                            &error);
-
-          if (! image && status != GIMP_PDB_CANCEL)
-            {
-              gimp_message (gimp, G_OBJECT (parent), GIMP_MESSAGE_ERROR,
-                            _("Opening '%s' failed:\n\n%s"),
-                            gimp_file_get_utf8_name (file), error->message);
-              g_clear_error (&error);
-            }
-          else
-            {
-              opened = TRUE;
-            }
+          if (gimp_ui_manager_activate_action (manager, "file", action_name))
+            opened = TRUE;
         }
 
       g_list_free (rows);
@@ -1595,61 +1579,13 @@ welcome_dialog_open_image_accelerator (GtkAccelGroup  *accel_group,
                                        GdkModifierType mods,
                                        gpointer        user_data)
 {
-  Gimp          *gimp   = NULL;
-  guint          index;
-  GtkWidget     *parent;
-  gboolean       opened = FALSE;
-  GimpImagefile *imagefile;
+  Gimp          *gimp    = g_object_get_data (G_OBJECT (welcome_dialog), "gimp");
+  GimpUIManager *manager = menus_get_image_manager_singleton (gimp);
+  guint          index   = GPOINTER_TO_UINT (user_data);
+  gchar          action_name[20];
 
-  if (! welcome_dialog)
-    return;
+  g_snprintf (action_name, sizeof (action_name), "file-open-recent-%02u", index + 1);
 
-  gimp = g_object_get_data (G_OBJECT (welcome_dialog), "gimp");
-
-  parent = gtk_widget_get_parent (welcome_dialog);
-
-  index = GPOINTER_TO_UINT (user_data);
-
-  imagefile = (GimpImagefile *) gimp_container_get_child_by_index (gimp->documents, index);
-
-  if (imagefile)
-    {
-      GimpPDBStatusType status;
-      GError           *error  = NULL;
-      GFile            *file;
-      GimpImage        *image;
-
-      g_object_ref (imagefile);
-
-      file = gimp_imagefile_get_file (imagefile);
-
-      image = file_open_with_display (gimp, gimp_get_user_context (gimp),
-                                      NULL, file, FALSE, NULL, &status,
-                                      &error);
-
-      if (! image && status != GIMP_PDB_CANCEL)
-        {
-          gimp_message (gimp, G_OBJECT (parent), GIMP_MESSAGE_ERROR,
-                        _("Opening '%s' failed:\n\n%s"),
-                        gimp_file_get_utf8_name (file), error->message);
-          g_clear_error (&error);
-        }
-      else
-        {
-          opened = TRUE;
-        }
-      g_object_unref (imagefile);
-    }
-
-  if (opened)
-    {
-      gtk_widget_set_visible (welcome_dialog, FALSE);
-      gtk_window_present (GTK_WINDOW(parent));
-
-      g_signal_connect (parent, "destroy",
-                        G_CALLBACK(welcome_dialog_open_dialog_close),
-                        welcome_dialog);
-    }
-  else
-      gtk_widget_set_sensitive (welcome_dialog, TRUE);
+  if (gimp_ui_manager_activate_action (manager, "file", action_name))
+    gtk_widget_destroy (welcome_dialog);
 }
