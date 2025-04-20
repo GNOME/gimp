@@ -1039,6 +1039,7 @@ gimp_metadata_serialize (GimpMetadata *metadata)
     {
       for (i = 0; exif_data[i] != NULL; i++)
         {
+          g_message ("Serialize: get exif tag '%s'", exif_data[i]);
           value = gexiv2_metadata_try_get_tag_string (GEXIV2_METADATA (metadata),
                                                       exif_data[i], &error);
           if (value)
@@ -1072,6 +1073,7 @@ gimp_metadata_serialize (GimpMetadata *metadata)
           /* XmpText is always a single value, but structures like
            * XmpBag and XmpSeq can have multiple values that need to be
            * treated separately or else saving will do things wrong. */
+          g_message ("Serialize: get xmp tag '%s'", xmp_data[i]);
           if (! g_strcmp0 (gexiv2_metadata_try_get_tag_type (xmp_data[i], NULL), "XmpText"))
             {
               value = gexiv2_metadata_try_get_tag_string (GEXIV2_METADATA (metadata),
@@ -1157,6 +1159,7 @@ gimp_metadata_serialize (GimpMetadata *metadata)
             }
           last_tag = *iptc_tags;
 
+          g_message ("Serialize: get iptc tag '%s'", *iptc_tags);
           values = gexiv2_metadata_try_get_tag_multiple (GEXIV2_METADATA (metadata),
                                                          *iptc_tags, &error);
 
@@ -1184,6 +1187,7 @@ gimp_metadata_serialize (GimpMetadata *metadata)
     }
 
   g_string_append (string, "</metadata>\n");
+  g_message ("Serialize finished");
 
   return g_string_free (string, FALSE);
 }
