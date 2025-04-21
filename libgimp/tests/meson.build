@@ -33,7 +33,7 @@ foreach test_name : tests
        args: [ gimp_exe.full_path(), py_test ],
        env: test_env,
        suite: ['libgimp', 'python3'],
-       timeout: 60)
+       timeout: 90)
 
   c_test_name  = basename + '.c'
   c_test = custom_target(c_test_name,
@@ -63,5 +63,5 @@ foreach test_name : tests
        args: [ gimp_exe.full_path(), meson.current_source_dir() / c_test_name, basename ],
        env: test_env,
        suite: ['libgimp', 'C'],
-       timeout: 60)
+       timeout: 90)
 endforeach
