@@ -9,26 +9,61 @@ This is the development branch of GIMP.
 Overview of Changes from GIMP 3.0.2 to GIMP 3.0.4
 =================================================
 
+Core:
+
+  - Make maximum radius for generated brushes consistent across
+    codebase.
+
 Graphical User Interface:
 
   - Highlight selected device in GimpDeviceStatus.
+  - Various theme leak fixes.
+  - UX improvement: GimpViewableDialog (e.g. Fill/Stroke path and more)
+    now has "OK" as default response.
+  - Icon size settings now also applying to Move and Transform icon
+    boxes.
+  - Commit hash is now shown in About dialog in all non-release builds
+    (i.e. even in stable series, when we are in-between releases).
+  - Hide Force slider for Pencil Tool (rather than just making it
+    insensitive).
+  - Define merged titlebar icon colors.
+  - Keep menubar color consistent when out of focus.
+  - We don't show Fx icon for tool-based filters.
+  - Updated splash without micro version in it.
 
 Plug-ins:
 
   - Restore GUI to Difference Clouds script. This had been lost since
     GIMP 2.8!
+  - Fixes in various file format support, such as: DDS, SVG…
 
 Build:
 
-  - Make Windows installer aware of Install, Reinstall and Update modes.
-  - Add Repair mode to Windows installer: in particular we can now fix
-    installations when the previous install directory cannot be
-    accessed anymore.
-  - The feature to delete the config folder on Windows uninstall will
-    now make a backup on the Desktop first (allowing people to delete it
-    themselves, move it, or even restore it later if needed).
+  - Windows Installer:
+    * Make the installer aware of Install, Reinstall and Update modes.
+    * Add Repair mode to Windows installer: in particular we can now fix
+      installations when the previous install directory cannot be
+      accessed anymore.
+    * The feature to delete the config folder on Windows uninstall will
+      now make a backup on the Desktop first (allowing people to delete
+      it themselves, move it, or even restore it later if needed).
+    * Uninstalling while GIMP is running is made impossible (among other
+      issues, it was causing partial uninstallation).
+    * Downgrading is only possible by uninstalling first.
+    * Development warning is shown in dev build of stable series too.
+    * Add fractional scaling support to Installer welcome image.
   - Our AppImage won't ship debug symbols anymore. Better debugging can
     be set with: export DEBUGINFOD_URLS="https://debuginfod.debian.net"
+  - Windows builds:
+    * Ship babl/GEGL and libgimp headers, static libs and pkg-config
+      files for plug-in developers.
+    * Dedicated file icon for XCF files.
+    * Generate native .pdb CodeView symbols on Windows (smaller debug
+      data files, usable by MSIX and better debugging ability).
+  - Crossbuilds are dropped from CI.
+  - Shell scripts used in the meson build are ported to Python (more
+    portable and much faster on some platforms, in particular Windows).
+  - Some build scripts were moved around for reorganization.
 
 
 Overview of Changes from GIMP 3.0.0 to GIMP 3.0.2
