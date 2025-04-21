@@ -16,4 +16,4 @@ cmd = (
   f"result = proc.run(None); "
   f"print('SUCCESS') if result.index(0) == Gimp.PDBStatusType.SUCCESS else gimp_c_assert('{TEST_FILE}', result.index(1), False);"
 )
-subprocess.run(['python3', GIMP_EXE, "-nis", "--batch-interpreter", "python-fu-eval", "-b", cmd, "--quit"], check=True)
+subprocess.run([sys.executable, GIMP_EXE, "-nis", "--batch-interpreter", "python-fu-eval", "-b", cmd, "--quit"], check=True)
