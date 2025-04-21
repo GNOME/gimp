@@ -44,11 +44,6 @@ app_tests = [
   'xcf',
 ]
 
-cmd = run_command('create_test_env.sh', check: false)
-if cmd.returncode() != 0
- error(cmd.stderr().strip())
-endif
-
 # Prevent parallel builds for the tests
 # The tests must not be run in parallel or in a different order as specified
 
