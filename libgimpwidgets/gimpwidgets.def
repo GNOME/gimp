@@ -413,6 +413,7 @@ EXPORTS
 	gimp_prop_string_combo_box_new
 	gimp_prop_switch_new
 	gimp_prop_text_buffer_new
+	gimp_prop_toggle_new
 	gimp_prop_unit_combo_box_new
 	gimp_prop_widget_set_factor
 	gimp_query_boolean_box
