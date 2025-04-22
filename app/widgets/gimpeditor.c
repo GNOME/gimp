@@ -72,6 +72,7 @@ struct _GimpEditorPrivate
   gpointer         popup_data;
 
   gboolean         show_button_bar;
+  GtkWidget       *top_box;
   GtkWidget       *name_label;
   GtkWidget       *button_box;
 };
@@ -216,6 +217,10 @@ gimp_editor_init (GimpEditor *editor)
   editor->priv->popup_data      = editor;
   editor->priv->show_button_bar = TRUE;
 
+  editor->priv->top_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
+  gtk_widget_set_visible (editor->priv->top_box, TRUE);
+  gtk_box_pack_start (GTK_BOX (editor), editor->priv->top_box, FALSE, FALSE, 0);
+
   editor->priv->name_label = g_object_new (GTK_TYPE_LABEL,
                                            "xalign",    0.0,
                                            "yalign",    0.5,
@@ -224,8 +229,10 @@ gimp_editor_init (GimpEditor *editor)
   gimp_label_set_attributes (GTK_LABEL (editor->priv->name_label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
-  gtk_box_pack_start (GTK_BOX (editor), editor->priv->name_label,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (editor->priv->top_box),
+                      editor->priv->name_label,
+                      TRUE, TRUE, 1);
+  gtk_label_set_xalign (GTK_LABEL (editor->priv->name_label), 0.0);
 }
 
 static void
@@ -234,6 +241,8 @@ gimp_editor_constructed (GObject *object)
   GimpEditor *editor = GIMP_EDITOR (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  gimp_editor_set_box_style (editor, GTK_BOX (editor->priv->top_box));
 
   if (! editor->priv->popup_data)
     editor->priv->popup_data = editor;
@@ -617,6 +626,11 @@ gimp_editor_add_icon_box (GimpEditor  *editor,
   return first_button;
 }
 
+GtkWidget *
+gimp_editor_get_top_box (GimpEditor *editor)
+{
+  return editor->priv->top_box;
+}
 
 typedef struct
 {

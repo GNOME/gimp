@@ -558,6 +558,9 @@ _("The name of the icon theme to use.")
 #define OVERRIDE_THEME_ICON_SIZE_BLURB \
 _("Override theme-set icon sizes.")
 
+#define VIEWABLES_FOLLOW_THEME_BLURB \
+_("Use theme colors for preview")
+
 #define ICON_SIZE_BLURB \
 _("The size of the icons to use.")
 

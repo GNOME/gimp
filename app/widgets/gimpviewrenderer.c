@@ -801,26 +801,38 @@ static void
 gimp_view_renderer_real_render (GimpViewRenderer *renderer,
                                 GtkWidget        *widget)
 {
-  GdkPixbuf       *pixbuf;
-  GimpTempBuf     *temp_buf;
-  const gchar     *icon_name;
-  GeglColor       *color    = NULL;
-  GdkRGBA         *fg_color = NULL;
-  GtkStyleContext *style;
-  gint             scale_factor = gtk_widget_get_scale_factor (widget);
+  GdkPixbuf   *pixbuf;
+  GimpTempBuf *temp_buf;
+  const gchar *icon_name;
+  GeglColor   *color        = NULL;
+  gint         scale_factor = gtk_widget_get_scale_factor (widget);
 
-  style = gtk_widget_get_style_context (widget);
-  gtk_style_context_get (style, gtk_style_context_get_state (style),
-                         GTK_STYLE_PROPERTY_COLOR, &fg_color,
-                         NULL);
-  if (fg_color)
+  if (renderer->context)
     {
-      color = gegl_color_new (NULL);
-      gegl_color_set_rgba_with_space (color,
-                                      fg_color->red, fg_color->green, fg_color->blue, 1.0,
-                                      NULL);
+      gboolean follow_theme = FALSE;
+
+      g_object_get (renderer->context->gimp->config,
+                    "viewables-follow-theme", &follow_theme,
+                    NULL);
+      if (follow_theme)
+        {
+          GtkStyleContext *style;
+          GdkRGBA         *fg_color = NULL;
+
+          style = gtk_widget_get_style_context (widget);
+          gtk_style_context_get (style, gtk_style_context_get_state (style),
+                                 GTK_STYLE_PROPERTY_COLOR, &fg_color,
+                                 NULL);
+          if (fg_color)
+            {
+              color = gegl_color_new (NULL);
+              gegl_color_set_rgba_with_space (color,
+                                              fg_color->red, fg_color->green, fg_color->blue, 1.0,
+                                              NULL);
+            }
+          g_clear_pointer (&fg_color, gdk_rgba_free);
+        }
     }
-  g_clear_pointer (&fg_color, gdk_rgba_free);
 
   pixbuf = gimp_viewable_get_pixbuf (renderer->viewable,
                                      renderer->context,
