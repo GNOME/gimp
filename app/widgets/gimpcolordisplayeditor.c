@@ -41,10 +41,6 @@
 #include "gimp-intl.h"
 
 
-#define LIST_WIDTH  200
-#define LIST_HEIGHT 100
-
-
 enum
 {
   SRC_COLUMN_NAME,
@@ -63,17 +59,17 @@ enum
 };
 
 
-static void   gimp_color_display_editor_dispose        (GObject               *object);
+static void   gimp_color_display_editor_dispose        (GObject                *object);
 
-static void   gimp_color_display_editor_add_clicked    (GtkWidget             *widget,
+static void   gimp_color_display_editor_add_clicked    (GtkWidget              *widget,
                                                         GimpColorDisplayEditor *editor);
-static void   gimp_color_display_editor_remove_clicked (GtkWidget             *widget,
+static void   gimp_color_display_editor_remove_clicked (GtkWidget              *widget,
                                                         GimpColorDisplayEditor *editor);
-static void   gimp_color_display_editor_up_clicked     (GtkWidget             *widget,
+static void   gimp_color_display_editor_up_clicked     (GtkWidget              *widget,
                                                         GimpColorDisplayEditor *editor);
-static void   gimp_color_display_editor_down_clicked   (GtkWidget             *widget,
+static void   gimp_color_display_editor_down_clicked   (GtkWidget              *widget,
                                                         GimpColorDisplayEditor *editor);
-static void   gimp_color_display_editor_reset_clicked  (GtkWidget             *widget,
+static void   gimp_color_display_editor_reset_clicked  (GtkWidget              *widget,
                                                         GimpColorDisplayEditor *editor);
 
 static void   gimp_color_display_editor_src_changed    (GtkTreeSelection       *sel,
@@ -145,8 +141,8 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
                                        GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
-                                  GTK_POLICY_AUTOMATIC,
-                                  GTK_POLICY_AUTOMATIC);
+                                  GTK_POLICY_NEVER,
+                                  GTK_POLICY_NEVER);
   gtk_box_pack_start (GTK_BOX (hbox), scrolled_win, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_win);
 
@@ -159,7 +155,6 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (editor->src));
   g_object_unref (editor->src);
 
-  gtk_widget_set_size_request (tv, LIST_WIDTH, LIST_HEIGHT);
   gtk_tree_view_set_headers_clickable (GTK_TREE_VIEW (tv), FALSE);
 
   column = gtk_tree_view_column_new ();
@@ -249,7 +244,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
                                        GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
-                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_NEVER,
                                   GTK_POLICY_AUTOMATIC);
   gtk_box_pack_start (GTK_BOX (ed), scrolled_win, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_win);
@@ -262,7 +257,6 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (editor->dest));
   g_object_unref (editor->dest);
 
-  gtk_widget_set_size_request (tv, LIST_WIDTH, LIST_HEIGHT);
   gtk_tree_view_set_headers_clickable (GTK_TREE_VIEW (tv), FALSE);
 
   rend = gtk_cell_renderer_toggle_new ();
@@ -474,7 +468,7 @@ gimp_color_display_editor_add_clicked (GtkWidget              *widget,
 }
 
 static void
-gimp_color_display_editor_remove_clicked (GtkWidget             *widget,
+gimp_color_display_editor_remove_clicked (GtkWidget              *widget,
                                           GimpColorDisplayEditor *editor)
 {
   if (editor->selected)
@@ -482,7 +476,7 @@ gimp_color_display_editor_remove_clicked (GtkWidget             *widget,
 }
 
 static void
-gimp_color_display_editor_up_clicked (GtkWidget             *widget,
+gimp_color_display_editor_up_clicked (GtkWidget              *widget,
                                       GimpColorDisplayEditor *editor)
 {
   if (editor->selected)
@@ -490,7 +484,7 @@ gimp_color_display_editor_up_clicked (GtkWidget             *widget,
 }
 
 static void
-gimp_color_display_editor_down_clicked (GtkWidget             *widget,
+gimp_color_display_editor_down_clicked (GtkWidget              *widget,
                                         GimpColorDisplayEditor *editor)
 {
   if (editor->selected)
@@ -498,7 +492,7 @@ gimp_color_display_editor_down_clicked (GtkWidget             *widget,
 }
 
 static void
-gimp_color_display_editor_reset_clicked (GtkWidget             *widget,
+gimp_color_display_editor_reset_clicked (GtkWidget              *widget,
                                          GimpColorDisplayEditor *editor)
 {
   if (editor->selected)
