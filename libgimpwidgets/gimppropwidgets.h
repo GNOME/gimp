@@ -39,6 +39,11 @@ GtkWidget     * gimp_prop_switch_new              (GObject      *config,
                                                    const gchar  *label,
                                                    GtkWidget   **label_out,
                                                    GtkWidget   **switch_out);
+GtkWidget *     gimp_prop_toggle_new              (GObject      *config,
+                                                   const gchar  *property_name,
+                                                   const gchar  *icon_name,
+                                                   const gchar  *label,
+                                                   GtkWidget   **image_out);
 GtkWidget     * gimp_prop_boolean_combo_box_new   (GObject      *config,
                                                    const gchar  *property_name,
                                                    const gchar  *true_text,
