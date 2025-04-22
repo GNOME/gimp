@@ -70,6 +70,7 @@ struct _GimpGuiConfig
   gdouble              font_relative_size;
   gboolean             override_icon_size;
   GimpIconSize         custom_icon_size;
+  gboolean             viewables_follow_theme;
   gboolean             use_help;
   gboolean             show_help_button;
   gchar               *help_locales;
