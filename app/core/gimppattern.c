@@ -49,7 +49,8 @@ static gboolean      gimp_pattern_get_size          (GimpViewable         *viewa
 static GimpTempBuf * gimp_pattern_get_new_preview   (GimpViewable         *viewable,
                                                      GimpContext          *context,
                                                      gint                  width,
-                                                     gint                  height);
+                                                     gint                  height,
+                                                     GeglColor            *color);
 static gchar       * gimp_pattern_get_description   (GimpViewable         *viewable,
                                                      gchar               **tooltip);
 
@@ -141,7 +142,8 @@ static GimpTempBuf *
 gimp_pattern_get_new_preview (GimpViewable *viewable,
                               GimpContext  *context,
                               gint          width,
-                              gint          height)
+                              gint          height,
+                              GeglColor    *color G_GNUC_UNUSED)
 {
   GimpPattern *pattern     = GIMP_PATTERN (viewable);
   GimpTempBuf *temp_buf;

@@ -93,11 +93,13 @@ static gboolean           gimp_image_proxy_get_popup_size           (GimpViewabl
 static GimpTempBuf      * gimp_image_proxy_get_new_preview          (GimpViewable               *viewable,
                                                                      GimpContext                *context,
                                                                      gint                        width,
-                                                                     gint                        height);
+                                                                     gint                        height,
+                                                                     GeglColor                  *color);
 static GdkPixbuf        * gimp_image_proxy_get_new_pixbuf           (GimpViewable               *viewable,
                                                                      GimpContext                *context,
                                                                      gint                        width,
-                                                                     gint                        height);
+                                                                     gint                        height,
+                                                                     GeglColor                  *color);
 static gchar            * gimp_image_proxy_get_description          (GimpViewable               *viewable,
                                                                      gchar                     **tooltip);
 
@@ -373,7 +375,8 @@ static GimpTempBuf *
 gimp_image_proxy_get_new_preview (GimpViewable *viewable,
                                   GimpContext  *context,
                                   gint          width,
-                                  gint          height)
+                                  gint          height,
+                                  GeglColor    *color G_GNUC_UNUSED)
 {
   GimpImageProxy *image_proxy = GIMP_IMAGE_PROXY (viewable);
   GimpImage      *image       = image_proxy->priv->image;
@@ -414,7 +417,8 @@ static GdkPixbuf *
 gimp_image_proxy_get_new_pixbuf (GimpViewable *viewable,
                                  GimpContext  *context,
                                  gint          width,
-                                 gint          height)
+                                 gint          height,
+                                 GeglColor    *color G_GNUC_UNUSED)
 {
   GimpImageProxy     *image_proxy = GIMP_IMAGE_PROXY (viewable);
   GimpImage          *image       = image_proxy->priv->image;

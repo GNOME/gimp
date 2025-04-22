@@ -1171,7 +1171,8 @@ gimp_clipboard_send_image (GtkClipboard     *clipboard,
       pixbuf = gimp_viewable_get_pixbuf (GIMP_VIEWABLE (gimp_clip->image),
                                          gimp_get_user_context (gimp),
                                          gimp_image_get_width (gimp_clip->image),
-                                         gimp_image_get_height (gimp_clip->image));
+                                         gimp_image_get_height (gimp_clip->image),
+                                         NULL);
 
       if (pixbuf)
         {
@@ -1216,7 +1217,8 @@ gimp_clipboard_send_buffer (GtkClipboard     *clipboard,
   pixbuf = gimp_viewable_get_pixbuf (GIMP_VIEWABLE (gimp_clip->buffer),
                                      gimp_get_user_context (gimp),
                                      gimp_buffer_get_width (gimp_clip->buffer),
-                                     gimp_buffer_get_height (gimp_clip->buffer));
+                                     gimp_buffer_get_height (gimp_clip->buffer),
+                                     NULL);
 
   if (pixbuf)
     {
