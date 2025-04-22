@@ -466,6 +466,9 @@ gimp_tool_button_query_tooltip (GtkWidget  *widget,
 {
   GimpToolButton *tool_button = GIMP_TOOL_BUTTON (widget);
 
+  if (GIMP_IS_TOOL_GROUP (tool_button->priv->tool_item))
+    g_clear_object (&tool_button->priv->tooltip_widget);
+
   if (! tool_button->priv->tooltip_widget)
     {
       GimpToolInfo  *tool_info;
@@ -549,11 +552,14 @@ gimp_tool_button_query_tooltip (GtkWidget  *widget,
               for (i = 0; i < n_children; i++)
                 {
                   GimpToolInfo *other_tool_info;
+                  gboolean      visible;
 
                   other_tool_info = GIMP_TOOL_INFO (
                     gimp_container_get_child_by_index (children, i));
 
-                  if (other_tool_info != tool_info)
+                  visible =
+                    gimp_tool_item_get_visible (GIMP_TOOL_ITEM (other_tool_info));
+                  if (other_tool_info != tool_info && visible)
                     {
                       gimp_tool_button_query_tooltip_add_tool (
                         tool_button,
