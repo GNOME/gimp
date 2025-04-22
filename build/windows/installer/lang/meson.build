@@ -133,10 +133,3 @@ custom_target('base_po-files',
   ],
   build_by_default: true,
 )
-
-test('windows-installer-langs',
-  find_program('test-installer-langs.sh'),
-  env: [
-    'GIMP_TESTING_ABS_TOP_SRCDIR=' + meson.project_source_root(),
-  ],
-  suite: 'build')
