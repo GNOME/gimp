@@ -86,7 +86,8 @@ static gboolean      gimp_curve_get_popup_size    (GimpViewable     *viewable,
 static GimpTempBuf * gimp_curve_get_new_preview   (GimpViewable     *viewable,
                                                    GimpContext      *context,
                                                    gint              width,
-                                                   gint              height);
+                                                   gint              height,
+                                                   GeglColor        *color);
 static gchar       * gimp_curve_get_description   (GimpViewable     *viewable,
                                                    gchar           **tooltip);
 
@@ -521,7 +522,8 @@ static GimpTempBuf *
 gimp_curve_get_new_preview (GimpViewable *viewable,
                             GimpContext  *context,
                             gint          width,
-                            gint          height)
+                            gint          height,
+                            GeglColor    *color G_GNUC_UNUSED)
 {
   return NULL;
 }

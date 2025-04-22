@@ -121,7 +121,8 @@ GimpTempBuf *
 gimp_image_get_new_preview (GimpViewable *viewable,
                             GimpContext  *context,
                             gint          width,
-                            gint          height)
+                            gint          height,
+                            GeglColor    *color G_GNUC_UNUSED)
 {
   GimpImage   *image = GIMP_IMAGE (viewable);
   const Babl  *format;
@@ -150,7 +151,8 @@ GdkPixbuf *
 gimp_image_get_new_pixbuf (GimpViewable *viewable,
                            GimpContext  *context,
                            gint          width,
-                           gint          height)
+                           gint          height,
+                           GeglColor    *color G_GNUC_UNUSED)
 {
   GimpImage          *image = GIMP_IMAGE (viewable);
   GdkPixbuf          *pixbuf;

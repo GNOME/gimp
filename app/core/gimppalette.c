@@ -75,7 +75,8 @@ static gboolean      gimp_palette_get_popup_size      (GimpViewable         *vie
 static GimpTempBuf * gimp_palette_get_new_preview     (GimpViewable         *viewable,
                                                        GimpContext          *context,
                                                        gint                  width,
-                                                       gint                  height);
+                                                       gint                  height,
+                                                       GeglColor            *color);
 static gchar       * gimp_palette_get_description     (GimpViewable         *viewable,
                                                        gchar               **tooltip);
 static const gchar * gimp_palette_get_extension       (GimpData             *data);
@@ -239,7 +240,8 @@ static GimpTempBuf *
 gimp_palette_get_new_preview (GimpViewable *viewable,
                               GimpContext  *context,
                               gint          width,
-                              gint          height)
+                              gint          height,
+                              GeglColor    *color G_GNUC_UNUSED)
 {
   GimpPalette *palette  = GIMP_PALETTE (viewable);
   GimpTempBuf *temp_buf;

@@ -163,7 +163,7 @@ gimp_image_metadata_rotate_dialog (GimpImage         *image,
 
   gimp_pickable_flush (GIMP_PICKABLE (image));
   pixbuf = gimp_viewable_get_pixbuf (GIMP_VIEWABLE (image), context,
-                                     width, height);
+                                     width, height, NULL);
   if (pixbuf)
     {
       GdkPixbuf *rotated;
