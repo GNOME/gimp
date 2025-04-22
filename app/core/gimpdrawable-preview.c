@@ -112,7 +112,8 @@ GimpTempBuf *
 gimp_drawable_get_new_preview (GimpViewable *viewable,
                                GimpContext  *context,
                                gint          width,
-                               gint          height)
+                               gint          height,
+                               GeglColor    *color G_GNUC_UNUSED)
 {
   GimpItem  *item  = GIMP_ITEM (viewable);
   GimpImage *image = gimp_item_get_image (item);
@@ -132,7 +133,8 @@ GdkPixbuf *
 gimp_drawable_get_new_pixbuf (GimpViewable *viewable,
                               GimpContext  *context,
                               gint          width,
-                              gint          height)
+                              gint          height,
+                              GeglColor    *color G_GNUC_UNUSED)
 {
   GimpItem  *item  = GIMP_ITEM (viewable);
   GimpImage *image = gimp_item_get_image (item);

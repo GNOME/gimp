@@ -801,15 +801,32 @@ static void
 gimp_view_renderer_real_render (GimpViewRenderer *renderer,
                                 GtkWidget        *widget)
 {
-  GdkPixbuf   *pixbuf;
-  GimpTempBuf *temp_buf;
-  const gchar *icon_name;
-  gint         scale_factor = gtk_widget_get_scale_factor (widget);
+  GdkPixbuf       *pixbuf;
+  GimpTempBuf     *temp_buf;
+  const gchar     *icon_name;
+  GeglColor       *color    = NULL;
+  GdkRGBA         *fg_color = NULL;
+  GtkStyleContext *style;
+  gint             scale_factor = gtk_widget_get_scale_factor (widget);
+
+  style = gtk_widget_get_style_context (widget);
+  gtk_style_context_get (style, gtk_style_context_get_state (style),
+                         GTK_STYLE_PROPERTY_COLOR, &fg_color,
+                         NULL);
+  if (fg_color)
+    {
+      color = gegl_color_new (NULL);
+      gegl_color_set_rgba_with_space (color,
+                                      fg_color->red, fg_color->green, fg_color->blue, 1.0,
+                                      NULL);
+    }
+  g_clear_pointer (&fg_color, gdk_rgba_free);
 
   pixbuf = gimp_viewable_get_pixbuf (renderer->viewable,
                                      renderer->context,
                                      renderer->width  * scale_factor,
-                                     renderer->height * scale_factor);
+                                     renderer->height * scale_factor,
+                                     color);
   if (pixbuf)
     {
       gimp_view_renderer_render_pixbuf (renderer, widget, pixbuf);
@@ -819,7 +836,8 @@ gimp_view_renderer_real_render (GimpViewRenderer *renderer,
   temp_buf = gimp_viewable_get_preview (renderer->viewable,
                                         renderer->context,
                                         renderer->width,
-                                        renderer->height);
+                                        renderer->height,
+                                        color);
   if (temp_buf)
     {
       gimp_view_renderer_render_temp_buf_simple (renderer, widget, temp_buf);
@@ -828,6 +846,8 @@ gimp_view_renderer_real_render (GimpViewRenderer *renderer,
 
   icon_name = gimp_viewable_get_icon_name (renderer->viewable);
   gimp_view_renderer_render_icon (renderer, widget, icon_name);
+
+  g_clear_object (&color);
 }
 
 static void

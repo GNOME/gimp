@@ -100,7 +100,8 @@ static void    gimp_viewable_real_ancestry_changed   (GimpViewable  *viewable);
 static GdkPixbuf * gimp_viewable_real_get_new_pixbuf (GimpViewable  *viewable,
                                                       GimpContext   *context,
                                                       gint           width,
-                                                      gint           height);
+                                                      gint           height,
+                                                      GeglColor     *color);
 static void    gimp_viewable_real_get_preview_size   (GimpViewable  *viewable,
                                                       gint           size,
                                                       gboolean       popup,
@@ -402,13 +403,14 @@ static GdkPixbuf *
 gimp_viewable_real_get_new_pixbuf (GimpViewable *viewable,
                                    GimpContext  *context,
                                    gint          width,
-                                   gint          height)
+                                   gint          height,
+                                   GeglColor    *color)
 {
   GimpViewablePrivate *private = GET_PRIVATE (viewable);
   GdkPixbuf           *pixbuf  = NULL;
   GimpTempBuf         *temp_buf;
 
-  temp_buf = gimp_viewable_get_preview (viewable, context, width, height);
+  temp_buf = gimp_viewable_get_preview (viewable, context, width, height, color);
 
   if (temp_buf)
     {
@@ -827,6 +829,8 @@ gimp_viewable_get_popup_size (GimpViewable *viewable,
  * @context:  The context to render the preview for.
  * @width:    desired width for the preview
  * @height:   desired height for the preview
+ * @color:    desired foreground color for the preview when the type of
+ *            @viewable support recolorization.
  *
  * Gets a preview for a viewable object, by running through a variety
  * of methods until it finds one that works.  First, if an
@@ -838,6 +842,12 @@ gimp_viewable_get_popup_size (GimpViewable *viewable,
  * method, and executes it, caching the result.  If everything fails,
  * %NULL is returned.
  *
+ * When a drawable can be recolored (for instance a generated or mask
+ * brush), then @color will be used. Note that in many cases, viewables
+ * cannot be recolored (e.g. images, layers or color brushes).
+ * When setting @color to %NULL on a recolorable viewable, the used
+ * color may be anything.
+ *
  * Returns: (nullable): A #GimpTempBuf containing the preview image, or %NULL if
  *          none can be found or created.
  **/
@@ -845,7 +855,8 @@ GimpTempBuf *
 gimp_viewable_get_preview (GimpViewable *viewable,
                            GimpContext  *context,
                            gint          width,
-                           gint          height)
+                           gint          height,
+                           GeglColor    *color)
 {
   GimpViewablePrivate *private = GET_PRIVATE (viewable);
   GimpViewableClass   *viewable_class;
@@ -862,7 +873,7 @@ gimp_viewable_get_preview (GimpViewable *viewable,
   viewable_class = GIMP_VIEWABLE_GET_CLASS (viewable);
 
   if (viewable_class->get_preview)
-    temp_buf = viewable_class->get_preview (viewable, context, width, height);
+    temp_buf = viewable_class->get_preview (viewable, context, width, height, color);
 
   if (temp_buf)
     return temp_buf;
@@ -880,7 +891,7 @@ gimp_viewable_get_preview (GimpViewable *viewable,
 
   if (viewable_class->get_new_preview)
     temp_buf = viewable_class->get_new_preview (viewable, context,
-                                                width, height);
+                                                width, height, color);
 
   private->preview_temp_buf = temp_buf;
 
@@ -892,6 +903,8 @@ gimp_viewable_get_preview (GimpViewable *viewable,
  * @viewable: The viewable object to get a preview for.
  * @width:    desired width for the preview
  * @height:   desired height for the preview
+ * @color:    desired foreground color for the preview when the type of
+ *            @viewable support recolorization.
  *
  * Gets a new preview for a viewable object.  Similar to
  * gimp_viewable_get_preview(), except that it tries things in a
@@ -906,7 +919,8 @@ GimpTempBuf *
 gimp_viewable_get_new_preview (GimpViewable *viewable,
                                GimpContext  *context,
                                gint          width,
-                               gint          height)
+                               gint          height,
+                               GeglColor    *color)
 {
   GimpViewableClass *viewable_class;
   GimpTempBuf       *temp_buf = NULL;
@@ -923,14 +937,14 @@ gimp_viewable_get_new_preview (GimpViewable *viewable,
 
   if (viewable_class->get_new_preview)
     temp_buf = viewable_class->get_new_preview (viewable, context,
-                                                width, height);
+                                                width, height, color);
 
   if (temp_buf)
     return temp_buf;
 
   if (viewable_class->get_preview)
     temp_buf = viewable_class->get_preview (viewable, context,
-                                            width, height);
+                                            width, height, color);
 
   if (temp_buf)
     return gimp_temp_buf_copy (temp_buf);
@@ -982,6 +996,8 @@ gimp_viewable_get_dummy_preview (GimpViewable *viewable,
  * @context:  The context to render the preview for.
  * @width:    desired width for the preview
  * @height:   desired height for the preview
+ * @color:    desired foreground color for the preview when the type of
+ *            @viewable support recolorization.
  *
  * Gets a preview for a viewable object, by running through a variety
  * of methods until it finds one that works.  First, if an
@@ -1000,7 +1016,8 @@ GdkPixbuf *
 gimp_viewable_get_pixbuf (GimpViewable *viewable,
                           GimpContext  *context,
                           gint          width,
-                          gint          height)
+                          gint          height,
+                          GeglColor    *color)
 {
   GimpViewablePrivate *private = GET_PRIVATE (viewable);
   GimpViewableClass   *viewable_class;
@@ -1017,7 +1034,7 @@ gimp_viewable_get_pixbuf (GimpViewable *viewable,
   viewable_class = GIMP_VIEWABLE_GET_CLASS (viewable);
 
   if (viewable_class->get_pixbuf)
-    pixbuf = viewable_class->get_pixbuf (viewable, context, width, height);
+    pixbuf = viewable_class->get_pixbuf (viewable, context, width, height, color);
 
   if (pixbuf)
     return pixbuf;
@@ -1034,7 +1051,7 @@ gimp_viewable_get_pixbuf (GimpViewable *viewable,
     }
 
   if (viewable_class->get_new_pixbuf)
-    pixbuf = viewable_class->get_new_pixbuf (viewable, context, width, height);
+    pixbuf = viewable_class->get_new_pixbuf (viewable, context, width, height, color);
 
   private->preview_pixbuf = pixbuf;
 
@@ -1047,6 +1064,8 @@ gimp_viewable_get_pixbuf (GimpViewable *viewable,
  * @context:  The context to render the preview for.
  * @width:    desired width for the pixbuf
  * @height:   desired height for the pixbuf
+ * @color:    desired foreground color for the preview when the type of
+ *            @viewable support recolorization.
  *
  * Gets a new preview for a viewable object.  Similar to
  * gimp_viewable_get_pixbuf(), except that it tries things in a
@@ -1061,7 +1080,8 @@ GdkPixbuf *
 gimp_viewable_get_new_pixbuf (GimpViewable *viewable,
                               GimpContext  *context,
                               gint          width,
-                              gint          height)
+                              gint          height,
+                              GeglColor    *color)
 {
   GimpViewableClass *viewable_class;
   GdkPixbuf         *pixbuf = NULL;
@@ -1077,13 +1097,13 @@ gimp_viewable_get_new_pixbuf (GimpViewable *viewable,
   viewable_class = GIMP_VIEWABLE_GET_CLASS (viewable);
 
   if (viewable_class->get_new_pixbuf)
-    pixbuf = viewable_class->get_new_pixbuf (viewable, context, width, height);
+    pixbuf = viewable_class->get_new_pixbuf (viewable, context, width, height, color);
 
   if (pixbuf)
     return pixbuf;
 
   if (viewable_class->get_pixbuf)
-    pixbuf = viewable_class->get_pixbuf (viewable, context, width, height);
+    pixbuf = viewable_class->get_pixbuf (viewable, context, width, height, color);
 
   if (pixbuf)
     return gdk_pixbuf_copy (pixbuf);

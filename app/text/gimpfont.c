@@ -133,7 +133,8 @@ static gboolean      gimp_font_get_popup_size     (GimpViewable          *viewab
 static GimpTempBuf * gimp_font_get_new_preview    (GimpViewable          *viewable,
                                                    GimpContext           *context,
                                                    gint                   width,
-                                                   gint                   height);
+                                                   gint                   height,
+                                                   GeglColor             *color);
 
 static void          gimp_font_config_iface_init  (GimpConfigInterface  *iface);
 static gboolean      gimp_font_serialize          (GimpConfig           *config,
@@ -710,7 +711,8 @@ static GimpTempBuf *
 gimp_font_get_new_preview (GimpViewable *viewable,
                            GimpContext  *context,
                            gint          width,
-                           gint          height)
+                           gint          height,
+                           GeglColor    *color)
 {
   GimpFont        *font = GIMP_FONT (viewable);
   PangoContext    *pango_context;

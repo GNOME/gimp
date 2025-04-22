@@ -234,7 +234,7 @@ gimp_view_renderer_get_frame_pixbuf (GimpViewRenderer *renderer,
     {
       pixbuf = gimp_viewable_get_pixbuf (renderer->viewable,
                                          renderer->context,
-                                         w, h);
+                                         w, h, NULL);
       if (!pixbuf)
         return NULL;
 
@@ -251,7 +251,8 @@ gimp_view_renderer_get_frame_pixbuf (GimpViewRenderer *renderer,
     {
       pixbuf = gimp_viewable_get_pixbuf (renderer->viewable,
                                          renderer->context,
-                                         width - 2, height - 2);
+                                         width - 2, height - 2,
+                                         NULL);
       if (!pixbuf)
         return NULL;
 
