@@ -81,6 +81,8 @@ GtkWidget * gimp_editor_add_icon_box      (GimpEditor           *editor,
                                            GCallback             callback,
                                            gpointer              callback_data);
 
+GtkWidget * gimp_editor_get_top_box       (GimpEditor           *editor);
+
 GtkWidget * gimp_editor_add_action_button (GimpEditor           *editor,
                                            const gchar          *group_name,
                                            const gchar          *action_name,
