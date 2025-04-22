@@ -73,6 +73,7 @@ enum
   PROP_THEME_SCHEME,
   PROP_OVERRIDE_THEME_ICON_SIZE,
   PROP_CUSTOM_ICON_SIZE,
+  PROP_VIEWABLES_FOLLOW_THEME,
   PROP_ICON_THEME_PATH,
   PROP_ICON_THEME,
   PROP_PREFER_SYMBOLIC_ICONS,
@@ -329,6 +330,13 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                             GIMP_TYPE_ICON_SIZE,
                             GIMP_ICON_SIZE_MEDIUM,
                             GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_VIEWABLES_FOLLOW_THEME,
+                            "viewables-follow-theme",
+                            "Preview of viewables follow the theme style when relevant",
+                            VIEWABLES_FOLLOW_THEME_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
 
   path = gimp_config_build_data_path ("icons");
   GIMP_CONFIG_PROP_PATH (object_class, PROP_ICON_THEME_PATH,
@@ -692,7 +700,10 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_CUSTOM_ICON_SIZE:
       gui_config->custom_icon_size = g_value_get_enum (value);
       break;
-     case PROP_ICON_THEME_PATH:
+    case PROP_VIEWABLES_FOLLOW_THEME:
+      gui_config->viewables_follow_theme = g_value_get_boolean (value);
+      break;
+    case PROP_ICON_THEME_PATH:
       g_free (gui_config->icon_theme_path);
       gui_config->icon_theme_path = g_value_dup_string (value);
       break;
@@ -873,6 +884,9 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_CUSTOM_ICON_SIZE:
       g_value_set_enum (value, gui_config->custom_icon_size);
+      break;
+    case PROP_VIEWABLES_FOLLOW_THEME:
+      g_value_set_boolean (value, gui_config->viewables_follow_theme);
       break;
     case PROP_ICON_THEME_PATH:
       g_value_set_string (value, gui_config->icon_theme_path);

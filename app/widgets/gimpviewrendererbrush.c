@@ -25,8 +25,10 @@
 
 #include "widgets-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpbrushpipe.h"
 #include "core/gimpbrushgenerated.h"
+#include "core/gimpcontext.h"
 #include "core/gimptempbuf.h"
 
 #include "gimpviewrendererbrush.h"
@@ -90,8 +92,7 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
   GimpViewRendererBrush *renderbrush   = GIMP_VIEW_RENDERER_BRUSH (renderer);
   GimpTempBuf           *temp_buf;
   GeglColor             *color         = NULL;
-  GdkRGBA               *fg_color      = NULL;
-  GtkStyleContext       *style;
+  gboolean               follow_theme  = FALSE;
   GimpViewBG             view_bg_style = GIMP_VIEW_BG_WHITE;
   gint                   temp_buf_x    = 0;
   gint                   temp_buf_y    = 0;
@@ -104,19 +105,28 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
       renderbrush->pipe_timeout_id = 0;
     }
 
-  style = gtk_widget_get_style_context (widget);
-  gtk_style_context_get (style, gtk_style_context_get_state (style),
-                         GTK_STYLE_PROPERTY_COLOR,            &fg_color,
-                         NULL);
-  if (fg_color)
+  g_object_get (renderer->context->gimp->config,
+                "viewables-follow-theme", &follow_theme,
+                NULL);
+  if (follow_theme)
     {
-      color = gegl_color_new (NULL);
-      gegl_color_set_rgba_with_space (color,
-                                      fg_color->red, fg_color->green, fg_color->blue, 1.0,
-                                      NULL);
-      view_bg_style = GIMP_VIEW_BG_USE_STYLE;
+      GtkStyleContext *style;
+      GdkRGBA         *fg_color = NULL;
+
+      style = gtk_widget_get_style_context (widget);
+      gtk_style_context_get (style, gtk_style_context_get_state (style),
+                             GTK_STYLE_PROPERTY_COLOR, &fg_color,
+                             NULL);
+      if (fg_color)
+        {
+          color = gegl_color_new (NULL);
+          gegl_color_set_rgba_with_space (color,
+                                          fg_color->red, fg_color->green, fg_color->blue, 1.0,
+                                          NULL);
+          view_bg_style = GIMP_VIEW_BG_USE_STYLE;
+        }
+      g_clear_pointer (&fg_color, gdk_rgba_free);
     }
-  g_clear_pointer (&fg_color, gdk_rgba_free);
 
   temp_buf = gimp_viewable_get_new_preview (renderer->viewable, renderer->context,
                                             renderer->width, renderer->height, color);
@@ -171,8 +181,7 @@ gimp_view_renderer_brush_render_timeout (gpointer data)
   GimpBrush             *brush;
   GimpTempBuf           *temp_buf;
   GeglColor             *color         = NULL;
-  GdkRGBA               *fg_color      = NULL;
-  GtkStyleContext       *style;
+  gboolean               follow_theme  = FALSE;
   GimpViewBG             view_bg_style = GIMP_VIEW_BG_WHITE;
   gint                   temp_buf_x = 0;
   gint                   temp_buf_y = 0;
@@ -189,19 +198,31 @@ gimp_view_renderer_brush_render_timeout (gpointer data)
 
   brush_pipe = GIMP_BRUSH_PIPE (renderer->viewable);
 
-  style = gtk_widget_get_style_context (renderbrush->widget);
-  gtk_style_context_get (style, gtk_style_context_get_state (style),
-                         GTK_STYLE_PROPERTY_COLOR,            &fg_color,
-                         NULL);
-  if (fg_color)
+  g_object_get (renderer->context->gimp->config,
+                "viewables-follow-theme", &follow_theme,
+                NULL);
+  if (follow_theme)
     {
-      color = gegl_color_new (NULL);
-      gegl_color_set_rgba_with_space (color,
-                                      fg_color->red, fg_color->green, fg_color->blue, 1.0,
-                                      NULL);
-      view_bg_style = GIMP_VIEW_BG_USE_STYLE;
+      GtkStyleContext *style;
+      GdkRGBA         *bg_color = NULL;
+      GdkRGBA         *fg_color = NULL;
+
+      style = gtk_widget_get_style_context (renderbrush->widget);
+      gtk_style_context_get (style, gtk_style_context_get_state (style),
+                             GTK_STYLE_PROPERTY_COLOR,            &fg_color,
+                             GTK_STYLE_PROPERTY_BACKGROUND_COLOR, &bg_color,
+                             NULL);
+      if (fg_color)
+        {
+          color = gegl_color_new (NULL);
+          gegl_color_set_rgba_with_space (color,
+                                          fg_color->red, fg_color->green, fg_color->blue, 1.0,
+                                          NULL);
+          view_bg_style = GIMP_VIEW_BG_USE_STYLE;
+        }
+      g_clear_pointer (&fg_color, gdk_rgba_free);
+      g_clear_pointer (&bg_color, gdk_rgba_free);
     }
-  g_clear_pointer (&fg_color, gdk_rgba_free);
 
   renderbrush->pipe_animation_index++;
 
