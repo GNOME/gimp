@@ -400,6 +400,82 @@ gimp_prop_switch_new (GObject     *config,
   return hbox;
 }
 
+/**
+ * gimp_prop_toggle_new:
+ * @config:        Object to which property is attached.
+ * @property_name: Name of boolean property controlled by the toggle button.
+ * @label:         Label to give the toggle (including mnemonic).
+ * @icon_name:     Icon to display in the toggle.
+ * @image_out: (out) (optional) (transfer none): The generated #GtkImage
+ *                 if @icon_name was not %NULL.
+ *
+ * Creates a [class@Gtk.ToggleButton] that sets the specified boolean
+ * property.
+ *
+ * If @icon_name is %NULL, @label will be used. If @label is %NULL too,
+ * the @property_name's nick will be used as label.
+ *
+ * Returns: (transfer full): The newly #GtkToggleButton.
+ *
+ * Since: 3.2
+ */
+GtkWidget *
+gimp_prop_toggle_new (GObject      *config,
+                      const gchar  *property_name,
+                      const gchar  *icon_name,
+                      const gchar  *label,
+                      GtkWidget   **image_out)
+{
+  GParamSpec  *param_spec;
+  const gchar *tooltip;
+  GtkWidget   *button;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
+
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  if (icon_name == NULL && label == NULL)
+    label = g_param_spec_get_nick (param_spec);
+
+  tooltip = g_param_spec_get_blurb (param_spec);
+
+  if (label != NULL)
+    button = gtk_toggle_button_new_with_mnemonic (label);
+  else
+    button = gtk_toggle_button_new ();
+
+  g_object_bind_property (config, property_name, button, "active",
+                          G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
+  gimp_help_set_help_data (button, tooltip, NULL);
+  gtk_widget_show (button);
+
+  if (image_out)
+    *image_out = NULL;
+
+  if (label == NULL)
+    {
+      GtkWidget *image;
+
+      g_return_val_if_fail (icon_name != NULL, NULL);
+
+      image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_SMALL_TOOLBAR);
+      gtk_container_add (GTK_CONTAINER (button), image);
+      gtk_widget_show (image);
+
+      if (image_out)
+        *image_out = image;
+    }
+
+  gimp_widget_set_bound_property (button, config, property_name);
+
+  return button;
+}
+
+
 
 /*************************/
 /*  int/enum combo box   */
