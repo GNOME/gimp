@@ -24,6 +24,7 @@ root = tree.getroot()
 ## Create list of lang [Languages]
 if sys.argv[1] == 'msg':
   msg_list = []
+  faultingmsg_list = ''
   for po in po_inno_array:
     # Change po
     po = po.replace('\\', '').replace('//', '').replace('..', '').replace('po-windows-installer', '')
@@ -33,6 +34,8 @@ if sys.argv[1] == 'msg':
       if entry.get('dl_code') == po:
         inno_code = entry.get('inno_code').replace('\\\\', '\\')
         break
+    if inno_code is None:
+      faultingmsg_list = faultingmsg_list + f"{po} "
     # Create line
     if inno_code is not None:
       msg_line = f'Name: "{po}"; MessagesFile: "compiler:{inno_code},{{#ASSETS_DIR}}\\lang\\{po}.setup.isl"'
@@ -40,10 +43,15 @@ if sys.argv[1] == 'msg':
   output_file = os.path.join(MESON_BUILD_ROOT, 'build/windows/installer/base_po-msg.list')
   with open(output_file, 'w', encoding='utf-8') as f:
     f.write('\n'.join(msg_list))
+  if faultingmsg_list != '':
+      print("Error: languages listed in iso_639_custom.xml do not match the .po files in po-windows-installer/.")
+      print(f"- Faulting 'inno_code' on iso_639_custom.xml: {faultingmsg_list}")
+      sys.exit(1)
 
 ## Create list of lang [Components]
 elif sys.argv[1] == 'cmp':
   cmp_list = []
+  faultingcmp_list = ''
   for po in po_array:
     # Change po
     po = po.replace('\\', '').replace('//', '').replace('..', '').replace('po', '')
@@ -54,6 +62,8 @@ elif sys.argv[1] == 'cmp':
       if entry.get('dl_code') == po:
         desc = entry.get('name')
         break
+    if desc is None:
+      faultingcmp_list = faultingcmp_list + f"{po} "
     # Create line
     if desc is not None:
       cmp_line = f'Name: loc\\{po_clean}; Description: "{desc}"; Types: full custom'
@@ -61,6 +71,10 @@ elif sys.argv[1] == 'cmp':
   output_file = os.path.join(MESON_BUILD_ROOT, 'build/windows/installer/base_po-cmp.list')
   with open(output_file, 'w', encoding='utf-8') as f:
     f.write('\n'.join(cmp_list))
+  if faultingcmp_list != '':
+    print("Error: languages listed in iso_639_custom.xml do not match the .po files in po/.")
+    print(f"- Faulting 'dl_code' on iso_639_custom.xml: {faultingcmp_list}")
+    sys.exit(1)
 
 ## Create list of lang [Files]
 elif sys.argv[1] == 'files':
