@@ -26,8 +26,6 @@
 
 #include "core-types.h"
 
-#include "config/gimpguiconfig.h"
-
 #include "gimp.h"
 #include "gimpbezierdesc.h"
 #include "gimpbrush.h"
@@ -81,7 +79,8 @@ static gboolean      gimp_brush_get_size              (GimpViewable         *vie
 static GimpTempBuf * gimp_brush_get_new_preview       (GimpViewable         *viewable,
                                                        GimpContext          *context,
                                                        gint                  width,
-                                                       gint                  height);
+                                                       gint                  height,
+                                                       GeglColor            *color);
 static gchar       * gimp_brush_get_description       (GimpViewable         *viewable,
                                                        gchar               **tooltip);
 
@@ -274,7 +273,8 @@ static GimpTempBuf *
 gimp_brush_get_new_preview (GimpViewable *viewable,
                             GimpContext  *context,
                             gint          width,
-                            gint          height)
+                            gint          height,
+                            GeglColor    *color)
 {
   GimpBrush         *brush       = GIMP_BRUSH (viewable);
   const GimpTempBuf *mask_buf    = brush->priv->mask;
@@ -370,13 +370,10 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
     }
   else
     {
-      GimpGuiConfig *config;
-      guint8         rgb[3] = {0, 0, 0};
+      guint8 rgb[3] = {0, 0, 0};
 
-      config = GIMP_GUI_CONFIG (context->gimp->config);
-
-      if (config->theme_scheme == GIMP_THEME_DARK)
-        rgb[0] = rgb[1] = rgb[2] = 255;
+      if (color != NULL)
+        gegl_color_get_pixel (color, babl_format ("R'G'B' u8"), rgb);
 
       for (y = 0; y < mask_height; y++)
         {
