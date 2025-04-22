@@ -29,6 +29,7 @@
 
 #include "widgets-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpviewable.h"
@@ -45,6 +46,8 @@
 struct _GimpContainerIconViewPrivate
 {
   GimpViewRenderer *dnd_renderer;
+
+  gulong            color_scheme_handler_id;
 };
 
 
@@ -82,6 +85,7 @@ static gboolean      gimp_container_icon_view_select_items      (GimpContainerVi
                                                                  GList                       *paths);
 static void          gimp_container_icon_view_clear_items       (GimpContainerView           *view);
 static void          gimp_container_icon_view_set_view_size     (GimpContainerView           *view);
+static void          gimp_container_icon_view_invalidate        (GimpContainerIconView       *view);
 
 static void          gimp_container_icon_view_selection_changed (GtkIconView                 *view,
                                                                  GimpContainerIconView       *icon_view);
@@ -108,6 +112,10 @@ static gboolean      gimp_container_icon_view_get_selected_single (GimpContainer
 static gint          gimp_container_icon_view_get_selected        (GimpContainerView      *view,
                                                                    GList                 **items,
                                                                    GList                 **paths);
+
+static void          gimp_container_icon_view_notify_color_scheme (GObject               *config,
+                                                                   GParamSpec            *param_spec,
+                                                                   GimpContainerIconView *view);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpContainerIconView, gimp_container_icon_view,
@@ -165,6 +173,8 @@ gimp_container_icon_view_init (GimpContainerIconView *icon_view)
   GimpContainerBox *box = GIMP_CONTAINER_BOX (icon_view);
 
   icon_view->priv = gimp_container_icon_view_get_instance_private (icon_view);
+
+  icon_view->priv->color_scheme_handler_id = 0;
 
   gimp_container_tree_store_columns_init (icon_view->model_columns,
                                           &icon_view->n_model_columns);
@@ -365,6 +375,15 @@ gimp_container_icon_view_set_context (GimpContainerView *view,
   if (icon_view->model)
     gimp_container_tree_store_set_context (GIMP_CONTAINER_TREE_STORE (icon_view->model),
                                            context);
+
+  if (context != NULL)
+    {
+      if (icon_view->priv->color_scheme_handler_id == 0)
+        icon_view->priv->color_scheme_handler_id = g_signal_connect_object (context->gimp->config,
+                                                                            "notify::theme-color-scheme",
+                                                                            G_CALLBACK (gimp_container_icon_view_notify_color_scheme),
+                                                                            icon_view, 0);
+    }
 }
 
 static void
@@ -571,6 +590,28 @@ gimp_container_icon_view_set_view_size (GimpContainerView *view)
                                           GTK_ORIENTATION_VERTICAL);
       gtk_icon_view_set_item_orientation (icon_view->view,
                                           GTK_ORIENTATION_HORIZONTAL);
+    }
+}
+
+static void
+gimp_container_icon_view_invalidate (GimpContainerIconView *view)
+{
+  GtkTreeIter iter;
+  gboolean    iter_valid;
+
+  for (iter_valid = gtk_tree_model_get_iter_first (view->model, &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (view->model, &iter))
+    {
+      GimpViewRenderer *renderer;
+
+      gtk_tree_model_get (view->model, &iter,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                          -1);
+
+      gimp_view_renderer_invalidate (renderer);
+
+      g_object_unref (renderer);
     }
 }
 
@@ -902,4 +943,13 @@ gimp_container_icon_view_get_selected (GimpContainerView    *view,
     g_list_free_full (selected_paths, (GDestroyNotify) gtk_tree_path_free);
 
   return selected_count;
+}
+
+static void
+gimp_container_icon_view_notify_color_scheme (GObject               *config,
+                                              GParamSpec            *param_spec,
+                                              GimpContainerIconView *view)
+{
+  gimp_container_icon_view_invalidate (view);
+  gtk_widget_queue_draw (GTK_WIDGET (view));
 }
