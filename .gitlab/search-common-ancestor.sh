@@ -24,13 +24,13 @@ git fetch --shallow-since="$(date --date="${ancestor_horizon} days ago" +%Y-%m-%
 # fall back to `${CI_DEFAULT_BRANCH}` or `${CI_COMMIT_BRANCH}` respectively
 # otherwise.
 
-# add mr-origin
-git remote add mr-origin ${CI_MERGE_REQUEST_SOURCE_PROJECT_URL}
+# add patch-origin
+git remote add patch-origin ${CI_MERGE_REQUEST_SOURCE_PROJECT_URL:-${CI_PROJECT_URL}}
 
 source_branch="${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME:-${CI_COMMIT_BRANCH}}"
-git fetch --shallow-since="$(date --date="${ancestor_horizon} days ago" +%Y-%m-%d)" mr-origin "${source_branch}" &> ./fetch_origin.log
+git fetch --shallow-since="$(date --date="${ancestor_horizon} days ago" +%Y-%m-%d)" patch-origin "${source_branch}" &> ./fetch_origin.log
 
-newest_common_ancestor_sha=$(diff --old-line-format='' --new-line-format='' <(git rev-list --first-parent "upstream/${CI_MERGE_REQUEST_TARGET_BRANCH_NAME:-${CI_DEFAULT_BRANCH}}") <(git rev-list --first-parent "mr-origin/${source_branch}") | head -1)
+newest_common_ancestor_sha=$(diff --old-line-format='' --new-line-format='' <(git rev-list --first-parent "upstream/${CI_MERGE_REQUEST_TARGET_BRANCH_NAME:-${CI_DEFAULT_BRANCH}}") <(git rev-list --first-parent "patch-origin/${source_branch}") | head -1)
 if [ -z "${newest_common_ancestor_sha}" ]; then
     echo "Couldn’t find common ancestor with upstream main branch. This typically"
     echo "happens if you branched from main a long time ago. Please update"
