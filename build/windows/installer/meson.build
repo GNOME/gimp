@@ -15,7 +15,7 @@ if gimp_rc_version != false
 endif
 
 configure_file(
-  input : 'config_clean.h.in',
+  input : 'config_clean.h.sh',
   output: 'config_clean.h',
   configuration: installer_conf
 )
