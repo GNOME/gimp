@@ -53,6 +53,7 @@
 
 /* APNG */
 #define id_IHDR 0x52444849
+#define id_tRNS 0x534E5274
 #define id_acTL 0x4C546361
 #define id_fcTL 0x4C546366
 #define id_IDAT 0x54414449
@@ -144,7 +145,7 @@ static GimpImage * load_image                (GFile                 *file,
                                               gboolean              *resolution_loaded,
                                               gboolean              *profile_loaded,
                                               GError               **error);
-static GimpImage * load_apng_image           (GFile                 *file,
+static gboolean    load_apng_image           (GFile                 *file,
                                               GimpImage             *image,
                                               gboolean               report_progress,
                                               GError               **error);
@@ -175,6 +176,9 @@ static gboolean    ia_has_transparent_pixels (GeglBuffer            *buffer);
 
 static gint        find_unused_ia_color      (GeglBuffer            *buffer,
                                               gint                  *colors);
+
+static void        add_alpha_to_indexed      (GimpLayer             *layer,
+                                              guchar                *alpha);
 
 static gboolean    restart_apng_processing   (png_structp           *png_ptr,
                                               png_infop             *info_ptr,
@@ -472,6 +476,7 @@ apng_load (GimpProcedure         *procedure,
   gboolean        report_progress   = FALSE;
   gboolean        resolution_loaded = FALSE;
   gboolean        profile_loaded    = FALSE;
+  gboolean        apng_loaded       = FALSE;
   GimpImage      *image;
   GError         *error = NULL;
 
@@ -490,16 +495,12 @@ apng_load (GimpProcedure         *procedure,
                       &profile_loaded,
                       &error);
 
-  if (image)
-    load_apng_image (file,
-                     image,
-                     report_progress,
-                     &error);
-
   if (! image)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              error);
+
+  load_apng_image (file, image, report_progress, &error);
 
   if (resolution_loaded)
     *flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
@@ -1283,34 +1284,7 @@ load_image (GFile        *file,
   fclose (fp);
 
   if (trns)
-    {
-      GeglBufferIterator *iter;
-      gint                n_components;
-
-      gimp_layer_add_alpha (layer);
-      buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
-      file_format = gegl_buffer_get_format (buffer);
-
-      iter = gegl_buffer_iterator_new (buffer, NULL, 0, file_format,
-                                       GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
-      n_components = babl_format_get_n_components (file_format);
-      g_warn_if_fail (n_components == 2);
-
-      while (gegl_buffer_iterator_next (iter))
-        {
-          guchar *data   = iter->items[0].data;
-          gint    length = iter->length;
-
-          while (length--)
-            {
-              data[1] = alpha[data[0]];
-
-              data += n_components;
-            }
-        }
-
-      g_object_unref (buffer);
-    }
+    add_alpha_to_indexed (layer, alpha);
 
   /* If any safe-to-copy chunks were saved,
    * store them in the image as parasite */
@@ -1332,7 +1306,7 @@ load_image (GFile        *file,
   return (GimpImage *) image;
 }
 
-static GimpImage *
+static gboolean
 load_apng_image (GFile      *file,
                  GimpImage  *image,
                  gboolean    report_progress,
@@ -1342,21 +1316,33 @@ load_apng_image (GFile      *file,
   GimpImageType          image_type;
   gint                   bpp;
   guchar                 sig[8];
+  guchar                 trns[256];
   FILE                  *fp;
   png_structp            pp;
   png_infop              info;
   /* APNG specific data */
-  gboolean               is_animated  = FALSE;
-  gboolean               idat_read    = FALSE;
-  guint                  sequence_num = 0;
+  gboolean               is_indexed_alpha = FALSE;
+  gboolean               is_animated      = FALSE;
+  gboolean               idat_read        = FALSE;
+  guint                  sequence_num     = 0;
   guint                  frame_no;
   guint                  playback_no;
-  guint                  frame_data_size = 0;
+  guint                  frame_data_size  = 0;
 
   layers     = gimp_image_get_layers (image);
   image_type = gimp_drawable_type (GIMP_DRAWABLE (layers[0]));
   bpp        = gimp_drawable_get_bpp (GIMP_DRAWABLE (layers[0]));
   g_free (layers);
+
+  if (image_type == GIMP_INDEXEDA_IMAGE)
+    {
+      image_type       = GIMP_INDEXED_IMAGE;
+      bpp              = 1;
+      is_indexed_alpha = TRUE;
+
+      for (gint i = 0; i < 256; i++)
+        trns[i] = 255;
+    }
 
   fp = g_fopen (g_file_peek_path (file), "rb");
 
@@ -1365,7 +1351,7 @@ load_apng_image (GFile      *file,
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
                    gimp_file_get_utf8_name (file), g_strerror (errno));
-      return NULL;
+      return FALSE;
     }
 
   if (report_progress)
@@ -1387,11 +1373,15 @@ load_apng_image (GFile      *file,
       if (! png_id)
         {
           fclose (fp);
-          return NULL;
+          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Could not read APNG frames. "
+                         "They will be discarded."));
+
+          return FALSE;
         }
 
       /* Set initial frame information */
-      if (png_id == id_IHDR && ihdr_chunk.size == 25)
+      if (png_id == id_IHDR)
         {
           gdouble image_width  = gimp_image_get_width (image);
           gdouble image_height = gimp_image_get_height (image);
@@ -1405,7 +1395,11 @@ load_apng_image (GFile      *file,
       else
         {
           fclose (fp);
-          return NULL;
+          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Could not read APNG frames. "
+                         "They will be discarded."));
+
+          return FALSE;
         }
 
       /* libpng will only read one image chunk for PNG, and will warn that
@@ -1421,7 +1415,12 @@ load_apng_image (GFile      *file,
               if (! png_id)
                 {
                   fclose (fp);
-                  return NULL;
+                  g_set_error (error, G_FILE_ERROR,
+                               g_file_error_from_errno (errno),
+                               _("Could not read APNG frames. "
+                                 "They will be discarded."));
+
+                  return FALSE;
                 }
 
               if (png_id == id_acTL)
@@ -1455,8 +1454,10 @@ load_apng_image (GFile      *file,
 
                           gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, apng_frame.width, apng_frame.height),
                                            0, NULL, apng_frame.pixels, GEGL_AUTO_ROWSTRIDE);
-
                           g_object_unref (buffer);
+
+                          if (is_indexed_alpha)
+                            add_alpha_to_indexed (layer, trns);
 
                           if (report_progress)
                             gimp_progress_update ((gdouble) sequence_num /
@@ -1506,9 +1507,27 @@ load_apng_image (GFile      *file,
                 {
                   idat_read = TRUE;
 
+                  if (! is_animated)
+                    {
+                      fclose (fp);
+                      g_set_error (error, G_FILE_ERROR,
+                                   g_file_error_from_errno (errno),
+                                   _("Invalid APNG: Image data appeared "
+                                     "before actTL chunk."));
+
+                      return FALSE;
+                    }
+
                   if (! process_apng_data (pp, info, chunk.data, chunk.size))
                     {
                       break;
+                    }
+                }
+              else if (png_id == id_tRNS)
+                {
+                  for (gint i = 0; i < chunk.size; i++)
+                    {
+                      trns[i] = chunk.data[i + 8];
                     }
                 }
               else if (png_id == id_IEND)
@@ -1520,7 +1539,7 @@ load_apng_image (GFile      *file,
 
                       layer = gimp_layer_new (image, NULL,
                                               apng_frame.width, apng_frame.height,
-                                              GIMP_RGBA_IMAGE,
+                                              image_type,
                                               100,
                                               gimp_image_get_default_new_layer_mode (image));
                       gimp_layer_set_offsets (layer, apng_frame.offset_x, apng_frame.offset_y);
@@ -1528,10 +1547,13 @@ load_apng_image (GFile      *file,
 
                       buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
-                      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, apng_frame.width, apng_frame.height), 0,
-                                       NULL, apng_frame.pixels, GEGL_AUTO_ROWSTRIDE);
-
+                      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, apng_frame.width, apng_frame.height),
+                                       0, NULL, apng_frame.pixels,
+                                       GEGL_AUTO_ROWSTRIDE);
                       g_object_unref (buffer);
+
+                      if (is_indexed_alpha)
+                        add_alpha_to_indexed (layer, trns);
                     }
 
                   break;
@@ -1577,9 +1599,8 @@ load_apng_image (GFile      *file,
   if (report_progress)
     gimp_progress_update (1.0);
 
-  return (GimpImage *) image;
+  return TRUE;
 }
-
 
 /*
  * 'offsets_dialog ()' - Asks the user about offsets when loading.
@@ -2628,6 +2649,39 @@ find_unused_ia_color (GeglBuffer *buffer,
     }
 
   return -1;
+}
+
+static void
+add_alpha_to_indexed (GimpLayer *layer,
+                      guchar    *alpha)
+{
+  GeglBufferIterator *iter;
+  GeglBuffer         *buffer;
+  const Babl         *format;
+  gint                n_components;
+
+  gimp_layer_add_alpha (layer);
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  format = gegl_buffer_get_format (buffer);
+
+  iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,
+                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
+  n_components = babl_format_get_n_components (format);
+  g_warn_if_fail (n_components == 2);
+
+  while (gegl_buffer_iterator_next (iter))
+    {
+      guchar *data   = iter->items[0].data;
+      gint    length = iter->length;
+
+      while (length--)
+        {
+          data[1] = alpha[data[0]];
+
+          data += n_components;
+        }
+    }
+  g_object_unref (buffer);
 }
 
 static int
