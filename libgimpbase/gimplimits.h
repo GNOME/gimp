@@ -65,7 +65,7 @@ G_BEGIN_DECLS
  * resolution is needed. GIMP will not accept resolutions smaller than
  * this value.
  **/
-#define GIMP_MIN_RESOLUTION  5e-3      /*  shouldn't display as 0.000  */
+#define GIMP_MIN_RESOLUTION  1e-3      /*  shouldn't display as 0.000  */
 
 /**
  * GIMP_MAX_RESOLUTION:
