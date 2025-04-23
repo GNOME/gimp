@@ -1426,7 +1426,7 @@ module_dependencies = find_program('tools'/'module-dependencies.py')
 meson_install_subdir= find_program('tools'/'meson_install_subdir.py')
 
 gimp_mkenums = find_program('tools' / 'gimp-mkenums')
-mkenums_wrap = find_program(meson.current_source_dir() / 'tools' / 'meson-mkenums.py')
+mkenums_wrap = find_program('powershell')
 
 libgimp_mkenums_dtails = \
     '    { 0, NULL, NULL }\n'                                                      + \
@@ -1823,7 +1823,7 @@ if is_git_repository
   endif
 
   if git.found()
-    git_submodule_check = run_command(meson.project_source_root() / 'build/meson/check-gimp-data.py',
+    git_submodule_check = run_command(meson.project_source_root() / 'build/meson/check-gimp-data.sh',
                                       check: false)
     if git_submodule_check.returncode() != 0
       submodule_warning = 'gimp-data submodule seems outdated. Possibly run from the source repository: git submodule update'
@@ -1905,7 +1905,7 @@ custom_target('Changelog',
   build_by_default: false,
 )
 
-meson.add_dist_script('meson_dist_script.py',
+meson.add_dist_script('echo',
                       generate_version_h ?  gitversion_h.full_path() : gitversion_h,
                       meson.project_source_root(), meson.project_build_root())
 
@@ -2053,7 +2053,7 @@ else
   gimp_exe_depends = []
 endif
 
-gimp_exe = find_program('tools'/'in-build-gimp.py')
+gimp_exe = find_program('tools'/'in-build-gimp.bat')
 
 ################################################################################
 # Subdirs: part 2
