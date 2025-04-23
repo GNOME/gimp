@@ -587,6 +587,8 @@ meson-health:
   rules:
     - <<: *CI_MERGE
     - <<: *CI_COMMIT
+      when: delayed
+      start_in: 2 seconds
   stage: analysis
   script:
     - apt-get update
@@ -597,6 +599,8 @@ clang-format:
   extends: .default
   rules:
     - <<: *CI_MERGE
+      when: delayed
+      start_in: 2 seconds
   stage: analysis
   script:
     - apt-get update
