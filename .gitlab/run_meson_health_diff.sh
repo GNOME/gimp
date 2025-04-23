@@ -133,9 +133,33 @@ done
 if [ "$found_coreutils" ]; then
   echo -e '\033[31m(ERROR)\033[0m: Seems that you are trying to add an Unix-specific dependency to be called by Meson.'
   echo "         Please, port to Python (which is crossplatform), your use of:${found_coreutils}."
-  exit 1
 fi
 
+
+#Limited list of commonly used utilities on Windows world
+ntutils_array=(
+  ".bat"
+  ".cmd"
+  ".ps1"
+  "'cmd'"
+  "'powershell'"
+)
+
+for ntutil in "${ntutils_array[@]}"; do
+  if echo "$diff" | grep -q "$ntutil"; then
+    found_ntutils+=" $ntutil"
+  fi
+done
+
+if [ "$found_ntutils" ]; then
+  echo -e '\033[31m(ERROR)\033[0m: Seems that you are trying to add a NT-specific dependency to be called by Meson.'
+  echo "         Please, port to Python (which is crossplatform), your use of:${found_ntutils}."
+fi
+
+
+if [ "$found_coreutils" ] || [ "$found_ntutils" ]; then
+  exit 1
+fi
 
 echo 'Meson .build files are alright regarding crossplatform.'
 exit 0
