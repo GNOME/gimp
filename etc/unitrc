@@ -40,3 +40,9 @@
    (digits 1)
    (symbol "tpc")
    (abbreviation "tpc"))
+
+(unit-info "mils"
+    (factor 1000.0)
+    (digits 0)
+    (symbol "mil")
+    (abbreviation "mil"))
