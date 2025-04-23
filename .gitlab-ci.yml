@@ -333,34 +333,20 @@ gimp-debian-x64:
                                    $MESON_OPTIONS
     - cd _build-${RUNNER}
     - ninja
-    - echo -e "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K"
-    # Check execution
-    - echo -e "\e[0Ksection_start:`date +%s`:gimp_test[collapsed=true]\r\e[0KTesting GIMP execution"
-    - ninja test
-    - echo -e "\e[0Ksection_end:`date +%s`:gimp_test\r\e[0K"
-    # Check source
-    - echo -e "\e[0Ksection_start:`date +%s`:gimp_tar[collapsed=true]\r\e[0KChecking GIMP source"
     - if [ $(git diff |wc -l) -ne 0 ]; then
         echo "ERROR. A generated file was updated without the source:";
         git diff;
         exit 1;
       fi
-    - if [ "$VARIANT" != "-gcc" ] && [ "$VARIANT" != "-raster" ] && [ "$CI_PIPELINE_SOURCE" != "merge_request_event" ]; then
-        ninja dist &> ninja_dist.txt || cat ninja_dist.txt;
-      fi
-    - echo -e "\e[0Ksection_end:`date +%s`:gimp_tar\r\e[0K"
+    - echo -e "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K"
     # Check install
     - echo -e "\e[0Ksection_start:`date +%s`:gimp_install[collapsed=true]\r\e[0KChecking GIMP installation"
-    - ninja install &> ninja_install.txt || cat ninja_install.txt;
+    - ninja install
     - echo -e "\e[0Ksection_end:`date +%s`:gimp_install\r\e[0K"
   artifacts:
     paths:
       - _install-${RUNNER}/
-      - _build-${RUNNER}/meson-logs/meson-log.txt
-      - _build-${RUNNER}/meson-dist/
-      - _build-${RUNNER}/config.h
-    reports:
-      junit: "_build-${RUNNER}/meson-logs/testlog.junit.xml"
+      - _build-${RUNNER}/
     expire_in: 2 days
 
 
@@ -538,6 +524,23 @@ gimp-win-x86:
 
 ## Analysis ##
 
+unit-tests:
+  extends: .debian-x64
+  needs: ["gimp-debian-x64"]
+  stage: analysis
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+  script:
+    - *ENVIRON
+    - echo -e "\e[0Ksection_start:`date +%s`:gimp_test[collapsed=true]\r\e[0KTesting GIMP execution"
+    - cd _build-${RUNNER}
+    - ninja test
+    - echo -e "\e[0Ksection_end:`date +%s`:gimp_test\r\e[0K"
+  artifacts:
+    reports:
+      junit: "_build-${RUNNER}/meson-logs/testlog.junit.xml"
+    expire_in: 2 days
+
 file-plug-in-tests:
   # FIXME: Do we need another job testing this under Windows? MSYS2 usually has
   #        the latest deps. It might be a good idea to test that too, maybe weekly?
@@ -632,7 +635,7 @@ cppcheck:
 ## Ready-to-distribute ##
 
 sources-debian:
-  extends: .default
+  extends: .debian-x64
   rules:
     - <<: *CI_COMMIT
     - if: '$GIMP_CI_SOURCES != null'
@@ -640,12 +643,20 @@ sources-debian:
   needs: ["gimp-debian-x64"]
   stage: distribution
   variables:
-    GIT_STRATEGY: none
+    GIT_SUBMODULE_STRATEGY: recursive
   script:
+    - *ENVIRON
+    - echo -e "\e[0Ksection_start:`date +%s`:gimp_tar[collapsed=true]\r\e[0KCreating GIMP source tarball"
+    - if [ "$VARIANT" != "-gcc" ] && [ "$VARIANT" != "-raster" ] && [ "$CI_PIPELINE_SOURCE" != "merge_request_event" ]; then
+        cd _build-${RUNNER};
+        ninja dist;
+        cd ..;
+      fi
     - mv _build*/meson-dist/gimp-*.tar.xz .
     - FILENAME=`ls gimp-*.tar.xz`                      &&
       sha256sum gimp-*.tar.xz > ${FILENAME}.SHA256SUMS &&
       sha512sum gimp-*.tar.xz > ${FILENAME}.SHA512SUMS
+    - echo -e "\e[0Ksection_end:`date +%s`:gimp_tar\r\e[0K"
   artifacts:
     paths:
       - gimp-*.tar.xz
