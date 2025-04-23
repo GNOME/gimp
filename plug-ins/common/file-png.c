@@ -476,7 +476,6 @@ apng_load (GimpProcedure         *procedure,
   gboolean        report_progress   = FALSE;
   gboolean        resolution_loaded = FALSE;
   gboolean        profile_loaded    = FALSE;
-  gboolean        apng_loaded       = FALSE;
   GimpImage      *image;
   GError         *error = NULL;
 
@@ -1324,6 +1323,7 @@ load_apng_image (GFile      *file,
   gboolean               is_indexed_alpha = FALSE;
   gboolean               is_animated      = FALSE;
   gboolean               idat_read        = FALSE;
+  gint                   frame_start      = 0;
   guint                  sequence_num     = 0;
   guint                  frame_no;
   guint                  playback_no;
@@ -1391,6 +1391,17 @@ load_apng_image (GFile      *file,
           apng_frame.bpp         = bpp;
           apng_frame.image_width = image_width;
           apng_frame.pixels      = g_malloc0 (frame_data_size);
+
+          /* In case we have IDAT before fcTL chunk, set the frame defaults */
+          apng_frame.width     = image_width;
+          apng_frame.height    = image_height;
+          apng_frame.offset_x  = 0;
+          apng_frame.offset_y  = 0;
+          apng_frame.delay_num = 0;
+          apng_frame.delay_den = 100;
+
+          dispose_op = 0;
+          blend_op   = 0;
         }
       else
         {
@@ -1425,9 +1436,21 @@ load_apng_image (GFile      *file,
 
               if (png_id == id_acTL)
                 {
+                  GimpParasite *parasite;
+                  gchar        *str;
+
                   is_animated = TRUE;
                   frame_no    = png_get_uint_32 (chunk.data + 8);
                   playback_no = png_get_uint_32 (chunk.data + 12);
+
+                  str = g_strdup_printf ("%d %d", frame_no, playback_no);
+                  parasite = gimp_parasite_new ("apng-image-data",
+                                                GIMP_PARASITE_PERSISTENT,
+                                                strlen (str) + 1, (gpointer) str);
+                  g_free (str);
+                  gimp_image_attach_parasite (image, parasite);
+                  gimp_parasite_free (parasite);
+
                 }
               else if (png_id == id_fcTL && (! idat_read || is_animated))
                 {
@@ -1437,10 +1460,12 @@ load_apng_image (GFile      *file,
                     {
                       /* Skipping the first frame because we've already loaded
                        * it with load_png () */
-                      if (end_apng_processing (pp, info) && sequence_num > 1)
+                      if (end_apng_processing (pp, info) && sequence_num > frame_start)
                         {
-                          GimpLayer  *layer;
-                          GeglBuffer *buffer;
+                          GimpLayer    *layer;
+                          GeglBuffer   *buffer;
+                          GimpParasite *parasite;
+                          gchar        *str;
 
                           layer = gimp_layer_new (image, NULL,
                                                   apng_frame.width, apng_frame.height,
@@ -1462,7 +1487,24 @@ load_apng_image (GFile      *file,
                           if (report_progress)
                             gimp_progress_update ((gdouble) sequence_num /
                                                   (gdouble) frame_no);
+
+                          str = g_strdup_printf ("%d %d %d %d",
+                                                 apng_frame.delay_num,
+                                                 apng_frame.delay_den,
+                                                 dispose_op,
+                                                 blend_op);
+                          parasite = gimp_parasite_new ("apng-frame-data",
+                                                        GIMP_PARASITE_PERSISTENT,
+                                                        strlen (str) + 1,
+                                                        (gpointer) str);
+                          g_free (str);
+                          gimp_item_attach_parasite (GIMP_ITEM (layer), parasite);
+                          gimp_parasite_free (parasite);
                         }
+                    }
+                  else
+                    {
+                      frame_start++;
                     }
 
                   apng_frame.width     = png_get_uint_32 (chunk.data + 12);
@@ -1534,8 +1576,10 @@ load_apng_image (GFile      *file,
                 {
                   if (idat_read && end_apng_processing (pp, info))
                     {
-                      GimpLayer  *layer;
-                      GeglBuffer *buffer;
+                      GimpLayer    *layer;
+                      GeglBuffer   *buffer;
+                      GimpParasite *parasite;
+                      gchar        *str;
 
                       layer = gimp_layer_new (image, NULL,
                                               apng_frame.width, apng_frame.height,
@@ -1554,6 +1598,19 @@ load_apng_image (GFile      *file,
 
                       if (is_indexed_alpha)
                         add_alpha_to_indexed (layer, trns);
+
+                      str = g_strdup_printf ("%d %d %d %d",
+                                             apng_frame.delay_num,
+                                             apng_frame.delay_den,
+                                             dispose_op,
+                                             blend_op);
+                      parasite = gimp_parasite_new ("apng-frame-data",
+                                                    GIMP_PARASITE_PERSISTENT,
+                                                    strlen (str) + 1,
+                                                    (gpointer) str);
+                      g_free (str);
+                      gimp_item_attach_parasite (GIMP_ITEM (layer), parasite);
+                      gimp_parasite_free (parasite);
                     }
 
                   break;
