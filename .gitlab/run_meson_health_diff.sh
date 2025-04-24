@@ -2,7 +2,7 @@
 
 source .gitlab/search-common-ancestor.sh
 
-diff=$(git diff -U0 --no-color "${newest_common_ancestor_sha}" -- '*.build' | grep -E '^\+[^+]' | sed 's/^+//')
+diff=$(git diff -U0 --no-color "${newest_common_ancestor_sha}" -- '*.build' '*.py' | grep -E '^\+[^+]' | sed 's/^+//')
 
 
 #List of commonly used utilities on Unix world
