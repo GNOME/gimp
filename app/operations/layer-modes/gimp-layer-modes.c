@@ -835,7 +835,9 @@ static const GimpLayerModeInfo layer_mode_infos[] =
   { GIMP_LAYER_MODE_OVERWRITE,
 
     .op_name              = "gimp:overwrite",
-    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE |
+    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE  |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_TRIVIAL,
     .context              = GIMP_LAYER_MODE_CONTEXT_PAINT,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_UNION,

@@ -78,6 +78,8 @@ gimp_operation_overwrite_process (GeglOperation       *op,
   gfloat                 *mask       = mask_p;
   gfloat                  opacity    = layer_mode->opacity;
   const gboolean          has_mask   = mask != NULL;
+  gfloat                  mask_value;
+  gfloat                  layer_alpha;
 
   switch (layer_mode->composite_mode)
     {
@@ -85,41 +87,33 @@ gimp_operation_overwrite_process (GeglOperation       *op,
     case GIMP_LAYER_COMPOSITE_AUTO:
       while (samples--)
         {
+          layer_alpha = layer[ALPHA] * opacity;
+
           if (has_mask)
+            mask_value = *(mask++);
+          else
+            mask_value = 1.0;
+
+          if (layer_alpha > 0.0f && mask_value > 0.0f)
             {
-              out[ALPHA] = in[ALPHA] + (*mask) * (opacity - in[ALPHA]);
+              gint b;
 
-              if (opacity + in[ALPHA] > -1e-5)
-                {
-                  gfloat C;
-                  gfloat lerp;
-                  gint   b;
+              /* We still interpolate both the alpha and RGB channels,
+               * using the mask value which gives us smoother transition
+               * in paintbrush style tools while the pencil tool
+               * provides hard pixel replacement as expected.
+               */
+              out[ALPHA] = in[ALPHA] + mask_value * (layer_alpha - in[ALPHA]);
 
-                  /* RGB interpolation */
+              for (b = RED; b < ALPHA; b++)
+                out[b] = in[b] + mask_value * (layer[b] - in[b]);
+            }
+          else
+            {
+              gint b;
 
-                  C = in[ALPHA] / ( opacity + in[ALPHA] );
-
-                  if (*mask < C)
-                    lerp = *mask * ((1 - C) / C);
-                  else
-                    lerp = (*mask - C) * (C / (1 - C)) + 1 - C;
-
-                  for (b = RED; b < ALPHA; b++)
-                    {
-                      out[b] = in[b] + (lerp) *  (layer[b] - in[b]);
-                    }
-                }
-              else
-                {
-                  gint b;
-
-                  for (b = RED; b < ALPHA; b++)
-                    {
-                      out[b] = in[b];
-                    }
-                }
-
-              mask++;
+              for (b = RED; b <= ALPHA; b++)
+                out[b] = in[b];
             }
 
           in    += 4;
@@ -129,121 +123,9 @@ gimp_operation_overwrite_process (GeglOperation       *op,
       break;
 
     case GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP:
-      while (samples--)
-        {
-          gfloat layer_alpha;
-
-          layer_alpha = layer[ALPHA] * opacity;
-          if (has_mask)
-            layer_alpha *= *mask;
-
-          out[ALPHA] = in[ALPHA];
-
-          if (out[ALPHA])
-            {
-              gint b;
-
-              for (b = RED; b < ALPHA; b++)
-                {
-                  out[b] = in[b] + (layer[b] - in[b]) * layer_alpha;
-                }
-            }
-          else
-            {
-              gint b;
-
-              for (b = RED; b < ALPHA; b++)
-                {
-                  out[b] = in[b];
-                }
-            }
-
-          in    += 4;
-          layer += 4;
-          out   += 4;
-
-          if (has_mask)
-            mask++;
-        }
-      break;
-
     case GIMP_LAYER_COMPOSITE_CLIP_TO_LAYER:
-      while (samples--)
-        {
-          gfloat layer_alpha;
-
-          layer_alpha = layer[ALPHA] * opacity;
-          if (has_mask)
-            layer_alpha *= *mask;
-
-          out[ALPHA] = layer_alpha;
-
-          if (out[ALPHA])
-            {
-              gint b;
-
-              for (b = RED; b < ALPHA; b++)
-                {
-                  out[b] = layer[b];
-                }
-            }
-          else
-            {
-              gint b;
-
-              for (b = RED; b < ALPHA; b++)
-                {
-                  out[b] = in[b];
-                }
-            }
-
-          in    += 4;
-          layer += 4;
-          out   += 4;
-
-          if (has_mask)
-            mask++;
-        }
-      break;
-
     case GIMP_LAYER_COMPOSITE_INTERSECTION:
-      while (samples--)
-        {
-          gfloat layer_alpha;
-
-          layer_alpha = layer[ALPHA] * opacity;
-          if (has_mask)
-            layer_alpha *= *mask;
-
-          out[ALPHA] = in[ALPHA] * layer_alpha;
-
-          if (out[ALPHA])
-            {
-              gint b;
-
-              for (b = RED; b < ALPHA; b++)
-                {
-                  out[b] = layer[b];
-                }
-            }
-          else
-            {
-              gint b;
-
-              for (b = RED; b < ALPHA; b++)
-                {
-                  out[b] = in[b];
-                }
-            }
-
-          in    += 4;
-          layer += 4;
-          out   += 4;
-
-          if (has_mask)
-            mask++;
-        }
-      break;
+      g_return_val_if_reached (FALSE);
     }
 
   return TRUE;
