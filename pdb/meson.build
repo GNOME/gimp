@@ -102,7 +102,7 @@ groups_pl_content   += ');\n'
 groups_pl = custom_target('groups.pl',
   input : [ ],
   output: [ 'groups.pl', ],
-  command: [ 'echo', groups_pl_content, ],
+  command: [ python, '-c', 'import sys; sys.stdout.write(sys.argv[1])', groups_pl_content ],
   capture: true,
 )
 
