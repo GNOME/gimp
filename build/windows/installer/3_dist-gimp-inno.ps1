@@ -31,6 +31,7 @@ if (-not $GITLAB_CI)
 #if (-not (Get-Command "python" -ErrorAction SilentlyContinue) -or "$(Get-Command "python" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source)" -like '*WindowsApps*')
 #  {
     Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'MSYS_ROOT\)' -Context 0,13) -replace '> ','')
+    $MSYS_ROOT = "$MSYS_ROOT\usr\bin"
 #  }
 
 
