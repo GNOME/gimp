@@ -48,6 +48,9 @@ modules = [
   }, {
     'name': 'display-filter-high-contrast',
     'link': display_filter_libs,
+  }, {
+    'name': 'display-filter-total-ink-coverage',
+    'link': display_filter_libs,
   },
 ]
 
