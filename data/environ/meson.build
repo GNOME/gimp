@@ -1,5 +1,7 @@
-environ_config = configuration_data()
+#.env files read by gimp_environ_table_load_env_file in gimpenvirontable.c
 
+
+environ_config = configuration_data()
 if platform_windows and relocatable_bundle
   environ_config.set('BIN_PATH', 'PATH=${gimp_installation_dir}\\bin')
 else
@@ -21,6 +23,7 @@ if not meson.is_cross_build() and python.found()
     install_dir: gimpplugindir / 'environ',
   )
 endif
+
 
 if platform_windows and not meson.is_cross_build() and python.found()
   install_data(
