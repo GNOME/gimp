@@ -19,7 +19,7 @@
 #sub DoActualWork
 	#if Copy(FileLine,Len(FileLine),1)=="\"
 		//include whole directory
-Source: "{#SRC_DIR}\{#FileLine}*"; DestDir: "{app}\32\{#Copy(FileLine,1,Len(FileLine)-1)}"; Components: gimp32on64; Flags: recursesubdirs restartreplace replacesameversion uninsrestartdelete ignoreversion
+Source: "{#SRC_DIR}\{#FileLine}*"; DestDir: "{app}\32\{#Copy(FileLine,1,Len(FileLine)-1)}"; Components: gimp32on64; Flags: recursesubdirs restartreplace replacesameversion uninsrestartdelete ignoreversion solidbreak
 	#else
 		//include files from a certain directory
 		#define OutputDir Copy(FileLine,1,RPos("\",FileLine)-1)

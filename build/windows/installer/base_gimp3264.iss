@@ -347,10 +347,14 @@ Source: "{#DEPS_DIR32}\share\mypaint-data\*"; DestDir: "{app}\share\mypaint-data
 ;Required and optional arch specific files (binaries), except TWAIN in x64 and amd64
 ;i686
 #define PLATFORM X86
+;Set solid break for 32-bit binaries. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/13801
+#define COMMON_FLAGS="recursesubdirs restartreplace uninsrestartdelete ignoreversion solidbreak"
 #include "base_executables.isi"
 ;TWAIN is always installed in the 32-bit version of GIMP
 Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins\twain.exe"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins"; Components: gimp32; Flags: {#COMMON_FLAGS}
 ;x86_64
+;Restore common flags
+#define COMMON_FLAGS="recursesubdirs restartreplace uninsrestartdelete ignoreversion"
 #define PLATFORM X64
 #include "base_executables.isi"
 ;AArch64
