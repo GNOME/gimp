@@ -466,7 +466,8 @@ gimp_tool_button_query_tooltip (GtkWidget  *widget,
 {
   GimpToolButton *tool_button = GIMP_TOOL_BUTTON (widget);
 
-  if (GIMP_IS_TOOL_GROUP (tool_button->priv->tool_item))
+  if (tool_button->priv->tooltip_widget &&
+      GIMP_IS_TOOL_GROUP (tool_button->priv->tool_item))
     g_clear_object (&tool_button->priv->tooltip_widget);
 
   if (! tool_button->priv->tooltip_widget)
