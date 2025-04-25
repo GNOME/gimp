@@ -627,8 +627,14 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
 
           if (GTK_IS_WINDOW (parent_toplevel))
             {
-              gtk_window_set_transient_for (GTK_WINDOW (dialog),
-                                            GTK_WINDOW (parent_toplevel));
+              GimpGuiConfig *config = NULL;
+
+              if (context != NULL)
+                config = GIMP_GUI_CONFIG (context->gimp->config);
+
+              if (! config || config->dock_window_hint != GIMP_WINDOW_HINT_NORMAL)
+                gtk_window_set_transient_for (GTK_WINDOW (dialog),
+                                              GTK_WINDOW (parent_toplevel));
             }
         }
 
