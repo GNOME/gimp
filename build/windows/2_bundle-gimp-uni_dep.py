@@ -19,6 +19,7 @@ import subprocess
 import re
 import shutil
 import sys
+import struct
 
 ################################################################################
 # Global variables
@@ -106,12 +107,25 @@ def find_dependencies(obj, srcdirs):
     # If DLL exists, extract dependencies.
     objdump = None
 
-    result = subprocess.run(['file', obj], stdout=subprocess.PIPE)
-    file_type = result.stdout.decode('utf-8')
-    if 'PE32+' in file_type:
-      objdump = 'x86_64-w64-mingw32-objdump'
-    elif 'PE32' in file_type:
-      objdump = 'i686-w64-mingw32-objdump'
+    try:
+      with open(obj, 'rb') as f:
+        f.seek(0x3C)
+        pe_offset = struct.unpack('<I', f.read(4))[0]
+        f.seek(pe_offset)
+        pe_sig = f.read(4)
+        if pe_sig != b'PE\0\0':
+          return None
+        f.seek(pe_offset + 24)
+        file_type = struct.unpack('<H', f.read(2))[0]
+        if file_type == 0x20b:
+          objdump = 'x86_64-w64-mingw32-objdump'
+        elif file_type == 0x10b:
+          objdump = 'i686-w64-mingw32-objdump'
+        else:
+          return None
+    except Exception as e:
+      sys.stderr.write("Cannot read PE header for {}: {}\n".format(obj, e))
+      return None
 
     if objdump is None:
       sys.stderr.write('File type of {} unknown: {}\n'.format(obj, file_type))
