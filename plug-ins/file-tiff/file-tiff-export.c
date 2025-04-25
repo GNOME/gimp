@@ -669,7 +669,7 @@ save_layer (TIFF        *tif,
     }
 
 #ifdef TIFFTAG_ICCPROFILE
-  if (config_save_profile)
+  if (config_save_profile || config_cmyk)
     {
       const guint8     *icc_data     = NULL;
       gsize             icc_length;
@@ -1089,7 +1089,7 @@ export_image (GFile         *file,
       goto out;
     }
 
-  if (config_save_profile)
+  if (config_save_profile || config_cmyk)
     {
       GimpColorProfile *profile;
       GError           *error = NULL;
