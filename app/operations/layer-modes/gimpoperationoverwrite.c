@@ -87,14 +87,14 @@ gimp_operation_overwrite_process (GeglOperation       *op,
     case GIMP_LAYER_COMPOSITE_AUTO:
       while (samples--)
         {
-          layer_alpha = layer[ALPHA] * opacity;
-
           if (has_mask)
             mask_value = *(mask++);
           else
             mask_value = 1.0;
 
-          if (layer_alpha > 0.0f && mask_value > 0.0f)
+          layer_alpha = layer[ALPHA] * opacity * mask_value;
+
+          if (layer_alpha > 0.0f)
             {
               gint b;
 
@@ -102,6 +102,14 @@ gimp_operation_overwrite_process (GeglOperation       *op,
                * using the mask value which gives us smoother transition
                * in paintbrush style tools while the pencil tool
                * provides hard pixel replacement as expected.
+               *
+               * Note that mask_value is used both as part of
+               * layer_alpha and as interpolation variable. This is on
+               * purpose because we are interpolating between the
+               * input's opacity and the applied one (based on layer
+               * opacity, tool opacity and mask value). In particular,
+               * without this, painting with dynamics changing opacity
+               * could not lower the pixel's opacity.
                */
               out[ALPHA] = in[ALPHA] + mask_value * (layer_alpha - in[ALPHA]);
 
