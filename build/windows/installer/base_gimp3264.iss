@@ -736,69 +736,71 @@ var
 procedure UpdateWizardImages();
 var TopBitmap,BottomBitmap: TFileStream;
 begin
-	//Automatically scaled splash image
-	WelcomeBitmapTop := TBitmapImage.Create(WizardForm.WelcomePage);
-	with WelcomeBitmapTop do
-	begin
-		Parent := WizardForm.WelcomePage;
-		Width := WizardForm.WelcomePage.ClientWidth
-		Height := 1080 * Width / 1920
-		Left := 0;
-		Top := (WizardForm.ClientHeight - Height) / 2;
-		AutoSize := False;
-		Stretch := True;
-		Center := True;
-	end;
-	try
-		if WelcomeBitmapTop.Height <= 314 then begin
-			TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-100.bmp'),fmOpenRead);
-		end else if WelcomeBitmapTop.Height <= 386 then begin
-			TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-125.bmp'),fmOpenRead);
-		end else if WelcomeBitmapTop.Height <= 459 then begin
-			TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-150.bmp'),fmOpenRead);
-		end else if WelcomeBitmapTop.Height <= 556 then begin
-			TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-175.bmp'),fmOpenRead);
-		end else if WelcomeBitmapTop.Height <= 604 then begin
-			TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-200.bmp'),fmOpenRead);
-		end else if WelcomeBitmapTop.Height <= 700 then begin
-			TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-225.bmp'),fmOpenRead);
-		end else begin
-			TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-250.bmp'),fmOpenRead);
+    if not WizardSilent then begin
+		//Automatically scaled splash image
+		WelcomeBitmapTop := TBitmapImage.Create(WizardForm.WelcomePage);
+		with WelcomeBitmapTop do
+		begin
+			Parent := WizardForm.WelcomePage;
+			Width := WizardForm.WelcomePage.ClientWidth
+			Height := 1080 * Width / 1920
+			Left := 0;
+			Top := (WizardForm.ClientHeight - Height) / 2;
+			AutoSize := False;
+			Stretch := True;
+			Center := True;
 		end;
-		DebugMsg('UpdateWizardImages','Height: ' + IntToStr(WelcomeBitmapTop.Height));
-		WizardForm.WizardBitmapImage.Bitmap.LoadFromStream(TopBitmap);
-		WelcomeBitmapTop.Bitmap := WizardForm.WizardBitmapImage.Bitmap;
-	except
-		DebugMsg('UpdateWizardImages','Error loading image: ' + GetExceptionMessage);
-	finally
-		if TopBitmap <> nil then
-			TopBitmap.Free;
-	end;
-	WizardForm.WelcomePage.Color := clNone;
+		try
+			if WelcomeBitmapTop.Height <= 314 then begin
+				TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-100.bmp'),fmOpenRead);
+			end else if WelcomeBitmapTop.Height <= 386 then begin
+				TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-125.bmp'),fmOpenRead);
+			end else if WelcomeBitmapTop.Height <= 459 then begin
+				TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-150.bmp'),fmOpenRead);
+			end else if WelcomeBitmapTop.Height <= 556 then begin
+				TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-175.bmp'),fmOpenRead);
+			end else if WelcomeBitmapTop.Height <= 604 then begin
+				TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-200.bmp'),fmOpenRead);
+			end else if WelcomeBitmapTop.Height <= 700 then begin
+				TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-225.bmp'),fmOpenRead);
+			end else begin
+				TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-250.bmp'),fmOpenRead);
+			end;
+			DebugMsg('UpdateWizardImages','Height: ' + IntToStr(WelcomeBitmapTop.Height));
+			WizardForm.WizardBitmapImage.Bitmap.LoadFromStream(TopBitmap);
+			WelcomeBitmapTop.Bitmap := WizardForm.WizardBitmapImage.Bitmap;
+		except
+			DebugMsg('UpdateWizardImages','Error loading image: ' + GetExceptionMessage);
+		finally
+			if TopBitmap <> nil then
+				TopBitmap.Free;
+		end;
+		WizardForm.WelcomePage.Color := clNone;
 
-	//Blurred background
-	WelcomeBitmapBottom := TBitmapImage.Create(WizardForm);
-	with WelcomeBitmapBottom do
-	begin
-		Left := 0;
-		Top := 0;
-		Parent := WizardForm;
-		Width := WizardForm.ClientWidth;
-		Height := WizardForm.ClientHeight;
-		Stretch := True;
-	end;
-	try
-		BottomBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_bottom.bmp'),fmOpenRead);
-		WizardForm.WizardBitmapImage.Bitmap.LoadFromStream(BottomBitmap);
-		WelcomeBitmapBottom.Bitmap := WizardForm.WizardBitmapImage.Bitmap;
-	except
-		DebugMsg('UpdateWizardImages','Error loading image: ' + GetExceptionMessage);
-	finally
-		if BottomBitmap <> nil then
-			BottomBitmap.Free;
-	end;
-	WizardForm.WizardBitmapImage.Width := WizardForm.ClientWidth;
-	WizardForm.WizardBitmapImage.Height := WizardForm.ClientHeight;
+		//Blurred background
+		WelcomeBitmapBottom := TBitmapImage.Create(WizardForm);
+		with WelcomeBitmapBottom do
+		begin
+			Left := 0;
+			Top := 0;
+			Parent := WizardForm;
+			Width := WizardForm.ClientWidth;
+			Height := WizardForm.ClientHeight;
+			Stretch := True;
+		end;
+		try
+			BottomBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_bottom.bmp'),fmOpenRead);
+			WizardForm.WizardBitmapImage.Bitmap.LoadFromStream(BottomBitmap);
+			WelcomeBitmapBottom.Bitmap := WizardForm.WizardBitmapImage.Bitmap;
+		except
+			DebugMsg('UpdateWizardImages','Error loading image: ' + GetExceptionMessage);
+		finally
+			if BottomBitmap <> nil then
+				BottomBitmap.Free;
+		end;
+		WizardForm.WizardBitmapImage.Width := WizardForm.ClientWidth;
+		WizardForm.WizardBitmapImage.Height := WizardForm.ClientHeight;
+    end;
 end;
 
 procedure PrepareWelcomePage();
