@@ -68,7 +68,6 @@ function self_build ([string]$dep, [string]$option1, [string]$option2)
     if (-not (Test-Path $dep))
       {
         $repo="https://gitlab.gnome.org/GNOME/$dep.git"
-
         # For tagged jobs (i.e. release or test jobs for upcoming releases), use the
         # last tag. Otherwise use the default branch's HEAD.
         if ($CI_COMMIT_TAG)
@@ -78,7 +77,6 @@ function self_build ([string]$dep, [string]$option1, [string]$option2)
             $git_options="--branch=$tag"
             Write-Output "Using tagged release of ${dep}: $tag"
           }
-
         git clone $git_options --depth $GIT_DEPTH $repo
       }
     Set-Location $dep
