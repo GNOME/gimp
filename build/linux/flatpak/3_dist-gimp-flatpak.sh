@@ -1,5 +1,10 @@
 #!/bin/sh
 
+case $(readlink /proc/$$/exe) in
+  *bash)
+    set -o posix
+    ;;
+esac
 set -e
 
 
@@ -38,10 +43,6 @@ fi
 if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
   echo -e "\e[0Ksection_start:`date +%s`:flat_publish[collapsed=true]\r\e[0KPublishing repo to GNOME nightly"
   curl https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml --output flatpak_ci_initiative.yml
-  IFS=$'\n' cmd_array=($(cat flatpak_ci_initiative.yml | sed -n '/flatpak build-update-repo/,/exit $result\"/p' | sed 's/    - //'))
-  IFS=$' \t\n'
-  for cmd in "${cmd_array[@]}"; do
-    eval "$cmd" || continue
-  done
+  source <(cat flatpak_ci_initiative.yml | sed -n '/flatpak build-update-repo/,/exit $result\"/p' | sed 's/    - //')
   echo -e "\e[0Ksection_end:`date +%s`:flat_publish\r\e[0K"
 fi

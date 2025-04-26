@@ -1,5 +1,10 @@
 #!/bin/sh
 
+case $(readlink /proc/$$/exe) in
+  *bash)
+    set -o posix
+    ;;
+esac
 set -e
 
 if [ -z "$GITLAB_CI" ]; then
@@ -7,7 +12,7 @@ if [ -z "$GITLAB_CI" ]; then
   if [ "$0" != 'build/linux/flatpak/1_build-deps-flatpak.sh' ] && [ ${PWD/*\//} != 'flatpak' ]; then
     echo -e '\033[31m(ERROR)\033[0m: Script called from wrong dir. Please, read: https://developer.gimp.org/core/setup/build/linux/'
     exit 1
-  elif [ ${PWD/*\//} = 'flatpak' ]; then
+  elif [ $(basename "$PWD") = 'flatpak' ]; then
     cd ../../..
   fi
 fi
