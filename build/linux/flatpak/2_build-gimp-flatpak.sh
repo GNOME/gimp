@@ -50,7 +50,7 @@ if [ -z "$GITLAB_CI" ] && [ "$1" != '--ci' ]; then
 elif [ "$GITLAB_CI" ] || [ "$1" = '--ci' ]; then
   echo -e "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP"
   eval $FLATPAK_BUILDER --force-clean --user --disable-rofiles-fuse --keep-build-dirs --build-only --disable-download \
-                  "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json &> gimp-flatpak-builder.log || cat gimp-flatpak-builder.log
+                        "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json &> gimp-flatpak-builder.log || cat gimp-flatpak-builder.log
   if [ "$GITLAB_CI"  ]; then
     tar cf gimp-meson-log.tar .flatpak-builder/build/gimp-1/_flatpak_build/meson-logs/meson-log.txt
   fi
@@ -60,7 +60,7 @@ elif [ "$GITLAB_CI" ] || [ "$1" = '--ci' ]; then
   ## https://github.com/flatpak/flatpak-builder/issues/14
   echo -e "\e[0Ksection_start:`date +%s`:gimp_bundle[collapsed=true]\r\e[0KCreating OSTree repo"
   eval $FLATPAK_BUILDER --user --disable-rofiles-fuse --finish-only --repo=repo \
-                  "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
+                        "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
   if [ "$GITLAB_CI"  ]; then
     tar cf repo.tar repo/
   fi

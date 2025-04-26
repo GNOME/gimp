@@ -52,19 +52,19 @@ fi
 # Build some deps (including babl and GEGL)
 if [ -z "$GITLAB_CI" ] && [ "$1" != '--ci' ]; then
   eval $FLATPAK_BUILDER --force-clean --ccache --state-dir=../.flatpak-builder --keep-build-dirs --stop-at=gimp \
-                  "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json 2>&1 | tee flatpak-builder.log
+                        "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json 2>&1 | tee flatpak-builder.log
 
 elif [ "$GITLAB_CI" ] || [ "$1" = '--ci' ]; then
   ## (The deps building is too long and no complete output would be collected,
   ## even from GitLab runner messages. So, let's silent and save logs as a file.)
   echo -e "\e[0Ksection_start:`date +%s`:deps_build[collapsed=true]\r\e[0KBuilding dependencies not present in GNOME runtime"
   eval $FLATPAK_BUILDER --force-clean --user --disable-rofiles-fuse --keep-build-dirs --build-only --stop-at=babl \
-                  "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json &> flatpak-builder.log
+                        "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json &> flatpak-builder.log
   echo -e "\e[0Ksection_end:`date +%s`:deps_build\r\e[0K"
 
   echo -e "\e[0Ksection_start:`date +%s`:babl_build[collapsed=true]\r\e[0KBuilding babl"
   eval $FLATPAK_BUILDER --force-clean --user --disable-rofiles-fuse --keep-build-dirs --build-only --stop-at=gegl \
-                  "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
+                        "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
   if [ "$GITLAB_CI" ]; then
     tar cf babl-meson-log.tar .flatpak-builder/build/babl-1/_flatpak_build/meson-logs/meson-log.txt
   fi
@@ -72,7 +72,7 @@ elif [ "$GITLAB_CI" ] || [ "$1" = '--ci' ]; then
 
   echo -e "\e[0Ksection_start:`date +%s`:gegl_build[collapsed=true]\r\e[0KBuilding gegl"
   eval $FLATPAK_BUILDER --force-clean --user --disable-rofiles-fuse --keep-build-dirs --build-only --stop-at=gimp \
-                  "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
+                        "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
   if [ "$GITLAB_CI" ]; then
     tar cf gegl-meson-log.tar .flatpak-builder/build/gegl-1/_flatpak_build/meson-logs/meson-log.txt
     echo -e "\e[0Ksection_end:`date +%s`:gegl_build\r\e[0K"
