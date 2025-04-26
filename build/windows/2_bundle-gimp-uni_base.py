@@ -198,6 +198,14 @@ for dir in ["bin", "lib"]:
 
 ### .pdb (CodeView) debug symbols from babl, gegl and GIMP binaries
 bundle(GIMP_PREFIX, "bin/*.pdb")
+### Remove .pdb without corresponding binaries (depends on what was choosen to be bundled above)
+files = os.listdir(GIMP_DISTRIB / "bin")
+binaries = {os.path.splitext(file)[0] for file in files if file.endswith(('.exe', '.dll'))}
+for file in files:
+  if file.endswith('.pdb'):
+    if os.path.splitext(file)[0] not in binaries:
+      print(f"(INFO): removing orphan {file}")
+      os.remove(os.path.join(GIMP_DISTRIB / "bin", file))
 ### Remove ancient COFF symbol table (not used for debugging) from MSYS2 binaries
 for bin_path in GIMP_DISTRIB.rglob("*"):
   if bin_path.suffix.lower() in (".dll", ".exe", ".pyd"):
