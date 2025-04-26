@@ -40,13 +40,25 @@ gimp_image_add_sample_point_at_pos (GimpImage *image,
                                     gint       y,
                                     gboolean   push_undo)
 {
-  GimpSamplePoint *sample_point;
+  GimpSamplePoint   *sample_point;
+  GList             *sample_points;
+  GimpColorPickMode  pick_mode = GIMP_COLOR_PICK_MODE_PIXEL;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (x >= 0 && x < gimp_image_get_width  (image), NULL);
   g_return_val_if_fail (y >= 0 && y < gimp_image_get_height (image), NULL);
 
   sample_point = gimp_sample_point_new (image->gimp->next_sample_point_id++);
+
+  /* Use previous sample point pick mode if it exists */
+  for (sample_points = GIMP_IMAGE_GET_PRIVATE (image)->sample_points;
+       sample_points;
+       sample_points = g_list_next (sample_points))
+    {
+      pick_mode =
+        gimp_sample_point_get_pick_mode (GIMP_SAMPLE_POINT (sample_points->data));
+    }
+  gimp_sample_point_set_pick_mode (sample_point, pick_mode);
 
   if (push_undo)
     gimp_image_undo_push_sample_point (image, C_("undo-type", "Add Sample Point"),
