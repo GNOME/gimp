@@ -79,6 +79,7 @@ enum
   PROP_OUTLINE_PATTERN,     /* context */
   PROP_OUTLINE_WIDTH,       /* stroke-options */
   PROP_OUTLINE_UNIT,
+  PROP_OUTLINE_DIRECTION,
   PROP_OUTLINE_CAP_STYLE,
   PROP_OUTLINE_JOIN_STYLE,
   PROP_OUTLINE_MITER_LIMIT,
@@ -308,6 +309,11 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                           _("Outline width unit"),
                           TRUE, FALSE, gimp_unit_pixel (),
                           GIMP_PARAM_STATIC_STRINGS);
+   GIMP_CONFIG_PROP_ENUM (object_class, PROP_OUTLINE_DIRECTION,
+                          "outline-direction", NULL, NULL,
+                          GIMP_TYPE_TEXT_OUTLINE_DIRECTION,
+                          GIMP_TEXT_OUTLINE_DIRECTION_OUTER,
+                          GIMP_PARAM_STATIC_STRINGS);
    GIMP_CONFIG_PROP_ENUM (object_class, PROP_OUTLINE_CAP_STYLE,
                           "outline-cap-style",
                           NULL, NULL,
@@ -325,7 +331,7 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                               "join if the miter would extend to a "
                               "distance of more than miter-limit * "
                               "line-width from the actual join point."),
-                            0.0, 100.0, 10.0,
+                            0.0, 100.0, 2.0,
                             GIMP_PARAM_STATIC_STRINGS);
    GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_OUTLINE_ANTIALIAS,
                              "outline-antialias",
@@ -445,6 +451,9 @@ gimp_text_options_get_property (GObject    *object,
     case PROP_OUTLINE_UNIT:
       g_value_set_object (value, options->outline_unit);
       break;
+    case PROP_OUTLINE_DIRECTION:
+      g_value_set_enum (value, options->outline_direction);
+      break;
     case PROP_OUTLINE_CAP_STYLE:
       g_value_set_enum (value, options->outline_cap_style);
       break;
@@ -562,6 +571,9 @@ gimp_text_options_set_property (GObject      *object,
     case PROP_OUTLINE_UNIT:
       options->outline_unit = g_value_get_object (value);
       break;
+    case PROP_OUTLINE_DIRECTION:
+      options->outline_direction = g_value_get_enum (value);
+      break;
     case PROP_OUTLINE_CAP_STYLE:
       options->outline_cap_style = g_value_get_enum (value);
       break;
@@ -637,6 +649,7 @@ gimp_text_options_reset (GimpConfig *config)
   gimp_config_reset_property (object, "outline-pattern");
   gimp_config_reset_property (object, "outline-width");
   gimp_config_reset_property (object, "outline-unit");
+  gimp_config_reset_property (object, "outline-direction");
   gimp_config_reset_property (object, "outline-cap-style");
   gimp_config_reset_property (object, "outline-join-style");
   gimp_config_reset_property (object, "outline-miter-limit");
@@ -760,6 +773,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   GtkWidget         *main_vbox = gimp_tool_options_gui (tool_options);
   GimpAsyncSet      *async_set;
   GtkWidget         *options_vbox;
+  GtkWidget         *outline_grid;
   GtkWidget         *grid;
   GtkWidget         *vbox;
   GtkWidget         *hbox;
@@ -872,6 +886,18 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
                     outline_frame);
   gimp_text_options_outline_changed (button, outline_frame);
 
+  outline_grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (outline_grid), 2);
+  gtk_grid_set_row_spacing (GTK_GRID (outline_grid), 2);
+  gtk_container_add (GTK_CONTAINER (outline_frame), outline_grid);
+  gtk_widget_show (outline_grid);
+
+  button = gimp_prop_enum_combo_box_new (config, "outline-direction", -1, -1);
+  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (button), _("Outline Direction:"));
+  gimp_grid_attach_aligned (GTK_GRID (outline_grid), 0, 0,
+                            NULL, 0.0, 0.5,
+                            button, 1);
+
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 2);
   gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
@@ -934,8 +960,10 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   BIND (dash-info);
 
   editor = gimp_stroke_editor_new (stroke_options, 72.0, TRUE, TRUE);
-  gtk_container_add (GTK_CONTAINER (outline_frame), editor);
-  gtk_widget_show (editor);
+  gimp_grid_attach_aligned (GTK_GRID (outline_grid), 0, 1,
+                            NULL, 0.0, 0.5,
+                            editor, 1);
+  gtk_widget_set_visible (editor, TRUE);
 
   g_object_unref (stroke_options);
 

@@ -1014,10 +1014,31 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
       cairo_set_line_width (cr, text->outline_width * 2);
 
       gimp_text_layout_render (layout, cr, text->base_dir, TRUE);
-      cairo_clip_preserve (cr);
-      cairo_stroke (cr);
+
+      if (text->outline_direction == GIMP_TEXT_OUTLINE_DIRECTION_INNER)
+        cairo_clip_preserve (cr);
+
+      cairo_stroke_preserve (cr);
+
+      /* Clears inner outline if outline direction is outward */
+      if (text->outline_direction == GIMP_TEXT_OUTLINE_DIRECTION_OUTER &&
+          text->outline == GIMP_TEXT_OUTLINE_STROKE_ONLY)
+        {
+          cairo_set_operator (cr, CAIRO_OPERATOR_CLEAR);
+          cairo_fill_preserve (cr);
+        }
 
       cairo_restore (cr);
+
+      if (text->outline_direction == GIMP_TEXT_OUTLINE_DIRECTION_OUTER &&
+          text->outline != GIMP_TEXT_OUTLINE_STROKE_ONLY)
+        {
+          cairo_save (cr);
+
+          gimp_text_layout_render (layout, cr, layer->text->base_dir, FALSE);
+
+          cairo_restore (cr);
+        }
     }
 
   cairo_destroy (cr);

@@ -35,41 +35,42 @@ typedef struct _GimpToolOptionsClass GimpTextOptionsClass;
 
 struct _GimpTextOptions
 {
-  GimpToolOptions        tool_options;
+  GimpToolOptions           tool_options;
 
-  GimpUnit              *unit;
-  gdouble                font_size;
-  gboolean               antialias;
-  GimpTextHintStyle      hint_style;
-  gchar                 *language;
-  GimpTextDirection      base_dir;
-  GimpTextJustification  justify;
-  gdouble                indent;
-  gdouble                line_spacing;
-  gdouble                letter_spacing;
-  GimpTextBoxMode        box_mode;
+  GimpUnit                 *unit;
+  gdouble                   font_size;
+  gboolean                  antialias;
+  GimpTextHintStyle         hint_style;
+  gchar                    *language;
+  GimpTextDirection         base_dir;
+  GimpTextJustification     justify;
+  gdouble                   indent;
+  gdouble                   line_spacing;
+  gdouble                   letter_spacing;
+  GimpTextBoxMode           box_mode;
 
-  GimpTextOutline        outline;
-  GimpCustomStyle        outline_style;
-  GeglColor             *outline_foreground;
-  GimpPattern           *outline_pattern;
-  gdouble                outline_width;
-  GimpUnit              *outline_unit;
-  GimpCapStyle           outline_cap_style;
-  GimpJoinStyle          outline_join_style;
-  gdouble                outline_miter_limit;
-  gboolean               outline_antialias;
-  gdouble                outline_dash_offset;
-  GArray                *outline_dash_info;
+  GimpTextOutline           outline;
+  GimpCustomStyle           outline_style;
+  GeglColor                *outline_foreground;
+  GimpPattern              *outline_pattern;
+  gdouble                   outline_width;
+  GimpUnit                 *outline_unit;
+  GimpTextOutlineDirection  outline_direction;
+  GimpCapStyle              outline_cap_style;
+  GimpJoinStyle             outline_join_style;
+  gdouble                   outline_miter_limit;
+  gboolean                  outline_antialias;
+  gdouble                   outline_dash_offset;
+  GArray                   *outline_dash_info;
 
-  GimpViewType           font_view_type;
-  GimpViewSize           font_view_size;
+  GimpViewType              font_view_type;
+  GimpViewSize              font_view_size;
 
-  gboolean               use_editor;
-  gboolean               show_on_canvas;
+  gboolean                  use_editor;
+  gboolean                  show_on_canvas;
 
   /*  options gui  */
-  GtkWidget             *size_entry;
+  GtkWidget                *size_entry;
 };
 
 
