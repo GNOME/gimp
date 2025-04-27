@@ -271,6 +271,9 @@ layers_edit_attributes_cmd_callback (GimpAction *action,
 
   layer = layers->data;
 
+  if (gimp_layer_is_floating_sel (layer))
+    return;
+
 #define EDIT_DIALOG_KEY "gimp-layer-edit-attributes-dialog"
 
   dialog = dialogs_get_dialog (G_OBJECT (layer), EDIT_DIALOG_KEY);
