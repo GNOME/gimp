@@ -100,5 +100,6 @@ gimp_text_outline_direction_get_type (void)
   return type;
 }
 
+
 /* Generated data ends here */
 
