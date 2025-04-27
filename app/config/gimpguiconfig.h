@@ -51,6 +51,7 @@ struct _GimpGuiConfig
   gboolean             restore_session;
   gboolean             restore_monitor;
   gboolean             save_tool_options;
+  gboolean             show_tooltips;
   gboolean             save_accels;
   gboolean             restore_accels;
   gint                 last_opened_size;

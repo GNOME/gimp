@@ -154,6 +154,9 @@ themes_init (Gimp *gimp)
   g_signal_connect (config, "notify::font-relative-size",
                     G_CALLBACK (themes_theme_change_notify),
                     gimp);
+  g_signal_connect (config, "notify::show-tooltips",
+                    G_CALLBACK (themes_theme_change_notify),
+                    gimp);
 
   themes_theme_change_notify (config, NULL, gimp);
 
@@ -702,6 +705,13 @@ themes_apply_theme (Gimp          *gimp,
                                   g_ascii_dtostr (font_size_string,
                                                   G_ASCII_DTOSTR_BUF_SIZE,
                                                   config->font_relative_size));
+        }
+
+      if (! error && ! config->show_tooltips)
+        {
+          g_output_stream_printf (output, NULL, NULL, &error,
+                                  "\n"
+                                  "tooltip { opacity: 0 }");
         }
 
       if (! error)
