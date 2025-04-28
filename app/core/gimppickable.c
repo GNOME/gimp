@@ -314,9 +314,6 @@ gimp_pickable_pick_color (GimpPickable *pickable,
     {
       gint radius = floor (average_radius);
 
-      format = babl_format_with_space ("RaGaBaA double",
-                                       babl_format_get_space (format));
-
       gimp_pickable_get_pixel_average (pickable,
                                        GEGL_RECTANGLE (x - radius,
                                                        y - radius,
