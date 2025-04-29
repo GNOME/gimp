@@ -2310,6 +2310,48 @@ gimp_text_tool_paste_clipboard (GimpTextTool *text_tool)
 }
 
 void
+gimp_text_tool_toggle_tag (GimpTextTool *text_tool,
+                           GtkTextTag   *tag)
+{
+  GtkTextBuffer *buffer;
+
+  g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
+  g_return_if_fail (GTK_IS_TEXT_BUFFER (text_tool->buffer));
+
+  buffer = GTK_TEXT_BUFFER (text_tool->buffer);
+
+  if (gtk_text_buffer_get_has_selection (buffer))
+    {
+      GtkTextIter start;
+      GtkTextIter end;
+      GtkTextIter iter;
+      gboolean    is_tag_active = FALSE;
+
+      gtk_text_buffer_get_selection_bounds (buffer, &start, &end);
+
+      iter = start;
+      while (! gtk_text_iter_equal (&iter, &end))
+        {
+          if (gtk_text_iter_has_tag (&iter, tag))
+            {
+              is_tag_active = TRUE;
+              break;
+            }
+          gtk_text_iter_forward_char (&iter);
+        }
+
+      gtk_text_buffer_begin_user_action (buffer);
+
+      if (is_tag_active)
+        gtk_text_buffer_remove_tag (buffer, tag, &start, &end);
+      else
+        gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
+
+      gtk_text_buffer_end_user_action (buffer);
+    }
+}
+
+void
 gimp_text_tool_create_path (GimpTextTool *text_tool)
 {
   GimpPath *path;

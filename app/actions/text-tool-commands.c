@@ -85,6 +85,36 @@ text_tool_paste_cmd_callback (GimpAction *action,
 }
 
 void
+text_tool_toggle_bold_cmd_callback (GimpAction *action,
+                                    GVariant   *value,
+                                    gpointer    data)
+{
+  GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
+
+  gimp_text_tool_toggle_tag (text_tool, text_tool->buffer->bold_tag);
+}
+
+void
+text_tool_toggle_italic_cmd_callback (GimpAction *action,
+                                      GVariant   *value,
+                                      gpointer    data)
+{
+  GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
+
+  gimp_text_tool_toggle_tag (text_tool, text_tool->buffer->italic_tag);
+}
+
+void
+text_tool_toggle_underline_cmd_callback (GimpAction *action,
+                                         GVariant   *value,
+                                         gpointer    data)
+{
+  GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
+
+  gimp_text_tool_toggle_tag (text_tool, text_tool->buffer->underline_tag);
+}
+
+void
 text_tool_delete_cmd_callback (GimpAction *action,
                                GVariant   *value,
                                gpointer    data)

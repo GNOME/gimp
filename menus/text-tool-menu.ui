@@ -10,6 +10,11 @@
       <item><attribute name="action">text-tool.text-tool-paste</attribute></item>
       <item><attribute name="action">text-tool.text-tool-delete</attribute></item>
       <section>
+        <item><attribute name="action">text-tool.text-tool-toggle-bold</attribute></item>
+        <item><attribute name="action">text-tool.text-tool-toggle-italic</attribute></item>
+        <item><attribute name="action">text-tool.text-tool-toggle-underline</attribute></item>
+      </section>
+      <section>
         <item><attribute name="action">text-tool.text-tool-load</attribute></item>
         <item><attribute name="action">text-tool.text-tool-clear</attribute></item>
       </section>

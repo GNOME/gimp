@@ -448,12 +448,14 @@ gboolean
 gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
                                  GdkEventKey  *kevent)
 {
-  GimpTool         *tool   = GIMP_TOOL (text_tool);
-  GimpDisplayShell *shell  = gimp_display_get_shell (tool->display);
-  GtkTextBuffer    *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
+  GimpTool         *tool    = GIMP_TOOL (text_tool);
+  GimpDisplayShell *shell   = gimp_display_get_shell (tool->display);
+  GtkTextBuffer    *buffer  = GTK_TEXT_BUFFER (text_tool->buffer);
   GtkTextIter       cursor;
   GtkTextIter       selection;
-  gboolean          retval = TRUE;
+  gboolean          retval  = TRUE;
+  GdkDisplay       *display = gdk_display_get_default ();
+  GdkModifierType   primary_mask;
 
   if (! gtk_widget_has_focus (shell->canvas))
     {
@@ -499,6 +501,8 @@ gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
   gtk_text_buffer_get_iter_at_mark (buffer, &selection,
                                     gtk_text_buffer_get_selection_bound (buffer));
 
+  primary_mask = gdk_keymap_get_modifier_mask (gdk_keymap_get_for_display (display),
+                                               GDK_MODIFIER_INTENT_PRIMARY_ACCELERATOR);
   switch (kevent->keyval)
     {
     case GDK_KEY_Return:
@@ -518,6 +522,24 @@ gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
     case GDK_KEY_Escape:
       gimp_tool_control (GIMP_TOOL (text_tool), GIMP_TOOL_ACTION_HALT,
                          GIMP_TOOL (text_tool)->display);
+      break;
+
+    case GDK_KEY_b:
+    case GDK_KEY_B:
+      if ((kevent->state & gimp_get_all_modifiers_mask ()) == primary_mask)
+        gimp_text_tool_toggle_tag (text_tool, text_tool->buffer->bold_tag);
+      break;
+
+    case GDK_KEY_i:
+    case GDK_KEY_I:
+      if ((kevent->state & gimp_get_all_modifiers_mask ()) == primary_mask)
+        gimp_text_tool_toggle_tag (text_tool, text_tool->buffer->italic_tag);
+      break;
+
+    case GDK_KEY_u:
+    case GDK_KEY_U:
+      if ((kevent->state & gimp_get_all_modifiers_mask ()) == primary_mask)
+        gimp_text_tool_toggle_tag (text_tool, text_tool->buffer->underline_tag);
       break;
 
     default:

@@ -27,6 +27,16 @@ void   text_tool_copy_cmd_callback            (GimpAction *action,
 void   text_tool_paste_cmd_callback           (GimpAction *action,
                                                GVariant   *value,
                                                gpointer    data);
+void   text_tool_toggle_bold_cmd_callback     (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   text_tool_toggle_italic_cmd_callback   (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   text_tool_toggle_underline_cmd_callback
+                                              (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
 void   text_tool_delete_cmd_callback          (GimpAction *action,
                                                GVariant   *value,
                                                gpointer    data);
