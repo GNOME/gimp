@@ -23,6 +23,8 @@
 
 #include "config.h"
 
+#include <fcntl.h>
+#include <glib/gstdio.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <pango/pangocairo.h>
 #include <pango/pangofc-fontmap.h>
@@ -750,8 +752,13 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
   FcObjectSet   *os;
   FcPattern     *pat;
   FcFontSet     *fontset;
+  FT_Library     ft;
+  GSList        *xml_configs_list;
+  GString       *xml;                                 
+  GString       *xml_bold_variant;
+  GString       *xml_italic_variant;
+  GString       *xml_bold_italic_variant_and_global;
   GString       *ignored_fonts;
-  GString       *global_xml = g_string_new ("<fontconfig>\n");
   gint           n_ignored  = 0;
   gint           i;
 
@@ -767,7 +774,6 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
                          FC_WIDTH,
                          FC_INDEX,
                          FC_FONTVERSION,
-                         FC_FONTFORMAT,
                          NULL);
   g_return_if_fail (os);
 
@@ -779,21 +785,29 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
       return;
     }
 
+    if (FT_Init_FreeType(&ft))
+    {
+        g_critical ("%s: FreeType Initialization Failed.", G_STRFUNC);
+        return -1;
+    }
+
   fontset       = FcFontList (NULL, pat, os);
-  ignored_fonts = g_string_new (NULL);
 
   FcPatternDestroy (pat);
   FcObjectSetDestroy (os);
 
   g_return_if_fail (fontset);
 
+  xml_configs_list = NULL;
+  xml = g_string_new (NULL);
+  xml_italic_variant = g_string_new (NULL);
+  xml_bold_variant = g_string_new (NULL);
+  xml_bold_italic_variant_and_global = g_string_new ("<fontconfig>");
+  ignored_fonts = g_string_new (NULL);
+
   for (i = 0; i < fontset->nfont; i++)
     {
       PangoFontDescription *pfd;
-      GString              *xml;
-      GString              *xml_bold_variant;
-      GString              *xml_italic_variant;
-      GString              *xml_bold_italic_variant;
       gchar                *family           = NULL;
       gchar                *style            = NULL;
       gchar                *psname           = NULL;
@@ -803,7 +817,6 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
       gchar                *fullname         = NULL;
       gchar                *escaped_file     = NULL;
       gchar                *file             = NULL;
-      hb_blob_t            *blob             = NULL;
       gint                  index            = -1;
       gint                  weight           = -1;
       gint                  width            = -1;
@@ -812,6 +825,7 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
       gpointer              font_info[PROPERTIES_COUNT];
       PangoFontDescription *pattern_pfd;
       gchar                *pattern_pfd_desc;
+      FT_Face               face;
 
       FcPatternGetString (fontset->fonts[i], FC_FILE, 0, (FcChar8 **) &file);
 
@@ -822,21 +836,45 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
           continue;
         }
 
-      blob = hb_blob_create_from_file_or_fail (file);
-      /*
-       * Pango doesn't support non SFNT fonts because harfbuzz doesn't support them.
-       * woff and woff2, not supported by pango (because they are not yet supported by harfbuzz).
-       * pcf,pcf.gz are bitmap font formats, not supported by pango (because of harfbuzz).
-       * afm, pfm, pfb are type1 font formats, not supported by pango (because of harfbuzz).
-       */
-      if (blob == NULL || hb_face_count (blob) == 0)
+      if (FT_New_Face(ft, file, 0, &face))
         {
-          g_string_append_printf (ignored_fonts, "- %s (not supported by pango)\n", file);
+          g_string_append_printf (ignored_fonts, "- %s (Failed To Create A FreeType Face)\n", file);
           n_ignored++;
           continue;
         }
 
-      hb_blob_destroy (blob);
+      /*
+       * Pango doesn't support non SFNT fonts because harfbuzz doesn't support them.
+       * woff and woff2, not supported by pango (because they are not yet supported by harfbuzz, 
+       * when using harfbuzz's default loader, which is how pango uses it).
+       * pcf,pcf.gz are bitmap font formats, not supported by pango (because of harfbuzz).
+       * afm, pfm, pfb are type1 font formats, not supported by pango (because of harfbuzz).
+       */
+      if (face->face_flags & FT_FACE_FLAG_SFNT)
+        {
+          /* If this is an SFNT wrapper, try to sniff the SFNT tag which is the
+           * first 4 bytes, to see if it is a WOFF or WOFF2 wrapper. */
+          char buf[4] = {0};
+          int  fd     = g_open ((gchar *) file, O_RDONLY, 0);
+
+          read (fd, buf, 4);
+          g_close (fd, NULL);
+          FT_Done_Face (face);
+
+          if (buf[0] == 'w' && buf[1] == 'O' && buf[2] == 'F')
+            {
+              g_string_append_printf (ignored_fonts, "- %s (WOFF[2] font)\n", file);
+              n_ignored++;
+              continue;
+            }
+        }
+      else
+        {
+          FT_Done_Face (face);
+          g_string_append_printf (ignored_fonts, "- %s (NON SFNT font)\n", file);
+          n_ignored++;
+          continue;
+        }
 
       /* Some variable fonts have only a family name and a font version.
        * But we also check in case there is no family name */
@@ -876,12 +914,12 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
 
       newname = g_strdup_printf ("gimpfont%i", i);
 
-      xml = g_string_new ("<match>");
+      xml = g_string_append (xml, "<match>");
 
       /*We can't use faux bold (sometimes real bold) unless it is specified in fontconfig*/
-      xml_bold_variant   = g_string_new ("<match>");
-      xml_italic_variant = g_string_new ("<match>");
-      xml_bold_italic_variant = g_string_new ("<match>");
+      xml_bold_variant   = g_string_append (xml_bold_variant, "<match>");
+      xml_italic_variant = g_string_append (xml_italic_variant, "<match>");
+      xml_bold_italic_variant_and_global = g_string_append (xml_bold_italic_variant_and_global, "<match>");
 
       g_string_append_printf (xml,
                               "<test name=\"family\"><string>%s</string></test>",
@@ -892,16 +930,16 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
       g_string_append_printf (xml_italic_variant,
                               "<test name=\"family\"><string>%s</string></test>",
                               newname);
-      g_string_append_printf (xml_bold_italic_variant,
+      g_string_append_printf (xml_bold_italic_variant_and_global,
                               "<test name=\"family\"><string>%s</string></test>",
                               newname);
       g_string_append (xml_bold_variant,
                        "<test name=\"weight\" compare=\"eq\"><const>bold</const></test>");
       g_string_append (xml_italic_variant,
                        "<test name=\"slant\" compare=\"eq\"><const>italic</const></test>");
-      g_string_append (xml_bold_italic_variant,
+      g_string_append (xml_bold_italic_variant_and_global,
                        "<test name=\"weight\" compare=\"eq\"><const>bold</const></test>");
-      g_string_append (xml_bold_italic_variant,
+      g_string_append (xml_bold_italic_variant_and_global,
                        "<test name=\"slant\" compare=\"eq\"><const>italic</const></test>");
 
       escaped_fullname = g_markup_escape_text (fullname, -1);
@@ -919,7 +957,7 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
       g_string_append_printf (xml_italic_variant,
                               "<edit name=\"family\" mode=\"assign\" binding=\"strong\"><string>%s</string></edit>",
                               family);
-      g_string_append_printf (xml_bold_italic_variant,
+      g_string_append_printf (xml_bold_italic_variant_and_global,
                               "<edit name=\"family\" mode=\"assign\" binding=\"strong\"><string>%s</string></edit>",
                               family);
 
@@ -929,7 +967,7 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
       g_string_append_printf (xml_italic_variant,
                               "<edit name=\"family\" mode=\"prepend\" binding=\"strong\"><string>%s</string></edit>",
                               escaped_fullname);
-      g_string_append_printf (xml_bold_italic_variant,
+      g_string_append_printf (xml_bold_italic_variant_and_global,
                               "<edit name=\"family\" mode=\"prepend\" binding=\"strong\"><string>%s</string></edit>",
                               escaped_fullname);
       g_free (escaped_fullname);
@@ -961,7 +999,7 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
         }
 
       g_string_append (xml_bold_variant, "<edit name=\"weight\" mode=\"assign\" binding=\"strong\"><const>bold</const></edit>");
-      g_string_append (xml_bold_italic_variant, "<edit name=\"weight\" mode=\"assign\" binding=\"strong\"><const>bold</const></edit>");
+      g_string_append (xml_bold_italic_variant_and_global, "<edit name=\"weight\" mode=\"assign\" binding=\"strong\"><const>bold</const></edit>");
 
       if (weight != -1)
         {
@@ -984,13 +1022,13 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
           g_string_append_printf (xml_italic_variant,
                                   "<edit name=\"width\" mode=\"assign\" binding=\"strong\"><int>%i</int></edit>",
                                   width);
-          g_string_append_printf (xml_bold_italic_variant,
+          g_string_append_printf (xml_bold_italic_variant_and_global,
                                   "<edit name=\"width\" mode=\"assign\" binding=\"strong\"><int>%i</int></edit>",
                                   width);
         }
 
       g_string_append (xml_italic_variant, "<edit name=\"slant\" mode=\"assign\" binding=\"strong\"><const>italic</const></edit>");
-      g_string_append (xml_bold_italic_variant, "<edit name=\"slant\" mode=\"assign\" binding=\"strong\"><const>italic</const></edit>");
+      g_string_append (xml_bold_italic_variant_and_global, "<edit name=\"slant\" mode=\"assign\" binding=\"strong\"><const>italic</const></edit>");
 
       if (slant != -1)
         {
@@ -1013,7 +1051,7 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
           g_string_append_printf (xml_italic_variant,
                                   "<edit name=\"fontversion\" mode=\"assign\" binding=\"strong\"><int>%i</int></edit>",
                                   fontversion);
-          g_string_append_printf (xml_bold_italic_variant,
+          g_string_append_printf (xml_bold_italic_variant_and_global,
                                   "<edit name=\"fontversion\" mode=\"assign\" binding=\"strong\"><int>%i</int></edit>",
                                   fontversion);
         }
@@ -1026,16 +1064,10 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
         }
 
 
-      g_string_append (xml, "</match>\n");
-      g_string_append (xml_bold_variant, "</match>\n");
-      g_string_append (xml_italic_variant, "</match>\n");
-      g_string_append (xml_bold_italic_variant, "</match>\n");
-
-      FcConfigParseAndLoadFromMemory (FcConfigGetCurrent (), (const FcChar8 *) xml_bold_italic_variant->str, FcTrue);
-      FcConfigParseAndLoadFromMemory (FcConfigGetCurrent (), (const FcChar8 *) xml_italic_variant->str, FcTrue);
-      FcConfigParseAndLoadFromMemory (FcConfigGetCurrent (), (const FcChar8 *) xml_bold_variant->str, FcTrue);
-      FcConfigParseAndLoadFromMemory (FcConfigGetCurrent (), (const FcChar8 *) xml->str, FcTrue);
-
+      g_string_append (xml, "</match>");
+      g_string_append (xml_bold_variant, "</match>");
+      g_string_append (xml_italic_variant, "</match>");
+      g_string_append (xml_bold_italic_variant_and_global, "</match>");
       pfd = pango_font_description_from_string (newname);
 
       if (display_name != NULL)
@@ -1048,25 +1080,26 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
           gimp_font_factory_add_font (container, context, pfd, fullname, (const gchar *) file, font_info);
         }
 
-      g_string_append (global_xml, xml_bold_italic_variant->str);
-      g_string_append (global_xml, xml_italic_variant->str);
-      g_string_append (global_xml, xml_bold_variant->str);
-      g_string_append (global_xml, xml->str);
-
       pango_font_description_free (pattern_pfd);
       g_free (pattern_pfd_desc);
       pango_font_description_free (pfd);
       g_free (newname);
-      g_string_free (xml, TRUE);
-      g_string_free (xml_bold_variant, TRUE);
-      g_string_free (xml_italic_variant, TRUE);
-      g_string_free (xml_bold_italic_variant, TRUE);
     }
 
-  g_string_append (global_xml, "</fontconfig>");
+  g_string_append (xml_bold_italic_variant_and_global, xml_italic_variant->str);
+  g_string_append (xml_bold_italic_variant_and_global, xml_bold_variant->str);
+  g_string_append (xml_bold_italic_variant_and_global, xml->str);
+  g_string_append (xml_bold_italic_variant_and_global, "</fontconfig>");
 
   g_free (factory->fonts_renaming_config);
-  factory->fonts_renaming_config = g_strdup (global_xml->str);
+
+  FcConfigParseAndLoadFromMemory (FcConfigGetCurrent (), (const FcChar8 *) xml_bold_italic_variant_and_global->str, FcTrue);
+
+  factory->fonts_renaming_config = xml_bold_italic_variant_and_global->str;
+
+  /*  only create aliases if there is at least one font available  */
+  if (fontset->nfont > 0)
+    gimp_font_factory_load_aliases (container, context);
 
   if (n_ignored > 0)
     {
@@ -1079,11 +1112,10 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
     }
 
   g_string_free (ignored_fonts, TRUE);
-  g_string_free (global_xml, TRUE);
-
-  /*  only create aliases if there is at least one font available  */
-  if (fontset->nfont > 0)
-    gimp_font_factory_load_aliases (container, context);
-
+  g_string_free (xml, TRUE);
+  g_string_free (xml_italic_variant, TRUE);
+  g_string_free (xml_bold_variant, TRUE);
+  g_string_free (xml_bold_italic_variant_and_global, FALSE);
+  FT_Done_FreeType(ft);
   FcFontSetDestroy (fontset);
 }
