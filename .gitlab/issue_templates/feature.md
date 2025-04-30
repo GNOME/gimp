@@ -3,7 +3,8 @@
 ### Description of the feature
 
 <!-- Please describe your feature with details. Also:
-- If the feature is UI-related, add screenshots, mockups or videos;
+- If the feature is UI-related, please DO NOT REPORT HERE but on
+  gimp-ux: https://gitlab.gnome.org/Teams/GIMP/Design/gimp-ux/-/issues;
 - If the feature is about some standard or API, link relevant resources;
 - If you have a patch, see: https://developer.gimp.org/core/submit-patch/ -->
 
