@@ -1329,12 +1329,16 @@ gimp_filter_tool_commit (GimpFilterTool *filter_tool,
 
       if (non_destructive && ! filter_tool->existing_filter)
         {
-          GimpDrawable *drawable =
-            gimp_drawable_filter_get_drawable (filter_tool->filter);
+          GimpDrawable *drawable;
+          const gchar  *filter_name;
+
+          drawable = gimp_drawable_filter_get_drawable (filter_tool->filter);
+
+          filter_name = gimp_object_get_name (filter_tool->filter);
 
           gimp_image_undo_push_filter_add (gimp_display_get_image (tool->display),
-                                           _("Add filter"),
-                                           drawable, filter_tool->filter);
+                                           filter_name, drawable,
+                                           filter_tool->filter);
         }
 
       drawable = gimp_drawable_filter_get_drawable (filter_tool->filter);
