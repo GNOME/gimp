@@ -19,7 +19,9 @@ AllowAllArgumentsOnNextLine: false
 AllowAllParametersOfDeclarationOnNextLine: false
 AlwaysBreakAfterReturnType: AllDefinitions
 BinPackArguments: true
-BinPackParameters: AlwaysOnePerLine
+# Uncomment when our CI uses LLVM 20.
+# See: https://github.com/llvm/llvm-project/issues/117830
+# BinPackParameters: AlwaysOnePerLine
 BreakBeforeBinaryOperators: None
 BreakBeforeBraces: GNU
 BreakBeforeTernaryOperators: false
