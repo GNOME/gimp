@@ -26,7 +26,7 @@ either in the last stable version of GIMP or on updated development code
 ### Description of the bug
 
 <!--Please describe your issue with details.
-Add screenshot or other files if needed.(write it after the > symbol)-->
+Add full (not cropped) screenshots or other files if needed.(write it after the > symbol)-->
 
 ### Reproduction
 
