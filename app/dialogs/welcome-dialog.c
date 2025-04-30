@@ -424,11 +424,11 @@ welcome_dialog_create_welcome_page (Gimp      *gimp,
 
   /* Translators: the %s string will be the version, e.g. "3.0". */
   tmp = g_strdup_printf (_("You installed GIMP %s!"), GIMP_VERSION);
-  markup = g_strdup_printf ("<big>%s</big>", tmp);
-  g_free (tmp);
   widget = gtk_label_new (NULL);
-  gtk_label_set_markup (GTK_LABEL (widget), markup);
-  g_free (markup);
+  /* XXX For GTK4, we may just replace with gtk_widget_add_css_class() AFAICS. */
+  gtk_style_context_add_class (gtk_widget_get_style_context (widget), "title-3");
+  gtk_label_set_text (GTK_LABEL (widget), tmp);
+  g_free (tmp);
   gtk_label_set_justify (GTK_LABEL (widget), GTK_JUSTIFY_CENTER);
   gtk_label_set_line_wrap (GTK_LABEL (widget), FALSE);
   gtk_widget_set_margin_bottom (widget, 10);
