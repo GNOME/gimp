@@ -13,6 +13,7 @@ Core:
 
   - Make maximum radius for generated brushes consistent across
     codebase.
+  - Use NDE filter name for undo history.
 
 Graphical User Interface:
 
@@ -30,12 +31,25 @@ Graphical User Interface:
   - Keep menubar color consistent when out of focus.
   - We don't show Fx icon for tool-based filters.
   - Updated splash without micro version in it.
+  - Removed size restrictions on Display Filters.
+  - Don't show hidden tools on toolbox tooltips.
+  - Fix "Keep above" Window Manager hint.
+
+Tools:
+
+  - MyPaint Brush: have consistent options layout compared to other
+    paint tools.
 
 Plug-ins:
 
   - Restore GUI to Difference Clouds script. This had been lost since
     GIMP 2.8!
-  - Fixes in various file format support, such as: DDS, SVG…
+  - Fixes in various file format support, such as: DDS, SVG, TIFF…
+
+PDB:
+
+  - Make "gimp-plug-ins-query" public again (yet still not available in
+    libgimp).
 
 Build:
 
