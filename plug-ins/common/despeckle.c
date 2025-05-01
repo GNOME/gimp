@@ -98,8 +98,9 @@ static GimpValueArray * despeckle_run              (GimpProcedure        *proced
                                                     GimpProcedureConfig  *config,
                                                     gpointer              run_data);
 
-static void             despeckle                  (GimpDrawable         *drawable,
-                                                    GObject              *config);
+static gboolean         despeckle                  (GimpDrawable         *drawable,
+                                                    GObject              *config,
+                                                    GError              **error);
 static void             despeckle_median           (GObject              *config,
                                                     guchar               *src,
                                                     guchar               *dst,
@@ -224,13 +225,12 @@ despeckle_run (GimpProcedure        *procedure,
                gpointer              run_data)
 {
   GimpDrawable *drawable;
+  GError       *error = NULL;
 
   gegl_init (NULL, NULL);
 
   if (gimp_core_object_array_get_length ((GObject **) drawables) != 1)
     {
-      GError *error = NULL;
-
       g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
                    PLUG_IN_PROC);
@@ -250,7 +250,10 @@ despeckle_run (GimpProcedure        *procedure,
   if (run_mode == GIMP_RUN_INTERACTIVE && ! despeckle_dialog (procedure, G_OBJECT (config), drawable))
     return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL, NULL);
 
-  despeckle (drawable, G_OBJECT (config));
+  if (! despeckle (drawable, G_OBJECT (config), &error))
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_EXECUTION_ERROR,
+                                               error);
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
@@ -323,9 +326,10 @@ get_u8_format (GimpDrawable *drawable)
     }
 }
 
-static void
+static gboolean
 despeckle (GimpDrawable *drawable,
-           GObject      *config)
+           GObject      *config,
+           GError      **error)
 {
   GeglBuffer *src_buffer;
   GeglBuffer *dest_buffer;
@@ -335,10 +339,11 @@ despeckle (GimpDrawable *drawable,
   gint        img_bpp;
   gint        x, y;
   gint        width, height;
+  gsize       bufsize = 0;
 
   if (! gimp_drawable_mask_intersect (drawable,
                                       &x, &y, &width, &height))
-    return;
+    return TRUE;
 
   format  = get_u8_format (drawable);
   img_bpp = babl_format_get_bytes_per_pixel (format);
@@ -346,8 +351,26 @@ despeckle (GimpDrawable *drawable,
   src_buffer  = gimp_drawable_get_buffer (drawable);
   dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
 
-  src = g_new (guchar, width * height * img_bpp);
-  dst = g_new (guchar, width * height * img_bpp);
+  if (! g_size_checked_mul (&bufsize, width,   height) ||
+      ! g_size_checked_mul (&bufsize, bufsize, img_bpp))
+    {
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Image dimensions too large: width %d x height %d"),
+                   width, height);
+      return FALSE;
+    }
+
+  src = g_try_malloc (bufsize);
+  dst = g_try_malloc (bufsize);
+
+  if (src == NULL || dst == NULL)
+    {
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("There was not enough memory to complete the operation."));
+      g_free (src);
+
+      return FALSE;
+    }
 
   gegl_buffer_get (src_buffer, GEGL_RECTANGLE (x, y, width, height), 1.0,
                    format, src,
@@ -368,6 +391,8 @@ despeckle (GimpDrawable *drawable,
 
   g_free (dst);
   g_free (src);
+
+  return TRUE;
 }
 
 static gboolean
@@ -446,8 +471,9 @@ static void
 preview_update (GtkWidget *widget,
                 GObject   *config)
 {
-  GimpPreview  *preview = GIMP_PREVIEW (widget);
+  GimpPreview  *preview  = GIMP_PREVIEW (widget);
   GimpDrawable *drawable = g_object_get_data (config, "drawable");
+  gsize         bufsize  = 0;
   GeglBuffer   *src_buffer;
   const Babl   *format;
   guchar       *dst;
@@ -464,8 +490,18 @@ preview_update (GtkWidget *widget,
 
   src_buffer = gimp_drawable_get_buffer (drawable);
 
-  dst = g_new (guchar, width * height * img_bpp);
-  src = g_new (guchar, width * height * img_bpp);
+  if (! g_size_checked_mul (&bufsize, width,   height) ||
+      ! g_size_checked_mul (&bufsize, bufsize, img_bpp))
+      return;
+
+  src = g_try_malloc (bufsize);
+  dst = g_try_malloc (bufsize);
+
+  if (src == NULL || dst == NULL)
+    {
+      g_free (src);
+      return;
+    }
 
   gegl_buffer_get (src_buffer, GEGL_RECTANGLE (x1, y1, width, height), 1.0,
                    format, src,
