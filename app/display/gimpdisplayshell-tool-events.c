@@ -859,7 +859,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         update_sw_cursor = TRUE;
 
         if (shell->mod_action != GIMP_MODIFIER_ACTION_NONE ||
-            shell->space_release_pending)
+            (shell->space_release_pending &&
+             shell->display->config->space_bar_action == GIMP_SPACE_BAR_ACTION_PAN))
           {
             gimp_display_shell_handle_scrolling (shell,
                                                  state, mevent->x, mevent->y);
