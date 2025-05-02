@@ -333,7 +333,12 @@ gimp_font_deserialize_create (GType     type,
     }
 
   if (g_scanner_peek_next_token (scanner) == G_TOKEN_RIGHT_PAREN)
-    return GIMP_CONFIG (GIMP_FONT (gimp_font_get_standard ()));
+    {
+      font = GIMP_FONT (gimp_font_get_standard ());
+      g_object_ref (font);
+
+      return GIMP_CONFIG (font);
+    }
 
   scope_id = g_type_qname (type);
   old_scope_id = g_scanner_set_scope (scanner, scope_id);
