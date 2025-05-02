@@ -14,6 +14,7 @@
  * or from GIMP's UI: File > Debug > Start GtkInspector
  */
 
+
 @import url("../System/gimp.css");
 
 * {
@@ -606,6 +607,11 @@ radio {
   color:            @fg-color;
   min-width:        14px;
   min-height:       14px;
+}
+
+/* Add padding for selection option radio buttons with icons */
+button.radio image {
+  padding: 4px;
 }
 
 /* Removes "blurred" effect from tooltip label */
