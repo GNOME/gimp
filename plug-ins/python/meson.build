@@ -4,6 +4,7 @@ plugins = [
   { 'name': 'foggify' },
   { 'name': 'gradients-save-as-css' },
   { 'name': 'histogram-export' },
+  { 'name': 'palette-export-as-kpl' },
   { 'name': 'palette-offset' },
   { 'name': 'palette-sort' },
   { 'name': 'palette-to-gradient' },

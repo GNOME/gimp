@@ -5,6 +5,7 @@ plug-ins/python/colorxhtml.py
 plug-ins/python/foggify.py
 plug-ins/python/gradients-save-as-css.py
 plug-ins/python/histogram-export.py
+plug-ins/python/palette-export-as-kpl.py
 plug-ins/python/palette-offset.py
 plug-ins/python/palette-sort.py
 plug-ins/python/palette-to-gradient.py
