@@ -299,7 +299,11 @@ ico_read_png (FILE    *fp,
   png_read_info (png_ptr, info);
   png_get_IHDR (png_ptr, info, &w, &h, &bit_depth, &color_type,
                 NULL, NULL, NULL);
-  if (w*h*4 > maxsize)
+  /* Check for overflow */
+  if ((w * h * 4) < w       ||
+      (w * h * 4) < h       ||
+      (w * h * 4) < (w * h) ||
+      (w * h * 4) > maxsize)
     {
       png_destroy_read_struct (&png_ptr, &info, NULL);
       return FALSE;
