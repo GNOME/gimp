@@ -86,65 +86,69 @@ struct _GimpToolboxPrivate
 };
 
 
-static void        gimp_toolbox_constructed             (GObject        *object);
-static void        gimp_toolbox_dispose                 (GObject        *object);
-static void        gimp_toolbox_set_property            (GObject        *object,
-                                                         guint           property_id,
-                                                         const GValue   *value,
-                                                         GParamSpec     *pspec);
-static void        gimp_toolbox_get_property            (GObject        *object,
-                                                         guint           property_id,
-                                                         GValue         *value,
-                                                         GParamSpec     *pspec);
+static void        gimp_toolbox_constructed             (GObject          *object);
+static void        gimp_toolbox_dispose                 (GObject          *object);
+static void        gimp_toolbox_set_property            (GObject          *object,
+                                                         guint             property_id,
+                                                         const GValue     *value,
+                                                         GParamSpec       *pspec);
+static void        gimp_toolbox_get_property            (GObject          *object,
+                                                         guint             property_id,
+                                                         GValue           *value,
+                                                         GParamSpec       *pspec);
 
-static void        gimp_toolbox_style_updated           (GtkWidget      *widget);
-static gboolean    gimp_toolbox_button_press_event      (GtkWidget      *widget,
-                                                         GdkEventButton *event);
-static void        gimp_toolbox_drag_leave              (GtkWidget      *widget,
-                                                         GdkDragContext *context,
-                                                         guint           time,
-                                                         GimpToolbox    *toolbox);
-static gboolean    gimp_toolbox_drag_motion             (GtkWidget      *widget,
-                                                         GdkDragContext *context,
-                                                         gint            x,
-                                                         gint            y,
-                                                         guint           time,
-                                                         GimpToolbox    *toolbox);
-static gboolean    gimp_toolbox_drag_drop               (GtkWidget      *widget,
-                                                         GdkDragContext *context,
-                                                         gint            x,
-                                                         gint            y,
-                                                         guint           time,
-                                                         GimpToolbox    *toolbox);
-static gchar     * gimp_toolbox_get_description         (GimpDock       *dock,
-                                                         gboolean        complete);
-static void        gimp_toolbox_set_host_geometry_hints (GimpDock       *dock,
-                                                         GtkWindow      *window);
-static void        gimp_toolbox_book_added              (GimpDock       *dock,
-                                                         GimpDockbook   *dockbook);
-static void        gimp_toolbox_book_removed            (GimpDock       *dock,
-                                                         GimpDockbook   *dockbook);
+static void        gimp_toolbox_style_updated           (GtkWidget        *widget);
+static gboolean    gimp_toolbox_button_press_event      (GtkWidget        *widget,
+                                                         GdkEventButton   *event);
+static void        gimp_toolbox_drag_leave              (GtkWidget        *widget,
+                                                         GdkDragContext   *context,
+                                                         guint             time,
+                                                         GimpToolbox      *toolbox);
+static gboolean    gimp_toolbox_drag_motion             (GtkWidget        *widget,
+                                                         GdkDragContext   *context,
+                                                         gint              x,
+                                                         gint              y,
+                                                         guint             time,
+                                                         GimpToolbox      *toolbox);
+static gboolean    gimp_toolbox_drag_drop               (GtkWidget        *widget,
+                                                         GdkDragContext   *context,
+                                                         gint              x,
+                                                         gint              y,
+                                                         guint             time,
+                                                         GimpToolbox      *toolbox);
+static gchar     * gimp_toolbox_get_description         (GimpDock         *dock,
+                                                         gboolean          complete);
+static void        gimp_toolbox_set_host_geometry_hints (GimpDock         *dock,
+                                                         GtkWindow        *window);
+static void        gimp_toolbox_book_added              (GimpDock         *dock,
+                                                         GimpDockbook     *dockbook);
+static void        gimp_toolbox_book_removed            (GimpDock         *dock,
+                                                         GimpDockbook     *dockbook);
 
-static void        gimp_toolbox_notify_theme            (GimpGuiConfig  *config,
-                                                         GParamSpec     *pspec,
-                                                         GimpToolbox    *toolbox);
+static void        gimp_toolbox_notify_theme            (GimpGuiConfig    *config,
+                                                         GParamSpec       *pspec,
+                                                         GimpToolbox      *toolbox);
 
-static void        gimp_toolbox_palette_style_updated   (GtkWidget      *palette,
-                                                         GimpToolbox    *toolbox);
+static void        gimp_toolbox_palette_style_updated   (GtkWidget        *palette,
+                                                         GimpToolbox      *toolbox);
 
-static void        gimp_toolbox_wilber_style_updated    (GtkWidget      *widget,
-                                                         GimpToolbox    *toolbox);
-static gboolean    gimp_toolbox_draw_wilber             (GtkWidget      *widget,
-                                                         cairo_t        *cr);
-static GtkWidget * toolbox_create_color_area            (GimpToolbox    *toolbox,
-                                                         GimpContext    *context);
-static GtkWidget * toolbox_create_foo_area              (GimpToolbox    *toolbox,
-                                                         GimpContext    *context);
-static GtkWidget * toolbox_create_image_area            (GimpToolbox    *toolbox,
-                                                         GimpContext    *context);
-static void        toolbox_paste_received               (GtkClipboard   *clipboard,
-                                                         const gchar    *text,
-                                                         gpointer        data);
+static void        gimp_toolbox_wilber_style_updated    (GtkWidget        *widget,
+                                                         GimpToolbox      *toolbox);
+static gboolean    gimp_toolbox_draw_wilber             (GtkWidget        *widget,
+                                                         cairo_t          *cr);
+static GtkWidget * toolbox_create_color_area            (GimpToolbox      *toolbox,
+                                                         GimpContext      *context);
+static GtkWidget * toolbox_create_foo_area              (GimpToolbox      *toolbox,
+                                                         GimpContext      *context);
+static GtkWidget * toolbox_create_image_area            (GimpToolbox      *toolbox,
+                                                         GimpContext      *context);
+static void        toolbox_paste_received               (GtkClipboard     *clipboard,
+                                                         const gchar      *text,
+                                                         gpointer          data);
+static void        toolbox_area_config_notify           (GimpGuiConfig    *config,
+                                                         const GParamSpec *pspec,
+                                                         GtkWidget        *area_box);
+
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpToolbox, gimp_toolbox, GIMP_TYPE_DOCK)
@@ -295,6 +299,9 @@ gimp_toolbox_constructed (GObject *object)
   g_object_bind_property (config,                 "toolbox-color-area",
                           toolbox->p->color_area, "visible",
                           G_BINDING_SYNC_CREATE);
+  g_signal_connect_object (config, "notify::toolbox-color-area",
+                           G_CALLBACK (toolbox_area_config_notify),
+                           toolbox->p->area_box, 0);
 
   toolbox->p->foo_area = toolbox_create_foo_area (toolbox, toolbox->p->context);
   gtk_flow_box_insert (GTK_FLOW_BOX (toolbox->p->area_box),
@@ -303,6 +310,9 @@ gimp_toolbox_constructed (GObject *object)
   g_object_bind_property (config,               "toolbox-foo-area",
                           toolbox->p->foo_area, "visible",
                           G_BINDING_SYNC_CREATE);
+  g_signal_connect_object (config, "notify::toolbox-foo-area",
+                           G_CALLBACK (toolbox_area_config_notify),
+                           toolbox->p->area_box, 0);
 
   toolbox->p->image_area = toolbox_create_image_area (toolbox,
                                                       toolbox->p->context);
@@ -312,6 +322,11 @@ gimp_toolbox_constructed (GObject *object)
   g_object_bind_property (config,                 "toolbox-image-area",
                           toolbox->p->image_area, "visible",
                           G_BINDING_SYNC_CREATE);
+  g_signal_connect_object (config, "notify::toolbox-image-area",
+                           G_CALLBACK (toolbox_area_config_notify),
+                           toolbox->p->area_box, 0);
+
+  toolbox_area_config_notify (config, NULL, toolbox->p->area_box);
 
   gimp_toolbox_dnd_init (GIMP_TOOLBOX (toolbox), toolbox->p->vbox);
 }
@@ -841,3 +856,19 @@ toolbox_paste_received (GtkClipboard *clipboard,
 
   g_object_unref (toolbox);
 }
+
+static void
+toolbox_area_config_notify (GimpGuiConfig    *config,
+                            const GParamSpec *pspec,
+                            GtkWidget        *area_box)
+{
+  gint visible_areas = 0;
+
+  visible_areas  = (gint) config->toolbox_color_area;
+  visible_areas += (gint) config->toolbox_foo_area;
+  visible_areas += (gint) config->toolbox_image_area;
+
+  gtk_flow_box_set_max_children_per_line (GTK_FLOW_BOX (area_box),
+                                          visible_areas);
+}
+
