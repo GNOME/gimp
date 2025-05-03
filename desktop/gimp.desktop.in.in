@@ -4,7 +4,12 @@ Type=Application
 Name=GNU Image Manipulation Program
 GenericName=Image Editor
 Comment=Create images and edit photographs
-# Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+# TRANSLATORS: Search terms to find this application.
+# 1. Do NOT translate or localize the semicolons!
+# 2. The list MUST also end with a semicolon!
+# 3. Keep "GIMP" in the list as-is so that people can search with the
+#    original acronym too, though you may add translated version of the
+#    name when relevant (it's OK if a localization has more keywords).
 Keywords=GIMP;graphic;design;illustration;painting;
 Exec=@GIMP_COMMAND@ %U
 TryExec=gimp-@GIMP_APP_VERSION@
