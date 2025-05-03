@@ -283,6 +283,9 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
 
       paint_appl_mode = paint_options->application_mode;
 
+      if (GIMP_BRUSH_CORE_GET_CLASS (brush_core)->handles_transforming_brush)
+        gimp_brush_core_eval_transform_symmetry (brush_core, sym, i);
+
       GIMP_PAINTBRUSH_GET_CLASS (paintbrush)->get_paint_params (paintbrush,
                                                                 drawable,
                                                                 paint_options,
@@ -294,9 +297,6 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
                                                                 &paint_color);
 
       coords    = *(gimp_symmetry_get_coords (sym, i));
-
-      if (GIMP_BRUSH_CORE_GET_CLASS (brush_core)->handles_transforming_brush)
-        gimp_brush_core_eval_transform_symmetry (brush_core, sym, i);
 
       paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
                                                        paint_options,
