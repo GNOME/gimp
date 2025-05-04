@@ -395,6 +395,7 @@ gimp_theme_scheme_get_type (void)
     { GIMP_THEME_LIGHT, "GIMP_THEME_LIGHT", "light" },
     { GIMP_THEME_GRAY, "GIMP_THEME_GRAY", "gray" },
     { GIMP_THEME_DARK, "GIMP_THEME_DARK", "dark" },
+    { GIMP_THEME_SYSTEM, "GIMP_THEME_SYSTEM", "system" },
     { 0, NULL, NULL }
   };
 
@@ -403,6 +404,7 @@ gimp_theme_scheme_get_type (void)
     { GIMP_THEME_LIGHT, NC_("theme-scheme", "Light Colors"), NULL },
     { GIMP_THEME_GRAY, NC_("theme-scheme", "Middle Gray"), NULL },
     { GIMP_THEME_DARK, NC_("theme-scheme", "Dark Colors"), NULL },
+    { GIMP_THEME_SYSTEM, NC_("theme-scheme", "System Colors"), NULL },
     { 0, NULL, NULL }
   };
 
