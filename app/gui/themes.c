@@ -43,25 +43,35 @@
 
 /*  local function prototypes  */
 
-static void   themes_apply_theme         (Gimp                   *gimp,
-                                          GimpGuiConfig          *config);
-static void   themes_list_themes_foreach (gpointer                key,
-                                          gpointer                value,
-                                          gpointer                data);
-static gint   themes_name_compare        (const void             *p1,
-                                          const void             *p2);
-static void   themes_theme_change_notify (GimpGuiConfig          *config,
-                                          GParamSpec             *pspec,
-                                          Gimp                   *gimp);
-static void   themes_theme_paths_notify  (GimpExtensionManager   *manager,
-                                          GParamSpec             *pspec,
-                                          Gimp                   *gimp);
+static void   themes_apply_theme                   (Gimp                  *gimp,
+                                                    GimpGuiConfig         *config);
+static void   themes_list_themes_foreach           (gpointer               key,
+                                                    gpointer               value,
+                                                    gpointer               data);
+static gint   themes_name_compare                  (const void            *p1,
+                                                    const void            *p2);
+static void   themes_theme_change_notify           (GimpGuiConfig         *config,
+                                                    GParamSpec            *pspec,
+                                                    Gimp                  *gimp);
+static void   themes_theme_paths_notify            (GimpExtensionManager  *manager,
+                                                    GParamSpec            *pspec,
+                                                    Gimp                  *gimp);
+#if defined(G_OS_UNIX) && ! defined(__APPLE__)
+static void   themes_theme_settings_portal_changed (GDBusProxy            *proxy,
+                                                    const gchar           *sender_name,
+                                                    const gchar           *signal_name,
+                                                    GVariant              *parameters,
+                                                    Gimp                  *gimp);
+#endif
 
 
 /*  private variables  */
 
-static GHashTable       *themes_hash           = NULL;
-static GtkStyleProvider *themes_style_provider = NULL;
+static GHashTable       *themes_hash            = NULL;
+static GtkStyleProvider *themes_style_provider  = NULL;
+#if defined(G_OS_UNIX) && ! defined(__APPLE__)
+static GDBusProxy       *themes_settings_portal = NULL;
+#endif
 
 
 /*  public functions  */
@@ -70,6 +80,7 @@ void
 themes_init (Gimp *gimp)
 {
   GimpGuiConfig *config;
+  GError        *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -89,6 +100,29 @@ themes_init (Gimp *gimp)
   gtk_style_context_add_provider_for_screen (gdk_screen_get_default (),
                                              themes_style_provider,
                                              GTK_STYLE_PROVIDER_PRIORITY_APPLICATION + 1);
+
+#if defined(G_OS_UNIX) && ! defined(__APPLE__)
+  themes_settings_portal =
+    g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
+                                   G_DBUS_PROXY_FLAGS_NONE, NULL,
+                                   "org.freedesktop.portal.Desktop",
+                                   "/org/freedesktop/portal/desktop",
+                                   "org.freedesktop.portal.Settings",
+                                   NULL, &error);
+
+  if (error)
+    {
+      g_printerr ("Could not access portal: %s", error->message);
+      g_clear_error (&error);
+    }
+  else
+    {
+      g_signal_connect (themes_settings_portal,
+                        "g-signal::SettingChanged",
+                        G_CALLBACK (themes_theme_settings_portal_changed),
+                        gimp);
+    }
+#endif
 
   g_signal_connect (config, "notify::theme",
                     G_CALLBACK (themes_theme_change_notify),
@@ -135,6 +169,10 @@ themes_exit (Gimp *gimp)
     }
 
   g_clear_object (&themes_style_provider);
+
+#if defined(G_OS_UNIX) && ! defined(__APPLE__)
+  g_clear_object (&themes_settings_portal);
+#endif
 }
 
 gchar **
@@ -242,11 +280,82 @@ themes_apply_theme (Gimp          *gimp,
   GOutputStream *output;
   GError        *error = NULL;
   gboolean       prefer_dark_theme;
+  guint32        color_scheme;
+  GVariant      *tuple_variant, *variant;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_GUI_CONFIG (config));
 
-  prefer_dark_theme = (config->theme_scheme != GIMP_THEME_LIGHT);
+#if defined(G_OS_UNIX) && ! defined(__APPLE__)
+  if (themes_settings_portal && config->theme_scheme == GIMP_THEME_SYSTEM)
+    {
+      tuple_variant = g_dbus_proxy_call_sync (themes_settings_portal,
+                                              "ReadOne",
+                                              g_variant_new ("(ss)", "org.freedesktop.appearance", "color-scheme"),
+                                              G_DBUS_CALL_FLAGS_NONE,
+                                              G_MAXINT,
+                                              NULL,
+                                              &error);
+      if (error)
+        {
+          g_clear_error (&error);
+
+          tuple_variant = g_dbus_proxy_call_sync (themes_settings_portal,
+                                                  "Read",
+                                                  g_variant_new ("(ss)", "org.freedesktop.appearance", "color-scheme"),
+                                                  G_DBUS_CALL_FLAGS_NONE,
+                                                  G_MAXINT,
+                                                  NULL,
+                                                  &error);
+          if (!error)
+            {
+              /*
+               * Since the org.freedesktop.portal.Settings.Read method returns
+               * two layers of variant, re-assign the tuple.
+               * https://flatpak.github.io/xdg-desktop-portal/docs/doc-org.freedesktop.portal.Settings.html#org-freedesktop-portal-settings-read
+               */
+              g_variant_get (tuple_variant, "(v)", &tuple_variant);
+
+              g_variant_get (tuple_variant, "v", &variant);
+            }
+        }
+      else
+        {
+          g_variant_get (tuple_variant, "(v)", &variant);
+        }
+
+      if (!error)
+        {
+          /*
+           * 1 means "Prefer dark", see:
+           * https://flatpak.github.io/xdg-desktop-portal/docs/doc-org.freedesktop.portal.Settings.html#description
+           */
+          prefer_dark_theme = (g_variant_get_uint32 (variant) == 1);
+
+          color_scheme = prefer_dark_theme ? GIMP_THEME_DARK : GIMP_THEME_SYSTEM;
+        }
+      else
+        {
+          g_printerr ("%s\n", error->message);
+          g_clear_error (&error);
+
+          color_scheme = config->theme_scheme;
+          prefer_dark_theme = (color_scheme == GIMP_THEME_DARK ||
+                               color_scheme == GIMP_THEME_GRAY);
+        }
+    }
+  else
+#endif
+    {
+      color_scheme = config->theme_scheme;
+      prefer_dark_theme = (color_scheme == GIMP_THEME_DARK ||
+                           color_scheme == GIMP_THEME_GRAY);
+    }
+
+  g_object_set (gtk_settings_get_for_screen (gdk_screen_get_default ()),
+                "gtk-application-prefer-dark-theme", prefer_dark_theme,
+                NULL);
+
   theme_css = gimp_directory_file ("theme.css", NULL);
 
   if (gimp->be_verbose)
@@ -291,8 +400,9 @@ themes_apply_theme (Gimp          *gimp,
           if (! g_file_query_exists (dark, NULL))
             g_clear_object (&dark);
 
-          switch (config->theme_scheme)
+          switch (color_scheme)
             {
+            case GIMP_THEME_SYSTEM:
             case GIMP_THEME_LIGHT:
               if (light != NULL)
                 file = g_object_ref (light);
@@ -353,8 +463,9 @@ themes_apply_theme (Gimp          *gimp,
           css_files = g_slist_prepend (css_files, g_file_new_for_path (tmp));
           g_free (tmp);
 
-          switch (config->theme_scheme)
+          switch (color_scheme)
             {
+            case GIMP_THEME_SYSTEM:
             case GIMP_THEME_LIGHT:
               tmp = g_build_filename (gimp_data_directory (),
                                       "themes", "Default", "gimp-light.css",
@@ -688,6 +799,33 @@ themes_theme_paths_notify (GimpExtensionManager *manager,
       g_list_free_full (path, (GDestroyNotify) g_object_unref);
     }
 }
+
+#if defined(G_OS_UNIX) && ! defined(__APPLE__)
+static void
+themes_theme_settings_portal_changed (GDBusProxy  *proxy,
+                                      const gchar *sender_name,
+                                      const gchar *signal_name,
+                                      GVariant    *parameters,
+                                      Gimp        *gimp)
+{
+  const char *namespace;
+  const char *name;
+  GVariant   *value = NULL;
+
+  if (g_strcmp0 (signal_name, "SettingChanged"))
+    return;
+
+  g_variant_get (parameters, "(&s&sv)", &namespace, &name, &value);
+
+  if (g_strcmp0 (namespace, "org.freedesktop.appearance") == 0 &&
+      g_strcmp0 (name, "color-scheme") == 0)
+    {
+      themes_theme_change_notify (GIMP_GUI_CONFIG (gimp->config), NULL, gimp);
+    }
+
+  g_variant_unref (value);
+}
+#endif
 
 #ifdef G_OS_WIN32
 void
