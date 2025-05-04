@@ -116,6 +116,14 @@ win32_command (const gchar *command)
   return (const gchar *) cmd;
 }
 
+/* Windows shells break with auto-quote. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/6378 */
+static const gchar *
+hollow_g_shell_quote (const gchar *input)
+{
+  return g_strdup (input);
+}
+
+#define g_shell_quote hollow_g_shell_quote
 #endif
 
 static gboolean
