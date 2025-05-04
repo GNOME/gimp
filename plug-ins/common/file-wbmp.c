@@ -29,6 +29,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 #define LOAD_PROC      "file-wbmp-load"
+#define LOAD_OTB_PROC  "file-otb-load"
 #define PLUG_IN_BINARY "file-wbmp"
 #define PLUG_IN_ROLE   "gimp-file-wbmp"
 
@@ -63,8 +64,17 @@ static GimpValueArray * wbmp_load             (GimpProcedure         *procedure,
                                                GimpMetadataLoadFlags *flags,
                                                GimpProcedureConfig   *config,
                                                gpointer               run_data);
+static GimpValueArray * otb_load              (GimpProcedure         *procedure,
+                                               GimpRunMode            run_mode,
+                                               GFile                 *file,
+                                               GimpMetadata          *metadata,
+                                               GimpMetadataLoadFlags *flags,
+                                               GimpProcedureConfig   *config,
+                                               gpointer               run_data);
 
-GimpImage             * load_image            (GFile                 *file,
+GimpImage             * load_wbmp_image       (GFile                 *file,
+                                               GError               **error);
+GimpImage             * load_otb_image        (GFile                 *file,
                                                GError               **error);
 
 static GimpImage      * read_image            (FILE                  *fd,
@@ -99,6 +109,7 @@ wbmp_query_procedures (GimpPlugIn *plug_in)
   GList *list = NULL;
 
   list = g_list_append (list, g_strdup (LOAD_PROC));
+  list = g_list_append (list, g_strdup (LOAD_OTB_PROC));
 
   return list;
 }
@@ -131,6 +142,26 @@ wbmp_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "wbmp");
     }
+  else if (! strcmp (name, LOAD_OTB_PROC))
+    {
+      procedure = gimp_load_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           otb_load, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, _("Nokia Over The Air Bitmap image"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        _("Loads files in Nokia Over The Air Bitmap file format"),
+                                        _("Loads files in Nokia Over The Air Bitmap file format"),
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Alx Sa",
+                                      "Alx Sa",
+                                      "2025");
+
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "otb");
+    }
 
   return procedure;
 }
@@ -150,7 +181,38 @@ wbmp_load (GimpProcedure         *procedure,
 
   gegl_init (NULL, NULL);
 
-  image = load_image (file, &error);
+  image = load_wbmp_image (file, &error);
+
+  if (! image)
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             error);
+
+  return_vals = gimp_procedure_new_return_values (procedure,
+                                                  GIMP_PDB_SUCCESS,
+                                                  NULL);
+
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+otb_load (GimpProcedure         *procedure,
+          GimpRunMode            run_mode,
+          GFile                 *file,
+          GimpMetadata          *metadata,
+          GimpMetadataLoadFlags *flags,
+          GimpProcedureConfig   *config,
+          gpointer               run_data)
+{
+  GimpValueArray *return_vals;
+  GimpImage      *image;
+  GError         *error = NULL;
+
+  gegl_init (NULL, NULL);
+
+  image = load_otb_image (file, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -167,8 +229,8 @@ wbmp_load (GimpProcedure         *procedure,
 }
 
 GimpImage *
-load_image (GFile   *file,
-            GError **error)
+load_wbmp_image (GFile   *file,
+                 GError **error)
 {
   FILE      *fd;
   GimpImage *image  = NULL;
@@ -231,6 +293,135 @@ load_image (GFile   *file,
     }
 
   image = read_image (fd, file, width, height, error);
+
+out:
+  if (fd)
+    fclose (fd);
+
+  return image;
+}
+
+GimpImage *
+load_otb_image (GFile   *file,
+                GError **error)
+{
+  FILE         *fd;
+  GimpImage    *image   = NULL;
+  GimpLayer    *layer;
+  GeglBuffer   *buffer;
+  guchar       *dest;
+  const guchar  mono[6] = { 255, 255, 255, 0, 0, 0, };
+  guint8        magic;
+  gushort       width   = 0;
+  gushort       height  = 0;
+  guint         count   = 0;
+  gsize         total_size;
+  guchar        value;
+
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_file_get_utf8_name (file));
+
+  fd = g_fopen (g_file_peek_path (file), "rb");
+
+  if (! fd)
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
+      goto out;
+    }
+
+  /* Checking the type field to make sure it is 0. */
+  if (! ReadOK (fd, &magic, 1))
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("'%s': Invalid OTA type value"),
+                   gimp_file_get_utf8_name (file));
+      goto out;
+    }
+
+  /* If magic is 0, we read width, height, and then depth field.
+   * If it's anything else, we may read extension byte first */
+  if (magic == 0)
+    {
+      if (! ReadOK (fd, &width, 1)  ||
+          ! ReadOK (fd, &height, 1) ||
+          ! ReadOK (fd, &value, 1))
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("'%s': Invalid OTA header value"),
+                       gimp_file_get_utf8_name (file));
+          goto out;
+        }
+    }
+  else
+    {
+      gint bytes_to_read = 1;
+
+      /* If extension byte is set */
+      if (magic & (1 << 7) &&
+          ! ReadOK (fd, &value, 1))
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("'%s': Invalid OTA header value"),
+                       gimp_file_get_utf8_name (file));
+          goto out;
+        }
+
+      /* If width and height are 16 bit integers */
+      if (magic & (1 << 4))
+        bytes_to_read = 2;
+
+      if (! ReadOK (fd, &width, bytes_to_read)  ||
+          ! ReadOK (fd, &height, bytes_to_read) ||
+          ! ReadOK (fd, &value, 1))
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("'%s': Invalid OTA header value"),
+                       gimp_file_get_utf8_name (file));
+          goto out;
+        }
+      width  = GUINT16_FROM_BE (width);
+      height = GUINT16_FROM_BE (height);
+    }
+
+  image = gimp_image_new (width, height, GIMP_INDEXED);
+  layer = gimp_layer_new (image, _("Background"), width, height,
+                          GIMP_INDEXED_IMAGE, 100,
+                          gimp_image_get_default_new_layer_mode (image));
+
+  gimp_palette_set_colormap (gimp_image_get_palette (image),
+                             babl_format ("R'G'B' u8"), (guint8 *) mono, 6);
+  gimp_image_insert_layer (image, layer, NULL, 0);
+
+  total_size = width * height;
+  dest       = g_malloc0 (total_size);
+
+  while (ReadOK (fd, &value, 1))
+    {
+      for (gint i = 7; i >= 0; i--)
+        {
+          if (value & (1 << i))
+            dest[count] = 1;
+
+          count++;
+          if (count >= (total_size))
+            break;
+
+          if ((count % 5) == 0)
+            gimp_progress_update ((gdouble) count / (gdouble) total_size);
+        }
+      if (count >= (total_size))
+        break;
+    }
+
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+
+  gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0, NULL, dest,
+                   GEGL_AUTO_ROWSTRIDE);
+  g_object_unref (buffer);
+
+  g_free (dest);
 
 out:
   if (fd)
@@ -323,4 +514,3 @@ read_image (FILE    *fd,
 
   return image;
 }
-
