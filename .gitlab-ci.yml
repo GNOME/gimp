@@ -346,12 +346,12 @@ gimp-debian-x64:
         exit 1;
       fi
     - if [ "$VARIANT" != "-gcc" ] && [ "$VARIANT" != "-raster" ] && [ "$CI_PIPELINE_SOURCE" != "merge_request_event" ]; then
-        ninja dist &> ninja_dist.txt || cat ninja_dist.txt;
+        ninja dist;
       fi
     - echo -e "\e[0Ksection_end:`date +%s`:gimp_tar\r\e[0K"
     # Check install
     - echo -e "\e[0Ksection_start:`date +%s`:gimp_install[collapsed=true]\r\e[0KChecking GIMP installation"
-    - ninja install &> ninja_install.txt || cat ninja_install.txt;
+    - ninja install
     - echo -e "\e[0Ksection_end:`date +%s`:gimp_install\r\e[0K"
   artifacts:
     paths:
