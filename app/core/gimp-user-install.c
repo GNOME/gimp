@@ -952,6 +952,7 @@ user_update_sessionrc (const GMatchInfo *matched_value,
 }
 
 #define GIMPRC_UPDATE_PATTERN \
+  "\\(show-tooltips [^)]*\\)"  "|" \
   "\\(theme [^)]*\\)"          "|" \
   "^ *\\(.*-path \".*\"\\) *$" "|" \
   "\\(style solid\\)"          "|" \
@@ -983,6 +984,8 @@ user_update_gimprc (const GMatchInfo *matched_value,
     }
   else
     {
+      /* Do not migrate show-tooltips GIMP < 3.0. Cf. #1965. */
+
       /* Do not migrate paths and themes from GIMP < 3.0. */
 
       /* Do not migrate the advanced color options which was the gamma
