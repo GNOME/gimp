@@ -533,7 +533,8 @@ gfig_brush_changed_callback (gpointer               user_data,
   current_style->brush = brush;
 
   /* this will soon be unneeded. How soon? */
-  set_context_bdesc (brush);
+  if (brush)
+    set_context_bdesc (brush);
 
   gimp_context_set_brush (brush);
   gimp_context_set_brush_default_size ();
@@ -660,12 +661,24 @@ gfig_read_gimp_style (Style       *style,
   style->fill_opacity = 100.;
 
   /* Cache attributes of brush. */
-  gimp_brush_get_info (style->brush,
-                       &style->brush_width, &style->brush_height,
-                       &dummy, &dummy);
-  style->brush_spacing = gimp_brush_get_spacing (style->brush);
+  if (style->brush)
+    {
+      gimp_brush_get_info (style->brush,
+                           &style->brush_width, &style->brush_height,
+                           &dummy, &dummy);
+      style->brush_spacing = gimp_brush_get_spacing (style->brush);
 
-  set_context_bdesc (style->brush);
+      set_context_bdesc (style->brush);
+    }
+  else
+    {
+      style->brush_width   = 1;
+      style->brush_height  = 1;
+      style->brush_spacing = 1;
+
+      gfig_context->bdesc.width  = 48;
+      gfig_context->bdesc.height = 48;
+    }
 }
 
 /*
@@ -695,16 +708,20 @@ gfig_style_set_context_from_style (Style *style)
 
   gimp_context_set_brush_default_size ();
 
-  gimp_resource_chooser_set_resource (GIMP_RESOURCE_CHOOSER (gfig_context->brush_select),
-                                      GIMP_RESOURCE (style->brush));
+  if (style->brush)
+    gimp_resource_chooser_set_resource (GIMP_RESOURCE_CHOOSER (gfig_context->brush_select),
+                                        GIMP_RESOURCE (style->brush));
 
-  gimp_resource_chooser_set_resource (GIMP_RESOURCE_CHOOSER (gfig_context->pattern_select),
-                                      GIMP_RESOURCE (style->pattern));
+  if (style->pattern)
+    gimp_resource_chooser_set_resource (GIMP_RESOURCE_CHOOSER (gfig_context->pattern_select),
+                                        GIMP_RESOURCE (style->pattern));
 
-  gimp_resource_chooser_set_resource (GIMP_RESOURCE_CHOOSER (gfig_context->gradient_select),
-                                      GIMP_RESOURCE (style->gradient));
+  if (style->gradient)
+    gimp_resource_chooser_set_resource (GIMP_RESOURCE_CHOOSER (gfig_context->gradient_select),
+                                        GIMP_RESOURCE (style->gradient));
 
-  set_context_bdesc (style->brush);
+  if (style->brush)
+    set_context_bdesc (style->brush);
 
   if (gfig_context->debug_styles)
     g_printerr ("done.\n");

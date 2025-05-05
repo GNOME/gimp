@@ -217,6 +217,8 @@ gimp_brush_chooser_get_brush_bitmap (GimpBrushChooser *chooser,
   GimpBrush *brush;
 
   g_object_get (chooser, "resource", &brush, NULL);
+  if (! brush)
+    return;
 
   if (chooser->brush  == brush &&
       chooser->width  == width &&

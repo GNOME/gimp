@@ -630,7 +630,8 @@ gfig_dialog (GimpGfig *gfig)
   gfig_list_load_all (gfig_path);
 
   /* Setup initial brush settings */
-  set_context_bdesc (gimp_context_get_brush ());
+  if (gimp_context_get_brush ())
+    set_context_bdesc (gimp_context_get_brush ());
 
   gtk_widget_show (main_hbox);
 
