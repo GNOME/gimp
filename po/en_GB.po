@@ -6,23 +6,23 @@
 # Thomas Thurman <thomas@thurman.org.uk>
 # Chris Leonard <cjl@laptop.org>, 2012.
 # Zander Brown <zbrown@gnome.org>, 2019-2021.
-# Bruce Cowan <bruce@bcowan.me.uk>, 2009-2025.
 # Andi Chandler <andi@gowling.com>, 2024.
+# Bruce Cowan <bruce@bcowan.me.uk>, 2009-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-02-22 18:11+0000\n"
-"PO-Revision-Date: 2025-02-24 12:15+0000\n"
+"POT-Creation-Date: 2025-05-04 02:35+0000\n"
+"PO-Revision-Date: 2025-05-05 19:56+0100\n"
 "Last-Translator: Bruce Cowan <bruce@bcowan.me.uk>\n"
-"Language-Team: English - United Kingdom <en@li.org>\n"
+"Language-Team: British English <en@li.org>\n"
 "Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Gtranslator 48.0\n"
 "X-Project-Style: gnome\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
@@ -73,19 +73,44 @@ msgstr ""
 "Microsoft Windows and OS X."
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:48
-msgid "Painting in GIMP"
-msgstr "Painting in GIMP"
+msgid ""
+"Scene 4 cut 15 of \"ZeMarmot\" being edited in GIMP. Illustration by Aryeom "
+"(CC by-sa 4.0 International)"
+msgstr ""
+"Scene 4 cut 15 of \"ZeMarmot\" being edited in GIMP. Illustration by Aryeom "
+"(CC by-sa 4.0 International)"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:52
-msgid "Photo editing in GIMP"
-msgstr "Photo editing in GIMP"
+msgid ""
+"Gull on beach photograph being edited in GIMP. Photo by Iana (CC by-sa 4.0 "
+"International)"
+msgstr ""
+"Gull on beach photograph being edited in GIMP. Photo by Iana (CC by-sa 4.0 "
+"International)"
+
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:56
+msgid ""
+"Portrait of Sofiia being edited in GIMP. Photo by Sofia (CC by-sa 4.0 "
+"International)"
+msgstr ""
+"Portrait of Sofiia being edited in GIMP. Photo by Sofia (CC by-sa 4.0 "
+"International)"
+
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:60
+msgid "Scanned engraving being edited in GIMP. Artwork by Liam (CC0)"
+msgstr "Scanned engraving being edited in GIMP. Artwork by Liam (CC0)"
 
 #: desktop/gimp.desktop.in.in:6
 msgid "Image Editor"
 msgstr "Image Editor"
 
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: desktop/gimp.desktop.in.in:9
+#. TRANSLATORS: Search terms to find this application.
+#. 1. Do NOT translate or localize the semicolons!
+#. 2. The list MUST also end with a semicolon!
+#. 3. Keep "GIMP" in the list as-is so that people can search with the
+#. original acronym too, though you may add translated version of the
+#. name when relevant (it's OK if a localization has more keywords).
+#: desktop/gimp.desktop.in.in:14
 msgid "GIMP;graphic;design;illustration;painting;"
 msgstr "GIMP;graphic;design;illustration;painting;"
 
@@ -273,11 +298,11 @@ msgstr "Show a preferences page with experimental features"
 msgid "Show an image submenu with debug actions"
 msgstr "Show an image submenu with debug actions"
 
-#: app/main.c:716
+#: app/main.c:725
 msgid "[FILE|URI...]"
 msgstr "[FILE|URI…]"
 
-#: app/main.c:744
+#: app/main.c:753
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -285,20 +310,20 @@ msgstr ""
 "GIMP could not initialise the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
 
-#: app/main.c:765
+#: app/main.c:774
 msgid "Another GIMP instance is already running."
 msgstr "Another GIMP instance is already running."
 
-#: app/main.c:854
+#: app/main.c:863
 msgid "GIMP output. Type any character to close this window."
 msgstr "GIMP output. Type any character to close this window."
 
-#: app/main.c:855
+#: app/main.c:864
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Type any character to close this window)\n"
 
-#: app/main.c:872
+#: app/main.c:881
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "GIMP output. You can minimise this window, but don't close it."
 
@@ -506,7 +531,7 @@ msgid "Select"
 msgstr "Select"
 
 #. initialize the template list
-#: app/actions/actions.c:224 app/core/gimp.c:860 app/dialogs/dialogs.c:371
+#: app/actions/actions.c:224 app/core/gimp.c:858 app/dialogs/dialogs.c:371
 msgid "Templates"
 msgstr "Templates"
 
@@ -1055,7 +1080,7 @@ msgstr[0] "Lower Channel to Bottom"
 msgstr[1] "Lower Channels to Bottom"
 
 #: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:607
-#: app/display/gimpdisplayshell-dnd.c:736 app/widgets/gimpchanneltreeview.c:265
+#: app/display/gimpdisplayshell-dnd.c:737 app/widgets/gimpchanneltreeview.c:265
 #: app/widgets/gimplayertreeview.c:862
 #, c-format
 msgid "%s Channel Copy"
@@ -2517,12 +2542,12 @@ msgid "Enter a description for the marker"
 msgstr "Enter a description for the marker"
 
 #: app/actions/data-commands.c:90 app/actions/documents-commands.c:393
-#: app/actions/file-commands.c:211 app/dialogs/file-open-dialog.c:228
-#: app/dialogs/file-open-dialog.c:269
+#: app/actions/file-commands.c:211 app/dialogs/file-open-dialog.c:247
+#: app/dialogs/file-open-dialog.c:288
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/dialogs/welcome-dialog.c:1247 app/display/gimpdisplayshell-dnd.c:679
-#: app/widgets/gimplayertreeview.c:820 app/widgets/gimptoolbox.c:826
+#: app/dialogs/welcome-dialog.c:1246 app/display/gimpdisplayshell-dnd.c:680
+#: app/widgets/gimplayertreeview.c:820 app/widgets/gimptoolbox.c:828
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -2535,7 +2560,7 @@ msgstr ""
 "%s"
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
-#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2390
+#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2436
 #: app/core/gimppalette.c:583 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:774 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
@@ -4221,7 +4246,7 @@ msgctxt "file-action"
 msgid "Save this image and close its window"
 msgstr "Save this image and close its window"
 
-#: app/actions/file-actions.c:156 app/actions/file-actions.c:326
+#: app/actions/file-actions.c:156 app/actions/file-actions.c:346
 msgctxt "file-action"
 msgid "E_xport..."
 msgstr "E_xport…"
@@ -4256,12 +4281,12 @@ msgctxt "file-action"
 msgid "_Save..."
 msgstr "_Save…"
 
-#: app/actions/file-actions.c:312
+#: app/actions/file-actions.c:313
 #, c-format
 msgid "Export to %s"
 msgstr "Export to %s"
 
-#: app/actions/file-actions.c:318
+#: app/actions/file-actions.c:329
 #, c-format
 msgid "Over_write %s"
 msgstr "Over_write %s"
@@ -4269,7 +4294,7 @@ msgstr "Over_write %s"
 #. TRANSLATORS: the %s will be replaced by the file name of a
 #. * recently opened image.
 #.
-#: app/actions/file-actions.c:381
+#: app/actions/file-actions.c:401
 #, c-format
 msgid "Open \"%s\""
 msgstr "Open \"%s\""
@@ -6006,7 +6031,7 @@ msgstr "Flipping"
 msgid "Rotating"
 msgstr "Rotating"
 
-#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1307
+#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1347
 msgid "Cannot crop because the current selection is empty."
 msgstr "Cannot crop because the current selection is empty."
 
@@ -6055,7 +6080,7 @@ msgid "Scale Image"
 msgstr "Scale Image"
 
 #. Scaling
-#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2537
+#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2577
 #: app/dialogs/preferences-dialog.c:1747 app/pdb/image-transform-cmds.c:124
 #: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:453
 #: app/tools/gimpscaletool.c:122
@@ -6927,112 +6952,112 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "To _New Layer"
 
-#: app/actions/layers-commands.c:286 app/actions/layers-commands.c:2379
+#: app/actions/layers-commands.c:289 app/actions/layers-commands.c:2419
 msgid "Layer Attributes"
 msgstr "Layer Attributes"
 
-#: app/actions/layers-commands.c:289
+#: app/actions/layers-commands.c:292
 msgid "Edit Layer Attributes"
 msgstr "Edit Layer Attributes"
 
-#: app/actions/layers-commands.c:358 app/widgets/gimpdrawabletreeview.c:354
+#: app/actions/layers-commands.c:361 app/widgets/gimpdrawabletreeview.c:354
 #: app/widgets/gimplayertreeview.c:939
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "New Layer"
 msgstr[1] "New Layers"
 
-#: app/actions/layers-commands.c:359
+#: app/actions/layers-commands.c:362
 #, c-format
 msgid "Create a New Layer"
 msgid_plural "Create %d New Layers"
 msgstr[0] "Create a New Layer"
 msgstr[1] "Create %d New Layers"
 
-#: app/actions/layers-commands.c:444 app/actions/layers-commands.c:2264
+#: app/actions/layers-commands.c:447 app/actions/layers-commands.c:2304
 msgid "New layer"
 msgid_plural "New layers"
 msgstr[0] "New layer"
 msgstr[1] "New layer"
 
-#: app/actions/layers-commands.c:523
+#: app/actions/layers-commands.c:526
 msgid "Visible"
 msgstr "Visible"
 
-#: app/actions/layers-commands.c:552
+#: app/actions/layers-commands.c:555
 msgid "New layer group"
 msgid_plural "New layer groups"
 msgstr[0] "New Layer _Group"
 msgstr[1] "New layer group"
 
-#: app/actions/layers-commands.c:673
+#: app/actions/layers-commands.c:676
 msgid "Raise Layer"
 msgid_plural "Raise Layers"
 msgstr[0] "Raise Layer"
 msgstr[1] "Raise Layer"
 
-#: app/actions/layers-commands.c:709
+#: app/actions/layers-commands.c:712
 msgid "Raise Layer to Top"
 msgid_plural "Raise Layers to Top"
 msgstr[0] "Raise Layer to Top"
 msgstr[1] "Raise Layers to Top"
 
-#: app/actions/layers-commands.c:754
+#: app/actions/layers-commands.c:757
 msgid "Lower Layer"
 msgid_plural "Lower Layers"
 msgstr[0] "Lower Layer"
 msgstr[1] "Lower Layers"
 
-#: app/actions/layers-commands.c:791
+#: app/actions/layers-commands.c:794
 msgid "Lower Layer to Bottom"
 msgid_plural "Lower Layers to Bottom"
 msgstr[0] "Lower Layer to Bottom"
 msgstr[1] "Lower Layers to Bottom"
 
-#: app/actions/layers-commands.c:818
+#: app/actions/layers-commands.c:821
 msgid "Duplicate layers"
 msgstr "Duplicate layers"
 
-#: app/actions/layers-commands.c:962
+#: app/actions/layers-commands.c:1002
 #, c-format
 msgctxt "undo-type"
 msgid "Merge %d Layer Groups"
 msgstr "Merge %d Layer Groups"
 
-#: app/actions/layers-commands.c:1022
+#: app/actions/layers-commands.c:1062
 #, c-format
 msgctxt "undo-type"
 msgid "Remove %d Layers"
 msgstr "Remove %d Layers"
 
-#: app/actions/layers-commands.c:1049 app/text/gimptextlayer.c:584
+#: app/actions/layers-commands.c:1089 app/text/gimptextlayer.c:584
 msgid "Discard Text Information"
 msgstr "Discard Text Information"
 
-#: app/actions/layers-commands.c:1068
+#: app/actions/layers-commands.c:1108
 msgid "Add Paths"
 msgstr "Add Paths"
 
-#: app/actions/layers-commands.c:1192
+#: app/actions/layers-commands.c:1232
 msgid "Set Layer Boundary Size"
 msgstr "Set Layer Boundary Size"
 
-#: app/actions/layers-commands.c:1222
+#: app/actions/layers-commands.c:1262
 msgid "Layers to Image Size"
 msgstr "Layers to Image Size"
 
-#: app/actions/layers-commands.c:1273
+#: app/actions/layers-commands.c:1313
 msgid "Scale Layer"
 msgstr "Scale Layer"
 
-#: app/actions/layers-commands.c:1312
+#: app/actions/layers-commands.c:1352
 #, c-format
 msgid "Crop Layer to Selection"
 msgid_plural "Crop %d Layers to Selection"
 msgstr[0] "Crop Layer to Selection"
 msgstr[1] "Crop %d Layers to Selection"
 
-#: app/actions/layers-commands.c:1377
+#: app/actions/layers-commands.c:1417
 msgid ""
 "Cannot crop because none of the selected layers have content or they are "
 "already cropped to their content."
@@ -7040,108 +7065,108 @@ msgstr ""
 "Cannot crop because none of the selected layers have content or they are "
 "already cropped to their content."
 
-#: app/actions/layers-commands.c:1383
+#: app/actions/layers-commands.c:1423
 #, c-format
 msgid "Crop Layer to Content"
 msgid_plural "Crop %d Layers to Content"
 msgstr[0] "Crop Layer to Content"
 msgstr[1] "Crop %d Layers to Content"
 
-#: app/actions/layers-commands.c:1520 app/actions/layers-commands.c:2472
+#: app/actions/layers-commands.c:1560 app/actions/layers-commands.c:2512
 msgid "Add Layer Masks"
 msgstr "Add Layer Masks"
 
-#: app/actions/layers-commands.c:1572
+#: app/actions/layers-commands.c:1612
 msgid "Apply Layer Masks"
 msgstr "Apply Layer Masks"
 
-#: app/actions/layers-commands.c:1576
+#: app/actions/layers-commands.c:1616
 msgid "Delete Layer Masks"
 msgstr "Delete Layer Masks"
 
-#: app/actions/layers-commands.c:1663
+#: app/actions/layers-commands.c:1703
 msgid "Show Layer Masks"
 msgstr "Show Layer Masks"
 
-#: app/actions/layers-commands.c:1710
+#: app/actions/layers-commands.c:1750
 msgid "Disable Layer Masks"
 msgstr "Disable Layer Masks"
 
-#: app/actions/layers-commands.c:1749
+#: app/actions/layers-commands.c:1789
 msgctxt "undo-type"
 msgid "Masks to Selection"
 msgstr "Masks to Selection"
 
-#: app/actions/layers-commands.c:1753
+#: app/actions/layers-commands.c:1793
 msgctxt "undo-type"
 msgid "Add Masks to Selection"
 msgstr "Add Masks to Selection"
 
-#: app/actions/layers-commands.c:1757
+#: app/actions/layers-commands.c:1797
 msgctxt "undo-type"
 msgid "Subtract Masks from Selection"
 msgstr "Subtract Masks from Selection"
 
-#: app/actions/layers-commands.c:1761
+#: app/actions/layers-commands.c:1801
 msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
 msgstr "Intersect Masks with Selection"
 
-#: app/actions/layers-commands.c:1782
+#: app/actions/layers-commands.c:1822
 msgid "Add Alpha Channel"
 msgstr "Add Alpha Channel"
 
-#: app/actions/layers-commands.c:1803
+#: app/actions/layers-commands.c:1843
 msgid "Remove Alpha Channel"
 msgstr "Remove Alpha Channel"
 
-#: app/actions/layers-commands.c:1831 app/core/gimpchannel-select.c:433
+#: app/actions/layers-commands.c:1871 app/core/gimpchannel-select.c:433
 #: app/core/gimplayer.c:435
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Alpha to Selection"
 
-#: app/actions/layers-commands.c:1835 app/core/gimpchannel-select.c:427
+#: app/actions/layers-commands.c:1875 app/core/gimpchannel-select.c:427
 msgctxt "undo-type"
 msgid "Add Alpha to Selection"
 msgstr "Add Alpha to Selection"
 
-#: app/actions/layers-commands.c:1839 app/core/gimpchannel-select.c:430
+#: app/actions/layers-commands.c:1879 app/core/gimpchannel-select.c:430
 msgctxt "undo-type"
 msgid "Subtract Alpha from Selection"
 msgstr "Subtract Alpha from Selection"
 
-#: app/actions/layers-commands.c:1843 app/core/gimpchannel-select.c:436
+#: app/actions/layers-commands.c:1883 app/core/gimpchannel-select.c:436
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
 msgstr "Intersect Alpha with Selection"
 
-#: app/actions/layers-commands.c:1854
+#: app/actions/layers-commands.c:1894
 msgid "Empty Selection"
 msgstr "Empty Selection"
 
-#: app/actions/layers-commands.c:1884 app/actions/layers-commands.c:1928
+#: app/actions/layers-commands.c:1924 app/actions/layers-commands.c:1968
 #: app/widgets/gimplayertreeview.c:1115
 msgid "Set layers opacity"
 msgstr "Set layers opacity"
 
-#: app/actions/layers-commands.c:1998
+#: app/actions/layers-commands.c:2038
 msgid "Set layers' blend space"
 msgstr "Set layers' blend space"
 
-#: app/actions/layers-commands.c:2051
+#: app/actions/layers-commands.c:2091
 msgid "Set layers' composite space"
 msgstr "Set layers' composite space"
 
-#: app/actions/layers-commands.c:2104
+#: app/actions/layers-commands.c:2144
 msgid "Set layers' composite mode"
 msgstr "Set layers' composite mode"
 
-#: app/actions/layers-commands.c:2188
+#: app/actions/layers-commands.c:2228
 msgid "Lock alpha channels"
 msgstr "Lock alpha channels"
 
-#: app/actions/layers-commands.c:2188
+#: app/actions/layers-commands.c:2228
 msgid "Unlock alpha channels"
 msgstr "Unlock alpha channels"
 
@@ -7923,7 +7948,7 @@ msgstr "Reset all Filters"
 #: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
 #: app/tools/gimpfiltertool.c:368 app/tools/gimptransformgridtool.c:1261
-#: app/widgets/gimpcolordialog.c:484 app/widgets/gimpcolordisplayeditor.c:332
+#: app/widgets/gimpcolordialog.c:484 app/widgets/gimpcolordisplayeditor.c:326
 msgid "_Reset"
 msgstr "_Reset"
 
@@ -8368,7 +8393,7 @@ msgstr "Open Text File (UTF-8)"
 
 #: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:125
 #: app/dialogs/file-open-location-dialog.c:81
-#: app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:718
+#: app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:717
 #: app/widgets/gimpiconpicker.c:490 app/widgets/gimpopendialog.c:87
 #: app/widgets/gimpsettingsbox.c:718
 msgid "_Open"
@@ -10139,7 +10164,7 @@ msgstr "Show \"%s-%d.%d\""
 #. TRANSLATORS: the first argument (%1$s) is the image name, the
 #. * second (%2$d) is its tab order in the graphical interface.
 #.
-#: app/actions/windows-actions.c:465
+#: app/actions/windows-actions.c:470
 #, c-format
 msgid "Switch to the first image view: %1$s"
 msgid_plural "Switch to image view %2$d: %1$s"
@@ -12266,12 +12291,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Anchor floating selection"
 
-#: app/core/core-enums.c:1336 app/core/gimp-edit.c:887
+#: app/core/core-enums.c:1336 app/core/gimp-edit.c:885
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Paste"
 
-#: app/core/core-enums.c:1337 app/core/gimp-edit.c:1266
+#: app/core/core-enums.c:1337 app/core/gimp-edit.c:1247
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Cut"
@@ -12587,26 +12612,26 @@ msgid "Selection by glob pattern search"
 msgstr "Selection by glob pattern search"
 
 #. initialize babl fishes
-#: app/core/gimp.c:543 app/core/gimp.c:573
+#: app/core/gimp.c:541 app/core/gimp.c:571
 msgid "Initialization"
 msgstr "Initialisation"
 
 #. register all internal procedures
-#: app/core/gimp.c:553
+#: app/core/gimp.c:551
 msgid "Internal Procedures"
 msgstr "Internal Procedures"
 
 #. initialize  the global parasite table
-#: app/core/gimp.c:853
+#: app/core/gimp.c:851
 msgid "Looking for data files"
 msgstr "Looking for data files"
 
-#: app/core/gimp.c:853
+#: app/core/gimp.c:851
 msgid "Parasites"
 msgstr "Parasites"
 
 #. initialize the module list
-#: app/core/gimp.c:864 app/dialogs/preferences-dialog.c:3569
+#: app/core/gimp.c:862 app/dialogs/preferences-dialog.c:3569
 msgid "Modules"
 msgstr "Modules"
 
@@ -12656,7 +12681,7 @@ msgstr "Deleting \"%s\" failed: %s"
 
 #. initialize the list of gimp dynamics
 #: app/core/gimp-data-factories.c:363 app/core/gimpcontext.c:706
-#: app/dialogs/preferences-dialog.c:3515 app/tools/gimppaintoptions-gui.c:327
+#: app/dialogs/preferences-dialog.c:3515 app/tools/gimppaintoptions-gui.c:329
 msgid "Dynamics"
 msgstr "Dynamics"
 
@@ -12678,12 +12703,10 @@ msgstr[0] "Cut Layer"
 msgstr[1] "Cut %d Layers"
 
 #: app/core/gimp-edit.c:213
-#| msgid "Cannot cut because the selected region is empty."
 msgid "Cannot cut because multiple channels are selected."
 msgstr "Cannot cut because multiple channels are selected."
 
 #: app/core/gimp-edit.c:217
-#| msgid "Cannot crop because the current selection is empty."
 msgid "Cannot copy because multiple channels are selected."
 msgstr "Cannot copy because multiple channels are selected."
 
@@ -12695,11 +12718,11 @@ msgstr "Cannot cut because the selected region is empty."
 msgid "Cannot copy because the selected region is empty."
 msgstr "Cannot copy because the selected region is empty."
 
-#: app/core/gimp-edit.c:657 app/core/gimpimage-new.c:656
+#: app/core/gimp-edit.c:655 app/core/gimpimage-new.c:656
 msgid "Pasted Layer"
 msgstr "Pasted Layer"
 
-#: app/core/gimp-edit.c:1283
+#: app/core/gimp-edit.c:1264
 msgid "Global Buffer"
 msgstr "Global Buffer"
 
@@ -13004,11 +13027,11 @@ msgstr "Fatal parse error in brush file: RLE compressed brush data corrupt."
 msgid "Brush Spacing"
 msgstr "Brush Spacing"
 
-#: app/core/gimpbrushclipboard.c:187
+#: app/core/gimpbrushclipboard.c:190
 msgid "Clipboard Mask"
 msgstr "Clipboard Mask"
 
-#: app/core/gimpbrushclipboard.c:189 app/core/gimppatternclipboard.c:165
+#: app/core/gimpbrushclipboard.c:192 app/core/gimppatternclipboard.c:167
 msgid "Clipboard Image"
 msgstr "Clipboard Image"
 
@@ -13070,19 +13093,19 @@ msgstr "Brush Shape"
 msgid "Brush Radius"
 msgstr "Brush Radius"
 
-#: app/core/gimpbrushgenerated.c:150
+#: app/core/gimpbrushgenerated.c:152
 msgid "Brush Spikes"
 msgstr "Brush Spikes"
 
-#: app/core/gimpbrushgenerated.c:157 app/paint/gimppaintoptions.c:242
+#: app/core/gimpbrushgenerated.c:159 app/paint/gimppaintoptions.c:242
 msgid "Brush Hardness"
 msgstr "Brush Hardness"
 
-#: app/core/gimpbrushgenerated.c:165 app/paint/gimppaintoptions.c:221
+#: app/core/gimpbrushgenerated.c:167 app/paint/gimppaintoptions.c:221
 msgid "Brush Aspect Ratio"
 msgstr "Brush Aspect Ratio"
 
-#: app/core/gimpbrushgenerated.c:172 app/paint/gimppaintoptions.c:228
+#: app/core/gimpbrushgenerated.c:174 app/paint/gimppaintoptions.c:228
 msgid "Brush Angle"
 msgstr "Brush Angle"
 
@@ -13304,7 +13327,7 @@ msgid "Paint Mode"
 msgstr "Paint Mode"
 
 #: app/core/gimpcontext.c:699 app/core/gimpcontext.c:700
-#: app/tools/gimpmybrushoptions-gui.c:57 app/tools/gimppaintoptions-gui.c:156
+#: app/tools/gimpmybrushoptions-gui.c:64 app/tools/gimppaintoptions-gui.c:156
 msgid "Brush"
 msgstr "Brush"
 
@@ -13323,7 +13346,7 @@ msgstr "Pattern"
 
 #: app/core/gimpcontext.c:727 app/core/gimpcontext.c:728
 #: app/pdb/drawable-edit-cmds.c:255 app/tools/gimpgradientoptions.c:269
-#: app/tools/gimpgradienttool.c:166 app/tools/gimppaintoptions-gui.c:383
+#: app/tools/gimpgradienttool.c:166 app/tools/gimppaintoptions-gui.c:385
 msgid "Gradient"
 msgstr "Gradient"
 
@@ -13333,7 +13356,7 @@ msgid "Palette"
 msgstr "Palette"
 
 #: app/core/gimpcontext.c:741 app/core/gimpcontext.c:742
-#: app/tools/gimptextoptions.c:796
+#: app/tools/gimptextoptions.c:799
 msgid "Font"
 msgstr "Font"
 
@@ -13363,7 +13386,7 @@ msgstr "copy"
 msgid "%s copy"
 msgstr "%s copy"
 
-#: app/core/gimpdatafactory.c:638 app/tools/gimptextoptions.c:777
+#: app/core/gimpdatafactory.c:638 app/tools/gimptextoptions.c:780
 #: app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
 msgstr "Loading fonts (this may take a while…)"
@@ -13439,7 +13462,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/core/gimpdrawable.c:558 app/tools/gimpscaletool.c:121
+#: app/core/gimpdrawable.c:559 app/tools/gimpscaletool.c:121
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Scale"
@@ -13524,7 +13547,7 @@ msgid "Transformation"
 msgstr "Transformation"
 
 #: app/core/gimpdrawablefiltermask.c:196 app/core/gimplayer.c:733
-#: app/core/gimplayer.c:2000 app/core/gimplayermask.c:294
+#: app/core/gimplayer.c:2030 app/core/gimplayermask.c:294
 #, c-format
 msgid "%s mask"
 msgstr "%s mask"
@@ -13559,7 +13582,7 @@ msgstr "Enable feathering of fill edges"
 #: app/core/gimpfilloptions.c:142 app/paint/gimpmybrushoptions.c:87
 #: app/tools/gimpbucketfilloptions.c:203 app/tools/gimpcoloroptions.c:86
 #: app/tools/gimprectangleselectoptions.c:101
-#: app/tools/gimpselectionoptions.c:103 app/widgets/gimpbrusheditor.c:154
+#: app/tools/gimpselectionoptions.c:103 app/widgets/gimpbrusheditor.c:157
 msgid "Radius"
 msgstr "Radius"
 
@@ -13700,226 +13723,225 @@ msgstr "Vertical offset of the first grid line; this may be a negative number."
 msgid "Offset unit"
 msgstr "Offset unit"
 
-#: app/core/gimpgrouplayer.c:292
+#: app/core/gimpgrouplayer.c:294
 msgid "Layer Group"
 msgstr "Layer Group"
 
-#: app/core/gimpgrouplayer.c:293
+#: app/core/gimpgrouplayer.c:295
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Rename Layer Group"
 
-#: app/core/gimpgrouplayer.c:294
+#: app/core/gimpgrouplayer.c:296
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "Move Layer Group"
 
-#: app/core/gimpgrouplayer.c:295
+#: app/core/gimpgrouplayer.c:297
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "Scale Layer Group"
 
-#: app/core/gimpgrouplayer.c:296
+#: app/core/gimpgrouplayer.c:298
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "Resize Layer Group"
 
-#: app/core/gimpgrouplayer.c:297
+#: app/core/gimpgrouplayer.c:299
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "Flip Layer Group"
 
-#: app/core/gimpgrouplayer.c:298
+#: app/core/gimpgrouplayer.c:300
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "Rotate Layer Group"
 
-#: app/core/gimpgrouplayer.c:299
+#: app/core/gimpgrouplayer.c:301
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Transform Layer Group"
 
-#: app/core/gimpimage.c:686 app/widgets/gimpsymmetryeditor.c:183
+#: app/core/gimpimage.c:688 app/widgets/gimpsymmetryeditor.c:183
 msgid "Symmetry"
 msgstr "Symmetry"
 
-#: app/core/gimpimage.c:2635
+#: app/core/gimpimage.c:2071 app/pdb/drawable-filter-cmds.c:681
+#: app/widgets/gimpitemtreeview.c:2901
+msgid "Remove filter"
+msgstr "Remove filter"
+
+#: app/core/gimpimage.c:2681
 msgid " (exported)"
 msgstr " (exported)"
 
-#: app/core/gimpimage.c:2639
+#: app/core/gimpimage.c:2685
 msgid " (overwritten)"
 msgstr " (overwritten)"
 
-#: app/core/gimpimage.c:2648
+#: app/core/gimpimage.c:2694
 msgid " (imported)"
 msgstr " (imported)"
 
-#: app/core/gimpimage.c:2822 app/core/gimpimage.c:2836
-#: app/core/gimpimage.c:2879
+#: app/core/gimpimage.c:2868 app/core/gimpimage.c:2882
+#: app/core/gimpimage.c:2925
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Layer mode '%s' was added in %s"
 
-#: app/core/gimpimage.c:2899
+#: app/core/gimpimage.c:2945
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Layer groups were added in %s"
 
-#: app/core/gimpimage.c:2906
+#: app/core/gimpimage.c:2952
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Masks on layer groups were added in %s"
 
-#: app/core/gimpimage.c:2913
+#: app/core/gimpimage.c:2959
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "Position locks on layer groups were added in %s"
 
-#: app/core/gimpimage.c:2920
+#: app/core/gimpimage.c:2966
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "Alpha channel locks on layer groups were added in %s"
 
-#: app/core/gimpimage.c:2928 app/core/gimpimage.c:2979
+#: app/core/gimpimage.c:2974 app/core/gimpimage.c:3025
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "Visibility locks were added in %s"
 
-#: app/core/gimpimage.c:2939
+#: app/core/gimpimage.c:2985
 #, c-format
 msgid "Format of font information in text layer was changed in %s"
 msgstr "Format of font information in text layer was changed in %s"
 
-#: app/core/gimpimage.c:2947
+#: app/core/gimpimage.c:2993
 #, c-format
 msgid "Layer effects were added in %s"
 msgstr "Layer effects were added in %s"
 
-#: app/core/gimpimage.c:2959
+#: app/core/gimpimage.c:3005
 #, c-format
-#| msgid "Internal zlib compression was added in %s"
 msgid "A new perceptual blending space was added in %s"
 msgstr "A new perceptual blending space was added in %s"
 
-#: app/core/gimpimage.c:2988
+#: app/core/gimpimage.c:3034
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "Multiple path selection was added in %s"
 
-#: app/core/gimpimage.c:3000
+#: app/core/gimpimage.c:3046
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "Storing colour tags in path was added in %s"
 
-#: app/core/gimpimage.c:3007
+#: app/core/gimpimage.c:3053
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "Storing locks in path was added in %s"
 
-#: app/core/gimpimage.c:3021
+#: app/core/gimpimage.c:3067
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "High bit-depth images were added in %s"
 
-#: app/core/gimpimage.c:3029
+#: app/core/gimpimage.c:3075
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Encoding of high bit-depth images was fixed in %s"
 
-#: app/core/gimpimage.c:3037
+#: app/core/gimpimage.c:3083
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Internal zlib compression was added in %s"
 
-#: app/core/gimpimage.c:3054
+#: app/core/gimpimage.c:3100
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Support for image files larger than 4GB was added in %s"
 
-#: app/core/gimpimage.c:3061
+#: app/core/gimpimage.c:3107
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Multiple layer selection was added in %s"
 
-#: app/core/gimpimage.c:3078
+#: app/core/gimpimage.c:3124
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "Off-canvas guides added in %s"
 
-#: app/core/gimpimage.c:3089
+#: app/core/gimpimage.c:3135
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr "Item set and pattern search in item's name were added in %s"
 
-#: app/core/gimpimage.c:3095
+#: app/core/gimpimage.c:3141
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "Multiple channel selection was added in %s"
 
-#: app/core/gimpimage.c:3209
+#: app/core/gimpimage.c:3256
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Change Image Resolution"
 
-#: app/core/gimpimage.c:3261
+#: app/core/gimpimage.c:3308
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Change Image Unit"
 
-#: app/core/gimpimage.c:4314
+#: app/core/gimpimage.c:4361
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 
-#: app/core/gimpimage.c:4376
+#: app/core/gimpimage.c:4423
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Attach Parasite to Image"
 
-#: app/core/gimpimage.c:4421
+#: app/core/gimpimage.c:4468
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Remove Parasite from Image"
 
-#: app/core/gimpimage.c:5256
+#: app/core/gimpimage.c:5311
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Add Layer"
 
-#: app/core/gimpimage.c:5300 app/core/gimpimage.c:5331
+#: app/core/gimpimage.c:5355 app/core/gimpimage.c:5386
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Remove Layer"
 
-#: app/core/gimpimage.c:5325
+#: app/core/gimpimage.c:5380
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Remove Floating Selection"
 
-#: app/core/gimpimage.c:5352 app/pdb/drawable-filter-cmds.c:681
-#: app/widgets/gimpitemtreeview.c:2879
-msgid "Remove filter"
-msgstr "Remove filter"
-
-#: app/core/gimpimage.c:5858
+#: app/core/gimpimage.c:5892
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Add Channel"
 
-#: app/core/gimpimage.c:5888 app/core/gimpimage.c:5913
+#: app/core/gimpimage.c:5922 app/core/gimpimage.c:5947
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Remove Channel"
 
-#: app/core/gimpimage.c:5973
+#: app/core/gimpimage.c:6007
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Add Path"
 
-#: app/core/gimpimage.c:6008 app/core/gimpimage.c:6016
+#: app/core/gimpimage.c:6042 app/core/gimpimage.c:6050
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Remove Path"
@@ -14117,56 +14139,56 @@ msgctxt "undo-type"
 msgid "Transform Items"
 msgstr "Transform Items"
 
-#: app/core/gimpimage-merge.c:77
+#: app/core/gimpimage-merge.c:79
 msgctxt "undo-type"
 msgid "Merge Visible Layers"
 msgstr "Merge Visible Layers"
 
-#: app/core/gimpimage-merge.c:234
+#: app/core/gimpimage-merge.c:237
 msgctxt "undo-type"
 msgid "Flatten Image"
 msgstr "Flatten Image"
 
-#: app/core/gimpimage-merge.c:263
+#: app/core/gimpimage-merge.c:266
 msgid "Cannot flatten an image without any visible layer."
 msgstr "Cannot flatten an image without any visible layer."
 
-#: app/core/gimpimage-merge.c:298
+#: app/core/gimpimage-merge.c:301
 msgid "Cannot merge down a floating selection."
 msgstr "Cannot merge down a floating selection."
 
-#: app/core/gimpimage-merge.c:307
+#: app/core/gimpimage-merge.c:310
 msgid "Cannot merge down an invisible layer."
 msgstr "Cannot merge down an invisible layer."
 
-#: app/core/gimpimage-merge.c:333
+#: app/core/gimpimage-merge.c:336
 msgid "Cannot merge down to a layer group."
 msgstr "Cannot merge down to a layer group."
 
-#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2845
+#: app/core/gimpimage-merge.c:345 app/widgets/gimpitemtreeview.c:2867
 msgid "The layer to merge down to is locked."
 msgstr "The layer to merge down to is locked."
 
-#: app/core/gimpimage-merge.c:357
+#: app/core/gimpimage-merge.c:360
 msgid "There is no visible layer to merge down to."
 msgstr "There is no visible layer to merge down to."
 
-#: app/core/gimpimage-merge.c:382
+#: app/core/gimpimage-merge.c:385
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "Merge Down"
 
-#: app/core/gimpimage-merge.c:423
+#: app/core/gimpimage-merge.c:429
 msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Merge Layer Group"
 
-#: app/core/gimpimage-merge.c:503
+#: app/core/gimpimage-merge.c:562
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Merge Visible Paths"
 
-#: app/core/gimpimage-merge.c:539
+#: app/core/gimpimage-merge.c:598
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr "Not enough visible paths for a merge. There must be at least two."
 
@@ -14264,9 +14286,9 @@ msgid "Could not open thumbnail '%s': %s"
 msgstr "Could not open thumbnail '%s': %s"
 
 #: app/core/gimpitem.c:1883 app/core/gimpitem.c:1950
-#: app/display/gimpdisplayshell-dnd.c:413 app/tools/gimptransformtool.c:704
+#: app/display/gimpdisplayshell-dnd.c:414 app/tools/gimptransformtool.c:704
 #: app/tools/gimpvectortool.c:757 app/tools/gimpvectortool.c:846
-#: app/widgets/gimpitemtreeview.c:2649
+#: app/widgets/gimpitemtreeview.c:2671
 msgid "A selected layer's pixels are locked."
 msgstr "A selected layer's pixels are locked."
 
@@ -14294,7 +14316,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Anchor Floating Selection"
 
-#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1047
+#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1077
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -14391,73 +14413,73 @@ msgstr ""
 "%s\n"
 "(%s)"
 
-#: app/core/gimplayer.c:1901
+#: app/core/gimplayer.c:1931
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Unable to add a layer mask since the layer already has one."
 
-#: app/core/gimplayer.c:1912
+#: app/core/gimplayer.c:1942
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Cannot add layer mask of different dimensions than specified layer."
 
-#: app/core/gimplayer.c:1918
+#: app/core/gimplayer.c:1948
 msgctxt "undo-type"
 msgid "Add Layer Masks"
 msgstr "Add Layer Masks"
 
-#: app/core/gimplayer.c:2042
+#: app/core/gimplayer.c:2072
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Transfer Alpha to Mask"
 
-#: app/core/gimplayer.c:2205
+#: app/core/gimplayer.c:2235
 msgctxt "undo-type"
 msgid "Apply Layer Masks"
 msgstr "Apply Layer Masks"
 
-#: app/core/gimplayer.c:2206
+#: app/core/gimplayer.c:2236
 msgctxt "undo-type"
 msgid "Delete Layer Masks"
 msgstr "Delete Layer Masks"
 
-#: app/core/gimplayer.c:2313
+#: app/core/gimplayer.c:2343
 msgctxt "undo-type"
 msgid "Enable Layer Masks"
 msgstr "Enable Layer Masks"
 
-#: app/core/gimplayer.c:2314
+#: app/core/gimplayer.c:2344
 msgctxt "undo-type"
 msgid "Disable Layer Masks"
 msgstr "Disable Layer Masks"
 
-#: app/core/gimplayer.c:2395
+#: app/core/gimplayer.c:2425
 msgctxt "undo-type"
 msgid "Show Layer Masks"
 msgstr "Show Layer Masks"
 
-#: app/core/gimplayer.c:2474
+#: app/core/gimplayer.c:2504
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Add Alpha Channel"
 
-#: app/core/gimplayer.c:2504
+#: app/core/gimplayer.c:2534
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Remove Alpha Channel"
 
-#: app/core/gimplayer.c:2525
+#: app/core/gimplayer.c:2555
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Layer to Image Size"
 
-#: app/core/gimplayer.c:2708
+#: app/core/gimplayer.c:2738
 msgid "Set layer's blend space"
 msgstr "Set layer's blend space"
 
-#: app/core/gimplayer.c:2755
+#: app/core/gimplayer.c:2785
 msgid "Set layer's composite space"
 msgstr "Set layer's composite space"
 
-#: app/core/gimplayer.c:2802
+#: app/core/gimplayer.c:2832
 msgid "Set layer's composite mode"
 msgstr "Set layer's composite mode"
 
@@ -15160,22 +15182,22 @@ msgstr "Tool preset file is corrupt."
 #. * installer/package revision.
 #. * For instance: "2.10.18 (revision 2)"
 #.
-#: app/dialogs/about-dialog.c:148
+#: app/dialogs/about-dialog.c:151
 #, c-format
 msgid "%s (revision %d)"
 msgstr "%s (revision %d)"
 
-#: app/dialogs/about-dialog.c:156
+#: app/dialogs/about-dialog.c:159
 msgid "About GIMP"
 msgstr "About GIMP"
 
-#: app/dialogs/about-dialog.c:165
+#: app/dialogs/about-dialog.c:168
 msgid "Visit the GIMP website"
 msgstr "Visit the GIMP website"
 
 #. Translators: insert your names here,
 #. separated by newline
-#: app/dialogs/about-dialog.c:171
+#: app/dialogs/about-dialog.c:174
 msgid "translator-credits"
 msgstr ""
 "Robert Brady\n"
@@ -15185,33 +15207,33 @@ msgstr ""
 "Zander Brown\n"
 "Andi Chandler"
 
-#: app/dialogs/about-dialog.c:225 app/widgets/gimpfiledialog.c:359
+#: app/dialogs/about-dialog.c:228 app/widgets/gimpfiledialog.c:359
 msgid "_Help"
 msgstr "_Help"
 
-#: app/dialogs/about-dialog.c:391
+#: app/dialogs/about-dialog.c:405
 msgid "Update available!"
 msgstr "Update available!"
 
 #. This is actually a new revision of current version.
-#: app/dialogs/about-dialog.c:421
+#: app/dialogs/about-dialog.c:435
 #, c-format
 msgid "Download GIMP %s revision %d (released on %s)\n"
 msgstr "Download GIMP %s revision %d (released on %s)\n"
 
 #. Translators: <> tags are Pango markup. Please keep these
 #. * markups in your translation.
-#: app/dialogs/about-dialog.c:431
+#: app/dialogs/about-dialog.c:445
 #, c-format
 msgid "<u>Release comment</u>: <i>%s</i>"
 msgstr "<u>Release comment</u>: <i>%s</i>"
 
-#: app/dialogs/about-dialog.c:436
+#: app/dialogs/about-dialog.c:450
 #, c-format
 msgid "Download GIMP %s (released on %s)\n"
 msgstr "Download GIMP %s (released on %s)\n"
 
-#: app/dialogs/about-dialog.c:461 app/dialogs/about-dialog.c:484
+#: app/dialogs/about-dialog.c:475 app/dialogs/about-dialog.c:498
 msgid "Check for updates"
 msgstr "Check for updates"
 
@@ -15219,22 +15241,22 @@ msgstr "Check for updates"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:503
+#: app/dialogs/about-dialog.c:517
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "Last checked on %s at %s"
 
-#: app/dialogs/about-dialog.c:730
+#: app/dialogs/about-dialog.c:744
 msgid "GIMP is brought to you by"
 msgstr "GIMP is brought to you by"
 
-#: app/dialogs/about-dialog.c:805
+#: app/dialogs/about-dialog.c:819
 #, c-format
 msgid ""
-"This is an unstable development release\n"
+"This is a development build\n"
 "commit %s"
 msgstr ""
-"This is an unstable development release\n"
+"This is a development build\n"
 "commit %s"
 
 #: app/dialogs/action-search-dialog.c:68
@@ -15611,7 +15633,8 @@ msgstr "Search extension:"
 msgid "Search extensions matching these keywords"
 msgstr "Search extensions matching these keywords"
 
-#: app/dialogs/file-open-dialog.c:260
+#: app/dialogs/file-open-dialog.c:140 app/dialogs/file-open-dialog.c:165
+#: app/dialogs/file-open-dialog.c:279
 msgid "Open layers"
 msgstr "Open layers"
 
@@ -15753,7 +15776,7 @@ msgstr "Merge within active _groups only"
 msgid "_Discard invisible layers"
 msgstr "_Discard invisible layers"
 
-#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:703
+#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:702
 msgid "Create a New Image"
 msgstr "Create a New Image"
 
@@ -15961,7 +15984,7 @@ msgid "_Fill with:"
 msgstr "_Fill with:"
 
 #: app/dialogs/layer-options-dialog.c:395
-#: app/widgets/gimpcolordisplayeditor.c:286
+#: app/widgets/gimpcolordisplayeditor.c:280
 msgid "Active Filters"
 msgstr "Active Filters"
 
@@ -16819,7 +16842,7 @@ msgstr "Remove _All Keyboard Shortcuts"
 
 #. Themes
 #: app/dialogs/preferences-dialog.c:1959 app/dialogs/preferences-dialog.c:1960
-#: app/dialogs/welcome-dialog.c:547
+#: app/dialogs/welcome-dialog.c:546
 msgid "Theme"
 msgstr "Theme"
 
@@ -16831,44 +16854,44 @@ msgstr "Select Theme"
 msgid "Color scheme variant (if available)"
 msgstr "Colour scheme variant (if available)"
 
-#: app/dialogs/preferences-dialog.c:2051 app/dialogs/welcome-dialog.c:599
+#: app/dialogs/preferences-dialog.c:2051 app/dialogs/welcome-dialog.c:598
 msgid "_Override icon sizes set by the theme"
 msgstr "_Override icon sizes set by the theme"
 
-#: app/dialogs/preferences-dialog.c:2064 app/dialogs/welcome-dialog.c:608
+#: app/dialogs/preferences-dialog.c:2064 app/dialogs/welcome-dialog.c:607
 msgid "Small"
 msgstr "Small"
 
-#: app/dialogs/preferences-dialog.c:2066 app/dialogs/welcome-dialog.c:610
+#: app/dialogs/preferences-dialog.c:2066 app/dialogs/welcome-dialog.c:609
 msgid "Medium"
 msgstr "Medium"
 
-#: app/dialogs/preferences-dialog.c:2068 app/dialogs/welcome-dialog.c:612
+#: app/dialogs/preferences-dialog.c:2068 app/dialogs/welcome-dialog.c:611
 msgid "Large"
 msgstr "Large"
 
-#: app/dialogs/preferences-dialog.c:2070 app/dialogs/welcome-dialog.c:614
+#: app/dialogs/preferences-dialog.c:2070 app/dialogs/welcome-dialog.c:613
 msgid "Huge"
 msgstr "Huge"
 
 #. Font sizes.
-#: app/dialogs/preferences-dialog.c:2083 app/dialogs/welcome-dialog.c:630
+#: app/dialogs/preferences-dialog.c:2083 app/dialogs/welcome-dialog.c:629
 msgid "Font Scaling"
 msgstr "Font Scaling"
 
-#: app/dialogs/preferences-dialog.c:2085 app/dialogs/welcome-dialog.c:632
+#: app/dialogs/preferences-dialog.c:2085 app/dialogs/welcome-dialog.c:631
 msgid "Font scaling will not work with themes using absolute sizes."
 msgstr "Font scaling will not work with themes using absolute sizes."
 
-#: app/dialogs/preferences-dialog.c:2091 app/dialogs/welcome-dialog.c:638
+#: app/dialogs/preferences-dialog.c:2091 app/dialogs/welcome-dialog.c:637
 msgid "50%"
 msgstr "50%"
 
-#: app/dialogs/preferences-dialog.c:2093 app/dialogs/welcome-dialog.c:640
+#: app/dialogs/preferences-dialog.c:2093 app/dialogs/welcome-dialog.c:639
 msgid "100%"
 msgstr "100%"
 
-#: app/dialogs/preferences-dialog.c:2095 app/dialogs/welcome-dialog.c:642
+#: app/dialogs/preferences-dialog.c:2095 app/dialogs/welcome-dialog.c:641
 msgid "200%"
 msgstr "200%"
 
@@ -16884,12 +16907,12 @@ msgstr "Icon Theme"
 msgid "Select an Icon Theme"
 msgstr "Select an Icon Theme"
 
-#: app/dialogs/preferences-dialog.c:2247 app/dialogs/welcome-dialog.c:592
+#: app/dialogs/preferences-dialog.c:2247 app/dialogs/welcome-dialog.c:591
 msgid "Use symbolic icons if available"
 msgstr "Use symbolic icons if available"
 
 #: app/dialogs/preferences-dialog.c:2257 app/dialogs/preferences-dialog.c:2258
-#: app/widgets/gimptoolbox.c:523
+#: app/widgets/gimptoolbox.c:525
 msgid "Toolbox"
 msgstr "Toolbox"
 
@@ -16915,7 +16938,7 @@ msgstr "Show active _brush, pattern & gradient"
 msgid "Show active _image"
 msgstr "Show active _image"
 
-#: app/dialogs/preferences-dialog.c:2291 app/dialogs/welcome-dialog.c:678
+#: app/dialogs/preferences-dialog.c:2291 app/dialogs/welcome-dialog.c:677
 msgid "Use tool _groups"
 msgstr "Use tool _groups"
 
@@ -18087,7 +18110,7 @@ msgid "_Next Tip"
 msgstr "_Next Tip"
 
 #. a link to the related section in the user manual
-#: app/dialogs/tips-dialog.c:196 app/dialogs/welcome-dialog.c:1093
+#: app/dialogs/tips-dialog.c:196 app/dialogs/welcome-dialog.c:1092
 msgid "Learn more"
 msgstr "Learn more"
 
@@ -18197,7 +18220,7 @@ msgid "You installed GIMP %s!"
 msgstr "You installed GIMP %s!"
 
 #. Welcome message: left
-#: app/dialogs/welcome-dialog.c:441
+#: app/dialogs/welcome-dialog.c:440
 msgid ""
 "GIMP is Free Software for image authoring and manipulation.\n"
 "Want to know more?"
@@ -18205,22 +18228,22 @@ msgstr ""
 "GIMP is Free Software for image authoring and manipulation.\n"
 "Want to know more?"
 
-#: app/dialogs/welcome-dialog.c:470
+#: app/dialogs/welcome-dialog.c:469
 msgid "GIMP website"
 msgstr "GIMP website"
 
-#: app/dialogs/welcome-dialog.c:474
+#: app/dialogs/welcome-dialog.c:473
 msgid "Tutorials"
 msgstr "Tutorials"
 
-#: app/dialogs/welcome-dialog.c:479
+#: app/dialogs/welcome-dialog.c:478
 msgid "Documentation"
 msgstr "Documentation"
 
 #. XXX: should we add API docs for plug-in developers once it's
 #. * properly set up?
 #. Welcome message: right
-#: app/dialogs/welcome-dialog.c:487
+#: app/dialogs/welcome-dialog.c:486
 msgid ""
 "GIMP is Community Software under the GNU general public license v3.\n"
 "Want to contribute?"
@@ -18228,76 +18251,76 @@ msgstr ""
 "GIMP is Community Software under the GNU general public licence v3.\n"
 "Want to contribute?"
 
-#: app/dialogs/welcome-dialog.c:512
+#: app/dialogs/welcome-dialog.c:511
 msgid "Contributing"
 msgstr "Contributing"
 
-#: app/dialogs/welcome-dialog.c:517
+#: app/dialogs/welcome-dialog.c:516
 msgid "Donating"
 msgstr "Donating"
 
-#: app/dialogs/welcome-dialog.c:557
+#: app/dialogs/welcome-dialog.c:556
 msgid "Color scheme"
 msgstr "Colour scheme"
 
-#: app/dialogs/welcome-dialog.c:583
+#: app/dialogs/welcome-dialog.c:582
 msgid "Icon theme"
 msgstr "Icon theme"
 
-#: app/dialogs/welcome-dialog.c:596
+#: app/dialogs/welcome-dialog.c:595
 msgid "Icon Scaling"
 msgstr "Icon Scaling"
 
-#: app/dialogs/welcome-dialog.c:655
+#: app/dialogs/welcome-dialog.c:654
 msgid "GUI Language (requires restart)"
 msgstr "GUI Language (requires restart)"
 
-#: app/dialogs/welcome-dialog.c:660
+#: app/dialogs/welcome-dialog.c:659
 msgid "Additional Customizations"
 msgstr "Additional Customisations"
 
-#: app/dialogs/welcome-dialog.c:664
+#: app/dialogs/welcome-dialog.c:663
 msgid "Merge menu and title bar (requires restart)"
 msgstr "Merge menu and title bar (requires restart)"
 
-#: app/dialogs/welcome-dialog.c:672
+#: app/dialogs/welcome-dialog.c:671
 msgid "Enable check for updates (requires internet)"
 msgstr "Enable check for updates (requires internet)"
 
-#: app/dialogs/welcome-dialog.c:706
+#: app/dialogs/welcome-dialog.c:705
 msgid "C_reate"
 msgstr "C_reate"
 
-#: app/dialogs/welcome-dialog.c:715
+#: app/dialogs/welcome-dialog.c:714
 msgid "Open an Existing Image"
 msgstr "Open an Existing Image"
 
 #. Recent Files
-#: app/dialogs/welcome-dialog.c:727
+#: app/dialogs/welcome-dialog.c:726
 msgid "Recent Images"
 msgstr "Recent Images"
 
-#: app/dialogs/welcome-dialog.c:819
+#: app/dialogs/welcome-dialog.c:818
 msgid "O_pen Selected Images"
 msgstr "O_pen Selected Images"
 
-#: app/dialogs/welcome-dialog.c:828
+#: app/dialogs/welcome-dialog.c:827
 msgid ""
 "Show on Start (You can show the Welcome dialog again from the \"Help\" menu)"
 msgstr ""
 "Show on Start (You can show the Welcome dialogue again from the \"Help\" "
 "menu)"
 
-#: app/dialogs/welcome-dialog.c:856
+#: app/dialogs/welcome-dialog.c:855
 #, c-format
 msgid "Ways to contribute"
 msgstr "Ways to contribute"
 
-#: app/dialogs/welcome-dialog.c:865 app/dialogs/welcome-dialog.c:876
+#: app/dialogs/welcome-dialog.c:864 app/dialogs/welcome-dialog.c:875
 msgid "Report Bugs"
 msgstr "Report Bugs"
 
-#: app/dialogs/welcome-dialog.c:867
+#: app/dialogs/welcome-dialog.c:866
 #, c-format
 msgid ""
 "As any application, GIMP is not bug-free, so reporting bugs that you "
@@ -18306,11 +18329,11 @@ msgstr ""
 "As any application, GIMP is not bug-free, so reporting bugs that you "
 "encounter is very important to the development."
 
-#: app/dialogs/welcome-dialog.c:880 app/dialogs/welcome-dialog.c:890
+#: app/dialogs/welcome-dialog.c:879 app/dialogs/welcome-dialog.c:889
 msgid "Write Code"
 msgstr "Write Code"
 
-#: app/dialogs/welcome-dialog.c:882
+#: app/dialogs/welcome-dialog.c:881
 #, c-format
 msgid ""
 "Our Developer Website is where you want to start learning about being a code "
@@ -18319,39 +18342,39 @@ msgstr ""
 "Our Developer Website is where you want to start learning about being a code "
 "contributor."
 
-#: app/dialogs/welcome-dialog.c:894 app/dialogs/welcome-dialog.c:904
+#: app/dialogs/welcome-dialog.c:893 app/dialogs/welcome-dialog.c:903
 msgid "Translate"
 msgstr "Translate"
 
-#: app/dialogs/welcome-dialog.c:896
+#: app/dialogs/welcome-dialog.c:895
 #, c-format
 msgid "Contact the respective translation team for your language"
 msgstr "Contact the respective translation team for your language"
 
-#: app/dialogs/welcome-dialog.c:908
+#: app/dialogs/welcome-dialog.c:907
 msgid "Donate"
 msgstr "Donate"
 
-#: app/dialogs/welcome-dialog.c:910
+#: app/dialogs/welcome-dialog.c:909
 #, c-format
 msgid "Donating money is important: it makes GIMP sustainable."
 msgstr "Donating money is important: it makes GIMP sustainable."
 
-#: app/dialogs/welcome-dialog.c:918
+#: app/dialogs/welcome-dialog.c:917
 msgid "Donate via Liberapay"
 msgstr "Donate via Liberapay"
 
-#: app/dialogs/welcome-dialog.c:921
+#: app/dialogs/welcome-dialog.c:920
 msgid "Other donation options"
 msgstr "Other donation options"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:955
+#: app/dialogs/welcome-dialog.c:954
 #, c-format
 msgid "GIMP %s Release Notes"
 msgstr "GIMP %s Release Notes"
 
-#: app/dialogs/welcome-dialog.c:1066
+#: app/dialogs/welcome-dialog.c:1065
 #, c-format
 msgid "Click on release items with a %s bullet point to get a tour."
 msgstr "Click on release items with a %s bullet point to get a tour."
@@ -18661,49 +18684,49 @@ msgid "The image has been exported to '%s'."
 msgstr "The image has been exported to '%s'."
 
 #: app/display/gimpdisplayshell-dnd.c:257
-#: app/display/gimpdisplayshell-dnd.c:739
-#: app/display/gimpdisplayshell-dnd.c:798
+#: app/display/gimpdisplayshell-dnd.c:740
+#: app/display/gimpdisplayshell-dnd.c:799
 msgid "Drop New Layer"
 msgstr "Drop New Layer"
 
-#: app/display/gimpdisplayshell-dnd.c:329
+#: app/display/gimpdisplayshell-dnd.c:330
 msgid "Drop New Path"
 msgstr "Drop New Path"
 
-#: app/display/gimpdisplayshell-dnd.c:404 app/tools/gimpbucketfilltool.c:610
+#: app/display/gimpdisplayshell-dnd.c:405 app/tools/gimpbucketfilltool.c:611
 #: app/tools/gimpcagetool.c:243 app/tools/gimpgradienttool.c:276
 #: app/tools/gimpselectiontool.c:567
 #, c-format
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Cannot modify the pixels of layer groups."
 
-#: app/display/gimpdisplayshell-dnd.c:423 app/tools/gimpfiltertool.c:333
+#: app/display/gimpdisplayshell-dnd.c:424 app/tools/gimpfiltertool.c:333
 #: app/tools/gimppainttool.c:371 app/tools/gimptransformtool.c:713
-#: app/widgets/gimpitemtreeview.c:2642
+#: app/widgets/gimpitemtreeview.c:2664
 msgid "A selected layer is not visible."
 msgstr "A selected layer is not visible."
 
-#: app/display/gimpdisplayshell-dnd.c:479
+#: app/display/gimpdisplayshell-dnd.c:480
 #: app/widgets/gimpdrawabletreeview.c:267
 #: app/widgets/gimpdrawabletreeview.c:381
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "Drop pattern to layer"
 
-#: app/display/gimpdisplayshell-dnd.c:501
+#: app/display/gimpdisplayshell-dnd.c:502
 #: app/widgets/gimpdrawabletreeview.c:298
 #: app/widgets/gimpdrawabletreeview.c:401
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Drop colour to layer"
 
-#: app/display/gimpdisplayshell-dnd.c:629 app/widgets/gimpitemtreeview.c:1943
+#: app/display/gimpdisplayshell-dnd.c:630 app/widgets/gimpitemtreeview.c:1971
 #: app/widgets/gimplayertreeview.c:811
 msgid "Drop layers"
 msgstr "Drop layers"
 
-#: app/display/gimpdisplayshell-dnd.c:772
-#: app/display/gimpdisplayshell-dnd.c:789 app/widgets/gimplayertreeview.c:888
+#: app/display/gimpdisplayshell-dnd.c:773
+#: app/display/gimpdisplayshell-dnd.c:790 app/widgets/gimplayertreeview.c:888
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "Dropped Buffer"
@@ -18796,7 +18819,7 @@ msgstr "(clean)"
 msgid "(none)"
 msgstr "(none)"
 
-#: app/display/gimpdisplayshell-tool-events.c:1757
+#: app/display/gimpdisplayshell-tool-events.c:1758
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "Layer picked: '%s'"
@@ -18839,6 +18862,25 @@ msgstr "Soft-Proofing Profile"
 #: app/display/gimpstatusbar.c:534
 msgid "_Soft-proofing Profile: "
 msgstr "_Soft-proofing Profile: "
+
+#: app/display/gimpstatusbar.c:543
+msgid "Perceptual"
+msgstr "Perceptual"
+
+#: app/display/gimpstatusbar.c:544
+msgid "Relative Colorimetric"
+msgstr "Relative Colourimetric"
+
+#: app/display/gimpstatusbar.c:545 app/operations/gimphuesaturationconfig.c:107
+#: app/operations/gimphuesaturationconfig.c:108
+#: app/operations/gimpoperationcolorize.c:106
+#: app/operations/gimpoperationcolorize.c:107
+msgid "Saturation"
+msgstr "Saturation"
+
+#: app/display/gimpstatusbar.c:546
+msgid "Absolute Colorimetric"
+msgstr "Absolute Colourimetric"
 
 #: app/display/gimpstatusbar.c:553
 msgid "_Rendering Intent: "
@@ -20093,13 +20135,6 @@ msgstr "Writing curves file failed: "
 msgid "Hue"
 msgstr "Hue"
 
-#: app/operations/gimphuesaturationconfig.c:107
-#: app/operations/gimphuesaturationconfig.c:108
-#: app/operations/gimpoperationcolorize.c:106
-#: app/operations/gimpoperationcolorize.c:107
-msgid "Saturation"
-msgstr "Saturation"
-
 #: app/operations/gimphuesaturationconfig.c:113
 #: app/operations/gimphuesaturationconfig.c:114
 #: app/operations/gimpoperationcolorize.c:112
@@ -20205,7 +20240,7 @@ msgid "Turn colors into shades of gray"
 msgstr "Turn colours into shades of grey"
 
 #: app/operations/gimpoperationdesaturate.c:91
-#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1449
+#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1457
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
 #: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:281
@@ -20250,14 +20285,14 @@ msgstr "Replace partial transparency with a colour"
 msgid "The color"
 msgstr "The colour"
 
-#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1412
-#: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:109
-#: app/tools/gimptransformoptions.c:262
+#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1420
+#: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:113
+#: app/tools/gimptransformoptions.c:307
 msgid "Clipping"
 msgstr "Clipping"
 
 #: app/operations/gimpoperationsettings.c:77
-#: app/tools/gimptransformoptions.c:110
+#: app/tools/gimptransformoptions.c:114
 msgid "How to clip"
 msgstr "How to clip"
 
@@ -20385,7 +20420,7 @@ msgid "No patterns available for use with this tool."
 msgstr "No patterns available for use with this tool."
 
 #: app/paint/gimpcloneoptions.c:67 app/tools/gimpbucketfilloptions.c:217
-#: app/tools/gimpbucketfilloptions.c:768 app/tools/gimpcloneoptions-gui.c:246
+#: app/tools/gimpbucketfilloptions.c:773 app/tools/gimpcloneoptions-gui.c:246
 msgid "Source"
 msgstr "Source"
 
@@ -20446,7 +20481,7 @@ msgstr "Ink Blob Size"
 #. angle frame
 #: app/paint/gimpinkoptions.c:81 app/paint/gimpinkoptions.c:120
 #: app/paint/gimppaintoptions.c:227 app/tools/gimptransform3dtool.c:321
-#: app/tools/gimptransform3dtool.c:422 app/widgets/gimpbrusheditor.c:194
+#: app/tools/gimptransform3dtool.c:422 app/widgets/gimpbrusheditor.c:197
 msgid "Angle"
 msgstr "Angle"
 
@@ -20461,7 +20496,7 @@ msgstr "Tilt"
 msgid "Shape"
 msgstr "Shape"
 
-#: app/paint/gimpinkoptions.c:114 app/widgets/gimpbrusheditor.c:184
+#: app/paint/gimpinkoptions.c:114 app/widgets/gimpbrusheditor.c:187
 msgid "Aspect ratio"
 msgstr "Aspect ratio"
 
@@ -20486,7 +20521,7 @@ msgid "Base Opacity"
 msgstr "Base Opacity"
 
 #: app/paint/gimpmybrushoptions.c:101 app/paint/gimppaintoptions.c:241
-#: app/tools/gimpwarpoptions.c:99 app/widgets/gimpbrusheditor.c:174
+#: app/tools/gimpwarpoptions.c:99 app/widgets/gimpbrusheditor.c:177
 msgid "Hardness"
 msgstr "Hardness"
 
@@ -20519,7 +20554,7 @@ msgid "Aspect Ratio"
 msgstr "Aspect Ratio"
 
 #: app/paint/gimppaintoptions.c:234 app/tools/gimpwarpoptions.c:113
-#: app/widgets/gimpbrusheditor.c:204 app/widgets/gimpbrushfactoryview.c:102
+#: app/widgets/gimpbrusheditor.c:207 app/widgets/gimpbrushfactoryview.c:102
 #: app/widgets/gimpgrideditor.c:175
 msgid "Spacing"
 msgstr "Spacing"
@@ -20661,7 +20696,7 @@ msgid "Reverse direction of fading"
 msgstr "Reverse direction of fading"
 
 #: app/paint/gimppaintoptions.c:380 app/paint/gimppaintoptions.c:400
-#: app/tools/gimpgradientoptions.c:307 app/tools/gimppaintoptions-gui.c:363
+#: app/tools/gimpgradientoptions.c:307 app/tools/gimppaintoptions-gui.c:365
 msgid "Repeat"
 msgstr "Repeat"
 
@@ -20670,7 +20705,7 @@ msgid "How fade is repeated as you paint"
 msgstr "How fade is repeated as you paint"
 
 #: app/paint/gimppaintoptions.c:393 app/tools/gimpgradientoptions.c:282
-#: app/tools/gimppaintoptions-gui.c:396
+#: app/tools/gimppaintoptions-gui.c:398
 msgid "Blend Color Space"
 msgstr "Blend Colour Space"
 
@@ -20787,7 +20822,7 @@ msgstr "Fixed"
 msgid "Combine Masks"
 msgstr "Combine Masks"
 
-#: app/pdb/drawable-cmds.c:655 app/tools/gimpfiltertool.c:1336
+#: app/pdb/drawable-cmds.c:655
 msgid "Add filter"
 msgstr "Add filter"
 
@@ -21153,8 +21188,8 @@ msgstr "Sample transparent"
 msgid "Diagonal neighbors"
 msgstr "Diagonal neighbours"
 
-#: app/pdb/gimppdbcontext.c:165 app/tools/gimptransformoptions.c:101
-#: app/tools/gimptransformoptions.c:253 app/tools/gimpwarpoptions.c:120
+#: app/pdb/gimppdbcontext.c:165 app/tools/gimptransformoptions.c:105
+#: app/tools/gimptransformoptions.c:298 app/tools/gimpwarpoptions.c:120
 #: app/tools/gimpwarpoptions.c:333
 msgid "Interpolation"
 msgstr "Interpolation"
@@ -21171,12 +21206,12 @@ msgstr "Transform resize"
 msgid "Distance metric"
 msgstr "Distance metric"
 
-#: app/pdb/gimpprocedure.c:567 app/plug-in/gimppluginprocframe.c:191
+#: app/pdb/gimpprocedure.c:564 app/plug-in/gimppluginprocframe.c:191
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Procedure '%s' returned no return values"
 
-#: app/pdb/gimpprocedure.c:854
+#: app/pdb/gimpprocedure.c:851
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -21185,7 +21220,7 @@ msgstr ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 
-#: app/pdb/gimpprocedure.c:866
+#: app/pdb/gimpprocedure.c:863
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' "
@@ -21194,7 +21229,7 @@ msgstr ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' "
 "(#%d). Expected %s, got %s."
 
-#: app/pdb/gimpprocedure.c:903
+#: app/pdb/gimpprocedure.c:900
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -21203,7 +21238,7 @@ msgstr ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on a layer that doesn't exist any longer."
 
-#: app/pdb/gimpprocedure.c:916
+#: app/pdb/gimpprocedure.c:913
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -21212,7 +21247,7 @@ msgstr ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on a layer that doesn't exist any longer."
 
-#: app/pdb/gimpprocedure.c:933
+#: app/pdb/gimpprocedure.c:930
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -21221,7 +21256,7 @@ msgstr ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on an image that doesn't exist any longer."
 
-#: app/pdb/gimpprocedure.c:946
+#: app/pdb/gimpprocedure.c:943
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -21230,7 +21265,7 @@ msgstr ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on an image that doesn't exist any longer."
 
-#: app/pdb/gimpprocedure.c:967
+#: app/pdb/gimpprocedure.c:964
 #, c-format
 msgid ""
 "Procedure '%s' returned `gimp_unit_pixel()` as GimpUnit return value #%d "
@@ -21239,7 +21274,7 @@ msgstr ""
 "Procedure '%s' returned `gimp_unit_pixel()` as GimpUnit return value #%d "
 "'%s'. This return value does not allow pixel unit."
 
-#: app/pdb/gimpprocedure.c:976
+#: app/pdb/gimpprocedure.c:973
 #, c-format
 msgid ""
 "Procedure '%s' returned `gimp_unit_percent()` as GimpUnit return value #%d "
@@ -21248,7 +21283,7 @@ msgstr ""
 "Procedure '%s' returned `gimp_unit_percent()` as GimpUnit return value #%d "
 "'%s'. This return value does not allow percent unit."
 
-#: app/pdb/gimpprocedure.c:988
+#: app/pdb/gimpprocedure.c:985
 #, c-format
 msgid ""
 "Procedure '%s' has been called with `gimp_unit_pixel()` for GimpUnit "
@@ -21257,7 +21292,7 @@ msgstr ""
 "Procedure '%s' has been called with `gimp_unit_pixel()` for GimpUnit "
 "argument #%d '%s'. This argument does not allow pixel unit."
 
-#: app/pdb/gimpprocedure.c:998
+#: app/pdb/gimpprocedure.c:995
 #, c-format
 msgid ""
 "Procedure '%s' has been called with `gimp_unit_percent()` for GimpUnit "
@@ -21266,7 +21301,7 @@ msgstr ""
 "Procedure '%s' has been called with `gimp_unit_percent()` for GimpUnit "
 "argument #%d '%s'. This argument does not allow percent unit."
 
-#: app/pdb/gimpprocedure.c:1018
+#: app/pdb/gimpprocedure.c:1015
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -21275,7 +21310,7 @@ msgstr ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 
-#: app/pdb/gimpprocedure.c:1032
+#: app/pdb/gimpprocedure.c:1029
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -21284,12 +21319,12 @@ msgstr ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 
-#: app/pdb/gimpprocedure.c:1088
+#: app/pdb/gimpprocedure.c:1085
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 
-#: app/pdb/gimpprocedure.c:1098
+#: app/pdb/gimpprocedure.c:1095
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -21370,7 +21405,7 @@ msgstr "Add path stroke"
 msgid "Extend path stroke"
 msgstr "Extend path stroke"
 
-#: app/pdb/pdb-cmds.c:1189 app/pdb/pdb-cmds.c:1231
+#: app/pdb/pdb-cmds.c:1185 app/pdb/pdb-cmds.c:1227
 #, c-format
 msgid "Data label '%s' is not a canonical identifier"
 msgstr "Data label '%s' is not a canonical identifier"
@@ -21383,22 +21418,22 @@ msgstr "Resource '%s' is not renamable"
 #. TODO: write a more explicit error message after
 #. * string freeze.
 #.
-#: app/pdb/text-layer-cmds.c:85 app/pdb/text-layer-cmds.c:111
+#: app/pdb/text-layer-cmds.c:85 app/pdb/text-layer-cmds.c:112
 #, c-format
 msgid "Failed to create text layer"
 msgstr "Failed to create text layer"
 
-#: app/pdb/text-layer-cmds.c:176 app/pdb/text-layer-cmds.c:314
-#: app/pdb/text-layer-cmds.c:379 app/pdb/text-layer-cmds.c:438
-#: app/pdb/text-layer-cmds.c:496 app/pdb/text-layer-cmds.c:554
-#: app/pdb/text-layer-cmds.c:612 app/pdb/text-layer-cmds.c:670
-#: app/pdb/text-layer-cmds.c:728 app/pdb/text-layer-cmds.c:784
-#: app/pdb/text-layer-cmds.c:842 app/pdb/text-layer-cmds.c:900
-#: app/pdb/text-layer-cmds.c:958 app/pdb/text-layer-cmds.c:993
+#: app/pdb/text-layer-cmds.c:177 app/pdb/text-layer-cmds.c:315
+#: app/pdb/text-layer-cmds.c:380 app/pdb/text-layer-cmds.c:439
+#: app/pdb/text-layer-cmds.c:497 app/pdb/text-layer-cmds.c:555
+#: app/pdb/text-layer-cmds.c:613 app/pdb/text-layer-cmds.c:671
+#: app/pdb/text-layer-cmds.c:729 app/pdb/text-layer-cmds.c:785
+#: app/pdb/text-layer-cmds.c:843 app/pdb/text-layer-cmds.c:901
+#: app/pdb/text-layer-cmds.c:959 app/pdb/text-layer-cmds.c:994
 msgid "Set text layer attribute"
 msgstr "Set text layer attribute"
 
-#: app/pdb/text-layer-cmds.c:245
+#: app/pdb/text-layer-cmds.c:246
 msgid "Set text layer markup"
 msgstr "Set text layer markup"
 
@@ -22438,7 +22473,7 @@ msgstr "Line Art Detection"
 msgid "(computing...)"
 msgstr "(computing…)"
 
-#: app/tools/gimpbucketfilloptions.c:773
+#: app/tools/gimpbucketfilloptions.c:778
 msgid "Detect opacity rather than grayscale"
 msgstr "Detect opacity rather than greyscale"
 
@@ -22468,11 +22503,11 @@ msgstr "_Bucket Fill"
 msgid "Bucket fill"
 msgstr "Bucket fill"
 
-#: app/tools/gimpbucketfilltool.c:596
+#: app/tools/gimpbucketfilltool.c:597
 msgid "Cannot fill multiple layers. Select only one layer."
 msgstr "Cannot fill multiple layers. Select only one layer."
 
-#: app/tools/gimpbucketfilltool.c:598 app/tools/gimpcagetool.c:231
+#: app/tools/gimpbucketfilltool.c:599 app/tools/gimpcagetool.c:231
 #: app/tools/gimpcurvestool.c:220 app/tools/gimpfiltertool.c:310
 #: app/tools/gimpforegroundselecttool.c:295 app/tools/gimplevelstool.c:210
 #: app/tools/gimpoffsettool.c:191 app/tools/gimppainttool.c:297
@@ -22481,26 +22516,26 @@ msgstr "Cannot fill multiple layers. Select only one layer."
 msgid "No selected drawables."
 msgstr "No selected drawables."
 
-#: app/tools/gimpbucketfilltool.c:618 app/tools/gimpforegroundselecttool.c:307
+#: app/tools/gimpbucketfilltool.c:619 app/tools/gimpforegroundselecttool.c:307
 #: app/tools/gimppaintselecttool.c:380
 msgid "The active layer is not visible."
 msgstr "The active layer is not visible."
 
-#: app/tools/gimpbucketfilltool.c:625 app/tools/gimpeditselectiontool.c:1310
+#: app/tools/gimpbucketfilltool.c:626 app/tools/gimpeditselectiontool.c:1310
 #: app/tools/gimpgradienttool.c:283 app/tools/gimpmovetool.c:349
 msgid "The selected layer's pixels are locked."
 msgstr "The selected layer's pixels are locked."
 
-#: app/tools/gimpbucketfilltool.c:634
+#: app/tools/gimpbucketfilltool.c:635
 msgid "No valid line art source selected."
 msgstr "No valid line art source selected."
 
-#: app/tools/gimpbucketfilltool.c:818 app/tools/gimpbucketfilltool.c:958
+#: app/tools/gimpbucketfilltool.c:819 app/tools/gimpbucketfilltool.c:959
 #: app/tools/gimpcolorpickertool.c:270 app/tools/gimppainttool.c:514
 msgid "Click in any image to pick the background color"
 msgstr "Click in any image to pick the background colour"
 
-#: app/tools/gimpbucketfilltool.c:825 app/tools/gimpbucketfilltool.c:967
+#: app/tools/gimpbucketfilltool.c:826 app/tools/gimpbucketfilltool.c:968
 #: app/tools/gimpcolorpickertool.c:262 app/tools/gimppainttool.c:508
 msgid "Click in any image to pick the foreground color"
 msgstr "Click in any image to pick the foreground colour"
@@ -22890,11 +22925,13 @@ msgstr "T_ype:"
 msgid "Curve _type:"
 msgstr "Curve _type:"
 
-#: app/tools/gimpcurvestool.c:755 app/tools/gimplevelstool.c:745
+#: app/tools/gimpcurvestool.c:756 app/tools/gimpcurvestool.c:759
+#: app/tools/gimplevelstool.c:745
+#, c-format
 msgid "Could not read header: "
 msgstr "Could not read header: "
 
-#: app/tools/gimpcurvestool.c:832
+#: app/tools/gimpcurvestool.c:836
 msgid "Use _old curves file format"
 msgstr "Use _old curves file format"
 
@@ -23075,21 +23112,21 @@ msgid "%s: switch horizontal and vertical"
 msgstr "%s: switch horizontal and vertical"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1425
+#: app/tools/gimpfiltertool.c:1433
 msgid "Blending Options"
 msgstr "Blending Options"
 
-#: app/tools/gimpfiltertool.c:1931 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1939 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Import '%s' Settings"
 
-#: app/tools/gimpfiltertool.c:1933 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1941 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Export '%s' Settings"
 
-#: app/tools/gimpfiltertool.c:2171
+#: app/tools/gimpfiltertool.c:2179
 msgid "Editing filter..."
 msgstr "Editing filter..."
 
@@ -23365,7 +23402,7 @@ msgstr "Modify active gradient"
 msgid "Modify the active gradient in-place"
 msgstr "Modify the active gradient in-place"
 
-#: app/tools/gimpgradientoptions.c:275 app/tools/gimppaintoptions-gui.c:389
+#: app/tools/gimpgradientoptions.c:275 app/tools/gimppaintoptions-gui.c:391
 msgid "Edit this gradient"
 msgstr "Edit this gradient"
 
@@ -23426,7 +23463,7 @@ msgid "Y:"
 msgstr "Y:"
 
 #. the color label
-#: app/tools/gimpgradienttool-editor.c:1345 app/tools/gimptextoptions.c:852
+#: app/tools/gimpgradienttool-editor.c:1345 app/tools/gimptextoptions.c:855
 msgid "Color:"
 msgstr "Colour:"
 
@@ -23609,8 +23646,8 @@ msgstr "Adjustment"
 msgid "Sensitivity"
 msgstr "Sensitivity"
 
-#: app/tools/gimpinkoptions-gui.c:147 app/tools/gimpmybrushoptions-gui.c:98
-#: app/tools/gimppaintoptions-gui.c:530
+#: app/tools/gimpinkoptions-gui.c:147 app/tools/gimpmybrushoptions-gui.c:105
+#: app/tools/gimppaintoptions-gui.c:532
 msgid "Fill Layer Mask With"
 msgstr "Fill Layer Mask With"
 
@@ -23759,7 +23796,7 @@ msgstr "Auto-resize window"
 msgid "Resize image window to accommodate new zoom level"
 msgstr "Resize image window to accommodate new zoom level"
 
-#: app/tools/gimpmagnifyoptions.c:92 app/tools/gimptransformoptions.c:93
+#: app/tools/gimpmagnifyoptions.c:92 app/tools/gimptransformoptions.c:97
 #: app/widgets/gimpdynamicseditor.c:163
 #: app/widgets/gimpdynamicsoutputeditor.c:72
 msgid "Direction"
@@ -23860,32 +23897,32 @@ msgstr "Measure Distances and Angles"
 msgid "Distance:"
 msgstr "Distance:"
 
-#: app/tools/gimpmoveoptions.c:137
+#: app/tools/gimpmoveoptions.c:173
 msgid "Move selection"
 msgstr "Move selection"
 
-#: app/tools/gimpmoveoptions.c:147 app/tools/gimpmoveoptions.c:210
+#: app/tools/gimpmoveoptions.c:183 app/tools/gimpmoveoptions.c:258
 #, c-format
 msgid "Tool Toggle  (%s)"
 msgstr "Tool Toggle  (%s)"
 
-#: app/tools/gimpmoveoptions.c:155
+#: app/tools/gimpmoveoptions.c:191
 msgid "Pick a layer or guide"
 msgstr "Pick a layer or guide"
 
-#: app/tools/gimpmoveoptions.c:156
+#: app/tools/gimpmoveoptions.c:192
 msgid "Move the selected layers"
 msgstr "Move the selected layers"
 
-#: app/tools/gimpmoveoptions.c:160
+#: app/tools/gimpmoveoptions.c:196
 msgid "Pick a path"
 msgstr "Pick a path"
 
-#: app/tools/gimpmoveoptions.c:161
+#: app/tools/gimpmoveoptions.c:197
 msgid "Move the active path"
 msgstr "Move the active path"
 
-#: app/tools/gimpmoveoptions.c:198
+#: app/tools/gimpmoveoptions.c:236
 msgid "Move:"
 msgstr "Move:"
 
@@ -24066,23 +24103,23 @@ msgstr "Reset spacing to brush's native spacing"
 msgid "Reset hardness to brush's native hardness"
 msgstr "Reset hardness to brush's native hardness"
 
-#: app/tools/gimppaintoptions-gui.c:206
+#: app/tools/gimppaintoptions-gui.c:208
 msgid "Reset force to default"
 msgstr "Reset force to default"
 
-#: app/tools/gimppaintoptions-gui.c:331
+#: app/tools/gimppaintoptions-gui.c:333
 msgid "Edit this dynamics"
 msgstr "Edit this dynamics"
 
-#: app/tools/gimppaintoptions-gui.c:334
+#: app/tools/gimppaintoptions-gui.c:336
 msgid "Fade Options"
 msgstr "Fade Options"
 
-#: app/tools/gimppaintoptions-gui.c:374
+#: app/tools/gimppaintoptions-gui.c:376
 msgid "Color Options"
 msgstr "Colour Options"
 
-#: app/tools/gimppaintoptions-gui.c:613
+#: app/tools/gimppaintoptions-gui.c:615
 msgid "Link to brush default"
 msgstr "Link to brush default"
 
@@ -24274,7 +24311,7 @@ msgstr "Current"
 msgid "Fixed"
 msgstr "Fixed"
 
-#: app/tools/gimprectangleoptions.c:1006 app/tools/gimptextoptions.c:810
+#: app/tools/gimprectangleoptions.c:1006 app/tools/gimptextoptions.c:813
 msgid "Size:"
 msgstr "Size:"
 
@@ -24428,7 +24465,7 @@ msgstr "Seamless Clone: Seamlessly paste one image into another"
 msgid "_Seamless Clone"
 msgstr "_Seamless Clone"
 
-#: app/tools/gimpseamlessclonetool.c:793
+#: app/tools/gimpseamlessclonetool.c:794
 msgid "Cloning the foreground object"
 msgstr "Cloning the foreground object"
 
@@ -24649,31 +24686,31 @@ msgstr "Outline width unit"
 msgid "Outline miter limit"
 msgstr "Outline miter limit"
 
-#: app/tools/gimptextoptions.c:841
+#: app/tools/gimptextoptions.c:844
 msgid "Hinting:"
 msgstr "Hinting:"
 
-#: app/tools/gimptextoptions.c:845
+#: app/tools/gimptextoptions.c:848
 msgid "Text Color"
 msgstr "Text Colour"
 
-#: app/tools/gimptextoptions.c:858
+#: app/tools/gimptextoptions.c:861
 msgid "Style:"
 msgstr "Style:"
 
-#: app/tools/gimptextoptions.c:862
+#: app/tools/gimptextoptions.c:865
 msgid "Outline Options"
 msgstr "Outline Options"
 
-#: app/tools/gimptextoptions.c:883
+#: app/tools/gimptextoptions.c:886
 msgid "Justify:"
 msgstr "Justify:"
 
-#: app/tools/gimptextoptions.c:913
+#: app/tools/gimptextoptions.c:916
 msgid "Box:"
 msgstr "Box:"
 
-#: app/tools/gimptextoptions.c:953
+#: app/tools/gimptextoptions.c:956
 msgid "Language:"
 msgstr "Language:"
 
@@ -25038,15 +25075,15 @@ msgstr "Z"
 msgid "Rotation axis order"
 msgstr "Rotation axis order"
 
-#: app/tools/gimptransformoptions.c:94
+#: app/tools/gimptransformoptions.c:98
 msgid "Direction of transformation"
 msgstr "Direction of transformation"
 
-#: app/tools/gimptransformoptions.c:102 app/tools/gimpwarpoptions.c:121
+#: app/tools/gimptransformoptions.c:106 app/tools/gimpwarpoptions.c:121
 msgid "Interpolation method"
 msgstr "Interpolation method"
 
-#: app/tools/gimptransformoptions.c:233
+#: app/tools/gimptransformoptions.c:268
 msgid "Transform:"
 msgstr "Transform:"
 
@@ -25301,21 +25338,21 @@ msgstr "No warp to smooth."
 msgid "Warp transform"
 msgstr "Warp transform"
 
-#: app/tools/gimpwarptool.c:1446
+#: app/tools/gimpwarptool.c:1447
 msgid "Please add some warp strokes first."
 msgstr "Please add some warp strokes first."
 
-#: app/tools/gimpwarptool.c:1460 app/tools/gimpwarptool.c:1497
+#: app/tools/gimpwarptool.c:1461 app/tools/gimpwarptool.c:1498
 #, c-format
 msgid "Rendering Frame %d"
 msgstr "Rendering Frame %d"
 
-#: app/tools/gimpwarptool.c:1475 app/tools/gimpwarptool.c:1505
+#: app/tools/gimpwarptool.c:1476 app/tools/gimpwarptool.c:1506
 #, c-format
 msgid "Frame %d"
 msgstr "Frame %d"
 
-#: app/tools/gimpwarptool.c:1514
+#: app/tools/gimpwarptool.c:1515
 msgid "Frame"
 msgstr "Frame"
 
@@ -25675,16 +25712,16 @@ msgstr "Changing shortcut failed."
 msgid "Shape:"
 msgstr "Shape:"
 
-#: app/widgets/gimpbrusheditor.c:164
+#: app/widgets/gimpbrusheditor.c:167
 msgid "Spikes"
 msgstr "Spikes"
 
-#: app/widgets/gimpbrusheditor.c:209 app/widgets/gimpbrushfactoryview.c:106
+#: app/widgets/gimpbrusheditor.c:212 app/widgets/gimpbrushfactoryview.c:106
 msgid "Percentage of width of brush"
 msgstr "Percentage of width of brush"
 
 #: app/widgets/gimpbufferview.c:189 app/widgets/gimpbufferview.c:290
-#: app/widgets/gimpeditor.c:820
+#: app/widgets/gimpeditor.c:821
 msgid "(None)"
 msgstr "(None)"
 
@@ -25696,33 +25733,33 @@ msgstr "Clipboard"
 msgid "Add the current color to the color history"
 msgstr "Add the current colour to the colour history"
 
-#: app/widgets/gimpcolordisplayeditor.c:166
+#: app/widgets/gimpcolordisplayeditor.c:161
 msgid "Available Filters"
 msgstr "Available Filters"
 
-#: app/widgets/gimpcolordisplayeditor.c:230
+#: app/widgets/gimpcolordisplayeditor.c:225
 msgid "Move the selected filter up"
 msgstr "Move the selected filter up"
 
-#: app/widgets/gimpcolordisplayeditor.c:239
+#: app/widgets/gimpcolordisplayeditor.c:234
 msgid "Move the selected filter down"
 msgstr "Move the selected filter down"
 
-#: app/widgets/gimpcolordisplayeditor.c:337
+#: app/widgets/gimpcolordisplayeditor.c:331
 msgid "Reset the selected filter to default values"
 msgstr "Reset the selected filter to default values"
 
-#: app/widgets/gimpcolordisplayeditor.c:525
+#: app/widgets/gimpcolordisplayeditor.c:519
 #, c-format
 msgid "Add '%s' to the list of active filters"
 msgstr "Add '%s' to the list of active filters"
 
-#: app/widgets/gimpcolordisplayeditor.c:557
+#: app/widgets/gimpcolordisplayeditor.c:551
 #, c-format
 msgid "Remove '%s' from the list of active filters"
 msgstr "Remove '%s' from the list of active filters"
 
-#: app/widgets/gimpcolordisplayeditor.c:595
+#: app/widgets/gimpcolordisplayeditor.c:589
 msgid "No filter selected"
 msgstr "No filter selected"
 
@@ -26896,26 +26933,26 @@ msgstr "Strip %d"
 msgid "Select Pad Event Action"
 msgstr "Select Pad Event Action"
 
-#: app/widgets/gimpdevicestatus.c:161
+#: app/widgets/gimpdevicestatus.c:164
 msgid "Save device status"
 msgstr "Save device status"
 
-#: app/widgets/gimpdevicestatus.c:629
+#: app/widgets/gimpdevicestatus.c:632
 #, c-format
 msgid "Foreground: %d, %d, %d (in color space of \"%s\")"
 msgstr "Foreground: %d, %d, %d (in colour space of \"%s\")"
 
-#: app/widgets/gimpdevicestatus.c:633
+#: app/widgets/gimpdevicestatus.c:636
 #, c-format
 msgid "Foreground: %d, %d, %d (in sRGB)"
 msgstr "Foreground: %d, %d, %d (in sRGB)"
 
-#: app/widgets/gimpdevicestatus.c:640
+#: app/widgets/gimpdevicestatus.c:643
 #, c-format
 msgid "Background: %d, %d, %d (in color space of \"%s\")"
 msgstr "Background: %d, %d, %d (in colour space of \"%s\")"
 
-#: app/widgets/gimpdevicestatus.c:644
+#: app/widgets/gimpdevicestatus.c:647
 #, c-format
 msgid "Background: %d, %d, %d (in sRGB)"
 msgstr "Background: %d, %d, %d (in sRGB)"
@@ -27456,59 +27493,59 @@ msgid_plural "%d items selected"
 msgstr[0] "%d item selected"
 msgstr[1] "%d items selected"
 
-#: app/widgets/gimpitemtreeview.c:2711 app/widgets/gimpitemtreeview.c:2766
+#: app/widgets/gimpitemtreeview.c:2733 app/widgets/gimpitemtreeview.c:2788
 msgid "Cannot reorder a filter that is being edited."
 msgstr "Cannot reorder a filter that is being edited."
 
-#: app/widgets/gimpitemtreeview.c:2729 app/widgets/gimpitemtreeview.c:2789
+#: app/widgets/gimpitemtreeview.c:2751 app/widgets/gimpitemtreeview.c:2811
 msgid "Reorder filter"
 msgstr "Reorder filter"
 
-#: app/widgets/gimpitemtreeview.c:3405
+#: app/widgets/gimpitemtreeview.c:3442
 msgid "No layer set stored"
 msgstr "No layer set stored"
 
-#: app/widgets/gimpitemtreeview.c:3427
+#: app/widgets/gimpitemtreeview.c:3464
 msgid "New layer set's name"
 msgstr "New layer set's name"
 
-#: app/widgets/gimpitemtreeview.c:3469 app/widgets/gimpitemtreeview.c:3484
+#: app/widgets/gimpitemtreeview.c:3506 app/widgets/gimpitemtreeview.c:3521
 msgid "Select layers by text search"
 msgstr "Select layers by text search"
 
-#: app/widgets/gimpitemtreeview.c:3471 app/widgets/gimpitemtreeview.c:3486
+#: app/widgets/gimpitemtreeview.c:3508 app/widgets/gimpitemtreeview.c:3523
 msgid "Text search"
 msgstr "Text search"
 
-#: app/widgets/gimpitemtreeview.c:3490
+#: app/widgets/gimpitemtreeview.c:3527
 msgid "Select layers by glob patterns"
 msgstr "Select layers by glob patterns"
 
-#: app/widgets/gimpitemtreeview.c:3492
+#: app/widgets/gimpitemtreeview.c:3529
 msgid "Glob pattern search"
 msgstr "Glob pattern search"
 
-#: app/widgets/gimpitemtreeview.c:3496
+#: app/widgets/gimpitemtreeview.c:3533
 msgid "Select layers by regular expressions"
 msgstr "Select layers by regular expressions"
 
-#: app/widgets/gimpitemtreeview.c:3498
+#: app/widgets/gimpitemtreeview.c:3535
 msgid "Regular Expression search"
 msgstr "Regular Expression search"
 
-#: app/widgets/gimpitemtreeview.c:3553
+#: app/widgets/gimpitemtreeview.c:3590
 msgid "search"
 msgstr "search"
 
-#: app/widgets/gimpitemtreeview.c:3554
+#: app/widgets/gimpitemtreeview.c:3591
 msgid "glob"
 msgstr "glob"
 
-#: app/widgets/gimpitemtreeview.c:3554
+#: app/widgets/gimpitemtreeview.c:3591
 msgid "regexp"
 msgstr "regexp"
 
-#: app/widgets/gimpitemtreeview.c:3723
+#: app/widgets/gimpitemtreeview.c:3760
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "Invalid regular expression: %s\n"
@@ -28076,7 +28113,7 @@ msgstr ""
 "The active gradient.\n"
 "Click to open the Gradient Dialogue."
 
-#: app/widgets/gimptoolbutton.c:537
+#: app/widgets/gimptoolbutton.c:541
 msgid "Also in group:"
 msgstr "Also in group:"
 
@@ -28404,19 +28441,19 @@ msgstr ""
 "If you don't know what XMP is, you most likely don't need it. Reported "
 "error: %s."
 
-#: app/xcf/xcf-load.c:908
+#: app/xcf/xcf-load.c:923
 msgid "Linked Layers"
 msgstr "Linked Layers"
 
-#: app/xcf/xcf-load.c:918
+#: app/xcf/xcf-load.c:933
 msgid "Linked Channels"
 msgstr "Linked Channels"
 
-#: app/xcf/xcf-load.c:943
+#: app/xcf/xcf-load.c:958
 msgid "Linked Paths"
 msgstr "Linked Paths"
 
-#: app/xcf/xcf-load.c:990
+#: app/xcf/xcf-load.c:1005
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -28424,7 +28461,7 @@ msgstr ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 
-#: app/xcf/xcf-load.c:1010
+#: app/xcf/xcf-load.c:1025
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -28432,7 +28469,7 @@ msgstr ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 
-#: app/xcf/xcf-load.c:1168
+#: app/xcf/xcf-load.c:1183
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -28442,7 +28479,7 @@ msgstr ""
 "did not save indexed colourmaps correctly.\n"
 "Substituting greyscale map."
 
-#: app/xcf/xcf-load.c:2561
+#: app/xcf/xcf-load.c:2576
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -28455,7 +28492,7 @@ msgstr ""
 "This should not happen. You should report the issue to the filter's "
 "developers."
 
-#: app/xcf/xcf-load.c:3498
+#: app/xcf/xcf-load.c:3518
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
@@ -28470,7 +28507,7 @@ msgstr ""
 "was updated without proper version management. In the latter case, you "
 "should report the issue to the filter's developers."
 
-#: app/xcf/xcf-read.c:195
+#: app/xcf/xcf-read.c:196
 msgid "Invalid UTF-8 string in XCF file"
 msgstr "Invalid UTF-8 string in XCF file"
 
@@ -29048,6 +29085,12 @@ msgstr "Tool Presets Menu"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Undo History Menu"
+
+#~ msgid "Painting in GIMP"
+#~ msgstr "Painting in GIMP"
+
+#~ msgid "Photo editing in GIMP"
+#~ msgstr "Photo editing in GIMP"
 
 #~ msgid "Show _advanced color options"
 #~ msgstr "Show _advanced colour options"
