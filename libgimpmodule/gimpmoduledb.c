@@ -406,15 +406,17 @@ gimp_module_db_load_module (GimpModuleDB *db,
 {
   gchar      *filename;
   GimpModule *module;
+  GModule    *gmodule;
   gboolean   load_inhibit;
 
   filename = g_file_get_path (file);
-  if (! g_module_open (filename, G_MODULE_BIND_LAZY))
+  if (! (gmodule = g_module_open (filename, G_MODULE_BIND_LAZY)))
     {
       g_free (filename);
       return;
     }
   g_free (filename);
+  g_module_close (gmodule);
 
   /* don't load if we already know about it */
   if (gimp_module_db_module_find_by_file (db, file))
