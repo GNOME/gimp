@@ -88,8 +88,6 @@ static void       app_init_update_noop       (const gchar        *text1,
                                               gdouble             percentage);
 static void       app_activate_callback      (GimpCoreApp        *app,
                                               gpointer            user_data);
-static void       app_restore_after_callback (Gimp               *gimp,
-                                              GimpInitStatusFunc  status_callback);
 static gboolean   app_exit_after_callback    (Gimp               *gimp,
                                               gboolean            kill_it,
                                               GApplication       *app);
@@ -104,11 +102,6 @@ static void       app_quit_on_ctrl_c         (gint                sig_num);
 /*  left here as documentation how to do compat enums  */
 GType gimp_convert_dither_type_compat_get_type (void); /* compat cruft */
 #endif
-
-
-/*  local variables  */
-
-static GObject *initial_monitor = NULL;
 
 
 /*  public functions  */
@@ -306,14 +299,6 @@ app_run (const gchar         *full_prog_name,
   /*  initialize lowlevel stuff  */
   gimp_gegl_init (gimp);
 
-  /*  Connect our restore_after callback before gui_init() connects
-   *  theirs, so ours runs first and can grab the initial monitor
-   *  before the GUI's restore_after callback resets it.
-   */
-  g_signal_connect_after (gimp, "restore",
-                          G_CALLBACK (app_restore_after_callback),
-                          NULL);
-
   g_signal_connect_after (gimp, "exit",
                           G_CALLBACK (app_exit_after_callback),
                           app);
@@ -439,7 +424,7 @@ app_activate_callback (GimpCoreApp *app,
                                               NULL,
                                               file,
                                               gimp_core_app_get_as_new (app),
-                                              initial_monitor,
+                                              NULL,
                                               &status, &error);
               if (image)
                 {
@@ -494,7 +479,7 @@ app_activate_callback (GimpCoreApp *app,
 
           file_open_from_command_line (gimp, file,
                                        gimp_core_app_get_as_new (app),
-                                       initial_monitor);
+                                       NULL);
 
           g_object_unref (file);
         }
@@ -552,20 +537,6 @@ app_activate_callback (GimpCoreApp *app,
                 "If you wanted to quit immediately instead, call GIMP with --quit.");
       g_application_hold (G_APPLICATION (app));
     }
-}
-
-static void
-app_restore_after_callback (Gimp               *gimp,
-                            GimpInitStatusFunc  status_callback)
-{
-  gint dummy;
-
-  /*  Getting the display name for a -1 display returns the initial
-   *  monitor during startup. Need to call this from a restore_after
-   *  callback, because before restore(), the GUI can't return anything,
-   *  after after restore() the initial monitor gets reset.
-   */
-  g_free (gimp_get_display_name (gimp, -1, &initial_monitor, &dummy));
 }
 
 static gboolean
