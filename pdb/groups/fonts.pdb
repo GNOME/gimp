@@ -137,7 +137,7 @@ HELP
 	  desc => 'config path' },
 	{ name => 'sysconfig', type => 'string',
 	  desc => 'sysconfig path' },
-	{ name => 'renaming_config', type => 'string',
+	{ name => 'renaming_config', type => 'strv',
 	  desc => 'fonts renaming config' },
 	{ name => 'dirs', type => 'strv',
 	  desc => 'custom fonts directories' }
@@ -152,9 +152,10 @@ HELP
 
   if (success)
     {
-      GList *list   = gimp_font_factory_get_custom_fonts_dirs (GIMP_FONT_FACTORY (gimp->font_factory));
-      guint  length = g_list_length (list);
-      gint   i;
+      GList  *list                  = gimp_font_factory_get_custom_fonts_dirs (GIMP_FONT_FACTORY (gimp->font_factory));
+      GSList *fonts_renaming_config = gimp_font_factory_get_fonts_renaming_config (GIMP_FONT_FACTORY (gimp->font_factory));
+      guint   length                = g_list_length (list);
+      gint    i;
 
 
       gimp_font_factory_get_custom_config_path (GIMP_FONT_FACTORY (gimp->font_factory),
@@ -163,14 +164,19 @@ HELP
       config    = g_strdup (config);
       sysconfig = g_strdup (sysconfig);
 
-      renaming_config = g_strdup (gimp_font_factory_get_fonts_renaming_config (GIMP_FONT_FACTORY (gimp->font_factory)));
-
       dirs = g_new0 (gchar *, length + 1);
 
       for (i = 0; list; list = g_list_next (list), i++)
         dirs[i] = g_file_get_path (list->data);
 
       g_list_free_full (list, (GDestroyNotify) g_object_unref);
+
+      length = g_slist_length (fonts_renaming_config);
+
+      renaming_config = g_new0 (gchar *, length + 1);
+
+      for (i = 0; fonts_renaming_config; fonts_renaming_config = g_slist_next (fonts_renaming_config), i++)
+        renaming_config[i] = g_strdup (fonts_renaming_config->data);
     }
 }
 CODE

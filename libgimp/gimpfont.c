@@ -63,7 +63,7 @@ gimp_font_get_pango_font_description (GimpFont *font)
     {
       gchar  *config;
       gchar  *sysconfig;
-      gchar  *fonts_renaming_config;
+      gchar **fonts_renaming_config;
       gchar **dirs;
 
       FcConfigSetCurrent (FcInitLoadConfig ());
@@ -82,11 +82,11 @@ gimp_font_get_pango_font_description (GimpFont *font)
         if (dirs[i])
           FcConfigAppFontAddDir (FcConfigGetCurrent (), (const FcChar8 *)dirs[i]);
 
-      FcConfigParseAndLoadFromMemory (FcConfigGetCurrent (),
-                                      (const FcChar8 *) fonts_renaming_config,
-                                      FcTrue);
+      for (int i = 0; fonts_renaming_config[i] != NULL; ++i)
+        if (fonts_renaming_config[i])
+          FcConfigParseAndLoadFromMemory (FcConfigGetCurrent (), (const FcChar8 *)fonts_renaming_config[i], FcTrue);
 
-      g_free (fonts_renaming_config);
+      g_strfreev (fonts_renaming_config);
       g_free (sysconfig);
       g_free (config);
       g_strfreev (dirs);

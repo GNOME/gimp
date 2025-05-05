@@ -68,7 +68,7 @@ fonts_get_custom_configs_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   gchar *config = NULL;
   gchar *sysconfig = NULL;
-  gchar *renaming_config = NULL;
+  gchar **renaming_config = NULL;
   gchar **dirs = NULL;
 
   if (! gimp_data_factory_data_wait (gimp->font_factory))
@@ -76,9 +76,10 @@ fonts_get_custom_configs_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GList *list   = gimp_font_factory_get_custom_fonts_dirs (GIMP_FONT_FACTORY (gimp->font_factory));
-      guint  length = g_list_length (list);
-      gint   i;
+      GList  *list                  = gimp_font_factory_get_custom_fonts_dirs (GIMP_FONT_FACTORY (gimp->font_factory));
+      GSList *fonts_renaming_config = gimp_font_factory_get_fonts_renaming_config (GIMP_FONT_FACTORY (gimp->font_factory));
+      guint   length                = g_list_length (list);
+      gint    i;
 
       gimp_font_factory_get_custom_config_path (GIMP_FONT_FACTORY (gimp->font_factory),
                                                 &config,
@@ -86,14 +87,19 @@ fonts_get_custom_configs_invoker (GimpProcedure         *procedure,
       config    = g_strdup (config);
       sysconfig = g_strdup (sysconfig);
 
-      renaming_config = g_strdup (gimp_font_factory_get_fonts_renaming_config (GIMP_FONT_FACTORY (gimp->font_factory)));
-
       dirs = g_new0 (gchar *, length + 1);
 
       for (i = 0; list; list = g_list_next (list), i++)
         dirs[i] = g_file_get_path (list->data);
 
       g_list_free_full (list, (GDestroyNotify) g_object_unref);
+
+      length = g_slist_length (fonts_renaming_config);
+
+      renaming_config = g_new0 (gchar *, length + 1);
+
+      for (i = 0; fonts_renaming_config; fonts_renaming_config = g_slist_next (fonts_renaming_config), i++)
+        renaming_config[i] = g_strdup (fonts_renaming_config->data);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -103,7 +109,7 @@ fonts_get_custom_configs_invoker (GimpProcedure         *procedure,
     {
       g_value_take_string (gimp_value_array_index (return_vals, 1), config);
       g_value_take_string (gimp_value_array_index (return_vals, 2), sysconfig);
-      g_value_take_string (gimp_value_array_index (return_vals, 3), renaming_config);
+      g_value_take_boxed (gimp_value_array_index (return_vals, 3), renaming_config);
       g_value_take_boxed (gimp_value_array_index (return_vals, 4), dirs);
     }
 
@@ -195,12 +201,11 @@ register_fonts_procs (GimpPDB *pdb)
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("renaming-config",
-                                                           "renaming config",
-                                                           "fonts renaming config",
-                                                           FALSE, FALSE, FALSE,
-                                                           NULL,
-                                                           GIMP_PARAM_READWRITE));
+                                   g_param_spec_boxed ("renaming-config",
+                                                       "renaming config",
+                                                       "fonts renaming config",
+                                                       G_TYPE_STRV,
+                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boxed ("dirs",
                                                        "dirs",

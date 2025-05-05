@@ -72,7 +72,7 @@ gimp_fonts_refresh (void)
 /**
  * _gimp_fonts_get_custom_configs:
  * @sysconfig: (out) (transfer full): sysconfig path.
- * @renaming_config: (out) (transfer full): fonts renaming config.
+ * @renaming_config: (out) (array zero-terminated=1) (transfer full): fonts renaming config.
  * @dirs: (out) (array zero-terminated=1) (transfer full): custom fonts directories.
  *
  * Retrieve custom configs.
@@ -87,7 +87,7 @@ gimp_fonts_refresh (void)
  **/
 gchar *
 _gimp_fonts_get_custom_configs (gchar  **sysconfig,
-                                gchar  **renaming_config,
+                                gchar ***renaming_config,
                                 gchar ***dirs)
 {
   GimpValueArray *args;
@@ -106,7 +106,7 @@ _gimp_fonts_get_custom_configs (gchar  **sysconfig,
     {
       config = GIMP_VALUES_DUP_STRING (return_vals, 1);
       *sysconfig = GIMP_VALUES_DUP_STRING (return_vals, 2);
-      *renaming_config = GIMP_VALUES_DUP_STRING (return_vals, 3);
+      *renaming_config = GIMP_VALUES_DUP_STRV (return_vals, 3);
       *dirs = GIMP_VALUES_DUP_STRV (return_vals, 4);
     }
 

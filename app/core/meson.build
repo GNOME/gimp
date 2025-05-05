@@ -279,5 +279,6 @@ libappcore = static_library('appcore',
     math,
     dl,
     libunwind,
+    pango,
   ],
 )
