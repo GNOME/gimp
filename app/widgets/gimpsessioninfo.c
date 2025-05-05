@@ -91,6 +91,9 @@ static void      gimp_session_info_dialog_show        (GtkWidget            *wid
                                                        GimpSessionInfo      *info);
 static gboolean  gimp_session_info_restore_docks      (GimpRestoreDocksData *data);
 
+static void      gimp_session_info_monitor_invalidate (GdkMonitor           *monitor,
+                                                       GimpSessionInfo      *info);
+
 
 G_DEFINE_TYPE_WITH_CODE (GimpSessionInfo, gimp_session_info, GIMP_TYPE_OBJECT,
                          G_ADD_PRIVATE (GimpSessionInfo)
@@ -350,8 +353,18 @@ gimp_session_info_deserialize (GimpConfig *config,
               token = G_TOKEN_INT;
               if (gimp_scanner_parse_int (scanner, &dummy))
                 {
+                  if (info->p->monitor != NULL)
+                    g_signal_handlers_disconnect_by_func (info->p->monitor,
+                                                          G_CALLBACK (gimp_session_info_monitor_invalidate),
+                                                          info);
+
                   info->p->monitor =
                     gdk_display_get_monitor (gdk_display_get_default (), dummy);
+
+                  if (info->p->monitor != NULL)
+                    g_signal_connect_object (info->p->monitor, "invalidate",
+                                             G_CALLBACK (gimp_session_info_monitor_invalidate),
+                                             info, 0);
                 }
               else
                 goto error;
@@ -546,6 +559,26 @@ gimp_session_info_restore_docks (GimpRestoreDocksData *data)
   g_slice_free (GimpRestoreDocksData, data);
 
   return FALSE;
+}
+
+static void
+gimp_session_info_monitor_invalidate (GdkMonitor      *monitor,
+                                      GimpSessionInfo *info)
+{
+  /* When a monitor is disconnected, even if it is connected again, it
+   * will now be a different object. We need to get rid of the dangling
+   * pointer.
+   *
+   * TODO: maybe storing also the manufacturer/model (and in GTK4, the
+   * description) may be a good way to retrieve a monitor upon
+   * reconnection so that a window stay associated to the same monitor,
+   * even when disconnecting/reconnecting (e.g. a laptop plugged to a
+   * desktop display).
+   */
+  g_signal_handlers_disconnect_by_func (monitor,
+                                        G_CALLBACK (gimp_session_info_monitor_invalidate),
+                                        info);
+  info->p->monitor = DEFAULT_MONITOR;
 }
 
 
@@ -809,10 +842,20 @@ gimp_session_info_read_geometry (GimpSessionInfo   *info,
           info->p->height = 0;
         }
 
+      if (info->p->monitor != NULL)
+        g_signal_handlers_disconnect_by_func (info->p->monitor,
+                                              G_CALLBACK (gimp_session_info_monitor_invalidate),
+                                              info);
+
       info->p->monitor = DEFAULT_MONITOR;
 
       if (monitor != gdk_display_get_primary_monitor (display))
         info->p->monitor = monitor;
+
+      if (info->p->monitor != NULL)
+        g_signal_connect_object (info->p->monitor, "invalidate",
+                                 G_CALLBACK (gimp_session_info_monitor_invalidate),
+                                 info, 0);
     }
 
   info->p->open = FALSE;
