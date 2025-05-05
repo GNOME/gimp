@@ -569,6 +569,9 @@ gimp_image_window_constructed (GObject *object)
   gimp_container_foreach (GIMP_CONTAINER (device_manager),
                           (GFunc) gimp_image_window_init_pad_foreach,
                           window);
+
+  /* This was only useful during construction and should not be further used. */
+  private->initial_monitor = NULL;
 }
 
 static void

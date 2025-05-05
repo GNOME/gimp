@@ -118,6 +118,11 @@ enum
   LAST_SIGNAL
 };
 
+struct _GimpDisplayShellPrivate
+{
+  GdkMonitor *initial_monitor;
+};
+
 
 typedef struct _GimpDisplayShellOverlay GimpDisplayShellOverlay;
 
@@ -194,6 +199,7 @@ static gboolean gimp_display_shell_draw            (GimpDisplayShell *shell,
 
 G_DEFINE_TYPE_WITH_CODE (GimpDisplayShell, gimp_display_shell,
                          GTK_TYPE_EVENT_BOX,
+                         G_ADD_PRIVATE (GimpDisplayShell)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
                                                 gimp_display_shell_progress_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_COLOR_MANAGED,
@@ -335,6 +341,9 @@ static void
 gimp_display_shell_init (GimpDisplayShell *shell)
 {
   const gchar *env;
+
+  shell->priv = gimp_display_shell_get_instance_private (shell);
+  shell->priv->initial_monitor = NULL;
 
   shell->options            = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS, NULL);
   shell->fullscreen_options = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_FULLSCREEN, NULL);
@@ -492,7 +501,7 @@ gimp_display_shell_constructed (GObject *object)
 
   if (config->monitor_res_from_gdk)
     {
-      gimp_get_monitor_resolution (shell->initial_monitor,
+      gimp_get_monitor_resolution (shell->priv->initial_monitor,
                                    &shell->monitor_xres, &shell->monitor_yres);
     }
   else
@@ -817,6 +826,9 @@ gimp_display_shell_constructed (GObject *object)
   gimp_display_shell_scale_update (shell);
 
   gimp_display_shell_set_show_all (shell, config->default_show_all);
+
+  /* This was only useful during construction and should not be further used. */
+  shell->priv->initial_monitor = NULL;
 }
 
 static void
@@ -926,7 +938,7 @@ gimp_display_shell_set_property (GObject      *object,
       shell->popup_manager = g_value_get_object (value);
       break;
     case PROP_INITIAL_MONITOR:
-      shell->initial_monitor = g_value_get_object (value);
+      shell->priv->initial_monitor = g_value_get_object (value);
       break;
     case PROP_DISPLAY:
       shell->display = g_value_get_object (value);
@@ -966,7 +978,7 @@ gimp_display_shell_get_property (GObject    *object,
       g_value_set_object (value, shell->popup_manager);
       break;
     case PROP_INITIAL_MONITOR:
-      g_value_set_object (value, shell->initial_monitor);
+      g_value_set_object (value, shell->priv->initial_monitor);
       break;
     case PROP_DISPLAY:
       g_value_set_object (value, shell->display);

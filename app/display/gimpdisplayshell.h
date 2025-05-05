@@ -43,7 +43,8 @@
 #define GIMP_DISPLAY_SHELL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DISPLAY_SHELL, GimpDisplayShellClass))
 
 
-typedef struct _GimpDisplayShellClass  GimpDisplayShellClass;
+typedef struct _GimpDisplayShellClass   GimpDisplayShellClass;
+typedef struct _GimpDisplayShellPrivate GimpDisplayShellPrivate;
 
 struct _GimpDisplayShell
 {
@@ -54,7 +55,6 @@ struct _GimpDisplayShell
   GBytes            *window_handle;
 
   GimpUIManager     *popup_manager;
-  GdkMonitor        *initial_monitor;
 
   GimpDisplayOptions *options;
   GimpDisplayOptions *fullscreen_options;
@@ -255,6 +255,8 @@ struct _GimpDisplayShell
   GimpLayer         *near_layer_vertical2;
 
   gboolean           drawn;
+
+  GimpDisplayShellPrivate *priv;
 };
 
 struct _GimpDisplayShellClass
