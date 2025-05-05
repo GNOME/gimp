@@ -1174,7 +1174,8 @@ set_cmap_preview (GimpProcedureConfig *config)
   while (xsize * ysize < n_colors)
     xsize++;
 
-  /* Set minimum size.  This does not always signal an event that would redraw. */
+  /* Set minimum size. Initialize to 0, 0 to force a redraw. */
+  gtk_widget_set_size_request (cmap_preview, 0, 0);
   gtk_widget_set_size_request (cmap_preview, xsize, ysize * 4);
 }
 
