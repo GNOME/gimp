@@ -602,8 +602,6 @@ shoot_dialog (GimpProcedure        *procedure,
                                         FALSE, "delay-box");
     }
 
-  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
-                                    "shoot-type", GIMP_TYPE_INT_RADIO_FRAME);
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), "shoot-type", NULL);
 
   if ((capabilities & SCREENSHOT_CAN_SHOOT_POINTER) ||
@@ -613,8 +611,6 @@ shoot_dialog (GimpProcedure        *procedure,
   if (capabilities & SCREENSHOT_CAN_DELAY_WINDOW_SHOT)
     gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), "delay-frame", NULL);
 
-  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
-                                    "color-profile", GIMP_TYPE_INT_RADIO_FRAME);
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), "color-profile", NULL);
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
