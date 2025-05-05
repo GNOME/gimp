@@ -31,7 +31,7 @@ if (-not $GITLAB_CI)
 #if (-not (Get-Command "python" -ErrorAction SilentlyContinue) -or "$(Get-Command "python" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source)" -like '*WindowsApps*')
 #  {
     Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'MSYS_ROOT\)' -Context 0,13) -replace '> ','')
-    $MSYS_ROOT = "$MSYS_ROOT\usr\bin"
+    $env:PATH = $env:PATH + ";$MSYS_ROOT\usr\bin"
 #  }
 
 
@@ -41,7 +41,8 @@ Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0)
 ## Download Inno
 ## (We need to ensure that TLS 1.2 is enabled because of some runners)
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-Invoke-WebRequest https://jrsoftware.org/download.php/is.exe -OutFile ..\is.exe
+#Post-6.4.2 Inno have awfully broken task dialogs: https://groups.google.com/g/innosetup/c/g0V_QE3Zf5Y/m/Daki-eb8EQAJ
+Invoke-WebRequest https://files.jrsoftware.org/is/6/innosetup-6.4.2.exe -OutFile ..\is.exe
 $inno_version_downloaded = (Get-Item ..\is.exe).VersionInfo.ProductVersion -replace ' ',''
 
 ## Install or Update Inno
