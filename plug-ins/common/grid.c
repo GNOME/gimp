@@ -738,9 +738,23 @@ color_callback (GtkWidget *widget,
   if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (chain_button)))
     {
       if (widget == grid->vcolor_button)
-        gimp_color_button_set_color (GIMP_COLOR_BUTTON (grid->hcolor_button), color);
+        {
+          g_signal_handlers_block_by_func (grid->hcolor_button, color_callback,
+                                           grid);
+          gimp_color_button_set_color (GIMP_COLOR_BUTTON (grid->hcolor_button),
+                                       color);
+          g_signal_handlers_unblock_by_func (grid->hcolor_button,
+                                             color_callback, grid);
+        }
       else if (widget == grid->hcolor_button)
-        gimp_color_button_set_color (GIMP_COLOR_BUTTON (grid->vcolor_button), color);
+        {
+          g_signal_handlers_block_by_func (grid->vcolor_button, color_callback,
+                                           grid);
+          gimp_color_button_set_color (GIMP_COLOR_BUTTON (grid->vcolor_button),
+                                       color);
+          g_signal_handlers_unblock_by_func (grid->vcolor_button,
+                                             color_callback, grid);
+        }
     }
 
   if (widget == grid->hcolor_button)
