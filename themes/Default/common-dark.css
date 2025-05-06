@@ -40,5 +40,10 @@ GimpSpinScale entry {
 }
 
 GimpSpinScale entry progress {
-  background-color:   @hover-color;
+  background-color: @hover-color;
+}
+
+/* progressbar color */
+progressbar trough progress {
+  background-color: @hover-color;
 }
