@@ -690,6 +690,7 @@ menuitem menuitem {
 menubar > menuitem:hover {
   color: @fg-color;
   background: @extreme-bg-color;
+  box-shadow: inset 0 -3px @stronger-border-color;
 }
 
 /* Top menubar subitem style */
