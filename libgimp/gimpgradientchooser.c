@@ -141,7 +141,7 @@ gimp_gradient_chooser_finalize (GObject *object)
   GimpGradientChooser *self = GIMP_GRADIENT_CHOOSER (object);
 
   g_free (self->local_grad_data->data);
-  g_free (self->local_grad_data);
+  g_slice_free (GimpGradientPreviewData, self->local_grad_data);
 
   /* chain up. */
   G_OBJECT_CLASS (gimp_gradient_chooser_parent_class)->finalize (object);
