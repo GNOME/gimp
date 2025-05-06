@@ -54,6 +54,7 @@ test_scripts = [
   'tests' / 'PDB' / 'selection' / 'selection-from.scm',
   'tests' / 'PDB' / 'selection' / 'selection-by.scm',
   'tests' / 'PDB' / 'selection' / 'selection-by-shape.scm',
+  'tests' / 'PDB' / 'selection' / 'selection-concepts.scm',
 
   'tests' / 'PDB' / 'resource' / 'resource.scm',
   'tests' / 'PDB' / 'resource' / 'resource-ops.scm',
