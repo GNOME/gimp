@@ -76,7 +76,6 @@ static gboolean gimp_gradient_select_model_change_handler  (GimpGradientChooser 
                                                             GimpResource        *resource,
                                                             gboolean   is_closing);
 
-static void     local_grad_data_new                         (GimpGradientChooser *self);
 static void     local_grad_data_free                        (GimpGradientChooser *self);
 static gboolean local_grad_data_exists                      (GimpGradientChooser *self);
 static gboolean local_grad_data_refresh                     (GimpGradientChooser *self,
@@ -115,6 +114,10 @@ gimp_gradient_chooser_init (GimpGradientChooser *self)
   button = gtk_button_new ();
   gtk_container_add (GTK_CONTAINER (self), button);
 
+  self->local_grad_data.data             = NULL;
+  self->local_grad_data.n_samples        = 0;
+  self->local_grad_data.allocation_width = 0;
+
   self->preview = gtk_drawing_area_new ();
   gtk_widget_set_size_request (self->preview, CELL_WIDTH, CELL_HEIGHT);
   gtk_container_add (GTK_CONTAINER (button), self->preview);
@@ -133,6 +136,8 @@ gimp_gradient_chooser_init (GimpGradientChooser *self)
                                          self->preview, &drag_target);
 
   _gimp_resource_chooser_set_clickable (GIMP_RESOURCE_CHOOSER (self), button);
+
+  gimp_gradient_chooser_draw_interior (GIMP_RESOURCE_CHOOSER (self));
 }
 
 /* Called when dialog is closed and owning ResourceSelect button is disposed. */
@@ -192,10 +197,6 @@ gimp_gradient_chooser_new (const gchar  *title,
                          "label",    label,
                          "resource", gradient,
                          NULL);
-
-  local_grad_data_new (GIMP_GRADIENT_CHOOSER (self));
-
-  gimp_gradient_chooser_draw_interior (GIMP_RESOURCE_CHOOSER (self));
 
   return self;
 }
@@ -391,22 +392,9 @@ local_grad_data_exists (GimpGradientChooser *self)
 }
 
 static void
-local_grad_data_new (GimpGradientChooser *self)
-{
-  self->local_grad_data.data             = NULL;
-  self->local_grad_data.n_samples        = 0;
-  self->local_grad_data.allocation_width = 0;
-}
-
-static void
 local_grad_data_free (GimpGradientChooser *self)
 {
-  /* More robust when set to NULL.
-   * g_free(NULL) is safe but g_free twice is not.
-   */
-  g_free (self->local_grad_data.data);
-  self->local_grad_data.data = NULL;
-
+  g_clear_pointer (&self->local_grad_data.data, g_free);
   self->local_grad_data.n_samples = 0;
 }
 
