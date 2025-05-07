@@ -90,7 +90,7 @@ unsigned filter_surround = 2;
 
 /* Says whether or not to remove ``knee'' points after finding the outline.
    (See the comments at `remove_knee_points'.)  (-remove-knees).  */
-boolean keep_knees = false;
+boolean keep_knees = FALSE;
 
 /* If a spline is closer to a straight line than this, it remains a
    straight line, even if it would otherwise be changed back to a curve.
@@ -436,7 +436,7 @@ split_at_corners (pixel_outline_list_type pixel_list)
             append_pixel (curve, O_COORDINATE (pixel_o, p));
 
           /* This curve is cyclic.  */
-          CURVE_CYCLIC (curve) = true;
+          CURVE_CYCLIC (curve) = TRUE;
         }
       else
         { /* Each curve consists of the points between (inclusive) each pair
@@ -538,7 +538,7 @@ find_corners (pixel_outline_type pixel_outline)
           unsigned q = p;
           unsigned i = p + 1;
 
-          while (true)
+          while (TRUE)
             {
               /* Perhaps the angle is sufficiently small that we want to
                  consider this a corner, even if it's not the best
@@ -763,7 +763,7 @@ remove_adjacent_corners (index_list_type *list, unsigned last_index)
    Since the first and last points are corners (unless the curve is
    cyclic), it doesn't make sense to remove those.  */
 
-/* This evaluates to true if the vector V is zero in one direction and
+/* This evaluates to TRUE if the vector V is zero in one direction and
    nonzero in the other.  */
 #define ONLY_ONE_ZERO(v)						\
   (((v).dx == 0.0 && (v).dy != 0.0) || ((v).dy == 0.0 && (v).dx != 0.0))
@@ -963,7 +963,7 @@ filter (curve_type curve)
      *curve = *new_curve;
     }
 
-/*   log_curve (curve, false); */
+/*   log_curve (curve, FALSE); */
 /*   display_curve (curve); */
 }
 
@@ -1107,14 +1107,14 @@ fit_with_least_squares (curve_type curve)
      more coherent.  */
 
 /*   LOG ("Finding tangents:\n"); */
-  find_tangent (curve, /* to_start */ true,  /* cross_curve */ false);
-  find_tangent (curve, /* to_start */ false, /* cross_curve */ false);
+  find_tangent (curve, /* to_start */ TRUE,  /* cross_curve */ FALSE);
+  find_tangent (curve, /* to_start */ FALSE, /* cross_curve */ FALSE);
 
   set_initial_parameter_values (curve);
 
   /* Now we loop, reparameterizing and/or subdividing, until CURVE has
      been fit.  */
-  while (true)
+  while (TRUE)
     {
 /*       LOG ("  fitted to spline:\n"); */
 
@@ -1223,9 +1223,9 @@ fit_with_least_squares (curve_type curve)
          the subdivision point.  The tangent at that point must be the
          same for both curves, or noticeable bumps will occur in the
          character.  But we want to use information on both sides of the
-         point to compute the tangent, hence cross_curve = true.  */
-      find_tangent (left_curve, /* to_start_point: */ false,
-                    /* cross_curve: */ true);
+         point to compute the tangent, hence cross_curve = TRUE.  */
+      find_tangent (left_curve, /* to_start_point: */ FALSE,
+                    /* cross_curve: */ TRUE);
       CURVE_START_TANGENT (right_curve) = CURVE_END_TANGENT (left_curve);
 
       /* Now that we've set up the curves, we can fit them.  */
@@ -1434,7 +1434,7 @@ reparameterize (curve_type curve, spline_type S)
 /* 	  REPORT ("!"); */
 /* 	  LOG3 ("  Stopped reparameterizing; %.3f > %.3f at point %u.\n", */
 /* 		new_distance, old_distance, p); */
-	  return false;
+	  return FALSE;
 	}
 
       /* The t value might be negative or > 1, if the choice of control
@@ -1443,9 +1443,9 @@ reparameterize (curve_type curve, spline_type S)
          doesn't matter.  (Although it is a little unconventional.)  */
     }
 /*   LOG ("  reparameterized curve:\n   "); */
-/*   log_curve (curve, true); */
+/*   log_curve (curve, TRUE); */
 
-  return true;
+  return TRUE;
 }
 
 /* This routine finds the best place to subdivide the curve CURVE,
@@ -1534,7 +1534,7 @@ test_subdivision_point (curve_type curve, unsigned index, vector_type *best)
 {
   unsigned count;
   vector_type in, out;
-  boolean join = false;
+  boolean join = FALSE;
 
   find_curve_vectors (index, curve, subdivide_surround, &in, &out, &count);
 
@@ -1591,8 +1591,8 @@ set_initial_parameter_values (curve_type curve)
 }
 
 /* Find an approximation to the tangent to an endpoint of CURVE (to the
-   first point if TO_START_POINT is true, else the last).  If
-   CROSS_CURVE is true, consider points on the adjacent curve to CURVE.
+   first point if TO_START_POINT is TRUE, else the last).  If
+   CROSS_CURVE is TRUE, consider points on the adjacent curve to CURVE.
 
    It is important to compute an accurate approximation, because the
    control points that we eventually decide upon to fit the curve will
@@ -1807,7 +1807,7 @@ static void
 change_bad_lines (spline_list_type *spline_list)
 {
   unsigned this_spline;
-  boolean found_cubic = false;
+  boolean found_cubic = FALSE;
   unsigned length = SPLINE_LIST_LENGTH (*spline_list);
 
 /*   LOG1 ("\nChecking for bad lines (length %u):\n", length); */
@@ -1817,7 +1817,7 @@ change_bad_lines (spline_list_type *spline_list)
     {
       if (SPLINE_DEGREE (SPLINE_LIST_ELT (*spline_list, this_spline)) == CUBIC)
         {
-          found_cubic = true;
+          found_cubic = TRUE;
           break;
         }
     }
@@ -1868,7 +1868,7 @@ change_bad_lines (spline_list_type *spline_list)
           START_POINT (*s).axis = END_POINT (*s).axis			\
             = END_POINT (*prev).axis = START_POINT (*next).axis		\
             = (start.axis + end.axis) / 2;				\
-          spline_change = true;						\
+          spline_change = TRUE;						\
         }								\
     }									\
   while (0)
@@ -1884,13 +1884,13 @@ align (spline_list_type *l)
 
   do
     {
-      change = false;
+      change = FALSE;
 
 /*       LOG ("  "); */
 
       for (this_spline = 0; this_spline < length; this_spline++)
         {
-          boolean spline_change = false;
+          boolean spline_change = FALSE;
           spline_type *s = &SPLINE_LIST_ELT (*l, this_spline);
           real_coordinate_type start = START_POINT (*s);
           real_coordinate_type end = END_POINT (*s);

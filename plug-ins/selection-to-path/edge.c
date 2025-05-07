@@ -204,7 +204,7 @@ is_outline_edge (edge_type edge,
 {
   /* If this pixel isn't black, it's not part of the outline.  */
   if (sel_pixel_is_white(row, col))
-    return false;
+    return FALSE;
 
   switch (edge)
     {
@@ -232,7 +232,7 @@ is_outline_edge (edge_type edge,
 
 /* If EDGE is not already marked, we mark it; otherwise, it's a fatal error.
    The position ROW and COL should be inside the bitmap MARKED.  EDGE can
-   be `no_edge'; we just return false.  */
+   be `no_edge'; we just return FALSE.  */
 
 void
 mark_edge (edge_type edge, unsigned row, unsigned col, bitmap_type *marked)
@@ -251,7 +251,7 @@ static boolean
 is_marked_edge (edge_type edge, unsigned row, unsigned col, bitmap_type marked)
 {
   return
-    edge == no_edge ? false : BITMAP_PIXEL (marked, row, col) & (1 << edge);
+    edge == no_edge ? FALSE : BITMAP_PIXEL (marked, row, col) & (1 << edge);
 }
 
 

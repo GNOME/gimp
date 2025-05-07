@@ -21,8 +21,6 @@
 
 /* Cope with C23 */
 typedef int boolean;
-#define false FALSE
-#define true TRUE
 
 /* The usual null-terminated string.  */
 typedef char *string;

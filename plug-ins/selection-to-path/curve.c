@@ -33,7 +33,7 @@ new_curve (void)
 
   curve->point_list = NULL;
   CURVE_LENGTH (curve) = 0;
-  CURVE_CYCLIC (curve) = false;
+  CURVE_CYCLIC (curve) = FALSE;
   CURVE_START_TANGENT (curve) = CURVE_END_TANGENT (curve) = NULL;
   PREVIOUS_CURVE (curve) = NEXT_CURVE (curve) = NULL;
 
