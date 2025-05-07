@@ -14,6 +14,9 @@ Core:
   - Make maximum radius for generated brushes consistent across
     codebase.
   - Use NDE filter name for undo history.
+  - Module loading improved to be better cross-platform (in particular
+    on macOS both .so and .dylib modules are supported).
+  - Code compliant with GCC 15 (C23).
 
 Graphical User Interface:
 
@@ -44,7 +47,12 @@ Plug-ins:
 
   - Restore GUI to Difference Clouds script. This had been lost since
     GIMP 2.8!
-  - Fixes in various file format support, such as: DDS, SVG, TIFF…
+  - Fixes in various file format support, such as: DDS, SVG, TIFF, PSD,
+    BMP, ICO…
+  - Screenshot dropdowns replaced by radio buttons, as part of a new UX
+    decision that choice settings with 2 or 3 choices should be dropdown
+    (faster 1-click access), unless there are a lot more settings making
+    the dialog too crowded already.
 
 PDB:
 
