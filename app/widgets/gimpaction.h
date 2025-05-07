@@ -126,6 +126,8 @@ gint              gimp_action_name_compare        (GimpAction      *action1,
                                                    GimpAction      *action2);
 
 gboolean          gimp_action_is_gui_blacklisted  (const gchar     *action_name);
+gboolean          gimp_action_is_action_search_blacklisted
+                                                  (const gchar     *action_name);
 
 GimpContext     * gimp_action_get_context         (GimpAction      *action);
 GimpViewable    * gimp_action_get_viewable        (GimpAction      *action);

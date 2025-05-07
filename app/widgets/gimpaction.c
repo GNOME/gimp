@@ -761,6 +761,29 @@ gimp_action_is_gui_blacklisted (const gchar *action_name)
 {
   static const gchar *prefixes[] =
     {
+      "windows-display-"
+    };
+
+  if (! (action_name && *action_name))
+    return TRUE;
+
+  for (guint i = 0; i < G_N_ELEMENTS (prefixes); i++)
+    {
+      if (g_str_has_prefix (action_name, prefixes[i]))
+        return TRUE;
+    }
+
+  if (gimp_action_is_action_search_blacklisted (action_name))
+    return TRUE;
+
+  return FALSE;
+}
+
+gboolean
+gimp_action_is_action_search_blacklisted (const gchar *action_name)
+{
+  static const gchar *prefixes[] =
+    {
       "<",
       "tools-color-average-radius-",
       "tools-paintbrush-size-",

@@ -318,7 +318,7 @@ gimp_action_history_search (Gimp                *gimp,
 gboolean
 gimp_action_history_is_blacklisted_action (const gchar *action_name)
 {
-  if (gimp_action_is_gui_blacklisted (action_name))
+  if (gimp_action_is_action_search_blacklisted (action_name))
     return TRUE;
 
   return (g_str_has_suffix (action_name, "-set")            ||
