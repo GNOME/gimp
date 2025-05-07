@@ -5,7 +5,9 @@
 <!-- Please describe your feature with details. Also:
 - If the feature is UI-related, please DO NOT REPORT HERE but on
   gimp-ux: https://gitlab.gnome.org/Teams/GIMP/Design/gimp-ux/-/issues;
-- If the feature is about some standard or API, link relevant resources;
+- If the feature is about some image file format on GIMP, first check if it
+  is not already listed on https://developer.gimp.org/core/standards/images,
+  then you can make the request, ideally linking relevant resources (e.g. specs);
 - If you have a patch, see: https://developer.gimp.org/core/submit-patch/ -->
 
 ### Use cases
