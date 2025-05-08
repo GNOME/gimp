@@ -396,7 +396,7 @@ winsock           = platform_windows ? cc.find_library('ws2_32') : no_dep
 mscms             = platform_windows ? cc.find_library('mscms') : no_dep
 atk_minver        = '2.4.0'
 atk               = dependency('atk',                version: '>='+atk_minver)
-babl_minver       = '0.1.112'
+babl_minver       = '0.1.114'
 babl              = dependency('babl-0.1',           version: '>='+babl_minver, required: false)
 if not babl.found()
   # babl changed its pkg-config name from 'babl' to 'babl-0.1' in version
@@ -418,7 +418,7 @@ freetype2_minver  = '2.1.7'
 freetype2         = dependency('freetype2',          version: '>='+freetype2_minver)
 gdk_pixbuf_minver = '2.30.8'
 gdk_pixbuf        = dependency('gdk-pixbuf-2.0',     version: '>='+gdk_pixbuf_minver)
-gegl_minver       = '0.4.58'
+gegl_minver       = '0.4.62'
 gegl              = dependency('gegl-0.4',           version: '>='+gegl_minver)
 exiv2_minver      = '0.27.4'
 exiv2             = dependency('exiv2',              version: '>='+exiv2_minver)
