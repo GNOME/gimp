@@ -323,7 +323,7 @@ Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ\default.env"; 
 Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\gimp-script-fu-interpreter.interp"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
 Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\extensions\*"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\extensions"; Excludes: "*.dll,*.exe,{#OPTIONAL_EXT}"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
 Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins\*"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins"; Excludes: "*.dll,*.exe,{#OPTIONAL_EXT}"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
-Source: "{#GIMP_DIR32}\share\gimp\*"; DestDir: "{app}\share\gimp"; Excludes: "{#OPTIONAL_EXT}"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS} createallsubdirs
+Source: "{#GIMP_DIR32}\share\gimp\*"; DestDir: "{app}\share\gimp"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS} createallsubdirs
 Source: "{#GIMP_DIR32}\share\icons\hicolor\*"; DestDir: "{app}\share\icons\hicolor"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
 Source: "{#GIMP_DIR32}\share\metainfo\*"; DestDir: "{app}\share\metainfo"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
 #define DEPS_ARCHS="deps32 or deps64 or depsARM64"
@@ -333,7 +333,7 @@ Source: "{#DEPS_DIR32}\share\*"; DestDir: "{app}\share"; Excludes: "gimp,icons\h
 ;Optional arch-neutral files (full install)
 #ifdef LUA
 Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\lua.interp"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters"; Components: (lua32 or lua64 or luaARM64); Flags: {#COMMON_FLAGS}
-Source: "{#GIMP_DIR32}\*.lua"; DestDir: "{app}"; Components: (lua32 or lua64 or luaARM64); Flags: {#COMMON_FLAGS}
+Source: "{#GIMP_DIR32}\*.lua"; DestDir: "{app}"; Excludes: "share\gimp\*.lua"; Components: (lua32 or lua64 or luaARM64); Flags: {#COMMON_FLAGS}
 #endif
 #ifdef PYTHON
 Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ\py*.env"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ"; Components: (py32 or py64 or pyARM64); Flags: {#COMMON_FLAGS}
