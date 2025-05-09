@@ -1,3 +1,25 @@
+spec:
+  inputs:
+    distribution_pipeline:
+      description: 'Pipelines that creates installable GIMP'
+      options:
+        - GIMP_CI_APPIMAGE #trigger the appimage making.
+        - GIMP_CI_FLATPAK #trigger the flatpak build and publishing (base but slow)
+        - GIMP_CI_WIN_INSTALLER #trigger all native MSYS2 builds then creates Inno Windows installer (base but slow)
+        - GIMP_CI_MS_STORE #trigger arm64 and x64 native MSYS2 builds then creates a .msixbundle (base but slow)
+        - none
+      default: 'none'
+    test_pipeline:
+      description: 'Pipelines used only for testing'
+      options:
+        - GIMP_CI_MESON_GCC #trigger the Debian GCC build (rare usefulness)
+        - GIMP_CI_RASTER_ICONS #trigger the Debian Clang build without vector icons (rare usefulness)
+        - GIMP_CI_CPPCHECK #trigger cppcheck (static code analysis)
+        - none
+      default: 'none'
+---
+
+
 # Our pipelines are auto cancelable when explicity set in 'rules'.
 # GitLab is quite sensitive about rules 'if' order so be careful.
 workflow:
@@ -41,21 +63,9 @@ workflow:
 
 .default:
   ## 5. On CUSTOM builds though web GUI, API or schedules.
-  ## Scheduled CI ($CI_PIPELINE_SOURCE == "schedule") will run regularly:
-  ## - GIMP_CI_MESON_GCC: trigger the Debian GCC build (rare usefulness).
-  ## - GIMP_CI_RASTER_ICONS: trigger the Debian Clang build without vector icons (rare usefulness).
-  ## - GIMP_CI_CPPCHECK: trigger cppcheck (static code analysis).
-  ## - GIMP_CI_APPIMAGE: trigger the appimage making (experimental).
-  ## - GIMP_CI_FLATPAK: trigger the flatpak build and publishing (base but slow).
-  ## - GIMP_CI_WIN_INSTALLER: trigger all native MSYS2 builds then creates Inno Windows installer (base but slow).
-  ## - GIMP_CI_MS_STORE: trigger arm64 and x64 native MSYS2 builds then creates a .msixbundle (base but slow).
-  ## In addition to the variables above, to force step-specific pipelines
-  ## without waiting for commits and/or schedules, these you should set on GUI:
-  ## - GIMP_CI_MESON_CLANG: trigger the Debian Clang build.
-  ## - GIMP_CI_MSYS2_WIN_AARCH64: trigger the native MSYS2 build for Win Aarch64.
-  ## - GIMP_CI_MSYS2_WIN64: trigger the native MSYS2 build for Win 64-bit.
-  ## - GIMP_CI_MSYS2_WIN32: trigger the native MSYS2 build for Win 32-bit.
-  ## - GIMP_CI_SOURCES: trigger the Debian Clang build and the source tarball job.
+  ## Scheduled CI ($CI_PIPELINE_SOURCE == "schedule") will run regularly all
+  ## the 'distribution_pipeline' and 'test_pipeline' above. To run them without
+  ## waiting for schedules: https://gitlab.gnome.org/GNOME/gimp/-/pipelines/new
   interruptible: false
 
 
@@ -93,7 +103,7 @@ stages:
   rules:
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. AppImage package.*/'
       interruptible: true
-    - if: '$GIMP_CI_APPIMAGE != null'
+    - if: '$GIMP_CI_APPIMAGE != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_APPIMAGE.*/'
     - <<: *CI_RELEASE
   parallel:
     matrix:
@@ -290,14 +300,14 @@ gimp-debian:
     - <<: *CI_COMMIT
     - if: '$GIMP_CI_MESON_CLANG != null'
       variables: {}
-    - if: '$GIMP_CI_MESON_GCC != null'
+    - if: '$GIMP_CI_MESON_GCC != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_MESON_GCC.*/'
       variables:
         CC: "cc"
         CXX: "c++"
         CC_LD: bfd
         CXX_LD: bfd
         VARIANT: "-gcc"
-    - if: '$GIMP_CI_RASTER_ICONS != null'
+    - if: '$GIMP_CI_RASTER_ICONS != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_RASTER_ICONS.*/'
       variables:
         MESON_OPTIONS: "-Dvector-icons=false"
         VARIANT: "-raster"
@@ -370,7 +380,7 @@ gimp-debian-x64:
   rules:
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Flatpak package.*/'
       interruptible: true
-    - if: '$GIMP_CI_FLATPAK != null'
+    - if: '$GIMP_CI_FLATPAK != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_FLATPAK.*/'
   tags:
     - flatpak
   image: 'quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master'
@@ -432,10 +442,10 @@ gimp-flatpak-x64:
       variables:
         INSTALLER_OPTION: '-Dwindows-installer=true'
         STORE_OPTION: '-Dms-store=true'
-    - if: '$GIMP_CI_WIN_INSTALLER != null'
+    - if: '$GIMP_CI_WIN_INSTALLER != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_WIN_INSTALLER.*/'
       variables:
         INSTALLER_OPTION: '-Dwindows-installer=true'
-    - if: '$GIMP_CI_MS_STORE != null && $CI_JOB_NAME =~ /.*64.*/ && $CI_JOB_NAME !~ /.*installer.*/'
+    - if: '$GIMP_CI_MS_STORE != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_MS_STORE.*/ && $CI_JOB_NAME =~ /.*64.*/ && $CI_JOB_NAME !~ /.*installer.*/'
       variables:
         STORE_OPTION: '-Dms-store=true'
     - <<: *CI_RELEASE
@@ -614,7 +624,7 @@ clang-format:
 cppcheck:
   extends: .default
   rules:
-    - if: '$GIMP_CI_CPPCHECK != null'
+    - if: '$GIMP_CI_CPPCHECK != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_CPPCHECK.*/'
   stage: analysis
   script:
     - apt-get update
@@ -732,7 +742,7 @@ dist-flatpak-weekly:
   rules:
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Flatpak package.*/'
       interruptible: true
-    - if: '$GIMP_CI_FLATPAK != null'
+    - if: '$GIMP_CI_FLATPAK != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_FLATPAK.*/'
   needs: ["gimp-flatpak-x64"]
   stage: distribution
   script:
@@ -767,7 +777,7 @@ dist-store-weekly:
   rules:
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Microsoft Store.*/'
       interruptible: true
-    - if: '$GIMP_CI_MS_STORE != null'
+    - if: '$GIMP_CI_MS_STORE != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_MS_STORE.*/'
     - <<: *CI_RELEASE
   needs: ["gimp-win"]
   stage: distribution
