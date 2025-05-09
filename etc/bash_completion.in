@@ -1,4 +1,3 @@
-
 __gimp()
 {
     COMPREPLY=()
@@ -73,4 +72,19 @@ __gimp()
    return 0
 }
 
-complete -F __gimp gimp
+complete -F __gimp @GIMP_MAIN_EXE@
+if command -v @GIMP_SYMLINK1@ 2>&1 > /dev/null
+then
+  complete -F __gimp @GIMP_SYMLINK1@
+  complete -F __gimp @GIMP_SYMLINK2@
+fi
+
+if command -v @GIMP_CONSOLE_EXE@ 2>&1 > /dev/null
+then
+  complete -F __gimp @GIMP_CONSOLE_EXE@
+  if command -v @GIMP_CONSOLE_SYMLINK1@ 2>&1 > /dev/null
+  then
+    complete -F __gimp @GIMP_CONSOLE_SYMLINK1@
+    complete -F __gimp @GIMP_CONSOLE_SYMLINK2@
+  fi
+fi
