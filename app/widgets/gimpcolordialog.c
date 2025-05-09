@@ -556,6 +556,18 @@ gimp_color_dialog_set_color (GimpColorDialog *dialog,
     gimp_color_selection_set_format (GIMP_COLOR_SELECTION (dialog->selection),
                                      gegl_color_get_format (color));
 
+  if (dialog->active_image &&
+      gimp_image_get_base_type (dialog->active_image) == GIMP_INDEXED)
+    {
+      GimpColormapSelection *colormap_selection;
+      gint                   col_index;
+
+      colormap_selection = GIMP_COLORMAP_SELECTION (dialog->colormap_selection);
+      col_index = gimp_colormap_selection_get_index (colormap_selection, color);
+
+      gimp_colormap_selection_set_index (colormap_selection, col_index, NULL);
+    }
+
   g_signal_handlers_unblock_by_func (dialog->selection,
                                      gimp_color_dialog_color_changed,
                                      dialog);
@@ -790,9 +802,26 @@ gimp_color_dialog_update_base_type (GimpColorDialog *dialog)
 {
   if (dialog->active_image &&
       gimp_image_get_base_type (dialog->active_image) == GIMP_INDEXED)
-    gtk_stack_set_visible_child_name (GTK_STACK (dialog->stack), "colormap");
+    {
+      GimpColormapSelection *colormap_selection;
+      GeglColor             *color;
+      gint                   col_index;
+
+      gtk_stack_set_visible_child_name (GTK_STACK (dialog->stack), "colormap");
+
+      /* Update selected color in palette */
+      colormap_selection = GIMP_COLORMAP_SELECTION (dialog->colormap_selection);
+
+      color = gimp_color_dialog_get_color (dialog);
+      col_index = gimp_colormap_selection_get_index (colormap_selection, color);
+      g_object_unref (color);
+
+      gimp_colormap_selection_set_index (colormap_selection, col_index, NULL);
+    }
   else
-    gtk_stack_set_visible_child_name (GTK_STACK (dialog->stack), "color");
+    {
+      gtk_stack_set_visible_child_name (GTK_STACK (dialog->stack), "color");
+    }
 }
 
 static void
