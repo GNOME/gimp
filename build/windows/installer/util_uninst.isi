@@ -266,7 +266,7 @@ var
   ResultCode: Integer;
 begin
   UninstallProgressForm.StatusLabel.Caption := CustomMessage('CreatingRestorePoint');
-  if not ShellExec('RunAs', 'powershell', ExpandConstant('Checkpoint-Computer -Description "GIMP_{#CUSTOM_GIMP_VERSION}_uninstall" -RestorePointType APPLICATION_UNINSTALL'),
+  if not ShellExec('RunAs', 'powershell', '-Command "$job = Start-Job -ScriptBlock { Checkpoint-Computer -Description "GIMP_' + ExpandConstant('{#CUSTOM_GIMP_VERSION}') + '_uninstall" -RestorePointType APPLICATION_UNINSTALL }; Wait-Job $job -Timeout 24; if ($job.State -eq \"Running\") { Stop-Job $job -Confirm:$false }; Receive-Job $job"',
                    '', SW_HIDE, ewWaitUntilTerminated, ResultCode) then
   begin
     DebugMsg('RestorePointU','Failed to create restore point. Error code: ' + IntToStr(ResultCode));

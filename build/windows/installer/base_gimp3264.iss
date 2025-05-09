@@ -1173,7 +1173,7 @@ var
   ResultCode: Integer;
 begin
   StatusLabel(CustomMessage('CreatingRestorePoint'),'');
-  if not ShellExec('RunAs', 'powershell', ExpandConstant('Checkpoint-Computer -Description "GIMP_{#CUSTOM_GIMP_VERSION}_install" -RestorePointType APPLICATION_INSTALL'),
+  if not ShellExec('RunAs', 'powershell', '-Command "$job = Start-Job -ScriptBlock { Checkpoint-Computer -Description "GIMP_' + ExpandConstant('{#CUSTOM_GIMP_VERSION}') + '_install" -RestorePointType APPLICATION_INSTALL }; Wait-Job $job -Timeout 24; if ($job.State -eq \"Running\") { Stop-Job $job -Confirm:$false }; Receive-Job $job"',
                    '', SW_HIDE, ewWaitUntilTerminated, ResultCode) then
   begin
     DebugMsg('RestorePoint','Failed to create restore point. Error code: ' + IntToStr(ResultCode));
