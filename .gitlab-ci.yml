@@ -467,7 +467,7 @@ gimp-flatpak-x64:
 - $env:PKG_CONFIG_PATH = "$GIMP_PREFIX/lib/pkgconfig;$MSYS_ROOT/$MSYSTEM_PREFIX/lib/pkgconfig;$MSYS_ROOT/$MSYSTEM_PREFIX/share/pkgconfig"
 - $env:XDG_DATA_DIRS = "$GIMP_PREFIX/share;$MSYS_ROOT/$MSYSTEM_PREFIX/share"
 ## Runtime vars
-- $env:Path = "$GIMP_PREFIX/bin;" + $env:Path
+- $env:PATH = "$GIMP_PREFIX/bin;$MSYS_ROOT/$MSYSTEM_PREFIX/bin;" + $env:PATH
 - $env:GI_TYPELIB_PATH = "$GIMP_PREFIX/lib/girepository-1.0;$MSYS_ROOT/$MSYSTEM_PREFIX/lib/girepository-1.0"
 - Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):win_environ$([char]13)$([char]27)[0K"
 
