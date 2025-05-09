@@ -36,8 +36,18 @@ if have_bash
     bash_comp_inst_dir = get_option('datadir') / 'bash-completion' / 'completions'
   endif
 
-  install_data('bash_completion',
-    install_dir: bash_comp_inst_dir,
-    rename: 'gimp',
-  )
+  bash_completion_conf = configuration_data()
+  bash_completion_conf.set('GIMP_MAIN_EXE', gimpmain_exe_name)
+  bash_completion_conf.set('GIMP_SYMLINK1', 'gimp-' + gimp_app_version_major.to_string())
+  bash_completion_conf.set('GIMP_SYMLINK2', 'gimp')
+
+  bash_completion_conf.set('GIMP_CONSOLE_EXE',      gimpconsole_exe_name)
+  bash_completion_conf.set('GIMP_CONSOLE_SYMLINK1', 'gimp-console-' + gimp_app_version_major.to_string())
+  bash_completion_conf.set('GIMP_CONSOLE_SYMLINK2', 'gimp-console')
+
+  configure_file(input : 'bash_completion.in',
+                 output: 'gimp-' + gimp_app_version,
+                 configuration: bash_completion_conf,
+                 install: true,
+                 install_dir: bash_comp_inst_dir)
 endif
