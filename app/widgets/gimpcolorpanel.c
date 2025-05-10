@@ -101,9 +101,9 @@ gimp_color_panel_class_init (GimpColorPanelClass *klass)
 static void
 gimp_color_panel_init (GimpColorPanel *panel)
 {
-  panel->context             = NULL;
-  panel->color_dialog        = NULL;
-  panel->user_context_aware  = TRUE;
+  panel->context            = NULL;
+  panel->color_dialog       = NULL;
+  panel->user_context_aware = TRUE;
 }
 
 static void
