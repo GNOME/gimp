@@ -38,8 +38,8 @@ fi #End of check
 
 if [ -z "$GITLAB_CI" ]; then
   flatpak update -y
-  flatpak remote-add --if-not-exists --user --from gnome-nightly https://nightly.gnome.org/gnome-nightly.flatpakrepo
-  flatpak install --user gnome-nightly org.gnome.Platform/$(uname -m)/master org.gnome.Sdk/$(uname -m)/master -y
+  flatpak remote-add --user --if-not-exists --from gnome-nightly https://nightly.gnome.org/gnome-nightly.flatpakrepo
+  flatpak install --user gnome-nightly org.gnome.Sdk/$(uname -m)/master org.gnome.Platform/$(uname -m)/master -y
 fi
 
 
