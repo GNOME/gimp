@@ -37,9 +37,9 @@ Source: "{#DEPS_DIR}\{#DDIR}\lib\*"; DestDir: "{app}\lib"; Excludes: "gimp,Gimp*
 Source: "{#GIMP_DIR}\{#DIR}\*.pdb"; DestDir: "{app}"; Components: debug{#COMPONENT}; Flags: {#COMMON_FLAGS}
 #endif
 
-Source: "{#GIMP_DIR}\{#DIR}\*.h"; DestDir: "{app}"; Components: dev{#COMPONENT}; Flags: {#COMMON_FLAGS}
-Source: "{#GIMP_DIR}\{#DIR}\*.a"; DestDir: "{app}"; Components: dev{#COMPONENT}; Flags: {#COMMON_FLAGS}
-Source: "{#GIMP_DIR}\{#DIR}\*.pc"; DestDir: "{app}"; Components: dev{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#GIMP_DIR}\{#DIR}\include\*.h**"; DestDir: "{app}\include"; Components: dev{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#GIMP_DIR}\{#DIR}\lib\*.a"; DestDir: "{app}\lib"; Components: dev{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#GIMP_DIR}\{#DIR}\lib\pkgconfig\*"; DestDir: "{app}\lib\pkgconfig"; Components: dev{#COMPONENT}; Flags: {#COMMON_FLAGS}
 
 Source: "{#DEPS_DIR}\{#DDIR}\bin\libgs*.dll"; DestDir: "{app}\bin"; Components: gs{#COMPONENT}; Flags: {#COMMON_FLAGS}
 Source: "{#GIMP_DIR}\{#DIR}\lib\file-ps.exe"; DestDir: "{app}\lib"; Components: gs{#COMPONENT}; Flags: {#COMMON_FLAGS}
