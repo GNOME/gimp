@@ -1,4 +1,4 @@
-desktopfilename = 'gimp.desktop'
+desktopfilename = gimp_desktop_name + '.desktop'
 
 desktop_conf = configuration_data()
 desktop_conf.set('GIMP_COMMAND',      gimp_command)

@@ -79,6 +79,9 @@ so_version = '@0@.@1@.@2@'.format(lt_current - lt_age, lt_age, lt_revision)
 
 gimp_command  = 'gimp-' + gimp_app_version
 
+# A specific desktop name to fix window icon under Wayland
+gimp_desktop_name = 'gimp'
+
 gettext_package= 'gimp@0@@1@'.format(api_version_major, api_version_minor)
 conf.set_quoted('GETTEXT_PACKAGE', gettext_package)
 
@@ -1648,6 +1651,7 @@ conf.set_quoted('GIMP_PACKAGE',   meson.project_name())
 conf.set_quoted('PACKAGE_NAME',   meson.project_name())
 conf.set_quoted('PACKAGE_STRING', package_string)
 conf.set_quoted('GIMP_COMMAND',   gimp_command)
+conf.set_quoted('GIMP_DESKTOP_NAME', gimp_desktop_name)
 
 # Versions
 conf.set_quoted('GIMP_APP_VERSION_STRING',gimp_app_version)

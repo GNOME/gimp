@@ -544,7 +544,6 @@ main (int    argc,
   GOptionContext *context;
   GError         *error = NULL;
   const gchar    *abort_message;
-  gchar          *basename;
   GFile          *system_gimprc_file = NULL;
   GFile          *user_gimprc_file   = NULL;
   GOptionGroup   *gimp_group         = NULL;
@@ -674,9 +673,7 @@ main (int    argc,
   argv = g_strdupv (argv);
 #endif
 
-  basename = g_path_get_basename (argv[0]);
-  g_set_prgname (basename);
-  g_free (basename);
+  g_set_prgname (GIMP_DESKTOP_NAME);
 
   /* Check argv[] for "--verbose" first */
   for (i = 1; i < argc; i++)
