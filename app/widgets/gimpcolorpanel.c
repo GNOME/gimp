@@ -101,8 +101,9 @@ gimp_color_panel_class_init (GimpColorPanelClass *klass)
 static void
 gimp_color_panel_init (GimpColorPanel *panel)
 {
-  panel->context      = NULL;
-  panel->color_dialog = NULL;
+  panel->context            = NULL;
+  panel->color_dialog       = NULL;
+  panel->user_context_aware = TRUE;
 }
 
 static void
@@ -183,7 +184,8 @@ gimp_color_panel_clicked (GtkButton *button)
       GimpColorButton *color_button = GIMP_COLOR_BUTTON (button);
 
       panel->color_dialog =
-        gimp_color_dialog_new (NULL, panel->context, TRUE,
+        gimp_color_dialog_new (NULL, panel->context,
+                               panel->user_context_aware,
                                gimp_color_button_get_title (color_button),
                                NULL, NULL,
                                GTK_WIDGET (button),
@@ -273,6 +275,15 @@ gimp_color_panel_set_context (GimpColorPanel *panel,
   if (context)
     gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (panel),
                                         context->gimp->config->color_management);
+}
+
+void
+gimp_color_panel_set_user_context_aware (GimpColorPanel *panel,
+                                         gboolean        user_context_aware)
+{
+  g_return_if_fail (GIMP_IS_COLOR_PANEL (panel));
+
+  panel->user_context_aware = user_context_aware;
 }
 
 void
