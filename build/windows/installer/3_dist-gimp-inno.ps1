@@ -31,7 +31,7 @@ if (-not $GITLAB_CI)
 #if (-not (Get-Command "python" -ErrorAction SilentlyContinue) -or "$(Get-Command "python" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source)" -like '*WindowsApps*')
 #  {
     Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'MSYS_ROOT\)' -Context 0,12) -replace '> ','')
-    $env:PATH = $env:PATH + ";$MSYS_ROOT\$MSYSTEM_PREFIX\bin;$MSYS_ROOT\usr\bin"
+    Invoke-Expression ((Get-Content .gitlab-ci.yml | Select-String 'win_environ\[' -Context 0,7) -replace '> ','' -replace '- ','')
 #  }
 
 
