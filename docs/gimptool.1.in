@@ -1,11 +1,11 @@
-.TH GIMPTOOL\-2.0 1 "Version @GIMP_VERSION@" "GIMP Manual Pages"
+.TH GIMPTOOL 1 "Version @GIMP_VERSION@" "GIMP Manual Pages"
 
 .SH NAME
-gimptool\-2.0 - script to perform various GIMPy functions
+gimptool - script to perform various GIMPy functions
 
 
 .SH SYNOPSIS
-.B gimptool\-2.0
+.B gimptool
 [\-\-prefix\fI[=DIR]\fP] [\-\-exec\-prefix\fI[=DIR]\fP] [\-\-version]
 [\-\-help] [\-\-quiet] [\-\-silent] [\-n] [\-\-just-print] [\-\-dry-run]
 [\-\-recon] [\-\-msvc-syntax]
@@ -29,18 +29,18 @@ gimptool\-2.0 - script to perform various GIMPy functions
 
 .SH DESCRIPTION
 .PP
-\fIgimptool\-2.0\fP is a tool that can, among other things, build
+\fIgimptool\fP is a tool that can, among other things, build
 plug-ins or scripts and install them if they are distributed in one
 source file.
 .PP
-\fIgimptool\-2.0\fP can also be used by programs that need to know what
-libraries and include-paths \fIGIMP\fP was compiled with. \fIgimptool\-2.0\fP
+\fIgimptool\fP can also be used by programs that need to know what
+libraries and include-paths \fIGIMP\fP was compiled with. \fIgimptool\fP
 uses \fIpkg-config\fP for this task. For use in Makefiles, it is recommended
-that you use \fIpkg-config\fP directly instead of calling \fIgimptool\-2.0\fP.
+that you use \fIpkg-config\fP directly instead of calling \fIgimptool\fP.
 
 
 .SH OPTIONS
-\fIgimptool\-2.0\fP accepts the following options:
+\fIgimptool\fP accepts the following options:
 .TP 8
 .B  \-\-version
 Print the currently installed version of \fIGIMP\fP on the standard output.
@@ -70,7 +70,7 @@ Test mode. Print the commands but don't actually execute them. Same as \-n.
 .B \-\-msvc-syntax
 Useful on Windows. Outputs the compiler and linker flags in the syntax
 used by Microsoft's toolchain. Passed to the pkg-config command that
-does most of \fIgimptool\-2.0\fP's work.
+does most of \fIgimptool\fP's work.
 .TP 8
 .B \-\-bindir
 Outputs the bindir used to install the \fIGIMP\fP.
