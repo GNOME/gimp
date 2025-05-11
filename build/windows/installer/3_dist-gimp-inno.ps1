@@ -151,7 +151,7 @@ function download_langs ([array]$langsArray)
         {
           Write-Output "(INFO): temporarily installing $($langfilePath -replace '\\\\','\')"
           $langfileUnix = $langfile.Replace('\\', '/')
-          Invoke-WebRequest https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/$langfileUnix -OutFile "$langfilePath"
+          Invoke-WebRequest https://gitlab.gnome.org/Jehan/jrsoftware-issrc/-/raw/main/Files/$langfileUnix -OutFile "$langfilePath"
         }
     }
 }
