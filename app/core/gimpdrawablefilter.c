@@ -631,6 +631,14 @@ gimp_drawable_filter_get_composite_mode (GimpDrawableFilter *filter)
 }
 
 gboolean
+gimp_drawable_filter_get_add_alpha (GimpDrawableFilter *filter)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), 0);
+
+  return filter->add_alpha;
+}
+
+gboolean
 gimp_drawable_filter_get_clip (GimpDrawableFilter *filter)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), FALSE);

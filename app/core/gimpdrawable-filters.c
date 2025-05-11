@@ -146,6 +146,7 @@ gimp_drawable_merge_filters (GimpDrawable *drawable)
   if (GIMP_LIST (drawable->private->filter_stack)->queue->head)
     {
       GimpDrawableFilter *top_filter = NULL;
+      gboolean            add_alpha  = FALSE;
 
       for (list = GIMP_LIST (drawable->private->filter_stack)->queue->tail;
            list;
@@ -153,7 +154,12 @@ gimp_drawable_merge_filters (GimpDrawable *drawable)
         {
           if (GIMP_IS_DRAWABLE_FILTER (list->data) &&
               gimp_filter_get_active (GIMP_FILTER (list->data)))
-            top_filter = list->data;
+            {
+              top_filter = list->data;
+
+              if (! add_alpha)
+                add_alpha = gimp_drawable_filter_get_add_alpha (top_filter);
+            }
         }
 
       if (top_filter)
@@ -162,6 +168,10 @@ gimp_drawable_merge_filters (GimpDrawable *drawable)
           GeglNode       *graph;
           GeglNode       *output;
           GeglRectangle   output_rect;
+
+          if (GIMP_IS_LAYER (drawable) && add_alpha)
+            gimp_layer_add_alpha (GIMP_LAYER (drawable));
+          g_object_set (top_filter, "to-be-merged", TRUE, NULL);
 
           graph       = gimp_filter_stack_get_graph (GIMP_FILTER_STACK (drawable->private->filter_stack));
           output      = gegl_node_get_output_proxy (graph, "output");
