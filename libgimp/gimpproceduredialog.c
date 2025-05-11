@@ -788,6 +788,7 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
           gtk_text_view_set_bottom_margin (GTK_TEXT_VIEW (widget), 3);
           gtk_text_view_set_left_margin (GTK_TEXT_VIEW (widget), 3);
           gtk_text_view_set_right_margin (GTK_TEXT_VIEW (widget), 3);
+          gtk_widget_set_hexpand (widget, TRUE);
           g_object_unref (buffer);
         }
       else if (widget_type == GTK_TYPE_ENTRY)

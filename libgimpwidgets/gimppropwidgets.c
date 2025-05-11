@@ -2242,6 +2242,7 @@ gimp_prop_entry_new (GObject     *config,
 
   gtk_editable_set_editable (GTK_EDITABLE (entry),
                              param_spec->flags & G_PARAM_WRITABLE);
+  gtk_widget_set_hexpand (entry, TRUE);
 
   set_param_spec (G_OBJECT (entry), entry, param_spec);
 
@@ -2361,6 +2362,7 @@ gimp_prop_label_entry_new (GObject     *config,
 
   gtk_editable_set_editable (GTK_EDITABLE (entry),
                              param_spec->flags & G_PARAM_WRITABLE);
+  gtk_widget_set_hexpand (entry, TRUE);
 
   set_param_spec (G_OBJECT (label_entry), label_entry, param_spec);
 
