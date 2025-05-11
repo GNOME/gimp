@@ -106,7 +106,7 @@ static const GimpActionEntry image_actions[] =
     GIMP_HELP_IMAGE_RESIZE_TO_LAYERS },
 
   { "image-resize-to-visible-layers", NULL,
-    NC_("image-action", "Fit Canvas to v_isible Layers"), NULL,
+    NC_("image-action", "Fit Canvas to v_isible Layers"), NULL, { NULL },
     NC_("image-action", "Resize the image to enclose all visible layers"),
     image_resize_to_visible_layers_cmd_callback,
     GIMP_HELP_IMAGE_RESIZE_TO_VISIBLE_LAYERS },

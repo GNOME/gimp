@@ -328,7 +328,7 @@ register_image_transform_procs (GimpPDB *pdb)
   /*
    * gimp-image-resize-to-visible-layers
    */
-  procedure = gimp_procedure_new (image_resize_to_visible_layers_invoker);
+  procedure = gimp_procedure_new (image_resize_to_visible_layers_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-resize-to-visible-layers");
   gimp_procedure_set_static_help (procedure,
