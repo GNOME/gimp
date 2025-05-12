@@ -322,8 +322,9 @@ dynamics_options_gui (GimpPaintOptions *paint_options,
 
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-  frame = gimp_prop_expanding_frame_new (config, "dynamics-enabled",
-                                         NULL, vbox, NULL);
+  frame = gimp_prop_check_expander_new (config, "dynamics-enabled",
+                                        "dynamics-settings-shown",
+                                        vbox);
   button = gimp_prop_dynamics_box_new (NULL,
                                        GIMP_CONTEXT (config),
                                        _("Dynamics"), 2,

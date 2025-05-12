@@ -111,6 +111,8 @@ struct _GimpPaintOptions
   GimpJitterOptions        *jitter_options;
 
   gboolean                  dynamics_enabled;
+  gboolean                  dynamics_settings_shown;
+
   GimpFadeOptions          *fade_options;
   GimpGradientPaintOptions *gradient_options;
   GimpSmoothingOptions     *smoothing_options;

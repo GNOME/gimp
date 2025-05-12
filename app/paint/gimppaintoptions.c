@@ -114,6 +114,7 @@ enum
   PROP_JITTER_AMOUNT,
 
   PROP_DYNAMICS_ENABLED,
+  PROP_DYNAMICS_SETTINGS_SHOWN,
 
   PROP_FADE_LENGTH,
   PROP_FADE_REVERSE,
@@ -348,6 +349,12 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                             "dynamics-enabled",
                             _("Enable dynamics"),
                             _("Apply dynamics curves to paint settings"),
+                            DEFAULT_DYNAMICS_ENABLED,
+                            GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DYNAMICS_SETTINGS_SHOWN,
+                            "dynamics-settings-shown",
+                            _("Showing dynamics settings"),
+                            _("Showing sub-settings for the dynamics"),
                             DEFAULT_DYNAMICS_ENABLED,
                             GIMP_PARAM_STATIC_STRINGS);
 
@@ -616,6 +623,9 @@ gimp_paint_options_set_property (GObject      *object,
     case PROP_DYNAMICS_ENABLED:
       options->dynamics_enabled = g_value_get_boolean (value);
       break;
+    case PROP_DYNAMICS_SETTINGS_SHOWN:
+      options->dynamics_settings_shown = g_value_get_boolean (value);
+      break;
 
     case PROP_FADE_LENGTH:
       fade_options->fade_length = g_value_get_double (value);
@@ -774,6 +784,9 @@ gimp_paint_options_get_property (GObject    *object,
 
     case PROP_DYNAMICS_ENABLED:
       g_value_set_boolean (value, options->dynamics_enabled);
+      break;
+    case PROP_DYNAMICS_SETTINGS_SHOWN:
+      g_value_set_boolean (value, options->dynamics_settings_shown);
       break;
 
     case PROP_FADE_LENGTH:
