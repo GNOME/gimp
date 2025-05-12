@@ -567,17 +567,6 @@ gui_restore_after_callback (Gimp               *gimp,
   status_callback (NULL, _("Documents"), 0.9);
   gimp_recent_list_load (gimp);
 
-  /*  enable this to always have icons everywhere  */
-  if (g_getenv ("GIMP_ICONS_LIKE_A_BOSS"))
-    {
-      GdkScreen *screen = gdk_screen_get_default ();
-
-      g_object_set (G_OBJECT (gtk_settings_get_for_screen (screen)),
-                    "gtk-button-images", TRUE,
-                    "gtk-menu-images",   TRUE,
-                    NULL);
-    }
-
   ui_configurer = g_object_new (GIMP_TYPE_UI_CONFIGURER,
                                 "gimp", gimp,
                                 NULL);
