@@ -407,14 +407,13 @@ top-level directories:
 | app/            | Source code of the main GIMP application             |
 | app-tools/      | Source code of distributed tools                     |
 | build/          | Scripts for creating binary packages                 |
-| cursors/        | Bitmaps used to construct cursors                    |
-| data/           | Data files: brushes, gradients, patterns, images…    |
+| data/           | Data files: dynamics, gradients, palettes…           |
 | desktop/        | Desktop integration files                            |
 | devel-docs/     | Developers documentation                             |
 | docs/           | Users documentation                                  |
 | etc/            | Configuration files installed with GIMP              |
 | extensions/     | Source code of extensions                            |
-| icons/          | Official icon themes                                 |
+| gimp-data/      | Raster or image data files                           |
 | libgimp/        | Library for plug-ins (core does not link against)    |
 | libgimpbase/    | Basic functions shared by core and plug-ins          |
 | libgimpcolor/   | Color-related functions shared by core and plug-ins  |
