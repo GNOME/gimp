@@ -45,6 +45,7 @@ libappwidgets_sources = [
   'gimpcellrendererdashes.c',
   'gimpcellrendererviewable.c',
   'gimpchanneltreeview.c',
+  'gimpcheckexpander.c',
   'gimpcircle.c',
   'gimpclipboard.c',
   'gimpcolorbar.c',

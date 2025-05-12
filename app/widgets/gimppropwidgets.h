@@ -28,6 +28,10 @@ GtkWidget * gimp_prop_expanding_frame_new   (GObject       *config,
                                              const gchar   *button_label,
                                              GtkWidget     *child,
                                              GtkWidget    **button);
+GtkWidget * gimp_prop_check_expander_new    (GObject      *config,
+                                             const gchar  *property_name,
+                                             const gchar  *expand_property_name,
+                                             GtkWidget    *child);
 
 GtkWidget * gimp_prop_boolean_icon_box_new  (GObject      *config,
                                              const gchar  *property_name,
