@@ -40,6 +40,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpviewable.h"
 
+#include "gimpcheckexpander.h"
 #include "gimpcolorbar.h"
 #include "gimpcolorpanel.h"
 #include "gimpcompressioncombobox.h"
@@ -142,6 +143,58 @@ gimp_prop_expanding_frame_new (GObject      *config,
 
   gimp_widget_set_bound_property (frame, config, property_name);
   gtk_widget_show (frame);
+
+  return frame;
+}
+
+/**
+ * gimp_prop_check_expander_new:
+ * @config:               #GimpConfig object to which properties are attached.
+ * @property_name:        Name of boolean property controlling the checkbox.
+ * @expand_property_name: Name of boolean property controlling the expansion.
+ * @child:                Child #GtkWidget being expanded.
+ *
+ * Creates a #GimpCheckExpander expanding @child.
+ *
+ * Returns:  A new #GimpCheckExpander widget.
+ *
+ * Since: 3.2
+ */
+GtkWidget *
+gimp_prop_check_expander_new (GObject     *config,
+                              const gchar *property_name,
+                              const gchar *expand_property_name,
+                              GtkWidget   *child)
+{
+  GParamSpec  *param_spec;
+  GtkWidget   *frame;
+  const gchar *check_label;
+
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  check_label = g_param_spec_get_nick (param_spec);
+
+  param_spec = check_param_spec_w (config, expand_property_name,
+                                   G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  frame = gimp_check_expander_new (check_label, child);
+
+  g_object_bind_property (G_OBJECT (config), property_name,
+                          G_OBJECT (frame),  "checked",
+                          G_BINDING_BIDIRECTIONAL |
+                          G_BINDING_SYNC_CREATE);
+  g_object_bind_property (G_OBJECT (config), expand_property_name,
+                          G_OBJECT (frame),  "expanded",
+                          G_BINDING_BIDIRECTIONAL |
+                          G_BINDING_SYNC_CREATE);
+
+  gimp_widget_set_bound_property (frame, config, property_name);
+  gtk_widget_set_visible (frame, TRUE);
 
   return frame;
 }
