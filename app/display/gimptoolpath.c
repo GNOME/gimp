@@ -1400,9 +1400,9 @@ gimp_tool_path_get_function (GimpToolPath     *path,
         {
           if (anchor->type == GIMP_ANCHOR_ANCHOR)
             {
-              if (! (state & TOGGLE_MASK) &&
-                  private->sel_anchor &&
-                  private->sel_anchor != anchor &&
+              if (! (state & TOGGLE_MASK)                         &&
+                  private->sel_anchor                             &&
+                  private->sel_anchor != anchor                   &&
                   gimp_stroke_is_extendable (private->sel_stroke,
                                              private->sel_anchor) &&
                   gimp_stroke_is_extendable (stroke, anchor))
