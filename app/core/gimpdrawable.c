@@ -764,6 +764,30 @@ gimp_drawable_rotate (GimpItem         *item,
                                      new_off_x, new_off_y, FALSE);
       g_object_unref (buffer);
     }
+
+  if (GIMP_IS_LAYER (drawable))
+    {
+      GList *list;
+      gint   width  = gimp_item_get_width (GIMP_ITEM (drawable));
+      gint   height = gimp_item_get_height (GIMP_ITEM (drawable));
+
+      for (list = GIMP_LIST (drawable->private->filter_stack)->queue->tail;
+           list; list = g_list_previous (list))
+        {
+          if (GIMP_IS_DRAWABLE_FILTER (list->data))
+            {
+              GimpDrawableFilter *filter = list->data;
+              GimpChannel        *mask   = GIMP_CHANNEL (gimp_drawable_filter_get_mask (filter));
+              GeglRectangle       rect   = {0, 0, width, height};
+
+              /* Don't resize partial layer effects */
+              if (gimp_channel_is_empty (mask))
+                gimp_drawable_filter_refresh_crop (filter, &rect);
+            }
+        }
+      if (list)
+        g_list_free (list);
+    }
 }
 
 static void
