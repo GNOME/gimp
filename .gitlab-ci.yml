@@ -19,15 +19,14 @@ spec:
       default: 'none'
 ---
 
-
-# Our pipelines are auto cancelable when explicity set in 'rules'.
-# GitLab is quite sensitive about rules 'if' order so be careful.
 workflow:
   auto_cancel:
     on_new_commit: interruptible
 
 
-# There are five "TYPES" of pipelines on our CI:
+##################################################
+# There are five "TYPES" of pipelines on our CI: #
+##################################################
 
 ## 1. On MERGE REQUESTS, the following are triggered:
 ## - Abbreviated Linux Clang build (base & fast)
@@ -39,7 +38,8 @@ workflow:
   variables: {}
 
 ## 2. LABELED MERGE REQUESTS (search for 'CI_MERGE_REQUEST_LABELS').
-  #'interruptible: true' needs to be hardcoded on job
+  #'interruptible: true' needs to be hardcoded on job rules
+  # GitLab is quite sensitive about rules 'if' order so be careful
 
 ## 3. On COMMITS except tags.
 ## - Linux Clang build (base & fast)
