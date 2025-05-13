@@ -95,7 +95,13 @@ GimpUndo * gimp_image_undo_push_filter_reorder      (GimpImage     *image,
                                                      GimpDrawable  *drawable,
                                                      GimpDrawableFilter
                                                                    *filter);
-
+GimpUndo * gimp_image_undo_push_filter_modified     (GimpImage     *image,
+                                                     const gchar   *undo_desc,
+                                                     GimpDrawable  *drawable,
+                                                     GimpDrawableFilter
+                                                                   *filter,
+                                                     GimpDrawableFilter
+                                                                   *filter_modified);
 
 /*  mask undos  */
 

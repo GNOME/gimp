@@ -1287,6 +1287,7 @@ gimp_undo_type_get_type (void)
     { GIMP_UNDO_FILTER_ADD, "GIMP_UNDO_FILTER_ADD", "filter-add" },
     { GIMP_UNDO_FILTER_REMOVE, "GIMP_UNDO_FILTER_REMOVE", "filter-remove" },
     { GIMP_UNDO_FILTER_REORDER, "GIMP_UNDO_FILTER_REORDER", "filter-reorder" },
+    { GIMP_UNDO_FILTER_MODIFIED, "GIMP_UNDO_FILTER_MODIFIED", "filter-modified" },
     { GIMP_UNDO_CANT, "GIMP_UNDO_CANT", "cant" },
     { 0, NULL, NULL }
   };
@@ -1399,6 +1400,7 @@ gimp_undo_type_get_type (void)
     { GIMP_UNDO_FILTER_ADD, NC_("undo-type", "Add effect"), NULL },
     { GIMP_UNDO_FILTER_REMOVE, NC_("undo-type", "Remove effect"), NULL },
     { GIMP_UNDO_FILTER_REORDER, NC_("undo-type", "Reorder effect"), NULL },
+    { GIMP_UNDO_FILTER_MODIFIED, NC_("undo-type", "Effect modification"), NULL },
     { GIMP_UNDO_CANT, NC_("undo-type", "Not undoable"), NULL },
     { 0, NULL, NULL }
   };
