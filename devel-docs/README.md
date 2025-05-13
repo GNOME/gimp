@@ -151,6 +151,9 @@ Variant" button ON or OFF.
 
 ### Icon themes
 
+Icon sets (a.k.a. "icon themes") have been separated from themes since
+GIMP 2.10 so you can have any icon theme with any theme.
+
 To know about icons, go to [gimp-data/icons](https://gitlab.gnome.org/GNOME/gimp-data/-/blob/main/icons/README.md?ref_type=heads).
 
 ### TODO: Tool presets
