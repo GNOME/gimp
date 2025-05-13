@@ -39,6 +39,7 @@ struct _GimpColorSelectorPalette
 
   GimpContext       *context;
   GtkWidget         *view;
+  GtkWidget         *name_label;
 };
 
 struct _GimpColorSelectorPaletteClass

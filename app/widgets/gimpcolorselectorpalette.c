@@ -100,7 +100,13 @@ gimp_color_selector_palette_palette_changed (GimpContext              *context,
                                              GimpPalette              *palette,
                                              GimpColorSelectorPalette *select)
 {
+  gchar *palette_name;
+
   gimp_view_set_viewable (GIMP_VIEW (select->view), GIMP_VIEWABLE (palette));
+
+  g_object_get (palette, "name", &palette_name, NULL);
+  gtk_label_set_text (GTK_LABEL (select->name_label), palette_name);
+  g_free (palette_name);
 }
 
 static void
@@ -138,6 +144,15 @@ gimp_color_selector_palette_set_config (GimpColorSelector *selector,
 
       if (! select->view)
         {
+          select->name_label = gtk_label_new ("");
+          gtk_label_set_ellipsize (GTK_LABEL (select->name_label),
+                                              PANGO_ELLIPSIZE_END);
+          gtk_widget_set_halign (select->name_label, GTK_ALIGN_START);
+
+          gtk_box_pack_start (GTK_BOX (select), select->name_label, FALSE,
+                              FALSE, 6);
+          gtk_widget_set_visible (select->name_label, TRUE);
+
           select->view = gimp_view_new_full_by_types (select->context,
                                                       GIMP_TYPE_PALETTE_VIEW,
                                                       GIMP_TYPE_PALETTE,
@@ -151,7 +166,7 @@ gimp_color_selector_palette_set_config (GimpColorSelector *selector,
             (GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (select->view)->renderer),
              TRUE);
           gtk_box_pack_start (GTK_BOX (select), select->view, TRUE, TRUE, 0);
-          gtk_widget_show (select->view);
+          gtk_widget_set_visible (select->view, TRUE);
 
           g_signal_connect (select->view, "entry-clicked",
                             G_CALLBACK (gimp_color_selector_palette_entry_clicked),
