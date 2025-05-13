@@ -182,6 +182,10 @@ You might also like to read these instructions on the process of
 
 ### TODO: Core Contributors
 
+As a core dev, you can trigger .appimage, .flatpak standalone packages,
+.exe Windows installer or Microsoft Store/.msixbundle to be generated
+with the MR code as explained in [gitlab-mr.md](gitlab-mr.md).
+
 ### Directory structure of GIMP source tree
 
 GIMP source tree can be divided into the main application, libraries, plug-ins,
