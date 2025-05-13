@@ -151,24 +151,7 @@ Variant" button ON or OFF.
 
 ### Icon themes
 
-Icon sets (a.k.a. "icon themes") have been separated from themes since
-GIMP 2.10 so you can have any icon theme with any theme.
-
-We currently only support 2 such icon themes — Symbolic and Color — and
-we keep around the Legacy icons.
-
-We don't want too many alternative designs as official icon themes
-(people are welcome to publish their favorite designs as third-party
-icons) though we would welcome special-purpose icon themes (e.g. high
-contrast).
-
-We also welcome design updates as a whole (anyone willing to work on
-this should discuss with us and propose something) and obviously fixes
-on existing icons or adding missing icons while keeping consistent
-styling.
-
-See the dedicated [icons documentation](icons.md) for more technical
-information.
+To know about icons, go to [gimp-data/icons](https://gitlab.gnome.org/GNOME/gimp-data/-/blob/main/icons/README.md?ref_type=heads).
 
 ### TODO: Tool presets
 
