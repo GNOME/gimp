@@ -760,7 +760,7 @@ gimp_font_factory_load_names (GimpFontFactory *factory)
   FcFontSet     *fontset;
   FT_Library     ft;
   GSList        *xml_configs_list;
-  GString       *xml;                                 
+  GString       *xml;
   GString       *xml_bold_variant;
   GString       *xml_italic_variant;
   GString       *xml_bold_italic_variant_and_global;
@@ -855,7 +855,7 @@ gimp_font_factory_load_names (GimpFontFactory *factory)
 
       /*
        * Pango doesn't support non SFNT fonts because harfbuzz doesn't support them.
-       * woff and woff2, not supported by pango (because they are not yet supported by harfbuzz, 
+       * woff and woff2, not supported by pango (because they are not yet supported by harfbuzz,
        * when using harfbuzz's default loader, which is how pango uses it).
        * pcf,pcf.gz are bitmap font formats, not supported by pango (because of harfbuzz).
        * afm, pfm, pfb are type1 font formats, not supported by pango (because of harfbuzz).
@@ -930,14 +930,13 @@ gimp_font_factory_load_names (GimpFontFactory *factory)
           xml_bold_italic_variant_and_global = g_string_append (xml_bold_italic_variant_and_global, xml->str);
           xml_bold_italic_variant_and_global = g_string_append (xml_bold_italic_variant_and_global, "</fontconfig>");
 
-          xml_configs_list = g_slist_append (xml_configs_list, xml_bold_italic_variant_and_global->str);
-
           FcConfigParseAndLoadFromMemory (FcConfigGetCurrent (), (const FcChar8 *) xml_bold_italic_variant_and_global->str, FcTrue);
+
+          xml_configs_list = g_slist_append (xml_configs_list, g_string_free (xml_bold_italic_variant_and_global, FALSE));
 
           g_string_free (xml, TRUE);
           g_string_free (xml_italic_variant, TRUE);
           g_string_free (xml_bold_variant, TRUE);
-          g_string_free (xml_bold_italic_variant_and_global, FALSE);
 
           xml = g_string_new (NULL);
           xml_italic_variant = g_string_new (NULL);
@@ -1128,14 +1127,13 @@ gimp_font_factory_load_names (GimpFontFactory *factory)
       xml_bold_italic_variant_and_global = g_string_append (xml_bold_italic_variant_and_global, xml->str);
       xml_bold_italic_variant_and_global = g_string_append (xml_bold_italic_variant_and_global, "</fontconfig>");
 
-      xml_configs_list = g_slist_append (xml_configs_list, xml_bold_italic_variant_and_global->str);
-
       FcConfigParseAndLoadFromMemory (FcConfigGetCurrent (), (const FcChar8 *) xml_bold_italic_variant_and_global->str, FcTrue);
+
+      xml_configs_list = g_slist_append (xml_configs_list, g_string_free (xml_bold_italic_variant_and_global, FALSE));
 
       g_string_free (xml, TRUE);
       g_string_free (xml_italic_variant, TRUE);
       g_string_free (xml_bold_variant, TRUE);
-      g_string_free (xml_bold_italic_variant_and_global, FALSE);
     }
 
   g_slist_free_full (GET_PRIVATE (factory)->fonts_renaming_config, (GDestroyNotify) g_free);
