@@ -37,7 +37,7 @@ workflow:
   interruptible: true
   variables: {}
 
-## 2. LABELED MERGE REQUESTS (search for 'CI_MERGE_REQUEST_LABELS').
+## 2. LABELED MERGE REQUESTS (search for $CI_MERGE_REQUEST_LABELS =~ /.*Package).
   #'interruptible: true' needs to be hardcoded on job rules
   # GitLab is quite sensitive about rules 'if' order so be careful
 
@@ -101,7 +101,7 @@ stages:
 .debian:
   extends: .default
   rules:
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. AppImage package.*/'
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:AppImage.*/'
       interruptible: true
     - if: '$GIMP_CI_APPIMAGE != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_APPIMAGE.*/'
     - <<: *CI_RELEASE
@@ -378,7 +378,7 @@ gimp-debian-x64:
 .flatpak-x64:
   extends: .default
   rules:
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Flatpak package.*/'
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Flatpak.*/'
       interruptible: true
     - if: '$GIMP_CI_FLATPAK != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_FLATPAK.*/'
   tags:
@@ -425,16 +425,16 @@ gimp-flatpak-x64:
 .win:
   extends: .default
   rules:
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Windows Installer.*/ && $CI_MERGE_REQUEST_LABELS =~ /.*5. Microsoft Store.*/'
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Windows Installer.*/ && $CI_MERGE_REQUEST_LABELS =~ /.*Package:Microsoft Store.*/'
       interruptible: true
       variables:
         INSTALLER_OPTION: '-Dwindows-installer=true'
         STORE_OPTION: '-Dms-store=true'
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Windows Installer.*/'
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Windows Installer.*/'
       interruptible: true
       variables:
         INSTALLER_OPTION: '-Dwindows-installer=true'
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Microsoft Store.*/ && $CI_JOB_NAME =~ /.*64.*/ && $CI_JOB_NAME !~ /.*installer.*/'
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Microsoft Store.*/ && $CI_JOB_NAME =~ /.*64.*/ && $CI_JOB_NAME !~ /.*installer.*/'
       interruptible: true
       variables:
         STORE_OPTION: '-Dms-store=true'
@@ -740,7 +740,7 @@ dist-flatpak-weekly:
     - .default
     - .publish_nightly
   rules:
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Flatpak package.*/'
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Flatpak.*/'
       interruptible: true
     - if: '$GIMP_CI_FLATPAK != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_FLATPAK.*/'
   needs: ["gimp-flatpak-x64"]
@@ -775,7 +775,7 @@ dist-installer-weekly:
 dist-store-weekly:
   extends: .default
   rules:
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Microsoft Store.*/'
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Microsoft Store.*/'
       interruptible: true
     - if: '$GIMP_CI_MS_STORE != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_MS_STORE.*/'
     - <<: *CI_RELEASE

@@ -1,12 +1,14 @@
 # Merge Request tricks
 
-By default, a Merge Request pipeline would only build GIMP with
-meson for Debian and for Windows 64-bit (similarly to normal commits).
+By default, a Merge Request pipeline would only build GIMP for
+Debian with merely testing purposes.
 
 You might want to actually generate easy-to-install builds, in
-particular if you want it to be testable for non-developers, or various
-other reasons. Making a full flatpak, Windows installer or .msixbundle
-can actually be quite time-consuming on a personal computer.
+particular if you want it to be testable for non-developers, or
+various other reasons. 
+
+So, as a developer, comment: /label ~Package:`AppImage` or `Flatpak` or `Windows Installer` or `Microsoft Store`
+(this will generate the requested package for new pipelines).
 
 ☣️  We remind that these packages are built on-top of development code
 (i.e. work-in-progress and potentially unstable codebase likely
@@ -16,50 +18,6 @@ requests not only known team members).
 Therefore you should always check the merge request changes before
 running the code and never blindly trust that it is harmless. In any
 case, run these builds at your own risk. ☢️
-
-## Generating a flatpak for merge request code
-
-If you add the label `5. Flatpak package` in a MR, then trigger a
-pipeline for instance by rebasing), it will add a flatpak creation to
-the pipeline. Once the pipeline ends, the flatpak can be installed by:
-
-- clicking the pipeline ID.
-- In the "gimp" stage, click the "gimp-flatpak-x64" job.
-- Then click the "Browse" button.
-- Click the `org.gimp.GIMP.flatpak` file to download it.
-- Locally run: `flatpak install --user ./org.gimp.GIMP.flatpak`
-  It should propose you to install the flatpak, allowing you to test.
-- After testing, you can uninstall with: `flatpak remove org.gimp.GIMP//master`
-
-## Generating a Windows installer for merge request code
-
-If you add the label `5. Windows Installer` in a MR, then trigger a
-pipeline (for instance by rebasing), it will add a Windows installer
-creation to the pipeline. Once the pipeline ends, the installer can be
-found by:
-
-- clicking the pipeline ID.
-- In the "Distribution" stage, click the "dist-installer-weekly" job.
-- Then click the "Browse" button.
-- Navigate to `build/installer/_Output/`.
-- Then click the `gimp-<version>-setup.exe` file to download the
-  installer.
-
-## Generating a .msixbundle for merge request code
-
-If you add the label `5. Microsoft Store` in a MR, then trigger a
-pipeline (for instance by rebasing), it will add a .msixbundle
-creation to the pipeline. Once the pipeline ends, the file can be
-found by:
-
-- clicking the pipeline ID.
-- In the "Distribution" stage, click the "dist-store-weekly" job.
-- Then click the "Browse" button.
-- Navigate to `build/windows/store/_Output/`.
-- Then click the `gimp-<version>-local.msixbundle` file to download it.
-
-To test the .msixbundle, you need to have previously installed `pseudo-gimp.pfx`
-in the CA cert group. You can do this with Windows built-in cert installer.
 
 ## Reviewing MR branches
 
