@@ -964,7 +964,6 @@ gimp_text_deserialize_property (GimpConfig *object,
                                                                                           scanner,
                                                                                           -1,
                                                                                           NULL));
-              g_assert (GIMP_IS_FONT (font));
               replaced_markup = g_markup_printf_escaped (" font=\"%s\"", markup_fontname);
               new_markup      = g_strdup_printf (" gimpfont=\"%s\"", gimp_font_get_lookup_name (font));
               g_string_replace (markup_str, replaced_markup, new_markup, 0);
@@ -1003,7 +1002,6 @@ gimp_text_deserialize_property (GimpConfig *object,
                                                                                           scanner,
                                                                                           -1,
                                                                                           NULL));
-              g_assert (GIMP_IS_FONT (font));
               g_scanner_get_next_token  (scanner); /* ) */
               g_scanner_get_next_token  (scanner); /* ) */
 
