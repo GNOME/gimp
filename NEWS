@@ -17,6 +17,7 @@ Core:
   - Module loading improved to be better cross-platform (in particular
     on macOS both .so and .dylib modules are supported).
   - Code compliant with GCC 15 (C23).
+  - Filter size updated when its drawable is rotated.
 
 Graphical User Interface:
 
@@ -42,6 +43,9 @@ Tools:
 
   - MyPaint Brush: have consistent options layout compared to other
     paint tools.
+  - Scissors Select Tool: close the curve on Enter, similar to the Path
+    tool.
+  - Path Tool: connect path on click in design mode.
 
 Plug-ins:
 
@@ -74,6 +78,7 @@ Build:
     * Downgrading is only possible by uninstalling first.
     * Development warning is shown in dev build of stable series too.
     * Add fractional scaling support to Installer welcome image.
+    * Restore points now have a timeout to prevent stuckness.
   - Our AppImage won't ship debug symbols anymore. Better debugging can
     be set with: export DEBUGINFOD_URLS="https://debuginfod.debian.net"
   - Windows builds:
@@ -86,6 +91,11 @@ Build:
   - Shell scripts used in the meson build are ported to Python (more
     portable and much faster on some platforms, in particular Windows).
   - Some build scripts were moved around for reorganization.
+  - Depency requirement bumped:
+    * babl 0.1.114
+    * GEGL 0.4.62
+  - New "Inputs" feature for simpler Gitlab pipelines running.
+  - Some in-repository documentation was cleaned up.
 
 
 Overview of Changes from GIMP 3.0.0 to GIMP 3.0.2
