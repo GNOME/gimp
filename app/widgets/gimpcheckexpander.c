@@ -142,7 +142,9 @@ gimp_check_expander_init (GimpCheckExpander *expander)
   gtk_widget_set_visible (expander->priv->checkbox, TRUE);
 
   event_box = gtk_event_box_new ();
-  gtk_box_pack_start (GTK_BOX (title), event_box, FALSE, FALSE, 0.0);
+  gtk_widget_set_halign (event_box, GTK_ALIGN_END);
+  gtk_widget_set_hexpand (event_box, TRUE);
+  gtk_box_pack_start (GTK_BOX (title), event_box, TRUE, TRUE, 0.0);
   gtk_widget_show (event_box);
 
   expander->priv->expander = gtk_drawing_area_new ();
@@ -315,7 +317,6 @@ gimp_check_expander_triangle_draw (GtkWidget         *triangle,
   gdouble               triangle_side;
 
   context = gtk_widget_get_style_context (triangle);
-
   width   = gtk_widget_get_allocated_width (triangle);
   height  = gtk_widget_get_allocated_height (triangle);
   gtk_render_background (context, cr, 0, 0, width, height);
@@ -337,31 +338,27 @@ gimp_check_expander_triangle_draw (GtkWidget         *triangle,
   if ((gint) triangle_side % 2 == 1)
     triangle_side -= 1;
 
-  gdk_cairo_set_source_rgba (cr, color);
-
   if (expander->priv->expanded)
     {
-      triangle_side = MIN (triangle_side, width);
+      gdk_cairo_set_source_rgba (cr, color);
 
       cairo_move_to (cr, (width - triangle_side) / 2.0, (height - triangle_side) / 2.0);
       cairo_line_to (cr, (gdouble) width - (width - triangle_side) / 2.0, (height - triangle_side) / 2.0);
       cairo_line_to (cr, width / 2.0, (gdouble) height - (height - triangle_side) / 2.0);
       cairo_line_to (cr, (width - triangle_side) / 2.0, (height - triangle_side) / 2.0);
-
-      cairo_fill (cr);
     }
   else
     {
+      color->alpha /= 2;
+      gdk_cairo_set_source_rgba (cr, color);
+
       cairo_move_to (cr, 1.0, (height - triangle_side) / 2.0);
       cairo_line_to (cr, 1.0, (gdouble) height - (height - triangle_side) / 2.0);
       cairo_line_to (cr, (gdouble) (width - 1.0), height / 2.0);
       cairo_line_to (cr, 1.0, (height - triangle_side) / 2.0);
-
-      cairo_set_line_width (cr, 1.0);
-      cairo_stroke (cr);
     }
 
-
+  cairo_fill (cr);
   gdk_rgba_free (color);
 
   return FALSE;
