@@ -304,7 +304,14 @@ script_fu_add_resource_arg (
 
       if (default_resource == NULL)
         {
-          g_warning ("%s declared resource name is invalid %s", G_STRFUNC, declared_name_of_default);
+          /* Fonts are loaded asynchronously so they may not be loaded
+           * yet when plug-in procedures' arguments are declared. That's
+           * OK though because resource argument defaults are not stored
+           * anyway. And when the procedure will be actually called
+           * later on, the fonts will likely have been loaded by then.
+           */
+          if (arg->default_value.sfa_resource.resource_type != GIMP_TYPE_FONT)
+            g_warning ("%s declared resource name is invalid %s", G_STRFUNC, declared_name_of_default);
           script_fu_add_resource_arg_default_from_context (procedure, name, nick, blurb, func);
         }
       else
