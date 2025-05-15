@@ -335,7 +335,7 @@ endif
 
 # Generate native .pdb (CodeView) debug symbols (for DIA or DbgHelp debuggers and LLDB)
 pdb_support = cc.has_argument('-gcodeview') and cc.has_link_argument('-Wl,--pdb=')
-if platform_windows and pdb_support
+if platform_windows and pdb_support and cc.get_id() == 'clang'
   compiler_args += '-gcodeview'
   linker_args += '-Wl,--pdb='
 endif
@@ -2140,7 +2140,7 @@ pkgconfig.generate(libgimpui,
 # Install native debug data (.pdb) on Windows
 # Ideally meson should take care of it automatically.
 # See: https://github.com/mesonbuild/meson/issues/12977
-if platform_windows and pdb_support
+if platform_windows and pdb_support and cc.get_id() == 'clang'
   install_win_debug_script = find_program('build/windows/2_bundle-gimp-uni_sym.py')
   meson.add_install_script(install_win_debug_script)
 endif
