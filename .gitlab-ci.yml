@@ -735,7 +735,7 @@ dist-appimage-weekly:
       - build/linux/appimage/_Output/
     expire_in: 8 days
 
-include: 'https://raw.githubusercontent.com/GNOME/citemplates/master/flatpak/flatpak_ci_initiative.yml'
+include: 'https://gitlab.gnome.org/GNOME/citemplates/-/raw/master/flatpak/flatpak_ci_initiative.yml'
 dist-flatpak-weekly:
   extends:
     - .default
