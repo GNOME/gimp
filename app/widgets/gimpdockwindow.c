@@ -127,6 +127,10 @@ static void            gimp_dock_window_get_property              (GObject      
 static void            gimp_dock_window_style_updated             (GtkWidget                  *widget);
 static gboolean        gimp_dock_window_delete_event              (GtkWidget                  *widget,
                                                                    GdkEventAny                *event);
+#ifdef G_OS_WIN32
+static void            gimp_dock_window_realize                   (GimpDockWindow             *dock_window,
+                                                                   gpointer                    data);
+#endif
 static GList         * gimp_dock_window_get_docks                 (GimpDockContainer          *dock_container);
 static GList         * gimp_dock_window_get_docks_self            (GimpDockWindow             *self);
 static GimpDialogFactory * gimp_dock_window_get_dialog_factory    (GimpDockContainer          *dock_container);
@@ -266,6 +270,12 @@ gimp_dock_window_init (GimpDockWindow *dock_window)
   gtk_window_set_resizable (GTK_WINDOW (dock_window), TRUE);
   gtk_window_set_focus_on_map (GTK_WINDOW (dock_window), FALSE);
   gtk_window_set_skip_taskbar_hint (GTK_WINDOW (dock_window), FALSE);
+
+#ifdef G_OS_WIN32
+  g_signal_connect (dock_window, "realize",
+                    G_CALLBACK (gimp_dock_window_realize),
+                    NULL);
+#endif
 }
 
 static void
@@ -697,6 +707,19 @@ gimp_dock_window_delete_event (GtkWidget   *widget,
   return FALSE;
 }
 
+#ifdef G_OS_WIN32
+static void
+gimp_dock_window_realize (GimpDockWindow *dock_window,
+                          gpointer        data)
+{
+  dock_window->p = gimp_dock_window_get_instance_private (dock_window);
+
+  if (dock_window->p->context && dock_window->p->context->gimp)
+    gimp_window_set_title_bar_theme (dock_window->p->context->gimp,
+                                     GTK_WIDGET (dock_window));
+}
+#endif
+
 /* Returns list of docks from self.
  * Delegate to self's dock_columns, when it exists.
  *
@@ -995,7 +1018,6 @@ gimp_dock_window_image_changed (GimpDockWindow *dock_window,
                                 GimpImage      *image,
                                 GimpContext    *context)
 {
-  GimpContainer *image_container   = dock_window->p->image_container;
   GimpContainer *display_container = dock_window->p->display_container;
 
   /*  make sure auto-follow-active works both ways  */
