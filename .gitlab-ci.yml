@@ -542,6 +542,7 @@ gimp-win-x86:
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
   script:
+    - $env:PATH = "C:/msys64/usr/bin;" + $env:PATH
     - !reference [gimp-win, script]
   artifacts: !reference [gimp-win, artifacts]
 
