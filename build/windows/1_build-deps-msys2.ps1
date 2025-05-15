@@ -59,7 +59,7 @@ Invoke-Expression ((Get-Content $GIMP_DIR\.gitlab-ci.yml | Select-String 'win_en
 
 
 # Build babl and GEGL
-function self_build ([string]$dep, [string]$option1, [string]$option2)
+function self_build ([string]$dep, [string]$branch, [string]$option1, [string]$option2)
   {
     Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):${dep}_build[collapsed=true]$([char]13)$([char]27)[0KBuilding $dep"
 
@@ -75,6 +75,10 @@ function self_build ([string]$dep, [string]$option1, [string]$option2)
             $tag = (git ls-remote --exit-code --refs --sort=version:refname $repo refs/tags/${tagprefix}_[0-9]*_[0-9]*_[0-9]* | Select-Object -Last 1).Split('refs/')[-1]
             $git_options="--branch=$tag"
             Write-Output "Using tagged release of ${dep}: $tag"
+          }
+        elseif ($branch)
+          {
+            $git_options="--branch=$branch"
           }
         git clone $git_options --depth $GIT_DEPTH $repo
       }
@@ -98,7 +102,7 @@ function self_build ([string]$dep, [string]$option1, [string]$option2)
     Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):${dep}_build$([char]13)$([char]27)[0K"
   }
 
-self_build babl
-self_build gegl
+self_build babl master
+self_build gegl master
 
 Set-Location $GIMP_DIR
