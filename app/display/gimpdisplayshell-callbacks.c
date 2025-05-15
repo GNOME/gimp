@@ -146,7 +146,7 @@ gimp_display_shell_canvas_tick (GtkWidget     *widget,
   if ((tick->prev_width  != allocation.width) ||
       (tick->prev_height != allocation.height))
     {
-      if (shell->zoom_on_resize   &&
+      if (shell->zoom_on_resize  &&
           tick->prev_width  > 64 &&
           tick->prev_height > 64 &&
           allocation.width  > 64 &&
@@ -167,7 +167,7 @@ gimp_display_shell_canvas_tick (GtkWidget     *widget,
                           SQR (tick->prev_height)));
 
           offset_x = UNSCALEX (shell, shell->offset_x);
-          offset_y = UNSCALEX (shell, shell->offset_y);
+          offset_y = UNSCALEY (shell, shell->offset_y);
 
           gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, scale);
 
