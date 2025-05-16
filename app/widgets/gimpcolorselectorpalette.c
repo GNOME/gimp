@@ -144,15 +144,6 @@ gimp_color_selector_palette_set_config (GimpColorSelector *selector,
 
       if (! select->view)
         {
-          select->name_label = gtk_label_new ("");
-          gtk_label_set_ellipsize (GTK_LABEL (select->name_label),
-                                              PANGO_ELLIPSIZE_END);
-          gtk_widget_set_halign (select->name_label, GTK_ALIGN_START);
-
-          gtk_box_pack_start (GTK_BOX (select), select->name_label, FALSE,
-                              FALSE, 6);
-          gtk_widget_set_visible (select->name_label, TRUE);
-
           select->view = gimp_view_new_full_by_types (select->context,
                                                       GIMP_TYPE_PALETTE_VIEW,
                                                       GIMP_TYPE_PALETTE,
@@ -171,6 +162,15 @@ gimp_color_selector_palette_set_config (GimpColorSelector *selector,
           g_signal_connect (select->view, "entry-clicked",
                             G_CALLBACK (gimp_color_selector_palette_entry_clicked),
                             select);
+
+          select->name_label = gtk_label_new (NULL);
+          gtk_label_set_ellipsize (GTK_LABEL (select->name_label),
+                                              PANGO_ELLIPSIZE_END);
+          gtk_widget_set_halign (select->name_label, GTK_ALIGN_START);
+
+          gtk_box_pack_start (GTK_BOX (select), select->name_label, FALSE,
+                              FALSE, 6);
+          gtk_widget_set_visible (select->name_label, TRUE);
         }
       else
         {
