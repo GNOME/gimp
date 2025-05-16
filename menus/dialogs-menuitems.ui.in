@@ -25,6 +25,7 @@
     <item><attribute name="action">@GROUP@.dialogs-mypaint-brushes</attribute></item>
     <item><attribute name="action">@GROUP@.dialogs-patterns</attribute></item>
     <item><attribute name="action">@GROUP@.dialogs-gradients</attribute></item>
+    <item><attribute name="action">@GROUP@.dialogs-gradient-editor</attribute></item>
     <item><attribute name="action">@GROUP@.dialogs-palettes</attribute></item>
     <item><attribute name="action">@GROUP@.dialogs-fonts</attribute></item>
     <item><attribute name="action">@GROUP@.dialogs-tool-presets</attribute></item>
