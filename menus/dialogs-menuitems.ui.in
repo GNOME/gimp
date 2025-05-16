@@ -19,7 +19,9 @@
   <section>
     <item><attribute name="action">@GROUP@.dialogs-colors</attribute></item>
     <item><attribute name="action">@GROUP@.dialogs-brushes</attribute></item>
+    <item><attribute name="action">@GROUP@.dialogs-brush-editor</attribute></item>
     <item><attribute name="action">@GROUP@.dialogs-dynamics</attribute></item>
+    <item><attribute name="action">@GROUP@.dialogs-dynamics-editor</attribute></item>
     <item><attribute name="action">@GROUP@.dialogs-mypaint-brushes</attribute></item>
     <item><attribute name="action">@GROUP@.dialogs-patterns</attribute></item>
     <item><attribute name="action">@GROUP@.dialogs-gradients</attribute></item>
