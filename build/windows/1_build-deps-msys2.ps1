@@ -59,7 +59,7 @@ Invoke-Expression ((Get-Content $GIMP_DIR\.gitlab-ci.yml | Select-String 'win_en
 
 
 # Build babl and GEGL
-function self_build ([string]$dep, [string]$branch, [string]$option1, [string]$option2)
+function self_build ([string]$dep, [string]$unstable_branch, [string]$stable_patch, [string]$option1, [string]$option2)
   {
     Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):${dep}_build[collapsed=true]$([char]13)$([char]27)[0KBuilding $dep"
 
@@ -76,11 +76,19 @@ function self_build ([string]$dep, [string]$branch, [string]$option1, [string]$o
             $git_options="--branch=$tag"
             Write-Output "Using tagged release of ${dep}: $tag"
           }
-        elseif ($branch)
+        elseif ($unstable_branch)
           {
-            $git_options="--branch=$branch"
+            $git_options="--branch=$unstable_branch"
           }
         git clone $git_options --depth $GIT_DEPTH $repo
+
+        # This allows to add some minor patch on a dependency without having a proper new release.
+        if ($CI_COMMIT_TAG -and $stable_patch)
+          {
+            Set-Location $dep
+            git apply $GIMP_DIR\$stable_patch
+            Set-Location ..
+          }
       }
     Set-Location $dep
     git pull
@@ -102,7 +110,7 @@ function self_build ([string]$dep, [string]$branch, [string]$option1, [string]$o
     Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):${dep}_build$([char]13)$([char]27)[0K"
   }
 
-self_build babl master
-self_build gegl master
+self_build babl
+self_build gegl master build/windows/patches/0001-meson-only-generate-CodeView-.pdb-symbols-on-Windows.patch
 
 Set-Location $GIMP_DIR
