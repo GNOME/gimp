@@ -150,14 +150,15 @@ function download_langs ([array]$langsArray)
       if ($langfile -ne '' -and -not (Test-Path "$langfilePath" -Type Leaf))
         {
           Write-Output "(INFO): temporarily installing $($langfilePath -replace '\\\\','\')"
-          $langfileUnix = $langfile.Replace('\\', '/')
-          Invoke-WebRequest https://gitlab.gnome.org/Jehan/jrsoftware-issrc/-/raw/main/Files/$langfileUnix -OutFile "$langfilePath"
+          Copy-Item "issrc\Files\$langfile" "$langfilePath" -Force
         }
     }
 }
+git clone --depth 1 https://github.com/jrsoftware/issrc.git
 download_langs $langsArray_Official
 New-Item "$INNO_PATH\Languages\Unofficial" -ItemType Directory -Force | Out-Null
 download_langs $langsArray_unofficial
+Remove-Item "issrc" -Recurse -Force
 ### Patch 'AppVer*' against Inno pervasive behavior: https://groups.google.com/g/innosetup/c/w0sebw5YAeg
 function fix_msg ([array]$langsArray, [string]$AppVer)
 {
