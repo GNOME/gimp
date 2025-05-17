@@ -29,4 +29,4 @@ Windows 10 and over.
 
 Hardware:
 * x86 32 and 64-bit
-* ARM 64-bit (experimental)
+* ARM 64-bit
