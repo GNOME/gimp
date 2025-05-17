@@ -1257,8 +1257,7 @@ gimp_filter_tool_commit (GimpFilterTool *filter_tool,
 
       gimp_image_undo_push_filter_modified (image, _("Edited filter"),
                                             drawable,
-                                            filter_tool->existing_filter,
-                                            filter_tool->filter);
+                                            filter_tool->existing_filter);
       /* If the filter was changed, we need to update the original filter's
        * operation */
       if (g_strcmp0 (operation_name, name) != 0)
