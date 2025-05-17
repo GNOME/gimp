@@ -712,6 +712,18 @@ gimp_action_view_accel_edited (GtkCellRendererAccel *accel,
       accel_mask == action_accel_mask)
     return;
 
+#if defined(__APPLE__)
+  /* On macOS, pressing the Command key (GDK_META_MASK) often results in
+   * GDK_MOD2_MASK being added automatically by the system.
+   * This causes shortcut comparisons to fail because GIMP treats
+   * "Command" and "Command+Mod2" as different combinations.
+   * To avoid false mismatches and detect duplicates correctly,
+   * we remove GDK_MOD2_MASK whenever GDK_META_MASK is present.
+   */
+  if ((accel_mask & (GDK_META_MASK | GDK_MOD2_MASK)) == (GDK_META_MASK | GDK_MOD2_MASK))
+    accel_mask &= ~GDK_MOD2_MASK;
+#endif
+
   if (! accel_key ||
 
       /* Don't allow arrow keys, they are all swallowed by the canvas
