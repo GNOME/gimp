@@ -18,6 +18,7 @@ Core:
     on macOS both .so and .dylib modules are supported).
   - Code compliant with GCC 15 (C23).
   - Filter size updated when its drawable is rotated.
+  - Font loading (at startup) optimized.
 
 Graphical User Interface:
 
@@ -38,6 +39,9 @@ Graphical User Interface:
   - Removed size restrictions on Display Filters.
   - Don't show hidden tools on toolbox tooltips.
   - Fix "Keep above" Window Manager hint.
+  - Multi-Window mode on Windows: dock windows' title bars now adapt to
+    the Windows system theme colors too.
+  - Show palette name in Palette Color Selector.
 
 Tools:
 
@@ -86,7 +90,8 @@ Build:
       files for plug-in developers.
     * Dedicated file icon for XCF files.
     * Generate native .pdb CodeView symbols on Windows (smaller debug
-      data files, usable by MSIX and better debugging ability).
+      data files, usable by MSIX and better debugging ability), except
+      on x86 (32-bit).
   - Crossbuilds are dropped from CI.
   - Shell scripts used in the meson build are ported to Python (more
     portable and much faster on some platforms, in particular Windows).
