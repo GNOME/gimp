@@ -39,7 +39,6 @@ enum
 {
   PROP_0,
   PROP_FILTER,
-  PROP_FILTER_MODIFIED
 };
 
 
@@ -87,12 +86,6 @@ gimp_drawable_filter_undo_class_init (GimpDrawableFilterUndoClass *klass)
                                                         GIMP_TYPE_DRAWABLE_FILTER,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-
-  g_object_class_install_property (object_class, PROP_FILTER_MODIFIED,
-                                   g_param_spec_object ("filter-modified", NULL, NULL,
-                                                        GIMP_TYPE_DRAWABLE_FILTER,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -132,7 +125,6 @@ gimp_drawable_filter_undo_constructed (GObject *object)
   gegl_node_set (df_undo->node,"operation", op_name, NULL);
 
   pspecs = gegl_operation_list_properties (op_name, &n_pspecs);
-  g_free (op_name);
   for (gint i = 0; i < n_pspecs; i++)
     {
       GParamSpec *pspec = pspecs[i];
@@ -144,13 +136,18 @@ gimp_drawable_filter_undo_constructed (GObject *object)
 
       gegl_node_set_property (df_undo->node, pspec->name,
                               &value);
+      g_value_unset (&value);
     }
+
   df_undo->opacity         = gimp_drawable_filter_get_opacity (df_undo->filter);
   df_undo->paint_mode      = gimp_drawable_filter_get_paint_mode (df_undo->filter);
   df_undo->blend_space     = gimp_drawable_filter_get_blend_space (df_undo->filter);
   df_undo->composite_space = gimp_drawable_filter_get_composite_space (df_undo->filter);
   df_undo->composite_mode  = gimp_drawable_filter_get_composite_mode (df_undo->filter);
   df_undo->region          = gimp_drawable_filter_get_region (df_undo->filter);
+
+  g_free (pspecs);
+  g_free (op_name);
 }
 
 static void
@@ -166,11 +163,6 @@ gimp_drawable_filter_undo_set_property (GObject      *object,
     case PROP_FILTER:
       drawable_filter_undo->filter = g_value_dup_object (value);
       break;
-
-    case PROP_FILTER_MODIFIED:
-      drawable_filter_undo->filter_modified = g_value_dup_object (value);
-      break;
-
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -192,10 +184,6 @@ gimp_drawable_filter_undo_get_property (GObject    *object,
       g_value_set_object (value, drawable_filter_undo->filter);
       break;
 
-    case PROP_FILTER_MODIFIED:
-      g_value_set_object (value, drawable_filter_undo->filter_modified);
-      break;
-
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -210,8 +198,6 @@ gimp_drawable_filter_undo_get_memsize (GimpObject *object,
   gint64                  memsize              = 0;
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (drawable_filter_undo->filter),
-                                      NULL);
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (drawable_filter_undo->filter_modified),
                                       NULL);
   memsize += sizeof (guint32);     /* Row Index */
   memsize += sizeof (gdouble);     /* Opacity */
@@ -285,71 +271,66 @@ gimp_drawable_filter_undo_pop (GimpUndo            *undo,
     }
   else if (undo->undo_type == GIMP_UNDO_FILTER_MODIFIED)
     {
-      GeglNode    *op;
-      GParamSpec **pspecs;
-      guint        n_pspecs;
-      gchar       *op_name = NULL;
+      GeglNode                *op;
+      GParamSpec             **pspecs;
+      guint                    n_pspecs;
+      gchar                   *op_name = NULL;
+      gdouble                  opacity;
+      GimpLayerMode            paint_mode;
+      GimpLayerColorSpace      blend_space;
+      GimpLayerColorSpace      composite_space;
+      GimpLayerCompositeMode   composite_mode;
+      GimpFilterRegion         region;
+
+      /* Swap values */
+      opacity         = gimp_drawable_filter_get_opacity (filter);
+      paint_mode      = gimp_drawable_filter_get_paint_mode (filter);
+      blend_space     = gimp_drawable_filter_get_blend_space (filter);
+      composite_space = gimp_drawable_filter_get_composite_space (filter);
+      composite_mode  = gimp_drawable_filter_get_composite_mode (filter);
+      region          = gimp_drawable_filter_get_region (filter);
+
+      gimp_drawable_filter_set_opacity (filter, df_undo->opacity);
+      gimp_drawable_filter_set_mode (filter, df_undo->paint_mode,
+                                     df_undo->blend_space,
+                                     df_undo->composite_space,
+                                     df_undo->composite_mode);
+      gimp_drawable_filter_set_region (filter, df_undo->region);
+
+      df_undo->opacity         = opacity;
+      df_undo->paint_mode      = paint_mode;
+      df_undo->blend_space     = blend_space;
+      df_undo->composite_space = composite_space;
+      df_undo->composite_mode  = composite_mode;
+      df_undo->region          = region;
 
       op = gimp_drawable_filter_get_operation (df_undo->filter);
       gegl_node_get (op, "operation", &op_name, NULL);
 
       pspecs = gegl_operation_list_properties (op_name, &n_pspecs);
+
+      for (gint i = 0; i < n_pspecs; i++)
+        {
+          GParamSpec *pspec  = pspecs[i];
+          GValue      value1 = G_VALUE_INIT;
+          GValue      value2 = G_VALUE_INIT;
+
+          g_value_init (&value1, pspec->value_type);
+          g_value_init (&value2, pspec->value_type);
+
+          gegl_node_get_property (op, pspec->name, &value1);
+
+          gegl_node_get_property (df_undo->node, pspec->name, &value2);
+          gegl_node_set_property (op, pspec->name, &value2);
+
+          gegl_node_set_property (df_undo->node, pspec->name, &value1);
+
+          g_value_unset (&value1);
+          g_value_unset (&value2);
+        }
+
+      g_free (pspecs);
       g_free (op_name);
-      /* Set filter properties */
-      if (undo_mode == GIMP_UNDO_MODE_UNDO)
-        {
-          gimp_drawable_filter_set_opacity (filter, df_undo->opacity);
-          gimp_drawable_filter_set_mode (filter, df_undo->paint_mode,
-                                         df_undo->blend_space,
-                                         df_undo->composite_space,
-                                         df_undo->composite_mode);
-          gimp_drawable_filter_set_region (filter, df_undo->region);
-
-
-          for (gint i = 0; i < n_pspecs; i++)
-            {
-              GParamSpec *pspec = pspecs[i];
-              GValue      value = G_VALUE_INIT;
-
-              g_value_init (&value, pspec->value_type);
-              gegl_node_get_property (df_undo->node, pspec->name, &value);
-
-              gegl_node_set_property (op, pspec->name, &value);
-            }
-        }
-      else if (undo_mode == GIMP_UNDO_MODE_REDO)
-        {
-          GimpLayerMode           paint_mode;
-          GimpLayerColorSpace     blend_space;
-          GimpLayerColorSpace     composite_space;
-          GimpLayerCompositeMode  composite_mode;
-          GeglNode               *node_modified;
-
-          gimp_drawable_filter_set_opacity (filter,
-                                            gimp_drawable_filter_get_opacity (df_undo->filter_modified));
-
-          paint_mode      = gimp_drawable_filter_get_paint_mode (df_undo->filter_modified);
-          blend_space     = gimp_drawable_filter_get_blend_space (df_undo->filter_modified);
-          composite_space = gimp_drawable_filter_get_composite_space (df_undo->filter_modified);
-          composite_mode  = gimp_drawable_filter_get_composite_mode (df_undo->filter_modified);
-
-          gimp_drawable_filter_set_mode (filter, paint_mode, blend_space,
-                                         composite_space, composite_mode);
-          gimp_drawable_filter_set_region (filter,
-                                           gimp_drawable_filter_get_region (df_undo->filter_modified));
-
-          node_modified = gimp_drawable_filter_get_operation (df_undo->filter_modified);
-          for (gint i = 0; i < n_pspecs; i++)
-            {
-              GParamSpec *pspec = pspecs[i];
-              GValue      value = G_VALUE_INIT;
-
-              g_value_init (&value, pspec->value_type);
-              gegl_node_get_property (node_modified, pspec->name, &value);
-
-              gegl_node_set_property (op, pspec->name, &value);
-            }
-        }
 
       gimp_drawable_filter_apply (filter, NULL);
     }
@@ -375,9 +356,6 @@ gimp_drawable_filter_undo_free (GimpUndo     *undo,
 
   if (drawable_filter_undo->filter)
     g_clear_object (&drawable_filter_undo->filter);
-
-  if (drawable_filter_undo->filter_modified)
-    g_clear_object (&drawable_filter_undo->filter_modified);
 
   if (drawable_filter_undo->node)
     g_object_unref (drawable_filter_undo->node);
