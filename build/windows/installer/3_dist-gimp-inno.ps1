@@ -23,6 +23,8 @@ if (-not $GITLAB_CI)
       {
         Set-Location ..\..\..
       }
+
+    $PARENT_DIR = '..\'
   }
 
 
@@ -31,6 +33,7 @@ if (-not $GITLAB_CI)
 #if (-not (Get-Command "python" -ErrorAction SilentlyContinue) -or "$(Get-Command "python" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source)" -like '*WindowsApps*')
 #  {
     Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'MSYS_ROOT\)' -Context 0,12) -replace '> ','')
+    $env:PATH = "$MSYS_ROOT/usr/bin;" + $env:PATH
     Invoke-Expression ((Get-Content .gitlab-ci.yml | Select-String 'win_environ\[' -Context 0,7) -replace '> ','' -replace '- ','')
 #  }
 
@@ -150,15 +153,15 @@ function download_langs ([array]$langsArray)
       if ($langfile -ne '' -and -not (Test-Path "$langfilePath" -Type Leaf))
         {
           Write-Output "(INFO): temporarily installing $($langfilePath -replace '\\\\','\')"
-          Copy-Item "issrc\Files\$langfile" "$langfilePath" -Force
+          Copy-Item "${PARENT_DIR}issrc\Files\$langfile" "$langfilePath" -Force
         }
     }
 }
-git clone --depth 1 https://github.com/jrsoftware/issrc.git
+git clone --depth 1 https://github.com/jrsoftware/issrc.git "${PARENT_DIR}issrc"
 download_langs $langsArray_Official
 New-Item "$INNO_PATH\Languages\Unofficial" -ItemType Directory -Force | Out-Null
 download_langs $langsArray_unofficial
-Remove-Item "issrc" -Recurse -Force
+Remove-Item "${PARENT_DIR}issrc" -Recurse -Force
 ### Patch 'AppVer*' against Inno pervasive behavior: https://groups.google.com/g/innosetup/c/w0sebw5YAeg
 function fix_msg ([array]$langsArray, [string]$AppVer)
 {
