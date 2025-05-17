@@ -85,8 +85,24 @@
     <release version="3.0.4" date="2025-05-17">
       <description>
         <p>
-        This second micro release in the 3.0 series fixes various bugs and improves usability in several parts of the interface.
+        This second micro release in the 3.0 series fixes various bugs and improves usability in several parts of the interface:
         </p>
+        <ul>
+          <li demo="toolbox:mypaint-brush,
+                    tool-options">
+          MyPaint Brush: tool options layout made more consistent with other paint tools
+          </li>
+          <li demo="toolbox:vector,
+                    tool-options:vectors-edit-mode=0">
+          Paths: clicking on the starting point in design mode closes the path</li>
+          <li demo="toolbox:iscissors">Scissors Select: pressing Enter connects the start and end points</li>
+          <li demo="toolbox:pencil,tool-options">Pencil: "Force" slider is now hidden in the tool options</li>
+          <li>Dockable dialogs in Windows have titlebars matching the theme's dark mode setting</li>
+          <li>Editing non-destructive filters now creates undo steps</li>
+          <li>Optimized font loading for faster startup</li>
+          <li>Improvements in various file format supports</li>
+          <li>And more bug fixes and usability improvements…</li>
+        </ul>
       </description>
     </release>
     <release version="3.0.2" date="2025-03-23">
