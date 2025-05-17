@@ -53,7 +53,9 @@ void
 gimp_init_signal_handlers (gchar **backtrace_file)
 {
   time_t   t;
+#ifdef G_OS_WIN32
   gchar   *codeview_path;
+#endif
   gchar   *filename;
   gchar   *dir;
 #if defined (G_OS_WIN32) && defined (HAVE_EXCHNDL)
