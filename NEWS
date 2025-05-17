@@ -19,6 +19,15 @@ Core:
   - Code compliant with GCC 15 (C23).
   - Filter size updated when its drawable is rotated.
   - Font loading (at startup) optimized.
+  - Set the proper program name for KDE/Wayland to map the process to
+    the correct desktop file.
+  - "windows-display-*" are hidden from the Shortcuts dialog (they are
+    not meant to be remapped).
+  - Editing non-destructive effects now triggers undo steps.
+  - When migrating from GIMP 2.x to GIMP 3, shortcuts for actions
+    "edit-paste-as-new-layer*" are now converted to "edit-paste-merged*"
+    (and not "edit-paste*" anymore which was confusing and
+    counter-productive).
 
 Graphical User Interface:
 
