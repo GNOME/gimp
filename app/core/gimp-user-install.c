@@ -683,22 +683,31 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
       else if (g_strcmp0 (action_match, "select-float") == 0)
         new_action_name = g_strdup ("select-cut-float");
       /* edit-paste-as-new-layer* actions removed in 3.0.0 (commit
-       * 2c4f91f585) because the default edit-paste pastes as new layer.
+       * 2c4f91f585) because the default "edit-paste" pastes as new layer.
        *
-       * XXX I realize though that it's not a perfect equivalent: if a
-       * layer mask exists, edit-paste would still create a floating
-       * mask (unlike old edit-paste-as-new-layer which was always
-       * creating a new layer). Should we reintroduce
-       * edit-paste-as-new-layers* actions?
+       * We used to migrate these to "edit-paste" and
+       * "edit-paste-in-place", but it meant that it would override the
+       * default shortcut (ctrl-v) for the basic paste, which may be
+       * counter-productive (cf. #13414). Furthermore, if you had a
+       * shortcut to "edit-paste*" actions (since these existed in 2.10
+       * too), you'd have a shortcut conflict.
        *
-       * There exists edit-paste-merged too (introduced in 143496af22)
-       * but it has the same caveats of possibly creating floating
-       * items.
+       * Instead since GIMP 3.0.4, we migrate them to "edit-paste-merged*"
+       * (introduced in 143496af22) though it's not an exact equivalent
+       * (but neither were "edit-paste*"), in particular:
+       *
+       * - If a layer mask is selected, "edit-paste-merged*" would still
+       *   create a floating mask (unlike old "edit-paste-as-new-layer*"
+       *   which was always creating a new layer).
+       * - Even when multiple layers are copied, the paste is always a
+       *   single layer. But the latter is not a big issue since in GIMP
+       *   2.x, you could not copy multiple layers anyway, so in this
+       *   aspect, we may say it works the same.
        */
       else if (g_strcmp0 (action_match, "edit-paste-as-new-layer") == 0)
-        new_action_name = g_strdup ("edit-paste");
+        new_action_name = g_strdup ("edit-paste-merged");
       else if (g_strcmp0 (action_match, "edit-paste-as-new-layer-in-place") == 0)
-        new_action_name = g_strdup ("edit-paste-in-place");
+        new_action_name = g_strdup ("edit-paste-merged-in-place");
       /* These actions had an -accel variant which got removed in commit
        * 71c8ff1f21. Since we cannot know if both variants were given a
        * custom shortcut when processing per-line, we temporarily store
