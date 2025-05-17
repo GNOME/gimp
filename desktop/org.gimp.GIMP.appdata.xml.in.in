@@ -82,10 +82,10 @@
   </provides>
 
   <releases>
-    <release version="3.0.4" date="TODO">
+    <release version="3.0.4" date="2025-05-17">
       <description>
         <p>
-        This second micro release in the 3.0 series fixes various bugs and improves usability in various parts of the interface.
+        This second micro release in the 3.0 series fixes various bugs and improves usability in several parts of the interface.
         </p>
       </description>
     </release>
