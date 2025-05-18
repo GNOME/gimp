@@ -296,7 +296,7 @@ foreach ($bundle in $supported_archs)
           {
             Write-Output "(INFO): making $APPXSYM"
             Get-ChildItem $msix_arch -Filter *.pdb -Recurse | Compress-Archive -DestinationPath "$APPXSYM.zip"
-            Get-ChildItem *.zip | Rename-Item -NewName $APPXSYM
+            Rename-Item "$APPXSYM.zip" "$APPXSYM"
             Get-ChildItem $msix_arch -Include *.pdb -Recurse -Force | Remove-Item -Recurse -Force
           }
 
@@ -335,7 +335,7 @@ if (((Test-Path $a64_bundle) -and (Test-Path $x64_bundle)) -and (Get-ChildItem *
       {
         Write-Output "(INFO): creating $MSIXUPLOAD for submission"
         Compress-Archive -Path "*.appxsym","*.msixbundle" -DestinationPath "$MSIXUPLOAD.zip"
-        Get-ChildItem ${IDENTITY_NAME}*.zip | Rename-Item -NewName $MSIXUPLOAD
+        Rename-Item "$MSIXUPLOAD.zip" "$MSIXUPLOAD"
         Remove-Item *.appxsym -Force
         Remove-Item *.msixbundle -Force
       }
