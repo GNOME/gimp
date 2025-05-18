@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-04-06 20:20+0000\n"
-"PO-Revision-Date: 2025-04-07 12:28+0200\n"
+"POT-Creation-Date: 2025-05-17 20:13+0000\n"
+"PO-Revision-Date: 2025-05-18 10:51+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -102,8 +102,13 @@ msgstr "Skenirana gravura, urejena v GIMP-u. Umetniško delo Liama (CC0)"
 msgid "Image Editor"
 msgstr "Urejevalnik slik"
 
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: desktop/gimp.desktop.in.in:9
+#. TRANSLATORS: Search terms to find this application.
+#. 1. Do NOT translate or localize the semicolons!
+#. 2. The list MUST also end with a semicolon!
+#. 3. Keep "GIMP" in the list as-is so that people can search with the
+#. original acronym too, though you may add translated version of the
+#. name when relevant (it's OK if a localization has more keywords).
+#: desktop/gimp.desktop.in.in:14
 msgid "GIMP;graphic;design;illustration;painting;"
 msgstr "GIMP;grafika;oblikovanje;ilustracija;slikanje;"
 
@@ -291,11 +296,11 @@ msgstr "Pokaži stran nastavitev s poskusnimi funkcionalnostmi"
 msgid "Show an image submenu with debug actions"
 msgstr "Pokaži podmeni slike z dejanji razhroščevanja"
 
-#: app/main.c:725
+#: app/main.c:722
 msgid "[FILE|URI...]"
 msgstr "[DATOTEKA|URI...]"
 
-#: app/main.c:753
+#: app/main.c:750
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -303,20 +308,20 @@ msgstr ""
 "GIMP ne more inicializirati grafičnega uporabniškega vmesnika.\n"
 "Prepričajte se, da obstaja prava nastavitev za vaše zaslonsko okolje."
 
-#: app/main.c:774
+#: app/main.c:771
 msgid "Another GIMP instance is already running."
 msgstr "GIMP je že zagnan."
 
-#: app/main.c:863
+#: app/main.c:860
 msgid "GIMP output. Type any character to close this window."
 msgstr "Izhod GIMP. Pritisnite kateri koli znak, da se okno zapre."
 
-#: app/main.c:864
+#: app/main.c:861
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Pritisnite katero koli tipko, da zaprete to okno)\n"
 
-#: app/main.c:881
+#: app/main.c:878
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Izhod programa GIMP. To okno lahko pomanjšate, vendar ga ne zapirajte."
 
@@ -2550,7 +2555,7 @@ msgstr "Vnesite opis oznake"
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
 #: app/dialogs/welcome-dialog.c:1246 app/display/gimpdisplayshell-dnd.c:680
-#: app/widgets/gimplayertreeview.c:820 app/widgets/gimptoolbox.c:828
+#: app/widgets/gimplayertreeview.c:820 app/widgets/gimptoolbox.c:843
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -6031,7 +6036,7 @@ msgstr "Prevračanje"
 msgid "Rotating"
 msgstr "Sukanje"
 
-#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1343
+#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1347
 msgid "Cannot crop because the current selection is empty."
 msgstr "Obrezava ni možna, ker je trenutni izbor prazen."
 
@@ -6080,7 +6085,7 @@ msgid "Scale Image"
 msgstr "Spremeni merilo slike"
 
 #. Scaling
-#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2573
+#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2577
 #: app/dialogs/preferences-dialog.c:1747 app/pdb/image-transform-cmds.c:124
 #: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:453
 #: app/tools/gimpscaletool.c:122
@@ -6950,15 +6955,15 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "V _novo plast"
 
-#: app/actions/layers-commands.c:286 app/actions/layers-commands.c:2415
+#: app/actions/layers-commands.c:289 app/actions/layers-commands.c:2419
 msgid "Layer Attributes"
 msgstr "Lastnosti plasti"
 
-#: app/actions/layers-commands.c:289
+#: app/actions/layers-commands.c:292
 msgid "Edit Layer Attributes"
 msgstr "Uredi lastnosti plasti"
 
-#: app/actions/layers-commands.c:358 app/widgets/gimpdrawabletreeview.c:354
+#: app/actions/layers-commands.c:361 app/widgets/gimpdrawabletreeview.c:354
 #: app/widgets/gimplayertreeview.c:939
 msgid "New Layer"
 msgid_plural "New Layers"
@@ -6967,7 +6972,7 @@ msgstr[1] "Nova plast"
 msgstr[2] "Nove plasti"
 msgstr[3] "Nove plasti"
 
-#: app/actions/layers-commands.c:359
+#: app/actions/layers-commands.c:362
 #, c-format
 msgid "Create a New Layer"
 msgid_plural "Create %d New Layers"
@@ -6976,7 +6981,7 @@ msgstr[1] "Ustvari %d novo plast"
 msgstr[2] "Ustvari %d novi plasti"
 msgstr[3] "Ustvari %d nove plasti"
 
-#: app/actions/layers-commands.c:444 app/actions/layers-commands.c:2300
+#: app/actions/layers-commands.c:447 app/actions/layers-commands.c:2304
 msgid "New layer"
 msgid_plural "New layers"
 msgstr[0] "Novij plasti"
@@ -6984,11 +6989,11 @@ msgstr[1] "Nova plast"
 msgstr[2] "Nove plasti"
 msgstr[3] "Nove plasti"
 
-#: app/actions/layers-commands.c:523
+#: app/actions/layers-commands.c:526
 msgid "Visible"
 msgstr "Vidno"
 
-#: app/actions/layers-commands.c:552
+#: app/actions/layers-commands.c:555
 msgid "New layer group"
 msgid_plural "New layer groups"
 msgstr[0] "Nova skupina plasti"
@@ -6996,7 +7001,7 @@ msgstr[1] "Nova skupina plasti"
 msgstr[2] "Nova skupina plasti"
 msgstr[3] "Nova skupina plasti"
 
-#: app/actions/layers-commands.c:673
+#: app/actions/layers-commands.c:676
 msgid "Raise Layer"
 msgid_plural "Raise Layers"
 msgstr[0] "Dvigni plasti"
@@ -7004,7 +7009,7 @@ msgstr[1] "Dvigni plast"
 msgstr[2] "Dvigni plasti"
 msgstr[3] "Dvigni plasti"
 
-#: app/actions/layers-commands.c:709
+#: app/actions/layers-commands.c:712
 msgid "Raise Layer to Top"
 msgid_plural "Raise Layers to Top"
 msgstr[0] "Dvigni plasti na vrh"
@@ -7012,7 +7017,7 @@ msgstr[1] "Dvigni plast na vrh"
 msgstr[2] "Dvigni plasti na vrh"
 msgstr[3] "Dvigni plasti na vrh"
 
-#: app/actions/layers-commands.c:754
+#: app/actions/layers-commands.c:757
 msgid "Lower Layer"
 msgid_plural "Lower Layers"
 msgstr[0] "Spusti plasti"
@@ -7020,7 +7025,7 @@ msgstr[1] "Spusti plast"
 msgstr[2] "Spusti plasti"
 msgstr[3] "Spusti plasti"
 
-#: app/actions/layers-commands.c:791
+#: app/actions/layers-commands.c:794
 msgid "Lower Layer to Bottom"
 msgid_plural "Lower Layers to Bottom"
 msgstr[0] "Spusti plasti na dno"
@@ -7028,43 +7033,43 @@ msgstr[1] "Spusti plast na dno"
 msgstr[2] "Spusti plasti na dno"
 msgstr[3] "Spusti plasti na dno"
 
-#: app/actions/layers-commands.c:818
+#: app/actions/layers-commands.c:821
 msgid "Duplicate layers"
 msgstr "Podvoji plasti"
 
-#: app/actions/layers-commands.c:998
+#: app/actions/layers-commands.c:1002
 #, c-format
 msgctxt "undo-type"
 msgid "Merge %d Layer Groups"
 msgstr "Spoji %d skupin plasti"
 
-#: app/actions/layers-commands.c:1058
+#: app/actions/layers-commands.c:1062
 #, c-format
 msgctxt "undo-type"
 msgid "Remove %d Layers"
 msgstr "Odstrani %d plasti"
 
-#: app/actions/layers-commands.c:1085 app/text/gimptextlayer.c:584
+#: app/actions/layers-commands.c:1089 app/text/gimptextlayer.c:584
 msgid "Discard Text Information"
 msgstr "Zavrži besedilne podatke"
 
-#: app/actions/layers-commands.c:1104
+#: app/actions/layers-commands.c:1108
 msgid "Add Paths"
 msgstr "Dodaj poti"
 
-#: app/actions/layers-commands.c:1228
+#: app/actions/layers-commands.c:1232
 msgid "Set Layer Boundary Size"
 msgstr "Nastavi mere robov plasti"
 
-#: app/actions/layers-commands.c:1258
+#: app/actions/layers-commands.c:1262
 msgid "Layers to Image Size"
 msgstr "Plasti na velikost slike"
 
-#: app/actions/layers-commands.c:1309
+#: app/actions/layers-commands.c:1313
 msgid "Scale Layer"
 msgstr "Spremeni merilo plasti"
 
-#: app/actions/layers-commands.c:1348
+#: app/actions/layers-commands.c:1352
 #, c-format
 msgid "Crop Layer to Selection"
 msgid_plural "Crop %d Layers to Selection"
@@ -7073,7 +7078,7 @@ msgstr[1] "Obreži %d plast na vsebino"
 msgstr[2] "Obreži %d plasti na vsebino"
 msgstr[3] "Obreži %d plasti na vsebino"
 
-#: app/actions/layers-commands.c:1413
+#: app/actions/layers-commands.c:1417
 msgid ""
 "Cannot crop because none of the selected layers have content or they are "
 "already cropped to their content."
@@ -7081,7 +7086,7 @@ msgstr ""
 "Obrezava ni možna, ker imajo izbrane plasti vsebino ali so že obrezana do "
 "svoje vsebine."
 
-#: app/actions/layers-commands.c:1419
+#: app/actions/layers-commands.c:1423
 #, c-format
 msgid "Crop Layer to Content"
 msgid_plural "Crop %d Layers to Content"
@@ -7090,101 +7095,101 @@ msgstr[1] "Obreži %d plast na vsebino"
 msgstr[2] "Obreži %d plasti na vsebino"
 msgstr[3] "Obreži %d plasti na vsebino"
 
-#: app/actions/layers-commands.c:1556 app/actions/layers-commands.c:2508
+#: app/actions/layers-commands.c:1560 app/actions/layers-commands.c:2512
 msgid "Add Layer Masks"
 msgstr "Dodaj maske plasti"
 
-#: app/actions/layers-commands.c:1608
+#: app/actions/layers-commands.c:1612
 msgid "Apply Layer Masks"
 msgstr "Uporabi maske plasti"
 
-#: app/actions/layers-commands.c:1612
+#: app/actions/layers-commands.c:1616
 msgid "Delete Layer Masks"
 msgstr "Izbriši maske plasti"
 
-#: app/actions/layers-commands.c:1699
+#: app/actions/layers-commands.c:1703
 msgid "Show Layer Masks"
 msgstr "Pokaži maske plasti"
 
-#: app/actions/layers-commands.c:1746
+#: app/actions/layers-commands.c:1750
 msgid "Disable Layer Masks"
 msgstr "Onemogoči maske plasti"
 
-#: app/actions/layers-commands.c:1785
+#: app/actions/layers-commands.c:1789
 msgctxt "undo-type"
 msgid "Masks to Selection"
 msgstr "Maske v izbor"
 
-#: app/actions/layers-commands.c:1789
+#: app/actions/layers-commands.c:1793
 msgctxt "undo-type"
 msgid "Add Masks to Selection"
 msgstr "Dodaj maske v izbor"
 
-#: app/actions/layers-commands.c:1793
+#: app/actions/layers-commands.c:1797
 msgctxt "undo-type"
 msgid "Subtract Masks from Selection"
 msgstr "Odštej maske od izbora"
 
-#: app/actions/layers-commands.c:1797
+#: app/actions/layers-commands.c:1801
 msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
 msgstr "Presekaj maske z izborom"
 
-#: app/actions/layers-commands.c:1818
+#: app/actions/layers-commands.c:1822
 msgid "Add Alpha Channel"
 msgstr "Dodaj kanal alfa"
 
-#: app/actions/layers-commands.c:1839
+#: app/actions/layers-commands.c:1843
 msgid "Remove Alpha Channel"
 msgstr "Odstrani kanal alfa"
 
-#: app/actions/layers-commands.c:1867 app/core/gimpchannel-select.c:433
+#: app/actions/layers-commands.c:1871 app/core/gimpchannel-select.c:433
 #: app/core/gimplayer.c:435
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Alfa v izbor"
 
-#: app/actions/layers-commands.c:1871 app/core/gimpchannel-select.c:427
+#: app/actions/layers-commands.c:1875 app/core/gimpchannel-select.c:427
 msgctxt "undo-type"
 msgid "Add Alpha to Selection"
 msgstr "Dodaj alfo v izbor"
 
-#: app/actions/layers-commands.c:1875 app/core/gimpchannel-select.c:430
+#: app/actions/layers-commands.c:1879 app/core/gimpchannel-select.c:430
 msgctxt "undo-type"
 msgid "Subtract Alpha from Selection"
 msgstr "Odštej alfo od izbora"
 
-#: app/actions/layers-commands.c:1879 app/core/gimpchannel-select.c:436
+#: app/actions/layers-commands.c:1883 app/core/gimpchannel-select.c:436
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
 msgstr "Presekaj alfo z izborom"
 
-#: app/actions/layers-commands.c:1890
+#: app/actions/layers-commands.c:1894
 msgid "Empty Selection"
 msgstr "Izprazni izbor"
 
-#: app/actions/layers-commands.c:1920 app/actions/layers-commands.c:1964
+#: app/actions/layers-commands.c:1924 app/actions/layers-commands.c:1968
 #: app/widgets/gimplayertreeview.c:1115
 msgid "Set layers opacity"
 msgstr "Nastavi prekrivnost plasti"
 
-#: app/actions/layers-commands.c:2034
+#: app/actions/layers-commands.c:2038
 msgid "Set layers' blend space"
 msgstr "Nastavi prostor spajanja plasti"
 
-#: app/actions/layers-commands.c:2087
+#: app/actions/layers-commands.c:2091
 msgid "Set layers' composite space"
 msgstr "Nastavi prostor skladanja plasti"
 
-#: app/actions/layers-commands.c:2140
+#: app/actions/layers-commands.c:2144
 msgid "Set layers' composite mode"
 msgstr "Nastavi način skladanja plasti"
 
-#: app/actions/layers-commands.c:2224
+#: app/actions/layers-commands.c:2228
 msgid "Lock alpha channels"
 msgstr "Zakleni kanale alfa"
 
-#: app/actions/layers-commands.c:2224
+#: app/actions/layers-commands.c:2228
 msgid "Unlock alpha channels"
 msgstr "Odkleni kanale alfa"
 
@@ -7974,7 +7979,7 @@ msgstr "Ponastavi vse filtre"
 #: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
 #: app/tools/gimpfiltertool.c:368 app/tools/gimptransformgridtool.c:1261
-#: app/widgets/gimpcolordialog.c:484 app/widgets/gimpcolordisplayeditor.c:332
+#: app/widgets/gimpcolordialog.c:484 app/widgets/gimpcolordisplayeditor.c:326
 msgid "_Reset"
 msgstr "_Ponastavi"
 
@@ -12144,523 +12149,528 @@ msgctxt "trc-type"
 msgid "Perceptual"
 msgstr "Zaznavno"
 
-#: app/core/core-enums.c:1296
+#: app/core/core-enums.c:1297
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "<<neveljaven>>"
 
-#: app/core/core-enums.c:1297
+#: app/core/core-enums.c:1298
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr "Spremeni merilo slike"
 
-#: app/core/core-enums.c:1298
+#: app/core/core-enums.c:1299
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr "Spremeni velikost slike"
 
-#: app/core/core-enums.c:1299
+#: app/core/core-enums.c:1300
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "Prezrcali sliko"
 
-#: app/core/core-enums.c:1300
+#: app/core/core-enums.c:1301
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "Zasukaj sliko"
 
-#: app/core/core-enums.c:1301
+#: app/core/core-enums.c:1302
 msgctxt "undo-type"
 msgid "Transform image"
 msgstr "Preoblikuj sliko"
 
-#: app/core/core-enums.c:1302
+#: app/core/core-enums.c:1303
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "Obreži sliko"
 
-#: app/core/core-enums.c:1303
+#: app/core/core-enums.c:1304
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "Pretvori sliko"
 
-#: app/core/core-enums.c:1304
+#: app/core/core-enums.c:1305
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "Odstrani element"
 
-#: app/core/core-enums.c:1305 app/core/core-enums.c:1359
+#: app/core/core-enums.c:1306 app/core/core-enums.c:1360
 msgctxt "undo-type"
 msgid "Reorder item"
 msgstr "Prerazvrsti element"
 
-#: app/core/core-enums.c:1306
+#: app/core/core-enums.c:1307
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "Spoji plasti"
 
-#: app/core/core-enums.c:1307
+#: app/core/core-enums.c:1308
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "Spoji poti"
 
-#: app/core/core-enums.c:1308
+#: app/core/core-enums.c:1309
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "Hitra maska"
 
-#: app/core/core-enums.c:1309 app/core/core-enums.c:1349
+#: app/core/core-enums.c:1310 app/core/core-enums.c:1350
 #: app/core/gimpimage-grid.c:64
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "Mreža"
 
-#: app/core/core-enums.c:1310
+#: app/core/core-enums.c:1311
 msgctxt "undo-type"
 msgid "Colormap remapping"
 msgstr "Preslikava kataloga barv"
 
-#: app/core/core-enums.c:1311 app/core/core-enums.c:1353
+#: app/core/core-enums.c:1312 app/core/core-enums.c:1354
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "Vodilo"
 
-#: app/core/core-enums.c:1312 app/core/core-enums.c:1354
+#: app/core/core-enums.c:1313 app/core/core-enums.c:1355
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "Vzorčna točka"
 
-#: app/core/core-enums.c:1313 app/core/core-enums.c:1355
+#: app/core/core-enums.c:1314 app/core/core-enums.c:1356
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "Plast/kanal"
 
-#: app/core/core-enums.c:1314 app/core/core-enums.c:1356
+#: app/core/core-enums.c:1315 app/core/core-enums.c:1357
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "Sprememba plasti/kanala"
 
-#: app/core/core-enums.c:1315 app/core/core-enums.c:1358
+#: app/core/core-enums.c:1316 app/core/core-enums.c:1359
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "Maska izbora"
 
-#: app/core/core-enums.c:1316 app/core/core-enums.c:1362
+#: app/core/core-enums.c:1317 app/core/core-enums.c:1363
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "Vidljivost predmeta"
 
-#: app/core/core-enums.c:1317
+#: app/core/core-enums.c:1318
 msgctxt "undo-type"
 msgid "Lock/Unlock contents"
 msgstr "Zakleni/odkleni vsebino"
 
-#: app/core/core-enums.c:1318 app/core/core-enums.c:1365
+#: app/core/core-enums.c:1319 app/core/core-enums.c:1366
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
 msgstr "Zakleni/odkleni položaj"
 
-#: app/core/core-enums.c:1319 app/core/core-enums.c:1366
+#: app/core/core-enums.c:1320 app/core/core-enums.c:1367
 msgctxt "undo-type"
 msgid "Lock/Unlock visibility"
 msgstr "Zakleni/odkleni vidljivost"
 
-#: app/core/core-enums.c:1320
+#: app/core/core-enums.c:1321
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr "Lastnosti predmeta"
 
-#: app/core/core-enums.c:1321 app/core/core-enums.c:1361
+#: app/core/core-enums.c:1322 app/core/core-enums.c:1362
 msgctxt "undo-type"
 msgid "Move item"
 msgstr "Premakni predmet"
 
-#: app/core/core-enums.c:1322
+#: app/core/core-enums.c:1323
 msgctxt "undo-type"
 msgid "Scale item"
 msgstr "Spremeni merilo elementa"
 
-#: app/core/core-enums.c:1323
+#: app/core/core-enums.c:1324
 msgctxt "undo-type"
 msgid "Resize item"
 msgstr "Spremeni velikost predmeta"
 
-#: app/core/core-enums.c:1324
+#: app/core/core-enums.c:1325
 msgctxt "undo-type"
 msgid "Add layer"
 msgstr "Dodaj plast"
 
-#: app/core/core-enums.c:1325
+#: app/core/core-enums.c:1326
 msgctxt "undo-type"
 msgid "Add alpha channel"
 msgstr "Dodaj kanal alfa"
 
-#: app/core/core-enums.c:1326 app/core/core-enums.c:1382
+#: app/core/core-enums.c:1327 app/core/core-enums.c:1383
 msgctxt "undo-type"
 msgid "Add layer masks"
 msgstr "Dodaj maske plasti"
 
-#: app/core/core-enums.c:1327 app/core/core-enums.c:1384
+#: app/core/core-enums.c:1328 app/core/core-enums.c:1385
 msgctxt "undo-type"
 msgid "Apply layer masks"
 msgstr "Uveljavi maske plasti"
 
-#: app/core/core-enums.c:1328
+#: app/core/core-enums.c:1329
 msgctxt "undo-type"
 msgid "Remove alpha channel"
 msgstr "Odstrani kanal alfa"
 
-#: app/core/core-enums.c:1329
+#: app/core/core-enums.c:1330
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channels"
 msgstr "Zakleni/odkleni kanal alfa"
 
-#: app/core/core-enums.c:1330
+#: app/core/core-enums.c:1331
 msgctxt "undo-type"
 msgid "Set layers opacity"
 msgstr "Nastavi prekrivnost plasti"
 
-#: app/core/core-enums.c:1331
+#: app/core/core-enums.c:1332
 msgctxt "undo-type"
 msgid "Set layers mode"
 msgstr "Nastavi način plasti"
 
-#: app/core/core-enums.c:1332
+#: app/core/core-enums.c:1333
 msgctxt "undo-type"
 msgid "Add channels"
 msgstr "Dodaj kanale"
 
-#: app/core/core-enums.c:1333 app/core/core-enums.c:1392
+#: app/core/core-enums.c:1334 app/core/core-enums.c:1393
 msgctxt "undo-type"
 msgid "Floating selection to layer"
 msgstr "Plavajoči izbor v plast"
 
-#: app/core/core-enums.c:1334
+#: app/core/core-enums.c:1335
 msgctxt "undo-type"
 msgid "Float selection"
 msgstr "Plavajoči izbor"
 
-#: app/core/core-enums.c:1335
+#: app/core/core-enums.c:1336
 msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Zasidraj plavajoči izbor"
 
-#: app/core/core-enums.c:1336 app/core/gimp-edit.c:887
+#: app/core/core-enums.c:1337 app/core/gimp-edit.c:885
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Prilepi"
 
-#: app/core/core-enums.c:1337 app/core/gimp-edit.c:1266
+#: app/core/core-enums.c:1338 app/core/gimp-edit.c:1247
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Izreži"
 
-#: app/core/core-enums.c:1338
+#: app/core/core-enums.c:1339
 msgctxt "undo-type"
 msgid "Text"
 msgstr "Besedilo"
 
-#: app/core/core-enums.c:1339 app/core/gimpdrawable-transform.c:717
+#: app/core/core-enums.c:1340 app/core/gimpdrawable-transform.c:717
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Preoblikuj"
 
-#: app/core/core-enums.c:1340 app/core/core-enums.c:1394
+#: app/core/core-enums.c:1341 app/core/core-enums.c:1395
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "Slikaj"
 
-#: app/core/core-enums.c:1341 app/core/core-enums.c:1397
+#: app/core/core-enums.c:1342 app/core/core-enums.c:1398
 msgctxt "undo-type"
 msgid "Attach parasite"
 msgstr "Pripni zajedalca"
 
-#: app/core/core-enums.c:1342 app/core/core-enums.c:1398
+#: app/core/core-enums.c:1343 app/core/core-enums.c:1399
 msgctxt "undo-type"
 msgid "Remove parasite"
 msgstr "Odstrani zajedalca"
 
-#: app/core/core-enums.c:1343
+#: app/core/core-enums.c:1344
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr "Uvozi poti"
 
-#: app/core/core-enums.c:1344
+#: app/core/core-enums.c:1345
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "Vtičnik"
 
-#: app/core/core-enums.c:1345
+#: app/core/core-enums.c:1346
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "Vrsta slike"
 
-#: app/core/core-enums.c:1346
+#: app/core/core-enums.c:1347
 msgctxt "undo-type"
 msgid "Image precision"
 msgstr "Natančnost slike"
 
-#: app/core/core-enums.c:1347
+#: app/core/core-enums.c:1348
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "Velikost slike"
 
-#: app/core/core-enums.c:1348
+#: app/core/core-enums.c:1349
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "Spremeni ločljivost slike"
 
-#: app/core/core-enums.c:1350
+#: app/core/core-enums.c:1351
 msgctxt "undo-type"
 msgid "Change metadata"
 msgstr "Spremeni metapodatke"
 
-#: app/core/core-enums.c:1351
+#: app/core/core-enums.c:1352
 msgctxt "undo-type"
 msgid "Change indexed palette"
 msgstr "Spremeni indeksirano paleto"
 
-#: app/core/core-enums.c:1352
+#: app/core/core-enums.c:1353
 msgctxt "undo-type"
 msgid "Hide/Unhide color profile"
 msgstr "Skrij/razkrij barvni profil"
 
-#: app/core/core-enums.c:1357
+#: app/core/core-enums.c:1358
 msgctxt "undo-type"
 msgid "Layer/Channel format"
 msgstr "Oblika plasti/kanala"
 
-#: app/core/core-enums.c:1360
+#: app/core/core-enums.c:1361
 msgctxt "undo-type"
 msgid "Rename item"
 msgstr "Preimenuj element"
 
-#: app/core/core-enums.c:1363
+#: app/core/core-enums.c:1364
 msgctxt "undo-type"
 msgid "Item color tag"
 msgstr "Oznaka barve elementa"
 
-#: app/core/core-enums.c:1364
+#: app/core/core-enums.c:1365
 msgctxt "undo-type"
 msgid "Lock/Unlock content"
 msgstr "Zakleni/odkleni vsebino"
 
-#: app/core/core-enums.c:1367
+#: app/core/core-enums.c:1368
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "Nova plast"
 
-#: app/core/core-enums.c:1368
+#: app/core/core-enums.c:1369
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "Izbriši plast"
 
-#: app/core/core-enums.c:1369
+#: app/core/core-enums.c:1370
 msgctxt "undo-type"
 msgid "Set layer mode"
 msgstr "Nastavi način plasti"
 
-#: app/core/core-enums.c:1370
+#: app/core/core-enums.c:1371
 msgctxt "undo-type"
 msgid "Set layer opacity"
 msgstr "Nastavi prekrivnost plasti"
 
-#: app/core/core-enums.c:1371
+#: app/core/core-enums.c:1372
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "Zakleni/odkleni kanal alfa"
 
-#: app/core/core-enums.c:1372
+#: app/core/core-enums.c:1373
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
 msgstr "Prekini s spreminjanjem velikosti skupine plasti"
 
-#: app/core/core-enums.c:1373
+#: app/core/core-enums.c:1374
 msgctxt "undo-type"
 msgid "Resume group layer resize"
 msgstr "Nadaljuj s spreminjanjem velikosti skupine plasti"
 
-#: app/core/core-enums.c:1374
+#: app/core/core-enums.c:1375
 msgctxt "undo-type"
 msgid "Suspend group layer mask"
 msgstr "Prekini s masko skupine plasti"
 
-#: app/core/core-enums.c:1375
+#: app/core/core-enums.c:1376
 msgctxt "undo-type"
 msgid "Resume group layer mask"
 msgstr "Nadaljuj z masko skupine plasti"
 
-#: app/core/core-enums.c:1376
+#: app/core/core-enums.c:1377
 msgctxt "undo-type"
 msgid "Start transforming group layer"
 msgstr "Začni preoblikovati skupinsko plast"
 
-#: app/core/core-enums.c:1377
+#: app/core/core-enums.c:1378
 msgctxt "undo-type"
 msgid "End transforming group layer"
 msgstr "Končaj preoblikovanje skupine plasti"
 
-#: app/core/core-enums.c:1378
+#: app/core/core-enums.c:1379
 msgctxt "undo-type"
 msgid "Convert group layer"
 msgstr "Pretvori skupinsko plast"
 
-#: app/core/core-enums.c:1379
+#: app/core/core-enums.c:1380
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "Plast besedila"
 
-#: app/core/core-enums.c:1380
+#: app/core/core-enums.c:1381
 msgctxt "undo-type"
 msgid "Text layer modification"
 msgstr "Sprememba besedilne plasti"
 
-#: app/core/core-enums.c:1381
+#: app/core/core-enums.c:1382
 msgctxt "undo-type"
 msgid "Convert text layer"
 msgstr "Pretvori plast besedila"
 
-#: app/core/core-enums.c:1383
+#: app/core/core-enums.c:1384
 msgctxt "undo-type"
 msgid "Delete layer masks"
 msgstr "Izbriši maske plasti"
 
-#: app/core/core-enums.c:1385
+#: app/core/core-enums.c:1386
 msgctxt "undo-type"
 msgid "Show layer masks"
 msgstr "Pokaži maske plasti"
 
-#: app/core/core-enums.c:1386
+#: app/core/core-enums.c:1387
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "Nov kanal"
 
-#: app/core/core-enums.c:1387
+#: app/core/core-enums.c:1388
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr "Izbriši kanal"
 
-#: app/core/core-enums.c:1388
+#: app/core/core-enums.c:1389
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "Barva kanala"
 
-#: app/core/core-enums.c:1389
+#: app/core/core-enums.c:1390
 msgctxt "undo-type"
 msgid "New path"
 msgstr "Nova pot"
 
-#: app/core/core-enums.c:1390
+#: app/core/core-enums.c:1391
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "Izbriši pot"
 
-#: app/core/core-enums.c:1391
+#: app/core/core-enums.c:1392
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "Sprememba poti"
 
-#: app/core/core-enums.c:1393
+#: app/core/core-enums.c:1394
 msgctxt "undo-type"
 msgid "Transform grid"
 msgstr "Preoblikuj mrežo"
 
-#: app/core/core-enums.c:1395
+#: app/core/core-enums.c:1396
 msgctxt "undo-type"
 msgid "Ink"
 msgstr "Črnilo"
 
-#: app/core/core-enums.c:1396
+#: app/core/core-enums.c:1397
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "Izberi ospredje"
 
-#: app/core/core-enums.c:1399
+#: app/core/core-enums.c:1400
 msgctxt "undo-type"
 msgid "Add effect"
 msgstr "Dodaj učinek"
 
-#: app/core/core-enums.c:1400
+#: app/core/core-enums.c:1401
 msgctxt "undo-type"
 msgid "Remove effect"
 msgstr "Odstrani učinek"
 
-#: app/core/core-enums.c:1401
+#: app/core/core-enums.c:1402
 msgctxt "undo-type"
 msgid "Reorder effect"
 msgstr "Prerazvrsti učinek"
 
-#: app/core/core-enums.c:1402
+#: app/core/core-enums.c:1403
+msgctxt "undo-type"
+msgid "Effect modification"
+msgstr "Sprememba učinka"
+
+#: app/core/core-enums.c:1404
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "Ni mogoče razveljaviti"
 
-#: app/core/core-enums.c:1437
+#: app/core/core-enums.c:1439
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "droben"
 
-#: app/core/core-enums.c:1438
+#: app/core/core-enums.c:1440
 msgctxt "view-size"
 msgid "Very small"
 msgstr "zelo majhen"
 
-#: app/core/core-enums.c:1439
+#: app/core/core-enums.c:1441
 msgctxt "view-size"
 msgid "Small"
 msgstr "majhen"
 
-#: app/core/core-enums.c:1440
+#: app/core/core-enums.c:1442
 msgctxt "view-size"
 msgid "Medium"
 msgstr "srednji"
 
-#: app/core/core-enums.c:1441
+#: app/core/core-enums.c:1443
 msgctxt "view-size"
 msgid "Large"
 msgstr "velik"
 
-#: app/core/core-enums.c:1442
+#: app/core/core-enums.c:1444
 msgctxt "view-size"
 msgid "Very large"
 msgstr "izjemno velik"
 
-#: app/core/core-enums.c:1443
+#: app/core/core-enums.c:1445
 msgctxt "view-size"
 msgid "Huge"
 msgstr "velikanski"
 
-#: app/core/core-enums.c:1444
+#: app/core/core-enums.c:1446
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "ogromen"
 
-#: app/core/core-enums.c:1445
+#: app/core/core-enums.c:1447
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "gigantski"
 
-#: app/core/core-enums.c:1473
+#: app/core/core-enums.c:1475
 msgctxt "view-type"
 msgid "View as list"
 msgstr "Pokaži kot seznam"
 
-#: app/core/core-enums.c:1474
+#: app/core/core-enums.c:1476
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "Pokaži kot mrežo"
 
-#: app/core/core-enums.c:1503
+#: app/core/core-enums.c:1505
 msgctxt "select-method"
 msgid "Selection by basic text search"
 msgstr "Izbor po osnovnem iskanju besedila"
 
-#: app/core/core-enums.c:1504
+#: app/core/core-enums.c:1506
 msgctxt "select-method"
 msgid "Selection by regular expression search"
 msgstr "Izbor po iskanju z regularnim izrazom"
 
-#: app/core/core-enums.c:1505
+#: app/core/core-enums.c:1507
 msgctxt "select-method"
 msgid "Selection by glob pattern search"
 msgstr "Izbira po iskanju vzorcev glob"
@@ -12739,7 +12749,7 @@ msgstr "Brisanje »%s« ni uspelo: %s"
 
 #. initialize the list of gimp dynamics
 #: app/core/gimp-data-factories.c:363 app/core/gimpcontext.c:706
-#: app/dialogs/preferences-dialog.c:3515 app/tools/gimppaintoptions-gui.c:327
+#: app/dialogs/preferences-dialog.c:3515 app/tools/gimppaintoptions-gui.c:329
 msgid "Dynamics"
 msgstr "Dinamika"
 
@@ -12778,11 +12788,11 @@ msgstr "Izrezovati ni mogoče, saj je izbrano območje prazno."
 msgid "Cannot copy because the selected region is empty."
 msgstr "Kopirati ni mogoče, saj je izbrano območje prazno."
 
-#: app/core/gimp-edit.c:657 app/core/gimpimage-new.c:656
+#: app/core/gimp-edit.c:655 app/core/gimpimage-new.c:656
 msgid "Pasted Layer"
 msgstr "Prilepljena plast"
 
-#: app/core/gimp-edit.c:1283
+#: app/core/gimp-edit.c:1264
 msgid "Global Buffer"
 msgstr "Splošni medpomnilnik"
 
@@ -13167,19 +13177,19 @@ msgstr "Oblika čopiča"
 msgid "Brush Radius"
 msgstr "Radij čopiča"
 
-#: app/core/gimpbrushgenerated.c:150
+#: app/core/gimpbrushgenerated.c:152
 msgid "Brush Spikes"
 msgstr "Konice čopiča"
 
-#: app/core/gimpbrushgenerated.c:157 app/paint/gimppaintoptions.c:242
+#: app/core/gimpbrushgenerated.c:159 app/paint/gimppaintoptions.c:242
 msgid "Brush Hardness"
 msgstr "Trdota čopiča"
 
-#: app/core/gimpbrushgenerated.c:165 app/paint/gimppaintoptions.c:221
+#: app/core/gimpbrushgenerated.c:167 app/paint/gimppaintoptions.c:221
 msgid "Brush Aspect Ratio"
 msgstr "Razmerje stranic čopiča"
 
-#: app/core/gimpbrushgenerated.c:172 app/paint/gimppaintoptions.c:228
+#: app/core/gimpbrushgenerated.c:174 app/paint/gimppaintoptions.c:228
 msgid "Brush Angle"
 msgstr "Kot čopiča"
 
@@ -13404,7 +13414,7 @@ msgid "Paint Mode"
 msgstr "Način slikanja"
 
 #: app/core/gimpcontext.c:699 app/core/gimpcontext.c:700
-#: app/tools/gimpmybrushoptions-gui.c:57 app/tools/gimppaintoptions-gui.c:156
+#: app/tools/gimpmybrushoptions-gui.c:64 app/tools/gimppaintoptions-gui.c:156
 msgid "Brush"
 msgstr "Čopič"
 
@@ -13423,7 +13433,7 @@ msgstr "Vzorec"
 
 #: app/core/gimpcontext.c:727 app/core/gimpcontext.c:728
 #: app/pdb/drawable-edit-cmds.c:255 app/tools/gimpgradientoptions.c:269
-#: app/tools/gimpgradienttool.c:166 app/tools/gimppaintoptions-gui.c:383
+#: app/tools/gimpgradienttool.c:166 app/tools/gimppaintoptions-gui.c:385
 msgid "Gradient"
 msgstr "Preliv"
 
@@ -13658,7 +13668,7 @@ msgstr "Omogoči operjanje robov polnjenja"
 #: app/core/gimpfilloptions.c:142 app/paint/gimpmybrushoptions.c:87
 #: app/tools/gimpbucketfilloptions.c:203 app/tools/gimpcoloroptions.c:86
 #: app/tools/gimprectangleselectoptions.c:101
-#: app/tools/gimpselectionoptions.c:103 app/widgets/gimpbrusheditor.c:154
+#: app/tools/gimpselectionoptions.c:103 app/widgets/gimpbrusheditor.c:157
 msgid "Radius"
 msgstr "Radij"
 
@@ -14303,7 +14313,7 @@ msgctxt "undo-type"
 msgid "Scale Image"
 msgstr "Spremeni merilo slike"
 
-#: app/core/gimpimage-undo-push.c:1117
+#: app/core/gimpimage-undo-push.c:1133
 #, c-format
 msgid "Can't undo %s"
 msgstr "Ni mogoče razveljaviti %s"
@@ -15272,52 +15282,52 @@ msgstr "Datoteka prednastavitev orodja je okvarjena."
 #. * installer/package revision.
 #. * For instance: "2.10.18 (revision 2)"
 #.
-#: app/dialogs/about-dialog.c:148
+#: app/dialogs/about-dialog.c:151
 #, c-format
 msgid "%s (revision %d)"
 msgstr "%s (rev. %d)"
 
-#: app/dialogs/about-dialog.c:156
+#: app/dialogs/about-dialog.c:159
 msgid "About GIMP"
 msgstr "O programu GIMP"
 
-#: app/dialogs/about-dialog.c:165
+#: app/dialogs/about-dialog.c:168
 msgid "Visit the GIMP website"
 msgstr "Obiščite spletno stran GIMP"
 
 #. Translators: insert your names here,
 #. separated by newline
-#: app/dialogs/about-dialog.c:171
+#: app/dialogs/about-dialog.c:174
 msgid "translator-credits"
 msgstr "Martin Srebotnjak"
 
-#: app/dialogs/about-dialog.c:225 app/widgets/gimpfiledialog.c:359
+#: app/dialogs/about-dialog.c:228 app/widgets/gimpfiledialog.c:359
 msgid "_Help"
 msgstr "Po_moč"
 
-#: app/dialogs/about-dialog.c:391
+#: app/dialogs/about-dialog.c:405
 msgid "Update available!"
 msgstr "Na voljo je posodobitev!"
 
 #. This is actually a new revision of current version.
-#: app/dialogs/about-dialog.c:421
+#: app/dialogs/about-dialog.c:435
 #, c-format
 msgid "Download GIMP %s revision %d (released on %s)\n"
 msgstr "Prenesi GIMP %s rev. %d (datum izdaje %s)\n"
 
 #. Translators: <> tags are Pango markup. Please keep these
 #. * markups in your translation.
-#: app/dialogs/about-dialog.c:431
+#: app/dialogs/about-dialog.c:445
 #, c-format
 msgid "<u>Release comment</u>: <i>%s</i>"
 msgstr "<u>Opomba ob izdaji</u>: <i>%s</i>"
 
-#: app/dialogs/about-dialog.c:436
+#: app/dialogs/about-dialog.c:450
 #, c-format
 msgid "Download GIMP %s (released on %s)\n"
 msgstr "Prenesi GIMP %s (datum izdaje %s)\n"
 
-#: app/dialogs/about-dialog.c:461 app/dialogs/about-dialog.c:484
+#: app/dialogs/about-dialog.c:475 app/dialogs/about-dialog.c:498
 msgid "Check for updates"
 msgstr "Preveri obstoj posodobitev"
 
@@ -15325,16 +15335,16 @@ msgstr "Preveri obstoj posodobitev"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:503
+#: app/dialogs/about-dialog.c:517
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "Nazadnje preverjeno %s ob %s"
 
-#: app/dialogs/about-dialog.c:730
+#: app/dialogs/about-dialog.c:744
 msgid "GIMP is brought to you by"
 msgstr "GIMPa vam zagotavlja"
 
-#: app/dialogs/about-dialog.c:805
+#: app/dialogs/about-dialog.c:819
 #, c-format
 msgid ""
 "This is a development build\n"
@@ -16073,7 +16083,7 @@ msgid "_Fill with:"
 msgstr "_Napolni z:"
 
 #: app/dialogs/layer-options-dialog.c:395
-#: app/widgets/gimpcolordisplayeditor.c:286
+#: app/widgets/gimpcolordisplayeditor.c:280
 msgid "Active Filters"
 msgstr "Aktivni filtri"
 
@@ -17008,7 +17018,7 @@ msgid "Use symbolic icons if available"
 msgstr "Uporabi simbolne ikone, če so na voljo"
 
 #: app/dialogs/preferences-dialog.c:2257 app/dialogs/preferences-dialog.c:2258
-#: app/widgets/gimptoolbox.c:525
+#: app/widgets/gimptoolbox.c:540
 msgid "Toolbox"
 msgstr "Orodjarna"
 
@@ -17419,17 +17429,17 @@ msgstr "Ločljivost zaslona"
 
 #. Pixels
 #: app/dialogs/preferences-dialog.c:2839 app/display/gimpcursorview.c:224
-#: app/widgets/gimpgrideditor.c:201 app/widgets/gimpgrideditor.c:236
+#: app/widgets/gimpgrideditor.c:205 app/widgets/gimpgrideditor.c:240
 msgid "Pixels"
 msgstr "slikovnih točk"
 
-#: app/dialogs/preferences-dialog.c:2857 app/widgets/gimpgrideditor.c:197
-#: app/widgets/gimpgrideditor.c:232
+#: app/dialogs/preferences-dialog.c:2857 app/widgets/gimpgrideditor.c:201
+#: app/widgets/gimpgrideditor.c:236
 msgid "Horizontal"
 msgstr "Vodoravno"
 
-#: app/dialogs/preferences-dialog.c:2859 app/widgets/gimpgrideditor.c:199
-#: app/widgets/gimpgrideditor.c:234
+#: app/dialogs/preferences-dialog.c:2859 app/widgets/gimpgrideditor.c:203
+#: app/widgets/gimpgrideditor.c:238
 msgid "Vertical"
 msgstr "Navpično"
 
@@ -18083,7 +18093,7 @@ msgstr ""
 #. offset frame
 #: app/dialogs/resize-dialog.c:377 app/tools/gimpgradientoptions.c:89
 #: app/tools/gimpoffsettool.c:130 app/tools/gimpoffsettool.c:472
-#: app/tools/gimptransform3dtool.c:342 app/widgets/gimpgrideditor.c:210
+#: app/tools/gimptransform3dtool.c:342 app/widgets/gimpgrideditor.c:214
 msgid "Offset"
 msgstr "Zamik"
 
@@ -18687,24 +18697,24 @@ msgstr "V"
 msgid "_Sample Merged"
 msgstr "_Vzorči spojeno"
 
-#: app/display/gimpdisplayshell.c:548
+#: app/display/gimpdisplayshell.c:557
 msgid "Access the image menu"
 msgstr "Dostopi do menija slike"
 
-#: app/display/gimpdisplayshell.c:711
+#: app/display/gimpdisplayshell.c:720
 msgid "Zoom image when window size changes"
 msgstr "Prilagodi povečavo slike ob spremenjeni velikosti okna"
 
-#: app/display/gimpdisplayshell.c:740
+#: app/display/gimpdisplayshell.c:749
 msgid "Toggle Quick Mask"
 msgstr "Vključi/izključi hitro masko"
 
-#: app/display/gimpdisplayshell.c:755
+#: app/display/gimpdisplayshell.c:764
 msgid "Navigate the image display"
 msgstr "Krmari po prikazu slike"
 
-#: app/display/gimpdisplayshell.c:809 app/display/gimpdisplayshell.c:1587
-#: app/widgets/gimptoolbox.c:269
+#: app/display/gimpdisplayshell.c:818 app/display/gimpdisplayshell.c:1599
+#: app/widgets/gimptoolbox.c:273
 msgid "Drop image files here to open them"
 msgstr "Semkaj spustite datoteke slik, ki jih želite odpreti."
 
@@ -18797,7 +18807,7 @@ msgstr "Spusti novo plast"
 msgid "Drop New Path"
 msgstr "Spusti novo pot"
 
-#: app/display/gimpdisplayshell-dnd.c:405 app/tools/gimpbucketfilltool.c:610
+#: app/display/gimpdisplayshell-dnd.c:405 app/tools/gimpbucketfilltool.c:611
 #: app/tools/gimpcagetool.c:243 app/tools/gimpgradienttool.c:276
 #: app/tools/gimpselectiontool.c:567
 #, c-format
@@ -18923,7 +18933,7 @@ msgstr "(čisto)"
 msgid "(none)"
 msgstr "(brez)"
 
-#: app/display/gimpdisplayshell-tool-events.c:1757
+#: app/display/gimpdisplayshell-tool-events.c:1758
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "Izbrana plast: »%s«"
@@ -19204,8 +19214,8 @@ msgstr "Dodaj potezo"
 msgid "Add Anchor"
 msgstr "Dodaj sidro"
 
-#: app/display/gimptoolpath.c:687 app/display/gimptoolpath.c:2054
-#: app/display/gimptoolpath.c:2091
+#: app/display/gimptoolpath.c:687 app/display/gimptoolpath.c:2066
+#: app/display/gimptoolpath.c:2103
 msgid "Insert Anchor"
 msgstr "Vstavi sidro"
 
@@ -19241,7 +19251,7 @@ msgstr "Pretvori rob"
 msgid "Delete Anchor"
 msgstr "Izbriši sidro"
 
-#: app/display/gimptoolpath.c:913 app/display/gimptoolpath.c:2071
+#: app/display/gimptoolpath.c:913 app/display/gimptoolpath.c:2083
 msgid "Delete Segment"
 msgstr "Izbriši odsek"
 
@@ -19249,84 +19259,84 @@ msgstr "Izbriši odsek"
 msgid "Move Anchors"
 msgstr "Premakni sidra"
 
-#: app/display/gimptoolpath.c:1588
+#: app/display/gimptoolpath.c:1600
 msgid "Click to pick path to edit"
 msgstr "Kliknite za izbor poti za urejanje"
 
-#: app/display/gimptoolpath.c:1592
+#: app/display/gimptoolpath.c:1604
 msgid "Click to create a new path"
 msgstr "Kliknite za ustvarjanje nove poti"
 
-#: app/display/gimptoolpath.c:1596
+#: app/display/gimptoolpath.c:1608
 msgid "Click to create a new component of the path"
 msgstr "Kliknite za ustvarjanje nove komponente poti"
 
-#: app/display/gimptoolpath.c:1600
+#: app/display/gimptoolpath.c:1612
 msgid "Click or Click-Drag to create a new anchor"
 msgstr "Kliknite ali kliknite in povlecite, da ustvarite novo sidro."
 
-#: app/display/gimptoolpath.c:1610 app/display/gimptoolpath.c:1617
+#: app/display/gimptoolpath.c:1622 app/display/gimptoolpath.c:1629
 msgid "Click-Drag to move the anchor around"
 msgstr "Kliknite in povlecite, da premaknete sidro."
 
-#: app/display/gimptoolpath.c:1621 app/display/gimptoolpath.c:1644
+#: app/display/gimptoolpath.c:1633 app/display/gimptoolpath.c:1656
 msgid "Click-Drag to move the anchors around"
 msgstr "Kliknite in povlecite, da premaknete sidra."
 
-#: app/display/gimptoolpath.c:1627
+#: app/display/gimptoolpath.c:1639
 msgid "Click-Drag to move the handle around"
 msgstr "Kliknite in povlecite, da premaknete ročico."
 
-#: app/display/gimptoolpath.c:1634
+#: app/display/gimptoolpath.c:1646
 msgid "Click-Drag to move the handles around symmetrically"
 msgstr "Kliknite in povlecite, da premaknete ročice simetrično."
 
-#: app/display/gimptoolpath.c:1649
+#: app/display/gimptoolpath.c:1661
 msgid "Click-Drag to change the shape of the curve"
 msgstr "Kliknite in povlecite, da spremenite obliko krivulje."
 
-#: app/display/gimptoolpath.c:1652
+#: app/display/gimptoolpath.c:1664
 #, c-format
 msgid "%s: symmetrical"
 msgstr "%s: simetrično"
 
-#: app/display/gimptoolpath.c:1657
+#: app/display/gimptoolpath.c:1669
 msgid "Click-Drag to move the component around"
 msgstr "Kliknite in povlecite, da premaknete komponento."
 
-#: app/display/gimptoolpath.c:1665
+#: app/display/gimptoolpath.c:1677
 msgid "Click-Drag to move the path around"
 msgstr "Kliknite in povlecite, da premaknete pot."
 
-#: app/display/gimptoolpath.c:1669
+#: app/display/gimptoolpath.c:1681
 msgid "Click-Drag to insert an anchor on the path"
 msgstr "Kliknite in povlecite, da vstavite sidrišče v pot."
 
-#: app/display/gimptoolpath.c:1677
+#: app/display/gimptoolpath.c:1689
 msgid "Click to delete this anchor"
 msgstr "Kliknite, da izbrišete to sidro."
 
-#: app/display/gimptoolpath.c:1681
+#: app/display/gimptoolpath.c:1693
 msgid "Click to connect this anchor with the selected endpoint"
 msgstr "Kliknite, da povežete to vozlišče z izbrano končno točko."
 
-#: app/display/gimptoolpath.c:1686
+#: app/display/gimptoolpath.c:1698
 msgid "Click to open up the path"
 msgstr "Kliknite, da odprete pot."
 
-#: app/display/gimptoolpath.c:1690
+#: app/display/gimptoolpath.c:1702
 msgid "Click to make this node angular"
 msgstr "Kliknite, da naredite to vozlišče kotno."
 
-#: app/display/gimptoolpath.c:1694
+#: app/display/gimptoolpath.c:1706
 msgid "Clicking here does nothing, try clicking on path elements."
 msgstr "Klik sem nima posledic, poskusite klikniti elemente poti."
 
-#: app/display/gimptoolpath.c:1902 app/display/gimptoolpath.c:2012
+#: app/display/gimptoolpath.c:1914 app/display/gimptoolpath.c:2024
 msgid "Delete Anchors"
 msgstr "Izbriši sidra"
 
-#: app/display/gimptoolpath.c:2039
+#: app/display/gimptoolpath.c:2051
 msgid "Shift start"
 msgstr "Zamakni začetek"
 
@@ -20349,7 +20359,7 @@ msgid "Turn colors into shades of gray"
 msgstr "Spremeni barve v sivinske odtenke"
 
 #: app/operations/gimpoperationdesaturate.c:91
-#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1453
+#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1466
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
 #: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:281
@@ -20395,7 +20405,7 @@ msgstr "Zamenjaj delno prosojnost z barvo"
 msgid "The color"
 msgstr "Barva"
 
-#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1416
+#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1429
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:113
 #: app/tools/gimptransformoptions.c:307
 msgid "Clipping"
@@ -20594,7 +20604,7 @@ msgstr "Velikost kapljice črnila"
 #. angle frame
 #: app/paint/gimpinkoptions.c:81 app/paint/gimpinkoptions.c:120
 #: app/paint/gimppaintoptions.c:227 app/tools/gimptransform3dtool.c:321
-#: app/tools/gimptransform3dtool.c:422 app/widgets/gimpbrusheditor.c:194
+#: app/tools/gimptransform3dtool.c:422 app/widgets/gimpbrusheditor.c:197
 msgid "Angle"
 msgstr "Kot"
 
@@ -20609,7 +20619,7 @@ msgstr "Nagni"
 msgid "Shape"
 msgstr "Oblika"
 
-#: app/paint/gimpinkoptions.c:114 app/widgets/gimpbrusheditor.c:184
+#: app/paint/gimpinkoptions.c:114 app/widgets/gimpbrusheditor.c:187
 msgid "Aspect ratio"
 msgstr "Razmerje stranic"
 
@@ -20634,7 +20644,7 @@ msgid "Base Opacity"
 msgstr "Prekrivnost osnove"
 
 #: app/paint/gimpmybrushoptions.c:101 app/paint/gimppaintoptions.c:241
-#: app/tools/gimpwarpoptions.c:99 app/widgets/gimpbrusheditor.c:174
+#: app/tools/gimpwarpoptions.c:99 app/widgets/gimpbrusheditor.c:177
 msgid "Hardness"
 msgstr "Trdota"
 
@@ -20667,8 +20677,8 @@ msgid "Aspect Ratio"
 msgstr "Razmerje stranic"
 
 #: app/paint/gimppaintoptions.c:234 app/tools/gimpwarpoptions.c:113
-#: app/widgets/gimpbrusheditor.c:204 app/widgets/gimpbrushfactoryview.c:102
-#: app/widgets/gimpgrideditor.c:175
+#: app/widgets/gimpbrusheditor.c:207 app/widgets/gimpbrushfactoryview.c:102
+#: app/widgets/gimpgrideditor.c:179
 msgid "Spacing"
 msgstr "Razmik"
 
@@ -20809,7 +20819,7 @@ msgid "Reverse direction of fading"
 msgstr "Obratna smer navzkrižnega pojemanja"
 
 #: app/paint/gimppaintoptions.c:380 app/paint/gimppaintoptions.c:400
-#: app/tools/gimpgradientoptions.c:307 app/tools/gimppaintoptions-gui.c:363
+#: app/tools/gimpgradientoptions.c:307 app/tools/gimppaintoptions-gui.c:365
 msgid "Repeat"
 msgstr "Ponovi"
 
@@ -20818,7 +20828,7 @@ msgid "How fade is repeated as you paint"
 msgstr "Kako je prehod ponovljen pri slikanju"
 
 #: app/paint/gimppaintoptions.c:393 app/tools/gimpgradientoptions.c:282
-#: app/tools/gimppaintoptions-gui.c:396
+#: app/tools/gimppaintoptions-gui.c:398
 msgid "Blend Color Space"
 msgstr "Zlij barvni prostor"
 
@@ -20935,7 +20945,7 @@ msgstr "Nespremenljivo"
 msgid "Combine Masks"
 msgstr "Združi maske"
 
-#: app/pdb/drawable-cmds.c:655 app/tools/gimpfiltertool.c:1336
+#: app/pdb/drawable-cmds.c:655
 msgid "Add filter"
 msgstr "Dodaj filter"
 
@@ -22114,7 +22124,7 @@ msgstr ""
 "Priznam, bil sem že vegi,\n"
 "dihal češnje, tofu in bicikel."
 
-#: app/text/gimpfontfactory.c:447
+#: app/text/gimpfontfactory.c:459
 #, c-format
 msgid ""
 "Some fonts failed to load:\n"
@@ -22623,11 +22633,11 @@ msgstr "_Zapolni s kanglico"
 msgid "Bucket fill"
 msgstr "Zapolni s kanglico"
 
-#: app/tools/gimpbucketfilltool.c:596
+#: app/tools/gimpbucketfilltool.c:597
 msgid "Cannot fill multiple layers. Select only one layer."
 msgstr "Več plasti ni mogoče zapolniti naenkrat. Izberite samo eno plast."
 
-#: app/tools/gimpbucketfilltool.c:598 app/tools/gimpcagetool.c:231
+#: app/tools/gimpbucketfilltool.c:599 app/tools/gimpcagetool.c:231
 #: app/tools/gimpcurvestool.c:220 app/tools/gimpfiltertool.c:310
 #: app/tools/gimpforegroundselecttool.c:295 app/tools/gimplevelstool.c:210
 #: app/tools/gimpoffsettool.c:191 app/tools/gimppainttool.c:297
@@ -22636,26 +22646,26 @@ msgstr "Več plasti ni mogoče zapolniti naenkrat. Izberite samo eno plast."
 msgid "No selected drawables."
 msgstr "Noben risani predmet ni izbran."
 
-#: app/tools/gimpbucketfilltool.c:618 app/tools/gimpforegroundselecttool.c:307
+#: app/tools/gimpbucketfilltool.c:619 app/tools/gimpforegroundselecttool.c:307
 #: app/tools/gimppaintselecttool.c:380
 msgid "The active layer is not visible."
 msgstr "Aktivna plast je nevidna."
 
-#: app/tools/gimpbucketfilltool.c:625 app/tools/gimpeditselectiontool.c:1310
+#: app/tools/gimpbucketfilltool.c:626 app/tools/gimpeditselectiontool.c:1310
 #: app/tools/gimpgradienttool.c:283 app/tools/gimpmovetool.c:349
 msgid "The selected layer's pixels are locked."
 msgstr "Slikovne točke izbrane plasti so zaklenjene."
 
-#: app/tools/gimpbucketfilltool.c:634
+#: app/tools/gimpbucketfilltool.c:635
 msgid "No valid line art source selected."
 msgstr "Izbran ni noben veljaven vir črt."
 
-#: app/tools/gimpbucketfilltool.c:818 app/tools/gimpbucketfilltool.c:958
+#: app/tools/gimpbucketfilltool.c:819 app/tools/gimpbucketfilltool.c:959
 #: app/tools/gimpcolorpickertool.c:270 app/tools/gimppainttool.c:514
 msgid "Click in any image to pick the background color"
 msgstr "Kliknite v katero koli sliko, da izberete barvo ozadja"
 
-#: app/tools/gimpbucketfilltool.c:825 app/tools/gimpbucketfilltool.c:967
+#: app/tools/gimpbucketfilltool.c:826 app/tools/gimpbucketfilltool.c:968
 #: app/tools/gimpcolorpickertool.c:262 app/tools/gimppainttool.c:508
 msgid "Click in any image to pick the foreground color"
 msgstr "Kliknite v katero koli sliko, da izberete barvo ospredja"
@@ -23058,11 +23068,13 @@ msgstr "_Vrsta:"
 msgid "Curve _type:"
 msgstr "Vrsta _krivulje:"
 
-#: app/tools/gimpcurvestool.c:755 app/tools/gimplevelstool.c:745
+#: app/tools/gimpcurvestool.c:756 app/tools/gimpcurvestool.c:759
+#: app/tools/gimplevelstool.c:745
+#, c-format
 msgid "Could not read header: "
 msgstr "Ni mogoče brati glave: "
 
-#: app/tools/gimpcurvestool.c:832
+#: app/tools/gimpcurvestool.c:836
 msgid "Use _old curves file format"
 msgstr "Uporabi _stare datoteke krivulj"
 
@@ -23243,22 +23255,26 @@ msgstr "%s: preklopi izvirno in filtrirano"
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: preklopi vodoravno in navpično"
 
+#: app/tools/gimpfiltertool.c:1258
+msgid "Edited filter"
+msgstr "Urejen filter"
+
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1429
+#: app/tools/gimpfiltertool.c:1442
 msgid "Blending Options"
 msgstr "Možnosti zlivanja"
 
-#: app/tools/gimpfiltertool.c:1935 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1948 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Uvozi nastavitve »%s«"
 
-#: app/tools/gimpfiltertool.c:1937 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1950 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Izvozi nastavitve »%s«"
 
-#: app/tools/gimpfiltertool.c:2175
+#: app/tools/gimpfiltertool.c:2188
 msgid "Editing filter..."
 msgstr "Urejanje filtra ..."
 
@@ -23537,7 +23553,7 @@ msgstr "Spremeni aktivni preliv"
 msgid "Modify the active gradient in-place"
 msgstr "Spremeni aktivni preliv na mestu"
 
-#: app/tools/gimpgradientoptions.c:275 app/tools/gimppaintoptions-gui.c:389
+#: app/tools/gimpgradientoptions.c:275 app/tools/gimppaintoptions-gui.c:391
 msgid "Edit this gradient"
 msgstr "Uredi ta preliv"
 
@@ -23782,8 +23798,8 @@ msgstr "Prilagoditev"
 msgid "Sensitivity"
 msgstr "Občutljivost"
 
-#: app/tools/gimpinkoptions-gui.c:147 app/tools/gimpmybrushoptions-gui.c:98
-#: app/tools/gimppaintoptions-gui.c:530
+#: app/tools/gimpinkoptions-gui.c:147 app/tools/gimpmybrushoptions-gui.c:105
+#: app/tools/gimppaintoptions-gui.c:532
 msgid "Fill Layer Mask With"
 msgstr "Zapolni masko plasti s/z"
 
@@ -23849,7 +23865,7 @@ msgstr "Pritisnite Enter za pretvorbo izbora"
 msgid "Click or Click-Drag to add a point"
 msgstr "Kliknite ali kliknite-povlecite za dodajanje točke."
 
-#: app/tools/gimpiscissorstool.c:1138 app/tools/gimpiscissorstool.c:1150
+#: app/tools/gimpiscissorstool.c:1165 app/tools/gimpiscissorstool.c:1177
 msgid "Modify Scissors Curve"
 msgstr "Spremeni krivuljo škarij"
 
@@ -24240,23 +24256,23 @@ msgstr "Ponastavi razmik na čopičev osnovni razmik"
 msgid "Reset hardness to brush's native hardness"
 msgstr "Ponastavi trdoto na čopičevo osnovno trdoto"
 
-#: app/tools/gimppaintoptions-gui.c:206
+#: app/tools/gimppaintoptions-gui.c:208
 msgid "Reset force to default"
 msgstr "Ponastavi silo na privzeto vrednost"
 
-#: app/tools/gimppaintoptions-gui.c:331
+#: app/tools/gimppaintoptions-gui.c:333
 msgid "Edit this dynamics"
 msgstr "Uredi to dinamiko"
 
-#: app/tools/gimppaintoptions-gui.c:334
+#: app/tools/gimppaintoptions-gui.c:336
 msgid "Fade Options"
 msgstr "Možnosti pojemanja"
 
-#: app/tools/gimppaintoptions-gui.c:374
+#: app/tools/gimppaintoptions-gui.c:376
 msgid "Color Options"
 msgstr "Možnosti barv"
 
-#: app/tools/gimppaintoptions-gui.c:613
+#: app/tools/gimppaintoptions-gui.c:615
 msgid "Link to brush default"
 msgstr "Poveži s privzeto vrednostjo čopiča"
 
@@ -24604,7 +24620,7 @@ msgstr "Neopazno kloniraj: neopazno prilepi eno sliko v drugo"
 msgid "_Seamless Clone"
 msgstr "Neopazno _kloniraj"
 
-#: app/tools/gimpseamlessclonetool.c:793
+#: app/tools/gimpseamlessclonetool.c:794
 msgid "Cloning the foreground object"
 msgstr "Kloniranje predmeta iz ospredja"
 
@@ -24903,19 +24919,19 @@ msgstr ""
 "\n"
 "Lahko urejate plast ali pa iz lastnosti besedila ustvarite novo plast."
 
-#: app/tools/gimptexttool.c:2356
+#: app/tools/gimptexttool.c:2355
 msgid "Text is required."
 msgstr "Besedilo je obvezno."
 
-#: app/tools/gimptexttool.c:2359
+#: app/tools/gimptexttool.c:2358
 msgid "No image."
 msgstr "Ni slike."
 
-#: app/tools/gimptexttool.c:2362
+#: app/tools/gimptexttool.c:2361
 msgid "No layer."
 msgstr "Ni plasti."
 
-#: app/tools/gimptexttool.c:2373
+#: app/tools/gimptexttool.c:2372
 msgid "Exactly one path must be selected."
 msgstr "Izbrana mora biti natanko ena pot."
 
@@ -25476,21 +25492,21 @@ msgstr "Ni ukrivitve za glajenje."
 msgid "Warp transform"
 msgstr "Preoblikovanje z ukrivljanjem"
 
-#: app/tools/gimpwarptool.c:1446
+#: app/tools/gimpwarptool.c:1447
 msgid "Please add some warp strokes first."
 msgstr "Najprej dodajte nekaj ukrivljenih potez."
 
-#: app/tools/gimpwarptool.c:1460 app/tools/gimpwarptool.c:1497
+#: app/tools/gimpwarptool.c:1461 app/tools/gimpwarptool.c:1498
 #, c-format
 msgid "Rendering Frame %d"
 msgstr "Upodabljanje sličice %d"
 
-#: app/tools/gimpwarptool.c:1475 app/tools/gimpwarptool.c:1505
+#: app/tools/gimpwarptool.c:1476 app/tools/gimpwarptool.c:1506
 #, c-format
 msgid "Frame %d"
 msgstr "Sličica %d"
 
-#: app/tools/gimpwarptool.c:1514
+#: app/tools/gimpwarptool.c:1515
 msgid "Frame"
 msgstr "Sličica"
 
@@ -25852,11 +25868,11 @@ msgstr "Sprememba bližnjice ni uspela."
 msgid "Shape:"
 msgstr "Oblika:"
 
-#: app/widgets/gimpbrusheditor.c:164
+#: app/widgets/gimpbrusheditor.c:167
 msgid "Spikes"
 msgstr "Konice"
 
-#: app/widgets/gimpbrusheditor.c:209 app/widgets/gimpbrushfactoryview.c:106
+#: app/widgets/gimpbrusheditor.c:212 app/widgets/gimpbrushfactoryview.c:106
 msgid "Percentage of width of brush"
 msgstr "Odstotek širine čopiča"
 
@@ -25873,33 +25889,33 @@ msgstr "Odložišče"
 msgid "Add the current color to the color history"
 msgstr "Dodaj trenutno barvo zgodovini barv."
 
-#: app/widgets/gimpcolordisplayeditor.c:166
+#: app/widgets/gimpcolordisplayeditor.c:161
 msgid "Available Filters"
 msgstr "Filtri na voljo"
 
-#: app/widgets/gimpcolordisplayeditor.c:230
+#: app/widgets/gimpcolordisplayeditor.c:225
 msgid "Move the selected filter up"
 msgstr "Premakni izbrani filter gor"
 
-#: app/widgets/gimpcolordisplayeditor.c:239
+#: app/widgets/gimpcolordisplayeditor.c:234
 msgid "Move the selected filter down"
 msgstr "Premakni izbrani filter dol"
 
-#: app/widgets/gimpcolordisplayeditor.c:337
+#: app/widgets/gimpcolordisplayeditor.c:331
 msgid "Reset the selected filter to default values"
 msgstr "Ponastavi izbrani filter na privzete vrednosti."
 
-#: app/widgets/gimpcolordisplayeditor.c:525
+#: app/widgets/gimpcolordisplayeditor.c:519
 #, c-format
 msgid "Add '%s' to the list of active filters"
 msgstr "Dodaj »%s« na seznam aktivnih filtrov"
 
-#: app/widgets/gimpcolordisplayeditor.c:557
+#: app/widgets/gimpcolordisplayeditor.c:551
 #, c-format
 msgid "Remove '%s' from the list of active filters"
 msgstr "Odstrani »%s« s seznama aktivnih filtrov"
 
-#: app/widgets/gimpcolordisplayeditor.c:595
+#: app/widgets/gimpcolordisplayeditor.c:589
 msgid "No filter selected"
 msgstr "Noben filter ni izbran"
 
@@ -25916,192 +25932,192 @@ msgid "Y:"
 msgstr "Y:"
 
 #. TRANSLATORS: n/a for Not Available.
-#: app/widgets/gimpcolorframe.c:776 app/widgets/gimpcolorframe.c:778
+#: app/widgets/gimpcolorframe.c:777 app/widgets/gimpcolorframe.c:779
 msgctxt "Coordinates"
 msgid "n/a"
 msgstr "ni na voljo"
 
 #. TRANSLATORS: V for Value (grayscale)
-#: app/widgets/gimpcolorframe.c:797 app/widgets/gimpcolorframe.c:943
+#: app/widgets/gimpcolorframe.c:798 app/widgets/gimpcolorframe.c:944
 msgctxt "Grayscale"
 msgid "V:"
 msgstr "V:"
 
 #. TRANSLATORS: A for Alpha (color transparency)
-#: app/widgets/gimpcolorframe.c:801 app/widgets/gimpcolorframe.c:814
-#: app/widgets/gimpcolorframe.c:878 app/widgets/gimpcolorframe.c:947
-#: app/widgets/gimpcolorframe.c:1000 app/widgets/gimpcolorframe.c:1027
-#: app/widgets/gimpcolorframe.c:1055 app/widgets/gimpcolorframe.c:1083
-#: app/widgets/gimpcolorframe.c:1110 app/widgets/gimpcolorframe.c:1157
+#: app/widgets/gimpcolorframe.c:802 app/widgets/gimpcolorframe.c:815
+#: app/widgets/gimpcolorframe.c:879 app/widgets/gimpcolorframe.c:948
+#: app/widgets/gimpcolorframe.c:1001 app/widgets/gimpcolorframe.c:1028
+#: app/widgets/gimpcolorframe.c:1056 app/widgets/gimpcolorframe.c:1084
+#: app/widgets/gimpcolorframe.c:1111 app/widgets/gimpcolorframe.c:1158
 msgctxt "Alpha channel"
 msgid "A:"
 msgstr "A:"
 
 #. TRANSLATORS: R for Red (RGB)
-#: app/widgets/gimpcolorframe.c:806 app/widgets/gimpcolorframe.c:870
+#: app/widgets/gimpcolorframe.c:807 app/widgets/gimpcolorframe.c:871
 msgctxt "RGB"
 msgid "R:"
 msgstr "R:"
 
 #. TRANSLATORS: G for Green (RGB)
-#: app/widgets/gimpcolorframe.c:808 app/widgets/gimpcolorframe.c:872
+#: app/widgets/gimpcolorframe.c:809 app/widgets/gimpcolorframe.c:873
 msgctxt "RGB"
 msgid "G:"
 msgstr "G:"
 
 #. TRANSLATORS: B for Blue (RGB)
-#: app/widgets/gimpcolorframe.c:810 app/widgets/gimpcolorframe.c:874
+#: app/widgets/gimpcolorframe.c:811 app/widgets/gimpcolorframe.c:875
 msgctxt "RGB"
 msgid "B:"
 msgstr "B:"
 
 #. TRANSLATORS: Index of the color in the palette.
-#: app/widgets/gimpcolorframe.c:819
+#: app/widgets/gimpcolorframe.c:820
 msgctxt "Indexed color"
 msgid "Index:"
 msgstr "Indeks:"
 
-#: app/widgets/gimpcolorframe.c:851 app/widgets/gimpcolorframe.c:884
-#: app/widgets/gimpcolorframe.c:950 app/widgets/gimpcolorframe.c:1159
+#: app/widgets/gimpcolorframe.c:852 app/widgets/gimpcolorframe.c:885
+#: app/widgets/gimpcolorframe.c:951 app/widgets/gimpcolorframe.c:1160
 msgctxt "Color"
 msgid "Profile:"
 msgstr "Profil:"
 
-#: app/widgets/gimpcolorframe.c:858 app/widgets/gimpcolorframe.c:859
-#: app/widgets/gimpcolorframe.c:932 app/widgets/gimpcolorframe.c:933
-#: app/widgets/gimpcolorframe.c:984 app/widgets/gimpcolorframe.c:985
-#: app/widgets/gimpcolorframe.c:1184 app/widgets/gimpcolorframe.c:1185
+#: app/widgets/gimpcolorframe.c:859 app/widgets/gimpcolorframe.c:860
+#: app/widgets/gimpcolorframe.c:933 app/widgets/gimpcolorframe.c:934
+#: app/widgets/gimpcolorframe.c:985 app/widgets/gimpcolorframe.c:986
+#: app/widgets/gimpcolorframe.c:1185 app/widgets/gimpcolorframe.c:1186
 #, c-format
 msgid "%s"
 msgstr "%s"
 
 #. TRANSLATORS: Hex for Hexadecimal (representation of a color)
-#: app/widgets/gimpcolorframe.c:881
+#: app/widgets/gimpcolorframe.c:882
 msgctxt "Color representation"
 msgid "Hex:"
 msgstr "Šestnajstiško:"
 
-#: app/widgets/gimpcolorframe.c:886 app/widgets/gimpcolorframe.c:952
-#: app/widgets/gimpcolorframe.c:1161
+#: app/widgets/gimpcolorframe.c:887 app/widgets/gimpcolorframe.c:953
+#: app/widgets/gimpcolorframe.c:1162
 msgctxt "Color"
 msgid "No Profile"
 msgstr "Brez profila"
 
 #. TRANSLATORS: H for Hue (HSV color space)
-#: app/widgets/gimpcolorframe.c:992
+#: app/widgets/gimpcolorframe.c:993
 msgctxt "HSV color space"
 msgid "H:"
 msgstr "H:"
 
 #. TRANSLATORS: S for Saturation (HSV color space)
-#: app/widgets/gimpcolorframe.c:994
+#: app/widgets/gimpcolorframe.c:995
 msgctxt "HSV color space"
 msgid "S:"
 msgstr "S:"
 
 #. TRANSLATORS: V for Value (HSV color space)
-#: app/widgets/gimpcolorframe.c:996
+#: app/widgets/gimpcolorframe.c:997
 msgctxt "HSV color space"
 msgid "V:"
 msgstr "V:"
 
 #. TRANSLATORS: L for Lightness (LCH color space)
-#: app/widgets/gimpcolorframe.c:1019
+#: app/widgets/gimpcolorframe.c:1020
 msgctxt "LCH color space"
 msgid "L*:"
 msgstr "L*:"
 
 #. TRANSLATORS: C for Chroma (LCH color space)
-#: app/widgets/gimpcolorframe.c:1021
+#: app/widgets/gimpcolorframe.c:1022
 msgctxt "LCH color space"
 msgid "C*:"
 msgstr "C*:"
 
 #. TRANSLATORS: H for Hue angle (LCH color space)
-#: app/widgets/gimpcolorframe.c:1023
+#: app/widgets/gimpcolorframe.c:1024
 msgctxt "LCH color space"
 msgid "h°:"
 msgstr "h°:"
 
 #. TRANSLATORS: L* for Lightness (Lab color space)
-#: app/widgets/gimpcolorframe.c:1047
+#: app/widgets/gimpcolorframe.c:1048
 msgctxt "Lab color space"
 msgid "L*:"
 msgstr "L*:"
 
 #. TRANSLATORS: a* color channel in Lab color space
-#: app/widgets/gimpcolorframe.c:1049
+#: app/widgets/gimpcolorframe.c:1050
 msgctxt "Lab color space"
 msgid "a*:"
 msgstr "a*:"
 
 #. TRANSLATORS: b* color channel in Lab color space
-#: app/widgets/gimpcolorframe.c:1051
+#: app/widgets/gimpcolorframe.c:1052
 msgctxt "Lab color space"
 msgid "b*:"
 msgstr "b*:"
 
 #. TRANSLATORS: x from xyY color space
-#: app/widgets/gimpcolorframe.c:1075
+#: app/widgets/gimpcolorframe.c:1076
 msgctxt "xyY color space"
 msgid "x:"
 msgstr "x:"
 
 #. TRANSLATORS: y from xyY color space
-#: app/widgets/gimpcolorframe.c:1077
+#: app/widgets/gimpcolorframe.c:1078
 msgctxt "xyY color space"
 msgid "y:"
 msgstr "y:"
 
 #. TRANSLATORS: Y from xyY color space
-#: app/widgets/gimpcolorframe.c:1079
+#: app/widgets/gimpcolorframe.c:1080
 msgctxt "xyY color space"
 msgid "Y:"
 msgstr "Y:"
 
 #. TRANSLATORS: Y from Yu'v' color space
-#: app/widgets/gimpcolorframe.c:1102
+#: app/widgets/gimpcolorframe.c:1103
 msgctxt "Yu'v' color space"
 msgid "Y:"
 msgstr "Y:"
 
 #. TRANSLATORS: u' from Yu'v' color space
-#: app/widgets/gimpcolorframe.c:1104
+#: app/widgets/gimpcolorframe.c:1105
 msgctxt "Yu'v' color space"
 msgid "u':"
 msgstr "u':"
 
 #. TRANSLATORS: v' from Yu'v' color space
-#: app/widgets/gimpcolorframe.c:1106
+#: app/widgets/gimpcolorframe.c:1107
 msgctxt "Yu'v' color space"
 msgid "v':"
 msgstr "v':"
 
 #. TRANSLATORS: C for Cyan (CMYK)
-#: app/widgets/gimpcolorframe.c:1148
+#: app/widgets/gimpcolorframe.c:1149
 msgctxt "CMYK"
 msgid "C:"
 msgstr "C:"
 
 #. TRANSLATORS: M for Magenta (CMYK)
-#: app/widgets/gimpcolorframe.c:1150
+#: app/widgets/gimpcolorframe.c:1151
 msgctxt "CMYK"
 msgid "M:"
 msgstr "M:"
 
 #. TRANSLATORS: Y for Yellow (CMYK)
-#: app/widgets/gimpcolorframe.c:1152
+#: app/widgets/gimpcolorframe.c:1153
 msgctxt "CMYK"
 msgid "Y:"
 msgstr "Y:"
 
 #. TRANSLATORS: K for Key/black (CMYK)
-#: app/widgets/gimpcolorframe.c:1154
+#: app/widgets/gimpcolorframe.c:1155
 msgctxt "CMYK"
 msgid "K:"
 msgstr "K:"
 
-#: app/widgets/gimpcolorframe.c:1202
+#: app/widgets/gimpcolorframe.c:1203
 msgctxt "Color value"
 msgid "n/a"
 msgstr "ni na voljo"
@@ -27151,11 +27167,11 @@ msgid "Configure this tab"
 msgstr "Prilagodi ta zavihek"
 
 #. Auto button
-#: app/widgets/gimpdockwindow.c:381
+#: app/widgets/gimpdockwindow.c:391
 msgid "Auto"
 msgstr "Samodejno"
 
-#: app/widgets/gimpdockwindow.c:392
+#: app/widgets/gimpdockwindow.c:402
 msgid ""
 "When enabled, the dialog automatically follows the image you are working on."
 msgstr ""
@@ -27365,15 +27381,15 @@ msgstr "Slog _črte:"
 msgid "Change grid foreground color"
 msgstr "Spremeni barvo ospredja mreže"
 
-#: app/widgets/gimpgrideditor.c:158
+#: app/widgets/gimpgrideditor.c:160
 msgid "_Foreground color:"
 msgstr "Barva o_spredja:"
 
-#: app/widgets/gimpgrideditor.c:162
+#: app/widgets/gimpgrideditor.c:164
 msgid "Change grid background color"
 msgstr "Spremeni barvo ozadja mreže"
 
-#: app/widgets/gimpgrideditor.c:170
+#: app/widgets/gimpgrideditor.c:174
 msgid "_Background color:"
 msgstr "Barva _ozadja:"
 
@@ -27652,51 +27668,51 @@ msgstr "Filtra, ki ga urejate, ni mogoče prerazvrstiti."
 msgid "Reorder filter"
 msgstr "Prerazvrsti filter"
 
-#: app/widgets/gimpitemtreeview.c:3427
+#: app/widgets/gimpitemtreeview.c:3442
 msgid "No layer set stored"
 msgstr "Nobena množica plasti ni shranjena"
 
-#: app/widgets/gimpitemtreeview.c:3449
+#: app/widgets/gimpitemtreeview.c:3464
 msgid "New layer set's name"
 msgstr "Ime novega nabora plasti"
 
-#: app/widgets/gimpitemtreeview.c:3491 app/widgets/gimpitemtreeview.c:3506
+#: app/widgets/gimpitemtreeview.c:3506 app/widgets/gimpitemtreeview.c:3521
 msgid "Select layers by text search"
 msgstr "Izberi plati z iskanjem besedila"
 
-#: app/widgets/gimpitemtreeview.c:3493 app/widgets/gimpitemtreeview.c:3508
+#: app/widgets/gimpitemtreeview.c:3508 app/widgets/gimpitemtreeview.c:3523
 msgid "Text search"
 msgstr "Iskanje besedila"
 
-#: app/widgets/gimpitemtreeview.c:3512
+#: app/widgets/gimpitemtreeview.c:3527
 msgid "Select layers by glob patterns"
 msgstr "Izberite plasti po vzorcih glob"
 
-#: app/widgets/gimpitemtreeview.c:3514
+#: app/widgets/gimpitemtreeview.c:3529
 msgid "Glob pattern search"
 msgstr "Iskanje vzorcev Glob"
 
-#: app/widgets/gimpitemtreeview.c:3518
+#: app/widgets/gimpitemtreeview.c:3533
 msgid "Select layers by regular expressions"
 msgstr "Izberi plasti z regularnimi izrazi"
 
-#: app/widgets/gimpitemtreeview.c:3520
+#: app/widgets/gimpitemtreeview.c:3535
 msgid "Regular Expression search"
 msgstr "Iskanje z regularnimi izrazi"
 
-#: app/widgets/gimpitemtreeview.c:3575
+#: app/widgets/gimpitemtreeview.c:3590
 msgid "search"
 msgstr "išči"
 
-#: app/widgets/gimpitemtreeview.c:3576
+#: app/widgets/gimpitemtreeview.c:3591
 msgid "glob"
 msgstr "glob"
 
-#: app/widgets/gimpitemtreeview.c:3576
+#: app/widgets/gimpitemtreeview.c:3591
 msgid "regexp"
 msgstr "regularni izraz"
 
-#: app/widgets/gimpitemtreeview.c:3745
+#: app/widgets/gimpitemtreeview.c:3760
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "Neveljaven regularni izraz: %s\n"
@@ -28268,7 +28284,7 @@ msgstr ""
 "Aktivni preliv.\n"
 "Kliknite za odprtje pogovornega okna preliva."
 
-#: app/widgets/gimptoolbutton.c:537
+#: app/widgets/gimptoolbutton.c:541
 msgid "Also in group:"
 msgstr "Tudi v skupini:"
 
