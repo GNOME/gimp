@@ -75,7 +75,7 @@ if os.getenv('GIMP_UNSTABLE'):
   gimp_mutex_version = os.getenv('GIMP_APP_VERSION')
 else:
   gimp_mutex_version = re.search(r'\d+', os.getenv('GIMP_APP_VERSION')).group()
-(GIMP_DISTRIB / "gimp.cmd").write_text(f"bin\\gimp-{gimp_mutex_version}.exe\n")
+(GIMP_DISTRIB / "gimp.cmd").write_text(f"powershell bin\\gimp-{gimp_mutex_version}.exe\n")
 
 
 ## Settings.
