@@ -297,7 +297,7 @@ foreach ($bundle in $supported_archs)
             Write-Output "(INFO): making $APPXSYM"
             Get-ChildItem $msix_arch -Filter *.pdb -Recurse | Compress-Archive -DestinationPath "$APPXSYM.zip"
             Rename-Item "$APPXSYM.zip" "$APPXSYM"
-            Get-ChildItem $msix_arch -Include *.pdb -Recurse -Force | Remove-Item -Recurse -Force
+            #Get-ChildItem $msix_arch -Include *.pdb -Recurse -Force | Remove-Item -Recurse -Force
           }
 
         ## Make .msix from each msix_arch
