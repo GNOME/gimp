@@ -71,9 +71,6 @@
             </uap5:AppExecutionAlias>
         </uap5:Extension>
       </Extensions>
-      <uap7:Properties>
-        <uap8:ActiveCodePage>UTF-8</uap8:ActiveCodePage>
-      </uap7:Properties>
     </Application>
   </Applications>
   <Extensions>
