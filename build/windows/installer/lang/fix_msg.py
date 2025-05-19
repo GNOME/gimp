@@ -13,7 +13,7 @@ except ImportError:
     subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'charset_normalizer'])
   else:
     MINGW_PACKAGE_PREFIX = "mingw-w64-clang-aarch64" if platform.machine() == "ARM64" else "mingw-w64-clang-x86_64"
-    subprocess.check_call(['powershell', 'pacman', '--noconfirm', '-S', '--needed', f"{MINGW_PACKAGE_PREFIX}-python-charset-normalizer"])
+    subprocess.check_call(['powershell', os.getenv("MSYS_ROOT") + '/usr/bin/pacman', '--noconfirm', '-S', '--needed', f"{MINGW_PACKAGE_PREFIX}-python-charset-normalizer"])
 finally:
   from charset_normalizer import detect
 
