@@ -12,6 +12,11 @@ libappvectors_sources = [
   'gimppathundo.c',
   'gimpstroke-new.c',
   'gimpstroke.c',
+  'gimpvectorlayer.c',
+  'gimpvectorlayer-xcf.c',
+  'gimpvectorlayeroptions.c',
+  'gimpvectorlayeroptions-parasite.c',
+  'gimpvectorlayerundo.c',
 ]
 
 libappvectors = static_library('appvectors',

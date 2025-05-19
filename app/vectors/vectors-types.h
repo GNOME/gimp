@@ -33,5 +33,9 @@ typedef struct _GimpPath         GimpPath;
 typedef struct _GimpStroke       GimpStroke;
 typedef struct _GimpBezierStroke GimpBezierStroke;
 
+typedef struct _GimpVectorLayer        GimpVectorLayer;
+typedef struct _GimpVectorLayerOptions GimpVectorLayerOptions;
+typedef struct _GimpVectorLayerUndo    GimpVectorLayerUndo;
+
 
 #endif /* __VECTORS_TYPES_H__ */
