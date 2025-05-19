@@ -113,7 +113,7 @@ bundle(MSYSTEM_PREFIX, "lib/gdk-pixbuf-*/*/loaders/libpixbufloader-tiff.dll")
 ## Resources.
 bundle(GIMP_PREFIX, "share/gimp")
 ### Needed for file dialogs
-bundle(MSYSTEM_PREFIX, "share/glib-*/schemas/gschemas.compiled")
+bundle(MSYSTEM_PREFIX, "share/glib-*/schemas")
 ### Needed to not crash UI. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/6165
 bundle(MSYSTEM_PREFIX, "share/icons/Adwaita")
 ### Needed by GTK to use icon themes. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/5080
