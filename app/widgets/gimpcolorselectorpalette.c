@@ -100,13 +100,16 @@ gimp_color_selector_palette_palette_changed (GimpContext              *context,
                                              GimpPalette              *palette,
                                              GimpColorSelectorPalette *select)
 {
-  gchar *palette_name;
-
   gimp_view_set_viewable (GIMP_VIEW (select->view), GIMP_VIEWABLE (palette));
 
-  g_object_get (palette, "name", &palette_name, NULL);
-  gtk_label_set_text (GTK_LABEL (select->name_label), palette_name);
-  g_free (palette_name);
+  if (palette != NULL)
+    {
+      gchar *palette_name;
+
+      g_object_get (palette, "name", &palette_name, NULL);
+      gtk_label_set_text (GTK_LABEL (select->name_label), palette_name);
+      g_free (palette_name);
+    }
 }
 
 static void
