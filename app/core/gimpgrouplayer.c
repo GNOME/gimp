@@ -220,6 +220,8 @@ static void
 static void
     gimp_group_layer_child_excludes_backdrop_changed (GimpLayer       *child,
                                                       GimpGroupLayer  *group);
+static void gimp_group_layer_child_filters_changed   (GimpLayer       *child,
+                                                      GimpGroupLayer  *group);
 
 static void            gimp_group_layer_flush        (GimpGroupLayer  *group);
 static void            gimp_group_layer_update       (GimpGroupLayer  *group);
@@ -378,6 +380,10 @@ gimp_group_layer_init (GimpGroupLayer *group)
   gimp_container_add_handler (private->children, "excludes-backdrop-changed",
                               G_CALLBACK (gimp_group_layer_child_excludes_backdrop_changed),
                               group);
+  gimp_container_add_handler (private->children, "filters-changed",
+                              G_CALLBACK (gimp_group_layer_child_filters_changed),
+                              group);
+
 
   g_signal_connect (private->children, "update",
                     G_CALLBACK (gimp_group_layer_stack_update),
@@ -1302,6 +1308,9 @@ gimp_group_layer_get_effective_mode (GimpLayer              *layer,
        *
        *     - the group's composite space equals the active children's
        *       composite space.
+       *
+       *     - none of the active children have any visible filter
+       *
        */
 
       GList    *list;
@@ -1321,6 +1330,12 @@ gimp_group_layer_get_effective_mode (GimpLayer              *layer,
 
           if (! gimp_filter_get_active (GIMP_FILTER (child)))
             continue;
+
+          if (gimp_drawable_has_visible_filters (GIMP_DRAWABLE (child)))
+            {
+              reduce = FALSE;
+              break;
+            }
 
           if (first)
             {
@@ -1925,6 +1940,14 @@ gimp_group_layer_child_active_changed (GimpLayer      *child,
 static void
 gimp_group_layer_child_effective_mode_changed (GimpLayer      *child,
                                                GimpGroupLayer *group)
+{
+  if (gimp_filter_get_active (GIMP_FILTER (child)))
+    gimp_layer_update_effective_mode (GIMP_LAYER (group));
+}
+
+static void
+gimp_group_layer_child_filters_changed (GimpLayer      *child,
+                                        GimpGroupLayer *group)
 {
   if (gimp_filter_get_active (GIMP_FILTER (child)))
     gimp_layer_update_effective_mode (GIMP_LAYER (group));
