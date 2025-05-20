@@ -868,7 +868,7 @@ toolbox_area_config_notify (GimpGuiConfig    *config,
   visible_areas += (gint) config->toolbox_foo_area;
   visible_areas += (gint) config->toolbox_image_area;
 
-  gtk_flow_box_set_max_children_per_line (GTK_FLOW_BOX (area_box),
-                                          visible_areas);
+  if (visible_areas > 0)
+    gtk_flow_box_set_max_children_per_line (GTK_FLOW_BOX (area_box),
+                                            visible_areas);
 }
-
