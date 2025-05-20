@@ -86,6 +86,9 @@ static void      gimp_text_style_editor_set_font          (GimpTextStyleEditor *
                                                            GtkTextTag          *font_tag);
 static void      gimp_text_style_editor_set_default_font  (GimpTextStyleEditor *editor);
 
+static void      gimp_text_style_editor_color_response    (GimpColorPanel      *panel,
+                                                           GimpColorDialogState state,
+                                                           GimpTextStyleEditor *editor);
 static void      gimp_text_style_editor_color_changed     (GimpColorButton     *button,
                                                            GimpTextStyleEditor *editor);
 static void      gimp_text_style_editor_set_color         (GimpTextStyleEditor *editor,
@@ -261,8 +264,8 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
   gimp_help_set_help_data (editor->color_button,
                            _("Change color of selected text"), NULL);
 
-  g_signal_connect (editor->color_button, "color-changed",
-                    G_CALLBACK (gimp_text_style_editor_color_changed),
+  g_signal_connect (GIMP_COLOR_PANEL (editor->color_button), "response",
+                    G_CALLBACK (gimp_text_style_editor_color_response),
                     editor);
 
   editor->kerning_adjustment = gtk_adjustment_new (0.0, -1000.0, 1000.0,
@@ -757,6 +760,17 @@ gimp_text_style_editor_color_changed (GimpColorButton     *button,
 }
 
 static void
+gimp_text_style_editor_color_response (GimpColorPanel       *panel,
+                                       GimpColorDialogState  state,
+                                       GimpTextStyleEditor  *editor)
+{
+  if (state == GIMP_COLOR_DIALOG_OK)
+    gimp_text_style_editor_color_changed (GIMP_COLOR_BUTTON (panel),
+                                          editor);
+
+}
+
+static void
 gimp_text_style_editor_set_color (GimpTextStyleEditor *editor,
                                   GtkTextTag          *color_tag)
 {
@@ -768,33 +782,17 @@ gimp_text_style_editor_set_color (GimpTextStyleEditor *editor,
   if (! color)
     color = gegl_color_new ("black");
 
-  g_signal_handlers_block_by_func (editor->color_button,
-                                   gimp_text_style_editor_color_changed,
-                                   editor);
-
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (editor->color_button),
                                color);
   g_clear_object (&color);
 
   /* FIXME should have "inconsistent" state as for font and size */
-
-  g_signal_handlers_unblock_by_func (editor->color_button,
-                                     gimp_text_style_editor_color_changed,
-                                     editor);
 }
 
 static void
 gimp_text_style_editor_set_default_color (GimpTextStyleEditor *editor)
 {
-  g_signal_handlers_block_by_func (editor->color_button,
-                                   gimp_text_style_editor_color_changed,
-                                   editor);
-
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (editor->color_button), editor->text->color);
-
-  g_signal_handlers_unblock_by_func (editor->color_button,
-                                     gimp_text_style_editor_color_changed,
-                                     editor);
 }
 
 static void
