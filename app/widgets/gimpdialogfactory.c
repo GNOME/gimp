@@ -38,6 +38,11 @@
 
 #include "menus/menus.h"
 
+#include "display/display-types.h"
+#include "display/gimpimagewindow.h"
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
+
 #include "gimpcursor.h"
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
@@ -95,6 +100,10 @@ static gboolean    gimp_dialog_factory_dialog_configure     (GtkWidget          
                                                              GimpDialogFactory      *factory);
 static void        gimp_dialog_factory_hide                 (GimpDialogFactory      *factory);
 static void        gimp_dialog_factory_show                 (GimpDialogFactory      *factory);
+
+static void        gimp_dialog_factory_display_changed      (GimpContext            *context,
+                                                             GimpDisplay            *display,
+                                                             GtkWidget              *dialog);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpDialogFactory, gimp_dialog_factory,
@@ -633,8 +642,17 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
                 config = GIMP_GUI_CONFIG (context->gimp->config);
 
               if (! config || config->dock_window_hint == GIMP_WINDOW_HINT_KEEP_ABOVE)
-                gtk_window_set_transient_for (GTK_WINDOW (dialog),
-                                              GTK_WINDOW (parent_toplevel));
+                {
+                  gtk_window_set_transient_for (GTK_WINDOW (dialog),
+                                                GTK_WINDOW (parent_toplevel));
+
+                  if (context != NULL && G_TYPE_FROM_INSTANCE (parent_toplevel) == GIMP_TYPE_IMAGE_WINDOW)
+                    {
+                      g_signal_connect_object (context, "display-changed",
+                                               G_CALLBACK (gimp_dialog_factory_display_changed),
+                                               dialog, 0);
+                    }
+                }
             }
         }
 
@@ -1675,4 +1693,24 @@ gimp_dialog_factory_set_singleton (GimpDialogFactory *factory)
                     factory               == NULL);
 
   gimp_toplevel_factory = factory;
+}
+
+
+/* Private Functions */
+
+static void
+gimp_dialog_factory_display_changed (GimpContext *context,
+                                     GimpDisplay *display,
+                                     GtkWidget   *dialog)
+{
+  GtkWindow *parent;
+
+  if (display == NULL)
+    /* No need to remove the parent. It will happen by itself if the
+     * window was removed.
+     */
+    return;
+
+  parent = GTK_WINDOW (gimp_display_shell_get_window (gimp_display_get_shell (display)));
+  gtk_window_set_transient_for (GTK_WINDOW (dialog), parent);
 }
