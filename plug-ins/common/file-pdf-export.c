@@ -1888,7 +1888,10 @@ draw_layer (GimpLayer           **layers,
       if (show_progress)
         gimp_progress_update (progress_start);
 
-      mask = gimp_layer_get_mask (layer);
+      /* Only render layer mask if it's not disabled */
+      if (gimp_layer_get_mask (layer) && gimp_layer_get_apply_mask (layer))
+        mask = gimp_layer_get_mask (layer);
+
       if (mask)
         {
           mask_image = get_cairo_surface (GIMP_DRAWABLE (mask), TRUE,
