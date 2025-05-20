@@ -915,6 +915,7 @@ gimp_window_set_hint (GtkWindow      *window,
       break;
 
     case GIMP_WINDOW_HINT_KEEP_ABOVE:
+      gtk_window_set_type_hint (window, GDK_WINDOW_TYPE_HINT_UTILITY);
       gtk_window_set_keep_above (window, TRUE);
       break;
     }
