@@ -185,6 +185,7 @@ if get_option('webkit-unmaintained')
   }
 endif
 
+plugin_custom_targets = []
 foreach plugin : common_plugins_list
   plugin_name = plugin.get('name')
   plugin_sources = [ plugin.get('sources', plugin_name + '.c') ]
@@ -242,7 +243,7 @@ foreach plugin : common_plugins_list
 
   # Ugly trick to copy executables into subfolders so that we can run GIMP from
   # the build directory without installing it.
-  custom_target('test-' + plugin_name,
+  plugin_custom_targets += custom_target('test-' + plugin_name,
                 input: [ plugin_exe ],
                 output: [ plugin_name + '.dummy' ],
                 command: [ python, meson.project_source_root() / 'build/meson/cp-plug-in-subfolder.py',
