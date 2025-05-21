@@ -56,9 +56,9 @@ struct _GimpVectorLayerOptionsClass
 
 GType                    gimp_vector_layer_options_get_type (void) G_GNUC_CONST;
 
-GimpVectorLayerOptions * gimp_vector_layer_options_new      (GimpImage    *image,
-                                                             GimpPath     *path,
-                                                             GimpContext  *context);
+GimpVectorLayerOptions * gimp_vector_layer_options_new      (GimpImage   *image,
+                                                             GimpPath    *path,
+                                                             GimpContext *context);
 
 
 #endif /* __GIMP_VECTOR_LAYER_OPTIONS_H__ */
