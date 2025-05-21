@@ -60,7 +60,7 @@ GimpVectorLayer * gimp_vector_layer_new         (GimpImage       *image,
 void              gimp_vector_layer_refresh     (GimpVectorLayer *layer);
 void              gimp_vector_layer_discard     (GimpVectorLayer *layer);
 
-gboolean          gimp_drawable_is_vector_layer (GimpDrawable    *drawable);
+gboolean          gimp_item_is_vector_layer     (GimpItem        *item);
 
 
 #endif /* __GIMP_VECTOR_LAYER_H__ */
