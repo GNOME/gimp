@@ -999,7 +999,7 @@ layers_actions_update (GimpActionGroup *group,
           gimp_action_group_set_action_active (group, action, TRUE);
 
           text_layer   = gimp_item_is_text_layer (GIMP_ITEM (layer));
-          vector_layer = gimp_drawable_is_vector_layer (GIMP_DRAWABLE (layer));
+          vector_layer = gimp_item_is_vector_layer (GIMP_ITEM (layer));
         }
     }
 
