@@ -1980,7 +1980,7 @@ if meson.can_run_host_binaries() and have_gobject_introspection
   else
     gimp_real_exe = gimpmain_exe
   endif
-  gimp_exe_depends = [gimp_real_exe]
+  gimp_exe_depends = [gimp_real_exe, libgimp_gir, libgimpui_gir] + plugin_custom_targets
   gimp_run_env.set('GIMP_SELF_IN_BUILD', gimp_real_exe.full_path())
 
   menu_paths=meson.global_build_root() / 'menus:' + meson.global_source_root() / 'menus'
