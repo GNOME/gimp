@@ -431,10 +431,10 @@ gimp_vector_layer_discard (GimpVectorLayer *layer)
 }
 
 gboolean
-gimp_drawable_is_vector_layer (GimpDrawable  *drawable)
+gimp_item_is_vector_layer (GimpItem *item)
 {
-  return (GIMP_IS_VECTOR_LAYER (drawable) &&
-          GIMP_VECTOR_LAYER (drawable)->options);
+  return (GIMP_IS_VECTOR_LAYER (item) &&
+          GIMP_VECTOR_LAYER (item)->options);
 }
 
 
@@ -468,14 +468,33 @@ static void
 gimp_vector_layer_render_path (GimpVectorLayer *layer,
                                GimpPath        *path)
 {
-  GimpImage   *image     = gimp_item_get_image (GIMP_ITEM (layer));
-  GimpChannel *selection = gimp_image_get_mask (image);
-  GList       *drawables;
+  GimpImage       *image     = gimp_item_get_image (GIMP_ITEM (layer));
+  GimpChannel     *selection = gimp_image_get_mask (image);
+  GList           *drawables;
+  GimpCustomStyle  style;
 
-  /*  don't mask these fill/stroke operations  */
+  /* Don't mask these fill/stroke operations  */
   gimp_selection_suspend (GIMP_SELECTION (selection));
 
-  /* fill the path object onto the layer */
+  /* Convert from custom to standard styles */
+  style = gimp_fill_options_get_custom_style (layer->options->fill_options);
+  if (style == GIMP_CUSTOM_STYLE_SOLID_COLOR)
+    gimp_fill_options_set_style (layer->options->fill_options,
+                                 GIMP_FILL_STYLE_FG_COLOR);
+  else
+    gimp_fill_options_set_style (layer->options->fill_options,
+                                 GIMP_FILL_STYLE_PATTERN);
+
+  style =
+    gimp_fill_options_get_custom_style (GIMP_FILL_OPTIONS (layer->options->stroke_options));
+  if (style == GIMP_CUSTOM_STYLE_SOLID_COLOR)
+    gimp_fill_options_set_style (GIMP_FILL_OPTIONS (layer->options->stroke_options),
+                                 GIMP_FILL_STYLE_FG_COLOR);
+  else
+    gimp_fill_options_set_style (GIMP_FILL_OPTIONS (layer->options->stroke_options),
+                                 GIMP_FILL_STYLE_PATTERN);
+
+  /* Fill the path object onto the layer */
   gimp_drawable_fill_path (GIMP_DRAWABLE (layer),
                            layer->options->fill_options,
                            path, FALSE, NULL);

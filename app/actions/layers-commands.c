@@ -204,6 +204,10 @@ layers_edit_cmd_callback (GimpAction *action,
     {
       layers_edit_text_cmd_callback (action, value, data);
     }
+  else if (gimp_item_is_vector_layer (GIMP_ITEM (layers->data)))
+    {
+      layers_vector_fill_stroke_cmd_callback (action, value, data);
+    }
   else
     {
       layers_edit_attributes_cmd_callback (action, value, data);
@@ -273,7 +277,7 @@ layers_edit_vector_cmd_callback (GimpAction *action,
 
   layer = layers->data;
 
-  if (! gimp_drawable_is_vector_layer (GIMP_DRAWABLE (layer)))
+  if (! gimp_item_is_vector_layer (GIMP_ITEM (layer)))
     {
       layers_edit_attributes_cmd_callback (action, value, data);
       return;
