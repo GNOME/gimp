@@ -45,7 +45,7 @@ gimp_vector_layer_options_parasite_name (void)
 }
 
 GimpParasite *
-gimp_vector_layer_options_to_parasite (const GimpVectorLayerOptions *options)
+gimp_vector_layer_options_to_parasite (GimpVectorLayerOptions *options)
 {
   GimpParasite *parasite;
   gchar        *str;
