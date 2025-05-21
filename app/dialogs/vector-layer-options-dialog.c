@@ -36,10 +36,13 @@
 #include "core/gimpstrokeoptions.h"
 
 #include "widgets/gimpcolorpanel.h"
+#include "widgets/gimpcontainercombobox.h"
+#include "widgets/gimpcontainerview.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpstrokeeditor.h"
 
+#include "vectors/gimppath.h"
 #include "vectors/gimpvectorlayer.h"
 #include "vectors/gimpvectorlayeroptions.h"
 
@@ -53,12 +56,16 @@
 
 /*  local functions  */
 
-static void  vector_layer_options_dialog_notify   (GObject          *options,
-                                                   const GParamSpec *pspec,
-                                                   GtkWidget        *dialog);
-static void  vector_layer_options_dialog_response (GtkWidget        *widget,
-                                                   gint              response_id,
-                                                   GtkWidget        *dialog);
+static void  vector_layer_options_dialog_notify        (GObject          *options,
+                                                        const GParamSpec *pspec,
+                                                        GtkWidget        *dialog);
+static void  vector_layer_options_dialog_response      (GtkWidget        *widget,
+                                                        gint              response_id,
+                                                        GtkWidget        *dialog);
+static void  vector_layer_options_dialog_path_selected (GtkWidget        *widget,
+                                                        GList            *items,
+                                                        GList            *paths,
+                                                        GtkWidget        *dialog);
 
 
 /*  public function  */
@@ -76,6 +83,7 @@ vector_layer_options_dialog_new (GimpVectorLayer *layer,
   GimpStrokeOptions      *stroke_options;
   GtkWidget              *dialog;
   GtkWidget              *main_vbox;
+  GtkWidget              *combo;
 
   g_return_val_if_fail (GIMP_IS_VECTOR_LAYER (layer), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -90,7 +98,7 @@ vector_layer_options_dialog_new (GimpVectorLayer *layer,
                                      context,
                                      title, "gimp-vectorlayer-options",
                                      icon_name,
-                                     _("Choose vector layer options"),
+                                     _("Choose Vector Layer Options"),
                                      parent,
                                      gimp_standard_help_func,
                                      help_id,
@@ -136,6 +144,19 @@ vector_layer_options_dialog_new (GimpVectorLayer *layer,
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_set_visible (main_vbox, TRUE);
+
+
+  combo = gimp_container_combo_box_new (gimp_image_get_paths (gimp_item_get_image (GIMP_ITEM (layer))),
+                                        context,
+                                        GIMP_VIEW_SIZE_SMALL, 1);
+  gimp_container_view_select_item (GIMP_CONTAINER_VIEW (combo),
+                                   GIMP_VIEWABLE (saved_options->path));
+  g_signal_connect_object (combo, "select-items",
+                           G_CALLBACK (vector_layer_options_dialog_path_selected),
+                           dialog, 0);
+
+  gtk_box_pack_start (GTK_BOX (main_vbox), combo, FALSE, FALSE, 0);
+  gtk_widget_set_visible (combo, TRUE);
 
   /* The fill editor */
   {
@@ -202,6 +223,7 @@ vector_layer_options_dialog_response (GtkWidget *widget,
                                       GtkWidget *dialog)
 {
   GimpVectorLayer        *layer;
+  GimpPath               *path;
   GimpVectorLayerOptions *saved_options;
   GimpFillOptions        *fill_options;
   GimpStrokeOptions      *stroke_options;
@@ -215,7 +237,7 @@ vector_layer_options_dialog_response (GtkWidget *widget,
   switch (response_id)
     {
     case GTK_RESPONSE_OK:
-      if (layer && layer->options )
+      if (layer && layer->options)
 	    {
           gimp_config_sync (G_OBJECT (saved_options->fill_options),
                            G_OBJECT (layer->options->fill_options), 0);
@@ -240,9 +262,40 @@ vector_layer_options_dialog_response (GtkWidget *widget,
                         G_OBJECT (fill_options), 0);
       gimp_config_sync (G_OBJECT (saved_options->stroke_options),
                         G_OBJECT (stroke_options), 0);
+      if (layer && layer->options)
+        {
+          g_object_get (saved_options, "path", &path, NULL);
+          g_object_set (layer->options, "path", path, NULL);
+
+          gimp_vector_layer_refresh (layer);
+          gimp_image_flush (gimp_item_get_image (GIMP_ITEM (layer)));
+        }
 
       if (response_id != RESPONSE_RESET)
         gtk_widget_destroy (dialog);
       break;
+    }
+}
+
+static void
+vector_layer_options_dialog_path_selected (GtkWidget *widget,
+                                           GList     *items,
+                                           GList     *paths,
+                                           GtkWidget *dialog)
+{
+  GimpPath        *path = NULL;
+  GimpVectorLayer *layer;
+
+  layer = g_object_get_data (G_OBJECT (dialog), "layer");
+
+  if (items)
+    path = items->data;
+
+  if (path && GIMP_IS_PATH (path))
+    {
+      g_object_set (layer->options, "path", path, NULL);
+
+      gimp_vector_layer_refresh (layer);
+      gimp_image_flush (gimp_item_get_image (GIMP_ITEM (layer)));
     }
 }
