@@ -11,10 +11,19 @@ For reminder, GIMP website also displays a [list of past
 splashes](https://www.gimp.org/about/splash/) which may not be as exhaustive.
 
 # Stable releases
-# 3.0 series
+# 3 series
 
 *Note: from the 3.0 series and onward, we are planning to release with a new
 splash screen for every minor version increments.*
+
+## GIMP 3.0
+
+* [GIMP 3.0 series](https://gitlab.gnome.org/GNOME/gimp-data/-/commit/e62f1905dcef7ec831ea6c052bb035eb37eaa69e)
+  by Sevenix, CC by-sa 4.0.
+
+  ![Splash for GIMP 3.0](https://www.gimp.org/news/2025/03/16/gimp-3-0-released/gimp-3.0-splash.jpg)
+
+  *Note: the "3.0.0" on the bottom right was replaced to "3.0" in GIMP 3.0.4*
 
 # Up to 2.10 series
 
@@ -62,6 +71,18 @@ The following splash images didn't make it for a stable release:
   ![Splash for GIMP 2.8](https://gitlab.gnome.org/GNOME/gimp/-/raw/b1d09cc7264899b8fec50a2e3a20f57506fa1da8/data/images/gimp-splash.png)
 
 # Development releases
+## 3.0 RCs
+
+* [GIMP 3.0.0 RC2](https://gitlab.gnome.org/GNOME/gimp-data/-/commit/adf34d068663fa17758d8fb1af9a427e7f34fe1e)
+  by Sevenix, CC by-sa 4.0.
+
+  ![Splash for GIMP 3.0.0 RC2](https://www.gimp.org/news/2024/12/27/gimp-3-0-RC2-released/gimp-3.0.RC2-splash.jpg)
+
+* [GIMP 3.0.0 RC1](https://gitlab.gnome.org/GNOME/gimp-data/-/commit/be37d3fee97be70bb5856f0c8c6d3e756f71f2ff)
+  by Sevenix, CC by-sa 4.0.
+
+  ![Splash for GIMP 3.0.0 RC1](https://www.gimp.org/news/2024/11/06/gimp-3-0-RC1-released/gimp-3.0.RC1-splash.jpg)
+
 ## 2.99 series
 
 * [GIMP 2.99.16 and 2.99.18](https://gitlab.gnome.org/GNOME/gimp/-/blob/7eea3c8622e38924fcf7e37c45e5a675d6c04040/data/images/gimp-splash.png)
