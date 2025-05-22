@@ -686,6 +686,11 @@ menuitem menuitem {
   background: @extreme-bg-color;
 }
 
+menubar menuitem {
+  min-height: 16px;
+  padding: 4px 8px;
+}
+
 /* A top (File, Edit) menubar item when its menu is expanded. */
 menubar > menuitem:hover {
   color: @fg-color;
