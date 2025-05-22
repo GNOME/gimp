@@ -108,16 +108,18 @@ typedef enum
 #define MIN_BLEND_AMOUNT 0
 #define MAX_BLEND_AMOUNT 1.0
 
-#define DRAW_POINT(buffer, bufsize, index)         \
-  do                                               \
-    {                                              \
-      if ((index) >= 0 && (index) + 2 < (bufsize)) \
-        {                                          \
-          buffer[(index) + 0] = BLACK_R;           \
-          buffer[(index) + 1] = BLACK_G;           \
-          buffer[(index) + 2] = BLACK_B;           \
-        }                                          \
-    }                                              \
+#define DRAW_POINT(buffer, bufsize, index, alpha)    \
+  do                                                 \
+    {                                                \
+      if ((index) >= 0 && (index) + 2 < (bufsize))   \
+        {                                            \
+          buffer[(index) + 0] = BLACK_R;             \
+          buffer[(index) + 1] = BLACK_G;             \
+          buffer[(index) + 2] = BLACK_B;             \
+          if (alpha && (index) + 3 < (bufsize))      \
+            buffer[(index) + 3] = 255;               \
+        }                                            \
+    }                                                \
   while (0)
 
 #define DARKEN_POINT(buffer, bufsize, index, delta, temp)                \
@@ -213,56 +215,108 @@ static gboolean jigsaw_dialog                    (GimpProcedure       *procedure
                                                   GObject             *config,
                                                   GimpDrawable        *drawable);
 
-static void     draw_jigsaw        (GObject   *config,
-                                    guchar    *buffer,
-                                    gint       bufsize,
-                                    gint       width,
-                                    gint       height,
-                                    gint       bytes,
-                                    gboolean   preview_mode);
+static void     draw_jigsaw                      (GObject             *config,
+                                                  guchar              *buffer,
+                                                  gint                 bufsize,
+                                                  gint                 width,
+                                                  gint                 height,
+                                                  gint                 bytes,
+                                                  gboolean             has_alpha,
+                                                  gboolean             preview_mode);
 
-static void draw_vertical_border   (guchar *buffer, gint bufsize,
-                                    gint width, gint height,
-                                    gint bytes, gint x_offset, gint ytiles,
-                                    gint blend_lines, gdouble blend_amount);
-static void draw_horizontal_border (guchar *buffer, gint bufsize,
-                                    gint width, gint bytes,
-                                    gint y_offset, gint xtiles,
-                                    gint blend_lines, gdouble blend_amount);
-static void draw_vertical_line     (guchar *buffer, gint bufsize,
-                                    gint width, gint bytes,
-                                    gint px[2], gint py[2]);
-static void draw_horizontal_line   (guchar *buffer, gint bufsize,
-                                    gint width, gint bytes,
-                                    gint px[2], gint py[2]);
-static void darken_vertical_line   (guchar *buffer, gint bufsize,
-                                    gint width, gint bytes,
-                                    gint px[2], gint py[2], gdouble delta);
-static void lighten_vertical_line  (guchar *buffer, gint bufsize,
-                                    gint width, gint bytes,
-                                    gint px[2], gint py[2], gdouble delta);
-static void darken_horizontal_line (guchar *buffer, gint bufsize,
-                                    gint width, gint bytes,
-                                    gint px[2], gint py[2], gdouble delta);
-static void lighten_horizontal_line(guchar *buffer, gint bufsize,
-                                    gint width, gint bytes,
-                                    gint px[2], gint py[2], gdouble delta);
-static void draw_right_bump        (guchar *buffer, gint bufsize,
-                                    gint width, gint bytes,
-                                    gint x_offset, gint curve_start_offset,
-                                    gint steps);
-static void draw_left_bump         (guchar *buffer, gint bufsize,
-                                    gint width, gint bytes,
-                                    gint x_offset, gint curve_start_offset,
-                                    gint steps);
-static void draw_up_bump           (guchar *buffer, gint bufsize,
-                                    gint width, gint bytes,
-                                    gint y_offset, gint curve_start_offset,
-                                    gint steps);
-static void draw_down_bump         (guchar *buffer, gint bufsize,
-                                    gint width, gint bytes,
-                                    gint y_offset, gint curve_start_offset,
-                                    gint steps);
+static void     draw_vertical_border             (guchar              *buffer,
+                                                  gint                 bufsize,
+                                                  gint                 width,
+                                                  gint                 height,
+                                                  gint                 bytes,
+                                                  gint                 x_offset,
+                                                  gint                 ytiles,
+                                                  gboolean             has_alpha,
+                                                  gint                 blend_lines,
+                                                  gdouble              blend_amount);
+static void     draw_horizontal_border           (guchar              *buffer,
+                                                  gint                 bufsize,
+                                                  gint                 width,
+                                                  gint                 bytes,
+                                                  gint                 y_offset,
+                                                  gint                 xtiles,
+                                                  gboolean             has_alpha,
+                                                  gint                 blend_lines,
+                                                  gdouble              blend_amount);
+static void     draw_vertical_line               (guchar              *buffer,
+                                                  gint                 bufsize,
+                                                  gint                 width,
+                                                  gint                 bytes,
+                                                  gint                 px[2],
+                                                  gint                 py[2],
+                                                  gboolean             has_alpha);
+static void     draw_horizontal_line             (guchar              *buffer,
+                                                  gint                 bufsize,
+                                                  gint                 width,
+                                                  gint                 bytes,
+                                                  gint                 px[2],
+                                                  gint                 py[2],
+                                                  gboolean             has_alpha);
+static void     darken_vertical_line             (guchar              *buffer,
+                                                  gint                 bufsize,
+                                                  gint                 width,
+                                                  gint                 bytes,
+                                                  gint                 px[2],
+                                                  gint                 py[2],
+                                                  gdouble              delta);
+static void     lighten_vertical_line            (guchar              *buffer,
+                                                  gint                 bufsize,
+                                                  gint                 width,
+                                                  gint                 bytes,
+                                                  gint                 px[2],
+                                                  gint                 py[2],
+                                                  gdouble              delta);
+static void     darken_horizontal_line           (guchar              *buffer,
+                                                  gint                 bufsize,
+                                                  gint                 width,
+                                                  gint                 bytes,
+                                                  gint                 px[2],
+                                                  gint                 py[2],
+                                                  gdouble              delta);
+static void     lighten_horizontal_line          (guchar              *buffer,
+                                                  gint                 bufsize,
+                                                  gint                 width,
+                                                  gint                 bytes,
+                                                  gint                 px[2],
+                                                  gint                 py[2],
+                                                  gdouble              delta);
+static void     draw_right_bump                  (guchar              *buffer,
+                                                  gint                 bufsize,
+                                                  gint                 width,
+                                                  gint                 bytes,
+                                                  gint                 x_offset,
+                                                  gint                 curve_start_offset,
+                                                  gboolean             has_alpha,
+                                                  gint                 steps);
+static void     draw_left_bump                   (guchar              *buffer,
+                                                  gint                 bufsize,
+                                                  gint                 width,
+                                                  gint                 bytes,
+                                                  gint                 x_offset,
+                                                  gint                 curve_start_offset,
+                                                  gboolean             has_alpha,
+                                                  gint                 steps);
+static void     draw_up_bump                     (guchar              *buffer,
+                                                  gint                 bufsize,
+                                                  gint                 width,
+                                                  gint                 bytes,
+                                                  gint                 y_offset,
+                                                  gint                 curve_start_offset,
+                                                  gboolean             has_alpha,
+                                                  gint                 steps);
+static void     draw_down_bump                   (guchar              *buffer,
+                                                  gint                 bufsize,
+                                                  gint                 width,
+                                                  gint                 bytes,
+                                                  gint                 y_offset,
+                                                  gint                 curve_start_offset,
+                                                  gboolean             has_alpha,
+                                                  gint                 steps);
 static void darken_right_bump      (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
                                     gint x_offset, gint curve_start_offset,
@@ -300,32 +354,37 @@ static void generate_grid          (gint width, gint height, gint xtiles, gint y
 static void generate_bezier        (gint px[4], gint py[4], gint steps,
                                     gint *cachex, gint *cachey);
 
-static void malloc_cache           (gint blend_lines);
-static void free_cache             (gint blend_lines);
+static void malloc_cache           (gint      blend_lines);
+static void free_cache             (gint      blend_lines);
 
-static void init_right_bump        (gint x,
-                                    gint y,
-                                    gint blend_lines,
-                                    gint width,
-                                    gint height);
-static void init_left_bump         (gint x,
-                                    gint y,
-                                    gint blend_lines,
-                                    gint width,
-                                    gint height);
-static void init_up_bump           (gint x,
-                                    gint y,
-                                    gint blend_lines,
-                                    gint width,
-                                    gint height);
-static void init_down_bump         (gint x,
-                                    gint y,
-                                    gint blend_lines,
-                                    gint width,
-                                    gint height);
-static void draw_bezier_line       (guchar *buffer, gint bufsize,
-                                    gint width, gint bytes,
-                                    gint steps, gint *cx, gint *cy);
+static void init_right_bump        (gint      x,
+                                    gint      y,
+                                    gint      blend_lines,
+                                    gint      width,
+                                    gint      height);
+static void init_left_bump         (gint      x,
+                                    gint      y,
+                                    gint      blend_lines,
+                                    gint      width,
+                                    gint      height);
+static void init_up_bump           (gint      x,
+                                    gint      y,
+                                    gint      blend_lines,
+                                    gint      width,
+                                    gint      height);
+static void init_down_bump         (gint      x,
+                                    gint      y,
+                                    gint      blend_lines,
+                                    gint      width,
+                                    gint      height);
+static void draw_bezier_line       (guchar   *buffer,
+                                    gint      bufsize,
+                                    gint      width,
+                                    gint      bytes,
+                                    gboolean  has_alpha,
+                                    gint      steps,
+                                    gint     *cx,
+                                    gint     *cy);
 static void darken_bezier_line     (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
                                     gint x_offset, gint y_offset, gint steps,
@@ -334,18 +393,30 @@ static void lighten_bezier_line    (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
                                     gint x_offset, gint y_offset, gint steps,
                                     gint *cx, gint *cy, gdouble delta);
-static void draw_bezier_vertical_border   (guchar *buffer, gint bufsize,
-                                           gint width, gint height,
-                                           gint bytes,
-                                           gint x_offset, gint xtiles,
-                                           gint ytiles, gint blend_lines,
-                                           gdouble blend_amount, gint steps);
-static void draw_bezier_horizontal_border (guchar *buffer, gint bufsize,
-                                           gint width, gint height,
-                                           gint bytes,
-                                           gint x_offset, gint xtiles,
-                                           gint ytiles, gint blend_lines,
-                                           gdouble blend_amount, gint steps);
+static void draw_bezier_vertical_border   (guchar   *buffer,
+                                           gint      bufsize,
+                                           gint      width,
+                                           gint      height,
+                                           gint      bytes,
+                                           gint      x_offset,
+                                           gint      xtiles,
+                                           gint      ytiles,
+                                           gboolean  has_alpha,
+                                           gint      blend_lines,
+                                           gdouble   blend_amount,
+                                           gint      steps);
+static void draw_bezier_horizontal_border (guchar   *buffer,
+                                           gint      bufsize,
+                                           gint      width,
+                                           gint      height,
+                                           gint      bytes,
+                                           gint      x_offset,
+                                           gint      xtiles,
+                                           gint      ytiles,
+                                           gboolean  has_alpha,
+                                           gint      blend_lines,
+                                           gdouble   blend_amount,
+                                           gint      steps);
 
 
 G_DEFINE_TYPE (Jigsaw, jigsaw, GIMP_TYPE_PLUG_IN)
@@ -505,6 +576,7 @@ jigsaw (GObject      *config,
   gint        x;
   gint        y;
   gint        blend_lines;
+  gboolean    has_alpha;
 
   g_object_get (config,
                 "x",           &x,
@@ -512,6 +584,7 @@ jigsaw (GObject      *config,
                 "blend-lines", &blend_lines,
                 NULL);
 
+  has_alpha = gimp_drawable_has_alpha (drawable);
   if (preview)
     {
       GBytes *buffer_bytes;
@@ -520,7 +593,8 @@ jigsaw (GObject      *config,
 
       buffer_bytes = gimp_drawable_get_thumbnail_data (drawable,
                                                        width, height,
-                                                       &width, &height, &bytes);
+                                                       &width, &height,
+                                                       &bytes);
 
       buffer = g_bytes_unref_to_data (buffer_bytes, &buffer_size);
     }
@@ -554,11 +628,11 @@ jigsaw (GObject      *config,
 
   malloc_cache (blend_lines);
   draw_jigsaw (config, buffer, buffer_size, width, height, bytes,
-               preview != NULL);
+               has_alpha, preview != NULL);
   free_cache (blend_lines);
 
   /* cleanup */
-  if (preview)
+  if (preview && GIMP_IS_PREVIEW (preview))
     {
       gimp_preview_draw_buffer (preview, buffer, width * bytes);
 
@@ -585,10 +659,10 @@ static void
 jigsaw_preview (GtkWidget *widget,
                 GObject   *config)
 {
-  GimpDrawablePreview  *preview;
-  GimpDrawable         *drawable;
+  GimpDrawablePreview *preview;
+  GimpDrawable        *drawable;
 
-  preview = GIMP_DRAWABLE_PREVIEW (widget);
+  preview  = GIMP_DRAWABLE_PREVIEW (widget);
   drawable = gimp_drawable_preview_get_drawable (preview);
 
   jigsaw (config, drawable, GIMP_PREVIEW (widget));
@@ -633,6 +707,7 @@ draw_jigsaw (GObject  *config,
              gint      width,
              gint      height,
              gint      bytes,
+             gboolean  has_alpha,
              gboolean  preview_mode)
 {
   gint i;
@@ -679,16 +754,16 @@ draw_jigsaw (GObject  *config,
       for (i = 0; i < xlines; i++)
         {
           draw_vertical_border (buffer, bufsize, width, height, bytes,
-                                x[i], ytiles,
+                                x[i], ytiles, has_alpha,
                                 blend_lines, blend_amount);
-          if (!preview_mode)
+          if (! preview_mode)
             gimp_progress_update ((gdouble) i / (gdouble) progress_total);
         }
       for (i = 0; i < ylines; i++)
         {
           draw_horizontal_border (buffer, bufsize, width, bytes, y[i], xtiles,
-                                  blend_lines, blend_amount);
-          if (!preview_mode)
+                                  has_alpha, blend_lines, blend_amount);
+          if (! preview_mode)
             gimp_progress_update ((gdouble) (i + xlines) / (gdouble) progress_total);
         }
     }
@@ -697,16 +772,16 @@ draw_jigsaw (GObject  *config,
       for (i = 0; i < xlines; i++)
         {
           draw_bezier_vertical_border (buffer, bufsize, width, height, bytes,
-                                       x[i], xtiles, ytiles, blend_lines,
-                                       blend_amount, steps);
-          if (!preview_mode)
+                                       x[i], xtiles, ytiles, has_alpha,
+                                       blend_lines, blend_amount, steps);
+          if (! preview_mode)
             gimp_progress_update ((gdouble) i / (gdouble) progress_total);
         }
       for (i = 0; i < ylines; i++)
         {
           draw_bezier_horizontal_border (buffer, bufsize, width, height, bytes,
-                                         y[i], xtiles, ytiles, blend_lines,
-                                         blend_amount, steps);
+                                         y[i], xtiles, ytiles, has_alpha,
+                                         blend_lines, blend_amount, steps);
           if (!preview_mode)
             gimp_progress_update ((gdouble) (i + xlines) / (gdouble) progress_total);
         }
@@ -716,7 +791,9 @@ draw_jigsaw (GObject  *config,
       g_printerr (_("draw_jigsaw: bad style\n"));
       gimp_quit ();
     }
-  gimp_progress_update (1.0);
+
+  if (! preview_mode)
+    gimp_progress_update (1.0);
 
   g_free (globals.gridx);
   g_free (globals.gridy);
@@ -730,6 +807,7 @@ draw_vertical_border (guchar  *buffer,
                       gint     bytes,
                       gint     x_offset,
                       gint     ytiles,
+                      gboolean has_alpha,
                       gint     blend_lines,
                       gdouble  blend_amount)
 {
@@ -752,7 +830,7 @@ draw_vertical_border (guchar  *buffer,
       /* first straight line from top downwards */
       px[0] = px[1] = x_offset;
       py[0] = y_offset; py[1] = y_offset + curve_start_offset - 1;
-      draw_vertical_line (buffer, bufsize, width, bytes, px, py);
+      draw_vertical_line (buffer, bufsize, width, bytes, px, py, has_alpha);
       delta = blend_amount;
       dy[0] = ly[0] = py[0]; dy[1] = ly[1] = py[1];
       if (!right)
@@ -774,7 +852,7 @@ draw_vertical_border (guchar  *buffer,
         {
           draw_right_bump (buffer, bufsize, width, bytes, x_offset,
                            y_offset + curve_start_offset,
-                           globals.steps[RIGHT]);
+                           has_alpha, globals.steps[RIGHT]);
           delta = blend_amount;
           for (j = 0; j < blend_lines; j++)
             {
@@ -793,7 +871,7 @@ draw_vertical_border (guchar  *buffer,
         {
           draw_left_bump (buffer, bufsize, width, bytes, x_offset,
                           y_offset + curve_start_offset,
-                          globals.steps[LEFT]);
+                          has_alpha, globals.steps[LEFT]);
           delta = blend_amount;
           for (j = 0; j < blend_lines; j++)
             {
@@ -812,7 +890,7 @@ draw_vertical_border (guchar  *buffer,
       px[0] = px[1] = x_offset;
       py[0] = y_offset + curve_end_offset;
       py[1] = globals.gridy[i];
-      draw_vertical_line (buffer, bufsize, width, bytes, px, py);
+      draw_vertical_line (buffer, bufsize, width, bytes, px, py, has_alpha);
       delta = blend_amount;
       dy[0] = ly[0] = py[0]; dy[1] = ly[1] = py[1];
       if (right)
@@ -841,6 +919,7 @@ draw_horizontal_border (guchar   *buffer,
                         gint      bytes,
                         gint      y_offset,
                         gint      xtiles,
+                        gboolean  has_alpha,
                         gint      blend_lines,
                         gdouble   blend_amount)
 {
@@ -863,7 +942,7 @@ draw_horizontal_border (guchar   *buffer,
       /* first horizontal line across */
       px[0] = x_offset; px[1] = x_offset + curve_start_offset - 1;
       py[0] = py[1] = y_offset;
-      draw_horizontal_line (buffer, bufsize, width, bytes, px, py);
+      draw_horizontal_line (buffer, bufsize, width, bytes, px, py, has_alpha);
       delta = blend_amount;
       dx[0] = lx[0] = px[0]; dx[1] = lx[1] = px[1];
       if (up)
@@ -886,7 +965,7 @@ draw_horizontal_border (guchar   *buffer,
         {
           draw_up_bump (buffer, bufsize, width, bytes, y_offset,
                         x_offset + curve_start_offset,
-                        globals.steps[UP]);
+                        has_alpha, globals.steps[UP]);
           delta = blend_amount;
           for (j = 0; j < blend_lines; j++)
             {
@@ -905,7 +984,7 @@ draw_horizontal_border (guchar   *buffer,
         {
           draw_down_bump (buffer, bufsize, width, bytes, y_offset,
                           x_offset + curve_start_offset,
-                          globals.steps[DOWN]);
+                          has_alpha, globals.steps[DOWN]);
           delta = blend_amount;
           for (j = 0; j < blend_lines; j++)
             {
@@ -924,7 +1003,7 @@ draw_horizontal_border (guchar   *buffer,
       px[0] = x_offset + curve_end_offset;
       px[1] = globals.gridx[i];
       py[0] = py[1] = y_offset;
-      draw_horizontal_line (buffer, bufsize, width, bytes, px, py);
+      draw_horizontal_line (buffer, bufsize, width, bytes, px, py, has_alpha);
       delta = blend_amount;
       dx[0] = lx[0] = px[0]; dx[1] = lx[1] = px[1];
       if (!up)
@@ -953,7 +1032,8 @@ draw_vertical_line (guchar   *buffer,
                     gint      width,
                     gint      bytes,
                     gint      px[2],
-                    gint      py[2])
+                    gint      py[2],
+                    gboolean  has_alpha)
 {
   gint i;
   gint rowstride;
@@ -966,7 +1046,7 @@ draw_vertical_line (guchar   *buffer,
 
   for (i = 0; i < length; i++)
     {
-      DRAW_POINT (buffer, bufsize, index);
+      DRAW_POINT (buffer, bufsize, index, has_alpha);
       index += rowstride;
     }
 }
@@ -978,7 +1058,8 @@ draw_horizontal_line (guchar   *buffer,
                       gint      width,
                       gint      bytes,
                       gint      px[2],
-                      gint      py[2])
+                      gint      py[2],
+                      gboolean  has_alpha)
 {
   gint i;
   gint rowstride;
@@ -991,7 +1072,7 @@ draw_horizontal_line (guchar   *buffer,
 
   for (i = 0; i < length; i++)
     {
-      DRAW_POINT (buffer, bufsize, index);
+      DRAW_POINT (buffer, bufsize, index, has_alpha);
       index += bytes;
     }
 }
@@ -1003,6 +1084,7 @@ draw_right_bump (guchar   *buffer,
                  gint      bytes,
                  gint      x_offset,
                  gint      curve_start_offset,
+                 gboolean  has_alpha,
                  gint      steps)
 {
   gint i;
@@ -1017,12 +1099,12 @@ draw_right_bump (guchar   *buffer,
       x = globals.cachex1[RIGHT][i] + x_offset;
       y = globals.cachey1[RIGHT][i] + curve_start_offset;
       index = y * rowstride + x * bytes;
-      DRAW_POINT (buffer, bufsize, index);
+      DRAW_POINT (buffer, bufsize, index, has_alpha);
 
       x = globals.cachex2[RIGHT][i] + x_offset;
       y = globals.cachey2[RIGHT][i] + curve_start_offset;
       index = y * rowstride + x * bytes;
-      DRAW_POINT (buffer, bufsize, index);
+      DRAW_POINT (buffer, bufsize, index, has_alpha);
     }
 }
 
@@ -1033,6 +1115,7 @@ draw_left_bump (guchar   *buffer,
                 gint      bytes,
                 gint      x_offset,
                 gint      curve_start_offset,
+                gboolean  has_alpha,
                 gint      steps)
 {
   gint i;
@@ -1047,12 +1130,12 @@ draw_left_bump (guchar   *buffer,
       x = globals.cachex1[LEFT][i] + x_offset;
       y = globals.cachey1[LEFT][i] + curve_start_offset;
       index = y * rowstride + x * bytes;
-      DRAW_POINT (buffer, bufsize, index);
+      DRAW_POINT (buffer, bufsize, index, has_alpha);
 
       x = globals.cachex2[LEFT][i] + x_offset;
       y = globals.cachey2[LEFT][i] + curve_start_offset;
       index = y * rowstride + x * bytes;
-      DRAW_POINT (buffer, bufsize, index);
+      DRAW_POINT (buffer, bufsize, index, has_alpha);
     }
 }
 
@@ -1063,6 +1146,7 @@ draw_up_bump (guchar   *buffer,
               gint      bytes,
               gint      y_offset,
               gint      curve_start_offset,
+              gboolean  has_alpha,
               gint      steps)
 {
   gint i;
@@ -1077,12 +1161,12 @@ draw_up_bump (guchar   *buffer,
       x = globals.cachex1[UP][i] + curve_start_offset;
       y = globals.cachey1[UP][i] + y_offset;
       index = y * rowstride + x * bytes;
-      DRAW_POINT (buffer, bufsize, index);
+      DRAW_POINT (buffer, bufsize, index, has_alpha);
 
       x = globals.cachex2[UP][i] + curve_start_offset;
       y = globals.cachey2[UP][i] + y_offset;
       index = y * rowstride + x * bytes;
-      DRAW_POINT (buffer, bufsize, index);
+      DRAW_POINT (buffer, bufsize, index, has_alpha);
     }
 }
 
@@ -1093,6 +1177,7 @@ draw_down_bump (guchar   *buffer,
                 gint      bytes,
                 gint      y_offset,
                 gint      curve_start_offset,
+                gboolean  has_alpha,
                 gint      steps)
 {
   gint i;
@@ -1107,12 +1192,12 @@ draw_down_bump (guchar   *buffer,
       x = globals.cachex1[DOWN][i] + curve_start_offset;
       y = globals.cachey1[DOWN][i] + y_offset;
       index = y * rowstride + x * bytes;
-      DRAW_POINT (buffer, bufsize, index);
+      DRAW_POINT (buffer, bufsize, index, has_alpha);
 
       x = globals.cachex2[DOWN][i] + curve_start_offset;
       y = globals.cachey2[DOWN][i] + y_offset;
       index = y * rowstride + x * bytes;
-      DRAW_POINT (buffer, bufsize, index);
+      DRAW_POINT (buffer, bufsize, index, has_alpha);
     }
 }
 
@@ -2111,6 +2196,7 @@ draw_bezier_line (guchar   *buffer,
                   gint      bufsize,
                   gint      width,
                   gint      bytes,
+                  gboolean  has_alpha,
                   gint      steps,
                   gint     *cx,
                   gint     *cy)
@@ -2127,7 +2213,7 @@ draw_bezier_line (guchar   *buffer,
       x = cx[i];
       y = cy[i];
       index = y * rowstride + x * bytes;
-      DRAW_POINT (buffer, bufsize, index);
+      DRAW_POINT (buffer, bufsize, index, has_alpha);
     }
 }
 
@@ -2208,6 +2294,7 @@ draw_bezier_vertical_border (guchar   *buffer,
                              gint      x_offset,
                              gint      xtiles,
                              gint      ytiles,
+                             gboolean  has_alpha,
                              gint      blend_lines,
                              gdouble   blend_amount,
                              gint      steps)
@@ -2246,7 +2333,8 @@ draw_bezier_vertical_border (guchar   *buffer,
           px[2] = x_offset - WALL_XFACTOR3 * tile_width;
         }
       generate_bezier (px, py, steps, cachex, cachey);
-      draw_bezier_line (buffer, bufsize, width, bytes, steps, cachex, cachey);
+      draw_bezier_line (buffer, bufsize, width, bytes, has_alpha, steps,
+                        cachex, cachey);
       delta = blend_amount;
       for (j = 0; j < blend_lines; j++)
         {
@@ -2262,7 +2350,7 @@ draw_bezier_vertical_border (guchar   *buffer,
         {
           draw_right_bump (buffer, bufsize, width, bytes, x_offset,
                            y_offset + curve_start_offset,
-                           globals.steps[RIGHT]);
+                           has_alpha, globals.steps[RIGHT]);
           delta = blend_amount;
           for (j = 0; j < blend_lines; j++)
             {
@@ -2281,7 +2369,7 @@ draw_bezier_vertical_border (guchar   *buffer,
         {
           draw_left_bump (buffer, bufsize, width, bytes, x_offset,
                           y_offset + curve_start_offset,
-                          globals.steps[LEFT]);
+                          has_alpha, globals.steps[LEFT]);
           delta = blend_amount;
           for (j = 0; j < blend_lines; j++)
             {
@@ -2309,7 +2397,8 @@ draw_bezier_vertical_border (guchar   *buffer,
           px[2] = x_offset - WALL_XFACTOR3 * tile_width;
         }
       generate_bezier (px, py, steps, cachex, cachey);
-      draw_bezier_line (buffer, bufsize, width, bytes, steps, cachex, cachey);
+      draw_bezier_line (buffer, bufsize, width, bytes, has_alpha, steps,
+                        cachex, cachey);
       delta = blend_amount;
       for (j = 0; j < blend_lines; j++)
         {
@@ -2336,6 +2425,7 @@ draw_bezier_horizontal_border (guchar   *buffer,
                                gint      y_offset,
                                gint      xtiles,
                                gint      ytiles,
+                               gboolean  has_alpha,
                                gint      blend_lines,
                                gdouble   blend_amount,
                                gint      steps)
@@ -2373,7 +2463,8 @@ draw_bezier_horizontal_border (guchar   *buffer,
           py[2] = y_offset - WALL_YFACTOR3 * tile_height;
         }
       generate_bezier (px, py, steps, cachex, cachey);
-      draw_bezier_line (buffer, bufsize, width, bytes, steps, cachex, cachey);
+      draw_bezier_line (buffer, bufsize, width, bytes, has_alpha, steps,
+                        cachex, cachey);
       delta = blend_amount;
       for (j = 0; j < blend_lines; j++)
         {
@@ -2390,7 +2481,7 @@ draw_bezier_horizontal_border (guchar   *buffer,
         {
           draw_up_bump (buffer, bufsize, width, bytes, y_offset,
                         x_offset + curve_start_offset,
-                        globals.steps[UP]);
+                        has_alpha, globals.steps[UP]);
           delta = blend_amount;
           for (j = 0; j < blend_lines; j++)
             {
@@ -2409,7 +2500,7 @@ draw_bezier_horizontal_border (guchar   *buffer,
         {
           draw_down_bump (buffer, bufsize, width, bytes, y_offset,
                           x_offset + curve_start_offset,
-                          globals.steps[DOWN]);
+                          has_alpha, globals.steps[DOWN]);
           delta = blend_amount;
           for (j = 0; j < blend_lines; j++)
             {
@@ -2438,7 +2529,8 @@ draw_bezier_horizontal_border (guchar   *buffer,
           py[2] = y_offset - WALL_YFACTOR3 * tile_height;
         }
       generate_bezier (px, py, steps, cachex, cachey);
-      draw_bezier_line (buffer, bufsize, width, bytes, steps, cachex, cachey);
+      draw_bezier_line (buffer, bufsize, width, bytes, has_alpha, steps,
+                        cachex, cachey);
       delta = blend_amount;
       for (j = 0; j < blend_lines; j++)
         {
