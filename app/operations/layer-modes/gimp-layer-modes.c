@@ -1541,9 +1541,10 @@ gimp_layer_mode_get_format (GimpLayerMode           mode,
 
     case GIMP_LAYER_COLOR_SPACE_LAB:
       return babl_format_with_space ("CIE Lab alpha float", preferred_format);
-    }
 
-  g_return_val_if_reached (babl_format_with_space ("RGBA float", preferred_format));
+    default:
+      g_return_val_if_reached (babl_format_with_space ("RGBA float", preferred_format));
+    }
 }
 
 GimpLayerCompositeRegion

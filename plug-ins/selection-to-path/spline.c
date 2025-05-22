@@ -83,6 +83,9 @@ evaluate_spline (spline_type s, real t)
   real one_minus_t = 1.0 - t;
   polynomial_degree degree = SPLINE_DEGREE (s);
 
+  for (i = 0; i < 4; i++)
+    V[i] = new_spline ();
+
   for (i = 0; i <= degree; i++)
     V[0].v[i] = s.v[i];
 

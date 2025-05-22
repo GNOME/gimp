@@ -1034,13 +1034,10 @@ set_flame_preview (GimpProcedureConfig *proc_config)
     return;
 
   g_object_get (proc_config, "settings-data", &settings_bytes, NULL);
-  if (settings_bytes != NULL)
-    {
-      if (g_bytes_get_size (settings_bytes) == sizeof (FlameSettings))
-        config = *((FlameSettings *) g_bytes_get_data (settings_bytes, NULL));
-
-      g_bytes_unref (settings_bytes);
-    }
+  if (settings_bytes != NULL &&
+      g_bytes_get_size (settings_bytes) == sizeof (FlameSettings))
+    config = *((FlameSettings *) g_bytes_get_data (settings_bytes, NULL));
+  g_bytes_unref (settings_bytes);
 
   g_object_get (proc_config,
                 "x",                     &config.cp.center[0],
