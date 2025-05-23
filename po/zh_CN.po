@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-05-17 20:13+0000\n"
-"PO-Revision-Date: 2025-05-18 09:45+0800\n"
+"POT-Creation-Date: 2025-05-22 21:32+0000\n"
+"PO-Revision-Date: 2025-05-23 19:09+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -356,7 +356,7 @@ msgstr ""
 "环境变量 G_FILENAME_ENCODING。"
 
 #: app/actions/actions.c:113 app/dialogs/dialogs.c:426
-#: app/widgets/gimpbrusheditor.c:88
+#: app/widgets/gimpbrusheditor.c:89
 msgid "Brush Editor"
 msgstr "笔刷编辑器"
 
@@ -2557,7 +2557,7 @@ msgstr ""
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
 #: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2436
-#: app/core/gimppalette.c:583 app/core/gimppalette-import.c:223
+#: app/core/gimppalette.c:585 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:774 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "无标题"
@@ -3539,7 +3539,7 @@ msgid "White Balance operates only on RGB color layers."
 msgstr "仅对使用 RGB 颜色的图层进行白平衡操作。"
 
 #: app/actions/drawable-commands.c:103 app/core/gimpdrawable-levels.c:72
-#: app/tools/gimplevelstool.c:138
+#: app/tools/gimplevelstool.c:139
 msgid "Levels"
 msgstr "色阶"
 
@@ -11010,232 +11010,236 @@ msgid "Override theme-set icon sizes."
 msgstr "覆盖主题设置的图标大小。"
 
 #: app/config/gimprc-blurbs.h:562
+msgid "Use theme colors for preview"
+msgstr "对预览使用主题颜色"
+
+#: app/config/gimprc-blurbs.h:565
 msgid "The size of the icons to use."
 msgstr "要使用图标的大小。"
 
-#: app/config/gimprc-blurbs.h:565
+#: app/config/gimprc-blurbs.h:568
 msgid "When enabled, symbolic icons will be preferred if available."
 msgstr "启用时，若可用将优先使用符号图标。"
 
-#: app/config/gimprc-blurbs.h:571
+#: app/config/gimprc-blurbs.h:574
 msgid "Tweak font size of the graphical interface."
 msgstr "调整图形界面的字体大小。"
 
-#: app/config/gimprc-blurbs.h:574
+#: app/config/gimprc-blurbs.h:577
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
 msgstr "为“转换到特性文件”对话框设置默认再现意图。"
 
-#: app/config/gimprc-blurbs.h:577
+#: app/config/gimprc-blurbs.h:580
 msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
 msgstr "为“转换到特性文件”对话框设置默认“黑点补偿”状态。"
 
-#: app/config/gimprc-blurbs.h:581
+#: app/config/gimprc-blurbs.h:584
 msgid ""
 "Sets the default layer dithering method for the 'Convert Precision' dialog."
 msgstr "为“转换精度”对话框设置默认图层抖动方式。"
 
-#: app/config/gimprc-blurbs.h:584
+#: app/config/gimprc-blurbs.h:587
 msgid ""
 "Sets the default text layer dithering method for the 'Convert Precision' "
 "dialog."
 msgstr "为“转换精度”对话框设置默认文字图层抖动方式。"
 
-#: app/config/gimprc-blurbs.h:587
+#: app/config/gimprc-blurbs.h:590
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
 msgstr "为“转换精度”对话框设置默认通道抖动方式。"
 
-#: app/config/gimprc-blurbs.h:590
+#: app/config/gimprc-blurbs.h:593
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
 msgstr "为“转换到索引”对话框设置默认色板类型。"
 
-#: app/config/gimprc-blurbs.h:593
+#: app/config/gimprc-blurbs.h:596
 msgid ""
 "Sets the default maximum number of colors for the 'Convert to Indexed' "
 "dialog."
 msgstr "为“转换到索引”对话框设置默认最大颜色数量。"
 
-#: app/config/gimprc-blurbs.h:596
+#: app/config/gimprc-blurbs.h:599
 msgid ""
 "Sets the default 'Remove duplicate colors' state for the 'Convert to "
 "Indexed' dialog."
 msgstr "为“转换到索引”对话框设置默认“移除重复颜色”状态。"
 
-#: app/config/gimprc-blurbs.h:599
+#: app/config/gimprc-blurbs.h:602
 msgid "Sets the default dithering type for the 'Convert to Indexed' dialog."
 msgstr "为“转换到索引”对话框设置默认抖动类型。"
 
-#: app/config/gimprc-blurbs.h:602
+#: app/config/gimprc-blurbs.h:605
 msgid ""
 "Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog."
 msgstr "为“转换到索引”对话框设置默认“抖动透明”状态。"
 
-#: app/config/gimprc-blurbs.h:605
+#: app/config/gimprc-blurbs.h:608
 msgid ""
 "Sets the default 'Dither text layers' state for the 'Convert to Indexed' "
 "dialog."
 msgstr "为“转换到索引”对话框设置默认“抖动文字图层”状态。"
 
-#: app/config/gimprc-blurbs.h:608
+#: app/config/gimprc-blurbs.h:611
 msgid "Sets the default fill type for the 'Canvas Size' dialog."
 msgstr "为“画布大小”对话框设置默认填充类型。"
 
-#: app/config/gimprc-blurbs.h:611
+#: app/config/gimprc-blurbs.h:614
 msgid "Sets the default set of layers to resize for the 'Canvas Size' dialog."
 msgstr "为“画布大小”对话框设置默认的图层缩放设定。"
 
-#: app/config/gimprc-blurbs.h:614
+#: app/config/gimprc-blurbs.h:617
 msgid ""
 "Sets the default 'Resize text layers' state for the 'Canvas Size' dialog."
 msgstr "为“画布大小”对话框设置默认“缩放文字图层”状态。"
 
-#: app/config/gimprc-blurbs.h:617
+#: app/config/gimprc-blurbs.h:620
 msgid "Sets how items are searched and selected from a textual pattern."
 msgstr "设置如何从文本模式中搜索并选择项目。"
 
-#: app/config/gimprc-blurbs.h:620
+#: app/config/gimprc-blurbs.h:623
 msgid "Sets the default layer name for the 'New Layer' dialog."
 msgstr "为“新建图层”对话框设置默认图层名称。"
 
-#: app/config/gimprc-blurbs.h:623
+#: app/config/gimprc-blurbs.h:626
 msgid "Sets the default mode for the 'New Layer' dialog."
 msgstr "为“新建图层”对话框设置默认模式。"
 
-#: app/config/gimprc-blurbs.h:626
+#: app/config/gimprc-blurbs.h:629
 msgid "Sets the default blend space for the 'New Layer' dialog."
 msgstr "为“新建图层”对话框设置默认混合空间。"
 
-#: app/config/gimprc-blurbs.h:629
+#: app/config/gimprc-blurbs.h:632
 msgid "Sets the default composite space for the 'New Layer' dialog."
 msgstr "为“新建图层”对话框设置默认合成空间。"
 
-#: app/config/gimprc-blurbs.h:632
+#: app/config/gimprc-blurbs.h:635
 msgid "Sets the default composite mode for the 'New Layer' dialog."
 msgstr "为“新建图层”对话框设置默认合成模式。"
 
-#: app/config/gimprc-blurbs.h:635
+#: app/config/gimprc-blurbs.h:638
 msgid "Sets the default opacity for the 'New Layer' dialog."
 msgstr "为“新建图层”对话框设置默认不透明度。"
 
-#: app/config/gimprc-blurbs.h:638
+#: app/config/gimprc-blurbs.h:641
 msgid "Sets the default fill type for the 'New Layer' dialog."
 msgstr "为“新建图层”对话框设置默认填充类型。"
 
-#: app/config/gimprc-blurbs.h:641
+#: app/config/gimprc-blurbs.h:644
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
 msgstr "为“图层边界大小”对话框设置默认填充类型。"
 
-#: app/config/gimprc-blurbs.h:644
+#: app/config/gimprc-blurbs.h:647
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
 msgstr "为“添加图层蒙版”对话框设置默认蒙版。"
 
-#: app/config/gimprc-blurbs.h:647
+#: app/config/gimprc-blurbs.h:650
 msgid "Sets the default 'invert mask' state for the 'Add Layer Mask' dialog."
 msgstr "为“添加图层蒙版”对话框设置默认“反转蒙版”状态。"
 
-#: app/config/gimprc-blurbs.h:650
+#: app/config/gimprc-blurbs.h:653
 msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
 msgstr "为“合并可见图层”对话框设置默认合并类型。"
 
-#: app/config/gimprc-blurbs.h:653
+#: app/config/gimprc-blurbs.h:656
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr "为“合并可见图层”对话框设置默认“仅激活图层组”。"
 
-#: app/config/gimprc-blurbs.h:656
+#: app/config/gimprc-blurbs.h:659
 msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
 msgstr "为“合并可见图层”对话框设置默认“丢弃不可见图层”。"
 
-#: app/config/gimprc-blurbs.h:659
+#: app/config/gimprc-blurbs.h:662
 msgid "Sets the default channel name for the 'New Channel' dialog."
 msgstr "为“新建通道”对话框设置默认通道名称。"
 
-#: app/config/gimprc-blurbs.h:662
+#: app/config/gimprc-blurbs.h:665
 msgid "Sets the default color and opacity for the 'New Channel' dialog."
 msgstr "为“新建通道”对话框设置默认颜色和不透明度。"
 
-#: app/config/gimprc-blurbs.h:665
+#: app/config/gimprc-blurbs.h:668
 msgid "Sets the default path name for the 'New Path' dialog."
 msgstr "为“新路径”对话框设置默认路径名称。"
 
-#: app/config/gimprc-blurbs.h:668
+#: app/config/gimprc-blurbs.h:671
 msgid "Sets the default folder path for the 'Export Path' dialog."
 msgstr "为“导出路径”对话框设置默认文件夹路径。"
 
-#: app/config/gimprc-blurbs.h:671
+#: app/config/gimprc-blurbs.h:674
 msgid ""
 "Sets the default 'Export the selected paths' state for the 'Export Path' "
 "dialog."
 msgstr "为“导出路径”对话框设置默认“导出选中路径”状态。"
 
-#: app/config/gimprc-blurbs.h:674
+#: app/config/gimprc-blurbs.h:677
 msgid "Sets the default folder path for the 'Import Path' dialog."
 msgstr "为“导入路径”对话框设置默认文件夹路径。"
 
-#: app/config/gimprc-blurbs.h:677
+#: app/config/gimprc-blurbs.h:680
 msgid ""
 "Sets the default 'Merge imported paths' state for the 'Import Path' dialog."
 msgstr "为“导入路径”对话框设置默认“合并导入的路径”状态。"
 
-#: app/config/gimprc-blurbs.h:680
+#: app/config/gimprc-blurbs.h:683
 msgid ""
 "Sets the default 'Scale imported paths to fit size' state for the 'Import "
 "Path' dialog."
 msgstr "为“导入路径”对话框设置默认“缩放导入的路径到适应大小”状态。"
 
-#: app/config/gimprc-blurbs.h:683
+#: app/config/gimprc-blurbs.h:686
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
 msgstr "为“羽化选区“对话框设置默认羽化半径。"
 
-#: app/config/gimprc-blurbs.h:686
+#: app/config/gimprc-blurbs.h:689
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Feather Selection' dialog."
 msgstr "为“羽化选区”对话框设置默认“选中区域超出图像”配置。"
 
-#: app/config/gimprc-blurbs.h:690
+#: app/config/gimprc-blurbs.h:693
 msgid "Sets the default grow radius for the 'Grow Selection' dialog."
 msgstr "为”增大选区“对话框设置默认增大半径。"
 
-#: app/config/gimprc-blurbs.h:693
+#: app/config/gimprc-blurbs.h:696
 msgid "Sets the default shrink radius for the 'Shrink Selection' dialog."
 msgstr "为”收缩选区“对话框设置默认收缩半径。"
 
-#: app/config/gimprc-blurbs.h:696
+#: app/config/gimprc-blurbs.h:699
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Shrink Selection' dialog."
 msgstr "为“收缩选区”对话框设置默认“选中区域超出图像”配置。"
 
-#: app/config/gimprc-blurbs.h:700
+#: app/config/gimprc-blurbs.h:703
 msgid "Sets the default border radius for the 'Border Selection' dialog."
 msgstr "为“加边选区”对话框设置默认加边半径。"
 
-#: app/config/gimprc-blurbs.h:703
+#: app/config/gimprc-blurbs.h:706
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Border Selection' dialog."
 msgstr "为“加边选区”对话框设置默认“选中区域超出图像”配置。"
 
-#: app/config/gimprc-blurbs.h:707
+#: app/config/gimprc-blurbs.h:710
 msgid "Sets the default border style for the 'Border Selection' dialog."
 msgstr "为“加边选区”对话框设置默认加边样式。"
 
-#: app/config/gimprc-blurbs.h:716
+#: app/config/gimprc-blurbs.h:719
 msgid "Sets the size of the thumbnail shown in the Open dialog."
 msgstr "设置打开文件对话框中缩略图的大小。"
 
-#: app/config/gimprc-blurbs.h:719
+#: app/config/gimprc-blurbs.h:722
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
 msgstr "如果预览的文件小于这里设置的大小，打开对话框中的缩略图将会自动更新。"
 
-#: app/config/gimprc-blurbs.h:723
+#: app/config/gimprc-blurbs.h:726
 msgid ""
 "When the amount of pixel data exceeds this limit, GIMP will start to swap "
 "tiles to disk.  This is a lot slower but it makes it possible to work on "
@@ -11246,53 +11250,53 @@ msgstr ""
 "理无法载入计算机内存 (RAM) 的超大图像成为可能。如果您的计算机内存(RAM)很大，"
 "您可能希望设置一个更大的数值。"
 
-#: app/config/gimprc-blurbs.h:729
+#: app/config/gimprc-blurbs.h:732
 msgid "Show the current foreground and background colors in the toolbox."
 msgstr "在工具箱中显示当前的前景色和背景色。"
 
-#: app/config/gimprc-blurbs.h:732
+#: app/config/gimprc-blurbs.h:735
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
 msgstr "在工具箱中显示活动笔刷、图案和渐变。"
 
-#: app/config/gimprc-blurbs.h:735
+#: app/config/gimprc-blurbs.h:738
 msgid "Use a single toolbox button for grouped tools."
 msgstr "为分组工具使用单独工具箱按钮。"
 
-#: app/config/gimprc-blurbs.h:738
+#: app/config/gimprc-blurbs.h:741
 msgid "Show the currently active image in the toolbox."
 msgstr "在工具箱中显示当前活动的图像。"
 
-#: app/config/gimprc-blurbs.h:741
+#: app/config/gimprc-blurbs.h:744
 msgid "Show the GIMP mascot at the top of the toolbox."
 msgstr "在工具箱顶部显示 GIMP 吉祥物。"
 
-#: app/config/gimprc-blurbs.h:744
+#: app/config/gimprc-blurbs.h:747
 msgid ""
 "The first color to use in the transparency checkerboard, when Transparency "
 "Type is set to Custom colors."
 msgstr "当透明类型设为自定义颜色时，透明棋盘格中使用的第一种颜色。"
 
-#: app/config/gimprc-blurbs.h:748
+#: app/config/gimprc-blurbs.h:751
 msgid ""
 "The second color to use in the transparency checkerboard, when Transparency "
 "Type is set to Custom colors."
 msgstr "当透明类型设为自定义颜色时，透明棋盘格中使用的第二种颜色。"
 
-#: app/config/gimprc-blurbs.h:752
+#: app/config/gimprc-blurbs.h:755
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr "设置图像中透明部分的显示方式。"
 
-#: app/config/gimprc-blurbs.h:755
+#: app/config/gimprc-blurbs.h:758
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr "设置用于表示透明的棋盘格子的大小。"
 
-#: app/config/gimprc-blurbs.h:758
+#: app/config/gimprc-blurbs.h:761
 msgid ""
 "When enabled, GIMP will not save an image if it has not been changed since "
 "it was opened."
 msgstr "当启用时，如果图像自打开以来没有被修改，GIMP 将不会保存。"
 
-#: app/config/gimprc-blurbs.h:762
+#: app/config/gimprc-blurbs.h:765
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
@@ -11300,7 +11304,7 @@ msgstr ""
 "设置允许撤消操作的最小次数。只要还没有达到撤消次数的限制，就可以保存更多的撤"
 "消操作。"
 
-#: app/config/gimprc-blurbs.h:766
+#: app/config/gimprc-blurbs.h:769
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
@@ -11309,27 +11313,27 @@ msgstr ""
 "设置每幅图像撤销历史中用于保存撤消操作的内存上限。与此设置无关，撤消操作至少"
 "可以达到指定的撤消次数。"
 
-#: app/config/gimprc-blurbs.h:771
+#: app/config/gimprc-blurbs.h:774
 msgid "Sets the size of the previews in the Undo History."
 msgstr "设置撤销历史的预览大小。"
 
-#: app/config/gimprc-blurbs.h:774
+#: app/config/gimprc-blurbs.h:777
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "当启用时，按 F1 将打开帮助浏览器。"
 
-#: app/config/gimprc-blurbs.h:777
+#: app/config/gimprc-blurbs.h:780
 msgid "When enabled, uses OpenCL for some operations."
 msgstr "当启用时，将在某些操作时使用 OpenCL。"
 
-#: app/config/gimprc-blurbs.h:788
+#: app/config/gimprc-blurbs.h:791
 msgid "There's a tradeoff between speed and quality of the zoomed-out display."
 msgstr "在缩放显示的速度和质量间存在取舍。"
 
-#: app/config/gimprc-blurbs.h:795
+#: app/config/gimprc-blurbs.h:798
 msgid "When enabled, a search of actions will also return inactive actions."
 msgstr "当启用时，对动作的搜索将同样反馈无效动作。"
 
-#: app/config/gimprc-blurbs.h:798
+#: app/config/gimprc-blurbs.h:801
 msgid "The maximum number of actions saved in history."
 msgstr "历史中保存动作的最大数量。"
 
@@ -12844,7 +12848,7 @@ msgstr "笔刷文件中出现致命解析错误：无法解码 abr 格式版本 
 msgid "Fatal parse error in brush file: RLE compressed brush data corrupt."
 msgstr "笔刷文件中出现致命解析错误：RLE 压缩笔刷数据损坏。"
 
-#: app/core/gimpbrush.c:155 app/paint/gimppaintoptions.c:235
+#: app/core/gimpbrush.c:158 app/paint/gimppaintoptions.c:235
 msgid "Brush Spacing"
 msgstr "笔刷间距"
 
@@ -13399,7 +13403,7 @@ msgstr "启用填充边缘羽化"
 #: app/core/gimpfilloptions.c:142 app/paint/gimpmybrushoptions.c:87
 #: app/tools/gimpbucketfilloptions.c:203 app/tools/gimpcoloroptions.c:86
 #: app/tools/gimprectangleselectoptions.c:101
-#: app/tools/gimpselectionoptions.c:103 app/widgets/gimpbrusheditor.c:157
+#: app/tools/gimpselectionoptions.c:103 app/widgets/gimpbrusheditor.c:160
 msgid "Radius"
 msgstr "半径"
 
@@ -13831,7 +13835,7 @@ msgstr "特性文件转换"
 msgid "Colormap of Image #%d (%s)"
 msgstr "图像 #%d 的颜色表 (%s)"
 
-#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:904
+#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:906
 msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "设置颜色表"
@@ -13841,7 +13845,7 @@ msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "重置颜色表"
 
-#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:695
+#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:697
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "改变颜色表项"
@@ -14041,53 +14045,53 @@ msgstr "缩放图像"
 msgid "Can't undo %s"
 msgstr "无法撤消 %s"
 
-#: app/core/gimpimagefile.c:799
+#: app/core/gimpimagefile.c:801
 msgid "Folder"
 msgstr "文件夹"
 
-#: app/core/gimpimagefile.c:804
+#: app/core/gimpimagefile.c:806
 msgid "Special File"
 msgstr "特殊文件"
 
-#: app/core/gimpimagefile.c:820
+#: app/core/gimpimagefile.c:822
 msgid "Remote File"
 msgstr "远程文件"
 
-#: app/core/gimpimagefile.c:839
+#: app/core/gimpimagefile.c:841
 msgid "Click to create preview"
 msgstr "单击生成预览"
 
-#: app/core/gimpimagefile.c:845
+#: app/core/gimpimagefile.c:847
 msgid "Loading preview..."
 msgstr "正在加载预览…"
 
-#: app/core/gimpimagefile.c:851
+#: app/core/gimpimagefile.c:853
 msgid "Preview is out of date"
 msgstr "预览已经过时"
 
-#: app/core/gimpimagefile.c:857
+#: app/core/gimpimagefile.c:859
 msgid "Cannot create preview"
 msgstr "无法生成预览"
 
-#: app/core/gimpimagefile.c:867
+#: app/core/gimpimagefile.c:869
 msgid "(Preview may be out of date)"
 msgstr "（预览可能已经过时）"
 
 #. pixel size
-#: app/core/gimpimagefile.c:876 app/widgets/gimpimagepropview.c:438
+#: app/core/gimpimagefile.c:878 app/widgets/gimpimagepropview.c:438
 #: app/widgets/gimpsizebox.c:429 app/widgets/gimptemplateeditor.c:734
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
 msgstr[0] "%d x %d 像素"
 
-#: app/core/gimpimagefile.c:899 app/display/gimpdisplayshell-title.c:394
+#: app/core/gimpimagefile.c:901 app/display/gimpdisplayshell-title.c:394
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
 msgstr[0] "%d 个图层"
 
-#: app/core/gimpimagefile.c:963
+#: app/core/gimpimagefile.c:965
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "无法打开缩略图“%s”：%s"
@@ -15300,7 +15304,7 @@ msgstr "编码转换"
 #. gamma
 #: app/dialogs/convert-precision-dialog.c:176
 #: app/operations/gimplevelsconfig.c:150 app/operations/gimplevelsconfig.c:151
-#: app/tools/gimplevelstool.c:510
+#: app/tools/gimplevelstool.c:511
 msgid "Gamma"
 msgstr "伽马值"
 
@@ -19894,6 +19898,13 @@ msgstr "解析错误，未找到 2 个整数"
 msgid "Writing curves file failed: "
 msgstr "写入曲线文件失败："
 
+#: app/operations/gimpcurvesconfig.c:805 app/operations/gimpcurvesconfig.c:808
+#: app/tools/gimpcurvestool.c:766 app/tools/gimpcurvestool.c:769
+#: app/tools/gimplevelstool.c:747 app/tools/gimplevelstool.c:750
+#, c-format
+msgid "Could not read header: "
+msgstr "无法读取文件头："
+
 #: app/operations/gimphuesaturationconfig.c:101
 #: app/operations/gimphuesaturationconfig.c:102
 #: app/operations/gimpoperationcolorize.c:100
@@ -19949,7 +19960,9 @@ msgstr "固定最终输出数值。"
 msgid "not a GIMP Levels file"
 msgstr "不是 GIMP 色阶文件"
 
-#: app/operations/gimplevelsconfig.c:951
+#: app/operations/gimplevelsconfig.c:951 app/operations/gimplevelsconfig.c:1084
+#: app/operations/gimplevelsconfig.c:1087
+#, c-format
 msgid "parse error"
 msgstr "解析错误"
 
@@ -20019,7 +20032,7 @@ msgstr "选择灰色梯度基于"
 msgid "Adjust hue, saturation, and lightness"
 msgstr "调整色相、饱和度以及亮度"
 
-#: app/operations/gimpoperationlevels.c:64 app/tools/gimplevelstool.c:139
+#: app/operations/gimpoperationlevels.c:64 app/tools/gimplevelstool.c:140
 msgid "Adjust color levels"
 msgstr "调整颜色色阶"
 
@@ -20240,7 +20253,7 @@ msgstr "墨斑大小"
 #. angle frame
 #: app/paint/gimpinkoptions.c:81 app/paint/gimpinkoptions.c:120
 #: app/paint/gimppaintoptions.c:227 app/tools/gimptransform3dtool.c:321
-#: app/tools/gimptransform3dtool.c:422 app/widgets/gimpbrusheditor.c:197
+#: app/tools/gimptransform3dtool.c:422 app/widgets/gimpbrusheditor.c:200
 msgid "Angle"
 msgstr "角度"
 
@@ -20255,7 +20268,7 @@ msgstr "倾斜"
 msgid "Shape"
 msgstr "形状"
 
-#: app/paint/gimpinkoptions.c:114 app/widgets/gimpbrusheditor.c:187
+#: app/paint/gimpinkoptions.c:114 app/widgets/gimpbrusheditor.c:190
 msgid "Aspect ratio"
 msgstr "宽高比"
 
@@ -20280,7 +20293,7 @@ msgid "Base Opacity"
 msgstr "基础不透明度"
 
 #: app/paint/gimpmybrushoptions.c:101 app/paint/gimppaintoptions.c:241
-#: app/tools/gimpwarpoptions.c:99 app/widgets/gimpbrusheditor.c:177
+#: app/tools/gimpwarpoptions.c:99 app/widgets/gimpbrusheditor.c:180
 msgid "Hardness"
 msgstr "硬度"
 
@@ -20313,7 +20326,7 @@ msgid "Aspect Ratio"
 msgstr "宽高比"
 
 #: app/paint/gimppaintoptions.c:234 app/tools/gimpwarpoptions.c:113
-#: app/widgets/gimpbrusheditor.c:207 app/widgets/gimpbrushfactoryview.c:102
+#: app/widgets/gimpbrusheditor.c:210 app/widgets/gimpbrushfactoryview.c:102
 #: app/widgets/gimpgrideditor.c:179
 msgid "Spacing"
 msgstr "间距"
@@ -21368,7 +21381,7 @@ msgstr "蓝色通道"
 msgid "Select Range to Adjust"
 msgstr "选择要调整的范围"
 
-#: app/propgui/gimppropgui-color-balance.c:98 app/tools/gimplevelstool.c:269
+#: app/propgui/gimppropgui-color-balance.c:98 app/tools/gimplevelstool.c:270
 msgid "Adjust Color Levels"
 msgstr "调整颜色色阶"
 
@@ -22230,7 +22243,7 @@ msgstr "无法填充多个图层。仅选择一个图层。"
 
 #: app/tools/gimpbucketfilltool.c:599 app/tools/gimpcagetool.c:231
 #: app/tools/gimpcurvestool.c:220 app/tools/gimpfiltertool.c:310
-#: app/tools/gimpforegroundselecttool.c:295 app/tools/gimplevelstool.c:210
+#: app/tools/gimpforegroundselecttool.c:295 app/tools/gimplevelstool.c:211
 #: app/tools/gimpoffsettool.c:191 app/tools/gimppainttool.c:297
 #: app/tools/gimpperspectiveclonetool.c:224 app/tools/gimpthresholdtool.c:160
 #: app/tools/gimptransformgridtool.c:351
@@ -22584,7 +22597,7 @@ msgid "_Curves..."
 msgstr "曲线(_C)…"
 
 #: app/tools/gimpcurvestool.c:218 app/tools/gimpfiltertool.c:306
-#: app/tools/gimplevelstool.c:208 app/tools/gimpoffsettool.c:189
+#: app/tools/gimplevelstool.c:209 app/tools/gimpoffsettool.c:189
 #: app/tools/gimpthresholdtool.c:158
 msgid "Cannot modify multiple drawables. Select only one."
 msgstr "无法修改多个可绘区。仅选择一个。"
@@ -22615,12 +22628,12 @@ msgstr "%s：在全部通道中添加控制点"
 msgid "Adjust Color Curves"
 msgstr "调整颜色曲线"
 
-#: app/tools/gimpcurvestool.c:486 app/tools/gimplevelstool.c:367
+#: app/tools/gimpcurvestool.c:486 app/tools/gimplevelstool.c:368
 #: app/tools/gimpthresholdtool.c:247
 msgid "Cha_nnel:"
 msgstr "通道(_N)："
 
-#: app/tools/gimpcurvestool.c:515 app/tools/gimplevelstool.c:394
+#: app/tools/gimpcurvestool.c:515 app/tools/gimplevelstool.c:395
 msgid "R_eset Channel"
 msgstr "重置通道(_E)"
 
@@ -22640,13 +22653,7 @@ msgstr "类型(_Y)："
 msgid "Curve _type:"
 msgstr "曲线类型(_T)"
 
-#: app/tools/gimpcurvestool.c:756 app/tools/gimpcurvestool.c:759
-#: app/tools/gimplevelstool.c:745
-#, c-format
-msgid "Could not read header: "
-msgstr "无法读取文件头："
-
-#: app/tools/gimpcurvestool.c:836
+#: app/tools/gimpcurvestool.c:850
 msgid "Use _old curves file format"
 msgstr "使用旧曲线文件格式(_O)"
 
@@ -23429,74 +23436,74 @@ msgstr "单击或单击拖动以添加点"
 msgid "Modify Scissors Curve"
 msgstr "修改剪刀曲线"
 
-#: app/tools/gimplevelstool.c:140
+#: app/tools/gimplevelstool.c:141
 msgid "_Levels..."
 msgstr "色阶(_L)…"
 
-#: app/tools/gimplevelstool.c:293
+#: app/tools/gimplevelstool.c:294
 msgid "Pick black point for all channels"
 msgstr "为所有通道拾取黑点"
 
-#: app/tools/gimplevelstool.c:295
+#: app/tools/gimplevelstool.c:296
 msgid "Pick black point for the selected channel"
 msgstr "为选中通道拾取黑点"
 
-#: app/tools/gimplevelstool.c:302
+#: app/tools/gimplevelstool.c:303
 msgid "Pick gray point for all channels"
 msgstr "为所有通道拾取灰点"
 
-#: app/tools/gimplevelstool.c:304
+#: app/tools/gimplevelstool.c:305
 msgid "Pick gray point for the selected channel"
 msgstr "为选中通道拾取灰点"
 
-#: app/tools/gimplevelstool.c:311
+#: app/tools/gimplevelstool.c:312
 msgid "Pick white point for all channels"
 msgstr "为所有通道拾取白点"
 
-#: app/tools/gimplevelstool.c:313
+#: app/tools/gimplevelstool.c:314
 msgid "Pick white point for the selected channel"
 msgstr "为选中通道拾取白点"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:419
+#: app/tools/gimplevelstool.c:420
 msgid "Input Levels"
 msgstr "输入色阶"
 
-#: app/tools/gimplevelstool.c:503
+#: app/tools/gimplevelstool.c:504
 msgid "Clamp _input"
 msgstr "固定输入(_I)"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:542
+#: app/tools/gimplevelstool.c:543
 msgid "Output Levels"
 msgstr "输出色阶"
 
-#: app/tools/gimplevelstool.c:589
+#: app/tools/gimplevelstool.c:590
 msgid "Clamp outpu_t"
 msgstr "固定输出(_T)"
 
 #. all channels frame
-#: app/tools/gimplevelstool.c:602
+#: app/tools/gimplevelstool.c:603
 msgid "All Channels"
 msgstr "所有通道"
 
-#: app/tools/gimplevelstool.c:614
+#: app/tools/gimplevelstool.c:615
 msgid "_Auto Input Levels"
 msgstr "自动输入色阶(_A)"
 
-#: app/tools/gimplevelstool.c:617
+#: app/tools/gimplevelstool.c:618
 msgid "Adjust levels for all channels automatically"
 msgstr "自动为所有通道调整色阶"
 
-#: app/tools/gimplevelstool.c:644
+#: app/tools/gimplevelstool.c:645
 msgid "Edit these Settings as Curves"
 msgstr "将此设置作为曲线编辑"
 
-#: app/tools/gimplevelstool.c:859
+#: app/tools/gimplevelstool.c:868
 msgid "Use _old levels file format"
 msgstr "使用旧色阶文件格式(_O)"
 
-#: app/tools/gimplevelstool.c:1004 app/tools/gimpthresholdtool.c:429
+#: app/tools/gimplevelstool.c:1013 app/tools/gimpthresholdtool.c:429
 msgid "Calculating histogram..."
 msgstr "正在计算直方图…"
 
@@ -25408,20 +25415,20 @@ msgstr "Alt+%d 被用于切换到显示 %d 且不能被重新映射。"
 msgid "Changing shortcut failed."
 msgstr "改变快捷键失败。"
 
-#: app/widgets/gimpbrusheditor.c:139
+#: app/widgets/gimpbrusheditor.c:142
 msgid "Shape:"
 msgstr "形状："
 
-#: app/widgets/gimpbrusheditor.c:167
+#: app/widgets/gimpbrusheditor.c:170
 msgid "Spikes"
 msgstr "尖"
 
-#: app/widgets/gimpbrusheditor.c:212 app/widgets/gimpbrushfactoryview.c:106
+#: app/widgets/gimpbrusheditor.c:215 app/widgets/gimpbrushfactoryview.c:106
 msgid "Percentage of width of brush"
 msgstr "笔刷宽度的百分比"
 
 #: app/widgets/gimpbufferview.c:189 app/widgets/gimpbufferview.c:290
-#: app/widgets/gimpeditor.c:821
+#: app/widgets/gimpeditor.c:835
 msgid "(None)"
 msgstr "（无）"
 
@@ -27655,47 +27662,47 @@ msgstr "写入文本文件“%s”失败：%s"
 msgid "_Use selected font"
 msgstr "使用选中字体(_U)"
 
-#: app/widgets/gimptextstyleeditor.c:211 app/widgets/gimptextstyleeditor.c:1329
+#: app/widgets/gimptextstyleeditor.c:214 app/widgets/gimptextstyleeditor.c:1327
 msgid "Change font of selected text"
 msgstr "改变选中文字的字体"
 
-#: app/widgets/gimptextstyleeditor.c:221
+#: app/widgets/gimptextstyleeditor.c:224
 msgid "Change size of selected text"
 msgstr "改变选中文字的大小"
 
-#: app/widgets/gimptextstyleeditor.c:240
+#: app/widgets/gimptextstyleeditor.c:243
 msgid "Clear style of selected text"
 msgstr "清除选中文字的样式"
 
-#: app/widgets/gimptextstyleeditor.c:251 app/widgets/gimptextstyleeditor.c:262
+#: app/widgets/gimptextstyleeditor.c:254 app/widgets/gimptextstyleeditor.c:265
 msgid "Change color of selected text"
 msgstr "改变选中文字的颜色"
 
-#: app/widgets/gimptextstyleeditor.c:278
+#: app/widgets/gimptextstyleeditor.c:281
 msgid "Change kerning of selected text"
 msgstr "改变选中文字的字距"
 
-#: app/widgets/gimptextstyleeditor.c:294
+#: app/widgets/gimptextstyleeditor.c:297
 msgid "Change baseline of selected text"
 msgstr "改变选中文字的基线"
 
-#: app/widgets/gimptextstyleeditor.c:333
+#: app/widgets/gimptextstyleeditor.c:336
 msgid "Bold"
 msgstr "粗体"
 
-#: app/widgets/gimptextstyleeditor.c:336
+#: app/widgets/gimptextstyleeditor.c:339
 msgid "Italic"
 msgstr "斜体"
 
-#: app/widgets/gimptextstyleeditor.c:339
+#: app/widgets/gimptextstyleeditor.c:342
 msgid "Underline"
 msgstr "下划线"
 
-#: app/widgets/gimptextstyleeditor.c:342
+#: app/widgets/gimptextstyleeditor.c:345
 msgid "Strikethrough"
 msgstr "删除线"
 
-#: app/widgets/gimptextstyleeditor.c:1321
+#: app/widgets/gimptextstyleeditor.c:1319
 #, c-format
 msgid "Font \"%s\" unavailable on this system"
 msgstr "字体“%s”在此系统上不可用"
@@ -27905,12 +27912,12 @@ msgstr "%s（尝试 %s, %s, %s）"
 #. * (e.g. a checkbox settings) displayed
 #. * in some dockable GUI.
 #.
-#: app/widgets/gimpwidgets-utils.c:1476
+#: app/widgets/gimpwidgets-utils.c:1477
 #, c-format
 msgid "Switch \"%s\" ON"
 msgstr "开启“%s”"
 
-#: app/widgets/gimpwidgets-utils.c:1478
+#: app/widgets/gimpwidgets-utils.c:1479
 #, c-format
 msgid "Switch \"%s\" OFF"
 msgstr "关闭“%s”"
@@ -27920,7 +27927,7 @@ msgstr "关闭“%s”"
 #. * multi-choice settings displayed
 #. * in some dockable GUI.
 #.
-#: app/widgets/gimpwidgets-utils.c:1497
+#: app/widgets/gimpwidgets-utils.c:1498
 #, c-format
 msgid "Select \"%s\""
 msgstr "选择“%s”"
@@ -27928,27 +27935,27 @@ msgstr "选择“%s”"
 #. TRANSLATORS: %s will be a tool name, so we'll get a
 #. * final string looking like 'Activate the "Bucket fill" tool'.
 #.
-#: app/widgets/gimpwidgets-utils.c:1520
+#: app/widgets/gimpwidgets-utils.c:1521
 #, c-format
 msgid "Activate the \"%s\" tool"
 msgstr "激活“%s”工具"
 
-#: app/widgets/gimpwidgets-utils.c:2119
+#: app/widgets/gimpwidgets-utils.c:2120
 #, c-format
 msgid "Built-in grayscale (%s)"
 msgstr "内置灰度 (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2126
+#: app/widgets/gimpwidgets-utils.c:2127
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "内置 RGB (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2146
+#: app/widgets/gimpwidgets-utils.c:2147
 #, c-format
 msgid "Preferred grayscale (%s)"
 msgstr "首选灰度 (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2155
+#: app/widgets/gimpwidgets-utils.c:2156
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "首选 RGB (%s)"
