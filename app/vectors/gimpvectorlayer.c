@@ -58,41 +58,66 @@ enum
 
 /* local function declarations */
 
-static void       gimp_vector_layer_finalize        (GObject             *object);
-static void       gimp_vector_layer_get_property    (GObject             *object,
-                                                     guint                property_id,
-                                                     GValue              *value,
-                                                     GParamSpec          *pspec);
-static void       gimp_vector_layer_set_property    (GObject             *object,
-                                                     guint                property_id,
-                                                     const GValue        *value,
-                                                     GParamSpec          *pspec);
+static void       gimp_vector_layer_finalize        (GObject                *object);
+static void       gimp_vector_layer_get_property    (GObject                *object,
+                                                     guint                   property_id,
+                                                     GValue                 *value,
+                                                     GParamSpec             *pspec);
+static void       gimp_vector_layer_set_property    (GObject                *object,
+                                                     guint                   property_id,
+                                                     const GValue           *value,
+                                                     GParamSpec             *pspec);
 static void       gimp_vector_layer_set_vector_options
-                                                    (GimpVectorLayer     *layer,
-                                                     GimpVectorLayerOptions
-                                                                         *options);
+                                                    (GimpVectorLayer        *layer,
+                                                     GimpVectorLayerOptions *options);
 
-static void       gimp_vector_layer_set_buffer      (GimpDrawable        *drawable,
-                                                     gboolean             push_undo,
-                                                     const gchar         *undo_desc,
-                                                     GeglBuffer          *buffer,
-                                                     const GeglRectangle *bounds);
+static void       gimp_vector_layer_set_buffer      (GimpDrawable           *drawable,
+                                                     gboolean                push_undo,
+                                                     const gchar            *undo_desc,
+                                                     GeglBuffer             *buffer,
+                                                     const GeglRectangle    *bounds);
 
-static gint64     gimp_vector_layer_get_memsize     (GimpObject          *object,
-						                             gint64              *gui_size);
+static gint64     gimp_vector_layer_get_memsize     (GimpObject             *object,
+						                             gint64                 *gui_size);
 
-static GimpItem * gimp_vector_layer_duplicate       (GimpItem            *item,
-                                                     GType                new_type);
+static GimpItem * gimp_vector_layer_duplicate       (GimpItem               *item,
+                                                     GType                   new_type);
 
-static gboolean   gimp_vector_layer_render          (GimpVectorLayer     *layer);
-static void       gimp_vector_layer_render_path     (GimpVectorLayer     *layer,
-                                                     GimpPath            *path);
-static void       gimp_vector_layer_changed_options (GimpVectorLayer     *layer);
+static void       gimp_vector_layer_scale           (GimpItem               *item,
+                                                     gint                    new_width,
+                                                     gint                    new_height,
+                                                     gint                    new_offset_x,
+                                                     gint                    new_offset_y,
+                                                     GimpInterpolationType   interp_type,
+                                                     GimpProgress           *progress);
+static void       gimp_vector_layer_flip            (GimpItem               *item,
+                                                     GimpContext            *context,
+                                                     GimpOrientationType     flip_type,
+                                                     gdouble                 axis,
+                                                     gboolean                clip_result);
+static void       gimp_vector_layer_rotate          (GimpItem               *item,
+                                                     GimpContext            *context,
+                                                     GimpRotationType        rotate_type,
+                                                     gdouble                 center_x,
+                                                     gdouble                 center_y,
+                                                     gboolean                clip_result);
+static void       gimp_vector_layer_transform       (GimpItem               *item,
+                                                     GimpContext            *context,
+                                                     const GimpMatrix3      *matrix,
+                                                     GimpTransformDirection  direction,
+                                                     GimpInterpolationType   interp_type,
+                                                     GimpTransformResize     clip_result,
+                                                     GimpProgress           *progress);
 
-static void       gimp_vector_layer_removed         (GimpItem        *item);
+static gboolean   gimp_vector_layer_render          (GimpVectorLayer        *layer);
+static void       gimp_vector_layer_render_path     (GimpVectorLayer        *layer,
+                                                     GimpPath               *path);
+static void       gimp_vector_layer_changed_options (GimpVectorLayer        *layer);
+
+static void       gimp_vector_layer_removed         (GimpItem               *item);
 
 static void       gimp_vector_layer_removed_options_path
-                                                    (GimpVectorLayer *layer);
+                                                    (GimpVectorLayer        *layer);
 
 
 G_DEFINE_TYPE (GimpVectorLayer, gimp_vector_layer, GIMP_TYPE_LAYER)
@@ -121,6 +146,10 @@ gimp_vector_layer_class_init (GimpVectorLayerClass *klass)
 
   item_class->removed               = gimp_vector_layer_removed;
   item_class->duplicate             = gimp_vector_layer_duplicate;
+  item_class->scale                 = gimp_vector_layer_scale;
+  item_class->flip                  = gimp_vector_layer_flip;
+  item_class->rotate                = gimp_vector_layer_rotate;
+  item_class->transform             = gimp_vector_layer_transform;
   item_class->default_name          = _("Vector Layer");
   item_class->rename_desc           = _("Rename Vector Layer");
   item_class->translate_desc        = _("Move Vector Layer");
@@ -323,6 +352,77 @@ gimp_vector_layer_duplicate (GimpItem *item,
     }
 
   return new_item;
+}
+
+static void
+gimp_vector_layer_scale (GimpItem              *item,
+                         gint                   new_width,
+                         gint                   new_height,
+                         gint                   new_offset_x,
+                         gint                   new_offset_y,
+                         GimpInterpolationType  interp_type,
+                         GimpProgress          *progress)
+{
+  GimpVectorLayer *vector_layer = GIMP_VECTOR_LAYER (item);
+
+  if (vector_layer->options && vector_layer->options->path)
+    {
+      gimp_item_scale (GIMP_ITEM (vector_layer->options->path),
+                       new_width, new_height, new_offset_x, new_offset_y,
+                       interp_type, progress);
+    }
+}
+
+static void
+gimp_vector_layer_flip (GimpItem            *item,
+                        GimpContext         *context,
+                        GimpOrientationType  flip_type,
+                        gdouble              axis,
+                        gboolean             clip_result)
+{
+  GimpVectorLayer *vector_layer = GIMP_VECTOR_LAYER (item);
+
+  if (vector_layer->options && vector_layer->options->path)
+    {
+      gimp_item_flip (GIMP_ITEM (vector_layer->options->path),
+                      context, flip_type, axis, clip_result);
+    }
+}
+
+static void
+gimp_vector_layer_rotate (GimpItem         *item,
+                          GimpContext      *context,
+                          GimpRotationType  rotate_type,
+                          gdouble           center_x,
+                          gdouble           center_y,
+                          gboolean          clip_result)
+{
+  GimpVectorLayer *vector_layer = GIMP_VECTOR_LAYER (item);
+
+  if (vector_layer->options && vector_layer->options->path)
+    {
+      gimp_item_rotate (GIMP_ITEM (vector_layer->options->path),
+                        context, rotate_type, center_x, center_y, clip_result);
+    }
+}
+
+static void
+gimp_vector_layer_transform (GimpItem               *item,
+                             GimpContext            *context,
+                             const GimpMatrix3      *matrix,
+                             GimpTransformDirection  direction,
+                             GimpInterpolationType   interp_type,
+                             GimpTransformResize     clip_result,
+                             GimpProgress           *progress)
+{
+  GimpVectorLayer *vector_layer = GIMP_VECTOR_LAYER (item);
+
+  if (vector_layer->options && vector_layer->options->path)
+    {
+      gimp_item_transform (GIMP_ITEM (vector_layer->options->path),
+                           context, matrix, direction, interp_type,
+                           clip_result, progress);
+    }
 }
 
 static void
