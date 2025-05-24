@@ -1166,6 +1166,10 @@ end;
 
 
 //7.1 BEFORE INSTALL
+procedure PreparingFaceLift();
+begin
+	WizardForm.Bevel.Visible := False;
+end;
 
 //Create restore point
 procedure RestorePoint();
@@ -1844,6 +1848,8 @@ begin
 			SelectComponentsFaceLift();
 		wpReady:
 			ReadyFaceLift();
+		wpPreparing:
+			PreparingFaceLift();
 		wpInstalling:
 			InstallingFaceLift();
 	end;
