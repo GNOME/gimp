@@ -41,5 +41,15 @@ typedef enum
   GIMP_TEXT_OUTLINE_STROKE_FILL  /*< desc="Outlined and filled" >*/
 } GimpTextOutline;
 
+#define GIMP_TYPE_TEXT_OUTLINE_DIRECTION (gimp_text_outline_direction_get_type ())
+
+GType gimp_text_outline_direction_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_TEXT_OUTLINE_DIRECTION_OUTER,   /*< desc="Outer"    >*/
+  GIMP_TEXT_OUTLINE_DIRECTION_INNER,   /*< desc="Inner"    >*/
+  GIMP_TEXT_OUTLINE_DIRECTION_CENTERED /*< desc="Centered" >*/
+} GimpTextOutlineDirection;
 
 #endif /* __TEXT_ENUMS_H__ */
