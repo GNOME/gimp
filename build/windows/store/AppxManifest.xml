@@ -29,8 +29,8 @@
     <Resource uap:Scale="400" />
   </Resources>
   <Applications>
-    <Application Id="GIMP" Executable="VFS\ProgramFilesX64\GIMP\bin\gimp-@GIMP_MUTEX_VERSION@.exe" EntryPoint="Windows.FullTrustApplication">
-      <uap:VisualElements DisplayName="GIMP @GIMP_MUTEX_VERSION@" Description="GNU Image Manipulation Program" BackgroundColor="transparent" Square150x150Logo="Assets\MedTile.png" Square44x44Logo="Assets\AppList.png">
+    <Application Id="GIMP" Executable="VFS\ProgramFilesX64\GIMP\bin\gimp@MUTEX_SUFFIX@.exe" EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements DisplayName="GIMP @GIMP_MUTEX_VERSION@@CHANNEL_SUFFIX@" Description="GNU Image Manipulation Program" BackgroundColor="transparent" Square150x150Logo="Assets\MedTile.png" Square44x44Logo="Assets\AppList.png">
         <uap:DefaultTile Wide310x150Logo="Assets\WideTile.png" Square310x310Logo="Assets\LargeTile.png" Square71x71Logo="Assets\SmallTile.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />
@@ -67,7 +67,7 @@
         </uap:Extension>
         <uap5:Extension Category="windows.appExecutionAlias" EntryPoint="Windows.FullTrustApplication">
             <uap5:AppExecutionAlias>
-              <uap5:ExecutionAlias Alias="gimp-@GIMP_MUTEX_VERSION@.exe"/>
+              <uap5:ExecutionAlias Alias="gimp@MUTEX_SUFFIX@.exe"/>
             </uap5:AppExecutionAlias>
         </uap5:Extension>
       </Extensions>

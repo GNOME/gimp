@@ -229,15 +229,16 @@ foreach ($bundle in $supported_archs)
         (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@CUSTOM_GIMP_VERSION@","$CUSTOM_GIMP_VERSION"} |
         Set-Content $msix_arch\AppxManifest.xml
         ### Set GIMP mutex version (major.minor or major)
-        if ($GIMP_UNSTABLE)
+        if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
           {
-            $gimp_mutex_version="$GIMP_APP_VERSION"
+            $channel_suffix=" (Insider)"
           }
         else
           {
-            $gimp_mutex_version="$major"
+            $mutex_suffix="-$GIMP_MUTEX_VERSION"
           }
-        (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@GIMP_MUTEX_VERSION@","$gimp_mutex_version"} |
+        (Get-Content $msix_arch\AppxManifest.xml)                         | Foreach-Object {$_ -replace "@GIMP_MUTEX_VERSION@","$GIMP_MUTEX_VERSION"} |
+        Foreach-Object {$_ -replace "@CHANNEL_SUFFIX@","$channel_suffix"} | Foreach-Object {$_ -replace "@MUTEX_SUFFIX@","$mutex_suffix"}             |
         Set-Content $msix_arch\AppxManifest.xml
         ### Match supported filetypes
         $file_types = Get-Content 'build\windows\installer\data_associations.list'       | Foreach-Object {"              <uap:FileType>." + $_} |
