@@ -686,6 +686,9 @@ gimp_image_undo_dirty_from_type (GimpUndoType undo_type)
     case GIMP_UNDO_GROUP_PATHS_IMPORT:
       return GIMP_DIRTY_IMAGE_STRUCTURE | GIMP_DIRTY_PATH;
 
+    case GIMP_UNDO_GROUP_FILTER_VISIBILITY:
+      return GIMP_DIRTY_DRAWABLE;
+
     case GIMP_UNDO_GROUP_MISC:
       return GIMP_DIRTY_ALL;
 

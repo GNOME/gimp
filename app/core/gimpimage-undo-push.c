@@ -390,6 +390,38 @@ gimp_image_undo_push_filter_modified (GimpImage          *image,
                                NULL);
 }
 
+GimpUndo *
+gimp_image_undo_push_filter_visibility (GimpImage          *image,
+                                        const gchar        *undo_desc,
+                                        GimpDrawable       *drawable,
+                                        GimpDrawableFilter *filter)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_DRAWABLE_FILTER_UNDO,
+                               GIMP_UNDO_FILTER_VISIBILITY, undo_desc,
+                               GIMP_DIRTY_DRAWABLE, "filter", filter, NULL);
+}
+
+GimpUndo *
+gimp_image_undo_push_filter_visibility_compressible (GimpDrawableFilter *filter)
+{
+  GimpDrawable *drawable;
+  GimpImage    *image;
+  GimpUndo     *undo;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), NULL);
+
+  drawable = gimp_drawable_filter_get_drawable (filter);
+  image    = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  undo = gimp_image_undo_push_filter_visibility (image, _("Filter visibility"),
+                                                 drawable, filter);
+
+  return undo;
+}
+
 
 /****************/
 /*  Mask Undos  */

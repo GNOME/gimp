@@ -37,6 +37,7 @@ struct _GimpDrawableFilterUndo
 
   GimpDrawableFilter    *filter;
   gint                   row_index;
+  gboolean               active;
 
   GeglNode              *node;
   gdouble                opacity;

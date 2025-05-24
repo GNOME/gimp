@@ -100,6 +100,14 @@ GimpUndo * gimp_image_undo_push_filter_modified     (GimpImage     *image,
                                                      GimpDrawable  *drawable,
                                                      GimpDrawableFilter
                                                                    *filter);
+GimpUndo * gimp_image_undo_push_filter_visibility   (GimpImage     *image,
+                                                     const gchar   *undo_desc,
+                                                     GimpDrawable  *drawable,
+                                                     GimpDrawableFilter
+                                                                   *filter);
+
+GimpUndo * gimp_image_undo_push_filter_visibility_compressible (GimpDrawableFilter
+                                                                   *filter);
 
 /*  mask undos  */
 

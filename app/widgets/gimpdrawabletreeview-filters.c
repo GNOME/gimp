@@ -45,6 +45,7 @@
 #include "core/gimprasterizable.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
 
 #include "path/gimpvectorlayer.h"
@@ -713,12 +714,16 @@ gimp_drawable_filters_editor_visible_all_toggled (GtkWidget            *widget,
                                                   GimpDrawableTreeView *view)
 {
   GimpDrawableTreeViewFiltersEditor *editor = view->editor;
+  GimpImage                         *image;
   GimpContainer                     *filters;
   GimpDrawable                      *drawable;
   GList                             *list;
+  GList                             *iter;
+  gint                               n_filters = 0;
   gboolean                           visible;
 
   visible = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
+  image   = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
 
   if (editor->filter)
     drawable = gimp_drawable_filter_get_drawable (editor->filter);
@@ -726,18 +731,50 @@ gimp_drawable_filters_editor_visible_all_toggled (GtkWidget            *widget,
     drawable = editor->drawable;
 
   filters = gimp_drawable_get_filters (drawable);
+  list    = GIMP_LIST (filters)->queue->head;
 
-  for (list = GIMP_LIST (filters)->queue->head;
-       list;
-       list = g_list_next (list))
+  for (iter = list;
+       iter;
+       iter = g_list_next (iter))
     {
-      if (GIMP_IS_DRAWABLE_FILTER (list->data))
+      if (GIMP_IS_DRAWABLE_FILTER (iter->data) &&
+          visible != gimp_filter_get_active (GIMP_FILTER (iter->data)))
         {
-          GimpFilter *filter = list->data;
+          n_filters++;
+        }
+    }
+
+  if (n_filters > 1)
+    {
+      /* TODO: undo groups cannot be compressed so far. */
+      gimp_image_undo_group_start (image,
+                                   GIMP_UNDO_GROUP_FILTER_VISIBILITY,
+                                   "Filters visibility");
+    }
+
+  for (iter = list;
+       iter;
+       iter = g_list_next (iter))
+    {
+      if (GIMP_IS_DRAWABLE_FILTER (iter->data))
+        {
+          GimpFilter         *filter  = iter->data;
+          GimpDrawableFilter *dfilter = iter->data;
+
+          if (visible != gimp_filter_get_active (filter))
+            {
+              gimp_image_undo_push_filter_visibility (image,
+                                                      _("Filter visibility"),
+                                                      editor->drawable,
+                                                      dfilter);
+            }
 
           gimp_filter_set_active (filter, visible);
         }
     }
+
+  if (n_filters > 1)
+    gimp_image_undo_group_end (image);
 
   gimp_drawable_update (drawable, 0, 0, -1, -1);
   gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));

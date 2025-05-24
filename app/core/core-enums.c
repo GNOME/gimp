@@ -1230,6 +1230,7 @@ gimp_undo_type_get_type (void)
     { GIMP_UNDO_GROUP_PARASITE_ATTACH, "GIMP_UNDO_GROUP_PARASITE_ATTACH", "group-parasite-attach" },
     { GIMP_UNDO_GROUP_PARASITE_REMOVE, "GIMP_UNDO_GROUP_PARASITE_REMOVE", "group-parasite-remove" },
     { GIMP_UNDO_GROUP_PATHS_IMPORT, "GIMP_UNDO_GROUP_PATHS_IMPORT", "group-paths-import" },
+    { GIMP_UNDO_GROUP_FILTER_VISIBILITY, "GIMP_UNDO_GROUP_FILTER_VISIBILITY", "group-filter-visibility" },
     { GIMP_UNDO_GROUP_MISC, "GIMP_UNDO_GROUP_MISC", "group-misc" },
     { GIMP_UNDO_IMAGE_TYPE, "GIMP_UNDO_IMAGE_TYPE", "image-type" },
     { GIMP_UNDO_IMAGE_PRECISION, "GIMP_UNDO_IMAGE_PRECISION", "image-precision" },
@@ -1290,6 +1291,7 @@ gimp_undo_type_get_type (void)
     { GIMP_UNDO_FILTER_REMOVE, "GIMP_UNDO_FILTER_REMOVE", "filter-remove" },
     { GIMP_UNDO_FILTER_REORDER, "GIMP_UNDO_FILTER_REORDER", "filter-reorder" },
     { GIMP_UNDO_FILTER_MODIFIED, "GIMP_UNDO_FILTER_MODIFIED", "filter-modified" },
+    { GIMP_UNDO_FILTER_VISIBILITY, "GIMP_UNDO_FILTER_VISIBILITY", "filter-visibility" },
     { GIMP_UNDO_RASTERIZABLE, "GIMP_UNDO_RASTERIZABLE", "rasterizable" },
     { GIMP_UNDO_CANT, "GIMP_UNDO_CANT", "cant" },
     { 0, NULL, NULL }
@@ -1346,6 +1348,7 @@ gimp_undo_type_get_type (void)
     { GIMP_UNDO_GROUP_PARASITE_ATTACH, NC_("undo-type", "Attach parasite"), NULL },
     { GIMP_UNDO_GROUP_PARASITE_REMOVE, NC_("undo-type", "Remove parasite"), NULL },
     { GIMP_UNDO_GROUP_PATHS_IMPORT, NC_("undo-type", "Import paths"), NULL },
+    { GIMP_UNDO_GROUP_FILTER_VISIBILITY, NC_("undo-type", "Effects visibility"), NULL },
     { GIMP_UNDO_GROUP_MISC, NC_("undo-type", "Plug-In"), NULL },
     { GIMP_UNDO_IMAGE_TYPE, NC_("undo-type", "Image type"), NULL },
     { GIMP_UNDO_IMAGE_PRECISION, NC_("undo-type", "Image precision"), NULL },
@@ -1406,6 +1409,7 @@ gimp_undo_type_get_type (void)
     { GIMP_UNDO_FILTER_REMOVE, NC_("undo-type", "Remove effect"), NULL },
     { GIMP_UNDO_FILTER_REORDER, NC_("undo-type", "Reorder effect"), NULL },
     { GIMP_UNDO_FILTER_MODIFIED, NC_("undo-type", "Effect modification"), NULL },
+    { GIMP_UNDO_FILTER_VISIBILITY, NC_("undo-type", "Effect visibility"), NULL },
     { GIMP_UNDO_RASTERIZABLE, NC_("undo-type", "Text, link or vector layer"), NULL },
     { GIMP_UNDO_CANT, NC_("undo-type", "Not undoable"), NULL },
     { 0, NULL, NULL }

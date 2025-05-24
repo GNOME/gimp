@@ -140,6 +140,7 @@ gimp_drawable_filter_undo_constructed (GObject *object)
       g_value_unset (&value);
     }
 
+  df_undo->active          = gimp_filter_get_active (GIMP_FILTER (df_undo->filter));
   df_undo->opacity         = gimp_drawable_filter_get_opacity (df_undo->filter);
   df_undo->paint_mode      = gimp_drawable_filter_get_paint_mode (df_undo->filter);
   df_undo->blend_space     = gimp_drawable_filter_get_blend_space (df_undo->filter);
@@ -266,6 +267,19 @@ gimp_drawable_filter_undo_pop (GimpUndo            *undo,
       gimp_container_reorder (filter_stack, GIMP_OBJECT (filter),
                               df_undo->row_index);
       gimp_drawable_update (drawable, 0, 0, -1, -1);
+    }
+  else if (undo->undo_type == GIMP_UNDO_FILTER_VISIBILITY)
+    {
+      GimpFilter *gfilter;
+      gboolean    active;
+
+      gfilter = GIMP_FILTER (filter);
+      active  = gimp_filter_get_active (gfilter);
+
+      gimp_filter_set_active (gfilter, df_undo->active);
+      gimp_drawable_filter_apply (filter, NULL);
+
+      df_undo->active = active;
     }
   else if (undo->undo_type == GIMP_UNDO_FILTER_MODIFIED)
     {

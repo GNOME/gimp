@@ -28,6 +28,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawablefilter.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-undo-push.h"
 
 #include "gimprowdrawablefilter.h"
 
@@ -66,14 +67,20 @@ static void
 gimp_row_filter_drawable_active_toggled (GimpRowFilter *row,
                                          gboolean       active)
 {
-  GimpViewable *viewable = gimp_row_get_viewable (GIMP_ROW (row));
+  GimpViewable       *viewable = gimp_row_get_viewable (GIMP_ROW (row));
+  GimpDrawableFilter *filter;
+
+  if (viewable)
+    {
+      filter = GIMP_DRAWABLE_FILTER (viewable);
+      gimp_image_undo_push_filter_visibility_compressible (filter);
+    }
 
   GIMP_ROW_FILTER_CLASS (parent_class)->active_toggled (row, active);
 
   if (viewable)
     {
-      GimpDrawable *drawable =
-        gimp_drawable_filter_get_drawable (GIMP_DRAWABLE_FILTER (viewable));
+      GimpDrawable *drawable = gimp_drawable_filter_get_drawable (filter);
 
       gimp_drawable_update (drawable, 0, 0, -1, -1);
       gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
