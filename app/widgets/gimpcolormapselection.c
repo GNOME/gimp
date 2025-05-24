@@ -836,9 +836,9 @@ gimp_colormap_selection_set_palette (GimpColormapSelection *selection)
           gint n_colors;
 
           n_colors = gimp_palette_get_n_colors (palette);
-          g_signal_connect_swapped (palette, "dirty",
-                                    G_CALLBACK (gtk_widget_queue_draw),
-                                    selection);
+          g_signal_connect_object (palette, "dirty",
+                                   G_CALLBACK (gtk_widget_queue_draw),
+                                   selection, G_CONNECT_SWAPPED);
           gimp_view_set_viewable (GIMP_VIEW (selection->view),
                                   GIMP_VIEWABLE (palette));
           gtk_adjustment_set_upper (selection->index_adjustment, n_colors - 1);
