@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI translations master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-05-20 21:12+0000\n"
-"PO-Revision-Date: 2025-05-21 08:00+0300\n"
+"POT-Creation-Date: 2025-05-24 16:13+0000\n"
+"PO-Revision-Date: 2025-05-24 08:00+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -361,7 +361,7 @@ msgstr ""
 "değişkenini ayarlayınız."
 
 #: app/actions/actions.c:113 app/dialogs/dialogs.c:426
-#: app/widgets/gimpbrusheditor.c:88
+#: app/widgets/gimpbrusheditor.c:89
 msgid "Brush Editor"
 msgstr "Fırça Düzenleyici"
 
@@ -2562,7 +2562,7 @@ msgstr ""
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
 #: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2436
-#: app/core/gimppalette.c:583 app/core/gimppalette-import.c:223
+#: app/core/gimppalette.c:585 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:774 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "Başlıksız"
@@ -3546,7 +3546,7 @@ msgid "White Balance operates only on RGB color layers."
 msgstr "Beyaz Dengesi, yalnızca RGB renk katmanlarına uygulanır."
 
 #: app/actions/drawable-commands.c:103 app/core/gimpdrawable-levels.c:72
-#: app/tools/gimplevelstool.c:138
+#: app/tools/gimplevelstool.c:139
 msgid "Levels"
 msgstr "Düzeyler"
 
@@ -11159,25 +11159,29 @@ msgid "Override theme-set icon sizes."
 msgstr "Temaca ayarlanan simge boyutlarının üzerine yaz."
 
 #: app/config/gimprc-blurbs.h:562
+msgid "Use theme colors for preview"
+msgstr "Ön izleme için tema renklerini kullan"
+
+#: app/config/gimprc-blurbs.h:565
 msgid "The size of the icons to use."
 msgstr "Kullanılacak simgenin boyutu."
 
-#: app/config/gimprc-blurbs.h:565
+#: app/config/gimprc-blurbs.h:568
 msgid "When enabled, symbolic icons will be preferred if available."
 msgstr "Etkinleştirildiğinde, oluyorsa, sembolik simgeler kullanılacak."
 
-#: app/config/gimprc-blurbs.h:571
+#: app/config/gimprc-blurbs.h:574
 msgid "Tweak font size of the graphical interface."
 msgstr "Grafik arayüzün yazı tipini ince ayarla."
 
-#: app/config/gimprc-blurbs.h:574
+#: app/config/gimprc-blurbs.h:577
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
 msgstr ""
 "'Renk Profiline Dönüştür' iletişim kutusu için öntanımlı görselleştirme "
 "amacını ayarlar."
 
-#: app/config/gimprc-blurbs.h:577
+#: app/config/gimprc-blurbs.h:580
 msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
@@ -11185,14 +11189,14 @@ msgstr ""
 "'Renk Profiline Dönüştür' iletişim kutusu için öntanımlı 'Siyah Nokta "
 "Dengelemesi' durumunu ayarlar."
 
-#: app/config/gimprc-blurbs.h:581
+#: app/config/gimprc-blurbs.h:584
 msgid ""
 "Sets the default layer dithering method for the 'Convert Precision' dialog."
 msgstr ""
 "'Hassasiyeti Dönüştür' iletişim kutusu için öntanımlı katman titreme "
 "yöntemini ayarlar."
 
-#: app/config/gimprc-blurbs.h:584
+#: app/config/gimprc-blurbs.h:587
 msgid ""
 "Sets the default text layer dithering method for the 'Convert Precision' "
 "dialog."
@@ -11200,18 +11204,18 @@ msgstr ""
 "'Hassasiyeti Dönüştür' iletişim kutusu için öntanımlı metin katmanı "
 "titremesi yöntemini ayarlar."
 
-#: app/config/gimprc-blurbs.h:587
+#: app/config/gimprc-blurbs.h:590
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
 msgstr ""
 "'Hassasiyeti Dönüştür' iletişim kutusu için öntanımlı kanal titreme "
 "yöntemini ayarlar."
 
-#: app/config/gimprc-blurbs.h:590
+#: app/config/gimprc-blurbs.h:593
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
 msgstr "'İndeksliye Dönüştür' kutusu için öntanımlı palet türünü ayarlar."
 
-#: app/config/gimprc-blurbs.h:593
+#: app/config/gimprc-blurbs.h:596
 msgid ""
 "Sets the default maximum number of colors for the 'Convert to Indexed' "
 "dialog."
@@ -11219,7 +11223,7 @@ msgstr ""
 "'İndeksliye Dönüştür' iletişim kutusu için öntanımlı en fazla renk sayısını "
 "ayarlar."
 
-#: app/config/gimprc-blurbs.h:596
+#: app/config/gimprc-blurbs.h:599
 msgid ""
 "Sets the default 'Remove duplicate colors' state for the 'Convert to "
 "Indexed' dialog."
@@ -11227,19 +11231,19 @@ msgstr ""
 "'İndeksliye Dönüştür' iletişim kutusu için öntanımlı 'Çift renkleri kaldır' "
 "durumunu ayarlar."
 
-#: app/config/gimprc-blurbs.h:599
+#: app/config/gimprc-blurbs.h:602
 msgid "Sets the default dithering type for the 'Convert to Indexed' dialog."
 msgstr ""
 "'İndeksliye Dönüştür' iletişim kutusu için öntanımlı titreme türünü ayarlar."
 
-#: app/config/gimprc-blurbs.h:602
+#: app/config/gimprc-blurbs.h:605
 msgid ""
 "Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog."
 msgstr ""
 "'İndeksliye Dönüştür' iletişim kutusu için öntanımlı 'Saydamlık titremesi' "
 "durumunu ayarlar."
 
-#: app/config/gimprc-blurbs.h:605
+#: app/config/gimprc-blurbs.h:608
 msgid ""
 "Sets the default 'Dither text layers' state for the 'Convert to Indexed' "
 "dialog."
@@ -11247,110 +11251,110 @@ msgstr ""
 "'İndeksliye Dönüştür' iletişim kutusu için öntanımlı 'Metin katmanları "
 "titremesi' durumunu ayarlar."
 
-#: app/config/gimprc-blurbs.h:608
+#: app/config/gimprc-blurbs.h:611
 msgid "Sets the default fill type for the 'Canvas Size' dialog."
 msgstr "'Tuval Boyutu' iletişim kutusu için öntanımlı doldurma türünü ayarlar."
 
-#: app/config/gimprc-blurbs.h:611
+#: app/config/gimprc-blurbs.h:614
 msgid "Sets the default set of layers to resize for the 'Canvas Size' dialog."
 msgstr ""
 "'Tuval Boyutu' iletişim kutusu için yeniden boyutlandırılacak öntanımlı "
 "katman kümesini ayarlar."
 
-#: app/config/gimprc-blurbs.h:614
+#: app/config/gimprc-blurbs.h:617
 msgid ""
 "Sets the default 'Resize text layers' state for the 'Canvas Size' dialog."
 msgstr ""
 "'Tuval Boyutu' iletişim kutusu için öntanımlı 'Metin katmanlarını yeniden "
 "boyutlandır' durumunu ayarlar."
 
-#: app/config/gimprc-blurbs.h:617
+#: app/config/gimprc-blurbs.h:620
 msgid "Sets how items are searched and selected from a textual pattern."
 msgstr ""
 "Ögelerin nasıl aranacağını ve metin örüntüsünden nasıl seçileceğini ayarlar."
 
-#: app/config/gimprc-blurbs.h:620
+#: app/config/gimprc-blurbs.h:623
 msgid "Sets the default layer name for the 'New Layer' dialog."
 msgstr "'Yeni Katman' iletişim kutusu için öntanımlı katman adını ayarlar."
 
-#: app/config/gimprc-blurbs.h:623
+#: app/config/gimprc-blurbs.h:626
 msgid "Sets the default mode for the 'New Layer' dialog."
 msgstr "'Yeni Katman' iletişim kutusu için öntanımlı kipi ayarlar."
 
-#: app/config/gimprc-blurbs.h:626
+#: app/config/gimprc-blurbs.h:629
 msgid "Sets the default blend space for the 'New Layer' dialog."
 msgstr ""
 "'Yeni Katman' iletişim kutusu için öntanımlı harmanlama alanını ayarlar."
 
-#: app/config/gimprc-blurbs.h:629
+#: app/config/gimprc-blurbs.h:632
 msgid "Sets the default composite space for the 'New Layer' dialog."
 msgstr "'Yeni Katman' iletişim kutusu için öntanımlı bileşik alanı ayarlar."
 
-#: app/config/gimprc-blurbs.h:632
+#: app/config/gimprc-blurbs.h:635
 msgid "Sets the default composite mode for the 'New Layer' dialog."
 msgstr "'Yeni Katman' iletişim kutusu için öntanımlı bileşik kipini ayarlar."
 
-#: app/config/gimprc-blurbs.h:635
+#: app/config/gimprc-blurbs.h:638
 msgid "Sets the default opacity for the 'New Layer' dialog."
 msgstr "'Yeni Katman' iletişim kutusu için öntanımlı matlığını ayarlar."
 
-#: app/config/gimprc-blurbs.h:638
+#: app/config/gimprc-blurbs.h:641
 msgid "Sets the default fill type for the 'New Layer' dialog."
 msgstr "'Yeni Katman' iletişim kutusu için öntanımlı doldurma türünü ayarlar."
 
-#: app/config/gimprc-blurbs.h:641
+#: app/config/gimprc-blurbs.h:644
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
 msgstr ""
 "'Katman Sınır Boyutu' iletişim kutusu için öntanımlı doldurma türünü ayarlar."
 
-#: app/config/gimprc-blurbs.h:644
+#: app/config/gimprc-blurbs.h:647
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
 msgstr "'Katman Maskesi Ekle' iletişim kutusu için öntanımlı maskeyi ayarlar."
 
-#: app/config/gimprc-blurbs.h:647
+#: app/config/gimprc-blurbs.h:650
 msgid "Sets the default 'invert mask' state for the 'Add Layer Mask' dialog."
 msgstr ""
 "'Katman Maskesi Ekle' iletişim kutusu için öntanımlı 'maskeyi ters çevir' "
 "durumunu ayarlar."
 
-#: app/config/gimprc-blurbs.h:650
+#: app/config/gimprc-blurbs.h:653
 msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
 msgstr ""
 "'Görünür Katmanları Birleştir' iletişim kutusu için öntanımlı birleştirme "
 "türünü ayarlar."
 
-#: app/config/gimprc-blurbs.h:653
+#: app/config/gimprc-blurbs.h:656
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr ""
 "'Görünür Katmanları Birleştir' iletişim kutusu için öntanımlı 'Yalnızca "
 "etkin küme' durumunu ayarlar."
 
-#: app/config/gimprc-blurbs.h:656
+#: app/config/gimprc-blurbs.h:659
 msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
 msgstr ""
 "'Görünen Katmanları Birleştir' iletişim kutusu için öntanımlı 'Görünmez "
 "katmanları gözden çıkar' durumunu ayarlar."
 
-#: app/config/gimprc-blurbs.h:659
+#: app/config/gimprc-blurbs.h:662
 msgid "Sets the default channel name for the 'New Channel' dialog."
 msgstr "'Yeni Kanal' iletişim kutusu için öntanımlı kanal adını ayarlar."
 
-#: app/config/gimprc-blurbs.h:662
+#: app/config/gimprc-blurbs.h:665
 msgid "Sets the default color and opacity for the 'New Channel' dialog."
 msgstr "'Yeni Kanal' iletişim kutusu için öntanımlı rengi ve matlığı ayarlar."
 
-#: app/config/gimprc-blurbs.h:665
+#: app/config/gimprc-blurbs.h:668
 msgid "Sets the default path name for the 'New Path' dialog."
 msgstr "'Yeni Yol' iletişim kutusu için öntanımlı yol adını ayarlar."
 
-#: app/config/gimprc-blurbs.h:668
+#: app/config/gimprc-blurbs.h:671
 msgid "Sets the default folder path for the 'Export Path' dialog."
 msgstr ""
 "'Yolu Dışa Aktar' iletişim kutusu için öntanımlı klasör yolunu ayarlar."
 
-#: app/config/gimprc-blurbs.h:671
+#: app/config/gimprc-blurbs.h:674
 msgid ""
 "Sets the default 'Export the selected paths' state for the 'Export Path' "
 "dialog."
@@ -11358,18 +11362,18 @@ msgstr ""
 "'Yolu Dışa Aktar' iletişim kutusu için öntanımlı 'Seçilen yolları dışa "
 "aktar' durumunu ayarlar."
 
-#: app/config/gimprc-blurbs.h:674
+#: app/config/gimprc-blurbs.h:677
 msgid "Sets the default folder path for the 'Import Path' dialog."
 msgstr "'Yolu İçe Aktar' iletişim kutusu için öntanımlı klasör yolunu ayarlar."
 
-#: app/config/gimprc-blurbs.h:677
+#: app/config/gimprc-blurbs.h:680
 msgid ""
 "Sets the default 'Merge imported paths' state for the 'Import Path' dialog."
 msgstr ""
 "'Yolu İçe Aktar' iletişim kutusu için öntanımlı 'İçe aktarılmış yolları "
 "birleştir' durumunu ayarlar."
 
-#: app/config/gimprc-blurbs.h:680
+#: app/config/gimprc-blurbs.h:683
 msgid ""
 "Sets the default 'Scale imported paths to fit size' state for the 'Import "
 "Path' dialog."
@@ -11377,11 +11381,11 @@ msgstr ""
 "'Yolları İçe Aktar' iletişim kutusu için öntanımlı 'İçe aktarılmış yolları "
 "ölçekle' durumunu ayarlar."
 
-#: app/config/gimprc-blurbs.h:683
+#: app/config/gimprc-blurbs.h:686
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
 msgstr "'Tüylü Seçim' iletişim kutusu için öntanımlı tüy yarıçapını ayarlar."
 
-#: app/config/gimprc-blurbs.h:686
+#: app/config/gimprc-blurbs.h:689
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Feather Selection' dialog."
@@ -11389,17 +11393,17 @@ msgstr ""
 "'Tüylü Seçim' iletişim kutusu için öntanımlı 'Seçilen alanlar görüntünün "
 "dışında devam ediyor' ayarını ayarlar."
 
-#: app/config/gimprc-blurbs.h:690
+#: app/config/gimprc-blurbs.h:693
 msgid "Sets the default grow radius for the 'Grow Selection' dialog."
 msgstr ""
 "'Seçimi Büyüt' iletişim kutusu için öntanımlı büyüme yarıçapını ayarlar."
 
-#: app/config/gimprc-blurbs.h:693
+#: app/config/gimprc-blurbs.h:696
 msgid "Sets the default shrink radius for the 'Shrink Selection' dialog."
 msgstr ""
 "'Seçimi Küçült' iletişim kutusu için öntanımlı küçültme yarıçapını ayarlar."
 
-#: app/config/gimprc-blurbs.h:696
+#: app/config/gimprc-blurbs.h:699
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Shrink Selection' dialog."
@@ -11407,12 +11411,12 @@ msgstr ""
 "'Seçimi Küçült' iletişim kutusu için öntanımlı 'Seçilen alanlar görüntünün "
 "dışında devam ediyor' ayarını ayarlar."
 
-#: app/config/gimprc-blurbs.h:700
+#: app/config/gimprc-blurbs.h:703
 msgid "Sets the default border radius for the 'Border Selection' dialog."
 msgstr ""
 "'Kenarlık Seçimi' iletişim kutusu için öntanımlı sınır yarıçapını ayarlar."
 
-#: app/config/gimprc-blurbs.h:703
+#: app/config/gimprc-blurbs.h:706
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Border Selection' dialog."
@@ -11420,16 +11424,16 @@ msgstr ""
 "'Kenarlık Seçimi' iletişim kutusu için öntanımlı 'Seçilen alanlar görüntünün "
 "dışında devam ediyor' ayarını ayarlar."
 
-#: app/config/gimprc-blurbs.h:707
+#: app/config/gimprc-blurbs.h:710
 msgid "Sets the default border style for the 'Border Selection' dialog."
 msgstr ""
 "'Kenarlık Seçimi' iletişim kutusu için öntanımlı sınır biçemini ayarlar."
 
-#: app/config/gimprc-blurbs.h:716
+#: app/config/gimprc-blurbs.h:719
 msgid "Sets the size of the thumbnail shown in the Open dialog."
 msgstr "Aç iletişim kutusunda gösterilecek küçük resim boyutunu ayarlar."
 
-#: app/config/gimprc-blurbs.h:719
+#: app/config/gimprc-blurbs.h:722
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
@@ -11437,7 +11441,7 @@ msgstr ""
 "Eğer küçük resim burada ayarlanan boyuttan daha küçükse, Aç iletişim "
 "penceresindeki ön izleme kendiliğinden güncellenecek."
 
-#: app/config/gimprc-blurbs.h:723
+#: app/config/gimprc-blurbs.h:726
 msgid ""
 "When the amount of pixel data exceeds this limit, GIMP will start to swap "
 "tiles to disk.  This is a lot slower but it makes it possible to work on "
@@ -11449,28 +11453,28 @@ msgstr ""
 "görüntülerde çalışılmasını sağlar. Bilgisayarınızın bellek (RAM) miktarı "
 "fazlaysa, bu değeri daha yüksek olarak ayarlamak isteyebilirsiniz."
 
-#: app/config/gimprc-blurbs.h:729
+#: app/config/gimprc-blurbs.h:732
 msgid "Show the current foreground and background colors in the toolbox."
 msgstr "Geçerli ön plan ve arka plan renklerini araç kutusunda göster."
 
-#: app/config/gimprc-blurbs.h:732
+#: app/config/gimprc-blurbs.h:735
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
 msgstr ""
 "Geçerli seçilmiş fırçayı, örüntüyü ve renk geçişini araç kutusunda göster."
 
-#: app/config/gimprc-blurbs.h:735
+#: app/config/gimprc-blurbs.h:738
 msgid "Use a single toolbox button for grouped tools."
 msgstr "Kümelenmiş araçlar için tek araç kutusu düğmesi kullan."
 
-#: app/config/gimprc-blurbs.h:738
+#: app/config/gimprc-blurbs.h:741
 msgid "Show the currently active image in the toolbox."
 msgstr "Geçerli etkin görüntüyü araç kutusunda göster."
 
-#: app/config/gimprc-blurbs.h:741
+#: app/config/gimprc-blurbs.h:744
 msgid "Show the GIMP mascot at the top of the toolbox."
 msgstr "GIMP maskotunu araç kutusu üstünde göster."
 
-#: app/config/gimprc-blurbs.h:744
+#: app/config/gimprc-blurbs.h:747
 msgid ""
 "The first color to use in the transparency checkerboard, when Transparency "
 "Type is set to Custom colors."
@@ -11478,7 +11482,7 @@ msgstr ""
 "Saydamlık Türü, Özel renkler olarak ayarlandığında, saydamlık dama "
 "tahtasında kullanılacak ilk renk."
 
-#: app/config/gimprc-blurbs.h:748
+#: app/config/gimprc-blurbs.h:751
 msgid ""
 "The second color to use in the transparency checkerboard, when Transparency "
 "Type is set to Custom colors."
@@ -11486,16 +11490,16 @@ msgstr ""
 "Saydamlık Türü, Özel renkler olarak ayarlandığında, saydamlık dama "
 "tahtasında kullanılacak ikinci renk."
 
-#: app/config/gimprc-blurbs.h:752
+#: app/config/gimprc-blurbs.h:755
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr "Görüntülerde gösterilecek saydamlığın davranışını ayarlar."
 
-#: app/config/gimprc-blurbs.h:755
+#: app/config/gimprc-blurbs.h:758
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr ""
 "Saydamlığı görüntülemek için kullanılan dama tahtasının boyutunu ayarlar."
 
-#: app/config/gimprc-blurbs.h:758
+#: app/config/gimprc-blurbs.h:761
 msgid ""
 "When enabled, GIMP will not save an image if it has not been changed since "
 "it was opened."
@@ -11503,7 +11507,7 @@ msgstr ""
 "Etkin olduğunda, eğer bir görüntü açıldıktan sonra değiştirilmemişse GIMP "
 "bunu kaydetmeyecek."
 
-#: app/config/gimprc-blurbs.h:762
+#: app/config/gimprc-blurbs.h:765
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
@@ -11512,7 +11516,7 @@ msgstr ""
 "düzeyi, geri alma boyutu sınırına ulaşılana kadar kullanılabilir olarak "
 "tutulur."
 
-#: app/config/gimprc-blurbs.h:766
+#: app/config/gimprc-blurbs.h:769
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
@@ -11522,28 +11526,28 @@ msgstr ""
 "dikkatsizce belirlenmesi sonucunda değişiklikler geri alınamaz hale "
 "gelebilir."
 
-#: app/config/gimprc-blurbs.h:771
+#: app/config/gimprc-blurbs.h:774
 msgid "Sets the size of the previews in the Undo History."
 msgstr "Geri Alma Geçmişindeki ön izlemelerin boyutlarını ayarlar."
 
-#: app/config/gimprc-blurbs.h:774
+#: app/config/gimprc-blurbs.h:777
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Etkin olduğunda, F1'e basmak yardım tarayıcısını açacak."
 
-#: app/config/gimprc-blurbs.h:777
+#: app/config/gimprc-blurbs.h:780
 msgid "When enabled, uses OpenCL for some operations."
 msgstr "Etkin olduğunda, bazı işlemler için OpenCL kullanır."
 
-#: app/config/gimprc-blurbs.h:788
+#: app/config/gimprc-blurbs.h:791
 msgid "There's a tradeoff between speed and quality of the zoomed-out display."
 msgstr "Hız ve uzaklaştırılmış ekran kalitesi arasında bir denge vardır."
 
-#: app/config/gimprc-blurbs.h:795
+#: app/config/gimprc-blurbs.h:798
 msgid "When enabled, a search of actions will also return inactive actions."
 msgstr ""
 "Etkinleştirildiğinde, komut araması etkin olmayan komutları da listeler."
 
-#: app/config/gimprc-blurbs.h:798
+#: app/config/gimprc-blurbs.h:801
 msgid "The maximum number of actions saved in history."
 msgstr "Geçmişte kaydedilecek en fazla işlem sayısı."
 
@@ -13084,7 +13088,7 @@ msgstr ""
 "Fırça dosyasında ölümcül ayrıştırma hatası: RLE sıkıştırılmış fırça verisi "
 "bozulmuş."
 
-#: app/core/gimpbrush.c:155 app/paint/gimppaintoptions.c:235
+#: app/core/gimpbrush.c:158 app/paint/gimppaintoptions.c:235
 msgid "Brush Spacing"
 msgstr "Fırça Boşluğu"
 
@@ -13418,7 +13422,7 @@ msgid "Palette"
 msgstr "Palet"
 
 #: app/core/gimpcontext.c:741 app/core/gimpcontext.c:742
-#: app/tools/gimptextoptions.c:799
+#: app/tools/gimptextoptions.c:813
 msgid "Font"
 msgstr "Yazı tipi"
 
@@ -13448,7 +13452,7 @@ msgstr "kopyala"
 msgid "%s copy"
 msgstr "%s kopyası"
 
-#: app/core/gimpdatafactory.c:638 app/tools/gimptextoptions.c:780
+#: app/core/gimpdatafactory.c:638 app/tools/gimptextoptions.c:794
 #: app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
 msgstr "Yazı tipleri yükleniyor (bu biraz zaman alabilir...)"
@@ -13629,7 +13633,7 @@ msgstr "Özel biçem"
 # Menü ögesi olmadığı için tümce düzeni yeğlendi
 #: app/core/gimpfilloptions.c:128 app/pdb/gimppdbcontext.c:101
 #: app/tools/gimpbucketfilloptions.c:186 app/tools/gimpselectionoptions.c:89
-#: app/tools/gimptextoptions.c:177
+#: app/tools/gimptextoptions.c:178
 msgid "Antialiasing"
 msgstr "Kenar yumuşatma"
 
@@ -13645,7 +13649,7 @@ msgstr "Doldurma kenarlarını tüylemeyi etkinleştir"
 #: app/core/gimpfilloptions.c:142 app/paint/gimpmybrushoptions.c:87
 #: app/tools/gimpbucketfilloptions.c:203 app/tools/gimpcoloroptions.c:86
 #: app/tools/gimprectangleselectoptions.c:101
-#: app/tools/gimpselectionoptions.c:103 app/widgets/gimpbrusheditor.c:157
+#: app/tools/gimpselectionoptions.c:103 app/widgets/gimpbrusheditor.c:160
 msgid "Radius"
 msgstr "Yarıçap"
 
@@ -14102,7 +14106,7 @@ msgstr "Renk profili dönüştürme"
 msgid "Colormap of Image #%d (%s)"
 msgstr "Görüntünün renk eşlemi #%d (%s)"
 
-#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:904
+#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:906
 msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "Renk Eşlemini Ayarla"
@@ -14112,7 +14116,7 @@ msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "Renk Eşlemini Geri Al"
 
-#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:695
+#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:697
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "Renk Eşlemi girdisini değiştir"
@@ -14314,53 +14318,53 @@ msgstr "Görüntüyü Ölçekle"
 msgid "Can't undo %s"
 msgstr "Geriye alınamıyor: %s"
 
-#: app/core/gimpimagefile.c:799
+#: app/core/gimpimagefile.c:801
 msgid "Folder"
 msgstr "Klasör"
 
-#: app/core/gimpimagefile.c:804
+#: app/core/gimpimagefile.c:806
 msgid "Special File"
 msgstr "Özel Dosya"
 
-#: app/core/gimpimagefile.c:820
+#: app/core/gimpimagefile.c:822
 msgid "Remote File"
 msgstr "Uzak Dosya"
 
-#: app/core/gimpimagefile.c:839
+#: app/core/gimpimagefile.c:841
 msgid "Click to create preview"
 msgstr "Ön izleme oluşturmak için tıkla"
 
-#: app/core/gimpimagefile.c:845
+#: app/core/gimpimagefile.c:847
 msgid "Loading preview..."
 msgstr "Ön izleme yükleniyor..."
 
-#: app/core/gimpimagefile.c:851
+#: app/core/gimpimagefile.c:853
 msgid "Preview is out of date"
 msgstr "Ön izleme geçerliliğini yitirmiş"
 
-#: app/core/gimpimagefile.c:857
+#: app/core/gimpimagefile.c:859
 msgid "Cannot create preview"
 msgstr "Ön izleme oluşturulamıyor"
 
-#: app/core/gimpimagefile.c:867
+#: app/core/gimpimagefile.c:869
 msgid "(Preview may be out of date)"
 msgstr "(Ön izleme geçerliliğini yitirmiş olabilir)"
 
 #. pixel size
-#: app/core/gimpimagefile.c:876 app/widgets/gimpimagepropview.c:438
+#: app/core/gimpimagefile.c:878 app/widgets/gimpimagepropview.c:438
 #: app/widgets/gimpsizebox.c:429 app/widgets/gimptemplateeditor.c:734
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
 msgstr[0] "%d x %d piksel"
 
-#: app/core/gimpimagefile.c:899 app/display/gimpdisplayshell-title.c:394
+#: app/core/gimpimagefile.c:901 app/display/gimpdisplayshell-title.c:394
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
 msgstr[0] "%d katman"
 
-#: app/core/gimpimagefile.c:963
+#: app/core/gimpimagefile.c:965
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Küçük resim '%s' açılamadı: %s"
@@ -14974,7 +14978,7 @@ msgid "Line width"
 msgstr "Çizgi genişliği"
 
 #: app/core/gimpstrokeoptions.c:168 app/core/gimptemplate.c:158
-#: app/tools/gimptextoptions.c:164 app/tools/gimptextoptions.c:307
+#: app/tools/gimptextoptions.c:165 app/tools/gimptextoptions.c:308
 msgid "Unit"
 msgstr "Birim"
 
@@ -14990,7 +14994,7 @@ msgstr "Birleştirme biçemi"
 msgid "Miter limit"
 msgstr "Köşe sınırı"
 
-#: app/core/gimpstrokeoptions.c:190 app/tools/gimptextoptions.c:324
+#: app/core/gimpstrokeoptions.c:190 app/tools/gimptextoptions.c:330
 msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
 "distance of more than miter-limit * line-width from the actual join point."
@@ -15575,7 +15579,7 @@ msgstr "Kodlamayı Dönüştür"
 #. gamma
 #: app/dialogs/convert-precision-dialog.c:176
 #: app/operations/gimplevelsconfig.c:150 app/operations/gimplevelsconfig.c:151
-#: app/tools/gimplevelstool.c:510
+#: app/tools/gimplevelstool.c:511
 msgid "Gamma"
 msgstr "Gama"
 
@@ -16883,7 +16887,7 @@ msgstr "Kullanıcı Arayüzü"
 msgid "Interface"
 msgstr "Arayüz"
 
-#: app/dialogs/preferences-dialog.c:1876 app/tools/gimptextoptions.c:194
+#: app/dialogs/preferences-dialog.c:1876 app/tools/gimptextoptions.c:195
 msgid "Language"
 msgstr "Dil"
 
@@ -20276,6 +20280,13 @@ msgstr "Ayrıştırma hatası, 2 tam sayı değeri bulunamadı"
 msgid "Writing curves file failed: "
 msgstr "Eğri dosyasına yazma işlemi başarısız oldu: "
 
+#: app/operations/gimpcurvesconfig.c:805 app/operations/gimpcurvesconfig.c:808
+#: app/tools/gimpcurvestool.c:766 app/tools/gimpcurvestool.c:769
+#: app/tools/gimplevelstool.c:747 app/tools/gimplevelstool.c:750
+#, c-format
+msgid "Could not read header: "
+msgstr "Başlık okunamadı: "
+
 #: app/operations/gimphuesaturationconfig.c:101
 #: app/operations/gimphuesaturationconfig.c:102
 #: app/operations/gimpoperationcolorize.c:100
@@ -20331,7 +20342,9 @@ msgstr "Son çıktı değerlerini kelepçele."
 msgid "not a GIMP Levels file"
 msgstr "bir GIMP Düzey dosyası değil"
 
-#: app/operations/gimplevelsconfig.c:951
+#: app/operations/gimplevelsconfig.c:951 app/operations/gimplevelsconfig.c:1084
+#: app/operations/gimplevelsconfig.c:1087
+#, c-format
 msgid "parse error"
 msgstr "ayrıştırma hatası"
 
@@ -20403,7 +20416,7 @@ msgstr "Gri gölgelemeyi seç"
 msgid "Adjust hue, saturation, and lightness"
 msgstr "Renk tonunu, doygunluğu ve açıklığı ayarla"
 
-#: app/operations/gimpoperationlevels.c:64 app/tools/gimplevelstool.c:139
+#: app/operations/gimpoperationlevels.c:64 app/tools/gimplevelstool.c:140
 msgid "Adjust color levels"
 msgstr "Renk düzeylerini ayarla"
 
@@ -20625,7 +20638,7 @@ msgstr "Mürekkep Damlası Boyutu"
 #. angle frame
 #: app/paint/gimpinkoptions.c:81 app/paint/gimpinkoptions.c:120
 #: app/paint/gimppaintoptions.c:227 app/tools/gimptransform3dtool.c:321
-#: app/tools/gimptransform3dtool.c:422 app/widgets/gimpbrusheditor.c:197
+#: app/tools/gimptransform3dtool.c:422 app/widgets/gimpbrusheditor.c:200
 msgid "Angle"
 msgstr "Açı"
 
@@ -20640,7 +20653,7 @@ msgstr "Eğim"
 msgid "Shape"
 msgstr "Şekil"
 
-#: app/paint/gimpinkoptions.c:114 app/widgets/gimpbrusheditor.c:187
+#: app/paint/gimpinkoptions.c:114 app/widgets/gimpbrusheditor.c:190
 msgid "Aspect ratio"
 msgstr "En boy oranı"
 
@@ -20665,7 +20678,7 @@ msgid "Base Opacity"
 msgstr "Temel Matlık"
 
 #: app/paint/gimpmybrushoptions.c:101 app/paint/gimppaintoptions.c:241
-#: app/tools/gimpwarpoptions.c:99 app/widgets/gimpbrusheditor.c:177
+#: app/tools/gimpwarpoptions.c:99 app/widgets/gimpbrusheditor.c:180
 msgid "Hardness"
 msgstr "Sertlik"
 
@@ -20698,7 +20711,7 @@ msgid "Aspect Ratio"
 msgstr "En Boy Oranı"
 
 #: app/paint/gimppaintoptions.c:234 app/tools/gimpwarpoptions.c:113
-#: app/widgets/gimpbrusheditor.c:207 app/widgets/gimpbrushfactoryview.c:102
+#: app/widgets/gimpbrusheditor.c:210 app/widgets/gimpbrushfactoryview.c:102
 #: app/widgets/gimpgrideditor.c:179
 msgid "Spacing"
 msgstr "Boşluk"
@@ -21783,7 +21796,7 @@ msgstr "Mavi kanal"
 msgid "Select Range to Adjust"
 msgstr "Ayarlamak için Erim Seç"
 
-#: app/propgui/gimppropgui-color-balance.c:98 app/tools/gimplevelstool.c:269
+#: app/propgui/gimppropgui-color-balance.c:98 app/tools/gimplevelstool.c:270
 msgid "Adjust Color Levels"
 msgstr "Renk Düzeylerini Ayarla"
 
@@ -22267,6 +22280,21 @@ msgctxt "text-outline"
 msgid "Outlined and filled"
 msgstr "Çerçeveli ve doldurulmuş"
 
+#: app/text/text-enums.c:85
+msgctxt "text-outline-direction"
+msgid "Outer"
+msgstr "Dış"
+
+#: app/text/text-enums.c:86
+msgctxt "text-outline-direction"
+msgid "Inner"
+msgstr "İç"
+
+#: app/text/text-enums.c:87
+msgctxt "text-outline-direction"
+msgid "Centered"
+msgstr "Ortalı"
+
 #: app/tools/gimpairbrushtool.c:70
 msgid "Airbrush Tool: Paint using a brush, with variable pressure"
 msgstr "Hava Fırçası Aracı: Değişken basınç ile boyarken bir fırça kullan"
@@ -22665,7 +22693,7 @@ msgstr "Birden çok katman doldurulamaz. Yalnızca tek katman seçin."
 
 #: app/tools/gimpbucketfilltool.c:599 app/tools/gimpcagetool.c:231
 #: app/tools/gimpcurvestool.c:220 app/tools/gimpfiltertool.c:310
-#: app/tools/gimpforegroundselecttool.c:295 app/tools/gimplevelstool.c:210
+#: app/tools/gimpforegroundselecttool.c:295 app/tools/gimplevelstool.c:211
 #: app/tools/gimpoffsettool.c:191 app/tools/gimppainttool.c:297
 #: app/tools/gimpperspectiveclonetool.c:224 app/tools/gimpthresholdtool.c:160
 #: app/tools/gimptransformgridtool.c:351
@@ -23027,7 +23055,7 @@ msgid "_Curves..."
 msgstr "_Eğriler..."
 
 #: app/tools/gimpcurvestool.c:218 app/tools/gimpfiltertool.c:306
-#: app/tools/gimplevelstool.c:208 app/tools/gimpoffsettool.c:189
+#: app/tools/gimplevelstool.c:209 app/tools/gimpoffsettool.c:189
 #: app/tools/gimpthresholdtool.c:158
 msgid "Cannot modify multiple drawables. Select only one."
 msgstr "Birden çok çizilebilir düzenlenemez. Yalnızca bir tane seçin."
@@ -23058,12 +23086,12 @@ msgstr "%s: tüm kanallara denetim noktası ekle"
 msgid "Adjust Color Curves"
 msgstr "Renk Eğrilerini Ayarla"
 
-#: app/tools/gimpcurvestool.c:486 app/tools/gimplevelstool.c:367
+#: app/tools/gimpcurvestool.c:486 app/tools/gimplevelstool.c:368
 #: app/tools/gimpthresholdtool.c:247
 msgid "Cha_nnel:"
 msgstr "_Kanal:"
 
-#: app/tools/gimpcurvestool.c:515 app/tools/gimplevelstool.c:394
+#: app/tools/gimpcurvestool.c:515 app/tools/gimplevelstool.c:395
 msgid "R_eset Channel"
 msgstr "Kanalı _Sıfırla"
 
@@ -23083,13 +23111,7 @@ msgstr "_Tür:"
 msgid "Curve _type:"
 msgstr "Eğri _türü:"
 
-#: app/tools/gimpcurvestool.c:756 app/tools/gimpcurvestool.c:759
-#: app/tools/gimplevelstool.c:745
-#, c-format
-msgid "Could not read header: "
-msgstr "Başlık okunamadı: "
-
-#: app/tools/gimpcurvestool.c:836
+#: app/tools/gimpcurvestool.c:850
 msgid "Use _old curves file format"
 msgstr "_Eski eğrilerin dosya biçimini kullan"
 
@@ -23631,7 +23653,7 @@ msgid "Y:"
 msgstr "Y:"
 
 #. the color label
-#: app/tools/gimpgradienttool-editor.c:1345 app/tools/gimptextoptions.c:855
+#: app/tools/gimpgradienttool-editor.c:1345 app/tools/gimptextoptions.c:869
 msgid "Color:"
 msgstr "Renk:"
 
@@ -23885,74 +23907,74 @@ msgstr "Bir nokta eklemek için tıkla ya da tıklayıp sürükle"
 msgid "Modify Scissors Curve"
 msgstr "Makas Eğrilerini Değiştir"
 
-#: app/tools/gimplevelstool.c:140
+#: app/tools/gimplevelstool.c:141
 msgid "_Levels..."
 msgstr "_Düzeyler..."
 
-#: app/tools/gimplevelstool.c:293
+#: app/tools/gimplevelstool.c:294
 msgid "Pick black point for all channels"
 msgstr "Tüm kanallar için siyah nokta seç"
 
-#: app/tools/gimplevelstool.c:295
+#: app/tools/gimplevelstool.c:296
 msgid "Pick black point for the selected channel"
 msgstr "Seçilmiş kanal için siyah nokta seç"
 
-#: app/tools/gimplevelstool.c:302
+#: app/tools/gimplevelstool.c:303
 msgid "Pick gray point for all channels"
 msgstr "Tüm kanallar için gri nokta seç"
 
-#: app/tools/gimplevelstool.c:304
+#: app/tools/gimplevelstool.c:305
 msgid "Pick gray point for the selected channel"
 msgstr "Seçilmiş kanal için gri nokta seç"
 
-#: app/tools/gimplevelstool.c:311
+#: app/tools/gimplevelstool.c:312
 msgid "Pick white point for all channels"
 msgstr "Tüm kanallar için beyaz nokta seç"
 
-#: app/tools/gimplevelstool.c:313
+#: app/tools/gimplevelstool.c:314
 msgid "Pick white point for the selected channel"
 msgstr "Seçilmiş kanal için beyaz nokta seç"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:419
+#: app/tools/gimplevelstool.c:420
 msgid "Input Levels"
 msgstr "Girdi Düzeyleri"
 
-#: app/tools/gimplevelstool.c:503
+#: app/tools/gimplevelstool.c:504
 msgid "Clamp _input"
 msgstr "G_irdiyi kelepçele"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:542
+#: app/tools/gimplevelstool.c:543
 msgid "Output Levels"
 msgstr "Çıktı Düzeyleri"
 
-#: app/tools/gimplevelstool.c:589
+#: app/tools/gimplevelstool.c:590
 msgid "Clamp outpu_t"
 msgstr "Çık_tıyı kelepçele"
 
 #. all channels frame
-#: app/tools/gimplevelstool.c:602
+#: app/tools/gimplevelstool.c:603
 msgid "All Channels"
 msgstr "Tüm Kanallar"
 
-#: app/tools/gimplevelstool.c:614
+#: app/tools/gimplevelstool.c:615
 msgid "_Auto Input Levels"
 msgstr "_Kendiliğinden Girdi Düzeyleri"
 
-#: app/tools/gimplevelstool.c:617
+#: app/tools/gimplevelstool.c:618
 msgid "Adjust levels for all channels automatically"
 msgstr "Tüm kanal düzeylerini kendiliğinden ayarla"
 
-#: app/tools/gimplevelstool.c:644
+#: app/tools/gimplevelstool.c:645
 msgid "Edit these Settings as Curves"
 msgstr "Bu Ayarları Eğriler olarak düzenle"
 
-#: app/tools/gimplevelstool.c:859
+#: app/tools/gimplevelstool.c:868
 msgid "Use _old levels file format"
 msgstr "_Eski düzeylerin dosya biçimini kullan"
 
-#: app/tools/gimplevelstool.c:1004 app/tools/gimpthresholdtool.c:429
+#: app/tools/gimplevelstool.c:1013 app/tools/gimpthresholdtool.c:429
 msgid "Calculating histogram..."
 msgstr "Histogram hesaplanıyor..."
 
@@ -24488,7 +24510,7 @@ msgstr "Geçerli"
 msgid "Fixed"
 msgstr "Sabit"
 
-#: app/tools/gimprectangleoptions.c:1006 app/tools/gimptextoptions.c:813
+#: app/tools/gimprectangleoptions.c:1006 app/tools/gimptextoptions.c:827
 msgid "Size:"
 msgstr "Boyut:"
 
@@ -24765,66 +24787,66 @@ msgstr "Lekelemek için tıklayın"
 msgid "Click to smudge the line"
 msgstr "Çizgiyi lekelemek için tıklayın"
 
-#: app/tools/gimptextoptions.c:165
+#: app/tools/gimptextoptions.c:166
 msgid "Font size unit"
 msgstr "Yazı tipi boyutu birimi"
 
-#: app/tools/gimptextoptions.c:170 app/tools/gimptextoptions.c:171
+#: app/tools/gimptextoptions.c:171 app/tools/gimptextoptions.c:172
 msgid "Font size"
 msgstr "Yazı Tipi Boyutu"
 
-#: app/tools/gimptextoptions.c:184
+#: app/tools/gimptextoptions.c:185
 msgid "Hinting"
 msgstr "İpucu"
 
-#: app/tools/gimptextoptions.c:185
+#: app/tools/gimptextoptions.c:186
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "Dokunma, yazı tipi dış çizgisini, küçük boyutlu canlı bit eşlem oluşturmak "
 "için değiştirir"
 
-#: app/tools/gimptextoptions.c:195
+#: app/tools/gimptextoptions.c:196
 msgid "The text language may have an effect on the way the text is rendered."
 msgstr "Metin dili, metnin görselleştirme şeklini etkileyebilir."
 
-#: app/tools/gimptextoptions.c:209
+#: app/tools/gimptextoptions.c:210
 msgid "Justify"
 msgstr "Hizala"
 
-#: app/tools/gimptextoptions.c:210
+#: app/tools/gimptextoptions.c:211
 msgid "Text alignment"
 msgstr "Metin hizalaması"
 
-#: app/tools/gimptextoptions.c:217
+#: app/tools/gimptextoptions.c:218
 msgid "Indentation"
 msgstr "Girinti"
 
-#: app/tools/gimptextoptions.c:218
+#: app/tools/gimptextoptions.c:219
 msgid "Indentation of the first line"
 msgstr "İlk satırın girintili yazımı"
 
-#: app/tools/gimptextoptions.c:225
+#: app/tools/gimptextoptions.c:226
 msgid "Line spacing"
 msgstr "Çizgi boşluğu"
 
-#: app/tools/gimptextoptions.c:226
+#: app/tools/gimptextoptions.c:227
 msgid "Adjust line spacing"
 msgstr "Satır boşluğunu ayarla"
 
-#: app/tools/gimptextoptions.c:233
+#: app/tools/gimptextoptions.c:234
 msgid "Letter spacing"
 msgstr "Harf boşluğu"
 
-#: app/tools/gimptextoptions.c:234
+#: app/tools/gimptextoptions.c:235
 msgid "Adjust letter spacing"
 msgstr "Harf boşluğunu ayarla"
 
-#: app/tools/gimptextoptions.c:241
+#: app/tools/gimptextoptions.c:242
 msgid "Box"
 msgstr "Kutu"
 
-#: app/tools/gimptextoptions.c:242
+#: app/tools/gimptextoptions.c:243
 msgid ""
 "Whether text flows into rectangular shape or moves into a new line when you "
 "press Enter"
@@ -24832,63 +24854,67 @@ msgstr ""
 "Enter tuşuna bastığınızda metnin yeni bir satıra kaydırılması veya "
 "dikdörtgen şekil içine devam edip etmemesi"
 
-#: app/tools/gimptextoptions.c:250
+#: app/tools/gimptextoptions.c:251
 msgid "Use editor window"
 msgstr "Düzenleyici penceresini kullan"
 
-#: app/tools/gimptextoptions.c:251
+#: app/tools/gimptextoptions.c:252
 msgid "Use an external editor window for text entry"
 msgstr "Metin girişi için dış metin düzenleyici kullan"
 
-#: app/tools/gimptextoptions.c:257
+#: app/tools/gimptextoptions.c:258
 msgid "Show on-canvas editor"
 msgstr "Tuvalde düzenleyici göster"
 
-#: app/tools/gimptextoptions.c:258
+#: app/tools/gimptextoptions.c:259
 msgid "Show on-canvas text editor"
 msgstr "Tuvalde metin düzenleyici göster"
 
-#: app/tools/gimptextoptions.c:300
+#: app/tools/gimptextoptions.c:301
 msgid "Outline width"
 msgstr "Çerçeve genişliği"
 
-#: app/tools/gimptextoptions.c:301
+#: app/tools/gimptextoptions.c:302
 msgid "Adjust outline width"
 msgstr "Çerçeve genişliğini ayarla"
 
-#: app/tools/gimptextoptions.c:308
+#: app/tools/gimptextoptions.c:309
 msgid "Outline width unit"
 msgstr "Çerçeve genişliği birimi"
 
-#: app/tools/gimptextoptions.c:323
+#: app/tools/gimptextoptions.c:329
 msgid "Outline miter limit"
 msgstr "Çerçeve gönye sınırı"
 
-#: app/tools/gimptextoptions.c:844
+#: app/tools/gimptextoptions.c:858
 msgid "Hinting:"
 msgstr "İpucu:"
 
-#: app/tools/gimptextoptions.c:848
+#: app/tools/gimptextoptions.c:862
 msgid "Text Color"
 msgstr "Metin Rengi"
 
-#: app/tools/gimptextoptions.c:861
+#: app/tools/gimptextoptions.c:875
 msgid "Style:"
 msgstr "Biçem:"
 
-#: app/tools/gimptextoptions.c:865
+#: app/tools/gimptextoptions.c:879
 msgid "Outline Options"
 msgstr "Çerçeve Seçenekleri"
 
-#: app/tools/gimptextoptions.c:886
+#: app/tools/gimptextoptions.c:896
+msgid "Outline Direction:"
+msgstr "Çerçeve Yönü:"
+
+#: app/tools/gimptextoptions.c:912
 msgid "Justify:"
 msgstr "Hizala:"
 
-#: app/tools/gimptextoptions.c:916
+#: app/tools/gimptextoptions.c:942
 msgid "Box:"
 msgstr "Kutu:"
 
-#: app/tools/gimptextoptions.c:956
+#: app/tools/gimptextoptions.c:984
 msgid "Language:"
 msgstr "Dil:"
 
@@ -25893,20 +25919,20 @@ msgstr "Alt+%d %d ekranına geçiş için kullanıldı ve yeniden yönlendirilem
 msgid "Changing shortcut failed."
 msgstr "Kısayol değiştirilemedi."
 
-#: app/widgets/gimpbrusheditor.c:139
+#: app/widgets/gimpbrusheditor.c:142
 msgid "Shape:"
 msgstr "Şekil:"
 
-#: app/widgets/gimpbrusheditor.c:167
+#: app/widgets/gimpbrusheditor.c:170
 msgid "Spikes"
 msgstr "Çiviler"
 
-#: app/widgets/gimpbrusheditor.c:212 app/widgets/gimpbrushfactoryview.c:106
+#: app/widgets/gimpbrusheditor.c:215 app/widgets/gimpbrushfactoryview.c:106
 msgid "Percentage of width of brush"
 msgstr "Fırça genişliğinin yüzdesi"
 
 #: app/widgets/gimpbufferview.c:189 app/widgets/gimpbufferview.c:290
-#: app/widgets/gimpeditor.c:821
+#: app/widgets/gimpeditor.c:835
 msgid "(None)"
 msgstr "(Hiçbiri)"
 
