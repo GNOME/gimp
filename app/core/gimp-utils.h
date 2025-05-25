@@ -98,6 +98,24 @@ gchar      * gimp_data_input_stream_read_line_always
                                                     GCancellable      *cancellable,
                                                     GError           **error);
 
+gboolean     gimp_data_input_stream_read_char      (GDataInputStream  *input,
+                                                    gchar             *value,
+                                                    GError           **error);
+gboolean     gimp_data_input_stream_read_short     (GDataInputStream  *input,
+                                                    gint16            *value,
+                                                    GError           **error);
+gboolean     gimp_data_input_stream_read_long      (GDataInputStream  *input,
+                                                    gint32            *value,
+                                                    GError           **error);
+gboolean     gimp_data_input_stream_read_ucs2_text (GDataInputStream  *input,
+                                                    gchar            **value,
+                                                    GError           **error);
+gboolean     gimp_data_input_stream_rle_decode     (GDataInputStream  *input,
+                                                    gchar             *buffer,
+                                                    gsize              buffer_size,
+                                                    gint32             height,
+                                                    GError           **error);
+
 gboolean     gimp_ascii_strtoi                     (const gchar       *nptr,
                                                     gchar            **endptr,
                                                     gint               base,

@@ -53,6 +53,7 @@
 #include "gimp-utils.h"
 #include "gimpasync.h"
 #include "gimpcontext.h"
+#include "gimpdata.h"
 #include "gimperror.h"
 #include "gimpimage.h"
 
@@ -931,6 +932,195 @@ gimp_data_input_stream_read_line_always (GDataInputStream  *stream,
   g_clear_error (&temp_error);
 
   return result;
+}
+
+gboolean
+gimp_data_input_stream_read_char (GDataInputStream  *input,
+                                  gchar             *value,
+                                  GError           **error)
+{
+  gchar result;
+
+  result = g_data_input_stream_read_byte (input, NULL, error);
+  if (error && *error)
+    return FALSE;
+
+  *value = result;
+  return TRUE;
+}
+
+gboolean
+gimp_data_input_stream_read_short (GDataInputStream  *input,
+                                   gint16            *value,
+                                   GError           **error)
+{
+  gint16 result;
+
+  result = g_data_input_stream_read_int16 (input, NULL, error);
+  if (error && *error)
+    return FALSE;
+
+  *value = result;
+  return TRUE;
+}
+
+gboolean
+gimp_data_input_stream_read_long (GDataInputStream  *input,
+                                  gint32            *value,
+                                  GError           **error)
+{
+  gint32 result;
+
+  result = g_data_input_stream_read_int32 (input, NULL, error);
+  if (error && *error)
+    return FALSE;
+
+  *value = result;
+  return TRUE;
+}
+
+gboolean
+gimp_data_input_stream_read_ucs2_text (GDataInputStream  *input,
+                                       gchar            **value,
+                                       GError           **error)
+{
+  gchar *name_ucs2;
+  gint32 pslen = 0;
+  gint   len;
+  gint   i;
+
+  /* two-bytes characters encoded (UCS-2)
+   *  format:
+   *   long : number of characters in string
+   *   data : zero terminated UCS-2 string
+   */
+
+  if (! gimp_data_input_stream_read_long (input, &pslen, error) || pslen <= 0)
+    return FALSE;
+
+  len = 2 * pslen;
+
+  name_ucs2 = g_new (gchar, len);
+
+  for (i = 0; i < len; i++)
+    {
+      gchar mychar;
+
+      if (! gimp_data_input_stream_read_char (input, &mychar, error))
+        {
+          g_free (name_ucs2);
+          return FALSE;
+        }
+      name_ucs2[i] = mychar;
+    }
+
+  *value = g_convert (name_ucs2, len,
+                      "UTF-8", "UCS-2BE",
+                      NULL, NULL, NULL);
+
+  g_free (name_ucs2);
+
+  return (*value != NULL);
+}
+
+/* Photoshop resource (brush, pattern) rle decode */
+gboolean
+gimp_data_input_stream_rle_decode (GDataInputStream  *input,
+                                   gchar             *buffer,
+                                   gsize              buffer_size,
+                                   gint32             height,
+                                   GError           **error)
+{
+  gint      i, j;
+  gshort   *cscanline_len = NULL;
+  gchar    *cdata         = NULL;
+  gchar    *data          = buffer;
+  gboolean  result;
+
+  /* read compressed size foreach scanline */
+  cscanline_len = gegl_scratch_new (gshort, height);
+  for (i = 0; i < height; i++)
+    {
+      result = gimp_data_input_stream_read_short (input, &cscanline_len[i], error);
+      if (! result || cscanline_len[i] <= 0)
+        goto err;
+    }
+
+  /* unpack each scanline data */
+  for (i = 0; i < height; i++)
+    {
+      gint  len;
+      gsize bytes_read;
+
+      len = cscanline_len[i];
+
+      cdata = gegl_scratch_alloc (len);
+
+      if (! g_input_stream_read_all (G_INPUT_STREAM (input),
+                                     cdata, len,
+                                     &bytes_read, NULL, error) ||
+          bytes_read != len)
+        {
+          goto err;
+        }
+
+      for (j = 0; j < len;)
+        {
+          gint32 n = cdata[j++];
+
+          if (n >= 128)     /* force sign */
+            n -= 256;
+
+          if (n < 0)
+            {
+              /* copy the following char -n + 1 times */
+
+              if (n == -128)  /* it's a nop */
+                continue;
+
+              n = -n + 1;
+
+              if (j + 1 > len || (data - buffer) + n > buffer_size)
+                goto err;
+
+              memset (data, cdata[j], n);
+
+              j    += 1;
+              data += n;
+            }
+          else
+            {
+              /* read the following n + 1 chars (no compr) */
+
+              n = n + 1;
+
+              if (j + n > len || (data - buffer) + n > buffer_size)
+                goto err;
+
+              memcpy (data, &cdata[j], n);
+
+              j    += n;
+              data += n;
+            }
+        }
+
+      g_clear_pointer (&cdata, gegl_scratch_free);
+    }
+
+  g_clear_pointer (&cscanline_len, gegl_scratch_free);
+
+  return TRUE;
+
+err:
+  g_clear_pointer (&cdata, gegl_scratch_free);
+  g_clear_pointer (&cscanline_len, gegl_scratch_free);
+  if (error && ! *error)
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Fatal parse error in Photoshop resource file: "
+                     "RLE compressed data is corrupt."));
+    }
+  return FALSE;
 }
 
 gboolean

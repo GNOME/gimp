@@ -32,6 +32,7 @@
 #include "gimpbrush-private.h"
 #include "gimppattern-header.h"
 #include "gimptempbuf.h"
+#include "gimp-utils.h"
 
 #include "gimp-intl.h"
 
@@ -87,26 +88,11 @@ static GimpBrush * gimp_brush_load_abr_brush_v6  (GDataInputStream  *input,
                                                   gint               index,
                                                   GFile             *file,
                                                   GError           **error);
-
-static gchar       abr_read_char                 (GDataInputStream  *input,
-                                                  GError           **error);
-static gint16      abr_read_short                (GDataInputStream  *input,
-                                                  GError           **error);
-static gint32      abr_read_long                 (GDataInputStream  *input,
-                                                  GError           **error);
-static gchar     * abr_read_ucs2_text            (GDataInputStream  *input,
-                                                  GError           **error);
 static gboolean    abr_supported                 (AbrHeader         *abr_hdr,
                                                   GError           **error);
 static gboolean    abr_reach_8bim_section        (GDataInputStream  *input,
                                                   const gchar       *name,
                                                   GError           **error);
-static gboolean    abr_rle_decode                (GDataInputStream  *input,
-                                                  gchar             *buffer,
-                                                  gsize              buffer_size,
-                                                  gint32             height,
-                                                  GError           **error);
-
 
 /*  public functions  */
 
@@ -481,13 +467,11 @@ gimp_brush_load_abr (GimpContext   *context,
   g_data_input_stream_set_byte_order (data_input,
                                       G_DATA_STREAM_BYTE_ORDER_BIG_ENDIAN);
 
-  abr_hdr.version = abr_read_short (data_input, &my_error);
-  if (my_error)
+  if (! gimp_data_input_stream_read_short (data_input, &abr_hdr.version, &my_error))
     goto done;
 
   /* sub-version for ABR v6 */
-  abr_hdr.count = abr_read_short (data_input, &my_error);
-  if (my_error)
+  if (! gimp_data_input_stream_read_short (data_input, &abr_hdr.count, &my_error))
     goto done;
 
   if (abr_supported (&abr_hdr, &my_error))
@@ -578,8 +562,7 @@ gimp_brush_load_abr_v6 (GDataInputStream  *input,
   if (! abr_reach_8bim_section (input, "samp", error))
     return brush_list;
 
-  sample_section_size = abr_read_long (input, error);
-  if (error && *error)
+  if (! gimp_data_input_stream_read_long (input, &sample_section_size, error))
     return brush_list;
 
   sample_section_end = (sample_section_size +
@@ -623,12 +606,10 @@ gimp_brush_load_abr_brush_v12 (GDataInputStream  *input,
   GimpBrush      *brush = NULL;
   AbrBrushHeader  abr_brush_hdr;
 
-  abr_brush_hdr.type = abr_read_short (input, error);
-  if (error && *error)
+  if (! gimp_data_input_stream_read_short (input, &abr_brush_hdr.type, error))
     return NULL;
 
-  abr_brush_hdr.size = abr_read_long (input, error);
-  if (error && *error)
+  if (! gimp_data_input_stream_read_long (input, &abr_brush_hdr.size, error))
     return NULL;
 
   if (abr_brush_hdr.size < 0)
@@ -668,43 +649,34 @@ gimp_brush_load_abr_brush_v12 (GDataInputStream  *input,
         gchar                 *name;
         gchar                 *sample_name = NULL;
         gchar                 *tmp;
-        gshort                 compress;
+        gchar                  compress;
 
-        abr_sampled_brush_hdr.misc = abr_read_long (input, error);
-        if (error && *error)
-          break;
-
-        abr_sampled_brush_hdr.spacing = abr_read_short (input, error);
-        if (error && *error)
+        if (! gimp_data_input_stream_read_long (input, &abr_sampled_brush_hdr.misc, error) ||
+            ! gimp_data_input_stream_read_short (input, &abr_sampled_brush_hdr.spacing, error))
           break;
 
         if (abr_hdr->version == 2)
           {
-            sample_name = abr_read_ucs2_text (input, error);
-            if (error && *error)
+            if (! gimp_data_input_stream_read_ucs2_text (input, &sample_name, error))
               break;
           }
 
-        abr_sampled_brush_hdr.antialiasing = abr_read_char (input, error);
-        if (error && *error)
+        if (! gimp_data_input_stream_read_char (input, &abr_sampled_brush_hdr.antialiasing, error))
           break;
 
         for (i = 0; i < 4; i++)
           {
-            abr_sampled_brush_hdr.bounds[i] = abr_read_short (input, error);
-            if (error && *error)
+            if (! gimp_data_input_stream_read_short (input, &abr_sampled_brush_hdr.bounds[i], error))
               break;
           }
 
         for (i = 0; i < 4; i++)
           {
-            abr_sampled_brush_hdr.bounds_long[i] = abr_read_long (input, error);
-            if (error && *error)
+            if (! gimp_data_input_stream_read_long (input, &abr_sampled_brush_hdr.bounds_long[i], error))
               break;
           }
 
-        abr_sampled_brush_hdr.depth = abr_read_short (input, error);
-        if (error && *error)
+        if (! gimp_data_input_stream_read_short (input, &abr_sampled_brush_hdr.depth, error))
           break;
 
         height = (abr_sampled_brush_hdr.bounds_long[2] -
@@ -771,8 +743,7 @@ gimp_brush_load_abr_brush_v12 (GDataInputStream  *input,
         mask = gimp_temp_buf_get_data (brush->priv->mask);
         size = width * height * bytes;
 
-        compress = abr_read_char (input, error);
-        if (error && *error)
+        if (! gimp_data_input_stream_read_char (input, &compress, error))
           {
             g_object_unref (brush);
             brush = NULL;
@@ -800,7 +771,7 @@ gimp_brush_load_abr_brush_v12 (GDataInputStream  *input,
           }
         else
           {
-            if (! abr_rle_decode (input, (gchar *) mask, size, height, error))
+            if (! gimp_data_input_stream_rle_decode (input, (gchar *) mask, size, height, error))
               {
                 g_object_unref (brush);
                 brush = NULL;
@@ -846,8 +817,7 @@ gimp_brush_load_abr_brush_v6 (GDataInputStream  *input,
   gchar     *name;
   gboolean   r;
 
-  brush_size = abr_read_long (input, error);
-  if (error && *error)
+  if (! gimp_data_input_stream_read_long (input, &brush_size, error))
     return NULL;
 
   if (brush_size < 0)
@@ -887,12 +857,13 @@ gimp_brush_load_abr_brush_v6 (GDataInputStream  *input,
       return NULL;
     }
 
-  top      = abr_read_long  (input, error); if (error && *error) return NULL;
-  left     = abr_read_long  (input, error); if (error && *error) return NULL;
-  bottom   = abr_read_long  (input, error); if (error && *error) return NULL;
-  right    = abr_read_long  (input, error); if (error && *error) return NULL;
-  depth    = abr_read_short (input, error); if (error && *error) return NULL;
-  compress = abr_read_char  (input, error); if (error && *error) return NULL;
+  if (! gimp_data_input_stream_read_long  (input, &top,      error) ||
+      ! gimp_data_input_stream_read_long  (input, &left,     error) ||
+      ! gimp_data_input_stream_read_long  (input, &bottom,   error) ||
+      ! gimp_data_input_stream_read_long  (input, &right,    error) ||
+      ! gimp_data_input_stream_read_short (input, &depth,    error) ||
+      ! gimp_data_input_stream_read_char  (input, &compress, error))
+    return NULL;
 
   depth = depth >> 3;
 
@@ -994,7 +965,7 @@ gimp_brush_load_abr_brush_v6 (GDataInputStream  *input,
     }
   else
     {
-      if (! abr_rle_decode (input, (gchar *) mask, size, height, error))
+      if (! gimp_data_input_stream_rle_decode (input, (gchar *) mask, size, height, error))
         {
           g_object_unref (brush);
           return NULL;
@@ -1006,67 +977,6 @@ gimp_brush_load_abr_brush_v6 (GDataInputStream  *input,
                      NULL, NULL);
 
   return brush;
-}
-
-static gchar
-abr_read_char (GDataInputStream  *input,
-               GError           **error)
-{
-  return g_data_input_stream_read_byte (input, NULL, error);
-}
-
-static gint16
-abr_read_short (GDataInputStream  *input,
-                GError           **error)
-{
-  return g_data_input_stream_read_int16 (input, NULL, error);
-}
-
-static gint32
-abr_read_long (GDataInputStream  *input,
-               GError           **error)
-{
-  return g_data_input_stream_read_int32 (input, NULL, error);
-}
-
-static gchar *
-abr_read_ucs2_text (GDataInputStream  *input,
-                    GError           **error)
-{
-  gchar *name_ucs2;
-  gchar *name_utf8;
-  gint   len;
-  gint   i;
-
-  /* two-bytes characters encoded (UCS-2)
-   *  format:
-   *   long : number of characters in string
-   *   data : zero terminated UCS-2 string
-   */
-
-  len = 2 * abr_read_long (input, error);
-  if (len <= 0)
-    return NULL;
-
-  name_ucs2 = g_new (gchar, len);
-
-  for (i = 0; i < len; i++)
-    {
-      name_ucs2[i] = abr_read_char (input, error);
-      if (error && *error)
-        {
-          g_free (name_ucs2);
-          return NULL;
-        }
-    }
-
-  name_utf8 = g_convert (name_ucs2, len,
-                         "UTF-8", "UCS-2BE",
-                         NULL, NULL, NULL);
-
-  g_free (name_ucs2);
-
-  return name_utf8;
 }
 
 static gboolean
@@ -1110,7 +1020,7 @@ abr_reach_8bim_section (GDataInputStream  *input,
     {
       gchar   tag[4];
       gchar   tagname[5];
-      guint32 section_size;
+      gint32  section_size;
       gsize   bytes_read;
 
       if (! g_input_stream_read_all (G_INPUT_STREAM (input),
@@ -1133,8 +1043,7 @@ abr_reach_8bim_section (GDataInputStream  *input,
       if (! strncmp (tagname, name, 4))
         return TRUE;
 
-      section_size = abr_read_long (input, error);
-      if (error && *error)
+      if (! gimp_data_input_stream_read_long (input, &section_size, error))
         return FALSE;
 
       if (! g_seekable_seek (G_SEEKABLE (input), section_size, G_SEEK_CUR,
@@ -1142,103 +1051,5 @@ abr_reach_8bim_section (GDataInputStream  *input,
         return FALSE;
     }
 
-  return FALSE;
-}
-
-static gboolean
-abr_rle_decode (GDataInputStream  *input,
-                gchar             *buffer,
-                gsize              buffer_size,
-                gint32             height,
-                GError           **error)
-{
-  gint    i, j;
-  gshort *cscanline_len = NULL;
-  gchar  *cdata         = NULL;
-  gchar  *data          = buffer;
-
-  /* read compressed size foreach scanline */
-  cscanline_len = gegl_scratch_new (gshort, height);
-  for (i = 0; i < height; i++)
-    {
-      cscanline_len[i] = abr_read_short (input, error);
-      if ((error && *error) || cscanline_len[i] <= 0)
-        goto err;
-    }
-
-  /* unpack each scanline data */
-  for (i = 0; i < height; i++)
-    {
-      gint  len;
-      gsize bytes_read;
-
-      len = cscanline_len[i];
-
-      cdata = gegl_scratch_alloc (len);
-
-      if (! g_input_stream_read_all (G_INPUT_STREAM (input),
-                                     cdata, len,
-                                     &bytes_read, NULL, error) ||
-          bytes_read != len)
-        {
-          goto err;
-        }
-
-      for (j = 0; j < len;)
-        {
-          gint32 n = cdata[j++];
-
-          if (n >= 128)     /* force sign */
-            n -= 256;
-
-          if (n < 0)
-            {
-              /* copy the following char -n + 1 times */
-
-              if (n == -128)  /* it's a nop */
-                continue;
-
-              n = -n + 1;
-
-              if (j + 1 > len || (data - buffer) + n > buffer_size)
-                goto err;
-
-              memset (data, cdata[j], n);
-
-              j    += 1;
-              data += n;
-            }
-          else
-            {
-              /* read the following n + 1 chars (no compr) */
-
-              n = n + 1;
-
-              if (j + n > len || (data - buffer) + n > buffer_size)
-                goto err;
-
-              memcpy (data, &cdata[j], n);
-
-              j    += n;
-              data += n;
-            }
-        }
-
-      g_clear_pointer (&cdata, gegl_scratch_free);
-    }
-
-  g_clear_pointer (&cscanline_len, gegl_scratch_free);
-
-  return TRUE;
-
-err:
-  g_clear_pointer (&cdata, gegl_scratch_free);
-  g_clear_pointer (&cscanline_len, gegl_scratch_free);
-  if (error && ! *error)
-    {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Fatal parse error in brush file: "
-                     "RLE compressed brush data corrupt."));
-    }
   return FALSE;
 }
