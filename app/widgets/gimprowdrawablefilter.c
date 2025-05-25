@@ -64,19 +64,22 @@ gimp_row_drawable_filter_init (GimpRowDrawableFilter *row)
 }
 
 static void
-gimp_row_filter_drawable_active_toggled (GimpRowFilter *row,
+gimp_row_filter_drawable_active_toggled (GimpRowFilter *rowfilter,
                                          gboolean       active)
 {
-  GimpViewable       *viewable = gimp_row_get_viewable (GIMP_ROW (row));
+  GimpRow            *row      = GIMP_ROW (rowfilter);
+  GimpViewable       *viewable = gimp_row_get_viewable (row);
+  GimpContext        *context;
   GimpDrawableFilter *filter;
 
   if (viewable)
     {
-      filter = GIMP_DRAWABLE_FILTER (viewable);
-      gimp_image_undo_push_filter_visibility_compressible (filter);
+      filter  = GIMP_DRAWABLE_FILTER (viewable);
+      context = gimp_row_get_context (row);
+      gimp_image_undo_push_filter_visibility_compressible (filter, context);
     }
 
-  GIMP_ROW_FILTER_CLASS (parent_class)->active_toggled (row, active);
+  GIMP_ROW_FILTER_CLASS (parent_class)->active_toggled (rowfilter, active);
 
   if (viewable)
     {

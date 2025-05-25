@@ -405,19 +405,36 @@ gimp_image_undo_push_filter_visibility (GimpImage          *image,
 }
 
 GimpUndo *
-gimp_image_undo_push_filter_visibility_compressible (GimpDrawableFilter *filter)
+gimp_image_undo_push_filter_visibility_compressible (GimpDrawableFilter *filter,
+                                                     GimpContext        *context)
 {
   GimpDrawable *drawable;
   GimpImage    *image;
   GimpUndo     *undo;
+  gboolean      push_undo = TRUE;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), NULL);
 
   drawable = gimp_drawable_filter_get_drawable (filter);
   image    = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  undo = gimp_image_undo_push_filter_visibility (image, _("Filter visibility"),
-                                                 drawable, filter);
+  undo = gimp_image_undo_can_compress (image, GIMP_TYPE_DRAWABLE_FILTER_UNDO,
+                                       GIMP_UNDO_FILTER_VISIBILITY);
+
+  if (undo != NULL && GIMP_DRAWABLE_FILTER_UNDO (undo)->filter == filter)
+    {
+      push_undo = FALSE;
+    }
+  else
+    {
+      undo = gimp_image_undo_push_filter_visibility (image,
+                                                     _("Filter visibility"),
+                                                     drawable,
+                                                     filter);
+    }
+
+  if (! push_undo)
+    gimp_undo_refresh_preview (undo, context);
 
   return undo;
 }
