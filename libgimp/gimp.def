@@ -568,7 +568,9 @@ EXPORTS
 	gimp_image_undo_group_end
 	gimp_image_undo_group_start
 	gimp_image_undo_is_enabled
+	gimp_image_undo_redo
 	gimp_image_undo_thaw
+	gimp_image_undo_undo
 	gimp_image_unset_active_channel
 	gimp_item_attach_parasite
 	gimp_item_delete

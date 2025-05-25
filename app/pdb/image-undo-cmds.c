@@ -281,6 +281,70 @@ image_undo_thaw_invoker (GimpProcedure         *procedure,
   return return_vals;
 }
 
+static GimpValueArray *
+image_undo_undo_invoker (GimpProcedure         *procedure,
+                         Gimp                  *gimp,
+                         GimpContext           *context,
+                         GimpProgress          *progress,
+                         const GimpValueArray  *args,
+                         GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpImage *image;
+  gboolean undone = FALSE;
+
+  image = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      if (success && gimp_image_undo_is_enabled (image))
+        undone = gimp_image_undo (image);
+      else
+        undone = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_boolean (gimp_value_array_index (return_vals, 1), undone);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+image_undo_redo_invoker (GimpProcedure         *procedure,
+                         Gimp                  *gimp,
+                         GimpContext           *context,
+                         GimpProgress          *progress,
+                         const GimpValueArray  *args,
+                         GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpImage *image;
+  gboolean redone = FALSE;
+
+  image = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      if (success && gimp_image_undo_is_enabled (image))
+        redone = gimp_image_redo (image);
+      else
+        redone = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_boolean (gimp_value_array_index (return_vals, 1), redone);
+
+  return return_vals;
+}
+
 void
 register_image_undo_procs (GimpPDB *pdb)
 {
@@ -472,6 +536,64 @@ register_image_undo_procs (GimpPDB *pdb)
                                    g_param_spec_boolean ("thawed",
                                                          "thawed",
                                                          "TRUE if the image undo has been thawed",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-undo-undo
+   */
+  procedure = gimp_procedure_new (image_undo_undo_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-undo-undo");
+  gimp_procedure_set_static_help (procedure,
+                                  "Undo the last change applied on the image.",
+                                  "This procedure reverts the last change applied to the image. It will not run if the undo stack is not enabled.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("undone",
+                                                         "undone",
+                                                         "TRUE if the last change was undone",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-undo-redo
+   */
+  procedure = gimp_procedure_new (image_undo_redo_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-undo-redo");
+  gimp_procedure_set_static_help (procedure,
+                                  "Restore the last change applied on the image.",
+                                  "This procedure restores the last change applied to the image. It will not run if the undo stack is not enabled.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("redone",
+                                                         "redone",
+                                                         "TRUE if the last change was restored",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

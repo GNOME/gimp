@@ -304,3 +304,73 @@ gimp_image_undo_thaw (GimpImage *image)
 
   return thawed;
 }
+
+/**
+ * gimp_image_undo_undo:
+ * @image: The image.
+ *
+ * Undo the last change applied on the image.
+ *
+ * This procedure reverts the last change applied to the image. It will
+ * not run if the undo stack is not enabled.
+ *
+ * Returns: TRUE if the last change was undone.
+ **/
+gboolean
+gimp_image_undo_undo (GimpImage *image)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean undone = FALSE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE, image,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-image-undo-undo",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    undone = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return undone;
+}
+
+/**
+ * gimp_image_undo_redo:
+ * @image: The image.
+ *
+ * Restore the last change applied on the image.
+ *
+ * This procedure restores the last change applied to the image. It
+ * will not run if the undo stack is not enabled.
+ *
+ * Returns: TRUE if the last change was restored.
+ **/
+gboolean
+gimp_image_undo_redo (GimpImage *image)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean redone = FALSE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE, image,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-image-undo-redo",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    redone = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return redone;
+}

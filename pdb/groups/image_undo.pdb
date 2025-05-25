@@ -284,6 +284,70 @@ CODE
     );
 }
 
+sub image_undo_undo {
+    $blurb = "Undo the last change applied on the image.";
+
+    $help = <<'HELP';
+This procedure reverts the last change applied to the image.
+It will not run if the undo stack is not enabled.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
+    );
+
+    @outargs = (
+	{ name => 'undone', type => 'boolean',
+	  desc => 'TRUE if the last change was undone' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (success && gimp_image_undo_is_enabled (image))
+    undone = gimp_image_undo (image);
+  else
+    undone = FALSE;
+}
+CODE
+    );
+}
+
+sub image_undo_redo {
+    $blurb = "Restore the last change applied on the image.";
+
+    $help = <<'HELP';
+This procedure restores the last change applied to the image.
+It will not run if the undo stack is not enabled.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
+    );
+
+    @outargs = (
+	{ name => 'redone', type => 'boolean',
+	  desc => 'TRUE if the last change was restored' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (success && gimp_image_undo_is_enabled (image))
+    redone = gimp_image_redo (image);
+  else
+    redone = FALSE;
+}
+CODE
+    );
+}
+
 
 @headers = qw("core/gimp.h"
               "core/gimpimage-undo.h"
@@ -294,7 +358,8 @@ CODE
 @procs = qw(image_undo_group_start image_undo_group_end
             image_undo_is_enabled
             image_undo_disable image_undo_enable
-            image_undo_freeze image_undo_thaw);
+            image_undo_freeze image_undo_thaw
+            image_undo_undo image_undo_redo);
 
 %exports = (app => [@procs], lib => [@procs]);
 
