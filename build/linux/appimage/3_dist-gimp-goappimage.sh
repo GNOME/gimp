@@ -355,6 +355,8 @@ bund_usr "$UNIX_PREFIX" "share/mypaint-data/2.0"
 ### Needed for 'th' word breaking in Text tool etc
 bund_usr "$UNIX_PREFIX" "share/libthai"
 conf_app LIBTHAI_DICTDIR "share/libthai"
+### Needed for not crashing file-heif
+conf_app LIBHEIF_PLUGIN_PATH 'null' --no-expand
 ### Needed for full CJK and Cyrillic support in file-pdf
 bund_usr "$UNIX_PREFIX" "share/poppler"
 ### Needed for file-ps work. See: #14785
@@ -376,8 +378,6 @@ if [ "$GIMP_UNSTABLE" ] || [ -z "$GIMP_RELEASE" ]; then
   bund_usr "$UNIX_PREFIX" "lib/libEGL*"
   bund_usr "$UNIX_PREFIX" "lib/libGL*"
   bund_usr "$UNIX_PREFIX" "lib/dri*"
-  #TODO: remove this on Debian Trixie (which have Mesa 24.2)
-  conf_app LIBGL_DRIVERS_PATH "${LIB_DIR}/${LIB_SUBDIR}dri"
 fi
 ### Debug dialog
 bund_usr "$GIMP_PREFIX" "bin/gimp-debug-tool*" --dest "libexec"

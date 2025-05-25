@@ -116,6 +116,8 @@ stages:
   tags:
     - $RUNNER
   variables:
+    #FIXME: remove this line and go back to relying on .default DEB_VERSION on GIMP 3.3/3.4
+    DEB_VERSION: "trixie"
     CC: "clang"
     CXX: "clang++"
     CC_LD: lld
@@ -185,6 +187,7 @@ deps-debian:
             libaa1-dev
             libappstream-dev
             libarchive-dev
+            libbacktrace-dev
             libbz2-dev
             libcfitsio-dev
             libgexiv2-dev
@@ -209,7 +212,7 @@ deps-debian:
             librsvg2-dev
             libsuitesparse-dev
             libtiff-dev
-            libumfpack5
+            libumfpack6
             libunwind-dev
             libwebp-dev
             libwmf-dev
@@ -316,6 +319,7 @@ gimp-debian:
     matrix:
       - RUNNER: x86_64_v3
   tags: []
+  variables: !reference [.default, variables]
 
 deps-debian-nonreloc:
   extends: .debian-nonreloc
