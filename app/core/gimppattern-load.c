@@ -30,22 +30,10 @@
 #include "gimppattern-header.h"
 #include "gimppattern-load.h"
 #include "gimptempbuf.h"
+#include "gimp-utils.h"
 
 #include "gimp-intl.h"
 
-
-static gboolean     photoshop_read_char           (GDataInputStream  *input,
-                                                   gchar             *value,
-                                                   GError           **error);
-static gboolean     photoshop_read_short          (GDataInputStream  *input,
-                                                  gint16            *value,
-                                                  GError           **error);
-static gboolean     photoshop_read_long           (GDataInputStream  *input,
-                                                  gint32            *value,
-                                                  GError           **error);
-static gboolean     photoshop_read_ucs2_text     (GDataInputStream  *input,
-                                                  gchar            **value,
-                                                  GError           **error);
 
 static gboolean first = TRUE;
 
@@ -87,20 +75,22 @@ gimp_pattern_load_photoshop_pattern (GimpContext   *context,
   GDataInputStream *data_input;
 
   data_input = g_data_input_stream_new (input);
+
+  /* Photoshop data is big endian */
   g_data_input_stream_set_byte_order (data_input,
                                       G_DATA_STREAM_BYTE_ORDER_BIG_ENDIAN);
 
-  /* Reset stream position to right after magic*/
+  /* Reset stream position to right after magic (offset 4) */
   if (! g_seekable_seek (G_SEEKABLE (input),
-                          4, G_SEEK_SET,
-                          NULL, error))
+                         4, G_SEEK_SET,
+                         NULL, error))
     {
       g_prefix_error (error, _("Error reading Photoshop pattern."));
       return NULL;
     }
 
-  if (! photoshop_read_short (data_input, &version, error) ||
-      ! photoshop_read_long (data_input, &pat_count, error))
+  if (! gimp_data_input_stream_read_short (data_input, &version, error) ||
+      ! gimp_data_input_stream_read_long (data_input, &pat_count, error))
     {
       g_prefix_error (error, _("Error reading Photoshop pattern."));
       return NULL;
@@ -124,11 +114,11 @@ gimp_pattern_load_photoshop_pattern (GimpContext   *context,
       can_handle = FALSE;
       pat_name   = NULL;
 
-      if (! photoshop_read_long (data_input,  &pat_version,    error) ||
-          ! photoshop_read_long (data_input,  &pat_image_type, error) ||
-          ! photoshop_read_short (data_input, &pat_height,     error) ||
-          ! photoshop_read_short (data_input, &pat_width,      error) ||
-          ! photoshop_read_ucs2_text (data_input, &pat_name,   error))
+      if (! gimp_data_input_stream_read_long (data_input,  &pat_version,    error) ||
+          ! gimp_data_input_stream_read_long (data_input,  &pat_image_type, error) ||
+          ! gimp_data_input_stream_read_short (data_input, &pat_height,     error) ||
+          ! gimp_data_input_stream_read_short (data_input, &pat_width,      error) ||
+          ! gimp_data_input_stream_read_ucs2_text (data_input, &pat_name,   error))
         {
           g_prefix_error (error, _("Error reading Photoshop pattern."));
           return NULL;
@@ -154,27 +144,28 @@ gimp_pattern_load_photoshop_pattern (GimpContext   *context,
           return NULL;
         }
 
-      if (! photoshop_read_long (data_input,  &pat_version,    error) ||
-          ! photoshop_read_long (data_input,  &pat_size, error))
+      if (! gimp_data_input_stream_read_long (data_input,  &pat_version,    error) ||
+          ! gimp_data_input_stream_read_long (data_input,  &pat_size, error))
         {
           g_prefix_error (error, _("Error reading Photoshop pattern."));
           return NULL;
         }
       ofs = g_seekable_tell (G_SEEKABLE (input));
-      g_printerr ("Pattern version %u, size: %u, offset: %llx, next %llx\n",
-                  pat_version, pat_size, ofs, ofs + pat_size);
 
-      if (! photoshop_read_long (data_input,  &pat_top,    error) ||
-          ! photoshop_read_long (data_input,  &pat_left,   error) ||
-          ! photoshop_read_long (data_input,  &pat_bottom, error) ||
-          ! photoshop_read_long (data_input,  &pat_right,  error) ||
-          ! photoshop_read_long (data_input,  &pat_depth,  error))
+      //g_printerr ("Pattern version %u, size: %u, offset: %llx, next %llx\n",
+      //            pat_version, pat_size, ofs, ofs + pat_size);
+
+      if (! gimp_data_input_stream_read_long (data_input,  &pat_top,    error) ||
+          ! gimp_data_input_stream_read_long (data_input,  &pat_left,   error) ||
+          ! gimp_data_input_stream_read_long (data_input,  &pat_bottom, error) ||
+          ! gimp_data_input_stream_read_long (data_input,  &pat_right,  error) ||
+          ! gimp_data_input_stream_read_long (data_input,  &pat_depth,  error))
         {
           g_prefix_error (error, _("Error reading Photoshop pattern."));
           return NULL;
         }
-      g_printerr ("(top,left)-(bottom,right): (%d,%d)-(%d,%d), bit depth: %d\n",
-                  pat_top, pat_left, pat_bottom, pat_right, pat_depth);
+      //g_printerr ("(top,left)-(bottom,right): (%d,%d)-(%d,%d), bit depth: %d\n",
+      //            pat_top, pat_left, pat_bottom, pat_right, pat_depth);
 
       switch (pat_image_type)
         {
@@ -187,6 +178,7 @@ gimp_pattern_load_photoshop_pattern (GimpContext   *context,
           break;
 
         default:
+          g_printerr ("--> Photoshop pattern type %d is not supported.", pat_image_type);
           g_prefix_error (error, _("Photoshop pattern type %d is not supported."), pat_image_type);
           return NULL;
 
@@ -207,13 +199,12 @@ gimp_pattern_load_photoshop_pattern (GimpContext   *context,
           /* Load pattern data */
           /* FIXME: Check valid dimensions*/
           /*        Check max pattern name length*/
-          g_printerr ("Create pattern object\n");
+
+          //g_printerr ("Create pattern object\n");
           pattern = g_object_new (GIMP_TYPE_PATTERN,
                                   "name",      pat_name,
                                   "mime-type", "image/x-gimp-pat",
                                   NULL);
-          if (! pattern)
-            g_printerr ("Failed to get pattern object!\n");
 
           switch (n_channels)
             {
@@ -249,37 +240,37 @@ gimp_pattern_load_photoshop_pattern (GimpContext   *context,
               temp_buf = NULL;
 
               //g_printerr ("call seekable tell...\n");
-              temp_ofs = g_seekable_tell (G_SEEKABLE (data_input));
-              g_printerr ("Offset: %llx\n", temp_ofs);
+              //temp_ofs = g_seekable_tell (G_SEEKABLE (data_input));
+              //g_printerr ("Offset: %llx\n", temp_ofs);
 
-              if (! photoshop_read_long (data_input,  &chan_version, error) ||
-                  ! photoshop_read_long (data_input,  &chan_size,    error))
+              if (! gimp_data_input_stream_read_long (data_input,  &chan_version, error) ||
+                  ! gimp_data_input_stream_read_long (data_input,  &chan_size,    error))
                 {
                   g_prefix_error (error, _("Error reading channel"));
                   return NULL;
                 }
               cofs = g_seekable_tell (G_SEEKABLE (data_input));
               /** Dummy depth */
-              if (! photoshop_read_long (data_input,  &chan_depth, error))
+              if (! gimp_data_input_stream_read_long (data_input,  &chan_depth, error))
                 {
                   g_prefix_error (error, _("Error reading channel"));
                   return NULL;
                 }
-              g_printerr ("Channel version %u, size: %u, offset: %llx, next %llx, dummy: %d\n",
-                          chan_version, chan_size, cofs, cofs + chan_size, chan_depth);
+              //g_printerr ("Channel version %u, size: %u, offset: %llx, next %llx, dummy: %d\n",
+              //            chan_version, chan_size, cofs, cofs + chan_size, chan_depth);
 
-              if (! photoshop_read_long (data_input,  &chan_top,         error) ||
-                  ! photoshop_read_long (data_input,  &chan_left,        error) ||
-                  ! photoshop_read_long (data_input,  &chan_bottom,      error) ||
-                  ! photoshop_read_long (data_input,  &chan_right,       error) ||
-                  ! photoshop_read_short (data_input, &chan_depth,       error) ||
-                  ! photoshop_read_char (data_input,  &chan_compression, error))
+              if (! gimp_data_input_stream_read_long (data_input,  &chan_top,         error) ||
+                  ! gimp_data_input_stream_read_long (data_input,  &chan_left,        error) ||
+                  ! gimp_data_input_stream_read_long (data_input,  &chan_bottom,      error) ||
+                  ! gimp_data_input_stream_read_long (data_input,  &chan_right,       error) ||
+                  ! gimp_data_input_stream_read_short (data_input, &chan_depth,       error) ||
+                  ! gimp_data_input_stream_read_char (data_input,  &chan_compression, error))
                 {
                   g_prefix_error (error, _("Error reading Photoshop pattern."));
                   return NULL;
                 }
-              g_printerr ("(top,left)-(bottom,right): (%d,%d)-(%d,%d), bit depth: %d, compression %d\n",
-                          chan_top, chan_left, chan_bottom, chan_right, chan_depth, chan_compression);
+              //g_printerr ("(top,left)-(bottom,right): (%d,%d)-(%d,%d), bit depth: %d, compression %d\n",
+              //            chan_top, chan_left, chan_bottom, chan_right, chan_depth, chan_compression);
 
               if (chan_compression == 0)
                 {
@@ -309,8 +300,8 @@ gimp_pattern_load_photoshop_pattern (GimpContext   *context,
                 }
 
               /* Always seek to next offset */
-              temp_ofs = g_seekable_tell (G_SEEKABLE (data_input));
-              g_printerr ("Offset: %llx -- seek to next channel at %llx\n", temp_ofs, cofs+chan_size);
+              //temp_ofs = g_seekable_tell (G_SEEKABLE (data_input));
+              //g_printerr ("Offset: %llx -- seek to next channel at %llx\n", temp_ofs, cofs+chan_size);
               if (! g_seekable_seek (G_SEEKABLE (data_input),
                                       cofs+chan_size, G_SEEK_SET,
                                       NULL, error))
@@ -343,8 +334,8 @@ gimp_pattern_load_photoshop_pattern (GimpContext   *context,
       g_free (pat_name);
 
       /* In case we made a mistake reading a pattern: compute offset next pattern. */
-      temp_ofs = g_seekable_tell (G_SEEKABLE (input));
-      g_printerr ("Offset: %llx -- seek to next pattern at %llx\n", temp_ofs, ofs+pat_size);
+      //temp_ofs = g_seekable_tell (G_SEEKABLE (input));
+      //g_printerr ("Offset: %llx -- seek to next pattern at %llx\n", temp_ofs, ofs+pat_size);
       if (! g_seekable_seek (G_SEEKABLE (input),
                               ofs+pat_size, G_SEEK_SET,
                               NULL, error))
@@ -556,105 +547,4 @@ gimp_pattern_load_pixbuf (GimpContext   *context,
   g_object_unref (pixbuf);
 
   return g_list_prepend (NULL, pattern);
-}
-
-
-/* Copied and adjusted from gimpbrush-load.c*/
-/* FIXME: Refactor */
-
-static gboolean
-photoshop_read_char (GDataInputStream  *input,
-                     gchar             *value,
-                     GError           **error)
-{
-  gchar result;
-
-  result = g_data_input_stream_read_byte (input, NULL, error);
-  if (error && *error)
-    {
-      return FALSE;
-    }
-  *value = result;
-  g_printerr ("%c", result);
-  return TRUE;
-}
-
-static gboolean
-photoshop_read_short (GDataInputStream  *input,
-                      gint16            *value,
-                      GError           **error)
-{
-  gint16 result;
-
-  result = g_data_input_stream_read_int16 (input, NULL, error);
-  if (error && *error)
-    {
-      return FALSE;
-    }
-  *value = result;
-  return TRUE;
-}
-
-static gboolean
-photoshop_read_long (GDataInputStream  *input,
-                     gint32            *value,
-                     GError           **error)
-{
-  gint32 result;
-
-  result = g_data_input_stream_read_int32 (input, NULL, error);
-  if (error && *error)
-    {
-      return FALSE;
-    }
-  *value = result;
-  return TRUE;
-}
-
-static gboolean
-photoshop_read_ucs2_text (GDataInputStream  *input,
-                          gchar            **value,
-                          GError           **error)
-{
-  gchar *name_ucs2;
-  gint32 pslen = 0;
-  gint   len;
-  gint   i;
-
-  /* two-bytes characters encoded (UCS-2)
-   *  format:
-   *   long : number of characters in string
-   *   data : zero terminated UCS-2 string
-   */
-
-  if (! photoshop_read_long (input, &pslen, error) || pslen <= 0)
-    return FALSE;
-
-  len = 2 * pslen;
-  g_printerr ("Length: %u\n[", len);
-
-  name_ucs2 = g_new (gchar, len);
-
-  for (i = 0; i < len; i++)
-    {
-      gchar mychar;
-
-      if (! photoshop_read_char (input, &mychar, error))
-        {
-          g_free (name_ucs2);
-          return FALSE;
-        }
-      name_ucs2[i] = mychar;
-    }
-
-  g_printerr ("] - and now convert\n");
-  *value = g_convert (name_ucs2, len,
-                      "UTF-8", "UCS-2BE",
-                      NULL, NULL, NULL);
-  g_printerr ("string: '%s'\n", *value);
-
-
-  g_free (name_ucs2);
-
-  return (*value != NULL);
 }
