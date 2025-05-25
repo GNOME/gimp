@@ -283,20 +283,29 @@ gimp_pattern_load_photoshop_pattern (GimpContext   *context,
                       // FIXME: Free data!
                       return NULL;
                     }
-                  /* Move channel data to correct offset in pixels (TODO: only if channels > 1)*/
-                  //temp_buf = &chan_data[i*size];
-                  temp_buf = &chan_data[i];
-                  //g_printerr ("Set pixels for channel %d...\n", i);
-                  for (j = 0; j < size; j++)
-                    {
-                      //
-                      //chan_data[i*size + j] = chan_buf[j];
-                      temp_buf[j*n_channels] = chan_buf[j];
-                    }
                 }
               else
                 {
-                  g_printerr ("TODO: Read compressed channel data.\n");
+                  //g_printerr ("TODO: Read compressed channel data.\n");
+                  if (! gimp_data_input_stream_rle_decode (data_input,
+                                                           chan_buf, size,
+                                                           height, error) ||
+                      bytes_read != size)
+                    {
+                      g_prefix_error (error, _("Invalid Photoshop pattern."));
+                      // FIXME: Free data!
+                      return NULL;
+                    }
+                }
+              /* Move channel data to correct offset in pixels (TODO: only if channels > 1)*/
+              //temp_buf = &chan_data[i*size];
+              temp_buf = &chan_data[i];
+              //g_printerr ("Set pixels for channel %d...\n", i);
+              for (j = 0; j < size; j++)
+                {
+                  //
+                  //chan_data[i*size + j] = chan_buf[j];
+                  temp_buf[j*n_channels] = chan_buf[j];
                 }
 
               /* Always seek to next offset */
