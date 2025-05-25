@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-05-17 20:13+0000\n"
-"PO-Revision-Date: 2025-05-19 01:17+0200\n"
+"POT-Creation-Date: 2025-05-24 16:13+0000\n"
+"PO-Revision-Date: 2025-05-25 03:50+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -316,7 +316,7 @@ msgid ""
 msgstr ""
 
 #: app/actions/actions.c:113 app/dialogs/dialogs.c:426
-#: app/widgets/gimpbrusheditor.c:88
+#: app/widgets/gimpbrusheditor.c:89
 msgid "Brush Editor"
 msgstr "ფუნჯის რედაქტორი"
 
@@ -2517,7 +2517,7 @@ msgstr ""
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
 #: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2436
-#: app/core/gimppalette.c:583 app/core/gimppalette-import.c:223
+#: app/core/gimppalette.c:585 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:774 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "უსათაურო"
@@ -3499,7 +3499,7 @@ msgid "White Balance operates only on RGB color layers."
 msgstr "თეთრის ბალანსი მოქმედებს მხოლოდ RGB ფერის ფენებზე."
 
 #: app/actions/drawable-commands.c:103 app/core/gimpdrawable-levels.c:72
-#: app/tools/gimplevelstool.c:138
+#: app/tools/gimplevelstool.c:139
 msgid "Levels"
 msgstr "დონეები"
 
@@ -10991,23 +10991,27 @@ msgid "Override theme-set icon sizes."
 msgstr "თემის დაყენებული ხატულის ზომების გადაფარვა."
 
 #: app/config/gimprc-blurbs.h:562
+msgid "Use theme colors for preview"
+msgstr "თემების ფერის გამოყენება მინიატურისთვის"
+
+#: app/config/gimprc-blurbs.h:565
 msgid "The size of the icons to use."
 msgstr "გამოსაყენებელი ხატულის ზომები."
 
-#: app/config/gimprc-blurbs.h:565
+#: app/config/gimprc-blurbs.h:568
 msgid "When enabled, symbolic icons will be preferred if available."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:571
+#: app/config/gimprc-blurbs.h:574
 msgid "Tweak font size of the graphical interface."
 msgstr "გრაფიკული ინტერფეისის ფონტის ზომის შეცვლა."
 
-#: app/config/gimprc-blurbs.h:574
+#: app/config/gimprc-blurbs.h:577
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
 msgstr "\"ფერად პროფილად გარდაქმნის\" ფანჯრის ნაგულისხმევი რენდერის რეჟიმი."
 
-#: app/config/gimprc-blurbs.h:577
+#: app/config/gimprc-blurbs.h:580
 msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
@@ -11015,14 +11019,14 @@ msgstr ""
 "ნაგულისხმევი \"შავი წერტილის კომპენსაციის\" მდგომარეობის დაყენება \"ფერის "
 "პროფილზე გარდაქმნის\" ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:581
+#: app/config/gimprc-blurbs.h:584
 msgid ""
 "Sets the default layer dithering method for the 'Convert Precision' dialog."
 msgstr ""
 "ნაგულისხმევი ფენის დიზერინგის მეთოდის დაყენება \"სიზუსტის გარდაქმნის\" "
 "ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:584
+#: app/config/gimprc-blurbs.h:587
 msgid ""
 "Sets the default text layer dithering method for the 'Convert Precision' "
 "dialog."
@@ -11030,20 +11034,20 @@ msgstr ""
 "ნაგულისხმევი ტექსტის ფენის დიზერინგის მეთოდის დაყენება \"სიზუსტის "
 "გარდაქმნის\" ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:587
+#: app/config/gimprc-blurbs.h:590
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
 msgstr ""
 "ნაგულისხმევი არხის დიზერინგის მეთოდის დაყენება \"სიზუსტის გარდაქმნის\" "
 "ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:590
+#: app/config/gimprc-blurbs.h:593
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
 msgstr ""
 "ნაგულისხმევი პალიტრის ტიპის დაყენება \"დაინდექსებულზე გარდაქმნის\" "
 "ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:593
+#: app/config/gimprc-blurbs.h:596
 msgid ""
 "Sets the default maximum number of colors for the 'Convert to Indexed' "
 "dialog."
@@ -11051,7 +11055,7 @@ msgstr ""
 "ნაგულისხმევი ფერების მაქსიმალური რაოდენობის დაყენება \"დაინდექსებულზე "
 "გარდაქმნის\" ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:596
+#: app/config/gimprc-blurbs.h:599
 msgid ""
 "Sets the default 'Remove duplicate colors' state for the 'Convert to "
 "Indexed' dialog."
@@ -11059,20 +11063,20 @@ msgstr ""
 "ნაგულისხმევი \"დუბლიკატის ფერების წაშლის\" მდგომარების დაყენება "
 "\"დაინდექსებულზე გარდაქმნის\" ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:599
+#: app/config/gimprc-blurbs.h:602
 msgid "Sets the default dithering type for the 'Convert to Indexed' dialog."
 msgstr ""
 "ნაგულისხმევი დიზერინგის ტიპის დაყენება \"დაინდექსებულზე გარდაქმნის\" "
 "ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:602
+#: app/config/gimprc-blurbs.h:605
 msgid ""
 "Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog."
 msgstr ""
 "ნაგულისხმევი \"ალფას დიზერინგის\" მდგომარეობის დაყენება \"დაინდექსებულზე "
 "გარდაქმნის\" ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:605
+#: app/config/gimprc-blurbs.h:608
 msgid ""
 "Sets the default 'Dither text layers' state for the 'Convert to Indexed' "
 "dialog."
@@ -11080,108 +11084,108 @@ msgstr ""
 "ნაგულისხმევი \"ტექსტური ფენების დიზერინგის\" მნიშვნელობის დაყენება "
 "\"დაინდექსებულზე გარდაქმნის\" ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:608
+#: app/config/gimprc-blurbs.h:611
 msgid "Sets the default fill type for the 'Canvas Size' dialog."
 msgstr "ნაგულისხმევი შევსების ტიპის დაყენება \"ტილოს ზომის\" ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:611
+#: app/config/gimprc-blurbs.h:614
 msgid "Sets the default set of layers to resize for the 'Canvas Size' dialog."
 msgstr ""
 "ნაგულისხმევი ფენების სეტის დაყენება ზომის შესაცვლელად \"ტილოს ზომის\" "
 "ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:614
+#: app/config/gimprc-blurbs.h:617
 msgid ""
 "Sets the default 'Resize text layers' state for the 'Canvas Size' dialog."
 msgstr ""
 "ნაგულისხმევი \"ტექსტური ფენის ზომის შეცვლის\" მდგომარეობის დაყენება \"ტილოს "
 "ზომის\" ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:617
+#: app/config/gimprc-blurbs.h:620
 msgid "Sets how items are searched and selected from a textual pattern."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:620
+#: app/config/gimprc-blurbs.h:623
 msgid "Sets the default layer name for the 'New Layer' dialog."
 msgstr "ნაგულისხმევი ფენის სახელის დაყენება \"ახალი ფენის\" ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:623
+#: app/config/gimprc-blurbs.h:626
 msgid "Sets the default mode for the 'New Layer' dialog."
 msgstr "ნაგულისხმევი რეჟიმის დაყენება \"ახალი ფენის\" ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:626
+#: app/config/gimprc-blurbs.h:629
 msgid "Sets the default blend space for the 'New Layer' dialog."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:629
+#: app/config/gimprc-blurbs.h:632
 msgid "Sets the default composite space for the 'New Layer' dialog."
 msgstr "ნაგულისხმევი კომპოზიტური სივრცის დაყენება \"ახალი ფენის\" ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:632
+#: app/config/gimprc-blurbs.h:635
 msgid "Sets the default composite mode for the 'New Layer' dialog."
 msgstr "ნაგულისხმევი კომპოზიტური რეჟიმის დაყენება \"ახალი ფენის\" ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:635
+#: app/config/gimprc-blurbs.h:638
 msgid "Sets the default opacity for the 'New Layer' dialog."
 msgstr "ნაგულისხმევი გაუმჭვირვალობის დაყენება \"ახალი ფენის\" ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:638
+#: app/config/gimprc-blurbs.h:641
 msgid "Sets the default fill type for the 'New Layer' dialog."
 msgstr "ნაგულისხმევი შევსების ტიპის დაყენება \"ახალი ფენის\" ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:641
+#: app/config/gimprc-blurbs.h:644
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
 msgstr ""
 "ნაგულისხმევი შევსების ტიპის დაყენება \"ფენის საზღვრის ზომის\" ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:644
+#: app/config/gimprc-blurbs.h:647
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
 msgstr "აირჩიეთ ნაგულისხმევი ნიღაბი 'ფენის ბიღბის დამატება' ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:647
+#: app/config/gimprc-blurbs.h:650
 msgid "Sets the default 'invert mask' state for the 'Add Layer Mask' dialog."
 msgstr ""
 "აირჩიეთ ნაგულისხმევი 'ნიღბის შებრუნება' მნიშვნელობა 'ფენის ნიღბის დამატება' "
 "ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:650
+#: app/config/gimprc-blurbs.h:653
 msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
 msgstr ""
 "ნაგულისხმევი შერწყმის ტიპის დაყენება \"ხილული ფენების შერწყმის\" ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:653
+#: app/config/gimprc-blurbs.h:656
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr ""
 "ნაგულისხმევი \"მხოლოდ აქტიური ჯგუფის\" დაყენება \"ხილული ფენების შერწყმის\" "
 "ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:656
+#: app/config/gimprc-blurbs.h:659
 msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
 msgstr ""
 "ნაგულისხმევი \"უხილავის მოცილების\" დაყენება \"ხილული ფენების შერწყმის \" "
 "ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:659
+#: app/config/gimprc-blurbs.h:662
 msgid "Sets the default channel name for the 'New Channel' dialog."
 msgstr "ნაგულისხმევი არხის სახელის დაყენება \"ახალი არხის\" ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:662
+#: app/config/gimprc-blurbs.h:665
 msgid "Sets the default color and opacity for the 'New Channel' dialog."
 msgstr ""
 "ნაგულისხმევი ფერისა და გაუმჭვირვალობის დაყენება \"ახალი არხის\" ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:665
+#: app/config/gimprc-blurbs.h:668
 msgid "Sets the default path name for the 'New Path' dialog."
 msgstr "ნაგულიხმები ბილიკის სახელი \"ახალი ბილიკის\" ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:668
+#: app/config/gimprc-blurbs.h:671
 msgid "Sets the default folder path for the 'Export Path' dialog."
 msgstr ""
 "ნაგულისხმევი საქაღალდის ბილიკის დაყენება \"გატანის ბილიკის\" ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:671
+#: app/config/gimprc-blurbs.h:674
 msgid ""
 "Sets the default 'Export the selected paths' state for the 'Export Path' "
 "dialog."
@@ -11189,19 +11193,19 @@ msgstr ""
 "ნაგულისხმევი \"მონიშნული ბილიკების გატანის\" მდგომარეობის დაყენება \"ბილიკის "
 "გატანის\" ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:674
+#: app/config/gimprc-blurbs.h:677
 msgid "Sets the default folder path for the 'Import Path' dialog."
 msgstr ""
 "\"შემოტანის ბილიკის\" ფანჯრის ნაგულისხმევი საქაღალდის ბილიკის დაყენება."
 
-#: app/config/gimprc-blurbs.h:677
+#: app/config/gimprc-blurbs.h:680
 msgid ""
 "Sets the default 'Merge imported paths' state for the 'Import Path' dialog."
 msgstr ""
 "ნაგულისხმევი \"შემოტანილი ბილიკების შერწყმის\" დაყენება \"შემოტანის "
 "ბილიკის\" ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:680
+#: app/config/gimprc-blurbs.h:683
 msgid ""
 "Sets the default 'Scale imported paths to fit size' state for the 'Import "
 "Path' dialog."
@@ -11209,58 +11213,58 @@ msgstr ""
 "ნაგულისხმევი \"შემოტანილი ბილიკის ჩატევის\" მდგომარეობის დაყენება "
 "\"შემოტანის ბილიკის\" ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:683
+#: app/config/gimprc-blurbs.h:686
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:686
+#: app/config/gimprc-blurbs.h:689
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Feather Selection' dialog."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:690
+#: app/config/gimprc-blurbs.h:693
 msgid "Sets the default grow radius for the 'Grow Selection' dialog."
 msgstr ""
 "ნაგულისხმევი ზრდის რადიუსის დაყენება \"მონიშნულის გადიდების\" ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:693
+#: app/config/gimprc-blurbs.h:696
 msgid "Sets the default shrink radius for the 'Shrink Selection' dialog."
 msgstr ""
 "ნაგულისხმევი შემცირების რადიუსის დაყენება \"მონიშნულის შემცირების\" "
 "ფანჯრისთვის."
 
-#: app/config/gimprc-blurbs.h:696
+#: app/config/gimprc-blurbs.h:699
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Shrink Selection' dialog."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:700
+#: app/config/gimprc-blurbs.h:703
 msgid "Sets the default border radius for the 'Border Selection' dialog."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:703
+#: app/config/gimprc-blurbs.h:706
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Border Selection' dialog."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:707
+#: app/config/gimprc-blurbs.h:710
 msgid "Sets the default border style for the 'Border Selection' dialog."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:716
+#: app/config/gimprc-blurbs.h:719
 msgid "Sets the size of the thumbnail shown in the Open dialog."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:719
+#: app/config/gimprc-blurbs.h:722
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:723
+#: app/config/gimprc-blurbs.h:726
 msgid ""
 "When the amount of pixel data exceeds this limit, GIMP will start to swap "
 "tiles to disk.  This is a lot slower but it makes it possible to work on "
@@ -11268,86 +11272,86 @@ msgid ""
 "you may want to set this to a higher value."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:729
+#: app/config/gimprc-blurbs.h:732
 msgid "Show the current foreground and background colors in the toolbox."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:732
+#: app/config/gimprc-blurbs.h:735
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:735
+#: app/config/gimprc-blurbs.h:738
 msgid "Use a single toolbox button for grouped tools."
 msgstr "დაჯგუფებული ხელსაწყოებისთვის ერთი ხელსაწყოების პანელი გამოიყენეთ."
 
-#: app/config/gimprc-blurbs.h:738
+#: app/config/gimprc-blurbs.h:741
 msgid "Show the currently active image in the toolbox."
 msgstr "ხელსაწყოების პანელში ამჟამად აქტიური გამოსახულების ჩვენება."
 
-#: app/config/gimprc-blurbs.h:741
+#: app/config/gimprc-blurbs.h:744
 msgid "Show the GIMP mascot at the top of the toolbox."
 msgstr "ხელსაწყოების პანელის თავზე GIMP-ის ლოგოს ჩვენება."
 
-#: app/config/gimprc-blurbs.h:744
+#: app/config/gimprc-blurbs.h:747
 msgid ""
 "The first color to use in the transparency checkerboard, when Transparency "
 "Type is set to Custom colors."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:748
+#: app/config/gimprc-blurbs.h:751
 msgid ""
 "The second color to use in the transparency checkerboard, when Transparency "
 "Type is set to Custom colors."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:752
+#: app/config/gimprc-blurbs.h:755
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr "აყენებს გამოსახულებებში გამჭვირვალობის ჩვენების მანერას."
 
-#: app/config/gimprc-blurbs.h:755
+#: app/config/gimprc-blurbs.h:758
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:758
+#: app/config/gimprc-blurbs.h:761
 msgid ""
 "When enabled, GIMP will not save an image if it has not been changed since "
 "it was opened."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:762
+#: app/config/gimprc-blurbs.h:765
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:766
+#: app/config/gimprc-blurbs.h:769
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
 "as configured can be undone."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:771
+#: app/config/gimprc-blurbs.h:774
 msgid "Sets the size of the previews in the Undo History."
 msgstr "აყენებს გაუქმების ისტორიის გადახედვის ზომას."
 
-#: app/config/gimprc-blurbs.h:774
+#: app/config/gimprc-blurbs.h:777
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "როდესაც ჩართულია, F1-ის დაჭერით დახმარების ბრაუზერს გახსნით."
 
-#: app/config/gimprc-blurbs.h:777
+#: app/config/gimprc-blurbs.h:780
 msgid "When enabled, uses OpenCL for some operations."
 msgstr "როდესაც ჩართულია, იყენებს OpenCL- ს გარკვეული ოპერაციებისთვის."
 
-#: app/config/gimprc-blurbs.h:788
+#: app/config/gimprc-blurbs.h:791
 msgid "There's a tradeoff between speed and quality of the zoomed-out display."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:795
+#: app/config/gimprc-blurbs.h:798
 msgid "When enabled, a search of actions will also return inactive actions."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:798
+#: app/config/gimprc-blurbs.h:801
 msgid "The maximum number of actions saved in history."
 msgstr "ისტორიაში შენახული ბრძანებების მაქსიმალური რაოდენობა."
 
@@ -12867,7 +12871,7 @@ msgstr ""
 "ფუნჯის ფაილის დამუშავების შეცდომა: ფუნჯის RLE-ით შეკუმშული მონაცემები "
 "დაზიანებულია."
 
-#: app/core/gimpbrush.c:155 app/paint/gimppaintoptions.c:235
+#: app/core/gimpbrush.c:158 app/paint/gimppaintoptions.c:235
 msgid "Brush Spacing"
 msgstr "ფუნჯებს შორის დაცილება"
 
@@ -13200,7 +13204,7 @@ msgid "Palette"
 msgstr "პალიტრა"
 
 #: app/core/gimpcontext.c:741 app/core/gimpcontext.c:742
-#: app/tools/gimptextoptions.c:799
+#: app/tools/gimptextoptions.c:813
 msgid "Font"
 msgstr "ფონტი"
 
@@ -13230,7 +13234,7 @@ msgstr "კოპირება"
 msgid "%s copy"
 msgstr "კოპირება %s"
 
-#: app/core/gimpdatafactory.c:638 app/tools/gimptextoptions.c:780
+#: app/core/gimpdatafactory.c:638 app/tools/gimptextoptions.c:794
 #: app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
 msgstr "ფონტების ჩატვირთვა (დაელოდეთ...)"
@@ -13399,7 +13403,7 @@ msgstr "ხელით მითითებული სტილი"
 
 #: app/core/gimpfilloptions.c:128 app/pdb/gimppdbcontext.c:101
 #: app/tools/gimpbucketfilloptions.c:186 app/tools/gimpselectionoptions.c:89
-#: app/tools/gimptextoptions.c:177
+#: app/tools/gimptextoptions.c:178
 msgid "Antialiasing"
 msgstr "მომრგვალება"
 
@@ -13415,7 +13419,7 @@ msgstr "შევსებული კუთხეების მომრგ�
 #: app/core/gimpfilloptions.c:142 app/paint/gimpmybrushoptions.c:87
 #: app/tools/gimpbucketfilloptions.c:203 app/tools/gimpcoloroptions.c:86
 #: app/tools/gimprectangleselectoptions.c:101
-#: app/tools/gimpselectionoptions.c:103 app/widgets/gimpbrusheditor.c:157
+#: app/tools/gimpselectionoptions.c:103 app/widgets/gimpbrusheditor.c:160
 msgid "Radius"
 msgstr "რადიუსი"
 
@@ -13853,7 +13857,7 @@ msgstr "ფერის პროფილის გადაყვანა"
 msgid "Colormap of Image #%d (%s)"
 msgstr "#%d (%s) გამოსახულების ფერების რუკა"
 
-#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:904
+#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:906
 msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "ფერების რუკის დაყენება"
@@ -13863,7 +13867,7 @@ msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "ფერების რუკის დაყენების მოხსნა"
 
-#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:695
+#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:697
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "ფერების რუკის ერთეულის შეცვლა"
@@ -14063,53 +14067,53 @@ msgstr "გამოსახულების მასშტაბირე�
 msgid "Can't undo %s"
 msgstr "შეუძლებელია %s-ის დაბრუნება"
 
-#: app/core/gimpimagefile.c:799
+#: app/core/gimpimagefile.c:801
 msgid "Folder"
 msgstr "საქაღალდე"
 
-#: app/core/gimpimagefile.c:804
+#: app/core/gimpimagefile.c:806
 msgid "Special File"
 msgstr "სპეციალური ფაილი"
 
-#: app/core/gimpimagefile.c:820
+#: app/core/gimpimagefile.c:822
 msgid "Remote File"
 msgstr "ფაილის ამოღება"
 
-#: app/core/gimpimagefile.c:839
+#: app/core/gimpimagefile.c:841
 msgid "Click to create preview"
 msgstr "დააჭირეთ მინიატურის შესაქმნელად"
 
-#: app/core/gimpimagefile.c:845
+#: app/core/gimpimagefile.c:847
 msgid "Loading preview..."
 msgstr "მინიატურის ჩატვირთვა..."
 
-#: app/core/gimpimagefile.c:851
+#: app/core/gimpimagefile.c:853
 msgid "Preview is out of date"
 msgstr "მინიატურა ძალიან ძველია"
 
-#: app/core/gimpimagefile.c:857
+#: app/core/gimpimagefile.c:859
 msgid "Cannot create preview"
 msgstr "მინატურის შექმნის შეცდომა"
 
-#: app/core/gimpimagefile.c:867
+#: app/core/gimpimagefile.c:869
 msgid "(Preview may be out of date)"
 msgstr "(მინიატურა შეიძლება ძალიან ძველი იყოს)"
 
 #. pixel size
-#: app/core/gimpimagefile.c:876 app/widgets/gimpimagepropview.c:438
+#: app/core/gimpimagefile.c:878 app/widgets/gimpimagepropview.c:438
 #: app/widgets/gimpsizebox.c:429 app/widgets/gimptemplateeditor.c:734
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
 msgstr[0] "%d x %d პიქსელი"
 
-#: app/core/gimpimagefile.c:899 app/display/gimpdisplayshell-title.c:394
+#: app/core/gimpimagefile.c:901 app/display/gimpdisplayshell-title.c:394
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
 msgstr[0] "%d ფენა"
 
-#: app/core/gimpimagefile.c:963
+#: app/core/gimpimagefile.c:965
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "მინიატურის გახსნის შეცდომა %s:%s"
@@ -14721,7 +14725,7 @@ msgid "Line width"
 msgstr "ხაზის სიგანე"
 
 #: app/core/gimpstrokeoptions.c:168 app/core/gimptemplate.c:158
-#: app/tools/gimptextoptions.c:164 app/tools/gimptextoptions.c:307
+#: app/tools/gimptextoptions.c:165 app/tools/gimptextoptions.c:308
 msgid "Unit"
 msgstr "საზომი ერთეულები"
 
@@ -14737,7 +14741,7 @@ msgstr "_შეერთების სტილი"
 msgid "Miter limit"
 msgstr "ფაცეტის ლიმიტი"
 
-#: app/core/gimpstrokeoptions.c:190 app/tools/gimptextoptions.c:324
+#: app/core/gimpstrokeoptions.c:190 app/tools/gimptextoptions.c:330
 msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
 "distance of more than miter-limit * line-width from the actual join point."
@@ -15315,7 +15319,7 @@ msgstr "კოდირების გადაყვანა"
 #. gamma
 #: app/dialogs/convert-precision-dialog.c:176
 #: app/operations/gimplevelsconfig.c:150 app/operations/gimplevelsconfig.c:151
-#: app/tools/gimplevelstool.c:510
+#: app/tools/gimplevelstool.c:511
 msgid "Gamma"
 msgstr "გამა"
 
@@ -16576,7 +16580,7 @@ msgstr "სამომხმარებლო ინტერფეისი"
 msgid "Interface"
 msgstr "ინტერფეისი"
 
-#: app/dialogs/preferences-dialog.c:1876 app/tools/gimptextoptions.c:194
+#: app/dialogs/preferences-dialog.c:1876 app/tools/gimptextoptions.c:195
 msgid "Language"
 msgstr "ენა"
 
@@ -19902,6 +19906,13 @@ msgstr "დამუშავების შეცდომა. ვერ ვ�
 msgid "Writing curves file failed: "
 msgstr "მრუდების ფაილის ჩაწერის შეცდომა: "
 
+#: app/operations/gimpcurvesconfig.c:805 app/operations/gimpcurvesconfig.c:808
+#: app/tools/gimpcurvestool.c:766 app/tools/gimpcurvestool.c:769
+#: app/tools/gimplevelstool.c:747 app/tools/gimplevelstool.c:750
+#, c-format
+msgid "Could not read header: "
+msgstr "ჰედერის წაკითხვის შეცდომა: "
+
 #: app/operations/gimphuesaturationconfig.c:101
 #: app/operations/gimphuesaturationconfig.c:102
 #: app/operations/gimpoperationcolorize.c:100
@@ -19957,7 +19968,9 @@ msgstr ""
 msgid "not a GIMP Levels file"
 msgstr "არ წარმოადგენს GIMP-ის დონეების ფაილს"
 
-#: app/operations/gimplevelsconfig.c:951
+#: app/operations/gimplevelsconfig.c:951 app/operations/gimplevelsconfig.c:1084
+#: app/operations/gimplevelsconfig.c:1087
+#, c-format
 msgid "parse error"
 msgstr "დამუშავების შეცდომა"
 
@@ -20027,7 +20040,7 @@ msgstr ""
 msgid "Adjust hue, saturation, and lightness"
 msgstr "ტონის, გაჯერებულობის და განათებულობის მორგება"
 
-#: app/operations/gimpoperationlevels.c:64 app/tools/gimplevelstool.c:139
+#: app/operations/gimpoperationlevels.c:64 app/tools/gimplevelstool.c:140
 msgid "Adjust color levels"
 msgstr "ფერის დონეების მორგება"
 
@@ -20244,7 +20257,7 @@ msgstr "მელნის ბლობის ზომა"
 #. angle frame
 #: app/paint/gimpinkoptions.c:81 app/paint/gimpinkoptions.c:120
 #: app/paint/gimppaintoptions.c:227 app/tools/gimptransform3dtool.c:321
-#: app/tools/gimptransform3dtool.c:422 app/widgets/gimpbrusheditor.c:197
+#: app/tools/gimptransform3dtool.c:422 app/widgets/gimpbrusheditor.c:200
 msgid "Angle"
 msgstr "კუთხე"
 
@@ -20259,7 +20272,7 @@ msgstr "მოხრა"
 msgid "Shape"
 msgstr "ფორმა"
 
-#: app/paint/gimpinkoptions.c:114 app/widgets/gimpbrusheditor.c:187
+#: app/paint/gimpinkoptions.c:114 app/widgets/gimpbrusheditor.c:190
 msgid "Aspect ratio"
 msgstr "თანაფარდობა"
 
@@ -20284,7 +20297,7 @@ msgid "Base Opacity"
 msgstr "საწყისი _გაუმჭვირვალობა"
 
 #: app/paint/gimpmybrushoptions.c:101 app/paint/gimppaintoptions.c:241
-#: app/tools/gimpwarpoptions.c:99 app/widgets/gimpbrusheditor.c:177
+#: app/tools/gimpwarpoptions.c:99 app/widgets/gimpbrusheditor.c:180
 msgid "Hardness"
 msgstr "სიმაგრე"
 
@@ -20317,7 +20330,7 @@ msgid "Aspect Ratio"
 msgstr "თანაფარდობა"
 
 #: app/paint/gimppaintoptions.c:234 app/tools/gimpwarpoptions.c:113
-#: app/widgets/gimpbrusheditor.c:207 app/widgets/gimpbrushfactoryview.c:102
+#: app/widgets/gimpbrusheditor.c:210 app/widgets/gimpbrushfactoryview.c:102
 #: app/widgets/gimpgrideditor.c:179
 msgid "Spacing"
 msgstr "დაშორება"
@@ -21365,7 +21378,7 @@ msgstr "ლურჯი არხი"
 msgid "Select Range to Adjust"
 msgstr "მოსარგებად აირჩიეთ დიაპაზონი"
 
-#: app/propgui/gimppropgui-color-balance.c:98 app/tools/gimplevelstool.c:269
+#: app/propgui/gimppropgui-color-balance.c:98 app/tools/gimplevelstool.c:270
 msgid "Adjust Color Levels"
 msgstr "ფერის დონეების მორგება"
 
@@ -21838,6 +21851,21 @@ msgctxt "text-outline"
 msgid "Outlined and filled"
 msgstr "გამოკვეთილი და შევსებულია"
 
+#: app/text/text-enums.c:85
+msgctxt "text-outline-direction"
+msgid "Outer"
+msgstr "გარე"
+
+#: app/text/text-enums.c:86
+msgctxt "text-outline-direction"
+msgid "Inner"
+msgstr "შიდა"
+
+#: app/text/text-enums.c:87
+msgctxt "text-outline-direction"
+msgid "Centered"
+msgstr "შუაზე გასწორებული"
+
 #: app/tools/gimpairbrushtool.c:70
 msgid "Airbrush Tool: Paint using a brush, with variable pressure"
 msgstr "ჰაეროვანი ფუნჯის ხელსაწყო: დახატეთ ფუნჯით, ცვალებადი დაწოლით"
@@ -22093,7 +22121,7 @@ msgstr "საწყისი გამოსახულება ხაზი�
 
 #: app/tools/gimpbucketfilloptions.c:225
 msgid "Manual closure in fill layer"
-msgstr ""
+msgstr "ხელით დახურვა შევსების ფენაში"
 
 #: app/tools/gimpbucketfilloptions.c:226
 msgid ""
@@ -22129,7 +22157,7 @@ msgstr ""
 
 #: app/tools/gimpbucketfilloptions.c:273
 msgid "Maximum gap length"
-msgstr ""
+msgstr "მაქსიმალური შუალედის სიგრძე"
 
 #: app/tools/gimpbucketfilloptions.c:274
 msgid "Maximum gap (in pixels) in line art which can be closed"
@@ -22217,7 +22245,7 @@ msgstr "მრავალი ფენების შევსება შე
 
 #: app/tools/gimpbucketfilltool.c:599 app/tools/gimpcagetool.c:231
 #: app/tools/gimpcurvestool.c:220 app/tools/gimpfiltertool.c:310
-#: app/tools/gimpforegroundselecttool.c:295 app/tools/gimplevelstool.c:210
+#: app/tools/gimpforegroundselecttool.c:295 app/tools/gimplevelstool.c:211
 #: app/tools/gimpoffsettool.c:191 app/tools/gimppainttool.c:297
 #: app/tools/gimpperspectiveclonetool.c:224 app/tools/gimpthresholdtool.c:160
 #: app/tools/gimptransformgridtool.c:351
@@ -22570,7 +22598,7 @@ msgid "_Curves..."
 msgstr "_მრუდები..."
 
 #: app/tools/gimpcurvestool.c:218 app/tools/gimpfiltertool.c:306
-#: app/tools/gimplevelstool.c:208 app/tools/gimpoffsettool.c:189
+#: app/tools/gimplevelstool.c:209 app/tools/gimpoffsettool.c:189
 #: app/tools/gimpthresholdtool.c:158
 msgid "Cannot modify multiple drawables. Select only one."
 msgstr ""
@@ -22601,12 +22629,12 @@ msgstr "საკონტროლო წერტილების ყვე�
 msgid "Adjust Color Curves"
 msgstr "ფერთა მრუდების მორგება"
 
-#: app/tools/gimpcurvestool.c:486 app/tools/gimplevelstool.c:367
+#: app/tools/gimpcurvestool.c:486 app/tools/gimplevelstool.c:368
 #: app/tools/gimpthresholdtool.c:247
 msgid "Cha_nnel:"
 msgstr "არ_ხი:"
 
-#: app/tools/gimpcurvestool.c:515 app/tools/gimplevelstool.c:394
+#: app/tools/gimpcurvestool.c:515 app/tools/gimplevelstool.c:395
 msgid "R_eset Channel"
 msgstr "არ_ხის ნაგულისხმევ მნიშვნელობებზე დაბრუნება"
 
@@ -22626,13 +22654,7 @@ msgstr "ტი_პი:"
 msgid "Curve _type:"
 msgstr "მრუდის _ტიპი:"
 
-#: app/tools/gimpcurvestool.c:756 app/tools/gimpcurvestool.c:759
-#: app/tools/gimplevelstool.c:745
-#, c-format
-msgid "Could not read header: "
-msgstr "ჰედერის წაკითხვის შეცდომა: "
-
-#: app/tools/gimpcurvestool.c:836
+#: app/tools/gimpcurvestool.c:850
 msgid "Use _old curves file format"
 msgstr "მრუდების ფაილის ძვე_ლი ფორმატის გამოყენება"
 
@@ -23168,7 +23190,7 @@ msgid "Y:"
 msgstr "Y:"
 
 #. the color label
-#: app/tools/gimpgradienttool-editor.c:1345 app/tools/gimptextoptions.c:855
+#: app/tools/gimpgradienttool-editor.c:1345 app/tools/gimptextoptions.c:869
 msgid "Color:"
 msgstr "ფერი:"
 
@@ -23423,74 +23445,74 @@ msgstr "წკაპი ან წკაპი-გადათრევა წ�
 msgid "Modify Scissors Curve"
 msgstr "მაკრატელის მრუდის შეცვლა"
 
-#: app/tools/gimplevelstool.c:140
+#: app/tools/gimplevelstool.c:141
 msgid "_Levels..."
 msgstr "_დონეები..."
 
-#: app/tools/gimplevelstool.c:293
+#: app/tools/gimplevelstool.c:294
 msgid "Pick black point for all channels"
 msgstr "აირჩიეთ შავი წერტილი ყველა არხზე"
 
-#: app/tools/gimplevelstool.c:295
+#: app/tools/gimplevelstool.c:296
 msgid "Pick black point for the selected channel"
 msgstr "აირჩიეთ შავი წერტილი მონიშნულ არხზე"
 
-#: app/tools/gimplevelstool.c:302
+#: app/tools/gimplevelstool.c:303
 msgid "Pick gray point for all channels"
 msgstr "აირჩიეთ ყავისფერი წერტილი ყველა არხზე"
 
-#: app/tools/gimplevelstool.c:304
+#: app/tools/gimplevelstool.c:305
 msgid "Pick gray point for the selected channel"
 msgstr "აირჩიეთ ყავისფერი წერტილი მონიშნულ არხზე"
 
-#: app/tools/gimplevelstool.c:311
+#: app/tools/gimplevelstool.c:312
 msgid "Pick white point for all channels"
 msgstr "აირჩიეთ თეთრი წერტილი ყველა არხზე"
 
-#: app/tools/gimplevelstool.c:313
+#: app/tools/gimplevelstool.c:314
 msgid "Pick white point for the selected channel"
 msgstr "აირჩიეთ თეთრი წერტილი მონიშნულ არხზე"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:419
+#: app/tools/gimplevelstool.c:420
 msgid "Input Levels"
 msgstr "შემავალი დონეები"
 
-#: app/tools/gimplevelstool.c:503
+#: app/tools/gimplevelstool.c:504
 msgid "Clamp _input"
 msgstr "_შეყვანის შეზღუდვა"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:542
+#: app/tools/gimplevelstool.c:543
 msgid "Output Levels"
 msgstr "დონეები გამოსავალზე"
 
-#: app/tools/gimplevelstool.c:589
+#: app/tools/gimplevelstool.c:590
 msgid "Clamp outpu_t"
 msgstr "_გამოტანის შეზღუდვა"
 
 #. all channels frame
-#: app/tools/gimplevelstool.c:602
+#: app/tools/gimplevelstool.c:603
 msgid "All Channels"
 msgstr "ყველა არხი"
 
-#: app/tools/gimplevelstool.c:614
+#: app/tools/gimplevelstool.c:615
 msgid "_Auto Input Levels"
 msgstr "შემოტანის ა_ვტომატური დონეები"
 
-#: app/tools/gimplevelstool.c:617
+#: app/tools/gimplevelstool.c:618
 msgid "Adjust levels for all channels automatically"
 msgstr "არხების დონის ავტომატური მორგება"
 
-#: app/tools/gimplevelstool.c:644
+#: app/tools/gimplevelstool.c:645
 msgid "Edit these Settings as Curves"
 msgstr "როგორც მრუდების, ისე ჩასწორება"
 
-#: app/tools/gimplevelstool.c:859
+#: app/tools/gimplevelstool.c:868
 msgid "Use _old levels file format"
 msgstr "_ძველი დომეების ფაილის ფორმატის გამოყენება"
 
-#: app/tools/gimplevelstool.c:1004 app/tools/gimpthresholdtool.c:429
+#: app/tools/gimplevelstool.c:1013 app/tools/gimpthresholdtool.c:429
 msgid "Calculating histogram..."
 msgstr "ჰისტოგრამის გამოთვლა..."
 
@@ -24016,7 +24038,7 @@ msgstr "მიმდინარე"
 msgid "Fixed"
 msgstr "ფიქსირებული"
 
-#: app/tools/gimprectangleoptions.c:1006 app/tools/gimptextoptions.c:813
+#: app/tools/gimprectangleoptions.c:1006 app/tools/gimptextoptions.c:827
 msgid "Size:"
 msgstr "ზომა:"
 
@@ -24292,126 +24314,130 @@ msgstr "გასადღაბნად დააწკაპუნეთ"
 msgid "Click to smudge the line"
 msgstr "ხაზის გასადღაბნად დააწკაპუნეთ"
 
-#: app/tools/gimptextoptions.c:165
+#: app/tools/gimptextoptions.c:166
 msgid "Font size unit"
 msgstr "ფონის ზომის საზომი ერთეული"
 
-#: app/tools/gimptextoptions.c:170 app/tools/gimptextoptions.c:171
+#: app/tools/gimptextoptions.c:171 app/tools/gimptextoptions.c:172
 msgid "Font size"
 msgstr "ფონტის ზომა"
 
-#: app/tools/gimptextoptions.c:184
+#: app/tools/gimptextoptions.c:185
 msgid "Hinting"
 msgstr "მომრგვალება"
 
-#: app/tools/gimptextoptions.c:185
+#: app/tools/gimptextoptions.c:186
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 
-#: app/tools/gimptextoptions.c:195
+#: app/tools/gimptextoptions.c:196
 msgid "The text language may have an effect on the way the text is rendered."
 msgstr ""
 
-#: app/tools/gimptextoptions.c:209
+#: app/tools/gimptextoptions.c:210
 msgid "Justify"
 msgstr "გადამრთეველი"
 
-#: app/tools/gimptextoptions.c:210
+#: app/tools/gimptextoptions.c:211
 msgid "Text alignment"
 msgstr "ტექსტის სწორება"
 
-#: app/tools/gimptextoptions.c:217
+#: app/tools/gimptextoptions.c:218
 msgid "Indentation"
 msgstr "სწორება"
 
-#: app/tools/gimptextoptions.c:218
+#: app/tools/gimptextoptions.c:219
 msgid "Indentation of the first line"
 msgstr "პირველი ხაზის სწორება"
 
-#: app/tools/gimptextoptions.c:225
+#: app/tools/gimptextoptions.c:226
 msgid "Line spacing"
 msgstr "ხაზებს შუა მანძილი"
 
-#: app/tools/gimptextoptions.c:226
+#: app/tools/gimptextoptions.c:227
 msgid "Adjust line spacing"
 msgstr "ხაზებს შუა მანძილის მორგება"
 
-#: app/tools/gimptextoptions.c:233
+#: app/tools/gimptextoptions.c:234
 msgid "Letter spacing"
 msgstr "სიმბოლოებს შუა მანძილი"
 
-#: app/tools/gimptextoptions.c:234
+#: app/tools/gimptextoptions.c:235
 msgid "Adjust letter spacing"
 msgstr "სიმბოლოებს შუა მანძილის მორგეება"
 
-#: app/tools/gimptextoptions.c:241
+#: app/tools/gimptextoptions.c:242
 msgid "Box"
 msgstr "ყუთი"
 
-#: app/tools/gimptextoptions.c:242
+#: app/tools/gimptextoptions.c:243
 msgid ""
 "Whether text flows into rectangular shape or moves into a new line when you "
 "press Enter"
 msgstr ""
 
-#: app/tools/gimptextoptions.c:250
+#: app/tools/gimptextoptions.c:251
 msgid "Use editor window"
 msgstr "რედაქტორის ფანჯრის გამოყენება"
 
-#: app/tools/gimptextoptions.c:251
+#: app/tools/gimptextoptions.c:252
 msgid "Use an external editor window for text entry"
 msgstr "გარე რედაქტორის ფანჯრის გამოყენება ტექსტური ელემენტისთვის"
 
-#: app/tools/gimptextoptions.c:257
+#: app/tools/gimptextoptions.c:258
 msgid "Show on-canvas editor"
 msgstr "ტილოზე მდებარე რედაქტორის ჩვენება"
 
-#: app/tools/gimptextoptions.c:258
+#: app/tools/gimptextoptions.c:259
 msgid "Show on-canvas text editor"
 msgstr "ტილოზე მდებარე ტექსტური რედაქტორის ჩვენება"
 
-#: app/tools/gimptextoptions.c:300
+#: app/tools/gimptextoptions.c:301
 msgid "Outline width"
 msgstr "კიდის სიგანე"
 
-#: app/tools/gimptextoptions.c:301
+#: app/tools/gimptextoptions.c:302
 msgid "Adjust outline width"
 msgstr "კიდის სიგანის მორგება"
 
-#: app/tools/gimptextoptions.c:308
+#: app/tools/gimptextoptions.c:309
 msgid "Outline width unit"
 msgstr "კიდის სიგანის ერთეული"
 
-#: app/tools/gimptextoptions.c:323
+#: app/tools/gimptextoptions.c:329
 msgid "Outline miter limit"
 msgstr "კონტურის ფაცეტის ლიმიტი"
 
-#: app/tools/gimptextoptions.c:844
+#: app/tools/gimptextoptions.c:858
 msgid "Hinting:"
 msgstr "მომრგვალება:"
 
-#: app/tools/gimptextoptions.c:848
+#: app/tools/gimptextoptions.c:862
 msgid "Text Color"
 msgstr "ტექსტის ფერი"
 
-#: app/tools/gimptextoptions.c:861
+#: app/tools/gimptextoptions.c:875
 msgid "Style:"
 msgstr "სტილი:"
 
-#: app/tools/gimptextoptions.c:865
+#: app/tools/gimptextoptions.c:879
 msgid "Outline Options"
 msgstr "კიდის პარამეტრები"
 
-#: app/tools/gimptextoptions.c:886
+#: app/tools/gimptextoptions.c:896
+msgid "Outline Direction:"
+msgstr "კონტურის მიმართულება:"
+
+#: app/tools/gimptextoptions.c:912
 msgid "Justify:"
 msgstr "გასწორება:"
 
-#: app/tools/gimptextoptions.c:916
+#: app/tools/gimptextoptions.c:942
 msgid "Box:"
 msgstr "ყუთი:"
 
-#: app/tools/gimptextoptions.c:956
+#: app/tools/gimptextoptions.c:984
 msgid "Language:"
 msgstr "ენა:"
 
@@ -25398,20 +25424,20 @@ msgstr ""
 msgid "Changing shortcut failed."
 msgstr "მალსახმობის შეცვლის შეცდომა."
 
-#: app/widgets/gimpbrusheditor.c:139
+#: app/widgets/gimpbrusheditor.c:142
 msgid "Shape:"
 msgstr "ფორმა:"
 
-#: app/widgets/gimpbrusheditor.c:167
+#: app/widgets/gimpbrusheditor.c:170
 msgid "Spikes"
 msgstr "წვერები"
 
-#: app/widgets/gimpbrusheditor.c:212 app/widgets/gimpbrushfactoryview.c:106
+#: app/widgets/gimpbrusheditor.c:215 app/widgets/gimpbrushfactoryview.c:106
 msgid "Percentage of width of brush"
 msgstr "ფუნჯის სიგანის პროცენტულობა"
 
 #: app/widgets/gimpbufferview.c:189 app/widgets/gimpbufferview.c:290
-#: app/widgets/gimpeditor.c:821
+#: app/widgets/gimpeditor.c:835
 msgid "(None)"
 msgstr "(არცერთი)"
 
@@ -26684,6 +26710,7 @@ msgstr "ავტო"
 msgid ""
 "When enabled, the dialog automatically follows the image you are working on."
 msgstr ""
+"როცა ჩართულია, დიალოგია ავტომატურად მიჰყვება გამოსახულებას, რომელზეც მუშაობთ."
 
 #: app/widgets/gimpdrawabletreeview.c:122
 msgid "Lock pixels"
@@ -26695,7 +26722,7 @@ msgstr "მდებარეობისა და ზომის ჩაკე
 
 #: app/widgets/gimpdrawabletreeview.c:192
 msgid "Cannot select items while a floating selection is active."
-msgstr ""
+msgstr "ელემენტების მონიშვნა შეუძლებელია, სანამ აქტიურია მცურავი მონიშვნა."
 
 #: app/widgets/gimpdynamicseditor.c:162
 #: app/widgets/gimpdynamicsoutputeditor.c:71
@@ -27640,47 +27667,47 @@ msgstr "ტექსტური ფაილ %s ჩაწერის შეც
 msgid "_Use selected font"
 msgstr "_არჩეული ფონტის გამოყენება"
 
-#: app/widgets/gimptextstyleeditor.c:211 app/widgets/gimptextstyleeditor.c:1329
+#: app/widgets/gimptextstyleeditor.c:214 app/widgets/gimptextstyleeditor.c:1327
 msgid "Change font of selected text"
 msgstr "მონიშნული ტექსტის ფონტის შეცვლა"
 
-#: app/widgets/gimptextstyleeditor.c:221
+#: app/widgets/gimptextstyleeditor.c:224
 msgid "Change size of selected text"
 msgstr "მონიშნული ტექსტის ზომის შეცვლა"
 
-#: app/widgets/gimptextstyleeditor.c:240
+#: app/widgets/gimptextstyleeditor.c:243
 msgid "Clear style of selected text"
 msgstr "მონიშნული ტექსტის სტილის გაწმენდა"
 
-#: app/widgets/gimptextstyleeditor.c:251 app/widgets/gimptextstyleeditor.c:262
+#: app/widgets/gimptextstyleeditor.c:254 app/widgets/gimptextstyleeditor.c:265
 msgid "Change color of selected text"
 msgstr "მონიშნული ტექსტის ფერის შეცვლა"
 
-#: app/widgets/gimptextstyleeditor.c:278
+#: app/widgets/gimptextstyleeditor.c:281
 msgid "Change kerning of selected text"
 msgstr "მონიშნული ტექსტის სიმბოლოებს შორის დაშორების შეცვლა"
 
-#: app/widgets/gimptextstyleeditor.c:294
+#: app/widgets/gimptextstyleeditor.c:297
 msgid "Change baseline of selected text"
 msgstr "მონიშნული ტექსტის ძირითადი პარამეტრების შეცვლა"
 
-#: app/widgets/gimptextstyleeditor.c:333
+#: app/widgets/gimptextstyleeditor.c:336
 msgid "Bold"
 msgstr "მუქი"
 
-#: app/widgets/gimptextstyleeditor.c:336
+#: app/widgets/gimptextstyleeditor.c:339
 msgid "Italic"
 msgstr "დახრილი"
 
-#: app/widgets/gimptextstyleeditor.c:339
+#: app/widgets/gimptextstyleeditor.c:342
 msgid "Underline"
 msgstr "ხაზგასმული"
 
-#: app/widgets/gimptextstyleeditor.c:342
+#: app/widgets/gimptextstyleeditor.c:345
 msgid "Strikethrough"
 msgstr "ხაზგადასმული"
 
-#: app/widgets/gimptextstyleeditor.c:1321
+#: app/widgets/gimptextstyleeditor.c:1319
 #, c-format
 msgid "Font \"%s\" unavailable on this system"
 msgstr "მიმდინარე სისტემაში ფონტი %s მიუწვდომელია"
@@ -27889,12 +27916,12 @@ msgstr "%s (სცადეთ %s, %s, %s)"
 #. * (e.g. a checkbox settings) displayed
 #. * in some dockable GUI.
 #.
-#: app/widgets/gimpwidgets-utils.c:1476
+#: app/widgets/gimpwidgets-utils.c:1477
 #, c-format
 msgid "Switch \"%s\" ON"
 msgstr "\"%s\"-ის ჩართვა"
 
-#: app/widgets/gimpwidgets-utils.c:1478
+#: app/widgets/gimpwidgets-utils.c:1479
 #, c-format
 msgid "Switch \"%s\" OFF"
 msgstr "\"%s\"-ის გამორთვა"
@@ -27904,7 +27931,7 @@ msgstr "\"%s\"-ის გამორთვა"
 #. * multi-choice settings displayed
 #. * in some dockable GUI.
 #.
-#: app/widgets/gimpwidgets-utils.c:1497
+#: app/widgets/gimpwidgets-utils.c:1498
 #, c-format
 msgid "Select \"%s\""
 msgstr "მოვნიშნო '%s' ?"
@@ -27912,27 +27939,27 @@ msgstr "მოვნიშნო '%s' ?"
 #. TRANSLATORS: %s will be a tool name, so we'll get a
 #. * final string looking like 'Activate the "Bucket fill" tool'.
 #.
-#: app/widgets/gimpwidgets-utils.c:1520
+#: app/widgets/gimpwidgets-utils.c:1521
 #, c-format
 msgid "Activate the \"%s\" tool"
 msgstr "ხელსაწყოს აქტივაცია:\"%s\""
 
-#: app/widgets/gimpwidgets-utils.c:2119
+#: app/widgets/gimpwidgets-utils.c:2120
 #, c-format
 msgid "Built-in grayscale (%s)"
 msgstr "ჩაშენებული შავთეთრი (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2126
+#: app/widgets/gimpwidgets-utils.c:2127
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "ჩაშენებული RGB(%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2146
+#: app/widgets/gimpwidgets-utils.c:2147
 #, c-format
 msgid "Preferred grayscale (%s)"
 msgstr "მირჩევნია შავთეთრი (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2155
+#: app/widgets/gimpwidgets-utils.c:2156
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "მირჩევნია RGB (%s)"
