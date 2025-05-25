@@ -13,7 +13,7 @@ spec:
     test_pipeline:
       description: 'Pipelines used only for testing'
       options:
-        - GIMP_CI_MESON_GCC #trigger the Debian GCC build (rare usefulness)
+        - GIMP_CI_MESON_CLANG #trigger the Debian Clang build (rare usefulness)
         - GIMP_CI_RASTER_ICONS #trigger the Debian Clang build without vector icons (rare usefulness)
         - GIMP_CI_CPPCHECK #trigger cppcheck (static code analysis)
         - none
@@ -30,7 +30,7 @@ workflow:
 ##################################################
 
 ## 1. On MERGE REQUESTS, the following are triggered:
-## - Abbreviated Linux Clang build
+## - Abbreviated Linux build
 ## - Building quality tests (static code analysis)
 ## - clang-format (static code analysis)
 ## - Execution tests (dynamic code analysis)
@@ -44,7 +44,7 @@ workflow:
   # GitLab is quite sensitive about rules 'if' order so be careful
 
 ## 3. On COMMITS except tags.
-## - Linux Clang build
+## - Linux build
 ## - Building quality tests (static code analysis)
 ## - Execution tests (dynamic code analysis)
 ## - Source tarball
@@ -84,6 +84,7 @@ workflow:
   image: $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}
   variables:
     DEB_VERSION: "bookworm"
+    UMFPACK: libumfpack5
     RUNNER: "x86_64_v3"
     # Common cloning procedure
     GIT_DEPTH: "1"
@@ -102,24 +103,27 @@ stages:
   - analysis
   - distribution
 
-## AppImage CI (Debian) ##
-.debian:
+
+## Common GNU/Linux 64-bit CI (Debian) ##
+.debian-nonreloc:
   extends: .default
   rules:
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:AppImage.*/'
-      interruptible: true
-    - if: '$GIMP_CI_APPIMAGE != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_APPIMAGE.*/'
+    - <<: *CI_MERGE
+    - <<: *CI_COMMIT
+      variables: {}
+    - if: '$GIMP_CI_MESON_CLANG != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_MESON_CLANG.*/'
+      variables:
+        CC: clang
+        CXX: clang++
+        CC_LD: lld
+        CXX_LD: lld
+        TOOLCHAIN: "clang lld"
+        VARIANT: -clang
+    - if: '$GIMP_CI_RASTER_ICONS != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_RASTER_ICONS.*/'
+      variables:
+        MESON_OPTIONS: "-Dvector-icons=false"
+        VARIANT: "-raster"
     - <<: *CI_RELEASE
-  parallel:
-    matrix:
-      - RUNNER: [aarch64, x86_64_v3]
-  tags:
-    - $RUNNER
-  variables:
-    CC: "clang"
-    CXX: "clang++"
-    CC_LD: lld
-    CXX_LD: lld
   before_script:
     - export GIMP_PREFIX="${CI_PROJECT_DIR}/_install-${RUNNER}"
   timeout: 30m
@@ -138,13 +142,12 @@ stages:
 - export GI_TYPELIB_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}girepository-1.0${GI_TYPELIB_PATH:+:$GI_TYPELIB_PATH}"
 - printf "\e[0Ksection_end:`date +%s`:environ\r\e[0K\n"
 
-deps-debian:
-  extends: .debian
+deps-debian-nonreloc:
+  extends: .debian-nonreloc
   stage: dependencies
   image: quay.io/buildah/stable
   variables:
     GIT_STRATEGY: none
-    PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   script:
     - export BUILDAH_FORMAT=docker
     - export STORAGE_DRIVER=vfs
@@ -158,16 +161,15 @@ deps-debian:
     - echo "RUN apt-get install -qq -y --no-install-recommends ca-certificates" >> Dockerfile
     ## Build-time only dependencies
     - echo "RUN apt-get install -qq -y --no-install-recommends \\" >> Dockerfile
-    - echo "appstream
+    - echo "${TOOLCHAIN:-build-essential}
+            appstream
             bison
-            clang
             desktop-file-utils
             flex
             gi-docgen
             git
             gobject-introspection
             libgtk-3-bin
-            lld
             meson
             valac
             xsltproc" >> Dockerfile
@@ -194,6 +196,7 @@ deps-debian:
             libgtk-3-dev
             libgudev-1.0-dev
             libheif-dev
+            $LIBHEIF_PLUGINS
             libjson-glib-dev
             libjxl-dev
             liblcms2-dev
@@ -209,7 +212,7 @@ deps-debian:
             librsvg2-dev
             libsuitesparse-dev
             libtiff-dev
-            libumfpack5
+            $UMFPACK
             libunwind-dev
             libwebp-dev
             libwmf-dev
@@ -226,10 +229,12 @@ deps-debian:
     - echo "RUN printf \"\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KPreparing build environment\n\"" >> Dockerfile2;
     - echo "ENV PKG_CONFIG_PATH=\"${GIMP_PREFIX}/lib/$([ "$(uname -m)" = 'aarch64' ] && echo "aarch64-linux-gnu/" || echo "x86_64-linux-gnu/")pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}\"" >> Dockerfile2;
     - echo "ENV XDG_DATA_DIRS=\"${GIMP_PREFIX}/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}\"" >> Dockerfile2;
-    - echo "ENV CC=\"$CC\"" >> Dockerfile2;
-    - echo "ENV CXX=\"$CXX\"" >> Dockerfile2;
-    - echo "ENV CC_LD=\"$CC_LD\"" >> Dockerfile2;
-    - echo "ENV CXX_LD=\"$CXX_LD\"" >> Dockerfile2;
+    - if [ "$VARIANT" = "-clang" ]; then
+        echo "ENV CC=\"$CC\"" >> Dockerfile2;
+        echo "ENV CXX=\"$CXX\"" >> Dockerfile2;
+        echo "ENV CC_LD=\"$CC_LD\"" >> Dockerfile2;
+        echo "ENV CXX_LD=\"$CXX_LD\"" >> Dockerfile2;
+      fi
     - echo "ENV CLICOLOR_FORCE=\"1\"" >> Dockerfile2;
     - echo "RUN printf \"\e[0Ksection_end:`date +%s`:environ\r\e[0K\n\"" >> Dockerfile2;
     # Build some dependencies
@@ -259,11 +264,88 @@ deps-debian:
       - gegl/_build-${RUNNER}/config.h
     expire_in: 2 hours
 
+gimp-debian-nonreloc:
+  extends: .debian-nonreloc
+  needs: ["deps-debian-nonreloc"]
+  stage: build
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+  script:
+    - *ENVIRON
+    # Check building
+    - printf "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP\n"
+    - meson setup _build-${RUNNER} -Dprefix="${GIMP_PREFIX}"
+                                   -Dfile-plug-ins-test=true
+                                   $MESON_OPTIONS
+    - cd _build-${RUNNER}
+    - ninja
+    - printf "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K\n"
+    # Check execution
+    - printf "\e[0Ksection_start:`date +%s`:gimp_test[collapsed=true]\r\e[0KTesting GIMP execution\n"
+    - ninja test
+    - printf "\e[0Ksection_end:`date +%s`:gimp_test\r\e[0K\n"
+    # Check source
+    - printf "\e[0Ksection_start:`date +%s`:gimp_tar[collapsed=true]\r\e[0KChecking GIMP source\n"
+    - if [ $(git diff |wc -l) -ne 0 ]; then
+        printf "ERROR. A generated file was updated without the source:\n";
+        git diff;
+        exit 1;
+      fi
+    - if [ "$VARIANT" != "-clang" ] && [ "$VARIANT" != "-raster" ] && [ "$CI_PIPELINE_SOURCE" != "merge_request_event" ]; then
+        ninja dist > ninja_dist.log 2>&1 || { cat ninja_dist.log; exit 1; };
+      fi
+    - printf "\e[0Ksection_end:`date +%s`:gimp_tar\r\e[0K\n"
+    # Check install
+    - printf "\e[0Ksection_start:`date +%s`:gimp_install[collapsed=true]\r\e[0KChecking GIMP installation\n"
+    - ninja install > ninja_install.log 2>&1 || { cat ninja_install.log; exit 1; };
+    - printf "\e[0Ksection_end:`date +%s`:gimp_install\r\e[0K\n"
+  artifacts:
+    paths:
+      - _install-${RUNNER}/
+      - _build-${RUNNER}/meson-logs/meson-log.txt
+      - _build-${RUNNER}/meson-dist/
+      - _build-${RUNNER}/config.h
+    reports:
+      junit: "_build-${RUNNER}/meson-logs/testlog.junit.xml"
+    expire_in: 2 days
+
+
+## AppImage CI (Debian) ##
+.debian:
+  extends: .debian-nonreloc
+  rules:
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:AppImage.*/'
+      interruptible: true
+    - if: '$GIMP_CI_APPIMAGE != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_APPIMAGE.*/'
+    - <<: *CI_RELEASE
+  parallel:
+    matrix:
+      - RUNNER: [aarch64, x86_64_v3]
+  tags:
+    - $RUNNER
+  variables:
+    #FIXME: remove this variables: key and go back to relying on .default DEB_VERSION on GIMP 3.3/3.4
+    DEB_VERSION: "trixie"
+    UMFPACK: libumfpack6
+    LIBHEIF_PLUGINS: "libheif-plugin-dav1d libheif-plugin-aomenc libheif-plugin-libde265 libheif-plugin-x265 libheif-plugin-j2kdec libheif-plugin-j2kenc"
+
+deps-debian:
+  extends: .debian
+  stage: !reference [deps-debian-nonreloc, stage]
+  image: !reference [deps-debian-nonreloc, image]
+  variables:
+    GIT_STRATEGY: none
+    PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
+  script:
+    - !reference [deps-debian-nonreloc, script]
+  artifacts: !reference [deps-debian-nonreloc, artifacts] 
+
 gimp-debian:
   extends: .debian
   needs: ["deps-debian"]
-  stage: build
+  stage: !reference [gimp-debian-nonreloc, stage]
   variables:
+    #FIXME: remove this variables: key and go back to relying on gimp-debian-nonreloc variables: on GIMP 3.3/3.4
     GIT_SUBMODULE_STRATEGY: recursive
   script:
     - *ENVIRON
@@ -290,85 +372,6 @@ gimp-debian:
       - appimageignore*
       - _build-${RUNNER}/meson-logs/meson-log.txt
       - _build-${RUNNER}/config.h
-    expire_in: 2 days
-
-
-## GNU/Linux 64-bit CIs (Debian) ##
-.debian-nonreloc:
-  extends: .debian
-  rules:
-    - <<: *CI_MERGE
-    - <<: *CI_COMMIT
-      variables: {}
-    - if: '$GIMP_CI_MESON_GCC != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_MESON_GCC.*/'
-      variables:
-        CC: "cc"
-        CXX: "c++"
-        CC_LD: bfd
-        CXX_LD: bfd
-        VARIANT: "-gcc"
-    - if: '$GIMP_CI_RASTER_ICONS != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_RASTER_ICONS.*/'
-      variables:
-        MESON_OPTIONS: "-Dvector-icons=false"
-        VARIANT: "-raster"
-    - <<: *CI_RELEASE
-  parallel:
-    matrix:
-      - RUNNER: x86_64_v3
-  tags: []
-
-deps-debian-nonreloc:
-  extends: .debian-nonreloc
-  stage: !reference [deps-debian, stage]
-  image: !reference [deps-debian, image]
-  variables:
-    GIT_STRATEGY: none
-  script:
-    - !reference [deps-debian, script]
-  artifacts: !reference [deps-debian, artifacts]
-
-gimp-debian-nonreloc:
-  extends: .debian-nonreloc
-  needs: ["deps-debian-nonreloc"]
-  stage: !reference [gimp-debian, stage]
-  variables: !reference [gimp-debian, variables]
-  script:
-    - *ENVIRON
-    # Check building
-    - printf "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP\n"
-    - meson setup _build-${RUNNER} -Dprefix="${GIMP_PREFIX}"
-                                   -Dfile-plug-ins-test=true
-                                   $MESON_OPTIONS
-    - cd _build-${RUNNER}
-    - ninja
-    - printf "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K\n"
-    # Check execution
-    - printf "\e[0Ksection_start:`date +%s`:gimp_test[collapsed=true]\r\e[0KTesting GIMP execution\n"
-    - ninja test
-    - printf "\e[0Ksection_end:`date +%s`:gimp_test\r\e[0K\n"
-    # Check source
-    - printf "\e[0Ksection_start:`date +%s`:gimp_tar[collapsed=true]\r\e[0KChecking GIMP source\n"
-    - if [ $(git diff |wc -l) -ne 0 ]; then
-        printf "ERROR. A generated file was updated without the source:\n";
-        git diff;
-        exit 1;
-      fi
-    - if [ "$VARIANT" != "-gcc" ] && [ "$VARIANT" != "-raster" ] && [ "$CI_PIPELINE_SOURCE" != "merge_request_event" ]; then
-        ninja dist > ninja_dist.log 2>&1 || { cat ninja_dist.log; exit 1; };
-      fi
-    - printf "\e[0Ksection_end:`date +%s`:gimp_tar\r\e[0K\n"
-    # Check install
-    - printf "\e[0Ksection_start:`date +%s`:gimp_install[collapsed=true]\r\e[0KChecking GIMP installation\n"
-    - ninja install > ninja_install.log 2>&1 || { cat ninja_install.log; exit 1; };
-    - printf "\e[0Ksection_end:`date +%s`:gimp_install\r\e[0K\n"
-  artifacts:
-    paths:
-      - _install-${RUNNER}/
-      - _build-${RUNNER}/meson-logs/meson-log.txt
-      - _build-${RUNNER}/meson-dist/
-      - _build-${RUNNER}/config.h
-    reports:
-      junit: "_build-${RUNNER}/meson-logs/testlog.junit.xml"
     expire_in: 2 days
 
 
