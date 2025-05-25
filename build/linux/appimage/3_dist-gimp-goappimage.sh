@@ -304,6 +304,7 @@ prep_pkg "xapps-common"
 bund_usr "$UNIX_PREFIX" "share/glib-*/schemas"
 ### Glib commonly required modules
 bund_usr "$UNIX_PREFIX" "lib/gvfs/*.so"
+bund_usr "$UNIX_PREFIX" "lib/libproxy/libpxbackend*.so" --dest "${LIB_DIR}/${LIB_SUBDIR}"
 bund_usr "$UNIX_PREFIX" "lib/gio/modules/*"
 conf_app GIO_MODULE_DIR "${LIB_DIR}/${LIB_SUBDIR}gio/modules"
 conf_app GIO_EXTRA_MODULES "" --no-expand
@@ -355,6 +356,9 @@ bund_usr "$UNIX_PREFIX" "share/mypaint-data/2.0"
 ### Needed for 'th' word breaking in Text tool etc
 bund_usr "$UNIX_PREFIX" "share/libthai"
 conf_app LIBTHAI_DICTDIR "share/libthai"
+### Needed for file-heif work
+bund_usr "$UNIX_PREFIX" "lib/libheif/plugins"
+conf_app LIBHEIF_PLUGIN_PATH "${LIB_DIR}/${LIB_SUBDIR}libheif/plugins"
 ### Needed for full CJK and Cyrillic support in file-pdf
 bund_usr "$UNIX_PREFIX" "share/poppler"
 ### Needed for file-ps work. See: #14785
@@ -376,8 +380,6 @@ if [ "$GIMP_UNSTABLE" ] || [ -z "$GIMP_RELEASE" ]; then
   bund_usr "$UNIX_PREFIX" "lib/libEGL*"
   bund_usr "$UNIX_PREFIX" "lib/libGL*"
   bund_usr "$UNIX_PREFIX" "lib/dri*"
-  #TODO: remove this on Debian Trixie (which have Mesa 24.2)
-  conf_app LIBGL_DRIVERS_PATH "${LIB_DIR}/${LIB_SUBDIR}dri"
 fi
 ### Debug dialog
 bund_usr "$GIMP_PREFIX" "bin/gimp-debug-tool*" --dest "libexec"
@@ -436,6 +438,7 @@ mv build/linux/appimage/AppRun.bak build/linux/appimage/AppRun
 rm $APP_DIR/*.desktop
 echo "usr/${LIB_DIR}/${LIB_SUBDIR}gconv
       usr/${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/gdk-pixbuf-query-loaders
+      usr/${LIB_DIR}/${LIB_SUBDIR}libproxy
       usr/share/doc
       usr/share/themes
       etc
