@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-05-22 21:32+0000\n"
-"PO-Revision-Date: 2025-05-23 14:00+0300\n"
+"POT-Creation-Date: 2025-05-24 16:13+0000\n"
+"PO-Revision-Date: 2025-05-25 21:01+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -11223,7 +11223,6 @@ msgid "Override theme-set icon sizes."
 msgstr "Перевизначити встановлені темою розміри піктограм."
 
 #: app/config/gimprc-blurbs.h:562
-#| msgid "Keep the image's color profile"
 msgid "Use theme colors for preview"
 msgstr "Кольори теми для попереднього перегляду"
 
@@ -13492,7 +13491,7 @@ msgid "Palette"
 msgstr "Палітра"
 
 #: app/core/gimpcontext.c:741 app/core/gimpcontext.c:742
-#: app/tools/gimptextoptions.c:799
+#: app/tools/gimptextoptions.c:813
 msgid "Font"
 msgstr "Шрифт"
 
@@ -13522,7 +13521,7 @@ msgstr "копія"
 msgid "%s copy"
 msgstr "копія %s"
 
-#: app/core/gimpdatafactory.c:638 app/tools/gimptextoptions.c:780
+#: app/core/gimpdatafactory.c:638 app/tools/gimptextoptions.c:794
 #: app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
 msgstr "Завантажуємо шрифти (їх завантаження може тривати довго…)"
@@ -13702,7 +13701,7 @@ msgstr "Нетиповий стиль"
 
 #: app/core/gimpfilloptions.c:128 app/pdb/gimppdbcontext.c:101
 #: app/tools/gimpbucketfilloptions.c:186 app/tools/gimpselectionoptions.c:89
-#: app/tools/gimptextoptions.c:177
+#: app/tools/gimptextoptions.c:178
 msgid "Antialiasing"
 msgstr "Згладжування"
 
@@ -15045,7 +15044,7 @@ msgid "Line width"
 msgstr "Ширина лінії"
 
 #: app/core/gimpstrokeoptions.c:168 app/core/gimptemplate.c:158
-#: app/tools/gimptextoptions.c:164 app/tools/gimptextoptions.c:307
+#: app/tools/gimptextoptions.c:165 app/tools/gimptextoptions.c:308
 msgid "Unit"
 msgstr "Одиниця виміру"
 
@@ -15061,7 +15060,7 @@ msgstr "Стиль з'єднання"
 msgid "Miter limit"
 msgstr "Обмеження фацета"
 
-#: app/core/gimpstrokeoptions.c:190 app/tools/gimptextoptions.c:324
+#: app/core/gimpstrokeoptions.c:190 app/tools/gimptextoptions.c:330
 msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
 "distance of more than miter-limit * line-width from the actual join point."
@@ -16946,7 +16945,7 @@ msgstr "Інтерфейс користувача"
 msgid "Interface"
 msgstr "Інтерфейс"
 
-#: app/dialogs/preferences-dialog.c:1876 app/tools/gimptextoptions.c:194
+#: app/dialogs/preferences-dialog.c:1876 app/tools/gimptextoptions.c:195
 msgid "Language"
 msgstr "Мова"
 
@@ -22343,6 +22342,22 @@ msgctxt "text-outline"
 msgid "Outlined and filled"
 msgstr "З контуром і заповнений"
 
+#: app/text/text-enums.c:85
+msgctxt "text-outline-direction"
+msgid "Outer"
+msgstr "Ззовні"
+
+#: app/text/text-enums.c:86
+msgctxt "text-outline-direction"
+msgid "Inner"
+msgstr "Всередині"
+
+#: app/text/text-enums.c:87
+#| msgid "C_enter"
+msgctxt "text-outline-direction"
+msgid "Centered"
+msgstr "За центром"
+
 #: app/tools/gimpairbrushtool.c:70
 msgid "Airbrush Tool: Paint using a brush, with variable pressure"
 msgstr "Аерограф: рисування пензлем зі змінним натиском"
@@ -23717,7 +23732,7 @@ msgid "Y:"
 msgstr "Y:"
 
 #. the color label
-#: app/tools/gimpgradienttool-editor.c:1345 app/tools/gimptextoptions.c:855
+#: app/tools/gimpgradienttool-editor.c:1345 app/tools/gimptextoptions.c:869
 msgid "Color:"
 msgstr "Колір:"
 
@@ -24576,7 +24591,7 @@ msgstr "Активне"
 msgid "Fixed"
 msgstr "Фіксовано"
 
-#: app/tools/gimprectangleoptions.c:1006 app/tools/gimptextoptions.c:813
+#: app/tools/gimprectangleoptions.c:1006 app/tools/gimptextoptions.c:827
 msgid "Size:"
 msgstr "Розмір:"
 
@@ -24854,66 +24869,66 @@ msgstr "Натисніть для розмиття"
 msgid "Click to smudge the line"
 msgstr "Натисніть для розмазування ліній"
 
-#: app/tools/gimptextoptions.c:165
+#: app/tools/gimptextoptions.c:166
 msgid "Font size unit"
 msgstr "Одиниця розміру шрифту"
 
-#: app/tools/gimptextoptions.c:170 app/tools/gimptextoptions.c:171
+#: app/tools/gimptextoptions.c:171 app/tools/gimptextoptions.c:172
 msgid "Font size"
 msgstr "Розмір шрифту"
 
-#: app/tools/gimptextoptions.c:184
+#: app/tools/gimptextoptions.c:185
 msgid "Hinting"
 msgstr "Уточнення"
 
-#: app/tools/gimptextoptions.c:185
+#: app/tools/gimptextoptions.c:186
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "Інструктування змінює кольори символу, щоб видати більш чіткі растри при "
 "маленьких розмірах"
 
-#: app/tools/gimptextoptions.c:195
+#: app/tools/gimptextoptions.c:196
 msgid "The text language may have an effect on the way the text is rendered."
 msgstr "Вибір мови тексту може змінити зовнішній вигляд вид тексту"
 
-#: app/tools/gimptextoptions.c:209
+#: app/tools/gimptextoptions.c:210
 msgid "Justify"
 msgstr "По ширині"
 
-#: app/tools/gimptextoptions.c:210
+#: app/tools/gimptextoptions.c:211
 msgid "Text alignment"
 msgstr "Вирівнювання тексту"
 
-#: app/tools/gimptextoptions.c:217
+#: app/tools/gimptextoptions.c:218
 msgid "Indentation"
 msgstr "Відступи"
 
-#: app/tools/gimptextoptions.c:218
+#: app/tools/gimptextoptions.c:219
 msgid "Indentation of the first line"
 msgstr "Розташування першого рядка"
 
-#: app/tools/gimptextoptions.c:225
+#: app/tools/gimptextoptions.c:226
 msgid "Line spacing"
 msgstr "Міжрядковий інтервал"
 
-#: app/tools/gimptextoptions.c:226
+#: app/tools/gimptextoptions.c:227
 msgid "Adjust line spacing"
 msgstr "Інтервал між рядками"
 
-#: app/tools/gimptextoptions.c:233
+#: app/tools/gimptextoptions.c:234
 msgid "Letter spacing"
 msgstr "Міжзнаковий інтервал"
 
-#: app/tools/gimptextoptions.c:234
+#: app/tools/gimptextoptions.c:235
 msgid "Adjust letter spacing"
 msgstr "Інтервал між літерами"
 
-#: app/tools/gimptextoptions.c:241
+#: app/tools/gimptextoptions.c:242
 msgid "Box"
 msgstr "Блок"
 
-#: app/tools/gimptextoptions.c:242
+#: app/tools/gimptextoptions.c:243
 msgid ""
 "Whether text flows into rectangular shape or moves into a new line when you "
 "press Enter"
@@ -24921,63 +24936,68 @@ msgstr ""
 "Чи текст впадає в прямокутну форму, чи рухається до нової лінії, натиснувши "
 "«Enter»"
 
-#: app/tools/gimptextoptions.c:250
+#: app/tools/gimptextoptions.c:251
 msgid "Use editor window"
 msgstr "Використовувати вікно редактора"
 
-#: app/tools/gimptextoptions.c:251
+#: app/tools/gimptextoptions.c:252
 msgid "Use an external editor window for text entry"
 msgstr "Використовувати вікно зовнішнього редактора для запису тексту"
 
-#: app/tools/gimptextoptions.c:257
+#: app/tools/gimptextoptions.c:258
 msgid "Show on-canvas editor"
 msgstr "Показувати редактор на полотні"
 
-#: app/tools/gimptextoptions.c:258
+#: app/tools/gimptextoptions.c:259
 msgid "Show on-canvas text editor"
 msgstr "Показувати текстоивй редактор на полотні"
 
-#: app/tools/gimptextoptions.c:300
+#: app/tools/gimptextoptions.c:301
 msgid "Outline width"
 msgstr "Товщина контуру"
 
-#: app/tools/gimptextoptions.c:301
+#: app/tools/gimptextoptions.c:302
 msgid "Adjust outline width"
 msgstr "Скоригувати товщину контуру"
 
-#: app/tools/gimptextoptions.c:308
+#: app/tools/gimptextoptions.c:309
 msgid "Outline width unit"
 msgstr "Одиниця товщини контуру"
 
-#: app/tools/gimptextoptions.c:323
+#: app/tools/gimptextoptions.c:329
 msgid "Outline miter limit"
 msgstr "Обмеження фацета контуру"
 
-#: app/tools/gimptextoptions.c:844
+#: app/tools/gimptextoptions.c:858
 msgid "Hinting:"
 msgstr "Уточнення:"
 
-#: app/tools/gimptextoptions.c:848
+#: app/tools/gimptextoptions.c:862
 msgid "Text Color"
 msgstr "Колір тексту"
 
-#: app/tools/gimptextoptions.c:861
+#: app/tools/gimptextoptions.c:875
 msgid "Style:"
 msgstr "Стиль:"
 
-#: app/tools/gimptextoptions.c:865
+#: app/tools/gimptextoptions.c:879
 msgid "Outline Options"
 msgstr "Параметри контуру"
 
-#: app/tools/gimptextoptions.c:886
+#: app/tools/gimptextoptions.c:896
+#| msgid "Outline Options"
+msgid "Outline Direction:"
+msgstr "Напрямок контуру:"
+
+#: app/tools/gimptextoptions.c:912
 msgid "Justify:"
 msgstr "Вирівнювання:"
 
-#: app/tools/gimptextoptions.c:916
+#: app/tools/gimptextoptions.c:942
 msgid "Box:"
 msgstr "Блок:"
 
-#: app/tools/gimptextoptions.c:956
+#: app/tools/gimptextoptions.c:984
 msgid "Language:"
 msgstr "Мова:"
 
