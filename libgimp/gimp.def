@@ -552,6 +552,7 @@ EXPORTS
 	gimp_image_procedure_new
 	gimp_image_raise_item
 	gimp_image_raise_item_to_top
+	gimp_image_redo
 	gimp_image_remove_channel
 	gimp_image_remove_layer
 	gimp_image_remove_path
@@ -590,6 +591,7 @@ EXPORTS
 	gimp_image_thaw_channels
 	gimp_image_thaw_layers
 	gimp_image_thaw_paths
+	gimp_image_undo
 	gimp_image_undo_disable
 	gimp_image_undo_enable
 	gimp_image_undo_freeze
