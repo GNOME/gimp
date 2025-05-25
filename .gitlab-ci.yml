@@ -83,7 +83,7 @@ workflow:
   # Default Docker image (keep variables: DEB_VERSION: consistent with devel-docs/os-support.txt)
   image: debian:${DEB_VERSION}
   variables:
-    DEB_VERSION: "bookworm"
+    DEB_VERSION: "trixie"
     # Common cloning procedure
     GIT_DEPTH: "1"
     GIT_SUBMODULE_STRATEGY: none
@@ -186,6 +186,7 @@ deps-debian:
             libaa1-dev
             libappstream-dev
             libarchive-dev
+            libbacktrace-dev
             libbz2-dev
             libcfitsio-dev
             libgexiv2-dev
@@ -210,7 +211,7 @@ deps-debian:
             librsvg2-dev
             libsuitesparse-dev
             libtiff-dev
-            libumfpack5
+            libumfpack6
             libunwind-dev
             libwebp-dev
             libwmf-dev

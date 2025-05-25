@@ -10,9 +10,9 @@ developers maintaining GIMP for this platform will decide.
 
 ### GNU/Linux, *BSD…
 
-Debian 12 "bookworm" stable is our baseline target.
-I.e. that we can bump a minimum dependency version only if it is in Debian
-bookworm. See: https://developer.gimp.org/core/setup/build/linux/#supported-distributions
+Debian 13 "trixie" stable is our baseline target.
+I.e. that we can bump a minimum dependency version only if it is in that Debian
+version. See: https://developer.gimp.org/core/setup/build/linux/#supported-distributions
 
 (NOTE TO MAINTAINERS:
 If you update this file, so update DEB_VERSION
