@@ -12,8 +12,8 @@ spec:
     test_pipeline:
       description: 'Pipelines used only for testing'
       options:
-        - GIMP_CI_MESON_GCC #trigger the Debian GCC build (rare usefulness)
-        - GIMP_CI_RASTER_ICONS #trigger the Debian Clang build without vector icons (rare usefulness)
+        - GIMP_CI_MESON_CLANG #trigger the Debian Clang build (rare usefulness)
+        - GIMP_CI_RASTER_ICONS #trigger the Debian GCC build without vector icons (rare usefulness)
         - GIMP_CI_CPPCHECK #trigger cppcheck (static code analysis)
         - none
       default: 'none'
@@ -29,7 +29,7 @@ workflow:
 ##################################################
 
 ## 1. On MERGE REQUESTS, the following are triggered:
-## - Abbreviated Linux Clang build (base & fast)
+## - Abbreviated Linux GCC build (base & fast)
 ## - clang-format (static code analysis)
 ## - Execution tests (dynamic code analysis)
 .pipeline_merge: &CI_MERGE
@@ -42,7 +42,7 @@ workflow:
   # GitLab is quite sensitive about rules 'if' order so be careful
 
 ## 3. On COMMITS except tags.
-## - Linux Clang build (base & fast)
+## - Linux GCC build (base & fast)
 ## - Execution tests (dynamic code analysis)
 ## - Source tarball (base & fast)
 ## - Developer documentation (base & fast)
@@ -111,11 +111,6 @@ stages:
   tags:
     - $RUNNER
   image: $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}
-  variables:
-    CC: "clang"
-    CXX: "clang++"
-    CC_LD: lld
-    CXX_LD: lld
   before_script:
     - export GIMP_PREFIX="${CI_PROJECT_DIR}/_install-${RUNNER}"
   timeout: 20m
@@ -157,13 +152,12 @@ deps-debian:
     - echo "RUN apt-get install -qq -y --no-install-recommends \\" >> Dockerfile
     - echo "appstream
             ccache
-            clang
+            build-essential
             desktop-file-utils
             gi-docgen
             git
             gobject-introspection
             libgtk-3-bin
-            lld
             meson
             valac
             xauth
@@ -198,7 +192,7 @@ deps-debian:
             libmaxflow-dev
             libmng-dev
             libmypaint-dev
-            libomp-dev
+            libgomp1
             libopenexr-dev
             libopenjp2-7-dev
             libpoppler-glib-dev
@@ -227,10 +221,6 @@ deps-debian:
     - export LIB_SUBDIR=$([ "$(uname -m)" = 'aarch64' ] && echo "aarch64-linux-gnu/" || echo "x86_64-linux-gnu/");
     - echo "ENV PKG_CONFIG_PATH=\"${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}\"" >> Dockerfile2;
     - echo "ENV XDG_DATA_DIRS=\"${GIMP_PREFIX}/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}\"" >> Dockerfile2;
-    - echo "ENV CC=\"$CC\"" >> Dockerfile2;
-    - echo "ENV CXX=\"$CXX\"" >> Dockerfile2;
-    - echo "ENV CC_LD=\"$CC_LD\"" >> Dockerfile2;
-    - echo "ENV CXX_LD=\"$CXX_LD\"" >> Dockerfile2;
     - echo "ENV CLICOLOR_FORCE=\"1\"" >> Dockerfile2;
     - echo "RUN echo -e \"\e[0Ksection_end:`date +%s`:environ\r\e[0K\"" >> Dockerfile2;
     # Build some dependencies
@@ -298,15 +288,13 @@ gimp-debian:
   rules:
     - <<: *CI_MERGE
     - <<: *CI_COMMIT
-    - if: '$GIMP_CI_MESON_CLANG != null'
-      variables: {}
-    - if: '$GIMP_CI_MESON_GCC != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_MESON_GCC.*/'
+    - if: '$GIMP_CI_MESON_CLANG != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_MESON_CLANG.*/'
       variables:
-        CC: "cc"
-        CXX: "c++"
-        CC_LD: bfd
-        CXX_LD: bfd
-        VARIANT: "-gcc"
+        CC: "clang"
+        CXX: "clang++"
+        CC_LD: lld
+        CXX_LD: lld
+        VARIANT: "-clang"
     - if: '$GIMP_CI_RASTER_ICONS != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_RASTER_ICONS.*/'
       variables:
         MESON_OPTIONS: "-Dvector-icons=false"
@@ -355,7 +343,7 @@ gimp-debian-x64:
         git diff;
         exit 1;
       fi
-    - if [ "$VARIANT" != "-gcc" ] && [ "$VARIANT" != "-raster" ] && [ "$CI_PIPELINE_SOURCE" != "merge_request_event" ]; then
+    - if [ "$VARIANT" != "-clang" ] && [ "$VARIANT" != "-raster" ] && [ "$CI_PIPELINE_SOURCE" != "merge_request_event" ]; then
         ninja dist &> ninja_dist.txt || cat ninja_dist.txt;
       fi
     - echo -e "\e[0Ksection_end:`date +%s`:gimp_tar\r\e[0K"
