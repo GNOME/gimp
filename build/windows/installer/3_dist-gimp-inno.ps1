@@ -97,6 +97,13 @@ ForEach ($line in $(Select-String 'define' $CONFIG_PATH -AllMatches))
   {
     Invoke-Expression $($line -replace '^.*#' -replace 'define ','$' -replace ' ','=')
   }
+#Meson don't support C++ style comments. See: https://github.com/mesonbuild/meson/issues/14260
+$CLEANCONFIG_PATH ="$(Split-Path -Parent $CONFIG_PATH)\config_clean.h"
+if (Test-Path $CLEANCONFIG_PATH)
+  {
+    Remove-Item $CLEANCONFIG_PATH -Force
+  }
+(Get-Content $CONFIG_PATH -Raw) -replace '/\*[\s\S]*?\*/', '' | Set-Content $CLEANCONFIG_PATH
 
 ## Get CUSTOM_GIMP_VERSION (GIMP version as we display for users in installer)
 $CUSTOM_GIMP_VERSION = $GIMP_VERSION
