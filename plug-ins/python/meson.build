@@ -40,7 +40,7 @@ endforeach
 # Fallback fix to the problem of non-configured interpreters (needed by MSIX)
 if platform_windows and not meson.is_cross_build() and python.found()
   python_config = configuration_data()
-  if gimp_unstable or not release
+  if not stable or not release
     #python.exe is prefered in unstable versions because of error output
     python_config.set('PYTHON_EXE', 'python.exe')
   else
