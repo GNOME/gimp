@@ -97,7 +97,7 @@ if have_heif
 endif
 
 if openjpeg.found()
-  common_plugins_list += { 'name': 'file-jp2-load',
+  common_plugins_list += { 'name': 'file-jp2',
     'deps': [ gtk3, gegl, gdk_pixbuf, openjpeg, ],
   }
 endif

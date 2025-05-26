@@ -90,6 +90,8 @@
 
 #define LOAD_JP2_PROC      "file-jp2-load"
 #define LOAD_J2K_PROC      "file-j2k-load"
+#define EXPORT_JP2_PROC    "file-jp2-export"
+#define EXPORT_J2K_PROC    "file-j2k-export"
 #define PLUG_IN_BINARY     "file-jp2-load"
 #define PLUG_IN_ROLE       "gimp-file-jp2-load"
 
@@ -124,6 +126,14 @@ static GimpValueArray * jp2_load             (GimpProcedure         *procedure,
                                               GimpMetadataLoadFlags *flags,
                                               GimpProcedureConfig   *config,
                                               gpointer               run_data);
+static GimpValueArray * jp2_export           (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GimpImage             *image,
+                                              GFile                 *file,
+                                              GimpExportOptions     *options,
+                                              GimpMetadata          *metadata,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
 
 static GimpImage      * load_image           (GimpProcedure         *procedure,
                                               GObject               *config,
@@ -133,6 +143,13 @@ static GimpImage      * load_image           (GimpProcedure         *procedure,
                                               gboolean               interactive,
                                               gboolean              *profile_loaded,
                                               GError               **error);
+static GimpPDBStatusType  export_image       (GFile                 *file,
+                                              GimpImage             *image,
+                                              GimpDrawable          *drawable,
+                                              GimpRunMode            run_mode,
+                                              GimpProcedure         *procedure,
+                                              GObject               *config,
+                                              GError               **error);
 
 static OPJ_COLOR_SPACE  open_dialog          (GimpProcedure         *procedure,
                                               GObject               *config,
@@ -140,6 +157,12 @@ static OPJ_COLOR_SPACE  open_dialog          (GimpProcedure         *procedure,
                                               OPJ_CODEC_FORMAT       format,
                                               gint                   num_components,
                                               GError               **error);
+static gboolean         export_dialog        (GimpProcedure         *procedure,
+                                              GimpProcedureConfig   *config,
+                                              GimpImage             *image);
+
+/* Helper Method */
+static gint             get_bpc              (GimpImage             *image);
 
 
 G_DEFINE_TYPE (Jp2, jp2, GIMP_TYPE_PLUG_IN)
@@ -170,6 +193,8 @@ jp2_query_procedures (GimpPlugIn *plug_in)
 
   list = g_list_append (list, g_strdup (LOAD_JP2_PROC));
   list = g_list_append (list, g_strdup (LOAD_J2K_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_JP2_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_J2K_PROC));
 
   return list;
 }
@@ -273,6 +298,182 @@ jp2_create_procedure (GimpPlugIn  *plug_in,
                                           "unknown",
                                           G_PARAM_READWRITE);
     }
+  else if (! strcmp (name, EXPORT_JP2_PROC))
+    {
+      procedure = gimp_export_procedure_new (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             FALSE, jp2_export, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "GRAY, RGB*");
+
+      gimp_procedure_set_menu_label (procedure, _("JPEG 2000 image"));
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("JPEG 2000"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        _("Exports files in JPEG 2000 file format"),
+                                        _("Exports files in JPEG 2000 file format"),
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Advance Software",
+                                      "Advance Software",
+                                      "2025");
+
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/jp2");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "jp2");
+
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_RGB   |
+                                              GIMP_EXPORT_CAN_HANDLE_GRAY  |
+                                              GIMP_EXPORT_CAN_HANDLE_ALPHA,
+                                              NULL, NULL, NULL);
+
+      gimp_procedure_add_double_argument (procedure, "quality",
+                                          _("_Quality"),
+                                          _("Quality of exported image"),
+                                          0.0, 1.0, 0.9,
+                                          G_PARAM_READWRITE);
+
+      gimp_procedure_add_boolean_argument (procedure, "ict",
+                                           _("IC_T compression"),
+                                           _("Use Irreversible Color Transformation "
+                                             "compression"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
+
+      gimp_procedure_add_int_argument (procedure, "resolution",
+                                       _("_Number of resolutions"),
+                                       _("Equivalent to the number of "
+                                         "DWT decompositions plus one"),
+                                       1, 12, 6,
+                                       G_PARAM_READWRITE);
+
+      gimp_procedure_add_choice_argument (procedure, "progression-order",
+                                          _("Pro_gression order"),
+                                          NULL,
+                                          gimp_choice_new_with_values ("lrcp", OPJ_LRCP, _("LRCP"), NULL,
+                                                                       "rlcp", OPJ_RLCP, _("RLCP"), NULL,
+                                                                       "rpcl", OPJ_RPCL, _("RPCL"), NULL,
+                                                                       "pcrl", OPJ_PCRL, _("PCRL"), NULL,
+                                                                       "cprl", OPJ_CPRL, _("CPRL"), NULL,
+                                                                       NULL),
+                                          "lrcp",
+                                          G_PARAM_READWRITE);
+
+      gimp_procedure_add_choice_argument (procedure, "compliance",
+                                          _("Co_mpliance Profile"),
+                                          _("Set to ensure compliance with Digital Cinema Specifications"),
+                                          gimp_choice_new_with_values ("standard",     0,               _("Standard Profile"),  NULL,
+                                                                       "cinema-2k-24", OPJ_CINEMA2K_24, _("Cinema2K (24 FPS)"), NULL,
+                                                                       "cinema-2k-48", OPJ_CINEMA2K_48, _("Cinema2K (48 FPS)"), NULL,
+                                                                       "cinema-4k-24", OPJ_CINEMA4K_24, _("Cinema4K (24 FPS)"), NULL,
+                                                                       NULL),
+                                          "standard",
+                                          G_PARAM_READWRITE);
+
+      /* CMYK JPEG 2000 export support was added in OpenJPEG 2.5.3 */
+#if ((OPJ_VERSION_MAJOR == 2 && OPJ_VERSION_MINOR == 5 && OPJ_VERSION_BUILD >= 3) || \
+     (OPJ_VERSION_MAJOR == 2 && OPJ_VERSION_MINOR > 5) || OPJ_VERSION_MAJOR > 2)
+      gimp_procedure_add_boolean_argument (procedure, "cmyk",
+                                           _("E_xport as CMYK"),
+                                           _("Create a CMYK JPEG 2000 image using the "
+                                             "soft-proofing color profile"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
+#endif
+
+      gimp_export_procedure_set_support_comment (GIMP_EXPORT_PROCEDURE (procedure), TRUE);
+    }
+  else if (! strcmp (name, EXPORT_J2K_PROC))
+    {
+      procedure = gimp_export_procedure_new (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             FALSE, jp2_export, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "GRAY, RGB*");
+
+      gimp_procedure_set_menu_label (procedure, _("JPEG 2000 codestream"));
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("JPEG 2000 codestream"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        _("Exports files in JPEG 2000 codestream format"),
+                                        _("Exports files in JPEG 2000 codestream format"),
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Advance Software",
+                                      "Advance Software",
+                                      "2025");
+
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/x-jp2-codestream");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "j2k,j2c,jpc");
+
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_RGB   |
+                                              GIMP_EXPORT_CAN_HANDLE_GRAY  |
+                                              GIMP_EXPORT_CAN_HANDLE_ALPHA,
+                                              NULL, NULL, NULL);
+
+      gimp_procedure_add_double_argument (procedure, "quality",
+                                          _("_Quality"),
+                                          _("Quality of exported image"),
+                                          0.0, 1.0, 0.9,
+                                          G_PARAM_READWRITE);
+
+      gimp_procedure_add_boolean_argument (procedure, "ict",
+                                           _("IC_T compression"),
+                                           _("Use Irreversible Color Transformation "
+                                             "compression"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
+
+      gimp_procedure_add_int_argument (procedure, "resolution",
+                                       _("_Number of Resolutions"),
+                                       _("Equivalent to the number of "
+                                         "DWT decompositions plus one"),
+                                       1, 12, 6,
+                                       G_PARAM_READWRITE);
+
+      gimp_procedure_add_choice_argument (procedure, "progression-order",
+                                          _("Pro_gression order"),
+                                          NULL,
+                                          gimp_choice_new_with_values ("lrcp", OPJ_LRCP, _("LRCP"), NULL,
+                                                                       "rlcp", OPJ_RLCP, _("RLCP"), NULL,
+                                                                       "rpcl", OPJ_RPCL, _("RPCL"), NULL,
+                                                                       "pcrl", OPJ_PCRL, _("PCRL"), NULL,
+                                                                       "cprl", OPJ_CPRL, _("CPRL"), NULL,
+                                                                       NULL),
+                                          "lrcp",
+                                          G_PARAM_READWRITE);
+
+      gimp_procedure_add_choice_argument (procedure, "compliance",
+                                          _("Co_mpliance Profile"),
+                                          _("Set to ensure compliance with Digital Cinema Specifications"),
+                                          gimp_choice_new_with_values ("standard",     0,               _("Standard Profile"),  NULL,
+                                                                       "cinema-2k-24", OPJ_CINEMA2K_24, _("Cinema2K (24 FPS)"), NULL,
+                                                                       "cinema-2k-48", OPJ_CINEMA2K_48, _("Cinema2K (48 FPS)"), NULL,
+                                                                       "cinema-4k-24", OPJ_CINEMA4K_24, _("Cinema4K (24 FPS)"), NULL,
+                                                                       NULL),
+                                          "standard",
+                                          G_PARAM_READWRITE);
+
+      /* CMYK JPEG 2000 export support was added in OpenJPEG 2.5.3 */
+#if ((OPJ_VERSION_MAJOR == 2 && OPJ_VERSION_MINOR == 5 && OPJ_VERSION_BUILD >= 3) || \
+     (OPJ_VERSION_MAJOR == 2 && OPJ_VERSION_MINOR > 5) || OPJ_VERSION_MAJOR > 2)
+      gimp_procedure_add_boolean_argument (procedure, "cmyk",
+                                           _("E_xport as CMYK"),
+                                           _("Create a CMYK JPEG 2000 image using the "
+                                             "soft-proofing color profile"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
+#endif
+
+      gimp_export_procedure_set_support_comment (GIMP_EXPORT_PROCEDURE (procedure), TRUE);
+    }
 
   return procedure;
 }
@@ -342,6 +543,49 @@ jp2_load (GimpProcedure         *procedure,
   GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
+}
+
+static GimpValueArray *
+jp2_export (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            GFile                *file,
+            GimpExportOptions    *options,
+            GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            gpointer              run_data)
+{
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export = GIMP_EXPORT_IGNORE;
+  GError            *error  = NULL;
+  GList             *drawables;
+
+  gegl_init (NULL, NULL);
+
+  if (run_mode == GIMP_RUN_INTERACTIVE)
+    {
+      gimp_ui_init (PLUG_IN_BINARY);
+
+      if (! export_dialog (procedure, config, image))
+        status = GIMP_PDB_CANCEL;
+    }
+
+  if (status != GIMP_PDB_CANCEL)
+    {
+      export    = gimp_export_options_get_image (options, &image);
+      drawables = gimp_image_list_layers (image);
+
+      status = export_image (file, image, drawables->data, run_mode,
+                             procedure, G_OBJECT (config),
+                             &error);
+
+      if (export == GIMP_EXPORT_EXPORT)
+        gimp_image_delete (image);
+
+      g_list_free (drawables);
+    }
+
+  return gimp_procedure_new_return_values (procedure, status, error);
 }
 
 static void
@@ -1028,6 +1272,73 @@ open_dialog (GimpProcedure    *procedure,
   return color_space;
 }
 
+static gboolean
+export_dialog (GimpProcedure         *procedure,
+               GimpProcedureConfig   *config,
+               GimpImage             *image)
+{
+  GtkWidget        *dialog;
+  GtkWidget        *profile_label;
+  GimpColorProfile *cmyk_profile = NULL;
+  gboolean          run;
+
+  dialog = gimp_export_procedure_dialog_new (GIMP_EXPORT_PROCEDURE (procedure),
+                                             GIMP_PROCEDURE_CONFIG (config),
+                                             image);
+
+  /* Quality as a GimpScaleEntry. */
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog),
+                                        "quality", 100.0);
+
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), "quality", "ict",
+                              NULL);
+
+#if ((OPJ_VERSION_MAJOR == 2 && OPJ_VERSION_MINOR == 5 && OPJ_VERSION_BUILD >= 3) || \
+     (OPJ_VERSION_MAJOR == 2 && OPJ_VERSION_MINOR > 5) || OPJ_VERSION_MAJOR > 2)
+  /* Profile label. */
+  profile_label = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                                   "profile-label", _("No soft-proofing profile"),
+                                                   FALSE, FALSE);
+  gtk_label_set_xalign (GTK_LABEL (profile_label), 0.0);
+  gtk_label_set_ellipsize (GTK_LABEL (profile_label), PANGO_ELLIPSIZE_END);
+  gimp_label_set_attributes (GTK_LABEL (profile_label),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
+  gimp_help_set_help_data (profile_label,
+                           _("Name of the color profile used for CMYK export."), NULL);
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "cmyk-frame", "cmyk", FALSE,
+                                    "profile-label");
+  cmyk_profile = gimp_image_get_simulation_profile (image);
+  if (cmyk_profile)
+    {
+      if (gimp_color_profile_is_cmyk (cmyk_profile))
+        {
+          gchar *label_text;
+
+          label_text = g_strdup_printf (_("Profile: %s"),
+                                        gimp_color_profile_get_label (cmyk_profile));
+          gtk_label_set_text (GTK_LABEL (profile_label), label_text);
+          gimp_label_set_attributes (GTK_LABEL (profile_label),
+                                     PANGO_ATTR_STYLE, PANGO_STYLE_NORMAL,
+                                     -1);
+          g_free (label_text);
+        }
+      g_object_unref (cmyk_profile);
+    }
+
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), "cmyk-frame", NULL);
+#endif
+
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), "resolution",
+                              "progression-order", "compliance", NULL);
+
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  gtk_widget_destroy (dialog);
+
+  return run;
+}
+
 static GimpImage *
 load_image (GimpProcedure     *procedure,
             GObject           *config,
@@ -1344,4 +1655,316 @@ load_image (GimpProcedure     *procedure,
     opj_stream_destroy (stream);
 
   return gimp_image;
+}
+
+static GimpPDBStatusType
+export_image (GFile          *file,
+              GimpImage      *image,
+              GimpDrawable   *drawable,
+              GimpRunMode     run_mode,
+              GimpProcedure  *procedure,
+              GObject        *config,
+              GError        **error)
+{
+  /* OpenJPEG parameters */
+  opj_cparameters_t      parameters;
+  opj_codec_t           *codec;
+  opj_image_t           *jp2_image;
+  opj_image_cmptparm_t   cmptparm[4];
+  opj_stream_t          *stream = NULL;
+  OPJ_BOOL               success;
+  OPJ_COLOR_SPACE        color_space;
+  /* GIMP variables */
+  GimpPDBStatusType      status  = GIMP_PDB_SUCCESS;
+  guchar                *pixels  = NULL;
+  GeglBuffer            *buffer  = NULL;
+  const Babl            *format;
+  gchar                 *path;
+  gint                   channels;
+  GimpImageType          type;
+  gint                   width;
+  gint                   height;
+  gint                   precision;
+  gint                   bpc;
+  gint                   tile_height;
+  /* Plug-in parameters */
+  gdouble                quality;
+  gboolean               ict;
+  gint                   resolution;
+  gint                   prog_order;
+  gint                   compliance;
+  gboolean               save_comment;
+  gchar                 *comment = NULL;
+  gboolean               cmyk    = FALSE;
+
+  g_object_get (config,
+                "quality",         &quality,
+                "ict",             &ict,
+                "resolution",      &resolution,
+                "include-comment", &save_comment,
+                "gimp-comment",    &comment,
+#if ((OPJ_VERSION_MAJOR == 2 && OPJ_VERSION_MINOR == 5 && OPJ_VERSION_BUILD >= 3) || \
+     (OPJ_VERSION_MAJOR == 2 && OPJ_VERSION_MINOR > 5) || OPJ_VERSION_MAJOR > 2)
+                "cmyk",            &cmyk,
+#endif
+                NULL);
+  compliance =
+    gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                         "compliance");
+  prog_order =
+    gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                         "progression-order");
+
+  buffer      = gimp_drawable_get_buffer (drawable);
+  tile_height = gimp_tile_height ();
+
+  type      = gimp_drawable_type (drawable);
+  width     = gimp_drawable_get_width (drawable);
+  height    = gimp_drawable_get_height (drawable);
+  precision = get_bpc (image);
+
+  switch (type)
+    {
+    case GIMP_RGBA_IMAGE:
+      if (precision == 8)
+        format = babl_format ("R'G'B'A u8");
+      else
+        format = babl_format ("R'G'B'A u16");
+
+      channels    = 4;
+      color_space = OPJ_CLRSPC_SRGB;
+      break;
+
+    case GIMP_RGB_IMAGE:
+      if (precision == 8)
+        format = babl_format ("R'G'B' u8");
+      else
+        format = babl_format ("R'G'B' u16");
+
+      channels    = 3;
+      color_space = OPJ_CLRSPC_SRGB;
+      break;
+
+    case GIMP_GRAYA_IMAGE:
+      if (precision == 8)
+        format = babl_format ("Y'A u8");
+      else
+        format = babl_format ("Y'A u16");
+
+      channels    = 2;
+      color_space = OPJ_CLRSPC_GRAY;
+      break;
+
+    case GIMP_GRAY_IMAGE:
+      if (precision == 8)
+        format = babl_format ("Y' u8");
+      else
+        format = babl_format ("Y' u16");
+
+      channels    = 1;
+      color_space = OPJ_CLRSPC_GRAY;
+      break;
+
+    default:
+      g_assert_not_reached ();
+    }
+
+  if (cmyk)
+    {
+      if (precision == 8)
+        format = babl_format ("CMYK u8");
+      else
+        format = babl_format ("CMYK u16");
+
+      channels    = 4;
+      color_space = OPJ_CLRSPC_CMYK;
+    }
+
+  gimp_progress_init_printf (_("Exporting '%s'"),
+                             gimp_file_get_utf8_name (file));
+
+  /* fetch the image */
+  bpc    = precision / 8;
+  pixels = g_new0 (guchar, tile_height * width * channels * bpc);
+
+  /* Initialize OpenJPEG */
+  opj_set_default_encoder_parameters (&parameters);
+
+  if (! strcmp (gimp_procedure_get_name (procedure), EXPORT_JP2_PROC))
+    {
+      parameters.cod_format = 1;
+      codec                 = opj_create_compress (OPJ_CODEC_JP2);
+    }
+  else
+    {
+      parameters.cod_format = 0;
+      codec                 = opj_create_compress (OPJ_CODEC_J2K);
+    }
+
+  memset (&cmptparm[0], 0, 4 * sizeof (opj_image_cmptparm_t));
+
+  for (gint i = 0; i < channels; i++)
+    {
+      cmptparm[i].prec = precision;
+      cmptparm[i].sgnd = 0;
+      cmptparm[i].dx   = parameters.subsampling_dx;
+      cmptparm[i].dy   = parameters.subsampling_dy;
+      cmptparm[i].w    = width;
+      cmptparm[i].h    = height;
+    }
+
+  jp2_image = opj_image_create (channels, &cmptparm[0], color_space);
+
+  if (! jp2_image)
+    {
+      status = GIMP_PDB_EXECUTION_ERROR;
+      goto out;
+    }
+
+  jp2_image->x0 = parameters.image_offset_x0;
+  jp2_image->y0 = parameters.image_offset_y0;
+  jp2_image->x1 = jp2_image->x0 + (width - 1) * parameters.subsampling_dx + 1;
+  jp2_image->y1 = jp2_image->y0 + (height - 1) * parameters.subsampling_dy + 1;
+
+  for (gint i = 0; i < height; i += tile_height)
+    {
+      gint tile_pixels;
+      gint rect_height = (tile_height < (height - i)) ?
+                          tile_height : (height - i);
+
+      gegl_buffer_get (buffer,
+                       GEGL_RECTANGLE (0, i, width, rect_height), 1.0,
+                       format, pixels,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
+      tile_pixels = rect_height * width;
+      for (gint j = 0; j < tile_pixels; j++)
+        {
+          gint    index  = (i * width) + j;
+          gint    offset = j * (channels * bpc);
+          guint16 pix16;
+
+          for (gint k = 0; k < (channels * bpc); k += bpc)
+            {
+              if (precision == 8)
+                {
+                  jp2_image->comps[k].data[index] = pixels[offset + k];
+                }
+              else if (precision == 16)
+                {
+                  pix16 = ((gushort) pixels[offset + k + 1] << 8) |
+                           pixels[offset + k];
+
+                  jp2_image->comps[k / bpc].data[index] = pix16;
+                }
+            }
+        }
+    }
+
+  /* Other parameters */
+  parameters.irreversible  = (gint) ict;
+  parameters.numresolution = resolution;
+  parameters.prog_order    = prog_order;
+
+  if (compliance == OPJ_CINEMA2K_24)
+    {
+      parameters.rsiz          = OPJ_PROFILE_CINEMA_2K;
+      parameters.max_comp_size = OPJ_CINEMA_24_COMP;
+      parameters.max_cs_size   = OPJ_CINEMA_24_CS;
+    }
+  else if (compliance == OPJ_CINEMA2K_48)
+    {
+      parameters.rsiz          = OPJ_PROFILE_CINEMA_2K;
+      parameters.max_comp_size = OPJ_CINEMA_48_COMP;
+      parameters.max_cs_size   = OPJ_CINEMA_48_CS;
+    }
+  else if (compliance == OPJ_CINEMA4K_24)
+    {
+      parameters.rsiz = OPJ_PROFILE_CINEMA_4K;
+    }
+
+  if (save_comment && comment && strlen (comment))
+    {
+      parameters.cp_comment = g_malloc0 (strlen (comment) + 1);
+      strncpy (parameters.cp_comment, comment, strlen (comment));
+    }
+
+  if (! cmyk)
+    parameters.tcp_mct = (channels >= 3) ? 1 : 0;
+
+  /* Quality of 0 is lossless */
+  parameters.tcp_distoratio[0] = (quality == 100.0) ? 0 : quality;
+  parameters.tcp_numlayers     = 1;
+
+  /* Encoding */
+  if (! opj_setup_encoder (codec, &parameters, jp2_image))
+    {
+      status = GIMP_PDB_EXECUTION_ERROR;
+      goto out;
+    }
+
+  path = g_file_get_path (file);
+  memcpy (parameters.outfile, path, strlen (path));
+
+  stream = opj_stream_create_default_file_stream (parameters.outfile,
+                                                  OPJ_FALSE);
+  if (! stream)
+    {
+      status = GIMP_PDB_EXECUTION_ERROR;
+      goto out;
+    }
+
+  success = opj_start_compress (codec, jp2_image, stream);
+  if (! success)
+    {
+      status = GIMP_PDB_EXECUTION_ERROR;
+      goto out;
+    }
+
+  success = success && opj_encode (codec, stream);
+  if (! success)
+    {
+      status = GIMP_PDB_EXECUTION_ERROR;
+      goto out;
+    }
+
+  success = success && opj_end_compress (codec, stream);
+  if (! success)
+    {
+      status = GIMP_PDB_EXECUTION_ERROR;
+      goto out;
+    }
+
+  out:
+  if (stream)
+    opj_stream_destroy (stream);
+  if (codec)
+    opj_destroy_codec (codec);
+  if (jp2_image)
+    opj_image_destroy (jp2_image);
+
+  if (buffer)
+    g_object_unref (buffer);
+  if (pixels)
+    g_free (pixels);
+
+  return status;
+}
+
+/* Helper Methods */
+
+static gint
+get_bpc (GimpImage *image)
+{
+  /* OpenJPEG only supports up to 16 bpc */
+  switch (gimp_image_get_precision (image))
+    {
+    case GIMP_PRECISION_U8_LINEAR:
+    case GIMP_PRECISION_U8_NON_LINEAR:
+    case GIMP_PRECISION_U8_PERCEPTUAL:
+      return 8;
+
+    default:
+      return 16;
+    }
 }
