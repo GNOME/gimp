@@ -32,7 +32,9 @@
 #include "gimpdrawablefilter.h"
 #include "gimpdrawablefilterundo.h"
 #include "gimpimage.h"
+#include "gimpimage-undo.h"
 #include "gimpitem.h"
+#include "gimpundostack.h"
 
 
 enum
@@ -371,4 +373,53 @@ gimp_drawable_filter_undo_free (GimpUndo     *undo,
   g_clear_object (&drawable_filter_undo->node);
 
   GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
+}
+
+/**
+ * Checks whether the undo step of toggling all filters in @filter_list can be
+ * compressed. It will be compressed if:
+ *    - The previous undo is a group of filter visibility changes
+ *    - The group has changes for every filters in the list
+ *    - The group only has changes for filters from the list
+ */
+GimpUndo *
+gimp_drawable_filter_undo_can_compress_visibility (GimpImage *image,
+                                                   GList     *filter_list)
+{
+  GimpUndo      *undo;
+  GimpUndoStack *undo_stack;
+  gint           n_items;
+
+  g_return_val_if_fail (image != NULL, NULL);
+  g_return_val_if_fail (filter_list != NULL, NULL);
+
+  undo = gimp_image_undo_can_compress (image,
+                                       GIMP_TYPE_UNDO_STACK,
+                                       GIMP_UNDO_GROUP_FILTER_VISIBILITY);
+  if (undo == NULL)
+    return NULL;
+
+  undo_stack = GIMP_UNDO_STACK (undo);
+  n_items    = gimp_container_get_n_children (undo_stack->undos);
+
+  if (n_items != g_list_length (filter_list))
+    return NULL;
+
+  for (gint i = 0; i < n_items; i++)
+    {
+      const GimpObject             *sub_undo;
+      const GimpDrawableFilterUndo *sub_filter_undo;
+
+      sub_undo = gimp_container_get_child_by_index (undo_stack->undos, i);
+      sub_filter_undo = GIMP_DRAWABLE_FILTER_UNDO (sub_undo);
+
+      if (sub_filter_undo == NULL ||
+          GIMP_UNDO (sub_undo)->undo_type != GIMP_UNDO_FILTER_VISIBILITY ||
+          ! g_list_find (filter_list, sub_filter_undo->filter))
+        {
+          return NULL;
+        }
+    }
+
+  return undo;
 }

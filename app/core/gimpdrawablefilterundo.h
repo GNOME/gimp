@@ -54,4 +54,7 @@ struct _GimpDrawableFilterUndoClass
 };
 
 
-GType   gimp_drawable_filter_undo_get_type (void);
+GType      gimp_drawable_filter_undo_get_type (void);
+
+GimpUndo * gimp_drawable_filter_undo_can_compress_visibility (GimpImage *image,
+                                                              GList     *filter_list);
