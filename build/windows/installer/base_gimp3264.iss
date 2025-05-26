@@ -82,27 +82,27 @@
 
 ;2 GLOBAL VARIABLES SET BY PARAMS
 ;Meson don't support C++ style comments. See: https://github.com/mesonbuild/meson/issues/14260
-#include BUILD_DIR + "\build\windows\installer\config_clean.h"
+#include BUILD_DIR + "\config_clean.h"
 
 ;Main GIMP versions:
 ;Get GIMP_MUTEX_VERSION (used for internal versioning control)
-#if Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != ""
+#if Defined(GIMP_UNSTABLE)
 	#define GIMP_MUTEX_VERSION GIMP_APP_VERSION
 #else
 	#define GIMP_MUTEX_VERSION=Copy(GIMP_APP_VERSION,1,Pos(".",GIMP_APP_VERSION)-1)
 #endif
 ;Get FULL_GIMP_VERSION (used by ITs)
 #define ORIGINAL_GIMP_VERSION GIMP_VERSION
-#if Defined(GIMP_RC_VERSION) && GIMP_RC_VERSION != ""
+#if Defined(GIMP_RC_VERSION)
 	#define GIMP_VERSION=Copy(GIMP_VERSION,1,Pos("-",GIMP_VERSION)-1)
 #endif
-#if !Defined(REVISION) || REVISION=="0" || REVISION==""
+#if !Defined(REVISION) || REVISION=="0"
 	#define FULL_GIMP_VERSION GIMP_VERSION + "." + "0"
 #else
 	#define FULL_GIMP_VERSION GIMP_VERSION + "." + REVISION
 #endif
 ;Get CUSTOM_GIMP_VERSION (that the users see)
-#if !Defined(REVISION) || REVISION=="0" || REVISION==""
+#if !Defined(REVISION) || REVISION=="0"
 	#define CUSTOM_GIMP_VERSION ORIGINAL_GIMP_VERSION
 #else
 	#define CUSTOM_GIMP_VERSION ORIGINAL_GIMP_VERSION + "-" + REVISION
@@ -157,7 +157,7 @@ AppPublisher=The GIMP Team
 AppPublisherURL=https://www.gimp.org/
 ;ControlPanel 'HelpLink'
 AppSupportURL=https://www.gimp.org/docs/
-#if Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != ""
+#if Defined(GIMP_UNSTABLE)
 	;ControlPanel 'URLUpdateInfo'
 	AppUpdatesURL=https://www.gimp.org/downloads/devel/
 #else
@@ -417,7 +417,7 @@ Type: files; Name: "{autodesktop}\{reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVer
 Type: filesandordirs; Name: "{app}\lib\babl-0.1"
 Type: filesandordirs; Name: "{app}\lib\gegl-0.4"
 ;This was bunbled in 3.0 RC1 but not needed since the "Debug" menu is hidden in stable releases
-#if (!Defined(GIMP_UNSTABLE) || GIMP_UNSTABLE=="") && (Defined(GIMP_RELEASE) && GIMP_RELEASE != "")
+#if !Defined(GIMP_UNSTABLE) && Defined(GIMP_RELEASE)
 	Type: files; Name: "{app}\bin\dot.exe"
 #endif
 ;No need to all these python binaries shipped in 3.0 RC1
@@ -678,7 +678,7 @@ begin
 end;
 
 function InitializeSetup(): Boolean;
-#if (Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != "") || (Defined(GIMP_RC_VERSION) && GIMP_RC_VERSION != "") || (!Defined(GIMP_RELEASE) || GIMP_RELEASE=="") || Defined(DEVEL_WARNING)
+#if Defined(GIMP_UNSTABLE) || Defined(GIMP_RC_VERSION) || !Defined(GIMP_RELEASE)|| Defined(DEVEL_WARNING)
 var Message,Buttons: TArrayOfString;
 #endif
 begin
@@ -697,7 +697,7 @@ begin
 		exit;
 
 //Unstable version warning
-#if (Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != "") || (Defined(GIMP_RC_VERSION) && GIMP_RC_VERSION != "") || (!Defined(GIMP_RELEASE) || GIMP_RELEASE=="") || Defined(DEVEL_WARNING)
+#if Defined(GIMP_UNSTABLE) || Defined(GIMP_RC_VERSION) || !Defined(GIMP_RELEASE) || Defined(DEVEL_WARNING)
 	Explode(Message, CustomMessage('DevelopmentWarning'), #13#10);
 	SetArrayLength(Buttons,2);
 	Buttons[0] := CustomMessage('DevelopmentButtonContinue');
@@ -1541,7 +1541,7 @@ end;
 
 
 //7.2 INSTALL: show GIMP text (aka billboard) above progress bar
-#if Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != ""
+#if Defined(GIMP_UNSTABLE)
 const
 	GIMP_URL = 'https://gimp.org/downloads/devel/';
 #else
@@ -1660,7 +1660,7 @@ begin
 		InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\pygimp.interp');
     DebugMsg('PrepareInterp','Writing interpreter file for gimp-python: ' + InterpFile);
 
-#if (Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != "") || (!Defined(GIMP_RELEASE) || GIMP_RELEASE=="")
+#if Defined(GIMP_UNSTABLE) || !Defined(GIMP_RELEASE)
 		//python.exe is prefered in unstable versions because of error output
 		#define PYTHON="python.exe"
 #else

@@ -89,25 +89,19 @@ conf.set_quoted('GIMP_VERSION', gimp_version)
 
 # GIMP_UNSTABLE tells if we are on an unstable or stable development branch.
 stable = (gimp_app_version_minor % 2 == 0)
-gimp_unstable = stable ? false : 1
-if gimp_unstable != false
-  conf.set('GIMP_UNSTABLE', gimp_unstable)
-endif
+conf.set('GIMP_UNSTABLE', stable ? false : 1)
 
 # GIMP_RELEASE tells if this is a release or in-between release (git) code.
 release = (gimp_app_version_micro % 2 == 0)
 conf.set('GIMP_RELEASE', release ? 1 : false)
 
 # GIMP_RC_VERSION can only be set on release candidates.
-gimp_rc_version = release and gimp_app_version_rc > 0 ? gimp_app_version_rc : false
-if gimp_rc_version != false
-  conf.set('GIMP_RC_VERSION', gimp_rc_version)
-endif
+conf.set('GIMP_RC_VERSION', release and gimp_app_version_rc > 0 ? gimp_app_version_rc : false)
 # GIMP_IS_GIT can only be set during development of a RC.
 conf.set('GIMP_IS_RC_GIT', gimp_rc_git ? 1 : false)
 
 # Mutex version
-if gimp_unstable != false
+if not stable
   conf.set_quoted('GIMP_MUTEX_VERSION', gimp_app_version)
 else
   conf.set_quoted('GIMP_MUTEX_VERSION', gimp_app_version_major.to_string())
@@ -2075,7 +2069,7 @@ subdir('devel-docs')
 # Inno Windows installer
 if get_option('windows-installer')
   subdir('po-windows-installer')
-  subdir('build/windows/installer')
+  subdir('build/windows/installer/lang')
 endif
 
 pkgconfig.generate(libgimp,
