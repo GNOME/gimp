@@ -42,7 +42,7 @@ plug-ins/common/file-header.c
 plug-ins/common/file-heif.c
 plug-ins/common/file-html-table.c
 plug-ins/common/file-iff.c
-plug-ins/common/file-jp2-load.c
+plug-ins/common/file-jp2.c
 plug-ins/common/file-jpegxl.c
 plug-ins/common/file-lnk.c
 plug-ins/common/file-mng.c
