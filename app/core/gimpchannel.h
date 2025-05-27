@@ -50,6 +50,7 @@ struct _GimpChannel
   gint          num_segs_in;       /*  number of lines in boundary    */
   gint          num_segs_out;      /*  number of lines in boundary    */
   gboolean      empty;             /*  is the region empty?           */
+  gboolean      full;              /*  is the region completely full? */
   gboolean      bounds_known;      /*  recalculate the bounds?        */
   gint          x1, y1;            /*  coordinates for bounding box   */
   gint          x2, y2;            /*  lower right hand coordinate    */
