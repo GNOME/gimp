@@ -337,11 +337,6 @@ gimp_edit_copy (GimpImage     *image,
             }
           g_list_free (all_items);
 
-          gimp_image_undo_disable (clip_image);
-          gimp_image_resize_to_layers (clip_image, context, NULL, NULL, NULL,
-                                       NULL, NULL);
-          gimp_image_undo_enable (clip_image);
-
           /* We need to store the original offsets before the image was
            * resized, in order to move it into the correct location for
            * in-place pasting.
@@ -353,6 +348,41 @@ gimp_edit_copy (GimpImage     *image,
                              "gimp-edit-new-image-y",
                              GINT_TO_POINTER (selection_bounds.y));
         }
+      else
+        {
+          gint offset_x;
+          gint offset_y;
+
+          /* We need to store the minimum offset from the selected layers
+           * in order to move it into the correct location for
+           * in-place pasting.
+           */
+          gimp_item_get_offset (GIMP_ITEM (drawables->data), &offset_x, &offset_y);
+
+          for (iter = g_list_next (drawables); iter; iter = iter->next)
+            {
+              gint item_x;
+              gint item_y;
+
+              gimp_item_get_offset (GIMP_ITEM (iter->data), &item_x, &item_y);
+
+              offset_x = MIN (item_x, offset_x);
+              offset_y = MIN (item_y, offset_y);
+            }
+
+          g_object_set_data (G_OBJECT (clip_image),
+                             "gimp-edit-new-image-x",
+                             GINT_TO_POINTER (offset_x));
+          g_object_set_data (G_OBJECT (clip_image),
+                             "gimp-edit-new-image-y",
+                             GINT_TO_POINTER (offset_y));
+        }
+
+      gimp_image_undo_disable (clip_image);
+      gimp_image_resize_to_layers (clip_image, context, NULL, NULL, NULL,
+                                   NULL, NULL);
+      gimp_image_undo_enable (clip_image);
+
       /* Remove selection from the clipboard image. */
       gimp_channel_clear (clip_selection, NULL, FALSE);
       g_object_unref (clip_image);
