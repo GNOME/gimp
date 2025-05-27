@@ -1745,6 +1745,10 @@ gimp_layer_real_transform (GimpLayer              *layer,
                            GimpTransformResize     clip_result,
                            GimpProgress           *progress)
 {
+  if (! gimp_matrix3_is_simple (matrix) &&
+      ! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
+    gimp_layer_add_alpha (GIMP_LAYER (layer));
+
   GIMP_ITEM_CLASS (parent_class)->transform (GIMP_ITEM (layer),
                                              context, matrix, direction,
                                              interpolation_type,
