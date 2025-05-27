@@ -54,7 +54,7 @@ option('wmf',               type: 'feature', value: 'auto', description: 'Wmf su
 option('xcursor',           type: 'feature', value: 'auto', description: 'Xcursor support')
 option('xpm',               type: 'feature', value: 'auto', description: 'XPM support')
 option('headless-tests',    type: 'feature', value: 'auto', description: 'Use xvfb-run/dbus-run-session for UI-dependent automatic tests')
-option('file-plug-ins-test', type: 'boolean', value: 'false', description: 'Always install test-file-plug-ins (mostly for CI testing)')
+option('file-plug-ins-test', type: 'boolean', value: false, description: 'Always install test-file-plug-ins (mostly for CI testing)')
 
 option('can-crosscompile-gir', type: 'boolean', value: false, description: 'GIR is buildable even if crosscompiling')
 
