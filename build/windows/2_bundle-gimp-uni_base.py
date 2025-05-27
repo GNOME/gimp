@@ -71,11 +71,7 @@ with open("config.h") as file:
     if match:
       key, value = match.groups()
       os.environ[key] = value.strip().strip('"').strip("'")
-if os.getenv('GIMP_UNSTABLE'):
-  gimp_mutex_version = os.getenv('GIMP_APP_VERSION')
-else:
-  gimp_mutex_version = re.search(r'\d+', os.getenv('GIMP_APP_VERSION')).group()
-(GIMP_DISTRIB / "gimp.cmd").write_text(f"powershell bin\\gimp-{gimp_mutex_version}.exe\n")
+(GIMP_DISTRIB / "gimp.cmd").write_text(f"powershell bin\\gimp-{os.getenv('GIMP_MUTEX_VERSION')}.exe\n")
 
 
 ## Settings.
