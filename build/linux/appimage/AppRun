@@ -12,6 +12,7 @@ fi
 export PATH="$APPDIR"/usr/bin/:"$PATH"
 unset LD_PRELOAD
 unset LD_LIBRARY_PATH
+unset LIBHEIF_PLUGIN_PATH
 export XDG_DATA_DIRS="$APPDIR"/usr/share/:"$XDG_DATA_DIRS"
 
 
