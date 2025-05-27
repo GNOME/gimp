@@ -1,6 +1,6 @@
 project('gimp',
   'c', 'cpp',
-  version: '3.1.1',
+  version: '3.2.1',
   meson_version: '>=0.61.0',
   default_options: [
     'cpp_std=gnu++14',
