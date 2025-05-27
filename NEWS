@@ -6,6 +6,40 @@
 This is the development branch of GIMP.
 
 
+Overview of Changes from GIMP 3.0.4 to GIMP 3.1.2
+=================================================
+
+Core:
+
+  - Layer mask created from layer's alpha when there is no alpha
+    channel is now a fully opaque mask.
+
+Graphical User Interface:
+
+  - Brushes and Palettes dockables: new "Use theme colors for preview"
+    toggle button.
+
+Tools:
+
+  - Curves tool: Photoshop curves file format (.acv) can now be loaded.
+  - Levels tool: Photoshop levels file format (.alv) can now be loaded.
+  - Text tool: new "Outline Direction" settings.
+
+Plug-Ins:
+
+  - Jigsaw: the plug-in now draws on transparent layers too.
+  - Playstation TIM images now supported (import/export).
+  - Palettes can now be exported as Krita .kpl palette.
+  - Over The Air Bitmap (Nokia mobile image format) now supported for
+    import.
+
+API:
+
+  - Changes in libgimpwidgets:
+    * New functions:
+      + gimp_prop_toggle_new()
+
+
 Overview of Changes from GIMP 3.0.2 to GIMP 3.0.4
 =================================================
 
