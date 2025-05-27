@@ -343,12 +343,6 @@ if (((Test-Path $a64_bundle) -and (Test-Path $x64_bundle)) -and (Get-ChildItem *
     Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):msix_making$([char]13)$([char]27)[0K"
   }
 
-Remove-Item .gitignore
-if (Test-Path .gitignore.bak -Type Leaf)
-  {
-    Rename-Item .gitignore.bak .gitignore
-  }
-
 
 # 6.A. CERTIFY .MSIX OR .MSIXBUNDLE WITH WACK (OPTIONAL)
 # (Partner Center does the same thing before publishing)
@@ -416,41 +410,46 @@ if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
         ## We need to manually check failures in pre-7.4 PS
         $pseudo_gimp = "pseudo-gimp_$(Get-Date -UFormat %s -Millisecond 0)"
         New-SelfSignedCertificate -Type Custom -Subject "$(([xml](Get-Content build\windows\store\AppxManifest.xml)).Package.Identity.Publisher)" -KeyUsage DigitalSignature -FriendlyName "$pseudo_gimp" -CertStoreLocation "Cert:\CurrentUser\My" -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.3", "2.5.29.19={text}") | Out-Null
-        Export-PfxCertificate -Cert "Cert:\CurrentUser\My\$(Get-ChildItem Cert:\CurrentUser\My | Where-Object FriendlyName -EQ "$pseudo_gimp" | Select-Object -ExpandProperty Thumbprint)" -FilePath "build/windows/store/${pseudo_gimp}.pfx" -Password (ConvertTo-SecureString -String eek -Force -AsPlainText) | Out-Null
+        Export-PfxCertificate -Cert "Cert:\CurrentUser\My\$(Get-ChildItem Cert:\CurrentUser\My | Where-Object FriendlyName -EQ "$pseudo_gimp" | Select-Object -ExpandProperty Thumbprint)" -FilePath "${pseudo_gimp}.pfx" -Password (ConvertTo-SecureString -String eek -Force -AsPlainText) | Out-Null
         Remove-Item "Cert:\CurrentUser\My\$(Get-ChildItem Cert:\CurrentUser\My | Where-Object FriendlyName -EQ "$pseudo_gimp" | Select-Object -ExpandProperty Thumbprint)"
-        if ($GITLAB_CI)
-          {
-            $OUTPUT_DIR = 'build\windows\store\_Output\'
-            $OUTPUT_DIR_PARTIAL = '_Output\'
-            New-Item $OUTPUT_DIR -ItemType Directory -Force | Out-Null
-            Move-Item build\windows\store\$pseudo_gimp.pfx $OUTPUT_DIR
-          }
-        Write-Host "(ERROR): Self-signing certificate expired. Please commit the generated '${OUTPUT_DIR}${pseudo_gimp}.pfx' on 'build\windows\store\'." -ForegroundColor red
-        $sha256 = (Get-FileHash build\windows\store\${OUTPUT_DIR_PARTIAL}${pseudo_gimp}.pfx -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()
-        Write-Output "(INFO): ${pseudo_gimp}.pfx SHA-256: $sha256"
-        exit 1
+        Write-Host "(ERROR): Self-signing certificate expired. Please commit the generated '${pseudo_gimp}.pfx' on 'build\windows\store\'." -ForegroundColor red
+        $sha256_pfx = (Get-FileHash "${pseudo_gimp}.pfx" -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()
+        Write-Output "(INFO): ${pseudo_gimp}.pfx SHA-256: $sha256_pfx"
       }
-    Copy-Item build\windows\store\pseudo-gimp*.pfx pseudo-gimp.pfx -Recurse
+    else
+      {
+        Copy-Item build\windows\store\pseudo-gimp*.pfx pseudo-gimp.pfx -Recurse
 
-    ## Generate checksums
-    $sha256 = (Get-FileHash $MSIX_ARTIFACT -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()
-    Write-Output "(INFO): $MSIX_ARTIFACT SHA-256: $sha256"
-    $sha512 = (Get-FileHash $MSIX_ARTIFACT -Algorithm SHA512 | Select-Object -ExpandProperty Hash).ToLower()
-    Write-Output "(INFO): $MSIX_ARTIFACT SHA-512: $sha512"
-    Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):msix_trust${msix_arch}$([char]13)$([char]27)[0K"
+        ## Generate checksums
+        $sha256 = (Get-FileHash $MSIX_ARTIFACT -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()
+        Write-Output "(INFO): $MSIX_ARTIFACT SHA-256: $sha256"
+        $sha512 = (Get-FileHash $MSIX_ARTIFACT -Algorithm SHA512 | Select-Object -ExpandProperty Hash).ToLower()
+        Write-Output "(INFO): $MSIX_ARTIFACT SHA-512: $sha512"
+        Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):msix_trust${msix_arch}$([char]13)$([char]27)[0K"
+      }
   }
 
+
+Remove-Item .gitignore
+if (Test-Path .gitignore.bak -Type Leaf)
+  {
+    Rename-Item .gitignore.bak .gitignore
+  }
 
 if ($GITLAB_CI)
   {
     # GitLab doesn't support wildcards when using "expose_as" so let's move to a dir
     $OUTPUT_DIR = "$PWD\build\windows\store\_Output"
     New-Item $OUTPUT_DIR -ItemType Directory -Force | Out-Null
-    Move-Item $MSIX_ARTIFACT $OUTPUT_DIR -Force
     if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
       {
-        Copy-Item pseudo-gimp.pfx $OUTPUT_DIR
+        Move-Item pseudo-gimp*.pfx $OUTPUT_DIR
       }
+    if ($sha256_pfx)
+      {
+        exit 1
+      }
+    Move-Item $MSIX_ARTIFACT $OUTPUT_DIR -Force
   }
 
 
