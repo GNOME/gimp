@@ -780,8 +780,8 @@ layers_actions_update (GimpActionGroup *group,
 
   gboolean       all_visible        = TRUE;
   gboolean       all_next_visible   = TRUE;
-  gboolean       all_masks_shown    = TRUE;
-  gboolean       all_masks_disabled = TRUE;
+  gboolean       any_mask_shown     = FALSE;
+  gboolean       any_mask_disabled  = FALSE;
   gboolean       all_writable       = TRUE;
   gboolean       all_movable        = TRUE;
 
@@ -816,10 +816,11 @@ layers_actions_update (GimpActionGroup *group,
           if (gimp_layer_get_mask (iter->data))
             {
               have_masks = TRUE;
-              if (! gimp_layer_get_show_mask (iter->data))
-                all_masks_shown = FALSE;
-              if (gimp_layer_get_apply_mask (iter->data))
-                all_masks_disabled = FALSE;
+
+              if (gimp_layer_get_show_mask (iter->data))
+                any_mask_shown = TRUE;
+              if (! gimp_layer_get_apply_mask (iter->data))
+                any_mask_disabled = TRUE;
             }
           else
             {
@@ -1082,8 +1083,8 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-mask-disable", n_selected_layers > 0 && !fs && !ac && have_masks);
 
   SET_ACTIVE ("layers-mask-edit",    n_selected_layers == 1 && have_masks && gimp_layer_get_edit_mask (layers->data));
-  SET_ACTIVE ("layers-mask-show",    all_masks_shown);
-  SET_ACTIVE ("layers-mask-disable", all_masks_disabled);
+  SET_ACTIVE ("layers-mask-show",    any_mask_shown);
+  SET_ACTIVE ("layers-mask-disable", any_mask_disabled);
 
   SET_SENSITIVE ("layers-mask-selection-replace",   n_selected_layers && !fs && !ac && have_masks);
   SET_SENSITIVE ("layers-mask-selection-add",       n_selected_layers && !fs && !ac && have_masks);

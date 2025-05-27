@@ -149,8 +149,6 @@ static void       gimp_layer_tree_view_layer_signal_handler       (GimpLayer    
                                                                    GimpLayerTreeView          *view);
 static void       gimp_layer_tree_view_update_options             (GimpLayerTreeView          *view,
                                                                    GList                      *layers);
-static void       gimp_layer_tree_view_update_menu                (GimpLayerTreeView          *view,
-                                                                   GList                      *layers);
 static void       gimp_layer_tree_view_update_highlight           (GimpLayerTreeView          *view);
 static void       gimp_layer_tree_view_mask_update                (GimpLayerTreeView          *view,
                                                                    GtkTreeIter                *iter,
@@ -637,7 +635,6 @@ gimp_layer_tree_view_select_items (GimpContainerView *view,
             }
 
           gimp_layer_tree_view_update_options (layer_view, items);
-          gimp_layer_tree_view_update_menu (layer_view, items);
         }
     }
 
@@ -1231,44 +1228,6 @@ gimp_layer_tree_view_update_options (GimpLayerTreeView *view,
 
 #undef BLOCK
 #undef UNBLOCK
-
-
-static void
-gimp_layer_tree_view_update_menu (GimpLayerTreeView *layer_view,
-                                  GList             *layers)
-{
-  GimpUIManager   *ui_manager = gimp_editor_get_ui_manager (GIMP_EDITOR (layer_view));
-  GimpActionGroup *group;
-  GList           *iter;
-  gboolean         have_masks         = FALSE;
-  gboolean         all_masks_shown    = TRUE;
-  gboolean         all_masks_disabled = TRUE;
-
-  group = gimp_ui_manager_get_action_group (ui_manager, "layers");
-
-  for (iter = layers; iter; iter = iter->next)
-    {
-      if (gimp_layer_get_mask (iter->data))
-        {
-          have_masks = TRUE;
-          if (! gimp_layer_get_show_mask (iter->data))
-            all_masks_shown = FALSE;
-          if (gimp_layer_get_apply_mask (iter->data))
-            all_masks_disabled = FALSE;
-        }
-    }
-
-  gimp_action_group_set_action_active (group, "layers-mask-show",
-                                       have_masks && all_masks_shown);
-  gimp_action_group_set_action_active (group, "layers-mask-disable",
-                                       have_masks && all_masks_disabled);
-
-  /* Only one layer mask at a time can be edited. */
-  gimp_action_group_set_action_active (group, "layers-mask-edit",
-                                       g_list_length (layers) == 1 &&
-                                       gimp_layer_get_mask (layers->data) &&
-                                       gimp_layer_get_edit_mask (layers->data));
-}
 
 static void
 gimp_layer_tree_view_update_highlight (GimpLayerTreeView *layer_view)
