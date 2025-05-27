@@ -132,7 +132,7 @@ NotRecognizedMessagesWarning=no
 ;GIMP process identifier for Inno
 AppMutex=GIMP-{#GIMP_MUTEX_VERSION}
 ;Inno installer identifier
-SetupMutex=GIMP-{#GIMP_MUTEX_VERSION}
+SetupMutex=GIMP-{#GIMP_MUTEX_VERSION}-setup
 ;Inno installer (default) install location
 DefaultDirName={autopf}\GIMP {#GIMP_MUTEX_VERSION}
 ;Inno uninstaller identifier
