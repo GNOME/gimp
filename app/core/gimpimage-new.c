@@ -54,6 +54,11 @@
 #include "gimp-intl.h"
 
 
+static void   gimp_image_new_add_creation_metadata (GimpImage *image);
+
+
+/*  public functions  */
+
 GimpTemplate *
 gimp_image_new_get_last_template (Gimp      *gimp,
                                   GimpImage *image)
@@ -100,26 +105,6 @@ gimp_image_new_set_last_template (Gimp         *gimp,
 
   gimp_config_sync (G_OBJECT (template),
                     G_OBJECT (gimp->image_new_last_template), 0);
-}
-
-void
-gimp_image_new_add_creation_metadata (GimpImage *image)
-{
-  GimpMetadata *metadata;
-
-  metadata = gimp_image_get_metadata (image);
-  if (! metadata)
-    {
-      g_critical ("Metadata not found. Should not happen!");
-    }
-  else
-    {
-      GDateTime *datetime;
-
-      datetime = g_date_time_new_now_local ();
-      gimp_metadata_set_creation_date (metadata, datetime);
-      g_date_time_unref (datetime);
-    }
 }
 
 GimpImage *
@@ -727,4 +712,27 @@ gimp_image_new_from_pixbuf (Gimp        *gimp,
   gimp_image_undo_enable (new_image);
 
   return new_image;
+}
+
+
+/*  private functions  */
+
+static void
+gimp_image_new_add_creation_metadata (GimpImage *image)
+{
+  GimpMetadata *metadata;
+
+  metadata = gimp_image_get_metadata (image);
+  if (! metadata)
+    {
+      g_critical ("Metadata not found. Should not happen!");
+    }
+  else
+    {
+      GDateTime *datetime;
+
+      datetime = g_date_time_new_now_local ();
+      gimp_metadata_set_creation_date (metadata, datetime);
+      g_date_time_unref (datetime);
+    }
 }
