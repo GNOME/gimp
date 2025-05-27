@@ -2081,6 +2081,10 @@ gimp_layer_create_mask (GimpLayer       *layer,
                                          1.0);
             }
         }
+      else
+        {
+          gimp_channel_all (GIMP_CHANNEL (mask), FALSE);
+        }
       break;
 
     case GIMP_ADD_MASK_SELECTION:
