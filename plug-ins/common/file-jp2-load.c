@@ -213,6 +213,19 @@ jp2_create_procedure (GimpPlugIn  *plug_in,
        */
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                       "3,string,\x0CjP");
+
+      gimp_procedure_add_choice_aux_argument (procedure, "colorspace",
+                                              _("Color s_pace"),
+                                              _("Color space"),
+                                              gimp_choice_new_with_values ("srgb",      OPJ_CLRSPC_SRGB,     _("sRGB"),      NULL,
+                                                                           "grayscale", OPJ_CLRSPC_GRAY,     _("Grayscale"), NULL,
+                                                                           "ycbcr",     OPJ_CLRSPC_SYCC,     _("YCbCr"),     NULL,
+                                                                           "xvycc",     OPJ_CLRSPC_EYCC,     _("xvYCC"),     NULL,
+                                                                           "cmyk",      OPJ_CLRSPC_CMYK,     _("CMYK"),      NULL,
+                                                                           "unknown",   OPJ_CLRSPC_UNKNOWN,  _("Unknown"),   NULL,
+                                                                           NULL),
+                                              "unknown",
+                                              G_PARAM_READWRITE);
     }
   else if (! strcmp (name, LOAD_J2K_PROC))
     {
@@ -244,11 +257,13 @@ jp2_create_procedure (GimpPlugIn  *plug_in,
                                           "image/x-jp2-codestream");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "j2k,j2c,jpc");
+      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+                                      "0,string,\xff\x4f\xff\x51\x00");
 
       gimp_procedure_add_choice_argument (procedure, "colorspace",
                                           _("Color s_pace"),
                                           _("Color space"),
-                                          gimp_choice_new_with_values ("srgb",      OPJ_CLRSPC_SRGB,     _("sRGB"),     NULL,
+                                          gimp_choice_new_with_values ("srgb",      OPJ_CLRSPC_SRGB,     _("sRGB"),      NULL,
                                                                        "grayscale", OPJ_CLRSPC_GRAY,     _("Grayscale"), NULL,
                                                                        "ycbcr",     OPJ_CLRSPC_SYCC,     _("YCbCr"),     NULL,
                                                                        "xvycc",     OPJ_CLRSPC_EYCC,     _("xvYCC"),     NULL,
@@ -686,12 +701,15 @@ sycc444_to_rgb (opj_image_t *img)
       ++b;
     }
 
-  free (img->comps[0].data);
-  img->comps[0].data = d0;
-  free (img->comps[1].data);
-  img->comps[1].data = d1;
-  free (img->comps[2].data);
-  img->comps[2].data = d2;
+  for (gint i = 0; i < max; i++)
+    {
+      img->comps[0].data[i] = d0[i];
+      img->comps[1].data[1] = d1[i];
+      img->comps[2].data[1] = d2[i];
+    }
+  g_free (d0);
+  g_free (d1);
+  g_free (d2);
 
   img->color_space = OPJ_CLRSPC_SRGB;
   return TRUE;
