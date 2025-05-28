@@ -311,6 +311,7 @@ gimp_image_undo_push_drawable_format (GimpImage    *image,
 /***************************/
 /*  Drawable Filter Undos  */
 /***************************/
+
 GimpUndo *
 gimp_image_undo_push_filter_add (GimpImage          *image,
                                  const gchar        *undo_desc,
