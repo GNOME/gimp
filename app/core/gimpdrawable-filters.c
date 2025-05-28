@@ -49,6 +49,19 @@
 
 #include "gimp-intl.h"
 
+
+void
+_gimp_drawable_filters_init (GimpDrawable *drawable)
+{
+  drawable->private->filter_stack = gimp_filter_stack_new (GIMP_TYPE_FILTER);
+}
+
+void
+_gimp_drawable_filters_finalize (GimpDrawable *drawable)
+{
+  g_clear_object (&drawable->private->filter_stack);
+}
+
 GimpContainer *
 gimp_drawable_get_filters (GimpDrawable *drawable)
 {

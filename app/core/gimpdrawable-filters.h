@@ -21,6 +21,14 @@
 #define __GIMP_DRAWABLE_FILTERS_H__
 
 
+/*  internal functions  */
+
+void            _gimp_drawable_filters_init         (GimpDrawable *drawable);
+void            _gimp_drawable_filters_finalize     (GimpDrawable *drawable);
+
+
+/*  public functions  */
+
 GimpContainer * gimp_drawable_get_filters           (GimpDrawable *drawable);
 
 gboolean        gimp_drawable_has_visible_filters   (GimpDrawable *drawable);

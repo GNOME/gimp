@@ -134,6 +134,8 @@ void            gimp_drawable_update                  (GimpDrawable       *drawa
                                                        gint                height);
 void            gimp_drawable_update_all              (GimpDrawable       *drawable);
 
+void            gimp_drawable_filters_changed         (GimpDrawable       *drawable);
+
 void           gimp_drawable_invalidate_boundary      (GimpDrawable       *drawable);
 void         gimp_drawable_get_active_components      (GimpDrawable       *drawable,
                                                        gboolean           *active);
@@ -234,8 +236,6 @@ void              gimp_drawable_start_paint          (GimpDrawable    *drawable)
 gboolean          gimp_drawable_end_paint            (GimpDrawable    *drawable);
 gboolean          gimp_drawable_flush_paint          (GimpDrawable    *drawable);
 gboolean          gimp_drawable_is_painting          (GimpDrawable    *drawable);
-
-void              gimp_drawable_filters_changed      (GimpDrawable    *drawable);
 
 
 #endif /* __GIMP_DRAWABLE_H__ */
