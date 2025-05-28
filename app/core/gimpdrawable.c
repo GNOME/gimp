@@ -560,11 +560,38 @@ gimp_drawable_duplicate (GimpItem *item,
       GimpDrawable  *drawable     = GIMP_DRAWABLE (item);
       GimpDrawable  *new_drawable = GIMP_DRAWABLE (new_item);
       GeglBuffer    *new_buffer;
+      GimpContainer *filters;
+      GList         *list;
 
       new_buffer = gimp_gegl_buffer_dup (gimp_drawable_get_buffer (drawable));
 
       gimp_drawable_set_buffer (new_drawable, FALSE, NULL, new_buffer);
       g_object_unref (new_buffer);
+
+      filters = gimp_drawable_get_filters (drawable);
+
+      for (list = GIMP_LIST (filters)->queue->tail;
+           list;
+           list = g_list_previous (list))
+        {
+          GimpDrawableFilter *filter = list->data;
+
+          if (GIMP_IS_DRAWABLE_FILTER (filter))
+            {
+              GimpDrawableFilter *new_filter;
+
+              new_filter = gimp_drawable_filter_duplicate (new_drawable,
+                                                           filter);
+              if (filter)
+                {
+                  gimp_drawable_filter_apply (new_filter, NULL);
+                  gimp_drawable_filter_commit (new_filter, TRUE, NULL, FALSE);
+
+                  gimp_drawable_filter_layer_mask_freeze (new_filter);
+                  g_object_unref (new_filter);
+                }
+            }
+        }
     }
 
   return new_item;

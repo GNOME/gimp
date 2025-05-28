@@ -36,9 +36,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
-#include "core/gimpdrawable-filters.h"
 #include "core/gimpdrawable.h"
-#include "core/gimpdrawablefilter.h"
 #include "core/gimpimage-color-profile.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage.h"
@@ -239,43 +237,7 @@ layer_new_from_drawable_invoker (GimpProcedure         *procedure,
 
       if (new_item)
         {
-          GimpContainer *filters;
-
           layer_copy = GIMP_LAYER (new_item);
-
-          filters = gimp_drawable_get_filters (GIMP_DRAWABLE (drawable));
-          if (gimp_container_get_n_children (filters) > 0)
-            {
-              GList        *filter_list;
-              GimpDrawable *drawable_copy;
-
-              drawable_copy = GIMP_DRAWABLE (layer_copy);
-
-              for (filter_list = GIMP_LIST (filters)->queue->tail;
-                   filter_list;
-                   filter_list = g_list_previous (filter_list))
-                {
-                  if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
-                    {
-                      GimpDrawableFilter *old_filter = filter_list->data;
-                      GimpDrawableFilter *filter;
-
-                      filter =
-                        gimp_drawable_filter_duplicate (drawable_copy,
-                                                        old_filter);
-
-                      if (filter != NULL)
-                        {
-                          gimp_drawable_filter_apply (filter, NULL);
-                          gimp_drawable_filter_commit (filter, TRUE, NULL,
-                                                       FALSE);
-
-                          gimp_drawable_filter_layer_mask_freeze (filter);
-                          g_object_unref (filter);
-                        }
-                    }
-                }
-            }
         }
       else
         {
@@ -311,48 +273,8 @@ layer_copy_invoker (GimpProcedure         *procedure,
     {
       layer_copy = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (layer),
                                                     G_TYPE_FROM_INSTANCE (layer)));
-      if (layer_copy)
-        {
-          GimpContainer *filters;
-
-          filters = gimp_drawable_get_filters (GIMP_DRAWABLE (layer));
-          if (gimp_container_get_n_children (filters) > 0)
-            {
-              GList        *filter_list;
-              GimpDrawable *drawable_copy;
-
-              drawable_copy = GIMP_DRAWABLE (layer_copy);
-
-              for (filter_list = GIMP_LIST (filters)->queue->tail;
-                   filter_list;
-                   filter_list = g_list_previous (filter_list))
-                {
-                  if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
-                    {
-                      GimpDrawableFilter *old_filter = filter_list->data;
-                      GimpDrawableFilter *filter;
-
-                      filter =
-                        gimp_drawable_filter_duplicate (drawable_copy,
-                                                        old_filter);
-
-                      if (filter != NULL)
-                        {
-                          gimp_drawable_filter_apply (filter, NULL);
-                          gimp_drawable_filter_commit (filter, TRUE, NULL,
-                                                       FALSE);
-
-                          gimp_drawable_filter_layer_mask_freeze (filter);
-                          g_object_unref (filter);
-                        }
-                    }
-                }
-            }
-        }
-      else
-        {
-          success = FALSE;
-        }
+      if (! layer_copy)
+        success = FALSE;
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

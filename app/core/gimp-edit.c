@@ -31,8 +31,6 @@
 #include "gimpbuffer.h"
 #include "gimpcontext.h"
 #include "gimpdrawable-edit.h"
-#include "gimpdrawable-filters.h"
-#include "gimpdrawablefilter.h"
 #include "gimperror.h"
 #include "gimpgrouplayer.h"
 #include "gimpimage.h"
@@ -506,38 +504,9 @@ gimp_edit_paste_get_tagged_layers (GimpImage         *image,
                                                                 "gimp-image-copied-layer"));
       if (copied)
         {
-          GimpContainer *filters;
-
           layer = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (iter->data),
                                                  image, layer_type));
 
-          filters = gimp_drawable_get_filters (GIMP_DRAWABLE (iter->data));
-          if (gimp_container_get_n_children (filters) > 0)
-            {
-              GList *filter_list;
-
-              for (filter_list = GIMP_LIST (filters)->queue->tail;
-                   filter_list;
-                   filter_list = g_list_previous (filter_list))
-                {
-                  if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
-                    {
-                      GimpDrawableFilter *old_filter = filter_list->data;
-                      GimpDrawableFilter *filter;
-
-                      filter = gimp_drawable_filter_duplicate (GIMP_DRAWABLE (layer), old_filter);
-
-                      if (filter != NULL)
-                        {
-                          gimp_drawable_filter_apply (filter, NULL);
-                          gimp_drawable_filter_commit (filter, TRUE, NULL, FALSE);
-
-                          gimp_drawable_filter_layer_mask_freeze (filter);
-                          g_object_unref (filter);
-                        }
-                    }
-                }
-            }
           returned_layers = g_list_prepend (returned_layers, layer);
 
           switch (paste_type)

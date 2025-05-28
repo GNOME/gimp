@@ -34,8 +34,6 @@
 #include "core/gimpbuffer.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpdrawable-edit.h"
-#include "core/gimpdrawable-filters.h"
-#include "core/gimpdrawablefilter.h"
 #include "core/gimpfilloptions.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-new.h"
@@ -249,44 +247,12 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
 
   if (new_item)
     {
-      GimpContainer *filters;
-
       GimpLayer *new_layer = GIMP_LAYER (new_item);
 
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                    _("Drop New Layer"));
 
       gimp_display_shell_dnd_position_item (shell, image, new_item);
-
-      filters = gimp_drawable_get_filters (GIMP_DRAWABLE (viewable));
-      if (gimp_container_get_n_children (filters) > 0)
-        {
-          GList *filter_list;
-
-          for (filter_list = GIMP_LIST (filters)->queue->tail;
-               filter_list;
-               filter_list = g_list_previous (filter_list))
-            {
-              if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
-                {
-                  GimpDrawableFilter *old_filter = filter_list->data;
-                  GimpDrawableFilter *filter;
-
-                  filter =
-                    gimp_drawable_filter_duplicate (GIMP_DRAWABLE (new_layer),
-                                                    old_filter);
-
-                  if (filter != NULL)
-                    {
-                      gimp_drawable_filter_apply (filter, NULL);
-                      gimp_drawable_filter_commit (filter, TRUE, NULL, FALSE);
-
-                      gimp_drawable_filter_layer_mask_freeze (filter);
-                      g_object_unref (filter);
-                    }
-                }
-            }
-        }
 
       gimp_item_set_visible (new_item, TRUE, FALSE);
 
