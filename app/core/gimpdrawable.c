@@ -50,7 +50,6 @@
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-undo-push.h"
-#include "gimplayer.h"
 #include "gimpmarshal.h"
 #include "gimppickable.h"
 #include "gimpprogress.h"
@@ -100,6 +99,7 @@ static void       gimp_drawable_get_property       (GObject           *object,
 static gint64     gimp_drawable_get_memsize        (GimpObject        *object,
                                                     gint64            *gui_size);
 
+static void       gimp_drawable_size_changed       (GimpViewable      *viewable);
 static gboolean   gimp_drawable_get_size           (GimpViewable      *viewable,
                                                     gint              *width,
                                                     gint              *height);
@@ -291,6 +291,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
 
   gimp_object_class->get_memsize  = gimp_drawable_get_memsize;
 
+  viewable_class->size_changed    = gimp_drawable_size_changed;
   viewable_class->get_size        = gimp_drawable_get_size;
   viewable_class->get_new_preview = gimp_drawable_get_new_preview;
   viewable_class->get_new_pixbuf  = gimp_drawable_get_new_pixbuf;
@@ -440,6 +441,36 @@ gimp_drawable_get_memsize (GimpObject *object,
                                                                   gui_size);
 }
 
+static void
+gimp_drawable_size_changed (GimpViewable *viewable)
+{
+  GList *list;
+  gint   width;
+  gint   height;
+
+  if (GIMP_VIEWABLE_CLASS (parent_class)->size_changed)
+    GIMP_VIEWABLE_CLASS (parent_class)->size_changed (viewable);
+
+  width   = gimp_item_get_width (GIMP_ITEM (viewable));
+  height  = gimp_item_get_height (GIMP_ITEM (viewable));
+
+  for (list = GIMP_LIST (GIMP_DRAWABLE (viewable)->private->filter_stack)->queue->tail;
+       list;
+       list = g_list_previous (list))
+    {
+      if (GIMP_IS_DRAWABLE_FILTER (list->data))
+        {
+          GimpDrawableFilter *filter = list->data;
+          GimpChannel        *mask   = GIMP_CHANNEL (gimp_drawable_filter_get_mask (filter));
+          GeglRectangle       rect   = { 0, 0, width, height };
+
+          /* Don't resize partial layer effects */
+          if (gimp_channel_is_empty (mask))
+            gimp_drawable_filter_refresh_crop (filter, &rect);
+        }
+    }
+}
+
 static gboolean
 gimp_drawable_get_size (GimpViewable *viewable,
                         gint         *width,
@@ -570,30 +601,6 @@ gimp_drawable_scale (GimpItem              *item,
                                                  0,            0),
                                  TRUE);
   g_object_unref (new_buffer);
-
-  if (GIMP_IS_LAYER (drawable))
-    {
-      GList *list;
-
-      for (list = GIMP_LIST (drawable->private->filter_stack)->queue->tail;
-           list; list = g_list_previous (list))
-        {
-          if (GIMP_IS_DRAWABLE_FILTER (list->data))
-            {
-              GimpDrawableFilter *filter = list->data;
-              GimpChannel        *mask   = GIMP_CHANNEL (gimp_drawable_filter_get_mask (filter));
-              GeglRectangle      *rect   = GEGL_RECTANGLE (0, 0,
-                                                           new_width,
-                                                           new_height);
-
-              /* Don't resize partial layer effects */
-              if (gimp_channel_is_empty (mask))
-                gimp_drawable_filter_refresh_crop (filter, rect);
-            }
-        }
-      if (list)
-        g_list_free (list);
-    }
 }
 
 static void
@@ -679,28 +686,6 @@ gimp_drawable_resize (GimpItem     *item,
                                                  0,            0),
                                  TRUE);
   g_object_unref (new_buffer);
-
-  if (GIMP_IS_LAYER (drawable))
-    {
-      GList *list;
-
-      for (list = GIMP_LIST (drawable->private->filter_stack)->queue->tail;
-           list; list = g_list_previous (list))
-        {
-          if (GIMP_IS_DRAWABLE_FILTER (list->data))
-            {
-              GimpDrawableFilter *filter = list->data;
-              GimpChannel        *mask   = GIMP_CHANNEL (gimp_drawable_filter_get_mask (filter));
-              GeglRectangle       rect   = {0, 0, new_width, new_height};
-
-              /* Don't resize partial layer effects */
-              if (gimp_channel_is_empty (mask))
-                gimp_drawable_filter_refresh_crop (filter, &rect);
-            }
-        }
-      if (list)
-        g_list_free (list);
-    }
 }
 
 static void
@@ -763,30 +748,6 @@ gimp_drawable_rotate (GimpItem         *item,
       gimp_drawable_transform_paste (drawable, buffer, buffer_profile,
                                      new_off_x, new_off_y, FALSE);
       g_object_unref (buffer);
-    }
-
-  if (GIMP_IS_LAYER (drawable))
-    {
-      GList *list;
-      gint   width  = gimp_item_get_width (GIMP_ITEM (drawable));
-      gint   height = gimp_item_get_height (GIMP_ITEM (drawable));
-
-      for (list = GIMP_LIST (drawable->private->filter_stack)->queue->tail;
-           list; list = g_list_previous (list))
-        {
-          if (GIMP_IS_DRAWABLE_FILTER (list->data))
-            {
-              GimpDrawableFilter *filter = list->data;
-              GimpChannel        *mask   = GIMP_CHANNEL (gimp_drawable_filter_get_mask (filter));
-              GeglRectangle       rect   = {0, 0, width, height};
-
-              /* Don't resize partial layer effects */
-              if (gimp_channel_is_empty (mask))
-                gimp_drawable_filter_refresh_crop (filter, &rect);
-            }
-        }
-      if (list)
-        g_list_free (list);
     }
 }
 
