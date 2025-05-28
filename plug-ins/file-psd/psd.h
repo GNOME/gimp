@@ -592,13 +592,12 @@ typedef struct
 {
   guint32    size;
   guint32    ver;
-  guint32    blur;
+  guint16    blur;
   guint32    intensity;
   gint32     angle;
   guint32    distance;
   guint16    color[5];
   gchar      blendsig[4];
-  guint32    effect;
   guchar     effecton;
   guchar     anglefx;
   guchar     opacity;

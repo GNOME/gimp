@@ -786,40 +786,96 @@ load_resource_lrfx (const PSDlayerres  *res_a,
                   return -1;
                 }
             }
-          else if (memcmp (effectname, "dsdw", 4) == 0
-                   || memcmp (effectname, "isdw", 4) == 0)
+          else if (memcmp (effectname, "dsdw", 4) == 0)
             {
-              PSDLayerStyleShadow shadow;
+              gchar   bim[4];
+              guint16 spacer16;
 
-              if (memcmp (effectname, "dsdw", 4) == 0)
-                shadow = ls_a->dsdw;
-              else
-                shadow = ls_a->isdw;
-
-              if (psd_read (input, &shadow.size,        4, error) < 4 ||
-                  psd_read (input, &shadow.ver,         4, error) < 4 ||
-                  psd_read (input, &shadow.blur,        4, error) < 4 ||
-                  psd_read (input, &shadow.intensity,   4, error) < 4 ||
-                  psd_read (input, &shadow.angle,       4, error) < 4 ||
-                  psd_read (input, &shadow.distance,    4, error) < 4 ||
-                  psd_read (input, &shadow.color[0],    2, error) < 2 ||
-                  psd_read (input, &shadow.color[1],    2, error) < 2 ||
-                  psd_read (input, &shadow.color[2],    2, error) < 2 ||
-                  psd_read (input, &shadow.color[3],    2, error) < 2 ||
-                  psd_read (input, &shadow.color[4],    2, error) < 2 ||
-                  psd_read (input, &shadow.blendsig,    4, error) < 4 ||
-                  psd_read (input, &shadow.effect,      4, error) < 4 ||
-                  psd_read (input, &shadow.effecton,    1, error) < 1 ||
-                  psd_read (input, &shadow.anglefx,     1, error) < 1 ||
-                  psd_read (input, &shadow.opacity,     1, error) < 1 ||
-                  psd_read (input, &shadow.natcolor[0], 2, error) < 2 ||
-                  psd_read (input, &shadow.natcolor[1], 2, error) < 2 ||
-                  psd_read (input, &shadow.natcolor[2], 2, error) < 2 ||
-                  psd_read (input, &shadow.natcolor[3], 2, error) < 2 ||
-                  psd_read (input, &shadow.natcolor[4], 2, error) < 2)
+              if (psd_read (input, &ls_a->dsdw.size,        4, error) < 4 ||
+                  psd_read (input, &ls_a->dsdw.ver,         4, error) < 4 ||
+                  psd_read (input, &ls_a->dsdw.blur,        2, error) < 2 ||
+                  psd_read (input, &ls_a->dsdw.intensity,   4, error) < 4 ||
+                  psd_read (input, &ls_a->dsdw.angle,       4, error) < 4 ||
+                  psd_read (input, &ls_a->dsdw.distance,    4, error) < 4 ||
+                  psd_read (input, &spacer16,               2, error) < 2 ||
+                  psd_read (input, &ls_a->dsdw.color[0],    2, error) < 2 ||
+                  psd_read (input, &ls_a->dsdw.color[1],    2, error) < 2 ||
+                  psd_read (input, &ls_a->dsdw.color[2],    2, error) < 2 ||
+                  psd_read (input, &ls_a->dsdw.color[3],    2, error) < 2 ||
+                  psd_read (input, &ls_a->dsdw.color[4],    2, error) < 2 ||
+                  psd_read (input, &bim,                    4, error) < 4 ||
+                  psd_read (input, &ls_a->dsdw.blendsig,    4, error) < 4 ||
+                  psd_read (input, &ls_a->dsdw.effecton,    1, error) < 1 ||
+                  psd_read (input, &ls_a->dsdw.anglefx,     1, error) < 1 ||
+                  psd_read (input, &ls_a->dsdw.opacity,     1, error) < 1)
                 {
                   psd_set_error (error);
                   return -1;
+                }
+              ls_a->dsdw.size      = GUINT32_TO_BE (ls_a->dsdw.size);
+              ls_a->dsdw.ver       = GUINT32_TO_BE (ls_a->dsdw.ver);
+              ls_a->dsdw.blur      = GUINT16_TO_BE (ls_a->dsdw.blur);
+              ls_a->dsdw.intensity = GUINT32_TO_BE (ls_a->dsdw.intensity);
+              ls_a->dsdw.angle     = GINT32_TO_BE (ls_a->dsdw.angle);
+              ls_a->dsdw.distance  = GUINT32_TO_BE (ls_a->dsdw.distance);
+
+              if (ls_a->dsdw.ver == 2)
+                {
+                  if (psd_read (input, &ls_a->dsdw.natcolor[0], 2, error) < 2 ||
+                      psd_read (input, &ls_a->dsdw.natcolor[1], 2, error) < 2 ||
+                      psd_read (input, &ls_a->dsdw.natcolor[2], 2, error) < 2 ||
+                      psd_read (input, &ls_a->dsdw.natcolor[3], 2, error) < 2 ||
+                      psd_read (input, &ls_a->dsdw.natcolor[4], 2, error) < 2)
+                    {
+                      psd_set_error (error);
+                      return -1;
+                    }
+                }
+            }
+          else if (memcmp (effectname, "isdw", 4) == 0)
+            {
+              gchar   bim[4];
+              guint16 spacer16;
+
+              if (psd_read (input, &ls_a->isdw.size,        4, error) < 4 ||
+                  psd_read (input, &ls_a->isdw.ver,         4, error) < 4 ||
+                  psd_read (input, &ls_a->isdw.blur,        2, error) < 2 ||
+                  psd_read (input, &ls_a->isdw.intensity,   4, error) < 4 ||
+                  psd_read (input, &ls_a->isdw.angle,       4, error) < 4 ||
+                  psd_read (input, &ls_a->isdw.distance,    4, error) < 4 ||
+                  psd_read (input, &spacer16,               2, error) < 2 ||
+                  psd_read (input, &ls_a->isdw.color[0],    2, error) < 2 ||
+                  psd_read (input, &ls_a->isdw.color[1],    2, error) < 2 ||
+                  psd_read (input, &ls_a->isdw.color[2],    2, error) < 2 ||
+                  psd_read (input, &ls_a->isdw.color[3],    2, error) < 2 ||
+                  psd_read (input, &ls_a->isdw.color[4],    2, error) < 2 ||
+                  psd_read (input, &bim,                    4, error) < 4 ||
+                  psd_read (input, &ls_a->isdw.blendsig,    4, error) < 4 ||
+                  psd_read (input, &ls_a->isdw.effecton,    1, error) < 1 ||
+                  psd_read (input, &ls_a->isdw.anglefx,     1, error) < 1 ||
+                  psd_read (input, &ls_a->isdw.opacity,     1, error) < 1)
+                {
+                  psd_set_error (error);
+                  return -1;
+                }
+              ls_a->isdw.size      = GUINT32_TO_BE (ls_a->isdw.size);
+              ls_a->isdw.ver       = GUINT32_TO_BE (ls_a->isdw.ver);
+              ls_a->isdw.blur      = GUINT16_TO_BE (ls_a->isdw.blur);
+              ls_a->isdw.intensity = GUINT32_TO_BE (ls_a->isdw.intensity);
+              ls_a->isdw.angle     = GINT32_TO_BE (ls_a->isdw.angle);
+              ls_a->isdw.distance  = GUINT32_TO_BE (ls_a->isdw.distance);
+
+              if (ls_a->isdw.ver == 2)
+                {
+                  if (psd_read (input, &ls_a->isdw.natcolor[0], 2, error) < 2 ||
+                      psd_read (input, &ls_a->isdw.natcolor[1], 2, error) < 2 ||
+                      psd_read (input, &ls_a->isdw.natcolor[2], 2, error) < 2 ||
+                      psd_read (input, &ls_a->isdw.natcolor[3], 2, error) < 2 ||
+                      psd_read (input, &ls_a->isdw.natcolor[4], 2, error) < 2)
+                    {
+                      psd_set_error (error);
+                      return -1;
+                    }
                 }
             }
           else if (memcmp (effectname, "oglw", 4) == 0)

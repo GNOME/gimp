@@ -2795,6 +2795,60 @@ add_legacy_layer_effects (GimpLayer *layer,
       g_object_unref (filter);
       g_object_unref (color);
     }
+
+  if (lyr_a->layer_styles->dsdw.effecton == 1)
+    {
+      PSDLayerStyleShadow  dsdw;
+      GimpLayerMode        mode;
+      GimpDrawableFilter  *filter;
+      GeglColor           *color = gegl_color_new ("none");
+      gdouble              x;
+      gdouble              y;
+      gdouble              blur;
+      gdouble              radians;
+
+      dsdw = lyr_a->layer_styles->dsdw;
+
+      /* Photoshop uses an angle slider that goes from 0 to 180,
+       * then -179 to 0. Since GEGL uses X/Y coordinates for distance,
+       * we convert the Photoshop angle and distance and then flip the
+       * sign based on the quadrant of the angle */
+      radians = (M_PI / 180) * dsdw.angle;
+      x       = dsdw.distance * cos (radians);
+      y       = dsdw.distance * sin (radians);
+
+      if (dsdw.angle >= 0xFF00)
+        dsdw.angle = (dsdw.angle - 0xFF00) * -1;
+
+      if (dsdw.angle > 90 && dsdw.angle < 180)
+        y *= -1;
+      else if (dsdw.angle < -90 && dsdw.angle > -180)
+        x *= -1;
+
+      blur = (dsdw.blur / 250.0) * 100.0;
+
+      if (dsdw.ver == 0)
+        convert_legacy_psd_color (color, dsdw.color, space, ibm_pc_format);
+      else if (dsdw.ver == 2)
+        convert_legacy_psd_color (color, dsdw.natcolor, space, ibm_pc_format);
+
+      convert_psd_mode (dsdw.blendsig, &mode);
+
+      filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                                "gegl:dropshadow",
+                                                NULL,
+                                                GIMP_LAYER_MODE_REPLACE,
+                                                1.0,
+                                                "x",       x,
+                                                "y",       y,
+                                                "radius",  blur,
+                                                "color",   color,
+                                                "opacity", dsdw.opacity / 255.0,
+                                                NULL);
+
+      g_object_unref (filter);
+      g_object_unref (color);
+    }
 }
 
 static gint
