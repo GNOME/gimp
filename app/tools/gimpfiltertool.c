@@ -924,10 +924,7 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
             gimp_container_reorder (filters, GIMP_OBJECT (filter_tool->filter),
                                     0);
 
-          gimp_item_set_visible (GIMP_ITEM (drawable), FALSE, FALSE);
-          gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
-          gimp_item_set_visible (GIMP_ITEM (drawable), TRUE, FALSE);
-          gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
+          gimp_item_refresh_filters (GIMP_ITEM (drawable));
         }
 
       g_object_set (filter_tool->filter,
@@ -1199,10 +1196,7 @@ gimp_filter_tool_halt (GimpFilterTool *filter_tool)
 
       gimp_filter_set_active (GIMP_FILTER (filter_tool->existing_filter), TRUE);
 
-      gimp_item_set_visible (GIMP_ITEM (drawable), FALSE, FALSE);
-      gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
-      gimp_item_set_visible (GIMP_ITEM (drawable), TRUE, FALSE);
-      gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
+      gimp_item_refresh_filters (GIMP_ITEM (drawable));
 
       /* Restore buttons in layer tree view */
       gimp_drawable_filters_changed (gimp_drawable_filter_get_drawable (filter_tool->existing_filter));
@@ -1361,9 +1355,7 @@ gimp_filter_tool_commit (GimpFilterTool *filter_tool,
       /* TODO: Review when we can apply NDE filters to channels/layer masks */
       if (GIMP_IS_LAYER (drawable))
         {
-          gimp_item_set_visible (GIMP_ITEM (drawable), FALSE, FALSE);
-          gimp_image_flush (gimp_display_get_image (tool->display));
-          gimp_item_set_visible (GIMP_ITEM (drawable), TRUE, FALSE);
+          gimp_item_refresh_filters (GIMP_ITEM (drawable));
         }
       gimp_image_flush (gimp_display_get_image (tool->display));
 
@@ -1383,10 +1375,7 @@ gimp_filter_tool_commit (GimpFilterTool *filter_tool,
 
       gimp_filter_set_active (GIMP_FILTER (filter_tool->existing_filter), TRUE);
 
-      gimp_item_set_visible (GIMP_ITEM (drawable), FALSE, FALSE);
-      gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
-      gimp_item_set_visible (GIMP_ITEM (drawable), TRUE, FALSE);
-      gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
+      gimp_item_refresh_filters (GIMP_ITEM (drawable));
     }
 
   filter_tool->existing_filter = NULL;
@@ -1569,10 +1558,7 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
         {
           gimp_container_reorder (filters, GIMP_OBJECT (filter_tool->filter),
                                   count - 1);
-          gimp_item_set_visible (GIMP_ITEM (drawable), FALSE, FALSE);
-          gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
-          gimp_item_set_visible (GIMP_ITEM (drawable), TRUE, FALSE);
-          gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
+          gimp_item_refresh_filters ((GIMP_ITEM (drawable)));
         }
     }
 }

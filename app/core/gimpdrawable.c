@@ -2107,10 +2107,7 @@ gimp_drawable_end_paint (GimpDrawable *drawable)
   if (gimp_drawable_has_visible_filters (drawable) &&
       drawable->private->paint_count == 0)
     {
-      gimp_item_set_visible (GIMP_ITEM (drawable), FALSE, FALSE);
-      gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
-      gimp_item_set_visible (GIMP_ITEM (drawable),TRUE, FALSE);
-      gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
+      gimp_item_refresh_filters (GIMP_ITEM (drawable));
     }
 
   return result;

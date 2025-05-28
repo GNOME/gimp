@@ -410,5 +410,7 @@ gboolean        gimp_item_mask_intersect     (GimpItem           *item,
 gboolean        gimp_item_is_in_set          (GimpItem           *item,
                                               GimpItemSet         set);
 
+void            gimp_item_refresh_filters    (GimpItem           *item);
+
 
 #endif /* __GIMP_ITEM_H__ */
