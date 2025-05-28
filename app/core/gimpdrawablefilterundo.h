@@ -38,7 +38,7 @@ struct _GimpDrawableFilterUndo
   GimpUndo               parent_instance;
 
   GimpDrawableFilter    *filter;
-  guint32                row_index;
+  gint                   row_index;
 
   GeglNode              *node;
   gdouble                opacity;

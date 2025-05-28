@@ -351,11 +351,8 @@ gimp_drawable_filter_undo_free (GimpUndo     *undo,
 {
   GimpDrawableFilterUndo *drawable_filter_undo = GIMP_DRAWABLE_FILTER_UNDO (undo);
 
-  if (drawable_filter_undo->filter)
-    g_clear_object (&drawable_filter_undo->filter);
-
-  if (drawable_filter_undo->node)
-    g_object_unref (drawable_filter_undo->node);
+  g_clear_object (&drawable_filter_undo->filter);
+  g_clear_object (&drawable_filter_undo->node);
 
   GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }
