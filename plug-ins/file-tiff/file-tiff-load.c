@@ -487,8 +487,10 @@ load_image (GimpProcedure        *procedure,
   TIFFSetDirectory (tif, 0);
 
   /* Check if there exist layers saved from Alias/AutoDesk Sketchbook */
+#ifdef TIFFTAG_ALIAS_LAYER_METADATA
   sketchbook_layers = TIFFGetField (tif, TIFFTAG_ALIAS_LAYER_METADATA,
                                     &sketchbook_info, &sketchbook_len);
+#endif
 
   pages.show_reduced = FALSE;
   if (pages.n_reducedimage_pages - pages.n_filtered_pages > 1)
@@ -1808,6 +1810,7 @@ load_image (GimpProcedure        *procedure,
       *ps_metadata_loaded = TRUE;
     }
 
+#ifdef TIFFTAG_IMAGESOURCEDATA
   if (TIFFGetField (tif, TIFFTAG_IMAGESOURCEDATA, &photoshop_len, &photoshop_data))
     {
       FILE           *fp;
@@ -1855,6 +1858,7 @@ load_image (GimpProcedure        *procedure,
 
       *ps_metadata_loaded = TRUE;
     }
+#endif
 
   g_free (pages.pages);
   TIFFClose (tif);
@@ -2308,7 +2312,7 @@ static void
 load_sketchbook_layers (TIFF      *tif,
                         GimpImage *image)
 {
-  gchar          *alias_layer_info;
+  gchar          *alias_layer_info = NULL;
   gint            alias_data_len;
   guint32         image_height = gimp_image_get_height (image);
   guint32         image_width  = gimp_image_get_width (image);
@@ -2328,9 +2332,11 @@ load_sketchbook_layers (TIFF      *tif,
 
   TIFFSetDirectory (tif, 0);
 
+#ifdef TIFFTAG_ALIAS_LAYER_METADATA
   TIFFGetField (tif, TIFFTAG_ALIAS_LAYER_METADATA, &alias_data_len,
                 &alias_layer_info);
-  if (! g_utf8_validate (alias_layer_info, -1, NULL))
+#endif
+  if (! alias_layer_info || ! g_utf8_validate (alias_layer_info, -1, NULL))
     return;
 
   /* Create background layer. Fill it with the hex color from
@@ -2392,6 +2398,7 @@ load_sketchbook_layers (TIFF      *tif,
           if (! TIFFSetSubDirectory (tif, offsets[i]))
             break;
 
+#ifdef TIFFTAG_ALIAS_LAYER_METADATA
           if (TIFFGetField (tif, TIFFTAG_ALIAS_LAYER_METADATA, &alias_sublayer_len, &alias_sublayer_info) &&
               g_utf8_validate (alias_sublayer_info, -1, NULL))
             {
@@ -2471,21 +2478,10 @@ load_sketchbook_layers (TIFF      *tif,
               g_object_unref (buffer);
               g_free (pixels);
 
-              /* The layers seem to have excessive padding that affects the
-               * offset, since it's calculated from the bottom-left corner
-               * of the layer. We can crop the layers to fix the y position
-               * offset. Since the layer width can also shrink due to the
-               * crop, we calculate the before and after difference and
-               * adjust the x offset too. */
-              (void) gimp_image_autocrop (image, GIMP_DRAWABLE (layer));
-
-
               x_pos += (layer_width - gimp_drawable_get_width (GIMP_DRAWABLE (layer)));
               y_pos = image_height - gimp_drawable_get_height (GIMP_DRAWABLE (layer)) - y_pos;
 
               gimp_layer_set_offsets (layer, ROUND (x_pos), ROUND (y_pos));
-              /* In Alias/Autodesk Sketchbook, the layers are the same size as the canvas */
-              gimp_layer_resize_to_image_size (layer);
 
               gimp_item_set_visible (GIMP_ITEM (layer), visible);
               /* Set locks after copying pixel data over */
@@ -2495,6 +2491,7 @@ load_sketchbook_layers (TIFF      *tif,
               count++;
               gimp_progress_update ((gdouble) count / (gdouble) layer_count);
             }
+#endif
         }
     }
 }
