@@ -336,7 +336,7 @@ gimp_drawable_init (GimpDrawable *drawable)
 {
   drawable->private = gimp_drawable_get_instance_private (drawable);
 
-  drawable->private->filter_stack = gimp_filter_stack_new (GIMP_TYPE_FILTER);
+  _gimp_drawable_filters_init (drawable);
 }
 
 /* sorry for the evil casts */
@@ -387,7 +387,8 @@ gimp_drawable_finalize (GObject *object)
 
   g_clear_object (&drawable->private->source_node);
   g_clear_object (&drawable->private->buffer_source_node);
-  g_clear_object (&drawable->private->filter_stack);
+
+  _gimp_drawable_filters_finalize (drawable);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -1271,6 +1272,14 @@ gimp_drawable_update_all (GimpDrawable *drawable)
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
   GIMP_DRAWABLE_GET_CLASS (drawable)->update_all (drawable);
+}
+
+void
+gimp_drawable_filters_changed (GimpDrawable *drawable)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
+  g_signal_emit (drawable, gimp_drawable_signals[FILTERS_CHANGED], 0);
 }
 
 void
@@ -2171,10 +2180,4 @@ gimp_drawable_is_painting (GimpDrawable *drawable)
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
   return drawable->private->paint_count > 0;
-}
-
-void
-gimp_drawable_filters_changed (GimpDrawable *drawable)
-{
-  g_signal_emit (drawable, gimp_drawable_signals[FILTERS_CHANGED], 0);
 }
