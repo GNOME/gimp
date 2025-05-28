@@ -2597,11 +2597,7 @@ gimp_item_tree_view_effects_visible_toggled (GtkCellRendererToggle *toggle,
 
               gimp_filter_set_active (GIMP_FILTER (filter), ! visible);
 
-              /* Refresh the drawable */
-              gimp_item_set_visible (GIMP_ITEM (drawable), FALSE, FALSE);
-              gimp_image_flush (image);
-              gimp_item_set_visible (GIMP_ITEM (drawable), TRUE, FALSE);
-              gimp_image_flush (image);
+              gimp_item_refresh_filters (GIMP_ITEM (drawable));
             }
         }
     }
@@ -2632,11 +2628,7 @@ gimp_item_tree_view_effects_visible_all_toggled (GtkWidget        *widget,
             }
         }
 
-      /* Hack to make the effects visibly change */
-      gimp_item_set_visible (GIMP_ITEM (view->priv->effects_drawable), FALSE, FALSE);
-      gimp_image_flush (image);
-      gimp_item_set_visible (GIMP_ITEM (view->priv->effects_drawable), TRUE, FALSE);
-      gimp_image_flush (image);
+      gimp_item_refresh_filters (GIMP_ITEM (view->priv->effects_drawable));
     }
 }
 
@@ -2762,11 +2754,7 @@ gimp_item_tree_view_effects_raised_clicked (GtkWidget        *widget,
                 gtk_widget_set_sensitive (view->priv->effects_raise_button, FALSE);
             }
 
-          /* Hack to make the effects visibly change */
-          gimp_item_set_visible (GIMP_ITEM (drawable), FALSE, FALSE);
-          gimp_image_flush (image);
-          gimp_item_set_visible (GIMP_ITEM (drawable), TRUE, FALSE);
-          gimp_image_flush (image);
+          gimp_item_refresh_filters (GIMP_ITEM (view->priv->effects_drawable));
         }
     }
 }
@@ -2822,11 +2810,7 @@ gimp_item_tree_view_effects_lowered_clicked (GtkWidget        *widget,
                 gtk_widget_set_sensitive (view->priv->effects_lower_button, FALSE);
             }
 
-          /* Hack to make the effects visibly change */
-          gimp_item_set_visible (GIMP_ITEM (drawable), FALSE, FALSE);
-          gimp_image_flush (image);
-          gimp_item_set_visible (GIMP_ITEM (drawable), TRUE, FALSE);
-          gimp_image_flush (image);
+          gimp_item_refresh_filters (GIMP_ITEM (drawable));
         }
     }
 }
@@ -2876,11 +2860,7 @@ gimp_item_tree_view_effects_merged_clicked (GtkWidget        *widget,
       /* Close NDE pop-over on successful merge */
       gtk_widget_set_visible (view->priv->effects_popover, FALSE);
 
-      /* Hack to make the effects visibly change */
-      gimp_item_set_visible (GIMP_ITEM (view->priv->effects_drawable), FALSE, FALSE);
-      gimp_image_flush (image);
-      gimp_item_set_visible (GIMP_ITEM (view->priv->effects_drawable), TRUE, FALSE);
-      gimp_image_flush (image);
+      gimp_item_refresh_filters (GIMP_ITEM (view->priv->effects_drawable));
     }
 }
 
@@ -2909,11 +2889,7 @@ gimp_item_tree_view_effects_removed_clicked (GtkWidget        *widget,
             gtk_widget_set_visible (view->priv->effects_popover, FALSE);
         }
 
-      /* Hack to make the effects visibly change */
-      gimp_item_set_visible (GIMP_ITEM (view->priv->effects_drawable), FALSE, FALSE);
-      gimp_image_flush (image);
-      gimp_item_set_visible (GIMP_ITEM (view->priv->effects_drawable), TRUE, FALSE);
-      gimp_image_flush (image);
+      gimp_item_refresh_filters (GIMP_ITEM (view->priv->effects_drawable));
     }
 }
 

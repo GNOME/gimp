@@ -2786,3 +2786,20 @@ gimp_item_is_in_set (GimpItem    *item,
 
   return FALSE;
 }
+
+/* Hack to make the effects visibly change */
+void
+gimp_item_refresh_filters (GimpItem *item)
+{
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  if (gimp_item_is_visible (item))
+    {
+      GimpImage *image = gimp_item_get_image (item);
+
+      gimp_item_set_visible (item, FALSE, FALSE);
+      gimp_image_flush (image);
+      gimp_item_set_visible (item, TRUE, FALSE);
+      gimp_image_flush (image);
+    }
+}
