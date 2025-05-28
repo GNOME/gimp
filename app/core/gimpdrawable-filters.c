@@ -128,6 +128,21 @@ gimp_drawable_clear_filters (GimpDrawable *drawable)
   gimp_drawable_filters_changed (drawable);
 }
 
+gboolean
+gimp_drawable_has_filter (GimpDrawable *drawable,
+                          GimpFilter   *filter)
+{
+  gboolean filter_exists = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (GIMP_IS_FILTER (filter), FALSE);
+
+  filter_exists = gimp_container_have (drawable->private->filter_stack,
+                                       GIMP_OBJECT (filter));
+
+  return filter_exists;
+}
+
 void
 gimp_drawable_merge_filters (GimpDrawable *drawable)
 {
@@ -208,21 +223,6 @@ gimp_drawable_merge_filters (GimpDrawable *drawable)
   g_object_unref (selection);
 
   gimp_drawable_filters_changed (drawable);
-}
-
-gboolean
-gimp_drawable_has_filter (GimpDrawable *drawable,
-                          GimpFilter   *filter)
-{
-  gboolean filter_exists = FALSE;
-
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-  g_return_val_if_fail (GIMP_IS_FILTER (filter), FALSE);
-
-  filter_exists = gimp_container_have (drawable->private->filter_stack,
-                                       GIMP_OBJECT (filter));
-
-  return filter_exists;
 }
 
 gboolean
