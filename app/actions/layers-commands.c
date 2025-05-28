@@ -39,8 +39,6 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable-fill.h"
-#include "core/gimpdrawable-filters.h"
-#include "core/gimpdrawablefilter.h"
 #include "core/gimpgrouplayer.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-merge.h"
@@ -824,8 +822,7 @@ layers_duplicate_cmd_callback (GimpAction *action,
                                _("Duplicate layers"));
   for (iter = layers; iter; iter = iter->next)
     {
-      GimpLayer     *new_layer;
-      GimpContainer *filters;
+      GimpLayer *new_layer;
 
       new_layer = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (iter->data),
                                                    G_TYPE_FROM_INSTANCE (iter->data)));
@@ -840,39 +837,6 @@ layers_duplicate_cmd_callback (GimpAction *action,
                             TRUE);
       gimp_drawable_enable_resize_undo (GIMP_DRAWABLE (new_layer));
       new_layers = g_list_prepend (new_layers, new_layer);
-
-      /* Import any attached layer effects */
-      filters = gimp_drawable_get_filters (GIMP_DRAWABLE (iter->data));
-      if (gimp_container_get_n_children (filters) > 0)
-        {
-          GList         *filter_list;
-          GimpContainer *filters;
-
-          filters = gimp_drawable_get_filters (GIMP_DRAWABLE (iter->data));
-
-          for (filter_list = GIMP_LIST (filters)->queue->tail; filter_list;
-               filter_list = g_list_previous (filter_list))
-            {
-              if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
-                {
-                  GimpDrawableFilter *old_filter = filter_list->data;
-                  GimpDrawableFilter *filter;
-
-                  filter =
-                    gimp_drawable_filter_duplicate (GIMP_DRAWABLE (new_layer),
-                                                    old_filter);
-
-                  if (filter != NULL)
-                    {
-                      gimp_drawable_filter_apply (filter, NULL);
-                      gimp_drawable_filter_commit (filter, TRUE, NULL, FALSE);
-
-                      gimp_drawable_filter_layer_mask_freeze (filter);
-                      g_object_unref (filter);
-                    }
-                }
-            }
-        }
     }
 
   gimp_image_set_selected_layers (image, new_layers);
