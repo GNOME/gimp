@@ -32,8 +32,6 @@
 #include "gimp-parasites.h"
 #include "gimpchannel.h"
 #include "gimpcontainer.h"
-#include "gimpdrawable-filters.h"
-#include "gimpdrawablefilter.h"
 #include "gimpidtable.h"
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
@@ -663,7 +661,7 @@ gimp_item_real_start_transform (GimpItem *item,
 
 static void
 gimp_item_real_end_transform (GimpItem *item,
-                                gboolean  push_undo)
+                              gboolean  push_undo)
 {
   gimp_item_end_move (item, push_undo);
 }
@@ -1785,36 +1783,6 @@ gimp_item_transform (GimpItem               *item,
   g_object_thaw_notify (G_OBJECT (item));
 
   gimp_item_end_transform (item, push_undo);
-
-  /* Update crop of any filters */
-  if (GIMP_IS_DRAWABLE (item))
-    {
-      GeglRectangle  rect;
-      GimpContainer *filters;
-      GList         *filter_list;
-
-      rect = gimp_drawable_get_bounding_box (GIMP_DRAWABLE (item));
-      gimp_item_mask_intersect (item, &rect.x, &rect.y,
-                                &rect.width, &rect.height);
-
-      filters = gimp_drawable_get_filters (GIMP_DRAWABLE (item));
-
-      for (filter_list = GIMP_LIST (filters)->queue->tail; filter_list;
-           filter_list = g_list_previous (filter_list))
-        {
-          if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
-            {
-              GimpDrawableFilter *filter = filter_list->data;
-              GimpChannel        *mask;
-
-              mask = GIMP_CHANNEL (gimp_drawable_filter_get_mask (filter));
-
-              /* Don't resize partial layer effects */
-              if (! mask || gimp_channel_is_empty (mask))
-                gimp_drawable_filter_refresh_crop (filter, &rect);
-            }
-        }
-    }
 
   if (push_undo)
     gimp_image_undo_group_end (image);
