@@ -294,19 +294,19 @@ static void   gimp_item_tree_view_effects_visible_toggled
 static void   gimp_item_tree_view_effects_visible_all_toggled
                                                     (GtkWidget         *widget,
                                                      GimpItemTreeView  *view);
-static void   gimp_item_tree_view_effects_edited_clicked
+static void   gimp_item_tree_view_effects_edit_clicked
                                                     (GtkWidget         *widget,
                                                      GimpItemTreeView  *view);
-static void   gimp_item_tree_view_effects_raised_clicked
+static void   gimp_item_tree_view_effects_raise_clicked
                                                     (GtkWidget         *widget,
                                                      GimpItemTreeView  *view);
-static void   gimp_item_tree_view_effects_lowered_clicked
+static void   gimp_item_tree_view_effects_lower_clicked
                                                     (GtkWidget         *widget,
                                                      GimpItemTreeView  *view);
-static void   gimp_item_tree_view_effects_merged_clicked
+static void   gimp_item_tree_view_effects_merge_clicked
                                                     (GtkWidget         *widget,
                                                      GimpItemTreeView  *view);
-static void   gimp_item_tree_view_effects_removed_clicked
+static void   gimp_item_tree_view_effects_remove_clicked
                                                     (GtkWidget         *widget,
                                                      GimpItemTreeView  *view);
 static gboolean gimp_item_tree_view_lock_button_release (GtkWidget        *widget,
@@ -800,7 +800,7 @@ gimp_item_tree_view_constructed (GObject *object)
                                _("Edit the selected filter."),
                                GIMP_HELP_LAYER_EFFECTS);
       g_signal_connect (item_view->priv->effects_edit_button, "clicked",
-                        G_CALLBACK (gimp_item_tree_view_effects_edited_clicked),
+                        G_CALLBACK (gimp_item_tree_view_effects_edit_clicked),
                         item_view);
       gtk_box_pack_start (GTK_BOX (item_view->priv->effects_options),
                           item_view->priv->effects_edit_button, TRUE, TRUE, 0);
@@ -813,7 +813,7 @@ gimp_item_tree_view_constructed (GObject *object)
                                _("Raise filter one step up in the stack."),
                                GIMP_HELP_LAYER_EFFECTS);
       g_signal_connect (item_view->priv->effects_raise_button, "clicked",
-                        G_CALLBACK (gimp_item_tree_view_effects_raised_clicked),
+                        G_CALLBACK (gimp_item_tree_view_effects_raise_clicked),
                         item_view);
       gtk_box_pack_start (GTK_BOX (item_view->priv->effects_options),
                           item_view->priv->effects_raise_button, TRUE, TRUE, 0);
@@ -826,7 +826,7 @@ gimp_item_tree_view_constructed (GObject *object)
                                _("Lower filter one step down in the stack."),
                                GIMP_HELP_LAYER_EFFECTS);
       g_signal_connect (item_view->priv->effects_lower_button, "clicked",
-                        G_CALLBACK (gimp_item_tree_view_effects_lowered_clicked),
+                        G_CALLBACK (gimp_item_tree_view_effects_lower_clicked),
                         item_view);
       gtk_box_pack_start (GTK_BOX (item_view->priv->effects_options),
                           item_view->priv->effects_lower_button, TRUE, TRUE, 0);
@@ -839,7 +839,7 @@ gimp_item_tree_view_constructed (GObject *object)
                                _("Merge all active filters down."),
                                GIMP_HELP_LAYER_EFFECTS);
       g_signal_connect (item_view->priv->effects_merge_button, "clicked",
-                        G_CALLBACK (gimp_item_tree_view_effects_merged_clicked),
+                        G_CALLBACK (gimp_item_tree_view_effects_merge_clicked),
                         item_view);
       gtk_box_pack_start (GTK_BOX (item_view->priv->effects_options),
                           item_view->priv->effects_merge_button, TRUE, TRUE, 0);
@@ -852,7 +852,7 @@ gimp_item_tree_view_constructed (GObject *object)
                                _("Remove the selected filter."),
                                GIMP_HELP_LAYER_EFFECTS);
       g_signal_connect (item_view->priv->effects_remove_button, "clicked",
-                        G_CALLBACK (gimp_item_tree_view_effects_removed_clicked),
+                        G_CALLBACK (gimp_item_tree_view_effects_remove_clicked),
                         item_view);
       gtk_box_pack_start (GTK_BOX (item_view->priv->effects_options),
                           item_view->priv->effects_remove_button, TRUE, TRUE, 0);
@@ -2540,7 +2540,7 @@ gimp_item_tree_view_effects_activate_filter (GtkWidget         *widget,
                                              GimpItemTreeView  *view)
 {
   if (gtk_widget_get_sensitive (view->priv->effects_edit_button))
-    gimp_item_tree_view_effects_edited_clicked (widget, view);
+    gimp_item_tree_view_effects_edit_clicked (widget, view);
 }
 
 static void
@@ -2585,14 +2585,12 @@ gimp_item_tree_view_effects_visible_toggled (GtkCellRendererToggle *toggle,
 
       if (GIMP_IS_DRAWABLE_FILTER (filter))
         {
-          GimpImage    *image    = NULL;
-          GimpDrawable *drawable = NULL;
+          GimpDrawable *drawable;
 
           drawable = gimp_drawable_filter_get_drawable (filter);
 
           if (drawable)
             {
-              image   = gimp_item_get_image (GIMP_ITEM (drawable));
               visible = gimp_filter_get_active (GIMP_FILTER (filter));
 
               gimp_filter_set_active (GIMP_FILTER (filter), ! visible);
@@ -2612,7 +2610,6 @@ gimp_item_tree_view_effects_visible_all_toggled (GtkWidget        *widget,
       gboolean       visible;
       GimpContainer *filter_stack;
       GList         *list;
-      GimpImage     *image = view->priv->image;
 
       visible = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
       filter_stack = gimp_drawable_get_filters (GIMP_DRAWABLE (view->priv->effects_drawable));
@@ -2633,8 +2630,8 @@ gimp_item_tree_view_effects_visible_all_toggled (GtkWidget        *widget,
 }
 
 static void
-gimp_item_tree_view_effects_edited_clicked (GtkWidget        *widget,
-                                            GimpItemTreeView *view)
+gimp_item_tree_view_effects_edit_clicked (GtkWidget        *widget,
+                                          GimpItemTreeView *view)
 {
   GimpImage    *image = view->priv->image;
   GimpDrawable *drawable;
@@ -2709,8 +2706,8 @@ gimp_item_tree_view_effects_edited_clicked (GtkWidget        *widget,
 }
 
 static void
-gimp_item_tree_view_effects_raised_clicked (GtkWidget        *widget,
-                                            GimpItemTreeView *view)
+gimp_item_tree_view_effects_raise_clicked (GtkWidget        *widget,
+                                           GimpItemTreeView *view)
 {
   GimpImage    *image    = view->priv->image;
   GimpDrawable *drawable = NULL;
@@ -2760,8 +2757,8 @@ gimp_item_tree_view_effects_raised_clicked (GtkWidget        *widget,
 }
 
 static void
-gimp_item_tree_view_effects_lowered_clicked (GtkWidget        *widget,
-                                             GimpItemTreeView *view)
+gimp_item_tree_view_effects_lower_clicked (GtkWidget        *widget,
+                                           GimpItemTreeView *view)
 {
   GimpImage    *image    = view->priv->image;
   GimpDrawable *drawable = NULL;
@@ -2816,8 +2813,8 @@ gimp_item_tree_view_effects_lowered_clicked (GtkWidget        *widget,
 }
 
 static void
-gimp_item_tree_view_effects_merged_clicked (GtkWidget        *widget,
-                                            GimpItemTreeView *view)
+gimp_item_tree_view_effects_merge_clicked (GtkWidget        *widget,
+                                           GimpItemTreeView *view)
 {
   GimpContext  *context     = NULL;
   GimpToolInfo *active_tool = NULL;
@@ -2865,8 +2862,8 @@ gimp_item_tree_view_effects_merged_clicked (GtkWidget        *widget,
 }
 
 static void
-gimp_item_tree_view_effects_removed_clicked (GtkWidget        *widget,
-                                             GimpItemTreeView *view)
+gimp_item_tree_view_effects_remove_clicked (GtkWidget        *widget,
+                                            GimpItemTreeView *view)
 {
   if (view->priv->effects_drawable)
     {
