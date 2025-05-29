@@ -41,6 +41,7 @@
 #include <string.h>
 #include <zlib.h>
 
+#include <gexiv2/gexiv2.h>
 #include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
@@ -461,6 +462,7 @@ typedef enum {
   PSP_XDATA_GUIDE,              /* Image guide information (since PSP7) */
   PSP_XDATA_EXIF,               /* Image Exif information (since PSP8) */
   PSP_XDATA_IPTC,               /* Image IPTC information (since PSP8) */
+  PSP_XDATA_XMP,
 } PSPExtendedDataID;
 
 /* Creator field types.
@@ -601,6 +603,7 @@ static GimpValueArray * psp_export           (GimpProcedure         *procedure,
                                               gpointer               run_data);
 
 static GimpImage      * load_image           (GFile                 *file,
+                                              GimpMetadata          *metadata,
                                               GError               **error);
 static gboolean         export_image         (GFile                 *file,
                                               GimpImage             *image,
@@ -751,7 +754,7 @@ psp_load (GimpProcedure         *procedure,
 
   gegl_init (NULL, NULL);
 
-  image = load_image (file, &error);
+  image = load_image (file, metadata, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -2409,11 +2412,12 @@ read_selection_block (FILE      *f,
 }
 
 static gint
-read_extended_block (FILE      *f,
-                     GimpImage *image,
-                     guint      total_len,
-                     PSPimage  *ia,
-                     GError   **error)
+read_extended_block (FILE          *f,
+                     GimpImage     *image,
+                     guint          total_len,
+                     PSPimage      *ia,
+                     GimpMetadata  *metadata,
+                     GError       **error)
 {
   guchar   header[4];
   guint16  field_type;
@@ -2432,7 +2436,6 @@ read_extended_block (FILE      *f,
 
       if (memcmp (header, "~FL\0", 4) != 0)
         {
-          g_print ("Header: %s\n", header);
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Invalid extended block chunk header"));
           return -1;
@@ -2518,9 +2521,59 @@ read_extended_block (FILE      *f,
           }
           break;
 
+        case PSP_XDATA_EXIF:
+          {
+            gchar   exif_header[6];
+            guchar *data;
+
+            data = g_malloc0 (field_length - 6);
+            if (fread (exif_header, 6, 1, f) < 1 ||
+                fread (data, (field_length - 6), 1, f) < 1)
+              {
+                g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Error reading extended chunk EXIF data"));
+                return -1;
+              }
+
+            if (! gexiv2_metadata_open_buf (GEXIV2_METADATA (metadata),
+                                            data, (field_length - 6),
+                                            error))
+              {
+                g_free (data);
+                g_printerr ("%s: Failed to set EXIF metadata: %s\n", G_STRFUNC,
+                            (*error)->message);
+                return -1;
+              }
+            g_free (data);
+          }
+          break;
+
+        case PSP_XDATA_XMP:
+          {
+            guchar *data;
+
+            data = g_malloc0 (field_length);
+            if (fread (data, (field_length), 1, f) < 1)
+              {
+                g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Error reading extended chunk XMP data"));
+                return -1;
+              }
+
+            if (! gimp_metadata_set_from_xmp (metadata, data, field_length,
+                                              error))
+              {
+                g_free (data);
+                g_printerr ("%s: Failed to set XMP metadata: %s\n", G_STRFUNC,
+                           (*error)->message);
+                g_clear_error (error);
+              }
+            g_free (data);
+          }
+          break;
+
         /* Not yet implemented */
         case PSP_XDATA_TRNS_INDEX:
-        case PSP_XDATA_EXIF:
         case PSP_XDATA_IPTC:
         default:
           if (try_fseek (f, field_length, SEEK_CUR, error) < 0)
@@ -2593,8 +2646,9 @@ read_colorprofile_block (FILE      *f,
 /* The main function for loading PSP-images
  */
 static GimpImage *
-load_image (GFile   *file,
-            GError **error)
+load_image (GFile         *file,
+            GimpMetadata  *metadata,
+            GError       **error)
 {
   FILE      *f;
   GStatBuf   st;
@@ -2741,7 +2795,7 @@ load_image (GFile   *file,
 
             case PSP_EXTENDED_DATA_BLOCK:
               if (read_extended_block (f, image, block_total_len, &ia,
-                                       error) == -1)
+                                       metadata, error) == -1)
                 goto error;
               break;
 

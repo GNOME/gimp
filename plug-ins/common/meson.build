@@ -51,7 +51,7 @@ common_plugins_list = [
   },
   { 'name': 'file-pnm', },
   { 'name': 'file-psp',
-    'deps': [ gtk3, gegl, zlib, ],
+    'deps': [ gtk3, gegl, gexiv2, zlib, ],
   },
   { 'name': 'file-raw-data', },
   { 'name': 'file-sunras', },
