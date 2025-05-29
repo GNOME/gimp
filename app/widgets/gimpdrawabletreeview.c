@@ -136,50 +136,52 @@ static void   gimp_drawable_tree_view_floating_selection_changed
 static void   gimp_drawable_tree_view_filters_changed (GimpDrawable                *drawable,
                                                        GimpDrawableTreeView        *view);
 
-static void   gimp_drawable_tree_effects_set_sensitive(GimpDrawableTreeView        *view,
+static void   gimp_drawable_tree_view_filters_set_sensitive
+                                                      (GimpDrawableTreeView        *view,
                                                        gboolean                     is_sensitive);
 
-static void   gimp_drawable_tree_view_effects_clicked (GtkCellRendererToggle       *toggle,
+static void   gimp_drawable_tree_view_filters_cell_clicked
+                                                      (GtkCellRendererToggle       *toggle,
                                                        gchar                       *path,
                                                        GdkModifierType              state,
                                                        GimpDrawableTreeView        *view);
 static gboolean
-              gimp_drawable_tree_view_effects_filters_selected
+              gimp_drawable_tree_view_filters_view_select_items
                                                       (GimpContainerView           *view,
                                                        GList                       *filters,
                                                        GList                       *paths,
                                                        GimpDrawableTreeView        *drawable_view);
-static void   gimp_drawable_tree_view_effects_activate_filter
+static void   gimp_drawable_tree_view_filters_view_activate_item
                                                       (GtkWidget                   *widget,
                                                        GimpViewable                *viewable,
                                                        gpointer                     insert_data,
                                                        GimpDrawableTreeView        *view);
-static void   gimp_drawable_tree_view_filter_active_changed
-                                                      (GimpFilter                  *item,
-                                                       GimpContainerTreeView       *view);
-
-static void   gimp_drawable_tree_view_effects_visible_toggled
+static void   gimp_drawable_tree_view_filters_view_visible_cell_toggled
                                                       (GtkCellRendererToggle       *toggle,
                                                        gchar                       *path_str,
                                                        GdkModifierType              state,
                                                        GimpContainerTreeView       *view);
 
-static void   gimp_drawable_tree_view_effects_visible_all_toggled
+static void   gimp_drawable_tree_view_filters_active_changed
+                                                      (GimpFilter                  *item,
+                                                       GimpContainerTreeView       *view);
+
+static void   gimp_drawable_tree_view_filters_visible_all_toggled
                                                       (GtkWidget                   *widget,
                                                        GimpDrawableTreeView        *view);
-static void   gimp_drawable_tree_view_effects_edit_clicked
+static void   gimp_drawable_tree_view_filters_edit_clicked
                                                       (GtkWidget                   *widget,
                                                        GimpDrawableTreeView        *view);
-static void   gimp_drawable_tree_view_effects_raise_clicked
+static void   gimp_drawable_tree_view_filters_raise_clicked
                                                       (GtkWidget                   *widget,
                                                        GimpDrawableTreeView        *view);
-static void   gimp_drawable_tree_view_effects_lower_clicked
+static void   gimp_drawable_tree_view_filters_lower_clicked
                                                       (GtkWidget                   *widget,
                                                        GimpDrawableTreeView        *view);
-static void   gimp_drawable_tree_view_effects_merge_clicked
+static void   gimp_drawable_tree_view_filters_merge_clicked
                                                       (GtkWidget                   *widget,
                                                        GimpDrawableTreeView        *view);
-static void   gimp_drawable_tree_view_effects_remove_clicked
+static void   gimp_drawable_tree_view_filters_remove_clicked
                                                       (GtkWidget                   *widget,
                                                        GimpDrawableTreeView        *view);
 
@@ -311,7 +313,7 @@ gimp_drawable_tree_view_constructed (GObject *object)
                                                 view->priv->filters_cell);
 
       g_signal_connect (view->priv->filters_cell, "clicked",
-                        G_CALLBACK (gimp_drawable_tree_view_effects_clicked),
+                        G_CALLBACK (gimp_drawable_tree_view_filters_cell_clicked),
                         item_view);
     }
 
@@ -370,7 +372,7 @@ gimp_drawable_tree_view_constructed (GObject *object)
                                GIMP_HELP_LAYER_EFFECTS);
 
       g_signal_connect (view->priv->filters_visible_button, "toggled",
-                        G_CALLBACK (gimp_drawable_tree_view_effects_visible_all_toggled),
+                        G_CALLBACK (gimp_drawable_tree_view_filters_visible_all_toggled),
                         view);
 
       /*  "edit" button  */
@@ -386,7 +388,7 @@ gimp_drawable_tree_view_constructed (GObject *object)
                                GIMP_HELP_LAYER_EFFECTS);
 
       g_signal_connect (view->priv->filters_edit_button, "clicked",
-                        G_CALLBACK (gimp_drawable_tree_view_effects_edit_clicked),
+                        G_CALLBACK (gimp_drawable_tree_view_filters_edit_clicked),
                         view);
 
       /*  "raide" button  */
@@ -401,7 +403,7 @@ gimp_drawable_tree_view_constructed (GObject *object)
                                _("Raise filter one step up in the stack."),
                                GIMP_HELP_LAYER_EFFECTS);
       g_signal_connect (view->priv->filters_raise_button, "clicked",
-                        G_CALLBACK (gimp_drawable_tree_view_effects_raise_clicked),
+                        G_CALLBACK (gimp_drawable_tree_view_filters_raise_clicked),
                         view);
 
       /*  "lower" button  */
@@ -417,7 +419,7 @@ gimp_drawable_tree_view_constructed (GObject *object)
                                GIMP_HELP_LAYER_EFFECTS);
 
       g_signal_connect (view->priv->filters_lower_button, "clicked",
-                        G_CALLBACK (gimp_drawable_tree_view_effects_lower_clicked),
+                        G_CALLBACK (gimp_drawable_tree_view_filters_lower_clicked),
                         view);
 
       /*  "merge" button  */
@@ -433,7 +435,7 @@ gimp_drawable_tree_view_constructed (GObject *object)
                                GIMP_HELP_LAYER_EFFECTS);
 
       g_signal_connect (view->priv->filters_merge_button, "clicked",
-                        G_CALLBACK (gimp_drawable_tree_view_effects_merge_clicked),
+                        G_CALLBACK (gimp_drawable_tree_view_filters_merge_clicked),
                         view);
 
       /*  "remove" button  */
@@ -449,7 +451,7 @@ gimp_drawable_tree_view_constructed (GObject *object)
                                GIMP_HELP_LAYER_EFFECTS);
 
       g_signal_connect (view->priv->filters_remove_button, "clicked",
-                        G_CALLBACK (gimp_drawable_tree_view_effects_remove_clicked),
+                        G_CALLBACK (gimp_drawable_tree_view_filters_remove_clicked),
                         view);
     }
 
@@ -829,7 +831,7 @@ gimp_drawable_tree_view_filters_changed (GimpDrawable         *drawable,
                         -1);
 
   /* Re-enable buttons after editing */
-  gimp_drawable_tree_effects_set_sensitive (view, ! fs_disabled);
+  gimp_drawable_tree_view_filters_set_sensitive (view, ! fs_disabled);
 
   if (view->priv->filters_popover &&
       view->priv->filter  &&
@@ -849,8 +851,8 @@ gimp_drawable_tree_view_filters_changed (GimpDrawable         *drawable,
 }
 
 static void
-gimp_drawable_tree_effects_set_sensitive (GimpDrawableTreeView *view,
-                                          gboolean              is_sensitive)
+gimp_drawable_tree_view_filters_set_sensitive (GimpDrawableTreeView *view,
+                                               gboolean              is_sensitive)
 {
   gboolean is_group = FALSE;
 
@@ -870,10 +872,10 @@ gimp_drawable_tree_effects_set_sensitive (GimpDrawableTreeView *view,
 }
 
 static void
-gimp_drawable_tree_view_effects_clicked (GtkCellRendererToggle *toggle,
-                                         gchar                 *path_str,
-                                         GdkModifierType        state,
-                                         GimpDrawableTreeView  *view)
+gimp_drawable_tree_view_filters_cell_clicked (GtkCellRendererToggle *toggle,
+                                              gchar                 *path_str,
+                                              GdkModifierType        state,
+                                              GimpDrawableTreeView  *view)
 {
   GtkTreePath *path;
   GtkTreeIter  iter;
@@ -902,10 +904,10 @@ gimp_drawable_tree_view_effects_clicked (GtkCellRendererToggle *toggle,
       if (view->priv->filters_view)
         {
           g_signal_handlers_disconnect_by_func (view->priv->filters_view,
-                                                gimp_drawable_tree_view_effects_filters_selected,
+                                                gimp_drawable_tree_view_filters_view_select_items,
                                                 view);
           g_signal_handlers_disconnect_by_func (view->priv->filters_view,
-                                                gimp_drawable_tree_view_effects_activate_filter,
+                                                gimp_drawable_tree_view_filters_view_activate_item,
                                                 view);
 
           g_clear_pointer (&view->priv->filters_active_changed_handler,
@@ -933,12 +935,12 @@ gimp_drawable_tree_view_effects_clicked (GtkCellRendererToggle *toggle,
 
       /* Set the initial value for the effect visibility toggle */
       g_signal_handlers_block_by_func (view->priv->filters_visible_button,
-                                       gimp_drawable_tree_view_effects_visible_all_toggled,
+                                       gimp_drawable_tree_view_filters_visible_all_toggled,
                                        view);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (view->priv->filters_visible_button),
                                     visible);
       g_signal_handlers_unblock_by_func (view->priv->filters_visible_button,
-                                         gimp_drawable_tree_view_effects_visible_all_toggled,
+                                         gimp_drawable_tree_view_filters_visible_all_toggled,
                                          view);
 
       /* Only show if we have at least one active filter */
@@ -958,7 +960,7 @@ gimp_drawable_tree_view_effects_clicked (GtkCellRendererToggle *toggle,
           /* Connect filter active signal */
           view->priv->filters_active_changed_handler =
             gimp_tree_handler_connect (filters, "active-changed",
-                                       G_CALLBACK (gimp_drawable_tree_view_filter_active_changed),
+                                       G_CALLBACK (gimp_drawable_tree_view_filters_active_changed),
                                        view->priv->filters_view);
 
           gimp_container_tree_store_columns_add (filter_tree_view->model_columns,
@@ -983,7 +985,7 @@ gimp_drawable_tree_view_effects_clicked (GtkCellRendererToggle *toggle,
                                                     renderer);
 
           g_signal_connect_object (renderer, "clicked",
-                                   G_CALLBACK (gimp_drawable_tree_view_effects_visible_toggled),
+                                   G_CALLBACK (gimp_drawable_tree_view_filters_view_visible_cell_toggled),
                                    filter_tree_view, 0);
 
           /* Update filter visible icon */
@@ -995,8 +997,8 @@ gimp_drawable_tree_view_effects_clicked (GtkCellRendererToggle *toggle,
                 {
                   gboolean is_temporary;
 
-                  gimp_drawable_tree_view_filter_active_changed (GIMP_FILTER (list->data),
-                                                                 filter_tree_view);
+                  gimp_drawable_tree_view_filters_active_changed (GIMP_FILTER (list->data),
+                                                                  filter_tree_view);
 
                   g_object_get (list->data,
                                 "temporary", &is_temporary,
@@ -1007,10 +1009,10 @@ gimp_drawable_tree_view_effects_clicked (GtkCellRendererToggle *toggle,
             }
 
           g_signal_connect (filter_tree_view, "select-items",
-                            G_CALLBACK (gimp_drawable_tree_view_effects_filters_selected),
+                            G_CALLBACK (gimp_drawable_tree_view_filters_view_select_items),
                             view);
           g_signal_connect_object (filter_tree_view, "activate-item",
-                                   G_CALLBACK (gimp_drawable_tree_view_effects_activate_filter),
+                                   G_CALLBACK (gimp_drawable_tree_view_filters_view_activate_item),
                                    view, 0);
 
           gtk_box_pack_start (GTK_BOX (view->priv->filters_vbox),
@@ -1035,16 +1037,16 @@ gimp_drawable_tree_view_effects_clicked (GtkCellRendererToggle *toggle,
           gtk_widget_show (view->priv->filters_popover);
 
           /* Lock filter options if we're actively editing a filter */
-          gimp_drawable_tree_effects_set_sensitive (view, ! is_editing);
+          gimp_drawable_tree_view_filters_set_sensitive (view, ! is_editing);
         }
     }
 }
 
 static gboolean
-gimp_drawable_tree_view_effects_filters_selected (GimpContainerView    *view,
-                                                  GList                *filters,
-                                                  GList                *paths,
-                                                  GimpDrawableTreeView *drawable_view)
+gimp_drawable_tree_view_filters_view_select_items (GimpContainerView    *view,
+                                                   GList                *filters,
+                                                   GList                *paths,
+                                                   GimpDrawableTreeView *drawable_view)
 {
   g_return_val_if_fail (g_list_length (filters) <= 1, FALSE);
 
@@ -1093,36 +1095,20 @@ gimp_drawable_tree_view_effects_filters_selected (GimpContainerView    *view,
 }
 
 static void
-gimp_drawable_tree_view_effects_activate_filter (GtkWidget             *widget,
-                                                 GimpViewable          *viewable,
-                                                 gpointer               insert_data,
-                                                 GimpDrawableTreeView  *view)
+gimp_drawable_tree_view_filters_view_activate_item (GtkWidget             *widget,
+                                                    GimpViewable          *viewable,
+                                                    gpointer               insert_data,
+                                                    GimpDrawableTreeView  *view)
 {
   if (gtk_widget_get_sensitive (view->priv->filters_edit_button))
-    gimp_drawable_tree_view_effects_edit_clicked (widget, view);
+    gimp_drawable_tree_view_filters_edit_clicked (widget, view);
 }
 
 static void
-gimp_drawable_tree_view_filter_active_changed (GimpFilter            *filter,
-                                               GimpContainerTreeView *view)
-{
-  GtkTreeIter *iter;
-
-  iter = gimp_container_view_lookup (GIMP_CONTAINER_VIEW (view),
-                                     (GimpViewable *) filter);
-
-  if (iter)
-    gtk_tree_store_set (GTK_TREE_STORE (view->model), iter,
-                        COLUMN_FILTERS_ACTIVE,
-                        gimp_filter_get_active (filter),
-                        -1);
-}
-
-static void
-gimp_drawable_tree_view_effects_visible_toggled (GtkCellRendererToggle *toggle,
-                                                 gchar                 *path_str,
-                                                 GdkModifierType        state,
-                                                 GimpContainerTreeView *view)
+gimp_drawable_tree_view_filters_view_visible_cell_toggled (GtkCellRendererToggle *toggle,
+                                                           gchar                 *path_str,
+                                                           GdkModifierType        state,
+                                                           GimpContainerTreeView *view)
 {
   GtkTreePath *path;
   GtkTreeIter  iter;
@@ -1161,7 +1147,23 @@ gimp_drawable_tree_view_effects_visible_toggled (GtkCellRendererToggle *toggle,
 }
 
 static void
-gimp_drawable_tree_view_effects_visible_all_toggled (GtkWidget            *widget,
+gimp_drawable_tree_view_filters_active_changed (GimpFilter            *filter,
+                                                GimpContainerTreeView *view)
+{
+  GtkTreeIter *iter;
+
+  iter = gimp_container_view_lookup (GIMP_CONTAINER_VIEW (view),
+                                     (GimpViewable *) filter);
+
+  if (iter)
+    gtk_tree_store_set (GTK_TREE_STORE (view->model), iter,
+                        COLUMN_FILTERS_ACTIVE,
+                        gimp_filter_get_active (filter),
+                        -1);
+}
+
+static void
+gimp_drawable_tree_view_filters_visible_all_toggled (GtkWidget            *widget,
                                                      GimpDrawableTreeView *view)
 {
   if (view->priv->filter_drawable)
@@ -1191,7 +1193,7 @@ gimp_drawable_tree_view_effects_visible_all_toggled (GtkWidget            *widge
 }
 
 static void
-gimp_drawable_tree_view_effects_edit_clicked (GtkWidget            *widget,
+gimp_drawable_tree_view_filters_edit_clicked (GtkWidget            *widget,
                                               GimpDrawableTreeView *view)
 {
   GimpImage    *image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
@@ -1256,7 +1258,7 @@ gimp_drawable_tree_view_effects_edit_clicked (GtkWidget            *widget,
               g_object_unref (procedure);
 
               /* Disable buttons until we're done editing */
-              gimp_drawable_tree_effects_set_sensitive (view, FALSE);
+              gimp_drawable_tree_view_filters_set_sensitive (view, FALSE);
             }
 
           g_free (name);
@@ -1266,7 +1268,7 @@ gimp_drawable_tree_view_effects_edit_clicked (GtkWidget            *widget,
 }
 
 static void
-gimp_drawable_tree_view_effects_raise_clicked (GtkWidget            *widget,
+gimp_drawable_tree_view_filters_raise_clicked (GtkWidget            *widget,
                                                GimpDrawableTreeView *view)
 {
   GimpImage *image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
@@ -1303,7 +1305,7 @@ gimp_drawable_tree_view_effects_raise_clicked (GtkWidget            *widget,
 }
 
 static void
-gimp_drawable_tree_view_effects_lower_clicked (GtkWidget            *widget,
+gimp_drawable_tree_view_filters_lower_clicked (GtkWidget            *widget,
                                                GimpDrawableTreeView *view)
 {
   GimpImage *image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
@@ -1340,7 +1342,7 @@ gimp_drawable_tree_view_effects_lower_clicked (GtkWidget            *widget,
 }
 
 static void
-gimp_drawable_tree_view_effects_merge_clicked (GtkWidget            *widget,
+gimp_drawable_tree_view_filters_merge_clicked (GtkWidget            *widget,
                                                GimpDrawableTreeView *view)
 {
   GimpContext  *context;
@@ -1388,7 +1390,7 @@ gimp_drawable_tree_view_effects_merge_clicked (GtkWidget            *widget,
 }
 
 static void
-gimp_drawable_tree_view_effects_remove_clicked (GtkWidget            *widget,
+gimp_drawable_tree_view_filters_remove_clicked (GtkWidget            *widget,
                                                 GimpDrawableTreeView *view)
 {
   if (view->priv->filter_drawable)
