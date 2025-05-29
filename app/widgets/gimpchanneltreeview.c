@@ -97,38 +97,39 @@ gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass)
   GimpContainerTreeViewClass *view_class   = GIMP_CONTAINER_TREE_VIEW_CLASS (klass);
   GimpItemTreeViewClass      *iv_class     = GIMP_ITEM_TREE_VIEW_CLASS (klass);
 
-  object_class->constructed  = gimp_channel_tree_view_constructed;
+  object_class->constructed    = gimp_channel_tree_view_constructed;
 
-  view_class->drop_viewables = gimp_channel_tree_view_drop_viewables;
-  view_class->drop_component = gimp_channel_tree_view_drop_component;
+  view_class->drop_viewables   = gimp_channel_tree_view_drop_viewables;
+  view_class->drop_component   = gimp_channel_tree_view_drop_component;
+
+  iv_class->set_image          = gimp_channel_tree_view_set_image;
+
+  iv_class->item_type          = GIMP_TYPE_CHANNEL;
+  iv_class->signal_name        = "selected-channels-changed";
+
+  iv_class->get_container      = gimp_image_get_channels;
+  iv_class->get_selected_items = (GimpGetItemsFunc) gimp_image_get_selected_channels;
+  iv_class->set_selected_items = (GimpSetItemsFunc) gimp_image_set_selected_channels;
+  iv_class->add_item           = (GimpAddItemFunc) gimp_image_add_channel;
+  iv_class->remove_item        = (GimpRemoveItemFunc) gimp_image_remove_channel;
+  iv_class->new_item           = gimp_channel_tree_view_item_new;
+
+  iv_class->action_group        = "channels";
+  iv_class->activate_action     = "channels-edit-attributes";
+  iv_class->new_action          = "channels-new";
+  iv_class->new_default_action  = "channels-new-last-values";
+  iv_class->raise_action        = "channels-raise";
+  iv_class->raise_top_action    = "channels-raise-to-top";
+  iv_class->lower_action        = "channels-lower";
+  iv_class->lower_bottom_action = "channels-lower-to-bottom";
+  iv_class->duplicate_action    = "channels-duplicate";
+  iv_class->delete_action       = "channels-delete";
 
   iv_class->move_cursor_up_action    = "channels-select-previous";
   iv_class->move_cursor_down_action  = "channels-select-next";
   iv_class->move_cursor_start_action = "channels-select-top";
   iv_class->move_cursor_end_action   = "channels-select-bottom";
 
-  iv_class->set_image        = gimp_channel_tree_view_set_image;
-
-  iv_class->item_type        = GIMP_TYPE_CHANNEL;
-  iv_class->signal_name      = "selected-channels-changed";
-
-  iv_class->get_container    = gimp_image_get_channels;
-  iv_class->get_selected_items = (GimpGetItemsFunc) gimp_image_get_selected_channels;
-  iv_class->set_selected_items = (GimpSetItemsFunc) gimp_image_set_selected_channels;
-  iv_class->add_item         = (GimpAddItemFunc) gimp_image_add_channel;
-  iv_class->remove_item      = (GimpRemoveItemFunc) gimp_image_remove_channel;
-  iv_class->new_item         = gimp_channel_tree_view_item_new;
-
-  iv_class->action_group            = "channels";
-  iv_class->activate_action         = "channels-edit-attributes";
-  iv_class->new_action              = "channels-new";
-  iv_class->new_default_action      = "channels-new-last-values";
-  iv_class->raise_action            = "channels-raise";
-  iv_class->raise_top_action        = "channels-raise-to-top";
-  iv_class->lower_action            = "channels-lower";
-  iv_class->lower_bottom_action     = "channels-lower-to-bottom";
-  iv_class->duplicate_action        = "channels-duplicate";
-  iv_class->delete_action           = "channels-delete";
   iv_class->lock_content_help_id    = GIMP_HELP_CHANNEL_LOCK_PIXELS;
   iv_class->lock_position_help_id   = GIMP_HELP_CHANNEL_LOCK_POSITION;
   iv_class->lock_visibility_help_id = GIMP_HELP_CHANNEL_LOCK_VISIBILITY;

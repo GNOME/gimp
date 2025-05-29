@@ -197,14 +197,36 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   tree_view_class = GIMP_CONTAINER_TREE_VIEW_CLASS (klass);
   item_view_class = GIMP_ITEM_TREE_VIEW_CLASS (klass);
 
-  object_class->constructed = gimp_layer_tree_view_constructed;
-  object_class->finalize    = gimp_layer_tree_view_finalize;
+  object_class->constructed           = gimp_layer_tree_view_constructed;
+  object_class->finalize              = gimp_layer_tree_view_finalize;
 
-  tree_view_class->drop_possible   = gimp_layer_tree_view_drop_possible;
-  tree_view_class->drop_color      = gimp_layer_tree_view_drop_color;
-  tree_view_class->drop_uri_list   = gimp_layer_tree_view_drop_uri_list;
-  tree_view_class->drop_component  = gimp_layer_tree_view_drop_component;
-  tree_view_class->drop_pixbuf     = gimp_layer_tree_view_drop_pixbuf;
+  tree_view_class->drop_possible      = gimp_layer_tree_view_drop_possible;
+  tree_view_class->drop_color         = gimp_layer_tree_view_drop_color;
+  tree_view_class->drop_uri_list      = gimp_layer_tree_view_drop_uri_list;
+  tree_view_class->drop_component     = gimp_layer_tree_view_drop_component;
+  tree_view_class->drop_pixbuf        = gimp_layer_tree_view_drop_pixbuf;
+
+  item_view_class->item_type          = GIMP_TYPE_LAYER;
+  item_view_class->signal_name        = "selected-layers-changed";
+
+  item_view_class->set_image          = gimp_layer_tree_view_set_image;
+  item_view_class->get_container      = gimp_image_get_layers;
+  item_view_class->get_selected_items = (GimpGetItemsFunc) gimp_image_get_selected_layers;
+  item_view_class->set_selected_items = (GimpSetItemsFunc) gimp_image_set_selected_layers;
+  item_view_class->add_item           = (GimpAddItemFunc) gimp_image_add_layer;
+  item_view_class->remove_item        = (GimpRemoveItemFunc) gimp_image_remove_layer;
+  item_view_class->new_item           = gimp_layer_tree_view_item_new;
+
+  item_view_class->action_group        = "layers";
+  item_view_class->activate_action     = "layers-edit";
+  item_view_class->new_action          = "layers-new";
+  item_view_class->new_default_action  = "layers-new-last-values";
+  item_view_class->raise_action        = "layers-raise";
+  item_view_class->raise_top_action    = "layers-raise-to-top";
+  item_view_class->lower_action        = "layers-lower";
+  item_view_class->lower_bottom_action = "layers-lower-to-bottom";
+  item_view_class->duplicate_action    = "layers-duplicate";
+  item_view_class->delete_action       = "layers-delete";
 
   item_view_class->move_cursor_up_action        = "layers-select-previous";
   item_view_class->move_cursor_down_action      = "layers-select-next";
@@ -213,27 +235,6 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   item_view_class->move_cursor_start_action     = "layers-select-top";
   item_view_class->move_cursor_end_action       = "layers-select-bottom";
 
-  item_view_class->item_type       = GIMP_TYPE_LAYER;
-  item_view_class->signal_name     = "selected-layers-changed";
-
-  item_view_class->set_image       = gimp_layer_tree_view_set_image;
-  item_view_class->get_container   = gimp_image_get_layers;
-  item_view_class->get_selected_items = (GimpGetItemsFunc) gimp_image_get_selected_layers;
-  item_view_class->set_selected_items = (GimpSetItemsFunc) gimp_image_set_selected_layers;
-  item_view_class->add_item        = (GimpAddItemFunc) gimp_image_add_layer;
-  item_view_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_layer;
-  item_view_class->new_item        = gimp_layer_tree_view_item_new;
-
-  item_view_class->action_group            = "layers";
-  item_view_class->activate_action         = "layers-edit";
-  item_view_class->new_action              = "layers-new";
-  item_view_class->new_default_action      = "layers-new-last-values";
-  item_view_class->raise_action            = "layers-raise";
-  item_view_class->raise_top_action        = "layers-raise-to-top";
-  item_view_class->lower_action            = "layers-lower";
-  item_view_class->lower_bottom_action     = "layers-lower-to-bottom";
-  item_view_class->duplicate_action        = "layers-duplicate";
-  item_view_class->delete_action           = "layers-delete";
   item_view_class->lock_content_help_id    = GIMP_HELP_LAYER_LOCK_PIXELS;
   item_view_class->lock_position_help_id   = GIMP_HELP_LAYER_LOCK_POSITION;
   item_view_class->lock_visibility_help_id = GIMP_HELP_LAYER_LOCK_VISIBILITY;

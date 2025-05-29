@@ -111,11 +111,7 @@ gimp_color_panel_dispose (GObject *object)
 {
   GimpColorPanel *panel = GIMP_COLOR_PANEL (object);
 
-  if (panel->color_dialog)
-    {
-      gtk_widget_destroy (panel->color_dialog);
-      panel->color_dialog = NULL;
-    }
+  g_clear_pointer (&panel->color_dialog, gtk_widget_destroy);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }

@@ -453,11 +453,7 @@ gimp_drawable_tree_view_dispose (GObject *object)
 {
   GimpDrawableTreeView *view = GIMP_DRAWABLE_TREE_VIEW (object);
 
-  if (view->priv->effects_popover)
-    {
-      gtk_widget_destroy (view->priv->effects_popover);
-      view->priv->effects_popover = NULL;
-    }
+  g_clear_pointer (&view->priv->effects_popover, gtk_widget_destroy);
 
   view->priv->effects_drawable = NULL;
   view->priv->effects_filter   = NULL;
