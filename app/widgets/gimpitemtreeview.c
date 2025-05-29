@@ -320,35 +320,42 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_OBJECT);
 
-  object_class->constructed      = gimp_item_tree_view_constructed;
-  object_class->dispose          = gimp_item_tree_view_dispose;
+  object_class->constructed       = gimp_item_tree_view_constructed;
+  object_class->dispose           = gimp_item_tree_view_dispose;
 
-  widget_class->style_updated    = gimp_item_tree_view_style_updated;
+  widget_class->style_updated     = gimp_item_tree_view_style_updated;
 
   tree_view_class->drop_possible  = gimp_item_tree_view_drop_possible;
   tree_view_class->drop_viewables = gimp_item_tree_view_drop_viewables;
 
-  klass->set_image               = gimp_item_tree_view_real_set_image;
+  klass->set_image                = gimp_item_tree_view_real_set_image;
 
-  klass->item_type               = G_TYPE_NONE;
-  klass->signal_name             = NULL;
+  klass->item_type                = G_TYPE_NONE;
+  klass->signal_name              = NULL;
 
-  klass->get_container           = NULL;
-  klass->get_selected_items      = NULL;
-  klass->set_selected_items      = NULL;
-  klass->add_item                = NULL;
-  klass->remove_item             = NULL;
-  klass->new_item                = NULL;
+  klass->get_container            = NULL;
+  klass->get_selected_items       = NULL;
+  klass->set_selected_items       = NULL;
+  klass->add_item                 = NULL;
+  klass->remove_item              = NULL;
+  klass->new_item                 = NULL;
 
-  klass->action_group            = NULL;
-  klass->new_action              = NULL;
-  klass->new_default_action      = NULL;
-  klass->raise_action            = NULL;
-  klass->raise_top_action        = NULL;
-  klass->lower_action            = NULL;
-  klass->lower_bottom_action     = NULL;
-  klass->duplicate_action        = NULL;
-  klass->delete_action           = NULL;
+  klass->action_group        = NULL;
+  klass->new_action          = NULL;
+  klass->new_default_action  = NULL;
+  klass->raise_action        = NULL;
+  klass->raise_top_action    = NULL;
+  klass->lower_action        = NULL;
+  klass->lower_bottom_action = NULL;
+  klass->duplicate_action    = NULL;
+  klass->delete_action       = NULL;
+
+  klass->move_cursor_up_action        = NULL;
+  klass->move_cursor_down_action      = NULL;
+  klass->move_cursor_up_flat_action   = NULL;
+  klass->move_cursor_down_flat_action = NULL;
+  klass->move_cursor_start_action     = NULL;
+  klass->move_cursor_end_action       = NULL;
 
   klass->lock_content_icon_name  = NULL;
   klass->lock_content_tooltip    = NULL;
@@ -361,13 +368,6 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   klass->lock_visibility_icon_name = NULL;
   klass->lock_visibility_tooltip   = NULL;
   klass->lock_visibility_help_id   = NULL;
-
-  klass->move_cursor_up_action        = NULL;
-  klass->move_cursor_down_action      = NULL;
-  klass->move_cursor_up_flat_action   = NULL;
-  klass->move_cursor_down_flat_action = NULL;
-  klass->move_cursor_start_action     = NULL;
-  klass->move_cursor_end_action       = NULL;
 }
 
 static void
@@ -701,22 +701,12 @@ gimp_item_tree_view_dispose (GObject *object)
   if (view->priv->image)
     gimp_item_tree_view_set_image (view, NULL);
 
-  if (view->priv->lock_popover)
-    {
-      gtk_widget_destroy (view->priv->lock_popover);
-      view->priv->lock_popover = NULL;
-    }
-
-  if (view->priv->lock_box_path)
-    {
-      gtk_tree_path_free (view->priv->lock_box_path);
-      view->priv->lock_box_path = NULL;
-    }
+  g_clear_pointer (&view->priv->lock_popover, gtk_widget_destroy);
+  g_clear_pointer (&view->priv->lock_box_path, gtk_tree_path_free);
 
   if (view->priv->locks)
     {
-      g_list_free_full (view->priv->locks,
-                        (GDestroyNotify) g_free);
+      g_list_free_full (view->priv->locks, g_free);
       view->priv->locks = NULL;
     }
 

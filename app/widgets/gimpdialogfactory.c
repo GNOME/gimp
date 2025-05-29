@@ -188,11 +188,7 @@ gimp_dialog_factory_dispose (GObject *object)
         }
     }
 
-  if (factory->p->open_dialogs)
-    {
-      g_list_free (factory->p->open_dialogs);
-      factory->p->open_dialogs = NULL;
-    }
+  g_clear_pointer (&factory->p->open_dialogs, g_list_free);
 
   if (factory->p->session_infos)
     {
@@ -223,11 +219,7 @@ gimp_dialog_factory_finalize (GObject *object)
       g_slice_free (GimpDialogFactoryEntry, entry);
     }
 
-  if (factory->p->registered_dialogs)
-    {
-      g_list_free (factory->p->registered_dialogs);
-      factory->p->registered_dialogs = NULL;
-    }
+  g_clear_pointer (&factory->p->registered_dialogs, g_list_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
