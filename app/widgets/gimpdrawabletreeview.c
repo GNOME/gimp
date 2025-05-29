@@ -776,25 +776,22 @@ gimp_drawable_tree_view_filters_changed (GimpDrawable         *drawable,
   /* Since floating selections are also stored in the filter stack,
    * we need to verify what's in there to get the correct count
    */
-  if (filters)
+  for (list = GIMP_LIST (filters)->queue->tail;
+       list;
+       list = g_list_previous (list))
     {
-      for (list = GIMP_LIST (filters)->queue->tail;
-           list;
-           list = g_list_previous (list))
+      if (GIMP_IS_DRAWABLE_FILTER (list->data))
         {
-          if (GIMP_IS_DRAWABLE_FILTER (list->data))
-            {
-              n_filters++;
+          n_filters++;
 
-              if (temporary_only)
-                g_object_get (list->data,
-                              "temporary", &temporary_only,
-                              NULL);
-            }
-          else
-            {
-              fs_disabled = TRUE;
-            }
+          if (temporary_only)
+            g_object_get (list->data,
+                          "temporary", &temporary_only,
+                          NULL);
+        }
+      else
+        {
+          fs_disabled = TRUE;
         }
     }
 
@@ -873,7 +870,7 @@ gimp_drawable_tree_view_effects_clicked (GtkCellRendererToggle *toggle,
       GimpContainer          *filters;
       GdkRectangle            rect;
       GtkWidget              *filter_view;
-      GList                  *filter_list;
+      GList                  *list;
       GList                  *children;
       gint                    n_children = 0;
       gboolean                visible    = TRUE;
@@ -903,13 +900,13 @@ gimp_drawable_tree_view_effects_clicked (GtkCellRendererToggle *toggle,
 
       filters = gimp_drawable_get_filters (drawable);
 
-      for (filter_list = GIMP_LIST (filters)->queue->tail;
-           filter_list;
-           filter_list = g_list_previous (filter_list))
+      for (list = GIMP_LIST (filters)->queue->tail;
+           list;
+           list = g_list_previous (list))
         {
-          if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
+          if (GIMP_IS_DRAWABLE_FILTER (list->data))
             {
-              if (! gimp_filter_get_active (GIMP_FILTER (filter_list->data)))
+              if (! gimp_filter_get_active (GIMP_FILTER (list->data)))
                 visible = FALSE;
 
               n_children++;
@@ -975,17 +972,18 @@ gimp_drawable_tree_view_effects_clicked (GtkCellRendererToggle *toggle,
                                    filter_tree_view, 0);
 
           /* Update filter visible icon */
-          for (filter_list = GIMP_LIST (filters)->queue->tail; filter_list;
-               filter_list = g_list_previous (filter_list))
+          for (list = GIMP_LIST (filters)->queue->tail;
+               list;
+               list = g_list_previous (list))
             {
-              if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
+              if (GIMP_IS_DRAWABLE_FILTER (list->data))
                 {
                   gboolean is_temporary;
 
-                  gimp_drawable_tree_view_filter_active_changed (GIMP_FILTER (filter_list->data),
+                  gimp_drawable_tree_view_filter_active_changed (GIMP_FILTER (list->data),
                                                                  filter_tree_view);
 
-                  g_object_get (filter_list->data,
+                  g_object_get (list->data,
                                 "temporary", &is_temporary,
                                 NULL);
                   if (is_temporary)
@@ -1155,14 +1153,16 @@ gimp_drawable_tree_view_effects_visible_all_toggled (GtkWidget            *widge
 {
   if (view->priv->effects_drawable)
     {
-      gboolean       visible;
-      GimpContainer *filter_stack;
+      GimpContainer *filters;
       GList         *list;
+      gboolean       visible;
 
       visible = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
-      filter_stack = gimp_drawable_get_filters (GIMP_DRAWABLE (view->priv->effects_drawable));
 
-      for (list = GIMP_LIST (filter_stack)->queue->head; list;
+      filters = gimp_drawable_get_filters (GIMP_DRAWABLE (view->priv->effects_drawable));
+
+      for (list = GIMP_LIST (filters)->queue->head;
+           list;
            list = g_list_next (list))
         {
           if (GIMP_IS_DRAWABLE_FILTER (list->data))
@@ -1273,13 +1273,13 @@ gimp_drawable_tree_view_effects_raise_clicked (GtkWidget            *widget,
     {
       if (gtk_widget_get_sensitive (view->priv->effects_edit_button))
         {
-          GimpContainer *container;
+          GimpContainer *filters;
           gint           index;
 
-          container =
+          filters =
             gimp_drawable_get_filters (GIMP_DRAWABLE (view->priv->effects_drawable));
 
-          index = gimp_container_get_child_index (container,
+          index = gimp_container_get_child_index (filters,
                                                   GIMP_OBJECT (view->priv->effects_filter));
 
           gtk_widget_set_sensitive (view->priv->effects_lower_button, TRUE);
@@ -1310,17 +1310,17 @@ gimp_drawable_tree_view_effects_lower_clicked (GtkWidget            *widget,
     {
       if (gtk_widget_get_sensitive (view->priv->effects_edit_button))
         {
-          GimpContainer *container;
+          GimpContainer *filters;
           gint           index;
 
-          container =
+          filters =
             gimp_drawable_get_filters (GIMP_DRAWABLE (view->priv->effects_drawable));
 
-          index = gimp_container_get_child_index (container,
+          index = gimp_container_get_child_index (filters,
                                                   GIMP_OBJECT (view->priv->effects_filter));
 
           gtk_widget_set_sensitive (view->priv->effects_raise_button, TRUE);
-          if (index == gimp_container_get_n_children (container) - 1)
+          if (index == gimp_container_get_n_children (filters) - 1)
             gtk_widget_set_sensitive (view->priv->effects_lower_button, FALSE);
         }
     }
@@ -1385,8 +1385,8 @@ gimp_drawable_tree_view_effects_remove_clicked (GtkWidget            *widget,
 
       filters = gimp_drawable_get_filters (view->priv->effects_drawable);
 
-      if (filters != NULL &&
-          gimp_container_have (filters, GIMP_OBJECT (view->priv->effects_filter)))
+      if (gimp_container_have (filters,
+                               GIMP_OBJECT (view->priv->effects_filter)))
         {
           gimp_image_undo_push_filter_remove (image, _("Remove filter"),
                                               view->priv->effects_drawable,
