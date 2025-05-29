@@ -199,6 +199,7 @@ Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):i
 
 
 # 4. PREPARE GIMP FILES
+# (Most of the file processing and special-casing is done on *gimp3264.iss [Files] section)
 
 ## Get 32-bit TWAIN deps list
 Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):installer_files[collapsed=true]$([char]13)$([char]27)[0KGenerating 32-bit TWAIN dependencies list"
