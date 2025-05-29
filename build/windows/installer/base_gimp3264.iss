@@ -482,14 +482,14 @@ Root: HKA; Subkey: "Software\GIMP {#GIMP_MUTEX_VERSION}\Capabilities\FileAssocia
 #endif
 ;Associations (special case for .xcf files)
 Root: HKA; Subkey: "Software\Classes\.xcf\OpenWithProgids"; ValueType: string; ValueName: "GIMP{#GIMP_MUTEX_VERSION}.xcf"; ValueData: ""; Flags: uninsdeletevalue
-Root: HKA; Subkey: "Software\Classes\GIMP{#GIMP_MUTEX_VERSION}.xcf"; ValueType: string; ValueName: ""; ValueData: "GIMP {#CUSTOM_GIMP_VERSION} {#UpperCase(FileLine)}"; Flags: uninsdeletekey
+Root: HKA; Subkey: "Software\Classes\GIMP{#GIMP_MUTEX_VERSION}.xcf"; ValueType: string; ValueName: ""; ValueData: "GIMP {#CUSTOM_GIMP_VERSION} XCF"; Flags: uninsdeletekey
 Root: HKA; Subkey: "Software\Classes\GIMP{#GIMP_MUTEX_VERSION}.xcf\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\gimp-{#GIMP_MUTEX_VERSION}.exe,1"
 Root: HKA; Subkey: "Software\Classes\GIMP{#GIMP_MUTEX_VERSION}.xcf\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\gimp-{#GIMP_MUTEX_VERSION}.exe"" ""%1"""
 Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#GIMP_MUTEX_VERSION}.exe\SupportedTypes"; ValueType: string; ValueName: ".xcf"; ValueData: ""
 Root: HKA; Subkey: "Software\GIMP {#GIMP_MUTEX_VERSION}\Capabilities\FileAssociations"; ValueType: string; ValueName: ".xcf"; ValueData: "GIMP{#GIMP_MUTEX_VERSION}.xcf"
 ;Associations (make association for .ico files but do not set DefaultIcon since their content is the DefaultIcon)
 Root: HKA; Subkey: "Software\Classes\.ico\OpenWithProgids"; ValueType: string; ValueName: "GIMP{#GIMP_MUTEX_VERSION}.ico"; ValueData: ""; Flags: uninsdeletevalue
-Root: HKA; Subkey: "Software\Classes\GIMP{#GIMP_MUTEX_VERSION}.ico"; ValueType: string; ValueName: ""; ValueData: "GIMP {#CUSTOM_GIMP_VERSION}"; Flags: uninsdeletekey
+Root: HKA; Subkey: "Software\Classes\GIMP{#GIMP_MUTEX_VERSION}.ico"; ValueType: string; ValueName: ""; ValueData: "GIMP {#CUSTOM_GIMP_VERSION} ICO"; Flags: uninsdeletekey
 Root: HKA; Subkey: "Software\Classes\GIMP{#GIMP_MUTEX_VERSION}.ico\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "%1"
 Root: HKA; Subkey: "Software\Classes\GIMP{#GIMP_MUTEX_VERSION}.ico\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\gimp-{#GIMP_MUTEX_VERSION}.exe"" ""%1"""
 Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#GIMP_MUTEX_VERSION}.exe\SupportedTypes"; ValueType: string; ValueName: ".ico"; ValueData: ""
