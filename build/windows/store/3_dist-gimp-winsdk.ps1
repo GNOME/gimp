@@ -241,8 +241,8 @@ foreach ($bundle in $supported_archs)
         Foreach-Object {$_ -replace "@CHANNEL_SUFFIX@","$channel_suffix"} | Foreach-Object {$_ -replace "@MUTEX_SUFFIX@","$mutex_suffix"}             |
         Set-Content $msix_arch\AppxManifest.xml
         ### Match supported filetypes
-        $file_types = Get-Content 'build\windows\installer\data_associations.list'       | Foreach-Object {"              <uap:FileType>." + $_} |
-                      Foreach-Object {$_ +  "</uap:FileType>"}                           | Where-Object {$_ -notmatch 'xcf'}
+        $file_types = Get-Content "$build_dir\plug-ins\file_associations.list" | Foreach-Object {"              <uap:FileType>." + $_} |
+                      Foreach-Object {$_ +  "</uap:FileType>"}                 | Where-Object {$_ -notmatch 'xcf'}
         (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@FILE_TYPES@","$file_types"}  |
         Set-Content $msix_arch\AppxManifest.xml
 

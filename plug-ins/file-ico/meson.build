@@ -1,11 +1,12 @@
 plugin_name = 'file-ico'
 
-plugin_sources = [
+plugin_sourcecode = [
   'ico-dialog.c',
   'ico-load.c',
   'ico-export.c',
   'ico.c',
 ]
+plugin_sources = plugin_sourcecode
 
 if platform_windows
   plugin_sources += windows.compile_resources(

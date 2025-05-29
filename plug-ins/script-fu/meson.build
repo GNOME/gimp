@@ -23,13 +23,14 @@ executable_name = 'script-fu'
 # Several source files implement the PDB procedures of type PLUGIN, of similar names.
 # script-fu.c also implements PDB procedure of type EXTENSION "extension-script-fu"
 
-plugin_sources = [
+plugin_sourcecode = [
   'script-fu-eval.c',
   'script-fu-text-console.c',
   'script-fu-refresh.c',
 
   'script-fu.c',
 ]
+plugin_sources = plugin_sourcecode
 
 if not meson.is_cross_build()
   if platform_windows

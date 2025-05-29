@@ -2,10 +2,11 @@ if openexr.found()
 
 plugin_name = 'file-exr'
 
-plugin_sources = [
+plugin_sourcecode = [
   'file-exr.c',
   'openexr-wrapper.cc',
 ]
+plugin_sources = plugin_sourcecode
 
 if platform_windows
   plugin_sources += windows.compile_resources(

@@ -2,10 +2,11 @@ subdir('examples')
 
 plugin_name = 'fractal-explorer'
 
-plugin_sources = [
+plugin_sourcecode = [
   'fractal-explorer-dialogs.c',
   'fractal-explorer.c',
 ]
+plugin_sources = plugin_sourcecode
 
 if platform_windows
   plugin_sources += windows.compile_resources(

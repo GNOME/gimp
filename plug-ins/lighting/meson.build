@@ -2,7 +2,7 @@ subdir('images')
 
 plugin_name = 'lighting'
 
-plugin_sources = [
+plugin_sourcecode = [
   'lighting-apply.c',
   'lighting-icons.c',
   'lighting-image.c',
@@ -10,8 +10,8 @@ plugin_sources = [
   'lighting-preview.c',
   'lighting-shade.c',
   'lighting-ui.c',
-  lighting_icon_sources,
 ]
+plugin_sources = plugin_sourcecode + lighting_icon_sources
 
 if platform_windows
   plugin_sources += windows.compile_resources(

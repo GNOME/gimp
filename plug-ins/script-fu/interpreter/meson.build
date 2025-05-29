@@ -3,10 +3,11 @@ scriptfuInclude = include_directories('..')
 
 executable_name = 'gimp-script-fu-interpreter-' + gimp_api_version
 
-plugin_sources = [
+plugin_sourcecode = [
   'script-fu-interpreter.c',
   'script-fu-interpreter-plugin.c',
 ]
+plugin_sources = plugin_sourcecode
 
 if not meson.is_cross_build()
   if platform_windows

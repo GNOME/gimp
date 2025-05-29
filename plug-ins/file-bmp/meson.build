@@ -10,12 +10,12 @@ huffman = custom_target('huffman.h',
                         command: [gen_huffman, '@OUTPUT@'],
 )
 
-plugin_sources = [
+plugin_sourcecode = [
   'bmp-load.c',
   'bmp-export.c',
   'bmp.c',
-  huffman,
 ]
+plugin_sources = plugin_sourcecode + huffman
 
 if platform_windows
   plugin_sources += windows.compile_resources(

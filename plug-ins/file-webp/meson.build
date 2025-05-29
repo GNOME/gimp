@@ -2,12 +2,13 @@ if webp_found
 
 plugin_name = 'file-webp'
 
-plugin_sources = [
+plugin_sourcecode = [
   'file-webp-dialog.c',
   'file-webp-load.c',
   'file-webp-export.c',
   'file-webp.c',
 ]
+plugin_sources = plugin_sourcecode
 
 if platform_windows
   plugin_sources += windows.compile_resources(

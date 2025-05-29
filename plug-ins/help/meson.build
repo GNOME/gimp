@@ -1,6 +1,6 @@
 plugin_name = 'help'
 
-plugin_sources = [
+plugin_sourcecode = [
   # 'gimp-help-lookup.c',
   'gimphelp.c',
   'gimphelpdomain.c',
@@ -8,6 +8,7 @@ plugin_sources = [
   'gimphelplocale.c',
   'gimphelpprogress.c',
 ]
+plugin_sources = plugin_sourcecode
 
 if platform_windows
   plugin_sources += windows.compile_resources(

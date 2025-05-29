@@ -3,7 +3,7 @@ subdir('images')
 
 plugin_name = 'gfig'
 
-plugin_sources = [
+plugin_sourcecode = [
   'gfig-arc.c',
   'gfig-bezier.c',
   'gfig-circle.c',
@@ -20,8 +20,8 @@ plugin_sources = [
   'gfig-star.c',
   'gfig-style.c',
   'gfig.c',
-  gfig_icon_sources,
 ]
+plugin_sources = plugin_sourcecode + gfig_icon_sources
 
 plugin_sources += gnome.compile_resources(
   'gfig-menus',

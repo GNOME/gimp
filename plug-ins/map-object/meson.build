@@ -1,6 +1,6 @@
 plugin_name = 'map-object'
 
-plugin_sources = [
+plugin_sourcecode = [
   'arcball.c',
   'map-object-apply.c',
   'map-object-icons.c',
@@ -9,8 +9,8 @@ plugin_sources = [
   'map-object-preview.c',
   'map-object-shade.c',
   'map-object-ui.c',
-  lighting_icon_sources,
 ]
+plugin_sources = plugin_sourcecode + lighting_icon_sources
 
 if platform_windows
   plugin_sources += windows.compile_resources(

@@ -1,12 +1,13 @@
 
 plugin_name = 'metadata-editor'
 
-plugin_sources = [
+plugin_sourcecode = [
   'metadata-editor.c',
   'metadata-impexp.c',
   'metadata-tags.c',
   'metadata-xml.c',
 ]
+plugin_sources = plugin_sourcecode
 
 if platform_windows
   plugin_rc = configure_file(
@@ -42,10 +43,11 @@ plugin_executables += [plugin_exe.full_path()]
 
 plugin_name = 'metadata-viewer'
 
-plugin_sources = [
+plugin_sourcecode = [
   'metadata-viewer.c',
   'metadata-tags.c',
 ]
+plugin_sources = plugin_sourcecode
 
 if platform_windows
   plugin_rc = configure_file(

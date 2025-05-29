@@ -7,10 +7,11 @@ file_raw_exes = [
 
 foreach plugin_name : file_raw_exes
 
-  plugin_sources = [
+  plugin_sourcecode = [
     plugin_name +'.c',
     'file-raw-utils.c',
   ]
+  plugin_sources = plugin_sourcecode
 
   if platform_windows
     plugin_rc = configure_file(
