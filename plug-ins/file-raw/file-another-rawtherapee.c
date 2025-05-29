@@ -108,7 +108,7 @@ anotherrawtherapee_init_procedures (GimpPlugIn *plug_in)
    * TODO: allow setting the location of the executable in preferences
    */
   gboolean  search_path      = FALSE;
-  gchar    *exec_path        = file_raw_get_executable_path ("ART", NULL,
+  gchar    *exec_path        = file_raw_get_executable_path ("ART", "-cli",
                                                              "ART_EXECUTABLE",
                                                              NULL,
                                                              REGISTRY_KEY_BASE,
@@ -175,7 +175,7 @@ anotherrawtherapee_init_procedures (GimpPlugIn *plug_in)
 
 static GimpProcedure *
 anotherrawtherapee_create_procedure (GimpPlugIn  *plug_in,
-                      const gchar *name)
+                                     const gchar *name)
 {
   GimpProcedure *procedure = NULL;
 
