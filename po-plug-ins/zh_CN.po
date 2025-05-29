@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-05-25 16:26+0000\n"
-"PO-Revision-Date: 2025-05-26 17:01+0800\n"
+"POT-Creation-Date: 2025-05-29 16:42+0000\n"
+"PO-Revision-Date: 2025-05-30 07:03+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -143,7 +143,7 @@ msgstr "JavaScript（GJS）插件示例"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2287
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/grid.c:836
 #: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:260
-#: plug-ins/file-exr/file-exr.c:438 plug-ins/file-psd/psd-load.c:3786
+#: plug-ins/file-exr/file-exr.c:438 plug-ins/file-psd/psd-load.c:3840
 #: plug-ins/flame/flame.c:823 plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -602,7 +602,7 @@ msgstr "百叶窗"
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:728
 #: plug-ins/common/file-farbfeld.c:296 plug-ins/common/file-gegl.c:446
 #: plug-ins/common/file-gif-load.c:1147 plug-ins/common/file-iff.c:408
-#: plug-ins/common/file-jp2-load.c:1275 plug-ins/common/file-pcx.c:710
+#: plug-ins/common/file-jp2-load.c:1293 plug-ins/common/file-pcx.c:710
 #: plug-ins/common/file-pcx.c:718 plug-ins/common/file-pcx.c:726
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:921
 #: plug-ins/common/file-pnm.c:845 plug-ins/common/file-qoi.c:296
@@ -615,7 +615,7 @@ msgstr "百叶窗"
 #: plug-ins/file-exr/file-exr.c:288 plug-ins/file-faxg3/faxg3.c:578
 #: plug-ins/file-fits/fits.c:673 plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1093
-#: plug-ins/file-psd/psd-load.c:2992 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:3046 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1554
 #: plug-ins/file-tiff/file-tiff-load.c:2359
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:559
@@ -1498,7 +1498,8 @@ msgstr "HSL"
 
 #: plug-ins/common/compose.c:275 plug-ins/common/compose.c:444
 #: plug-ins/common/compose.c:507 plug-ins/common/decompose.c:210
-#: plug-ins/common/decompose.c:304 plug-ins/common/file-jp2-load.c:255
+#: plug-ins/common/decompose.c:304 plug-ins/common/file-jp2-load.c:224
+#: plug-ins/common/file-jp2-load.c:270
 msgid "CMYK"
 msgstr "CMYK"
 
@@ -2568,7 +2569,7 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #.
 #: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:352
 #: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:408
-#: plug-ins/common/file-heif.c:853 plug-ins/common/file-jp2-load.c:1047
+#: plug-ins/common/file-heif.c:853 plug-ins/common/file-jp2-load.c:1065
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
 #: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
 #: plug-ins/common/file-png.c:631 plug-ins/common/file-pnm.c:688
@@ -3717,19 +3718,49 @@ msgstr "ILBM 未包含图像数据——可能为色板文件"
 msgid "JPEG 2000 image"
 msgstr "JPEG 2000 图像"
 
-#: plug-ins/common/file-jp2-load.c:191 plug-ins/common/file-jp2-load.c:225
+#: plug-ins/common/file-jp2-load.c:191 plug-ins/common/file-jp2-load.c:238
 msgid "JPEG 2000"
 msgstr "JPEG 2000"
 
-#: plug-ins/common/file-jp2-load.c:223
+#: plug-ins/common/file-jp2-load.c:218 plug-ins/common/file-jp2-load.c:264
+msgid "Color s_pace"
+msgstr "色彩空间(_P)"
+
+#: plug-ins/common/file-jp2-load.c:219 plug-ins/common/file-jp2-load.c:265
+msgid "Color space"
+msgstr "色彩空间"
+
+#: plug-ins/common/file-jp2-load.c:220 plug-ins/common/file-jp2-load.c:266
+msgid "sRGB"
+msgstr "sRGB"
+
+#: plug-ins/common/file-jp2-load.c:221 plug-ins/common/file-jp2-load.c:267
+msgid "Grayscale"
+msgstr "灰度"
+
+#: plug-ins/common/file-jp2-load.c:222 plug-ins/common/file-jp2-load.c:268
+msgid "YCbCr"
+msgstr "YCbCr"
+
+#: plug-ins/common/file-jp2-load.c:223 plug-ins/common/file-jp2-load.c:269
+msgid "xvYCC"
+msgstr "xvYCC"
+
+#: plug-ins/common/file-jp2-load.c:225 plug-ins/common/file-jp2-load.c:271
+#: plug-ins/metadata/metadata-tags.c:261 plug-ins/metadata/metadata-tags.c:297
+#: plug-ins/metadata/metadata-tags.c:304 plug-ins/metadata/metadata-tags.c:311
+msgid "Unknown"
+msgstr "未知"
+
+#: plug-ins/common/file-jp2-load.c:236
 msgid "JPEG 2000 codestream"
 msgstr "JPEG 2000 码流"
 
-#: plug-ins/common/file-jp2-load.c:228
+#: plug-ins/common/file-jp2-load.c:241
 msgid "Loads JPEG 2000 codestream."
 msgstr "加载 JPEG 2000 码流。"
 
-#: plug-ins/common/file-jp2-load.c:229
+#: plug-ins/common/file-jp2-load.c:242
 msgid ""
 "Loads JPEG 2000 codestream. If the color space is set to UNKNOWN (0), we "
 "will try to guess, which is only possible for few spaces (such as "
@@ -3740,98 +3771,68 @@ msgstr ""
 "空间有可能（比如灰度）。大部分如此调用将失败。最好预期是您知道数据的色彩空"
 "间。"
 
-#: plug-ins/common/file-jp2-load.c:249
-msgid "Color s_pace"
-msgstr "色彩空间(_P)"
-
-#: plug-ins/common/file-jp2-load.c:250
-msgid "Color space"
-msgstr "色彩空间"
-
-#: plug-ins/common/file-jp2-load.c:251
-msgid "sRGB"
-msgstr "sRGB"
-
-#: plug-ins/common/file-jp2-load.c:252
-msgid "Grayscale"
-msgstr "灰度"
-
-#: plug-ins/common/file-jp2-load.c:253
-msgid "YCbCr"
-msgstr "YCbCr"
-
-#: plug-ins/common/file-jp2-load.c:254
-msgid "xvYCC"
-msgstr "xvYCC"
-
-#: plug-ins/common/file-jp2-load.c:256 plug-ins/metadata/metadata-tags.c:261
-#: plug-ins/metadata/metadata-tags.c:297 plug-ins/metadata/metadata-tags.c:304
-#: plug-ins/metadata/metadata-tags.c:311
-msgid "Unknown"
-msgstr "未知"
-
-#: plug-ins/common/file-jp2-load.c:978
+#: plug-ins/common/file-jp2-load.c:996
 #, c-format
 msgid "Unsupported JPEG 2000%s '%s' with %d components."
 msgstr "不支持 JPEG 2000%s “%s”带有 %d 分量。"
 
-#: plug-ins/common/file-jp2-load.c:1055 plug-ins/common/file-wmf.c:238
+#: plug-ins/common/file-jp2-load.c:1073 plug-ins/common/file-wmf.c:238
 #: plug-ins/common/file-wmf.c:596
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr "无法打开“%s”并读取"
 
-#: plug-ins/common/file-jp2-load.c:1064
+#: plug-ins/common/file-jp2-load.c:1082
 #, c-format
 msgid "Failed to initialize decoder for '%s', out of memory?"
 msgstr "为“%s”初始化解码器失败，内存不足吗？"
 
-#: plug-ins/common/file-jp2-load.c:1080
+#: plug-ins/common/file-jp2-load.c:1098
 #, c-format
 msgid "Couldn't set parameters on decoder for '%s'."
 msgstr "无法对“%s”的解码器设置参数。"
 
-#: plug-ins/common/file-jp2-load.c:1088
+#: plug-ins/common/file-jp2-load.c:1106
 #, c-format
 msgid "Couldn't read JP2 header from '%s'."
 msgstr "无法从“%s”读取 JP2 文件头。"
 
-#: plug-ins/common/file-jp2-load.c:1096
+#: plug-ins/common/file-jp2-load.c:1114
 #, c-format
 msgid "Couldn't decode JP2 image in '%s'."
 msgstr "无法解码“%s”中的 JP2 图像。"
 
-#: plug-ins/common/file-jp2-load.c:1104
+#: plug-ins/common/file-jp2-load.c:1122
 #, c-format
 msgid "Couldn't decompress JP2 image in '%s'."
 msgstr "无法解压缩“%s”中的 JP2 图像。"
 
-#: plug-ins/common/file-jp2-load.c:1135
+#: plug-ins/common/file-jp2-load.c:1153
 #, c-format
 msgid "Couldn't decode CIELAB JP2 image in '%s'."
 msgstr "无法解码“%s”中的 CIELAB JP2 图像。"
 
-#: plug-ins/common/file-jp2-load.c:1192
+#: plug-ins/common/file-jp2-load.c:1210
 #, c-format
 msgid "Unknown color space in JP2 codestream '%s'."
 msgstr "JP2 码流“%s”带有未知色彩空间。"
 
-#: plug-ins/common/file-jp2-load.c:1203
+#: plug-ins/common/file-jp2-load.c:1221
 #, c-format
 msgid "Couldn't convert YCbCr JP2 image '%s' to RGB."
 msgstr "无法转换 YCbCr JP2 图像“%s”为 RGB。"
 
-#: plug-ins/common/file-jp2-load.c:1213
+#: plug-ins/common/file-jp2-load.c:1231
 #, c-format
 msgid "Couldn't convert CMYK JP2 image in '%s' to RGB."
 msgstr "无法转换“%s”中的 CMYK JP2 图像为 RGB。"
 
-#: plug-ins/common/file-jp2-load.c:1225
+#: plug-ins/common/file-jp2-load.c:1243
 #, c-format
 msgid "Couldn't convert xvYCC JP2 image in '%s' to RGB."
 msgstr "无法转换“%s”中的 xvYCC JP2 图像为 RGB。"
 
-#: plug-ins/common/file-jp2-load.c:1252
+#: plug-ins/common/file-jp2-load.c:1270
 #, c-format
 msgid "Unsupported color space in JP2 image '%s'."
 msgstr "不支持 JP2 图像“%s”中的色彩空间。"
@@ -9943,7 +9944,7 @@ msgid ""
 "Layers will be merged on export."
 msgstr "Photoshop 不支持多于一个图层的索引图像。图层将在导出时合并。"
 
-#: plug-ins/file-psd/psd-export.c:2703 plug-ins/file-psd/psd-load.c:3825
+#: plug-ins/file-psd/psd-export.c:2703 plug-ins/file-psd/psd-load.c:3879
 msgid "Compatibility Notice"
 msgstr "兼容性注意"
 
@@ -10044,30 +10045,30 @@ msgstr "不支持的或无效的图层蒙板宽度：%d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "不支持的或无效的图层蒙板尺寸：%dx%d"
 
-#: plug-ins/file-psd/psd-load.c:2232 plug-ins/file-psd/psd-load.c:2965
+#: plug-ins/file-psd/psd-load.c:2232 plug-ins/file-psd/psd-load.c:3019
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "不支持的压缩模式：%d"
 
-#: plug-ins/file-psd/psd-load.c:3127
+#: plug-ins/file-psd/psd-load.c:3181
 msgid "Extra"
 msgstr "附加的"
 
-#: plug-ins/file-psd/psd-load.c:3350
+#: plug-ins/file-psd/psd-load.c:3404
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "不支持或无效的通道尺寸"
 
-#: plug-ins/file-psd/psd-load.c:3419
+#: plug-ins/file-psd/psd-load.c:3473
 #, c-format
 msgid "Failed to decompress data"
 msgstr "解压缩数据失败"
 
-#: plug-ins/file-psd/psd-load.c:3802
+#: plug-ins/file-psd/psd-load.c:3856
 msgid "Duotone Import"
 msgstr "双色导入"
 
-#: plug-ins/file-psd/psd-load.c:3803
+#: plug-ins/file-psd/psd-load.c:3857
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10077,7 +10078,7 @@ msgstr ""
 "双色调颜色空间数据已保存\n"
 "且可在导出时重新应用。"
 
-#: plug-ins/file-psd/psd-load.c:3826
+#: plug-ins/file-psd/psd-load.c:3880
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -10322,6 +10323,7 @@ msgid ""
 "GIMP currently supports these RAW loaders:\n"
 "- darktable (http://www.darktable.org/), at least 1.7\n"
 "- RawTherapee (http://rawtherapee.com/), at least 5.2\n"
+"- ART (https://art.pixls.us/)\n"
 "\n"
 "Please install one of them in order to load RAW files."
 msgstr ""
@@ -10330,6 +10332,7 @@ msgstr ""
 "GIMP 目前支持这些 RAW 加载器：\n"
 "- darktable（http://www.darktable.org/），至少为 1.7 版本\n"
 "- RawTherapee（http://rawtherapee.com/），至少为 5.2 版本\n"
+"- ART（https://art.pixls.us/）\n"
 "\n"
 "请安装其中之一以载入 RAW 文件。"
 
