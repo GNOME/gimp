@@ -2,11 +2,12 @@ if get_option('webkit-unmaintained')
 
 plugin_name = 'help-browser'
 
-plugin_sources = [
+plugin_sourcecode = [
   'dialog.c',
   'help-browser.c',
   'uri.c',
 ]
+plugin_sources = plugin_sourcecode
 
 plugin_sources += gnome.compile_resources(
   'help-menus',

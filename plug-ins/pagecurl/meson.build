@@ -1,8 +1,9 @@
 plugin_name = 'pagecurl'
 
-plugin_sources = [
+plugin_sourcecode = [
   'pagecurl.c',
 ]
+plugin_sources = plugin_sourcecode
 
 pagecurl_icons_images = [
   'curl0.png',

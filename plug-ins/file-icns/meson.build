@@ -1,11 +1,12 @@
 plugin_name = 'file-icns'
 
-plugin_sources = [
+plugin_sourcecode = [
   'file-icns-data.c',
   'file-icns-load.c',
   'file-icns-export.c',
   'file-icns.c',
 ]
+plugin_sources = plugin_sourcecode
 
 if platform_windows
   plugin_sources += windows.compile_resources(

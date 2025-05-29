@@ -3,10 +3,11 @@ scriptfuInclude = include_directories('..')
 
 executable_name = 'script-fu-server'
 
-plugin_sources = [
+plugin_sourcecode = [
   'script-fu-server.c',
   'script-fu-server-plugin.c',
 ]
+plugin_sources = plugin_sourcecode
 
 if not meson.is_cross_build()
   if platform_windows

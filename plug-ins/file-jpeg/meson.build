@@ -1,6 +1,6 @@
 plugin_name = 'file-jpeg'
 
-plugin_sources = [
+plugin_sourcecode = [
   'jpeg-icc.c',
   'jpeg-load.c',
   'jpeg-quality.c',
@@ -8,6 +8,7 @@ plugin_sources = [
   'jpeg-settings.c',
   'jpeg.c',
 ]
+plugin_sources = plugin_sourcecode
 
 if platform_windows
   plugin_sources += windows.compile_resources(

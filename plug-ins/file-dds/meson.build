@@ -1,6 +1,6 @@
 plugin_name = 'file-dds'
 
-plugin_sources = [
+plugin_sourcecode = [
   'bc7.c',
   'dds.c',
   'ddsread.c',
@@ -10,6 +10,7 @@ plugin_sources = [
   'misc.c',
   'formats.c',
 ]
+plugin_sources = plugin_sourcecode
 
 if platform_windows
   plugin_sources += windows.compile_resources(

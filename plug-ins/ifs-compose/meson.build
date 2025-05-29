@@ -1,10 +1,11 @@
 plugin_name = 'ifs-compose'
 
-plugin_sources = [
+plugin_sourcecode = [
   'ifs-compose-storage.c',
   'ifs-compose-utils.c',
   'ifs-compose.c',
 ]
+plugin_sources = plugin_sourcecode
 
 plugin_sources += gnome.compile_resources(
   'ifs-menus',

@@ -1,6 +1,6 @@
 plugin_name = 'file-psd'
 
-plugin_sources = [
+plugin_sourcecode = [
   'psd-image-res-load.c',
   'psd-layer-res-load.c',
   'psd-load.c',
@@ -9,6 +9,7 @@ plugin_sources = [
   'psd-util.c',
   'psd.c',
 ]
+plugin_sources = plugin_sourcecode
 
 if platform_windows
   plugin_sources += windows.compile_resources(

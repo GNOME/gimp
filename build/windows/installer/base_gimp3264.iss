@@ -463,7 +463,7 @@ Root: HKA; Subkey: "Software\RegisteredApplications"; ValueType: string; ValueNa
 		#if Copy(FileLine,1,1)=="#" || FileLine==""
 			//skip comments and empty lines
 		#else
-			#pragma message "Processing data_associations.list: " + FileLine
+			#pragma message "Processing file_associations.list: " + FileLine
 Root: HKA; Subkey: "Software\Classes\.{#FileLine}\OpenWithProgids"; ValueType: string; ValueName: "GIMP{#GIMP_MUTEX_VERSION}.{#FileLine}"; ValueData: ""; Flags: uninsdeletevalue
 Root: HKA; Subkey: "Software\Classes\GIMP{#GIMP_MUTEX_VERSION}.{#FileLine}"; ValueType: string; ValueName: ""; ValueData: "GIMP {#CUSTOM_GIMP_VERSION} {#UpperCase(FileLine)}"; Flags: uninsdeletekey
 Root: HKA; Subkey: "Software\Classes\GIMP{#GIMP_MUTEX_VERSION}.{#FileLine}\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\gimp-{#GIMP_MUTEX_VERSION}.exe,2"
@@ -474,7 +474,7 @@ Root: HKA; Subkey: "Software\GIMP {#GIMP_MUTEX_VERSION}\Capabilities\FileAssocia
 	#endif
 #endsub
 #define FileHandle
-#for {FileHandle = FileOpen(AddBackslash(SourcePath)+"data_associations.list"); \
+#for {FileHandle = FileOpen(AddBackslash(BUILD_DIR)+"plug-ins\file_associations.list"); \
   FileHandle && !FileEof(FileHandle); FileLine = FileRead(FileHandle)} \
   ProcessAssociation
 #if FileHandle

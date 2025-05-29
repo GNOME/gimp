@@ -1,6 +1,6 @@
 plugin_name = 'selection-to-path'
 
-plugin_sources = [
+plugin_sourcecode = [
   'curve.c',
   'edge.c',
   'fit.c',
@@ -10,6 +10,7 @@ plugin_sources = [
   'spline.c',
   'vector.c',
 ]
+plugin_sources = plugin_sourcecode
 
 if platform_windows
   plugin_sources += windows.compile_resources(

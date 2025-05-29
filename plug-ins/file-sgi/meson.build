@@ -1,9 +1,10 @@
 plugin_name = 'file-sgi'
 
-plugin_sources = [
+plugin_sourcecode = [
   'sgi-lib.c',
   'sgi.c',
 ]
+plugin_sources = plugin_sourcecode
 
 if platform_windows
   plugin_sources += windows.compile_resources(

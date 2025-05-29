@@ -4,12 +4,13 @@ endif
 
 plugin_name = 'twain'
 
-plugin_sources = [
+plugin_sourcecode = [
   'tw_func.c',
   'tw_util.c',
   'tw_win.c',
   'twain.c',
 ]
+plugin_sources = plugin_sourcecode
 
 plugin_sources += windows.compile_resources(
   gimp_plugins_rc,

@@ -3,7 +3,7 @@ if have_print
 
 plugin_name = 'print'
 
-plugin_sources = [
+plugin_sourcecode = [
   'print-draw-page.c',
   'print-page-layout.c',
   'print-page-setup.c',
@@ -12,6 +12,7 @@ plugin_sources = [
   'print-utils.c',
   'print.c',
 ]
+plugin_sources = plugin_sourcecode
 
 if platform_windows
   plugin_sources += windows.compile_resources(
