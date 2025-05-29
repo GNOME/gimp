@@ -1,7 +1,7 @@
 if not stable or not release or gimp_version.endswith('+git') or get_option('file-plug-ins-test')
 
 # This does not get installed for releases
-plugins += {
+python_plugins += {
   'name': 'test-file-plug-ins',
   'srcs': [
     # modules

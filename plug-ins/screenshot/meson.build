@@ -1,12 +1,13 @@
 plugin_name = 'screenshot'
 
-plugin_sources = [
+plugin_sourcecode = [
   'screenshot-freedesktop.c',
   'screenshot-osx.c',
   'screenshot-win32.c',
   'screenshot-x11.c',
   'screenshot.c',
 ]
+plugin_sources = plugin_sourcecode
 
 screenshot_icons_images = [
   'screenshot-icon.png',

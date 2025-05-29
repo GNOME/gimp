@@ -1,4 +1,4 @@
-plugins = [
+python_plugins = [
   { 'name': 'colorxhtml' },
   { 'name': 'file-openraster' },
   { 'name': 'foggify' },
@@ -13,7 +13,7 @@ plugins = [
 ]
 
 if not stable or not release
-  plugins += [
+  python_plugins += [
     { 'name': 'test-dialog' },
   ]
 endif
@@ -21,7 +21,7 @@ endif
 subdir('python-console')
 subdir('tests')
 
-foreach plugin : plugins
+foreach plugin : python_plugins
   name = plugin.get('name')
   srcs = plugin.get('srcs', [name + '.py'])
 

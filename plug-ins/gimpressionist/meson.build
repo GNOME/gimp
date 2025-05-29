@@ -4,7 +4,7 @@ subdir('Presets')
 
 plugin_name = 'gimpressionist'
 
-plugin_sources = [
+plugin_sourcecode = [
   'brush.c',
   'color.c',
   'general.c',
@@ -24,6 +24,7 @@ plugin_sources = [
   'sizemap.c',
   'utils.c',
 ]
+plugin_sources = plugin_sourcecode
 
 if platform_windows
   plugin_sources += windows.compile_resources(

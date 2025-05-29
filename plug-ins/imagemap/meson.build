@@ -2,7 +2,7 @@ subdir('images')
 
 plugin_name = 'imagemap'
 
-plugin_sources = [
+plugin_sourcecode = [
   'imap_about.c',
   'imap_browse.c',
   'imap_circle.c',
@@ -60,8 +60,8 @@ plugin_sources = [
   'imap_string.c',
   'imap_taglist.c',
   'imap_ui_grid.c',
-  imagemap_icon_sources,
 ]
+plugin_sources = plugin_sourcecode + imagemap_icon_sources
 
 plugin_sources += gnome.compile_resources(
   'imagemap-menus',

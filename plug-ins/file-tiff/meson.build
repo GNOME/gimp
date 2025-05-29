@@ -1,11 +1,12 @@
 plugin_name = 'file-tiff'
 
-plugin_sources = [
+plugin_sourcecode = [
   'file-tiff-io.c',
   'file-tiff-export.c',
   'file-tiff.c',
   'file-tiff-load.c',
 ]
+plugin_sources = plugin_sourcecode
 
 if platform_windows
   plugin_sources += windows.compile_resources(
