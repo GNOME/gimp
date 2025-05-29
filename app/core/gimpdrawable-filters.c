@@ -143,6 +143,81 @@ gimp_drawable_has_filter (GimpDrawable *drawable,
   return filter_exists;
 }
 
+gboolean
+gimp_drawable_raise_filter (GimpDrawable *drawable,
+                            GimpFilter   *filter)
+{
+  gint index;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), FALSE);
+  g_return_val_if_fail (gimp_drawable_has_filter (drawable, filter), FALSE);
+
+  if (gimp_drawable_filter_get_mask (GIMP_DRAWABLE_FILTER (filter)) == NULL)
+    return FALSE;
+
+  index = gimp_container_get_child_index (drawable->private->filter_stack,
+                                          GIMP_OBJECT (filter));
+  index--;
+
+  if (index >= 0)
+    {
+      gimp_image_undo_push_filter_reorder (gimp_item_get_image (GIMP_ITEM (drawable)),
+                                           _("Reorder filter"),
+                                           drawable,
+                                           GIMP_DRAWABLE_FILTER (filter));
+
+      gimp_container_reorder (drawable->private->filter_stack,
+                              GIMP_OBJECT (filter), index);
+
+      gimp_item_refresh_filters (GIMP_ITEM (drawable));
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+gboolean
+gimp_drawable_lower_filter (GimpDrawable *drawable,
+                            GimpFilter   *filter)
+{
+  gint index;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), FALSE);
+  g_return_val_if_fail (gimp_drawable_has_filter (drawable, filter), FALSE);
+
+  if (gimp_drawable_filter_get_mask (GIMP_DRAWABLE_FILTER (filter)) == NULL)
+    return FALSE;
+
+  index = gimp_container_get_child_index (drawable->private->filter_stack,
+                                          GIMP_OBJECT (filter));
+  index++;
+
+  if (index < gimp_container_get_n_children (drawable->private->filter_stack))
+    {
+      /* Don't rearrange filters with floating selection */
+      if (! GIMP_IS_DRAWABLE_FILTER (gimp_container_get_child_by_index (drawable->private->filter_stack,
+                                                                        index)))
+        return FALSE;
+
+      gimp_image_undo_push_filter_reorder (gimp_item_get_image (GIMP_ITEM (drawable)),
+                                           _("Reorder filter"),
+                                           drawable,
+                                           GIMP_DRAWABLE_FILTER (filter));
+
+      gimp_container_reorder (drawable->private->filter_stack,
+                              GIMP_OBJECT (filter), index);
+
+      gimp_item_refresh_filters (GIMP_ITEM (drawable));
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
 void
 gimp_drawable_merge_filters (GimpDrawable *drawable)
 {

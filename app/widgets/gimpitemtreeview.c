@@ -2709,11 +2709,9 @@ static void
 gimp_item_tree_view_effects_raise_clicked (GtkWidget        *widget,
                                            GimpItemTreeView *view)
 {
-  GimpImage    *image    = view->priv->image;
-  GimpDrawable *drawable = NULL;
+  GimpImage *image = view->priv->image;
 
-  if (! view->priv->effects_filter ||
-      ! GIMP_IS_DRAWABLE_FILTER (view->priv->effects_filter))
+  if (! GIMP_IS_DRAWABLE_FILTER (view->priv->effects_filter))
     return;
 
   if (gimp_drawable_filter_get_mask (view->priv->effects_filter) == NULL)
@@ -2723,35 +2721,23 @@ gimp_item_tree_view_effects_raise_clicked (GtkWidget        *widget,
       return;
     }
 
-  drawable = gimp_drawable_filter_get_drawable (view->priv->effects_filter);
-  if (drawable)
+  if (gimp_drawable_raise_filter (view->priv->effects_drawable,
+                                  GIMP_FILTER (view->priv->effects_filter)))
     {
-      GimpContainer *filters;
-      gint           index;
-
-      filters = gimp_drawable_get_filters (drawable);
-
-      index = gimp_container_get_child_index (filters,
-                                              GIMP_OBJECT (view->priv->effects_filter));
-      index--;
-
-      if (index >= 0)
+      if (gtk_widget_get_sensitive (view->priv->effects_edit_button))
         {
-          gimp_image_undo_push_filter_reorder (image, _("Reorder filter"),
-                                               drawable,
-                                               view->priv->effects_filter);
+          GimpContainer *container;
+          gint           index;
 
-          gimp_container_reorder (filters, GIMP_OBJECT (view->priv->effects_filter),
-                                  index);
+          container =
+            gimp_drawable_get_filters (GIMP_DRAWABLE (view->priv->effects_drawable));
 
-          if (gtk_widget_get_sensitive (view->priv->effects_edit_button))
-            {
-              gtk_widget_set_sensitive (view->priv->effects_lower_button, TRUE);
-              if (index == 0)
-                gtk_widget_set_sensitive (view->priv->effects_raise_button, FALSE);
-            }
+          index = gimp_container_get_child_index (container,
+                                                  GIMP_OBJECT (view->priv->effects_filter));
 
-          gimp_item_refresh_filters (GIMP_ITEM (view->priv->effects_drawable));
+          gtk_widget_set_sensitive (view->priv->effects_lower_button, TRUE);
+          if (index == 0)
+            gtk_widget_set_sensitive (view->priv->effects_raise_button, FALSE);
         }
     }
 }
@@ -2760,11 +2746,9 @@ static void
 gimp_item_tree_view_effects_lower_clicked (GtkWidget        *widget,
                                            GimpItemTreeView *view)
 {
-  GimpImage    *image    = view->priv->image;
-  GimpDrawable *drawable = NULL;
+  GimpImage *image = view->priv->image;
 
-  if (! view->priv->effects_filter ||
-      ! GIMP_IS_DRAWABLE_FILTER (view->priv->effects_filter))
+  if (! GIMP_IS_DRAWABLE_FILTER (view->priv->effects_filter))
     return;
 
   if (gimp_drawable_filter_get_mask (view->priv->effects_filter) == NULL)
@@ -2774,40 +2758,23 @@ gimp_item_tree_view_effects_lower_clicked (GtkWidget        *widget,
       return;
     }
 
-  drawable = gimp_drawable_filter_get_drawable (view->priv->effects_filter);
-  if (drawable)
+  if (gimp_drawable_lower_filter (view->priv->effects_drawable,
+                                  GIMP_FILTER (view->priv->effects_filter)))
     {
-      GimpContainer *filters;
-      gint           index;
-
-      filters = gimp_drawable_get_filters (drawable);
-
-      index = gimp_container_get_child_index (filters,
-                                              GIMP_OBJECT (view->priv->effects_filter));
-      index++;
-
-      if (index < gimp_container_get_n_children (filters))
+      if (gtk_widget_get_sensitive (view->priv->effects_edit_button))
         {
-          /* Don't rearrange filters with floating selection */
-          if (! GIMP_IS_DRAWABLE_FILTER (
-                  gimp_container_get_child_by_index (filters, index)))
-            return;
+          GimpContainer *container;
+          gint           index;
 
-          gimp_image_undo_push_filter_reorder (image, _("Reorder filter"),
-                                               drawable,
-                                               view->priv->effects_filter);
+          container =
+            gimp_drawable_get_filters (GIMP_DRAWABLE (view->priv->effects_drawable));
 
-          gimp_container_reorder (filters, GIMP_OBJECT (view->priv->effects_filter),
-                                  index);
+          index = gimp_container_get_child_index (container,
+                                                  GIMP_OBJECT (view->priv->effects_filter));
 
-          if (gtk_widget_get_sensitive (view->priv->effects_edit_button))
-            {
-              gtk_widget_set_sensitive (view->priv->effects_raise_button, TRUE);
-              if (index == gimp_container_get_n_children (filters) - 1)
-                gtk_widget_set_sensitive (view->priv->effects_lower_button, FALSE);
-            }
-
-          gimp_item_refresh_filters (GIMP_ITEM (drawable));
+          gtk_widget_set_sensitive (view->priv->effects_raise_button, TRUE);
+          if (index == gimp_container_get_n_children (container) - 1)
+            gtk_widget_set_sensitive (view->priv->effects_lower_button, FALSE);
         }
     }
 }
