@@ -118,8 +118,7 @@ struct _GimpItemTreeViewClass
   const gchar          *lock_visibility_tooltip;
   const gchar          *lock_visibility_help_id;
 
-  /* actions */
-
+  /* cursor actions */
   const gchar          *move_cursor_up_action;
   const gchar          *move_cursor_down_action;
   const gchar          *move_cursor_up_flat_action;
