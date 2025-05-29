@@ -33,11 +33,14 @@
 #define GIMP_DRAWABLE_TREE_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DRAWABLE_TREE_VIEW, GimpDrawableTreeViewClass))
 
 
-typedef struct _GimpDrawableTreeViewClass  GimpDrawableTreeViewClass;
+typedef struct _GimpDrawableTreeViewClass   GimpDrawableTreeViewClass;
+typedef struct _GimpDrawableTreeViewPrivate GimpDrawableTreeViewPrivate;
 
 struct _GimpDrawableTreeView
 {
-  GimpItemTreeView  parent_instance;
+  GimpItemTreeView             parent_instance;
+
+  GimpDrawableTreeViewPrivate *priv;
 };
 
 struct _GimpDrawableTreeViewClass
