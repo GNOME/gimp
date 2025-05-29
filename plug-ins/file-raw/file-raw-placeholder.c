@@ -178,6 +178,7 @@ placeholder_load (GimpProcedure         *procedure,
                  "GIMP currently supports these RAW loaders:\n"
                  "- darktable (http://www.darktable.org/), at least 1.7\n"
                  "- RawTherapee (http://rawtherapee.com/), at least 5.2\n"
+                 "- ART (https://art.pixls.us/)\n"
                  "\n"
                  "Please install one of them in order to "
                  "load RAW files."),

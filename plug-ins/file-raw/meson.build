@@ -1,5 +1,6 @@
 
 file_raw_exes = [
+  'file-another-rawtherapee',
   'file-darktable',
   'file-raw-placeholder',
   'file-rawtherapee',
