@@ -179,9 +179,9 @@ load_image (GFile                 *file,
   GimpPrecision     image_precision;
   GimpImage        *image = NULL;
   GimpImageType     layer_type;
-  GimpLayer        *layer;
+  gint              layer_count = 0;
+  gboolean          layers_only;
   const Babl       *format;
-  GeglBuffer       *buffer = NULL;
   gint              bpp;
   gint              tile_height;
   gchar            *pixels = NULL;
@@ -285,47 +285,66 @@ load_image (GFile                 *file,
         gimp_image_set_color_profile (image, profile);
     }
 
-  layer = gimp_layer_new (image, _("Background"), width, height,
-                          layer_type, 100,
-                          gimp_image_get_default_new_layer_mode (image));
-  gimp_image_insert_layer (image, layer, NULL, 0);
+  exr_loader_get_layer_info (loader, &layer_count, &layers_only);
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
-  format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
-  bpp = babl_format_get_bytes_per_pixel (format);
-
-  tile_height = gimp_tile_height ();
-  pixels = g_new0 (gchar, tile_height * width * bpp);
-
-  for (begin = 0; begin < height; begin += tile_height)
+  /* i == -1 represents an image with no named layers, just raw channels.
+   * If layers_only is TRUE, there are only named layers and we skip these
+   * entirely and just read the layers */
+  for (gint i = (-1 + layers_only); i < layer_count; i++)
     {
-      gint end;
-      gint num;
-      gint i;
+      GimpLayer  *layer;
+      GeglBuffer *buffer     = NULL;
+      gchar      *layer_name = NULL;
 
-      end = MIN (begin + tile_height, height);
-      num = end - begin;
+      if (i > -1)
+        layer_name = exr_loader_get_layer_name (loader, i);
+      else
+        layer_name = _("Background");
 
-      for (i = 0; i < num; i++)
+      layer = gimp_layer_new (image, layer_name, width, height,
+                              layer_type, 100,
+                              gimp_image_get_default_new_layer_mode (image));
+      gimp_image_insert_layer (image, layer, NULL, -1);
+
+      buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+      format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+      bpp = babl_format_get_bytes_per_pixel (format);
+
+      tile_height = gimp_tile_height ();
+      pixels = g_new0 (gchar, tile_height * width * bpp);
+
+      for (begin = 0; begin < height; begin += tile_height)
         {
-          gint retval;
+          gint end;
+          gint num;
 
-          retval = exr_loader_read_pixel_row (loader,
-                                              pixels + (i * width * bpp),
-                                              bpp, begin + i);
-          if (retval < 0)
+          end = MIN (begin + tile_height, height);
+          num = end - begin;
+
+          for (gint j = 0; j < num; j++)
             {
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("Error reading pixel data from '%s'"),
-                           gimp_file_get_utf8_name (file));
-              goto out;
+              gint retval;
+
+              retval = exr_loader_read_pixel_row (loader,
+                                                  pixels + (j * width * bpp),
+                                                  bpp, begin + j, i);
+              if (retval < 0)
+                {
+                  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                               _("Error reading pixel data from '%s'"),
+                               gimp_file_get_utf8_name (file));
+                  goto out;
+                }
             }
+
+          gegl_buffer_set (buffer, GEGL_RECTANGLE (0, begin, width, num),
+                           0, NULL, pixels, GEGL_AUTO_ROWSTRIDE);
+
+          gimp_progress_update ((gdouble) begin / (gdouble) height);
         }
 
-      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, begin, width, num),
-                       0, NULL, pixels, GEGL_AUTO_ROWSTRIDE);
-
-      gimp_progress_update ((gdouble) begin / (gdouble) height);
+      g_clear_object (&buffer);
+      g_clear_pointer (&pixels, g_free);
     }
 
   /* try to read the file comment */
@@ -390,8 +409,6 @@ load_image (GFile                 *file,
 
  out:
   g_clear_object (&profile);
-  g_clear_object (&buffer);
-  g_clear_pointer (&pixels, g_free);
   g_clear_pointer (&comment, g_free);
   g_clear_pointer (&loader, exr_loader_unref);
 

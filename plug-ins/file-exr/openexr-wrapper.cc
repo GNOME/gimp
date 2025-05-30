@@ -82,41 +82,72 @@ struct _EXRLoader
     data_window_(file_.header().dataWindow()),
     channels_(file_.header().channels())
   {
+    std::set<string> layerNames;
+    bool             loaded;
+
+    channels_.layers (layerNames);
+    layers_only_ = false;
+    layer_count_ = layerNames.size();
+
+    loaded = initializeImage (false);
+
+    /* The OpenEXR image may have named layers only, not loose channels.
+     * In that case, we need to go through each layer name and append it
+     * to the call for findChannel () */
+    if (! loaded)
+      {
+        layers_only_ = true;
+
+
+        for (std::set<std::string>::const_iterator i = layerNames.begin();
+             i != layerNames.end(); ++i)
+          {
+            loaded = initializeImage (true, *i + ".");
+
+            if (loaded)
+              break;
+          }
+      }
+  }
+
+  bool initializeImage (bool               has_layers,
+                        const std::string &prefix = "")
+  {
     const Channel* chan;
 
     can_load_ = true;
 
-    if (channels_.findChannel("R") ||
-        channels_.findChannel("G") ||
-        channels_.findChannel("B"))
+    if (channels_.findChannel(prefix + "R") ||
+        channels_.findChannel(prefix + "G") ||
+        channels_.findChannel(prefix + "B"))
       {
         format_string_ = "RGB";
         image_type_ = IMAGE_TYPE_RGB;
 
-        if ((chan = channels_.findChannel("R")))
+        if ((chan = channels_.findChannel(prefix + "R")))
           pt_ = chan->type;
-        else if ((chan = channels_.findChannel("G")))
+        else if ((chan = channels_.findChannel(prefix + "G")))
           pt_ = chan->type;
         else
-          pt_ = channels_.findChannel("B")->type;
+          pt_ = channels_.findChannel(prefix + "B")->type;
       }
-    else if (channels_.findChannel("Y") &&
-             (channels_.findChannel("RY") ||
-              channels_.findChannel("BY")))
+    else if (channels_.findChannel(prefix + "Y") &&
+             (channels_.findChannel(prefix + "RY") ||
+              channels_.findChannel(prefix + "BY")))
       {
         format_string_ = "Y'CbCr";
         image_type_ = IMAGE_TYPE_YUV;
 
         /* TODO: Use RGBA interface to incorporate
          * RY/BY chroma channels */
-        pt_ = channels_.findChannel("Y")->type;
+        pt_ = channels_.findChannel(prefix + "Y")->type;
       }
-    else if (channels_.findChannel("Y"))
+    else if (channels_.findChannel(prefix + "Y"))
       {
         format_string_ = "Y";
         image_type_ = IMAGE_TYPE_GRAY;
 
-        pt_ = channels_.findChannel("Y")->type;
+        pt_ = channels_.findChannel(prefix + "Y")->type;
       }
     else
       {
@@ -152,9 +183,9 @@ struct _EXRLoader
           }
       }
 
-    if (channels_.findChannel("A"))
+    if (channels_.findChannel(prefix + "A"))
       {
-        format_string_.append("A");
+        format_string_.append(prefix + "A");
         has_alpha_ = true;
       }
     else
@@ -177,18 +208,30 @@ struct _EXRLoader
         format_string_.append(" float");
         bpc_ = 4;
       }
+
+    return can_load_;
   }
 
   int readPixelRow(char *pixels,
                    int   bpp,
-                   int   row)
+                   int   row,
+                   int   layer_index)
   {
-    const int actual_row = data_window_.min.y + row;
-    FrameBuffer fb;
+    const int        actual_row = data_window_.min.y + row;
+    FrameBuffer      fb;
+    std::set<string> layerNames;
+    std::string      prefix     = "";
     // This is necessary because OpenEXR expects the buffer to begin at
     // (0, 0). Though it probably results in some unmapped address,
     // hopefully OpenEXR will not make use of it. :/
     char* base = pixels - (data_window_.min.x * bpp);
+
+    if (layer_index > -1)
+      {
+        channels_.layers (layerNames);
+
+        prefix = *std::next(layerNames.begin(), layer_index) + ".";
+      }
 
     switch (image_type_)
       {
@@ -198,21 +241,21 @@ struct _EXRLoader
 
       case IMAGE_TYPE_YUV:
       case IMAGE_TYPE_GRAY:
-        fb.insert("Y", Slice(pt_, base, bpp, 0, 1, 1, 0.5));
+        fb.insert(prefix + "Y", Slice(pt_, base, bpp, 0, 1, 1, 0.5));
         if (hasAlpha())
           {
-            fb.insert("A", Slice(pt_, base + bpc_, bpp, 0, 1, 1, 1.0));
+            fb.insert(prefix + "A", Slice(pt_, base + bpc_, bpp, 0, 1, 1, 1.0));
           }
         break;
 
       case IMAGE_TYPE_RGB:
       default:
-        fb.insert("R", Slice(pt_, base + (bpc_ * 0), bpp, 0, 1, 1, 0.0));
-        fb.insert("G", Slice(pt_, base + (bpc_ * 1), bpp, 0, 1, 1, 0.0));
-        fb.insert("B", Slice(pt_, base + (bpc_ * 2), bpp, 0, 1, 1, 0.0));
+        fb.insert(prefix + "R", Slice(pt_, base + (bpc_ * 0), bpp, 0, 1, 1, 0.0));
+        fb.insert(prefix + "G", Slice(pt_, base + (bpc_ * 1), bpp, 0, 1, 1, 0.0));
+        fb.insert(prefix + "B", Slice(pt_, base + (bpc_ * 2), bpp, 0, 1, 1, 0.0));
         if (hasAlpha())
           {
-            fb.insert("A", Slice(pt_, base + (bpc_ * 3), bpp, 0, 1, 1, 1.0));
+            fb.insert(prefix + "A", Slice(pt_, base + (bpc_ * 3), bpp, 0, 1, 1, 1.0));
           }
       }
 
@@ -415,6 +458,30 @@ struct _EXRLoader
     return result;
   }
 
+  gchar *getLayerName(int index) const {
+    gchar *result = NULL;
+
+    if (index > -1 && index < layer_count_)
+      {
+        std::set<string> layerNames;
+        std::string      name;
+
+        channels_.layers (layerNames);
+
+        name   = *std::next(layerNames.begin(), index);
+        result = (gchar *) g_memdup2 (name.c_str () + '\0',
+                                      strlen (name.c_str ()) + 1);
+      }
+    return result;
+  }
+
+  int getLayerInfo(gint *num_layers, int *layers_only) const {
+    *num_layers  = layer_count_;
+    *layers_only = layers_only_;
+
+    return 1;
+  }
+
   size_t refcount_;
   InputFile file_;
   const Box2i data_window_;
@@ -423,6 +490,8 @@ struct _EXRLoader
   int bpc_;
   EXRImageType image_type_;
   bool has_alpha_;
+  bool layers_only_;
+  int  layer_count_;
   bool can_load_;
   std::string format_string_;
   std::string unknown_channel_name_;
@@ -550,17 +619,33 @@ exr_loader_get_xmp (EXRLoader *loader,
   return loader->getXmp (size);
 }
 
+gchar *
+exr_loader_get_layer_name (EXRLoader  *loader,
+                           gint        index)
+{
+  return loader->getLayerName (index);
+}
+
+int
+exr_loader_get_layer_info (EXRLoader *loader,
+                           gint      *num_layers,
+                           gboolean  *layers_only)
+{
+  return loader->getLayerInfo (num_layers, layers_only);
+}
+
 int
 exr_loader_read_pixel_row (EXRLoader *loader,
-                           char *pixels,
-                           int bpp,
-                           int row)
+                           char      *pixels,
+                           int        bpp,
+                           int        row,
+                           int        layer_index)
 {
   int retval = -1;
   // Don't let any exceptions propagate to the C layer.
   try
     {
-      retval = loader->readPixelRow(pixels, bpp, row);
+      retval = loader->readPixelRow(pixels, bpp, row, layer_index);
     }
   catch (...)
     {
