@@ -33,6 +33,10 @@ GimpContainer * gimp_drawable_get_filters           (GimpDrawable *drawable);
 
 gboolean        gimp_drawable_has_visible_filters   (GimpDrawable *drawable);
 
+gint            gimp_drawable_n_editable_filters    (GimpDrawable *drawable,
+                                                     gint         *first,
+                                                     gint         *last);
+
 void            gimp_drawable_add_filter            (GimpDrawable *drawable,
                                                      GimpFilter   *filter);
 void            gimp_drawable_remove_filter         (GimpDrawable *drawable,
