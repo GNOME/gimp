@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-05-25 16:26+0000\n"
-"PO-Revision-Date: 2025-05-25 21:10+0300\n"
+"POT-Creation-Date: 2025-05-29 16:42+0000\n"
+"PO-Revision-Date: 2025-05-30 21:16+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -143,7 +143,7 @@ msgstr "Приклад додатка мовою JavaScript (GJS)"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2287
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/grid.c:836
 #: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:260
-#: plug-ins/file-exr/file-exr.c:438 plug-ins/file-psd/psd-load.c:3786
+#: plug-ins/file-exr/file-exr.c:438 plug-ins/file-psd/psd-load.c:3840
 #: plug-ins/flame/flame.c:823 plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -605,7 +605,7 @@ msgstr "Жалюзі"
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:728
 #: plug-ins/common/file-farbfeld.c:296 plug-ins/common/file-gegl.c:446
 #: plug-ins/common/file-gif-load.c:1147 plug-ins/common/file-iff.c:408
-#: plug-ins/common/file-jp2-load.c:1275 plug-ins/common/file-pcx.c:710
+#: plug-ins/common/file-jp2-load.c:1293 plug-ins/common/file-pcx.c:710
 #: plug-ins/common/file-pcx.c:718 plug-ins/common/file-pcx.c:726
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:921
 #: plug-ins/common/file-pnm.c:845 plug-ins/common/file-qoi.c:296
@@ -618,7 +618,7 @@ msgstr "Жалюзі"
 #: plug-ins/file-exr/file-exr.c:288 plug-ins/file-faxg3/faxg3.c:578
 #: plug-ins/file-fits/fits.c:673 plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1093
-#: plug-ins/file-psd/psd-load.c:2992 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:3046 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1554
 #: plug-ins/file-tiff/file-tiff-load.c:2359
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:559
@@ -1511,7 +1511,8 @@ msgstr "HSL"
 
 #: plug-ins/common/compose.c:275 plug-ins/common/compose.c:444
 #: plug-ins/common/compose.c:507 plug-ins/common/decompose.c:210
-#: plug-ins/common/decompose.c:304 plug-ins/common/file-jp2-load.c:255
+#: plug-ins/common/decompose.c:304 plug-ins/common/file-jp2-load.c:224
+#: plug-ins/common/file-jp2-load.c:270
 msgid "CMYK"
 msgstr "CMYK"
 
@@ -2609,7 +2610,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #.
 #: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:352
 #: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:408
-#: plug-ins/common/file-heif.c:853 plug-ins/common/file-jp2-load.c:1047
+#: plug-ins/common/file-heif.c:853 plug-ins/common/file-jp2-load.c:1065
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
 #: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
 #: plug-ins/common/file-png.c:631 plug-ins/common/file-pnm.c:688
@@ -3798,19 +3799,49 @@ msgstr "В ILBM не міститься даних зображення — йм
 msgid "JPEG 2000 image"
 msgstr "Зображення JPEG 2000"
 
-#: plug-ins/common/file-jp2-load.c:191 plug-ins/common/file-jp2-load.c:225
+#: plug-ins/common/file-jp2-load.c:191 plug-ins/common/file-jp2-load.c:238
 msgid "JPEG 2000"
 msgstr "JPEG 2000"
 
-#: plug-ins/common/file-jp2-load.c:223
+#: plug-ins/common/file-jp2-load.c:218 plug-ins/common/file-jp2-load.c:264
+msgid "Color s_pace"
+msgstr "Колірний п_ростір"
+
+#: plug-ins/common/file-jp2-load.c:219 plug-ins/common/file-jp2-load.c:265
+msgid "Color space"
+msgstr "Простір кольорів"
+
+#: plug-ins/common/file-jp2-load.c:220 plug-ins/common/file-jp2-load.c:266
+msgid "sRGB"
+msgstr "sRGB"
+
+#: plug-ins/common/file-jp2-load.c:221 plug-ins/common/file-jp2-load.c:267
+msgid "Grayscale"
+msgstr "Відтінки сірого"
+
+#: plug-ins/common/file-jp2-load.c:222 plug-ins/common/file-jp2-load.c:268
+msgid "YCbCr"
+msgstr "YCbCr"
+
+#: plug-ins/common/file-jp2-load.c:223 plug-ins/common/file-jp2-load.c:269
+msgid "xvYCC"
+msgstr "xvYCC"
+
+#: plug-ins/common/file-jp2-load.c:225 plug-ins/common/file-jp2-load.c:271
+#: plug-ins/metadata/metadata-tags.c:261 plug-ins/metadata/metadata-tags.c:297
+#: plug-ins/metadata/metadata-tags.c:304 plug-ins/metadata/metadata-tags.c:311
+msgid "Unknown"
+msgstr "Невідомо"
+
+#: plug-ins/common/file-jp2-load.c:236
 msgid "JPEG 2000 codestream"
 msgstr "Кодовий потік JPEG 2000"
 
-#: plug-ins/common/file-jp2-load.c:228
+#: plug-ins/common/file-jp2-load.c:241
 msgid "Loads JPEG 2000 codestream."
 msgstr "Завантажує потік даних JPEG 2000."
 
-#: plug-ins/common/file-jp2-load.c:229
+#: plug-ins/common/file-jp2-load.c:242
 msgid ""
 "Loads JPEG 2000 codestream. If the color space is set to UNKNOWN (0), we "
 "will try to guess, which is only possible for few spaces (such as "
@@ -3822,98 +3853,68 @@ msgstr ""
 "декількох просторів (зокрема простору відтінків сірого). Більшість таких "
 "вгадувань є невдалими. Ви б мали знати простір кольорів ваших даних."
 
-#: plug-ins/common/file-jp2-load.c:249
-msgid "Color s_pace"
-msgstr "Колірний п_ростір"
-
-#: plug-ins/common/file-jp2-load.c:250
-msgid "Color space"
-msgstr "Простір кольорів"
-
-#: plug-ins/common/file-jp2-load.c:251
-msgid "sRGB"
-msgstr "sRGB"
-
-#: plug-ins/common/file-jp2-load.c:252
-msgid "Grayscale"
-msgstr "Відтінки сірого"
-
-#: plug-ins/common/file-jp2-load.c:253
-msgid "YCbCr"
-msgstr "YCbCr"
-
-#: plug-ins/common/file-jp2-load.c:254
-msgid "xvYCC"
-msgstr "xvYCC"
-
-#: plug-ins/common/file-jp2-load.c:256 plug-ins/metadata/metadata-tags.c:261
-#: plug-ins/metadata/metadata-tags.c:297 plug-ins/metadata/metadata-tags.c:304
-#: plug-ins/metadata/metadata-tags.c:311
-msgid "Unknown"
-msgstr "Невідомо"
-
-#: plug-ins/common/file-jp2-load.c:978
+#: plug-ins/common/file-jp2-load.c:996
 #, c-format
 msgid "Unsupported JPEG 2000%s '%s' with %d components."
 msgstr "Непідтримуваний JPEG 2000%s «%s» з %d компонентами."
 
-#: plug-ins/common/file-jp2-load.c:1055 plug-ins/common/file-wmf.c:238
+#: plug-ins/common/file-jp2-load.c:1073 plug-ins/common/file-wmf.c:238
 #: plug-ins/common/file-wmf.c:596
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr "Не вдається відкрити «%s» для читання."
 
-#: plug-ins/common/file-jp2-load.c:1064
+#: plug-ins/common/file-jp2-load.c:1082
 #, c-format
 msgid "Failed to initialize decoder for '%s', out of memory?"
 msgstr "Не вдалося ініціалізувати декодер для «%s». Не вистачає пам'яті?"
 
-#: plug-ins/common/file-jp2-load.c:1080
+#: plug-ins/common/file-jp2-load.c:1098
 #, c-format
 msgid "Couldn't set parameters on decoder for '%s'."
 msgstr "Не вдається встановити параметри декодера для «%s»."
 
-#: plug-ins/common/file-jp2-load.c:1088
+#: plug-ins/common/file-jp2-load.c:1106
 #, c-format
 msgid "Couldn't read JP2 header from '%s'."
 msgstr "Не вдається зчитати заголовок JP2 з «%s»"
 
-#: plug-ins/common/file-jp2-load.c:1096
+#: plug-ins/common/file-jp2-load.c:1114
 #, c-format
 msgid "Couldn't decode JP2 image in '%s'."
 msgstr "Не вдається декодувати зображення JP2 в «%s»"
 
-#: plug-ins/common/file-jp2-load.c:1104
+#: plug-ins/common/file-jp2-load.c:1122
 #, c-format
 msgid "Couldn't decompress JP2 image in '%s'."
 msgstr "Не вдається розпакувати зображення JP2 в «%s»"
 
-#: plug-ins/common/file-jp2-load.c:1135
+#: plug-ins/common/file-jp2-load.c:1153
 #, c-format
 msgid "Couldn't decode CIELAB JP2 image in '%s'."
 msgstr "Не вдається декодувати зображення CIELAB JP2 в «%s»."
 
-#: plug-ins/common/file-jp2-load.c:1192
+#: plug-ins/common/file-jp2-load.c:1210
 #, c-format
 msgid "Unknown color space in JP2 codestream '%s'."
 msgstr "Невідомий колірний простір у кодовому потоці JP2 «%s»."
 
-#: plug-ins/common/file-jp2-load.c:1203
+#: plug-ins/common/file-jp2-load.c:1221
 #, c-format
 msgid "Couldn't convert YCbCr JP2 image '%s' to RGB."
 msgstr "Неможливо перетворити зображення YCbCr JP2 «%s» в RGB."
 
-#: plug-ins/common/file-jp2-load.c:1213
+#: plug-ins/common/file-jp2-load.c:1231
 #, c-format
 msgid "Couldn't convert CMYK JP2 image in '%s' to RGB."
 msgstr "Неможливо перетворити зображення CMYK JP2 в «%s» в RGB."
 
-#: plug-ins/common/file-jp2-load.c:1225
+#: plug-ins/common/file-jp2-load.c:1243
 #, c-format
 msgid "Couldn't convert xvYCC JP2 image in '%s' to RGB."
 msgstr "Неможливо перетворити зображення xvYCC JP2 в «%s» в RGB."
 
-#: plug-ins/common/file-jp2-load.c:1252
+#: plug-ins/common/file-jp2-load.c:1270
 #, c-format
 msgid "Unsupported color space in JP2 image '%s'."
 msgstr "Невідомий колірний простір у зображенні JP2 «%s»."
@@ -6170,17 +6171,14 @@ msgid "Cannot read header from '%s'"
 msgstr "Не вдається зчитати заголовок з «%s»"
 
 #: plug-ins/common/file-tim.c:173
-#| msgid "PNM Image"
 msgid "TIM Image"
 msgstr "Зображення TIM"
 
 #: plug-ins/common/file-tim.c:176
-#| msgid "Load file in the IFF file format"
 msgid "Load file in the TIM file format"
 msgstr "Завантажити файл у форматі TIM"
 
 #: plug-ins/common/file-tim.c:177
-#| msgid "Loads files in the PNM file format"
 msgid "Load file in the Sony Playstation TIM file format"
 msgstr "Завантажити файл у форматі TIM Sony Playstation"
 
@@ -6189,32 +6187,26 @@ msgid "Playstation TIM image"
 msgstr "Зображення TIM Playstation"
 
 #: plug-ins/common/file-tim.c:199
-#| msgid "Save file in the DICOM file format"
 msgid "Saves files in the TIM file format"
 msgstr "Зберігає файли у форматі TIM"
 
 #: plug-ins/common/file-tim.c:200
-#| msgid "Saves files in the JPEG XL file format"
 msgid "Saves files in the Playstation TIM file format"
 msgstr "Зберігає файли у форматі TIM Playstation"
 
 #: plug-ins/common/file-tim.c:218
-#| msgid "Type"
 msgid "_Type"
 msgstr "_Тип"
 
 #: plug-ins/common/file-tim.c:219
-#| msgid "Type of object to map to"
 msgid "Type of TIM texture to export"
 msgstr "Тип текстури TIM для експортування"
 
 #: plug-ins/common/file-tim.c:220
-#| msgid "Indexed"
 msgid "4BPP (Indexed)"
 msgstr "4 біт/піксель (індексований)"
 
 #: plug-ins/common/file-tim.c:221
-#| msgid "Indexed"
 msgid "8BPP (Indexed)"
 msgstr "8 біт/піксель (індексований)"
 
@@ -6227,7 +6219,6 @@ msgid "24BPP (RGB)"
 msgstr "24 біт/піксель (RGB)"
 
 #: plug-ins/common/file-tim.c:229
-#| msgid "Image 2"
 msgid "Image _X"
 msgstr "_X зображення"
 
@@ -6236,7 +6227,6 @@ msgid "Origin X coordinate"
 msgstr "Координата X початку"
 
 #: plug-ins/common/file-tim.c:235
-#| msgid "Image 2"
 msgid "Image _Y"
 msgstr "_Y зображення"
 
@@ -6245,57 +6235,45 @@ msgid "Origin Y coordinate"
 msgstr "Координата Y початку"
 
 #: plug-ins/common/file-tim.c:242
-#| msgid "Palette"
 msgid "_Palette X"
 msgstr "X _палітри"
 
 #: plug-ins/common/file-tim.c:243
-#| msgid "_Palette file"
 msgid "Palette X coordinate"
 msgstr "Координата X палітри"
 
 #: plug-ins/common/file-tim.c:248
-#| msgid "Palette"
 msgid "P_alette Y"
 msgstr "Y п_алітри"
 
 #: plug-ins/common/file-tim.c:249
-#| msgid "_Palette file"
 msgid "Palette Y coordinate"
 msgstr "Координата Y палітри"
 
 #: plug-ins/common/file-tim.c:383
 #, c-format
-#| msgid "Unsupported or invalid image width: %d"
 msgid "Unsupported TIM image type: %d"
 msgstr "Непідтримуваний тип зображення TIM: %d"
 
 #: plug-ins/common/file-tim.c:491
 #, c-format
-#| msgid "Could not read header from '%s'"
 msgid "Could not read palette from '%s'"
 msgstr "Не вдалося прочитати палітру з «%s»"
 
 #: plug-ins/common/file-tim.c:622
 #, c-format
-#| msgid ""
-#| "Unable to export '%s'.  The GIF file format does not support images that "
-#| "are more than %d pixels wide or tall."
 msgid ""
 "Unable to export '%s'.  The TIM file format does not support images that are "
 "more than %d pixels wide or tall."
 msgstr ""
-"Не вдається експортувати «%s». У файлі формату TIM не передбачено підтримки"
-" зображень "
-"шириною чи висотою більше, ніж %d точок."
+"Не вдається експортувати «%s». У файлі формату TIM не передбачено підтримки "
+"зображень шириною чи висотою більше, ніж %d точок."
 
 #: plug-ins/common/file-tim.c:862
-#| msgid "Image origin"
 msgid "Image Origin"
 msgstr "Центр зображення"
 
 #: plug-ins/common/file-tim.c:877
-#| msgid "_Palette Options"
 msgid "Palette Origin"
 msgstr "Центр палітри"
 
@@ -6312,7 +6290,6 @@ msgid "Nokia Over The Air Bitmap image"
 msgstr "Растрове зображення Nokia Over The Air"
 
 #: plug-ins/common/file-wbmp.c:154 plug-ins/common/file-wbmp.c:155
-#| msgid "Loads files in SGI image file format"
 msgid "Loads files in Nokia Over The Air Bitmap file format"
 msgstr "Завантажує файли у растровому форматі Nokia Over The Air"
 
@@ -6333,14 +6310,12 @@ msgstr "«%s» не є коректним файлом WBMP"
 
 #: plug-ins/common/file-wbmp.c:338
 #, c-format
-#| msgid "'%s': Invalid WBMP type value"
 msgid "'%s': Invalid OTA type value"
 msgstr "«%s»: некоректне значення типу OTA"
 
 #: plug-ins/common/file-wbmp.c:352 plug-ins/common/file-wbmp.c:366
 #: plug-ins/common/file-wbmp.c:380
 #, c-format
-#| msgid "'%s': Invalid WBMP type value"
 msgid "'%s': Invalid OTA header value"
 msgstr "«%s»: некоректне значення заголовка OTA"
 
@@ -10240,7 +10215,7 @@ msgstr ""
 "У Photoshop не передбачено підтримки індексованих зображень, у яких понад "
 "один шар. При експортуванні шари буде об'єднано."
 
-#: plug-ins/file-psd/psd-export.c:2703 plug-ins/file-psd/psd-load.c:3825
+#: plug-ins/file-psd/psd-export.c:2703 plug-ins/file-psd/psd-load.c:3879
 msgid "Compatibility Notice"
 msgstr "Зауваження щодо сумісності"
 
@@ -10342,30 +10317,30 @@ msgstr "Непідтримувана чи хибна ширина маски: %d
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Непідтримуваний чи некоректний розмір маски: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:2232 plug-ins/file-psd/psd-load.c:2965
+#: plug-ins/file-psd/psd-load.c:2232 plug-ins/file-psd/psd-load.c:3019
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Непідтримуваний метод стиснення: %d"
 
-#: plug-ins/file-psd/psd-load.c:3127
+#: plug-ins/file-psd/psd-load.c:3181
 msgid "Extra"
 msgstr "Додатково"
 
-#: plug-ins/file-psd/psd-load.c:3350
+#: plug-ins/file-psd/psd-load.c:3404
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Непідтримуваний чи некоректний розмір каналу"
 
-#: plug-ins/file-psd/psd-load.c:3419
+#: plug-ins/file-psd/psd-load.c:3473
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Не вдається розпакувати дані"
 
-#: plug-ins/file-psd/psd-load.c:3802
+#: plug-ins/file-psd/psd-load.c:3856
 msgid "Duotone Import"
 msgstr "Двотонове імпортування"
 
-#: plug-ins/file-psd/psd-load.c:3803
+#: plug-ins/file-psd/psd-load.c:3857
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10375,7 +10350,7 @@ msgstr ""
 "Дані двотонового простору кольорів було збережено,\n"
 "їх можна повторно застосувати при експортуванні."
 
-#: plug-ins/file-psd/psd-load.c:3826
+#: plug-ins/file-psd/psd-load.c:3880
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -10634,12 +10609,21 @@ msgstr "Raw Arriflex ARI"
 
 #: plug-ins/file-raw/file-raw-placeholder.c:176
 #, c-format
+#| msgid ""
+#| "There is no RAW loader installed to open '%s' files.\n"
+#| "\n"
+#| "GIMP currently supports these RAW loaders:\n"
+#| "- darktable (http://www.darktable.org/), at least 1.7\n"
+#| "- RawTherapee (http://rawtherapee.com/), at least 5.2\n"
+#| "\n"
+#| "Please install one of them in order to load RAW files."
 msgid ""
 "There is no RAW loader installed to open '%s' files.\n"
 "\n"
 "GIMP currently supports these RAW loaders:\n"
 "- darktable (http://www.darktable.org/), at least 1.7\n"
 "- RawTherapee (http://rawtherapee.com/), at least 5.2\n"
+"- ART (https://art.pixls.us/)\n"
 "\n"
 "Please install one of them in order to load RAW files."
 msgstr ""
@@ -10648,6 +10632,7 @@ msgstr ""
 "Наразі GIMP підтримує такі завантажувачі RAW:\n"
 "- darktable (http://www.darktable.org/), принаймні 1.7\n"
 "- RawTherapee (http://rawtherapee.com/), принаймні 5.2\n"
+"- ART (https://art.pixls.us/)\n\n"
 "\n"
 "Встановіть один з них для того, щоб відкривати файли RAW."
 
