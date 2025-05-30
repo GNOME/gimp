@@ -60,10 +60,17 @@ guchar           * exr_loader_get_exif       (EXRLoader  *loader,
 guchar           * exr_loader_get_xmp        (EXRLoader  *loader,
                                               guint      *size);
 
+gchar            * exr_loader_get_layer_name (EXRLoader  *loader,
+                                              gint        index);
+int                exr_loader_get_layer_info (EXRLoader  *loader,
+                                              gint       *num_layers,
+                                              gboolean   *layers_only);
+
 int                exr_loader_read_pixel_row (EXRLoader *loader,
                                               char      *pixels,
                                               int        bpp,
-                                              int        row);
+                                              int        row,
+                                              int        layer_index);
 
 G_END_DECLS
 
