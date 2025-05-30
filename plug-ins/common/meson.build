@@ -23,9 +23,6 @@ common_plugins_list = [
     'deps': [ gegl, gdk_pixbuf, cairo, gio, liblzma, pango, bz2, zlib, ],
   },
   { 'name': 'file-csource', },
-  { 'name': 'file-desktop-link',
-    'deps': [ gtk3, gegl, gdk_pixbuf, cairo, ],
-  },
   { 'name': 'file-dicom', },
   { 'name': 'file-farbfeld', },
   { 'name': 'file-gbr', },
@@ -173,6 +170,13 @@ endif
 
 if platform_windows
   common_plugins_list += { 'name': 'file-lnk', }
+endif
+
+if platform_linux
+  common_plugins_list += {
+    'name': 'file-desktop-link',
+    'deps': [ gtk3, gegl, gdk_pixbuf, cairo, ],
+  }
 endif
 
 if not platform_windows
