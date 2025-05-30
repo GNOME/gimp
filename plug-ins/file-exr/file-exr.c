@@ -304,7 +304,7 @@ load_image (GFile                 *file,
       layer = gimp_layer_new (image, layer_name, width, height,
                               layer_type, 100,
                               gimp_image_get_default_new_layer_mode (image));
-      gimp_image_insert_layer (image, layer, NULL, i);
+      gimp_image_insert_layer (image, layer, NULL, -1);
 
       buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
       format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
