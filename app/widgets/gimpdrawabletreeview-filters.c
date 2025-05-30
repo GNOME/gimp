@@ -140,8 +140,8 @@ _gimp_drawable_tree_view_filter_editor_show (GimpDrawableTreeView *view,
   GimpContainerTreeView             *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   GimpContainer                     *filters;
   GList                             *list;
-  gint                               n_children = 0;
-  gboolean                           visible    = FALSE;
+  gint                               n_editable;
+  gboolean                           visible   = FALSE;
 
   if (! editor)
     {
@@ -307,8 +307,6 @@ _gimp_drawable_tree_view_filter_editor_show (GimpDrawableTreeView *view,
         {
           if (gimp_filter_get_active (list->data))
             visible = TRUE;
-
-          n_children++;
         }
     }
 
@@ -322,8 +320,10 @@ _gimp_drawable_tree_view_filter_editor_show (GimpDrawableTreeView *view,
                                      gimp_drawable_filters_editor_visible_all_toggled,
                                      view);
 
-  /* Only show if we have at least one active filter */
-  if (n_children > 0)
+  gimp_drawable_n_editable_filters (drawable, &n_editable, NULL, NULL);
+
+  /*  only show if we have at least one editable filter  */
+  if (n_editable > 0)
     {
       GtkCellRenderer       *renderer;
       GtkTreeViewColumn     *column;
@@ -401,7 +401,6 @@ _gimp_drawable_tree_view_filter_editor_show (GimpDrawableTreeView *view,
       gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                       GTK_POLICY_NEVER,
                                       GTK_POLICY_NEVER);
-      gtk_widget_set_size_request (editor->vbox, -1, 24 * (n_children + 1));
 
       gimp_drawable_filters_editor_set_sensitive (view);
 
@@ -474,18 +473,19 @@ static void
 gimp_drawable_filters_editor_set_sensitive (GimpDrawableTreeView *view)
 {
   GimpDrawableTreeViewFiltersEditor *editor= view->editor;
+  gboolean                           editable;
   gint                               n_editable;
   gint                               first_editable;
   gint                               last_editable;
 
-  n_editable = gimp_drawable_n_editable_filters (editor->drawable,
-                                                 &first_editable,
-                                                 &last_editable);
+  editable = gimp_drawable_n_editable_filters (editor->drawable,
+                                               &n_editable,
+                                               &first_editable,
+                                               &last_editable);
 
-  gtk_widget_set_sensitive (editor->vbox, n_editable > 0);
-
-  /*  lock filter options if none is editable  */
-  if (n_editable == 0)
+  /*  lock everything if none is editable  */
+  gtk_widget_set_sensitive (editor->vbox, editable);
+  if (! editable)
     return;
 
   gtk_widget_set_sensitive (editor->options,
@@ -630,6 +630,19 @@ static void
 gimp_drawable_filters_editor_filters_changed (GimpDrawable         *drawable,
                                               GimpDrawableTreeView *view)
 {
+  GimpContainer *filters;
+  gint           n_filters;
+  gint           height;
+
+  filters   = gimp_drawable_get_filters (drawable);
+  n_filters = gimp_container_get_n_children (filters);
+
+  height = gimp_container_view_get_view_size (GIMP_CONTAINER_VIEW (view->editor->view), NULL);
+
+  /*  it doesn't get any more hackish  */
+  gtk_widget_set_size_request (view->editor->view,
+                               -1, (height + 6) * n_filters);
+
   gimp_drawable_filters_editor_set_sensitive (view);
 }
 

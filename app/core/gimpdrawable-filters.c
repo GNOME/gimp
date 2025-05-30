@@ -90,16 +90,18 @@ gimp_drawable_has_visible_filters (GimpDrawable *drawable)
   return FALSE;
 }
 
-gint
+gboolean
 gimp_drawable_n_editable_filters (GimpDrawable *drawable,
+                                  gint         *n_editable,
                                   gint         *first,
                                   gint         *last)
 {
-  GList *list;
-  gint   index          = 0;
-  gint   n_editable     = 0;
-  gint   first_editable = -1;
-  gint   last_editable  = -1;
+  GList    *list;
+  gboolean  editing_blocked = FALSE;
+  gint      index           = 0;
+  gint      n               = 0;
+  gint      first_editable  = -1;
+  gint      last_editable   = -1;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
@@ -119,20 +121,18 @@ gimp_drawable_n_editable_filters (GimpDrawable *drawable,
                         NULL);
 
           if (temporary)
-            {
-              n_editable     = 0;
-              first_editable = -1;
-              last_editable  = -1;
-
-              break;
-            }
-
-          editable = TRUE;
+            editing_blocked = TRUE;
+          else
+            editable = TRUE;
+        }
+      else
+        {
+          editing_blocked = TRUE;
         }
 
       if (editable)
         {
-          n_editable++;
+          n++;
 
           if (first_editable == -1)
             first_editable = index;
@@ -141,10 +141,11 @@ gimp_drawable_n_editable_filters (GimpDrawable *drawable,
         }
     }
 
-  if (first) *first = first_editable;
-  if (last)  *last  = last_editable;
+  if (n_editable) *n_editable = n;
+  if (first)      *first      = first_editable;
+  if (last)       *last       = last_editable;
 
-  return n_editable;
+  return ! editing_blocked;
 }
 
 void
