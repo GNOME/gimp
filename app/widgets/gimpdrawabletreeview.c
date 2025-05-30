@@ -56,9 +56,6 @@
 #include "gimp-intl.h"
 
 
-#define COLUMN_FILTERS_ACTIVE 3
-
-
 struct _GimpDrawableTreeViewPrivate
 {
   GtkWidget       *filters_header_image;
@@ -573,11 +570,13 @@ gimp_drawable_tree_view_filters_changed (GimpDrawable         *drawable,
 
   if (iter)
     {
-      gint n_filters = gimp_drawable_n_editable_filters (drawable, NULL, NULL);
+      gint n_editable;
+
+      gimp_drawable_n_editable_filters (drawable, &n_editable, NULL, NULL);
 
       gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
                           view->priv->model_column_filters,
-                          n_filters > 0,
+                          n_editable > 0,
                           -1);
     }
 }
@@ -612,8 +611,6 @@ gimp_drawable_tree_view_filters_cell_clicked (GtkCellRendererToggle *toggle,
                                    &rect);
       gtk_tree_view_convert_bin_window_to_widget_coords (GIMP_CONTAINER_TREE_VIEW (view)->view,
                                                          rect.x, rect.y, &rect.x, &rect.y);
-
-      gimp_drawable_tree_view_filters_changed (drawable, view);
 
       _gimp_drawable_tree_view_filter_editor_show (view, drawable, &rect);
     }
