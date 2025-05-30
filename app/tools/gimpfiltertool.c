@@ -924,7 +924,8 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
             gimp_container_reorder (filters, GIMP_OBJECT (filter_tool->filter),
                                     0);
 
-          gimp_item_refresh_filters (GIMP_ITEM (drawable));
+          gimp_drawable_update (drawable, 0, 0, -1, -1);
+          gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
         }
 
       g_object_set (filter_tool->filter,
@@ -1196,7 +1197,8 @@ gimp_filter_tool_halt (GimpFilterTool *filter_tool)
 
       gimp_filter_set_active (GIMP_FILTER (filter_tool->existing_filter), TRUE);
 
-      gimp_item_refresh_filters (GIMP_ITEM (drawable));
+      gimp_drawable_update (drawable, 0, 0, -1, -1);
+      gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
 
       /* Restore buttons in layer tree view */
       gimp_drawable_filters_changed (gimp_drawable_filter_get_drawable (filter_tool->existing_filter));
@@ -1249,7 +1251,7 @@ gimp_filter_tool_commit (GimpFilterTool *filter_tool,
         gimp_drawable_filter_get_drawable (filter_tool->existing_filter);
       image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-      gimp_image_undo_push_filter_modified (image, _("Edited filter"),
+      gimp_image_undo_push_filter_modified (image, _("Edit filter"),
                                             drawable,
                                             filter_tool->existing_filter);
       /* If the filter was changed, we need to update the original filter's
@@ -1354,9 +1356,8 @@ gimp_filter_tool_commit (GimpFilterTool *filter_tool,
 
       /* TODO: Review when we can apply NDE filters to channels/layer masks */
       if (GIMP_IS_LAYER (drawable))
-        {
-          gimp_item_refresh_filters (GIMP_ITEM (drawable));
-        }
+        gimp_drawable_update (drawable, 0, 0, -1, -1);
+
       gimp_image_flush (gimp_display_get_image (tool->display));
 
       if (filter_tool->config && filter_tool->has_settings)
@@ -1375,7 +1376,8 @@ gimp_filter_tool_commit (GimpFilterTool *filter_tool,
 
       gimp_filter_set_active (GIMP_FILTER (filter_tool->existing_filter), TRUE);
 
-      gimp_item_refresh_filters (GIMP_ITEM (drawable));
+      gimp_drawable_update (drawable, 0, 0, -1, -1);
+      gimp_image_flush (gimp_display_get_image (tool->display));
     }
 
   filter_tool->existing_filter = NULL;
@@ -1558,7 +1560,9 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
         {
           gimp_container_reorder (filters, GIMP_OBJECT (filter_tool->filter),
                                   count - 1);
-          gimp_item_refresh_filters ((GIMP_ITEM (drawable)));
+
+          gimp_drawable_update (drawable, 0, 0, -1, -1);
+          gimp_image_flush (gimp_display_get_image (tool->display));
         }
     }
 }
@@ -2171,7 +2175,7 @@ gimp_filter_tool_set_config (GimpFilterTool *filter_tool,
       GimpDrawableFilterMask *mask;
       GimpDrawable           *existing_drawable;
       gint                    index;
-      const gchar            *name = _("Editing filter...");
+      gchar                  *name;
 
       /* Get drawable from existing filter, as we might have a different
        * drawable selected in the layer tree */
@@ -2196,11 +2200,15 @@ gimp_filter_tool_set_config (GimpFilterTool *filter_tool,
                                     index);
         }
 
+      name = g_strdup_printf (_("Editing '%s'..."),
+                              gimp_object_get_name (filter_tool->existing_filter));
       g_object_set (filter_tool->filter,
                     "name",      name,
                     "mask",      mask,
                     "temporary", TRUE,
                     NULL);
+
+      g_free (name);
     }
 }
 

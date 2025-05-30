@@ -2107,7 +2107,7 @@ gimp_drawable_end_paint (GimpDrawable *drawable)
   if (gimp_drawable_has_visible_filters (drawable) &&
       drawable->private->paint_count == 0)
     {
-      gimp_item_refresh_filters (GIMP_ITEM (drawable));
+      gimp_drawable_update (drawable, 0, 0, -1, -1);
     }
 
   return result;

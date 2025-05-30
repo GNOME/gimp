@@ -90,6 +90,63 @@ gimp_drawable_has_visible_filters (GimpDrawable *drawable)
   return FALSE;
 }
 
+gint
+gimp_drawable_n_editable_filters (GimpDrawable *drawable,
+                                  gint         *first,
+                                  gint         *last)
+{
+  GList *list;
+  gint   index          = 0;
+  gint   n_editable     = 0;
+  gint   first_editable = -1;
+  gint   last_editable  = -1;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+
+  for (list = GIMP_LIST (drawable->private->filter_stack)->queue->head;
+       list;
+       list = g_list_next (list), index++)
+    {
+      GimpFilter *filter   = list->data;
+      gboolean    editable = FALSE;
+
+      if (GIMP_IS_DRAWABLE_FILTER (filter))
+        {
+          gboolean temporary;
+
+          g_object_get (filter,
+                        "temporary", &temporary,
+                        NULL);
+
+          if (temporary)
+            {
+              n_editable     = 0;
+              first_editable = -1;
+              last_editable  = -1;
+
+              break;
+            }
+
+          editable = TRUE;
+        }
+
+      if (editable)
+        {
+          n_editable++;
+
+          if (first_editable == -1)
+            first_editable = index;
+
+          last_editable = index;
+        }
+    }
+
+  if (first) *first = first_editable;
+  if (last)  *last  = last_editable;
+
+  return n_editable;
+}
+
 void
 gimp_drawable_add_filter (GimpDrawable *drawable,
                           GimpFilter   *filter)
@@ -170,7 +227,7 @@ gimp_drawable_raise_filter (GimpDrawable *drawable,
       gimp_container_reorder (drawable->private->filter_stack,
                               GIMP_OBJECT (filter), index);
 
-      gimp_item_refresh_filters (GIMP_ITEM (drawable));
+      gimp_drawable_update (drawable, 0, 0, -1, -1);
 
       return TRUE;
     }
@@ -210,7 +267,7 @@ gimp_drawable_lower_filter (GimpDrawable *drawable,
       gimp_container_reorder (drawable->private->filter_stack,
                               GIMP_OBJECT (filter), index);
 
-      gimp_item_refresh_filters (GIMP_ITEM (drawable));
+      gimp_drawable_update (drawable, 0, 0, -1, -1);
 
       return TRUE;
     }

@@ -242,7 +242,7 @@ gimp_drawable_filter_undo_pop (GimpUndo            *undo,
         {
           gimp_drawable_remove_filter (drawable, GIMP_FILTER (filter));
 
-          gimp_item_refresh_filters (GIMP_ITEM (drawable));
+          gimp_drawable_update (drawable, 0, 0, -1, -1);
         }
     }
   if ((undo_mode       == GIMP_UNDO_MODE_UNDO &&
