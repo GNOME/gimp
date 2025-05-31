@@ -265,7 +265,7 @@ gimp_drawable_filter_undo_pop (GimpUndo            *undo,
     {
       gimp_container_reorder (filter_stack, GIMP_OBJECT (filter),
                               df_undo->row_index);
-      gimp_drawable_filter_apply (filter, NULL);
+      gimp_drawable_update (drawable, 0, 0, -1, -1);
     }
   else if (undo->undo_type == GIMP_UNDO_FILTER_MODIFIED)
     {

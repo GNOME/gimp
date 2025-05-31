@@ -576,12 +576,12 @@ gimp_drawable_filters_editor_view_visible_cell_toggled (GtkCellRendererToggle *t
 
   if (gtk_tree_model_get_iter (view->model, &iter, path))
     {
-      GimpViewRenderer       *renderer;
       GimpContainerTreeStore *store;
+      GimpViewRenderer       *renderer;
       GimpDrawableFilter     *filter;
 
-      /* Update the filter state. */
       store = GIMP_CONTAINER_TREE_STORE (view->model);
+
       renderer = gimp_container_tree_store_get_renderer (store, &iter);
       filter = GIMP_DRAWABLE_FILTER (renderer->viewable);
       g_object_unref (renderer);
@@ -589,14 +589,16 @@ gimp_drawable_filters_editor_view_visible_cell_toggled (GtkCellRendererToggle *t
       if (GIMP_IS_DRAWABLE_FILTER (filter))
         {
           GimpDrawable *drawable;
-          gboolean      visible;
+          gboolean      active;
+
+          g_object_get (toggle,
+                        "active", &active,
+                        NULL);
 
           drawable = gimp_drawable_filter_get_drawable (filter);
+          gimp_filter_set_active (GIMP_FILTER (filter), ! active);
 
-          visible = gimp_filter_get_active (GIMP_FILTER (filter));
-          gimp_filter_set_active (GIMP_FILTER (filter), ! visible);
-
-          gimp_drawable_update_bounding_box (drawable);
+          gimp_drawable_update (drawable, 0, 0, -1, -1);
           gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
         }
     }
@@ -671,7 +673,7 @@ gimp_drawable_filters_editor_visible_all_toggled (GtkWidget            *widget,
         }
     }
 
-  gimp_drawable_update_bounding_box (editor->drawable);
+  gimp_drawable_update (editor->drawable, 0, 0, -1, -1);
   gimp_image_flush (gimp_item_get_image (GIMP_ITEM (editor->drawable)));
 }
 
