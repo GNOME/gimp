@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-05-24 16:13+0000\n"
-"PO-Revision-Date: 2025-05-25 08:43+0800\n"
+"POT-Creation-Date: 2025-05-30 16:10+0000\n"
+"PO-Revision-Date: 2025-05-31 08:09+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -517,7 +517,7 @@ msgid "Plug-ins"
 msgstr "插件"
 
 #. Quick Mask Color
-#: app/actions/actions.c:215 app/core/gimpchannel.c:362
+#: app/actions/actions.c:215 app/core/gimpchannel.c:363
 #: app/dialogs/preferences-dialog.c:1829
 msgid "Quick Mask"
 msgstr "快速蒙版"
@@ -1043,7 +1043,7 @@ msgstr "编辑通道颜色"
 msgid "_Fill opacity:"
 msgstr "填充不透明度(_F)："
 
-#: app/actions/channels-commands.c:167 app/widgets/gimpchanneltreeview.c:332
+#: app/actions/channels-commands.c:167 app/widgets/gimpchanneltreeview.c:333
 msgid "New Channel"
 msgstr "新建通道"
 
@@ -1075,9 +1075,9 @@ msgid "Lower Channel to Bottom"
 msgid_plural "Lower Channels to Bottom"
 msgstr[0] "通道移至底端"
 
-#: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:607
-#: app/display/gimpdisplayshell-dnd.c:737 app/widgets/gimpchanneltreeview.c:265
-#: app/widgets/gimplayertreeview.c:862
+#: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:531
+#: app/display/gimpdisplayshell-dnd.c:703 app/widgets/gimpchanneltreeview.c:266
+#: app/widgets/gimplayertreeview.c:860
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s 通道副本"
@@ -2542,8 +2542,8 @@ msgstr "为该标记添加描述"
 #: app/dialogs/file-open-dialog.c:288
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/dialogs/welcome-dialog.c:1246 app/display/gimpdisplayshell-dnd.c:680
-#: app/widgets/gimplayertreeview.c:820 app/widgets/gimptoolbox.c:843
+#: app/dialogs/welcome-dialog.c:1246 app/display/gimpdisplayshell-dnd.c:646
+#: app/widgets/gimplayertreeview.c:818 app/widgets/gimptoolbox.c:843
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -6003,7 +6003,7 @@ msgstr "翻转"
 msgid "Rotating"
 msgstr "旋转"
 
-#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1347
+#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1324
 msgid "Cannot crop because the current selection is empty."
 msgstr "无法剪裁，因为当前选区为空。"
 
@@ -6052,9 +6052,9 @@ msgid "Scale Image"
 msgstr "缩放图像"
 
 #. Scaling
-#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2577
+#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2573
 #: app/dialogs/preferences-dialog.c:1747 app/pdb/image-transform-cmds.c:124
-#: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:453
+#: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:375
 #: app/tools/gimpscaletool.c:122
 msgid "Scaling"
 msgstr "缩放"
@@ -6089,19 +6089,19 @@ msgctxt "images-action"
 msgid "Delete this image"
 msgstr "删除此图像"
 
-#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:723
+#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:594
 msgid "Lock content"
 msgstr "锁定内容"
 
-#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:724
+#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:595
 msgid "Unlock content"
 msgstr "解锁内容"
 
-#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:739
+#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:610
 msgid "Lock position"
 msgstr "锁定位置"
 
-#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:740
+#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:611
 msgid "Unlock position"
 msgstr "解锁位置"
 
@@ -6148,7 +6148,7 @@ msgctxt "layers-action"
 msgid "Edit the layer's name"
 msgstr "编辑图层的名字"
 
-#: app/actions/layers-actions.c:70 app/actions/layers-actions.c:1004
+#: app/actions/layers-actions.c:70 app/actions/layers-actions.c:1005
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "新建图层(_N)…"
@@ -6158,7 +6158,7 @@ msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "创建新图层并将其添加到图像"
 
-#: app/actions/layers-actions.c:76 app/actions/layers-actions.c:1005
+#: app/actions/layers-actions.c:76 app/actions/layers-actions.c:1006
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "新建图层(_N)"
@@ -6253,7 +6253,7 @@ msgctxt "layers-action"
 msgid "_Anchor Floating Layer or Mask"
 msgstr "固定浮动图层或蒙版(_A)"
 
-#: app/actions/layers-actions.c:133 app/widgets/gimplayertreeview.c:1312
+#: app/actions/layers-actions.c:133 app/widgets/gimplayertreeview.c:1272
 msgctxt "layers-action"
 msgid "Anchor the floating layer or mask"
 msgstr "固定浮动图层或蒙版"
@@ -6911,214 +6911,214 @@ msgstr "快捷键："
 msgid "-Click on thumbnail in Layers dockable"
 msgstr "-单击图层停靠中的缩略图"
 
-#: app/actions/layers-actions.c:999 app/actions/layers-actions.c:1000
+#: app/actions/layers-actions.c:1000 app/actions/layers-actions.c:1001
 msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "到新图层(_N)"
 
-#: app/actions/layers-commands.c:289 app/actions/layers-commands.c:2419
+#: app/actions/layers-commands.c:287 app/actions/layers-commands.c:2414
 msgid "Layer Attributes"
 msgstr "图层属性"
 
-#: app/actions/layers-commands.c:292
+#: app/actions/layers-commands.c:290
 msgid "Edit Layer Attributes"
 msgstr "编辑图层属性"
 
-#: app/actions/layers-commands.c:361 app/widgets/gimpdrawabletreeview.c:354
-#: app/widgets/gimplayertreeview.c:939
+#: app/actions/layers-commands.c:359 app/widgets/gimpdrawabletreeview.c:631
+#: app/widgets/gimplayertreeview.c:937
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "新建图层"
 
-#: app/actions/layers-commands.c:362
+#: app/actions/layers-commands.c:360
 #, c-format
 msgid "Create a New Layer"
 msgid_plural "Create %d New Layers"
 msgstr[0] "创建 %d 个新图层"
 
-#: app/actions/layers-commands.c:447 app/actions/layers-commands.c:2304
+#: app/actions/layers-commands.c:445 app/actions/layers-commands.c:2299
 msgid "New layer"
 msgid_plural "New layers"
 msgstr[0] "新建图层"
 
-#: app/actions/layers-commands.c:526
+#: app/actions/layers-commands.c:527
 msgid "Visible"
 msgstr "可见"
 
-#: app/actions/layers-commands.c:555
+#: app/actions/layers-commands.c:557
 msgid "New layer group"
 msgid_plural "New layer groups"
 msgstr[0] "新建图层组"
 
-#: app/actions/layers-commands.c:676
+#: app/actions/layers-commands.c:679
 msgid "Raise Layer"
 msgid_plural "Raise Layers"
 msgstr[0] "升高图层"
 
-#: app/actions/layers-commands.c:712
+#: app/actions/layers-commands.c:714
 msgid "Raise Layer to Top"
 msgid_plural "Raise Layers to Top"
 msgstr[0] "图层升至顶端"
 
-#: app/actions/layers-commands.c:757
+#: app/actions/layers-commands.c:758
 msgid "Lower Layer"
 msgid_plural "Lower Layers"
 msgstr[0] "降低图层"
 
-#: app/actions/layers-commands.c:794
+#: app/actions/layers-commands.c:795
 msgid "Lower Layer to Bottom"
 msgid_plural "Lower Layers to Bottom"
 msgstr[0] "图层降至底端"
 
-#: app/actions/layers-commands.c:821
+#: app/actions/layers-commands.c:822
 msgid "Duplicate layers"
 msgstr "再制图层"
 
-#: app/actions/layers-commands.c:1002
+#: app/actions/layers-commands.c:970
 #, c-format
 msgctxt "undo-type"
 msgid "Merge %d Layer Groups"
 msgstr "合并 %d 图层组"
 
-#: app/actions/layers-commands.c:1062
+#: app/actions/layers-commands.c:1031
 #, c-format
 msgctxt "undo-type"
 msgid "Remove %d Layers"
 msgstr "删除 %d 图层"
 
-#: app/actions/layers-commands.c:1089 app/text/gimptextlayer.c:584
+#: app/actions/layers-commands.c:1059 app/text/gimptextlayer.c:584
 msgid "Discard Text Information"
 msgstr "放弃文字信息"
 
-#: app/actions/layers-commands.c:1108
+#: app/actions/layers-commands.c:1079
 msgid "Add Paths"
 msgstr "添加路径"
 
-#: app/actions/layers-commands.c:1232
+#: app/actions/layers-commands.c:1208
 msgid "Set Layer Boundary Size"
 msgstr "设置图层边界大小"
 
-#: app/actions/layers-commands.c:1262
+#: app/actions/layers-commands.c:1238
 msgid "Layers to Image Size"
 msgstr "图层到图像大小"
 
-#: app/actions/layers-commands.c:1313
+#: app/actions/layers-commands.c:1290
 msgid "Scale Layer"
 msgstr "缩放图层"
 
-#: app/actions/layers-commands.c:1352
+#: app/actions/layers-commands.c:1329
 #, c-format
 msgid "Crop Layer to Selection"
 msgid_plural "Crop %d Layers to Selection"
 msgstr[0] "剪裁 %d 个图层到选区"
 
-#: app/actions/layers-commands.c:1417
+#: app/actions/layers-commands.c:1394
 msgid ""
 "Cannot crop because none of the selected layers have content or they are "
 "already cropped to their content."
 msgstr "无法剪裁，因为选中的图层都没有内容或它们已被剪裁到内容。"
 
-#: app/actions/layers-commands.c:1423
+#: app/actions/layers-commands.c:1400
 #, c-format
 msgid "Crop Layer to Content"
 msgid_plural "Crop %d Layers to Content"
 msgstr[0] "剪裁 %d 个图层到内容"
 
-#: app/actions/layers-commands.c:1560 app/actions/layers-commands.c:2512
+#: app/actions/layers-commands.c:1538 app/actions/layers-commands.c:2506
 msgid "Add Layer Masks"
 msgstr "添加图层蒙版"
 
-#: app/actions/layers-commands.c:1612
+#: app/actions/layers-commands.c:1590
 msgid "Apply Layer Masks"
 msgstr "应用图层蒙版"
 
-#: app/actions/layers-commands.c:1616
+#: app/actions/layers-commands.c:1594
 msgid "Delete Layer Masks"
 msgstr "删除图层蒙版"
 
-#: app/actions/layers-commands.c:1703
+#: app/actions/layers-commands.c:1685
 msgid "Show Layer Masks"
 msgstr "显示图层蒙版"
 
-#: app/actions/layers-commands.c:1750
+#: app/actions/layers-commands.c:1736
 msgid "Disable Layer Masks"
 msgstr "禁用图层蒙版"
 
-#: app/actions/layers-commands.c:1789
+#: app/actions/layers-commands.c:1775
 msgctxt "undo-type"
 msgid "Masks to Selection"
 msgstr "蒙版到选区"
 
-#: app/actions/layers-commands.c:1793
+#: app/actions/layers-commands.c:1779
 msgctxt "undo-type"
 msgid "Add Masks to Selection"
 msgstr "添加蒙版到选区"
 
-#: app/actions/layers-commands.c:1797
+#: app/actions/layers-commands.c:1783
 msgctxt "undo-type"
 msgid "Subtract Masks from Selection"
 msgstr "从选区减去蒙版"
 
-#: app/actions/layers-commands.c:1801
+#: app/actions/layers-commands.c:1787
 msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
 msgstr "蒙版与选区相交"
 
-#: app/actions/layers-commands.c:1822
+#: app/actions/layers-commands.c:1810
 msgid "Add Alpha Channel"
 msgstr "添加透明通道"
 
-#: app/actions/layers-commands.c:1843
+#: app/actions/layers-commands.c:1831
 msgid "Remove Alpha Channel"
 msgstr "删除透明通道"
 
-#: app/actions/layers-commands.c:1871 app/core/gimpchannel-select.c:433
+#: app/actions/layers-commands.c:1859 app/core/gimpchannel-select.c:433
 #: app/core/gimplayer.c:435
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "透明到选区"
 
-#: app/actions/layers-commands.c:1875 app/core/gimpchannel-select.c:427
+#: app/actions/layers-commands.c:1863 app/core/gimpchannel-select.c:427
 msgctxt "undo-type"
 msgid "Add Alpha to Selection"
 msgstr "添加透明到选区"
 
-#: app/actions/layers-commands.c:1879 app/core/gimpchannel-select.c:430
+#: app/actions/layers-commands.c:1867 app/core/gimpchannel-select.c:430
 msgctxt "undo-type"
 msgid "Subtract Alpha from Selection"
 msgstr "从选区减去透明"
 
-#: app/actions/layers-commands.c:1883 app/core/gimpchannel-select.c:436
+#: app/actions/layers-commands.c:1871 app/core/gimpchannel-select.c:436
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
 msgstr "透明与选区相交"
 
-#: app/actions/layers-commands.c:1894
+#: app/actions/layers-commands.c:1884
 msgid "Empty Selection"
 msgstr "空选区"
 
-#: app/actions/layers-commands.c:1924 app/actions/layers-commands.c:1968
-#: app/widgets/gimplayertreeview.c:1115
+#: app/actions/layers-commands.c:1914 app/actions/layers-commands.c:1958
+#: app/widgets/gimplayertreeview.c:1113
 msgid "Set layers opacity"
 msgstr "设置图层不透明度"
 
-#: app/actions/layers-commands.c:2038
+#: app/actions/layers-commands.c:2028
 msgid "Set layers' blend space"
 msgstr "设置图层混合空间"
 
-#: app/actions/layers-commands.c:2091
+#: app/actions/layers-commands.c:2082
 msgid "Set layers' composite space"
 msgstr "设置图层合成空间"
 
-#: app/actions/layers-commands.c:2144
+#: app/actions/layers-commands.c:2136
 msgid "Set layers' composite mode"
 msgstr "设置图层合成模式"
 
-#: app/actions/layers-commands.c:2228
+#: app/actions/layers-commands.c:2221
 msgid "Lock alpha channels"
 msgstr "锁定透明通道"
 
-#: app/actions/layers-commands.c:2228
+#: app/actions/layers-commands.c:2221
 msgid "Unlock alpha channels"
 msgstr "解锁透明通道"
 
@@ -10370,12 +10370,12 @@ msgstr "图层"
 #: app/config/gimpdialogconfig.c:418 app/core/gimpchannel.c:256
 #: app/operations/gimpcurvesconfig.c:119 app/operations/gimplevelsconfig.c:125
 #: app/operations/gimpoperationthreshold.c:94
-#: app/widgets/gimpchanneltreeview.c:338
+#: app/widgets/gimpchanneltreeview.c:339
 msgid "Channel"
 msgstr "通道"
 
 #: app/config/gimpdialogconfig.c:432 app/vectors/gimppath.c:224
-#: app/widgets/gimppathtreeview.c:258
+#: app/widgets/gimppathtreeview.c:259
 msgid "Path"
 msgstr "路径"
 
@@ -12117,12 +12117,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "固定浮动选区"
 
-#: app/core/core-enums.c:1337 app/core/gimp-edit.c:885
+#: app/core/core-enums.c:1337 app/core/gimp-edit.c:854
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "粘贴"
 
-#: app/core/core-enums.c:1338 app/core/gimp-edit.c:1247
+#: app/core/core-enums.c:1338 app/core/gimp-edit.c:1216
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "剪切"
@@ -12526,33 +12526,33 @@ msgstr "颜色历史"
 msgid "Updating tag cache"
 msgstr "正在更新标签缓存"
 
-#: app/core/gimp-edit.c:91
+#: app/core/gimp-edit.c:89
 #, c-format
 msgid "Cut Layer"
 msgid_plural "Cut %d Layers"
 msgstr[0] "剪切 %d 个图层"
 
-#: app/core/gimp-edit.c:213
+#: app/core/gimp-edit.c:211
 msgid "Cannot cut because multiple channels are selected."
 msgstr "无法剪切，因为选中多个通道。"
 
-#: app/core/gimp-edit.c:217
+#: app/core/gimp-edit.c:215
 msgid "Cannot copy because multiple channels are selected."
 msgstr "无法复制，因为选中多个通道。"
 
-#: app/core/gimp-edit.c:253
+#: app/core/gimp-edit.c:251
 msgid "Cannot cut because the selected region is empty."
 msgstr "无法剪切，因为选中区域为空。"
 
-#: app/core/gimp-edit.c:256
+#: app/core/gimp-edit.c:254
 msgid "Cannot copy because the selected region is empty."
 msgstr "无法复制，因为选中区域为空。"
 
-#: app/core/gimp-edit.c:655 app/core/gimpimage-new.c:656
+#: app/core/gimp-edit.c:624 app/core/gimpimage-new.c:580
 msgid "Pasted Layer"
 msgstr "被粘贴的图层"
 
-#: app/core/gimp-edit.c:1264
+#: app/core/gimp-edit.c:1233
 msgid "Global Buffer"
 msgstr "全局缓冲区"
 
@@ -13103,25 +13103,25 @@ msgctxt "undo-type"
 msgid "Flood Channel"
 msgstr "溢出通道"
 
-#: app/core/gimpchannel.c:783
+#: app/core/gimpchannel.c:788
 msgid "Cannot fill empty channel."
 msgstr "无法填充空通道。"
 
-#: app/core/gimpchannel.c:819
+#: app/core/gimpchannel.c:824
 msgid "Cannot stroke empty channel."
 msgstr "无法勾画空通道。"
 
-#: app/core/gimpchannel.c:1663
+#: app/core/gimpchannel.c:1676
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "设置通道颜色"
 
-#: app/core/gimpchannel.c:1717
+#: app/core/gimpchannel.c:1730
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "设置通道不透明度"
 
-#: app/core/gimpchannel.c:1802 app/core/gimpselection.c:172
+#: app/core/gimpchannel.c:1815 app/core/gimpselection.c:172
 msgid "Selection Mask"
 msgstr "选区蒙版"
 
@@ -13133,7 +13133,7 @@ msgstr "前景"
 msgid "Foreground color"
 msgstr "前景色"
 
-#: app/core/gimpcontext.c:675 app/core/gimpimage-new.c:197
+#: app/core/gimpcontext.c:675 app/core/gimpimage-new.c:180
 msgid "Background"
 msgstr "背景"
 
@@ -13143,7 +13143,7 @@ msgstr "背景色"
 
 #: app/core/gimpcontext.c:682 app/core/gimpcontext.c:683
 #: app/operations/gimpoperationsettings.c:99
-#: app/widgets/gimplayertreeview.c:295
+#: app/widgets/gimplayertreeview.c:294
 msgid "Opacity"
 msgstr "不透明度"
 
@@ -13202,11 +13202,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:465 app/core/gimpdatafactory.c:468
-#: app/core/gimpitem.c:574 app/core/gimpitem.c:577
+#: app/core/gimpitem.c:572 app/core/gimpitem.c:575
 msgid "copy"
 msgstr "副本"
 
-#: app/core/gimpdatafactory.c:477 app/core/gimpitem.c:585
+#: app/core/gimpdatafactory.c:477 app/core/gimpitem.c:583
 #, c-format
 msgid "%s copy"
 msgstr "%s 副本"
@@ -13283,7 +13283,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/core/gimpdrawable.c:559 app/tools/gimpscaletool.c:121
+#: app/core/gimpdrawable.c:618 app/tools/gimpscaletool.c:121
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "缩放"
@@ -13320,11 +13320,15 @@ msgctxt "undo-type"
 msgid "Render Stroke"
 msgstr "渲染笔触"
 
-#: app/core/gimpdrawable-filters.c:138
+#: app/core/gimpdrawable-filters.c:224 app/core/gimpdrawable-filters.c:264
+msgid "Reorder filter"
+msgstr "重新排列滤镜"
+
+#: app/core/gimpdrawable-filters.c:299
 msgid "Rasterize filters"
 msgstr "栅格化滤镜"
 
-#: app/core/gimpdrawable-filters.c:181
+#: app/core/gimpdrawable-filters.c:342
 msgid "Merge filter"
 msgstr "合并滤镜"
 
@@ -13542,41 +13546,41 @@ msgstr "第一条网格线的竖直位移；可以是负数。"
 msgid "Offset unit"
 msgstr "位移单位"
 
-#: app/core/gimpgrouplayer.c:294
+#: app/core/gimpgrouplayer.c:292
 msgid "Layer Group"
 msgstr "图层组"
 
-#: app/core/gimpgrouplayer.c:295
+#: app/core/gimpgrouplayer.c:293
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "重命名图层组"
 
-#: app/core/gimpgrouplayer.c:296
+#: app/core/gimpgrouplayer.c:294
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "移动图层组"
 
-#: app/core/gimpgrouplayer.c:297
+#: app/core/gimpgrouplayer.c:295
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "缩放图层组"
 
-#: app/core/gimpgrouplayer.c:298
+#: app/core/gimpgrouplayer.c:296
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "改变图层组大小"
 
-#: app/core/gimpgrouplayer.c:299
+#: app/core/gimpgrouplayer.c:297
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "翻转图层组"
 
-#: app/core/gimpgrouplayer.c:300
+#: app/core/gimpgrouplayer.c:298
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "旋转图层组"
 
-#: app/core/gimpgrouplayer.c:301
+#: app/core/gimpgrouplayer.c:299
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "变换图层组"
@@ -13586,7 +13590,6 @@ msgid "Symmetry"
 msgstr "对称"
 
 #: app/core/gimpimage.c:2071 app/pdb/drawable-filter-cmds.c:681
-#: app/widgets/gimpitemtreeview.c:2901
 msgid "Remove filter"
 msgstr "移除滤镜"
 
@@ -13978,7 +13981,7 @@ msgstr "无法向下合并不可见图层。"
 msgid "Cannot merge down to a layer group."
 msgstr "无法向下合并到图层组。"
 
-#: app/core/gimpimage-merge.c:345 app/widgets/gimpitemtreeview.c:2867
+#: app/core/gimpimage-merge.c:345
 msgid "The layer to merge down to is locked."
 msgstr "要向下合并的目标图层已被锁定。"
 
@@ -14040,7 +14043,7 @@ msgctxt "undo-type"
 msgid "Scale Image"
 msgstr "缩放图像"
 
-#: app/core/gimpimage-undo-push.c:1133
+#: app/core/gimpimage-undo-push.c:1134
 #, c-format
 msgid "Can't undo %s"
 msgstr "无法撤消 %s"
@@ -14096,24 +14099,23 @@ msgstr[0] "%d 个图层"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "无法打开缩略图“%s”：%s"
 
-#: app/core/gimpitem.c:1883 app/core/gimpitem.c:1950
-#: app/display/gimpdisplayshell-dnd.c:414 app/tools/gimptransformtool.c:704
+#: app/core/gimpitem.c:1851 app/core/gimpitem.c:1918
+#: app/display/gimpdisplayshell-dnd.c:380 app/tools/gimptransformtool.c:704
 #: app/tools/gimpvectortool.c:757 app/tools/gimpvectortool.c:846
-#: app/widgets/gimpitemtreeview.c:2671
 msgid "A selected layer's pixels are locked."
 msgstr "一个选中图层的像素已被锁定。"
 
-#: app/core/gimpitem.c:2259
+#: app/core/gimpitem.c:2227
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "添加内嵌信息"
 
-#: app/core/gimpitem.c:2269
+#: app/core/gimpitem.c:2237
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "添加内嵌信息到项目"
 
-#: app/core/gimpitem.c:2320 app/core/gimpitem.c:2327
+#: app/core/gimpitem.c:2288 app/core/gimpitem.c:2295
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "从项目删除内嵌信息"
@@ -14240,55 +14242,55 @@ msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "将透明度转移到蒙版"
 
-#: app/core/gimplayer.c:2235
+#: app/core/gimplayer.c:2239
 msgctxt "undo-type"
 msgid "Apply Layer Masks"
 msgstr "应用图层蒙版"
 
-#: app/core/gimplayer.c:2236
+#: app/core/gimplayer.c:2240
 msgctxt "undo-type"
 msgid "Delete Layer Masks"
 msgstr "删除图层蒙版"
 
-#: app/core/gimplayer.c:2343
+#: app/core/gimplayer.c:2347
 msgctxt "undo-type"
 msgid "Enable Layer Masks"
 msgstr "启用图层蒙版"
 
-#: app/core/gimplayer.c:2344
+#: app/core/gimplayer.c:2348
 msgctxt "undo-type"
 msgid "Disable Layer Masks"
 msgstr "禁用图层蒙版"
 
-#: app/core/gimplayer.c:2425
+#: app/core/gimplayer.c:2429
 msgctxt "undo-type"
 msgid "Show Layer Masks"
 msgstr "显示图层蒙版"
 
-#: app/core/gimplayer.c:2504
+#: app/core/gimplayer.c:2508
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "添加透明通道"
 
-#: app/core/gimplayer.c:2534
+#: app/core/gimplayer.c:2538
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "删除透明通道"
 
-#: app/core/gimplayer.c:2555
+#: app/core/gimplayer.c:2559
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "图层到图像大小"
 
-#: app/core/gimplayer.c:2738
+#: app/core/gimplayer.c:2742
 msgid "Set layer's blend space"
 msgstr "设置图层混合空间"
 
-#: app/core/gimplayer.c:2785
+#: app/core/gimplayer.c:2789
 msgid "Set layer's composite space"
 msgstr "设置图层合成空间"
 
-#: app/core/gimplayer.c:2832
+#: app/core/gimplayer.c:2836
 msgid "Set layer's composite mode"
 msgstr "设置图层合成模式"
 
@@ -15093,7 +15095,7 @@ msgstr "锁定位置和大小(_S)"
 
 #: app/dialogs/channel-options-dialog.c:130
 #: app/dialogs/layer-options-dialog.c:169
-#: app/widgets/gimpdrawabletreeview.c:126 app/widgets/gimpitemtreeview.c:755
+#: app/widgets/gimpdrawabletreeview.c:175 app/widgets/gimpitemtreeview.c:626
 msgid "Lock visibility"
 msgstr "锁定可见性"
 
@@ -18453,50 +18455,49 @@ msgstr[0] "如果您不保存图像，最近 %d 分钟内的更改将会丢失�
 msgid "The image has been exported to '%s'."
 msgstr "图像已导出到“%s”。"
 
-#: app/display/gimpdisplayshell-dnd.c:257
-#: app/display/gimpdisplayshell-dnd.c:740
-#: app/display/gimpdisplayshell-dnd.c:799
+#: app/display/gimpdisplayshell-dnd.c:253
+#: app/display/gimpdisplayshell-dnd.c:706
+#: app/display/gimpdisplayshell-dnd.c:765
 msgid "Drop New Layer"
 msgstr "拖放新图层"
 
-#: app/display/gimpdisplayshell-dnd.c:330
+#: app/display/gimpdisplayshell-dnd.c:296
 msgid "Drop New Path"
 msgstr "拖放新路径"
 
-#: app/display/gimpdisplayshell-dnd.c:405 app/tools/gimpbucketfilltool.c:611
+#: app/display/gimpdisplayshell-dnd.c:371 app/tools/gimpbucketfilltool.c:611
 #: app/tools/gimpcagetool.c:243 app/tools/gimpgradienttool.c:276
 #: app/tools/gimpselectiontool.c:567
 #, c-format
 msgid "Cannot modify the pixels of layer groups."
 msgstr "不能修改图层组的像素。"
 
-#: app/display/gimpdisplayshell-dnd.c:424 app/tools/gimpfiltertool.c:333
+#: app/display/gimpdisplayshell-dnd.c:390 app/tools/gimpfiltertool.c:333
 #: app/tools/gimppainttool.c:371 app/tools/gimptransformtool.c:713
-#: app/widgets/gimpitemtreeview.c:2664
 msgid "A selected layer is not visible."
 msgstr "一个选中图层不可见。"
 
-#: app/display/gimpdisplayshell-dnd.c:480
-#: app/widgets/gimpdrawabletreeview.c:267
-#: app/widgets/gimpdrawabletreeview.c:381
+#: app/display/gimpdisplayshell-dnd.c:446
+#: app/widgets/gimpdrawabletreeview.c:476
+#: app/widgets/gimpdrawabletreeview.c:658
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "将图案放置到图层"
 
-#: app/display/gimpdisplayshell-dnd.c:502
-#: app/widgets/gimpdrawabletreeview.c:298
-#: app/widgets/gimpdrawabletreeview.c:401
+#: app/display/gimpdisplayshell-dnd.c:468
+#: app/widgets/gimpdrawabletreeview.c:507
+#: app/widgets/gimpdrawabletreeview.c:678
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "将颜色放置到图层"
 
-#: app/display/gimpdisplayshell-dnd.c:630 app/widgets/gimpitemtreeview.c:1971
-#: app/widgets/gimplayertreeview.c:811
+#: app/display/gimpdisplayshell-dnd.c:596 app/widgets/gimpitemtreeview.c:1658
+#: app/widgets/gimplayertreeview.c:809
 msgid "Drop layers"
 msgstr "拖放图层"
 
-#: app/display/gimpdisplayshell-dnd.c:773
-#: app/display/gimpdisplayshell-dnd.c:790 app/widgets/gimplayertreeview.c:888
+#: app/display/gimpdisplayshell-dnd.c:739
+#: app/display/gimpdisplayshell-dnd.c:756 app/widgets/gimplayertreeview.c:886
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "删除缓冲区"
@@ -19040,29 +19041,29 @@ msgstr "单击并拖动以移动此中心点"
 msgid "Click-Drag to shear"
 msgstr "单击并拖动以切变"
 
-#: app/file/file-open.c:139 app/file/file-save.c:132
+#: app/file/file-open.c:137 app/file/file-save.c:132
 msgid "Not a regular file"
 msgstr "不是普通文件"
 
-#: app/file/file-open.c:148 app/file/file-save.c:141
+#: app/file/file-open.c:146 app/file/file-save.c:141
 msgid "Permission denied"
 msgstr "访问被拒绝"
 
-#: app/file/file-open.c:280
+#: app/file/file-open.c:278
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr "%s 插件返回的状态为成功，但没有返回图像"
 
-#: app/file/file-open.c:291
+#: app/file/file-open.c:289
 #, c-format
 msgid "%s plug-in could not open image"
 msgstr "%s 插件无法打开图像"
 
-#: app/file/file-open.c:676
+#: app/file/file-open.c:674
 msgid "Image doesn't contain any layers"
 msgstr "图像没有包含任何图层"
 
-#: app/file/file-open.c:734
+#: app/file/file-open.c:732
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "打开“%s”失败：%s"
@@ -20017,10 +20018,10 @@ msgid "Turn colors into shades of gray"
 msgstr "将颜色转换为灰度色调"
 
 #: app/operations/gimpoperationdesaturate.c:91
-#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1466
+#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1457
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
-#: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:281
+#: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:280
 msgid "Mode"
 msgstr "模式"
 
@@ -20062,7 +20063,7 @@ msgstr "使用颜色替换半透明部分"
 msgid "The color"
 msgstr "颜色"
 
-#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1429
+#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1420
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:113
 #: app/tools/gimptransformoptions.c:307
 msgid "Clipping"
@@ -22848,28 +22849,29 @@ msgstr "%s：切换原始图片和应用滤镜图片"
 msgid "%s: switch horizontal and vertical"
 msgstr "%s：切换水平视图和竖直视图"
 
-#: app/tools/gimpfiltertool.c:1258
-msgid "Edited filter"
-msgstr "已编辑滤镜"
+#: app/tools/gimpfiltertool.c:1254
+msgid "Edit filter"
+msgstr "编辑滤镜"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1442
+#: app/tools/gimpfiltertool.c:1433
 msgid "Blending Options"
 msgstr "混合选项"
 
-#: app/tools/gimpfiltertool.c:1948 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1938 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "导入“%s”设置"
 
-#: app/tools/gimpfiltertool.c:1950 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1940 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "导出“%s”设置"
 
-#: app/tools/gimpfiltertool.c:2188
-msgid "Editing filter..."
-msgstr "编辑滤镜…"
+#: app/tools/gimpfiltertool.c:2203
+#, c-format
+msgid "Editing '%s'..."
+msgstr "正在编辑“%s”…"
 
 #: app/tools/gimpfiltertool-settings.c:100
 msgid "Pre_sets:"
@@ -26729,15 +26731,15 @@ msgid ""
 "When enabled, the dialog automatically follows the image you are working on."
 msgstr "当启用时，对话框将自动跟随你正在编辑的图片。"
 
-#: app/widgets/gimpdrawabletreeview.c:122
+#: app/widgets/gimpdrawabletreeview.c:171
 msgid "Lock pixels"
 msgstr "锁定像素"
 
-#: app/widgets/gimpdrawabletreeview.c:124
+#: app/widgets/gimpdrawabletreeview.c:173
 msgid "Lock position and size"
 msgstr "锁定位置和大小"
 
-#: app/widgets/gimpdrawabletreeview.c:192
+#: app/widgets/gimpdrawabletreeview.c:401
 msgid "Cannot select items while a floating selection is active."
 msgstr "当浮动选区激活时无法选择项目。"
 
@@ -27144,113 +27146,77 @@ msgid "Indexed color (monochrome)"
 msgid_plural "Indexed color (%d colors)"
 msgstr[0] "索引颜色（%d 个颜色）"
 
-#: app/widgets/gimpitemtreeview.c:725
+#: app/widgets/gimpitemtreeview.c:596
 msgid "Set Item Exclusive Content Lock"
 msgstr "设置项目唯一内容锁定"
 
-#: app/widgets/gimpitemtreeview.c:741
+#: app/widgets/gimpitemtreeview.c:612
 msgid "Set Item Exclusive Position Lock"
 msgstr "设置项目唯一位置锁定"
 
-#: app/widgets/gimpitemtreeview.c:756
+#: app/widgets/gimpitemtreeview.c:627
 msgid "Unlock visibility"
 msgstr "解锁可见性"
 
-#: app/widgets/gimpitemtreeview.c:757
+#: app/widgets/gimpitemtreeview.c:628
 msgid "Set Item Exclusive Visibility Lock"
 msgstr "设置项目唯一可见性锁定"
 
-#: app/widgets/gimpitemtreeview.c:786
-msgid "Toggle the visibility of all filters."
-msgstr "切换所有滤镜的可见性。"
-
-#: app/widgets/gimpitemtreeview.c:800
-msgid "Edit the selected filter."
-msgstr "编辑选中滤镜。"
-
-#: app/widgets/gimpitemtreeview.c:813
-msgid "Raise filter one step up in the stack."
-msgstr "在堆叠中将滤镜升高一步。"
-
-#: app/widgets/gimpitemtreeview.c:826
-msgid "Lower filter one step down in the stack."
-msgstr "在堆叠中将滤镜降低一步。"
-
-#: app/widgets/gimpitemtreeview.c:839
-msgid "Merge all active filters down."
-msgstr "向下合并所有活动滤镜。"
-
-#: app/widgets/gimpitemtreeview.c:852
-msgid "Remove the selected filter."
-msgstr "移除选中滤镜。"
-
-#: app/widgets/gimpitemtreeview.c:863
-msgid "Layer Effects"
-msgstr "图层效果"
-
-#: app/widgets/gimpitemtreeview.c:896
+#: app/widgets/gimpitemtreeview.c:652
 msgid "Select items by patterns and store item sets"
 msgstr "按模式选择项目并存储项目集合"
 
-#: app/widgets/gimpitemtreeview.c:1793
+#: app/widgets/gimpitemtreeview.c:1480
 #, c-format
 msgid "%d item selected"
 msgid_plural "%d items selected"
 msgstr[0] "%d 个项目被选中"
 
-#: app/widgets/gimpitemtreeview.c:2733 app/widgets/gimpitemtreeview.c:2788
-msgid "Cannot reorder a filter that is being edited."
-msgstr "无法重新排列正在编辑的滤镜。"
-
-#: app/widgets/gimpitemtreeview.c:2751 app/widgets/gimpitemtreeview.c:2811
-msgid "Reorder filter"
-msgstr "重新排列滤镜"
-
-#: app/widgets/gimpitemtreeview.c:3442
+#: app/widgets/gimpitemtreeview.c:2423
 msgid "No layer set stored"
 msgstr "未存储图层集合"
 
-#: app/widgets/gimpitemtreeview.c:3464
+#: app/widgets/gimpitemtreeview.c:2445
 msgid "New layer set's name"
 msgstr "新图层集合的名字"
 
-#: app/widgets/gimpitemtreeview.c:3506 app/widgets/gimpitemtreeview.c:3521
+#: app/widgets/gimpitemtreeview.c:2487 app/widgets/gimpitemtreeview.c:2502
 msgid "Select layers by text search"
 msgstr "通过文字搜索选择图层"
 
-#: app/widgets/gimpitemtreeview.c:3508 app/widgets/gimpitemtreeview.c:3523
+#: app/widgets/gimpitemtreeview.c:2489 app/widgets/gimpitemtreeview.c:2504
 msgid "Text search"
 msgstr "文字搜索"
 
-#: app/widgets/gimpitemtreeview.c:3527
+#: app/widgets/gimpitemtreeview.c:2508
 msgid "Select layers by glob patterns"
 msgstr "通过 glob 模式选择图层"
 
-#: app/widgets/gimpitemtreeview.c:3529
+#: app/widgets/gimpitemtreeview.c:2510
 msgid "Glob pattern search"
 msgstr "Glob 模式搜索"
 
-#: app/widgets/gimpitemtreeview.c:3533
+#: app/widgets/gimpitemtreeview.c:2514
 msgid "Select layers by regular expressions"
 msgstr "通过正则表达式选择图层"
 
-#: app/widgets/gimpitemtreeview.c:3535
+#: app/widgets/gimpitemtreeview.c:2516
 msgid "Regular Expression search"
 msgstr "正则表达式搜索"
 
-#: app/widgets/gimpitemtreeview.c:3590
+#: app/widgets/gimpitemtreeview.c:2571
 msgid "search"
 msgstr "搜索"
 
-#: app/widgets/gimpitemtreeview.c:3591
+#: app/widgets/gimpitemtreeview.c:2572
 msgid "glob"
 msgstr "glob"
 
-#: app/widgets/gimpitemtreeview.c:3591
+#: app/widgets/gimpitemtreeview.c:2572
 msgid "regexp"
 msgstr "正则"
 
-#: app/widgets/gimpitemtreeview.c:3760
+#: app/widgets/gimpitemtreeview.c:2741
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "无效的正则表达式：%s\n"
@@ -27259,35 +27225,35 @@ msgstr "无效的正则表达式：%s\n"
 msgid "Switch to another group of modes"
 msgstr "切换到另一组模式"
 
-#: app/widgets/gimplayertreeview.c:419 app/widgets/gimplayertreeview.c:422
+#: app/widgets/gimplayertreeview.c:418 app/widgets/gimplayertreeview.c:421
 msgid "Lock alpha channel"
 msgstr "锁定透明通道"
 
-#: app/widgets/gimplayertreeview.c:420
+#: app/widgets/gimplayertreeview.c:419
 msgid "Unlock alpha channel"
 msgstr "解锁透明通道"
 
-#: app/widgets/gimplayertreeview.c:421
+#: app/widgets/gimplayertreeview.c:420
 msgid "Set Item Exclusive Alpha Channel lock"
 msgstr "设置项目唯一透明通道锁定"
 
-#: app/widgets/gimplayertreeview.c:1058
+#: app/widgets/gimplayertreeview.c:1056
 msgid "Set layers mode"
 msgstr "设置图层模式"
 
-#: app/widgets/gimplayertreeview.c:1304
+#: app/widgets/gimplayertreeview.c:1264
 msgctxt "layers-action"
 msgid "Anchor the floating mask"
 msgstr "固定浮动蒙版"
 
-#: app/widgets/gimplayertreeview.c:1307
+#: app/widgets/gimplayertreeview.c:1267
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
 msgstr "固定浮动图层"
 
 #. No channel. We cannot perform the add
 #. * mask action.
-#: app/widgets/gimplayertreeview.c:1568
+#: app/widgets/gimplayertreeview.c:1528
 msgid "No channels to create a layer mask from."
 msgstr "没有可用于创建图层蒙版的通道。"
 
@@ -27866,15 +27832,15 @@ msgstr "%s 预设"
 msgid "[ Base Image ]"
 msgstr "[ 原始图像 ]"
 
-#: app/widgets/gimppathtreeview.c:116
+#: app/widgets/gimppathtreeview.c:117
 msgid "Lock path"
 msgstr "锁定路径"
 
-#: app/widgets/gimppathtreeview.c:119
+#: app/widgets/gimppathtreeview.c:120
 msgid "Lock path position"
 msgstr "锁定路径位置"
 
-#: app/widgets/gimppathtreeview.c:122
+#: app/widgets/gimppathtreeview.c:123
 msgid "Lock path visibility"
 msgstr "锁定路径可见性"
 
@@ -28776,6 +28742,30 @@ msgstr "工具预设菜单"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "撤消历史菜单"
+
+#~ msgid "Toggle the visibility of all filters."
+#~ msgstr "切换所有滤镜的可见性。"
+
+#~ msgid "Edit the selected filter."
+#~ msgstr "编辑选中滤镜。"
+
+#~ msgid "Raise filter one step up in the stack."
+#~ msgstr "在堆叠中将滤镜升高一步。"
+
+#~ msgid "Lower filter one step down in the stack."
+#~ msgstr "在堆叠中将滤镜降低一步。"
+
+#~ msgid "Merge all active filters down."
+#~ msgstr "向下合并所有活动滤镜。"
+
+#~ msgid "Remove the selected filter."
+#~ msgstr "移除选中滤镜。"
+
+#~ msgid "Layer Effects"
+#~ msgstr "图层效果"
+
+#~ msgid "Cannot reorder a filter that is being edited."
+#~ msgstr "无法重新排列正在编辑的滤镜。"
 
 #~ msgid "Painting in GIMP"
 #~ msgstr "在 GIMP 中绘画"
