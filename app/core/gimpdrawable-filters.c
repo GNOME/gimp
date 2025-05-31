@@ -328,12 +328,20 @@ gimp_drawable_merge_filters (GimpDrawable *drawable)
           g_clear_object (&buffer);
         }
 
-      while ((list = GIMP_LIST (drawable->private->filter_stack)->queue->tail))
+      for (list = GIMP_LIST (drawable->private->filter_stack)->queue->tail;
+           list;
+           list = list->prev)
         {
-          gimp_image_undo_push_filter_remove (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                              _("Merge filter"), drawable, list->data);
+          if (GIMP_IS_DRAWABLE_FILTER (list->data) &&
+              ! gimp_drawable_filter_get_temporary (list->data))
 
-          gimp_drawable_remove_filter (drawable, GIMP_FILTER (list->data));
+            {
+              gimp_image_undo_push_filter_remove (gimp_item_get_image (GIMP_ITEM (drawable)),
+                                                  _("Merge filter"),
+                                                  drawable, list->data);
+              gimp_drawable_remove_filter (drawable,
+                                           GIMP_FILTER (list->data));
+            }
         }
     }
 
