@@ -636,7 +636,8 @@ gimp_item_tree_view_constructed (GObject *object)
                     "button-press-event",
                     G_CALLBACK (gimp_item_tree_view_popover_button_press),
                     item_view);
-  gtk_container_add (GTK_CONTAINER (item_view->priv->lock_popover), item_view->priv->lock_box);
+  gtk_container_add (GTK_CONTAINER (item_view->priv->lock_popover),
+                     item_view->priv->lock_box);
   gtk_widget_show (item_view->priv->lock_box);
 
   items_header = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
@@ -646,8 +647,9 @@ gimp_item_tree_view_constructed (GObject *object)
 
   /* Link popover menu. */
 
-  item_view->priv->search_button = gtk_image_new_from_icon_name (GIMP_ICON_EDIT_FIND,
-                                                                 button_icon_size);
+  item_view->priv->search_button =
+    gtk_image_new_from_icon_name (GIMP_ICON_EDIT_FIND,
+                                  button_icon_size);
   gtk_widget_set_tooltip_text (item_view->priv->search_button,
                                _("Select items by patterns and store item sets"));
   gtk_box_pack_end (GTK_BOX (items_header), item_view->priv->search_button,
@@ -1988,7 +1990,7 @@ gimp_item_tree_view_lock_clicked (GtkCellRendererToggle *toggle,
                                                          rect.x, rect.y, &rect.x, &rect.y);
       gtk_popover_set_pointing_to (GTK_POPOVER (view->priv->lock_popover), &rect);
 
-      gtk_widget_show (view->priv->lock_popover);
+      gtk_popover_popup (GTK_POPOVER (view->priv->lock_popover));
     }
 }
 
@@ -2696,11 +2698,11 @@ gimp_item_tree_view_search_key_release (GtkWidget        *widget,
       if (event->state & GDK_SHIFT_MASK)
         {
           if (gimp_item_tree_view_new_link_clicked (view))
-            gtk_widget_hide (view->priv->search_popover);
+            gtk_popover_popdown (GTK_POPOVER (view->priv->search_popover));
         }
       else
         {
-          gtk_widget_hide (view->priv->search_popover);
+          gtk_popover_popdown (GTK_POPOVER (view->priv->search_popover));
         }
       return TRUE;
     }
@@ -2775,7 +2777,7 @@ static gboolean
 gimp_item_tree_view_start_interactive_search (GtkTreeView      *tree_view,
                                               GimpItemTreeView *layer_view)
 {
-  gtk_widget_show (layer_view->priv->search_popover);
+  gtk_popover_popup (GTK_POPOVER (layer_view->priv->search_popover));
   gtk_widget_grab_focus (layer_view->priv->link_search_entry);
 
   return FALSE;
@@ -2833,7 +2835,7 @@ static void
 gimp_item_tree_view_new_link_exit (GimpItemTreeView *view)
 {
   if (gimp_item_tree_view_new_link_clicked (view))
-    gtk_widget_hide (view->priv->search_popover);
+    gtk_popover_popdown (GTK_POPOVER (view->priv->search_popover));
 }
 
 static gboolean
