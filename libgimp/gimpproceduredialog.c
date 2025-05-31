@@ -1328,7 +1328,7 @@ gimp_procedure_dialog_get_spin_scale (GimpProcedureDialog *dialog,
       minimum = (gdouble) pspecint->minimum;
       maximum = (gdouble) pspecint->maximum;
     }
-  if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_UINT)
+  else if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_UINT)
     {
       GParamSpecUInt *pspecuint = (GParamSpecUInt *) pspec;
 
