@@ -755,7 +755,7 @@ gimp_seamless_clone_tool_create_filter (GimpSeamlessCloneTool *sc,
                                          _("Seamless Clone"),
                                          sc->render_node,
                                          GIMP_ICON_TOOL_SEAMLESS_CLONE);
-  g_object_set (sc->filter, "temporary", TRUE, NULL);
+  gimp_drawable_filter_set_temporary (sc->filter, TRUE);
 
   gimp_drawable_filter_set_region (sc->filter, GIMP_FILTER_REGION_DRAWABLE);
 

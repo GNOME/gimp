@@ -596,7 +596,7 @@ gimp_drawable_filters_editor_view_visible_cell_toggled (GtkCellRendererToggle *t
           visible = gimp_filter_get_active (GIMP_FILTER (filter));
           gimp_filter_set_active (GIMP_FILTER (filter), ! visible);
 
-          gimp_drawable_update (drawable, 0, 0, -1, -1);
+          gimp_drawable_update_bounding_box (drawable);
           gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
         }
     }
@@ -671,7 +671,7 @@ gimp_drawable_filters_editor_visible_all_toggled (GtkWidget            *widget,
         }
     }
 
-  gimp_drawable_update (editor->drawable, 0, 0, -1, -1);
+  gimp_drawable_update_bounding_box (editor->drawable);
   gimp_image_flush (gimp_item_get_image (GIMP_ITEM (editor->drawable)));
 }
 

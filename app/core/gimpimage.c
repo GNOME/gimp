@@ -2063,7 +2063,8 @@ gimp_image_rec_filter_remove_undo (GimpImage *image,
       for (filter_list = GIMP_LIST (filters)->queue->tail; filter_list;
            filter_list = g_list_previous (filter_list))
         {
-          if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
+          if (GIMP_IS_DRAWABLE_FILTER (filter_list->data) &&
+              ! gimp_drawable_filter_get_temporary (filter_list->data))
             {
               GimpDrawableFilter *filter = filter_list->data;
 

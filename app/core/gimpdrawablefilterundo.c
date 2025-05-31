@@ -106,7 +106,8 @@ gimp_drawable_filter_undo_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_DRAWABLE_FILTER (df_undo->filter));
+  gimp_assert (GIMP_IS_DRAWABLE_FILTER (df_undo->filter) &&
+               ! gimp_drawable_filter_get_temporary (df_undo->filter));
 
   drawable = gimp_drawable_filter_get_drawable (df_undo->filter);
   if (drawable)

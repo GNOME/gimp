@@ -1091,7 +1091,7 @@ gimp_warp_tool_create_filter (GimpWarpTool *wt,
                                          _("Warp transform"),
                                          wt->graph,
                                          GIMP_ICON_TOOL_WARP);
-  g_object_set (wt->filter, "temporary", TRUE, NULL);
+  gimp_drawable_filter_set_temporary (wt->filter, TRUE);
 
   gimp_drawable_filter_set_region (wt->filter, GIMP_FILTER_REGION_DRAWABLE);
 

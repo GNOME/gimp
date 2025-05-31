@@ -1105,7 +1105,7 @@ gimp_gradient_tool_create_filter (GimpGradientTool *gradient_tool,
                                                     C_("undo-type", "Gradient"),
                                                     gradient_tool->graph,
                                                     GIMP_ICON_TOOL_GRADIENT);
-  g_object_set (gradient_tool->filter, "temporary", TRUE, NULL);
+  gimp_drawable_filter_set_temporary (gradient_tool->filter, TRUE);
 
   gimp_drawable_filter_set_region (gradient_tool->filter,
                                    GIMP_FILTER_REGION_DRAWABLE);
