@@ -1382,24 +1382,23 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
     }
   else
     {
-      const Babl *fish;
-      const Babl *u8_format;
-      GeglBuffer *buffer;
-      guchar     *src;
+      const Babl   *fish;
+      const Babl   *u8_format;
+      GeglBuffer   *buffer;
+      guchar       *src;
       const guchar *s;
-      guchar     *dest;
-      gint        dest_stride;
-      gboolean    has_alpha;
-      gint        bytes;
-      gint        n_components;
-      gint        rowstride;
-      gint        pixel_len;
-      gint        i;
+      guchar       *dest;
+      gint          dest_stride;
+      gboolean      has_alpha;
+      gint          bytes;
+      gint          n_components;
+      gint          rowstride;
+      gint          pixel_len;
+      gint          i;
 
       cairo_surface_flush (surface);
 
       u8_format    = gimp_babl_compat_u8_format (temp_buf_format);
-
       has_alpha    = babl_format_has_alpha (temp_buf_format);
       n_components = babl_format_get_n_components (temp_buf_format);
       bytes        = babl_format_get_bytes_per_pixel (u8_format);
