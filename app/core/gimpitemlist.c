@@ -187,8 +187,8 @@ gimp_item_list_constructed (GObject *object)
 
   gimp_assert (GIMP_IS_IMAGE (set->p->image));
   gimp_assert (set->p->item_type == GIMP_TYPE_LAYER   ||
-               set->p->item_type == GIMP_TYPE_PATH ||
-               set->p->item_type == GIMP_TYPE_CHANNEL);
+               set->p->item_type == GIMP_TYPE_CHANNEL ||
+               set->p->item_type == GIMP_TYPE_PATH);
 
   if (! set->p->is_pattern)
     {
@@ -196,10 +196,11 @@ gimp_item_list_constructed (GObject *object)
 
       if (set->p->item_type == GIMP_TYPE_LAYER)
         container = gimp_image_get_layers (set->p->image);
-      else if (set->p->item_type == GIMP_TYPE_PATH)
-        container = gimp_image_get_paths (set->p->image);
-      else
+      else if  (set->p->item_type == GIMP_TYPE_CHANNEL)
         container = gimp_image_get_channels (set->p->image);
+      else
+        container = gimp_image_get_paths (set->p->image);
+
       g_signal_connect (container, "remove",
                         G_CALLBACK (gimp_item_list_item_remove),
                         set);
@@ -220,10 +221,11 @@ gimp_item_list_dispose (GObject *object)
 
       if (set->p->item_type == GIMP_TYPE_LAYER)
         container = gimp_image_get_layers (set->p->image);
-      else if (set->p->item_type == GIMP_TYPE_PATH)
-        container = gimp_image_get_paths (set->p->image);
-      else
+      else if (set->p->item_type == GIMP_TYPE_CHANNEL)
         container = gimp_image_get_channels (set->p->image);
+      else
+        container = gimp_image_get_paths (set->p->image);
+
       g_signal_handlers_disconnect_by_func (container,
                                             G_CALLBACK (gimp_item_list_item_remove),
                                             set);
@@ -349,10 +351,10 @@ gimp_item_list_named_new (GimpImage   *image,
     {
       if (item_type == GIMP_TYPE_LAYER)
         items = gimp_image_get_selected_layers (image);
-      else if (item_type == GIMP_TYPE_PATH)
-        items = gimp_image_get_selected_paths (image);
       else if (item_type == GIMP_TYPE_CHANNEL)
         items = gimp_image_get_selected_channels (image);
+      else if (item_type == GIMP_TYPE_PATH)
+        items = gimp_image_get_selected_paths (image);
 
       if (! items)
         return NULL;
@@ -555,7 +557,7 @@ gimp_item_list_get_items_by_substr (GimpItemList  *set,
                                     const gchar   *pattern,
                                     GError       **error)
 {
-  GList  *items;
+  GList  *items = NULL;
   GList  *match = NULL;
   GList  *iter;
 
@@ -566,15 +568,11 @@ gimp_item_list_get_items_by_substr (GimpItemList  *set,
     return NULL;
 
   if (set->p->item_type == GIMP_TYPE_LAYER)
-    {
-      items = gimp_image_get_layer_list (set->p->image);
-    }
-  else
-    {
-      g_critical ("%s: only list of GimpLayer supported for now.",
-                  G_STRFUNC);
-      return NULL;
-    }
+    items = gimp_image_get_layer_list (set->p->image);
+  else if (set->p->item_type == GIMP_TYPE_CHANNEL)
+    items = gimp_image_get_channel_list (set->p->image);
+  else if (set->p->item_type == GIMP_TYPE_PATH)
+    items = gimp_image_get_path_list (set->p->image);
 
   for (iter = items; iter; iter = iter->next)
     {
@@ -604,7 +602,7 @@ gimp_item_list_get_items_by_glob (GimpItemList  *set,
                                   const gchar   *pattern,
                                   GError       **error)
 {
-  GList        *items;
+  GList        *items = NULL;
   GList        *match = NULL;
   GList        *iter;
   GPatternSpec *spec;
@@ -616,15 +614,11 @@ gimp_item_list_get_items_by_glob (GimpItemList  *set,
     return NULL;
 
   if (set->p->item_type == GIMP_TYPE_LAYER)
-    {
-      items = gimp_image_get_layer_list (set->p->image);
-    }
-  else
-    {
-      g_critical ("%s: only list of GimpLayer supported for now.",
-                  G_STRFUNC);
-      return NULL;
-    }
+    items = gimp_image_get_layer_list (set->p->image);
+  else if (set->p->item_type == GIMP_TYPE_CHANNEL)
+    items = gimp_image_get_channel_list (set->p->image);
+  else if (set->p->item_type == GIMP_TYPE_PATH)
+    items = gimp_image_get_path_list (set->p->image);
 
   spec = g_pattern_spec_new (pattern);
   for (iter = items; iter; iter = iter->next)
@@ -656,7 +650,7 @@ gimp_item_list_get_items_by_regexp (GimpItemList  *set,
                                     const gchar   *pattern,
                                     GError       **error)
 {
-  GList  *items;
+  GList  *items = NULL;
   GList  *match = NULL;
   GList  *iter;
   GRegex *regex;
@@ -671,15 +665,11 @@ gimp_item_list_get_items_by_regexp (GimpItemList  *set,
     return NULL;
 
   if (set->p->item_type == GIMP_TYPE_LAYER)
-    {
-      items = gimp_image_get_layer_list (set->p->image);
-    }
-  else
-    {
-      g_critical ("%s: only list of GimpLayer supported for now.",
-                  G_STRFUNC);
-      return NULL;
-    }
+    items = gimp_image_get_layer_list (set->p->image);
+  else if (set->p->item_type == GIMP_TYPE_CHANNEL)
+    items = gimp_image_get_channel_list (set->p->image);
+  else if (set->p->item_type == GIMP_TYPE_PATH)
+    items = gimp_image_get_path_list (set->p->image);
 
   for (iter = items; iter; iter = iter->next)
     {
