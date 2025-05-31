@@ -1386,6 +1386,7 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
       const Babl *u8_format;
       GeglBuffer *buffer;
       guchar     *src;
+      const guchar *s;
       guchar     *dest;
       gint        dest_stride;
       gboolean    has_alpha;
@@ -1406,13 +1407,13 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
       pixel_len    = n_components + (! has_alpha);
 
       buffer = gimp_temp_buf_create_buffer (temp_buf);
-      src    = g_malloc (width * height * n_components);
+      src    = g_malloc0 (width * height * n_components);
       gegl_buffer_get (buffer,
                        GEGL_RECTANGLE (0, 0,
                                        temp_buf_width, temp_buf_height), 1.0,
                        gimp_babl_compat_u8_format (temp_buf_format),
-                       src,
-                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+                       src, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+      s = src;
 
       dest        = cairo_image_surface_get_data (surface);
       dest_stride = cairo_image_surface_get_stride (surface);
@@ -1424,10 +1425,9 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
 
       for (i = y; i < (y + height); i++)
         {
-          const guchar *s = src;
-          guchar       *d = dest;
-          guchar        pixel[pixel_len];
-          gint          j;
+          guchar *d = dest;
+          guchar  pixel[pixel_len];
+          gint    j;
 
           for (j = x; j < (x + width); j++, d += 4, s += bytes)
             {
@@ -1440,9 +1440,9 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
               babl_process (fish, pixel, d, 1);
             }
 
-          src += rowstride;
           dest += dest_stride;
         }
+      g_free (src);
 
       cairo_surface_mark_dirty (surface);
       g_object_unref (buffer);
