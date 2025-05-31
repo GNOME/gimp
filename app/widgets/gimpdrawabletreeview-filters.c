@@ -165,10 +165,6 @@ _gimp_drawable_tree_view_filter_editor_show (GimpDrawableTreeView *view,
       editor->popover = gtk_popover_new (GTK_WIDGET (tree_view->view));
       gtk_popover_set_modal (GTK_POPOVER (editor->popover), TRUE);
 
-      g_signal_connect_swapped (editor->popover, "closed",
-                                G_CALLBACK (_gimp_drawable_tree_view_filter_editor_hide),
-                                view);
-
       /*  main vbox  */
       vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, button_spacing);
       gtk_container_add (GTK_CONTAINER (editor->popover), vbox);
@@ -405,7 +401,11 @@ _gimp_drawable_tree_view_filter_editor_show (GimpDrawableTreeView *view,
       gimp_drawable_filters_editor_set_sensitive (view);
 
       gtk_popover_set_pointing_to (GTK_POPOVER (editor->popover), rect);
-      gtk_widget_show (editor->popover);
+      gtk_popover_popup (GTK_POPOVER (editor->popover));
+
+      g_signal_connect_swapped (editor->popover, "closed",
+                                G_CALLBACK (_gimp_drawable_tree_view_filter_editor_hide),
+                                view);
 
       return TRUE;
     }
@@ -421,10 +421,12 @@ _gimp_drawable_tree_view_filter_editor_hide (GimpDrawableTreeView *view)
   if (! editor)
     return;
 
-  gtk_widget_hide (editor->popover);
-
   if (editor->active_changed_handler)
     {
+      g_signal_handlers_disconnect_by_func (editor->popover,
+                                            _gimp_drawable_tree_view_filter_editor_hide,
+                                            view);
+
       g_signal_handlers_disconnect_by_func (editor->drawable,
                                             gimp_drawable_filters_editor_filters_changed,
                                             view);
@@ -434,6 +436,8 @@ _gimp_drawable_tree_view_filter_editor_hide (GimpDrawableTreeView *view)
       g_clear_pointer (&editor->active_changed_handler,
                        gimp_tree_handler_disconnect);
     }
+
+  gtk_popover_popdown (GTK_POPOVER (editor->popover));
 
   if (editor->view)
     {
@@ -460,10 +464,6 @@ _gimp_drawable_tree_view_filter_editor_destroy (GimpDrawableTreeView *view)
     return;
 
   _gimp_drawable_tree_view_filter_editor_hide (view);
-
-  g_signal_handlers_disconnect_by_func (editor->popover,
-                                        _gimp_drawable_tree_view_filter_editor_hide,
-                                        view);
 
   g_clear_pointer (&editor->popover, gtk_widget_destroy);
   g_clear_pointer (&view->editor, g_free);
