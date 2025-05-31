@@ -36,6 +36,8 @@
 
 #include "config/gimpcoreconfig.h"
 
+#include "gegl/gimp-babl.h"
+#include "gegl/gimp-babl-compat.h"
 #include "gegl/gimp-gegl-loops.h"
 
 #include "core/gimp.h"
@@ -1381,56 +1383,68 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
   else
     {
       const Babl   *fish;
-      const guchar *src;
+      const Babl   *u8_format;
+      GeglBuffer   *buffer;
+      guchar       *src;
+      const guchar *s;
       guchar       *dest;
       gint          dest_stride;
+      gboolean      has_alpha;
       gint          bytes;
+      gint          n_components;
       gint          rowstride;
+      gint          pixel_len;
       gint          i;
 
       cairo_surface_flush (surface);
 
-      bytes     = babl_format_get_bytes_per_pixel (temp_buf_format);
-      rowstride = temp_buf_width * bytes;
+      u8_format    = gimp_babl_compat_u8_format (temp_buf_format);
+      has_alpha    = babl_format_has_alpha (temp_buf_format);
+      n_components = babl_format_get_n_components (temp_buf_format);
+      bytes        = babl_format_get_bytes_per_pixel (u8_format);
+      rowstride    = temp_buf_width * bytes;
+      pixel_len    = n_components + (! has_alpha);
 
-      src = gimp_temp_buf_get_data (temp_buf) + ((y - temp_buf_y) * rowstride +
-                                                 (x - temp_buf_x) * bytes);
+      buffer = gimp_temp_buf_create_buffer (temp_buf);
+      src    = g_malloc0 (width * height * n_components);
+      gegl_buffer_get (buffer,
+                       GEGL_RECTANGLE (0, 0,
+                                       temp_buf_width, temp_buf_height), 1.0,
+                       gimp_babl_compat_u8_format (temp_buf_format),
+                       src, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+      s = src;
 
       dest        = cairo_image_surface_get_data (surface);
       dest_stride = cairo_image_surface_get_stride (surface);
 
       dest += y * dest_stride + x * 4;
 
-      fish = babl_fish (temp_buf_format,
+      fish = babl_fish (u8_format,
                         babl_format ("cairo-RGB24"));
 
       for (i = y; i < (y + height); i++)
         {
-          const guchar *s = src;
-          guchar       *d = dest;
-          gint          j;
+          guchar *d = dest;
+          guchar  pixel[pixel_len];
+          gint    j;
 
           for (j = x; j < (x + width); j++, d += 4, s += bytes)
             {
-              if (bytes > 2)
-                {
-                  guchar pixel[4] = { s[channel], s[channel], s[channel], 255 };
+              guchar value = s[channel];
 
-                  babl_process (fish, pixel, d, 1);
-                }
-              else
-                {
-                  guchar pixel[2] = { s[channel], 255 };
+              for (gint k = 0; k < (pixel_len - 1); k++)
+                pixel[k] = value;
+              pixel[pixel_len - 1] = 255;
 
-                  babl_process (fish, pixel, d, 1);
-                }
+              babl_process (fish, pixel, d, 1);
             }
 
-          src += rowstride;
           dest += dest_stride;
         }
+      g_free (src);
 
       cairo_surface_mark_dirty (surface);
+      g_object_unref (buffer);
     }
 
   cairo_destroy (cr);
