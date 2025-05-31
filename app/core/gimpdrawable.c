@@ -1189,24 +1189,23 @@ gimp_drawable_update (GimpDrawable *drawable,
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
-  if (width < 0)
+  if (width < 0 || height < 0)
     {
       GeglRectangle bounding_box;
 
       bounding_box = gimp_drawable_get_bounding_box (drawable);
 
-      x     = bounding_box.x;
-      width = bounding_box.width;
-    }
+      if (width < 0)
+        {
+          x     = bounding_box.x;
+          width = bounding_box.width;
+        }
 
-  if (height < 0)
-    {
-      GeglRectangle bounding_box;
-
-      bounding_box = gimp_drawable_get_bounding_box (drawable);
-
-      y      = bounding_box.y;
-      height = bounding_box.height;
+      if (height < 0)
+        {
+          y      = bounding_box.y;
+          height = bounding_box.height;
+        }
     }
 
   if (drawable->private->paint_count == 0)
