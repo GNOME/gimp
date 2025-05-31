@@ -371,7 +371,7 @@ gimp_bucket_fill_tool_start (GimpBucketFillTool *tool,
   tool->priv->filter = gimp_drawable_filter_new (drawables->data, _("Bucket fill"),
                                                  tool->priv->graph,
                                                  GIMP_ICON_TOOL_BUCKET_FILL);
-  g_object_set (tool->priv->filter, "temporary", TRUE, NULL);
+  gimp_drawable_filter_set_temporary (tool->priv->filter, TRUE);
 
   gimp_drawable_filter_set_region (tool->priv->filter,
                                    GIMP_FILTER_REGION_DRAWABLE);

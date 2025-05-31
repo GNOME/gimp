@@ -69,6 +69,10 @@ GeglNode * gimp_drawable_filter_get_operation  (GimpDrawableFilter      *filter)
 GimpDrawableFilterMask *
            gimp_drawable_filter_get_mask       (GimpDrawableFilter      *filter);
 
+void       gimp_drawable_filter_set_temporary  (GimpDrawableFilter      *filter,
+                                                gboolean                 temporary);
+gboolean   gimp_drawable_filter_get_temporary  (GimpDrawableFilter      *filter);
+
 void       gimp_drawable_filter_set_opacity    (GimpDrawableFilter      *filter,
                                                 gdouble                  opacity);
 gdouble    gimp_drawable_filter_get_opacity    (GimpDrawableFilter      *filter);

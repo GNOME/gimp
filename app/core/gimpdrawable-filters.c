@@ -112,18 +112,10 @@ gimp_drawable_n_editable_filters (GimpDrawable *drawable,
       GimpFilter *filter   = list->data;
       gboolean    editable = FALSE;
 
-      if (GIMP_IS_DRAWABLE_FILTER (filter))
+      if (GIMP_IS_DRAWABLE_FILTER (filter) &&
+          ! gimp_drawable_filter_get_temporary (GIMP_DRAWABLE_FILTER (filter)))
         {
-          gboolean temporary;
-
-          g_object_get (filter,
-                        "temporary", &temporary,
-                        NULL);
-
-          if (temporary)
-            editing_blocked = TRUE;
-          else
-            editable = TRUE;
+          editable = TRUE;
         }
       else
         {

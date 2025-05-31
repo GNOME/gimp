@@ -115,7 +115,7 @@ struct _GimpDrawableFilter
   GeglNode               *crop_after;
   GimpApplicator         *applicator;
 
-  gboolean                is_temporary;
+  gboolean                temporary;
   /* This is mirroring merge_filter option of GimpFilterOptions. */
   gboolean                to_be_merged;
 };
@@ -291,7 +291,7 @@ gimp_drawable_filter_set_property (GObject      *object,
       break;
 
     case PROP_TEMPORARY:
-      filter->is_temporary = g_value_get_boolean (value);
+      filter->temporary = g_value_get_boolean (value);
       break;
 
     case PROP_TO_BE_MERGED:
@@ -325,7 +325,7 @@ gimp_drawable_filter_get_property (GObject    *object,
       g_value_set_boolean (value, filter->has_custom_name);
       break;
     case PROP_TEMPORARY:
-      g_value_set_boolean (value, filter->is_temporary);
+      g_value_set_boolean (value, filter->temporary);
       break;
     case PROP_TO_BE_MERGED:
       g_value_set_boolean (value, filter->to_be_merged);
@@ -588,6 +588,30 @@ gimp_drawable_filter_get_mask (GimpDrawableFilter  *filter)
   g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), NULL);
 
   return filter->mask;
+}
+
+void
+gimp_drawable_filter_set_temporary (GimpDrawableFilter *filter,
+                                    gboolean            temporary)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
+
+  temporary = temporary ? TRUE : FALSE;
+
+  if (temporary != filter->temporary)
+    {
+      g_object_set (filter,
+                    "temporary", temporary,
+                    NULL);
+    }
+}
+
+gboolean
+gimp_drawable_filter_get_temporary (GimpDrawableFilter *filter)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), FALSE);
+
+  return filter->temporary;
 }
 
 void

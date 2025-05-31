@@ -2200,12 +2200,13 @@ gimp_filter_tool_set_config (GimpFilterTool *filter_tool,
                                     index);
         }
 
+      gimp_drawable_filter_set_temporary (filter_tool->filter, TRUE);
+
       name = g_strdup_printf (_("Editing '%s'..."),
                               gimp_object_get_name (filter_tool->existing_filter));
       g_object_set (filter_tool->filter,
-                    "name",      name,
-                    "mask",      mask,
-                    "temporary", TRUE,
+                    "name", name,
+                    "mask", mask,
                     NULL);
 
       g_free (name);
