@@ -590,12 +590,55 @@ gimp_drawable_filter_get_mask (GimpDrawableFilter  *filter)
   return filter->mask;
 }
 
+void
+gimp_drawable_filter_set_opacity (GimpDrawableFilter *filter,
+                                  gdouble             opacity)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
+
+  if (opacity != filter->opacity)
+    {
+      filter->opacity = opacity;
+
+      gimp_drawable_filter_sync_opacity (filter);
+
+      if (gimp_drawable_filter_is_active (filter))
+        gimp_drawable_filter_update_drawable (filter, NULL);
+    }
+}
+
 gdouble
 gimp_drawable_filter_get_opacity (GimpDrawableFilter *filter)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), 0.0f);
 
   return filter->opacity;
+}
+
+void
+gimp_drawable_filter_set_mode (GimpDrawableFilter     *filter,
+                               GimpLayerMode           paint_mode,
+                               GimpLayerColorSpace     blend_space,
+                               GimpLayerColorSpace     composite_space,
+                               GimpLayerCompositeMode  composite_mode)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
+
+  if (paint_mode      != filter->paint_mode      ||
+      blend_space     != filter->blend_space     ||
+      composite_space != filter->composite_space ||
+      composite_mode  != filter->composite_mode)
+    {
+      filter->paint_mode      = paint_mode;
+      filter->blend_space     = blend_space;
+      filter->composite_space = composite_space;
+      filter->composite_mode  = composite_mode;
+
+      gimp_drawable_filter_sync_mode (filter);
+
+      if (gimp_drawable_filter_is_active (filter))
+        gimp_drawable_filter_update_drawable (filter, NULL);
+    }
 }
 
 GimpLayerMode
@@ -630,22 +673,6 @@ gimp_drawable_filter_get_composite_mode (GimpDrawableFilter *filter)
   return filter->composite_mode;
 }
 
-gboolean
-gimp_drawable_filter_get_clip (GimpDrawableFilter *filter)
-{
-  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), FALSE);
-
-  return filter->clip;
-}
-
-GimpFilterRegion
-gimp_drawable_filter_get_region (GimpDrawableFilter  *filter)
-{
-  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), 0);
-
-  return filter->region;
-}
-
 void
 gimp_drawable_filter_set_clip (GimpDrawableFilter *filter,
                                gboolean            clip)
@@ -659,6 +686,14 @@ gimp_drawable_filter_set_clip (GimpDrawableFilter *filter,
       gimp_drawable_filter_sync_region (filter);
       gimp_drawable_filter_sync_clip (filter, TRUE);
     }
+}
+
+gboolean
+gimp_drawable_filter_get_clip (GimpDrawableFilter *filter)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), FALSE);
+
+  return filter->clip;
 }
 
 void
@@ -676,6 +711,14 @@ gimp_drawable_filter_set_region (GimpDrawableFilter *filter,
       if (gimp_drawable_filter_is_active (filter))
         gimp_drawable_filter_update_drawable (filter, NULL);
     }
+}
+
+GimpFilterRegion
+gimp_drawable_filter_get_region (GimpDrawableFilter  *filter)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), 0);
+
+  return filter->region;
 }
 
 void
@@ -1058,49 +1101,6 @@ gimp_drawable_filter_update (GimpDrawableFilter      *filter,
     gimp_drawable_filter_update_drawable (filter, NULL);
 
   return (*error != NULL);
-}
-
-void
-gimp_drawable_filter_set_opacity (GimpDrawableFilter *filter,
-                                  gdouble             opacity)
-{
-  g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
-
-  if (opacity != filter->opacity)
-    {
-      filter->opacity = opacity;
-
-      gimp_drawable_filter_sync_opacity (filter);
-
-      if (gimp_drawable_filter_is_active (filter))
-        gimp_drawable_filter_update_drawable (filter, NULL);
-    }
-}
-
-void
-gimp_drawable_filter_set_mode (GimpDrawableFilter     *filter,
-                               GimpLayerMode           paint_mode,
-                               GimpLayerColorSpace     blend_space,
-                               GimpLayerColorSpace     composite_space,
-                               GimpLayerCompositeMode  composite_mode)
-{
-  g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
-
-  if (paint_mode      != filter->paint_mode      ||
-      blend_space     != filter->blend_space     ||
-      composite_space != filter->composite_space ||
-      composite_mode  != filter->composite_mode)
-    {
-      filter->paint_mode      = paint_mode;
-      filter->blend_space     = blend_space;
-      filter->composite_space = composite_space;
-      filter->composite_mode  = composite_mode;
-
-      gimp_drawable_filter_sync_mode (filter);
-
-      if (gimp_drawable_filter_is_active (filter))
-        gimp_drawable_filter_update_drawable (filter, NULL);
-    }
 }
 
 void
