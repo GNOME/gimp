@@ -72,6 +72,7 @@ static void   gimp_drawable_tree_view_view_iface_init (GimpContainerViewInterfac
 static void     gimp_drawable_tree_view_constructed   (GObject                    *object);
 static void     gimp_drawable_tree_view_dispose       (GObject                    *object);
 
+static void     gimp_drawable_tree_view_unmap         (GtkWidget                  *widget);
 static void     gimp_drawable_tree_view_style_updated (GtkWidget                  *widget);
 
 static void     gimp_drawable_tree_view_set_container (GimpContainerView          *view,
@@ -159,6 +160,7 @@ gimp_drawable_tree_view_class_init (GimpDrawableTreeViewClass *klass)
   object_class->constructed       = gimp_drawable_tree_view_constructed;
   object_class->dispose           = gimp_drawable_tree_view_dispose;
 
+  widget_class->unmap             = gimp_drawable_tree_view_unmap;
   widget_class->style_updated     = gimp_drawable_tree_view_style_updated;
 
   tree_view_class->drop_possible  = gimp_drawable_tree_view_drop_possible;
@@ -272,6 +274,16 @@ gimp_drawable_tree_view_dispose (GObject *object)
   _gimp_drawable_tree_view_filter_editor_destroy (view);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_drawable_tree_view_unmap (GtkWidget *widget)
+{
+  GimpDrawableTreeView *view = GIMP_DRAWABLE_TREE_VIEW (widget);
+
+  _gimp_drawable_tree_view_filter_editor_hide (view);
+
+  GTK_WIDGET_CLASS (parent_class)->unmap (widget);
 }
 
 static void
@@ -519,8 +531,12 @@ static void
 gimp_drawable_tree_view_set_image (GimpItemTreeView *view,
                                    GimpImage        *image)
 {
+  GimpDrawableTreeView  *drawable_view = GIMP_DRAWABLE_TREE_VIEW (view);
+
   if (gimp_item_tree_view_get_image (view))
     {
+      _gimp_drawable_tree_view_filter_editor_hide (drawable_view);
+
       g_signal_handlers_disconnect_by_func (gimp_item_tree_view_get_image (view),
                                             gimp_drawable_tree_view_floating_selection_changed,
                                             view);
