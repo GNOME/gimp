@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-05-25 16:26+0000\n"
-"PO-Revision-Date: 2025-05-26 11:56+0200\n"
+"POT-Creation-Date: 2025-05-30 18:47+0000\n"
+"PO-Revision-Date: 2025-05-31 08:02+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -146,7 +146,7 @@ msgstr "Primer vstavka v JavaScriptu (GJS)"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2287
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/grid.c:836
 #: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:260
-#: plug-ins/file-exr/file-exr.c:438 plug-ins/file-psd/psd-load.c:3786
+#: plug-ins/file-exr/file-exr.c:455 plug-ins/file-psd/psd-load.c:3840
 #: plug-ins/flame/flame.c:823 plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -607,7 +607,7 @@ msgstr "Rolete"
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:728
 #: plug-ins/common/file-farbfeld.c:296 plug-ins/common/file-gegl.c:446
 #: plug-ins/common/file-gif-load.c:1147 plug-ins/common/file-iff.c:408
-#: plug-ins/common/file-jp2-load.c:1275 plug-ins/common/file-pcx.c:710
+#: plug-ins/common/file-jp2-load.c:1293 plug-ins/common/file-pcx.c:710
 #: plug-ins/common/file-pcx.c:718 plug-ins/common/file-pcx.c:726
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:921
 #: plug-ins/common/file-pnm.c:845 plug-ins/common/file-qoi.c:296
@@ -617,10 +617,10 @@ msgstr "Rolete"
 #: plug-ins/common/file-wbmp.c:465 plug-ins/common/file-xbm.c:887
 #: plug-ins/common/film.c:865 plug-ins/common/smooth-palette.c:301
 #: plug-ins/common/tile.c:390 plug-ins/file-bmp/bmp-load.c:809
-#: plug-ins/file-exr/file-exr.c:288 plug-ins/file-faxg3/faxg3.c:578
+#: plug-ins/file-exr/file-exr.c:302 plug-ins/file-faxg3/faxg3.c:578
 #: plug-ins/file-fits/fits.c:673 plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1093
-#: plug-ins/file-psd/psd-load.c:2992 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:3046 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1554
 #: plug-ins/file-tiff/file-tiff-load.c:2359
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:559
@@ -1509,7 +1509,8 @@ msgstr "Barvni model HSL"
 
 #: plug-ins/common/compose.c:275 plug-ins/common/compose.c:444
 #: plug-ins/common/compose.c:507 plug-ins/common/decompose.c:210
-#: plug-ins/common/decompose.c:304 plug-ins/common/file-jp2-load.c:255
+#: plug-ins/common/decompose.c:304 plug-ins/common/file-jp2-load.c:224
+#: plug-ins/common/file-jp2-load.c:270
 msgid "CMYK"
 msgstr "CMYK"
 
@@ -2601,7 +2602,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #.
 #: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:352
 #: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:408
-#: plug-ins/common/file-heif.c:853 plug-ins/common/file-jp2-load.c:1047
+#: plug-ins/common/file-heif.c:853 plug-ins/common/file-jp2-load.c:1065
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
 #: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
 #: plug-ins/common/file-png.c:631 plug-ins/common/file-pnm.c:688
@@ -3781,19 +3782,49 @@ msgstr ""
 msgid "JPEG 2000 image"
 msgstr "Slika JPEG 2000"
 
-#: plug-ins/common/file-jp2-load.c:191 plug-ins/common/file-jp2-load.c:225
+#: plug-ins/common/file-jp2-load.c:191 plug-ins/common/file-jp2-load.c:238
 msgid "JPEG 2000"
 msgstr "JPEG 2000"
 
-#: plug-ins/common/file-jp2-load.c:223
+#: plug-ins/common/file-jp2-load.c:218 plug-ins/common/file-jp2-load.c:264
+msgid "Color s_pace"
+msgstr "Barvni _prostor"
+
+#: plug-ins/common/file-jp2-load.c:219 plug-ins/common/file-jp2-load.c:265
+msgid "Color space"
+msgstr "Barvni prostor"
+
+#: plug-ins/common/file-jp2-load.c:220 plug-ins/common/file-jp2-load.c:266
+msgid "sRGB"
+msgstr "sRGB"
+
+#: plug-ins/common/file-jp2-load.c:221 plug-ins/common/file-jp2-load.c:267
+msgid "Grayscale"
+msgstr "Sivinsko"
+
+#: plug-ins/common/file-jp2-load.c:222 plug-ins/common/file-jp2-load.c:268
+msgid "YCbCr"
+msgstr "YCbCr"
+
+#: plug-ins/common/file-jp2-load.c:223 plug-ins/common/file-jp2-load.c:269
+msgid "xvYCC"
+msgstr "xvYCC"
+
+#: plug-ins/common/file-jp2-load.c:225 plug-ins/common/file-jp2-load.c:271
+#: plug-ins/metadata/metadata-tags.c:261 plug-ins/metadata/metadata-tags.c:297
+#: plug-ins/metadata/metadata-tags.c:304 plug-ins/metadata/metadata-tags.c:311
+msgid "Unknown"
+msgstr "Neznano"
+
+#: plug-ins/common/file-jp2-load.c:236
 msgid "JPEG 2000 codestream"
 msgstr "Kodni tok JPEG 2000"
 
-#: plug-ins/common/file-jp2-load.c:228
+#: plug-ins/common/file-jp2-load.c:241
 msgid "Loads JPEG 2000 codestream."
 msgstr "Naloži kodni tok JPEG 2000."
 
-#: plug-ins/common/file-jp2-load.c:229
+#: plug-ins/common/file-jp2-load.c:242
 msgid ""
 "Loads JPEG 2000 codestream. If the color space is set to UNKNOWN (0), we "
 "will try to guess, which is only possible for few spaces (such as "
@@ -3805,98 +3836,68 @@ msgstr ""
 "Večina takih klicev bo spodletela. Od vas se pričakuje, da poznate barvni "
 "prostor svojih podatkov."
 
-#: plug-ins/common/file-jp2-load.c:249
-msgid "Color s_pace"
-msgstr "Barvni _prostor"
-
-#: plug-ins/common/file-jp2-load.c:250
-msgid "Color space"
-msgstr "Barvni prostor"
-
-#: plug-ins/common/file-jp2-load.c:251
-msgid "sRGB"
-msgstr "sRGB"
-
-#: plug-ins/common/file-jp2-load.c:252
-msgid "Grayscale"
-msgstr "Sivinsko"
-
-#: plug-ins/common/file-jp2-load.c:253
-msgid "YCbCr"
-msgstr "YCbCr"
-
-#: plug-ins/common/file-jp2-load.c:254
-msgid "xvYCC"
-msgstr "xvYCC"
-
-#: plug-ins/common/file-jp2-load.c:256 plug-ins/metadata/metadata-tags.c:261
-#: plug-ins/metadata/metadata-tags.c:297 plug-ins/metadata/metadata-tags.c:304
-#: plug-ins/metadata/metadata-tags.c:311
-msgid "Unknown"
-msgstr "Neznano"
-
-#: plug-ins/common/file-jp2-load.c:978
+#: plug-ins/common/file-jp2-load.c:996
 #, c-format
 msgid "Unsupported JPEG 2000%s '%s' with %d components."
 msgstr "Nepodprta JPEG 2000%s »%s« s/z %d komponentami."
 
-#: plug-ins/common/file-jp2-load.c:1055 plug-ins/common/file-wmf.c:238
+#: plug-ins/common/file-jp2-load.c:1073 plug-ins/common/file-wmf.c:238
 #: plug-ins/common/file-wmf.c:596
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr "»%s« ni mogoče odpreti za branje."
 
-#: plug-ins/common/file-jp2-load.c:1064
+#: plug-ins/common/file-jp2-load.c:1082
 #, c-format
 msgid "Failed to initialize decoder for '%s', out of memory?"
 msgstr "Dekodirnika za »%s« ni uspelo inicializirati, je zmanjkalo pomnilnika?"
 
-#: plug-ins/common/file-jp2-load.c:1080
+#: plug-ins/common/file-jp2-load.c:1098
 #, c-format
 msgid "Couldn't set parameters on decoder for '%s'."
 msgstr "Parametrov dekodirnika za »%s« ni mogoče nastaviti."
 
-#: plug-ins/common/file-jp2-load.c:1088
+#: plug-ins/common/file-jp2-load.c:1106
 #, c-format
 msgid "Couldn't read JP2 header from '%s'."
 msgstr "Glave JP2 iz »%s« ni mogoče prebrati."
 
-#: plug-ins/common/file-jp2-load.c:1096
+#: plug-ins/common/file-jp2-load.c:1114
 #, c-format
 msgid "Couldn't decode JP2 image in '%s'."
 msgstr "Slike JP2 v »%s« ni mogoče dekodirati."
 
-#: plug-ins/common/file-jp2-load.c:1104
+#: plug-ins/common/file-jp2-load.c:1122
 #, c-format
 msgid "Couldn't decompress JP2 image in '%s'."
 msgstr "Slike JP2 v »%s« ni mogoče dekompresirati."
 
-#: plug-ins/common/file-jp2-load.c:1135
+#: plug-ins/common/file-jp2-load.c:1153
 #, c-format
 msgid "Couldn't decode CIELAB JP2 image in '%s'."
 msgstr "Slike CIELAB JP2 v »%s« ni mogoče dekodirati."
 
-#: plug-ins/common/file-jp2-load.c:1192
+#: plug-ins/common/file-jp2-load.c:1210
 #, c-format
 msgid "Unknown color space in JP2 codestream '%s'."
 msgstr "Neznan barvni prostor v kodnem toku JP2 »%s«."
 
-#: plug-ins/common/file-jp2-load.c:1203
+#: plug-ins/common/file-jp2-load.c:1221
 #, c-format
 msgid "Couldn't convert YCbCr JP2 image '%s' to RGB."
 msgstr "Slike YCbCr JP2 »%s« ni mogoče pretvoriti v RGB."
 
-#: plug-ins/common/file-jp2-load.c:1213
+#: plug-ins/common/file-jp2-load.c:1231
 #, c-format
 msgid "Couldn't convert CMYK JP2 image in '%s' to RGB."
 msgstr "Slike CMYK JP2 »%s« ni mogoče pretvoriti v RGB."
 
-#: plug-ins/common/file-jp2-load.c:1225
+#: plug-ins/common/file-jp2-load.c:1243
 #, c-format
 msgid "Couldn't convert xvYCC JP2 image in '%s' to RGB."
 msgstr "Slike xvYCC JP2 »%s« ni mogoče pretvoriti v RGB."
 
-#: plug-ins/common/file-jp2-load.c:1252
+#: plug-ins/common/file-jp2-load.c:1270
 #, c-format
 msgid "Unsupported color space in JP2 image '%s'."
 msgstr "Nepodprti barvni prostor v sliki JP2 »%s«."
@@ -6057,8 +6058,8 @@ msgstr ""
 "Ali želite poskusiti znova brez omejitev, ki preprečujejo razčlenjevanje "
 "ogromnih količin podatkov?"
 
-#: plug-ins/common/file-svg.c:562 plug-ins/file-exr/file-exr.c:359
-#: plug-ins/file-exr/file-exr.c:373
+#: plug-ins/common/file-svg.c:562 plug-ins/file-exr/file-exr.c:378
+#: plug-ins/file-exr/file-exr.c:392
 msgid "Unknown reason"
 msgstr "Neznani razlog"
 
@@ -9398,25 +9399,25 @@ msgstr "Napaka pri poizvedovanju o natančnosti slike iz »%s«"
 msgid "Error querying image type from '%s'"
 msgstr "Napaka pri poizvedovanju o vrsti slike iz »%s«"
 
-#: plug-ins/file-exr/file-exr.c:319
+#: plug-ins/file-exr/file-exr.c:334
 #, c-format
 msgid "Error reading pixel data from '%s'"
 msgstr "Napaka pri branju podatkov slikovnih točk iz »%s«"
 
-#: plug-ins/file-exr/file-exr.c:358 plug-ins/file-exr/file-exr.c:372
+#: plug-ins/file-exr/file-exr.c:377 plug-ins/file-exr/file-exr.c:391
 #, c-format
 msgid "Failed to load metadata: %s"
 msgstr "Nalaganje metapodatkov je spodletelo: %s"
 
-#: plug-ins/file-exr/file-exr.c:435
+#: plug-ins/file-exr/file-exr.c:452
 msgid "Import OpenEXR"
 msgstr "Uvozi OpenEXR"
 
-#: plug-ins/file-exr/file-exr.c:450
+#: plug-ins/file-exr/file-exr.c:467
 msgid "Unknown Channel Name"
 msgstr "Neznano ime kanala"
 
-#: plug-ins/file-exr/file-exr.c:451
+#: plug-ins/file-exr/file-exr.c:468
 msgid ""
 "The image contains a single unknown channel.\n"
 "It has been converted to grayscale."
@@ -9424,11 +9425,11 @@ msgstr ""
 "Slika vsebuje en sam neznan kanal.\n"
 "Pretvorjen je v sivinskega."
 
-#: plug-ins/file-exr/file-exr.c:454
+#: plug-ins/file-exr/file-exr.c:471
 msgid "Chroma Channels"
 msgstr "Kanali krome"
 
-#: plug-ins/file-exr/file-exr.c:455
+#: plug-ins/file-exr/file-exr.c:472
 msgid ""
 "OpenEXR chroma channels are not yet supported.\n"
 "They have been discarded."
@@ -10135,7 +10136,7 @@ msgstr ""
 "Photoshop ne podpira indeksiranih slik, ki imajo več kot eno plast. Plasti "
 "bodo združene ob izvozu."
 
-#: plug-ins/file-psd/psd-export.c:2703 plug-ins/file-psd/psd-load.c:3825
+#: plug-ins/file-psd/psd-export.c:2703 plug-ins/file-psd/psd-load.c:3879
 msgid "Compatibility Notice"
 msgstr "Obvestilo o združljivosti"
 
@@ -10237,30 +10238,30 @@ msgstr "Nepodprta ali neveljavna širina plasti maske: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Nepodprta ali neveljavna velikost plasti maske: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:2232 plug-ins/file-psd/psd-load.c:2965
+#: plug-ins/file-psd/psd-load.c:2232 plug-ins/file-psd/psd-load.c:3019
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Nepodprti način stiskanja: %d"
 
-#: plug-ins/file-psd/psd-load.c:3127
+#: plug-ins/file-psd/psd-load.c:3181
 msgid "Extra"
 msgstr "Dodatno"
 
-#: plug-ins/file-psd/psd-load.c:3350
+#: plug-ins/file-psd/psd-load.c:3404
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Nepodprta ali neveljavna velikost kanala"
 
-#: plug-ins/file-psd/psd-load.c:3419
+#: plug-ins/file-psd/psd-load.c:3473
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Podatkov ni mogoče razpakirati"
 
-#: plug-ins/file-psd/psd-load.c:3802
+#: plug-ins/file-psd/psd-load.c:3856
 msgid "Duotone Import"
 msgstr "Uvoz duotone"
 
-#: plug-ins/file-psd/psd-load.c:3803
+#: plug-ins/file-psd/psd-load.c:3857
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10270,7 +10271,7 @@ msgstr ""
 "Podatki o barvnem prostoru duotone so shranjeni\n"
 "in se lahko ponovno uporabijo pri izvozu."
 
-#: plug-ins/file-psd/psd-load.c:3826
+#: plug-ins/file-psd/psd-load.c:3880
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -10528,14 +10529,16 @@ msgid ""
 "GIMP currently supports these RAW loaders:\n"
 "- darktable (http://www.darktable.org/), at least 1.7\n"
 "- RawTherapee (http://rawtherapee.com/), at least 5.2\n"
+"- ART (https://art.pixls.us/)\n"
 "\n"
 "Please install one of them in order to load RAW files."
 msgstr ""
-"Za zagon datotek »%s« ni nameščen nalagalnik RAW.\n"
+"Za odpiranje datotek »%s« ni nameščen nalagalnik RAW.\n"
 "\n"
 "GIMP trenutno podpira naslednje nalagalnike RAW:\n"
 "- darktable (http://www.darktable.org/), vsaj 1.7;\n"
-"- RawTherapee (http://rawtherapee.com/), najmanj 5.2.\n"
+"- RawTherapee (http://rawtherapee.com/), najmanj 5.2;\n"
+"- ART (https://art.pixls.us/).\n"
 "\n"
 "Namestite enega od njih, da boste lahko naložili datoteke RAW."
 
