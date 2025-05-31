@@ -638,7 +638,7 @@ gimp_procedure_dialog_set_ok_label (GimpProcedureDialog *dialog,
  * - %G_TYPE_PARAM_BOOLEAN:
  *     * %GTK_TYPE_CHECK_BUTTON (default)
  *     * %GTK_TYPE_SWITCH
- * - %G_TYPE_PARAM_INT or %G_TYPE_PARAM_DOUBLE:
+ * - %G_TYPE_PARAM_INT, %G_TYPE_PARAM_UINT, or %G_TYPE_PARAM_DOUBLE:
  *     * %GIMP_TYPE_LABEL_SPIN (default): a spin button with a label.
  *     * %GIMP_TYPE_SCALE_ENTRY: a scale entry with label.
  *     * %GIMP_TYPE_SPIN_SCALE: a spin scale with label embedded.
@@ -720,7 +720,8 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
                                        g_param_spec_get_nick (pspec),
                                        &label, NULL);
     }
-  else if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_INT ||
+  else if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_INT  ||
+           G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_UINT ||
            G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_DOUBLE)
     {
       gdouble minimum;
@@ -735,6 +736,13 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
 
           minimum = (gdouble) pspecint->minimum;
           maximum = (gdouble) pspecint->maximum;
+        }
+      else if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_UINT)
+        {
+          GParamSpecUInt *pspecuint = (GParamSpecUInt *) pspec;
+
+          minimum = (gdouble) pspecuint->minimum;
+          maximum = (gdouble) pspecuint->maximum;
         }
       else /* G_TYPE_PARAM_DOUBLE */
         {
@@ -1302,8 +1310,9 @@ gimp_procedure_dialog_get_spin_scale (GimpProcedureDialog *dialog,
       return NULL;
     }
 
-  g_return_val_if_fail (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_DOUBLE ||
-                        (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_INT   &&
+  g_return_val_if_fail (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_DOUBLE  ||
+                        ((G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_UINT  ||
+                          G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_INT)  &&
                          factor == 1.0), NULL);
 
   /* First check if it already exists. */
@@ -1318,6 +1327,13 @@ gimp_procedure_dialog_get_spin_scale (GimpProcedureDialog *dialog,
 
       minimum = (gdouble) pspecint->minimum;
       maximum = (gdouble) pspecint->maximum;
+    }
+  if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_UINT)
+    {
+      GParamSpecUInt *pspecuint = (GParamSpecUInt *) pspec;
+
+      minimum = (gdouble) pspecuint->minimum;
+      maximum = (gdouble) pspecuint->maximum;
     }
   else /* G_TYPE_PARAM_DOUBLE */
     {
@@ -1385,7 +1401,8 @@ gimp_procedure_dialog_get_scale_entry (GimpProcedureDialog *dialog,
       return NULL;
     }
 
-  g_return_val_if_fail (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_INT ||
+  g_return_val_if_fail (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_INT  ||
+                        G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_UINT ||
                         G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_DOUBLE, NULL);
 
   /* First check if it already exists. */
@@ -1475,7 +1492,8 @@ gimp_procedure_dialog_get_size_entry (GimpProcedureDialog       *dialog,
       return NULL;
     }
 
-  g_return_val_if_fail (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_INT ||
+  g_return_val_if_fail (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_INT  ||
+                        G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_UINT ||
                         G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_DOUBLE, NULL);
   g_return_val_if_fail (G_PARAM_SPEC_TYPE (pspec_unit) == GIMP_TYPE_PARAM_UNIT, NULL);
 
