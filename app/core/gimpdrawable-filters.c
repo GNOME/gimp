@@ -273,13 +273,12 @@ gimp_drawable_lower_filter (GimpDrawable *drawable,
 void
 gimp_drawable_merge_filters (GimpDrawable *drawable)
 {
-  GList       *list;
   GimpImage   *image;
-  GimpChannel *selection = NULL;
-  GeglBuffer  *buffer    = NULL;
+  GimpChannel *selection;
+  GeglBuffer  *buffer;
+  GList       *list;
 
-  if (! GIMP_IS_DRAWABLE (drawable))
-    return;
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -300,7 +299,7 @@ gimp_drawable_merge_filters (GimpDrawable *drawable)
    */
   if (GIMP_LIST (drawable->private->filter_stack)->queue->head)
     {
-      GimpDrawableFilter *top_filter = NULL;
+      GimpDrawableFilter *filter = NULL;
 
       for (list = GIMP_LIST (drawable->private->filter_stack)->queue->tail;
            list;
@@ -308,10 +307,10 @@ gimp_drawable_merge_filters (GimpDrawable *drawable)
         {
           if (GIMP_IS_DRAWABLE_FILTER (list->data) &&
               gimp_filter_get_active (GIMP_FILTER (list->data)))
-            top_filter = list->data;
+            filter = list->data;
         }
 
-      if (top_filter)
+      if (filter)
         {
           GimpApplicator *applicator;
           GeglNode       *graph;
@@ -323,26 +322,31 @@ gimp_drawable_merge_filters (GimpDrawable *drawable)
           output_rect = gegl_node_get_bounding_box (output);
           buffer      = gegl_buffer_new (&output_rect, gimp_drawable_get_format (drawable));
 
-          applicator  = gimp_filter_get_applicator (GIMP_FILTER (top_filter));
+          applicator  = gimp_filter_get_applicator (GIMP_FILTER (filter));
           gimp_applicator_set_dest_buffer (applicator, buffer);
           gimp_applicator_blit (applicator, gegl_buffer_get_extent (buffer));
           gimp_drawable_set_buffer (drawable, TRUE, NULL, buffer);
           g_clear_object (&buffer);
         }
 
-      for (list = GIMP_LIST (drawable->private->filter_stack)->queue->tail;
-           list;
-           list = list->prev)
+      /*  don't use a for() loop because we are deleting the list
+       *  under our feet
+       */
+      list = GIMP_LIST (drawable->private->filter_stack)->queue->head;
+      while (list)
         {
-          if (GIMP_IS_DRAWABLE_FILTER (list->data) &&
-              ! gimp_drawable_filter_get_temporary (list->data))
+          filter = list->data;
+
+          list = list->next;
+
+          if (GIMP_IS_DRAWABLE_FILTER (filter) &&
+              ! gimp_drawable_filter_get_temporary (filter))
 
             {
               gimp_image_undo_push_filter_remove (gimp_item_get_image (GIMP_ITEM (drawable)),
                                                   _("Merge filter"),
-                                                  drawable, list->data);
-              gimp_drawable_remove_filter (drawable,
-                                           GIMP_FILTER (list->data));
+                                                  drawable, filter);
+              gimp_drawable_remove_filter (drawable, GIMP_FILTER (filter));
             }
         }
     }
