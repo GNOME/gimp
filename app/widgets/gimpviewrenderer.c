@@ -1402,31 +1402,26 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
       dest += y * dest_stride + x * 4;
 
       fish = babl_fish (temp_buf_format,
-                        babl_format ("cairo-RGB24"));
+                        babl_format ("R~G~B~ u8"));
 
-      for (i = y; i < (y + height); i++)
+      for (i = 0; i < height; i++)
         {
-          const guchar *s = src;
-          guchar       *d = dest;
+          guchar        line[width * 3];
+          const guchar *s = line;
+          guint32      *d = (guint32*) dest;
           gint          j;
 
-          for (j = x; j < (x + width); j++, d += 4, s += bytes)
+          babl_process (fish, src, line, width);
+
+          for (j = 0; j < width; j++)
             {
-              if (bytes > 2)
-                {
-                  guchar pixel[4] = { s[channel], s[channel], s[channel], 255 };
+              *d = s[channel] | s[channel] << 8 | s[channel] << 16;
 
-                  babl_process (fish, pixel, d, 1);
-                }
-              else
-                {
-                  guchar pixel[2] = { s[channel], 255 };
-
-                  babl_process (fish, pixel, d, 1);
-                }
+              s += 3;
+              d += 1;
             }
 
-          src += rowstride;
+          src  += rowstride;
           dest += dest_stride;
         }
 
