@@ -89,13 +89,13 @@ endforeach
 
 subdir('python')
 
-#if get_option('windows-installer') or get_option('ms-store')
-#  foreach plugin : python_plugins
-#    if plugin.get('name').startswith('file-') 
-#      all_plugins_sources += [ meson.current_source_dir() / python/ plugin.get('name') + '.py' ]
-#    endif
-#  endforeach
-#endif
+if get_option('windows-installer') or get_option('ms-store')
+  foreach plugin : python_plugins
+    if plugin.get('name').startswith('file-') 
+      all_plugins_sources += [ meson.current_source_dir() / 'python' / plugin.get('name') + '.py' ]
+    endif
+  endforeach
+endif
 
 
 if get_option('windows-installer') or get_option('ms-store')
