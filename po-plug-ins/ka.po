@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-05-25 16:26+0000\n"
-"PO-Revision-Date: 2025-05-26 03:40+0200\n"
+"POT-Creation-Date: 2025-06-03 13:40+0000\n"
+"PO-Revision-Date: 2025-06-04 04:33+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -64,7 +64,7 @@ msgstr "დამატების მაგალითი C-ში"
 #: plug-ins/common/cml-explorer.c:2144 plug-ins/common/cml-explorer.c:2354
 #: plug-ins/common/curve-bend.c:1787 plug-ins/common/curve-bend.c:1822
 #: plug-ins/common/file-gif-export.c:1209 plug-ins/common/file-heif.c:2286
-#: plug-ins/common/file-pdf-export.c:1069 plug-ins/common/file-pdf-load.c:585
+#: plug-ins/common/file-pdf-export.c:1073 plug-ins/common/file-pdf-load.c:585
 #: plug-ins/common/grid.c:835 plug-ins/common/qbist.c:839
 #: plug-ins/common/qbist.c:881 plug-ins/common/sphere-designer.c:2291
 #: plug-ins/common/sphere-designer.c:2654 plug-ins/common/unit-editor.c:427
@@ -137,7 +137,7 @@ msgstr "დამატების მაგალითი JavaScript-ში (
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2287
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/grid.c:836
 #: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:260
-#: plug-ins/file-exr/file-exr.c:438 plug-ins/file-psd/psd-load.c:3786
+#: plug-ins/file-exr/file-exr.c:455 plug-ins/file-psd/psd-load.c:3840
 #: plug-ins/flame/flame.c:823 plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -592,7 +592,7 @@ msgstr ""
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:728
 #: plug-ins/common/file-farbfeld.c:296 plug-ins/common/file-gegl.c:446
 #: plug-ins/common/file-gif-load.c:1147 plug-ins/common/file-iff.c:408
-#: plug-ins/common/file-jp2-load.c:1275 plug-ins/common/file-pcx.c:710
+#: plug-ins/common/file-jp2.c:1604 plug-ins/common/file-pcx.c:710
 #: plug-ins/common/file-pcx.c:718 plug-ins/common/file-pcx.c:726
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:921
 #: plug-ins/common/file-pnm.c:845 plug-ins/common/file-qoi.c:296
@@ -602,12 +602,12 @@ msgstr ""
 #: plug-ins/common/file-wbmp.c:465 plug-ins/common/file-xbm.c:887
 #: plug-ins/common/film.c:865 plug-ins/common/smooth-palette.c:301
 #: plug-ins/common/tile.c:390 plug-ins/file-bmp/bmp-load.c:809
-#: plug-ins/file-exr/file-exr.c:288 plug-ins/file-faxg3/faxg3.c:578
+#: plug-ins/file-exr/file-exr.c:302 plug-ins/file-faxg3/faxg3.c:578
 #: plug-ins/file-fits/fits.c:673 plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1093
-#: plug-ins/file-psd/psd-load.c:2992 plug-ins/file-sgi/sgi.c:456
-#: plug-ins/file-tiff/file-tiff-load.c:1554
-#: plug-ins/file-tiff/file-tiff-load.c:2359
+#: plug-ins/file-psd/psd-load.c:3046 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-tiff/file-tiff-load.c:1556
+#: plug-ins/file-tiff/file-tiff-load.c:2365
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:559
 #: plug-ins/gfig/gfig-dialog.c:1287 plug-ins/gimpressionist/general.c:147
 #: plug-ins/map-object/map-object-apply.c:241
@@ -739,7 +739,7 @@ msgstr "შემოწმებების ზომა"
 
 #: plug-ins/common/checkerboard.c:148 plug-ins/common/checkerboard.c:149
 msgid "Check size unit of measure"
-msgstr ""
+msgstr "საზომი ერთეულების შეცვლა"
 
 #: plug-ins/common/checkerboard.c:355 plug-ins/common/checkerboard.c:485
 msgid "Checkerboard"
@@ -755,7 +755,7 @@ msgstr "პირველი მნიშვნელობის შენა�
 
 #: plug-ins/common/cml-explorer.c:132
 msgid "Fill with parameter k"
-msgstr ""
+msgstr "შევსება პარამეტრით k"
 
 #: plug-ins/common/cml-explorer.c:133
 msgid "k{x(1-x)}^p"
@@ -791,11 +791,11 @@ msgstr ""
 
 #: plug-ins/common/cml-explorer.c:141
 msgid "sin^p-based function"
-msgstr ""
+msgstr "sin^p-ზე დაფუძნებული ფუნქცია"
 
 #: plug-ins/common/cml-explorer.c:142
 msgid "sin^p, stepped"
-msgstr ""
+msgstr "sin^p, ნაბიჯებით"
 
 #: plug-ins/common/cml-explorer.c:167
 msgctxt "cml-composition"
@@ -868,7 +868,7 @@ msgstr "საშუალო მნიშვნელობის გამო�
 
 #: plug-ins/common/cml-explorer.c:203
 msgid "Use reverse value"
-msgstr ""
+msgstr "შებრუნებული მნიშვნელობის გამოყენება"
 
 #: plug-ins/common/cml-explorer.c:204
 msgid "With random power (0,10)"
@@ -928,15 +928,15 @@ msgstr ""
 
 #: plug-ins/common/cml-explorer.c:231
 msgid "Random shared"
-msgstr ""
+msgstr "შემთხვევითი გაზიარებული"
 
 #: plug-ins/common/cml-explorer.c:232
 msgid "Randoms from seed"
-msgstr ""
+msgstr "შემთხვევითი თესლიდან"
 
 #: plug-ins/common/cml-explorer.c:233
 msgid "Randoms from seed (shared)"
-msgstr ""
+msgstr "შემთხვევითი თესლიდან (გაზიარებული)"
 
 #: plug-ins/common/cml-explorer.c:299 plug-ins/common/cml-explorer.c:307
 #: plug-ins/common/decompose.c:201 plug-ins/common/van-gogh-lic.c:160
@@ -1024,7 +1024,7 @@ msgstr "_გახსნა"
 #. The Save button
 #: plug-ins/common/cml-explorer.c:1459 plug-ins/common/cml-explorer.c:2145
 #: plug-ins/common/curve-bend.c:1261 plug-ins/common/curve-bend.c:1823
-#: plug-ins/common/file-pdf-export.c:1068 plug-ins/common/qbist.c:882
+#: plug-ins/common/file-pdf-export.c:1072 plug-ins/common/qbist.c:882
 #: plug-ins/common/qbist.c:1003 plug-ins/common/sphere-designer.c:2294
 #: plug-ins/common/sphere-designer.c:2711 plug-ins/flame/flame.c:619
 #: plug-ins/flame/flame.c:1242
@@ -1428,27 +1428,27 @@ msgstr "_H"
 
 #: plug-ins/common/compose.c:234
 msgid "_Luma y470:"
-msgstr ""
+msgstr "_ლუმა y470:"
 
 #: plug-ins/common/compose.c:235
 msgid "_Blueness cb470:"
-msgstr ""
+msgstr "_სილურჯე cb470:"
 
 #: plug-ins/common/compose.c:236
 msgid "_Redness cr470:"
-msgstr ""
+msgstr "_სიწითლე cr470:"
 
 #: plug-ins/common/compose.c:238
 msgid "_Luma y709:"
-msgstr ""
+msgstr "_ლუმა y709:"
 
 #: plug-ins/common/compose.c:239
 msgid "_Blueness cb709:"
-msgstr ""
+msgstr "_სილურჯე cb709:"
 
 #: plug-ins/common/compose.c:240
 msgid "_Redness cr709:"
-msgstr ""
+msgstr "_სიწითლე cr709:"
 
 #: plug-ins/common/compose.c:246 plug-ins/common/compose.c:440
 #: plug-ins/common/compose.c:503 plug-ins/common/decompose.c:192
@@ -1477,7 +1477,8 @@ msgstr "HSL"
 
 #: plug-ins/common/compose.c:275 plug-ins/common/compose.c:444
 #: plug-ins/common/compose.c:507 plug-ins/common/decompose.c:210
-#: plug-ins/common/decompose.c:304 plug-ins/common/file-jp2-load.c:255
+#: plug-ins/common/decompose.c:304 plug-ins/common/file-jp2.c:249
+#: plug-ins/common/file-jp2.c:295
 msgid "CMYK"
 msgstr "CMYK"
 
@@ -1515,7 +1516,7 @@ msgstr ""
 
 #: plug-ins/common/compose.c:405
 msgid "C_ompose..."
-msgstr ""
+msgstr "_შედგენა..."
 
 #: plug-ins/common/compose.c:409
 msgid "Create an image using multiple gray images as color channels"
@@ -1577,7 +1578,7 @@ msgstr "YCbCr ITU R709 256"
 #: plug-ins/common/compose.c:456 plug-ins/common/compose.c:519
 #: plug-ins/common/smooth-palette.c:158
 msgid "New image"
-msgstr ""
+msgstr "ახალი გამოსახულება"
 
 #: plug-ins/common/compose.c:457 plug-ins/common/compose.c:520
 #: plug-ins/common/smooth-palette.c:159
@@ -1683,7 +1684,7 @@ msgstr "შედგენა"
 
 #: plug-ins/common/compose.c:1272
 msgid "Compose Channels"
-msgstr ""
+msgstr "არხების შედგენა"
 
 #. Channel representation grid
 #: plug-ins/common/compose.c:1287
@@ -2535,7 +2536,7 @@ msgstr ""
 #.
 #: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:352
 #: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:408
-#: plug-ins/common/file-heif.c:853 plug-ins/common/file-jp2-load.c:1047
+#: plug-ins/common/file-heif.c:853 plug-ins/common/file-jp2.c:1376
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
 #: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
 #: plug-ins/common/file-png.c:631 plug-ins/common/file-pnm.c:688
@@ -2616,15 +2617,15 @@ msgstr ""
 #.
 #: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:347
 #: plug-ins/common/file-gif-export.c:939 plug-ins/common/file-html-table.c:360
-#: plug-ins/common/file-jpegxl.c:1389 plug-ins/common/file-pcx.c:1083
-#: plug-ins/common/file-pix.c:636 plug-ins/common/file-png.c:1483
-#: plug-ins/common/file-pnm.c:1623 plug-ins/common/file-ps.c:1369
-#: plug-ins/common/file-qoi.c:350 plug-ins/common/file-sunras.c:605
-#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:630
-#: plug-ins/common/file-xbm.c:1026 plug-ins/common/file-xpm.c:682
-#: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
-#: plug-ins/file-fits/fits.c:646 plug-ins/file-fli/fli-gimp.c:766
-#: plug-ins/file-icns/file-icns-export.c:824
+#: plug-ins/common/file-jp2.c:1783 plug-ins/common/file-jpegxl.c:1389
+#: plug-ins/common/file-pcx.c:1083 plug-ins/common/file-pix.c:636
+#: plug-ins/common/file-png.c:1483 plug-ins/common/file-pnm.c:1623
+#: plug-ins/common/file-ps.c:1369 plug-ins/common/file-qoi.c:350
+#: plug-ins/common/file-sunras.c:605 plug-ins/common/file-tga.c:1217
+#: plug-ins/common/file-tim.c:630 plug-ins/common/file-xbm.c:1026
+#: plug-ins/common/file-xpm.c:682 plug-ins/common/file-xwd.c:693
+#: plug-ins/file-bmp/bmp-export.c:328 plug-ins/file-fits/fits.c:646
+#: plug-ins/file-fli/fli-gimp.c:766 plug-ins/file-icns/file-icns-export.c:824
 #: plug-ins/file-ico/ico-export.c:1358 plug-ins/file-ico/ico-export.c:1572
 #: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2168
 #: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1077
@@ -3268,7 +3269,7 @@ msgstr "მონიშვნის რეჟიმები"
 
 #: plug-ins/common/file-gih.c:234
 msgid "Display as"
-msgstr ""
+msgstr "ჩვენება, როგორც"
 
 #: plug-ins/common/file-gih.c:235
 msgid "Describe how the layers will be split"
@@ -3313,7 +3314,7 @@ msgstr "HEIF/HEIC"
 
 #: plug-ins/common/file-heif.c:198
 msgid "Loads HEIF images"
-msgstr ""
+msgstr "ჩატვირთავს HEIF გამოსახულებებს"
 
 #: plug-ins/common/file-heif.c:199
 msgid ""
@@ -3326,7 +3327,7 @@ msgstr ""
 
 #: plug-ins/common/file-heif.c:240
 msgid "Exports HEIF images"
-msgstr ""
+msgstr "გაიტანს HEIF გამოსახულებებს"
 
 #: plug-ins/common/file-heif.c:241
 msgid "Save image in HEIF format (High Efficiency Image File Format)."
@@ -3335,13 +3336,14 @@ msgstr ""
 "ფორმატი)."
 
 #: plug-ins/common/file-heif.c:262 plug-ins/common/file-heif.c:383
+#: plug-ins/common/file-jp2.c:334 plug-ins/common/file-jp2.c:422
 #: plug-ins/file-jpeg/jpeg.c:210
 msgid "_Quality"
 msgstr "_ხარისხი"
 
 #: plug-ins/common/file-heif.c:263 plug-ins/common/file-heif.c:384
 msgid "Quality factor (0 = worst, 100 = best)"
-msgstr ""
+msgstr "ხარისხის ფაქტორი (0 = ყველაზე ცუდი, 100 = საუკეთესო)"
 
 #: plug-ins/common/file-heif.c:268 plug-ins/common/file-heif.c:389
 #: plug-ins/common/file-jpegxl.c:193 plug-ins/file-webp/file-webp.c:191
@@ -3351,7 +3353,7 @@ msgstr "_კარგვის გარეშე"
 #: plug-ins/common/file-heif.c:269 plug-ins/common/file-heif.c:390
 #: plug-ins/common/file-jpegxl.c:194
 msgid "Use lossless compression"
-msgstr ""
+msgstr "კარგვისგარეშე შეკუმშვის გამოყენება"
 
 #: plug-ins/common/file-heif.c:274 plug-ins/common/file-heif.c:395
 msgid "Save color prof_ile"
@@ -3359,17 +3361,17 @@ msgstr "ფერის პროფილის _შენახვა"
 
 #: plug-ins/common/file-heif.c:275 plug-ins/common/file-heif.c:396
 msgid "Save the image's color profile"
-msgstr ""
+msgstr "გამოსახულების ფერის პროფილის შენახვა"
 
 #: plug-ins/common/file-heif.c:280 plug-ins/common/file-heif.c:401
 #: plug-ins/common/file-jpegxl.c:205
 msgid "_Bit depth"
-msgstr ""
+msgstr "_ბიტური სიღრმე"
 
 #: plug-ins/common/file-heif.c:281 plug-ins/common/file-heif.c:402
 #: plug-ins/common/file-jpegxl.c:206
 msgid "Bit depth of exported image"
-msgstr ""
+msgstr "გატანილი გამოსახულების ბიტური სიღრმე"
 
 #: plug-ins/common/file-heif.c:286 plug-ins/common/file-heif.c:407
 #: plug-ins/common/file-png.c:296
@@ -3390,11 +3392,11 @@ msgstr "YUV420"
 
 #: plug-ins/common/file-heif.c:296 plug-ins/common/file-heif.c:417
 msgid "Enco_der speed"
-msgstr ""
+msgstr "ეკო_დერის სიჩქარე"
 
 #: plug-ins/common/file-heif.c:297 plug-ins/common/file-heif.c:418
 msgid "Tradeoff between speed and compression"
-msgstr ""
+msgstr "ბალანსი სიჩქარესა და შეკუმშვას შორის"
 
 #: plug-ins/common/file-heif.c:298 plug-ins/common/file-heif.c:419
 msgid "Slow"
@@ -3416,7 +3418,7 @@ msgstr "Exi_f-ის შენახვა"
 #: plug-ins/common/file-heif.c:307 plug-ins/common/file-heif.c:428
 #: plug-ins/common/file-jpegxl.c:234
 msgid "Toggle saving Exif data"
-msgstr ""
+msgstr "Exif-ის მონაცემების შენახვის გადართვა"
 
 #: plug-ins/common/file-heif.c:312 plug-ins/common/file-heif.c:433
 #: plug-ins/common/file-jpegxl.c:239
@@ -3426,7 +3428,7 @@ msgstr "_XMP-ის შენახვა"
 #: plug-ins/common/file-heif.c:313 plug-ins/common/file-heif.c:434
 #: plug-ins/common/file-jpegxl.c:240
 msgid "Toggle saving XMP data"
-msgstr ""
+msgstr "XMP მონაცემების შენახვის გადართვა"
 
 #: plug-ins/common/file-heif.c:326
 msgid "Loads AVIF images"
@@ -3519,7 +3521,7 @@ msgstr "HTML ცხრილი"
 
 #: plug-ins/common/file-html-table.c:158
 msgid "GIMP Table Magic"
-msgstr ""
+msgstr "GIMP-ის ცხრილის მაგია"
 
 #: plug-ins/common/file-html-table.c:159
 msgid "Allows you to draw an HTML table in GIMP. See help for more info."
@@ -3565,7 +3567,7 @@ msgstr ""
 
 #: plug-ins/common/file-html-table.c:213
 msgid "_Generate full HTML document"
-msgstr ""
+msgstr "სრული HTML დოკუმენტის _გენერაცია"
 
 #: plug-ins/common/file-html-table.c:214
 msgid ""
@@ -3642,37 +3644,69 @@ msgstr "ცხრილის პარამეტრები"
 
 #: plug-ins/common/file-iff.c:155
 msgid "Amiga IFF"
-msgstr ""
+msgstr "Amiga IFF"
 
 #: plug-ins/common/file-iff.c:158 plug-ins/common/file-iff.c:159
 msgid "Load file in the IFF file format"
-msgstr ""
+msgstr "IFF ფორმატის ფაილის ჩატვირთვა"
 
 #: plug-ins/common/file-iff.c:317
 msgid "Invalid or missing ILBM image"
-msgstr ""
+msgstr "არასწორი, ან ნაკლული ILBM გამოსახულება"
 
 #: plug-ins/common/file-iff.c:331
 msgid "ILBM contains no image data - likely a palette file"
 msgstr ""
 
-#: plug-ins/common/file-jp2-load.c:189
+#: plug-ins/common/file-jp2.c:214 plug-ins/common/file-jp2.c:309
 msgid "JPEG 2000 image"
 msgstr "JPEG 2000 გამოსახულება"
 
-#: plug-ins/common/file-jp2-load.c:191 plug-ins/common/file-jp2-load.c:225
+#: plug-ins/common/file-jp2.c:216 plug-ins/common/file-jp2.c:263
+#: plug-ins/common/file-jp2.c:311
 msgid "JPEG 2000"
 msgstr "JPEG 2000"
 
-#: plug-ins/common/file-jp2-load.c:223
+#: plug-ins/common/file-jp2.c:243 plug-ins/common/file-jp2.c:289
+msgid "Color s_pace"
+msgstr "ფერთა _სივრცე"
+
+#: plug-ins/common/file-jp2.c:244 plug-ins/common/file-jp2.c:290
+msgid "Color space"
+msgstr "ფერთა სივრცე"
+
+#: plug-ins/common/file-jp2.c:245 plug-ins/common/file-jp2.c:291
+msgid "sRGB"
+msgstr "sRGB"
+
+#: plug-ins/common/file-jp2.c:246 plug-ins/common/file-jp2.c:292
+msgid "Grayscale"
+msgstr "ნაცრისფერი"
+
+#: plug-ins/common/file-jp2.c:247 plug-ins/common/file-jp2.c:293
+msgid "YCbCr"
+msgstr "YCbCr"
+
+#: plug-ins/common/file-jp2.c:248 plug-ins/common/file-jp2.c:294
+msgid "xvYCC"
+msgstr "xvYCC"
+
+#: plug-ins/common/file-jp2.c:250 plug-ins/common/file-jp2.c:296
+#: plug-ins/metadata/metadata-tags.c:261 plug-ins/metadata/metadata-tags.c:297
+#: plug-ins/metadata/metadata-tags.c:304 plug-ins/metadata/metadata-tags.c:311
+msgid "Unknown"
+msgstr "უცნობი"
+
+#: plug-ins/common/file-jp2.c:261 plug-ins/common/file-jp2.c:397
+#: plug-ins/common/file-jp2.c:399
 msgid "JPEG 2000 codestream"
 msgstr ""
 
-#: plug-ins/common/file-jp2-load.c:228
+#: plug-ins/common/file-jp2.c:266
 msgid "Loads JPEG 2000 codestream."
 msgstr ""
 
-#: plug-ins/common/file-jp2-load.c:229
+#: plug-ins/common/file-jp2.c:267
 msgid ""
 "Loads JPEG 2000 codestream. If the color space is set to UNKNOWN (0), we "
 "will try to guess, which is only possible for few spaces (such as "
@@ -3680,98 +3714,177 @@ msgid ""
 "color space of your data."
 msgstr ""
 
-#: plug-ins/common/file-jp2-load.c:249
-msgid "Color s_pace"
-msgstr "ფერთა _სივრცე"
+#: plug-ins/common/file-jp2.c:314 plug-ins/common/file-jp2.c:315
+msgid "Exports files in JPEG 2000 file format"
+msgstr ""
 
-#: plug-ins/common/file-jp2-load.c:250
-msgid "Color space"
-msgstr "ფერთა სივრცე"
+#: plug-ins/common/file-jp2.c:335 plug-ins/common/file-jp2.c:423
+#: plug-ins/file-jpeg/jpeg.c:211
+msgid "Quality of exported image"
+msgstr "გატანილი გამოსახულების ხარისხი"
 
-#: plug-ins/common/file-jp2-load.c:251
-msgid "sRGB"
-msgstr "sRGB"
+#: plug-ins/common/file-jp2.c:340 plug-ins/common/file-jp2.c:428
+#| msgid "No compression"
+msgid "IC_T compression"
+msgstr "IC_T შეკუმშვა"
 
-#: plug-ins/common/file-jp2-load.c:252
-msgid "Grayscale"
-msgstr "ნაცრისფერი"
+#: plug-ins/common/file-jp2.c:341 plug-ins/common/file-jp2.c:429
+msgid "Use Irreversible Color Transformation compression"
+msgstr ""
 
-#: plug-ins/common/file-jp2-load.c:253
-msgid "YCbCr"
-msgstr "YCbCr"
+#: plug-ins/common/file-jp2.c:347
+msgid "_Number of resolutions"
+msgstr "გაფართოებების რაოდე_ნობა"
 
-#: plug-ins/common/file-jp2-load.c:254
-msgid "xvYCC"
-msgstr "xvYCC"
+#: plug-ins/common/file-jp2.c:348 plug-ins/common/file-jp2.c:436
+msgid "Equivalent to the number of DWT decompositions plus one"
+msgstr ""
 
-#: plug-ins/common/file-jp2-load.c:256 plug-ins/metadata/metadata-tags.c:261
-#: plug-ins/metadata/metadata-tags.c:297 plug-ins/metadata/metadata-tags.c:304
-#: plug-ins/metadata/metadata-tags.c:311
-msgid "Unknown"
-msgstr "უცნობი"
+#: plug-ins/common/file-jp2.c:354 plug-ins/common/file-jp2.c:442
+msgid "Pro_gression order"
+msgstr "პრო_გრესირების მიმდევრობა"
 
-#: plug-ins/common/file-jp2-load.c:978
+#: plug-ins/common/file-jp2.c:356 plug-ins/common/file-jp2.c:444
+msgid "LRCP"
+msgstr "LRCP"
+
+#: plug-ins/common/file-jp2.c:357 plug-ins/common/file-jp2.c:445
+msgid "RLCP"
+msgstr "RLCP"
+
+#: plug-ins/common/file-jp2.c:358 plug-ins/common/file-jp2.c:446
+msgid "RPCL"
+msgstr "RPCL"
+
+#: plug-ins/common/file-jp2.c:359 plug-ins/common/file-jp2.c:447
+msgid "PCRL"
+msgstr "PCRL"
+
+#: plug-ins/common/file-jp2.c:360 plug-ins/common/file-jp2.c:448
+msgid "CPRL"
+msgstr "CPRL"
+
+#: plug-ins/common/file-jp2.c:366 plug-ins/common/file-jp2.c:454
+msgid "Co_mpliance Profile"
+msgstr "სტანდარტის დაცვის პრ_ოფილი"
+
+#: plug-ins/common/file-jp2.c:367 plug-ins/common/file-jp2.c:455
+msgid "Set to ensure compliance with Digital Cinema Specifications"
+msgstr ""
+
+#: plug-ins/common/file-jp2.c:368 plug-ins/common/file-jp2.c:456
+msgid "Standard Profile"
+msgstr "სტანდარტული პროფილი"
+
+#: plug-ins/common/file-jp2.c:369 plug-ins/common/file-jp2.c:457
+msgid "Cinema2K (24 FPS)"
+msgstr "Cinema2K (24 კადრი/წმ)"
+
+#: plug-ins/common/file-jp2.c:370 plug-ins/common/file-jp2.c:458
+msgid "Cinema2K (48 FPS)"
+msgstr "Cinema2K (48 კადრი/წმ)"
+
+#: plug-ins/common/file-jp2.c:371 plug-ins/common/file-jp2.c:459
+msgid "Cinema4K (24 FPS)"
+msgstr "Cinema4K (24 კადრი/წმ)"
+
+#: plug-ins/common/file-jp2.c:380 plug-ins/common/file-jp2.c:468
+msgid "E_xport as CMYK"
+msgstr "CMYK-ის სახით _გატანა"
+
+#: plug-ins/common/file-jp2.c:381 plug-ins/common/file-jp2.c:469
+msgid "Create a CMYK JPEG 2000 image using the soft-proofing color profile"
+msgstr ""
+
+#: plug-ins/common/file-jp2.c:402 plug-ins/common/file-jp2.c:403
+msgid "Exports files in JPEG 2000 codestream format"
+msgstr ""
+
+#: plug-ins/common/file-jp2.c:435
+msgid "_Number of Resolutions"
+msgstr "გაფართოებების რაოდე_ნობა"
+
+#: plug-ins/common/file-jp2.c:1240
 #, c-format
 msgid "Unsupported JPEG 2000%s '%s' with %d components."
 msgstr ""
 
-#: plug-ins/common/file-jp2-load.c:1055 plug-ins/common/file-wmf.c:238
+#: plug-ins/common/file-jp2.c:1300 plug-ins/file-jpeg/jpeg-export.c:896
+#: plug-ins/file-psd/psd-export.c:2459
+#: plug-ins/file-tiff/file-tiff-export.c:1310
+msgid "No soft-proofing profile"
+msgstr ""
+
+#: plug-ins/common/file-jp2.c:1308 plug-ins/common/file-jpegxl.c:2035
+#: plug-ins/file-jpeg/jpeg-export.c:904 plug-ins/file-psd/psd-export.c:2467
+#: plug-ins/file-tiff/file-tiff-export.c:1318
+msgid "Name of the color profile used for CMYK export."
+msgstr ""
+
+#: plug-ins/common/file-jp2.c:1319 plug-ins/common/file-jpegxl.c:2054
+#: plug-ins/file-jpeg/jpeg-export.c:915 plug-ins/file-psd/psd-export.c:2478
+#: plug-ins/file-tiff/file-tiff-export.c:1330
+#, c-format
+msgid "Profile: %s"
+msgstr "პროფილი: %s"
+
+#: plug-ins/common/file-jp2.c:1384 plug-ins/common/file-wmf.c:238
 #: plug-ins/common/file-wmf.c:596
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr ""
 
-#: plug-ins/common/file-jp2-load.c:1064
+#: plug-ins/common/file-jp2.c:1393
 #, c-format
 msgid "Failed to initialize decoder for '%s', out of memory?"
 msgstr ""
 
-#: plug-ins/common/file-jp2-load.c:1080
+#: plug-ins/common/file-jp2.c:1409
 #, c-format
 msgid "Couldn't set parameters on decoder for '%s'."
 msgstr ""
 
-#: plug-ins/common/file-jp2-load.c:1088
+#: plug-ins/common/file-jp2.c:1417
 #, c-format
 msgid "Couldn't read JP2 header from '%s'."
 msgstr ""
 
-#: plug-ins/common/file-jp2-load.c:1096
+#: plug-ins/common/file-jp2.c:1425
 #, c-format
 msgid "Couldn't decode JP2 image in '%s'."
 msgstr ""
 
-#: plug-ins/common/file-jp2-load.c:1104
+#: plug-ins/common/file-jp2.c:1433
 #, c-format
 msgid "Couldn't decompress JP2 image in '%s'."
 msgstr ""
 
-#: plug-ins/common/file-jp2-load.c:1135
+#: plug-ins/common/file-jp2.c:1464
 #, c-format
 msgid "Couldn't decode CIELAB JP2 image in '%s'."
 msgstr ""
 
-#: plug-ins/common/file-jp2-load.c:1192
+#: plug-ins/common/file-jp2.c:1521
 #, c-format
 msgid "Unknown color space in JP2 codestream '%s'."
 msgstr ""
 
-#: plug-ins/common/file-jp2-load.c:1203
+#: plug-ins/common/file-jp2.c:1532
 #, c-format
 msgid "Couldn't convert YCbCr JP2 image '%s' to RGB."
 msgstr ""
 
-#: plug-ins/common/file-jp2-load.c:1213
+#: plug-ins/common/file-jp2.c:1542
 #, c-format
 msgid "Couldn't convert CMYK JP2 image in '%s' to RGB."
 msgstr ""
 
-#: plug-ins/common/file-jp2-load.c:1225
+#: plug-ins/common/file-jp2.c:1554
 #, c-format
 msgid "Couldn't convert xvYCC JP2 image in '%s' to RGB."
 msgstr ""
 
-#: plug-ins/common/file-jp2-load.c:1252
+#: plug-ins/common/file-jp2.c:1581
 #, c-format
 msgid "Unsupported color space in JP2 image '%s'."
 msgstr ""
@@ -3852,24 +3965,11 @@ msgstr ""
 
 #: plug-ins/common/file-jpegxl.c:2019
 msgid "16 bit/channel"
-msgstr ""
+msgstr "16 ბიტი/არხი"
 
 #: plug-ins/common/file-jpegxl.c:2027
 msgid "CMYK profile required for export"
 msgstr ""
-
-#: plug-ins/common/file-jpegxl.c:2035 plug-ins/file-jpeg/jpeg-export.c:904
-#: plug-ins/file-psd/psd-export.c:2467
-#: plug-ins/file-tiff/file-tiff-export.c:1318
-msgid "Name of the color profile used for CMYK export."
-msgstr ""
-
-#: plug-ins/common/file-jpegxl.c:2054 plug-ins/file-jpeg/jpeg-export.c:915
-#: plug-ins/file-psd/psd-export.c:2478
-#: plug-ins/file-tiff/file-tiff-export.c:1330
-#, c-format
-msgid "Profile: %s"
-msgstr "პროფილი: %s"
 
 #: plug-ins/common/file-lnk.c:210 plug-ins/common/file-lnk.c:225
 #: plug-ins/common/file-lnk.c:234 plug-ins/common/file-lnk.c:247
@@ -3880,7 +3980,7 @@ msgstr "არასწორი ფაილი."
 
 #: plug-ins/common/file-mng.c:254
 msgid "MNG animation"
-msgstr ""
+msgstr "MNG ანიმაცია"
 
 #: plug-ins/common/file-mng.c:256
 msgid "MNG"
@@ -3927,7 +4027,7 @@ msgstr "JPEG-ის მოგლუვების ფაქტორი"
 
 #: plug-ins/common/file-mng.c:310
 msgid "L_oop"
-msgstr ""
+msgstr "მარყ_უჟი"
 
 #: plug-ins/common/file-mng.c:311
 msgid "(ANIMATED MNG) Loop infinitely"
@@ -4304,7 +4404,7 @@ msgid ""
 "read only!"
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:980
+#: plug-ins/common/file-pdf-export.c:984
 #, c-format
 msgid ""
 "The following fonts cannot be found: %s.\n"
@@ -4312,54 +4412,54 @@ msgid ""
 "missing fonts before exporting, otherwise your design may not look right."
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:1050
+#: plug-ins/common/file-pdf-export.c:1054
 msgid "Export Image as Multi-Page PDF"
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:1051
+#: plug-ins/common/file-pdf-export.c:1055
 #: plug-ins/metadata/metadata-editor.c:5604
 msgid "_Export"
 msgstr "გატანა"
 
-#: plug-ins/common/file-pdf-export.c:1060
+#: plug-ins/common/file-pdf-export.c:1064
 msgid "Save to:"
 msgstr "შენახვა მისამართზე:"
 
-#: plug-ins/common/file-pdf-export.c:1064
+#: plug-ins/common/file-pdf-export.c:1068
 msgid "Browse..."
 msgstr "მოძებნა..."
 
-#: plug-ins/common/file-pdf-export.c:1065
+#: plug-ins/common/file-pdf-export.c:1069
 msgid "Multipage PDF export"
 msgstr "მულტიგვერდიან PDF-ში გატანა"
 
-#: plug-ins/common/file-pdf-export.c:1109
+#: plug-ins/common/file-pdf-export.c:1113
 msgid "Remove the selected pages"
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:1123
+#: plug-ins/common/file-pdf-export.c:1127
 msgid "Add this image"
 msgstr "ამ გამოსახულების დამატება"
 
-#: plug-ins/common/file-pdf-export.c:1219
-#: plug-ins/common/file-pdf-export.c:1292
-#: plug-ins/common/file-pdf-export.c:1390 plug-ins/common/file-ps.c:2218
-#: plug-ins/file-tiff/file-tiff-load.c:1556
+#: plug-ins/common/file-pdf-export.c:1223
+#: plug-ins/common/file-pdf-export.c:1296
+#: plug-ins/common/file-pdf-export.c:1394 plug-ins/common/file-ps.c:2218
+#: plug-ins/file-tiff/file-tiff-load.c:1558
 #, c-format
 msgid "Page %d"
 msgstr "%d გვერდი"
 
-#: plug-ins/common/file-pdf-export.c:1259
+#: plug-ins/common/file-pdf-export.c:1263
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:1437 plug-ins/print/print-draw-page.c:125
+#: plug-ins/common/file-pdf-export.c:1441 plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr ""
 
 #: plug-ins/common/file-pdf-load.c:226
 msgid "PDF password"
-msgstr ""
+msgstr "PDF-ის პაროლი"
 
 #: plug-ins/common/file-pdf-load.c:227
 msgid "The password to decrypt the encrypted PDF file"
@@ -5856,8 +5956,8 @@ msgstr ""
 msgid "Retry without limits preventing to parse huge data?"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:562 plug-ins/file-exr/file-exr.c:359
-#: plug-ins/file-exr/file-exr.c:373
+#: plug-ins/common/file-svg.c:562 plug-ins/file-exr/file-exr.c:378
+#: plug-ins/file-exr/file-exr.c:392
 msgid "Unknown reason"
 msgstr "უცნობი მიზეზი"
 
@@ -5953,7 +6053,6 @@ msgid "4BPP (Indexed)"
 msgstr "4BPP (დაინდექსებული)"
 
 #: plug-ins/common/file-tim.c:221
-#| msgid "Indexed"
 msgid "8BPP (Indexed)"
 msgstr "8BPP (დაინდექსებული)"
 
@@ -5966,7 +6065,6 @@ msgid "24BPP (RGB)"
 msgstr ""
 
 #: plug-ins/common/file-tim.c:229
-#| msgid "Image 2"
 msgid "Image _X"
 msgstr "გამოსახულების _X"
 
@@ -5975,7 +6073,6 @@ msgid "Origin X coordinate"
 msgstr ""
 
 #: plug-ins/common/file-tim.c:235
-#| msgid "Image 2"
 msgid "Image _Y"
 msgstr "გამოსახულების _Y"
 
@@ -6063,7 +6160,6 @@ msgstr ""
 #: plug-ins/common/file-wbmp.c:352 plug-ins/common/file-wbmp.c:366
 #: plug-ins/common/file-wbmp.c:380
 #, c-format
-#| msgid "Invalid block header at %ld"
 msgid "'%s': Invalid OTA header value"
 msgstr "'%s': არასწორი OTA-ის თავსართის მნიშვნელობა"
 
@@ -9079,35 +9175,35 @@ msgstr ""
 msgid "Error querying image type from '%s'"
 msgstr ""
 
-#: plug-ins/file-exr/file-exr.c:319
+#: plug-ins/file-exr/file-exr.c:334
 #, c-format
 msgid "Error reading pixel data from '%s'"
 msgstr ""
 
-#: plug-ins/file-exr/file-exr.c:358 plug-ins/file-exr/file-exr.c:372
+#: plug-ins/file-exr/file-exr.c:377 plug-ins/file-exr/file-exr.c:391
 #, c-format
 msgid "Failed to load metadata: %s"
 msgstr "მეტამონაცემების ჩატვირთვა ჩავარდა: %s"
 
-#: plug-ins/file-exr/file-exr.c:435
+#: plug-ins/file-exr/file-exr.c:452
 msgid "Import OpenEXR"
 msgstr ""
 
-#: plug-ins/file-exr/file-exr.c:450
+#: plug-ins/file-exr/file-exr.c:467
 msgid "Unknown Channel Name"
 msgstr ""
 
-#: plug-ins/file-exr/file-exr.c:451
+#: plug-ins/file-exr/file-exr.c:468
 msgid ""
 "The image contains a single unknown channel.\n"
 "It has been converted to grayscale."
 msgstr ""
 
-#: plug-ins/file-exr/file-exr.c:454
+#: plug-ins/file-exr/file-exr.c:471
 msgid "Chroma Channels"
 msgstr "ინტენსივობის არხები"
 
-#: plug-ins/file-exr/file-exr.c:455
+#: plug-ins/file-exr/file-exr.c:472
 msgid ""
 "OpenEXR chroma channels are not yet supported.\n"
 "They have been discarded."
@@ -9559,11 +9655,6 @@ msgstr "ფაილის ზომა: უცნობია"
 msgid "Enable preview to obtain the file size."
 msgstr ""
 
-#: plug-ins/file-jpeg/jpeg-export.c:896 plug-ins/file-psd/psd-export.c:2459
-#: plug-ins/file-tiff/file-tiff-export.c:1310
-msgid "No soft-proofing profile"
-msgstr ""
-
 #: plug-ins/file-jpeg/jpeg-load.c:241
 msgid "JPEG preview"
 msgstr "JPEG მინიატურა"
@@ -9601,10 +9692,6 @@ msgstr ""
 #: plug-ins/file-jpeg/jpeg.c:195 plug-ins/file-tiff/file-tiff.c:251
 msgid "JPEG"
 msgstr "JPEG"
-
-#: plug-ins/file-jpeg/jpeg.c:211
-msgid "Quality of exported image"
-msgstr "გატანილი გამოსახულების ხარისხი"
 
 #: plug-ins/file-jpeg/jpeg.c:216
 msgid "S_moothing"
@@ -9771,7 +9858,7 @@ msgid ""
 "Layers will be merged on export."
 msgstr ""
 
-#: plug-ins/file-psd/psd-export.c:2703 plug-ins/file-psd/psd-load.c:3825
+#: plug-ins/file-psd/psd-export.c:2703 plug-ins/file-psd/psd-load.c:3879
 msgid "Compatibility Notice"
 msgstr "თავსებადობის შენიშვნა"
 
@@ -9869,37 +9956,37 @@ msgstr ""
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:2232 plug-ins/file-psd/psd-load.c:2965
+#: plug-ins/file-psd/psd-load.c:2232 plug-ins/file-psd/psd-load.c:3019
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3127
+#: plug-ins/file-psd/psd-load.c:3181
 msgid "Extra"
 msgstr "დამატებით"
 
-#: plug-ins/file-psd/psd-load.c:3350
+#: plug-ins/file-psd/psd-load.c:3404
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3419
+#: plug-ins/file-psd/psd-load.c:3473
 #, c-format
 msgid "Failed to decompress data"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3802
+#: plug-ins/file-psd/psd-load.c:3856
 msgid "Duotone Import"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3803
+#: plug-ins/file-psd/psd-load.c:3857
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
 "and can be reapplied on export."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3826
+#: plug-ins/file-psd/psd-load.c:3880
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -10136,6 +10223,7 @@ msgid ""
 "GIMP currently supports these RAW loaders:\n"
 "- darktable (http://www.darktable.org/), at least 1.7\n"
 "- RawTherapee (http://rawtherapee.com/), at least 5.2\n"
+"- ART (https://art.pixls.us/)\n"
 "\n"
 "Please install one of them in order to load RAW files."
 msgstr ""
@@ -10389,58 +10477,58 @@ msgstr ""
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:579
+#: plug-ins/file-tiff/file-tiff-load.c:581
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:608
+#: plug-ins/file-tiff/file-tiff-load.c:610
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
 "The layers below layer # %d will be interpreted as non linear."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:616
+#: plug-ins/file-tiff/file-tiff-load.c:618
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
 "separate image."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:628
+#: plug-ins/file-tiff/file-tiff-load.c:630
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:702
+#: plug-ins/file-tiff/file-tiff-load.c:704
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:717
+#: plug-ins/file-tiff/file-tiff-load.c:719
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:725
+#: plug-ins/file-tiff/file-tiff-load.c:727
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:733
+#: plug-ins/file-tiff/file-tiff-load.c:735
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:754
+#: plug-ins/file-tiff/file-tiff-load.c:756
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
 "is-white"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:761
+#: plug-ins/file-tiff/file-tiff-load.c:763
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr ""
@@ -10448,13 +10536,13 @@ msgstr ""
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: plug-ins/file-tiff/file-tiff-load.c:793
+#: plug-ins/file-tiff/file-tiff-load.c:795
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:818
+#: plug-ins/file-tiff/file-tiff-load.c:820
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
@@ -10462,37 +10550,37 @@ msgid ""
 "is non-premultiplied alpha."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1107
+#: plug-ins/file-tiff/file-tiff-load.c:1109
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1165
+#: plug-ins/file-tiff/file-tiff-load.c:1167
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1335
+#: plug-ins/file-tiff/file-tiff-load.c:1337
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr ""
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: plug-ins/file-tiff/file-tiff-load.c:1345
+#: plug-ins/file-tiff/file-tiff-load.c:1347
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr ""
 
 #. xres but no yres
-#: plug-ins/file-tiff/file-tiff-load.c:1353
+#: plug-ins/file-tiff/file-tiff-load.c:1355
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1374
+#: plug-ins/file-tiff/file-tiff-load.c:1376
 msgid "Invalid image resolution info, using default"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1436
+#: plug-ins/file-tiff/file-tiff-load.c:1438
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr ""
@@ -10502,66 +10590,66 @@ msgstr ""
 #. * and can cause GIMP to become unresponsive and/or stuck.
 #. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:1526
+#: plug-ins/file-tiff/file-tiff-load.c:1528
 #, c-format
 msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1591
+#: plug-ins/file-tiff/file-tiff-load.c:1593
 msgid "TIFF Channel"
 msgstr "TIFF არხი"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1749
+#: plug-ins/file-tiff/file-tiff-load.c:1751
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1785
-#: plug-ins/file-tiff/file-tiff-load.c:1828
+#: plug-ins/file-tiff/file-tiff-load.c:1787
+#: plug-ins/file-tiff/file-tiff-load.c:1831
 #, c-format
 msgid ""
 "Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1908
+#: plug-ins/file-tiff/file-tiff-load.c:1912
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:2023
-#: plug-ins/file-tiff/file-tiff-load.c:2220
+#: plug-ins/file-tiff/file-tiff-load.c:2027
+#: plug-ins/file-tiff/file-tiff-load.c:2224
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr ""
 
 #. Error reading scanline, stop loading
-#: plug-ins/file-tiff/file-tiff-load.c:2032
-#: plug-ins/file-tiff/file-tiff-load.c:2229
+#: plug-ins/file-tiff/file-tiff-load.c:2036
+#: plug-ins/file-tiff/file-tiff-load.c:2233
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:2777
+#: plug-ins/file-tiff/file-tiff-load.c:2774
 msgid "Import from TIFF"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:2785
+#: plug-ins/file-tiff/file-tiff-load.c:2782
 msgid "_Show reduced images"
 msgstr "შემცირებული გამოსახულებების _ჩვენება"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2830
+#: plug-ins/file-tiff/file-tiff-load.c:2827
 msgid "Process extra channel as:"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:2833
+#: plug-ins/file-tiff/file-tiff-load.c:2830
 msgid "_Non-premultiplied alpha"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:2834
+#: plug-ins/file-tiff/file-tiff-load.c:2831
 msgid "Pre_multiplied alpha"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:2835
+#: plug-ins/file-tiff/file-tiff-load.c:2832
 msgid "Channe_l"
 msgstr "_არხი"
 
@@ -10920,7 +11008,7 @@ msgstr "ტალღები"
 
 #: plug-ins/flame/flame.c:934
 msgid "Fisheye"
-msgstr ""
+msgstr "თევზისთვალი"
 
 #: plug-ins/flame/flame.c:935
 msgid "Popcorn"
