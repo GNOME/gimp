@@ -42,6 +42,8 @@ struct _GimpVectorTool
 {
   GimpDrawTool    parent_instance;
 
+  GimpImage      *current_image;
+
   GimpPath       *vectors;        /* the current Path data           */
   GimpVectorMode  saved_mode;     /* used by modifier_key()            */
 

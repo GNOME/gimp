@@ -72,6 +72,7 @@
 
 /*  local function prototypes  */
 
+static void     gimp_vector_tool_constructed     (GObject               *object);
 static void     gimp_vector_tool_dispose         (GObject               *object);
 
 static void     gimp_vector_tool_control         (GimpTool              *tool,
@@ -107,6 +108,12 @@ static void     gimp_vector_tool_cursor_update   (GimpTool              *tool,
 static void     gimp_vector_tool_start           (GimpVectorTool        *vector_tool,
                                                   GimpDisplay           *display);
 static void     gimp_vector_tool_halt            (GimpVectorTool        *vector_tool);
+
+static void     gimp_vector_tool_image_changed   (GimpVectorTool        *vector_tool,
+                                                  GimpImage             *image,
+                                                  GimpContext           *context);
+static void     gimp_vector_tool_image_selected_layers_changed
+                                                 (GimpVectorTool        *vector_tool);
 
 static void     gimp_vector_tool_path_changed    (GimpToolWidget        *path,
                                                   GimpVectorTool        *vector_tool);
@@ -149,7 +156,7 @@ static void     gimp_vector_tool_stroke_callback (GtkWidget             *dialog,
                                                   GimpStrokeOptions     *options,
                                                   gpointer               data);
 
-static void     gimp_vector_tool_create_vector_layer 
+static void     gimp_vector_tool_create_vector_layer
                                                  (GimpVectorTool        *vector_tool,
 						                          GtkWidget             *button);
 
@@ -184,6 +191,7 @@ gimp_vector_tool_class_init (GimpVectorToolClass *klass)
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
   GimpToolClass *tool_class   = GIMP_TOOL_CLASS (klass);
 
+  object_class->constructed  = gimp_vector_tool_constructed;
   object_class->dispose      = gimp_vector_tool_dispose;
 
   tool_class->control        = gimp_vector_tool_control;
@@ -209,12 +217,37 @@ gimp_vector_tool_init (GimpVectorTool *vector_tool)
 }
 
 static void
+gimp_vector_tool_constructed (GObject *object)
+{
+  GimpVectorTool  *vector_tool = GIMP_VECTOR_TOOL (object);
+  GimpContext     *context;
+  GimpToolInfo    *tool_info;
+
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  tool_info = GIMP_TOOL (vector_tool)->tool_info;
+
+  context = gimp_get_user_context (tool_info->gimp);
+
+  g_signal_connect_object (context, "image-changed",
+                           G_CALLBACK (gimp_vector_tool_image_changed),
+                           vector_tool, G_CONNECT_SWAPPED);
+
+  gimp_vector_tool_image_changed (vector_tool,
+                                  gimp_context_get_image (context),
+                                  context);
+}
+
+
+static void
 gimp_vector_tool_dispose (GObject *object)
 {
   GimpVectorTool *vector_tool = GIMP_VECTOR_TOOL (object);
 
   gimp_vector_tool_set_vectors (vector_tool, NULL);
   g_clear_object (&vector_tool->widget);
+
+  gimp_vector_tool_image_changed (vector_tool, NULL, NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -451,6 +484,51 @@ gimp_vector_tool_halt (GimpVectorTool *vector_tool)
 }
 
 static void
+gimp_vector_tool_image_changed (GimpVectorTool *vector_tool,
+                                GimpImage      *image,
+                                GimpContext    *context)
+{
+  if (vector_tool->current_image)
+    g_signal_handlers_disconnect_by_func (vector_tool->current_image,
+                                          gimp_vector_tool_image_selected_layers_changed,
+                                          NULL);
+
+  g_set_weak_pointer (&vector_tool->current_image, image);
+
+  if (vector_tool->current_image)
+    g_signal_connect_object (vector_tool->current_image, "selected-layers-changed",
+                             G_CALLBACK (gimp_vector_tool_image_selected_layers_changed),
+                             vector_tool, G_CONNECT_SWAPPED);
+
+  gimp_vector_tool_image_selected_layers_changed (vector_tool);
+}
+
+static void
+gimp_vector_tool_image_selected_layers_changed (GimpVectorTool *vector_tool)
+{
+  GList *current_layers = NULL;
+
+  if (vector_tool->current_image)
+    current_layers =
+      gimp_image_get_selected_layers (vector_tool->current_image);
+
+  if (current_layers)
+    {
+      /* If we've selected a single vector layer, make its path editable */
+      if (g_list_length (current_layers) == 1 &&
+          GIMP_IS_VECTOR_LAYER (current_layers->data))
+        {
+          GimpVectorLayer *vector_layer = current_layers->data;
+
+          if (vector_layer->options && vector_layer->options->path)
+            gimp_vector_tool_set_vectors (vector_tool,
+                                          vector_layer->options->path);
+        }
+    }
+}
+
+
+static void
 gimp_vector_tool_path_changed (GimpToolWidget *path,
                                GimpVectorTool *vector_tool)
 {
@@ -676,7 +754,7 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
       g_signal_connect_swapped (options->vector_layer_button, "clicked",
 				                G_CALLBACK (gimp_vector_tool_create_vector_layer),
 				                tool);
-      
+
       gtk_widget_set_sensitive (options->vector_layer_button, TRUE);
     }
 
@@ -943,7 +1021,7 @@ gimp_vector_tool_create_vector_layer (GimpVectorTool *vector_tool,
                         GIMP_IMAGE_ACTIVE_PARENT,
                         -1,
                         TRUE);
-  
+
   gimp_vector_layer_refresh (layer);
 
   gimp_image_flush (image);
