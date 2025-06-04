@@ -276,12 +276,12 @@ static void
 themes_apply_theme (Gimp          *gimp,
                     GimpGuiConfig *config)
 {
-  GFile         *theme_css;
-  GOutputStream *output;
-  GError        *error = NULL;
-  gboolean       prefer_dark_theme;
-  guint32        color_scheme;
-  GVariant      *tuple_variant, *variant;
+  GFile           *theme_css;
+  GOutputStream   *output;
+  GError          *error = NULL;
+  gboolean         prefer_dark_theme;
+  GimpThemeScheme  color_scheme;
+  GVariant        *tuple_variant, *variant;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_GUI_CONFIG (config));
@@ -332,14 +332,25 @@ themes_apply_theme (Gimp          *gimp,
            */
           prefer_dark_theme = (g_variant_get_uint32 (variant) == 1);
 
-          color_scheme = prefer_dark_theme ? GIMP_THEME_DARK : GIMP_THEME_SYSTEM;
+          /*
+           * Note that normally it's a tri-state flag, with a
+           * prefer-light and no-preference case too, except that it
+           * looks like both in KDE and GNOME at least, they only set
+           * prefer-dark or no-preference and for us, the latter should
+           * also mean dark.
+           * Therefore for this setting to actually mean something, we
+           * are currently breaking the spec by having no-preference
+           * mean prefer-light. This should be fixed if/when the main
+           * desktops actually implement all 3 options some day.
+           */
+          color_scheme = prefer_dark_theme ? GIMP_THEME_DARK : GIMP_THEME_LIGHT;
         }
       else
         {
           g_printerr ("%s\n", error->message);
           g_clear_error (&error);
 
-          color_scheme = config->theme_scheme;
+          color_scheme = (config->theme_scheme == GIMP_THEME_SYSTEM) ? GIMP_THEME_DARK : config->theme_scheme;
           prefer_dark_theme = (color_scheme == GIMP_THEME_DARK ||
                                color_scheme == GIMP_THEME_GRAY);
         }
@@ -347,7 +358,7 @@ themes_apply_theme (Gimp          *gimp,
   else
 #endif
     {
-      color_scheme = config->theme_scheme;
+      color_scheme = (config->theme_scheme == GIMP_THEME_SYSTEM) ? GIMP_THEME_DARK : config->theme_scheme;
       prefer_dark_theme = (color_scheme == GIMP_THEME_DARK ||
                            color_scheme == GIMP_THEME_GRAY);
     }
@@ -402,7 +413,6 @@ themes_apply_theme (Gimp          *gimp,
 
           switch (color_scheme)
             {
-            case GIMP_THEME_SYSTEM:
             case GIMP_THEME_LIGHT:
               if (light != NULL)
                 file = g_object_ref (light);
@@ -433,6 +443,8 @@ themes_apply_theme (Gimp          *gimp,
               else if (light != NULL)
                 file = g_object_ref (light);
               break;
+            case GIMP_THEME_SYSTEM:
+              g_return_if_reached ();
             }
 
           if (file != NULL)
@@ -465,7 +477,6 @@ themes_apply_theme (Gimp          *gimp,
 
           switch (color_scheme)
             {
-            case GIMP_THEME_SYSTEM:
             case GIMP_THEME_LIGHT:
               tmp = g_build_filename (gimp_data_directory (),
                                       "themes", "Default", "gimp-light.css",
@@ -481,6 +492,8 @@ themes_apply_theme (Gimp          *gimp,
                                       "themes", "Default", "gimp-dark.css",
                                       NULL);
               break;
+            case GIMP_THEME_SYSTEM:
+              g_return_if_reached ();
             }
 
           css_files = g_slist_prepend (css_files, g_file_new_for_path (tmp));
