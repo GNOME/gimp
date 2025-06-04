@@ -437,7 +437,7 @@ export USR_DIR="$APP_DIR/usr"
 ## 4.1. Finish AppRun configuration
 echo '(INFO): finishing AppRun configuration'
 ln -sfr "$USR_DIR/bin/gimp-$GIMP_APP_VERSION" "$USR_DIR/bin/$APP_ID"
-printf "\nexec \"\${LD_LINUX}\" --inhibit-cache \"\$APPDIR\"/usr/bin/$APP_ID \"\$@\"" >> "$APP_DIR/AppRun"
+printf "\nexec \"\$APPDIR\"/usr/bin/$APP_ID \"\$@\"" >> "$APP_DIR/AppRun"
 chmod +x $APP_DIR/AppRun
 
 ## 4.2. Copy icon assets (similarly to flatpaks's 'rename-icon')
