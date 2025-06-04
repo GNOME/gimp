@@ -405,6 +405,29 @@ done
 #  fi
 #done
 
+
+#Get dependencies
+#libs+=$(ldd "$1" 2>/dev/null|grep -v 'error while loading shared libraries'|\
+#grep '/lib'|cut -d'>' -f2|sed 's| (.*)||g'|sed 's|^[[:space:]]*||g'|sort -u)
+#OLD_IFS="$IFS"
+    #IFS=$'\n'
+    #for lib in $libs
+    #    cp $UNIX_DIR/$LIB_DIR/${LIB_SUBDIR}${lib} $USR_DIR/$LIB_DIR/${LIB_SUBDIR}
+    #done
+    #IFS="$OLD_IFS"
+
+## Test polyfill-glibc
+git clone https://github.com/corsix/polyfill-glibc.git
+ninja -C polyfill-glibc
+export PATH="$PWD/polyfill-glibc:$PATH"
+
+bin_array=($(find "$USR_DIR/bin" "$USR_DIR/$LIB_DIR" "$(dirname $APP_DIR/$LD_LINUX)" ! -iname "*.dumb*" -type f -exec head -c 4 {} \; -exec echo " {}" \;  | grep ^.ELF))
+for bin in "${bin_array[@]}"; do
+  if [[ ! "$bin" =~ 'ELF' ]] && [[ ! "$bin" =~ '.debug' ]]; then
+    polyfill-glibc --target-glibc=2.36 $bin && echo "(INFO): patching relocatable libc functions on $bin"
+  fi
+done
+
 ## Files unnecessarily created or bundled by the tool
 mv build/linux/appimage/AppRun $APP_DIR
 mv build/linux/appimage/AppRun.bak build/linux/appimage/AppRun
@@ -438,7 +461,7 @@ export USR_DIR="$APP_DIR/usr"
 ## 4.1. Finish AppRun configuration
 echo '(INFO): finishing AppRun configuration'
 ln -sfr "$USR_DIR/bin/gimp-$GIMP_APP_VERSION" "$USR_DIR/bin/$APP_ID"
-printf "\nexec \"\${LD_LINUX}\" --inhibit-cache \"\$APPDIR\"/usr/bin/$APP_ID \"\$@\"" >> "$APP_DIR/AppRun"
+printf "\n\"\$APPDIR\"/usr/bin/$APP_ID \"\$@\"" >> "$APP_DIR/AppRun"
 chmod +x $APP_DIR/AppRun
 
 ## 4.2. Copy icon assets (similarly to flatpaks's 'rename-icon')
