@@ -530,11 +530,13 @@ app_activate_callback (GimpCoreApp *app,
       gimp_signal_private (SIGINT, app_quit_on_ctrl_c, 0);
 #endif
       g_printf ("\n== %s ==\n%s\n\n%s\n",
-                /* TODO: localize when string freeze is over. */
-                "INFO",
-                "GIMP is now running as a background process. "
-                "You can quit anytime with Ctrl-C (SIGINT).",
-                "If you wanted to quit immediately instead, call GIMP with --quit.");
+                /* TRANSLATORS: title for info message in terminal window */
+                _("INFO"),
+                /* TRANSLATORS: info message displayed in terminal window. */
+                _("GIMP is now running as a background process. "
+                  "You can quit anytime with Ctrl-C (SIGINT)."),
+                /* TRANSLATORS: info message displayed in terminal window. */
+                _("If you wanted to quit immediately instead, call GIMP with --quit."));
       g_application_hold (G_APPLICATION (app));
     }
 }
