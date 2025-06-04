@@ -85,9 +85,7 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
   GimpColorTransform      *transform;
   GtkStyleContext         *style;
   GdkRGBA                 *bg_color = NULL;
-  GdkRGBA                 *fg_color = NULL;
   guchar                   bg_rgb[3];
-  guchar                   fg_rgb[3];
   guchar                  *row;
   guchar                  *dest;
   GList                   *list;
@@ -104,22 +102,8 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
   /* Get background colors from context */
   style = gtk_widget_get_style_context (widget);
   gtk_style_context_get (style, gtk_style_context_get_state (style),
-                         GTK_STYLE_PROPERTY_COLOR,            &fg_color,
                          GTK_STYLE_PROPERTY_BACKGROUND_COLOR, &bg_color,
                          NULL);
-
-  if (fg_color)
-    {
-      fg_rgb[0] = (gint) (fg_color->red * 255);
-      fg_rgb[1] = (gint) (fg_color->green * 255);
-      fg_rgb[2] = (gint) (fg_color->blue * 255);
-
-      gdk_rgba_free (fg_color);
-    }
-  else
-    {
-      fg_rgb[0] = fg_rgb[1] = fg_rgb[2] = 0;
-    }
 
   if (bg_color)
     {
@@ -195,16 +179,13 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
 
   for (y = 0; y < renderer->height; y++)
     {
+      gint x;
+
       if ((y % renderpal->cell_height) == 0)
         {
           guchar  rgb[3];
-          gint    x;
           gint    n = 0;
           guchar *d = row;
-
-          memset (row, renderpal->draw_grid ? 0 : 255, renderer->width * 4);
-
-          rgb[0] = rgb[1] = rgb[2] = (renderpal->draw_grid ? 0 : 255);
 
           for (x = 0; x < renderer->width; x++, d += 4)
             {
@@ -223,26 +204,20 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
                     }
                   else
                     {
-                      if (renderpal->draw_grid)
-                        {
-                          for (gint i = 0; i < 3; i++)
-                            rgb[i] = fg_rgb[i];
-                        }
-                      else
-                        {
-                          for (gint i = 0; i < 3; i++)
-                            rgb[i] = bg_rgb[i];
-                        }
+                      /* Background color (not entries, not grids) */
+                      for (gint i = 0; i < 3; i++)
+                        rgb[i] = bg_rgb[i];
                     }
                 }
 
               if (renderpal->draw_grid && (x % renderpal->cell_width) == 0)
                 {
-                  GIMP_CAIRO_RGB24_SET_PIXEL (d, fg_rgb[0], fg_rgb[1],
-                                              fg_rgb[2]);
+                  /* Vertical grid lines */
+                  GIMP_CAIRO_RGB24_SET_PIXEL (d, bg_rgb[0], bg_rgb[1], bg_rgb[2]);
                 }
               else
                 {
+                  /* Palette entry */
                   GIMP_CAIRO_RGB24_SET_PIXEL (d, rgb[0], rgb[1], rgb[2]);
                 }
             }
@@ -250,7 +225,11 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
 
       if (renderpal->draw_grid && (y % renderpal->cell_height) == 0)
         {
-          memset (dest, 0, renderer->width * 4);
+          guchar *d = dest;
+
+          /* Horizontal grid lines */
+          for (x = 0; x < renderer->width; x++, d += 4)
+            GIMP_CAIRO_RGB24_SET_PIXEL (d, bg_rgb[0], bg_rgb[1], bg_rgb[2]);
         }
       else
         {
