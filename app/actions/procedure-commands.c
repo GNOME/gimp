@@ -289,13 +289,13 @@ procedure_commands_get_display_args (GimpProcedure *procedure,
                   return NULL;
                 }
             }
-          else if (GIMP_IS_PARAM_SPEC_CORE_OBJECT_ARRAY (procedure->args[n_args]))
+          else if (gimp_value_array_length (args) > n_args &&
+                   GIMP_IS_PARAM_SPEC_CORE_OBJECT_ARRAY (procedure->args[n_args]))
             {
               GimpDrawable **drawables   = NULL;
               gint           n_drawables;
               GList         *iter;
               gint           i;
-
 
               n_drawables = g_list_length (drawables_list);
 
