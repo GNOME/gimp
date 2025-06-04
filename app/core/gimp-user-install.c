@@ -758,7 +758,7 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
   return FALSE;
 }
 
-gchar *
+static gchar *
 user_update_post_process_menurc_over20 (gpointer user_data)
 {
   GString         *string  = g_string_new (NULL);
