@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-05-29 16:42+0000\n"
-"PO-Revision-Date: 2025-05-30 07:03+0800\n"
+"POT-Creation-Date: 2025-06-03 13:40+0000\n"
+"PO-Revision-Date: 2025-06-04 09:50+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -68,7 +68,7 @@ msgstr "C 语言插件示例"
 #: plug-ins/common/cml-explorer.c:2144 plug-ins/common/cml-explorer.c:2354
 #: plug-ins/common/curve-bend.c:1787 plug-ins/common/curve-bend.c:1822
 #: plug-ins/common/file-gif-export.c:1209 plug-ins/common/file-heif.c:2286
-#: plug-ins/common/file-pdf-export.c:1069 plug-ins/common/file-pdf-load.c:585
+#: plug-ins/common/file-pdf-export.c:1073 plug-ins/common/file-pdf-load.c:585
 #: plug-ins/common/grid.c:835 plug-ins/common/qbist.c:839
 #: plug-ins/common/qbist.c:881 plug-ins/common/sphere-designer.c:2291
 #: plug-ins/common/sphere-designer.c:2654 plug-ins/common/unit-editor.c:427
@@ -143,7 +143,7 @@ msgstr "JavaScript（GJS）插件示例"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2287
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/grid.c:836
 #: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:260
-#: plug-ins/file-exr/file-exr.c:438 plug-ins/file-psd/psd-load.c:3840
+#: plug-ins/file-exr/file-exr.c:455 plug-ins/file-psd/psd-load.c:3840
 #: plug-ins/flame/flame.c:823 plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -602,7 +602,7 @@ msgstr "百叶窗"
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:728
 #: plug-ins/common/file-farbfeld.c:296 plug-ins/common/file-gegl.c:446
 #: plug-ins/common/file-gif-load.c:1147 plug-ins/common/file-iff.c:408
-#: plug-ins/common/file-jp2-load.c:1293 plug-ins/common/file-pcx.c:710
+#: plug-ins/common/file-jp2.c:1604 plug-ins/common/file-pcx.c:710
 #: plug-ins/common/file-pcx.c:718 plug-ins/common/file-pcx.c:726
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:921
 #: plug-ins/common/file-pnm.c:845 plug-ins/common/file-qoi.c:296
@@ -612,12 +612,12 @@ msgstr "百叶窗"
 #: plug-ins/common/file-wbmp.c:465 plug-ins/common/file-xbm.c:887
 #: plug-ins/common/film.c:865 plug-ins/common/smooth-palette.c:301
 #: plug-ins/common/tile.c:390 plug-ins/file-bmp/bmp-load.c:809
-#: plug-ins/file-exr/file-exr.c:288 plug-ins/file-faxg3/faxg3.c:578
+#: plug-ins/file-exr/file-exr.c:302 plug-ins/file-faxg3/faxg3.c:578
 #: plug-ins/file-fits/fits.c:673 plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1093
 #: plug-ins/file-psd/psd-load.c:3046 plug-ins/file-sgi/sgi.c:456
-#: plug-ins/file-tiff/file-tiff-load.c:1554
-#: plug-ins/file-tiff/file-tiff-load.c:2359
+#: plug-ins/file-tiff/file-tiff-load.c:1556
+#: plug-ins/file-tiff/file-tiff-load.c:2365
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:559
 #: plug-ins/gfig/gfig-dialog.c:1287 plug-ins/gimpressionist/general.c:147
 #: plug-ins/map-object/map-object-apply.c:241
@@ -1037,7 +1037,7 @@ msgstr "打开(_O)"
 #. The Save button
 #: plug-ins/common/cml-explorer.c:1459 plug-ins/common/cml-explorer.c:2145
 #: plug-ins/common/curve-bend.c:1261 plug-ins/common/curve-bend.c:1823
-#: plug-ins/common/file-pdf-export.c:1068 plug-ins/common/qbist.c:882
+#: plug-ins/common/file-pdf-export.c:1072 plug-ins/common/qbist.c:882
 #: plug-ins/common/qbist.c:1003 plug-ins/common/sphere-designer.c:2294
 #: plug-ins/common/sphere-designer.c:2711 plug-ins/flame/flame.c:619
 #: plug-ins/flame/flame.c:1242
@@ -1498,8 +1498,8 @@ msgstr "HSL"
 
 #: plug-ins/common/compose.c:275 plug-ins/common/compose.c:444
 #: plug-ins/common/compose.c:507 plug-ins/common/decompose.c:210
-#: plug-ins/common/decompose.c:304 plug-ins/common/file-jp2-load.c:224
-#: plug-ins/common/file-jp2-load.c:270
+#: plug-ins/common/decompose.c:304 plug-ins/common/file-jp2.c:249
+#: plug-ins/common/file-jp2.c:295
 msgid "CMYK"
 msgstr "CMYK"
 
@@ -2569,7 +2569,7 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #.
 #: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:352
 #: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:408
-#: plug-ins/common/file-heif.c:853 plug-ins/common/file-jp2-load.c:1065
+#: plug-ins/common/file-heif.c:853 plug-ins/common/file-jp2.c:1376
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
 #: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
 #: plug-ins/common/file-png.c:631 plug-ins/common/file-pnm.c:688
@@ -2650,15 +2650,15 @@ msgstr "“%s”：读取色板数据时遇到文件尾或错误"
 #.
 #: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:347
 #: plug-ins/common/file-gif-export.c:939 plug-ins/common/file-html-table.c:360
-#: plug-ins/common/file-jpegxl.c:1389 plug-ins/common/file-pcx.c:1083
-#: plug-ins/common/file-pix.c:636 plug-ins/common/file-png.c:1483
-#: plug-ins/common/file-pnm.c:1623 plug-ins/common/file-ps.c:1369
-#: plug-ins/common/file-qoi.c:350 plug-ins/common/file-sunras.c:605
-#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:630
-#: plug-ins/common/file-xbm.c:1026 plug-ins/common/file-xpm.c:682
-#: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
-#: plug-ins/file-fits/fits.c:646 plug-ins/file-fli/fli-gimp.c:766
-#: plug-ins/file-icns/file-icns-export.c:824
+#: plug-ins/common/file-jp2.c:1783 plug-ins/common/file-jpegxl.c:1389
+#: plug-ins/common/file-pcx.c:1083 plug-ins/common/file-pix.c:636
+#: plug-ins/common/file-png.c:1483 plug-ins/common/file-pnm.c:1623
+#: plug-ins/common/file-ps.c:1369 plug-ins/common/file-qoi.c:350
+#: plug-ins/common/file-sunras.c:605 plug-ins/common/file-tga.c:1217
+#: plug-ins/common/file-tim.c:630 plug-ins/common/file-xbm.c:1026
+#: plug-ins/common/file-xpm.c:682 plug-ins/common/file-xwd.c:693
+#: plug-ins/file-bmp/bmp-export.c:328 plug-ins/file-fits/fits.c:646
+#: plug-ins/file-fli/fli-gimp.c:766 plug-ins/file-icns/file-icns-export.c:824
 #: plug-ins/file-ico/ico-export.c:1358 plug-ins/file-ico/ico-export.c:1572
 #: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2168
 #: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1077
@@ -3386,6 +3386,7 @@ msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr "以 HEIF（高效率图像文件格式）格式保存图像。"
 
 #: plug-ins/common/file-heif.c:262 plug-ins/common/file-heif.c:383
+#: plug-ins/common/file-jp2.c:334 plug-ins/common/file-jp2.c:422
 #: plug-ins/file-jpeg/jpeg.c:210
 msgid "_Quality"
 msgstr "质量(_Q)"
@@ -3714,53 +3715,55 @@ msgstr "无效或缺失的 ILBM 图像"
 msgid "ILBM contains no image data - likely a palette file"
 msgstr "ILBM 未包含图像数据——可能为色板文件"
 
-#: plug-ins/common/file-jp2-load.c:189
+#: plug-ins/common/file-jp2.c:214 plug-ins/common/file-jp2.c:309
 msgid "JPEG 2000 image"
 msgstr "JPEG 2000 图像"
 
-#: plug-ins/common/file-jp2-load.c:191 plug-ins/common/file-jp2-load.c:238
+#: plug-ins/common/file-jp2.c:216 plug-ins/common/file-jp2.c:263
+#: plug-ins/common/file-jp2.c:311
 msgid "JPEG 2000"
 msgstr "JPEG 2000"
 
-#: plug-ins/common/file-jp2-load.c:218 plug-ins/common/file-jp2-load.c:264
+#: plug-ins/common/file-jp2.c:243 plug-ins/common/file-jp2.c:289
 msgid "Color s_pace"
 msgstr "色彩空间(_P)"
 
-#: plug-ins/common/file-jp2-load.c:219 plug-ins/common/file-jp2-load.c:265
+#: plug-ins/common/file-jp2.c:244 plug-ins/common/file-jp2.c:290
 msgid "Color space"
 msgstr "色彩空间"
 
-#: plug-ins/common/file-jp2-load.c:220 plug-ins/common/file-jp2-load.c:266
+#: plug-ins/common/file-jp2.c:245 plug-ins/common/file-jp2.c:291
 msgid "sRGB"
 msgstr "sRGB"
 
-#: plug-ins/common/file-jp2-load.c:221 plug-ins/common/file-jp2-load.c:267
+#: plug-ins/common/file-jp2.c:246 plug-ins/common/file-jp2.c:292
 msgid "Grayscale"
 msgstr "灰度"
 
-#: plug-ins/common/file-jp2-load.c:222 plug-ins/common/file-jp2-load.c:268
+#: plug-ins/common/file-jp2.c:247 plug-ins/common/file-jp2.c:293
 msgid "YCbCr"
 msgstr "YCbCr"
 
-#: plug-ins/common/file-jp2-load.c:223 plug-ins/common/file-jp2-load.c:269
+#: plug-ins/common/file-jp2.c:248 plug-ins/common/file-jp2.c:294
 msgid "xvYCC"
 msgstr "xvYCC"
 
-#: plug-ins/common/file-jp2-load.c:225 plug-ins/common/file-jp2-load.c:271
+#: plug-ins/common/file-jp2.c:250 plug-ins/common/file-jp2.c:296
 #: plug-ins/metadata/metadata-tags.c:261 plug-ins/metadata/metadata-tags.c:297
 #: plug-ins/metadata/metadata-tags.c:304 plug-ins/metadata/metadata-tags.c:311
 msgid "Unknown"
 msgstr "未知"
 
-#: plug-ins/common/file-jp2-load.c:236
+#: plug-ins/common/file-jp2.c:261 plug-ins/common/file-jp2.c:397
+#: plug-ins/common/file-jp2.c:399
 msgid "JPEG 2000 codestream"
 msgstr "JPEG 2000 码流"
 
-#: plug-ins/common/file-jp2-load.c:241
+#: plug-ins/common/file-jp2.c:266
 msgid "Loads JPEG 2000 codestream."
 msgstr "加载 JPEG 2000 码流。"
 
-#: plug-ins/common/file-jp2-load.c:242
+#: plug-ins/common/file-jp2.c:267
 msgid ""
 "Loads JPEG 2000 codestream. If the color space is set to UNKNOWN (0), we "
 "will try to guess, which is only possible for few spaces (such as "
@@ -3771,68 +3774,176 @@ msgstr ""
 "空间有可能（比如灰度）。大部分如此调用将失败。最好预期是您知道数据的色彩空"
 "间。"
 
-#: plug-ins/common/file-jp2-load.c:996
+#: plug-ins/common/file-jp2.c:314 plug-ins/common/file-jp2.c:315
+msgid "Exports files in JPEG 2000 file format"
+msgstr "以 JPEG 2000 格式导出文件"
+
+#: plug-ins/common/file-jp2.c:335 plug-ins/common/file-jp2.c:423
+#: plug-ins/file-jpeg/jpeg.c:211
+msgid "Quality of exported image"
+msgstr "导出图像的质量"
+
+#: plug-ins/common/file-jp2.c:340 plug-ins/common/file-jp2.c:428
+msgid "IC_T compression"
+msgstr "IC_T 压缩"
+
+#: plug-ins/common/file-jp2.c:341 plug-ins/common/file-jp2.c:429
+msgid "Use Irreversible Color Transformation compression"
+msgstr "使用不可逆色彩变换压缩"
+
+#: plug-ins/common/file-jp2.c:347
+msgid "_Number of resolutions"
+msgstr "分辨率数量(_N)"
+
+#: plug-ins/common/file-jp2.c:348 plug-ins/common/file-jp2.c:436
+msgid "Equivalent to the number of DWT decompositions plus one"
+msgstr "等同于 DWT 分解数量加一"
+
+#: plug-ins/common/file-jp2.c:354 plug-ins/common/file-jp2.c:442
+msgid "Pro_gression order"
+msgstr "渐进顺序(_G)"
+
+#: plug-ins/common/file-jp2.c:356 plug-ins/common/file-jp2.c:444
+msgid "LRCP"
+msgstr "LRCP"
+
+#: plug-ins/common/file-jp2.c:357 plug-ins/common/file-jp2.c:445
+msgid "RLCP"
+msgstr "RLCP"
+
+#: plug-ins/common/file-jp2.c:358 plug-ins/common/file-jp2.c:446
+msgid "RPCL"
+msgstr "RPCL"
+
+#: plug-ins/common/file-jp2.c:359 plug-ins/common/file-jp2.c:447
+msgid "PCRL"
+msgstr "PCRL"
+
+#: plug-ins/common/file-jp2.c:360 plug-ins/common/file-jp2.c:448
+msgid "CPRL"
+msgstr "CPRL"
+
+#: plug-ins/common/file-jp2.c:366 plug-ins/common/file-jp2.c:454
+msgid "Co_mpliance Profile"
+msgstr "合规配置(_M)"
+
+#: plug-ins/common/file-jp2.c:367 plug-ins/common/file-jp2.c:455
+msgid "Set to ensure compliance with Digital Cinema Specifications"
+msgstr "设定以确保遵守数字影院标准"
+
+#: plug-ins/common/file-jp2.c:368 plug-ins/common/file-jp2.c:456
+msgid "Standard Profile"
+msgstr "标准配置"
+
+#: plug-ins/common/file-jp2.c:369 plug-ins/common/file-jp2.c:457
+msgid "Cinema2K (24 FPS)"
+msgstr "数字影院 2K（24 帧）"
+
+#: plug-ins/common/file-jp2.c:370 plug-ins/common/file-jp2.c:458
+msgid "Cinema2K (48 FPS)"
+msgstr "数字影院 2K（48 帧）"
+
+#: plug-ins/common/file-jp2.c:371 plug-ins/common/file-jp2.c:459
+msgid "Cinema4K (24 FPS)"
+msgstr "数字影院 4K（24 帧）"
+
+#: plug-ins/common/file-jp2.c:380 plug-ins/common/file-jp2.c:468
+msgid "E_xport as CMYK"
+msgstr "导出为 CMYK(_X)"
+
+#: plug-ins/common/file-jp2.c:381 plug-ins/common/file-jp2.c:469
+msgid "Create a CMYK JPEG 2000 image using the soft-proofing color profile"
+msgstr "使用软打样特性文件创建 CMYK JPEG 2000 图像"
+
+#: plug-ins/common/file-jp2.c:402 plug-ins/common/file-jp2.c:403
+msgid "Exports files in JPEG 2000 codestream format"
+msgstr "以 JPEG 2000 码流格式导出文件"
+
+#: plug-ins/common/file-jp2.c:435
+msgid "_Number of Resolutions"
+msgstr "分辨率数量(_N)"
+
+#: plug-ins/common/file-jp2.c:1240
 #, c-format
 msgid "Unsupported JPEG 2000%s '%s' with %d components."
 msgstr "不支持 JPEG 2000%s “%s”带有 %d 分量。"
 
-#: plug-ins/common/file-jp2-load.c:1073 plug-ins/common/file-wmf.c:238
+#: plug-ins/common/file-jp2.c:1300 plug-ins/file-jpeg/jpeg-export.c:896
+#: plug-ins/file-psd/psd-export.c:2459
+#: plug-ins/file-tiff/file-tiff-export.c:1310
+msgid "No soft-proofing profile"
+msgstr "无软打样特性文件"
+
+#: plug-ins/common/file-jp2.c:1308 plug-ins/common/file-jpegxl.c:2035
+#: plug-ins/file-jpeg/jpeg-export.c:904 plug-ins/file-psd/psd-export.c:2467
+#: plug-ins/file-tiff/file-tiff-export.c:1318
+msgid "Name of the color profile used for CMYK export."
+msgstr "用于 CMYK 导出的特性文件的名称。"
+
+#: plug-ins/common/file-jp2.c:1319 plug-ins/common/file-jpegxl.c:2054
+#: plug-ins/file-jpeg/jpeg-export.c:915 plug-ins/file-psd/psd-export.c:2478
+#: plug-ins/file-tiff/file-tiff-export.c:1330
+#, c-format
+msgid "Profile: %s"
+msgstr "特性文件：%s"
+
+#: plug-ins/common/file-jp2.c:1384 plug-ins/common/file-wmf.c:238
 #: plug-ins/common/file-wmf.c:596
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr "无法打开“%s”并读取"
 
-#: plug-ins/common/file-jp2-load.c:1082
+#: plug-ins/common/file-jp2.c:1393
 #, c-format
 msgid "Failed to initialize decoder for '%s', out of memory?"
 msgstr "为“%s”初始化解码器失败，内存不足吗？"
 
-#: plug-ins/common/file-jp2-load.c:1098
+#: plug-ins/common/file-jp2.c:1409
 #, c-format
 msgid "Couldn't set parameters on decoder for '%s'."
 msgstr "无法对“%s”的解码器设置参数。"
 
-#: plug-ins/common/file-jp2-load.c:1106
+#: plug-ins/common/file-jp2.c:1417
 #, c-format
 msgid "Couldn't read JP2 header from '%s'."
 msgstr "无法从“%s”读取 JP2 文件头。"
 
-#: plug-ins/common/file-jp2-load.c:1114
+#: plug-ins/common/file-jp2.c:1425
 #, c-format
 msgid "Couldn't decode JP2 image in '%s'."
 msgstr "无法解码“%s”中的 JP2 图像。"
 
-#: plug-ins/common/file-jp2-load.c:1122
+#: plug-ins/common/file-jp2.c:1433
 #, c-format
 msgid "Couldn't decompress JP2 image in '%s'."
 msgstr "无法解压缩“%s”中的 JP2 图像。"
 
-#: plug-ins/common/file-jp2-load.c:1153
+#: plug-ins/common/file-jp2.c:1464
 #, c-format
 msgid "Couldn't decode CIELAB JP2 image in '%s'."
 msgstr "无法解码“%s”中的 CIELAB JP2 图像。"
 
-#: plug-ins/common/file-jp2-load.c:1210
+#: plug-ins/common/file-jp2.c:1521
 #, c-format
 msgid "Unknown color space in JP2 codestream '%s'."
 msgstr "JP2 码流“%s”带有未知色彩空间。"
 
-#: plug-ins/common/file-jp2-load.c:1221
+#: plug-ins/common/file-jp2.c:1532
 #, c-format
 msgid "Couldn't convert YCbCr JP2 image '%s' to RGB."
 msgstr "无法转换 YCbCr JP2 图像“%s”为 RGB。"
 
-#: plug-ins/common/file-jp2-load.c:1231
+#: plug-ins/common/file-jp2.c:1542
 #, c-format
 msgid "Couldn't convert CMYK JP2 image in '%s' to RGB."
 msgstr "无法转换“%s”中的 CMYK JP2 图像为 RGB。"
 
-#: plug-ins/common/file-jp2-load.c:1243
+#: plug-ins/common/file-jp2.c:1554
 #, c-format
 msgid "Couldn't convert xvYCC JP2 image in '%s' to RGB."
 msgstr "无法转换“%s”中的 xvYCC JP2 图像为 RGB。"
 
-#: plug-ins/common/file-jp2-load.c:1270
+#: plug-ins/common/file-jp2.c:1581
 #, c-format
 msgid "Unsupported color space in JP2 image '%s'."
 msgstr "不支持 JP2 图像“%s”中的色彩空间。"
@@ -3918,19 +4029,6 @@ msgstr "16 位/通道"
 #: plug-ins/common/file-jpegxl.c:2027
 msgid "CMYK profile required for export"
 msgstr "需要 CMYK 色彩配置用于导出"
-
-#: plug-ins/common/file-jpegxl.c:2035 plug-ins/file-jpeg/jpeg-export.c:904
-#: plug-ins/file-psd/psd-export.c:2467
-#: plug-ins/file-tiff/file-tiff-export.c:1318
-msgid "Name of the color profile used for CMYK export."
-msgstr "用于 CMYK 导出的特性文件的名称。"
-
-#: plug-ins/common/file-jpegxl.c:2054 plug-ins/file-jpeg/jpeg-export.c:915
-#: plug-ins/file-psd/psd-export.c:2478
-#: plug-ins/file-tiff/file-tiff-export.c:1330
-#, c-format
-msgid "Profile: %s"
-msgstr "特性文件：%s"
 
 #: plug-ins/common/file-lnk.c:210 plug-ins/common/file-lnk.c:225
 #: plug-ins/common/file-lnk.c:234 plug-ins/common/file-lnk.c:247
@@ -4371,7 +4469,7 @@ msgstr ""
 "%s\n"
 "请确保您输入了有效文件名且选中的位置不是只读！"
 
-#: plug-ins/common/file-pdf-export.c:980
+#: plug-ins/common/file-pdf-export.c:984
 #, c-format
 msgid ""
 "The following fonts cannot be found: %s.\n"
@@ -4382,48 +4480,48 @@ msgstr ""
 "建议在导出前将您的文字图层转换为图像或安装缺少的字体，否则您的设计可能不会正"
 "确显示。"
 
-#: plug-ins/common/file-pdf-export.c:1050
+#: plug-ins/common/file-pdf-export.c:1054
 msgid "Export Image as Multi-Page PDF"
 msgstr "导出图像为多页面 PDF"
 
-#: plug-ins/common/file-pdf-export.c:1051
+#: plug-ins/common/file-pdf-export.c:1055
 #: plug-ins/metadata/metadata-editor.c:5604
 msgid "_Export"
 msgstr "导出(_E)"
 
-#: plug-ins/common/file-pdf-export.c:1060
+#: plug-ins/common/file-pdf-export.c:1064
 msgid "Save to:"
 msgstr "保存到："
 
-#: plug-ins/common/file-pdf-export.c:1064
+#: plug-ins/common/file-pdf-export.c:1068
 msgid "Browse..."
 msgstr "浏览…"
 
-#: plug-ins/common/file-pdf-export.c:1065
+#: plug-ins/common/file-pdf-export.c:1069
 msgid "Multipage PDF export"
 msgstr "多页面 PDF 导出"
 
-#: plug-ins/common/file-pdf-export.c:1109
+#: plug-ins/common/file-pdf-export.c:1113
 msgid "Remove the selected pages"
 msgstr "删除选中页面"
 
-#: plug-ins/common/file-pdf-export.c:1123
+#: plug-ins/common/file-pdf-export.c:1127
 msgid "Add this image"
 msgstr "添加该图像"
 
-#: plug-ins/common/file-pdf-export.c:1219
-#: plug-ins/common/file-pdf-export.c:1292
-#: plug-ins/common/file-pdf-export.c:1390 plug-ins/common/file-ps.c:2218
-#: plug-ins/file-tiff/file-tiff-load.c:1556
+#: plug-ins/common/file-pdf-export.c:1223
+#: plug-ins/common/file-pdf-export.c:1296
+#: plug-ins/common/file-pdf-export.c:1394 plug-ins/common/file-ps.c:2218
+#: plug-ins/file-tiff/file-tiff-load.c:1558
 #, c-format
 msgid "Page %d"
 msgstr "第 %d 页"
 
-#: plug-ins/common/file-pdf-export.c:1259
+#: plug-ins/common/file-pdf-export.c:1263
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "错误！为了保存该文件，应该添加至少一副图像！"
 
-#: plug-ins/common/file-pdf-export.c:1437 plug-ins/print/print-draw-page.c:125
+#: plug-ins/common/file-pdf-export.c:1441 plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "无法处理该图像的尺寸（无论宽度或高度）。"
 
@@ -5946,8 +6044,8 @@ msgstr "为了安全原因，该选项应仅用于信任的输入！"
 msgid "Retry without limits preventing to parse huge data?"
 msgstr "不带阻止解析巨量数据的限制来重试吗？"
 
-#: plug-ins/common/file-svg.c:562 plug-ins/file-exr/file-exr.c:359
-#: plug-ins/file-exr/file-exr.c:373
+#: plug-ins/common/file-svg.c:562 plug-ins/file-exr/file-exr.c:378
+#: plug-ins/file-exr/file-exr.c:392
 msgid "Unknown reason"
 msgstr "未知原因"
 
@@ -9229,25 +9327,25 @@ msgstr "从“%s”查询图像精度出错"
 msgid "Error querying image type from '%s'"
 msgstr "从“%s”查询图像类型出错"
 
-#: plug-ins/file-exr/file-exr.c:319
+#: plug-ins/file-exr/file-exr.c:334
 #, c-format
 msgid "Error reading pixel data from '%s'"
 msgstr "从“%s”读取像素数据出错"
 
-#: plug-ins/file-exr/file-exr.c:358 plug-ins/file-exr/file-exr.c:372
+#: plug-ins/file-exr/file-exr.c:377 plug-ins/file-exr/file-exr.c:391
 #, c-format
 msgid "Failed to load metadata: %s"
 msgstr "加载元数据失败：%s"
 
-#: plug-ins/file-exr/file-exr.c:435
+#: plug-ins/file-exr/file-exr.c:452
 msgid "Import OpenEXR"
 msgstr "导入 OpenEXR"
 
-#: plug-ins/file-exr/file-exr.c:450
+#: plug-ins/file-exr/file-exr.c:467
 msgid "Unknown Channel Name"
 msgstr "未知通道名称"
 
-#: plug-ins/file-exr/file-exr.c:451
+#: plug-ins/file-exr/file-exr.c:468
 msgid ""
 "The image contains a single unknown channel.\n"
 "It has been converted to grayscale."
@@ -9255,11 +9353,11 @@ msgstr ""
 "该图像包含一个单独的未知通道。\n"
 "它已被转换为灰度模式。"
 
-#: plug-ins/file-exr/file-exr.c:454
+#: plug-ins/file-exr/file-exr.c:471
 msgid "Chroma Channels"
 msgstr "色度通道"
 
-#: plug-ins/file-exr/file-exr.c:455
+#: plug-ins/file-exr/file-exr.c:472
 msgid ""
 "OpenEXR chroma channels are not yet supported.\n"
 "They have been discarded."
@@ -9725,11 +9823,6 @@ msgstr "文件大小：未知"
 msgid "Enable preview to obtain the file size."
 msgstr "启用预览以获得文件大小。"
 
-#: plug-ins/file-jpeg/jpeg-export.c:896 plug-ins/file-psd/psd-export.c:2459
-#: plug-ins/file-tiff/file-tiff-export.c:1310
-msgid "No soft-proofing profile"
-msgstr "无软打样特性文件"
-
 #: plug-ins/file-jpeg/jpeg-load.c:241
 msgid "JPEG preview"
 msgstr "JPEG 预览"
@@ -9767,10 +9860,6 @@ msgstr "将文件导出为有损的，被广泛支持的 JPEG 格式"
 #: plug-ins/file-jpeg/jpeg.c:195 plug-ins/file-tiff/file-tiff.c:251
 msgid "JPEG"
 msgstr "JPEG"
-
-#: plug-ins/file-jpeg/jpeg.c:211
-msgid "Quality of exported image"
-msgstr "导出图像的质量"
 
 #: plug-ins/file-jpeg/jpeg.c:216
 msgid "S_moothing"
@@ -10593,12 +10682,12 @@ msgstr "具有未指明数据的额外通道。"
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "非一致性 TIFF：没有“额外采样”区域的额外通道。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:579
+#: plug-ins/file-tiff/file-tiff-load.c:581
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr "无法读取 %2$d 页中的第 %1$d 页。图像可能是损坏的。\n"
 
-#: plug-ins/file-tiff/file-tiff-load.c:608
+#: plug-ins/file-tiff/file-tiff-load.c:610
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
@@ -10607,7 +10696,7 @@ msgstr ""
 "该图像具有线性特性文件但未在第一个图层上设置。第 %d # 图层以下的图层将视为非"
 "线性。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:616
+#: plug-ins/file-tiff/file-tiff-load.c:618
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -10616,39 +10705,39 @@ msgstr ""
 "该图像具有多个特性文件。我们将使用第一个。如果这导致不正确的结果您应考虑将每"
 "个图层作为单独图像载入。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:628
+#: plug-ins/file-tiff/file-tiff-load.c:630
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr "可疑的位深度：%2$d 页中的 %1$d。图像可能是损坏的。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:702
+#: plug-ins/file-tiff/file-tiff-load.c:704
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr "不支持的位深度：第 %2$d 页的 %1$d。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:717
+#: plug-ins/file-tiff/file-tiff-load.c:719
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr "无法从“%s”获取图像宽度"
 
-#: plug-ins/file-tiff/file-tiff-load.c:725
+#: plug-ins/file-tiff/file-tiff-load.c:727
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr "无法从“%s”获取图像长度"
 
-#: plug-ins/file-tiff/file-tiff-load.c:733
+#: plug-ins/file-tiff/file-tiff-load.c:735
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr "第 %3$d 页有无效图像尺寸（%1$u x %2$u）。图像可能已损坏。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:754
+#: plug-ins/file-tiff/file-tiff-load.c:756
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
 "is-white"
 msgstr "无法从“%s”获取测光。图像是 CCITT 压缩的，假定最小值为白色"
 
-#: plug-ins/file-tiff/file-tiff-load.c:761
+#: plug-ins/file-tiff/file-tiff-load.c:763
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr "无法从“%s”获取测光。假定最小值为黑色"
@@ -10656,13 +10745,13 @@ msgstr "无法从“%s”获取测光。假定最小值为黑色"
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: plug-ins/file-tiff/file-tiff-load.c:793
+#: plug-ins/file-tiff/file-tiff-load.c:795
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
 msgstr "没有为 %s 定义透明通道类型。假定透明不是自左乘的"
 
-#: plug-ins/file-tiff/file-tiff-load.c:818
+#: plug-ins/file-tiff/file-tiff-load.c:820
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
@@ -10672,37 +10761,37 @@ msgstr ""
 "图像“%s”不符合 TIFF 标准：额外通道呈现的情况下未设置额外采样域。假定第一个额"
 "外通道是非自左乘透明。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1107
+#: plug-ins/file-tiff/file-tiff-load.c:1109
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr "无效或未知的压缩方式 %u。将设置压缩为无。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1165
+#: plug-ins/file-tiff/file-tiff-load.c:1167
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr "无法创建新图像：%s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1335
+#: plug-ins/file-tiff/file-tiff-load.c:1337
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "未知的分辨率单位类型 %d，假定为 dpi"
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: plug-ins/file-tiff/file-tiff-load.c:1345
+#: plug-ins/file-tiff/file-tiff-load.c:1347
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr "警告：指定的分辨率没有单位类型，假定为 dpi"
 
 #. xres but no yres
-#: plug-ins/file-tiff/file-tiff-load.c:1353
+#: plug-ins/file-tiff/file-tiff-load.c:1355
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr "警告：没有 y 分辨率信息，假定与 x 相同"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1374
+#: plug-ins/file-tiff/file-tiff-load.c:1376
 msgid "Invalid image resolution info, using default"
 msgstr "无效的图像分辨率信息，将使用默认值"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1436
+#: plug-ins/file-tiff/file-tiff-load.c:1438
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "无法从“%s”获取颜色表"
@@ -10712,66 +10801,66 @@ msgstr "无法从“%s”获取颜色表"
 #. * and can cause GIMP to become unresponsive and/or stuck.
 #. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:1526
+#: plug-ins/file-tiff/file-tiff-load.c:1528
 #, c-format
 msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
 msgstr "可疑的额外通道数量：%d。可能是损坏的图像。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1591
+#: plug-ins/file-tiff/file-tiff-load.c:1593
 msgid "TIFF Channel"
 msgstr "TIFF 通道"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1749
+#: plug-ins/file-tiff/file-tiff-load.c:1751
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr "从 TIFF“%s”读取不到数据。该文件可能已损坏。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1785
-#: plug-ins/file-tiff/file-tiff-load.c:1828
+#: plug-ins/file-tiff/file-tiff-load.c:1787
+#: plug-ins/file-tiff/file-tiff-load.c:1831
 #, c-format
 msgid ""
 "Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
 msgstr "试图打开临时的 %s 文件“%s”用于加载 TIFF 元数据时出错：%s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1908
+#: plug-ins/file-tiff/file-tiff-load.c:1912
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr "%s：不支持的图像格式，没有可用的 RGBA 加载器"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2023
-#: plug-ins/file-tiff/file-tiff-load.c:2220
+#: plug-ins/file-tiff/file-tiff-load.c:2027
+#: plug-ins/file-tiff/file-tiff-load.c:2224
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr "读取分块失败。图像可能在第 %d 行损坏。"
 
 #. Error reading scanline, stop loading
-#: plug-ins/file-tiff/file-tiff-load.c:2032
-#: plug-ins/file-tiff/file-tiff-load.c:2229
+#: plug-ins/file-tiff/file-tiff-load.c:2036
+#: plug-ins/file-tiff/file-tiff-load.c:2233
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr "读取扫描线失败。图像可能在第 %d 行损坏。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2777
+#: plug-ins/file-tiff/file-tiff-load.c:2774
 msgid "Import from TIFF"
 msgstr "从 TIFF 导入"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2785
+#: plug-ins/file-tiff/file-tiff-load.c:2782
 msgid "_Show reduced images"
 msgstr "显示缩减的图像(_S)"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2830
+#: plug-ins/file-tiff/file-tiff-load.c:2827
 msgid "Process extra channel as:"
 msgstr "处理额外通道为："
 
-#: plug-ins/file-tiff/file-tiff-load.c:2833
+#: plug-ins/file-tiff/file-tiff-load.c:2830
 msgid "_Non-premultiplied alpha"
 msgstr "非自左乘透明(_N)"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2834
+#: plug-ins/file-tiff/file-tiff-load.c:2831
 msgid "Pre_multiplied alpha"
 msgstr "自左乘透明(_M)"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2835
+#: plug-ins/file-tiff/file-tiff-load.c:2832
 msgid "Channe_l"
 msgstr "通道(_L)"
 
