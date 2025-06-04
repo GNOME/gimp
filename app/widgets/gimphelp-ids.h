@@ -675,7 +675,6 @@
 #define GIMP_HELP_PREFS_INTERFACE                 "gimp-prefs-interface"
 #define GIMP_HELP_PREFS_THEME                     "gimp-prefs-theme"
 #define GIMP_HELP_PREFS_ICON_THEME                "gimp-prefs-icon-theme"
-#define GIMP_HELP_PREFS_VIEWABLES_FOLLOW_THEME    "gimp-prefs-viewables-follow-theme"
 #define GIMP_HELP_PREFS_TOOLBOX                   "gimp-prefs-toolbox"
 #define GIMP_HELP_PREFS_DIALOG_DEFAULTS           "gimp-prefs-dialog-defaults"
 #define GIMP_HELP_PREFS_HELP                      "gimp-prefs-help"
