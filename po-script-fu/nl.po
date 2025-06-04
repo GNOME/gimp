@@ -12,8 +12,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-01-31 03:57+0000\n"
-"PO-Revision-Date: 2025-02-01 13:41+0200\n"
+"POT-Creation-Date: 2025-03-28 19:22+0000\n"
+"PO-Revision-Date: 2025-03-29 10:21+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -360,42 +360,42 @@ msgstr "Voor GIF voorbereiden"
 msgid "Speed (pixels/frame)"
 msgstr "Snelheid (beeldpunten/frame)"
 
-#: plug-ins/script-fu/scripts/carve-it.scm:202
+#: plug-ins/script-fu/scripts/carve-it.scm:207
 msgid "Carved Surface"
 msgstr "Gekerfde oppervlakte"
 
-#: plug-ins/script-fu/scripts/carve-it.scm:203
+#: plug-ins/script-fu/scripts/carve-it.scm:208
 msgid "Bevel Shadow"
 msgstr "Schaduw schuine rand"
 
-#: plug-ins/script-fu/scripts/carve-it.scm:204
+#: plug-ins/script-fu/scripts/carve-it.scm:209
 msgid "Bevel Highlight"
 msgstr "Hooglichten schuine rand"
 
-#: plug-ins/script-fu/scripts/carve-it.scm:205
+#: plug-ins/script-fu/scripts/carve-it.scm:210
 msgid "Cast Shadow"
 msgstr "Schaduw werpen"
 
 # Goed?
 # pm
-#: plug-ins/script-fu/scripts/carve-it.scm:206
+#: plug-ins/script-fu/scripts/carve-it.scm:211
 msgid "Inset"
 msgstr "Inzet"
 
-#: plug-ins/script-fu/scripts/carve-it.scm:218
+#: plug-ins/script-fu/scripts/carve-it.scm:223
 msgid "Stencil C_arve..."
 msgstr "_Kerven…"
 
-#: plug-ins/script-fu/scripts/carve-it.scm:219
+#: plug-ins/script-fu/scripts/carve-it.scm:224
 msgid ""
 "Use the specified drawable as a stencil to carve from the specified image."
 msgstr "Gebruik het opgegeven tekengebied als stencil om de afbeelding te kerven."
 
-#: plug-ins/script-fu/scripts/carve-it.scm:226
+#: plug-ins/script-fu/scripts/carve-it.scm:231
 msgid "Mask drawable"
 msgstr "Tekengebied-masker"
 
-#: plug-ins/script-fu/scripts/carve-it.scm:227
+#: plug-ins/script-fu/scripts/carve-it.scm:232
 msgid "Carve white areas"
 msgstr "Witte gebieden kerven"
 
@@ -557,13 +557,37 @@ msgid "Gradient to color stains"
 msgstr "Kleurverloop om vlekken te kleuren"
 
 # wat doet dit precies?
-#: plug-ins/script-fu/scripts/difference-clouds.scm:76
+#: plug-ins/script-fu/scripts/difference-clouds.scm:82
 msgid "_Difference Clouds"
 msgstr "_Verschil-wolken…"
 
-#: plug-ins/script-fu/scripts/difference-clouds.scm:77
+#: plug-ins/script-fu/scripts/difference-clouds.scm:83
 msgid "Solid noise applied with Difference layer mode"
 msgstr "Aaneengesloten ruis die toegepast wordt in de laagmodus Verschil"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:89
+msgid "Random Seed"
+msgstr "Willekeurige waarde"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:90
+msgid "Levels"
+msgstr "Kleurniveaus"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:91
+msgid "Tileable"
+msgstr "Tegelbaar"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:92
+msgid "Turbulent"
+msgstr "Turbulent"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:93
+msgid "X"
+msgstr "X"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:94
+msgid "Y"
+msgstr "Y"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm:112
 msgid "_Distort..."
@@ -709,7 +733,7 @@ msgstr "Schaduw gewicht (%)"
 #: plug-ins/script-fu/scripts/old-photo.scm:105
 #: plug-ins/script-fu/scripts/round-corners.scm:145
 #: plug-ins/script-fu/scripts/slide.scm:268
-#: plug-ins/script-fu/scripts/spinning-globe.scm:111
+#: plug-ins/script-fu/scripts/spinning-globe.scm:127
 msgid "Work on copy"
 msgstr "Op kopie werken"
 
@@ -799,15 +823,15 @@ msgstr "Bladwijzer naar de bug-tracker van GIMP"
 msgid "_User Manual Web Site"
 msgstr "_Gebruikershandleiding website"
 
-#: plug-ins/script-fu/scripts/gradient-example.scm:69
+#: plug-ins/script-fu/scripts/gradient-example.scm:73
 msgid "Custom _Gradient..."
 msgstr "Aan_gepast kleurverloop…"
 
-#: plug-ins/script-fu/scripts/gradient-example.scm:70
+#: plug-ins/script-fu/scripts/gradient-example.scm:74
 msgid "Create an image filled with an example of the current gradient"
 msgstr "Een afbeelding maken die gevuld is met een voorbeeld van het huidige kleurverloop"
 
-#: plug-ins/script-fu/scripts/gradient-example.scm:73
+#: plug-ins/script-fu/scripts/gradient-example.scm:77
 #: plug-ins/script-fu/scripts/mkbrush.scm:69
 #: plug-ins/script-fu/scripts/mkbrush.scm:137
 #: plug-ins/script-fu/scripts/mkbrush.scm:191
@@ -815,7 +839,7 @@ msgstr "Een afbeelding maken die gevuld is met een voorbeeld van het huidige kle
 msgid "Width"
 msgstr "Breedte"
 
-#: plug-ins/script-fu/scripts/gradient-example.scm:74
+#: plug-ins/script-fu/scripts/gradient-example.scm:78
 #: plug-ins/script-fu/scripts/mkbrush.scm:70
 #: plug-ins/script-fu/scripts/mkbrush.scm:138
 #: plug-ins/script-fu/scripts/mkbrush.scm:192
@@ -823,7 +847,7 @@ msgstr "Breedte"
 msgid "Height"
 msgstr "Hoogte"
 
-#: plug-ins/script-fu/scripts/gradient-example.scm:75
+#: plug-ins/script-fu/scripts/gradient-example.scm:79
 msgid "Gradient reverse"
 msgstr "Omgekeerd kleurverloop"
 
@@ -1294,27 +1318,27 @@ msgstr "Lettertype"
 msgid "Font color"
 msgstr "Lettertypekleur"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:99
+#: plug-ins/script-fu/scripts/spinning-globe.scm:116
 msgid "_Spinning Globe..."
 msgstr "_Draaiende bol…"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:100
+#: plug-ins/script-fu/scripts/spinning-globe.scm:117
 msgid "Create an animation by mapping the current image onto a spinning sphere"
 msgstr "Een animatie aanmaken door de huidige afbeelding op een ronddraaiende bol te projecteren"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:107
+#: plug-ins/script-fu/scripts/spinning-globe.scm:123
 msgid "Frames"
 msgstr "Frames"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:108
+#: plug-ins/script-fu/scripts/spinning-globe.scm:124
 msgid "Turn from left to right"
 msgstr "Draai van links naar rechts"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:109
+#: plug-ins/script-fu/scripts/spinning-globe.scm:125
 msgid "Transparent background"
 msgstr "Transparante achtergrond"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:110
+#: plug-ins/script-fu/scripts/spinning-globe.scm:126
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "Indexeren naar n kleuren (0 = behoud RGB)"
 
@@ -1395,41 +1419,41 @@ msgid "Invert direction"
 msgstr "Richting omdraaien"
 
 # geweefte/weefgetouw/weven/geweefsel
-#: plug-ins/script-fu/scripts/weave.scm:421
+#: plug-ins/script-fu/scripts/weave.scm:425
 msgid "_Weave..."
 msgstr "_Weven…"
 
-#: plug-ins/script-fu/scripts/weave.scm:422
+#: plug-ins/script-fu/scripts/weave.scm:426
 msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
 msgstr "Een nieuwe laag maken die gevuld is met een vlechteffect om als een bedekking of een bumpprojectie te gebruiken"
 
-#: plug-ins/script-fu/scripts/weave.scm:428
+#: plug-ins/script-fu/scripts/weave.scm:432
 msgid "Ribbon width"
 msgstr "Lint breedte"
 
-#: plug-ins/script-fu/scripts/weave.scm:429
+#: plug-ins/script-fu/scripts/weave.scm:433
 msgid "Ribbon spacing"
 msgstr "Lint tussenruimte"
 
-#: plug-ins/script-fu/scripts/weave.scm:430
+#: plug-ins/script-fu/scripts/weave.scm:434
 msgid "Shadow darkness"
 msgstr "Schaduw donkerte"
 
-#: plug-ins/script-fu/scripts/weave.scm:431
+#: plug-ins/script-fu/scripts/weave.scm:435
 msgid "Shadow depth"
 msgstr "Schaduw diepte"
 
-#: plug-ins/script-fu/scripts/weave.scm:432
+#: plug-ins/script-fu/scripts/weave.scm:436
 msgid "Thread length"
 msgstr "Draad lengte"
 
-#: plug-ins/script-fu/scripts/weave.scm:433
+#: plug-ins/script-fu/scripts/weave.scm:437
 msgid "Thread density"
 msgstr "Draad dichtheid"
 
-#: plug-ins/script-fu/scripts/weave.scm:434
+#: plug-ins/script-fu/scripts/weave.scm:438
 msgid "Thread intensity"
 msgstr "Draad intensiteit"
 
@@ -2150,9 +2174,6 @@ msgstr "Y-verschuiving slagschaduw"
 #~ msgid "Image width"
 #~ msgstr "Afbeeldingsbreedte"
 
-#~ msgid "Random seed"
-#~ msgstr "Willekeurige startwaarde"
-
 #~ msgid "Scale X"
 #~ msgstr "X-schaal"
 
@@ -2428,9 +2449,6 @@ msgstr "Y-verschuiving slagschaduw"
 
 #~ msgid "Render _Map..."
 #~ msgstr "Kaart _renderen..."
-
-#~ msgid "Tile"
-#~ msgstr "Tegel"
 
 # Vertaling 'huidige stand van kennis' past hier niet echt
 #~ msgid "Create a State Of The Art chromed logo"
