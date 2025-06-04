@@ -552,7 +552,12 @@ welcome_dialog_create_personalize_page (Gimp       *gimp,
   gtk_widget_set_visible (hbox, TRUE);
 
   grid = prefs_grid_new (GTK_CONTAINER (hbox));
-  button = prefs_enum_combo_box_add (object, "theme-color-scheme", 0, 0,
+  button = prefs_enum_combo_box_add (object, "theme-color-scheme",
+#if defined(G_OS_UNIX) && ! defined(__APPLE__)
+                                     0, 0,
+#else
+                                     GIMP_THEME_LIGHT, GIMP_THEME_DARK,
+#endif
                                      _("Color scheme"), GTK_GRID (grid),
                                      0, size_group);
 
