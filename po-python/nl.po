@@ -10,8 +10,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-01-31 03:56+0000\n"
-"PO-Revision-Date: 2025-02-01 12:41+0200\n"
+"POT-Creation-Date: 2025-05-25 16:27+0000\n"
+"PO-Revision-Date: 2025-05-26 11:41+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -121,34 +121,36 @@ msgstr "D_ekking"
 msgid "Opacity"
 msgstr "Dekking"
 
-#: plug-ins/python/gradients-save-as-css.py:130
 #: plug-ins/python/gradients-save-as-css.py:131
+#: plug-ins/python/gradients-save-as-css.py:132
 msgid "Creates a new palette from a given gradient"
 msgstr "Maakt een nieuw palet uit een opgegeven kleurverloop"
 
-#: plug-ins/python/gradients-save-as-css.py:133
+#: plug-ins/python/gradients-save-as-css.py:134
 msgid "Save Gradient as CSS..."
 msgstr "Kleurverloop opslaan als CSS…"
 
-#: plug-ins/python/gradients-save-as-css.py:139
+#: plug-ins/python/gradients-save-as-css.py:140
+#: plug-ins/python/palette-export-as-kpl.py:176
 #: plug-ins/python/palette-offset.py:55 plug-ins/python/palette-sort.py:354
-#: plug-ins/python/palette-to-gradient.py:144
-#: plug-ins/python/python-console/python-console.py:320
+#: plug-ins/python/palette-to-gradient.py:145
+#: plug-ins/python/python-console/python-console.py:323
 msgid "Run mode"
 msgstr "Modus Uitvoeren"
 
-#: plug-ins/python/gradients-save-as-css.py:140
+#: plug-ins/python/gradients-save-as-css.py:141
+#: plug-ins/python/palette-export-as-kpl.py:177
 #: plug-ins/python/palette-offset.py:56 plug-ins/python/palette-sort.py:355
-#: plug-ins/python/palette-to-gradient.py:145
-#: plug-ins/python/python-console/python-console.py:321
+#: plug-ins/python/palette-to-gradient.py:146
+#: plug-ins/python/python-console/python-console.py:324
 msgid "The run mode"
 msgstr "De modus Uitvoeren"
 
-#: plug-ins/python/gradients-save-as-css.py:143
+#: plug-ins/python/gradients-save-as-css.py:144
 msgid "_Gradient to use"
 msgstr "Te gebruiken _kleurverloop"
 
-#: plug-ins/python/gradients-save-as-css.py:147
+#: plug-ins/python/gradients-save-as-css.py:148
 msgid "_File"
 msgstr "_Bestand"
 
@@ -218,6 +220,47 @@ msgstr "_Indeling uitvoer"
 msgid "Output format"
 msgstr "Indeling uitvoer"
 
+#: plug-ins/python/palette-export-as-kpl.py:55
+msgid "Options"
+msgstr "Opties"
+
+#: plug-ins/python/palette-export-as-kpl.py:60
+msgid "_Export"
+msgstr "_Exporteren"
+
+#: plug-ins/python/palette-export-as-kpl.py:167
+#: plug-ins/python/palette-export-as-kpl.py:168
+msgid "Export palette as Krita .kpl"
+msgstr "Palet exporteren als Krita .kpl"
+
+#: plug-ins/python/palette-export-as-kpl.py:170
+msgid "_Krita palette..."
+msgstr "_Krita palet…"
+
+#: plug-ins/python/palette-export-as-kpl.py:180
+msgid "_Palette to export"
+msgstr "_Palet om te exporteren"
+
+#: plug-ins/python/palette-export-as-kpl.py:184
+msgid "_File (.kpl)"
+msgstr "_Bestand (.kpl)"
+
+#: plug-ins/python/palette-export-as-kpl.py:187
+msgid "Commen_t"
+msgstr "Opme_rking"
+
+#: plug-ins/python/palette-export-as-kpl.py:188
+msgid "Optional comment"
+msgstr "Optionele opmerking"
+
+#: plug-ins/python/palette-export-as-kpl.py:191
+msgid "Re_ad only"
+msgstr "_Alleen-lezen"
+
+#: plug-ins/python/palette-export-as-kpl.py:192
+msgid "The palette will be locked on import"
+msgstr "Het palet zal worden vergrendeld bij importeren"
+
 #: plug-ins/python/palette-offset.py:48
 msgid "_Offset Palette..."
 msgstr "_Verschuiving palet…"
@@ -227,13 +270,13 @@ msgid "Offset the colors in a palette"
 msgstr "De kleuren in een palet verschuiven"
 
 #: plug-ins/python/palette-offset.py:59 plug-ins/python/palette-sort.py:358
-#: plug-ins/python/palette-to-gradient.py:148
+#: plug-ins/python/palette-to-gradient.py:149
 msgid "_Palette"
 msgstr "_Palet"
 
 #: plug-ins/python/palette-offset.py:60 plug-ins/python/palette-sort.py:359
 #: plug-ins/python/palette-sort.py:400 plug-ins/python/palette-sort.py:401
-#: plug-ins/python/palette-to-gradient.py:149
+#: plug-ins/python/palette-to-gradient.py:150
 msgid "Palette"
 msgstr "Palet"
 
@@ -254,47 +297,47 @@ msgid "The newly created palette when read-only, otherwise the input palette"
 msgstr "Het nieuw gemaakte palet indien alleen-lezen, anders het palet van de invoer"
 
 #. TODO: Re-incorporate LAB and LCHab options with GeglColor
-#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:464
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:465
 msgid "Red"
 msgstr "Rood"
 
-#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:465
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:466
 msgid "Green"
 msgstr "Groen"
 
-#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:466
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:467
 msgid "Blue"
 msgstr "Blauw"
 
-#: plug-ins/python/palette-sort.py:46 plug-ins/python/palette-sort.py:467
+#: plug-ins/python/palette-sort.py:46 plug-ins/python/palette-sort.py:468
 msgid "Luma (Y)"
 msgstr "Luma (Y)"
 
-#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:468
+#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:469
 msgid "Hue"
 msgstr "Tint"
 
-#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:469
+#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:470
 msgid "Saturation"
 msgstr "Verzadiging"
 
-#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:470
+#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:471
 msgid "Value"
 msgstr "Waarde"
 
-#: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:471
+#: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:472
 msgid "Saturation (HSL)"
 msgstr "Verzadiging (HSL)"
 
-#: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:472
+#: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:473
 msgid "Lightness (HSL)"
 msgstr "Lichtheid (HSL)"
 
-#: plug-ins/python/palette-sort.py:49 plug-ins/python/palette-sort.py:473
+#: plug-ins/python/palette-sort.py:49 plug-ins/python/palette-sort.py:474
 msgid "Index"
 msgstr "Index"
 
-#: plug-ins/python/palette-sort.py:50 plug-ins/python/palette-sort.py:474
+#: plug-ins/python/palette-sort.py:50 plug-ins/python/palette-sort.py:475
 msgid "Random"
 msgstr "Willekeurig"
 
@@ -423,113 +466,113 @@ msgstr "K_wantisering partitie"
 msgid "Partition quantization"
 msgstr "Kwantisering partitie"
 
-#: plug-ins/python/palette-sort.py:475
+#: plug-ins/python/palette-sort.py:476
 msgid "Lightness (LAB)"
 msgstr "Lichtheid (LAB)"
 
-#: plug-ins/python/palette-sort.py:476
+#: plug-ins/python/palette-sort.py:477
 msgid "A-color"
 msgstr "A-kleur"
 
-#: plug-ins/python/palette-sort.py:477
+#: plug-ins/python/palette-sort.py:478
 msgid "B-color"
 msgstr "B-kleur"
 
-#: plug-ins/python/palette-sort.py:478
+#: plug-ins/python/palette-sort.py:479
 msgid "Chroma (LCHab)"
 msgstr "Chroma (LCHab)"
 
-#: plug-ins/python/palette-sort.py:479
+#: plug-ins/python/palette-sort.py:480
 msgid "Hue (LCHab)"
 msgstr "Tint (LCHab)"
 
-#: plug-ins/python/palette-to-gradient.py:128
+#: plug-ins/python/palette-to-gradient.py:129
 msgid "Palette to _Gradient"
 msgstr "Palet naar _kleurverloop"
 
-#: plug-ins/python/palette-to-gradient.py:129
+#: plug-ins/python/palette-to-gradient.py:130
 msgid "Create a gradient using colors from the palette"
 msgstr "Een kleurverloop aanmaken met de kleuren van het palet"
 
-#: plug-ins/python/palette-to-gradient.py:130
+#: plug-ins/python/palette-to-gradient.py:131
 msgid "Create a new gradient using colors from the palette."
 msgstr "Maak een nieuw kleurverloop met kleuren uit het palet."
 
-#: plug-ins/python/palette-to-gradient.py:133
+#: plug-ins/python/palette-to-gradient.py:134
 msgid "Palette to _Repeating Gradient"
 msgstr "Palet naar he_rhalend kleurverloop"
 
-#: plug-ins/python/palette-to-gradient.py:134
+#: plug-ins/python/palette-to-gradient.py:135
 msgid "Create a repeating gradient using colors from the palette"
 msgstr "Een herhalend kleurverloop maken met de kleuren van het palet"
 
-#: plug-ins/python/palette-to-gradient.py:135
+#: plug-ins/python/palette-to-gradient.py:136
 msgid "Create a new repeating gradient using colors from the palette."
 msgstr "Maak een herhalend kleurverloop met de kleuren van het palet."
 
-#: plug-ins/python/palette-to-gradient.py:152
 #: plug-ins/python/palette-to-gradient.py:153
+#: plug-ins/python/palette-to-gradient.py:154
 msgid "The newly created gradient"
 msgstr "Het nieuw gemaakte kleurverloop"
 
-#: plug-ins/python/python-console/python-console.py:80
+#: plug-ins/python/python-console/python-console.py:79
 msgid "Python Console"
 msgstr "Python-opdrachtregel"
 
-#: plug-ins/python/python-console/python-console.py:82
-#: plug-ins/python/python-console/python-console.py:277
+#: plug-ins/python/python-console/python-console.py:81
+#: plug-ins/python/python-console/python-console.py:279
 msgid "_Save"
 msgstr "Op_slaan"
 
-#: plug-ins/python/python-console/python-console.py:83
+#: plug-ins/python/python-console/python-console.py:82
 msgid "Cl_ear"
 msgstr "_Wissen"
 
-#: plug-ins/python/python-console/python-console.py:84
+#: plug-ins/python/python-console/python-console.py:83
 msgid "_Browse..."
 msgstr "_Verkennen…"
 
-#: plug-ins/python/python-console/python-console.py:85
-#: plug-ins/python/python-console/python-console.py:225
+#: plug-ins/python/python-console/python-console.py:84
+#: plug-ins/python/python-console/python-console.py:227
 msgid "_Close"
 msgstr "_Sluiten"
 
-#: plug-ins/python/python-console/python-console.py:222
+#: plug-ins/python/python-console/python-console.py:224
 msgid "Python Procedure Browser"
 msgstr "Python-procedureverkenner"
 
-#: plug-ins/python/python-console/python-console.py:224
+#: plug-ins/python/python-console/python-console.py:226
 msgid "_Apply"
 msgstr "Toep_assen"
 
-#: plug-ins/python/python-console/python-console.py:250
+#: plug-ins/python/python-console/python-console.py:252
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Kon '%s' niet openen om te schrijven: %s"
 
-#: plug-ins/python/python-console/python-console.py:265
+#: plug-ins/python/python-console/python-console.py:267
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Kon niet schrijven naar ‘%s’: %s"
 
-#: plug-ins/python/python-console/python-console.py:274
+#: plug-ins/python/python-console/python-console.py:276
 msgid "Save Python-Fu Console Output"
 msgstr "Uitvoer van Python-Fu-opdrachtregel opslaan"
 
-#: plug-ins/python/python-console/python-console.py:276
+#: plug-ins/python/python-console/python-console.py:278
 #: plug-ins/python/spyro-plus.py:1750
 msgid "_Cancel"
 msgstr "_Annuleren"
 
-#: plug-ins/python/python-console/python-console.py:313
+#: plug-ins/python/python-console/python-console.py:316
 msgid "Python _Console"
 msgstr "Python-opdra_chtregel"
 
-#: plug-ins/python/python-console/python-console.py:314
+#: plug-ins/python/python-console/python-console.py:317
 msgid "Interactive GIMP Python interpreter"
 msgstr "Interactieve GIMP-Python- interpreter"
 
-#: plug-ins/python/python-console/python-console.py:315
+#: plug-ins/python/python-console/python-console.py:318
 msgid "Type in commands and see results"
 msgstr "Typ opdrachten in en bekijk de resultaten"
 
@@ -642,7 +685,7 @@ msgstr "Gereedschap"
 #: plug-ins/python/spyro-plus.py:1494
 msgid ""
 "The tool with which to draw the pattern. The Preview tool just draws quickly."
-msgstr "Het gereedschap waarmee het patroon moet worden getekend. Het gereedschap Voorbeeld tekent alleen maar snel."
+msgstr "Het gereedschap waarmee het patroon moet worden getekend. Het voorbeeldgereedschap tekent dit snel."
 
 #: plug-ins/python/spyro-plus.py:1499
 msgid "Long Gradient"
@@ -653,7 +696,7 @@ msgid ""
 "When unchecked, the current tool settings will be used. When checked, will "
 "use a long gradient to match the length of the pattern, based on current "
 "gradient and repeat mode from the gradient tool settings."
-msgstr "Indien niet geselecteerd zullen de huidige instellingen van het gereedschap worden gebruikt. Indien geselecteerd zal het een lang kleurverloop gebruiken om overeen te komen met de lengte van het patroon, gebaseerd op het huidige kleurverloop en modus Herhalen uit de instellingen van het gereedschap Kleurverloop."
+msgstr "Indien uitgevinkt worden de huidige gereedschapsinstellingen gebruikt. Indien aangevinkt wordt een lang verloop gebruikt ter lengte van het patroon, gebaseerd op het huidige verloop en op de herhaalmodus van het verloopgereedschap."
 
 #: plug-ins/python/spyro-plus.py:1521
 msgid "Specify pattern using one of the following tabs:"
@@ -665,7 +708,7 @@ msgid ""
 "Gears, but it uses gears and hole numbers which are found in toy kits. If "
 "you follow the instructions from the toy kit manuals, results should be "
 "similar."
-msgstr "Het patroon wordt alleen door de actieve tab gespecificeerd. Speelgoedkit is soortgelijk aan Tandwielen, maar het gebruikt tandwielen en gatnummers die te vinden zijn in speelgoedkits. Als u de instructies van de handleidingen van de speelgoedkit volgt, zouden de resultaten soortgelijk moeten zijn."
+msgstr "Het patroon wordt alleen door de actieve tab bepaald. Speelgoedkit is soortgelijk aan Tandwielen, maar het gebruikt tandwielen en gatnummers die te vinden zijn in speelgoedkits. Als u de instructies in de handleiding van deze speelgoedkits volgt, moet u soortgelijke resultaten verkrijgen."
 
 #: plug-ins/python/spyro-plus.py:1547
 msgid ""
@@ -681,7 +724,7 @@ msgstr "Tanden vaste tandwiel"
 msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
-msgstr "Aantal tanden van bewegend tandwiel. De grootte van het bewegend tandwiel is proportioneel ten opzichte van het aantal tanden."
+msgstr "Aantal tanden van bewegende tandwielen. De grootte van het bewegend tandwiel is proportioneel ten opzichte van het aantal tanden."
 
 #: plug-ins/python/spyro-plus.py:1561 plug-ins/python/spyro-plus.py:1583
 msgid "Moving Gear Teeth"
@@ -695,7 +738,7 @@ msgstr "Gat (percentage)"
 msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
-msgstr "Hoe ver staat het gat vanaf het middelpunt van het bewegend tandwiel. 100% betekent dat het gat op de rand van het tandwiel staat."
+msgstr "Hoe ver het gat verwijderd is van het centrum van de bewegende tandwielen. 100% betekent dat het gat aan de rand van het tandwiel is."
 
 #: plug-ins/python/spyro-plus.py:1588
 msgid "Hole Number"
@@ -705,7 +748,7 @@ msgstr "Gatnummer"
 msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
-msgstr "Gat #1 ligt aan de rand van het tandwiel. Het maximale gatnummer ligt nabij het middelpunt. Het maximale gatnummer is voor elk tandwiel anders."
+msgstr "Gat 1 bevindt zich aan de rand van de tandwielen. Het maximale gatnummer ligt nabij het middelpunt. Het maximale gatnummer is voor elk tandwiel anders."
 
 #: plug-ins/python/spyro-plus.py:1600
 msgid "Flower Petals"
@@ -778,7 +821,7 @@ msgid ""
 "of the rectangular selection, use hole=100 in Gear notation to touch "
 "boundary. Selection will hug boundaries of current selection - try something "
 "non-rectangular."
-msgstr "De vorm van het te gebruiken vaste tandwiel binnen de huidige selectie. Rek is een langwerpige vorm met ronde hoeken die wordt verschaft in de speelgoedkits. Frame knuffelt de grenzen van de rechthoekige selectie, gebruik gat=100 in notatie van Tandwiel om de grens te raken. Selectie zal de grenzen van de huidige selectie knuffelen - probeer iets dat niet rechthoekig is."
+msgstr "De vorm van het te gebruiken vaste tandwiel in de huidige selectie. Rek is een lange vorm met afgeronde hoeken. Kader gaat tegen de randen van de rechthoekige selectie aan, gebruik gat=100 in Tandwielnotatie om de rand te raken. Selectie gaat tegen de randen van de huidige selectie aan - probeer niet-rechthoekige vormen."
 
 #: plug-ins/python/spyro-plus.py:1705
 msgid "Sides"
@@ -794,7 +837,7 @@ msgstr "Transformeren"
 
 #: plug-ins/python/spyro-plus.py:1710
 msgid "Morph fixed gear shape. Only affects some of the shapes."
-msgstr "Vorm vaste tandwiel transformeren. Beïnvloedt slechts enkele vormen."
+msgstr "Vormverandering van de vaste tandwielen. Beïnvloedt slechts enkele vormen."
 
 #: plug-ins/python/spyro-plus.py:1715
 msgid "Rotation of the fixed gear, in degrees"
@@ -817,7 +860,7 @@ msgstr "Maak breedte en hoogte gelijk"
 msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
-msgstr "Indien niet geselecteerd zal het patroon de huidige afbeelding of selectie vullen. Indien geselecteerd zal het patroon dezelfde breedte en hoogte hebben en zal zijn gecentreerd."
+msgstr "Indien uitgevinkt zal het patroon de huidige afbeelding of selectie vullen. Indien aangevinkt heeft het patroon dezelfde breedte en hoogte en is gecentreerd."
 
 #: plug-ins/python/spyro-plus.py:1751
 msgid "_OK"
@@ -988,9 +1031,6 @@ msgstr "Of een lang kleurverloop moet worden toegepast om overeen te komen met d
 
 #~ msgid "CSS file..."
 #~ msgstr "CSS-bestand…"
-
-#~ msgid "_File..."
-#~ msgstr "_Bestand…"
 
 #~ msgid "Choose export file..."
 #~ msgstr "Kies bestand om te exporteren…"
