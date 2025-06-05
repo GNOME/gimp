@@ -573,3 +573,137 @@ gimp_drawable_filter_delete (GimpDrawableFilter *filter)
 
   return success;
 }
+
+/**
+ * gimp_drawable_filter_operation_get_available:
+ *
+ * Get a list of all available GEGL operation names for drawable
+ * filters.
+ *
+ * This procedure returns a list of all GEGL operation names available
+ * for use with drawable filters.
+ *
+ * Returns: (array zero-terminated=1) (transfer full):
+ *          The list of GEGL operation names.
+ *          The returned value must be freed with g_strfreev().
+ *
+ * Since: 3.2
+ **/
+gchar **
+gimp_drawable_filter_operation_get_available (void)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gchar **names = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-drawable-filter-operation-get-available",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    names = GIMP_VALUES_DUP_STRV (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return names;
+}
+
+/**
+ * gimp_drawable_filter_operation_get_details:
+ * @operation_name: The GEGL operation's name.
+ * @propnames: (out) (array zero-terminated=1) (transfer full): The names of properties.
+ * @propvalues: (out): The values of properties in the same order.
+ *
+ * Get information about a GEGL operation.
+ *
+ * This procedure returns information about a GEGL operation. The
+ * content of the list of information can vary across versions and
+ * currently can contain:
+ * - a human-readable title of the operation, - a description of the
+ * operation's behaviour, - the categories the operation belongs to,
+ * and - the license of the operation.
+ * An operation can belong to no categories or to multiple categories.
+ * Multiple categories are separated by the ':' character.
+ * Some operation's license is not specifically set. In such cases, the
+ * returned license is 'unknown'.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_drawable_filter_operation_get_details (const gchar      *operation_name,
+                                            gchar          ***propnames,
+                                            GimpValueArray  **propvalues)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, operation_name,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-drawable-filter-operation-get-details",
+                                               args);
+  gimp_value_array_unref (args);
+
+  *propnames = NULL;
+  *propvalues = NULL;
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  if (success)
+    {
+      *propnames = GIMP_VALUES_DUP_STRV (return_vals, 1);
+      *propvalues = g_value_dup_boxed (gimp_value_array_index (return_vals, 2));
+    }
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_drawable_filter_operation_get_pspecs:
+ * @operation_name: The GEGL operation's name.
+ *
+ * Get information for all parameters of a GEGL operation.
+ *
+ * This procedure returns a list of all parameters used to configure a
+ * GEGL operation.
+ * Each parameter is represented by GParamSpec.
+ *
+ * Returns: List of all parameters of the GEGL operation.
+ *          The returned value must be freed with g_free().
+ *
+ * Since: 3.2
+ **/
+GimpValueArray *
+gimp_drawable_filter_operation_get_pspecs (const gchar *operation_name)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpValueArray *pspecs = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, operation_name,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-drawable-filter-operation-get-pspecs",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    pspecs = g_value_dup_boxed (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return pspecs;
+}

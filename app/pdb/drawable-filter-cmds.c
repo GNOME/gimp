@@ -39,6 +39,7 @@
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpitem.h"
 #include "core/gimpparamspecs.h"
+#include "gegl/gimp-gegl-utils.h"
 #include "operations/gimp-operation-config.h"
 #include "operations/gimpoperationsettings.h"
 
@@ -61,7 +62,7 @@ validate_operation_name (const gchar  *operation_name,
 
   op_type = gegl_operation_gtype_from_name (operation_name);
 
-  /* Using the same rules as in xcf_load_effect() for plug-in created
+  /* Using the same rules as in xcf_load_effect () for plug-in created
    * effects.
    */
   if (g_type_is_a (op_type, GEGL_TYPE_OPERATION_SINK))
@@ -707,6 +708,202 @@ drawable_filter_delete_invoker (GimpProcedure         *procedure,
                                            error ? *error : NULL);
 }
 
+static GimpValueArray *
+drawable_filter_operation_get_available_invoker (GimpProcedure         *procedure,
+                                                 Gimp                  *gimp,
+                                                 GimpContext           *context,
+                                                 GimpProgress          *progress,
+                                                 const GimpValueArray  *args,
+                                                 GError               **error)
+{
+  GimpValueArray *return_vals;
+  gchar **names = NULL;
+
+  GList        *ops     = NULL;
+  GStrvBuilder *builder = NULL;
+
+  ops     = gimp_gegl_get_op_classes (FALSE);
+  builder = g_strv_builder_new ();
+
+  for (GList *op = ops; op != NULL; op = op->next)
+    {
+      GeglOperationClass *op_klass = op->data;
+
+      if (!validate_operation_name (op_klass->name, NULL))
+        continue;
+
+      g_strv_builder_add (builder, op_klass->name);
+    }
+
+  names = g_strv_builder_end (builder);
+
+  g_list_free (ops);
+  g_strv_builder_unref (builder);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_take_boxed (gimp_value_array_index (return_vals, 1), names);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+drawable_filter_operation_get_details_invoker (GimpProcedure         *procedure,
+                                               Gimp                  *gimp,
+                                               GimpContext           *context,
+                                               GimpProgress          *progress,
+                                               const GimpValueArray  *args,
+                                               GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  const gchar *operation_name;
+  gchar **propnames = NULL;
+  GimpValueArray *propvalues = NULL;
+
+  operation_name = g_value_get_string (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+    if (validate_operation_name (operation_name, error))
+        {
+          GStrvBuilder       *names_builder = NULL;
+          GeglOperationClass *klass         = NULL;
+          gchar              *license       = NULL;
+          GType               op_type;
+          GValue              value         = G_VALUE_INIT;
+
+          /* Comes from gegl/operation/gegl-operations.h which is not public. */
+          GType gegl_operation_gtype_from_name (const gchar *name);
+
+          names_builder = g_strv_builder_new ();
+          propvalues    = gimp_value_array_new (0);
+
+          op_type = gegl_operation_gtype_from_name (operation_name);
+          klass   = g_type_class_ref (op_type);
+
+          g_value_init (&value, G_TYPE_STRING);
+
+          g_strv_builder_add (names_builder, "title");
+          g_value_take_string (&value, g_strdup (gegl_operation_class_get_key (klass, "title")));
+          gimp_value_array_append (propvalues, &value);
+
+          g_strv_builder_add (names_builder, "description");
+          g_value_take_string (&value, g_strdup (gegl_operation_class_get_key (klass, "description")));
+          gimp_value_array_append (propvalues, &value);
+
+          g_strv_builder_add (names_builder, "categories");
+          g_value_take_string (&value, g_strdup (gegl_operation_class_get_key (klass, "categories")));
+          gimp_value_array_append (propvalues, &value);
+
+          license = g_strdup (gegl_operation_class_get_key (klass, "license"));
+          if (license == NULL)
+            license = g_strdup ("unknown");
+
+          g_strv_builder_add (names_builder, "license");
+          g_value_take_string (&value, license);
+          gimp_value_array_append (propvalues, &value);
+
+          propnames = g_strv_builder_end (names_builder);
+
+          g_strv_builder_unref (names_builder);
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    {
+      g_value_take_boxed (gimp_value_array_index (return_vals, 1), propnames);
+      g_value_take_boxed (gimp_value_array_index (return_vals, 2), propvalues);
+    }
+
+  return return_vals;
+}
+
+static GimpValueArray *
+drawable_filter_operation_get_pspecs_invoker (GimpProcedure         *procedure,
+                                              Gimp                  *gimp,
+                                              GimpContext           *context,
+                                              GimpProgress          *progress,
+                                              const GimpValueArray  *args,
+                                              GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  const gchar *operation_name;
+  GimpValueArray *pspecs = NULL;
+
+  operation_name = g_value_get_string (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      if (validate_operation_name (operation_name, error))
+        {
+          GParamSpec **specs          = NULL;
+          guint        n_specs        = 0;
+          guint        n_parent_specs = 0;
+
+          if (gimp_operation_config_is_custom (gimp, operation_name))
+            {
+              GObjectClass *op_config_klass = NULL;
+              GObjectClass *op_parent_klass = NULL;
+              GType         op_config_type;
+              GType         op_parent_type;
+
+              op_config_type  = gimp_operation_config_get_type (gimp, operation_name, NULL, GIMP_TYPE_OPERATION_SETTINGS);
+              op_config_klass = g_type_class_ref (op_config_type);
+              specs           = g_object_class_list_properties (op_config_klass, &n_specs);
+              g_type_class_unref (op_config_klass);
+
+              op_parent_type  = g_type_parent (op_config_type);
+              op_parent_klass = g_type_class_ref (op_parent_type);
+              g_free (g_object_class_list_properties (op_parent_klass, &n_parent_specs));
+              g_type_class_unref (op_parent_klass);
+
+              n_specs -= n_parent_specs;
+            }
+          else
+            {
+              specs = gegl_operation_list_properties (operation_name, &n_specs);
+            }
+
+          pspecs = gimp_value_array_new (n_specs);
+
+          for (gint i = 0; i < n_specs; i++)
+            {
+              GParamSpec *pspec = specs[n_parent_specs + i];
+              GValue      value = G_VALUE_INIT;
+
+              g_value_init (&value, G_TYPE_PARAM);
+
+              g_value_set_param (&value, g_param_spec_ref (pspec));
+              gimp_value_array_append (pspecs, &value);
+
+              g_value_unset (&value);
+            }
+
+          g_free (specs);
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), pspecs);
+
+  return return_vals;
+}
+
 void
 register_drawable_filter_procs (GimpPDB *pdb)
 {
@@ -1168,6 +1365,99 @@ register_drawable_filter_procs (GimpPDB *pdb)
                                                                 "filter",
                                                                 "The filter to delete",
                                                                 FALSE,
+                                                                GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-filter-operation-get-available
+   */
+  procedure = gimp_procedure_new (drawable_filter_operation_get_available_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-filter-operation-get-available");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get a list of all available GEGL operation names for drawable filters.",
+                                  "This procedure returns a list of all GEGL operation names available for use with drawable filters.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ondřej Míchal <harrymichal@seznam.cz>",
+                                         "Ondřej Míchal",
+                                         "2025");
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boxed ("names",
+                                                       "names",
+                                                       "The list of GEGL operation names",
+                                                       G_TYPE_STRV,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-filter-operation-get-details
+   */
+  procedure = gimp_procedure_new (drawable_filter_operation_get_details_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-filter-operation-get-details");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get information about a GEGL operation.",
+                                  "This procedure returns information about a GEGL operation. The content of the list of information can vary across versions and currently can contain:\n"
+                                  "- a human-readable title of the operation, - a description of the operation's behaviour, - the categories the operation belongs to, and - the license of the operation.\n"
+                                  "An operation can belong to no categories or to multiple categories. Multiple categories are separated by the ':' character.\n"
+                                  "Some operation's license is not specifically set. In such cases, the returned license is 'unknown'.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ondřej Míchal <harrymichal@seznam.cz>",
+                                         "Ondřej Míchal",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("operation-name",
+                                                       "operation name",
+                                                       "The GEGL operation's name",
+                                                       FALSE, FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boxed ("propnames",
+                                                       "propnames",
+                                                       "The names of properties",
+                                                       G_TYPE_STRV,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_value_array ("propvalues",
+                                                                "propvalues",
+                                                                "The values of properties in the same order",
+                                                                NULL,
+                                                                GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-filter-operation-get-pspecs
+   */
+  procedure = gimp_procedure_new (drawable_filter_operation_get_pspecs_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-filter-operation-get-pspecs");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get information for all parameters of a GEGL operation.",
+                                  "This procedure returns a list of all parameters used to configure a GEGL operation.\n"
+                                  "Each parameter is represented by GParamSpec.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ondřej Míchal <harrymichal@seznam.cz>",
+                                         "Ondřej Míchal",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("operation-name",
+                                                       "operation name",
+                                                       "The GEGL operation's name",
+                                                       FALSE, FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_value_array ("pspecs",
+                                                                "pspecs",
+                                                                "List of all parameters of the GEGL operation",
+                                                                NULL,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

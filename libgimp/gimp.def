@@ -227,6 +227,9 @@ EXPORTS
 	gimp_drawable_filter_id_is_valid
 	gimp_drawable_filter_is_valid
 	gimp_drawable_filter_new
+	gimp_drawable_filter_operation_get_available
+	gimp_drawable_filter_operation_get_details
+	gimp_drawable_filter_operation_get_pspecs
 	gimp_drawable_filter_set_aux_input
 	gimp_drawable_filter_set_blend_mode
 	gimp_drawable_filter_set_opacity

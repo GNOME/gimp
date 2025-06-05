@@ -125,6 +125,10 @@ sub martin_pdb_misc {
     contrib_pdb_misc('Martin Nordholts', '', @_);
 }
 
+sub martymichal_pdb_misc {
+    contrib_pdb_misc('Ondřej Míchal', 'harrymichal@seznam.cz', @_);
+}
+
 sub mitch_pdb_misc {
     contrib_pdb_misc('Michael Natterer', 'mitch@gimp.org', @_);
 }
