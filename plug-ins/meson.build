@@ -20,6 +20,7 @@ complex_plugins_list = [
   { 'name': 'file-raw', },
   { 'name': 'file-sgi', },
   { 'name': 'file-tiff', },
+  { 'name': 'filter-browser', },
   { 'name': 'flame', },
   { 'name': 'fractal-explorer', },
   { 'name': 'gfig', },
