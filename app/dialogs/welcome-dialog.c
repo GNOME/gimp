@@ -553,7 +553,7 @@ welcome_dialog_create_personalize_page (Gimp       *gimp,
 
   grid = prefs_grid_new (GTK_CONTAINER (hbox));
   button = prefs_enum_combo_box_add (object, "theme-color-scheme",
-#if defined(G_OS_UNIX) && ! defined(__APPLE__)
+#if (defined(G_OS_UNIX) && ! defined(__APPLE__)) || defined(G_OS_WIN32)
                                      0, 0,
 #else
                                      GIMP_THEME_LIGHT, GIMP_THEME_DARK,
