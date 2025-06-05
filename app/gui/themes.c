@@ -22,6 +22,10 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#ifdef G_OS_WIN32
+#include <windows.h>
+#endif
+
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 
@@ -64,6 +68,15 @@ static void   themes_theme_settings_portal_changed (GDBusProxy            *proxy
                                                     Gimp                  *gimp);
 #endif
 
+#ifdef G_OS_WIN32
+static gboolean         themes_is_darkmode_active    (void);
+static void             themes_win32_pick_theme      (Gimp                 *init_gimp);
+static LRESULT CALLBACK themes_win32_message_handler (HWND                  hWnd,
+                                                      UINT                  uMsg,
+                                                      WPARAM                wParam,
+                                                      LPARAM                lParam);
+#endif
+
 
 /*  private variables  */
 
@@ -71,6 +84,8 @@ static GHashTable       *themes_hash            = NULL;
 static GtkStyleProvider *themes_style_provider  = NULL;
 #if defined(G_OS_UNIX) && ! defined(__APPLE__)
 static GDBusProxy       *themes_settings_portal = NULL;
+#elif defined(G_OS_WIN32)
+static HWND              proxy_window           = NULL;
 #endif
 
 
@@ -80,7 +95,11 @@ void
 themes_init (Gimp *gimp)
 {
   GimpGuiConfig *config;
+#if defined(G_OS_UNIX) && ! defined(__APPLE__)
   GError        *error = NULL;
+#elif defined(G_OS_WIN32)
+  WNDCLASSW      wc;
+#endif
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -122,6 +141,25 @@ themes_init (Gimp *gimp)
                         G_CALLBACK (themes_theme_settings_portal_changed),
                         gimp);
     }
+#elif defined(G_OS_WIN32)
+  themes_win32_pick_theme (gimp);
+
+  /* register window class for proxy window */
+  memset (&wc, 0, sizeof (wc));
+
+  wc.hInstance     = GetModuleHandleW (NULL);
+  wc.lpfnWndProc   = themes_win32_message_handler;
+  wc.lpszClassName = L"GimpWin32ThemesHandler";
+
+  RegisterClassW (&wc);
+
+  /* https://learn.microsoft.com/en-us/windows/win32/winmsg/window-features#message-only-windows */
+  proxy_window = CreateWindowExW (0,
+                                  wc.lpszClassName,
+                                  L"GimpWin32ThemesWindow",
+                                  WS_POPUP, 0, 0, 1, 1,
+                                  HWND_MESSAGE,
+                                  NULL, wc.hInstance, NULL);
 #endif
 
   g_signal_connect (config, "notify::theme",
@@ -172,6 +210,8 @@ themes_exit (Gimp *gimp)
 
 #if defined(G_OS_UNIX) && ! defined(__APPLE__)
   g_clear_object (&themes_settings_portal);
+#elif defined(G_OS_WIN32)
+  DestroyWindow (proxy_window);
 #endif
 }
 
@@ -281,7 +321,6 @@ themes_apply_theme (Gimp          *gimp,
   GError          *error = NULL;
   gboolean         prefer_dark_theme;
   GimpThemeScheme  color_scheme;
-  GVariant        *tuple_variant, *variant;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_GUI_CONFIG (config));
@@ -289,6 +328,9 @@ themes_apply_theme (Gimp          *gimp,
 #if defined(G_OS_UNIX) && ! defined(__APPLE__)
   if (themes_settings_portal && config->theme_scheme == GIMP_THEME_SYSTEM)
     {
+      GVariant *tuple_variant;
+      GVariant *variant;
+
       tuple_variant = g_dbus_proxy_call_sync (themes_settings_portal,
                                               "ReadOne",
                                               g_variant_new ("(ss)", "org.freedesktop.appearance", "color-scheme"),
@@ -354,6 +396,13 @@ themes_apply_theme (Gimp          *gimp,
           prefer_dark_theme = (color_scheme == GIMP_THEME_DARK ||
                                color_scheme == GIMP_THEME_GRAY);
         }
+    }
+  else
+#elif defined(G_OS_WIN32)
+  if (config->theme_scheme == GIMP_THEME_SYSTEM)
+    {
+      prefer_dark_theme = themes_is_darkmode_active ();
+      color_scheme = prefer_dark_theme ? GIMP_THEME_DARK : GIMP_THEME_LIGHT;
     }
   else
 #endif
@@ -856,5 +905,57 @@ themes_set_title_bar (Gimp *gimp)
 
   if (windows)
     g_list_free (windows);
+}
+
+static gboolean
+themes_is_darkmode_active (void)
+{
+  DWORD   val      = 0;
+  DWORD   val_size = sizeof (val);
+  LSTATUS status;
+
+  status = RegGetValueA(HKEY_CURRENT_USER,
+                        "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+                        "AppsUseLightTheme",
+                        RRF_RT_REG_DWORD,
+                        NULL,
+                        &val,
+                        &val_size);
+
+  return status == ERROR_SUCCESS && val == 0;
+}
+
+static void
+themes_win32_pick_theme (Gimp *init_gimp)
+{
+  static Gimp *gimp = NULL;
+
+  g_return_if_fail ((gimp == NULL && init_gimp != NULL) ||
+                    (gimp != NULL && init_gimp == NULL));
+
+  if (init_gimp != NULL)
+    {
+      gimp = init_gimp;
+      return;
+    }
+
+  themes_theme_change_notify (GIMP_GUI_CONFIG (gimp->config), NULL, gimp);
+}
+
+static LRESULT CALLBACK
+themes_win32_message_handler (HWND   hWnd,
+                              UINT   uMsg,
+                              WPARAM wParam,
+                              LPARAM lParam)
+{
+  switch (uMsg)
+    {
+    case WM_SETTINGCHANGE:
+      if (lParam != 0 && lstrcmpW((LPCWSTR)lParam, L"ImmersiveColorSet") == 0)
+        themes_win32_pick_theme (NULL);
+      break;
+    }
+
+  return FALSE;
 }
 #endif
