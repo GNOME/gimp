@@ -128,6 +128,20 @@ static void   gimp_text_tool_fix_position         (GimpTextTool    *text_tool,
 static void   gimp_text_tool_convert_gdkkeyevent  (GimpTextTool    *text_tool,
                                                    GdkEventKey     *kevent);
 
+static gboolean gimp_text_tool_style_overlay_button_press
+                                                  (GtkWidget       *widget,
+                                                   GdkEventButton  *event,
+                                                   gpointer         user_data);
+static gboolean gimp_text_tool_style_overlay_button_release
+                                                  (GtkWidget       *widget,
+                                                   GdkEventButton  *event,
+                                                   gpointer         user_data);
+static gboolean gimp_text_tool_style_overlay_button_motion
+                                                  (GtkWidget       *widget,
+                                                   GdkEventMotion  *event,
+                                                   gpointer         user_data);
+
+#define DEFAULT_DRAG_OFFSET 25
 
 /*  public functions  */
 
@@ -199,10 +213,11 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
 
   if (! text_tool->style_overlay)
     {
-      Gimp          *gimp = GIMP_CONTEXT (options)->gimp;
-      GimpContainer *fonts;
-      gdouble        xres = 1.0;
-      gdouble        yres = 1.0;
+      Gimp                *gimp   = GIMP_CONTEXT (options)->gimp;
+      GimpTextStyleEditor *editor;
+      GimpContainer       *fonts;
+      gdouble              xres   = 1.0;
+      gdouble              yres   = 1.0;
 
       text_tool->style_overlay = gimp_overlay_frame_new ();
       gtk_container_set_border_width (GTK_CONTAINER (text_tool->style_overlay),
@@ -226,6 +241,20 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
                                                             xres, yres);
       gtk_container_add (GTK_CONTAINER (text_tool->style_overlay),
                          text_tool->style_editor);
+
+      editor = GIMP_TEXT_STYLE_EDITOR (text_tool->style_editor);
+
+      g_signal_connect_object (editor->dnd_handle, "button-press-event",
+                               G_CALLBACK (gimp_text_tool_style_overlay_button_press),
+                               text_tool, 0);
+      g_signal_connect_object (editor->dnd_handle, "button-release-event",
+                               G_CALLBACK (gimp_text_tool_style_overlay_button_release),
+                               text_tool, 0);
+      g_signal_connect_object (editor->dnd_handle, "motion-notify-event",
+                               G_CALLBACK (gimp_text_tool_style_overlay_button_motion),
+                               text_tool, 0);
+
+      text_tool->overlay_dragging = FALSE;
 
       if (options->show_on_canvas)
         gtk_widget_show (text_tool->style_editor);
@@ -1924,4 +1953,92 @@ gimp_text_tool_convert_gdkkeyevent (GimpTextTool *text_tool,
 #endif
       break;
     }
+}
+
+static gboolean
+gimp_text_tool_style_overlay_button_press (GtkWidget      *widget,
+                                           GdkEventButton *event,
+                                           gpointer        user_data)
+{
+  GimpTextTool        *text_tool    = GIMP_TEXT_TOOL (user_data);
+  GtkWidget           *event_widget = gtk_get_event_widget ((GdkEvent*) event);
+  GimpTextStyleEditor *editor       = GIMP_TEXT_STYLE_EDITOR (text_tool->style_editor);
+
+  if (event_widget != GTK_WIDGET (editor->dnd_handle) &&
+      gtk_widget_is_ancestor (event_widget, GTK_WIDGET (text_tool->style_editor)))
+    {
+      return FALSE;
+    }
+
+  if (gtk_widget_get_window (GTK_WIDGET (text_tool->style_overlay)))
+    {
+      GdkCursor *cursor = gdk_cursor_new_for_display (gtk_widget_get_display (GTK_WIDGET (text_tool->style_overlay)),
+                                                      GDK_FLEUR);
+      if (cursor)
+        {
+          gdk_window_set_cursor (gtk_widget_get_window (GTK_WIDGET (text_tool->style_overlay)),
+                                 cursor);
+          g_object_unref (cursor);
+        }
+    }
+
+  text_tool->overlay_dragging = TRUE;
+  text_tool->drag_offset_x    = event->x;
+  text_tool->drag_offset_y    = event->y;
+
+  return TRUE;
+}
+
+static gboolean
+gimp_text_tool_style_overlay_button_release (GtkWidget      *widget,
+                                             GdkEventButton *event,
+                                             gpointer        user_data)
+{
+  GimpTextTool        *text_tool    = GIMP_TEXT_TOOL (user_data);
+  GtkWidget           *event_widget = gtk_get_event_widget ((GdkEvent*) event);
+  GimpTextStyleEditor *editor       = GIMP_TEXT_STYLE_EDITOR (text_tool->style_editor);
+
+  if (event_widget != GTK_WIDGET (editor->dnd_handle) &&
+      gtk_widget_is_ancestor (event_widget, GTK_WIDGET (text_tool->style_editor)))
+    {
+      return FALSE;
+    }
+
+  text_tool->overlay_dragging = FALSE;
+
+  if (gtk_widget_get_window (GTK_WIDGET (text_tool->style_overlay)))
+    gdk_window_set_cursor (gtk_widget_get_window (GTK_WIDGET (text_tool->style_overlay)), NULL);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_text_tool_style_overlay_button_motion (GtkWidget      *widget,
+                                            GdkEventMotion *event,
+                                            gpointer        user_data)
+{
+  GimpTextTool *text_tool = GIMP_TEXT_TOOL (user_data);
+
+  if (text_tool->overlay_dragging)
+    {
+      GimpTool         *tool  = GIMP_TOOL (text_tool);
+      GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
+      gdouble           x, y;
+
+      gdk_window_get_device_position_double (gtk_widget_get_window (GTK_WIDGET (shell)),
+                                             event->device,
+                                             &x, &y, NULL);
+
+      gimp_display_shell_untransform_xy_f (shell,
+                                           x, y,
+                                           &x, &y);
+
+      gimp_display_shell_move_overlay (shell,
+                                       text_tool->style_overlay,
+                                       x, y, -1,
+                                       text_tool->drag_offset_x + DEFAULT_DRAG_OFFSET,
+                                       text_tool->drag_offset_y + DEFAULT_DRAG_OFFSET);
+    }
+
+  return TRUE;
 }

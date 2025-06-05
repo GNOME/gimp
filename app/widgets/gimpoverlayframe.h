@@ -34,12 +34,12 @@ typedef struct _GimpOverlayFrameClass GimpOverlayFrameClass;
 
 struct _GimpOverlayFrame
 {
-  GtkBin  parent_instance;
+  GtkBin parent_instance;
 };
 
 struct _GimpOverlayFrameClass
 {
-  GtkBinClass  parent_class;
+  GtkBinClass parent_class;
 };
 
 

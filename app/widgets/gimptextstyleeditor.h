@@ -45,6 +45,8 @@ struct _GimpTextStyleEditor
   gdouble         resolution_x;
   gdouble         resolution_y;
 
+  GtkWidget      *dnd_handle;
+
   GtkWidget      *upper_hbox;
   GtkWidget      *lower_hbox;
 
