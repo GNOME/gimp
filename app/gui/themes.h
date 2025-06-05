@@ -18,7 +18,6 @@
 #ifndef __THEMES_H__
 #define __THEMES_H__
 
-
 void     themes_init           (Gimp        *gimp);
 void     themes_exit           (Gimp        *gimp);
 
@@ -29,6 +28,9 @@ GFile  * themes_get_theme_dir  (Gimp        *gimp,
 GFile  * themes_get_theme_file (Gimp        *gimp,
                                 const gchar *first_component,
                                 ...) G_GNUC_NULL_TERMINATED;
+void     themes_theme_change_notify  (GimpGuiConfig *config,
+                                      GParamSpec    *pspec,
+                                      Gimp          *gimp);
 #ifdef G_OS_WIN32
 void     themes_set_title_bar  (Gimp        *gimp);
 #endif

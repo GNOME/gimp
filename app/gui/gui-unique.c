@@ -41,6 +41,8 @@
 
 #include "gimpdbusservice.h"
 #include "gui-unique.h"
+#include "config/gimpguiconfig.h"
+#include "themes.h"
 
 
 #ifdef G_OS_WIN32
@@ -202,9 +204,16 @@ gui_unique_win32_message_handler (HWND   hWnd,
         }
       return TRUE;
 
-    default:
-      return DefWindowProcW (hWnd, uMsg, wParam, lParam);
+    case WM_SETTINGCHANGE:
+      if (lParam != 0 && lstrcmpW((LPCWSTR)lParam, L"ImmersiveColorSet") == 0)
+        {
+          themes_theme_change_notify (GIMP_GUI_CONFIG (unique_gimp->config), NULL, unique_gimp);
+          return 0;
+        }
+      break;
     }
+
+    return DefWindowProcW (hWnd, uMsg, wParam, lParam);
 }
 
 static void
