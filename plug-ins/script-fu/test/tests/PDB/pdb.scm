@@ -17,6 +17,7 @@
 (testing:load-test "image-set-selected.scm")
 (testing:load-test "image-mode.scm")
 (testing:load-test "image-color-profile.scm")
+(testing:load-test "image-sample-points.scm")
 
 (testing:load-test "paint.scm")
 (testing:load-test "paint-methods.scm")
