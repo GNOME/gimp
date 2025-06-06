@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-06 03:55+0000\n"
-"PO-Revision-Date: 2025-06-06 14:55+0800\n"
+"POT-Creation-Date: 2025-06-06 14:16+0000\n"
+"PO-Revision-Date: 2025-06-07 07:45+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -601,7 +601,7 @@ msgstr "百叶窗"
 #: plug-ins/common/decompose.c:642 plug-ins/common/file-cel.c:475
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:728
 #: plug-ins/common/file-farbfeld.c:296 plug-ins/common/file-gegl.c:446
-#: plug-ins/common/file-gif-load.c:1147 plug-ins/common/file-iff.c:408
+#: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:408
 #: plug-ins/common/file-jp2.c:1604 plug-ins/common/file-pcx.c:710
 #: plug-ins/common/file-pcx.c:718 plug-ins/common/file-pcx.c:726
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1082
@@ -1962,7 +1962,7 @@ msgstr "无法对空选区进行操作。"
 
 #: plug-ins/common/curve-bend.c:815 plug-ins/common/file-cel.c:330
 #: plug-ins/common/file-cel.c:382 plug-ins/common/file-dicom.c:360
-#: plug-ins/common/file-farbfeld.c:273 plug-ins/common/file-gif-load.c:416
+#: plug-ins/common/file-farbfeld.c:273 plug-ins/common/file-gif-load.c:481
 #: plug-ins/common/file-iff.c:282 plug-ins/common/file-lnk.c:200
 #: plug-ins/common/file-mng.c:1409 plug-ins/common/file-pcx.c:490
 #: plug-ins/common/file-pcx.c:533 plug-ins/common/file-png.c:800
@@ -2568,7 +2568,7 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #. * Open the file for reading...
 #.
 #: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:352
-#: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:408
+#: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:473
 #: plug-ins/common/file-heif.c:853 plug-ins/common/file-jp2.c:1376
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
 #: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
@@ -2917,7 +2917,7 @@ msgstr "OpenEXR 图像"
 msgid "Could not open '%s'"
 msgstr "无法打开“%s”"
 
-#: plug-ins/common/file-gif-export.c:155 plug-ins/common/file-gif-load.c:178
+#: plug-ins/common/file-gif-export.c:155 plug-ins/common/file-gif-load.c:184
 msgid "GIF image"
 msgstr "GIF 图像"
 
@@ -3102,133 +3102,144 @@ msgstr ""
 "只能在图像有多个图层时导出为动画。\n"
 "您正在试图导出的图像仅含有一个图层。"
 
-#: plug-ins/common/file-gif-load.c:423
+#: plug-ins/common/file-gif-load.c:247
+msgid "Jeff's Image Format"
+msgstr "Jeff 的图像格式"
+
+#: plug-ins/common/file-gif-load.c:488
 msgid "GIF magic code"
 msgstr "GIF 魔法代码"
 
-#: plug-ins/common/file-gif-load.c:431
+#: plug-ins/common/file-gif-load.c:498
 #, c-format
 msgid "This is not a GIF file: incorrect magic code"
 msgstr "这不是 GIF 文件：不正确的魔法代码"
 
-#: plug-ins/common/file-gif-load.c:439
+#: plug-ins/common/file-gif-load.c:507
 #, c-format
 msgid "Incorrect GIF version: not '87a' or '89a'"
 msgstr "不正确的 GIF 版本：不是“87a”或“89a”"
 
-#: plug-ins/common/file-gif-load.c:446
+#: plug-ins/common/file-gif-load.c:517
+#, c-format
+msgid "This is not a Jeff's Image Format file: incorrect magic code"
+msgstr "这不是 JIF 文件：不正确的魔法代码"
+
+#: plug-ins/common/file-gif-load.c:526
 msgid "screen descriptor"
 msgstr "屏幕描述符"
 
-#: plug-ins/common/file-gif-load.c:464
+#: plug-ins/common/file-gif-load.c:544
 msgid "global colormap"
 msgstr "全局颜色表"
 
-#: plug-ins/common/file-gif-load.c:476 plug-ins/common/file-gif-load.c:1110
+#: plug-ins/common/file-gif-load.c:556 plug-ins/common/file-gif-load.c:1191
+#: plug-ins/common/file-gif-load.c:1546 plug-ins/common/file-gif-load.c:1556
+#: plug-ins/common/file-gif-load.c:1579
 msgid "image data"
 msgstr "图像数据"
 
-#: plug-ins/common/file-gif-load.c:493
+#: plug-ins/common/file-gif-load.c:573
 msgid "extension data"
 msgstr "扩展数据"
 
-#: plug-ins/common/file-gif-load.c:513
+#: plug-ins/common/file-gif-load.c:593
 msgid "frame info"
 msgstr "帧信息"
 
-#: plug-ins/common/file-gif-load.c:526
+#: plug-ins/common/file-gif-load.c:606
 msgid "local colormap"
 msgstr "局部颜色表"
 
-#: plug-ins/common/file-gif-load.c:571 plug-ins/common/file-iff.c:425
+#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:425
 msgid ""
 "Non-square pixels. Image might look squashed if Dot for Dot mode is enabled."
 msgstr "非正方形像素。如果启用点对点模式则图像可能会看起来扁了。"
 
-#: plug-ins/common/file-gif-load.c:627 plug-ins/common/file-gif-load.c:632
+#: plug-ins/common/file-gif-load.c:707 plug-ins/common/file-gif-load.c:712
 #, c-format
 msgid "Error reading %s. %s"
 msgstr "读取“%s”时出错。%s"
 
-#: plug-ins/common/file-gif-load.c:628 plug-ins/common/file-gif-load.c:633
-#: plug-ins/common/file-gif-load.c:793 plug-ins/common/file-gif-load.c:801
-#: plug-ins/common/file-gif-load.c:832 plug-ins/common/file-gif-load.c:886
-#: plug-ins/common/file-gif-load.c:976 plug-ins/common/file-gif-load.c:995
-#: plug-ins/common/file-gif-load.c:1096 plug-ins/common/file-gif-load.c:1100
-#: plug-ins/common/file-gif-load.c:1245
+#: plug-ins/common/file-gif-load.c:708 plug-ins/common/file-gif-load.c:713
+#: plug-ins/common/file-gif-load.c:873 plug-ins/common/file-gif-load.c:881
+#: plug-ins/common/file-gif-load.c:912 plug-ins/common/file-gif-load.c:966
+#: plug-ins/common/file-gif-load.c:1056 plug-ins/common/file-gif-load.c:1075
+#: plug-ins/common/file-gif-load.c:1177 plug-ins/common/file-gif-load.c:1181
+#: plug-ins/common/file-gif-load.c:1327
 msgid "Image may be corrupt!"
 msgstr "图像可能已损坏！"
 
-#: plug-ins/common/file-gif-load.c:793
+#: plug-ins/common/file-gif-load.c:873
 msgid "Error reading data size"
 msgstr "读取数据大小时出错"
 
-#: plug-ins/common/file-gif-load.c:801
+#: plug-ins/common/file-gif-load.c:881
 msgid "Error reading data"
 msgstr "读取数据时出错"
 
-#: plug-ins/common/file-gif-load.c:832
+#: plug-ins/common/file-gif-load.c:912
 msgid "Not enough compressed data"
 msgstr "压缩的数据不够"
 
-#: plug-ins/common/file-gif-load.c:886
+#: plug-ins/common/file-gif-load.c:966
 msgid "Value out of range for code size"
 msgstr "数值超出代码大小的范围"
 
-#: plug-ins/common/file-gif-load.c:975
+#: plug-ins/common/file-gif-load.c:1055
 msgid "Invalid code, expecting end of data marker"
 msgstr "无效代码，预期为数据标记末尾"
 
-#: plug-ins/common/file-gif-load.c:995
+#: plug-ins/common/file-gif-load.c:1075
 msgid "Unexpected extra data"
 msgstr "非预期的额外数据"
 
-#: plug-ins/common/file-gif-load.c:1014
+#: plug-ins/common/file-gif-load.c:1094
 msgid "Invalid table entry"
 msgstr "无效的表项目"
 
-#: plug-ins/common/file-gif-load.c:1014 plug-ins/common/file-gif-load.c:1020
+#: plug-ins/common/file-gif-load.c:1094 plug-ins/common/file-gif-load.c:1100
 msgid "Image is corrupt!"
 msgstr "图像已损坏！"
 
-#: plug-ins/common/file-gif-load.c:1020
+#: plug-ins/common/file-gif-load.c:1100
 msgid "Circular table entry"
 msgstr "循环表项目"
 
-#: plug-ins/common/file-gif-load.c:1095
+#: plug-ins/common/file-gif-load.c:1176
 #, c-format
 msgid "%s. %s"
 msgstr "%s. %s"
 
-#: plug-ins/common/file-gif-load.c:1096 plug-ins/common/file-gif-load.c:1100
+#: plug-ins/common/file-gif-load.c:1177 plug-ins/common/file-gif-load.c:1181
 msgid "Invalid frame dimensions"
 msgstr "无效的帧尺寸"
 
-#: plug-ins/common/file-gif-load.c:1116
+#: plug-ins/common/file-gif-load.c:1198
 msgid "compressed image data"
 msgstr "压缩的图像数据"
 
-#: plug-ins/common/file-gif-load.c:1149
+#: plug-ins/common/file-gif-load.c:1231
 #, c-format
 msgid "Background (%d%s)"
 msgstr "背景（%d%s）"
 
-#: plug-ins/common/file-gif-load.c:1176
+#: plug-ins/common/file-gif-load.c:1258
 #, c-format
 msgid "Opening '%s' (frame %d)"
 msgstr "打开“%s”（第%d帧）"
 
-#: plug-ins/common/file-gif-load.c:1205
+#: plug-ins/common/file-gif-load.c:1287
 #, c-format
 msgid "Frame %d"
 msgstr "帧 %d"
 
-#: plug-ins/common/file-gif-load.c:1207
+#: plug-ins/common/file-gif-load.c:1289
 #, c-format
 msgid "Frame %d (%d%s)"
 msgstr "帧 %d（%d%s）"
 
-#: plug-ins/common/file-gif-load.c:1238
+#: plug-ins/common/file-gif-load.c:1320
 #, c-format
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
@@ -3236,12 +3247,12 @@ msgid ""
 msgstr ""
 "GIF：无法处理无书面文件的 GIF 合成类型 %d。动画可能无法准确地播放或重储存。"
 
-#: plug-ins/common/file-gif-load.c:1244
+#: plug-ins/common/file-gif-load.c:1326
 #, c-format
 msgid "Unknown composite type %d. %s"
 msgstr "未知的合成类型“%d”。%s"
 
-#: plug-ins/common/file-gif-load.c:1287
+#: plug-ins/common/file-gif-load.c:1369
 #, c-format
 msgid ""
 "Can't handle non-alpha RGB frames.\n"
@@ -3250,7 +3261,7 @@ msgstr ""
 "无法处理非透明 RGB 帧。\n"
 "请在 https://gitlab.gnome.org/GNOME/gimp/issues 提交缺陷报告"
 
-#: plug-ins/common/file-gif-load.c:1410
+#: plug-ins/common/file-gif-load.c:1498
 msgid "Too much compressed data, ignoring extra..."
 msgstr "太多压缩的数据，正在忽略额外数据…"
 
