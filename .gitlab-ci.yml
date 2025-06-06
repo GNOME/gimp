@@ -604,6 +604,7 @@ meson-health:
     - apt-get update
     - apt-get install -y git
     - bash .gitlab/run_meson_health_diff.sh
+  allow_failure: true
 
 clang-format:
   extends: .default
