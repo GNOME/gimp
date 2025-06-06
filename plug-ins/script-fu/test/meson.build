@@ -20,6 +20,7 @@ test_scripts = [
   'tests' / 'PDB' / 'image' / 'image-set-selected.scm',
   'tests' / 'PDB' / 'image' / 'image-mode.scm',
   'tests' / 'PDB' / 'image' / 'image-color-profile.scm',
+  'tests' / 'PDB' / 'image' / 'image-sample-points.scm',
 
   'tests' / 'PDB' / 'paint' / 'paint.scm',
   'tests' / 'PDB' / 'paint' / 'paint-methods.scm',
