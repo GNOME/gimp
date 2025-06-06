@@ -430,7 +430,7 @@ gimp_overlay_box_set_child_position (GimpOverlayBox *box,
 {
   GimpOverlayChild *child = gimp_overlay_child_find (box, widget);
 
-  if (child)
+  if (child && ! child->relative_to_shell)
     {
       if (! child->has_position ||
           child->x != x         ||

@@ -70,14 +70,15 @@ gimp_overlay_child_new (GimpOverlayBox *box,
 
   child = g_slice_new0 (GimpOverlayChild);
 
-  child->widget       = widget;
-  child->xalign       = CLAMP (xalign, 0.0, 1.0);
-  child->yalign       = CLAMP (yalign, 0.0, 1.0);
-  child->x            = 0.0;
-  child->y            = 0.0;
-  child->has_position = FALSE;
-  child->angle        = angle;
-  child->opacity      = CLAMP (opacity, 0.0, 1.0);
+  child->widget            = widget;
+  child->xalign            = CLAMP (xalign, 0.0, 1.0);
+  child->yalign            = CLAMP (yalign, 0.0, 1.0);
+  child->x                 = 0.0;
+  child->y                 = 0.0;
+  child->relative_to_shell = FALSE;
+  child->has_position      = FALSE;
+  child->angle             = angle;
+  child->opacity           = CLAMP (opacity, 0.0, 1.0);
 
   cairo_matrix_init_identity (&child->matrix);
 
@@ -508,6 +509,16 @@ gimp_overlay_child_pick (GimpOverlayBox   *box,
 
   return FALSE;
 }
+
+void
+gimp_overlay_child_set_relative_to_shell (GimpOverlayChild *child,
+                                          gboolean          relative_to_shell)
+{
+  g_return_if_fail (child != NULL);
+
+  child->relative_to_shell = relative_to_shell;
+}
+
 
 
 /*  private functions  */
