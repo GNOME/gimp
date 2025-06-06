@@ -28,7 +28,7 @@ common_plugins_list = [
   { 'name': 'file-gbr', },
   { 'name': 'file-gegl', },
   { 'name': 'file-gif-load',
-    'deps': [ gtk3, gegl, gdk_pixbuf, cairo, ],
+    'deps': [ gtk3, gegl, gdk_pixbuf, cairo, zlib, ],
   },
   { 'name': 'file-gif-export', },
   { 'name': 'file-gih', },
@@ -179,7 +179,6 @@ if platform_linux
     'deps': [ gtk3, gegl, gdk_pixbuf, cairo, ],
   }
 endif
-
 if not platform_windows
   common_plugins_list += { 'name': 'mail', }
 endif
