@@ -67,6 +67,7 @@
 
 #include <errno.h>
 #include <string.h>
+#include <zlib.h>
 
 #include <glib/gstdio.h>
 
@@ -75,8 +76,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define LOAD_PROC        "file-gif-load"
-#define LOAD_THUMB_PROC  "file-gif-load-thumb"
+#define LOAD_PROC           "file-gif-load"
+#define LOAD_THUMB_PROC     "file-gif-load-thumb"
+#define LOAD_JIF_PROC       "file-jif-load"
+#define LOAD_JIF_THUMB_PROC "file-jif-load-thumb"
 
 
 /* uncomment the line below for a little debugging info */
@@ -121,6 +124,7 @@ static GimpValueArray * gif_load_thumb       (GimpProcedure         *procedure,
 
 static GimpImage      * load_image           (GFile                 *file,
                                               gboolean               thumbnail,
+                                              gboolean               is_jeff_image,
                                               GError               **error);
 
 
@@ -159,6 +163,8 @@ gif_query_procedures (GimpPlugIn *plug_in)
 
   list = g_list_append (list, g_strdup (LOAD_THUMB_PROC));
   list = g_list_append (list, g_strdup (LOAD_PROC));
+  list = g_list_append (list, g_strdup (LOAD_JIF_THUMB_PROC));
+  list = g_list_append (list, g_strdup (LOAD_JIF_PROC));
 
   return list;
 }
@@ -215,6 +221,46 @@ gif_create_procedure (GimpPlugIn  *plug_in,
                                       "Sven Neumann",
                                       "2006");
     }
+  else if (! strcmp (name, LOAD_JIF_THUMB_PROC))
+    {
+      procedure = gimp_thumbnail_procedure_new (plug_in, name,
+                                                GIMP_PDB_PROC_TYPE_PLUGIN,
+                                                gif_load_thumb, NULL, NULL);
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Loads only the first frame of a "
+                                        "Jeff's Image Format image, to be "
+                                        "used as a thumbnail",
+                                        "",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Alx Sa",
+                                      "Alx Sa",
+                                      "2025");
+    }
+  else if (! strcmp (name, LOAD_JIF_PROC))
+    {
+      procedure = gimp_load_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           gif_load, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, _("Jeff's Image Format"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Loads files of Jeff's Image Format "
+                                        "file format", NULL,
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Alx Sa",
+                                      "Alx Sa",
+                                      "2025");
+
+      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+                                      "0,string,JIF99a");
+
+      gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
+                                                LOAD_JIF_THUMB_PROC);
+    }
 
   return procedure;
 }
@@ -231,11 +277,15 @@ gif_load (GimpProcedure         *procedure,
 {
   GimpValueArray *return_vals;
   GimpImage      *image;
-  GError         *error = NULL;
+  gboolean        is_jeff = FALSE;
+  GError         *error   = NULL;
 
   gegl_init (NULL, NULL);
 
-  image = load_image (file, FALSE, &error);
+  /* Unlikely, but check if we're loading a Jeff Image Format image */
+  is_jeff = (! strcmp (gimp_procedure_get_name (procedure), LOAD_JIF_PROC));
+
+  image = load_image (file, FALSE, is_jeff, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -279,11 +329,15 @@ gif_load_thumb (GimpProcedure       *procedure,
 {
   GimpValueArray *return_vals;
   GimpImage      *image;
-  GError         *error = NULL;
+  gboolean        is_jeff = FALSE;
+  GError         *error   = NULL;
 
   gegl_init (NULL, NULL);
 
-  image = load_image (file, TRUE, &error);
+  /* Unlikely, but check if we're loading a Jeff Image Format image */
+  is_jeff = (! strcmp (gimp_procedure_get_name (procedure), LOAD_JIF_THUMB_PROC));
+
+  image = load_image (file, TRUE, is_jeff, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -355,42 +409,53 @@ static struct
   gint num_loops;
 } Gif89 = { -1, -1, -1, 0, -1 };
 
-static void     read_error   (const gchar *error_type,
-                              GimpImage   *image,
-                              GError     **error);
-static gboolean ReadColorMap (FILE        *fd,
-                              gint         number,
-                              CMap         buffer,
-                              gint        *format);
-static gint     DoExtension  (FILE        *fd,
-                              gint         label);
-static gint     GetDataBlock (FILE        *fd,
-                              guchar      *buf);
-static gint     GetCode      (FILE        *fd,
-                              gint         code_size,
-                              gboolean     flag);
-static gint     LZWReadByte  (FILE        *fd,
-                              gint         just_reset_LZW,
-                              gint         input_code_size);
-static gboolean ReadImage    (FILE        *fd,
-                              GFile       *file,
-                              gint         len,
-                              gint         height,
-                              CMap         cmap,
-                              gint         ncols,
-                              gint         format,
-                              gint         interlace,
-                              gint         number,
-                              guint        leftpos,
-                              guint        toppos,
-                              guint        screenwidth,
-                              guint        screenheight,
-                              GimpImage  **image,
-                              GError     **error);
+static void     read_error     (const gchar *error_type,
+                                GimpImage   *image,
+                                GError     **error);
+static gboolean ReadColorMap   (FILE        *fd,
+                                gint         number,
+                                CMap         buffer,
+                                gint        *format);
+static gint     DoExtension    (FILE        *fd,
+                                gint         label);
+static gint     GetDataBlock   (FILE        *fd,
+                                guchar      *buf);
+static gint     GetCode        (FILE        *fd,
+                                gint         code_size,
+                                gboolean     flag);
+static gint     LZWReadByte    (FILE        *fd,
+                                gint         just_reset_LZW,
+                                gint         input_code_size);
+static gboolean ReadImage      (FILE        *fd,
+                                GFile       *file,
+                                gint         len,
+                                gint         height,
+                                CMap         cmap,
+                                gint         ncols,
+                                gint         format,
+                                gint         interlace,
+                                gint         number,
+                                guint        leftpos,
+                                guint        toppos,
+                                guint        screenwidth,
+                                guint        screenheight,
+                                gboolean     is_jeff_image,
+                                GimpImage  **image,
+                                GError     **error);
+
+static gboolean ReadJeffsImage (FILE        *fd,
+                                guchar      *dest,
+                                guchar       bpp,
+                                gint         len,
+                                gint         height,
+                                gboolean     alpha_frame,
+                                GimpImage  **image,
+                                GError     **error);
 
 static GimpImage *
 load_image (GFile     *file,
             gboolean   thumbnail,
+            gboolean   is_jeff_image,
             GError   **error)
 {
   FILE      *fd;
@@ -425,20 +490,35 @@ load_image (GFile     *file,
       return NULL;
     }
 
-  if (strncmp ((gchar *) buf, "GIF", 3) != 0)
+  if (! is_jeff_image)
     {
-      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
-                   _("This is not a GIF file: incorrect magic code"));
-      fclose (fd);
-      return NULL;
-    }
+      if (strncmp ((gchar *) buf, "GIF", 3) != 0)
+        {
+          g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                       _("This is not a GIF file: incorrect magic code"));
+          fclose (fd);
+          return NULL;
+        }
 
-  if ((strncmp ((gchar *) buf + 3, "87a", 3) != 0) && (strncmp ((gchar *) buf + 3, "89a", 3) != 0))
+      if ((strncmp ((gchar *) buf + 3, "87a", 3) != 0) &&
+          (strncmp ((gchar *) buf + 3, "89a", 3) != 0))
+        {
+          g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                       _("Incorrect GIF version: not '87a' or '89a'"));
+          fclose (fd);
+          return NULL;
+        }
+    }
+  else
     {
-      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
-                   _("Incorrect GIF version: not '87a' or '89a'"));
-      fclose (fd);
-      return NULL;
+      if (strncmp ((gchar *) buf, "JIF99a", 6) != 0)
+       {
+         g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                      _("This is not a Jeff's Image Format file: "
+                        "incorrect magic code"));
+         fclose (fd);
+         return NULL;
+       }
     }
 
   if (! ReadOK (fd, buf, 7))
@@ -538,7 +618,7 @@ load_image (GFile     *file,
                               (guint) LM_to_uint (buf[2], buf[3]),
                               GifScreen.Width,
                               GifScreen.Height,
-                              &image, error);
+                              is_jeff_image, &image, error);
         }
       else
         {
@@ -551,7 +631,7 @@ load_image (GFile     *file,
                               (guint) LM_to_uint (buf[2], buf[3]),
                               GifScreen.Width,
                               GifScreen.Height,
-                              &image, error);
+                              is_jeff_image, &image, error);
         }
 
       if (!status)
@@ -1067,6 +1147,7 @@ ReadImage (FILE        *fd,
            guint        toppos,
            guint        screenwidth,
            guint        screenheight,
+           gboolean     is_jeff_image,
            GimpImage  **image,
            GError     **error)
 {
@@ -1111,7 +1192,8 @@ ReadImage (FILE        *fd,
       return FALSE;
     }
 
-  if (LZWReadByte (fd, TRUE, c) < 0)
+  /* Jeff's Image Format uses zlib compression instead of LZW */
+  if (! is_jeff_image && LZWReadByte (fd, TRUE, c) < 0)
     {
       read_error (_("compressed image data"), *image, error);
       return FALSE;
@@ -1166,7 +1248,7 @@ ReadImage (FILE        *fd,
                                   GIMP_INDEXEDA_IMAGE,
                                   100,
                                   gimp_image_get_default_new_layer_mode (*image));
-          alpha_frame=TRUE;
+          alpha_frame = TRUE;
         }
 
       g_free (framename);
@@ -1297,88 +1379,93 @@ ReadImage (FILE        *fd,
   else
     dest = (guchar *) g_malloc ((gsize)len * (gsize)height);
 
-  while ((v = LZWReadByte (fd, FALSE, c)) >= 0)
+  if (! is_jeff_image)
     {
-      if (alpha_frame)
+      while ((v = LZWReadByte (fd, FALSE, c)) >= 0)
         {
-
-          if (promote_to_rgb)
+          if (alpha_frame)
             {
-              temp = dest + ( (ypos * len) + xpos ) * 4;
-              *(temp  ) = (guchar) cmap[0][v];
-              *(temp+1) = (guchar) cmap[1][v];
-              *(temp+2) = (guchar) cmap[2][v];
-              *(temp+3) = (guchar) ((v == Gif89.transparent) ? 0 : 255);
+              if (promote_to_rgb)
+                {
+                  temp = dest + ( (ypos * len) + xpos ) * 4;
+                  *(temp  ) = (guchar) cmap[0][v];
+                  *(temp+1) = (guchar) cmap[1][v];
+                  *(temp+2) = (guchar) cmap[2][v];
+                  *(temp+3) = (guchar) ((v == Gif89.transparent) ? 0 : 255);
+                }
+              else
+                {
+                  temp = dest + ( (ypos * len) + xpos ) * 2;
+                  *temp = (guchar) v;
+                  *(temp+1) = (guchar) ((v == Gif89.transparent) ? 0 : 255);
+                }
             }
           else
             {
-              temp = dest + ( (ypos * len) + xpos ) * 2;
+              temp = dest + (ypos * len) + xpos;
               *temp = (guchar) v;
-              *(temp+1) = (guchar) ((v == Gif89.transparent) ? 0 : 255);
             }
-        }
-      else
-        {
 
-          temp = dest + (ypos * len) + xpos;
-          *temp = (guchar) v;
-        }
-
-      xpos++;
-      if (xpos == len)
-        {
-          xpos = 0;
-          if (interlace)
+          xpos++;
+          if (xpos == len)
             {
-              switch (pass)
+              xpos = 0;
+              if (interlace)
                 {
-                case 0:
-                case 1:
-                  ypos += 8;
-                  break;
-                case 2:
-                  ypos += 4;
-                  break;
-                case 3:
-                  ypos += 2;
-                  break;
-                }
-
-              if (ypos >= height)
-                {
-                  pass++;
                   switch (pass)
                     {
+                    case 0:
                     case 1:
-                      ypos = 4;
+                      ypos += 8;
                       break;
                     case 2:
-                      ypos = 2;
+                      ypos += 4;
                       break;
                     case 3:
-                      ypos = 1;
+                      ypos += 2;
                       break;
-                    default:
-                      goto fini;
+                    }
+
+                  if (ypos >= height)
+                    {
+                      pass++;
+                      switch (pass)
+                        {
+                        case 1:
+                          ypos = 4;
+                          break;
+                        case 2:
+                          ypos = 2;
+                          break;
+                        case 3:
+                          ypos = 1;
+                          break;
+                        default:
+                          goto fini;
+                        }
                     }
                 }
-            }
-          else
-            {
-              ypos++;
+              else
+                {
+                  ypos++;
+                }
+
+              if (frame_number == 1)
+                {
+                  cur_progress++;
+                  if ((cur_progress % 16) == 0)
+                    gimp_progress_update ((gdouble) cur_progress /
+                                          (gdouble) max_progress);
+                }
             }
 
-          if (frame_number == 1)
-            {
-              cur_progress++;
-              if ((cur_progress % 16) == 0)
-                gimp_progress_update ((gdouble) cur_progress /
-                                      (gdouble) max_progress);
-            }
+          if (ypos >= height)
+            break;
         }
-
-      if (ypos >= height)
-        break;
+    }
+  else
+    {
+      ReadJeffsImage (fd, dest, c, len, height, alpha_frame, image, error);
     }
 
   /* v can be < 0 here, indicating an error or encountering an end_code (-2).
@@ -1402,16 +1489,118 @@ ReadImage (FILE        *fd,
     gboolean first = TRUE;
 
     /* Skip remaining compressed data if any. */
-
-    while (LZWReadByte (fd, FALSE, c) >= 0)
+    if (! is_jeff_image)
       {
-        if (first)
+        while (LZWReadByte (fd, FALSE, c) >= 0)
           {
-            g_message (_("Too much compressed data, ignoring extra..."));
-            first = FALSE;
+            if (first)
+              {
+                g_message (_("Too much compressed data, ignoring extra..."));
+                first = FALSE;
+              }
           }
       }
   }
+
+  return TRUE;
+}
+
+static gboolean
+ReadJeffsImage (FILE       *fd,
+                guchar     *dest,
+                guchar      bpp,
+                gint        len,
+                gint        height,
+                gboolean    alpha_frame,
+                GimpImage **image,
+                GError    **error)
+{
+  guchar    block_size = 255;
+  z_stream  zs;
+  guchar    block[255];
+  guchar   *compressed;
+  guchar   *indexes;
+  guint     count = 0;
+  guint     pos   = 0;
+  guint     mask  = 0;
+
+  /* Indexes are stored as 1, 2, 4, or 8 bits per pixel
+   * in the uncompressed image. */
+  for (gint i = 7; i > 7 - bpp; i--)
+    {
+      if (i >= 0)
+        mask |= 1 << i;
+    }
+
+  compressed = g_malloc (len * height);
+  indexes    = g_malloc (len * height);
+
+  /* Image data is stored as a zlib stream, arbitrarily broken
+   * in chunks of 255 bytes or less. We read in the chunk size,
+   * then that many bytes of compressed data to recreate the
+   * full zlib stream. */
+  while (block_size != 0)
+    {
+      if (! ReadOK (fd, &block_size, 1))
+        {
+          read_error (_("image data"), *image, error);
+          g_free (compressed);
+          g_free (indexes);
+          return FALSE;
+        }
+      if (block_size == 0)
+        break;
+
+      if (! ReadOK (fd, block, block_size))
+        {
+          read_error (_("image data"), *image, error);
+          g_free (compressed);
+          g_free (indexes);
+          return FALSE;
+        }
+
+      for (gint i = 0; i < block_size; i++)
+        compressed[i + count] = block[i];
+
+      count += block_size;
+    }
+  count = 0;
+
+  zs.next_in  = (guchar *) compressed;
+  zs.avail_in = count;
+  zs.next_out = (guchar *) indexes;
+  zs.avail_in = len * height;
+  zs.zalloc   = Z_NULL;
+  zs.zfree    = Z_NULL;
+  zs.opaque   = Z_NULL;
+
+  if (inflateInit (&zs) != Z_OK)
+    {
+      read_error (_("image data"), *image, error);
+      g_free (compressed);
+      g_free (indexes);
+      return FALSE;
+    }
+  inflate (&zs, Z_NO_FLUSH);
+
+  /* We then extract the indexes based on the bits per pixel
+   * set in the header */
+  for (gint i = 0; i < zs.total_out; i++)
+    {
+      for (gint j = 0; j < 8; j += bpp)
+        {
+          dest[pos++] = (indexes[i] & (mask >> j)) >> (8 - bpp - j);
+
+          if (alpha_frame)
+            {
+              dest[pos] = (dest[pos - 1] == Gif89.transparent) ? 0 : 255;
+              pos++;
+            }
+        }
+    }
+  g_free (indexes);
+  g_free (compressed);
+  inflateEnd (&zs);
 
   return TRUE;
 }
