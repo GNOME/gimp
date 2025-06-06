@@ -266,6 +266,8 @@ bund_usr "$UNIX_PREFIX" "bin/gvfs*" --dest "${LIB_DIR}/gvfs"
 bund_usr "$UNIX_PREFIX" "lib/gvfs/*.so"
 bund_usr "$UNIX_PREFIX" "lib/gio/modules/*"
 conf_app GIO_MODULE_DIR "${LIB_DIR}/${LIB_SUBDIR}gio/modules"
+bund_usr "$UNIX_PREFIX" "share/X11/xkb"
+conf_app XKB_CONFIG_ROOT "share/X11/xkb"
 ### GTK needed files (to be able to load icons)
 bund_usr "$UNIX_PREFIX" "share/icons/Adwaita"
 bund_usr "$GIMP_PREFIX" "share/icons/hicolor"
