@@ -765,8 +765,10 @@ script_fu_marshal_arg_to_value (scheme       *sc,
           GParamSpecInt *ispec = G_PARAM_SPEC_INT (arg_spec);
           gint           v     = sc->vptr->ivalue (sc->vptr->pair_car (a));
 
-          if (v < ispec->minimum || v > ispec->maximum)
-            return script_int_range_error (sc, arg_index, proc_name, ispec->minimum, ispec->maximum, v);
+          if (! (arg_spec->flags & GIMP_PARAM_NO_VALIDATE) &&
+              (v < ispec->minimum || v > ispec->maximum))
+            return script_int_range_error (sc, arg_index, proc_name,
+                                           ispec->minimum, ispec->maximum, v);
 
           g_value_set_int (value, v);
           if (strvalue)
@@ -784,8 +786,10 @@ script_fu_marshal_arg_to_value (scheme       *sc,
           GParamSpecUInt *ispec = G_PARAM_SPEC_UINT (arg_spec);
           gint            v     = sc->vptr->ivalue (arg_val);
 
-          if (v < ispec->minimum || v > ispec->maximum)
-            return script_int_range_error (sc, arg_index, proc_name, ispec->minimum, ispec->maximum, v);
+          if (! (arg_spec->flags & GIMP_PARAM_NO_VALIDATE) &&
+              (v < ispec->minimum || v > ispec->maximum))
+            return script_int_range_error (sc, arg_index, proc_name,
+                                           ispec->minimum, ispec->maximum, v);
 
           g_value_set_uint (value, v);
           if (strvalue)
@@ -803,8 +807,10 @@ script_fu_marshal_arg_to_value (scheme       *sc,
           GParamSpecUChar *cspec = G_PARAM_SPEC_UCHAR (arg_spec);
           gint             c     = sc->vptr->ivalue (arg_val);
 
-          if (c < cspec->minimum || c > cspec->maximum)
-            return script_int_range_error (sc, arg_index, proc_name, cspec->minimum, cspec->maximum, c);
+          if (! (arg_spec->flags & GIMP_PARAM_NO_VALIDATE) &&
+              (c < cspec->minimum || c > cspec->maximum))
+            return script_int_range_error (sc, arg_index, proc_name,
+                                           cspec->minimum, cspec->maximum, c);
 
           g_value_set_uchar (value, c);
           if (strvalue)
@@ -822,7 +828,8 @@ script_fu_marshal_arg_to_value (scheme       *sc,
           GParamSpecDouble *dspec = G_PARAM_SPEC_DOUBLE (arg_spec);
           gdouble           d     = sc->vptr->rvalue (arg_val);
 
-          if (d < dspec->minimum || d > dspec->maximum)
+          if (! (arg_spec->flags & GIMP_PARAM_NO_VALIDATE) &&
+              (d < dspec->minimum || d > dspec->maximum))
             return script_float_range_error (sc, arg_index, proc_name, dspec->minimum, dspec->maximum, d);
 
           g_value_set_double (value, d);
@@ -1716,7 +1723,8 @@ script_fu_marshal_procedure_call (scheme   *sc,
             }
 
           debug_gvalue (&value);
-          if (g_param_value_validate (arg_spec, &value))
+          if (! (arg_spec->flags & GIMP_PARAM_NO_VALIDATE) &&
+              g_param_value_validate (arg_spec, &value))
             {
               gchar error_message[1024];
 
