@@ -1402,7 +1402,6 @@ ReadImage (FILE        *fd,
             }
           else
             {
-
               temp = dest + (ypos * len) + xpos;
               *temp = (guchar) v;
             }
@@ -1506,14 +1505,15 @@ ReadImage (FILE        *fd,
   return TRUE;
 }
 
-static gboolean ReadJeffsImage (FILE        *fd,
-                                guchar      *dest,
-                                guchar       bpp,
-                                gint         len,
-                                gint         height,
-                                gboolean     alpha_frame,
-                                GimpImage  **image,
-                                GError     **error)
+static gboolean
+ReadJeffsImage (FILE       *fd,
+                guchar     *dest,
+                guchar      bpp,
+                gint        len,
+                gint        height,
+                gboolean    alpha_frame,
+                GimpImage **image,
+                GError    **error)
 {
   guchar    block_size = 255;
   z_stream  zs;
