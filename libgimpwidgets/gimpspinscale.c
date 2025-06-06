@@ -643,7 +643,7 @@ gimp_spin_scale_update_cursor (GtkWidget *widget,
       break;
 
     case TARGET_GRAB:
-      cursor = gdk_cursor_new_from_name (display, "n-resize");
+      cursor = gdk_cursor_new_from_name (display, "sb_up_arrow");
       break;
 
     case TARGET_GRABBING:
