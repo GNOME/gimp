@@ -276,6 +276,44 @@ themes_get_theme_file (Gimp        *gimp,
   return file;
 }
 
+void
+themes_theme_change_notify (GimpGuiConfig *config,
+                            GParamSpec    *pspec,
+                            Gimp          *gimp)
+{
+  GFile  *theme_css;
+  GError *error = NULL;
+
+  g_object_set (gtk_settings_get_for_screen (gdk_screen_get_default ()),
+                "gtk-application-prefer-dark-theme",
+                config->theme_scheme != GIMP_THEME_LIGHT,
+                NULL);
+
+  themes_apply_theme (gimp, config);
+
+  theme_css = gimp_directory_file ("theme.css", NULL);
+
+  if (gimp->be_verbose)
+    g_print ("Parsing '%s'\n",
+             gimp_file_get_utf8_name (theme_css));
+
+  if (! gtk_css_provider_load_from_file (GTK_CSS_PROVIDER (themes_style_provider),
+                                         theme_css, &error))
+    {
+      g_printerr ("%s: error parsing %s: %s\n", G_STRFUNC,
+                  gimp_file_get_utf8_name (theme_css), error->message);
+      g_clear_error (&error);
+    }
+
+  g_object_unref (theme_css);
+
+  gtk_style_context_reset_widgets (gdk_screen_get_default ());
+
+#ifdef G_OS_WIN32
+  themes_set_title_bar (gimp);
+#endif
+}
+
 
 /*  private functions  */
 
@@ -713,44 +751,6 @@ themes_name_compare (const void *p1,
   return strcmp (* (char **) p1, * (char **) p2);
 }
 
-void
-themes_theme_change_notify (GimpGuiConfig *config,
-                            GParamSpec    *pspec,
-                            Gimp          *gimp)
-{
-  GFile  *theme_css;
-  GError *error = NULL;
-
-  g_object_set (gtk_settings_get_for_screen (gdk_screen_get_default ()),
-                "gtk-application-prefer-dark-theme",
-                config->theme_scheme != GIMP_THEME_LIGHT,
-                NULL);
-
-  themes_apply_theme (gimp, config);
-
-  theme_css = gimp_directory_file ("theme.css", NULL);
-
-  if (gimp->be_verbose)
-    g_print ("Parsing '%s'\n",
-             gimp_file_get_utf8_name (theme_css));
-
-  if (! gtk_css_provider_load_from_file (GTK_CSS_PROVIDER (themes_style_provider),
-                                         theme_css, &error))
-    {
-      g_printerr ("%s: error parsing %s: %s\n", G_STRFUNC,
-                  gimp_file_get_utf8_name (theme_css), error->message);
-      g_clear_error (&error);
-    }
-
-  g_object_unref (theme_css);
-
-  gtk_style_context_reset_widgets (gdk_screen_get_default ());
-
-#ifdef G_OS_WIN32
-  themes_set_title_bar (gimp);
-#endif
-}
-
 static void
 themes_theme_paths_notify (GimpExtensionManager *manager,
                            GParamSpec           *pspec,
@@ -892,5 +892,4 @@ themes_win32_is_darkmode_active (void)
 
   return status == ERROR_SUCCESS && val == 0;
 }
-
 #endif

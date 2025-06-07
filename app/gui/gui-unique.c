@@ -30,6 +30,8 @@
 
 #include "gui/gui-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 
@@ -41,7 +43,6 @@
 
 #include "gimpdbusservice.h"
 #include "gui-unique.h"
-#include "config/gimpguiconfig.h"
 #include "themes.h"
 
 
@@ -205,6 +206,11 @@ gui_unique_win32_message_handler (HWND   hWnd,
       return TRUE;
 
     case WM_SETTINGCHANGE:
+      /* This message is not about the unique GUI code, but we reuse the
+       * existing top-level (hidden) window used for receiving messages
+       * for other purposes too, such as color scheme in this case.
+       * See !2308.
+       */
       if (lParam != 0 && lstrcmpW((LPCWSTR)lParam, L"ImmersiveColorSet") == 0)
         {
           themes_theme_change_notify (GIMP_GUI_CONFIG (unique_gimp->config), NULL, unique_gimp);
