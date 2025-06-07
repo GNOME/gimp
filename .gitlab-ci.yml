@@ -107,9 +107,7 @@ stages:
     - <<: *CI_RELEASE
   parallel:
     matrix:
-      - RUNNER: [aarch64, x86_64_v2]
-  tags:
-    - $RUNNER
+      - RUNNER: [x86_64_v2]
   image: $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}
   variables:
     CC: "clang"

@@ -381,12 +381,6 @@ if [ "$HOST_ARCH" = 'x86_64' ]; then
   rm -r $APP_DIR/lib64
 fi
 chmod +x "$APP_DIR/$LD_LINUX"
-exec_array=($(find "$USR_DIR/bin" "$USR_DIR/$LIB_DIR" ! -iname "*.so*" -type f -exec head -c 4 {} \; -exec echo " {}" \;  | grep ^.ELF))
-for exec in "${exec_array[@]}"; do
-  if [[ ! "$exec" =~ 'ELF' ]]; then
-    patchelf --set-interpreter "./$LD_LINUX" "$exec" >/dev/null 2>&1 || continue
-  fi
-done
 ### We can't set LD_LIBRARY_PATH partly to not break patchelf trick so we need 'ln' for Lua
 #cd $APP_DIR
 #lua_cpath_tweaked="$(echo $LUA_CPATH | sed -e 's|$HERE/||' -e 's|/?.so||')/lgi"
