@@ -305,7 +305,12 @@ for lang in "${lang_array[@]}"; do
   # For language list in text tool options
   bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/iso_639*3.mo
 done
+bund_usr "$UNIX_PREFIX" "share/locale/locale.alias"
+conf_app LOCPATH "share/locale"
+bund_usr "$UNIX_PREFIX" "share/i18n"
+conf_app GCONV_PATH "${LIB_DIR}/${LIB_SUBDIR}gconv"
 bund_usr "$GIMP_PREFIX" "etc/gimp"
+
 
 ## Other features and plug-ins
 ### Needed for welcome page
@@ -410,8 +415,7 @@ done
 mv build/linux/appimage/AppRun $APP_DIR
 mv build/linux/appimage/AppRun.bak build/linux/appimage/AppRun
 rm $APP_DIR/*.desktop
-echo "usr/${LIB_DIR}/${LIB_SUBDIR}gconv
-      usr/${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/gdk-pixbuf-query-loaders
+echo "usr/${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/gdk-pixbuf-query-loaders
       usr/${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/*.debug
       usr/share/doc
       usr/share/themes
@@ -439,7 +443,7 @@ export USR_DIR="$APP_DIR/usr"
 ## 4.1. Finish AppRun configuration
 echo '(INFO): finishing AppRun configuration'
 ln -sfr "$USR_DIR/bin/gimp-$GIMP_APP_VERSION" "$USR_DIR/bin/$APP_ID"
-printf "\nexec \"\${LD_LINUX}\" --inhibit-cache \"\$APPDIR\"/usr/bin/$APP_ID \"\$@\"" >> "$APP_DIR/AppRun"
+printf "\nexec \"\$APPDIR\"/usr/bin/$APP_ID \"\$@\"" >> "$APP_DIR/AppRun"
 chmod +x $APP_DIR/AppRun
 
 ## 4.2. Copy icon assets (similarly to flatpaks's 'rename-icon')
