@@ -51,6 +51,7 @@ struct _ColorselCmyk
 
   GtkWidget                *scales[4];
   GtkWidget                *name_label;
+  GtkWidget                *tic_label;
 
   gboolean                  in_destruction;
 };
@@ -182,6 +183,15 @@ colorsel_cmyk_init (ColorselCmyk *module)
       gtk_widget_show (module->scales[i]);
     }
 
+  module->tic_label = gtk_label_new (NULL);
+  gtk_label_set_xalign (GTK_LABEL (module->tic_label), 0.0);
+  gtk_label_set_ellipsize (GTK_LABEL (module->tic_label), PANGO_ELLIPSIZE_END);
+  gimp_label_set_attributes (GTK_LABEL (module->tic_label),
+                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                             -1);
+  gtk_grid_attach (GTK_GRID (grid), module->tic_label, 1, 4, 3, 1);
+  gtk_widget_set_visible (module->tic_label, TRUE);
+
   module->name_label = gtk_label_new (NULL);
   gtk_label_set_xalign (GTK_LABEL (module->name_label), 0.0);
   gtk_label_set_ellipsize (GTK_LABEL (module->name_label), PANGO_ELLIPSIZE_END);
@@ -213,6 +223,8 @@ colorsel_cmyk_set_color (GimpColorSelector *selector,
   GimpColorRenderingIntent  intent       = GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
   const Babl               *space        = NULL;
   ColorselCmyk             *module       = COLORSEL_CMYK (selector);
+  gfloat                    tic_val      = 0;
+  gchar                    *tic_str;
   gfloat                    cmyk[4];
 
   /* Try Image Soft-proofing profile first, then default CMYK profile */
@@ -245,7 +257,13 @@ colorsel_cmyk_set_color (GimpColorSelector *selector,
       g_signal_handlers_unblock_by_func (module->scales[i],
                                          colorsel_cmyk_scale_update,
                                          module);
+      tic_val += cmyk[i];
     }
+
+  tic_str = g_strdup_printf ("%s: %d%%", _("Total Ink Coverage"),
+                             (gint) tic_val);
+  gtk_label_set_text (GTK_LABEL (module->tic_label), tic_str);
+  g_free (tic_str);
 
   if (cmyk_profile && ! module->simulation_profile)
     g_object_unref (cmyk_profile);
