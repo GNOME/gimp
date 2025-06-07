@@ -29,12 +29,14 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define LOAD_PROC       "file-heif-load"
-#define LOAD_PROC_AV1   "file-heif-av1-load"
-#define LOAD_PROC_HEJ2  "file-heif-hej2-load"
-#define EXPORT_PROC     "file-heif-export"
-#define EXPORT_PROC_AV1 "file-heif-av1-export"
-#define PLUG_IN_BINARY  "file-heif"
+#define LOAD_PROC        "file-heif-load"
+#define LOAD_PROC_AV1    "file-heif-av1-load"
+#define LOAD_PROC_HEJ2   "file-heif-hej2-load"
+#define LOAD_PROC_AVCI   "file-heif-avci-load"
+#define EXPORT_PROC      "file-heif-export"
+#define EXPORT_PROC_AV1  "file-heif-av1-export"
+#define EXPORT_PROC_HEJ2 "file-heif-hej2-export"
+#define PLUG_IN_BINARY   "file-heif"
 
 typedef enum _HeifpluginEncoderSpeed
 {
@@ -98,6 +100,17 @@ static GimpValueArray * heif_av1_export       (GimpProcedure                *pro
                                                GimpMetadata                 *metadata,
                                                GimpProcedureConfig          *config,
                                                gpointer                      run_data);
+
+#if LIBHEIF_HAVE_VERSION(1,19,8)
+static GimpValueArray * heif_jpeg2000_export   (GimpProcedure                *procedure,
+                                                GimpRunMode                   run_mode,
+                                                GimpImage                    *image,
+                                                GFile                        *file,
+                                                GimpExportOptions            *options,
+                                                GimpMetadata                 *metadata,
+                                                GimpProcedureConfig          *config,
+                                                gpointer                      run_data);
+#endif
 
 static GimpImage      * load_image            (GFile                        *file,
                                                GimpMetadata                 *metadata,
@@ -172,6 +185,20 @@ heif_init_procedures (GimpPlugIn *plug_in)
   if (heif_have_decoder_for_format (heif_compression_JPEG2000))
     {
       list = g_list_append (list, g_strdup (LOAD_PROC_HEJ2));
+    }
+#endif
+
+#if LIBHEIF_HAVE_VERSION(1,19,8)
+  if (heif_have_encoder_for_format (heif_compression_JPEG2000))
+    {
+      list = g_list_append (list, g_strdup (EXPORT_PROC_HEJ2));
+    }
+#endif
+
+#if LIBHEIF_HAVE_VERSION(1,19,6)
+  if (heif_have_decoder_for_format (heif_compression_AVC))
+    {
+      list = g_list_append (list, g_strdup (LOAD_PROC_AVCI));
     }
 #endif
 
@@ -462,6 +489,114 @@ heif_create_procedure (GimpPlugIn  *plug_in,
                                       "4,string,ftypj2ki");
     }
 #endif
+#if LIBHEIF_HAVE_VERSION(1,19,6)
+  else if (! strcmp (name, LOAD_PROC_AVCI))
+    {
+      procedure = gimp_load_procedure_new (plug_in, name, GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           heif_load, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, _("AVC-encoded image encapsulated in HEIF"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        _("Loads AVCI images"),
+                                        _("Load AVCI image - H.264 image encapsulated in HEIF)"),
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Daniel Novomesky <dnovomesky@gmail.com>",
+                                      "Daniel Novomesky <dnovomesky@gmail.com>",
+                                      "2025");
+
+      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure), TRUE);
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/avci");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "avci");
+
+      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+                                      "4,string,ftypavci");
+    }
+#endif
+#if LIBHEIF_HAVE_VERSION(1,19,8)
+  else if (! strcmp (name, EXPORT_PROC_HEJ2))
+    {
+      procedure = gimp_export_procedure_new (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             FALSE, heif_jpeg2000_export, NULL,
+                                             NULL);
+
+      gimp_procedure_set_image_types (procedure, "RGB*");
+
+      gimp_procedure_set_menu_label (procedure, "HEIF/HEJ2");
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           "HEJ2");
+
+      gimp_procedure_set_documentation (procedure,
+                                        _("Exports HEJ2 images"),
+                                        _("Save JPEG 2000 image encapsulated in HEIF (HEJ2)"),
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Daniel Novomesky <dnovomesky@gmail.com>",
+                                      "Daniel Novomesky <dnovomesky@gmail.com>",
+                                      "2025");
+
+      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+                                              TRUE);
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/hej2k");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "hej2");
+
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_RGB |
+                                              GIMP_EXPORT_CAN_HANDLE_ALPHA,
+                                              NULL, NULL, NULL);
+
+      gimp_procedure_add_int_argument (procedure, "quality",
+                                       _("_Quality"),
+                                       _("Quality factor (0 = worst, 100 = best)"),
+                                       0, 100, 50,
+                                       G_PARAM_READWRITE);
+
+      gimp_procedure_add_boolean_argument (procedure, "lossless",
+                                           _("L_ossless"),
+                                           _("Use lossless compression"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
+
+      gimp_procedure_add_boolean_aux_argument (procedure, "include-color-profile",
+                                               _("Save color prof_ile"),
+                                               _("Save the image's color profile"),
+                                               gimp_export_color_profile (),
+                                               G_PARAM_READWRITE);
+
+      gimp_procedure_add_int_argument (procedure, "save-bit-depth",
+                                       _("_Bit depth"),
+                                       _("Bit depth of exported image"),
+                                       8, 12, 8,
+                                       G_PARAM_READWRITE);
+
+      gimp_procedure_add_choice_argument (procedure, "pixel-format",
+                                          _("_Pixel format"),
+                                          _("Format of color sub-sampling"),
+                                          gimp_choice_new_with_values ("yuv444", HEIFPLUGIN_EXPORT_FORMAT_YUV444, _("YUV444"), NULL,
+                                                                       "yuv420", HEIFPLUGIN_EXPORT_FORMAT_YUV420, _("YUV420"), NULL,
+                                                                       NULL),
+                                          "yuv420",
+                                          G_PARAM_READWRITE);
+
+      gimp_procedure_add_boolean_argument (procedure, "include-exif",
+                                           _("Save Exi_f"),
+                                           _("Toggle saving Exif data"),
+                                           gimp_export_exif (),
+                                           G_PARAM_READWRITE);
+
+      gimp_procedure_add_boolean_argument (procedure, "include-xmp",
+                                           _("Save _XMP"),
+                                           _("Toggle saving XMP data"),
+                                           gimp_export_xmp (),
+                                           G_PARAM_READWRITE);
+    }
+#endif
   return procedure;
 }
 
@@ -621,6 +756,67 @@ heif_av1_export (GimpProcedure        *procedure,
   g_list_free (drawables);
   return gimp_procedure_new_return_values (procedure, status, error);
 }
+
+#if LIBHEIF_HAVE_VERSION(1,19,8)
+static GimpValueArray *
+heif_jpeg2000_export (GimpProcedure        *procedure,
+                      GimpRunMode           run_mode,
+                      GimpImage            *image,
+                      GFile                *file,
+                      GimpExportOptions    *options,
+                      GimpMetadata         *metadata_unused,
+                      GimpProcedureConfig  *config,
+                      gpointer              run_data)
+{
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export = GIMP_EXPORT_IGNORE;
+  GList             *drawables;
+
+  GimpMetadata      *metadata;
+  GError            *error       = NULL;
+
+  gegl_init (NULL, NULL);
+
+  if (run_mode == GIMP_RUN_INTERACTIVE)
+    {
+      gimp_ui_init (PLUG_IN_BINARY);
+
+      if (! save_dialog (procedure, G_OBJECT (config), image))
+        status = GIMP_PDB_CANCEL;
+    }
+
+  export = gimp_export_options_get_image (options, &image);
+  drawables = gimp_image_list_layers (image);
+
+  if (status == GIMP_PDB_SUCCESS)
+    {
+      GimpMetadataSaveFlags metadata_flags;
+
+      metadata = gimp_image_metadata_save_prepare (image, "image/hej2k", &metadata_flags);
+
+      heif_init (NULL);
+
+      if (! export_image (file, image, drawables->data, G_OBJECT (config),
+                          &error, heif_compression_JPEG2000, metadata))
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
+
+      heif_deinit ();
+
+      if (metadata)
+        {
+          g_object_unref (metadata);
+        }
+    }
+
+  if (export == GIMP_EXPORT_EXPORT)
+    gimp_image_delete (image);
+
+  g_list_free (drawables);
+  return gimp_procedure_new_return_values (procedure, status, error);
+}
+#endif
 
 static goffset
 get_file_size (GFile   *file,
@@ -1421,7 +1617,6 @@ export_image (GFile                        *file,
   gint                                  save_bit_depth = 8;
 
   HeifpluginExportFormat    pixel_format = HEIFPLUGIN_EXPORT_FORMAT_YUV420;
-  HeifpluginEncoderSpeed    encoder_speed = HEIFPLUGIN_ENCODER_SPEED_BALANCED;
   const char               *parameter_value;
   struct heif_color_profile_nclx nclx_profile;
   gboolean                  save_exif = FALSE;
@@ -1445,9 +1640,6 @@ export_image (GFile                        *file,
   pixel_format =
     gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
                                          "pixel-format");
-  encoder_speed =
-    gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
-                                         "encoder-speed");
 
   if (compression == heif_compression_HEVC)
     {
@@ -1466,26 +1658,27 @@ export_image (GFile                        *file,
           return FALSE;
         }
     }
-  else /* AV1 compression */
+  else if (compression == heif_compression_AV1 &&
+           heif_context_get_encoder_descriptors (context,
+                                                 heif_compression_AV1,
+                                                 "aom", /* we prefer aom rather than rav1e */
+                                                 &encoder_descriptor, 1) == 1)
+    {
+      encoder_name = heif_encoder_descriptor_get_id_name (encoder_descriptor);
+    }
+  else /* non-AOM AV1 or JPEG 2000 */
     {
       if (heif_context_get_encoder_descriptors (context,
                                                 compression,
-                                                "aom", /* we prefer aom rather than rav1e */
+                                                NULL,
                                                 &encoder_descriptor, 1) == 1)
-        {
-          encoder_name = heif_encoder_descriptor_get_id_name (encoder_descriptor);
-        }
-      else if (heif_context_get_encoder_descriptors (context,
-                                                     compression,
-                                                     NULL,
-                                                     &encoder_descriptor, 1) == 1)
         {
           encoder_name = heif_encoder_descriptor_get_id_name (encoder_descriptor);
         }
       else
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       "Unable to find suitable AVIF encoder");
+                       "Unable to find suitable encoder");
           heif_context_free (context);
           return FALSE;
         }
@@ -1815,7 +2008,11 @@ export_image (GFile                        *file,
 
   if (compression == heif_compression_HEVC)
     {
-      switch (encoder_speed)
+      HeifpluginEncoderSpeed  encoder_speed_hevc =
+        gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                             "encoder-speed");
+
+      switch (encoder_speed_hevc)
         {
         case HEIFPLUGIN_ENCODER_SPEED_SLOW:
           parameter_value = "veryslow";
@@ -1837,6 +2034,10 @@ export_image (GFile                        *file,
     }
   else if (compression == heif_compression_AV1)
     {
+      HeifpluginEncoderSpeed  encoder_speed_av1 =
+        gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                             "encoder-speed");
+
       int parameter_number;
 
       parameter_number = gimp_get_num_processors();
@@ -1851,7 +2052,7 @@ export_image (GFile                        *file,
 
       if (g_strcmp0 (encoder_name, "aom") == 0) /* AOMedia AV1 encoder */
         {
-          switch (encoder_speed)
+          switch (encoder_speed_av1)
             {
             case HEIFPLUGIN_ENCODER_SPEED_SLOW:
               parameter_number = 1;
@@ -1878,7 +2079,7 @@ export_image (GFile                        *file,
         }
       else if (g_strcmp0 (encoder_name, "rav1e") == 0) /* Rav1e encoder */
         {
-          switch (encoder_speed)
+          switch (encoder_speed_av1)
             {
             case HEIFPLUGIN_ENCODER_SPEED_SLOW:
               parameter_number = 6;
@@ -2450,12 +2651,25 @@ save_dialog (GimpProcedure *procedure,
   gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
                                        "save-bit-depth", GIMP_INT_STORE (store_bitdepths));
 
-  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
-                              "lossless", "quality",
-                              "pixel-format",
-                              "save-bit-depth", "encoder-speed",
-                              "include-color-profile",
-                              "include-exif", "include-xmp", NULL);
+  if (g_strcmp0 (gimp_procedure_get_name (procedure), EXPORT_PROC_HEJ2) == 0)
+    {
+      /* HEJ2 doesn't use encoder-speed */
+      gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "lossless", "quality",
+                                  "pixel-format",
+                                  "save-bit-depth",
+                                  "include-color-profile",
+                                  "include-exif", "include-xmp", NULL);
+    }
+  else
+    {
+      gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "lossless", "quality",
+                                  "pixel-format",
+                                  "save-bit-depth", "encoder-speed",
+                                  "include-color-profile",
+                                  "include-exif", "include-xmp", NULL);
+    }
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
