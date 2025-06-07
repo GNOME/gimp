@@ -296,7 +296,7 @@ register_image_guides_procs (GimpPDB *pdb)
                                    g_param_spec_uint ("guide",
                                                       "guide",
                                                       "The new guide",
-                                                      1, G_MAXUINT32, 1,
+                                                      0, G_MAXUINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -331,7 +331,7 @@ register_image_guides_procs (GimpPDB *pdb)
                                    g_param_spec_uint ("guide",
                                                       "guide",
                                                       "The new guide",
-                                                      1, G_MAXUINT32, 1,
+                                                      0, G_MAXUINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -360,7 +360,7 @@ register_image_guides_procs (GimpPDB *pdb)
                                g_param_spec_uint ("guide",
                                                   "guide",
                                                   "The ID of the guide to be removed",
-                                                  1, G_MAXUINT32, 1,
+                                                  0, G_MAXUINT32, 1,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -395,7 +395,7 @@ register_image_guides_procs (GimpPDB *pdb)
                                    g_param_spec_uint ("next-guide",
                                                       "next guide",
                                                       "The next guide's ID",
-                                                      1, G_MAXUINT32, 1,
+                                                      0, G_MAXUINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -424,7 +424,7 @@ register_image_guides_procs (GimpPDB *pdb)
                                g_param_spec_uint ("guide",
                                                   "guide",
                                                   "The guide",
-                                                  1, G_MAXUINT32, 1,
+                                                  0, G_MAXUINT32, 1,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_enum ("orientation",
@@ -462,7 +462,7 @@ register_image_guides_procs (GimpPDB *pdb)
                                g_param_spec_uint ("guide",
                                                   "guide",
                                                   "The guide",
-                                                  1, G_MAXUINT32, 1,
+                                                  0, G_MAXUINT32, 1,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("position",
