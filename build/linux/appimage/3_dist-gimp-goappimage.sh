@@ -261,8 +261,6 @@ bund_usr "$UNIX_PREFIX" "lib/glib-*/gio-launch-desktop" --dest "bin"
 prep_pkg "xapps-common" 
 bund_usr "$UNIX_PREFIX" "share/glib-*/schemas" 
 ### Glib commonly required modules
-prep_pkg "gvfs"
-bund_usr "$UNIX_PREFIX" "bin/gvfs*" --dest "${LIB_DIR}/gvfs"
 bund_usr "$UNIX_PREFIX" "lib/gvfs/*.so"
 bund_usr "$UNIX_PREFIX" "lib/gio/modules/*"
 conf_app GIO_MODULE_DIR "${LIB_DIR}/${LIB_SUBDIR}gio/modules"
