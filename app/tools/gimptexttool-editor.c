@@ -38,6 +38,7 @@
 #include "menus/menus.h"
 
 #include "text/gimptext.h"
+#include "text/gimptextlayer.h"
 #include "text/gimptextlayout.h"
 
 #include "widgets/gimpdialogfactory.h"
@@ -284,10 +285,23 @@ gimp_text_tool_editor_position (GimpTextTool *text_tool)
                     "y1", &y,
                     NULL);
 
-      gimp_display_shell_move_overlay (shell,
-                                       text_tool->style_overlay,
-                                       x, y,
-                                       GIMP_HANDLE_ANCHOR_SOUTH_WEST, 4, 12);
+      if (text_tool->layer &&
+          gimp_text_layer_get_style_overlay_position (text_tool->layer, &x, &y))
+        {
+          gimp_display_shell_move_overlay (shell,
+                                           text_tool->style_overlay,
+                                           x, y, -1,
+                                           text_tool->drag_offset_x + 25,
+                                           text_tool->drag_offset_y + 25);
+        }
+      else
+        {
+          gimp_display_shell_move_overlay (shell,
+                                           text_tool->style_overlay,
+                                           x, y, GIMP_HANDLE_ANCHOR_SOUTH_WEST,
+                                           4, 12);
+        }
+
 
       if (text_tool->image)
         {
@@ -1974,6 +1988,12 @@ gimp_text_tool_style_overlay_button_press (GtkWidget      *widget,
       return FALSE;
     }
 
+  /* Prevent moving the overlay
+   * if no text layer has been created
+   */
+  if (! text_tool->layer)
+    return FALSE;
+
   if (gtk_widget_get_window (GTK_WIDGET (text_tool->style_overlay)))
     {
       GdkCursor *cursor = gdk_cursor_new_for_display (gtk_widget_get_display (GTK_WIDGET (text_tool->style_overlay)),
@@ -2051,8 +2071,11 @@ gimp_text_tool_style_overlay_button_motion (GtkWidget      *widget,
       gimp_display_shell_move_overlay (shell,
                                        text_tool->style_overlay,
                                        x, y, -1,
-                                       text_tool->drag_offset_x + DEFAULT_DRAG_OFFSET,
-                                       text_tool->drag_offset_y + DEFAULT_DRAG_OFFSET);
+                                       text_tool->drag_offset_x + 25,
+                                       text_tool->drag_offset_y + 25);
+
+      gimp_text_layer_set_style_overlay_position (text_tool->layer, TRUE,
+                                                  x, y);
     }
 
   return TRUE;
