@@ -143,6 +143,10 @@ _gimp_drawable_tree_view_filter_editor_show (GimpDrawableTreeView *view,
   gint                               n_editable;
   gboolean                           visible   = FALSE;
 
+  /* Prevents "duplicate" filter views if you click the popover too fast */
+  if (editor && editor->view)
+    _gimp_drawable_tree_view_filter_editor_hide (view);
+
   if (! editor)
     {
       GtkWidget   *vbox;
@@ -229,7 +233,7 @@ _gimp_drawable_tree_view_filter_editor_show (GimpDrawableTreeView *view,
                         G_CALLBACK (gimp_drawable_filters_editor_edit_clicked),
                         view);
 
-      /*  "raide" button  */
+      /*  "raise" button  */
       editor->raise_button =
         gtk_button_new_from_icon_name (GIMP_ICON_GO_UP,
                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
