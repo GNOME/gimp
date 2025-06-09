@@ -1,0 +1,133 @@
+import pathlib
+import os
+import sys
+
+gi.require_version('Gegl', '0.4')
+from gi.repository import Gegl
+
+gi.require_version("Gio", "2.0")
+from gi.repository import Gio
+
+variants = ['-xcf', '']
+
+def export_img(sizes, type='none', type_param='none'):
+    for variant in variants:
+        if type != 'scaled':
+            scale = 100
+        else:
+            scale = type_param        
+        image_size = max(sizes) * scale / 100
+        image = Gimp.Image.new(image_size, image_size, Gimp.ImageBaseType.RGB)
+
+        sizes.sort()
+        for size in sizes:
+            procedure   = Gimp.get_pdb().lookup_procedure("file-svg-load")
+            config      = procedure.create_config()
+            
+            # 1. Loading the "File" SVG base.
+            config.set_property("file", Gio.file_new_for_path('@SRCDIR@/fileicon-base' + variant + '.svg'))
+            base_size   = size * scale / 100
+            config.set_property("width",  base_size)
+            config.set_property("height", base_size)
+            Gimp.Procedure.run(procedure, config)
+            v = Gimp.Procedure.run(procedure, config)
+            if v.index(0) != Gimp.PDBStatusType.SUCCESS:
+                sys.exit(os.EX_SOFTWARE)
+            tmp_image = v.index(1)
+            drawables = tmp_image.get_selected_drawables()
+            layer1 = Gimp.Layer.new_from_drawable (drawables[0], image)
+            image.insert_layer(layer1, None, 0)
+            tmp_image.delete()
+
+            # 2. Loading Wilber.
+            config.set_property("file", Gio.file_new_for_path('@SRCDIR@/gimp-logo-shadow.svg'))
+            wilber_size = base_size * 7 / 8
+            config.set_property("width",  wilber_size)
+            config.set_property("height", wilber_size)
+            Gimp.Procedure.run(procedure, config)
+            v = Gimp.Procedure.run(procedure, config)
+            if v.index(0) != Gimp.PDBStatusType.SUCCESS:
+                sys.exit(os.EX_SOFTWARE)
+            tmp_image = v.index(1)
+            drawables = tmp_image.get_selected_drawables()
+            layer2 = Gimp.Layer.new_from_drawable (drawables[0], image)
+            image.insert_layer(layer2, None, 0)
+            layer2.set_offsets(0, (base_size - wilber_size) * 5 / 6)
+            tmp_image.delete()
+
+            # 3. Merging the file design and Wilber on top.
+            image.merge_down(layer2, Gimp.MergeType.CLIP_TO_IMAGE)
+
+        # 4. Export icon
+        procedure = Gimp.get_pdb().lookup_procedure("file-@OUTPUT_TYPE@-export")
+        config    = procedure.create_config()
+        drawables = image.get_selected_drawables()
+        config.set_property("image", image)
+        if not GLib.file_test(export_dir, GLib.FileTest.EXISTS):
+            GLib.mkdir_with_parents(export_dir, 0o755)
+        if type == 'scaled':
+            scale_str = str(scale)
+            config.set_property("file", Gio.file_new_for_path(export_dir + 'fileicon' + variant + '.scale-' + scale_str + '.@OUTPUT_TYPE@'))
+        elif type == 'targeted' and type_param != 'first':
+            size_str = str(size)
+            config.set_property("file", Gio.file_new_for_path(export_dir + 'fileicon' + variant + '.targetsize-' + size_str + '.@OUTPUT_TYPE@'))
+        else:
+            config.set_property("file", Gio.file_new_for_path(export_dir + 'fileicon' + variant + '.@OUTPUT_TYPE@'))
+        Gimp.Procedure.run(procedure, config)
+        v = Gimp.Procedure.run(procedure, config)
+        if v.index(0) != Gimp.PDBStatusType.SUCCESS:
+            sys.exit(os.EX_SOFTWARE)
+
+
+if '@OUTPUT_TYPE@' == 'ico':
+    # List of sizes come from these links:
+    # https://learn.microsoft.com/en-us/windows/apps/design/style/iconography/app-icon-construction
+    # https://learn.microsoft.com/en-us/windows/win32/uxguide/vis-icons
+    # Application icons and control panel items:
+    sizes       = [ 16, 32, 48, 256 ]
+    # Quick Launch area:
+    sizes      += [ 40 ]
+    # Additional sizes: we don't generate sizes: 8, 10 and 14 because we don't have
+    # pixel-perfect raster for these and it's so small that I wonder if it's worth
+    # it.
+    sizes      += [ 22, 24, 64, 96, 128 ]
+
+    export_dir = 'build/windows/installer/'
+
+    export_img(sizes)
+
+
+elif '@OUTPUT_TYPE@' == 'png':
+    export_dir = 'build/windows/store/Assets/'
+
+    export_img([44], 'scaled', 100)
+    export_img([44], 'scaled', 125)
+    export_img([44], 'scaled', 150)
+    export_img([44], 'scaled', 200)
+    export_img([44], 'scaled', 400)
+
+    export_img([44], 'targeted', 'first')
+    export_img([16], 'targeted')
+    export_img([20], 'targeted')
+    export_img([24], 'targeted')
+    export_img([30], 'targeted')
+    export_img([32], 'targeted')
+    export_img([36], 'targeted')
+    export_img([40], 'targeted')
+    export_img([48], 'targeted')
+    export_img([56], 'targeted')
+    export_img([60], 'targeted')
+    export_img([64], 'targeted')
+    export_img([72], 'targeted')
+    export_img([80], 'targeted')
+    export_img([96], 'targeted')
+    export_img([128], 'targeted')
+    export_img([256], 'targeted')
+
+
+elif '@OUTPUT_TYPE@' == 'icns':
+    sizes       = [ 16, 18, 24, 32, 36, 48, 64, 128, 256, 512, 1024 ]
+
+    export_dir = 'build/macos/'
+
+    export_img(sizes)
