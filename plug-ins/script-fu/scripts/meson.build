@@ -41,7 +41,6 @@ scripts = [
   'slide.scm',
   'spinning-globe.scm',
   'tileblur.scm',
-  'unsharp-mask.scm',
   'waves-anim.scm',
   'weave.scm',
   'xach-effect.scm',
