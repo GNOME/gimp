@@ -579,6 +579,7 @@ app/widgets/gimpdockbook.c
 app/widgets/gimpdockwindow.c
 app/widgets/gimpdocumentview.c
 app/widgets/gimpdrawabletreeview.c
+app/widgets/gimpdrawabletreeview-filters.c
 app/widgets/gimpdynamicseditor.c
 app/widgets/gimpdynamicsoutputeditor.c
 app/widgets/gimpeditor.c
