@@ -117,6 +117,7 @@ plug-ins/file-psd/psd-load.c
 plug-ins/file-psd/psd-thumb-load.c
 plug-ins/file-psd/psd-util.c
 plug-ins/file-psd/psd.c
+plug-ins/file-raw/file-another-rawtherapee.c
 plug-ins/file-raw/file-darktable.c
 plug-ins/file-raw/file-raw-formats.h
 plug-ins/file-raw/file-raw-placeholder.c
