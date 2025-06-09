@@ -36,7 +36,10 @@
 
 #include "display/gimpdisplay.h"
 
+#include "text/gimptextlayer.h"
+
 #include "tools/gimptexttool.h"
+#include "tools/gimptexttool-editor.h"
 
 #include "dialogs/dialogs.h"
 
@@ -245,6 +248,20 @@ text_tool_direction_cmd_callback (GimpAction *action,
                 "base-direction", direction,
                 NULL);
 }
+
+void
+text_tool_restore_on_canvas_editor_position_cmd_callback (GimpAction *action,
+                                                          GVariant   *value,
+                                                          gpointer    data)
+{
+  GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
+
+  if (text_tool->layer)
+    gimp_text_layer_set_style_overlay_position (text_tool->layer, FALSE, 0, 0);
+
+  gimp_text_tool_editor_position (text_tool);
+}
+
 
 
 /*  private functions  */

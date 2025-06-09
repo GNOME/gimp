@@ -296,6 +296,17 @@ gimp_text_tool_editor_position (GimpTextTool *text_tool)
         }
       else
         {
+          GimpOverlayChild *child_overlay;
+
+          /*
+           * Set 'relative_to_shell' to FALSE to allow the overlay to be positioned
+           * independently from the shell. This enables the overlay to be moved freely
+           * and later restored to its original position on screen.
+           */
+          child_overlay = gimp_overlay_child_find (GIMP_OVERLAY_BOX (shell->canvas),
+                                                   text_tool->style_overlay);
+          gimp_overlay_child_set_relative_to_shell (child_overlay, FALSE);
+
           gimp_display_shell_move_overlay (shell,
                                            text_tool->style_overlay,
                                            x, y, GIMP_HANDLE_ANCHOR_SOUTH_WEST,

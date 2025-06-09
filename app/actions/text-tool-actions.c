@@ -110,7 +110,12 @@ static const GimpActionEntry text_tool_actions[] =
     NC_("text-tool-action",
         "Bend the text along the currently active path"),
     text_tool_text_along_path_cmd_callback,
-    GIMP_HELP_TEXT_TOOL_TEXT_ALONG_PATH }
+    GIMP_HELP_TEXT_TOOL_TEXT_ALONG_PATH },
+
+  { "text-tool-restore-on-canvas-editor-position", NULL,
+    NC_("text-tool-action", "Restore On-Canvas Editor Position"), NULL, { NULL }, NULL,
+    text_tool_restore_on_canvas_editor_position_cmd_callback,
+    NULL }
 };
 
 static const GimpRadioActionEntry text_tool_direction_actions[] =
@@ -187,6 +192,7 @@ text_tool_actions_update (GimpActionGroup *group,
   gboolean          clip       = FALSE;   /* clipboard has text available */
   GimpTextDirection direction;
   gint              i;
+  gdouble           x, y;
 
   layers = gimp_image_get_selected_layers (image);
 
@@ -222,6 +228,9 @@ text_tool_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("text-tool-load",              image);
   SET_SENSITIVE ("text-tool-text-to-path",      text_layer);
   SET_SENSITIVE ("text-tool-text-along-path",   text_layer && g_list_length (paths) == 1);
+  SET_SENSITIVE ("text-tool-restore-on-canvas-editor-position",
+                                                text_layer &&
+                                                gimp_text_layer_get_style_overlay_position (text_tool->layer, &x, &y));
 
   direction = gimp_text_tool_get_direction (text_tool);
   for (i = 0; i < G_N_ELEMENTS (text_tool_direction_actions); i++)
