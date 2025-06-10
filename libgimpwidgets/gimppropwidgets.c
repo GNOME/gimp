@@ -3944,12 +3944,39 @@ gimp_prop_coordinates_new (GObject                   *config,
                            gdouble                    yresolution,
                            gboolean                   has_chainbutton)
 {
+  GimpUnit  *unit_type;
   GtkWidget *entry;
-  GtkWidget *chainbutton = NULL;
+  GtkWidget *chainbutton     = NULL;
+  gboolean   show_pixels     = FALSE;
+  gboolean   show_percents   = FALSE;
+  gboolean   show_resolution = TRUE;
 
-  entry = gimp_size_entry_new (2, gimp_unit_inch (), unit_format,
-                               FALSE, FALSE, TRUE, 10,
-                               update_policy);
+  if (unit_property_name != NULL)
+    {
+      GParamSpec *pspec_unit = NULL;
+
+      pspec_unit = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
+                                                 unit_property_name);
+
+      if (pspec_unit && GIMP_IS_PARAM_SPEC_UNIT (pspec_unit))
+        {
+          show_pixels   = gimp_param_spec_unit_pixel_allowed (pspec_unit);
+          show_percents = gimp_param_spec_unit_percent_allowed (pspec_unit);
+
+          if (show_pixels)
+            show_resolution = FALSE;
+
+          g_object_get (config, unit_property_name, &unit_type, NULL);
+        }
+    }
+  else
+    {
+      unit_type = gimp_unit_inch ();
+    }
+
+  entry = gimp_size_entry_new (2, unit_type, unit_format,
+                               show_pixels, show_percents, show_resolution,
+                               10, update_policy);
 
   if (has_chainbutton)
     {
