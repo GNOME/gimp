@@ -202,6 +202,7 @@ print_page_layout_gui (PrintData   *data,
 
   gimp_help_connect (main_hbox, NULL, gimp_standard_help_func, help, NULL, NULL);
 
+  data->has_layout_gui = TRUE;
   return main_hbox;
 }
 
