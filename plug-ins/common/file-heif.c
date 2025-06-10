@@ -499,7 +499,7 @@ heif_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         _("Loads AVCI images"),
-                                        _("Load AVCI image - H.264 image encapsulated in HEIF)"),
+                                        _("Load AVCI image - H.264 image encapsulated in HEIF"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Daniel Novomesky <dnovomesky@gmail.com>",
