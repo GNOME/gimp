@@ -1116,16 +1116,15 @@ gimp_procedure_dialog_get_color_widget (GimpProcedureDialog *dialog,
  *                           freed.
  */
 GtkWidget *
-gimp_procedure_dialog_get_coordinates (GimpProcedureDialog *dialog,
-                                       const gchar         *coordinates_id,
-                                       const gchar         *x_property,
-                                       const gchar         *y_property,
-                                       const gchar         *unit_property,
-                                       const gchar         *unit_format,
-                                       GimpSizeEntryUpdatePolicy
-                                                            update_policy,
-                                       gdouble              x_resolution,
-                                       gdouble              y_resolution)
+gimp_procedure_dialog_get_coordinates (GimpProcedureDialog       *dialog,
+                                       const gchar               *coordinates_id,
+                                       const gchar               *x_property,
+                                       const gchar               *y_property,
+                                       const gchar               *unit_property,
+                                       const gchar               *unit_format,
+                                       GimpSizeEntryUpdatePolicy  update_policy,
+                                       gdouble                    x_resolution,
+                                       gdouble                    y_resolution)
 {
   GimpProcedureDialogPrivate *priv;
   GtkWidget                  *widget = NULL;
@@ -1167,9 +1166,11 @@ gimp_procedure_dialog_get_coordinates (GimpProcedureDialog *dialog,
       return NULL;
     }
 
-  g_return_val_if_fail (G_PARAM_SPEC_TYPE (pspec_x) == G_TYPE_PARAM_INT ||
+  g_return_val_if_fail (G_PARAM_SPEC_TYPE (pspec_x) == G_TYPE_PARAM_INT  ||
+                        G_PARAM_SPEC_TYPE (pspec_x) == G_TYPE_PARAM_UINT ||
                         G_PARAM_SPEC_TYPE (pspec_x) == G_TYPE_PARAM_DOUBLE, NULL);
-  g_return_val_if_fail (G_PARAM_SPEC_TYPE (pspec_y) == G_TYPE_PARAM_INT ||
+  g_return_val_if_fail (G_PARAM_SPEC_TYPE (pspec_y) == G_TYPE_PARAM_INT  ||
+                        G_PARAM_SPEC_TYPE (pspec_y) == G_TYPE_PARAM_UINT ||
                         G_PARAM_SPEC_TYPE (pspec_y) == G_TYPE_PARAM_DOUBLE, NULL);
   g_return_val_if_fail (G_PARAM_SPEC_TYPE (pspec_unit) == GIMP_TYPE_PARAM_UNIT, NULL);
 
