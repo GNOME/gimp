@@ -1102,7 +1102,6 @@ gimp_procedure_dialog_get_color_widget (GimpProcedureDialog *dialog,
  *                     calculations should be done.
  * @x_resolution:      The resolution (in dpi) for the X coordinate.
  * @y_resolution:      The resolution (in dpi) for the Y coordinate.
-
  *
  * Creates a new #GimpCoordinates for @x_property and @y_property which
  * must necessarily be an integer or double property.
