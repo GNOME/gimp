@@ -964,13 +964,11 @@ gimp_foreground_select_tool_confirm (GimpPolygonSelectTool *poly_sel,
 static void
 gimp_foreground_select_tool_halt (GimpForegroundSelectTool *fg_select)
 {
-  GimpTool     *tool = GIMP_TOOL (fg_select);
+  GimpTool     *tool      = GIMP_TOOL (fg_select);
   GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (fg_select);
 
   if (draw_tool->preview)
-    {
-      gimp_draw_tool_remove_preview (draw_tool, fg_select->grayscale_preview);
-    }
+    gimp_draw_tool_remove_preview (draw_tool, fg_select->grayscale_preview);
 
   g_clear_object (&fg_select->grayscale_preview);
   g_clear_object (&fg_select->trimap);
@@ -1028,7 +1026,9 @@ gimp_foreground_select_tool_commit (GimpForegroundSelectTool *fg_select)
   GimpTool             *tool    = GIMP_TOOL (fg_select);
   GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (fg_select);
 
-  if (tool->display && fg_select->state != MATTING_STATE_FREE_SELECT)
+  if (tool->display                                 &&
+      fg_select->state != MATTING_STATE_FREE_SELECT &&
+      fg_select->undo_stack != NULL)
     {
       GimpImage *image = gimp_display_get_image (tool->display);
 
