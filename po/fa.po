@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI VERSION\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-05-24 16:13+0000\n"
-"PO-Revision-Date: 2025-05-27 11:47+0330\n"
+"POT-Creation-Date: 2025-06-09 21:15+0000\n"
+"PO-Revision-Date: 2025-06-11 00:55+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@gnome.org>\n"
 "Language: fa\n"
@@ -142,6 +142,23 @@ msgstr ""
 "\n"
 "شما باید یک رونوشت از پروانهٔ جامع همگانی گنو را همراه با گیمپ دریافت کرده باشید؛ "
 "اگر نه، https://www.gnu.org/licenses/ را ببینید"
+
+#. TRANSLATORS: title for info message in terminal window
+#: app/app.c:534
+msgid "INFO"
+msgstr ""
+
+#. TRANSLATORS: info message displayed in terminal window.
+#: app/app.c:536
+msgid ""
+"GIMP is now running as a background process. You can quit anytime with Ctrl-C "
+"(SIGINT)."
+msgstr ""
+
+#. TRANSLATORS: info message displayed in terminal window.
+#: app/app.c:539
+msgid "If you wanted to quit immediately instead, call GIMP with --quit."
+msgstr ""
 
 #: app/gimp-update.c:455
 #, c-format
@@ -349,7 +366,7 @@ msgstr "ویرایشگر قلم‌مو"
 # "و شما در این مورد به GLib اطلاع نداده‌اید. لطفاً متغیر محیطی G_FILENAME_ENCODING را مقداردهی کنید."
 #. initialize the list of gimp brushes
 #: app/actions/actions.c:116 app/core/gimp-data-factories.c:358
-#: app/dialogs/dialogs.c:341 app/dialogs/preferences-dialog.c:3509
+#: app/dialogs/dialogs.c:341 app/dialogs/preferences-dialog.c:3514
 msgid "Brushes"
 msgstr "قلم‌موها"
 
@@ -432,7 +449,7 @@ msgstr "پالایه‌ها"
 
 #. initialize the list of gimp fonts
 #: app/actions/actions.c:173 app/core/gimp-data-factories.c:392
-#: app/dialogs/dialogs.c:359 app/dialogs/preferences-dialog.c:3539
+#: app/dialogs/dialogs.c:359 app/dialogs/preferences-dialog.c:3544
 msgid "Fonts"
 msgstr "قلم‌ها"
 
@@ -443,12 +460,12 @@ msgstr "ویرایشگر گرادیان"
 
 #. initialize the list of gimp gradients
 #: app/actions/actions.c:179 app/core/gimp-data-factories.c:383
-#: app/dialogs/dialogs.c:353 app/dialogs/preferences-dialog.c:3533
+#: app/dialogs/dialogs.c:353 app/dialogs/preferences-dialog.c:3538
 msgid "Gradients"
 msgstr "گرادیان‌ها"
 
 #: app/actions/actions.c:182 app/core/gimp-data-factories.c:399
-#: app/dialogs/dialogs.c:365 app/dialogs/preferences-dialog.c:3545
+#: app/dialogs/dialogs.c:365 app/dialogs/preferences-dialog.c:3550
 msgid "Tool Presets"
 msgstr "پیش‌تنظیم‌های ابزار"
 
@@ -477,7 +494,7 @@ msgstr "لایه‌ها"
 
 #. initialize the list of mypaint brushes
 #: app/actions/actions.c:200 app/core/gimp-data-factories.c:368
-#: app/dialogs/dialogs.c:347 app/dialogs/preferences-dialog.c:3551
+#: app/dialogs/dialogs.c:347 app/dialogs/preferences-dialog.c:3556
 msgid "MyPaint Brushes"
 msgstr "قلم‌موهای مای‌پینت"
 
@@ -488,22 +505,22 @@ msgstr "ویرایشگر تخته‌رنگ"
 
 #. initialize the list of gimp palettes
 #: app/actions/actions.c:206 app/core/gimp-data-factories.c:378
-#: app/dialogs/dialogs.c:356 app/dialogs/preferences-dialog.c:3527
+#: app/dialogs/dialogs.c:356 app/dialogs/preferences-dialog.c:3532
 msgid "Palettes"
 msgstr "تخته‌رنگ‌ها"
 
 #. initialize the list of gimp patterns
 #: app/actions/actions.c:209 app/core/gimp-data-factories.c:373
-#: app/dialogs/dialogs.c:350 app/dialogs/preferences-dialog.c:3521
+#: app/dialogs/dialogs.c:350 app/dialogs/preferences-dialog.c:3526
 msgid "Patterns"
 msgstr "الگوها"
 
-#: app/actions/actions.c:212 app/dialogs/preferences-dialog.c:3557
+#: app/actions/actions.c:212 app/dialogs/preferences-dialog.c:3562
 msgid "Plug-ins"
 msgstr "افزایه‌ها"
 
 #. Quick Mask Color
-#: app/actions/actions.c:215 app/core/gimpchannel.c:362
+#: app/actions/actions.c:215 app/core/gimpchannel.c:363
 #: app/dialogs/preferences-dialog.c:1829
 msgid "Quick Mask"
 msgstr "نقاب سریع"
@@ -1029,7 +1046,7 @@ msgstr "ویرایش رنگ کانال"
 msgid "_Fill opacity:"
 msgstr "_کدری داخل:"
 
-#: app/actions/channels-commands.c:167 app/widgets/gimpchanneltreeview.c:332
+#: app/actions/channels-commands.c:167 app/widgets/gimpchanneltreeview.c:333
 msgid "New Channel"
 msgstr "کانال جدید"
 
@@ -1061,9 +1078,9 @@ msgid "Lower Channel to Bottom"
 msgid_plural "Lower Channels to Bottom"
 msgstr[0] "بردن کانال به پایین‌ترین"
 
-#: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:607
-#: app/display/gimpdisplayshell-dnd.c:737 app/widgets/gimpchanneltreeview.c:265
-#: app/widgets/gimplayertreeview.c:862
+#: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:531
+#: app/display/gimpdisplayshell-dnd.c:703 app/widgets/gimpchanneltreeview.c:266
+#: app/widgets/gimplayertreeview.c:859
 #, c-format
 msgid "%s Channel Copy"
 msgstr "رونوشت %s کانال"
@@ -2523,8 +2540,8 @@ msgstr "توضیحی برای نشانه‌گذار وارد کنید"
 #: app/actions/data-commands.c:90 app/actions/documents-commands.c:393
 #: app/actions/file-commands.c:211 app/dialogs/file-open-dialog.c:247
 #: app/dialogs/file-open-dialog.c:288 app/dialogs/file-open-location-dialog.c:217
-#: app/dialogs/file-open-location-dialog.c:233 app/dialogs/welcome-dialog.c:1246
-#: app/display/gimpdisplayshell-dnd.c:680 app/widgets/gimplayertreeview.c:820
+#: app/dialogs/file-open-location-dialog.c:233 app/dialogs/welcome-dialog.c:1251
+#: app/display/gimpdisplayshell-dnd.c:646 app/widgets/gimplayertreeview.c:817
 #: app/widgets/gimptoolbox.c:843 app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -2537,7 +2554,7 @@ msgstr ""
 "%s"
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
-#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2436
+#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2437
 #: app/core/gimppalette.c:585 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:774 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
@@ -5984,7 +6001,7 @@ msgstr "برگرداندن"
 msgid "Rotating"
 msgstr "چرخاندن"
 
-#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1347
+#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1324
 msgid "Cannot crop because the current selection is empty."
 msgstr "نمی‌توان حاشیه‌گیری کرد چون در حال حاضر چیزی گزینش نشده است."
 
@@ -6033,9 +6050,9 @@ msgid "Scale Image"
 msgstr "مقیاس کردن تصویر"
 
 #. Scaling
-#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2577
+#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2573
 #: app/dialogs/preferences-dialog.c:1747 app/pdb/image-transform-cmds.c:124
-#: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:453
+#: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:375
 #: app/tools/gimpscaletool.c:122
 msgid "Scaling"
 msgstr "بزرگ‌نمایی"
@@ -6070,19 +6087,19 @@ msgctxt "images-action"
 msgid "Delete this image"
 msgstr ""
 
-#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:723
+#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:594
 msgid "Lock content"
 msgstr ""
 
-#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:724
+#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:595
 msgid "Unlock content"
 msgstr ""
 
-#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:739
+#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:610
 msgid "Lock position"
 msgstr ""
 
-#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:740
+#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:611
 msgid "Unlock position"
 msgstr ""
 
@@ -6129,7 +6146,7 @@ msgctxt "layers-action"
 msgid "Edit the layer's name"
 msgstr ""
 
-#: app/actions/layers-actions.c:70 app/actions/layers-actions.c:1004
+#: app/actions/layers-actions.c:70 app/actions/layers-actions.c:1005
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "_لایهٔ جدید…"
@@ -6139,7 +6156,7 @@ msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "ایجاد لایه‌ای جدید و افزودنش به تصویر"
 
-#: app/actions/layers-actions.c:76 app/actions/layers-actions.c:1005
+#: app/actions/layers-actions.c:76 app/actions/layers-actions.c:1006
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "_لایهٔ جدید"
@@ -6234,7 +6251,7 @@ msgctxt "layers-action"
 msgid "_Anchor Floating Layer or Mask"
 msgstr ""
 
-#: app/actions/layers-actions.c:133 app/widgets/gimplayertreeview.c:1312
+#: app/actions/layers-actions.c:133 app/widgets/gimplayertreeview.c:1271
 msgctxt "layers-action"
 msgid "Anchor the floating layer or mask"
 msgstr ""
@@ -6891,214 +6908,214 @@ msgstr "میان‌بر: "
 msgid "-Click on thumbnail in Layers dockable"
 msgstr ""
 
-#: app/actions/layers-actions.c:999 app/actions/layers-actions.c:1000
+#: app/actions/layers-actions.c:1000 app/actions/layers-actions.c:1001
 msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "به لایهٔ _جدید"
 
-#: app/actions/layers-commands.c:289 app/actions/layers-commands.c:2419
+#: app/actions/layers-commands.c:287 app/actions/layers-commands.c:2414
 msgid "Layer Attributes"
 msgstr "ویژگی‌های لایه"
 
-#: app/actions/layers-commands.c:292
+#: app/actions/layers-commands.c:290
 msgid "Edit Layer Attributes"
 msgstr "ویرایش ویژگی‌های لایه"
 
-#: app/actions/layers-commands.c:361 app/widgets/gimpdrawabletreeview.c:354
-#: app/widgets/gimplayertreeview.c:939
+#: app/actions/layers-commands.c:359 app/widgets/gimpdrawabletreeview.c:647
+#: app/widgets/gimplayertreeview.c:936
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "لایه‌های جدید"
 
-#: app/actions/layers-commands.c:362
+#: app/actions/layers-commands.c:360
 #, c-format
 msgid "Create a New Layer"
 msgid_plural "Create %d New Layers"
 msgstr[0] "ایجاد %Id لایهٔ جدید"
 
-#: app/actions/layers-commands.c:447 app/actions/layers-commands.c:2304
+#: app/actions/layers-commands.c:445 app/actions/layers-commands.c:2299
 msgid "New layer"
 msgid_plural "New layers"
 msgstr[0] "لایه‌های جدید"
 
-#: app/actions/layers-commands.c:526
+#: app/actions/layers-commands.c:527
 msgid "Visible"
 msgstr "قابل دیدن"
 
-#: app/actions/layers-commands.c:555
+#: app/actions/layers-commands.c:557
 msgid "New layer group"
 msgid_plural "New layer groups"
 msgstr[0] "گروه‌های لایهٔ جدید"
 
-#: app/actions/layers-commands.c:676
+#: app/actions/layers-commands.c:679
 msgid "Raise Layer"
 msgid_plural "Raise Layers"
 msgstr[0] "بالا بردن لایه‌ها"
 
-#: app/actions/layers-commands.c:712
+#: app/actions/layers-commands.c:714
 msgid "Raise Layer to Top"
 msgid_plural "Raise Layers to Top"
 msgstr[0] "بردن لایه‌ها به بالاترین"
 
-#: app/actions/layers-commands.c:757
+#: app/actions/layers-commands.c:758
 msgid "Lower Layer"
 msgid_plural "Lower Layers"
 msgstr[0] "پایین بردن لایه‌ها"
 
-#: app/actions/layers-commands.c:794
+#: app/actions/layers-commands.c:795
 msgid "Lower Layer to Bottom"
 msgid_plural "Lower Layers to Bottom"
 msgstr[0] "بردن لایه‌ها به پایین‌ترین"
 
-#: app/actions/layers-commands.c:821
+#: app/actions/layers-commands.c:822
 msgid "Duplicate layers"
 msgstr "تکثیر لایه‌ها"
 
-#: app/actions/layers-commands.c:1002
+#: app/actions/layers-commands.c:970
 #, c-format
 msgctxt "undo-type"
 msgid "Merge %d Layer Groups"
 msgstr ""
 
-#: app/actions/layers-commands.c:1062
+#: app/actions/layers-commands.c:1031
 #, c-format
 msgctxt "undo-type"
 msgid "Remove %d Layers"
 msgstr "برداشتن %Id لایه"
 
-#: app/actions/layers-commands.c:1089 app/text/gimptextlayer.c:584
+#: app/actions/layers-commands.c:1059 app/text/gimptextlayer.c:584
 msgid "Discard Text Information"
 msgstr "دور ریختن اطّلاعات متنی"
 
-#: app/actions/layers-commands.c:1108
+#: app/actions/layers-commands.c:1079
 msgid "Add Paths"
 msgstr "افزودن مسیرها"
 
-#: app/actions/layers-commands.c:1232
+#: app/actions/layers-commands.c:1208
 msgid "Set Layer Boundary Size"
 msgstr "تنظیم اندازهٔ حدود لایه"
 
-#: app/actions/layers-commands.c:1262
+#: app/actions/layers-commands.c:1238
 msgid "Layers to Image Size"
 msgstr "لایه‌ها به اندازهٔ تصویر"
 
-#: app/actions/layers-commands.c:1313
+#: app/actions/layers-commands.c:1290
 msgid "Scale Layer"
 msgstr "مقیاس کردن لایه"
 
-#: app/actions/layers-commands.c:1352
+#: app/actions/layers-commands.c:1329
 #, c-format
 msgid "Crop Layer to Selection"
 msgid_plural "Crop %d Layers to Selection"
 msgstr[0] "برش %Id لایه به گزیده"
 
-#: app/actions/layers-commands.c:1417
+#: app/actions/layers-commands.c:1394
 msgid ""
 "Cannot crop because none of the selected layers have content or they are already "
 "cropped to their content."
 msgstr ""
 
-#: app/actions/layers-commands.c:1423
+#: app/actions/layers-commands.c:1400
 #, c-format
 msgid "Crop Layer to Content"
 msgid_plural "Crop %d Layers to Content"
 msgstr[0] "برش %Id لایه به محتوا"
 
-#: app/actions/layers-commands.c:1560 app/actions/layers-commands.c:2512
+#: app/actions/layers-commands.c:1538 app/actions/layers-commands.c:2506
 msgid "Add Layer Masks"
 msgstr "افزودن نقاب‌های لایه"
 
-#: app/actions/layers-commands.c:1612
+#: app/actions/layers-commands.c:1590
 msgid "Apply Layer Masks"
 msgstr "اعمال نقاب‌های لایه"
 
-#: app/actions/layers-commands.c:1616
+#: app/actions/layers-commands.c:1594
 msgid "Delete Layer Masks"
 msgstr "حذف نقاب‌های لایه"
 
-#: app/actions/layers-commands.c:1703
+#: app/actions/layers-commands.c:1685
 msgid "Show Layer Masks"
 msgstr "نمایش نقاب‌های لایه"
 
-#: app/actions/layers-commands.c:1750
+#: app/actions/layers-commands.c:1736
 msgid "Disable Layer Masks"
 msgstr "از کار انداختن نقاب‌های لایه"
 
-#: app/actions/layers-commands.c:1789
+#: app/actions/layers-commands.c:1775
 msgctxt "undo-type"
 msgid "Masks to Selection"
 msgstr ""
 
-#: app/actions/layers-commands.c:1793
+#: app/actions/layers-commands.c:1779
 msgctxt "undo-type"
 msgid "Add Masks to Selection"
 msgstr ""
 
-#: app/actions/layers-commands.c:1797
+#: app/actions/layers-commands.c:1783
 msgctxt "undo-type"
 msgid "Subtract Masks from Selection"
 msgstr ""
 
-#: app/actions/layers-commands.c:1801
+#: app/actions/layers-commands.c:1787
 msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
 msgstr ""
 
-#: app/actions/layers-commands.c:1822
+#: app/actions/layers-commands.c:1810
 msgid "Add Alpha Channel"
 msgstr "افزودن کانال آلفا"
 
-#: app/actions/layers-commands.c:1843
+#: app/actions/layers-commands.c:1831
 msgid "Remove Alpha Channel"
 msgstr "برداشتن کانال آلفا"
 
-#: app/actions/layers-commands.c:1871 app/core/gimpchannel-select.c:433
+#: app/actions/layers-commands.c:1859 app/core/gimpchannel-select.c:433
 #: app/core/gimplayer.c:435
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr ""
 
-#: app/actions/layers-commands.c:1875 app/core/gimpchannel-select.c:427
+#: app/actions/layers-commands.c:1863 app/core/gimpchannel-select.c:427
 msgctxt "undo-type"
 msgid "Add Alpha to Selection"
 msgstr ""
 
-#: app/actions/layers-commands.c:1879 app/core/gimpchannel-select.c:430
+#: app/actions/layers-commands.c:1867 app/core/gimpchannel-select.c:430
 msgctxt "undo-type"
 msgid "Subtract Alpha from Selection"
 msgstr ""
 
-#: app/actions/layers-commands.c:1883 app/core/gimpchannel-select.c:436
+#: app/actions/layers-commands.c:1871 app/core/gimpchannel-select.c:436
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
 msgstr ""
 
-#: app/actions/layers-commands.c:1894
+#: app/actions/layers-commands.c:1884
 msgid "Empty Selection"
 msgstr "گزینش خالی"
 
-#: app/actions/layers-commands.c:1924 app/actions/layers-commands.c:1968
-#: app/widgets/gimplayertreeview.c:1115
+#: app/actions/layers-commands.c:1914 app/actions/layers-commands.c:1958
+#: app/widgets/gimplayertreeview.c:1112
 msgid "Set layers opacity"
 msgstr ""
 
-#: app/actions/layers-commands.c:2038
+#: app/actions/layers-commands.c:2028
 msgid "Set layers' blend space"
 msgstr ""
 
-#: app/actions/layers-commands.c:2091
+#: app/actions/layers-commands.c:2082
 msgid "Set layers' composite space"
 msgstr ""
 
-#: app/actions/layers-commands.c:2144
+#: app/actions/layers-commands.c:2136
 msgid "Set layers' composite mode"
 msgstr ""
 
-#: app/actions/layers-commands.c:2228
+#: app/actions/layers-commands.c:2221
 msgid "Lock alpha channels"
 msgstr ""
 
-#: app/actions/layers-commands.c:2228
+#: app/actions/layers-commands.c:2221
 msgid "Unlock alpha channels"
 msgstr ""
 
@@ -8319,7 +8336,7 @@ msgstr "گشودن پروندهٔ متنی (UTF-8)"
 
 #: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:125
 #: app/dialogs/file-open-location-dialog.c:81 app/dialogs/path-import-dialog.c:94
-#: app/dialogs/welcome-dialog.c:717 app/widgets/gimpiconpicker.c:490
+#: app/dialogs/welcome-dialog.c:722 app/widgets/gimpiconpicker.c:490
 #: app/widgets/gimpopendialog.c:87 app/widgets/gimpsettingsbox.c:718
 msgid "_Open"
 msgstr "_گشودن"
@@ -10288,20 +10305,25 @@ msgctxt "zoom-quality"
 msgid "High"
 msgstr "بالا"
 
-#: app/config/config-enums.c:403
+#: app/config/config-enums.c:404
 msgctxt "theme-scheme"
 msgid "Light Colors"
 msgstr "رنگ‌های روشن"
 
-#: app/config/config-enums.c:404
+#: app/config/config-enums.c:405
 msgctxt "theme-scheme"
 msgid "Middle Gray"
 msgstr "خاکستری متوسّط"
 
-#: app/config/config-enums.c:405
+#: app/config/config-enums.c:406
 msgctxt "theme-scheme"
 msgid "Dark Colors"
 msgstr "رنگ‌های تیره"
+
+#: app/config/config-enums.c:407
+msgctxt "theme-scheme"
+msgid "System Colors"
+msgstr "رنگ‌های سامانه"
 
 #: app/config/gimpconfig-file.c:84
 #, c-format
@@ -10314,7 +10336,7 @@ msgid "Error parsing '%%s': line longer than %s characters."
 msgstr ""
 
 #: app/config/gimpconfig-file.c:154 app/config/gimpconfig-file.c:206
-#: app/config/gimpconfig-file.c:223 app/core/gimp-tags.c:145 app/gui/themes.c:533
+#: app/config/gimpconfig-file.c:223 app/core/gimp-tags.c:145 app/gui/themes.c:711
 #: app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
@@ -10345,12 +10367,12 @@ msgstr "لایه"
 
 #: app/config/gimpdialogconfig.c:418 app/core/gimpchannel.c:256
 #: app/operations/gimpcurvesconfig.c:119 app/operations/gimplevelsconfig.c:125
-#: app/operations/gimpoperationthreshold.c:94 app/widgets/gimpchanneltreeview.c:338
+#: app/operations/gimpoperationthreshold.c:94 app/widgets/gimpchanneltreeview.c:339
 msgid "Channel"
 msgstr "کانال"
 
 #: app/config/gimpdialogconfig.c:432 app/vectors/gimppath.c:224
-#: app/widgets/gimppathtreeview.c:258
+#: app/widgets/gimppathtreeview.c:259
 msgid "Path"
 msgstr "مسیر"
 
@@ -12079,12 +12101,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr ""
 
-#: app/core/core-enums.c:1337 app/core/gimp-edit.c:885
+#: app/core/core-enums.c:1337 app/core/gimp-edit.c:854
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "جای‌گذاری"
 
-#: app/core/core-enums.c:1338 app/core/gimp-edit.c:1247
+#: app/core/core-enums.c:1338 app/core/gimp-edit.c:1216
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "بریدن"
@@ -12424,7 +12446,7 @@ msgid "Parasites"
 msgstr "پارازیت‌ها"
 
 #. initialize the module list
-#: app/core/gimp.c:862 app/dialogs/preferences-dialog.c:3569
+#: app/core/gimp.c:862 app/dialogs/preferences-dialog.c:3574
 msgid "Modules"
 msgstr "پیمانه‌ها"
 
@@ -12474,7 +12496,7 @@ msgstr "حذف «%s» شکست خورد: %s"
 
 #. initialize the list of gimp dynamics
 #: app/core/gimp-data-factories.c:363 app/core/gimpcontext.c:706
-#: app/dialogs/preferences-dialog.c:3515 app/tools/gimppaintoptions-gui.c:329
+#: app/dialogs/preferences-dialog.c:3520 app/tools/gimppaintoptions-gui.c:329
 msgid "Dynamics"
 msgstr "دینامیک‌ها"
 
@@ -12488,33 +12510,33 @@ msgstr "تاریخچهٔ رنگ"
 msgid "Updating tag cache"
 msgstr "به‌روز کردن انبارهٔ برجسب"
 
-#: app/core/gimp-edit.c:91
+#: app/core/gimp-edit.c:89
 #, c-format
 msgid "Cut Layer"
 msgid_plural "Cut %d Layers"
 msgstr[0] "برش %Id لایه"
 
-#: app/core/gimp-edit.c:213
+#: app/core/gimp-edit.c:211
 msgid "Cannot cut because multiple channels are selected."
 msgstr "نمی‌توان برید چرا که چندین کانال گزیده شده‌اند."
 
-#: app/core/gimp-edit.c:217
+#: app/core/gimp-edit.c:215
 msgid "Cannot copy because multiple channels are selected."
 msgstr "نمی‌توان رونوشت کرد چرا که چندین کانال گزیده شده‌اند."
 
-#: app/core/gimp-edit.c:253
+#: app/core/gimp-edit.c:251
 msgid "Cannot cut because the selected region is empty."
 msgstr ""
 
-#: app/core/gimp-edit.c:256
+#: app/core/gimp-edit.c:254
 msgid "Cannot copy because the selected region is empty."
 msgstr ""
 
-#: app/core/gimp-edit.c:655 app/core/gimpimage-new.c:656
+#: app/core/gimp-edit.c:624 app/core/gimpimage-new.c:580
 msgid "Pasted Layer"
 msgstr "لایهٔ چسبانده"
 
-#: app/core/gimp-edit.c:1264
+#: app/core/gimp-edit.c:1233
 msgid "Global Buffer"
 msgstr "میان‌گیر سراسری"
 
@@ -12652,7 +12674,7 @@ msgstr "اجرای فرایند فرزند «%s» شکست خورد (%s)"
 msgid "tags-locale:C"
 msgstr ""
 
-#: app/core/gimp-tags.c:156 app/gui/themes.c:545
+#: app/core/gimp-tags.c:156 app/gui/themes.c:723
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr ""
@@ -13068,25 +13090,25 @@ msgctxt "undo-type"
 msgid "Flood Channel"
 msgstr ""
 
-#: app/core/gimpchannel.c:783
+#: app/core/gimpchannel.c:788
 msgid "Cannot fill empty channel."
 msgstr ""
 
-#: app/core/gimpchannel.c:819
+#: app/core/gimpchannel.c:824
 msgid "Cannot stroke empty channel."
 msgstr "نمی‌توان کانال خالی را قلم‌ضربه کاری کرد."
 
-#: app/core/gimpchannel.c:1663
+#: app/core/gimpchannel.c:1676
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr ""
 
-#: app/core/gimpchannel.c:1717
+#: app/core/gimpchannel.c:1730
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr ""
 
-#: app/core/gimpchannel.c:1802 app/core/gimpselection.c:172
+#: app/core/gimpchannel.c:1815 app/core/gimpselection.c:172
 msgid "Selection Mask"
 msgstr "نقاب گزینش"
 
@@ -13098,7 +13120,7 @@ msgstr "پیش‌زمینه"
 msgid "Foreground color"
 msgstr "رنگ پیش‌زمینه"
 
-#: app/core/gimpcontext.c:675 app/core/gimpimage-new.c:197
+#: app/core/gimpcontext.c:675 app/core/gimpimage-new.c:180
 msgid "Background"
 msgstr "پس‌زمینه"
 
@@ -13107,7 +13129,7 @@ msgid "Background color"
 msgstr "رنگ پس‌زمینه"
 
 #: app/core/gimpcontext.c:682 app/core/gimpcontext.c:683
-#: app/operations/gimpoperationsettings.c:99 app/widgets/gimplayertreeview.c:295
+#: app/operations/gimpoperationsettings.c:99 app/widgets/gimplayertreeview.c:293
 msgid "Opacity"
 msgstr "شفافیت"
 
@@ -13163,11 +13185,11 @@ msgid ""
 msgstr ""
 
 #: app/core/gimpdatafactory.c:465 app/core/gimpdatafactory.c:468
-#: app/core/gimpitem.c:574 app/core/gimpitem.c:577
+#: app/core/gimpitem.c:572 app/core/gimpitem.c:575
 msgid "copy"
 msgstr "نگارش"
 
-#: app/core/gimpdatafactory.c:477 app/core/gimpitem.c:585
+#: app/core/gimpdatafactory.c:477 app/core/gimpitem.c:583
 #, c-format
 msgid "%s copy"
 msgstr "%s نگارش"
@@ -13233,7 +13255,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: app/core/gimpdrawable.c:559 app/tools/gimpscaletool.c:121
+#: app/core/gimpdrawable.c:618 app/tools/gimpscaletool.c:121
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "مقیاس"
@@ -13270,11 +13292,15 @@ msgctxt "undo-type"
 msgid "Render Stroke"
 msgstr ""
 
-#: app/core/gimpdrawable-filters.c:138
+#: app/core/gimpdrawable-filters.c:218 app/core/gimpdrawable-filters.c:258
+msgid "Reorder filter"
+msgstr ""
+
+#: app/core/gimpdrawable-filters.c:292
 msgid "Rasterize filters"
 msgstr ""
 
-#: app/core/gimpdrawable-filters.c:181
+#: app/core/gimpdrawable-filters.c:347
 msgid "Merge filter"
 msgstr ""
 
@@ -13318,7 +13344,7 @@ msgid "Transformation"
 msgstr "تبدیل"
 
 #: app/core/gimpdrawablefiltermask.c:196 app/core/gimplayer.c:733
-#: app/core/gimplayer.c:2030 app/core/gimplayermask.c:294
+#: app/core/gimplayer.c:2034 app/core/gimplayermask.c:294
 #, c-format
 msgid "%s mask"
 msgstr "نقاب %s"
@@ -13493,41 +13519,41 @@ msgstr "فاصلهٔ عمودی اولین خط توری از لبه‌ها؛ ا
 msgid "Offset unit"
 msgstr ""
 
-#: app/core/gimpgrouplayer.c:294
+#: app/core/gimpgrouplayer.c:292
 msgid "Layer Group"
 msgstr ""
 
-#: app/core/gimpgrouplayer.c:295
+#: app/core/gimpgrouplayer.c:293
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr ""
 
-#: app/core/gimpgrouplayer.c:296
+#: app/core/gimpgrouplayer.c:294
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "جابه‌جایی گروه لایه"
 
-#: app/core/gimpgrouplayer.c:297
+#: app/core/gimpgrouplayer.c:295
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "مقیاس کردن گروه لایه"
 
-#: app/core/gimpgrouplayer.c:298
+#: app/core/gimpgrouplayer.c:296
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr ""
 
-#: app/core/gimpgrouplayer.c:299
+#: app/core/gimpgrouplayer.c:297
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr ""
 
-#: app/core/gimpgrouplayer.c:300
+#: app/core/gimpgrouplayer.c:298
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr ""
 
-#: app/core/gimpgrouplayer.c:301
+#: app/core/gimpgrouplayer.c:299
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr ""
@@ -13536,179 +13562,179 @@ msgstr ""
 msgid "Symmetry"
 msgstr ""
 
-#: app/core/gimpimage.c:2071 app/pdb/drawable-filter-cmds.c:681
-#: app/widgets/gimpitemtreeview.c:2901
+#: app/core/gimpimage.c:2072 app/pdb/drawable-filter-cmds.c:681
+#: app/widgets/gimpdrawabletreeview-filters.c:863
 msgid "Remove filter"
 msgstr ""
 
-#: app/core/gimpimage.c:2681
+#: app/core/gimpimage.c:2682
 msgid " (exported)"
 msgstr " (برون‌ریخته)"
 
-#: app/core/gimpimage.c:2685
+#: app/core/gimpimage.c:2686
 msgid " (overwritten)"
 msgstr ""
 
-#: app/core/gimpimage.c:2694
+#: app/core/gimpimage.c:2695
 msgid " (imported)"
 msgstr " (درون‌ریخته)"
 
-#: app/core/gimpimage.c:2868 app/core/gimpimage.c:2882 app/core/gimpimage.c:2925
+#: app/core/gimpimage.c:2869 app/core/gimpimage.c:2883 app/core/gimpimage.c:2926
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:2945
+#: app/core/gimpimage.c:2946
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:2952
+#: app/core/gimpimage.c:2953
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:2959
+#: app/core/gimpimage.c:2960
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:2966
+#: app/core/gimpimage.c:2967
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:2974 app/core/gimpimage.c:3025
+#: app/core/gimpimage.c:2975 app/core/gimpimage.c:3026
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:2985
+#: app/core/gimpimage.c:2986
 #, c-format
 msgid "Format of font information in text layer was changed in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:2993
+#: app/core/gimpimage.c:2994
 #, c-format
 msgid "Layer effects were added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3005
+#: app/core/gimpimage.c:3006
 #, c-format
 msgid "A new perceptual blending space was added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3034
+#: app/core/gimpimage.c:3035
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3046
+#: app/core/gimpimage.c:3047
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3053
+#: app/core/gimpimage.c:3054
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3067
+#: app/core/gimpimage.c:3068
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3075
+#: app/core/gimpimage.c:3076
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3083
+#: app/core/gimpimage.c:3084
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3100
+#: app/core/gimpimage.c:3101
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3107
+#: app/core/gimpimage.c:3108
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3124
+#: app/core/gimpimage.c:3125
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3135
+#: app/core/gimpimage.c:3136
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3141
+#: app/core/gimpimage.c:3142
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3256
+#: app/core/gimpimage.c:3257
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr ""
 
-#: app/core/gimpimage.c:3308
+#: app/core/gimpimage.c:3309
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr ""
 
-#: app/core/gimpimage.c:4361
+#: app/core/gimpimage.c:4362
 #, c-format
 msgid "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
 
-#: app/core/gimpimage.c:4423
+#: app/core/gimpimage.c:4424
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr ""
 
-#: app/core/gimpimage.c:4468
+#: app/core/gimpimage.c:4469
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr ""
 
-#: app/core/gimpimage.c:5311
+#: app/core/gimpimage.c:5312
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "افزودن لایه"
 
-#: app/core/gimpimage.c:5355 app/core/gimpimage.c:5386
+#: app/core/gimpimage.c:5356 app/core/gimpimage.c:5387
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr ""
 
-#: app/core/gimpimage.c:5380
+#: app/core/gimpimage.c:5381
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr ""
 
-#: app/core/gimpimage.c:5892
+#: app/core/gimpimage.c:5893
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr ""
 
-#: app/core/gimpimage.c:5922 app/core/gimpimage.c:5947
+#: app/core/gimpimage.c:5923 app/core/gimpimage.c:5948
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr ""
 
-#: app/core/gimpimage.c:6007
+#: app/core/gimpimage.c:6008
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr ""
 
-#: app/core/gimpimage.c:6042 app/core/gimpimage.c:6050
+#: app/core/gimpimage.c:6043 app/core/gimpimage.c:6051
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr ""
@@ -13925,7 +13951,7 @@ msgstr ""
 msgid "Cannot merge down to a layer group."
 msgstr ""
 
-#: app/core/gimpimage-merge.c:345 app/widgets/gimpitemtreeview.c:2867
+#: app/core/gimpimage-merge.c:345 app/widgets/gimpdrawabletreeview-filters.c:837
 msgid "The layer to merge down to is locked."
 msgstr ""
 
@@ -13989,7 +14015,7 @@ msgctxt "undo-type"
 msgid "Scale Image"
 msgstr "مقیاس کردن تصویر"
 
-#: app/core/gimpimage-undo-push.c:1133
+#: app/core/gimpimage-undo-push.c:1142
 #, c-format
 msgid "Can't undo %s"
 msgstr "نمی‌توان %s را برگرداند"
@@ -14045,24 +14071,24 @@ msgstr[0] ""
 msgid "Could not open thumbnail '%s': %s"
 msgstr "نمی‌توان مسطورهٔ «‎%s» را گشوده کرد: %s"
 
-#: app/core/gimpitem.c:1883 app/core/gimpitem.c:1950
-#: app/display/gimpdisplayshell-dnd.c:414 app/tools/gimptransformtool.c:704
+#: app/core/gimpitem.c:1851 app/core/gimpitem.c:1918
+#: app/display/gimpdisplayshell-dnd.c:380 app/tools/gimptransformtool.c:704
 #: app/tools/gimpvectortool.c:757 app/tools/gimpvectortool.c:846
-#: app/widgets/gimpitemtreeview.c:2671
+#: app/widgets/gimpdrawabletreeview-filters.c:709
 msgid "A selected layer's pixels are locked."
 msgstr ""
 
-#: app/core/gimpitem.c:2259
+#: app/core/gimpitem.c:2227
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr ""
 
-#: app/core/gimpitem.c:2269
+#: app/core/gimpitem.c:2237
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr ""
 
-#: app/core/gimpitem.c:2320 app/core/gimpitem.c:2327
+#: app/core/gimpitem.c:2288 app/core/gimpitem.c:2295
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr ""
@@ -14170,73 +14196,73 @@ msgid ""
 "(%s)"
 msgstr ""
 
-#: app/core/gimplayer.c:1931
+#: app/core/gimplayer.c:1935
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "افزودن نقاب لایه ممکن نیست چون لایه از قبل یک نقاب دارد."
 
-#: app/core/gimplayer.c:1942
+#: app/core/gimplayer.c:1946
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "ابعاد نقاب لایه نمی‌تواند با ابعاد خود لایه متفاوت باشد."
 
-#: app/core/gimplayer.c:1948
+#: app/core/gimplayer.c:1952
 msgctxt "undo-type"
 msgid "Add Layer Masks"
 msgstr "افزودن نقاب‌های لایه"
 
-#: app/core/gimplayer.c:2072
+#: app/core/gimplayer.c:2076
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr ""
 
-#: app/core/gimplayer.c:2235
+#: app/core/gimplayer.c:2243
 msgctxt "undo-type"
 msgid "Apply Layer Masks"
 msgstr "اعمال نقاب‌های لایه"
 
-#: app/core/gimplayer.c:2236
+#: app/core/gimplayer.c:2244
 msgctxt "undo-type"
 msgid "Delete Layer Masks"
 msgstr ""
 
-#: app/core/gimplayer.c:2343
+#: app/core/gimplayer.c:2351
 msgctxt "undo-type"
 msgid "Enable Layer Masks"
 msgstr ""
 
-#: app/core/gimplayer.c:2344
+#: app/core/gimplayer.c:2352
 msgctxt "undo-type"
 msgid "Disable Layer Masks"
 msgstr ""
 
-#: app/core/gimplayer.c:2425
+#: app/core/gimplayer.c:2433
 msgctxt "undo-type"
 msgid "Show Layer Masks"
 msgstr ""
 
-#: app/core/gimplayer.c:2504
+#: app/core/gimplayer.c:2512
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "افزودن کانال آلفا"
 
-#: app/core/gimplayer.c:2534
+#: app/core/gimplayer.c:2542
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "برداشتن کانال آلفا"
 
-#: app/core/gimplayer.c:2555
+#: app/core/gimplayer.c:2563
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr ""
 
-#: app/core/gimplayer.c:2738
+#: app/core/gimplayer.c:2746
 msgid "Set layer's blend space"
 msgstr ""
 
-#: app/core/gimplayer.c:2785
+#: app/core/gimplayer.c:2793
 msgid "Set layer's composite space"
 msgstr ""
 
-#: app/core/gimplayer.c:2832
+#: app/core/gimplayer.c:2840
 msgid "Set layer's composite mode"
 msgstr ""
 
@@ -15024,7 +15050,7 @@ msgid "Lock position and _size"
 msgstr ""
 
 #: app/dialogs/channel-options-dialog.c:130 app/dialogs/layer-options-dialog.c:169
-#: app/widgets/gimpdrawabletreeview.c:126 app/widgets/gimpitemtreeview.c:755
+#: app/widgets/gimpdrawabletreeview.c:177 app/widgets/gimpitemtreeview.c:626
 msgid "Lock visibility"
 msgstr ""
 
@@ -15509,7 +15535,7 @@ msgstr ""
 msgid "_Discard invisible layers"
 msgstr "_چشم‌پوشی کردن از لایه‌های نامریی"
 
-#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:702
+#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:707
 msgid "Create a New Image"
 msgstr "ایجاد تصویری جدید"
 
@@ -15967,11 +15993,11 @@ msgid ""
 msgstr ""
 "دفعهٔ بعدی که گیمپ را آغاز کنید گزینه‌های ابزارتان به مقادیر پیش‌گزیدهش برخواهد گشت."
 
-#: app/dialogs/preferences-dialog.c:841 app/dialogs/preferences-dialog.c:2696
+#: app/dialogs/preferences-dialog.c:841 app/dialogs/preferences-dialog.c:2701
 msgid "There's a local installation of the user manual."
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:846 app/dialogs/preferences-dialog.c:2702
+#: app/dialogs/preferences-dialog.c:846 app/dialogs/preferences-dialog.c:2707
 msgid "The user manual is not installed locally."
 msgstr ""
 
@@ -16393,8 +16419,8 @@ msgstr "گزینه‌های ابزار"
 #. Snapping Distance
 #. General
 #. general device information
-#: app/dialogs/preferences-dialog.c:1719 app/dialogs/preferences-dialog.c:2643
-#: app/dialogs/preferences-dialog.c:3081 app/dialogs/preferences-dialog.c:3105
+#: app/dialogs/preferences-dialog.c:1719 app/dialogs/preferences-dialog.c:2648
+#: app/dialogs/preferences-dialog.c:3086 app/dialogs/preferences-dialog.c:3110
 #: app/widgets/gimpcontrollereditor.c:190 app/widgets/gimpdeviceinfoeditor.c:362
 msgid "General"
 msgstr "عمومی"
@@ -16550,411 +16576,411 @@ msgstr "زمینه"
 msgid "Select Theme"
 msgstr "گزینش زمینه"
 
-#: app/dialogs/preferences-dialog.c:2046
+#: app/dialogs/preferences-dialog.c:2051
 msgid "Color scheme variant (if available)"
 msgstr "دگرکونهٔ طرحوارهٔ رنگی (در صورت وجود)"
 
-#: app/dialogs/preferences-dialog.c:2051 app/dialogs/welcome-dialog.c:598
+#: app/dialogs/preferences-dialog.c:2056 app/dialogs/welcome-dialog.c:603
 msgid "_Override icon sizes set by the theme"
 msgstr "_پایمالی اندازهٔ مجموعه نقشک‌ها به دست زمینه"
 
-#: app/dialogs/preferences-dialog.c:2064 app/dialogs/welcome-dialog.c:607
+#: app/dialogs/preferences-dialog.c:2069 app/dialogs/welcome-dialog.c:612
 msgid "Small"
 msgstr "کوچک"
 
-#: app/dialogs/preferences-dialog.c:2066 app/dialogs/welcome-dialog.c:609
+#: app/dialogs/preferences-dialog.c:2071 app/dialogs/welcome-dialog.c:614
 msgid "Medium"
 msgstr "متوسّط"
 
-#: app/dialogs/preferences-dialog.c:2068 app/dialogs/welcome-dialog.c:611
+#: app/dialogs/preferences-dialog.c:2073 app/dialogs/welcome-dialog.c:616
 msgid "Large"
 msgstr "بزرگ"
 
-#: app/dialogs/preferences-dialog.c:2070 app/dialogs/welcome-dialog.c:613
+#: app/dialogs/preferences-dialog.c:2075 app/dialogs/welcome-dialog.c:618
 msgid "Huge"
 msgstr "عظیم"
 
 #. Font sizes.
-#: app/dialogs/preferences-dialog.c:2083 app/dialogs/welcome-dialog.c:629
+#: app/dialogs/preferences-dialog.c:2088 app/dialogs/welcome-dialog.c:634
 msgid "Font Scaling"
 msgstr "مقیاس کردن قلم"
 
-#: app/dialogs/preferences-dialog.c:2085 app/dialogs/welcome-dialog.c:631
+#: app/dialogs/preferences-dialog.c:2090 app/dialogs/welcome-dialog.c:636
 msgid "Font scaling will not work with themes using absolute sizes."
 msgstr ""
 "مقیاس کردن قلم با زمینه‌هایی که از اندازه‌های مطلق استفاده می‌کنند کار نخواهد کرد."
 
-#: app/dialogs/preferences-dialog.c:2091 app/dialogs/welcome-dialog.c:637
+#: app/dialogs/preferences-dialog.c:2096 app/dialogs/welcome-dialog.c:642
 msgid "50%"
 msgstr "۵۰٪"
 
-#: app/dialogs/preferences-dialog.c:2093 app/dialogs/welcome-dialog.c:639
+#: app/dialogs/preferences-dialog.c:2098 app/dialogs/welcome-dialog.c:644
 msgid "100%"
 msgstr "۱۰۰٪"
 
-#: app/dialogs/preferences-dialog.c:2095 app/dialogs/welcome-dialog.c:641
+#: app/dialogs/preferences-dialog.c:2100 app/dialogs/welcome-dialog.c:646
 msgid "200%"
 msgstr "۲۰۰٪"
 
-#: app/dialogs/preferences-dialog.c:2113
+#: app/dialogs/preferences-dialog.c:2118
 msgid "Reload C_urrent Theme"
 msgstr "بار کردن دوبارهٔ زمینهٔ _کنونی"
 
-#: app/dialogs/preferences-dialog.c:2125 app/dialogs/preferences-dialog.c:2126
+#: app/dialogs/preferences-dialog.c:2130 app/dialogs/preferences-dialog.c:2131
 msgid "Icon Theme"
 msgstr "زمینهٔ نقشک"
 
-#: app/dialogs/preferences-dialog.c:2131
+#: app/dialogs/preferences-dialog.c:2136
 msgid "Select an Icon Theme"
 msgstr "گزینش زمینهٔ نقشک"
 
-#: app/dialogs/preferences-dialog.c:2247 app/dialogs/welcome-dialog.c:591
+#: app/dialogs/preferences-dialog.c:2252 app/dialogs/welcome-dialog.c:596
 msgid "Use symbolic icons if available"
 msgstr "استفاده از نقشک‌های نمادین در صورت وجود"
 
-#: app/dialogs/preferences-dialog.c:2257 app/dialogs/preferences-dialog.c:2258
+#: app/dialogs/preferences-dialog.c:2262 app/dialogs/preferences-dialog.c:2263
 #: app/widgets/gimptoolbox.c:540
 msgid "Toolbox"
 msgstr "جعبه‌ابزار"
 
 #. Appearance
-#: app/dialogs/preferences-dialog.c:2266 app/dialogs/preferences-dialog.c:3164
+#: app/dialogs/preferences-dialog.c:2271 app/dialogs/preferences-dialog.c:3169
 #: app/widgets/gimpgrideditor.c:133
 msgid "Appearance"
 msgstr "ظاهر"
 
-#: app/dialogs/preferences-dialog.c:2270
+#: app/dialogs/preferences-dialog.c:2275
 msgid "Show GIMP _logo (drag-and-drop target)"
 msgstr "نمایش _نشان گیمپ (هدف کشیدن و انداختن)"
 
-#: app/dialogs/preferences-dialog.c:2274
+#: app/dialogs/preferences-dialog.c:2279
 msgid "Show _foreground & background color"
 msgstr "نمایش رنگ _پیش‌زمینه و پس‌زمینه"
 
-#: app/dialogs/preferences-dialog.c:2278
+#: app/dialogs/preferences-dialog.c:2283
 msgid "Show active _brush, pattern & gradient"
 msgstr "نمایش _قلم‌مو، الگو و گرادیان فعال"
 
-#: app/dialogs/preferences-dialog.c:2282
+#: app/dialogs/preferences-dialog.c:2287
 msgid "Show active _image"
 msgstr "نمایش _تصویر فعّال"
 
-#: app/dialogs/preferences-dialog.c:2291 app/dialogs/welcome-dialog.c:677
+#: app/dialogs/preferences-dialog.c:2296 app/dialogs/welcome-dialog.c:682
 msgid "Use tool _groups"
 msgstr "استفاده از _گروه‌های ابزار"
 
 #. Tool Editor
-#: app/dialogs/preferences-dialog.c:2298
+#: app/dialogs/preferences-dialog.c:2303
 msgid "Tools Configuration"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2313 app/dialogs/preferences-dialog.c:2314
+#: app/dialogs/preferences-dialog.c:2318 app/dialogs/preferences-dialog.c:2319
 msgid "Dialog Defaults"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2323
+#: app/dialogs/preferences-dialog.c:2328
 msgid "Reset Dialog _Defaults"
 msgstr ""
 
 #. Color profile import dialog
-#: app/dialogs/preferences-dialog.c:2331
+#: app/dialogs/preferences-dialog.c:2336
 msgid "Color Profile Import Dialog"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2336
+#: app/dialogs/preferences-dialog.c:2341
 msgid "Color profile policy:"
 msgstr ""
 
 #. All color profile chooser dialogs
-#: app/dialogs/preferences-dialog.c:2340
+#: app/dialogs/preferences-dialog.c:2345
 msgid "Color Profile File Dialogs"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2345
+#: app/dialogs/preferences-dialog.c:2350
 msgid "Profile folder:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2346
+#: app/dialogs/preferences-dialog.c:2351
 msgid "Select Default Folder for Color Profiles"
 msgstr ""
 
 #. Convert to Color Profile Dialog
-#: app/dialogs/preferences-dialog.c:2350
+#: app/dialogs/preferences-dialog.c:2355
 msgid "Convert to Color Profile Dialog"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2355
+#: app/dialogs/preferences-dialog.c:2360
 msgid "Rendering intent:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2359
+#: app/dialogs/preferences-dialog.c:2364
 msgid "Black point compensation"
 msgstr ""
 
 #. Convert Precision Dialog
-#: app/dialogs/preferences-dialog.c:2363
+#: app/dialogs/preferences-dialog.c:2368
 msgid "Precision Conversion Dialog"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2370
+#: app/dialogs/preferences-dialog.c:2375
 msgid "Dither layers:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2375
+#: app/dialogs/preferences-dialog.c:2380
 msgid "Dither text layers:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2380
+#: app/dialogs/preferences-dialog.c:2385
 msgid "Dither channels/masks:"
 msgstr ""
 
 #. Convert Indexed Dialog
-#: app/dialogs/preferences-dialog.c:2384
+#: app/dialogs/preferences-dialog.c:2389
 msgid "Indexed Conversion Dialog"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2389
+#: app/dialogs/preferences-dialog.c:2394
 msgid "Colormap:"
 msgstr "نگاشت رنگ:"
 
-#: app/dialogs/preferences-dialog.c:2392
+#: app/dialogs/preferences-dialog.c:2397
 msgid "Maximum number of colors:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2396
+#: app/dialogs/preferences-dialog.c:2401
 msgid "Remove unused and duplicate colors from colormap"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2402
+#: app/dialogs/preferences-dialog.c:2407
 msgid "Color dithering:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2406
+#: app/dialogs/preferences-dialog.c:2411
 msgid "Enable dithering of transparency"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2409
+#: app/dialogs/preferences-dialog.c:2414
 msgid "Enable dithering of text layers"
 msgstr ""
 
 #. Filter Dialogs
-#: app/dialogs/preferences-dialog.c:2413
+#: app/dialogs/preferences-dialog.c:2418
 msgid "Filter Dialogs"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2418
+#: app/dialogs/preferences-dialog.c:2423
 msgid "Keep recent settings:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2422
+#: app/dialogs/preferences-dialog.c:2427
 msgid "Default to the last used settings"
 msgstr ""
 
 #. Canvas Size Dialog
-#: app/dialogs/preferences-dialog.c:2426
+#: app/dialogs/preferences-dialog.c:2431
 msgid "Canvas Size Dialog"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2431 app/dialogs/preferences-dialog.c:2460
+#: app/dialogs/preferences-dialog.c:2436 app/dialogs/preferences-dialog.c:2465
 msgid "Fill with:"
 msgstr "پر کردن با:"
 
-#: app/dialogs/preferences-dialog.c:2434
+#: app/dialogs/preferences-dialog.c:2439
 msgid "Resize layers:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2438
+#: app/dialogs/preferences-dialog.c:2443
 msgid "Resize text layers"
 msgstr ""
 
 #. New Layer Dialog
-#: app/dialogs/preferences-dialog.c:2442
+#: app/dialogs/preferences-dialog.c:2447
 msgid "New Layer Dialog"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2447
+#: app/dialogs/preferences-dialog.c:2452
 msgid "Layer name:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2451
+#: app/dialogs/preferences-dialog.c:2456
 msgid "Fill type:"
 msgstr ""
 
 #. Layer Boundary Size Dialog
-#: app/dialogs/preferences-dialog.c:2455
+#: app/dialogs/preferences-dialog.c:2460
 msgid "Layer Boundary Size Dialog"
 msgstr ""
 
 #. Add Layer Mask Dialog
-#: app/dialogs/preferences-dialog.c:2464
+#: app/dialogs/preferences-dialog.c:2469
 msgid "Add Layer Mask Dialog"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2469
+#: app/dialogs/preferences-dialog.c:2474
 msgid "Layer mask type:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2473
+#: app/dialogs/preferences-dialog.c:2478
 msgid "Invert mask"
 msgstr ""
 
 #. Merge Layers Dialog
-#: app/dialogs/preferences-dialog.c:2477
+#: app/dialogs/preferences-dialog.c:2482
 msgid "Merge Layers Dialog"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2484
+#: app/dialogs/preferences-dialog.c:2489
 msgid "Merged layer size:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2488
+#: app/dialogs/preferences-dialog.c:2493
 msgid "Merge within active groups only"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2491
+#: app/dialogs/preferences-dialog.c:2496
 msgid "Discard invisible layers"
 msgstr ""
 
 #. New Channel Dialog
-#: app/dialogs/preferences-dialog.c:2495
+#: app/dialogs/preferences-dialog.c:2500
 msgid "New Channel Dialog"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2500
+#: app/dialogs/preferences-dialog.c:2505
 msgid "Channel name:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2504
+#: app/dialogs/preferences-dialog.c:2509
 msgid "Color and opacity:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2505
+#: app/dialogs/preferences-dialog.c:2510
 msgid "Default New Channel Color and Opacity"
 msgstr ""
 
 #. New Path Dialog
-#: app/dialogs/preferences-dialog.c:2510
+#: app/dialogs/preferences-dialog.c:2515
 msgid "New Path Dialog"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2515
+#: app/dialogs/preferences-dialog.c:2520
 msgid "Path name:"
 msgstr "نام مسیر:"
 
 #. Export Path Dialog
-#: app/dialogs/preferences-dialog.c:2519
+#: app/dialogs/preferences-dialog.c:2524
 msgid "Export Paths Dialog"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2524
+#: app/dialogs/preferences-dialog.c:2529
 msgid "Export folder:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2525
+#: app/dialogs/preferences-dialog.c:2530
 msgid "Select Default Folder for Exporting Paths"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2529
+#: app/dialogs/preferences-dialog.c:2534
 msgid "Export the selected paths only"
 msgstr ""
 
 #. Import Path Dialog
-#: app/dialogs/preferences-dialog.c:2533
+#: app/dialogs/preferences-dialog.c:2538
 msgid "Import Paths Dialog"
 msgstr "درون‌ریزی محاورهٔ مسیر"
 
-#: app/dialogs/preferences-dialog.c:2538
+#: app/dialogs/preferences-dialog.c:2543
 msgid "Import folder:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2539
+#: app/dialogs/preferences-dialog.c:2544
 msgid "Select Default Folder for Importing Paths"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2543
+#: app/dialogs/preferences-dialog.c:2548
 msgid "Merge imported paths"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2546
+#: app/dialogs/preferences-dialog.c:2551
 msgid "Scale imported paths"
 msgstr "مقیاس کردن مسیرهای درون‌ریخته"
 
 #. Feather Selection Dialog
-#: app/dialogs/preferences-dialog.c:2550
+#: app/dialogs/preferences-dialog.c:2555
 msgid "Feather Selection Dialog"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2555
+#: app/dialogs/preferences-dialog.c:2560
 msgid "Feather radius:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2559 app/dialogs/preferences-dialog.c:2581
-#: app/dialogs/preferences-dialog.c:2598
+#: app/dialogs/preferences-dialog.c:2564 app/dialogs/preferences-dialog.c:2586
+#: app/dialogs/preferences-dialog.c:2603
 msgid "Selected areas continue outside the image"
 msgstr ""
 
 #. Grow Selection Dialog
-#: app/dialogs/preferences-dialog.c:2563
+#: app/dialogs/preferences-dialog.c:2568
 msgid "Grow Selection Dialog"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2568
+#: app/dialogs/preferences-dialog.c:2573
 msgid "Grow radius:"
 msgstr ""
 
 #. Shrink Selection Dialog
-#: app/dialogs/preferences-dialog.c:2572
+#: app/dialogs/preferences-dialog.c:2577
 msgid "Shrink Selection Dialog"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2577
+#: app/dialogs/preferences-dialog.c:2582
 msgid "Shrink radius:"
 msgstr ""
 
 #. Border Selection Dialog
-#: app/dialogs/preferences-dialog.c:2585
+#: app/dialogs/preferences-dialog.c:2590
 msgid "Border Selection Dialog"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2590
+#: app/dialogs/preferences-dialog.c:2595
 msgid "Border radius:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2594
+#: app/dialogs/preferences-dialog.c:2599
 msgid "Border style:"
 msgstr ""
 
 #. Fill Options Dialog
-#: app/dialogs/preferences-dialog.c:2602
+#: app/dialogs/preferences-dialog.c:2607
 msgid "Fill Selection Outline & Fill Path Dialogs"
 msgstr ""
 
 #. Stroke Options Dialog
-#: app/dialogs/preferences-dialog.c:2611
+#: app/dialogs/preferences-dialog.c:2616
 msgid "Stroke Selection & Stroke Path Dialogs"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2634 app/dialogs/preferences-dialog.c:2635
+#: app/dialogs/preferences-dialog.c:2639 app/dialogs/preferences-dialog.c:2640
 msgid "Help System"
 msgstr "سیستم راهنما"
 
-#: app/dialogs/preferences-dialog.c:2646
+#: app/dialogs/preferences-dialog.c:2651
 msgid "Show help _buttons"
 msgstr "نمایش _دکمه‌های راهنما"
 
-#: app/dialogs/preferences-dialog.c:2651
+#: app/dialogs/preferences-dialog.c:2656
 msgid "Use the online version"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2652
+#: app/dialogs/preferences-dialog.c:2657
 msgid "Use a locally installed copy"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2653
+#: app/dialogs/preferences-dialog.c:2658
 msgid "U_ser manual:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2664
+#: app/dialogs/preferences-dialog.c:2669
 msgid "User interface language"
 msgstr ""
 
@@ -16962,580 +16988,580 @@ msgstr ""
 #. *  that doesn't use the help browser, so don't bother showing
 #. *  the combo.
 #.
-#: app/dialogs/preferences-dialog.c:2723
+#: app/dialogs/preferences-dialog.c:2728
 msgid "Help Browser"
 msgstr "مرورگر راهنما"
 
-#: app/dialogs/preferences-dialog.c:2730
+#: app/dialogs/preferences-dialog.c:2735
 msgid "H_elp browser to use:"
 msgstr "مرورگر را_هنمای مورد استفاده:"
 
-#: app/dialogs/preferences-dialog.c:2736
+#: app/dialogs/preferences-dialog.c:2741
 msgid ""
 "The GIMP help browser doesn't seem to be installed. Using the web browser instead."
 msgstr ""
 
 #. Action Search
-#: app/dialogs/preferences-dialog.c:2753
+#: app/dialogs/preferences-dialog.c:2758
 msgid "Action Search"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2757
+#: app/dialogs/preferences-dialog.c:2762
 msgid "_Maximum History Size:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2761
+#: app/dialogs/preferences-dialog.c:2766
 msgid "C_lear Action History"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2775 app/dialogs/preferences-dialog.c:2776
+#: app/dialogs/preferences-dialog.c:2780 app/dialogs/preferences-dialog.c:2781
 msgid "Display"
 msgstr "نمایش"
 
 #. Transparency
-#: app/dialogs/preferences-dialog.c:2785
+#: app/dialogs/preferences-dialog.c:2790
 msgid "Transparency"
 msgstr "شفافیت"
 
-#: app/dialogs/preferences-dialog.c:2789
+#: app/dialogs/preferences-dialog.c:2794
 msgid "_Check style:"
 msgstr "سبک _شطرنجی:"
 
-#: app/dialogs/preferences-dialog.c:2823
+#: app/dialogs/preferences-dialog.c:2828
 msgid "Check _size:"
 msgstr "اندازهٔ خانه‌های _صفحهٔ شطرنجی:"
 
 #. Zoom Quality
-#: app/dialogs/preferences-dialog.c:2827
+#: app/dialogs/preferences-dialog.c:2832
 msgid "Zoom Quality"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2831
+#: app/dialogs/preferences-dialog.c:2836
 msgid "_Zoom quality:"
 msgstr ""
 
 #. Monitor Resolution
-#: app/dialogs/preferences-dialog.c:2835
+#: app/dialogs/preferences-dialog.c:2840
 msgid "Monitor Resolution"
 msgstr ""
 
 #. Pixels
-#: app/dialogs/preferences-dialog.c:2839 app/display/gimpcursorview.c:224
+#: app/dialogs/preferences-dialog.c:2844 app/display/gimpcursorview.c:224
 #: app/widgets/gimpgrideditor.c:205 app/widgets/gimpgrideditor.c:240
 msgid "Pixels"
 msgstr "نقاط"
 
-#: app/dialogs/preferences-dialog.c:2857 app/widgets/gimpgrideditor.c:201
+#: app/dialogs/preferences-dialog.c:2862 app/widgets/gimpgrideditor.c:201
 #: app/widgets/gimpgrideditor.c:236
 msgid "Horizontal"
 msgstr "افقی"
 
-#: app/dialogs/preferences-dialog.c:2859 app/widgets/gimpgrideditor.c:203
+#: app/dialogs/preferences-dialog.c:2864 app/widgets/gimpgrideditor.c:203
 #: app/widgets/gimpgrideditor.c:238
 msgid "Vertical"
 msgstr "عمودی"
 
-#: app/dialogs/preferences-dialog.c:2861 app/widgets/gimpimagepropview.c:466
+#: app/dialogs/preferences-dialog.c:2866 app/widgets/gimpimagepropview.c:466
 msgid "ppi"
 msgstr "نقطه بر اینچ"
 
-#: app/dialogs/preferences-dialog.c:2879
+#: app/dialogs/preferences-dialog.c:2884
 #, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
 msgstr "ت_شخیص خودکار (در حال حاضر ‎%Id × %Id نقطه بر اینچ)"
 
-#: app/dialogs/preferences-dialog.c:2897
+#: app/dialogs/preferences-dialog.c:2902
 msgid "_Enter manually"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2912
+#: app/dialogs/preferences-dialog.c:2917
 msgid "C_alibrate..."
 msgstr "اندازه‌_گیری…"
 
-#: app/dialogs/preferences-dialog.c:2942 app/dialogs/preferences-dialog.c:2943
+#: app/dialogs/preferences-dialog.c:2947 app/dialogs/preferences-dialog.c:2948
 msgid "Window Management"
 msgstr "مدیریت پنجره‌ها"
 
-#: app/dialogs/preferences-dialog.c:2948
+#: app/dialogs/preferences-dialog.c:2953
 msgid "Window Manager Hints"
 msgstr "راهنمایی‌های مدیر پنجره‌ها"
 
-#: app/dialogs/preferences-dialog.c:2954
+#: app/dialogs/preferences-dialog.c:2959
 msgid "Hint for _docks and toolbox:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2957
+#: app/dialogs/preferences-dialog.c:2962
 msgid "Focus"
 msgstr "تمرکز"
 
-#: app/dialogs/preferences-dialog.c:2961
+#: app/dialogs/preferences-dialog.c:2966
 msgid "Activate the _focused image"
 msgstr "فعال کردن تصویر دارای _تمرکز"
 
 #. Window Positions
-#: app/dialogs/preferences-dialog.c:2965
+#: app/dialogs/preferences-dialog.c:2970
 msgid "Window Positions"
 msgstr "موقعیت پنجره‌ها"
 
-#: app/dialogs/preferences-dialog.c:2968
+#: app/dialogs/preferences-dialog.c:2973
 msgid "_Save window positions on exit"
 msgstr "_ذخیرهٔ موقعیت پنجره‌ها هنگام خروج"
 
-#: app/dialogs/preferences-dialog.c:2971
+#: app/dialogs/preferences-dialog.c:2976
 msgid "Open windows on the same _monitor they were open before"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2975
+#: app/dialogs/preferences-dialog.c:2980
 msgid "Save Window Positions _Now"
 msgstr "ذخیرهٔ _فوری موقعیت پنجره‌ها"
 
-#: app/dialogs/preferences-dialog.c:2982
+#: app/dialogs/preferences-dialog.c:2987
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "_برگرداندن موقعیت ذخیره شدهٔ پنجره‌ها به مقادیر پیش‌گزیده"
 
-#: app/dialogs/preferences-dialog.c:2997 app/dialogs/preferences-dialog.c:2998
+#: app/dialogs/preferences-dialog.c:3002 app/dialogs/preferences-dialog.c:3003
 msgid "Canvas Interaction"
 msgstr ""
 
 #. Space Bar
-#: app/dialogs/preferences-dialog.c:3007
+#: app/dialogs/preferences-dialog.c:3012
 msgid "Space Bar"
 msgstr "کلید فاصله"
 
-#: app/dialogs/preferences-dialog.c:3013
+#: app/dialogs/preferences-dialog.c:3018
 msgid "_While space bar is pressed:"
 msgstr "_هنگام فشرده بودن کلید فاصله:"
 
 #. Zoom by drag Behavior
-#: app/dialogs/preferences-dialog.c:3017 app/tools/gimpmagnifytool.c:93
+#: app/dialogs/preferences-dialog.c:3022 app/tools/gimpmagnifytool.c:93
 msgid "Zoom"
 msgstr "زوم"
 
-#: app/dialogs/preferences-dialog.c:3023
+#: app/dialogs/preferences-dialog.c:3028
 msgid "Dra_g-to-zoom behavior:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3029
+#: app/dialogs/preferences-dialog.c:3034
 msgid "Drag-to-zoom spe_ed:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3039 app/dialogs/preferences-dialog.c:3040
+#: app/dialogs/preferences-dialog.c:3044 app/dialogs/preferences-dialog.c:3045
 msgid "Modifiers"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3051
+#: app/dialogs/preferences-dialog.c:3056
 msgid "_Reset Saved Modifiers Settings to Default Values"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3065
+#: app/dialogs/preferences-dialog.c:3070
 msgid "Snapping Behavior"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3066
+#: app/dialogs/preferences-dialog.c:3071
 msgid "Snapping"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3073
+#: app/dialogs/preferences-dialog.c:3078
 msgid "Default Behavior in Normal Mode"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3077
+#: app/dialogs/preferences-dialog.c:3082
 msgid "Default Behavior in Fullscreen Mode"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3086
+#: app/dialogs/preferences-dialog.c:3091
 msgid "_Snapping distance:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3095 app/dialogs/preferences-dialog.c:3096
+#: app/dialogs/preferences-dialog.c:3100 app/dialogs/preferences-dialog.c:3101
 msgid "Image Windows"
 msgstr "پنجره‌های تصویر"
 
-#: app/dialogs/preferences-dialog.c:3113
+#: app/dialogs/preferences-dialog.c:3118
 msgid "Merge menu and title bar"
 msgstr "ادغام نوار عنوان و فهرست"
 
-#: app/dialogs/preferences-dialog.c:3116
+#: app/dialogs/preferences-dialog.c:3121
 msgid ""
 "GIMP will try to convince your system not to decorate image windows. If it "
 "doesn't work properly on your system (i.e. you get 2 title bars), please report."
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3126
+#: app/dialogs/preferences-dialog.c:3131
 msgid "Use \"Show _all\" by default"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3130
+#: app/dialogs/preferences-dialog.c:3135
 msgid "Use \"_Dot for dot\" by default"
 msgstr "استفاده از «نقطه به نقطه» به صورت پیش‌گزیده"
 
-#: app/dialogs/preferences-dialog.c:3136
+#: app/dialogs/preferences-dialog.c:3141
 msgid "Marching ants s_peed:"
 msgstr ""
 
 #. Zoom & Resize Behavior
-#: app/dialogs/preferences-dialog.c:3140
+#: app/dialogs/preferences-dialog.c:3145
 msgid "Zoom & Resize Behavior"
 msgstr "رفتار زوم و تغییر اندازه"
 
-#: app/dialogs/preferences-dialog.c:3144
+#: app/dialogs/preferences-dialog.c:3149
 msgid "Resize window on _zoom"
 msgstr "تغییر اندازهٔ پنجره هنگام _زوم کردن"
 
-#: app/dialogs/preferences-dialog.c:3147
+#: app/dialogs/preferences-dialog.c:3152
 msgid "Resize window on image _size change"
 msgstr "تغییر اندازهٔ پنجره هنگام تغییر اندا_زهٔ تصویر"
 
-#: app/dialogs/preferences-dialog.c:3153
+#: app/dialogs/preferences-dialog.c:3158
 msgid "Show entire image"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3155
+#: app/dialogs/preferences-dialog.c:3160
 msgid "Initial zoom _ratio:"
 msgstr "_نسبت زوم اولیه:"
 
-#: app/dialogs/preferences-dialog.c:3163
+#: app/dialogs/preferences-dialog.c:3168
 msgid "Image Window Appearance"
 msgstr "ظاهر پنجرهٔ تصویر"
 
-#: app/dialogs/preferences-dialog.c:3173
+#: app/dialogs/preferences-dialog.c:3178
 msgid "Default Appearance in Normal Mode"
 msgstr "ظاهر پیش‌گزیده در حالت عادی"
 
-#: app/dialogs/preferences-dialog.c:3178
+#: app/dialogs/preferences-dialog.c:3183
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "ظاهر پیش‌گزیده در حالت تمام‌صفحه"
 
-#: app/dialogs/preferences-dialog.c:3187
+#: app/dialogs/preferences-dialog.c:3192
 msgid "Image Title & Statusbar Format"
 msgstr "قالب عنوان تصویر و نوار وضعیت"
 
-#: app/dialogs/preferences-dialog.c:3188
+#: app/dialogs/preferences-dialog.c:3193
 msgid "Title & Status"
 msgstr "عنوان و وضعیت"
 
-#: app/dialogs/preferences-dialog.c:3206
+#: app/dialogs/preferences-dialog.c:3211
 msgid "Current format"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3207
+#: app/dialogs/preferences-dialog.c:3212
 msgid "Default format"
 msgstr "قالب پیش‌گزیده"
 
-#: app/dialogs/preferences-dialog.c:3208
+#: app/dialogs/preferences-dialog.c:3213
 msgid "Show zoom percentage"
 msgstr "نمایش درصد زوم"
 
-#: app/dialogs/preferences-dialog.c:3209
+#: app/dialogs/preferences-dialog.c:3214
 msgid "Show zoom ratio"
 msgstr "نمایش نسبت زوم"
 
-#: app/dialogs/preferences-dialog.c:3210
+#: app/dialogs/preferences-dialog.c:3215
 msgid "Show image size"
 msgstr "نمایش اندازهٔ تصویر"
 
-#: app/dialogs/preferences-dialog.c:3211
+#: app/dialogs/preferences-dialog.c:3216
 msgid "Show drawable size"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3224
+#: app/dialogs/preferences-dialog.c:3229
 msgid "Image Title Format"
 msgstr "قالب عنوان تصویر"
 
-#: app/dialogs/preferences-dialog.c:3226
+#: app/dialogs/preferences-dialog.c:3231
 msgid "Image Statusbar Format"
 msgstr "قالب نوار وضعیت تصویر"
 
-#: app/dialogs/preferences-dialog.c:3320 app/dialogs/preferences-dialog.c:3321
+#: app/dialogs/preferences-dialog.c:3325 app/dialogs/preferences-dialog.c:3326
 msgid "Input Devices"
 msgstr "دستگاه‌های ورودی"
 
-#: app/dialogs/preferences-dialog.c:3332
+#: app/dialogs/preferences-dialog.c:3337
 msgid "Pointers"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3339
+#: app/dialogs/preferences-dialog.c:3344
 msgid "Pointer _mode:"
 msgstr "_حالت نشانگر:"
 
-#: app/dialogs/preferences-dialog.c:3342
+#: app/dialogs/preferences-dialog.c:3347
 msgid "Pointer _handedness:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3346
+#: app/dialogs/preferences-dialog.c:3351
 msgid "Paint Tools"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3350
+#: app/dialogs/preferences-dialog.c:3355
 msgid "Show _brush outline"
 msgstr "نمایش پیرامون _قلم‌مو"
 
-#: app/dialogs/preferences-dialog.c:3358
+#: app/dialogs/preferences-dialog.c:3363
 msgid "S_nap brush outline to stroke"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3362
+#: app/dialogs/preferences-dialog.c:3367
 msgid "Show pointer for paint _tools"
 msgstr "نمایش نشانگر برای _ابزارهای رنگ‌آمیزی"
 
 #. Extended Input Devices
-#: app/dialogs/preferences-dialog.c:3366
+#: app/dialogs/preferences-dialog.c:3371
 msgid "Extended Input Devices"
 msgstr "دستگاه‌های ورودی گسترش‌یافته"
 
-#: app/dialogs/preferences-dialog.c:3382
+#: app/dialogs/preferences-dialog.c:3387
 msgid "Pointer Input API:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3393
+#: app/dialogs/preferences-dialog.c:3398
 msgid "S_hare tool and tool options between input devices"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3397
+#: app/dialogs/preferences-dialog.c:3402
 msgid "Configure E_xtended Input Devices..."
 msgstr "پیکربندی دستگاه‌های ورودی _گسترش‌یافته…"
 
-#: app/dialogs/preferences-dialog.c:3404
+#: app/dialogs/preferences-dialog.c:3409
 msgid "_Save input device settings on exit"
 msgstr "_ذخیره کردن تنظیمات دستگاه ورودی هنگام خروج"
 
-#: app/dialogs/preferences-dialog.c:3408
+#: app/dialogs/preferences-dialog.c:3413
 msgid "Save Input Device Settings _Now"
 msgstr "ذخیرهٔ _فوری تنظیمات دستگاه ورودی"
 
-#: app/dialogs/preferences-dialog.c:3415
+#: app/dialogs/preferences-dialog.c:3420
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "_برگرداندن تنظیمات دستگاه ورودی به مقادیر اولیه"
 
-#: app/dialogs/preferences-dialog.c:3430
+#: app/dialogs/preferences-dialog.c:3435
 msgid "Additional Input Controllers"
 msgstr "کنترلرهای ورودی اضافی"
 
-#: app/dialogs/preferences-dialog.c:3431
+#: app/dialogs/preferences-dialog.c:3436
 msgid "Input Controllers"
 msgstr "کنترلرهای ورودی"
 
-#: app/dialogs/preferences-dialog.c:3446 app/dialogs/preferences-dialog.c:3447
+#: app/dialogs/preferences-dialog.c:3451 app/dialogs/preferences-dialog.c:3452
 msgid "Folders"
 msgstr "شاخه‌ها"
 
-#: app/dialogs/preferences-dialog.c:3454
+#: app/dialogs/preferences-dialog.c:3459
 msgid "Reset _Folders"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3470
+#: app/dialogs/preferences-dialog.c:3475
 msgid "_Temporary folder:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3471
+#: app/dialogs/preferences-dialog.c:3476
 msgid "Select Folder for Temporary Files"
 msgstr "پوشهٔ پرونده‌های موقت را گزینش کنید"
 
-#: app/dialogs/preferences-dialog.c:3475
+#: app/dialogs/preferences-dialog.c:3480
 msgid "_Swap folder:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3476
+#: app/dialogs/preferences-dialog.c:3481
 msgid "Select Swap Folder"
 msgstr "پوشهٔ مبادله را گزینش کنید"
 
-#: app/dialogs/preferences-dialog.c:3509
+#: app/dialogs/preferences-dialog.c:3514
 msgid "Brush Folders"
 msgstr "شاخه‌های قلم‌موها"
 
-#: app/dialogs/preferences-dialog.c:3512
+#: app/dialogs/preferences-dialog.c:3517
 msgid "Reset Brush _Folders"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3513
+#: app/dialogs/preferences-dialog.c:3518
 msgid "Select Brush Folders"
 msgstr "شاخه‌های قلم‌موها را گزینش کنید"
 
-#: app/dialogs/preferences-dialog.c:3515
+#: app/dialogs/preferences-dialog.c:3520
 msgid "Dynamics Folders"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3518
+#: app/dialogs/preferences-dialog.c:3523
 msgid "Reset Dynamics _Folders"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3519
+#: app/dialogs/preferences-dialog.c:3524
 msgid "Select Dynamics Folders"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3521
+#: app/dialogs/preferences-dialog.c:3526
 msgid "Pattern Folders"
 msgstr "شاخه‌های الگوها"
 
-#: app/dialogs/preferences-dialog.c:3524
+#: app/dialogs/preferences-dialog.c:3529
 msgid "Reset Pattern _Folders"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3525
+#: app/dialogs/preferences-dialog.c:3530
 msgid "Select Pattern Folders"
 msgstr "شاخه‌های الگوها را گزینش کنید"
 
-#: app/dialogs/preferences-dialog.c:3527
+#: app/dialogs/preferences-dialog.c:3532
 msgid "Palette Folders"
 msgstr "شاخه‌های تخته‌رنگ‌ها"
 
-#: app/dialogs/preferences-dialog.c:3530
+#: app/dialogs/preferences-dialog.c:3535
 msgid "Reset Palette _Folders"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3531
+#: app/dialogs/preferences-dialog.c:3536
 msgid "Select Palette Folders"
 msgstr "شاخه‌های تخته‌رنگ‌ها را گزینش کنید"
 
-#: app/dialogs/preferences-dialog.c:3533
+#: app/dialogs/preferences-dialog.c:3538
 msgid "Gradient Folders"
 msgstr "شاخه‌های گرادیان‌ها"
 
-#: app/dialogs/preferences-dialog.c:3536
+#: app/dialogs/preferences-dialog.c:3541
 msgid "Reset Gradient _Folders"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3537
+#: app/dialogs/preferences-dialog.c:3542
 msgid "Select Gradient Folders"
 msgstr "شاخه‌های گرادیان‌ها را گزینش کنید"
 
-#: app/dialogs/preferences-dialog.c:3539
+#: app/dialogs/preferences-dialog.c:3544
 msgid "Font Folders"
 msgstr "شاخه‌های قلم‌ها"
 
-#: app/dialogs/preferences-dialog.c:3542
+#: app/dialogs/preferences-dialog.c:3547
 msgid "Reset Font _Folders"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3543
+#: app/dialogs/preferences-dialog.c:3548
 msgid "Select Font Folders"
 msgstr "شاخه‌های قلم‌ها را گزینش کنید"
 
-#: app/dialogs/preferences-dialog.c:3545
+#: app/dialogs/preferences-dialog.c:3550
 msgid "Tool Preset Folders"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3548
+#: app/dialogs/preferences-dialog.c:3553
 msgid "Reset Tool Preset _Folders"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3549
+#: app/dialogs/preferences-dialog.c:3554
 msgid "Select Tool Preset Folders"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3551
+#: app/dialogs/preferences-dialog.c:3556
 msgid "MyPaint Brush Folders"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3554
+#: app/dialogs/preferences-dialog.c:3559
 msgid "Reset MyPaint Brush _Folders"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3555
+#: app/dialogs/preferences-dialog.c:3560
 msgid "Select MyPaint Brush Folders"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3557
+#: app/dialogs/preferences-dialog.c:3562
 msgid "Plug-in Folders"
 msgstr "شاخه‌های افزایه"
 
-#: app/dialogs/preferences-dialog.c:3560
+#: app/dialogs/preferences-dialog.c:3565
 msgid "Reset plug-in _Folders"
 msgstr "بازنشانی _شاخه‌های افزایه"
 
-#: app/dialogs/preferences-dialog.c:3561
+#: app/dialogs/preferences-dialog.c:3566
 msgid "Select plug-in Folders"
 msgstr "بازنشانی شاخه‌های افزایه"
 
-#: app/dialogs/preferences-dialog.c:3563
+#: app/dialogs/preferences-dialog.c:3568
 msgid "Scripts"
 msgstr "کدنوشته‌ها"
 
-#: app/dialogs/preferences-dialog.c:3563
+#: app/dialogs/preferences-dialog.c:3568
 msgid "Script-Fu Folders"
 msgstr "شاخه‌های اسکریپت‌فو"
 
-#: app/dialogs/preferences-dialog.c:3566
+#: app/dialogs/preferences-dialog.c:3571
 msgid "Reset Script-Fu _Folders"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3567
+#: app/dialogs/preferences-dialog.c:3572
 msgid "Select Script-Fu Folders"
 msgstr "شاخه‌های اسکریپت‌فو را گزینش کنید"
 
-#: app/dialogs/preferences-dialog.c:3569
+#: app/dialogs/preferences-dialog.c:3574
 msgid "Module Folders"
 msgstr "شاخه‌های پیمانه‌ها"
 
-#: app/dialogs/preferences-dialog.c:3572
+#: app/dialogs/preferences-dialog.c:3577
 msgid "Reset Module _Folders"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3573
+#: app/dialogs/preferences-dialog.c:3578
 msgid "Select Module Folders"
 msgstr "شاخه‌های پیمانه‌ها را گزینش کنید"
 
-#: app/dialogs/preferences-dialog.c:3575
+#: app/dialogs/preferences-dialog.c:3580
 msgid "Interpreters"
 msgstr "مفسرها"
 
-#: app/dialogs/preferences-dialog.c:3575
+#: app/dialogs/preferences-dialog.c:3580
 msgid "Interpreter Folders"
 msgstr "شاخه‌های مفسرها"
 
-#: app/dialogs/preferences-dialog.c:3578
+#: app/dialogs/preferences-dialog.c:3583
 msgid "Reset Interpreter _Folders"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3579
+#: app/dialogs/preferences-dialog.c:3584
 msgid "Select Interpreter Folders"
 msgstr "شاخه‌های مفسرها را گزینش کنید"
 
-#: app/dialogs/preferences-dialog.c:3581
+#: app/dialogs/preferences-dialog.c:3586
 msgid "Environment"
 msgstr "محیط"
 
-#: app/dialogs/preferences-dialog.c:3581
+#: app/dialogs/preferences-dialog.c:3586
 msgid "Environment Folders"
 msgstr "شاخه‌های محیط کار"
 
-#: app/dialogs/preferences-dialog.c:3584
+#: app/dialogs/preferences-dialog.c:3589
 msgid "Reset Environment _Folders"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3585
+#: app/dialogs/preferences-dialog.c:3590
 msgid "Select Environment Folders"
 msgstr "شاخه‌های محیط کار را گزینش کنید"
 
-#: app/dialogs/preferences-dialog.c:3587
+#: app/dialogs/preferences-dialog.c:3592
 msgid "Themes"
 msgstr "تم‌ها"
 
-#: app/dialogs/preferences-dialog.c:3587
+#: app/dialogs/preferences-dialog.c:3592
 msgid "Theme Folders"
 msgstr "شاخه‌های تم‌ها"
 
-#: app/dialogs/preferences-dialog.c:3590
+#: app/dialogs/preferences-dialog.c:3595
 msgid "Reset Theme _Folders"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3591
+#: app/dialogs/preferences-dialog.c:3596
 msgid "Select Theme Folders"
 msgstr "شاخه‌های تم‌ها را گزینش کنید"
 
-#: app/dialogs/preferences-dialog.c:3593
+#: app/dialogs/preferences-dialog.c:3598
 msgid "Icon Themes"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3593
+#: app/dialogs/preferences-dialog.c:3598
 msgid "Icon Theme Folders"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3596
+#: app/dialogs/preferences-dialog.c:3601
 msgid "Reset Icon Theme _Folders"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:3597
+#: app/dialogs/preferences-dialog.c:3602
 msgid "Select Icon Theme Folders"
 msgstr ""
 
@@ -17801,7 +17827,7 @@ msgid "_Next Tip"
 msgstr "نکتهٔ _پیشین"
 
 #. a link to the related section in the user manual
-#: app/dialogs/tips-dialog.c:196 app/dialogs/welcome-dialog.c:1092
+#: app/dialogs/tips-dialog.c:196 app/dialogs/welcome-dialog.c:1097
 msgid "Learn more"
 msgstr "بیشتر بدانید"
 
@@ -17951,65 +17977,65 @@ msgstr "مشارکت"
 msgid "Donating"
 msgstr "اعانه"
 
-#: app/dialogs/welcome-dialog.c:556
+#: app/dialogs/welcome-dialog.c:561
 msgid "Color scheme"
 msgstr "طرحوارهٔ رنگی"
 
-#: app/dialogs/welcome-dialog.c:582
+#: app/dialogs/welcome-dialog.c:587
 msgid "Icon theme"
 msgstr "زمینهٔ نقشک"
 
-#: app/dialogs/welcome-dialog.c:595
+#: app/dialogs/welcome-dialog.c:600
 msgid "Icon Scaling"
 msgstr "مقیاس نقشک"
 
-#: app/dialogs/welcome-dialog.c:654
+#: app/dialogs/welcome-dialog.c:659
 msgid "GUI Language (requires restart)"
 msgstr "زبان میانا (نیازمند آغاز دوباره)"
 
-#: app/dialogs/welcome-dialog.c:659
+#: app/dialogs/welcome-dialog.c:664
 msgid "Additional Customizations"
 msgstr "سفارشی سازی‌های اضافی"
 
-#: app/dialogs/welcome-dialog.c:663
+#: app/dialogs/welcome-dialog.c:668
 msgid "Merge menu and title bar (requires restart)"
 msgstr "ادغام نوار عنوان و فهرست (نیازمند آغاز دوباره)"
 
-#: app/dialogs/welcome-dialog.c:671
+#: app/dialogs/welcome-dialog.c:676
 msgid "Enable check for updates (requires internet)"
 msgstr "به کارانداختن بررسی برای به‌روز رسانی‌ها (نیازمند آغاز دوباره)"
 
-#: app/dialogs/welcome-dialog.c:705
+#: app/dialogs/welcome-dialog.c:710
 msgid "C_reate"
 msgstr "_ایجاد"
 
-#: app/dialogs/welcome-dialog.c:714
+#: app/dialogs/welcome-dialog.c:719
 msgid "Open an Existing Image"
 msgstr "کشودن تصویری موجود"
 
 #. Recent Files
-#: app/dialogs/welcome-dialog.c:726
+#: app/dialogs/welcome-dialog.c:731
 msgid "Recent Images"
 msgstr "تصویرهای اخیر"
 
-#: app/dialogs/welcome-dialog.c:818
+#: app/dialogs/welcome-dialog.c:823
 msgid "O_pen Selected Images"
 msgstr "_گشودن تصویرهای گزیده"
 
-#: app/dialogs/welcome-dialog.c:827
+#: app/dialogs/welcome-dialog.c:832
 msgid "Show on Start (You can show the Welcome dialog again from the \"Help\" menu)"
 msgstr "نمایش در آغاز (می‌توانید از فهرست «راهنما» دوباره نشانش دهید)"
 
-#: app/dialogs/welcome-dialog.c:855
+#: app/dialogs/welcome-dialog.c:860
 #, c-format
 msgid "Ways to contribute"
 msgstr "راه‌های مشارکت"
 
-#: app/dialogs/welcome-dialog.c:864 app/dialogs/welcome-dialog.c:875
+#: app/dialogs/welcome-dialog.c:869 app/dialogs/welcome-dialog.c:880
 msgid "Report Bugs"
 msgstr "گزارش اشکال‌ها"
 
-#: app/dialogs/welcome-dialog.c:866
+#: app/dialogs/welcome-dialog.c:871
 #, c-format
 msgid ""
 "As any application, GIMP is not bug-free, so reporting bugs that you encounter is "
@@ -18018,11 +18044,11 @@ msgstr ""
 "گیمپ مثل هر برنامه‌ای بدون اشکال نیست. گزارش اشکال‌هایی که به آن‌ها برمی‌خورید برای "
 "توسعه بسیار مهم است."
 
-#: app/dialogs/welcome-dialog.c:879 app/dialogs/welcome-dialog.c:889
+#: app/dialogs/welcome-dialog.c:884 app/dialogs/welcome-dialog.c:894
 msgid "Write Code"
 msgstr "نوشتن کد"
 
-#: app/dialogs/welcome-dialog.c:881
+#: app/dialogs/welcome-dialog.c:886
 #, c-format
 msgid ""
 "Our Developer Website is where you want to start learning about being a code "
@@ -18030,39 +18056,39 @@ msgid ""
 msgstr ""
 "پایگاه وب توسعه‌دهنده‌مان جاییست که می‌توانید مشارکت کردن در کد را از آن بیاموزید."
 
-#: app/dialogs/welcome-dialog.c:893 app/dialogs/welcome-dialog.c:903
+#: app/dialogs/welcome-dialog.c:898 app/dialogs/welcome-dialog.c:908
 msgid "Translate"
 msgstr "ترجمه"
 
-#: app/dialogs/welcome-dialog.c:895
+#: app/dialogs/welcome-dialog.c:900
 #, c-format
 msgid "Contact the respective translation team for your language"
 msgstr "با گروه ترجمهٔ مربوط به زبانتان تماس بگیرید"
 
-#: app/dialogs/welcome-dialog.c:907
+#: app/dialogs/welcome-dialog.c:912
 msgid "Donate"
 msgstr "اعانه"
 
-#: app/dialogs/welcome-dialog.c:909
+#: app/dialogs/welcome-dialog.c:914
 #, c-format
 msgid "Donating money is important: it makes GIMP sustainable."
 msgstr "اهدای پول مهم است. گیمپ را پایدار می‌کند."
 
-#: app/dialogs/welcome-dialog.c:917
+#: app/dialogs/welcome-dialog.c:922
 msgid "Donate via Liberapay"
 msgstr "اعانه با لیبراپی"
 
-#: app/dialogs/welcome-dialog.c:920
+#: app/dialogs/welcome-dialog.c:925
 msgid "Other donation options"
 msgstr "دیگر گزینه‌های اعانه"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:954
+#: app/dialogs/welcome-dialog.c:959
 #, c-format
 msgid "GIMP %s Release Notes"
 msgstr "یادداشت‌های انتشار گیمپ %s"
 
-#: app/dialogs/welcome-dialog.c:1065
+#: app/dialogs/welcome-dialog.c:1070
 #, c-format
 msgid "Click on release items with a %s bullet point to get a tour."
 msgstr "برای گشت روی موارد انتشار با نقطهٔ گلوله‌ای %s بزنید."
@@ -18360,47 +18386,47 @@ msgstr[0] "اگر تصویر را ذخیره نکنید، تغییرات %Id د�
 msgid "The image has been exported to '%s'."
 msgstr "تصویر در «%s» برون‌ریخته شد."
 
-#: app/display/gimpdisplayshell-dnd.c:257 app/display/gimpdisplayshell-dnd.c:740
-#: app/display/gimpdisplayshell-dnd.c:799
+#: app/display/gimpdisplayshell-dnd.c:253 app/display/gimpdisplayshell-dnd.c:706
+#: app/display/gimpdisplayshell-dnd.c:765
 msgid "Drop New Layer"
 msgstr "انداختن لایهٔ جدید"
 
-#: app/display/gimpdisplayshell-dnd.c:330
+#: app/display/gimpdisplayshell-dnd.c:296
 msgid "Drop New Path"
 msgstr "انداختن مسیر جدید"
 
-#: app/display/gimpdisplayshell-dnd.c:405 app/tools/gimpbucketfilltool.c:611
+#: app/display/gimpdisplayshell-dnd.c:371 app/tools/gimpbucketfilltool.c:611
 #: app/tools/gimpcagetool.c:243 app/tools/gimpgradienttool.c:276
 #: app/tools/gimpselectiontool.c:567
 #, c-format
 msgid "Cannot modify the pixels of layer groups."
 msgstr "نمی‌توان تصدانه‌های گروه لایه‌ها را تغییر داد."
 
-#: app/display/gimpdisplayshell-dnd.c:424 app/tools/gimpfiltertool.c:333
+#: app/display/gimpdisplayshell-dnd.c:390 app/tools/gimpfiltertool.c:333
 #: app/tools/gimppainttool.c:371 app/tools/gimptransformtool.c:713
-#: app/widgets/gimpitemtreeview.c:2664
+#: app/widgets/gimpdrawabletreeview-filters.c:702
 msgid "A selected layer is not visible."
 msgstr "لایهٔ گزیده‌ای نمایان نیست."
 
-#: app/display/gimpdisplayshell-dnd.c:480 app/widgets/gimpdrawabletreeview.c:267
-#: app/widgets/gimpdrawabletreeview.c:381
+#: app/display/gimpdisplayshell-dnd.c:446 app/widgets/gimpdrawabletreeview.c:488
+#: app/widgets/gimpdrawabletreeview.c:674
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr ""
 
-#: app/display/gimpdisplayshell-dnd.c:502 app/widgets/gimpdrawabletreeview.c:298
-#: app/widgets/gimpdrawabletreeview.c:401
+#: app/display/gimpdisplayshell-dnd.c:468 app/widgets/gimpdrawabletreeview.c:519
+#: app/widgets/gimpdrawabletreeview.c:694
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr ""
 
-#: app/display/gimpdisplayshell-dnd.c:630 app/widgets/gimpitemtreeview.c:1971
-#: app/widgets/gimplayertreeview.c:811
+#: app/display/gimpdisplayshell-dnd.c:596 app/widgets/gimpitemtreeview.c:1660
+#: app/widgets/gimplayertreeview.c:808
 msgid "Drop layers"
 msgstr "انداختن لایه‌ها"
 
-#: app/display/gimpdisplayshell-dnd.c:773 app/display/gimpdisplayshell-dnd.c:790
-#: app/widgets/gimplayertreeview.c:888 app/widgets/gimptoolbox-dnd.c:277
+#: app/display/gimpdisplayshell-dnd.c:739 app/display/gimpdisplayshell-dnd.c:756
+#: app/widgets/gimplayertreeview.c:885 app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "میانگیر افتاده"
 
@@ -18937,32 +18963,32 @@ msgstr ""
 msgid "Click-Drag to shear"
 msgstr ""
 
-#: app/file/file-open.c:139 app/file/file-save.c:132
+#: app/file/file-open.c:137 app/file/file-save.c:132
 msgid "Not a regular file"
 msgstr "یک پروندهٔ متعارف نیست"
 
-#: app/file/file-open.c:148 app/file/file-save.c:141
+#: app/file/file-open.c:146 app/file/file-save.c:141
 msgid "Permission denied"
 msgstr "اجازه رد شد"
 
-#: app/file/file-open.c:280
+#: app/file/file-open.c:278
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr ""
 
-#: app/file/file-open.c:291
+#: app/file/file-open.c:289
 #, c-format
 msgid "%s plug-in could not open image"
 msgstr ""
 
-#: app/file/file-open.c:676
+#: app/file/file-open.c:674
 msgid "Image doesn't contain any layers"
 msgstr ""
 
 # "باز کردن پروندهٔ مبادلهٔ آزمایشی ممکن نیست."
 # "برای پیش‌گیری از، از دست رفتن داده‌هایتان لطفاً مکان و اجازه‌های شاخهٔ مبادله را "
 # "که در ترجیحات شما تعیین می‌شود (در حال حاضر «%s»)، بررسی کنید."
-#: app/file/file-open.c:734
+#: app/file/file-open.c:732
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "گشودن «‎%s» با شکست مواجه شد: %s"
@@ -19914,10 +19940,10 @@ msgid "Turn colors into shades of gray"
 msgstr ""
 
 #: app/operations/gimpoperationdesaturate.c:91
-#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1466
+#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1457
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
-#: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:281
+#: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:279
 msgid "Mode"
 msgstr "حالت"
 
@@ -19959,7 +19985,7 @@ msgstr ""
 msgid "The color"
 msgstr "رنگ"
 
-#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1429
+#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1420
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:113
 #: app/tools/gimptransformoptions.c:307
 msgid "Clipping"
@@ -20034,7 +20060,7 @@ msgstr "نوشتارها"
 msgid "GIMP Startup"
 msgstr "آغاز به کار گیمپ"
 
-#: app/gui/themes.c:336
+#: app/gui/themes.c:512
 #, c-format
 msgid ""
 "Invalid theme: directory '%s' contains neither gimp-dark.css, gimp-gray.css, gimp-"
@@ -22690,28 +22716,29 @@ msgstr ""
 msgid "%s: switch horizontal and vertical"
 msgstr ""
 
-#: app/tools/gimpfiltertool.c:1258
-msgid "Edited filter"
-msgstr "پالایهٔ ویراسته"
+#: app/tools/gimpfiltertool.c:1254
+msgid "Edit filter"
+msgstr "ویرایش mhghdi"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1442
+#: app/tools/gimpfiltertool.c:1433
 msgid "Blending Options"
 msgstr ""
 
-#: app/tools/gimpfiltertool.c:1948 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1938 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr ""
 
-#: app/tools/gimpfiltertool.c:1950 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1940 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr ""
 
-#: app/tools/gimpfiltertool.c:2188
-msgid "Editing filter..."
-msgstr ""
+#: app/tools/gimpfiltertool.c:2205
+#, c-format
+msgid "Editing '%s'..."
+msgstr "ویراستن «%s»…"
 
 #: app/tools/gimpfiltertool-settings.c:100
 msgid "Pre_sets:"
@@ -26519,16 +26546,49 @@ msgstr "خودکار"
 msgid "When enabled, the dialog automatically follows the image you are working on."
 msgstr ""
 
-#: app/widgets/gimpdrawabletreeview.c:122
+#: app/widgets/gimpdrawabletreeview.c:173
 msgid "Lock pixels"
 msgstr ""
 
-#: app/widgets/gimpdrawabletreeview.c:124
+#: app/widgets/gimpdrawabletreeview.c:175
 msgid "Lock position and size"
 msgstr ""
 
-#: app/widgets/gimpdrawabletreeview.c:192
+#: app/widgets/gimpdrawabletreeview.c:413
 msgid "Cannot select items while a floating selection is active."
+msgstr ""
+
+#: app/widgets/gimpdrawabletreeview-filters.c:183
+msgid "Layer Effects"
+msgstr "جلوه‌های لایه"
+
+#: app/widgets/gimpdrawabletreeview-filters.c:213
+msgid "Toggle the visibility of all filters."
+msgstr ""
+
+#: app/widgets/gimpdrawabletreeview-filters.c:229
+msgid "Edit the selected filter."
+msgstr ""
+
+#: app/widgets/gimpdrawabletreeview-filters.c:245
+msgid "Raise filter one step up in the stack."
+msgstr ""
+
+#: app/widgets/gimpdrawabletreeview-filters.c:260
+msgid "Lower filter one step down in the stack."
+msgstr ""
+
+#: app/widgets/gimpdrawabletreeview-filters.c:276
+msgid "Merge all active filters down."
+msgstr ""
+
+#: app/widgets/gimpdrawabletreeview-filters.c:292
+msgid "Remove the selected filter."
+msgstr ""
+
+#: app/widgets/gimpdrawabletreeview-filters.c:768
+#: app/widgets/gimpdrawabletreeview-filters.c:794
+msgid "Cannot reorder a filter that is being edited."
 msgstr ""
 
 #: app/widgets/gimpdynamicseditor.c:162 app/widgets/gimpdynamicsoutputeditor.c:71
@@ -26928,113 +26988,77 @@ msgid "Indexed color (monochrome)"
 msgid_plural "Indexed color (%d colors)"
 msgstr[0] ""
 
-#: app/widgets/gimpitemtreeview.c:725
+#: app/widgets/gimpitemtreeview.c:596
 msgid "Set Item Exclusive Content Lock"
 msgstr ""
 
-#: app/widgets/gimpitemtreeview.c:741
+#: app/widgets/gimpitemtreeview.c:612
 msgid "Set Item Exclusive Position Lock"
 msgstr ""
 
-#: app/widgets/gimpitemtreeview.c:756
+#: app/widgets/gimpitemtreeview.c:627
 msgid "Unlock visibility"
 msgstr "قفل‌گشایی نمایانی"
 
-#: app/widgets/gimpitemtreeview.c:757
+#: app/widgets/gimpitemtreeview.c:628
 msgid "Set Item Exclusive Visibility Lock"
 msgstr ""
 
-#: app/widgets/gimpitemtreeview.c:786
-msgid "Toggle the visibility of all filters."
-msgstr ""
-
-#: app/widgets/gimpitemtreeview.c:800
-msgid "Edit the selected filter."
-msgstr ""
-
-#: app/widgets/gimpitemtreeview.c:813
-msgid "Raise filter one step up in the stack."
-msgstr ""
-
-#: app/widgets/gimpitemtreeview.c:826
-msgid "Lower filter one step down in the stack."
-msgstr ""
-
-#: app/widgets/gimpitemtreeview.c:839
-msgid "Merge all active filters down."
-msgstr ""
-
-#: app/widgets/gimpitemtreeview.c:852
-msgid "Remove the selected filter."
-msgstr ""
-
-#: app/widgets/gimpitemtreeview.c:863
-msgid "Layer Effects"
-msgstr "جلوه‌های لایه"
-
-#: app/widgets/gimpitemtreeview.c:896
+#: app/widgets/gimpitemtreeview.c:654
 msgid "Select items by patterns and store item sets"
 msgstr "گزینش موارد با الگویها و ذخیرهٔ مجموعهٔ موارد"
 
-#: app/widgets/gimpitemtreeview.c:1793
+#: app/widgets/gimpitemtreeview.c:1482
 #, c-format
 msgid "%d item selected"
 msgid_plural "%d items selected"
 msgstr[0] "%Id مورد گزیده"
 
-#: app/widgets/gimpitemtreeview.c:2733 app/widgets/gimpitemtreeview.c:2788
-msgid "Cannot reorder a filter that is being edited."
-msgstr ""
-
-#: app/widgets/gimpitemtreeview.c:2751 app/widgets/gimpitemtreeview.c:2811
-msgid "Reorder filter"
-msgstr ""
-
-#: app/widgets/gimpitemtreeview.c:3442
+#: app/widgets/gimpitemtreeview.c:2425
 msgid "No layer set stored"
 msgstr ""
 
-#: app/widgets/gimpitemtreeview.c:3464
+#: app/widgets/gimpitemtreeview.c:2447
 msgid "New layer set's name"
 msgstr ""
 
-#: app/widgets/gimpitemtreeview.c:3506 app/widgets/gimpitemtreeview.c:3521
+#: app/widgets/gimpitemtreeview.c:2489 app/widgets/gimpitemtreeview.c:2504
 msgid "Select layers by text search"
 msgstr ""
 
-#: app/widgets/gimpitemtreeview.c:3508 app/widgets/gimpitemtreeview.c:3523
+#: app/widgets/gimpitemtreeview.c:2491 app/widgets/gimpitemtreeview.c:2506
 msgid "Text search"
 msgstr ""
 
-#: app/widgets/gimpitemtreeview.c:3527
+#: app/widgets/gimpitemtreeview.c:2510
 msgid "Select layers by glob patterns"
 msgstr ""
 
-#: app/widgets/gimpitemtreeview.c:3529
+#: app/widgets/gimpitemtreeview.c:2512
 msgid "Glob pattern search"
 msgstr ""
 
-#: app/widgets/gimpitemtreeview.c:3533
+#: app/widgets/gimpitemtreeview.c:2516
 msgid "Select layers by regular expressions"
 msgstr ""
 
-#: app/widgets/gimpitemtreeview.c:3535
+#: app/widgets/gimpitemtreeview.c:2518
 msgid "Regular Expression search"
 msgstr ""
 
-#: app/widgets/gimpitemtreeview.c:3590
+#: app/widgets/gimpitemtreeview.c:2573
 msgid "search"
 msgstr "جست‌وجو"
 
-#: app/widgets/gimpitemtreeview.c:3591
+#: app/widgets/gimpitemtreeview.c:2574
 msgid "glob"
 msgstr ""
 
-#: app/widgets/gimpitemtreeview.c:3591
+#: app/widgets/gimpitemtreeview.c:2574
 msgid "regexp"
 msgstr "عبارت باقاعده"
 
-#: app/widgets/gimpitemtreeview.c:3760
+#: app/widgets/gimpitemtreeview.c:2743
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "عبارت باقاعدهٔ نامعتبر: %s\n"
@@ -27043,35 +27067,35 @@ msgstr "عبارت باقاعدهٔ نامعتبر: %s\n"
 msgid "Switch to another group of modes"
 msgstr "تعویض به گروهی دیگر از حالت‌ها"
 
-#: app/widgets/gimplayertreeview.c:419 app/widgets/gimplayertreeview.c:422
+#: app/widgets/gimplayertreeview.c:417 app/widgets/gimplayertreeview.c:420
 msgid "Lock alpha channel"
 msgstr "قفل کانال آلفا"
 
-#: app/widgets/gimplayertreeview.c:420
+#: app/widgets/gimplayertreeview.c:418
 msgid "Unlock alpha channel"
 msgstr "قفل‌گشایی کانال آلفا"
 
-#: app/widgets/gimplayertreeview.c:421
+#: app/widgets/gimplayertreeview.c:419
 msgid "Set Item Exclusive Alpha Channel lock"
 msgstr "تنظیم قفل کانال آلفای اختصاصی مورد"
 
-#: app/widgets/gimplayertreeview.c:1058
+#: app/widgets/gimplayertreeview.c:1055
 msgid "Set layers mode"
 msgstr "تنظیم حالت لایه‌ها"
 
-#: app/widgets/gimplayertreeview.c:1304
+#: app/widgets/gimplayertreeview.c:1263
 msgctxt "layers-action"
 msgid "Anchor the floating mask"
 msgstr ""
 
-#: app/widgets/gimplayertreeview.c:1307
+#: app/widgets/gimplayertreeview.c:1266
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
 msgstr ""
 
 #. No channel. We cannot perform the add
 #. * mask action.
-#: app/widgets/gimplayertreeview.c:1568
+#: app/widgets/gimplayertreeview.c:1527
 msgid "No channels to create a layer mask from."
 msgstr ""
 
@@ -27157,7 +27181,7 @@ msgstr ""
 
 #: app/widgets/gimppickablechooser.c:244 app/widgets/gimppickablechooser.c:529
 msgid "Select an image in the left pane"
-msgstr ""
+msgstr "گزینش تصویری در قاب راست"
 
 #: app/widgets/gimppluginview.c:146
 msgid "Plug-In"
@@ -27241,7 +27265,7 @@ msgstr ""
 
 #: app/widgets/gimpselectiondata.c:254
 msgid "Invalid UTF-8"
-msgstr "یوتی‌اف-۸ نامعتبر"
+msgstr "یونی‌کد نامعتبر"
 
 #: app/widgets/gimpsettingsbox.c:304
 msgid "Pick a preset from the list"
@@ -27249,7 +27273,7 @@ msgstr "یک پیش‌تنظیم از سیاهه برگزینید"
 
 #: app/widgets/gimpsettingsbox.c:328
 msgid "Save the current settings as named preset"
-msgstr ""
+msgstr "ذخیرهٔ تنظیمات کنونی به شکل پیش‌تنظیم نام‌دار"
 
 #: app/widgets/gimpsettingsbox.c:346
 msgid "Manage presets"
@@ -27644,15 +27668,15 @@ msgstr "%s پیش‌تنظیم"
 msgid "[ Base Image ]"
 msgstr "[ تصویر پایه ]"
 
-#: app/widgets/gimppathtreeview.c:116
+#: app/widgets/gimppathtreeview.c:117
 msgid "Lock path"
 msgstr "قفل کردن مسیر"
 
-#: app/widgets/gimppathtreeview.c:119
+#: app/widgets/gimppathtreeview.c:120
 msgid "Lock path position"
 msgstr "قفل کردن موقعیت مسیر"
 
-#: app/widgets/gimppathtreeview.c:122
+#: app/widgets/gimppathtreeview.c:123
 msgid "Lock path visibility"
 msgstr "قفل نمایانی مسیر"
 
@@ -31606,9 +31630,6 @@ msgstr "فهرست تاریخچهٔ برگردان"
 
 #~ msgid "Style of bevel around the statusbar text"
 #~ msgstr "سبک لبهٔ پخ دور متن نوار وضعیت"
-
-#~ msgid "Writing '%s'\n"
-#~ msgstr "در حال نوشتن «%s»\n"
 
 #~ msgid "Adding theme '%s' (%s)\n"
 #~ msgstr "در حال اضافه کردن تم «%s» ‏(%s)\n"
