@@ -236,9 +236,43 @@ fix_msg $langsArray_unofficial revert
 Remove-Item "$INNO_PATH\Languages\Unofficial" -Recurse -Force
 
 
-# 6. GENERATE CHECKSUMS IN GNU FORMAT
-Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):installer_trust[collapsed=true]$([char]13)$([char]27)[0KChecksumming $INSTALLER"
-## (We use .NET directly because 'sha*sum' does NOT support BOM from pre-PS6 'Set-Content')
+# 6. VALIDATE .EXE INSTALLER
+Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):installer_trust[collapsed=true]$([char]13)$([char]27)[0KValidating $INSTALLER"
+
+## Check if installer is intact in relation to bundle before checksumming
+if ("$CI_PROJECT_NAMESPACE" -eq 'gimp')
+  {
+    Write-Output "(INFO): comparing Installer with the bundle"
+    #List bundle files
+    $excludes = 'gimp.cmd|.gitignore|python|twain|\\32|\\uninst|\\fonts'
+    $bundle_path = if ((Get-WmiObject Win32_ComputerSystem).SystemType -like 'ARM64*') { 'gimp-clangarm64' } else { 'gimp-clang64' }
+    $bundle_files = Get-ChildItem "$bundle_path" -Recurse | Where-Object { $_.FullName -notmatch $excludes } | Sort-Object Name | Select-Object Name
+    #List installer files
+    $uninstaller_path = Get-ItemProperty Registry::"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-$GIMP_MUTEX_VERSION*" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty UninstallString
+    if ("$uninstaller_path" -ne '')
+      {
+        $installation_path = (Get-ItemProperty Registry::"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-$GIMP_MUTEX_VERSION*" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty InstallLocation)
+        Start-Process "$uninstaller_path" -ArgumentList "/VERYSILENT", "/SUPPRESSMSGBOXES" -Wait
+        Remove-Item "$installation_path" -Recurse -Force -ErrorAction SilentlyContinue
+      }
+    Start-Process $GIMP_BASE\$INSTALLER -ArgumentList "/VERYSILENT", "/SUPPRESSMSGBOXES", "/CURRENTUSER", "/SP-" -Wait
+    $installation_path = (Get-ItemProperty Registry::"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-$GIMP_MUTEX_VERSION*" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty InstallLocation).TrimEnd('\')
+    $installation_files = Get-ChildItem "$installation_path" -Recurse | Where-Object { $_.FullName -notmatch $excludes } | Sort-Object Name | Select-Object Name
+    $uninstaller_path = Get-ItemProperty Registry::"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-$GIMP_MUTEX_VERSION*" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty UninstallString
+    Start-Process "$uninstaller_path" -ArgumentList "/VERYSILENT", "/SUPPRESSMSGBOXES" -Wait
+    Remove-Item "$installation_path" -Recurse -Force -ErrorAction SilentlyContinue
+    #Do the diffing
+    $diff = Compare-Object -ReferenceObject $installation_files -DifferenceObject $bundle_files -Property Name
+    if ("$diff" -like '*=*')
+      {
+        Write-Host "(ERROR): Installer content differs from the bundle. Please, maintain parity with the bundle so with the MSIX." -ForegroundColor Red
+        Write-Output ($diff -split "`r?`n" | Where-Object {$_ -ne ""})
+        exit 1
+      }
+  }
+
+## Checksums in GNU format (we use .NET directly because 'sha*sum' does NOT support BOM from pre-PS6 'Set-Content')
+Write-Output "(INFO): checksumming $INSTALLER"
 $Utf8NoBomEncoding = New-Object -TypeName System.Text.UTF8Encoding -ArgumentList $False
 $sha256 = (Get-FileHash $INSTALLER -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()
 if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)

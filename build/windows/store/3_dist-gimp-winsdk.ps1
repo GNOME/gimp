@@ -176,7 +176,7 @@ foreach ($bundle in $supported_archs)
         Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):${msix_arch}_making[collapsed=true]$([char]13)$([char]27)[0KMaking ${temp_text}$msix_arch MSIX"
 
         ## Prevent Git going crazy
-        $ig_content = "`n$msix_arch`n*.appxsym`n*.zip"
+        $ig_content = "`n$msix_arch`n*.appxsym`n*.zip`n$IDENTITY_NAME*"
         if (Test-Path .gitignore -Type Leaf)
           {
             if (-not (Test-Path .gitignore.bak -Type Leaf))
@@ -344,18 +344,52 @@ if (((Test-Path $a64_bundle) -and (Test-Path $x64_bundle)) -and (Get-ChildItem *
   }
 
 
-# 6.A. CERTIFY .MSIX OR .MSIXBUNDLE WITH WACK (OPTIONAL)
-# (Partner Center does the same thing before publishing)
+# 6. VALIDATE .MSIX OR .MSIXBUNDLE PACKAGE
+Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):msix_trust${msix_arch}[collapsed=true]$([char]13)$([char]27)[0KValidating $MSIX_ARTIFACT"
+
+## Check if msix package have parity with bundle, otherwise don't proceed
+Write-Output "(INFO): comparing native MSIX with the bundle"
+###List bundle files
+Invoke-Expression ((Get-Content build\windows\installer\3_dist-gimp-inno.ps1 | Select-String 'excludes =' -Context 0,2) -replace '> ','')
+###List msix files
+if ("$MSIX_ARTIFACT" -like '*bundle*')
+  {
+    $new_msixbundle_path = $MSIX_ARTIFACT -replace '.msixbundle', '.zip'
+    Copy-Item "$MSIX_ARTIFACT" "$new_msixbundle_path"
+    $new_msixbundle_dir = $new_msixbundle_path -replace '.zip', '\'
+    Expand-Archive "$new_msixbundle_path" "$new_msixbundle_dir" -Force
+    $MSIX_ARTIFACT = Resolve-Path ${new_msixbundle_dir}*$(if ((Get-WmiObject Win32_ComputerSystem).SystemType -like 'ARM64*') { 'arm64' } else { 'x64' })*.msix
+  }
+$new_msix_path = $MSIX_ARTIFACT -replace '.msix', '.zip'
+Copy-Item "$MSIX_ARTIFACT" "$new_msix_path"
+$new_msix_dir = $new_msix_path -replace '.zip', '\'
+Expand-Archive "$new_msix_path" "$new_msix_dir" -Force
+Remove-Item "$new_msix_path" -Recurse
+Add-Type -AssemblyName System.Web
+Get-ChildItem "$new_msix_dir" -Recurse | Where-Object { $_.Name -match "%" } | ForEach-Object { Rename-Item -LiteralPath $_.FullName -NewName ([System.Web.HttpUtility]::UrlDecode($_.Name)) }
+$msix_files = Get-ChildItem "$new_msix_dir\VFS\ProgramFilesX64\GIMP" -Recurse | Where-Object { $_.FullName -notmatch $excludes } | Sort-Object Name | Select-Object Name
+Remove-Item "$new_msix_dir" -Recurse
+###Do the diffing
+$diff = Compare-Object -ReferenceObject $msix_files -DifferenceObject $bundle_files -Property Name -PassThru
+if ("$diff" -like '*=*')
+  {
+    Write-Host "(ERROR): MSIX content differs from the bundle. Please, maintain parity with the bundle so with the .exe installer." -ForegroundColor Red
+    Write-Output ($diff -split "`r?`n" | Where-Object {$_ -ne ""})
+    exit 1
+  }
+
+## Certify the package and binaries
+## (Partner Center does the same thing before publishing)
 if (-not $GITLAB_CI -and $wack -eq 'WACK')
   {
-    ## Prepare file naming
-    ## (appcert CLI does NOT allow relative paths)
+    ### Prepare file naming
+    ### (appcert CLI does NOT allow relative paths)
     $fullpath = $PWD
-    ## (appcert CLI does NOT allow more than one dot on xml name)
+    ### (appcert CLI does NOT allow more than one dot on xml name)
     $xml_artifact = "$MSIX_ARTIFACT" -replace '.msix', '-report.xml' -replace 'bundle', ''
 
-    ## Generate detailed report
-    ## (appcert only works with admin rights so let's use sudo)
+    ### Generate detailed report
+    ### (appcert only works with admin rights so let's use sudo)
     $nt_build = [System.Environment]::OSVersion.Version | Select-Object -ExpandProperty Build
     if ($nt_build -lt '26052')
       {
@@ -373,10 +407,10 @@ if (-not $GITLAB_CI -and $wack -eq 'WACK')
         Write-Host "(ERROR): 'sudo' is not in normal/inline mode. Please change it in Settings." -ForegroundColor Red
         exit 1
       }
-    Write-Output "(INFO): certifying $MSIX_ARTIFACT with WACK"
+    Write-Output "(INFO): certifying native $MSIX_ARTIFACT with WACK"
     sudo appcert test -appxpackagepath $fullpath\$MSIX_ARTIFACT -reportoutputpath $fullpath\$xml_artifact
 
-    ## Output overall result
+    ### Output overall result
     if (Test-Path $xml_artifact -Type Leaf)
       {
         $xmlObject = New-Object XML
@@ -398,12 +432,11 @@ if (-not $GITLAB_CI -and $wack -eq 'WACK')
       }
   }
 
-
-# 6.B. SIGN .MSIX OR .MSIXBUNDLE PACKAGE (NOT THE BINARIES)
-# (Partner Center does the same thing, for free, before publishing)
+## Sign package, not the binaries
+## (Partner Center does the same thing, for free, before publishing)
 if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
   {
-    Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):msix_trust${msix_arch}[collapsed=true]$([char]13)$([char]27)[0KSelf-signing $MSIX_ARTIFACT (for testing purposes)"
+    Write-Output "(INFO): self-signing $MSIX_ARTIFACT (for testing purposes)"
     signtool sign /debug /fd sha256 /a /f $(Resolve-Path build\windows\store\pseudo-gimp*.pfx) /p eek $MSIX_ARTIFACT
     if ("$LASTEXITCODE" -gt '0' -or "$?" -eq 'False')
       {
@@ -425,9 +458,9 @@ if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
         Write-Output "(INFO): $MSIX_ARTIFACT SHA-256: $sha256"
         $sha512 = (Get-FileHash $MSIX_ARTIFACT -Algorithm SHA512 | Select-Object -ExpandProperty Hash).ToLower()
         Write-Output "(INFO): $MSIX_ARTIFACT SHA-512: $sha512"
-        Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):msix_trust${msix_arch}$([char]13)$([char]27)[0K"
       }
   }
+Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):msix_trust${msix_arch}$([char]13)$([char]27)[0K"
 
 
 Remove-Item .gitignore
