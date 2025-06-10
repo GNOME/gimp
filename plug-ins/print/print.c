@@ -287,6 +287,7 @@ print_image (GimpImage *image,
   data.use_full_page   = FALSE;
   data.draw_crop_marks = FALSE;
   data.operation       = operation;
+  data.has_layout_gui  = FALSE;
 
   gimp_image_get_resolution (image, &data.xres, &data.yres);
 
@@ -448,6 +449,26 @@ begin_print (GtkPrintOperation *operation,
              GtkPrintContext   *context,
              PrintData         *data)
 {
+  if (! data->has_layout_gui)
+    {
+      GtkWidget *dialog, *layout_gui;
+      layout_gui = print_page_layout_gui (data, PRINT_PROC_NAME);
+      dialog     = gtk_dialog_new_with_buttons (_("Image Settings"), NULL, 0,
+                                                _("_Print"), GTK_RESPONSE_ACCEPT,
+                                                _("_Cancel"), GTK_RESPONSE_REJECT, NULL);
+      gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                          layout_gui, TRUE, TRUE, 0);
+      gtk_widget_show_all (dialog);
+      if (gtk_dialog_run (GTK_DIALOG (dialog)) != GTK_RESPONSE_ACCEPT)
+        {
+          gtk_print_operation_cancel (operation);
+          gtk_widget_destroy (dialog);
+          return;
+        }
+
+      gtk_widget_destroy (dialog);
+    }
+
   gtk_print_operation_set_use_full_page (operation, data->use_full_page);
 
   gimp_progress_init (_("Printing"));
