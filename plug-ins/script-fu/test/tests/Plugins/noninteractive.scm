@@ -1,7 +1,8 @@
 ; Test script calling plugin scripts non-interactive
 
-; Some scripts must be non-interactive (no menu item.)
-; Such scripts can only be tested by another plugin or script.
+; Some are scripts that must be non-interactive (no menu item.)
+; Most scripts can be tested using app menus.
+; These scripts can only be tested by another plugin or script.
 
 ; This also tests and illustrates aspects
 ; of calling plugin scripts from other scripts:
@@ -12,10 +13,6 @@
 ; cannot be done from the dialect v3 binding state.
 ; While calling a dialect v2 script interprocess
 ; can be done from v3 binding state.
-
-; This also illustrates that some scripts are not well-behaved
-; re non-interactive calls:
-; they open a display on the new image.
 
 ; FUTURE: call all plugin scripts in repo
 
@@ -29,10 +26,10 @@
 
 (define testImage (testing:load-test-image-basic-v3))
 
-; get-layers returns just a vector #(layers)
+; get-layers returns (length #(layers))
 ; Calling another script requires a vector of layers (ever since multi-layer feature.)
-
-(define testDrawables (gimp-image-get-layers testImage))
+; cdr is always a list i.e. (#(layers)), so we need cadr here.
+(define testDrawables (cadr (gimp-image-get-layers testImage)))
 (define testDrawable  (vector-ref testDrawables 0))
 
 ;(newline)
@@ -41,14 +38,15 @@
 
 
 
-(test! "Calling a Scheme plugin script non-interactively")
+(test! "script-fu-unsharp-mask")
 
-; The called plugin is a Scheme script that is already loaded in the interpreter.
+; script-fu-unsharp-mask has been replaced by a GEGL filter.
+; If it is removed from the repo, please keep a test of some script here,
+; if only as an example of how the testing framework can test plugin scripts.
 
-; The test is only: ensure it doesn't error or crash,
-; and that it does not open a display on the new image
+; The test is only: ensure it doesn't error or crash.
 
-; The called plugin uses v2 binding
+; unsharp-mask uses v2 binding
 ; If called without this, usually error is "must be pair"
 (script-fu-use-v2)
 
@@ -58,16 +56,17 @@
 ; only a call to a Scheme function, the run-func of the script.
 ; Use the Scheme signature of the run-func:
 ;    no run_mode argument.
-;
-; The script is not a filter, but a renderer,
-; and does not use passed image and drawables.
-
-(script-fu-gradient-example
+;    no "num-drawables" argument of the C signature.
+(script-fu-unsharp-mask
   ; !!! Not pass run_mode
-  40 40   ; dimensions of new image
-  1      ; NO reverse gradient.  Since v2 binding, this is a number, not #f
+  testImage
+  ; !!! Not pass num_drawables, just a Scheme vector of int ID of drawables
+  testDrawables
+  128   ; mask-size, radius in pixels
+  50    ; opacity percent
   )
-; Expect creates new image of current gradient in context
+; Expect an image with extra layers: "lighter mask" and "darker mask"
+
 
 ; back to v3 binding so we don't need to unwrap calls to gimp-foo in this scope.
 (script-fu-use-v3)
@@ -120,6 +119,7 @@
 (script-fu-test-sphere-v3
   RUN-NONINTERACTIVE           ; run_mode       see above interprocess
   testImage                    ; unused          Image
+  1                            ; num-drawables   int size of GimpObjectArray
   testDrawables                ; unused          GimpObjectArray, Scheme vector of int ID
   ; radius is actually dimension of the square rendered image
   300                          ; radius          int
