@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-06 14:16+0000\n"
-"PO-Revision-Date: 2025-06-07 07:45+0800\n"
+"POT-Creation-Date: 2025-06-10 21:47+0000\n"
+"PO-Revision-Date: 2025-06-11 08:50+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -42,7 +42,7 @@ msgstr "C 语言插件示例"
 #: plug-ins/common/jigsaw.c:537 plug-ins/common/nl-filter.c:215
 #: plug-ins/common/qbist.c:254 plug-ins/common/sample-colorize.c:425
 #: plug-ins/common/smooth-palette.c:193 plug-ins/common/sparkle.c:301
-#: plug-ins/common/sphere-designer.c:3203 plug-ins/common/tile.c:216
+#: plug-ins/common/sphere-designer.c:3203 plug-ins/common/tile.c:222
 #: plug-ins/common/tile-small.c:312 plug-ins/common/van-gogh-lic.c:242
 #: plug-ins/common/warp.c:344 plug-ins/common/wavelet-decompose.c:179
 #: plug-ins/flame/flame.c:297 plug-ins/fractal-explorer/fractal-explorer.c:427
@@ -67,7 +67,7 @@ msgstr "C 语言插件示例"
 #: plug-ins/common/busy-dialog.c:280 plug-ins/common/cml-explorer.c:1374
 #: plug-ins/common/cml-explorer.c:2144 plug-ins/common/cml-explorer.c:2354
 #: plug-ins/common/curve-bend.c:1787 plug-ins/common/curve-bend.c:1822
-#: plug-ins/common/file-gif-export.c:1209 plug-ins/common/file-heif.c:2286
+#: plug-ins/common/file-gif-export.c:1209 plug-ins/common/file-heif.c:2487
 #: plug-ins/common/file-pdf-export.c:1073 plug-ins/common/file-pdf-load.c:585
 #: plug-ins/common/grid.c:835 plug-ins/common/qbist.c:839
 #: plug-ins/common/qbist.c:881 plug-ins/common/sphere-designer.c:2291
@@ -140,7 +140,7 @@ msgstr "JavaScript（GJS）插件示例"
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
-#: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2287
+#: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2488
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/grid.c:836
 #: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:260
 #: plug-ins/file-exr/file-exr.c:455 plug-ins/file-psd/psd-load.c:3840
@@ -611,7 +611,7 @@ msgstr "百叶窗"
 #: plug-ins/common/file-tim.c:517 plug-ins/common/file-wbmp.c:389
 #: plug-ins/common/file-wbmp.c:465 plug-ins/common/file-xbm.c:887
 #: plug-ins/common/film.c:865 plug-ins/common/smooth-palette.c:301
-#: plug-ins/common/tile.c:390 plug-ins/file-bmp/bmp-load.c:809
+#: plug-ins/common/tile.c:396 plug-ins/file-bmp/bmp-load.c:809
 #: plug-ins/file-exr/file-exr.c:302 plug-ins/file-faxg3/faxg3.c:578
 #: plug-ins/file-fits/fits.c:673 plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1093
@@ -1473,8 +1473,8 @@ msgstr "红色差 cr709(_R)："
 
 #: plug-ins/common/compose.c:246 plug-ins/common/compose.c:440
 #: plug-ins/common/compose.c:503 plug-ins/common/decompose.c:192
-#: plug-ins/common/decompose.c:299 plug-ins/common/file-heif.c:288
-#: plug-ins/common/file-heif.c:409
+#: plug-ins/common/decompose.c:299 plug-ins/common/file-heif.c:315
+#: plug-ins/common/file-heif.c:436
 msgid "RGB"
 msgstr "RGB"
 
@@ -2569,7 +2569,7 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #.
 #: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:352
 #: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:473
-#: plug-ins/common/file-heif.c:853 plug-ins/common/file-jp2.c:1376
+#: plug-ins/common/file-heif.c:1049 plug-ins/common/file-jp2.c:1376
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
 #: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
 #: plug-ins/common/file-png.c:792 plug-ins/common/file-pnm.c:688
@@ -2583,6 +2583,7 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #: plug-ins/file-fli/fli-gimp.c:483 plug-ins/file-icns/file-icns-load.c:544
 #: plug-ins/file-ico/ico-load.c:677 plug-ins/file-ico/ico-load.c:815
 #: plug-ins/file-jpeg/jpeg-load.c:97 plug-ins/file-psd/psd-load.c:202
+#: plug-ins/file-raw/file-another-rawtherapee.c:346
 #: plug-ins/file-raw/file-darktable.c:467
 #: plug-ins/file-raw/file-rawtherapee.c:345 plug-ins/file-sgi/sgi.c:315
 #: plug-ins/file-tiff/file-tiff-load.c:299
@@ -3372,15 +3373,15 @@ msgstr "C 源代码头文件"
 msgid "Saves files as C unsigned character array"
 msgstr "将文件作为 C 无符号字符数组保存"
 
-#: plug-ins/common/file-heif.c:195 plug-ins/common/file-heif.c:235
+#: plug-ins/common/file-heif.c:222 plug-ins/common/file-heif.c:262
 msgid "HEIF/HEIC"
 msgstr "HEIF/HEIC"
 
-#: plug-ins/common/file-heif.c:198
+#: plug-ins/common/file-heif.c:225
 msgid "Loads HEIF images"
 msgstr "载入 HEIF 图像"
 
-#: plug-ins/common/file-heif.c:199
+#: plug-ins/common/file-heif.c:226
 msgid ""
 "Load image stored in HEIF format (High Efficiency Image File Format). "
 "Typical suffices for HEIF files are .heif, .heic."
@@ -3388,187 +3389,214 @@ msgstr ""
 "载入以 HEIF（高效率图像文件格式）格式存储的图像。HEIF 文件典型的后缀名为 ."
 "heif、.heic。"
 
-#: plug-ins/common/file-heif.c:240
+#: plug-ins/common/file-heif.c:267
 msgid "Exports HEIF images"
 msgstr "导出 HEIF 图像"
 
-#: plug-ins/common/file-heif.c:241
+#: plug-ins/common/file-heif.c:268
 msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr "以 HEIF（高效率图像文件格式）格式保存图像。"
 
-#: plug-ins/common/file-heif.c:262 plug-ins/common/file-heif.c:383
-#: plug-ins/common/file-jp2.c:334 plug-ins/common/file-jp2.c:422
-#: plug-ins/file-jpeg/jpeg.c:210
+#: plug-ins/common/file-heif.c:289 plug-ins/common/file-heif.c:410
+#: plug-ins/common/file-heif.c:555 plug-ins/common/file-jp2.c:334
+#: plug-ins/common/file-jp2.c:422 plug-ins/file-jpeg/jpeg.c:210
 msgid "_Quality"
 msgstr "质量(_Q)"
 
-#: plug-ins/common/file-heif.c:263 plug-ins/common/file-heif.c:384
+#: plug-ins/common/file-heif.c:290 plug-ins/common/file-heif.c:411
+#: plug-ins/common/file-heif.c:556
 msgid "Quality factor (0 = worst, 100 = best)"
 msgstr "质量系数（0 = 最差，100 = 最好）"
 
-#: plug-ins/common/file-heif.c:268 plug-ins/common/file-heif.c:389
-#: plug-ins/common/file-jpegxl.c:193 plug-ins/file-webp/file-webp.c:191
+#: plug-ins/common/file-heif.c:295 plug-ins/common/file-heif.c:416
+#: plug-ins/common/file-heif.c:561 plug-ins/common/file-jpegxl.c:193
+#: plug-ins/file-webp/file-webp.c:191
 msgid "L_ossless"
 msgstr "无损(_O)"
 
-#: plug-ins/common/file-heif.c:269 plug-ins/common/file-heif.c:390
-#: plug-ins/common/file-jpegxl.c:194
+#: plug-ins/common/file-heif.c:296 plug-ins/common/file-heif.c:417
+#: plug-ins/common/file-heif.c:562 plug-ins/common/file-jpegxl.c:194
 msgid "Use lossless compression"
 msgstr "使用无损压缩"
 
-#: plug-ins/common/file-heif.c:274 plug-ins/common/file-heif.c:395
+#: plug-ins/common/file-heif.c:301 plug-ins/common/file-heif.c:422
+#: plug-ins/common/file-heif.c:567
 msgid "Save color prof_ile"
 msgstr "保存特性文件(_I)"
 
-#: plug-ins/common/file-heif.c:275 plug-ins/common/file-heif.c:396
+#: plug-ins/common/file-heif.c:302 plug-ins/common/file-heif.c:423
+#: plug-ins/common/file-heif.c:568
 msgid "Save the image's color profile"
 msgstr "保存图像的特性文件"
 
-#: plug-ins/common/file-heif.c:280 plug-ins/common/file-heif.c:401
-#: plug-ins/common/file-jpegxl.c:205
+#: plug-ins/common/file-heif.c:307 plug-ins/common/file-heif.c:428
+#: plug-ins/common/file-heif.c:573 plug-ins/common/file-jpegxl.c:205
 msgid "_Bit depth"
 msgstr "位深(_B)"
 
-#: plug-ins/common/file-heif.c:281 plug-ins/common/file-heif.c:402
-#: plug-ins/common/file-jpegxl.c:206
+#: plug-ins/common/file-heif.c:308 plug-ins/common/file-heif.c:429
+#: plug-ins/common/file-heif.c:574 plug-ins/common/file-jpegxl.c:206
 msgid "Bit depth of exported image"
 msgstr "导出图像的位深"
 
-#: plug-ins/common/file-heif.c:286 plug-ins/common/file-heif.c:407
-#: plug-ins/common/file-png.c:395
+#: plug-ins/common/file-heif.c:313 plug-ins/common/file-heif.c:434
+#: plug-ins/common/file-heif.c:579 plug-ins/common/file-png.c:395
 msgid "_Pixel format"
 msgstr "像素格式(_P)"
 
-#: plug-ins/common/file-heif.c:287 plug-ins/common/file-heif.c:408
+#: plug-ins/common/file-heif.c:314 plug-ins/common/file-heif.c:435
+#: plug-ins/common/file-heif.c:580
 msgid "Format of color sub-sampling"
 msgstr "颜色次采样的格式"
 
-#: plug-ins/common/file-heif.c:289 plug-ins/common/file-heif.c:410
+#: plug-ins/common/file-heif.c:316 plug-ins/common/file-heif.c:437
+#: plug-ins/common/file-heif.c:581
 msgid "YUV444"
 msgstr "YUV444"
 
-#: plug-ins/common/file-heif.c:290 plug-ins/common/file-heif.c:411
+#: plug-ins/common/file-heif.c:317 plug-ins/common/file-heif.c:438
+#: plug-ins/common/file-heif.c:582
 msgid "YUV420"
 msgstr "YUV420"
 
-#: plug-ins/common/file-heif.c:296 plug-ins/common/file-heif.c:417
+#: plug-ins/common/file-heif.c:323 plug-ins/common/file-heif.c:444
 msgid "Enco_der speed"
 msgstr "编码速度(_D)"
 
-#: plug-ins/common/file-heif.c:297 plug-ins/common/file-heif.c:418
+#: plug-ins/common/file-heif.c:324 plug-ins/common/file-heif.c:445
 msgid "Tradeoff between speed and compression"
 msgstr "在速度和压缩之间权衡"
 
-#: plug-ins/common/file-heif.c:298 plug-ins/common/file-heif.c:419
+#: plug-ins/common/file-heif.c:325 plug-ins/common/file-heif.c:446
 msgid "Slow"
 msgstr "慢"
 
-#: plug-ins/common/file-heif.c:299 plug-ins/common/file-heif.c:420
+#: plug-ins/common/file-heif.c:326 plug-ins/common/file-heif.c:447
 msgid "Balanced"
 msgstr "平衡"
 
-#: plug-ins/common/file-heif.c:300 plug-ins/common/file-heif.c:421
+#: plug-ins/common/file-heif.c:327 plug-ins/common/file-heif.c:448
 msgid "Fast"
 msgstr "快"
 
-#: plug-ins/common/file-heif.c:306 plug-ins/common/file-heif.c:427
-#: plug-ins/common/file-jpegxl.c:233
+#: plug-ins/common/file-heif.c:333 plug-ins/common/file-heif.c:454
+#: plug-ins/common/file-heif.c:588 plug-ins/common/file-jpegxl.c:233
 msgid "Save Exi_f"
 msgstr "保存 Exif(_F)"
 
-#: plug-ins/common/file-heif.c:307 plug-ins/common/file-heif.c:428
-#: plug-ins/common/file-jpegxl.c:234
+#: plug-ins/common/file-heif.c:334 plug-ins/common/file-heif.c:455
+#: plug-ins/common/file-heif.c:589 plug-ins/common/file-jpegxl.c:234
 msgid "Toggle saving Exif data"
 msgstr "切换保存 Exif 数据"
 
-#: plug-ins/common/file-heif.c:312 plug-ins/common/file-heif.c:433
-#: plug-ins/common/file-jpegxl.c:239
+#: plug-ins/common/file-heif.c:339 plug-ins/common/file-heif.c:460
+#: plug-ins/common/file-heif.c:594 plug-ins/common/file-jpegxl.c:239
 msgid "Save _XMP"
 msgstr "保存 _XMP"
 
-#: plug-ins/common/file-heif.c:313 plug-ins/common/file-heif.c:434
-#: plug-ins/common/file-jpegxl.c:240
+#: plug-ins/common/file-heif.c:340 plug-ins/common/file-heif.c:461
+#: plug-ins/common/file-heif.c:595 plug-ins/common/file-jpegxl.c:240
 msgid "Toggle saving XMP data"
 msgstr "切换保存 XMP 数据"
 
-#: plug-ins/common/file-heif.c:326
+#: plug-ins/common/file-heif.c:353
 msgid "Loads AVIF images"
 msgstr "载入 AVIF 图像"
 
-#: plug-ins/common/file-heif.c:327
+#: plug-ins/common/file-heif.c:354
 msgid "Load image stored in AV1 Image File Format (AVIF)"
 msgstr "载入以 AV1 图像文件格式（AVIF）存储的图像"
 
-#: plug-ins/common/file-heif.c:360
+#: plug-ins/common/file-heif.c:387
 msgid "Exports AVIF images"
 msgstr "导出 AVIF 图像"
 
-#: plug-ins/common/file-heif.c:361
+#: plug-ins/common/file-heif.c:388
 msgid "Save image in AV1 Image File Format (AVIF)"
 msgstr "以 AV1 图像文件格式（AVIF）保存图像"
 
-#: plug-ins/common/file-heif.c:444
+#: plug-ins/common/file-heif.c:471
 msgid "JPEG 2000 encapsulated in HEIF"
 msgstr "在 HEIF 中封装的 JPEG 2000"
 
-#: plug-ins/common/file-heif.c:447
+#: plug-ins/common/file-heif.c:474
 msgid "Loads HEJ2 images"
 msgstr "载入 HEJ2 图像"
 
-#: plug-ins/common/file-heif.c:448
+#: plug-ins/common/file-heif.c:475
 msgid "Load JPEG 2000 image encapsulated in HEIF (HEJ2)"
 msgstr "加载在 HEIF（HEJ2）中封装的 JPEG 2000 图像"
 
-#: plug-ins/common/file-heif.c:893 plug-ins/common/file-heif.c:926
-#: plug-ins/common/file-heif.c:967 plug-ins/common/file-heif.c:1029
+#: plug-ins/common/file-heif.c:498
+msgid "AVC-encoded image encapsulated in HEIF"
+msgstr "封装在 HEIF 中的 AVC 编码图像"
+
+#: plug-ins/common/file-heif.c:501
+msgid "Loads AVCI images"
+msgstr "载入 AVCI 图像"
+
+#: plug-ins/common/file-heif.c:502
+msgid "Load AVCI image - H.264 image encapsulated in HEIF)"
+msgstr "加载 AVCI 图像 - 封装在 HEIF 中的 H.264 图像"
+
+#: plug-ins/common/file-heif.c:534
+msgid "Exports HEJ2 images"
+msgstr "导出 HEJ2 图像"
+
+#: plug-ins/common/file-heif.c:535
+msgid "Save JPEG 2000 image encapsulated in HEIF (HEJ2)"
+msgstr "将 JPEG 2000 图像封装在 HEIF（HEJ2）中进行保存"
+
+#: plug-ins/common/file-heif.c:1089 plug-ins/common/file-heif.c:1122
+#: plug-ins/common/file-heif.c:1163 plug-ins/common/file-heif.c:1225
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "加载 HEIF 图像失败：%s"
 
-#: plug-ins/common/file-heif.c:915
+#: plug-ins/common/file-heif.c:1111
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr "加载 HEIF 图像失败：输入的文件未包含可读取图像"
 
-#: plug-ins/common/file-heif.c:1151
+#: plug-ins/common/file-heif.c:1347
 msgid "image content"
 msgstr "图像内容"
 
-#: plug-ins/common/file-heif.c:1494
+#: plug-ins/common/file-heif.c:1687
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "正在使用 %2$s 编码器导出“%1$s”"
 
-#: plug-ins/common/file-heif.c:1542 plug-ins/common/file-heif.c:1927
+#: plug-ins/common/file-heif.c:1735 plug-ins/common/file-heif.c:2128
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "编码 HEIF 图像失败：%s"
 
-#: plug-ins/common/file-heif.c:2048
+#: plug-ins/common/file-heif.c:2249
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "写入 HEIF 图像失败：%s"
 
-#: plug-ins/common/file-heif.c:2137
+#: plug-ins/common/file-heif.c:2338
 msgid "primary"
 msgstr "主要"
 
-#: plug-ins/common/file-heif.c:2282
+#: plug-ins/common/file-heif.c:2483
 msgid "Load HEIF Image"
 msgstr "载入 HEIF 图像"
 
-#: plug-ins/common/file-heif.c:2296
+#: plug-ins/common/file-heif.c:2497
 msgid "Select Image"
 msgstr "选择图像"
 
-#: plug-ins/common/file-heif.c:2445 plug-ins/common/file-jpegxl.c:2018
+#: plug-ins/common/file-heif.c:2646 plug-ins/common/file-jpegxl.c:2018
 msgid "8 bit/channel"
 msgstr "8 位/通道"
 
-#: plug-ins/common/file-heif.c:2446
+#: plug-ins/common/file-heif.c:2647
 msgid "10 bit/channel"
 msgstr "10 位/通道"
 
-#: plug-ins/common/file-heif.c:2447
+#: plug-ins/common/file-heif.c:2648
 msgid "12 bit/channel"
 msgstr "12 位/通道"
 
@@ -8100,30 +8128,34 @@ msgstr "新建高度(_H)"
 msgid "New (tiled) image height"
 msgstr "新建（平铺）图像的高度"
 
-#: plug-ins/common/tile.c:172
+#: plug-ins/common/tile.c:172 plug-ins/common/tile.c:173
+msgid "Tile size unit of measure"
+msgstr "平铺分块大小的测量单位"
+
+#: plug-ins/common/tile.c:178
 msgid "New _image"
 msgstr "新建图像(_I)"
 
-#: plug-ins/common/tile.c:173 plug-ins/lighting/lighting-main.c:316
+#: plug-ins/common/tile.c:179 plug-ins/lighting/lighting-main.c:316
 #: plug-ins/map-object/map-object-main.c:334
 msgid "Create a new image"
 msgstr "创建新图像"
 
-#: plug-ins/common/tile.c:252 plug-ins/common/tile-small.c:375
+#: plug-ins/common/tile.c:258 plug-ins/common/tile-small.c:375
 msgid "Tiling"
 msgstr "平铺"
 
-#: plug-ins/common/tile.c:469
+#: plug-ins/common/tile.c:479
 msgid "Tile"
 msgstr "平铺"
 
-#: plug-ins/common/tile.c:471
+#: plug-ins/common/tile.c:481
 msgid "Tile to New Size"
 msgstr "平铺到新的大小"
 
 #: plug-ins/common/tile-small.c:270
 msgid "_Small Tiles..."
-msgstr "小块平铺(_S)…"
+msgstr "小图平铺(_S)…"
 
 #: plug-ins/common/tile-small.c:274
 msgid "Tile image into smaller versions of the original"
@@ -8143,7 +8175,7 @@ msgstr "用于滤镜的选中区域是空的。"
 
 #: plug-ins/common/tile-small.c:441
 msgid "Small Tiles"
-msgstr "小块平铺"
+msgstr "小图平铺"
 
 #. Area for buttons etc
 #. Flip
@@ -9706,6 +9738,7 @@ msgstr "试图打开临时的 %s 文件“%s”用于加载 icns 时出错：%s"
 #. ----- Open PSD file -----
 #: plug-ins/file-icns/file-icns-load.c:596 plug-ins/file-ico/ico-load.c:1017
 #: plug-ins/file-jpeg/jpeg-load.c:685 plug-ins/file-psd/psd-thumb-load.c:72
+#: plug-ins/file-raw/file-another-rawtherapee.c:462
 #: plug-ins/file-raw/file-darktable.c:620
 #: plug-ins/file-raw/file-rawtherapee.c:459
 #, c-format
