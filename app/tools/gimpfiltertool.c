@@ -56,6 +56,7 @@
 #include "core/gimpimage-pick-color.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimplayer.h"
+#include "core/gimplayermask.h"
 #include "core/gimplist.h"
 #include "core/gimppickable.h"
 #include "core/gimpprogress.h"
@@ -405,8 +406,10 @@ gimp_filter_tool_initialize (GimpTool     *tool,
                                            "preview", NULL);
 
       /* Only show merge filter option if we're not editing an NDE filter or
-       * applying to a layer group */
-      if ((GIMP_IS_LAYER (drawable) && ! GIMP_IS_GROUP_LAYER (drawable)) &&
+       * applying to a layer group or layer mask */
+      if (((GIMP_IS_LAYER (drawable) || GIMP_IS_CHANNEL (drawable)) &&
+          ! GIMP_IS_GROUP_LAYER (drawable)                          &&
+          ! GIMP_IS_LAYER_MASK (drawable))                          &&
           ! filter_tool->existing_filter)
         {
           gchar *operation_name = NULL;
@@ -551,8 +554,9 @@ gimp_filter_tool_control (GimpTool       *tool,
         drawable = gimp_drawable_filter_get_drawable (filter_tool->filter);
 
       /* TODO: Expand non-destructive editing to other drawables
-       * besides layers */
-      if (! GIMP_IS_LAYER (drawable) ||
+       * besides layers and channels */
+      if ((! GIMP_IS_LAYER (drawable) && ! GIMP_IS_CHANNEL (drawable)) ||
+          GIMP_IS_LAYER_MASK (drawable)                                ||
           (! filter_tool->existing_filter && options->merge_filter))
         non_destructive = FALSE;
 
@@ -1354,8 +1358,9 @@ gimp_filter_tool_commit (GimpFilterTool *filter_tool,
 
       gimp_filter_tool_remove_guide (filter_tool);
 
-      /* TODO: Review when we can apply NDE filters to channels/layer masks */
-      if (GIMP_IS_LAYER (drawable))
+      /* TODO: Review when we can apply NDE filters to layer masks */
+      if (GIMP_IS_LAYER (drawable) ||
+          (GIMP_IS_CHANNEL (drawable) && ! GIMP_IS_LAYER_MASK (drawable)))
         gimp_drawable_update (drawable, 0, 0, -1, -1);
 
       gimp_image_flush (gimp_display_get_image (tool->display));

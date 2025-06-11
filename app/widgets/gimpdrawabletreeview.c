@@ -207,6 +207,7 @@ gimp_drawable_tree_view_constructed (GObject *object)
   GimpItemTreeView      *item_view        = GIMP_ITEM_TREE_VIEW (object);
   GimpDrawableTreeView  *view             = GIMP_DRAWABLE_TREE_VIEW (object);
   GtkIconSize            button_icon_size = GTK_ICON_SIZE_SMALL_TOOLBAR;
+  GtkTreeViewColumn     *column;
   gint                   pixel_icon_size  = 16;
   gint                   button_spacing;
 
@@ -218,39 +219,33 @@ gimp_drawable_tree_view_constructed (GObject *object)
                         NULL);
   gtk_icon_size_lookup (button_icon_size, &pixel_icon_size, NULL);
 
-  /* TODO: Expand layer effects to other drawable types */
-  if (GIMP_IS_LAYER_TREE_VIEW (object))
-    {
-      GtkTreeViewColumn *column;
+  column = gtk_tree_view_column_new ();
+  view->priv->filters_header_image =
+    gtk_image_new_from_icon_name (GIMP_ICON_EFFECT, button_icon_size);
+  gimp_widget_set_identifier (view->priv->filters_header_image,
+                              "item-effect-header-icon");
+  gtk_tree_view_column_set_widget (column, view->priv->filters_header_image);
+  gtk_widget_show (view->priv->filters_header_image);
+  gtk_tree_view_insert_column (tree_view->view, column, 2);
 
-      column = gtk_tree_view_column_new ();
-      view->priv->filters_header_image =
-        gtk_image_new_from_icon_name (GIMP_ICON_EFFECT, button_icon_size);
-      gimp_widget_set_identifier (view->priv->filters_header_image,
-                                  "item-effect-header-icon");
-      gtk_tree_view_column_set_widget (column, view->priv->filters_header_image);
-      gtk_widget_show (view->priv->filters_header_image);
-      gtk_tree_view_insert_column (tree_view->view, column, 2);
+  view->priv->filters_cell = gimp_cell_renderer_toggle_new (GIMP_ICON_EFFECT);
+  g_object_set (view->priv->filters_cell,
+                "xpad",      0,
+                "ypad",      0,
+                "icon-size", pixel_icon_size,
+                NULL);
+  gtk_tree_view_column_pack_start (column, view->priv->filters_cell, FALSE);
+  gtk_tree_view_column_set_attributes (column, view->priv->filters_cell,
+                                       "active",
+                                       view->priv->model_column_filters,
+                                       NULL);
 
-      view->priv->filters_cell = gimp_cell_renderer_toggle_new (GIMP_ICON_EFFECT);
-      g_object_set (view->priv->filters_cell,
-                    "xpad",      0,
-                    "ypad",      0,
-                    "icon-size", pixel_icon_size,
-                    NULL);
-      gtk_tree_view_column_pack_start (column, view->priv->filters_cell, FALSE);
-      gtk_tree_view_column_set_attributes (column, view->priv->filters_cell,
-                                           "active",
-                                           view->priv->model_column_filters,
-                                           NULL);
+  gimp_container_tree_view_add_toggle_cell (tree_view,
+                                            view->priv->filters_cell);
 
-      gimp_container_tree_view_add_toggle_cell (tree_view,
-                                                view->priv->filters_cell);
-
-      g_signal_connect (view->priv->filters_cell, "clicked",
-                        G_CALLBACK (gimp_drawable_tree_view_filters_cell_clicked),
-                        item_view);
-    }
+  g_signal_connect (view->priv->filters_cell, "clicked",
+                    G_CALLBACK (gimp_drawable_tree_view_filters_cell_clicked),
+                    item_view);
 
   gimp_dnd_viewable_dest_add (gimp_item_tree_view_get_new_button (item_view),
                               GIMP_TYPE_PATTERN,
@@ -297,25 +292,22 @@ gimp_drawable_tree_view_style_updated (GtkWidget *widget)
 
   gtk_icon_size_lookup (button_icon_size, &pixel_icon_size, NULL);
 
-  if (GIMP_IS_LAYER_TREE_VIEW (view))
+  gtk_image_get_icon_name (GTK_IMAGE (view->priv->filters_header_image),
+                           &old_icon_name, &old_size);
+
+  if (button_icon_size != old_size)
     {
-      gtk_image_get_icon_name (GTK_IMAGE (view->priv->filters_header_image),
-                               &old_icon_name, &old_size);
+      gchar *icon_name = g_strdup (old_icon_name);
 
-      if (button_icon_size != old_size)
-        {
-          gchar *icon_name = g_strdup (old_icon_name);
-
-          gtk_image_set_from_icon_name (GTK_IMAGE (view->priv->filters_header_image),
-                                        icon_name, button_icon_size);
-          g_free (icon_name);
-        }
-
-      g_object_set (view->priv->filters_cell,
-                    "icon-name", GIMP_ICON_EFFECT,
-                    "icon-size", pixel_icon_size,
-                    NULL);
+      gtk_image_set_from_icon_name (GTK_IMAGE (view->priv->filters_header_image),
+                                    icon_name, button_icon_size);
+      g_free (icon_name);
     }
+
+  g_object_set (view->priv->filters_cell,
+                "icon-name", GIMP_ICON_EFFECT,
+                "icon-size", pixel_icon_size,
+                NULL);
 
   GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 }
@@ -333,26 +325,16 @@ gimp_drawable_tree_view_set_container (GimpContainerView *view,
   old_container = gimp_container_view_get_container (view);
 
   if (old_container)
-    {
-      if (GIMP_IS_LAYER_TREE_VIEW (drawable_view))
-        {
-          g_clear_pointer (&drawable_view->priv->filters_changed_handler,
-                           gimp_tree_handler_disconnect);
-        }
-    }
+    g_clear_pointer (&drawable_view->priv->filters_changed_handler,
+                     gimp_tree_handler_disconnect);
 
   parent_view_iface->set_container (view, container);
 
   if (container)
-    {
-      if (GIMP_IS_LAYER_TREE_VIEW (drawable_view))
-        {
-          drawable_view->priv->filters_changed_handler =
-            gimp_tree_handler_connect (container, "filters-changed",
-                                       G_CALLBACK (gimp_drawable_tree_view_filters_changed),
-                                       view);
-        }
-    }
+    drawable_view->priv->filters_changed_handler =
+      gimp_tree_handler_connect (container, "filters-changed",
+                                 G_CALLBACK (gimp_drawable_tree_view_filters_changed),
+                                 view);
 }
 
 static gpointer
@@ -363,24 +345,20 @@ gimp_drawable_tree_view_insert_item (GimpContainerView *view,
 {
   GimpContainerTreeView *tree_view     = GIMP_CONTAINER_TREE_VIEW (view);
   GimpDrawableTreeView  *drawable_view = GIMP_DRAWABLE_TREE_VIEW (view);
+  GimpContainer         *filters;
   GtkTreeIter           *iter;
+  gint                   n_filters;
 
   iter = parent_view_iface->insert_item (view, viewable,
                                          parent_insert_data, index);
 
-  if (GIMP_IS_LAYER_TREE_VIEW (view))
-    {
-      GimpContainer *filters;
-      gint           n_filters;
+  filters   = gimp_drawable_get_filters (GIMP_DRAWABLE (viewable));
+  n_filters = gimp_container_get_n_children (filters);
 
-      filters   = gimp_drawable_get_filters (GIMP_DRAWABLE (viewable));
-      n_filters = gimp_container_get_n_children (filters);
-
-      gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
-                          drawable_view->priv->model_column_filters,
-                          n_filters > 0,
-                          -1);
-    }
+  gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
+                      drawable_view->priv->model_column_filters,
+                      n_filters > 0,
+                      -1);
 
   return iter;
 }
