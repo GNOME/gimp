@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import os
 import random
+import re
 import shutil
 import string
 import subprocess
@@ -20,16 +21,23 @@ try:
   if "GIMP_TEMP_UPDATE_RPATH" in os.environ:
     # Earlier code used to set DYLD_LIBRARY_PATH environment variable instead, but
     # it didn't work on contributor's builds because of System Integrity
-    # Protection (SIP), though it did work in the CI.            
+    # Protection (SIP), though it did work in the CI.
+    dylib_paths = [
+      f"{GIMP_GLOBAL_BUILD_ROOT}/libgimp",
+      f"{GIMP_GLOBAL_BUILD_ROOT}/libgimpbase",
+      f"{GIMP_GLOBAL_BUILD_ROOT}/libgimpcolor",
+      f"{GIMP_GLOBAL_BUILD_ROOT}/libgimpconfig",
+      f"{GIMP_GLOBAL_BUILD_ROOT}/libgimpmath",
+      f"{GIMP_GLOBAL_BUILD_ROOT}/libgimpmodule",
+      f"{GIMP_GLOBAL_BUILD_ROOT}/libgimpthumb",
+      f"{GIMP_GLOBAL_BUILD_ROOT}/libgimpwidgets"
+    ]
+
     for binary in os.environ["GIMP_TEMP_UPDATE_RPATH"].split(":"):
-      subprocess.run(["install_name_tool", "-add_rpath", f"{GIMP_GLOBAL_BUILD_ROOT}/libgimp", binary], check=True)
-      subprocess.run(["install_name_tool", "-add_rpath", f"{GIMP_GLOBAL_BUILD_ROOT}/libgimpbase", binary], check=True)
-      subprocess.run(["install_name_tool", "-add_rpath", f"{GIMP_GLOBAL_BUILD_ROOT}/libgimpcolor", binary], check=True)
-      subprocess.run(["install_name_tool", "-add_rpath", f"{GIMP_GLOBAL_BUILD_ROOT}/libgimpconfig", binary], check=True)
-      subprocess.run(["install_name_tool", "-add_rpath", f"{GIMP_GLOBAL_BUILD_ROOT}/libgimpmath", binary], check=True)
-      subprocess.run(["install_name_tool", "-add_rpath", f"{GIMP_GLOBAL_BUILD_ROOT}/libgimpmodule", binary], check=True)
-      subprocess.run(["install_name_tool", "-add_rpath", f"{GIMP_GLOBAL_BUILD_ROOT}/libgimpthumb", binary], check=True)
-      subprocess.run(["install_name_tool", "-add_rpath", f"{GIMP_GLOBAL_BUILD_ROOT}/libgimpwidgets", binary], check=True)
+      rpath = subprocess.run(["otool", "-l", binary], capture_output=True, text=True)
+      for path in dylib_paths:
+        if not path in re.findall(r'\s+path\s+(\S+)', rpath.stdout):
+          subprocess.run(["install_name_tool", "-add_rpath", path, binary], check=False)
 
   if "GIMP_DEBUG_SELF" in os.environ and shutil.which("gdb"):
     print(f"RUNNING: gdb --batch -x {os.environ['GIMP_GLOBAL_SOURCE_ROOT']}/tools/debug-in-build-gimp.py --args {os.environ['GIMP_SELF_IN_BUILD']} {' '.join(sys.argv[1:])}")
@@ -40,14 +48,8 @@ try:
 
   if "GIMP_TEMP_UPDATE_RPATH" in os.environ:
     for binary in os.environ["GIMP_TEMP_UPDATE_RPATH"].split(":"):
-      subprocess.run(["install_name_tool", "-delete_rpath", f"{GIMP_GLOBAL_BUILD_ROOT}/libgimp", binary], check=True)
-      subprocess.run(["install_name_tool", "-delete_rpath", f"{GIMP_GLOBAL_BUILD_ROOT}/libgimpbase", binary], check=True)
-      subprocess.run(["install_name_tool", "-delete_rpath", f"{GIMP_GLOBAL_BUILD_ROOT}/libgimpcolor", binary], check=True)
-      subprocess.run(["install_name_tool", "-delete_rpath", f"{GIMP_GLOBAL_BUILD_ROOT}/libgimpconfig", binary], check=True)
-      subprocess.run(["install_name_tool", "-delete_rpath", f"{GIMP_GLOBAL_BUILD_ROOT}/libgimpmath", binary], check=True)
-      subprocess.run(["install_name_tool", "-delete_rpath", f"{GIMP_GLOBAL_BUILD_ROOT}/libgimpmodule", binary], check=True)
-      subprocess.run(["install_name_tool", "-delete_rpath", f"{GIMP_GLOBAL_BUILD_ROOT}/libgimpthumb", binary], check=True)
-      subprocess.run(["install_name_tool", "-delete_rpath", f"{GIMP_GLOBAL_BUILD_ROOT}/libgimpwidgets", binary], check=True)
+      for path in dylib_paths:
+        subprocess.run(["install_name_tool", "-delete_rpath", path, binary], check=True)
 
   # Clean-up the temporary config directory after each usage, yet making sure we
   # don't get tricked by weird redirections or anything of the sort. In particular
