@@ -20,7 +20,9 @@ try:
   if "GIMP_TEMP_UPDATE_RPATH" in os.environ:
     # Earlier code used to set DYLD_LIBRARY_PATH environment variable instead, but
     # it didn't work on contributor's builds because of System Integrity
-    # Protection (SIP), though it did work in the CI.            
+    # Protection (SIP), though it did work in the CI.    
+    # So, we just set LC_RPATH on binaries, but this restrict us to only one 'gimp_exe_depends' target for
+    # macOS (the splash screen). Otherwise, multiple install_name_tool procs would clash over the same bin. See: #14236
     for binary in os.environ["GIMP_TEMP_UPDATE_RPATH"].split(":"):
       subprocess.run(["install_name_tool", "-add_rpath", f"{GIMP_GLOBAL_BUILD_ROOT}/libgimp", binary], check=True)
       subprocess.run(["install_name_tool", "-add_rpath", f"{GIMP_GLOBAL_BUILD_ROOT}/libgimpbase", binary], check=True)
