@@ -165,6 +165,8 @@ static void   gimp_foreground_select_tool_preview_toggled(GtkToggleButton       
 
 static void   gimp_foreground_select_tool_update_gui     (GimpForegroundSelectTool *fg_select);
 
+static gboolean  gimp_foreground_select_tool_has_strokes (GimpForegroundSelectTool *fg_select);
+
 static StrokeUndo * gimp_foreground_select_undo_new      (GeglBuffer               *trimap,
                                                           GArray                   *stroke,
                                                           GimpMattingDrawMode       draw_mode,
@@ -964,13 +966,11 @@ gimp_foreground_select_tool_confirm (GimpPolygonSelectTool *poly_sel,
 static void
 gimp_foreground_select_tool_halt (GimpForegroundSelectTool *fg_select)
 {
-  GimpTool     *tool = GIMP_TOOL (fg_select);
+  GimpTool     *tool      = GIMP_TOOL (fg_select);
   GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (fg_select);
 
   if (draw_tool->preview)
-    {
-      gimp_draw_tool_remove_preview (draw_tool, fg_select->grayscale_preview);
-    }
+    gimp_draw_tool_remove_preview (draw_tool, fg_select->grayscale_preview);
 
   g_clear_object (&fg_select->grayscale_preview);
   g_clear_object (&fg_select->trimap);
@@ -1028,7 +1028,9 @@ gimp_foreground_select_tool_commit (GimpForegroundSelectTool *fg_select)
   GimpTool             *tool    = GIMP_TOOL (fg_select);
   GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (fg_select);
 
-  if (tool->display && fg_select->state != MATTING_STATE_FREE_SELECT)
+  if (tool->display                                 &&
+      fg_select->state != MATTING_STATE_FREE_SELECT &&
+      gimp_foreground_select_tool_has_strokes (fg_select))
     {
       GimpImage *image = gimp_display_get_image (tool->display);
 
@@ -1319,6 +1321,27 @@ gimp_foreground_select_tool_update_gui (GimpForegroundSelectTool *fg_select)
   gimp_tool_gui_set_response_sensitive (fg_select->gui, GTK_RESPONSE_APPLY,
                                         TRUE);
   gtk_widget_set_sensitive (fg_select->preview_toggle, TRUE);
+}
+
+static gboolean
+gimp_foreground_select_tool_has_strokes (GimpForegroundSelectTool *fg_select)
+{
+  GList *iter;
+
+  if (fg_select->undo_stack == NULL)
+    return FALSE;
+
+  /* Check if undo_stack has any foreground strokes, as these are the
+     only ones that can create a selection */
+  for (iter = fg_select->undo_stack; iter; iter = iter->next)
+    {
+      StrokeUndo *undo = iter->data;
+
+      if (undo && undo->draw_mode == GIMP_MATTING_DRAW_MODE_FOREGROUND)
+        return TRUE;
+    }
+
+  return FALSE;
 }
 
 static StrokeUndo *
