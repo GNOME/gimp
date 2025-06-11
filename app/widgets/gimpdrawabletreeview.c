@@ -207,7 +207,7 @@ gimp_drawable_tree_view_constructed (GObject *object)
   GimpItemTreeView      *item_view        = GIMP_ITEM_TREE_VIEW (object);
   GimpDrawableTreeView  *view             = GIMP_DRAWABLE_TREE_VIEW (object);
   GtkIconSize            button_icon_size = GTK_ICON_SIZE_SMALL_TOOLBAR;
-  GtkTreeViewColumn      *column;
+  GtkTreeViewColumn     *column;
   gint                   pixel_icon_size  = 16;
   gint                   button_spacing;
 
