@@ -17,7 +17,7 @@
 
 #pragma once
 
-
-void   filters_actions_setup  (GimpActionGroup *group);
-void   filters_actions_update (GimpActionGroup *group,
-                               gpointer         data);
+void     filters_actions_setup               (GimpActionGroup *group);
+void     filters_actions_update              (GimpActionGroup *group,
+                                              gpointer         data);
+gboolean filters_actions_gegl_op_blocklisted (const gchar     *operation_name);

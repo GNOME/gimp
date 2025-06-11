@@ -789,6 +789,9 @@ filters_actions_setup (GimpActionGroup *group)
       const gchar           *op_name;
       gchar                 *label;
 
+      if (filters_actions_gegl_op_blocklisted (op_class->name))
+        continue;
+
       formatted_op_name = g_strdup (op_class->name);
       gimp_make_valid_action_name (formatted_op_name);
       action_name = g_strdup_printf ("filters-%s", formatted_op_name);
@@ -1118,6 +1121,36 @@ filters_actions_update (GimpActionGroup *group,
         g_free (name);
       }
   }
+}
+
+gboolean
+filters_actions_gegl_op_blocklisted (const gchar *operation_name)
+{
+  for (gint i = 0; i < G_N_ELEMENTS (filters_actions); i++)
+    {
+      const GimpStringActionEntry *action_entry = &filters_actions[i];
+
+      if (g_strcmp0 (operation_name, action_entry->value) == 0)
+        return TRUE;
+    }
+
+  for (gint i = 0; i < G_N_ELEMENTS (filters_settings_actions); i++)
+    {
+      const GimpStringActionEntry *action_entry = &filters_settings_actions[i];
+
+      if (g_strcmp0 (operation_name, action_entry->value) == 0)
+        return TRUE;
+    }
+
+  for (gint i = 0; i < G_N_ELEMENTS (filters_interactive_actions); i++)
+    {
+      const GimpStringActionEntry *action_entry = &filters_interactive_actions[i];
+
+      if (g_strcmp0 (operation_name, action_entry->value) == 0)
+        return TRUE;
+    }
+
+  return FALSE;
 }
 
 static void
