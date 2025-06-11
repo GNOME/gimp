@@ -47,6 +47,7 @@ plug-ins/script-fu/scripts/slide.scm
 plug-ins/script-fu/scripts/spinning-globe.scm
 plug-ins/script-fu/scripts/test-sphere-v3.scm
 plug-ins/script-fu/scripts/tileblur.scm
+plug-ins/script-fu/scripts/unsharp-mask.scm
 plug-ins/script-fu/scripts/waves-anim.scm
 plug-ins/script-fu/scripts/weave.scm
 plug-ins/script-fu/scripts/xach-effect.scm
