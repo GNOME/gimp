@@ -4,6 +4,7 @@ desktop_conf = configuration_data()
 desktop_conf.set('GIMP_COMMAND',      gimp_command)
 desktop_conf.set('GIMP_VERSION',      gimp_version)
 desktop_conf.set('GIMP_APP_VERSION',  gimp_app_version)
+desktop_conf.set('GIMP_DESKTOP_NAME', gimp_desktop_name)
 desktop_conf.set('MIME_TYPES',        ';'.join(MIMEtypes))
 desktop_conf.set('BUG_REPORT_URL',    bug_report_url)
 
