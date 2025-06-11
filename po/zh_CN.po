@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-04 23:16+0000\n"
+"POT-Creation-Date: 2025-06-09 21:15+0000\n"
 "PO-Revision-Date: 2025-06-05 08:01+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
@@ -10363,7 +10363,7 @@ msgstr "解析“%%s”时出错：线段长度长于 %s 个字符。"
 
 #: app/config/gimpconfig-file.c:154 app/config/gimpconfig-file.c:206
 #: app/config/gimpconfig-file.c:223 app/core/gimp-tags.c:145
-#: app/gui/themes.c:657 app/tools/gimpfiltertool-settings.c:229
+#: app/gui/themes.c:711 app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "写入“%s”时出错：%s"
@@ -12713,7 +12713,7 @@ msgstr "无法执行子进程“%s” (%s)"
 msgid "tags-locale:C"
 msgstr "tags-locale:zh_CN"
 
-#: app/core/gimp-tags.c:156 app/gui/themes.c:669
+#: app/core/gimp-tags.c:156 app/gui/themes.c:723
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "关闭“%s”时出错：%s"
@@ -13394,7 +13394,7 @@ msgid "Transformation"
 msgstr "变换"
 
 #: app/core/gimpdrawablefiltermask.c:196 app/core/gimplayer.c:733
-#: app/core/gimplayer.c:2030 app/core/gimplayermask.c:294
+#: app/core/gimplayer.c:2034 app/core/gimplayermask.c:294
 #, c-format
 msgid "%s mask"
 msgstr "%s 蒙版"
@@ -13612,6 +13612,7 @@ msgid "Symmetry"
 msgstr "对称"
 
 #: app/core/gimpimage.c:2072 app/pdb/drawable-filter-cmds.c:681
+#: app/widgets/gimpdrawabletreeview-filters.c:863
 msgid "Remove filter"
 msgstr "移除滤镜"
 
@@ -14004,6 +14005,7 @@ msgid "Cannot merge down to a layer group."
 msgstr "无法向下合并到图层组。"
 
 #: app/core/gimpimage-merge.c:345
+#: app/widgets/gimpdrawabletreeview-filters.c:837
 msgid "The layer to merge down to is locked."
 msgstr "要向下合并的目标图层已被锁定。"
 
@@ -14124,6 +14126,7 @@ msgstr "无法打开缩略图“%s”：%s"
 #: app/core/gimpitem.c:1851 app/core/gimpitem.c:1918
 #: app/display/gimpdisplayshell-dnd.c:380 app/tools/gimptransformtool.c:704
 #: app/tools/gimpvectortool.c:757 app/tools/gimpvectortool.c:846
+#: app/widgets/gimpdrawabletreeview-filters.c:709
 msgid "A selected layer's pixels are locked."
 msgstr "一个选中图层的像素已被锁定。"
 
@@ -14246,73 +14249,73 @@ msgstr ""
 "%s\n"
 "(%s)"
 
-#: app/core/gimplayer.c:1931
+#: app/core/gimplayer.c:1935
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "无法添加图层蒙版，因为已有一个。"
 
-#: app/core/gimplayer.c:1942
+#: app/core/gimplayer.c:1946
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "无法添加跟指定图层尺寸不同的图层蒙版。"
 
-#: app/core/gimplayer.c:1948
+#: app/core/gimplayer.c:1952
 msgctxt "undo-type"
 msgid "Add Layer Masks"
 msgstr "添加图层蒙版"
 
-#: app/core/gimplayer.c:2072
+#: app/core/gimplayer.c:2076
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "将透明度转移到蒙版"
 
-#: app/core/gimplayer.c:2239
+#: app/core/gimplayer.c:2243
 msgctxt "undo-type"
 msgid "Apply Layer Masks"
 msgstr "应用图层蒙版"
 
-#: app/core/gimplayer.c:2240
+#: app/core/gimplayer.c:2244
 msgctxt "undo-type"
 msgid "Delete Layer Masks"
 msgstr "删除图层蒙版"
 
-#: app/core/gimplayer.c:2347
+#: app/core/gimplayer.c:2351
 msgctxt "undo-type"
 msgid "Enable Layer Masks"
 msgstr "启用图层蒙版"
 
-#: app/core/gimplayer.c:2348
+#: app/core/gimplayer.c:2352
 msgctxt "undo-type"
 msgid "Disable Layer Masks"
 msgstr "禁用图层蒙版"
 
-#: app/core/gimplayer.c:2429
+#: app/core/gimplayer.c:2433
 msgctxt "undo-type"
 msgid "Show Layer Masks"
 msgstr "显示图层蒙版"
 
-#: app/core/gimplayer.c:2508
+#: app/core/gimplayer.c:2512
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "添加透明通道"
 
-#: app/core/gimplayer.c:2538
+#: app/core/gimplayer.c:2542
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "删除透明通道"
 
-#: app/core/gimplayer.c:2559
+#: app/core/gimplayer.c:2563
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "图层到图像大小"
 
-#: app/core/gimplayer.c:2742
+#: app/core/gimplayer.c:2746
 msgid "Set layer's blend space"
 msgstr "设置图层混合空间"
 
-#: app/core/gimplayer.c:2789
+#: app/core/gimplayer.c:2793
 msgid "Set layer's composite space"
 msgstr "设置图层合成空间"
 
-#: app/core/gimplayer.c:2836
+#: app/core/gimplayer.c:2840
 msgid "Set layer's composite mode"
 msgstr "设置图层合成模式"
 
@@ -18496,6 +18499,7 @@ msgstr "不能修改图层组的像素。"
 
 #: app/display/gimpdisplayshell-dnd.c:390 app/tools/gimpfiltertool.c:333
 #: app/tools/gimppainttool.c:371 app/tools/gimptransformtool.c:713
+#: app/widgets/gimpdrawabletreeview-filters.c:702
 msgid "A selected layer is not visible."
 msgstr "一个选中图层不可见。"
 
@@ -20163,7 +20167,7 @@ msgstr "文档"
 msgid "GIMP Startup"
 msgstr "GIMP 启动"
 
-#: app/gui/themes.c:458
+#: app/gui/themes.c:512
 #, c-format
 msgid ""
 "Invalid theme: directory '%s' contains neither gimp-dark.css, gimp-gray.css, "
@@ -26765,6 +26769,39 @@ msgstr "锁定位置和大小"
 msgid "Cannot select items while a floating selection is active."
 msgstr "当浮动选区激活时无法选择项目。"
 
+#: app/widgets/gimpdrawabletreeview-filters.c:183
+msgid "Layer Effects"
+msgstr "图层效果"
+
+#: app/widgets/gimpdrawabletreeview-filters.c:213
+msgid "Toggle the visibility of all filters."
+msgstr "切换所有滤镜的可见性。"
+
+#: app/widgets/gimpdrawabletreeview-filters.c:229
+msgid "Edit the selected filter."
+msgstr "编辑选中滤镜。"
+
+#: app/widgets/gimpdrawabletreeview-filters.c:245
+msgid "Raise filter one step up in the stack."
+msgstr "在堆叠中将滤镜升高一步。"
+
+#: app/widgets/gimpdrawabletreeview-filters.c:260
+msgid "Lower filter one step down in the stack."
+msgstr "在堆叠中将滤镜降低一步。"
+
+#: app/widgets/gimpdrawabletreeview-filters.c:276
+msgid "Merge all active filters down."
+msgstr "向下合并所有活动滤镜。"
+
+#: app/widgets/gimpdrawabletreeview-filters.c:292
+msgid "Remove the selected filter."
+msgstr "移除选中滤镜。"
+
+#: app/widgets/gimpdrawabletreeview-filters.c:768
+#: app/widgets/gimpdrawabletreeview-filters.c:794
+msgid "Cannot reorder a filter that is being edited."
+msgstr "无法重新排列正在编辑的滤镜。"
+
 #: app/widgets/gimpdynamicseditor.c:162
 #: app/widgets/gimpdynamicsoutputeditor.c:71
 msgid "Velocity"
@@ -28764,30 +28801,6 @@ msgstr "工具预设菜单"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "撤消历史菜单"
-
-#~ msgid "Toggle the visibility of all filters."
-#~ msgstr "切换所有滤镜的可见性。"
-
-#~ msgid "Edit the selected filter."
-#~ msgstr "编辑选中滤镜。"
-
-#~ msgid "Raise filter one step up in the stack."
-#~ msgstr "在堆叠中将滤镜升高一步。"
-
-#~ msgid "Lower filter one step down in the stack."
-#~ msgstr "在堆叠中将滤镜降低一步。"
-
-#~ msgid "Merge all active filters down."
-#~ msgstr "向下合并所有活动滤镜。"
-
-#~ msgid "Remove the selected filter."
-#~ msgstr "移除选中滤镜。"
-
-#~ msgid "Layer Effects"
-#~ msgstr "图层效果"
-
-#~ msgid "Cannot reorder a filter that is being edited."
-#~ msgstr "无法重新排列正在编辑的滤镜。"
 
 #~ msgid "Painting in GIMP"
 #~ msgstr "在 GIMP 中绘画"
