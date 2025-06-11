@@ -46,6 +46,9 @@
 
 #ifndef GIMP_CONSOLE_COMPILATION
 #include <gtk/gtk.h>
+#ifdef GDK_WINDOWING_X11
+#include <gdk/gdkx.h>
+#endif
 #else
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #endif
@@ -548,6 +551,9 @@ main (int    argc,
   GFile          *user_gimprc_file   = NULL;
   GOptionGroup   *gimp_group         = NULL;
   gchar          *backtrace_file     = NULL;
+#ifndef GIMP_CONSOLE_COMPILATION
+  GKeyFile       *flatpak_keyfile;
+#endif
   gint            retval;
   gint            i;
 
@@ -754,6 +760,47 @@ main (int    argc,
 
       app_exit (EXIT_FAILURE);
     }
+
+#if GLIB_CHECK_VERSION(2,72,0)
+  /* g_set_prgname() can only be called several times since 2.72.0. */
+#ifndef GIMP_CONSOLE_COMPILATION
+  g_return_val_if_fail (gdk_display_get_default () != NULL, EXIT_FAILURE);
+
+  flatpak_keyfile = g_key_file_new ();
+
+  if (
+#ifdef GDK_WINDOWING_X11
+      ! GDK_IS_X11_DISPLAY (gdk_display_get_default ()) &&
+#endif
+      g_key_file_load_from_file (flatpak_keyfile, "/.flatpak-info", G_KEY_FILE_NONE, NULL))
+    {
+      /* Flatpak renames the desktop file. The .flatpak-info file tells
+       * us the right desktop name we must associate our process to,
+       * especially as we have flatpaks with different IDs.
+       *
+       * This logic should not apply on X11 which will instead
+       * apparently use the StartupWMClass set in the desktop file and
+       * expect it to be the same as the name set by g_set_prgname().
+       *
+       * Cf. #13183 and #14233.
+       */
+      gchar *flatpak_name = g_key_file_get_string (flatpak_keyfile, "Application", "name", NULL);
+
+      if (flatpak_name != NULL)
+        {
+          g_set_prgname (flatpak_name);
+          g_free (flatpak_name);
+        }
+      /* The else case should never happen unless we are in some kind of
+       * broken flatpak environment or somehow in a non-flatpak
+       * environment with a .flatpak-info file at the root, which seems
+       * improbable. Fail silently.
+       */
+    }
+
+  g_key_file_free (flatpak_keyfile);
+#endif
+#endif
 
   if (no_interface || be_verbose || console_messages || batch_commands != NULL)
     gimp_open_console_window ();
