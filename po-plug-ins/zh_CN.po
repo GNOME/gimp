@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-10 21:47+0000\n"
-"PO-Revision-Date: 2025-06-11 08:50+0800\n"
+"POT-Creation-Date: 2025-06-11 05:11+0000\n"
+"PO-Revision-Date: 2025-06-12 08:52+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -3536,7 +3536,7 @@ msgid "Loads AVCI images"
 msgstr "载入 AVCI 图像"
 
 #: plug-ins/common/file-heif.c:502
-msgid "Load AVCI image - H.264 image encapsulated in HEIF)"
+msgid "Load AVCI image - H.264 image encapsulated in HEIF"
 msgstr "加载 AVCI 图像 - 封装在 HEIF 中的 H.264 图像"
 
 #: plug-ins/common/file-heif.c:534
