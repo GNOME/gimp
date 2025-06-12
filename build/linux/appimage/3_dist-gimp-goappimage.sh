@@ -306,8 +306,6 @@ done
 bund_usr "$GIMP_PREFIX" "etc/gimp"
 
 ## Other features and plug-ins
-### Needed for welcome page
-bund_usr "$GIMP_PREFIX" "share/metainfo/*.xml"
 ### mypaint brushes
 bund_usr "$UNIX_PREFIX" "share/mypaint-data/1.0"
 ### Needed for 'th' word breaking in Text tool etc
@@ -362,6 +360,8 @@ conf_app PYTHONDONTWRITEBYTECODE "1" --no-expand
 #bund_usr "$UNIX_PREFIX" "share/lua/5.1"
 #conf_app LUA_PATH "\${APPDIR}/usr/share/lua/5.1/?.lua;\${APPDIR}/usr/share/lua/5.1/lgi/?.lua;\${APPDIR}/usr/share/lua/5.1/lgi/override/?.lua" --no-expand
 
+## Used by AppImage "centers" etc
+bund_usr "$GIMP_PREFIX" "share/metainfo/*.xml"
 ## Other binaries and deps (bundle them and do fine-tuning with bundling tool)
 bund_usr "$GIMP_PREFIX" 'bin/gimp*'
 bund_usr "$GIMP_PREFIX" "bin/gegl"
