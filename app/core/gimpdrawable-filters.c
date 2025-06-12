@@ -325,7 +325,6 @@ gimp_drawable_merge_filters (GimpDrawable *drawable)
 
           if (GIMP_IS_LAYER (drawable) && add_alpha)
             gimp_layer_add_alpha (GIMP_LAYER (drawable));
-          g_print ("Add Alpha? %s\n", add_alpha ? "Yes" : "No?");
 
           graph       = gimp_filter_stack_get_graph (GIMP_FILTER_STACK (drawable->private->filter_stack));
           output      = gegl_node_get_output_proxy (graph, "output");
