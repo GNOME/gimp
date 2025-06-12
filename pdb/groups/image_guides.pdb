@@ -138,6 +138,7 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
+        # TODO: this should be changed to type 'guide' with none_ok => 1 when we can break API.
 	{ name => 'guide', type => '0 <= int32', default => 1, no_validate => 1,
 	  desc => 'The ID of the current guide (0 if first invocation)' }
     );
