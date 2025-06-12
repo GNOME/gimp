@@ -109,12 +109,12 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
-	{ name => 'sample_point', type => 'sample_point', no_validate => 1,
+	{ name => 'sample_point', type => 'sample_point', no_validate => 1, none_ok => 1,
 	  desc => 'The ID of the current sample point (0 if first invocation)' }
     );
 
     @outargs = (
-	{ name => 'next_sample_point', type => 'sample_point',
+	{ name => 'next_sample_point', type => 'sample_point', none_ok => 1,
 	  desc => "The next sample point's ID" }
     );
 

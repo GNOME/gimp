@@ -481,11 +481,12 @@ g_param_spec_uint ("$name",
 CODE
     }
     elsif ($pdbtype eq 'sample_point') {
+        $min = exists $arg->{none_ok} ? 0 : 1,
 	$pspec = <<CODE;
 g_param_spec_uint ("$name",
                    "$nick",
                    "$blurb",
-                   1, G_MAXUINT32, 1,
+                   $min, G_MAXUINT32, $min,
                    $flags)
 CODE
     }
