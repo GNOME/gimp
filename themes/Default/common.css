@@ -60,6 +60,20 @@
   border: 1px solid @stronger-border-color;
 }
 
+/* ListBox when used as a view. Selected items. */
+.view row {
+  background-color: @extreme-bg-color;
+  color: @fg-color;
+}
+
+.view row:hover {
+  background-color: unset;
+}
+
+.view row:selected {
+  background-color: @extreme-selected-color;
+}
+
 /* Define color for drag and drop borders
  * in Layer/Channel/Path dockables */
 GimpDock .view:drop(active) {
