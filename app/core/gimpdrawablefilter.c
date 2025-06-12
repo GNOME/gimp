@@ -530,6 +530,8 @@ gimp_drawable_filter_duplicate (GimpDrawable       *drawable,
                                  prior_filter->composite_mode);
   gimp_drawable_filter_set_region (filter,
                                    prior_filter->region);
+  gimp_drawable_filter_set_add_alpha (filter,
+                                      prior_filter->add_alpha);
   gimp_filter_set_active (GIMP_FILTER (filter),
                           gimp_filter_get_active (GIMP_FILTER (prior_filter)));
   gimp_filter_set_is_last_node (GIMP_FILTER (filter),
@@ -1125,6 +1127,14 @@ gimp_drawable_filter_update (GimpDrawableFilter      *filter,
     gimp_drawable_filter_update_drawable (filter, NULL);
 
   return (*error != NULL);
+}
+
+gboolean
+gimp_drawable_filter_get_add_alpha (GimpDrawableFilter *filter)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), FALSE);
+
+  return filter->add_alpha;
 }
 
 void
