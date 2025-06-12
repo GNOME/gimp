@@ -777,7 +777,7 @@ filters_actions_setup (GimpActionGroup *group)
                                 G_N_ELEMENTS (filters_interactive_actions));
 
   gegl_actions = g_strv_builder_new ();
-  op_classes   = gimp_gegl_get_op_classes ();
+  op_classes   = gimp_gegl_get_op_classes (TRUE);
 
   for (iter = op_classes; iter; iter = iter->next)
     {

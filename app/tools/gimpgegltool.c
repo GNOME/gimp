@@ -166,7 +166,7 @@ gimp_gegl_tool_dialog (GimpFilterTool *filter_tool)
   store = gtk_list_store_new (N_COLUMNS,
                               G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
 
-  opclasses = gimp_gegl_get_op_classes ();
+  opclasses = gimp_gegl_get_op_classes (TRUE);
 
   for (iter = opclasses; iter; iter = iter->next)
     {

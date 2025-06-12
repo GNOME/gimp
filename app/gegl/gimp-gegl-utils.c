@@ -42,9 +42,11 @@
 /*  local function prototypes  */
 
 static gboolean   gimp_gegl_op_blacklisted    (const gchar        *name,
-                                               const gchar        *categories);
+                                               const gchar        *categories,
+                                               gboolean            block_gimp_ops);
 static GList    * gimp_gegl_get_op_subclasses (GType               type,
-                                               GList              *classes);
+                                               GList              *classes,
+                                               gboolean            block_gimp_ops);
 static gint       gimp_gegl_compare_op_names  (GeglOperationClass *a,
                                                GeglOperationClass *b);
 
@@ -52,11 +54,11 @@ static gint       gimp_gegl_compare_op_names  (GeglOperationClass *a,
 /*  public functions  */
 
 GList *
-gimp_gegl_get_op_classes (void)
+gimp_gegl_get_op_classes (gboolean block_gimp_ops)
 {
   GList *operations;
 
-  operations = gimp_gegl_get_op_subclasses (GEGL_TYPE_OPERATION, NULL);
+  operations = gimp_gegl_get_op_subclasses (GEGL_TYPE_OPERATION, NULL, block_gimp_ops);
 
   operations = g_list_sort (operations,
                             (GCompareFunc)
@@ -473,7 +475,8 @@ gimp_gegl_buffer_set_extent (GeglBuffer          *buffer,
 
 static gboolean
 gimp_gegl_op_blacklisted (const gchar *name,
-                          const gchar *categories_str)
+                          const gchar *categories_str,
+                          gboolean     block_gimp_ops)
 {
   static const gchar * const category_blacklist[] =
   {
@@ -534,7 +537,7 @@ gimp_gegl_op_blacklisted (const gchar *name,
   if (g_getenv ("GIMP_TESTING_NO_GEGL_BLACKLIST"))
     return FALSE;
 
-  if (g_str_has_prefix (name, "gimp"))
+  if (block_gimp_ops && g_str_has_prefix (name, "gimp"))
     return TRUE;
 
   for (i = 0; i < G_N_ELEMENTS (name_blacklist); i++)
@@ -568,8 +571,9 @@ gimp_gegl_op_blacklisted (const gchar *name,
 /* Builds a GList of the class structures of all subtypes of type.
  */
 static GList *
-gimp_gegl_get_op_subclasses (GType  type,
-                             GList *classes)
+gimp_gegl_get_op_subclasses (GType     type,
+                             GList    *classes,
+                             gboolean  block_gimp_ops)
 {
   GeglOperationClass *klass;
   GType              *ops;
@@ -585,11 +589,11 @@ gimp_gegl_get_op_subclasses (GType  type,
 
   categories = gegl_operation_class_get_key (klass, "categories");
 
-  if (! gimp_gegl_op_blacklisted (klass->name, categories))
+  if (! gimp_gegl_op_blacklisted (klass->name, categories, block_gimp_ops))
     classes = g_list_prepend (classes, klass);
 
   for (i = 0; i < n_ops; i++)
-    classes = gimp_gegl_get_op_subclasses (ops[i], classes);
+    classes = gimp_gegl_get_op_subclasses (ops[i], classes, block_gimp_ops);
 
   if (ops)
     g_free (ops);

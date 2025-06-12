@@ -21,7 +21,7 @@
 #pragma once
 
 
-GList       * gimp_gegl_get_op_classes                (void);
+GList       * gimp_gegl_get_op_classes                (gboolean             block_gimp_ops);
 
 GType         gimp_gegl_get_op_enum_type              (const gchar         *operation,
                                                        const gchar         *property);
