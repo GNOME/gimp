@@ -240,7 +240,7 @@ register_image_sample_points_procs (GimpPDB *pdb)
                                    g_param_spec_uint ("sample-point",
                                                       "sample point",
                                                       "The new sample point",
-                                                      0, G_MAXUINT32, 1,
+                                                      1, G_MAXUINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -269,7 +269,7 @@ register_image_sample_points_procs (GimpPDB *pdb)
                                g_param_spec_uint ("sample-point",
                                                   "sample point",
                                                   "The ID of the sample point to be removed",
-                                                  0, G_MAXUINT32, 1,
+                                                  1, G_MAXUINT32, 1,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -298,13 +298,13 @@ register_image_sample_points_procs (GimpPDB *pdb)
                                g_param_spec_uint ("sample-point",
                                                   "sample point",
                                                   "The ID of the current sample point (0 if first invocation)",
-                                                  0, G_MAXUINT32, 1,
+                                                  1, G_MAXUINT32, 1,
                                                   GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_uint ("next-sample-point",
                                                       "next sample point",
                                                       "The next sample point's ID",
-                                                      0, G_MAXUINT32, 1,
+                                                      1, G_MAXUINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -333,7 +333,7 @@ register_image_sample_points_procs (GimpPDB *pdb)
                                g_param_spec_uint ("sample-point",
                                                   "sample point",
                                                   "The guide",
-                                                  0, G_MAXUINT32, 1,
+                                                  1, G_MAXUINT32, 1,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("position-x",

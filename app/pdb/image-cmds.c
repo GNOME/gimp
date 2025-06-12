@@ -5439,7 +5439,7 @@ register_image_procs (GimpPDB *pdb)
                                    g_param_spec_uint ("tattoo-state",
                                                       "tattoo state",
                                                       "The tattoo state",
-                                                      0, G_MAXUINT32, 1,
+                                                      1, G_MAXUINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -5468,7 +5468,7 @@ register_image_procs (GimpPDB *pdb)
                                g_param_spec_uint ("tattoo-state",
                                                   "tattoo state",
                                                   "The new image tattoo state",
-                                                  0, G_MAXUINT32, 1,
+                                                  1, G_MAXUINT32, 1,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -5497,7 +5497,7 @@ register_image_procs (GimpPDB *pdb)
                                g_param_spec_uint ("tattoo",
                                                   "tattoo",
                                                   "The tattoo of the layer to find",
-                                                  0, G_MAXUINT32, 1,
+                                                  1, G_MAXUINT32, 1,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_layer ("layer",
@@ -5532,7 +5532,7 @@ register_image_procs (GimpPDB *pdb)
                                g_param_spec_uint ("tattoo",
                                                   "tattoo",
                                                   "The tattoo of the channel to find",
-                                                  0, G_MAXUINT32, 1,
+                                                  1, G_MAXUINT32, 1,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_channel ("channel",
@@ -5567,7 +5567,7 @@ register_image_procs (GimpPDB *pdb)
                                g_param_spec_uint ("tattoo",
                                                   "tattoo",
                                                   "The tattoo of the path to find",
-                                                  0, G_MAXUINT32, 1,
+                                                  1, G_MAXUINT32, 1,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_path ("path",
