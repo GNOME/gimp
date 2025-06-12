@@ -126,6 +126,7 @@ gboolean   gimp_drawable_filter_update         (GimpDrawableFilter      *filter,
                                                 const gchar            **auxinputnames,
                                                 const GimpDrawable     **auxinputs,
                                                 GError                 **error);
+gboolean   gimp_drawable_filter_get_add_alpha  (GimpDrawableFilter      *filter);
 void       gimp_drawable_filter_set_add_alpha  (GimpDrawableFilter      *filter,
                                                 gboolean                 add_alpha);
 
