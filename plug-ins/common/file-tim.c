@@ -357,13 +357,6 @@ load_image (GFile        *file,
   TimSharedHeader    tim_header;
   gushort            width;
   gushort            height;
-  gsize              file_size;
-  gsize              file_start;
-
-  file_start = ftell (fp);
-  fseek (fp, 0, SEEK_END);
-  file_size = ftell (fp) - file_start;
-  fseek (fp, file_start, SEEK_SET);
 
   if (fread (&tim_header, sizeof (TimSharedHeader), 1, fp) == 0)
     {
