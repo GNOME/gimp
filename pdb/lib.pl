@@ -140,7 +140,7 @@ sub generate_fun {
             $annotate   = " (array length=$retarg_len)";
         }
 
-        if (exists $retarg->{none_ok} && $type ne 'sample_point') {
+        if (exists $retarg->{none_ok} && $type ne 'sample_point' && $type ne 'guide') {
             $annotate .= " (nullable)";
         }
 
@@ -294,7 +294,7 @@ sub generate_fun {
             $n_annotations++;
         }
 
-        if (exists $_->{none_ok} && $type ne 'sample_point') {
+        if (exists $_->{none_ok} && $type ne 'sample_point' && $type ne 'guide') {
             $argdesc .= " (nullable)";
             $n_annotations++;
         }
