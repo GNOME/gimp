@@ -391,7 +391,15 @@ read_dds (GFile                *file,
           load_info.pitch *= 16;
         }
 
-      load_info.linear_size = MAX (1, (hdr.height + 3) >> 2) * load_info.pitch;
+      if (! g_size_checked_mul (&load_info.linear_size,
+                                MAX (1, (hdr.height + 3) >> 2),
+                                load_info.pitch))
+        {
+          fclose (fp);
+          g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                       _("Image size is too big to handle."));
+          return GIMP_PDB_EXECUTION_ERROR;
+        }
 
       if (load_info.linear_size != hdr.pitch_or_linsize)
         {
@@ -1433,18 +1441,22 @@ load_layer (FILE             *fp,
     {
       guchar *dst;
 
-      dst = g_malloc (width * height * load_info->gimp_bpp);
-      memset (dst, 0, width * height * load_info->gimp_bpp);
+      dst = g_malloc ((gsize) width * height * load_info->gimp_bpp);
+      memset (dst, 0, (gsize) width * height * load_info->gimp_bpp);
 
       /* Initialize alpha to all 1s instead of all 0s */
       if (load_info->gimp_bpp == 4)
         {
+          guchar *dst_line;
+
+          dst_line = dst;
           for (y = 0; y < height; ++y)
             {
               for (x = 0; x < width; ++x)
                 {
-                  dst[y * (width * 4) + (x * 4) + 3] = 255;
+                  dst_line[(x * 4) + 3] = 255;
                 }
+              dst_line += width * 4;
             }
         }
 
