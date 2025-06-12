@@ -1919,7 +1919,7 @@ register_item_procs (GimpPDB *pdb)
                                    g_param_spec_uint ("tattoo",
                                                       "tattoo",
                                                       "The item tattoo",
-                                                      0, G_MAXUINT32, 1,
+                                                      1, G_MAXUINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -1948,7 +1948,7 @@ register_item_procs (GimpPDB *pdb)
                                g_param_spec_uint ("tattoo",
                                                   "tattoo",
                                                   "The new item tattoo",
-                                                  0, G_MAXUINT32, 1,
+                                                  1, G_MAXUINT32, 1,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

@@ -467,7 +467,7 @@ CODE
 g_param_spec_uint ("$name",
                    "$nick",
                    "$blurb",
-                   0, G_MAXUINT32, 1,
+                   1, G_MAXUINT32, 1,
                    $flags)
 CODE
     }
@@ -476,7 +476,7 @@ CODE
 g_param_spec_uint ("$name",
                    "$nick",
                    "$blurb",
-                   0, G_MAXUINT32, 1,
+                   1, G_MAXUINT32, 1,
                    $flags)
 CODE
     }
@@ -485,7 +485,7 @@ CODE
 g_param_spec_uint ("$name",
                    "$nick",
                    "$blurb",
-                   0, G_MAXUINT32, 1,
+                   1, G_MAXUINT32, 1,
                    $flags)
 CODE
     }
