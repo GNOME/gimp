@@ -59,7 +59,7 @@ elif [ "$GITLAB_CI" ] || [ "$1" = '--ci' ]; then
   ## even from GitLab runner messages. So, let's silent and save logs as a file.)
   echo -e "\e[0Ksection_start:`date +%s`:deps_build[collapsed=true]\r\e[0KBuilding dependencies not present in GNOME runtime"
   eval $FLATPAK_BUILDER --force-clean --user --disable-rofiles-fuse --keep-build-dirs --build-only --stop-at=babl \
-                        "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json &> flatpak-builder.log
+                        "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
   echo -e "\e[0Ksection_end:`date +%s`:deps_build\r\e[0K"
 
   echo -e "\e[0Ksection_start:`date +%s`:babl_build[collapsed=true]\r\e[0KBuilding babl"

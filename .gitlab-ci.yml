@@ -417,6 +417,7 @@ gimp-flatpak-x64:
   artifacts:
     paths:
       - repo.tar
+      - flatpak-builder.log
       - gimp-meson-log.tar
     expire_in: 2 days
 

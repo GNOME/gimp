@@ -49,6 +49,7 @@
         "/share/gir-1.0",
         "/share/gtk-doc",
         "/share/man",
+        "/share/metainfo",
         "/share/pkgconfig",
         "/share/vala",
         "*.la",
