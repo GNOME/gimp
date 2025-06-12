@@ -127,8 +127,6 @@ for lang in lang_array:
     bundle(MSYSTEM_PREFIX, f"share/locale/{lang}/LC_MESSAGES/gtk*.mo")
     # For language list in text tool options
     bundle(MSYSTEM_PREFIX, f"share/locale/{lang}/LC_MESSAGES/iso_639_3.mo")
-### Needed for welcome page
-bundle(GIMP_PREFIX, "share/metainfo/org.gimp*.xml")
 ### mypaint brushes
 bundle(MSYSTEM_PREFIX, "share/mypaint-data")
 ### Needed for full CJK and Cyrillic support in file-pdf
