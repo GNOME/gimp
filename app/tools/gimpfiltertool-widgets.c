@@ -402,14 +402,19 @@ gimp_filter_tool_set_line (Controller    *controller,
                            gdouble        x2,
                            gdouble        y2)
 {
-  GimpTool     *tool;
-  GimpDrawable *drawable;
+  GimpTool       *tool;
+  GimpFilterTool *filter_tool;
+  GimpDrawable   *drawable;
 
   if (! controller->widget)
     return;
 
-  tool     = GIMP_TOOL (controller->filter_tool);
-  drawable = tool->drawables->data;
+  filter_tool = controller->filter_tool;
+  tool        = GIMP_TOOL (filter_tool);
+  if (filter_tool->existing_filter)
+    drawable = gimp_drawable_filter_get_drawable (filter_tool->existing_filter);
+  else
+    drawable = tool->drawables->data;
 
   if (drawable)
     {
@@ -479,14 +484,19 @@ gimp_filter_tool_set_slider_line (Controller                 *controller,
                                   const GimpControllerSlider *sliders,
                                   gint                        n_sliders)
 {
-  GimpTool     *tool;
-  GimpDrawable *drawable;
+  GimpTool       *tool;
+  GimpFilterTool *filter_tool;
+  GimpDrawable   *drawable;
 
   if (! controller->widget)
     return;
 
-  tool     = GIMP_TOOL (controller->filter_tool);
-  drawable = tool->drawables->data;
+  filter_tool = controller->filter_tool;
+  tool        = GIMP_TOOL (filter_tool);
+  if (filter_tool->existing_filter)
+    drawable = gimp_drawable_filter_get_drawable (filter_tool->existing_filter);
+  else
+    drawable = tool->drawables->data;
 
   if (drawable)
     {
@@ -572,9 +582,8 @@ gimp_filter_tool_set_transform_grid (Controller        *controller,
   if (! controller->widget)
     return;
 
-  tool        = GIMP_TOOL (controller->filter_tool);
   filter_tool = controller->filter_tool;
-
+  tool        = GIMP_TOOL (filter_tool);
   if (filter_tool->existing_filter)
     drawable = gimp_drawable_filter_get_drawable (filter_tool->existing_filter);
   else
@@ -652,6 +661,7 @@ gimp_filter_tool_set_transform_grids (Controller        *controller,
                                       gint               n_transforms)
 {
   GimpTool         *tool;
+  GimpFilterTool   *filter_tool;
   GimpDisplayShell *shell;
   GimpDrawable     *drawable;
   GimpContainer    *grids;
@@ -666,9 +676,13 @@ gimp_filter_tool_set_transform_grids (Controller        *controller,
   if (! controller->widget)
     return;
 
-  tool     = GIMP_TOOL (controller->filter_tool);
-  shell    = gimp_display_get_shell (tool->display);
-  drawable = tool->drawables->data;
+  filter_tool = controller->filter_tool;
+  tool        = GIMP_TOOL (filter_tool);
+  shell       = gimp_display_get_shell (tool->display);
+  if (filter_tool->existing_filter)
+    drawable = gimp_drawable_filter_get_drawable (filter_tool->existing_filter);
+  else
+    drawable = tool->drawables->data;
 
   g_signal_handlers_block_by_func (controller->widget,
                                    gimp_filter_tool_transform_grids_changed,
@@ -884,14 +898,19 @@ gimp_filter_tool_set_focus (Controller    *controller,
                             gdouble        inner_limit,
                             gdouble        midpoint)
 {
-  GimpTool     *tool;
-  GimpDrawable *drawable;
+  GimpTool       *tool;
+  GimpFilterTool *filter_tool;
+  GimpDrawable   *drawable;
 
   if (! controller->widget)
     return;
 
-  tool     = GIMP_TOOL (controller->filter_tool);
-  drawable = tool->drawables->data;
+  filter_tool = controller->filter_tool;
+  tool        = GIMP_TOOL (filter_tool);
+  if (filter_tool->existing_filter)
+    drawable = gimp_drawable_filter_get_drawable (filter_tool->existing_filter);
+  else
+    drawable = tool->drawables->data;
 
   if (drawable)
     {
