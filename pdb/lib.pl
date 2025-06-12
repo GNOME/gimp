@@ -139,7 +139,8 @@ sub generate_fun {
             $retarg_len = $retarg->{array}->{name};
             $annotate   = " (array length=$retarg_len)";
         }
-        if (exists $retarg->{none_ok}) {
+
+        if (exists $retarg->{none_ok} && $type ne 'sample_point') {
             $annotate .= " (nullable)";
         }
 
@@ -199,6 +200,7 @@ sub generate_fun {
         my $desc = exists $_->{desc} ? $_->{desc} : "";
         my $var_len;
         my $value;
+        my $n_annotations = 0;
 
         if (exists $_->{nopdb}) {
             $argc--;
@@ -284,16 +286,20 @@ sub generate_fun {
 
         if (exists $arg->{array}) {
             $argdesc .= " (array length=$var_len)";
+            $n_annotations++;
         }
 
         if (exists $arg->{in_annotate}) {
             $argdesc .= " $arg->{in_annotate}";
-        }
-        if (exists $_->{none_ok}) {
-            $argdesc .= " (nullable)";
+            $n_annotations++;
         }
 
-        if (exists $arg->{array} || exists $_->{none_ok} || exists $arg->{in_annotate}) {
+        if (exists $_->{none_ok} && $type ne 'sample_point') {
+            $argdesc .= " (nullable)";
+            $n_annotations++;
+        }
+
+        if ($n_annotations > 0) {
             $argdesc .= ":";
         }
 
