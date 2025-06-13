@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-09 21:15+0000\n"
-"PO-Revision-Date: 2025-06-10 06:07+0200\n"
+"POT-Creation-Date: 2025-06-13 16:05+0000\n"
+"PO-Revision-Date: 2025-06-13 19:56+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -59,6 +59,11 @@ msgid ""
 "manipulation procedures to be easily scripted. GIMP is available for Linux, "
 "Microsoft Windows and OS X."
 msgstr ""
+"GIMP გაფართოებადია. ის შექმნილია, რომ გაფართოვდეს დამატებებით და "
+"გაფართოებებით, რომ რაც გნებავთ, ის აკეთოთ. განვითარებული დასკრიპტვის "
+"ინტერფეისი ყველაფერის საშუალებას გაძლევთ, უმარტივესი ამოცანებიდან ურთულესი "
+"გამოსახულების მანიპულაციის პროცედურამდე უადვილესი გახადოთ. GIMP "
+"ხელმისაწვდომია Linux-ზე, Microsoft Windows-ზე და OS X-ზე."
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:48
 msgid ""
@@ -179,136 +184,136 @@ msgstr "გამოიყენება %s-ის ვერსია %s"
 msgid "System Language"
 msgstr "სისტემის ენა"
 
-#: app/main.c:161
+#: app/main.c:164
 msgid "Show version information and exit"
 msgstr "ვერსიის ჩვენება და გასვლა"
 
-#: app/main.c:166
+#: app/main.c:169
 msgid "Show license information and exit"
 msgstr "ლიცენზიის ჩვენება და გასვლა"
 
-#: app/main.c:171
+#: app/main.c:174
 msgid "Be more verbose"
 msgstr "უფრო მეტის ჩვენება"
 
-#: app/main.c:176
+#: app/main.c:179
 msgid "Start a new GIMP instance"
 msgstr "ახალი GIMP-ის გაშვება"
 
-#: app/main.c:181
+#: app/main.c:184
 msgid "Open images as new"
 msgstr "გამოსახულების თავიდან გახსნა"
 
-#: app/main.c:186
+#: app/main.c:189
 msgid "Run without a user interface"
 msgstr "გაუშვი სამომხმარებლო ინტერფეისის გარეშე"
 
-#: app/main.c:191
+#: app/main.c:194
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "არ ჩატვირთო ფუნჯები, გრადიენტები, ..."
 
-#: app/main.c:196
+#: app/main.c:199
 msgid "Do not load any fonts"
 msgstr "არ ჩატვირთო ფონტები"
 
-#: app/main.c:201
+#: app/main.c:204
 msgid "Do not show a splash screen"
 msgstr "არ აჩვენო მისასალმებელი ფანჯარა"
 
-#: app/main.c:206
+#: app/main.c:209
 msgid "Do not use shared memory between GIMP and plug-ins"
 msgstr "GIMP-სა და მის დამატებებს შორის ზიარი მეხსიერების არ გამოყენება"
 
-#: app/main.c:211
+#: app/main.c:214
 msgid "Do not use special CPU acceleration functions"
 msgstr "CPU აჩქარების სპეციალური ფუნქციების არ-გამოყენება"
 
-#: app/main.c:216
+#: app/main.c:219
 msgid "Use an alternate sessionrc file"
 msgstr "ალტერნატიული sessionrc ფაილის გამოყენება"
 
-#: app/main.c:221
+#: app/main.c:224
 msgid "Use an alternate user gimprc file"
 msgstr "ალტერნატიული მომხმარებლის gimprc ფაილის გამოყენება"
 
-#: app/main.c:226
+#: app/main.c:229
 msgid "Use an alternate system gimprc file"
 msgstr "ალტერნატიული სისტემური sessionrc ფაილის გამოყენება"
 
-#: app/main.c:231
+#: app/main.c:234
 msgid "Batch command to run (can be used multiple times)"
 msgstr "ბევრი ბრძანების გაშვება (შეგიძლიათ ბევრჯერ გამოიყენოთ)"
 
-#: app/main.c:236
+#: app/main.c:239
 msgid "The procedure to process batch commands with"
 msgstr "პროცედურა ბევრი ბრძანების ერთდროულად გასაშვებად"
 
-#: app/main.c:241
+#: app/main.c:244
 msgid "Quit immediately after performing requested actions"
 msgstr "მოთხოვნილი მოთხოვნების შესრულების შემდეგ დაუყოვნებლივი გამოსვლა"
 
-#: app/main.c:246
+#: app/main.c:249
 msgid "Send messages to console instead of using a dialog"
 msgstr "შეტყობინებების ფანჯარაში ჩვენების მაგიერ კონსოლზე გაგზავნა"
 
 #. don't translate the mode names (off|on|warn)
-#: app/main.c:252
+#: app/main.c:255
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "PDB-სთან თავსებადობის რეჟიმი (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: app/main.c:258
+#: app/main.c:261
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "გამართვა ავარიის შემთხვევაში (არასდროს|მკითხე|ყოველთვის)"
 
-#: app/main.c:263
+#: app/main.c:266
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "არაფატალური გამართვის სიგნალის დამმუშავებლების ჩართვა"
 
-#: app/main.c:268
+#: app/main.c:271
 msgid "Make all warnings fatal"
 msgstr "ყველა გაფრთხილების ფატალურად გამოცხადება"
 
-#: app/main.c:273
+#: app/main.c:276
 msgid "Output a gimprc file with default settings"
 msgstr "გამოტანილი იქნება gimprc ფაილი ნაგულისხმევი პარამეტრებით"
 
-#: app/main.c:289
+#: app/main.c:292
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "მოძველებული პროცედურების დალაგებული სიის გამოტანა PDB-ში"
 
-#: app/main.c:294
+#: app/main.c:297
 msgid "Show a preferences page with experimental features"
 msgstr "მორგების ფანჯარაში ექსპერიმენტალური თვისებების ჩვენება"
 
-#: app/main.c:299
+#: app/main.c:302
 msgid "Show an image submenu with debug actions"
 msgstr "გამოსახულების ქვემენიუს გამართვის ქმედებებით ჩვენება"
 
-#: app/main.c:722
+#: app/main.c:728
 msgid "[FILE|URI...]"
 msgstr "[FILE|URI...]"
 
-#: app/main.c:750
+#: app/main.c:756
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
 msgstr ""
 
-#: app/main.c:771
+#: app/main.c:818
 msgid "Another GIMP instance is already running."
 msgstr "GIMP-ის კიდევ ერთი ასლი უკვე გაშვებულია."
 
-#: app/main.c:860
+#: app/main.c:907
 msgid "GIMP output. Type any character to close this window."
 msgstr "GIMP-ის გამოტანა. ფანჯრის დასახურად დააწექით ნებისმიერ კლავიშას."
 
-#: app/main.c:861
+#: app/main.c:908
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(ფანჯრის დასახურად დააჭირეთ ნებისმიერ კლავიშას)\n"
 
-#: app/main.c:878
+#: app/main.c:925
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr ""
 "GIMP-ის გამოტანა. თქვენ შეგიძლიათ ჩაკეცოთ ფანჯარა, მაგრამ არა მისი დახურვა."
@@ -2449,7 +2454,7 @@ msgstr "240 წამი"
 #: app/display/gimpdisplayshell-filter-dialog.c:87
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
-#: app/tools/gimpfiltertool.c:369 app/tools/gimpforegroundselecttool.c:331
+#: app/tools/gimpfiltertool.c:370 app/tools/gimpforegroundselecttool.c:333
 #: app/tools/gimptexttool.c:1774 app/tools/gimptransformgridtool.c:1264
 #: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
 #: app/widgets/gimpcolordialog.c:485 app/widgets/gimpcontrollereditor.c:666
@@ -6917,7 +6922,7 @@ msgstr "ფენის ატრიბუტები"
 msgid "Edit Layer Attributes"
 msgstr "ფენის ატრიბუტების რედაქტირება"
 
-#: app/actions/layers-commands.c:359 app/widgets/gimpdrawabletreeview.c:647
+#: app/actions/layers-commands.c:359 app/widgets/gimpdrawabletreeview.c:625
 #: app/widgets/gimplayertreeview.c:936
 msgid "New Layer"
 msgid_plural "New Layers"
@@ -7890,7 +7895,7 @@ msgstr "ყველა ფილტრის საწყის მნიშვ
 #: app/dialogs/preferences-dialog.c:1178 app/dialogs/print-size-dialog.c:122
 #: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
-#: app/tools/gimpfiltertool.c:368 app/tools/gimptransformgridtool.c:1261
+#: app/tools/gimpfiltertool.c:369 app/tools/gimptransformgridtool.c:1261
 #: app/widgets/gimpcolordialog.c:484 app/widgets/gimpcolordisplayeditor.c:326
 msgid "_Reset"
 msgstr "_საწყის მნიშვნელობებზე დაბრუნება"
@@ -9971,7 +9976,7 @@ msgstr "ეკრანის გახსნა"
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
 #: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:191
-#: app/tools/gimpfiltertool.c:370 app/widgets/gimpcolordialog.c:486
+#: app/tools/gimpfiltertool.c:371 app/widgets/gimpcolordialog.c:486
 #: app/widgets/gimpcontrollereditor.c:667
 #: app/widgets/gimpdeviceinfoeditor.c:1161 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:180 app/widgets/gimpmodifierseditor.c:689
@@ -12772,77 +12777,85 @@ msgstr "საქაღალდის შექმნა '%s'..."
 msgid "Cannot create folder '%s': %s"
 msgstr "შეცდომა საქაღალდის შექმნისას  '%s': %s"
 
-#: app/core/gimp-utils.c:576 app/core/gimpfilloptions.c:431
+#: app/core/gimp-utils.c:577 app/core/gimpfilloptions.c:431
 msgid "No patterns available for this operation."
 msgstr "ამ ოპერაციებისთვის შაბლონები ხელმიუწვდომელია."
 
-#: app/core/gimp-utils.c:1475
+#: app/core/gimp-utils.c:1120
+#, c-format
+msgid ""
+"Fatal parse error in Photoshop resource file: RLE compressed data is corrupt."
+msgstr ""
+"ფატალური დამუშავების შეცდომა Photoshop-ის რესურსის ფაილი: RLE-ით შეკუმშული "
+"მონაცემები დაზიანებულია."
+
+#: app/core/gimp-utils.c:1665
 #, c-format
 msgid "This parser does not support imbricated lists."
 msgstr "ამ დამმუშავებელს ერთმანეთში ჩალაგებული სიების მხარდაჭერა არ გააჩნია."
 
-#: app/core/gimp-utils.c:1498
+#: app/core/gimp-utils.c:1688
 #, c-format
 msgid "<li> must be inside <ol> or <ul> tags."
 msgstr "<li> უნდა იყოს <ol> ან <ul> ჭდის შიგნით."
 
-#: app/core/gimp-utils.c:1503
+#: app/core/gimp-utils.c:1693
 #, c-format
 msgid "Unknown tag <%s>."
 msgstr "უცნობი ჭდე <%s>."
 
-#: app/core/gimpbrush-load.c:173
+#: app/core/gimpbrush-load.c:159
 #, c-format
 msgid "Fatal parse error in brush file: Width = 0."
 msgstr "ფუნჯის ფაილის დამუშავების შეცდომა: სიგანე = 0."
 
-#: app/core/gimpbrush-load.c:180
+#: app/core/gimpbrush-load.c:166
 #, c-format
 msgid "Fatal parse error in brush file: Height = 0."
 msgstr "ფუნჯის ფაილის დამუშავების შეცდომა:სიმაღლე = 0."
 
-#: app/core/gimpbrush-load.c:187
+#: app/core/gimpbrush-load.c:173
 #, c-format
 msgid "Fatal parse error in brush file: Bytes = 0."
 msgstr "ფუნჯის ფაილის დამუშავების შეცდომა:ბაიტები = 0."
 
-#: app/core/gimpbrush-load.c:196
+#: app/core/gimpbrush-load.c:182
 #, c-format
 msgid "Fatal parse error in brush file: %dx%d over max size."
 msgstr "ფუნჯის ფაილის დამუშავების შეცდომა:%dx%d დასაშვებ ზომაზე დიდია."
 
-#: app/core/gimpbrush-load.c:222
+#: app/core/gimpbrush-load.c:208
 #, c-format
 msgid "Fatal parse error in brush file: Unknown depth %d."
 msgstr "ფუნჯის ფაილის დამუშავების შეცდომა: უცნობი სიღრმე %d."
 
-#: app/core/gimpbrush-load.c:234
+#: app/core/gimpbrush-load.c:220
 #, c-format
 msgid "Fatal parse error in brush file: Unknown version %d."
 msgstr "ფუნჯის ფაილის დამუშავების შეცდომა:უცნობი ვერსია %d."
 
-#: app/core/gimpbrush-load.c:242
+#: app/core/gimpbrush-load.c:228
 #, c-format
 msgid "Unsupported brush format"
 msgstr "ფუნჯის მხარდაუჭერელი ფორმატი"
 
-#: app/core/gimpbrush-load.c:254
+#: app/core/gimpbrush-load.c:240
 #, c-format
 msgid "Invalid header data in '%s': Brush name is too long: %lu"
 msgstr "თავსართის არასწორი მონაცემები %s-ში: ფუნჯის სახელი ძალიან გრძელია: %lu"
 
-#: app/core/gimpbrush-load.c:272 app/core/gimpbrushgenerated-load.c:126
+#: app/core/gimpbrush-load.c:258 app/core/gimpbrushgenerated-load.c:126
 #: app/core/gimpbrushpipe-load.c:70
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "არასწორი UTF-8 მონაცემები ფუნჯის ფაილში '%s'."
 
-#: app/core/gimpbrush-load.c:279 app/core/gimppattern-load.c:142
+#: app/core/gimpbrush-load.c:265 app/core/gimppattern-load.c:469
 #: app/dialogs/template-options-dialog.c:110 app/display/gimptoolpath.c:617
 msgid "Unnamed"
 msgstr "უსახელო"
 
-#: app/core/gimpbrush-load.c:442
+#: app/core/gimpbrush-load.c:428
 #, c-format
 msgid ""
 "Fatal parse error in brush file:\n"
@@ -12853,49 +12866,42 @@ msgstr ""
 "ფუნჯის მხარდაუჭერელი სიღრმე %d\n"
 "GIMP-ის ფუნჯები უნდა იყოს GRAY ან RGBA ტიპის."
 
-#: app/core/gimpbrush-load.c:519
+#: app/core/gimpbrush-load.c:503
 #, c-format
 msgid "Unable to decode abr format version %d."
 msgstr "Abr ფორმატის %d ვერსიის დეკოდირება შეუძლებელია."
 
-#: app/core/gimpbrush-load.c:637 app/core/gimpbrush-load.c:856
+#: app/core/gimpbrush-load.c:618 app/core/gimpbrush-load.c:826
 #, c-format
 msgid "Fatal parse error in brush file: Brush size value corrupt."
 msgstr "ფუნჯის ფაილის დამუშავების შეცდომა: ფუნჯის ზომის არასწორი მნიშვნელობა."
 
-#: app/core/gimpbrush-load.c:724 app/core/gimpbrush-load.c:915
+#: app/core/gimpbrush-load.c:696 app/core/gimpbrush-load.c:886
 #, c-format
 msgid "Fatal parse error in brush file: Brush dimensions out of range."
 msgstr "ფუნჯის ფაილის დამუშავების შეცდომა:ფუნჯის ზომები დასაშვებზე მეტია."
 
-#: app/core/gimpbrush-load.c:736
+#: app/core/gimpbrush-load.c:708
 #, c-format
 msgid "Fatal parse error in brush file: Wide brushes are not supported."
 msgstr "ფუნჯის ფაილის დამუშავების შეცდომა: ფართო ფუნჯები მხარდაუჭერელია."
 
-#: app/core/gimpbrush-load.c:885
+#: app/core/gimpbrush-load.c:855
 msgid "Fatal parse error in brush file: File appears truncated: "
 msgstr "ფუნჯის ფაილის დამუშავების შეცდომა:ფაილი დაზიანებულია: "
 
-#: app/core/gimpbrush-load.c:923
+#: app/core/gimpbrush-load.c:894
 #, c-format
 msgid "Fatal parse error in brush file: Unknown compression method."
 msgstr "ფუნჯის ფაილის დამუშავების შეცდომა: შეკუმშვის უცნობი მეთოდი."
 
-#: app/core/gimpbrush-load.c:1090
+#: app/core/gimpbrush-load.c:1000
 #, c-format
 msgid ""
 "Fatal parse error in brush file: Unable to decode abr format version %d."
 msgstr ""
 "ფუნჯის ფაილის დამუშავების შეცდომა:abr ფორმატის %d ვერსიის დეკოდირების "
 "შეცდომა."
-
-#: app/core/gimpbrush-load.c:1240
-#, c-format
-msgid "Fatal parse error in brush file: RLE compressed brush data corrupt."
-msgstr ""
-"ფუნჯის ფაილის დამუშავების შეცდომა: ფუნჯის RLE-ით შეკუმშული მონაცემები "
-"დაზიანებულია."
 
 #: app/core/gimpbrush.c:158 app/paint/gimppaintoptions.c:235
 msgid "Brush Spacing"
@@ -13370,7 +13376,7 @@ msgstr "ფილტრების გადალაგება"
 msgid "Rasterize filters"
 msgstr "ფილტრების რასტერიზაცია"
 
-#: app/core/gimpdrawable-filters.c:347
+#: app/core/gimpdrawable-filters.c:356
 msgid "Merge filter"
 msgstr "ფილტრების შერწყმა"
 
@@ -14601,23 +14607,27 @@ msgstr "SBZ ფაილის გახსნის შეცდომა"
 msgid "History Color"
 msgstr "ფერების ისტორია"
 
-#: app/core/gimppattern-load.c:60
+#: app/core/gimppattern-load.c:63 app/core/gimppattern-load.c:70
+msgid "Error reading Photoshop pattern."
+msgstr ""
+
+#: app/core/gimppattern-load.c:377
 msgid "File appears truncated: "
 msgstr "ფაილი შეკვეცილია: "
 
-#: app/core/gimppattern-load.c:78
+#: app/core/gimppattern-load.c:405
 #, c-format
 msgid "Unknown pattern format version %d."
 msgstr "შაბლონის ფორმატის უცნობი ვერსია: %d."
 
-#: app/core/gimppattern-load.c:87
+#: app/core/gimppattern-load.c:414
 #, c-format
 msgid ""
 "Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
 
-#: app/core/gimppattern-load.c:99
+#: app/core/gimppattern-load.c:426
 #, c-format
 msgid ""
 "Invalid header data in '%s': width=%lu (maximum %lu), height=%lu (maximum "
@@ -14626,22 +14636,22 @@ msgstr ""
 "თავსართის არასწორი მონაცემები '%s'-ში: სიგანე=%lu (მაქს %lu), სიმაღლე=%lu "
 "(მაქს %lu), ბაიტი=%lu"
 
-#: app/core/gimppattern-load.c:116
+#: app/core/gimppattern-load.c:443
 #, c-format
 msgid "Invalid header data in '%s': Pattern name is too long: %lu"
 msgstr ""
 "თავსართის არასწორი მონაცემები %s-ში: შაბლონის სახელი ძალიან გრძელია: %lu"
 
-#: app/core/gimppattern-load.c:129 app/core/gimppattern-load.c:167
+#: app/core/gimppattern-load.c:456 app/core/gimppattern-load.c:494
 msgid "File appears truncated."
 msgstr "ფაილი შეკვეცილია."
 
-#: app/core/gimppattern-load.c:135
+#: app/core/gimppattern-load.c:462
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "არასწორი UTF-8 მონაცემები შაბლონის ფაილში '%s'."
 
-#: app/core/gimppattern-load.c:178
+#: app/core/gimppattern-load.c:505
 msgid "Fatal parse error in pattern file: "
 msgstr "შაბლონის ფაილის დამუშავების შეცდომა: "
 
@@ -15209,7 +15219,7 @@ msgid "Select Soft-Proof Profile"
 msgstr "აირჩეთ პროგრამულად დამოწმებული პროფილი"
 
 #: app/dialogs/color-profile-dialog.c:209
-#: app/tools/gimpforegroundselecttool.c:332
+#: app/tools/gimpforegroundselecttool.c:334
 msgid "_Select"
 msgstr "აირჩი_ეთ"
 
@@ -16024,7 +16034,7 @@ msgstr "ი_ნტერვალი:"
 
 #. The "Preview" frame
 #: app/dialogs/palette-import-dialog.c:349
-#: app/tools/gimpforegroundselecttool.c:1316
+#: app/tools/gimpforegroundselecttool.c:1318
 msgid "Preview"
 msgstr "მინიატურა"
 
@@ -18509,22 +18519,22 @@ msgstr "ახალი ბილიკის წაშლა"
 msgid "Cannot modify the pixels of layer groups."
 msgstr "ფენების ჯგუფების პიქსელების შეცვლა შეუძლებელია."
 
-#: app/display/gimpdisplayshell-dnd.c:390 app/tools/gimpfiltertool.c:333
+#: app/display/gimpdisplayshell-dnd.c:390 app/tools/gimpfiltertool.c:334
 #: app/tools/gimppainttool.c:371 app/tools/gimptransformtool.c:713
 #: app/widgets/gimpdrawabletreeview-filters.c:702
 msgid "A selected layer is not visible."
 msgstr "მონიშნული ფენა უხილავია."
 
 #: app/display/gimpdisplayshell-dnd.c:446
-#: app/widgets/gimpdrawabletreeview.c:488
-#: app/widgets/gimpdrawabletreeview.c:674
+#: app/widgets/gimpdrawabletreeview.c:466
+#: app/widgets/gimpdrawabletreeview.c:652
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "ფენის ტექსტურით შევსება"
 
 #: app/display/gimpdisplayshell-dnd.c:468
-#: app/widgets/gimpdrawabletreeview.c:519
-#: app/widgets/gimpdrawabletreeview.c:694
+#: app/widgets/gimpdrawabletreeview.c:497
+#: app/widgets/gimpdrawabletreeview.c:672
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "ფენის ფერთ შევსება"
@@ -20056,7 +20066,7 @@ msgid "Turn colors into shades of gray"
 msgstr "ფერების გადაყვანა ნაცრისფრის ტონებში"
 
 #: app/operations/gimpoperationdesaturate.c:91
-#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1457
+#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1462
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
 #: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:279
@@ -20101,7 +20111,7 @@ msgstr "ნაწილობრივი გამჭვირვალობ�
 msgid "The color"
 msgstr "ფერი"
 
-#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1420
+#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1425
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:113
 #: app/tools/gimptransformoptions.c:307
 msgid "Clipping"
@@ -20637,7 +20647,7 @@ msgstr "ფილტრის დამატება"
 msgid "Plug-in"
 msgstr "დამატება"
 
-#: app/pdb/drawable-cmds.c:1131 app/tools/gimpforegroundselecttool.c:1039
+#: app/pdb/drawable-cmds.c:1131 app/tools/gimpforegroundselecttool.c:1041
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "წინა პლანის არჩევა"
@@ -22275,15 +22285,15 @@ msgid "Cannot fill multiple layers. Select only one layer."
 msgstr "მრავალი ფენების შევსება შეუძლებელია. მონიშნეთ მხოლოდ ერთი ფენა."
 
 #: app/tools/gimpbucketfilltool.c:599 app/tools/gimpcagetool.c:231
-#: app/tools/gimpcurvestool.c:220 app/tools/gimpfiltertool.c:310
-#: app/tools/gimpforegroundselecttool.c:295 app/tools/gimplevelstool.c:211
+#: app/tools/gimpcurvestool.c:220 app/tools/gimpfiltertool.c:311
+#: app/tools/gimpforegroundselecttool.c:297 app/tools/gimplevelstool.c:211
 #: app/tools/gimpoffsettool.c:191 app/tools/gimppainttool.c:297
 #: app/tools/gimpperspectiveclonetool.c:224 app/tools/gimpthresholdtool.c:160
 #: app/tools/gimptransformgridtool.c:351
 msgid "No selected drawables."
 msgstr "ხატვის რეგიონი მონშნული არაა."
 
-#: app/tools/gimpbucketfilltool.c:619 app/tools/gimpforegroundselecttool.c:307
+#: app/tools/gimpbucketfilltool.c:619 app/tools/gimpforegroundselecttool.c:309
 #: app/tools/gimppaintselecttool.c:380
 msgid "The active layer is not visible."
 msgstr "აქტიური ფენა უხილავია."
@@ -22628,7 +22638,7 @@ msgstr "მრუდები"
 msgid "_Curves..."
 msgstr "_მრუდები..."
 
-#: app/tools/gimpcurvestool.c:218 app/tools/gimpfiltertool.c:306
+#: app/tools/gimpcurvestool.c:218 app/tools/gimpfiltertool.c:307
 #: app/tools/gimplevelstool.c:209 app/tools/gimpoffsettool.c:189
 #: app/tools/gimpthresholdtool.c:158
 msgid "Cannot modify multiple drawables. Select only one."
@@ -22834,57 +22844,57 @@ msgid ""
 "Otherwise, it becomes an editable non-destructive filter."
 msgstr ""
 
-#: app/tools/gimpfiltertool.c:321 app/tools/gimpselectiontool.c:575
+#: app/tools/gimpfiltertool.c:322 app/tools/gimpselectiontool.c:575
 #, c-format
 msgid "A selected item's pixels are locked."
 msgstr "მონიშნული ფენის პიქსელები ჩაკეტილია."
 
-#: app/tools/gimpfiltertool.c:441
+#: app/tools/gimpfiltertool.c:444
 msgid "Disabled because this filter depends on another image."
 msgstr "გათიშულია, რადგან ეს ფილტრი სხვა გამოსახულებაზეა დამოკიდებული."
 
-#: app/tools/gimpfiltertool.c:759
+#: app/tools/gimpfiltertool.c:763
 msgid "Click to switch the original and filtered sides"
 msgstr "წკაპი წყაროსა და ფილტრირებულს შორის გასართველად"
 
-#: app/tools/gimpfiltertool.c:763
+#: app/tools/gimpfiltertool.c:767
 msgid "Click to switch between vertical and horizontal"
 msgstr "წკაპი ვერტიკალურსა და ჰორიზონტალურს შორის გადასართველად"
 
-#: app/tools/gimpfiltertool.c:767
+#: app/tools/gimpfiltertool.c:771
 msgid "Click to move the split guide"
 msgstr ""
 
-#: app/tools/gimpfiltertool.c:769
+#: app/tools/gimpfiltertool.c:773
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s წყაროსა და ფილტრირებულს შორის გადართვა"
 
-#: app/tools/gimpfiltertool.c:770
+#: app/tools/gimpfiltertool.c:774
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s ჰორიზონტალურსა და ვერტიკალურს შორის გადართვა"
 
-#: app/tools/gimpfiltertool.c:1254
+#: app/tools/gimpfiltertool.c:1258
 msgid "Edit filter"
 msgstr "ფილტრის ჩასწორება"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1433
+#: app/tools/gimpfiltertool.c:1438
 msgid "Blending Options"
 msgstr "შერევის პარამეტრები"
 
-#: app/tools/gimpfiltertool.c:1938 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1943 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "%s-ის პარამეტრების შემოტანა"
 
-#: app/tools/gimpfiltertool.c:1940 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1945 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "%s-ის პარამეტრების გატანა"
 
-#: app/tools/gimpfiltertool.c:2205
+#: app/tools/gimpfiltertool.c:2210
 #, c-format
 msgid "Editing '%s'..."
 msgstr "'%s'-ის ჩასწორება..."
@@ -23009,66 +23019,66 @@ msgstr "მოსახდენი იტერაციების რიც�
 msgid "Reset stroke width native size"
 msgstr "ფუნჯის ნაგულიხმევი ზომის დაყენება"
 
-#: app/tools/gimpforegroundselecttool.c:193
+#: app/tools/gimpforegroundselecttool.c:195
 msgid "Foreground Select"
 msgstr "წინა პლანის არჩევა"
 
-#: app/tools/gimpforegroundselecttool.c:194
+#: app/tools/gimpforegroundselecttool.c:196
 msgid "Foreground Select Tool: Select a region containing foreground objects"
 msgstr ""
 
-#: app/tools/gimpforegroundselecttool.c:195
+#: app/tools/gimpforegroundselecttool.c:197
 msgid "F_oreground Select"
 msgstr "_წინა პლანის ფერი"
 
-#: app/tools/gimpforegroundselecttool.c:293
+#: app/tools/gimpforegroundselecttool.c:295
 msgid "Cannot select from multiple layers."
 msgstr "მონიშვნა მრავალი ფენიდან ერთდროულად შეუძლებელია."
 
-#: app/tools/gimpforegroundselecttool.c:326
+#: app/tools/gimpforegroundselecttool.c:328
 msgid "Dialog for foreground select"
 msgstr "წინა პლანის არჩევის ფანჯარა"
 
-#: app/tools/gimpforegroundselecttool.c:343
+#: app/tools/gimpforegroundselecttool.c:345
 msgid "_Preview mask"
 msgstr "ნიღაბზე _გადახედვა"
 
-#: app/tools/gimpforegroundselecttool.c:354
+#: app/tools/gimpforegroundselecttool.c:356
 msgid "Select foreground pixels"
 msgstr "აირჩიე წინა პლანის პიქსელები"
 
-#: app/tools/gimpforegroundselecttool.c:630
-#: app/tools/gimpforegroundselecttool.c:635
+#: app/tools/gimpforegroundselecttool.c:632
+#: app/tools/gimpforegroundselecttool.c:637
 msgid "Roughly outline the object to extract"
 msgstr "ობიექტის ამოსაღებად მისი უხეშად შემოსაზღვრა"
 
-#: app/tools/gimpforegroundselecttool.c:631
+#: app/tools/gimpforegroundselecttool.c:633
 msgid "press Enter to refine."
 msgstr "გასამკვეთრებლად დააჭირეთ Enter-ს."
 
-#: app/tools/gimpforegroundselecttool.c:658
+#: app/tools/gimpforegroundselecttool.c:660
 msgid "Selecting foreground"
 msgstr "წინა პლანის მონიშვნა"
 
-#: app/tools/gimpforegroundselecttool.c:660
+#: app/tools/gimpforegroundselecttool.c:662
 msgid "Selecting background"
 msgstr "ფონის მონიშვნა"
 
-#: app/tools/gimpforegroundselecttool.c:662
+#: app/tools/gimpforegroundselecttool.c:664
 msgid "Selecting unknown"
 msgstr "უცნობის მონიშვნა"
 
-#: app/tools/gimpforegroundselecttool.c:665
+#: app/tools/gimpforegroundselecttool.c:667
 msgid "press Enter to preview."
 msgstr "გადასახედად დააჭირეთ Enter-ს."
 
-#: app/tools/gimpforegroundselecttool.c:667
+#: app/tools/gimpforegroundselecttool.c:669
 msgid "press Escape to exit preview or Enter to apply."
 msgstr ""
 "გადახედვიდან გასასვლელად დააჭირეთ Esc-ს. შეტანილი ცვლილებების გადასატარებლად "
 "დააჭირეთ Enter-ს."
 
-#: app/tools/gimpforegroundselecttool.c:1312
+#: app/tools/gimpforegroundselecttool.c:1314
 msgid "Paint mask"
 msgstr "დახატვადი ნიღაბი"
 
@@ -26752,7 +26762,7 @@ msgstr "პიქსელების ჩაკეტვა"
 msgid "Lock position and size"
 msgstr "მდებარეობისა და ზომის ჩაკეტვა"
 
-#: app/widgets/gimpdrawabletreeview.c:413
+#: app/widgets/gimpdrawabletreeview.c:391
 msgid "Cannot select items while a floating selection is active."
 msgstr "ელემენტების მონიშვნა შეუძლებელია, სანამ აქტიურია მცურავი მონიშვნა."
 
