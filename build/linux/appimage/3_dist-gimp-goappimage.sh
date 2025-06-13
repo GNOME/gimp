@@ -451,7 +451,8 @@ ln -sfr "$APP_DIR/$APP_ID.svg" $APP_DIR/.DirIcon
 echo "(INFO): configuring $APP_ID.desktop"
 find "$USR_DIR/share/applications" \( -iname *.desktop -and ! -iname $APP_ID*.desktop \) -execdir mv "{}" $APP_ID.desktop \;
 sed -i "s/gimp-$GIMP_APP_VERSION/$APP_ID/g" "$USR_DIR/share/applications/${APP_ID}.desktop"
-sed -i "s/Icon=gimp/Icon=$APP_ID/g" "$USR_DIR/share/applications/${APP_ID}.desktop"
+sed -i "s/^StartupWMClass=.*/StartupWMClass=$APP_ID/g" "$USR_DIR/share/applications/${APP_ID}.desktop"
+sed -i "s/^Icon=.*/Icon=$APP_ID/" "$USR_DIR/share/applications/${APP_ID}.desktop"
 ln -sfr "$USR_DIR/share/applications/${APP_ID}.desktop" $APP_DIR
 
 ## 4.4. Configure appdata asset (similarly to flatpaks's 'rename-appdata-file')
