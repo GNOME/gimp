@@ -742,44 +742,12 @@ have_doc_shooter= x11_target
 ################################################################################
 # Plugins (optional dependencies)
 
-# The list of MIME types that are supported by plug-ins
-MIMEtypes = [
-  'image/bmp',
-  'image/g3fax',
-  'image/gif',
-  'image/svg+xml',
-  'image/x-compressed-xcf',
-  'image/x-fits',
-  'image/x-gimp-gbr',
-  'image/x-gimp-gih',
-  'image/x-gimp-pat',
-  'image/x-pcx',
-  'image/x-portable-anymap',
-  'image/x-portable-bitmap',
-  'image/x-portable-graymap',
-  'image/x-portable-pixmap',
-  'image/x-psd',
-  'image/x-sgi',
-  'image/x-sun-raster',
-  'image/x-tga',
-  'image/x-xbitmap',
-  'image/x-xcf',
-  'image/x-xwindowdump',
-]
-
-
-
 libtiff_minver = '4.0.0'
 libtiff = dependency('libtiff-4', version: '>=' + libtiff_minver)
-MIMEtypes += 'image/tiff'
-
 
 libjpeg = dependency('libjpeg')
-MIMEtypes += 'image/jpeg'
-
 
 zlib = dependency('zlib')
-MIMEtypes += 'image/x-psp'
 
 # Compiler-provided headers can't be found in crossroads environment
 if not meson.is_cross_build()
@@ -793,15 +761,12 @@ liblzma = dependency('liblzma', version: '>='+liblzma_minver)
 
 
 ghostscript = cc.find_library('gs', required: get_option('ghostscript'))
-if ghostscript.found()
-  MIMEtypes += 'application/postscript'
-else
+if not ghostscript.found()
   ghostscript = disabler()
 endif
 
 libpng_minver = '1.6.25'
 libpng = dependency('libpng', version: '>='+libpng_minver)
-MIMEtypes += [ 'image/png', 'image/x-icon']
 
 libmng = dependency('libmng', required: get_option('mng'))
 
@@ -821,14 +786,8 @@ endif
 libaa = cc.find_library('aa', required: get_option('aa'))
 
 libxpm = dependency('xpm', required: get_option('xpm'))
-if libxpm.found()
-  MIMEtypes += 'image/x-xpixmap'
-endif
 
 have_qoi = cc.has_header('qoi.h')
-if have_qoi
-  MIMEtypes += 'image/qoi'
-endif
 
 libiff = dependency('libiff', required: get_option('ilbm'))
 libilbm = dependency('libilbm', required: get_option('ilbm'))
@@ -837,17 +796,11 @@ if libiff.found() and libilbm.found()
 else
   have_ilbm = cc.has_header('libilbm/ilbm.h', required: get_option('ilbm'))
 endif
-if have_ilbm
-  MIMEtypes += 'image/x-ilbm'
-endif
 
 openexr_minver = '1.6.1'
 openexr = dependency('OpenEXR', version: '>='+openexr_minver,
   required: get_option('openexr')
 )
-if openexr.found()
-  MIMEtypes += 'image/x-exr'
-endif
 
 webp_minver = '0.6.0'
 webp_libs = [
@@ -859,13 +812,6 @@ webp_found = true
 foreach lib : webp_libs
   webp_found = webp_found and  lib.found()
 endforeach
-
-if webp_found
-  MIMEtypes += [
-    'image/x-webp',
-    'image/webp'
-  ]
-endif
 
 libheif_minver = '1.15.1'
 libheif = dependency('libheif', version: '>='+libheif_minver,
@@ -960,17 +906,6 @@ if have_heif
   if not can_import_heic and not can_import_avif
     have_heif = false
   endif
-
-  if have_heif
-    # Listing support for both HEIC and AVIF if we build with HEIF support,
-    # because codecs can be added at any time later and we won't be able to edit
-    # the desktop file once it's installed. See discussion in #9080.
-    MIMEtypes += [
-      'image/heif',
-      'image/heic',
-      'image/avif'
-    ]
-  endif
 endif
 
 have_vala = add_languages('vala', required: get_option('vala'), native: false)
@@ -1014,24 +949,15 @@ cairopdf = dependency('cairo-pdf', version: '>='+cairopdf_minver,
   required: get_option('cairo-pdf')
 )
 
-# PDF import support is a granted feature.
-MIMEtypes += 'application/pdf'
-
 wmf_minver = '0.2.8'
 wmf = dependency('libwmf', version: '>='+wmf_minver,
   required: get_option('wmf')
 )
-if wmf.found()
-  MIMEtypes += 'image/x-wmf'
-endif
 
 openjpeg_minver = '2.1.0'
 openjpeg = dependency('libopenjp2', version: '>='+openjpeg_minver,
   required: get_option('jpeg2000')
 )
-if openjpeg.found()
-  MIMEtypes += [ 'image/jp2', 'image/jpeg2000', 'image/jpx', ]
-endif
 
 jpegxl_minver  = '0.7.0'
 libjxl         = dependency('libjxl',
@@ -1042,14 +968,8 @@ libjxl_threads = dependency('libjxl_threads',
                             version: '>='+jpegxl_minver,
                             required: get_option('jpeg-xl')
 )
-if libjxl.found() and libjxl_threads.found()
-  MIMEtypes += 'image/jxl'
-endif
 
 xmc = dependency('xcursor', required: get_option('xcursor'))
-if xmc.found()
-  MIMEtypes += 'image/x-xcursor'
-endif
 
 
 alsa = dependency('alsa', version: '>=1.0.0', required: get_option('alsa'))
@@ -1093,9 +1013,6 @@ endif
 conf.set('HAVE_DX_DINPUT', directx.found())
 
 cfitsio_dep = dependency('cfitsio', required: get_option('fits'))
-if cfitsio_dep.found()
-  MIMEtypes += 'image/fits'
-endif
 
 
 ################################################################################
@@ -1175,8 +1092,6 @@ message('Found PyGObject: @0@'.format(pygobject_found))
 if not pygobject_found
   error('PyGObject is required.')
 endif
-
-MIMEtypes += 'image/openraster'
 
 ## Javascript
 
@@ -1930,9 +1845,8 @@ subdir('po-python')
 subdir('po-script-fu')
 subdir('po-tags')
 subdir('po-tips')
-# Data / Desktop / xml files
+# Data / xml files
 subdir('data')
-subdir('desktop')
 subdir('etc')
 subdir('menus')
 subdir('themes')
@@ -1956,6 +1870,9 @@ subdir('modules')
 subdir('plug-ins')
 subdir('app')
 subdir('app-tools')
+
+# Desktop files
+subdir('desktop')
 
 ################################################################################
 # Make GIMP runnable without being installed for unit-testing or as a build
