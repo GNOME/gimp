@@ -1,13 +1,11 @@
 subdir('common')
 
-if get_option('windows-installer') or get_option('ms-store')
-  all_plugins_sources = []
-  foreach plugin : common_plugins_list
-    if plugin.get('name').startswith('file-') and plugin.get('name') != 'file-desktop-link' and plugin.get('name') != 'file-lnk'
-      all_plugins_sources += [ meson.current_source_dir() / 'common' / plugin.get('name') + '.c' ]
-    endif
-  endforeach
-endif
+all_plugins_sources = []
+foreach plugin : common_plugins_list
+  if plugin.get('name').startswith('file-') and plugin.get('name') != 'file-desktop-link' and plugin.get('name') != 'file-lnk'
+    all_plugins_sources += [ meson.current_source_dir() / 'common' / plugin.get('name') + '.c' ]
+  endif
+endforeach
 
 
 complex_plugins_list = [
@@ -72,41 +70,47 @@ endif
 
 foreach plugin : complex_plugins_list
   subdir(plugin.get('name'))
-  if get_option('windows-installer') or get_option('ms-store')
-    foreach sourcecode : plugin_sourcecode
-      if plugin.get('name').startswith('file-')
-        #.ico files are handled in a special way by installer and msix scripts
-        if plugin.get('name') == 'file-ico' and platform_windows
-          continue
-        else
-          all_plugins_sources += [ meson.current_source_dir() / plugin.get('name') / sourcecode ]
-        endif
+  foreach sourcecode : plugin_sourcecode
+    if plugin.get('name').startswith('file-')
+      #.ico files are handled in a special way by installer and msix scripts
+      if plugin.get('name') == 'file-ico' and platform_windows
+        continue
+      else
+        all_plugins_sources += [ meson.current_source_dir() / plugin.get('name') / sourcecode ]
       endif
-    endforeach
-  endif
+    endif
+  endforeach
 endforeach
 
 
 subdir('python')
 
-if get_option('windows-installer') or get_option('ms-store')
-  foreach plugin : python_plugins
-    if plugin.get('name').startswith('file-') 
-      all_plugins_sources += [ meson.current_source_dir() / 'python' / plugin.get('name') + '.py' ]
-    endif
-  endforeach
-endif
+foreach plugin : python_plugins
+  if plugin.get('name').startswith('file-') 
+    all_plugins_sources += [ meson.current_source_dir() / 'python' / plugin.get('name') + '.py' ]
+  endif
+endforeach
 
 
+#Dynamically created list of supported files with the plugins lists above
+MIMEtypes_output = run_command(
+  python,
+  meson.current_source_dir() / 'generate_mime_ext.py',
+  '--mime',
+  meson.current_build_dir() / 'file_mimetypes.list',
+  all_plugins_sources
+).stdout().strip()
+MIMEtypes_dep = declare_dependency(variables : {'MIMEtypes': MIMEtypes_output})
+
 if get_option('windows-installer') or get_option('ms-store')
-  #List of file associations dynamically created with the plugins lists above
   custom_target('file_associations',
     input : all_plugins_sources,
     output : 'file_associations.list',
     command : [
       python,
-      meson.current_source_dir() / 'generate_associations.py',
-      '@OUTPUT@'
+      meson.current_source_dir() / 'generate_mime_ext.py',
+      '--association',
+      '@OUTPUT@',
     ] + all_plugins_sources,
     build_by_default: true
   )
