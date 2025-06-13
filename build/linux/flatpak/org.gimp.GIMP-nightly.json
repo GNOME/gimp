@@ -122,8 +122,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://download.gnome.org/sources/gexiv2/0.14/gexiv2-0.14.3.tar.xz",
-                    "sha256": "21e64d2c56e9b333d44fef3f2a4b25653d922c419acd972fa96fab695217e2c8",
+                    "url": "https://download.gnome.org/sources/gexiv2/0.14/gexiv2-0.14.5.tar.xz",
+                    "sha256": "0913c53daabab1f1ab586afd55bb55370796f2b8abcc6e37640ab7704ad99ce1",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 1626,
@@ -170,8 +170,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.3.3.tar.gz",
-                    "sha256": "0ffbd842a7ee2128d44affdea30f42294b4061293cde3aa75b61a53573413d1e",
+                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.3.4.tar.gz",
+                    "sha256": "63abac7c52f280e3e16fc868ac40e06449733bb19179008248ae7e34e4f19824",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 13289,
@@ -222,8 +222,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/ebiggers/libdeflate/archive/refs/tags/v1.23.zip",
-                            "sha256": "e0d9562aa27c6c0d47054002a400dcc17215a41386aee36e72b012b77d95a698",
+                            "url": "https://github.com/ebiggers/libdeflate/archive/refs/tags/v1.24.zip",
+                            "sha256": "1e33358dc545a3258af213e2fb0ebb84e6d970bb098d774c33bdacfbdde4a087",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 242778,
@@ -861,8 +861,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://gitlab.com/graphviz/graphviz/-/archive/12.2.1/graphviz-12.2.1.tar.gz",
-                    "sha256": "91d444b4dabdaf5bfa7c6fcc3a1ee5d41e588af6079ebc030f0acb79e48a56ea",
+                    "url": "https://gitlab.com/graphviz/graphviz/-/archive/13.0.0/graphviz-13.0.0.tar.gz",
+                    "sha256": "1f55d96f413c911ffc6d1ce1b4e1d3bddfe65931b2de62f3c81206258f09a34a",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 1249,
