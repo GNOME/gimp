@@ -687,9 +687,9 @@ gimp_brush_load_abr_brush_v12 (GDataInputStream  *input,
 
         /* g_print ("width %i  height %i  bytes %i\n", width, height, bytes); */
 
-        if (width  < 1 || width  > 10000 ||
-            height < 1 || height > 10000 ||
-            bytes  < 1 || bytes  > 1     ||
+        if (width  < 1 || width  > GIMP_BRUSH_MAX_SIZE ||
+            height < 1 || height > GIMP_BRUSH_MAX_SIZE ||
+            bytes  < 1 || bytes  > 1                   ||
             G_MAXSIZE / width / height / bytes < 1)
           {
             g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
@@ -876,10 +876,10 @@ gimp_brush_load_abr_brush_v6 (GDataInputStream  *input,
               width, height, depth, compress);
 #endif
 
-  if (width  < 1 || width  > 10000             ||
-      height < 1 || height > 10000             ||
-      (compress && depth != 1)                 ||
-      (! compress && (depth < 1 || depth > 2)) ||
+  if (width  < 1 || width  > GIMP_BRUSH_MAX_SIZE ||
+      height < 1 || height > GIMP_BRUSH_MAX_SIZE ||
+      (compress && depth != 1)                   ||
+      (! compress && (depth < 1 || depth > 2))   ||
       G_MAXSIZE / width / height / depth < 1)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
