@@ -91,13 +91,13 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://people.freedesktop.org/~hughsient/appstream-glib/releases/appstream-glib-0.8.3.tar.xz",
-                    "sha256": "84754064c560fca6e1ab151dc64354fc235a5798f016b91b38c9617253a8cf11",
+                    "url": "https://github.com/hughsie/appstream-glib/archive/refs/tags/appstream_glib_0_8_3.zip",
+                    "sha256": "d9d3c5cc690c1f0ccd630c4f70298ee68277586a59500a9cb04b8e8b2c0ae7e6",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 14018,
                         "stable-only": true,
-                        "url-template": "https://people.freedesktop.org/~hughsient/appstream-glib/releases/appstream-glib-$version.tar.xz"
+                        "url-template": "https://github.com/hughsie/appstream-glib/archive/refs/tags/appstream_glib_$version.zip"
                     }
                 }
             ],
