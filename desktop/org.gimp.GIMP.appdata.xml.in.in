@@ -73,12 +73,12 @@
   </kudos>
   <translation type="gettext">gimp30</translation>
 
-  <launchable type="desktop-id">gimp.desktop</launchable>
+  <launchable type="desktop-id">@GIMP_DESKTOP_NAME@.desktop</launchable>
   <provides>
     <binary>@GIMP_COMMAND@</binary>
     <!-- Fix the ID renaming, and things like past reviews made on the
          older ID in software installers. -->
-    <id>gimp.desktop</id>
+    <id>@GIMP_DESKTOP_NAME@.desktop</id>
   </provides>
 
   <releases>
