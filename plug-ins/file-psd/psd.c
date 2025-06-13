@@ -115,6 +115,7 @@ psd_query_procedures (GimpPlugIn *plug_in)
   list = g_list_append (list, g_strdup (LOAD_PROC));
   list = g_list_append (list, g_strdup (LOAD_MERGED_PROC));
   list = g_list_append (list, g_strdup (EXPORT_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_PSB_PROC));
   list = g_list_append (list, g_strdup (LOAD_METADATA_PROC));
 
   return list;
@@ -204,7 +205,8 @@ psd_create_procedure (GimpPlugIn  *plug_in,
                                       "John Marshall",
                                       "2007");
     }
-  else if (! strcmp (name, EXPORT_PROC))
+  else if (! strcmp (name, EXPORT_PROC) ||
+           ! strcmp (name, EXPORT_PSB_PROC))
     {
       procedure = gimp_export_procedure_new (plug_in, name,
                                              GIMP_PDB_PROC_TYPE_PLUGIN,
@@ -212,29 +214,53 @@ psd_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, _("Photoshop image"));
-      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+      if (! strcmp (name, EXPORT_PROC))
+        {
+          gimp_procedure_set_menu_label (procedure, _("Photoshop image"));
+          gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
                                            _("Photoshop image"));
 
-      gimp_procedure_set_documentation (procedure,
-                                        _("Saves files in the Photoshop (TM) "
-                                          "PSD file format"),
-                                        _("This plug-in saves files of Adobe "
-                                          "Photoshop (TM) native PSD format. "
-                                          "These files may be of any image type "
-                                          "supported by GIMP, with or without "
-                                          "layers, layer masks, aux channels "
-                                          "and guides."),
-                                        name);
+          gimp_procedure_set_documentation (procedure,
+                                            _("Saves files in the Photoshop (TM) "
+                                              "PSD file format"),
+                                            _("This plug-in saves files of Adobe "
+                                              "Photoshop (TM) native PSD format. "
+                                              "These files may be of any image type "
+                                              "supported by GIMP, with or without "
+                                              "layers, layer masks, aux channels "
+                                              "and guides."),
+                                            name);
+          gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                              "image/x-psd");
+          gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                              "psd");
+        }
+      else
+        {
+          gimp_procedure_set_menu_label (procedure, _("Photoshop Large image"));
+          gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("Photoshop Large image"));
+
+          gimp_procedure_set_documentation (procedure,
+                                            _("Saves files in the Photoshop (TM) "
+                                              "Large PSB file format"),
+                                            _("This plug-in saves files of Adobe "
+                                              "Photoshop (TM) Large native PSB format. "
+                                              "These files may be of any image type "
+                                              "supported by GIMP, with or without "
+                                              "layers, layer masks, aux channels "
+                                              "and guides."),
+                                            name);
+          gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                              "image/x-psb");
+          gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                              "psb");
+        }
+
       gimp_procedure_set_attribution (procedure,
                                       "Monigotes",
                                       "Monigotes",
                                       "2000");
-
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
-                                          "image/x-psd");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
-                                          "psd");
 
       gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
                                               GIMP_EXPORT_CAN_HANDLE_RGB     |
@@ -463,7 +489,7 @@ psd_export (GimpProcedure        *procedure,
   export    = gimp_export_options_get_image (options, &image);
   drawables = gimp_image_list_layers (image);
 
-  if (export_image (file, image, G_OBJECT (config), &error))
+  if (export_image (file, image, procedure, G_OBJECT (config), &error))
     {
       if (metadata)
         gimp_metadata_set_bits_per_sample (metadata, 8);

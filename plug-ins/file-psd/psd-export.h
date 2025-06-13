@@ -19,13 +19,14 @@
 #define __PSD_EXPORT_H__
 
 
-gboolean   export_image (GFile      *file,
-                         GimpImage  *image,
-                         GObject    *config,
-                         GError    **error);
+gboolean   export_image (GFile          *file,
+                         GimpImage      *image,
+                         GimpProcedure  *procedure,
+                         GObject        *config,
+                         GError        **error);
 
-gboolean   save_dialog  (GimpImage     *image,
-                         GimpProcedure *procedure,
-                         GObject       *config);
+gboolean   save_dialog  (GimpImage      *image,
+                         GimpProcedure  *procedure,
+                         GObject        *config);
 
 #endif /* __PSD_EXPORT_H__ */
