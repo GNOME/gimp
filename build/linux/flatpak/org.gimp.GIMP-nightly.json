@@ -64,6 +64,7 @@
     },
     "modules": [
         {
+            "//": "This dep is tricky to be included in the SDK: https://gitlab.com/freedesktop-sdk/freedesktop-sdk/-/issues/1826",
             "name": "libbacktrace",
             "sources": [
                 {
