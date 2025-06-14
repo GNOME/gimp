@@ -43,6 +43,22 @@ def bundle(src_root, pattern):
       shutil.copytree(src_path, dest_path, dirs_exist_ok=True)
     else:
       shutil.copy2(src_path, dest_path)
+      ## Process .typelib dependencies
+      if str(src_path).endswith(".typelib"):
+        def process_typelib(path, typelib_list=None):
+          cmd = ['g-ir-inspect', '--print-typelibs', os.path.basename(path).split('-')[0]]
+          result = subprocess.run(cmd, capture_output=True, text=True)
+          for line in result.stdout.splitlines():
+            typelib = line.replace("typelib: ", "").strip()
+            if typelib_list is None:
+              typelib_list = set()
+            if typelib not in typelib_list:
+              typelib_list.add(typelib)
+              typelib_path = Path(f"{MSYSTEM_PREFIX}/lib/girepository-1.0/{typelib}.typelib")
+              if typelib_path.exists():
+                shutil.copy2(typelib_path, dest_path.parent)
+              process_typelib(typelib)
+        process_typelib(src_path)
 
 def clean(base_path, pattern):
   base_path = Path(base_path)
@@ -159,8 +175,7 @@ if not os.getenv("GIMP_UNSTABLE") and os.getenv("GIMP_RELEASE"):
   bundle(MSYSTEM_PREFIX, "bin/gspawn*-helper.exe")
   
 ## Binaries for GObject Introspection support. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/13170
-bundle(GIMP_PREFIX, "lib/girepository-*")
-bundle(MSYSTEM_PREFIX, "lib/girepository-*")
+bundle(GIMP_PREFIX, "lib/girepository-*/*.typelib")
 bundle(MSYSTEM_PREFIX, "bin/libgirepository-*.dll")
 ### FIXME: luajit crashes at startup: See: https://gitlab.gnome.org/GNOME/gimp/-/issues/11597
 #bundle(MSYSTEM_PREFIX, "bin/luajit.exe")
