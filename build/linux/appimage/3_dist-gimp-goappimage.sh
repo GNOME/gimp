@@ -186,11 +186,29 @@ bund_usr ()
         fi
         dest_path="$output_dest_path/tmp"
       fi
-
       if [ "$3" != '--bundler' ] && [ "$5" != '--bundler' ]; then
         printf "(INFO): bundling $target_path to $output_dest_path\n"
         mkdir -p $dest_path
         cp -ru $target_path $dest_path >/dev/null 2>&1 || continue
+        
+        #Process .typelib dependencies
+        if echo "$target_path" | grep -q '\.typelib$'; then
+          process_typelib()
+          {
+            for typelib in $(g-ir-inspect --print-typelibs "$(basename "$1" | sed 's/-.*//')" | sed 's/typelib: //g'); do
+              case "$typelib_list" in
+                *"$typelib"*)
+                  ;;
+                *)
+                  export typelib_list="$typelib_list $typelib "
+                  cp -ru $(echo "$UNIX_PREFIX/${LIB_DIR}/${LIB_SUBDIR}girepository-*/${typelib}.typelib") "$dest_path" >/dev/null 2>&1 || true
+                  process_typelib "$typelib"
+                  ;;
+              esac
+            done
+          }
+          process_typelib "$target_path"
+        fi
 
         #Additional parameters for special situations
         if [ "$3" = '--dest' ] || [ "$3" = '--rename' ]; then
@@ -333,8 +351,7 @@ fi
 ### Debug dialog
 bund_usr "$GIMP_PREFIX" "bin/gimp-debug-tool*" --dest "libexec"
 ### Introspected plug-ins
-bund_usr "$GIMP_PREFIX" "lib/girepository-*"
-bund_usr "$UNIX_PREFIX" "lib/girepository-*"
+bund_usr "$GIMP_PREFIX" "lib/girepository-*/*.typelib"
 conf_app GI_TYPELIB_PATH "${LIB_DIR}/${LIB_SUBDIR}girepository-*"
 #### JavaScript plug-ins support
 bund_usr "$UNIX_PREFIX" "bin/gjs*"
