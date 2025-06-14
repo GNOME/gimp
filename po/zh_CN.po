@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-09 21:15+0000\n"
-"PO-Revision-Date: 2025-06-05 08:01+0800\n"
+"POT-Creation-Date: 2025-06-13 19:43+0000\n"
+"PO-Revision-Date: 2025-06-14 09:13+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -211,117 +211,117 @@ msgstr "使用 %s 版本 %s"
 msgid "System Language"
 msgstr "系统语言"
 
-#: app/main.c:161
+#: app/main.c:164
 msgid "Show version information and exit"
 msgstr "显示版本信息并退出"
 
-#: app/main.c:166
+#: app/main.c:169
 msgid "Show license information and exit"
 msgstr "显示许可信息并退出"
 
-#: app/main.c:171
+#: app/main.c:174
 msgid "Be more verbose"
 msgstr "输出更详细信息"
 
-#: app/main.c:176
+#: app/main.c:179
 msgid "Start a new GIMP instance"
 msgstr "启动一个新的 GIMP 实例"
 
-#: app/main.c:181
+#: app/main.c:184
 msgid "Open images as new"
 msgstr "作为新图像打开"
 
-#: app/main.c:186
+#: app/main.c:189
 msgid "Run without a user interface"
 msgstr "不以图形界面运行"
 
-#: app/main.c:191
+#: app/main.c:194
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "不加载笔刷、渐变、图案……"
 
-#: app/main.c:196
+#: app/main.c:199
 msgid "Do not load any fonts"
 msgstr "不加载任何字体"
 
-#: app/main.c:201
+#: app/main.c:204
 msgid "Do not show a splash screen"
 msgstr "不显示启动画面"
 
-#: app/main.c:206
+#: app/main.c:209
 msgid "Do not use shared memory between GIMP and plug-ins"
 msgstr "不在 GIMP 和插件之间使用共享内存"
 
-#: app/main.c:211
+#: app/main.c:214
 msgid "Do not use special CPU acceleration functions"
 msgstr "不使用特殊 CPU 加速功能"
 
-#: app/main.c:216
+#: app/main.c:219
 msgid "Use an alternate sessionrc file"
 msgstr "使用代替的 sessionrc 文件"
 
-#: app/main.c:221
+#: app/main.c:224
 msgid "Use an alternate user gimprc file"
 msgstr "使用代替的用户 gimprc 文件"
 
-#: app/main.c:226
+#: app/main.c:229
 msgid "Use an alternate system gimprc file"
 msgstr "使用代替的系统 gimprc 文件"
 
-#: app/main.c:231
+#: app/main.c:234
 msgid "Batch command to run (can be used multiple times)"
 msgstr "要运行的批处理命令（可以使用多次）"
 
-#: app/main.c:236
+#: app/main.c:239
 msgid "The procedure to process batch commands with"
 msgstr "处理批处理命令的过程"
 
-#: app/main.c:241
+#: app/main.c:244
 msgid "Quit immediately after performing requested actions"
 msgstr "执行请求的动作后立即退出"
 
-#: app/main.c:246
+#: app/main.c:249
 msgid "Send messages to console instead of using a dialog"
 msgstr "在控制台而不是对话框中显示警告信息"
 
 #. don't translate the mode names (off|on|warn)
-#: app/main.c:252
+#: app/main.c:255
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "PDB 兼容模式 (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: app/main.c:258
+#: app/main.c:261
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "崩溃时调试 (never|query|always)"
 
-#: app/main.c:263
+#: app/main.c:266
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "启用非致命调试信号处理程序"
 
-#: app/main.c:268
+#: app/main.c:271
 msgid "Make all warnings fatal"
 msgstr "将所有警告作为致命的"
 
-#: app/main.c:273
+#: app/main.c:276
 msgid "Output a gimprc file with default settings"
 msgstr "输出默认设置的 gimprc 文件"
 
-#: app/main.c:289
+#: app/main.c:292
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "排序列出 PDB 中的已弃用过程"
 
-#: app/main.c:294
+#: app/main.c:297
 msgid "Show a preferences page with experimental features"
 msgstr "显示带有实验性特性的首选项页面"
 
-#: app/main.c:299
+#: app/main.c:302
 msgid "Show an image submenu with debug actions"
 msgstr "显示带有调试动作的图像子菜单"
 
-#: app/main.c:722
+#: app/main.c:728
 msgid "[FILE|URI...]"
 msgstr "[文件|URI…]"
 
-#: app/main.c:750
+#: app/main.c:756
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -329,20 +329,20 @@ msgstr ""
 "GIMP 无法初始化图形用户界面。\n"
 "请确定您已正确安装和配置显示环境。"
 
-#: app/main.c:771
+#: app/main.c:818
 msgid "Another GIMP instance is already running."
 msgstr "另一个 GIMP 实例已在运行。"
 
-#: app/main.c:860
+#: app/main.c:907
 msgid "GIMP output. Type any character to close this window."
 msgstr "GIMP 输出。键入任意字符以关闭此窗口。"
 
-#: app/main.c:861
+#: app/main.c:908
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "（键入任意字符关闭本窗口）\n"
 
-#: app/main.c:878
+#: app/main.c:925
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "GIMP 输出。您可以最小化该窗口，但请不要关闭窗口。"
 
@@ -2489,7 +2489,7 @@ msgstr "240 秒"
 #: app/display/gimpdisplayshell-filter-dialog.c:87
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
-#: app/tools/gimpfiltertool.c:369 app/tools/gimpforegroundselecttool.c:331
+#: app/tools/gimpfiltertool.c:370 app/tools/gimpforegroundselecttool.c:333
 #: app/tools/gimptexttool.c:1774 app/tools/gimptransformgridtool.c:1264
 #: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
 #: app/widgets/gimpcolordialog.c:485 app/widgets/gimpcontrollereditor.c:666
@@ -6941,7 +6941,7 @@ msgstr "图层属性"
 msgid "Edit Layer Attributes"
 msgstr "编辑图层属性"
 
-#: app/actions/layers-commands.c:359 app/widgets/gimpdrawabletreeview.c:647
+#: app/actions/layers-commands.c:359 app/widgets/gimpdrawabletreeview.c:625
 #: app/widgets/gimplayertreeview.c:936
 msgid "New Layer"
 msgid_plural "New Layers"
@@ -7912,7 +7912,7 @@ msgstr "重置所有滤镜"
 #: app/dialogs/preferences-dialog.c:1178 app/dialogs/print-size-dialog.c:122
 #: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
-#: app/tools/gimpfiltertool.c:368 app/tools/gimptransformgridtool.c:1261
+#: app/tools/gimpfiltertool.c:369 app/tools/gimptransformgridtool.c:1261
 #: app/widgets/gimpcolordialog.c:484 app/widgets/gimpcolordisplayeditor.c:326
 msgid "_Reset"
 msgstr "重置(_R)"
@@ -9987,7 +9987,7 @@ msgstr "打开显示器"
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
 #: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:191
-#: app/tools/gimpfiltertool.c:370 app/widgets/gimpcolordialog.c:486
+#: app/tools/gimpfiltertool.c:371 app/widgets/gimpcolordialog.c:486
 #: app/widgets/gimpcontrollereditor.c:667
 #: app/widgets/gimpdeviceinfoeditor.c:1161 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:180 app/widgets/gimpmodifierseditor.c:689
@@ -12749,77 +12749,83 @@ msgstr "正在创建文件夹“%s”…"
 msgid "Cannot create folder '%s': %s"
 msgstr "无法创建“%s”文件夹：%s"
 
-#: app/core/gimp-utils.c:576 app/core/gimpfilloptions.c:431
+#: app/core/gimp-utils.c:577 app/core/gimpfilloptions.c:431
 msgid "No patterns available for this operation."
 msgstr "没有可供此操作使用的图案。"
 
-#: app/core/gimp-utils.c:1475
+#: app/core/gimp-utils.c:1120
+#, c-format
+msgid ""
+"Fatal parse error in Photoshop resource file: RLE compressed data is corrupt."
+msgstr "Photoshop 资源文件中出现致命解析错误：RLE 压缩数据损坏。"
+
+#: app/core/gimp-utils.c:1665
 #, c-format
 msgid "This parser does not support imbricated lists."
 msgstr "该解析器不支持瓦状层叠式列表。"
 
-#: app/core/gimp-utils.c:1498
+#: app/core/gimp-utils.c:1688
 #, c-format
 msgid "<li> must be inside <ol> or <ul> tags."
 msgstr "<li> 必须内置 <ol> 或 <ul> 标签。"
 
-#: app/core/gimp-utils.c:1503
+#: app/core/gimp-utils.c:1693
 #, c-format
 msgid "Unknown tag <%s>."
 msgstr "未知标签 <%s>。"
 
-#: app/core/gimpbrush-load.c:173
+#: app/core/gimpbrush-load.c:159
 #, c-format
 msgid "Fatal parse error in brush file: Width = 0."
 msgstr "笔刷文件中出现致命解析错误：宽度 = 0。"
 
-#: app/core/gimpbrush-load.c:180
+#: app/core/gimpbrush-load.c:166
 #, c-format
 msgid "Fatal parse error in brush file: Height = 0."
 msgstr "笔刷文件中出现致命解析错误：高度 = 0。"
 
-#: app/core/gimpbrush-load.c:187
+#: app/core/gimpbrush-load.c:173
 #, c-format
 msgid "Fatal parse error in brush file: Bytes = 0."
 msgstr "笔刷文件中出现致命解析错误：字节 = 0。"
 
-#: app/core/gimpbrush-load.c:196
+#: app/core/gimpbrush-load.c:182
 #, c-format
 msgid "Fatal parse error in brush file: %dx%d over max size."
 msgstr "笔刷文件中出现致命解析错误：%dx%d 超出最大尺寸。"
 
-#: app/core/gimpbrush-load.c:222
+#: app/core/gimpbrush-load.c:208
 #, c-format
 msgid "Fatal parse error in brush file: Unknown depth %d."
 msgstr "笔刷文件中出现致命解析错误：未知深度 %d。"
 
-#: app/core/gimpbrush-load.c:234
+#: app/core/gimpbrush-load.c:220
 #, c-format
 msgid "Fatal parse error in brush file: Unknown version %d."
 msgstr "笔刷文件中出现致命解析错误：未知版本 %d。"
 
-#: app/core/gimpbrush-load.c:242
+#: app/core/gimpbrush-load.c:228
 #, c-format
 msgid "Unsupported brush format"
 msgstr "不支持的笔刷格式"
 
-#: app/core/gimpbrush-load.c:254
+#: app/core/gimpbrush-load.c:240
 #, c-format
 msgid "Invalid header data in '%s': Brush name is too long: %lu"
 msgstr "“%s”中存在无效头数据：笔刷名称太长：%lu"
 
-#: app/core/gimpbrush-load.c:272 app/core/gimpbrushgenerated-load.c:126
+#: app/core/gimpbrush-load.c:258 app/core/gimpbrushgenerated-load.c:126
 #: app/core/gimpbrushpipe-load.c:70
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "笔刷文件“%s”中含有无效的 UTF-8 字符串。"
 
-#: app/core/gimpbrush-load.c:279 app/core/gimppattern-load.c:142
+#: app/core/gimpbrush-load.c:265 app/core/gimppattern-load.c:469
 #: app/dialogs/template-options-dialog.c:110 app/display/gimptoolpath.c:617
 msgid "Unnamed"
 msgstr "未命名"
 
-#: app/core/gimpbrush-load.c:442
+#: app/core/gimpbrush-load.c:428
 #, c-format
 msgid ""
 "Fatal parse error in brush file:\n"
@@ -12830,45 +12836,40 @@ msgstr ""
 "不支持的笔刷深度 %d\n"
 "GIMP 笔刷必须是灰度或者 RGBA。"
 
-#: app/core/gimpbrush-load.c:519
+#: app/core/gimpbrush-load.c:503
 #, c-format
 msgid "Unable to decode abr format version %d."
 msgstr "无法解码 abr 格式版本 %d。"
 
-#: app/core/gimpbrush-load.c:637 app/core/gimpbrush-load.c:856
+#: app/core/gimpbrush-load.c:618 app/core/gimpbrush-load.c:826
 #, c-format
 msgid "Fatal parse error in brush file: Brush size value corrupt."
 msgstr "笔刷文件中出现致命解析错误：笔刷尺寸值损坏。"
 
-#: app/core/gimpbrush-load.c:724 app/core/gimpbrush-load.c:915
+#: app/core/gimpbrush-load.c:696 app/core/gimpbrush-load.c:886
 #, c-format
 msgid "Fatal parse error in brush file: Brush dimensions out of range."
 msgstr "笔刷文件中出现致命解析错误：笔刷尺寸超出范围。"
 
-#: app/core/gimpbrush-load.c:736
+#: app/core/gimpbrush-load.c:708
 #, c-format
 msgid "Fatal parse error in brush file: Wide brushes are not supported."
 msgstr "笔刷文件中出现致命解析错误：宽笔刷不受支持。"
 
-#: app/core/gimpbrush-load.c:885
+#: app/core/gimpbrush-load.c:855
 msgid "Fatal parse error in brush file: File appears truncated: "
 msgstr "笔刷文件中出现致命解析错误：文件看起来被截断："
 
-#: app/core/gimpbrush-load.c:923
+#: app/core/gimpbrush-load.c:894
 #, c-format
 msgid "Fatal parse error in brush file: Unknown compression method."
 msgstr "笔刷文件中出现致命解析错误：未知压缩方式。"
 
-#: app/core/gimpbrush-load.c:1090
+#: app/core/gimpbrush-load.c:1000
 #, c-format
 msgid ""
 "Fatal parse error in brush file: Unable to decode abr format version %d."
 msgstr "笔刷文件中出现致命解析错误：无法解码 abr 格式版本 %d。"
-
-#: app/core/gimpbrush-load.c:1240
-#, c-format
-msgid "Fatal parse error in brush file: RLE compressed brush data corrupt."
-msgstr "笔刷文件中出现致命解析错误：RLE 压缩笔刷数据损坏。"
 
 #: app/core/gimpbrush.c:158 app/paint/gimppaintoptions.c:235
 msgid "Brush Spacing"
@@ -13350,7 +13351,7 @@ msgstr "重新排列滤镜"
 msgid "Rasterize filters"
 msgstr "栅格化滤镜"
 
-#: app/core/gimpdrawable-filters.c:347
+#: app/core/gimpdrawable-filters.c:356
 msgid "Merge filter"
 msgstr "合并滤镜"
 
@@ -14565,16 +14566,20 @@ msgstr "无法打开 SBZ 文件"
 msgid "History Color"
 msgstr "历史颜色"
 
-#: app/core/gimppattern-load.c:60
+#: app/core/gimppattern-load.c:63 app/core/gimppattern-load.c:70
+msgid "Error reading Photoshop pattern."
+msgstr "读取 Photoshop 图案时出错。"
+
+#: app/core/gimppattern-load.c:377
 msgid "File appears truncated: "
 msgstr "文件似乎被截断："
 
-#: app/core/gimppattern-load.c:78
+#: app/core/gimppattern-load.c:405
 #, c-format
 msgid "Unknown pattern format version %d."
 msgstr "未知图案格式版本 %d。"
 
-#: app/core/gimppattern-load.c:87
+#: app/core/gimppattern-load.c:414
 #, c-format
 msgid ""
 "Unsupported pattern depth %d.\n"
@@ -14583,7 +14588,7 @@ msgstr ""
 "不支持的图案色深 %d。\n"
 "GIMP 图案必须为灰度或 RGB。"
 
-#: app/core/gimppattern-load.c:99
+#: app/core/gimppattern-load.c:426
 #, c-format
 msgid ""
 "Invalid header data in '%s': width=%lu (maximum %lu), height=%lu (maximum "
@@ -14591,21 +14596,21 @@ msgid ""
 msgstr ""
 "“%s”中存在无效头数据：宽度=%lu（最大 %lu），高度=%lu（最大 %lu），大小=%lu"
 
-#: app/core/gimppattern-load.c:116
+#: app/core/gimppattern-load.c:443
 #, c-format
 msgid "Invalid header data in '%s': Pattern name is too long: %lu"
 msgstr "“%s”中存在无效头数据：图案名称太长：%lu"
 
-#: app/core/gimppattern-load.c:129 app/core/gimppattern-load.c:167
+#: app/core/gimppattern-load.c:456 app/core/gimppattern-load.c:494
 msgid "File appears truncated."
 msgstr "文件似乎被截断。"
 
-#: app/core/gimppattern-load.c:135
+#: app/core/gimppattern-load.c:462
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "图案文件“%s”中含有无效的 UTF-8 字符串。"
 
-#: app/core/gimppattern-load.c:178
+#: app/core/gimppattern-load.c:505
 msgid "Fatal parse error in pattern file: "
 msgstr "图案文件中出现致命解析错误："
 
@@ -15191,7 +15196,7 @@ msgid "Select Soft-Proof Profile"
 msgstr "选择软打样特性文件"
 
 #: app/dialogs/color-profile-dialog.c:209
-#: app/tools/gimpforegroundselecttool.c:332
+#: app/tools/gimpforegroundselecttool.c:334
 msgid "_Select"
 msgstr "选择(_S)"
 
@@ -16016,7 +16021,7 @@ msgstr "间隔(_N)："
 
 #. The "Preview" frame
 #: app/dialogs/palette-import-dialog.c:349
-#: app/tools/gimpforegroundselecttool.c:1316
+#: app/tools/gimpforegroundselecttool.c:1318
 msgid "Preview"
 msgstr "预览"
 
@@ -18497,22 +18502,22 @@ msgstr "拖放新路径"
 msgid "Cannot modify the pixels of layer groups."
 msgstr "不能修改图层组的像素。"
 
-#: app/display/gimpdisplayshell-dnd.c:390 app/tools/gimpfiltertool.c:333
+#: app/display/gimpdisplayshell-dnd.c:390 app/tools/gimpfiltertool.c:334
 #: app/tools/gimppainttool.c:371 app/tools/gimptransformtool.c:713
 #: app/widgets/gimpdrawabletreeview-filters.c:702
 msgid "A selected layer is not visible."
 msgstr "一个选中图层不可见。"
 
 #: app/display/gimpdisplayshell-dnd.c:446
-#: app/widgets/gimpdrawabletreeview.c:488
-#: app/widgets/gimpdrawabletreeview.c:674
+#: app/widgets/gimpdrawabletreeview.c:466
+#: app/widgets/gimpdrawabletreeview.c:652
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "将图案放置到图层"
 
 #: app/display/gimpdisplayshell-dnd.c:468
-#: app/widgets/gimpdrawabletreeview.c:519
-#: app/widgets/gimpdrawabletreeview.c:694
+#: app/widgets/gimpdrawabletreeview.c:497
+#: app/widgets/gimpdrawabletreeview.c:672
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "将颜色放置到图层"
@@ -20044,7 +20049,7 @@ msgid "Turn colors into shades of gray"
 msgstr "将颜色转换为灰度色调"
 
 #: app/operations/gimpoperationdesaturate.c:91
-#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1457
+#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1462
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
 #: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:279
@@ -20089,7 +20094,7 @@ msgstr "使用颜色替换半透明部分"
 msgid "The color"
 msgstr "颜色"
 
-#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1420
+#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1425
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:113
 #: app/tools/gimptransformoptions.c:307
 msgid "Clipping"
@@ -20629,7 +20634,7 @@ msgstr "添加滤镜"
 msgid "Plug-in"
 msgstr "插件"
 
-#: app/pdb/drawable-cmds.c:1131 app/tools/gimpforegroundselecttool.c:1039
+#: app/pdb/drawable-cmds.c:1131 app/tools/gimpforegroundselecttool.c:1041
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "前景选择"
@@ -22284,15 +22289,15 @@ msgid "Cannot fill multiple layers. Select only one layer."
 msgstr "无法填充多个图层。仅选择一个图层。"
 
 #: app/tools/gimpbucketfilltool.c:599 app/tools/gimpcagetool.c:231
-#: app/tools/gimpcurvestool.c:220 app/tools/gimpfiltertool.c:310
-#: app/tools/gimpforegroundselecttool.c:295 app/tools/gimplevelstool.c:211
+#: app/tools/gimpcurvestool.c:220 app/tools/gimpfiltertool.c:311
+#: app/tools/gimpforegroundselecttool.c:297 app/tools/gimplevelstool.c:211
 #: app/tools/gimpoffsettool.c:191 app/tools/gimppainttool.c:297
 #: app/tools/gimpperspectiveclonetool.c:224 app/tools/gimpthresholdtool.c:160
 #: app/tools/gimptransformgridtool.c:351
 msgid "No selected drawables."
 msgstr "未选择可绘区。"
 
-#: app/tools/gimpbucketfilltool.c:619 app/tools/gimpforegroundselecttool.c:307
+#: app/tools/gimpbucketfilltool.c:619 app/tools/gimpforegroundselecttool.c:309
 #: app/tools/gimppaintselecttool.c:380
 msgid "The active layer is not visible."
 msgstr "激活图层不可见。"
@@ -22638,7 +22643,7 @@ msgstr "曲线"
 msgid "_Curves..."
 msgstr "曲线(_C)…"
 
-#: app/tools/gimpcurvestool.c:218 app/tools/gimpfiltertool.c:306
+#: app/tools/gimpcurvestool.c:218 app/tools/gimpfiltertool.c:307
 #: app/tools/gimplevelstool.c:209 app/tools/gimpoffsettool.c:189
 #: app/tools/gimpthresholdtool.c:158
 msgid "Cannot modify multiple drawables. Select only one."
@@ -22844,57 +22849,57 @@ msgstr ""
 "如果启用，滤镜将立即合并。\n"
 "否则，它会成为可编辑的非破坏性滤镜。"
 
-#: app/tools/gimpfiltertool.c:321 app/tools/gimpselectiontool.c:575
+#: app/tools/gimpfiltertool.c:322 app/tools/gimpselectiontool.c:575
 #, c-format
 msgid "A selected item's pixels are locked."
 msgstr "一个选中项目的像素已被锁定。"
 
-#: app/tools/gimpfiltertool.c:441
+#: app/tools/gimpfiltertool.c:444
 msgid "Disabled because this filter depends on another image."
 msgstr "已禁用，因为该滤镜依赖于另一幅图像。"
 
-#: app/tools/gimpfiltertool.c:759
+#: app/tools/gimpfiltertool.c:763
 msgid "Click to switch the original and filtered sides"
 msgstr "单击以在原始图片和应用滤镜图片之间切换"
 
-#: app/tools/gimpfiltertool.c:763
+#: app/tools/gimpfiltertool.c:767
 msgid "Click to switch between vertical and horizontal"
 msgstr "单击以在竖直视图和水平视图之间切换"
 
-#: app/tools/gimpfiltertool.c:767
+#: app/tools/gimpfiltertool.c:771
 msgid "Click to move the split guide"
 msgstr "单击以移动分割参考线"
 
-#: app/tools/gimpfiltertool.c:769
+#: app/tools/gimpfiltertool.c:773
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s：切换原始图片和应用滤镜图片"
 
-#: app/tools/gimpfiltertool.c:770
+#: app/tools/gimpfiltertool.c:774
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s：切换水平视图和竖直视图"
 
-#: app/tools/gimpfiltertool.c:1254
+#: app/tools/gimpfiltertool.c:1258
 msgid "Edit filter"
 msgstr "编辑滤镜"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1433
+#: app/tools/gimpfiltertool.c:1438
 msgid "Blending Options"
 msgstr "混合选项"
 
-#: app/tools/gimpfiltertool.c:1938 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1943 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "导入“%s”设置"
 
-#: app/tools/gimpfiltertool.c:1940 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1945 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "导出“%s”设置"
 
-#: app/tools/gimpfiltertool.c:2205
+#: app/tools/gimpfiltertool.c:2210
 #, c-format
 msgid "Editing '%s'..."
 msgstr "正在编辑“%s”…"
@@ -23017,64 +23022,64 @@ msgstr "要执行的迭代次数"
 msgid "Reset stroke width native size"
 msgstr "重置笔触宽度原始大小"
 
-#: app/tools/gimpforegroundselecttool.c:193
+#: app/tools/gimpforegroundselecttool.c:195
 msgid "Foreground Select"
 msgstr "前景选择"
 
-#: app/tools/gimpforegroundselecttool.c:194
+#: app/tools/gimpforegroundselecttool.c:196
 msgid "Foreground Select Tool: Select a region containing foreground objects"
 msgstr "前景选择工具：选择包含前景对象的区域"
 
-#: app/tools/gimpforegroundselecttool.c:195
+#: app/tools/gimpforegroundselecttool.c:197
 msgid "F_oreground Select"
 msgstr "前景选择(_O)"
 
-#: app/tools/gimpforegroundselecttool.c:293
+#: app/tools/gimpforegroundselecttool.c:295
 msgid "Cannot select from multiple layers."
 msgstr "无法从多个图层选择。"
 
-#: app/tools/gimpforegroundselecttool.c:326
+#: app/tools/gimpforegroundselecttool.c:328
 msgid "Dialog for foreground select"
 msgstr "前景选择对话框"
 
-#: app/tools/gimpforegroundselecttool.c:343
+#: app/tools/gimpforegroundselecttool.c:345
 msgid "_Preview mask"
 msgstr "预览蒙版"
 
-#: app/tools/gimpforegroundselecttool.c:354
+#: app/tools/gimpforegroundselecttool.c:356
 msgid "Select foreground pixels"
 msgstr "选择前景像素"
 
-#: app/tools/gimpforegroundselecttool.c:630
-#: app/tools/gimpforegroundselecttool.c:635
+#: app/tools/gimpforegroundselecttool.c:632
+#: app/tools/gimpforegroundselecttool.c:637
 msgid "Roughly outline the object to extract"
 msgstr "为对象画一个粗略的轮廓以便提取"
 
-#: app/tools/gimpforegroundselecttool.c:631
+#: app/tools/gimpforegroundselecttool.c:633
 msgid "press Enter to refine."
 msgstr "按回车键提取。"
 
-#: app/tools/gimpforegroundselecttool.c:658
+#: app/tools/gimpforegroundselecttool.c:660
 msgid "Selecting foreground"
 msgstr "正在选择前景"
 
-#: app/tools/gimpforegroundselecttool.c:660
+#: app/tools/gimpforegroundselecttool.c:662
 msgid "Selecting background"
 msgstr "正在选择背景"
 
-#: app/tools/gimpforegroundselecttool.c:662
+#: app/tools/gimpforegroundselecttool.c:664
 msgid "Selecting unknown"
 msgstr "正在选择未知"
 
-#: app/tools/gimpforegroundselecttool.c:665
+#: app/tools/gimpforegroundselecttool.c:667
 msgid "press Enter to preview."
 msgstr "按回车键预览。"
 
-#: app/tools/gimpforegroundselecttool.c:667
+#: app/tools/gimpforegroundselecttool.c:669
 msgid "press Escape to exit preview or Enter to apply."
 msgstr "按 Esc 键退出预览或回车键应用。"
 
-#: app/tools/gimpforegroundselecttool.c:1312
+#: app/tools/gimpforegroundselecttool.c:1314
 msgid "Paint mask"
 msgstr "绘画蒙版"
 
@@ -26765,7 +26770,7 @@ msgstr "锁定像素"
 msgid "Lock position and size"
 msgstr "锁定位置和大小"
 
-#: app/widgets/gimpdrawabletreeview.c:413
+#: app/widgets/gimpdrawabletreeview.c:391
 msgid "Cannot select items while a floating selection is active."
 msgstr "当浮动选区激活时无法选择项目。"
 
@@ -27071,32 +27076,36 @@ msgid "Read _Online"
 msgstr "在线阅读(_O)"
 
 #: app/widgets/gimphistogrameditor.c:135
-msgid "Mean:"
+msgid "Mean: "
 msgstr "平均值："
 
 #: app/widgets/gimphistogrameditor.c:136
-msgid "Std dev:"
-msgstr "标准偏差："
+msgid "Std dev: "
+msgstr "标准差："
 
 #: app/widgets/gimphistogrameditor.c:137
-msgid "Median:"
+msgid "Median: "
 msgstr "中位数："
 
 #: app/widgets/gimphistogrameditor.c:138
-msgid "Pixels:"
+msgid "Pixels: "
 msgstr "像素："
 
 #: app/widgets/gimphistogrameditor.c:139
-msgid "Count:"
+msgid "Count: "
 msgstr "计数："
 
 #: app/widgets/gimphistogrameditor.c:140
-msgid "Percentile:"
+msgid "Percentile: "
 msgstr "百分比："
 
 #: app/widgets/gimphistogrameditor.c:166
 msgid "Histogram channel"
 msgstr "直方图通道"
+
+#: app/widgets/gimphistogrameditor.c:225
+msgid "Compute unique colors:"
+msgstr "计算唯一颜色："
 
 #: app/widgets/gimpiconpicker.c:246
 msgid "From File..."
