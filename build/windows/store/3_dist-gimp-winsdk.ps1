@@ -298,6 +298,7 @@ foreach ($bundle in $supported_archs)
             Write-Output "(INFO): making $APPXSYM"
             Get-ChildItem $msix_arch -Filter *.pdb -Recurse | Compress-Archive -DestinationPath "$APPXSYM.zip"
             Rename-Item "$APPXSYM.zip" "$APPXSYM"
+            #(To not ship .pdb we need an online symbol server pointed on _NT_SYMBOL_PATH)
             #Get-ChildItem $msix_arch -Include *.pdb -Recurse -Force | Remove-Item -Recurse -Force
           }
 
