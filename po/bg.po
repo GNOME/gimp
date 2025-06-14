@@ -264,8 +264,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-08 11:05+0000\n"
-"PO-Revision-Date: 2025-06-08 21:31+0200\n"
+"POT-Creation-Date: 2025-06-14 17:46+0000\n"
+"PO-Revision-Date: 2025-06-14 22:25+0200\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -462,121 +462,121 @@ msgstr "ползвате %s версия %s"
 msgid "System Language"
 msgstr "Език на системата"
 
-#: app/main.c:161
+#: app/main.c:164
 msgid "Show version information and exit"
 msgstr "Показване на данни за версията и спиране на програмата"
 
-#: app/main.c:166
+#: app/main.c:169
 msgid "Show license information and exit"
 msgstr "Показване на данни за лиценза и спиране на програмата"
 
-#: app/main.c:171
+#: app/main.c:174
 msgid "Be more verbose"
 msgstr "По-подробно"
 
-#: app/main.c:176
+#: app/main.c:179
 msgid "Start a new GIMP instance"
 msgstr "Стартиране на нов процес на GIMP"
 
-#: app/main.c:181
+#: app/main.c:184
 msgid "Open images as new"
 msgstr "Отваряне на изображението като ново"
 
-#: app/main.c:186
+#: app/main.c:189
 msgid "Run without a user interface"
 msgstr "Без графичен интерфейс"
 
-#: app/main.c:191
+#: app/main.c:194
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Без зареждане на четки, преливки, шарки, …"
 
-#: app/main.c:196
+#: app/main.c:199
 msgid "Do not load any fonts"
 msgstr "Без зареждане на шрифтове"
 
-#: app/main.c:201
+#: app/main.c:204
 msgid "Do not show a splash screen"
 msgstr "Без начален екран"
 
-#: app/main.c:206
+#: app/main.c:209
 msgid "Do not use shared memory between GIMP and plug-ins"
 msgstr "Без споделяне на памет между GIMP и приставките"
 
-#: app/main.c:211
+#: app/main.c:214
 msgid "Do not use special CPU acceleration functions"
 msgstr "Без специалните функции за ускоряване на процесора"
 
-#: app/main.c:216
+#: app/main.c:219
 msgid "Use an alternate sessionrc file"
 msgstr "Използване на различен файл за сесия „sessionrc“"
 
-#: app/main.c:221
+#: app/main.c:224
 msgid "Use an alternate user gimprc file"
 msgstr "Използване на различен потребителски файл „gimprc“"
 
-#: app/main.c:226
+#: app/main.c:229
 msgid "Use an alternate system gimprc file"
 msgstr "Използване на различен системен файл „gimprc“"
 
-#: app/main.c:231
+#: app/main.c:234
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Изпълнение на пакетна команда (може да се използва няколко пъти)"
 
-#: app/main.c:236
+#: app/main.c:239
 msgid "The procedure to process batch commands with"
 msgstr "Процедурата за обработка на пакетните команди"
 
-#: app/main.c:241
+#: app/main.c:244
 msgid "Quit immediately after performing requested actions"
 msgstr "Изход от програмата след извършване на действията"
 
-#: app/main.c:246
+#: app/main.c:249
 msgid "Send messages to console instead of using a dialog"
 msgstr "Изпращане на съобщения до конзолата, вместо да се извеждат в прозорец"
 
 #. don't translate the mode names (off|on|warn)
-#: app/main.c:252
+#: app/main.c:255
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr ""
 "Съвместимост с PDB: „off“ (изключена), „on“ (включена), „warn“ "
 "(предупреждения)"
 
 #. don't translate the mode names (never|query|always)
-#: app/main.c:258
+#: app/main.c:261
 msgid "Debug in case of a crash (never|query|always)"
 msgstr ""
 "Дебъгер в случай на срив: „never“ (никога), „query“ (питане), „always“ "
 "(винаги)"
 
-#: app/main.c:263
+#: app/main.c:266
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Включва нефаталните функции за сигнали"
 
-#: app/main.c:268
+#: app/main.c:271
 msgid "Make all warnings fatal"
 msgstr "Всички предупреждения да са фатални"
 
-#: app/main.c:273
+#: app/main.c:276
 msgid "Output a gimprc file with default settings"
 msgstr "Извеждане на файл „gimprc“ със стандартни настройки"
 
-#: app/main.c:289
+#: app/main.c:292
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "Извеждане на подреден списък с остарелите процедури в PDB"
 
-#: app/main.c:294
+#: app/main.c:297
 msgid "Show a preferences page with experimental features"
 msgstr "Показване на страница с настройки за експерименталните възможности"
 
-#: app/main.c:299
+#: app/main.c:302
 msgid "Show an image submenu with debug actions"
 msgstr "Показване на подменю за действията за изчистване на грешки"
 
-#: app/main.c:722
+#: app/main.c:728
 msgid "[FILE|URI...]"
 msgstr "[ФАЙЛ|АДРЕС…]"
 
-#: app/main.c:750
+#: app/main.c:756
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -584,20 +584,20 @@ msgstr ""
 "GIMP не може да стартира графичния интерфейс.\n"
 "Проверете дали има правилни настройки за графичната среда."
 
-#: app/main.c:771
+#: app/main.c:818
 msgid "Another GIMP instance is already running."
 msgstr "Вече работи друг процес на GIMP."
 
-#: app/main.c:860
+#: app/main.c:907
 msgid "GIMP output. Type any character to close this window."
 msgstr "Изход от GIMP. Въведете знак, за да затворите този прозорец."
 
-#: app/main.c:861
+#: app/main.c:908
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Въведете произволен знак, за да затворите този прозорец)\n"
 
-#: app/main.c:878
+#: app/main.c:925
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr ""
 "Изход от GIMP. Може да минимизирате този прозорец, но не го затваряйте."
@@ -2754,7 +2754,7 @@ msgstr "240 секунди"
 #: app/display/gimpdisplayshell-filter-dialog.c:87
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
-#: app/tools/gimpfiltertool.c:369 app/tools/gimpforegroundselecttool.c:331
+#: app/tools/gimpfiltertool.c:370 app/tools/gimpforegroundselecttool.c:333
 #: app/tools/gimptexttool.c:1774 app/tools/gimptransformgridtool.c:1264
 #: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
 #: app/widgets/gimpcolordialog.c:485 app/widgets/gimpcontrollereditor.c:666
@@ -7242,7 +7242,7 @@ msgstr "Настройки на слоя"
 msgid "Edit Layer Attributes"
 msgstr "Промяна на настройките на слоя"
 
-#: app/actions/layers-commands.c:359 app/widgets/gimpdrawabletreeview.c:647
+#: app/actions/layers-commands.c:359 app/widgets/gimpdrawabletreeview.c:625
 #: app/widgets/gimplayertreeview.c:936
 msgid "New Layer"
 msgid_plural "New Layers"
@@ -8233,7 +8233,7 @@ msgstr "Изчистване на всички филтри"
 #: app/dialogs/preferences-dialog.c:1178 app/dialogs/print-size-dialog.c:122
 #: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
-#: app/tools/gimpfiltertool.c:368 app/tools/gimptransformgridtool.c:1261
+#: app/tools/gimpfiltertool.c:369 app/tools/gimptransformgridtool.c:1261
 #: app/widgets/gimpcolordialog.c:484 app/widgets/gimpcolordisplayeditor.c:326
 msgid "_Reset"
 msgstr "_Зануляване"
@@ -10327,7 +10327,7 @@ msgstr "Отваряне на монитор"
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
 #: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:191
-#: app/tools/gimpfiltertool.c:370 app/widgets/gimpcolordialog.c:486
+#: app/tools/gimpfiltertool.c:371 app/widgets/gimpcolordialog.c:486
 #: app/widgets/gimpcontrollereditor.c:667
 #: app/widgets/gimpdeviceinfoeditor.c:1161 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:180 app/widgets/gimpmodifierseditor.c:689
@@ -13289,78 +13289,84 @@ msgstr "Създаване на папката „%s“…"
 msgid "Cannot create folder '%s': %s"
 msgstr "Грешка при създаване на папката „%s“: %s"
 
-#: app/core/gimp-utils.c:576 app/core/gimpfilloptions.c:431
+#: app/core/gimp-utils.c:577 app/core/gimpfilloptions.c:431
 msgid "No patterns available for this operation."
 msgstr "Няма възможни шарки за това действие."
 
-#: app/core/gimp-utils.c:1475
+#: app/core/gimp-utils.c:1120
+#, c-format
+msgid ""
+"Fatal parse error in Photoshop resource file: RLE compressed data is corrupt."
+msgstr "Фатална грешка при анализ на файл с ресурси на Photoshop: повредени данни, компресирани с RLE."
+
+#: app/core/gimp-utils.c:1665
 #, c-format
 msgid "This parser does not support imbricated lists."
 msgstr "Този анализатор не поддържа застъпващи се списъци."
 
-#: app/core/gimp-utils.c:1498
+#: app/core/gimp-utils.c:1688
 #, c-format
 msgid "<li> must be inside <ol> or <ul> tags."
 msgstr "Етикетът „<li>“ трябва да е или в „<ol>“, или в „<ul>“."
 
-#: app/core/gimp-utils.c:1503
+#: app/core/gimp-utils.c:1693
 #, c-format
 msgid "Unknown tag <%s>."
 msgstr "Непознат етикет „<%s>“."
 
-#: app/core/gimpbrush-load.c:173
+#: app/core/gimpbrush-load.c:159
 #, c-format
 msgid "Fatal parse error in brush file: Width = 0."
 msgstr "Фатална грешка при анализ на файл с четки: широчина = 0."
 
-#: app/core/gimpbrush-load.c:180
+#: app/core/gimpbrush-load.c:166
 #, c-format
 msgid "Fatal parse error in brush file: Height = 0."
 msgstr "Фатална грешка при анализ на файл с четки: височина = 0."
 
-#: app/core/gimpbrush-load.c:187
+#: app/core/gimpbrush-load.c:173
 #, c-format
 msgid "Fatal parse error in brush file: Bytes = 0."
 msgstr "Фатална грешка при анализ на файл с четки: байтове = 0."
 
-#: app/core/gimpbrush-load.c:196
+#: app/core/gimpbrush-load.c:182
 #, c-format
 msgid "Fatal parse error in brush file: %dx%d over max size."
 msgstr ""
 "Фатална грешка при анализ на файл с четки: %d×%d над максималния размер."
 
-#: app/core/gimpbrush-load.c:222
+#: app/core/gimpbrush-load.c:208
 #, c-format
 msgid "Fatal parse error in brush file: Unknown depth %d."
 msgstr "Фатална грешка при анализ файл с четки: Непозната дълбочина %d."
 
-#: app/core/gimpbrush-load.c:234
+#: app/core/gimpbrush-load.c:220
 #, c-format
 msgid "Fatal parse error in brush file: Unknown version %d."
 msgstr "Фатална грешка при анализ на файл с четки: Непозната версия %d."
 
-#: app/core/gimpbrush-load.c:242
+#: app/core/gimpbrush-load.c:228
 #, c-format
 msgid "Unsupported brush format"
 msgstr "Неподдържан формат на четка"
 
-#: app/core/gimpbrush-load.c:254
+#: app/core/gimpbrush-load.c:240
 #, c-format
 msgid "Invalid header data in '%s': Brush name is too long: %lu"
 msgstr "Неправилни заглавни данни в „%s“: Твърде дълго име на четка: %lu"
 
-#: app/core/gimpbrush-load.c:272 app/core/gimpbrushgenerated-load.c:126
+#: app/core/gimpbrush-load.c:258 app/core/gimpbrushgenerated-load.c:126
 #: app/core/gimpbrushpipe-load.c:70
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Неправилен низ UTF-8 във файл с четки „%s“."
 
-#: app/core/gimpbrush-load.c:279 app/core/gimppattern-load.c:142
+#: app/core/gimpbrush-load.c:265 app/core/gimppattern-load.c:469
 #: app/dialogs/template-options-dialog.c:110 app/display/gimptoolpath.c:617
 msgid "Unnamed"
 msgstr "Без име"
 
-#: app/core/gimpbrush-load.c:442
+#: app/core/gimpbrush-load.c:428
 #, c-format
 msgid ""
 "Fatal parse error in brush file:\n"
@@ -13371,55 +13377,48 @@ msgstr ""
 "Неподдържана дълбочина на цвета на четка: %d\n"
 "Четките на GIMP трябва да са едноцветни или в RGBA."
 
-#: app/core/gimpbrush-load.c:519
+#: app/core/gimpbrush-load.c:503
 #, c-format
 msgid "Unable to decode abr format version %d."
 msgstr ""
 "Неуспешно декодиране на версията на форма̀та на файла с четки на Photoshop "
 "(abr) %d."
 
-#: app/core/gimpbrush-load.c:637 app/core/gimpbrush-load.c:856
+#: app/core/gimpbrush-load.c:618 app/core/gimpbrush-load.c:826
 #, c-format
 msgid "Fatal parse error in brush file: Brush size value corrupt."
 msgstr "Фатална грешка при анализ на файл с четки: Неправилен размер на четка."
 
-#: app/core/gimpbrush-load.c:724 app/core/gimpbrush-load.c:915
+#: app/core/gimpbrush-load.c:696 app/core/gimpbrush-load.c:886
 #, c-format
 msgid "Fatal parse error in brush file: Brush dimensions out of range."
 msgstr ""
 "Фатална грешка при анализ на файл с четки: Размерите на четка са извън "
 "поддържания диапазон."
 
-#: app/core/gimpbrush-load.c:736
+#: app/core/gimpbrush-load.c:708
 #, c-format
 msgid "Fatal parse error in brush file: Wide brushes are not supported."
 msgstr ""
 "Фатална грешка при анализ на файл с четки: Не се поддържат широки четки."
 
-#: app/core/gimpbrush-load.c:885
+#: app/core/gimpbrush-load.c:855
 msgid "Fatal parse error in brush file: File appears truncated: "
 msgstr "Фатална грешка при анализ на файл с четки: Файлът изглежда непълен."
 
-#: app/core/gimpbrush-load.c:923
+#: app/core/gimpbrush-load.c:894
 #, c-format
 msgid "Fatal parse error in brush file: Unknown compression method."
 msgstr ""
 "Фатална грешка при анализ на файл с четки: Непознат метод на компресия."
 
-#: app/core/gimpbrush-load.c:1090
+#: app/core/gimpbrush-load.c:1000
 #, c-format
 msgid ""
 "Fatal parse error in brush file: Unable to decode abr format version %d."
 msgstr ""
 "Фатална грешка при анализ на файл с четки: Неуспешно декодиране на версията "
 "на форма̀та на файла с четки на Photoshop (abr) %d."
-
-#: app/core/gimpbrush-load.c:1240
-#, c-format
-msgid "Fatal parse error in brush file: RLE compressed brush data corrupt."
-msgstr ""
-"Фатална грешка при анализ на файл с четки: повредени данни, компресирани с "
-"RLE."
 
 #: app/core/gimpbrush.c:158 app/paint/gimppaintoptions.c:235
 msgid "Brush Spacing"
@@ -13903,7 +13902,7 @@ msgstr "Преподреждане на филтър"
 msgid "Rasterize filters"
 msgstr "Филтри за растеризация"
 
-#: app/core/gimpdrawable-filters.c:347
+#: app/core/gimpdrawable-filters.c:356
 msgid "Merge filter"
 msgstr "Сливане на филтри"
 
@@ -14169,6 +14168,7 @@ msgid "Symmetry"
 msgstr "Симетрия"
 
 #: app/core/gimpimage.c:2072 app/pdb/drawable-filter-cmds.c:681
+#: app/widgets/gimpdrawabletreeview-filters.c:863
 msgid "Remove filter"
 msgstr "Премахване на филтър"
 
@@ -14572,6 +14572,7 @@ msgid "Cannot merge down to a layer group."
 msgstr "Не може да слеете надолу към група от слоеве."
 
 #: app/core/gimpimage-merge.c:345
+#: app/widgets/gimpdrawabletreeview-filters.c:837
 msgid "The layer to merge down to is locked."
 msgstr "Слоят, към който сливате, е заключен."
 
@@ -14694,6 +14695,7 @@ msgstr "Не може да се отвори миниатюрата „%s“: %s
 #: app/core/gimpitem.c:1851 app/core/gimpitem.c:1918
 #: app/display/gimpdisplayshell-dnd.c:380 app/tools/gimptransformtool.c:704
 #: app/tools/gimpvectortool.c:757 app/tools/gimpvectortool.c:846
+#: app/widgets/gimpdrawabletreeview-filters.c:709
 msgid "A selected layer's pixels are locked."
 msgstr "Пикселите на някой от избраните слоеве са заключени."
 
@@ -15148,16 +15150,20 @@ msgstr "Файл във формат SBZ не може да се отвори"
 msgid "History Color"
 msgstr "История на цветовете"
 
-#: app/core/gimppattern-load.c:60
+#: app/core/gimppattern-load.c:63 app/core/gimppattern-load.c:70
+msgid "Error reading Photoshop pattern."
+msgstr "Грешка при четене на шаблон на Photoshop."
+
+#: app/core/gimppattern-load.c:377
 msgid "File appears truncated: "
 msgstr "Файлът изглежда непълен: "
 
-#: app/core/gimppattern-load.c:78
+#: app/core/gimppattern-load.c:405
 #, c-format
 msgid "Unknown pattern format version %d."
 msgstr "Непозната версия на шарки %d."
 
-#: app/core/gimppattern-load.c:87
+#: app/core/gimppattern-load.c:414
 #, c-format
 msgid ""
 "Unsupported pattern depth %d.\n"
@@ -15166,7 +15172,7 @@ msgstr ""
 "Неподдържана дълбочина на цвета на шарка: %d\n"
 "Шарките на GIMP трябва да са едноцветни или в RGB."
 
-#: app/core/gimppattern-load.c:99
+#: app/core/gimppattern-load.c:426
 #, c-format
 msgid ""
 "Invalid header data in '%s': width=%lu (maximum %lu), height=%lu (maximum "
@@ -15175,21 +15181,21 @@ msgstr ""
 "Неправилни заглавни данни в „%s“: широчина=%lu (максимално %lu), "
 "височина=%lu (максимално %lu), байтове=%lu"
 
-#: app/core/gimppattern-load.c:116
+#: app/core/gimppattern-load.c:443
 #, c-format
 msgid "Invalid header data in '%s': Pattern name is too long: %lu"
 msgstr "Неправилни заглавни данни в „%s“: Твърде дълго име на шарка: %lu"
 
-#: app/core/gimppattern-load.c:129 app/core/gimppattern-load.c:167
+#: app/core/gimppattern-load.c:456 app/core/gimppattern-load.c:494
 msgid "File appears truncated."
 msgstr "Файлът изглежда е непълен."
 
-#: app/core/gimppattern-load.c:135
+#: app/core/gimppattern-load.c:462
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Низ с неправилен UTF-8 във файл с шарки „%s“."
 
-#: app/core/gimppattern-load.c:178
+#: app/core/gimppattern-load.c:505
 msgid "Fatal parse error in pattern file: "
 msgstr "Грешка при анализ на файл с шарки: "
 
@@ -15775,7 +15781,7 @@ msgid "Select Soft-Proof Profile"
 msgstr "Избор на цветови профил за коректура"
 
 #: app/dialogs/color-profile-dialog.c:209
-#: app/tools/gimpforegroundselecttool.c:332
+#: app/tools/gimpforegroundselecttool.c:334
 msgid "_Select"
 msgstr "_Избор"
 
@@ -16623,7 +16629,7 @@ msgstr "_Интервал:"
 
 #. The "Preview" frame
 #: app/dialogs/palette-import-dialog.c:349
-#: app/tools/gimpforegroundselecttool.c:1316
+#: app/tools/gimpforegroundselecttool.c:1318
 msgid "Preview"
 msgstr "Преглед"
 
@@ -19154,21 +19160,22 @@ msgstr "Поставяне на нова пътека"
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Пикселите в групирани слоеве не може да се променят."
 
-#: app/display/gimpdisplayshell-dnd.c:390 app/tools/gimpfiltertool.c:333
+#: app/display/gimpdisplayshell-dnd.c:390 app/tools/gimpfiltertool.c:334
 #: app/tools/gimppainttool.c:371 app/tools/gimptransformtool.c:713
+#: app/widgets/gimpdrawabletreeview-filters.c:702
 msgid "A selected layer is not visible."
 msgstr "Избраният слой не е видим."
 
 #: app/display/gimpdisplayshell-dnd.c:446
-#: app/widgets/gimpdrawabletreeview.c:488
-#: app/widgets/gimpdrawabletreeview.c:674
+#: app/widgets/gimpdrawabletreeview.c:466
+#: app/widgets/gimpdrawabletreeview.c:652
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "Поставяне на шаблон като слой"
 
 #: app/display/gimpdisplayshell-dnd.c:468
-#: app/widgets/gimpdrawabletreeview.c:519
-#: app/widgets/gimpdrawabletreeview.c:694
+#: app/widgets/gimpdrawabletreeview.c:497
+#: app/widgets/gimpdrawabletreeview.c:672
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Поставяне на цвят като слой"
@@ -20714,7 +20721,7 @@ msgid "Turn colors into shades of gray"
 msgstr "Превръщане на цветовете в степени на сивото"
 
 #: app/operations/gimpoperationdesaturate.c:91
-#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1457
+#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1462
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
 #: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:279
@@ -20759,7 +20766,7 @@ msgstr "Замяна на частичната прозрачност с цвя�
 msgid "The color"
 msgstr "Цвят"
 
-#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1420
+#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1425
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:113
 #: app/tools/gimptransformoptions.c:307
 msgid "Clipping"
@@ -21310,7 +21317,7 @@ msgstr "Добавяне на филтър"
 msgid "Plug-in"
 msgstr "Приставка"
 
-#: app/pdb/drawable-cmds.c:1131 app/tools/gimpforegroundselecttool.c:1039
+#: app/pdb/drawable-cmds.c:1131 app/tools/gimpforegroundselecttool.c:1041
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "Избор на цвета за рисуване"
@@ -23023,15 +23030,15 @@ msgid "Cannot fill multiple layers. Select only one layer."
 msgstr "Не може да заливате повече от един слой. Изберете само един."
 
 #: app/tools/gimpbucketfilltool.c:599 app/tools/gimpcagetool.c:231
-#: app/tools/gimpcurvestool.c:220 app/tools/gimpfiltertool.c:310
-#: app/tools/gimpforegroundselecttool.c:295 app/tools/gimplevelstool.c:211
+#: app/tools/gimpcurvestool.c:220 app/tools/gimpfiltertool.c:311
+#: app/tools/gimpforegroundselecttool.c:297 app/tools/gimplevelstool.c:211
 #: app/tools/gimpoffsettool.c:191 app/tools/gimppainttool.c:297
 #: app/tools/gimpperspectiveclonetool.c:224 app/tools/gimpthresholdtool.c:160
 #: app/tools/gimptransformgridtool.c:351
 msgid "No selected drawables."
 msgstr "Не е избрано нищо нарисувано."
 
-#: app/tools/gimpbucketfilltool.c:619 app/tools/gimpforegroundselecttool.c:307
+#: app/tools/gimpbucketfilltool.c:619 app/tools/gimpforegroundselecttool.c:309
 #: app/tools/gimppaintselecttool.c:380
 msgid "The active layer is not visible."
 msgstr "Активният слой не е видим."
@@ -23388,7 +23395,7 @@ msgstr "Криви"
 msgid "_Curves..."
 msgstr "_Криви…"
 
-#: app/tools/gimpcurvestool.c:218 app/tools/gimpfiltertool.c:306
+#: app/tools/gimpcurvestool.c:218 app/tools/gimpfiltertool.c:307
 #: app/tools/gimplevelstool.c:209 app/tools/gimpoffsettool.c:189
 #: app/tools/gimpthresholdtool.c:158
 msgid "Cannot modify multiple drawables. Select only one."
@@ -23594,57 +23601,57 @@ msgstr ""
 "Когато е включено, филтърът се слива автоматично.\n"
 "В противен случай е редактируем, обратим филтър."
 
-#: app/tools/gimpfiltertool.c:321 app/tools/gimpselectiontool.c:575
+#: app/tools/gimpfiltertool.c:322 app/tools/gimpselectiontool.c:575
 #, c-format
 msgid "A selected item's pixels are locked."
 msgstr "Пикселите на някой от избрани обекти са заключени."
 
-#: app/tools/gimpfiltertool.c:441
+#: app/tools/gimpfiltertool.c:444
 msgid "Disabled because this filter depends on another image."
 msgstr "Изключено, защото този филтър зависи от друго изображение."
 
-#: app/tools/gimpfiltertool.c:759
+#: app/tools/gimpfiltertool.c:763
 msgid "Click to switch the original and filtered sides"
 msgstr "Натиснете за смяна между избраната страна и филтрираната"
 
-#: app/tools/gimpfiltertool.c:763
+#: app/tools/gimpfiltertool.c:767
 msgid "Click to switch between vertical and horizontal"
 msgstr "Натиснете за смяна между хоризонтално и вертикално"
 
-#: app/tools/gimpfiltertool.c:767
+#: app/tools/gimpfiltertool.c:771
 msgid "Click to move the split guide"
 msgstr "Натиснете за преместване на разделящия водач"
 
-#: app/tools/gimpfiltertool.c:769
+#: app/tools/gimpfiltertool.c:773
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s: смяна между избраната и филтрираната"
 
-#: app/tools/gimpfiltertool.c:770
+#: app/tools/gimpfiltertool.c:774
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: смяна между хоризонтално и вертикално"
 
-#: app/tools/gimpfiltertool.c:1254
+#: app/tools/gimpfiltertool.c:1258
 msgid "Edit filter"
 msgstr "Редактиране на филтър"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1433
+#: app/tools/gimpfiltertool.c:1438
 msgid "Blending Options"
 msgstr "Настройки на смесване"
 
-#: app/tools/gimpfiltertool.c:1938 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1943 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Внасяне на настройки за „%s“"
 
-#: app/tools/gimpfiltertool.c:1940 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1945 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Изнасяне на настройки за „%s“"
 
-#: app/tools/gimpfiltertool.c:2205
+#: app/tools/gimpfiltertool.c:2210
 #, c-format
 msgid "Editing '%s'..."
 msgstr "Редактиране на „%s“…"
@@ -23769,65 +23776,65 @@ msgstr "Брой итерации за изпълнение"
 msgid "Reset stroke width native size"
 msgstr "Стандартна широчина на щрихите"
 
-#: app/tools/gimpforegroundselecttool.c:193
+#: app/tools/gimpforegroundselecttool.c:195
 msgid "Foreground Select"
 msgstr "Избиране на цвета за рисуване"
 
-#: app/tools/gimpforegroundselecttool.c:194
+#: app/tools/gimpforegroundselecttool.c:196
 msgid "Foreground Select Tool: Select a region containing foreground objects"
 msgstr ""
 "Избиране на цвета за рисуване: изберете област, съдържаща обекти отпред"
 
-#: app/tools/gimpforegroundselecttool.c:195
+#: app/tools/gimpforegroundselecttool.c:197
 msgid "F_oreground Select"
 msgstr "Избиране на цвета за _рисуване"
 
-#: app/tools/gimpforegroundselecttool.c:293
+#: app/tools/gimpforegroundselecttool.c:295
 msgid "Cannot select from multiple layers."
 msgstr "Селекция на база множество слоеве е невъзможна."
 
-#: app/tools/gimpforegroundselecttool.c:326
+#: app/tools/gimpforegroundselecttool.c:328
 msgid "Dialog for foreground select"
 msgstr "Прозорче за избор на цвета за рисуване"
 
-#: app/tools/gimpforegroundselecttool.c:343
+#: app/tools/gimpforegroundselecttool.c:345
 msgid "_Preview mask"
 msgstr "_Преглед на маската"
 
-#: app/tools/gimpforegroundselecttool.c:354
+#: app/tools/gimpforegroundselecttool.c:356
 msgid "Select foreground pixels"
 msgstr "Избор на пикселите за цвета за рисуване"
 
-#: app/tools/gimpforegroundselecttool.c:630
-#: app/tools/gimpforegroundselecttool.c:635
+#: app/tools/gimpforegroundselecttool.c:632
+#: app/tools/gimpforegroundselecttool.c:637
 msgid "Roughly outline the object to extract"
 msgstr "Грубо очертаване на обекта за извличане"
 
-#: app/tools/gimpforegroundselecttool.c:631
+#: app/tools/gimpforegroundselecttool.c:633
 msgid "press Enter to refine."
 msgstr "Натиснете Enter за подобряване."
 
-#: app/tools/gimpforegroundselecttool.c:658
+#: app/tools/gimpforegroundselecttool.c:660
 msgid "Selecting foreground"
 msgstr "Избор на цвят за рисуване"
 
-#: app/tools/gimpforegroundselecttool.c:660
+#: app/tools/gimpforegroundselecttool.c:662
 msgid "Selecting background"
 msgstr "Избор на цвeта за фона"
 
-#: app/tools/gimpforegroundselecttool.c:662
+#: app/tools/gimpforegroundselecttool.c:664
 msgid "Selecting unknown"
 msgstr "Не е ясно какво се избира"
 
-#: app/tools/gimpforegroundselecttool.c:665
+#: app/tools/gimpforegroundselecttool.c:667
 msgid "press Enter to preview."
 msgstr "Натиснете Enter за преглед."
 
-#: app/tools/gimpforegroundselecttool.c:667
+#: app/tools/gimpforegroundselecttool.c:669
 msgid "press Escape to exit preview or Enter to apply."
 msgstr "натиснете Escape за изход от прегледа и Enter за прилагане."
 
-#: app/tools/gimpforegroundselecttool.c:1312
+#: app/tools/gimpforegroundselecttool.c:1314
 msgid "Paint mask"
 msgstr "Рисувана маска"
 
@@ -27569,9 +27576,42 @@ msgstr "Заключване на пикселите"
 msgid "Lock position and size"
 msgstr "Заключване на местоположението и размера"
 
-#: app/widgets/gimpdrawabletreeview.c:413
+#: app/widgets/gimpdrawabletreeview.c:391
 msgid "Cannot select items while a floating selection is active."
 msgstr "Не може да се избират други обекти докато има плаваща селекция."
+
+#: app/widgets/gimpdrawabletreeview-filters.c:183
+msgid "Layer Effects"
+msgstr "Ефекти на слой"
+
+#: app/widgets/gimpdrawabletreeview-filters.c:213
+msgid "Toggle the visibility of all filters."
+msgstr "Превключване видимостта на всички филтри"
+
+#: app/widgets/gimpdrawabletreeview-filters.c:229
+msgid "Edit the selected filter."
+msgstr "Редактиране на избрания филтър"
+
+#: app/widgets/gimpdrawabletreeview-filters.c:245
+msgid "Raise filter one step up in the stack."
+msgstr "Повдигане на филтъра с една позиция в тестето."
+
+#: app/widgets/gimpdrawabletreeview-filters.c:260
+msgid "Lower filter one step down in the stack."
+msgstr "Снижаване на филтъра с една позиция в тестето."
+
+#: app/widgets/gimpdrawabletreeview-filters.c:276
+msgid "Merge all active filters down."
+msgstr "Сливане на всички действащи филтри надолу"
+
+#: app/widgets/gimpdrawabletreeview-filters.c:292
+msgid "Remove the selected filter."
+msgstr "Премахване на избрания филтър"
+
+#: app/widgets/gimpdrawabletreeview-filters.c:768
+#: app/widgets/gimpdrawabletreeview-filters.c:794
+msgid "Cannot reorder a filter that is being edited."
+msgstr "Филтър, който в момента се редактира, не може да се преподреди."
 
 #: app/widgets/gimpdynamicseditor.c:162
 #: app/widgets/gimpdynamicsoutputeditor.c:71
@@ -27846,32 +27886,36 @@ msgid "Read _Online"
 msgstr "Четене в _Интернет"
 
 #: app/widgets/gimphistogrameditor.c:135
-msgid "Mean:"
-msgstr "Средно:"
+msgid "Mean: "
+msgstr "Средно: "
 
 #: app/widgets/gimphistogrameditor.c:136
-msgid "Std dev:"
-msgstr "Станд. откл.:"
+msgid "Std dev: "
+msgstr "Станд. откл.: "
 
 #: app/widgets/gimphistogrameditor.c:137
-msgid "Median:"
-msgstr "Медиана:"
+msgid "Median: "
+msgstr "Медиана: "
 
 #: app/widgets/gimphistogrameditor.c:138
-msgid "Pixels:"
-msgstr "Пиксели:"
+msgid "Pixels: "
+msgstr "Пиксели: "
 
 #: app/widgets/gimphistogrameditor.c:139
-msgid "Count:"
-msgstr "Брой:"
+msgid "Count: "
+msgstr "Брой: "
 
 #: app/widgets/gimphistogrameditor.c:140
-msgid "Percentile:"
-msgstr "Проценти:"
+msgid "Percentile: "
+msgstr "Проценти: "
 
 #: app/widgets/gimphistogrameditor.c:166
 msgid "Histogram channel"
 msgstr "Хистограма на канала"
+
+#: app/widgets/gimphistogrameditor.c:225
+msgid "Compute unique colors:"
+msgstr "Изчисляване на отделните цветове:"
 
 #: app/widgets/gimpiconpicker.c:246
 msgid "From File..."
@@ -29602,30 +29646,6 @@ msgstr "Меню за запомнени настройки"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Меню за историята на действията"
-
-#~ msgid "Toggle the visibility of all filters."
-#~ msgstr "Превключване видимостта на всички филтри"
-
-#~ msgid "Edit the selected filter."
-#~ msgstr "Редактиране на избрания филтър"
-
-#~ msgid "Raise filter one step up in the stack."
-#~ msgstr "Повдигане на филтъра с една позиция в тестето."
-
-#~ msgid "Lower filter one step down in the stack."
-#~ msgstr "Снижаване на филтъра с една позиция в тестето."
-
-#~ msgid "Merge all active filters down."
-#~ msgstr "Сливане на всички действащи филтри надолу"
-
-#~ msgid "Remove the selected filter."
-#~ msgstr "Премахване на избрания филтър"
-
-#~ msgid "Layer Effects"
-#~ msgstr "Ефекти на слой"
-
-#~ msgid "Cannot reorder a filter that is being edited."
-#~ msgstr "Филтър, който в момента се редактира, не може да се преподреди."
 
 #~ msgid "Painting in GIMP"
 #~ msgstr "Рисуване в GIMP"
