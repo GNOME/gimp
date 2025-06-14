@@ -66,6 +66,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimptextbuffer.h"
+#include "widgets/gimptextstyleeditor.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -2481,4 +2482,16 @@ gimp_text_tool_get_direction  (GimpTextTool *text_tool)
 {
   GimpTextOptions *options = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
   return options->base_dir;
+}
+
+void
+gimp_text_tool_restore_on_canvas_editor_position (GimpTextTool *text_tool)
+{
+  GimpTextStyleEditor *editor = GIMP_TEXT_STYLE_EDITOR (text_tool->style_editor);
+
+  if (text_tool->layer)
+    gimp_text_layer_set_style_overlay_position (text_tool->layer, FALSE, 0, 0);
+
+  gimp_text_tool_editor_position (text_tool);
+  gimp_text_style_show_restore_position_button (editor, FALSE);
 }

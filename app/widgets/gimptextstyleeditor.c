@@ -33,6 +33,10 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 
+#include "tools/tools-types.h"
+#include "tools/tool_manager.h"
+#include "tools/gimptexttool.h"
+
 #include "text/gimptext.h"
 #include "text/gimpfont.h"
 
@@ -42,6 +46,7 @@
 #include "gimptextbuffer.h"
 #include "gimptextstyleeditor.h"
 #include "gimptexttag.h"
+#include "gimpwidgets-constructors.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
@@ -129,6 +134,10 @@ static gboolean  gimp_text_style_editor_notify_leave_dnd_handler
                                                           (GtkWidget           *widget,
                                                            GdkEventCrossing     event,
                                                            gpointer             user_data);
+
+static void      gimp_text_style_editor_restore_position_callback
+                                                          (GtkWidget           *button,
+                                                           GimpTextStyleEditor *editor);
 
 
 G_DEFINE_TYPE (GimpTextStyleEditor, gimp_text_style_editor,
@@ -278,6 +287,23 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
   g_signal_connect (editor->size_entry, "value-changed",
                     G_CALLBACK (gimp_text_style_editor_size_changed),
                     editor);
+
+  /* Restore position button */
+  editor->restore_position_button = gimp_icon_button_new (GIMP_ICON_RESET, NULL);
+  gtk_button_set_relief (GTK_BUTTON (editor->restore_position_button),
+                         GTK_RELIEF_NONE);
+  gtk_image_set_from_icon_name (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (editor->restore_position_button))),
+                                GIMP_ICON_RESET, GTK_ICON_SIZE_MENU);
+
+  gimp_help_set_help_data (editor->restore_position_button,
+                           _("Restore On-Canvas Editor Position"), NULL);
+
+  g_signal_connect (editor->restore_position_button, "clicked",
+                    G_CALLBACK (gimp_text_style_editor_restore_position_callback),
+                    editor);
+
+  gtk_box_pack_end (GTK_BOX (editor->upper_hbox), editor->restore_position_button,
+                    FALSE, FALSE, 0);
 
   /*  lower row  */
 
@@ -673,6 +699,16 @@ gimp_text_style_editor_list_tags (GimpTextStyleEditor  *editor,
   *remove_tags = g_list_reverse (*remove_tags);
 
   return g_list_reverse (tags);
+}
+
+void
+gimp_text_style_show_restore_position_button (GimpTextStyleEditor *editor,
+                                              gboolean             show)
+{
+  if (show)
+    gtk_widget_show (editor->restore_position_button);
+  else
+    gtk_widget_hide (editor->restore_position_button);
 }
 
 
@@ -1414,4 +1450,14 @@ gimp_text_style_editor_notify_leave_dnd_handler (GtkWidget       *widget,
     gdk_window_set_cursor (window, NULL);
 
   return FALSE;
+}
+
+static void
+gimp_text_style_editor_restore_position_callback (GtkWidget           *button,
+                                                  GimpTextStyleEditor *editor)
+{
+  GimpTool     *tool      = tool_manager_get_active (editor->gimp);
+  GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
+
+  gimp_text_tool_restore_on_canvas_editor_position (text_tool);
 }

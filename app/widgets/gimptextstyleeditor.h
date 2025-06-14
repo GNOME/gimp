@@ -49,6 +49,7 @@ struct _GimpTextStyleEditor
 
   GtkWidget      *upper_hbox;
   GtkWidget      *lower_hbox;
+  GtkWidget      *restore_position_button;
 
   GtkWidget      *font_entry;
   GtkWidget      *size_entry;
@@ -85,3 +86,7 @@ GtkWidget * gimp_text_style_editor_new       (Gimp                 *gimp,
 
 GList     * gimp_text_style_editor_list_tags (GimpTextStyleEditor  *editor,
                                               GList               **remove_tags);
+
+void        gimp_text_style_show_restore_position_button
+                                             (GimpTextStyleEditor  *editor,
+                                              gboolean              show);

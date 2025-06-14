@@ -293,6 +293,9 @@ gimp_text_tool_editor_position (GimpTextTool *text_tool)
                                            x, y, -1,
                                            text_tool->drag_offset_x + 25,
                                            text_tool->drag_offset_y + 25);
+
+          gimp_text_style_show_restore_position_button (GIMP_TEXT_STYLE_EDITOR (text_tool->style_editor),
+                                                        TRUE);
         }
       else
         {
@@ -2067,9 +2070,10 @@ gimp_text_tool_style_overlay_button_motion (GtkWidget      *widget,
 
   if (text_tool->overlay_dragging)
     {
-      GimpTool         *tool  = GIMP_TOOL (text_tool);
-      GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
-      gdouble           x, y;
+      GimpTool            *tool  = GIMP_TOOL (text_tool);
+      GimpDisplayShell    *shell = gimp_display_get_shell (tool->display);
+      GimpTextStyleEditor *style_editor;
+      gdouble              x, y;
 
       gdk_window_get_device_position_double (gtk_widget_get_window (GTK_WIDGET (shell)),
                                              event->device,
@@ -2087,6 +2091,9 @@ gimp_text_tool_style_overlay_button_motion (GtkWidget      *widget,
 
       gimp_text_layer_set_style_overlay_position (text_tool->layer, TRUE,
                                                   x, y);
+
+      style_editor = GIMP_TEXT_STYLE_EDITOR (text_tool->style_editor);
+      gimp_text_style_show_restore_position_button (style_editor, TRUE);
     }
 
   return TRUE;
