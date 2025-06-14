@@ -325,7 +325,7 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/caolanm/libwmf/archive/refs/tags/v0.2.13.tar.gz",
+                    "url": "https://github.com/caolanm/libwmf/archive/refs/tags/v0.2.12.tar.gz",
                     "sha512": "f45a936c9bc98fc1a5f2b0808b497119e4dcd3c132615fdddb7583e5719c7d1d7f85c16ebf313cad453e5b7ae3508bf6b80c4ed2b42322b7dec295d8f4eb86ce",
                     "x-checker-data": {
                         "type": "anitya",
