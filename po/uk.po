@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-13 16:05+0000\n"
-"PO-Revision-Date: 2025-06-13 20:43+0300\n"
+"POT-Creation-Date: 2025-06-13 19:43+0000\n"
+"PO-Revision-Date: 2025-06-14 20:44+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -13057,12 +13057,11 @@ msgstr "Немає доступних текстур для цієї опера�
 
 #: app/core/gimp-utils.c:1120
 #, c-format
-#| msgid "Fatal parse error in brush file: RLE compressed brush data corrupt."
 msgid ""
 "Fatal parse error in Photoshop resource file: RLE compressed data is corrupt."
 msgstr ""
-"Критична помилка під час обробки файла ресурсів Photoshop: пошкоджено"
-" стиснені RLE дані."
+"Критична помилка під час обробки файла ресурсів Photoshop: пошкоджено "
+"стиснені RLE дані."
 
 #: app/core/gimp-utils.c:1665
 #, c-format
@@ -27669,32 +27668,42 @@ msgid "Read _Online"
 msgstr "_Читати з мережі"
 
 #: app/widgets/gimphistogrameditor.c:135
-msgid "Mean:"
-msgstr "Середнє:"
+#| msgid "Mean:"
+msgid "Mean: "
+msgstr "Середнє: "
 
 #: app/widgets/gimphistogrameditor.c:136
-msgid "Std dev:"
-msgstr "Станд. відхилення:"
+#| msgid "Std dev:"
+msgid "Std dev: "
+msgstr "Стд. відх.: "
 
 #: app/widgets/gimphistogrameditor.c:137
-msgid "Median:"
-msgstr "Медіана:"
+#| msgid "Median:"
+msgid "Median: "
+msgstr "Медіана: "
 
 #: app/widgets/gimphistogrameditor.c:138
-msgid "Pixels:"
-msgstr "Точок:"
+#| msgid "Pixels:"
+msgid "Pixels: "
+msgstr "Точок: "
 
 #: app/widgets/gimphistogrameditor.c:139
-msgid "Count:"
-msgstr "Кількість:"
+#| msgid "Count:"
+msgid "Count: "
+msgstr "Кількість: "
 
 #: app/widgets/gimphistogrameditor.c:140
-msgid "Percentile:"
-msgstr "Відсоток:"
+#| msgid "Percentile:"
+msgid "Percentile: "
+msgstr "Процентиль: "
 
 #: app/widgets/gimphistogrameditor.c:166
 msgid "Histogram channel"
 msgstr "Канал гістограми"
+
+#: app/widgets/gimphistogrameditor.c:225
+msgid "Compute unique colors:"
+msgstr "Обчислення унікальних кольорів:"
 
 #: app/widgets/gimpiconpicker.c:246
 msgid "From File..."
