@@ -327,7 +327,7 @@ Source: "{#GIMP_DIR32}\share\gimp\*"; DestDir: "{app}\share\gimp"; Components: {
 Source: "{#GIMP_DIR32}\share\icons\hicolor\*"; DestDir: "{app}\share\icons\hicolor"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
 #define DEPS_ARCHS="deps32 or deps64 or depsARM64"
 Source: "{#DEPS_DIR32}\etc\*"; DestDir: "{app}\etc"; Excludes: "gimp"; Components: {#DEPS_ARCHS}; Flags: {#COMMON_FLAGS}
-Source: "{#DEPS_DIR32}\share\*"; DestDir: "{app}\share"; Excludes: "gimp,icons\hicolor,metainfo,locale\*,mypaint-data"; Components: {#DEPS_ARCHS}; Flags: {#COMMON_FLAGS} createallsubdirs
+Source: "{#DEPS_DIR32}\share\*"; DestDir: "{app}\share"; Excludes: "gimp,icons\hicolor,locale\*,mypaint-data"; Components: {#DEPS_ARCHS}; Flags: {#COMMON_FLAGS} createallsubdirs
 
 ;Optional arch-neutral files (full install)
 #ifdef LUA
@@ -415,6 +415,8 @@ Type: files; Name: "{autodesktop}\{reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVer
 ;remove old babl and gegl plugins
 Type: filesandordirs; Name: "{app}\lib\babl-0.1"
 Type: filesandordirs; Name: "{app}\lib\gegl-0.4"
+;Uneeded Linux appdata shipped in 2.99.18
+Type: filesandordirs; Name: "{app}\share\metainfo"
 ;This was bunbled in 3.0 RC1 but not needed since the "Debug" menu is hidden in stable releases
 #if !Defined(GIMP_UNSTABLE) && Defined(GIMP_RELEASE)
 	Type: files; Name: "{app}\bin\dot.exe"
