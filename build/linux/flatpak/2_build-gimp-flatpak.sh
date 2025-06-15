@@ -9,8 +9,8 @@ set -e
 
 if [ -z "$GITLAB_CI" ]; then
   # Make the script work locally
-  if [ "$0" != 'build/linux/flatpak/2_build-gimp-flatpak.sh' ] && [ ${PWD/*\//} != 'flatpak' ]; then
-    echo -e '\033[31m(ERROR)\033[0m: Script called from wrong dir. Please, read: https://developer.gimp.org/core/setup/build/linux/'
+  if [ "$0" != 'build/linux/flatpak/2_build-gimp-flatpak.sh' ] && [ $(basename "$PWD") != 'flatpak' ]; then
+    printf '\033[31m(ERROR)\033[0m: Script called from wrong dir. Please, read: https://developer.gimp.org/core/setup/build/linux/\n'
     exit 1
   elif [ $(basename "$PWD") = 'flatpak' ]; then
     cd ../../..
@@ -21,7 +21,7 @@ fi
 
 
 # Install part of the deps
-source <(cat build/linux/flatpak/1_build-deps-flatpak.sh | sed -n "/Install part/,/End of check/p")
+eval "$(sed -n '/Install part/,/End of check/p' build/linux/flatpak/1_build-deps-flatpak.sh)"
 
 if [ "$GITLAB_CI" ]; then
   # Extract deps from previous job
@@ -48,21 +48,21 @@ if [ -z "$GITLAB_CI" ] && [ "$1" != '--ci' ]; then
   eval $FLATPAK_BUILDER --run "$GIMP_PREFIX" ../build/linux/flatpak/org.gimp.GIMP-nightly.json ninja install
 
 elif [ "$GITLAB_CI" ] || [ "$1" = '--ci' ]; then
-  echo -e "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP"
+  printf "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP\n"
   eval $FLATPAK_BUILDER --force-clean --user --disable-rofiles-fuse --keep-build-dirs --build-only --disable-download \
-                        "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json &> gimp-flatpak-builder.log || cat gimp-flatpak-builder.log
+                        "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json > gimp-flatpak-builder.log 2>&1 || { cat gimp-flatpak-builder.log; exit 1; }
   if [ "$GITLAB_CI"  ]; then
     tar cf gimp-meson-log.tar .flatpak-builder/build/gimp-1/_flatpak_build/meson-logs/meson-log.txt
   fi
-  echo -e "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K"
+  printf "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K\n"
 
   ## Cleanup GIMP_PREFIX (not working) and export it to OSTree repo
   ## https://github.com/flatpak/flatpak-builder/issues/14
-  echo -e "\e[0Ksection_start:`date +%s`:gimp_bundle[collapsed=true]\r\e[0KCreating OSTree repo"
+  printf "\e[0Ksection_start:`date +%s`:gimp_bundle[collapsed=true]\r\e[0KCreating OSTree repo\n"
   eval $FLATPAK_BUILDER --user --disable-rofiles-fuse --finish-only --repo=repo \
                         "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
   if [ "$GITLAB_CI"  ]; then
     tar cf repo.tar repo/
   fi
-  echo -e "\e[0Ksection_end:`date +%s`:gimp_bundle\r\e[0K"
+  printf "\e[0Ksection_end:`date +%s`:gimp_bundle\r\e[0K\n"
 fi
