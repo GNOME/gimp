@@ -800,7 +800,11 @@ gimp_histogram_editor_info_update (GimpHistogramEditor *editor)
         }
       else
         {
-          gtk_label_set_text (GTK_LABEL (editor->labels[6]), "n/a");
+          gchar *markup = g_strdup_printf ("<i>%s</i>", _("n/a"));
+
+          gtk_label_set_markup (GTK_LABEL (editor->labels[6]), markup);
+
+          g_free (markup);
         }
     }
   else

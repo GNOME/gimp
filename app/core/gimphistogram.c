@@ -239,22 +239,22 @@ hash_color_bytes (gpointer *key)
   GBytes       *bytes     = (GBytes *) key;
   gsize         size;
   const guint8 *data;
-  guint64       max_value = 0;
-  guint64       value     = 0;
+  gdouble       max_value = 0.0;
+  gdouble       value     = 0.0;
   guint         hash;
 
   data = g_bytes_get_data (bytes, &size);
 
   for (gsize i = 0; i < size; ++i)
     {
-      value     = value * 256 + data[i];
-      max_value = max_value * 256 + 255;
+      value     = value * 256.0 + data[i];
+      max_value = max_value * 256.0 + 255.0;
     }
 
   if (max_value == 0)
     return 0;
 
-  hash = (guint) ((value * (guint64) G_MAXUINT) / max_value);
+  hash = (guint) (value * G_MAXUINT / max_value);
 
   return hash;
 }
@@ -1285,7 +1285,6 @@ gimp_histogram_unique_colors (GimpDrawable *drawable)
   guint               bpp;
   GeglBufferIterator *iter;
   GHashTable         *hash_table;
-  GBytes             *key     = NULL;
   guint               uniques = 0;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), 0);
@@ -1298,8 +1297,10 @@ gimp_histogram_unique_colors (GimpDrawable *drawable)
                                    GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
 
 
-  hash_table = g_hash_table_new ((GHashFunc)  hash_color_bytes,
-                                 (GEqualFunc) color_bytes_equal);
+  hash_table = g_hash_table_new_full ((GHashFunc)      hash_color_bytes,
+                                      (GEqualFunc)     color_bytes_equal,
+                                      (GDestroyNotify) g_bytes_unref,
+                                      NULL);
 
   while (gegl_buffer_iterator_next (iter))
     {
@@ -1308,21 +1309,22 @@ gimp_histogram_unique_colors (GimpDrawable *drawable)
 
       while (length--)
         {
-          key = g_bytes_new (data, bpp);
+          GBytes *key = g_bytes_new (data, bpp);
 
-          if (! g_hash_table_lookup (hash_table, key))
+          if (! g_hash_table_lookup_extended (hash_table, key, NULL, NULL))
             {
-              g_hash_table_insert (hash_table, key, key);
+              g_hash_table_insert (hash_table, key, NULL);
               key = NULL;
               uniques++;
             }
+
+          g_bytes_unref (key);
 
           data += bpp;
         }
     }
 
   g_hash_table_destroy (hash_table);
-  g_bytes_unref (key);
 
   return uniques;
 }
