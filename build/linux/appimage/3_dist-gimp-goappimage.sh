@@ -2,7 +2,7 @@
 
 # Parameters
 REVISION="$1"
-if [[ "$GIMP_CI_APPIMAGE" =~ [1-9] ]] && [ "$CI_PIPELINE_SOURCE" != 'schedule' ]; then
+if echo "$GIMP_CI_APPIMAGE" | grep -q '[1-9]' && [ "$CI_PIPELINE_SOURCE" != 'schedule' ]; then
   export REVISION="$GIMP_CI_APPIMAGE"
 fi
 MODE="$2"
@@ -11,14 +11,19 @@ if [ "$REVISION" = '--bundle-only' ]; then
 fi
 BUILD_DIR="$3"
 
+case $(readlink /proc/$$/exe) in
+  *bash)
+    set -o posix
+    ;;
+esac
 set -e
 
 if [ -z "$GITLAB_CI" ]; then
   # Make the script work locally
-  if [ "$0" != 'build/linux/appimage/3_dist-gimp-goappimage.sh' ] && [ ${PWD/*\//} != 'appimage' ]; then
-    echo -e '\033[31m(ERROR)\033[0m: Script called from wrong dir. Please, call this script from the root of gimp git dir'
+  if [ "$0" != 'build/linux/appimage/3_dist-gimp-goappimage.sh' ] && [ $(basename "$PWD") != 'appimage' ]; then
+    printf '\033[31m(ERROR)\033[0m: Script called from wrong dir. Please, call this script from the root of gimp git dir\n'
     exit 1
-  elif [ ${PWD/*\//} = 'appimage' ]; then
+  elif [ $(basename "$PWD") = 'appimage' ]; then
     cd ../../..
   fi
 
@@ -27,7 +32,7 @@ fi
 
 
 # 1. INSTALL BUNDLING TOOL AND STANDARD APPIMAGE DISTRIBUTION TOOLS
-echo -e "\e[0Ksection_start:`date +%s`:apmg_tlkt\r\e[0KInstalling appimage tools"
+printf "\e[0Ksection_start:`date +%s`:apmg_tlkt\r\e[0KInstalling appimage tools\n"
 GIMP_DIR="$PWD/"
 cd ${GIMP_DIR}${PARENT_DIR}
 if [ "$GITLAB_CI" ]; then
@@ -69,8 +74,8 @@ if [ "$MODE" != '--bundle-only' ]; then
   chmod +x "./runtime-$HOST_ARCH"
   static_runtime_version_downloaded=$("./runtime-$HOST_ARCH" --appimage-version 2>&1)
   chmod -x "./runtime-$HOST_ARCH"
-  if [ "${static_runtime_version_downloaded#*commit/}" != "${static_runtime_version_online:0:7}" ]; then
-    echo -e '\033[31m(ERROR)\033[0m: Downloaded runtime version differs from the one released online. Please, run again this script.'
+  if [ "${static_runtime_version_downloaded#*commit/}" != "$(echo "$static_runtime_version_online" | cut -c1-7)" ]; then
+    printf '\033[31m(ERROR)\033[0m: Downloaded runtime version differs from the one released online. Please, run again this script.\n'
     exit 1
   fi
   standard_appimagetool_text="appimagetool commit: $standard_appimagetool_version | type2-runtime commit: ${static_runtime_version_downloaded#*commit/}"
@@ -79,17 +84,17 @@ if [ ! "$(find $GIMP_DIR -maxdepth 1 -iname "AppDir*")" ] && [ "$MODE" != '--bun
   separator=' | '
 fi
 cd $GIMP_DIR
-echo "(INFO): ${bundler_text}${separator}${standard_appimagetool_text}"
-echo -e "\e[0Ksection_end:`date +%s`:apmg_tlkt\r\e[0K"
+printf "(INFO): ${bundler_text}${separator}${standard_appimagetool_text}\n"
+printf "\e[0Ksection_end:`date +%s`:apmg_tlkt\r\e[0K\n"
 
 
 # 2. GET GLOBAL VARIABLES
-echo -e "\e[0Ksection_start:`date +%s`:apmg_info\r\e[0KGetting AppImage global info"
+printf "\e[0Ksection_start:`date +%s`:apmg_info\r\e[0KGetting AppImage global info\n"
 if [ "$BUILD_DIR" = '' ]; then
   export BUILD_DIR=$(find $PWD -maxdepth 1 -iname "_build*$RUNNER" | head -n 1)
 fi
 if [ ! -f "$BUILD_DIR/config.h" ]; then
-  echo -e "\033[31m(ERROR)\033[0m: config.h file not found. You can configure GIMP with meson to generate it."
+  printf "\033[31m(ERROR)\033[0m: config.h file not found. You can configure GIMP with meson to generate it.\n"
   exit 1
 fi
 eval $(sed -n 's/^#define  *\([^ ]*\)  *\(.*\) *$/export \1=\2/p' $BUILD_DIR/config.h)
@@ -106,21 +111,21 @@ export APP_ID="org.gimp.GIMP.$CHANNEL"
 
 ## Get info about GIMP version
 export CUSTOM_GIMP_VERSION="$GIMP_VERSION"
-if [[ ! "$REVISION" =~ [1-9] ]]; then
+if ! echo "$REVISION" | grep -q '[1-9]'; then
   export REVISION="0"
 else
   export CUSTOM_GIMP_VERSION="${GIMP_VERSION}-${REVISION}"
 fi
-echo "(INFO): App ID: $APP_ID | Version: $CUSTOM_GIMP_VERSION"
-echo -e "\e[0Ksection_end:`date +%s`:apmg_info\r\e[0K"
+printf "(INFO): App ID: $APP_ID | Version: $CUSTOM_GIMP_VERSION\n"
+printf "\e[0Ksection_end:`date +%s`:apmg_info\r\e[0K\n"
 
 
 # 3. GIMP FILES (IN APPDIR)
 if [ ! "$(find . -maxdepth 1 -iname "AppDir*")" ] || [ "$MODE" = '--bundle-only' ]; then
-echo -e "\e[0Ksection_start:`date +%s`:apmg_files[collapsed=true]\r\e[0KPreparing GIMP files in AppDir-$HOST_ARCH/usr"
+printf "\e[0Ksection_start:`date +%s`:apmg_files[collapsed=true]\r\e[0KPreparing GIMP files in AppDir-$HOST_ARCH/usr\n"
 grep -q 'relocatable-bundle=yes' $BUILD_DIR/meson-logs/meson-log.txt && export RELOCATABLE_BUNDLE_ON=1
 if [ -z "$RELOCATABLE_BUNDLE_ON" ]; then
-  echo -e "\033[31m(ERROR)\033[0m: No relocatable GIMP build found. You can build GIMP with '-Drelocatable-bundle=yes' to make a build suitable for AppImage."
+  printf "\033[31m(ERROR)\033[0m: No relocatable GIMP build found. You can build GIMP with '-Drelocatable-bundle=yes' to make a build suitable for AppImage.\n"
   exit 1
 fi
 
@@ -130,11 +135,7 @@ if [ -z "$GITLAB_CI" ] && [ -z "$GIMP_PREFIX" ]; then
   export GIMP_PREFIX="$PWD/../_install"
 fi
 if [ -z "$GITLAB_CI" ]; then
-  IFS=$'\n' VAR_ARRAY=($(cat .gitlab-ci.yml | sed -n '/multi-os/,/multiarch/p' | sed 's/- //'))
-  IFS=$' \t\n'
-  for VAR in "${VAR_ARRAY[@]}"; do
-    eval "$VAR"
-  done
+  eval "$(sed -n -e '/multi-os/,/multiarch/p' -e 's/- //' .gitlab-ci.yml)"
 fi
 
 #Paths to receive copied files
@@ -157,25 +158,24 @@ bund_usr ()
   #Paths where to search
   case $2 in
     bin*)
-      search_path=("$1/bin" "$1/sbin" "$1/libexec")
+      search_path="$1/bin $1/sbin $1/libexec"
       ;;
     lib*)
-      search_path=("$(dirname $(echo $2 | sed "s|lib/|$1/${LIB_DIR}/${LIB_SUBDIR}|g" | sed "s|*|no_scape|g"))"
-                   "$(dirname $(echo $2 | sed "s|lib/|/usr/${LIB_DIR}/|g" | sed "s|*|no_scape|g"))")
+      search_path="$(dirname $(echo $2 | sed "s|lib/|$1/${LIB_DIR}/${LIB_SUBDIR}|g" | sed "s|*|no_scape|g")) \
+                   $(dirname $(echo $2 | sed "s|lib/|/usr/${LIB_DIR}/|g" | sed "s|*|no_scape|g"))"
       ;;
     share*|include*|etc*)
-      search_path=("$(dirname $(echo $2 | sed "s|${2%%/*}|$1/${2%%/*}|g" | sed "s|*|no_scape|g"))")
+      search_path="$(dirname $(echo $2 | sed "s|${2%%/*}|$1/${2%%/*}|g" | sed "s|*|no_scape|g"))"
       ;;
   esac
-  for path in "${search_path[@]}"; do
+  for path in $search_path; do
     expanded_path=$(echo $(echo $path | sed "s|no_scape|*|g"))
     if [ ! -d "$expanded_path" ]; then
       continue
     fi
 
     #Copy found targets from search_path to bundle dir
-    target_array=($(find $expanded_path -maxdepth 1 -name ${2##*/}))
-    for target_path in "${target_array[@]}"; do
+    for target_path in $(find $expanded_path -maxdepth 1 -name ${2##*/}); do
       dest_path="$(dirname $(echo $target_path | sed "s|$1/|${USR_DIR}/|g"))"
       output_dest_path="$dest_path"
       if [ "$3" = '--dest' ] || [ "$3" = '--rename' ]; then
@@ -186,9 +186,9 @@ bund_usr ()
         fi
         dest_path="$output_dest_path/tmp"
       fi
-      
+
       if [ "$3" != '--bundler' ] && [ "$5" != '--bundler' ]; then
-        echo "(INFO): bundling $target_path to $output_dest_path"
+        printf "(INFO): bundling $target_path to $output_dest_path\n"
         mkdir -p $dest_path
         cp -ru $target_path $dest_path >/dev/null 2>&1 || continue
 
@@ -198,9 +198,9 @@ bund_usr ()
           rm -r "$dest_path"
         fi
       else
-        echo "(INFO): skipping $target_path (will be bundled by the tool)"
-        if [[ "$target_path" =~ 'bin' ]] || [[ "$target_path" =~ '.so' ]]; then
-          export APPENDED_LIST+="$target_path "
+        printf "(INFO): skipping $target_path (will be bundled by the tool)\n"
+        if echo "$target_path" | grep -q 'bin' || echo "$target_path" | grep -q '.so'; then
+          export APPENDED_LIST="$APPENDED_LIST $target_path "
         fi
       fi
     done
@@ -228,7 +228,7 @@ conf_app ()
     unset appdir_path
     var_path="$2"
   fi
-  
+
   #Set expanded var in AppRun (and in environ if needed by this script or by the bundler)
   if [ "$3" != '--bundler' ] && [ "$4" != '--bundler' ]; then
     apprun="build/linux/appimage/AppRun"
@@ -258,8 +258,8 @@ fi
 ## Bundle base (bare minimum to run GTK apps)
 ### Glib needed files (to be able to use URIs and file dialogs). See: #12937 and #13082
 bund_usr "$UNIX_PREFIX" "lib/glib-*/gio-launch-desktop" --dest "bin"
-prep_pkg "xapps-common" 
-bund_usr "$UNIX_PREFIX" "share/glib-*/schemas" 
+prep_pkg "xapps-common"
+bund_usr "$UNIX_PREFIX" "share/glib-*/schemas"
 ### Glib commonly required modules
 bund_usr "$UNIX_PREFIX" "lib/gvfs/*.so"
 bund_usr "$UNIX_PREFIX" "lib/gio/modules/*"
@@ -293,10 +293,8 @@ conf_app GEGL_PATH "${LIB_DIR}/${LIB_SUBDIR}gegl-*"
 bund_usr "$GIMP_PREFIX" "lib/libgimp*"
 bund_usr "$GIMP_PREFIX" "lib/gimp"
 bund_usr "$GIMP_PREFIX" "share/gimp"
-lang_array=($(echo $(ls po/*.po |
-              sed -e 's|po/||g' -e 's|.po||g' | sort) |
-              tr '\n\r' ' '))
-for lang in "${lang_array[@]}"; do
+lang_list=$(echo $(ls po/*.po | sed -e 's|po/||g' -e 's|.po||g' | sort) | tr '\n\r' ' ')
+for lang in $lang_list; do
   bund_usr "$GIMP_PREFIX" share/locale/$lang/LC_MESSAGES
   # Needed for eventually used widgets, GTK inspector etc
   bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/gtk3*.mo
@@ -367,7 +365,7 @@ bund_usr "$GIMP_PREFIX" 'bin/gimp*'
 bund_usr "$GIMP_PREFIX" "bin/gegl"
 bund_usr "$GIMP_PREFIX" "share/applications/*.desktop"
 #go-appimagetool have too polluted output so we save as log. See: https://github.com/probonopd/go-appimage/issues/314
-"$bundler" -s deploy $(echo "$USR_DIR/share/applications/*.desktop") &> appimagetool.log || cat appimagetool.log
+"$bundler" -s deploy $(echo "$USR_DIR/share/applications/*.desktop") > appimagetool.log 2>&1 || { cat appimagetool.log; exit 1; }
 
 ## Manual adjustments after running the bundling tool
 ### Undo the mess which breaks babl and GEGL. See: https://github.com/probonopd/go-appimage/issues/315
@@ -381,9 +379,9 @@ if [ "$HOST_ARCH" = 'x86_64' ]; then
   rm -r $APP_DIR/lib64
 fi
 chmod +x "$APP_DIR/$LD_LINUX"
-exec_array=($(find "$USR_DIR/bin" "$USR_DIR/$LIB_DIR" ! -iname "*.so*" -type f -exec head -c 4 {} \; -exec echo " {}" \;  | grep ^.ELF))
-for exec in "${exec_array[@]}"; do
-  if [[ ! "$exec" =~ 'ELF' ]]; then
+exec_list=$(find "$USR_DIR/bin" "$USR_DIR/$LIB_DIR" ! -iname "*.so*" -type f -exec head -c 4 {} \; -exec echo " {}" \;  | grep ^.ELF)
+for exec in $exec_list; do
+  if ! echo "$exec" | grep -q 'ELF'; then
     patchelf --set-interpreter "./$LD_LINUX" "$exec" >/dev/null 2>&1 || continue
   fi
 done
@@ -397,10 +395,9 @@ done
 #if [ "$GITLAB_CI" ]; then
 #  export DEBUGINFOD_URLS="https://debuginfod.debian.net"
 #fi
-#bin_array=($(find "$USR_DIR/bin" "$USR_DIR/$LIB_DIR" "$(dirname $APP_DIR/$LD_LINUX)" ! -iname "*.dumb*" -type f -exec head -c 4 {} \; -exec echo " {}" \;  | grep ^.ELF))
-#for bin in "${bin_array[@]}"; do
-#  if [[ ! "$bin" =~ 'ELF' ]] && [[ ! "$bin" =~ '.debug' ]]; then
-#    grep -a -q '.gnu_debuglink' $bin && echo "(INFO): bundling $bin debug symbols to $(dirname $bin)" && cp -f $(debuginfod-find debuginfo $bin) "$(dirname $bin)/$(readelf --string-dump=.gnu_debuglink $bin | sed -n '/]/{s/.* //;p;q}')" || $true
+#for bin in $(find "$USR_DIR/bin" "$USR_DIR/$LIB_DIR" "$(dirname $APP_DIR/$LD_LINUX)" ! -iname "*.dumb*" -type f -exec head -c 4 {} \; -exec echo " {}" \;  | grep ^.ELF); do
+#  if ! echo "$bin" | grep -q 'ELF' && ! echo "$bin" | grep -q '.debug'; then
+#    grep -a -q '.gnu_debuglink' $bin && printf "(INFO): bundling $bin debug symbols to $(dirname $bin)\n" && cp -f $(debuginfod-find debuginfo $bin) "$(dirname $bin)/$(readelf --string-dump=.gnu_debuglink $bin | sed -n '/]/{s/.* //;p;q}')" || $true
 #  fi
 #done
 
@@ -420,7 +417,7 @@ echo "usr/${LIB_DIR}/${LIB_SUBDIR}gconv
 before=$(cat "$(echo $USR_DIR/share/gimp/*/gimp-release)" | grep 'revision')
 after="revision=$REVISION"
 sed -i "s|$before|$after|" "$(echo $USR_DIR/share/gimp/*/gimp-release)"
-echo -e "\e[0Ksection_end:`date +%s`:apmg_files\r\e[0K"
+printf "\e[0Ksection_end:`date +%s`:apmg_files\r\e[0K\n"
 fi
 if [ "$MODE" = '--bundle-only' ]; then
   exit 0
@@ -428,27 +425,26 @@ fi
 
 
 # 4. PREPARE .APPIMAGE-SPECIFIC "SOURCE"
-appdir_array=($(find . -maxdepth 1 -iname "AppDir*"))
-for APP_DIR in "${appdir_array[@]}"; do
+for APP_DIR in $(find . -maxdepth 1 -iname "AppDir*"); do
 export ARCH=$(echo $APP_DIR | sed -e 's|AppDir-||' -e 's|./||')
-echo -e "\e[0Ksection_start:`date +%s`:${ARCH}_source[collapsed=true]\r\e[0KMaking AppImage assets for $ARCH"
+printf "\e[0Ksection_start:`date +%s`:${ARCH}_source[collapsed=true]\r\e[0KMaking AppImage assets for $ARCH\n"
 export USR_DIR="$APP_DIR/usr"
 
 ## 4.1. Finish AppRun configuration
-echo '(INFO): finishing AppRun configuration'
+printf '(INFO): finishing AppRun configuration\n'
 ln -sfr "$USR_DIR/bin/gimp-$GIMP_APP_VERSION" "$USR_DIR/bin/$APP_ID"
 printf "\nexec \"\$APPDIR\"/usr/bin/$APP_ID \"\$@\"" >> "$APP_DIR/AppRun"
 chmod +x $APP_DIR/AppRun
 
 ## 4.2. Copy icon assets (similarly to flatpaks's 'rename-icon')
-echo "(INFO): copying $APP_ID.svg asset to AppDir"
+printf "(INFO): copying $APP_ID.svg asset to AppDir\n"
 find "$USR_DIR/share/icons/hicolor" \( -iname *.svg -and ! -iname $APP_ID*.svg \) -execdir ln -sf "{}" $APP_ID.svg \;
 find "$USR_DIR/share/icons/hicolor" \( -iname *.png -and ! -iname $APP_ID*.png \) -execdir ln -sf "{}" $APP_ID.png \;
 cp -L "$USR_DIR/share/icons/hicolor/scalable/apps/$APP_ID.svg" $APP_DIR
 ln -sfr "$APP_DIR/$APP_ID.svg" $APP_DIR/.DirIcon
 
 ## 4.3. Configure .desktop asset (similarly to flatpaks's 'rename-desktop-file')
-echo "(INFO): configuring $APP_ID.desktop"
+printf "(INFO): configuring $APP_ID.desktop\n"
 find "$USR_DIR/share/applications" \( -iname *.desktop -and ! -iname $APP_ID*.desktop \) -execdir mv "{}" $APP_ID.desktop \;
 sed -i "s/gimp-$GIMP_APP_VERSION/$APP_ID/g" "$USR_DIR/share/applications/${APP_ID}.desktop"
 sed -i "s/^StartupWMClass=.*/StartupWMClass=$APP_ID/g" "$USR_DIR/share/applications/${APP_ID}.desktop"
@@ -456,17 +452,17 @@ sed -i "s/^Icon=.*/Icon=$APP_ID/" "$USR_DIR/share/applications/${APP_ID}.desktop
 ln -sfr "$USR_DIR/share/applications/${APP_ID}.desktop" $APP_DIR
 
 ## 4.4. Configure appdata asset (similarly to flatpaks's 'rename-appdata-file')
-echo "(INFO): configuring $APP_ID.appdata.xml"
+printf "(INFO): configuring $APP_ID.appdata.xml\n"
 find "$USR_DIR/share/metainfo" \( -iname *.appdata.xml -and ! -iname $APP_ID*.appdata.xml \) -execdir mv "{}" $APP_ID.appdata.xml \;
 sed -i "s/org.gimp.GIMP</${APP_ID}</g" "$USR_DIR/share/metainfo/${APP_ID}.appdata.xml"
 sed -i "s/gimp.desktop/${APP_ID}.desktop/g" "$USR_DIR/share/metainfo/${APP_ID}.appdata.xml"
 sed -i "s/date=\"TODO\"/date=\"`date --iso-8601`\"/" "$USR_DIR/share/metainfo/${APP_ID}.appdata.xml"
-echo -e "\e[0Ksection_end:`date +%s`:${ARCH}_source\r\e[0K"
+printf "\e[0Ksection_end:`date +%s`:${ARCH}_source\r\e[0K\n"
 
 
 # 5. CONSTRUCT .APPIMAGE
 APPIMAGETOOL_APP_NAME="GIMP-${CUSTOM_GIMP_VERSION}-${ARCH}.AppImage"
-echo -e "\e[0Ksection_start:`date +%s`:${ARCH}_making[collapsed=true]\r\e[0KSquashing $APPIMAGETOOL_APP_NAME"
+printf "\e[0Ksection_start:`date +%s`:${ARCH}_making[collapsed=true]\r\e[0KSquashing $APPIMAGETOOL_APP_NAME\n"
 if [ "$GIMP_RELEASE" ] && [ -z "$GIMP_IS_RC_GIT" ]; then
   update_info="--updateinformation zsync|https://download.gimp.org/gimp/GIMP-${CHANNEL}-${ARCH}.AppImage.zsync"
 fi
@@ -480,20 +476,20 @@ if [ -f "${APPIMAGETOOL_APP_NAME}.zsync" ]; then
   sed -i "s|$before|$after|" "$APPIMAGETOOL_APP_NAME.zsync" >/dev/null 2>&1
   mv ${APPIMAGETOOL_APP_NAME}.zsync GIMP-${CHANNEL}-${ARCH}.AppImage.zsync
 fi
-echo -e "\e[0Ksection_end:`date +%s`:${ARCH}_making\r\e[0K"
+printf "\e[0Ksection_end:`date +%s`:${ARCH}_making\r\e[0K\n"
 
 
 # 6. GENERATE SHASUMS
-echo -e "\e[0Ksection_start:`date +%s`:${ARCH}_trust[collapsed=true]\r\e[0KChecksumming $APPIMAGETOOL_APP_NAME"
+printf "\e[0Ksection_start:`date +%s`:${ARCH}_trust[collapsed=true]\r\e[0KChecksumming $APPIMAGETOOL_APP_NAME\n"
 if [ "$GIMP_RELEASE" ] && [ -z "$GIMP_IS_RC_GIT" ]; then
   sha256sum $APPIMAGETOOL_APP_NAME > $APPIMAGETOOL_APP_NAME.SHA256SUMS
 fi
-echo "(INFO): $APPIMAGETOOL_APP_NAME SHA-256: $(sha256sum $APPIMAGETOOL_APP_NAME | cut -d ' ' -f 1)"
+printf "(INFO): $APPIMAGETOOL_APP_NAME SHA-256: $(sha256sum $APPIMAGETOOL_APP_NAME | cut -d ' ' -f 1)\n"
 if [ "$GIMP_RELEASE" ] && [ -z "$GIMP_IS_RC_GIT" ]; then
   sha512sum $APPIMAGETOOL_APP_NAME > $APPIMAGETOOL_APP_NAME.SHA512SUMS
 fi
-echo "(INFO): $APPIMAGETOOL_APP_NAME SHA-512: $(sha512sum $APPIMAGETOOL_APP_NAME | cut -d ' ' -f 1)"
-echo -e "\e[0Ksection_end:`date +%s`:${ARCH}_trust\r\e[0K"
+printf "(INFO): $APPIMAGETOOL_APP_NAME SHA-512: $(sha512sum $APPIMAGETOOL_APP_NAME | cut -d ' ' -f 1)\n"
+printf "\e[0Ksection_end:`date +%s`:${ARCH}_trust\r\e[0K\n"
 
 
 if [ "$GITLAB_CI" ]; then
