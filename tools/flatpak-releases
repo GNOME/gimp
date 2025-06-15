@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # This is a very basic script for developer usage. It has a few known
 # limitations (feel free to send patches for these):
@@ -16,10 +16,6 @@
 # - It also assumes the flathub remotes are installed at all (it can't
 #   search without them being installed and won't install these for
 #   you).
-# - It uses bash because I lazily didn't bother making it portable as
-#   it's really just a tool for core dev testing. Yet we of course
-#   welcome patches if some syntax needs to be rewritten for
-#   portability.
 
 install=-1
 show_runtime=0
@@ -29,19 +25,19 @@ branch='stable'
 prefix='--user'
 for var in "$@"
 do
-  if [[ $var =~ ^-([0-9]+)$ ]]; then
-    install=${BASH_REMATCH[1]}
-  elif [[ $var = '--beta' ]]; then
+  if echo "$var" | grep -qE '^-[0-9]+$'; then
+    install=${var#-}
+  elif [ $var = '--beta' ]; then
     remote='flathub-beta'
     branch='beta'
-  elif [[ $var = '--nightly' ]]; then
+  elif [ $var = '--nightly' ]; then
     remote='gnome-nightly'
     branch='master'
-  elif [[ $var = '--system' ]]; then
+  elif [ $var = '--system' ]; then
     prefix='--system'
-  elif [[ $var = '--runtime' ]]; then
+  elif [ $var = '--runtime' ]; then
     show_runtime=1
-  elif [[ $var =~ ^- ]]; then
+  elif echo "$var" | grep -q '^-'; then
     echo "Usage: ./flathub-releases [--beta] [--system] [-X] [org.example.app]"
     echo
     echo "List all flatpak builds stored on Flathub or GNOME repository."
@@ -109,7 +105,7 @@ elif [ "$show_runtime" -eq 1 ]; then
   runtime=`echo "$package_info" | grep Runtime: |sed 's/^ *Runtime: //'`
   appid=$runtime
   # The beta runtime is in the stable repository.
-  if [[ $branch = 'beta' ]]; then
+  if [ $branch = 'beta' ]; then
     remote='flathub'
   fi
   package_info_cmd="flatpak remote-info $user_system $remote $appid//$branch"
