@@ -177,11 +177,17 @@ notebook stack {
 
 notebook header {
   background-color: @bg-color;
-  border-color: @edge-border-color;
+  border-bottom:    1px solid @edge-border-color;
+  box-shadow:       none;
 }
 
 notebook header button {
   box-shadow: none;
+}
+
+notebook header button:hover {
+  background-color: @selected-color;
+  border-color:     @edge-border-color;
 }
 
 notebook header tabs {
