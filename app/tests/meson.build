@@ -52,7 +52,7 @@ foreach test_name : app_tests
   test_exe = executable(test_name,
     'test-@0@.c'.format(test_name),
     'tests.c',
-    dependencies: [ libapp_dep, appstream_glib ],
+    dependencies: [ libapp_dep, appstream ],
     link_with: apptests_links,
   )
 
