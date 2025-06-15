@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 set -e
 
@@ -13,15 +13,15 @@ clang-format --version
 # Wrap everything in a subshell so we can propagate the exit status.
 (
 
-source .gitlab/search-common-ancestor.sh
+. .gitlab/search-common-ancestor.sh
 
 git diff -U0 --no-color "${newest_common_ancestor_sha}" | clang-format-diff -p1 > format-diff.log
 )
 exit_status=$?
 
-[ ${exit_status} == 0 ] || exit ${exit_status}
+[ ${exit_status} = 0 ] || exit ${exit_status}
 
-format_diff="$(<format-diff.log)"
+format_diff="$(cat format-diff.log)"
 
 if [ -n "${format_diff}" ]; then
     cat format-diff.log

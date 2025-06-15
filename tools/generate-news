@@ -1,30 +1,31 @@
-#!/bin/bash
+#!/bin/sh
 
 # Copyright (C) 2015  Ville Pätsi <drc@gimp.org>
 
-SCRIPT_FOLDER=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+SCRIPT_FOLDER=$( cd "$( dirname "$0")" && pwd )
 
 FIRST_COMMIT="$1"
 [ -z "$FIRST_COMMIT" ] && FIRST_COMMIT="950412fbdc720fe2600f58f04f25145d9073895d" # First after tag 2.8.0
 
-declare -a FOLDERS=('app tools menus etc' \
+FOLDERS="'app tools menus etc' \
     'libgimp libgimpbase libgimpcolor libgimpconfig libgimpmath libgimpmodule libgimpthumb libgimpwidgets' \
     'plug-ins' \
     'modules'
     'build' \
-    'themes icons')
+    'themes'"
 
 OUTPUTFILE=${SCRIPT_FOLDER}/../NEWS_since_"${FIRST_COMMIT}"
 
-pushd ${SCRIPT_FOLDER}/..
+old_dir=$(pwd)
+cd ${SCRIPT_FOLDER}/..
 
-for folderloop in "${FOLDERS[@]}"
-do uppercase_folderloop="`echo ${folderloop:0:1} | tr  '[:lower:]' '[:upper:]'`${folderloop:1}"
-    echo -e "${uppercase_folderloop}:\n" >> "${OUTPUTFILE}"
+for folderloop in $FOLDERS;
+do uppercase_folderloop="`echo ${folderloop} | cut -c1 | tr '[:lower:]' '[:upper:]'``echo ${folderloop} | cut -c2-`"
+    printf "${uppercase_folderloop}:\n" >> "${OUTPUTFILE}"
     git log --date-order --reverse --date=short --pretty=format:"- %h %s" "${FIRST_COMMIT}"..HEAD ${folderloop} >> "${OUTPUTFILE}"
-    echo -e "\n\n" >> "${OUTPUTFILE}"
+    printf "\n\n" >> "${OUTPUTFILE}"
 done
 
-popd
+cd $old_dir
 
 echo "NEWS generated into ${OUTPUTFILE}"
