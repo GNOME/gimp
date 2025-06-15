@@ -53,7 +53,7 @@ test('app-config',
     [ 'test-config.c', app_debug_files, ],
 
     dependencies: [
-      appstream_glib,
+      appstream,
       libapp_dep,
     ],
     link_with: [

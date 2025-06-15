@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <appstream-glib.h>
+#include <appstream.h>
 #include <archive.h>
 #include <archive_entry.h>
 #include <cairo.h>
@@ -76,7 +76,7 @@ static gboolean   file_gex_validate_path  (const gchar     *path,
                                            gchar          **plugin_id,
                                            GError         **error);
 static gboolean   file_gex_validate       (GFile           *file,
-                                           AsApp          **appstream,
+                                           AsComponent    **appstream,
                                            GError         **error);
 static gchar *    file_gex_decompress     (GFile           *file,
                                            gchar           *plugin_id,
@@ -205,9 +205,9 @@ file_gex_validate_path (const gchar  *path,
  *          with @error set.
  */
 static gboolean
-file_gex_validate (GFile   *file,
-                   AsApp  **appstream,
-                   GError **error)
+file_gex_validate (GFile        *file,
+                   AsComponent  **appstream,
+                   GError       **error)
 {
   GInputStream *input;
   gboolean      success = FALSE;
@@ -285,20 +285,14 @@ file_gex_validate (GFile   *file,
                 {
                   if (appdata)
                     {
-                      *appstream = as_app_new ();
+                      *appstream = as_component_new ();
 
-                      if (! as_app_parse_data (*appstream, appdata,
-                                               AS_APP_PARSE_FLAG_USE_HEURISTICS,
-                                               error))
-                        {
-                          g_clear_object (appstream);
-                        }
-                      else if (g_strcmp0 (as_app_get_id (*appstream), plugin_id) != 0)
+                      if (g_strcmp0 (as_component_get_id (*appstream), plugin_id) != 0)
                         {
                           *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
                                                 _("GIMP extension '%s' directory (%s) different from AppStream id: %s"),
                                                 gimp_file_get_utf8_name (file),
-                                                plugin_id, as_app_get_id (*appstream));
+                                                plugin_id, as_component_get_id (*appstream));
                           g_clear_object (appstream);
                         }
                     }
@@ -515,7 +509,7 @@ file_gex_load_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GFile          *file;
   gchar          *ext_dir = NULL;
-  AsApp          *appdata = NULL;
+  AsComponent    *appdata = NULL;
   gboolean        success = FALSE;
 
   gimp_set_busy (gimp);
@@ -524,7 +518,7 @@ file_gex_load_invoker (GimpProcedure         *procedure,
 
   success = file_gex_validate (file, &appdata, error);
   if (success)
-    ext_dir = file_gex_decompress (file, (gchar *) as_app_get_id (appdata),
+    ext_dir = file_gex_decompress (file, (gchar *) as_component_get_id (appdata),
                                    error);
 
   if (ext_dir)

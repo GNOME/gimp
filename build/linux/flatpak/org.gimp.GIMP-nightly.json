@@ -88,37 +88,6 @@
             ]
         },
         {
-            "name": "appstream-glib",
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/hughsie/appstream-glib/archive/refs/tags/appstream_glib_0_8_3.zip",
-                    "sha256": "d9d3c5cc690c1f0ccd630c4f70298ee68277586a59500a9cb04b8e8b2c0ae7e6",
-                    "x-checker-data": {
-                        "type": "anitya",
-                        "project-id": 14018,
-                        "stable-only": true,
-                        "url-template": "https://github.com/hughsie/appstream-glib/archive/refs/tags/appstream_glib_$version.zip"
-                    }
-                }
-            ],
-            "buildsystem": "meson",
-            "config-opts": [
-                "-Drpm=false",
-                "-Dfonts=false",
-                "-Ddep11=false",
-                "-Dbuilder=false",
-                "-Dman=false",
-                "-Dintrospection=false"
-            ],
-            "cleanup": [
-                "/bin",
-                "/include",
-                "/lib/pkgconfig",
-                "/share"
-            ]
-        },
-        {
             "name": "gexiv2",
             "sources": [
                 {

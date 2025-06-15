@@ -76,7 +76,7 @@ libappdialogs = static_library('appdialogs',
   include_directories: [ rootInclude, rootAppInclude, ],
   c_args: '-DG_LOG_DOMAIN="Gimp-Dialogs"',
   dependencies: [
-    appstream_glib,
+    appstream,
     gegl,
     gexiv2,
     gtk3,
