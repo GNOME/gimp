@@ -1903,7 +1903,9 @@ write_pixel_data (GOutputStream      *output,
 
       if (ltable_offset > 0)
         {
-          length_table_pos = ltable_offset + 2 * chan * height;
+          gint byte_offset = (! options->psb) ? 2 : 4;
+
+          length_table_pos = ltable_offset + byte_offset * chan * height;
         }
       else
         {
@@ -2038,7 +2040,10 @@ write_pixel_data (GOutputStream      *output,
                        NULL, NULL /*FIXME: error*/);
       for (j = 0; j < height; j++) /* write real length table */
         {
-          write_gint16 (output, LengthsTable[j], "RLE length");
+          if (! options->psb)
+            write_gint16 (output, LengthsTable[j], "RLE length");
+          else
+            write_gint32 (output, LengthsTable[j], "RLE length");
           IFDBG(3) g_debug ("\t\t\t\t. Updating RLE len %d",
                             LengthsTable[j]);
         }
@@ -2050,7 +2055,10 @@ write_pixel_data (GOutputStream      *output,
                            ChanLenPosition[components], G_SEEK_SET,
                            NULL, NULL /*FIXME: error*/);
 
-          write_gint32 (output, len, "channel data length");
+          if (! options->psb)
+            write_gint32 (output, len, "channel data length");
+          else
+            write_gint64 (output, len, "channel data length");
           IFDBG(1) g_debug ("\t\tUpdating data len to %" G_GSIZE_FORMAT
                             ", at %" G_GOFFSET_FORMAT,
                             len, g_seekable_tell (G_SEEKABLE (output)));
@@ -2103,7 +2111,12 @@ save_data (GOutputStream      *output,
 
   for (i = 0; i < ChanCount; i++)
     for (j = 0; j < imageHeight; j++)
-      write_gint16 (output, 0, "junk line lengths");
+      {
+        if (! options->psb)
+          write_gint16 (output, 0, "junk line lengths");
+        else
+          write_gint32 (output, 0, "junk line lengths");
+      }
 
   IFDBG(1) g_debug ("\t\tWriting compressed image data");
   write_pixel_data (output, image, GIMP_DRAWABLE (PSDImageData.merged_layer),
@@ -2111,9 +2124,11 @@ save_data (GOutputStream      *output,
 
   for (iter = PSDImageData.lChannels; iter; iter = g_list_next (iter))
     {
+      gint bpc = (! options->psb) ? 2 : 4;
+
       IFDBG(1) g_debug ("\t\tWriting compressed channel data for channel %d", i);
       write_pixel_data (output, image, iter->data, NULL,
-                        offset + 2*imageHeight*chan, FALSE,
+                        offset + bpc * imageHeight * chan, FALSE,
                         options); //check how imgs are channels here
       chan++;
     }
@@ -2251,11 +2266,18 @@ export_image (GFile          *file,
   if (gimp_image_get_width (image) > max_dim ||
       gimp_image_get_height (image) > max_dim)
     {
-      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("Unable to export '%s'.  The PSD file format does not "
-                     "support images that are more than 30,000 pixels wide "
-                     "or tall."),
-                   gimp_file_get_utf8_name (file));
+      if (! resource_options.psb)
+        g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                     _("Unable to export '%s'.  The PSD file format does not "
+                       "support images that are more than 30,000 pixels wide "
+                       "or tall."),
+                     gimp_file_get_utf8_name (file));
+      else
+        g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                     _("Unable to export '%s'.  The PSB file format does not "
+                       "support images that are more than 300,000 pixels wide "
+                       "or tall."),
+                     gimp_file_get_utf8_name (file));
       return FALSE;
     }
 
@@ -2292,11 +2314,18 @@ export_image (GFile          *file,
           if (gegl_buffer_get_width (buffer)  > max_dim ||
               gegl_buffer_get_height (buffer) > max_dim)
             {
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("Unable to export '%s'.  The PSD file format does not "
-                             "support images with layers that are more than 30,000 "
-                             "pixels wide or tall."),
-                           gimp_file_get_utf8_name (file));
+              if (! resource_options.psb)
+                g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                             _("Unable to export '%s'.  The PSD file format "
+                               "does not support images with layers that are "
+                               "more than 30,000 pixels wide or tall."),
+                             gimp_file_get_utf8_name (file));
+              else
+                g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                             _("Unable to export '%s'.  The PSB file format "
+                               "does not support images with layers that are "
+                               "more than 300,000 pixels wide or tall."),
+                             gimp_file_get_utf8_name (file));
               clear_image_data ();
               return FALSE;
             }
