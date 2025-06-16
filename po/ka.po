@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-13 16:05+0000\n"
-"PO-Revision-Date: 2025-06-13 19:56+0200\n"
+"POT-Creation-Date: 2025-06-13 19:43+0000\n"
+"PO-Revision-Date: 2025-06-15 03:55+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -70,18 +70,24 @@ msgid ""
 "Scene 4 cut 15 of \"ZeMarmot\" being edited in GIMP. Illustration by Aryeom "
 "(CC by-sa 4.0 International)"
 msgstr ""
+"\"ZeMarmot\"-ის მეოთხე სცენის მე-15-ე ამოჭრა GIMP-ში ჩაასწორეს. ილუსტრაცია "
+"Aryeom-სგან (CC by-sa 4.0 International)"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:52
 msgid ""
 "Gull on beach photograph being edited in GIMP. Photo by Iana (CC by-sa 4.0 "
 "International)"
 msgstr ""
+"სურათი თოლია პლაჟზე ჩაასწორეს GIMP-ში. ფოტოს ავტორია Iana (CC by-sa 4.0 "
+"International)"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:56
 msgid ""
 "Portrait of Sofiia being edited in GIMP. Photo by Sofia (CC by-sa 4.0 "
 "International)"
 msgstr ""
+"Sofia-ის პორტრეტი ჩაასწორეს GIMP-ში. ფოტოს ავტორია Iana (CC by-sa 4.0 "
+"International)"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:60
 msgid "Scanned engraving being edited in GIMP. Artwork by Liam (CC0)"
@@ -151,7 +157,7 @@ msgstr ""
 #. TRANSLATORS: info message displayed in terminal window.
 #: app/app.c:539
 msgid "If you wanted to quit immediately instead, call GIMP with --quit."
-msgstr ""
+msgstr "თუ გნებავთ გასვლა დაუყოვნებლივ, გამოიძახეთ GIMP პარამეტრით --quit."
 
 #: app/gimp-update.c:455
 #, c-format
@@ -299,6 +305,8 @@ msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
 msgstr ""
+"GIMP-ის შეცდომა გრაფიკული მომხმარებლის ინტერფეისის ინიციალიზაციისას.\n"
+"დარწმუნდით, რომ არსებობს თქვენი ვიდეოქვესისტემის სწორი გარემო."
 
 #: app/main.c:818
 msgid "Another GIMP instance is already running."
@@ -325,6 +333,9 @@ msgid ""
 "\n"
 "Please check the value of the environment variable G_FILENAME_ENCODING."
 msgstr ""
+"მორგებული ფაილის სახელის კოდირების გადაყვანა შეუძლებელია UTF-8-ში: %s\n"
+"\n"
+"შეამოწმეთ მნიშვნელობა გარემოს ცვლადისთვის G_FILENAME_ENCODING."
 
 #: app/sanity.c:565
 #, c-format
@@ -10445,6 +10456,8 @@ msgstr "რა მოხდება ჩაშენებული ICC ფე�
 #: app/config/gimprc-blurbs.h:56
 msgid "Sets the default folder path for all color profile file dialogs."
 msgstr ""
+"აყენებს ნაგულისხმევი საქაღალდის ბილიკის ყველა ფერის პროფილის ფაილის "
+"დიალოგისთვის."
 
 #: app/config/gimprc-blurbs.h:59
 msgid "Sets the type of mouse pointers to use."
@@ -14609,7 +14622,7 @@ msgstr "ფერების ისტორია"
 
 #: app/core/gimppattern-load.c:63 app/core/gimppattern-load.c:70
 msgid "Error reading Photoshop pattern."
-msgstr ""
+msgstr "Photoshop-ის ნიმუშის წაკითხვის შეცდომა."
 
 #: app/core/gimppattern-load.c:377
 msgid "File appears truncated: "
@@ -27069,32 +27082,37 @@ msgid "Read _Online"
 msgstr "ონლაინ ნახვა"
 
 #: app/widgets/gimphistogrameditor.c:135
-msgid "Mean:"
-msgstr "მიშვნელობა:"
+msgid "Mean: "
+msgstr "საშუალო: "
 
 #: app/widgets/gimphistogrameditor.c:136
-msgid "Std dev:"
-msgstr "Std dev:"
+#| msgid "Std dev:"
+msgid "Std dev: "
+msgstr "Std dev: "
 
 #: app/widgets/gimphistogrameditor.c:137
-msgid "Median:"
-msgstr "საშუალო:"
+msgid "Median: "
+msgstr "საშუალო: "
 
 #: app/widgets/gimphistogrameditor.c:138
-msgid "Pixels:"
-msgstr "პიქსელები:"
+msgid "Pixels: "
+msgstr "პიქსელი: "
 
 #: app/widgets/gimphistogrameditor.c:139
-msgid "Count:"
-msgstr "რაოდენობა:"
+msgid "Count: "
+msgstr "რაოდენობა: "
 
 #: app/widgets/gimphistogrameditor.c:140
-msgid "Percentile:"
-msgstr "პროცენტი:"
+msgid "Percentile: "
+msgstr "პროცენტული: "
 
 #: app/widgets/gimphistogrameditor.c:166
 msgid "Histogram channel"
 msgstr "ჰისტოგრამის არხი"
+
+#: app/widgets/gimphistogrameditor.c:225
+msgid "Compute unique colors:"
+msgstr ""
 
 #: app/widgets/gimpiconpicker.c:246
 msgid "From File..."
