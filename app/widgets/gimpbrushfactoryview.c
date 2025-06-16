@@ -109,6 +109,8 @@ gimp_brush_factory_view_init (GimpBrushFactoryView *view)
   g_signal_connect (view->spacing_adjustment, "value-changed",
                     G_CALLBACK (gimp_brush_factory_view_spacing_update),
                     view);
+
+  gimp_data_factory_view_show_follow_theme_toggle (GIMP_DATA_FACTORY_VIEW (view), TRUE);
 }
 
 static void

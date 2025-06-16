@@ -73,6 +73,9 @@ struct _GimpDataFactoryViewPrivate
   GtkWidget       *assign_tag_entry;
   GList           *selected_items;
 
+  GtkWidget       *follow_theme_toggle;
+  gboolean         show_follow_theme_toggle;
+
   GtkWidget       *edit_button;
   GtkWidget       *new_button;
   GtkWidget       *duplicate_button;
@@ -167,6 +170,8 @@ gimp_data_factory_view_init (GimpDataFactoryView *view)
   view->priv->duplicate_button = NULL;
   view->priv->delete_button    = NULL;
   view->priv->refresh_button   = NULL;
+
+  view->priv->show_follow_theme_toggle = FALSE;
 }
 
 static void
@@ -218,7 +223,12 @@ gimp_data_factory_view_constructed (GObject *object)
   GimpDataFactoryViewPrivate *priv         = factory_view->priv;
   GimpContainerEditor        *editor       = GIMP_CONTAINER_EDITOR (object);
   GimpUIManager              *manager;
+  GimpContext                *context;
+  GtkWidget                  *image;
+  GtkWidget                  *hbox;
   gchar                      *str;
+  GtkIconSize                 button_icon_size;
+  GtkReliefStyle              button_relief;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -279,16 +289,38 @@ gimp_data_factory_view_constructed (GObject *object)
                                      str, NULL);
   g_free (str);
 
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
+  gtk_box_pack_start (GTK_BOX (editor->view), hbox, FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (editor->view), hbox, 0);
+  gtk_widget_set_visible (hbox, TRUE);
+
   /* Query tag entry */
   priv->query_tag_entry =
     gimp_combo_tag_entry_new (GIMP_TAGGED_CONTAINER (priv->tagged_container),
                               GIMP_TAG_ENTRY_MODE_QUERY);
-  gtk_box_pack_start (GTK_BOX (editor->view),
-                      priv->query_tag_entry,
-                      FALSE, FALSE, 0);
-  gtk_box_reorder_child (GTK_BOX (editor->view),
-                         priv->query_tag_entry, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), priv->query_tag_entry, TRUE, TRUE, 0);
   gtk_widget_show (priv->query_tag_entry);
+
+  /* Follow Theme toggle */
+  g_object_get (object,
+                "context", &context,
+                NULL);
+  gtk_widget_style_get (GTK_WIDGET (editor->view),
+                        "button-icon-size", &button_icon_size,
+                        "button-relief",    &button_relief,
+                        NULL);
+#define GIMP_ICON_FOLLOW_THEME "gimp-prefs-theme"
+  priv->follow_theme_toggle  = gimp_prop_toggle_new (G_OBJECT (context->gimp->config),
+                                                     "viewables-follow-theme",
+                                                     GIMP_ICON_FOLLOW_THEME, NULL,
+                                                     &image);
+  gtk_button_set_relief (GTK_BUTTON (priv->follow_theme_toggle), button_relief);
+  /* Re-setting the image to make sure we use the correct size from theme.  */
+  gtk_image_set_from_icon_name (GTK_IMAGE (image), GIMP_ICON_FOLLOW_THEME, button_icon_size);
+#undef GIMP_ICON_FOLLOW_THEME
+  gtk_box_pack_start (GTK_BOX (hbox), priv->follow_theme_toggle, FALSE, FALSE, 0);
+  gtk_widget_set_visible (priv->follow_theme_toggle, priv->show_follow_theme_toggle);
+  g_object_unref (context);
 
   /* Assign tag entry */
   priv->assign_tag_entry =
@@ -459,6 +491,16 @@ gimp_data_factory_view_new (GimpViewType      view_type,
                        "ui-path",           ui_path,
                        "action-group",      action_group,
                        NULL);
+}
+
+void
+gimp_data_factory_view_show_follow_theme_toggle (GimpDataFactoryView *view,
+                                                 gboolean             show)
+{
+  view->priv->show_follow_theme_toggle = show;
+
+  if (view->priv->follow_theme_toggle != NULL)
+    gtk_widget_set_visible (view->priv->follow_theme_toggle, show);
 }
 
 GtkWidget *

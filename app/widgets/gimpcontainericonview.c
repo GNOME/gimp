@@ -46,7 +46,6 @@
 struct _GimpContainerIconViewPrivate
 {
   GimpViewRenderer *dnd_renderer;
-  GtkWidget        *theme_button;
 
   gulong            color_scheme_handler_id;
 };
@@ -375,42 +374,8 @@ gimp_container_icon_view_set_context (GimpContainerView *view,
     gimp_container_tree_store_set_context (GIMP_CONTAINER_TREE_STORE (icon_view->model),
                                            context);
 
-  g_clear_pointer (&icon_view->priv->theme_button, gtk_widget_destroy);
   if (context != NULL)
     {
-      GtkWidget      *top_box;
-      GtkWidget      *button;
-      GtkWidget      *image;
-      GtkIconSize     button_icon_size;
-      GtkReliefStyle  button_relief;
-
-#define GIMP_ICON_FOLLOW_THEME "gimp-prefs-theme"
-      gtk_widget_style_get (GTK_WIDGET (view),
-                            "button-icon-size", &button_icon_size,
-                            "button-relief",    &button_relief,
-                            NULL);
-
-      top_box = gimp_editor_get_top_box (GIMP_EDITOR (view));
-      button  = gimp_prop_toggle_new (G_OBJECT (context->gimp->config),
-                                      "viewables-follow-theme",
-                                      GIMP_ICON_FOLLOW_THEME, NULL,
-                                      &image);
-      gtk_button_set_relief (GTK_BUTTON (button), button_relief);
-      /* Re-setting the image to make sure we use the correct size from
-       * the theme.
-       */
-      gtk_image_set_from_icon_name (GTK_IMAGE (image), GIMP_ICON_FOLLOW_THEME,
-                                    button_icon_size);
-      gtk_widget_set_visible (button, TRUE);
-      gtk_box_pack_start (GTK_BOX (top_box), button, FALSE, FALSE, 0);
-#undef GIMP_ICON_FOLLOW_THEME
-
-      icon_view->priv->theme_button = button;
-
-      g_signal_connect_object (button, "toggled",
-                               G_CALLBACK (gimp_container_icon_view_trigger_redraw),
-                               view, G_CONNECT_SWAPPED);
-
       if (icon_view->priv->color_scheme_handler_id == 0)
         icon_view->priv->color_scheme_handler_id = g_signal_connect_object (context->gimp->config,
                                                                             "notify::theme-color-scheme",
