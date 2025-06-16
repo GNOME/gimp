@@ -34,14 +34,17 @@
 #include "gimpviewrendererbrush.h"
 
 
-static void   gimp_view_renderer_brush_finalize (GObject          *object);
-static void   gimp_view_renderer_brush_render   (GimpViewRenderer *renderer,
-                                                 GtkWidget        *widget);
-static void   gimp_view_renderer_brush_draw     (GimpViewRenderer *renderer,
-                                                 GtkWidget        *widget,
-                                                 cairo_t          *cr,
-                                                 gint              available_width,
-                                                 gint              available_height);
+static void   gimp_view_renderer_brush_finalize    (GObject          *object);
+
+static void   gimp_view_renderer_brush_set_context (GimpViewRenderer *renderer,
+                                                    GimpContext      *context);
+static void   gimp_view_renderer_brush_render      (GimpViewRenderer *renderer,
+                                                    GtkWidget        *widget);
+static void   gimp_view_renderer_brush_draw        (GimpViewRenderer *renderer,
+                                                    GtkWidget        *widget,
+                                                    cairo_t          *cr,
+                                                    gint              available_width,
+                                                    gint              available_height);
 
 static gboolean gimp_view_renderer_brush_render_timeout (gpointer    data);
 
@@ -58,10 +61,11 @@ gimp_view_renderer_brush_class_init (GimpViewRendererBrushClass *klass)
   GObjectClass          *object_class   = G_OBJECT_CLASS (klass);
   GimpViewRendererClass *renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
 
-  object_class->finalize = gimp_view_renderer_brush_finalize;
+  object_class->finalize      = gimp_view_renderer_brush_finalize;
 
-  renderer_class->render = gimp_view_renderer_brush_render;
-  renderer_class->draw   = gimp_view_renderer_brush_draw;
+  renderer_class->set_context = gimp_view_renderer_brush_set_context;
+  renderer_class->render      = gimp_view_renderer_brush_render;
+  renderer_class->draw        = gimp_view_renderer_brush_draw;
 }
 
 static void
@@ -83,6 +87,32 @@ gimp_view_renderer_brush_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_view_renderer_brush_set_context (GimpViewRenderer *renderer,
+                                      GimpContext      *context)
+{
+  if (renderer->context)
+    {
+      g_signal_handlers_disconnect_by_func (renderer->context->gimp->config,
+                                            G_CALLBACK (gimp_view_renderer_invalidate),
+                                            renderer);
+    }
+
+  GIMP_VIEW_RENDERER_CLASS (parent_class)->set_context (renderer, context);
+
+  if (renderer->context)
+    {
+      g_signal_connect_object (renderer->context->gimp->config,
+                               "notify::viewables-follow-theme",
+                               G_CALLBACK (gimp_view_renderer_invalidate),
+                               renderer, G_CONNECT_SWAPPED);
+      g_signal_connect_object (renderer->context->gimp->config,
+                               "notify::theme-color-scheme",
+                               G_CALLBACK (gimp_view_renderer_invalidate),
+                               renderer, G_CONNECT_SWAPPED);
+    }
 }
 
 static void
