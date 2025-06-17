@@ -225,7 +225,7 @@ static gint     parse_text_info       (PSDlayer              *lyr_a,
 
 static gint     load_descriptor       (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
-                                       JsonNode              *base_node,
+                                       JsonNode             **base_node,
                                        GInputStream          *input,
                                        GError               **error);
 
@@ -238,7 +238,7 @@ static gint     load_type             (const PSDlayerres     *res_a,
                                        const gchar           *class_id,
                                        const gchar           *key,
                                        const gchar           *type,
-                                       JsonNode	             *node,
+                                       JsonNode	            **node,
                                        GError               **error);
 
 
@@ -820,7 +820,7 @@ load_resource_lfx (const PSDlayerres  *res_a,
 
       g_printerr ("load descriptor...\n");
 
-      res = load_descriptor (res_a, lyr_a, root, input, error);
+      res = load_descriptor (res_a, lyr_a, &root, input, error);
       if (res < 0)
         return res;
     }
@@ -1705,7 +1705,7 @@ static gint parse_text_info (PSDlayer  *lyr_a,
 static gint
 load_descriptor (const PSDlayerres  *res_a,
                  PSDlayer           *lyr_a,
-                 JsonNode           *base_node,
+                 JsonNode          **base_node,
                  GInputStream       *input,
                  GError            **error)
 {
@@ -1721,17 +1721,17 @@ load_descriptor (const PSDlayerres  *res_a,
   JsonNode *local = NULL;
   JsonNode *root  = NULL;
 
-  if (! base_node)
+  if (base_node == NULL || *base_node == NULL)
     {
-
       local = json_node_new (JSON_NODE_OBJECT);
       obj = json_object_new ();
       json_node_init_object (local, obj);
-      base_node = local;
+      if (base_node)
+        *base_node = local;
     }
   else
     {
-      root = base_node;
+      root = *base_node;
       obj = json_node_get_object (root);
     }
 
@@ -1796,14 +1796,26 @@ load_descriptor (const PSDlayerres  *res_a,
       IFDBG(3) g_debug ("Item: %d, key: %s type: %.4s", i, key, type);
 
       node = NULL;
-      res = load_type (res_a, lyr_a, input, classID_string, key, type, node, error);
+      res = load_type (res_a, lyr_a, input, classID_string, key, type, &node, error);
       if (node)
         {
-          json_array_add_array_element (arr, node);
+          g_printerr ("-- Adding descriptor array element\n");
+          //json_array_add_array_element (arr, node);
+          json_array_add_element (arr, node);
+          // DEBUG:
+          g_printerr ("Node Json:\n%s\n", json_to_string (node, TRUE));
         }
+      else
+        g_printerr ("MISSING NODE!\n");
       g_free (key);
       if (res < 0)
         return res;
+    }
+
+  if (root)
+    {
+      /* Print json for debugging... */
+      g_printerr ("Json:\n%s\n", json_to_string (root, TRUE));
     }
 
   g_free (classID_string);
@@ -1855,10 +1867,10 @@ load_type (const PSDlayerres  *res_a,
            const gchar        *class_id,
            const gchar        *key,
            const gchar        *type,
-           JsonNode	          *node,
+           JsonNode	         **node,
            GError            **error)
 {
-  g_printerr ("load type for key %s\n", key);
+  g_printerr ("Loading type %.4s for key %s\n", type, key);
 
   if (memcmp (type, "obj ", 4) == 0)
     {
@@ -1870,9 +1882,12 @@ load_type (const PSDlayerres  *res_a,
     {
       /* Descriptor structure*/
       gint      res;
+      JsonNode *desc_node = NULL;
 
       IFDBG(3) g_debug ("Objc Descriptor begin");
-      res = load_descriptor (res_a, lyr_a, node, input, error);
+      desc_node = add_descriptor_objc (key, type);
+      res = load_descriptor (res_a, lyr_a, &desc_node, input, error);
+      *node = desc_node;
       IFDBG(3) g_debug ("Objc Descriptor end");
       if (res < 0)
         return res;
