@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-11 05:11+0000\n"
-"PO-Revision-Date: 2025-06-12 08:52+0800\n"
+"POT-Creation-Date: 2025-06-16 20:41+0000\n"
+"PO-Revision-Date: 2025-06-17 09:46+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -607,8 +607,8 @@ msgstr "百叶窗"
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1082
 #: plug-ins/common/file-pnm.c:845 plug-ins/common/file-qoi.c:296
 #: plug-ins/common/file-raw-data.c:1877 plug-ins/common/file-sunras.c:1059
-#: plug-ins/common/file-tga.c:1103 plug-ins/common/file-tim.c:410
-#: plug-ins/common/file-tim.c:517 plug-ins/common/file-wbmp.c:389
+#: plug-ins/common/file-tga.c:1103 plug-ins/common/file-tim.c:402
+#: plug-ins/common/file-tim.c:509 plug-ins/common/file-wbmp.c:389
 #: plug-ins/common/file-wbmp.c:465 plug-ins/common/file-xbm.c:887
 #: plug-ins/common/film.c:865 plug-ins/common/smooth-palette.c:301
 #: plug-ins/common/tile.c:396 plug-ins/file-bmp/bmp-load.c:809
@@ -1227,12 +1227,12 @@ msgstr "保存 CML 探索器参数"
 #: plug-ins/common/file-pcx.c:1200 plug-ins/common/file-pdf-export.c:680
 #: plug-ins/common/file-png.c:1915 plug-ins/common/file-raw-data.c:1382
 #: plug-ins/common/file-raw-data.c:1411 plug-ins/common/file-sunras.c:614
-#: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:638
+#: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:630
 #: plug-ins/common/file-xmc.c:1272 plug-ins/common/sphere-designer.c:2205
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
 #: plug-ins/file-icns/file-icns-export.c:444
 #: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1588
-#: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2222
+#: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2345
 #: plug-ins/file-tiff/file-tiff-export.c:1087
 #: plug-ins/file-tiff/file-tiff-export.c:1176 plug-ins/flame/flame.c:585
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1415
@@ -1982,7 +1982,7 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/file-icns/file-icns-load.c:604 plug-ins/file-ico/ico-load.c:685
 #: plug-ins/file-ico/ico-load.c:823 plug-ins/file-ico/ico-load.c:1025
 #: plug-ins/file-jpeg/jpeg-load.c:106 plug-ins/file-jpeg/jpeg-load.c:699
-#: plug-ins/file-psd/psd-export.c:2227 plug-ins/file-psd/psd-load.c:189
+#: plug-ins/file-psd/psd-export.c:2350 plug-ins/file-psd/psd-load.c:189
 #: plug-ins/file-psd/psd-load.c:194 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:539
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1772
@@ -2656,12 +2656,12 @@ msgstr "“%s”：读取色板数据时遇到文件尾或错误"
 #: plug-ins/common/file-png.c:1907 plug-ins/common/file-pnm.c:1623
 #: plug-ins/common/file-ps.c:1369 plug-ins/common/file-qoi.c:350
 #: plug-ins/common/file-sunras.c:605 plug-ins/common/file-tga.c:1217
-#: plug-ins/common/file-tim.c:630 plug-ins/common/file-xbm.c:1026
+#: plug-ins/common/file-tim.c:622 plug-ins/common/file-xbm.c:1026
 #: plug-ins/common/file-xpm.c:682 plug-ins/common/file-xwd.c:693
 #: plug-ins/file-bmp/bmp-export.c:328 plug-ins/file-fits/fits.c:646
 #: plug-ins/file-fli/fli-gimp.c:766 plug-ins/file-icns/file-icns-export.c:824
 #: plug-ins/file-ico/ico-export.c:1358 plug-ins/file-ico/ico-export.c:1572
-#: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2168
+#: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2284
 #: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1077
 #, c-format
 msgid "Exporting '%s'"
@@ -3908,19 +3908,19 @@ msgid "Unsupported JPEG 2000%s '%s' with %d components."
 msgstr "不支持 JPEG 2000%s “%s”带有 %d 分量。"
 
 #: plug-ins/common/file-jp2.c:1300 plug-ins/file-jpeg/jpeg-export.c:896
-#: plug-ins/file-psd/psd-export.c:2459
+#: plug-ins/file-psd/psd-export.c:2589
 #: plug-ins/file-tiff/file-tiff-export.c:1310
 msgid "No soft-proofing profile"
 msgstr "无软打样特性文件"
 
 #: plug-ins/common/file-jp2.c:1308 plug-ins/common/file-jpegxl.c:2035
-#: plug-ins/file-jpeg/jpeg-export.c:904 plug-ins/file-psd/psd-export.c:2467
+#: plug-ins/file-jpeg/jpeg-export.c:904 plug-ins/file-psd/psd-export.c:2597
 #: plug-ins/file-tiff/file-tiff-export.c:1318
 msgid "Name of the color profile used for CMYK export."
 msgstr "用于 CMYK 导出的特性文件的名称。"
 
 #: plug-ins/common/file-jp2.c:1319 plug-ins/common/file-jpegxl.c:2054
-#: plug-ins/file-jpeg/jpeg-export.c:915 plug-ins/file-psd/psd-export.c:2478
+#: plug-ins/file-jpeg/jpeg-export.c:915 plug-ins/file-psd/psd-export.c:2608
 #: plug-ins/file-tiff/file-tiff-export.c:1330
 #, c-format
 msgid "Profile: %s"
@@ -4325,9 +4325,9 @@ msgstr "未加载混合模式 DCX 图像"
 msgid "%s: Could not load all DCX images: %s\n"
 msgstr "%s：无法加载所有 DCX 图像：%s\n"
 
-#: plug-ins/common/file-pcx.c:646 plug-ins/common/file-tim.c:372
-#: plug-ins/common/file-tim.c:398 plug-ins/common/file-tim.c:461
-#: plug-ins/common/file-tim.c:506
+#: plug-ins/common/file-pcx.c:646 plug-ins/common/file-tim.c:364
+#: plug-ins/common/file-tim.c:390 plug-ins/common/file-tim.c:453
+#: plug-ins/common/file-tim.c:498
 #, c-format
 msgid "Could not read header from '%s'"
 msgstr "无法从“%s”读取文件头"
@@ -6243,28 +6243,28 @@ msgstr "调色板 Y(_A)"
 msgid "Palette Y coordinate"
 msgstr "调色板 Y 坐标"
 
-#: plug-ins/common/file-tim.c:383
+#: plug-ins/common/file-tim.c:375
 #, c-format
 msgid "Unsupported TIM image type: %d"
 msgstr "不支持的 TIM 图像类型：%d"
 
-#: plug-ins/common/file-tim.c:491
+#: plug-ins/common/file-tim.c:483
 #, c-format
 msgid "Could not read palette from '%s'"
 msgstr "无法从“%s”读取调色板"
 
-#: plug-ins/common/file-tim.c:622
+#: plug-ins/common/file-tim.c:614
 #, c-format
 msgid ""
 "Unable to export '%s'.  The TIM file format does not support images that are "
 "more than %d pixels wide or tall."
 msgstr "无法导出“%s”。TIM 文件格式不支持宽度或高度大于 %d 像素的图像。"
 
-#: plug-ins/common/file-tim.c:862
+#: plug-ins/common/file-tim.c:854
 msgid "Image Origin"
 msgstr "图像原点"
 
-#: plug-ins/common/file-tim.c:877
+#: plug-ins/common/file-tim.c:869
 msgid "Palette Origin"
 msgstr "色板原点"
 
@@ -10052,18 +10052,25 @@ msgstr "较旧的软件打开算法编码的图像可能会有问题"
 msgid "Use restart mar_kers"
 msgstr "使用重新开始标记(_K)"
 
-#: plug-ins/file-psd/psd-export.c:502
+#: plug-ins/file-psd/psd-export.c:536
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "出错：无法将 GIMP 基础图像类型转换为 PSD 模式"
 
-#: plug-ins/file-psd/psd-export.c:2161
+#: plug-ins/file-psd/psd-export.c:2271
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
 "more than 30,000 pixels wide or tall."
 msgstr "无法导出“%s”。PSD 文件格式不支持宽度或高度大于 30000 像素的图像。"
 
-#: plug-ins/file-psd/psd-export.c:2202
+#: plug-ins/file-psd/psd-export.c:2277
+#, c-format
+msgid ""
+"Unable to export '%s'.  The PSB file format does not support images that are "
+"more than 300,000 pixels wide or tall."
+msgstr "无法导出“%s”。PSB 文件格式不支持宽度或高度大于 300000 像素的图像。"
+
+#: plug-ins/file-psd/psd-export.c:2319
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -10071,7 +10078,15 @@ msgid ""
 msgstr ""
 "无法导出“%s”。PSD 文件格式不支持含有宽度或高度大于 30000 像素图层的图像。"
 
-#: plug-ins/file-psd/psd-export.c:2502
+#: plug-ins/file-psd/psd-export.c:2325
+#, c-format
+msgid ""
+"Unable to export '%s'.  The PSB file format does not support images with "
+"layers that are more than 300,000 pixels wide or tall."
+msgstr ""
+"无法导出“%s”。PSB 文件格式不支持含有宽度或高度大于 300000 像素图层的图像。"
+
+#: plug-ins/file-psd/psd-export.c:2632
 msgid ""
 "Duotone color space information from the original\n"
 "imported image will be used."
@@ -10079,7 +10094,7 @@ msgstr ""
 "将使用来自原始导入图像的\n"
 "双色调颜色空间信息。"
 
-#: plug-ins/file-psd/psd-export.c:2571
+#: plug-ins/file-psd/psd-export.c:2701
 msgid ""
 "PSD files can store up to 998 paths. \n"
 "The rest will be discarded."
@@ -10087,21 +10102,21 @@ msgstr ""
 "PSD 文件可以存储至多 998 个路径。\n"
 "其余路径将被丢弃。"
 
-#: plug-ins/file-psd/psd-export.c:2681
+#: plug-ins/file-psd/psd-export.c:2811
 msgid "Indexed Image Warning"
 msgstr "索引图像警告"
 
-#: plug-ins/file-psd/psd-export.c:2682
+#: plug-ins/file-psd/psd-export.c:2812
 msgid ""
 "Photoshop does not support indexed images that have more than one layer. "
 "Layers will be merged on export."
 msgstr "Photoshop 不支持多于一个图层的索引图像。图层将在导出时合并。"
 
-#: plug-ins/file-psd/psd-export.c:2703 plug-ins/file-psd/psd-load.c:3879
+#: plug-ins/file-psd/psd-export.c:2833 plug-ins/file-psd/psd-load.c:3879
 msgid "Compatibility Notice"
 msgstr "兼容性注意"
 
-#: plug-ins/file-psd/psd-export.c:2704
+#: plug-ins/file-psd/psd-export.c:2834
 msgid ""
 "Legacy layer modes have better compatibility with Photoshop, but do not "
 "support Clip to Backdrop, which is needed for using Photoshop's 'Blend "
@@ -10249,45 +10264,45 @@ msgstr "读取数据时出错。很可能是意料之外的文件尾。"
 msgid "Unexpected end of file"
 msgstr "意料之外的文件尾"
 
-#: plug-ins/file-psd/psd.c:135 plug-ins/file-psd/psd.c:215
-#: plug-ins/file-psd/psd.c:217
+#: plug-ins/file-psd/psd.c:136 plug-ins/file-psd/psd.c:219
+#: plug-ins/file-psd/psd.c:221
 msgid "Photoshop image"
 msgstr "Photoshop 图像"
 
-#: plug-ins/file-psd/psd.c:138 plug-ins/file-psd/psd.c:167
+#: plug-ins/file-psd/psd.c:139 plug-ins/file-psd/psd.c:168
 msgid "Loads images from the Photoshop PSD and PSB file formats"
 msgstr "加载 Photoshop PSD 和 PSB 格式的图像"
 
-#: plug-ins/file-psd/psd.c:140
+#: plug-ins/file-psd/psd.c:141
 msgid ""
 "This plug-in loads images in Adobe Photoshop (TM) native PSD and PSB format."
 msgstr "该插件加载 Adobe Photoshop (TM) 原生 PSD 和 PSB 格式的图像。"
 
-#: plug-ins/file-psd/psd.c:164
+#: plug-ins/file-psd/psd.c:165
 msgid "Photoshop image (merged)"
 msgstr "Photoshop 图像（已合并）"
 
-#: plug-ins/file-psd/psd.c:169
+#: plug-ins/file-psd/psd.c:170
 msgid ""
 "This plug-in loads the merged image data in Adobe Photoshop (TM) native PSD "
 "and PSB format."
 msgstr "该插件加载 Adobe Photoshop (TM) 原生 PSD 和 PSB 格式的已合并图像数据。"
 
-#: plug-ins/file-psd/psd.c:196
+#: plug-ins/file-psd/psd.c:197
 msgid "Loads thumbnails from the Photoshop PSD file format"
 msgstr "加载来自 Photoshop PSD 文件的缩略图"
 
-#: plug-ins/file-psd/psd.c:198
+#: plug-ins/file-psd/psd.c:199
 msgid ""
 "This plug-in loads thumbnail images from Adobe Photoshop (TM) native PSD "
 "format files."
 msgstr "该插件加载来自 Adobe Photoshop (TM) 原生 PSD 格式文件的缩略图像。"
 
-#: plug-ins/file-psd/psd.c:220
+#: plug-ins/file-psd/psd.c:224
 msgid "Saves files in the Photoshop (TM) PSD file format"
 msgstr "以 Photoshop (TM) PSD 格式保存文件"
 
-#: plug-ins/file-psd/psd.c:222
+#: plug-ins/file-psd/psd.c:226
 msgid ""
 "This plug-in saves files of Adobe Photoshop (TM) native PSD format. These "
 "files may be of any image type supported by GIMP, with or without layers, "
@@ -10296,19 +10311,36 @@ msgstr ""
 "该插件将文件保存为 Adobe Photoshop (TM) 原生 PSD 格式。这些文件可以为 GIMP 支"
 "持的任何图像类型，带或不带图层、蒙板、辅助通道和参考线。"
 
-#: plug-ins/file-psd/psd.c:249
+#: plug-ins/file-psd/psd.c:240 plug-ins/file-psd/psd.c:242
+msgid "Photoshop Large image"
+msgstr "Photoshop 大幅图像"
+
+#: plug-ins/file-psd/psd.c:245
+msgid "Saves files in the Photoshop (TM) Large PSB file format"
+msgstr "以 Photoshop (TM) 大型 PSB 格式保存文件"
+
+#: plug-ins/file-psd/psd.c:247
+msgid ""
+"This plug-in saves files of Adobe Photoshop (TM) Large native PSB format. "
+"These files may be of any image type supported by GIMP, with or without "
+"layers, layer masks, aux channels and guides."
+msgstr ""
+"该插件将文件保存为 Adobe Photoshop (TM) 原生大型 PSB 格式。这些文件可以为 "
+"GIMP 支持的任何图像类型，带或不带图层、蒙板、辅助通道和参考线。"
+
+#: plug-ins/file-psd/psd.c:275
 msgid "Assign a Clipping _Path"
 msgstr "指定剪切路径(_P)"
 
-#: plug-ins/file-psd/psd.c:250
+#: plug-ins/file-psd/psd.c:276
 msgid "Select a path to be the clipping path"
 msgstr "选择一个路径作为剪切路径"
 
-#: plug-ins/file-psd/psd.c:256
+#: plug-ins/file-psd/psd.c:282
 msgid "Clipping Path _Name"
 msgstr "剪切路径名称(_N)"
 
-#: plug-ins/file-psd/psd.c:257
+#: plug-ins/file-psd/psd.c:283
 msgid ""
 "Clipping path name\n"
 "(ignored if no clipping path)"
@@ -10316,11 +10348,11 @@ msgstr ""
 "剪切路径名称\n"
 "（如果无剪切路径则忽略）"
 
-#: plug-ins/file-psd/psd.c:263
+#: plug-ins/file-psd/psd.c:289
 msgid "Path _Flatness"
 msgstr "路径平整度(_F)"
 
-#: plug-ins/file-psd/psd.c:264
+#: plug-ins/file-psd/psd.c:290
 msgid ""
 "Clipping path flatness in device pixels\n"
 "(ignored if no clipping path)"
@@ -10328,33 +10360,33 @@ msgstr ""
 "设备像素中的剪切路径平整度\n"
 "（如果无剪切路径则忽略）"
 
-#: plug-ins/file-psd/psd.c:270
+#: plug-ins/file-psd/psd.c:296
 msgid "Export as _CMYK"
 msgstr "导出为 CMYK(_C)"
 
-#: plug-ins/file-psd/psd.c:271
+#: plug-ins/file-psd/psd.c:297
 msgid "Export a CMYK PSD image using the soft-proofing color profile"
 msgstr "使用软打样特性文件导出 CMYK PSD 图像"
 
-#: plug-ins/file-psd/psd.c:276
+#: plug-ins/file-psd/psd.c:302
 msgid "Export as _Duotone"
 msgstr "导出为双色调(_D)"
 
-#: plug-ins/file-psd/psd.c:277
+#: plug-ins/file-psd/psd.c:303
 msgid ""
 "Export as a Duotone PSD file if Duotone color space information was attached "
 "to the image when originally imported."
 msgstr "如果在原始导入时附加了双色调颜色空间信息则导出为双色调 PSD 文件。"
 
-#: plug-ins/file-psd/psd.c:381
+#: plug-ins/file-psd/psd.c:407
 msgid "Import PSD"
 msgstr "导入 PSD"
 
-#: plug-ins/file-psd/psd.c:532
+#: plug-ins/file-psd/psd.c:558
 msgid "Import PSD metadata"
 msgstr "导入 PSD 元数据"
 
-#: plug-ins/file-psd/psd.c:536
+#: plug-ins/file-psd/psd.c:562
 msgid ""
 "Metadata fill layers are not supported and will show up as empty layers."
 msgstr "不支持元数据填充图层且将会显示为空白图层。"
