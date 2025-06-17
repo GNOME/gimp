@@ -79,8 +79,17 @@ palette_editor_delete_color_cmd_callback (GimpAction *action,
   if (data_editor->data_editable && editor->color)
     {
       GimpPalette *palette = GIMP_PALETTE (data_editor->data);
+      gint         index;
+
+      index = gimp_palette_get_entry_position (palette, editor->color);
 
       gimp_palette_delete_entry (palette, editor->color);
+
+      if (index >= gimp_palette_get_n_colors (palette))
+        index = gimp_palette_get_n_colors (palette) - 1;
+
+      gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (editor->view),
+                                      gimp_palette_get_entry (palette, index));
     }
 }
 
