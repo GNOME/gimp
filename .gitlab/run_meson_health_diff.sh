@@ -8,7 +8,7 @@ diff=$(git diff -U0 --no-color "${newest_common_ancestor_sha}" -- '*.build' '*.p
 #List of commonly used utilities on Unix world
 #See the context: https://gitlab.gnome.org/GNOME/gimp/-/issues/11385
 coreutils_list="
-   .sh \
+   \.sh \
    'sh' \
    'bash' \
    '\[' \
@@ -128,7 +128,7 @@ coreutils_list="
 
 for coreutil in $coreutils_list; do
   if echo "$diff" | grep -q "$coreutil"; then
-    found_coreutils="$found_coreutils $coreutil"
+    found_coreutils="$(echo "$found_coreutils $coreutil" | sed 's|\\||g')"
   fi
 done
 
@@ -140,16 +140,16 @@ fi
 
 #Limited list of commonly used utilities on Windows world
 ntutils_list="
-   .bat \
-   .cmd \
-   .ps1 \
+   \.bat \
+   \.cmd \
+   \.ps1 \
    'cmd' \
    'powershell'
 "
 
 for ntutil in $ntutils_list; do
   if echo "$diff" | grep -q "$ntutil"; then
-    found_ntutils="$found_ntutils $ntutil"
+    found_ntutils="$(echo "$found_ntutils $ntutil" | sed 's|\\||g')"
   fi
 done
 
