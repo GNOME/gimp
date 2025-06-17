@@ -121,7 +121,7 @@ stages:
   timeout: 20m
 
 .debian_environ: &ENVIRON
-- echo -e "\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KPreparing build environment"
+- printf "\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KPreparing build environment\n"
 - gcc -print-multi-os-directory 2>/dev/null | grep ./ && export LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || export LIB_DIR="lib"
 - gcc -print-multiarch 2>/dev/null | grep . && export LIB_SUBDIR=$(echo $(gcc -print-multiarch)'/')
 ## Build-time vars
@@ -131,7 +131,7 @@ stages:
 - export PATH="${GIMP_PREFIX}/bin:$PATH"
 - export LD_LIBRARY_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 - export GI_TYPELIB_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}girepository-1.0${GI_TYPELIB_PATH:+:$GI_TYPELIB_PATH}"
-- echo -e "\e[0Ksection_end:`date +%s`:environ\r\e[0K"
+- printf "\e[0Ksection_end:`date +%s`:environ\r\e[0K\n"
 
 deps-debian:
   extends: .debian
@@ -149,7 +149,7 @@ deps-debian:
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     # Install deps
     - echo "FROM debian:${DEB_VERSION}" > Dockerfile
-    - echo "RUN echo -e \"\e[0Ksection_start:0000000001:deps_install[collapsed=true]\r\e[0KInstalling dependencies provided by Debian $DEB_VERSION\"" >> Dockerfile
+    - echo "RUN printf \"\e[0Ksection_start:0000000001:deps_install[collapsed=true]\r\e[0KInstalling dependencies provided by Debian $DEB_VERSION\n\"" >> Dockerfile
     - echo "RUN apt-get update -qq" >> Dockerfile
     ## 'ca-certificates' is NOT a gimp dep, it is installed only to our Docker image work
     - echo "RUN apt-get install -qq -y --no-install-recommends ca-certificates" >> Dockerfile
@@ -219,10 +219,10 @@ deps-debian:
             python3
             python3-gi
             python3-gi-cairo" >> Dockerfile
-    - echo "RUN echo -e \"\e[0Ksection_end:0000000002:deps_install\r\e[0K\"" >> Dockerfile
+    - echo "RUN printf \"\e[0Ksection_end:0000000002:deps_install\r\e[0K\n\"" >> Dockerfile
     # Prepare environ
     - echo "FROM $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}" > Dockerfile2;
-    - echo "RUN echo -e \"\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KPreparing build environment\"" >> Dockerfile2;
+    - echo "RUN printf \"\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KPreparing build environment\n\"" >> Dockerfile2;
     - export LIB_DIR="lib";
     - export LIB_SUBDIR=$([ "$(uname -m)" = 'aarch64' ] && echo "aarch64-linux-gnu/" || echo "x86_64-linux-gnu/");
     - echo "ENV PKG_CONFIG_PATH=\"${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}\"" >> Dockerfile2;
@@ -232,22 +232,22 @@ deps-debian:
     - echo "ENV CC_LD=\"$CC_LD\"" >> Dockerfile2;
     - echo "ENV CXX_LD=\"$CXX_LD\"" >> Dockerfile2;
     - echo "ENV CLICOLOR_FORCE=\"1\"" >> Dockerfile2;
-    - echo "RUN echo -e \"\e[0Ksection_end:`date +%s`:environ\r\e[0K\"" >> Dockerfile2;
+    - echo "RUN printf \"\e[0Ksection_end:`date +%s`:environ\r\e[0K\n\"" >> Dockerfile2;
     # Build some dependencies
     ## Build babl
-    - echo "RUN echo -e \"\e[0Ksection_start:`date +%s`:babl_build[collapsed=true]\r\e[0KBuilding babl\"" >> Dockerfile2;
+    - echo "RUN printf \"\e[0Ksection_start:`date +%s`:babl_build[collapsed=true]\r\e[0KBuilding babl\n\"" >> Dockerfile2;
     - echo "RUN git clone --branch \"\$([ \"$CI_COMMIT_TAG\" ] && echo \"\$(git ls-remote --tags --exit-code --refs https://gitlab.gnome.org/GNOME/babl.git | grep -oi \"BABL_[0-9]*_[0-9]*_[0-9]*\" | sort --version-sort | tail -1)\" || echo \"master\")\" --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git" $CI_PROJECT_DIR/babl >> Dockerfile2;
     - echo "RUN meson setup $CI_PROJECT_DIR/babl/_build-${RUNNER} $CI_PROJECT_DIR/babl -Dprefix=\"${GIMP_PREFIX}\" $PKGCONF_RELOCATABLE_OPTION" >> Dockerfile2;
     - echo "RUN ninja -C $CI_PROJECT_DIR/babl/_build-${RUNNER}" >> Dockerfile2;
     - echo "RUN ninja -C $CI_PROJECT_DIR/babl/_build-${RUNNER} install" >> Dockerfile2;
-    - echo "RUN echo -e \"\e[0Ksection_end:`date +%s`:babl_build\r\e[0K\"" >> Dockerfile2;
+    - echo "RUN printf \"\e[0Ksection_end:`date +%s`:babl_build\r\e[0K\n\"" >> Dockerfile2;
     ## Build GEGL
-    - echo "RUN echo -e \"\e[0Ksection_start:`date +%s`:gegl_build[collapsed=true]\r\e[0KBuilding gegl\"" >> Dockerfile2;
+    - echo "RUN printf \"\e[0Ksection_start:`date +%s`:gegl_build[collapsed=true]\r\e[0KBuilding gegl\n\"" >> Dockerfile2;
     - echo "RUN git clone --branch \"\$([ \"$CI_COMMIT_TAG\" ] && echo \"\$(git ls-remote --tags --exit-code --refs https://gitlab.gnome.org/GNOME/gegl.git | grep -oi \"GEGL_[0-9]*_[0-9]*_[0-9]*\" | sort --version-sort | tail -1)\" || echo \"master\")\" --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git" $CI_PROJECT_DIR/gegl >> Dockerfile2;
     - echo "RUN meson setup $CI_PROJECT_DIR/gegl/_build-${RUNNER} $CI_PROJECT_DIR/gegl -Dprefix=\"${GIMP_PREFIX}\" $PKGCONF_RELOCATABLE_OPTION $WORKSHOP_OPTION" >> Dockerfile2;
     - echo "RUN ninja -C $CI_PROJECT_DIR/gegl/_build-${RUNNER}" >> Dockerfile2;
     - echo "RUN ninja -C $CI_PROJECT_DIR/gegl/_build-${RUNNER} install" >> Dockerfile2;
-    - echo "RUN echo -e \"\e[0Ksection_end:`date +%s`:gegl_build\r\e[0K\"" >> Dockerfile2;
+    - echo "RUN printf \"\e[0Ksection_end:`date +%s`:gegl_build\r\e[0K\n\"" >> Dockerfile2;
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER} --cache=true --cache-ttl=120h --image-fs-extract-retry 1 --verbosity=warn
     - if [ -f 'Dockerfile2' ]; then /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile2 --destination build-debian-${DEB_VERSION}-${RUNNER}-temp --cache=false --no-push --verbosity=warn; fi
   artifacts:
@@ -268,7 +268,7 @@ gimp-debian:
   script:
     - *ENVIRON
     # Build GIMP
-    - echo -e "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP"
+    - printf "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP\n"
     - meson setup _build-${RUNNER} -Dprefix="${GIMP_PREFIX}"
                                    -Dpkgconfig.relocatable=true
                                    -Drelocatable-bundle=yes
@@ -276,13 +276,13 @@ gimp-debian:
                                    -Dbuild-id=org.gimp.GIMP_official.AppImage.$(uname -m)
     - cd _build-${RUNNER}
     - ninja
-    - echo -e "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K"
+    - printf "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K\n"
     # Create bundle
-    - echo -e "\e[0Ksection_start:`date +%s`:gimp_bundle[collapsed=true]\r\e[0KCreating bundle"
+    - printf "\e[0Ksection_start:`date +%s`:gimp_bundle[collapsed=true]\r\e[0KCreating bundle\n"
     - ninja install > ninja_install.log 2>&1 || { cat ninja_install.log; exit 1; }
     - cd ..
     - sh build/linux/appimage/3_dist-gimp-goappimage.sh --bundle-only > goappimage.log 2>&1 || { cat goappimage.log; exit 1; }
-    - echo -e "\e[0Ksection_end:`date +%s`:gimp_bundle\r\e[0K"
+    - printf "\e[0Ksection_end:`date +%s`:gimp_bundle\r\e[0K\n"
   artifacts:
     paths:
       - AppDir*/
@@ -337,32 +337,32 @@ gimp-debian-x64:
   script:
     - *ENVIRON
     # Check building
-    - echo -e "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP"
+    - printf "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP\n"
     - meson setup _build-${RUNNER} -Dprefix="${GIMP_PREFIX}"
                                    -Dfile-plug-ins-test=true
                                    $MESON_OPTIONS
     - cd _build-${RUNNER}
     - ninja
-    - echo -e "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K"
+    - printf "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K\n"
     # Check execution
-    - echo -e "\e[0Ksection_start:`date +%s`:gimp_test[collapsed=true]\r\e[0KTesting GIMP execution"
+    - printf "\e[0Ksection_start:`date +%s`:gimp_test[collapsed=true]\r\e[0KTesting GIMP execution\n"
     - ninja test
-    - echo -e "\e[0Ksection_end:`date +%s`:gimp_test\r\e[0K"
+    - printf "\e[0Ksection_end:`date +%s`:gimp_test\r\e[0K\n"
     # Check source
-    - echo -e "\e[0Ksection_start:`date +%s`:gimp_tar[collapsed=true]\r\e[0KChecking GIMP source"
+    - printf "\e[0Ksection_start:`date +%s`:gimp_tar[collapsed=true]\r\e[0KChecking GIMP source\n"
     - if [ $(git diff |wc -l) -ne 0 ]; then
-        echo "ERROR. A generated file was updated without the source:";
+        printf "ERROR. A generated file was updated without the source:\n";
         git diff;
         exit 1;
       fi
     - if [ "$VARIANT" != "-gcc" ] && [ "$VARIANT" != "-raster" ] && [ "$CI_PIPELINE_SOURCE" != "merge_request_event" ]; then
         ninja dist > ninja_dist.log 2>&1 || { cat ninja_dist.log; exit 1; };
       fi
-    - echo -e "\e[0Ksection_end:`date +%s`:gimp_tar\r\e[0K"
+    - printf "\e[0Ksection_end:`date +%s`:gimp_tar\r\e[0K\n"
     # Check install
-    - echo -e "\e[0Ksection_start:`date +%s`:gimp_install[collapsed=true]\r\e[0KChecking GIMP installation"
+    - printf "\e[0Ksection_start:`date +%s`:gimp_install[collapsed=true]\r\e[0KChecking GIMP installation\n"
     - ninja install > ninja_install.log 2>&1 || { cat ninja_install.log; exit 1; };
-    - echo -e "\e[0Ksection_end:`date +%s`:gimp_install\r\e[0K"
+    - printf "\e[0Ksection_end:`date +%s`:gimp_install\r\e[0K\n"
   artifacts:
     paths:
       - _install-${RUNNER}/
@@ -582,7 +582,7 @@ file-plug-in-tests:
     - cd ..
     - cat ${PLUG_IN_DIR}test-file-plug-ins/batch-import-tests.py | gimp-console-${APP_VER} -idf --batch-interpreter python-fu-eval -b - --quit
     - if [ $(grep -c "${REGRESSION_STRING}" "${GIMP_TESTS_LOG_FILE}") -ne 1 ]; then
-        echo "There are file import regressions. Check the log at ${GIMP_TESTS_LOG_FILE}!";
+        printf "There are file import regressions. Check the log at ${GIMP_TESTS_LOG_FILE}!\n";
         exit 1;
       fi
     # FIXME No export testing for now until it's more developed. A limited test
