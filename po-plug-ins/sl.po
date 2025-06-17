@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-12 11:53+0000\n"
-"PO-Revision-Date: 2025-06-13 07:38+0200\n"
+"POT-Creation-Date: 2025-06-16 20:41+0000\n"
+"PO-Revision-Date: 2025-06-17 13:40+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -1241,7 +1241,7 @@ msgstr "Shrani parametre raziskovalca MZP"
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
 #: plug-ins/file-icns/file-icns-export.c:444
 #: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1588
-#: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2222
+#: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2345
 #: plug-ins/file-tiff/file-tiff-export.c:1087
 #: plug-ins/file-tiff/file-tiff-export.c:1176 plug-ins/flame/flame.c:585
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1415
@@ -2010,7 +2010,7 @@ msgstr "Ne deluje na praznih izborih."
 #: plug-ins/file-icns/file-icns-load.c:604 plug-ins/file-ico/ico-load.c:685
 #: plug-ins/file-ico/ico-load.c:823 plug-ins/file-ico/ico-load.c:1025
 #: plug-ins/file-jpeg/jpeg-load.c:106 plug-ins/file-jpeg/jpeg-load.c:699
-#: plug-ins/file-psd/psd-export.c:2227 plug-ins/file-psd/psd-load.c:189
+#: plug-ins/file-psd/psd-export.c:2350 plug-ins/file-psd/psd-load.c:189
 #: plug-ins/file-psd/psd-load.c:194 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:539
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1772
@@ -2696,7 +2696,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #: plug-ins/file-bmp/bmp-export.c:328 plug-ins/file-fits/fits.c:646
 #: plug-ins/file-fli/fli-gimp.c:766 plug-ins/file-icns/file-icns-export.c:824
 #: plug-ins/file-ico/ico-export.c:1358 plug-ins/file-ico/ico-export.c:1572
-#: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2168
+#: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2284
 #: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1077
 #, c-format
 msgid "Exporting '%s'"
@@ -3974,19 +3974,19 @@ msgid "Unsupported JPEG 2000%s '%s' with %d components."
 msgstr "Nepodprta JPEG 2000%s »%s« s/z %d komponentami."
 
 #: plug-ins/common/file-jp2.c:1300 plug-ins/file-jpeg/jpeg-export.c:896
-#: plug-ins/file-psd/psd-export.c:2459
+#: plug-ins/file-psd/psd-export.c:2589
 #: plug-ins/file-tiff/file-tiff-export.c:1310
 msgid "No soft-proofing profile"
 msgstr "Brez profila preverjanja videza"
 
 #: plug-ins/common/file-jp2.c:1308 plug-ins/common/file-jpegxl.c:2035
-#: plug-ins/file-jpeg/jpeg-export.c:904 plug-ins/file-psd/psd-export.c:2467
+#: plug-ins/file-jpeg/jpeg-export.c:904 plug-ins/file-psd/psd-export.c:2597
 #: plug-ins/file-tiff/file-tiff-export.c:1318
 msgid "Name of the color profile used for CMYK export."
 msgstr "Ime barvnega profila, uporabljenega za izvoz CMYK."
 
 #: plug-ins/common/file-jp2.c:1319 plug-ins/common/file-jpegxl.c:2054
-#: plug-ins/file-jpeg/jpeg-export.c:915 plug-ins/file-psd/psd-export.c:2478
+#: plug-ins/file-jpeg/jpeg-export.c:915 plug-ins/file-psd/psd-export.c:2608
 #: plug-ins/file-tiff/file-tiff-export.c:1330
 #, c-format
 msgid "Profile: %s"
@@ -10240,11 +10240,11 @@ msgstr ""
 msgid "Use restart mar_kers"
 msgstr "Uporabi _označevalnike ponovnega začetka"
 
-#: plug-ins/file-psd/psd-export.c:502
+#: plug-ins/file-psd/psd-export.c:536
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Napaka: Osnovne vrste slike GIMP ni mogoče pretvoriti v način PSD"
 
-#: plug-ins/file-psd/psd-export.c:2161
+#: plug-ins/file-psd/psd-export.c:2271
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -10253,7 +10253,16 @@ msgstr ""
 "Izvažanje »%s« ni uspelo. Vrsta datotek PSD ne podpira slik, ki so daljše "
 "ali širše od 30.000 slikovnih točk."
 
-#: plug-ins/file-psd/psd-export.c:2202
+#: plug-ins/file-psd/psd-export.c:2277
+#, c-format
+msgid ""
+"Unable to export '%s'.  The PSB file format does not support images that are "
+"more than 300,000 pixels wide or tall."
+msgstr ""
+"Izvažanje »%s« ni uspelo. Vrsta datotek PSB ne podpira slik, ki so daljše "
+"ali širše od 300.000 slikovnih točk."
+
+#: plug-ins/file-psd/psd-export.c:2319
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -10262,7 +10271,16 @@ msgstr ""
 "Izvažanje »%s« ni uspelo. Vrsta datotek PSD ne podpira slik s plastmi, ki so "
 "daljše ali širše od 30.000 slikovnih točk."
 
-#: plug-ins/file-psd/psd-export.c:2502
+#: plug-ins/file-psd/psd-export.c:2325
+#, c-format
+msgid ""
+"Unable to export '%s'.  The PSB file format does not support images with "
+"layers that are more than 300,000 pixels wide or tall."
+msgstr ""
+"Izvažanje »%s« ni uspelo. Vrsta datotek PSB ne podpira slik s plastmi, ki so "
+"daljše ali širše od 300.000 slikovnih točk."
+
+#: plug-ins/file-psd/psd-export.c:2632
 msgid ""
 "Duotone color space information from the original\n"
 "imported image will be used."
@@ -10270,7 +10288,7 @@ msgstr ""
 "Informacije o barvnem prostoru duotone bodo\n"
 "uporabljene iz izvorno uvožene slike."
 
-#: plug-ins/file-psd/psd-export.c:2571
+#: plug-ins/file-psd/psd-export.c:2701
 msgid ""
 "PSD files can store up to 998 paths. \n"
 "The rest will be discarded."
@@ -10278,11 +10296,11 @@ msgstr ""
 "Datoteke PSD lahko shranijo do 998 poti. \n"
 "Ostalo bo zavrženo."
 
-#: plug-ins/file-psd/psd-export.c:2681
+#: plug-ins/file-psd/psd-export.c:2811
 msgid "Indexed Image Warning"
 msgstr "Opozorilo o indeksirani sliki"
 
-#: plug-ins/file-psd/psd-export.c:2682
+#: plug-ins/file-psd/psd-export.c:2812
 msgid ""
 "Photoshop does not support indexed images that have more than one layer. "
 "Layers will be merged on export."
@@ -10290,11 +10308,11 @@ msgstr ""
 "Photoshop ne podpira indeksiranih slik, ki imajo več kot eno plast. Plasti "
 "bodo združene ob izvozu."
 
-#: plug-ins/file-psd/psd-export.c:2703 plug-ins/file-psd/psd-load.c:3879
+#: plug-ins/file-psd/psd-export.c:2833 plug-ins/file-psd/psd-load.c:3879
 msgid "Compatibility Notice"
 msgstr "Obvestilo o združljivosti"
 
-#: plug-ins/file-psd/psd-export.c:2704
+#: plug-ins/file-psd/psd-export.c:2834
 msgid ""
 "Legacy layer modes have better compatibility with Photoshop, but do not "
 "support Clip to Backdrop, which is needed for using Photoshop's 'Blend "
@@ -10443,26 +10461,26 @@ msgstr "Napaka pri branju podatkov. Najverjetneje nepričakovan konec datoteke."
 msgid "Unexpected end of file"
 msgstr "Nepričakovan konec datoteke"
 
-#: plug-ins/file-psd/psd.c:135 plug-ins/file-psd/psd.c:215
-#: plug-ins/file-psd/psd.c:217
+#: plug-ins/file-psd/psd.c:136 plug-ins/file-psd/psd.c:219
+#: plug-ins/file-psd/psd.c:221
 msgid "Photoshop image"
 msgstr "Slika Photoshop"
 
-#: plug-ins/file-psd/psd.c:138 plug-ins/file-psd/psd.c:167
+#: plug-ins/file-psd/psd.c:139 plug-ins/file-psd/psd.c:168
 msgid "Loads images from the Photoshop PSD and PSB file formats"
 msgstr "Naloži slike iz zapisov Photoshop PSD in PSB"
 
-#: plug-ins/file-psd/psd.c:140
+#: plug-ins/file-psd/psd.c:141
 msgid ""
 "This plug-in loads images in Adobe Photoshop (TM) native PSD and PSB format."
 msgstr ""
 "Ta vstavek naloži slike v izvornem zapisu PSD in PSB Adobe Photoshop (TM)."
 
-#: plug-ins/file-psd/psd.c:164
+#: plug-ins/file-psd/psd.c:165
 msgid "Photoshop image (merged)"
 msgstr "Slika Photoshop (spojena)"
 
-#: plug-ins/file-psd/psd.c:169
+#: plug-ins/file-psd/psd.c:170
 msgid ""
 "This plug-in loads the merged image data in Adobe Photoshop (TM) native PSD "
 "and PSB format."
@@ -10470,11 +10488,11 @@ msgstr ""
 "Ta vtičnik naloži združene slikovne podatke v izvornem zapisu PSD in PSB "
 "Adobe Photoshop (TM)."
 
-#: plug-ins/file-psd/psd.c:196
+#: plug-ins/file-psd/psd.c:197
 msgid "Loads thumbnails from the Photoshop PSD file format"
 msgstr "Naloži ogledne sličice iz zapisa Photoshop PSD"
 
-#: plug-ins/file-psd/psd.c:198
+#: plug-ins/file-psd/psd.c:199
 msgid ""
 "This plug-in loads thumbnail images from Adobe Photoshop (TM) native PSD "
 "format files."
@@ -10482,11 +10500,11 @@ msgstr ""
 "Ta vtičnik naloži sličice iz izvornih datotek v zapisu PSD Adobe Photoshop "
 "(TM)."
 
-#: plug-ins/file-psd/psd.c:220
+#: plug-ins/file-psd/psd.c:224
 msgid "Saves files in the Photoshop (TM) PSD file format"
 msgstr "Shrani datoteke v zapisu Photoshop (™) PSD"
 
-#: plug-ins/file-psd/psd.c:222
+#: plug-ins/file-psd/psd.c:226
 msgid ""
 "This plug-in saves files of Adobe Photoshop (TM) native PSD format. These "
 "files may be of any image type supported by GIMP, with or without layers, "
@@ -10496,19 +10514,37 @@ msgstr ""
 "Te datoteke so lahko poljubne vrste slike, ki jih podpira GIMP, z ali brez "
 "plasti, z maskami plasti, pomožnimi kanali in vodili."
 
-#: plug-ins/file-psd/psd.c:249
+#: plug-ins/file-psd/psd.c:240 plug-ins/file-psd/psd.c:242
+msgid "Photoshop Large image"
+msgstr "Slika Photoshop Large"
+
+#: plug-ins/file-psd/psd.c:245
+msgid "Saves files in the Photoshop (TM) Large PSB file format"
+msgstr "Shrani datoteke v zapisu PSB Photoshop (TM) Large"
+
+#: plug-ins/file-psd/psd.c:247
+msgid ""
+"This plug-in saves files of Adobe Photoshop (TM) Large native PSB format. "
+"These files may be of any image type supported by GIMP, with or without "
+"layers, layer masks, aux channels and guides."
+msgstr ""
+"Ta vstavek shranjuje datoteke v domorodnem zapisu PSB za Adobe Photoshop "
+"(TM) Large. Te datoteke so lahko poljubne vrste slike, ki jih podpira GIMP, "
+"z ali brez plasti, z maskami plasti, pomožnimi kanali in vodili."
+
+#: plug-ins/file-psd/psd.c:275
 msgid "Assign a Clipping _Path"
 msgstr "Dodali _pot obrezovanja"
 
-#: plug-ins/file-psd/psd.c:250
+#: plug-ins/file-psd/psd.c:276
 msgid "Select a path to be the clipping path"
 msgstr "Izberite pot, ki bo uporabljena za obrezovanje"
 
-#: plug-ins/file-psd/psd.c:256
+#: plug-ins/file-psd/psd.c:282
 msgid "Clipping Path _Name"
 msgstr "I_me poti obrezovanja"
 
-#: plug-ins/file-psd/psd.c:257
+#: plug-ins/file-psd/psd.c:283
 msgid ""
 "Clipping path name\n"
 "(ignored if no clipping path)"
@@ -10516,11 +10552,11 @@ msgstr ""
 "Ime poti obrezovanja\n"
 "(prezrto, če ni poti obrezovanja)"
 
-#: plug-ins/file-psd/psd.c:263
+#: plug-ins/file-psd/psd.c:289
 msgid "Path _Flatness"
 msgstr "Plos_kost poti"
 
-#: plug-ins/file-psd/psd.c:264
+#: plug-ins/file-psd/psd.c:290
 msgid ""
 "Clipping path flatness in device pixels\n"
 "(ignored if no clipping path)"
@@ -10528,19 +10564,19 @@ msgstr ""
 "Ploskost poti obrezovanja v slik. točkah naprave\n"
 "(prezrto, če ni poti izrezovanja)"
 
-#: plug-ins/file-psd/psd.c:270
+#: plug-ins/file-psd/psd.c:296
 msgid "Export as _CMYK"
 msgstr "Izvozi kot _CMYK"
 
-#: plug-ins/file-psd/psd.c:271
+#: plug-ins/file-psd/psd.c:297
 msgid "Export a CMYK PSD image using the soft-proofing color profile"
 msgstr "Izvozite sliko PSD CMYK z uporabo barvnega profila preverjanja videza"
 
-#: plug-ins/file-psd/psd.c:276
+#: plug-ins/file-psd/psd.c:302
 msgid "Export as _Duotone"
 msgstr "Izvoz kot _dvotonalno (duotone)"
 
-#: plug-ins/file-psd/psd.c:277
+#: plug-ins/file-psd/psd.c:303
 msgid ""
 "Export as a Duotone PSD file if Duotone color space information was attached "
 "to the image when originally imported."
@@ -10548,15 +10584,15 @@ msgstr ""
 "Izvozite kot dvotonalno datoteko PSD (duotone), če so bili podatki o barvnem "
 "prostoru duotone priloženi sliki ob prvotnem uvozu."
 
-#: plug-ins/file-psd/psd.c:381
+#: plug-ins/file-psd/psd.c:407
 msgid "Import PSD"
 msgstr "Uvozi PSD"
 
-#: plug-ins/file-psd/psd.c:532
+#: plug-ins/file-psd/psd.c:558
 msgid "Import PSD metadata"
 msgstr "Uvozi metapodatke PSD"
 
-#: plug-ins/file-psd/psd.c:536
+#: plug-ins/file-psd/psd.c:562
 msgid ""
 "Metadata fill layers are not supported and will show up as empty layers."
 msgstr ""
