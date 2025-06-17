@@ -1,7 +1,5 @@
 #!/bin/sh
 
-set -e
-
 ancestor_horizon=28  # days (4 weeks)
 
 # We need to add a new remote for the upstream target branch, since this script
