@@ -734,6 +734,10 @@ load_resource_lsct (const PSDlayerres  *res_a,
   return 0;
 }
 
+/* Adobe uses fixed point ints which consist of four bytes: a 16-bit number and
+ * 16-bit fraction */
+#define FIXED_TO_FLOAT(num,fract) (gfloat) num + fract / 65535.0f
+
 static gint
 load_resource_lrfx (const PSDlayerres  *res_a,
                     PSDlayer           *lyr_a,
@@ -789,35 +793,35 @@ load_resource_lrfx (const PSDlayerres  *res_a,
           else if (memcmp (effectname, "dsdw", 4) == 0)
             {
               gchar   bim[4];
-              guint16 spacer16;
+              guint16 temp[8];
 
-              if (psd_read (input, &ls_a->dsdw.size,        4, error) < 4 ||
-                  psd_read (input, &ls_a->dsdw.ver,         4, error) < 4 ||
-                  psd_read (input, &ls_a->dsdw.blur,        2, error) < 2 ||
-                  psd_read (input, &ls_a->dsdw.intensity,   4, error) < 4 ||
-                  psd_read (input, &ls_a->dsdw.angle,       4, error) < 4 ||
-                  psd_read (input, &ls_a->dsdw.distance,    4, error) < 4 ||
-                  psd_read (input, &spacer16,               2, error) < 2 ||
-                  psd_read (input, &ls_a->dsdw.color[0],    2, error) < 2 ||
-                  psd_read (input, &ls_a->dsdw.color[1],    2, error) < 2 ||
-                  psd_read (input, &ls_a->dsdw.color[2],    2, error) < 2 ||
-                  psd_read (input, &ls_a->dsdw.color[3],    2, error) < 2 ||
-                  psd_read (input, &ls_a->dsdw.color[4],    2, error) < 2 ||
-                  psd_read (input, &bim,                    4, error) < 4 ||
-                  psd_read (input, &ls_a->dsdw.blendsig,    4, error) < 4 ||
-                  psd_read (input, &ls_a->dsdw.effecton,    1, error) < 1 ||
-                  psd_read (input, &ls_a->dsdw.anglefx,     1, error) < 1 ||
-                  psd_read (input, &ls_a->dsdw.opacity,     1, error) < 1)
+              if (psd_read (input, &ls_a->dsdw.size,       4, error) < 4  ||
+                  psd_read (input, &ls_a->dsdw.ver,        4, error) < 4  ||
+                  psd_read (input, &temp,                  16, error) < 2 ||
+                  psd_read (input, &ls_a->dsdw.color[0],   2, error) < 2  ||
+                  psd_read (input, &ls_a->dsdw.color[1],   2, error) < 2  ||
+                  psd_read (input, &ls_a->dsdw.color[2],   2, error) < 2  ||
+                  psd_read (input, &ls_a->dsdw.color[3],   2, error) < 2  ||
+                  psd_read (input, &ls_a->dsdw.color[4],   2, error) < 2  ||
+                  psd_read (input, &bim,                   4, error) < 4  ||
+                  psd_read (input, &ls_a->dsdw.blendsig,   4, error) < 4  ||
+                  psd_read (input, &ls_a->dsdw.effecton,   1, error) < 1  ||
+                  psd_read (input, &ls_a->dsdw.anglefx,    1, error) < 1  ||
+                  psd_read (input, &ls_a->dsdw.opacity,    1, error) < 1)
                 {
                   psd_set_error (error);
                   return -1;
                 }
               ls_a->dsdw.size      = GUINT32_TO_BE (ls_a->dsdw.size);
               ls_a->dsdw.ver       = GUINT32_TO_BE (ls_a->dsdw.ver);
-              ls_a->dsdw.blur      = GUINT16_TO_BE (ls_a->dsdw.blur);
-              ls_a->dsdw.intensity = GUINT32_TO_BE (ls_a->dsdw.intensity);
-              ls_a->dsdw.angle     = GINT32_TO_BE (ls_a->dsdw.angle);
-              ls_a->dsdw.distance  = GUINT32_TO_BE (ls_a->dsdw.distance);
+              ls_a->dsdw.blur      = FIXED_TO_FLOAT (GUINT16_TO_BE (temp[0]),
+                                                     GUINT16_TO_BE (temp[1]));
+              ls_a->dsdw.intensity = FIXED_TO_FLOAT (GUINT16_TO_BE (temp[2]),
+                                                     GUINT16_TO_BE (temp[3]));
+              ls_a->dsdw.angle     = FIXED_TO_FLOAT (GUINT16_TO_BE (temp[4]),
+                                                     GUINT16_TO_BE (temp[5]));
+              ls_a->dsdw.distance  = FIXED_TO_FLOAT (GUINT16_TO_BE (temp[6]),
+                                                     GUINT16_TO_BE (temp[7]));
 
               if (ls_a->dsdw.ver == 2)
                 {
@@ -835,35 +839,35 @@ load_resource_lrfx (const PSDlayerres  *res_a,
           else if (memcmp (effectname, "isdw", 4) == 0)
             {
               gchar   bim[4];
-              guint16 spacer16;
+              guint16 temp[8];
 
-              if (psd_read (input, &ls_a->isdw.size,        4, error) < 4 ||
-                  psd_read (input, &ls_a->isdw.ver,         4, error) < 4 ||
-                  psd_read (input, &ls_a->isdw.blur,        2, error) < 2 ||
-                  psd_read (input, &ls_a->isdw.intensity,   4, error) < 4 ||
-                  psd_read (input, &ls_a->isdw.angle,       4, error) < 4 ||
-                  psd_read (input, &ls_a->isdw.distance,    4, error) < 4 ||
-                  psd_read (input, &spacer16,               2, error) < 2 ||
-                  psd_read (input, &ls_a->isdw.color[0],    2, error) < 2 ||
-                  psd_read (input, &ls_a->isdw.color[1],    2, error) < 2 ||
-                  psd_read (input, &ls_a->isdw.color[2],    2, error) < 2 ||
-                  psd_read (input, &ls_a->isdw.color[3],    2, error) < 2 ||
-                  psd_read (input, &ls_a->isdw.color[4],    2, error) < 2 ||
-                  psd_read (input, &bim,                    4, error) < 4 ||
-                  psd_read (input, &ls_a->isdw.blendsig,    4, error) < 4 ||
-                  psd_read (input, &ls_a->isdw.effecton,    1, error) < 1 ||
-                  psd_read (input, &ls_a->isdw.anglefx,     1, error) < 1 ||
-                  psd_read (input, &ls_a->isdw.opacity,     1, error) < 1)
+              if (psd_read (input, &ls_a->isdw.size,       4, error) < 4  ||
+                  psd_read (input, &ls_a->isdw.ver,        4, error) < 4  ||
+                  psd_read (input, &temp,                  16, error) < 2 ||
+                  psd_read (input, &ls_a->isdw.color[0],   2, error) < 2  ||
+                  psd_read (input, &ls_a->isdw.color[1],   2, error) < 2  ||
+                  psd_read (input, &ls_a->isdw.color[2],   2, error) < 2  ||
+                  psd_read (input, &ls_a->isdw.color[3],   2, error) < 2  ||
+                  psd_read (input, &ls_a->isdw.color[4],   2, error) < 2  ||
+                  psd_read (input, &bim,                   4, error) < 4  ||
+                  psd_read (input, &ls_a->isdw.blendsig,   4, error) < 4  ||
+                  psd_read (input, &ls_a->isdw.effecton,   1, error) < 1  ||
+                  psd_read (input, &ls_a->isdw.anglefx,    1, error) < 1  ||
+                  psd_read (input, &ls_a->isdw.opacity,    1, error) < 1)
                 {
                   psd_set_error (error);
                   return -1;
                 }
               ls_a->isdw.size      = GUINT32_TO_BE (ls_a->isdw.size);
               ls_a->isdw.ver       = GUINT32_TO_BE (ls_a->isdw.ver);
-              ls_a->isdw.blur      = GUINT16_TO_BE (ls_a->isdw.blur);
-              ls_a->isdw.intensity = GUINT32_TO_BE (ls_a->isdw.intensity);
-              ls_a->isdw.angle     = GINT32_TO_BE (ls_a->isdw.angle);
-              ls_a->isdw.distance  = GUINT32_TO_BE (ls_a->isdw.distance);
+              ls_a->isdw.blur      = FIXED_TO_FLOAT (GUINT16_TO_BE (temp[0]),
+                                                     GUINT16_TO_BE (temp[1]));
+              ls_a->isdw.intensity = FIXED_TO_FLOAT (GUINT16_TO_BE (temp[2]),
+                                                     GUINT16_TO_BE (temp[3]));
+              ls_a->isdw.angle     = FIXED_TO_FLOAT (GUINT16_TO_BE (temp[4]),
+                                                     GUINT16_TO_BE (temp[5]));
+              ls_a->isdw.distance  = FIXED_TO_FLOAT (GUINT16_TO_BE (temp[6]),
+                                                     GUINT16_TO_BE (temp[7]));
 
               if (ls_a->isdw.ver == 2)
                 {
@@ -1035,6 +1039,7 @@ load_resource_lrfx (const PSDlayerres  *res_a,
 
   return 0;
 }
+#undef FIXED_TO_FLOAT
 
 static gint
 load_resource_lyvr (const PSDlayerres  *res_a,
