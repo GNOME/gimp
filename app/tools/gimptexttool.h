@@ -70,10 +70,7 @@ struct _GimpTextTool
   GtkWidget      *style_editor;
 
   /* style overlay dragging: */
-
   gboolean        overlay_dragging;
-  gdouble         drag_offset_x;
-  gdouble         drag_offset_y;
 
   gboolean        selecting;
   GtkTextIter     select_start_iter;

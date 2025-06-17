@@ -288,11 +288,15 @@ gimp_text_tool_editor_position (GimpTextTool *text_tool)
       if (text_tool->layer &&
           gimp_text_layer_get_style_overlay_position (text_tool->layer, &x, &y))
         {
+          gdouble offset_x, offset_y;
+
+          gimp_text_layer_get_style_overlay_offset (text_tool->layer,
+                                                    &offset_x, &offset_y);
           gimp_display_shell_move_overlay (shell,
                                            text_tool->style_overlay,
                                            x, y, -1,
-                                           text_tool->drag_offset_x + 25,
-                                           text_tool->drag_offset_y + 25);
+                                           offset_x + DEFAULT_DRAG_OFFSET,
+                                           offset_y + DEFAULT_DRAG_OFFSET);
 
           gimp_text_style_show_restore_position_button (GIMP_TEXT_STYLE_EDITOR (text_tool->style_editor),
                                                         TRUE);
@@ -2021,8 +2025,7 @@ gimp_text_tool_style_overlay_button_press (GtkWidget      *widget,
     }
 
   text_tool->overlay_dragging = TRUE;
-  text_tool->drag_offset_x    = event->x;
-  text_tool->drag_offset_y    = event->y;
+  gimp_text_layer_set_style_overlay_offset (text_tool->layer, event->x, event->y);
 
   child_overlay = gimp_overlay_child_find (GIMP_OVERLAY_BOX (shell->canvas),
                                            text_tool->style_overlay);
@@ -2074,6 +2077,9 @@ gimp_text_tool_style_overlay_button_motion (GtkWidget      *widget,
       GimpDisplayShell    *shell = gimp_display_get_shell (tool->display);
       GimpTextStyleEditor *style_editor;
       gdouble              x, y;
+      gdouble              x_off, y_off;
+
+      gimp_text_layer_get_style_overlay_offset (text_tool->layer, &x_off, &y_off);
 
       gdk_window_get_device_position_double (gtk_widget_get_window (GTK_WIDGET (shell)),
                                              event->device,
@@ -2086,8 +2092,8 @@ gimp_text_tool_style_overlay_button_motion (GtkWidget      *widget,
       gimp_display_shell_move_overlay (shell,
                                        text_tool->style_overlay,
                                        x, y, -1,
-                                       text_tool->drag_offset_x + 25,
-                                       text_tool->drag_offset_y + 25);
+                                       x_off + DEFAULT_DRAG_OFFSET,
+                                       y_off + DEFAULT_DRAG_OFFSET);
 
       gimp_text_layer_set_style_overlay_position (text_tool->layer, TRUE,
                                                   x, y);
