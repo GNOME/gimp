@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-12 11:53+0000\n"
-"PO-Revision-Date: 2025-06-12 18:23+0300\n"
+"POT-Creation-Date: 2025-06-16 20:41+0000\n"
+"PO-Revision-Date: 2025-06-17 16:50+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -1241,7 +1241,7 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
 #: plug-ins/file-icns/file-icns-export.c:444
 #: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1588
-#: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2222
+#: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2345
 #: plug-ins/file-tiff/file-tiff-export.c:1087
 #: plug-ins/file-tiff/file-tiff-export.c:1176 plug-ins/flame/flame.c:585
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1415
@@ -2018,7 +2018,7 @@ msgstr "Неможливо виконувати дії з порожнім ви�
 #: plug-ins/file-icns/file-icns-load.c:604 plug-ins/file-ico/ico-load.c:685
 #: plug-ins/file-ico/ico-load.c:823 plug-ins/file-ico/ico-load.c:1025
 #: plug-ins/file-jpeg/jpeg-load.c:106 plug-ins/file-jpeg/jpeg-load.c:699
-#: plug-ins/file-psd/psd-export.c:2227 plug-ins/file-psd/psd-load.c:189
+#: plug-ins/file-psd/psd-export.c:2350 plug-ins/file-psd/psd-load.c:189
 #: plug-ins/file-psd/psd-load.c:194 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:539
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1772
@@ -2704,7 +2704,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: plug-ins/file-bmp/bmp-export.c:328 plug-ins/file-fits/fits.c:646
 #: plug-ins/file-fli/fli-gimp.c:766 plug-ins/file-icns/file-icns-export.c:824
 #: plug-ins/file-ico/ico-export.c:1358 plug-ins/file-ico/ico-export.c:1572
-#: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2168
+#: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2284
 #: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1077
 #, c-format
 msgid "Exporting '%s'"
@@ -3602,28 +3602,23 @@ msgid "Load JPEG 2000 image encapsulated in HEIF (HEJ2)"
 msgstr "Завантаження зображення JPEG 2000, яке вбудовано до HEIF (HEJ2)"
 
 #: plug-ins/common/file-heif.c:498
-#| msgid "Load JPEG 2000 image encapsulated in HEIF (HEJ2)"
 msgid "AVC-encoded image encapsulated in HEIF"
 msgstr "Закодоване AVC зображення, яке вставлено до HEIF"
 
 #: plug-ins/common/file-heif.c:501
-#| msgid "Loads AVIF images"
 msgid "Loads AVCI images"
 msgstr "Завантаження зображень AVCI"
 
 #: plug-ins/common/file-heif.c:502
-#| msgid "Load JPEG 2000 image encapsulated in HEIF (HEJ2)"
 msgid "Load AVCI image - H.264 image encapsulated in HEIF"
 msgstr ""
 "Завантаження зображення AVCI — зображення H.264, яке вбудовано до HEIF"
 
 #: plug-ins/common/file-heif.c:534
-#| msgid "Exports HEIF images"
 msgid "Exports HEJ2 images"
 msgstr "Експортує зображення HEJ2"
 
 #: plug-ins/common/file-heif.c:535
-#| msgid "Load JPEG 2000 image encapsulated in HEIF (HEJ2)"
 msgid "Save JPEG 2000 image encapsulated in HEIF (HEJ2)"
 msgstr "Збереження зображення JPEG 2000, яке вбудовано до HEIF (HEJ2)"
 
@@ -4000,19 +3995,19 @@ msgid "Unsupported JPEG 2000%s '%s' with %d components."
 msgstr "Непідтримуваний JPEG 2000%s «%s» з %d компонентами."
 
 #: plug-ins/common/file-jp2.c:1300 plug-ins/file-jpeg/jpeg-export.c:896
-#: plug-ins/file-psd/psd-export.c:2459
+#: plug-ins/file-psd/psd-export.c:2589
 #: plug-ins/file-tiff/file-tiff-export.c:1310
 msgid "No soft-proofing profile"
 msgstr "Немає профілю для проби кольорів"
 
 #: plug-ins/common/file-jp2.c:1308 plug-ins/common/file-jpegxl.c:2035
-#: plug-ins/file-jpeg/jpeg-export.c:904 plug-ins/file-psd/psd-export.c:2467
+#: plug-ins/file-jpeg/jpeg-export.c:904 plug-ins/file-psd/psd-export.c:2597
 #: plug-ins/file-tiff/file-tiff-export.c:1318
 msgid "Name of the color profile used for CMYK export."
 msgstr "Назва профілю кольорів, який використано для експортування CMYK."
 
 #: plug-ins/common/file-jp2.c:1319 plug-ins/common/file-jpegxl.c:2054
-#: plug-ins/file-jpeg/jpeg-export.c:915 plug-ins/file-psd/psd-export.c:2478
+#: plug-ins/file-jpeg/jpeg-export.c:915 plug-ins/file-psd/psd-export.c:2608
 #: plug-ins/file-tiff/file-tiff-export.c:1330
 #, c-format
 msgid "Profile: %s"
@@ -8365,7 +8360,6 @@ msgid "New (tiled) image height"
 msgstr "Нова висота (плиткового) зображення"
 
 #: plug-ins/common/tile.c:172 plug-ins/common/tile.c:173
-#| msgid "Check size unit of measure"
 msgid "Tile size unit of measure"
 msgstr "Одиниця вимірювання розміру плитки"
 
@@ -10328,12 +10322,12 @@ msgstr ""
 msgid "Use restart mar_kers"
 msgstr "Використовувати _маркери перезапуску"
 
-#: plug-ins/file-psd/psd-export.c:502
+#: plug-ins/file-psd/psd-export.c:536
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
 "Помилка: Неможливо перетворити основний тип зображення GIMP на режим PSD"
 
-#: plug-ins/file-psd/psd-export.c:2161
+#: plug-ins/file-psd/psd-export.c:2271
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -10342,7 +10336,19 @@ msgstr ""
 "Не вдається експортувати «%s».  Файл формату PSD не підтримує зображення "
 "шириною чи висотою більше ніж 30000 точок."
 
-#: plug-ins/file-psd/psd-export.c:2202
+#: plug-ins/file-psd/psd-export.c:2277
+#, c-format
+#| msgid ""
+#| "Unable to export '%s'.  The PSD file format does not support images that "
+#| "are more than 30,000 pixels wide or tall."
+msgid ""
+"Unable to export '%s'.  The PSB file format does not support images that are "
+"more than 300,000 pixels wide or tall."
+msgstr ""
+"Не вдається експортувати «%s». Файл формату PSB не підтримує зображення "
+"шириною чи висотою більше ніж 300000 точок."
+
+#: plug-ins/file-psd/psd-export.c:2319
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -10351,7 +10357,19 @@ msgstr ""
 "Не вдається експортувати «%s». Файл формату PSD не підтримує зображення з "
 "шарами, ширина чи висота яких більша ніж 30000 точок."
 
-#: plug-ins/file-psd/psd-export.c:2502
+#: plug-ins/file-psd/psd-export.c:2325
+#, c-format
+#| msgid ""
+#| "Unable to export '%s'.  The PSD file format does not support images with "
+#| "layers that are more than 30,000 pixels wide or tall."
+msgid ""
+"Unable to export '%s'.  The PSB file format does not support images with "
+"layers that are more than 300,000 pixels wide or tall."
+msgstr ""
+"Не вдається експортувати «%s». Файл формату PSB не підтримує зображення з "
+"шарами, ширина чи висота яких більша ніж 300000 точок."
+
+#: plug-ins/file-psd/psd-export.c:2632
 msgid ""
 "Duotone color space information from the original\n"
 "imported image will be used."
@@ -10359,7 +10377,7 @@ msgstr ""
 "Буде використано дані двотонового простору кольорів з\n"
 "початкового імпортованого зображення."
 
-#: plug-ins/file-psd/psd-export.c:2571
+#: plug-ins/file-psd/psd-export.c:2701
 msgid ""
 "PSD files can store up to 998 paths. \n"
 "The rest will be discarded."
@@ -10367,11 +10385,11 @@ msgstr ""
 "У файлах PSD можна зберігати до 998 контурів. \n"
 "Решту контурів буде відкинуто."
 
-#: plug-ins/file-psd/psd-export.c:2681
+#: plug-ins/file-psd/psd-export.c:2811
 msgid "Indexed Image Warning"
 msgstr "Попередження щодо індексованого зображення"
 
-#: plug-ins/file-psd/psd-export.c:2682
+#: plug-ins/file-psd/psd-export.c:2812
 msgid ""
 "Photoshop does not support indexed images that have more than one layer. "
 "Layers will be merged on export."
@@ -10379,11 +10397,11 @@ msgstr ""
 "У Photoshop не передбачено підтримки індексованих зображень, у яких понад "
 "один шар. При експортуванні шари буде об'єднано."
 
-#: plug-ins/file-psd/psd-export.c:2703 plug-ins/file-psd/psd-load.c:3879
+#: plug-ins/file-psd/psd-export.c:2833 plug-ins/file-psd/psd-load.c:3879
 msgid "Compatibility Notice"
 msgstr "Зауваження щодо сумісності"
 
-#: plug-ins/file-psd/psd-export.c:2704
+#: plug-ins/file-psd/psd-export.c:2834
 msgid ""
 "Legacy layer modes have better compatibility with Photoshop, but do not "
 "support Clip to Backdrop, which is needed for using Photoshop's 'Blend "
@@ -10534,27 +10552,27 @@ msgstr ""
 msgid "Unexpected end of file"
 msgstr "Передчасне закінчення файлу"
 
-#: plug-ins/file-psd/psd.c:135 plug-ins/file-psd/psd.c:215
-#: plug-ins/file-psd/psd.c:217
+#: plug-ins/file-psd/psd.c:136 plug-ins/file-psd/psd.c:219
+#: plug-ins/file-psd/psd.c:221
 msgid "Photoshop image"
 msgstr "Зображення Photoshop"
 
-#: plug-ins/file-psd/psd.c:138 plug-ins/file-psd/psd.c:167
+#: plug-ins/file-psd/psd.c:139 plug-ins/file-psd/psd.c:168
 msgid "Loads images from the Photoshop PSD and PSB file formats"
 msgstr "Завантажує зображення у форматах файлів Photoshop PSD і PSB"
 
-#: plug-ins/file-psd/psd.c:140
+#: plug-ins/file-psd/psd.c:141
 msgid ""
 "This plug-in loads images in Adobe Photoshop (TM) native PSD and PSB format."
 msgstr ""
 "Цей додаток завантажує зображення у власних форматах PSD і PSB Adobe "
 "Photoshop (TM)."
 
-#: plug-ins/file-psd/psd.c:164
+#: plug-ins/file-psd/psd.c:165
 msgid "Photoshop image (merged)"
 msgstr "Зображення Photoshop (об'єднане)"
 
-#: plug-ins/file-psd/psd.c:169
+#: plug-ins/file-psd/psd.c:170
 msgid ""
 "This plug-in loads the merged image data in Adobe Photoshop (TM) native PSD "
 "and PSB format."
@@ -10562,11 +10580,11 @@ msgstr ""
 "Цей додаток завантажує дані об'єднаного зображення у власних форматах PSD і "
 "PSB Adobe Photoshop (TM)."
 
-#: plug-ins/file-psd/psd.c:196
+#: plug-ins/file-psd/psd.c:197
 msgid "Loads thumbnails from the Photoshop PSD file format"
 msgstr "Завантажує мініатюри з файлів у форматі PSD Photoshop"
 
-#: plug-ins/file-psd/psd.c:198
+#: plug-ins/file-psd/psd.c:199
 msgid ""
 "This plug-in loads thumbnail images from Adobe Photoshop (TM) native PSD "
 "format files."
@@ -10574,11 +10592,11 @@ msgstr ""
 "Цей додаток завантажує зображення мініатюр з файлів у власних форматах PSD і "
 "PSB Adobe Photoshop (TM)."
 
-#: plug-ins/file-psd/psd.c:220
+#: plug-ins/file-psd/psd.c:224
 msgid "Saves files in the Photoshop (TM) PSD file format"
 msgstr "Завантажує файли у форматі файлів PSD Photoshop (TM)"
 
-#: plug-ins/file-psd/psd.c:222
+#: plug-ins/file-psd/psd.c:226
 msgid ""
 "This plug-in saves files of Adobe Photoshop (TM) native PSD format. These "
 "files may be of any image type supported by GIMP, with or without layers, "
@@ -10589,19 +10607,45 @@ msgstr ""
 "передбачено у GIMP, з шарами або без них, масками шарів, допоміжними "
 "каналами та напрямними."
 
-#: plug-ins/file-psd/psd.c:249
+#: plug-ins/file-psd/psd.c:240 plug-ins/file-psd/psd.c:242
+#| msgid "Photoshop image"
+msgid "Photoshop Large image"
+msgstr "Велике зображення Photoshop"
+
+#: plug-ins/file-psd/psd.c:245
+#| msgid "Saves files in the Photoshop (TM) PSD file format"
+msgid "Saves files in the Photoshop (TM) Large PSB file format"
+msgstr "Завантажує файли у форматі файлів великого PSB Photoshop (TM)"
+
+#: plug-ins/file-psd/psd.c:247
+#| msgid ""
+#| "This plug-in saves files of Adobe Photoshop (TM) native PSD format. These "
+#| "files may be of any image type supported by GIMP, with or without layers, "
+#| "layer masks, aux channels and guides."
+msgid ""
+"This plug-in saves files of Adobe Photoshop (TM) Large native PSB format. "
+"These files may be of any image type supported by GIMP, with or without "
+"layers, layer masks, aux channels and guides."
+msgstr ""
+"Цей додаток зберігає файли у власному форматі великого PSB Adobe Photoshop™."
+" Ці "
+"файли можуть зберігати дані у будь-якому типі зображень, підтримку яких "
+"передбачено у GIMP, з шарами або без них, масками шарів, допоміжними "
+"каналами та напрямними."
+
+#: plug-ins/file-psd/psd.c:275
 msgid "Assign a Clipping _Path"
 msgstr "Призначити _контур обрізання"
 
-#: plug-ins/file-psd/psd.c:250
+#: plug-ins/file-psd/psd.c:276
 msgid "Select a path to be the clipping path"
 msgstr "Виберіть контур, який буде контуром обрізання"
 
-#: plug-ins/file-psd/psd.c:256
+#: plug-ins/file-psd/psd.c:282
 msgid "Clipping Path _Name"
 msgstr "_Назва контура обрізання"
 
-#: plug-ins/file-psd/psd.c:257
+#: plug-ins/file-psd/psd.c:283
 msgid ""
 "Clipping path name\n"
 "(ignored if no clipping path)"
@@ -10609,11 +10653,11 @@ msgstr ""
 "Назва контура обрізання\n"
 "(буде проігноровано, якщо немає контура обрізання)"
 
-#: plug-ins/file-psd/psd.c:263
+#: plug-ins/file-psd/psd.c:289
 msgid "Path _Flatness"
 msgstr "_Рівність контура"
 
-#: plug-ins/file-psd/psd.c:264
+#: plug-ins/file-psd/psd.c:290
 msgid ""
 "Clipping path flatness in device pixels\n"
 "(ignored if no clipping path)"
@@ -10621,21 +10665,21 @@ msgstr ""
 "Рівність контура обрізання у пікселях пристрою\n"
 "(буде проігноровано, якщо немає контура обрізання)"
 
-#: plug-ins/file-psd/psd.c:270
+#: plug-ins/file-psd/psd.c:296
 msgid "Export as _CMYK"
 msgstr "Експортувати як _CMYK"
 
-#: plug-ins/file-psd/psd.c:271
+#: plug-ins/file-psd/psd.c:297
 msgid "Export a CMYK PSD image using the soft-proofing color profile"
 msgstr ""
 "Експортувати зображення PSD CMYK з використанням профілю кольорів із "
 "пробником"
 
-#: plug-ins/file-psd/psd.c:276
+#: plug-ins/file-psd/psd.c:302
 msgid "Export as _Duotone"
 msgstr "Експортувати як _Duotone"
 
-#: plug-ins/file-psd/psd.c:277
+#: plug-ins/file-psd/psd.c:303
 msgid ""
 "Export as a Duotone PSD file if Duotone color space information was attached "
 "to the image when originally imported."
@@ -10643,15 +10687,15 @@ msgstr ""
 "Експортувати як файл Duotone PSD, якщо під час початкового імпортування до "
 "зображення було долучено дані простору кольорів Duotone."
 
-#: plug-ins/file-psd/psd.c:381
+#: plug-ins/file-psd/psd.c:407
 msgid "Import PSD"
 msgstr "Імпорт PSD"
 
-#: plug-ins/file-psd/psd.c:532
+#: plug-ins/file-psd/psd.c:558
 msgid "Import PSD metadata"
 msgstr "Імпорт метаданих PSD"
 
-#: plug-ins/file-psd/psd.c:536
+#: plug-ins/file-psd/psd.c:562
 msgid ""
 "Metadata fill layers are not supported and will show up as empty layers."
 msgstr ""
