@@ -1499,6 +1499,7 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
   GimpDrawable      *drawable = NULL;
   GimpContainer     *filters;
   gint               count;
+  gboolean           merge_filter;
 
   if (filter_tool->filter)
     {
@@ -1549,14 +1550,15 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
 
   /* TODO: Once we can serialize GimpDrawable, remove so that filters with
    * aux nodes can be non-destructive */
+  merge_filter = options->merge_filter;
   if (gegl_node_has_pad (filter_tool->operation, "aux"))
-    options->merge_filter = TRUE;
+    merge_filter = TRUE;
 
   g_object_set (filter_tool->filter,
-                "to-be-merged", options->merge_filter,
+                "to-be-merged", merge_filter,
                 NULL);
 
-  if (options->merge_filter)
+  if (merge_filter)
     {
       filters = gimp_drawable_get_filters (drawable);
       count   = gimp_container_get_n_children (filters);
