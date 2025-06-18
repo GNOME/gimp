@@ -36,8 +36,8 @@
 #define PLUG_IN_PROC    "plug-in-plug-in-details"
 #define PLUG_IN_BINARY  "plugin-browser"
 #define PLUG_IN_ROLE    "gimp-plugin-browser"
-#define DBL_WIDTH       650
-#define DBL_HEIGHT      400
+#define DBL_WIDTH       800
+#define DBL_HEIGHT      500
 
 
 enum

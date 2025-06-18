@@ -45,8 +45,8 @@
  **/
 
 
-#define DBL_WIDTH  650
-#define DBL_HEIGHT 400
+#define DBL_WIDTH  800
+#define DBL_HEIGHT 500
 
 
 enum
