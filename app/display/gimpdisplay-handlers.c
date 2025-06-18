@@ -42,11 +42,6 @@ static void   gimp_display_bounds_changed_handler (GimpImage      *image,
                                                    gint            old_x,
                                                    gint            old_y,
                                                    GimpDisplay    *display);
-static void   gimp_display_flush_handler          (GimpImage      *image,
-                                                   gboolean        invalidate_preview,
-                                                   GimpDisplay    *display);
-static gboolean
-              gimp_display_flush_handler_idle     (gpointer user_data);
 
 
 /*  public functions  */
@@ -122,24 +117,4 @@ gimp_display_bounds_changed_handler (GimpImage   *image,
                                      GimpDisplay *display)
 {
   gimp_display_update_bounding_box (display);
-}
-
-static void
-gimp_display_flush_handler (GimpImage   *image,
-                            gboolean     invalidate_preview,
-                            GimpDisplay *display)
-{
-  g_idle_add_full (G_PRIORITY_LOW,
-                   (GSourceFunc) gimp_display_flush_handler_idle,
-                   g_object_ref (display), g_object_unref);
-}
-
-static gboolean
-gimp_display_flush_handler_idle (gpointer user_data)
-{
-  GimpDisplay *display = user_data;
-
-  gimp_display_flush (display);
-
-  return G_SOURCE_REMOVE;
 }
