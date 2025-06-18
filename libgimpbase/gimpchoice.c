@@ -204,8 +204,7 @@ gimp_choice_add (GimpChoice  *choice,
   if (duplicate != NULL)
     {
       choice->keys = g_list_remove_link (choice->keys, duplicate);
-      gimp_choice_desc_free (duplicate->data);
-      g_list_free (duplicate);
+      g_free (duplicate->data);
     }
   choice->keys = g_list_append (choice->keys, g_strdup (nick));
 }
