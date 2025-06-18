@@ -513,13 +513,17 @@ gimp_modifiers_manager_get_keys (GdkDevice        *device,
                                  gchar           **actions_key,
                                  gchar           **buttons_key)
 {
-  const gchar *vendor_id;
-  const gchar *product_id;
+  const gchar *vendor_id  = NULL;
+  const gchar *product_id = NULL;
 
   g_return_if_fail (GDK_IS_DEVICE (device) || device == NULL);
 
-  vendor_id  = device ? gdk_device_get_vendor_id (device) : NULL;
-  product_id = device ? gdk_device_get_product_id (device) : NULL;
+  if (device && gdk_device_get_device_type (device) != GDK_DEVICE_TYPE_MASTER)
+    {
+      vendor_id  = gdk_device_get_vendor_id (device);
+      product_id = gdk_device_get_product_id (device);
+    }
+
   modifiers  = modifiers & gimp_get_all_modifiers_mask ();
 
   if (actions_key)
