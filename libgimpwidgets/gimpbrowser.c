@@ -42,6 +42,10 @@
  * A base class for a documentation browser.
  **/
 
+#define GIMP_BROWSER_LEFT_MIN_WIDTH   250
+#define GIMP_BROWSER_LEFT_MIN_HEIGHT  250
+#define GIMP_BROWSER_RIGHT_MIN_WIDTH  400
+#define GIMP_BROWSER_RIGHT_MIN_HEIGHT 250
 
 enum
 {
@@ -122,6 +126,7 @@ gimp_browser_init (GimpBrowser *browser)
   browser->search_type = -1;
 
   browser->left_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_widget_set_size_request (GTK_WIDGET (browser->left_vbox), GIMP_BROWSER_LEFT_MIN_WIDTH, GIMP_BROWSER_LEFT_MIN_HEIGHT);
   gtk_paned_pack1 (GTK_PANED (browser), browser->left_vbox, TRUE, FALSE);
   gtk_widget_show (browser->left_vbox);
 
@@ -170,6 +175,7 @@ gimp_browser_init (GimpBrowser *browser)
   /* scrolled window */
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_widget_set_size_request (GTK_WIDGET (scrolled_window), GIMP_BROWSER_RIGHT_MIN_WIDTH, GIMP_BROWSER_RIGHT_MIN_HEIGHT);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
