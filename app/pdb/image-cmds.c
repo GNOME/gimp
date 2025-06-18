@@ -1849,7 +1849,7 @@ image_thumbnail_invoker (GimpProcedure         *procedure,
       gimp_pickable_flush (GIMP_PICKABLE (image));
 
       buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (image), context,
-                                           width, height, NULL);
+                                           width, height, NULL, NULL);
 
       if (buf)
         {

@@ -76,7 +76,8 @@ static GimpTempBuf * gimp_palette_get_new_preview     (GimpViewable         *vie
                                                        GimpContext          *context,
                                                        gint                  width,
                                                        gint                  height,
-                                                       GeglColor            *color);
+                                                       GeglColor            *color,
+                                                       GeglColor            *background);
 static gchar       * gimp_palette_get_description     (GimpViewable         *viewable,
                                                        gchar               **tooltip);
 static const gchar * gimp_palette_get_extension       (GimpData             *data);
@@ -241,7 +242,8 @@ gimp_palette_get_new_preview (GimpViewable *viewable,
                               GimpContext  *context,
                               gint          width,
                               gint          height,
-                              GeglColor    *color G_GNUC_UNUSED)
+                              GeglColor    *color G_GNUC_UNUSED,
+                              GeglColor    *background G_GNUC_UNUSED)
 {
   GimpPalette *palette  = GIMP_PALETTE (viewable);
   GimpTempBuf *temp_buf;

@@ -85,7 +85,7 @@ gimp_view_renderer_buffer_render (GimpViewRenderer *renderer,
       temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
                                                 renderer->context,
                                                 buffer_width, buffer_height,
-                                                NULL);
+                                                NULL, NULL);
 
       if (temp_buf)
         {
@@ -99,7 +99,7 @@ gimp_view_renderer_buffer_render (GimpViewRenderer *renderer,
       render_buf = gimp_viewable_get_new_preview (renderer->viewable,
                                                   renderer->context,
                                                   view_width, view_height,
-                                                  NULL);
+                                                  NULL, NULL);
     }
 
   if (render_buf)

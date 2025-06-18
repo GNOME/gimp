@@ -85,7 +85,8 @@ static GdkPixbuf * gimp_imagefile_get_new_pixbuf   (GimpViewable   *viewable,
                                                     GimpContext    *context,
                                                     gint            width,
                                                     gint            height,
-                                                    GeglColor      *color);
+                                                    GeglColor      *color,
+                                                    GeglColor      *background);
 static gchar     * gimp_imagefile_get_description  (GimpViewable   *viewable,
                                                     gchar         **tooltip);
 
@@ -226,7 +227,8 @@ gimp_imagefile_get_new_pixbuf (GimpViewable *viewable,
                                GimpContext  *context,
                                gint          width,
                                gint          height,
-                               GeglColor    *color G_GNUC_UNUSED)
+                               GeglColor    *color G_GNUC_UNUSED,
+                               GeglColor    *background G_GNUC_UNUSED)
 {
   GimpImagefile *imagefile = GIMP_IMAGEFILE (viewable);
 
@@ -1063,7 +1065,7 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
   pixbuf = gimp_viewable_get_new_pixbuf (GIMP_VIEWABLE (image),
                                          /* random context, unused */
                                          gimp_get_user_context (image->gimp),
-                                         width, height, NULL);
+                                         width, height, NULL, NULL);
 
   /*  when layer previews are disabled, we won't get a pixbuf  */
   if (! pixbuf)

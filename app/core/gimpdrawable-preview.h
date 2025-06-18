@@ -26,12 +26,14 @@ GimpTempBuf * gimp_drawable_get_new_preview       (GimpViewable *viewable,
                                                    GimpContext  *context,
                                                    gint          width,
                                                    gint          height,
-                                                   GeglColor    *color);
+                                                   GeglColor    *color,
+                                                   GeglColor    *background);
 GdkPixbuf   * gimp_drawable_get_new_pixbuf        (GimpViewable *viewable,
                                                    GimpContext  *context,
                                                    gint          width,
                                                    gint          height,
-                                                   GeglColor    *color);
+                                                   GeglColor    *color,
+                                                   GeglColor    *background);
 
 /*
  *  normal functions (no virtuals)

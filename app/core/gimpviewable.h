@@ -80,22 +80,26 @@ struct _GimpViewableClass
                                           GimpContext   *context,
                                           gint           width,
                                           gint           height,
-                                          GeglColor     *fg_color);
+                                          GeglColor     *fg_color,
+                                          GeglColor     *background);
   GimpTempBuf   * (* get_new_preview)    (GimpViewable  *viewable,
                                           GimpContext   *context,
                                           gint           width,
                                           gint           height,
-                                          GeglColor     *fg_color);
+                                          GeglColor     *fg_color,
+                                          GeglColor     *background);
   GdkPixbuf     * (* get_pixbuf)         (GimpViewable  *viewable,
                                           GimpContext   *context,
                                           gint           width,
                                           gint           height,
-                                          GeglColor     *fg_color);
+                                          GeglColor     *fg_color,
+                                          GeglColor     *background);
   GdkPixbuf     * (* get_new_pixbuf)     (GimpViewable  *viewable,
                                           GimpContext   *context,
                                           gint           width,
                                           gint           height,
-                                          GeglColor     *fg_color);
+                                          GeglColor     *fg_color,
+                                          GeglColor     *background);
   gchar         * (* get_description)    (GimpViewable  *viewable,
                                           gchar        **tooltip);
 
@@ -149,12 +153,14 @@ GimpTempBuf   * gimp_viewable_get_preview        (GimpViewable  *viewable,
                                                   GimpContext   *context,
                                                   gint           width,
                                                   gint           height,
-                                                  GeglColor     *fg_color);
+                                                  GeglColor     *fg_color,
+                                                  GeglColor     *bg_color);
 GimpTempBuf   * gimp_viewable_get_new_preview    (GimpViewable  *viewable,
                                                   GimpContext   *context,
                                                   gint           width,
                                                   gint           height,
-                                                  GeglColor     *fg_color);
+                                                  GeglColor     *fg_color,
+                                                  GeglColor     *bg_color);
 
 GimpTempBuf   * gimp_viewable_get_dummy_preview  (GimpViewable  *viewable,
                                                   gint           width,
@@ -165,12 +171,14 @@ GdkPixbuf     * gimp_viewable_get_pixbuf         (GimpViewable  *viewable,
                                                   GimpContext   *context,
                                                   gint           width,
                                                   gint           height,
-                                                  GeglColor     *color);
+                                                  GeglColor     *color,
+                                                  GeglColor     *background);
 GdkPixbuf     * gimp_viewable_get_new_pixbuf     (GimpViewable  *viewable,
                                                   GimpContext   *context,
                                                   gint           width,
                                                   gint           height,
-                                                  GeglColor     *color);
+                                                  GeglColor     *color,
+                                                  GeglColor     *background);
 
 GdkPixbuf     * gimp_viewable_get_dummy_pixbuf   (GimpViewable  *viewable,
                                                   gint           width,

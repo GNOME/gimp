@@ -811,7 +811,8 @@ gimp_container_icon_view_drag_pixbuf (GtkWidget *widget,
 
   if (renderer && gimp_viewable_get_size (renderer->viewable, &width, &height))
     {
-      GeglColor *color = NULL;
+      GeglColor *color      = NULL;
+      GeglColor *background = NULL;
       GdkPixbuf *pixbuf;
 
       if (renderer->context)
@@ -825,27 +826,36 @@ gimp_container_icon_view_drag_pixbuf (GtkWidget *widget,
             {
               GtkStyleContext *style;
               GdkRGBA         *fg_color = NULL;
+              GdkRGBA         *bg_color = NULL;
 
               style = gtk_widget_get_style_context (widget);
               gtk_style_context_get (style, gtk_style_context_get_state (style),
-                                     GTK_STYLE_PROPERTY_COLOR, &fg_color,
+                                     GTK_STYLE_PROPERTY_COLOR,            &fg_color,
+                                     GTK_STYLE_PROPERTY_BACKGROUND_COLOR, &bg_color,
                                      NULL);
-              if (fg_color)
+              if (fg_color && bg_color)
                 {
                   color = gegl_color_new (NULL);
                   gegl_color_set_rgba_with_space (color,
                                                   fg_color->red, fg_color->green, fg_color->blue, 1.0,
                                                   NULL);
+
+                  background = gegl_color_new (NULL);
+                  gegl_color_set_rgba_with_space (background,
+                                                  bg_color->red, bg_color->green, bg_color->blue, 1.0,
+                                                  NULL);
                 }
               g_clear_pointer (&fg_color, gdk_rgba_free);
+              g_clear_pointer (&bg_color, gdk_rgba_free);
             }
         }
 
       pixbuf = gimp_viewable_get_new_pixbuf (renderer->viewable,
                                              renderer->context,
-                                             width, height, color);
+                                             width, height, color, background);
 
       g_clear_object (&color);
+      g_clear_object (&background);
 
       return pixbuf;
     }

@@ -114,6 +114,8 @@ static cairo_pattern_t *
                  gimp_view_renderer_create_background (GimpViewRenderer   *renderer,
                                                        GtkWidget          *widget);
 
+static void      gimp_view_renderer_redraw            (GimpViewRenderer   *renderer);
+
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpViewRenderer, gimp_view_renderer, G_TYPE_OBJECT)
 
@@ -285,8 +287,26 @@ gimp_view_renderer_set_context (GimpViewRenderer *renderer,
 
   if (context != renderer->context)
     {
-      GIMP_VIEW_RENDERER_GET_CLASS (renderer)->set_context (renderer,
-                                                            context);
+      if (renderer->context)
+        {
+          g_signal_handlers_disconnect_by_func (renderer->context->gimp->config,
+                                                G_CALLBACK (gimp_view_renderer_redraw),
+                                                renderer);
+        }
+
+      GIMP_VIEW_RENDERER_GET_CLASS (renderer)->set_context (renderer, context);
+
+      if (renderer->context)
+        {
+          g_signal_connect_object (renderer->context->gimp->config,
+                                   "notify::viewables-follow-theme",
+                                   G_CALLBACK (gimp_view_renderer_redraw),
+                                   renderer, G_CONNECT_SWAPPED);
+          g_signal_connect_object (renderer->context->gimp->config,
+                                   "notify::theme-color-scheme",
+                                   G_CALLBACK (gimp_view_renderer_redraw),
+                                   renderer, G_CONNECT_SWAPPED);
+        }
 
       if (renderer->viewable)
         gimp_view_renderer_invalidate (renderer);
@@ -805,6 +825,7 @@ gimp_view_renderer_real_render (GimpViewRenderer *renderer,
   GimpTempBuf *temp_buf;
   const gchar *icon_name;
   GeglColor   *color        = NULL;
+  GeglColor   *background   = NULL;
   gint         scale_factor = gtk_widget_get_scale_factor (widget);
 
   if (renderer->context)
@@ -818,19 +839,27 @@ gimp_view_renderer_real_render (GimpViewRenderer *renderer,
         {
           GtkStyleContext *style;
           GdkRGBA         *fg_color = NULL;
+          GdkRGBA         *bg_color = NULL;
 
           style = gtk_widget_get_style_context (widget);
           gtk_style_context_get (style, gtk_style_context_get_state (style),
-                                 GTK_STYLE_PROPERTY_COLOR, &fg_color,
+                                 GTK_STYLE_PROPERTY_COLOR,            &fg_color,
+                                 GTK_STYLE_PROPERTY_BACKGROUND_COLOR, &bg_color,
                                  NULL);
-          if (fg_color)
+          if (fg_color && bg_color)
             {
               color = gegl_color_new (NULL);
               gegl_color_set_rgba_with_space (color,
                                               fg_color->red, fg_color->green, fg_color->blue, 1.0,
                                               NULL);
+
+              background = gegl_color_new (NULL);
+              gegl_color_set_rgba_with_space (background,
+                                              bg_color->red, bg_color->green, bg_color->blue, 1.0,
+                                              NULL);
             }
           g_clear_pointer (&fg_color, gdk_rgba_free);
+          g_clear_pointer (&bg_color, gdk_rgba_free);
         }
     }
 
@@ -838,10 +867,12 @@ gimp_view_renderer_real_render (GimpViewRenderer *renderer,
                                      renderer->context,
                                      renderer->width  * scale_factor,
                                      renderer->height * scale_factor,
-                                     color);
+                                     color, background);
   if (pixbuf)
     {
       gimp_view_renderer_render_pixbuf (renderer, widget, pixbuf);
+      g_clear_object (&color);
+      g_clear_object (&background);
       return;
     }
 
@@ -849,7 +880,7 @@ gimp_view_renderer_real_render (GimpViewRenderer *renderer,
                                         renderer->context,
                                         renderer->width,
                                         renderer->height,
-                                        color);
+                                        color, background);
   if (temp_buf)
     {
       gimp_view_renderer_render_temp_buf_simple (renderer, widget, temp_buf);
@@ -860,6 +891,7 @@ gimp_view_renderer_real_render (GimpViewRenderer *renderer,
   gimp_view_renderer_render_icon (renderer, widget, icon_name);
 
   g_clear_object (&color);
+  g_clear_object (&background);
 }
 
 static void
@@ -1458,4 +1490,11 @@ gimp_view_renderer_create_background (GimpViewRenderer *renderer,
     }
 
   return pattern;
+}
+
+static void
+gimp_view_renderer_redraw (GimpViewRenderer *renderer)
+{
+  gimp_view_renderer_invalidate (renderer);
+  gimp_view_renderer_update (renderer);
 }

@@ -41,7 +41,8 @@ gimp_path_get_new_preview (GimpViewable *viewable,
                            GimpContext  *context,
                            gint          width,
                            gint          height,
-                           GeglColor    *color)
+                           GeglColor    *color G_GNUC_UNUSED,
+                           GeglColor    *background G_GNUC_UNUSED)
 {
   GimpPath    *path;
   GimpItem    *item;
