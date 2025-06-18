@@ -601,8 +601,8 @@ meson-health:
     - <<: *CI_COMMIT
   stage: analysis
   script:
-    - apt-get update
-    - apt-get install -y git
+    - apt-get update -qq
+    - apt-get install -qq -y --no-install-recommends git shellcheck devscripts
     - sh .gitlab/run_meson_health_diff.sh
   allow_failure: true
 
