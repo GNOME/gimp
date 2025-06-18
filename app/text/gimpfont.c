@@ -134,7 +134,8 @@ static GimpTempBuf * gimp_font_get_new_preview    (GimpViewable          *viewab
                                                    GimpContext           *context,
                                                    gint                   width,
                                                    gint                   height,
-                                                   GeglColor             *color);
+                                                   GeglColor             *color,
+                                                   GeglColor             *background);
 
 static void          gimp_font_config_iface_init  (GimpConfigInterface  *iface);
 static gboolean      gimp_font_serialize          (GimpConfig           *config,
@@ -712,7 +713,8 @@ gimp_font_get_new_preview (GimpViewable *viewable,
                            GimpContext  *context,
                            gint          width,
                            gint          height,
-                           GeglColor    *color)
+                           GeglColor    *color,
+                           GeglColor    *background)
 {
   GimpFont        *font = GIMP_FONT (viewable);
   PangoContext    *pango_context;
@@ -726,6 +728,7 @@ gimp_font_get_new_preview (GimpViewable *viewable,
   GimpTempBuf     *temp_buf;
   cairo_t         *cr;
   cairo_surface_t *surface;
+  gint             stride;
 
   pango_context = gimp_font_factory_get_pango_context (GIMP_FONT_CLASS (g_type_class_peek (GIMP_TYPE_FONT))->font_factory);
 
@@ -763,14 +766,26 @@ gimp_font_get_new_preview (GimpViewable *viewable,
       layout = g_object_ref (font->popup_layout);
     }
 
-  width = cairo_format_stride_for_width (CAIRO_FORMAT_A8, width);
+  stride = cairo_format_stride_for_width (CAIRO_FORMAT_ARGB32, width);
 
-  temp_buf = gimp_temp_buf_new (width, height, babl_format ("Y' u8"));
-  memset (gimp_temp_buf_get_data (temp_buf), 255, width * height);
+  temp_buf = gimp_temp_buf_new (width, height, babl_format ("cairo-ARGB32"));
+  if (background)
+    {
+      guint32 *data = (guint32 *) gimp_temp_buf_get_data (temp_buf);
+      guint32  argb;
+
+      gegl_color_get_pixel (background, babl_format ("cairo-ARGB32"), &argb);
+      for (gint i = 0; i < width * height; i++)
+        data[i] = argb;
+    }
+  else
+    {
+      memset (gimp_temp_buf_get_data (temp_buf), 255, width * height * 4);
+    }
 
   surface = cairo_image_surface_create_for_data (gimp_temp_buf_get_data (temp_buf),
-                                                 CAIRO_FORMAT_A8,
-                                                 width, height, width);
+                                                 CAIRO_FORMAT_ARGB32,
+                                                 width, height, stride);
 
   pango_layout_get_pixel_extents (layout, &ink, &logical);
 
@@ -789,7 +804,18 @@ gimp_font_get_new_preview (GimpViewable *viewable,
   cr = cairo_create (surface);
 
   cairo_translate (cr, layout_x, layout_y);
-  cairo_set_operator (cr, CAIRO_OPERATOR_CLEAR);
+  cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
+  if (color)
+    {
+      gfloat rgb[3];
+
+      gegl_color_get_pixel (color, babl_format ("R'G'B' float"), rgb);
+      cairo_set_source_rgb (cr, rgb[0], rgb[1], rgb[2]);
+    }
+  else
+    {
+      cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
+    }
   pango_cairo_show_layout (cr, layout);
 
   cairo_destroy (cr);

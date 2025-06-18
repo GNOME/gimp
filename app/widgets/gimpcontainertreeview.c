@@ -1827,7 +1827,7 @@ gimp_container_tree_view_drag_pixbuf (GtkWidget *widget,
   if (renderer && gimp_viewable_get_size (renderer->viewable, &width, &height))
     return gimp_viewable_get_new_pixbuf (renderer->viewable,
                                          renderer->context,
-                                         width, height, NULL);
+                                         width, height, NULL, NULL);
 
   return NULL;
 }

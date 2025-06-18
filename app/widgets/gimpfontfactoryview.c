@@ -55,6 +55,7 @@ gimp_font_factory_view_class_init (GimpFontFactoryViewClass *klass)
 static void
 gimp_font_factory_view_init (GimpFontFactoryView *view)
 {
+  gimp_data_factory_view_show_follow_theme_toggle (GIMP_DATA_FACTORY_VIEW (view), TRUE);
 }
 
 GtkWidget *

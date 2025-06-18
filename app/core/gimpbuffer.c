@@ -62,12 +62,14 @@ static GimpTempBuf * gimp_buffer_get_new_preview   (GimpViewable      *viewable,
                                                     GimpContext       *context,
                                                     gint               width,
                                                     gint               height,
-                                                    GeglColor         *color);
+                                                    GeglColor         *color,
+                                                    GeglColor         *background);
 static GdkPixbuf   * gimp_buffer_get_new_pixbuf    (GimpViewable      *viewable,
                                                     GimpContext       *context,
                                                     gint               width,
                                                     gint               height,
-                                                    GeglColor         *color);
+                                                    GeglColor         *color,
+                                                    GeglColor         *background);
 static gchar       * gimp_buffer_get_description   (GimpViewable      *viewable,
                                                     gchar            **tooltip);
 
@@ -227,7 +229,8 @@ gimp_buffer_get_new_preview (GimpViewable *viewable,
                              GimpContext  *context,
                              gint          width,
                              gint          height,
-                             GeglColor    *color G_GNUC_UNUSED)
+                             GeglColor    *color G_GNUC_UNUSED,
+                             GeglColor    *background G_GNUC_UNUSED)
 {
   GimpBuffer  *buffer = GIMP_BUFFER (viewable);
   const Babl  *format = gimp_buffer_get_format (buffer);
@@ -262,7 +265,8 @@ gimp_buffer_get_new_pixbuf (GimpViewable *viewable,
                             GimpContext  *context,
                             gint          width,
                             gint          height,
-                            GeglColor    *color G_GNUC_UNUSED)
+                            GeglColor    *color G_GNUC_UNUSED,
+                            GeglColor    *background G_GNUC_UNUSED)
 {
   GimpBuffer *buffer = GIMP_BUFFER (viewable);
   GdkPixbuf  *pixbuf;
