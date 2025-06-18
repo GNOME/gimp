@@ -45,9 +45,10 @@
  **/
 
 
-#define DBL_LIST_WIDTH 250
-#define DBL_WIDTH      (DBL_LIST_WIDTH + 400)
-#define DBL_HEIGHT     250
+#define DBL_LIST_WIDTH  250
+#define DBL_LIST_HEIGHT 250
+#define DBL_WIDTH       650
+#define DBL_HEIGHT      400
 
 
 enum
@@ -144,8 +145,8 @@ gimp_proc_browser_dialog_init (GimpProcBrowserDialog *dialog)
   GtkTreeSelection *selection;
   GtkWidget        *parent;
 
-  gtk_window_set_default_size (GTK_WINDOW (dialog), DBL_WIDTH,
-                               DBL_WIDTH - DBL_LIST_WIDTH);
+  gtk_window_set_default_size (GTK_WINDOW (dialog),
+                               DBL_WIDTH, DBL_HEIGHT);
 
   dialog->browser = gimp_browser_new ();
   gimp_browser_add_search_types (GIMP_BROWSER (dialog->browser),
@@ -195,7 +196,7 @@ gimp_proc_browser_dialog_init (GimpProcBrowserDialog *dialog)
                     G_CALLBACK (browser_row_activated),
                     dialog);
 
-  gtk_widget_set_size_request (dialog->tree_view, DBL_LIST_WIDTH, DBL_HEIGHT);
+  gtk_widget_set_size_request (dialog->tree_view, DBL_LIST_WIDTH, DBL_LIST_HEIGHT);
   gtk_container_add (GTK_CONTAINER (scrolled_window), dialog->tree_view);
   gtk_widget_show (dialog->tree_view);
 
