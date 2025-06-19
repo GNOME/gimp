@@ -200,6 +200,7 @@ bund_usr ()
       else
         printf "(INFO): skipping $target_path (will be bundled by the tool)\n"
         if echo "$target_path" | grep -q 'bin' || echo "$target_path" | grep -q '.so'; then
+          #$APPENDED_LIST can be used as value for certain params of bundlers
           export APPENDED_LIST="$APPENDED_LIST $target_path "
         fi
       fi
