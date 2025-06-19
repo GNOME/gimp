@@ -331,13 +331,6 @@ if [ "$GIMP_UNSTABLE" ] || [ -z "$GIMP_RELEASE" ]; then
 fi
 ### Debug dialog
 bund_usr "$GIMP_PREFIX" "bin/gimp-debug-tool*" --dest "libexec"
-### headers and .pc files for help building filters and plug-ins
-bund_usr "$GIMP_PREFIX" "include/gimp-*"
-bund_usr "$GIMP_PREFIX" "include/babl-*"
-bund_usr "$GIMP_PREFIX" "include/gegl-*"
-bund_usr "$GIMP_PREFIX" "lib/pkgconfig/gimp*"
-bund_usr "$GIMP_PREFIX" "lib/pkgconfig/babl*"
-bund_usr "$GIMP_PREFIX" "lib/pkgconfig/gegl*"
 ### Introspected plug-ins
 bund_usr "$GIMP_PREFIX" "lib/girepository-*"
 bund_usr "$UNIX_PREFIX" "lib/girepository-*"
@@ -358,16 +351,12 @@ conf_app PYTHONDONTWRITEBYTECODE "1" --no-expand
 #bund_usr "$UNIX_PREFIX" "share/lua/5.1"
 #conf_app LUA_PATH "\${APPDIR}/usr/share/lua/5.1/?.lua;\${APPDIR}/usr/share/lua/5.1/lgi/?.lua;\${APPDIR}/usr/share/lua/5.1/lgi/override/?.lua" --no-expand
 
-## Used by AppImage "centers" etc
-bund_usr "$GIMP_PREFIX" "share/metainfo/*.xml"
 ## Other binaries and deps (bundle them and do fine-tuning with bundling tool)
 bund_usr "$GIMP_PREFIX" 'bin/gimp*'
 bund_usr "$GIMP_PREFIX" "bin/gegl"
 bund_usr "$GIMP_PREFIX" "share/applications/*.desktop"
-#go-appimagetool have too polluted output so we save as log. See: https://github.com/probonopd/go-appimage/issues/314
+### go-appimagetool have too polluted output so we save as log. See: https://github.com/probonopd/go-appimage/issues/314
 "$bundler" -s deploy $(echo "$USR_DIR/share/applications/*.desktop") > appimagetool.log 2>&1 || { cat appimagetool.log; exit 1; }
-
-## Manual adjustments after running the bundling tool
 ### Undo the mess which breaks babl and GEGL. See: https://github.com/probonopd/go-appimage/issues/315
 cp -r $APP_DIR/lib/* $USR_DIR/${LIB_DIR}
 rm -r $APP_DIR/lib
@@ -390,8 +379,20 @@ done
 #lua_cpath_tweaked="$(echo $LUA_CPATH | sed -e 's|$HERE/||' -e 's|/?.so||')/lgi"
 #find "usr/${LIB_DIR}/${LIB_SUBDIR}" -maxdepth 1 -iname *.so* -exec ln -sf $(realpath "{}" --relative-to "$lua_cpath_tweaked") "$lua_cpath_tweaked" \;
 #cd ..
+### Used by AppImage "centers" etc
+bund_usr "$GIMP_PREFIX" "share/metainfo/*.xml"
+### Files unnecessarily created or bundled by the tool
+mv build/linux/appimage/AppRun $APP_DIR
+mv build/linux/appimage/AppRun.bak build/linux/appimage/AppRun
+rm $APP_DIR/*.desktop
+echo "usr/${LIB_DIR}/${LIB_SUBDIR}gconv
+      usr/${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/gdk-pixbuf-query-loaders
+      usr/share/doc
+      usr/share/themes
+      etc
+      .gitignore" > appimageignore-$HOST_ARCH
 
-## Debug symbols
+## Debug symbols (not shipped since ad155fd5)
 #if [ "$GITLAB_CI" ]; then
 #  export DEBUGINFOD_URLS="https://debuginfod.debian.net"
 #fi
@@ -401,17 +402,13 @@ done
 #  fi
 #done
 
-## Files unnecessarily created or bundled by the tool
-mv build/linux/appimage/AppRun $APP_DIR
-mv build/linux/appimage/AppRun.bak build/linux/appimage/AppRun
-rm $APP_DIR/*.desktop
-echo "usr/${LIB_DIR}/${LIB_SUBDIR}gconv
-      usr/${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/gdk-pixbuf-query-loaders
-      usr/${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/*.debug
-      usr/share/doc
-      usr/share/themes
-      etc
-      .gitignore" > appimageignore-$HOST_ARCH
+## headers and .pc files for help building filters and plug-ins
+bund_usr "$GIMP_PREFIX" "include/gimp-*"
+bund_usr "$GIMP_PREFIX" "include/babl-*"
+bund_usr "$GIMP_PREFIX" "include/gegl-*"
+bund_usr "$GIMP_PREFIX" "lib/pkgconfig/gimp*"
+bund_usr "$GIMP_PREFIX" "lib/pkgconfig/babl*"
+bund_usr "$GIMP_PREFIX" "lib/pkgconfig/gegl*"
 
 ## Revision (this does the same as '-Drevision' build option)
 before=$(cat "$(echo $USR_DIR/share/gimp/*/gimp-release)" | grep 'revision')
