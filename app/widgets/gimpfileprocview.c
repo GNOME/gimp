@@ -164,7 +164,8 @@ gimp_file_proc_view_new (Gimp        *gimp,
                                   COLUMN_HELP_ID,    help_id,
                                   COLUMN_FILTER,     filter,
                                   -1);
-              g_object_unref (filter);
+              if (filter != NULL)
+                g_object_unref (filter);
             }
 
           for (list2 = proc->extensions_list;
