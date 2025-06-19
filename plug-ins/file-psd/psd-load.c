@@ -2796,6 +2796,62 @@ add_legacy_layer_effects (GimpLayer *layer,
       g_object_unref (color);
     }
 
+  if (lyr_a->layer_styles->isdw.effecton == 1)
+    {
+      PSDLayerStyleShadow  isdw;
+      GimpLayerMode        mode;
+      GimpDrawableFilter  *filter;
+      GeglColor           *color = gegl_color_new ("none");
+      gchar               *filter_name;
+      gdouble              x;
+      gdouble              y;
+      gdouble              blur;
+      gdouble              radians;
+
+      isdw = lyr_a->layer_styles->isdw;
+
+      filter_name = g_strdup_printf ("%s (%s)", _("Inner Shadow"),
+                                     _("imported"));
+
+      radians = (M_PI / 180) * isdw.angle;
+      x       = isdw.distance * cos (radians);
+      y       = isdw.distance * sin (radians);
+
+      if (isdw.angle >= 0xFF00)
+        isdw.angle = (isdw.angle - 0xFF00) * -1;
+
+      if (isdw.angle > 90 && isdw.angle < 180)
+        y *= -1;
+      else if (isdw.angle < -90 && isdw.angle > -180)
+        x *= -1;
+
+      blur = (isdw.blur / 250.0) * 50.0;
+
+      if (isdw.ver == 0)
+        convert_legacy_psd_color (color, isdw.color, space, ibm_pc_format);
+      else if (isdw.ver == 2)
+        convert_legacy_psd_color (color, isdw.natcolor, space, ibm_pc_format);
+
+      convert_psd_mode (isdw.blendsig, &mode);
+
+      filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                                "gegl:inner-glow",
+                                                filter_name,
+                                                mode,
+                                                1.0,
+                                                "x",           x,
+                                                "y",           y,
+                                                "grow-radius", 1.0,
+                                                "radius",      blur,
+                                                "value",       color,
+                                                "opacity",     isdw.opacity / 255.0,
+                                                NULL);
+
+      g_free (filter_name);
+      g_object_unref (filter);
+      g_object_unref (color);
+    }
+
   if (lyr_a->layer_styles->dsdw.effecton == 1)
     {
       PSDLayerStyleShadow  dsdw;
