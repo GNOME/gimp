@@ -57,7 +57,7 @@ if [ -z "$GITLAB_CI" ] && [ "$1" != '--ci' ]; then
 elif [ "$GITLAB_CI" ] || [ "$1" = '--ci' ]; then
   printf "\e[0Ksection_start:`date +%s`:deps_build[collapsed=true]\r\e[0KBuilding dependencies not present in GNOME runtime\n"
   if [ "$CI_PIPELINE_SOURCE" = 'schedule' ]; then
-    # Check dependencies versions with flatpak-external-data-checker
+    #Check dependencies versions with flatpak-external-data-checker
     export FLATPAK_SYSTEM_HELPER_ON_SESSION=foo
     flatpak install --user https://dl.flathub.org/repo/appstream/org.flathub.flatpak-external-data-checker.flatpakref -y
     if ! flatpak run --user --filesystem=$CI_PROJECT_DIR org.flathub.flatpak-external-data-checker \
@@ -68,7 +68,6 @@ elif [ "$GITLAB_CI" ] || [ "$1" = '--ci' ]; then
       printf "(INFO): All dependencies sources are up to date. Building them...\n" 
     fi
   fi
-
   ## (The deps building is too long and no complete output would be collected,
   ## even from GitLab runner messages. So, let's silent and save logs as a file.)
   eval $FLATPAK_BUILDER --force-clean --user --disable-rofiles-fuse --keep-build-dirs --build-only --stop-at=babl \
