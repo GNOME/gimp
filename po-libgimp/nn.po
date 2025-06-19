@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-02-14 18:58+0000\n"
-"PO-Revision-Date: 2025-02-15 18:38+0100\n"
+"POT-Creation-Date: 2025-06-13 17:12+0000\n"
+"PO-Revision-Date: 2025-06-19 22:00+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -265,22 +265,22 @@ msgid "Allowed values:"
 msgstr "Tillatne verdiar:"
 
 #. procedure executed successfully
-#: libgimp/gimppdb.c:340
+#: libgimp/gimppdb.c:335
 msgid "success"
 msgstr "vellukka"
 
 #. procedure execution failed
-#: libgimp/gimppdb.c:344
+#: libgimp/gimppdb.c:339
 msgid "execution error"
 msgstr "utføringsfeil"
 
 #. procedure called incorrectly
-#: libgimp/gimppdb.c:348
+#: libgimp/gimppdb.c:343
 msgid "calling error"
 msgstr "oppkallsfeil"
 
 #. procedure execution cancelled
-#: libgimp/gimppdb.c:352
+#: libgimp/gimppdb.c:347
 msgid "cancelled"
 msgstr "avbrote"
 
@@ -372,12 +372,12 @@ msgid_plural "%d procedures match your query"
 msgstr[0] "%d prosedyre passa til spørjinga"
 msgstr[1] "%d prosedyrar passa til spørringa"
 
-#: libgimp/gimpprocedure.c:2164
+#: libgimp/gimpprocedure.c:2162
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Prosedyren «%s» returnerte ingen verdiar"
 
-#: libgimp/gimpprocedure.c:2352
+#: libgimp/gimpprocedure.c:2368
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -386,7 +386,7 @@ msgstr ""
 "Prosedyren «%s» returnerte feil verditype for verdien «%s» (#%d). Venta %s, "
 "fekk %s."
 
-#: libgimp/gimpprocedure.c:2364
+#: libgimp/gimpprocedure.c:2380
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' "
@@ -395,7 +395,7 @@ msgstr ""
 "Prosedyren «%s» vart kalla opp med ein feil verditype for argumentet «%s» "
 "(#%d). Venta %s, fekk %s."
 
-#: libgimp/gimpprocedure.c:2399
+#: libgimp/gimpprocedure.c:2415
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -404,7 +404,7 @@ msgstr ""
 "Prosedyren «%s» returnerte «%s» som returverdi «%s» (#%d, type %s). Denne "
 "verdien er utanfor området."
 
-#: libgimp/gimpprocedure.c:2413
+#: libgimp/gimpprocedure.c:2429
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -413,13 +413,13 @@ msgstr ""
 "Prosedyren «%s» vart kalla opp med verdien «%s» for argumentet «%s» (#%d, "
 "type %s). Denne verdien er utføre området."
 
-#: libgimp/gimpprocedure.c:2457
+#: libgimp/gimpprocedure.c:2473
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
 "Prosedyren «%s» returnerte ein ugyldig UTF-8-streng for argumentet «%s»."
 
-#: libgimp/gimpprocedure.c:2467
+#: libgimp/gimpprocedure.c:2483
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -439,9 +439,9 @@ msgstr "_Eksporter"
 
 #: libgimp/gimpproceduredialog.c:318 libgimp/gimpproceduredialog.c:617
 #: libgimpwidgets/gimpcolorbutton.c:553 libgimpwidgets/gimpfilechooser.c:713
-#: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:274
-#: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
-#: libgimpwidgets/gimpquerybox.c:479
+#: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:276
+#: libgimpwidgets/gimpquerybox.c:339 libgimpwidgets/gimpquerybox.c:405
+#: libgimpwidgets/gimpquerybox.c:481
 msgid "_OK"
 msgstr "_OK"
 
@@ -453,8 +453,8 @@ msgstr "_Tilbakestill"
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:172
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:182
 #: libgimpwidgets/gimpfilechooser.c:714 libgimpwidgets/gimpfileentry.c:465
-#: libgimpwidgets/gimpquerybox.c:274 libgimpwidgets/gimpquerybox.c:337
-#: libgimpwidgets/gimpquerybox.c:403 libgimpwidgets/gimpquerybox.c:479
+#: libgimpwidgets/gimpquerybox.c:276 libgimpwidgets/gimpquerybox.c:339
+#: libgimpwidgets/gimpquerybox.c:405 libgimpwidgets/gimpquerybox.c:481
 msgid "_Cancel"
 msgstr "_Avbryt"
 
@@ -474,31 +474,31 @@ msgstr "_Lagra innstillingane"
 msgid "Store current settings for later reuse"
 msgstr "Lagra gjeldande innstillingar for seinare bruk"
 
-#: libgimp/gimpproceduredialog.c:869
+#: libgimp/gimpproceduredialog.c:892
 msgid "Brush Chooser"
 msgstr "Penselveljar"
 
-#: libgimp/gimpproceduredialog.c:873
+#: libgimp/gimpproceduredialog.c:896
 msgid "Font Chooser"
 msgstr "Skrifttypeveljar"
 
-#: libgimp/gimpproceduredialog.c:877
+#: libgimp/gimpproceduredialog.c:900
 msgid "Gradient Chooser"
 msgstr "Fargeovergangsveljar"
 
-#: libgimp/gimpproceduredialog.c:881
+#: libgimp/gimpproceduredialog.c:904
 msgid "Palette Chooser"
 msgstr "Palettveljar"
 
-#: libgimp/gimpproceduredialog.c:885
+#: libgimp/gimpproceduredialog.c:908
 msgid "Pattern Chooser"
 msgstr "Mønsterveljar"
 
-#: libgimp/gimpproceduredialog.c:2647
+#: libgimp/gimpproceduredialog.c:2789
 msgid "Reset to _Initial Values"
 msgstr "Tilbakestill til dei _opphavlege innstillingane"
 
-#: libgimp/gimpproceduredialog.c:2656
+#: libgimp/gimpproceduredialog.c:2798
 msgid "Reset to _Factory Defaults"
 msgstr "Tilbakestill til _fabrikkinnstillingane"
 
@@ -2151,19 +2151,19 @@ msgstr ""
 msgid "Module '%s' load error: %s"
 msgstr "Feil ved lasting av modul «%s»: %s"
 
-#: libgimpmodule/gimpmoduledb.c:450
+#: libgimpmodule/gimpmoduledb.c:458
 msgid "Module error"
 msgstr "Modulfeil"
 
-#: libgimpmodule/gimpmoduledb.c:451
+#: libgimpmodule/gimpmoduledb.c:459
 msgid "Loaded"
 msgstr "Lasta"
 
-#: libgimpmodule/gimpmoduledb.c:452
+#: libgimpmodule/gimpmoduledb.c:460
 msgid "Load failed"
 msgstr "Lastinga mislukka"
 
-#: libgimpmodule/gimpmoduledb.c:453
+#: libgimpmodule/gimpmoduledb.c:461
 msgid "Not loaded"
 msgstr "Ikkje lasta"
 
@@ -2288,7 +2288,7 @@ msgid "HSV"
 msgstr "HSV"
 
 #: libgimpwidgets/gimpcolorscales.c:708 libgimpwidgets/gimpcolorselect.c:2113
-#: modules/color-selector-cmyk.c:301 modules/color-selector-cmyk.c:385
+#: modules/color-selector-cmyk.c:319 modules/color-selector-cmyk.c:403
 #: modules/color-selector-water.c:258 modules/color-selector-wheel.c:191
 #, c-format
 msgid "Profile: %s"
@@ -2493,7 +2493,7 @@ msgstr "Tilpassa kontrollar farge 1"
 msgid "Custom Checks Color 2"
 msgstr "Tilpassa kontrollar farge 2"
 
-#: libgimpwidgets/gimppropwidgets.c:2474
+#: libgimpwidgets/gimppropwidgets.c:2552
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2688,51 +2688,55 @@ msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Forminsk"
 
-#: modules/color-selector-cmyk.c:85
+#: modules/color-selector-cmyk.c:86
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYK fargeveljar (med fargeprofil)"
 
-#: modules/color-selector-cmyk.c:119
+#: modules/color-selector-cmyk.c:120
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: modules/color-selector-cmyk.c:143
+#: modules/color-selector-cmyk.c:144
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: modules/color-selector-cmyk.c:145
+#: modules/color-selector-cmyk.c:146
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: modules/color-selector-cmyk.c:147
+#: modules/color-selector-cmyk.c:148
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: modules/color-selector-cmyk.c:149
+#: modules/color-selector-cmyk.c:150
 msgid "_K"
 msgstr "_K"
 
-#: modules/color-selector-cmyk.c:153
+#: modules/color-selector-cmyk.c:154
 msgid "Cyan"
 msgstr "Cyanblå"
 
-#: modules/color-selector-cmyk.c:154
+#: modules/color-selector-cmyk.c:155
 msgid "Magenta"
 msgstr "Magentaraud"
 
-#: modules/color-selector-cmyk.c:155
+#: modules/color-selector-cmyk.c:156
 msgid "Yellow"
 msgstr "Gul"
 
-#: modules/color-selector-cmyk.c:156
+#: modules/color-selector-cmyk.c:157
 msgid "Black"
 msgstr "Svart"
 
-#: modules/color-selector-cmyk.c:288 modules/color-selector-cmyk.c:367
+#: modules/color-selector-cmyk.c:263
+msgid "Total Ink Coverage"
+msgstr "Total blekkdekning"
+
+#: modules/color-selector-cmyk.c:306 modules/color-selector-cmyk.c:385
 msgid "Profile: (none)"
 msgstr "Profil: (ingen)"
 
