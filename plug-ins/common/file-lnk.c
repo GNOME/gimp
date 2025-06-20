@@ -120,7 +120,7 @@ lnk_create_procedure (GimpPlugIn  *plug_in,
                                            lnk_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure,
-                                     "Windows Shortcut");
+                                     _("Windows Shortcut"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Follows a link to an image in a "
