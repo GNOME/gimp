@@ -444,6 +444,7 @@ legacy_temporary_scalable = [
   '../Default/scalable/gimp-even-horizontal-gap.svg',
   '../Default/scalable/gimp-even-vertical-gap.svg',
   '../Default/scalable/gimp-file-manager.svg',
+  '../Default/scalable/gimp-group-layer.svg',
   '../Default/scalable/gimp-lock-alpha.svg',
   '../Default/scalable/gimp-lock-alpha-symbolic.svg',
   '../Default/scalable/gimp-lock-content.svg',
@@ -491,6 +492,7 @@ legacy_temporary_scalable = [
   '../Default/scalable/gimp-symmetry.svg',
   '../Default/scalable/gtk-ok.svg',
   '../Default/scalable/gtk-no.svg',
+  '../Default/scalable/gtk-cancel.svg',
   '../Default/scalable/gtk-select-color.svg',
   '../Default/scalable/gtk-select-font.svg',
 ]
