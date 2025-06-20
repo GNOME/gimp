@@ -1,7 +1,5 @@
 #!/bin/sh
 
-set -e
-
 ancestor_horizon=28  # days (4 weeks)
 
 echo ""
