@@ -134,7 +134,7 @@ farbfeld_create_procedure (GimpPlugIn  *plug_in,
                                            farbfeld_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure,
-                                     N_("Farbfeld"));
+                                     _("Farbfeld"));
 
       gimp_procedure_set_documentation (procedure,
                                         _("Load file in the Farbfeld file "

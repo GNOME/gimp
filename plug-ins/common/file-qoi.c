@@ -136,7 +136,7 @@ qoi_create_procedure (GimpPlugIn  *plug_in,
                                            qoi_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure,
-                                     N_("Quite OK Image"));
+                                     _("Quite OK Image"));
 
       gimp_procedure_set_documentation (procedure,
                                         _("Load file in the QOI file format"),
