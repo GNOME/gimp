@@ -123,11 +123,11 @@ lnk_create_procedure (GimpPlugIn  *plug_in,
                                      _("Windows Shortcut"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Follows a link to an image in a "
-                                        ".lnk file",
-                                        "Opens a .lnk file and if it points "
-                                        "to an image, it asks GIMP to open "
-                                        "the linked image.",
+                                        _("Follows a link to an image in a "
+                                          ".lnk file"),
+                                        _("Opens a .lnk file and if it points "
+                                          "to an image, it asks GIMP to open "
+                                          "the linked image."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Alex S.",

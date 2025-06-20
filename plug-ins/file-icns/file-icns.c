@@ -133,8 +133,8 @@ icns_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("Icns"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Loads files in Apple Icon Image format",
-                                        "Loads Apple Icon Image files.",
+                                        _("Loads files in Apple Icon Image format"),
+                                        _("Loads Apple Icon Image files."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Brion Vibber <brion@pobox.com>",
