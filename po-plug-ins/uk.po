@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-16 20:41+0000\n"
-"PO-Revision-Date: 2025-06-17 16:50+0300\n"
+"POT-Creation-Date: 2025-06-20 14:46+0000\n"
+"PO-Revision-Date: 2025-06-20 18:43+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -143,7 +143,7 @@ msgstr "Приклад додатка мовою JavaScript (GJS)"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2488
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/grid.c:836
 #: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:260
-#: plug-ins/file-exr/file-exr.c:455 plug-ins/file-psd/psd-load.c:3840
+#: plug-ins/file-exr/file-exr.c:455 plug-ins/file-psd/psd-load.c:3896
 #: plug-ins/flame/flame.c:823 plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -618,7 +618,7 @@ msgstr "Жалюзі"
 #: plug-ins/file-exr/file-exr.c:302 plug-ins/file-faxg3/faxg3.c:578
 #: plug-ins/file-fits/fits.c:673 plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1093
-#: plug-ins/file-psd/psd-load.c:3046 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:3102 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1556
 #: plug-ins/file-tiff/file-tiff-load.c:2365
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:559
@@ -9524,75 +9524,81 @@ msgstr ""
 "Непідтримуваний формат пікселів DDS:\n"
 "бнп: %d, R-маска: %x, G-маска: %x, B-маска: %x, A-маска: %x, прапорці: %u"
 
-#: plug-ins/file-dds/ddsread.c:505
+#: plug-ins/file-dds/ddsread.c:400
+#, c-format
+#| msgid "Image size has changed."
+msgid "Image size is too big to handle."
+msgstr "Розміри зображення є надто великими для обробки."
+
+#: plug-ins/file-dds/ddsread.c:513
 #, c-format
 msgid "Invalid or corrupted DDS header."
 msgstr "Некоректний або пошкоджений заголовок DDS."
 
-#: plug-ins/file-dds/ddsread.c:517
+#: plug-ins/file-dds/ddsread.c:525
 #, c-format
 msgid "Could not allocate a new image."
 msgstr "Не вдалося розмістити нове зображення."
 
-#: plug-ins/file-dds/ddsread.c:533
+#: plug-ins/file-dds/ddsread.c:541
 #, c-format
 msgid "Error reading palette."
 msgstr "Помилка під час спроби читання палітри."
 
-#: plug-ins/file-dds/ddsread.c:828
+#: plug-ins/file-dds/ddsread.c:836
 #, c-format
 msgid "Invalid DDS format magic number."
 msgstr "Некоректна контрольна сума у форматі DOS."
 
-#: plug-ins/file-dds/ddsread.c:844
+#: plug-ins/file-dds/ddsread.c:852
 msgid ""
 "File lacks expected pixel format flags! Image may not be decoded correctly."
 msgstr ""
 "У файлі немає очікуваних прапорців формату пікселя. Можливо, зображення буде "
 "декодовано із помилками."
 
-#: plug-ins/file-dds/ddsread.c:879
+#: plug-ins/file-dds/ddsread.c:887
 #, c-format
 msgid "Invalid pixel format."
 msgstr "Некоректний піксельний формат."
 
-#: plug-ins/file-dds/ddsread.c:904
+#: plug-ins/file-dds/ddsread.c:912
 #, c-format
 msgid "Unsupported format (FourCC: %c%c%c%c, hex: %08x)"
 msgstr "Непідтримуваний формат (FourCC: %c%c%c%c, шіст.: %08x)"
 
-#: plug-ins/file-dds/ddsread.c:926
+#: plug-ins/file-dds/ddsread.c:934
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "Некоректне значення бітів на піксель для даних RGB: %d"
 
-#: plug-ins/file-dds/ddsread.c:937
+#: plug-ins/file-dds/ddsread.c:945
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "Некоректне значення бітів на піксель для даних освітленості: %d"
 
-#: plug-ins/file-dds/ddsread.c:959
+#: plug-ins/file-dds/ddsread.c:967
 #, c-format
 msgid "Invalid DX10 header"
 msgstr "Некоректний заголовок DX10"
 
-#: plug-ins/file-dds/ddsread.c:997
+#: plug-ins/file-dds/ddsread.c:1005
 #, c-format
 msgid "Unsupported DXGI Format: %u"
 msgstr "Непідтримуваний формат DXGI: %u"
 
-#: plug-ins/file-dds/ddsread.c:1185 plug-ins/file-dds/ddsread.c:1249
-#: plug-ins/file-dds/ddsread.c:1269
+#: plug-ins/file-dds/ddsread.c:1193 plug-ins/file-dds/ddsread.c:1257
+#: plug-ins/file-dds/ddsread.c:1277
 #, c-format
 msgid "Requested data exceeds size of file.\n"
 msgstr "Розмір даних, на які надійшов запит, перевищує розмір файла.\n"
 
-#: plug-ins/file-dds/ddsread.c:1193 plug-ins/file-dds/ddsread.c:1275
+#: plug-ins/file-dds/ddsread.c:1201 plug-ins/file-dds/ddsread.c:1283
 #, c-format
 msgid "Unexpected EOF.\n"
 msgstr "Неочікуваний кінець файла.\n"
 
-#: plug-ins/file-dds/ddsread.c:1601
+#: plug-ins/file-dds/ddsread.c:1613
 msgid "Open DDS"
 msgstr "Відкрити DDS"
 
@@ -10338,9 +10344,6 @@ msgstr ""
 
 #: plug-ins/file-psd/psd-export.c:2277
 #, c-format
-#| msgid ""
-#| "Unable to export '%s'.  The PSD file format does not support images that "
-#| "are more than 30,000 pixels wide or tall."
 msgid ""
 "Unable to export '%s'.  The PSB file format does not support images that are "
 "more than 300,000 pixels wide or tall."
@@ -10359,9 +10362,6 @@ msgstr ""
 
 #: plug-ins/file-psd/psd-export.c:2325
 #, c-format
-#| msgid ""
-#| "Unable to export '%s'.  The PSD file format does not support images with "
-#| "layers that are more than 30,000 pixels wide or tall."
 msgid ""
 "Unable to export '%s'.  The PSB file format does not support images with "
 "layers that are more than 300,000 pixels wide or tall."
@@ -10397,7 +10397,7 @@ msgstr ""
 "У Photoshop не передбачено підтримки індексованих зображень, у яких понад "
 "один шар. При експортуванні шари буде об'єднано."
 
-#: plug-ins/file-psd/psd-export.c:2833 plug-ins/file-psd/psd-load.c:3879
+#: plug-ins/file-psd/psd-export.c:2833 plug-ins/file-psd/psd-load.c:3935
 msgid "Compatibility Notice"
 msgstr "Зауваження щодо сумісності"
 
@@ -10499,30 +10499,40 @@ msgstr "Непідтримувана чи хибна ширина маски: %d
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Непідтримуваний чи некоректний розмір маски: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:2232 plug-ins/file-psd/psd-load.c:3019
+#: plug-ins/file-psd/psd-load.c:2232 plug-ins/file-psd/psd-load.c:3075
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Непідтримуваний метод стиснення: %d"
 
-#: plug-ins/file-psd/psd-load.c:3181
+#: plug-ins/file-psd/psd-load.c:2813
+#| msgid "Drop shadow"
+msgid "Inner Shadow"
+msgstr "Внутрішня тінь"
+
+#: plug-ins/file-psd/psd-load.c:2814
+#| msgid "_Import"
+msgid "imported"
+msgstr "імпортовано"
+
+#: plug-ins/file-psd/psd-load.c:3237
 msgid "Extra"
 msgstr "Додатково"
 
-#: plug-ins/file-psd/psd-load.c:3404
+#: plug-ins/file-psd/psd-load.c:3460
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Непідтримуваний чи некоректний розмір каналу"
 
-#: plug-ins/file-psd/psd-load.c:3473
+#: plug-ins/file-psd/psd-load.c:3529
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Не вдається розпакувати дані"
 
-#: plug-ins/file-psd/psd-load.c:3856
+#: plug-ins/file-psd/psd-load.c:3912
 msgid "Duotone Import"
 msgstr "Двотонове імпортування"
 
-#: plug-ins/file-psd/psd-load.c:3857
+#: plug-ins/file-psd/psd-load.c:3913
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10532,7 +10542,7 @@ msgstr ""
 "Дані двотонового простору кольорів було збережено,\n"
 "їх можна повторно застосувати при експортуванні."
 
-#: plug-ins/file-psd/psd-load.c:3880
+#: plug-ins/file-psd/psd-load.c:3936
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -10608,28 +10618,21 @@ msgstr ""
 "каналами та напрямними."
 
 #: plug-ins/file-psd/psd.c:240 plug-ins/file-psd/psd.c:242
-#| msgid "Photoshop image"
 msgid "Photoshop Large image"
 msgstr "Велике зображення Photoshop"
 
 #: plug-ins/file-psd/psd.c:245
-#| msgid "Saves files in the Photoshop (TM) PSD file format"
 msgid "Saves files in the Photoshop (TM) Large PSB file format"
 msgstr "Завантажує файли у форматі файлів великого PSB Photoshop (TM)"
 
 #: plug-ins/file-psd/psd.c:247
-#| msgid ""
-#| "This plug-in saves files of Adobe Photoshop (TM) native PSD format. These "
-#| "files may be of any image type supported by GIMP, with or without layers, "
-#| "layer masks, aux channels and guides."
 msgid ""
 "This plug-in saves files of Adobe Photoshop (TM) Large native PSB format. "
 "These files may be of any image type supported by GIMP, with or without "
 "layers, layer masks, aux channels and guides."
 msgstr ""
-"Цей додаток зберігає файли у власному форматі великого PSB Adobe Photoshop™."
-" Ці "
-"файли можуть зберігати дані у будь-якому типі зображень, підтримку яких "
+"Цей додаток зберігає файли у власному форматі великого PSB Adobe Photoshop™. "
+"Ці файли можуть зберігати дані у будь-якому типі зображень, підтримку яких "
 "передбачено у GIMP, з шарами або без них, масками шарів, допоміжними "
 "каналами та напрямними."
 
