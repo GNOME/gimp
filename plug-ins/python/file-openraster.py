@@ -25,6 +25,9 @@ from gi.repository import Gio
 import os, sys, tempfile, zipfile
 import xml.etree.ElementTree as ET
 
+def N_(message): return message
+def _(message): return GLib.dgettext(None, message)
+
 NESTED_STACK_END = object()
 
 layermodes_map = {
@@ -498,18 +501,18 @@ class FileOpenRaster (Gimp.PlugIn):
                                                  Gimp.PDBProcType.PLUGIN,
                                                  False, export_ora, None)
             procedure.set_image_types("*");
-            procedure.set_documentation ('save an OpenRaster (.ora) file',
-                                         'save an OpenRaster (.ora) file',
+            procedure.set_documentation (_('export an OpenRaster (.ora) file'),
+                                         _('export an OpenRaster (.ora) file'),
                                          name)
-            procedure.set_menu_label('OpenRaster')
+            procedure.set_menu_label(_('OpenRaster'))
             procedure.set_extensions ("ora");
         elif name == 'file-openraster-load':
             procedure = Gimp.LoadProcedure.new (self, name,
                                                 Gimp.PDBProcType.PLUGIN,
                                                 load_ora, None)
-            procedure.set_menu_label('OpenRaster')
-            procedure.set_documentation ('load an OpenRaster (.ora) file',
-                                         'load an OpenRaster (.ora) file',
+            procedure.set_menu_label(_('OpenRaster'))
+            procedure.set_documentation (_('load an OpenRaster (.ora) file'),
+                                         _('load an OpenRaster (.ora) file'),
                                          name)
             procedure.set_mime_types ("image/openraster");
             procedure.set_extensions ("ora");
@@ -518,8 +521,8 @@ class FileOpenRaster (Gimp.PlugIn):
             procedure = Gimp.ThumbnailProcedure.new (self, name,
                                                      Gimp.PDBProcType.PLUGIN,
                                                      thumbnail_ora, None)
-            procedure.set_documentation ('loads a thumbnail from an OpenRaster (.ora) file',
-                                         'loads a thumbnail from an OpenRaster (.ora) file',
+            procedure.set_documentation (_('loads a thumbnail from an OpenRaster (.ora) file'),
+                                         _('loads a thumbnail from an OpenRaster (.ora) file'),
                                          name)
         procedure.set_attribution('Jon Nordby', #author
                                   'Jon Nordby', #copyright
