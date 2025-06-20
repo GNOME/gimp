@@ -94,6 +94,10 @@ static void             add_legacy_layer_effects   (GimpLayer      *layer,
                                                     PSDlayer       *lyr_a,
                                                     PSDimage       *img_a);
 
+static void             add_layer_effects          (GimpLayer      *layer,
+                                                    PSDlayer       *lyr_a,
+                                                    PSDimage       *img_a);
+
 static gint             add_merged_image           (GimpImage      *image,
                                                     PSDimage       *img_a,
                                                     GInputStream   *input,
@@ -2737,7 +2741,10 @@ add_layers (GimpImage     *image,
             /* Add legacy layer styles if applicable.
              * TODO: When we can load modern layer styles, only load these if
              * the file doesn't have modern layer style data. */
-            if (lyr_a[lidx]->layer_styles->count > 0)
+            if (lyr_a[lidx]->layer_effects)
+              add_layer_effects (layer, lyr_a[lidx],
+                                 img_a);
+            else if (lyr_a[lidx]->layer_styles->count > 0)
               add_legacy_layer_effects (layer, lyr_a[lidx], img_a);
 
             /* Insert the layer */
@@ -2909,6 +2916,8 @@ add_legacy_layer_effects (GimpLayer *layer,
 
       dsdw = lyr_a->layer_styles->dsdw;
 
+      g_printerr ("Drop Shadow: legacy intensity value: %f\n", dsdw.intensity);
+
       /* Photoshop uses an angle slider that goes from 0 to 180,
        * then -179 to 0. Since GEGL uses X/Y coordinates for distance,
        * we convert the Photoshop angle and distance and then flip the
@@ -2953,6 +2962,436 @@ add_legacy_layer_effects (GimpLayer *layer,
 
       g_object_unref (filter);
       g_object_unref (color);
+    }
+}
+
+static gboolean
+get_json_boolean (JsonReader *reader, gchar *key, gboolean default_value)
+{
+  gboolean result = default_value;
+
+  if (json_reader_read_member (reader, key))
+    {
+      result = json_reader_get_boolean_value (reader);
+    }
+  json_reader_end_member (reader);
+
+  return result;
+}
+
+static gdouble
+get_json_double (JsonReader *reader, gchar *key, gdouble default_value)
+{
+  gdouble result = default_value;
+
+  if (json_reader_read_member (reader, key))
+    {
+      result = json_reader_get_double_value (reader);
+    }
+  json_reader_end_member (reader);
+
+  return result;
+}
+
+static const gchar *
+get_json_string (JsonReader *reader, gchar *key, const gchar *default_value)
+{
+  const gchar *result = default_value;
+
+  if (json_reader_read_member (reader, key))
+    {
+      result = json_reader_get_string_value (reader);
+    }
+  else
+    {
+      const GError *error = json_reader_get_error (reader);
+      g_printerr ("Unable to read the element: %s\n", error->message);
+    }
+  json_reader_end_member (reader);
+
+  return result;
+}
+
+static GeglColor *
+get_json_color (JsonReader *reader, const Babl *space)
+{
+  GeglColor *color = gegl_color_new ("none");
+
+  /* Expected ClassID here is RGBC, but what if it is e.g. CMYK?
+   * Examples: see psd_tools/composite/vector.py
+   */
+
+  if (json_reader_read_member (reader, "descriptor"))
+    {
+      gint        cnt = json_reader_count_elements (reader);
+      gdouble     pixel[4] = {0.0, 0.0, 0.0, 1.0};
+      gint        i;
+
+      for (i = 0; i < cnt; i++)
+        {
+          if (json_reader_read_element (reader, i))
+            {
+              JsonReader  *color_reader = json_reader_new (json_reader_get_current_node (reader));
+              const gchar *key          = get_json_string (color_reader, "key", "");
+
+              if (json_string_equal (key, "Rd  "))
+                pixel[0] = get_json_double (color_reader, "value", 0.0) / 255.0;
+              else if (json_string_equal (key, "Grn "))
+                pixel[1] = get_json_double (color_reader, "value", 0.0) / 255.0;
+              else if (json_string_equal (key, "Bl  "))
+                pixel[2] = get_json_double (color_reader, "value", 0.0) / 255.0;
+
+              g_object_unref (color_reader);
+            }
+          json_reader_end_element (reader);
+          }
+        pixel[3] = 1.0; /* I guess PS doesn't set an alpha channel? */
+        g_debug ("Pixel values: R: %f, G: %f, B: %f", pixel[0], pixel[1], pixel[2]);
+
+      /* This is not specified in the documentation, but based on sample files,
+        * the color is assumed to be in the drawable's color space. */
+
+      /* FIXME: Since this is double, should we set a linear space? */
+      gegl_color_set_pixel (color, babl_format_with_space ("R'G'B' double", space),
+                            &pixel);
+    }
+  json_reader_end_member (reader);
+
+  return color;
+}
+
+static void
+json_read_dropshadow (JsonReader *reader, const Babl *space, GimpLayer *layer)
+{
+  gboolean     enabled   = FALSE;
+  gboolean     present   = TRUE;        /* Not always present in descriptor*/
+  const gchar *mode      = NULL;
+  GeglColor   *color     = NULL;
+  /* FIXME: Figure out below what the real default values are in Photoshop */
+  gdouble      opacity   = 100.0;
+  gdouble      angle     =  90.0;
+  gdouble      distance  =  18.0;
+  gdouble      intensity =   0.0;
+  gdouble      blur      =  40.0;
+
+  if (json_reader_read_member (reader, "descriptor"))
+    {
+      gint cnt = json_reader_count_elements (reader);
+      gint i;
+
+      g_debug ("Parse dropshadow (%d elements)...\n", cnt);
+
+      for (i = 0; i < cnt; i++)
+        {
+          if (json_reader_read_element (reader, i))
+            {
+              /* Since each element is an object, we need to init a new reader. */
+              JsonReader  *obj_reader = json_reader_new (json_reader_get_current_node (reader));
+              const gchar *key        = get_json_string (obj_reader, "key", "");
+
+              g_debug ("Index %d - Member key: %s.\n", i, key);
+
+              /* For documentation purposes I also list the members we currently do not
+              * interpret:
+              * - "showInDialog", boolean. Seems to be always true.
+              * - "uglg"", boolean (true) I guess this is "use global light".
+              * - "Ckmt", float, pxl (0.0)
+              * - "AntA", boolean (false). Seems to mean anti-alias.
+              * - "TrnS", descriptor with several members, including curves.
+              * - "layerConceals" - boolean.
+              */
+
+              if (json_string_equal (key, "enab"))
+                enabled   = get_json_boolean (obj_reader, "value", FALSE);
+              else if (json_string_equal (key, "present"))
+                present   = get_json_boolean (obj_reader, "value", TRUE);
+              else if (json_string_equal (key, "Md  "))
+                mode      = get_json_string (obj_reader, "value", "Nrml");
+              else if (json_string_equal (key, "Clr "))
+                color     = get_json_color (obj_reader, space);
+              else if (json_string_equal (key, "Opct"))
+                opacity   = (gfloat) get_json_double (obj_reader, "value", 100.0);
+              else if (json_string_equal (key, "lagl"))
+                angle     = (gfloat) get_json_double (obj_reader, "value", 90.0);
+              else if (json_string_equal (key, "Dstn"))
+                distance  = (gfloat) get_json_double (obj_reader, "value", 18.0);
+              else if (json_string_equal (key, "Nose"))
+                /* Uncertain which member intensity, is it Nose, or Ckmt?.
+                * Since the legacy value is percent, I chose Nose. */
+                intensity = (gfloat) get_json_double (obj_reader, "value", 0.0);
+              else if (json_string_equal (key, "blur"))
+                blur      = (gfloat) get_json_double (obj_reader, "value", 40.0);
+
+              g_object_unref (obj_reader);
+            }
+          else
+            {
+              const GError *error = json_reader_get_error (reader);
+
+              g_debug ("Array index %d. Unable to read element: %s", i, error->message);
+            }
+          json_reader_end_element (reader);
+        }
+      if (present && enabled)
+        {
+          GimpDrawableFilter  *filter;
+          gdouble              x;
+          gdouble              y;
+          gdouble              gegl_blur;
+          gdouble              radians;
+
+          radians = (M_PI / 180) * angle;
+          x       = distance * cos (radians);
+          y       = distance * sin (radians);
+
+          /* FIXME: Do we need this check done for the legacy filter? */
+          /*if (angle >= 0xFF00)
+            angle = (angle - 0xFF00) * -1;*/
+
+          g_debug ("Dropshadow angle: %f\n", angle);
+
+          if (angle > 90.0 && angle < 180.0)
+            y *= -1;
+          else if (angle < -90.0 && angle > -180.0)
+            x *= -1;
+
+          gegl_blur = (blur / 250.0) * 100.0;
+
+          /* FIXME Besides certain modes not working for Dropshadow in GIMP,
+           * an additional issue is that the mode names in the descriptor
+           * are different than elsewhere in PSD's, so we need a new
+           * conversion function.
+           */
+          /*convert_psd_mode (dsdw.blendsig, &mode);*/
+          g_printerr ("Drop Shadow: setting layer mode to Replace instead of %.4s.\n", mode);
+          /* Nose (intensity?) is not used in GEGL. */
+          g_debug ("Drop Shadow: Nose value: %f\n", intensity);
+
+          if (! color)
+            {
+              color = gegl_color_new ("none");
+              g_printerr ("WARNING: Color not initialized!\n");
+            }
+
+          filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                                    "gegl:dropshadow",
+                                                    NULL,
+                                                    GIMP_LAYER_MODE_REPLACE,
+                                                    1.0,
+                                                    "x",       x,
+                                                    "y",       y,
+                                                    "radius",  gegl_blur,
+                                                    "color",   color,
+                                                    "opacity", opacity / 100.0,
+                                                    NULL);
+
+          g_object_unref (filter);
+        }
+      g_object_unref (color);
+    }
+  else
+    {
+      g_printerr ("ERROR: No descriptor found!\n");
+    }
+  json_reader_end_member (reader);
+}
+
+static void
+json_read_solidfill (JsonReader *reader, const Babl *space, GimpLayer *layer)
+{
+  gboolean     enabled   = FALSE;
+  gboolean     present   = TRUE;        /* Not always present in descriptor*/
+  const gchar *mode      = NULL;
+  GeglColor   *color     = NULL;
+  /* FIXME: Figure out below what the real default values are in Photoshop */
+  gdouble      opacity   = 100.0;
+
+  if (json_reader_read_member (reader, "descriptor"))
+    {
+      gint cnt = json_reader_count_elements (reader);
+      gint i;
+
+      g_debug  ("Parse Solid Fill (%d elements)", cnt);
+
+      for (i = 0; i < cnt; i++)
+        {
+          if (json_reader_read_element (reader, i))
+            {
+              /* Since each element is an object, we need to init a new reader. */
+              JsonReader  *obj_reader = json_reader_new (json_reader_get_current_node (reader));
+              const gchar *key        = get_json_string (obj_reader, "key", "");
+
+              g_debug ("Index %d - Member key: %s.", i, key);
+
+              /* For documentation purposes I also list the members we currently do not
+              * interpret:
+              * - "showInDialog", boolean. Seems to be always true.
+              */
+
+              if (json_string_equal (key, "enab"))
+                enabled   = get_json_boolean (obj_reader, "value", FALSE);
+              else if (json_string_equal (key, "present"))
+                present   = get_json_boolean (obj_reader, "value", TRUE);
+              else if (json_string_equal (key, "Md  "))
+                mode      = get_json_string (obj_reader, "value", "Nrml");
+              else if (json_string_equal (key, "Clr "))
+                color     = get_json_color (obj_reader, space);
+              else if (json_string_equal (key, "Opct"))
+                opacity   = (gfloat) get_json_double (obj_reader, "value", 100.0);
+
+              g_object_unref (obj_reader);
+            }
+          else
+            {
+              const GError *error = json_reader_get_error (reader);
+
+              g_printerr ("Array index %d. Unable to read the element: %s\n", i, error->message);
+            }
+          json_reader_end_element (reader);
+        }
+      if (present && enabled)
+        {
+          GimpDrawableFilter  *filter;
+          GimpLayerMode        layer_mode;
+
+          /* FIXME The blend mode names in the descriptor
+           * are different than elsewhere in PSD's, so we need a new
+           * conversion function.
+           */
+          /*convert_psd_mode (mode, &layer_mode);*/
+          g_printerr ("Solid Fill: setting layer mode to Normal instead of %.4s.\n", mode);
+          layer_mode = GIMP_LAYER_MODE_NORMAL;
+
+          if (! color)
+            {
+              color = gegl_color_new ("none");
+              g_printerr ("WARNING: Color not initialized!\n");
+            }
+
+      filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                                "gegl:color-overlay",
+                                                NULL,
+                                                layer_mode,
+                                                opacity / 100.0,
+                                                "value", color,
+                                                NULL);
+
+          g_object_unref (filter);
+        }
+      g_object_unref (color);
+    }
+  else
+    {
+      g_printerr ("No descriptor found!\n");
+    }
+  json_reader_end_member (reader);
+}
+
+static void
+add_layer_effects (GimpLayer *layer,
+                   PSDlayer  *lyr_a,
+                   PSDimage  *img_a)
+{
+  const Babl *format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+  const Babl *space  = babl_format_get_space (format);
+
+  if (lyr_a->layer_effects && lyr_a->layer_effects->effects)
+    {
+      JsonReader *root_reader = NULL;
+
+      root_reader = json_reader_new (lyr_a->layer_effects->effects);
+
+      if (json_reader_read_member (root_reader, "descriptor"))
+        {
+          gint cnt = json_reader_count_elements (root_reader);
+          gint i;
+
+          g_debug ("Descriptor has %d elelements.", cnt);
+
+          for (i = cnt-1; i >=0; i--)
+            {
+              if (json_reader_read_element (root_reader, i))
+                {
+                  JsonReader  *reader = json_reader_new (json_reader_get_current_node (root_reader));
+
+                  /* We read classID here instead of key, because I have seen cases
+                   * where e.g. key is "innerShadowMulti" while classID is "IrSh".
+                   * (The multi versions seem to be cases where more than one of
+                   *  that same effect can be defined. The trouble is, that in that
+                   *  case the classID can be (but not always is) one layer deeper
+                   *  in a list.)
+                   * For each of the effects there are "enab" and "present" keys.
+                   * I will assume for now that "enab" means visible, and
+                   * "present" means the effect is used, but this needs confirmation.
+                   * Apparently present is not always included, so maybe I'm wrong.
+                   * For now I'll set it to TRUE by default.
+                   */
+                  if (json_reader_read_member (reader, "classID"))
+                    {
+                      const gchar *str = json_reader_get_string_value (reader);
+
+                      json_reader_end_member (reader);
+
+                      g_debug ("Member classID: %s.", str);
+
+                      if (json_string_equal (str, "SoFi"))
+                        {
+                          /* Read Solid Fill settings */
+                          json_read_solidfill (reader, space, layer);
+                        }
+                      else if (json_string_equal (str, "DrSh"))
+                        {
+                          /* Read DropShadow settings */
+                          json_read_dropshadow (reader, space, layer);
+                        }
+                      else if (json_string_equal (str, "IrSh"))
+                        {
+                          /* Read InnerShadow settings */
+                        }
+                      else if (json_string_equal (str, "OrGl"))
+                        {
+                          /* Read OuterGlow settings */
+                        }
+                      else if (json_string_equal (str, "IrGl"))
+                        {
+                          /* Read InnerGlow settings */
+                        }
+                      else if (json_string_equal (str, "GrFl"))
+                        {
+                          /* Read GradientFill settings */
+                        }
+                      else if (json_string_equal (str, "ebbl"))
+                        {
+                          /* Read (bevel & emboss?) settings */
+                        }
+                      else if (json_string_equal (str, "patternFill"))
+                        {
+                          /* Read patternFill settings */
+                        }
+                      else if (json_string_equal (str, "FrFX"))
+                        {
+                          /* Read FrameFX settings */
+                        }
+                      else if (json_string_equal (str, "ChFX"))
+                        {
+                          /* Read ChFX settings */
+                        }
+                    }
+                  else
+                    {
+                      json_reader_end_member (reader);
+                    }
+                  g_object_unref (reader);
+                }
+              else
+                {
+                  g_debug ("WARNING: Failed to read json element %d!", i);
+                }
+              json_reader_end_element (root_reader);
+            }
+        }
+      json_reader_end_member (root_reader);
+      g_object_unref (root_reader);
     }
 }
 
