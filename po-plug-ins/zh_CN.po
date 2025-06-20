@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-16 20:41+0000\n"
-"PO-Revision-Date: 2025-06-17 09:46+0800\n"
+"POT-Creation-Date: 2025-06-20 14:46+0000\n"
+"PO-Revision-Date: 2025-06-21 07:11+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -143,7 +143,7 @@ msgstr "JavaScript（GJS）插件示例"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2488
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/grid.c:836
 #: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:260
-#: plug-ins/file-exr/file-exr.c:455 plug-ins/file-psd/psd-load.c:3840
+#: plug-ins/file-exr/file-exr.c:455 plug-ins/file-psd/psd-load.c:3896
 #: plug-ins/flame/flame.c:823 plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -615,7 +615,7 @@ msgstr "百叶窗"
 #: plug-ins/file-exr/file-exr.c:302 plug-ins/file-faxg3/faxg3.c:578
 #: plug-ins/file-fits/fits.c:673 plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1093
-#: plug-ins/file-psd/psd-load.c:3046 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:3102 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1556
 #: plug-ins/file-tiff/file-tiff-load.c:2365
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:559
@@ -9278,73 +9278,78 @@ msgstr ""
 "不支持的 DDS 像素格式：\n"
 "bpp：%d，Rmask：%x，Gmask：%x，Bmask：%x，Amask：%x，flags：%u"
 
-#: plug-ins/file-dds/ddsread.c:505
+#: plug-ins/file-dds/ddsread.c:400
+#, c-format
+msgid "Image size is too big to handle."
+msgstr "图像尺寸太大无法处理。"
+
+#: plug-ins/file-dds/ddsread.c:513
 #, c-format
 msgid "Invalid or corrupted DDS header."
 msgstr "无效或损坏的 DDS 头部信息。"
 
-#: plug-ins/file-dds/ddsread.c:517
+#: plug-ins/file-dds/ddsread.c:525
 #, c-format
 msgid "Could not allocate a new image."
 msgstr "无法分配新图像。"
 
-#: plug-ins/file-dds/ddsread.c:533
+#: plug-ins/file-dds/ddsread.c:541
 #, c-format
 msgid "Error reading palette."
 msgstr "读取色板出错。"
 
-#: plug-ins/file-dds/ddsread.c:828
+#: plug-ins/file-dds/ddsread.c:836
 #, c-format
 msgid "Invalid DDS format magic number."
 msgstr "无效的 DDS 格式魔法数字。"
 
-#: plug-ins/file-dds/ddsread.c:844
+#: plug-ins/file-dds/ddsread.c:852
 msgid ""
 "File lacks expected pixel format flags! Image may not be decoded correctly."
 msgstr "文件缺少预期的像素格式标签！图像可能无法正确解码。"
 
-#: plug-ins/file-dds/ddsread.c:879
+#: plug-ins/file-dds/ddsread.c:887
 #, c-format
 msgid "Invalid pixel format."
 msgstr "无效的像素格式。"
 
-#: plug-ins/file-dds/ddsread.c:904
+#: plug-ins/file-dds/ddsread.c:912
 #, c-format
 msgid "Unsupported format (FourCC: %c%c%c%c, hex: %08x)"
 msgstr "不支持的格式（四字符代码：%c%c%c%c，hex：%08x）"
 
-#: plug-ins/file-dds/ddsread.c:926
+#: plug-ins/file-dds/ddsread.c:934
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "用于 RGB 数据的无效 bpp 值：%d"
 
-#: plug-ins/file-dds/ddsread.c:937
+#: plug-ins/file-dds/ddsread.c:945
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "用于亮度数据的无效 bpp 值：%d"
 
-#: plug-ins/file-dds/ddsread.c:959
+#: plug-ins/file-dds/ddsread.c:967
 #, c-format
 msgid "Invalid DX10 header"
 msgstr "无效 DX10 头部信息"
 
-#: plug-ins/file-dds/ddsread.c:997
+#: plug-ins/file-dds/ddsread.c:1005
 #, c-format
 msgid "Unsupported DXGI Format: %u"
 msgstr "不支持的 DXGI 格式：%u"
 
-#: plug-ins/file-dds/ddsread.c:1185 plug-ins/file-dds/ddsread.c:1249
-#: plug-ins/file-dds/ddsread.c:1269
+#: plug-ins/file-dds/ddsread.c:1193 plug-ins/file-dds/ddsread.c:1257
+#: plug-ins/file-dds/ddsread.c:1277
 #, c-format
 msgid "Requested data exceeds size of file.\n"
 msgstr "请求的数据超出文件大小。\n"
 
-#: plug-ins/file-dds/ddsread.c:1193 plug-ins/file-dds/ddsread.c:1275
+#: plug-ins/file-dds/ddsread.c:1201 plug-ins/file-dds/ddsread.c:1283
 #, c-format
 msgid "Unexpected EOF.\n"
 msgstr "意料之外的文件尾。\n"
 
-#: plug-ins/file-dds/ddsread.c:1601
+#: plug-ins/file-dds/ddsread.c:1613
 msgid "Open DDS"
 msgstr "打开 DDS"
 
@@ -10112,7 +10117,7 @@ msgid ""
 "Layers will be merged on export."
 msgstr "Photoshop 不支持多于一个图层的索引图像。图层将在导出时合并。"
 
-#: plug-ins/file-psd/psd-export.c:2833 plug-ins/file-psd/psd-load.c:3879
+#: plug-ins/file-psd/psd-export.c:2833 plug-ins/file-psd/psd-load.c:3935
 msgid "Compatibility Notice"
 msgstr "兼容性注意"
 
@@ -10213,30 +10218,38 @@ msgstr "不支持的或无效的图层蒙板宽度：%d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "不支持的或无效的图层蒙板尺寸：%dx%d"
 
-#: plug-ins/file-psd/psd-load.c:2232 plug-ins/file-psd/psd-load.c:3019
+#: plug-ins/file-psd/psd-load.c:2232 plug-ins/file-psd/psd-load.c:3075
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "不支持的压缩模式：%d"
 
-#: plug-ins/file-psd/psd-load.c:3181
+#: plug-ins/file-psd/psd-load.c:2813
+msgid "Inner Shadow"
+msgstr "内阴影"
+
+#: plug-ins/file-psd/psd-load.c:2814
+msgid "imported"
+msgstr "已导入"
+
+#: plug-ins/file-psd/psd-load.c:3237
 msgid "Extra"
 msgstr "附加的"
 
-#: plug-ins/file-psd/psd-load.c:3404
+#: plug-ins/file-psd/psd-load.c:3460
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "不支持或无效的通道尺寸"
 
-#: plug-ins/file-psd/psd-load.c:3473
+#: plug-ins/file-psd/psd-load.c:3529
 #, c-format
 msgid "Failed to decompress data"
 msgstr "解压缩数据失败"
 
-#: plug-ins/file-psd/psd-load.c:3856
+#: plug-ins/file-psd/psd-load.c:3912
 msgid "Duotone Import"
 msgstr "双色导入"
 
-#: plug-ins/file-psd/psd-load.c:3857
+#: plug-ins/file-psd/psd-load.c:3913
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10246,7 +10259,7 @@ msgstr ""
 "双色调颜色空间数据已保存\n"
 "且可在导出时重新应用。"
 
-#: plug-ins/file-psd/psd-load.c:3880
+#: plug-ins/file-psd/psd-load.c:3936
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
