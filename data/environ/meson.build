@@ -1,33 +1,30 @@
 #.env files read by gimp_environ_table_load_env_file in gimpenvirontable.c
 
 
-environ_config = configuration_data()
-if platform_windows and relocatable_bundle
-  environ_config.set('BIN_PATH', 'PATH=${gimp_installation_dir}\\bin')
-else
-  environ_config.set('BIN_PATH', '')
-endif
-
-configure_file(
-  input : 'default.env.in',
-  output: 'default.env',
-  configuration: environ_config,
-  install: true,
+install_data(
+  'default.env',
   install_dir: gimpplugindir / 'environ',
 )
 
 
-if not meson.is_cross_build() and python.found()
-  install_data(
-    'python.env',
-    install_dir: gimpplugindir / 'environ',
-  )
-endif
+if relocatable_bundle or platform_windows and not meson.is_cross_build()
+  pygimp_config = configuration_data()
+  if relocatable_bundle
+    pygimp_config.set('DONTWRITEBYTECODE_SETTING', 'PYTHONDONTWRITEBYTECODE=1')
+  else
+    pygimp_config.set('DONTWRITEBYTECODE_SETTING', '')
+  endif
+  if platform_windows 
+    pygimp_config.set('HIGHDPI_SETTING', '__COMPAT_LAYER=HIGHDPIAWARE')
+  else
+    pygimp_config.set('HIGHDPI_SETTING', '')
+  endif
 
-
-if platform_windows and not meson.is_cross_build() and python.found()
-  install_data(
-    'pygimp.env',
+  configure_file(
+    input : 'pygimp.env.in',
+    output: 'pygimp.env',
+    configuration: pygimp_config,
+    install: true,
     install_dir: gimpplugindir / 'environ',
   )
 endif
