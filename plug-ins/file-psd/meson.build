@@ -28,6 +28,7 @@ plugin_exe = executable(plugin_name,
                         plugin_sources,
                         c_args: '-DG_LOG_DOMAIN="file-psd"',
                         dependencies: [
+                          json_glib,
                           libgimpui_dep,
                           libjpeg,
                           math,
