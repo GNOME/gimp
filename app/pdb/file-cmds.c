@@ -285,6 +285,28 @@ file_save_invoker (GimpProcedure         *procedure,
                                              gimp_object_get_name (proc),
                                              new_args);
 
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) ==
+      GIMP_PDB_SUCCESS)
+    {
+      GimpImage *image =
+        g_value_get_object (gimp_value_array_index (new_args, 1));
+
+      if (! strcmp (gimp_object_get_name (proc), "gimp-xcf-save"))
+        {
+          gimp_image_set_file (image, file);
+
+          gimp_image_set_imported_file (image, NULL);
+          gimp_image_clean_all (image);
+        }
+      else
+        {
+          gimp_image_set_exported_file (image, file);
+          gimp_image_set_export_proc (image, file_proc);
+
+          gimp_image_set_imported_file (image, NULL);
+          gimp_image_export_clean_all (image);
+        }
+    }
   gimp_value_array_unref (new_args);
 
   return return_vals;
