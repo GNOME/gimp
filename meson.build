@@ -1905,7 +1905,7 @@ if meson.can_run_host_binaries() and have_gobject_introspection
 
   gimp_run_env.set('GIMP_TESTING_INTERPRETER_DIRS', meson.global_build_root() / 'plug-ins/python/')
   gimp_run_env.append('GIMP_TESTING_INTERPRETER_DIRS', meson.global_build_root() / 'extensions/')
-  gimp_run_env.set('GIMP_TESTING_ENVIRON_DIRS', meson.global_source_root() / 'data/environ/')
+  gimp_run_env.set('GIMP_TESTING_ENVIRON_DIRS', meson.global_build_root() / 'data/environ/')
 
   # Makes build errors output way less polluted, making easier to debug
   gimp_run_env.set('GIMP3_LOCALEDIR', meson.global_build_root() / 'po-plug-ins')
