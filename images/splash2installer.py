@@ -9,8 +9,14 @@ if procedure is None:
 config    = procedure.create_config()
 
 def export_scaled_img(image, target_width, target_height, export_path):
-  img        = image.duplicate()
-  layer = img.flatten()
+  img    = image.duplicate()
+  layer  = img.flatten()
+  width  = layer.get_width()
+  height = layer.get_height()
+  # Apparently the height is what we want to preserve while keeping the
+  # ratio. We ignore the original target_width (unsure where this list
+  # of dimensions comes from).
+  target_width  = int(target_height / height * width)
   layer.scale(target_width, target_height, False)
   img.resize(target_width, target_height, 0, 0)
 
@@ -24,8 +30,11 @@ def export_scaled_img(image, target_width, target_height, export_path):
 
 # See https://gitlab.gnome.org/GNOME/gimp-data/-/issues/5
 def export_blurred_img(image, target_width, target_height, export_path):
-  img        = image.duplicate()
-  layer = img.flatten()
+  img    = image.duplicate()
+  layer  = img.flatten()
+  width  = layer.get_width()
+  height = layer.get_height()
+  target_width  = int(target_height / height * width)
   layer.scale(target_width, target_height, False)
   img.resize(target_width, target_height, 0, 0)
 
