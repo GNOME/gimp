@@ -21,12 +21,18 @@ Core:
   - Loading Photoshop patterns (RGB and Grayscale) is now supported.
   - The histogram editor now shows a "Compute unique colors:" checkbox
     which will display the unique color count in the image.
+  - Deleting current palette entry now selects the next entry in the
+    palette.
+  - New paint mode: Overwrite. Note that this mode is only available for
+    paint tools right now (in particular not for layers, neither in
+    filters).
 
 Graphical User Interface:
 
-  - Brushes and Palettes dockables: new "Use theme colors for preview"
-    toggle button. The Palette Editor dockable and the Palette tab in
-    FB/BG Color dockable also follow this setting.
+  - Brushes and Fonts dockables: new "Use theme colors for preview"
+    toggle button.
+  - The Palettes and Palette Editor dockables, and the Palette tab in
+    FB/BG Color dockable, also follow theme colors for grid display.
   - New "System" color scheme which will follow the system's color
     scheme setting (on Unix-like systems when XDG Settings portal is
     installed and on Windows).
@@ -44,7 +50,9 @@ Plug-Ins:
   - Palettes can now be exported as Krita .kpl palette.
   - Over The Air Bitmap (Nokia mobile image format) now supported for
     import.
-  - PSD: legacy Dropshadow layer style is now imported on loading.
+  - PSD:
+    * legacy Dropshadow layer style is now imported on loading.
+    * legacy Inner Shadow layer style is now imported on loading.
   - file-raw: new support for ART (Another RawTherapee, fork of the
     latter) as a RAW loader.
   - OpenEXR: support for importing multi-layer OpenEXR images.
@@ -60,6 +68,7 @@ Plug-Ins:
       decoder enabled);
     * new HEJ2 export support (requires libheif 1.19.8 with OpenJPEG
       support).
+  - New export support for PSB.
 
 Modules:
 
@@ -90,6 +99,10 @@ Build:
   - Flatpak: verify nightly flatpak dependencies with the
     flatpak-external-data-checker (like we do for stable and beta
     flatpaks).
+  - Various non-portable scripts were ported to be properly
+    POSIX-compliant and to allow native builds on all OS (e.g. Windows).
+  - Some soft checks were also added to the build system to prevent
+    re-introduction of non-portable code.
 
 
 Overview of Changes from GIMP 3.0.2 to GIMP 3.0.4
