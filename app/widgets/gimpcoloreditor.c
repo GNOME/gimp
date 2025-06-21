@@ -28,6 +28,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "widgets-types.h"
@@ -245,6 +246,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
 
       gimp_help_set_help_data (button,
                                selector_class->name, selector_class->help_id);
+      gimp_widget_set_identifier (button, selector_class->name);
 
       g_object_set_data (G_OBJECT (button),   "selector", selector);
       g_object_set_data (G_OBJECT (selector), "button",   button);
