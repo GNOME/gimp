@@ -18,7 +18,8 @@ Core:
   - NDE filters are now allowed on channels.
   - Merging filter will now add an alpha channel to a layer if required.
   - Refactoring Photoshop stream loading functions.
-  - Loading Photoshop patterns (RGB and Grayscale) is now supported.
+  - Loading Photoshop RGB and grayscale patterns (.pat, unfortunately
+    the same extension as our own pattern format) now supported.
   - The histogram editor now shows a "Compute unique colors:" checkbox
     which will display the unique color count in the image.
   - Deleting current palette entry now selects the next entry in the
@@ -51,7 +52,7 @@ Plug-Ins:
   - Over The Air Bitmap (Nokia mobile image format) now supported for
     import.
   - PSD:
-    * legacy Dropshadow layer style is now imported on loading.
+    * legacy Drop Shadow layer style is now imported on loading.
     * legacy Inner Shadow layer style is now imported on loading.
   - file-raw: new support for ART (Another RawTherapee, fork of the
     latter) as a RAW loader.
