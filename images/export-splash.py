@@ -5,7 +5,13 @@ image     = Gimp.get_images()[0]
 procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
 config    = procedure.create_config()
 image.flatten()
-image.scale(1920, 1080)
+
+if image.get_width() > 1920 or image.get_height() > 1080:
+  factor = max(image.get_width() / 1920, image.get_height() / 1080)
+  new_width  = image.get_width() / factor
+  new_height = image.get_height() / factor
+  image.scale(new_width, new_height)
+
 drawables = image.get_selected_drawables()
 config.set_property("image", image)
 config.set_property("file", Gio.file_new_for_path("gimp-data/images/gimp-splash.png"))
