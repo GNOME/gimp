@@ -24,6 +24,7 @@
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpmodule/gimpmodule.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 #include "libgimp/libgimp-intl.h"
 
@@ -191,6 +192,7 @@ colorsel_cmyk_init (ColorselCmyk *module)
                              -1);
   gtk_grid_attach (GTK_GRID (grid), module->tic_label, 1, 4, 3, 1);
   gtk_widget_set_visible (module->tic_label, TRUE);
+  gimp_widget_set_identifier (module->tic_label, "total-ink-coverage");
 
   module->name_label = gtk_label_new (NULL);
   gtk_label_set_xalign (GTK_LABEL (module->name_label), 0.0);

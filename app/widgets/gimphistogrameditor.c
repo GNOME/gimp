@@ -22,6 +22,7 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 #include "widgets-types.h"
 
@@ -223,6 +224,7 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
     }
 
   editor->toggle = gtk_check_button_new_with_label (_("Compute unique colors:"));
+  gimp_widget_set_identifier (editor->toggle, "toggle-compute-unique-colors");
   gimp_label_set_attributes (GTK_LABEL (gtk_bin_get_child (GTK_BIN (editor->toggle))),
                              PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,
                              -1);
