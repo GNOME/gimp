@@ -1509,6 +1509,14 @@ gimp_widget_blink_timeout (GtkWidget *widget)
                                   g_type_name (param_spec->owner_type));
                     }
                 }
+              else if (GTK_IS_BUTTON (widget) && step->settings_value)
+                {
+                  /* For any "value" set for a button, we assume it
+                   * means that we want it clicked as part of the demo
+                   * script.
+                   */
+                  gtk_button_clicked (GTK_BUTTON (widget));
+                }
             }
           else if (GIMP_IS_TOOL_BUTTON (widget))
             {
