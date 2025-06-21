@@ -89,16 +89,37 @@
         Among other improvements, it introduces the following features:
         </p>
         <ul>
-          <li>New paint mode "Overwrite"</li>
-          <li>Text tool: new "Outline Direction" option</li>
+          <li demo="toolbox:pencil,
+                    tool-options:paint-mode">
+          New paint mode "Overwrite"
+          </li>
+          <li demo="toolbox:text,
+                    tool-options:outline=1,
+                    tool-options:outline-direction">
+          Text tool: new "Outline Direction" option
+          </li>
+          <li demo="channel-list,
+                    channel-list:item-effect-header-icon">
+          Non-destructive effects now allowed on channels
+          </li>
           <li>New "System" color scheme</li>
-          <li>New button "Use theme colors for preview" on Brushes and Palettes dockables</li>
-          <li>Total Ink Coverage now displayed in the CMYK color selector</li>
+          <li demo="brush-list,brush-list:viewables-follow-theme">
+          New toggle "Use theme colors for preview" on Brushes and Fonts dockables
+          </li>
+          <li demo="histogram-editor,histogram-editor:toggle-compute-unique-colors">
+          New checkbox "Compute unique colors" on Histogram dockable
+          </li>
+          <li demo="color-editor,color-editor:CMYK=1,color-editor:total-ink-coverage">
+          Total Ink Coverage now displayed in the CMYK color selector
+          </li>
           <li>Image format import newly supported: APNG, AVCI, JIF, TIM, OTA bitmap</li>
-          <li>Image format export newly supported: JPEG 2000, HEJ2, TIM</li>
+          <li>Image format export newly supported: JPEG 2000, HEJ2, TIM, PSB</li>
           <li>Improved image format support: OpenEXR, ORA</li>
-          <li>PSD's legacy Dropshadow filter now imported</li>
-          <li>Photoshop's curves files (.acv) and levels files (.alv) can be loaded from the Curves and Levels tools respectively</li>
+          <li>PSD's legacy Drop Shadow and Inner Shadow filters now imported</li>
+          <li demo="toolbox:curves">
+          Photoshop's curves files (.acv) and levels files (.alv) can be loaded from the Curves and Levels tools respectively
+          </li>
+          <li>Photoshop's RGB and grayscale pattern files now supported</li>
           <li>Palettes can now be exported as Krita's palettes (.kpl)</li>
           <li>ART is now supported as a RAW loader</li>
           <li>Refactoring of the non-destructive filter code</li>
