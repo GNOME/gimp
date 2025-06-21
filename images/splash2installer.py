@@ -104,5 +104,9 @@ export_cropped_img(image, 315, 604, 'build/windows/installer/install-end.scale-2
 export_cropped_img(image, 366, 700, 'build/windows/installer/install-end.scale-225.bmp')
 export_cropped_img(image, 416, 797, 'build/windows/installer/install-end.scale-250.bmp')
 
+with open('build/windows/installer/splash-dimensions.h', 'w') as f:
+  f.write('#define GIMP_SPLASH_WIDTH  {}\n'.format(image.get_width()))
+  f.write('#define GIMP_SPLASH_HEIGHT {}\n'.format(image.get_height()))
+
 # Avoid the images being re-generated at each build.
 pathlib.Path('gimp-data/images/stamp-install-end.bmp').touch()
