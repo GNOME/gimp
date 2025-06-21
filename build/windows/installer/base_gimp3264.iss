@@ -84,6 +84,8 @@
 ;Meson don't support C++ style comments. See: https://github.com/mesonbuild/meson/issues/14260
 #include BUILD_DIR + "\config_clean.h"
 
+#include BUILD_DIR + "\build\windows\installer\splash-dimensions.h"
+
 ;Main GIMP versions:
 ;Get GIMP_MUTEX_VERSION (used for internal versioning control)
 #if Defined(GIMP_UNSTABLE)
@@ -748,7 +750,7 @@ begin
 		begin
 			Parent := WizardForm.WelcomePage;
 			Width := WizardForm.WelcomePage.ClientWidth
-			Height := 1080 * Width / 1920
+			Height := {#GIMP_SPLASH_HEIGHT} * Width / {#GIMP_SPLASH_WIDTH}
 			Left := 0;
 			Top := (WizardForm.ClientHeight - Height) / 2;
 			AutoSize := False;
