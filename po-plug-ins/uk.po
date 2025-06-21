@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-20 14:46+0000\n"
-"PO-Revision-Date: 2025-06-20 18:43+0300\n"
+"POT-Creation-Date: 2025-06-21 10:25+0000\n"
+"PO-Revision-Date: 2025-06-21 20:14+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -3572,6 +3572,11 @@ msgstr "Зберегти дані _XMP"
 msgid "Toggle saving XMP data"
 msgstr "Увімкнути або вимкнути збереження даних XMP"
 
+#: plug-ins/common/file-heif.c:350 plug-ins/common/file-heif.c:382
+#| msgid "HEIF/HEIC"
+msgid "HEIF/AVIF"
+msgstr "HEIF/AVIF"
+
 #: plug-ins/common/file-heif.c:353
 msgid "Loads AVIF images"
 msgstr "Завантаження зображень AVIF"
@@ -4159,6 +4164,23 @@ msgstr "16 біт/канал"
 #: plug-ins/common/file-jpegxl.c:2027
 msgid "CMYK profile required for export"
 msgstr "Для експортування потрібен профіль CMYK"
+
+#: plug-ins/common/file-lnk.c:123
+#| msgid "Windows Cursor"
+msgid "Windows Shortcut"
+msgstr "Кнопка Windows"
+
+#: plug-ins/common/file-lnk.c:126
+msgid "Follows a link to an image in a .lnk file"
+msgstr "Переходить за посиланням на зображення у файлі .lnk"
+
+#: plug-ins/common/file-lnk.c:128
+msgid ""
+"Opens a .lnk file and if it points to an image, it asks GIMP to open the "
+"linked image."
+msgstr ""
+"Відкриває файл .lnk, і якщо він вказує на зображення, просить GIMP відкрити"
+" пов'язане зображення."
 
 #: plug-ins/common/file-lnk.c:210 plug-ins/common/file-lnk.c:225
 #: plug-ins/common/file-lnk.c:234 plug-ins/common/file-lnk.c:247
@@ -9526,7 +9548,6 @@ msgstr ""
 
 #: plug-ins/file-dds/ddsread.c:400
 #, c-format
-#| msgid "Image size has changed."
 msgid "Image size is too big to handle."
 msgstr "Розміри зображення є надто великими для обробки."
 
@@ -10011,6 +10032,16 @@ msgstr "Відкривається перегляд для «%s»"
 #: plug-ins/file-icns/file-icns.c:133
 msgid "Icns"
 msgstr "Icns"
+
+#: plug-ins/file-icns/file-icns.c:136
+#| msgid "Loads files in DDS image format"
+msgid "Loads files in Apple Icon Image format"
+msgstr "Завантажує файли у форматі зображень піктограм Apple"
+
+#: plug-ins/file-icns/file-icns.c:137
+#| msgid "Apple Icon Image"
+msgid "Loads Apple Icon Image files."
+msgstr "Завантажує файли зображень піктограм Apple."
 
 #: plug-ins/file-icns/file-icns.c:177
 msgid "Apple Icon Image"
@@ -10505,12 +10536,10 @@ msgid "Unsupported compression mode: %d"
 msgstr "Непідтримуваний метод стиснення: %d"
 
 #: plug-ins/file-psd/psd-load.c:2813
-#| msgid "Drop shadow"
 msgid "Inner Shadow"
 msgstr "Внутрішня тінь"
 
 #: plug-ins/file-psd/psd-load.c:2814
-#| msgid "_Import"
 msgid "imported"
 msgstr "імпортовано"
 
@@ -16964,9 +16993,6 @@ msgstr "Отримання даних зі сканера/камери"
 
 #~ msgid "Windows Animated Cursor"
 #~ msgstr "Анімований вказівник Windows"
-
-#~ msgid "Windows Cursor"
-#~ msgstr "Курсор Windows"
 
 #~ msgid "Windows Icon"
 #~ msgstr "Значок Windows"
