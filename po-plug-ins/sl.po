@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-20 14:46+0000\n"
-"PO-Revision-Date: 2025-06-20 21:53+0200\n"
+"POT-Creation-Date: 2025-06-21 10:25+0000\n"
+"PO-Revision-Date: 2025-06-21 15:45+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -3556,6 +3556,11 @@ msgstr "Shrani podatke _XMP"
 msgid "Toggle saving XMP data"
 msgstr "Preklopi shranjevanje podatkov XMP"
 
+#: plug-ins/common/file-heif.c:350 plug-ins/common/file-heif.c:382
+#| msgid "HEIF/HEIC"
+msgid "HEIF/AVIF"
+msgstr "HEIF/AVIF"
+
 #: plug-ins/common/file-heif.c:353
 msgid "Loads AVIF images"
 msgstr "Naloži slike AVIF"
@@ -4137,6 +4142,22 @@ msgstr "16 bitov/kanal"
 #: plug-ins/common/file-jpegxl.c:2027
 msgid "CMYK profile required for export"
 msgstr "Profil CMYK, potreben za izvoz"
+
+#: plug-ins/common/file-lnk.c:123
+msgid "Windows Shortcut"
+msgstr "Tipkovna bližnjica sistema Windows"
+
+#: plug-ins/common/file-lnk.c:126
+msgid "Follows a link to an image in a .lnk file"
+msgstr "Sledi povezavi do slike v datoteki .lnk"
+
+#: plug-ins/common/file-lnk.c:128
+msgid ""
+"Opens a .lnk file and if it points to an image, it asks GIMP to open the "
+"linked image."
+msgstr ""
+"Odpre datoteko .lnk in če kaže na sliko, poda ukaz GIMP-u, da odpre povezano "
+"sliko."
 
 #: plug-ins/common/file-lnk.c:210 plug-ins/common/file-lnk.c:225
 #: plug-ins/common/file-lnk.c:234 plug-ins/common/file-lnk.c:247
@@ -9927,6 +9948,14 @@ msgstr "Odpri sličico predogleda za »%s« ..."
 #: plug-ins/file-icns/file-icns.c:133
 msgid "Icns"
 msgstr "Icns"
+
+#: plug-ins/file-icns/file-icns.c:136
+msgid "Loads files in Apple Icon Image format"
+msgstr "Naloži datoteke v zapisu Apple Icon Image"
+
+#: plug-ins/file-icns/file-icns.c:137
+msgid "Loads Apple Icon Image files."
+msgstr "Naloži slikovne datoteke Apple Icon Image."
 
 #: plug-ins/file-icns/file-icns.c:177
 msgid "Apple Icon Image"
