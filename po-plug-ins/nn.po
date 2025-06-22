@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-16 20:41+0000\n"
-"PO-Revision-Date: 2025-06-19 21:47+0200\n"
+"POT-Creation-Date: 2025-06-21 10:25+0000\n"
+"PO-Revision-Date: 2025-06-22 14:38+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -144,7 +144,7 @@ msgstr "Programtillegg-eksempel i JavaScript (GJS)"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2488
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/grid.c:836
 #: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:260
-#: plug-ins/file-exr/file-exr.c:455 plug-ins/file-psd/psd-load.c:3840
+#: plug-ins/file-exr/file-exr.c:455 plug-ins/file-psd/psd-load.c:3896
 #: plug-ins/flame/flame.c:823 plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -620,7 +620,7 @@ msgstr "Persienne"
 #: plug-ins/file-exr/file-exr.c:302 plug-ins/file-faxg3/faxg3.c:578
 #: plug-ins/file-fits/fits.c:673 plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1093
-#: plug-ins/file-psd/psd-load.c:3046 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:3102 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1556
 #: plug-ins/file-tiff/file-tiff-load.c:2365
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:559
@@ -3556,6 +3556,11 @@ msgstr "Lagra _XMP"
 msgid "Toggle saving XMP data"
 msgstr "Slå lagring av XMP-data av eller på"
 
+#: plug-ins/common/file-heif.c:350 plug-ins/common/file-heif.c:382
+#| msgid "HEIF/HEIC"
+msgid "HEIF/AVIF"
+msgstr "HEIF/AVIF"
+
 #: plug-ins/common/file-heif.c:353
 msgid "Loads AVIF images"
 msgstr "Lastar inn AVIF-bilete"
@@ -4136,6 +4141,22 @@ msgstr "16 bitar/kanal"
 #: plug-ins/common/file-jpegxl.c:2027
 msgid "CMYK profile required for export"
 msgstr "Treng CMYK-profil for eksport"
+
+#: plug-ins/common/file-lnk.c:123
+msgid "Windows Shortcut"
+msgstr "Windows-snarveg"
+
+#: plug-ins/common/file-lnk.c:126
+msgid "Follows a link to an image in a .lnk file"
+msgstr "Følj ei lenkje til eit bilete i ei .link-fil"
+
+#: plug-ins/common/file-lnk.c:128
+msgid ""
+"Opens a .lnk file and if it points to an image, it asks GIMP to open the "
+"linked image."
+msgstr ""
+"Opnar ei -link-fil, og viss ho peikar til eit bilete vil det spørja GIMP om "
+"å opna biletet."
 
 #: plug-ins/common/file-lnk.c:210 plug-ins/common/file-lnk.c:225
 #: plug-ins/common/file-lnk.c:234 plug-ins/common/file-lnk.c:247
@@ -9447,75 +9468,80 @@ msgstr ""
 "Ustøtta DDS-pikselformat:\n"
 "bpp: %d, Rmask: %x, Gmask: %x, Bmask: %x, Amask: %x, flags: %u"
 
-#: plug-ins/file-dds/ddsread.c:505
+#: plug-ins/file-dds/ddsread.c:400
+#, c-format
+msgid "Image size is too big to handle."
+msgstr "Biletstorleiken er for stor til å handsamast."
+
+#: plug-ins/file-dds/ddsread.c:513
 #, c-format
 msgid "Invalid or corrupted DDS header."
 msgstr "Ugyldig eller øydelagt DDS-overskrift."
 
-#: plug-ins/file-dds/ddsread.c:517
+#: plug-ins/file-dds/ddsread.c:525
 #, c-format
 msgid "Could not allocate a new image."
 msgstr "Klarte ikkje tildela eit nytt bilete."
 
-#: plug-ins/file-dds/ddsread.c:533
+#: plug-ins/file-dds/ddsread.c:541
 #, c-format
 msgid "Error reading palette."
 msgstr "Feil ved lesing av palett."
 
-#: plug-ins/file-dds/ddsread.c:828
+#: plug-ins/file-dds/ddsread.c:836
 #, c-format
 msgid "Invalid DDS format magic number."
 msgstr "Ugyldig magisk nummer i DDS-format."
 
-#: plug-ins/file-dds/ddsread.c:844
+#: plug-ins/file-dds/ddsread.c:852
 msgid ""
 "File lacks expected pixel format flags! Image may not be decoded correctly."
 msgstr ""
 "Fila manglar flagg i forventa pikselformat! Biletet er kanskje ikkje dekoda "
 "korrekt."
 
-#: plug-ins/file-dds/ddsread.c:879
+#: plug-ins/file-dds/ddsread.c:887
 #, c-format
 msgid "Invalid pixel format."
 msgstr "Ugyldig pikselformat."
 
-#: plug-ins/file-dds/ddsread.c:904
+#: plug-ins/file-dds/ddsread.c:912
 #, c-format
 msgid "Unsupported format (FourCC: %c%c%c%c, hex: %08x)"
 msgstr "Ustøtta format (FourCC: %c%c%c%c, heks: %08x)"
 
-#: plug-ins/file-dds/ddsread.c:926
+#: plug-ins/file-dds/ddsread.c:934
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "Ugyldig bpp-verdi for RGB-dataa: %d"
 
-#: plug-ins/file-dds/ddsread.c:937
+#: plug-ins/file-dds/ddsread.c:945
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "Ugyldig bpp-verdi for luminansdataa: %d"
 
-#: plug-ins/file-dds/ddsread.c:959
+#: plug-ins/file-dds/ddsread.c:967
 #, c-format
 msgid "Invalid DX10 header"
 msgstr "Ugyldig DX10-header"
 
-#: plug-ins/file-dds/ddsread.c:997
+#: plug-ins/file-dds/ddsread.c:1005
 #, c-format
 msgid "Unsupported DXGI Format: %u"
 msgstr "Ugyldig DXGI-format: %u"
 
-#: plug-ins/file-dds/ddsread.c:1185 plug-ins/file-dds/ddsread.c:1249
-#: plug-ins/file-dds/ddsread.c:1269
+#: plug-ins/file-dds/ddsread.c:1193 plug-ins/file-dds/ddsread.c:1257
+#: plug-ins/file-dds/ddsread.c:1277
 #, c-format
 msgid "Requested data exceeds size of file.\n"
 msgstr "Dei førespurde dataa overstig filstorleiken.\n"
 
-#: plug-ins/file-dds/ddsread.c:1193 plug-ins/file-dds/ddsread.c:1275
+#: plug-ins/file-dds/ddsread.c:1201 plug-ins/file-dds/ddsread.c:1283
 #, c-format
 msgid "Unexpected EOF.\n"
 msgstr "Uventa filslutt\n"
 
-#: plug-ins/file-dds/ddsread.c:1601
+#: plug-ins/file-dds/ddsread.c:1613
 msgid "Open DDS"
 msgstr "Opna DDS"
 
@@ -9924,6 +9950,14 @@ msgstr "Opnar miniatyr for «%s»"
 msgid "Icns"
 msgstr "Icns"
 
+#: plug-ins/file-icns/file-icns.c:136
+msgid "Loads files in Apple Icon Image format"
+msgstr "Lastar inn filer i Apple Icon-format"
+
+#: plug-ins/file-icns/file-icns.c:137
+msgid "Loads Apple Icon Image files."
+msgstr "Lastar inn Apple Ikon-filer"
+
 #: plug-ins/file-icns/file-icns.c:177
 msgid "Apple Icon Image"
 msgstr "Apple Ikon-bilete"
@@ -10307,7 +10341,7 @@ msgstr ""
 "Photoshop har ikkje støtte for indekserte bilete med meir enn eitt lag. Laga "
 "vert difor fletta saman ved eksport."
 
-#: plug-ins/file-psd/psd-export.c:2833 plug-ins/file-psd/psd-load.c:3879
+#: plug-ins/file-psd/psd-export.c:2833 plug-ins/file-psd/psd-load.c:3935
 msgid "Compatibility Notice"
 msgstr "Kompabilitetsnotis"
 
@@ -10409,30 +10443,38 @@ msgstr "Lagmaskebreidda er ugyldig eller utan støtte: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Lagmaskestorleiken er ugyldig eller utan støtte: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:2232 plug-ins/file-psd/psd-load.c:3019
+#: plug-ins/file-psd/psd-load.c:2232 plug-ins/file-psd/psd-load.c:3075
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Har ikkje støtte for kompresjonsmodus %d"
 
-#: plug-ins/file-psd/psd-load.c:3181
+#: plug-ins/file-psd/psd-load.c:2813
+msgid "Inner Shadow"
+msgstr "Indre skugge"
+
+#: plug-ins/file-psd/psd-load.c:2814
+msgid "imported"
+msgstr "importer"
+
+#: plug-ins/file-psd/psd-load.c:3237
 msgid "Extra"
 msgstr "Ekstra"
 
-#: plug-ins/file-psd/psd-load.c:3404
+#: plug-ins/file-psd/psd-load.c:3460
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Ustøtta eller ugyldig kanalstorleik"
 
-#: plug-ins/file-psd/psd-load.c:3473
+#: plug-ins/file-psd/psd-load.c:3529
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Klarte ikkje dekomprimera data"
 
-#: plug-ins/file-psd/psd-load.c:3856
+#: plug-ins/file-psd/psd-load.c:3912
 msgid "Duotone Import"
 msgstr "Duotone import"
 
-#: plug-ins/file-psd/psd-load.c:3857
+#: plug-ins/file-psd/psd-load.c:3913
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10442,7 +10484,7 @@ msgstr ""
 "Duotone fargeromsdata er lagra\n"
 "og kan brukast på nytt ved eksport."
 
-#: plug-ins/file-psd/psd-load.c:3880
+#: plug-ins/file-psd/psd-load.c:3936
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -16890,9 +16932,6 @@ msgstr "Overfører data frå skannar/kamera"
 
 #~ msgid "Windows Animated Cursor"
 #~ msgstr "Windows animerte markør"
-
-#~ msgid "Windows Cursor"
-#~ msgstr "Windows-markør"
 
 #~ msgid "Windows Icon"
 #~ msgstr "Windows-ikon"
