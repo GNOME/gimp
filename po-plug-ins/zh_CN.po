@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-20 14:46+0000\n"
-"PO-Revision-Date: 2025-06-21 07:11+0800\n"
+"POT-Creation-Date: 2025-06-21 10:25+0000\n"
+"PO-Revision-Date: 2025-06-22 10:22+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -3499,6 +3499,10 @@ msgstr "保存 _XMP"
 msgid "Toggle saving XMP data"
 msgstr "切换保存 XMP 数据"
 
+#: plug-ins/common/file-heif.c:350 plug-ins/common/file-heif.c:382
+msgid "HEIF/AVIF"
+msgstr "HEIF/AVIF"
+
 #: plug-ins/common/file-heif.c:353
 msgid "Loads AVIF images"
 msgstr "载入 AVIF 图像"
@@ -4068,6 +4072,20 @@ msgstr "16 位/通道"
 #: plug-ins/common/file-jpegxl.c:2027
 msgid "CMYK profile required for export"
 msgstr "需要 CMYK 色彩配置用于导出"
+
+#: plug-ins/common/file-lnk.c:123
+msgid "Windows Shortcut"
+msgstr "Windows 快捷方式"
+
+#: plug-ins/common/file-lnk.c:126
+msgid "Follows a link to an image in a .lnk file"
+msgstr "跟随指向 .lnk 文件中图像的链接"
+
+#: plug-ins/common/file-lnk.c:128
+msgid ""
+"Opens a .lnk file and if it points to an image, it asks GIMP to open the "
+"linked image."
+msgstr "打开 .lnk 文件且如果其指向图像，将会使 GIMP 打开该链接的图像。"
 
 #: plug-ins/common/file-lnk.c:210 plug-ins/common/file-lnk.c:225
 #: plug-ins/common/file-lnk.c:234 plug-ins/common/file-lnk.c:247
@@ -9753,6 +9771,14 @@ msgstr "打开“%s”的缩略图"
 #: plug-ins/file-icns/file-icns.c:133
 msgid "Icns"
 msgstr "Icns"
+
+#: plug-ins/file-icns/file-icns.c:136
+msgid "Loads files in Apple Icon Image format"
+msgstr "加载苹果图标图像格式的文件"
+
+#: plug-ins/file-icns/file-icns.c:137
+msgid "Loads Apple Icon Image files."
+msgstr "加载苹果图标图像文件。"
 
 #: plug-ins/file-icns/file-icns.c:177
 msgid "Apple Icon Image"
@@ -16535,9 +16561,6 @@ msgstr "从扫描仪/相机传送数据"
 
 #~ msgid "Windows Animated Cursor"
 #~ msgstr "Windows 动画指针"
-
-#~ msgid "Windows Cursor"
-#~ msgstr "Windows 指针"
 
 #~ msgid "Windows Icon"
 #~ msgstr "Windows 图标"
