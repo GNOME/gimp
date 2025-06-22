@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-20 14:46+0000\n"
-"PO-Revision-Date: 2025-06-21 06:38+0200\n"
+"POT-Creation-Date: 2025-06-21 10:25+0000\n"
+"PO-Revision-Date: 2025-06-22 04:48+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -3449,6 +3449,11 @@ msgstr "_XMP-ის შენახვა"
 msgid "Toggle saving XMP data"
 msgstr "XMP მონაცემების შენახვის გადართვა"
 
+#: plug-ins/common/file-heif.c:350 plug-ins/common/file-heif.c:382
+#| msgid "HEIF/HEIC"
+msgid "HEIF/AVIF"
+msgstr "HEIF/AVIF"
+
 #: plug-ins/common/file-heif.c:353
 msgid "Loads AVIF images"
 msgstr "ტვირთავს AVIF გამოსახულებებს"
@@ -4007,6 +4012,20 @@ msgstr "16 ბიტი/არხი"
 
 #: plug-ins/common/file-jpegxl.c:2027
 msgid "CMYK profile required for export"
+msgstr ""
+
+#: plug-ins/common/file-lnk.c:123
+msgid "Windows Shortcut"
+msgstr "Windows-ის მალსახმობი"
+
+#: plug-ins/common/file-lnk.c:126
+msgid "Follows a link to an image in a .lnk file"
+msgstr ""
+
+#: plug-ins/common/file-lnk.c:128
+msgid ""
+"Opens a .lnk file and if it points to an image, it asks GIMP to open the "
+"linked image."
 msgstr ""
 
 #: plug-ins/common/file-lnk.c:210 plug-ins/common/file-lnk.c:225
@@ -9584,6 +9603,14 @@ msgstr ""
 #: plug-ins/file-icns/file-icns.c:133
 msgid "Icns"
 msgstr ""
+
+#: plug-ins/file-icns/file-icns.c:136
+msgid "Loads files in Apple Icon Image format"
+msgstr "ჩატვირთავს ფაილებს Apple-ის ხატულას გამოსახულების ფორმატში"
+
+#: plug-ins/file-icns/file-icns.c:137
+msgid "Loads Apple Icon Image files."
+msgstr "ჩატვირთავს Apple-ის ხატულას გამოსახულების ფაილებს."
 
 #: plug-ins/file-icns/file-icns.c:177
 msgid "Apple Icon Image"
@@ -16134,9 +16161,6 @@ msgstr ""
 
 #~ msgid "(Left edge = 0, Center = 1, Right edge = 2)"
 #~ msgstr "(მარცხენა კიდე = 0, ცენტრი = 1, მარჯვენა კიდე = 2)"
-
-#~ msgid "Windows Cursor"
-#~ msgstr "Windows-ის კურსორი"
 
 #~ msgid "Windows Icon"
 #~ msgstr "Windows-ის ხატულა"
