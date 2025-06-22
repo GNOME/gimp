@@ -93,66 +93,28 @@ gimp_edit_cut (GimpImage     *image,
                                    undo_label);
       g_free (undo_label);
 
-      if (gimp_channel_is_empty (gimp_image_get_mask (image)))
+      /* With a layer, a 'cut' is the same as a 'copy' and
+       * then deleting layers/clearing selections
+       */
+      if (gimp_edit_copy (image, drawables, context, TRUE, error))
         {
-          GList     *remove = NULL;
-          GimpImage *clip_image;
-
-          /* Let's work on a copy because we will edit the list to remove
-           * layers whose ancestor is also cut.
-           */
-          drawables = g_list_copy (drawables);
           for (iter = drawables; iter; iter = iter->next)
             {
-              GList *iter2;
-
-              for (iter2 = drawables; iter2; iter2 = iter2->next)
+              if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
                 {
-                  if (iter2 == iter)
-                    continue;
-
-                  if (gimp_viewable_is_ancestor (iter2->data, iter->data))
-                    {
-                      /* When cutting a layer group, all its children come
-                       * with anyway.
-                       */
-                      remove = g_list_prepend (remove, iter);
-                      break;
-                    }
+                  gimp_drawable_edit_clear (GIMP_DRAWABLE (iter->data), context);
+                }
+              else
+                {
+                  if (! gimp_layer_is_floating_sel (iter->data))
+                    gimp_image_remove_layer (image, GIMP_LAYER (iter->data),
+                                             TRUE, NULL);
                 }
             }
-          for (iter = remove; iter; iter = iter->next)
-            drawables = g_list_delete_link (drawables, iter->data);
-
-          g_list_free (remove);
-
-          /* Now copy all layers into the clipboard image. */
-          clip_image = gimp_image_new_from_drawables (image->gimp, drawables, FALSE, TRUE);
-          gimp_container_remove (image->gimp->images, GIMP_OBJECT (clip_image));
-          gimp_set_clipboard_image (image->gimp, clip_image);
-          g_object_unref (clip_image);
-
-          /* Remove layers from source image. */
-          for (iter = drawables; iter; iter = iter->next)
-            if (! gimp_layer_is_floating_sel (iter->data))
-              gimp_image_remove_layer (image, GIMP_LAYER (iter->data),
-                                       TRUE, NULL);
-
-          g_list_free (drawables);
         }
       else
         {
-          /* With selection, a cut is similar to a copy followed by a clear. */
-          if (gimp_edit_copy (image, drawables, context, TRUE, error))
-            {
-              for (iter = drawables; iter; iter = iter->next)
-                if (! GIMP_IS_GROUP_LAYER (iter->data))
-                  gimp_drawable_edit_clear (GIMP_DRAWABLE (iter->data), context);
-            }
-          else
-            {
-              success = FALSE;
-            }
+          success = FALSE;
         }
 
       gimp_image_undo_group_end (image);

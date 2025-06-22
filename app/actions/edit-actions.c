@@ -282,7 +282,7 @@ edit_actions_update (GimpActionGroup *group,
   gboolean      undo_enabled = FALSE;
 
   gboolean      have_no_groups = FALSE; /* At least 1 selected layer is not a group.         */
-  gboolean      have_writable  = FALSE; /* At least 1 selected layer has no contents lock.   */
+  gboolean      have_writable  = TRUE;  /* At least 1 selected layer has no contents lock.   */
 
   if (image)
     {
@@ -292,11 +292,30 @@ edit_actions_update (GimpActionGroup *group,
 
       for (iter = drawables; iter; iter = iter->next)
         {
-          if (! gimp_viewable_get_children (GIMP_VIEWABLE (iter->data)))
-            have_no_groups = TRUE;
+          GimpContainer *container = gimp_viewable_get_children (GIMP_VIEWABLE (iter->data));
 
-          if (! gimp_item_is_content_locked (GIMP_ITEM (iter->data), NULL))
-            have_writable = TRUE;
+          if (gimp_item_is_content_locked (GIMP_ITEM (iter->data), NULL))
+            have_writable = FALSE;
+
+          /* If we have a layer group, check if any of its children have
+           * content locked.
+           */
+          if (! container)
+            {
+              have_no_groups = TRUE;
+            }
+          else
+            {
+              gint n_children = gimp_container_get_n_children (container);
+
+              for (gint i = 0; i < n_children; i++)
+                {
+                  GimpObject *child = gimp_container_get_child_by_index (container, i);
+
+                  if (gimp_item_is_content_locked (GIMP_ITEM (child), NULL))
+                    have_writable = FALSE;
+                }
+            }
 
           if (have_no_groups && have_writable)
             break;
@@ -351,7 +370,7 @@ edit_actions_update (GimpActionGroup *group,
   g_free (undo_name);
   g_free (redo_name);
 
-  SET_SENSITIVE ("edit-cut",                         have_writable && have_no_groups);
+  SET_SENSITIVE ("edit-cut",                         have_writable);
   SET_SENSITIVE ("edit-copy",                        drawables);
   SET_SENSITIVE ("edit-copy-visible",                image);
   /*             "edit-paste" is always active */
