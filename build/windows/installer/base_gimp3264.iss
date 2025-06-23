@@ -84,8 +84,6 @@
 ;Meson don't support C++ style comments. See: https://github.com/mesonbuild/meson/issues/14260
 #include BUILD_DIR + "\config_clean.h"
 
-#include BUILD_DIR + "\build\windows\installer\splash-dimensions.h"
-
 ;Main GIMP versions:
 ;Get GIMP_MUTEX_VERSION (used for internal versioning control)
 #if Defined(GIMP_UNSTABLE)
@@ -119,6 +117,7 @@
 
 ;3.1.1 Icons and other files
 #define ASSETS_DIR BUILD_DIR + "\build\windows\installer"
+#include ASSETS_DIR + "\splash-dimensions.h"
 
 ;3.1.2 Installer lang files
 [Languages]
