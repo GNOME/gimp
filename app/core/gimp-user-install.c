@@ -297,7 +297,7 @@ user_install_detect_old (GimpUserInstall *install,
       gint major;
       gint minor;
 
-      for (major = 3; major >= 2; major--)
+      for (major = GIMP_MAJOR_VERSION; major >= 2; major--)
         {
           gint max_minor;
 
@@ -324,14 +324,14 @@ user_install_detect_old (GimpUserInstall *install,
 
               if (migrate)
                 {
-                  install->old_major = 2;
+                  install->old_major = major;
                   install->old_minor = minor;
 
                   break;
                 }
 
 #ifdef G_OS_UNIX
-              if (minor == 10)
+              if (major == 2 && minor == 10)
                 {
                   /* This is special-casing for GIMP 2.10 as flatpak where
                    * we had this weird inconsistency: depending on whether a
@@ -381,6 +381,8 @@ user_install_detect_old (GimpUserInstall *install,
                 }
 #endif
             }
+          if (migrate)
+            break;
         }
     }
 
