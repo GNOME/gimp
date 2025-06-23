@@ -819,8 +819,8 @@
                                 "type": "anitya",
                                 "project-id": 2540,
                                 "stable-only": true,
+                                "//": "https://github.com/OpenMathLib/OpenBLAS/issues/5324",
                                 "versions": {
-                                    "//": "https://github.com/OpenMathLib/OpenBLAS/issues/5324",
                                     "<": "0.3.30"
                                 },
                                 "url-template": "https://github.com/xianyi/OpenBLAS/archive/v$version.tar.gz"
