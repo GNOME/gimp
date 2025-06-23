@@ -600,7 +600,8 @@ gimp_get_version_url (void)
 #if defined(GIMP_RELEASE) && ! defined(GIMP_RC_VERSION)
   return "https://www.gimp.org/gimp_versions.json";
 #else
-  if (g_getenv ("GIMP_DEV_VERSIONS_JSON"))
+  if (g_getenv ("GIMP_DEV_VERSIONS_JSON") &&
+      g_strcmp0 (g_getenv ("GIMP_DEV_VERSIONS_JSON"), "") != 0)
     return g_getenv ("GIMP_DEV_VERSIONS_JSON");
   else
     return "https://testing.gimp.org/gimp_versions.json";
