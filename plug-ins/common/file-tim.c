@@ -170,7 +170,7 @@ tim_create_procedure (GimpPlugIn  *plug_in,
                                            tim_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure,
-                                     N_("TIM Image"));
+                                     _("TIM Image"));
 
       gimp_procedure_set_documentation (procedure,
                                         _("Load file in the TIM file format"),
