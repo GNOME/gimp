@@ -284,7 +284,6 @@ gimp_edit_copy (GimpImage     *image,
       clip_image = gimp_image_new_from_drawables (image->gimp, drawables, TRUE, TRUE);
       gimp_container_remove (image->gimp->images, GIMP_OBJECT (clip_image));
       gimp_set_clipboard_image (image->gimp, clip_image);
-      g_list_free (drawables);
 
       clip_selection = gimp_image_get_mask (clip_image);
       if (! gimp_channel_is_empty (clip_selection))
@@ -377,6 +376,7 @@ gimp_edit_copy (GimpImage     *image,
                              "gimp-edit-new-image-y",
                              GINT_TO_POINTER (offset_y));
         }
+      g_list_free (drawables);
 
       gimp_image_undo_disable (clip_image);
       gimp_image_resize_to_layers (clip_image, context, NULL, NULL, NULL,
