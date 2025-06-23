@@ -82,7 +82,7 @@
   </provides>
 
   <releases>
-    <release version="3.1.2" date="2025-06-21" type="development">
+    <release version="3.1.2" date="2025-06-22" type="development">
       <description>
         <p>
         GIMP 3.1.2 is the first development release leading to the next stable 3.2 series.
