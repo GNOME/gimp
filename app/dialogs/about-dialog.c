@@ -22,6 +22,10 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#ifdef PLATFORM_OSX
+#include <Foundation/Foundation.h>
+#endif /* PLATFORM_OSX */
+
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
@@ -508,9 +512,39 @@ about_dialog_add_update (GimpAboutDialog *dialog,
       gchar *time;
 
       datetime = g_date_time_new_from_unix_local (config->check_update_timestamp);
+#if defined(PLATFORM_OSX)
+      NSAutoreleasePool *pool         = [[NSAutoreleasePool alloc] init];
+      NSDateFormatter   *formatter    = [[NSDateFormatter alloc] init];
+      NSDate            *current_date = [NSDate date];
+      NSString          *formatted_date;
+      NSString          *formatted_time;
+
+      formatter.locale = [NSLocale currentLocale];
+
+      formatter.dateStyle = NSDateFormatterShortStyle;
+      formatter.timeStyle = NSDateFormatterNoStyle;
+      formatted_date      = [formatter stringFromDate:current_date];
+
+      formatter.dateStyle = NSDateFormatterNoStyle;
+      formatter.timeStyle = NSDateFormatterMediumStyle;
+      formatted_time      = [formatter stringFromDate:current_date];
+
+      if (formatted_date)
+        date = g_strdup ([formatted_date UTF8String]);
+      else
+        date = g_date_time_format (datetime, "%x");
+
+      if (formatted_time)
+        time = g_strdup ([formatted_time UTF8String]);
+      else
+        time = g_date_time_format (datetime, "%X");
+
+      [formatter release];
+      [pool drain];
+#else
       date = g_date_time_format (datetime, "%x");
       time = g_date_time_format (datetime, "%X");
-
+#endif
       if (config->last_known_release != NULL)
         /* Translators: first string is the date in the locale's date
         * representation (e.g., 12/31/99), second is the time in the
