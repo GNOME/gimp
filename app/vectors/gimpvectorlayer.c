@@ -52,7 +52,8 @@
 enum
 {
   PROP_0,
-  PROP_VECTOR_LAYER_OPTIONS
+  PROP_VECTOR_LAYER_OPTIONS,
+  PROP_MODIFIED
 };
 
 
@@ -76,6 +77,13 @@ static void       gimp_vector_layer_set_buffer      (GimpDrawable           *dra
                                                      const gchar            *undo_desc,
                                                      GeglBuffer             *buffer,
                                                      const GeglRectangle    *bounds);
+static void       gimp_vector_layer_push_undo       (GimpDrawable           *drawable,
+                                                     const gchar            *undo_desc,
+                                                     GeglBuffer             *buffer,
+                                                     gint                    x,
+                                                     gint                    y,
+                                                     gint                    width,
+                                                     gint                    height);
 
 static gint64     gimp_vector_layer_get_memsize     (GimpObject             *object,
 						                             gint64                 *gui_size);
@@ -139,6 +147,7 @@ gimp_vector_layer_class_init (GimpVectorLayerClass *klass)
   GimpLayerClass    *layer_class       = GIMP_LAYER_CLASS (klass);
 
   drawable_class->set_buffer        = gimp_vector_layer_set_buffer;
+  drawable_class->push_undo         = gimp_vector_layer_push_undo;
 
   object_class->finalize            = gimp_vector_layer_finalize;
   object_class->set_property        = gimp_vector_layer_set_property;
@@ -169,6 +178,12 @@ gimp_vector_layer_class_init (GimpVectorLayerClass *klass)
                            "vector-layer-options", NULL, NULL,
                            GIMP_TYPE_VECTOR_LAYER_OPTIONS,
                            G_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_MODIFIED,
+                            "modified",
+                            NULL, NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -212,6 +227,9 @@ gimp_vector_layer_get_property (GObject    *object,
     {
     case PROP_VECTOR_LAYER_OPTIONS:
       g_value_set_object (value, vector_layer->options);
+      break;
+    case PROP_MODIFIED:
+      g_value_set_boolean (value, vector_layer->modified);
       break;
 
     default:
@@ -258,6 +276,9 @@ gimp_vector_layer_set_property (GObject      *object,
                                    vector_layer, G_CONNECT_SWAPPED);
 
 	    }
+      break;
+    case PROP_MODIFIED:
+      vector_layer->modified = g_value_get_boolean (value);
       break;
 
     default:
@@ -306,6 +327,35 @@ gimp_vector_layer_set_buffer (GimpDrawable        *drawable,
                                                   buffer, bounds);
 
   if (push_undo && ! layer->modified)
+    {
+      gimp_image_undo_push_vector_layer_modified (image, NULL, layer);
+
+      g_object_set (drawable, "modified", TRUE, NULL);
+
+      gimp_image_undo_group_end (image);
+    }
+}
+
+static void
+gimp_vector_layer_push_undo (GimpDrawable *drawable,
+                             const gchar  *undo_desc,
+                             GeglBuffer   *buffer,
+                             gint          x,
+                             gint          y,
+                             gint          width,
+                             gint          height)
+{
+  GimpVectorLayer *layer = GIMP_VECTOR_LAYER (drawable);
+  GimpImage       *image = gimp_item_get_image (GIMP_ITEM (layer));
+
+  if (! layer->modified)
+    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_DRAWABLE, undo_desc);
+
+  GIMP_DRAWABLE_CLASS (parent_class)->push_undo (drawable, undo_desc,
+                                                 buffer,
+                                                 x, y, width, height);
+
+  if (! layer->modified)
     {
       gimp_image_undo_push_vector_layer_modified (image, NULL, layer);
 
@@ -605,7 +655,8 @@ gimp_vector_layer_render_path (GimpVectorLayer *layer,
 
   /* Convert from custom to standard styles */
   style = gimp_fill_options_get_custom_style (layer->options->fill_options);
-  if (style == GIMP_CUSTOM_STYLE_SOLID_COLOR)
+  if (style == GIMP_CUSTOM_STYLE_SOLID_COLOR ||
+      ! gimp_context_get_pattern (GIMP_CONTEXT (layer->options->fill_options)))
     gimp_fill_options_set_style (layer->options->fill_options,
                                  GIMP_FILL_STYLE_FG_COLOR);
   else
@@ -614,7 +665,8 @@ gimp_vector_layer_render_path (GimpVectorLayer *layer,
 
   style =
     gimp_fill_options_get_custom_style (GIMP_FILL_OPTIONS (layer->options->stroke_options));
-  if (style == GIMP_CUSTOM_STYLE_SOLID_COLOR)
+  if (style == GIMP_CUSTOM_STYLE_SOLID_COLOR ||
+      ! gimp_context_get_pattern (GIMP_CONTEXT (layer->options->stroke_options)))
     gimp_fill_options_set_style (GIMP_FILL_OPTIONS (layer->options->stroke_options),
                                  GIMP_FILL_STYLE_FG_COLOR);
   else
