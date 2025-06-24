@@ -83,6 +83,9 @@ static gint64     gimp_vector_layer_get_memsize     (GimpObject             *obj
 static GimpItem * gimp_vector_layer_duplicate       (GimpItem               *item,
                                                      GType                   new_type);
 
+static void       gimp_vector_layer_translate       (GimpLayer              *layer,
+                                                     gint                    offset_x,
+                                                     gint                    offset_y);
 static void       gimp_vector_layer_scale           (GimpItem               *item,
                                                      gint                    new_width,
                                                      gint                    new_height,
@@ -133,6 +136,7 @@ gimp_vector_layer_class_init (GimpVectorLayerClass *klass)
   GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
   GimpItemClass     *item_class        = GIMP_ITEM_CLASS (klass);
   GimpDrawableClass *drawable_class    = GIMP_DRAWABLE_CLASS (klass);
+  GimpLayerClass    *layer_class       = GIMP_LAYER_CLASS (klass);
 
   drawable_class->set_buffer        = gimp_vector_layer_set_buffer;
 
@@ -143,6 +147,8 @@ gimp_vector_layer_class_init (GimpVectorLayerClass *klass)
   gimp_object_class->get_memsize    = gimp_vector_layer_get_memsize;
 
   viewable_class->default_icon_name = "gimp-vector-layer";
+
+  layer_class->translate            = gimp_vector_layer_translate;
 
   item_class->removed               = gimp_vector_layer_removed;
   item_class->duplicate             = gimp_vector_layer_duplicate;
@@ -352,6 +358,27 @@ gimp_vector_layer_duplicate (GimpItem *item,
     }
 
   return new_item;
+}
+
+static void
+gimp_vector_layer_translate (GimpLayer *layer,
+                             gint       offset_x,
+                             gint       offset_y)
+{
+  GimpVectorLayer *vector_layer = GIMP_VECTOR_LAYER (layer);
+  gint             x, y;
+
+  if (vector_layer->options && vector_layer->options->path)
+    gimp_item_translate (GIMP_ITEM (vector_layer->options->path),
+                         offset_x, offset_y, FALSE);
+
+  /* Correct offset for vector layer after moving path */
+  gimp_item_get_offset (GIMP_ITEM (layer), &x, &y);
+
+  x += offset_x;
+  y += offset_y;
+
+  gimp_item_set_offset (GIMP_ITEM (layer), x, y);
 }
 
 static void
