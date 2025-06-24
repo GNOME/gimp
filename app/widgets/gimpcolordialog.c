@@ -386,9 +386,13 @@ gimp_color_dialog_response (GtkDialog *gtk_dialog,
 
           /* Restore old color for undo */
           old_color = gimp_color_selection_get_old_color (GIMP_COLOR_SELECTION (dialog->selection));
-          gimp_image_set_colormap_entry (image, col_index, old_color, FALSE);
-          gimp_image_set_colormap_entry (image, col_index, color, TRUE);
-          gimp_image_flush (image);
+
+          if (gimp_image_get_base_type (image) == GIMP_INDEXED)
+            {
+              gimp_image_set_colormap_entry (image, col_index, old_color, FALSE);
+              gimp_image_set_colormap_entry (image, col_index, color, TRUE);
+              gimp_image_flush (image);
+            }
 
           gtk_stack_set_visible_child_name (GTK_STACK (dialog->stack), "colormap");
           g_signal_emit (dialog, color_dialog_signals[UPDATE], 0,
@@ -412,8 +416,11 @@ gimp_color_dialog_response (GtkDialog *gtk_dialog,
         {
           dialog->colormap_editing = FALSE;
 
-          gimp_image_set_colormap_entry (image, col_index, color, FALSE);
-          gimp_projection_flush (gimp_image_get_projection (image));
+          if (gimp_image_get_base_type (image) == GIMP_INDEXED)
+            {
+              gimp_image_set_colormap_entry (image, col_index, color, FALSE);
+              gimp_projection_flush (gimp_image_get_projection (image));
+            }
 
           gtk_stack_set_visible_child_name (GTK_STACK (dialog->stack), "colormap");
           g_signal_emit (dialog, color_dialog_signals[UPDATE], 0,
@@ -683,7 +690,8 @@ gimp_color_dialog_color_changed (GimpColorSelection *selection,
               g_object_unref (old_color);
             }
 
-          gimp_image_set_colormap_entry (image, col_index, color, push_undo);
+          if (gimp_image_get_base_type (image) == GIMP_INDEXED)
+            gimp_image_set_colormap_entry (image, col_index, color, push_undo);
 
           if (push_undo)
             gimp_image_flush (image);
