@@ -35,10 +35,18 @@
 #include "gimp-intl.h"
 
 
-static GList * gimp_pattern_load_photoshop_pattern (GimpContext   *context,
-                                                    GFile         *file,
-                                                    GInputStream  *input,
-                                                    GError       **error);
+static gboolean gimp_pattern_load_photoshop_channel  (GDataInputStream  *data_input,
+                                                      gint               chan,
+                                                      guchar            *chan_buf,
+                                                      gsize              size,
+                                                      guchar            *chan_data,
+                                                      guint32            n_channels,
+                                                      GError           **error);
+
+static GList * gimp_pattern_load_photoshop_pattern   (GimpContext       *context,
+                                                      GFile             *file,
+                                                      GInputStream      *input,
+                                                      GError           **error);
 
 
 GList *
@@ -238,6 +246,108 @@ gimp_pattern_load_pixbuf (GimpContext   *context,
 
 
 /* Private functions */
+#define update_last_error() if (last_error) g_clear_error (last_error); last_error = error; error = NULL;
+
+static gboolean
+gimp_pattern_load_photoshop_channel (GDataInputStream  *data_input,
+                                     gint               chan,
+                                     guchar            *chan_buf,
+                                     gsize              size,
+                                     guchar            *chan_data,
+                                     guint32            n_channels,
+                                     GError           **error)
+{
+  gint      j;
+  goffset   cofs;
+  gint32    chan_version;
+  gint32    chan_size;
+  gint32    chan_dummy;
+  gint16    chan_depth;
+  gint8     chan_compression;
+  gint32    chan_top, chan_left, chan_bottom, chan_right;
+  guchar   *temp_buf;
+  gsize     bytes_read;
+  GError  **last_error = NULL;
+
+  temp_buf = NULL;
+
+  if (! gimp_data_input_stream_read_long (data_input,  &chan_version, error) ||
+      ! gimp_data_input_stream_read_long (data_input,  &chan_size,    error))
+    {
+      g_printerr ("Error reading channel %d\n", chan);
+      update_last_error ();
+      return FALSE;
+    }
+  cofs = g_seekable_tell (G_SEEKABLE (data_input));
+
+  /** Dummy 32-bit depth */
+  if (! gimp_data_input_stream_read_long (data_input,  &chan_dummy, error))
+    {
+      g_printerr ("Error reading channel %d\n", chan);
+      update_last_error ();
+      return FALSE;
+    }
+
+  if (! gimp_data_input_stream_read_long (data_input,  &chan_top,    error) ||
+      ! gimp_data_input_stream_read_long (data_input,  &chan_left,   error) ||
+      ! gimp_data_input_stream_read_long (data_input,  &chan_bottom, error) ||
+      ! gimp_data_input_stream_read_long (data_input,  &chan_right,  error) ||
+      ! gimp_data_input_stream_read_short (data_input, &chan_depth,  error) ||
+      ! gimp_data_input_stream_read_char (data_input,  (gchar *) &chan_compression, error))
+    {
+      g_printerr ("Error reading channel %d\n", chan);
+      update_last_error ();
+      return FALSE;
+    }
+  if (chan_depth != 8)
+    {
+      g_printerr ("Unsupported channel depth %d\n", chan_depth);
+      update_last_error ();
+      return FALSE;
+    }
+
+  if (chan_compression == 0)
+    {
+      if (! g_input_stream_read_all ((GInputStream *) data_input,
+                                     chan_buf, size,
+                                     &bytes_read, NULL, error) ||
+          bytes_read != size)
+        {
+          g_printerr ("Error reading channel %d\n", chan);
+          update_last_error ();
+          return FALSE;
+        }
+    }
+  else
+    {
+      if (! gimp_data_input_stream_rle_decode (data_input,
+                                               (gchar *) chan_buf, size,
+                                               chan_bottom-chan_top, error))
+        {
+          g_printerr ("Failed to decode channel %d\n", chan);
+          update_last_error ();
+          return FALSE;
+        }
+    }
+
+  /* Move channel data to correct offset */
+  temp_buf = &chan_data[chan];
+  for (j = 0; j < size; j++)
+    {
+      temp_buf[j*n_channels] = chan_buf[j];
+    }
+
+  /* Always seek to next offset to reduce chance of errors */
+  if (! g_seekable_seek (G_SEEKABLE (data_input),
+                         cofs+chan_size, G_SEEK_SET,
+                         NULL, error))
+    {
+      g_printerr ("Error reading Photoshop pattern.\n");
+      update_last_error ();
+      return FALSE;
+    }
+  return TRUE;
+}
 
 static GList *
 gimp_pattern_load_photoshop_pattern (GimpContext   *context,
@@ -249,9 +359,10 @@ gimp_pattern_load_photoshop_pattern (GimpContext   *context,
   gint32             pat_count;
   gint               i;
   goffset            ofs;
-  GList             *pattern_list = NULL;
+  GList             *pattern_list     = NULL;
   GDataInputStream  *data_input;
-  GError           **last_error   = NULL;
+  GError           **last_error       = NULL;
+  gboolean           show_unsupported = TRUE;
 
   data_input = g_data_input_stream_new (input);
 
@@ -277,8 +388,6 @@ gimp_pattern_load_photoshop_pattern (GimpContext   *context,
 
   g_debug ("\nDetected Photoshop pattern file. Version: %u, number of patterns: %u",
            version, pat_count);
-
-#define update_last_error() if (last_error) g_clear_error (last_error); last_error = error; error = NULL;
 
   for (i = 0; i < pat_count; i++)
     {
@@ -325,7 +434,11 @@ gimp_pattern_load_photoshop_pattern (GimpContext   *context,
       /* FIXME: Support for reading the palette if this is indexed */
       if (pat_image_type == 2)
         {
-          g_printerr ("Indexed Photoshop pattern is not yet supported.\n");
+          if (show_unsupported)
+            {
+              g_printerr ("Indexed Photoshop pattern is not yet supported.\n");
+              show_unsupported = FALSE;
+            }
           break;
         }
 
@@ -358,17 +471,19 @@ gimp_pattern_load_photoshop_pattern (GimpContext   *context,
        * but it seems Photoshop sets depth to 24 even for grayscale and cmyk,
        * independent of the actual number of channels; so we can't do that.
        * (Possibly it will be 48 instead of 24 in case of 16-bit per channel.)
+       * We always include an alpha channel, since we can't know before
+       * reading the other channels whether there is an alpha channel or not.
        */
       if (pat_depth == 24)
         {
           switch (pat_image_type)
             {
-            case 1: /* Grayscale */
-              n_channels = 1;
+            case 1: /* Grayscale+A */
+              n_channels = 2;
               can_handle = TRUE;
               break;
-            case 3: /* RGB*/
-              n_channels = 3;
+            case 3: /* RGB+A */
+              n_channels = 4;
               can_handle = TRUE;
               break;
             }
@@ -392,10 +507,11 @@ gimp_pattern_load_photoshop_pattern (GimpContext   *context,
         {
           GimpPattern *pattern;
           const Babl  *format;
-          gsize        size, bytes_read;
+          gsize        size;
           gint         chan;
           guchar      *chan_data;
           guchar      *chan_buf;
+          goffset      alpha_ofs;
 
           chan_buf = NULL;
           format   = NULL;
@@ -410,9 +526,7 @@ gimp_pattern_load_photoshop_pattern (GimpContext   *context,
 
           switch (n_channels)
             {
-            case 1: format = babl_format ("Y' u8");      break;
             case 2: format = babl_format ("Y'A u8");     break;
-            case 3: format = babl_format ("R'G'B' u8");  break;
             case 4: format = babl_format ("R'G'B'A u8"); break;
             }
 
@@ -427,104 +541,56 @@ gimp_pattern_load_photoshop_pattern (GimpContext   *context,
             }
           chan_data = gimp_temp_buf_get_data (pattern->mask);
 
-          for (chan = 0; chan < n_channels; chan++)
+          for (chan = 0; chan < n_channels-1; chan++)
+            gimp_pattern_load_photoshop_channel (data_input, chan, chan_buf,
+                                                 size, chan_data, n_channels,
+                                                 error);
+
+          /* An alpha channel (and possibly mask) may follow the normal channels...
+           * Only way to tell is to check if there is enough space after the
+           * color channels. There appears to also be an 88-byte empty space
+           * before the alpha channel for reasons only known to Photoshop.
+           */
+          alpha_ofs = g_seekable_tell (G_SEEKABLE (data_input)) + 88;
+          /* Minimum size of a channel would be at least room for the channel
+           * header, so 31 bytes. */
+          if (alpha_ofs + 31 < ofs+pat_size)
             {
-              gint      j;
-              goffset   cofs;
-              gint32    chan_version;
-              gint32    chan_size;
-              gint32    chan_dummy;
-              gint16    chan_depth;
-              gint8     chan_compression;
-              gint32    chan_top, chan_left, chan_bottom, chan_right;
-              guchar   *temp_buf;
-
-              temp_buf = NULL;
-
-              if (! gimp_data_input_stream_read_long (data_input,  &chan_version, error) ||
-                  ! gimp_data_input_stream_read_long (data_input,  &chan_size,    error))
-                {
-                  g_printerr ("Error reading channel %d of pattern %d\n", chan, i);
-                  update_last_error ();
-                  break;
-                }
-              cofs = g_seekable_tell (G_SEEKABLE (data_input));
-
-              /** Dummy 32-bit depth */
-              if (! gimp_data_input_stream_read_long (data_input,  &chan_dummy, error))
-                {
-                  g_printerr ("Error reading channel %d of pattern %d\n", chan, i);
-                  update_last_error ();
-                  break;
-                }
-
-              if (! gimp_data_input_stream_read_long (data_input,  &chan_top,    error) ||
-                  ! gimp_data_input_stream_read_long (data_input,  &chan_left,   error) ||
-                  ! gimp_data_input_stream_read_long (data_input,  &chan_bottom, error) ||
-                  ! gimp_data_input_stream_read_long (data_input,  &chan_right,  error) ||
-                  ! gimp_data_input_stream_read_short (data_input, &chan_depth,  error) ||
-                  ! gimp_data_input_stream_read_char (data_input,  (gchar *) &chan_compression, error))
-                {
-                  g_printerr ("Error reading channel %d of pattern %d\n", chan, i);
-                  update_last_error ();
-                  break;
-                }
-
-              if (chan_compression == 0)
-                {
-                  if (! g_input_stream_read_all ((GInputStream *) data_input,
-                                                 chan_buf, size,
-                                                 &bytes_read, NULL, error) ||
-                      bytes_read != size)
-                    {
-                      g_printerr ("Error reading channel %d of pattern %d\n", chan, i);
-                      update_last_error ();
-                      break;
-                    }
-                }
-              else
-                {
-                  if (! gimp_data_input_stream_rle_decode (data_input,
-                                                           (gchar *) chan_buf, size,
-                                                           height, error))
-                    {
-                      g_printerr ("Failed to decode channel %d of pattern %d.\n", chan, i);
-                      update_last_error ();
-                      break;
-                    }
-                }
-
-              /* Move channel data to correct offset */
-              temp_buf = &chan_data[chan];
-              for (j = 0; j < size; j++)
-                {
-                  temp_buf[j*n_channels] = chan_buf[j];
-                }
-
-              /* Always seek to next offset to reduce chance of errors */
               if (! g_seekable_seek (G_SEEKABLE (data_input),
-                                     cofs+chan_size, G_SEEK_SET,
+                                     alpha_ofs, G_SEEK_SET,
                                      NULL, error))
                 {
                   g_printerr ("Error reading Photoshop pattern.\n");
                   update_last_error ();
                   break;
                 }
+              gimp_pattern_load_photoshop_channel (data_input, n_channels-1, chan_buf,
+                                                   size, chan_data, n_channels,
+                                                   error);
             }
-          /* FIXME: An alpha channel (and possibly mask) may follow the normal channels...
-           *        Maybe always add alpha and init to fully opaque?
-           */
+          else
+            {
+              guchar *temp_buf;
+              gint    j;
+
+              temp_buf = &chan_data[n_channels-1];
+              for (j = 0; j < size; j++)
+                {
+                  temp_buf[j*n_channels] = 255;
+                }
+            }
 
           g_free (chan_buf);
 
           if (pattern)
             pattern_list = g_list_prepend (pattern_list, pattern);
         }
-      else
+      else if (show_unsupported)
         {
           /* Format not handled yet */
           g_printerr ("Loading Photoshop patterns of type %d is not yet supported.\n",
                       pat_image_type);
+          show_unsupported = FALSE;
         }
       g_free (pat_name);
 
