@@ -510,11 +510,20 @@ about_dialog_add_update (GimpAboutDialog *dialog,
       datetime = g_date_time_new_from_unix_local (config->check_update_timestamp);
       date = g_date_time_format (datetime, "%x");
       time = g_date_time_format (datetime, "%X");
-      /* Translators: first string is the date in the locale's date
-       * representation (e.g., 12/31/99), second is the time in the
-       * locale's time representation (e.g., 23:13:48).
-       */
-      subtext = g_strdup_printf (_("Last checked on %s at %s"), date, time);
+
+      if (config->last_known_release != NULL)
+        /* Translators: first string is the date in the locale's date
+        * representation (e.g., 12/31/99), second is the time in the
+        * locale's time representation (e.g., 23:13:48).
+        */
+        subtext = g_strdup_printf (_("Last checked on %s at %s"), date, time);
+      else
+        /* Translators: first string is the date in the locale's date
+        * representation (e.g., 12/31/99), second is the time in the
+        * locale's time representation (e.g., 23:13:48).
+        */
+        subtext = g_strdup_printf (_("Up to date as of %s at %s"), date, time);
+
       g_date_time_unref (datetime);
       g_free (date);
       g_free (time);
