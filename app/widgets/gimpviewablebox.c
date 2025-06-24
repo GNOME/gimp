@@ -625,13 +625,14 @@ gimp_viewable_box_new (GimpContainer *container,
                        const gchar   *editor_id,
                        const gchar   *editor_tooltip)
 {
+  GtkWidget *viewable_box;
   GtkWidget *hbox;
   GtkWidget *button;
   GtkWidget *vbox;
   GtkWidget *l;
   GtkWidget *entry;
 
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, spacing);
+  viewable_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, spacing);
 
   button = gimp_viewable_button_new (container, context,
                                      view_type, button_view_size, view_size, 1,
@@ -643,13 +644,13 @@ gimp_viewable_box_new (GimpContainer *container,
   gimp_view_renderer_set_size_full (GIMP_VIEW (GIMP_VIEWABLE_BUTTON (button)->view)->renderer,
                                     button_view_size, button_view_size, 1);
 
-  g_object_set_data (G_OBJECT (hbox), "viewable-button", button);
+  g_object_set_data (G_OBJECT (viewable_box), "viewable-button", button);
 
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (viewable_box), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (viewable_box), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   if (label)
@@ -660,13 +661,17 @@ gimp_viewable_box_new (GimpContainer *container,
       gtk_widget_show (l);
     }
 
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
+  gtk_widget_show (hbox);
+
   entry = gimp_container_entry_new (container, context, view_size, 1);
 
   /*  set a silly smally size request on the entry to disable
    *  GtkEntry's minimal width of 150 pixels.
    */
   gtk_entry_set_width_chars (GTK_ENTRY (entry), 4);
-  gtk_box_pack_end (GTK_BOX (vbox), entry, label ? FALSE : TRUE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
   gtk_widget_show (entry);
 
   if (editor_id)
@@ -676,7 +681,7 @@ gimp_viewable_box_new (GimpContainer *container,
 
       edit_button = gtk_button_new ();
       gtk_button_set_relief (GTK_BUTTON (edit_button), GTK_RELIEF_NONE);
-      gtk_box_pack_end (GTK_BOX (hbox), edit_button, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), edit_button, FALSE, FALSE, 0);
       gtk_widget_show (edit_button);
 
       if (editor_tooltip)
@@ -684,7 +689,8 @@ gimp_viewable_box_new (GimpContainer *container,
 
       image = gtk_image_new_from_icon_name (GIMP_ICON_EDIT,
                                             GTK_ICON_SIZE_BUTTON);
-      gtk_widget_set_valign (image, GTK_ALIGN_END);
+      gtk_widget_set_valign (image, GTK_ALIGN_CENTER);
+      gtk_widget_set_halign (image, GTK_ALIGN_CENTER);
       gtk_container_add (GTK_CONTAINER (edit_button), image);
       gtk_widget_show (image);
 
@@ -698,7 +704,7 @@ gimp_viewable_box_new (GimpContainer *container,
                         button);
     }
 
-  return hbox;
+  return viewable_box;
 }
 
 static GtkWidget *
