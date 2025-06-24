@@ -384,7 +384,8 @@ gimp_colormap_editor_color_update (GimpColorDialog      *dialog,
       break;
     }
 
-  if (image)
+  if (image &&
+      gimp_image_get_base_type (image) == GIMP_INDEXED)
     {
       gint col_index;
 
