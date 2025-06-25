@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-21 10:25+0000\n"
-"PO-Revision-Date: 2025-06-22 04:48+0200\n"
+"POT-Creation-Date: 2025-06-24 17:54+0000\n"
+"PO-Revision-Date: 2025-06-25 12:14+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -38,7 +38,7 @@ msgstr "დამატების მაგალითი C-ში"
 #: plug-ins/common/jigsaw.c:537 plug-ins/common/nl-filter.c:215
 #: plug-ins/common/qbist.c:254 plug-ins/common/sample-colorize.c:425
 #: plug-ins/common/smooth-palette.c:193 plug-ins/common/sparkle.c:301
-#: plug-ins/common/sphere-designer.c:3203 plug-ins/common/tile.c:222
+#: plug-ins/common/sphere-designer.c:3199 plug-ins/common/tile.c:222
 #: plug-ins/common/tile-small.c:312 plug-ins/common/van-gogh-lic.c:242
 #: plug-ins/common/warp.c:344 plug-ins/common/wavelet-decompose.c:179
 #: plug-ins/flame/flame.c:297 plug-ins/fractal-explorer/fractal-explorer.c:427
@@ -67,7 +67,7 @@ msgstr "დამატების მაგალითი C-ში"
 #: plug-ins/common/file-pdf-export.c:1073 plug-ins/common/file-pdf-load.c:585
 #: plug-ins/common/grid.c:835 plug-ins/common/qbist.c:839
 #: plug-ins/common/qbist.c:881 plug-ins/common/sphere-designer.c:2291
-#: plug-ins/common/sphere-designer.c:2654 plug-ins/common/unit-editor.c:427
+#: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:427
 #: plug-ins/flame/flame.c:617 plug-ins/flame/flame.c:822
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1513
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1551
@@ -136,7 +136,7 @@ msgstr "დამატების მაგალითი JavaScript-ში (
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2488
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/grid.c:836
-#: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:260
+#: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:260
 #: plug-ins/file-exr/file-exr.c:455 plug-ins/file-psd/psd-load.c:3896
 #: plug-ins/flame/flame.c:823 plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
@@ -1010,7 +1010,7 @@ msgstr "შემთხვევითი მარცვალი"
 #: plug-ins/common/curve-bend.c:1249 plug-ins/common/curve-bend.c:1788
 #: plug-ins/common/file-cel.c:989 plug-ins/common/qbist.c:840
 #: plug-ins/common/qbist.c:995 plug-ins/common/sphere-designer.c:2294
-#: plug-ins/common/sphere-designer.c:2703 plug-ins/flame/flame.c:619
+#: plug-ins/common/sphere-designer.c:2704 plug-ins/flame/flame.c:619
 #: plug-ins/flame/flame.c:1234
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:794
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1514
@@ -1026,7 +1026,7 @@ msgstr "_გახსნა"
 #: plug-ins/common/curve-bend.c:1261 plug-ins/common/curve-bend.c:1823
 #: plug-ins/common/file-pdf-export.c:1072 plug-ins/common/qbist.c:882
 #: plug-ins/common/qbist.c:1003 plug-ins/common/sphere-designer.c:2294
-#: plug-ins/common/sphere-designer.c:2711 plug-ins/flame/flame.c:619
+#: plug-ins/common/sphere-designer.c:2712 plug-ins/flame/flame.c:619
 #: plug-ins/flame/flame.c:1242
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:802
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1552
@@ -1159,7 +1159,7 @@ msgstr ""
 
 #: plug-ins/common/cml-explorer.c:1829
 msgid "Parameter k:"
-msgstr ""
+msgstr "პარამეტრი k:"
 
 #: plug-ins/common/cml-explorer.c:1837
 msgid "Range low:"
@@ -2027,7 +2027,7 @@ msgid "Swap the two curves"
 msgstr "ორი მრუდის მიმოცვლა"
 
 #. The Reset button
-#: plug-ins/common/curve-bend.c:1232 plug-ins/common/sphere-designer.c:2653
+#: plug-ins/common/curve-bend.c:1232 plug-ins/common/sphere-designer.c:2654
 #: plug-ins/common/tile-small.c:523 plug-ins/gimpressionist/preview.c:182
 #: plug-ins/ifs-compose/ifs-compose.c:912
 msgid "_Reset"
@@ -3450,7 +3450,6 @@ msgid "Toggle saving XMP data"
 msgstr "XMP მონაცემების შენახვის გადართვა"
 
 #: plug-ins/common/file-heif.c:350 plug-ins/common/file-heif.c:382
-#| msgid "HEIF/HEIC"
 msgid "HEIF/AVIF"
 msgstr "HEIF/AVIF"
 
@@ -7835,7 +7834,8 @@ msgid "Create an image of a textured sphere"
 msgstr ""
 
 #: plug-ins/common/sphere-designer.c:1834
-#: plug-ins/common/sphere-designer.c:2797
+#: plug-ins/common/sphere-designer.c:2798
+#: plug-ins/common/sphere-designer.c:2826
 msgid "Texture"
 msgstr "ტექსტურა"
 
@@ -7844,7 +7844,7 @@ msgid "Bumpmap"
 msgstr "რელიეფური"
 
 #: plug-ins/common/sphere-designer.c:1838
-#: plug-ins/common/sphere-designer.c:2799
+#: plug-ins/common/sphere-designer.c:2800
 msgid "Light"
 msgstr "მსუბუქი"
 
@@ -7861,24 +7861,24 @@ msgstr "ფაილის გახსნა"
 msgid "Save File"
 msgstr "ფაილის შენახვა"
 
-#: plug-ins/common/sphere-designer.c:2649
+#: plug-ins/common/sphere-designer.c:2650
 msgid "Sphere Designer"
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:2750
+#: plug-ins/common/sphere-designer.c:2751
 msgid "Layers"
 msgstr "ფენები"
 
-#: plug-ins/common/sphere-designer.c:2761
+#: plug-ins/common/sphere-designer.c:2762
 #: plug-ins/gradient-flare/gradient-flare.c:3051
 msgid "_New"
 msgstr "_ახალი"
 
-#: plug-ins/common/sphere-designer.c:2767
+#: plug-ins/common/sphere-designer.c:2768
 msgid "D_uplicate"
 msgstr "_დუბლირება"
 
-#: plug-ins/common/sphere-designer.c:2773
+#: plug-ins/common/sphere-designer.c:2774
 #: plug-ins/fractal-explorer/fractal-explorer.c:887
 #: plug-ins/fractal-explorer/fractal-explorer.c:1369
 #: plug-ins/gimpressionist/presets.c:1071
@@ -7887,94 +7887,99 @@ msgstr "_დუბლირება"
 msgid "_Delete"
 msgstr "_წაშლა"
 
-#: plug-ins/common/sphere-designer.c:2783
+#: plug-ins/common/sphere-designer.c:2784
 msgid "Properties"
 msgstr "თვისებები"
 
-#: plug-ins/common/sphere-designer.c:2798
+#: plug-ins/common/sphere-designer.c:2799
 msgid "Bump"
 msgstr "რელიეფი"
 
-#: plug-ins/common/sphere-designer.c:2806
-msgid "Type:"
-msgstr "ტიპი:"
+#: plug-ins/common/sphere-designer.c:2807
+#: plug-ins/gimpressionist/orientmap.c:638
+#: plug-ins/lighting/lighting-main.c:211 plug-ins/lighting/lighting-main.c:334
+#: plug-ins/lighting/lighting-main.c:393 plug-ins/lighting/lighting-main.c:452
+#: plug-ins/lighting/lighting-main.c:511 plug-ins/lighting/lighting-main.c:570
+msgid "Type"
+msgstr "ტიპით"
 
-#: plug-ins/common/sphere-designer.c:2825
-msgid "Texture:"
-msgstr "ტექსტურა:"
+#: plug-ins/common/sphere-designer.c:2831
+#: plug-ins/imagemap/imap_preferences.c:463 plug-ins/pagecurl/pagecurl.c:228
+msgid "Colors"
+msgstr "ფერები"
 
-#: plug-ins/common/sphere-designer.c:2830
-msgid "Colors:"
-msgstr "ფერები:"
-
-#: plug-ins/common/sphere-designer.c:2833
-#: plug-ins/common/sphere-designer.c:2844
+#: plug-ins/common/sphere-designer.c:2834
+#: plug-ins/common/sphere-designer.c:2845
 msgid "Color Selection Dialog"
 msgstr ""
 
-#. Scale
-#: plug-ins/common/sphere-designer.c:2855 plug-ins/gimpressionist/paper.c:191
-#: plug-ins/ifs-compose/ifs-compose.c:668
-msgid "Scale:"
-msgstr "გაფართოება:"
+#: plug-ins/common/sphere-designer.c:2857
+msgid "Scale"
+msgstr "მასშტაბი"
 
-#: plug-ins/common/sphere-designer.c:2863
-msgid "Turbulence:"
-msgstr "ტურბულენტობა:"
+#: plug-ins/common/sphere-designer.c:2865
+msgid "Turbulence"
+msgstr "ტურბულენტობა"
 
-#: plug-ins/common/sphere-designer.c:2871
-msgid "Amount:"
-msgstr "რაოდენობა:"
+#: plug-ins/common/sphere-designer.c:2873
+msgid "Amount"
+msgstr "რაოდენობა"
 
-#: plug-ins/common/sphere-designer.c:2878
-msgid "Exp.:"
+#: plug-ins/common/sphere-designer.c:2881
+msgid "Exp."
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:2885
+#: plug-ins/common/sphere-designer.c:2888
 msgid "Transformations"
 msgstr "გარდაქმნები"
 
-#: plug-ins/common/sphere-designer.c:2899
-msgid "Scale X:"
-msgstr "მასშტაბი X:"
+#: plug-ins/common/sphere-designer.c:2897
+#: plug-ins/map-object/map-object-main.c:391
+msgid "Scale X"
+msgstr "მასშტაბი X"
 
-#: plug-ins/common/sphere-designer.c:2907
-msgid "Scale Y:"
-msgstr "მასშტაბი Y:"
+#: plug-ins/common/sphere-designer.c:2905
+#: plug-ins/map-object/map-object-main.c:396
+msgid "Scale Y"
+msgstr "მასშტაბი Y"
 
-#: plug-ins/common/sphere-designer.c:2915
-msgid "Scale Z:"
-msgstr "მასშტაბი Z:"
+#: plug-ins/common/sphere-designer.c:2913
+#: plug-ins/map-object/map-object-main.c:401
+msgid "Scale Z"
+msgstr "მასშტაბი Z"
 
-#: plug-ins/common/sphere-designer.c:2926
-msgid "Rotate X:"
-msgstr "შებრუნება X:"
+#: plug-ins/common/sphere-designer.c:2922
+msgid "Rotate X"
+msgstr "შებრუნება X"
 
-#: plug-ins/common/sphere-designer.c:2933
-msgid "Rotate Y:"
-msgstr "შებრუნება Y:"
+#: plug-ins/common/sphere-designer.c:2930
+msgid "Rotate Y"
+msgstr "შებრუნება Y"
 
-#: plug-ins/common/sphere-designer.c:2940
-msgid "Rotate Z:"
-msgstr "შებრუნება Z:"
+#: plug-ins/common/sphere-designer.c:2938
+msgid "Rotate Z"
+msgstr "შებრუნება Z"
 
-#: plug-ins/common/sphere-designer.c:2950
-msgid "Position X:"
-msgstr "მდებარეობის X:"
+#: plug-ins/common/sphere-designer.c:2947
+#: plug-ins/map-object/map-object-main.c:165
+msgid "Position X"
+msgstr "მდებარეობის X"
 
-#: plug-ins/common/sphere-designer.c:2958
-msgid "Position Y:"
-msgstr "მდებარეობის Y:"
+#: plug-ins/common/sphere-designer.c:2955
+#: plug-ins/map-object/map-object-main.c:170
+msgid "Position Y"
+msgstr "მდებარეობის Y"
 
-#: plug-ins/common/sphere-designer.c:2966
-msgid "Position Z:"
-msgstr "მდებარეობა Z:"
+#: plug-ins/common/sphere-designer.c:2963
+#: plug-ins/map-object/map-object-main.c:175
+msgid "Position Z"
+msgstr "მდებარეობა Z"
 
-#: plug-ins/common/sphere-designer.c:3098
+#: plug-ins/common/sphere-designer.c:3094
 msgid "Rendering sphere"
 msgstr "სფეროს რენდერი"
 
-#: plug-ins/common/sphere-designer.c:3217
+#: plug-ins/common/sphere-designer.c:3213
 msgid "Region selected for plug-in is empty"
 msgstr ""
 
@@ -12398,13 +12403,6 @@ msgstr "_მოკვლა"
 msgid "Delete selected vector"
 msgstr "არჩეული ვექტორის წაშლა"
 
-#: plug-ins/gimpressionist/orientmap.c:638
-#: plug-ins/lighting/lighting-main.c:211 plug-ins/lighting/lighting-main.c:334
-#: plug-ins/lighting/lighting-main.c:393 plug-ins/lighting/lighting-main.c:452
-#: plug-ins/lighting/lighting-main.c:511 plug-ins/lighting/lighting-main.c:570
-msgid "Type"
-msgstr "ტიპით"
-
 #: plug-ins/gimpressionist/orientmap.c:642
 msgid "_Normal"
 msgstr "_ნორმალური"
@@ -12484,6 +12482,11 @@ msgstr ""
 #: plug-ins/gimpressionist/paper.c:180
 msgid "Applies the paper as it is (without embossing it)"
 msgstr ""
+
+#. Scale
+#: plug-ins/gimpressionist/paper.c:191 plug-ins/ifs-compose/ifs-compose.c:668
+msgid "Scale:"
+msgstr "მასშტაბი:"
 
 #: plug-ins/gimpressionist/paper.c:193
 msgid "Specifies the scale of the texture (in percent of original file)"
@@ -13871,10 +13874,6 @@ msgstr ""
 msgid "Select Color"
 msgstr "ფერი"
 
-#: plug-ins/imagemap/imap_preferences.c:463 plug-ins/pagecurl/pagecurl.c:228
-msgid "Colors"
-msgstr "ფერები"
-
 #: plug-ins/imagemap/imap_preferences.c:465
 msgid "Normal:"
 msgstr "ნორმალური:"
@@ -14510,23 +14509,11 @@ msgstr "Y"
 msgid "Z"
 msgstr "Z"
 
-#: plug-ins/map-object/map-object-main.c:165
-msgid "Position X"
-msgstr "მდებარეობის X"
-
 #: plug-ins/map-object/map-object-main.c:166
 #: plug-ins/map-object/map-object-main.c:171
 #: plug-ins/map-object/map-object-main.c:176
 msgid "Object position (x,y,z)"
 msgstr ""
-
-#: plug-ins/map-object/map-object-main.c:170
-msgid "Position Y"
-msgstr "მდებარეობის Y"
-
-#: plug-ins/map-object/map-object-main.c:175
-msgid "Position Z"
-msgstr "მდებარეობა Z"
 
 #: plug-ins/map-object/map-object-main.c:182
 #: plug-ins/map-object/map-object-main.c:187
@@ -14712,25 +14699,13 @@ msgstr ""
 msgid "Box right face"
 msgstr "ყუთის მარჯვენა ზედაპირი"
 
-#: plug-ins/map-object/map-object-main.c:391
-msgid "Scale X"
-msgstr "მასშტაბი X"
-
 #: plug-ins/map-object/map-object-main.c:392
 msgid "Box X size"
 msgstr "ყუთის X ზომა"
 
-#: plug-ins/map-object/map-object-main.c:396
-msgid "Scale Y"
-msgstr "მასშტაბი Y"
-
 #: plug-ins/map-object/map-object-main.c:397
 msgid "Box Y size"
 msgstr "ყუთის Y ზომა"
-
-#: plug-ins/map-object/map-object-main.c:401
-msgid "Scale Z"
-msgstr "მასშტაბი Z"
 
 #: plug-ins/map-object/map-object-main.c:402
 msgid "Box Z size"
@@ -16115,6 +16090,33 @@ msgstr ""
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr ""
+
+#~ msgid "Type:"
+#~ msgstr "ტიპი:"
+
+#~ msgid "Texture:"
+#~ msgstr "ტექსტურა:"
+
+#~ msgid "Colors:"
+#~ msgstr "ფერები:"
+
+#~ msgid "Scale X:"
+#~ msgstr "მასშტაბი X:"
+
+#~ msgid "Scale Y:"
+#~ msgstr "მასშტაბი Y:"
+
+#~ msgid "Scale Z:"
+#~ msgstr "მასშტაბი Z:"
+
+#~ msgid "Position X:"
+#~ msgstr "მდებარეობის X:"
+
+#~ msgid "Position Y:"
+#~ msgstr "მდებარეობის Y:"
+
+#~ msgid "Position Z:"
+#~ msgstr "მდებარეობა Z:"
 
 #~ msgid "Count"
 #~ msgstr "რაოდენობა"
