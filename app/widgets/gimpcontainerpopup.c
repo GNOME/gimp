@@ -32,6 +32,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpviewable.h"
+#include "core/gimp-utils.h"
 
 #include "gimpcontainerbox.h"
 #include "gimpcontainereditor.h"
@@ -213,7 +214,7 @@ gimp_container_popup_set_view_type (GimpContainerPopup *popup,
     }
 }
 
-gint
+GimpViewSize
 gimp_container_popup_get_view_size (GimpContainerPopup *popup)
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER_POPUP (popup), GIMP_VIEW_SIZE_SMALL);
@@ -223,7 +224,7 @@ gimp_container_popup_get_view_size (GimpContainerPopup *popup)
 
 void
 gimp_container_popup_set_view_size (GimpContainerPopup *popup,
-                                    gint                view_size)
+                                    GimpViewSize        view_size)
 {
   GtkWidget     *scrolled_win;
   GtkWidget     *viewport;
@@ -366,7 +367,7 @@ gimp_container_popup_smaller_clicked (GtkWidget          *button,
 
   view_size = gimp_container_view_get_view_size (popup->editor->view, NULL);
 
-  gimp_container_popup_set_view_size (popup, view_size * 0.8);
+  gimp_container_popup_set_view_size (popup, gimp_view_size_get_smaller (view_size));
 }
 
 static void
@@ -377,7 +378,7 @@ gimp_container_popup_larger_clicked (GtkWidget          *button,
 
   view_size = gimp_container_view_get_view_size (popup->editor->view, NULL);
 
-  gimp_container_popup_set_view_size (popup, view_size * 1.2);
+  gimp_container_popup_set_view_size (popup, gimp_view_size_get_larger (view_size));
 }
 
 static void

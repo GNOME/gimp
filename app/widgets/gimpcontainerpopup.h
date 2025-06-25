@@ -80,9 +80,9 @@ GimpViewType gimp_container_popup_get_view_type (GimpContainerPopup *popup);
 void         gimp_container_popup_set_view_type (GimpContainerPopup *popup,
                                                  GimpViewType        view_type);
 
-gint         gimp_container_popup_get_view_size (GimpContainerPopup *popup);
+GimpViewSize gimp_container_popup_get_view_size (GimpContainerPopup *popup);
 void         gimp_container_popup_set_view_size (GimpContainerPopup *popup,
-                                                 gint                view_size);
+                                                 GimpViewSize        view_size);
 
 
 #endif  /*  __GIMP_CONTAINER_POPUP_H__  */

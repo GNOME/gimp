@@ -351,7 +351,7 @@ gimp_viewable_button_get_view_size (GimpViewableButton *button)
 
 void
 gimp_viewable_button_set_view_size (GimpViewableButton *button,
-                                    gint                view_size)
+                                    GimpViewSize        view_size)
 {
   g_return_if_fail (GIMP_IS_VIEWABLE_BUTTON (button));
 
