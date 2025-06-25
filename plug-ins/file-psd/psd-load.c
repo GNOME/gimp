@@ -3095,7 +3095,7 @@ json_read_dropshadow (JsonReader *reader, const Babl *space, GimpLayer *layer)
               * interpret:
               * - "showInDialog", boolean. Seems to be always true.
               * - "uglg"", boolean (true) I guess this is "use global light".
-              * - "Ckmt", float, pxl (0.0)
+              * - "Ckmt", float, pxl (0.0) PS calls this ChokeMatte
               * - "AntA", boolean (false). Seems to mean anti-alias.
               * - "TrnS", descriptor with several members, including curves.
               * - "layerConceals" - boolean.
@@ -3117,7 +3117,8 @@ json_read_dropshadow (JsonReader *reader, const Babl *space, GimpLayer *layer)
                 distance  = (gfloat) get_json_double (obj_reader, "value", 18.0);
               else if (json_string_equal (key, "Nose"))
                 /* Uncertain which member intensity, is it Nose, or Ckmt?.
-                * Since the legacy value is percent, I chose Nose. */
+                 * Since the legacy value is percent, I chose Nose,
+                 * which means supposedly noise. */
                 intensity = (gfloat) get_json_double (obj_reader, "value", 0.0);
               else if (json_string_equal (key, "blur"))
                 blur      = (gfloat) get_json_double (obj_reader, "value", 40.0);
@@ -3135,6 +3136,7 @@ json_read_dropshadow (JsonReader *reader, const Babl *space, GimpLayer *layer)
       if (present && enabled)
         {
           GimpDrawableFilter  *filter;
+          GimpLayerMode        gimp_mode;
           gdouble              x;
           gdouble              y;
           gdouble              gegl_blur;
@@ -3162,7 +3164,7 @@ json_read_dropshadow (JsonReader *reader, const Babl *space, GimpLayer *layer)
            * are different than elsewhere in PSD's, so we need a new
            * conversion function.
            */
-          /*convert_psd_mode (dsdw.blendsig, &mode);*/
+          convert_psd_effect_mode (mode, &gimp_mode);
           g_printerr ("Drop Shadow: setting layer mode to Replace instead of %.4s.\n", mode);
           /* Nose (intensity?) is not used in GEGL. */
           g_debug ("Drop Shadow: Nose value: %f\n", intensity);
@@ -3258,9 +3260,8 @@ json_read_solidfill (JsonReader *reader, const Babl *space, GimpLayer *layer)
            * are different than elsewhere in PSD's, so we need a new
            * conversion function.
            */
-          /*convert_psd_mode (mode, &layer_mode);*/
-          g_printerr ("Solid Fill: setting layer mode to Normal instead of %.4s.\n", mode);
-          layer_mode = GIMP_LAYER_MODE_NORMAL;
+          convert_psd_effect_mode (mode, &layer_mode);
+          g_debug ("Solid Fill: Photoshop has layer mode %.4s.", mode);
 
           if (! color)
             {

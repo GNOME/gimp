@@ -166,6 +166,40 @@ static const LayerModeMapping layer_mode_map[] =
   { "Pass Through",  "pass", GIMP_LAYER_MODE_PASS_THROUGH,          TRUE },
 };
 
+/* Names of layer modes in descriptors */
+static const LayerModeMapping descriptor_mode_map[] =
+/*  Name             PSD     GIMP                                   Exact?  */
+{
+  /* From SDK, apparently less possible values than regular blend mode?
+   * typeBlendMode 'BlnM' // enumNormal, enumDissolve, enumBehind, enumClear,
+                             enumMultiply, enumScreen, enumOverlay, enumSoftLight,
+                             enumHardLight, enumDarken, enumLighten, enumDifference,
+                             enumHue, enumSaturation, enumColor, enumLuminosity,
+                             enumExclusion, enumColorDodge, enumColorBurn.
+   */
+  { "Normal",        "Nrml", GIMP_LAYER_MODE_NORMAL,                TRUE },
+  { "Dissolve",      "Dslv", GIMP_LAYER_MODE_DISSOLVE,              TRUE },
+  { "Behind",        "Bhnd", GIMP_LAYER_MODE_BEHIND,                TRUE },
+  /* Cl(e)ar sounds like color erase, although according to Adobe it's not
+   * available as a regular layer mode:
+   * https://helpx.adobe.com/photoshop/using/blending-modes.html
+   */
+  { "Color Erase",   "Clar", GIMP_LAYER_MODE_COLOR_ERASE,           TRUE },
+  { "Multiply",      "Mltp", GIMP_LAYER_MODE_MULTIPLY,              TRUE },
+  { "Screen",        "Scrn", GIMP_LAYER_MODE_SCREEN,                TRUE },
+  { "Overlay",       "Ovrl", GIMP_LAYER_MODE_OVERLAY,               TRUE },
+  { "Soft Light",    "SftL", GIMP_LAYER_MODE_SOFTLIGHT,             FALSE },
+  { "Hard Light",    "HrdL", GIMP_LAYER_MODE_HARDLIGHT,             TRUE },
+  { "Darken",        "Drkn", GIMP_LAYER_MODE_DARKEN_ONLY,           TRUE },
+  { "Difference",    "Dfrn", GIMP_LAYER_MODE_DIFFERENCE,            TRUE },
+  { "Hue",           "H   ", GIMP_LAYER_MODE_LCH_HUE,               FALSE },
+  { "Saturation",    "Strt", GIMP_LAYER_MODE_LCH_CHROMA,            FALSE },
+  { "Color",         "Clr ", GIMP_LAYER_MODE_LCH_COLOR,             FALSE },
+  { "Luminosity",    "Lmns", GIMP_LAYER_MODE_LCH_LIGHTNESS,         FALSE },
+  { "Exclusion",     "Xclu", GIMP_LAYER_MODE_EXCLUSION,             TRUE  },
+  { "Color Dodge",   "CDdg", GIMP_LAYER_MODE_DODGE,                 FALSE },
+  { "Color Burn",    "CBrn", GIMP_LAYER_MODE_BURN,                  FALSE },
+};
 
 /* Utility function */
 void
@@ -828,6 +862,31 @@ convert_psd_mode (const gchar   *psd_mode,
             }
 
           *mode = layer_mode_map[i].gimp_mode;
+          return TRUE;
+        }
+    }
+
+  return FALSE;
+}
+
+gboolean
+convert_psd_effect_mode (const gchar   *psd_mode,
+                         GimpLayerMode *mode)
+{
+  *mode = GIMP_LAYER_MODE_REPLACE;
+
+  for (gint i = 0; i < G_N_ELEMENTS (descriptor_mode_map); i++)
+    {
+      if (g_ascii_strncasecmp (psd_mode, descriptor_mode_map[i].psd_mode, 4) == 0)
+        {
+          if (! descriptor_mode_map[i].exact && CONVERSION_WARNINGS)
+            {
+              g_message ("GIMP uses a different equation than Photoshop for "
+                         "blend mode: %s. Results will differ.",
+                         descriptor_mode_map[i].name);
+            }
+
+          *mode = descriptor_mode_map[i].gimp_mode;
           return TRUE;
         }
     }
