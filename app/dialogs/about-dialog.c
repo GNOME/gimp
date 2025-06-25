@@ -25,6 +25,10 @@
 #ifdef PLATFORM_OSX
 #include <Foundation/Foundation.h>
 #endif /* PLATFORM_OSX */
+#ifdef G_OS_WIN32
+#include <windows.h>
+#include <datetimeapi.h>
+#endif /* G_OS_WIN32 */
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
@@ -541,6 +545,50 @@ about_dialog_add_update (GimpAboutDialog *dialog,
 
       [formatter release];
       [pool drain];
+#elif defined(G_OS_WIN32)
+      SYSTEMTIME st;
+      int        date_len, time_len;
+      wchar_t   *date_buf = NULL;
+      wchar_t   *time_buf = NULL;
+
+      GetLocalTime (&st);
+
+      date_len = GetDateFormatEx (LOCALE_NAME_USER_DEFAULT, 0, &st,
+                                  NULL, NULL, 0, NULL);
+      if (date_len > 0)
+       {
+          date_buf = g_malloc (date_len * sizeof (wchar_t));
+          if (! GetDateFormatEx(LOCALE_NAME_USER_DEFAULT, 0, &st, NULL, date_buf, date_len, NULL))
+            {
+              g_free (date_buf);
+              date_buf = NULL;
+            }
+        }
+
+      time_len = GetTimeFormatEx (LOCALE_NAME_USER_DEFAULT, 0, &st,
+                                  NULL, NULL, 0);
+      if (time_len > 0)
+        {
+            time_buf = g_malloc (time_len * sizeof (wchar_t));
+            if (! GetTimeFormatEx (LOCALE_NAME_USER_DEFAULT, 0, &st, NULL, time_buf, time_len))
+              {
+                g_free (time_buf);
+                time_buf = NULL;
+              }
+        }
+
+      if (date_buf)
+        date = g_utf16_to_utf8 ((gunichar2*) date_buf, -1, NULL, NULL, NULL);
+      else
+        date = g_date_time_format (datetime, "%x");
+
+      if (time_buf)
+        time = g_utf16_to_utf8 ((gunichar2*) time_buf, -1, NULL, NULL, NULL);
+      else
+        time = g_date_time_format (datetime, "%X");
+
+      g_free (date_buf);
+      g_free (time_buf);
 #else
       date = g_date_time_format (datetime, "%x");
       time = g_date_time_format (datetime, "%X");
