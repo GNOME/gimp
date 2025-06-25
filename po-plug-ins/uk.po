@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-21 10:25+0000\n"
-"PO-Revision-Date: 2025-06-21 20:14+0300\n"
+"POT-Creation-Date: 2025-06-24 17:54+0000\n"
+"PO-Revision-Date: 2025-06-25 10:46+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -41,7 +41,7 @@ msgstr "Приклад додатка мовою C"
 #: plug-ins/common/jigsaw.c:537 plug-ins/common/nl-filter.c:215
 #: plug-ins/common/qbist.c:254 plug-ins/common/sample-colorize.c:425
 #: plug-ins/common/smooth-palette.c:193 plug-ins/common/sparkle.c:301
-#: plug-ins/common/sphere-designer.c:3203 plug-ins/common/tile.c:222
+#: plug-ins/common/sphere-designer.c:3199 plug-ins/common/tile.c:222
 #: plug-ins/common/tile-small.c:312 plug-ins/common/van-gogh-lic.c:242
 #: plug-ins/common/warp.c:344 plug-ins/common/wavelet-decompose.c:179
 #: plug-ins/flame/flame.c:297 plug-ins/fractal-explorer/fractal-explorer.c:427
@@ -70,7 +70,7 @@ msgstr "Приклад додатка мовою C"
 #: plug-ins/common/file-pdf-export.c:1073 plug-ins/common/file-pdf-load.c:585
 #: plug-ins/common/grid.c:835 plug-ins/common/qbist.c:839
 #: plug-ins/common/qbist.c:881 plug-ins/common/sphere-designer.c:2291
-#: plug-ins/common/sphere-designer.c:2654 plug-ins/common/unit-editor.c:427
+#: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:427
 #: plug-ins/flame/flame.c:617 plug-ins/flame/flame.c:822
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1513
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1551
@@ -142,7 +142,7 @@ msgstr "Приклад додатка мовою JavaScript (GJS)"
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2488
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/grid.c:836
-#: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:260
+#: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:260
 #: plug-ins/file-exr/file-exr.c:455 plug-ins/file-psd/psd-load.c:3896
 #: plug-ins/flame/flame.c:823 plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
@@ -1031,7 +1031,7 @@ msgstr "База випадковості"
 #: plug-ins/common/curve-bend.c:1249 plug-ins/common/curve-bend.c:1788
 #: plug-ins/common/file-cel.c:989 plug-ins/common/qbist.c:840
 #: plug-ins/common/qbist.c:995 plug-ins/common/sphere-designer.c:2294
-#: plug-ins/common/sphere-designer.c:2703 plug-ins/flame/flame.c:619
+#: plug-ins/common/sphere-designer.c:2704 plug-ins/flame/flame.c:619
 #: plug-ins/flame/flame.c:1234
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:794
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1514
@@ -1047,7 +1047,7 @@ msgstr "_Відкрити"
 #: plug-ins/common/curve-bend.c:1261 plug-ins/common/curve-bend.c:1823
 #: plug-ins/common/file-pdf-export.c:1072 plug-ins/common/qbist.c:882
 #: plug-ins/common/qbist.c:1003 plug-ins/common/sphere-designer.c:2294
-#: plug-ins/common/sphere-designer.c:2711 plug-ins/flame/flame.c:619
+#: plug-ins/common/sphere-designer.c:2712 plug-ins/flame/flame.c:619
 #: plug-ins/flame/flame.c:1242
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:802
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1552
@@ -2094,7 +2094,7 @@ msgid "Swap the two curves"
 msgstr "Переставити дві криві"
 
 #. The Reset button
-#: plug-ins/common/curve-bend.c:1232 plug-ins/common/sphere-designer.c:2653
+#: plug-ins/common/curve-bend.c:1232 plug-ins/common/sphere-designer.c:2654
 #: plug-ins/common/tile-small.c:523 plug-ins/gimpressionist/preview.c:182
 #: plug-ins/ifs-compose/ifs-compose.c:912
 msgid "_Reset"
@@ -3573,7 +3573,6 @@ msgid "Toggle saving XMP data"
 msgstr "Увімкнути або вимкнути збереження даних XMP"
 
 #: plug-ins/common/file-heif.c:350 plug-ins/common/file-heif.c:382
-#| msgid "HEIF/HEIC"
 msgid "HEIF/AVIF"
 msgstr "HEIF/AVIF"
 
@@ -4166,7 +4165,6 @@ msgid "CMYK profile required for export"
 msgstr "Для експортування потрібен профіль CMYK"
 
 #: plug-ins/common/file-lnk.c:123
-#| msgid "Windows Cursor"
 msgid "Windows Shortcut"
 msgstr "Кнопка Windows"
 
@@ -4179,8 +4177,8 @@ msgid ""
 "Opens a .lnk file and if it points to an image, it asks GIMP to open the "
 "linked image."
 msgstr ""
-"Відкриває файл .lnk, і якщо він вказує на зображення, просить GIMP відкрити"
-" пов'язане зображення."
+"Відкриває файл .lnk, і якщо він вказує на зображення, просить GIMP відкрити "
+"пов'язане зображення."
 
 #: plug-ins/common/file-lnk.c:210 plug-ins/common/file-lnk.c:225
 #: plug-ins/common/file-lnk.c:234 plug-ins/common/file-lnk.c:247
@@ -8214,7 +8212,8 @@ msgid "Create an image of a textured sphere"
 msgstr "Створити сферу з заданою текстурою"
 
 #: plug-ins/common/sphere-designer.c:1834
-#: plug-ins/common/sphere-designer.c:2797
+#: plug-ins/common/sphere-designer.c:2798
+#: plug-ins/common/sphere-designer.c:2826
 msgid "Texture"
 msgstr "Текстура"
 
@@ -8223,7 +8222,7 @@ msgid "Bumpmap"
 msgstr "Рельєф"
 
 #: plug-ins/common/sphere-designer.c:1838
-#: plug-ins/common/sphere-designer.c:2799
+#: plug-ins/common/sphere-designer.c:2800
 msgid "Light"
 msgstr "Світло"
 
@@ -8240,24 +8239,24 @@ msgstr "Відкривання файлу"
 msgid "Save File"
 msgstr "Збереження файлу"
 
-#: plug-ins/common/sphere-designer.c:2649
+#: plug-ins/common/sphere-designer.c:2650
 msgid "Sphere Designer"
 msgstr "Створення сфери"
 
-#: plug-ins/common/sphere-designer.c:2750
+#: plug-ins/common/sphere-designer.c:2751
 msgid "Layers"
 msgstr "Шари"
 
-#: plug-ins/common/sphere-designer.c:2761
+#: plug-ins/common/sphere-designer.c:2762
 #: plug-ins/gradient-flare/gradient-flare.c:3051
 msgid "_New"
 msgstr "_Новий"
 
-#: plug-ins/common/sphere-designer.c:2767
+#: plug-ins/common/sphere-designer.c:2768
 msgid "D_uplicate"
 msgstr "_Дублювати"
 
-#: plug-ins/common/sphere-designer.c:2773
+#: plug-ins/common/sphere-designer.c:2774
 #: plug-ins/fractal-explorer/fractal-explorer.c:887
 #: plug-ins/fractal-explorer/fractal-explorer.c:1369
 #: plug-ins/gimpressionist/presets.c:1071
@@ -8266,94 +8265,106 @@ msgstr "_Дублювати"
 msgid "_Delete"
 msgstr "_Видалити"
 
-#: plug-ins/common/sphere-designer.c:2783
+#: plug-ins/common/sphere-designer.c:2784
 msgid "Properties"
 msgstr "Властивості"
 
-#: plug-ins/common/sphere-designer.c:2798
+#: plug-ins/common/sphere-designer.c:2799
 msgid "Bump"
 msgstr "Рельєф"
 
-#: plug-ins/common/sphere-designer.c:2806
-msgid "Type:"
-msgstr "Тип:"
+#: plug-ins/common/sphere-designer.c:2807
+#: plug-ins/gimpressionist/orientmap.c:638
+#: plug-ins/lighting/lighting-main.c:211 plug-ins/lighting/lighting-main.c:334
+#: plug-ins/lighting/lighting-main.c:393 plug-ins/lighting/lighting-main.c:452
+#: plug-ins/lighting/lighting-main.c:511 plug-ins/lighting/lighting-main.c:570
+msgid "Type"
+msgstr "Тип"
 
-#: plug-ins/common/sphere-designer.c:2825
-msgid "Texture:"
-msgstr "Текстура:"
+#: plug-ins/common/sphere-designer.c:2831
+#: plug-ins/imagemap/imap_preferences.c:463 plug-ins/pagecurl/pagecurl.c:228
+msgid "Colors"
+msgstr "Кольори"
 
-#: plug-ins/common/sphere-designer.c:2830
-msgid "Colors:"
-msgstr "Кольори:"
-
-#: plug-ins/common/sphere-designer.c:2833
-#: plug-ins/common/sphere-designer.c:2844
+#: plug-ins/common/sphere-designer.c:2834
+#: plug-ins/common/sphere-designer.c:2845
 msgid "Color Selection Dialog"
 msgstr "Вікно вибору кольору"
 
-#. Scale
-#: plug-ins/common/sphere-designer.c:2855 plug-ins/gimpressionist/paper.c:191
-#: plug-ins/ifs-compose/ifs-compose.c:668
-msgid "Scale:"
-msgstr "Масштаб:"
+#: plug-ins/common/sphere-designer.c:2857
+#| msgid "Scale:"
+msgid "Scale"
+msgstr "Масштаб"
 
-#: plug-ins/common/sphere-designer.c:2863
-msgid "Turbulence:"
-msgstr "Турбулентність:"
+#: plug-ins/common/sphere-designer.c:2865
+#| msgid "Turbulence:"
+msgid "Turbulence"
+msgstr "Турбулентність"
 
-#: plug-ins/common/sphere-designer.c:2871
-msgid "Amount:"
-msgstr "Величина:"
+#: plug-ins/common/sphere-designer.c:2873
+#| msgid "Amount:"
+msgid "Amount"
+msgstr "Величина"
 
-#: plug-ins/common/sphere-designer.c:2878
-msgid "Exp.:"
-msgstr "Експонента:"
+#: plug-ins/common/sphere-designer.c:2881
+#| msgid "Exp.:"
+msgid "Exp."
+msgstr "Експонента"
 
-#: plug-ins/common/sphere-designer.c:2885
+#: plug-ins/common/sphere-designer.c:2888
 msgid "Transformations"
 msgstr "Перетворення"
 
-#: plug-ins/common/sphere-designer.c:2899
-msgid "Scale X:"
-msgstr "Масштаб X:"
+#: plug-ins/common/sphere-designer.c:2897
+#: plug-ins/map-object/map-object-main.c:391
+msgid "Scale X"
+msgstr "Масштаб за X"
 
-#: plug-ins/common/sphere-designer.c:2907
-msgid "Scale Y:"
-msgstr "Масштаб Y:"
+#: plug-ins/common/sphere-designer.c:2905
+#: plug-ins/map-object/map-object-main.c:396
+msgid "Scale Y"
+msgstr "Масштаб за Y"
 
-#: plug-ins/common/sphere-designer.c:2915
-msgid "Scale Z:"
-msgstr "Масштаб Z:"
+#: plug-ins/common/sphere-designer.c:2913
+#: plug-ins/map-object/map-object-main.c:401
+msgid "Scale Z"
+msgstr "Масштаб за Z"
 
-#: plug-ins/common/sphere-designer.c:2926
-msgid "Rotate X:"
-msgstr "Масштаб X:"
+#: plug-ins/common/sphere-designer.c:2922
+#| msgid "Rotate X:"
+msgid "Rotate X"
+msgstr "Обертання навколо X"
 
-#: plug-ins/common/sphere-designer.c:2933
-msgid "Rotate Y:"
-msgstr "Обертання Y:"
+#: plug-ins/common/sphere-designer.c:2930
+#| msgid "Rotate Y:"
+msgid "Rotate Y"
+msgstr "Обертання навколо Y"
 
-#: plug-ins/common/sphere-designer.c:2940
-msgid "Rotate Z:"
-msgstr "Обертання Z:"
+#: plug-ins/common/sphere-designer.c:2938
+#| msgid "Rotate Z:"
+msgid "Rotate Z"
+msgstr "Обертання навколо Z"
 
-#: plug-ins/common/sphere-designer.c:2950
-msgid "Position X:"
-msgstr "Позиція по X:"
+#: plug-ins/common/sphere-designer.c:2947
+#: plug-ins/map-object/map-object-main.c:165
+msgid "Position X"
+msgstr "Позиція за X"
 
-#: plug-ins/common/sphere-designer.c:2958
-msgid "Position Y:"
-msgstr "Позиція по Y:"
+#: plug-ins/common/sphere-designer.c:2955
+#: plug-ins/map-object/map-object-main.c:170
+msgid "Position Y"
+msgstr "Позиція за Y"
 
-#: plug-ins/common/sphere-designer.c:2966
-msgid "Position Z:"
-msgstr "Позиція по Z:"
+#: plug-ins/common/sphere-designer.c:2963
+#: plug-ins/map-object/map-object-main.c:175
+msgid "Position Z"
+msgstr "Позиція за Z"
 
-#: plug-ins/common/sphere-designer.c:3098
+#: plug-ins/common/sphere-designer.c:3094
 msgid "Rendering sphere"
 msgstr "Візуалізація сфери"
 
-#: plug-ins/common/sphere-designer.c:3217
+#: plug-ins/common/sphere-designer.c:3213
 msgid "Region selected for plug-in is empty"
 msgstr "Ділянка, вибрана для розширення, порожня"
 
@@ -10034,12 +10045,10 @@ msgid "Icns"
 msgstr "Icns"
 
 #: plug-ins/file-icns/file-icns.c:136
-#| msgid "Loads files in DDS image format"
 msgid "Loads files in Apple Icon Image format"
 msgstr "Завантажує файли у форматі зображень піктограм Apple"
 
 #: plug-ins/file-icns/file-icns.c:137
-#| msgid "Apple Icon Image"
 msgid "Loads Apple Icon Image files."
 msgstr "Завантажує файли зображень піктограм Apple."
 
@@ -12988,13 +12997,6 @@ msgstr "В_идалити"
 msgid "Delete selected vector"
 msgstr "Видалити вибраний вектор"
 
-#: plug-ins/gimpressionist/orientmap.c:638
-#: plug-ins/lighting/lighting-main.c:211 plug-ins/lighting/lighting-main.c:334
-#: plug-ins/lighting/lighting-main.c:393 plug-ins/lighting/lighting-main.c:452
-#: plug-ins/lighting/lighting-main.c:511 plug-ins/lighting/lighting-main.c:570
-msgid "Type"
-msgstr "Тип"
-
 #: plug-ins/gimpressionist/orientmap.c:642
 msgid "_Normal"
 msgstr "_Звичайний"
@@ -13075,6 +13077,11 @@ msgstr "Пере_кривання"
 #: plug-ins/gimpressionist/paper.c:180
 msgid "Applies the paper as it is (without embossing it)"
 msgstr "Використовувати папір як є (без надання йому рельєфу)"
+
+#. Scale
+#: plug-ins/gimpressionist/paper.c:191 plug-ins/ifs-compose/ifs-compose.c:668
+msgid "Scale:"
+msgstr "Масштаб:"
 
 #: plug-ins/gimpressionist/paper.c:193
 msgid "Specifies the scale of the texture (in percent of original file)"
@@ -14476,10 +14483,6 @@ msgstr "Кількість _рядків MRU (1 - 16):"
 msgid "Select Color"
 msgstr "Вибір кольору"
 
-#: plug-ins/imagemap/imap_preferences.c:463 plug-ins/pagecurl/pagecurl.c:228
-msgid "Colors"
-msgstr "Кольори"
-
 #: plug-ins/imagemap/imap_preferences.c:465
 msgid "Normal:"
 msgstr "Звичайне:"
@@ -15116,23 +15119,11 @@ msgstr "Y"
 msgid "Z"
 msgstr "Z"
 
-#: plug-ins/map-object/map-object-main.c:165
-msgid "Position X"
-msgstr "Позиція за X"
-
 #: plug-ins/map-object/map-object-main.c:166
 #: plug-ins/map-object/map-object-main.c:171
 #: plug-ins/map-object/map-object-main.c:176
 msgid "Object position (x,y,z)"
 msgstr "Позиція об'єкта (x,y,z)"
-
-#: plug-ins/map-object/map-object-main.c:170
-msgid "Position Y"
-msgstr "Позиція за Y"
-
-#: plug-ins/map-object/map-object-main.c:175
-msgid "Position Z"
-msgstr "Позиція за Z"
 
 #: plug-ins/map-object/map-object-main.c:182
 #: plug-ins/map-object/map-object-main.c:187
@@ -15318,25 +15309,13 @@ msgstr "Ліва грань паралелепіпеда"
 msgid "Box right face"
 msgstr "Права грань паралелепіпеда"
 
-#: plug-ins/map-object/map-object-main.c:391
-msgid "Scale X"
-msgstr "Масштаб за X"
-
 #: plug-ins/map-object/map-object-main.c:392
 msgid "Box X size"
 msgstr "Розмір паралелепіпеда за X"
 
-#: plug-ins/map-object/map-object-main.c:396
-msgid "Scale Y"
-msgstr "Масштаб за Y"
-
 #: plug-ins/map-object/map-object-main.c:397
 msgid "Box Y size"
 msgstr "Розмір паралелепіпеда за Y"
-
-#: plug-ins/map-object/map-object-main.c:401
-msgid "Scale Z"
-msgstr "Масштаб за Z"
 
 #: plug-ins/map-object/map-object-main.c:402
 msgid "Box Z size"
@@ -16777,6 +16756,33 @@ msgstr "Не знайдено драйвера TWAIN. Не можна скори
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "Type:"
+#~ msgstr "Тип:"
+
+#~ msgid "Texture:"
+#~ msgstr "Текстура:"
+
+#~ msgid "Colors:"
+#~ msgstr "Кольори:"
+
+#~ msgid "Scale X:"
+#~ msgstr "Масштаб X:"
+
+#~ msgid "Scale Y:"
+#~ msgstr "Масштаб Y:"
+
+#~ msgid "Scale Z:"
+#~ msgstr "Масштаб Z:"
+
+#~ msgid "Position X:"
+#~ msgstr "Позиція по X:"
+
+#~ msgid "Position Y:"
+#~ msgstr "Позиція по Y:"
+
+#~ msgid "Position Z:"
+#~ msgstr "Позиція по Z:"
 
 #~ msgid "Argc upper point X"
 #~ msgstr "X верхньої точки Argc"
