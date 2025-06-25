@@ -78,7 +78,7 @@ void         gimp_viewable_button_set_view_type (GimpViewableButton *button,
 
 gint         gimp_viewable_button_get_view_size (GimpViewableButton *button);
 void         gimp_viewable_button_set_view_size (GimpViewableButton *button,
-                                                 gint                view_size);
+                                                 GimpViewSize        view_size);
 
 
 #endif /* __GIMP_VIEWABLE_BUTTON_H__ */
