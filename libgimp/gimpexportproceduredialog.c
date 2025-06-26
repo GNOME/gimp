@@ -55,7 +55,7 @@ static void   gimp_export_procedure_dialog_fill_list (GimpProcedureDialog *dialo
                                                       GList               *properties);
 
 static void   gimp_export_procedure_dialog_notify_comment
-                                                     (GimpConfig          *config,
+                                                     (GimpProcedureConfig *config,
                                                       GParamSpec          *pspec,
                                                       GtkWidget           *widget);
 
@@ -364,9 +364,9 @@ gimp_export_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
 }
 
 static void
-gimp_export_procedure_dialog_notify_comment (GimpConfig *config,
-                                             GParamSpec *pspec,
-                                             GtkWidget  *widget)
+gimp_export_procedure_dialog_notify_comment (GimpProcedureConfig *config,
+                                             GParamSpec          *pspec,
+                                             GtkWidget           *widget)
 {
   gboolean sensitive;
 
