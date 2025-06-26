@@ -1484,11 +1484,11 @@ gimp_item_tree_view_select_items (GimpContainerView *view,
                              g_list_length (items));
       gtk_label_set_text (GTK_LABEL (tree_view->priv->multi_selection_label), str);
       g_free (str);
-      gtk_widget_show (tree_view->priv->multi_selection_label);
+      gtk_widget_set_opacity (tree_view->priv->multi_selection_label, 1.0);
     }
   else
     {
-      gtk_widget_hide (tree_view->priv->multi_selection_label);
+      gtk_widget_set_opacity (tree_view->priv->multi_selection_label, 0.0);
     }
 
   return success;
