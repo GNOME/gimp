@@ -399,6 +399,7 @@ gimp_macos_setenv (const char * progname)
       else
         g_snprintf (path, path_len, "%s", app_dir);
       g_free (app_dir);
+      /* (We set env vars to avoid using an ugly wrapper in the .app bundle) */
       g_setenv ("PATH", path, TRUE);
       g_free (path);
       tmp = g_strdup_printf ("%s/lib/gtk-3.0/3.0.0", res_dir);
@@ -415,6 +416,9 @@ gimp_macos_setenv (const char * progname)
       g_free (tmp);
       tmp = g_strdup_printf ("%s/etc/fonts", res_dir);
       g_setenv ("FONTCONFIG_PATH", tmp, TRUE);
+      g_free (tmp);
+      tmp = g_strdup_printf ("%s/share/libthai", res_dir);
+      g_setenv ("LIBTHAI_DICTDIR", tmp, TRUE);
       g_free (tmp);
       if (need_pythonhome)
         {
