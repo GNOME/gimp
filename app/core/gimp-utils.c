@@ -574,6 +574,10 @@ gimp_get_fill_params (GimpContext   *context,
       *color = gegl_color_new ("white");
       break;
 
+    case GIMP_FILL_BLACK:
+      *color = gegl_color_new ("black");
+      break;
+
     case GIMP_FILL_TRANSPARENT:
       *color = gegl_color_new ("transparent");
       break;

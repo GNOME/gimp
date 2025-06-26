@@ -414,6 +414,11 @@ gimp_fill_options_set_by_fill_type (GimpFillOptions  *options,
       undo_desc = C_("undo-type", "Fill with White");
       break;
 
+    case GIMP_FILL_BLACK:
+      color = gegl_color_new ("black");
+      undo_desc = C_("undo-type", "Fill with Black");
+      break;
+
     case GIMP_FILL_TRANSPARENT:
       color = gegl_color_duplicate (gimp_context_get_background (context));
       gimp_context_set_paint_mode (GIMP_CONTEXT (options),
