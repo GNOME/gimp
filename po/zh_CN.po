@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-21 20:38+0000\n"
-"PO-Revision-Date: 2025-06-22 10:24+0800\n"
+"POT-Creation-Date: 2025-06-27 14:27+0000\n"
+"PO-Revision-Date: 2025-06-28 07:54+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -317,11 +317,11 @@ msgstr "显示带有实验性特性的首选项页面"
 msgid "Show an image submenu with debug actions"
 msgstr "显示带有调试动作的图像子菜单"
 
-#: app/main.c:728
+#: app/main.c:732
 msgid "[FILE|URI...]"
 msgstr "[文件|URI…]"
 
-#: app/main.c:756
+#: app/main.c:760
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -329,20 +329,20 @@ msgstr ""
 "GIMP 无法初始化图形用户界面。\n"
 "请确定您已正确安装和配置显示环境。"
 
-#: app/main.c:818
+#: app/main.c:822
 msgid "Another GIMP instance is already running."
 msgstr "另一个 GIMP 实例已在运行。"
 
-#: app/main.c:907
+#: app/main.c:911
 msgid "GIMP output. Type any character to close this window."
 msgstr "GIMP 输出。键入任意字符以关闭此窗口。"
 
-#: app/main.c:908
+#: app/main.c:912
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "（键入任意字符关闭本窗口）\n"
 
-#: app/main.c:925
+#: app/main.c:929
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "GIMP 输出。您可以最小化该窗口，但请不要关闭窗口。"
 
@@ -2492,7 +2492,7 @@ msgstr "240 秒"
 #: app/tools/gimpfiltertool.c:370 app/tools/gimpforegroundselecttool.c:333
 #: app/tools/gimptexttool.c:1774 app/tools/gimptransformgridtool.c:1264
 #: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
-#: app/widgets/gimpcolordialog.c:485 app/widgets/gimpcontrollereditor.c:666
+#: app/widgets/gimpcolordialog.c:492 app/widgets/gimpcontrollereditor.c:666
 #: app/widgets/gimpcontrollerlist.c:549 app/widgets/gimpdeviceeditor.c:543
 #: app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228
 #: app/widgets/gimpfiledialog.c:336 app/widgets/gimphelp.c:438
@@ -7913,7 +7913,7 @@ msgstr "重置所有滤镜"
 #: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
 #: app/tools/gimpfiltertool.c:369 app/tools/gimptransformgridtool.c:1261
-#: app/widgets/gimpcolordialog.c:484 app/widgets/gimpcolordisplayeditor.c:326
+#: app/widgets/gimpcolordialog.c:491 app/widgets/gimpcolordisplayeditor.c:326
 msgid "_Reset"
 msgstr "重置(_R)"
 
@@ -9987,7 +9987,7 @@ msgstr "打开显示器"
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
 #: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:191
-#: app/tools/gimpfiltertool.c:371 app/widgets/gimpcolordialog.c:486
+#: app/tools/gimpfiltertool.c:371 app/widgets/gimpcolordialog.c:493
 #: app/widgets/gimpcontrollereditor.c:667
 #: app/widgets/gimpdeviceinfoeditor.c:1161 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:180 app/widgets/gimpmodifierseditor.c:689
@@ -12820,7 +12820,7 @@ msgstr "“%s”中存在无效头数据：笔刷名称太长：%lu"
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "笔刷文件“%s”中含有无效的 UTF-8 字符串。"
 
-#: app/core/gimpbrush-load.c:265 app/core/gimppattern-load.c:159
+#: app/core/gimpbrush-load.c:265 app/core/gimppattern-load.c:167
 #: app/dialogs/template-options-dialog.c:110 app/display/gimptoolpath.c:617
 msgid "Unnamed"
 msgstr "未命名"
@@ -14566,16 +14566,16 @@ msgstr "无法打开 SBZ 文件"
 msgid "History Color"
 msgstr "历史颜色"
 
-#: app/core/gimppattern-load.c:67
+#: app/core/gimppattern-load.c:75
 msgid "File appears truncated: "
 msgstr "文件似乎被截断："
 
-#: app/core/gimppattern-load.c:95
+#: app/core/gimppattern-load.c:103
 #, c-format
 msgid "Unknown pattern format version %d."
 msgstr "未知图案格式版本 %d。"
 
-#: app/core/gimppattern-load.c:104
+#: app/core/gimppattern-load.c:112
 #, c-format
 msgid ""
 "Unsupported pattern depth %d.\n"
@@ -14584,7 +14584,7 @@ msgstr ""
 "不支持的图案色深 %d。\n"
 "GIMP 图案必须为灰度或 RGB。"
 
-#: app/core/gimppattern-load.c:116
+#: app/core/gimppattern-load.c:124
 #, c-format
 msgid ""
 "Invalid header data in '%s': width=%lu (maximum %lu), height=%lu (maximum "
@@ -14592,25 +14592,25 @@ msgid ""
 msgstr ""
 "“%s”中存在无效头数据：宽度=%lu（最大 %lu），高度=%lu（最大 %lu），大小=%lu"
 
-#: app/core/gimppattern-load.c:133
+#: app/core/gimppattern-load.c:141
 #, c-format
 msgid "Invalid header data in '%s': Pattern name is too long: %lu"
 msgstr "“%s”中存在无效头数据：图案名称太长：%lu"
 
-#: app/core/gimppattern-load.c:146 app/core/gimppattern-load.c:184
+#: app/core/gimppattern-load.c:154 app/core/gimppattern-load.c:192
 msgid "File appears truncated."
 msgstr "文件似乎被截断。"
 
-#: app/core/gimppattern-load.c:152
+#: app/core/gimppattern-load.c:160
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "图案文件“%s”中含有无效的 UTF-8 字符串。"
 
-#: app/core/gimppattern-load.c:195
+#: app/core/gimppattern-load.c:203
 msgid "Fatal parse error in pattern file: "
 msgstr "图案文件中出现致命解析错误："
 
-#: app/core/gimppattern-load.c:267 app/core/gimppattern-load.c:274
+#: app/core/gimppattern-load.c:378 app/core/gimppattern-load.c:385
 msgid "Error reading Photoshop pattern."
 msgstr "读取 Photoshop 图案时出错。"
 
@@ -14811,7 +14811,7 @@ msgid "Mirror"
 msgstr "镜面"
 
 #: app/core/gimpsymmetry-mirror.c:128
-msgid "Horizontal Symmetry"
+msgid "Horizontal symmetry"
 msgstr "水平对称"
 
 #: app/core/gimpsymmetry-mirror.c:129
@@ -14819,7 +14819,7 @@ msgid "Reflect the initial stroke across a horizontal axis"
 msgstr "横跨水平轴反映初始笔触"
 
 #: app/core/gimpsymmetry-mirror.c:136
-msgid "Vertical Symmetry"
+msgid "Vertical symmetry"
 msgstr "竖直对称"
 
 #: app/core/gimpsymmetry-mirror.c:137
@@ -14827,7 +14827,7 @@ msgid "Reflect the initial stroke across a vertical axis"
 msgstr "横跨竖直轴反映初始笔触"
 
 #: app/core/gimpsymmetry-mirror.c:144
-msgid "Central Symmetry"
+msgid "Central symmetry"
 msgstr "中心对称"
 
 #: app/core/gimpsymmetry-mirror.c:145
@@ -25740,7 +25740,7 @@ msgstr "编辑颜色表项 #%d"
 msgid "Edit Colormap Entry"
 msgstr "编辑颜色表项"
 
-#: app/widgets/gimpcolormapeditor.c:472
+#: app/widgets/gimpcolormapeditor.c:473
 msgid "The color is used in this indexed image"
 msgstr "该颜色已在该索引图像中使用"
 
