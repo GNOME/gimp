@@ -79,6 +79,10 @@ do
   fi
 done
 
+if [ $appid = 'org.gimp.GIMP' ] && [ $remote = 'gnome-nightly' ]; then
+  appid='org.gimp.GIMP.Nightly'
+fi
+
 package_info_cmd="flatpak remote-info $remote $appid"
 package_info=`$package_info_cmd 2>&1`
 got_info="$?"
