@@ -446,8 +446,8 @@ gimp_macos_setenv (const char * progname)
       g_free (tmp);
       if (g_getenv ("HOME") != NULL)
         {
-          tmp = g_strdup_printf ("%s/Library/Application Support/GIMP/3.00/cache",
-                                 g_getenv ("HOME"));
+          tmp = g_strdup_printf ("%s/Library/Application Support/GIMP/%s/cache",
+                                 g_getenv ("HOME"), GIMP_APP_VERSION);
           g_setenv ("XDG_CACHE_HOME", tmp, TRUE);
           g_free (tmp);
         }
