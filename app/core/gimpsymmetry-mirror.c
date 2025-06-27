@@ -125,7 +125,7 @@ gimp_mirror_class_init (GimpMirrorClass *klass)
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_HORIZONTAL_SYMMETRY,
                             "horizontal-symmetry",
-                            _("Horizontal Symmetry"),
+                            _("Horizontal symmetry"),
                             _("Reflect the initial stroke across a horizontal axis"),
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS |
@@ -133,7 +133,7 @@ gimp_mirror_class_init (GimpMirrorClass *klass)
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_VERTICAL_SYMMETRY,
                             "vertical-symmetry",
-                            _("Vertical Symmetry"),
+                            _("Vertical symmetry"),
                             _("Reflect the initial stroke across a vertical axis"),
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS |
@@ -141,7 +141,7 @@ gimp_mirror_class_init (GimpMirrorClass *klass)
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_POINT_SYMMETRY,
                             "point-symmetry",
-                            _("Central Symmetry"),
+                            _("Central symmetry"),
                             _("Invert the initial stroke through a point"),
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS |
