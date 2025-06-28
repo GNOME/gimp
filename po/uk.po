@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-27 14:27+0000\n"
-"PO-Revision-Date: 2025-06-28 11:29+0300\n"
+"POT-Creation-Date: 2025-06-28 09:34+0000\n"
+"PO-Revision-Date: 2025-06-28 14:19+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -15165,7 +15165,6 @@ msgid "Mirror"
 msgstr "Дзеркало"
 
 #: app/core/gimpsymmetry-mirror.c:128
-#| msgid "Horizontal Symmetry"
 msgid "Horizontal symmetry"
 msgstr "Горизонтальна симетрія"
 
@@ -15174,7 +15173,6 @@ msgid "Reflect the initial stroke across a horizontal axis"
 msgstr "Віддзеркалити початковий штрих відносно горизонтальної вісі"
 
 #: app/core/gimpsymmetry-mirror.c:136
-#| msgid "Vertical Symmetry"
 msgid "Vertical symmetry"
 msgstr "Вертикальна симетрія"
 
@@ -15183,7 +15181,6 @@ msgid "Reflect the initial stroke across a vertical axis"
 msgstr "Віддзеркалити початковий штрих відносно вертикальної вісі"
 
 #: app/core/gimpsymmetry-mirror.c:144
-#| msgid "Central Symmetry"
 msgid "Central symmetry"
 msgstr "Центральна симетрія"
 
@@ -15434,16 +15431,25 @@ msgstr "Шукати оновлення"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:517
+#: app/dialogs/about-dialog.c:519
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "Остання перевірка на %s, %s"
 
-#: app/dialogs/about-dialog.c:744
+#. Translators: first string is the date in the locale's date
+#. * representation (e.g., 12/31/99), second is the time in the
+#. * locale's time representation (e.g., 23:13:48).
+#.
+#: app/dialogs/about-dialog.c:525
+#, c-format
+msgid "Up to date as of %s at %s"
+msgstr "Є актуальним станом на %s, %s"
+
+#: app/dialogs/about-dialog.c:753
 msgid "GIMP is brought to you by"
 msgstr "GIMP створили для вас"
 
-#: app/dialogs/about-dialog.c:819
+#: app/dialogs/about-dialog.c:828
 #, c-format
 msgid ""
 "This is a development build\n"
