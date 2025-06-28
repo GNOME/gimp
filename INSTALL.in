@@ -281,10 +281,12 @@ help in that regard:
 
      Package Name        Version        Feature
 
+     bison               -              Image Map plug-in
      cairo-pdf           @CAIRO_PDF_REQUIRED_VERSION@         PDF export
      cfitsio             -              FITS
      iso-codes           -              Language selection
      ExcHndl             -              Crash logs on Windows with Dr. MinGW
+     flex                -              Image Map plug-in
      gs                  -              ghostscript
      libaa               -              ASCII art
      libheif             @LIBHEIF_REQUIRED_VERSION@         HEIF (HEIC, AVIF)
