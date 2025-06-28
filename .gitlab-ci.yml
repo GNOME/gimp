@@ -156,9 +156,11 @@ deps-debian:
     ## Build-time only dependencies
     - echo "RUN apt-get install -qq -y --no-install-recommends \\" >> Dockerfile
     - echo "appstream
+            bison
             ccache
             clang
             desktop-file-utils
+            flex
             gi-docgen
             git
             gobject-introspection
