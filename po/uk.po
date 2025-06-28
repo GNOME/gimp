@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-21 00:32+0000\n"
-"PO-Revision-Date: 2025-06-21 20:17+0300\n"
+"POT-Creation-Date: 2025-06-27 14:27+0000\n"
+"PO-Revision-Date: 2025-06-28 11:29+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -319,11 +319,11 @@ msgstr "Показувати сторінку налаштувань із екс
 msgid "Show an image submenu with debug actions"
 msgstr "Показати підменю зображення із пунктами діагностики"
 
-#: app/main.c:728
+#: app/main.c:732
 msgid "[FILE|URI...]"
 msgstr "[ФАЙЛ|URI...]"
 
-#: app/main.c:756
+#: app/main.c:760
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -331,20 +331,20 @@ msgstr ""
 "GIMP не може ініціалізувати графічний інтерфейс.\n"
 "Перевірте правильність параметрів вашого графічного середовища."
 
-#: app/main.c:818
+#: app/main.c:822
 msgid "Another GIMP instance is already running."
 msgstr "Вже запущена інша копія GIMP"
 
-#: app/main.c:907
+#: app/main.c:911
 msgid "GIMP output. Type any character to close this window."
 msgstr "Вивід GIMP. Введіть будь-який символ для закриття цього вікна."
 
-#: app/main.c:908
+#: app/main.c:912
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Введіть будь-який символ для закриття цього вікна.)\n"
 
-#: app/main.c:925
+#: app/main.c:929
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Вивід GIMP. Ви можете згорнути це вікно, але не закривати його."
 
@@ -2510,7 +2510,7 @@ msgstr "240 секунд"
 #: app/tools/gimpfiltertool.c:370 app/tools/gimpforegroundselecttool.c:333
 #: app/tools/gimptexttool.c:1774 app/tools/gimptransformgridtool.c:1264
 #: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
-#: app/widgets/gimpcolordialog.c:485 app/widgets/gimpcontrollereditor.c:666
+#: app/widgets/gimpcolordialog.c:492 app/widgets/gimpcontrollereditor.c:666
 #: app/widgets/gimpcontrollerlist.c:549 app/widgets/gimpdeviceeditor.c:543
 #: app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228
 #: app/widgets/gimpfiledialog.c:336 app/widgets/gimphelp.c:438
@@ -8009,7 +8009,7 @@ msgstr "Перезавантажити усі фільтри"
 #: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
 #: app/tools/gimpfiltertool.c:369 app/tools/gimptransformgridtool.c:1261
-#: app/widgets/gimpcolordialog.c:484 app/widgets/gimpcolordisplayeditor.c:326
+#: app/widgets/gimpcolordialog.c:491 app/widgets/gimpcolordisplayeditor.c:326
 msgid "_Reset"
 msgstr "С_кинути"
 
@@ -10104,7 +10104,7 @@ msgstr "Відкрити дисплей"
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
 #: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:191
-#: app/tools/gimpfiltertool.c:371 app/widgets/gimpcolordialog.c:486
+#: app/tools/gimpfiltertool.c:371 app/widgets/gimpcolordialog.c:493
 #: app/widgets/gimpcontrollereditor.c:667
 #: app/widgets/gimpdeviceinfoeditor.c:1161 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:180 app/widgets/gimpmodifierseditor.c:689
@@ -13126,7 +13126,7 @@ msgstr "Неправильний заголовок даних у «%s»: зан
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Неправильний UTF-8 рядок у файлі пензля «%s»."
 
-#: app/core/gimpbrush-load.c:265 app/core/gimppattern-load.c:159
+#: app/core/gimpbrush-load.c:265 app/core/gimppattern-load.c:167
 #: app/dialogs/template-options-dialog.c:110 app/display/gimptoolpath.c:617
 msgid "Unnamed"
 msgstr "Без назви"
@@ -14916,16 +14916,16 @@ msgstr "Не вдалося відкрити файл SBZ"
 msgid "History Color"
 msgstr "Колір з журналу"
 
-#: app/core/gimppattern-load.c:67
+#: app/core/gimppattern-load.c:75
 msgid "File appears truncated: "
 msgstr "Файл, вірогідно, обірваний:"
 
-#: app/core/gimppattern-load.c:95
+#: app/core/gimppattern-load.c:103
 #, c-format
 msgid "Unknown pattern format version %d."
 msgstr "Невідома версія формату текстури %d."
 
-#: app/core/gimppattern-load.c:104
+#: app/core/gimppattern-load.c:112
 #, c-format
 msgid ""
 "Unsupported pattern depth %d.\n"
@@ -14934,7 +14934,7 @@ msgstr ""
 "Непідтримувана глибина текстури %d.\n"
 "Текстури GIMP повинні бути у відтінках сірого або RGB."
 
-#: app/core/gimppattern-load.c:116
+#: app/core/gimppattern-load.c:124
 #, c-format
 msgid ""
 "Invalid header data in '%s': width=%lu (maximum %lu), height=%lu (maximum "
@@ -14943,26 +14943,26 @@ msgstr ""
 "Неправильний заголовок даних у «%s»: ширина=%lu (максимальна %lu), "
 "висота=%lu (максимальна %lu), байтів=%lu"
 
-#: app/core/gimppattern-load.c:133
+#: app/core/gimppattern-load.c:141
 #, c-format
 msgid "Invalid header data in '%s': Pattern name is too long: %lu"
 msgstr ""
 "Неправильний заголовок даних у «%s»: занадто довга назва візерунка %lu"
 
-#: app/core/gimppattern-load.c:146 app/core/gimppattern-load.c:184
+#: app/core/gimppattern-load.c:154 app/core/gimppattern-load.c:192
 msgid "File appears truncated."
 msgstr "Файл, вірогідно, обірваний."
 
-#: app/core/gimppattern-load.c:152
+#: app/core/gimppattern-load.c:160
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Неправильний UTF-8 рядок у файлі текстури «%s»."
 
-#: app/core/gimppattern-load.c:195
+#: app/core/gimppattern-load.c:203
 msgid "Fatal parse error in pattern file: "
 msgstr "Критична помилка аналізу файла текстури: "
 
-#: app/core/gimppattern-load.c:267 app/core/gimppattern-load.c:274
+#: app/core/gimppattern-load.c:378 app/core/gimppattern-load.c:385
 msgid "Error reading Photoshop pattern."
 msgstr "Помилка під час читання візерунка Photoshop."
 
@@ -15165,7 +15165,8 @@ msgid "Mirror"
 msgstr "Дзеркало"
 
 #: app/core/gimpsymmetry-mirror.c:128
-msgid "Horizontal Symmetry"
+#| msgid "Horizontal Symmetry"
+msgid "Horizontal symmetry"
 msgstr "Горизонтальна симетрія"
 
 #: app/core/gimpsymmetry-mirror.c:129
@@ -15173,7 +15174,8 @@ msgid "Reflect the initial stroke across a horizontal axis"
 msgstr "Віддзеркалити початковий штрих відносно горизонтальної вісі"
 
 #: app/core/gimpsymmetry-mirror.c:136
-msgid "Vertical Symmetry"
+#| msgid "Vertical Symmetry"
+msgid "Vertical symmetry"
 msgstr "Вертикальна симетрія"
 
 #: app/core/gimpsymmetry-mirror.c:137
@@ -15181,7 +15183,8 @@ msgid "Reflect the initial stroke across a vertical axis"
 msgstr "Віддзеркалити початковий штрих відносно вертикальної вісі"
 
 #: app/core/gimpsymmetry-mirror.c:144
-msgid "Central Symmetry"
+#| msgid "Central Symmetry"
+msgid "Central symmetry"
 msgstr "Центральна симетрія"
 
 #: app/core/gimpsymmetry-mirror.c:145
@@ -15292,7 +15295,7 @@ msgid "Precision"
 msgstr "Точність"
 
 #: app/core/gimptemplate.c:212 app/operations/gimpcurvesconfig.c:105
-#: app/operations/gimplevelsconfig.c:111 app/widgets/gimphistogrameditor.c:115
+#: app/operations/gimplevelsconfig.c:111 app/widgets/gimphistogrameditor.c:116
 msgid "Linear/Perceptual"
 msgstr "Лінійне/Придатне до сприйняття"
 
@@ -18761,7 +18764,7 @@ msgstr "Змінити непрозорість засобу"
 #: app/display/gimpcursorview.c:742 app/display/gimpcursorview.c:744
 #: app/display/gimpcursorview.c:824 app/display/gimpcursorview.c:825
 #: app/display/gimpcursorview.c:826 app/display/gimpcursorview.c:827
-#: app/widgets/gimphistogrameditor.c:803
+#: app/widgets/gimphistogrameditor.c:805
 msgid "n/a"
 msgstr "н/д"
 
@@ -20279,8 +20282,6 @@ msgid "Replace"
 msgstr "Замінити"
 
 #: app/operations/operations-enums.c:292
-#| msgctxt "file-action"
-#| msgid "Over_write"
 msgctxt "layer-mode"
 msgid "Overwrite"
 msgstr "Перезапис"
@@ -26313,7 +26314,7 @@ msgstr "Зміна запису палітри кольорів #%d"
 msgid "Edit Colormap Entry"
 msgstr "Зміна запису палітри кольорів"
 
-#: app/widgets/gimpcolormapeditor.c:472
+#: app/widgets/gimpcolormapeditor.c:473
 msgid "The color is used in this indexed image"
 msgstr "Колір використано у цьому індексованому зображенні"
 
@@ -27675,35 +27676,35 @@ msgstr ""
 msgid "Read _Online"
 msgstr "_Читати з мережі"
 
-#: app/widgets/gimphistogrameditor.c:135
+#: app/widgets/gimphistogrameditor.c:136
 msgid "Mean: "
 msgstr "Середнє: "
 
-#: app/widgets/gimphistogrameditor.c:136
+#: app/widgets/gimphistogrameditor.c:137
 msgid "Std dev: "
 msgstr "Стд. відх.: "
 
-#: app/widgets/gimphistogrameditor.c:137
+#: app/widgets/gimphistogrameditor.c:138
 msgid "Median: "
 msgstr "Медіана: "
 
-#: app/widgets/gimphistogrameditor.c:138
+#: app/widgets/gimphistogrameditor.c:139
 msgid "Pixels: "
 msgstr "Точок: "
 
-#: app/widgets/gimphistogrameditor.c:139
+#: app/widgets/gimphistogrameditor.c:140
 msgid "Count: "
 msgstr "Кількість: "
 
-#: app/widgets/gimphistogrameditor.c:140
+#: app/widgets/gimphistogrameditor.c:141
 msgid "Percentile: "
 msgstr "Процентиль: "
 
-#: app/widgets/gimphistogrameditor.c:166
+#: app/widgets/gimphistogrameditor.c:167
 msgid "Histogram channel"
 msgstr "Канал гістограми"
 
-#: app/widgets/gimphistogrameditor.c:225
+#: app/widgets/gimphistogrameditor.c:226
 msgid "Compute unique colors:"
 msgstr "Обчислення унікальних кольорів:"
 
@@ -28605,27 +28606,27 @@ msgstr "Вибрати «%s»"
 #. TRANSLATORS: %s will be a tool name, so we'll get a
 #. * final string looking like 'Activate the "Bucket fill" tool'.
 #.
-#: app/widgets/gimpwidgets-utils.c:1521
+#: app/widgets/gimpwidgets-utils.c:1529
 #, c-format
 msgid "Activate the \"%s\" tool"
 msgstr "Активувати інструмент «%s»"
 
-#: app/widgets/gimpwidgets-utils.c:2120
+#: app/widgets/gimpwidgets-utils.c:2128
 #, c-format
 msgid "Built-in grayscale (%s)"
 msgstr "Вбудовані відтінки сірого  (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2127
+#: app/widgets/gimpwidgets-utils.c:2135
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "Вбудований RGB (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2147
+#: app/widgets/gimpwidgets-utils.c:2155
 #, c-format
 msgid "Preferred grayscale (%s)"
 msgstr "Бажаний відтінків сірого (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2156
+#: app/widgets/gimpwidgets-utils.c:2164
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "Бажаний RGB (%s)"
