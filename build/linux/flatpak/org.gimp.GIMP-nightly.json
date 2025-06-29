@@ -129,6 +129,10 @@
                         "type": "anitya",
                         "project-id": 1626,
                         "stable-only": true,
+                        "//": "https://gitlab.gnome.org/GNOME/gexiv2/-/issues/82",
+                        "versions": {
+                            "<": "0.15.0"
+                        },
                         "url-template": "https://download.gnome.org/sources/gexiv2/$major.$minor/gexiv2-$version.tar.xz"
                     }
                 }
@@ -484,6 +488,7 @@
                         "type": "anitya",
                         "project-id": 17096,
                         "stable-only": true,
+                        "//": "https://github.com/mypaint/libmypaint/issues/101",
                         "versions": {
                             "<": "2.0.0"
                         },
