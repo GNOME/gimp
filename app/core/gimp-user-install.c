@@ -121,7 +121,10 @@ gimp_user_install_items[] =
 static gboolean  user_install_detect_old         (GimpUserInstall    *install,
                                                   const gchar        *gimp_dir);
 static gchar   * user_install_old_style_gimpdir  (void);
+
+#ifdef G_OS_UNIX
 static gchar   * user_install_flatpak_gimpdir    (gint                minor);
+#endif
 
 static void      user_install_log                (GimpUserInstall    *install,
                                                   const gchar        *format,
@@ -448,6 +451,7 @@ user_install_old_style_gimpdir (void)
   return gimp_dir;
 }
 
+#ifdef G_OS_UNIX
 static gchar *
 user_install_flatpak_gimpdir (gint minor)
 {
@@ -468,6 +472,7 @@ user_install_flatpak_gimpdir (gint minor)
 
   return gimp_dir;
 }
+#endif
 
 static void
 user_install_log (GimpUserInstall *install,
