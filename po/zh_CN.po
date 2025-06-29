@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-27 14:27+0000\n"
-"PO-Revision-Date: 2025-06-28 07:54+0800\n"
+"POT-Creation-Date: 2025-06-28 09:34+0000\n"
+"PO-Revision-Date: 2025-06-29 09:34+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -15087,16 +15087,25 @@ msgstr "检查更新"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:517
+#: app/dialogs/about-dialog.c:519
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "上次检查于 %s 的 %s"
 
-#: app/dialogs/about-dialog.c:744
+#. Translators: first string is the date in the locale's date
+#. * representation (e.g., 12/31/99), second is the time in the
+#. * locale's time representation (e.g., 23:13:48).
+#.
+#: app/dialogs/about-dialog.c:525
+#, c-format
+msgid "Up to date as of %s at %s"
+msgstr "已是最新 %s %s"
+
+#: app/dialogs/about-dialog.c:753
 msgid "GIMP is brought to you by"
 msgstr "GIMP 的提供者为"
 
-#: app/dialogs/about-dialog.c:819
+#: app/dialogs/about-dialog.c:828
 #, c-format
 msgid ""
 "This is a development build\n"
