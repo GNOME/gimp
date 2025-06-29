@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-21 00:32+0000\n"
-"PO-Revision-Date: 2025-06-21 15:43+0200\n"
+"POT-Creation-Date: 2025-06-28 09:34+0000\n"
+"PO-Revision-Date: 2025-06-29 12:38+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -315,11 +315,11 @@ msgstr "Pokaži stran nastavitev s poskusnimi funkcionalnostmi"
 msgid "Show an image submenu with debug actions"
 msgstr "Pokaži podmeni slike z dejanji razhroščevanja"
 
-#: app/main.c:728
+#: app/main.c:732
 msgid "[FILE|URI...]"
 msgstr "[DATOTEKA|URI...]"
 
-#: app/main.c:756
+#: app/main.c:760
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -327,20 +327,20 @@ msgstr ""
 "GIMP ne more inicializirati grafičnega uporabniškega vmesnika.\n"
 "Prepričajte se, da obstaja prava nastavitev za vaše zaslonsko okolje."
 
-#: app/main.c:818
+#: app/main.c:822
 msgid "Another GIMP instance is already running."
 msgstr "GIMP je že zagnan."
 
-#: app/main.c:907
+#: app/main.c:911
 msgid "GIMP output. Type any character to close this window."
 msgstr "Izhod GIMP. Pritisnite kateri koli znak, da se okno zapre."
 
-#: app/main.c:908
+#: app/main.c:912
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Pritisnite katero koli tipko, da zaprete to okno)\n"
 
-#: app/main.c:925
+#: app/main.c:929
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Izhod programa GIMP. To okno lahko pomanjšate, vendar ga ne zapirajte."
 
@@ -2506,7 +2506,7 @@ msgstr "240 s"
 #: app/tools/gimpfiltertool.c:370 app/tools/gimpforegroundselecttool.c:333
 #: app/tools/gimptexttool.c:1774 app/tools/gimptransformgridtool.c:1264
 #: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
-#: app/widgets/gimpcolordialog.c:485 app/widgets/gimpcontrollereditor.c:666
+#: app/widgets/gimpcolordialog.c:492 app/widgets/gimpcontrollereditor.c:666
 #: app/widgets/gimpcontrollerlist.c:549 app/widgets/gimpdeviceeditor.c:543
 #: app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228
 #: app/widgets/gimpfiledialog.c:336 app/widgets/gimphelp.c:438
@@ -7998,7 +7998,7 @@ msgstr "Ponastavi vse filtre"
 #: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
 #: app/tools/gimpfiltertool.c:369 app/tools/gimptransformgridtool.c:1261
-#: app/widgets/gimpcolordialog.c:484 app/widgets/gimpcolordisplayeditor.c:326
+#: app/widgets/gimpcolordialog.c:491 app/widgets/gimpcolordisplayeditor.c:326
 msgid "_Reset"
 msgstr "_Ponastavi"
 
@@ -10082,7 +10082,7 @@ msgstr "Odpri zaslon"
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
 #: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:191
-#: app/tools/gimpfiltertool.c:371 app/widgets/gimpcolordialog.c:486
+#: app/tools/gimpfiltertool.c:371 app/widgets/gimpcolordialog.c:493
 #: app/widgets/gimpcontrollereditor.c:667
 #: app/widgets/gimpdeviceinfoeditor.c:1161 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:180 app/widgets/gimpmodifierseditor.c:689
@@ -13076,7 +13076,7 @@ msgstr "Neveljavni podatki glave v »%s«: ime čopiča je predolgo: %lu"
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Neveljaven niz UTF-8 v datoteki čopičev »%s«."
 
-#: app/core/gimpbrush-load.c:265 app/core/gimppattern-load.c:159
+#: app/core/gimpbrush-load.c:265 app/core/gimppattern-load.c:167
 #: app/dialogs/template-options-dialog.c:110 app/display/gimptoolpath.c:617
 msgid "Unnamed"
 msgstr "Neimenovano"
@@ -14862,16 +14862,16 @@ msgstr "Datoteke SBZ ni mogoče odpreti"
 msgid "History Color"
 msgstr "Zgodovina barv"
 
-#: app/core/gimppattern-load.c:67
+#: app/core/gimppattern-load.c:75
 msgid "File appears truncated: "
 msgstr "Datoteka se zdi odsekana: "
 
-#: app/core/gimppattern-load.c:95
+#: app/core/gimppattern-load.c:103
 #, c-format
 msgid "Unknown pattern format version %d."
 msgstr "Neznana različica oblike vzorca %d."
 
-#: app/core/gimppattern-load.c:104
+#: app/core/gimppattern-load.c:112
 #, c-format
 msgid ""
 "Unsupported pattern depth %d.\n"
@@ -14880,7 +14880,7 @@ msgstr ""
 "Nepodprta globina vzorca %d.\n"
 "Vzorci za GIMP morajo biti GRAY (sivinske) ali RGB."
 
-#: app/core/gimppattern-load.c:116
+#: app/core/gimppattern-load.c:124
 #, c-format
 msgid ""
 "Invalid header data in '%s': width=%lu (maximum %lu), height=%lu (maximum "
@@ -14889,25 +14889,25 @@ msgstr ""
 "Neveljavni podatki glave v »%s«: širina=%lu (največ %lu), višina=%lu (največ "
 "%lu), bajti=%lu"
 
-#: app/core/gimppattern-load.c:133
+#: app/core/gimppattern-load.c:141
 #, c-format
 msgid "Invalid header data in '%s': Pattern name is too long: %lu"
 msgstr "Neveljavni podatki glave v »%s«: ime vzorca je predolgo: %lu"
 
-#: app/core/gimppattern-load.c:146 app/core/gimppattern-load.c:184
+#: app/core/gimppattern-load.c:154 app/core/gimppattern-load.c:192
 msgid "File appears truncated."
 msgstr "Datoteka se zdi prekinjena."
 
-#: app/core/gimppattern-load.c:152
+#: app/core/gimppattern-load.c:160
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Neveljaven niz UTF-8 v datoteki vzorca »%s«."
 
-#: app/core/gimppattern-load.c:195
+#: app/core/gimppattern-load.c:203
 msgid "Fatal parse error in pattern file: "
 msgstr "Usodna napaka pri razčlenjevanju datoteke vzorca: "
 
-#: app/core/gimppattern-load.c:267 app/core/gimppattern-load.c:274
+#: app/core/gimppattern-load.c:378 app/core/gimppattern-load.c:385
 msgid "Error reading Photoshop pattern."
 msgstr "Napaka pri branju vzorca Photoshopa."
 
@@ -15110,7 +15110,7 @@ msgid "Mirror"
 msgstr "Zrcali"
 
 #: app/core/gimpsymmetry-mirror.c:128
-msgid "Horizontal Symmetry"
+msgid "Horizontal symmetry"
 msgstr "Vodoravna simetrija"
 
 #: app/core/gimpsymmetry-mirror.c:129
@@ -15118,7 +15118,7 @@ msgid "Reflect the initial stroke across a horizontal axis"
 msgstr "Odsevaj začetno potezo prek vodoravne osi"
 
 #: app/core/gimpsymmetry-mirror.c:136
-msgid "Vertical Symmetry"
+msgid "Vertical symmetry"
 msgstr "Navpična simetrija"
 
 #: app/core/gimpsymmetry-mirror.c:137
@@ -15126,7 +15126,7 @@ msgid "Reflect the initial stroke across a vertical axis"
 msgstr "Odsevaj začetno potezo prek navpične osi"
 
 #: app/core/gimpsymmetry-mirror.c:144
-msgid "Central Symmetry"
+msgid "Central symmetry"
 msgstr "Centralna simetrija"
 
 #: app/core/gimpsymmetry-mirror.c:145
@@ -15238,7 +15238,7 @@ msgid "Precision"
 msgstr "Natančnost"
 
 #: app/core/gimptemplate.c:212 app/operations/gimpcurvesconfig.c:105
-#: app/operations/gimplevelsconfig.c:111 app/widgets/gimphistogrameditor.c:115
+#: app/operations/gimplevelsconfig.c:111 app/widgets/gimphistogrameditor.c:116
 msgid "Linear/Perceptual"
 msgstr "Linearno/zaznavno"
 
@@ -15373,16 +15373,25 @@ msgstr "Preveri obstoj posodobitev"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:517
+#: app/dialogs/about-dialog.c:519
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "Nazadnje preverjeno %s ob %s"
 
-#: app/dialogs/about-dialog.c:744
+#. Translators: first string is the date in the locale's date
+#. * representation (e.g., 12/31/99), second is the time in the
+#. * locale's time representation (e.g., 23:13:48).
+#.
+#: app/dialogs/about-dialog.c:525
+#, c-format
+msgid "Up to date as of %s at %s"
+msgstr "Posodobljeno glede na stanje %s ob %s"
+
+#: app/dialogs/about-dialog.c:753
 msgid "GIMP is brought to you by"
 msgstr "GIMPa vam zagotavlja"
 
-#: app/dialogs/about-dialog.c:819
+#: app/dialogs/about-dialog.c:828
 #, c-format
 msgid ""
 "This is a development build\n"
@@ -18697,7 +18706,7 @@ msgstr "Spremeni prekrivnost orodja"
 #: app/display/gimpcursorview.c:742 app/display/gimpcursorview.c:744
 #: app/display/gimpcursorview.c:824 app/display/gimpcursorview.c:825
 #: app/display/gimpcursorview.c:826 app/display/gimpcursorview.c:827
-#: app/widgets/gimphistogrameditor.c:803
+#: app/widgets/gimphistogrameditor.c:805
 msgid "n/a"
 msgstr "ni na voljo"
 
@@ -26198,7 +26207,7 @@ msgstr "Uredi vnos #%d kataloga barv"
 msgid "Edit Colormap Entry"
 msgstr "Uredi vnos kataloga barv"
 
-#: app/widgets/gimpcolormapeditor.c:472
+#: app/widgets/gimpcolormapeditor.c:473
 msgid "The color is used in this indexed image"
 msgstr "Barva se uporablja v tej indeksirani sliki"
 
@@ -27563,35 +27572,35 @@ msgstr ""
 msgid "Read _Online"
 msgstr "P_reberi na spletu"
 
-#: app/widgets/gimphistogrameditor.c:135
+#: app/widgets/gimphistogrameditor.c:136
 msgid "Mean: "
 msgstr "Povprečje: "
 
-#: app/widgets/gimphistogrameditor.c:136
+#: app/widgets/gimphistogrameditor.c:137
 msgid "Std dev: "
 msgstr "Std dev: "
 
-#: app/widgets/gimphistogrameditor.c:137
+#: app/widgets/gimphistogrameditor.c:138
 msgid "Median: "
 msgstr "Mediana: "
 
-#: app/widgets/gimphistogrameditor.c:138
+#: app/widgets/gimphistogrameditor.c:139
 msgid "Pixels: "
 msgstr "Slikovnih točk: "
 
-#: app/widgets/gimphistogrameditor.c:139
+#: app/widgets/gimphistogrameditor.c:140
 msgid "Count: "
 msgstr "Števec: "
 
-#: app/widgets/gimphistogrameditor.c:140
+#: app/widgets/gimphistogrameditor.c:141
 msgid "Percentile: "
 msgstr "Percentil: "
 
-#: app/widgets/gimphistogrameditor.c:166
+#: app/widgets/gimphistogrameditor.c:167
 msgid "Histogram channel"
 msgstr "Kanal histograma"
 
-#: app/widgets/gimphistogrameditor.c:225
+#: app/widgets/gimphistogrameditor.c:226
 msgid "Compute unique colors:"
 msgstr "Izračunaj edinstvene barve:"
 
@@ -28493,27 +28502,27 @@ msgstr "Izberi »%s«"
 #. TRANSLATORS: %s will be a tool name, so we'll get a
 #. * final string looking like 'Activate the "Bucket fill" tool'.
 #.
-#: app/widgets/gimpwidgets-utils.c:1521
+#: app/widgets/gimpwidgets-utils.c:1529
 #, c-format
 msgid "Activate the \"%s\" tool"
 msgstr "Aktiviraj orodje »%s«"
 
-#: app/widgets/gimpwidgets-utils.c:2120
+#: app/widgets/gimpwidgets-utils.c:2128
 #, c-format
 msgid "Built-in grayscale (%s)"
 msgstr "Vgrajena sivinska (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2127
+#: app/widgets/gimpwidgets-utils.c:2135
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "Vgrajeni RGB (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2147
+#: app/widgets/gimpwidgets-utils.c:2155
 #, c-format
 msgid "Preferred grayscale (%s)"
 msgstr "Prednostna sivinska (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2156
+#: app/widgets/gimpwidgets-utils.c:2164
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "Prednostni RGB (%s)"
