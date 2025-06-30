@@ -595,6 +595,7 @@ file-plug-in-tests:
     reports:
       junit: "_log/import-tests.xml"
     expire_in: 2 days
+  timeout: 30m
 
 meson-health:
   extends: .default
