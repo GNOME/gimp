@@ -65,10 +65,6 @@ static void   themes_theme_settings_portal_changed (GDBusProxy            *proxy
                                                     Gimp                  *gimp);
 #endif
 
-#ifdef G_OS_WIN32
-static gboolean themes_win32_is_darkmode_active    (void);
-#endif
-
 
 /*  private variables  */
 
@@ -406,7 +402,7 @@ themes_apply_theme (Gimp          *gimp,
 #elif defined(G_OS_WIN32)
   if (config->theme_scheme == GIMP_THEME_SYSTEM)
     {
-      prefer_dark_theme = themes_win32_is_darkmode_active ();
+      prefer_dark_theme = gimp_is_win32_system_theme_dark ();
       color_scheme = prefer_dark_theme ? GIMP_THEME_DARK : GIMP_THEME_LIGHT;
     }
   else
@@ -873,23 +869,5 @@ themes_set_title_bar (Gimp *gimp)
 
   if (windows)
     g_list_free (windows);
-}
-
-static gboolean
-themes_win32_is_darkmode_active (void)
-{
-  DWORD   val      = 0;
-  DWORD   val_size = sizeof (val);
-  LSTATUS status;
-
-  status = RegGetValueA(HKEY_CURRENT_USER,
-                        "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
-                        "AppsUseLightTheme",
-                        RRF_RT_REG_DWORD,
-                        NULL,
-                        &val,
-                        &val_size);
-
-  return status == ERROR_SUCCESS && val == 0;
 }
 #endif

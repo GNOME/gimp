@@ -167,6 +167,7 @@ gboolean          gimp_utils_are_menu_path_identical   (const gchar       *path1
 #ifdef G_OS_WIN32
 void              gimp_window_set_title_bar_theme      (Gimp              *gimp,
                                                         GtkWidget         *dialog);
+gboolean          gimp_is_win32_system_theme_dark      (void);
 #endif
 
 #endif /* __APP_GIMP_WIDGETS_UTILS_H__ */

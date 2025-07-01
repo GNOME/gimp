@@ -2677,7 +2677,10 @@ gimp_window_set_title_bar_theme (Gimp      *gimp,
           GimpGuiConfig *config;
 
           config = GIMP_GUI_CONFIG (gimp->config);
-          use_dark_mode = (config->theme_scheme != GIMP_THEME_LIGHT);
+          if (config->theme_scheme == GIMP_THEME_SYSTEM)
+            use_dark_mode = gimp_is_win32_system_theme_dark ();
+          else
+            use_dark_mode = (config->theme_scheme != GIMP_THEME_LIGHT);
         }
       else
         {
@@ -2705,5 +2708,23 @@ gimp_window_set_title_bar_theme (Gimp      *gimp,
         DwmSetWindowAttribute (hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE,
                                &use_dark_mode, sizeof (use_dark_mode));
     }
+}
+
+gboolean
+gimp_is_win32_system_theme_dark (void)
+{
+  DWORD   val      = 0;
+  DWORD   val_size = sizeof (val);
+  LSTATUS status;
+
+  status = RegGetValueA(HKEY_CURRENT_USER,
+                        "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+                        "AppsUseLightTheme",
+                        RRF_RT_REG_DWORD,
+                        NULL,
+                        &val,
+                        &val_size);
+
+  return status == ERROR_SUCCESS && val == 0;
 }
 #endif
