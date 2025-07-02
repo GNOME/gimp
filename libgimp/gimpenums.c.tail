@@ -64,7 +64,8 @@ static const GimpGetTypeFunc get_type_funcs[] =
   gimp_text_justification_get_type,
   gimp_transfer_mode_get_type,
   gimp_transform_direction_get_type,
-  gimp_transform_resize_get_type
+  gimp_transform_resize_get_type,
+  gimp_trc_type_get_type
 };
 
 static const gchar * const type_names[] =
@@ -130,7 +131,8 @@ static const gchar * const type_names[] =
   "GimpTextJustification",
   "GimpTransferMode",
   "GimpTransformDirection",
-  "GimpTransformResize"
+  "GimpTransformResize",
+  "GimpTRCType"
 };
 
 static gboolean enums_initialized = FALSE;

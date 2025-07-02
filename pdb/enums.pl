@@ -861,6 +861,15 @@ package Gimp::CodeGen::enums;
 		       GIMP_HISTOGRAM_ALPHA => '4',
 		       GIMP_HISTOGRAM_LUMINANCE => '5' }
 	},
+    GimpTRCType =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_TRC_LINEAR GIMP_TRC_NON_LINEAR
+			  GIMP_TRC_PERCEPTUAL) ],
+	  mapping => { GIMP_TRC_LINEAR => '0',
+		       GIMP_TRC_NON_LINEAR => '1',
+		       GIMP_TRC_PERCEPTUAL => '2' }
+	},
     GimpBrushApplicationMode =>
 	{ contig => 1,
 	  header => 'paint/paint-enums.h',

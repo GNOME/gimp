@@ -278,6 +278,26 @@ typedef enum
 } GimpLayerMode;
 
 
+#define GIMP_TYPE_TRC_TYPE (gimp_trc_type_get_type ())
+
+GType gimp_trc_type_get_type (void) G_GNUC_CONST;
+
+/**
+ * GimpTRCType:
+ * @GIMP_TRC_LINEAR: GIMP_TRC_LINEAR
+ * @GIMP_TRC_NON_LINEAR: GIMP_TRC_NON_LINEAR
+ * @GIMP_TRC_PERCEPTUAL: GIMP_TRC_PERCEPTUAL
+ *
+ * Extracted from app/core/core-enums.h
+ **/
+typedef enum
+{
+  GIMP_TRC_LINEAR,
+  GIMP_TRC_NON_LINEAR,
+  GIMP_TRC_PERCEPTUAL
+} GimpTRCType;
+
+
 void           gimp_enums_init           (void);
 
 const gchar ** gimp_enums_get_type_names (gint *n_type_names);

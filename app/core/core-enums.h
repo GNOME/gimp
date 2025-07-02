@@ -482,7 +482,7 @@ typedef enum  /*< pdb-skip >*/
 
 GType gimp_trc_type_get_type (void) G_GNUC_CONST;
 
-typedef enum  /*< pdb-skip >*/
+typedef enum
 {
   GIMP_TRC_LINEAR,     /*< desc="Linear"     >*/
   GIMP_TRC_NON_LINEAR, /*< desc="Non-Linear" >*/
