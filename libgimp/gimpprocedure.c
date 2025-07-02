@@ -410,13 +410,13 @@ gimp_procedure_real_install (GimpProcedure *procedure)
   for (i = 0; i < n_args; i++)
     {
       _gimp_param_spec_to_gp_param_def (args[i],
-                                        &proc_install.params[i]);
+                                        &proc_install.params[i], FALSE);
     }
 
   for (i = 0; i < n_return_vals; i++)
     {
       _gimp_param_spec_to_gp_param_def (return_vals[i],
-                                        &proc_install.return_vals[i]);
+                                        &proc_install.return_vals[i], FALSE);
     }
 
   plug_in = gimp_procedure_get_plug_in (procedure);

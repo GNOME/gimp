@@ -24,8 +24,9 @@
 G_BEGIN_DECLS
 
 GParamSpec     * _gimp_gp_param_def_to_param_spec (const GPParamDef     *param_def);
-void             _gimp_param_spec_to_gp_param_def (GParamSpec           *pspec,
-                                                   GPParamDef           *param_def);
+gboolean         _gimp_param_spec_to_gp_param_def (GParamSpec           *pspec,
+                                                   GPParamDef           *param_def,
+                                                   gboolean              check_only);
 
 GimpValueArray * _gimp_gp_params_to_value_array   (gpointer              gimp,
                                                    GParamSpec          **pspecs,

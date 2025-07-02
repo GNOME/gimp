@@ -847,15 +847,39 @@ HELP
 
       for (gint i = 0; i < n_specs; i++)
         {
-          GParamSpec *pspec = specs[n_parent_specs + i];
-          GValue      value = G_VALUE_INIT;
+          GParamSpec *pspec     = specs[n_parent_specs + i];
+          GPParamDef  param_def = { 0, };
 
-          g_value_init (&value, G_TYPE_PARAM);
+          /* Make sure we do not try to send param specs over the wire
+           * if we don't support sending their type.
+           */
+          if (_gimp_param_spec_to_gp_param_def (pspec, &param_def, TRUE))
+            {
+              GValue value = G_VALUE_INIT;
 
-          g_value_set_param (&value, g_param_spec_ref (pspec));
-          gimp_value_array_append (pspecs, &value);
+              g_value_init (&value, G_TYPE_PARAM);
 
-          g_value_unset (&value);
+              g_value_set_param (&value, g_param_spec_ref (pspec));
+              gimp_value_array_append (pspecs, &value);
+
+              g_value_unset (&value);
+            }
+          else
+            {
+              /* This is not technically a bug if an operation has
+               * unsupported argument types, because we cannot possibly
+               * support everything (third-party operations could have any
+               * kind of arguments; and even official ops have types
+               * such as audio fragment which we may never support).
+               * So this should not generate any WARNING. Yet we still
+               * want to softly notify developers, in case we can
+               * actually do something about some types.
+               */
+              g_printerr ("%s: ignoring argument '%s' of procedure '%s'. "
+                          "Unsupported argument type '%s'.\n",
+                          G_STRFUNC, pspec->name, operation_name,
+                          g_type_name (G_PARAM_SPEC_VALUE_TYPE (pspec)));
+            }
         }
 
       g_free (specs);
@@ -925,6 +949,13 @@ CODE
 
 @headers = qw(<gegl.h>
               <gegl-plugin.h>
+
+              "libgimpbase/gimpbase.h"
+              "libgimpbase/gimpprotocol.h"
+              "libgimpbase/gimpwire.h"
+
+              "libgimp/gimpgpparams.h"
+
               "core/gimpcontainer.h"
               "core/gimpdrawablefilter.h"
               "core/gimpdrawable-filters.h"

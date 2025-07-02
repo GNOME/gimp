@@ -1111,6 +1111,9 @@ GPL
 		elsif (!/libgimp/) {
 		    s/^/~/;
 		}
+		elsif (/libgimp[a-z]/) {
+		    s/^/"/;
+                }
 	    }
 	    $x cmp $y;
 	} keys %{$out->{headers}};
@@ -1137,7 +1140,7 @@ GPL
 
 	    $seen = 0 if !/^</;
 
-	    if (/libgimp/) {
+	    if (/libgimp[a-z]/) {
 		$lib = 1;
 	    }
 	    else {

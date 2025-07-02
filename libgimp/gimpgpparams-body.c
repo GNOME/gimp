@@ -367,12 +367,14 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
   return NULL;
 }
 
-void
+gboolean
 _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
-                                  GPParamDef *param_def)
+                                  GPParamDef *param_def,
+                                  gboolean    check_only)
 {
   GType pspec_type = G_PARAM_SPEC_TYPE (pspec);
   GType value_type = G_PARAM_SPEC_VALUE_TYPE (pspec);
+  gboolean success = TRUE;
 
   param_def->param_def_type  = GP_PARAM_DEF_TYPE_DEFAULT;
   param_def->type_name       = (gchar *) g_type_name (pspec_type);
@@ -767,11 +769,19 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
         }
       else
         {
-          g_warning ("%s: GParamSpecObject for unsupported type '%s:%s'",
-                     G_STRFUNC,
-                     param_def->type_name, param_def->value_type_name);
+          success = FALSE;
+          if (! check_only)
+            g_warning ("%s: GParamSpecObject for unsupported type '%s:%s'",
+                       G_STRFUNC,
+                       param_def->type_name, param_def->value_type_name);
         }
     }
+  else
+    {
+      success = FALSE;
+    }
+
+  return success;
 }
 
 static GimpImage *
@@ -1709,7 +1719,7 @@ gimp_value_to_gp_param (const GValue *value,
       param->param_type = GP_PARAM_TYPE_PARAM_DEF;
 
       _gimp_param_spec_to_gp_param_def (g_value_get_param (value),
-                                        &param->data.d_param_def);
+                                        &param->data.d_param_def, FALSE);
     }
   else if (GIMP_VALUE_HOLDS_VALUE_ARRAY (value))
     {

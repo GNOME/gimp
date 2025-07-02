@@ -1152,7 +1152,7 @@ plug_in_rc_write_proc_arg (GimpConfigWriter *writer,
 {
   GPParamDef param_def = { 0, };
 
-  _gimp_param_spec_to_gp_param_def (pspec, &param_def);
+  _gimp_param_spec_to_gp_param_def (pspec, &param_def, FALSE);
 
   gimp_config_writer_open (writer, "proc-arg");
   gimp_config_writer_printf (writer, "%d", param_def.param_def_type);
