@@ -1056,6 +1056,7 @@ EXPORTS
 	gimp_thumbnail_procedure_new
 	gimp_tile_height
 	gimp_tile_width
+	gimp_trc_type_get_type
 	gimp_unit_new
 	gimp_user_time
 	gimp_vector_load_procedure_extract_dimensions
