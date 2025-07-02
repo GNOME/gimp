@@ -72,8 +72,8 @@ foreach (sort keys %enums) {
 	! $enums{$_}->{external}) {
         my $gtype = $func = $_;
 
-	for ($gtype) { s/Gimp//; s/([A-Z][^A-Z]+)/\U$1\E_/g; s/_$// }
-	for ($func) { s/Gimp//; s/([A-Z][^A-Z]+)/\L$1\E_/g; s/_$// }
+	for ($gtype) { s/Gimp//; s/([A-Z][^A-Z]+|[A-Z]+(?=[A-Z]))/\U$1\E_/g; s/_$// }
+	for ($func) { s/Gimp//; s/([A-Z][^A-Z]+|[A-Z]+(?=[A-Z]))/\L$1\E_/g; s/_$// }
 
 	print ENUMFILE "\n#define GIMP_TYPE_$gtype (gimp_$func\_get_type ())\n\n";
 	print ENUMFILE "GType gimp_$func\_get_type (void) G_GNUC_CONST;\n\n";
@@ -136,14 +136,14 @@ static const GimpGetTypeFunc get_type_funcs[] =
 CODE
 
 my $first = 1;
-foreach (sort keys %enums) {
+foreach (sort {uc($a) cmp uc($b)} keys %enums) {
     if (! ($_ =~ /GimpUnit/)) {
 	my $enum = $enums{$_};
 	my $func = $_;
 	my $gegl_enum = ($func =~ /Gegl/);
 
 	for ($func) { s/Gimp//; s/Gegl//; s/PDB/Pdb/;
-		      s/([A-Z][^A-Z]+)/\L$1\E_/g; s/_$// }
+		      s/([A-Z][^A-Z]+|[A-Z]+(?=[A-Z]))/\L$1\E_/g; s/_$// }
 
 	print ENUMFILE ",\n" unless $first;
 
@@ -166,7 +166,7 @@ static const gchar * const type_names[] =
 CODE
 
 $first = 1;
-foreach (sort keys %enums) {
+foreach (sort {uc($a) cmp uc($b)} keys %enums) {
     if (! ($_ =~ /GimpUnit/)) {
 	my $enum = $enums{$_};
 	my $gtype = $_;
