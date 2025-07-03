@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-21 00:32+0000\n"
-"PO-Revision-Date: 2025-06-21 06:39+0200\n"
+"POT-Creation-Date: 2025-07-02 20:34+0000\n"
+"PO-Revision-Date: 2025-07-03 05:44+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -296,11 +296,11 @@ msgstr "მორგების ფანჯარაში ექსპერ�
 msgid "Show an image submenu with debug actions"
 msgstr "გამოსახულების ქვემენიუს გამართვის ქმედებებით ჩვენება"
 
-#: app/main.c:728
+#: app/main.c:732
 msgid "[FILE|URI...]"
 msgstr "[FILE|URI...]"
 
-#: app/main.c:756
+#: app/main.c:760
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -308,20 +308,20 @@ msgstr ""
 "GIMP-ის შეცდომა გრაფიკული მომხმარებლის ინტერფეისის ინიციალიზაციისას.\n"
 "დარწმუნდით, რომ არსებობს თქვენი ვიდეოქვესისტემის სწორი გარემო."
 
-#: app/main.c:818
+#: app/main.c:822
 msgid "Another GIMP instance is already running."
 msgstr "GIMP-ის კიდევ ერთი ასლი უკვე გაშვებულია."
 
-#: app/main.c:907
+#: app/main.c:911
 msgid "GIMP output. Type any character to close this window."
 msgstr "GIMP-ის გამოტანა. ფანჯრის დასახურად დააწექით ნებისმიერ კლავიშას."
 
-#: app/main.c:908
+#: app/main.c:912
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(ფანჯრის დასახურად დააჭირეთ ნებისმიერ კლავიშას)\n"
 
-#: app/main.c:925
+#: app/main.c:929
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr ""
 "GIMP-ის გამოტანა. თქვენ შეგიძლიათ ჩაკეცოთ ფანჯარა, მაგრამ არა მისი დახურვა."
@@ -2468,7 +2468,7 @@ msgstr "240 წამი"
 #: app/tools/gimpfiltertool.c:370 app/tools/gimpforegroundselecttool.c:333
 #: app/tools/gimptexttool.c:1774 app/tools/gimptransformgridtool.c:1264
 #: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
-#: app/widgets/gimpcolordialog.c:485 app/widgets/gimpcontrollereditor.c:666
+#: app/widgets/gimpcolordialog.c:492 app/widgets/gimpcontrollereditor.c:666
 #: app/widgets/gimpcontrollerlist.c:549 app/widgets/gimpdeviceeditor.c:543
 #: app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228
 #: app/widgets/gimpfiledialog.c:336 app/widgets/gimphelp.c:438
@@ -4333,6 +4333,8 @@ msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
 msgstr ""
+"გამოსახულების დაბრუნებით დისკზე შენახულ მდგომარეობაში თქვენ დაკარგავთ ყველა "
+"ცვლილებას, მათ შორის ქმედებების დაბრუნების საშუალებას."
 
 #: app/actions/file-commands.c:812
 msgid "(Unnamed Template)"
@@ -7907,7 +7909,7 @@ msgstr "ყველა ფილტრის საწყის მნიშვ
 #: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
 #: app/tools/gimpfiltertool.c:369 app/tools/gimptransformgridtool.c:1261
-#: app/widgets/gimpcolordialog.c:484 app/widgets/gimpcolordisplayeditor.c:326
+#: app/widgets/gimpcolordialog.c:491 app/widgets/gimpcolordisplayeditor.c:326
 msgid "_Reset"
 msgstr "_საწყის მნიშვნელობებზე დაბრუნება"
 
@@ -9987,7 +9989,7 @@ msgstr "ეკრანის გახსნა"
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
 #: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:191
-#: app/tools/gimpfiltertool.c:371 app/widgets/gimpcolordialog.c:486
+#: app/tools/gimpfiltertool.c:371 app/widgets/gimpcolordialog.c:493
 #: app/widgets/gimpcontrollereditor.c:667
 #: app/widgets/gimpdeviceinfoeditor.c:1161 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:180 app/widgets/gimpmodifierseditor.c:689
@@ -10361,7 +10363,7 @@ msgstr "'%%s'-ის დამუშავების შეცდომა: �
 
 #: app/config/gimpconfig-file.c:154 app/config/gimpconfig-file.c:206
 #: app/config/gimpconfig-file.c:223 app/core/gimp-tags.c:145
-#: app/gui/themes.c:711 app/tools/gimpfiltertool-settings.c:229
+#: app/gui/themes.c:707 app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "შეცდომა '%s'-ის ჩაწერისას: %s"
@@ -12754,12 +12756,12 @@ msgstr "შვილობილი პროცესის %s გაშვე�
 msgid "tags-locale:C"
 msgstr "tips-locale:ka"
 
-#: app/core/gimp-tags.c:156 app/gui/themes.c:723
+#: app/core/gimp-tags.c:156 app/gui/themes.c:719
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "%s-ის დახურვის შეცდომა: %s"
 
-#: app/core/gimp-user-install.c:232
+#: app/core/gimp-user-install.c:235
 #, c-format
 msgid ""
 "It seems you have used GIMP %s before.  GIMP will now migrate your user "
@@ -12768,24 +12770,24 @@ msgstr ""
 "როგორც ჩანს, ადრე GIMP %s-ს იყენებდით.   GIMP ახლა თქვენს მომხმარებლის "
 "პარამეტრებს '%s'-ში გადაიტანს."
 
-#: app/core/gimp-user-install.c:240
+#: app/core/gimp-user-install.c:243
 #, c-format
 msgid ""
 "It appears that you are using GIMP for the first time.  GIMP will now create "
 "a folder named '%s' and copy some files to it."
 msgstr ""
 
-#: app/core/gimp-user-install.c:534
+#: app/core/gimp-user-install.c:541
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "ფაილის კოპირება \"%s\"-დან \"%s\"-ში..."
 
-#: app/core/gimp-user-install.c:551 app/core/gimp-user-install.c:577
+#: app/core/gimp-user-install.c:558 app/core/gimp-user-install.c:584
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "საქაღალდის შექმნა '%s'..."
 
-#: app/core/gimp-user-install.c:562 app/core/gimp-user-install.c:588
+#: app/core/gimp-user-install.c:569 app/core/gimp-user-install.c:595
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "შეცდომა საქაღალდის შექმნისას  '%s': %s"
@@ -12863,7 +12865,7 @@ msgstr "თავსართის არასწორი მონაცე�
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "არასწორი UTF-8 მონაცემები ფუნჯის ფაილში '%s'."
 
-#: app/core/gimpbrush-load.c:265 app/core/gimppattern-load.c:159
+#: app/core/gimpbrush-load.c:265 app/core/gimppattern-load.c:167
 #: app/dialogs/template-options-dialog.c:110 app/display/gimptoolpath.c:617
 msgid "Unnamed"
 msgstr "უსახელო"
@@ -14620,23 +14622,23 @@ msgstr "SBZ ფაილის გახსნის შეცდომა"
 msgid "History Color"
 msgstr "ფერების ისტორია"
 
-#: app/core/gimppattern-load.c:67
+#: app/core/gimppattern-load.c:75
 msgid "File appears truncated: "
 msgstr "ფაილი შეკვეცილია: "
 
-#: app/core/gimppattern-load.c:95
+#: app/core/gimppattern-load.c:103
 #, c-format
 msgid "Unknown pattern format version %d."
 msgstr "შაბლონის ფორმატის უცნობი ვერსია: %d."
 
-#: app/core/gimppattern-load.c:104
+#: app/core/gimppattern-load.c:112
 #, c-format
 msgid ""
 "Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
 
-#: app/core/gimppattern-load.c:116
+#: app/core/gimppattern-load.c:124
 #, c-format
 msgid ""
 "Invalid header data in '%s': width=%lu (maximum %lu), height=%lu (maximum "
@@ -14645,26 +14647,26 @@ msgstr ""
 "თავსართის არასწორი მონაცემები '%s'-ში: სიგანე=%lu (მაქს %lu), სიმაღლე=%lu "
 "(მაქს %lu), ბაიტი=%lu"
 
-#: app/core/gimppattern-load.c:133
+#: app/core/gimppattern-load.c:141
 #, c-format
 msgid "Invalid header data in '%s': Pattern name is too long: %lu"
 msgstr ""
 "თავსართის არასწორი მონაცემები %s-ში: შაბლონის სახელი ძალიან გრძელია: %lu"
 
-#: app/core/gimppattern-load.c:146 app/core/gimppattern-load.c:184
+#: app/core/gimppattern-load.c:154 app/core/gimppattern-load.c:192
 msgid "File appears truncated."
 msgstr "ფაილი შეკვეცილია."
 
-#: app/core/gimppattern-load.c:152
+#: app/core/gimppattern-load.c:160
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "არასწორი UTF-8 მონაცემები შაბლონის ფაილში '%s'."
 
-#: app/core/gimppattern-load.c:195
+#: app/core/gimppattern-load.c:203
 msgid "Fatal parse error in pattern file: "
 msgstr "შაბლონის ფაილის დამუშავების შეცდომა: "
 
-#: app/core/gimppattern-load.c:267 app/core/gimppattern-load.c:274
+#: app/core/gimppattern-load.c:378 app/core/gimppattern-load.c:385
 msgid "Error reading Photoshop pattern."
 msgstr "Photoshop-ის ნიმუშის წაკითხვის შეცდომა."
 
@@ -14861,7 +14863,7 @@ msgid "Mirror"
 msgstr "სარკე"
 
 #: app/core/gimpsymmetry-mirror.c:128
-msgid "Horizontal Symmetry"
+msgid "Horizontal symmetry"
 msgstr "ჰორიზონტალური სიმეტრია"
 
 #: app/core/gimpsymmetry-mirror.c:129
@@ -14869,7 +14871,7 @@ msgid "Reflect the initial stroke across a horizontal axis"
 msgstr ""
 
 #: app/core/gimpsymmetry-mirror.c:136
-msgid "Vertical Symmetry"
+msgid "Vertical symmetry"
 msgstr "ვერტიკალური სიმეტრია"
 
 #: app/core/gimpsymmetry-mirror.c:137
@@ -14877,7 +14879,7 @@ msgid "Reflect the initial stroke across a vertical axis"
 msgstr ""
 
 #: app/core/gimpsymmetry-mirror.c:144
-msgid "Central Symmetry"
+msgid "Central symmetry"
 msgstr "ცენტრალური სიმეტრია"
 
 #: app/core/gimpsymmetry-mirror.c:145
@@ -14988,7 +14990,7 @@ msgid "Precision"
 msgstr "სიზუსტე"
 
 #: app/core/gimptemplate.c:212 app/operations/gimpcurvesconfig.c:105
-#: app/operations/gimplevelsconfig.c:111 app/widgets/gimphistogrameditor.c:115
+#: app/operations/gimplevelsconfig.c:111 app/widgets/gimphistogrameditor.c:116
 msgid "Linear/Perceptual"
 msgstr "ხაზოვანი/აღქმადი"
 
@@ -15123,16 +15125,25 @@ msgstr "განახლებების შემოწმება"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:517
+#: app/dialogs/about-dialog.c:519
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "ბოლოს შემოწმების თარიღი %s %s"
 
-#: app/dialogs/about-dialog.c:744
+#. Translators: first string is the date in the locale's date
+#. * representation (e.g., 12/31/99), second is the time in the
+#. * locale's time representation (e.g., 23:13:48).
+#.
+#: app/dialogs/about-dialog.c:525
+#, c-format
+msgid "Up to date as of %s at %s"
+msgstr ""
+
+#: app/dialogs/about-dialog.c:753
 msgid "GIMP is brought to you by"
 msgstr "GIMP შექმნილია თქვენთვის"
 
-#: app/dialogs/about-dialog.c:819
+#: app/dialogs/about-dialog.c:828
 #, c-format
 msgid ""
 "This is a development build\n"
@@ -18396,7 +18407,7 @@ msgstr "ხელსაწყოს გაუმჭვირვალობი�
 #: app/display/gimpcursorview.c:742 app/display/gimpcursorview.c:744
 #: app/display/gimpcursorview.c:824 app/display/gimpcursorview.c:825
 #: app/display/gimpcursorview.c:826 app/display/gimpcursorview.c:827
-#: app/widgets/gimphistogrameditor.c:803
+#: app/widgets/gimphistogrameditor.c:805
 msgid "n/a"
 msgstr "n/a"
 
@@ -20208,7 +20219,7 @@ msgstr "დოკუმენტები"
 msgid "GIMP Startup"
 msgstr "GIMP-ის გაშვება"
 
-#: app/gui/themes.c:512
+#: app/gui/themes.c:508
 #, c-format
 msgid ""
 "Invalid theme: directory '%s' contains neither gimp-dark.css, gimp-gray.css, "
@@ -25752,7 +25763,7 @@ msgstr "ფერის რუკის #%d-ე ნაწილის ჩას�
 msgid "Edit Colormap Entry"
 msgstr "ფერის რუკის ნაწილის ჩასწორება"
 
-#: app/widgets/gimpcolormapeditor.c:472
+#: app/widgets/gimpcolormapeditor.c:473
 msgid "The color is used in this indexed image"
 msgstr "ფერი ამ დაინდექსებულ გამოსახულებაში გამოიყენება"
 
@@ -27087,35 +27098,35 @@ msgstr ""
 msgid "Read _Online"
 msgstr "ონლაინ ნახვა"
 
-#: app/widgets/gimphistogrameditor.c:135
+#: app/widgets/gimphistogrameditor.c:136
 msgid "Mean: "
 msgstr "საშუალო: "
 
-#: app/widgets/gimphistogrameditor.c:136
+#: app/widgets/gimphistogrameditor.c:137
 msgid "Std dev: "
 msgstr "Std dev: "
 
-#: app/widgets/gimphistogrameditor.c:137
+#: app/widgets/gimphistogrameditor.c:138
 msgid "Median: "
 msgstr "საშუალო: "
 
-#: app/widgets/gimphistogrameditor.c:138
+#: app/widgets/gimphistogrameditor.c:139
 msgid "Pixels: "
 msgstr "პიქსელი: "
 
-#: app/widgets/gimphistogrameditor.c:139
+#: app/widgets/gimphistogrameditor.c:140
 msgid "Count: "
 msgstr "რაოდენობა: "
 
-#: app/widgets/gimphistogrameditor.c:140
+#: app/widgets/gimphistogrameditor.c:141
 msgid "Percentile: "
 msgstr "პროცენტული: "
 
-#: app/widgets/gimphistogrameditor.c:166
+#: app/widgets/gimphistogrameditor.c:167
 msgid "Histogram channel"
 msgstr "ჰისტოგრამის არხი"
 
-#: app/widgets/gimphistogrameditor.c:225
+#: app/widgets/gimphistogrameditor.c:226
 msgid "Compute unique colors:"
 msgstr ""
 
@@ -28003,27 +28014,27 @@ msgstr "მოვნიშნო '%s' ?"
 #. TRANSLATORS: %s will be a tool name, so we'll get a
 #. * final string looking like 'Activate the "Bucket fill" tool'.
 #.
-#: app/widgets/gimpwidgets-utils.c:1521
+#: app/widgets/gimpwidgets-utils.c:1529
 #, c-format
 msgid "Activate the \"%s\" tool"
 msgstr "ხელსაწყოს აქტივაცია:\"%s\""
 
-#: app/widgets/gimpwidgets-utils.c:2120
+#: app/widgets/gimpwidgets-utils.c:2128
 #, c-format
 msgid "Built-in grayscale (%s)"
 msgstr "ჩაშენებული შავთეთრი (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2127
+#: app/widgets/gimpwidgets-utils.c:2135
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "ჩაშენებული RGB(%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2147
+#: app/widgets/gimpwidgets-utils.c:2155
 #, c-format
 msgid "Preferred grayscale (%s)"
 msgstr "მირჩევნია შავთეთრი (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2156
+#: app/widgets/gimpwidgets-utils.c:2164
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "მირჩევნია RGB (%s)"
