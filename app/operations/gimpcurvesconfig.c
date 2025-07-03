@@ -102,8 +102,8 @@ gimp_curves_config_class_init (GimpCurvesConfigClass *klass)
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_TRC,
                          "trc",
-                         _("Linear/Perceptual"),
-                         _("Work on linear or perceptual RGB"),
+                         _("Tone Reproduction Curve"),
+                         _("Work on linear or perceptual RGB, or following the image's TRC"),
                          GIMP_TYPE_TRC_TYPE,
                          GIMP_TRC_NON_LINEAR, 0);
 
