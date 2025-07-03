@@ -556,24 +556,28 @@ gimp_channel_combine_items (GimpChannel    *mask,
 
       if (g_list_length (layers) == 1)
         {
+          GimpChannel *alpha;
+          gint         offset_x;
+          gint         offset_y;
+
           if (gimp_drawable_has_alpha (layers->data))
             {
-              GimpChannel *alpha;
-              gint         offset_x;
-              gint         offset_y;
-
               alpha = gimp_channel_new_from_alpha (image,
                                                    layers->data, NULL, NULL);
-              gimp_item_get_offset (layers->data, &offset_x, &offset_y);
-              gimp_channel_combine_mask (channel, alpha,
-                                         GIMP_CHANNEL_OP_REPLACE,
-                                         offset_x, offset_y);
-              g_object_unref (alpha);
             }
           else
             {
-              gimp_channel_all (channel, FALSE);
+              alpha = gimp_channel_new (image,
+                                        gimp_item_get_width (layers->data),
+                                        gimp_item_get_height (layers->data),
+                                        NULL, NULL);
+              gimp_channel_all (alpha, FALSE);
             }
+          gimp_item_get_offset (layers->data, &offset_x, &offset_y);
+          gimp_channel_combine_mask (channel, alpha,
+                                     GIMP_CHANNEL_OP_REPLACE,
+                                     offset_x, offset_y);
+          g_object_unref (alpha);
         }
     }
 
