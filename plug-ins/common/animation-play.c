@@ -830,6 +830,7 @@ build_dialog (GimpPlay *play,
   /* Progress bar. */
 
   progress = gtk_progress_bar_new ();
+  gtk_progress_bar_set_show_text (GTK_PROGRESS_BAR (progress), TRUE);
   gtk_box_pack_end (GTK_BOX (hbox), progress, TRUE, TRUE, 0);
   gtk_widget_set_visible (progress, TRUE);
 
