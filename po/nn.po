@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-19 14:26+0000\n"
-"PO-Revision-Date: 2025-06-19 21:56+0200\n"
+"POT-Creation-Date: 2025-07-02 20:34+0000\n"
+"PO-Revision-Date: 2025-07-04 19:24+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -309,11 +309,11 @@ msgstr "Vis ei oppsettside med eksperimentelle eigenskapar"
 msgid "Show an image submenu with debug actions"
 msgstr "Vis ein biletundermeny med feilfinningshandlingar"
 
-#: app/main.c:728
+#: app/main.c:732
 msgid "[FILE|URI...]"
 msgstr "[FIL|URI …]"
 
-#: app/main.c:756
+#: app/main.c:760
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -321,20 +321,20 @@ msgstr ""
 "GIMP greidde ikkje å setja opp det grafiske brukargrensesnittet.\n"
 "Kontroller oppsettet for skjermen og skjermdrivarane."
 
-#: app/main.c:818
+#: app/main.c:822
 msgid "Another GIMP instance is already running."
 msgstr "Ei anna økt av GIMP er i bruk."
 
-#: app/main.c:907
+#: app/main.c:911
 msgid "GIMP output. Type any character to close this window."
 msgstr "GIMP-melding. Trykk ein tast for å lukka vindauget."
 
-#: app/main.c:908
+#: app/main.c:912
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Trykk ein tast for å lukka vindauget)\n"
 
-#: app/main.c:925
+#: app/main.c:929
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "GIMP-melding. Du kan minimera dette vindauget, men ikkje lukka det."
 
@@ -2490,7 +2490,7 @@ msgstr "240 sekund"
 #: app/tools/gimpfiltertool.c:370 app/tools/gimpforegroundselecttool.c:333
 #: app/tools/gimptexttool.c:1774 app/tools/gimptransformgridtool.c:1264
 #: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
-#: app/widgets/gimpcolordialog.c:485 app/widgets/gimpcontrollereditor.c:666
+#: app/widgets/gimpcolordialog.c:492 app/widgets/gimpcontrollereditor.c:666
 #: app/widgets/gimpcontrollerlist.c:549 app/widgets/gimpdeviceeditor.c:543
 #: app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228
 #: app/widgets/gimpfiledialog.c:336 app/widgets/gimphelp.c:438
@@ -2572,7 +2572,7 @@ msgstr ""
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
 #: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2437
-#: app/core/gimppalette.c:585 app/core/gimppalette-import.c:223
+#: app/core/gimppalette.c:587 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:774 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "Utan namn"
@@ -7961,7 +7961,7 @@ msgstr "Tilbakestill alle filtera"
 #: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
 #: app/tools/gimpfiltertool.c:369 app/tools/gimptransformgridtool.c:1261
-#: app/widgets/gimpcolordialog.c:484 app/widgets/gimpcolordisplayeditor.c:326
+#: app/widgets/gimpcolordialog.c:491 app/widgets/gimpcolordisplayeditor.c:326
 msgid "_Reset"
 msgstr "_Tilbakestill"
 
@@ -10045,7 +10045,7 @@ msgstr "Opna visinga"
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
 #: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:191
-#: app/tools/gimpfiltertool.c:371 app/widgets/gimpcolordialog.c:486
+#: app/tools/gimpfiltertool.c:371 app/widgets/gimpcolordialog.c:493
 #: app/widgets/gimpcontrollereditor.c:667
 #: app/widgets/gimpdeviceinfoeditor.c:1161 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:180 app/widgets/gimpmodifierseditor.c:689
@@ -10426,7 +10426,7 @@ msgstr "Feil ved tolkinga av '%%s': linje lenger enn %s teikn."
 
 #: app/config/gimpconfig-file.c:154 app/config/gimpconfig-file.c:206
 #: app/config/gimpconfig-file.c:223 app/core/gimp-tags.c:145
-#: app/gui/themes.c:711 app/tools/gimpfiltertool-settings.c:229
+#: app/gui/themes.c:707 app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "Feil ved skriving til «%s»: %s"
@@ -12341,12 +12341,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Forankra flytande utval"
 
-#: app/core/core-enums.c:1337 app/core/gimp-edit.c:854
+#: app/core/core-enums.c:1337 app/core/gimp-edit.c:884
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Lim inn"
 
-#: app/core/core-enums.c:1338 app/core/gimp-edit.c:1216
+#: app/core/core-enums.c:1338 app/core/gimp-edit.c:1246
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Klipp ut"
@@ -12773,11 +12773,11 @@ msgstr "Kan ikkje klippa ut fordi det valde området er tomt."
 msgid "Cannot copy because the selected region is empty."
 msgstr "Kan ikkje kopiera fordi det valde området er tomt."
 
-#: app/core/gimp-edit.c:624 app/core/gimpimage-new.c:580
+#: app/core/gimp-edit.c:654 app/core/gimpimage-new.c:580
 msgid "Pasted Layer"
 msgstr "Innlimt lag"
 
-#: app/core/gimp-edit.c:1233
+#: app/core/gimp-edit.c:1263
 msgid "Global Buffer"
 msgstr "Global buffer"
 
@@ -12918,12 +12918,12 @@ msgstr "Klarte ikkje køyra underordna prosess «%s» (%s)"
 msgid "tags-locale:C"
 msgstr "tags-locale:nn"
 
-#: app/core/gimp-tags.c:156 app/gui/themes.c:723
+#: app/core/gimp-tags.c:156 app/gui/themes.c:719
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "Feil ved lukking av «%s»: %s"
 
-#: app/core/gimp-user-install.c:232
+#: app/core/gimp-user-install.c:235
 #, c-format
 msgid ""
 "It seems you have used GIMP %s before.  GIMP will now migrate your user "
@@ -12932,7 +12932,7 @@ msgstr ""
 "Det ser ut til at du har brukt GIMP %s tidlegare. GIMP vil no flytta "
 "brukarinnstillingane dine til «%s»."
 
-#: app/core/gimp-user-install.c:240
+#: app/core/gimp-user-install.c:243
 #, c-format
 msgid ""
 "It appears that you are using GIMP for the first time.  GIMP will now create "
@@ -12941,17 +12941,17 @@ msgstr ""
 "Det ser ut til at dette er første gongen dy køyrer GIMP. GIMP vil difor laga "
 "ei ny mappe, «%s», og kopiera nokre filer dit."
 
-#: app/core/gimp-user-install.c:534
+#: app/core/gimp-user-install.c:541
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "Kopierer fila «%s» frå «%s» …"
 
-#: app/core/gimp-user-install.c:551 app/core/gimp-user-install.c:577
+#: app/core/gimp-user-install.c:558 app/core/gimp-user-install.c:584
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "Oppretter mappa «%s» …"
 
-#: app/core/gimp-user-install.c:562 app/core/gimp-user-install.c:588
+#: app/core/gimp-user-install.c:569 app/core/gimp-user-install.c:595
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "Kan ikkje oppretta mappa «%s»: %s"
@@ -13029,7 +13029,7 @@ msgstr "Ugyldige header-data i «%s»: Penselnamnet er for langt: %lu"
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ugyldig UTF-8-streng i penselfila «%s»."
 
-#: app/core/gimpbrush-load.c:265 app/core/gimppattern-load.c:159
+#: app/core/gimpbrush-load.c:265 app/core/gimppattern-load.c:167
 #: app/dialogs/template-options-dialog.c:110 app/display/gimptoolpath.c:617
 msgid "Unnamed"
 msgstr "Utan namn"
@@ -13082,7 +13082,7 @@ msgid ""
 msgstr ""
 "Fatal tolkingsfeil i penselfila: Klarte ikkje dekoda abr-formatversjonen %d."
 
-#: app/core/gimpbrush.c:158 app/paint/gimppaintoptions.c:235
+#: app/core/gimpbrush.c:159 app/paint/gimppaintoptions.c:235
 msgid "Brush Spacing"
 msgstr "Penselavstand"
 
@@ -13446,7 +13446,7 @@ msgid "%s copy"
 msgstr "Kopi av «%s»"
 
 #: app/core/gimpdatafactory.c:638 app/tools/gimptextoptions.c:794
-#: app/widgets/gimpfontfactoryview.c:97
+#: app/widgets/gimpfontfactoryview.c:98
 msgid "Loading fonts (this may take a while...)"
 msgstr "Lastar skrifttypar (dette kan ta litt tid)"
 
@@ -14087,7 +14087,7 @@ msgstr "Fargeprofilkonvertering"
 msgid "Colormap of Image #%d (%s)"
 msgstr "Fargekart for biletet #%d (%s)"
 
-#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:906
+#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:908
 msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "Set fargekart"
@@ -14097,7 +14097,7 @@ msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "Set tilbake fargekartet"
 
-#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:697
+#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:699
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "Endra fargekartinnslag"
@@ -14298,40 +14298,40 @@ msgstr "Skaler biletet"
 msgid "Can't undo %s"
 msgstr "Kan ikkje angra %s"
 
-#: app/core/gimpimagefile.c:801
+#: app/core/gimpimagefile.c:803
 msgid "Folder"
 msgstr "Mappe"
 
-#: app/core/gimpimagefile.c:806
+#: app/core/gimpimagefile.c:808
 msgid "Special File"
 msgstr "Spesiell fil"
 
-#: app/core/gimpimagefile.c:822
+#: app/core/gimpimagefile.c:824
 msgid "Remote File"
 msgstr "Nettverksfil"
 
-#: app/core/gimpimagefile.c:841
+#: app/core/gimpimagefile.c:843
 msgid "Click to create preview"
 msgstr "Klikk for å laga førehandsvising"
 
-#: app/core/gimpimagefile.c:847
+#: app/core/gimpimagefile.c:849
 msgid "Loading preview..."
 msgstr "Laster førehandsvising …"
 
-#: app/core/gimpimagefile.c:853
+#: app/core/gimpimagefile.c:855
 msgid "Preview is out of date"
 msgstr "Førehandsvisinga er utdatert"
 
-#: app/core/gimpimagefile.c:859
+#: app/core/gimpimagefile.c:861
 msgid "Cannot create preview"
 msgstr "Kan ikkje laga førehandsvising"
 
-#: app/core/gimpimagefile.c:869
+#: app/core/gimpimagefile.c:871
 msgid "(Preview may be out of date)"
 msgstr "(Førehandsvisinga kan vere utdatert)"
 
 #. pixel size
-#: app/core/gimpimagefile.c:878 app/widgets/gimpimagepropview.c:438
+#: app/core/gimpimagefile.c:880 app/widgets/gimpimagepropview.c:438
 #: app/widgets/gimpsizebox.c:429 app/widgets/gimptemplateeditor.c:734
 #, c-format
 msgid "%d × %d pixel"
@@ -14339,14 +14339,14 @@ msgid_plural "%d × %d pixels"
 msgstr[0] "%d × %d piksel"
 msgstr[1] "%d × %d pikslar"
 
-#: app/core/gimpimagefile.c:901 app/display/gimpdisplayshell-title.c:394
+#: app/core/gimpimagefile.c:903 app/display/gimpdisplayshell-title.c:394
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
 msgstr[0] "1 lag"
 msgstr[1] "%d lag"
 
-#: app/core/gimpimagefile.c:965
+#: app/core/gimpimagefile.c:967
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Fekk ikkje til å opna miniatyren «%s»: %s"
@@ -14800,16 +14800,16 @@ msgstr "Klarte ikkje opna SBZ-fila"
 msgid "History Color"
 msgstr "Loggfarge"
 
-#: app/core/gimppattern-load.c:67
+#: app/core/gimppattern-load.c:75
 msgid "File appears truncated: "
 msgstr "Fila ser ut til å vera avkorta: "
 
-#: app/core/gimppattern-load.c:95
+#: app/core/gimppattern-load.c:103
 #, c-format
 msgid "Unknown pattern format version %d."
 msgstr "Ukjent mønsterformatversjon %d."
 
-#: app/core/gimppattern-load.c:104
+#: app/core/gimppattern-load.c:112
 #, c-format
 msgid ""
 "Unsupported pattern depth %d.\n"
@@ -14818,7 +14818,7 @@ msgstr ""
 "Ugyldig mønsterdjupn %d.\n"
 "GIMP-mønsterelementa må vere GRÅ eller RGB."
 
-#: app/core/gimppattern-load.c:116
+#: app/core/gimppattern-load.c:124
 #, c-format
 msgid ""
 "Invalid header data in '%s': width=%lu (maximum %lu), height=%lu (maximum "
@@ -14827,25 +14827,25 @@ msgstr ""
 "Ugyldige header-data i «%s»: breidd=%lu (maksimum %lu), høgd=%lu (maksimum "
 "%lu), bytes=%lu"
 
-#: app/core/gimppattern-load.c:133
+#: app/core/gimppattern-load.c:141
 #, c-format
 msgid "Invalid header data in '%s': Pattern name is too long: %lu"
 msgstr "Ugyldige header-data i «%s»: Mønsternamnet er for lagt: %lu"
 
-#: app/core/gimppattern-load.c:146 app/core/gimppattern-load.c:184
+#: app/core/gimppattern-load.c:154 app/core/gimppattern-load.c:192
 msgid "File appears truncated."
 msgstr "Fila ser ut til å vere avkorta."
 
-#: app/core/gimppattern-load.c:152
+#: app/core/gimppattern-load.c:160
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Ugyldig UTF-8-streng i mønsterfila «%s»."
 
-#: app/core/gimppattern-load.c:195
+#: app/core/gimppattern-load.c:203
 msgid "Fatal parse error in pattern file: "
 msgstr "Fatal tolkingsfeil i mønsterfil: "
 
-#: app/core/gimppattern-load.c:267 app/core/gimppattern-load.c:274
+#: app/core/gimppattern-load.c:378 app/core/gimppattern-load.c:385
 msgid "Error reading Photoshop pattern."
 msgstr "Feil ved lesinga av Photoshop-mønster."
 
@@ -15046,7 +15046,7 @@ msgid "Mirror"
 msgstr "Spegel"
 
 #: app/core/gimpsymmetry-mirror.c:128
-msgid "Horizontal Symmetry"
+msgid "Horizontal symmetry"
 msgstr "Vassrett symmetri"
 
 #: app/core/gimpsymmetry-mirror.c:129
@@ -15054,7 +15054,7 @@ msgid "Reflect the initial stroke across a horizontal axis"
 msgstr "Reflekter det første stroket over ein vassrett akse"
 
 #: app/core/gimpsymmetry-mirror.c:136
-msgid "Vertical Symmetry"
+msgid "Vertical symmetry"
 msgstr "Loddrett symmetri"
 
 #: app/core/gimpsymmetry-mirror.c:137
@@ -15062,7 +15062,7 @@ msgid "Reflect the initial stroke across a vertical axis"
 msgstr "Reflekter det første stroket over ein loddrett akse"
 
 #: app/core/gimpsymmetry-mirror.c:144
-msgid "Central Symmetry"
+msgid "Central symmetry"
 msgstr "Midtsymmetri"
 
 #: app/core/gimpsymmetry-mirror.c:145
@@ -15173,7 +15173,7 @@ msgid "Precision"
 msgstr "Presisjon"
 
 #: app/core/gimptemplate.c:212 app/operations/gimpcurvesconfig.c:105
-#: app/operations/gimplevelsconfig.c:111 app/widgets/gimphistogrameditor.c:115
+#: app/operations/gimplevelsconfig.c:111 app/widgets/gimphistogrameditor.c:116
 msgid "Linear/Perceptual"
 msgstr "Lineær / Perseptuell"
 
@@ -15314,16 +15314,25 @@ msgstr "Sjå etter oppdateringar"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:517
+#: app/dialogs/about-dialog.c:519
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "Sist kontrollert %s kl. %s"
 
-#: app/dialogs/about-dialog.c:744
+#. Translators: first string is the date in the locale's date
+#. * representation (e.g., 12/31/99), second is the time in the
+#. * locale's time representation (e.g., 23:13:48).
+#.
+#: app/dialogs/about-dialog.c:525
+#, c-format
+msgid "Up to date as of %s at %s"
+msgstr "Oppdatert frå %s ved %s"
+
+#: app/dialogs/about-dialog.c:753
 msgid "GIMP is brought to you by"
 msgstr "GIMP er levert deg av"
 
-#: app/dialogs/about-dialog.c:819
+#: app/dialogs/about-dialog.c:828
 #, c-format
 msgid ""
 "This is a development build\n"
@@ -18632,7 +18641,7 @@ msgstr "Endra dekkevne for verktøyet"
 #: app/display/gimpcursorview.c:742 app/display/gimpcursorview.c:744
 #: app/display/gimpcursorview.c:824 app/display/gimpcursorview.c:825
 #: app/display/gimpcursorview.c:826 app/display/gimpcursorview.c:827
-#: app/widgets/gimphistogrameditor.c:803
+#: app/widgets/gimphistogrameditor.c:805
 msgid "n/a"
 msgstr "i/t"
 
@@ -19652,500 +19661,505 @@ msgctxt "layer-composite-mode"
 msgid "Intersection"
 msgstr "Snitt"
 
-#: app/operations/operations-enums.c:156
+#: app/operations/operations-enums.c:157
 msgctxt "layer-mode"
 msgid "Normal (legacy)"
 msgstr "Normal (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Normal (legacy)".
 #. Keep it short.
-#: app/operations/operations-enums.c:159
+#: app/operations/operations-enums.c:160
 msgctxt "layer-mode"
 msgid "Normal (l)"
 msgstr "Normal (I)"
 
-#: app/operations/operations-enums.c:160
+#: app/operations/operations-enums.c:161
 msgctxt "layer-mode"
 msgid "Dissolve"
 msgstr "Oppløys"
 
-#: app/operations/operations-enums.c:161
+#: app/operations/operations-enums.c:162
 msgctxt "layer-mode"
 msgid "Behind (legacy)"
 msgstr "Bak (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Behind (legacy)".
 #. Keep it short.
-#: app/operations/operations-enums.c:164
+#: app/operations/operations-enums.c:165
 msgctxt "layer-mode"
 msgid "Behind (l)"
 msgstr "Bak (I)"
 
-#: app/operations/operations-enums.c:165
+#: app/operations/operations-enums.c:166
 msgctxt "layer-mode"
 msgid "Multiply (legacy)"
 msgstr "Multipliser (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Multiply (legacy)".
 #. Keep it short.
-#: app/operations/operations-enums.c:168
+#: app/operations/operations-enums.c:169
 msgctxt "layer-mode"
 msgid "Multiply (l)"
 msgstr "Multipliser (I)"
 
-#: app/operations/operations-enums.c:169
+#: app/operations/operations-enums.c:170
 msgctxt "layer-mode"
 msgid "Screen (legacy)"
 msgstr "Skjerm (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Screen (legacy)".
 #. Keep it short.
-#: app/operations/operations-enums.c:172
+#: app/operations/operations-enums.c:173
 msgctxt "layer-mode"
 msgid "Screen (l)"
 msgstr "Skjerm (I)"
 
-#: app/operations/operations-enums.c:173
+#: app/operations/operations-enums.c:174
 msgctxt "layer-mode"
 msgid "Old broken Overlay"
 msgstr "Gammal brote overlegg"
 
 #. Translators: this is an abbreviated version of "Old broken Overlay".
 #. Keep it short.
-#: app/operations/operations-enums.c:176
+#: app/operations/operations-enums.c:177
 msgctxt "layer-mode"
 msgid "Old Overlay"
 msgstr "Gammalt overlegg"
 
-#: app/operations/operations-enums.c:177
+#: app/operations/operations-enums.c:178
 msgctxt "layer-mode"
 msgid "Difference (legacy)"
 msgstr "Differanse (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Difference (legacy)".
 #. Keep it short.
-#: app/operations/operations-enums.c:180
+#: app/operations/operations-enums.c:181
 msgctxt "layer-mode"
 msgid "Difference (l)"
 msgstr "Differanse (I)"
 
-#: app/operations/operations-enums.c:181
+#: app/operations/operations-enums.c:182
 msgctxt "layer-mode"
 msgid "Addition (legacy)"
 msgstr "Addisjon (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Addition (legacy)".
 #. Keep it short.
-#: app/operations/operations-enums.c:184
+#: app/operations/operations-enums.c:185
 msgctxt "layer-mode"
 msgid "Addition (l)"
 msgstr "Addisjon (I)"
 
-#: app/operations/operations-enums.c:185
+#: app/operations/operations-enums.c:186
 msgctxt "layer-mode"
 msgid "Subtract (legacy)"
 msgstr "Subtraher (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Subtract (legacy)".
 #. Keep it short.
-#: app/operations/operations-enums.c:188
+#: app/operations/operations-enums.c:189
 msgctxt "layer-mode"
 msgid "Subtract (l)"
 msgstr "Subtraher (I)"
 
-#: app/operations/operations-enums.c:189
+#: app/operations/operations-enums.c:190
 msgctxt "layer-mode"
 msgid "Darken only (legacy)"
 msgstr "Gjer berre mørkare (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Darken only (legacy)".
 #. Keep it short.
-#: app/operations/operations-enums.c:192
+#: app/operations/operations-enums.c:193
 msgctxt "layer-mode"
 msgid "Darken only (l)"
 msgstr "Gjer berre mørkare (I)"
 
-#: app/operations/operations-enums.c:193
+#: app/operations/operations-enums.c:194
 msgctxt "layer-mode"
 msgid "Lighten only (legacy)"
 msgstr "Gjer berre lysare (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Lighten only (legacy)".
 #. Keep it short.
-#: app/operations/operations-enums.c:196
+#: app/operations/operations-enums.c:197
 msgctxt "layer-mode"
 msgid "Lighten only (l)"
 msgstr "Gjer berre lysare (I)"
 
-#: app/operations/operations-enums.c:197
+#: app/operations/operations-enums.c:198
 msgctxt "layer-mode"
 msgid "HSV Hue (legacy)"
 msgstr "HSV kulør (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "HSV Hue (legacy)".
 #. Keep it short.
-#: app/operations/operations-enums.c:200
+#: app/operations/operations-enums.c:201
 msgctxt "layer-mode"
 msgid "HSV Hue (l)"
 msgstr "HSV kulør (l)"
 
-#: app/operations/operations-enums.c:201
+#: app/operations/operations-enums.c:202
 msgctxt "layer-mode"
 msgid "HSV Saturation (legacy)"
 msgstr "HSV-metning (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "HSV Saturation (legacy)".
 #. Keep it short.
-#: app/operations/operations-enums.c:204
+#: app/operations/operations-enums.c:205
 msgctxt "layer-mode"
 msgid "HSV Saturation (l)"
 msgstr "HSV-metning (I)"
 
-#: app/operations/operations-enums.c:205
+#: app/operations/operations-enums.c:206
 msgctxt "layer-mode"
 msgid "HSL Color (legacy)"
 msgstr "HSL farge (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "HSL Color (legacy)".
 #. Keep it short.
-#: app/operations/operations-enums.c:208
+#: app/operations/operations-enums.c:209
 msgctxt "layer-mode"
 msgid "HSL Color (l)"
 msgstr "HSL-farge (I)"
 
-#: app/operations/operations-enums.c:209
+#: app/operations/operations-enums.c:210
 msgctxt "layer-mode"
 msgid "HSV Value (legacy)"
 msgstr "HSV verdi (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "HSV Value (legacy)".
 #. Keep it short.
-#: app/operations/operations-enums.c:212
+#: app/operations/operations-enums.c:213
 msgctxt "layer-mode"
 msgid "HSV Value (l)"
 msgstr "HSV-verdi (I)"
 
-#: app/operations/operations-enums.c:213
+#: app/operations/operations-enums.c:214
 msgctxt "layer-mode"
 msgid "Divide (legacy)"
 msgstr "Divider (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Divide (legacy)".
 #. Keep it short.
-#: app/operations/operations-enums.c:216
+#: app/operations/operations-enums.c:217
 msgctxt "layer-mode"
 msgid "Divide (l)"
 msgstr "Del opp (I)"
 
-#: app/operations/operations-enums.c:217
+#: app/operations/operations-enums.c:218
 msgctxt "layer-mode"
 msgid "Dodge (legacy)"
 msgstr "Avskugg (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Dodge (legacy)".
 #. Keep it short.
-#: app/operations/operations-enums.c:220
+#: app/operations/operations-enums.c:221
 msgctxt "layer-mode"
 msgid "Dodge (l)"
 msgstr "Avskugg (I)"
 
-#: app/operations/operations-enums.c:221
+#: app/operations/operations-enums.c:222
 msgctxt "layer-mode"
 msgid "Burn (legacy)"
 msgstr "Etterbelys (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Burn (legacy)".
 #. Keep it short.
-#: app/operations/operations-enums.c:224
+#: app/operations/operations-enums.c:225
 msgctxt "layer-mode"
 msgid "Burn (l)"
 msgstr "Etterbelys (I)"
 
-#: app/operations/operations-enums.c:225
+#: app/operations/operations-enums.c:226
 msgctxt "layer-mode"
 msgid "Hard light (legacy)"
 msgstr "Hardt lys (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Hard light (legacy)".
 #. Keep it short.
-#: app/operations/operations-enums.c:228
+#: app/operations/operations-enums.c:229
 msgctxt "layer-mode"
 msgid "Hard light (l)"
 msgstr "Hardt lys (i)"
 
-#: app/operations/operations-enums.c:229
+#: app/operations/operations-enums.c:230
 msgctxt "layer-mode"
 msgid "Soft light (legacy)"
 msgstr "Mjukt lys (ltradisjonell)"
 
 #. Translators: this is an abbreviated version of "Soft light (legacy)".
 #. Keep it short.
-#: app/operations/operations-enums.c:232
+#: app/operations/operations-enums.c:233
 msgctxt "layer-mode"
 msgid "Soft light (l)"
 msgstr "Mjukt lys (I)"
 
-#: app/operations/operations-enums.c:233
+#: app/operations/operations-enums.c:234
 msgctxt "layer-mode"
 msgid "Grain extract (legacy)"
 msgstr "Trekk ut korn (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Grain extract (legacy)".
 #. Keep it short.
-#: app/operations/operations-enums.c:236
+#: app/operations/operations-enums.c:237
 msgctxt "layer-mode"
 msgid "Grain extract (l)"
 msgstr "Trekk ut korn (I)"
 
-#: app/operations/operations-enums.c:237
+#: app/operations/operations-enums.c:238
 msgctxt "layer-mode"
 msgid "Grain merge (legacy)"
 msgstr "Flett korn (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Grain merge (legacy)".
 #. Keep it short.
-#: app/operations/operations-enums.c:240
+#: app/operations/operations-enums.c:241
 msgctxt "layer-mode"
 msgid "Grain merge (l)"
 msgstr "Flett korn (I)"
 
-#: app/operations/operations-enums.c:241
+#: app/operations/operations-enums.c:242
 msgctxt "layer-mode"
 msgid "Color erase (legacy)"
 msgstr "Slett farge (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Color erase (legacy)".
 #. Keep it short.
-#: app/operations/operations-enums.c:244
+#: app/operations/operations-enums.c:245
 msgctxt "layer-mode"
 msgid "Color erase (l)"
 msgstr "Slett farge (I)"
 
-#: app/operations/operations-enums.c:245
+#: app/operations/operations-enums.c:246
 msgctxt "layer-mode"
 msgid "Overlay"
 msgstr "Overlegg"
 
-#: app/operations/operations-enums.c:246
+#: app/operations/operations-enums.c:247
 msgctxt "layer-mode"
 msgid "LCh Hue"
 msgstr "LCh kulør"
 
-#: app/operations/operations-enums.c:247
+#: app/operations/operations-enums.c:248
 msgctxt "layer-mode"
 msgid "LCh Chroma"
 msgstr "LCh kroma"
 
-#: app/operations/operations-enums.c:248
+#: app/operations/operations-enums.c:249
 msgctxt "layer-mode"
 msgid "LCh Color"
 msgstr "LCh-farge"
 
-#: app/operations/operations-enums.c:249
+#: app/operations/operations-enums.c:250
 msgctxt "layer-mode"
 msgid "LCh Lightness"
 msgstr "LCh-lysverdi"
 
-#: app/operations/operations-enums.c:250
+#: app/operations/operations-enums.c:251
 msgctxt "layer-mode"
 msgid "Normal"
 msgstr "Normal"
 
-#: app/operations/operations-enums.c:251
+#: app/operations/operations-enums.c:252
 msgctxt "layer-mode"
 msgid "Behind"
 msgstr "Bak"
 
-#: app/operations/operations-enums.c:252
+#: app/operations/operations-enums.c:253
 msgctxt "layer-mode"
 msgid "Multiply"
 msgstr "Multipliser"
 
-#: app/operations/operations-enums.c:253
+#: app/operations/operations-enums.c:254
 msgctxt "layer-mode"
 msgid "Screen"
 msgstr "Skjerm"
 
-#: app/operations/operations-enums.c:254
+#: app/operations/operations-enums.c:255
 msgctxt "layer-mode"
 msgid "Difference"
 msgstr "Differanse"
 
-#: app/operations/operations-enums.c:255
+#: app/operations/operations-enums.c:256
 msgctxt "layer-mode"
 msgid "Addition"
 msgstr "Addisjon"
 
-#: app/operations/operations-enums.c:256
+#: app/operations/operations-enums.c:257
 msgctxt "layer-mode"
 msgid "Subtract"
 msgstr "Subtraksjon"
 
-#: app/operations/operations-enums.c:257
+#: app/operations/operations-enums.c:258
 msgctxt "layer-mode"
 msgid "Darken only"
 msgstr "Gjer berre mørkare"
 
-#: app/operations/operations-enums.c:258
+#: app/operations/operations-enums.c:259
 msgctxt "layer-mode"
 msgid "Lighten only"
 msgstr "Gjer berre lysare"
 
-#: app/operations/operations-enums.c:259
+#: app/operations/operations-enums.c:260
 msgctxt "layer-mode"
 msgid "HSV Hue"
 msgstr "HSV kulør"
 
-#: app/operations/operations-enums.c:260
+#: app/operations/operations-enums.c:261
 msgctxt "layer-mode"
 msgid "HSV Saturation"
 msgstr "HSV-metning"
 
-#: app/operations/operations-enums.c:261
+#: app/operations/operations-enums.c:262
 msgctxt "layer-mode"
 msgid "HSL Color"
 msgstr "HSL-farge"
 
-#: app/operations/operations-enums.c:262
+#: app/operations/operations-enums.c:263
 msgctxt "layer-mode"
 msgid "HSV Value"
 msgstr "HSV-verdi"
 
-#: app/operations/operations-enums.c:263
+#: app/operations/operations-enums.c:264
 msgctxt "layer-mode"
 msgid "Divide"
 msgstr "Del opp"
 
-#: app/operations/operations-enums.c:264
+#: app/operations/operations-enums.c:265
 msgctxt "layer-mode"
 msgid "Dodge"
 msgstr "Avskugg"
 
-#: app/operations/operations-enums.c:265
+#: app/operations/operations-enums.c:266
 msgctxt "layer-mode"
 msgid "Burn"
 msgstr "Etterbelys"
 
-#: app/operations/operations-enums.c:266
+#: app/operations/operations-enums.c:267
 msgctxt "layer-mode"
 msgid "Hard light"
 msgstr "Hardt lys"
 
-#: app/operations/operations-enums.c:267
+#: app/operations/operations-enums.c:268
 msgctxt "layer-mode"
 msgid "Soft light"
 msgstr "Mjukt lys"
 
-#: app/operations/operations-enums.c:268
+#: app/operations/operations-enums.c:269
 msgctxt "layer-mode"
 msgid "Grain extract"
 msgstr "Trekk ut korn"
 
-#: app/operations/operations-enums.c:269
+#: app/operations/operations-enums.c:270
 msgctxt "layer-mode"
 msgid "Grain merge"
 msgstr "Flett korn"
 
-#: app/operations/operations-enums.c:270
+#: app/operations/operations-enums.c:271
 msgctxt "layer-mode"
 msgid "Vivid light"
 msgstr "Levande lys"
 
-#: app/operations/operations-enums.c:271
+#: app/operations/operations-enums.c:272
 msgctxt "layer-mode"
 msgid "Pin light"
 msgstr "Punktlys"
 
-#: app/operations/operations-enums.c:272
+#: app/operations/operations-enums.c:273
 msgctxt "layer-mode"
 msgid "Linear light"
 msgstr "Lineært lys"
 
-#: app/operations/operations-enums.c:273
+#: app/operations/operations-enums.c:274
 msgctxt "layer-mode"
 msgid "Hard mix"
 msgstr "Hardt miks"
 
-#: app/operations/operations-enums.c:274
+#: app/operations/operations-enums.c:275
 msgctxt "layer-mode"
 msgid "Exclusion"
 msgstr "Utelukking"
 
-#: app/operations/operations-enums.c:275
+#: app/operations/operations-enums.c:276
 msgctxt "layer-mode"
 msgid "Linear burn"
 msgstr "Lineær etterbelysing"
 
-#: app/operations/operations-enums.c:276
+#: app/operations/operations-enums.c:277
 msgctxt "layer-mode"
 msgid "Luma/Luminance darken only"
 msgstr "Luma/Luminans gjer berre mørkare"
 
 #. Translators: this is an abbreviated version of "Luma/Luminance darken only".
 #. Keep it short.
-#: app/operations/operations-enums.c:279
+#: app/operations/operations-enums.c:280
 msgctxt "layer-mode"
 msgid "Luma darken only"
 msgstr "Luma gjer berre mørkare"
 
-#: app/operations/operations-enums.c:280
+#: app/operations/operations-enums.c:281
 msgctxt "layer-mode"
 msgid "Luma/Luminance lighten only"
 msgstr "Luma/Luminans gjer berre lysare"
 
 #. Translators: this is an abbreviated version of "Luma/Luminance lighten only".
 #. Keep it short.
-#: app/operations/operations-enums.c:283
+#: app/operations/operations-enums.c:284
 msgctxt "layer-mode"
 msgid "Luma lighten only"
 msgstr "Luma gjer berre lysare"
 
-#: app/operations/operations-enums.c:284
+#: app/operations/operations-enums.c:285
 msgctxt "layer-mode"
 msgid "Luminance"
 msgstr "Luminans"
 
-#: app/operations/operations-enums.c:285
+#: app/operations/operations-enums.c:286
 msgctxt "layer-mode"
 msgid "Color erase"
 msgstr "Slett farge"
 
-#: app/operations/operations-enums.c:286
+#: app/operations/operations-enums.c:287
 msgctxt "layer-mode"
 msgid "Erase"
 msgstr "Slett"
 
-#: app/operations/operations-enums.c:287
+#: app/operations/operations-enums.c:288
 msgctxt "layer-mode"
 msgid "Merge"
 msgstr "Flett"
 
-#: app/operations/operations-enums.c:288
+#: app/operations/operations-enums.c:289
 msgctxt "layer-mode"
 msgid "Split"
 msgstr "Del"
 
-#: app/operations/operations-enums.c:289
+#: app/operations/operations-enums.c:290
 msgctxt "layer-mode"
 msgid "Pass through"
 msgstr "Gå gjennom"
 
-#: app/operations/operations-enums.c:290
+#: app/operations/operations-enums.c:291
 msgctxt "layer-mode"
 msgid "Replace"
 msgstr "Byt ut"
 
-#: app/operations/operations-enums.c:291
+#: app/operations/operations-enums.c:292
+msgctxt "layer-mode"
+msgid "Overwrite"
+msgstr "Overskriv"
+
+#: app/operations/operations-enums.c:293
 msgctxt "layer-mode"
 msgid "Anti erase"
 msgstr "Visk inn"
 
-#: app/operations/operations-enums.c:319
+#: app/operations/operations-enums.c:321
 msgctxt "layer-mode-group"
 msgid "Default"
 msgstr "Standard"
 
-#: app/operations/operations-enums.c:320
+#: app/operations/operations-enums.c:322
 msgctxt "layer-mode-group"
 msgid "Legacy"
 msgstr "Tradisjonell"
@@ -20473,7 +20487,7 @@ msgstr "Dokument"
 msgid "GIMP Startup"
 msgstr "GIMP oppstart"
 
-#: app/gui/themes.c:512
+#: app/gui/themes.c:508
 #, c-format
 msgid ""
 "Invalid theme: directory '%s' contains neither gimp-dark.css, gimp-gray.css, "
@@ -26133,7 +26147,7 @@ msgstr "Rediger fargekartoppføring nr. %d"
 msgid "Edit Colormap Entry"
 msgstr "Rediger fargekartoppføringa"
 
-#: app/widgets/gimpcolormapeditor.c:472
+#: app/widgets/gimpcolormapeditor.c:473
 msgid "The color is used in this indexed image"
 msgstr "Fargen er brukt i dette indekserte biletet"
 
@@ -27488,35 +27502,35 @@ msgstr ""
 msgid "Read _Online"
 msgstr "Les frå _Internett"
 
-#: app/widgets/gimphistogrameditor.c:135
+#: app/widgets/gimphistogrameditor.c:136
 msgid "Mean: "
 msgstr "Middelverdi: "
 
-#: app/widgets/gimphistogrameditor.c:136
+#: app/widgets/gimphistogrameditor.c:137
 msgid "Std dev: "
 msgstr "Standardavvik: "
 
-#: app/widgets/gimphistogrameditor.c:137
+#: app/widgets/gimphistogrameditor.c:138
 msgid "Median: "
 msgstr "Median: "
 
-#: app/widgets/gimphistogrameditor.c:138
+#: app/widgets/gimphistogrameditor.c:139
 msgid "Pixels: "
 msgstr "Pikslar: "
 
-#: app/widgets/gimphistogrameditor.c:139
+#: app/widgets/gimphistogrameditor.c:140
 msgid "Count: "
 msgstr "Talde: "
 
-#: app/widgets/gimphistogrameditor.c:140
+#: app/widgets/gimphistogrameditor.c:141
 msgid "Percentile: "
 msgstr "Prosentil: "
 
-#: app/widgets/gimphistogrameditor.c:166
+#: app/widgets/gimphistogrameditor.c:167
 msgid "Histogram channel"
 msgstr "Histogramkanal"
 
-#: app/widgets/gimphistogrameditor.c:225
+#: app/widgets/gimphistogrameditor.c:226
 msgid "Compute unique colors:"
 msgstr "Reknar ut ulinke fargar:"
 
@@ -28411,27 +28425,27 @@ msgstr "Vel \"%s\""
 #. TRANSLATORS: %s will be a tool name, so we'll get a
 #. * final string looking like 'Activate the "Bucket fill" tool'.
 #.
-#: app/widgets/gimpwidgets-utils.c:1521
+#: app/widgets/gimpwidgets-utils.c:1529
 #, c-format
 msgid "Activate the \"%s\" tool"
 msgstr "Slå på «%s»-verktøyet"
 
-#: app/widgets/gimpwidgets-utils.c:2120
+#: app/widgets/gimpwidgets-utils.c:2128
 #, c-format
 msgid "Built-in grayscale (%s)"
 msgstr "Innebygd gråtone (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2127
+#: app/widgets/gimpwidgets-utils.c:2135
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "Innebygd RGB (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2147
+#: app/widgets/gimpwidgets-utils.c:2155
 #, c-format
 msgid "Preferred grayscale (%s)"
 msgstr "Føretrekt gråtone (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2156
+#: app/widgets/gimpwidgets-utils.c:2164
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "Føretrekt RGB (%s)"
