@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-22 12:40+0000\n"
-"PO-Revision-Date: 2025-06-22 23:37+0200\n"
+"POT-Creation-Date: 2025-07-03 17:08+0000\n"
+"PO-Revision-Date: 2025-07-04 19:19+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -41,7 +41,7 @@ msgstr "Programtillegg-eksempel i C"
 #: plug-ins/common/jigsaw.c:537 plug-ins/common/nl-filter.c:215
 #: plug-ins/common/qbist.c:254 plug-ins/common/sample-colorize.c:425
 #: plug-ins/common/smooth-palette.c:193 plug-ins/common/sparkle.c:301
-#: plug-ins/common/sphere-designer.c:3203 plug-ins/common/tile.c:222
+#: plug-ins/common/sphere-designer.c:3199 plug-ins/common/tile.c:222
 #: plug-ins/common/tile-small.c:312 plug-ins/common/van-gogh-lic.c:242
 #: plug-ins/common/warp.c:344 plug-ins/common/wavelet-decompose.c:179
 #: plug-ins/flame/flame.c:297 plug-ins/fractal-explorer/fractal-explorer.c:427
@@ -70,7 +70,7 @@ msgstr "Programtillegg-eksempel i C"
 #: plug-ins/common/file-pdf-export.c:1073 plug-ins/common/file-pdf-load.c:585
 #: plug-ins/common/grid.c:835 plug-ins/common/qbist.c:839
 #: plug-ins/common/qbist.c:881 plug-ins/common/sphere-designer.c:2291
-#: plug-ins/common/sphere-designer.c:2654 plug-ins/common/unit-editor.c:427
+#: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:427
 #: plug-ins/flame/flame.c:617 plug-ins/flame/flame.c:822
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1513
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1551
@@ -143,7 +143,7 @@ msgstr "Programtillegg-eksempel i JavaScript (GJS)"
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2488
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/grid.c:836
-#: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:260
+#: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:260
 #: plug-ins/file-exr/file-exr.c:455 plug-ins/file-psd/psd-load.c:3896
 #: plug-ins/flame/flame.c:823 plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
@@ -430,7 +430,7 @@ msgid "Procedure '%s' only works in interactive mode."
 msgstr "Prosedyren «%s» verkar berre i interaktiv modus."
 
 #: plug-ins/common/animation-play.c:387 plug-ins/common/animation-play.c:770
-#: plug-ins/common/animation-play.c:1392
+#: plug-ins/common/animation-play.c:1393
 msgid "Start playback"
 msgstr "Spel av"
 
@@ -472,7 +472,7 @@ msgstr "Avslutt"
 
 #. list is given in "fps" - frames per second
 #: plug-ins/common/animation-play.c:494 plug-ins/common/animation-play.c:552
-#: plug-ins/common/animation-play.c:843
+#: plug-ins/common/animation-play.c:844
 #, c-format
 msgid "%.1f %%"
 msgstr "%.1f %%"
@@ -495,51 +495,51 @@ msgid "Detach"
 msgstr "Løys"
 
 #. Zoom Options
-#: plug-ins/common/animation-play.c:858
+#: plug-ins/common/animation-play.c:859
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:679
 #: plug-ins/imagemap/imap-menu.ui:271
 msgid "Zoom"
 msgstr "Forstørr"
 
 #. list is given in "fps" - frames per second
-#: plug-ins/common/animation-play.c:868
+#: plug-ins/common/animation-play.c:869
 #, c-format
 msgid "%d fps"
 msgstr "%d fps"
 
-#: plug-ins/common/animation-play.c:879
+#: plug-ins/common/animation-play.c:880
 msgid "Default framerate"
 msgstr "Standard rammefart"
 
-#: plug-ins/common/animation-play.c:899
+#: plug-ins/common/animation-play.c:900
 msgid "Playback speed"
 msgstr "Avspelingssfart"
 
 #. 2 styles of default frame disposals: cumulative layers and one
 #. * frame per layer.
 #.
-#: plug-ins/common/animation-play.c:910 plug-ins/common/file-gif-export.c:221
+#: plug-ins/common/animation-play.c:911 plug-ins/common/file-gif-export.c:221
 msgid "Cumulative layers (combine)"
 msgstr "Kumulative lag (kombiner)"
 
-#: plug-ins/common/animation-play.c:915 plug-ins/common/file-gif-export.c:222
+#: plug-ins/common/animation-play.c:916 plug-ins/common/file-gif-export.c:222
 msgid "One frame per layer (replace)"
 msgstr "Éi ramme per lag (byt ut)"
 
-#: plug-ins/common/animation-play.c:1011
+#: plug-ins/common/animation-play.c:1012
 msgid "Memory could not be allocated to the frame container."
 msgstr "Klarte ikkje tildela minne til rammebehaldaren."
 
-#: plug-ins/common/animation-play.c:1078
+#: plug-ins/common/animation-play.c:1079
 msgid "Invalid image. Did you close it?"
 msgstr "Ugyldig bilete. Har du lukka det?"
 
-#: plug-ins/common/animation-play.c:1190
+#: plug-ins/common/animation-play.c:1191
 #, c-format
 msgid "Frame %d of %d"
 msgstr "Ramme %d av %d"
 
-#: plug-ins/common/animation-play.c:1392
+#: plug-ins/common/animation-play.c:1393
 msgid "Stop playback"
 msgstr "Stopp avspelinga"
 
@@ -1031,7 +1031,7 @@ msgstr "Tilfeldig frø"
 #: plug-ins/common/curve-bend.c:1249 plug-ins/common/curve-bend.c:1788
 #: plug-ins/common/file-cel.c:989 plug-ins/common/qbist.c:840
 #: plug-ins/common/qbist.c:995 plug-ins/common/sphere-designer.c:2294
-#: plug-ins/common/sphere-designer.c:2703 plug-ins/flame/flame.c:619
+#: plug-ins/common/sphere-designer.c:2704 plug-ins/flame/flame.c:619
 #: plug-ins/flame/flame.c:1234
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:794
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1514
@@ -1047,7 +1047,7 @@ msgstr "_Opna"
 #: plug-ins/common/curve-bend.c:1261 plug-ins/common/curve-bend.c:1823
 #: plug-ins/common/file-pdf-export.c:1072 plug-ins/common/qbist.c:882
 #: plug-ins/common/qbist.c:1003 plug-ins/common/sphere-designer.c:2294
-#: plug-ins/common/sphere-designer.c:2711 plug-ins/flame/flame.c:619
+#: plug-ins/common/sphere-designer.c:2712 plug-ins/flame/flame.c:619
 #: plug-ins/flame/flame.c:1242
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:802
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1552
@@ -2089,7 +2089,7 @@ msgid "Swap the two curves"
 msgstr "Byt dei to kurvene"
 
 #. The Reset button
-#: plug-ins/common/curve-bend.c:1232 plug-ins/common/sphere-designer.c:2653
+#: plug-ins/common/curve-bend.c:1232 plug-ins/common/sphere-designer.c:2654
 #: plug-ins/common/tile-small.c:523 plug-ins/gimpressionist/preview.c:182
 #: plug-ins/ifs-compose/ifs-compose.c:912
 msgid "_Reset"
@@ -8137,7 +8137,8 @@ msgid "Create an image of a textured sphere"
 msgstr "Lager eit bilete av ei teksturert kule"
 
 #: plug-ins/common/sphere-designer.c:1834
-#: plug-ins/common/sphere-designer.c:2797
+#: plug-ins/common/sphere-designer.c:2798
+#: plug-ins/common/sphere-designer.c:2826
 msgid "Texture"
 msgstr "Tekstur"
 
@@ -8146,7 +8147,7 @@ msgid "Bumpmap"
 msgstr "Punktkopling"
 
 #: plug-ins/common/sphere-designer.c:1838
-#: plug-ins/common/sphere-designer.c:2799
+#: plug-ins/common/sphere-designer.c:2800
 msgid "Light"
 msgstr "Lys"
 
@@ -8163,24 +8164,24 @@ msgstr "Opna fil"
 msgid "Save File"
 msgstr "Lagra fil"
 
-#: plug-ins/common/sphere-designer.c:2649
+#: plug-ins/common/sphere-designer.c:2650
 msgid "Sphere Designer"
 msgstr "Kuledesigner"
 
-#: plug-ins/common/sphere-designer.c:2750
+#: plug-ins/common/sphere-designer.c:2751
 msgid "Layers"
 msgstr "Lag"
 
-#: plug-ins/common/sphere-designer.c:2761
+#: plug-ins/common/sphere-designer.c:2762
 #: plug-ins/gradient-flare/gradient-flare.c:3051
 msgid "_New"
 msgstr "_Ny"
 
-#: plug-ins/common/sphere-designer.c:2767
+#: plug-ins/common/sphere-designer.c:2768
 msgid "D_uplicate"
 msgstr "D_uplikat"
 
-#: plug-ins/common/sphere-designer.c:2773
+#: plug-ins/common/sphere-designer.c:2774
 #: plug-ins/fractal-explorer/fractal-explorer.c:887
 #: plug-ins/fractal-explorer/fractal-explorer.c:1369
 #: plug-ins/gimpressionist/presets.c:1071
@@ -8189,94 +8190,99 @@ msgstr "D_uplikat"
 msgid "_Delete"
 msgstr "_Slett"
 
-#: plug-ins/common/sphere-designer.c:2783
+#: plug-ins/common/sphere-designer.c:2784
 msgid "Properties"
 msgstr "Eigenskapar"
 
-#: plug-ins/common/sphere-designer.c:2798
+#: plug-ins/common/sphere-designer.c:2799
 msgid "Bump"
 msgstr "Buler"
 
-#: plug-ins/common/sphere-designer.c:2806
-msgid "Type:"
-msgstr "Type:"
+#: plug-ins/common/sphere-designer.c:2807
+#: plug-ins/gimpressionist/orientmap.c:638
+#: plug-ins/lighting/lighting-main.c:211 plug-ins/lighting/lighting-main.c:334
+#: plug-ins/lighting/lighting-main.c:393 plug-ins/lighting/lighting-main.c:452
+#: plug-ins/lighting/lighting-main.c:511 plug-ins/lighting/lighting-main.c:570
+msgid "Type"
+msgstr "Type"
 
-#: plug-ins/common/sphere-designer.c:2825
-msgid "Texture:"
-msgstr "Tekstur:"
+#: plug-ins/common/sphere-designer.c:2831
+#: plug-ins/imagemap/imap_preferences.c:463 plug-ins/pagecurl/pagecurl.c:228
+msgid "Colors"
+msgstr "Fargar"
 
-#: plug-ins/common/sphere-designer.c:2830
-msgid "Colors:"
-msgstr "Fargar:"
-
-#: plug-ins/common/sphere-designer.c:2833
-#: plug-ins/common/sphere-designer.c:2844
+#: plug-ins/common/sphere-designer.c:2834
+#: plug-ins/common/sphere-designer.c:2845
 msgid "Color Selection Dialog"
 msgstr "Fargeveljardialog"
 
-#. Scale
-#: plug-ins/common/sphere-designer.c:2855 plug-ins/gimpressionist/paper.c:191
-#: plug-ins/ifs-compose/ifs-compose.c:668
-msgid "Scale:"
-msgstr "Skalering:"
+#: plug-ins/common/sphere-designer.c:2857
+msgid "Scale"
+msgstr "Skaler"
 
-#: plug-ins/common/sphere-designer.c:2863
-msgid "Turbulence:"
-msgstr "Turbulens:"
+#: plug-ins/common/sphere-designer.c:2865
+msgid "Turbulence"
+msgstr "Turbulens"
 
-#: plug-ins/common/sphere-designer.c:2871
-msgid "Amount:"
-msgstr "Mengde:"
+#: plug-ins/common/sphere-designer.c:2873
+msgid "Amount"
+msgstr "Mengd"
 
-#: plug-ins/common/sphere-designer.c:2878
-msgid "Exp.:"
-msgstr "Eksp.:"
+#: plug-ins/common/sphere-designer.c:2881
+msgid "Exp."
+msgstr "Eksp."
 
-#: plug-ins/common/sphere-designer.c:2885
+#: plug-ins/common/sphere-designer.c:2888
 msgid "Transformations"
 msgstr "Transformasjonar"
 
-#: plug-ins/common/sphere-designer.c:2899
-msgid "Scale X:"
-msgstr "Skalering X:"
+#: plug-ins/common/sphere-designer.c:2897
+#: plug-ins/map-object/map-object-main.c:391
+msgid "Scale X"
+msgstr "Skalering X"
 
-#: plug-ins/common/sphere-designer.c:2907
-msgid "Scale Y:"
-msgstr "Skalering Y:"
+#: plug-ins/common/sphere-designer.c:2905
+#: plug-ins/map-object/map-object-main.c:396
+msgid "Scale Y"
+msgstr "Skalering Y"
 
-#: plug-ins/common/sphere-designer.c:2915
-msgid "Scale Z:"
-msgstr "Skalering Z:"
+#: plug-ins/common/sphere-designer.c:2913
+#: plug-ins/map-object/map-object-main.c:401
+msgid "Scale Z"
+msgstr "Skaler Z"
 
-#: plug-ins/common/sphere-designer.c:2926
-msgid "Rotate X:"
-msgstr "Roter X:"
+#: plug-ins/common/sphere-designer.c:2922
+msgid "Rotate X"
+msgstr "Roter X"
 
-#: plug-ins/common/sphere-designer.c:2933
-msgid "Rotate Y:"
-msgstr "Roter Y:"
+#: plug-ins/common/sphere-designer.c:2930
+msgid "Rotate Y"
+msgstr "Roter Y"
 
-#: plug-ins/common/sphere-designer.c:2940
-msgid "Rotate Z:"
-msgstr "Roter Z:"
+#: plug-ins/common/sphere-designer.c:2938
+msgid "Rotate Z"
+msgstr "Roter Z"
 
-#: plug-ins/common/sphere-designer.c:2950
-msgid "Position X:"
-msgstr "Posisjon X:"
+#: plug-ins/common/sphere-designer.c:2947
+#: plug-ins/map-object/map-object-main.c:165
+msgid "Position X"
+msgstr "Posisjon X"
 
-#: plug-ins/common/sphere-designer.c:2958
-msgid "Position Y:"
-msgstr "Posisjon Y:"
+#: plug-ins/common/sphere-designer.c:2955
+#: plug-ins/map-object/map-object-main.c:170
+msgid "Position Y"
+msgstr "Posisjon Y"
 
-#: plug-ins/common/sphere-designer.c:2966
-msgid "Position Z:"
-msgstr "Posisjon Z:"
+#: plug-ins/common/sphere-designer.c:2963
+#: plug-ins/map-object/map-object-main.c:175
+msgid "Position Z"
+msgstr "Posisjon Z"
 
-#: plug-ins/common/sphere-designer.c:3098
+#: plug-ins/common/sphere-designer.c:3094
 msgid "Rendering sphere"
 msgstr "Bereknar kula"
 
-#: plug-ins/common/sphere-designer.c:3217
+#: plug-ins/common/sphere-designer.c:3213
 msgid "Region selected for plug-in is empty"
 msgstr "Området du valde for programtillegg er tomt"
 
@@ -9955,7 +9961,7 @@ msgstr "Lastar inn filer i Apple Icon-format"
 
 #: plug-ins/file-icns/file-icns.c:137
 msgid "Loads Apple Icon Image files."
-msgstr "Lastar inn Apple Ikon-filer"
+msgstr "Lastar inn Apple Ikon-filer."
 
 #: plug-ins/file-icns/file-icns.c:177
 msgid "Apple Icon Image"
@@ -12869,13 +12875,6 @@ msgstr "_Fjern"
 msgid "Delete selected vector"
 msgstr "Fjern den markerte vektoren"
 
-#: plug-ins/gimpressionist/orientmap.c:638
-#: plug-ins/lighting/lighting-main.c:211 plug-ins/lighting/lighting-main.c:334
-#: plug-ins/lighting/lighting-main.c:393 plug-ins/lighting/lighting-main.c:452
-#: plug-ins/lighting/lighting-main.c:511 plug-ins/lighting/lighting-main.c:570
-msgid "Type"
-msgstr "Type"
-
 #: plug-ins/gimpressionist/orientmap.c:642
 msgid "_Normal"
 msgstr "_Normal"
@@ -12956,6 +12955,11 @@ msgstr "O_verlegg"
 #: plug-ins/gimpressionist/paper.c:180
 msgid "Applies the paper as it is (without embossing it)"
 msgstr "Bruk papiret som det er, utan bossering (relieffverknad)"
+
+#. Scale
+#: plug-ins/gimpressionist/paper.c:191 plug-ins/ifs-compose/ifs-compose.c:668
+msgid "Scale:"
+msgstr "Skalering:"
 
 #: plug-ins/gimpressionist/paper.c:193
 msgid "Specifies the scale of the texture (in percent of original file)"
@@ -14356,10 +14360,6 @@ msgstr "Talet på M_RU-innskrivingar (1 - 16):"
 msgid "Select Color"
 msgstr "Vel farge"
 
-#: plug-ins/imagemap/imap_preferences.c:463 plug-ins/pagecurl/pagecurl.c:228
-msgid "Colors"
-msgstr "Fargar"
-
 #: plug-ins/imagemap/imap_preferences.c:465
 msgid "Normal:"
 msgstr "Normal:"
@@ -14995,23 +14995,11 @@ msgstr "Y"
 msgid "Z"
 msgstr "Z"
 
-#: plug-ins/map-object/map-object-main.c:165
-msgid "Position X"
-msgstr "Posisjon X"
-
 #: plug-ins/map-object/map-object-main.c:166
 #: plug-ins/map-object/map-object-main.c:171
 #: plug-ins/map-object/map-object-main.c:176
 msgid "Object position (x,y,z)"
 msgstr "Objektposisjonen (x, y, z)"
-
-#: plug-ins/map-object/map-object-main.c:170
-msgid "Position Y"
-msgstr "Posisjon Y"
-
-#: plug-ins/map-object/map-object-main.c:175
-msgid "Position Z"
-msgstr "Posisjon Z"
 
 #: plug-ins/map-object/map-object-main.c:182
 #: plug-ins/map-object/map-object-main.c:187
@@ -15197,25 +15185,13 @@ msgstr "Venstre sida av boksen"
 msgid "Box right face"
 msgstr "Boks høgresida"
 
-#: plug-ins/map-object/map-object-main.c:391
-msgid "Scale X"
-msgstr "Skalering X"
-
 #: plug-ins/map-object/map-object-main.c:392
 msgid "Box X size"
 msgstr "Boks X-storleik"
 
-#: plug-ins/map-object/map-object-main.c:396
-msgid "Scale Y"
-msgstr "Skalering Y"
-
 #: plug-ins/map-object/map-object-main.c:397
 msgid "Box Y size"
 msgstr "Boks Y-storleik"
-
-#: plug-ins/map-object/map-object-main.c:401
-msgid "Scale Z"
-msgstr "Skaler Z"
 
 #: plug-ins/map-object/map-object-main.c:402
 msgid "Box Z size"
@@ -16655,6 +16631,33 @@ msgstr "Fann ikkje TWAIN-drivaren. Ikkje råd å skanna"
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "Overfører data frå skannar/kamera"
+
+#~ msgid "Type:"
+#~ msgstr "Type:"
+
+#~ msgid "Texture:"
+#~ msgstr "Tekstur:"
+
+#~ msgid "Colors:"
+#~ msgstr "Fargar:"
+
+#~ msgid "Scale X:"
+#~ msgstr "Skalering X:"
+
+#~ msgid "Scale Y:"
+#~ msgstr "Skalering Y:"
+
+#~ msgid "Scale Z:"
+#~ msgstr "Skalering Z:"
+
+#~ msgid "Position X:"
+#~ msgstr "Posisjon X:"
+
+#~ msgid "Position Y:"
+#~ msgstr "Posisjon Y:"
+
+#~ msgid "Position Z:"
+#~ msgstr "Posisjon Z:"
 
 #~ msgid "Argc upper point X"
 #~ msgstr "Argc øvre punkt X"
