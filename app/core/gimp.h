@@ -225,6 +225,10 @@ GimpContext  * gimp_get_user_context       (Gimp                *gimp);
 GimpToolInfo * gimp_get_tool_info          (Gimp                *gimp,
                                             const gchar         *tool_name);
 
+void           gimp_set_last_template      (Gimp                *gimp,
+                                            GimpTemplate        *_template);
+GimpTemplate * gimp_get_last_template      (Gimp                *gimp);
+
 void           gimp_message                (Gimp                *gimp,
                                             GObject             *handler,
                                             GimpMessageSeverity  severity,
