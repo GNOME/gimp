@@ -14,7 +14,7 @@ if not os.getenv("MESON_BUILD_ROOT"):
 
 
 # Bundle deps and GIMP files
-GIMP_SOURCE = Path(os.getenv("MESON_SOURCE_ROOT")).as_posix()  
+GIMP_SOURCE = Path(os.getenv("MESON_SOURCE_ROOT")).as_posix()
 
 ## System prefix: it is MSYSTEM_PREFIX
 with open("meson-logs/meson-log.txt") as f:
@@ -144,7 +144,10 @@ for lang in lang_array:
     # For language list in text tool options
     bundle(MSYSTEM_PREFIX, f"share/locale/{lang}/LC_MESSAGES/iso_639_3.mo")
 ### mypaint brushes
-bundle(MSYSTEM_PREFIX, "share/mypaint-data")
+if "32" not in MSYSTEM_PREFIX:
+    bundle(MSYSTEM_PREFIX, "share/mypaint-data/2.0")
+else:
+    bundle(MSYSTEM_PREFIX, "share/mypaint-data/1.0")
 ### Needed for full CJK and Cyrillic support in file-pdf
 bundle(MSYSTEM_PREFIX, "share/poppler")
 
@@ -164,7 +167,7 @@ if (os.getenv("GIMP_UNSTABLE") or not os.getenv("GIMP_RELEASE")) and "32" not in
   #### See: https://gitlab.gnome.org/GNOME/gimp/-/issues/12119
   bundle(MSYSTEM_PREFIX, "bin/libgvplugin_dot*.dll")
   bundle(MSYSTEM_PREFIX, "bin/libgvplugin_pango*.dll")
-  bundle(MSYSTEM_PREFIX, "bin/config6")  
+  bundle(MSYSTEM_PREFIX, "bin/config6")
 ### Needed to not pollute output. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/8877
 bundle(MSYSTEM_PREFIX, "bin/gdbus.exe")
 ### Needed for hyperlink support etc... See: https://gitlab.gnome.org/GNOME/gimp/-/issues/12288
@@ -173,7 +176,7 @@ bundle(MSYSTEM_PREFIX, "bin/gspawn*-console.exe")
 if not os.getenv("GIMP_UNSTABLE") and os.getenv("GIMP_RELEASE"):
   #...when running from `gimp*.exe`
   bundle(MSYSTEM_PREFIX, "bin/gspawn*-helper.exe")
-  
+
 ## Binaries for GObject Introspection support. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/13170
 bundle(GIMP_PREFIX, "lib/girepository-*/*.typelib")
 bundle(MSYSTEM_PREFIX, "bin/libgirepository-*.dll")
