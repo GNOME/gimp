@@ -443,9 +443,9 @@ json_glib_minver  = '1.2.6'
 json_glib         = dependency('json-glib-1.0',      version: '>='+json_glib_minver)
 lcms_minver       = '2.8'
 lcms              = dependency('lcms2',              version: '>='+lcms_minver)
-libmypaint_minver = '1.3.0'
+libmypaint_minver = '1.5.0'
 libmypaint        = dependency('libmypaint',         version: '>='+libmypaint_minver)
-mypaint_brushes   = dependency('mypaint-brushes-1.0',version: '>='+libmypaint_minver)
+mypaint_brushes   = dependency('mypaint-brushes-2.0',version: '>='+libmypaint_minver)
 if not libmypaint.version().version_compare('>=1.4.0')
   libmypaint_warning='''
 
@@ -459,7 +459,7 @@ endif
 
 if relocatable_bundle
   mypaint_brushes_dir = '${gimp_installation_dir}'\
-                        /'share'/'mypaint-data'/'1.0'/'brushes'
+                        /'share'/'mypaint-data'/'2.0'/'brushes'
 else
   mypaint_brushes_dir = mypaint_brushes.get_variable(pkgconfig: 'brushesdir')
 endif

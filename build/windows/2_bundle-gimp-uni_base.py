@@ -144,7 +144,7 @@ for lang in lang_array:
     # For language list in text tool options
     bundle(MSYSTEM_PREFIX, f"share/locale/{lang}/LC_MESSAGES/iso_639_3.mo")
 ### mypaint brushes
-bundle(MSYSTEM_PREFIX, "share/mypaint-data")
+bundle(MSYSTEM_PREFIX, "share/mypaint-data/2.0")
 ### Needed for full CJK and Cyrillic support in file-pdf
 bundle(MSYSTEM_PREFIX, "share/poppler")
 
