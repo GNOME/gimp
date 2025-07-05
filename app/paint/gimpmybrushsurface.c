@@ -34,7 +34,7 @@
 
 struct _GimpMybrushSurface
 {
-  MyPaintSurface      surface;
+  MyPaintSurface2     surface;
   GeglBuffer         *buffer;
   GeglBuffer         *paint_mask;
   gint                paint_mask_x;
@@ -232,17 +232,18 @@ calculate_dab_roi (float x,
 }
 
 static void
-gimp_mypaint_surface_get_color (MyPaintSurface *base_surface,
-                                float           x,
-                                float           y,
-                                float           radius,
-                                float          *color_r,
-                                float          *color_g,
-                                float          *color_b,
-                                float          *color_a)
+gimp_mypaint_surface_get_color_2 (MyPaintSurface2 *base_surface,
+                                  gfloat           x,
+                                  gfloat           y,
+                                  gfloat           radius,
+                                  gfloat          *color_r,
+                                  gfloat          *color_g,
+                                  gfloat          *color_b,
+                                  gfloat          *color_a,
+                                  gfloat           paint)
 {
   GimpMybrushSurface *surface = (GimpMybrushSurface *)base_surface;
-  GeglRectangle dabRect;
+  GeglRectangle       dabRect;
 
   if (radius < 1.0f)
     radius = 1.0f;
@@ -334,24 +335,41 @@ gimp_mypaint_surface_get_color (MyPaintSurface *base_surface,
         *color_a = CLAMP(sum_a, 0.0f, 1.0f);
       }
   }
-
 }
 
-static int
-gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
-                               float           x,
-                               float           y,
-                               float           radius,
-                               float           color_r,
-                               float           color_g,
-                               float           color_b,
-                               float           opaque,
-                               float           hardness,
-                               float           color_a,
-                               float           aspect_ratio,
-                               float           angle,
-                               float           lock_alpha,
-                               float           colorize)
+static void
+gimp_mypaint_surface_get_color_wrapper (MyPaintSurface *surface,
+                                        float           x,
+                                        float           y,
+                                        float           radius,
+                                        float          *color_r,
+                                        float          *color_g,
+                                        float          *color_b,
+                                        float          *color_a)
+{
+  return gimp_mypaint_surface_get_color_2 ((MyPaintSurface2 *) surface, x, y, radius,
+                                           color_r, color_g, color_b, color_a,
+                                           -1.0);
+}
+
+static gint
+gimp_mypaint_surface_draw_dab_2 (MyPaintSurface2 *base_surface,
+                                 gfloat           x,
+                                 gfloat           y,
+                                 gfloat           radius,
+                                 gfloat           color_r,
+                                 gfloat           color_g,
+                                 gfloat           color_b,
+                                 gfloat           opaque,
+                                 gfloat           hardness,
+                                 gfloat           color_a,
+                                 gfloat           aspect_ratio,
+                                 gfloat           angle,
+                                 gfloat           lock_alpha,
+                                 gfloat           colorize,
+                                 gfloat           posterize,
+                                 gfloat           posterize_num,
+                                 gfloat           paint)
 {
   GimpMybrushSurface *surface = (GimpMybrushSurface *)base_surface;
   GeglBufferIterator *iter;
@@ -370,6 +388,10 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
   float segment2_slope;
   float r_aa_start;
 
+  posterize     = CLAMP (posterize, 0.0f, 1.0f);
+  posterize_num = CLAMP (ROUND (posterize_num * 100.0), 1, 128);
+  paint         = CLAMP (paint, 0.0f, 1.0f);
+
   hardness = CLAMP (hardness, 0.0f, 1.0f);
   segment1_slope = -(1.0f / hardness - 1.0f);
   segment2_slope = -hardness / (1.0f - hardness);
@@ -379,7 +401,7 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
   r_aa_start = MAX (r_aa_start, 0);
   r_aa_start = (r_aa_start * r_aa_start) / aspect_ratio;
 
-  normal_mode = opaque * (1.0f - colorize);
+  normal_mode = opaque * (1.0f - colorize) * (1.0f - posterize);
   colorize = opaque * colorize;
 
   /* FIXME: This should use the real matrix values to trim aspect_ratio dabs */
@@ -481,6 +503,26 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
                     }
                 }
 
+              if (posterize > 0.0f && base_alpha > 0.0f)
+                {
+                  alpha = base_alpha * posterize;
+                  a     = alpha + dst_alpha - alpha * dst_alpha;
+                  if (a > 0.0f)
+                    {
+                      gfloat post_pixel[3];
+                      gfloat src_term = alpha / a;
+                      gfloat dst_term = 1.0f - src_term;
+
+                      post_pixel[0] = ROUND (r * posterize_num) / posterize_num;
+                      post_pixel[1] = ROUND (g * posterize_num) / posterize_num;
+                      post_pixel[2] = ROUND (b * posterize_num) / posterize_num;
+
+                      r = post_pixel[0] * src_term + r * dst_term;
+                      g = post_pixel[1] * src_term + g * dst_term;
+                      b = post_pixel[2] * src_term + b * dst_term;
+                    }
+                }
+
               if (surface->options->no_erasing)
                 a = MAX (a, pixel[ALPHA]);
 
@@ -513,6 +555,33 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
   return 1;
 }
 
+static int
+gimp_mypaint_surface_draw_dab_wrapper (MyPaintSurface *surface,
+                                       float           x,
+                                       float           y,
+                                       float           radius,
+                                       float           color_r,
+                                       float           color_g,
+                                       float           color_b,
+                                       float           opaque,
+                                       float           hardness,
+                                       float           color_a,
+                                       float           aspect_ratio,
+                                       float           angle,
+                                       float           lock_alpha,
+                                       float           colorize)
+{
+  const gfloat posterize     = 0.0;
+  const gfloat posterize_num = 1.0;
+  const gfloat pigment       = 0.0;
+
+  return gimp_mypaint_surface_draw_dab_2 ((MyPaintSurface2 *) surface, x, y, radius,
+                                          color_r, color_g, color_b, opaque, hardness,
+                                          color_a, aspect_ratio, angle, lock_alpha,
+                                          colorize, posterize, posterize_num,
+                                          pigment);
+}
+
 static void
 gimp_mypaint_surface_begin_atomic (MyPaintSurface *base_surface)
 {
@@ -520,22 +589,39 @@ gimp_mypaint_surface_begin_atomic (MyPaintSurface *base_surface)
 }
 
 static void
-gimp_mypaint_surface_end_atomic (MyPaintSurface   *base_surface,
-                                 MyPaintRectangle *roi)
+gimp_mypaint_surface_end_atomic_2 (MyPaintSurface2   *base_surface,
+                                   MyPaintRectangles *rois)
 {
   GimpMybrushSurface *surface = (GimpMybrushSurface *)base_surface;
 
-  roi->x         = surface->dirty.x;
-  roi->y         = surface->dirty.y;
-  roi->width     = surface->dirty.width;
-  roi->height    = surface->dirty.height;
-  surface->dirty = *GEGL_RECTANGLE (0, 0, 0, 0);
+  if (rois)
+    {
+      const gint roi_rects = rois->num_rectangles;
+
+      for (gint i = 0; i < roi_rects; i++)
+        {
+          rois->rectangles[i].x         = surface->dirty.x;
+          rois->rectangles[i].y         = surface->dirty.y;
+          rois->rectangles[i].width     = surface->dirty.width;
+          rois->rectangles[i].height    = surface->dirty.height;
+          surface->dirty = *GEGL_RECTANGLE (0, 0, 0, 0);
+        }
+    }
+}
+
+static void
+gimp_mypaint_surface_end_atomic_wrapper (MyPaintSurface   *surface,
+                                         MyPaintRectangle *roi)
+{
+  MyPaintRectangles rois = {1, roi};
+
+  gimp_mypaint_surface_end_atomic_2 ((MyPaintSurface2 *) surface, &rois);
 }
 
 static void
 gimp_mypaint_surface_destroy (MyPaintSurface *base_surface)
 {
-  GimpMybrushSurface *surface = (GimpMybrushSurface *)base_surface;
+  GimpMybrushSurface *surface = (GimpMybrushSurface *) base_surface;
 
   g_clear_object (&surface->buffer);
   g_clear_object (&surface->paint_mask);
@@ -551,26 +637,34 @@ gimp_mypaint_surface_new (GeglBuffer         *buffer,
                           GimpMybrushOptions *options)
 {
   GimpMybrushSurface *surface = g_malloc0 (sizeof (GimpMybrushSurface));
+  MyPaintSurface2    *s;
 
-  mypaint_surface_init ((MyPaintSurface *)surface);
+  mypaint_surface_init (&surface->surface.parent);
+  s = &surface->surface;
 
-  surface->surface.get_color    = gimp_mypaint_surface_get_color;
-  surface->surface.draw_dab     = gimp_mypaint_surface_draw_dab;
-  surface->surface.begin_atomic = gimp_mypaint_surface_begin_atomic;
-  surface->surface.end_atomic   = gimp_mypaint_surface_end_atomic;
-  surface->surface.destroy      = gimp_mypaint_surface_destroy;
-  surface->component_mask       = component_mask;
-  surface->options              = options;
-  surface->buffer               = g_object_ref (buffer);
+  s->get_color_pigment    = gimp_mypaint_surface_get_color_2;
+  s->draw_dab_pigment     = gimp_mypaint_surface_draw_dab_2;
+  s->parent.begin_atomic  = gimp_mypaint_surface_begin_atomic;
+  s->end_atomic_multi     = gimp_mypaint_surface_end_atomic_2;
+
+  s->parent.draw_dab      = gimp_mypaint_surface_draw_dab_wrapper;
+  s->parent.get_color     = gimp_mypaint_surface_get_color_wrapper;
+  s->parent.end_atomic    = gimp_mypaint_surface_end_atomic_wrapper;
+
+  s->parent.destroy       = gimp_mypaint_surface_destroy;
+
+  surface->component_mask = component_mask;
+  surface->options        = options;
+  surface->buffer         = g_object_ref (buffer);
   if (paint_mask)
-    surface->paint_mask         = g_object_ref (paint_mask);
+    surface->paint_mask   = g_object_ref (paint_mask);
 
-  surface->paint_mask_x         = paint_mask_x;
-  surface->paint_mask_y         = paint_mask_y;
-  surface->dirty                = *GEGL_RECTANGLE (0, 0, 0, 0);
+  surface->paint_mask_x   = paint_mask_x;
+  surface->paint_mask_y   = paint_mask_y;
+  surface->dirty          = *GEGL_RECTANGLE (0, 0, 0, 0);
 
-  surface->off_x                = 0;
-  surface->off_y                = 0;
+  surface->off_x          = 0;
+  surface->off_y          = 0;
 
   return surface;
 }
