@@ -549,12 +549,12 @@ main (int    argc,
       char **argv)
 {
   GOptionContext *context;
-  GError         *error = NULL;
   const gchar    *abort_message;
   GFile          *system_gimprc_file = NULL;
   GFile          *user_gimprc_file   = NULL;
   GOptionGroup   *gimp_group         = NULL;
   gchar          *backtrace_file     = NULL;
+  GError         *error              = NULL;
 #ifndef GIMP_CONSOLE_COMPILATION
   GKeyFile       *flatpak_keyfile;
 #endif
@@ -564,6 +564,7 @@ main (int    argc,
 #ifdef ENABLE_WIN32_DEBUG_CONSOLE
   gimp_open_console_window ();
 #endif
+
 #if defined(ENABLE_RELOCATABLE_RESOURCES) && defined(__APPLE__)
   /* remove MacOS session identifier from the command line args */
   gint newargc = 0;
@@ -575,6 +576,7 @@ main (int    argc,
           newargc++;
         }
     }
+
   if (argc > newargc)
     {
       argv[newargc] = NULL; /* glib expects NULL terminated array */
@@ -607,12 +609,12 @@ main (int    argc,
   /* Make Inno aware of gimp process avoiding broken install/unninstall */
   char    *utf8_name = g_strdup_printf ("GIMP-%s", GIMP_MUTEX_VERSION);
   wchar_t *name      = g_utf8_to_utf16 (utf8_name, -1, NULL, NULL, NULL);
-  
+
   CreateMutexW (NULL, FALSE, name);
-  
+
   g_free (utf8_name);
   g_free (name);
-  
+
   /* Enable Anti-Aliasing*/
   g_setenv ("PANGOCAIRO_BACKEND", "fc", TRUE);
 
@@ -620,8 +622,9 @@ main (int    argc,
   SetDllDirectoryW (L"");
 
   /* On Windows, set DLL search path to $INSTALLDIR/bin so that .exe
-     plug-ins in the plug-ins directory can find libgimp and file
-     library DLLs without needing to set external PATH. */
+   * plug-ins in the plug-ins directory can find libgimp and file
+   * library DLLs without needing to set external PATH.
+   */
   {
     const gchar *install_dir;
     gchar       *bin_dir;
@@ -650,7 +653,8 @@ main (int    argc,
       (t_SetProcessDEPPolicy) GetProcAddress (GetModuleHandleW (L"kernel32.dll"),
                                               "SetProcessDEPPolicy");
     if (p_SetProcessDEPPolicy)
-      (*p_SetProcessDEPPolicy) (PROCESS_DEP_ENABLE|PROCESS_DEP_DISABLE_ATL_THUNK_EMULATION);
+      (*p_SetProcessDEPPolicy) (PROCESS_DEP_ENABLE |
+                                PROCESS_DEP_DISABLE_ATL_THUNK_EMULATION);
   }
 #endif
 
@@ -734,14 +738,16 @@ main (int    argc,
 
   g_option_context_add_main_entries (context, main_entries, GETTEXT_PACKAGE);
 
-  /* The GIMP option group is just an empty option group, created for the sole
-   * purpose of running a post-parse hook before any other of dependant libraries
-   * are run. This makes it possible to apply options from configuration data
-   * obtained from "gimprc" files, before other libraries have a chance to run
-   * some of their intialization code.
+  /* The GIMP option group is just an empty option group, created for
+   * the sole purpose of running a post-parse hook before any other of
+   * dependant libraries are run. This makes it possible to apply
+   * options from configuration data obtained from "gimprc" files,
+   * before other libraries have a chance to run some of their
+   * intialization code.
    */
   gimp_group = g_option_group_new ("gimp", "", "", NULL, NULL);
-  g_option_group_set_parse_hooks (gimp_group, NULL, gimp_options_group_parse_hook);
+  g_option_group_set_parse_hooks (gimp_group, NULL,
+                                  gimp_options_group_parse_hook);
   g_option_context_add_group (context, gimp_group);
 
   app_libs_init (context, no_interface);
@@ -776,11 +782,12 @@ main (int    argc,
 #ifdef GDK_WINDOWING_X11
       ! GDK_IS_X11_DISPLAY (gdk_display_get_default ()) &&
 #endif
-      g_key_file_load_from_file (flatpak_keyfile, "/.flatpak-info", G_KEY_FILE_NONE, NULL))
+      g_key_file_load_from_file (flatpak_keyfile, "/.flatpak-info",
+                                 G_KEY_FILE_NONE, NULL))
     {
-      /* Flatpak renames the desktop file. The .flatpak-info file tells
-       * us the right desktop name we must associate our process to,
-       * especially as we have flatpaks with different IDs.
+      /* Flatpak renames the desktop file. The .flatpak-info file
+       * tells us the right desktop name we must associate our process
+       * to, especially as we have flatpaks with different IDs.
        *
        * This logic should not apply on X11 which will instead
        * apparently use the StartupWMClass set in the desktop file and
@@ -788,17 +795,18 @@ main (int    argc,
        *
        * Cf. #13183 and #14233.
        */
-      gchar *flatpak_name = g_key_file_get_string (flatpak_keyfile, "Application", "name", NULL);
+      gchar *flatpak_name = g_key_file_get_string (flatpak_keyfile,
+                                                   "Application", "name", NULL);
 
       if (flatpak_name != NULL)
         {
           g_set_prgname (flatpak_name);
           g_free (flatpak_name);
         }
-      /* The else case should never happen unless we are in some kind of
-       * broken flatpak environment or somehow in a non-flatpak
-       * environment with a .flatpak-info file at the root, which seems
-       * improbable. Fail silently.
+      /* The else case should never happen unless we are in some kind
+       * of broken flatpak environment or somehow in a non-flatpak
+       * environment with a .flatpak-info file at the root, which
+       * seems improbable. Fail silently.
        */
     }
 
@@ -926,7 +934,9 @@ gimp_open_console_window (void)
       if ((HANDLE) _get_osfhandle (fileno (stderr)) == INVALID_HANDLE_VALUE)
         freopen ("CONOUT$", "w", stderr);
 
-      SetConsoleTitleW (g_utf8_to_utf16 (_("GIMP output. You can minimize this window, but don't close it."), -1, NULL, NULL, NULL));
+      SetConsoleTitleW (g_utf8_to_utf16 (_("GIMP output. You can minimize "
+                                           "this window, but don't close "
+                                           "it."), -1, NULL, NULL, NULL));
 
       atexit (wait_console_window);
     }
