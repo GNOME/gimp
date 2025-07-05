@@ -111,7 +111,7 @@ CODE
     );
 }
 
-sub drawable_append_filter_private {
+sub drawable_append_filter {
     $blurb = 'Append the specified effect to the top of the list of drawable effects.';
 
     $help = <<'HELP';
@@ -185,7 +185,7 @@ HELP
 CODE
 }
 
-sub drawable_merge_filter_private {
+sub drawable_merge_filter {
     $blurb = 'Apply the specified effect directly to the drawable.';
 
     $help = <<'HELP';
@@ -1231,8 +1231,8 @@ CODE
             drawable_get_offsets
             drawable_mask_bounds
             drawable_mask_intersect
-            drawable_append_filter_private
-            drawable_merge_filter_private
+            drawable_append_filter
+            drawable_merge_filter
             drawable_get_filters
             drawable_merge_filters
             drawable_merge_shadow

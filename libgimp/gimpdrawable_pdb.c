@@ -677,7 +677,7 @@ gimp_drawable_mask_intersect (GimpDrawable *drawable,
 }
 
 /**
- * _gimp_drawable_append_filter_private:
+ * _gimp_drawable_append_filter:
  * @drawable: The drawable.
  * @filter: The drawable filter to append.
  *
@@ -702,8 +702,8 @@ gimp_drawable_mask_intersect (GimpDrawable *drawable,
  * Since: 3.0
  **/
 gboolean
-_gimp_drawable_append_filter_private (GimpDrawable       *drawable,
-                                      GimpDrawableFilter *filter)
+_gimp_drawable_append_filter (GimpDrawable       *drawable,
+                              GimpDrawableFilter *filter)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -715,7 +715,7 @@ _gimp_drawable_append_filter_private (GimpDrawable       *drawable,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-drawable-append-filter-private",
+                                               "gimp-drawable-append-filter",
                                                args);
   gimp_value_array_unref (args);
 
@@ -727,7 +727,7 @@ _gimp_drawable_append_filter_private (GimpDrawable       *drawable,
 }
 
 /**
- * _gimp_drawable_merge_filter_private:
+ * _gimp_drawable_merge_filter:
  * @drawable: The drawable.
  * @filter: The drawable filter to merge.
  *
@@ -752,8 +752,8 @@ _gimp_drawable_append_filter_private (GimpDrawable       *drawable,
  * Since: 3.0
  **/
 gboolean
-_gimp_drawable_merge_filter_private (GimpDrawable       *drawable,
-                                     GimpDrawableFilter *filter)
+_gimp_drawable_merge_filter (GimpDrawable       *drawable,
+                             GimpDrawableFilter *filter)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -765,7 +765,7 @@ _gimp_drawable_merge_filter_private (GimpDrawable       *drawable,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-drawable-merge-filter-private",
+                                               "gimp-drawable-merge-filter",
                                                args);
   gimp_value_array_unref (args);
 

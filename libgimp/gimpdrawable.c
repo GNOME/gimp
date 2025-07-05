@@ -461,7 +461,7 @@ gimp_drawable_append_filter (GimpDrawable       *drawable,
   g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
 
   gimp_drawable_filter_update (filter);
-  _gimp_drawable_append_filter_private (drawable, filter);
+  _gimp_drawable_append_filter (drawable, filter);
 }
 
 /**
@@ -491,7 +491,7 @@ gimp_drawable_merge_filter (GimpDrawable       *drawable,
   g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
 
   gimp_drawable_filter_update (filter);
-  _gimp_drawable_merge_filter_private (drawable, filter);
+  _gimp_drawable_merge_filter (drawable, filter);
 }
 
 /**
