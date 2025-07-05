@@ -38,9 +38,15 @@
 enum
 {
   PROP_0,
+  PROP_VIEW_ZOOM,
+  PROP_VIEW_ROTATION,
   PROP_RADIUS,
   PROP_OPAQUE,
   PROP_HARDNESS,
+  PROP_GAIN,
+  PROP_PIGMENT,
+  PROP_POSTERIZE,
+  PROP_POSTERIZE_NUM,
   PROP_ERASER,
   PROP_NO_ERASING
 };
@@ -83,6 +89,20 @@ gimp_mybrush_options_class_init (GimpMybrushOptionsClass *klass)
   context_class->mybrush_changed = gimp_mybrush_options_mybrush_changed;
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_RADIUS,
+                           "viewzoom",
+                           _("View Zoom"),
+                           NULL,
+                           0.0001, G_MAXFLOAT, 1.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_RADIUS,
+                           "viewrotation",
+                           _("View Rotation"),
+                           NULL,
+                           -360.0, 360.0, 0.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_RADIUS,
                            "radius",
                            _("Radius"),
                            NULL,
@@ -101,6 +121,31 @@ gimp_mybrush_options_class_init (GimpMybrushOptionsClass *klass)
                            _("Hardness"),
                            NULL,
                            0.0, 1.0, 1.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_GAIN,
+                           "gain",
+                           _("Gain"),
+                           _("Adjust strength of input pressue"),
+                           -1.8, 1.8, 0.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_PIGMENT,
+                           "pigment",
+                           NULL, NULL,
+                           0.0, 1.0, 0.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_POSTERIZE,
+                           "posterize",
+                           NULL, NULL,
+                           0.0, 1.0, 0.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_POSTERIZE_NUM,
+                           "posterizenum",
+                           NULL, NULL,
+                           0.0, 1.28, 1.0,
                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ERASER,
@@ -141,14 +186,33 @@ gimp_mybrush_options_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_VIEW_ZOOM:
+      options->view_zoom = g_value_get_double (value) > 0.0f ?
+                           g_value_get_double (value) : 0.0001f;
+      break;
+    case PROP_VIEW_ROTATION:
+      options->view_rotation = CLAMP (g_value_get_double (value), 0.0f, 360.0f);
+      break;
     case PROP_RADIUS:
       options->radius = g_value_get_double (value);
+      break;
+    case PROP_OPAQUE:
+      options->opaque = g_value_get_double (value);
       break;
     case PROP_HARDNESS:
       options->hardness = g_value_get_double (value);
       break;
-    case PROP_OPAQUE:
-      options->opaque = g_value_get_double (value);
+    case PROP_GAIN:
+      options->gain = g_value_get_double (value);
+      break;
+    case PROP_PIGMENT:
+      options->pigment = g_value_get_double (value);
+      break;
+    case PROP_POSTERIZE:
+      options->posterize = g_value_get_double (value);
+      break;
+    case PROP_POSTERIZE_NUM:
+      options->posterize_num = g_value_get_double (value);
       break;
     case PROP_ERASER:
       options->eraser = g_value_get_boolean (value);
@@ -173,6 +237,12 @@ gimp_mybrush_options_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_VIEW_ZOOM:
+      g_value_set_double (value, options->view_zoom);
+      break;
+    case PROP_VIEW_ROTATION:
+      g_value_set_double (value, options->view_rotation);
+      break;
     case PROP_RADIUS:
       g_value_set_double (value, options->radius);
       break;
@@ -181,6 +251,18 @@ gimp_mybrush_options_get_property (GObject    *object,
       break;
     case PROP_HARDNESS:
       g_value_set_double (value, options->hardness);
+      break;
+    case PROP_GAIN:
+      g_value_set_double (value, options->gain);
+      break;
+    case PROP_PIGMENT:
+      g_value_set_double (value, options->pigment);
+      break;
+    case PROP_POSTERIZE:
+      g_value_set_double (value, options->posterize);
+      break;
+    case PROP_POSTERIZE_NUM:
+      g_value_set_double (value, options->posterize_num);
       break;
     case PROP_ERASER:
       g_value_set_boolean (value, options->eraser);
@@ -201,10 +283,16 @@ gimp_mybrush_options_mybrush_changed (GimpContext *context,
 {
   if (brush)
     g_object_set (context,
-                  "radius",   gimp_mybrush_get_radius (brush),
-                  "opaque",   gimp_mybrush_get_opaque (brush),
-                  "hardness", gimp_mybrush_get_hardness (brush),
-                  "eraser",   gimp_mybrush_get_is_eraser (brush),
+                  "viewzoom",     1.0f,
+                  "viewrotation", 0.0f,
+                  "radius",       gimp_mybrush_get_radius (brush),
+                  "opaque",       gimp_mybrush_get_opaque (brush),
+                  "hardness",     gimp_mybrush_get_hardness (brush),
+                  "gain",         gimp_mybrush_get_gain (brush),
+                  "pigment",      gimp_mybrush_get_pigment (brush),
+                  "posterize",    gimp_mybrush_get_posterize (brush),
+                  "posterizenum", gimp_mybrush_get_posterize_num (brush),
+                  "eraser",       gimp_mybrush_get_is_eraser (brush),
                   NULL);
 }
 
