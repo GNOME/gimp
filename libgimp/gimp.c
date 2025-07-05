@@ -1131,9 +1131,12 @@ _gimp_config (GPConfig *config)
   format = babl_format_with_space (config->check_custom_encoding1, space);
   if (bpp != babl_format_get_bytes_per_pixel (format))
     {
-      g_warning ("%s: checker board color 1's format expects %d bpp but %" G_GSIZE_FORMAT " bytes were passed.",
+      g_warning ("%s: checker board color 1's format expects %d bpp but %"
+                 G_GSIZE_FORMAT " bytes were passed.",
                  G_STRFUNC, babl_format_get_bytes_per_pixel (format), bpp);
-      gegl_color_set_pixel (_check_custom_color1, babl_format ("R'G'B'A double"), GIMP_CHECKS_CUSTOM_COLOR1);
+      gegl_color_set_pixel (_check_custom_color1,
+                            babl_format ("R'G'B'A double"),
+                            GIMP_CHECKS_CUSTOM_COLOR1);
     }
   else
     {
@@ -1150,9 +1153,12 @@ _gimp_config (GPConfig *config)
   format = babl_format_with_space (config->check_custom_encoding2, space);
   if (bpp != babl_format_get_bytes_per_pixel (format))
     {
-      g_warning ("%s: checker board color 2's format expects %d bpp but %" G_GSIZE_FORMAT " bytes were passed.",
+      g_warning ("%s: checker board color 2's format expects %d bpp but %"
+                 G_GSIZE_FORMAT " bytes were passed.",
                  G_STRFUNC, babl_format_get_bytes_per_pixel (format), bpp);
-      gegl_color_set_pixel (_check_custom_color2, babl_format ("R'G'B'A double"), GIMP_CHECKS_CUSTOM_COLOR2);
+      gegl_color_set_pixel (_check_custom_color2,
+                            babl_format ("R'G'B'A double"),
+                            GIMP_CHECKS_CUSTOM_COLOR2);
     }
   else
     {
