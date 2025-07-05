@@ -223,19 +223,22 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
       gtk_widget_show (label);
     }
 
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
+  gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
   editor->toggle = gtk_check_button_new_with_label (_("Compute unique colors:"));
   gimp_widget_set_identifier (editor->toggle, "toggle-compute-unique-colors");
   gimp_label_set_attributes (GTK_LABEL (gtk_bin_get_child (GTK_BIN (editor->toggle))),
                              PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,
                              -1);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (editor->toggle), FALSE);
+  gtk_box_pack_start (GTK_BOX (hbox), editor->toggle, FALSE, FALSE, 0);
+  gtk_widget_show (editor->toggle);
+
   g_signal_connect_swapped (editor->toggle, "toggled",
                             G_CALLBACK (gimp_histogram_editor_info_update),
                             editor);
-  gtk_widget_set_margin_start (gtk_bin_get_child (GTK_BIN (editor->toggle)), 6);
-  gtk_widget_set_halign (editor->toggle, GTK_ALIGN_END);
-  gtk_grid_attach (GTK_GRID (grid), editor->toggle, 0, 3, 1, 1);
-  gtk_widget_show (editor->toggle);
 
   editor->labels[6] = label = g_object_new (GTK_TYPE_LABEL,
                                             "xalign",      0.0,
@@ -245,7 +248,7 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
   gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,
                              -1);
-  gtk_grid_attach (GTK_GRID (grid), label, 1, 3, 1, 1);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 }
 
