@@ -540,10 +540,6 @@ gimp_real_initialize (Gimp               *gimp,
 
   status_callback (_("Initialization"), NULL, 0.0);
 
-  /*  set the last values used to default values  */
-  gimp->image_new_last_template =
-    gimp_config_duplicate (GIMP_CONFIG (gimp->config->default_image));
-
   /*  add data objects that need the user context  */
   gimp_data_factories_add_builtin (gimp);
 
@@ -1117,6 +1113,37 @@ gimp_get_tool_info (Gimp        *gimp,
 
   return (GimpToolInfo *) info;
 }
+
+void
+gimp_set_last_template (Gimp         *gimp,
+                        GimpTemplate *template)
+{
+  GimpTemplate *last_template;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_TEMPLATE (template));
+
+  last_template = gimp_get_last_template (gimp);
+
+  gimp_config_sync (G_OBJECT (template),
+                    G_OBJECT (last_template), 0);
+}
+
+GimpTemplate *
+gimp_get_last_template (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  if (! gimp->image_new_last_template)
+    {
+      /*  set the last values used to default values  */
+      gimp->image_new_last_template =
+        gimp_config_duplicate (GIMP_CONFIG (gimp->config->default_image));
+    }
+
+  return gimp->image_new_last_template;
+}
+
 
 /**
  * gimp_message:

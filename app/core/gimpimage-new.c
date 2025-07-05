@@ -87,7 +87,11 @@ gimp_image_new_get_last_template (Gimp      *gimp,
     }
   else
     {
-      gimp_config_sync (G_OBJECT (gimp->image_new_last_template),
+      GimpTemplate *last_template;
+
+      last_template = gimp_get_last_template (gimp);
+
+      gimp_config_sync (G_OBJECT (last_template),
                         G_OBJECT (template), 0);
     }
 
@@ -101,8 +105,7 @@ gimp_image_new_set_last_template (Gimp         *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_TEMPLATE (template));
 
-  gimp_config_sync (G_OBJECT (template),
-                    G_OBJECT (gimp->image_new_last_template), 0);
+  gimp_set_last_template (gimp, template);
 }
 
 GimpImage *
