@@ -384,10 +384,10 @@ gimp_convert_palette_type_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_CONVERT_PALETTE_GENERATE, NC_("convert-palette-type", "Generate optimum palette"), NULL },
-    { GIMP_CONVERT_PALETTE_WEB, NC_("convert-palette-type", "Use web-optimized palette"), NULL },
-    { GIMP_CONVERT_PALETTE_MONO, NC_("convert-palette-type", "Use black and white (1-bit) palette"), NULL },
-    { GIMP_CONVERT_PALETTE_CUSTOM, NC_("convert-palette-type", "Use custom palette"), NULL },
+    { GIMP_CONVERT_PALETTE_GENERATE, NC_("convert-palette-type", "_Generate optimum palette"), NULL },
+    { GIMP_CONVERT_PALETTE_WEB, NC_("convert-palette-type", "Use _web-optimized palette"), NULL },
+    { GIMP_CONVERT_PALETTE_MONO, NC_("convert-palette-type", "Use _black and white (1-bit) palette"), NULL },
+    { GIMP_CONVERT_PALETTE_CUSTOM, NC_("convert-palette-type", "Use custom _palette"), NULL },
     { 0, NULL, NULL }
   };
 
