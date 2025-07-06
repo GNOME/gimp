@@ -54,6 +54,11 @@ static void   gimp_export_procedure_dialog_fill_list (GimpProcedureDialog *dialo
                                                       GimpProcedureConfig *config,
                                                       GList               *properties);
 
+static void   gimp_export_procedure_dialog_notify_comment
+                                                     (GimpProcedureConfig *config,
+                                                      GParamSpec          *pspec,
+                                                      GtkWidget           *widget);
+
 static gpointer gimp_export_procedure_dialog_edit_metadata_thread   (gpointer                 data);
 static gboolean gimp_export_procedure_dialog_activate_edit_metadata (GtkLinkButton           *link,
                                                                      GimpExportProcedureDialog *dialog);
@@ -300,6 +305,13 @@ gimp_export_procedure_dialog_fill_end (GimpProcedureDialog *dialog,
           gtk_container_add (GTK_CONTAINER (scrolled_window), widget);
           gtk_widget_show (widget);
 
+          /* Comment field should only be editable when "Save Comment" is
+           * sensitive. */
+          g_signal_connect_object (config, "notify::include-comment",
+                                   G_CALLBACK (gimp_export_procedure_dialog_notify_comment),
+                                   widget, 0);
+          gimp_export_procedure_dialog_notify_comment (config, NULL, widget);
+
           gtk_grid_attach (GTK_GRID (grid), frame2, 0, top, 6, 1);
           gtk_widget_show (frame2);
         }
@@ -349,6 +361,18 @@ gimp_export_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
   properties2 = g_list_reverse (properties2);
   GIMP_PROCEDURE_DIALOG_CLASS (parent_class)->fill_list (dialog, procedure, config, properties2);
   g_list_free (properties2);
+}
+
+static void
+gimp_export_procedure_dialog_notify_comment (GimpProcedureConfig *config,
+                                             GParamSpec          *pspec,
+                                             GtkWidget           *widget)
+{
+  gboolean sensitive;
+
+  g_object_get (config, "include-comment", &sensitive, NULL);
+
+  gtk_widget_set_sensitive (widget, sensitive);
 }
 
 static gpointer
