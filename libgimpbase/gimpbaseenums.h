@@ -293,10 +293,10 @@ GType gimp_convert_palette_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_CONVERT_PALETTE_GENERATE, /*< desc="Generate optimum palette"          >*/
-  GIMP_CONVERT_PALETTE_WEB,      /*< desc="Use web-optimized palette"         >*/
-  GIMP_CONVERT_PALETTE_MONO,     /*< desc="Use black and white (1-bit) palette" >*/
-  GIMP_CONVERT_PALETTE_CUSTOM    /*< desc="Use custom palette"                >*/
+  GIMP_CONVERT_PALETTE_GENERATE, /*< desc="_Generate optimum palette"          >*/
+  GIMP_CONVERT_PALETTE_WEB,      /*< desc="Use _web-optimized palette"         >*/
+  GIMP_CONVERT_PALETTE_MONO,     /*< desc="Use _black and white (1-bit) palette" >*/
+  GIMP_CONVERT_PALETTE_CUSTOM    /*< desc="Use custom _palette"                >*/
 } GimpConvertPaletteType;
 
 
