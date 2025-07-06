@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-07 01:37+0000\n"
-"PO-Revision-Date: 2025-06-07 18:19+0300\n"
+"POT-Creation-Date: 2025-07-06 11:59+0000\n"
+"PO-Revision-Date: 2025-07-06 19:28+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -480,31 +480,31 @@ msgid "Store current settings for later reuse"
 msgstr ""
 "Зберегти поточні значення параметрів для подальшого повторного використання"
 
-#: libgimp/gimpproceduredialog.c:878
+#: libgimp/gimpproceduredialog.c:892
 msgid "Brush Chooser"
 msgstr "Вибір пензля"
 
-#: libgimp/gimpproceduredialog.c:882
+#: libgimp/gimpproceduredialog.c:896
 msgid "Font Chooser"
 msgstr "Вибір шрифту"
 
-#: libgimp/gimpproceduredialog.c:886
+#: libgimp/gimpproceduredialog.c:900
 msgid "Gradient Chooser"
 msgstr "Вибір градієнта"
 
-#: libgimp/gimpproceduredialog.c:890
+#: libgimp/gimpproceduredialog.c:904
 msgid "Palette Chooser"
 msgstr "Вибір палітри"
 
-#: libgimp/gimpproceduredialog.c:894
+#: libgimp/gimpproceduredialog.c:908
 msgid "Pattern Chooser"
 msgstr "Вибір текстури"
 
-#: libgimp/gimpproceduredialog.c:2666
+#: libgimp/gimpproceduredialog.c:2789
 msgid "Reset to _Initial Values"
 msgstr "Повернути до по_чаткових значень"
 
-#: libgimp/gimpproceduredialog.c:2675
+#: libgimp/gimpproceduredialog.c:2798
 msgid "Reset to _Factory Defaults"
 msgstr "Повернути до стандартних _початкових значень"
 
@@ -917,24 +917,32 @@ msgid "64-bit floating point"
 msgstr "64-бітове з рухомою комою"
 
 #: libgimpbase/gimpbaseenums.c:387
+#| msgctxt "convert-palette-type"
+#| msgid "Generate optimum palette"
 msgctxt "convert-palette-type"
-msgid "Generate optimum palette"
-msgstr "Згенерувати оптимальну палітру"
+msgid "_Generate optimum palette"
+msgstr "З_генерувати оптимальну палітру"
 
 #: libgimpbase/gimpbaseenums.c:388
+#| msgctxt "convert-palette-type"
+#| msgid "Use web-optimized palette"
 msgctxt "convert-palette-type"
-msgid "Use web-optimized palette"
-msgstr "Використовувати палітру оптимізовану для тенет"
+msgid "Use _web-optimized palette"
+msgstr "Використовувати палітру _оптимізовану для тенет"
 
 #: libgimpbase/gimpbaseenums.c:389
+#| msgctxt "convert-palette-type"
+#| msgid "Use black and white (1-bit) palette"
 msgctxt "convert-palette-type"
-msgid "Use black and white (1-bit) palette"
-msgstr "Використовувати чорно-білу (1-бітову) палітру"
+msgid "Use _black and white (1-bit) palette"
+msgstr "Використовувати _чорно-білу (1-бітову) палітру"
 
 #: libgimpbase/gimpbaseenums.c:390
+#| msgctxt "convert-palette-type"
+#| msgid "Use custom palette"
 msgctxt "convert-palette-type"
-msgid "Use custom palette"
-msgstr "Використовувати власну палітру"
+msgid "Use custom _palette"
+msgstr "Використовувати власну п_алітру"
 
 #: libgimpbase/gimpbaseenums.c:419
 msgctxt "convolve-type"
@@ -2296,7 +2304,7 @@ msgid "HSV"
 msgstr "HSV"
 
 #: libgimpwidgets/gimpcolorscales.c:708 libgimpwidgets/gimpcolorselect.c:2113
-#: modules/color-selector-cmyk.c:319 modules/color-selector-cmyk.c:403
+#: modules/color-selector-cmyk.c:321 modules/color-selector-cmyk.c:405
 #: modules/color-selector-water.c:258 modules/color-selector-wheel.c:191
 #, c-format
 msgid "Profile: %s"
@@ -2698,55 +2706,55 @@ msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Віддалити"
 
-#: modules/color-selector-cmyk.c:86
+#: modules/color-selector-cmyk.c:87
 msgid "CMYK color selector (using color profile)"
 msgstr "Вибір кольору у моделі CMYK (використовуючи профіль кольорів)"
 
-#: modules/color-selector-cmyk.c:120
+#: modules/color-selector-cmyk.c:121
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: modules/color-selector-cmyk.c:144
+#: modules/color-selector-cmyk.c:145
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: modules/color-selector-cmyk.c:146
+#: modules/color-selector-cmyk.c:147
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: modules/color-selector-cmyk.c:148
+#: modules/color-selector-cmyk.c:149
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: modules/color-selector-cmyk.c:150
+#: modules/color-selector-cmyk.c:151
 msgid "_K"
 msgstr "_K"
 
-#: modules/color-selector-cmyk.c:154
+#: modules/color-selector-cmyk.c:155
 msgid "Cyan"
 msgstr "Бірюзовий"
 
-#: modules/color-selector-cmyk.c:155
+#: modules/color-selector-cmyk.c:156
 msgid "Magenta"
 msgstr "Пурпурний"
 
-#: modules/color-selector-cmyk.c:156
+#: modules/color-selector-cmyk.c:157
 msgid "Yellow"
 msgstr "Жовтий"
 
-#: modules/color-selector-cmyk.c:157
+#: modules/color-selector-cmyk.c:158
 msgid "Black"
 msgstr "Чорний"
 
-#: modules/color-selector-cmyk.c:263
+#: modules/color-selector-cmyk.c:265
 msgid "Total Ink Coverage"
 msgstr "Загальне покриття чорнилом"
 
-#: modules/color-selector-cmyk.c:306 modules/color-selector-cmyk.c:385
+#: modules/color-selector-cmyk.c:308 modules/color-selector-cmyk.c:387
 msgid "Profile: (none)"
 msgstr ": (немає)"
 
