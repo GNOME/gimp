@@ -256,8 +256,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-25.06.0.tar.xz",
-                    "sha256": "8199532d38984fab46dbd0020ec9c40f20e928e33e9b4cc6043572603a821d83",
+                    "url": "https://poppler.freedesktop.org/poppler-25.07.0.tar.xz",
+                    "sha256": "c504a9066dbdfebe377ad53cec641fd971ee96c4e1e8ca74e6c9c03d46d817ae",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 3686,
@@ -502,8 +502,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/strukturag/libheif/releases/download/v1.19.8/libheif-1.19.8.tar.gz",
-                    "sha256": "6c4a5b08e6eae66d199977468859dea3b5e059081db8928f7c7c16e53836c906",
+                    "url": "https://github.com/strukturag/libheif/releases/download/v1.20.1/libheif-1.20.1.tar.gz",
+                    "sha256": "55cc76b77c533151fc78ba58ef5ad18562e84da403ed749c3ae017abaf1e2090",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 64439,
@@ -871,8 +871,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://gitlab.com/graphviz/graphviz/-/archive/13.0.1/graphviz-13.0.1.tar.gz",
-                    "sha256": "b91a80434f34986c47410b490d15ab1bd87fc7fea4e130161c8f029c548055a3",
+                    "url": "https://gitlab.com/graphviz/graphviz/-/archive/13.1.0/graphviz-13.1.0.tar.gz",
+                    "sha256": "04d4b182a0a383b2f000465312a141acbf1c05b2b0ce6a542f3f1d0220294c30",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 1249,
