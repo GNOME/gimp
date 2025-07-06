@@ -1090,9 +1090,7 @@ gimp_show_license_and_exit (void)
   gimp_open_console_window ();
   gimp_version_show (be_verbose);
 
-  g_print ("\n");
-  g_print (GIMP_LICENSE);
-  g_print ("\n\n");
+  g_print ("\n%s\n\n", GIMP_LICENSE);
 
   app_exit (EXIT_SUCCESS);
 }
