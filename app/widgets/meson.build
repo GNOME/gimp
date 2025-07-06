@@ -139,6 +139,7 @@ libappwidgets_sources = [
   'gimpimagepropview.c',
   'gimpimageview.c',
   'gimpitemtreeview.c',
+  'gimpitemtreeview-search.c',
   'gimplanguagecombobox.c',
   'gimplanguageentry.c',
   'gimplanguagestore.c',

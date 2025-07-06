@@ -64,12 +64,14 @@ typedef GimpUndo      * (*GimpUndoLockPush)      (GimpImage     *image,
 
 typedef struct _GimpItemTreeViewClass   GimpItemTreeViewClass;
 typedef struct _GimpItemTreeViewPrivate GimpItemTreeViewPrivate;
+typedef struct _GimpItemTreeViewSearch  GimpItemTreeViewSearch;
 
 struct _GimpItemTreeView
 {
   GimpContainerTreeView    parent_instance;
 
   GimpItemTreeViewPrivate *priv;
+  GimpItemTreeViewSearch  *search;
 };
 
 struct _GimpItemTreeViewClass
