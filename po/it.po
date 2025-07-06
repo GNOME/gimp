@@ -44,7 +44,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2025-06-21 20:38+0000\n"
-"PO-Revision-Date: 2025-06-29 22:55+0200\n"
+"PO-Revision-Date: 2025-07-06 18:47+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -11885,14 +11885,12 @@ msgstr "Mantieni il profilo incorporato"
 #: app/core/core-enums.c:211
 msgctxt "color-profile-policy"
 msgid "Convert to built-in sRGB or grayscale profile"
-msgstr "Converte in profilo sRGB incorporato o in scala di grigi"
+msgstr "Converti nel profilo sRGB incorporato o in scala di grigi"
 
 #: app/core/core-enums.c:212
 msgctxt "color-profile-policy"
 msgid "Convert to preferred RGB or grayscale profile (defaulting to built-in)"
-msgstr ""
-"Converte in profilo sRGB o in scala di grigi preferiti (valore predefinito "
-"in incorporato)"
+msgstr "Converti nel profilo in scala di grigi o sRGB preferiti (valore predefinito incorporato)"
 
 #: app/core/core-enums.c:306
 msgctxt "convert-dither-type"
