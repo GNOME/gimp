@@ -51,9 +51,10 @@
  * @frame_title: (nullable):
  *                         The title of the Frame or %NULL if you don't want a
  *                         title.
- * @radio_button_callback: (scope notified): The callback each button's
+ * @radio_button_callback: (scope notified) (closure radio_button_callback_data):
+ *                         The callback each button's
  *                         "toggled" signal will be connected with.
- * @radio_button_callback_data: (closure radio_button_callback):
+ * @radio_button_callback_data:
  *                         The data which will be passed to g_signal_connect().
  * @radio_button_callback_destroy: (destroy radio_button_callback_data):
  * @initial:               The @item_data of the initially pressed radio button.
