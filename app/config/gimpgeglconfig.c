@@ -182,9 +182,9 @@ gimp_gegl_config_finalize (GObject *object)
 {
   GimpGeglConfig *gegl_config = GIMP_GEGL_CONFIG (object);
 
-  g_free (gegl_config->temp_path);
-  g_free (gegl_config->swap_path);
-  g_free (gegl_config->swap_compression);
+  g_clear_pointer (&gegl_config->temp_path,        g_free);
+  g_clear_pointer (&gegl_config->swap_path,        g_free);
+  g_clear_pointer (&gegl_config->swap_compression, g_free);
 
   gimp_debug_remove_instance (object);
 
@@ -202,23 +202,28 @@ gimp_gegl_config_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_TEMP_PATH:
-      g_free (gegl_config->temp_path);
-      gegl_config->temp_path = g_value_dup_string (value);
+      g_set_str (&gegl_config->temp_path,
+                 g_value_get_string (value));
       break;
+
     case PROP_SWAP_PATH:
-      g_free (gegl_config->swap_path);
-      gegl_config->swap_path = g_value_dup_string (value);
+      g_set_str (&gegl_config->swap_path,
+                 g_value_get_string (value));
       break;
+
     case PROP_SWAP_COMPRESSION:
-      g_free (gegl_config->swap_compression);
-      gegl_config->swap_compression = g_value_dup_string (value);
+      g_set_str (&gegl_config->swap_compression,
+                 g_value_get_string (value));
       break;
+
     case PROP_NUM_PROCESSORS:
       gegl_config->num_processors = g_value_get_int (value);
       break;
+
     case PROP_TILE_CACHE_SIZE:
       gegl_config->tile_cache_size = g_value_get_uint64 (value);
       break;
+
     case PROP_USE_OPENCL:
       gegl_config->use_opencl = g_value_get_boolean (value);
       break;
@@ -246,18 +251,23 @@ gimp_gegl_config_get_property (GObject    *object,
     case PROP_TEMP_PATH:
       g_value_set_string (value, gegl_config->temp_path);
       break;
+
     case PROP_SWAP_PATH:
       g_value_set_string (value, gegl_config->swap_path);
       break;
+
     case PROP_SWAP_COMPRESSION:
       g_value_set_string (value, gegl_config->swap_compression);
       break;
+
     case PROP_NUM_PROCESSORS:
       g_value_set_int (value, gegl_config->num_processors);
       break;
+
     case PROP_TILE_CACHE_SIZE:
       g_value_set_uint64 (value, gegl_config->tile_cache_size);
       break;
+
     case PROP_USE_OPENCL:
       g_value_set_boolean (value, gegl_config->use_opencl);
       break;

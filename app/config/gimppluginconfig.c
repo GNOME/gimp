@@ -130,11 +130,11 @@ gimp_plugin_config_finalize (GObject *object)
 {
   GimpPluginConfig *plugin_config = GIMP_PLUGIN_CONFIG (object);
 
-  g_free (plugin_config->fractalexplorer_path);
-  g_free (plugin_config->gfig_path);
-  g_free (plugin_config->gflare_path);
-  g_free (plugin_config->gimpressionist_path);
-  g_free (plugin_config->script_fu_path);
+  g_clear_pointer (&plugin_config->fractalexplorer_path, g_free);
+  g_clear_pointer (&plugin_config->gfig_path,            g_free);
+  g_clear_pointer (&plugin_config->gflare_path,          g_free);
+  g_clear_pointer (&plugin_config->gimpressionist_path,  g_free);
+  g_clear_pointer (&plugin_config->script_fu_path,       g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -150,28 +150,28 @@ gimp_plugin_config_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_FRACTALEXPLORER_PATH:
-      g_free (plugin_config->fractalexplorer_path);
-      plugin_config->fractalexplorer_path = g_value_dup_string (value);
+      g_set_str (&plugin_config->fractalexplorer_path,
+                 g_value_get_string (value));
       break;
 
     case PROP_GFIG_PATH:
-      g_free (plugin_config->gfig_path);
-      plugin_config->gfig_path = g_value_dup_string (value);
+      g_set_str (&plugin_config->gfig_path,
+                 g_value_get_string (value));
       break;
 
     case PROP_GFLARE_PATH:
-      g_free (plugin_config->gflare_path);
-      plugin_config->gflare_path = g_value_dup_string (value);
+      g_set_str (&plugin_config->gflare_path,
+                 g_value_get_string (value));
       break;
 
     case PROP_GIMPRESSIONIST_PATH:
-      g_free (plugin_config->gimpressionist_path);
-      plugin_config->gimpressionist_path = g_value_dup_string (value);
+      g_set_str (&plugin_config->gimpressionist_path,
+                 g_value_get_string (value));
       break;
 
     case PROP_SCRIPT_FU_PATH:
-      g_free (plugin_config->script_fu_path);
-      plugin_config->script_fu_path = g_value_dup_string (value);
+      g_set_str (&plugin_config->script_fu_path,
+                 g_value_get_string (value));
       break;
 
     default:

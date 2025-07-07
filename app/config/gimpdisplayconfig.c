@@ -439,8 +439,8 @@ gimp_display_config_finalize (GObject *object)
 {
   GimpDisplayConfig *display_config = GIMP_DISPLAY_CONFIG (object);
 
-  g_free (display_config->image_title_format);
-  g_free (display_config->image_status_format);
+  g_clear_pointer (&display_config->image_title_format,  g_free);
+  g_clear_pointer (&display_config->image_status_format, g_free);
 
   g_clear_object (&display_config->default_view);
   g_clear_object (&display_config->default_fullscreen_view);
@@ -518,12 +518,12 @@ gimp_display_config_set_property (GObject      *object,
       display_config->show_paint_tool_cursor = g_value_get_boolean (value);
       break;
     case PROP_IMAGE_TITLE_FORMAT:
-      g_free (display_config->image_title_format);
-      display_config->image_title_format = g_value_dup_string (value);
+      g_set_str (&display_config->image_title_format,
+                 g_value_get_string (value));
       break;
     case PROP_IMAGE_STATUS_FORMAT:
-      g_free (display_config->image_status_format);
-      display_config->image_status_format = g_value_dup_string (value);
+      g_set_str (&display_config->image_status_format,
+                 g_value_get_string (value));
       break;
     case PROP_MONITOR_XRESOLUTION:
       display_config->monitor_xres = g_value_get_double (value);

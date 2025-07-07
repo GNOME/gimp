@@ -598,9 +598,9 @@ gimp_dialog_config_finalize (GObject *object)
   g_clear_pointer (&config->color_profile_path,  g_free);
   g_clear_pointer (&config->layer_new_name,      g_free);
   g_clear_pointer (&config->channel_new_name,    g_free);
-  g_clear_pointer (&config->path_new_name,    g_free);
-  g_clear_pointer (&config->path_export_path, g_free);
-  g_clear_pointer (&config->path_import_path, g_free);
+  g_clear_pointer (&config->path_new_name,       g_free);
+  g_clear_pointer (&config->path_export_path,    g_free);
+  g_clear_pointer (&config->path_import_path,    g_free);
 
   g_clear_object (&config->fill_options);
   g_clear_object (&config->stroke_options);
@@ -632,9 +632,8 @@ gimp_dialog_config_set_property (GObject      *object,
       break;
 
     case PROP_COLOR_PROFILE_PATH:
-      if (config->color_profile_path)
-        g_free (config->color_profile_path);
-      config->color_profile_path = g_value_dup_string (value);
+      g_set_str (&config->color_profile_path,
+                 g_value_get_string (value));
       break;
 
     case PROP_IMAGE_CONVERT_PROFILE_INTENT:
@@ -687,9 +686,8 @@ gimp_dialog_config_set_property (GObject      *object,
       break;
 
     case PROP_LAYER_NEW_NAME:
-      if (config->layer_new_name)
-        g_free (config->layer_new_name);
-      config->layer_new_name = g_value_dup_string (value);
+      g_set_str (&config->layer_new_name,
+                 g_value_get_string (value));
       break;
     case PROP_LAYER_NEW_MODE:
       config->layer_new_mode = g_value_get_enum (value);
@@ -732,9 +730,8 @@ gimp_dialog_config_set_property (GObject      *object,
       break;
 
     case PROP_CHANNEL_NEW_NAME:
-      if (config->channel_new_name)
-        g_free (config->channel_new_name);
-      config->channel_new_name = g_value_dup_string (value);
+      g_set_str (&config->channel_new_name,
+                 g_value_get_string (value));
       break;
     case PROP_CHANNEL_NEW_COLOR:
       g_clear_object (&config->channel_new_color);
@@ -742,24 +739,21 @@ gimp_dialog_config_set_property (GObject      *object,
       break;
 
     case PROP_PATH_NEW_NAME:
-      if (config->path_new_name)
-        g_free (config->path_new_name);
-      config->path_new_name = g_value_dup_string (value);
+      g_set_str (&config->path_new_name,
+                 g_value_get_string (value));
       break;
 
     case PROP_PATH_EXPORT_PATH:
-      if (config->path_export_path)
-        g_free (config->path_export_path);
-      config->path_export_path = g_value_dup_string (value);
+      g_set_str (&config->path_export_path,
+                 g_value_get_string (value));
       break;
     case PROP_PATH_EXPORT_ACTIVE_ONLY:
       config->path_export_active_only = g_value_get_boolean (value);
       break;
 
     case PROP_PATH_IMPORT_PATH:
-      if (config->path_import_path)
-        g_free (config->path_import_path);
-      config->path_import_path = g_value_dup_string (value);
+      g_set_str (&config->path_import_path,
+                 g_value_get_string (value));
       break;
     case PROP_PATH_IMPORT_MERGE:
       config->path_import_merge = g_value_get_boolean (value);

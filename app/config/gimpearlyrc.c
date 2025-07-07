@@ -47,16 +47,16 @@ enum
 };
 
 
-static void         gimp_early_rc_constructed       (GObject      *object);
-static void         gimp_early_rc_finalize          (GObject      *object);
-static void         gimp_early_rc_set_property      (GObject      *object,
-                                                     guint         property_id,
-                                                     const GValue *value,
-                                                     GParamSpec   *pspec);
-static void         gimp_early_rc_get_property      (GObject      *object,
-                                                     guint         property_id,
-                                                     GValue       *value,
-                                                     GParamSpec   *pspec);
+static void   gimp_early_rc_constructed  (GObject      *object);
+static void   gimp_early_rc_finalize     (GObject      *object);
+static void   gimp_early_rc_set_property (GObject      *object,
+                                          guint         property_id,
+                                          const GValue *value,
+                                          GParamSpec   *pspec);
+static void   gimp_early_rc_get_property (GObject      *object,
+                                          guint         property_id,
+                                          GValue       *value,
+                                          GParamSpec   *pspec);
 
 
 /* Just use GimpConfig interface's default implementation which will
@@ -206,9 +206,8 @@ gimp_early_rc_set_property (GObject      *object,
       break;
 
     case PROP_LANGUAGE:
-      if (rc->language)
-        g_free (rc->language);
-      rc->language = g_value_dup_string (value);
+      g_set_str (&rc->language,
+                 g_value_get_string (value));
       break;
 
 #ifdef G_OS_WIN32
@@ -255,12 +254,15 @@ gimp_early_rc_get_property (GObject    *object,
     case PROP_VERBOSE:
       g_value_set_boolean (value, rc->verbose);
       break;
+
     case PROP_SYSTEM_GIMPRC:
       g_value_set_object (value, rc->system_gimprc);
       break;
+
     case PROP_USER_GIMPRC:
       g_value_set_object (value, rc->user_gimprc);
       break;
+
     case PROP_LANGUAGE:
       g_value_set_string (value, rc->language);
       break;

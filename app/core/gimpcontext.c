@@ -2296,8 +2296,8 @@ static void
 gimp_context_paint_info_dirty (GimpPaintInfo *paint_info,
                                GimpContext   *context)
 {
-  g_free (context->paint_name);
-  context->paint_name = g_strdup (gimp_object_get_name (paint_info));
+  g_set_str (&context->paint_name,
+             gimp_object_get_name (paint_info));
 
   g_signal_emit (context, gimp_context_signals[PROP_NAME_CHANGED], 0,
                  GIMP_CONTEXT_PROP_PAINT_INFO);
@@ -2646,8 +2646,8 @@ static void
 gimp_context_brush_dirty (GimpBrush   *brush,
                           GimpContext *context)
 {
-  g_free (context->brush_name);
-  context->brush_name = g_strdup (gimp_object_get_name (brush));
+  g_set_str (&context->brush_name,
+             gimp_object_get_name (brush));
 
   g_signal_emit (context, gimp_context_signals[PROP_NAME_CHANGED], 0,
                  GIMP_CONTEXT_PROP_BRUSH);
@@ -2760,8 +2760,8 @@ static void
 gimp_context_dynamics_dirty (GimpDynamics *dynamics,
                              GimpContext  *context)
 {
-  g_free (context->dynamics_name);
-  context->dynamics_name = g_strdup (gimp_object_get_name (dynamics));
+  g_set_str (&context->dynamics_name,
+             gimp_object_get_name (dynamics));
 
   g_signal_emit (context, gimp_context_signals[PROP_NAME_CHANGED], 0,
                  GIMP_CONTEXT_PROP_DYNAMICS);
@@ -2873,8 +2873,8 @@ static void
 gimp_context_mybrush_dirty (GimpMybrush *brush,
                             GimpContext *context)
 {
-  g_free (context->mybrush_name);
-  context->mybrush_name = g_strdup (gimp_object_get_name (brush));
+  g_set_str (&context->mybrush_name,
+             gimp_object_get_name (brush));
 
   g_signal_emit (context, gimp_context_signals[PROP_NAME_CHANGED], 0,
                  GIMP_CONTEXT_PROP_MYBRUSH);
@@ -2986,8 +2986,8 @@ static void
 gimp_context_pattern_dirty (GimpPattern *pattern,
                             GimpContext *context)
 {
-  g_free (context->pattern_name);
-  context->pattern_name = g_strdup (gimp_object_get_name (pattern));
+  g_set_str (&context->pattern_name,
+             gimp_object_get_name (pattern));
 
   g_signal_emit (context, gimp_context_signals[PROP_NAME_CHANGED], 0,
                  GIMP_CONTEXT_PROP_PATTERN);
@@ -3099,8 +3099,8 @@ static void
 gimp_context_gradient_dirty (GimpGradient *gradient,
                              GimpContext  *context)
 {
-  g_free (context->gradient_name);
-  context->gradient_name = g_strdup (gimp_object_get_name (gradient));
+  g_set_str (&context->gradient_name,
+             gimp_object_get_name (gradient));
 
   g_signal_emit (context, gimp_context_signals[PROP_NAME_CHANGED], 0,
                  GIMP_CONTEXT_PROP_GRADIENT);
@@ -3212,8 +3212,8 @@ static void
 gimp_context_palette_dirty (GimpPalette *palette,
                             GimpContext *context)
 {
-  g_free (context->palette_name);
-  context->palette_name = g_strdup (gimp_object_get_name (palette));
+  g_set_str (&context->palette_name,
+             gimp_object_get_name (palette));
 
   g_signal_emit (context, gimp_context_signals[PROP_NAME_CHANGED], 0,
                  GIMP_CONTEXT_PROP_PALETTE);
@@ -3344,8 +3344,7 @@ gimp_context_set_font_name (GimpContext *context,
        */
       gimp_context_set_font (context, GIMP_FONT (gimp_font_get_standard ()));
 
-      g_free (context->font_name);
-      context->font_name = g_strdup (name);
+      g_set_str (&context->font_name, name);
     }
 }
 
@@ -3363,8 +3362,8 @@ static void
 gimp_context_font_dirty (GimpFont    *font,
                          GimpContext *context)
 {
-  g_free (context->font_name);
-  context->font_name = g_strdup (gimp_object_get_name (font));
+  g_set_str (&context->font_name,
+             gimp_object_get_name (font));
 
   g_signal_emit (context, gimp_context_signals[PROP_NAME_CHANGED], 0,
                  GIMP_CONTEXT_PROP_FONT);
@@ -3476,8 +3475,8 @@ static void
 gimp_context_tool_preset_dirty (GimpToolPreset *tool_preset,
                                 GimpContext    *context)
 {
-  g_free (context->tool_preset_name);
-  context->tool_preset_name = g_strdup (gimp_object_get_name (tool_preset));
+  g_set_str (&context->tool_preset_name,
+             gimp_object_get_name (tool_preset));
 
   g_signal_emit (context, gimp_context_signals[PROP_NAME_CHANGED], 0,
                  GIMP_CONTEXT_PROP_TOOL_PRESET);
@@ -3584,8 +3583,8 @@ static void
 gimp_context_buffer_dirty (GimpBuffer  *buffer,
                            GimpContext *context)
 {
-  g_free (context->buffer_name);
-  context->buffer_name = g_strdup (gimp_object_get_name (buffer));
+  g_set_str (&context->buffer_name,
+             gimp_object_get_name (buffer));
 
   g_signal_emit (context, gimp_context_signals[PROP_NAME_CHANGED], 0,
                  GIMP_CONTEXT_PROP_BUFFER);
@@ -3700,8 +3699,8 @@ static void
 gimp_context_imagefile_dirty (GimpImagefile *imagefile,
                               GimpContext   *context)
 {
-  g_free (context->imagefile_name);
-  context->imagefile_name = g_strdup (gimp_object_get_name (imagefile));
+  g_set_str (&context->imagefile_name,
+             gimp_object_get_name (imagefile));
 
   g_signal_emit (context, gimp_context_signals[PROP_NAME_CHANGED], 0,
                  GIMP_CONTEXT_PROP_IMAGEFILE);
@@ -3816,8 +3815,8 @@ static void
 gimp_context_template_dirty (GimpTemplate *template,
                              GimpContext  *context)
 {
-  g_free (context->template_name);
-  context->template_name = g_strdup (gimp_object_get_name (template));
+  g_set_str (&context->template_name,
+             gimp_object_get_name (template));
 
   g_signal_emit (context, gimp_context_signals[PROP_NAME_CHANGED], 0,
                  GIMP_CONTEXT_PROP_TEMPLATE);
