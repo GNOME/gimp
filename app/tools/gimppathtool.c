@@ -41,6 +41,8 @@
 #include "paint/gimppaintoptions.h" /* GIMP_PAINT_OPTIONS_CONTEXT_MASK */
 
 #include "path/gimppath.h"
+#include "path/gimpvectorlayer.h"
+#include "path/gimpvectorlayeroptions.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdockcontainer.h"
@@ -70,6 +72,7 @@
 
 /*  local function prototypes  */
 
+static void     gimp_path_tool_constructed        (GObject               *object);
 static void     gimp_path_tool_dispose            (GObject               *object);
 
 static void     gimp_path_tool_control            (GimpTool              *tool,
@@ -105,6 +108,12 @@ static void     gimp_path_tool_cursor_update      (GimpTool              *tool,
 static void     gimp_path_tool_start              (GimpPathTool          *path_tool,
                                                    GimpDisplay           *display);
 static void     gimp_path_tool_halt               (GimpPathTool          *path_tool);
+
+static void     gimp_path_tool_image_changed      (GimpPathTool          *path_tool,
+                                                   GimpImage             *image,
+                                                   GimpContext           *context);
+static void     gimp_path_tool_image_selected_layers_changed
+                                                  (GimpPathTool          *path_tool);
 
 static void     gimp_path_tool_tool_path_changed  (GimpToolWidget        *tool_path,
                                                    GimpPathTool          *path_tool);
@@ -148,6 +157,8 @@ static void     gimp_path_tool_stroke_callback    (GtkWidget             *dialog
                                                    GimpStrokeOptions     *options,
                                                    gpointer               data);
 
+static void     gimp_path_tool_create_vector_layer(GimpPathTool          *path_tool,
+						                           GtkWidget             *button);
 
 G_DEFINE_TYPE (GimpPathTool, gimp_path_tool, GIMP_TYPE_DRAW_TOOL)
 
@@ -179,6 +190,7 @@ gimp_path_tool_class_init (GimpPathToolClass *klass)
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
   GimpToolClass *tool_class   = GIMP_TOOL_CLASS (klass);
 
+  object_class->constructed  = gimp_path_tool_constructed;
   object_class->dispose      = gimp_path_tool_dispose;
 
   tool_class->control        = gimp_path_tool_control;
@@ -204,12 +216,36 @@ gimp_path_tool_init (GimpPathTool *path_tool)
 }
 
 static void
+gimp_path_tool_constructed (GObject *object)
+{
+  GimpPathTool  *path_tool = GIMP_PATH_TOOL (object);
+  GimpContext   *context;
+  GimpToolInfo  *tool_info;
+
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  tool_info = GIMP_TOOL (path_tool)->tool_info;
+
+  context = gimp_get_user_context (tool_info->gimp);
+
+  g_signal_connect_object (context, "image-changed",
+                           G_CALLBACK (gimp_path_tool_image_changed),
+                           path_tool, G_CONNECT_SWAPPED);
+
+  gimp_path_tool_image_changed (path_tool,
+                                gimp_context_get_image (context),
+                                context);
+}
+
+static void
 gimp_path_tool_dispose (GObject *object)
 {
   GimpPathTool *path_tool = GIMP_PATH_TOOL (object);
 
   gimp_path_tool_set_path (path_tool, NULL);
   g_clear_object (&path_tool->widget);
+
+  gimp_path_tool_image_changed (path_tool, NULL, NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -446,6 +482,50 @@ gimp_path_tool_halt (GimpPathTool *path_tool)
 }
 
 static void
+gimp_path_tool_image_changed (GimpPathTool *path_tool,
+                              GimpImage    *image,
+                              GimpContext  *context)
+{
+  if (path_tool->current_image)
+    g_signal_handlers_disconnect_by_func (path_tool->current_image,
+                                          gimp_path_tool_image_selected_layers_changed,
+                                          NULL);
+
+  g_set_weak_pointer (&path_tool->current_image, image);
+
+  if (path_tool->current_image)
+    g_signal_connect_object (path_tool->current_image, "selected-layers-changed",
+                             G_CALLBACK (gimp_path_tool_image_selected_layers_changed),
+                             path_tool, G_CONNECT_SWAPPED);
+
+  gimp_path_tool_image_selected_layers_changed (path_tool);
+}
+
+static void
+gimp_path_tool_image_selected_layers_changed (GimpPathTool *path_tool)
+{
+  GList *current_layers = NULL;
+
+  if (path_tool->current_image)
+    current_layers =
+      gimp_image_get_selected_layers (path_tool->current_image);
+
+  if (current_layers)
+    {
+      /* If we've selected a single vector layer, make its path editable */
+      if (g_list_length (current_layers) == 1 &&
+          GIMP_IS_VECTOR_LAYER (current_layers->data))
+        {
+          GimpVectorLayer *vector_layer = current_layers->data;
+
+          if (vector_layer->options && vector_layer->options->path)
+            gimp_path_tool_set_path (path_tool,
+                                       vector_layer->options->path);
+        }
+    }
+}
+
+static void
 gimp_path_tool_tool_path_changed (GimpToolWidget *tool_path,
                                   GimpPathTool   *path_tool)
 {
@@ -610,6 +690,14 @@ gimp_path_tool_set_path (GimpPathTool *path_tool,
                                                 gimp_path_tool_stroke_path,
                                                 tool);
         }
+
+      if (options->vector_layer_button)
+        {
+          gtk_widget_set_sensitive (options->vector_layer_button, FALSE);
+          g_signal_handlers_disconnect_by_func (options->vector_layer_button,
+                                                gimp_path_tool_create_vector_layer,
+                                                tool);
+        }
     }
 
   if (! path ||
@@ -656,6 +744,15 @@ gimp_path_tool_set_path (GimpPathTool *path_tool,
                                 G_CALLBACK (gimp_path_tool_stroke_path),
                                 tool);
       gtk_widget_set_sensitive (options->stroke_button, TRUE);
+    }
+
+  if (options->vector_layer_button)
+    {
+      g_signal_connect_swapped (options->vector_layer_button, "clicked",
+				                G_CALLBACK (gimp_path_tool_create_vector_layer),
+				                tool);
+
+      gtk_widget_set_sensitive (options->vector_layer_button, TRUE);
     }
 
   if (tool->display)
@@ -898,4 +995,30 @@ gimp_path_tool_stroke_callback (GtkWidget         *dialog,
   gimp_image_undo_group_end (image);
   gimp_image_flush (image);
   gtk_widget_destroy (dialog);
+}
+
+static void
+gimp_path_tool_create_vector_layer (GimpPathTool *path_tool,
+				                    GtkWidget    *button)
+{
+  GimpImage       *image;
+  GimpVectorLayer *layer;
+
+  if (! path_tool->path)
+    return;
+
+  image = gimp_item_get_image (GIMP_ITEM (path_tool->path));
+
+  layer = gimp_vector_layer_new (image, path_tool->path,
+				                 gimp_get_user_context (image->gimp));
+
+  gimp_image_add_layer (image,
+                        GIMP_LAYER (layer),
+                        GIMP_IMAGE_ACTIVE_PARENT,
+                        -1,
+                        TRUE);
+
+  gimp_vector_layer_refresh (layer);
+
+  gimp_image_flush (image);
 }

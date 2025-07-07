@@ -33,7 +33,7 @@
 
 #include "text/gimptextlayer.h"
 
-#include "vectors/gimpvectorlayer.h"
+#include "path/gimpvectorlayer.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpactiongroup.h"
