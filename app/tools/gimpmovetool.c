@@ -155,8 +155,8 @@ gimp_move_tool_init (GimpMoveTool *move_tool)
 
   move_tool->saved_type         = GIMP_TRANSFORM_TYPE_LAYER;
 
-  move_tool->old_selected_layers   = NULL;
-  move_tool->old_selected_vectors = NULL;
+  move_tool->old_selected_layers = NULL;
+  move_tool->old_selected_paths  = NULL;
 }
 
 static void
@@ -164,9 +164,9 @@ gimp_move_tool_finalize (GObject *object)
 {
   GimpMoveTool *move = GIMP_MOVE_TOOL (object);
 
-  g_clear_pointer (&move->guides, g_list_free);
+  g_clear_pointer (&move->guides,              g_list_free);
   g_clear_pointer (&move->old_selected_layers, g_list_free);
-  g_clear_pointer (&move->old_selected_vectors, g_list_free);
+  g_clear_pointer (&move->old_selected_paths,  g_list_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -203,17 +203,17 @@ gimp_move_tool_button_press (GimpTool            *tool,
 
       if (options->move_type == GIMP_TRANSFORM_TYPE_PATH)
         {
-          GimpPath *vectors;
+          GimpPath *path;
 
-          vectors = gimp_image_pick_path (image,
-                                          coords->x, coords->y,
-                                          FUNSCALEX (shell, snap_distance),
-                                          FUNSCALEY (shell, snap_distance));
-          if (vectors)
+          path = gimp_image_pick_path (image,
+                                       coords->x, coords->y,
+                                       FUNSCALEX (shell, snap_distance),
+                                       FUNSCALEY (shell, snap_distance));
+          if (path)
             {
-              GList *new_selected_paths = g_list_prepend (NULL, vectors);
+              GList *new_selected_paths = g_list_prepend (NULL, path);
 
-              move->old_selected_vectors =
+              move->old_selected_paths =
                 g_list_copy (gimp_image_get_selected_paths (image));
 
               gimp_image_set_selected_paths (image, new_selected_paths);
@@ -286,7 +286,7 @@ gimp_move_tool_button_press (GimpTool            *tool,
         selected_items = gimp_image_get_selected_paths (image);
         selected_items = g_list_copy (selected_items);
 
-        translate_mode = GIMP_TRANSLATE_MODE_VECTORS;
+        translate_mode = GIMP_TRANSLATE_MODE_PATH;
 
         if (! selected_items)
           {
@@ -427,10 +427,10 @@ gimp_move_tool_button_release (GimpTool              *tool,
           flush = TRUE;
         }
 
-      if (move->old_selected_vectors)
+      if (move->old_selected_paths)
         {
-          gimp_image_set_selected_paths (image, move->old_selected_vectors);
-          g_clear_pointer (&move->old_selected_vectors, g_list_free);
+          gimp_image_set_selected_paths (image, move->old_selected_paths);
+          g_clear_pointer (&move->old_selected_paths, g_list_free);
 
           flush = TRUE;
         }

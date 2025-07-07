@@ -95,7 +95,7 @@ gimp_image_crop (GimpImage    *image,
                         width, height, -x, -y);
     }
 
-  /*  Resize all vectors  */
+  /*  Resize all paths  */
   for (list = gimp_image_get_path_iter (image);
        list;
        list = g_list_next (list))

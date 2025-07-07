@@ -478,11 +478,11 @@ static const GimpDndDataDef dnd_data_defs[] =
   {
     GIMP_TARGET_PATH,
 
-    "gimp-dnd-get-vectors-func",
-    "gimp-dnd-get-vectors-data",
+    "gimp-dnd-get-path-func",
+    "gimp-dnd-get-path-data",
 
-    "gimp-dnd-set-vectors-func",
-    "gimp-dnd-set-vectors-data",
+    "gimp-dnd-set-path-func",
+    "gimp-dnd-set-path-data",
 
     gimp_dnd_get_viewable_icon,
     gimp_dnd_get_item_data,
@@ -660,11 +660,11 @@ static const GimpDndDataDef dnd_data_defs[] =
   {
     GIMP_TARGET_PATH_LIST,
 
-    "gimp-dnd-get-vectors-list-func",
-    "gimp-dnd-get-vectors-list-data",
+    "gimp-dnd-get-path-list-func",
+    "gimp-dnd-get-path-list-data",
 
-    "gimp-dnd-set-vectors-list-func",
-    "gimp-dnd-set-vectors-list-data",
+    "gimp-dnd-set-path-list-func",
+    "gimp-dnd-set-path-list-data",
 
     gimp_dnd_get_viewable_list_icon,
     gimp_dnd_get_item_list_data,
@@ -1950,7 +1950,7 @@ gimp_dnd_data_type_get_by_g_type (GType    type,
     }
   else if (g_type_is_a (type, GIMP_TYPE_PATH))
     {
-      dnd_type = list ? GIMP_DND_TYPE_VECTORS_LIST : GIMP_DND_TYPE_VECTORS;
+      dnd_type = list ? GIMP_DND_TYPE_PATH_LIST : GIMP_DND_TYPE_PATH;
     }
   else if (g_type_is_a (type, GIMP_TYPE_BRUSH) && ! list)
     {

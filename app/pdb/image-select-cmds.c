@@ -683,7 +683,7 @@ register_image_select_procs (GimpPDB *pdb)
                                "gimp-image-select-item");
   gimp_procedure_set_static_help (procedure,
                                   "Transforms the specified item into a selection",
-                                  "This procedure renders the item's outline into the current selection of the image the item belongs to. What exactly the item's outline is depends on the item type: for layers, it's the layer's alpha channel, for vectors the vector's shape.\n"
+                                  "This procedure renders the item's outline into the current selection of the image the item belongs to. What exactly the item's outline is depends on the item type: for layers, it's the layer's alpha channel, for paths the path's shape.\n"
                                   "\n"
                                   "This procedure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius'.",
                                   NULL);

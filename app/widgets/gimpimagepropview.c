@@ -161,7 +161,7 @@ gimp_image_prop_view_init (GimpImagePropView *view)
   view->channels_label =
     gimp_image_prop_view_add_label (grid, row++, _("Number of channels:"));
 
-  view->vectors_label =
+  view->paths_label =
     gimp_image_prop_view_add_label (grid, row++, _("Number of paths:"));
 
   g_signal_connect (view, "realize",
@@ -529,10 +529,10 @@ gimp_image_prop_view_update (GimpImagePropView *view)
               gimp_image_get_n_channels (image));
   gtk_label_set_text (GTK_LABEL (view->channels_label), buf);
 
-  /*  number of vectors  */
+  /*  number of paths  */
   g_snprintf (buf, sizeof (buf), "%d",
               gimp_image_get_n_paths (image));
-  gtk_label_set_text (GTK_LABEL (view->vectors_label), buf);
+  gtk_label_set_text (GTK_LABEL (view->paths_label), buf);
 }
 
 static void

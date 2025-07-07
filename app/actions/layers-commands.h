@@ -78,10 +78,10 @@ void   layers_delete_cmd_callback             (GimpAction *action,
 void   layers_text_discard_cmd_callback       (GimpAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-void   layers_text_to_vectors_cmd_callback    (GimpAction *action,
+void   layers_text_to_path_cmd_callback       (GimpAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-void   layers_text_along_vectors_cmd_callback (GimpAction *action,
+void   layers_text_along_path_cmd_callback    (GimpAction *action,
                                                GVariant   *value,
                                                gpointer    data);
 

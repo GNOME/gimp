@@ -305,7 +305,7 @@ gimp_align_tool_button_release (GimpTool              *tool,
       /* Check if a layer is fully included in the rubber-band rectangle.
        * Don't verify for too small rectangles.
        */
-      /* FIXME: look for vectors too */
+      /* FIXME: look for paths too */
       if (hypot (coords->x - align_tool->x1,
                  coords->y - align_tool->y1) > EPSILON)
         {

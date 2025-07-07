@@ -230,7 +230,7 @@ gimp_image_flip_full (GimpImage           *image,
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_FLIP, NULL);
 
-  /*  Flip all layers, channels (including selection mask), and vectors  */
+  /*  Flip all layers, channels (including selection mask), and paths  */
   while ((item = gimp_object_queue_pop (queue)))
     {
       gboolean clip = FALSE;

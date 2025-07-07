@@ -2310,7 +2310,7 @@ gimp_text_tool_paste_clipboard (GimpTextTool *text_tool)
 }
 
 void
-gimp_text_tool_create_vectors (GimpTextTool *text_tool)
+gimp_text_tool_create_path (GimpTextTool *text_tool)
 {
   GimpPath *path;
 
@@ -2336,11 +2336,11 @@ gimp_text_tool_create_vectors (GimpTextTool *text_tool)
 }
 
 gboolean
-gimp_text_tool_create_vectors_warped (GimpTextTool  *text_tool,
-                                      GError       **error)
+gimp_text_tool_create_path_warped (GimpTextTool  *text_tool,
+                                   GError       **error)
 {
-  GList             *vectors0;
-  GimpPath          *vectors;
+  GList             *paths0;
+  GimpPath          *path;
   gdouble            box_width;
   gdouble            box_height;
   GimpTextDirection  dir;
@@ -2365,15 +2365,15 @@ gimp_text_tool_create_vectors_warped (GimpTextTool  *text_tool,
   box_width  = gimp_item_get_width  (GIMP_ITEM (text_tool->layer));
   box_height = gimp_item_get_height (GIMP_ITEM (text_tool->layer));
 
-  vectors0 = gimp_image_get_selected_paths (text_tool->image);
-  if (g_list_length (vectors0) != 1)
+  paths0 = gimp_image_get_selected_paths (text_tool->image);
+  if (g_list_length (paths0) != 1)
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                            _("Exactly one path must be selected."));
       return FALSE;
     }
 
-  vectors = gimp_text_path_new (text_tool->image, text_tool->text);
+  path = gimp_text_path_new (text_tool->image, text_tool->text);
 
   offset = 0;
   dir = gimp_text_tool_get_direction (text_tool);
@@ -2390,7 +2390,7 @@ gimp_text_tool_create_vectors_warped (GimpTextTool  *text_tool,
       {
         GimpStroke *stroke = NULL;
 
-        while ((stroke = gimp_path_stroke_get_next (vectors, stroke)))
+        while ((stroke = gimp_path_stroke_get_next (path, stroke)))
           {
             gimp_stroke_rotate (stroke, 0, 0, 270);
             gimp_stroke_translate (stroke, 0, box_width);
@@ -2400,11 +2400,11 @@ gimp_text_tool_create_vectors_warped (GimpTextTool  *text_tool,
       break;
     }
 
-  gimp_path_warp_path (vectors0->data, vectors, offset);
+  gimp_path_warp_path (paths0->data, path, offset);
 
-  gimp_item_set_visible (GIMP_ITEM (vectors), TRUE, FALSE);
+  gimp_item_set_visible (GIMP_ITEM (path), TRUE, FALSE);
 
-  gimp_image_add_path (text_tool->image, vectors,
+  gimp_image_add_path (text_tool->image, path,
                        GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
 
   gimp_image_flush (text_tool->image);

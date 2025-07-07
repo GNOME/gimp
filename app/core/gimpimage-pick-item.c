@@ -203,14 +203,14 @@ gimp_image_pick_path (GimpImage *image,
 
   for (list = all_path; list; list = g_list_next (list))
     {
-      GimpPath *vectors = list->data;
+      GimpPath *path = list->data;
 
-      if (gimp_item_is_visible (GIMP_ITEM (vectors)))
+      if (gimp_item_is_visible (GIMP_ITEM (path)))
         {
           GimpStroke *stroke = NULL;
           GimpCoords  coords = GIMP_COORDS_DEFAULT_VALUES;
 
-          while ((stroke = gimp_path_stroke_get_next (vectors, stroke)))
+          while ((stroke = gimp_path_stroke_get_next (path, stroke)))
             {
               gdouble dist;
 
@@ -224,7 +224,7 @@ gimp_image_pick_path (GimpImage *image,
                   dist <  MIN (epsilon_y, mindist))
                 {
                   mindist = dist;
-                  ret     = vectors;
+                  ret     = path;
                 }
             }
         }

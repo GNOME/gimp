@@ -182,13 +182,13 @@ static const GimpActionEntry layers_actions[] =
   { "layers-text-to-vectors", GIMP_ICON_TOOL_TEXT,
     NC_("layers-action", "Text to _Path"), NULL, { NULL },
     NC_("layers-action", "Create paths from text layers"),
-    layers_text_to_vectors_cmd_callback,
+    layers_text_to_path_cmd_callback,
     GIMP_HELP_LAYER_TEXT_TO_PATH },
 
   { "layers-text-along-vectors", GIMP_ICON_TOOL_TEXT,
     NC_("layers-action", "Text alon_g Path"), NULL, { NULL },
     NC_("layers-action", "Warp this layer's text along the current path"),
-    layers_text_along_vectors_cmd_callback,
+    layers_text_along_path_cmd_callback,
     GIMP_HELP_LAYER_TEXT_ALONG_PATH },
 
   { "layers-resize", GIMP_ICON_OBJECT_RESIZE,

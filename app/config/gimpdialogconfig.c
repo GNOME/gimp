@@ -89,14 +89,14 @@ enum
   PROP_CHANNEL_NEW_NAME,
   PROP_CHANNEL_NEW_COLOR,
 
-  PROP_VECTORS_NEW_NAME,
+  PROP_PATH_NEW_NAME,
 
-  PROP_VECTORS_EXPORT_PATH,
-  PROP_VECTORS_EXPORT_ACTIVE_ONLY,
+  PROP_PATH_EXPORT_PATH,
+  PROP_PATH_EXPORT_ACTIVE_ONLY,
 
-  PROP_VECTORS_IMPORT_PATH,
-  PROP_VECTORS_IMPORT_MERGE,
-  PROP_VECTORS_IMPORT_SCALE,
+  PROP_PATH_IMPORT_PATH,
+  PROP_PATH_IMPORT_MERGE,
+  PROP_PATH_IMPORT_SCALE,
 
   PROP_SELECTION_FEATHER_RADIUS,
   PROP_SELECTION_FEATHER_EDGE_LOCK,
@@ -425,47 +425,47 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                           TRUE, half_transparent,
                           GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_STRING (object_class, PROP_VECTORS_NEW_NAME,
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_PATH_NEW_NAME,
                            "path-new-name",
                            "Default new path name",
-                           VECTORS_NEW_NAME_BLURB,
+                           PATH_NEW_NAME_BLURB,
                            _("Path"),
                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_PATH (object_class, PROP_VECTORS_EXPORT_PATH,
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_PATH_EXPORT_PATH,
                          "path-export-path",
                          "Default path export folder path",
-                         VECTORS_EXPORT_PATH_BLURB,
+                         PATH_EXPORT_PATH_BLURB,
                          GIMP_CONFIG_PATH_FILE,
                          NULL,
                          GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_VECTORS_EXPORT_ACTIVE_ONLY,
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PATH_EXPORT_ACTIVE_ONLY,
                             "path-export-active-only",
                             "Default export only the selected paths",
-                            VECTORS_EXPORT_ACTIVE_ONLY_BLURB,
+                            PATH_EXPORT_ACTIVE_ONLY_BLURB,
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_PATH (object_class, PROP_VECTORS_IMPORT_PATH,
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_PATH_IMPORT_PATH,
                          "path-import-path",
                          "Default path import folder path",
-                         VECTORS_IMPORT_PATH_BLURB,
+                         PATH_IMPORT_PATH_BLURB,
                          GIMP_CONFIG_PATH_FILE,
                          NULL,
                          GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_VECTORS_IMPORT_MERGE,
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PATH_IMPORT_MERGE,
                             "path-import-merge",
                             "Default merge imported path",
-                            VECTORS_IMPORT_MERGE_BLURB,
+                            PATH_IMPORT_MERGE_BLURB,
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_VECTORS_IMPORT_SCALE,
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PATH_IMPORT_SCALE,
                             "path-import-scale",
                             "Default scale imported path",
-                            VECTORS_IMPORT_SCALE_BLURB,
+                            PATH_IMPORT_SCALE_BLURB,
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
@@ -741,30 +741,30 @@ gimp_dialog_config_set_property (GObject      *object,
       config->channel_new_color = gegl_color_duplicate (g_value_get_object (value));
       break;
 
-    case PROP_VECTORS_NEW_NAME:
+    case PROP_PATH_NEW_NAME:
       if (config->path_new_name)
         g_free (config->path_new_name);
       config->path_new_name = g_value_dup_string (value);
       break;
 
-    case PROP_VECTORS_EXPORT_PATH:
+    case PROP_PATH_EXPORT_PATH:
       if (config->path_export_path)
         g_free (config->path_export_path);
       config->path_export_path = g_value_dup_string (value);
       break;
-    case PROP_VECTORS_EXPORT_ACTIVE_ONLY:
+    case PROP_PATH_EXPORT_ACTIVE_ONLY:
       config->path_export_active_only = g_value_get_boolean (value);
       break;
 
-    case PROP_VECTORS_IMPORT_PATH:
+    case PROP_PATH_IMPORT_PATH:
       if (config->path_import_path)
         g_free (config->path_import_path);
       config->path_import_path = g_value_dup_string (value);
       break;
-    case PROP_VECTORS_IMPORT_MERGE:
+    case PROP_PATH_IMPORT_MERGE:
       config->path_import_merge = g_value_get_boolean (value);
       break;
-    case PROP_VECTORS_IMPORT_SCALE:
+    case PROP_PATH_IMPORT_SCALE:
       config->path_import_scale = g_value_get_boolean (value);
       break;
 
@@ -938,24 +938,24 @@ gimp_dialog_config_get_property (GObject    *object,
       g_value_set_object (value, config->channel_new_color);
       break;
 
-    case PROP_VECTORS_NEW_NAME:
+    case PROP_PATH_NEW_NAME:
       g_value_set_string (value, config->path_new_name);
       break;
 
-    case PROP_VECTORS_EXPORT_PATH:
+    case PROP_PATH_EXPORT_PATH:
       g_value_set_string (value, config->path_export_path);
       break;
-    case PROP_VECTORS_EXPORT_ACTIVE_ONLY:
+    case PROP_PATH_EXPORT_ACTIVE_ONLY:
       g_value_set_boolean (value, config->path_export_active_only);
       break;
 
-    case PROP_VECTORS_IMPORT_PATH:
+    case PROP_PATH_IMPORT_PATH:
       g_value_set_string (value, config->path_import_path);
       break;
-    case PROP_VECTORS_IMPORT_MERGE:
+    case PROP_PATH_IMPORT_MERGE:
       g_value_set_boolean (value, config->path_import_merge);
       break;
-    case PROP_VECTORS_IMPORT_SCALE:
+    case PROP_PATH_IMPORT_SCALE:
       g_value_set_boolean (value, config->path_import_scale);
       break;
 

@@ -383,7 +383,7 @@ static const GimpDialogFactoryEntry entries[] =
   DOCKABLE ("gimp-vectors-list",
             N_("Paths"), NULL, GIMP_ICON_DIALOG_PATHS,
             GIMP_HELP_PATH_DIALOG,
-            dialogs_vectors_list_view_new, 0, FALSE),
+            dialogs_path_list_view_new, 0, FALSE),
   DOCKABLE ("gimp-indexed-palette",
             N_("Colormap"), NULL, GIMP_ICON_COLORMAP,
             GIMP_HELP_INDEXED_PALETTE_DIALOG,

@@ -57,9 +57,9 @@ void   paths_merge_visible_cmd_callback        (GimpAction *action,
 void   paths_to_selection_cmd_callback         (GimpAction *action,
                                                 GVariant   *value,
                                                 gpointer    data);
-void   paths_selection_to_paths_cmd_callback (GimpAction *action,
-                                              GVariant   *value,
-                                              gpointer    data);
+void   paths_selection_to_paths_cmd_callback   (GimpAction *action,
+                                                GVariant   *value,
+                                                gpointer    data);
 
 void   paths_fill_cmd_callback                 (GimpAction *action,
                                                 GVariant   *value,

@@ -45,7 +45,7 @@ struct _GimpMoveTool
   GimpTransformType    saved_type;
 
   GList               *old_selected_layers;
-  GList               *old_selected_vectors;
+  GList               *old_selected_paths;
 };
 
 struct _GimpMoveToolClass

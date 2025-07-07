@@ -47,7 +47,7 @@ void       gimp_drawable_fill_boundary     (GimpDrawable        *drawable,
 
 gboolean   gimp_drawable_fill_path         (GimpDrawable        *drawable,
                                             GimpFillOptions     *options,
-                                            GimpPath            *vectors,
+                                            GimpPath            *path,
                                             gboolean             push_undo,
                                             GError             **error);
 

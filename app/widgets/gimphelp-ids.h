@@ -121,7 +121,7 @@
 #define GIMP_HELP_VIEW_SNAP_TO_GUIDES             "gimp-view-snap-to-guides"
 #define GIMP_HELP_VIEW_SNAP_TO_GRID               "gimp-view-snap-to-grid"
 #define GIMP_HELP_VIEW_SNAP_TO_CANVAS             "gimp-view-snap-to-canvas"
-#define GIMP_HELP_VIEW_SNAP_TO_VECTORS            "gimp-view-snap-to-vectors"
+#define GIMP_HELP_VIEW_SNAP_TO_PATH               "gimp-view-snap-to-vectors"
 #define GIMP_HELP_VIEW_SNAP_TO_BBOX               "gimp-view-snap-to-bbox"
 #define GIMP_HELP_VIEW_SNAP_TO_EQUIDISTANCE       "gimp-view-snap-to-equidistance"
 #define GIMP_HELP_VIEW_SHOW_MENUBAR               "gimp-view-show-menubar"
@@ -374,7 +374,6 @@
 #define GIMP_HELP_TOOL_THRESHOLD                  "gimp-tool-threshold"
 #define GIMP_HELP_TOOL_TRANSFORM_3D               "gimp-tool-transform-3d"
 #define GIMP_HELP_TOOL_UNIFIED_TRANSFORM          "gimp-tool-unified-transform"
-#define GIMP_HELP_TOOL_VECTORS                    "gimp-tool-vectors"
 #define GIMP_HELP_TOOL_WARP                       "gimp-tool-warp"
 #define GIMP_HELP_TOOL_ZOOM                       "gimp-tool-zoom"
 

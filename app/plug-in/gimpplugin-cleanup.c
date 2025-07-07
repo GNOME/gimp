@@ -50,7 +50,7 @@ struct _GimpPlugInCleanupImage
   gint       undo_group_count;
   gint       layers_freeze_count;
   gint       channels_freeze_count;
-  gint       vectors_freeze_count;
+  gint       paths_freeze_count;
 };
 
 
@@ -262,7 +262,7 @@ gimp_plug_in_cleanup_paths_freeze (GimpPlugIn *plug_in,
   if (! cleanup)
     cleanup = gimp_plug_in_cleanup_image_new (proc_frame, image);
 
-  cleanup->vectors_freeze_count++;
+  cleanup->paths_freeze_count++;
 
   return TRUE;
 }
@@ -283,9 +283,9 @@ gimp_plug_in_cleanup_paths_thaw (GimpPlugIn *plug_in,
   if (! cleanup)
     return FALSE;
 
-  if (cleanup->vectors_freeze_count > 0)
+  if (cleanup->paths_freeze_count > 0)
     {
-      cleanup->vectors_freeze_count--;
+      cleanup->paths_freeze_count--;
 
       if (gimp_plug_in_cleanup_image_is_clean (cleanup))
         gimp_plug_in_cleanup_image_free (proc_frame, cleanup);
@@ -420,7 +420,7 @@ gimp_plug_in_cleanup_image_is_clean (GimpPlugInCleanupImage *cleanup)
   if (cleanup->channels_freeze_count > 0)
     return FALSE;
 
-  if (cleanup->vectors_freeze_count > 0)
+  if (cleanup->paths_freeze_count > 0)
     return FALSE;
 
   return TRUE;
@@ -493,13 +493,13 @@ gimp_plug_in_cleanup_image (GimpPlugInProcFrame    *proc_frame,
 
   container = gimp_image_get_paths (image);
 
-  if (cleanup->vectors_freeze_count > 0)
+  if (cleanup->paths_freeze_count > 0)
     {
       g_message ("Plug-in '%s' left image's paths frozen, "
                  "thawing paths.",
                  gimp_procedure_get_label (proc_frame->procedure));
 
-      while (cleanup->vectors_freeze_count > 0 &&
+      while (cleanup->paths_freeze_count > 0 &&
              gimp_container_frozen (container))
         {
           gimp_container_thaw (container);

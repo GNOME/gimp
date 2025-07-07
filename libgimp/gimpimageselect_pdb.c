@@ -411,7 +411,7 @@ gimp_image_select_polygon (GimpImage      *image,
  * This procedure renders the item's outline into the current selection
  * of the image the item belongs to. What exactly the item's outline is
  * depends on the item type: for layers, it's the layer's alpha
- * channel, for vectors the vector's shape.
+ * channel, for paths the path's shape.
  *
  * This procedure is affected by the following context setters:
  * gimp_context_set_antialias(), gimp_context_set_feather(),

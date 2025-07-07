@@ -38,8 +38,8 @@ typedef struct _PathImportDialog PathImportDialog;
 struct _PathImportDialog
 {
   GimpImage              *image;
-  gboolean                merge_path;
-  gboolean                scale_path;
+  gboolean                merge_paths;
+  gboolean                scale_paths;
   GimpPathImportCallback  callback;
   gpointer                user_data;
 };
@@ -59,13 +59,13 @@ static void   path_import_dialog_response (GtkWidget        *dialog,
 /*  public function  */
 
 GtkWidget *
-path_import_dialog_new (GimpImage                 *image,
-                           GtkWidget              *parent,
-                           GFile                  *import_folder,
-                           gboolean                merge_path,
-                           gboolean                scale_path,
-                           GimpPathImportCallback  callback,
-                           gpointer                user_data)
+path_import_dialog_new (GimpImage              *image,
+                        GtkWidget              *parent,
+                        GFile                  *import_folder,
+                        gboolean                merge_paths,
+                        gboolean                scale_paths,
+                        GimpPathImportCallback  callback,
+                        gpointer                user_data)
 {
   PathImportDialog *private;
   GtkWidget        *dialog;
@@ -81,11 +81,11 @@ path_import_dialog_new (GimpImage                 *image,
 
   private = g_slice_new0 (PathImportDialog);
 
-  private->image      = image;
-  private->merge_path = merge_path;
-  private->scale_path = scale_path;
-  private->callback   = callback;
-  private->user_data  = user_data;
+  private->image       = image;
+  private->merge_paths = merge_paths;
+  private->scale_paths = scale_paths;
+  private->callback    = callback;
+  private->user_data   = user_data;
 
   dialog = gtk_file_chooser_dialog_new (_("Import Paths from SVG"), NULL,
                                         GTK_FILE_CHOOSER_ACTION_OPEN,
@@ -149,24 +149,24 @@ path_import_dialog_new (GimpImage                 *image,
 
   button = gtk_check_button_new_with_mnemonic (_("_Merge imported paths"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                private->merge_path);
+                                private->merge_paths);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
-                    &private->merge_path);
+                    &private->merge_paths);
 
   button = gtk_check_button_new_with_mnemonic (_("_Scale imported paths "
                                                  "to fit image"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                private->scale_path);
+                                private->scale_paths);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
-                    &private->scale_path);
+                    &private->scale_paths);
 
   return dialog;
 }
@@ -211,8 +211,8 @@ path_import_dialog_response (GtkWidget        *dialog,
                              private->image,
                              file,
                              folder,
-                             private->merge_path,
-                             private->scale_path,
+                             private->merge_paths,
+                             private->scale_paths,
                              private->user_data);
 
           if (folder)

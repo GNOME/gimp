@@ -311,7 +311,7 @@ gimp_path_style_get_type (void)
   static const GEnumValue values[] =
   {
     { GIMP_PATH_STYLE_DEFAULT, "GIMP_PATH_STYLE_DEFAULT", "default" },
-    { GIMP_PATH_STYLE_VECTORS, "GIMP_PATH_STYLE_VECTORS", "vectors" },
+    { GIMP_PATH_STYLE_PATH, "GIMP_PATH_STYLE_PATH", "path" },
     { GIMP_PATH_STYLE_OUTLINE, "GIMP_PATH_STYLE_OUTLINE", "outline" },
     { 0, NULL, NULL }
   };
@@ -319,7 +319,7 @@ gimp_path_style_get_type (void)
   static const GimpEnumDesc descs[] =
   {
     { GIMP_PATH_STYLE_DEFAULT, "GIMP_PATH_STYLE_DEFAULT", NULL },
-    { GIMP_PATH_STYLE_VECTORS, "GIMP_PATH_STYLE_VECTORS", NULL },
+    { GIMP_PATH_STYLE_PATH, "GIMP_PATH_STYLE_PATH", NULL },
     { GIMP_PATH_STYLE_OUTLINE, "GIMP_PATH_STYLE_OUTLINE", NULL },
     { 0, NULL, NULL }
   };

@@ -170,7 +170,7 @@ text_tool_text_to_path_cmd_callback (GimpAction *action,
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
 
-  gimp_text_tool_create_vectors (text_tool);
+  gimp_text_tool_create_path (text_tool);
 }
 
 void
@@ -181,7 +181,7 @@ text_tool_text_along_path_cmd_callback (GimpAction *action,
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
   GError       *error     = NULL;
 
-  if (! gimp_text_tool_create_vectors_warped (text_tool, &error))
+  if (! gimp_text_tool_create_path_warped (text_tool, &error))
     {
       gimp_message (text_tool->image->gimp, G_OBJECT (text_tool),
                     GIMP_MESSAGE_ERROR,

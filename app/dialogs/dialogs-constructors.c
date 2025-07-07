@@ -766,10 +766,10 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
 }
 
 GtkWidget *
-dialogs_vectors_list_view_new (GimpDialogFactory *factory,
-                               GimpContext       *context,
-                               GimpUIManager     *ui_manager,
-                               gint               view_size)
+dialogs_path_list_view_new (GimpDialogFactory *factory,
+                            GimpContext       *context,
+                            GimpUIManager     *ui_manager,
+                            gint               view_size)
 {
   if (view_size < 1)
     view_size = context->gimp->config->layer_preview_size;

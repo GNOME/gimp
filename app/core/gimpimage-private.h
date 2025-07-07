@@ -112,14 +112,14 @@ struct _GimpImagePrivate
   /*  Layer/Channel attributes  */
   GimpItemTree      *layers;                /*  the tree of layers           */
   GimpItemTree      *channels;              /*  the tree of masks            */
-  GimpItemTree      *vectors;               /*  the tree of vectors          */
+  GimpItemTree      *paths;                 /*  the tree of paths            */
   GSList            *layer_stack;           /*  the layers in MRU order      */
 
   GList             *hidden_items;          /*  internal process-only items  */
 
   GList             *stored_layer_sets;
   GList             *stored_channel_sets;
-  GList             *stored_vectors_sets;
+  GList             *stored_path_sets;
 
   GQuark             layer_offset_x_handler;
   GQuark             layer_offset_y_handler;

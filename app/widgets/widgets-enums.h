@@ -156,7 +156,7 @@ typedef enum  /*< skip >*/
   GIMP_DND_TYPE_LAYER        = 11,
   GIMP_DND_TYPE_CHANNEL      = 12,
   GIMP_DND_TYPE_LAYER_MASK   = 13,
-  GIMP_DND_TYPE_VECTORS      = 14,
+  GIMP_DND_TYPE_PATH         = 14,
   GIMP_DND_TYPE_BRUSH        = 15,
   GIMP_DND_TYPE_PATTERN      = 16,
   GIMP_DND_TYPE_GRADIENT     = 17,
@@ -170,9 +170,9 @@ typedef enum  /*< skip >*/
 
   GIMP_DND_TYPE_LAYER_LIST   = 25,
   GIMP_DND_TYPE_CHANNEL_LIST = 26,
-  GIMP_DND_TYPE_VECTORS_LIST = 27,
+  GIMP_DND_TYPE_PATH_LIST    = 27,
 
-  GIMP_DND_TYPE_LAST         = GIMP_DND_TYPE_VECTORS_LIST
+  GIMP_DND_TYPE_LAST         = GIMP_DND_TYPE_PATH_LIST
 } GimpDndType;
 
 typedef enum  /*< skip >*/

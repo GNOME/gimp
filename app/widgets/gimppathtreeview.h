@@ -39,8 +39,8 @@ struct _GimpPathTreeView
 {
   GimpItemTreeView  parent_instance;
 
-  GtkWidget        *toselection_button;
-  GtkWidget        *tovectors_button;
+  GtkWidget        *to_selection_button;
+  GtkWidget        *to_path_button;
   GtkWidget        *stroke_button;
 };
 

@@ -619,7 +619,7 @@ svg_handler_group_start (SvgHandler   *handler,
             {
               handler->transform = g_slice_dup (GimpMatrix3, &matrix);
 
-#ifdef DEBUG_VECTORS_IMPORT
+#ifdef DEBUG_PATH_IMPORT
               g_printerr ("transform %s: %g %g %g   %g %g %g   %g %g %g\n",
                           handler->id ? handler->id : "(null)",
                           handler->transform->coeff[0][0],
@@ -1194,7 +1194,7 @@ parse_svg_viewbox (const gchar *value,
         }
       else  /* disable rendering of the element */
         {
-#ifdef DEBUG_VECTORS_IMPORT
+#ifdef DEBUG_PATH_IMPORT
           g_printerr ("empty viewBox");
 #endif
           *width = *height = 0.0;

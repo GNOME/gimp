@@ -248,10 +248,6 @@ GtkWidget * dialogs_channel_list_view_new       (GimpDialogFactory *factory,
                                                  GimpContext       *context,
                                                  GimpUIManager     *ui_manager,
                                                  gint               view_size);
-GtkWidget * dialogs_vectors_list_view_new       (GimpDialogFactory *factory,
-                                                 GimpContext       *context,
-                                                 GimpUIManager     *ui_manager,
-                                                 gint               view_size);
 GtkWidget * dialogs_path_list_view_new          (GimpDialogFactory *factory,
                                                  GimpContext       *context,
                                                  GimpUIManager     *ui_manager,

@@ -61,7 +61,7 @@ enum
   PROP_0,
   PROP_ALIGN_REFERENCE,
   PROP_ALIGN_LAYERS,
-  PROP_ALIGN_VECTORS,
+  PROP_ALIGN_PATHS,
   PROP_ALIGN_CONTENTS,
   PROP_PIVOT_X,
   PROP_PIVOT_Y,
@@ -159,7 +159,7 @@ gimp_align_options_class_init (GimpAlignOptionsClass *klass)
                             _("Selected layers will be aligned or distributed by the tool"),
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ALIGN_VECTORS,
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ALIGN_PATHS,
                             "align-vectors",
                             _("Selected paths"),
                             _("Selected paths will be aligned or distributed by the tool"),
@@ -226,7 +226,7 @@ gimp_align_options_set_property (GObject      *object,
       options->priv->align_layers = g_value_get_boolean (value);
       gimp_align_options_update_area (options);
       break;
-    case PROP_ALIGN_VECTORS:
+    case PROP_ALIGN_PATHS:
       options->priv->align_paths = g_value_get_boolean (value);
       gimp_align_options_update_area (options);
       break;
@@ -265,7 +265,7 @@ gimp_align_options_get_property (GObject    *object,
     case PROP_ALIGN_LAYERS:
       g_value_set_boolean (value, options->priv->align_layers);
       break;
-    case PROP_ALIGN_VECTORS:
+    case PROP_ALIGN_PATHS:
       g_value_set_boolean (value, options->priv->align_paths);
       break;
 
@@ -575,11 +575,11 @@ gimp_align_options_get_objects (GimpAlignOptions *options)
         }
       if (options->priv->align_paths)
         {
-          GList *vectors;
+          GList *paths;
 
-          vectors = gimp_image_get_selected_paths (image);
-          vectors = g_list_copy (vectors);
-          objects = g_list_concat (objects, vectors);
+          paths = gimp_image_get_selected_paths (image);
+          paths = g_list_copy (paths);
+          objects = g_list_concat (objects, paths);
         }
 
       if (options->priv->selected_guides)

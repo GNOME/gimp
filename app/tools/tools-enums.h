@@ -192,7 +192,7 @@ typedef enum /*< skip >*/
 /*  Modes of GimpEditSelectionTool  */
 typedef enum /*< skip >*/
 {
-  GIMP_TRANSLATE_MODE_VECTORS,
+  GIMP_TRANSLATE_MODE_PATH,
   GIMP_TRANSLATE_MODE_CHANNEL,
   GIMP_TRANSLATE_MODE_LAYER_MASK,
   GIMP_TRANSLATE_MODE_MASK,

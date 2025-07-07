@@ -74,9 +74,9 @@ void       gimp_display_shell_set_snap_to_canvas       (GimpDisplayShell       *
                                                         gboolean                snap);
 gboolean   gimp_display_shell_get_snap_to_canvas       (GimpDisplayShell       *shell);
 
-void       gimp_display_shell_set_snap_to_vectors      (GimpDisplayShell       *shell,
+void       gimp_display_shell_set_snap_to_path         (GimpDisplayShell       *shell,
                                                         gboolean                snap);
-gboolean   gimp_display_shell_get_snap_to_vectors      (GimpDisplayShell       *shell);
+gboolean   gimp_display_shell_get_snap_to_path         (GimpDisplayShell       *shell);
 
 void       gimp_display_shell_set_snap_to_bbox         (GimpDisplayShell       *shell,
                                                         gboolean                snap);

@@ -67,9 +67,9 @@ gimp_display_shell_items_init (GimpDisplayShell *shell)
   gimp_display_shell_add_item (shell, shell->preview_items);
   g_object_unref (shell->preview_items);
 
-  shell->vectors = gimp_canvas_proxy_group_new (shell);
-  gimp_display_shell_add_item (shell, shell->vectors);
-  g_object_unref (shell->vectors);
+  shell->paths = gimp_canvas_proxy_group_new (shell);
+  gimp_display_shell_add_item (shell, shell->paths);
+  g_object_unref (shell->paths);
 
   shell->grid = gimp_canvas_grid_new (shell, NULL);
   gimp_canvas_item_set_visible (shell->grid, FALSE);
@@ -130,7 +130,7 @@ gimp_display_shell_items_free (GimpDisplayShell *shell)
 
       shell->passe_partout   = NULL;
       shell->preview_items   = NULL;
-      shell->vectors         = NULL;
+      shell->paths           = NULL;
       shell->grid            = NULL;
       shell->guides          = NULL;
       shell->sample_points   = NULL;

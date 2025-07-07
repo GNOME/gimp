@@ -104,15 +104,15 @@ gimp_canvas_item_on_handle (GimpCanvasItem  *item,
 }
 
 gboolean
-gimp_canvas_item_on_vectors_handle (GimpCanvasItem    *item,
-                                    GimpPath          *vectors,
-                                    const GimpCoords  *coord,
-                                    gint               width,
-                                    gint               height,
-                                    GimpAnchorType     preferred,
-                                    gboolean           exclusive,
-                                    GimpAnchor       **ret_anchor,
-                                    GimpStroke       **ret_stroke)
+gimp_canvas_item_on_path_handle (GimpCanvasItem    *item,
+                                 GimpPath          *path,
+                                 const GimpCoords  *coord,
+                                 gint               width,
+                                 gint               height,
+                                 GimpAnchorType     preferred,
+                                 gboolean           exclusive,
+                                 GimpAnchor       **ret_anchor,
+                                 GimpStroke       **ret_stroke)
 {
   GimpStroke *stroke       = NULL;
   GimpStroke *pref_stroke  = NULL;
@@ -123,13 +123,13 @@ gimp_canvas_item_on_vectors_handle (GimpCanvasItem    *item,
   gdouble     mindist      = -1;
 
   g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), FALSE);
-  g_return_val_if_fail (GIMP_IS_PATH (vectors), FALSE);
+  g_return_val_if_fail (GIMP_IS_PATH (path), FALSE);
   g_return_val_if_fail (coord != NULL, FALSE);
 
   if (ret_anchor) *ret_anchor = NULL;
   if (ret_stroke) *ret_stroke = NULL;
 
-  while ((stroke = gimp_path_stroke_get_next (vectors, stroke)))
+  while ((stroke = gimp_path_stroke_get_next (path, stroke)))
     {
       GList *anchor_list;
       GList *list;
@@ -220,16 +220,16 @@ gimp_canvas_item_on_vectors_handle (GimpCanvasItem    *item,
 }
 
 gboolean
-gimp_canvas_item_on_vectors_curve (GimpCanvasItem    *item,
-                                   GimpPath          *vectors,
-                                   const GimpCoords  *coord,
-                                   gint               width,
-                                   gint               height,
-                                   GimpCoords        *ret_coords,
-                                   gdouble           *ret_pos,
-                                   GimpAnchor       **ret_segment_start,
-                                   GimpAnchor       **ret_segment_end,
-                                   GimpStroke       **ret_stroke)
+gimp_canvas_item_on_path_curve (GimpCanvasItem    *item,
+                                GimpPath          *path,
+                                const GimpCoords  *coord,
+                                gint               width,
+                                gint               height,
+                                GimpCoords        *ret_coords,
+                                gdouble           *ret_pos,
+                                GimpAnchor       **ret_segment_start,
+                                GimpAnchor       **ret_segment_end,
+                                GimpStroke       **ret_stroke)
 {
   GimpStroke *stroke = NULL;
   GimpAnchor *segment_start;
@@ -239,7 +239,7 @@ gimp_canvas_item_on_vectors_curve (GimpCanvasItem    *item,
   gdouble     min_dist, cur_dist, cur_pos;
 
   g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), FALSE);
-  g_return_val_if_fail (GIMP_IS_PATH (vectors), FALSE);
+  g_return_val_if_fail (GIMP_IS_PATH (path), FALSE);
   g_return_val_if_fail (coord != NULL, FALSE);
 
   if (ret_coords)        *ret_coords        = *coord;
@@ -250,7 +250,7 @@ gimp_canvas_item_on_vectors_curve (GimpCanvasItem    *item,
 
   min_dist = -1.0;
 
-  while ((stroke = gimp_path_stroke_get_next (vectors, stroke)))
+  while ((stroke = gimp_path_stroke_get_next (path, stroke)))
     {
       cur_dist = gimp_stroke_nearest_point_get (stroke, coord, 1.0,
                                                 &cur_coords,
@@ -321,22 +321,22 @@ gimp_canvas_item_on_path (GimpCanvasItem    *item,
 
   for (list = all_path; list; list = g_list_next (list))
     {
-      GimpPath *vectors = list->data;
+      GimpPath *path = list->data;
 
-      if (! gimp_item_get_visible (GIMP_ITEM (vectors)))
+      if (! gimp_item_get_visible (GIMP_ITEM (path)))
         continue;
 
-      if (gimp_canvas_item_on_vectors_curve (item,
-                                             vectors, coords,
-                                             width, height,
-                                             ret_coords,
-                                             ret_pos,
-                                             ret_segment_start,
-                                             ret_segment_end,
-                                             ret_stroke))
+      if (gimp_canvas_item_on_path_curve (item,
+                                          path, coords,
+                                          width, height,
+                                          ret_coords,
+                                          ret_pos,
+                                          ret_segment_start,
+                                          ret_segment_end,
+                                          ret_stroke))
         {
           if (ret_path)
-            *ret_path = vectors;
+            *ret_path = path;
 
           g_list_free (all_path);
 
