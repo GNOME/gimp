@@ -39,7 +39,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 
-#include "vectors-types.h"
+#include "path-types.h"
 
 #include "config/gimpxmlparser.h"
 

@@ -22,7 +22,7 @@
 
 #include <glib-object.h>
 
-#include "vectors-types.h"
+#include "path-types.h"
 
 #include "gimpstroke-new.h"
 #include "gimpbezierstroke.h"

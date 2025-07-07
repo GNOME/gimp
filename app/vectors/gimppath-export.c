@@ -22,7 +22,7 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "vectors-types.h"
+#include "path-types.h"
 
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"

@@ -1,8 +1,8 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * vectors-enums.h
- * Copyright (C) 2006 Simon Budig  <simon@gimp.org>
+ * path-types.h
+ * Copyright (C) 2002 Simon Budig  <simon@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,29 +18,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __VECTORS_ENUMS_H__
-#define __VECTORS_ENUMS_H__
+#ifndef __PATH_TYPES_H__
+#define __PATH_TYPES_H__
 
 
-typedef enum
-{
-  GIMP_ANCHOR_ANCHOR,
-  GIMP_ANCHOR_CONTROL
-} GimpAnchorType;
+#include "core/core-types.h"
 
-typedef enum
-{
-  GIMP_ANCHOR_FEATURE_NONE,
-  GIMP_ANCHOR_FEATURE_EDGE,
-  GIMP_ANCHOR_FEATURE_ALIGNED,
-  GIMP_ANCHOR_FEATURE_SYMMETRIC
-} GimpAnchorFeatureType;
-
-typedef enum
-{
-  GIMP_STROKE_EXTEND_SIMPLE,
-  GIMP_STROKE_EXTEND_EDITABLE
-} GimpStrokeExtendMode;
+#include "vectors/path-enums.h"
 
 
-#endif /* __VECTORS_ENUMS_H__ */
+typedef struct _GimpAnchor       GimpAnchor;
+
+typedef struct _GimpPath         GimpPath;
+typedef struct _GimpStroke       GimpStroke;
+typedef struct _GimpBezierStroke GimpBezierStroke;
+
+
+#endif /* __PATH_TYPES_H__ */

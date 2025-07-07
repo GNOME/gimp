@@ -20,7 +20,7 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "vectors-types.h"
+#include "path-types.h"
 
 #include "gimppath.h"
 #include "gimppathmodundo.h"

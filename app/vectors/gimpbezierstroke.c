@@ -25,7 +25,7 @@
 
 #include "libgimpmath/gimpmath.h"
 
-#include "vectors-types.h"
+#include "path-types.h"
 
 #include "core/gimp-transform-utils.h"
 #include "core/gimpbezierdesc.h"

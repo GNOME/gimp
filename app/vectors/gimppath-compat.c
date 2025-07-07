@@ -23,7 +23,7 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "vectors-types.h"
+#include "path-types.h"
 
 #include "core/gimpimage.h"
 
@@ -45,11 +45,11 @@ static const GimpCoords default_coords = GIMP_COORDS_DEFAULT_VALUES;
 
 
 GimpPath *
-gimp_path_compat_new (GimpImage              *image,
-                         const gchar         *name,
-                         GimpPathCompatPoint *points,
-                         gint                 n_points,
-                         gboolean             closed)
+gimp_path_compat_new (GimpImage           *image,
+                      const gchar         *name,
+                      GimpPathCompatPoint *points,
+                      gint                 n_points,
+                      gboolean             closed)
 {
   GimpPath    *path;
   GimpStroke  *stroke;
