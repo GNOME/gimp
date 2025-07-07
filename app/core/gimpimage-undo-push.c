@@ -57,7 +57,7 @@
 #include "path/gimppathmodundo.h"
 #include "path/gimppathpropundo.h"
 #include "path/gimppathundo.h"
-#include "paths/gimpvectorlayer.h"
+#include "path/gimpvectorlayer.h"
 #include "path/gimpvectorlayerundo.h"
 
 #include "text/gimptextlayer.h"

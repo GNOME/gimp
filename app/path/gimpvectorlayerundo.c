@@ -27,7 +27,7 @@
 
 #include "libgimpconfig/gimpconfig.h"
 
-#include "vectors-types.h"
+#include "path-types.h"
 
 #include "core/gimp-memsize.h"
 #include "core/gimpitem.h"
