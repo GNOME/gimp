@@ -52,6 +52,7 @@ if have_vala and have_gobject_introspection
     ],
     c_args: [
       '-DGETTEXT_PACKAGE="@0@"'.format('org.gimp.extension.goat-exercises'),
+      '-w',
     ],
     install: true,
     install_dir: gimpplugindir /  'extensions' / extension_name,
