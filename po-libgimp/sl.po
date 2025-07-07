@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp - libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-07 01:37+0000\n"
-"PO-Revision-Date: 2025-06-08 00:54+0200\n"
+"POT-Creation-Date: 2025-07-07 16:01+0000\n"
+"PO-Revision-Date: 2025-07-07 18:46+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -230,20 +230,20 @@ msgstr "Komentar"
 msgid "Image comment"
 msgstr "Komentar slike"
 
-#: libgimp/gimpexportproceduredialog.c:150
+#: libgimp/gimpexportproceduredialog.c:155
 msgid "Metadata"
 msgstr "Metapodatki"
 
-#: libgimp/gimpexportproceduredialog.c:159
+#: libgimp/gimpexportproceduredialog.c:164
 msgid "Edit Metadata"
 msgstr "Uredi metapodatke"
 
-#: libgimp/gimpexportproceduredialog.c:159
+#: libgimp/gimpexportproceduredialog.c:164
 msgid "(edit)"
 msgstr "(v urejanju)"
 
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexportproceduredialog.c:436
+#: libgimp/gimpexportproceduredialog.c:460
 #, c-format
 msgid "Export Image as %s"
 msgstr "Izvozi sliko kot %s"
@@ -481,31 +481,31 @@ msgstr "_Shrani nastavitve"
 msgid "Store current settings for later reuse"
 msgstr "Shrani trenutne nastavitve za kasnejšo rabo"
 
-#: libgimp/gimpproceduredialog.c:878
+#: libgimp/gimpproceduredialog.c:892
 msgid "Brush Chooser"
 msgstr "Izbirnik čopičev"
 
-#: libgimp/gimpproceduredialog.c:882
+#: libgimp/gimpproceduredialog.c:896
 msgid "Font Chooser"
 msgstr "Izbirnik pisav"
 
-#: libgimp/gimpproceduredialog.c:886
+#: libgimp/gimpproceduredialog.c:900
 msgid "Gradient Chooser"
 msgstr "Izbirnik prelivov"
 
-#: libgimp/gimpproceduredialog.c:890
+#: libgimp/gimpproceduredialog.c:904
 msgid "Palette Chooser"
 msgstr "Izbirnik palet"
 
-#: libgimp/gimpproceduredialog.c:894
+#: libgimp/gimpproceduredialog.c:908
 msgid "Pattern Chooser"
 msgstr "Izbirnik vzorcev"
 
-#: libgimp/gimpproceduredialog.c:2666
+#: libgimp/gimpproceduredialog.c:2789
 msgid "Reset to _Initial Values"
 msgstr "Ponastavi na _začetne vrednosti"
 
-#: libgimp/gimpproceduredialog.c:2675
+#: libgimp/gimpproceduredialog.c:2798
 msgid "Reset to _Factory Defaults"
 msgstr "Ponastavi na _tovarniške vrednosti"
 
@@ -918,23 +918,23 @@ msgstr "64-bitna s plavajočo vejico"
 
 #: libgimpbase/gimpbaseenums.c:387
 msgctxt "convert-palette-type"
-msgid "Generate optimum palette"
-msgstr "Tvori optimalno paleto"
+msgid "_Generate optimum palette"
+msgstr "_Tvori optimalno paleto"
 
 #: libgimpbase/gimpbaseenums.c:388
 msgctxt "convert-palette-type"
-msgid "Use web-optimized palette"
-msgstr "Uporabi paleto, optimizirano za splet"
+msgid "Use _web-optimized palette"
+msgstr "Uporabi paleto, optimizirano za sp_let"
 
 #: libgimpbase/gimpbaseenums.c:389
 msgctxt "convert-palette-type"
-msgid "Use black and white (1-bit) palette"
-msgstr "Uporabi črno-belo (1-bitno) paleto"
+msgid "Use _black and white (1-bit) palette"
+msgstr "Uporabi _črno-belo (1-bitno) paleto"
 
 #: libgimpbase/gimpbaseenums.c:390
 msgctxt "convert-palette-type"
-msgid "Use custom palette"
-msgstr "Uporabi paleto po meri"
+msgid "Use custom _palette"
+msgstr "Uporabi paleto po _meri"
 
 #: libgimpbase/gimpbaseenums.c:419
 msgctxt "convolve-type"
@@ -2294,7 +2294,7 @@ msgid "HSV"
 msgstr "HSV"
 
 #: libgimpwidgets/gimpcolorscales.c:708 libgimpwidgets/gimpcolorselect.c:2113
-#: modules/color-selector-cmyk.c:319 modules/color-selector-cmyk.c:403
+#: modules/color-selector-cmyk.c:321 modules/color-selector-cmyk.c:405
 #: modules/color-selector-water.c:258 modules/color-selector-wheel.c:191
 #, c-format
 msgid "Profile: %s"
@@ -2510,7 +2510,7 @@ msgstr[1] "Vnosno polje za besedilo je omejeno na %d znak."
 msgstr[2] "Vnosno polje za besedilo je omejeno na %d znaka."
 msgstr[3] "Vnosno polje za besedilo je omejeno na %d znake."
 
-#: libgimpwidgets/gimpwidgets.c:259
+#: libgimpwidgets/gimpwidgets.c:260
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -2518,15 +2518,15 @@ msgstr ""
 "Uporabi navedeno vrednost pri izračunavanju naključnih števil. Tako lahko "
 "ponovite dano »naključno« operacijo."
 
-#: libgimpwidgets/gimpwidgets.c:263
+#: libgimpwidgets/gimpwidgets.c:264
 msgid "_New Seed"
 msgstr "_Novo seme"
 
-#: libgimpwidgets/gimpwidgets.c:279
+#: libgimpwidgets/gimpwidgets.c:280
 msgid "Seed random number generator with a generated random number"
 msgstr "Ponastavi generator naključnih števil z novim naključnim številom"
 
-#: libgimpwidgets/gimpwidgets.c:283
+#: libgimpwidgets/gimpwidgets.c:284
 msgid "_Randomize"
 msgstr "Na_redi naključno"
 
@@ -2697,55 +2697,55 @@ msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Pomanjšaj"
 
-#: modules/color-selector-cmyk.c:86
+#: modules/color-selector-cmyk.c:87
 msgid "CMYK color selector (using color profile)"
 msgstr "Barvni izbirnik CMYK (z uporabo barvnega profila)"
 
-#: modules/color-selector-cmyk.c:120
+#: modules/color-selector-cmyk.c:121
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: modules/color-selector-cmyk.c:144
+#: modules/color-selector-cmyk.c:145
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: modules/color-selector-cmyk.c:146
+#: modules/color-selector-cmyk.c:147
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: modules/color-selector-cmyk.c:148
+#: modules/color-selector-cmyk.c:149
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: modules/color-selector-cmyk.c:150
+#: modules/color-selector-cmyk.c:151
 msgid "_K"
 msgstr "_K"
 
-#: modules/color-selector-cmyk.c:154
+#: modules/color-selector-cmyk.c:155
 msgid "Cyan"
 msgstr "Cianasta"
 
-#: modules/color-selector-cmyk.c:155
+#: modules/color-selector-cmyk.c:156
 msgid "Magenta"
 msgstr "Magenta"
 
-#: modules/color-selector-cmyk.c:156
+#: modules/color-selector-cmyk.c:157
 msgid "Yellow"
 msgstr "Rumena"
 
-#: modules/color-selector-cmyk.c:157
+#: modules/color-selector-cmyk.c:158
 msgid "Black"
 msgstr "Črna"
 
-#: modules/color-selector-cmyk.c:263
+#: modules/color-selector-cmyk.c:265
 msgid "Total Ink Coverage"
 msgstr "Skupna pokritost s črnilom"
 
-#: modules/color-selector-cmyk.c:306 modules/color-selector-cmyk.c:385
+#: modules/color-selector-cmyk.c:308 modules/color-selector-cmyk.c:387
 msgid "Profile: (none)"
 msgstr "Profil: (brez)"
 
