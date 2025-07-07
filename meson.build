@@ -430,13 +430,12 @@ glib_minver       = '2.70.0'
 glib              = dependency('glib-2.0',           version: '>='+glib_minver)
 gi                = dependency('gobject-introspection-1.0')
 
-conf.set('G_DISABLE_DEPRECATED', glib.version().version_compare('>=2.57'))
-
 gobject           = dependency('gobject-2.0',        version: '>='+glib_minver)
 gmodule           = dependency('gmodule-no-export-2.0')
 
 gtk3_minver       = '3.24.0'
 gtk3              = dependency('gtk+-3.0',           version: '>='+gtk3_minver)
+
 harfbuzz_minver   = '2.8.2'
 harfbuzz          = dependency('harfbuzz',           version: '>='+harfbuzz_minver)
 json_glib_minver  = '1.2.6'
