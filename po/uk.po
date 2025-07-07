@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-07-07 12:57+0000\n"
-"PO-Revision-Date: 2025-07-07 16:16+0300\n"
+"POT-Creation-Date: 2025-07-07 16:19+0000\n"
+"PO-Revision-Date: 2025-07-07 20:28+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -568,13 +568,15 @@ msgstr "Текстовий редактор"
 msgid "Tool Options"
 msgstr "Параметри інструменту"
 
-#: app/actions/actions.c:236 app/widgets/gimptoolpalette.c:327
+#: app/actions/actions.c:236
+#| msgctxt "paths-action"
+#| msgid "To _Path"
+msgid "Tool Path"
+msgstr "Інструмент «Контур»"
+
+#: app/actions/actions.c:239 app/widgets/gimptoolpalette.c:327
 msgid "Tools"
 msgstr "Інструменти"
-
-#: app/actions/actions.c:239
-msgid "Path Toolpath"
-msgstr "Інструмент контуру"
 
 #: app/actions/actions.c:242 app/dialogs/dialogs.c:384
 #: app/tools/gimppathtool.c:168
@@ -8597,6 +8599,41 @@ msgstr "Скинути усі параметри інструментів"
 msgid "Do you really want to reset all tool options to default values?"
 msgstr "Ви дійсно бажаєте повернутись до початкових параметрів?"
 
+#: app/actions/tool-path-actions.c:45
+#| msgctxt "vector-toolpath-action"
+#| msgid "_Delete Anchor"
+msgctxt "tool-path-action"
+msgid "_Delete Anchor"
+msgstr "Ви_лучити прив'язку"
+
+#: app/actions/tool-path-actions.c:49
+#| msgctxt "vector-toolpath-action"
+#| msgid "Shift S_tart"
+msgctxt "tool-path-action"
+msgid "Shift S_tart"
+msgstr "По_чаток зсуву"
+
+#: app/actions/tool-path-actions.c:54
+#| msgctxt "vector-toolpath-action"
+#| msgid "_Insert Anchor"
+msgctxt "tool-path-action"
+msgid "_Insert Anchor"
+msgstr "_Вставвити прив'язку"
+
+#: app/actions/tool-path-actions.c:58
+#| msgctxt "vector-toolpath-action"
+#| msgid "Delete _Segment"
+msgctxt "tool-path-action"
+msgid "Delete _Segment"
+msgstr "Вилучити се_гмент"
+
+#: app/actions/tool-path-actions.c:62
+#| msgctxt "vector-toolpath-action"
+#| msgid "_Reverse Stroke"
+msgctxt "tool-path-action"
+msgid "_Reverse Stroke"
+msgstr "_Розвернути штрих"
+
 #: app/actions/tool-preset-editor-actions.c:44
 msgctxt "tool-preset-editor-action"
 msgid "_Save Tool Options to Preset"
@@ -9171,31 +9208,6 @@ msgstr "Потужність інструменту: збільшити відн
 #, c-format
 msgid "Activate tool \"%s\""
 msgstr "Активувати інструмент «%s»"
-
-#: app/actions/vector-toolpath-actions.c:45
-msgctxt "vector-toolpath-action"
-msgid "_Delete Anchor"
-msgstr "Ви_лучити прив'язку"
-
-#: app/actions/vector-toolpath-actions.c:49
-msgctxt "vector-toolpath-action"
-msgid "Shift S_tart"
-msgstr "По_чаток зсуву"
-
-#: app/actions/vector-toolpath-actions.c:54
-msgctxt "vector-toolpath-action"
-msgid "_Insert Anchor"
-msgstr "_Вставвити прив'язку"
-
-#: app/actions/vector-toolpath-actions.c:58
-msgctxt "vector-toolpath-action"
-msgid "Delete _Segment"
-msgstr "Вилучити се_гмент"
-
-#: app/actions/vector-toolpath-actions.c:62
-msgctxt "vector-toolpath-action"
-msgid "_Reverse Stroke"
-msgstr "_Розвернути штрих"
 
 #: app/actions/view-actions.c:71
 msgctxt "view-action"
@@ -10522,7 +10534,7 @@ msgstr "Шар"
 msgid "Channel"
 msgstr "Канал"
 
-#: app/config/gimpdialogconfig.c:432 app/vectors/gimppath.c:224
+#: app/config/gimpdialogconfig.c:432 app/path/gimppath.c:224
 #: app/widgets/gimppathtreeview.c:259
 msgid "Path"
 msgstr "Контур"
@@ -13652,7 +13664,7 @@ msgstr "Рухомий вибір"
 msgid "Computing alpha of unknown pixels"
 msgstr "Обчислення альфи невідомих пікселів"
 
-#: app/core/gimpdrawable-fill.c:214 app/vectors/gimppath.c:676
+#: app/core/gimpdrawable-fill.c:214 app/path/gimppath.c:676
 msgid "Not enough points to fill"
 msgstr "Бракує точок для заповнення"
 
@@ -13689,7 +13701,7 @@ msgid "Offset Drawable"
 msgstr "Тягнучий зсув"
 
 #: app/core/gimpdrawable-stroke.c:111 app/paint/gimppaintcore-stroke.c:335
-#: app/vectors/gimppath.c:698
+#: app/path/gimppath.c:698
 msgid "Not enough points to stroke"
 msgstr "Бракує точок для обведення"
 
@@ -13954,114 +13966,114 @@ msgstr " (імпортовано)"
 msgid "Layer mode '%s' was added in %s"
 msgstr "Режим шару «%s» було додано у %s"
 
-#: app/core/gimpimage.c:2946
+#: app/core/gimpimage.c:2947
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Групи шарів було додано у %s"
 
-#: app/core/gimpimage.c:2953
+#: app/core/gimpimage.c:2954
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Маски для груп шарів було додано у %s"
 
-#: app/core/gimpimage.c:2960
+#: app/core/gimpimage.c:2961
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "Блокування позицій для груп шарів було додано у %s"
 
-#: app/core/gimpimage.c:2967
+#: app/core/gimpimage.c:2968
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "Блокування каналу прозорості для груп шарів було додано у %s"
 
-#: app/core/gimpimage.c:2975 app/core/gimpimage.c:3026
+#: app/core/gimpimage.c:2976 app/core/gimpimage.c:3027
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "Блокування видимості було додано у %s"
 
-#: app/core/gimpimage.c:2986
+#: app/core/gimpimage.c:2987
 #, c-format
 msgid "Format of font information in text layer was changed in %s"
 msgstr "Формат даних щодо шрифту у текстовому шарі було змінено у %s"
 
-#: app/core/gimpimage.c:2994
+#: app/core/gimpimage.c:2995
 #, c-format
 msgid "Layer effects were added in %s"
 msgstr "До %s було додано ефекти шарів"
 
-#: app/core/gimpimage.c:3006
+#: app/core/gimpimage.c:3007
 #, c-format
 msgid "A new perceptual blending space was added in %s"
 msgstr "Новий простір відчуттєвого злиття кольорів було додано у %s"
 
-#: app/core/gimpimage.c:3035
+#: app/core/gimpimage.c:3036
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "Було додано позначення декількох контурів у %s"
 
-#: app/core/gimpimage.c:3047
+#: app/core/gimpimage.c:3048
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "Зберігання міток кольорів у контурі було додано у %s"
 
-#: app/core/gimpimage.c:3054
+#: app/core/gimpimage.c:3055
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "Зберігання блокувань у контурі було додано у %s"
 
-#: app/core/gimpimage.c:3068
+#: app/core/gimpimage.c:3069
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr ""
 "Підтримку зображень із великою бітовою розрядністю кольорів було додано у %s"
 
-#: app/core/gimpimage.c:3076
+#: app/core/gimpimage.c:3077
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Кодування зображень із великою глибиною кольорів було виправлено у %s"
 
-#: app/core/gimpimage.c:3084
+#: app/core/gimpimage.c:3085
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Додано вбудовані засоби стискання zlib у %s"
 
-#: app/core/gimpimage.c:3101
+#: app/core/gimpimage.c:3102
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr ""
 "Підтримку файлів зображень, розмір яких перевищує 4 ГБ, було додано у %s"
 
-#: app/core/gimpimage.c:3108
+#: app/core/gimpimage.c:3109
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Було додано позначення декількох шарів у %s"
 
-#: app/core/gimpimage.c:3125
+#: app/core/gimpimage.c:3126
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "У %s додано напрямні поза полотном"
 
-#: app/core/gimpimage.c:3136
+#: app/core/gimpimage.c:3137
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr "Набір записів та пошук за взірцем у назві запису було додано у %s"
 
-#: app/core/gimpimage.c:3142
+#: app/core/gimpimage.c:3143
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "Було додано позначення декількох каналів у %s"
 
-#: app/core/gimpimage.c:3257
+#: app/core/gimpimage.c:3258
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Змінити роздільність зображення"
 
-#: app/core/gimpimage.c:3309
+#: app/core/gimpimage.c:3310
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Змінити одиницю вимірювання"
 
-#: app/core/gimpimage.c:4362
+#: app/core/gimpimage.c:4363
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -14069,47 +14081,47 @@ msgstr ""
 "не вдалося перевірити додаток «gimp-comment»: коментар містить некоректні "
 "символи UTF-8"
 
-#: app/core/gimpimage.c:4424
+#: app/core/gimpimage.c:4425
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Додати шум до зображення"
 
-#: app/core/gimpimage.c:4469
+#: app/core/gimpimage.c:4470
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Вилучити шум із зображення"
 
-#: app/core/gimpimage.c:5312
+#: app/core/gimpimage.c:5358
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Додати шар"
 
-#: app/core/gimpimage.c:5356 app/core/gimpimage.c:5387
+#: app/core/gimpimage.c:5402 app/core/gimpimage.c:5433
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Вилучити шар"
 
-#: app/core/gimpimage.c:5381
+#: app/core/gimpimage.c:5427
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Вилучити рухомий вибір"
 
-#: app/core/gimpimage.c:5893
+#: app/core/gimpimage.c:5939
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Додати канал"
 
-#: app/core/gimpimage.c:5923 app/core/gimpimage.c:5948
+#: app/core/gimpimage.c:5969 app/core/gimpimage.c:5994
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Вилучити канал"
 
-#: app/core/gimpimage.c:6008
+#: app/core/gimpimage.c:6054
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Додати контур"
 
-#: app/core/gimpimage.c:6043 app/core/gimpimage.c:6051
+#: app/core/gimpimage.c:6089 app/core/gimpimage.c:6097
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Вилучити контур"
@@ -18693,20 +18705,16 @@ msgid "Remove"
 msgstr "Вилучити"
 
 #: app/display/display-enums.c:544
-#| msgctxt "vector-mode"
-#| msgid "Design"
 msgctxt "path-mode"
 msgid "Design"
 msgstr "Створення"
 
 #: app/display/display-enums.c:545
-#| msgid "Edit"
 msgctxt "path-mode"
 msgid "Edit"
 msgstr "Редагування"
 
 #: app/display/display-enums.c:546
-#| msgid "Move"
 msgctxt "path-mode"
 msgid "Move"
 msgstr "Переміщення"
@@ -21090,6 +21098,132 @@ msgstr "З реєстрацією"
 msgctxt "source-align-mode"
 msgid "Fixed"
 msgstr "Фіксоване"
+
+#: app/path/gimppath.c:225
+msgctxt "undo-type"
+msgid "Rename Path"
+msgstr "Перейменувати контур"
+
+#: app/path/gimppath.c:226
+msgctxt "undo-type"
+msgid "Move Path"
+msgstr "Перенести контур"
+
+#: app/path/gimppath.c:227
+msgctxt "undo-type"
+msgid "Scale Path"
+msgstr "Масштабувати контуру"
+
+#: app/path/gimppath.c:228
+msgctxt "undo-type"
+msgid "Resize Path"
+msgstr "Змінити розмір контуру"
+
+#: app/path/gimppath.c:229
+msgctxt "undo-type"
+msgid "Flip Path"
+msgstr "Віддзеркалити контур"
+
+#: app/path/gimppath.c:230
+msgctxt "undo-type"
+msgid "Rotate Path"
+msgstr "Обернути контур"
+
+#: app/path/gimppath.c:231
+msgctxt "undo-type"
+msgid "Transform Path"
+msgstr "Перетворити контур"
+
+#: app/path/gimppath.c:232
+msgctxt "undo-type"
+msgid "Fill Path"
+msgstr "Заповнити контур"
+
+#: app/path/gimppath.c:233
+msgctxt "undo-type"
+msgid "Stroke Path"
+msgstr "Обвести контур"
+
+#: app/path/gimppath.c:234
+msgctxt "undo-type"
+msgid "Path to Selection"
+msgstr "Контур до позначеного"
+
+#: app/path/gimppath.c:235
+msgctxt "undo-type"
+msgid "Reorder Path"
+msgstr "Перевпорядкувати контур"
+
+#: app/path/gimppath.c:236
+msgctxt "undo-type"
+msgid "Raise Path"
+msgstr "Змінити розмір контуру"
+
+#: app/path/gimppath.c:237
+msgctxt "undo-type"
+msgid "Raise Path to Top"
+msgstr "Підняти контур доверху"
+
+#: app/path/gimppath.c:238
+msgctxt "undo-type"
+msgid "Lower Path"
+msgstr "Опустити контур"
+
+#: app/path/gimppath.c:239
+msgctxt "undo-type"
+msgid "Lower Path to Bottom"
+msgstr "Опустити контур додолу"
+
+#: app/path/gimppath.c:240
+msgid "Path cannot be raised higher."
+msgstr "Контур не можна підняти ще вище."
+
+#: app/path/gimppath.c:241
+msgid "Path cannot be lowered more."
+msgstr "Контур не можна опустити ще нижче."
+
+#: app/path/gimppath.c:456
+msgid "Move Path"
+msgstr "Перейменування контуру"
+
+#: app/path/gimppath.c:556
+msgid "Flip Path"
+msgstr "Віддзеркалення контуру"
+
+#: app/path/gimppath.c:587
+msgid "Rotate Path"
+msgstr "Обертання контуру"
+
+#: app/path/gimppath.c:617
+msgid "Transform Path"
+msgstr "Перетворення контуру"
+
+#: app/path/gimppath-export.c:95
+#, c-format
+msgid "Writing SVG file '%s' failed: %s"
+msgstr "Запис у файл SVG «%s» не вдався: %s"
+
+#: app/path/gimppath-import.c:344
+msgid "Import Paths"
+msgstr "Імпортування контуру"
+
+#: app/path/gimppath-import.c:355
+msgid "Imported Path"
+msgstr "Імпортований контур"
+
+#: app/path/gimppath-import.c:386
+#, c-format
+msgid "No paths found in '%s'"
+msgstr "У \"%s\" не знайдено контурів"
+
+#: app/path/gimppath-import.c:390
+msgid "No paths found in the buffer"
+msgstr "У буфері не знайдено контурів"
+
+#: app/path/gimppath-import.c:400
+#, c-format
+msgid "Failed to import paths from '%s': %s"
+msgstr "Не вдалось імпортувати з «%s»: %s"
 
 #: app/pdb/channel-cmds.c:199
 msgid "Combine Masks"
@@ -25870,132 +26004,6 @@ msgctxt "paint-select-mode"
 msgid "Subtract from selection"
 msgstr "Відняти від позначеного"
 
-#: app/vectors/gimppath.c:225
-msgctxt "undo-type"
-msgid "Rename Path"
-msgstr "Перейменувати контур"
-
-#: app/vectors/gimppath.c:226
-msgctxt "undo-type"
-msgid "Move Path"
-msgstr "Перенести контур"
-
-#: app/vectors/gimppath.c:227
-msgctxt "undo-type"
-msgid "Scale Path"
-msgstr "Масштабувати контуру"
-
-#: app/vectors/gimppath.c:228
-msgctxt "undo-type"
-msgid "Resize Path"
-msgstr "Змінити розмір контуру"
-
-#: app/vectors/gimppath.c:229
-msgctxt "undo-type"
-msgid "Flip Path"
-msgstr "Віддзеркалити контур"
-
-#: app/vectors/gimppath.c:230
-msgctxt "undo-type"
-msgid "Rotate Path"
-msgstr "Обернути контур"
-
-#: app/vectors/gimppath.c:231
-msgctxt "undo-type"
-msgid "Transform Path"
-msgstr "Перетворити контур"
-
-#: app/vectors/gimppath.c:232
-msgctxt "undo-type"
-msgid "Fill Path"
-msgstr "Заповнити контур"
-
-#: app/vectors/gimppath.c:233
-msgctxt "undo-type"
-msgid "Stroke Path"
-msgstr "Обвести контур"
-
-#: app/vectors/gimppath.c:234
-msgctxt "undo-type"
-msgid "Path to Selection"
-msgstr "Контур до позначеного"
-
-#: app/vectors/gimppath.c:235
-msgctxt "undo-type"
-msgid "Reorder Path"
-msgstr "Перевпорядкувати контур"
-
-#: app/vectors/gimppath.c:236
-msgctxt "undo-type"
-msgid "Raise Path"
-msgstr "Змінити розмір контуру"
-
-#: app/vectors/gimppath.c:237
-msgctxt "undo-type"
-msgid "Raise Path to Top"
-msgstr "Підняти контур доверху"
-
-#: app/vectors/gimppath.c:238
-msgctxt "undo-type"
-msgid "Lower Path"
-msgstr "Опустити контур"
-
-#: app/vectors/gimppath.c:239
-msgctxt "undo-type"
-msgid "Lower Path to Bottom"
-msgstr "Опустити контур додолу"
-
-#: app/vectors/gimppath.c:240
-msgid "Path cannot be raised higher."
-msgstr "Контур не можна підняти ще вище."
-
-#: app/vectors/gimppath.c:241
-msgid "Path cannot be lowered more."
-msgstr "Контур не можна опустити ще нижче."
-
-#: app/vectors/gimppath.c:456
-msgid "Move Path"
-msgstr "Перейменування контуру"
-
-#: app/vectors/gimppath.c:556
-msgid "Flip Path"
-msgstr "Віддзеркалення контуру"
-
-#: app/vectors/gimppath.c:587
-msgid "Rotate Path"
-msgstr "Обертання контуру"
-
-#: app/vectors/gimppath.c:617
-msgid "Transform Path"
-msgstr "Перетворення контуру"
-
-#: app/vectors/gimppath-export.c:95
-#, c-format
-msgid "Writing SVG file '%s' failed: %s"
-msgstr "Запис у файл SVG «%s» не вдався: %s"
-
-#: app/vectors/gimppath-import.c:344
-msgid "Import Paths"
-msgstr "Імпортування контуру"
-
-#: app/vectors/gimppath-import.c:355
-msgid "Imported Path"
-msgstr "Імпортований контур"
-
-#: app/vectors/gimppath-import.c:386
-#, c-format
-msgid "No paths found in '%s'"
-msgstr "У \"%s\" не знайдено контурів"
-
-#: app/vectors/gimppath-import.c:390
-msgid "No paths found in the buffer"
-msgstr "У буфері не знайдено контурів"
-
-#: app/vectors/gimppath-import.c:400
-#, c-format
-msgid "Failed to import paths from '%s': %s"
-msgstr "Не вдалось імпортувати з «%s»: %s"
-
 #: app/widgets/gimpactioneditor.c:71
 msgid "_Search:"
 msgstr "З_найти:"
@@ -29447,6 +29455,9 @@ msgstr "Меню шаблону інструментів"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Меню журналу скасувань"
+
+#~ msgid "Path Toolpath"
+#~ msgstr "Інструмент контуру"
 
 #~ msgctxt "vector-mode"
 #~ msgid "Edit"
