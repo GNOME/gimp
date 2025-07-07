@@ -85,18 +85,10 @@ typedef gboolean (*GimpUiTestFunc) (GObject *object);
 
 
 static void            gimp_ui_synthesize_delete_event          (GtkWidget         *widget);
-static gboolean        gimp_ui_synthesize_click                 (GtkWidget         *widget,
-                                                                 gint               x,
-                                                                 gint               y,
-                                                                 gint               button,
-                                                                 GdkModifierType    modifiers);
 static GtkWidget     * gimp_ui_find_window                      (GimpDialogFactory *dialog_factory,
                                                                  GimpUiTestFunc     predicate);
 static gboolean        gimp_ui_not_toolbox_window               (GObject           *object);
 static gboolean        gimp_ui_multicolumn_not_toolbox_window   (GObject           *object);
-static gboolean        gimp_ui_is_gimp_layer_list               (GObject           *object);
-static int             gimp_ui_aux_data_equivalent              (gconstpointer      _a,
-                                                                 gconstpointer      _b);
 static void            gimp_ui_switch_window_mode               (Gimp              *gimp);
 
 
@@ -174,7 +166,6 @@ keyboard_zoom_focus (gconstpointer data)
   Gimp              *gimp    = GIMP (data);
   GimpDisplay       *display = GIMP_DISPLAY (gimp_get_display_iter (gimp)->data);
   GimpDisplayShell  *shell   = gimp_display_get_shell (display);
-  GimpImageWindow   *window  = gimp_display_shell_get_window (shell);
   gint               image_x;
   gint               image_y;
   gint               shell_x_before_zoom;
@@ -227,111 +218,6 @@ keyboard_zoom_focus (gconstpointer data)
   g_assert_cmpfloat (fabs (factor_before_zoom - factor_after_zoom),
                      >=,
                      GIMP_UI_ZOOM_EPSILON);
-
-#ifdef __GNUC__
-#warning disabled zoom test, it fails randomly, no clue how to fix it
-#endif
-#if 0
-  g_assert_cmpint (ABS (shell_x_after_zoom - shell_x_before_zoom),
-                   <=,
-                   GIMP_UI_POSITION_EPSILON);
-  g_assert_cmpint (ABS (shell_y_after_zoom - shell_y_before_zoom),
-                   <=,
-                   GIMP_UI_POSITION_EPSILON);
-#endif
-}
-
-/**
- * alt_click_is_layer_to_selection:
- * @data:
- *
- * Makes sure that we can alt-click on a layer to do
- * layer-to-selection. Also makes sure that the layer clicked on is
- * not set as the active layer.
- **/
-static void
-alt_click_is_layer_to_selection (gconstpointer data)
-{
-#if __GNUC__
-#warning FIXME: please fix alt_click_is_layer_to_selection test
-#endif
-#if 0
-  Gimp        *gimp      = GIMP (data);
-  GimpImage   *image     = GIMP_IMAGE (gimp_get_image_iter (gimp)->data);
-  GimpChannel *selection = gimp_image_get_mask (image);
-  GList       *selected_layers;
-  GList       *iter;
-  GtkWidget   *dockable;
-  GtkWidget   *gtk_tree_view;
-  gint         assumed_layer_x;
-  gint         assumed_empty_layer_y;
-  gint         assumed_background_layer_y;
-
-  /* Hardcode assumptions of where the layers are in the
-   * GtkTreeView. Doesn't feel worth adding proper API for this. One
-   * can just use GIMP_PAUSE and re-measure new coordinates if we
-   * start to layout layers in the GtkTreeView differently
-   */
-  assumed_layer_x            = 96;
-  assumed_empty_layer_y      = 16;
-  assumed_background_layer_y = 42;
-
-  /* Store the active layer, it shall not change during the execution
-   * of this test
-   */
-  selected_layers = gimp_image_get_selected_layers (image);
-  selected_layers = g_list_copy (selected_layers);
-
-  /* Find the layer tree view to click in. Note that there is a
-   * potential problem with gtk_test_find_widget and GtkNotebook: it
-   * will return e.g. a GtkTreeView from another page if that page is
-   * "on top" of the reference label.
-   */
-  dockable = gimp_ui_find_window (gimp_dialog_factory_get_singleton (),
-                                  gimp_ui_is_gimp_layer_list);
-  gtk_tree_view = gtk_test_find_widget (dockable,
-                                        "Lock:",
-                                        GTK_TYPE_TREE_VIEW);
-
-  /* First make sure there is no selection */
-  g_assert_true (gimp_channel_is_empty (selection));
-
-  /* Now simulate alt-click on the background layer */
-  g_assert_true (gimp_ui_synthesize_click (gtk_tree_view,
-                                           assumed_layer_x,
-                                           assumed_background_layer_y,
-                                           1 /*button*/,
-                                           GDK_MOD1_MASK));
-  gimp_test_run_mainloop_until_idle ();
-
-  /* Make sure we got a selection and that the active layer didn't
-   * change
-   */
-  g_assert_true (! gimp_channel_is_empty (selection));
-  g_assert_true (g_list_length (gimp_image_get_selected_layers (image)) ==
-                 g_list_length (selected_layers));
-  for (iter = selected_layers; iter; iter = iter->next)
-    g_assert_true (g_list_find (gimp_image_get_selected_layers (image), iter->data));
-
-  /* Now simulate alt-click on the empty layer */
-  g_assert_true (gimp_ui_synthesize_click (gtk_tree_view,
-                                           assumed_layer_x,
-                                           assumed_empty_layer_y,
-                                           1 /*button*/,
-                                           GDK_MOD1_MASK));
-  gimp_test_run_mainloop_until_idle ();
-
-  /* Make sure that emptied the selection and that the active layer
-   * still didn't change
-   */
-  g_assert_true (gimp_channel_is_empty (selection));
-  g_assert_true (g_list_length (gimp_image_get_selected_layers (image)) ==
-                 g_list_length (selected_layers));
-  for (iter = selected_layers; iter; iter = iter->next)
-    g_assert_true (g_list_find (gimp_image_get_selected_layers (image), iter->data));
-
-  g_list_free (selected_layers);
-#endif
 }
 
 static void
@@ -457,114 +343,6 @@ switch_to_single_window_mode (gconstpointer data)
 }
 
 static void
-gimp_ui_toggle_docks_in_single_window_mode (Gimp *gimp)
-{
-  GimpDisplay      *display       = GIMP_DISPLAY (gimp_get_display_iter (gimp)->data);
-  GimpDisplayShell *shell         = gimp_display_get_shell (display);
-  GtkWidget        *toplevel      = GTK_WIDGET (gimp_display_shell_get_window (shell));
-  gint              x_temp        = -1;
-  gint              y_temp        = -1;
-  gint              x_before_hide = -1;
-  gint              y_before_hide = -1;
-  gint              x_after_hide  = -1;
-  gint              y_after_hide  = -1;
-  g_assert_true (shell);
-  g_assert_true (toplevel);
-
-  /* Get toplevel coordinate of image origin */
-  gimp_test_run_mainloop_until_idle ();
-  gimp_display_shell_transform_xy (shell,
-                                   0.0, 0.0,
-                                   &x_temp, &y_temp);
-  gtk_widget_translate_coordinates (GTK_WIDGET (shell),
-                                    toplevel,
-                                    x_temp, y_temp,
-                                    &x_before_hide, &y_before_hide);
-
-  /* Hide all dock windows */
-  gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
-                                   "windows",
-                                   "windows-hide-docks");
-  gimp_test_run_mainloop_until_idle ();
-
-  /* Get toplevel coordinate of image origin */
-  gimp_test_run_mainloop_until_idle ();
-  gimp_display_shell_transform_xy (shell,
-                                   0.0, 0.0,
-                                   &x_temp, &y_temp);
-  gtk_widget_translate_coordinates (GTK_WIDGET (shell),
-                                    toplevel,
-                                    x_temp, y_temp,
-                                    &x_after_hide, &y_after_hide);
-
-  g_assert_cmpint ((int)abs (x_after_hide - x_before_hide), <=, GIMP_UI_POSITION_EPSILON);
-  g_assert_cmpint ((int)abs (y_after_hide - y_before_hide), <=, GIMP_UI_POSITION_EPSILON);
-}
-
-static void
-hide_docks_in_single_window_mode (gconstpointer data)
-{
-  Gimp *gimp = GIMP (data);
-  gimp_ui_toggle_docks_in_single_window_mode (gimp);
-}
-
-static void
-show_docks_in_single_window_mode (gconstpointer data)
-{
-  Gimp *gimp = GIMP (data);
-  gimp_ui_toggle_docks_in_single_window_mode (gimp);
-}
-
-static void
-maximize_state_in_aux_data (gconstpointer data)
-{
-  Gimp               *gimp    = GIMP (data);
-  GimpDisplay        *display = GIMP_DISPLAY (gimp_get_display_iter (gimp)->data);
-  GimpDisplayShell   *shell   = gimp_display_get_shell (display);
-  GimpImageWindow    *window  = gimp_display_shell_get_window (shell);
-  gint                i;
-
-  for (i = 0; i < 2; i++)
-    {
-      GList              *aux_info = NULL;
-      GimpSessionInfoAux *target_info;
-      gboolean            target_max_state;
-
-      if (i == 0)
-        {
-          target_info = gimp_session_info_aux_new ("maximized" , "yes");
-          target_max_state = TRUE;
-        }
-      else
-        {
-          target_info = gimp_session_info_aux_new ("maximized", "no");
-          target_max_state = FALSE;
-        }
-
-      /* Set the aux info to out target data */
-      aux_info = g_list_append (aux_info, target_info);
-      gimp_session_managed_set_aux_info (GIMP_SESSION_MANAGED (window), aux_info);
-      g_list_free (aux_info);
-
-      /* Give the WM a chance to maximize/unmaximize us */
-      gimp_test_run_mainloop_until_idle ();
-      g_usleep (500 * 1000);
-      gimp_test_run_mainloop_until_idle ();
-
-      /* Make sure the maximize/unmaximize happened */
-      g_assert_true (gimp_image_window_is_maximized (window) == target_max_state);
-
-      /* Make sure we can read out the window state again */
-      aux_info = gimp_session_managed_get_aux_info (GIMP_SESSION_MANAGED (window));
-      g_assert_true (g_list_find_custom (aux_info, target_info, gimp_ui_aux_data_equivalent));
-      g_list_free_full (aux_info,
-                        (GDestroyNotify) gimp_session_info_aux_free);
-
-      gimp_session_info_aux_free (target_info);
-    }
-}
-
-static void
 switch_back_to_multi_window_mode (gconstpointer data)
 {
   Gimp *gimp = GIMP (data);
@@ -600,77 +378,6 @@ close_image (gconstpointer data)
 
   /* Did it really disappear? */
   g_assert_cmpint (g_list_length (gimp_get_image_iter (gimp)), ==, 0);
-}
-
-/**
- * repeatedly_switch_window_mode:
- * @data:
- *
- * Makes sure that the size of the image window is properly handled
- * when repeatedly switching between window modes.
- **/
-static void
-repeatedly_switch_window_mode (gconstpointer data)
-{
-#ifdef __GNUC__
-#warning FIXME: please fix repeatedly_switch_window_mode test
-#endif
-#if 0
-  Gimp             *gimp     = GIMP (data);
-  GimpDisplay      *display  = GIMP_DISPLAY (gimp_get_empty_display (gimp));
-  GimpDisplayShell *shell    = gimp_display_get_shell (display);
-  GtkWidget        *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
-
-  gint expected_initial_height;
-  gint expected_initial_width;
-  gint expected_second_height;
-  gint expected_second_width;
-  gint initial_width;
-  gint initial_height;
-  gint second_width;
-  gint second_height;
-
-  /* We need this for some reason */
-  gimp_test_run_mainloop_until_idle ();
-
-  /* Remember the multi-window mode size */
-  gtk_window_get_size (GTK_WINDOW (toplevel),
-                       &expected_initial_width,
-                       &expected_initial_height);
-
-  /* Switch to single-window mode */
-  gimp_ui_switch_window_mode (gimp);
-
-  /* Remember the single-window mode size */
-  gtk_window_get_size (GTK_WINDOW (toplevel),
-                       &expected_second_width,
-                       &expected_second_height);
-
-  /* Make sure they differ, otherwise the test is pointless */
-  g_assert_cmpint (expected_initial_width,  !=, expected_second_width);
-  g_assert_cmpint (expected_initial_height, !=, expected_second_height);
-
-  /* Switch back to multi-window mode */
-  gimp_ui_switch_window_mode (gimp);
-
-  /* Make sure the size is the same as before */
-  gtk_window_get_size (GTK_WINDOW (toplevel), &initial_width, &initial_height);
-  g_assert_cmpint (expected_initial_width,  ==, initial_width);
-  g_assert_cmpint (expected_initial_height, ==, initial_height);
-
-  /* Switch to single-window mode again... */
-  gimp_ui_switch_window_mode (gimp);
-
-  /* Make sure the size is the same as before */
-  gtk_window_get_size (GTK_WINDOW (toplevel), &second_width, &second_height);
-  g_assert_cmpint (expected_second_width,  ==, second_width);
-  g_assert_cmpint (expected_second_height, ==, second_height);
-
-  /* Finally switch back to multi-window mode since that was the mode
-   * when we started
-   */
-  gimp_ui_switch_window_mode (gimp);
-#endif
 }
 
 /**
@@ -750,25 +457,6 @@ gimp_ui_synthesize_delete_event (GtkWidget *widget)
   gdk_event_free (event);
 }
 
-static gboolean
-gimp_ui_synthesize_click (GtkWidget       *widget,
-                          gint             x,
-                          gint             y,
-                          gint             button, /*1..3*/
-                          GdkModifierType  modifiers)
-{
-  return (gdk_test_simulate_button (gtk_widget_get_window (widget),
-                                    x, y,
-                                    button,
-                                    modifiers,
-                                    GDK_BUTTON_PRESS) &&
-          gdk_test_simulate_button (gtk_widget_get_window (widget),
-                                    x, y,
-                                    button,
-                                    modifiers,
-                                    GDK_BUTTON_RELEASE));
-}
-
 static GtkWidget *
 gimp_ui_find_window (GimpDialogFactory *dialog_factory,
                      GimpUiTestFunc     predicate)
@@ -824,27 +512,6 @@ gimp_ui_multicolumn_not_toolbox_window (GObject *object)
   return not_toolbox_window;
 }
 
-static gboolean
-gimp_ui_is_gimp_layer_list (GObject *object)
-{
-  GimpDialogFactoryEntry *entry = NULL;
-
-  if (! GTK_IS_WIDGET (object))
-    return FALSE;
-
-  gimp_dialog_factory_from_widget (GTK_WIDGET (object), &entry);
-
-  return strcmp (entry->identifier, "gimp-layer-list") == 0;
-}
-
-static int
-gimp_ui_aux_data_equivalent (gconstpointer _a, gconstpointer _b)
-{
-  GimpSessionInfoAux *a = (GimpSessionInfoAux*) _a;
-  GimpSessionInfoAux *b = (GimpSessionInfoAux*) _b;
-  return (strcmp (a->name, b->name) || strcmp (a->value, b->value));
-}
-
 static void
 gimp_ui_switch_window_mode (Gimp *gimp)
 {
@@ -880,22 +547,11 @@ int main(int argc, char **argv)
   ADD_TEST (tool_options_editor_updates);
   ADD_TEST (create_new_image_via_dialog);
   ADD_TEST (keyboard_zoom_focus);
-  ADD_TEST (alt_click_is_layer_to_selection);
   ADD_TEST (restore_recently_closed_multi_column_dock);
   ADD_TEST (tab_toggle_dont_change_dock_window_position);
   ADD_TEST (switch_to_single_window_mode);
-#warning "FIXME: hide/show docks doesn't work when running make check"
-#if 0
-  ADD_TEST (hide_docks_in_single_window_mode);
-  ADD_TEST (show_docks_in_single_window_mode);
-#endif
-#warning "FIXME: maximize_state_in_aux_data doesn't work without WM"
-#if 0
-  ADD_TEST (maximize_state_in_aux_data);
-#endif
   ADD_TEST (switch_back_to_multi_window_mode);
   ADD_TEST (close_image);
-  ADD_TEST (repeatedly_switch_window_mode);
   ADD_TEST (window_roles);
 
   /* Run the tests and return status */
