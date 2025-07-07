@@ -376,8 +376,14 @@ gimp_item_search_key_release (GtkWidget        *widget,
   const gchar            *pattern;
   GimpSelectMethod        pattern_syntax;
 
-  if (event->keyval == GDK_KEY_Escape   ||
-      event->keyval == GDK_KEY_Return   ||
+  if (event->keyval == GDK_KEY_Escape)
+    {
+      _gimp_item_tree_view_search_hide (view);
+
+      return TRUE;
+    }
+
+  if (event->keyval == GDK_KEY_Return   ||
       event->keyval == GDK_KEY_KP_Enter ||
       event->keyval == GDK_KEY_ISO_Enter)
     {
@@ -390,6 +396,7 @@ gimp_item_search_key_release (GtkWidget        *widget,
         {
           _gimp_item_tree_view_search_hide (view);
         }
+
       return TRUE;
     }
 
