@@ -283,7 +283,6 @@ gimp_procedure_set_property (GObject      *object,
       break;
 
     case PROP_NAME:
-      g_free (priv->name);
       priv->name = g_value_dup_string (value);
       break;
 

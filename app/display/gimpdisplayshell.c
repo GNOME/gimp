@@ -947,12 +947,10 @@ gimp_display_shell_set_property (GObject      *object,
       gimp_display_shell_set_unit (shell, g_value_get_object (value));
       break;
     case PROP_TITLE:
-      g_free (shell->title);
-      shell->title = g_value_dup_string (value);
+      g_set_str (&shell->title, g_value_get_string (value));
       break;
     case PROP_STATUS:
-      g_free (shell->status);
-      shell->status = g_value_dup_string (value);
+      g_set_str (&shell->status, g_value_get_string (value));
       break;
     case PROP_SHOW_ALL:
       gimp_display_shell_set_show_all (shell, g_value_get_boolean (value));

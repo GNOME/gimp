@@ -206,8 +206,7 @@ gimp_early_rc_set_property (GObject      *object,
       break;
 
     case PROP_LANGUAGE:
-      g_set_str (&rc->language,
-                 g_value_get_string (value));
+      g_set_str (&rc->language, g_value_get_string (value));
       break;
 
 #ifdef G_OS_WIN32

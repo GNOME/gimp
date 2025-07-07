@@ -564,8 +564,7 @@ gimp_text_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_TEXT:
-      g_free (text->text);
-      text->text = g_value_dup_string (value);
+      g_set_str (&text->text, g_value_get_string (value));
       if (text->text && text->markup)
         {
           g_clear_pointer (&text->markup, g_free);
@@ -573,8 +572,7 @@ gimp_text_set_property (GObject      *object,
         }
       break;
     case PROP_MARKUP:
-      g_free (text->markup);
-      text->markup = g_value_dup_string (value);
+      g_set_str (&text->markup, g_value_get_string (value));
       if (text->markup && text->text)
         {
           g_clear_pointer (&text->text, g_free);
@@ -588,7 +586,7 @@ gimp_text_set_property (GObject      *object,
         if (font != text->font && font != NULL)
           g_set_object (&text->font, font);
         /* this is defensive to avoid some crashes */
-        else if (font == NULL) 
+        else if (font == NULL)
           g_set_object (&text->font, GIMP_FONT (gimp_font_get_standard ()));
       }
       break;
@@ -608,8 +606,7 @@ gimp_text_set_property (GObject      *object,
       text->kerning = g_value_get_boolean (value);
       break;
     case PROP_LANGUAGE:
-      g_free (text->language);
-      text->language = g_value_dup_string (value);
+      g_set_str (&text->language, g_value_get_string (value));
       break;
     case PROP_BASE_DIR:
       text->base_dir = g_value_get_enum (value);

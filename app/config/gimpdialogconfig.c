@@ -632,8 +632,7 @@ gimp_dialog_config_set_property (GObject      *object,
       break;
 
     case PROP_COLOR_PROFILE_PATH:
-      g_set_str (&config->color_profile_path,
-                 g_value_get_string (value));
+      g_set_str (&config->color_profile_path, g_value_get_string (value));
       break;
 
     case PROP_IMAGE_CONVERT_PROFILE_INTENT:
@@ -686,8 +685,7 @@ gimp_dialog_config_set_property (GObject      *object,
       break;
 
     case PROP_LAYER_NEW_NAME:
-      g_set_str (&config->layer_new_name,
-                 g_value_get_string (value));
+      g_set_str (&config->layer_new_name, g_value_get_string (value));
       break;
     case PROP_LAYER_NEW_MODE:
       config->layer_new_mode = g_value_get_enum (value);
@@ -730,8 +728,7 @@ gimp_dialog_config_set_property (GObject      *object,
       break;
 
     case PROP_CHANNEL_NEW_NAME:
-      g_set_str (&config->channel_new_name,
-                 g_value_get_string (value));
+      g_set_str (&config->channel_new_name, g_value_get_string (value));
       break;
     case PROP_CHANNEL_NEW_COLOR:
       g_clear_object (&config->channel_new_color);
@@ -739,21 +736,18 @@ gimp_dialog_config_set_property (GObject      *object,
       break;
 
     case PROP_PATH_NEW_NAME:
-      g_set_str (&config->path_new_name,
-                 g_value_get_string (value));
+      g_set_str (&config->path_new_name, g_value_get_string (value));
       break;
 
     case PROP_PATH_EXPORT_PATH:
-      g_set_str (&config->path_export_path,
-                 g_value_get_string (value));
+      g_set_str (&config->path_export_path, g_value_get_string (value));
       break;
     case PROP_PATH_EXPORT_ACTIVE_ONLY:
       config->path_export_active_only = g_value_get_boolean (value);
       break;
 
     case PROP_PATH_IMPORT_PATH:
-      g_set_str (&config->path_import_path,
-                 g_value_get_string (value));
+      g_set_str (&config->path_import_path, g_value_get_string (value));
       break;
     case PROP_PATH_IMPORT_MERGE:
       config->path_import_merge = g_value_get_boolean (value);

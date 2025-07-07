@@ -515,8 +515,7 @@ gimp_text_options_set_property (GObject      *object,
       options->base_dir = g_value_get_enum (value);
       break;
     case PROP_LANGUAGE:
-      g_free (options->language);
-      options->language = g_value_dup_string (value);
+      g_set_str (&options->language, g_value_get_string (value));
       break;
     case PROP_JUSTIFICATION:
       options->justify = g_value_get_enum (value);

@@ -110,6 +110,7 @@ gimp_string_action_get_property (GObject    *object,
     case PROP_VALUE:
       g_value_set_string (value, action->value);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
@@ -127,9 +128,9 @@ gimp_string_action_set_property (GObject      *object,
   switch (prop_id)
     {
     case PROP_VALUE:
-      g_free (action->value);
-      action->value = g_value_dup_string (value);
+      g_set_str (&action->value, g_value_get_string (value));
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;

@@ -202,18 +202,15 @@ gimp_gegl_config_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_TEMP_PATH:
-      g_set_str (&gegl_config->temp_path,
-                 g_value_get_string (value));
+      g_set_str (&gegl_config->temp_path, g_value_get_string (value));
       break;
 
     case PROP_SWAP_PATH:
-      g_set_str (&gegl_config->swap_path,
-                 g_value_get_string (value));
+      g_set_str (&gegl_config->swap_path, g_value_get_string (value));
       break;
 
     case PROP_SWAP_COMPRESSION:
-      g_set_str (&gegl_config->swap_compression,
-                 g_value_get_string (value));
+      g_set_str (&gegl_config->swap_compression, g_value_get_string (value));
       break;
 
     case PROP_NUM_PROCESSORS:
