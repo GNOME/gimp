@@ -37,7 +37,7 @@ struct _GimpVectorOptions
 {
   GimpToolOptions  parent_instance;
 
-  GimpVectorMode   edit_mode;
+  GimpPathMode     edit_mode;
   gboolean         polygonal;
 
   /*  options gui  */

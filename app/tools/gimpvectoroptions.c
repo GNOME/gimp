@@ -71,8 +71,8 @@ gimp_vector_options_class_init (GimpVectorOptionsClass *klass)
                          "vectors-edit-mode",
                          _("Edit Mode"),
                          NULL,
-                         GIMP_TYPE_VECTOR_MODE,
-                         GIMP_VECTOR_MODE_DESIGN,
+                         GIMP_TYPE_PATH_MODE,
+                         GIMP_PATH_MODE_DESIGN,
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_VECTORS_POLYGONAL,
@@ -166,10 +166,10 @@ gimp_vector_options_gui (GimpToolOptions *tool_options)
     {
       GSList *list = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
 
-      /* GIMP_VECTOR_MODE_MOVE  */
+      /* GIMP_PATH_MODE_MOVE  */
       button_append_modifier (list->data, GDK_MOD1_MASK);
 
-      if (list->next)   /* GIMP_VECTOR_MODE_EDIT  */
+      if (list->next)   /* GIMP_PATH_MODE_EDIT  */
         button_append_modifier (list->next->data,
                                 gimp_get_toggle_behavior_mask ());
     }

@@ -226,16 +226,16 @@ typedef enum
 } GimpTransformHandleMode;
 
 
-#define GIMP_TYPE_VECTOR_MODE (gimp_vector_mode_get_type ())
+#define GIMP_TYPE_PATH_MODE (gimp_path_mode_get_type ())
 
-GType gimp_vector_mode_get_type (void) G_GNUC_CONST;
+GType gimp_path_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_VECTOR_MODE_DESIGN,      /*< desc="Design" >*/
-  GIMP_VECTOR_MODE_EDIT,        /*< desc="Edit"   >*/
-  GIMP_VECTOR_MODE_MOVE         /*< desc="Move"   >*/
-} GimpVectorMode;
+  GIMP_PATH_MODE_DESIGN,      /*< desc="Design" >*/
+  GIMP_PATH_MODE_EDIT,        /*< desc="Edit"   >*/
+  GIMP_PATH_MODE_MOVE         /*< desc="Move"   >*/
+} GimpPathMode;
 
 
 #define GIMP_TYPE_ZOOM_FOCUS (gimp_zoom_focus_get_type ())

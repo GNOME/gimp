@@ -199,7 +199,7 @@ gimp_vector_tool_init (GimpVectorTool *vector_tool)
   gimp_tool_control_set_tool_cursor        (tool->control,
                                             GIMP_TOOL_CURSOR_PATHS);
 
-  vector_tool->saved_mode = GIMP_VECTOR_MODE_DESIGN;
+  vector_tool->saved_mode = GIMP_PATH_MODE_DESIGN;
 }
 
 static void
@@ -316,7 +316,7 @@ gimp_vector_tool_modifier_key (GimpTool        *tool,
 
   if (key == INSDEL_MASK || key == MOVE_MASK)
     {
-      GimpVectorMode button_mode = options->edit_mode;
+      GimpPathMode button_mode = options->edit_mode;
 
       if (press)
         {
@@ -339,11 +339,11 @@ gimp_vector_tool_modifier_key (GimpTool        *tool,
 
       if (state & MOVE_MASK)
         {
-          button_mode = GIMP_VECTOR_MODE_MOVE;
+          button_mode = GIMP_PATH_MODE_MOVE;
         }
       else if (state & INSDEL_MASK)
         {
-          button_mode = GIMP_VECTOR_MODE_EDIT;
+          button_mode = GIMP_PATH_MODE_EDIT;
         }
 
       if (button_mode != options->edit_mode)
@@ -407,7 +407,7 @@ gimp_vector_tool_start (GimpVectorTool *vector_tool,
                           G_BINDING_BIDIRECTIONAL);
 
   gimp_tool_path_set_path (GIMP_TOOL_PATH (widget),
-                           vector_tool->vectors);
+                           vector_tool->path);
 
   g_signal_connect (widget, "changed",
                     G_CALLBACK (gimp_vector_tool_path_changed),
@@ -445,18 +445,18 @@ gimp_vector_tool_halt (GimpVectorTool *vector_tool)
 }
 
 static void
-gimp_vector_tool_path_changed (GimpToolWidget *path,
+gimp_vector_tool_path_changed (GimpToolWidget *tool_path,
                                GimpVectorTool *vector_tool)
 {
-  GimpDisplayShell *shell = gimp_tool_widget_get_shell (path);
+  GimpDisplayShell *shell = gimp_tool_widget_get_shell (tool_path);
   GimpImage        *image = gimp_display_get_image (shell->display);
   GimpPath         *vectors;
 
-  g_object_get (path,
-                "vectors", &vectors,
+  g_object_get (tool_path,
+                "path", &vectors,
                 NULL);
 
-  if (vectors != vector_tool->vectors)
+  if (vectors != vector_tool->path)
     {
       if (vectors && ! gimp_item_is_attached (GIMP_ITEM (vectors)))
         {
@@ -492,7 +492,7 @@ gimp_vector_tool_path_begin_change (GimpToolWidget *path,
   GimpDisplayShell *shell = gimp_tool_widget_get_shell (path);
   GimpImage        *image = gimp_display_get_image (shell->display);
 
-  gimp_image_undo_push_path_mod (image, desc, vector_tool->vectors);
+  gimp_image_undo_push_path_mod (image, desc, vector_tool->path);
 }
 
 static void
@@ -565,23 +565,23 @@ gimp_vector_tool_set_path (GimpVectorTool *vector_tool,
   if (vectors)
     item = GIMP_ITEM (vectors);
 
-  if (vectors == vector_tool->vectors)
+  if (vectors == vector_tool->path)
     return;
 
-  if (vector_tool->vectors)
+  if (vector_tool->path)
     {
       GimpImage *old_image;
 
-      old_image = gimp_item_get_image (GIMP_ITEM (vector_tool->vectors));
+      old_image = gimp_item_get_image (GIMP_ITEM (vector_tool->path));
 
       g_signal_handlers_disconnect_by_func (old_image,
                                             gimp_vector_tool_vectors_changed,
                                             vector_tool);
-      g_signal_handlers_disconnect_by_func (vector_tool->vectors,
+      g_signal_handlers_disconnect_by_func (vector_tool->path,
                                             gimp_vector_tool_vectors_removed,
                                             vector_tool);
 
-      g_clear_object (&vector_tool->vectors);
+      g_clear_object (&vector_tool->path);
 
       if (options->to_selection_button)
         {
@@ -621,7 +621,7 @@ gimp_vector_tool_set_path (GimpVectorTool *vector_tool,
   if (! vectors)
     return;
 
-  vector_tool->vectors = g_object_ref (vectors);
+  vector_tool->path = g_object_ref (vectors);
 
   g_signal_connect_object (gimp_item_get_image (item), "selected-paths-changed",
                            G_CALLBACK (gimp_vector_tool_vectors_changed),
@@ -693,9 +693,9 @@ gimp_vector_tool_set_path (GimpVectorTool *vector_tool,
         gimp_vector_tool_start (vector_tool, display);
     }
 
-  if (options->edit_mode != GIMP_VECTOR_MODE_DESIGN)
+  if (options->edit_mode != GIMP_PATH_MODE_DESIGN)
     g_object_set (options, "vectors-edit-mode",
-                  GIMP_VECTOR_MODE_DESIGN, NULL);
+                  GIMP_PATH_MODE_DESIGN, NULL);
 }
 
 static void
@@ -710,12 +710,12 @@ gimp_vector_tool_to_selection_extended (GimpVectorTool  *vector_tool,
 {
   GimpImage *image;
 
-  if (! vector_tool->vectors)
+  if (! vector_tool->path)
     return;
 
-  image = gimp_item_get_image (GIMP_ITEM (vector_tool->vectors));
+  image = gimp_item_get_image (GIMP_ITEM (vector_tool->path));
 
-  gimp_item_to_selection (GIMP_ITEM (vector_tool->vectors),
+  gimp_item_to_selection (GIMP_ITEM (vector_tool->path),
                           gimp_modifiers_to_channel_op (state),
                           TRUE, FALSE, 0, 0);
   gimp_image_flush (image);
@@ -732,10 +732,10 @@ gimp_vector_tool_fill_vectors (GimpVectorTool *vector_tool,
   GList            *vectors_list = NULL;
   GtkWidget        *dialog;
 
-  if (! vector_tool->vectors)
+  if (! vector_tool->path)
     return;
 
-  image = gimp_item_get_image (GIMP_ITEM (vector_tool->vectors));
+  image = gimp_item_get_image (GIMP_ITEM (vector_tool->path));
 
   config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
@@ -758,7 +758,7 @@ gimp_vector_tool_fill_vectors (GimpVectorTool *vector_tool,
       return;
     }
 
-  vectors_list = g_list_prepend (NULL, vector_tool->vectors);
+  vectors_list = g_list_prepend (NULL, vector_tool->path);
   dialog = fill_dialog_new (vectors_list, drawables,
                             GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (vector_tool)),
                             _("Fill Path"),
@@ -821,10 +821,10 @@ gimp_vector_tool_stroke_vectors (GimpVectorTool *vector_tool,
   GList            *vectors_list = NULL;
   GtkWidget        *dialog;
 
-  if (! vector_tool->vectors)
+  if (! vector_tool->path)
     return;
 
-  image = gimp_item_get_image (GIMP_ITEM (vector_tool->vectors));
+  image = gimp_item_get_image (GIMP_ITEM (vector_tool->path));
 
   config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
@@ -847,7 +847,7 @@ gimp_vector_tool_stroke_vectors (GimpVectorTool *vector_tool,
       return;
     }
 
-  vectors_list = g_list_prepend (NULL, vector_tool->vectors);
+  vectors_list = g_list_prepend (NULL, vector_tool->path);
   dialog = stroke_dialog_new (vectors_list, drawables,
                               GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (vector_tool)),
                               _("Stroke Path"),
