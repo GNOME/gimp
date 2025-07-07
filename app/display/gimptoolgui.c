@@ -273,8 +273,7 @@ gimp_tool_gui_set_title (GimpToolGui *gui,
   if (title == private->title)
     return;
 
-  g_free (private->title);
-  private->title = g_strdup (title);
+  g_set_str (&private->title, title);
 
   if (! title)
     title = private->tool_info->label;
@@ -295,8 +294,7 @@ gimp_tool_gui_set_description (GimpToolGui *gui,
   if (description == private->description)
     return;
 
-  g_free (private->description);
-  private->description = g_strdup (description);
+  g_set_str (&private->description, description);
 
   if (! description)
     description = private->tool_info->tooltip;
@@ -324,8 +322,7 @@ gimp_tool_gui_set_icon_name (GimpToolGui *gui,
   if (icon_name == private->icon_name)
     return;
 
-  g_free (private->icon_name);
-  private->icon_name = g_strdup (icon_name);
+  g_set_str (&private->icon_name, icon_name);
 
   if (! icon_name)
     icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (private->tool_info));
@@ -346,8 +343,7 @@ gimp_tool_gui_set_help_id (GimpToolGui *gui,
   if (help_id == private->help_id)
     return;
 
-  g_free (private->help_id);
-  private->help_id = g_strdup (help_id);
+  g_set_str (&private->help_id, help_id);
 
   if (! help_id)
     help_id = private->tool_info->help_id;
