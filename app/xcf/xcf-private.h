@@ -128,7 +128,7 @@ struct _XcfInfo
   GimpTattoo          tattoo_state;
   GList              *selected_layers;
   GList              *selected_channels;
-  GList              *selected_vectors;
+  GList              *selected_paths;
 
   /* Old deprecated "linked" concept which we keep in the XcfInfo
    * probably forever to transform these tags into named stored item

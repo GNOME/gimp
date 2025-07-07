@@ -124,7 +124,7 @@ static gboolean xcf_save_effect_props  (XcfInfo           *info,
                                         GError           **error);
 static gboolean xcf_save_path_props    (XcfInfo           *info,
                                         GimpImage         *image,
-                                        GimpPath          *vectors,
+                                        GimpPath          *path,
                                         GError           **error);
 static gboolean xcf_save_prop          (XcfInfo           *info,
                                         GimpImage         *image,
@@ -145,7 +145,7 @@ static gboolean xcf_save_effect        (XcfInfo           *info,
                                         GError           **error);
 static gboolean xcf_save_path          (XcfInfo           *info,
                                         GimpImage         *image,
-                                        GimpPath          *vectors,
+                                        GimpPath          *path,
                                         GError           **error);
 static gboolean xcf_save_buffer        (XcfInfo           *info,
                                         GimpImage         *image,
@@ -435,7 +435,7 @@ xcf_save_image (XcfInfo    *info,
 
       for (list = all_paths; list; list = g_list_next (list))
         {
-          GimpPath *vectors = list->data;
+          GimpPath *path = list->data;
 
           /* seek back to the next slot in the offset table and write the
            * offset of the channel
@@ -448,7 +448,7 @@ xcf_save_image (XcfInfo    *info,
 
           /* seek to the channel offset and save the channel */
           xcf_check_error (xcf_seek_pos (info, offset, error), ;);
-          xcf_check_error (xcf_save_path (info, image, vectors, error), ;);
+          xcf_check_error (xcf_save_path (info, image, path, error), ;);
 
           /* the next channels's offset is after the channel we just wrote */
           offset = info->cp;
@@ -941,27 +941,27 @@ xcf_save_effect_props (XcfInfo      *info,
 static gboolean
 xcf_save_path_props (XcfInfo      *info,
                      GimpImage    *image,
-                     GimpPath     *vectors,
+                     GimpPath     *path,
                      GError      **error)
 {
   GimpParasiteList *parasites;
 
-  if (g_list_find (gimp_image_get_selected_paths (image), vectors))
+  if (g_list_find (gimp_image_get_selected_paths (image), path))
     xcf_check_error (xcf_save_prop (info, image, PROP_SELECTED_PATH, error), ;);
 
   xcf_check_error (xcf_save_prop (info, image, PROP_VISIBLE, error,
-                                  gimp_item_get_visible (GIMP_ITEM (vectors))), ;);
+                                  gimp_item_get_visible (GIMP_ITEM (path))), ;);
   xcf_check_error (xcf_save_prop (info, image, PROP_COLOR_TAG, error,
-                                  gimp_item_get_color_tag (GIMP_ITEM (vectors))), ;);
+                                  gimp_item_get_color_tag (GIMP_ITEM (path))), ;);
   xcf_check_error (xcf_save_prop (info, image, PROP_LOCK_CONTENT, error,
-                                  gimp_item_get_lock_content (GIMP_ITEM (vectors))), ;);
+                                  gimp_item_get_lock_content (GIMP_ITEM (path))), ;);
   xcf_check_error (xcf_save_prop (info, image, PROP_LOCK_POSITION, error,
-                                  gimp_item_get_lock_position (GIMP_ITEM (vectors))), ;);
+                                  gimp_item_get_lock_position (GIMP_ITEM (path))), ;);
 
   xcf_check_error (xcf_save_prop (info, image, PROP_TATTOO, error,
-                                  gimp_item_get_tattoo (GIMP_ITEM (vectors))), ;);
+                                  gimp_item_get_tattoo (GIMP_ITEM (path))), ;);
 
-  parasites = gimp_item_get_parasites (GIMP_ITEM (vectors));
+  parasites = gimp_item_get_parasites (GIMP_ITEM (path));
 
   if (gimp_parasite_list_length (parasites) > 0)
     {
@@ -970,7 +970,7 @@ xcf_save_path_props (XcfInfo      *info,
     }
 
 #if 0
-  for (iter = info->vectors_sets; iter; iter = iter->next)
+  for (iter = info->path_sets; iter; iter = iter->next)
     {
       GimpItemList *set = iter->data;
 
@@ -978,7 +978,7 @@ xcf_save_path_props (XcfInfo      *info,
         {
           GList *items = gimp_item_list_get_items (set, NULL);
 
-          if (g_list_find (items, GIMP_ITEM (vectors)))
+          if (g_list_find (items, GIMP_ITEM (path)))
             xcf_check_error (xcf_save_prop (info, image, PROP_ITEM_SET_ITEM, error,
                                             g_list_position (info->layer_sets, iter)), ;);
 
@@ -2947,7 +2947,7 @@ xcf_save_old_paths (XcfInfo    *info,
   if (gimp_image_get_selected_paths (image))
     {
       active_path = gimp_image_get_selected_paths (image)->data;
-      /* Having more than 1 selected vectors should not have happened in this
+      /* Having more than 1 selected paths should not have happened in this
        * code path but let's not break saving, only produce a critical.
        */
       if (g_list_length (gimp_image_get_selected_paths (image)) > 1)
@@ -2966,7 +2966,7 @@ xcf_save_old_paths (XcfInfo    *info,
        list;
        list = g_list_next (list))
     {
-      GimpPath               *vectors = list->data;
+      GimpPath               *path = list->data;
       gchar                  *name;
       guint32                 locked;
       guint8                  state;
@@ -2990,7 +2990,7 @@ xcf_save_old_paths (XcfInfo    *info,
        * then each point.
        */
 
-      points = gimp_path_compat_get_points (vectors,
+      points = gimp_path_compat_get_points (path,
                                             (gint32 *) &num_points,
                                             (gint32 *) &closed);
 
@@ -2999,13 +2999,13 @@ xcf_save_old_paths (XcfInfo    *info,
        * we already saved the number of paths and I won't start seeking
        * around to fix that cruft  */
 
-      name     = (gchar *) gimp_object_get_name (vectors);
+      name     = (gchar *) gimp_object_get_name (path);
       /* The 'linked' concept does not exist anymore in GIMP 3.0 and over. */
       locked   = 0;
       state    = closed ? 4 : 2;  /* EDIT : ADD  (editing state, 1.2 compat) */
       version  = 3;
       pathtype = 1;  /* BEZIER  (1.2 compat) */
-      tattoo   = gimp_item_get_tattoo (GIMP_ITEM (vectors));
+      tattoo   = gimp_item_get_tattoo (GIMP_ITEM (path));
 
       xcf_write_string_check_error (info, &name,       1, ;);
       xcf_write_int32_check_error  (info, &locked,     1, ;);
@@ -3070,7 +3070,7 @@ xcf_save_old_vectors (XcfInfo    *info,
   if (gimp_image_get_selected_paths (image))
     {
       active_path = gimp_image_get_selected_paths (image)->data;
-      /* Having more than 1 selected vectors should not have happened in this
+      /* Having more than 1 selected paths should not have happened in this
        * code path but let's not break saving, only produce a critical.
        */
       if (g_list_length (gimp_image_get_selected_paths (image)) > 1)
@@ -3092,7 +3092,7 @@ xcf_save_old_vectors (XcfInfo    *info,
        list;
        list = g_list_next (list))
     {
-      GimpPath         *vectors = list->data;
+      GimpPath         *path = list->data;
       GimpParasiteList *parasites;
       const gchar      *name;
       guint32           tattoo;
@@ -3113,14 +3113,14 @@ xcf_save_old_vectors (XcfInfo    *info,
        * then each stroke
        */
 
-      name          = gimp_object_get_name (vectors);
-      visible       = gimp_item_get_visible (GIMP_ITEM (vectors));
+      name          = gimp_object_get_name (path);
+      visible       = gimp_item_get_visible (GIMP_ITEM (path));
       /* The 'linked' concept does not exist anymore in GIMP 3.0 and over. */
       linked        = 0;
-      tattoo        = gimp_item_get_tattoo (GIMP_ITEM (vectors));
-      parasites     = gimp_item_get_parasites (GIMP_ITEM (vectors));
+      tattoo        = gimp_item_get_tattoo (GIMP_ITEM (path));
+      parasites     = gimp_item_get_parasites (GIMP_ITEM (path));
       num_parasites = gimp_parasite_list_persistent_length (parasites);
-      num_strokes   = g_queue_get_length (vectors->strokes);
+      num_strokes   = g_queue_get_length (path->strokes);
 
       xcf_write_string_check_error (info, (gchar **) &name, 1, ;);
       xcf_write_int32_check_error  (info, &tattoo,          1, ;);
@@ -3131,7 +3131,7 @@ xcf_save_old_vectors (XcfInfo    *info,
 
       xcf_check_error (xcf_save_parasite_list (info, parasites, error), ;);
 
-      for (stroke_list = g_list_first (vectors->strokes->head);
+      for (stroke_list = g_list_first (path->strokes->head);
            stroke_list;
            stroke_list = g_list_next (stroke_list))
         {
@@ -3213,7 +3213,7 @@ xcf_save_old_vectors (XcfInfo    *info,
 static gboolean
 xcf_save_path (XcfInfo      *info,
                GimpImage    *image,
-               GimpPath     *vectors,
+               GimpPath     *path,
                GError      **error)
 {
   const gchar *string;
@@ -3227,7 +3227,7 @@ xcf_save_path (XcfInfo      *info,
   goffset      pos;
 
   /* write out the path name */
-  string = gimp_object_get_name (vectors);
+  string = gimp_object_get_name (path);
   xcf_write_string_check_error (info, (gchar **) &string, 1, ;);
 
   /* Payload size */
@@ -3237,16 +3237,16 @@ xcf_save_path (XcfInfo      *info,
   base = info->cp;
 
   /* write out the path properties */
-  xcf_save_path_props (info, image, vectors, error);
+  xcf_save_path_props (info, image, path, error);
 
   /* Path version */
   xcf_write_int32_check_error (info, &version, 1, ;);
 
   /* Write out the number of strokes. */
-  num_strokes = g_queue_get_length (vectors->strokes);
+  num_strokes = g_queue_get_length (path->strokes);
   xcf_write_int32_check_error  (info, &num_strokes, 1, ;);
 
-  for (stroke_list = g_list_first (vectors->strokes->head);
+  for (stroke_list = g_list_first (path->strokes->head);
        stroke_list;
        stroke_list = g_list_next (stroke_list))
     {

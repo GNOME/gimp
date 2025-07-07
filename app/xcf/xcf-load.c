@@ -140,7 +140,7 @@ static gboolean        xcf_load_effect_props  (XcfInfo       *info,
                                                FilterData    *filter);
 static gboolean        xcf_load_path_props    (XcfInfo       *info,
                                                GimpImage     *image,
-                                               GimpPath     **vectors);
+                                               GimpPath     **paths);
 static gboolean        xcf_load_prop          (XcfInfo       *info,
                                                PropType      *prop_type,
                                                guint32       *prop_size);
@@ -838,7 +838,7 @@ xcf_load_image (Gimp     *gimp,
     {
       while (TRUE)
         {
-          GimpPath *vectors;
+          GimpPath *path;
 
           /* read in the offset of the next path */
           if (xcf_read_offset (info, &offset, 1) < info->bytes_per_offset)
@@ -871,8 +871,8 @@ xcf_load_image (Gimp     *gimp,
             goto error;
 
           /* read in the path */
-          vectors = xcf_load_path (info, image);
-          if (! vectors)
+          path = xcf_load_path (info, image);
+          if (! path)
             {
               n_broken_paths++;
               GIMP_LOG (XCF, "Failed to load path.");
@@ -887,7 +887,7 @@ xcf_load_image (Gimp     *gimp,
 
           xcf_progress_update (info);
 
-          gimp_image_add_path (image, vectors,
+          gimp_image_add_path (image, path,
                                NULL, /* can't be a tree */
                                gimp_container_get_n_children (gimp_image_get_paths (image)),
                                FALSE);
@@ -909,8 +909,8 @@ xcf_load_image (Gimp     *gimp,
   if (info->selected_channels)
     gimp_image_set_selected_channels (image, info->selected_channels);
 
-  if (info->selected_vectors)
-    gimp_image_set_selected_paths (image, info->selected_vectors);
+  if (info->selected_paths)
+    gimp_image_set_selected_paths (image, info->selected_paths);
 
   /* We don't have linked items concept anymore. We transform formerly
    * linked items into stored sets of named items instead.
@@ -937,7 +937,7 @@ xcf_load_image (Gimp     *gimp,
     }
   if (info->linked_paths)
     {
-      /* It is kind of ugly but vectors are really implemented as
+      /* It is kind of ugly but paths are really implemented as
        * exception in our XCF spec and building over it seems like a
        * mistake. Since I'm seriously not sure this would be much of an
        * issue, I'll let it as it for now.
@@ -2836,7 +2836,7 @@ set_or_seek_node_property:
 static gboolean
 xcf_load_path_props (XcfInfo    *info,
                      GimpImage  *image,
-                     GimpPath  **vectors)
+                     GimpPath  **path)
 {
   PropType prop_type;
   guint32  prop_size;
@@ -2852,7 +2852,7 @@ xcf_load_path_props (XcfInfo    *info,
           return TRUE;
 
         case PROP_SELECTED_PATH:
-          info->selected_vectors = g_list_prepend (info->selected_vectors, *vectors);
+          info->selected_paths = g_list_prepend (info->selected_paths, *path);
           break;
 
         case PROP_VISIBLE:
@@ -2861,7 +2861,7 @@ xcf_load_path_props (XcfInfo    *info,
 
             xcf_read_int32 (info, (guint32 *) &visible, 1);
 
-            gimp_item_set_visible (GIMP_ITEM (*vectors), visible, FALSE);
+            gimp_item_set_visible (GIMP_ITEM (*path), visible, FALSE);
           }
           break;
 
@@ -2871,7 +2871,7 @@ xcf_load_path_props (XcfInfo    *info,
 
             xcf_read_int32 (info, (guint32 *) &color_tag, 1);
 
-            gimp_item_set_color_tag (GIMP_ITEM (*vectors), color_tag, FALSE);
+            gimp_item_set_color_tag (GIMP_ITEM (*path), color_tag, FALSE);
           }
           break;
 
@@ -2881,8 +2881,8 @@ xcf_load_path_props (XcfInfo    *info,
 
             xcf_read_int32 (info, (guint32 *) &lock_content, 1);
 
-            if (gimp_item_can_lock_content (GIMP_ITEM (*vectors)))
-              gimp_item_set_lock_content (GIMP_ITEM (*vectors),
+            if (gimp_item_can_lock_content (GIMP_ITEM (*path)))
+              gimp_item_set_lock_content (GIMP_ITEM (*path),
                                           lock_content, FALSE);
           }
           break;
@@ -2893,8 +2893,8 @@ xcf_load_path_props (XcfInfo    *info,
 
             xcf_read_int32 (info, (guint32 *) &lock_position, 1);
 
-            if (gimp_item_can_lock_position (GIMP_ITEM (*vectors)))
-              gimp_item_set_lock_position (GIMP_ITEM (*vectors),
+            if (gimp_item_can_lock_position (GIMP_ITEM (*path)))
+              gimp_item_set_lock_position (GIMP_ITEM (*path),
                                            lock_position, FALSE);
           }
           break;
@@ -2905,8 +2905,8 @@ xcf_load_path_props (XcfInfo    *info,
 
             xcf_read_int32 (info, (guint32 *) &lock_visibility, 1);
 
-            if (gimp_item_can_lock_visibility (GIMP_ITEM (*vectors)))
-              gimp_item_set_lock_visibility (GIMP_ITEM (*vectors),
+            if (gimp_item_can_lock_visibility (GIMP_ITEM (*path)))
+              gimp_item_set_lock_visibility (GIMP_ITEM (*path),
                                              lock_visibility, FALSE);
           }
           break;
@@ -2917,7 +2917,7 @@ xcf_load_path_props (XcfInfo    *info,
 
             xcf_read_int32 (info, (guint32 *) &tattoo, 1);
 
-            gimp_item_set_tattoo (GIMP_ITEM (*vectors), tattoo);
+            gimp_item_set_tattoo (GIMP_ITEM (*path), tattoo);
           }
           break;
 
@@ -2933,7 +2933,7 @@ xcf_load_path_props (XcfInfo    *info,
                 if (! p)
                   return FALSE;
 
-                if (! gimp_item_parasite_validate (GIMP_ITEM (*vectors), p,
+                if (! gimp_item_parasite_validate (GIMP_ITEM (*path), p,
                                                     &error))
                   {
                     gimp_message (info->gimp, G_OBJECT (info->progress),
@@ -2944,7 +2944,7 @@ xcf_load_path_props (XcfInfo    *info,
                   }
                 else
                   {
-                    gimp_item_parasite_attach (GIMP_ITEM (*vectors), p, FALSE);
+                    gimp_item_parasite_attach (GIMP_ITEM (*path), p, FALSE);
                   }
 
                 gimp_parasite_free (p);
@@ -2964,16 +2964,16 @@ xcf_load_path_props (XcfInfo    *info,
               guint32       n;
 
               xcf_read_int32 (info, &n, 1);
-              set = g_list_nth_data (info->vectors_sets, n);
+              set = g_list_nth_data (info->path_sets, n);
               if (set == NULL)
                 g_printerr ("xcf: unknown path set: %d (skipping)\n", n);
-              else if (! g_type_is_a (G_TYPE_FROM_INSTANCE (*vectors),
+              else if (! g_type_is_a (G_TYPE_FROM_INSTANCE (*path),
                                       gimp_item_list_get_item_type (set)))
                 g_printerr ("xcf: path '%s' cannot be added to item set '%s' with item type %s (skipping)\n",
-                            gimp_object_get_name (*vectors), gimp_object_get_name (set),
+                            gimp_object_get_name (*path), gimp_object_get_name (set),
                             g_type_name (gimp_item_list_get_item_type (set)));
               else
-                gimp_item_list_add (set, GIMP_ITEM (*vectors));
+                gimp_item_list_add (set, GIMP_ITEM (*path));
             }
           break;
 #endif
@@ -3584,7 +3584,7 @@ static GimpPath *
 xcf_load_path (XcfInfo   *info,
                GimpImage *image)
 {
-  GimpPath *vectors = NULL;
+  GimpPath *path = NULL;
   gchar    *name;
   guint32   version;
   guint32   plength;
@@ -3598,9 +3598,9 @@ xcf_load_path (XcfInfo   *info,
   GIMP_LOG (XCF, "Path name='%s'", name);
 
   /* create a new path */
-  vectors = gimp_path_new (image, name);
+  path = gimp_path_new (image, name);
   g_free (name);
-  if (! vectors)
+  if (! path)
     return NULL;
 
   /* Read the path's payload size. */
@@ -3608,7 +3608,7 @@ xcf_load_path (XcfInfo   *info,
   base = info->cp;
 
   /* read in the path properties */
-  if (! xcf_load_path_props (info, image, &vectors))
+  if (! xcf_load_path_props (info, image, &path))
     goto error;
 
   GIMP_LOG (XCF, "path props loaded");
@@ -3621,7 +3621,7 @@ xcf_load_path (XcfInfo   *info,
     {
       gimp_message (info->gimp, G_OBJECT (info->progress),
                     GIMP_MESSAGE_WARNING,
-                    "Unknown vectors version: %d (skipping)", version);
+                    "Unknown path version: %d (skipping)", version);
       goto error;
     }
 
@@ -3710,7 +3710,7 @@ xcf_load_path (XcfInfo   *info,
                              "control-points", control_points,
                              NULL);
 
-      gimp_path_stroke_add (vectors, stroke);
+      gimp_path_stroke_add (path, stroke);
 
       g_object_unref (stroke);
       gimp_value_array_unref (control_points);
@@ -3725,12 +3725,12 @@ xcf_load_path (XcfInfo   *info,
       goto error;
     }
 
-  return vectors;
+  return path;
 
 error:
 
   xcf_seek_pos (info, base + plength, NULL);
-  g_clear_object (&vectors);
+  g_clear_object (&path);
 
   return NULL;
 }
@@ -4380,7 +4380,7 @@ xcf_load_old_paths (XcfInfo   *info,
 {
   guint32   num_paths;
   guint32   last_selected_row;
-  GimpPath *active_vectors;
+  GimpPath *active_path;
 
   xcf_read_int32 (info, &last_selected_row, 1);
   xcf_read_int32 (info, &num_paths,         1);
@@ -4391,13 +4391,13 @@ xcf_load_old_paths (XcfInfo   *info,
     if (! xcf_load_old_path (info, image))
       return FALSE;
 
-  active_vectors =
+  active_path =
     GIMP_PATH (gimp_container_get_child_by_index (gimp_image_get_paths (image),
                                                      last_selected_row));
 
-  if (active_vectors)
+  if (active_path)
     {
-      GList *list = g_list_prepend (NULL, active_vectors);
+      GList *list = g_list_prepend (NULL, active_path);
       gimp_image_set_selected_paths (image, list);
       g_list_free (list);
     }
@@ -4416,7 +4416,7 @@ xcf_load_old_path (XcfInfo   *info,
   guint32                 num_points;
   guint32                 version; /* changed from num_paths */
   GimpTattoo              tattoo = 0;
-  GimpPath               *vectors;
+  GimpPath               *path;
   GimpPathCompatPoint    *points;
   gint                    i;
 
@@ -4487,18 +4487,18 @@ xcf_load_old_path (XcfInfo   *info,
         }
     }
 
-  vectors = gimp_path_compat_new (image, name, points, num_points, closed);
+  path = gimp_path_compat_new (image, name, points, num_points, closed);
 
   g_free (name);
   g_free (points);
 
   if (locked)
-    info->linked_paths = g_list_prepend (info->linked_paths, vectors);
+    info->linked_paths = g_list_prepend (info->linked_paths, path);
 
   if (tattoo)
-    gimp_item_set_tattoo (GIMP_ITEM (vectors), tattoo);
+    gimp_item_set_tattoo (GIMP_ITEM (path), tattoo);
 
-  gimp_image_add_path (image, vectors,
+  gimp_image_add_path (image, path,
                        NULL, /* can't be a tree */
                        gimp_container_get_n_children (gimp_image_get_paths (image)),
                        FALSE);
@@ -4514,7 +4514,7 @@ xcf_load_old_vectors (XcfInfo   *info,
   guint32   version;
   guint32   active_index;
   guint32   num_paths;
-  GimpPath *active_vectors;
+  GimpPath *active_path;
 
 #ifdef GIMP_XCF_PATH_DEBUG
   g_printerr ("xcf_load_old_vectors\n");
@@ -4526,7 +4526,7 @@ xcf_load_old_vectors (XcfInfo   *info,
     {
       gimp_message (info->gimp, G_OBJECT (info->progress),
                     GIMP_MESSAGE_WARNING,
-                    "Unknown vectors version: %d (skipping)", version);
+                    "Unknown path version: %d (skipping)", version);
       return FALSE;
     }
 
@@ -4542,13 +4542,13 @@ xcf_load_old_vectors (XcfInfo   *info,
       return FALSE;
 
   /* FIXME tree */
-  active_vectors =
+  active_path =
     GIMP_PATH (gimp_container_get_child_by_index (gimp_image_get_paths (image),
                                                   active_index));
 
-  if (active_vectors)
+  if (active_path)
     {
-      GList *list = g_list_prepend (NULL, active_vectors);
+      GList *list = g_list_prepend (NULL, active_path);
       gimp_image_set_selected_paths (image, list);
       g_list_free (list);
     }
@@ -4569,7 +4569,7 @@ xcf_load_old_vector (XcfInfo   *info,
   guint32     linked;
   guint32     num_parasites;
   guint32     num_strokes;
-  GimpPath   *vectors;
+  GimpPath   *path;
   gint        i;
 
 #ifdef GIMP_XCF_PATH_DEBUG
@@ -4589,15 +4589,15 @@ xcf_load_old_vector (XcfInfo   *info,
               name, tattoo, visible, linked, num_parasites, num_strokes);
 #endif
 
-  vectors = gimp_path_new (image, name);
+  path = gimp_path_new (image, name);
   g_free (name);
 
-  gimp_item_set_visible (GIMP_ITEM (vectors), visible, FALSE);
+  gimp_item_set_visible (GIMP_ITEM (path), visible, FALSE);
   if (linked)
-    info->linked_paths = g_list_prepend (info->linked_paths, vectors);
+    info->linked_paths = g_list_prepend (info->linked_paths, path);
 
   if (tattoo)
-    gimp_item_set_tattoo (GIMP_ITEM (vectors), tattoo);
+    gimp_item_set_tattoo (GIMP_ITEM (path), tattoo);
 
   for (i = 0; i < num_parasites; i++)
     {
@@ -4607,7 +4607,7 @@ xcf_load_old_vector (XcfInfo   *info,
       if (! parasite)
         return FALSE;
 
-      if (! gimp_item_parasite_validate (GIMP_ITEM (vectors), parasite, &error))
+      if (! gimp_item_parasite_validate (GIMP_ITEM (path), parasite, &error))
         {
           gimp_message (info->gimp, G_OBJECT (info->progress),
                         GIMP_MESSAGE_WARNING,
@@ -4617,7 +4617,7 @@ xcf_load_old_vector (XcfInfo   *info,
         }
       else
         {
-          gimp_item_parasite_attach (GIMP_ITEM (vectors), parasite, FALSE);
+          gimp_item_parasite_attach (GIMP_ITEM (path), parasite, FALSE);
         }
 
       gimp_parasite_free (parasite);
@@ -4705,13 +4705,13 @@ xcf_load_old_vector (XcfInfo   *info,
                              "control-points", control_points,
                              NULL);
 
-      gimp_path_stroke_add (vectors, stroke);
+      gimp_path_stroke_add (path, stroke);
 
       g_object_unref (stroke);
       gimp_value_array_unref (control_points);
     }
 
-  gimp_image_add_path (image, vectors,
+  gimp_image_add_path (image, path,
                        NULL, /* FIXME tree */
                        gimp_container_get_n_children (gimp_image_get_paths (image)),
                        FALSE);
