@@ -434,7 +434,9 @@ gimp_item_search_key_release (GtkWidget        *widget,
           gtk_widget_set_tooltip_text (search->search_entry, tooltip);
           g_free (tooltip);
 
-          gimp_image_set_selected_layers (image, NULL);
+          gimp_image_set_selected_items (image,
+                                         item_view_class->item_type,
+                                         NULL);
 
           gtk_entry_set_attributes (GTK_ENTRY (search->search_entry), attrs);
           pango_attr_list_unref (attrs);
@@ -445,12 +447,16 @@ gimp_item_search_key_release (GtkWidget        *widget,
       else if (items == NULL)
         {
           /* Pattern does not match any results. */
-          gimp_image_set_selected_layers (image, NULL);
+          gimp_image_set_selected_items (image,
+                                         item_view_class->item_type,
+                                         NULL);
           gimp_widget_blink (search->search_entry);
         }
       else
         {
-          gimp_image_set_selected_layers (image, items);
+          gimp_image_set_selected_items (image,
+                                         item_view_class->item_type,
+                                         items);
           g_list_free (items);
         }
     }
