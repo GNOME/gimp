@@ -70,8 +70,10 @@ EXPORTS
 	gimp_color_display_stack_changed
 	gimp_color_display_stack_clone
 	gimp_color_display_stack_convert_buffer
+	gimp_color_display_stack_get_display
 	gimp_color_display_stack_get_filters
 	gimp_color_display_stack_get_type
+	gimp_color_display_stack_is_any_enabled
 	gimp_color_display_stack_new
 	gimp_color_display_stack_remove
 	gimp_color_display_stack_reorder_down

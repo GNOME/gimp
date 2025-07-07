@@ -40,8 +40,12 @@ GimpColorDisplayStack * gimp_color_display_stack_clone    (GimpColorDisplayStack
 
 void    gimp_color_display_stack_changed         (GimpColorDisplayStack *stack);
 
+GIMP_DEPRECATED_FOR(g_list_model_get_item)
 GList * gimp_color_display_stack_get_filters     (GimpColorDisplayStack *stack);
 
+GimpColorDisplay *
+        gimp_color_display_stack_get_display     (GimpColorDisplayStack *stack,
+                                                  guint                  index);
 void    gimp_color_display_stack_add             (GimpColorDisplayStack *stack,
                                                   GimpColorDisplay      *display);
 void    gimp_color_display_stack_remove          (GimpColorDisplayStack *stack,
@@ -53,6 +57,8 @@ void    gimp_color_display_stack_reorder_down    (GimpColorDisplayStack *stack,
 void    gimp_color_display_stack_convert_buffer  (GimpColorDisplayStack *stack,
                                                   GeglBuffer            *buffer,
                                                   GeglRectangle         *area);
+gboolean
+        gimp_color_display_stack_is_any_enabled  (GimpColorDisplayStack *stack);
 
 
 G_END_DECLS

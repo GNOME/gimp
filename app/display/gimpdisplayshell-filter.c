@@ -73,19 +73,8 @@ gimp_display_shell_has_filter (GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
-  if (shell->filter_stack)
-    {
-      GList *filters;
-      GList *iter;
-
-      filters = gimp_color_display_stack_get_filters (shell->filter_stack);
-
-      for (iter = filters; iter; iter = g_list_next (iter))
-        {
-          if (gimp_color_display_get_enabled (GIMP_COLOR_DISPLAY (iter->data)))
-            return TRUE;
-        }
-    }
+  if (shell->filter_stack != NULL)
+    return gimp_color_display_stack_is_any_enabled (shell->filter_stack);
 
   return FALSE;
 }
