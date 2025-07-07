@@ -836,6 +836,27 @@ user_update_post_process_menurc_over20 (gpointer user_data)
   return g_string_free (string, FALSE);
 }
 
+#define SHORTCUTSRC_UPDATE_PATTERN \
+  "\"tools-vector\""
+
+static gboolean
+user_update_shortcutsrc (const GMatchInfo *matched_value,
+                         GString          *new_value,
+                         gpointer          data)
+{
+  gchar *match = g_match_info_fetch (matched_value, 0);
+
+  if (g_strcmp0 (match, "\"tools-vector\"") == 0)
+    {
+      /* Renamed in GIMP 3.2. */
+      g_string_append (new_value, "\"tools-path\"");
+    }
+
+  g_free (match);
+
+  return FALSE;
+}
+
 #define TEMPLATERC_UPDATE_PATTERN \
   "\\(precision (.*)-gamma\\)"
 
@@ -1321,13 +1342,14 @@ user_install_migrate_files (GimpUserInstall *install)
             }
           else if (strcmp (basename, "menurc") == 0)
             {
-              switch (install->old_minor)
+              if (install->old_major < 2 ||
+                  (install->old_major == 2 && install->old_minor == 0))
                 {
-                case 0:
                   /*  skip menurc for gimp 2.0 as the format has changed  */
                   goto next_file;
-                  break;
-                default:
+                }
+              else
+                {
                   update_pattern        = MENURC_OVER20_UPDATE_PATTERN;
                   update_callback       = user_update_menurc_over20;
                   post_process_callback = user_update_post_process_menurc_over20;
@@ -1335,6 +1357,11 @@ user_install_migrate_files (GimpUserInstall *install)
                   new_dest              = "shortcutsrc";
                   break;
                 }
+            }
+          else if (strcmp (basename, "shortcutsrc") == 0)
+            {
+              update_pattern  = SHORTCUTSRC_UPDATE_PATTERN;
+              update_callback = user_update_shortcutsrc;
             }
           else if (strcmp (basename, "templaterc") == 0)
             {
