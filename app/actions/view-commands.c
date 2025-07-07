@@ -963,9 +963,9 @@ view_snap_to_canvas_cmd_callback (GimpAction *action,
 }
 
 void
-view_snap_to_vectors_cmd_callback (GimpAction *action,
-                                   GVariant   *value,
-                                   gpointer    data)
+view_snap_to_path_cmd_callback (GimpAction *action,
+                                GVariant   *value,
+                                gpointer    data)
 {
   GimpDisplayShell *shell;
   gboolean          active;
@@ -973,9 +973,9 @@ view_snap_to_vectors_cmd_callback (GimpAction *action,
 
   active = g_variant_get_boolean (value);
 
-  if (active != gimp_display_shell_get_snap_to_vectors (shell))
+  if (active != gimp_display_shell_get_snap_to_path (shell))
     {
-      gimp_display_shell_set_snap_to_vectors (shell, active);
+      gimp_display_shell_set_snap_to_path (shell, active);
     }
 }
 

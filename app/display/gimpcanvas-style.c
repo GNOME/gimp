@@ -80,11 +80,11 @@ static GeglColor *selection_out_bg;
 static GeglColor *selection_in_fg;
 static GeglColor *selection_in_bg;
 
-static GeglColor *vectors_normal_bg;
-static GeglColor *vectors_normal_fg;
+static GeglColor *path_normal_bg;
+static GeglColor *path_normal_fg;
 
-static GeglColor *vectors_active_bg;
-static GeglColor *vectors_active_fg;
+static GeglColor *path_active_bg;
+static GeglColor *path_active_fg;
 
 static GeglColor *outline_bg;
 static GeglColor *outline_fg;
@@ -153,15 +153,15 @@ gimp_canvas_styles_init (void)
   selection_in_fg         = gegl_color_new ("black");
   selection_in_bg         = gegl_color_new ("white");
 
-  vectors_normal_bg       = gegl_color_new ("white");
-  gimp_color_set_alpha (vectors_normal_bg, 0.6);
-  vectors_normal_fg       = gegl_color_new ("blue");
-  gimp_color_set_alpha (vectors_normal_fg, 0.8);
+  path_normal_bg          = gegl_color_new ("white");
+  gimp_color_set_alpha (path_normal_bg, 0.6);
+  path_normal_fg          = gegl_color_new ("blue");
+  gimp_color_set_alpha (path_normal_fg, 0.8);
 
-  vectors_active_bg       = gegl_color_new ("white");
-  gimp_color_set_alpha (vectors_active_bg, 0.6);
-  vectors_active_fg       = gegl_color_new ("red");
-  gimp_color_set_alpha (vectors_active_fg, 0.8);
+  path_active_bg          = gegl_color_new ("white");
+  gimp_color_set_alpha (path_active_bg, 0.6);
+  path_active_fg          = gegl_color_new ("red");
+  gimp_color_set_alpha (path_active_fg, 0.8);
 
   outline_bg              = gegl_color_new ("white");
   gimp_color_set_alpha (outline_bg, 0.6);
@@ -211,10 +211,10 @@ gimp_canvas_styles_exit (void)
   g_object_unref (selection_out_bg);
   g_object_unref (selection_in_fg);
   g_object_unref (selection_in_bg);
-  g_object_unref (vectors_normal_bg);
-  g_object_unref (vectors_normal_fg);
-  g_object_unref (vectors_active_bg);
-  g_object_unref (vectors_active_fg);
+  g_object_unref (path_normal_bg);
+  g_object_unref (path_normal_fg);
+  g_object_unref (path_active_bg);
+  g_object_unref (path_active_fg);
   g_object_unref (outline_bg);
   g_object_unref (outline_fg);
   g_object_unref (passe_partout);
@@ -519,9 +519,9 @@ gimp_canvas_set_selection_in_style (GtkWidget *canvas,
 }
 
 void
-gimp_canvas_set_vectors_bg_style (GtkWidget *canvas,
-                                  cairo_t   *cr,
-                                  gboolean   active)
+gimp_canvas_set_path_bg_style (GtkWidget *canvas,
+                               cairo_t   *cr,
+                               gboolean   active)
 {
   GimpColorConfig *config;
 
@@ -532,15 +532,15 @@ gimp_canvas_set_vectors_bg_style (GtkWidget *canvas,
 
   config = GIMP_CORE_CONFIG (GIMP_CANVAS (canvas)->config)->color_management;
   if (active)
-    gimp_cairo_set_source_color (cr, vectors_active_bg, config, FALSE, canvas);
+    gimp_cairo_set_source_color (cr, path_active_bg, config, FALSE, canvas);
   else
-    gimp_cairo_set_source_color (cr, vectors_normal_bg, config, FALSE, canvas);
+    gimp_cairo_set_source_color (cr, path_normal_bg, config, FALSE, canvas);
 }
 
 void
-gimp_canvas_set_vectors_fg_style (GtkWidget *canvas,
-                                  cairo_t   *cr,
-                                  gboolean   active)
+gimp_canvas_set_path_fg_style (GtkWidget *canvas,
+                               cairo_t   *cr,
+                               gboolean   active)
 {
   GimpColorConfig *config;
 
@@ -551,9 +551,9 @@ gimp_canvas_set_vectors_fg_style (GtkWidget *canvas,
 
   config = GIMP_CORE_CONFIG (GIMP_CANVAS (canvas)->config)->color_management;
   if (active)
-    gimp_cairo_set_source_color (cr, vectors_active_fg, config, FALSE, canvas);
+    gimp_cairo_set_source_color (cr, path_active_fg, config, FALSE, canvas);
   else
-    gimp_cairo_set_source_color (cr, vectors_normal_fg, config, FALSE, canvas);
+    gimp_cairo_set_source_color (cr, path_normal_fg, config, FALSE, canvas);
 }
 
 void

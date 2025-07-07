@@ -103,7 +103,7 @@ gimp_image_scale (GimpImage             *image,
                 "height", new_height,
                 NULL);
 
-  /*  Scale all layers, channels (including selection mask), and vectors  */
+  /*  Scale all layers, channels (including selection mask), and paths  */
   while ((item = gimp_object_queue_pop (queue)))
     {
       if (! gimp_item_scale_by_factors (item,

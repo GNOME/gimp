@@ -183,7 +183,7 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
     case GIMP_DND_TYPE_LAYER:
     case GIMP_DND_TYPE_CHANNEL:
     case GIMP_DND_TYPE_LAYER_MASK:
-    case GIMP_DND_TYPE_VECTORS:
+    case GIMP_DND_TYPE_PATH:
     case GIMP_DND_TYPE_BRUSH:
     case GIMP_DND_TYPE_PATTERN:
     case GIMP_DND_TYPE_GRADIENT:
@@ -213,7 +213,7 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
 
     case GIMP_DND_TYPE_CHANNEL_LIST:
     case GIMP_DND_TYPE_LAYER_LIST:
-    case GIMP_DND_TYPE_VECTORS_LIST:
+    case GIMP_DND_TYPE_PATH_LIST:
       /* Various GimpViewable list (GList) drag data. */
       {
         GtkWidget *src_widget = gtk_drag_get_source_widget (context);

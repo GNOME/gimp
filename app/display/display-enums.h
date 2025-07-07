@@ -146,7 +146,7 @@ GType gimp_path_style_get_type (void) G_GNUC_CONST;
 typedef enum
 {
   GIMP_PATH_STYLE_DEFAULT,
-  GIMP_PATH_STYLE_VECTORS,
+  GIMP_PATH_STYLE_PATH,
   GIMP_PATH_STYLE_OUTLINE
 } GimpPathStyle;
 

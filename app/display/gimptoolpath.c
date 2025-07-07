@@ -318,7 +318,7 @@ gimp_tool_path_dispose (GObject *object)
 {
   GimpToolPath *path = GIMP_TOOL_PATH (object);
 
-  gimp_tool_path_set_vectors (path, NULL);
+  gimp_tool_path_set_path (path, NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -335,7 +335,7 @@ gimp_tool_path_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_VECTORS:
-      gimp_tool_path_set_vectors (path, g_value_get_object (value));
+      gimp_tool_path_set_path (path, g_value_get_object (value));
       break;
     case PROP_EDIT_MODE:
       private->edit_mode = g_value_get_enum (value);
@@ -599,7 +599,7 @@ gimp_tool_path_button_press (GimpToolWidget      *widget,
                                     GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
                                     NULL, NULL, NULL, NULL, NULL, &vectors))
         {
-          gimp_tool_path_set_vectors (path, vectors);
+          gimp_tool_path_set_path (path, vectors);
         }
 
       private->function = VECTORS_FINISHED;
@@ -622,7 +622,7 @@ gimp_tool_path_button_press (GimpToolWidget      *widget,
 
       private->undo_motion = TRUE;
 
-      gimp_tool_path_set_vectors (path, vectors);
+      gimp_tool_path_set_path (path, vectors);
       g_object_unref (vectors);
 
       private->function = VECTORS_CREATE_STROKE;
@@ -726,13 +726,13 @@ gimp_tool_path_button_press (GimpToolWidget      *widget,
               private->undo_motion = TRUE;
             }
 
-          gimp_canvas_item_on_vectors_handle (private->path,
-                                              private->vectors, coords,
-                                              GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
-                                              GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
-                                              GIMP_ANCHOR_CONTROL, TRUE,
-                                              &private->cur_anchor,
-                                              &private->cur_stroke);
+          gimp_canvas_item_on_path_handle (private->path,
+                                           private->vectors, coords,
+                                           GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
+                                           GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
+                                           GIMP_ANCHOR_CONTROL, TRUE,
+                                           &private->cur_anchor,
+                                           &private->cur_stroke);
           if (! private->cur_anchor)
             private->function = VECTORS_FINISHED;
         }
@@ -1345,24 +1345,24 @@ gimp_tool_path_get_function (GimpToolPath     *path,
   /* are we hovering the current vectors on the current display? */
   if (private->vectors)
     {
-      on_handle = gimp_canvas_item_on_vectors_handle (private->path,
-                                                      private->vectors,
-                                                      coords,
-                                                      GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
-                                                      GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
-                                                      GIMP_ANCHOR_ANCHOR,
-                                                      private->sel_count > 2,
-                                                      &anchor, &stroke);
+      on_handle = gimp_canvas_item_on_path_handle (private->path,
+                                                   private->vectors,
+                                                   coords,
+                                                   GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
+                                                   GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
+                                                   GIMP_ANCHOR_ANCHOR,
+                                                   private->sel_count > 2,
+                                                   &anchor, &stroke);
 
       if (! on_handle)
-        on_curve = gimp_canvas_item_on_vectors_curve (private->path,
-                                                      private->vectors,
-                                                      coords,
-                                                      GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
-                                                      GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
-                                                      NULL,
-                                                      &position, &anchor,
-                                                      &anchor2, &stroke);
+        on_curve = gimp_canvas_item_on_path_curve (private->path,
+                                                   private->vectors,
+                                                   coords,
+                                                   GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
+                                                   GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
+                                                   NULL,
+                                                   &position, &anchor,
+                                                   &anchor2, &stroke);
     }
 
   if (! on_handle && ! on_curve)
@@ -1948,8 +1948,8 @@ gimp_tool_path_new (GimpDisplayShell *shell)
 }
 
 void
-gimp_tool_path_set_vectors (GimpToolPath *path,
-                            GimpPath     *vectors)
+gimp_tool_path_set_path (GimpToolPath *path,
+                         GimpPath     *vectors)
 {
   GimpToolPathPrivate *private;
 

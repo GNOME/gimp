@@ -295,13 +295,13 @@ gimp_canvas_path_stroke (GimpCanvasItem *item,
 
   switch (private->path_style)
     {
-    case GIMP_PATH_STYLE_VECTORS:
+    case GIMP_PATH_STYLE_PATH:
       active = gimp_canvas_item_get_highlight (item);
 
-      gimp_canvas_set_vectors_bg_style (canvas, cr, active);
+      gimp_canvas_set_path_bg_style (canvas, cr, active);
       cairo_stroke_preserve (cr);
 
-      gimp_canvas_set_vectors_fg_style (canvas, cr, active);
+      gimp_canvas_set_path_fg_style (canvas, cr, active);
       cairo_stroke (cr);
       break;
 

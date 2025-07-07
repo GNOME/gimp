@@ -303,15 +303,15 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                     G_CALLBACK (gimp_display_shell_active_paths_handler),
                     shell);
 
-  shell->vectors_freeze_handler =
+  shell->path_freeze_handler =
     gimp_tree_handler_connect (paths, "freeze",
                                G_CALLBACK (gimp_display_shell_path_freeze_handler),
                                shell);
-  shell->vectors_thaw_handler =
+  shell->path_thaw_handler =
     gimp_tree_handler_connect (paths, "thaw",
                                G_CALLBACK (gimp_display_shell_path_thaw_handler),
                                shell);
-  shell->vectors_visible_handler =
+  shell->path_visible_handler =
     gimp_tree_handler_connect (paths, "visibility-changed",
                                G_CALLBACK (gimp_display_shell_path_visible_handler),
                                shell);
@@ -499,14 +499,14 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
                                         gimp_display_shell_path_add_handler,
                                         shell);
 
-  gimp_tree_handler_disconnect (shell->vectors_visible_handler);
-  shell->vectors_visible_handler = NULL;
+  gimp_tree_handler_disconnect (shell->path_visible_handler);
+  shell->path_visible_handler = NULL;
 
-  gimp_tree_handler_disconnect (shell->vectors_thaw_handler);
-  shell->vectors_thaw_handler = NULL;
+  gimp_tree_handler_disconnect (shell->path_thaw_handler);
+  shell->path_thaw_handler = NULL;
 
-  gimp_tree_handler_disconnect (shell->vectors_freeze_handler);
-  shell->vectors_freeze_handler = NULL;
+  gimp_tree_handler_disconnect (shell->path_freeze_handler);
+  shell->path_freeze_handler = NULL;
 
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_shell_active_paths_handler,
@@ -516,7 +516,7 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
        list;
        list = g_list_next (list))
     {
-      gimp_canvas_proxy_group_remove_item (GIMP_CANVAS_PROXY_GROUP (shell->vectors),
+      gimp_canvas_proxy_group_remove_item (GIMP_CANVAS_PROXY_GROUP (shell->paths),
                                            list->data);
     }
 
@@ -966,7 +966,7 @@ static void
 gimp_display_shell_active_paths_handler (GimpImage        *image,
                                          GimpDisplayShell *shell)
 {
-  GimpCanvasProxyGroup *group    = GIMP_CANVAS_PROXY_GROUP (shell->vectors);
+  GimpCanvasProxyGroup *group    = GIMP_CANVAS_PROXY_GROUP (shell->paths);
   GList                *selected = gimp_image_get_selected_paths (image);
   GList                *list;
 
@@ -995,7 +995,7 @@ static void
 gimp_display_shell_path_thaw_handler (GimpPath         *path,
                                       GimpDisplayShell *shell)
 {
-  GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->vectors);
+  GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->paths);
   GimpCanvasItem       *item;
 
   item = gimp_canvas_proxy_group_get_item (group, path);
@@ -1007,7 +1007,7 @@ static void
 gimp_display_shell_path_visible_handler (GimpPath         *path,
                                          GimpDisplayShell *shell)
 {
-  GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->vectors);
+  GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->paths);
   GimpCanvasItem       *item;
 
   item = gimp_canvas_proxy_group_get_item (group, path);
@@ -1021,14 +1021,14 @@ gimp_display_shell_path_add_handler (GimpContainer    *container,
                                      GimpPath         *path,
                                      GimpDisplayShell *shell)
 {
-  GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->vectors);
+  GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->paths);
   GimpCanvasItem       *item;
 
   item = gimp_canvas_path_new (shell,
                                gimp_path_get_bezier (path),
                                0, 0,
                                FALSE,
-                               GIMP_PATH_STYLE_VECTORS);
+                               GIMP_PATH_STYLE_PATH);
   gimp_canvas_item_set_visible (item,
                                 gimp_item_get_visible (GIMP_ITEM (path)));
 
@@ -1041,7 +1041,7 @@ gimp_display_shell_path_remove_handler (GimpContainer    *container,
                                         GimpPath         *path,
                                         GimpDisplayShell *shell)
 {
-  GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->vectors);
+  GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->paths);
 
   gimp_canvas_proxy_group_remove_item (group, path);
 }

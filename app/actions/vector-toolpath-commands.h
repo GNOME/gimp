@@ -36,4 +36,5 @@ void   vector_toolpath_reverse_stroke_cmd_callback (GimpAction *action,
                                                     GVariant   *value,
                                                     gpointer    data);
 
+
 #endif /* __VECTOR_TOOLPATH_COMMANDS_H__ */

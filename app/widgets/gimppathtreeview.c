@@ -153,7 +153,7 @@ gimp_path_tree_view_constructed (GObject *object)
   modify_mask = gtk_widget_get_modifier_mask (GTK_WIDGET (object),
                                               GDK_MODIFIER_INTENT_MODIFY_SELECTION);
 
-  view->toselection_button =
+  view->to_selection_button =
     gimp_editor_add_action_button (editor, "paths",
                                    "paths-selection-replace",
                                    "paths-selection-add",
@@ -164,19 +164,19 @@ gimp_path_tree_view_constructed (GObject *object)
                                    extend_mask | modify_mask,
                                    NULL);
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (editor),
-                                  GTK_BUTTON (view->toselection_button),
+                                  GTK_BUTTON (view->to_selection_button),
                                   GIMP_TYPE_PATH);
   gtk_box_reorder_child (gimp_editor_get_button_box (editor),
-                         view->toselection_button, 4);
+                         view->to_selection_button, 4);
 
-  view->tovectors_button =
+  view->to_path_button =
     gimp_editor_add_action_button (editor, "paths",
                                    "paths-selection-to-path",
                                    "paths-selection-to-path-advanced",
                                    GDK_SHIFT_MASK,
                                    NULL);
   gtk_box_reorder_child (gimp_editor_get_button_box (editor),
-                         view->tovectors_button, 5);
+                         view->to_path_button, 5);
 
   view->stroke_button =
     gimp_editor_add_action_button (editor, "paths",

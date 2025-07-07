@@ -799,14 +799,14 @@ gimp_image_init (GimpImage *image)
   private->channels            = gimp_item_tree_new (image,
                                                      GIMP_TYPE_DRAWABLE_STACK,
                                                      GIMP_TYPE_CHANNEL);
-  private->vectors             = gimp_item_tree_new (image,
+  private->paths               = gimp_item_tree_new (image,
                                                      GIMP_TYPE_ITEM_STACK,
                                                      GIMP_TYPE_PATH);
   private->layer_stack         = NULL;
 
   private->stored_layer_sets   = NULL;
   private->stored_channel_sets = NULL;
-  private->stored_vectors_sets = NULL;
+  private->stored_path_sets    = NULL;
 
   g_signal_connect (private->projection, "notify::buffer",
                     G_CALLBACK (gimp_image_projection_buffer_notify),
@@ -818,7 +818,7 @@ gimp_image_init (GimpImage *image)
   g_signal_connect (private->channels, "notify::selected-items",
                     G_CALLBACK (gimp_image_selected_channels_notify),
                     image);
-  g_signal_connect (private->vectors, "notify::selected-items",
+  g_signal_connect (private->paths, "notify::selected-items",
                     G_CALLBACK (gimp_image_selected_paths_notify),
                     image);
 
@@ -1102,9 +1102,9 @@ gimp_image_dispose (GObject *object)
 
   gimp_image_undo_free (image);
 
-  g_list_free_full (private->stored_layer_sets, g_object_unref);
+  g_list_free_full (private->stored_layer_sets,   g_object_unref);
   g_list_free_full (private->stored_channel_sets, g_object_unref);
-  g_list_free_full (private->stored_vectors_sets, g_object_unref);
+  g_list_free_full (private->stored_path_sets,    g_object_unref);
 
   g_signal_handlers_disconnect_by_func (private->layers->container,
                                         gimp_image_invalidate,
@@ -1141,7 +1141,7 @@ gimp_image_dispose (GObject *object)
 
   g_object_run_dispose (G_OBJECT (private->layers));
   g_object_run_dispose (G_OBJECT (private->channels));
-  g_object_run_dispose (G_OBJECT (private->vectors));
+  g_object_run_dispose (G_OBJECT (private->paths));
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -1170,7 +1170,7 @@ gimp_image_finalize (GObject *object)
   g_clear_object (&private->untitled_file);
   g_clear_object (&private->layers);
   g_clear_object (&private->channels);
-  g_clear_object (&private->vectors);
+  g_clear_object (&private->paths);
   g_clear_object (&private->quick_mask_color);
 
   if (private->layer_stack)
@@ -1286,7 +1286,7 @@ gimp_image_get_memsize (GimpObject *object,
                                       gui_size);
   memsize += gimp_object_get_memsize (GIMP_OBJECT (private->channels),
                                       gui_size);
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (private->vectors),
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (private->paths),
                                       gui_size);
 
   memsize += gimp_g_slist_get_memsize (private->layer_stack, 0);
@@ -3040,9 +3040,9 @@ gimp_image_get_xcf_version (GimpImage    *image,
   items = gimp_image_get_path_list (image);
   for (list = items; list; list = g_list_next (list))
     {
-      GimpPath *vectors = GIMP_PATH (list->data);
+      GimpPath *path = GIMP_PATH (list->data);
 
-      if (gimp_item_get_color_tag (GIMP_ITEM (vectors)) != GIMP_COLOR_TAG_NONE)
+      if (gimp_item_get_color_tag (GIMP_ITEM (path)) != GIMP_COLOR_TAG_NONE)
         {
           ADD_REASON (g_strdup_printf (_("Storing color tags in path was "
                                          "added in %s"), "GIMP 3.0.0"));
@@ -4616,7 +4616,7 @@ gimp_image_get_path_tree (GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->vectors;
+  return GIMP_IMAGE_GET_PRIVATE (image)->paths;
 }
 
 GimpContainer *
@@ -4640,7 +4640,7 @@ gimp_image_get_paths (GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->vectors->container;
+  return GIMP_IMAGE_GET_PRIVATE (image)->paths->container;
 }
 
 gint
@@ -4913,7 +4913,7 @@ gimp_image_get_selected_paths (GimpImage *image)
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  return gimp_item_tree_get_selected_items (private->vectors);
+  return gimp_item_tree_get_selected_items (private->paths);
 }
 
 void
@@ -5040,7 +5040,7 @@ gimp_image_set_selected_paths (GimpImage *image,
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  gimp_item_tree_set_selected_items (private->vectors, g_list_copy (paths));
+  gimp_item_tree_set_selected_items (private->paths, g_list_copy (paths));
 }
 
 
@@ -5541,7 +5541,7 @@ gimp_image_store_item_set (GimpImage    *image,
   else if (item_type == GIMP_TYPE_CHANNEL)
     stored_sets = &private->stored_channel_sets;
   else if (item_type == GIMP_TYPE_PATH)
-    stored_sets = &private->stored_vectors_sets;
+    stored_sets = &private->stored_path_sets;
   else
     g_return_if_reached ();
 
@@ -5602,7 +5602,7 @@ gimp_image_unlink_item_set (GimpImage    *image,
   else if (item_type == GIMP_TYPE_CHANNEL)
     stored_sets = &private->stored_channel_sets;
   else if (item_type == GIMP_TYPE_PATH)
-    stored_sets = &private->stored_vectors_sets;
+    stored_sets = &private->stored_path_sets;
   else
     g_return_val_if_reached (FALSE);
 
@@ -5641,7 +5641,7 @@ gimp_image_get_stored_item_sets (GimpImage *image,
   else if (item_type == GIMP_TYPE_CHANNEL)
     return private->stored_channel_sets;
   else if (item_type == GIMP_TYPE_PATH)
-    return private->stored_vectors_sets;
+    return private->stored_path_sets;
 
   g_return_val_if_reached (FALSE);
 }
@@ -5998,7 +5998,7 @@ gimp_image_add_path (GimpImage   *image,
 
   /*  item and parent are type-checked in GimpItemTree
    */
-  if (! gimp_item_tree_get_insert_pos (private->vectors,
+  if (! gimp_item_tree_get_insert_pos (private->paths,
                                        (GimpItem *) path,
                                        (GimpItem **) &parent,
                                        &position))
@@ -6009,7 +6009,7 @@ gimp_image_add_path (GimpImage   *image,
                                    path,
                                    gimp_image_get_selected_paths (image));
 
-  gimp_item_tree_add_item (private->vectors, GIMP_ITEM (path),
+  gimp_item_tree_add_item (private->paths, GIMP_ITEM (path),
                            GIMP_ITEM (parent), position);
 
   if (path != NULL)
@@ -6055,7 +6055,7 @@ gimp_image_remove_path (GimpImage   *image,
 
   g_object_ref (path);
 
-  new_selected = gimp_item_tree_remove_item (private->vectors,
+  new_selected = gimp_item_tree_remove_item (private->paths,
                                              GIMP_ITEM (path),
                                              new_selected);
 

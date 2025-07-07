@@ -273,9 +273,9 @@ static const GimpToggleActionEntry view_toggle_actions[] =
   { "view-snap-to-vectors", NULL,
     NC_("view-action", "Snap t_o Active Path"), NULL, { NULL },
     NC_("view-action", "Tool operations snap to the active path"),
-    view_snap_to_vectors_cmd_callback,
+    view_snap_to_path_cmd_callback,
     FALSE,
-    GIMP_HELP_VIEW_SNAP_TO_VECTORS },
+    GIMP_HELP_VIEW_SNAP_TO_PATH },
 
   { "view-snap-to-bbox", NULL,
     NC_("view-action", "Snap to _Bounding Boxes"), NULL, { NULL },

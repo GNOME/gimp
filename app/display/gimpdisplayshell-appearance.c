@@ -445,8 +445,8 @@ gimp_display_shell_get_snap_to_canvas (GimpDisplayShell *shell)
 }
 
 void
-gimp_display_shell_set_snap_to_vectors (GimpDisplayShell *shell,
-                                        gboolean          snap)
+gimp_display_shell_set_snap_to_path (GimpDisplayShell *shell,
+                                     gboolean          snap)
 {
   GimpDisplayOptions *options;
 
@@ -458,7 +458,7 @@ gimp_display_shell_set_snap_to_vectors (GimpDisplayShell *shell,
 }
 
 gboolean
-gimp_display_shell_get_snap_to_vectors (GimpDisplayShell *shell)
+gimp_display_shell_get_snap_to_path (GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 

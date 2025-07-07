@@ -281,7 +281,7 @@ gimp_channel_select_polygon (GimpChannel       *channel,
 void
 gimp_channel_select_path (GimpChannel    *channel,
                           const gchar    *undo_desc,
-                          GimpPath       *vectors,
+                          GimpPath       *path,
                           GimpChannelOps  op,
                           gboolean        antialias,
                           gboolean        feather,
@@ -294,9 +294,9 @@ gimp_channel_select_path (GimpChannel    *channel,
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
   g_return_if_fail (undo_desc != NULL);
-  g_return_if_fail (GIMP_IS_PATH (vectors));
+  g_return_if_fail (GIMP_IS_PATH (path));
 
-  bezier = gimp_path_get_bezier (vectors);
+  bezier = gimp_path_get_bezier (path);
 
   if (bezier && bezier->num_data > 4)
     {

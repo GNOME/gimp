@@ -46,7 +46,7 @@ static const GimpActionEntry paths_actions[] =
     NC_("paths-action", "Edit Pa_th"), NULL, { NULL },
     NC_("paths-action", "Edit the active path"),
     paths_edit_cmd_callback,
-    GIMP_HELP_TOOL_VECTORS },
+    GIMP_HELP_TOOL_PATH },
 
   { "paths-edit-attributes", GIMP_ICON_EDIT,
     NC_("paths-action", "_Edit Path Attributes..."), NULL, { NULL },

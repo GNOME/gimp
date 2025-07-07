@@ -207,7 +207,7 @@ gimp_vector_tool_dispose (GObject *object)
 {
   GimpVectorTool *vector_tool = GIMP_VECTOR_TOOL (object);
 
-  gimp_vector_tool_set_vectors (vector_tool, NULL);
+  gimp_vector_tool_set_path (vector_tool, NULL);
   g_clear_object (&vector_tool->widget);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -406,8 +406,8 @@ gimp_vector_tool_start (GimpVectorTool *vector_tool,
                           G_BINDING_SYNC_CREATE |
                           G_BINDING_BIDIRECTIONAL);
 
-  gimp_tool_path_set_vectors (GIMP_TOOL_PATH (widget),
-                              vector_tool->vectors);
+  gimp_tool_path_set_path (GIMP_TOOL_PATH (widget),
+                           vector_tool->vectors);
 
   g_signal_connect (widget, "changed",
                     G_CALLBACK (gimp_vector_tool_path_changed),
@@ -433,7 +433,7 @@ gimp_vector_tool_halt (GimpVectorTool *vector_tool)
   if (tool->display)
     gimp_tool_pop_status (tool, tool->display);
 
-  gimp_vector_tool_set_vectors (vector_tool, NULL);
+  gimp_vector_tool_set_path (vector_tool, NULL);
 
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
@@ -464,11 +464,11 @@ gimp_vector_tool_path_changed (GimpToolWidget *path,
                                GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
           gimp_image_flush (image);
 
-          gimp_vector_tool_set_vectors (vector_tool, vectors);
+          gimp_vector_tool_set_path (vector_tool, vectors);
         }
       else
         {
-          gimp_vector_tool_set_vectors (vector_tool, vectors);
+          gimp_vector_tool_set_path (vector_tool, vectors);
 
           if (vectors)
             {
@@ -538,19 +538,19 @@ gimp_vector_tool_vectors_changed (GimpImage      *image,
   if (g_list_length (gimp_image_get_selected_paths (image)) == 1)
     path = gimp_image_get_selected_paths (image)->data;
 
-  gimp_vector_tool_set_vectors (vector_tool, path);
+  gimp_vector_tool_set_path (vector_tool, path);
 }
 
 static void
 gimp_vector_tool_vectors_removed (GimpPath       *vectors,
                                   GimpVectorTool *vector_tool)
 {
-  gimp_vector_tool_set_vectors (vector_tool, NULL);
+  gimp_vector_tool_set_path (vector_tool, NULL);
 }
 
 void
-gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
-                              GimpPath       *vectors)
+gimp_vector_tool_set_path (GimpVectorTool *vector_tool,
+                           GimpPath       *vectors)
 {
   GimpTool          *tool;
   GimpItem          *item = NULL;
@@ -659,7 +659,7 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
 
   if (tool->display)
     {
-      gimp_tool_path_set_vectors (GIMP_TOOL_PATH (vector_tool->widget), vectors);
+      gimp_tool_path_set_path (GIMP_TOOL_PATH (vector_tool->widget), vectors);
     }
   else
     {

@@ -87,7 +87,8 @@ vector_toolpath_actions_update (GimpActionGroup *group,
                                 gpointer         data)
 {
   GimpToolPath *toolpath = GIMP_TOOL_PATH (data);
-  gboolean on_handle, on_curve;
+  gboolean      on_handle;
+  gboolean      on_curve;
 
   gimp_tool_path_get_popup_state (toolpath, &on_handle, &on_curve);
 

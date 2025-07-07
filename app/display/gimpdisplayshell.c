@@ -1826,7 +1826,7 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
 
   snap_to_canvas = gimp_display_shell_get_snap_to_canvas (shell);
 
-  if (gimp_display_shell_get_snap_to_vectors (shell) &&
+  if (gimp_display_shell_get_snap_to_path (shell) &&
       gimp_image_get_selected_paths (image))
     {
       snap_to_path = TRUE;

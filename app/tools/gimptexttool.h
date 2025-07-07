@@ -115,8 +115,8 @@ void       gimp_text_tool_cut_clipboard          (GimpTextTool  *text_tool);
 void       gimp_text_tool_copy_clipboard         (GimpTextTool  *text_tool);
 void       gimp_text_tool_paste_clipboard        (GimpTextTool  *text_tool);
 
-void       gimp_text_tool_create_vectors         (GimpTextTool  *text_tool);
-gboolean   gimp_text_tool_create_vectors_warped  (GimpTextTool  *text_tool,
+void       gimp_text_tool_create_path            (GimpTextTool  *text_tool);
+gboolean   gimp_text_tool_create_path_warped     (GimpTextTool  *text_tool,
                                                   GError       **error);
 
 GimpTextDirection

@@ -122,7 +122,7 @@ struct _GimpDisplayShell
   GimpCanvasItem    *unrotated_item;   /*  unrotated items for e.g. cursor    */
   GimpCanvasItem    *passe_partout;    /*  item for the highlight             */
   GimpCanvasItem    *preview_items;    /*  item for previews                  */
-  GimpCanvasItem    *vectors;          /*  item proxy of vectors              */
+  GimpCanvasItem    *paths;            /*  item proxy of paths                */
   GimpCanvasItem    *grid;             /*  item proxy of the grid             */
   GimpCanvasItem    *guides;           /*  item proxies of guides             */
   GimpCanvasItem    *sample_points;    /*  item proxies of sample points      */
@@ -183,9 +183,9 @@ struct _GimpDisplayShell
 
   gint               paused_count;
 
-  GimpTreeHandler   *vectors_freeze_handler;
-  GimpTreeHandler   *vectors_thaw_handler;
-  GimpTreeHandler   *vectors_visible_handler;
+  GimpTreeHandler   *path_freeze_handler;
+  GimpTreeHandler   *path_thaw_handler;
+  GimpTreeHandler   *path_visible_handler;
 
   gboolean           zoom_on_resize;
 

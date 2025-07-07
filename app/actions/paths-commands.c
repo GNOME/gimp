@@ -138,7 +138,7 @@ paths_edit_cmd_callback (GimpAction *action,
     }
 
   if (GIMP_IS_VECTOR_TOOL (active_tool))
-    gimp_vector_tool_set_vectors (GIMP_VECTOR_TOOL (active_tool), paths->data);
+    gimp_vector_tool_set_path (GIMP_VECTOR_TOOL (active_tool), paths->data);
 }
 
 void
@@ -924,8 +924,8 @@ paths_import_callback (GtkWidget *dialog,
                        GimpImage *image,
                        GFile     *file,
                        GFile     *import_folder,
-                       gboolean   merge_vectors,
-                       gboolean   scale_vectors,
+                       gboolean   merge_paths,
+                       gboolean   scale_paths,
                        gpointer   user_data)
 {
   GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
@@ -937,8 +937,8 @@ paths_import_callback (GtkWidget *dialog,
 
   g_object_set (config,
                 "path-import-path",  path,
-                "path-import-merge", merge_vectors,
-                "path-import-scale", scale_vectors,
+                "path-import-merge", merge_paths,
+                "path-import-scale", scale_paths,
                 NULL);
 
   if (path)

@@ -52,7 +52,7 @@ struct _GimpImagePropView
   GtkWidget *pixels_label;
   GtkWidget *layers_label;
   GtkWidget *channels_label;
-  GtkWidget *vectors_label;
+  GtkWidget *paths_label;
 };
 
 struct _GimpImagePropViewClass
