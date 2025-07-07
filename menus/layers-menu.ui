@@ -60,8 +60,8 @@
       </section>
       <section>
         <item><attribute name="action">app.layers-text-discard</attribute></item>
-        <item><attribute name="action">app.layers-text-to-vectors</attribute></item>
-        <item><attribute name="action">app.layers-text-along-vectors</attribute></item>
+        <item><attribute name="action">app.layers-text-to-path</attribute></item>
+        <item><attribute name="action">app.layers-text-along-path</attribute></item>
       </section>
       <section>
         <item><attribute name="action">app.layers-resize</attribute></item>

@@ -270,7 +270,7 @@ static const GimpToggleActionEntry view_toggle_actions[] =
     FALSE,
     GIMP_HELP_VIEW_SNAP_TO_CANVAS },
 
-  { "view-snap-to-vectors", NULL,
+  { "view-snap-to-path", NULL,
     NC_("view-action", "Snap t_o Active Path"), NULL, { NULL },
     NC_("view-action", "Tool operations snap to the active path"),
     view_snap_to_path_cmd_callback,
@@ -938,8 +938,8 @@ view_actions_update (GimpActionGroup *group,
   SET_ACTIVE    ("view-snap-to-grid",         display && options->snap_to_grid);
   SET_SENSITIVE ("view-snap-to-canvas",       image);
   SET_ACTIVE    ("view-snap-to-canvas",       display && options->snap_to_canvas);
-  SET_SENSITIVE ("view-snap-to-vectors",      image);
-  SET_ACTIVE    ("view-snap-to-vectors",      display && options->snap_to_path);
+  SET_SENSITIVE ("view-snap-to-path",         image);
+  SET_ACTIVE    ("view-snap-to-path",         display && options->snap_to_path);
   SET_SENSITIVE ("view-snap-to-bbox",         image);
   SET_ACTIVE    ("view-snap-to-bbox",         display && options->snap_to_bbox);
   SET_SENSITIVE ("view-snap-to-equidistance", image);

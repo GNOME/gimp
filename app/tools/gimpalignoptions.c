@@ -160,7 +160,7 @@ gimp_align_options_class_init (GimpAlignOptionsClass *klass)
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ALIGN_PATHS,
-                            "align-vectors",
+                            "align-paths",
                             _("Selected paths"),
                             _("Selected paths will be aligned or distributed by the tool"),
                             FALSE,
@@ -401,7 +401,7 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
                                           NULL, widget, NULL);
   gtk_grid_attach (GTK_GRID (items_grid), widget, 0, 0, 1, 1);
 
-  widget = gimp_prop_check_button_new (config, "align-vectors", NULL);
+  widget = gimp_prop_check_button_new (config, "align-paths", NULL);
   gtk_grid_attach (GTK_GRID (items_grid), widget, 0, 1, 1, 1);
 
   options->priv->pivot_selector = gimp_pivot_selector_new (0.0, 0.0, 1.0, 1.0);

@@ -380,7 +380,7 @@ static const GimpDialogFactoryEntry entries[] =
             N_("Channels"), NULL, GIMP_ICON_DIALOG_CHANNELS,
             GIMP_HELP_CHANNEL_DIALOG,
             dialogs_channel_list_view_new, 0, FALSE),
-  DOCKABLE ("gimp-vectors-list",
+  DOCKABLE ("gimp-path-list",
             N_("Paths"), NULL, GIMP_ICON_DIALOG_PATHS,
             GIMP_HELP_PATH_DIALOG,
             dialogs_path_list_view_new, 0, FALSE),

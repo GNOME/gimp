@@ -275,7 +275,7 @@
         <item><attribute name="action">app.view-snap-to-guides</attribute></item>
         <item><attribute name="action">app.view-snap-to-grid</attribute></item>
         <item><attribute name="action">app.view-snap-to-canvas</attribute></item>
-        <item><attribute name="action">app.view-snap-to-vectors</attribute></item>
+        <item><attribute name="action">app.view-snap-to-path</attribute></item>
         <item><attribute name="action">app.view-snap-to-bbox</attribute></item>
         <item><attribute name="action">app.view-snap-to-equidistance</attribute></item>
       </section>
@@ -430,8 +430,8 @@
       <section>
         <attribute name="section-name" translatable="no">Text</attribute>
         <item><attribute name="action">app.layers-text-discard</attribute></item>
-        <item><attribute name="action">app.layers-text-to-vectors</attribute></item>
-        <item><attribute name="action">app.layers-text-along-vectors</attribute></item>
+        <item><attribute name="action">app.layers-text-to-path</attribute></item>
+        <item><attribute name="action">app.layers-text-along-path</attribute></item>
       </section>
       <section>
         <submenu>

@@ -179,13 +179,13 @@ static const GimpActionEntry layers_actions[] =
     layers_text_discard_cmd_callback,
     GIMP_HELP_LAYER_TEXT_DISCARD },
 
-  { "layers-text-to-vectors", GIMP_ICON_TOOL_TEXT,
+  { "layers-text-to-path", GIMP_ICON_TOOL_TEXT,
     NC_("layers-action", "Text to _Path"), NULL, { NULL },
     NC_("layers-action", "Create paths from text layers"),
     layers_text_to_path_cmd_callback,
     GIMP_HELP_LAYER_TEXT_TO_PATH },
 
-  { "layers-text-along-vectors", GIMP_ICON_TOOL_TEXT,
+  { "layers-text-along-path", GIMP_ICON_TOOL_TEXT,
     NC_("layers-action", "Text alon_g Path"), NULL, { NULL },
     NC_("layers-action", "Warp this layer's text along the current path"),
     layers_text_along_path_cmd_callback,
@@ -1038,9 +1038,9 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-merge-layers",      n_selected_layers > 0 && !fs && !ac);
   SET_SENSITIVE ("layers-flatten-image",     !fs && !ac);
 
-  SET_VISIBLE   ("layers-text-discard",       n_text_layers > 0 && !ac);
-  SET_VISIBLE   ("layers-text-to-vectors",    n_text_layers > 0 && !ac);
-  SET_VISIBLE   ("layers-text-along-vectors", text_layer && !ac);
+  SET_VISIBLE   ("layers-text-discard",      n_text_layers > 0 && !ac);
+  SET_VISIBLE   ("layers-text-to-path",      n_text_layers > 0 && !ac);
+  SET_VISIBLE   ("layers-text-along-path",   text_layer && !ac);
 
   SET_SENSITIVE ("layers-resize",          n_selected_layers == 1 && all_writable && all_movable && !ac);
   SET_SENSITIVE ("layers-resize-to-image", all_writable && all_movable && !ac);

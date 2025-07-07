@@ -6,7 +6,7 @@
   <section>
     <item><attribute name="action">@GROUP@.dialogs-layers</attribute></item>
     <item><attribute name="action">@GROUP@.dialogs-channels</attribute></item>
-    <item><attribute name="action">@GROUP@.dialogs-vectors</attribute></item>
+    <item><attribute name="action">@GROUP@.dialogs-paths</attribute></item>
     <item><attribute name="action">@GROUP@.dialogs-indexed-palette</attribute></item>
     <item><attribute name="action">@GROUP@.dialogs-histogram</attribute></item>
     <item><attribute name="action">@GROUP@.dialogs-selection-editor</attribute></item>

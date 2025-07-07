@@ -1195,7 +1195,7 @@ gimp_tool_path_key_press (GimpToolWidget *widget,
     case GDK_KEY_Escape:
       if (private->edit_mode != GIMP_PATH_MODE_DESIGN)
         g_object_set (private,
-                      "vectors-edit-mode", GIMP_PATH_MODE_DESIGN,
+                      "path-edit-mode", GIMP_PATH_MODE_DESIGN,
                       NULL);
       break;
 

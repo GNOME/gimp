@@ -121,7 +121,7 @@
 #define GIMP_HELP_VIEW_SNAP_TO_GUIDES             "gimp-view-snap-to-guides"
 #define GIMP_HELP_VIEW_SNAP_TO_GRID               "gimp-view-snap-to-grid"
 #define GIMP_HELP_VIEW_SNAP_TO_CANVAS             "gimp-view-snap-to-canvas"
-#define GIMP_HELP_VIEW_SNAP_TO_PATH               "gimp-view-snap-to-vectors"
+#define GIMP_HELP_VIEW_SNAP_TO_PATH               "gimp-view-snap-to-path"
 #define GIMP_HELP_VIEW_SNAP_TO_BBOX               "gimp-view-snap-to-bbox"
 #define GIMP_HELP_VIEW_SNAP_TO_EQUIDISTANCE       "gimp-view-snap-to-equidistance"
 #define GIMP_HELP_VIEW_SHOW_MENUBAR               "gimp-view-show-menubar"

@@ -89,12 +89,12 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     "gimp-channel-list",
     GIMP_HELP_CHANNEL_DIALOG },
 
-  { "dialogs-vectors", GIMP_ICON_DIALOG_PATHS,
+  { "dialogs-paths", GIMP_ICON_DIALOG_PATHS,
     NC_("dialogs-action", "_Paths Dialog"),
     NC_("dialogs-action", "_Paths"),
     { NULL },
     NC_("dialogs-action", "Open the paths dialog"),
-    "gimp-vectors-list",
+    "gimp-path-list",
     GIMP_HELP_PATH_DIALOG },
 
   { "dialogs-indexed-palette", GIMP_ICON_COLORMAP,

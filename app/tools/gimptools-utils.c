@@ -59,7 +59,7 @@ gimp_tools_blink_lock_box (Gimp     *gimp,
   else if (GIMP_IS_CHANNEL (item))
     identifier = "gimp-channel-list";
   else if (GIMP_IS_PATH (item))
-    identifier = "gimp-vectors-list";
+    identifier = "gimp-path-list";
   else
     return;
 
