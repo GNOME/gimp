@@ -15,13 +15,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __VECTOR_TOOLPATH_ACTIONS_H__
-#define __VECTOR_TOOLPATH_ACTIONS_H__
+#ifndef __TOOL_PATH_ACTIONS_H__
+#define __TOOL_PATH_ACTIONS_H__
 
 
-void   vector_toolpath_actions_setup  (GimpActionGroup *group);
-void   vector_toolpath_actions_update (GimpActionGroup *group,
-                                       gpointer         data);
+void   tool_path_actions_setup  (GimpActionGroup *group);
+void   tool_path_actions_update (GimpActionGroup *group,
+                                 gpointer         data);
 
 
-#endif /* __VECTOR_TOOLPATH_ACTIONS_H__ */
+#endif /* __TOOL_PATH_ACTIONS_H__ */

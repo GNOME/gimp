@@ -175,11 +175,11 @@ menus_init (Gimp *gimp)
                                       "paths-menu", plug_in_menus_setup,
                                       NULL);
 
-  gimp_menu_factory_manager_register (global_menu_factory, "<VectorToolPath>",
-                                      "vector-toolpath",
+  gimp_menu_factory_manager_register (global_menu_factory, "<ToolPath>",
+                                      "tool-path",
                                       NULL,
-                                      "/vector-toolpath-popup",
-                                      "vector-toolpath-menu",
+                                      "/tool-path-popup",
+                                      "tool-path-menu",
                                       NULL,
                                       NULL);
 

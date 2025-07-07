@@ -91,10 +91,10 @@
 #include "text-editor-actions.h"
 #include "text-tool-actions.h"
 #include "tool-options-actions.h"
+#include "tool-path-actions.h"
 #include "tool-presets-actions.h"
 #include "tool-preset-editor-actions.h"
 #include "tools-actions.h"
-#include "vector-toolpath-actions.h"
 #include "view-actions.h"
 #include "windows-actions.h"
 
@@ -233,12 +233,12 @@ static const GimpActionFactoryEntry action_groups[] =
   { "tool-options", N_("Tool Options"), GIMP_ICON_DIALOG_TOOL_OPTIONS,
     tool_options_actions_setup,
     tool_options_actions_update },
+  { "tool-path", N_("Tool Path"), GIMP_ICON_PATH,
+    tool_path_actions_setup,
+    tool_path_actions_update },
   { "tools", N_("Tools"), GIMP_ICON_DIALOG_TOOLS,
     tools_actions_setup,
     tools_actions_update },
-  { "vector-toolpath", N_("Path Toolpath"), GIMP_ICON_PATH,
-    vector_toolpath_actions_setup,
-    vector_toolpath_actions_update },
   { "paths", N_("Paths"), GIMP_ICON_PATH,
     paths_actions_setup,
     paths_actions_update },

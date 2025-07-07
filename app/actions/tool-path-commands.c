@@ -37,15 +37,15 @@
 
 #include "dialogs/dialogs.h"
 
-#include "vector-toolpath-commands.h"
+#include "tool-path-commands.h"
 
 
 /*  public functions  */
 
 void
-vector_toolpath_delete_anchor_cmd_callback (GimpAction *action,
-                                            GVariant   *value,
-                                            gpointer    data)
+tool_path_delete_anchor_cmd_callback (GimpAction *action,
+                                      GVariant   *value,
+                                      gpointer    data)
 {
   GimpToolPath *tool_path = GIMP_TOOL_PATH (data);
 
@@ -53,9 +53,9 @@ vector_toolpath_delete_anchor_cmd_callback (GimpAction *action,
 }
 
 void
-vector_toolpath_shift_start_cmd_callback (GimpAction *action,
-                                          GVariant   *value,
-                                          gpointer    data)
+tool_path_shift_start_cmd_callback (GimpAction *action,
+                                    GVariant   *value,
+                                    gpointer    data)
 {
   GimpToolPath *tool_path = GIMP_TOOL_PATH (data);
 
@@ -63,9 +63,9 @@ vector_toolpath_shift_start_cmd_callback (GimpAction *action,
 }
 
 void
-vector_toolpath_insert_anchor_cmd_callback (GimpAction *action,
-                                            GVariant   *value,
-                                            gpointer    data)
+tool_path_insert_anchor_cmd_callback (GimpAction *action,
+                                      GVariant   *value,
+                                      gpointer    data)
 {
   GimpToolPath *tool_path = GIMP_TOOL_PATH (data);
 
@@ -73,9 +73,9 @@ vector_toolpath_insert_anchor_cmd_callback (GimpAction *action,
 }
 
 void
-vector_toolpath_delete_segment_cmd_callback (GimpAction *action,
-                                             GVariant   *value,
-                                             gpointer    data)
+tool_path_delete_segment_cmd_callback (GimpAction *action,
+                                       GVariant   *value,
+                                       gpointer    data)
 {
   GimpToolPath *tool_path = GIMP_TOOL_PATH (data);
 
@@ -83,9 +83,9 @@ vector_toolpath_delete_segment_cmd_callback (GimpAction *action,
 }
 
 void
-vector_toolpath_reverse_stroke_cmd_callback (GimpAction *action,
-                                             GVariant   *value,
-                                             gpointer    data)
+tool_path_reverse_stroke_cmd_callback (GimpAction *action,
+                                       GVariant   *value,
+                                       gpointer    data)
 {
   GimpToolPath *tool_path = GIMP_TOOL_PATH (data);
 

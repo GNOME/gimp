@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<interface>
+  <menu id="/tool-path-popup">
+    <section>
+      <item><attribute name="action">tool-path.tool-path-delete-anchor</attribute></item>
+      <item><attribute name="action">tool-path.tool-path-shift-start</attribute></item>
+    </section>
+    <item><attribute name="action">tool-path.tool-path-insert-anchor</attribute></item>
+    <item><attribute name="action">tool-path.tool-path-delete-segment</attribute></item>
+    <item><attribute name="action">tool-path.tool-path-reverse-stroke</attribute></item>
+  </menu>
+</interface>

@@ -1309,7 +1309,7 @@ gimp_tool_path_get_popup (GimpToolWidget    *widget,
 
   menu_factory   = menus_get_global_menu_factory (gimp_dialog_factory_get_context (dialog_factory)->gimp);
   ui_manager     = gimp_menu_factory_get_manager (menu_factory,
-                                                  "<VectorToolPath>", widget);
+                                                  "<ToolPath>", widget);
 
   /* we're using a side effects of gimp_tool_path_get_function
    * that update the private->cur_* variables. */
@@ -1319,7 +1319,7 @@ gimp_tool_path_get_popup (GimpToolWidget    *widget,
     {
       gimp_ui_manager_update (ui_manager, widget);
 
-      *ui_path = "/vector-toolpath-popup";
+      *ui_path = "/tool-path-popup";
       return ui_manager;
     }
 

@@ -30,10 +30,10 @@ ui_menus_files = files(
   'text-editor-toolbar.ui',
   'text-tool-menu.ui',
   'tool-options-menu.ui',
+  'tool-path-menu.ui',
   'tool-preset-editor-menu.ui',
   'tool-presets-menu.ui',
   'undo-menu.ui',
-  'vector-toolpath-menu.ui',
 )
 
 install_data(ui_menus_files,
