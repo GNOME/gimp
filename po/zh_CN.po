@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-28 09:34+0000\n"
-"PO-Revision-Date: 2025-06-29 09:34+0800\n"
+"POT-Creation-Date: 2025-07-07 22:38+0000\n"
+"PO-Revision-Date: 2025-07-08 07:44+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -317,11 +317,11 @@ msgstr "显示带有实验性特性的首选项页面"
 msgid "Show an image submenu with debug actions"
 msgstr "显示带有调试动作的图像子菜单"
 
-#: app/main.c:732
+#: app/main.c:736
 msgid "[FILE|URI...]"
 msgstr "[文件|URI…]"
 
-#: app/main.c:760
+#: app/main.c:766
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -329,20 +329,20 @@ msgstr ""
 "GIMP 无法初始化图形用户界面。\n"
 "请确定您已正确安装和配置显示环境。"
 
-#: app/main.c:822
+#: app/main.c:830
 msgid "Another GIMP instance is already running."
 msgstr "另一个 GIMP 实例已在运行。"
 
-#: app/main.c:911
+#: app/main.c:919
 msgid "GIMP output. Type any character to close this window."
 msgstr "GIMP 输出。键入任意字符以关闭此窗口。"
 
-#: app/main.c:912
+#: app/main.c:920
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "（键入任意字符关闭本窗口）\n"
 
-#: app/main.c:929
+#: app/main.c:937
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "GIMP 输出。您可以最小化该窗口，但请不要关闭窗口。"
 
@@ -548,7 +548,7 @@ msgid "Select"
 msgstr "选择"
 
 #. initialize the template list
-#: app/actions/actions.c:224 app/core/gimp.c:858 app/dialogs/dialogs.c:371
+#: app/actions/actions.c:224 app/core/gimp.c:854 app/dialogs/dialogs.c:371
 msgid "Templates"
 msgstr "模板"
 
@@ -564,16 +564,16 @@ msgstr "文字编辑器"
 msgid "Tool Options"
 msgstr "工具选项"
 
-#: app/actions/actions.c:236 app/widgets/gimptoolpalette.c:327
+#: app/actions/actions.c:236
+msgid "Tool Path"
+msgstr "工具路径"
+
+#: app/actions/actions.c:239 app/widgets/gimptoolpalette.c:327
 msgid "Tools"
 msgstr "工具"
 
-#: app/actions/actions.c:239
-msgid "Path Toolpath"
-msgstr "路径工具路径"
-
 #: app/actions/actions.c:242 app/dialogs/dialogs.c:384
-#: app/tools/gimpvectortool.c:167
+#: app/tools/gimppathtool.c:168
 msgid "Paths"
 msgstr "路径"
 
@@ -1092,7 +1092,7 @@ msgid "Lower Channel to Bottom"
 msgid_plural "Lower Channels to Bottom"
 msgstr[0] "通道移至底端"
 
-#: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:531
+#: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:534
 #: app/display/gimpdisplayshell-dnd.c:703 app/widgets/gimpchanneltreeview.c:266
 #: app/widgets/gimplayertreeview.c:859
 #, c-format
@@ -2498,7 +2498,7 @@ msgstr "240 秒"
 #: app/widgets/gimpfiledialog.c:336 app/widgets/gimphelp.c:438
 #: app/widgets/gimphelp.c:773 app/widgets/gimpiconpicker.c:489
 #: app/widgets/gimpmodifierseditor.c:688 app/widgets/gimppdbdialog.c:148
-#: app/widgets/gimpprogressdialog.c:91 app/widgets/gimpsettingsbox.c:716
+#: app/widgets/gimpprogressdialog.c:91 app/widgets/gimpsettingsbox.c:705
 msgid "_Cancel"
 msgstr "取消(_C)"
 
@@ -4103,7 +4103,7 @@ msgstr "将出错日志保存到文件"
 #: app/actions/error-console-commands.c:102 app/actions/gradients-commands.c:81
 #: app/dialogs/file-save-dialog.c:759 app/dialogs/path-export-dialog.c:89
 #: app/display/gimpdisplayshell-close.c:179 app/widgets/gimpsavedialog.c:142
-#: app/widgets/gimpsettingsbox.c:718
+#: app/widgets/gimpsettingsbox.c:707
 msgid "_Save"
 msgstr "保存(_S)"
 
@@ -6106,19 +6106,19 @@ msgctxt "images-action"
 msgid "Delete this image"
 msgstr "删除此图像"
 
-#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:594
+#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:568
 msgid "Lock content"
 msgstr "锁定内容"
 
-#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:595
+#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:569
 msgid "Unlock content"
 msgstr "解锁内容"
 
-#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:610
+#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:582
 msgid "Lock position"
 msgstr "锁定位置"
 
-#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:611
+#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:583
 msgid "Unlock position"
 msgstr "解锁位置"
 
@@ -6126,12 +6126,12 @@ msgstr "解锁位置"
 msgid "There are no selected items to fill."
 msgstr "没有选中的项目可以填充。"
 
-#: app/actions/items-commands.c:313 app/tools/gimpvectortool.c:748
+#: app/actions/items-commands.c:313 app/tools/gimppathtool.c:749
 msgid "There are no selected layers or channels to fill."
 msgstr "没有选中的图层或通道可以填充。"
 
 #: app/actions/items-commands.c:358 app/actions/items-commands.c:396
-#: app/tools/gimpvectortool.c:837
+#: app/tools/gimppathtool.c:838
 msgid "There are no selected layers or channels to stroke to."
 msgstr "没有选中的图层或通道可以勾画。"
 
@@ -7801,13 +7801,13 @@ msgstr "移除路径"
 msgid "Paths to selection"
 msgstr "路径到选区"
 
-#: app/actions/paths-commands.c:605 app/tools/gimpvectoroptions.c:201
-#: app/tools/gimpvectortool.c:764
+#: app/actions/paths-commands.c:605 app/tools/gimppathoptions.c:201
+#: app/tools/gimppathtool.c:765
 msgid "Fill Path"
 msgstr "填充路径"
 
-#: app/actions/paths-commands.c:633 app/tools/gimpvectoroptions.c:209
-#: app/tools/gimpvectortool.c:853
+#: app/actions/paths-commands.c:633 app/tools/gimppathoptions.c:209
+#: app/tools/gimppathtool.c:854
 msgid "Stroke Path"
 msgstr "勾画路径"
 
@@ -8359,7 +8359,7 @@ msgstr "打开文本文件 (UTF-8)"
 #: app/dialogs/file-open-location-dialog.c:81
 #: app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:722
 #: app/widgets/gimpiconpicker.c:490 app/widgets/gimpopendialog.c:87
-#: app/widgets/gimpsettingsbox.c:718
+#: app/widgets/gimpsettingsbox.c:707
 msgid "_Open"
 msgstr "打开(_O)"
 
@@ -8493,6 +8493,31 @@ msgstr "重置所有工具选项"
 #: app/actions/tool-options-commands.c:227
 msgid "Do you really want to reset all tool options to default values?"
 msgstr "您真的要将所有工具选项重置到默认值吗？"
+
+#: app/actions/tool-path-actions.c:45
+msgctxt "tool-path-action"
+msgid "_Delete Anchor"
+msgstr "删除锚点(_D)"
+
+#: app/actions/tool-path-actions.c:49
+msgctxt "tool-path-action"
+msgid "Shift S_tart"
+msgstr "偏移起点(_T)"
+
+#: app/actions/tool-path-actions.c:54
+msgctxt "tool-path-action"
+msgid "_Insert Anchor"
+msgstr "插入锚点(_I)"
+
+#: app/actions/tool-path-actions.c:58
+msgctxt "tool-path-action"
+msgid "Delete _Segment"
+msgstr "删除线段(_S)"
+
+#: app/actions/tool-path-actions.c:62
+msgctxt "tool-path-action"
+msgid "_Reverse Stroke"
+msgstr "反转笔触(_R)"
 
 #: app/actions/tool-preset-editor-actions.c:44
 msgctxt "tool-preset-editor-action"
@@ -9064,31 +9089,6 @@ msgstr "工具的力度：相对增大"
 #, c-format
 msgid "Activate tool \"%s\""
 msgstr "激活“%s”工具"
-
-#: app/actions/vector-toolpath-actions.c:45
-msgctxt "vector-toolpath-action"
-msgid "_Delete Anchor"
-msgstr "删除锚点(_D)"
-
-#: app/actions/vector-toolpath-actions.c:49
-msgctxt "vector-toolpath-action"
-msgid "Shift S_tart"
-msgstr "偏移起点(_T)"
-
-#: app/actions/vector-toolpath-actions.c:54
-msgctxt "vector-toolpath-action"
-msgid "_Insert Anchor"
-msgstr "插入锚点(_I)"
-
-#: app/actions/vector-toolpath-actions.c:58
-msgctxt "vector-toolpath-action"
-msgid "Delete _Segment"
-msgstr "删除线段(_S)"
-
-#: app/actions/vector-toolpath-actions.c:62
-msgctxt "vector-toolpath-action"
-msgid "_Reverse Stroke"
-msgstr "反转笔触(_R)"
 
 #: app/actions/view-actions.c:71
 msgctxt "view-action"
@@ -10363,7 +10363,7 @@ msgstr "解析“%%s”时出错：线段长度长于 %s 个字符。"
 
 #: app/config/gimpconfig-file.c:154 app/config/gimpconfig-file.c:206
 #: app/config/gimpconfig-file.c:223 app/core/gimp-tags.c:145
-#: app/gui/themes.c:711 app/tools/gimpfiltertool-settings.c:229
+#: app/gui/themes.c:707 app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "写入“%s”时出错：%s"
@@ -10396,7 +10396,7 @@ msgstr "图层"
 msgid "Channel"
 msgstr "通道"
 
-#: app/config/gimpdialogconfig.c:432 app/vectors/gimppath.c:224
+#: app/config/gimpdialogconfig.c:432 app/path/gimppath.c:224
 #: app/widgets/gimppathtreeview.c:259
 msgid "Path"
 msgstr "路径"
@@ -12465,26 +12465,26 @@ msgid "Selection by glob pattern search"
 msgstr "通过 glob 模式搜索来选择"
 
 #. initialize babl fishes
-#: app/core/gimp.c:541 app/core/gimp.c:571
+#: app/core/gimp.c:541 app/core/gimp.c:567
 msgid "Initialization"
 msgstr "初始化"
 
 #. register all internal procedures
-#: app/core/gimp.c:551
+#: app/core/gimp.c:547
 msgid "Internal Procedures"
 msgstr "内部程序"
 
 #. initialize  the global parasite table
-#: app/core/gimp.c:851
+#: app/core/gimp.c:847
 msgid "Looking for data files"
 msgstr "正在查找数据文件"
 
-#: app/core/gimp.c:851
+#: app/core/gimp.c:847
 msgid "Parasites"
 msgstr "内嵌信息"
 
 #. initialize the module list
-#: app/core/gimp.c:862 app/dialogs/preferences-dialog.c:3574
+#: app/core/gimp.c:858 app/dialogs/preferences-dialog.c:3574
 msgid "Modules"
 msgstr "模块"
 
@@ -12570,7 +12570,7 @@ msgstr "无法剪切，因为选中区域为空。"
 msgid "Cannot copy because the selected region is empty."
 msgstr "无法复制，因为选中区域为空。"
 
-#: app/core/gimp-edit.c:654 app/core/gimpimage-new.c:580
+#: app/core/gimp-edit.c:654 app/core/gimpimage-new.c:583
 msgid "Pasted Layer"
 msgstr "被粘贴的图层"
 
@@ -12713,19 +12713,19 @@ msgstr "无法执行子进程“%s” (%s)"
 msgid "tags-locale:C"
 msgstr "tags-locale:zh_CN"
 
-#: app/core/gimp-tags.c:156 app/gui/themes.c:723
+#: app/core/gimp-tags.c:156 app/gui/themes.c:719
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "关闭“%s”时出错：%s"
 
-#: app/core/gimp-user-install.c:232
+#: app/core/gimp-user-install.c:235
 #, c-format
 msgid ""
 "It seems you have used GIMP %s before.  GIMP will now migrate your user "
 "settings to '%s'."
 msgstr "看来您曾经使用过 GIMP %s。GIMP 现在将要把您的用户配置迁移到“%s”。"
 
-#: app/core/gimp-user-install.c:240
+#: app/core/gimp-user-install.c:243
 #, c-format
 msgid ""
 "It appears that you are using GIMP for the first time.  GIMP will now create "
@@ -12734,17 +12734,17 @@ msgstr ""
 "看来您是第一次使用 GIMP。GIMP 现在将创建名为“%s”的文件夹并复制一些文件到其"
 "中。"
 
-#: app/core/gimp-user-install.c:534
+#: app/core/gimp-user-install.c:541
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "正在从“%2$s”复制文件“%1$s”…"
 
-#: app/core/gimp-user-install.c:551 app/core/gimp-user-install.c:577
+#: app/core/gimp-user-install.c:558 app/core/gimp-user-install.c:584
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "正在创建文件夹“%s”…"
 
-#: app/core/gimp-user-install.c:562 app/core/gimp-user-install.c:588
+#: app/core/gimp-user-install.c:569 app/core/gimp-user-install.c:595
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "无法创建“%s”文件夹：%s"
@@ -12821,7 +12821,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "笔刷文件“%s”中含有无效的 UTF-8 字符串。"
 
 #: app/core/gimpbrush-load.c:265 app/core/gimppattern-load.c:167
-#: app/dialogs/template-options-dialog.c:110 app/display/gimptoolpath.c:617
+#: app/dialogs/template-options-dialog.c:110 app/display/gimptoolpath.c:618
 msgid "Unnamed"
 msgstr "未命名"
 
@@ -13156,7 +13156,7 @@ msgstr "前景"
 msgid "Foreground color"
 msgstr "前景色"
 
-#: app/core/gimpcontext.c:675 app/core/gimpimage-new.c:180
+#: app/core/gimpcontext.c:675 app/core/gimpimage-new.c:183
 msgid "Background"
 msgstr "背景"
 
@@ -13204,7 +13204,7 @@ msgid "Palette"
 msgstr "色板"
 
 #: app/core/gimpcontext.c:741 app/core/gimpcontext.c:742
-#: app/tools/gimptextoptions.c:813
+#: app/tools/gimptextoptions.c:812
 msgid "Font"
 msgstr "字体"
 
@@ -13234,7 +13234,7 @@ msgstr "副本"
 msgid "%s copy"
 msgstr "%s 副本"
 
-#: app/core/gimpdatafactory.c:638 app/tools/gimptextoptions.c:794
+#: app/core/gimpdatafactory.c:638 app/tools/gimptextoptions.c:793
 #: app/widgets/gimpfontfactoryview.c:98
 msgid "Loading fonts (this may take a while...)"
 msgstr "正在加载字体（这将耗费一些时间）"
@@ -13334,7 +13334,7 @@ msgstr "浮动选区"
 msgid "Computing alpha of unknown pixels"
 msgstr "正在计算未知像素的透明度"
 
-#: app/core/gimpdrawable-fill.c:214 app/vectors/gimppath.c:676
+#: app/core/gimpdrawable-fill.c:214 app/path/gimppath.c:676
 msgid "Not enough points to fill"
 msgstr "没有足够的点来填充"
 
@@ -13371,7 +13371,7 @@ msgid "Offset Drawable"
 msgstr "偏移可绘区"
 
 #: app/core/gimpdrawable-stroke.c:111 app/paint/gimppaintcore-stroke.c:335
-#: app/vectors/gimppath.c:698
+#: app/path/gimppath.c:698
 msgid "Not enough points to stroke"
 msgstr "没有足够的点形成笔触"
 
@@ -13635,158 +13635,158 @@ msgstr "（已导入）"
 msgid "Layer mode '%s' was added in %s"
 msgstr "图层模式“%s”已添加到 %s"
 
-#: app/core/gimpimage.c:2946
+#: app/core/gimpimage.c:2947
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "图层组已添加到 %s"
 
-#: app/core/gimpimage.c:2953
+#: app/core/gimpimage.c:2954
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "图层组蒙版已添加到 %s"
 
-#: app/core/gimpimage.c:2960
+#: app/core/gimpimage.c:2961
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "图层组位置锁定已添加到 %s"
 
-#: app/core/gimpimage.c:2967
+#: app/core/gimpimage.c:2968
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "图层组透明通道锁定已添加到 %s"
 
-#: app/core/gimpimage.c:2975 app/core/gimpimage.c:3026
+#: app/core/gimpimage.c:2976 app/core/gimpimage.c:3027
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "可见性锁定已添加到 %s"
 
-#: app/core/gimpimage.c:2986
+#: app/core/gimpimage.c:2987
 #, c-format
 msgid "Format of font information in text layer was changed in %s"
 msgstr "文字图层中字体信息的格式已在 %s 中更改"
 
-#: app/core/gimpimage.c:2994
+#: app/core/gimpimage.c:2995
 #, c-format
 msgid "Layer effects were added in %s"
 msgstr "图层效果已添加到 %s"
 
-#: app/core/gimpimage.c:3006
+#: app/core/gimpimage.c:3007
 #, c-format
 msgid "A new perceptual blending space was added in %s"
 msgstr "在 %s 中添加了新的感知混合空间"
 
-#: app/core/gimpimage.c:3035
+#: app/core/gimpimage.c:3036
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "多个路径选区已添加到 %s"
 
-#: app/core/gimpimage.c:3047
+#: app/core/gimpimage.c:3048
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "路径中存储的颜色标签已添加到 %s"
 
-#: app/core/gimpimage.c:3054
+#: app/core/gimpimage.c:3055
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "路径中存储的锁定已添加到 %s"
 
-#: app/core/gimpimage.c:3068
+#: app/core/gimpimage.c:3069
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "高位深图像已添加到 %s"
 
-#: app/core/gimpimage.c:3076
+#: app/core/gimpimage.c:3077
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "高位深图像编码已固定到 %s"
 
-#: app/core/gimpimage.c:3084
+#: app/core/gimpimage.c:3085
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "内置 zlib 压缩已添加到 %s"
 
-#: app/core/gimpimage.c:3101
+#: app/core/gimpimage.c:3102
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "对大于 4GB 图像文件的支持已添加到 %s"
 
-#: app/core/gimpimage.c:3108
+#: app/core/gimpimage.c:3109
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "多个图层选区被添加进 %s"
 
-#: app/core/gimpimage.c:3125
+#: app/core/gimpimage.c:3126
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "画布外参考线添加至 %s"
 
-#: app/core/gimpimage.c:3136
+#: app/core/gimpimage.c:3137
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr "项目设置和项目名称中的模式搜索已添加进 %s"
 
-#: app/core/gimpimage.c:3142
+#: app/core/gimpimage.c:3143
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "多个通道选择已添加进 %s"
 
-#: app/core/gimpimage.c:3257
+#: app/core/gimpimage.c:3258
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "改变图像分辨率"
 
-#: app/core/gimpimage.c:3309
+#: app/core/gimpimage.c:3310
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "改变图像单位"
 
-#: app/core/gimpimage.c:4362
+#: app/core/gimpimage.c:4363
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr "“GIMP 注释”内嵌信息校验失败：注释包含无效的 UTF-8"
 
-#: app/core/gimpimage.c:4424
+#: app/core/gimpimage.c:4425
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "添加内嵌信息到图像"
 
-#: app/core/gimpimage.c:4469
+#: app/core/gimpimage.c:4470
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "从图像删除内嵌信息"
 
-#: app/core/gimpimage.c:5312
+#: app/core/gimpimage.c:5358
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "添加图层"
 
-#: app/core/gimpimage.c:5356 app/core/gimpimage.c:5387
+#: app/core/gimpimage.c:5402 app/core/gimpimage.c:5433
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "删除图层"
 
-#: app/core/gimpimage.c:5381
+#: app/core/gimpimage.c:5427
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "删除浮动选区"
 
-#: app/core/gimpimage.c:5893
+#: app/core/gimpimage.c:5939
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "添加通道"
 
-#: app/core/gimpimage.c:5923 app/core/gimpimage.c:5948
+#: app/core/gimpimage.c:5969 app/core/gimpimage.c:5994
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "删除通道"
 
-#: app/core/gimpimage.c:6008
+#: app/core/gimpimage.c:6054
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "添加路径"
 
-#: app/core/gimpimage.c:6043 app/core/gimpimage.c:6051
+#: app/core/gimpimage.c:6089 app/core/gimpimage.c:6097
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "删除路径"
@@ -14125,8 +14125,8 @@ msgid "Could not open thumbnail '%s': %s"
 msgstr "无法打开缩略图“%s”：%s"
 
 #: app/core/gimpitem.c:1851 app/core/gimpitem.c:1918
-#: app/display/gimpdisplayshell-dnd.c:380 app/tools/gimptransformtool.c:704
-#: app/tools/gimpvectortool.c:757 app/tools/gimpvectortool.c:846
+#: app/display/gimpdisplayshell-dnd.c:380 app/tools/gimppathtool.c:758
+#: app/tools/gimppathtool.c:847 app/tools/gimptransformtool.c:704
 #: app/widgets/gimpdrawabletreeview-filters.c:709
 msgid "A selected layer's pixels are locked."
 msgstr "一个选中图层的像素已被锁定。"
@@ -14938,7 +14938,7 @@ msgid "Precision"
 msgstr "精度"
 
 #: app/core/gimptemplate.c:212 app/operations/gimpcurvesconfig.c:105
-#: app/operations/gimplevelsconfig.c:111 app/widgets/gimphistogrameditor.c:116
+#: app/operations/gimplevelsconfig.c:111 app/widgets/gimphistogrameditor.c:128
 msgid "Linear/Perceptual"
 msgstr "线性/感知"
 
@@ -15134,7 +15134,7 @@ msgstr "锁定位置和大小(_S)"
 
 #: app/dialogs/channel-options-dialog.c:130
 #: app/dialogs/layer-options-dialog.c:169
-#: app/widgets/gimpdrawabletreeview.c:177 app/widgets/gimpitemtreeview.c:626
+#: app/widgets/gimpdrawabletreeview.c:177 app/widgets/gimpitemtreeview.c:596
 msgid "Lock visibility"
 msgstr "锁定可见性"
 
@@ -15664,8 +15664,8 @@ msgstr "图像属性"
 #: app/dialogs/welcome-dialog.c:193 app/tools/gimpcolorpickertool.c:351
 #: app/tools/gimpgradienttool-editor.c:1818 app/tools/gimpmeasuretool.c:740
 #: app/widgets/gimpcontrollerlist.c:625 app/widgets/gimpcriticaldialog.c:206
-#: app/widgets/gimpcriticaldialog.c:228 app/widgets/gimpsettingsbox.c:647
-#: app/widgets/gimptexteditor.c:167
+#: app/widgets/gimpcriticaldialog.c:228 app/widgets/gimpsettingsbox.c:636
+#: app/widgets/gimptexteditor.c:164
 msgid "_Close"
 msgstr "关闭(_C)"
 
@@ -18293,17 +18293,17 @@ msgid "Remove"
 msgstr "删除"
 
 #: app/display/display-enums.c:544
-msgctxt "vector-mode"
+msgctxt "path-mode"
 msgid "Design"
 msgstr "设计"
 
 #: app/display/display-enums.c:545
-msgctxt "vector-mode"
+msgctxt "path-mode"
 msgid "Edit"
 msgstr "编辑"
 
 #: app/display/display-enums.c:546
-msgctxt "vector-mode"
+msgctxt "path-mode"
 msgid "Move"
 msgstr "移动"
 
@@ -18370,7 +18370,7 @@ msgstr "更改工具不透明度"
 #: app/display/gimpcursorview.c:742 app/display/gimpcursorview.c:744
 #: app/display/gimpcursorview.c:824 app/display/gimpcursorview.c:825
 #: app/display/gimpcursorview.c:826 app/display/gimpcursorview.c:827
-#: app/widgets/gimphistogrameditor.c:805
+#: app/widgets/gimphistogrameditor.c:820
 msgid "n/a"
 msgstr "n/a"
 
@@ -18425,7 +18425,7 @@ msgstr "切换快速蒙版"
 msgid "Navigate the image display"
 msgstr "导航图像显示"
 
-#: app/display/gimpdisplayshell.c:818 app/display/gimpdisplayshell.c:1599
+#: app/display/gimpdisplayshell.c:818 app/display/gimpdisplayshell.c:1597
 #: app/widgets/gimptoolbox.c:273
 msgid "Drop image files here to open them"
 msgstr "拖动图像到此处以打开"
@@ -18532,7 +18532,7 @@ msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "将颜色放置到图层"
 
-#: app/display/gimpdisplayshell-dnd.c:596 app/widgets/gimpitemtreeview.c:1660
+#: app/display/gimpdisplayshell-dnd.c:596 app/widgets/gimpitemtreeview.c:1629
 #: app/widgets/gimplayertreeview.c:808
 msgid "Drop layers"
 msgstr "拖放图层"
@@ -18769,7 +18769,7 @@ msgid "Click-Drag to rotate the focus"
 msgstr "单击并拖动以旋转对焦"
 
 #: app/display/gimptoolfocus.c:1149 app/display/gimptoolgyroscope.c:729
-#: app/display/gimptoolline.c:1557 app/tools/gimppainttool.c:696
+#: app/display/gimptoolline.c:1556 app/tools/gimppainttool.c:696
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s 可限定角度"
@@ -18836,203 +18836,203 @@ msgstr "单击并拖动以移动此控制柄"
 msgid "Click-Drag to remove this handle"
 msgstr "单击并拖动以移除此控制柄"
 
-#: app/display/gimptoolline.c:345 app/display/gimptoolline.c:504
+#: app/display/gimptoolline.c:345 app/display/gimptoolline.c:503
 msgid "Line: "
 msgstr "直线："
 
-#: app/display/gimptoolline.c:1551
+#: app/display/gimptoolline.c:1550
 msgid "Click-Drag to move the endpoint"
 msgstr "单击并拖动以移动该端点"
 
-#: app/display/gimptoolline.c:1564
+#: app/display/gimptoolline.c:1563
 msgid "Release to remove the slider"
 msgstr "释放以移除该滑块"
 
-#: app/display/gimptoolline.c:1568
+#: app/display/gimptoolline.c:1567
 #, c-format
 msgid "%s for constrained values"
 msgstr "%s 可限定值"
 
-#: app/display/gimptoolline.c:1578
+#: app/display/gimptoolline.c:1577
 msgid "Click-Drag to move the slider; drag away to remove the slider"
 msgstr "单击并拖动以移动该滑块；拖走以移除该滑块"
 
-#: app/display/gimptoolline.c:1583
+#: app/display/gimptoolline.c:1582
 msgid "Click-Drag to move or remove the slider"
 msgstr "单击并拖动以移动或移除该滑块"
 
-#: app/display/gimptoolline.c:1588
+#: app/display/gimptoolline.c:1587
 msgid "Click-Drag to move the slider"
 msgstr "单击并拖动以移动该滑块"
 
-#: app/display/gimptoolline.c:1599
+#: app/display/gimptoolline.c:1598
 msgid "Click-Drag away to remove the slider"
 msgstr "单击并拖走以移除该滑块"
 
-#: app/display/gimptoolline.c:1603
+#: app/display/gimptoolline.c:1602
 msgid "Click-Drag to remove the slider"
 msgstr "单击并拖动以移除该滑块"
 
-#: app/display/gimptoolline.c:1614
+#: app/display/gimptoolline.c:1613
 msgid "Click or Click-Drag to add a new slider"
 msgstr "单击或单击拖动以添加新滑块"
 
-#: app/display/gimptoolline.c:1620
+#: app/display/gimptoolline.c:1619
 msgid "Click-Drag to move the line"
 msgstr "单击并拖动以移动该线"
 
-#: app/display/gimptoolline.c:1632
+#: app/display/gimptoolline.c:1631
 #, c-format
 msgid "%s to move the whole line"
 msgstr "%s 移动整条线"
 
-#: app/display/gimptoolpath.c:280 app/tools/gimpvectoroptions.c:72
+#: app/display/gimptoolpath.c:281 app/tools/gimppathoptions.c:72
 msgid "Edit Mode"
 msgstr "编辑模式"
 
-#: app/display/gimptoolpath.c:289 app/tools/gimpvectoroptions.c:80
+#: app/display/gimptoolpath.c:290 app/tools/gimppathoptions.c:80
 msgid "Polygonal"
 msgstr "多边形"
 
-#: app/display/gimptoolpath.c:290 app/tools/gimpvectoroptions.c:81
+#: app/display/gimptoolpath.c:291 app/tools/gimppathoptions.c:81
 msgid "Restrict editing to polygons"
 msgstr "编辑限于多边形"
 
-#: app/display/gimptoolpath.c:549
+#: app/display/gimptoolpath.c:550
 msgid "The selected path is locked."
 msgstr "选中路径已被锁定。"
 
-#: app/display/gimptoolpath.c:639
+#: app/display/gimptoolpath.c:640
 msgid "Add Stroke"
 msgstr "添加笔触"
 
-#: app/display/gimptoolpath.c:663
+#: app/display/gimptoolpath.c:664
 msgid "Add Anchor"
 msgstr "添加锚点"
 
-#: app/display/gimptoolpath.c:687 app/display/gimptoolpath.c:2066
-#: app/display/gimptoolpath.c:2103
+#: app/display/gimptoolpath.c:688 app/display/gimptoolpath.c:2073
+#: app/display/gimptoolpath.c:2115
 msgid "Insert Anchor"
 msgstr "插入锚点"
 
-#: app/display/gimptoolpath.c:716
+#: app/display/gimptoolpath.c:717
 msgid "Drag Handle"
 msgstr "拖动控制柄"
 
-#: app/display/gimptoolpath.c:747
+#: app/display/gimptoolpath.c:748
 msgid "Drag Anchor"
 msgstr "拖动锚点"
 
-#: app/display/gimptoolpath.c:765
+#: app/display/gimptoolpath.c:766
 msgid "Drag Anchors"
 msgstr "拖动多个锚点"
 
-#: app/display/gimptoolpath.c:787
+#: app/display/gimptoolpath.c:788
 msgid "Drag Curve"
 msgstr "拖动曲线"
 
-#: app/display/gimptoolpath.c:816
+#: app/display/gimptoolpath.c:817
 msgid "Connect Strokes"
 msgstr "连接笔触"
 
-#: app/display/gimptoolpath.c:848
+#: app/display/gimptoolpath.c:849
 msgid "Drag Path"
 msgstr "拖动路径"
 
-#: app/display/gimptoolpath.c:859
+#: app/display/gimptoolpath.c:860
 msgid "Convert Edge"
 msgstr "转换边缘"
 
-#: app/display/gimptoolpath.c:890
+#: app/display/gimptoolpath.c:891
 msgid "Delete Anchor"
 msgstr "删除锚点"
 
-#: app/display/gimptoolpath.c:913 app/display/gimptoolpath.c:2083
+#: app/display/gimptoolpath.c:914 app/display/gimptoolpath.c:2093
 msgid "Delete Segment"
 msgstr "删除线段"
 
-#: app/display/gimptoolpath.c:1165
+#: app/display/gimptoolpath.c:1166
 msgid "Move Anchors"
 msgstr "移动多个锚点"
 
-#: app/display/gimptoolpath.c:1600
+#: app/display/gimptoolpath.c:1601
 msgid "Click to pick path to edit"
 msgstr "单击可拾取路径并编辑"
 
-#: app/display/gimptoolpath.c:1604
+#: app/display/gimptoolpath.c:1605
 msgid "Click to create a new path"
 msgstr "单击可创建新的路径"
 
-#: app/display/gimptoolpath.c:1608
+#: app/display/gimptoolpath.c:1609
 msgid "Click to create a new component of the path"
 msgstr "单击可创建新的路径组件"
 
-#: app/display/gimptoolpath.c:1612
+#: app/display/gimptoolpath.c:1613
 msgid "Click or Click-Drag to create a new anchor"
 msgstr "单击或单击拖动可创建新的锚点"
 
-#: app/display/gimptoolpath.c:1622 app/display/gimptoolpath.c:1629
+#: app/display/gimptoolpath.c:1623 app/display/gimptoolpath.c:1630
 msgid "Click-Drag to move the anchor around"
 msgstr "单击并拖动可移动锚点"
 
-#: app/display/gimptoolpath.c:1633 app/display/gimptoolpath.c:1656
+#: app/display/gimptoolpath.c:1634 app/display/gimptoolpath.c:1657
 msgid "Click-Drag to move the anchors around"
 msgstr "单击并拖动可移动多个锚点"
 
-#: app/display/gimptoolpath.c:1639
+#: app/display/gimptoolpath.c:1640
 msgid "Click-Drag to move the handle around"
 msgstr "单击并拖动可移动控制柄"
 
-#: app/display/gimptoolpath.c:1646
+#: app/display/gimptoolpath.c:1647
 msgid "Click-Drag to move the handles around symmetrically"
 msgstr "单击并拖动可对称地移动控制柄"
 
-#: app/display/gimptoolpath.c:1661
+#: app/display/gimptoolpath.c:1662
 msgid "Click-Drag to change the shape of the curve"
 msgstr "单击并拖动可改变曲线的形状"
 
-#: app/display/gimptoolpath.c:1664
+#: app/display/gimptoolpath.c:1665
 #, c-format
 msgid "%s: symmetrical"
 msgstr "%s：对称"
 
-#: app/display/gimptoolpath.c:1669
+#: app/display/gimptoolpath.c:1670
 msgid "Click-Drag to move the component around"
 msgstr "单击并拖动可移动组件"
 
-#: app/display/gimptoolpath.c:1677
+#: app/display/gimptoolpath.c:1678
 msgid "Click-Drag to move the path around"
 msgstr "单击并拖动可移动路径"
 
-#: app/display/gimptoolpath.c:1681
+#: app/display/gimptoolpath.c:1682
 msgid "Click-Drag to insert an anchor on the path"
 msgstr "单击并拖动可在路径中插入新的锚点"
 
-#: app/display/gimptoolpath.c:1689
+#: app/display/gimptoolpath.c:1690
 msgid "Click to delete this anchor"
 msgstr "单击可删除此锚点"
 
-#: app/display/gimptoolpath.c:1693
+#: app/display/gimptoolpath.c:1694
 msgid "Click to connect this anchor with the selected endpoint"
 msgstr "单击可连接此锚点与选中的端点"
 
-#: app/display/gimptoolpath.c:1698
+#: app/display/gimptoolpath.c:1699
 msgid "Click to open up the path"
 msgstr "单击可断开路径"
 
-#: app/display/gimptoolpath.c:1702
+#: app/display/gimptoolpath.c:1703
 msgid "Click to make this node angular"
 msgstr "单击可使此节点获得角度"
 
-#: app/display/gimptoolpath.c:1706
+#: app/display/gimptoolpath.c:1707
 msgid "Clicking here does nothing, try clicking on path elements."
 msgstr "点击这里无用，请尝试点击路径元素。"
 
-#: app/display/gimptoolpath.c:1914 app/display/gimptoolpath.c:2024
+#: app/display/gimptoolpath.c:1915 app/display/gimptoolpath.c:2026
 msgid "Delete Anchors"
 msgstr "删除多个锚点"
 
-#: app/display/gimptoolpath.c:2051
+#: app/display/gimptoolpath.c:2055
 msgid "Shift start"
 msgstr "偏移起点"
 
@@ -19056,12 +19056,12 @@ msgstr "回车键确认，Esc 键取消，退格键删除最后线段"
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr "单击并拖动以添加自由线段，单击以添加多边形线段"
 
-#: app/display/gimptoolrectangle.c:575 app/display/gimptoolrectangle.c:884
+#: app/display/gimptoolrectangle.c:575 app/display/gimptoolrectangle.c:883
 #: app/tools/gimprectangleselecttool.c:638
 msgid "Rectangle: "
 msgstr "矩形："
 
-#: app/display/gimptoolrectangle.c:2173
+#: app/display/gimptoolrectangle.c:2172
 msgid "Position: "
 msgstr "位置："
 
@@ -20187,7 +20187,7 @@ msgstr "文档"
 msgid "GIMP Startup"
 msgstr "GIMP 启动"
 
-#: app/gui/themes.c:512
+#: app/gui/themes.c:508
 #, c-format
 msgid ""
 "Invalid theme: directory '%s' contains neither gimp-dark.css, gimp-gray.css, "
@@ -20239,7 +20239,7 @@ msgid "No patterns available for use with this tool."
 msgstr "没有可供此工具使用的图案。"
 
 #: app/paint/gimpcloneoptions.c:67 app/tools/gimpbucketfilloptions.c:217
-#: app/tools/gimpbucketfilloptions.c:773 app/tools/gimpcloneoptions-gui.c:246
+#: app/tools/gimpbucketfilloptions.c:772 app/tools/gimpcloneoptions-gui.c:246
 msgid "Source"
 msgstr "源"
 
@@ -20636,6 +20636,132 @@ msgstr "已记录"
 msgctxt "source-align-mode"
 msgid "Fixed"
 msgstr "已固定"
+
+#: app/path/gimppath.c:225
+msgctxt "undo-type"
+msgid "Rename Path"
+msgstr "重命名路径"
+
+#: app/path/gimppath.c:226
+msgctxt "undo-type"
+msgid "Move Path"
+msgstr "移动路径"
+
+#: app/path/gimppath.c:227
+msgctxt "undo-type"
+msgid "Scale Path"
+msgstr "缩放路径"
+
+#: app/path/gimppath.c:228
+msgctxt "undo-type"
+msgid "Resize Path"
+msgstr "改变路径大小"
+
+#: app/path/gimppath.c:229
+msgctxt "undo-type"
+msgid "Flip Path"
+msgstr "翻转路径"
+
+#: app/path/gimppath.c:230
+msgctxt "undo-type"
+msgid "Rotate Path"
+msgstr "旋转路径"
+
+#: app/path/gimppath.c:231
+msgctxt "undo-type"
+msgid "Transform Path"
+msgstr "变换路径"
+
+#: app/path/gimppath.c:232
+msgctxt "undo-type"
+msgid "Fill Path"
+msgstr "填充路径"
+
+#: app/path/gimppath.c:233
+msgctxt "undo-type"
+msgid "Stroke Path"
+msgstr "勾画路径"
+
+#: app/path/gimppath.c:234
+msgctxt "undo-type"
+msgid "Path to Selection"
+msgstr "路径到选区"
+
+#: app/path/gimppath.c:235
+msgctxt "undo-type"
+msgid "Reorder Path"
+msgstr "重排路径"
+
+#: app/path/gimppath.c:236
+msgctxt "undo-type"
+msgid "Raise Path"
+msgstr "升高路径"
+
+#: app/path/gimppath.c:237
+msgctxt "undo-type"
+msgid "Raise Path to Top"
+msgstr "路径移至顶端"
+
+#: app/path/gimppath.c:238
+msgctxt "undo-type"
+msgid "Lower Path"
+msgstr "降低路径"
+
+#: app/path/gimppath.c:239
+msgctxt "undo-type"
+msgid "Lower Path to Bottom"
+msgstr "路径移至底端"
+
+#: app/path/gimppath.c:240
+msgid "Path cannot be raised higher."
+msgstr "路径无法再升高。"
+
+#: app/path/gimppath.c:241
+msgid "Path cannot be lowered more."
+msgstr "路径无法再降低。"
+
+#: app/path/gimppath.c:456
+msgid "Move Path"
+msgstr "移动路径"
+
+#: app/path/gimppath.c:556
+msgid "Flip Path"
+msgstr "翻转路径"
+
+#: app/path/gimppath.c:587
+msgid "Rotate Path"
+msgstr "旋转路径"
+
+#: app/path/gimppath.c:617
+msgid "Transform Path"
+msgstr "变换路径"
+
+#: app/path/gimppath-export.c:95
+#, c-format
+msgid "Writing SVG file '%s' failed: %s"
+msgstr "写入 SVG 文件“%s” 失败：%s"
+
+#: app/path/gimppath-import.c:344
+msgid "Import Paths"
+msgstr "导入路径"
+
+#: app/path/gimppath-import.c:355
+msgid "Imported Path"
+msgstr "导入的路径"
+
+#: app/path/gimppath-import.c:386
+#, c-format
+msgid "No paths found in '%s'"
+msgstr "“%s”中未找到路径"
+
+#: app/path/gimppath-import.c:390
+msgid "No paths found in the buffer"
+msgstr "缓冲区中未找到路径"
+
+#: app/path/gimppath-import.c:400
+#, c-format
+msgid "Failed to import paths from '%s': %s"
+msgstr "无法从“%s”导入路径：%s"
 
 #: app/pdb/channel-cmds.c:199
 msgid "Combine Masks"
@@ -22223,7 +22349,7 @@ msgstr "最大间隙长度"
 msgid "Maximum gap (in pixels) in line art which can be closed"
 msgstr "线条艺术中可以被闭合的最大间隙（像素）"
 
-#: app/tools/gimpbucketfilloptions.c:280 app/tools/gimpbucketfilloptions.c:731
+#: app/tools/gimpbucketfilloptions.c:280 app/tools/gimpbucketfilloptions.c:730
 msgid "Fill by"
 msgstr "填充使用"
 
@@ -22231,55 +22357,55 @@ msgstr "填充使用"
 msgid "Criterion used for determining color similarity"
 msgstr "决定颜色相似程度的标准"
 
-#: app/tools/gimpbucketfilloptions.c:581
+#: app/tools/gimpbucketfilloptions.c:580
 msgid ""
 "Opaque pixels will be considered as line art instead of low luminance pixels"
 msgstr "不透明像素将视为线条艺术而不是低亮度像素"
 
-#: app/tools/gimpbucketfilloptions.c:633
+#: app/tools/gimpbucketfilloptions.c:632
 msgid "No valid source drawable selected"
 msgstr "未选择有效的来源可绘区"
 
-#: app/tools/gimpbucketfilloptions.c:635
+#: app/tools/gimpbucketfilloptions.c:634
 msgid "The source drawable has no alpha channel"
 msgstr "来源可绘区没有透明通道"
 
 #. fill type
-#: app/tools/gimpbucketfilloptions.c:677
+#: app/tools/gimpbucketfilloptions.c:676
 #, c-format
 msgid "Fill Type  (%s)"
 msgstr "填充类型 (%s)"
 
 #. fill selection
-#: app/tools/gimpbucketfilloptions.c:690
+#: app/tools/gimpbucketfilloptions.c:689
 #, c-format
 msgid "Affected Area  (%s)"
 msgstr "影响区域 (%s)"
 
 #. Similar color frame
-#: app/tools/gimpbucketfilloptions.c:697
+#: app/tools/gimpbucketfilloptions.c:696
 msgid "Finding Similar Colors"
 msgstr "寻找相近的颜色"
 
-#: app/tools/gimpbucketfilloptions.c:748
+#: app/tools/gimpbucketfilloptions.c:747
 msgid "Line Art Detection"
 msgstr "线条艺术检测"
 
-#: app/tools/gimpbucketfilloptions.c:758
+#: app/tools/gimpbucketfilloptions.c:757
 msgid "(computing...)"
 msgstr "（正在计算…）"
 
-#: app/tools/gimpbucketfilloptions.c:778
+#: app/tools/gimpbucketfilloptions.c:777
 msgid "Detect opacity rather than grayscale"
 msgstr "检测不透明度而不是灰度"
 
 #. Line Art Closure: frame label
-#: app/tools/gimpbucketfilloptions.c:788
+#: app/tools/gimpbucketfilloptions.c:787
 msgid "Line Art Closure"
 msgstr "线条艺术闭合"
 
 #. Line Art Borders: frame label
-#: app/tools/gimpbucketfilloptions.c:819
+#: app/tools/gimpbucketfilloptions.c:818
 msgid "Fill borders"
 msgstr "填充边界"
 
@@ -23246,7 +23372,7 @@ msgid "Y:"
 msgstr "Y："
 
 #. the color label
-#: app/tools/gimpgradienttool-editor.c:1345 app/tools/gimptextoptions.c:869
+#: app/tools/gimpgradienttool-editor.c:1345 app/tools/gimptextoptions.c:868
 msgid "Color:"
 msgstr "颜色："
 
@@ -23972,6 +24098,32 @@ msgstr "选中可绘区没有透明通道。"
 msgid "The selected layer's alpha channel is locked."
 msgstr "选中图层的透明通道已被锁定。"
 
+#: app/tools/gimppathoptions.c:180
+#, c-format
+msgid ""
+"Path to Selection\n"
+"%s  Add\n"
+"%s  Subtract\n"
+"%s  Intersect"
+msgstr ""
+"路径到选区\n"
+"%s 添加\n"
+"%s 减去\n"
+"%s 相交"
+
+#. Create a selection from the current path
+#: app/tools/gimppathoptions.c:191
+msgid "Selection from Path"
+msgstr "从路径创建选区"
+
+#: app/tools/gimppathtool.c:169
+msgid "Paths Tool: Create and edit paths"
+msgstr "路径工具：创建并编辑路径"
+
+#: app/tools/gimppathtool.c:170
+msgid "Pat_hs"
+msgstr "路径(_H)"
+
 #: app/tools/gimppenciltool.c:54
 msgid "Pencil Tool: Hard edge painting using a brush"
 msgstr "铅笔工具：使用笔刷做硬边缘的绘画"
@@ -24089,7 +24241,7 @@ msgstr "当前"
 msgid "Fixed"
 msgstr "固定"
 
-#: app/tools/gimprectangleoptions.c:1006 app/tools/gimptextoptions.c:827
+#: app/tools/gimprectangleoptions.c:1006 app/tools/gimptextoptions.c:826
 msgid "Size:"
 msgstr "大小："
 
@@ -24460,35 +24612,35 @@ msgstr "轮廓宽度单位"
 msgid "Outline miter limit"
 msgstr "轮廓斜接限制"
 
-#: app/tools/gimptextoptions.c:858
+#: app/tools/gimptextoptions.c:857
 msgid "Hinting:"
 msgstr "微调："
 
-#: app/tools/gimptextoptions.c:862
+#: app/tools/gimptextoptions.c:861
 msgid "Text Color"
 msgstr "文字颜色"
 
-#: app/tools/gimptextoptions.c:875
+#: app/tools/gimptextoptions.c:874
 msgid "Style:"
 msgstr "样式："
 
-#: app/tools/gimptextoptions.c:879
+#: app/tools/gimptextoptions.c:878
 msgid "Outline Options"
 msgstr "轮廓选项"
 
-#: app/tools/gimptextoptions.c:896
+#: app/tools/gimptextoptions.c:895
 msgid "Outline Direction:"
 msgstr "轮廓方向："
 
-#: app/tools/gimptextoptions.c:912
+#: app/tools/gimptextoptions.c:911
 msgid "Justify:"
 msgstr "对齐："
 
-#: app/tools/gimptextoptions.c:942
+#: app/tools/gimptextoptions.c:941
 msgid "Box:"
 msgstr "文字框："
 
-#: app/tools/gimptextoptions.c:984
+#: app/tools/gimptextoptions.c:983
 msgid "Language:"
 msgstr "语言："
 
@@ -24952,32 +25104,6 @@ msgstr "统一变换"
 msgid "Unified transform"
 msgstr "统一变换"
 
-#: app/tools/gimpvectoroptions.c:180
-#, c-format
-msgid ""
-"Path to Selection\n"
-"%s  Add\n"
-"%s  Subtract\n"
-"%s  Intersect"
-msgstr ""
-"路径到选区\n"
-"%s 添加\n"
-"%s 减去\n"
-"%s 相交"
-
-#. Create a selection from the current path
-#: app/tools/gimpvectoroptions.c:191
-msgid "Selection from Path"
-msgstr "从路径创建选区"
-
-#: app/tools/gimpvectortool.c:168
-msgid "Paths Tool: Create and edit paths"
-msgstr "路径工具：创建并编辑路径"
-
-#: app/tools/gimpvectortool.c:169
-msgid "Pat_hs"
-msgstr "路径(_H)"
-
 #: app/tools/gimpwarpoptions.c:84 app/tools/gimpwarpoptions.c:85
 msgid "Behavior"
 msgstr "行为"
@@ -25298,132 +25424,6 @@ msgstr "添加到选区"
 msgctxt "paint-select-mode"
 msgid "Subtract from selection"
 msgstr "从选区中减去"
-
-#: app/vectors/gimppath.c:225
-msgctxt "undo-type"
-msgid "Rename Path"
-msgstr "重命名路径"
-
-#: app/vectors/gimppath.c:226
-msgctxt "undo-type"
-msgid "Move Path"
-msgstr "移动路径"
-
-#: app/vectors/gimppath.c:227
-msgctxt "undo-type"
-msgid "Scale Path"
-msgstr "缩放路径"
-
-#: app/vectors/gimppath.c:228
-msgctxt "undo-type"
-msgid "Resize Path"
-msgstr "改变路径大小"
-
-#: app/vectors/gimppath.c:229
-msgctxt "undo-type"
-msgid "Flip Path"
-msgstr "翻转路径"
-
-#: app/vectors/gimppath.c:230
-msgctxt "undo-type"
-msgid "Rotate Path"
-msgstr "旋转路径"
-
-#: app/vectors/gimppath.c:231
-msgctxt "undo-type"
-msgid "Transform Path"
-msgstr "变换路径"
-
-#: app/vectors/gimppath.c:232
-msgctxt "undo-type"
-msgid "Fill Path"
-msgstr "填充路径"
-
-#: app/vectors/gimppath.c:233
-msgctxt "undo-type"
-msgid "Stroke Path"
-msgstr "勾画路径"
-
-#: app/vectors/gimppath.c:234
-msgctxt "undo-type"
-msgid "Path to Selection"
-msgstr "路径到选区"
-
-#: app/vectors/gimppath.c:235
-msgctxt "undo-type"
-msgid "Reorder Path"
-msgstr "重排路径"
-
-#: app/vectors/gimppath.c:236
-msgctxt "undo-type"
-msgid "Raise Path"
-msgstr "升高路径"
-
-#: app/vectors/gimppath.c:237
-msgctxt "undo-type"
-msgid "Raise Path to Top"
-msgstr "路径移至顶端"
-
-#: app/vectors/gimppath.c:238
-msgctxt "undo-type"
-msgid "Lower Path"
-msgstr "降低路径"
-
-#: app/vectors/gimppath.c:239
-msgctxt "undo-type"
-msgid "Lower Path to Bottom"
-msgstr "路径移至底端"
-
-#: app/vectors/gimppath.c:240
-msgid "Path cannot be raised higher."
-msgstr "路径无法再升高。"
-
-#: app/vectors/gimppath.c:241
-msgid "Path cannot be lowered more."
-msgstr "路径无法再降低。"
-
-#: app/vectors/gimppath.c:456
-msgid "Move Path"
-msgstr "移动路径"
-
-#: app/vectors/gimppath.c:556
-msgid "Flip Path"
-msgstr "翻转路径"
-
-#: app/vectors/gimppath.c:587
-msgid "Rotate Path"
-msgstr "旋转路径"
-
-#: app/vectors/gimppath.c:617
-msgid "Transform Path"
-msgstr "变换路径"
-
-#: app/vectors/gimppath-export.c:95
-#, c-format
-msgid "Writing SVG file '%s' failed: %s"
-msgstr "写入 SVG 文件“%s” 失败：%s"
-
-#: app/vectors/gimppath-import.c:344
-msgid "Import Paths"
-msgstr "导入路径"
-
-#: app/vectors/gimppath-import.c:355
-msgid "Imported Path"
-msgstr "导入的路径"
-
-#: app/vectors/gimppath-import.c:386
-#, c-format
-msgid "No paths found in '%s'"
-msgstr "“%s”中未找到路径"
-
-#: app/vectors/gimppath-import.c:390
-msgid "No paths found in the buffer"
-msgstr "缓冲区中未找到路径"
-
-#: app/vectors/gimppath-import.c:400
-#, c-format
-msgid "Failed to import paths from '%s': %s"
-msgstr "无法从“%s”导入路径：%s"
 
 #: app/widgets/gimpactioneditor.c:71
 msgid "_Search:"
@@ -27090,35 +27090,35 @@ msgstr "您可以选择安装额外的帮助包，或修改首选项以使用在
 msgid "Read _Online"
 msgstr "在线阅读(_O)"
 
-#: app/widgets/gimphistogrameditor.c:136
+#: app/widgets/gimphistogrameditor.c:148
 msgid "Mean: "
 msgstr "平均值："
 
-#: app/widgets/gimphistogrameditor.c:137
+#: app/widgets/gimphistogrameditor.c:149
 msgid "Std dev: "
 msgstr "标准差："
 
-#: app/widgets/gimphistogrameditor.c:138
+#: app/widgets/gimphistogrameditor.c:150
 msgid "Median: "
 msgstr "中位数："
 
-#: app/widgets/gimphistogrameditor.c:139
+#: app/widgets/gimphistogrameditor.c:151
 msgid "Pixels: "
 msgstr "像素："
 
-#: app/widgets/gimphistogrameditor.c:140
+#: app/widgets/gimphistogrameditor.c:152
 msgid "Count: "
 msgstr "计数："
 
-#: app/widgets/gimphistogrameditor.c:141
+#: app/widgets/gimphistogrameditor.c:153
 msgid "Percentile: "
 msgstr "百分比："
 
-#: app/widgets/gimphistogrameditor.c:167
+#: app/widgets/gimphistogrameditor.c:179
 msgid "Histogram channel"
 msgstr "直方图通道"
 
-#: app/widgets/gimphistogrameditor.c:226
+#: app/widgets/gimphistogrameditor.c:242
 msgid "Compute unique colors:"
 msgstr "计算唯一颜色："
 
@@ -27229,77 +27229,77 @@ msgid "Indexed color (monochrome)"
 msgid_plural "Indexed color (%d colors)"
 msgstr[0] "索引颜色（%d 个颜色）"
 
-#: app/widgets/gimpitemtreeview.c:596
+#: app/widgets/gimpitemtreeview.c:570
 msgid "Set Item Exclusive Content Lock"
 msgstr "设置项目唯一内容锁定"
 
-#: app/widgets/gimpitemtreeview.c:612
+#: app/widgets/gimpitemtreeview.c:584
 msgid "Set Item Exclusive Position Lock"
 msgstr "设置项目唯一位置锁定"
 
-#: app/widgets/gimpitemtreeview.c:627
+#: app/widgets/gimpitemtreeview.c:597
 msgid "Unlock visibility"
 msgstr "解锁可见性"
 
-#: app/widgets/gimpitemtreeview.c:628
+#: app/widgets/gimpitemtreeview.c:598
 msgid "Set Item Exclusive Visibility Lock"
 msgstr "设置项目唯一可见性锁定"
 
-#: app/widgets/gimpitemtreeview.c:654
+#: app/widgets/gimpitemtreeview.c:624
 msgid "Select items by patterns and store item sets"
 msgstr "按模式选择项目并存储项目集合"
 
-#: app/widgets/gimpitemtreeview.c:1482
+#: app/widgets/gimpitemtreeview.c:1451
 #, c-format
 msgid "%d item selected"
 msgid_plural "%d items selected"
 msgstr[0] "%d 个项目被选中"
 
-#: app/widgets/gimpitemtreeview.c:2425
+#: app/widgets/gimpitemtreeview-search.c:113
 msgid "No layer set stored"
 msgstr "未存储图层集合"
 
-#: app/widgets/gimpitemtreeview.c:2447
+#: app/widgets/gimpitemtreeview-search.c:125
 msgid "New layer set's name"
 msgstr "新图层集合的名字"
 
-#: app/widgets/gimpitemtreeview.c:2489 app/widgets/gimpitemtreeview.c:2504
+#: app/widgets/gimpitemtreeview-search.c:186
 msgid "Select layers by text search"
 msgstr "通过文字搜索选择图层"
 
-#: app/widgets/gimpitemtreeview.c:2491 app/widgets/gimpitemtreeview.c:2506
+#: app/widgets/gimpitemtreeview-search.c:187
 msgid "Text search"
 msgstr "文字搜索"
 
-#: app/widgets/gimpitemtreeview.c:2510
+#: app/widgets/gimpitemtreeview-search.c:191
 msgid "Select layers by glob patterns"
 msgstr "通过 glob 模式选择图层"
 
-#: app/widgets/gimpitemtreeview.c:2512
+#: app/widgets/gimpitemtreeview-search.c:192
 msgid "Glob pattern search"
 msgstr "Glob 模式搜索"
 
-#: app/widgets/gimpitemtreeview.c:2516
+#: app/widgets/gimpitemtreeview-search.c:196
 msgid "Select layers by regular expressions"
 msgstr "通过正则表达式选择图层"
 
-#: app/widgets/gimpitemtreeview.c:2518
+#: app/widgets/gimpitemtreeview-search.c:197
 msgid "Regular Expression search"
 msgstr "正则表达式搜索"
 
-#: app/widgets/gimpitemtreeview.c:2573
+#: app/widgets/gimpitemtreeview-search.c:269
 msgid "search"
 msgstr "搜索"
 
-#: app/widgets/gimpitemtreeview.c:2574
+#: app/widgets/gimpitemtreeview-search.c:270
 msgid "glob"
 msgstr "glob"
 
-#: app/widgets/gimpitemtreeview.c:2574
+#: app/widgets/gimpitemtreeview-search.c:270
 msgid "regexp"
 msgstr "正则"
 
-#: app/widgets/gimpitemtreeview.c:2743
+#: app/widgets/gimpitemtreeview-search.c:432
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "无效的正则表达式：%s\n"
@@ -27535,19 +27535,19 @@ msgstr "将当前设置导出到文件(_E)…"
 msgid "_Manage Saved Presets..."
 msgstr "管理保存的预设(_M)…"
 
-#: app/widgets/gimpsettingsbox.c:595
+#: app/widgets/gimpsettingsbox.c:584
 msgid "Save Settings as Named Preset"
 msgstr "保存设为已命名的预设"
 
-#: app/widgets/gimpsettingsbox.c:598
+#: app/widgets/gimpsettingsbox.c:587
 msgid "Enter a name for the preset"
 msgstr "为该预设输入一个名字"
 
-#: app/widgets/gimpsettingsbox.c:599
+#: app/widgets/gimpsettingsbox.c:588
 msgid "Saved Settings"
 msgstr "已保存设置"
 
-#: app/widgets/gimpsettingsbox.c:642
+#: app/widgets/gimpsettingsbox.c:631
 msgid "Manage Saved Presets"
 msgstr "管理保存的预设"
 
@@ -27726,7 +27726,7 @@ msgstr "“%s”文件中含有无效的 UTF-8 数据。"
 msgid "Writing text file '%s' failed: %s"
 msgstr "写入文本文件“%s”失败：%s"
 
-#: app/widgets/gimptexteditor.c:231
+#: app/widgets/gimptexteditor.c:236
 msgid "_Use selected font"
 msgstr "使用选中字体(_U)"
 
@@ -28825,6 +28825,17 @@ msgstr "工具预设菜单"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "撤消历史菜单"
+
+#~ msgid "Path Toolpath"
+#~ msgstr "路径工具路径"
+
+#~ msgctxt "vector-mode"
+#~ msgid "Edit"
+#~ msgstr "编辑"
+
+#~ msgctxt "vector-mode"
+#~ msgid "Move"
+#~ msgstr "移动"
 
 #~ msgid "Painting in GIMP"
 #~ msgstr "在 GIMP 中绘画"
