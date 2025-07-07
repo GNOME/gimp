@@ -173,16 +173,8 @@ _gimp_item_tree_view_search_show (GimpItemTreeView *view)
 
   image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
 
-  gtk_widget_set_sensitive (search->link_entry, image != NULL);
-
   if (! image)
-    {
-      gtk_widget_set_tooltip_text (search->search_entry,
-                                   _("Select layers by text search"));
-      gtk_entry_set_placeholder_text (GTK_ENTRY (search->search_entry),
-                                      _("Text search"));
-      return;
-    }
+    return;
 
   g_object_get (image->gimp->config,
                 "items-select-method", &pattern_syntax,
@@ -246,7 +238,10 @@ _gimp_item_tree_view_search_update_links (GimpItemTreeView *view,
                          (GtkCallback) gtk_widget_destroy, NULL);
 
   if (! image)
-    return;
+    {
+      _gimp_item_tree_view_search_hide (view);
+      return;
+    }
 
   label_size = gtk_size_group_new (GTK_SIZE_GROUP_BOTH);
 
