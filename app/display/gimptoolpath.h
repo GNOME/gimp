@@ -61,18 +61,18 @@ GType            gimp_tool_path_get_type        (void) G_GNUC_CONST;
 
 GimpToolWidget * gimp_tool_path_new             (GimpDisplayShell *shell);
 
-void             gimp_tool_path_set_path        (GimpToolPath     *path,
+void             gimp_tool_path_set_path        (GimpToolPath     *tool_path,
                                                  GimpPath         *vectors);
 
-void             gimp_tool_path_get_popup_state (GimpToolPath     *path,
+void             gimp_tool_path_get_popup_state (GimpToolPath     *tool_path,
                                                  gboolean         *on_handle,
                                                  gboolean         *on_curve);
 
-void             gimp_tool_path_delete_anchor   (GimpToolPath     *path);
-void             gimp_tool_path_shift_start     (GimpToolPath     *path);
-void             gimp_tool_path_insert_anchor   (GimpToolPath     *path);
-void             gimp_tool_path_delete_segment  (GimpToolPath     *path);
-void             gimp_tool_path_reverse_stroke  (GimpToolPath     *path);
+void             gimp_tool_path_delete_anchor   (GimpToolPath     *tool_path);
+void             gimp_tool_path_shift_start     (GimpToolPath     *tool_path);
+void             gimp_tool_path_insert_anchor   (GimpToolPath     *tool_path);
+void             gimp_tool_path_delete_segment  (GimpToolPath     *tool_path);
+void             gimp_tool_path_reverse_stroke  (GimpToolPath     *tool_path);
 
 
 #endif /* __GIMP_TOOL_PATH_H__ */
