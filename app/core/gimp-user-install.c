@@ -837,7 +837,12 @@ user_update_post_process_menurc_over20 (gpointer user_data)
 }
 
 #define SHORTCUTSRC_UPDATE_PATTERN \
-  "\"tools-vector\""
+  "\""                             \
+  "tools-vector|"                  \
+  "dialogs-vectors|"               \
+  "layers-text-.*-vectors|"        \
+  "view-snap-to-vectors"           \
+  "\""
 
 static gboolean
 user_update_shortcutsrc (const GMatchInfo *matched_value,
@@ -850,6 +855,26 @@ user_update_shortcutsrc (const GMatchInfo *matched_value,
     {
       /* Renamed in GIMP 3.2. */
       g_string_append (new_value, "\"tools-path\"");
+    }
+  else if (g_strcmp0 (match, "\"dialogs-vectors\"") == 0)
+    {
+      /* Renamed in GIMP 3.2. */
+      g_string_append (new_value, "\"dialogs-path\"");
+    }
+  else if (g_strcmp0 (match, "\"layers-text-along-vectors\"") == 0)
+    {
+      /* Renamed in GIMP 3.2. */
+      g_string_append (new_value, "\"layers-text-along-path\"");
+    }
+  else if (g_strcmp0 (match, "\"layers-text-along-vectors\"") == 0)
+    {
+      /* Renamed in GIMP 3.2. */
+      g_string_append (new_value, "\"layers-text-along-path\"");
+    }
+  else if (g_strcmp0 (match, "\"view-snap-to-vectors\"") == 0)
+    {
+      /* Renamed in GIMP 3.2. */
+      g_string_append (new_value, "\"view-snap-to-path\"");
     }
 
   g_free (match);
