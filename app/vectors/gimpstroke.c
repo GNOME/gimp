@@ -114,7 +114,7 @@ static gboolean     gimp_stroke_real_is_extendable   (GimpStroke       *stroke,
 static GimpAnchor * gimp_stroke_real_extend (GimpStroke           *stroke,
                                              const GimpCoords     *coords,
                                              GimpAnchor           *neighbor,
-                                             GimpVectorExtendMode  extend_mode);
+                                             GimpStrokeExtendMode  extend_mode);
 
 gboolean     gimp_stroke_real_connect_stroke (GimpStroke          *stroke,
                                               GimpAnchor          *anchor,
@@ -839,7 +839,7 @@ GimpAnchor *
 gimp_stroke_extend (GimpStroke           *stroke,
                     const GimpCoords     *coords,
                     GimpAnchor           *neighbor,
-                    GimpVectorExtendMode  extend_mode)
+                    GimpStrokeExtendMode  extend_mode)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
   g_return_val_if_fail (!stroke->closed, NULL);
@@ -852,7 +852,7 @@ static GimpAnchor *
 gimp_stroke_real_extend (GimpStroke           *stroke,
                          const GimpCoords     *coords,
                          GimpAnchor           *neighbor,
-                         GimpVectorExtendMode  extend_mode)
+                         GimpStrokeExtendMode  extend_mode)
 {
   g_printerr ("gimp_stroke_extend: default implementation\n");
   return NULL;

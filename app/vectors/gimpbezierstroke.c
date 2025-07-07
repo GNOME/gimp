@@ -230,7 +230,7 @@ gimp_bezier_stroke_new_from_coords (const GimpCoords *coords,
     last_anchor = gimp_bezier_stroke_extend (stroke,
                                              &coords[count],
                                              last_anchor,
-                                             EXTEND_SIMPLE);
+                                             GIMP_STROKE_EXTEND_SIMPLE);
 
   if (closed)
     gimp_stroke_close (stroke);
@@ -1120,7 +1120,7 @@ GimpAnchor *
 gimp_bezier_stroke_extend (GimpStroke           *stroke,
                            const GimpCoords     *coords,
                            GimpAnchor           *neighbor,
-                           GimpVectorExtendMode  extend_mode)
+                           GimpStrokeExtendMode  extend_mode)
 {
   GimpAnchor *anchor = NULL;
   GList      *listneighbor;
@@ -1137,18 +1137,18 @@ gimp_bezier_stroke_extend (GimpStroke           *stroke,
 
       switch (extend_mode)
         {
-        case EXTEND_SIMPLE:
+        case GIMP_STROKE_EXTEND_SIMPLE:
           break;
 
-        case EXTEND_EDITABLE:
+        case GIMP_STROKE_EXTEND_EDITABLE:
           anchor = gimp_bezier_stroke_extend (stroke,
                                               coords, anchor,
-                                              EXTEND_SIMPLE);
+                                              GIMP_STROKE_EXTEND_SIMPLE);
 
           /* we return the GIMP_ANCHOR_ANCHOR */
           gimp_bezier_stroke_extend (stroke,
                                      coords, anchor,
-                                     EXTEND_SIMPLE);
+                                     GIMP_STROKE_EXTEND_SIMPLE);
 
           break;
 
@@ -1258,7 +1258,7 @@ gimp_bezier_stroke_extend (GimpStroke           *stroke,
 
           switch (extend_mode)
             {
-            case EXTEND_SIMPLE:
+            case GIMP_STROKE_EXTEND_SIMPLE:
               switch (control_count)
                 {
                 case 0:
@@ -1288,29 +1288,29 @@ gimp_bezier_stroke_extend (GimpStroke           *stroke,
                 g_queue_push_head (stroke->anchors, anchor);
               break;
 
-            case EXTEND_EDITABLE:
+            case GIMP_STROKE_EXTEND_EDITABLE:
               switch (control_count)
                 {
                 case 0:
                   neighbor = gimp_bezier_stroke_extend (stroke,
                                                         &(neighbor->position),
                                                         neighbor,
-                                                        EXTEND_SIMPLE);
+                                                        GIMP_STROKE_EXTEND_SIMPLE);
                 case 1:
                   neighbor = gimp_bezier_stroke_extend (stroke,
                                                         coords,
                                                         neighbor,
-                                                        EXTEND_SIMPLE);
+                                                        GIMP_STROKE_EXTEND_SIMPLE);
                 case 2:
                   anchor = gimp_bezier_stroke_extend (stroke,
                                                       coords,
                                                       neighbor,
-                                                      EXTEND_SIMPLE);
+                                                      GIMP_STROKE_EXTEND_SIMPLE);
 
                   neighbor = gimp_bezier_stroke_extend (stroke,
                                                         coords,
                                                         anchor,
-                                                        EXTEND_SIMPLE);
+                                                        GIMP_STROKE_EXTEND_SIMPLE);
                   break;
                 default:
                   g_warning ("inconsistent bezier curve: "

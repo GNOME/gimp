@@ -38,9 +38,9 @@ typedef enum
 
 typedef enum
 {
-  EXTEND_SIMPLE,
-  EXTEND_EDITABLE
-} GimpVectorExtendMode;
+  GIMP_STROKE_EXTEND_SIMPLE,
+  GIMP_STROKE_EXTEND_EDITABLE
+} GimpStrokeExtendMode;
 
 
 #endif /* __VECTORS_ENUMS_H__ */

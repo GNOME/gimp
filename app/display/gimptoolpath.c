@@ -667,7 +667,7 @@ gimp_tool_path_button_press (GimpToolWidget      *widget,
       private->cur_anchor = gimp_bezier_stroke_extend (private->sel_stroke,
                                                        &position,
                                                        private->sel_anchor,
-                                                       EXTEND_EDITABLE);
+                                                       GIMP_STROKE_EXTEND_EDITABLE);
 
       private->restriction = GIMP_ANCHOR_FEATURE_SYMMETRIC;
 

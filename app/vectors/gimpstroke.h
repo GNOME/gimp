@@ -125,7 +125,7 @@ struct _GimpStrokeClass
   GimpAnchor  * (* extend)               (GimpStroke            *stroke,
                                           const GimpCoords      *coords,
                                           GimpAnchor            *neighbor,
-                                          GimpVectorExtendMode   extend_mode);
+                                          GimpStrokeExtendMode   extend_mode);
   gboolean      (* connect_stroke)       (GimpStroke            *stroke,
                                           GimpAnchor            *anchor,
                                           GimpStroke            *extension,
@@ -284,7 +284,7 @@ gboolean     gimp_stroke_is_extendable        (GimpStroke            *stroke,
 GimpAnchor * gimp_stroke_extend               (GimpStroke            *stroke,
                                                const GimpCoords      *coords,
                                                GimpAnchor            *neighbor,
-                                               GimpVectorExtendMode   extend_mode);
+                                               GimpStrokeExtendMode   extend_mode);
 
 gboolean     gimp_stroke_connect_stroke       (GimpStroke            *stroke,
                                                GimpAnchor            *anchor,

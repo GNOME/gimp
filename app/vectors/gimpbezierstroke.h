@@ -78,7 +78,7 @@ GimpStroke * gimp_bezier_stroke_new_ellipse     (const GimpCoords *center,
 GimpAnchor * gimp_bezier_stroke_extend      (GimpStroke           *stroke,
                                              const GimpCoords     *coords,
                                              GimpAnchor           *neighbor,
-                                             GimpVectorExtendMode  extend_mode);
+                                             GimpStrokeExtendMode  extend_mode);
 
 
 #endif /* __GIMP_BEZIER_STROKE_H__ */
