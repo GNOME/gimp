@@ -2930,6 +2930,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
 
           /*  Just here instead of default so we get compiler warnings  */
         case GIMP_LAYER_MODE_REPLACE:
+        case GIMP_LAYER_MODE_OVERWRITE:
         case GIMP_LAYER_MODE_ANTI_ERASE:
         case GIMP_LAYER_MODE_SEPARATOR:
           gimp_enum_get_value (GIMP_TYPE_LAYER_MODE,
