@@ -30,7 +30,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 
-#include "vectors-types.h"
+#include "path-types.h"
 
 #include "gimpvectorlayeroptions.h"
 #include "gimpvectorlayeroptions-parasite.h"

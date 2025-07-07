@@ -40,6 +40,8 @@ struct _GimpPathTool
 {
   GimpDrawTool    parent_instance;
 
+  GimpImage      *current_image;
+
   GimpPath       *path;           /*  the current Path data   */
   GimpPathMode    saved_mode;     /*  used by modifier_key()  */
 
