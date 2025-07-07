@@ -141,13 +141,13 @@
 #define GIMP_MAINIMAGE_SELECTION_W      7
 #define GIMP_MAINIMAGE_SELECTION_H      8
 
-#define GIMP_MAINIMAGE_VECTORS1_NAME    "vectors1"
-#define GIMP_MAINIMAGE_VECTORS1_COORDS  { { 11.0, 12.0, /* pad zeroes */ },\
+#define GIMP_MAINIMAGE_PATH1_NAME       "vectors1"
+#define GIMP_MAINIMAGE_PATH1_COORDS     { { 11.0, 12.0, /* pad zeroes */ },\
                                           { 21.0, 22.0, /* pad zeroes */ },\
                                           { 31.0, 32.0, /* pad zeroes */ }, }
 
-#define GIMP_MAINIMAGE_VECTORS2_NAME    "vectors2"
-#define GIMP_MAINIMAGE_VECTORS2_COORDS  { { 911.0, 912.0, /* pad zeroes */ },\
+#define GIMP_MAINIMAGE_PATH2_NAME       "vectors2"
+#define GIMP_MAINIMAGE_PATH2_COORDS     { { 911.0, 912.0, /* pad zeroes */ },\
                                           { 921.0, 922.0, /* pad zeroes */ },\
                                           { 931.0, 932.0, /* pad zeroes */ }, }
 
@@ -374,19 +374,19 @@ gimp_create_mainimage (Gimp     *gimp,
                        gboolean  compat_paths,
                        gboolean  use_gimp_2_8_features)
 {
-  GimpImage     *image             = NULL;
-  GimpLayer     *layer             = NULL;
-  GimpParasite  *parasite          = NULL;
-  GimpGrid      *grid              = NULL;
-  GimpChannel   *channel           = NULL;
-  GeglColor     *channel_color     = gegl_color_new (NULL);
-  GimpChannel   *selection         = NULL;
-  GimpPath      *vectors           = NULL;
-  GimpCoords     vectors1_coords[] = GIMP_MAINIMAGE_VECTORS1_COORDS;
-  GimpCoords     vectors2_coords[] = GIMP_MAINIMAGE_VECTORS2_COORDS;
-  GimpStroke    *stroke            = NULL;
-  GimpLayerMask *layer_mask        = NULL;
-  gdouble        rgb[4]            = GIMP_MAINIMAGE_CHANNEL1_COLOR;
+  GimpImage     *image          = NULL;
+  GimpLayer     *layer          = NULL;
+  GimpParasite  *parasite       = NULL;
+  GimpGrid      *grid           = NULL;
+  GimpChannel   *channel        = NULL;
+  GeglColor     *channel_color  = gegl_color_new (NULL);
+  GimpChannel   *selection      = NULL;
+  GimpPath      *path           = NULL;
+  GimpCoords     path1_coords[] = GIMP_MAINIMAGE_PATH1_COORDS;
+  GimpCoords     path2_coords[] = GIMP_MAINIMAGE_PATH2_COORDS;
+  GimpStroke    *stroke         = NULL;
+  GimpLayerMask *layer_mask     = NULL;
+  gdouble        rgb[4]         = GIMP_MAINIMAGE_CHANNEL1_COLOR;
 
   gegl_color_set_pixel (channel_color, babl_format ("R'G'B'A double"), &rgb);
   /* Image size and type */
@@ -528,43 +528,43 @@ gimp_create_mainimage (Gimp     *gimp,
                                  0.0 /*feather_radius_y*/,
                                  FALSE /*push_undo*/);
 
-  /* Vectors 1 */
-  vectors = gimp_path_new (image,
-                           GIMP_MAINIMAGE_VECTORS1_NAME);
-  /* The XCF file can save vectors in two kind of ways, one old way
+  /* Path 1 */
+  path = gimp_path_new (image,
+                        GIMP_MAINIMAGE_PATH1_NAME);
+  /* The XCF file can save paths in two kind of ways, one old way
    * and a new way. Parameterize the way so we can test both variants,
    * i.e. gimp_path_compat_is_compatible() must return both TRUE
    * and FALSE.
    */
   if (! compat_paths)
     {
-      gimp_item_set_visible (GIMP_ITEM (vectors),
+      gimp_item_set_visible (GIMP_ITEM (path),
                              TRUE,
                              FALSE /*push_undo*/);
     }
   /* TODO: Add test for non-closed stroke. The order of the anchor
    * points changes for open strokes, so it's boring to test
    */
-  stroke = gimp_bezier_stroke_new_from_coords (vectors1_coords,
-                                               G_N_ELEMENTS (vectors1_coords),
+  stroke = gimp_bezier_stroke_new_from_coords (path1_coords,
+                                               G_N_ELEMENTS (path1_coords),
                                                TRUE /*closed*/);
-  gimp_path_stroke_add (vectors, stroke);
+  gimp_path_stroke_add (path, stroke);
   gimp_image_add_path (image,
-                       vectors,
+                       path,
                        NULL /*parent*/,
                        -1 /*position*/,
                        FALSE /*push_undo*/);
 
-  /* Vectors 2 */
-  vectors = gimp_path_new (image,
-                           GIMP_MAINIMAGE_VECTORS2_NAME);
+  /* Path 2 */
+  path = gimp_path_new (image,
+                        GIMP_MAINIMAGE_PATH2_NAME);
 
-  stroke = gimp_bezier_stroke_new_from_coords (vectors2_coords,
-                                               G_N_ELEMENTS (vectors2_coords),
+  stroke = gimp_bezier_stroke_new_from_coords (path2_coords,
+                                               G_N_ELEMENTS (path2_coords),
                                                TRUE /*closed*/);
-  gimp_path_stroke_add (vectors, stroke);
+  gimp_path_stroke_add (path, stroke);
   gimp_image_add_path (image,
-                       vectors,
+                       path,
                        NULL /*parent*/,
                        -1 /*position*/,
                        FALSE /*push_undo*/);
@@ -681,20 +681,20 @@ gimp_create_mainimage (Gimp     *gimp,
 }
 
 static void
-gimp_assert_vectors (GimpImage   *image,
-                     const gchar *name,
-                     GimpCoords   coords[],
-                     gsize        coords_size,
-                     gboolean     visible)
+gimp_assert_path (GimpImage   *image,
+                  const gchar *name,
+                  GimpCoords   coords[],
+                  gsize        coords_size,
+                  gboolean     visible)
 {
-  GimpPath    *vectors        = NULL;
+  GimpPath    *path           = NULL;
   GimpStroke  *stroke         = NULL;
   GArray      *control_points = NULL;
   gboolean     closed         = FALSE;
   gint         i              = 0;
 
-  vectors = gimp_image_get_path_by_name (image, name);
-  stroke = gimp_path_stroke_get_next (vectors, NULL);
+  path = gimp_image_get_path_by_name (image, name);
+  stroke = gimp_path_stroke_get_next (path, NULL);
   g_assert_true (stroke != NULL);
   control_points = gimp_stroke_control_points_get (stroke,
                                                    &closed);
@@ -716,7 +716,7 @@ gimp_assert_vectors (GimpImage   *image,
                                       i).position.y);
     }
 
-  g_assert_true (gimp_item_get_visible (GIMP_ITEM (vectors)) ? TRUE : FALSE ==
+  g_assert_true (gimp_item_get_visible (GIMP_ITEM (path)) ? TRUE : FALSE ==
                  visible ? TRUE : FALSE);
 }
 
@@ -756,8 +756,8 @@ gimp_assert_mainimage (GimpImage *image,
   gint                y                      = -1;
   gint                w                      = -1;
   gint                h                      = -1;
-  GimpCoords          vectors1_coords[]      = GIMP_MAINIMAGE_VECTORS1_COORDS;
-  GimpCoords          vectors2_coords[]      = GIMP_MAINIMAGE_VECTORS2_COORDS;
+  GimpCoords          path1_coords[]         = GIMP_MAINIMAGE_PATH1_COORDS;
+  GimpCoords          path2_coords[]         = GIMP_MAINIMAGE_PATH2_COORDS;
 
   /* Image size and type */
   g_assert_cmpint (gimp_image_get_width (image),
@@ -955,19 +955,19 @@ gimp_assert_mainimage (GimpImage *image,
                        GIMP_MAINIMAGE_SELECTION_H);
     }
 
-  /* Vectors 1 */
-  gimp_assert_vectors (image,
-                       GIMP_MAINIMAGE_VECTORS1_NAME,
-                       vectors1_coords,
-                       G_N_ELEMENTS (vectors1_coords),
-                       ! compat_paths /*visible*/);
+  /* Path 1 */
+  gimp_assert_path (image,
+                    GIMP_MAINIMAGE_PATH1_NAME,
+                    path1_coords,
+                    G_N_ELEMENTS (path1_coords),
+                    ! compat_paths /*visible*/);
 
-  /* Vectors 2 (always visible FALSE) */
-  gimp_assert_vectors (image,
-                       GIMP_MAINIMAGE_VECTORS2_NAME,
-                       vectors2_coords,
-                       G_N_ELEMENTS (vectors2_coords),
-                       FALSE /*visible*/);
+  /* Path 2 (always visible FALSE) */
+  gimp_assert_path (image,
+                    GIMP_MAINIMAGE_PATH2_NAME,
+                    path2_coords,
+                    G_N_ELEMENTS (path2_coords),
+                    FALSE /*visible*/);
 
   if (with_unusual_stuff)
     g_assert_true (gimp_image_get_floating_selection (image) != NULL);
