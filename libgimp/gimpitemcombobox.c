@@ -167,8 +167,9 @@ gimp_drawable_combo_box_init (GimpDrawableComboBox *combo_box)
 
 /**
  * gimp_drawable_combo_box_new:
- * @constraint: (nullable):       A #GimpItemConstraintFunc or %NULL
- * @data: (closure constraint):   A pointer that is passed to @constraint
+ * @constraint: (nullable) (closure data):
+ *                                A #GimpItemConstraintFunc or %NULL
+ * @data:                         A pointer that is passed to @constraint
  * @data_destroy: (destroy data): Destroy function for @data
  *
  * Creates a new #GimpIntComboBox filled with all currently opened
@@ -223,9 +224,9 @@ gimp_channel_combo_box_init (GimpChannelComboBox *combo_box)
 
 /**
  * gimp_channel_combo_box_new:
- * @constraint: (nullable):       A #GimpItemConstraintFunc or %NULL
- * @data: (closure constraint):   A pointer that is passed to @constraint
- * @data_destroy: (destroy data): Destroy function for @data
+ * @constraint: (nullable) (closure data): A #GimpItemConstraintFunc or %NULL
+ * @data:                                  A pointer that is passed to @constraint
+ * @data_destroy: (destroy data):          Destroy function for @data
  *
  * Creates a new #GimpIntComboBox filled with all currently opened
  * channels. See gimp_drawable_combo_box_new() for more information.
@@ -272,9 +273,9 @@ gimp_layer_combo_box_init (GimpLayerComboBox *combo_box)
 
 /**
  * gimp_layer_combo_box_new:
- * @constraint: (nullable):       A #GimpItemConstraintFunc or %NULL
- * @data: (closure constraint):   A pointer that is passed to @constraint
- * @data_destroy: (destroy data): Destroy function for @data
+ * @constraint: (nullable) (closure data): A #GimpItemConstraintFunc or %NULL
+ * @data:                                  A pointer that is passed to @constraint
+ * @data_destroy: (destroy data):          Destroy function for @data
  *
  * Creates a new #GimpIntComboBox filled with all currently opened
  * layers. See gimp_drawable_combo_box_new() for more information.
@@ -322,9 +323,9 @@ gimp_path_combo_box_init (GimpPathComboBox *combo_box)
 
 /**
  * gimp_path_combo_box_new:
- * @constraint: (nullable):       A #GimpItemConstraintFunc or %NULL
- * @data: (closure constraint):   A pointer that is passed to @constraint
- * @data_destroy: (destroy data): Destroy function for @data
+ * @constraint: (nullable) (closure data): A #GimpItemConstraintFunc or %NULL
+ * @data:                                  A pointer that is passed to @constraint
+ * @data_destroy: (destroy data):          Destroy function for @data
  *
  * Creates a new #GimpIntComboBox filled with all currently opened
  * path objects. If a @constraint function is specified, it is called for
