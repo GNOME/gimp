@@ -1013,6 +1013,29 @@ user_update_sessionrc_2to3 (const GMatchInfo *matched_value,
   return FALSE;
 }
 
+#define TOOLRC_UPDATE_PATTERN \
+  "\"gimp-vector-tool\""
+
+static gboolean
+user_update_toolrc (const GMatchInfo *matched_value,
+                    GString          *new_value,
+                    gpointer          data)
+{
+  gchar *original;
+
+  original = g_match_info_fetch (matched_value, 0);
+
+  if (g_strcmp0 (original, "\"gimp-vector-tool\"") == 0)
+    {
+      /* Renamed in GIMP 3.2. */
+      g_string_append (new_value, "\"gimp-path-tool\"");
+    }
+
+  g_free (original);
+
+  return FALSE;
+}
+
 #define SESSIONRC_UPDATE_PATTERN \
   "\"gimp-vectors-list\""
 
@@ -1374,10 +1397,23 @@ user_install_migrate_files (GimpUserInstall *install)
               g_str_has_prefix (basename, "gimpswap.") ||
               strcmp (basename, "pluginrc") == 0       ||
               strcmp (basename, "themerc") == 0        ||
-              strcmp (basename, "toolrc") == 0         ||
               strcmp (basename, "gtkrc") == 0)
             {
               goto next_file;
+            }
+          else if (strcmp (basename, "toolrc") == 0)
+            {
+              if (install->old_major < 2 ||
+                  (install->old_major == 2 && install->old_minor < 10))
+                {
+                  /* No new tool since GIMP 2.10. */
+                  goto next_file;
+                }
+              else
+                {
+                  update_pattern  = TOOLRC_UPDATE_PATTERN;
+                  update_callback = user_update_toolrc;
+                }
             }
           else if (install->old_major < 3 &&
                    strcmp (basename, "sessionrc") == 0)
