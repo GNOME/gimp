@@ -198,8 +198,7 @@ gimp_paint_core_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_UNDO_DESC:
-      g_free (core->undo_desc);
-      core->undo_desc = g_value_dup_string (value);
+      g_set_str (&core->undo_desc, g_value_get_string (value));
       break;
 
     default:

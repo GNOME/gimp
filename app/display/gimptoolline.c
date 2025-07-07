@@ -498,8 +498,7 @@ gimp_tool_line_set_property (GObject      *object,
       break;
 
     case PROP_STATUS_TITLE:
-      g_free (private->status_title);
-      private->status_title = g_value_dup_string (value);
+      g_set_str (&private->status_title, g_value_get_string (value));
       if (! private->status_title)
         private->status_title = g_strdup (_("Line: "));
       break;

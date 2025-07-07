@@ -342,14 +342,10 @@ gimp_template_set_property (GObject      *object,
       g_object_notify (object, "precision");
       break;
     case PROP_COLOR_PROFILE:
-      if (private->color_profile)
-        g_object_unref (private->color_profile);
-      private->color_profile = g_value_dup_object (value);
+      g_set_object (&private->color_profile, g_value_get_object (value));
       break;
     case PROP_SIMULATION_PROFILE:
-      if (private->simulation_profile)
-        g_object_unref (private->simulation_profile);
-      private->simulation_profile = g_value_dup_object (value);
+      g_set_object (&private->simulation_profile, g_value_get_object (value));
       break;
     case PROP_SIMULATION_INTENT:
       private->simulation_intent = g_value_get_enum (value);
@@ -361,14 +357,10 @@ gimp_template_set_property (GObject      *object,
       private->fill_type = g_value_get_enum (value);
       break;
     case PROP_COMMENT:
-      if (private->comment)
-        g_free (private->comment);
-      private->comment = g_value_dup_string (value);
+      g_set_str (&private->comment, g_value_get_string (value));
       break;
     case PROP_FILENAME:
-      if (private->filename)
-        g_free (private->filename);
-      private->filename = g_value_dup_string (value);
+      g_set_str (&private->filename, g_value_get_string (value));
       break;
 
     case PROP_COLOR_MANAGED:

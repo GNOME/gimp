@@ -248,8 +248,7 @@ gimp_dialog_set_property (GObject      *object,
       break;
 
     case PROP_HELP_ID:
-      g_free (private->help_id);
-      private->help_id = g_value_dup_string (value);
+      g_set_str (&private->help_id, g_value_get_string (value));
       gimp_help_set_help_data (GTK_WIDGET (object), NULL, private->help_id);
       break;
 

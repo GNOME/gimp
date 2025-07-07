@@ -365,8 +365,7 @@ gimp_bucket_fill_options_set_property (GObject      *object,
       options->line_art_stroke = g_value_get_boolean (value);
       break;
     case PROP_LINE_ART_STROKE_TOOL:
-      g_clear_pointer (&options->line_art_stroke_tool, g_free);
-      options->line_art_stroke_tool = g_value_dup_string (value);
+      g_set_str (&options->line_art_stroke_tool, g_value_get_string (value));
 
       if (options->stroke_options)
         {

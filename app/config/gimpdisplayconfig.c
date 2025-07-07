@@ -518,12 +518,10 @@ gimp_display_config_set_property (GObject      *object,
       display_config->show_paint_tool_cursor = g_value_get_boolean (value);
       break;
     case PROP_IMAGE_TITLE_FORMAT:
-      g_set_str (&display_config->image_title_format,
-                 g_value_get_string (value));
+      g_set_str (&display_config->image_title_format, g_value_get_string (value));
       break;
     case PROP_IMAGE_STATUS_FORMAT:
-      g_set_str (&display_config->image_status_format,
-                 g_value_get_string (value));
+      g_set_str (&display_config->image_status_format, g_value_get_string (value));
       break;
     case PROP_MONITOR_XRESOLUTION:
       display_config->monitor_xres = g_value_get_double (value);

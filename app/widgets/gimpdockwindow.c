@@ -547,7 +547,6 @@ gimp_dock_window_set_property (GObject      *object,
       break;
 
     case PROP_UI_MANAGER_NAME:
-      g_free (dock_window->p->ui_manager_name);
       dock_window->p->ui_manager_name = g_value_dup_string (value);
       break;
 

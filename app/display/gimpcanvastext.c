@@ -139,7 +139,7 @@ gimp_canvas_text_set_property (GObject      *object,
       private->font_size = g_value_get_double (value);
       break;
     case PROP_TEXT:
-      private->text = (gchar *) g_value_dup_string (value);
+      private->text = g_value_dup_string (value);
       break;
 
     default:

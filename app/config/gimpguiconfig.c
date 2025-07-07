@@ -684,12 +684,10 @@ gimp_gui_config_set_property (GObject      *object,
       gui_config->toolbox_groups = g_value_get_boolean (value);
       break;
     case PROP_THEME_PATH:
-      g_set_str (&gui_config->theme_path,
-                 g_value_get_string (value));
+      g_set_str (&gui_config->theme_path, g_value_get_string (value));
       break;
     case PROP_THEME:
-      g_set_str (&gui_config->theme,
-                 g_value_get_string (value));
+      g_set_str (&gui_config->theme, g_value_get_string (value));
       break;
     case PROP_THEME_SCHEME:
       gui_config->theme_scheme = g_value_get_enum (value);
@@ -704,12 +702,10 @@ gimp_gui_config_set_property (GObject      *object,
       gui_config->viewables_follow_theme = g_value_get_boolean (value);
       break;
     case PROP_ICON_THEME_PATH:
-      g_set_str (&gui_config->icon_theme_path,
-                 g_value_get_string (value));
+      g_set_str (&gui_config->icon_theme_path, g_value_get_string (value));
       break;
     case PROP_ICON_THEME:
-      g_set_str (&gui_config->icon_theme,
-                 g_value_get_string (value));
+      g_set_str (&gui_config->icon_theme, g_value_get_string (value));
       break;
     case PROP_PREFER_SYMBOLIC_ICONS:
       gui_config->prefer_symbolic_icons = g_value_get_boolean (value);
@@ -724,8 +720,7 @@ gimp_gui_config_set_property (GObject      *object,
       gui_config->show_help_button = g_value_get_boolean (value);
       break;
     case PROP_HELP_LOCALES:
-      g_set_str (&gui_config->help_locales,
-                 g_value_get_string (value));
+      g_set_str (&gui_config->help_locales, g_value_get_string (value));
       break;
     case PROP_HELP_BROWSER:
       gui_config->help_browser = g_value_get_enum (value);
@@ -734,8 +729,7 @@ gimp_gui_config_set_property (GObject      *object,
       gui_config->user_manual_online = g_value_get_boolean (value);
       break;
     case PROP_USER_MANUAL_ONLINE_URI:
-      g_set_str (&gui_config->user_manual_online_uri,
-                 g_value_get_string (value));
+      g_set_str (&gui_config->user_manual_online_uri, g_value_get_string (value));
       break;
     case PROP_ACTION_HISTORY_SIZE:
       gui_config->action_history_size = g_value_get_int (value);

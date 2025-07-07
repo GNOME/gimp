@@ -150,28 +150,19 @@ gimp_plugin_config_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_FRACTALEXPLORER_PATH:
-      g_set_str (&plugin_config->fractalexplorer_path,
-                 g_value_get_string (value));
+      g_set_str (&plugin_config->fractalexplorer_path, g_value_get_string (value));
       break;
-
     case PROP_GFIG_PATH:
-      g_set_str (&plugin_config->gfig_path,
-                 g_value_get_string (value));
+      g_set_str (&plugin_config->gfig_path, g_value_get_string (value));
       break;
-
     case PROP_GFLARE_PATH:
-      g_set_str (&plugin_config->gflare_path,
-                 g_value_get_string (value));
+      g_set_str (&plugin_config->gflare_path, g_value_get_string (value));
       break;
-
     case PROP_GIMPRESSIONIST_PATH:
-      g_set_str (&plugin_config->gimpressionist_path,
-                 g_value_get_string (value));
+      g_set_str (&plugin_config->gimpressionist_path, g_value_get_string (value));
       break;
-
     case PROP_SCRIPT_FU_PATH:
-      g_set_str (&plugin_config->script_fu_path,
-                 g_value_get_string (value));
+      g_set_str (&plugin_config->script_fu_path, g_value_get_string (value));
       break;
 
     default:
@@ -193,19 +184,15 @@ gimp_plugin_config_get_property (GObject    *object,
     case PROP_FRACTALEXPLORER_PATH:
       g_value_set_string (value, plugin_config->fractalexplorer_path);
       break;
-
     case PROP_GFIG_PATH:
       g_value_set_string (value, plugin_config->gfig_path);
       break;
-
     case PROP_GFLARE_PATH:
       g_value_set_string (value, plugin_config->gflare_path);
       break;
-
     case PROP_GIMPRESSIONIST_PATH:
       g_value_set_string (value, plugin_config->gimpressionist_path);
       break;
-
     case PROP_SCRIPT_FU_PATH:
       g_value_set_string (value, plugin_config->script_fu_path);
       break;

@@ -409,9 +409,7 @@ gimp_settings_box_set_property (GObject      *object,
       break;
 
     case PROP_CONFIG:
-      if (private->config)
-        g_object_unref (private->config);
-      private->config = g_value_dup_object (value);
+      g_set_object (&private->config, g_value_get_object (value));
       break;
 
     case PROP_CONTAINER:
@@ -421,39 +419,30 @@ gimp_settings_box_set_property (GObject      *object,
       if (private->file_dialog)
         gtk_dialog_response (GTK_DIALOG (private->file_dialog),
                              GTK_RESPONSE_DELETE_EVENT);
-      if (private->container)
-        g_object_unref (private->container);
-      private->container = g_value_dup_object (value);
+      g_set_object (&private->container, g_value_get_object (value));
       if (private->combo)
         gimp_container_view_set_container (GIMP_CONTAINER_VIEW (private->combo),
                                            private->container);
       break;
 
     case PROP_HELP_ID:
-      g_free (private->help_id);
-      private->help_id = g_value_dup_string (value);
+      g_set_str (&private->help_id, g_value_get_string (value));
       break;
 
     case PROP_IMPORT_TITLE:
-      g_free (private->import_title);
-      private->import_title = g_value_dup_string (value);
+      g_set_str (&private->import_title, g_value_get_string (value));
       break;
 
     case PROP_EXPORT_TITLE:
-      g_free (private->export_title);
-      private->export_title = g_value_dup_string (value);
+      g_set_str (&private->export_title, g_value_dup_string (value));
       break;
 
     case PROP_DEFAULT_FOLDER:
-      if (private->default_folder)
-        g_object_unref (private->default_folder);
-      private->default_folder = g_value_dup_object (value);
+      g_set_object (&private->default_folder, g_value_get_object (value));
       break;
 
     case PROP_LAST_FILE:
-      if (private->last_file)
-        g_object_unref (private->last_file);
-      private->last_file = g_value_dup_object (value);
+      g_set_object (&private->last_file, g_value_get_object (value));
       break;
 
    default:
