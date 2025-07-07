@@ -670,6 +670,11 @@ border {
   border: 0px;
 }
 
+/* The border around frames in dialogs */
+dialog .frame {
+    border: 1px solid @border-color;
+}
+
 /* The border around GimpOffsetArea frame in resize dialogs */
 .gimp-offset-area-frame {
   border: solid 2px @stronger-border-color;
