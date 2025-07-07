@@ -144,7 +144,7 @@
         (GimpToolInfo "gimp-dodge-burn-tool"
             (icon-name "gimp-tool-dodge")
             (visible yes))))
-(GimpToolInfo "gimp-vector-tool"
+(GimpToolInfo "gimp-path-tool"
     (icon-name "gimp-tool-path")
     (visible yes))
 (GimpToolInfo "gimp-text-tool"

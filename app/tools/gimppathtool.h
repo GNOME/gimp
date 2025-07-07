@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * Vector tool
+ * Path tool
  * Copyright (C) 2003 Simon Budig  <simon@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,27 +18,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VECTOR_TOOL_H__
-#define __GIMP_VECTOR_TOOL_H__
+#ifndef __GIMP_PATH_TOOL_H__
+#define __GIMP_PATH_TOOL_H__
 
 
 #include "gimpdrawtool.h"
 
 
-#define GIMP_TYPE_VECTOR_TOOL            (gimp_vector_tool_get_type ())
-#define GIMP_VECTOR_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VECTOR_TOOL, GimpVectorTool))
-#define GIMP_VECTOR_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_VECTOR_TOOL, GimpVectorToolClass))
-#define GIMP_IS_VECTOR_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_VECTOR_TOOL))
-#define GIMP_IS_VECTOR_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_VECTOR_TOOL))
-#define GIMP_VECTOR_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_VECTOR_TOOL, GimpVectorToolClass))
+#define GIMP_TYPE_PATH_TOOL            (gimp_path_tool_get_type ())
+#define GIMP_PATH_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PATH_TOOL, GimpPathTool))
+#define GIMP_PATH_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PATH_TOOL, GimpPathToolClass))
+#define GIMP_IS_PATH_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PATH_TOOL))
+#define GIMP_IS_PATH_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PATH_TOOL))
+#define GIMP_PATH_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PATH_TOOL, GimpPathToolClass))
 
-#define GIMP_VECTOR_TOOL_GET_OPTIONS(t)  (GIMP_PATH_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+#define GIMP_PATH_TOOL_GET_OPTIONS(t)  (GIMP_PATH_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
 
 
-typedef struct _GimpVectorTool      GimpVectorTool;
-typedef struct _GimpVectorToolClass GimpVectorToolClass;
+typedef struct _GimpPathTool      GimpPathTool;
+typedef struct _GimpPathToolClass GimpPathToolClass;
 
-struct _GimpVectorTool
+struct _GimpPathTool
 {
   GimpDrawTool    parent_instance;
 
@@ -49,19 +49,19 @@ struct _GimpVectorTool
   GimpToolWidget *grab_widget;
 };
 
-struct _GimpVectorToolClass
+struct _GimpPathToolClass
 {
   GimpDrawToolClass  parent_class;
 };
 
 
-void    gimp_vector_tool_register (GimpToolRegisterCallback  callback,
-                                   gpointer                  data);
+void    gimp_path_tool_register (GimpToolRegisterCallback  callback,
+                                 gpointer                  data);
 
-GType   gimp_vector_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_path_tool_get_type (void) G_GNUC_CONST;
 
-void    gimp_vector_tool_set_path (GimpVectorTool           *vector_tool,
-                                   GimpPath                 *path);
+void    gimp_path_tool_set_path (GimpPathTool             *path_tool,
+                                 GimpPath                 *path);
 
 
-#endif  /*  __GIMP_VECTOR_TOOL_H__  */
+#endif  /*  __GIMP_PATH_TOOL_H__  */

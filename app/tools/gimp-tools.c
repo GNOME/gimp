@@ -145,7 +145,7 @@ gimp_tools_init (Gimp *gimp)
 
     /*  path tool */
 
-    gimp_vector_tool_register,
+    gimp_path_tool_register,
 
     /*  non-modifying tools  */
 

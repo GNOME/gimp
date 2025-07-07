@@ -651,7 +651,7 @@
           <item><attribute name="action">app.tools-n-point-deformation</attribute></item>
           -->
         </submenu>
-        <item><attribute name="action">app.tools-vector</attribute></item>
+        <item><attribute name="action">app.tools-path</attribute></item>
         <item><attribute name="action">app.tools-text</attribute></item>
       </section>
       <section>

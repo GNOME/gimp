@@ -125,10 +125,10 @@ paths_edit_cmd_callback (GimpAction *action,
 
   active_tool = tool_manager_get_active (image->gimp);
 
-  if (! GIMP_IS_VECTOR_TOOL (active_tool))
+  if (! GIMP_IS_PATH_TOOL (active_tool))
     {
-      GimpToolInfo  *tool_info = gimp_get_tool_info (image->gimp,
-                                                     "gimp-vector-tool");
+      GimpToolInfo *tool_info = gimp_get_tool_info (image->gimp,
+                                                    "gimp-path-tool");
 
       if (GIMP_IS_TOOL_INFO (tool_info))
         {
@@ -137,8 +137,8 @@ paths_edit_cmd_callback (GimpAction *action,
         }
     }
 
-  if (GIMP_IS_VECTOR_TOOL (active_tool))
-    gimp_vector_tool_set_path (GIMP_VECTOR_TOOL (active_tool), paths->data);
+  if (GIMP_IS_PATH_TOOL (active_tool))
+    gimp_path_tool_set_path (GIMP_PATH_TOOL (active_tool), paths->data);
 }
 
 void
