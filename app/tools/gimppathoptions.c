@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpvectoroptions.c
+ * gimppathoptions.c
  * Copyright (C) 1999 Sven Neumann <sven@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -41,42 +41,42 @@
 enum
 {
   PROP_0,
-  PROP_VECTORS_EDIT_MODE,
-  PROP_VECTORS_POLYGONAL
+  PROP_PATH_EDIT_MODE,
+  PROP_PATH_POLYGONAL
 };
 
 
-static void   gimp_vector_options_set_property (GObject      *object,
-                                                guint         property_id,
-                                                const GValue *value,
-                                                GParamSpec   *pspec);
-static void   gimp_vector_options_get_property (GObject      *object,
-                                                guint         property_id,
-                                                GValue       *value,
-                                                GParamSpec   *pspec);
+static void   gimp_path_options_set_property (GObject      *object,
+                                              guint         property_id,
+                                              const GValue *value,
+                                              GParamSpec   *pspec);
+static void   gimp_path_options_get_property (GObject      *object,
+                                              guint         property_id,
+                                              GValue       *value,
+                                              GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpVectorOptions, gimp_vector_options, GIMP_TYPE_TOOL_OPTIONS)
+G_DEFINE_TYPE (GimpPathOptions, gimp_path_options, GIMP_TYPE_TOOL_OPTIONS)
 
 
 static void
-gimp_vector_options_class_init (GimpVectorOptionsClass *klass)
+gimp_path_options_class_init (GimpPathOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_vector_options_set_property;
-  object_class->get_property = gimp_vector_options_get_property;
+  object_class->set_property = gimp_path_options_set_property;
+  object_class->get_property = gimp_path_options_get_property;
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_VECTORS_EDIT_MODE,
-                         "vectors-edit-mode",
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_PATH_EDIT_MODE,
+                         "path-edit-mode",
                          _("Edit Mode"),
                          NULL,
                          GIMP_TYPE_PATH_MODE,
                          GIMP_PATH_MODE_DESIGN,
                          GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_VECTORS_POLYGONAL,
-                            "vectors-polygonal",
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PATH_POLYGONAL,
+                            "path-polygonal",
                             _("Polygonal"),
                             _("Restrict editing to polygons"),
                             FALSE,
@@ -84,24 +84,24 @@ gimp_vector_options_class_init (GimpVectorOptionsClass *klass)
 }
 
 static void
-gimp_vector_options_init (GimpVectorOptions *options)
+gimp_path_options_init (GimpPathOptions *options)
 {
 }
 
 static void
-gimp_vector_options_set_property (GObject      *object,
-                                  guint         property_id,
-                                  const GValue *value,
-                                  GParamSpec   *pspec)
+gimp_path_options_set_property (GObject      *object,
+                                guint         property_id,
+                                const GValue *value,
+                                GParamSpec   *pspec)
 {
-  GimpVectorOptions *options = GIMP_VECTOR_OPTIONS (object);
+  GimpPathOptions *options = GIMP_PATH_OPTIONS (object);
 
   switch (property_id)
     {
-    case PROP_VECTORS_EDIT_MODE:
+    case PROP_PATH_EDIT_MODE:
       options->edit_mode = g_value_get_enum (value);
       break;
-    case PROP_VECTORS_POLYGONAL:
+    case PROP_PATH_POLYGONAL:
       options->polygonal = g_value_get_boolean (value);
       break;
     default:
@@ -112,19 +112,19 @@ gimp_vector_options_set_property (GObject      *object,
 
 
 static void
-gimp_vector_options_get_property (GObject    *object,
+gimp_path_options_get_property (GObject    *object,
                                   guint       property_id,
                                   GValue     *value,
                                   GParamSpec *pspec)
 {
-  GimpVectorOptions *options = GIMP_VECTOR_OPTIONS (object);
+  GimpPathOptions *options = GIMP_PATH_OPTIONS (object);
 
   switch (property_id)
     {
-    case PROP_VECTORS_EDIT_MODE:
+    case PROP_PATH_EDIT_MODE:
       g_value_set_enum (value, options->edit_mode);
       break;
-    case PROP_VECTORS_POLYGONAL:
+    case PROP_PATH_POLYGONAL:
       g_value_set_boolean (value, options->polygonal);
       break;
     default:
@@ -146,17 +146,17 @@ button_append_modifier (GtkWidget       *button,
 }
 
 GtkWidget *
-gimp_vector_options_gui (GimpToolOptions *tool_options)
+gimp_path_options_gui (GimpToolOptions *tool_options)
 {
   GObject           *config  = G_OBJECT (tool_options);
-  GimpVectorOptions *options = GIMP_VECTOR_OPTIONS (tool_options);
+  GimpPathOptions *options = GIMP_PATH_OPTIONS (tool_options);
   GtkWidget         *vbox    = gimp_tool_options_gui (tool_options);
   GtkWidget         *frame;
   GtkWidget         *button;
   gchar             *str;
 
   /*  tool toggle  */
-  frame = gimp_prop_enum_radio_frame_new (config, "vectors-edit-mode", NULL,
+  frame = gimp_prop_enum_radio_frame_new (config, "path-edit-mode", NULL,
                                           0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
@@ -174,7 +174,7 @@ gimp_vector_options_gui (GimpToolOptions *tool_options)
                                 gimp_get_toggle_behavior_mask ());
     }
 
-  button = gimp_prop_check_button_new (config, "vectors-polygonal", NULL);
+  button = gimp_prop_check_button_new (config, "path-polygonal", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
   str = g_strdup_printf (_("Path to Selection\n"

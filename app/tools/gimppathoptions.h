@@ -15,25 +15,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VECTOR_OPTIONS_H__
-#define __GIMP_VECTOR_OPTIONS_H__
+#ifndef __GIMP_PATH_OPTIONS_H__
+#define __GIMP_PATH_OPTIONS_H__
 
 
 #include "core/gimptooloptions.h"
 
 
-#define GIMP_TYPE_VECTOR_OPTIONS            (gimp_vector_options_get_type ())
-#define GIMP_VECTOR_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VECTOR_OPTIONS, GimpVectorOptions))
-#define GIMP_VECTOR_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_VECTOR_OPTIONS, GimpVectorOptionsClass))
-#define GIMP_IS_VECTOR_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_VECTOR_OPTIONS))
-#define GIMP_IS_VECTOR_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_VECTOR_OPTIONS))
-#define GIMP_VECTOR_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_VECTOR_OPTIONS, GimpVectorOptionsClass))
+#define GIMP_TYPE_PATH_OPTIONS            (gimp_path_options_get_type ())
+#define GIMP_PATH_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PATH_OPTIONS, GimpPathOptions))
+#define GIMP_PATH_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PATH_OPTIONS, GimpPathOptionsClass))
+#define GIMP_IS_PATH_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PATH_OPTIONS))
+#define GIMP_IS_PATH_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PATH_OPTIONS))
+#define GIMP_PATH_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PATH_OPTIONS, GimpPathOptionsClass))
 
 
-typedef struct _GimpVectorOptions    GimpVectorOptions;
-typedef struct _GimpToolOptionsClass GimpVectorOptionsClass;
+typedef struct _GimpPathOptions    GimpPathOptions;
+typedef struct _GimpToolOptionsClass GimpPathOptionsClass;
 
-struct _GimpVectorOptions
+struct _GimpPathOptions
 {
   GimpToolOptions  parent_instance;
 
@@ -47,9 +47,9 @@ struct _GimpVectorOptions
 };
 
 
-GType       gimp_vector_options_get_type (void) G_GNUC_CONST;
+GType       gimp_path_options_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_vector_options_gui      (GimpToolOptions *tool_options);
+GtkWidget * gimp_path_options_gui      (GimpToolOptions *tool_options);
 
 
-#endif  /*  __GIMP_VECTOR_OPTIONS_H__  */
+#endif  /*  __GIMP_PATH_OPTIONS_H__  */

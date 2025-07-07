@@ -158,8 +158,8 @@ gimp_vector_tool_register (GimpToolRegisterCallback callback,
                            gpointer                 data)
 {
   (* callback) (GIMP_TYPE_VECTOR_TOOL,
-                GIMP_TYPE_VECTOR_OPTIONS,
-                gimp_vector_options_gui,
+                GIMP_TYPE_PATH_OPTIONS,
+                gimp_path_options_gui,
                 GIMP_PAINT_OPTIONS_CONTEXT_MASK |
                 GIMP_CONTEXT_PROP_MASK_PATTERN  |
                 GIMP_CONTEXT_PROP_MASK_GRADIENT, /* for stroking */
@@ -308,8 +308,8 @@ gimp_vector_tool_modifier_key (GimpTool        *tool,
                                GdkModifierType  state,
                                GimpDisplay     *display)
 {
-  GimpVectorTool    *vector_tool = GIMP_VECTOR_TOOL (tool);
-  GimpVectorOptions *options     = GIMP_VECTOR_TOOL_GET_OPTIONS (tool);
+  GimpVectorTool  *vector_tool = GIMP_VECTOR_TOOL (tool);
+  GimpPathOptions *options     = GIMP_VECTOR_TOOL_GET_OPTIONS (tool);
 
   if (key == TOGGLE_MASK)
     return;
@@ -348,7 +348,7 @@ gimp_vector_tool_modifier_key (GimpTool        *tool,
 
       if (button_mode != options->edit_mode)
         {
-          g_object_set (options, "vectors-edit-mode", button_mode, NULL);
+          g_object_set (options, "path-edit-mode", button_mode, NULL);
         }
     }
 }
@@ -387,7 +387,7 @@ gimp_vector_tool_start (GimpVectorTool *vector_tool,
                         GimpDisplay    *display)
 {
   GimpTool          *tool    = GIMP_TOOL (vector_tool);
-  GimpVectorOptions *options = GIMP_VECTOR_TOOL_GET_OPTIONS (tool);
+  GimpPathOptions   *options = GIMP_VECTOR_TOOL_GET_OPTIONS (tool);
   GimpDisplayShell  *shell   = gimp_display_get_shell (display);
   GimpToolWidget    *widget;
 
@@ -397,11 +397,11 @@ gimp_vector_tool_start (GimpVectorTool *vector_tool,
 
   gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), widget);
 
-  g_object_bind_property (G_OBJECT (options), "vectors-edit-mode",
+  g_object_bind_property (G_OBJECT (options), "path-edit-mode",
                           G_OBJECT (widget),  "edit-mode",
                           G_BINDING_SYNC_CREATE |
                           G_BINDING_BIDIRECTIONAL);
-  g_object_bind_property (G_OBJECT (options), "vectors-polygonal",
+  g_object_bind_property (G_OBJECT (options), "path-polygonal",
                           G_OBJECT (widget),  "polygonal",
                           G_BINDING_SYNC_CREATE |
                           G_BINDING_BIDIRECTIONAL);
@@ -552,9 +552,9 @@ void
 gimp_vector_tool_set_path (GimpVectorTool *vector_tool,
                            GimpPath       *vectors)
 {
-  GimpTool          *tool;
-  GimpItem          *item = NULL;
-  GimpVectorOptions *options;
+  GimpTool        *tool;
+  GimpItem        *item = NULL;
+  GimpPathOptions *options;
 
   g_return_if_fail (GIMP_IS_VECTOR_TOOL (vector_tool));
   g_return_if_fail (vectors == NULL || GIMP_IS_PATH (vectors));
@@ -694,7 +694,7 @@ gimp_vector_tool_set_path (GimpVectorTool *vector_tool,
     }
 
   if (options->edit_mode != GIMP_PATH_MODE_DESIGN)
-    g_object_set (options, "vectors-edit-mode",
+    g_object_set (options, "path-edit-mode",
                   GIMP_PATH_MODE_DESIGN, NULL);
 }
 
