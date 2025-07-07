@@ -379,10 +379,16 @@ gboolean     gimp_image_equal_selected_drawables (GimpImage          *image,
                                                   GList              *drawables);
 
 GList        * gimp_image_get_selected_drawables (GimpImage          *image);
+
+GList         * gimp_image_get_selected_items    (GimpImage          *image,
+                                                  GType               item_type);
 GList         * gimp_image_get_selected_layers   (GimpImage          *image);
 GList         * gimp_image_get_selected_channels (GimpImage          *image);
 GList         * gimp_image_get_selected_paths    (GimpImage          *image);
 
+void            gimp_image_set_selected_items    (GimpImage          *image,
+                                                  GType               item_type,
+                                                  GList              *items);
 void            gimp_image_set_selected_layers   (GimpImage          *image,
                                                   GList              *layers);
 void            gimp_image_set_selected_channels (GimpImage          *image,

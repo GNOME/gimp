@@ -4882,6 +4882,28 @@ gimp_image_get_selected_drawables (GimpImage *image)
 }
 
 GList *
+gimp_image_get_selected_items (GimpImage *image,
+                               GType      item_type)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  if (item_type == GIMP_TYPE_LAYER)
+    {
+      return gimp_image_get_selected_layers (image);
+    }
+  else if (item_type == GIMP_TYPE_CHANNEL)
+    {
+      return gimp_image_get_selected_channels (image);
+    }
+  else if (item_type == GIMP_TYPE_PATH)
+    {
+      return gimp_image_get_selected_paths (image);
+    }
+
+  g_return_val_if_reached (NULL);
+}
+
+GList *
 gimp_image_get_selected_layers (GimpImage *image)
 {
   GimpImagePrivate *private;
@@ -4915,6 +4937,29 @@ gimp_image_get_selected_paths (GimpImage *image)
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
   return gimp_item_tree_get_selected_items (private->paths);
+}
+
+void
+gimp_image_set_selected_items (GimpImage *image,
+                               GType      item_type,
+                               GList     *items)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  if (item_type == GIMP_TYPE_LAYER)
+    {
+      gimp_image_set_selected_layers (image, items);
+    }
+  else if (item_type == GIMP_TYPE_CHANNEL)
+    {
+      gimp_image_set_selected_channels (image, items);
+    }
+  else if (item_type == GIMP_TYPE_PATH)
+    {
+      gimp_image_set_selected_paths (image, items);
+    }
+
+  g_return_if_reached ();
 }
 
 void
