@@ -54,7 +54,7 @@
 
 #include "display/gimpdisplay.h"
 
-#include "tools/gimpvectortool.h"
+#include "tools/gimppathtool.h"
 #include "tools/tool_manager.h"
 
 #include "dialogs/dialogs.h"

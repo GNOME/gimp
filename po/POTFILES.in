@@ -496,6 +496,8 @@ app/tools/gimppaintoptions-gui.c
 app/tools/gimppaintselectoptions.c
 app/tools/gimppaintselecttool.c
 app/tools/gimppainttool.c
+app/tools/gimppathoptions.c
+app/tools/gimppathtool.c
 app/tools/gimppenciltool.c
 app/tools/gimpperspectiveclonetool.c
 app/tools/gimpperspectivetool.c
@@ -526,8 +528,6 @@ app/tools/gimptransform3dtool.c
 app/tools/gimptransformoptions.c
 app/tools/gimptransformtool.c
 app/tools/gimpunifiedtransformtool.c
-app/tools/gimpvectoroptions.c
-app/tools/gimpvectortool.c
 app/tools/gimpwarpoptions.c
 app/tools/gimpwarptool.c
 app/tools/tools-enums.c

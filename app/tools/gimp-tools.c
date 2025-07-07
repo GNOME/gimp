@@ -68,6 +68,7 @@
 #include "gimpiscissorstool.h"
 #include "gimplevelstool.h"
 #include "gimpoperationtool.h"
+#include "gimppathtool.h"
 #include "gimpmagnifytool.h"
 #include "gimpmeasuretool.h"
 #include "gimpmovetool.h"
@@ -89,7 +90,6 @@
 #include "gimptexttool.h"
 #include "gimptransform3dtool.h"
 #include "gimpunifiedtransformtool.h"
-#include "gimpvectortool.h"
 #include "gimpwarptool.h"
 
 #include "gimp-intl.h"

@@ -53,9 +53,9 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimptoolpath.h"
 
+#include "gimppathoptions.h"
+#include "gimppathtool.h"
 #include "gimptoolcontrol.h"
-#include "gimpvectoroptions.h"
-#include "gimpvectortool.h"
 
 #include "dialogs/fill-dialog.h"
 #include "dialogs/stroke-dialog.h"

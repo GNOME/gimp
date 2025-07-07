@@ -501,7 +501,7 @@ gimp_bezier_stroke_point_move_relative (GimpStroke            *stroke,
   /* dragging close to endpoints just moves the handle related to
    * the endpoint. Just make sure that feel_good is in the range from
    * 0 to 1. The 1.0 / 6.0 and 5.0 / 6.0 are duplicated in
-   * tools/gimpvectortool.c.
+   * tools/gimppathtool.c.
    */
   if (position <= 1.0 / 6.0)
     feel_good = 0;

@@ -32,7 +32,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"
 
-#include "gimpvectoroptions.h"
+#include "gimppathoptions.h"
 #include "gimptooloptions-gui.h"
 
 #include "gimp-intl.h"
