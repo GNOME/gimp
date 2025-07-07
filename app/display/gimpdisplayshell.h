@@ -363,3 +363,13 @@ void              gimp_display_shell_set_mask      (GimpDisplayShell   *shell,
                                                     gboolean            inverted);
 
 gboolean          gimp_display_shell_is_drawn      (GimpDisplayShell   *shell);
+
+void              gimp_display_shell_get_overlay_corners
+                                                   (GimpDisplayShell   *shell,
+                                                    GtkWidget          *child,
+                                                    gdouble             image_x,
+                                                    gdouble             image_y,
+                                                    gdouble            *top_left_x,
+                                                    gdouble            *top_left_y,
+                                                    gdouble            *bottom_right_x,
+                                                    gdouble            *bottom_right_y);

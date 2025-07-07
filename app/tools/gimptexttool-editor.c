@@ -2076,6 +2076,8 @@ gimp_text_tool_style_overlay_button_motion (GtkWidget      *widget,
       GimpTool            *tool  = GIMP_TOOL (text_tool);
       GimpDisplayShell    *shell = gimp_display_get_shell (tool->display);
       GimpTextStyleEditor *style_editor;
+      gdouble              llimit, rlimit, ulimit, blimit;
+      gdouble              tlx, tly, brx, bry;
       gdouble              x, y;
       gdouble              x_off, y_off;
 
@@ -2088,6 +2090,33 @@ gimp_text_tool_style_overlay_button_motion (GtkWidget      *widget,
       gimp_display_shell_untransform_xy_f (shell,
                                            x, y,
                                            &x, &y);
+
+      gimp_ruler_get_range ((GimpRuler *) shell->hrule,
+                            &llimit, &rlimit, NULL);
+      gimp_ruler_get_range ((GimpRuler *) shell->vrule,
+                            &ulimit, &blimit, NULL);
+
+      gimp_display_shell_get_overlay_corners (shell, text_tool->style_overlay,
+                                              x, y,
+                                              &tlx, &tly,
+                                              &brx, &bry);
+
+      /* If the overlay is being dragged, we need to check if it is still
+       * within the image bounds. If it is not, we adjust the coordinates.
+       * This is to prevent the overlay from being dragged outside the image
+       * bounds, which would cause it to be lost.
+       */
+      if (gimp_text_layer_is_style_overlay_positioned (text_tool->layer))
+        {
+          if (tlx < llimit)
+            x += (llimit - tlx);
+          if (tly < ulimit)
+            y += (ulimit - tly);
+          if (brx > rlimit)
+            x -= (brx - rlimit);
+          if (bry > blimit)
+            y -= (bry - blimit);
+        }
 
       gimp_display_shell_move_overlay (shell,
                                        text_tool->style_overlay,

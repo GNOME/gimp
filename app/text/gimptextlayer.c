@@ -617,6 +617,18 @@ gimp_text_layer_get_style_overlay_position (GimpTextLayer *layer,
   return TRUE;
 }
 
+gboolean
+gimp_text_layer_is_style_overlay_positioned (GimpTextLayer *layer)
+{
+  GimpTextLayerPrivate *priv;
+
+  g_return_val_if_fail (GIMP_IS_TEXT_LAYER (layer), FALSE);
+
+  priv = layer->private;
+
+  return priv->style_overlay_positioned;
+}
+
 void
 gimp_text_layer_set_style_overlay_offset (GimpTextLayer *layer,
                                           gdouble        offset_x,

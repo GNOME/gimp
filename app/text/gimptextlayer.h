@@ -80,6 +80,8 @@ gboolean    gimp_text_layer_get_style_overlay_position
                                         (GimpTextLayer *layer,
                                          gdouble       *x,
                                          gdouble       *y);
+gboolean    gimp_text_layer_is_style_overlay_positioned
+                                        (GimpTextLayer *layer);
 void        gimp_text_layer_set_style_overlay_offset
                                         (GimpTextLayer *layer,
                                          gdouble        offset_x,
