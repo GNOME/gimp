@@ -931,16 +931,16 @@ user_update_controllerrc (const GMatchInfo *matched_value,
   return FALSE;
 }
 
-#define SESSIONRC_UPDATE_PATTERN \
-  "\\(position [0-9]* [0-9]*\\)"        "|"  \
-  "\\(size [0-9]* [0-9]*\\)"            "|" \
-  "\\(left-docks-width \"?[0-9]*\"?\\)" "|" \
+#define SESSIONRC_UPDATE_PATTERN_2TO3 \
+  "\\(position [0-9]* [0-9]*\\)"         "|" \
+  "\\(size [0-9]* [0-9]*\\)"             "|" \
+  "\\(left-docks-width \"?[0-9]*\"?\\)"  "|" \
   "\\(right-docks-width \"?[0-9]*\"?\\)"
 
 static gboolean
-user_update_sessionrc (const GMatchInfo *matched_value,
-                       GString          *new_value,
-                       gpointer          data)
+user_update_sessionrc_2to3 (const GMatchInfo *matched_value,
+                            GString          *new_value,
+                            gpointer          data)
 {
   GimpUserInstall *install = (GimpUserInstall *) data;
   gchar           *original;
@@ -1006,6 +1006,29 @@ user_update_sessionrc (const GMatchInfo *matched_value,
     {
       /* Just copy as-is. */
       g_string_append (new_value, original);
+    }
+
+  g_free (original);
+
+  return FALSE;
+}
+
+#define SESSIONRC_UPDATE_PATTERN \
+  "\"gimp-vectors-list\""
+
+static gboolean
+user_update_sessionrc (const GMatchInfo *matched_value,
+                       GString          *new_value,
+                       gpointer          data)
+{
+  gchar *original;
+
+  original = g_match_info_fetch (matched_value, 0);
+
+  if (g_strcmp0 (original, "\"gimp-vectors-list\"") == 0)
+    {
+      /* Renamed in GIMP 3.2. */
+      g_string_append (new_value, "\"gimp-path-list\"");
     }
 
   g_free (original);
@@ -1362,6 +1385,12 @@ user_install_migrate_files (GimpUserInstall *install)
               /* We need to update size and positions because of scale
                * factor support.
                */
+              update_pattern  = SESSIONRC_UPDATE_PATTERN_2TO3;
+              update_callback = user_update_sessionrc_2to3;
+            }
+          else if (strcmp (basename, "sessionrc") == 0)
+            {
+              /* sessionrc updates since 3.0. */
               update_pattern  = SESSIONRC_UPDATE_PATTERN;
               update_callback = user_update_sessionrc;
             }
