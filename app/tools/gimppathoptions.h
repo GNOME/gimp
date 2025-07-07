@@ -42,6 +42,7 @@ struct _GimpPathOptions
   GtkWidget       *to_selection_button;
   GtkWidget       *fill_button;
   GtkWidget       *stroke_button;
+  GtkWidget       *vector_layer_button;
 };
 
 

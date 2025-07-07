@@ -30,7 +30,7 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
-#include "vectors-types.h"
+#include "path-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpdrawable-fill.h"

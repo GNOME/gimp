@@ -35,16 +35,16 @@
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpstrokeoptions.h"
 
+#include "path/gimppath.h"
+#include "path/gimpvectorlayer.h"
+#include "path/gimpvectorlayeroptions.h"
+
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpcontainercombobox.h"
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpstrokeeditor.h"
-
-#include "vectors/gimppath.h"
-#include "vectors/gimpvectorlayer.h"
-#include "vectors/gimpvectorlayeroptions.h"
 
 #include "vector-layer-options-dialog.h"
 

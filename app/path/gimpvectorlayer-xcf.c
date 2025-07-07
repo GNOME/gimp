@@ -26,7 +26,8 @@
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "vectors-types.h"
+
+#include "path-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
