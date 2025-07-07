@@ -41,10 +41,10 @@
 #include "gimppattern.h"
 #include "gimpselection.h"
 
+#include "path/gimppath.h"
+
 #include "text/gimpfont.h"
 #include "text/gimptextlayer.h"
-
-#include "vectors/gimppath.h"
 
 
 /*

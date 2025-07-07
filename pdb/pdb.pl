@@ -429,7 +429,7 @@ package Gimp::CodeGen::pdb;
 		     dup_value_func  => '$var = GIMP_VALUES_GET_PATH ($value)',
 		     set_value_func  => 'g_value_set_object ($value, $var)',
 		     take_value_func => 'g_value_set_object ($value, $var)',
-		     headers         => [ qw("vectors/gimppath.h") ] },
+		     headers         => [ qw("path/gimppath.h") ] },
 
     filter      => { name            => 'DRAWABLE_FILTER',
 		     gtype           => 'GIMP_TYPE_DRAWABLE_FILTER',

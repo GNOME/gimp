@@ -44,7 +44,7 @@
 #include "core/gimpsamplepoint.h"
 #include "core/gimptreehandler.h"
 
-#include "vectors/gimppath.h"
+#include "path/gimppath.h"
 
 #include "widgets/gimpwidgets-utils.h"
 

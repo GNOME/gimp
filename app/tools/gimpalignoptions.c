@@ -32,7 +32,7 @@
 #include "core/gimplayer.h"
 #include "core/gimpchannel.h"
 
-#include "vectors/gimppath.h"
+#include "path/gimppath.h"
 
 #include "widgets/gimppivotselector.h"
 #include "widgets/gimppropwidgets.h"

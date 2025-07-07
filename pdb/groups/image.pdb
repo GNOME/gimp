@@ -1296,7 +1296,7 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("vectors/gimppath-import.h") ],
+        headers => [ qw("path/gimppath-import.h") ],
         code    => <<'CODE'
 {
   GList *path_list = NULL;
@@ -1359,7 +1359,7 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("vectors/gimppath-import.h") ],
+        headers => [ qw("path/gimppath-import.h") ],
         code    => <<'CODE'
 {
   GList *path_list = NULL;
@@ -1414,7 +1414,7 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("vectors/gimppath-export.h") ],
+        headers => [ qw("path/gimppath-export.h") ],
         code    => <<'CODE'
 {
   GList *path_list = NULL;
@@ -1456,7 +1456,7 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("vectors/gimppath-export.h") ],
+        headers => [ qw("path/gimppath-export.h") ],
         code    => <<'CODE'
 {
   GList *path_list = NULL;

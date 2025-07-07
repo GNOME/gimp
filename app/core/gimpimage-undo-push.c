@@ -53,13 +53,13 @@
 #include "gimpsamplepointundo.h"
 #include "gimpselection.h"
 
+#include "path/gimppath.h"
+#include "path/gimppathmodundo.h"
+#include "path/gimppathpropundo.h"
+#include "path/gimppathundo.h"
+
 #include "text/gimptextlayer.h"
 #include "text/gimptextundo.h"
-
-#include "vectors/gimppath.h"
-#include "vectors/gimppathmodundo.h"
-#include "vectors/gimppathpropundo.h"
-#include "vectors/gimppathundo.h"
 
 #include "gimp-intl.h"
 

@@ -25,8 +25,6 @@
 
 #include "config/gimpdialogconfig.h"
 
-#include "vectors/gimppath.h"
-
 #include "gimp.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
@@ -44,6 +42,8 @@
 #include "gimpobjectqueue.h"
 #include "gimpprogress.h"
 #include "gimpsamplepoint.h"
+
+#include "path/gimppath.h"
 
 
 static void  gimp_image_rotate_item_offset   (GimpImage         *image,

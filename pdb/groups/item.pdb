@@ -1056,8 +1056,8 @@ CODE
               "core/gimplayermask.h"
               "core/gimplist.h"
               "core/gimpselection.h"
+              "path/gimppath.h" 
               "text/gimptextlayer.h"
-              "vectors/gimppath.h" 
               "gimppdb-utils.h"
               "gimppdbcontext.h"
               "gimp-intl.h");

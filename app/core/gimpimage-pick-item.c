@@ -32,10 +32,10 @@
 #include "gimppickable.h"
 #include "gimpsamplepoint.h"
 
-#include "text/gimptextlayer.h"
+#include "path/gimppath.h"
+#include "path/gimpstroke.h"
 
-#include "vectors/gimppath.h"
-#include "vectors/gimpstroke.h"
+#include "text/gimptextlayer.h"
 
 
 GimpLayer *

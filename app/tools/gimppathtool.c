@@ -40,7 +40,7 @@
 
 #include "paint/gimppaintoptions.h" /* GIMP_PAINT_OPTIONS_CONTEXT_MASK */
 
-#include "vectors/gimppath.h"
+#include "path/gimppath.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdockcontainer.h"

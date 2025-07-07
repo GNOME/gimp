@@ -41,7 +41,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 
-#include "vectors/gimppath-import.h"
+#include "path/gimppath-import.h"
 
 #include "widgets/gimpclipboard.h"
 #include "widgets/gimphelp-ids.h"

@@ -24,7 +24,7 @@
 
 #include "core/core-types.h"
 
-#include "vectors/path-enums.h"
+#include "path-enums.h"
 
 
 typedef struct _GimpAnchor       GimpAnchor;

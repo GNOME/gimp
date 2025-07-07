@@ -1120,12 +1120,12 @@ CODE
               "core/gimplist.h"
               "core/gimpimage.h"
               "core/gimpimage-undo-push.h"
+              "path/gimpanchor.h"
+              "path/gimpstroke-new.h"
+              "path/gimpbezierstroke.h"
+              "path/gimppath.h"
               "text/gimptext-path.h"
               "text/gimptextlayer.h"
-              "vectors/gimpanchor.h"
-              "vectors/gimpstroke-new.h"
-              "vectors/gimpbezierstroke.h"
-              "vectors/gimppath.h"
               "gimppdb-utils.h"
               "gimp-intl.h");
 

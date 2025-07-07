@@ -43,8 +43,8 @@
 #include "gimppickable-contiguous-region.h"
 #include "gimpscanconvert.h"
 
-#include "vectors/gimppath.h"
-#include "vectors/gimpstroke.h"
+#include "path/gimppath.h"
+#include "path/gimpstroke.h"
 
 #include "gimp-intl.h"
 

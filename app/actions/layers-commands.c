@@ -55,13 +55,13 @@
 #include "core/gimpundostack.h"
 #include "core/gimpprogress.h"
 
+#include "path/gimppath.h"
+#include "path/gimppath-warp.h"
+#include "path/gimpstroke.h"
+
 #include "text/gimptext.h"
 #include "text/gimptext-path.h"
 #include "text/gimptextlayer.h"
-
-#include "vectors/gimppath.h"
-#include "vectors/gimppath-warp.h"
-#include "vectors/gimpstroke.h"
 
 #include "widgets/gimpaction.h"
 #include "widgets/gimpdock.h"

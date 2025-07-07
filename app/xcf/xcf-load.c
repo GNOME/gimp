@@ -68,14 +68,14 @@
 
 #include "operations/layer-modes/gimp-layer-modes.h"
 
+#include "path/gimpanchor.h"
+#include "path/gimpstroke.h"
+#include "path/gimpbezierstroke.h"
+#include "path/gimppath.h"
+#include "path/gimppath-compat.h"
+
 #include "text/gimptextlayer.h"
 #include "text/gimptextlayer-xcf.h"
-
-#include "vectors/gimpanchor.h"
-#include "vectors/gimpstroke.h"
-#include "vectors/gimpbezierstroke.h"
-#include "vectors/gimppath.h"
-#include "vectors/gimppath-compat.h"
 
 #include "xcf-private.h"
 #include "xcf-load.h"

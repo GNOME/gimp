@@ -35,7 +35,7 @@
 #include "core/gimpparamspecs.h"
 #include "core/gimpprogress.h"
 
-#include "vectors/gimppath.h"
+#include "path/gimppath.h"
 
 #include "gimppdbcontext.h"
 #include "gimppdberror.h"

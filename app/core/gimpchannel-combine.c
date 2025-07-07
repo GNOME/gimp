@@ -37,7 +37,7 @@
 #include "gimpimage-new.h"
 #include "gimplayer.h"
 
-#include "vectors/gimppath.h"
+#include "path/gimppath.h"
 
 
 typedef struct

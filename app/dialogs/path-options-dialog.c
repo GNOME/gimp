@@ -27,7 +27,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
-#include "vectors/gimppath.h"
+#include "path/gimppath.h"
 
 #include "item-options-dialog.h"
 #include "path-options-dialog.h"

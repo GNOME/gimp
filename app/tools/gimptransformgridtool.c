@@ -50,8 +50,8 @@
 #include "core/gimptoolinfo.h"
 #include "core/gimpviewable.h"
 
-#include "vectors/gimppath.h"
-#include "vectors/gimpstroke.h"
+#include "path/gimppath.h"
+#include "path/gimpstroke.h"
 
 #include "widgets/gimpwidgets-utils.h"
 

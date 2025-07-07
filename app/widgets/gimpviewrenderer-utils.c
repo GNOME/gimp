@@ -35,7 +35,7 @@
 #include "core/gimplayer.h"
 #include "core/gimppalette.h"
 
-#include "vectors/gimppath.h"
+#include "path/gimppath.h"
 
 #include "gimpviewrenderer-utils.h"
 #include "gimpviewrendererbrush.h"

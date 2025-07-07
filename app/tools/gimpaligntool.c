@@ -38,7 +38,7 @@
 #include "core/gimppickable.h"
 #include "core/gimppickable-auto-shrink.h"
 
-#include "vectors/gimppath.h"
+#include "path/gimppath.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"

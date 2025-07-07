@@ -86,7 +86,7 @@
 
 #include "text/gimptextlayer.h"
 
-#include "vectors/gimppath.h"
+#include "path/gimppath.h"
 
 #include "gimp-log.h"
 #include "gimp-intl.h"

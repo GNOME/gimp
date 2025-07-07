@@ -11,12 +11,12 @@ subdir('gui')
 subdir('menus')
 subdir('operations')
 subdir('paint')
+subdir('path')
 subdir('pdb')
 subdir('plug-in')
 subdir('propgui')
 subdir('text')
 subdir('tools')
-subdir('vectors')
 subdir('widgets')
 subdir('xcf')
 
@@ -102,10 +102,10 @@ console_libapps = [
     libapplayermodeslegacy,
     libappoperations,
     libapppaint,
+    libapppath,
     libapppdb,
     libappplugin,
     libapptext,
-    libappvectors,
     libappxcf,
 ]
 

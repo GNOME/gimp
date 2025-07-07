@@ -317,7 +317,7 @@ struct _GimpSegment
 #include "gegl/gimp-gegl-types.h"
 #include "paint/paint-types.h"
 #include "text/text-types.h"
-#include "vectors/path-types.h"
+#include "path/path-types.h"
 #include "pdb/pdb-types.h"
 #include "plug-in/plug-in-types.h"
 

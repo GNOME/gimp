@@ -56,9 +56,9 @@
 #include "text/gimptextlayout.h"
 #include "text/gimptextundo.h"
 
-#include "vectors/gimpstroke.h"
-#include "vectors/gimppath.h"
-#include "vectors/gimppath-warp.h"
+#include "path/gimpstroke.h"
+#include "path/gimppath.h"
+#include "path/gimppath-warp.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdockcontainer.h"

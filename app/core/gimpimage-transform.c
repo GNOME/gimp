@@ -27,7 +27,7 @@
 
 #include "core-types.h"
 
-#include "vectors/gimppath.h"
+#include "path/gimppath.h"
 
 #include "gimp.h"
 #include "gimp-transform-resize.h"

@@ -38,8 +38,8 @@
 #include "core/gimplist.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimpselection.h"
+#include "path/gimppath.h"
 #include "text/gimptextlayer.h"
-#include "vectors/gimppath.h"
 
 #include "gimppdb.h"
 #include "gimppdb-utils.h"

@@ -29,9 +29,9 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 
-#include "vectors/gimpanchor.h"
-#include "vectors/gimpbezierstroke.h"
-#include "vectors/gimppath.h"
+#include "path/gimpanchor.h"
+#include "path/gimpbezierstroke.h"
+#include "path/gimppath.h"
 
 #include "gimptext.h"
 #include "gimptext-path.h"

@@ -32,7 +32,7 @@
 #include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
-#include "vectors/gimppath.h"
+#include "path/gimppath.h"
 
 #include "gimp.h"
 #include "gimpcontext.h"

@@ -55,9 +55,9 @@
 #include "core/gimpsamplepoint.h"
 #include "core/gimpselection.h"
 
-#include "vectors/gimpanchor.h"
-#include "vectors/gimpbezierstroke.h"
-#include "vectors/gimppath.h"
+#include "path/gimpanchor.h"
+#include "path/gimpbezierstroke.h"
+#include "path/gimppath.h"
 
 #include "plug-in/gimppluginmanager-file.h"
 

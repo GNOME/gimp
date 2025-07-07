@@ -45,9 +45,9 @@
 #include "core/gimptemplate.h"
 #include "core/gimptoolitem.h"
 
-#include "text/gimpfont.h"
+#include "path/gimppath.h"
 
-#include "vectors/gimppath.h"
+#include "text/gimpfont.h"
 
 #include "gimpdnd.h"
 #include "gimpdnd-xds.h"

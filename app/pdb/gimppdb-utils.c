@@ -43,10 +43,10 @@
 #include "core/gimppalette.h"
 #include "core/gimppattern.h"
 
+#include "path/gimppath.h"
+
 #include "text/gimptextlayer.h"
 #include "text/gimpfont.h"
-
-#include "vectors/gimppath.h"
 
 #include "gimppdb-utils.h"
 #include "gimppdberror.h"

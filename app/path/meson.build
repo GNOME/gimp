@@ -1,4 +1,4 @@
-libappvectors_sources = [
+libapppath_sources = [
   'gimpanchor.c',
   'gimpbezierstroke.c',
   'gimppath.c',
@@ -14,10 +14,10 @@ libappvectors_sources = [
   'gimpstroke.c',
 ]
 
-libappvectors = static_library('appvectors',
-  libappvectors_sources,
+libapppath = static_library('apppath',
+  libapppath_sources,
   include_directories: [ rootInclude, rootAppInclude, ],
-  c_args: '-DG_LOG_DOMAIN="Gimp-Vectors"',
+  c_args: '-DG_LOG_DOMAIN="Gimp-Path"',
   dependencies: [
     cairo, gegl, gdk_pixbuf,
   ],

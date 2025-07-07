@@ -26,7 +26,7 @@
 
 #include "gegl/gimp-gegl-loops.h"
 
-#include "vectors/gimppath.h"
+#include "path/gimppath.h"
 
 #include "gimp.h"
 #include "gimpchannel.h"

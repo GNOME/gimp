@@ -356,6 +356,10 @@ app/paint/gimpsourcecore.c
 app/paint/gimpsourceoptions.c
 app/paint/paint-enums.c
 
+app/path/gimppath.c
+app/path/gimppath-export.c
+app/path/gimppath-import.c
+
 app/pdb/channel-cmds.c
 app/pdb/drawable-cmds.c
 app/pdb/drawable-color-cmds.c
@@ -531,10 +535,6 @@ app/tools/gimpunifiedtransformtool.c
 app/tools/gimpwarpoptions.c
 app/tools/gimpwarptool.c
 app/tools/tools-enums.c
-
-app/vectors/gimppath.c
-app/vectors/gimppath-export.c
-app/vectors/gimppath-import.c
 
 app/widgets/gimpactioneditor.c
 app/widgets/gimpactiongroup.c

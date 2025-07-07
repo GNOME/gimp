@@ -47,11 +47,11 @@
 
 #include "file/file-open.h"
 
+#include "path/gimppath.h"
+#include "path/gimppath-import.h"
+
 #include "text/gimptext.h"
 #include "text/gimptextlayer.h"
-
-#include "vectors/gimppath.h"
-#include "vectors/gimppath-import.h"
 
 #include "widgets/gimpdnd.h"
 

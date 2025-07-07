@@ -34,11 +34,9 @@
 
 #include "core/gimpcontext.h"
 
-#include "menus/menus.h"
-
-#include "vectors/gimpanchor.h"
-#include "vectors/gimpbezierstroke.h"
-#include "vectors/gimppath.h"
+#include "path/gimpanchor.h"
+#include "path/gimpbezierstroke.h"
+#include "path/gimppath.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdockcontainer.h"
@@ -47,6 +45,8 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "tools/gimptools-utils.h"
+
+#include "menus/menus.h"
 
 #include "gimpcanvashandle.h"
 #include "gimpcanvasitem-utils.h"

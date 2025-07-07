@@ -44,9 +44,9 @@
 #include "pdb/gimppdb.h"
 #include "pdb/gimpprocedure.h"
 
-#include "vectors/gimppath.h"
-#include "vectors/gimppath-export.h"
-#include "vectors/gimppath-import.h"
+#include "path/gimppath.h"
+#include "path/gimppath-export.h"
+#include "path/gimppath-import.h"
 
 #include "widgets/gimpaction.h"
 #include "widgets/gimpclipboard.h"
