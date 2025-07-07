@@ -324,29 +324,25 @@ void
 gimp_text_editor_set_font_name (GimpTextEditor *editor,
                                 const gchar    *font_name)
 {
+  gchar *css;
+
   g_return_if_fail (GIMP_IS_TEXT_EDITOR (editor));
 
-  if (editor->font_name)
-    g_free (editor->font_name);
+  g_set_str (&editor->font_name, font_name);
 
-  editor->font_name = g_strdup (font_name);
-
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (editor->font_toggle)))
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (editor->font_toggle)) &&
+      editor->font_name)
     {
-      if (editor->font_name)
-        {
-          gchar *css;
-
-          css = g_strdup_printf ("* { font-family: %s }", editor->font_name);
-          gtk_css_provider_load_from_data (editor->font_css,
-                                           css, strlen (css), NULL);
-          g_free (css);
-
-          return;
-        }
+      css = g_strdup_printf ("* { font-family: \"%s\" }",
+                             editor->font_name);
+    }
+  else
+    {
+      css = g_strdup ("");
     }
 
-  gtk_css_provider_load_from_data (editor->font_css, "", 1, NULL);
+  gtk_css_provider_load_from_data (editor->font_css, css, -1, NULL);
+  g_free (css);
 }
 
 const gchar *
@@ -371,17 +367,18 @@ static void
 gimp_text_editor_font_toggled (GtkToggleButton *button,
                                GimpTextEditor  *editor)
 {
+  gchar *css;
+
   if (gtk_toggle_button_get_active (button) && editor->font_name)
     {
-      gchar *css;
-
-      css = g_strdup_printf ("* { font-family: %s }", editor->font_name);
-      gtk_css_provider_load_from_data (editor->font_css,
-                                       css, strlen (css), NULL);
-      g_free (css);
-
-      return;
+      css = g_strdup_printf ("* { font-family: \"%s\" }",
+                             editor->font_name);
+    }
+  else
+    {
+      css = g_strdup ("");
     }
 
-  gtk_css_provider_load_from_data (editor->font_css, "", 1, NULL);
+  gtk_css_provider_load_from_data (editor->font_css, css, -1, NULL);
+  g_free (css);
 }
