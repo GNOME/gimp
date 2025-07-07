@@ -41,6 +41,7 @@ struct _GimpTextEditor
   GtkWidget         *font_toggle;
   GtkWidget         *file_dialog;
   GimpUIManager     *ui_manager;
+  GtkCssProvider    *font_css;
 };
 
 struct _GimpTextEditorClass

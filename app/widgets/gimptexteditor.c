@@ -96,10 +96,6 @@ gimp_text_editor_class_init (GimpTextEditorClass *klass)
 static void
 gimp_text_editor_init (GimpTextEditor *editor)
 {
-  editor->view        = NULL;
-  editor->file_dialog = NULL;
-  editor->ui_manager  = NULL;
-
   switch (gtk_widget_get_default_direction ())
     {
     case GTK_TEXT_DIR_NONE:
@@ -135,13 +131,14 @@ gimp_text_editor_new (const gchar     *title,
                       gdouble          xres,
                       gdouble          yres)
 {
-  GimpTextEditor *editor;
-  GtkWidget      *content_area;
-  GtkWidget      *toolbar;
-  GimpMenuModel  *toolbar_model;
-  GtkWidget      *style_editor;
-  GtkWidget      *scrolled_window;
-  gboolean        use_header_bar;
+  GimpTextEditor  *editor;
+  GtkWidget       *content_area;
+  GtkWidget       *toolbar;
+  GimpMenuModel   *toolbar_model;
+  GtkWidget       *style_editor;
+  GtkWidget       *scrolled_window;
+  gboolean         use_header_bar;
+  GtkStyleContext *style_context;
 
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WINDOW (parent), NULL);
@@ -210,6 +207,14 @@ gimp_text_editor_new (const gchar     *title,
                                GTK_WRAP_WORD_CHAR);
   gtk_container_add (GTK_CONTAINER (scrolled_window), editor->view);
   gtk_widget_show (editor->view);
+
+  style_context = gtk_widget_get_style_context (editor->view);
+
+  editor->font_css = gtk_css_provider_new ();
+  gtk_style_context_add_provider (style_context,
+                                  GTK_STYLE_PROVIDER (editor->font_css),
+                                  GTK_STYLE_PROVIDER_PRIORITY_USER);
+  g_object_unref (editor->font_css);
 
   switch (editor->base_dir)
     {
@@ -328,16 +333,20 @@ gimp_text_editor_set_font_name (GimpTextEditor *editor,
 
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (editor->font_toggle)))
     {
-      PangoFontDescription *font_desc = NULL;
+      if (editor->font_name)
+        {
+          gchar *css;
 
-      if (font_name)
-        font_desc = pango_font_description_from_string (font_name);
+          css = g_strdup_printf ("* { font-family: %s }", editor->font_name);
+          gtk_css_provider_load_from_data (editor->font_css,
+                                           css, strlen (css), NULL);
+          g_free (css);
 
-      gtk_widget_override_font (editor->view, font_desc);
-
-      if (font_desc)
-        pango_font_description_free (font_desc);
+          return;
+        }
     }
+
+  gtk_css_provider_load_from_data (editor->font_css, "", 1, NULL);
 }
 
 const gchar *
@@ -362,13 +371,17 @@ static void
 gimp_text_editor_font_toggled (GtkToggleButton *button,
                                GimpTextEditor  *editor)
 {
-  PangoFontDescription *font_desc = NULL;
-
   if (gtk_toggle_button_get_active (button) && editor->font_name)
-    font_desc = pango_font_description_from_string (editor->font_name);
+    {
+      gchar *css;
 
-  gtk_widget_override_font (editor->view, font_desc);
+      css = g_strdup_printf ("* { font-family: %s }", editor->font_name);
+      gtk_css_provider_load_from_data (editor->font_css,
+                                       css, strlen (css), NULL);
+      g_free (css);
 
-  if (font_desc)
-    pango_font_description_free (font_desc);
+      return;
+    }
+
+  gtk_css_provider_load_from_data (editor->font_css, "", 1, NULL);
 }
