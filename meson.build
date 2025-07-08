@@ -444,10 +444,11 @@ lcms_minver       = '2.8'
 lcms              = dependency('lcms2',              version: '>='+lcms_minver)
 libmypaint_minver = '1.3.0'
 libmypaint        = dependency('libmypaint',         version: '>='+libmypaint_minver)
-mypaint_brushes   = dependency('mypaint-brushes-2.0',version: '>='+libmypaint_minver, required: false)
-if not mypaint_brushes.found()
-    mypaint_brushes = dependency('mypaint-brushes-1.0',version: '>='+libmypaint_minver)
+mypaint_brushes_n = 'mypaint-brushes-2.0'
+if platform_windows and host_cpu_family == 'x86'
+    mypaint_brushes_n = 'mypaint-brushes-1.0'
 endif
+mypaint_brushes   = dependency(mypaint_brushes_n,version: '>='+libmypaint_minver)
 if not libmypaint.version().version_compare('>=1.4.0')
   libmypaint_warning='''
 
