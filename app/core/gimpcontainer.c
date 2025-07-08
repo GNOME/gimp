@@ -117,10 +117,13 @@ static void   gimp_container_disconnect_callback (GimpObject       *object,
 
 static void       gimp_container_free_handler    (GimpContainer    *container,
                                                   GimpContainerHandler *handler);
+static void       g_list_model_iface_init        (GListModelInterface  *iface);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpContainer, gimp_container, GIMP_TYPE_OBJECT,
                          G_ADD_PRIVATE (GimpContainer)
+                         G_IMPLEMENT_INTERFACE (G_TYPE_LIST_MODEL,
+                                                g_list_model_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
                                                 gimp_container_config_iface_init))
 
@@ -1187,4 +1190,38 @@ gimp_container_remove_handlers_by_data (GimpContainer *container,
 
       list = next;
     }
+}
+
+/* GListModel implementation */
+
+static GType
+gimp_controller_manager_get_item_type (GListModel *list)
+{
+  return GIMP_TYPE_OBJECT;
+}
+
+static guint
+gimp_controller_manager_get_n_items (GListModel *list)
+{
+  GimpContainer *self = GIMP_CONTAINER (list);
+  return gimp_container_get_n_children (self);
+}
+
+static void *
+gimp_container_get_item (GListModel *list,
+                         guint       index)
+{
+  GimpContainer *self = GIMP_CONTAINER (list);
+
+  if (index >= gimp_container_get_n_children (self))
+    return NULL;
+  return g_object_ref (gimp_container_get_child_by_index (self, index));
+}
+
+static void
+g_list_model_iface_init (GListModelInterface *iface)
+{
+  iface->get_item_type = gimp_container_get_item_type;
+  iface->get_n_items   = gimp_container_get_n_items;
+  iface->get_item      = gimp_container_get_item;
 }
