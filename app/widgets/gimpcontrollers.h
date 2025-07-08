@@ -22,17 +22,32 @@
 #define __GIMP_CONTROLLERS_H__
 
 
-void             gimp_controllers_init           (Gimp          *gimp);
-void             gimp_controllers_exit           (Gimp          *gimp);
+void  gimp_controllers_init (Gimp *gimp);
+void  gimp_controllers_exit (Gimp *gimp);
 
-void             gimp_controllers_restore        (Gimp          *gimp,
-                                                  GimpUIManager *ui_manager);
-void             gimp_controllers_save           (Gimp          *gimp);
 
-GimpContainer  * gimp_controllers_get_list       (Gimp          *gimp);
-GimpUIManager  * gimp_controllers_get_ui_manager (Gimp          *gimp);
-GimpController * gimp_controllers_get_wheel      (Gimp          *gimp);
-GimpController * gimp_controllers_get_keyboard   (Gimp          *gimp);
+#define GIMP_TYPE_CONTROLLER_MANAGER (gimp_controller_manager_get_type ())
+G_DECLARE_FINAL_TYPE (GimpControllerManager,
+                      gimp_controller_manager,
+                      GIMP, CONTROLLER_MANAGER,
+                      GObject)
+
+GimpControllerManager * gimp_get_controller_manager            (Gimp                  *gimp);
+
+void                    gimp_controller_manager_restore        (GimpControllerManager *self,
+                                                                GimpUIManager         *ui_manager);
+void                    gimp_controller_manager_save           (GimpControllerManager *self);
+
+void                    gimp_controller_manager_add            (GimpControllerManager *self,
+                                                                GimpControllerInfo    *info);
+void                    gimp_controller_manager_remove         (GimpControllerManager *self,
+                                                                GimpControllerInfo    *info);
+
+Gimp *                  gimp_controller_manager_get_gimp       (GimpControllerManager *self);
+GimpContainer  *        gimp_controller_manager_get_list       (GimpControllerManager *self);
+GimpUIManager  *        gimp_controller_manager_get_ui_manager (GimpControllerManager *self);
+GimpController *        gimp_controller_manager_get_wheel      (GimpControllerManager *self);
+GimpController *        gimp_controller_manager_get_keyboard   (GimpControllerManager *self);
 
 
 #endif /* __GIMP_CONTROLLERS_H__ */

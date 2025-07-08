@@ -775,8 +775,12 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
     case GDK_SCROLL:
       {
-        GdkEventScroll *sevent = (GdkEventScroll *) event;
-        GimpController *wheel  = gimp_controllers_get_wheel (gimp);
+        GdkEventScroll        *sevent = (GdkEventScroll *) event;
+        GimpControllerManager *controller_manager;
+        GimpController        *wheel;
+
+        controller_manager = gimp_get_controller_manager (gimp);
+        wheel  = gimp_controller_manager_get_wheel (controller_manager);
 
         if (! wheel ||
             ! gimp_controller_wheel_scroll (GIMP_CONTROLLER_WHEEL (wheel),
@@ -1069,7 +1073,11 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
                 if (! return_val)
                   {
-                    GimpController *keyboard = gimp_controllers_get_keyboard (gimp);
+                    GimpControllerManager *controller_manager;
+                    GimpController        *keyboard;
+
+                    controller_manager = gimp_get_controller_manager (gimp);
+                    keyboard = gimp_controller_manager_get_keyboard (controller_manager);
 
                     if (keyboard)
                       return_val =
