@@ -70,9 +70,12 @@ static gboolean   gimp_controller_manager_event_mapped  (GimpControllerInfo     
                                                          const GimpControllerEvent *event,
                                                          const gchar               *action_name,
                                                          GimpControllerManager     *manager);
+static void       g_list_model_iface_init               (GListModelInterface       *iface);
 
 
-G_DEFINE_TYPE (GimpControllerManager, gimp_controller_manager, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_CODE (GimpControllerManager, gimp_controller_manager, G_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (G_TYPE_LIST_MODEL,
+                                                g_list_model_iface_init))
 
 
 /*  public functions  */
@@ -361,4 +364,38 @@ gimp_controller_manager_event_mapped (GimpControllerInfo        *info,
     }
 
   return FALSE;
+}
+
+/* GListModel implementation */
+
+static GType
+gimp_controller_manager_get_item_type (GListModel *list)
+{
+  return GIMP_TYPE_CONTROLLER_INFO;
+}
+
+static guint
+gimp_controller_manager_get_n_items (GListModel *list)
+{
+  GimpControllerManager *self = GIMP_CONTROLLER_MANAGER (list);
+  return gimp_container_get_n_children (self->controllers);
+}
+
+static void *
+gimp_controller_manager_get_item (GListModel *list,
+                                  guint       index)
+{
+  GimpControllerManager *self = GIMP_CONTROLLER_MANAGER (list);
+
+  if (index >= gimp_container_get_n_children (self->controllers))
+    return NULL;
+  return g_object_ref (gimp_container_get_child_by_index (self->controllers, index));
+}
+
+static void
+g_list_model_iface_init (GListModelInterface *iface)
+{
+  iface->get_item_type = gimp_controller_manager_get_item_type;
+  iface->get_n_items   = gimp_controller_manager_get_n_items;
+  iface->get_item      = gimp_controller_manager_get_item;
 }
