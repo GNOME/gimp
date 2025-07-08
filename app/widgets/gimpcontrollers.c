@@ -260,14 +260,23 @@ gimp_controller_manager_add (GimpControllerManager *self,
     self->wheel = info->controller;
   else if (GIMP_IS_CONTROLLER_KEYBOARD (info->controller))
     self->keyboard = info->controller;
+
+  g_list_model_items_changed (G_LIST_MODEL (self),
+                              gimp_container_get_n_children (self->controllers) - 1,
+                              0, 1);
 }
 
 void
 gimp_controller_manager_remove (GimpControllerManager *self,
                                 GimpControllerInfo    *info)
 {
+  int index;
+
   g_return_if_fail (GIMP_IS_CONTROLLER_MANAGER (self));
   g_return_if_fail (GIMP_IS_CONTROLLER_INFO (info));
+
+  index = gimp_container_get_child_index (self->controllers, GIMP_OBJECT (info));
+  g_return_if_fail (index >= 0);
 
   if (info->controller == self->wheel)
     self->wheel = NULL;
@@ -275,6 +284,8 @@ gimp_controller_manager_remove (GimpControllerManager *self,
     self->keyboard = NULL;
 
   gimp_container_remove (self->controllers, GIMP_OBJECT (info));
+
+  g_list_model_items_changed (G_LIST_MODEL (self), index, 1, 0);
 }
 
 
