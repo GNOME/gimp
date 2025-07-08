@@ -547,11 +547,12 @@ static void
 gui_restore_after_callback (Gimp               *gimp,
                             GimpInitStatusFunc  status_callback)
 {
-  GimpGuiConfig *gui_config = GIMP_GUI_CONFIG (gimp->config);
-  GimpUIManager *image_ui_manager;
-  GimpDisplay   *display;
+  GimpGuiConfig         *gui_config = GIMP_GUI_CONFIG (gimp->config);
+  GimpControllerManager *controller_manager;
+  GimpUIManager         *image_ui_manager;
+  GimpDisplay           *display;
 #ifdef G_OS_WIN32
-  STARTUPINFO    StartupInfo;
+  STARTUPINFO            StartupInfo;
 
   GetStartupInfo (&StartupInfo);
 #endif
@@ -593,7 +594,8 @@ gui_restore_after_callback (Gimp               *gimp,
                     gimp);
 
   gimp_devices_restore (gimp);
-  gimp_controllers_restore (gimp, image_ui_manager);
+  controller_manager = gimp_get_controller_manager (gimp);
+  gimp_controller_manager_restore (controller_manager, image_ui_manager);
   modifiers_restore (gimp);
 
   if (status_callback == splash_update)
@@ -689,7 +691,12 @@ gui_exit_callback (Gimp     *gimp,
     gimp_devices_save (gimp, FALSE);
 
   if (TRUE /* gui_config->save_controllers */)
-    gimp_controllers_save (gimp);
+    {
+      GimpControllerManager *controller_manager;
+
+      controller_manager = gimp_get_controller_manager (gimp);
+      gimp_controller_manager_save (controller_manager);
+    }
 
   modifiers_save (gimp, FALSE);
 

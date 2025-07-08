@@ -47,10 +47,12 @@
 #define GIMP_CONTROLLER_MANAGER_DATA_KEY "gimp-controller-manager"
 
 
-typedef struct _GimpControllerManager GimpControllerManager;
-
 struct _GimpControllerManager
 {
+  GObject         parent_instance;
+
+  Gimp           *gimp;
+
   GimpContainer  *controllers;
   GQuark          event_mapped_id;
   GimpController *wheel;
@@ -61,93 +63,71 @@ struct _GimpControllerManager
 
 /*  local function prototypes  */
 
-static GimpControllerManager * gimp_controller_manager_get  (Gimp *gimp);
-static void   gimp_controller_manager_free (GimpControllerManager *manager);
+static void       gimp_controller_manager_finalize      (GObject                   *object);
+static void       gimp_controller_manager_dispose       (GObject                   *object);
+static gboolean   gimp_controller_manager_event_mapped  (GimpControllerInfo        *info,
+                                                         GimpController            *controller,
+                                                         const GimpControllerEvent *event,
+                                                         const gchar               *action_name,
+                                                         GimpControllerManager     *manager);
 
-static void   gimp_controllers_add         (GimpContainer         *container,
-                                            GimpControllerInfo    *info,
-                                            GimpControllerManager *manager);
-static void   gimp_controllers_remove      (GimpContainer         *container,
-                                            GimpControllerInfo    *info,
-                                            GimpControllerManager *manager);
 
-static gboolean gimp_controllers_event_mapped (GimpControllerInfo        *info,
-                                               GimpController            *controller,
-                                               const GimpControllerEvent *event,
-                                               const gchar               *action_name,
-                                               GimpControllerManager     *manager);
+G_DEFINE_TYPE (GimpControllerManager, gimp_controller_manager, G_TYPE_OBJECT)
 
 
 /*  public functions  */
 
+GimpControllerManager *
+gimp_get_controller_manager (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (gimp->controller_manager != NULL, NULL);
+
+  return GIMP_CONTROLLER_MANAGER (gimp->controller_manager);
+}
+
 void
 gimp_controllers_init (Gimp *gimp)
 {
-  GimpControllerManager *manager;
+  GimpControllerManager *self;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (gimp_controller_manager_get (gimp) == NULL);
+  g_return_if_fail (gimp->controller_manager == NULL);
 
-  manager = g_slice_new0 (GimpControllerManager);
+  self = g_object_new (GIMP_TYPE_CONTROLLER_MANAGER, NULL);
+  self->gimp = gimp;
 
-  g_object_set_data_full (G_OBJECT (gimp),
-                          GIMP_CONTROLLER_MANAGER_DATA_KEY, manager,
-                          (GDestroyNotify) gimp_controller_manager_free);
-
-  manager->controllers = gimp_list_new (GIMP_TYPE_CONTROLLER_INFO, TRUE);
-
-  g_signal_connect (manager->controllers, "add",
-                    G_CALLBACK (gimp_controllers_add),
-                    manager);
-  g_signal_connect (manager->controllers, "remove",
-                    G_CALLBACK (gimp_controllers_remove),
-                    manager);
-
-  manager->event_mapped_id =
-    gimp_container_add_handler (manager->controllers, "event-mapped",
-                                G_CALLBACK (gimp_controllers_event_mapped),
-                                manager);
-
-  g_type_class_ref (GIMP_TYPE_CONTROLLER_WHEEL);
-  g_type_class_ref (GIMP_TYPE_CONTROLLER_KEYBOARD);
+  gimp->controller_manager = G_OBJECT (self);
 }
 
 void
 gimp_controllers_exit (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (gimp_controller_manager_get (gimp) != NULL);
+  g_return_if_fail (GIMP_IS_CONTROLLER_MANAGER (gimp->controller_manager));
 
-  g_object_set_data (G_OBJECT (gimp), GIMP_CONTROLLER_MANAGER_DATA_KEY, NULL);
-
-  g_type_class_unref (g_type_class_peek (GIMP_TYPE_CONTROLLER_WHEEL));
-  g_type_class_unref (g_type_class_peek (GIMP_TYPE_CONTROLLER_KEYBOARD));
+  g_clear_object (&gimp->controller_manager);
 }
 
 void
-gimp_controllers_restore (Gimp          *gimp,
-                          GimpUIManager *ui_manager)
+gimp_controller_manager_restore (GimpControllerManager *self,
+                                 GimpUIManager         *ui_manager)
 {
-  GimpControllerManager *manager;
-  GFile                 *file;
-  GError                *error = NULL;
+  GFile  *file;
+  GError *error = NULL;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_CONTROLLER_MANAGER (self));
   g_return_if_fail (GIMP_IS_UI_MANAGER (ui_manager));
+  g_return_if_fail (self->ui_manager == NULL);
 
-  manager = gimp_controller_manager_get (gimp);
-
-  g_return_if_fail (manager != NULL);
-  g_return_if_fail (manager->ui_manager == NULL);
-
-  manager->ui_manager = ui_manager;
+  self->ui_manager = ui_manager;
 
   file = gimp_directory_file ("controllerrc", NULL);
 
-  if (gimp->be_verbose)
+  if (self->gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
-  if (! gimp_config_deserialize_file (GIMP_CONFIG (manager->controllers),
+  if (! gimp_config_deserialize_file (GIMP_CONFIG (self->controllers),
                                       file, NULL, &error))
     {
       if (error->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
@@ -168,28 +148,28 @@ gimp_controllers_restore (Gimp          *gimp,
               file = gimp_sysconf_directory_file ("controllerrc", NULL);
             }
 
-          if (! gimp_config_deserialize_file (GIMP_CONFIG (manager->controllers),
+          if (! gimp_config_deserialize_file (GIMP_CONFIG (self->controllers),
                                               file, NULL, &error))
             {
-              gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR,
+              gimp_message_literal (self->gimp, NULL, GIMP_MESSAGE_ERROR,
                                     error->message);
             }
         }
       else
         {
-          gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
+          gimp_message_literal (self->gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
         }
 
       g_clear_error (&error);
     }
 
-  gimp_list_reverse (GIMP_LIST (manager->controllers));
+  gimp_list_reverse (GIMP_LIST (self->controllers));
 
   g_object_unref (file);
 }
 
 void
-gimp_controllers_save (Gimp *gimp)
+gimp_controller_manager_save (GimpControllerManager *self)
 {
   const gchar *header =
     "GIMP controllerrc\n"
@@ -198,137 +178,148 @@ gimp_controllers_save (Gimp *gimp)
   const gchar *footer =
     "end of controllerrc";
 
-  GimpControllerManager *manager;
   GFile                 *file;
   GError                *error = NULL;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  manager = gimp_controller_manager_get (gimp);
-
-  g_return_if_fail (manager != NULL);
+  g_return_if_fail (GIMP_IS_CONTROLLER_MANAGER (self));
 
   file = gimp_directory_file ("controllerrc", NULL);
 
-  if (gimp->be_verbose)
+  if (self->gimp->be_verbose)
     g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
-  if (! gimp_config_serialize_to_file (GIMP_CONFIG (manager->controllers),
+  if (! gimp_config_serialize_to_file (GIMP_CONFIG (self->controllers),
                                        file,
                                        header, footer, NULL,
                                        &error))
     {
-      gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
+      gimp_message_literal (self->gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
       g_error_free (error);
     }
 
   g_object_unref (file);
 }
 
-GimpContainer *
-gimp_controllers_get_list (Gimp *gimp)
+Gimp *
+gimp_controller_manager_get_gimp (GimpControllerManager *self)
 {
-  GimpControllerManager *manager;
+  g_return_val_if_fail (GIMP_IS_CONTROLLER_MANAGER (self), NULL);
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  return self->gimp;
+}
 
-  manager = gimp_controller_manager_get (gimp);
+GimpContainer *
+gimp_controller_manager_get_list (GimpControllerManager *self)
+{
+  g_return_val_if_fail (GIMP_IS_CONTROLLER_MANAGER (self), NULL);
 
-  g_return_val_if_fail (manager != NULL, NULL);
-
-  return manager->controllers;
+  return self->controllers;
 }
 
 GimpUIManager *
-gimp_controllers_get_ui_manager (Gimp *gimp)
+gimp_controller_manager_get_ui_manager (GimpControllerManager *self)
 {
-  GimpControllerManager *manager;
+  g_return_val_if_fail (GIMP_IS_CONTROLLER_MANAGER (self), NULL);
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-
-  manager = gimp_controller_manager_get (gimp);
-
-  g_return_val_if_fail (manager != NULL, NULL);
-
-  return manager->ui_manager;
+  return self->ui_manager;
 }
 
 GimpController *
-gimp_controllers_get_wheel (Gimp *gimp)
+gimp_controller_manager_get_wheel (GimpControllerManager *self)
 {
-  GimpControllerManager *manager;
+  g_return_val_if_fail (GIMP_IS_CONTROLLER_MANAGER (self), NULL);
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-
-  manager = gimp_controller_manager_get (gimp);
-
-  g_return_val_if_fail (manager != NULL, NULL);
-
-  return manager->wheel;
+  return self->wheel;
 }
 
 GimpController *
-gimp_controllers_get_keyboard (Gimp *gimp)
+gimp_controller_manager_get_keyboard (GimpControllerManager *self)
 {
-  GimpControllerManager *manager;
+  g_return_val_if_fail (GIMP_IS_CONTROLLER_MANAGER (self), NULL);
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  return self->keyboard;
+}
 
-  manager = gimp_controller_manager_get (gimp);
+void
+gimp_controller_manager_add (GimpControllerManager *self,
+                             GimpControllerInfo    *info)
+{
+  g_return_if_fail (GIMP_IS_CONTROLLER_MANAGER (self));
+  g_return_if_fail (GIMP_IS_CONTROLLER_INFO (info));
 
-  g_return_val_if_fail (manager != NULL, NULL);
+  gimp_container_add (self->controllers, GIMP_OBJECT (info));
 
-  return manager->keyboard;
+  g_signal_connect_object (self->controllers, "event-mapped",
+                           G_CALLBACK (gimp_controller_manager_event_mapped),
+                           G_OBJECT (self), 0);
+
+  if (GIMP_IS_CONTROLLER_WHEEL (info->controller))
+    self->wheel = info->controller;
+  else if (GIMP_IS_CONTROLLER_KEYBOARD (info->controller))
+    self->keyboard = info->controller;
+}
+
+void
+gimp_controller_manager_remove (GimpControllerManager *self,
+                                GimpControllerInfo    *info)
+{
+  g_return_if_fail (GIMP_IS_CONTROLLER_MANAGER (self));
+  g_return_if_fail (GIMP_IS_CONTROLLER_INFO (info));
+
+  if (info->controller == self->wheel)
+    self->wheel = NULL;
+  else if (info->controller == self->keyboard)
+    self->keyboard = NULL;
+
+  gimp_container_remove (self->controllers, GIMP_OBJECT (info));
 }
 
 
 /*  private functions  */
 
-static GimpControllerManager *
-gimp_controller_manager_get (Gimp *gimp)
+static void
+gimp_controller_manager_init (GimpControllerManager *self)
 {
-  return g_object_get_data (G_OBJECT (gimp), GIMP_CONTROLLER_MANAGER_DATA_KEY);
+  self->controllers = gimp_list_new (GIMP_TYPE_CONTROLLER_INFO, TRUE);
+
+  g_type_class_ref (GIMP_TYPE_CONTROLLER_WHEEL);
+  g_type_class_ref (GIMP_TYPE_CONTROLLER_KEYBOARD);
 }
 
 static void
-gimp_controller_manager_free (GimpControllerManager *manager)
+gimp_controller_manager_finalize (GObject *object)
 {
-  gimp_container_remove_handler (manager->controllers,
-                                 manager->event_mapped_id);
+  g_type_class_unref (g_type_class_peek (GIMP_TYPE_CONTROLLER_WHEEL));
+  g_type_class_unref (g_type_class_peek (GIMP_TYPE_CONTROLLER_KEYBOARD));
 
-  g_clear_object (&manager->controllers);
-
-  g_slice_free (GimpControllerManager, manager);
+  G_OBJECT_CLASS (gimp_controller_manager_parent_class)->finalize (object);
 }
 
 static void
-gimp_controllers_add (GimpContainer         *container,
-                      GimpControllerInfo    *info,
-                      GimpControllerManager *manager)
+gimp_controller_manager_dispose (GObject *object)
 {
-  if (GIMP_IS_CONTROLLER_WHEEL (info->controller))
-    manager->wheel = info->controller;
-  else if (GIMP_IS_CONTROLLER_KEYBOARD (info->controller))
-    manager->keyboard = info->controller;
+  GimpControllerManager *self = GIMP_CONTROLLER_MANAGER (object);
+
+  g_clear_object (&self->controllers);
+
+  G_OBJECT_CLASS (gimp_controller_manager_parent_class)->dispose (object);
 }
 
 static void
-gimp_controllers_remove (GimpContainer         *container,
-                         GimpControllerInfo    *info,
-                         GimpControllerManager *manager)
+gimp_controller_manager_class_init (GimpControllerManagerClass *klass)
 {
-  if (info->controller == manager->wheel)
-    manager->wheel = NULL;
-  else if (info->controller == manager->keyboard)
-    manager->keyboard = NULL;
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->dispose = gimp_controller_manager_dispose;
+  object_class->finalize = gimp_controller_manager_finalize;
 }
 
 static gboolean
-gimp_controllers_event_mapped (GimpControllerInfo        *info,
-                               GimpController            *controller,
-                               const GimpControllerEvent *event,
-                               const gchar               *action_name,
-                               GimpControllerManager     *manager)
+gimp_controller_manager_event_mapped (GimpControllerInfo        *info,
+                                      GimpController            *controller,
+                                      const GimpControllerEvent *event,
+                                      const gchar               *action_name,
+                                      GimpControllerManager     *manager)
 {
   GList *list;
 

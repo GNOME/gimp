@@ -3433,7 +3433,7 @@ prefs_boolean_combo_box_add (object, "initial-zoom-to-fit",
                                   &top_iter,
                                   &child_iter);
 
-  vbox2 = gimp_controller_list_new (gimp);
+  vbox2 = gimp_controller_list_new (gimp_get_controller_manager (gimp));
   gtk_box_pack_start (GTK_BOX (vbox), vbox2, TRUE, TRUE, 0);
   gtk_widget_show (vbox2);
 

@@ -95,6 +95,8 @@ struct _Gimp
 
   GList                  *image_windows;
 
+  GObject                *controller_manager;
+
   GimpImage              *clipboard_image;
   GimpBuffer             *clipboard_buffer;
   GimpContainer          *named_buffers;
