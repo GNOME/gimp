@@ -6,6 +6,34 @@
 This is the development branch of GIMP.
 
 
+Overview of Changes from GIMP 3.1.2 to GIMP 3.1.4
+=================================================
+
+Core:
+
+  - About dialog now shows "Up to date as of <date>" text for more
+    clarity.
+  - Fixed config migration when updating to GIMP 3.1/2.
+  - Reorganizing layer search code into generic item tree view search
+    code for further reusing into other use cases.
+  - Internal classes, config items and actions renamed from "vectors" to
+    "path".
+  - Some cleanup of outdated disabled unit tests and other warnings.
+  - Restructuration of internal GimpControllerManager API.
+
+Graphical User Interface:
+
+  - More consistent capitalization across text in UI.
+  - Use system colors on Windows title bar when System colors theme is
+    set.
+  - Make the comment text area sensitive in Export procedure dialogs
+    depending on whether "Save Comment" checkbox is checked or not.
+
+PDB:
+
+  - gimp-file-save properly sets associated save or exported files.
+
+
 Overview of Changes from GIMP 3.0.4 to GIMP 3.1.2
 =================================================
 
