@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: gimp-2006-08\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2025-07-08 13:09+0000\n"
-"PO-Revision-Date: 2025-07-09 15:20+0700\n"
+"PO-Revision-Date: 2025-07-09 16:38+0700\n"
 "Last-Translator: Sira Nokyoongtong <gumaraa@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "Language: th\n"
@@ -101,19 +101,16 @@ msgstr ""
 #: app/about.h:39
 #, fuzzy
 #| msgid ""
-#| "GIMP is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any "
-#| "later version.\n"
+#| "GIMP is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later "
+#| "version.\n"
 #| "\n"
-#| "GIMP is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
-#| "details.\n"
+#| "GIMP is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
 #| "\n"
 #| "You should have received a copy of the GNU General Public License along with GIMP.  If not, see https://www.gnu.org/licenses/."
 msgid ""
-"GIMP is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later "
-"version.\n"
+"GIMP is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.\n"
 "\n"
-"GIMP is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
-"details.\n"
+"GIMP is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
@@ -153,13 +150,12 @@ msgstr "%s รุ่น %s"
 #: app/gimp-version.c:164 app/gimp-version.c:283
 #, c-format
 msgid "using %s version %s (compiled against version %s)"
-msgstr ""
+msgstr "กำลังใช้ %s รุ่น %s (คอมไพล์ผ่านรุ่น %s)"
 
 #: app/gimp-version.c:305
-#, fuzzy, c-format
-#| msgid "%s version %s"
+#, c-format
 msgid "using %s version %s"
-msgstr "%s รุ่น %s"
+msgstr "กำลังใช้ %s รุ่น %s"
 
 #. This must be localized with the system language itself, before we
 #. * apply any other language.
@@ -327,7 +323,7 @@ msgid ""
 msgstr ""
 "ชื่อของไดเรกทอรีที่เก็บการกำหนดค่าผู้ใช้ GIMP ไม่สามารถแปลงเป็น UTF-8 ได้: %s\n"
 "\n"
-"ระบบแฟ้มของคุณมักจะถูกเข้ารหัสที่เป็นอย่างอื่นที่ไม่ใช่ UTF-8 และคุณไม่ได้บอก GLib ว่าคืออะไร กรุณาตั้งค่าตัวแปรแวดล้อม G_FILENAME_ENCODING"
+"ระบบไฟล์ของคุณมักจะถูกเข้ารหัสที่เป็นอย่างอื่นที่ไม่ใช่ UTF-8 และคุณไม่ได้บอก GLib ว่าคืออะไร กรุณาตั้งค่าตัวแปรแวดล้อม G_FILENAME_ENCODING"
 
 #: app/actions/actions.c:113 app/dialogs/dialogs.c:426 app/widgets/gimpbrusheditor.c:89
 msgid "Brush Editor"
@@ -360,7 +356,7 @@ msgstr "ข้อมูลตัวชี้"
 
 #: app/actions/actions.c:134 app/dialogs/dialogs.c:332
 msgid "Dashboard"
-msgstr ""
+msgstr "แดชบอร์ด"
 
 #: app/actions/actions.c:137
 msgid "Debug"
@@ -389,12 +385,11 @@ msgstr "สามารถวาดได้"
 
 #: app/actions/actions.c:155 app/dialogs/dialogs.c:344
 msgid "Paint Dynamics"
-msgstr ""
+msgstr "ค่าไดนามิกพู่กัน"
 
 #: app/actions/actions.c:158 app/dialogs/dialogs.c:430 app/widgets/gimpdynamicseditor.c:97
-#, fuzzy
 msgid "Paint Dynamics Editor"
-msgstr "เครื่องมือแก้ไขสีแรเงา"
+msgstr "ตัวแก้ไขค่าไดนามิกพู่กัน"
 
 #: app/actions/actions.c:161
 msgid "Edit"
@@ -406,12 +401,11 @@ msgstr "หน้าต่างแสดงข้อผิดพลาด"
 
 #: app/actions/actions.c:167
 msgid "File"
-msgstr "แฟ้ม"
+msgstr "ไฟล์"
 
 #: app/actions/actions.c:170
-#, fuzzy
 msgid "Filters"
-msgstr "ฟิลเ_ตอร์"
+msgstr "ฟิลเตอร์"
 
 #. initialize the list of gimp fonts
 #: app/actions/actions.c:173 app/core/gimp-data-factories.c:392 app/dialogs/dialogs.c:359 app/dialogs/preferences-dialog.c:3544
@@ -429,16 +423,15 @@ msgstr "สีแรเงา"
 
 #: app/actions/actions.c:182 app/core/gimp-data-factories.c:399 app/dialogs/dialogs.c:365 app/dialogs/preferences-dialog.c:3550
 msgid "Tool Presets"
-msgstr ""
+msgstr "พรีเซ็ตเครื่องมือ"
 
 #: app/actions/actions.c:185 app/dialogs/dialogs.c:442 app/widgets/gimptoolpreseteditor.c:99
-#, fuzzy
 msgid "Tool Preset Editor"
-msgstr "เครื่องมือแก้ไขข้อความ"
+msgstr "ตัวแก้ไขพรีเซ็ตเครื่องมือ"
 
 #: app/actions/actions.c:188
 msgid "Help"
-msgstr "ช่วยเหลือ"
+msgstr "วิธีใช้"
 
 #: app/actions/actions.c:191
 msgid "Image"
@@ -454,10 +447,8 @@ msgstr "ชั้นงาน"
 
 #. initialize the list of mypaint brushes
 #: app/actions/actions.c:200 app/core/gimp-data-factories.c:368 app/dialogs/dialogs.c:347 app/dialogs/preferences-dialog.c:3556
-#, fuzzy
-#| msgid "Paintbrush"
 msgid "MyPaint Brushes"
-msgstr "พู่กัน"
+msgstr "หัวแปรง MyPaint"
 
 #: app/actions/actions.c:203 app/dialogs/dialogs.c:438 app/widgets/gimppaletteeditor.c:157
 msgid "Palette Editor"
@@ -474,10 +465,8 @@ msgid "Patterns"
 msgstr "แบบลาย"
 
 #: app/actions/actions.c:212 app/dialogs/preferences-dialog.c:3562
-#, fuzzy
-#| msgid "Plug-Ins"
 msgid "Plug-ins"
-msgstr "โปรแกรมเสริม"
+msgstr "ปลั๊กอิน"
 
 #. Quick Mask Color
 #: app/actions/actions.c:215 app/core/gimpchannel.c:363 app/dialogs/preferences-dialog.c:1829
@@ -503,16 +492,15 @@ msgstr "เครื่องมือข้อความ"
 
 #: app/actions/actions.c:230
 msgid "Text Editor"
-msgstr "เครื่องมือแก้ไขข้อความ"
+msgstr "ตัวแก้ไขข้อความ"
 
 #: app/actions/actions.c:233 app/dialogs/dialogs.c:316 app/gui/gui.c:542
 msgid "Tool Options"
-msgstr "ตัวเลือกของเครื่องมือ"
+msgstr "ตัวเลือกเครื่องมือ"
 
 #: app/actions/actions.c:236
-#, fuzzy
 msgid "Tool Path"
-msgstr "เป็นเส้น_พาธ"
+msgstr "พาธเครื่องมือ"
 
 #: app/actions/actions.c:239 app/widgets/gimptoolpalette.c:327
 msgid "Tools"
@@ -520,7 +508,7 @@ msgstr "เครื่องมือ"
 
 #: app/actions/actions.c:242 app/dialogs/dialogs.c:384 app/tools/gimppathtool.c:168
 msgid "Paths"
-msgstr "เส้นพาธ"
+msgstr "พาธ"
 
 #: app/actions/actions.c:245
 msgid "View"
@@ -534,13 +522,13 @@ msgstr "หน้าต่าง"
 #: app/actions/actions.c:650
 #, c-format
 msgid "%s: %.2f"
-msgstr ""
+msgstr "%s: %.2f"
 
 #. value description and new value shown in the status bar
 #: app/actions/actions.c:676
 #, c-format
 msgid "%s: %d"
-msgstr ""
+msgstr "%s: %d"
 
 #: app/actions/brush-editor-actions.c:43
 msgctxt "brush-editor-action"
@@ -585,21 +573,17 @@ msgstr "คัดลอกตำแหน่ง_หัวแปรง"
 #: app/actions/brushes-actions.c:62
 msgctxt "brushes-action"
 msgid "Copy brush file location to clipboard"
-msgstr "คัดลอกตำแหน่งแฟ้มหัวแปรงไปที่คลิปบอร์ด"
+msgstr "คัดลอกตำแหน่งไฟล์หัวแปรงไปที่คลิปบอร์ด"
 
 #: app/actions/brushes-actions.c:67
-#, fuzzy
 msgctxt "brushes-action"
 msgid "Show in _File Manager"
-msgstr "ตัวจัดการโ_มดูล"
+msgstr "แสดงในตัวจัดการไ_ฟล์"
 
 #: app/actions/brushes-actions.c:68
-#, fuzzy
-#| msgctxt "brushes-action"
-#| msgid "Copy brush file location to clipboard"
 msgctxt "brushes-action"
 msgid "Show brush file location in the file manager"
-msgstr "คัดลอกตำแหน่งแฟ้มหัวแปรงไปที่คลิปบอร์ด"
+msgstr "แสดงตำแหน่งไฟล์หัวแปรงในโปรแกรมจัดการไฟล์"
 
 #: app/actions/brushes-actions.c:73
 msgctxt "brushes-action"
@@ -632,19 +616,16 @@ msgid "Edit this brush"
 msgstr "แก้ไขหัวแปรงนี้"
 
 #: app/actions/buffers-actions.c:42
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Paste Buffer as _New Image"
-msgstr "แปะชุดพักข้อมูลเป็น_อันใหม่"
+msgstr "แปะชุดพักข้อมูลเป็น_ภาพใหม่"
 
 #: app/actions/buffers-actions.c:43
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new image"
 msgstr "แปะข้อมูลจากชุดพักข้อมูลที่เลือกไว้เป็นภาพใหม่"
 
 #: app/actions/buffers-actions.c:48
-#, fuzzy
 msgctxt "buffers-action"
 msgid "_Delete Buffer"
 msgstr "_ลบชุดพักข้อมูล"
@@ -660,76 +641,64 @@ msgid "_Paste Buffer"
 msgstr "แ_ปะชุดพักข้อมูล"
 
 #: app/actions/buffers-actions.c:58
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Paste the selected buffer"
 msgstr "แปะข้อมูลจากชุดพักข้อมูลที่เลือกไว้"
 
 #: app/actions/buffers-actions.c:63
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Paste Buffer In Pl_ace"
-msgstr "แปะชุดพักข้อมูลเป็น_อันใหม่"
+msgstr "แปะชุดพักข้อมูลที่_จุดเดิม"
 
 #: app/actions/buffers-actions.c:64
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Paste the selected buffer at its original position"
-msgstr "แปะแหล่งชุดพักข้อมูลที่เลือกไว้ลงในพื้นที่ที่เลือก"
+msgstr "แปะข้อมูลจากชุดพักข้อมูลที่เลือกไว้ที่ตำแหน่งดั้งเดิม"
 
 #: app/actions/buffers-actions.c:69
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Paste Buffer _Into The Selection"
-msgstr "แปะชุดพักข้อมูลล_งใน"
+msgstr "แปะชุดพักข้อมูลล_งในพื้นที่เลือก"
 
 #: app/actions/buffers-actions.c:70
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Paste the selected buffer into the selection"
-msgstr "แปะแหล่งชุดพักข้อมูลที่เลือกไว้ลงในพื้นที่ที่เลือก"
+msgstr "แปะข้อมูลจากชุดพักข้อมูลที่เลือกไว้ลงในพื้นที่เลือก"
 
 #: app/actions/buffers-actions.c:75
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Paste Buffer Into The Selection In Place"
-msgstr "แปะแหล่งชุดพักข้อมูลที่เลือกไว้ลงในพื้นที่ที่เลือก"
+msgstr "แปะชุดพักข้อมูลลงในพื้นที่เลือกที่จุดเดิม"
 
 #: app/actions/buffers-actions.c:77
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Paste the selected buffer into the selection at its original position"
-msgstr "แปะแหล่งชุดพักข้อมูลที่เลือกไว้ลงในพื้นที่ที่เลือก"
+msgstr "แปะข้อมูลจากชุดพักข้อมูลที่เลือกไว้ลงในพื้นที่เลือกที่ตำแหน่งดั้งเดิม"
 
 #: app/actions/buffers-actions.c:82
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Paste Buffer as New _Layer"
-msgstr "แปะชุดพักข้อมูลเป็น_อันใหม่"
+msgstr "แปะชุดพักข้อมูลเป็น_ชั้นงานใหม่"
 
 #: app/actions/buffers-actions.c:83
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new layer"
-msgstr "แปะข้อมูลจากชุดพักข้อมูลที่เลือกไว้เป็นภาพใหม่"
+msgstr "แปะข้อมูลจากชุดพักข้อมูลที่เลือกไว้เป็นชั้นงานใหม่"
 
 #: app/actions/buffers-actions.c:88
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Paste Buffer as New Layer in Place"
-msgstr "แปะชุดพักข้อมูลเป็น_อันใหม่"
+msgstr "แปะชุดพักข้อมูลเป็นชั้นงานใหม่ที่จุดเดิม"
 
 #: app/actions/buffers-actions.c:90
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new layer at its original position"
-msgstr "แปะข้อมูลจากชุดพักข้อมูลที่เลือกไว้เป็นภาพใหม่"
+msgstr "แปะข้อมูลจากชุดพักข้อมูลที่เลือกไว้เป็นชั้นงานใหม่ที่ตำแหน่งดั้งเดิม"
 
 #: app/actions/buffers-actions.c:122 app/actions/buffers-actions.c:123 app/actions/buffers-actions.c:124 app/actions/buffers-actions.c:125 app/actions/buffers-actions.c:126 app/actions/buffers-actions.c:127
 #: app/actions/buffers-actions.c:128 app/actions/buffers-actions.c:129
-#, fuzzy
 msgid "No selected buffer"
-msgstr "แปะข้อมูลจากชุดพักข้อมูลที่เลือกไว้"
+msgstr "ไม่ได้เลือกชุดพักข้อมูลใด"
 
 #: app/actions/channels-actions.c:45
 msgctxt "channels-action"
@@ -762,121 +731,91 @@ msgid "Create a new channel with last used values"
 msgstr "เปิดแชนเนลใหม่ด้วยค่าที่ใช้ล่าสุด"
 
 #: app/actions/channels-actions.c:63
-#, fuzzy
-#| msgctxt "channels-action"
-#| msgid "D_uplicate Channel"
 msgctxt "channels-action"
 msgid "D_uplicate Channels"
 msgstr "สำเ_นาแชนเนล"
 
 #: app/actions/channels-actions.c:65
-#, fuzzy
-#| msgctxt "channels-action"
-#| msgid "Create a duplicate of this channel and add it to the image"
 msgctxt "channels-action"
 msgid "Create duplicates of selected channels and add them to the image"
 msgstr "สร้างชุดสำเนาของแชนเนลนี้และเพิ่มลงไปในภาพ"
 
 #: app/actions/channels-actions.c:70
-#, fuzzy
-#| msgctxt "channels-action"
-#| msgid "_Delete Channel"
 msgctxt "channels-action"
 msgid "_Delete Channels"
 msgstr "_ลบแชนเนล"
 
 #: app/actions/channels-actions.c:71
-#, fuzzy
-#| msgctxt "channels-action"
-#| msgid "Delete this channel"
 msgctxt "channels-action"
 msgid "Delete selected channels"
-msgstr "ลบแชนเนลนี้"
+msgstr "ลบแชนเนลที่เลือก"
 
 #: app/actions/channels-actions.c:76
-#, fuzzy
 msgctxt "channels-action"
 msgid "_Raise Channels"
 msgstr "_เลื่อนลำดับแชนเนลขึ้น"
 
 #: app/actions/channels-actions.c:77
-#, fuzzy
 msgctxt "channels-action"
 msgid "Raise these channels one step in the channel stack"
 msgstr "เลื่อนลำดับแชนเนลนี้ขึ้นหนึ่งขั้นในลำดับชั้นของแชนเนล"
 
 #: app/actions/channels-actions.c:82
-#, fuzzy
 msgctxt "channels-action"
 msgid "Raise Channels to _Top"
 msgstr "เลื่อนลำดับแชนเนลขึ้นไประดับ_บนสุด"
 
 #: app/actions/channels-actions.c:84
-#, fuzzy
 msgctxt "channels-action"
 msgid "Raise these channels to the top of the channel stack"
 msgstr "เลื่อนลำดับแชนเนลนี้ขึ้นไปไว้บนสุดของลำดับชั้นของแชนเนล"
 
 #: app/actions/channels-actions.c:89
-#, fuzzy
 msgctxt "channels-action"
 msgid "_Lower Channels"
 msgstr "เลื่อนลำดับแชนเนล_ลง"
 
 #: app/actions/channels-actions.c:90
-#, fuzzy
 msgctxt "channels-action"
 msgid "Lower these channels one step in the channel stack"
 msgstr "เลื่อนลำดับแชนเนลนี้ลงหนึ่งขั้นในลำดับชั้นของแชนเนล"
 
 #: app/actions/channels-actions.c:95
-#, fuzzy
 msgctxt "channels-action"
 msgid "Lower Channels to _Bottom"
 msgstr "เลื่อนลำดับแชนเนลลงไปไว้_ล่างสุด"
 
 #: app/actions/channels-actions.c:97
-#, fuzzy
 msgctxt "channels-action"
 msgid "Lower these channels to the bottom of the channel stack"
 msgstr "เลื่อนลำดับแชนเนลลงล่างสุดของลำดับชั้นของแชนเนล"
 
 #: app/actions/channels-actions.c:105
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "Toggle visibility"
 msgctxt "channels-action"
 msgid "Toggle Channel _Visibility"
-msgstr "เปิดปิดการปรากฏของวัตถุ"
+msgstr "เปิด/ปิดการ_ปรากฏของแชนเนล"
 
 #: app/actions/channels-actions.c:111
-#, fuzzy
 msgctxt "channels-action"
 msgid "L_ock Pixels of Channel"
-msgstr "เพิ่มแชนเนลอัลฟา"
+msgstr "ล็_อกพิกเซลของแชนเนล"
 
 #: app/actions/channels-actions.c:117
-#, fuzzy
 msgctxt "channels-action"
 msgid "L_ock Position of Channel"
-msgstr "จัดตำแหน่งแชนเนลใหม่"
+msgstr "ล็_อกตำแหน่งของแชนเนล"
 
 #: app/actions/channels-actions.c:126
-#, fuzzy
-#| msgid "None"
 msgctxt "channels-action"
 msgid "None"
 msgstr "ไม่มี"
 
 #: app/actions/channels-actions.c:127
-#, fuzzy
 msgctxt "channels-action"
 msgid "Channel Color Tag: Clear"
-msgstr "เปลี่ยนลำดับผังสี"
+msgstr "แท็กสีของแชนเนล: ล้าง"
 
 #: app/actions/channels-actions.c:132
-#, fuzzy
-#| msgid "Blue"
 msgctxt "channels-action"
 msgid "Blue"
 msgstr "น้ำเงิน"
@@ -884,24 +823,19 @@ msgstr "น้ำเงิน"
 #: app/actions/channels-actions.c:133
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Blue"
-msgstr ""
+msgstr "แท็กสีของแชนเนล: ตั้งเป็นสีน้ำเงิน"
 
 #: app/actions/channels-actions.c:138
-#, fuzzy
-#| msgid "Green"
 msgctxt "channels-action"
 msgid "Green"
-msgstr "สีเขียว"
+msgstr "เขียว"
 
 #: app/actions/channels-actions.c:139
-#, fuzzy
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Green"
-msgstr "เปลี่ยนลำดับผังสี"
+msgstr "แท็กสีของแชนเนล: ตั้งเป็นสีเขียว"
 
 #: app/actions/channels-actions.c:144
-#, fuzzy
-#| msgid "Yellow"
 msgctxt "channels-action"
 msgid "Yellow"
 msgstr "เหลือง"
@@ -909,162 +843,137 @@ msgstr "เหลือง"
 #: app/actions/channels-actions.c:145
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Yellow"
-msgstr ""
+msgstr "แท็กสีของแชนเนล: ตั้งเป็นสีเหลือง"
 
 #: app/actions/channels-actions.c:150
-#, fuzzy
 msgctxt "channels-action"
 msgid "Orange"
-msgstr "กำลังหมุน..."
+msgstr "ส้ม"
 
 #: app/actions/channels-actions.c:151
-#, fuzzy
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Orange"
-msgstr "เปลี่ยนลำดับผังสี"
+msgstr "แท็กสีของแชนเนล: ตั้งเป็นสีส้ม"
 
 #: app/actions/channels-actions.c:156
 msgctxt "channels-action"
 msgid "Brown"
-msgstr ""
+msgstr "น้ำตาล"
 
 #: app/actions/channels-actions.c:157
-#, fuzzy
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Brown"
-msgstr "เปลี่ยนลำดับผังสี"
+msgstr "แท็กสีของแชนเนล: ตั้งเป็นสีน้ำตาล"
 
 #: app/actions/channels-actions.c:162
-#, fuzzy
-#| msgid "Red"
 msgctxt "channels-action"
 msgid "Red"
-msgstr "สีแดง"
+msgstr "แดง"
 
 #: app/actions/channels-actions.c:163
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Red"
-msgstr ""
+msgstr "แท็กสีของแชนเนล: ตั้งเป็นสีแดง"
 
 #: app/actions/channels-actions.c:168
 msgctxt "channels-action"
 msgid "Violet"
-msgstr ""
+msgstr "ม่วง"
 
 #: app/actions/channels-actions.c:169
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Violet"
-msgstr ""
+msgstr "แท็กสีของแชนเนล: ตั้งเป็นสีม่วง"
 
 #: app/actions/channels-actions.c:174
-#, fuzzy
 msgctxt "channels-action"
 msgid "Gray"
-msgstr "เฉดเ_ทา"
+msgstr "เทา"
 
 #: app/actions/channels-actions.c:175
-#, fuzzy
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Gray"
-msgstr "เปลี่ยนลำดับผังสี"
+msgstr "แท็กสีของแชนเนล: ตั้งเป็นสีเทา"
 
 #: app/actions/channels-actions.c:183
-#, fuzzy
 msgctxt "channels-action"
 msgid "Channels to Sele_ction"
 msgstr "แปลงแชนเนลเป็น_พื้นที่เลือก"
 
 #: app/actions/channels-actions.c:184
-#, fuzzy
 msgctxt "channels-action"
 msgid "Replace the selection with selected channels"
-msgstr "แทนที่พื้นที่เลือกปัจจุบันด้วยแชนเนลนี้"
+msgstr "แทนที่พื้นที่เลือกด้วยแชนเนลที่เลือกไว้"
 
 #: app/actions/channels-actions.c:189
-#, fuzzy
 msgctxt "channels-action"
 msgid "_Add Channels to Selection"
-msgstr "แปลงแชนเนลเป็นพื้นที่เลือก"
+msgstr "เ_พิ่มแชนเนลลงในพื้นที่เลือก"
 
 #: app/actions/channels-actions.c:190
-#, fuzzy
-#| msgctxt "channels-action"
-#| msgid "Add this channel to the current selection"
 msgctxt "channels-action"
 msgid "Add selected channels to the current selection"
-msgstr "รวมแชนเนลนี้เข้ากับพี้นที่เลือกปัจจุบัน"
+msgstr "เพิ่มแชนเนลที่เลือกเข้าไปในพี้นที่เลือกปัจจุบัน"
 
 #: app/actions/channels-actions.c:195
-#, fuzzy
 msgctxt "channels-action"
 msgid "_Subtract Channels from Selection"
-msgstr "_ลบออกจากพื้นที่เลือก"
+msgstr "_ลบแชนเนลออกจากพื้นที่เลือก"
 
 #: app/actions/channels-actions.c:196
-#, fuzzy
 msgctxt "channels-action"
 msgid "Subtract selected channels from the current selection"
-msgstr "ลบแชนเนลนี้ออกจากพี้นที่เลือกปัจจุบัน"
+msgstr "ลบแชนเนลที่เลือกไว้ออกจากพี้นที่เลือกปัจจุบัน"
 
 #: app/actions/channels-actions.c:201
-#, fuzzy
 msgctxt "channels-action"
 msgid "_Intersect Channels with Selection"
-msgstr "หาส่วนทับ_ซ้อนกับพื้นที่เลือก"
+msgstr "หาส่วนทับ_ซ้อนแชนเนลกับพื้นที่เลือก"
 
 #: app/actions/channels-actions.c:202
-#, fuzzy
 msgctxt "channels-action"
 msgid "Intersect selected channels with the current selection and each other"
-msgstr "หาส่วนที่ทับซ้อนระหว่างแชนเนลนี้กับการเลือกปัจจุบัน"
+msgstr "หาส่วนที่ทับซ้อนระหว่างแชนเนลที่เลือกกับพื้นที่เลือกปัจจุบันและพื้นที่เลือกอื่น ๆ แต่ละจุด"
 
 #: app/actions/channels-actions.c:210
-#, fuzzy
 msgctxt "channels-action"
 msgid "Select _Top Channel"
-msgstr "เลือก_ชั้นงานบนสุด"
+msgstr "เลือกแชนเนล_บนสุด"
 
 #: app/actions/channels-actions.c:211
-#, fuzzy
 msgctxt "channels-action"
 msgid "Select the topmost channel"
-msgstr "เลือกชั้น_งานล่างสุด"
+msgstr "เลือกแชนเนลที่อยู่ด้านบนสุด"
 
 #: app/actions/channels-actions.c:216
-#, fuzzy
 msgctxt "channels-action"
 msgid "Select _Bottom Channel"
-msgstr "เลือกชั้น_งานล่างสุด"
+msgstr "เลือกแชนเนล_ล่างสุด"
 
 #: app/actions/channels-actions.c:217
-#, fuzzy
 msgctxt "channels-action"
 msgid "Select the bottommost channel"
-msgstr "เลือกชั้น_งานล่างสุด"
+msgstr "เลือกแชนเนลที่อยู่ด้านล่างสุด"
 
 #: app/actions/channels-actions.c:222
-#, fuzzy
 msgctxt "channels-action"
 msgid "Select _Previous Channels"
-msgstr "เลือกชั้นงานก่_อนหน้า"
+msgstr "เลือกแชนเนล_ก่อนหน้า"
 
 #: app/actions/channels-actions.c:223
-#, fuzzy
 msgctxt "channels-action"
 msgid "Select the channels above the selected channels"
-msgstr "ลบออกจากพี้นที่ที่เลือกอยู่"
+msgstr "เลือกแชนเนลที่อยู่เหนือแชนเนลที่เลือกไว้"
 
 #: app/actions/channels-actions.c:228
-#, fuzzy
 msgctxt "channels-action"
 msgid "Select _Next Channels"
-msgstr "เลือกชั้นงาน_ถัดไป"
+msgstr "เลือกแชนเนล_ถัดไป"
 
 #: app/actions/channels-actions.c:229
-#, fuzzy
 msgctxt "channels-action"
 msgid "Select the channels below the selected channels"
-msgstr "เฉพาะที่ซ้ำกับพี้นที่ที่เลือกอยู่"
+msgstr "เลือกแชนเนลที่อยู่ใต้แชนเนลที่เลือกไว้"
 
 #: app/actions/channels-commands.c:121 app/actions/channels-commands.c:714
 msgid "Channel Attributes"
@@ -1087,9 +996,6 @@ msgid "New Channel"
 msgstr "แชนเนลใหม่"
 
 #: app/actions/channels-commands.c:170
-#, fuzzy
-#| msgctxt "channels-action"
-#| msgid "Create a new channel"
 msgid "Create a New Channel"
 msgstr "สร้างแชนเนลใหม่"
 
@@ -1098,25 +1004,21 @@ msgid "New Channel Color"
 msgstr "สีของแชนเนลใหม่"
 
 #: app/actions/channels-commands.c:248
-#, fuzzy
 msgid "Raise Channel"
 msgid_plural "Raise Channels"
 msgstr[0] "สลับแชนเนลขี้น"
 
 #: app/actions/channels-commands.c:283
-#, fuzzy
 msgid "Raise Channel to Top"
 msgid_plural "Raise Channels to Top"
-msgstr[0] "สลับแชนเนลไว้บนสุด"
+msgstr[0] "สลับแชนเนลขึ้นบนสุด"
 
 #: app/actions/channels-commands.c:328
-#, fuzzy
 msgid "Lower Channel"
 msgid_plural "Lower Channels"
 msgstr[0] "สลับแชนเนลลง"
 
 #: app/actions/channels-commands.c:365
-#, fuzzy
 msgid "Lower Channel to Bottom"
 msgid_plural "Lower Channels to Bottom"
 msgstr[0] "สลับแชนเนลลงล่างสุด"
@@ -1128,20 +1030,16 @@ msgid "%s Channel Copy"
 msgstr "สำเนาแชนเนล %s"
 
 #: app/actions/channels-commands.c:424
-#, fuzzy
-#| msgctxt "channels-action"
-#| msgid "D_uplicate Channel"
 msgid "Duplicate channels"
-msgstr "สำเ_นาแชนเนล"
+msgstr "สำเนาแชนเนล"
 
 #: app/actions/channels-commands.c:467
-#, fuzzy, c-format
+#, c-format
 msgctxt "undo-type"
 msgid "Remove %d Channels"
-msgstr "เอาแชนเนลออก"
+msgstr "เอา %d แชนเนลออก"
 
 #: app/actions/channels-commands.c:511
-#, fuzzy
 msgid "Channels to selection"
 msgstr "แปลงแชนเนลเป็นพื้นที่เลือก"
 
@@ -2649,18 +2547,17 @@ msgid "240 Seconds"
 msgstr ""
 
 #: app/actions/dashboard-commands.c:121 app/actions/documents-commands.c:238 app/actions/edit-commands.c:170 app/actions/error-console-commands.c:101 app/actions/file-commands.c:449 app/actions/gradient-editor-commands.c:410
-#: app/actions/gradient-editor-commands.c:521 app/actions/gradients-commands.c:80 app/actions/plug-in-commands.c:185 app/actions/templates-commands.c:248 app/actions/text-editor-commands.c:65
-#: app/actions/text-tool-commands.c:124 app/actions/tool-options-commands.c:210 app/actions/window-commands.c:77 app/dialogs/color-profile-dialog.c:136 app/dialogs/color-profile-dialog.c:154
-#: app/dialogs/color-profile-dialog.c:172 app/dialogs/color-profile-dialog.c:190 app/dialogs/color-profile-dialog.c:208 app/dialogs/convert-indexed-dialog.c:142 app/dialogs/convert-precision-dialog.c:146
-#: app/dialogs/data-delete-dialog.c:87 app/dialogs/file-open-location-dialog.c:80 app/dialogs/file-save-dialog.c:758 app/dialogs/fill-dialog.c:115 app/dialogs/grid-dialog.c:102 app/dialogs/image-merge-layers-dialog.c:100
-#: app/dialogs/image-new-dialog.c:106 app/dialogs/image-new-dialog.c:326 app/dialogs/image-scale-dialog.c:210 app/dialogs/input-devices-dialog.c:66 app/dialogs/input-devices-dialog.c:121 app/dialogs/item-options-dialog.c:147
-#: app/dialogs/layer-add-mask-dialog.c:120 app/dialogs/palette-import-dialog.c:161 app/dialogs/preferences-dialog.c:221 app/dialogs/preferences-dialog.c:618 app/dialogs/preferences-dialog.c:1179
-#: app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:178 app/dialogs/resize-dialog.c:225 app/dialogs/resolution-calibrate-dialog.c:73 app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:129
-#: app/dialogs/template-options-dialog.c:118 app/dialogs/path-export-dialog.c:88 app/dialogs/path-import-dialog.c:93 app/display/gimpdisplayshell-close.c:181 app/display/gimpdisplayshell-filter-dialog.c:87
-#: app/display/gimpdisplayshell-rotate-dialog.c:123 app/display/gimpdisplayshell-scale-dialog.c:131 app/tools/gimpfiltertool.c:370 app/tools/gimpforegroundselecttool.c:333 app/tools/gimptexttool.c:1774
-#: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492 app/widgets/gimpcontrollereditor.c:666 app/widgets/gimpcontrollerlist.c:554
-#: app/widgets/gimpdeviceeditor.c:543 app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228 app/widgets/gimpfiledialog.c:336 app/widgets/gimphelp.c:438 app/widgets/gimphelp.c:773
-#: app/widgets/gimpiconpicker.c:489 app/widgets/gimpmodifierseditor.c:688 app/widgets/gimppdbdialog.c:148 app/widgets/gimpprogressdialog.c:91 app/widgets/gimpsettingsbox.c:705
+#: app/actions/gradient-editor-commands.c:521 app/actions/gradients-commands.c:80 app/actions/plug-in-commands.c:185 app/actions/templates-commands.c:248 app/actions/text-editor-commands.c:65 app/actions/text-tool-commands.c:124
+#: app/actions/tool-options-commands.c:210 app/actions/window-commands.c:77 app/dialogs/color-profile-dialog.c:136 app/dialogs/color-profile-dialog.c:154 app/dialogs/color-profile-dialog.c:172 app/dialogs/color-profile-dialog.c:190
+#: app/dialogs/color-profile-dialog.c:208 app/dialogs/convert-indexed-dialog.c:142 app/dialogs/convert-precision-dialog.c:146 app/dialogs/data-delete-dialog.c:87 app/dialogs/file-open-location-dialog.c:80
+#: app/dialogs/file-save-dialog.c:758 app/dialogs/fill-dialog.c:115 app/dialogs/grid-dialog.c:102 app/dialogs/image-merge-layers-dialog.c:100 app/dialogs/image-new-dialog.c:106 app/dialogs/image-new-dialog.c:326
+#: app/dialogs/image-scale-dialog.c:210 app/dialogs/input-devices-dialog.c:66 app/dialogs/input-devices-dialog.c:121 app/dialogs/item-options-dialog.c:147 app/dialogs/layer-add-mask-dialog.c:120 app/dialogs/palette-import-dialog.c:161
+#: app/dialogs/preferences-dialog.c:221 app/dialogs/preferences-dialog.c:618 app/dialogs/preferences-dialog.c:1179 app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:178 app/dialogs/resize-dialog.c:225
+#: app/dialogs/resolution-calibrate-dialog.c:73 app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:129 app/dialogs/template-options-dialog.c:118 app/dialogs/path-export-dialog.c:88 app/dialogs/path-import-dialog.c:93
+#: app/display/gimpdisplayshell-close.c:181 app/display/gimpdisplayshell-filter-dialog.c:87 app/display/gimpdisplayshell-rotate-dialog.c:123 app/display/gimpdisplayshell-scale-dialog.c:131 app/tools/gimpfiltertool.c:370
+#: app/tools/gimpforegroundselecttool.c:333 app/tools/gimptexttool.c:1774 app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
+#: app/widgets/gimpcontrollereditor.c:666 app/widgets/gimpcontrollerlist.c:554 app/widgets/gimpdeviceeditor.c:543 app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228 app/widgets/gimpfiledialog.c:336
+#: app/widgets/gimphelp.c:438 app/widgets/gimphelp.c:773 app/widgets/gimpiconpicker.c:489 app/widgets/gimpmodifierseditor.c:688 app/widgets/gimppdbdialog.c:148 app/widgets/gimpprogressdialog.c:91 app/widgets/gimpsettingsbox.c:705
 #, fuzzy
 msgid "_Cancel"
 msgstr "ยกเลิก"
@@ -6734,8 +6631,7 @@ msgid "Scale Image"
 msgstr "ปรับขนาดภาพ"
 
 #. Scaling
-#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2573 app/dialogs/preferences-dialog.c:1747 app/pdb/image-transform-cmds.c:124 app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:375
-#: app/tools/gimpscaletool.c:122
+#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2573 app/dialogs/preferences-dialog.c:1747 app/pdb/image-transform-cmds.c:124 app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:375 app/tools/gimpscaletool.c:122
 msgid "Scaling"
 msgstr "การปรับขนาด"
 
@@ -11244,9 +11140,9 @@ msgstr "เ_ปิดช่องการแสดงผล..."
 
 #: app/actions/window-commands.c:78 app/dialogs/extensions-dialog.c:79 app/dialogs/file-save-dialog.c:682 app/dialogs/grid-dialog.c:103 app/dialogs/image-new-dialog.c:107 app/dialogs/image-new-dialog.c:327
 #: app/dialogs/input-devices-dialog.c:67 app/dialogs/item-options-dialog.c:148 app/dialogs/keyboard-shortcuts-dialog.c:65 app/dialogs/preferences-dialog.c:1180 app/dialogs/print-size-dialog.c:124
-#: app/dialogs/resolution-calibrate-dialog.c:74 app/dialogs/template-options-dialog.c:119 app/display/gimpdisplayshell-filter-dialog.c:88 app/display/gimpdisplayshell-rotate-dialog.c:124
-#: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:191 app/tools/gimpfiltertool.c:371 app/widgets/gimpcolordialog.c:493 app/widgets/gimpcontrollereditor.c:667 app/widgets/gimpdeviceinfoeditor.c:1161
-#: app/widgets/gimperrordialog.c:76 app/widgets/gimpfiledialog.c:180 app/widgets/gimpmodifierseditor.c:689 app/widgets/gimppdbdialog.c:146
+#: app/dialogs/resolution-calibrate-dialog.c:74 app/dialogs/template-options-dialog.c:119 app/display/gimpdisplayshell-filter-dialog.c:88 app/display/gimpdisplayshell-rotate-dialog.c:124 app/display/gimpdisplayshell-scale-dialog.c:132
+#: app/gui/gui.c:191 app/tools/gimpfiltertool.c:371 app/widgets/gimpcolordialog.c:493 app/widgets/gimpcontrollereditor.c:667 app/widgets/gimpdeviceinfoeditor.c:1161 app/widgets/gimperrordialog.c:76 app/widgets/gimpfiledialog.c:180
+#: app/widgets/gimpmodifierseditor.c:689 app/widgets/gimppdbdialog.c:146
 msgid "_OK"
 msgstr ""
 
@@ -11810,8 +11706,8 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:134
 msgid ""
-"Tools such as fuzzy-select and bucket fill find regions based on a seed-fill algorithm.  The seed fill starts at the initially selected pixel and progresses in all directions until the difference of pixel intensity from the "
-"original is greater than a specified threshold. This value represents the default threshold."
+"Tools such as fuzzy-select and bucket fill find regions based on a seed-fill algorithm.  The seed fill starts at the initially selected pixel and progresses in all directions until the difference of pixel intensity from the original "
+"is greater than a specified threshold. This value represents the default threshold."
 msgstr "เครื่องมือเลือกสุ่มสี และ เทสี จะหาพื้นที่ที่จะกระทำด้วย seed fill อัลกอริธึม โดยจำค่าจุดภาพเริ่มต้นและทำการขยายพื้นที่ไปในจุดภาพที่ใกล้เคียง และจะสิ้นสุดเมื่อจุดภาพนั้นมีค่า Threshold เกินกว่าค่าที่ระบุไว้ในค่าปริยาย threshold"
 
 #: app/config/gimprc-blurbs.h:147
@@ -12184,11 +12080,11 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:522
 #, fuzzy
 msgid ""
-"Sets the swap file location. GIMP uses a tile based memory allocation scheme. The swap file is used to quickly and easily swap tiles out to disk and back in. Be aware that the swap file can easily get very large if GIMP is "
-"used with large images. Also, things can get horribly slow if the swap file is created on a folder that is mounted over NFS.  For these reasons, it may be desirable to put your swap file in \"/tmp\"."
+"Sets the swap file location. GIMP uses a tile based memory allocation scheme. The swap file is used to quickly and easily swap tiles out to disk and back in. Be aware that the swap file can easily get very large if GIMP is used with "
+"large images. Also, things can get horribly slow if the swap file is created on a folder that is mounted over NFS.  For these reasons, it may be desirable to put your swap file in \"/tmp\"."
 msgstr ""
-"กำหนดตำแหน่งไฟล์สแว็พ Gimp จะทำงานในหน่วยความจำที่ได้จัดไว้ ไฟล์สแว็พจะใช้เป็นตัวแลกเปลี่ยนข้อมูลอย่างรวดเร็วลงดิสก์และในทางกลับกันด้วย "
-"โปรดทราบว่าขนาดของไฟล์สแว็พจะมีขนาดใหญ่มากเมื่อมีการทำกับภาพขนาดใหญ่และการทำงานก็จะช้าอย่างมากหากมีการกำหนดไฟล์สแว็พไว้พื้นที่อื่นในเครือข่าย ด้วยเหตุนี้จึงได้กำหนดตำแหน่งไฟล์สแว็พไว้ที่ \"/tmp\"ย"
+"กำหนดตำแหน่งไฟล์สแว็พ Gimp จะทำงานในหน่วยความจำที่ได้จัดไว้ ไฟล์สแว็พจะใช้เป็นตัวแลกเปลี่ยนข้อมูลอย่างรวดเร็วลงดิสก์และในทางกลับกันด้วย โปรดทราบว่าขนาดของไฟล์สแว็พจะมีขนาดใหญ่มากเมื่อมีการทำกับภาพขนาดใหญ่และการทำงานก็จะช้าอย่างมากหากมีการกำหนดไฟล์สแว็พไว้พื้นที่อื่นในเครือข่าย "
+"ด้วยเหตุนี้จึงได้กำหนดตำแหน่งไฟล์สแว็พไว้ที่ \"/tmp\"ย"
 
 #: app/config/gimprc-blurbs.h:531
 msgid "When enabled, you can change keyboard shortcuts for menu items by hitting a key combination while the menu item is highlighted."
@@ -12206,8 +12102,8 @@ msgstr "เรียกปุ่มลัดที่ได้บันทึก
 #: app/config/gimprc-blurbs.h:541
 #, fuzzy
 msgid ""
-"Sets the folder for temporary storage. Files will appear here during the course of running GIMP.  Most files will disappear when GIMP exits, but some files are likely to remain, so it is best if this folder not be one that "
-"is shared by other users."
+"Sets the folder for temporary storage. Files will appear here during the course of running GIMP.  Most files will disappear when GIMP exits, but some files are likely to remain, so it is best if this folder not be one that is shared "
+"by other users."
 msgstr "กำหนดไดเรคทอรี่ของแหล่งข้อมูลชั่วคราว ไฟล์ต่าง ๆ จะถูกสร้างขึ้นที่นี่ในขณะที่ใช้ GIMP อยู่ ไฟล์ส่วนใหญ่จะถูกลบออกไปหลังจากออกจาก GIMP แต่มีบางไฟล์ที่ยังคงอยู่ เพราะฉะนั้นจะดีที่สุดหากไดเรคทอรี่นี้ไม่ได้ใช้ร่วมกับผู้ใช้คนอื่น"
 
 #: app/config/gimprc-blurbs.h:547
@@ -12434,8 +12330,8 @@ msgstr "ภาพย่อในหน้าต่างเปิดภาพจ
 
 #: app/config/gimprc-blurbs.h:726
 msgid ""
-"When the amount of pixel data exceeds this limit, GIMP will start to swap tiles to disk.  This is a lot slower but it makes it possible to work on images that wouldn't fit into memory otherwise.  If you have a lot of RAM, "
-"you may want to set this to a higher value."
+"When the amount of pixel data exceeds this limit, GIMP will start to swap tiles to disk.  This is a lot slower but it makes it possible to work on images that wouldn't fit into memory otherwise.  If you have a lot of RAM, you may "
+"want to set this to a higher value."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:732
@@ -15601,8 +15497,7 @@ msgstr[0] "%d ชั้นงาน"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "ไม่สามารถเปิดรูปย่อ '%s': %s ได้"
 
-#: app/core/gimpitem.c:1851 app/core/gimpitem.c:1918 app/display/gimpdisplayshell-dnd.c:380 app/tools/gimppathtool.c:758 app/tools/gimppathtool.c:847 app/tools/gimptransformtool.c:704
-#: app/widgets/gimpdrawabletreeview-filters.c:709
+#: app/core/gimpitem.c:1851 app/core/gimpitem.c:1918 app/display/gimpdisplayshell-dnd.c:380 app/tools/gimppathtool.c:758 app/tools/gimppathtool.c:847 app/tools/gimptransformtool.c:704 app/widgets/gimpdrawabletreeview-filters.c:709
 msgid "A selected layer's pixels are locked."
 msgstr ""
 
@@ -18205,8 +18100,7 @@ msgstr "ตัวเลือกของเครื่องมือ"
 #. Snapping Distance
 #. General
 #. general device information
-#: app/dialogs/preferences-dialog.c:1719 app/dialogs/preferences-dialog.c:2648 app/dialogs/preferences-dialog.c:3086 app/dialogs/preferences-dialog.c:3110 app/widgets/gimpcontrollereditor.c:190
-#: app/widgets/gimpdeviceinfoeditor.c:362
+#: app/dialogs/preferences-dialog.c:1719 app/dialogs/preferences-dialog.c:2648 app/dialogs/preferences-dialog.c:3086 app/dialogs/preferences-dialog.c:3110 app/widgets/gimpcontrollereditor.c:190 app/widgets/gimpdeviceinfoeditor.c:362
 msgid "General"
 msgstr "ทั่วไป"
 
@@ -20291,9 +20185,9 @@ msgctxt "modifier-action"
 msgid "Change tool opacity"
 msgstr "ชนิดภาพ"
 
-#: app/display/gimpcursorview.c:234 app/display/gimpcursorview.c:240 app/display/gimpcursorview.c:259 app/display/gimpcursorview.c:265 app/display/gimpcursorview.c:286 app/display/gimpcursorview.c:292
-#: app/display/gimpcursorview.c:308 app/display/gimpcursorview.c:315 app/display/gimpcursorview.c:738 app/display/gimpcursorview.c:740 app/display/gimpcursorview.c:742 app/display/gimpcursorview.c:744
-#: app/display/gimpcursorview.c:824 app/display/gimpcursorview.c:825 app/display/gimpcursorview.c:826 app/display/gimpcursorview.c:827 app/widgets/gimphistogrameditor.c:820
+#: app/display/gimpcursorview.c:234 app/display/gimpcursorview.c:240 app/display/gimpcursorview.c:259 app/display/gimpcursorview.c:265 app/display/gimpcursorview.c:286 app/display/gimpcursorview.c:292 app/display/gimpcursorview.c:308
+#: app/display/gimpcursorview.c:315 app/display/gimpcursorview.c:738 app/display/gimpcursorview.c:740 app/display/gimpcursorview.c:742 app/display/gimpcursorview.c:744 app/display/gimpcursorview.c:824 app/display/gimpcursorview.c:825
+#: app/display/gimpcursorview.c:826 app/display/gimpcursorview.c:827 app/widgets/gimphistogrameditor.c:820
 msgid "n/a"
 msgstr ""
 
@@ -20533,8 +20427,8 @@ msgstr "(แก้ไขแล้ว)"
 msgid "(clean)"
 msgstr "(ลบล้าง)"
 
-#: app/display/gimpdisplayshell-title.c:410 app/display/gimpdisplayshell-title.c:419 app/widgets/gimpactiongroup.c:1205 app/widgets/gimpbuffersourcebox.c:166 app/widgets/gimpbuffersourcebox.c:296
-#: app/widgets/gimpdeviceinfo.c:1148 app/widgets/gimpdeviceinfo.c:1173
+#: app/display/gimpdisplayshell-title.c:410 app/display/gimpdisplayshell-title.c:419 app/widgets/gimpactiongroup.c:1205 app/widgets/gimpbuffersourcebox.c:166 app/widgets/gimpbuffersourcebox.c:296 app/widgets/gimpdeviceinfo.c:1148
+#: app/widgets/gimpdeviceinfo.c:1173
 msgid "(none)"
 msgstr ""
 
@@ -21193,50 +21087,45 @@ msgstr "แบบลาย"
 msgid "GIMP extension"
 msgstr "ตามส่วนขยาย"
 
-#: app/gegl/gimp-babl.c:184 app/gegl/gimp-babl.c:185 app/gegl/gimp-babl.c:186 app/gegl/gimp-babl.c:187 app/gegl/gimp-babl.c:188 app/gegl/gimp-babl.c:189 app/gegl/gimp-babl.c:190 app/gegl/gimp-babl.c:191
-#: app/gegl/gimp-babl.c:192 app/gegl/gimp-babl.c:193 app/gegl/gimp-babl.c:194 app/gegl/gimp-babl.c:195 app/gegl/gimp-babl.c:196 app/gegl/gimp-babl.c:197 app/gegl/gimp-babl.c:198 app/gegl/gimp-babl.c:199
-#: app/gegl/gimp-babl.c:200 app/gegl/gimp-babl.c:201 app/plug-in/gimppluginprocedure.c:1022
+#: app/gegl/gimp-babl.c:184 app/gegl/gimp-babl.c:185 app/gegl/gimp-babl.c:186 app/gegl/gimp-babl.c:187 app/gegl/gimp-babl.c:188 app/gegl/gimp-babl.c:189 app/gegl/gimp-babl.c:190 app/gegl/gimp-babl.c:191 app/gegl/gimp-babl.c:192
+#: app/gegl/gimp-babl.c:193 app/gegl/gimp-babl.c:194 app/gegl/gimp-babl.c:195 app/gegl/gimp-babl.c:196 app/gegl/gimp-babl.c:197 app/gegl/gimp-babl.c:198 app/gegl/gimp-babl.c:199 app/gegl/gimp-babl.c:200 app/gegl/gimp-babl.c:201
+#: app/plug-in/gimppluginprocedure.c:1022
 #, fuzzy
 msgid "RGB"
 msgstr "RGB"
 
-#: app/gegl/gimp-babl.c:203 app/gegl/gimp-babl.c:204 app/gegl/gimp-babl.c:205 app/gegl/gimp-babl.c:206 app/gegl/gimp-babl.c:207 app/gegl/gimp-babl.c:208 app/gegl/gimp-babl.c:209 app/gegl/gimp-babl.c:210
-#: app/gegl/gimp-babl.c:211 app/gegl/gimp-babl.c:212 app/gegl/gimp-babl.c:213 app/gegl/gimp-babl.c:214 app/gegl/gimp-babl.c:215 app/gegl/gimp-babl.c:216 app/gegl/gimp-babl.c:217 app/gegl/gimp-babl.c:218
-#: app/gegl/gimp-babl.c:219 app/gegl/gimp-babl.c:220
+#: app/gegl/gimp-babl.c:203 app/gegl/gimp-babl.c:204 app/gegl/gimp-babl.c:205 app/gegl/gimp-babl.c:206 app/gegl/gimp-babl.c:207 app/gegl/gimp-babl.c:208 app/gegl/gimp-babl.c:209 app/gegl/gimp-babl.c:210 app/gegl/gimp-babl.c:211
+#: app/gegl/gimp-babl.c:212 app/gegl/gimp-babl.c:213 app/gegl/gimp-babl.c:214 app/gegl/gimp-babl.c:215 app/gegl/gimp-babl.c:216 app/gegl/gimp-babl.c:217 app/gegl/gimp-babl.c:218 app/gegl/gimp-babl.c:219 app/gegl/gimp-babl.c:220
 msgid "RGB-alpha"
 msgstr ""
 
-#: app/gegl/gimp-babl.c:222 app/gegl/gimp-babl.c:223 app/gegl/gimp-babl.c:224 app/gegl/gimp-babl.c:225 app/gegl/gimp-babl.c:226 app/gegl/gimp-babl.c:227 app/gegl/gimp-babl.c:228 app/gegl/gimp-babl.c:229
-#: app/gegl/gimp-babl.c:230 app/gegl/gimp-babl.c:231 app/gegl/gimp-babl.c:232 app/gegl/gimp-babl.c:233 app/gegl/gimp-babl.c:234 app/gegl/gimp-babl.c:235 app/gegl/gimp-babl.c:236 app/gegl/gimp-babl.c:237
-#: app/gegl/gimp-babl.c:238 app/gegl/gimp-babl.c:239 app/plug-in/gimppluginprocedure.c:1040
+#: app/gegl/gimp-babl.c:222 app/gegl/gimp-babl.c:223 app/gegl/gimp-babl.c:224 app/gegl/gimp-babl.c:225 app/gegl/gimp-babl.c:226 app/gegl/gimp-babl.c:227 app/gegl/gimp-babl.c:228 app/gegl/gimp-babl.c:229 app/gegl/gimp-babl.c:230
+#: app/gegl/gimp-babl.c:231 app/gegl/gimp-babl.c:232 app/gegl/gimp-babl.c:233 app/gegl/gimp-babl.c:234 app/gegl/gimp-babl.c:235 app/gegl/gimp-babl.c:236 app/gegl/gimp-babl.c:237 app/gegl/gimp-babl.c:238 app/gegl/gimp-babl.c:239
+#: app/plug-in/gimppluginprocedure.c:1040
 #, fuzzy
 msgid "Grayscale"
 msgstr "เฉดเ_ทา"
 
-#: app/gegl/gimp-babl.c:241 app/gegl/gimp-babl.c:242 app/gegl/gimp-babl.c:243 app/gegl/gimp-babl.c:244 app/gegl/gimp-babl.c:245 app/gegl/gimp-babl.c:246 app/gegl/gimp-babl.c:247 app/gegl/gimp-babl.c:248
-#: app/gegl/gimp-babl.c:249 app/gegl/gimp-babl.c:250 app/gegl/gimp-babl.c:251 app/gegl/gimp-babl.c:252 app/gegl/gimp-babl.c:253 app/gegl/gimp-babl.c:254 app/gegl/gimp-babl.c:255 app/gegl/gimp-babl.c:256
-#: app/gegl/gimp-babl.c:257 app/gegl/gimp-babl.c:258
+#: app/gegl/gimp-babl.c:241 app/gegl/gimp-babl.c:242 app/gegl/gimp-babl.c:243 app/gegl/gimp-babl.c:244 app/gegl/gimp-babl.c:245 app/gegl/gimp-babl.c:246 app/gegl/gimp-babl.c:247 app/gegl/gimp-babl.c:248 app/gegl/gimp-babl.c:249
+#: app/gegl/gimp-babl.c:250 app/gegl/gimp-babl.c:251 app/gegl/gimp-babl.c:252 app/gegl/gimp-babl.c:253 app/gegl/gimp-babl.c:254 app/gegl/gimp-babl.c:255 app/gegl/gimp-babl.c:256 app/gegl/gimp-babl.c:257 app/gegl/gimp-babl.c:258
 #, fuzzy
 msgid "Grayscale-alpha"
 msgstr "เฉดเ_ทา"
 
-#: app/gegl/gimp-babl.c:260 app/gegl/gimp-babl.c:261 app/gegl/gimp-babl.c:262 app/gegl/gimp-babl.c:263 app/gegl/gimp-babl.c:264 app/gegl/gimp-babl.c:265 app/gegl/gimp-babl.c:266 app/gegl/gimp-babl.c:267
-#: app/gegl/gimp-babl.c:268 app/gegl/gimp-babl.c:269 app/gegl/gimp-babl.c:270 app/gegl/gimp-babl.c:271 app/gegl/gimp-babl.c:272 app/gegl/gimp-babl.c:273 app/gegl/gimp-babl.c:274 app/gegl/gimp-babl.c:275
-#: app/gegl/gimp-babl.c:276 app/gegl/gimp-babl.c:277
+#: app/gegl/gimp-babl.c:260 app/gegl/gimp-babl.c:261 app/gegl/gimp-babl.c:262 app/gegl/gimp-babl.c:263 app/gegl/gimp-babl.c:264 app/gegl/gimp-babl.c:265 app/gegl/gimp-babl.c:266 app/gegl/gimp-babl.c:267 app/gegl/gimp-babl.c:268
+#: app/gegl/gimp-babl.c:269 app/gegl/gimp-babl.c:270 app/gegl/gimp-babl.c:271 app/gegl/gimp-babl.c:272 app/gegl/gimp-babl.c:273 app/gegl/gimp-babl.c:274 app/gegl/gimp-babl.c:275 app/gegl/gimp-babl.c:276 app/gegl/gimp-babl.c:277
 #, fuzzy
 msgid "Red component"
 msgstr "หมายเหตุ"
 
-#: app/gegl/gimp-babl.c:279 app/gegl/gimp-babl.c:280 app/gegl/gimp-babl.c:281 app/gegl/gimp-babl.c:282 app/gegl/gimp-babl.c:283 app/gegl/gimp-babl.c:284 app/gegl/gimp-babl.c:285 app/gegl/gimp-babl.c:286
-#: app/gegl/gimp-babl.c:287 app/gegl/gimp-babl.c:288 app/gegl/gimp-babl.c:289 app/gegl/gimp-babl.c:290 app/gegl/gimp-babl.c:291 app/gegl/gimp-babl.c:292 app/gegl/gimp-babl.c:293 app/gegl/gimp-babl.c:294
-#: app/gegl/gimp-babl.c:295 app/gegl/gimp-babl.c:296
+#: app/gegl/gimp-babl.c:279 app/gegl/gimp-babl.c:280 app/gegl/gimp-babl.c:281 app/gegl/gimp-babl.c:282 app/gegl/gimp-babl.c:283 app/gegl/gimp-babl.c:284 app/gegl/gimp-babl.c:285 app/gegl/gimp-babl.c:286 app/gegl/gimp-babl.c:287
+#: app/gegl/gimp-babl.c:288 app/gegl/gimp-babl.c:289 app/gegl/gimp-babl.c:290 app/gegl/gimp-babl.c:291 app/gegl/gimp-babl.c:292 app/gegl/gimp-babl.c:293 app/gegl/gimp-babl.c:294 app/gegl/gimp-babl.c:295 app/gegl/gimp-babl.c:296
 #, fuzzy
 msgid "Green component"
 msgstr "หมายเหตุ"
 
-#: app/gegl/gimp-babl.c:298 app/gegl/gimp-babl.c:299 app/gegl/gimp-babl.c:300 app/gegl/gimp-babl.c:301 app/gegl/gimp-babl.c:302 app/gegl/gimp-babl.c:303 app/gegl/gimp-babl.c:304 app/gegl/gimp-babl.c:305
-#: app/gegl/gimp-babl.c:306 app/gegl/gimp-babl.c:307 app/gegl/gimp-babl.c:308 app/gegl/gimp-babl.c:309 app/gegl/gimp-babl.c:310 app/gegl/gimp-babl.c:311 app/gegl/gimp-babl.c:312 app/gegl/gimp-babl.c:313
-#: app/gegl/gimp-babl.c:314 app/gegl/gimp-babl.c:315
+#: app/gegl/gimp-babl.c:298 app/gegl/gimp-babl.c:299 app/gegl/gimp-babl.c:300 app/gegl/gimp-babl.c:301 app/gegl/gimp-babl.c:302 app/gegl/gimp-babl.c:303 app/gegl/gimp-babl.c:304 app/gegl/gimp-babl.c:305 app/gegl/gimp-babl.c:306
+#: app/gegl/gimp-babl.c:307 app/gegl/gimp-babl.c:308 app/gegl/gimp-babl.c:309 app/gegl/gimp-babl.c:310 app/gegl/gimp-babl.c:311 app/gegl/gimp-babl.c:312 app/gegl/gimp-babl.c:313 app/gegl/gimp-babl.c:314 app/gegl/gimp-babl.c:315
 #, fuzzy
 msgid "Blue component"
 msgstr "หมายเหตุ"
@@ -22085,8 +21974,8 @@ msgstr "ปรับสมดุลสี"
 msgid "Turn colors into shades of gray"
 msgstr "เปลี่ยนค่ากสีให้เป็นระดับสีเทา"
 
-#: app/operations/gimpoperationdesaturate.c:91 app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1462 app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
-#: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179 app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:279
+#: app/operations/gimpoperationdesaturate.c:91 app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1462 app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73 app/tools/gimptransform3doptions.c:77
+#: app/widgets/gimpdeviceinfo.c:179 app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:279
 #, fuzzy
 #| msgid "Mode:"
 msgid "Mode"
@@ -22650,8 +22539,7 @@ msgctxt "smudge-tool"
 msgid "No erasing effect"
 msgstr ""
 
-#: app/paint/gimpsmudgeoptions.c:93 app/paint/gimpsourceoptions.c:110 app/pdb/gimppdbcontext.c:129 app/tools/gimpbucketfilloptions.c:171 app/tools/gimpcoloroptions.c:70 app/tools/gimphealtool.c:101
-#: app/tools/gimpregionselectoptions.c:98
+#: app/paint/gimpsmudgeoptions.c:93 app/paint/gimpsourceoptions.c:110 app/pdb/gimppdbcontext.c:129 app/tools/gimpbucketfilloptions.c:171 app/tools/gimpcoloroptions.c:70 app/tools/gimphealtool.c:101 app/tools/gimpregionselectoptions.c:98
 msgid "Sample merged"
 msgstr "เลือกแบบรวมภาพ"
 
@@ -24537,8 +24425,8 @@ msgstr "เทสี"
 msgid "Cannot fill multiple layers. Select only one layer."
 msgstr ""
 
-#: app/tools/gimpbucketfilltool.c:599 app/tools/gimpcagetool.c:231 app/tools/gimpcurvestool.c:220 app/tools/gimpfiltertool.c:311 app/tools/gimpforegroundselecttool.c:297 app/tools/gimplevelstool.c:211
-#: app/tools/gimpoffsettool.c:191 app/tools/gimppainttool.c:297 app/tools/gimpperspectiveclonetool.c:224 app/tools/gimpthresholdtool.c:160 app/tools/gimptransformgridtool.c:351
+#: app/tools/gimpbucketfilltool.c:599 app/tools/gimpcagetool.c:231 app/tools/gimpcurvestool.c:220 app/tools/gimpfiltertool.c:311 app/tools/gimpforegroundselecttool.c:297 app/tools/gimplevelstool.c:211 app/tools/gimpoffsettool.c:191
+#: app/tools/gimppainttool.c:297 app/tools/gimpperspectiveclonetool.c:224 app/tools/gimpthresholdtool.c:160 app/tools/gimptransformgridtool.c:351
 msgid "No selected drawables."
 msgstr ""
 
@@ -28023,8 +27911,8 @@ msgid "V:"
 msgstr ""
 
 #. TRANSLATORS: A for Alpha (color transparency)
-#: app/widgets/gimpcolorframe.c:802 app/widgets/gimpcolorframe.c:815 app/widgets/gimpcolorframe.c:879 app/widgets/gimpcolorframe.c:948 app/widgets/gimpcolorframe.c:1001 app/widgets/gimpcolorframe.c:1028
-#: app/widgets/gimpcolorframe.c:1056 app/widgets/gimpcolorframe.c:1084 app/widgets/gimpcolorframe.c:1111 app/widgets/gimpcolorframe.c:1158
+#: app/widgets/gimpcolorframe.c:802 app/widgets/gimpcolorframe.c:815 app/widgets/gimpcolorframe.c:879 app/widgets/gimpcolorframe.c:948 app/widgets/gimpcolorframe.c:1001 app/widgets/gimpcolorframe.c:1028 app/widgets/gimpcolorframe.c:1056
+#: app/widgets/gimpcolorframe.c:1084 app/widgets/gimpcolorframe.c:1111 app/widgets/gimpcolorframe.c:1158
 msgctxt "Alpha channel"
 msgid "A:"
 msgstr ""
@@ -28063,8 +27951,8 @@ msgctxt "Color"
 msgid "Profile:"
 msgstr "ตัวเก็บค่าสี"
 
-#: app/widgets/gimpcolorframe.c:859 app/widgets/gimpcolorframe.c:860 app/widgets/gimpcolorframe.c:933 app/widgets/gimpcolorframe.c:934 app/widgets/gimpcolorframe.c:985 app/widgets/gimpcolorframe.c:986
-#: app/widgets/gimpcolorframe.c:1185 app/widgets/gimpcolorframe.c:1186
+#: app/widgets/gimpcolorframe.c:859 app/widgets/gimpcolorframe.c:860 app/widgets/gimpcolorframe.c:933 app/widgets/gimpcolorframe.c:934 app/widgets/gimpcolorframe.c:985 app/widgets/gimpcolorframe.c:986 app/widgets/gimpcolorframe.c:1185
+#: app/widgets/gimpcolorframe.c:1186
 #, c-format
 msgid "%s"
 msgstr ""
@@ -28464,18 +28352,18 @@ msgstr ""
 msgid "Scroll Up"
 msgstr "เลื่อนขึ้น"
 
-#: app/widgets/gimpcontrollerwheel.c:93 app/widgets/gimpcontrollerwheel.c:96 app/widgets/gimpcontrollerwheel.c:99 app/widgets/gimpcontrollerwheel.c:102 app/widgets/gimpcontrollerwheel.c:105
-#: app/widgets/gimpcontrollerwheel.c:108 app/widgets/gimpcontrollerwheel.c:111 app/widgets/gimpcontrollerwheel.c:114
+#: app/widgets/gimpcontrollerwheel.c:93 app/widgets/gimpcontrollerwheel.c:96 app/widgets/gimpcontrollerwheel.c:99 app/widgets/gimpcontrollerwheel.c:102 app/widgets/gimpcontrollerwheel.c:105 app/widgets/gimpcontrollerwheel.c:108
+#: app/widgets/gimpcontrollerwheel.c:111 app/widgets/gimpcontrollerwheel.c:114
 msgid "Scroll Down"
 msgstr "เลื่อนลง"
 
-#: app/widgets/gimpcontrollerwheel.c:118 app/widgets/gimpcontrollerwheel.c:121 app/widgets/gimpcontrollerwheel.c:124 app/widgets/gimpcontrollerwheel.c:127 app/widgets/gimpcontrollerwheel.c:130
-#: app/widgets/gimpcontrollerwheel.c:133 app/widgets/gimpcontrollerwheel.c:136 app/widgets/gimpcontrollerwheel.c:139
+#: app/widgets/gimpcontrollerwheel.c:118 app/widgets/gimpcontrollerwheel.c:121 app/widgets/gimpcontrollerwheel.c:124 app/widgets/gimpcontrollerwheel.c:127 app/widgets/gimpcontrollerwheel.c:130 app/widgets/gimpcontrollerwheel.c:133
+#: app/widgets/gimpcontrollerwheel.c:136 app/widgets/gimpcontrollerwheel.c:139
 msgid "Scroll Left"
 msgstr "เลื่อนซ้าย"
 
-#: app/widgets/gimpcontrollerwheel.c:143 app/widgets/gimpcontrollerwheel.c:146 app/widgets/gimpcontrollerwheel.c:149 app/widgets/gimpcontrollerwheel.c:152 app/widgets/gimpcontrollerwheel.c:155
-#: app/widgets/gimpcontrollerwheel.c:158 app/widgets/gimpcontrollerwheel.c:161 app/widgets/gimpcontrollerwheel.c:164
+#: app/widgets/gimpcontrollerwheel.c:143 app/widgets/gimpcontrollerwheel.c:146 app/widgets/gimpcontrollerwheel.c:149 app/widgets/gimpcontrollerwheel.c:152 app/widgets/gimpcontrollerwheel.c:155 app/widgets/gimpcontrollerwheel.c:158
+#: app/widgets/gimpcontrollerwheel.c:161 app/widgets/gimpcontrollerwheel.c:164
 msgid "Scroll Right"
 msgstr "เลือนขวา"
 
@@ -31827,8 +31715,8 @@ msgstr "เมนูประวัติการเรียกคืน"
 
 #, fuzzy
 #~ msgid ""
-#~ "Unable to open swap file. GIMP has run out of memory and cannot use the swap file. Some parts of your images may be corrupted. Try to save your work using different filenames, restart GIMP and check the location of the "
-#~ "swap directory in your Preferences."
+#~ "Unable to open swap file. GIMP has run out of memory and cannot use the swap file. Some parts of your images may be corrupted. Try to save your work using different filenames, restart GIMP and check the location of the swap "
+#~ "directory in your Preferences."
 #~ msgstr "ไม่สามารถเปิดไฟล์ swap ได้ หน่วยความจำหมดและใช้ไฟล์ swap ไม่ได้ ข้อมูลของภาพบางส่วนอาจเสียหาย กรุณาบันทึกงานเป็นชื่ออื่น เริ่มการทำงาน Gimp ใหม่และตรวจสอบตำแหน่งของ swap ไดเรคทอรี่ในการปรับแต่งค่าของโปรแกรม"
 
 #~ msgid "Ask for confirmation before closing an image without saving."
@@ -31840,8 +31728,8 @@ msgstr "เมนูประวัติการเรียกคืน"
 
 #, fuzzy
 #~ msgid ""
-#~ "When enabled, the X server is queried for the mouse's current position on each motion event, rather than relying on the position hint.  This means painting with large brushes should be more accurate, but it may be "
-#~ "slower.  Conversely, on some X servers enabling this option results in faster painting."
+#~ "When enabled, the X server is queried for the mouse's current position on each motion event, rather than relying on the position hint.  This means painting with large brushes should be more accurate, but it may be slower.  "
+#~ "Conversely, on some X servers enabling this option results in faster painting."
 #~ msgstr "เมื่อเปิดใช้งาน X server จะถามหาตำแหน่งปัจจุบันของเมาส์ นั่นหมายถึงการทาสีด้วยหัวแปรงขนาดใหญ่จะมีความถูกต้องสูงขึ้นแต่จะช้าลง ในบาง X server การเปิดใช้คุณสมบัตินี้อาจทำให้การทาสี้เร็วขึ้น"
 
 #, fuzzy
@@ -32825,8 +32713,8 @@ msgstr "เมนูประวัติการเรียกคืน"
 
 #, fuzzy
 #~ msgid ""
-#~ "Sets the external web browser to be used.  This can be an absolute path or the name of an executable to search for in the user's PATH. If the command contains '%s' it will be replaced with the URL, else the URL will be "
-#~ "appended to the command with a space separating the two."
+#~ "Sets the external web browser to be used.  This can be an absolute path or the name of an executable to search for in the user's PATH. If the command contains '%s' it will be replaced with the URL, else the URL will be appended to "
+#~ "the command with a space separating the two."
 #~ msgstr "กำหนดการนำตัวเรียกดูเว็บไซต์มาใช้ ซึ่งอาจจะบอกเป็นตำแหน่งแบบเต็มของโปรแกรมหรือชื่อของแฟ้มตัวโปรแกรมก็ได้ หากในคำสั่งมี %s ก็จะถูกแทนด้วย URL "
 
 #~ msgid "Remove floating selection"
