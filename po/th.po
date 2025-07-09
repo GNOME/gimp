@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: gimp-2006-08\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2025-07-08 13:09+0000\n"
-"PO-Revision-Date: 2025-07-09 14:27+0700\n"
+"PO-Revision-Date: 2025-07-09 15:20+0700\n"
 "Last-Translator: Sira Nokyoongtong <gumaraa@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "Language: th\n"
@@ -40,15 +40,13 @@ msgid "GIMP is an acronym for GNU Image Manipulation Program. It is a freely dis
 msgstr ""
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:24
-msgid ""
-"It has many capabilities. It can be used as a simple paint program, an expert quality photo retouching program, an online batch processing system, a mass production image "
-"renderer, an image format converter, etc."
+msgid "It has many capabilities. It can be used as a simple paint program, an expert quality photo retouching program, an online batch processing system, a mass production image renderer, an image format converter, etc."
 msgstr ""
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:30
 msgid ""
-"GIMP is expandable and extensible. It is designed to be augmented with plug-ins and extensions to do just about anything. The advanced scripting interface allows everything "
-"from the simplest task to the most complex image manipulation procedures to be easily scripted. GIMP is available for Linux, Microsoft Windows and OS X."
+"GIMP is expandable and extensible. It is designed to be augmented with plug-ins and extensions to do just about anything. The advanced scripting interface allows everything from the simplest task to the most complex image "
+"manipulation procedures to be easily scripted. GIMP is available for Linux, Microsoft Windows and OS X."
 msgstr ""
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:48
@@ -103,27 +101,25 @@ msgstr ""
 #: app/about.h:39
 #, fuzzy
 #| msgid ""
-#| "GIMP is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either "
-#| "version 3 of the License, or (at your option) any later version.\n"
+#| "GIMP is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any "
+#| "later version.\n"
 #| "\n"
-#| "GIMP is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR "
-#| "PURPOSE.  See the GNU General Public License for more details.\n"
+#| "GIMP is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
+#| "details.\n"
 #| "\n"
 #| "You should have received a copy of the GNU General Public License along with GIMP.  If not, see https://www.gnu.org/licenses/."
 msgid ""
-"GIMP is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version "
-"3 of the License, or (at your option) any later version.\n"
+"GIMP is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later "
+"version.\n"
 "\n"
-"GIMP is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  "
-"See the GNU General Public License for more details.\n"
+"GIMP is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
+"details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
-"GIMP เป็นซอฟต์แวร์เสรี คุณสามารถแจกจ่ายต่อ และ/หรือ แก้ไขโปรแกรมได้ ภายใต้เงื่อนไขของ GNU General Public License ที่เผยแพร่โดยมูลนิธิซอฟต์แวร์เสรี ไม่ว่าจะเป็นสัญญาอนุญาตรุ่นที่ 3 หรือรุ่นถัดมา "
-"(ตามแต่คุณจะเลือก)\n"
+"GIMP เป็นซอฟต์แวร์เสรี คุณสามารถแจกจ่ายต่อ และ/หรือ แก้ไขโปรแกรมได้ ภายใต้เงื่อนไขของ GNU General Public License ที่เผยแพร่โดยมูลนิธิซอฟต์แวร์เสรี ไม่ว่าจะเป็นสัญญาอนุญาตรุ่นที่ 3 หรือรุ่นถัดมา (ตามแต่คุณจะเลือก)\n"
 "\n"
-"GIMP เผยแพร่ด้วยความหวังว่าโปรแกรมจะมีประโยชน์ แต่ *ไม่มีการรับประกันใดๆ* ไม่มีแม้การรับประกัน *อรรถประโยชน์เชิงพาณิชย์* หรือ *ความเหมาะสมสำหรับวัตถุประสงค์เฉพาะกิจใดๆ* กรุณาอ่าน GNU General Public "
-"License เพื่อดูรายละเอียดเพิ่มเติม\n"
+"GIMP เผยแพร่ด้วยความหวังว่าโปรแกรมจะมีประโยชน์ แต่ *ไม่มีการรับประกันใดๆ* ไม่มีแม้การรับประกัน *อรรถประโยชน์เชิงพาณิชย์* หรือ *ความเหมาะสมสำหรับวัตถุประสงค์เฉพาะกิจใดๆ* กรุณาอ่าน GNU General Public License เพื่อดูรายละเอียดเพิ่มเติม\n"
 "\n"
 "คุณควรจะได้รับสำเนาของ GNU General Public License มาพร้อมกับ GIMP ถ้าคุณไม่ได้รับ กรุณาดูได้ที่ https://www.gnu.org/licenses/"
 
@@ -729,8 +725,8 @@ msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new layer at its original position"
 msgstr "แปะข้อมูลจากชุดพักข้อมูลที่เลือกไว้เป็นภาพใหม่"
 
-#: app/actions/buffers-actions.c:122 app/actions/buffers-actions.c:123 app/actions/buffers-actions.c:124 app/actions/buffers-actions.c:125 app/actions/buffers-actions.c:126
-#: app/actions/buffers-actions.c:127 app/actions/buffers-actions.c:128 app/actions/buffers-actions.c:129
+#: app/actions/buffers-actions.c:122 app/actions/buffers-actions.c:123 app/actions/buffers-actions.c:124 app/actions/buffers-actions.c:125 app/actions/buffers-actions.c:126 app/actions/buffers-actions.c:127
+#: app/actions/buffers-actions.c:128 app/actions/buffers-actions.c:129
 #, fuzzy
 msgid "No selected buffer"
 msgstr "แปะข้อมูลจากชุดพักข้อมูลที่เลือกไว้"
@@ -1126,8 +1122,7 @@ msgid_plural "Lower Channels to Bottom"
 msgstr[0] "สลับแชนเนลลงล่างสุด"
 
 # unsure
-#: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:534 app/display/gimpdisplayshell-dnd.c:703 app/widgets/gimpchanneltreeview.c:266
-#: app/widgets/gimplayertreeview.c:859
+#: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:534 app/display/gimpdisplayshell-dnd.c:703 app/widgets/gimpchanneltreeview.c:266 app/widgets/gimplayertreeview.c:859
 #, c-format
 msgid "%s Channel Copy"
 msgstr "สำเนาแชนเนล %s"
@@ -2653,23 +2648,19 @@ msgctxt "dashboard-history-duration"
 msgid "240 Seconds"
 msgstr ""
 
-#: app/actions/dashboard-commands.c:121 app/actions/documents-commands.c:238 app/actions/edit-commands.c:170 app/actions/error-console-commands.c:101
-#: app/actions/file-commands.c:449 app/actions/gradient-editor-commands.c:410 app/actions/gradient-editor-commands.c:521 app/actions/gradients-commands.c:80
-#: app/actions/plug-in-commands.c:185 app/actions/templates-commands.c:248 app/actions/text-editor-commands.c:65 app/actions/text-tool-commands.c:124
-#: app/actions/tool-options-commands.c:210 app/actions/window-commands.c:77 app/dialogs/color-profile-dialog.c:136 app/dialogs/color-profile-dialog.c:154
-#: app/dialogs/color-profile-dialog.c:172 app/dialogs/color-profile-dialog.c:190 app/dialogs/color-profile-dialog.c:208 app/dialogs/convert-indexed-dialog.c:142
-#: app/dialogs/convert-precision-dialog.c:146 app/dialogs/data-delete-dialog.c:87 app/dialogs/file-open-location-dialog.c:80 app/dialogs/file-save-dialog.c:758
-#: app/dialogs/fill-dialog.c:115 app/dialogs/grid-dialog.c:102 app/dialogs/image-merge-layers-dialog.c:100 app/dialogs/image-new-dialog.c:106 app/dialogs/image-new-dialog.c:326
-#: app/dialogs/image-scale-dialog.c:210 app/dialogs/input-devices-dialog.c:66 app/dialogs/input-devices-dialog.c:121 app/dialogs/item-options-dialog.c:147
-#: app/dialogs/layer-add-mask-dialog.c:120 app/dialogs/palette-import-dialog.c:161 app/dialogs/preferences-dialog.c:221 app/dialogs/preferences-dialog.c:618
-#: app/dialogs/preferences-dialog.c:1179 app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:178 app/dialogs/resize-dialog.c:225
-#: app/dialogs/resolution-calibrate-dialog.c:73 app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:129 app/dialogs/template-options-dialog.c:118
-#: app/dialogs/path-export-dialog.c:88 app/dialogs/path-import-dialog.c:93 app/display/gimpdisplayshell-close.c:181 app/display/gimpdisplayshell-filter-dialog.c:87
-#: app/display/gimpdisplayshell-rotate-dialog.c:123 app/display/gimpdisplayshell-scale-dialog.c:131 app/tools/gimpfiltertool.c:370 app/tools/gimpforegroundselecttool.c:333
-#: app/tools/gimptexttool.c:1774 app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
-#: app/widgets/gimpcontrollereditor.c:666 app/widgets/gimpcontrollerlist.c:554 app/widgets/gimpdeviceeditor.c:543 app/widgets/gimpdeviceinfoeditor.c:1160
-#: app/widgets/gimpdnd-xds.c:228 app/widgets/gimpfiledialog.c:336 app/widgets/gimphelp.c:438 app/widgets/gimphelp.c:773 app/widgets/gimpiconpicker.c:489
-#: app/widgets/gimpmodifierseditor.c:688 app/widgets/gimppdbdialog.c:148 app/widgets/gimpprogressdialog.c:91 app/widgets/gimpsettingsbox.c:705
+#: app/actions/dashboard-commands.c:121 app/actions/documents-commands.c:238 app/actions/edit-commands.c:170 app/actions/error-console-commands.c:101 app/actions/file-commands.c:449 app/actions/gradient-editor-commands.c:410
+#: app/actions/gradient-editor-commands.c:521 app/actions/gradients-commands.c:80 app/actions/plug-in-commands.c:185 app/actions/templates-commands.c:248 app/actions/text-editor-commands.c:65
+#: app/actions/text-tool-commands.c:124 app/actions/tool-options-commands.c:210 app/actions/window-commands.c:77 app/dialogs/color-profile-dialog.c:136 app/dialogs/color-profile-dialog.c:154
+#: app/dialogs/color-profile-dialog.c:172 app/dialogs/color-profile-dialog.c:190 app/dialogs/color-profile-dialog.c:208 app/dialogs/convert-indexed-dialog.c:142 app/dialogs/convert-precision-dialog.c:146
+#: app/dialogs/data-delete-dialog.c:87 app/dialogs/file-open-location-dialog.c:80 app/dialogs/file-save-dialog.c:758 app/dialogs/fill-dialog.c:115 app/dialogs/grid-dialog.c:102 app/dialogs/image-merge-layers-dialog.c:100
+#: app/dialogs/image-new-dialog.c:106 app/dialogs/image-new-dialog.c:326 app/dialogs/image-scale-dialog.c:210 app/dialogs/input-devices-dialog.c:66 app/dialogs/input-devices-dialog.c:121 app/dialogs/item-options-dialog.c:147
+#: app/dialogs/layer-add-mask-dialog.c:120 app/dialogs/palette-import-dialog.c:161 app/dialogs/preferences-dialog.c:221 app/dialogs/preferences-dialog.c:618 app/dialogs/preferences-dialog.c:1179
+#: app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:178 app/dialogs/resize-dialog.c:225 app/dialogs/resolution-calibrate-dialog.c:73 app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:129
+#: app/dialogs/template-options-dialog.c:118 app/dialogs/path-export-dialog.c:88 app/dialogs/path-import-dialog.c:93 app/display/gimpdisplayshell-close.c:181 app/display/gimpdisplayshell-filter-dialog.c:87
+#: app/display/gimpdisplayshell-rotate-dialog.c:123 app/display/gimpdisplayshell-scale-dialog.c:131 app/tools/gimpfiltertool.c:370 app/tools/gimpforegroundselecttool.c:333 app/tools/gimptexttool.c:1774
+#: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492 app/widgets/gimpcontrollereditor.c:666 app/widgets/gimpcontrollerlist.c:554
+#: app/widgets/gimpdeviceeditor.c:543 app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228 app/widgets/gimpfiledialog.c:336 app/widgets/gimphelp.c:438 app/widgets/gimphelp.c:773
+#: app/widgets/gimpiconpicker.c:489 app/widgets/gimpmodifierseditor.c:688 app/widgets/gimppdbdialog.c:148 app/widgets/gimpprogressdialog.c:91 app/widgets/gimpsettingsbox.c:705
 #, fuzzy
 msgid "_Cancel"
 msgstr "ยกเลิก"
@@ -2734,9 +2725,8 @@ msgstr "เพิ่มชั้นงาน"
 msgid "Enter a description for the marker"
 msgstr "ตั้งชื่อแม่แบบนี้"
 
-#: app/actions/data-commands.c:90 app/actions/documents-commands.c:393 app/actions/file-commands.c:211 app/dialogs/file-open-dialog.c:247 app/dialogs/file-open-dialog.c:288
-#: app/dialogs/file-open-location-dialog.c:217 app/dialogs/file-open-location-dialog.c:233 app/dialogs/welcome-dialog.c:1251 app/display/gimpdisplayshell-dnd.c:646
-#: app/widgets/gimplayertreeview.c:817 app/widgets/gimptoolbox.c:843 app/widgets/gimptoolbox-dnd.c:178
+#: app/actions/data-commands.c:90 app/actions/documents-commands.c:393 app/actions/file-commands.c:211 app/dialogs/file-open-dialog.c:247 app/dialogs/file-open-dialog.c:288 app/dialogs/file-open-location-dialog.c:217
+#: app/dialogs/file-open-location-dialog.c:233 app/dialogs/welcome-dialog.c:1251 app/display/gimpdisplayshell-dnd.c:646 app/widgets/gimplayertreeview.c:817 app/widgets/gimptoolbox.c:843 app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -2747,8 +2737,8 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75 app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2437 app/core/gimppalette.c:587
-#: app/core/gimppalette-import.c:223 app/dialogs/palette-import-dialog.c:774 app/widgets/gimpdnd-xds.c:87
+#: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75 app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2437 app/core/gimppalette.c:587 app/core/gimppalette-import.c:223
+#: app/dialogs/palette-import-dialog.c:774 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "ยังไม่ตั้งชื่อ"
 
@@ -4517,8 +4507,8 @@ msgstr "ไม่มีการเลือก ไม่สามารถบ�
 msgid "Save Error Log to File"
 msgstr "บันทึกปูมข้อผิดพลาดลงแฟ้ม"
 
-#: app/actions/error-console-commands.c:102 app/actions/gradients-commands.c:81 app/dialogs/file-save-dialog.c:759 app/dialogs/path-export-dialog.c:89
-#: app/display/gimpdisplayshell-close.c:179 app/widgets/gimpsavedialog.c:142 app/widgets/gimpsettingsbox.c:707
+#: app/actions/error-console-commands.c:102 app/actions/gradients-commands.c:81 app/dialogs/file-save-dialog.c:759 app/dialogs/path-export-dialog.c:89 app/display/gimpdisplayshell-close.c:179 app/widgets/gimpsavedialog.c:142
+#: app/widgets/gimpsettingsbox.c:707
 #, fuzzy
 #| msgctxt "file-action"
 #| msgid "_Save"
@@ -6744,8 +6734,8 @@ msgid "Scale Image"
 msgstr "ปรับขนาดภาพ"
 
 #. Scaling
-#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2573 app/dialogs/preferences-dialog.c:1747 app/pdb/image-transform-cmds.c:124
-#: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:375 app/tools/gimpscaletool.c:122
+#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2573 app/dialogs/preferences-dialog.c:1747 app/pdb/image-transform-cmds.c:124 app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:375
+#: app/tools/gimpscaletool.c:122
 msgid "Scaling"
 msgstr "การปรับขนาด"
 
@@ -8906,10 +8896,9 @@ msgstr "ตั้งค่าให้โปรแกรมเสริมทุ
 msgid "Reset all Filters"
 msgstr "ตั้งค่าฟิลเตอร์ใหม่ทั้งหมด"
 
-#: app/actions/plug-in-commands.c:186 app/actions/tool-options-commands.c:211 app/dialogs/fill-dialog.c:114 app/dialogs/grid-dialog.c:101 app/dialogs/image-new-dialog.c:105
-#: app/dialogs/input-devices-dialog.c:65 app/dialogs/input-devices-dialog.c:122 app/dialogs/preferences-dialog.c:222 app/dialogs/preferences-dialog.c:1178
-#: app/dialogs/print-size-dialog.c:122 app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128 app/display/gimpdisplayshell-rotate-dialog.c:122
-#: app/tools/gimpfiltertool.c:369 app/tools/gimptransformgridtool.c:1261 app/widgets/gimpcolordialog.c:491 app/widgets/gimpcolordisplayeditor.c:326
+#: app/actions/plug-in-commands.c:186 app/actions/tool-options-commands.c:211 app/dialogs/fill-dialog.c:114 app/dialogs/grid-dialog.c:101 app/dialogs/image-new-dialog.c:105 app/dialogs/input-devices-dialog.c:65
+#: app/dialogs/input-devices-dialog.c:122 app/dialogs/preferences-dialog.c:222 app/dialogs/preferences-dialog.c:1178 app/dialogs/print-size-dialog.c:122 app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
+#: app/display/gimpdisplayshell-rotate-dialog.c:122 app/tools/gimpfiltertool.c:369 app/tools/gimptransformgridtool.c:1261 app/widgets/gimpcolordialog.c:491 app/widgets/gimpcolordisplayeditor.c:326
 #, fuzzy
 msgid "_Reset"
 msgstr "ตั้งค่าสีใหม่"
@@ -9393,16 +9382,16 @@ msgstr ""
 msgid "Open Text File (UTF-8)"
 msgstr "เปิดแฟ้มข้อความแบบ (UTF-8)"
 
-#: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:125 app/dialogs/file-open-location-dialog.c:81 app/dialogs/path-import-dialog.c:94
-#: app/dialogs/welcome-dialog.c:722 app/widgets/gimpiconpicker.c:490 app/widgets/gimpopendialog.c:87 app/widgets/gimpsettingsbox.c:707
+#: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:125 app/dialogs/file-open-location-dialog.c:81 app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:722 app/widgets/gimpiconpicker.c:490
+#: app/widgets/gimpopendialog.c:87 app/widgets/gimpsettingsbox.c:707
 #, fuzzy
 #| msgctxt "text-editor-action"
 #| msgid "Open"
 msgid "_Open"
 msgstr "เปิด"
 
-#: app/actions/text-editor-commands.c:140 app/actions/text-tool-commands.c:226 app/config/gimpconfig-file.c:73 app/core/gimppalette-import.c:520
-#: app/plug-in/gimpenvirontable.c:289 app/plug-in/gimpinterpreterdb.c:234 app/tools/gimpfiltertool-settings.c:170 app/widgets/gimptextbuffer.c:1650
+#: app/actions/text-editor-commands.c:140 app/actions/text-tool-commands.c:226 app/config/gimpconfig-file.c:73 app/core/gimppalette-import.c:520 app/plug-in/gimpenvirontable.c:289 app/plug-in/gimpinterpreterdb.c:234
+#: app/tools/gimpfiltertool-settings.c:170 app/widgets/gimptextbuffer.c:1650
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "ไม่สามารถเปิด '%s' เพื่ออ่าน: %s"
@@ -11253,11 +11242,10 @@ msgstr "เลื่อนไปที่หน้าจอ..."
 msgid "Open Display"
 msgstr "เ_ปิดช่องการแสดงผล..."
 
-#: app/actions/window-commands.c:78 app/dialogs/extensions-dialog.c:79 app/dialogs/file-save-dialog.c:682 app/dialogs/grid-dialog.c:103 app/dialogs/image-new-dialog.c:107
-#: app/dialogs/image-new-dialog.c:327 app/dialogs/input-devices-dialog.c:67 app/dialogs/item-options-dialog.c:148 app/dialogs/keyboard-shortcuts-dialog.c:65
-#: app/dialogs/preferences-dialog.c:1180 app/dialogs/print-size-dialog.c:124 app/dialogs/resolution-calibrate-dialog.c:74 app/dialogs/template-options-dialog.c:119
-#: app/display/gimpdisplayshell-filter-dialog.c:88 app/display/gimpdisplayshell-rotate-dialog.c:124 app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:191
-#: app/tools/gimpfiltertool.c:371 app/widgets/gimpcolordialog.c:493 app/widgets/gimpcontrollereditor.c:667 app/widgets/gimpdeviceinfoeditor.c:1161
+#: app/actions/window-commands.c:78 app/dialogs/extensions-dialog.c:79 app/dialogs/file-save-dialog.c:682 app/dialogs/grid-dialog.c:103 app/dialogs/image-new-dialog.c:107 app/dialogs/image-new-dialog.c:327
+#: app/dialogs/input-devices-dialog.c:67 app/dialogs/item-options-dialog.c:148 app/dialogs/keyboard-shortcuts-dialog.c:65 app/dialogs/preferences-dialog.c:1180 app/dialogs/print-size-dialog.c:124
+#: app/dialogs/resolution-calibrate-dialog.c:74 app/dialogs/template-options-dialog.c:119 app/display/gimpdisplayshell-filter-dialog.c:88 app/display/gimpdisplayshell-rotate-dialog.c:124
+#: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:191 app/tools/gimpfiltertool.c:371 app/widgets/gimpcolordialog.c:493 app/widgets/gimpcontrollereditor.c:667 app/widgets/gimpdeviceinfoeditor.c:1161
 #: app/widgets/gimperrordialog.c:76 app/widgets/gimpfiledialog.c:180 app/widgets/gimpmodifierseditor.c:689 app/widgets/gimppdbdialog.c:146
 msgid "_OK"
 msgstr ""
@@ -11680,8 +11668,7 @@ msgstr "ไม่สามารถเปิด '%s' เพี่อที่จ
 msgid "Error parsing '%%s': line longer than %s characters."
 msgstr ""
 
-#: app/config/gimpconfig-file.c:154 app/config/gimpconfig-file.c:206 app/config/gimpconfig-file.c:223 app/core/gimp-tags.c:145 app/gui/themes.c:707
-#: app/tools/gimpfiltertool-settings.c:229
+#: app/config/gimpconfig-file.c:154 app/config/gimpconfig-file.c:206 app/config/gimpconfig-file.c:223 app/core/gimp-tags.c:145 app/gui/themes.c:707 app/tools/gimpfiltertool-settings.c:229
 #, fuzzy, c-format
 msgid "Error writing '%s': %s"
 msgstr "เกิดข้อผิดพลาดขณะเขียน '%s': %s"
@@ -11704,8 +11691,7 @@ msgstr ""
 msgid "Layer"
 msgstr "ชั้นงาน"
 
-#: app/config/gimpdialogconfig.c:418 app/core/gimpchannel.c:256 app/operations/gimpcurvesconfig.c:119 app/operations/gimplevelsconfig.c:125
-#: app/operations/gimpoperationthreshold.c:94 app/widgets/gimpchanneltreeview.c:339
+#: app/config/gimpdialogconfig.c:418 app/core/gimpchannel.c:256 app/operations/gimpcurvesconfig.c:119 app/operations/gimplevelsconfig.c:125 app/operations/gimpoperationthreshold.c:94 app/widgets/gimpchanneltreeview.c:339
 msgid "Channel"
 msgstr "แชนเนล"
 
@@ -11824,11 +11810,9 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:134
 msgid ""
-"Tools such as fuzzy-select and bucket fill find regions based on a seed-fill algorithm.  The seed fill starts at the initially selected pixel and progresses in all directions "
-"until the difference of pixel intensity from the original is greater than a specified threshold. This value represents the default threshold."
-msgstr ""
-"เครื่องมือเลือกสุ่มสี และ เทสี จะหาพื้นที่ที่จะกระทำด้วย seed fill อัลกอริธึม โดยจำค่าจุดภาพเริ่มต้นและทำการขยายพื้นที่ไปในจุดภาพที่ใกล้เคียง และจะสิ้นสุดเมื่อจุดภาพนั้นมีค่า Threshold เกินกว่าค่าที่ระบุไว้ในค่าปริยาย "
-"threshold"
+"Tools such as fuzzy-select and bucket fill find regions based on a seed-fill algorithm.  The seed fill starts at the initially selected pixel and progresses in all directions until the difference of pixel intensity from the "
+"original is greater than a specified threshold. This value represents the default threshold."
+msgstr "เครื่องมือเลือกสุ่มสี และ เทสี จะหาพื้นที่ที่จะกระทำด้วย seed fill อัลกอริธึม โดยจำค่าจุดภาพเริ่มต้นและทำการขยายพื้นที่ไปในจุดภาพที่ใกล้เคียง และจะสิ้นสุดเมื่อจุดภาพนั้นมีค่า Threshold เกินกว่าค่าที่ระบุไว้ในค่าปริยาย threshold"
 
 #: app/config/gimprc-blurbs.h:147
 msgid "The window type hint that is set on dock windows and the toolbox window. This may affect the way your window manager decorates and handles these windows."
@@ -12027,9 +12011,7 @@ msgid "Sets how many threads GIMP should use for operations that support it."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:371
-msgid ""
-"Sets whether GIMP should create previews of layers and channels. Previews in the layers and channels dialog are nice to have but they can slow things down when working with "
-"large images."
+msgid "Sets whether GIMP should create previews of layers and channels. Previews in the layers and channels dialog are nice to have but they can slow things down when working with large images."
 msgstr "ตั้งค่าว่า GIMP ควรแสดงตัวอย่างภาพของชั้นงานและแชนเนลหรือไม่ การแสดงภาพตัวอย่างในกล่องโต้ตอบของชั้นงานและแชนเนลทำให้น่าใช้และง่ายต่อการใช้มากขึ้น แต่ก็ทำให้ช้าลงถ้าทำงานกับภาพขนาดใหญ่มาก ๆ"
 
 #: app/config/gimprc-blurbs.h:376
@@ -12102,9 +12084,7 @@ msgid "When enabled, dialogs will show a help button that gives access to the re
 msgstr "เมื่อเปิดใช้ กล่องโต้ตอบจะแสดงปุ่มช่วยเหลือซึ่งใช้นำไปสู่หน้าช่วยเหลือที่เกี่ยวข้อง หากไม่มีปุ่มนี้ ก็ยังสามารถเข้าสู่หน้าช่วยเหลือได้โดยกดแป้น F1"
 
 #: app/config/gimprc-blurbs.h:440
-msgid ""
-"When enabled, the pointer will be shown over the image while using a paint tool. If both the brush outline and pointer are disabled, the position will be indicated as "
-"unobtrusively as possibly."
+msgid "When enabled, the pointer will be shown over the image while using a paint tool. If both the brush outline and pointer are disabled, the position will be indicated as unobtrusively as possibly."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:446
@@ -12204,9 +12184,8 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:522
 #, fuzzy
 msgid ""
-"Sets the swap file location. GIMP uses a tile based memory allocation scheme. The swap file is used to quickly and easily swap tiles out to disk and back in. Be aware that "
-"the swap file can easily get very large if GIMP is used with large images. Also, things can get horribly slow if the swap file is created on a folder that is mounted over "
-"NFS.  For these reasons, it may be desirable to put your swap file in \"/tmp\"."
+"Sets the swap file location. GIMP uses a tile based memory allocation scheme. The swap file is used to quickly and easily swap tiles out to disk and back in. Be aware that the swap file can easily get very large if GIMP is "
+"used with large images. Also, things can get horribly slow if the swap file is created on a folder that is mounted over NFS.  For these reasons, it may be desirable to put your swap file in \"/tmp\"."
 msgstr ""
 "กำหนดตำแหน่งไฟล์สแว็พ Gimp จะทำงานในหน่วยความจำที่ได้จัดไว้ ไฟล์สแว็พจะใช้เป็นตัวแลกเปลี่ยนข้อมูลอย่างรวดเร็วลงดิสก์และในทางกลับกันด้วย "
 "โปรดทราบว่าขนาดของไฟล์สแว็พจะมีขนาดใหญ่มากเมื่อมีการทำกับภาพขนาดใหญ่และการทำงานก็จะช้าอย่างมากหากมีการกำหนดไฟล์สแว็พไว้พื้นที่อื่นในเครือข่าย ด้วยเหตุนี้จึงได้กำหนดตำแหน่งไฟล์สแว็พไว้ที่ \"/tmp\"ย"
@@ -12227,10 +12206,9 @@ msgstr "เรียกปุ่มลัดที่ได้บันทึก
 #: app/config/gimprc-blurbs.h:541
 #, fuzzy
 msgid ""
-"Sets the folder for temporary storage. Files will appear here during the course of running GIMP.  Most files will disappear when GIMP exits, but some files are likely to "
-"remain, so it is best if this folder not be one that is shared by other users."
-msgstr ""
-"กำหนดไดเรคทอรี่ของแหล่งข้อมูลชั่วคราว ไฟล์ต่าง ๆ จะถูกสร้างขึ้นที่นี่ในขณะที่ใช้ GIMP อยู่ ไฟล์ส่วนใหญ่จะถูกลบออกไปหลังจากออกจาก GIMP แต่มีบางไฟล์ที่ยังคงอยู่ เพราะฉะนั้นจะดีที่สุดหากไดเรคทอรี่นี้ไม่ได้ใช้ร่วมกับผู้ใช้คนอื่น"
+"Sets the folder for temporary storage. Files will appear here during the course of running GIMP.  Most files will disappear when GIMP exits, but some files are likely to remain, so it is best if this folder not be one that "
+"is shared by other users."
+msgstr "กำหนดไดเรคทอรี่ของแหล่งข้อมูลชั่วคราว ไฟล์ต่าง ๆ จะถูกสร้างขึ้นที่นี่ในขณะที่ใช้ GIMP อยู่ ไฟล์ส่วนใหญ่จะถูกลบออกไปหลังจากออกจาก GIMP แต่มีบางไฟล์ที่ยังคงอยู่ เพราะฉะนั้นจะดีที่สุดหากไดเรคทอรี่นี้ไม่ได้ใช้ร่วมกับผู้ใช้คนอื่น"
 
 #: app/config/gimprc-blurbs.h:547
 msgid "The name of the theme to use."
@@ -12456,8 +12434,8 @@ msgstr "ภาพย่อในหน้าต่างเปิดภาพจ
 
 #: app/config/gimprc-blurbs.h:726
 msgid ""
-"When the amount of pixel data exceeds this limit, GIMP will start to swap tiles to disk.  This is a lot slower but it makes it possible to work on images that wouldn't fit "
-"into memory otherwise.  If you have a lot of RAM, you may want to set this to a higher value."
+"When the amount of pixel data exceeds this limit, GIMP will start to swap tiles to disk.  This is a lot slower but it makes it possible to work on images that wouldn't fit into memory otherwise.  If you have a lot of RAM, "
+"you may want to set this to a higher value."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:732
@@ -12509,9 +12487,7 @@ msgstr "กำหนดจำนวนขั้นต่ำของการย
 
 #: app/config/gimprc-blurbs.h:769
 #, fuzzy
-msgid ""
-"Sets an upper limit to the memory that is used per image to keep operations on the undo stack. Regardless of this setting, at least as many undo-levels as configured can be "
-"undone."
+msgid "Sets an upper limit to the memory that is used per image to keep operations on the undo stack. Regardless of this setting, at least as many undo-levels as configured can be undone."
 msgstr "ตั้งค่าสูงสุดของหน่วยความจำที่ใช้ในการเก็บการดำเนินการในลำดับของการยกเลิกการกระทำ"
 
 #: app/config/gimprc-blurbs.h:774
@@ -12540,8 +12516,7 @@ msgstr ""
 msgid "The maximum number of actions saved in history."
 msgstr ""
 
-#: app/config/gimprc-deserialize.c:136 app/core/gimp-modules.c:130 app/core/gimp-units.c:185 app/gui/session.c:309 app/menus/shortcuts-rc.c:148 app/plug-in/plug-in-rc.c:252
-#: app/tools/gimp-tools.c:504
+#: app/config/gimprc-deserialize.c:136 app/core/gimp-modules.c:130 app/core/gimp-units.c:185 app/gui/session.c:309 app/menus/shortcuts-rc.c:148 app/plug-in/plug-in-rc.c:252 app/tools/gimp-tools.c:504
 #, fuzzy
 msgid "fatal parse error"
 msgstr "ข้อผิดพลาดใน"
@@ -13910,8 +13885,7 @@ msgstr ""
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr "ตัวแปลชุดคำสั่ง '%s' ใช้งานไม่ได้ ปิดการใช้งานโหมดชุดคำสั่ง"
 
-#: app/core/gimp-contexts.c:153 app/core/gimp-internal-data.c:338 app/core/gimptooloptions.c:361 app/gui/modifiers.c:191 app/gui/session.c:449 app/menus/menus.c:480
-#: app/widgets/gimpdevices.c:226
+#: app/core/gimp-contexts.c:153 app/core/gimp-internal-data.c:338 app/core/gimptooloptions.c:361 app/gui/modifiers.c:191 app/gui/session.c:449 app/menus/menus.c:480 app/widgets/gimpdevices.c:226
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "การลบ \"%s\" ล้มเหลว: %s"
@@ -14637,8 +14611,7 @@ msgstr "พู่กัน"
 msgid "Pattern"
 msgstr "แบบลาย"
 
-#: app/core/gimpcontext.c:727 app/core/gimpcontext.c:728 app/pdb/drawable-edit-cmds.c:255 app/tools/gimpgradientoptions.c:269 app/tools/gimpgradienttool.c:166
-#: app/tools/gimppaintoptions-gui.c:385
+#: app/core/gimpcontext.c:727 app/core/gimpcontext.c:728 app/pdb/drawable-edit-cmds.c:255 app/tools/gimpgradientoptions.c:269 app/tools/gimpgradienttool.c:166 app/tools/gimppaintoptions-gui.c:385
 #, fuzzy
 msgid "Gradient"
 msgstr "สีแรเงา"
@@ -14692,16 +14665,12 @@ msgstr ""
 
 #: app/core/gimpdatafactory.c:1002
 #, c-format
-msgid ""
-"You have a writable data folder configured (%s), but this folder does not exist. Please create the folder or fix your configuration in the Preferences dialog's 'Folders' "
-"section."
+msgid "You have a writable data folder configured (%s), but this folder does not exist. Please create the folder or fix your configuration in the Preferences dialog's 'Folders' section."
 msgstr ""
 
 #: app/core/gimpdatafactory.c:1023
 #, c-format
-msgid ""
-"You have a writable data folder configured, but this folder is not part of your data search path. You probably edited the gimprc file manually, please fix it in the "
-"Preferences dialog's 'Folders' section."
+msgid "You have a writable data folder configured, but this folder is not part of your data search path. You probably edited the gimprc file manually, please fix it in the Preferences dialog's 'Folders' section."
 msgstr ""
 
 #: app/core/gimpdatafactory.c:1033
@@ -14719,8 +14688,7 @@ msgstr "เกิดข้อผิดพลาดขณะอ่าน '%s': %s
 msgid "Error loading '%s'"
 msgstr "เกิดข้อผิดพลาดขณะอ่าน '%s': %s"
 
-#: app/core/gimpdataloaderfactory.c:492 app/file-data/file-data-gbr.c:101 app/file-data/file-data-gex.c:343 app/file-data/file-data-gex.c:493 app/file-data/file-data-gih.c:99
-#: app/file-data/file-data-pat.c:102 app/xcf/xcf.c:436
+#: app/core/gimpdataloaderfactory.c:492 app/file-data/file-data-gbr.c:101 app/file-data/file-data-gex.c:343 app/file-data/file-data-gex.c:493 app/file-data/file-data-gih.c:99 app/file-data/file-data-pat.c:102 app/xcf/xcf.c:436
 #, fuzzy, c-format
 #| msgid "Could not open '%s' for reading: %s"
 msgid "Could not open '%s' for reading: "
@@ -14872,8 +14840,8 @@ msgstr "ขอบฟุ้ง"
 msgid "Enable feathering of fill edges"
 msgstr "ลอยตัวพื้นที่เลือก"
 
-#: app/core/gimpfilloptions.c:142 app/paint/gimpmybrushoptions.c:87 app/tools/gimpbucketfilloptions.c:203 app/tools/gimpcoloroptions.c:86
-#: app/tools/gimprectangleselectoptions.c:101 app/tools/gimpselectionoptions.c:103 app/widgets/gimpbrusheditor.c:160
+#: app/core/gimpfilloptions.c:142 app/paint/gimpmybrushoptions.c:87 app/tools/gimpbucketfilloptions.c:203 app/tools/gimpcoloroptions.c:86 app/tools/gimprectangleselectoptions.c:101 app/tools/gimpselectionoptions.c:103
+#: app/widgets/gimpbrusheditor.c:160
 #, fuzzy
 msgid "Radius"
 msgstr "รัศมี:"
@@ -14933,8 +14901,7 @@ msgstr "ข้อความแบบ UTF-8 ไม่มีค่าในไ�
 msgid "File is corrupt."
 msgstr ""
 
-#: app/core/gimpgradient-load.c:170 app/core/gimpgradient-load.c:188 app/core/gimpgradient-load.c:198 app/core/gimpgradient-load.c:210 app/core/gimpgradient-load.c:220
-#: app/core/gimpgradient-load.c:228
+#: app/core/gimpgradient-load.c:170 app/core/gimpgradient-load.c:188 app/core/gimpgradient-load.c:198 app/core/gimpgradient-load.c:210 app/core/gimpgradient-load.c:220 app/core/gimpgradient-load.c:228
 #, c-format
 msgid "Corrupt segment %d."
 msgstr ""
@@ -15397,8 +15364,7 @@ msgid "Convert Image to %s"
 msgstr "แปลงค่าสีภาพเป็น RGB"
 
 #. dithering
-#: app/core/gimpimage-convert-precision.c:198 app/core/gimpimage-convert-precision.c:219 app/dialogs/convert-indexed-dialog.c:240 app/dialogs/convert-precision-dialog.c:212
-#: app/tools/gimpgradientoptions.c:129
+#: app/core/gimpimage-convert-precision.c:198 app/core/gimpimage-convert-precision.c:219 app/dialogs/convert-indexed-dialog.c:240 app/dialogs/convert-precision-dialog.c:212 app/tools/gimpgradientoptions.c:129
 msgid "Dithering"
 msgstr "การคละสี"
 
@@ -15635,8 +15601,8 @@ msgstr[0] "%d ชั้นงาน"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "ไม่สามารถเปิดรูปย่อ '%s': %s ได้"
 
-#: app/core/gimpitem.c:1851 app/core/gimpitem.c:1918 app/display/gimpdisplayshell-dnd.c:380 app/tools/gimppathtool.c:758 app/tools/gimppathtool.c:847
-#: app/tools/gimptransformtool.c:704 app/widgets/gimpdrawabletreeview-filters.c:709
+#: app/core/gimpitem.c:1851 app/core/gimpitem.c:1918 app/display/gimpdisplayshell-dnd.c:380 app/tools/gimppathtool.c:758 app/tools/gimppathtool.c:847 app/tools/gimptransformtool.c:704
+#: app/widgets/gimpdrawabletreeview-filters.c:709
 msgid "A selected layer's pixels are locked."
 msgstr ""
 
@@ -16335,8 +16301,7 @@ msgid "Emulate brush dynamics"
 msgstr "สำเนาเส้นพาธ"
 
 #. no undo (or redo) steps available
-#: app/core/gimpsymmetry.c:137 app/display/gimpstatusbar.c:512 app/display/gimpstatusbar.c:2155 app/widgets/gimpimagepropview.c:407 app/widgets/gimpsymmetryeditor.c:167
-#: app/widgets/gimpsymmetryeditor.c:177
+#: app/core/gimpsymmetry.c:137 app/display/gimpstatusbar.c:512 app/display/gimpstatusbar.c:2155 app/widgets/gimpimagepropview.c:407 app/widgets/gimpsymmetryeditor.c:167 app/widgets/gimpsymmetryeditor.c:177
 msgid "None"
 msgstr "ไม่มี"
 
@@ -16786,8 +16751,7 @@ msgstr "เลือกจากสี"
 msgid "Convert the image to a color profile"
 msgstr "แปลงค่าสีภาพเป็นแบบ RGB"
 
-#: app/dialogs/color-profile-dialog.c:155 app/dialogs/color-profile-dialog.c:173 app/dialogs/color-profile-dialog.c:191 app/dialogs/convert-indexed-dialog.c:143
-#: app/dialogs/convert-precision-dialog.c:147
+#: app/dialogs/color-profile-dialog.c:155 app/dialogs/color-profile-dialog.c:173 app/dialogs/color-profile-dialog.c:191 app/dialogs/convert-indexed-dialog.c:143 app/dialogs/convert-precision-dialog.c:147
 #, fuzzy
 msgid "C_onvert"
 msgstr "_กลับ"
@@ -17166,9 +17130,7 @@ msgid "Invalid URI"
 msgstr "UTF-8 ไม่ถูกต้อง"
 
 #: app/dialogs/file-save-dialog.c:502
-msgid ""
-"Saving remote files needs to determine the file format from the file extension. Please enter a file extension that matches the selected file format or enter no file extension "
-"at all."
+msgid "Saving remote files needs to determine the file format from the file extension. Please enter a file extension that matches the selected file format or enter no file extension at all."
 msgstr ""
 
 #: app/dialogs/file-save-dialog.c:662
@@ -17315,9 +17277,8 @@ msgstr "ขนาดของภาพที่เลือกใหญ่กว
 msgid "Image Properties"
 msgstr "คุณ_สมบัติ"
 
-#: app/dialogs/image-properties-dialog.c:68 app/dialogs/module-dialog.c:113 app/dialogs/welcome-dialog.c:193 app/tools/gimpcolorpickertool.c:351
-#: app/tools/gimpgradienttool-editor.c:1818 app/tools/gimpmeasuretool.c:740 app/widgets/gimpcontrollerlist.c:631 app/widgets/gimpcriticaldialog.c:206
-#: app/widgets/gimpcriticaldialog.c:228 app/widgets/gimpsettingsbox.c:636 app/widgets/gimptexteditor.c:164
+#: app/dialogs/image-properties-dialog.c:68 app/dialogs/module-dialog.c:113 app/dialogs/welcome-dialog.c:193 app/tools/gimpcolorpickertool.c:351 app/tools/gimpgradienttool-editor.c:1818 app/tools/gimpmeasuretool.c:740
+#: app/widgets/gimpcontrollerlist.c:631 app/widgets/gimpcriticaldialog.c:206 app/widgets/gimpcriticaldialog.c:228 app/widgets/gimpsettingsbox.c:636 app/widgets/gimptexteditor.c:164
 msgid "_Close"
 msgstr "ปิ_ด"
 
@@ -18244,8 +18205,8 @@ msgstr "ตัวเลือกของเครื่องมือ"
 #. Snapping Distance
 #. General
 #. general device information
-#: app/dialogs/preferences-dialog.c:1719 app/dialogs/preferences-dialog.c:2648 app/dialogs/preferences-dialog.c:3086 app/dialogs/preferences-dialog.c:3110
-#: app/widgets/gimpcontrollereditor.c:190 app/widgets/gimpdeviceinfoeditor.c:362
+#: app/dialogs/preferences-dialog.c:1719 app/dialogs/preferences-dialog.c:2648 app/dialogs/preferences-dialog.c:3086 app/dialogs/preferences-dialog.c:3110 app/widgets/gimpcontrollereditor.c:190
+#: app/widgets/gimpdeviceinfoeditor.c:362
 msgid "General"
 msgstr "ทั่วไป"
 
@@ -19733,8 +19694,7 @@ msgstr ""
 #. offset frame
 #. The offset frame
 #. offset frame
-#: app/dialogs/resize-dialog.c:377 app/tools/gimpgradientoptions.c:89 app/tools/gimpoffsettool.c:130 app/tools/gimpoffsettool.c:472 app/tools/gimptransform3dtool.c:342
-#: app/widgets/gimpgrideditor.c:214
+#: app/dialogs/resize-dialog.c:377 app/tools/gimpgradientoptions.c:89 app/tools/gimpoffsettool.c:130 app/tools/gimpoffsettool.c:472 app/tools/gimptransform3dtool.c:342 app/widgets/gimpgrideditor.c:214
 msgid "Offset"
 msgstr ""
 
@@ -20331,10 +20291,9 @@ msgctxt "modifier-action"
 msgid "Change tool opacity"
 msgstr "ชนิดภาพ"
 
-#: app/display/gimpcursorview.c:234 app/display/gimpcursorview.c:240 app/display/gimpcursorview.c:259 app/display/gimpcursorview.c:265 app/display/gimpcursorview.c:286
-#: app/display/gimpcursorview.c:292 app/display/gimpcursorview.c:308 app/display/gimpcursorview.c:315 app/display/gimpcursorview.c:738 app/display/gimpcursorview.c:740
-#: app/display/gimpcursorview.c:742 app/display/gimpcursorview.c:744 app/display/gimpcursorview.c:824 app/display/gimpcursorview.c:825 app/display/gimpcursorview.c:826
-#: app/display/gimpcursorview.c:827 app/widgets/gimphistogrameditor.c:820
+#: app/display/gimpcursorview.c:234 app/display/gimpcursorview.c:240 app/display/gimpcursorview.c:259 app/display/gimpcursorview.c:265 app/display/gimpcursorview.c:286 app/display/gimpcursorview.c:292
+#: app/display/gimpcursorview.c:308 app/display/gimpcursorview.c:315 app/display/gimpcursorview.c:738 app/display/gimpcursorview.c:740 app/display/gimpcursorview.c:742 app/display/gimpcursorview.c:744
+#: app/display/gimpcursorview.c:824 app/display/gimpcursorview.c:825 app/display/gimpcursorview.c:826 app/display/gimpcursorview.c:827 app/widgets/gimphistogrameditor.c:820
 msgid "n/a"
 msgstr ""
 
@@ -20461,8 +20420,7 @@ msgstr ""
 msgid "Cannot modify the pixels of layer groups."
 msgstr ""
 
-#: app/display/gimpdisplayshell-dnd.c:390 app/tools/gimpfiltertool.c:334 app/tools/gimppainttool.c:371 app/tools/gimptransformtool.c:713
-#: app/widgets/gimpdrawabletreeview-filters.c:702
+#: app/display/gimpdisplayshell-dnd.c:390 app/tools/gimpfiltertool.c:334 app/tools/gimppainttool.c:371 app/tools/gimptransformtool.c:713 app/widgets/gimpdrawabletreeview-filters.c:702
 msgid "A selected layer is not visible."
 msgstr ""
 
@@ -20575,8 +20533,8 @@ msgstr "(แก้ไขแล้ว)"
 msgid "(clean)"
 msgstr "(ลบล้าง)"
 
-#: app/display/gimpdisplayshell-title.c:410 app/display/gimpdisplayshell-title.c:419 app/widgets/gimpactiongroup.c:1205 app/widgets/gimpbuffersourcebox.c:166
-#: app/widgets/gimpbuffersourcebox.c:296 app/widgets/gimpdeviceinfo.c:1148 app/widgets/gimpdeviceinfo.c:1173
+#: app/display/gimpdisplayshell-title.c:410 app/display/gimpdisplayshell-title.c:419 app/widgets/gimpactiongroup.c:1205 app/widgets/gimpbuffersourcebox.c:166 app/widgets/gimpbuffersourcebox.c:296
+#: app/widgets/gimpdeviceinfo.c:1148 app/widgets/gimpdeviceinfo.c:1173
 msgid "(none)"
 msgstr ""
 
@@ -20636,8 +20594,7 @@ msgstr "เปอร์เซ็นต์ไทล์:"
 msgid "Relative Colorimetric"
 msgstr "เครื่องมือสลับขึ้น"
 
-#: app/display/gimpstatusbar.c:545 app/operations/gimphuesaturationconfig.c:107 app/operations/gimphuesaturationconfig.c:108 app/operations/gimpoperationcolorize.c:106
-#: app/operations/gimpoperationcolorize.c:107
+#: app/display/gimpstatusbar.c:545 app/operations/gimphuesaturationconfig.c:107 app/operations/gimphuesaturationconfig.c:108 app/operations/gimpoperationcolorize.c:106 app/operations/gimpoperationcolorize.c:107
 #, fuzzy
 msgid "Saturation"
 msgstr "ธาตุสี-ความอิ่มสี"
@@ -21236,50 +21193,50 @@ msgstr "แบบลาย"
 msgid "GIMP extension"
 msgstr "ตามส่วนขยาย"
 
-#: app/gegl/gimp-babl.c:184 app/gegl/gimp-babl.c:185 app/gegl/gimp-babl.c:186 app/gegl/gimp-babl.c:187 app/gegl/gimp-babl.c:188 app/gegl/gimp-babl.c:189 app/gegl/gimp-babl.c:190
-#: app/gegl/gimp-babl.c:191 app/gegl/gimp-babl.c:192 app/gegl/gimp-babl.c:193 app/gegl/gimp-babl.c:194 app/gegl/gimp-babl.c:195 app/gegl/gimp-babl.c:196 app/gegl/gimp-babl.c:197
-#: app/gegl/gimp-babl.c:198 app/gegl/gimp-babl.c:199 app/gegl/gimp-babl.c:200 app/gegl/gimp-babl.c:201 app/plug-in/gimppluginprocedure.c:1022
+#: app/gegl/gimp-babl.c:184 app/gegl/gimp-babl.c:185 app/gegl/gimp-babl.c:186 app/gegl/gimp-babl.c:187 app/gegl/gimp-babl.c:188 app/gegl/gimp-babl.c:189 app/gegl/gimp-babl.c:190 app/gegl/gimp-babl.c:191
+#: app/gegl/gimp-babl.c:192 app/gegl/gimp-babl.c:193 app/gegl/gimp-babl.c:194 app/gegl/gimp-babl.c:195 app/gegl/gimp-babl.c:196 app/gegl/gimp-babl.c:197 app/gegl/gimp-babl.c:198 app/gegl/gimp-babl.c:199
+#: app/gegl/gimp-babl.c:200 app/gegl/gimp-babl.c:201 app/plug-in/gimppluginprocedure.c:1022
 #, fuzzy
 msgid "RGB"
 msgstr "RGB"
 
-#: app/gegl/gimp-babl.c:203 app/gegl/gimp-babl.c:204 app/gegl/gimp-babl.c:205 app/gegl/gimp-babl.c:206 app/gegl/gimp-babl.c:207 app/gegl/gimp-babl.c:208 app/gegl/gimp-babl.c:209
-#: app/gegl/gimp-babl.c:210 app/gegl/gimp-babl.c:211 app/gegl/gimp-babl.c:212 app/gegl/gimp-babl.c:213 app/gegl/gimp-babl.c:214 app/gegl/gimp-babl.c:215 app/gegl/gimp-babl.c:216
-#: app/gegl/gimp-babl.c:217 app/gegl/gimp-babl.c:218 app/gegl/gimp-babl.c:219 app/gegl/gimp-babl.c:220
+#: app/gegl/gimp-babl.c:203 app/gegl/gimp-babl.c:204 app/gegl/gimp-babl.c:205 app/gegl/gimp-babl.c:206 app/gegl/gimp-babl.c:207 app/gegl/gimp-babl.c:208 app/gegl/gimp-babl.c:209 app/gegl/gimp-babl.c:210
+#: app/gegl/gimp-babl.c:211 app/gegl/gimp-babl.c:212 app/gegl/gimp-babl.c:213 app/gegl/gimp-babl.c:214 app/gegl/gimp-babl.c:215 app/gegl/gimp-babl.c:216 app/gegl/gimp-babl.c:217 app/gegl/gimp-babl.c:218
+#: app/gegl/gimp-babl.c:219 app/gegl/gimp-babl.c:220
 msgid "RGB-alpha"
 msgstr ""
 
-#: app/gegl/gimp-babl.c:222 app/gegl/gimp-babl.c:223 app/gegl/gimp-babl.c:224 app/gegl/gimp-babl.c:225 app/gegl/gimp-babl.c:226 app/gegl/gimp-babl.c:227 app/gegl/gimp-babl.c:228
-#: app/gegl/gimp-babl.c:229 app/gegl/gimp-babl.c:230 app/gegl/gimp-babl.c:231 app/gegl/gimp-babl.c:232 app/gegl/gimp-babl.c:233 app/gegl/gimp-babl.c:234 app/gegl/gimp-babl.c:235
-#: app/gegl/gimp-babl.c:236 app/gegl/gimp-babl.c:237 app/gegl/gimp-babl.c:238 app/gegl/gimp-babl.c:239 app/plug-in/gimppluginprocedure.c:1040
+#: app/gegl/gimp-babl.c:222 app/gegl/gimp-babl.c:223 app/gegl/gimp-babl.c:224 app/gegl/gimp-babl.c:225 app/gegl/gimp-babl.c:226 app/gegl/gimp-babl.c:227 app/gegl/gimp-babl.c:228 app/gegl/gimp-babl.c:229
+#: app/gegl/gimp-babl.c:230 app/gegl/gimp-babl.c:231 app/gegl/gimp-babl.c:232 app/gegl/gimp-babl.c:233 app/gegl/gimp-babl.c:234 app/gegl/gimp-babl.c:235 app/gegl/gimp-babl.c:236 app/gegl/gimp-babl.c:237
+#: app/gegl/gimp-babl.c:238 app/gegl/gimp-babl.c:239 app/plug-in/gimppluginprocedure.c:1040
 #, fuzzy
 msgid "Grayscale"
 msgstr "เฉดเ_ทา"
 
-#: app/gegl/gimp-babl.c:241 app/gegl/gimp-babl.c:242 app/gegl/gimp-babl.c:243 app/gegl/gimp-babl.c:244 app/gegl/gimp-babl.c:245 app/gegl/gimp-babl.c:246 app/gegl/gimp-babl.c:247
-#: app/gegl/gimp-babl.c:248 app/gegl/gimp-babl.c:249 app/gegl/gimp-babl.c:250 app/gegl/gimp-babl.c:251 app/gegl/gimp-babl.c:252 app/gegl/gimp-babl.c:253 app/gegl/gimp-babl.c:254
-#: app/gegl/gimp-babl.c:255 app/gegl/gimp-babl.c:256 app/gegl/gimp-babl.c:257 app/gegl/gimp-babl.c:258
+#: app/gegl/gimp-babl.c:241 app/gegl/gimp-babl.c:242 app/gegl/gimp-babl.c:243 app/gegl/gimp-babl.c:244 app/gegl/gimp-babl.c:245 app/gegl/gimp-babl.c:246 app/gegl/gimp-babl.c:247 app/gegl/gimp-babl.c:248
+#: app/gegl/gimp-babl.c:249 app/gegl/gimp-babl.c:250 app/gegl/gimp-babl.c:251 app/gegl/gimp-babl.c:252 app/gegl/gimp-babl.c:253 app/gegl/gimp-babl.c:254 app/gegl/gimp-babl.c:255 app/gegl/gimp-babl.c:256
+#: app/gegl/gimp-babl.c:257 app/gegl/gimp-babl.c:258
 #, fuzzy
 msgid "Grayscale-alpha"
 msgstr "เฉดเ_ทา"
 
-#: app/gegl/gimp-babl.c:260 app/gegl/gimp-babl.c:261 app/gegl/gimp-babl.c:262 app/gegl/gimp-babl.c:263 app/gegl/gimp-babl.c:264 app/gegl/gimp-babl.c:265 app/gegl/gimp-babl.c:266
-#: app/gegl/gimp-babl.c:267 app/gegl/gimp-babl.c:268 app/gegl/gimp-babl.c:269 app/gegl/gimp-babl.c:270 app/gegl/gimp-babl.c:271 app/gegl/gimp-babl.c:272 app/gegl/gimp-babl.c:273
-#: app/gegl/gimp-babl.c:274 app/gegl/gimp-babl.c:275 app/gegl/gimp-babl.c:276 app/gegl/gimp-babl.c:277
+#: app/gegl/gimp-babl.c:260 app/gegl/gimp-babl.c:261 app/gegl/gimp-babl.c:262 app/gegl/gimp-babl.c:263 app/gegl/gimp-babl.c:264 app/gegl/gimp-babl.c:265 app/gegl/gimp-babl.c:266 app/gegl/gimp-babl.c:267
+#: app/gegl/gimp-babl.c:268 app/gegl/gimp-babl.c:269 app/gegl/gimp-babl.c:270 app/gegl/gimp-babl.c:271 app/gegl/gimp-babl.c:272 app/gegl/gimp-babl.c:273 app/gegl/gimp-babl.c:274 app/gegl/gimp-babl.c:275
+#: app/gegl/gimp-babl.c:276 app/gegl/gimp-babl.c:277
 #, fuzzy
 msgid "Red component"
 msgstr "หมายเหตุ"
 
-#: app/gegl/gimp-babl.c:279 app/gegl/gimp-babl.c:280 app/gegl/gimp-babl.c:281 app/gegl/gimp-babl.c:282 app/gegl/gimp-babl.c:283 app/gegl/gimp-babl.c:284 app/gegl/gimp-babl.c:285
-#: app/gegl/gimp-babl.c:286 app/gegl/gimp-babl.c:287 app/gegl/gimp-babl.c:288 app/gegl/gimp-babl.c:289 app/gegl/gimp-babl.c:290 app/gegl/gimp-babl.c:291 app/gegl/gimp-babl.c:292
-#: app/gegl/gimp-babl.c:293 app/gegl/gimp-babl.c:294 app/gegl/gimp-babl.c:295 app/gegl/gimp-babl.c:296
+#: app/gegl/gimp-babl.c:279 app/gegl/gimp-babl.c:280 app/gegl/gimp-babl.c:281 app/gegl/gimp-babl.c:282 app/gegl/gimp-babl.c:283 app/gegl/gimp-babl.c:284 app/gegl/gimp-babl.c:285 app/gegl/gimp-babl.c:286
+#: app/gegl/gimp-babl.c:287 app/gegl/gimp-babl.c:288 app/gegl/gimp-babl.c:289 app/gegl/gimp-babl.c:290 app/gegl/gimp-babl.c:291 app/gegl/gimp-babl.c:292 app/gegl/gimp-babl.c:293 app/gegl/gimp-babl.c:294
+#: app/gegl/gimp-babl.c:295 app/gegl/gimp-babl.c:296
 #, fuzzy
 msgid "Green component"
 msgstr "หมายเหตุ"
 
-#: app/gegl/gimp-babl.c:298 app/gegl/gimp-babl.c:299 app/gegl/gimp-babl.c:300 app/gegl/gimp-babl.c:301 app/gegl/gimp-babl.c:302 app/gegl/gimp-babl.c:303 app/gegl/gimp-babl.c:304
-#: app/gegl/gimp-babl.c:305 app/gegl/gimp-babl.c:306 app/gegl/gimp-babl.c:307 app/gegl/gimp-babl.c:308 app/gegl/gimp-babl.c:309 app/gegl/gimp-babl.c:310 app/gegl/gimp-babl.c:311
-#: app/gegl/gimp-babl.c:312 app/gegl/gimp-babl.c:313 app/gegl/gimp-babl.c:314 app/gegl/gimp-babl.c:315
+#: app/gegl/gimp-babl.c:298 app/gegl/gimp-babl.c:299 app/gegl/gimp-babl.c:300 app/gegl/gimp-babl.c:301 app/gegl/gimp-babl.c:302 app/gegl/gimp-babl.c:303 app/gegl/gimp-babl.c:304 app/gegl/gimp-babl.c:305
+#: app/gegl/gimp-babl.c:306 app/gegl/gimp-babl.c:307 app/gegl/gimp-babl.c:308 app/gegl/gimp-babl.c:309 app/gegl/gimp-babl.c:310 app/gegl/gimp-babl.c:311 app/gegl/gimp-babl.c:312 app/gegl/gimp-babl.c:313
+#: app/gegl/gimp-babl.c:314 app/gegl/gimp-babl.c:315
 #, fuzzy
 msgid "Blue component"
 msgstr "หมายเหตุ"
@@ -22013,20 +21970,17 @@ msgstr ""
 msgid "Writing curves file failed: "
 msgstr ""
 
-#: app/operations/gimpcurvesconfig.c:805 app/operations/gimpcurvesconfig.c:808 app/tools/gimpcurvestool.c:766 app/tools/gimpcurvestool.c:769 app/tools/gimplevelstool.c:747
-#: app/tools/gimplevelstool.c:750
+#: app/operations/gimpcurvesconfig.c:805 app/operations/gimpcurvesconfig.c:808 app/tools/gimpcurvestool.c:766 app/tools/gimpcurvestool.c:769 app/tools/gimplevelstool.c:747 app/tools/gimplevelstool.c:750
 #, fuzzy, c-format
 msgid "Could not read header: "
 msgstr "ไม่สามารถอ่านได้ %d ไบต์ จาก '%s': %s"
 
-#: app/operations/gimphuesaturationconfig.c:101 app/operations/gimphuesaturationconfig.c:102 app/operations/gimpoperationcolorize.c:100
-#: app/operations/gimpoperationcolorize.c:101
+#: app/operations/gimphuesaturationconfig.c:101 app/operations/gimphuesaturationconfig.c:102 app/operations/gimpoperationcolorize.c:100 app/operations/gimpoperationcolorize.c:101
 #, fuzzy
 msgid "Hue"
 msgstr "ธาตุสี:"
 
-#: app/operations/gimphuesaturationconfig.c:113 app/operations/gimphuesaturationconfig.c:114 app/operations/gimpoperationcolorize.c:112
-#: app/operations/gimpoperationcolorize.c:113
+#: app/operations/gimphuesaturationconfig.c:113 app/operations/gimphuesaturationconfig.c:114 app/operations/gimpoperationcolorize.c:112 app/operations/gimpoperationcolorize.c:113
 msgid "Lightness"
 msgstr ""
 
@@ -22131,9 +22085,8 @@ msgstr "ปรับสมดุลสี"
 msgid "Turn colors into shades of gray"
 msgstr "เปลี่ยนค่ากสีให้เป็นระดับสีเทา"
 
-#: app/operations/gimpoperationdesaturate.c:91 app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1462 app/tools/gimppaintoptions-gui.c:112
-#: app/tools/gimppaintselectoptions.c:73 app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179 app/widgets/gimpdeviceinfoeditor.c:573
-#: app/widgets/gimplayertreeview.c:279
+#: app/operations/gimpoperationdesaturate.c:91 app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1462 app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
+#: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179 app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:279
 #, fuzzy
 #| msgid "Mode:"
 msgid "Mode"
@@ -22162,8 +22115,7 @@ msgstr "ปรับสมดุลสี"
 msgid "Shift the pixels, optionally wrapping them at the borders"
 msgstr "เลื่อนพิกเซล โดยเลือกได้ว่าจะวนทะลุขอบได้หรือไม่"
 
-#: app/operations/gimpoperationoffset.c:125 app/operations/gimpoperationoffset.c:126 app/tools/gimpoffsettool.c:579 app/widgets/gimpfilleditor.c:142
-#: app/widgets/gimpfilleditor.c:154
+#: app/operations/gimpoperationoffset.c:125 app/operations/gimpoperationoffset.c:126 app/tools/gimpoffsettool.c:579 app/widgets/gimpfilleditor.c:142 app/widgets/gimpfilleditor.c:154
 #, fuzzy
 msgid "Fill Color"
 msgstr "เติมด้วยสีพื้นห_น้า"
@@ -22187,8 +22139,7 @@ msgstr ""
 msgid "The color"
 msgstr "สีอักษร"
 
-#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1425 app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:113
-#: app/tools/gimptransformoptions.c:307
+#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1425 app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:113 app/tools/gimptransformoptions.c:307
 #, fuzzy
 msgid "Clipping"
 msgstr "กำลังพลิก..."
@@ -22376,8 +22327,7 @@ msgid "Ink Blob Size"
 msgstr ""
 
 #. angle frame
-#: app/paint/gimpinkoptions.c:81 app/paint/gimpinkoptions.c:120 app/paint/gimppaintoptions.c:227 app/tools/gimptransform3dtool.c:321 app/tools/gimptransform3dtool.c:422
-#: app/widgets/gimpbrusheditor.c:200
+#: app/paint/gimpinkoptions.c:81 app/paint/gimpinkoptions.c:120 app/paint/gimppaintoptions.c:227 app/tools/gimptransform3dtool.c:321 app/tools/gimptransform3dtool.c:422 app/widgets/gimpbrusheditor.c:200
 #, fuzzy
 msgid "Angle"
 msgstr "มุ_ม"
@@ -22700,8 +22650,8 @@ msgctxt "smudge-tool"
 msgid "No erasing effect"
 msgstr ""
 
-#: app/paint/gimpsmudgeoptions.c:93 app/paint/gimpsourceoptions.c:110 app/pdb/gimppdbcontext.c:129 app/tools/gimpbucketfilloptions.c:171 app/tools/gimpcoloroptions.c:70
-#: app/tools/gimphealtool.c:101 app/tools/gimpregionselectoptions.c:98
+#: app/paint/gimpsmudgeoptions.c:93 app/paint/gimpsourceoptions.c:110 app/pdb/gimppdbcontext.c:129 app/tools/gimpbucketfilloptions.c:171 app/tools/gimpcoloroptions.c:70 app/tools/gimphealtool.c:101
+#: app/tools/gimpregionselectoptions.c:98
 msgid "Sample merged"
 msgstr "เลือกแบบรวมภาพ"
 
@@ -23474,9 +23424,8 @@ msgstr ""
 msgid "Failed to create text layer"
 msgstr ""
 
-#: app/pdb/text-layer-cmds.c:177 app/pdb/text-layer-cmds.c:315 app/pdb/text-layer-cmds.c:380 app/pdb/text-layer-cmds.c:439 app/pdb/text-layer-cmds.c:497
-#: app/pdb/text-layer-cmds.c:555 app/pdb/text-layer-cmds.c:613 app/pdb/text-layer-cmds.c:671 app/pdb/text-layer-cmds.c:729 app/pdb/text-layer-cmds.c:785
-#: app/pdb/text-layer-cmds.c:843 app/pdb/text-layer-cmds.c:901 app/pdb/text-layer-cmds.c:959 app/pdb/text-layer-cmds.c:994
+#: app/pdb/text-layer-cmds.c:177 app/pdb/text-layer-cmds.c:315 app/pdb/text-layer-cmds.c:380 app/pdb/text-layer-cmds.c:439 app/pdb/text-layer-cmds.c:497 app/pdb/text-layer-cmds.c:555 app/pdb/text-layer-cmds.c:613
+#: app/pdb/text-layer-cmds.c:671 app/pdb/text-layer-cmds.c:729 app/pdb/text-layer-cmds.c:785 app/pdb/text-layer-cmds.c:843 app/pdb/text-layer-cmds.c:901 app/pdb/text-layer-cmds.c:959 app/pdb/text-layer-cmds.c:994
 #, fuzzy
 msgid "Set text layer attribute"
 msgstr "แก้ไขคุณสมบัติชั้นงาน"
@@ -24205,76 +24154,68 @@ msgid "Centered"
 msgstr "ตรงกลาง"
 
 #: app/tools/gimpairbrushtool.c:70
-#, fuzzy
 msgid "Airbrush Tool: Paint using a brush, with variable pressure"
-msgstr "พู่กันลมแบบแรงพ่นแปรผัน"
+msgstr "เครื่องมือพู่กันลม: ระบายสีโดยใช้พู่กันด้วยแรงพ่นแปรผัน"
 
 #: app/tools/gimpairbrushtool.c:71
 msgid "_Airbrush"
 msgstr "พู่_กันลม"
 
 #: app/tools/gimpalignoptions.c:150 app/tools/gimpalignoptions.c:455
-#, fuzzy
 msgid "Relative to"
-msgstr "เครื่องมือสลับขึ้น"
+msgstr "สัมพันธ์กับ"
 
 #: app/tools/gimpalignoptions.c:151
 msgid "Reference object targets will be aligned on"
-msgstr ""
+msgstr "วัตถุอ้างอิงที่จะใช้ในการจัดแนวเป้าหมาย"
 
 #: app/tools/gimpalignoptions.c:158
-#, fuzzy
 msgid "Selected layers"
-msgstr "ลบชั้นงาน"
+msgstr "ชั้นงานที่เลือก"
 
 #: app/tools/gimpalignoptions.c:159
 msgid "Selected layers will be aligned or distributed by the tool"
-msgstr ""
+msgstr "ชั้นงานที่เลือกจะถูกจัดแนวหรือกระจายโดยเครื่องมือนี้"
 
 #: app/tools/gimpalignoptions.c:164
-#, fuzzy
 msgid "Selected paths"
-msgstr "ลบเส้นพาธ"
+msgstr "พาธที่เลือก"
 
 #: app/tools/gimpalignoptions.c:165
 msgid "Selected paths will be aligned or distributed by the tool"
-msgstr ""
+msgstr "พาธที่เลือกจะถูกจัดแนวหรือกระจายโดยเครื่องมือนี้"
 
 #: app/tools/gimpalignoptions.c:170
-#, fuzzy
 msgid "Use extents of layer contents"
-msgstr "เปลี่ยนขนาดพื้นที่ของชั้นงาน"
+msgstr "ใช้ขอบเขตของเนื้อหาชั้นงาน"
 
 #: app/tools/gimpalignoptions.c:171
 msgid "Instead of aligning or distributing on layer borders, use its content bounding box"
-msgstr ""
+msgstr "แทนที่จะจัดแนวหรือกระจายบนขอบชั้นงาน ให้ใช้กล่องขอบเขตเนื้อหาของชั้นงานนั้น"
 
 #. Selected objects
 #: app/tools/gimpalignoptions.c:387
-#, fuzzy
 msgid "Targets"
-msgstr "ใหญ่"
+msgstr "เป้าหมาย"
 
 #: app/tools/gimpalignoptions.c:409
 msgid "Set anchor point of targets"
-msgstr ""
+msgstr "ตั้งจุดยึดสมอของเป้าหมาย"
 
 #. TRANSLATORS: the %s strings are modifiers such as Shift, Alt or Cmd.
 #: app/tools/gimpalignoptions.c:428
 #, c-format
 msgid "%s-pick target guides (%s-%s to add more)"
-msgstr ""
+msgstr "%s-เก็บเส้นนำแนวเป้าหมาย (%s-%s เพื่อเพิ่มอีก)"
 
 #. Align frame
 #: app/tools/gimpalignoptions.c:445
-#, fuzzy
 msgid "Align"
-msgstr "จัดเรียงแล้ว"
+msgstr "จัดแนว"
 
 #: app/tools/gimpalignoptions.c:469
-#, fuzzy
 msgid "Select the reference object"
-msgstr "เปิดกล่องโต้ตอบเลือกแบบอักษร"
+msgstr "เลือกวัตถุอ้างอิง"
 
 #: app/tools/gimpalignoptions.c:487
 msgid "Align anchor points of targets on left edge of reference"
@@ -24302,9 +24243,8 @@ msgstr ""
 
 #. Distribute frame
 #: app/tools/gimpalignoptions.c:515
-#, fuzzy
 msgid "Distribute"
-msgstr "_บิดเบี้ยว"
+msgstr "กระจาย"
 
 #: app/tools/gimpalignoptions.c:530
 msgid "Distribute anchor points of targets evenly in the horizontal"
@@ -24329,20 +24269,19 @@ msgid_plural "%d guides will be aligned or distributed"
 msgstr[0] ""
 
 #: app/tools/gimpalignoptions.c:822
-#, fuzzy, c-format
+#, c-format
 msgid "Reference layer: %s"
-msgstr "รวมชั้นงานทั้งหมด"
+msgstr "ชั้นงานอ้างอิง: %s"
 
 #: app/tools/gimpalignoptions.c:825
-#, fuzzy, c-format
+#, c-format
 msgid "Reference channel: %s"
-msgstr "ลบแชนเนล"
+msgstr "แชนเนลอ้างอิง: %s"
 
 #: app/tools/gimpalignoptions.c:828
-#, fuzzy, c-format
-#| msgid "Preferences"
+#, c-format
 msgid "Reference path: %s"
-msgstr "ปรับแต่ง"
+msgstr "พาธอ้างอิง: %s"
 
 #: app/tools/gimpalignoptions.c:831
 #, fuzzy
@@ -24351,18 +24290,16 @@ msgid "Reference guide"
 msgstr "ปรับแต่ง"
 
 #: app/tools/gimpaligntool.c:132
-#, fuzzy
 msgid "Align and Distribute"
-msgstr "_บิดเบี้ยว"
+msgstr "จัดแนวและกระจาย"
 
 #: app/tools/gimpaligntool.c:133
 msgid "Alignment Tool: Align or arrange layers and other objects"
-msgstr ""
+msgstr "เครื่องมือจัดแนว: จัดแนวหรือจัดเรียงชั้นงานและวัตถุอื่น ๆ"
 
 #: app/tools/gimpaligntool.c:134
-#, fuzzy
 msgid "_Align and Distribute"
-msgstr "_บิดเบี้ยว"
+msgstr "_จัดแนวและกระจาย"
 
 #: app/tools/gimpaligntool.c:529
 msgid "Arrange Objects"
@@ -24457,8 +24394,7 @@ msgstr ""
 msgid "Base fill opacity on color difference from the clicked pixel (see threshold) or on line  art borders. Disable antialiasing to fill the entire area uniformly."
 msgstr ""
 
-#: app/tools/gimpbucketfilloptions.c:210 app/tools/gimpbucketfilloptions.c:232 app/tools/gimpgradientoptions.c:122 app/tools/gimpregionselectoptions.c:113
-#: app/tools/gimpthresholdtool.c:93
+#: app/tools/gimpbucketfilloptions.c:210 app/tools/gimpbucketfilloptions.c:232 app/tools/gimpgradientoptions.c:122 app/tools/gimpregionselectoptions.c:113 app/tools/gimpthresholdtool.c:93
 msgid "Threshold"
 msgstr ""
 
@@ -24601,9 +24537,8 @@ msgstr "เทสี"
 msgid "Cannot fill multiple layers. Select only one layer."
 msgstr ""
 
-#: app/tools/gimpbucketfilltool.c:599 app/tools/gimpcagetool.c:231 app/tools/gimpcurvestool.c:220 app/tools/gimpfiltertool.c:311 app/tools/gimpforegroundselecttool.c:297
-#: app/tools/gimplevelstool.c:211 app/tools/gimpoffsettool.c:191 app/tools/gimppainttool.c:297 app/tools/gimpperspectiveclonetool.c:224 app/tools/gimpthresholdtool.c:160
-#: app/tools/gimptransformgridtool.c:351
+#: app/tools/gimpbucketfilltool.c:599 app/tools/gimpcagetool.c:231 app/tools/gimpcurvestool.c:220 app/tools/gimpfiltertool.c:311 app/tools/gimpforegroundselecttool.c:297 app/tools/gimplevelstool.c:211
+#: app/tools/gimpoffsettool.c:191 app/tools/gimppainttool.c:297 app/tools/gimpperspectiveclonetool.c:224 app/tools/gimpthresholdtool.c:160 app/tools/gimptransformgridtool.c:351
 msgid "No selected drawables."
 msgstr ""
 
@@ -26035,12 +25970,11 @@ msgstr ""
 
 #: app/tools/gimpmagnifytool.c:94
 msgid "Zoom Tool: Adjust the zoom level"
-msgstr ""
+msgstr "เครื่องมือซูม: ปรับระดับการซูม"
 
 #: app/tools/gimpmagnifytool.c:95
-#, fuzzy
 msgid "_Zoom"
-msgstr "_ย่อขยาย"
+msgstr "_ซูม"
 
 #: app/tools/gimpmeasureoptions.c:72
 #, fuzzy
@@ -28089,8 +28023,8 @@ msgid "V:"
 msgstr ""
 
 #. TRANSLATORS: A for Alpha (color transparency)
-#: app/widgets/gimpcolorframe.c:802 app/widgets/gimpcolorframe.c:815 app/widgets/gimpcolorframe.c:879 app/widgets/gimpcolorframe.c:948 app/widgets/gimpcolorframe.c:1001
-#: app/widgets/gimpcolorframe.c:1028 app/widgets/gimpcolorframe.c:1056 app/widgets/gimpcolorframe.c:1084 app/widgets/gimpcolorframe.c:1111 app/widgets/gimpcolorframe.c:1158
+#: app/widgets/gimpcolorframe.c:802 app/widgets/gimpcolorframe.c:815 app/widgets/gimpcolorframe.c:879 app/widgets/gimpcolorframe.c:948 app/widgets/gimpcolorframe.c:1001 app/widgets/gimpcolorframe.c:1028
+#: app/widgets/gimpcolorframe.c:1056 app/widgets/gimpcolorframe.c:1084 app/widgets/gimpcolorframe.c:1111 app/widgets/gimpcolorframe.c:1158
 msgctxt "Alpha channel"
 msgid "A:"
 msgstr ""
@@ -28129,8 +28063,8 @@ msgctxt "Color"
 msgid "Profile:"
 msgstr "ตัวเก็บค่าสี"
 
-#: app/widgets/gimpcolorframe.c:859 app/widgets/gimpcolorframe.c:860 app/widgets/gimpcolorframe.c:933 app/widgets/gimpcolorframe.c:934 app/widgets/gimpcolorframe.c:985
-#: app/widgets/gimpcolorframe.c:986 app/widgets/gimpcolorframe.c:1185 app/widgets/gimpcolorframe.c:1186
+#: app/widgets/gimpcolorframe.c:859 app/widgets/gimpcolorframe.c:860 app/widgets/gimpcolorframe.c:933 app/widgets/gimpcolorframe.c:934 app/widgets/gimpcolorframe.c:985 app/widgets/gimpcolorframe.c:986
+#: app/widgets/gimpcolorframe.c:1185 app/widgets/gimpcolorframe.c:1186
 #, c-format
 msgid "%s"
 msgstr ""
@@ -28409,26 +28343,26 @@ msgstr ""
 msgid "Debug events"
 msgstr "สีแ_รเงา"
 
-#: app/widgets/gimpcontrollerkeyboard.c:69 app/widgets/gimpcontrollerkeyboard.c:72 app/widgets/gimpcontrollerkeyboard.c:75 app/widgets/gimpcontrollerkeyboard.c:78
-#: app/widgets/gimpcontrollerkeyboard.c:81 app/widgets/gimpcontrollerkeyboard.c:84 app/widgets/gimpcontrollerkeyboard.c:87 app/widgets/gimpcontrollerkeyboard.c:90
+#: app/widgets/gimpcontrollerkeyboard.c:69 app/widgets/gimpcontrollerkeyboard.c:72 app/widgets/gimpcontrollerkeyboard.c:75 app/widgets/gimpcontrollerkeyboard.c:78 app/widgets/gimpcontrollerkeyboard.c:81
+#: app/widgets/gimpcontrollerkeyboard.c:84 app/widgets/gimpcontrollerkeyboard.c:87 app/widgets/gimpcontrollerkeyboard.c:90
 #, fuzzy
 msgid "Cursor Up"
 msgstr "เคอร์เซอร์"
 
-#: app/widgets/gimpcontrollerkeyboard.c:94 app/widgets/gimpcontrollerkeyboard.c:97 app/widgets/gimpcontrollerkeyboard.c:100 app/widgets/gimpcontrollerkeyboard.c:103
-#: app/widgets/gimpcontrollerkeyboard.c:106 app/widgets/gimpcontrollerkeyboard.c:109 app/widgets/gimpcontrollerkeyboard.c:112 app/widgets/gimpcontrollerkeyboard.c:115
+#: app/widgets/gimpcontrollerkeyboard.c:94 app/widgets/gimpcontrollerkeyboard.c:97 app/widgets/gimpcontrollerkeyboard.c:100 app/widgets/gimpcontrollerkeyboard.c:103 app/widgets/gimpcontrollerkeyboard.c:106
+#: app/widgets/gimpcontrollerkeyboard.c:109 app/widgets/gimpcontrollerkeyboard.c:112 app/widgets/gimpcontrollerkeyboard.c:115
 #, fuzzy
 msgid "Cursor Down"
 msgstr "เคอร์เซอร์"
 
-#: app/widgets/gimpcontrollerkeyboard.c:119 app/widgets/gimpcontrollerkeyboard.c:122 app/widgets/gimpcontrollerkeyboard.c:125 app/widgets/gimpcontrollerkeyboard.c:128
-#: app/widgets/gimpcontrollerkeyboard.c:131 app/widgets/gimpcontrollerkeyboard.c:134 app/widgets/gimpcontrollerkeyboard.c:137 app/widgets/gimpcontrollerkeyboard.c:140
+#: app/widgets/gimpcontrollerkeyboard.c:119 app/widgets/gimpcontrollerkeyboard.c:122 app/widgets/gimpcontrollerkeyboard.c:125 app/widgets/gimpcontrollerkeyboard.c:128 app/widgets/gimpcontrollerkeyboard.c:131
+#: app/widgets/gimpcontrollerkeyboard.c:134 app/widgets/gimpcontrollerkeyboard.c:137 app/widgets/gimpcontrollerkeyboard.c:140
 #, fuzzy
 msgid "Cursor Left"
 msgstr "เคอร์เซอร์"
 
-#: app/widgets/gimpcontrollerkeyboard.c:144 app/widgets/gimpcontrollerkeyboard.c:147 app/widgets/gimpcontrollerkeyboard.c:150 app/widgets/gimpcontrollerkeyboard.c:153
-#: app/widgets/gimpcontrollerkeyboard.c:156 app/widgets/gimpcontrollerkeyboard.c:159 app/widgets/gimpcontrollerkeyboard.c:162 app/widgets/gimpcontrollerkeyboard.c:165
+#: app/widgets/gimpcontrollerkeyboard.c:144 app/widgets/gimpcontrollerkeyboard.c:147 app/widgets/gimpcontrollerkeyboard.c:150 app/widgets/gimpcontrollerkeyboard.c:153 app/widgets/gimpcontrollerkeyboard.c:156
+#: app/widgets/gimpcontrollerkeyboard.c:159 app/widgets/gimpcontrollerkeyboard.c:162 app/widgets/gimpcontrollerkeyboard.c:165
 #, fuzzy
 msgid "Cursor Right"
 msgstr "เลือนขวา"
@@ -28525,23 +28459,23 @@ msgstr ""
 msgid "Configure Input Controller"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:68 app/widgets/gimpcontrollerwheel.c:71 app/widgets/gimpcontrollerwheel.c:74 app/widgets/gimpcontrollerwheel.c:77
-#: app/widgets/gimpcontrollerwheel.c:80 app/widgets/gimpcontrollerwheel.c:83 app/widgets/gimpcontrollerwheel.c:86 app/widgets/gimpcontrollerwheel.c:89
+#: app/widgets/gimpcontrollerwheel.c:68 app/widgets/gimpcontrollerwheel.c:71 app/widgets/gimpcontrollerwheel.c:74 app/widgets/gimpcontrollerwheel.c:77 app/widgets/gimpcontrollerwheel.c:80 app/widgets/gimpcontrollerwheel.c:83
+#: app/widgets/gimpcontrollerwheel.c:86 app/widgets/gimpcontrollerwheel.c:89
 msgid "Scroll Up"
 msgstr "เลื่อนขึ้น"
 
-#: app/widgets/gimpcontrollerwheel.c:93 app/widgets/gimpcontrollerwheel.c:96 app/widgets/gimpcontrollerwheel.c:99 app/widgets/gimpcontrollerwheel.c:102
-#: app/widgets/gimpcontrollerwheel.c:105 app/widgets/gimpcontrollerwheel.c:108 app/widgets/gimpcontrollerwheel.c:111 app/widgets/gimpcontrollerwheel.c:114
+#: app/widgets/gimpcontrollerwheel.c:93 app/widgets/gimpcontrollerwheel.c:96 app/widgets/gimpcontrollerwheel.c:99 app/widgets/gimpcontrollerwheel.c:102 app/widgets/gimpcontrollerwheel.c:105
+#: app/widgets/gimpcontrollerwheel.c:108 app/widgets/gimpcontrollerwheel.c:111 app/widgets/gimpcontrollerwheel.c:114
 msgid "Scroll Down"
 msgstr "เลื่อนลง"
 
-#: app/widgets/gimpcontrollerwheel.c:118 app/widgets/gimpcontrollerwheel.c:121 app/widgets/gimpcontrollerwheel.c:124 app/widgets/gimpcontrollerwheel.c:127
-#: app/widgets/gimpcontrollerwheel.c:130 app/widgets/gimpcontrollerwheel.c:133 app/widgets/gimpcontrollerwheel.c:136 app/widgets/gimpcontrollerwheel.c:139
+#: app/widgets/gimpcontrollerwheel.c:118 app/widgets/gimpcontrollerwheel.c:121 app/widgets/gimpcontrollerwheel.c:124 app/widgets/gimpcontrollerwheel.c:127 app/widgets/gimpcontrollerwheel.c:130
+#: app/widgets/gimpcontrollerwheel.c:133 app/widgets/gimpcontrollerwheel.c:136 app/widgets/gimpcontrollerwheel.c:139
 msgid "Scroll Left"
 msgstr "เลื่อนซ้าย"
 
-#: app/widgets/gimpcontrollerwheel.c:143 app/widgets/gimpcontrollerwheel.c:146 app/widgets/gimpcontrollerwheel.c:149 app/widgets/gimpcontrollerwheel.c:152
-#: app/widgets/gimpcontrollerwheel.c:155 app/widgets/gimpcontrollerwheel.c:158 app/widgets/gimpcontrollerwheel.c:161 app/widgets/gimpcontrollerwheel.c:164
+#: app/widgets/gimpcontrollerwheel.c:143 app/widgets/gimpcontrollerwheel.c:146 app/widgets/gimpcontrollerwheel.c:149 app/widgets/gimpcontrollerwheel.c:152 app/widgets/gimpcontrollerwheel.c:155
+#: app/widgets/gimpcontrollerwheel.c:158 app/widgets/gimpcontrollerwheel.c:161 app/widgets/gimpcontrollerwheel.c:164
 msgid "Scroll Right"
 msgstr "เลือนขวา"
 
@@ -30544,7 +30478,7 @@ msgstr ""
 
 #: app/widgets/gimptoolbutton.c:541
 msgid "Also in group:"
-msgstr ""
+msgstr "เครื่องมือที่อยู่ในกลุ่มนี้ด้วย:"
 
 #: app/widgets/gimptooleditor.c:243
 #, fuzzy
@@ -30937,8 +30871,7 @@ msgstr ""
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was discarded.\n"
-"It either means that you are using an old version of the filter or that it was updated without proper version management. In the latter case, you should report the issue to "
-"the filter's developers."
+"It either means that you are using an old version of the filter or that it was updated without proper version management. In the latter case, you should report the issue to the filter's developers."
 msgstr ""
 
 #: app/xcf/xcf-read.c:196
@@ -31894,11 +31827,9 @@ msgstr "เมนูประวัติการเรียกคืน"
 
 #, fuzzy
 #~ msgid ""
-#~ "Unable to open swap file. GIMP has run out of memory and cannot use the swap file. Some parts of your images may be corrupted. Try to save your work using different "
-#~ "filenames, restart GIMP and check the location of the swap directory in your Preferences."
-#~ msgstr ""
-#~ "ไม่สามารถเปิดไฟล์ swap ได้ หน่วยความจำหมดและใช้ไฟล์ swap ไม่ได้ ข้อมูลของภาพบางส่วนอาจเสียหาย กรุณาบันทึกงานเป็นชื่ออื่น เริ่มการทำงาน Gimp ใหม่และตรวจสอบตำแหน่งของ swap "
-#~ "ไดเรคทอรี่ในการปรับแต่งค่าของโปรแกรม"
+#~ "Unable to open swap file. GIMP has run out of memory and cannot use the swap file. Some parts of your images may be corrupted. Try to save your work using different filenames, restart GIMP and check the location of the "
+#~ "swap directory in your Preferences."
+#~ msgstr "ไม่สามารถเปิดไฟล์ swap ได้ หน่วยความจำหมดและใช้ไฟล์ swap ไม่ได้ ข้อมูลของภาพบางส่วนอาจเสียหาย กรุณาบันทึกงานเป็นชื่ออื่น เริ่มการทำงาน Gimp ใหม่และตรวจสอบตำแหน่งของ swap ไดเรคทอรี่ในการปรับแต่งค่าของโปรแกรม"
 
 #~ msgid "Ask for confirmation before closing an image without saving."
 #~ msgstr "ถามเพื่อยืนยันการปิดภาพโดยไม่มีการบันทึก"
@@ -31909,8 +31840,8 @@ msgstr "เมนูประวัติการเรียกคืน"
 
 #, fuzzy
 #~ msgid ""
-#~ "When enabled, the X server is queried for the mouse's current position on each motion event, rather than relying on the position hint.  This means painting with large "
-#~ "brushes should be more accurate, but it may be slower.  Conversely, on some X servers enabling this option results in faster painting."
+#~ "When enabled, the X server is queried for the mouse's current position on each motion event, rather than relying on the position hint.  This means painting with large brushes should be more accurate, but it may be "
+#~ "slower.  Conversely, on some X servers enabling this option results in faster painting."
 #~ msgstr "เมื่อเปิดใช้งาน X server จะถามหาตำแหน่งปัจจุบันของเมาส์ นั่นหมายถึงการทาสีด้วยหัวแปรงขนาดใหญ่จะมีความถูกต้องสูงขึ้นแต่จะช้าลง ในบาง X server การเปิดใช้คุณสมบัตินี้อาจทำให้การทาสี้เร็วขึ้น"
 
 #, fuzzy
@@ -32894,8 +32825,8 @@ msgstr "เมนูประวัติการเรียกคืน"
 
 #, fuzzy
 #~ msgid ""
-#~ "Sets the external web browser to be used.  This can be an absolute path or the name of an executable to search for in the user's PATH. If the command contains '%s' it will "
-#~ "be replaced with the URL, else the URL will be appended to the command with a space separating the two."
+#~ "Sets the external web browser to be used.  This can be an absolute path or the name of an executable to search for in the user's PATH. If the command contains '%s' it will be replaced with the URL, else the URL will be "
+#~ "appended to the command with a space separating the two."
 #~ msgstr "กำหนดการนำตัวเรียกดูเว็บไซต์มาใช้ ซึ่งอาจจะบอกเป็นตำแหน่งแบบเต็มของโปรแกรมหรือชื่อของแฟ้มตัวโปรแกรมก็ได้ หากในคำสั่งมี %s ก็จะถูกแทนด้วย URL "
 
 #~ msgid "Remove floating selection"
