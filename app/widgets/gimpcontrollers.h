@@ -57,7 +57,6 @@ void                    gimp_controller_manager_move           (GimpControllerMa
                                                                 guint                  new_position);
 
 Gimp *                  gimp_controller_manager_get_gimp       (GimpControllerManager *self);
-GimpContainer  *        gimp_controller_manager_get_list       (GimpControllerManager *self);
 GimpUIManager  *        gimp_controller_manager_get_ui_manager (GimpControllerManager *self);
 GimpController *        gimp_controller_manager_get_wheel      (GimpControllerManager *self);
 GimpController *        gimp_controller_manager_get_keyboard   (GimpControllerManager *self);

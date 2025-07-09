@@ -213,14 +213,6 @@ gimp_controller_manager_get_gimp (GimpControllerManager *self)
   return self->gimp;
 }
 
-GimpContainer *
-gimp_controller_manager_get_list (GimpControllerManager *self)
-{
-  g_return_val_if_fail (GIMP_IS_CONTROLLER_MANAGER (self), NULL);
-
-  return self->controllers;
-}
-
 GimpUIManager *
 gimp_controller_manager_get_ui_manager (GimpControllerManager *self)
 {
@@ -367,7 +359,6 @@ gimp_controller_manager_get_categories (GimpControllerManager *self)
 
   return G_LIST_MODEL (categories);
 }
-
 
 /*  private functions  */
 

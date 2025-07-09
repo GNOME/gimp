@@ -42,11 +42,10 @@ struct _GimpControllerList
 
   GtkWidget             *hbox;
 
-  GtkListStore          *src;
-  GtkTreeSelection      *src_sel;
+  GtkWidget             *available_controllers;
   GType                  src_gtype;
 
-  GtkWidget             *dest;
+  GtkWidget             *active_controllers;
   GimpControllerInfo    *dest_info;
 
   GtkWidget             *add_button;
