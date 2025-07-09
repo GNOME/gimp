@@ -327,10 +327,6 @@ gimp_vector_layer_options_new (GimpImage     *image,
                                stroke_color);
   gimp_context_set_pattern (GIMP_CONTEXT (options->stroke_options), pattern);
 
-  g_object_set (options->stroke_options,
-                "width", 3.0,
-                NULL);
-
   g_object_set (options,
                 "path", path,
                 NULL);

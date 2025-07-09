@@ -98,13 +98,13 @@ vector_layer_options_dialog_new (GimpVectorLayer *layer,
                                      context,
                                      title, "gimp-vectorlayer-options",
                                      icon_name,
-                                     _("Choose Vector Layer Options"),
+                                     _("Edit Vector Layer Attributes"),
                                      parent,
                                      gimp_standard_help_func,
                                      help_id,
                                      _("_Reset"),  RESPONSE_RESET,
                                      _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                     _("_Apply"),    GTK_RESPONSE_OK,
+                                     _("_Apply"),  GTK_RESPONSE_OK,
 
                                      NULL);
 
