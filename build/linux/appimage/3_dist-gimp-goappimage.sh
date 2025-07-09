@@ -324,7 +324,7 @@ bund_usr "$GIMP_PREFIX" "etc/gimp"
 
 ## Other features and plug-ins
 ### mypaint brushes
-bund_usr "$UNIX_PREFIX" "share/mypaint-data/1.0"
+bund_usr "$UNIX_PREFIX" "share/mypaint-data/2.0"
 ### Needed for 'th' word breaking in Text tool etc
 bund_usr "$UNIX_PREFIX" "share/libthai"
 conf_app LIBTHAI_DICTDIR "share/libthai"

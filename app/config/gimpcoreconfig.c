@@ -311,7 +311,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
 #ifdef ENABLE_RELOCATABLE_RESOURCES
   mypaint_brushes = g_build_filename ("${gimp_installation_dir}",
                                       "share", "mypaint-data",
-                                      "1.0", "brushes", NULL);
+                                      "2.0", "brushes", NULL);
 #else
   mypaint_brushes = g_strdup (MYPAINT_BRUSHES_DIR);
 #endif

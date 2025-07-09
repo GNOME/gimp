@@ -69,7 +69,7 @@ gimp_mybrush_load (GimpContext   *context,
                                            G_FILE_ATTRIBUTE_STANDARD_SIZE);
   g_object_unref (info);
 
-  if (size > 32768)
+  if (size > G_MAXSHORT)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("MyPaint brush file is unreasonably large, skipping."));
@@ -84,7 +84,7 @@ gimp_mybrush_load (GimpContext   *context,
       return NULL;
     }
 
-  mypaint_brush = mypaint_brush_new ();
+  mypaint_brush = mypaint_brush_new_with_buckets (64);
   mypaint_brush_from_defaults (mypaint_brush);
 
   if (! mypaint_brush_from_string (mypaint_brush, (const gchar *) buffer))
@@ -146,6 +146,23 @@ gimp_mybrush_load (GimpContext   *context,
   brush->priv->offset_by_random =
     mypaint_brush_get_base_value (mypaint_brush,
                                   MYPAINT_BRUSH_SETTING_OFFSET_BY_RANDOM);
+
+  brush->priv->gain =
+    mypaint_brush_get_base_value (mypaint_brush,
+                                  MYPAINT_BRUSH_SETTING_PRESSURE_GAIN_LOG);
+
+  /* Version 2 MyPaint Brush options */
+  brush->priv->pigment =
+    mypaint_brush_get_base_value (mypaint_brush,
+                                  MYPAINT_BRUSH_SETTING_PAINT_MODE);
+
+  brush->priv->posterize =
+    mypaint_brush_get_base_value (mypaint_brush,
+                                  MYPAINT_BRUSH_SETTING_POSTERIZE);
+
+  brush->priv->posterize_num =
+    mypaint_brush_get_base_value (mypaint_brush,
+                                  MYPAINT_BRUSH_SETTING_POSTERIZE_NUM);
 
   mypaint_brush_unref (mypaint_brush);
 
