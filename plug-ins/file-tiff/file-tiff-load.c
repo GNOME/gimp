@@ -2324,7 +2324,7 @@ load_sketchbook_layers (TIFF      *tif,
   gchar         **image_settings;
   gchar          *hex_color;
   gint            layer_count = 0;
-  gint            sub_len;
+  gint16          sub_len;
   void           *ptr;
   gchar          *endptr = NULL;
 
