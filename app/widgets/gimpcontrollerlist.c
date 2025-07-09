@@ -148,9 +148,6 @@ gimp_controller_list_init (GimpControllerList *list)
   GtkIconSize        icon_size;
   gint               icon_width;
   gint               icon_height;
-  GType             *controller_types;
-  guint              n_controller_types;
-  gint               i;
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (list),
                                   GTK_ORIENTATION_VERTICAL);
@@ -210,28 +207,6 @@ gimp_controller_list_init (GimpControllerList *list)
   g_signal_connect_object (list->src_sel, "changed",
                            G_CALLBACK (gimp_controller_list_src_sel_changed),
                            G_OBJECT (list), 0);
-
-  controller_types = g_type_children (GIMP_TYPE_CONTROLLER,
-                                      &n_controller_types);
-
-  for (i = 0; i < n_controller_types; i++)
-    {
-      GimpControllerClass *controller_class;
-      GtkTreeIter          iter;
-
-      controller_class = g_type_class_ref (controller_types[i]);
-
-      gtk_list_store_append (list->src, &iter);
-      gtk_list_store_set (list->src, &iter,
-                          COLUMN_ICON, controller_class->icon_name,
-                          COLUMN_NAME, controller_class->name,
-                          COLUMN_TYPE, controller_types[i],
-                          -1);
-
-      g_type_class_unref (controller_class);
-    }
-
-  g_free (controller_types);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_box_set_homogeneous (GTK_BOX (vbox), TRUE);
@@ -317,11 +292,31 @@ gimp_controller_list_constructed (GObject *object)
 {
   GimpControllerList *list = GIMP_CONTROLLER_LIST (object);
   Gimp               *gimp;
+  GListModel         *categories;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp = gimp_controller_manager_get_gimp (list->controller_manager);
   gimp_assert (GIMP_IS_GIMP (gimp));
+
+  categories = gimp_controller_manager_get_categories (list->controller_manager);
+  for (guint i = 0; i < g_list_model_get_n_items (G_LIST_MODEL (categories)); i++)
+    {
+      GimpControllerCategory *category;
+      GtkTreeIter             iter;
+
+      category = g_list_model_get_item (G_LIST_MODEL (categories), i);
+
+      gtk_list_store_append (list->src, &iter);
+      gtk_list_store_set (list->src, &iter,
+                          COLUMN_ICON, gimp_controller_category_get_icon_name (category),
+                          COLUMN_NAME, gimp_controller_category_get_name (category),
+                          COLUMN_TYPE, gimp_controller_category_get_gtype (category),
+                          -1);
+
+      g_object_unref (category);
+    }
+  g_clear_object (&categories);
 
   gimp_container_view_set_container (GIMP_CONTAINER_VIEW (list->dest),
                                      gimp_controller_manager_get_list (list->controller_manager));

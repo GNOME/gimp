@@ -70,6 +70,8 @@ static gboolean   gimp_controller_manager_event_mapped  (GimpControllerInfo     
                                                          const GimpControllerEvent *event,
                                                          const gchar               *action_name,
                                                          GimpControllerManager     *manager);
+static GimpControllerCategory *
+                  gimp_controller_category_new          (GType                      gtype);
 static void       g_list_model_iface_init               (GListModelInterface       *iface);
 
 
@@ -288,6 +290,34 @@ gimp_controller_manager_remove (GimpControllerManager *self,
   g_list_model_items_changed (G_LIST_MODEL (self), index, 1, 0);
 }
 
+GListModel *
+gimp_controller_manager_get_categories (GimpControllerManager *self)
+{
+  GListStore *categories;
+  GType      *controller_types;
+  guint       n_controller_types;
+
+  g_return_val_if_fail (GIMP_IS_CONTROLLER_MANAGER (self), NULL);
+
+  categories = g_list_store_new (GIMP_TYPE_CONTROLLER_CATEGORY);
+
+  controller_types = g_type_children (GIMP_TYPE_CONTROLLER,
+                                      &n_controller_types);
+
+  for (guint i = 0; i < n_controller_types; i++)
+    {
+      GimpControllerCategory *category;
+
+      category = gimp_controller_category_new (controller_types[i]);
+      g_list_store_append (G_LIST_STORE (categories), category);
+      g_object_unref (category);
+    }
+
+  g_free (controller_types);
+
+  return G_LIST_MODEL (categories);
+}
+
 
 /*  private functions  */
 
@@ -409,4 +439,67 @@ g_list_model_iface_init (GListModelInterface *iface)
   iface->get_item_type = gimp_controller_manager_get_item_type;
   iface->get_n_items   = gimp_controller_manager_get_n_items;
   iface->get_item      = gimp_controller_manager_get_item;
+}
+
+/**
+ * GimpControllerCategory:
+ *
+ * A helper object to list types/categories of controllers
+ */
+
+struct _GimpControllerCategory {
+  GObject      parent_instance;
+
+  const gchar *name;
+  const gchar *icon_name;
+  GType        gtype;
+};
+
+G_DEFINE_TYPE (GimpControllerCategory, gimp_controller_category, G_TYPE_OBJECT)
+
+static void
+gimp_controller_category_init (GimpControllerCategory *self)
+{
+}
+
+static void
+gimp_controller_category_class_init (GimpControllerCategoryClass *klass)
+{
+}
+
+static GimpControllerCategory *
+gimp_controller_category_new (GType gtype)
+{
+  GimpControllerClass *controller_class;
+  GimpControllerCategory *category;
+
+  controller_class = g_type_class_get (gtype);
+
+  category = g_object_new (GIMP_TYPE_CONTROLLER_CATEGORY, NULL);
+  category->name = controller_class->name;
+  category->icon_name = controller_class->icon_name;
+  category->gtype = gtype;
+
+  return category;
+}
+
+const gchar *
+gimp_controller_category_get_name (GimpControllerCategory *self)
+{
+  g_return_val_if_fail (GIMP_IS_CONTROLLER_CATEGORY (self), NULL);
+  return self->name;
+}
+
+const gchar *
+gimp_controller_category_get_icon_name (GimpControllerCategory *self)
+{
+  g_return_val_if_fail (GIMP_IS_CONTROLLER_CATEGORY (self), NULL);
+  return self->icon_name;
+}
+
+GType
+gimp_controller_category_get_gtype (GimpControllerCategory *self)
+{
+  g_return_val_if_fail (GIMP_IS_CONTROLLER_CATEGORY (self), G_TYPE_INVALID);
+  return self->gtype;
 }
