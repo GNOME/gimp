@@ -130,6 +130,25 @@ GParamSpec * gimp_param_spec_text_layer     (const gchar  *name,
 
 
 /*
+ * GIMP_TYPE_PARAM_VECTOR_LAYER
+ */
+
+#define GIMP_VALUE_HOLDS_VECTOR_LAYER(value)   (G_TYPE_CHECK_VALUE_TYPE ((value),\
+                                                GIMP_TYPE_VECTOR_LAYER))
+
+#define GIMP_TYPE_PARAM_VECTOR_LAYER           (gimp_param_vector_layer_get_type ())
+#define GIMP_IS_PARAM_SPEC_VECTOR_LAYER(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_VECTOR_LAYER))
+
+GType        gimp_param_vector_layer_get_type (void) G_GNUC_CONST;
+
+GParamSpec * gimp_param_spec_vector_layer     (const gchar  *name,
+                                               const gchar  *nick,
+                                               const gchar  *blurb,
+                                               gboolean      none_ok,
+                                               GParamFlags   flags);
+
+
+/*
  * GIMP_TYPE_PARAM_GROUP_LAYER
  */
 
