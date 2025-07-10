@@ -56,8 +56,7 @@ GimpFillStyle     gimp_fill_options_get_style        (GimpFillOptions     *optio
 void              gimp_fill_options_set_style        (GimpFillOptions     *options,
                                                       GimpFillStyle        style);
 
-GimpCustomStyle     gimp_fill_options_get_custom_style
-                                                     (GimpFillOptions     *options);
+GimpCustomStyle   gimp_fill_options_get_custom_style (GimpFillOptions     *options);
 void              gimp_fill_options_set_custom_style (GimpFillOptions     *options,
                                                       GimpCustomStyle      custom_style);
 
