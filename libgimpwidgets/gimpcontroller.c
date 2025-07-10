@@ -164,12 +164,15 @@ gimp_controller_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_NAME:
-      g_set_str (&priv->name, g_value_get_string (value));
+      if (priv->name)
+        g_free (priv->name);
+      priv->name = g_value_dup_string (value);
       break;
     case PROP_STATE:
-      g_set_str (&priv->state, g_value_get_string (value));
+      if (priv->state)
+        g_free (priv->state);
+      priv->state = g_value_dup_string (value);
       break;
-
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -193,7 +196,6 @@ gimp_controller_get_property (GObject    *object,
     case PROP_STATE:
       g_value_set_string (value, priv->state);
       break;
-
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;

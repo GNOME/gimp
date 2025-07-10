@@ -312,7 +312,8 @@ gimp_thumbnail_set_property (GObject      *object,
       thumbnail->image_filesize = g_value_get_int64 (value);
       break;
     case PROP_IMAGE_MIMETYPE:
-      g_set_str (&thumbnail->image_mimetype, g_value_get_string (value));
+      g_free (thumbnail->image_mimetype);
+      thumbnail->image_mimetype = g_value_dup_string (value);
       break;
     case PROP_IMAGE_WIDTH:
       thumbnail->image_width = g_value_get_int (value);
@@ -321,7 +322,8 @@ gimp_thumbnail_set_property (GObject      *object,
       thumbnail->image_height = g_value_get_int (value);
       break;
     case PROP_IMAGE_TYPE:
-      g_set_str (&thumbnail->image_type, g_value_get_string (value));
+      g_free (thumbnail->image_type);
+      thumbnail->image_type = g_value_dup_string (value);
       break;
     case PROP_IMAGE_NUM_LAYERS:
       thumbnail->image_num_layers = g_value_get_int (value);

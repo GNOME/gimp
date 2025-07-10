@@ -179,10 +179,11 @@ gimp_label_string_widget_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_VALUE:
-      if (g_set_str (&widget->value, g_value_get_string (value)))
+      if (g_strcmp0 (widget->value, g_value_get_string (value)) != 0)
         {
-          g_signal_emit (object,
-                         gimp_label_string_widget_signals[VALUE_CHANGED], 0);
+          g_free (widget->value);
+          widget->value = g_value_dup_string (value);
+          g_signal_emit (object, gimp_label_string_widget_signals[VALUE_CHANGED], 0);
         }
       break;
     case PROP_WIDGET:

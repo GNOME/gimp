@@ -217,7 +217,9 @@ gimp_cell_renderer_toggle_set_property (GObject      *object,
   switch (param_id)
     {
     case PROP_ICON_NAME:
-      g_set_str (&toggle->icon_name, g_value_get_string (value));
+      if (toggle->icon_name)
+        g_free (toggle->icon_name);
+      toggle->icon_name = g_value_dup_string (value);
       break;
 
     case PROP_ICON_SIZE:

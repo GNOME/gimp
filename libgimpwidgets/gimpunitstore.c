@@ -244,25 +244,23 @@ gimp_unit_store_set_property (GObject      *object,
           private->resolutions = g_new0 (gdouble, private->num_values);
         }
       break;
-
     case PROP_HAS_PIXELS:
       gimp_unit_store_set_has_pixels (GIMP_UNIT_STORE (object),
                                       g_value_get_boolean (value));
       break;
-
     case PROP_HAS_PERCENT:
       gimp_unit_store_set_has_percent (GIMP_UNIT_STORE (object),
                                        g_value_get_boolean (value));
       break;
-
     case PROP_SHORT_FORMAT:
-      g_set_str (&private->short_format, g_value_get_string (value));
+      g_free (private->short_format);
+      private->short_format = g_value_dup_string (value);
       if (! private->short_format)
         private->short_format = g_strdup ("%a");
       break;
-
     case PROP_LONG_FORMAT:
-      g_set_str (&private->long_format, g_value_get_string (value));
+      g_free (private->long_format);
+      private->long_format = g_value_dup_string (value);
       if (! private->long_format)
         private->long_format = g_strdup ("%a");
       break;
