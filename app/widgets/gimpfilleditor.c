@@ -89,7 +89,7 @@ gimp_fill_editor_class_init (GimpFillEditorClass *klass)
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 
-  g_object_class_install_property (object_class, PROP_EDIT_CONTEXT,
+  g_object_class_install_property (object_class, PROP_USE_CUSTOM_STYLE,
                                    g_param_spec_boolean ("use-custom-style",
                                                          NULL, NULL,
                                                          FALSE,
@@ -116,10 +116,6 @@ gimp_fill_editor_constructed (GObject *object)
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_assert (GIMP_IS_FILL_OPTIONS (editor->options));
-
-  g_object_get (object,
-                "use-custom-style", &editor->use_custom_style,
-                NULL);
 
   if (editor->use_custom_style)
     box = gimp_prop_enum_radio_box_new (G_OBJECT (editor->options),
@@ -209,8 +205,6 @@ gimp_fill_editor_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_OPTIONS:
-      if (editor->options)
-        g_object_unref (editor->options);
       editor->options = g_value_dup_object (value);
       break;
 
@@ -266,6 +260,6 @@ gimp_fill_editor_new (GimpFillOptions *options,
   return g_object_new (GIMP_TYPE_FILL_EDITOR,
                        "options",          options,
                        "edit-context",     edit_context ? TRUE : FALSE,
-                       "use_custom_style", use_custom_style ? TRUE : FALSE,
+                       "use-custom-style", use_custom_style ? TRUE : FALSE,
                        NULL);
 }
