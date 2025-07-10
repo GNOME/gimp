@@ -45,10 +45,16 @@ void                    gimp_controller_manager_restore        (GimpControllerMa
                                                                 GimpUIManager         *ui_manager);
 void                    gimp_controller_manager_save           (GimpControllerManager *self);
 
+gboolean                gimp_controller_manager_find           (GimpControllerManager *self,
+                                                                GimpControllerInfo    *info,
+                                                                guint                 *position);
 void                    gimp_controller_manager_add            (GimpControllerManager *self,
                                                                 GimpControllerInfo    *info);
 void                    gimp_controller_manager_remove         (GimpControllerManager *self,
                                                                 GimpControllerInfo    *info);
+void                    gimp_controller_manager_move           (GimpControllerManager *self,
+                                                                GimpControllerInfo    *info,
+                                                                guint                  new_position);
 
 Gimp *                  gimp_controller_manager_get_gimp       (GimpControllerManager *self);
 GimpContainer  *        gimp_controller_manager_get_list       (GimpControllerManager *self);

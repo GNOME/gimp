@@ -245,6 +245,26 @@ gimp_controller_manager_get_keyboard (GimpControllerManager *self)
   return self->keyboard;
 }
 
+gboolean
+gimp_controller_manager_find (GimpControllerManager *self,
+                              GimpControllerInfo    *info,
+                              guint                 *position)
+{
+  gint index;
+
+  g_return_val_if_fail (GIMP_IS_CONTROLLER_MANAGER (self), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTROLLER_INFO (info), FALSE);
+
+  index = gimp_container_get_child_index (self->controllers, GIMP_OBJECT (info));
+
+  if (index < 0)
+      return FALSE;
+
+  if (position)
+      *position = (guint) index;
+  return TRUE;
+}
+
 void
 gimp_controller_manager_add (GimpControllerManager *self,
                              GimpControllerInfo    *info)
@@ -254,7 +274,7 @@ gimp_controller_manager_add (GimpControllerManager *self,
 
   gimp_container_add (self->controllers, GIMP_OBJECT (info));
 
-  g_signal_connect_object (self->controllers, "event-mapped",
+  g_signal_connect_object (info, "event-mapped",
                            G_CALLBACK (gimp_controller_manager_event_mapped),
                            G_OBJECT (self), 0);
 
@@ -272,13 +292,14 @@ void
 gimp_controller_manager_remove (GimpControllerManager *self,
                                 GimpControllerInfo    *info)
 {
-  int index;
+  gboolean found;
+  guint index;
 
   g_return_if_fail (GIMP_IS_CONTROLLER_MANAGER (self));
   g_return_if_fail (GIMP_IS_CONTROLLER_INFO (info));
 
-  index = gimp_container_get_child_index (self->controllers, GIMP_OBJECT (info));
-  g_return_if_fail (index >= 0);
+  found = gimp_controller_manager_find (self, info, &index);
+  g_return_if_fail (found);
 
   if (info->controller == self->wheel)
     self->wheel = NULL;
@@ -288,6 +309,35 @@ gimp_controller_manager_remove (GimpControllerManager *self,
   gimp_container_remove (self->controllers, GIMP_OBJECT (info));
 
   g_list_model_items_changed (G_LIST_MODEL (self), index, 1, 0);
+}
+
+void
+gimp_controller_manager_move (GimpControllerManager *self,
+                              GimpControllerInfo    *info,
+                              guint                  new_position)
+{
+  gboolean found;
+  guint    old_position;
+  gint     diff;
+
+  g_return_if_fail (GIMP_IS_CONTROLLER_MANAGER (self));
+  g_return_if_fail (GIMP_IS_CONTROLLER_INFO (info));
+
+  found = gimp_controller_manager_find (self, info, &old_position);
+  g_return_if_fail (found);
+
+  if (new_position == old_position)
+      return;
+
+  gimp_container_reorder (self->controllers,
+                          GIMP_OBJECT (info),
+                          new_position);
+
+  diff = (old_position - (int) new_position);
+  g_list_model_items_changed (G_LIST_MODEL (self),
+                              MIN (old_position, new_position),
+                              ABS (diff) + 1,
+                              ABS (diff) + 1);
 }
 
 GListModel *
@@ -472,6 +522,8 @@ gimp_controller_category_new (GType gtype)
 {
   GimpControllerClass *controller_class;
   GimpControllerCategory *category;
+
+  g_return_val_if_fail (g_type_is_a (gtype, GIMP_TYPE_CONTROLLER), NULL);
 
   controller_class = g_type_class_get (gtype);
 
