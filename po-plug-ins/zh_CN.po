@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-24 17:54+0000\n"
-"PO-Revision-Date: 2025-06-25 19:10+0800\n"
+"POT-Creation-Date: 2025-07-10 01:31+0000\n"
+"PO-Revision-Date: 2025-07-11 07:17+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -425,7 +425,7 @@ msgid "Procedure '%s' only works in interactive mode."
 msgstr "程序“%s”仅在交互式模式中有效。"
 
 #: plug-ins/common/animation-play.c:387 plug-ins/common/animation-play.c:770
-#: plug-ins/common/animation-play.c:1392
+#: plug-ins/common/animation-play.c:1393
 msgid "Start playback"
 msgstr "开始回放"
 
@@ -467,7 +467,7 @@ msgstr "退出"
 
 #. list is given in "fps" - frames per second
 #: plug-ins/common/animation-play.c:494 plug-ins/common/animation-play.c:552
-#: plug-ins/common/animation-play.c:843
+#: plug-ins/common/animation-play.c:844
 #, c-format
 msgid "%.1f %%"
 msgstr "%.1f %%"
@@ -490,51 +490,51 @@ msgid "Detach"
 msgstr "分离"
 
 #. Zoom Options
-#: plug-ins/common/animation-play.c:858
+#: plug-ins/common/animation-play.c:859
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:679
 #: plug-ins/imagemap/imap-menu.ui:271
 msgid "Zoom"
 msgstr "缩放"
 
 #. list is given in "fps" - frames per second
-#: plug-ins/common/animation-play.c:868
+#: plug-ins/common/animation-play.c:869
 #, c-format
 msgid "%d fps"
 msgstr "%d fps"
 
-#: plug-ins/common/animation-play.c:879
+#: plug-ins/common/animation-play.c:880
 msgid "Default framerate"
 msgstr "默认帧率"
 
-#: plug-ins/common/animation-play.c:899
+#: plug-ins/common/animation-play.c:900
 msgid "Playback speed"
 msgstr "回放速度"
 
 #. 2 styles of default frame disposals: cumulative layers and one
 #. * frame per layer.
 #.
-#: plug-ins/common/animation-play.c:910 plug-ins/common/file-gif-export.c:221
+#: plug-ins/common/animation-play.c:911 plug-ins/common/file-gif-export.c:221
 msgid "Cumulative layers (combine)"
 msgstr "累积图层（组合）"
 
-#: plug-ins/common/animation-play.c:915 plug-ins/common/file-gif-export.c:222
+#: plug-ins/common/animation-play.c:916 plug-ins/common/file-gif-export.c:222
 msgid "One frame per layer (replace)"
 msgstr "每图层一帧（替换）"
 
-#: plug-ins/common/animation-play.c:1011
+#: plug-ins/common/animation-play.c:1012
 msgid "Memory could not be allocated to the frame container."
 msgstr "无法将内存分配到该帧容器。"
 
-#: plug-ins/common/animation-play.c:1078
+#: plug-ins/common/animation-play.c:1079
 msgid "Invalid image. Did you close it?"
 msgstr "无效图像。您关闭了它吗？"
 
-#: plug-ins/common/animation-play.c:1190
+#: plug-ins/common/animation-play.c:1191
 #, c-format
 msgid "Frame %d of %d"
 msgstr "帧 %d/%d"
 
-#: plug-ins/common/animation-play.c:1392
+#: plug-ins/common/animation-play.c:1393
 msgid "Stop playback"
 msgstr "停止回放"
 
@@ -1970,7 +1970,7 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/common/file-ps.c:3739 plug-ins/common/file-psp.c:2620
 #: plug-ins/common/file-psp.c:2670 plug-ins/common/file-qoi.c:275
 #: plug-ins/common/file-raw-data.c:577 plug-ins/common/file-raw-data.c:1714
-#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:560
+#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:562
 #: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:278
 #: plug-ins/common/file-wbmp.c:250 plug-ins/common/file-wbmp.c:329
 #: plug-ins/common/file-xbm.c:725 plug-ins/common/file-xmc.c:656
@@ -2888,11 +2888,11 @@ msgstr "以 GIMP 笔刷文件格式导出文件"
 msgid "Sp_acing"
 msgstr "间距(_A)"
 
-#: plug-ins/common/file-gbr.c:159 plug-ins/common/file-gih.c:193
+#: plug-ins/common/file-gbr.c:159 plug-ins/common/file-gih.c:200
 msgid "Spacing of the brush"
 msgstr "笔刷的间距"
 
-#: plug-ins/common/file-gbr.c:164 plug-ins/common/file-gih.c:198
+#: plug-ins/common/file-gbr.c:164 plug-ins/common/file-gih.c:205
 #: plug-ins/common/file-pat.c:143
 msgid "_Description"
 msgstr "描述(_D)"
@@ -3266,15 +3266,44 @@ msgstr ""
 msgid "Too much compressed data, ignoring extra..."
 msgstr "太多压缩的数据，正在忽略额外数据…"
 
-#: plug-ins/common/file-gih.c:155
+#: plug-ins/common/file-gih.c:119
+msgid "Incremental"
+msgstr "增量"
+
+#: plug-ins/common/file-gih.c:120
+msgid "Angular"
+msgstr "尖角"
+
+#: plug-ins/common/file-gih.c:121 plug-ins/flame/flame.c:917
+#: plug-ins/gimpressionist/orientation.c:156 plug-ins/gimpressionist/size.c:163
+msgid "Random"
+msgstr "随机"
+
+#: plug-ins/common/file-gih.c:122
+msgid "Velocity"
+msgstr "速率"
+
+#: plug-ins/common/file-gih.c:123
+msgid "Pressure"
+msgstr "压力"
+
+#: plug-ins/common/file-gih.c:124
+msgid "X tilt"
+msgstr "X 倾斜"
+
+#: plug-ins/common/file-gih.c:125
+msgid "Y tilt"
+msgstr "Y 倾斜"
+
+#: plug-ins/common/file-gih.c:162
 msgid "GIMP brush (animated)"
 msgstr "GIMP 笔刷（动画化）"
 
-#: plug-ins/common/file-gih.c:159
+#: plug-ins/common/file-gih.c:166
 msgid "Exports images in GIMP Brush Pipe format"
 msgstr "以 GIMP 笔刷管道格式导出图像"
 
-#: plug-ins/common/file-gih.c:161
+#: plug-ins/common/file-gih.c:168
 msgid ""
 "This plug-in exports an image in the GIMP brush pipe format. For a colored "
 "brush pipe, RGBA layers are used, otherwise the layers should be grayscale "
@@ -3284,84 +3313,84 @@ msgstr ""
 "该插件将图像导出为 GIMP 笔刷管道格式。对于彩色笔刷管道，使用 RGBA 图层，否则"
 "图层应为灰度蒙板。图像可以为多图层的，且图层可以分离为笔刷的矩形阵列。"
 
-#: plug-ins/common/file-gih.c:178
+#: plug-ins/common/file-gih.c:185
 msgid "Brush Pipe"
 msgstr "笔刷管道"
 
-#: plug-ins/common/file-gih.c:192
+#: plug-ins/common/file-gih.c:199
 msgid "Spacing (_percent)"
 msgstr "间距（百分比）(_P)"
 
-#: plug-ins/common/file-gih.c:199
+#: plug-ins/common/file-gih.c:206
 msgid "Short description of the GIH brush pipe"
 msgstr "GIH 笔刷管道的简短描述"
 
-#: plug-ins/common/file-gih.c:204
+#: plug-ins/common/file-gih.c:211
 msgid "Cell _width"
 msgstr "单元宽度(_W)"
 
-#: plug-ins/common/file-gih.c:205
+#: plug-ins/common/file-gih.c:212
 msgid "Width of the brush cells in pixels"
 msgstr "笔刷单元的宽度（像素）"
 
-#: plug-ins/common/file-gih.c:210
+#: plug-ins/common/file-gih.c:217
 msgid "Cell _height"
 msgstr "单元高度(_H)"
 
-#: plug-ins/common/file-gih.c:211
+#: plug-ins/common/file-gih.c:218
 msgid "Height of the brush cells in pixels"
 msgstr "笔刷单元的高度（像素）"
 
-#: plug-ins/common/file-gih.c:216
+#: plug-ins/common/file-gih.c:223
 msgid "_Number of cells"
 msgstr "单元数量(_N)"
 
-#: plug-ins/common/file-gih.c:217
+#: plug-ins/common/file-gih.c:224
 msgid "Number of cells to cut up"
 msgstr "割裂的单元数量"
 
-#: plug-ins/common/file-gih.c:222
+#: plug-ins/common/file-gih.c:229
 msgid "_Rank"
 msgstr "等级(_R)"
 
-#: plug-ins/common/file-gih.c:223
+#: plug-ins/common/file-gih.c:230
 msgid "Ranks of the dimensions"
 msgstr "尺寸等级"
 
-#: plug-ins/common/file-gih.c:227 plug-ins/common/file-gih.c:228
+#: plug-ins/common/file-gih.c:234 plug-ins/common/file-gih.c:235
 msgid "Selection modes"
 msgstr "选择模式"
 
-#: plug-ins/common/file-gih.c:234
+#: plug-ins/common/file-gih.c:241
 msgid "Display as"
 msgstr "显示为"
 
-#: plug-ins/common/file-gih.c:235
+#: plug-ins/common/file-gih.c:242
 msgid "Describe how the layers will be split"
 msgstr "描述图层分割的方式"
 
-#: plug-ins/common/file-gih.c:239
+#: plug-ins/common/file-gih.c:246
 msgid "D_imension"
 msgstr "尺寸(_I)"
 
-#: plug-ins/common/file-gih.c:240
+#: plug-ins/common/file-gih.c:247
 msgid "How many dimensions the animated brush has"
 msgstr "动画笔刷具有的尺寸数量"
 
-#: plug-ins/common/file-gih.c:514
+#: plug-ins/common/file-gih.c:521
 msgid "Width Mismatch!"
 msgstr "宽度不匹配！"
 
-#: plug-ins/common/file-gih.c:515
+#: plug-ins/common/file-gih.c:522
 msgid "Height Mismatch!"
 msgstr "高度不匹配！"
 
-#: plug-ins/common/file-gih.c:562
+#: plug-ins/common/file-gih.c:569
 #, c-format
 msgid "Displays as a %d × %d grid on each layer"
 msgstr "在每个图层上显示为 %d × %d 网格"
 
-#: plug-ins/common/file-gih.c:748
+#: plug-ins/common/file-gih.c:755
 msgid "Ranks:"
 msgstr "等级："
 
@@ -6082,15 +6111,15 @@ msgstr "合并导入的路径"
 #. * unsafe, possibly consumming too much memory with malicious XML
 #. * files.
 #.
-#: plug-ins/common/file-svg.c:274
+#: plug-ins/common/file-svg.c:276
 msgid "Disable safety size limits?"
 msgstr "禁用安全大小限制吗？"
 
-#: plug-ins/common/file-svg.c:279
+#: plug-ins/common/file-svg.c:281
 msgid "_No"
 msgstr "否(_N)"
 
-#: plug-ins/common/file-svg.c:280
+#: plug-ins/common/file-svg.c:282
 msgid "_Yes"
 msgstr "是(_Y)"
 
@@ -6104,7 +6133,7 @@ msgstr "是(_Y)"
 #. * cases. Instead of this, we need to ask each and every time, in
 #. * case it might be the huge data error.
 #.
-#: plug-ins/common/file-svg.c:304
+#: plug-ins/common/file-svg.c:306
 msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to "
@@ -6113,24 +6142,24 @@ msgstr ""
 "发生了解析错误。\n"
 "禁用安全限制可能会有帮助。恶意 SVG 文件可能会用此消耗过多内存。"
 
-#: plug-ins/common/file-svg.c:316
+#: plug-ins/common/file-svg.c:318
 msgid "For security reasons, this should only be used for trusted input!"
 msgstr "为了安全原因，该选项应仅用于信任的输入！"
 
-#: plug-ins/common/file-svg.c:323
+#: plug-ins/common/file-svg.c:325
 msgid "Retry without limits preventing to parse huge data?"
 msgstr "不带阻止解析巨量数据的限制来重试吗？"
 
-#: plug-ins/common/file-svg.c:562 plug-ins/file-exr/file-exr.c:378
+#: plug-ins/common/file-svg.c:564 plug-ins/file-exr/file-exr.c:378
 #: plug-ins/file-exr/file-exr.c:392
 msgid "Unknown reason"
 msgstr "未知原因"
 
-#: plug-ins/common/file-svg.c:568
+#: plug-ins/common/file-svg.c:570
 msgid "Rendering SVG"
 msgstr "渲染 SVG"
 
-#: plug-ins/common/file-svg.c:578
+#: plug-ins/common/file-svg.c:580
 msgid "Rendered SVG"
 msgstr "已渲染的 SVG"
 
@@ -11292,11 +11321,6 @@ msgstr "随机产生(_R)"
 #: plug-ins/flame/flame.c:916
 msgid "Same"
 msgstr "相同"
-
-#: plug-ins/flame/flame.c:917 plug-ins/gimpressionist/orientation.c:156
-#: plug-ins/gimpressionist/size.c:163
-msgid "Random"
-msgstr "随机"
 
 #: plug-ins/flame/flame.c:918 plug-ins/lighting/lighting-main.c:176
 msgid "Linear"
@@ -16517,9 +16541,6 @@ msgstr "从扫描仪/相机传送数据"
 
 #~ msgid "ID"
 #~ msgstr "ID"
-
-#~ msgid "Singular"
-#~ msgstr "单数"
 
 #~ msgid "The unit's singular form."
 #~ msgstr "此单位的单数形式。"
