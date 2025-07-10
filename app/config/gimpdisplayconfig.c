@@ -28,8 +28,6 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
-#include "core/core-types.h" /* Temporary g_set_str() redefined */
-
 #include "config-types.h"
 
 #include "gimprc-blurbs.h"
