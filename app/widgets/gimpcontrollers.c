@@ -516,12 +516,14 @@ gimp_controller_category_new (GType gtype)
 
   g_return_val_if_fail (g_type_is_a (gtype, GIMP_TYPE_CONTROLLER), NULL);
 
-  controller_class = g_type_class_get (gtype);
+  controller_class = g_type_class_ref (gtype);
 
   category = g_object_new (GIMP_TYPE_CONTROLLER_CATEGORY, NULL);
   category->name = controller_class->name;
   category->icon_name = controller_class->icon_name;
   category->gtype = gtype;
+
+  g_type_class_unref (controller_class);
 
   return category;
 }
