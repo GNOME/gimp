@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-07-07 16:19+0000\n"
-"PO-Revision-Date: 2025-07-07 20:28+0300\n"
+"POT-Creation-Date: 2025-07-10 05:31+0000\n"
+"PO-Revision-Date: 2025-07-10 21:26+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -569,8 +569,6 @@ msgid "Tool Options"
 msgstr "Параметри інструменту"
 
 #: app/actions/actions.c:236
-#| msgctxt "paths-action"
-#| msgid "To _Path"
 msgid "Tool Path"
 msgstr "Інструмент «Контур»"
 
@@ -2513,12 +2511,12 @@ msgstr "240 секунд"
 #: app/tools/gimptexttool.c:1774 app/tools/gimptransformgridtool.c:1264
 #: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
 #: app/widgets/gimpcolordialog.c:492 app/widgets/gimpcontrollereditor.c:666
-#: app/widgets/gimpcontrollerlist.c:549 app/widgets/gimpdeviceeditor.c:543
+#: app/widgets/gimpcontrollerlist.c:572 app/widgets/gimpdeviceeditor.c:543
 #: app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228
 #: app/widgets/gimpfiledialog.c:336 app/widgets/gimphelp.c:438
 #: app/widgets/gimphelp.c:773 app/widgets/gimpiconpicker.c:489
 #: app/widgets/gimpmodifierseditor.c:688 app/widgets/gimppdbdialog.c:148
-#: app/widgets/gimpprogressdialog.c:91 app/widgets/gimpsettingsbox.c:716
+#: app/widgets/gimpprogressdialog.c:91 app/widgets/gimpsettingsbox.c:705
 msgid "_Cancel"
 msgstr "_Скасувати"
 
@@ -4133,7 +4131,7 @@ msgstr "Збереження повідомлень про помилки у ф�
 #: app/actions/error-console-commands.c:102 app/actions/gradients-commands.c:81
 #: app/dialogs/file-save-dialog.c:759 app/dialogs/path-export-dialog.c:89
 #: app/display/gimpdisplayshell-close.c:179 app/widgets/gimpsavedialog.c:142
-#: app/widgets/gimpsettingsbox.c:718
+#: app/widgets/gimpsettingsbox.c:707
 msgid "_Save"
 msgstr "З_берегти"
 
@@ -8464,7 +8462,7 @@ msgstr "Відкривання текстового файла (UTF-8)"
 #: app/dialogs/file-open-location-dialog.c:81
 #: app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:722
 #: app/widgets/gimpiconpicker.c:490 app/widgets/gimpopendialog.c:87
-#: app/widgets/gimpsettingsbox.c:718
+#: app/widgets/gimpsettingsbox.c:707
 msgid "_Open"
 msgstr "Від_крити"
 
@@ -8600,36 +8598,26 @@ msgid "Do you really want to reset all tool options to default values?"
 msgstr "Ви дійсно бажаєте повернутись до початкових параметрів?"
 
 #: app/actions/tool-path-actions.c:45
-#| msgctxt "vector-toolpath-action"
-#| msgid "_Delete Anchor"
 msgctxt "tool-path-action"
 msgid "_Delete Anchor"
 msgstr "Ви_лучити прив'язку"
 
 #: app/actions/tool-path-actions.c:49
-#| msgctxt "vector-toolpath-action"
-#| msgid "Shift S_tart"
 msgctxt "tool-path-action"
 msgid "Shift S_tart"
 msgstr "По_чаток зсуву"
 
 #: app/actions/tool-path-actions.c:54
-#| msgctxt "vector-toolpath-action"
-#| msgid "_Insert Anchor"
 msgctxt "tool-path-action"
 msgid "_Insert Anchor"
 msgstr "_Вставвити прив'язку"
 
 #: app/actions/tool-path-actions.c:58
-#| msgctxt "vector-toolpath-action"
-#| msgid "Delete _Segment"
 msgctxt "tool-path-action"
 msgid "Delete _Segment"
 msgstr "Вилучити се_гмент"
 
 #: app/actions/tool-path-actions.c:62
-#| msgctxt "vector-toolpath-action"
-#| msgid "_Reverse Stroke"
 msgctxt "tool-path-action"
 msgid "_Reverse Stroke"
 msgstr "_Розвернути штрих"
@@ -13510,7 +13498,7 @@ msgid "Paint dynamics"
 msgstr "Динаміка малювання"
 
 #: app/core/gimpcontext.c:713 app/core/gimpcontext.c:714
-#: app/tools/gimpmybrushtool.c:75
+#: app/tools/gimpmybrushtool.c:78
 msgid "MyPaint Brush"
 msgstr "Пензель MyPaint"
 
@@ -13530,7 +13518,7 @@ msgid "Palette"
 msgstr "Палітра"
 
 #: app/core/gimpcontext.c:741 app/core/gimpcontext.c:742
-#: app/tools/gimptextoptions.c:813
+#: app/tools/gimptextoptions.c:812
 msgid "Font"
 msgstr "Шрифт"
 
@@ -13560,7 +13548,7 @@ msgstr "копія"
 msgid "%s copy"
 msgstr "копія %s"
 
-#: app/core/gimpdatafactory.c:638 app/tools/gimptextoptions.c:794
+#: app/core/gimpdatafactory.c:638 app/tools/gimptextoptions.c:793
 #: app/widgets/gimpfontfactoryview.c:98
 msgid "Loading fonts (this may take a while...)"
 msgstr "Завантажуємо шрифти (їх завантаження може тривати довго…)"
@@ -13757,7 +13745,7 @@ msgstr "Розмивати межі"
 msgid "Enable feathering of fill edges"
 msgstr "Увімкнути розмазування країв заповнення кольором"
 
-#: app/core/gimpfilloptions.c:142 app/paint/gimpmybrushoptions.c:87
+#: app/core/gimpfilloptions.c:142 app/paint/gimpmybrushoptions.c:107
 #: app/tools/gimpbucketfilloptions.c:203 app/tools/gimpcoloroptions.c:86
 #: app/tools/gimprectangleselectoptions.c:101
 #: app/tools/gimpselectionoptions.c:103 app/widgets/gimpbrusheditor.c:160
@@ -16024,9 +16012,9 @@ msgstr "Властивості зображення"
 #: app/dialogs/image-properties-dialog.c:68 app/dialogs/module-dialog.c:113
 #: app/dialogs/welcome-dialog.c:193 app/tools/gimpcolorpickertool.c:351
 #: app/tools/gimpgradienttool-editor.c:1818 app/tools/gimpmeasuretool.c:740
-#: app/widgets/gimpcontrollerlist.c:625 app/widgets/gimpcriticaldialog.c:206
-#: app/widgets/gimpcriticaldialog.c:228 app/widgets/gimpsettingsbox.c:647
-#: app/widgets/gimptexteditor.c:167
+#: app/widgets/gimpcontrollerlist.c:647 app/widgets/gimpcriticaldialog.c:206
+#: app/widgets/gimpcriticaldialog.c:228 app/widgets/gimpsettingsbox.c:636
+#: app/widgets/gimptexteditor.c:164
 msgid "_Close"
 msgstr "За_крити"
 
@@ -18837,7 +18825,7 @@ msgstr "Перемикнути швидку маску"
 msgid "Navigate the image display"
 msgstr "Навігація на зображенні"
 
-#: app/display/gimpdisplayshell.c:818 app/display/gimpdisplayshell.c:1599
+#: app/display/gimpdisplayshell.c:818 app/display/gimpdisplayshell.c:1597
 #: app/widgets/gimptoolbox.c:273
 msgid "Drop image files here to open them"
 msgstr "Перетягніть сюди зображення, які хочете відкрити"
@@ -19070,7 +19058,7 @@ msgstr "(не змінено)"
 msgid "(none)"
 msgstr "(немає)"
 
-#: app/display/gimpdisplayshell-tool-events.c:1758
+#: app/display/gimpdisplayshell-tool-events.c:1766
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "Вибрано шар: '%s'"
@@ -19208,7 +19196,7 @@ msgid "Click-Drag to rotate the focus"
 msgstr "Натисніть і перетягніть для обертання фокуса"
 
 #: app/display/gimptoolfocus.c:1149 app/display/gimptoolgyroscope.c:729
-#: app/display/gimptoolline.c:1557 app/tools/gimppainttool.c:696
+#: app/display/gimptoolline.c:1556 app/tools/gimppainttool.c:696
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s для обмеження кроку кута"
@@ -19275,54 +19263,54 @@ msgstr "Натисніть і перетягніть, щоб пересунут�
 msgid "Click-Drag to remove this handle"
 msgstr "Натисніть і перетягніть, щоб вилучити цю опорну точку"
 
-#: app/display/gimptoolline.c:345 app/display/gimptoolline.c:504
+#: app/display/gimptoolline.c:345 app/display/gimptoolline.c:503
 msgid "Line: "
 msgstr "Лінія:"
 
-#: app/display/gimptoolline.c:1551
+#: app/display/gimptoolline.c:1550
 msgid "Click-Drag to move the endpoint"
 msgstr "Натисніть і перетягніть, щоб пересунути кінцеву точку"
 
-#: app/display/gimptoolline.c:1564
+#: app/display/gimptoolline.c:1563
 msgid "Release to remove the slider"
 msgstr "Відпустіть, щоб вилучити повзунок"
 
-#: app/display/gimptoolline.c:1568
+#: app/display/gimptoolline.c:1567
 #, c-format
 msgid "%s for constrained values"
 msgstr "%s для обмеження значень"
 
-#: app/display/gimptoolline.c:1578
+#: app/display/gimptoolline.c:1577
 msgid "Click-Drag to move the slider; drag away to remove the slider"
 msgstr ""
 "Натисніть і перетягніть, щоб пересунути повзунок; перетягніть назовні, щоб "
 "прибрати повзунок"
 
-#: app/display/gimptoolline.c:1583
+#: app/display/gimptoolline.c:1582
 msgid "Click-Drag to move or remove the slider"
 msgstr "Натисніть і перетягніть, щоб пересунути або прибрати повзунок"
 
-#: app/display/gimptoolline.c:1588
+#: app/display/gimptoolline.c:1587
 msgid "Click-Drag to move the slider"
 msgstr "Натисніть і перетягніть, щоб пересунути повзунок"
 
-#: app/display/gimptoolline.c:1599
+#: app/display/gimptoolline.c:1598
 msgid "Click-Drag away to remove the slider"
 msgstr "Натисніть і перетягніть, щоб прибрати повзунок"
 
-#: app/display/gimptoolline.c:1603
+#: app/display/gimptoolline.c:1602
 msgid "Click-Drag to remove the slider"
 msgstr "Натисніть і перетягніть, щоб прибрати повзунок"
 
-#: app/display/gimptoolline.c:1614
+#: app/display/gimptoolline.c:1613
 msgid "Click or Click-Drag to add a new slider"
 msgstr "Натисніть або натисніть і перетягніть для додавання повзунка"
 
-#: app/display/gimptoolline.c:1620
+#: app/display/gimptoolline.c:1619
 msgid "Click-Drag to move the line"
 msgstr "Натисніть та перетягніть, щоб пересунути лінію"
 
-#: app/display/gimptoolline.c:1632
+#: app/display/gimptoolline.c:1631
 #, c-format
 msgid "%s to move the whole line"
 msgstr "%s для зсуву усієї лінії"
@@ -19500,12 +19488,12 @@ msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr ""
 "Клацання+перетягування малює довільну лінію, клацання додає прямий відрізок"
 
-#: app/display/gimptoolrectangle.c:575 app/display/gimptoolrectangle.c:884
+#: app/display/gimptoolrectangle.c:575 app/display/gimptoolrectangle.c:883
 #: app/tools/gimprectangleselecttool.c:638
 msgid "Rectangle: "
 msgstr "Прямокутник: "
 
-#: app/display/gimptoolrectangle.c:2173
+#: app/display/gimptoolrectangle.c:2172
 msgid "Position: "
 msgstr "Позиція:"
 
@@ -20637,7 +20625,7 @@ msgstr[3] ""
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: app/gui/gui.c:567
+#: app/gui/gui.c:568
 msgid "Documents"
 msgstr "Документи"
 
@@ -20697,7 +20685,7 @@ msgid "No patterns available for use with this tool."
 msgstr "Немає текстур, доступних для використання з цим інструментом."
 
 #: app/paint/gimpcloneoptions.c:67 app/tools/gimpbucketfilloptions.c:217
-#: app/tools/gimpbucketfilloptions.c:773 app/tools/gimpcloneoptions-gui.c:246
+#: app/tools/gimpbucketfilloptions.c:772 app/tools/gimpcloneoptions-gui.c:246
 msgid "Source"
 msgstr "Джерело"
 
@@ -20785,32 +20773,50 @@ msgstr "Відношення сторін каплі Пера"
 msgid "Ink Blob Angle"
 msgstr "Кут Пера"
 
-#: app/paint/gimpmybrushcore.c:104
+#: app/paint/gimpmybrushcore.c:107
 msgid "Mybrush"
 msgstr "Mybrush"
 
-#: app/paint/gimpmybrushcore.c:157
+#: app/paint/gimpmybrushcore.c:160
 msgid "No MyPaint brushes available for use with this tool."
 msgstr "Немає пензлів MyPaint, доступних для використання з цим інструментом."
 
-#: app/paint/gimpmybrushoptions.c:94
+#: app/paint/gimpmybrushoptions.c:93
+#| msgid "View"
+msgid "View Zoom"
+msgstr "Масштаб перегляду"
+
+#: app/paint/gimpmybrushoptions.c:100
+#| msgid "Rotation"
+msgid "View Rotation"
+msgstr "Обертання перегляду"
+
+#: app/paint/gimpmybrushoptions.c:114
 msgid "Base Opacity"
 msgstr "Базова непрозорість"
 
-#: app/paint/gimpmybrushoptions.c:101 app/paint/gimppaintoptions.c:241
+#: app/paint/gimpmybrushoptions.c:121 app/paint/gimppaintoptions.c:241
 #: app/tools/gimpwarpoptions.c:99 app/widgets/gimpbrusheditor.c:180
 msgid "Hardness"
 msgstr "Жорсткість"
 
-#: app/paint/gimpmybrushoptions.c:108
+#: app/paint/gimpmybrushoptions.c:128
+msgid "Gain"
+msgstr "Підсилення"
+
+#: app/paint/gimpmybrushoptions.c:129
+msgid "Adjust strength of input pressure"
+msgstr "Скоригувати потужність вхідного тиску"
+
+#: app/paint/gimpmybrushoptions.c:153
 msgid "Erase with this brush"
 msgstr "Стерти цим пензлем"
 
-#: app/paint/gimpmybrushoptions.c:115
+#: app/paint/gimpmybrushoptions.c:160
 msgid "No erasing effect"
 msgstr "Без ефекту витирання"
 
-#: app/paint/gimpmybrushoptions.c:116 app/paint/gimpsmudgeoptions.c:87
+#: app/paint/gimpmybrushoptions.c:161 app/paint/gimpsmudgeoptions.c:87
 msgid "Never decrease alpha of existing pixels"
 msgstr "Не зменшувати прозорості наявних пікселів"
 
@@ -22860,7 +22866,7 @@ msgstr "Найбільша довжина розриву"
 msgid "Maximum gap (in pixels) in line art which can be closed"
 msgstr "Найбільший розрив лінії (у пікселях), який можна закрити"
 
-#: app/tools/gimpbucketfilloptions.c:280 app/tools/gimpbucketfilloptions.c:731
+#: app/tools/gimpbucketfilloptions.c:280 app/tools/gimpbucketfilloptions.c:730
 msgid "Fill by"
 msgstr "Тип заповнення"
 
@@ -22868,56 +22874,56 @@ msgstr "Тип заповнення"
 msgid "Criterion used for determining color similarity"
 msgstr "Критерії для визначення подібності кольорів"
 
-#: app/tools/gimpbucketfilloptions.c:581
+#: app/tools/gimpbucketfilloptions.c:580
 msgid ""
 "Opaque pixels will be considered as line art instead of low luminance pixels"
 msgstr ""
 "Непрозорі пікселі вважатимуться графікою, а не пікселями із низькою світністю"
 
-#: app/tools/gimpbucketfilloptions.c:633
+#: app/tools/gimpbucketfilloptions.c:632
 msgid "No valid source drawable selected"
 msgstr "Не вибрано придатного початкового намальованого об'єкта"
 
-#: app/tools/gimpbucketfilloptions.c:635
+#: app/tools/gimpbucketfilloptions.c:634
 msgid "The source drawable has no alpha channel"
 msgstr "У початковому намальованому об'єкті немає каналу прозорості"
 
 #. fill type
-#: app/tools/gimpbucketfilloptions.c:677
+#: app/tools/gimpbucketfilloptions.c:676
 #, c-format
 msgid "Fill Type  (%s)"
 msgstr "Тип заповнення  (%s)"
 
 #. fill selection
-#: app/tools/gimpbucketfilloptions.c:690
+#: app/tools/gimpbucketfilloptions.c:689
 #, c-format
 msgid "Affected Area  (%s)"
 msgstr "Область застосування  (%s)"
 
 #. Similar color frame
-#: app/tools/gimpbucketfilloptions.c:697
+#: app/tools/gimpbucketfilloptions.c:696
 msgid "Finding Similar Colors"
 msgstr "Пошук схожих кольорів"
 
-#: app/tools/gimpbucketfilloptions.c:748
+#: app/tools/gimpbucketfilloptions.c:747
 msgid "Line Art Detection"
 msgstr "Виявлення контуру"
 
-#: app/tools/gimpbucketfilloptions.c:758
+#: app/tools/gimpbucketfilloptions.c:757
 msgid "(computing...)"
 msgstr "(обчислюємо…)"
 
-#: app/tools/gimpbucketfilloptions.c:778
+#: app/tools/gimpbucketfilloptions.c:777
 msgid "Detect opacity rather than grayscale"
 msgstr "Виявляти непрозорість, а не тони сірого"
 
 #. Line Art Closure: frame label
-#: app/tools/gimpbucketfilloptions.c:788
+#: app/tools/gimpbucketfilloptions.c:787
 msgid "Line Art Closure"
 msgstr "Замикання штрихування"
 
 #. Line Art Borders: frame label
-#: app/tools/gimpbucketfilloptions.c:819
+#: app/tools/gimpbucketfilloptions.c:818
 msgid "Fill borders"
 msgstr "Рамки заповнення"
 
@@ -23921,7 +23927,7 @@ msgid "Y:"
 msgstr "Y:"
 
 #. the color label
-#: app/tools/gimpgradienttool-editor.c:1345 app/tools/gimptextoptions.c:869
+#: app/tools/gimpgradienttool-editor.c:1345 app/tools/gimptextoptions.c:868
 msgid "Color:"
 msgstr "Колір:"
 
@@ -24106,7 +24112,7 @@ msgstr "Вирівнювання"
 msgid "Sensitivity"
 msgstr "Чутливість"
 
-#: app/tools/gimpinkoptions-gui.c:147 app/tools/gimpmybrushoptions-gui.c:105
+#: app/tools/gimpinkoptions-gui.c:147 app/tools/gimpmybrushoptions-gui.c:110
 #: app/tools/gimppaintoptions-gui.c:532
 msgid "Fill Layer Mask With"
 msgstr "Заповнити маску шару"
@@ -24409,11 +24415,11 @@ msgstr "Усі позиції позначеного шару заблокова
 msgid "A selected channel's position or pixels are locked."
 msgstr "Позначену позицію або пікселі каналу заблоковано."
 
-#: app/tools/gimpmybrushtool.c:76
+#: app/tools/gimpmybrushtool.c:79
 msgid "MyPaint Brush Tool: Use MyPaint brushes in GIMP"
 msgstr "Пензель MyPaint: скористайтеся пензлями MyPaint у GIMP"
 
-#: app/tools/gimpmybrushtool.c:77
+#: app/tools/gimpmybrushtool.c:80
 msgid "M_yPaint Brush"
 msgstr "Пе_нзель MyPaint"
 
@@ -24806,7 +24812,7 @@ msgstr "Активне"
 msgid "Fixed"
 msgstr "Фіксовано"
 
-#: app/tools/gimprectangleoptions.c:1006 app/tools/gimptextoptions.c:827
+#: app/tools/gimprectangleoptions.c:1006 app/tools/gimptextoptions.c:826
 msgid "Size:"
 msgstr "Розмір:"
 
@@ -25183,35 +25189,35 @@ msgstr "Одиниця товщини контуру"
 msgid "Outline miter limit"
 msgstr "Обмеження фацета контуру"
 
-#: app/tools/gimptextoptions.c:858
+#: app/tools/gimptextoptions.c:857
 msgid "Hinting:"
 msgstr "Уточнення:"
 
-#: app/tools/gimptextoptions.c:862
+#: app/tools/gimptextoptions.c:861
 msgid "Text Color"
 msgstr "Колір тексту"
 
-#: app/tools/gimptextoptions.c:875
+#: app/tools/gimptextoptions.c:874
 msgid "Style:"
 msgstr "Стиль:"
 
-#: app/tools/gimptextoptions.c:879
+#: app/tools/gimptextoptions.c:878
 msgid "Outline Options"
 msgstr "Параметри контуру"
 
-#: app/tools/gimptextoptions.c:896
+#: app/tools/gimptextoptions.c:895
 msgid "Outline Direction:"
 msgstr "Напрямок контуру:"
 
-#: app/tools/gimptextoptions.c:912
+#: app/tools/gimptextoptions.c:911
 msgid "Justify:"
 msgstr "Вирівнювання:"
 
-#: app/tools/gimptextoptions.c:942
+#: app/tools/gimptextoptions.c:941
 msgid "Box:"
 msgstr "Блок:"
 
-#: app/tools/gimptextoptions.c:984
+#: app/tools/gimptextoptions.c:983
 msgid "Language:"
 msgstr "Мова:"
 
@@ -26503,37 +26509,37 @@ msgstr "Події клавіатури"
 msgid "Ready"
 msgstr "Виконано"
 
-#: app/widgets/gimpcontrollerlist.c:183
+#: app/widgets/gimpcontrollerlist.c:166
 msgid "Available Controllers"
 msgstr "Доступні контролери"
 
-#: app/widgets/gimpcontrollerlist.c:272
+#: app/widgets/gimpcontrollerlist.c:229
 msgid "Active Controllers"
 msgstr "Активні контролери"
 
-#: app/widgets/gimpcontrollerlist.c:288
+#: app/widgets/gimpcontrollerlist.c:251
 msgid "Configure the selected controller"
 msgstr "Налаштувати обраний контролер"
 
-#: app/widgets/gimpcontrollerlist.c:296
+#: app/widgets/gimpcontrollerlist.c:259
 msgid "Move the selected controller up"
 msgstr "Перемістити обраний контролер вгору"
 
-#: app/widgets/gimpcontrollerlist.c:304
+#: app/widgets/gimpcontrollerlist.c:267
 msgid "Move the selected controller down"
 msgstr "Перемістити обраний контролер вниз"
 
-#: app/widgets/gimpcontrollerlist.c:417
+#: app/widgets/gimpcontrollerlist.c:441
 #, c-format
 msgid "Add '%s' to the list of active controllers"
 msgstr "Додати «%s» до списку активних фільтрів"
 
-#: app/widgets/gimpcontrollerlist.c:470
+#: app/widgets/gimpcontrollerlist.c:490
 #, c-format
 msgid "Remove '%s' from the list of active controllers"
 msgstr "Вилучити «%s» зі списку активних фільтрів"
 
-#: app/widgets/gimpcontrollerlist.c:506
+#: app/widgets/gimpcontrollerlist.c:528
 msgid ""
 "There can only be one active keyboard controller.\n"
 "\n"
@@ -26543,7 +26549,7 @@ msgstr ""
 "\n"
 "У списку вже є такий контролер."
 
-#: app/widgets/gimpcontrollerlist.c:517
+#: app/widgets/gimpcontrollerlist.c:539
 msgid ""
 "There can only be one active wheel controller.\n"
 "\n"
@@ -26553,24 +26559,24 @@ msgstr ""
 "\n"
 "У списку вже є такий контролер."
 
-#: app/widgets/gimpcontrollerlist.c:543
+#: app/widgets/gimpcontrollerlist.c:566
 msgid "Remove Controller?"
 msgstr "Вилучити контролер?"
 
-#: app/widgets/gimpcontrollerlist.c:548
+#: app/widgets/gimpcontrollerlist.c:571
 msgid "_Disable Controller"
 msgstr "Ви_мкнути контролер"
 
-#: app/widgets/gimpcontrollerlist.c:550
+#: app/widgets/gimpcontrollerlist.c:573
 msgid "_Remove Controller"
 msgstr "Ви_лучити контролер"
 
-#: app/widgets/gimpcontrollerlist.c:562
+#: app/widgets/gimpcontrollerlist.c:585
 #, c-format
 msgid "Remove Controller '%s'?"
 msgstr "Вилучити контролер «%s»?"
 
-#: app/widgets/gimpcontrollerlist.c:566
+#: app/widgets/gimpcontrollerlist.c:589
 msgid ""
 "Removing this controller from the list of active controllers will "
 "permanently delete all event mappings you have configured.\n"
@@ -26583,7 +26589,7 @@ msgstr ""
 "Функція «Вимкнути контролер» вимикає обраний контролер, без вилучення "
 "параметрів."
 
-#: app/widgets/gimpcontrollerlist.c:618
+#: app/widgets/gimpcontrollerlist.c:640
 msgid "Configure Input Controller"
 msgstr "Налаштувати контролер вводу"
 
@@ -28154,19 +28160,19 @@ msgstr "_Експортувати поточні параметри до фай�
 msgid "_Manage Saved Presets..."
 msgstr "_Керувати збереженими шаблонами…"
 
-#: app/widgets/gimpsettingsbox.c:595
+#: app/widgets/gimpsettingsbox.c:584
 msgid "Save Settings as Named Preset"
 msgstr "Зберегти параметри як шаблон із назвою"
 
-#: app/widgets/gimpsettingsbox.c:598
+#: app/widgets/gimpsettingsbox.c:587
 msgid "Enter a name for the preset"
 msgstr "Введіть назву шаблону"
 
-#: app/widgets/gimpsettingsbox.c:599
+#: app/widgets/gimpsettingsbox.c:588
 msgid "Saved Settings"
 msgstr "Збережені параметри"
 
-#: app/widgets/gimpsettingsbox.c:642
+#: app/widgets/gimpsettingsbox.c:631
 msgid "Manage Saved Presets"
 msgstr "Керування збереженими шаблонами"
 
@@ -28345,7 +28351,7 @@ msgstr "Неправильний рядок UTF-8 у файлі \"%s\"."
 msgid "Writing text file '%s' failed: %s"
 msgstr "Не вдалося записати текстовий файл «%s»: %s"
 
-#: app/widgets/gimptexteditor.c:231
+#: app/widgets/gimptexteditor.c:236
 msgid "_Use selected font"
 msgstr "_Використовувати позначений шрифт"
 
