@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-07-07 22:38+0000\n"
-"PO-Revision-Date: 2025-07-08 07:44+0800\n"
+"POT-Creation-Date: 2025-07-10 22:00+0000\n"
+"PO-Revision-Date: 2025-07-11 07:22+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -2493,7 +2493,7 @@ msgstr "240 秒"
 #: app/tools/gimptexttool.c:1774 app/tools/gimptransformgridtool.c:1264
 #: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
 #: app/widgets/gimpcolordialog.c:492 app/widgets/gimpcontrollereditor.c:666
-#: app/widgets/gimpcontrollerlist.c:549 app/widgets/gimpdeviceeditor.c:543
+#: app/widgets/gimpcontrollerlist.c:572 app/widgets/gimpdeviceeditor.c:543
 #: app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228
 #: app/widgets/gimpfiledialog.c:336 app/widgets/gimphelp.c:438
 #: app/widgets/gimphelp.c:773 app/widgets/gimpiconpicker.c:489
@@ -13184,7 +13184,7 @@ msgid "Paint dynamics"
 msgstr "动态绘画"
 
 #: app/core/gimpcontext.c:713 app/core/gimpcontext.c:714
-#: app/tools/gimpmybrushtool.c:75
+#: app/tools/gimpmybrushtool.c:78
 msgid "MyPaint Brush"
 msgstr "MyPaint 笔刷"
 
@@ -13427,7 +13427,7 @@ msgstr "羽化边缘"
 msgid "Enable feathering of fill edges"
 msgstr "启用填充边缘羽化"
 
-#: app/core/gimpfilloptions.c:142 app/paint/gimpmybrushoptions.c:87
+#: app/core/gimpfilloptions.c:142 app/paint/gimpmybrushoptions.c:107
 #: app/tools/gimpbucketfilloptions.c:203 app/tools/gimpcoloroptions.c:86
 #: app/tools/gimprectangleselectoptions.c:101
 #: app/tools/gimpselectionoptions.c:103 app/widgets/gimpbrusheditor.c:160
@@ -15663,7 +15663,7 @@ msgstr "图像属性"
 #: app/dialogs/image-properties-dialog.c:68 app/dialogs/module-dialog.c:113
 #: app/dialogs/welcome-dialog.c:193 app/tools/gimpcolorpickertool.c:351
 #: app/tools/gimpgradienttool-editor.c:1818 app/tools/gimpmeasuretool.c:740
-#: app/widgets/gimpcontrollerlist.c:625 app/widgets/gimpcriticaldialog.c:206
+#: app/widgets/gimpcontrollerlist.c:647 app/widgets/gimpcriticaldialog.c:206
 #: app/widgets/gimpcriticaldialog.c:228 app/widgets/gimpsettingsbox.c:636
 #: app/widgets/gimptexteditor.c:164
 msgid "_Close"
@@ -18631,7 +18631,7 @@ msgstr "（干净）"
 msgid "(none)"
 msgstr "（无）"
 
-#: app/display/gimpdisplayshell-tool-events.c:1758
+#: app/display/gimpdisplayshell-tool-events.c:1766
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "拾取的图层：“%s”"
@@ -20089,7 +20089,7 @@ msgstr "偏移像素，可选择在边界处回卷像素"
 
 #: app/operations/gimpoperationoffset.c:125
 #: app/operations/gimpoperationoffset.c:126 app/tools/gimpoffsettool.c:579
-#: app/widgets/gimpfilleditor.c:142 app/widgets/gimpfilleditor.c:154
+#: app/widgets/gimpfilleditor.c:138 app/widgets/gimpfilleditor.c:150
 msgid "Fill Color"
 msgstr "填充颜色"
 
@@ -20179,7 +20179,7 @@ msgstr[0] "从崩溃中抢救了 %d 张图像。您想要尝试并恢复它们�
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: app/gui/gui.c:567
+#: app/gui/gui.c:568
 msgid "Documents"
 msgstr "文档"
 
@@ -20327,32 +20327,48 @@ msgstr "墨斑宽高比"
 msgid "Ink Blob Angle"
 msgstr "墨斑角度"
 
-#: app/paint/gimpmybrushcore.c:104
+#: app/paint/gimpmybrushcore.c:107
 msgid "Mybrush"
 msgstr "Mybrush"
 
-#: app/paint/gimpmybrushcore.c:157
+#: app/paint/gimpmybrushcore.c:160
 msgid "No MyPaint brushes available for use with this tool."
 msgstr "没有可供此工具使用的 MyPaint 笔刷。"
 
-#: app/paint/gimpmybrushoptions.c:94
+#: app/paint/gimpmybrushoptions.c:93
+msgid "View Zoom"
+msgstr "视图缩放"
+
+#: app/paint/gimpmybrushoptions.c:100
+msgid "View Rotation"
+msgstr "视图旋转"
+
+#: app/paint/gimpmybrushoptions.c:114
 msgid "Base Opacity"
 msgstr "基础不透明度"
 
-#: app/paint/gimpmybrushoptions.c:101 app/paint/gimppaintoptions.c:241
+#: app/paint/gimpmybrushoptions.c:121 app/paint/gimppaintoptions.c:241
 #: app/tools/gimpwarpoptions.c:99 app/widgets/gimpbrusheditor.c:180
 msgid "Hardness"
 msgstr "硬度"
 
-#: app/paint/gimpmybrushoptions.c:108
+#: app/paint/gimpmybrushoptions.c:128
+msgid "Gain"
+msgstr "增益"
+
+#: app/paint/gimpmybrushoptions.c:129
+msgid "Adjust strength of input pressure"
+msgstr "调整输入压力的强度"
+
+#: app/paint/gimpmybrushoptions.c:153
 msgid "Erase with this brush"
 msgstr "使用此笔刷擦除"
 
-#: app/paint/gimpmybrushoptions.c:115
+#: app/paint/gimpmybrushoptions.c:160
 msgid "No erasing effect"
 msgstr "没有擦除效果"
 
-#: app/paint/gimpmybrushoptions.c:116 app/paint/gimpsmudgeoptions.c:87
+#: app/paint/gimpmybrushoptions.c:161 app/paint/gimpsmudgeoptions.c:87
 msgid "Never decrease alpha of existing pixels"
 msgstr "永不减小现存像素的透明度"
 
@@ -23554,7 +23570,7 @@ msgstr "调整"
 msgid "Sensitivity"
 msgstr "灵敏度"
 
-#: app/tools/gimpinkoptions-gui.c:147 app/tools/gimpmybrushoptions-gui.c:105
+#: app/tools/gimpinkoptions-gui.c:147 app/tools/gimpmybrushoptions-gui.c:110
 #: app/tools/gimppaintoptions-gui.c:532
 msgid "Fill Layer Mask With"
 msgstr "填充图层蒙版为"
@@ -23855,11 +23871,11 @@ msgstr "所有选中路径的位置已被锁定。"
 msgid "A selected channel's position or pixels are locked."
 msgstr "一个选中通道的位置或像素已被锁定。"
 
-#: app/tools/gimpmybrushtool.c:76
+#: app/tools/gimpmybrushtool.c:79
 msgid "MyPaint Brush Tool: Use MyPaint brushes in GIMP"
 msgstr "MyPaint 笔刷工具：在 GIMP 中使用 MyPaint 笔刷"
 
-#: app/tools/gimpmybrushtool.c:77
+#: app/tools/gimpmybrushtool.c:80
 msgid "M_yPaint Brush"
 msgstr "MyPaint 笔刷(_Y)"
 
@@ -25920,37 +25936,37 @@ msgstr "键盘事件"
 msgid "Ready"
 msgstr "就绪"
 
-#: app/widgets/gimpcontrollerlist.c:183
+#: app/widgets/gimpcontrollerlist.c:166
 msgid "Available Controllers"
 msgstr "可用控制器"
 
-#: app/widgets/gimpcontrollerlist.c:272
+#: app/widgets/gimpcontrollerlist.c:229
 msgid "Active Controllers"
 msgstr "活动控制器"
 
-#: app/widgets/gimpcontrollerlist.c:288
+#: app/widgets/gimpcontrollerlist.c:251
 msgid "Configure the selected controller"
 msgstr "配置选中控制器"
 
-#: app/widgets/gimpcontrollerlist.c:296
+#: app/widgets/gimpcontrollerlist.c:259
 msgid "Move the selected controller up"
 msgstr "上移选中控制器"
 
-#: app/widgets/gimpcontrollerlist.c:304
+#: app/widgets/gimpcontrollerlist.c:267
 msgid "Move the selected controller down"
 msgstr "下移选中控制器"
 
-#: app/widgets/gimpcontrollerlist.c:417
+#: app/widgets/gimpcontrollerlist.c:441
 #, c-format
 msgid "Add '%s' to the list of active controllers"
 msgstr "将“%s”添加到活动控制器列表"
 
-#: app/widgets/gimpcontrollerlist.c:470
+#: app/widgets/gimpcontrollerlist.c:490
 #, c-format
 msgid "Remove '%s' from the list of active controllers"
 msgstr "从活动控制器列表中删除“%s”"
 
-#: app/widgets/gimpcontrollerlist.c:506
+#: app/widgets/gimpcontrollerlist.c:528
 msgid ""
 "There can only be one active keyboard controller.\n"
 "\n"
@@ -25960,7 +25976,7 @@ msgstr ""
 "\n"
 "在您的活动控制器列表中已经有一个键盘控制器。"
 
-#: app/widgets/gimpcontrollerlist.c:517
+#: app/widgets/gimpcontrollerlist.c:539
 msgid ""
 "There can only be one active wheel controller.\n"
 "\n"
@@ -25970,24 +25986,24 @@ msgstr ""
 "\n"
 "在您的活动控制器列表中已经有一个滚轮控制器。"
 
-#: app/widgets/gimpcontrollerlist.c:543
+#: app/widgets/gimpcontrollerlist.c:566
 msgid "Remove Controller?"
 msgstr "移除控制器吗？"
 
-#: app/widgets/gimpcontrollerlist.c:548
+#: app/widgets/gimpcontrollerlist.c:571
 msgid "_Disable Controller"
 msgstr "禁用控制器(_D)"
 
-#: app/widgets/gimpcontrollerlist.c:550
+#: app/widgets/gimpcontrollerlist.c:573
 msgid "_Remove Controller"
 msgstr "移除控制器(_R)"
 
-#: app/widgets/gimpcontrollerlist.c:562
+#: app/widgets/gimpcontrollerlist.c:585
 #, c-format
 msgid "Remove Controller '%s'?"
 msgstr "移除“%s”控制器吗？"
 
-#: app/widgets/gimpcontrollerlist.c:566
+#: app/widgets/gimpcontrollerlist.c:589
 msgid ""
 "Removing this controller from the list of active controllers will "
 "permanently delete all event mappings you have configured.\n"
@@ -25999,7 +26015,7 @@ msgstr ""
 "\n"
 "选择“禁用控制器”可以禁用控制器而非删除它。"
 
-#: app/widgets/gimpcontrollerlist.c:618
+#: app/widgets/gimpcontrollerlist.c:640
 msgid "Configure Input Controller"
 msgstr "配置输入控制器"
 
@@ -26574,7 +26590,7 @@ msgstr "X 倾斜"
 
 #: app/widgets/gimpdeviceinfo.c:60
 msgid "Y tilt"
-msgstr "X 倾斜"
+msgstr "Y 倾斜"
 
 #. Wheel as in mouse or input device wheel.
 #. * Some pens would use the same axis for their rotation feature.
@@ -26903,11 +26919,11 @@ msgstr "选择文件类型 (_T)"
 msgid "File Type"
 msgstr "文件类型"
 
-#: app/widgets/gimpfilleditor.c:164
+#: app/widgets/gimpfilleditor.c:160
 msgid "Fill BG Color"
 msgstr "填充背景色"
 
-#: app/widgets/gimpfilleditor.c:187
+#: app/widgets/gimpfilleditor.c:183
 msgid "_Antialiasing"
 msgstr "抗锯齿(_A)"
 
