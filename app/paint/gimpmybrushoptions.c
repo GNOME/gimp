@@ -126,7 +126,7 @@ gimp_mybrush_options_class_init (GimpMybrushOptionsClass *klass)
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_GAIN,
                            "gain",
                            _("Gain"),
-                           _("Adjust strength of input pressue"),
+                           _("Adjust strength of input pressure"),
                            -1.8, 1.8, 0.0,
                            GIMP_PARAM_STATIC_STRINGS);
 
@@ -188,7 +188,7 @@ gimp_mybrush_options_set_property (GObject      *object,
     {
     case PROP_VIEW_ZOOM:
       options->view_zoom = g_value_get_double (value) > 0.0f ?
-                           g_value_get_double (value) : 0.0001f;
+                           g_value_get_double (value) : 1.0f;
       break;
     case PROP_VIEW_ROTATION:
       options->view_rotation = CLAMP (g_value_get_double (value), 0.0f, 360.0f);

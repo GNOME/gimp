@@ -124,8 +124,8 @@ static void gimp_mybrush_tool_cursor_update (GimpTool         *tool,
 
   shell = gimp_display_get_shell (display);
 
-  options->view_zoom     = (gimp_zoom_model_get_factor (shell->zoom) >= 0.0f) ?
-                           gimp_zoom_model_get_factor (shell->zoom) : 0.0001f;
+  options->view_zoom     = (gimp_zoom_model_get_factor (shell->zoom) > 0.0f) ?
+                            gimp_zoom_model_get_factor (shell->zoom) : 1.0f;
   options->view_rotation = shell->rotate_angle;
 }
 
