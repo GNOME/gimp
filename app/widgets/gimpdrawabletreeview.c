@@ -290,6 +290,10 @@ gimp_drawable_tree_view_style_updated (GtkWidget *widget)
   GtkIconSize           old_size;
   GtkIconSize           button_icon_size = GTK_ICON_SIZE_SMALL_TOOLBAR;
 
+  gtk_widget_style_get (widget,
+                        "button-icon-size", &button_icon_size,
+                        NULL);
+
   gtk_icon_size_lookup (button_icon_size, &pixel_icon_size, NULL);
 
   gtk_image_get_icon_name (GTK_IMAGE (view->priv->filters_header_image),
@@ -509,7 +513,7 @@ static void
 gimp_drawable_tree_view_set_image (GimpItemTreeView *view,
                                    GimpImage        *image)
 {
-  GimpDrawableTreeView  *drawable_view = GIMP_DRAWABLE_TREE_VIEW (view);
+  GimpDrawableTreeView *drawable_view = GIMP_DRAWABLE_TREE_VIEW (view);
 
   if (gimp_item_tree_view_get_image (view))
     {
@@ -518,6 +522,10 @@ gimp_drawable_tree_view_set_image (GimpItemTreeView *view,
       g_signal_handlers_disconnect_by_func (gimp_item_tree_view_get_image (view),
                                             gimp_drawable_tree_view_floating_selection_changed,
                                             view);
+      g_signal_handlers_disconnect_by_func (gimp_item_tree_view_get_image (view)->gimp->config,
+                                            G_CALLBACK (gimp_drawable_tree_view_style_updated),
+                                            view);
+
     }
 
   GIMP_ITEM_TREE_VIEW_CLASS (parent_class)->set_image (view, image);
@@ -528,6 +536,19 @@ gimp_drawable_tree_view_set_image (GimpItemTreeView *view,
                         "floating-selection-changed",
                         G_CALLBACK (gimp_drawable_tree_view_floating_selection_changed),
                         view);
+
+      g_signal_connect_object (image->gimp->config,
+                               "notify::theme",
+                               G_CALLBACK (gimp_drawable_tree_view_style_updated),
+                               view, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+      g_signal_connect_object (image->gimp->config,
+                               "notify::override-theme-icon-size",
+                               G_CALLBACK (gimp_drawable_tree_view_style_updated),
+                               view, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+      g_signal_connect_object (image->gimp->config,
+                               "notify::custom-icon-size",
+                               G_CALLBACK (gimp_drawable_tree_view_style_updated),
+                               view, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
     }
 }
 
