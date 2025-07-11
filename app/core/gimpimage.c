@@ -4957,8 +4957,10 @@ gimp_image_set_selected_items (GimpImage *image,
     {
       gimp_image_set_selected_paths (image, items);
     }
-
-  g_return_if_reached ();
+  else
+    {
+      g_return_if_reached ();
+    }
 }
 
 void
