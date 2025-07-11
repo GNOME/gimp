@@ -2615,52 +2615,52 @@ convert_alias_blend (gint     alias_blend_mode,
   switch (alias_blend_mode)
     {
     case 1:
-      blend_mode = GIMP_LAYER_MODE_MULTIPLY;
+      blend_mode = GIMP_LAYER_MODE_MULTIPLY_LEGACY;
       break;
     case 2:
-      blend_mode = GIMP_LAYER_MODE_ADDITION;
+      blend_mode = GIMP_LAYER_MODE_ADDITION_LEGACY;
       break;
     case 3:
-      blend_mode = GIMP_LAYER_MODE_SCREEN;
+      blend_mode = GIMP_LAYER_MODE_SCREEN_LEGACY;
       break;
     case 4:
       blend_mode = GIMP_LAYER_MODE_OVERLAY;
       break;
     case 5:
-      blend_mode = GIMP_LAYER_MODE_LIGHTEN_ONLY;
+      blend_mode = GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY;
       break;
     case 6:
-      blend_mode = GIMP_LAYER_MODE_DARKEN_ONLY;
+      blend_mode = GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY;
       break;
 
     case 8:
-      blend_mode = GIMP_LAYER_MODE_HSL_COLOR;
+      blend_mode = GIMP_LAYER_MODE_HSL_COLOR_LEGACY;
       break;
     case 9:
-      blend_mode = GIMP_LAYER_MODE_HSV_HUE;
+      blend_mode = GIMP_LAYER_MODE_HSV_HUE_LEGACY;
       break;
     case 10:
-      blend_mode = GIMP_LAYER_MODE_HSV_SATURATION;
+      blend_mode = GIMP_LAYER_MODE_HSV_SATURATION_LEGACY;
       break;
     case 11:
-      blend_mode = GIMP_LAYER_MODE_HSV_VALUE;
+      blend_mode = GIMP_LAYER_MODE_HSV_VALUE_LEGACY;
       break;
 
     case 13:
-      blend_mode = GIMP_LAYER_MODE_BURN;
+      blend_mode = GIMP_LAYER_MODE_BURN_LEGACY;
       break;
     case 14:
       blend_mode = GIMP_LAYER_MODE_LINEAR_BURN;
       break;
     case 15:
-      blend_mode = GIMP_LAYER_MODE_HARDLIGHT;
+      blend_mode = GIMP_LAYER_MODE_HARDLIGHT_LEGACY;
       break;
     case 16:
-      blend_mode = GIMP_LAYER_MODE_SOFTLIGHT;
+      blend_mode = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
       break;
 
     case 21:
-      blend_mode = GIMP_LAYER_MODE_DODGE;
+      blend_mode = GIMP_LAYER_MODE_DODGE_LEGACY;
       break;
     case 22: /* Glow */
       blend_mode = GIMP_LAYER_MODE_VIVID_LIGHT;
@@ -2672,7 +2672,7 @@ convert_alias_blend (gint     alias_blend_mode,
     default:
       if (is_group_layer)
         blend_mode = GIMP_LAYER_MODE_PASS_THROUGH;
-      blend_mode = GIMP_LAYER_MODE_NORMAL;
+      blend_mode = GIMP_LAYER_MODE_NORMAL_LEGACY;
     }
 
   return blend_mode;
