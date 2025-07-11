@@ -1422,7 +1422,7 @@ blend_mode_name (PSPBlendModes mode)
   };
   static gchar *err_name = NULL;
 
-  if (mode >= 0 && mode <= PSP_BLEND_TRUE_LIGHTNESS)
+  if (mode <= PSP_BLEND_TRUE_LIGHTNESS)
     return blend_mode_names[mode];
   else if (mode == PSP_BLEND_ADJUST)
     return blend_mode_names[PSP_BLEND_TRUE_LIGHTNESS+1];
@@ -1449,7 +1449,7 @@ layer_type_name (PSPLayerTypePSP6 type)
   };
   static gchar *err_name = NULL;
 
-  if (type >= 0 && type <= keGLTArtMedia)
+  if (type <= keGLTArtMedia)
     return layer_type_names[type];
 
   g_free (err_name);
