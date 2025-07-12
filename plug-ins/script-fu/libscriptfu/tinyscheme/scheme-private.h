@@ -183,6 +183,7 @@ extern "C" {
 #define immutable_cons(sc,a,b) _cons(sc,a,b,1)
 
 int is_string(pointer p);
+int is_arg_name(pointer p);
 char *string_value(pointer p);
 int is_number(pointer p);
 num nvalue(pointer p);
