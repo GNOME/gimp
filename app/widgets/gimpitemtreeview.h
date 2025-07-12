@@ -25,26 +25,16 @@
 #include "gimpcontainertreeview.h"
 
 
-typedef void            (* GimpAddItemFunc)      (GimpImage *image,
-                                                  GimpItem  *item,
-                                                  GimpItem  *parent,
-                                                  gint       index,
-                                                  gboolean   push_undo);
-typedef void            (* GimpRemoveItemFunc)   (GimpImage *image,
-                                                  GimpItem  *item,
-                                                  gboolean   push_undo,
-                                                  GimpItem  *new_active);
-typedef GimpItem      * (* GimpNewItemFunc)      (GimpImage *image);
+typedef GimpItem * (* GimpNewItemFunc)  (GimpImage *image);
 
-
-typedef gboolean        (* GimpIsLockedFunc)     (GimpItem  *item);
-typedef gboolean        (* GimpCanLockFunc)      (GimpItem  *item);
-typedef void            (* GimpSetLockFunc)      (GimpItem  *item,
-                                                  gboolean   lock,
-                                                  gboolean   push_undo);
-typedef GimpUndo      * (*GimpUndoLockPush)      (GimpImage     *image,
-                                                  const gchar   *undo_desc,
-                                                  GimpItem      *item);
+typedef gboolean   (* GimpIsLockedFunc) (GimpItem  *item);
+typedef gboolean   (* GimpCanLockFunc)  (GimpItem  *item);
+typedef void       (* GimpSetLockFunc)  (GimpItem  *item,
+                                         gboolean   lock,
+                                         gboolean   push_undo);
+typedef GimpUndo * (*GimpUndoLockPush)  (GimpImage     *image,
+                                         const gchar   *undo_desc,
+                                         GimpItem      *item);
 
 
 #define GIMP_TYPE_ITEM_TREE_VIEW            (gimp_item_tree_view_get_type ())
@@ -79,8 +69,6 @@ struct _GimpItemTreeViewClass
   const gchar          *signal_name;
 
   /*  virtual functions for manipulating the image's item tree  */
-  GimpAddItemFunc       add_item;
-  GimpRemoveItemFunc    remove_item;
   GimpNewItemFunc       new_item;
 
   /*  action names  */
