@@ -63,6 +63,8 @@ typedef enum
 } DialTarget;
 
 
+typedef struct _GimpDialPrivate GimpDialPrivate;
+
 struct _GimpDialPrivate
 {
   gdouble     alpha;
@@ -74,6 +76,9 @@ struct _GimpDialPrivate
   DialTarget  target;
   gdouble     last_angle;
 };
+
+#define GET_PRIVATE(obj)                                                \
+  ((GimpDialPrivate *) gimp_dial_get_instance_private ((GimpDial *) obj))
 
 
 static void        gimp_dial_set_property         (GObject            *object,
@@ -170,7 +175,6 @@ gimp_dial_class_init (GimpDialClass *klass)
 static void
 gimp_dial_init (GimpDial *dial)
 {
-  dial->priv = gimp_dial_get_instance_private (dial);
 }
 
 static void
@@ -179,33 +183,33 @@ gimp_dial_set_property (GObject      *object,
                         const GValue *value,
                         GParamSpec   *pspec)
 {
-  GimpDial *dial = GIMP_DIAL (object);
+  GimpDialPrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_ALPHA:
-      dial->priv->alpha = g_value_get_double (value);
-      gtk_widget_queue_draw (GTK_WIDGET (dial));
+      priv->alpha = g_value_get_double (value);
+      gtk_widget_queue_draw (GTK_WIDGET (object));
       break;
 
     case PROP_BETA:
-      dial->priv->beta = g_value_get_double (value);
-      gtk_widget_queue_draw (GTK_WIDGET (dial));
+      priv->beta = g_value_get_double (value);
+      gtk_widget_queue_draw (GTK_WIDGET (object));
       break;
 
     case PROP_CLOCKWISE_ANGLES:
-      dial->priv->clockwise_angles = g_value_get_boolean (value);
-      gtk_widget_queue_draw (GTK_WIDGET (dial));
+      priv->clockwise_angles = g_value_get_boolean (value);
+      gtk_widget_queue_draw (GTK_WIDGET (object));
       break;
 
     case PROP_CLOCKWISE_DELTA:
-      dial->priv->clockwise_delta = g_value_get_boolean (value);
-      gtk_widget_queue_draw (GTK_WIDGET (dial));
+      priv->clockwise_delta = g_value_get_boolean (value);
+      gtk_widget_queue_draw (GTK_WIDGET (object));
       break;
 
     case PROP_DRAW_BETA:
-      dial->priv->draw_beta = g_value_get_boolean (value);
-      gtk_widget_queue_draw (GTK_WIDGET (dial));
+      priv->draw_beta = g_value_get_boolean (value);
+      gtk_widget_queue_draw (GTK_WIDGET (object));
       break;
 
     default:
@@ -220,28 +224,28 @@ gimp_dial_get_property (GObject    *object,
                         GValue     *value,
                         GParamSpec *pspec)
 {
-  GimpDial *dial = GIMP_DIAL (object);
+  GimpDialPrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_ALPHA:
-      g_value_set_double (value, dial->priv->alpha);
+      g_value_set_double (value, priv->alpha);
       break;
 
     case PROP_BETA:
-      g_value_set_double (value, dial->priv->beta);
+      g_value_set_double (value, priv->beta);
       break;
 
     case PROP_CLOCKWISE_ANGLES:
-      g_value_set_boolean (value, dial->priv->clockwise_angles);
+      g_value_set_boolean (value, priv->clockwise_angles);
       break;
 
     case PROP_CLOCKWISE_DELTA:
-      g_value_set_boolean (value, dial->priv->clockwise_delta);
+      g_value_set_boolean (value, priv->clockwise_delta);
       break;
 
     case PROP_DRAW_BETA:
-      g_value_set_boolean (value, dial->priv->draw_beta);
+      g_value_set_boolean (value, priv->draw_beta);
       break;
 
     default:
@@ -254,11 +258,11 @@ static gboolean
 gimp_dial_draw (GtkWidget *widget,
                 cairo_t   *cr)
 {
-  GimpDial      *dial  = GIMP_DIAL (widget);
-  GtkAllocation  allocation;
-  gint           size;
-  gdouble        alpha = dial->priv->alpha;
-  gdouble        beta  = dial->priv->beta;
+  GimpDialPrivate *priv = GET_PRIVATE (widget);
+  GtkAllocation    allocation;
+  gint             size;
+  gdouble          alpha = priv->alpha;
+  gdouble          beta  = priv->beta;
 
   GTK_WIDGET_CLASS (parent_class)->draw (widget, cr);
 
@@ -268,7 +272,7 @@ gimp_dial_draw (GtkWidget *widget,
 
   gtk_widget_get_allocation (widget, &allocation);
 
-  if (dial->priv->clockwise_angles)
+  if (priv->clockwise_angles)
     {
       alpha = -alpha;
       beta  = -beta;
@@ -282,9 +286,9 @@ gimp_dial_draw (GtkWidget *widget,
 
   gimp_dial_draw_arrows (cr, size,
                          alpha, beta,
-                         dial->priv->clockwise_delta,
-                         dial->priv->target,
-                         dial->priv->draw_beta);
+                         priv->clockwise_delta,
+                         priv->target,
+                         priv->draw_beta);
 
   cairo_restore (cr);
 
@@ -295,36 +299,36 @@ static gboolean
 gimp_dial_button_press_event (GtkWidget      *widget,
                               GdkEventButton *bevent)
 {
-  GimpDial *dial = GIMP_DIAL (widget);
+  GimpDialPrivate *priv = GET_PRIVATE (widget);
 
   if (bevent->type == GDK_BUTTON_PRESS &&
       bevent->button == 1              &&
-      dial->priv->target != DIAL_TARGET_NONE)
+      priv->target != DIAL_TARGET_NONE)
     {
       gdouble angle;
 
       GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, bevent);
 
-      angle = _gimp_circle_get_angle_and_distance (GIMP_CIRCLE (dial),
+      angle = _gimp_circle_get_angle_and_distance (GIMP_CIRCLE (widget),
                                                    bevent->x, bevent->y,
                                                    NULL);
 
-      if (dial->priv->clockwise_angles && angle)
+      if (priv->clockwise_angles && angle)
         angle = 2.0 * G_PI - angle;
 
       if (bevent->state & GDK_SHIFT_MASK)
         angle = SNAP (angle, G_PI / 12.0);
 
-      dial->priv->last_angle = angle;
+      priv->last_angle = angle;
 
-      switch (dial->priv->target)
+      switch (priv->target)
         {
         case DIAL_TARGET_ALPHA:
-          g_object_set (dial, "alpha", angle, NULL);
+          g_object_set (widget, "alpha", angle, NULL);
           break;
 
         case DIAL_TARGET_BETA:
-          g_object_set (dial, "beta", angle, NULL);
+          g_object_set (widget, "beta", angle, NULL);
           break;
 
         default:
@@ -339,39 +343,39 @@ static gboolean
 gimp_dial_motion_notify_event (GtkWidget      *widget,
                                GdkEventMotion *mevent)
 {
-  GimpDial *dial = GIMP_DIAL (widget);
-  gdouble   angle;
-  gdouble   distance;
+  GimpDialPrivate *priv = GET_PRIVATE (widget);
+  gdouble          angle;
+  gdouble          distance;
 
-  angle = _gimp_circle_get_angle_and_distance (GIMP_CIRCLE (dial),
+  angle = _gimp_circle_get_angle_and_distance (GIMP_CIRCLE (widget),
                                                mevent->x, mevent->y,
                                                &distance);
 
-  if (dial->priv->clockwise_angles && angle)
+  if (priv->clockwise_angles && angle)
     angle = 2.0 * G_PI - angle;
 
-  if (_gimp_circle_has_grab (GIMP_CIRCLE (dial)))
+  if (_gimp_circle_has_grab (GIMP_CIRCLE (widget)))
     {
       gdouble delta;
 
       if (mevent->state & GDK_SHIFT_MASK)
         angle = SNAP (angle, G_PI / 12.0);
 
-      delta = angle - dial->priv->last_angle;
-      dial->priv->last_angle = angle;
+      delta = angle - priv->last_angle;
+      priv->last_angle = angle;
 
       if (delta != 0.0)
         {
-          gdouble alpha = dial->priv->alpha;
+          gdouble alpha = priv->alpha;
 
-          switch (dial->priv->target)
+          switch (priv->target)
             {
             case DIAL_TARGET_ALPHA:
-              g_object_set (dial, "alpha", angle, NULL);
+              g_object_set (widget, "alpha", angle, NULL);
               break;
 
             case DIAL_TARGET_BETA:
-              g_object_set (dial, "beta", angle, NULL);
+              g_object_set (widget, "beta", angle, NULL);
               break;
 
             case DIAL_TARGET_BOTH:
@@ -379,9 +383,11 @@ gimp_dial_motion_notify_event (GtkWidget      *widget,
               if (mevent->state & GDK_SHIFT_MASK)
                 delta = SNAP (alpha + delta, G_PI / 12.0) - alpha;
 
-              g_object_set (dial,
-                            "alpha", gimp_dial_normalize_angle (dial->priv->alpha + delta),
-                            "beta",  gimp_dial_normalize_angle (dial->priv->beta  + delta),
+              g_object_set (widget,
+                            "alpha",
+                            gimp_dial_normalize_angle (priv->alpha + delta),
+                            "beta",
+                            gimp_dial_normalize_angle (priv->beta  + delta),
                             NULL);
               break;
 
@@ -396,10 +402,10 @@ gimp_dial_motion_notify_event (GtkWidget      *widget,
       gdouble    dist_alpha;
       gdouble    dist_beta;
 
-      dist_alpha = gimp_dial_get_angle_distance (dial->priv->alpha, angle);
-      dist_beta  = gimp_dial_get_angle_distance (dial->priv->beta, angle);
+      dist_alpha = gimp_dial_get_angle_distance (priv->alpha, angle);
+      dist_beta  = gimp_dial_get_angle_distance (priv->beta, angle);
 
-      if (dial->priv->draw_beta       &&
+      if (priv->draw_beta             &&
           distance > SEGMENT_FRACTION &&
           MIN (dist_alpha, dist_beta) < G_PI / 12)
         {
@@ -417,7 +423,7 @@ gimp_dial_motion_notify_event (GtkWidget      *widget,
           target = DIAL_TARGET_BOTH;
         }
 
-      gimp_dial_set_target (dial, target);
+      gimp_dial_set_target (GIMP_DIAL (widget), target);
     }
 
   gdk_event_request_motions (mevent);
@@ -447,9 +453,11 @@ static void
 gimp_dial_set_target (GimpDial   *dial,
                       DialTarget  target)
 {
-  if (target != dial->priv->target)
+  GimpDialPrivate *priv = GET_PRIVATE (dial);
+
+  if (target != priv->target)
     {
-      dial->priv->target = target;
+      priv->target = target;
       gtk_widget_queue_draw (GTK_WIDGET (dial));
     }
 }
