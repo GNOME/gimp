@@ -621,7 +621,7 @@ image_pick_color_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  const GimpDrawable **drawables;
+  GimpDrawable **drawables;
   gdouble x;
   gdouble y;
   gboolean sample_merged;
@@ -1926,7 +1926,7 @@ image_set_selected_layers_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  const GimpLayer **layers;
+  GimpLayer **layers;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   layers = g_value_get_boxed (gimp_value_array_index (args, 1));
@@ -1995,7 +1995,7 @@ image_set_selected_channels_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  const GimpChannel **channels;
+  GimpChannel **channels;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   channels = g_value_get_boxed (gimp_value_array_index (args, 1));
@@ -2064,7 +2064,7 @@ image_set_selected_paths_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  const GimpPath **paths;
+  GimpPath **paths;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   paths = g_value_get_boxed (gimp_value_array_index (args, 1));

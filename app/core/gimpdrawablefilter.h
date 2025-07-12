@@ -124,7 +124,7 @@ gboolean   gimp_drawable_filter_update         (GimpDrawableFilter      *filter,
                                                 GimpLayerColorSpace      composite_space,
                                                 GimpLayerCompositeMode   composite_mode,
                                                 const gchar            **auxinputnames,
-                                                const GimpDrawable     **auxinputs,
+                                                GimpDrawable           **auxinputs,
                                                 GError                 **error);
 gboolean   gimp_drawable_filter_get_add_alpha  (GimpDrawableFilter      *filter);
 void       gimp_drawable_filter_set_add_alpha  (GimpDrawableFilter      *filter,

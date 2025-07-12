@@ -872,7 +872,7 @@ gimp_drawable_filter_update (GimpDrawableFilter      *filter,
                              GimpLayerColorSpace      composite_space,
                              GimpLayerCompositeMode   composite_mode,
                              const gchar            **auxinputnames,
-                             const GimpDrawable     **auxinputs,
+                             GimpDrawable           **auxinputs,
                              GError                 **error)
 {
   GimpImage    *image;

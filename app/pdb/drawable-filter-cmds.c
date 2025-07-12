@@ -359,7 +359,7 @@ drawable_filter_update_invoker (GimpProcedure         *procedure,
   gint composite_mode;
   gint composite_space;
   const gchar **auxinputnames;
-  const GimpDrawable **auxinputs;
+  GimpDrawable **auxinputs;
 
   filter = g_value_get_object (gimp_value_array_index (args, 0));
   propnames = g_value_get_boxed (gimp_value_array_index (args, 1));
