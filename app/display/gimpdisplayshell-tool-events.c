@@ -41,6 +41,7 @@
 #include "menus/menus.h"
 
 #include "widgets/gimpaction.h"
+#include "widgets/gimpcontrollermanager.h"
 #include "widgets/gimpcontrollers.h"
 #include "widgets/gimpcontrollerkeyboard.h"
 #include "widgets/gimpcontrollerwheel.h"
