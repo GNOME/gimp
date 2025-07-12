@@ -32,12 +32,6 @@ G_DECLARE_FINAL_TYPE (GimpControllerManager,
                       GIMP, CONTROLLER_MANAGER,
                       GObject)
 
-#define GIMP_TYPE_CONTROLLER_CATEGORY (gimp_controller_category_get_type ())
-G_DECLARE_FINAL_TYPE (GimpControllerCategory,
-                      gimp_controller_category,
-                      GIMP, CONTROLLER_CATEGORY,
-                      GObject)
-
 
 GimpControllerManager * gimp_get_controller_manager            (Gimp                  *gimp);
 
@@ -61,11 +55,6 @@ GimpUIManager  *        gimp_controller_manager_get_ui_manager (GimpControllerMa
 GimpController *        gimp_controller_manager_get_wheel      (GimpControllerManager *self);
 GimpController *        gimp_controller_manager_get_keyboard   (GimpControllerManager *self);
 GListModel *            gimp_controller_manager_get_categories (GimpControllerManager *self);
-
-
-const gchar *           gimp_controller_category_get_name      (GimpControllerCategory *self);
-const gchar *           gimp_controller_category_get_icon_name (GimpControllerCategory *self);
-GType                   gimp_controller_category_get_gtype     (GimpControllerCategory *self);
 
 
 #endif /* __GIMP_CONTROLLERS_H__ */

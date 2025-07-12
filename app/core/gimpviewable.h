@@ -213,5 +213,7 @@ void            gimp_viewable_set_expanded       (GimpViewable  *viewable,
 gboolean        gimp_viewable_is_ancestor        (GimpViewable  *ancestor,
                                                   GimpViewable  *descendant);
 
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpViewable, g_object_unref);
+
 
 #endif  /* __GIMP_VIEWABLE_H__ */
