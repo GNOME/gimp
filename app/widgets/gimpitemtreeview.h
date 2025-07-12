@@ -25,7 +25,6 @@
 #include "gimpcontainertreeview.h"
 
 
-typedef GimpContainer * (* GimpGetContainerFunc) (GimpImage *image);
 typedef void            (* GimpAddItemFunc)      (GimpImage *image,
                                                   GimpItem  *item,
                                                   GimpItem  *parent,
@@ -80,7 +79,6 @@ struct _GimpItemTreeViewClass
   const gchar          *signal_name;
 
   /*  virtual functions for manipulating the image's item tree  */
-  GimpGetContainerFunc  get_container;
   GimpAddItemFunc       add_item;
   GimpRemoveItemFunc    remove_item;
   GimpNewItemFunc       new_item;

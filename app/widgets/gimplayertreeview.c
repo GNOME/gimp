@@ -209,7 +209,6 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   item_view_class->signal_name        = "selected-layers-changed";
 
   item_view_class->set_image          = gimp_layer_tree_view_set_image;
-  item_view_class->get_container      = gimp_image_get_layers;
   item_view_class->add_item           = (GimpAddItemFunc) gimp_image_add_layer;
   item_view_class->remove_item        = (GimpRemoveItemFunc) gimp_image_remove_layer;
   item_view_class->new_item           = gimp_layer_tree_view_item_new;
