@@ -5342,6 +5342,67 @@ gimp_image_lower_item_to_bottom (GimpImage *image,
 }
 
 
+gboolean
+gimp_image_add_item (GimpImage *image,
+                     GimpItem  *item,
+                     GimpItem  *parent,
+                     gint       position,
+                     gboolean   push_undo)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+
+  if (GIMP_IS_LAYER (item))
+    {
+      return gimp_image_add_layer (image, GIMP_LAYER (item),
+                                   GIMP_LAYER (parent),
+                                   position, push_undo);
+    }
+  else if (GIMP_IS_CHANNEL (item))
+    {
+      return gimp_image_add_channel (image, GIMP_CHANNEL (item),
+                                     GIMP_CHANNEL (parent),
+                                     position, push_undo);
+    }
+  else if (GIMP_IS_PATH (item))
+    {
+      return gimp_image_add_path (image, GIMP_PATH (item),
+                                  GIMP_PATH (parent),
+                                  position, push_undo);
+    }
+
+  g_return_val_if_reached (FALSE);
+}
+
+void
+gimp_image_remove_item (GimpImage *image,
+                        GimpItem  *item,
+                        gboolean   push_undo,
+                        GList     *new_selected)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  if (GIMP_IS_LAYER (item))
+    {
+      gimp_image_remove_layer (image, GIMP_LAYER (item),
+                               push_undo, new_selected);
+    }
+  else if (GIMP_IS_CHANNEL (item))
+    {
+      gimp_image_remove_channel (image, GIMP_CHANNEL (item),
+                                 push_undo, new_selected);
+    }
+  else if (GIMP_IS_PATH (item))
+    {
+      gimp_image_remove_path (image, GIMP_PATH (item),
+                              push_undo, new_selected);
+    }
+  else
+    {
+      g_return_if_reached ();
+    }
+}
+
+
 /*  layers  */
 
 gboolean
