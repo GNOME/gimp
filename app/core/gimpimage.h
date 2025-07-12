@@ -447,21 +447,6 @@ void            gimp_image_add_layers            (GimpImage          *image,
                                                   gint                height,
                                                   const gchar        *undo_desc);
 
-void            gimp_image_store_item_set        (GimpImage          *image,
-                                                  GimpItemList       *set);
-gboolean        gimp_image_unlink_item_set       (GimpImage          *image,
-                                                  GimpItemList       *set);
-GList         * gimp_image_get_stored_item_sets   (GimpImage         *image,
-                                                   GType              item_type);
-void            gimp_image_select_item_set       (GimpImage          *image,
-                                                  GimpItemList       *set);
-void            gimp_image_add_item_set          (GimpImage          *image,
-                                                  GimpItemList       *set);
-void            gimp_image_remove_item_set       (GimpImage          *image,
-                                                  GimpItemList       *set);
-void            gimp_image_intersect_item_set    (GimpImage        *image,
-                                                  GimpItemList       *set);
-
 gboolean        gimp_image_add_channel           (GimpImage          *image,
                                                   GimpChannel        *channel,
                                                   GimpChannel        *parent,
@@ -481,6 +466,21 @@ void            gimp_image_remove_path           (GimpImage          *image,
                                                   GimpPath           *path,
                                                   gboolean            push_undo,
                                                   GList              *new_selected);
+
+void            gimp_image_store_item_set        (GimpImage          *image,
+                                                  GimpItemList       *set);
+gboolean        gimp_image_unlink_item_set       (GimpImage          *image,
+                                                  GimpItemList       *set);
+GList         * gimp_image_get_stored_item_sets   (GimpImage         *image,
+                                                   GType              item_type);
+void            gimp_image_select_item_set       (GimpImage          *image,
+                                                  GimpItemList       *set);
+void            gimp_image_add_item_set          (GimpImage          *image,
+                                                  GimpItemList       *set);
+void            gimp_image_remove_item_set       (GimpImage          *image,
+                                                  GimpItemList       *set);
+void            gimp_image_intersect_item_set    (GimpImage        *image,
+                                                  GimpItemList       *set);
 
 gboolean        gimp_image_add_hidden_item       (GimpImage          *image,
                                                   GimpItem           *item);
