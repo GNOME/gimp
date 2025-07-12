@@ -309,7 +309,6 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   klass->item_type                = G_TYPE_NONE;
   klass->signal_name              = NULL;
 
-  klass->get_container            = NULL;
   klass->add_item                 = NULL;
   klass->remove_item              = NULL;
   klass->new_item                 = NULL;
@@ -1141,9 +1140,11 @@ gimp_item_tree_view_real_set_image (GimpItemTreeView *view,
   if (view->priv->image)
     {
       GimpContainer *container;
+      GType          item_type;
 
-      container =
-        GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_container (view->priv->image);
+      item_type = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->item_type;
+
+      container = gimp_image_get_items (view->priv->image, item_type);
 
       gimp_container_view_set_container (GIMP_CONTAINER_VIEW (view), container);
 

@@ -90,7 +90,6 @@ gimp_path_tree_view_class_init (GimpPathTreeViewClass *klass)
   pv_vlass->item_type          = GIMP_TYPE_PATH;
   pv_vlass->signal_name        = "selected-paths-changed";
 
-  pv_vlass->get_container      = gimp_image_get_paths;
   pv_vlass->add_item           = (GimpAddItemFunc) gimp_image_add_path;
   pv_vlass->remove_item        = (GimpRemoveItemFunc) gimp_image_remove_path;
   pv_vlass->new_item           = gimp_path_tree_view_item_new;
