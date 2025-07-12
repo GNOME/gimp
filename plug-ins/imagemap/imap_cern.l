@@ -45,6 +45,10 @@ WS	[ \t\n]+
 
 %%
 
+RECTANGLE           return RECTANGLE;
+CIRCLE              return CIRCLE;
+POLYGON             return POLYGON;
+
 RECT{WS}\(4096,4096\){WS}\(4096,4096\).*#\$AUTHOR: {
 				   BEGIN(comment);
 				   return AUTHOR;
@@ -65,6 +69,8 @@ RECT{WS}\(4096,4096\){WS}\(4096,4096\)   {
    				   cern_lval.id = g_strndup (yytext, yyleng);
    				   return COMMENT;
 				}
+
+
 
 RECT				return RECTANGLE;
 
