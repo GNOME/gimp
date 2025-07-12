@@ -355,6 +355,8 @@ GimpItemTree  * gimp_image_get_layer_tree        (GimpImage          *image);
 GimpItemTree  * gimp_image_get_channel_tree      (GimpImage          *image);
 GimpItemTree  * gimp_image_get_path_tree         (GimpImage          *image);
 
+GimpContainer * gimp_image_get_items             (GimpImage          *image,
+                                                  GType               item_type);
 GimpContainer * gimp_image_get_layers            (GimpImage          *image);
 GimpContainer * gimp_image_get_channels          (GimpImage          *image);
 GimpContainer * gimp_image_get_paths             (GimpImage          *image);

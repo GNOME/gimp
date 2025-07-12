@@ -4621,6 +4621,28 @@ gimp_image_get_path_tree (GimpImage *image)
 }
 
 GimpContainer *
+gimp_image_get_items (GimpImage *image,
+                      GType      item_type)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  if (item_type == GIMP_TYPE_LAYER)
+    {
+      return gimp_image_get_layers (image);
+    }
+  else if (item_type == GIMP_TYPE_CHANNEL)
+    {
+      return gimp_image_get_channels (image);
+    }
+  else if (item_type == GIMP_TYPE_PATH)
+    {
+      return gimp_image_get_paths (image);
+    }
+
+  g_return_val_if_reached (NULL);
+}
+
+GimpContainer *
 gimp_image_get_layers (GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
