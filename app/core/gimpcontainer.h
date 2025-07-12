@@ -149,5 +149,7 @@ void         gimp_container_remove_handlers_by_data
                                                (GimpContainer           *container,
                                                 gpointer                 callback_data);
 
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpContainer, g_object_unref);
+
 
 #endif  /* __GIMP_CONTAINER_H__ */

@@ -66,5 +66,7 @@ void            gimp_list_sort          (GimpList     *list,
                                          GCompareFunc  sort_func);
 void            gimp_list_sort_by_name  (GimpList     *list);
 
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpList, g_object_unref);
+
 
 #endif  /* __GIMP_LIST_H__ */
