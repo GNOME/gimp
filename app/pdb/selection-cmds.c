@@ -197,7 +197,7 @@ selection_float_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  const GimpDrawable **drawables;
+  GimpDrawable **drawables;
   gint offx;
   gint offy;
   GimpLayer *layer = NULL;

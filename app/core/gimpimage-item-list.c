@@ -361,8 +361,8 @@ gimp_image_item_list_get_list (GimpImage        *image,
 }
 
 static GList *
-gimp_image_item_list_remove_children (GList          *list,
-                                      const GimpItem *parent)
+gimp_image_item_list_remove_children (GList    *list,
+                                      GimpItem *parent)
 {
   GList *l = list;
 

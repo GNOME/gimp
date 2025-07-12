@@ -60,7 +60,7 @@ edit_cut_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  const GimpDrawable **drawables;
+  GimpDrawable **drawables;
   gboolean non_empty = FALSE;
 
   drawables = g_value_get_boxed (gimp_value_array_index (args, 0));
@@ -137,7 +137,7 @@ edit_copy_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  const GimpDrawable **drawables;
+  GimpDrawable **drawables;
   gboolean non_empty = FALSE;
 
   drawables = g_value_get_boxed (gimp_value_array_index (args, 0));
@@ -343,7 +343,7 @@ edit_named_cut_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  const GimpDrawable **drawables;
+  GimpDrawable **drawables;
   const gchar *buffer_name;
   gchar *real_name = NULL;
 
@@ -427,7 +427,7 @@ edit_named_copy_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  const GimpDrawable **drawables;
+  GimpDrawable **drawables;
   const gchar *buffer_name;
   gchar *real_name = NULL;
 
