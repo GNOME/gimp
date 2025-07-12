@@ -55,6 +55,8 @@ typedef enum
 } PolarTarget;
 
 
+typedef struct _GimpPolarPrivate GimpPolarPrivate;
+
 struct _GimpPolarPrivate
 {
   gdouble      angle;
@@ -62,6 +64,9 @@ struct _GimpPolarPrivate
 
   PolarTarget  target;
 };
+
+#define GET_PRIVATE(obj)                                                \
+  ((GimpPolarPrivate *) gimp_polar_get_instance_private ((GimpPolar *) obj))
 
 
 static void        gimp_polar_set_property         (GObject            *object,
@@ -135,7 +140,6 @@ gimp_polar_class_init (GimpPolarClass *klass)
 static void
 gimp_polar_init (GimpPolar *polar)
 {
-  polar->priv = gimp_polar_get_instance_private (polar);
 }
 
 static void
@@ -144,18 +148,18 @@ gimp_polar_set_property (GObject      *object,
                          const GValue *value,
                          GParamSpec   *pspec)
 {
-  GimpPolar *polar = GIMP_POLAR (object);
+  GimpPolarPrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_ANGLE:
-      polar->priv->angle = g_value_get_double (value);
-      gtk_widget_queue_draw (GTK_WIDGET (polar));
+      priv->angle = g_value_get_double (value);
+      gtk_widget_queue_draw (GTK_WIDGET (object));
       break;
 
     case PROP_RADIUS:
-      polar->priv->radius = g_value_get_double (value);
-      gtk_widget_queue_draw (GTK_WIDGET (polar));
+      priv->radius = g_value_get_double (value);
+      gtk_widget_queue_draw (GTK_WIDGET (object));
       break;
 
     default:
@@ -170,16 +174,16 @@ gimp_polar_get_property (GObject    *object,
                          GValue     *value,
                          GParamSpec *pspec)
 {
-  GimpPolar *polar = GIMP_POLAR (object);
+  GimpPolarPrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_ANGLE:
-      g_value_set_double (value, polar->priv->angle);
+      g_value_set_double (value, priv->angle);
       break;
 
     case PROP_RADIUS:
-      g_value_set_double (value, polar->priv->radius);
+      g_value_set_double (value, priv->radius);
       break;
 
     default:
@@ -192,9 +196,9 @@ static gboolean
 gimp_polar_draw (GtkWidget *widget,
                  cairo_t   *cr)
 {
-  GimpPolar     *polar = GIMP_POLAR (widget);
-  GtkAllocation  allocation;
-  gint           size;
+  GimpPolarPrivate *priv = GET_PRIVATE (widget);
+  GtkAllocation     allocation;
+  gint              size;
 
   GTK_WIDGET_CLASS (parent_class)->draw (widget, cr);
 
@@ -211,8 +215,8 @@ gimp_polar_draw (GtkWidget *widget,
                    (allocation.height - size) / 2.0);
 
   gimp_polar_draw_circle (cr, size,
-                          polar->priv->angle, polar->priv->radius,
-                          polar->priv->target);
+                          priv->angle, priv->radius,
+                          priv->target);
 
   cairo_restore (cr);
 
@@ -223,18 +227,18 @@ static gboolean
 gimp_polar_button_press_event (GtkWidget      *widget,
                                GdkEventButton *bevent)
 {
-  GimpPolar *polar = GIMP_POLAR (widget);
+  GimpPolarPrivate *priv = GET_PRIVATE (widget);
 
   if (bevent->type == GDK_BUTTON_PRESS &&
       bevent->button == 1              &&
-      polar->priv->target != POLAR_TARGET_NONE)
+      priv->target != POLAR_TARGET_NONE)
     {
       gdouble angle;
       gdouble radius;
 
       GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, bevent);
 
-      angle = _gimp_circle_get_angle_and_distance (GIMP_CIRCLE (polar),
+      angle = _gimp_circle_get_angle_and_distance (GIMP_CIRCLE (widget),
                                                    bevent->x, bevent->y,
                                                    &radius);
       if (bevent->state & GDK_SHIFT_MASK)
@@ -242,7 +246,7 @@ gimp_polar_button_press_event (GtkWidget      *widget,
 
       radius = MIN (radius, 1.0);
 
-      g_object_set (polar,
+      g_object_set (widget,
                     "angle",  angle,
                     "radius", radius,
                     NULL);
@@ -255,22 +259,22 @@ static gboolean
 gimp_polar_motion_notify_event (GtkWidget      *widget,
                                 GdkEventMotion *mevent)
 {
-  GimpPolar *polar = GIMP_POLAR (widget);
-  gdouble    angle;
-  gdouble    radius;
+  GimpPolarPrivate *priv = GET_PRIVATE (widget);
+  gdouble           angle;
+  gdouble           radius;
 
-  angle = _gimp_circle_get_angle_and_distance (GIMP_CIRCLE (polar),
+  angle = _gimp_circle_get_angle_and_distance (GIMP_CIRCLE (widget),
                                                mevent->x, mevent->y,
                                                &radius);
 
-  if (_gimp_circle_has_grab (GIMP_CIRCLE (polar)))
+  if (_gimp_circle_has_grab (GIMP_CIRCLE (widget)))
     {
       radius = MIN (radius, 1.0);
 
       if (mevent->state & GDK_SHIFT_MASK)
         angle = SNAP (angle, G_PI / 12.0);
 
-      g_object_set (polar,
+      g_object_set (widget,
                     "angle",  angle,
                     "radius", radius,
                     NULL);
@@ -281,10 +285,10 @@ gimp_polar_motion_notify_event (GtkWidget      *widget,
       gdouble     dist_angle;
       gdouble     dist_radius;
 
-      dist_angle  = gimp_polar_get_angle_distance (polar->priv->angle, angle);
-      dist_radius = ABS (polar->priv->radius - radius);
+      dist_angle  = gimp_polar_get_angle_distance (priv->angle, angle);
+      dist_radius = ABS (priv->radius - radius);
 
-      if ((radius < 0.2 && polar->priv->radius < 0.2) ||
+      if ((radius < 0.2 && priv->radius < 0.2) ||
           (dist_angle  < (G_PI / 12) && dist_radius < 0.2))
         {
           target = POLAR_TARGET_CIRCLE;
@@ -294,7 +298,7 @@ gimp_polar_motion_notify_event (GtkWidget      *widget,
           target = POLAR_TARGET_NONE;
         }
 
-      gimp_polar_set_target (polar, target);
+      gimp_polar_set_target (GIMP_POLAR (widget), target);
     }
 
   gdk_event_request_motions (mevent);
@@ -324,9 +328,11 @@ static void
 gimp_polar_set_target (GimpPolar   *polar,
                        PolarTarget  target)
 {
-  if (target != polar->priv->target)
+  GimpPolarPrivate *priv = GET_PRIVATE (polar);
+
+  if (target != priv->target)
     {
-      polar->priv->target = target;
+      priv->target = target;
       gtk_widget_queue_draw (GTK_WIDGET (polar));
     }
 }

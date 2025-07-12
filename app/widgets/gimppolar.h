@@ -29,23 +29,12 @@
 #include "gimpcircle.h"
 
 
-#define GIMP_TYPE_POLAR            (gimp_polar_get_type ())
-#define GIMP_POLAR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_POLAR, GimpPolar))
-#define GIMP_POLAR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_POLAR, GimpPolarClass))
-#define GIMP_IS_POLAR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_POLAR))
-#define GIMP_IS_POLAR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_POLAR))
-#define GIMP_POLAR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_POLAR, GimpPolarClass))
+#define GIMP_TYPE_POLAR (gimp_polar_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpPolar,
+                          gimp_polar,
+                          GIMP, POLAR,
+                          GimpCircle)
 
-
-typedef struct _GimpPolarPrivate GimpPolarPrivate;
-typedef struct _GimpPolarClass   GimpPolarClass;
-
-struct _GimpPolar
-{
-  GimpCircle       parent_instance;
-
-  GimpPolarPrivate *priv;
-};
 
 struct _GimpPolarClass
 {
