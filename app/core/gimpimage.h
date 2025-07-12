@@ -429,6 +429,16 @@ gboolean        gimp_image_lower_item            (GimpImage          *image,
 gboolean        gimp_image_lower_item_to_bottom  (GimpImage          *image,
                                                   GimpItem           *item);
 
+gboolean        gimp_image_add_item              (GimpImage          *image,
+                                                  GimpItem           *item,
+                                                  GimpItem          *parent,
+                                                  gint                position,
+                                                  gboolean            push_undo);
+void            gimp_image_remove_item           (GimpImage          *image,
+                                                  GimpItem           *item,
+                                                  gboolean            push_undo,
+                                                  GList              *new_selected);
+
 gboolean        gimp_image_add_layer             (GimpImage          *image,
                                                   GimpLayer          *layer,
                                                   GimpLayer          *parent,
