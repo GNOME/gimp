@@ -22,23 +22,12 @@
 #define __GIMP_EDITOR_H__
 
 
-#define GIMP_TYPE_EDITOR            (gimp_editor_get_type ())
-#define GIMP_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_EDITOR, GimpEditor))
-#define GIMP_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_EDITOR, GimpEditorClass))
-#define GIMP_IS_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_EDITOR))
-#define GIMP_IS_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_EDITOR))
-#define GIMP_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_EDITOR, GimpEditorClass))
+#define GIMP_TYPE_EDITOR (gimp_editor_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpEditor,
+                          gimp_editor,
+                          GIMP, EDITOR,
+                          GtkBox)
 
-
-typedef struct _GimpEditorClass    GimpEditorClass;
-typedef struct _GimpEditorPrivate  GimpEditorPrivate;
-
-struct _GimpEditor
-{
-  GtkBox            parent_instance;
-
-  GimpEditorPrivate *priv;
-};
 
 struct _GimpEditorClass
 {
@@ -87,25 +76,27 @@ GtkWidget * gimp_editor_add_action_button (GimpEditor           *editor,
                                            const gchar          *group_name,
                                            const gchar          *action_name,
                                            ...) G_GNUC_NULL_TERMINATED;
-void     gimp_editor_set_action_sensitive (GimpEditor          *editor,
+void        gimp_editor_set_action_sensitive
+                                          (GimpEditor          *editor,
                                            const gchar         *group_name,
                                            const gchar         *action_name,
                                            gboolean             sensitive,
                                            const gchar         *reason);
 
-void        gimp_editor_set_show_name       (GimpEditor         *editor,
-                                             gboolean            show);
-void        gimp_editor_set_name            (GimpEditor         *editor,
-                                             const gchar        *name);
+void        gimp_editor_set_show_name     (GimpEditor          *editor,
+                                           gboolean             show);
+void        gimp_editor_set_name          (GimpEditor          *editor,
+                                           const gchar         *name);
 
-void        gimp_editor_set_box_style       (GimpEditor         *editor,
-                                             GtkBox             *box);
+void        gimp_editor_set_box_style     (GimpEditor          *editor,
+                                           GtkBox              *box);
 GimpUIManager *
-            gimp_editor_get_ui_manager      (GimpEditor         *editor);
-GtkBox    * gimp_editor_get_button_box      (GimpEditor         *editor);
+            gimp_editor_get_ui_manager    (GimpEditor          *editor);
+GtkBox    * gimp_editor_get_button_box    (GimpEditor          *editor);
 GimpMenuFactory *
-            gimp_editor_get_menu_factory    (GimpEditor         *editor);
-gpointer *  gimp_editor_get_popup_data      (GimpEditor         *editor);
-gchar *     gimp_editor_get_ui_path         (GimpEditor         *editor);
+            gimp_editor_get_menu_factory  (GimpEditor          *editor);
+gpointer  * gimp_editor_get_popup_data    (GimpEditor          *editor);
+gchar     * gimp_editor_get_ui_path       (GimpEditor          *editor);
+
 
 #endif  /*  __GIMP_EDITOR_H__  */
