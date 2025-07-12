@@ -559,9 +559,12 @@ static void
 gimp_drawable_tree_view_floating_selection_changed (GimpImage            *image,
                                                     GimpDrawableTreeView *view)
 {
+  GType  item_type;
   GList *items;
 
-  items = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (image);
+  item_type = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->item_type;
+
+  items = gimp_image_get_selected_items (image, item_type);
   items = g_list_copy (items);
 
   /*  update button states  */

@@ -310,8 +310,6 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   klass->signal_name              = NULL;
 
   klass->get_container            = NULL;
-  klass->get_selected_items       = NULL;
-  klass->set_selected_items       = NULL;
   klass->add_item                 = NULL;
   klass->remove_item              = NULL;
   klass->new_item                 = NULL;
@@ -908,7 +906,8 @@ gimp_item_tree_view_add_options (GimpItemTreeView *view,
       gtk_widget_show (view->priv->options_box);
 
       if (! view->priv->image ||
-          ! item_view_class->get_selected_items (view->priv->image))
+          ! gimp_image_get_selected_items (view->priv->image,
+                                           item_view_class->item_type))
         {
           gtk_widget_set_sensitive (view->priv->options_box, FALSE);
         }
@@ -1409,7 +1408,8 @@ gimp_item_tree_view_insert_items_after (GimpContainerView *view)
 
   item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view);
 
-  selected_items = item_view_class->get_selected_items (item_view->priv->image);
+  selected_items = gimp_image_get_selected_items (item_view->priv->image,
+                                                  item_view_class->item_type);
   gimp_container_view_select_items (view, selected_items);
 }
 
@@ -1429,11 +1429,15 @@ gimp_item_tree_view_select_items (GimpContainerView *view,
       GimpItemTreeViewClass *item_view_class;
 
       item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (tree_view);
+
       if (TRUE) /* XXX: test if new selection same as old. */
         {
-          item_view_class->set_selected_items (tree_view->priv->image, items);
+          gimp_image_set_selected_items (tree_view->priv->image,
+                                         item_view_class->item_type,
+                                         items);
 
-          items = item_view_class->get_selected_items (tree_view->priv->image);
+          items = gimp_image_get_selected_items (tree_view->priv->image,
+                                                 item_view_class->item_type);
         }
 
       options_sensitive = TRUE;
@@ -1747,9 +1751,12 @@ static void
 gimp_item_tree_view_item_changed (GimpImage        *image,
                                   GimpItemTreeView *view)
 {
+  GType  item_type;
   GList *items;
 
-  items = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (view->priv->image);
+  item_type = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->item_type;
+
+  items = gimp_image_get_selected_items (view->priv->image, item_type);
 
   gimp_container_view_select_items (GIMP_CONTAINER_VIEW (view), items);
 }
@@ -2275,7 +2282,9 @@ gimp_item_tree_view_row_expanded (GtkTreeView      *tree_view,
   GList                 *list;
 
   item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view);
-  selected_items  = item_view_class->get_selected_items (item_view->priv->image);
+
+  selected_items = gimp_image_get_selected_items (item_view->priv->image,
+                                                  item_view_class->item_type);
 
   if (selected_items)
     {

@@ -210,8 +210,6 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
 
   item_view_class->set_image          = gimp_layer_tree_view_set_image;
   item_view_class->get_container      = gimp_image_get_layers;
-  item_view_class->get_selected_items = (GimpGetItemsFunc) gimp_image_get_selected_layers;
-  item_view_class->set_selected_items = (GimpSetItemsFunc) gimp_image_set_selected_layers;
   item_view_class->add_item           = (GimpAddItemFunc) gimp_image_add_layer;
   item_view_class->remove_item        = (GimpRemoveItemFunc) gimp_image_remove_layer;
   item_view_class->new_item           = gimp_layer_tree_view_item_new;
@@ -1033,7 +1031,7 @@ gimp_layer_tree_view_layer_mode_box_callback (GtkWidget         *widget,
                                         GIMP_UNDO_LAYER_MODE);
 
   if (image)
-    layers = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (image);
+    layers = gimp_image_get_selected_layers (image);
 
   for (iter = layers; iter; iter = iter->next)
     {
@@ -1088,7 +1086,7 @@ gimp_layer_tree_view_opacity_scale_changed (GtkAdjustment     *adjustment,
   gdouble    opacity;
 
   image   = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
-  layers  = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (image);
+  layers  = gimp_image_get_selected_layers (image);
   undo    = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
                                           GIMP_UNDO_LAYER_OPACITY);
   opacity = gtk_adjustment_get_value (adjustment) / 100.0;
@@ -1144,7 +1142,7 @@ gimp_layer_tree_view_layer_signal_handler (GimpLayer         *layer,
   GList            *selected_layers;
 
   selected_layers =
-    GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (gimp_item_tree_view_get_image (item_view));
+    gimp_image_get_selected_layers (gimp_item_tree_view_get_image (item_view));
 
   if (g_list_find (selected_layers, layer))
     gimp_layer_tree_view_update_options (view, selected_layers);
