@@ -91,8 +91,6 @@ gimp_path_tree_view_class_init (GimpPathTreeViewClass *klass)
   pv_vlass->signal_name        = "selected-paths-changed";
 
   pv_vlass->get_container      = gimp_image_get_paths;
-  pv_vlass->get_selected_items = (GimpGetItemsFunc) gimp_image_get_selected_paths;
-  pv_vlass->set_selected_items = (GimpSetItemsFunc) gimp_image_set_selected_paths;
   pv_vlass->add_item           = (GimpAddItemFunc) gimp_image_add_path;
   pv_vlass->remove_item        = (GimpRemoveItemFunc) gimp_image_remove_path;
   pv_vlass->new_item           = gimp_path_tree_view_item_new;
@@ -274,7 +272,7 @@ gimp_path_tree_view_drag_svg (GtkWidget *widget,
   GList            *items;
   gchar            *svg_data = NULL;
 
-  items = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (image);
+  items = gimp_image_get_selected_paths (image);
 
   *svg_data_len = 0;
 
