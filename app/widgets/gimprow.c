@@ -33,8 +33,11 @@
 enum
 {
   PROP_0,
-  PROP_VIEWABLE
+  PROP_VIEWABLE,
+  N_PROPS
 };
+
+static GParamSpec *obj_props[N_PROPS] = { NULL, };
 
 
 typedef struct _GimpRowPrivate GimpRowPrivate;
@@ -47,26 +50,29 @@ struct _GimpRowPrivate
   GtkWidget    *label;
 };
 
+#define GET_PRIVATE(obj) \
+  ((GimpRowPrivate *) gimp_row_get_instance_private ((GimpRow *) obj))
 
-static void   gimp_row_constructed           (GObject      *object);
-static void   gimp_row_dispose               (GObject      *object);
-static void   gimp_row_set_property          (GObject      *object,
-                                              guint         property_id,
-                                              const GValue *value,
-                                              GParamSpec   *pspec);
-static void   gimp_row_get_property          (GObject      *object,
-                                              guint         property_id,
-                                              GValue       *value,
-                                              GParamSpec   *pspec);
 
-static void   gimp_row_viewable_name_changed (GimpViewable *viewable,
-                                              GimpRow      *row);
+static void   gimp_row_constructed           (GObject          *object);
+static void   gimp_row_dispose               (GObject          *object);
+static void   gimp_row_set_property          (GObject          *object,
+                                              guint             property_id,
+                                              const GValue     *value,
+                                              GParamSpec       *pspec);
+static void   gimp_row_get_property          (GObject          *object,
+                                              guint             property_id,
+                                              GValue           *value,
+                                              GParamSpec       *pspec);
+
+static void   gimp_row_viewable_icon_changed (GimpViewable     *viewable,
+                                              const GParamSpec *pspec,
+                                              GimpRow          *row);
+static void   gimp_row_viewable_name_changed (GimpViewable     *viewable,
+                                              GimpRow          *row);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpRow, gimp_row, GTK_TYPE_LIST_BOX_ROW)
-
-#define GET_PRIVATE(obj) \
-  ((GimpRowPrivate *) gimp_row_get_instance_private ((GimpRow *) obj))
 
 #define parent_class gimp_row_parent_class
 
@@ -81,12 +87,14 @@ gimp_row_class_init (GimpRowClass *klass)
   object_class->set_property = gimp_row_set_property;
   object_class->get_property = gimp_row_get_property;
 
-  g_object_class_install_property (object_class, PROP_VIEWABLE,
-                                   g_param_spec_object ("viewable",
-                                                        NULL, NULL,
-                                                        GIMP_TYPE_VIEWABLE,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+  obj_props[PROP_VIEWABLE] =
+    g_param_spec_object ("viewable",
+                         NULL, NULL,
+                         GIMP_TYPE_VIEWABLE,
+                         G_PARAM_READWRITE |
+                         G_PARAM_CONSTRUCT);
+
+  g_object_class_install_properties (object_class, N_PROPS, obj_props);
 }
 
 static void
@@ -187,6 +195,9 @@ gimp_row_set_viewable (GimpRow      *row,
   if (priv->viewable)
     {
       g_signal_handlers_disconnect_by_func (priv->viewable,
+                                            gimp_row_viewable_icon_changed,
+                                            row);
+      g_signal_handlers_disconnect_by_func (priv->viewable,
                                             gimp_row_viewable_name_changed,
                                             row);
     }
@@ -195,11 +206,19 @@ gimp_row_set_viewable (GimpRow      *row,
 
   if (priv->viewable)
     {
-      g_signal_connect (priv->viewable, "name-changed",
+      g_signal_connect (priv->viewable,
+                        GIMP_VIEWABLE_GET_CLASS (viewable)->name_changed_signal,
                         G_CALLBACK (gimp_row_viewable_name_changed),
                         row);
       gimp_row_viewable_name_changed (priv->viewable, row);
+
+      g_signal_connect (priv->viewable, "notify::icon-name",
+                        G_CALLBACK (gimp_row_viewable_icon_changed),
+                        row);
+      gimp_row_viewable_icon_changed (priv->viewable, NULL, row);
     }
+
+  g_object_notify_by_pspec (G_OBJECT (row), obj_props[PROP_VIEWABLE]);
 }
 
 GimpViewable *
@@ -219,6 +238,19 @@ gimp_row_create (gpointer item,
 
 
 /*  private functions  */
+
+static void
+gimp_row_viewable_icon_changed (GimpViewable     *viewable,
+                                const GParamSpec *pspec,
+                                GimpRow          *row)
+{
+  GimpRowPrivate *priv = GET_PRIVATE (row);
+
+  if (priv->icon)
+    gtk_image_set_from_icon_name (GTK_IMAGE (priv->icon),
+                                  gimp_viewable_get_icon_name (viewable),
+                                  GTK_ICON_SIZE_BUTTON);
+}
 
 static void
 gimp_row_viewable_name_changed (GimpViewable *viewable,
