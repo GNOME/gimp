@@ -22,39 +22,10 @@
 #define __GIMP_CONTROLLERS_H__
 
 
-void  gimp_controllers_init (Gimp *gimp);
-void  gimp_controllers_exit (Gimp *gimp);
+void                    gimp_controllers_init       (Gimp *gimp);
+void                    gimp_controllers_exit       (Gimp *gimp);
 
-
-#define GIMP_TYPE_CONTROLLER_MANAGER (gimp_controller_manager_get_type ())
-G_DECLARE_FINAL_TYPE (GimpControllerManager,
-                      gimp_controller_manager,
-                      GIMP, CONTROLLER_MANAGER,
-                      GObject)
-
-
-GimpControllerManager * gimp_get_controller_manager            (Gimp                  *gimp);
-
-void                    gimp_controller_manager_restore        (GimpControllerManager *self,
-                                                                GimpUIManager         *ui_manager);
-void                    gimp_controller_manager_save           (GimpControllerManager *self);
-
-gboolean                gimp_controller_manager_find           (GimpControllerManager *self,
-                                                                GimpControllerInfo    *info,
-                                                                guint                 *position);
-void                    gimp_controller_manager_add            (GimpControllerManager *self,
-                                                                GimpControllerInfo    *info);
-void                    gimp_controller_manager_remove         (GimpControllerManager *self,
-                                                                GimpControllerInfo    *info);
-void                    gimp_controller_manager_move           (GimpControllerManager *self,
-                                                                GimpControllerInfo    *info,
-                                                                guint                  new_position);
-
-Gimp *                  gimp_controller_manager_get_gimp       (GimpControllerManager *self);
-GimpUIManager  *        gimp_controller_manager_get_ui_manager (GimpControllerManager *self);
-GimpController *        gimp_controller_manager_get_wheel      (GimpControllerManager *self);
-GimpController *        gimp_controller_manager_get_keyboard   (GimpControllerManager *self);
-GListModel *            gimp_controller_manager_get_categories (GimpControllerManager *self);
+GimpControllerManager * gimp_get_controller_manager (Gimp *gimp);
 
 
 #endif /* __GIMP_CONTROLLERS_H__ */
