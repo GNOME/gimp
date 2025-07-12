@@ -57,7 +57,8 @@ struct _GimpFilterPrivate
   GimpApplicator *applicator;
 };
 
-#define GET_PRIVATE(filter) ((GimpFilterPrivate *) gimp_filter_get_instance_private ((GimpFilter *) (filter)))
+#define GET_PRIVATE(filter) \
+  ((GimpFilterPrivate *) gimp_filter_get_instance_private ((GimpFilter *) (filter)))
 
 
 /*  local function prototypes  */
@@ -223,11 +224,9 @@ gimp_filter_new (const gchar *name)
 GeglNode *
 gimp_filter_get_node (GimpFilter *filter)
 {
-  GimpFilterPrivate *private;
+  GimpFilterPrivate *private = GET_PRIVATE (filter);
 
   g_return_val_if_fail (GIMP_IS_FILTER (filter), NULL);
-
-  private = GET_PRIVATE (filter);
 
   if (private->node)
     return private->node;
@@ -297,11 +296,9 @@ void
 gimp_filter_set_applicator (GimpFilter     *filter,
                             GimpApplicator *applicator)
 {
-  GimpFilterPrivate *private;
+  GimpFilterPrivate *private = GET_PRIVATE (filter);
 
   g_return_if_fail (GIMP_IS_FILTER (filter));
-
-  private = GET_PRIVATE (filter);
 
   private->applicator = applicator;
 }
