@@ -552,8 +552,7 @@ gimp_controller_list_add_clicked (GtkWidget          *button,
   Gimp                   *gimp;
   GimpControllerCategory *category;
   GType                   gtype;
-  gboolean                found;
-  guint                   position;
+  gint                    position;
   GtkListBoxRow          *row;
 
   gimp = gimp_controller_manager_get_gimp (list->controller_manager);
@@ -586,12 +585,15 @@ gimp_controller_list_add_clicked (GtkWidget          *button,
     }
 
   info = gimp_controller_info_new (gtype);
-  gimp_controller_manager_add (list->controller_manager, info);
+  gimp_container_add (GIMP_CONTAINER (list->controller_manager),
+                      GIMP_OBJECT (info));
   g_object_unref (info);
 
   /* Make sure it's selected for when we press "edit" */
-  found = gimp_controller_manager_find (list->controller_manager, info, &position);
-  g_return_if_fail (found);
+  position =
+    gimp_container_get_child_index (GIMP_CONTAINER (list->controller_manager),
+                                    GIMP_OBJECT (info));
+
   row = gtk_list_box_get_row_at_index (GTK_LIST_BOX (list->active_controllers),
                                        position);
   gtk_list_box_select_row (GTK_LIST_BOX (list->active_controllers), row);
@@ -656,7 +658,8 @@ gimp_controller_list_remove_clicked (GtkWidget          *button,
           gtk_dialog_response (GTK_DIALOG (editor_dialog),
                                GTK_RESPONSE_DELETE_EVENT);
 
-        gimp_controller_manager_remove (list->controller_manager, info);
+        gimp_container_remove (GIMP_CONTAINER (list->controller_manager),
+                               GIMP_OBJECT (info));
       }
       break;
 
@@ -746,21 +749,19 @@ gimp_controller_list_up_clicked (GtkWidget          *button,
 {
   GimpControllerInfo *info;
   GtkListBoxRow      *row;
-  gboolean            found;
-  guint               old_position;
+  gint                old_position;
 
   info = gimp_controller_list_get_selected_controller (list);
-  found = gimp_controller_manager_find (list->controller_manager,
-                                        info,
-                                        &old_position);
-  g_return_if_fail (found);
 
+  old_position =
+    gimp_container_get_child_index (GIMP_CONTAINER (list->controller_manager),
+                                    GIMP_OBJECT (info));
   if (old_position == 0)
     return;
 
-  gimp_controller_manager_move (list->controller_manager,
-                                info,
-                                old_position - 1);
+  gimp_container_reorder (GIMP_CONTAINER (list->controller_manager),
+                          GIMP_OBJECT (info),
+                          old_position - 1);
 
   row = gtk_list_box_get_row_at_index (GTK_LIST_BOX (list->active_controllers),
                                        old_position - 1);
@@ -773,22 +774,24 @@ gimp_controller_list_down_clicked (GtkWidget          *button,
 {
   GimpControllerInfo *info;
   GtkListBoxRow      *row;
-  gboolean            found;
-  guint               old_position, n_controllers;
+  gint                old_position;
+  gint                n_controllers;
 
   info = gimp_controller_list_get_selected_controller (list);
-  found = gimp_controller_manager_find (list->controller_manager,
-                                        info,
-                                        &old_position);
-  g_return_if_fail (found);
 
-  n_controllers = g_list_model_get_n_items (G_LIST_MODEL (list->controller_manager));
+  old_position =
+    gimp_container_get_child_index (GIMP_CONTAINER (list->controller_manager),
+                                    GIMP_OBJECT (info));
+
+  n_controllers =
+    gimp_container_get_n_children (GIMP_CONTAINER (list->controller_manager));
+
   if (old_position == n_controllers - 1)
     return;
 
-  gimp_controller_manager_move (list->controller_manager,
-                                info,
-                                old_position + 1);
+  gimp_container_reorder (GIMP_CONTAINER (list->controller_manager),
+                          GIMP_OBJECT (info),
+                          old_position + 1);
 
   row = gtk_list_box_get_row_at_index (GTK_LIST_BOX (list->active_controllers),
                                        old_position + 1);

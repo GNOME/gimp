@@ -22,11 +22,14 @@
 #define __GIMP_CONTROLLER_MANAGER_H__
 
 
+#include "core/gimplist.h"
+
+
 #define GIMP_TYPE_CONTROLLER_MANAGER (gimp_controller_manager_get_type ())
 G_DECLARE_FINAL_TYPE (GimpControllerManager,
                       gimp_controller_manager,
                       GIMP, CONTROLLER_MANAGER,
-                      GObject)
+                      GimpList)
 
 
 GimpControllerManager * gimp_controller_manager_new     (Gimp                  *gimp);
@@ -34,17 +37,6 @@ GimpControllerManager * gimp_controller_manager_new     (Gimp                  *
 void             gimp_controller_manager_restore        (GimpControllerManager *self,
                                                          GimpUIManager         *ui_manager);
 void             gimp_controller_manager_save           (GimpControllerManager *self);
-
-gboolean         gimp_controller_manager_find           (GimpControllerManager *self,
-                                                         GimpControllerInfo    *info,
-                                                         guint                 *position);
-void             gimp_controller_manager_add            (GimpControllerManager *self,
-                                                         GimpControllerInfo    *info);
-void             gimp_controller_manager_remove         (GimpControllerManager *self,
-                                                         GimpControllerInfo    *info);
-void             gimp_controller_manager_move           (GimpControllerManager *self,
-                                                         GimpControllerInfo    *info,
-                                                         guint                  new_position);
 
 Gimp           * gimp_controller_manager_get_gimp       (GimpControllerManager *self);
 GimpUIManager  * gimp_controller_manager_get_ui_manager (GimpControllerManager *self);
