@@ -187,6 +187,7 @@ libappwidgets_sources = [
   'gimppropwidgets.c',
   'gimpradioaction.c',
   'gimprender.c',
+  'gimprow.c',
   'gimpsamplepointeditor.c',
   'gimpsavedialog.c',
   'gimpsearchpopup.c',

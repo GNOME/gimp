@@ -277,6 +277,11 @@ typedef struct _GimpCellRendererDashes       GimpCellRendererDashes;
 typedef struct _GimpCellRendererViewable     GimpCellRendererViewable;
 
 
+/*  list rows  */
+
+typedef struct _GimpRow                      GimpRow;
+
+
 /*  misc objects  */
 
 typedef struct _GimpDialogFactory            GimpDialogFactory;

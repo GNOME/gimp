@@ -50,6 +50,7 @@
 #include "gimpmessagebox.h"
 #include "gimpmessagedialog.h"
 #include "gimppropwidgets.h"
+#include "gimprow.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 
@@ -83,12 +84,6 @@ static void gimp_controller_list_get_property    (GObject            *object,
                                                   GValue             *value,
                                                   GParamSpec         *pspec);
 
-GtkWidget * gimp_controller_create_row_for_category
-                                                 (gpointer            item,
-                                                  gpointer            user_data);
-GtkWidget * gimp_controller_create_row_for_controller
-                                                 (gpointer            item,
-                                                  gpointer            user_data);
 static GimpControllerCategory *
             gimp_controller_list_get_selected_category
                                                  (GimpControllerList  *list);
@@ -295,13 +290,13 @@ gimp_controller_list_constructed (GObject *object)
   categories = gimp_controller_manager_get_categories (list->controller_manager);
   gtk_list_box_bind_model (GTK_LIST_BOX (list->available_controllers),
                            categories,
-                           gimp_controller_create_row_for_category,
+                           gimp_row_create,
                            list,
                            NULL);
 
   gtk_list_box_bind_model (GTK_LIST_BOX (list->active_controllers),
                            G_LIST_MODEL (list->controller_manager),
-                           gimp_controller_create_row_for_controller,
+                           gimp_row_create,
                            list,
                            NULL);
 }
@@ -372,74 +367,16 @@ gimp_controller_list_new (GimpControllerManager *controller_manager)
 
 /*  private functions  */
 
-GtkWidget *
-gimp_controller_create_row_for_category (gpointer item,
-                                         gpointer user_data)
-{
-  GimpControllerCategory *category = GIMP_CONTROLLER_CATEGORY (item);
-  const gchar            *icon_name;
-  GtkWidget              *row, *box, *icon, *label;
-
-  row = gtk_list_box_row_new ();
-  g_object_set_data (G_OBJECT (row), "category", category);
-  gtk_widget_set_visible (row, TRUE);
-
-  box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_container_add (GTK_CONTAINER (row), box);
-  gtk_widget_set_visible (box, TRUE);
-
-  icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (category));
-  icon = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
-  gtk_box_pack_start (GTK_BOX (box), icon, FALSE, FALSE, 0);
-  gtk_widget_set_visible (icon, TRUE);
-
-  label = gtk_label_new (gimp_object_get_name (category));
-  gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
-  gtk_widget_set_visible (label, TRUE);
-
-  return row;
-}
-
-GtkWidget *
-gimp_controller_create_row_for_controller (gpointer item,
-                                           gpointer user_data)
-{
-  GimpControllerInfo *info = GIMP_CONTROLLER_INFO (item);
-  const gchar        *icon_name;
-  GtkWidget          *row, *box, *icon, *label;
-
-  row = gtk_list_box_row_new ();
-  gtk_widget_set_visible (row, TRUE);
-  g_object_set_data (G_OBJECT (row), "controller", info);
-
-  box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_widget_set_visible (box, TRUE);
-  gtk_container_add (GTK_CONTAINER (row), box);
-
-  label = gtk_label_new (gimp_object_get_name (GIMP_OBJECT (info)));
-  gtk_widget_set_visible (label, TRUE);
-  gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
-
-  icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (info));
-  icon = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
-  gtk_widget_set_visible (icon, TRUE);
-  gtk_box_pack_start (GTK_BOX (box), icon, FALSE, FALSE, 0);
-
-  return row;
-}
-
 static GimpControllerCategory *
 gimp_controller_list_get_selected_category (GimpControllerList *list)
 {
   GtkListBoxRow *row;
-  GimpControllerCategory *category;
 
   row = gtk_list_box_get_selected_row (GTK_LIST_BOX (list->available_controllers));
   if (row == NULL)
     return NULL;
 
-  category = GIMP_CONTROLLER_CATEGORY (g_object_get_data (G_OBJECT (row), "category"));
-  return category;
+  return GIMP_CONTROLLER_CATEGORY (gimp_row_get_viewable (GIMP_ROW (row)));
 }
 
 static void
@@ -491,14 +428,12 @@ static GimpControllerInfo *
 gimp_controller_list_get_selected_controller (GimpControllerList *list)
 {
   GtkListBoxRow *row;
-  GimpControllerInfo *info;
 
   row = gtk_list_box_get_selected_row (GTK_LIST_BOX (list->active_controllers));
   if (row == NULL)
     return NULL;
 
-  info = GIMP_CONTROLLER_INFO (g_object_get_data (G_OBJECT (row), "controller"));
-  return info;
+  return GIMP_CONTROLLER_INFO (gimp_row_get_viewable (GIMP_ROW (row)));
 }
 
 static void
