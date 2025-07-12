@@ -38,6 +38,7 @@
 
 #include "gimpcontainertreeview.h"
 #include "gimpcontainerview.h"
+#include "gimpcontrollercategory.h"
 #include "gimpcontrollereditor.h"
 #include "gimpcontrollerlist.h"
 #include "gimpcontrollerinfo.h"
@@ -142,7 +143,7 @@ gimp_controller_list_class_init (GimpControllerListClass *klass)
 }
 
 static void
-gimp_controller_list_init (GimpControllerList *list)
+gimp_controller_list_init (GimpControllerList      *list)
 {
   GtkWidget *hbox;
   GtkWidget *sw;
@@ -373,21 +374,21 @@ gimp_controller_create_row_for_category (gpointer item,
   GtkWidget              *row, *box, *icon, *label;
 
   row = gtk_list_box_row_new ();
-  gtk_widget_set_visible (row, TRUE);
   g_object_set_data (G_OBJECT (row), "category", category);
+  gtk_widget_set_visible (row, TRUE);
 
   box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_widget_set_visible (box, TRUE);
   gtk_container_add (GTK_CONTAINER (row), box);
+  gtk_widget_set_visible (box, TRUE);
 
-  icon_name = gimp_controller_category_get_icon_name (category);
+  icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (category));
   icon = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
-  gtk_widget_set_visible (icon, TRUE);
   gtk_box_pack_start (GTK_BOX (box), icon, FALSE, FALSE, 0);
+  gtk_widget_set_visible (icon, TRUE);
 
-  label = gtk_label_new (gimp_controller_category_get_name (category));
-  gtk_widget_set_visible (label, TRUE);
+  label = gtk_label_new (gimp_object_get_name (category));
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
+  gtk_widget_set_visible (label, TRUE);
 
   return row;
 }
@@ -439,7 +440,7 @@ gimp_controller_list_category_row_selected (GtkListBox    *self,
         {
           tip =
             g_strdup_printf (_("Add '%s' to the list of active controllers"),
-                             gimp_controller_category_get_name (category));
+                             gimp_object_get_name (category));
           gtk_widget_set_sensitive (list->add_button, TRUE);
         }
     }

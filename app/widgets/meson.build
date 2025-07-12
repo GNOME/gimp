@@ -72,6 +72,7 @@ libappwidgets_sources = [
   'gimpcontainerview-utils.c',
   'gimpcontainerview.c',
   'gimpcontrollereditor.c',
+  'gimpcontrollercategory.c',
   'gimpcontrollerinfo.c',
   'gimpcontrollerkeyboard.c',
   'gimpcontrollerlist.c',
