@@ -171,6 +171,7 @@ pointer mk_symbol(scheme *sc, const char *name);
 pointer gensym(scheme *sc);
 pointer mk_string(scheme *sc, const char *str);
 pointer mk_counted_string(scheme *sc, const char *str, int len);
+pointer mk_arg_name(scheme *sc, const char *str);
 pointer mk_empty_string(scheme *sc, int len, gunichar fill);
 pointer mk_byte (scheme *sc, guint8 b);
 pointer mk_character(scheme *sc, gunichar c);
