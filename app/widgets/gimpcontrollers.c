@@ -25,6 +25,7 @@
 #include "core/gimp.h"
 
 #include "gimpcontrollermanager.h"
+#include "gimpcontrollers.h"
 
 
 #define GIMP_CONTROLLER_MANAGER_DATA_KEY "gimp-controller-manager"
