@@ -279,6 +279,9 @@ void
 gimp_controller_manager_add (GimpControllerManager *self,
                              GimpControllerInfo    *info)
 {
+  gboolean found;
+  guint    position;
+
   g_return_if_fail (GIMP_IS_CONTROLLER_MANAGER (self));
   g_return_if_fail (GIMP_IS_CONTROLLER_INFO (info));
 
@@ -293,9 +296,10 @@ gimp_controller_manager_add (GimpControllerManager *self,
   else if (GIMP_IS_CONTROLLER_KEYBOARD (info->controller))
     self->keyboard = info->controller;
 
-  g_list_model_items_changed (G_LIST_MODEL (self),
-                              gimp_container_get_n_children (self->controllers) - 1,
-                              0, 1);
+  found = gimp_controller_manager_find (self, info, &position);
+  g_return_if_fail (found);
+
+  g_list_model_items_changed (G_LIST_MODEL (self), position, 0, 1);
 }
 
 void

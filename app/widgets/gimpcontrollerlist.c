@@ -89,21 +89,27 @@ GtkWidget * gimp_controller_create_row_for_category
 GtkWidget * gimp_controller_create_row_for_controller
                                                  (gpointer            item,
                                                   gpointer            user_data);
+static GimpControllerCategory *
+            gimp_controller_list_get_selected_category
+                                                 (GimpControllerList  *list);
 static void gimp_controller_list_category_row_selected
-                                                 (GtkListBox    *self,
-                                                  GtkListBoxRow *row,
-                                                  gpointer       user_data);
+                                                 (GtkListBox          *self,
+                                                  GtkListBoxRow       *row,
+                                                  gpointer             user_data);
 static void gimp_controller_list_category_row_activated
-                                                 (GtkListBox    *self,
-                                                  GtkListBoxRow *row,
-                                                  gpointer       user_data);
+                                                 (GtkListBox          *self,
+                                                  GtkListBoxRow       *row,
+                                                  gpointer             user_data);
 
-static void gimp_controller_list_row_selected    (GtkListBox    *self,
-                                                  GtkListBoxRow *row,
-                                                  gpointer       user_data);
-static void gimp_controller_list_row_activated   (GtkListBox    *self,
-                                                  GtkListBoxRow *row,
-                                                  gpointer       user_data);
+static GimpControllerInfo *
+            gimp_controller_list_get_selected_controller
+                                                 (GimpControllerList  *list);
+static void gimp_controller_list_row_selected    (GtkListBox          *self,
+                                                  GtkListBoxRow       *row,
+                                                  gpointer             user_data);
+static void gimp_controller_list_row_activated   (GtkListBox          *self,
+                                                  GtkListBoxRow       *row,
+                                                  gpointer             user_data);
 
 static void gimp_controller_list_add_clicked     (GtkWidget          *button,
                                                   GimpControllerList *list);
@@ -422,6 +428,20 @@ gimp_controller_create_row_for_controller (gpointer item,
   return row;
 }
 
+static GimpControllerCategory *
+gimp_controller_list_get_selected_category (GimpControllerList *list)
+{
+  GtkListBoxRow *row;
+  GimpControllerCategory *category;
+
+  row = gtk_list_box_get_selected_row (GTK_LIST_BOX (list->available_controllers));
+  if (row == NULL)
+    return NULL;
+
+  category = GIMP_CONTROLLER_CATEGORY (g_object_get_data (G_OBJECT (row), "category"));
+  return category;
+}
+
 static void
 gimp_controller_list_category_row_selected (GtkListBox    *self,
                                             GtkListBoxRow *row,
@@ -434,9 +454,7 @@ gimp_controller_list_category_row_selected (GtkListBox    *self,
     {
       GimpControllerCategory *category;
 
-      category = g_object_get_data (G_OBJECT (row), "category");
-      list->src_gtype = gimp_controller_category_get_gtype (category);
-
+      category = gimp_controller_list_get_selected_category (list);
       if (list->add_button)
         {
           tip =
@@ -469,28 +487,42 @@ gimp_controller_list_category_row_activated (GtkListBox    *self,
     gtk_button_clicked (GTK_BUTTON (list->add_button));
 }
 
+static GimpControllerInfo *
+gimp_controller_list_get_selected_controller (GimpControllerList *list)
+{
+  GtkListBoxRow *row;
+  GimpControllerInfo *info;
+
+  row = gtk_list_box_get_selected_row (GTK_LIST_BOX (list->active_controllers));
+  if (row == NULL)
+    return NULL;
+
+  info = GIMP_CONTROLLER_INFO (g_object_get_data (G_OBJECT (row), "controller"));
+  return info;
+}
+
 static void
 gimp_controller_list_row_selected (GtkListBox    *self,
                                    GtkListBoxRow *row,
                                    gpointer       user_data)
 {
   GimpControllerList *list = GIMP_CONTROLLER_LIST (user_data);
-  gboolean selected;
+  GimpControllerInfo *info;
+  gboolean            selected;
 
-  list->dest_info = row? g_object_get_data (G_OBJECT (row), "controller") : NULL;
-  selected = (row != NULL);
+  info = gimp_controller_list_get_selected_controller (list);
+  selected = (info != NULL);
 
   if (list->remove_button)
     {
-      GimpObject *object = GIMP_OBJECT (list->dest_info);
-      gchar      *tip    = NULL;
+      gchar *tip = NULL;
 
       gtk_widget_set_sensitive (list->remove_button, selected);
 
       if (selected)
         tip =
           g_strdup_printf (_("Remove '%s' from the list of active controllers"),
-                           gimp_object_get_name (object));
+                           gimp_object_get_name (GIMP_OBJECT (info)));
 
       gimp_help_set_help_data (list->remove_button, tip, NULL);
       g_free (tip);
@@ -516,13 +548,21 @@ static void
 gimp_controller_list_add_clicked (GtkWidget          *button,
                                   GimpControllerList *list)
 {
-  GimpControllerInfo *info;
-  Gimp               *gimp;
-  GtkListBoxRow      *row;
+  GimpControllerInfo     *info;
+  Gimp                   *gimp;
+  GimpControllerCategory *category;
+  GType                   gtype;
+  gboolean                found;
+  guint                   position;
+  GtkListBoxRow          *row;
 
   gimp = gimp_controller_manager_get_gimp (list->controller_manager);
 
-  if (list->src_gtype == GIMP_TYPE_CONTROLLER_KEYBOARD &&
+  category = gimp_controller_list_get_selected_category (list);
+  g_return_if_fail (category != NULL);
+
+  gtype = gimp_controller_category_get_gtype (category);
+  if (gtype == GIMP_TYPE_CONTROLLER_KEYBOARD &&
       gimp_controller_manager_get_keyboard (list->controller_manager) != NULL)
     {
       gimp_message_literal (gimp,
@@ -533,7 +573,7 @@ gimp_controller_list_add_clicked (GtkWidget          *button,
                               "your list of active controllers."));
       return;
     }
-  else if (list->src_gtype == GIMP_TYPE_CONTROLLER_WHEEL &&
+  else if (gtype == GIMP_TYPE_CONTROLLER_WHEEL &&
            gimp_controller_manager_get_wheel (list->controller_manager) != NULL)
     {
       gimp_message_literal (gimp,
@@ -545,12 +585,15 @@ gimp_controller_list_add_clicked (GtkWidget          *button,
       return;
     }
 
-  info = gimp_controller_info_new (list->src_gtype);
+  info = gimp_controller_info_new (gtype);
   gimp_controller_manager_add (list->controller_manager, info);
   g_object_unref (info);
 
+  /* Make sure it's selected for when we press "edit" */
+  found = gimp_controller_manager_find (list->controller_manager, info, &position);
+  g_return_if_fail (found);
   row = gtk_list_box_get_row_at_index (GTK_LIST_BOX (list->active_controllers),
-                                       g_list_model_get_n_items (G_LIST_MODEL (list->controller_manager)) - 1);
+                                       position);
   gtk_list_box_select_row (GTK_LIST_BOX (list->active_controllers), row);
 
   gimp_controller_list_edit_clicked (list->edit_button, list);
@@ -560,8 +603,9 @@ static void
 gimp_controller_list_remove_clicked (GtkWidget          *button,
                                      GimpControllerList *list)
 {
-  GtkWidget   *dialog;
-  const gchar *name;
+  GtkWidget          *dialog;
+  GimpControllerInfo *info;
+  const gchar        *name;
 
 #define RESPONSE_DISABLE 1
 
@@ -582,7 +626,8 @@ gimp_controller_list_remove_clicked (GtkWidget          *button,
                                            RESPONSE_DISABLE,
                                            -1);
 
-  name = gimp_object_get_name (list->dest_info);
+  info = gimp_controller_list_get_selected_controller (list);
+  name = gimp_object_get_name (info);
   gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                                      _("Remove Controller '%s'?"), name);
 
@@ -597,21 +642,21 @@ gimp_controller_list_remove_clicked (GtkWidget          *button,
   switch (gimp_dialog_run (GIMP_DIALOG (dialog)))
     {
     case RESPONSE_DISABLE:
-      gimp_controller_info_set_enabled (list->dest_info, FALSE);
+      gimp_controller_info_set_enabled (info, FALSE);
       break;
 
     case GTK_RESPONSE_OK:
       {
         GtkWidget     *editor_dialog;
 
-        editor_dialog = g_object_get_data (G_OBJECT (list->dest_info),
+        editor_dialog = g_object_get_data (G_OBJECT (info),
                                            "gimp-controller-editor-dialog");
 
         if (editor_dialog)
           gtk_dialog_response (GTK_DIALOG (editor_dialog),
                                GTK_RESPONSE_DELETE_EVENT);
 
-        gimp_controller_manager_remove (list->controller_manager, list->dest_info);
+        gimp_controller_manager_remove (list->controller_manager, info);
       }
       break;
 
@@ -626,11 +671,13 @@ static void
 gimp_controller_list_edit_clicked (GtkWidget          *button,
                                    GimpControllerList *list)
 {
-  GtkWidget *dialog;
-  GtkWidget *editor;
-  Gimp      *gimp;
+  GimpControllerInfo *info;
+  GtkWidget          *dialog;
+  GtkWidget          *editor;
+  Gimp               *gimp;
 
-  dialog = g_object_get_data (G_OBJECT (list->dest_info),
+  info = gimp_controller_list_get_selected_controller (list);
+  dialog = g_object_get_data (G_OBJECT (info),
                               "gimp-controller-editor-dialog");
 
   if (dialog)
@@ -660,19 +707,19 @@ gimp_controller_list_edit_clicked (GtkWidget          *button,
                     NULL);
 
   gimp = gimp_controller_manager_get_gimp (list->controller_manager);
-  editor = gimp_controller_editor_new (list->dest_info,
+  editor = gimp_controller_editor_new (info,
                                        gimp_get_user_context (gimp));
   gtk_container_set_border_width (GTK_CONTAINER (editor), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       editor, TRUE, TRUE, 0);
   gtk_widget_show (editor);
 
-  g_object_set_data (G_OBJECT (list->dest_info), "gimp-controller-editor-dialog",
+  g_object_set_data (G_OBJECT (info), "gimp-controller-editor-dialog",
                      dialog);
 
   g_signal_connect_object (dialog, "destroy",
                            G_CALLBACK (gimp_controller_list_edit_destroy),
-                           G_OBJECT (list->dest_info), 0);
+                           G_OBJECT (info), 0);
 
   g_signal_connect_object (list, "destroy",
                            G_CALLBACK (gtk_widget_destroy),
@@ -697,12 +744,14 @@ static void
 gimp_controller_list_up_clicked (GtkWidget          *button,
                                  GimpControllerList *list)
 {
-  GtkListBoxRow *row;
-  gboolean       found;
-  guint          old_position;
+  GimpControllerInfo *info;
+  GtkListBoxRow      *row;
+  gboolean            found;
+  guint               old_position;
 
+  info = gimp_controller_list_get_selected_controller (list);
   found = gimp_controller_manager_find (list->controller_manager,
-                                        list->dest_info,
+                                        info,
                                         &old_position);
   g_return_if_fail (found);
 
@@ -710,7 +759,7 @@ gimp_controller_list_up_clicked (GtkWidget          *button,
     return;
 
   gimp_controller_manager_move (list->controller_manager,
-                                list->dest_info,
+                                info,
                                 old_position - 1);
 
   row = gtk_list_box_get_row_at_index (GTK_LIST_BOX (list->active_controllers),
@@ -722,12 +771,14 @@ static void
 gimp_controller_list_down_clicked (GtkWidget          *button,
                                    GimpControllerList *list)
 {
-  GtkListBoxRow *row;
-  gboolean       found;
-  guint          old_position, n_controllers;
+  GimpControllerInfo *info;
+  GtkListBoxRow      *row;
+  gboolean            found;
+  guint               old_position, n_controllers;
 
+  info = gimp_controller_list_get_selected_controller (list);
   found = gimp_controller_manager_find (list->controller_manager,
-                                        list->dest_info,
+                                        info,
                                         &old_position);
   g_return_if_fail (found);
 
@@ -736,7 +787,7 @@ gimp_controller_list_down_clicked (GtkWidget          *button,
     return;
 
   gimp_controller_manager_move (list->controller_manager,
-                                list->dest_info,
+                                info,
                                 old_position + 1);
 
   row = gtk_list_box_get_row_at_index (GTK_LIST_BOX (list->active_controllers),

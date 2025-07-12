@@ -41,10 +41,7 @@ struct _GimpControllerList
   GtkWidget             *hbox;
 
   GtkWidget             *available_controllers;
-  GType                  src_gtype;
-
   GtkWidget             *active_controllers;
-  GimpControllerInfo    *dest_info;
 
   GtkWidget             *add_button;
   GtkWidget             *remove_button;
