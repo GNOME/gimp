@@ -24,20 +24,12 @@
 #include "gimpviewable.h"
 
 
-#define GIMP_TYPE_FILTER            (gimp_filter_get_type ())
-#define GIMP_FILTER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FILTER, GimpFilter))
-#define GIMP_FILTER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FILTER, GimpFilterClass))
-#define GIMP_IS_FILTER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_FILTER))
-#define GIMP_IS_FILTER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_FILTER))
-#define GIMP_FILTER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FILTER, GimpFilterClass))
+#define GIMP_TYPE_FILTER (gimp_filter_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpFilter,
+                          gimp_filter,
+                          GIMP, FILTER,
+                          GimpViewable)
 
-
-typedef struct _GimpFilterClass GimpFilterClass;
-
-struct _GimpFilter
-{
-  GimpViewable  parent_instance;
-};
 
 struct _GimpFilterClass
 {

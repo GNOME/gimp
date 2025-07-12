@@ -48,7 +48,9 @@ enum
   PROP_FROZEN,
   N_PROPS
 };
+
 static GParamSpec *obj_props[N_PROPS] = { NULL, };
+
 
 enum
 {
@@ -80,7 +82,8 @@ struct _GimpViewablePrivate
   GeglColor    *preview_temp_buf_background;
 };
 
-#define GET_PRIVATE(viewable) ((GimpViewablePrivate *) gimp_viewable_get_instance_private ((GimpViewable *) (viewable)))
+#define GET_PRIVATE(viewable) \
+  ((GimpViewablePrivate *) gimp_viewable_get_instance_private ((GimpViewable *) (viewable)))
 
 
 static void    gimp_viewable_config_iface_init (GimpConfigInterface *iface);
@@ -582,7 +585,6 @@ gimp_viewable_invalidate_preview (GimpViewable *viewable)
   GimpViewablePrivate *private = GET_PRIVATE (viewable);
 
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
-
 
   if (private->freeze_count == 0)
     g_signal_emit (viewable, viewable_signals[INVALIDATE_PREVIEW], 0);

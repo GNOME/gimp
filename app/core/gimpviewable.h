@@ -31,20 +31,12 @@
 #define GIMP_VIEWABLE_MAX_MENU_SIZE      48
 
 
-#define GIMP_TYPE_VIEWABLE            (gimp_viewable_get_type ())
-#define GIMP_VIEWABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VIEWABLE, GimpViewable))
-#define GIMP_VIEWABLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_VIEWABLE, GimpViewableClass))
-#define GIMP_IS_VIEWABLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_VIEWABLE))
-#define GIMP_IS_VIEWABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_VIEWABLE))
-#define GIMP_VIEWABLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_VIEWABLE, GimpViewableClass))
+#define GIMP_TYPE_VIEWABLE (gimp_viewable_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpViewable,
+                          gimp_viewable,
+                          GIMP, VIEWABLE,
+                          GimpObject)
 
-
-typedef struct _GimpViewableClass GimpViewableClass;
-
-struct _GimpViewable
-{
-  GimpObject  parent_instance;
-};
 
 struct _GimpViewableClass
 {
@@ -212,8 +204,6 @@ void            gimp_viewable_set_expanded       (GimpViewable  *viewable,
 
 gboolean        gimp_viewable_is_ancestor        (GimpViewable  *ancestor,
                                                   GimpViewable  *descendant);
-
-G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpViewable, g_object_unref);
 
 
 #endif  /* __GIMP_VIEWABLE_H__ */
