@@ -43,6 +43,7 @@
 #include "gimpcontrollerlist.h"
 #include "gimpcontrollerinfo.h"
 #include "gimpcontrollerkeyboard.h"
+#include "gimpcontrollermanager.h"
 #include "gimpcontrollerwheel.h"
 #include "gimpdialogfactory.h"
 #include "gimphelp-ids.h"

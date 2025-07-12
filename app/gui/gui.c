@@ -55,6 +55,7 @@
 #include "widgets/gimpaction-history.h"
 #include "widgets/gimpclipboard.h"
 #include "widgets/gimpcolorselectorpalette.h"
+#include "widgets/gimpcontrollermanager.h"
 #include "widgets/gimpcontrollers.h"
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
