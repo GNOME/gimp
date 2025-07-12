@@ -309,8 +309,6 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   klass->item_type                = G_TYPE_NONE;
   klass->signal_name              = NULL;
 
-  klass->add_item                 = NULL;
-  klass->remove_item              = NULL;
   klass->new_item                 = NULL;
 
   klass->action_group        = NULL;
@@ -1650,8 +1648,8 @@ gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
           new_item = gimp_item_convert (GIMP_ITEM (src_viewable),
                                         item_view->priv->image, item_type);
 
-          item_view_class->add_item (item_view->priv->image, new_item,
-                                     parent, dest_index, TRUE);
+          gimp_image_add_item (item_view->priv->image, new_item,
+                               parent, dest_index, TRUE);
         }
     }
   else if (dest_viewable)

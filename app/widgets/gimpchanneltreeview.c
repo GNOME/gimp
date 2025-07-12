@@ -107,8 +107,6 @@ gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass)
   iv_class->item_type          = GIMP_TYPE_CHANNEL;
   iv_class->signal_name        = "selected-channels-changed";
 
-  iv_class->add_item           = (GimpAddItemFunc) gimp_image_add_channel;
-  iv_class->remove_item        = (GimpRemoveItemFunc) gimp_image_remove_channel;
   iv_class->new_item           = gimp_channel_tree_view_item_new;
 
   iv_class->action_group        = "channels";
@@ -225,8 +223,7 @@ gimp_channel_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
                                         gimp_item_tree_view_get_image (item_view),
                                         item_view_class->item_type);
 
-          item_view_class->add_item (image, new_item, parent, index, TRUE);
-
+          gimp_image_add_item (image, new_item, parent, index, TRUE);
           gimp_image_flush (image);
 
           return;
