@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FILTER_OPTIONS_H__
-#define __GIMP_FILTER_OPTIONS_H__
-
+#pragma once
 
 #include "gimpcoloroptions.h"
 
@@ -59,6 +57,3 @@ void    gimp_filter_options_switch_preview_side        (GimpFilterOptions *optio
 void    gimp_filter_options_switch_preview_orientation (GimpFilterOptions *options,
                                                         gint               position_x,
                                                         gint               position_y);
-
-
-#endif /* __GIMP_FILTER_OPTIONS_H__ */

@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_REGION_SELECT_OPTIONS_H__
-#define __GIMP_REGION_SELECT_OPTIONS_H__
-
+#pragma once
 
 #include "gimpselectionoptions.h"
 
@@ -49,6 +47,3 @@ struct _GimpRegionSelectOptions
 GType       gimp_region_select_options_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_region_select_options_gui      (GimpToolOptions *tool_options);
-
-
-#endif  /*  __GIMP_REGION_SELECT_OPTIONS_H__  */

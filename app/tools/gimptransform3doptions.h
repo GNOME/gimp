@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TRANSFORM_3D_OPTIONS_H__
-#define __GIMP_TRANSFORM_3D_OPTIONS_H__
-
+#pragma once
 
 #include "gimptransformgridoptions.h"
 
@@ -54,6 +52,3 @@ struct _GimpTransform3DOptionsClass
 GType       gimp_transform_3d_options_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_transform_3d_options_gui      (GimpToolOptions *tool_options);
-
-
-#endif /* __GIMP_TRANSFORM_3D_OPTIONS_H__ */

@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MEASURE_OPTIONS_H__
-#define __GIMP_MEASURE_OPTIONS_H__
-
+#pragma once
 
 #include "gimptransformoptions.h"
 
@@ -53,6 +51,3 @@ struct _GimpMeasureOptionsClass
 GType       gimp_measure_options_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_measure_options_gui      (GimpToolOptions *tool_options);
-
-
-#endif  /*  __GIMP_MEASURE_OPTIONS_H__  */

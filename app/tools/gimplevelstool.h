@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LEVELS_TOOL_H__
-#define __GIMP_LEVELS_TOOL_H__
-
+#pragma once
 
 #include "gimpfiltertool.h"
 
@@ -71,6 +69,3 @@ void    gimp_levels_tool_register (GimpToolRegisterCallback  callback,
                                    gpointer                  data);
 
 GType   gimp_levels_tool_get_type (void) G_GNUC_CONST;
-
-
-#endif  /*  __GIMP_LEVELS_TOOL_H__  */

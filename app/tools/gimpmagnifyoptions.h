@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MAGNIFY_OPTIONS_H__
-#define __GIMP_MAGNIFY_OPTIONS_H__
-
+#pragma once
 
 #include "core/gimptooloptions.h"
 
@@ -46,5 +44,3 @@ GType       gimp_magnify_options_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_magnify_options_gui      (GimpToolOptions *tool_options);
 
-
-#endif  /*  __GIMP_MAGNIFY_OPTIONS_H__  */

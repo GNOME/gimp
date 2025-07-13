@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_TOOL_H__
-#define __GIMP_BRUSH_TOOL_H__
-
+#pragma once
 
 #include "gimppainttool.h"
 
@@ -58,6 +56,3 @@ GimpCanvasItem * gimp_brush_tool_create_outline (GimpBrushTool *brush_tool,
                                                  GimpDisplay   *display,
                                                  gdouble        x,
                                                  gdouble        y);
-
-
-#endif  /*  __GIMP_BRUSH_TOOL_H__  */

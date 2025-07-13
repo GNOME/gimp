@@ -15,11 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CLONE_OPTIONS_GUI_H__
-#define __GIMP_CLONE_OPTIONS_GUI_H__
+#pragma once
 
 
 GtkWidget * gimp_clone_options_gui (GimpToolOptions *tool_options);
-
-
-#endif  /*  __GIMP_CLONE_OPTIONS_GUI_H__  */

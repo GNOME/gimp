@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_POLYGON_SELECT_TOOL_H__
-#define __GIMP_POLYGON_SELECT_TOOL_H__
-
+#pragma once
 
 #include "gimpselectiontool.h"
 
@@ -65,5 +63,3 @@ gboolean   gimp_polygon_select_tool_is_grabbed (GimpPolygonSelectTool  *poly_sel
 
 void       gimp_polygon_select_tool_halt       (GimpPolygonSelectTool  *poly_sel);
 
-
-#endif  /*  __GIMP_POLYGON_SELECT_TOOL_H__  */

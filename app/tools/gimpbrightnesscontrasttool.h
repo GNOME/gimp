@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRIGHTNESS_CONTRAST_TOOL_H__
-#define __GIMP_BRIGHTNESS_CONTRAST_TOOL_H__
-
+#pragma once
 
 #include "gimpfiltertool.h"
 
@@ -56,6 +54,3 @@ void    gimp_brightness_contrast_tool_register (GimpToolRegisterCallback  callba
                                                 gpointer                  data);
 
 GType   gimp_brightness_contrast_tool_get_type (void) G_GNUC_CONST;
-
-
-#endif  /*  __GIMP_BRIGHTNESS_CONTRAST_TOOL_H__  */

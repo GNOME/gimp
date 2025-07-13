@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FILTER_TOOL_H__
-#define __GIMP_FILTER_TOOL_H__
-
+#pragma once
 
 #include "gimpcolortool.h"
 
@@ -146,6 +144,3 @@ gboolean    gimp_filter_tool_get_drawable_area     (GimpFilterTool     *filter_t
                                                     gint               *drawable_offset_x,
                                                     gint               *drawable_offset_y,
                                                     GeglRectangle      *drawable_area);
-
-
-#endif /* __GIMP_FILTER_TOOL_H__ */

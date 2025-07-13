@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GENERIC_TRANSFORM_TOOL_H__
-#define __GIMP_GENERIC_TRANSFORM_TOOL_H__
-
+#pragma once
 
 #include "gimptransformgridtool.h"
 
@@ -53,6 +51,3 @@ struct _GimpGenericTransformToolClass
 
 
 GType   gimp_generic_transform_tool_get_type (void) G_GNUC_CONST;
-
-
-#endif  /*  __GIMP_GENERIC_TRANSFORM_TOOL_H__  */

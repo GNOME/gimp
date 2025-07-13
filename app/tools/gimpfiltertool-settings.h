@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FILTER_TOOL_SETTINGS_H__
-#define __GIMP_FILTER_TOOL_SETTINGS_H__
+#pragma once
 
 
 GtkWidget * gimp_filter_tool_get_settings_box     (GimpFilterTool  *filter_tool);
@@ -32,6 +31,3 @@ gboolean    gimp_filter_tool_real_settings_import (GimpFilterTool  *filter_tool,
 gboolean    gimp_filter_tool_real_settings_export (GimpFilterTool  *filter_tool,
                                                    GOutputStream   *output,
                                                    GError         **error);
-
-
-#endif /* __GIMP_FILTER_TOOL_SETTINGS_H__ */

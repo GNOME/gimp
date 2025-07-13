@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TRANSFORM_OPTIONS_H__
-#define __GIMP_TRANSFORM_OPTIONS_H__
-
+#pragma once
 
 #include "core/gimptooloptions.h"
 
@@ -59,6 +57,3 @@ GtkWidget * gimp_transform_options_gui      (GimpToolOptions *tool_options,
                                              gboolean         direction,
                                              gboolean         interpolation,
                                              gboolean         clipping);
-
-
-#endif /* __GIMP_TRANSFORM_OPTIONS_H__ */

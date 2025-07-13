@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FLIP_OPTIONS_H__
-#define __GIMP_FLIP_OPTIONS_H__
-
+#pragma once
 
 #include "gimptransformoptions.h"
 
@@ -47,6 +45,3 @@ struct _GimpFlipOptions
 GType       gimp_flip_options_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_flip_options_gui      (GimpToolOptions *tool_options);
-
-
-#endif /* __GIMP_FLIP_OPTIONS_H__ */

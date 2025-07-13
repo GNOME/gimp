@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_CONTROL_H__
-#define __GIMP_TOOL_CONTROL_H__
-
+#pragma once
 
 #include "core/gimpobject.h"
 
@@ -270,6 +268,3 @@ const gchar * gimp_tool_control_get_action_object_2 (GimpToolControl *control);
 void          gimp_tool_control_set_action_pixel_size (GimpToolControl *control,
                                                        const gchar     *action);
 const gchar * gimp_tool_control_get_action_pixel_size (GimpToolControl *control);
-
-
-#endif /* __GIMP_TOOL_CONTROL_H__ */

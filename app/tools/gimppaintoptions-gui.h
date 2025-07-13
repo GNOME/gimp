@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PAINT_OPTIONS_GUI_H__
-#define __GIMP_PAINT_OPTIONS_GUI_H__
+#pragma once
 
 
 GtkWidget * gimp_paint_options_gui                    (GimpToolOptions *tool_options);
 
 GtkWidget * gimp_paint_options_gui_get_paint_mode_box (GtkWidget       *options_gui);
-
-
-#endif /* __GIMP_PAINT_OPTIONS_GUI_H__ */

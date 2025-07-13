@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_EDIT_SELECTION_TOOL_H__
-#define __GIMP_EDIT_SELECTION_TOOL_H__
-
+#pragma once
 
 #include "gimpdrawtool.h"
 
@@ -45,6 +43,3 @@ gboolean   gimp_edit_selection_tool_translate (GimpTool          *tool,
                                                GimpTransformType  translate_type,
                                                GimpDisplay       *display,
                                                GtkWidget        **type_box);
-
-
-#endif  /*  __GIMP_EDIT_SELECTION_TOOL_H__  */

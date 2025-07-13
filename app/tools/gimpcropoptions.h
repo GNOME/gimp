@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CROP_OPTIONS_H__
-#define __GIMP_CROP_OPTIONS_H__
-
+#pragma once
 
 #include "core/gimptooloptions.h"
 
@@ -56,6 +54,3 @@ struct _GimpCropOptions
 GType       gimp_crop_options_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_crop_options_gui      (GimpToolOptions *tool_options);
-
-
-#endif /* __GIMP_CROP_OPTIONS_H__ */

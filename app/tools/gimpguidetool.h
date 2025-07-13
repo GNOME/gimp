@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GUIDE_TOOL_H__
-#define __GIMP_GUIDE_TOOL_H__
-
+#pragma once
 
 #include "gimpdrawtool.h"
 
@@ -69,6 +67,3 @@ void    gimp_guide_tool_start_edit      (GimpTool            *parent_tool,
 void    gimp_guide_tool_start_edit_many (GimpTool            *parent_tool,
                                          GimpDisplay         *display,
                                          GList               *guides);
-
-
-#endif  /*  __GIMP_GUIDE_TOOL_H__  */

@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SAMPLE_POINT_TOOL_H__
-#define __GIMP_SAMPLE_POINT_TOOL_H__
-
+#pragma once
 
 #include "gimpdrawtool.h"
 
@@ -57,6 +55,3 @@ void    gimp_sample_point_tool_start_new  (GimpTool        *parent_tool,
 void    gimp_sample_point_tool_start_edit (GimpTool        *parent_tool,
                                            GimpDisplay     *display,
                                            GimpSamplePoint *sample_point);
-
-
-#endif  /*  __GIMP_SAMPLE_POINT_TOOL_H__  */

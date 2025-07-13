@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TRANSFORM_TOOL_H__
-#define __GIMP_TRANSFORM_TOOL_H__
-
+#pragma once
 
 #include "gimpdrawtool.h"
 
@@ -101,6 +99,3 @@ gboolean     gimp_transform_tool_transform           (GimpTransformTool  *tr_too
 
 void         gimp_transform_tool_set_type            (GimpTransformTool  *tr_tool,
                                                       GimpTransformType   type);
-
-
-#endif  /*  __GIMP_TRANSFORM_TOOL_H__  */

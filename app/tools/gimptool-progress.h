@@ -18,11 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_PROGRESS_H__
-#define __GIMP_TOOL_PROGRESS_H__
+#pragma once
 
 
 void   gimp_tool_progress_iface_init (GimpProgressInterface *iface);
-
-
-#endif /* __GIMP_TOOL_PROGRESS */

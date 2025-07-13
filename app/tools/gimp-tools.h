@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOLS_H__
-#define __GIMP_TOOLS_H__
+#pragma once
 
 
 void       gimp_tools_init        (Gimp              *gimp);
@@ -40,6 +39,3 @@ gboolean   gimp_tools_deserialize (Gimp              *gimp,
 void       gimp_tools_reset       (Gimp              *gimp,
                                    GimpContainer     *container,
                                    gboolean           user_toolrc);
-
-
-#endif  /* __GIMP_TOOLS_H__ */

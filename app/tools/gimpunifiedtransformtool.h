@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_UNIFIED_TRANSFORM_TOOL_H__
-#define __GIMP_UNIFIED_TRANSFORM_TOOL_H__
-
+#pragma once
 
 #include "gimpgenerictransformtool.h"
 
@@ -48,6 +46,3 @@ void    gimp_unified_transform_tool_register (GimpToolRegisterCallback  callback
                                               gpointer                  data);
 
 GType   gimp_unified_transform_tool_get_type (void) G_GNUC_CONST;
-
-
-#endif  /*  __GIMP_UNIFIED_TRANSFORM_TOOL_H__  */

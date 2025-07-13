@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TRANSFORM_GRID_TOOL_H__
-#define __GIMP_TRANSFORM_GRID_TOOL_H__
-
+#pragma once
 
 #include "gimptransformtool.h"
 
@@ -113,6 +111,3 @@ void       gimp_transform_grid_tool_matrix_to_info     (GimpTransformGridTool *t
 
 void       gimp_transform_grid_tool_push_internal_undo (GimpTransformGridTool *tg_tool,
                                                         gboolean               compress);
-
-
-#endif  /*  __GIMP_TRANSFORM_GRID_TOOL_H__  */

@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef  __GIMP_INK_TOOL_H__
-#define  __GIMP_INK_TOOL_H__
-
+#pragma once
 
 #include "gimppainttool.h"
 
@@ -50,6 +48,3 @@ void    gimp_ink_tool_register (GimpToolRegisterCallback  callback,
                                 gpointer                  data);
 
 GType   gimp_ink_tool_get_type (void) G_GNUC_CONST;
-
-
-#endif  /*  __GIMP_INK_TOOL_H__  */

@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAW_TOOL_H__
-#define __GIMP_DRAW_TOOL_H__
-
+#pragma once
 
 #include "gimptool.h"
 
@@ -207,6 +205,3 @@ gboolean         gimp_draw_tool_on_handle            (GimpDrawTool     *draw_too
                                                       gint              width,
                                                       gint              height,
                                                       GimpHandleAnchor  anchor);
-
-
-#endif  /*  __GIMP_DRAW_TOOL_H__  */

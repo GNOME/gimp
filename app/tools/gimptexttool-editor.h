@@ -20,8 +20,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_TOOL_EDITOR_H__
-#define __GIMP_TEXT_TOOL_EDITOR_H__
+#pragma once
 
 
 void       gimp_text_tool_editor_init             (GimpTextTool        *text_tool);
@@ -51,6 +50,3 @@ void       gimp_text_tool_editor_get_cursor_rect  (GimpTextTool        *text_too
                                                    gboolean             overwrite,
                                                    PangoRectangle      *cursor_rect);
 void       gimp_text_tool_editor_update_im_cursor (GimpTextTool        *text_tool);
-
-
-#endif /* __GIMP_TEXT_TOOL_EDITOR_H__ */

@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ALIGN_TOOL_H__
-#define __GIMP_ALIGN_TOOL_H__
-
+#pragma once
 
 #include "gimpdrawtool.h"
 
@@ -74,6 +72,3 @@ void    gimp_align_tool_register (GimpToolRegisterCallback  callback,
                                   gpointer                  data);
 
 GType   gimp_align_tool_get_type (void) G_GNUC_CONST;
-
-
-#endif  /*  __GIMP_ALIGN_TOOL_H__  */

@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_RECTANGLE_OPTIONS_H__
-#define __GIMP_RECTANGLE_OPTIONS_H__
+#pragma once
 
 
 typedef enum
@@ -176,6 +175,3 @@ void        gimp_rectangle_options_get_property       (GObject      *object,
 /*  testing helper functions  */
 
 GtkWidget * gimp_rectangle_options_get_size_entry     (GimpRectangleOptions *rectangle_options);
-
-
-#endif  /* __GIMP_RECTANGLE_OPTIONS_H__ */

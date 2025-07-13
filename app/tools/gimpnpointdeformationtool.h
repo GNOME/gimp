@@ -17,12 +17,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_N_POINT_DEFORMATION_TOOL_H__
-#define __GIMP_N_POINT_DEFORMATION_TOOL_H__
-
+#pragma once
 
 #include "gimpdrawtool.h"
-#include "libgimpmath/gimpmath.h"
 #include <npd/npd_common.h>
 
 
@@ -90,6 +87,3 @@ void    gimp_n_point_deformation_tool_register (GimpToolRegisterCallback  callba
                                                 gpointer                  data);
 
 GType   gimp_n_point_deformation_tool_get_type (void) G_GNUC_CONST;
-
-
-#endif  /*  __GIMP_N_POINT_DEFORMATION_TOOL_H__  */

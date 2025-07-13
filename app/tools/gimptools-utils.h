@@ -15,14 +15,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOLS_UTILS_H__
-#define __GIMP_TOOLS_UTILS_H__
+#pragma once
 
 
 void   gimp_tools_blink_lock_box    (Gimp     *gimp,
                                      GimpItem *item);
 
 void   gimp_tools_show_tool_options (Gimp *gimp);
-
-
-#endif  /* __GIMP_TOOLS_UTILS_H__ */

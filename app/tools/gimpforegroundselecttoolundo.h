@@ -17,9 +17,7 @@
 
 #if 0
 
-#ifndef __GIMP_FOREGROUND_SELECT_TOOL_UNDO_H__
-#define __GIMP_FOREGROUND_SELECT_TOOL_UNDO_H__
-
+#pragma once
 
 #include "core/gimpundo.h"
 
@@ -49,8 +47,5 @@ struct _GimpForegroundSelectToolUndoClass
 
 
 GType   gimp_foreground_select_tool_undo_get_type (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_FOREGROUND_SELECT_TOOL_UNDO_H__ */
 
 #endif

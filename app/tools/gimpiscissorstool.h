@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ISCISSORS_TOOL_H__
-#define __GIMP_ISCISSORS_TOOL_H__
-
+#pragma once
 
 #include "gimpselectiontool.h"
 
@@ -92,6 +90,3 @@ void    gimp_iscissors_tool_register (GimpToolRegisterCallback  callback,
                                       gpointer                  data);
 
 GType   gimp_iscissors_tool_get_type (void) G_GNUC_CONST;
-
-
-#endif  /*  __GIMP_ISCISSORS_TOOL_H__  */

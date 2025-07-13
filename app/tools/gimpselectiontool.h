@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SELECTION_TOOL_H__
-#define __GIMP_SELECTION_TOOL_H__
-
+#pragma once
 
 #include "gimpdrawtool.h"
 
@@ -73,6 +71,3 @@ void       gimp_selection_tool_start_change (GimpSelectionTool *sel_tool,
                                              GimpChannelOps     operation);
 void       gimp_selection_tool_end_change   (GimpSelectionTool *sel_tool,
                                              gboolean           cancel);
-
-
-#endif  /* __GIMP_SELECTION_TOOL_H__ */

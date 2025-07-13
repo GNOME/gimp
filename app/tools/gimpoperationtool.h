@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_TOOL_H__
-#define __GIMP_OPERATION_TOOL_H__
-
+#pragma once
 
 #include "gimpfiltertool.h"
 
@@ -67,6 +65,3 @@ void    gimp_operation_tool_set_operation (GimpOperationTool        *op_tool,
                                            const gchar              *undo_desc,
                                            const gchar              *icon_name,
                                            const gchar              *help_id);
-
-
-#endif  /*  __GIMP_OPERATION_TOOL_H__  */

@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PAINT_TOOL_H__
-#define __GIMP_PAINT_TOOL_H__
-
+#pragma once
 
 #include "gimpcolortool.h"
 
@@ -110,6 +108,3 @@ void    gimp_paint_tool_set_draw_circle     (GimpPaintTool       *tool,
 
 void    gimp_paint_tool_force_draw          (GimpPaintTool       *tool,
                                              gboolean             force);
-
-
-#endif  /*  __GIMP_PAINT_TOOL_H__  */

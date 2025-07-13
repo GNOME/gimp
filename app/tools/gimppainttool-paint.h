@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PAINT_TOOL_PAINT_H__
-#define __GIMP_PAINT_TOOL_PAINT_H__
+#pragma once
 
 
 typedef void (* GimpPaintToolPaintFunc) (GimpPaintTool *tool,
@@ -43,6 +42,3 @@ void       gimp_paint_tool_paint_push      (GimpPaintTool           *tool,
 void       gimp_paint_tool_paint_motion    (GimpPaintTool           *tool,
                                             const GimpCoords        *coords,
                                             guint32                  time);
-
-
-#endif  /*  __GIMP_PAINT_TOOL_PAINT_H__  */

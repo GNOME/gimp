@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TRANSFORM_3D_TOOL_H__
-#define __GIMP_TRANSFORM_3D_TOOL_H__
-
+#pragma once
 
 #include "gimptransformgridtool.h"
 
@@ -63,5 +61,3 @@ void    gimp_transform_3d_tool_register (GimpToolRegisterCallback  callback,
 
 GType   gimp_transform_3d_tool_get_type (void) G_GNUC_CONST;
 
-
-#endif  /*  __GIMP_TRANSFORM_3D_TOOL_H__  */

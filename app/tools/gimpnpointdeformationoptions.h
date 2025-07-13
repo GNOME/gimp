@@ -17,9 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_N_POINT_DEFORMATION_OPTIONS_H__
-#define __GIMP_N_POINT_DEFORMATION_OPTIONS_H__
-
+#pragma once
 
 #include "core/gimptooloptions.h"
 
@@ -62,6 +60,3 @@ GtkWidget * gimp_n_point_deformation_options_gui      (GimpToolOptions *tool_opt
 
 void        gimp_n_point_deformation_options_set_sensitivity (GimpNPointDeformationOptions *npd_options,
                                                               gboolean                      tool_active);
-
-
-#endif  /*  __GIMP_N_POINT_DEFORMATION_OPTIONS_H__  */

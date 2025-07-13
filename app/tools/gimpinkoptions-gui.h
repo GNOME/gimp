@@ -15,11 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef  __GIMP_INK_OPTIONS_GUI_H__
-#define  __GIMP_INK_OPTIONS_GUI_H__
+#pragma once
 
 
-GtkWidget * gimp_ink_options_gui      (GimpToolOptions *tool_options);
-
-
-#endif  /*  __GIMP_INK_OPTIONS_GUI_H__  */
+GtkWidget * gimp_ink_options_gui (GimpToolOptions *tool_options);

@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FREE_SELECT_TOOL_H__
-#define __GIMP_FREE_SELECT_TOOL_H__
-
+#pragma once
 
 #include "gimppolygonselecttool.h"
 
@@ -52,5 +50,3 @@ void    gimp_free_select_tool_register     (GimpToolRegisterCallback  callback,
 
 GType   gimp_free_select_tool_get_type     (void) G_GNUC_CONST;
 
-
-#endif  /*  __GIMP_FREE_SELECT_TOOL_H__  */

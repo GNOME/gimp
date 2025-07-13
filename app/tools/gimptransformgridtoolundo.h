@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TRANSFORM_GRID_TOOL_UNDO_H__
-#define __GIMP_TRANSFORM_GRID_TOOL_UNDO_H__
-
+#pragma once
 
 #include "core/gimpundo.h"
 
@@ -39,7 +37,7 @@ struct _GimpTransformGridToolUndo
 
   GimpTransformGridTool *tg_tool;
   TransInfo              trans_infos[2];
-#if 0                   
+#if 0
   TileManager           *original;
 #endif
 };
@@ -51,6 +49,3 @@ struct _GimpTransformGridToolUndoClass
 
 
 GType   gimp_transform_grid_tool_undo_get_type (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_TRANSFORM_GRID_TOOL_UNDO_H__ */
