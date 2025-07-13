@@ -12,6 +12,11 @@ libapppath_sources = [
   'gimppathundo.c',
   'gimpstroke-new.c',
   'gimpstroke.c',
+  'gimpvectorlayer.c',
+  'gimpvectorlayer-xcf.c',
+  'gimpvectorlayeroptions.c',
+  'gimpvectorlayeroptions-parasite.c',
+  'gimpvectorlayerundo.c',
 ]
 
 libapppath = static_library('apppath',
