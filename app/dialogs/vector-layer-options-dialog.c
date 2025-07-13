@@ -35,13 +35,16 @@
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpstrokeoptions.h"
 
+#include "path/gimppath.h"
+#include "path/gimpvectorlayer.h"
+#include "path/gimpvectorlayeroptions.h"
+
 #include "widgets/gimpcolorpanel.h"
+#include "widgets/gimpcontainercombobox.h"
+#include "widgets/gimpcontainerview.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpstrokeeditor.h"
-
-#include "vectors/gimpvectorlayer.h"
-#include "vectors/gimpvectorlayeroptions.h"
 
 #include "vector-layer-options-dialog.h"
 
@@ -53,12 +56,14 @@
 
 /*  local functions  */
 
-static void  vector_layer_options_dialog_notify   (GObject          *options,
-                                                   const GParamSpec *pspec,
-                                                   GtkWidget        *dialog);
-static void  vector_layer_options_dialog_response (GtkWidget        *widget,
-                                                   gint              response_id,
-                                                   GtkWidget        *dialog);
+static void  vector_layer_options_dialog_notify        (GObject            *options,
+                                                        const GParamSpec   *pspec,
+                                                        GtkWidget          *dialog);
+static void  vector_layer_options_dialog_response      (GtkWidget          *widget,
+                                                        gint                response_id,
+                                                        GtkWidget          *dialog);
+static void  vector_layer_options_dialog_path_selected (GimpContainerView  *view,
+                                                        GtkWidget          *dialog);
 
 
 /*  public function  */
@@ -76,6 +81,7 @@ vector_layer_options_dialog_new (GimpVectorLayer *layer,
   GimpStrokeOptions      *stroke_options;
   GtkWidget              *dialog;
   GtkWidget              *main_vbox;
+  GtkWidget              *combo;
 
   g_return_val_if_fail (GIMP_IS_VECTOR_LAYER (layer), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -90,13 +96,13 @@ vector_layer_options_dialog_new (GimpVectorLayer *layer,
                                      context,
                                      title, "gimp-vectorlayer-options",
                                      icon_name,
-                                     _("Choose vector layer options"),
+                                     _("Edit Vector Layer Attributes"),
                                      parent,
                                      gimp_standard_help_func,
                                      help_id,
                                      _("_Reset"),  RESPONSE_RESET,
                                      _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                     _("_Apply"),    GTK_RESPONSE_OK,
+                                     _("_Apply"),  GTK_RESPONSE_OK,
 
                                      NULL);
 
@@ -104,7 +110,7 @@ vector_layer_options_dialog_new (GimpVectorLayer *layer,
                                             RESPONSE_RESET,
                                             GTK_RESPONSE_OK,
                                             GTK_RESPONSE_CANCEL,
-                                           -1);
+                                            -1);
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
@@ -124,6 +130,13 @@ vector_layer_options_dialog_new (GimpVectorLayer *layer,
                           stroke_options,
                           (GDestroyNotify) g_object_unref);
 
+  g_signal_connect_object (saved_options, "notify::enable-fill",
+                           G_CALLBACK (vector_layer_options_dialog_notify),
+                           dialog, 0);
+  g_signal_connect_object (saved_options, "notify::enable-stroke",
+                           G_CALLBACK (vector_layer_options_dialog_notify),
+                           dialog, 0);
+
   g_signal_connect_object (fill_options, "notify",
                            G_CALLBACK (vector_layer_options_dialog_notify),
                            dialog, 0);
@@ -137,18 +150,31 @@ vector_layer_options_dialog_new (GimpVectorLayer *layer,
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_set_visible (main_vbox, TRUE);
 
+
+  combo = gimp_container_combo_box_new (gimp_image_get_paths (gimp_item_get_image (GIMP_ITEM (layer))),
+                                        context,
+                                        GIMP_VIEW_SIZE_SMALL, 1);
+  gimp_container_view_set_1_selected (GIMP_CONTAINER_VIEW (combo),
+                                      GIMP_VIEWABLE (saved_options->path));
+  g_signal_connect_object (combo, "selection-changed",
+                           G_CALLBACK (vector_layer_options_dialog_path_selected),
+                           dialog, 0);
+
+  gtk_box_pack_start (GTK_BOX (main_vbox), combo, FALSE, FALSE, 0);
+  gtk_widget_set_visible (combo, TRUE);
+
   /* The fill editor */
   {
     GtkWidget *frame;
     GtkWidget *fill_editor;
 
-    frame = gimp_frame_new (_("Fill Style"));
-    gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-    gtk_widget_set_visible (frame, TRUE);
-
     fill_editor = gimp_fill_editor_new (fill_options, TRUE, TRUE);
-    gtk_container_add (GTK_CONTAINER (frame), fill_editor);
     gtk_widget_set_visible (fill_editor, TRUE);
+
+    frame = gimp_prop_expanding_frame_new (G_OBJECT (saved_options),
+                                           "enable-fill", NULL, fill_editor,
+                                           NULL);
+    gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   }
 
   /* The stroke editor */
@@ -158,16 +184,16 @@ vector_layer_options_dialog_new (GimpVectorLayer *layer,
     gdouble    xres;
     gdouble    yres;
 
-    frame = gimp_frame_new (_("Stroke Style"));
-    gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-    gtk_widget_set_visible (frame, TRUE);
-
     gimp_image_get_resolution (gimp_item_get_image (GIMP_ITEM (layer)),
                                &xres, &yres);
 
     stroke_editor = gimp_stroke_editor_new (stroke_options, yres, TRUE, TRUE);
-    gtk_container_add (GTK_CONTAINER (frame), stroke_editor);
     gtk_widget_set_visible (stroke_editor, TRUE);
+
+    frame = gimp_prop_expanding_frame_new (G_OBJECT (saved_options),
+                                           "enable-stroke", NULL, stroke_editor,
+                                           NULL);
+    gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   }
 
   return dialog;
@@ -181,8 +207,13 @@ vector_layer_options_dialog_notify (GObject          *options,
   GimpVectorLayer   *layer;
   GimpFillOptions   *fill_options;
   GimpStrokeOptions *stroke_options;
+  gboolean           enable_fill;
+  gboolean           enable_stroke;
 
   layer = g_object_get_data (G_OBJECT (dialog), "layer");
+
+  enable_fill   = layer->options->enable_fill;
+  enable_stroke = layer->options->enable_stroke;
 
   fill_options   = g_object_get_data (G_OBJECT (dialog), "fill-options");
   stroke_options = g_object_get_data (G_OBJECT (dialog), "stroke-options");
@@ -192,8 +223,22 @@ vector_layer_options_dialog_notify (GObject          *options,
   gimp_config_sync (G_OBJECT (stroke_options),
                     G_OBJECT (layer->options->stroke_options), 0);
 
+  if (! strcmp (pspec->name, "enable-fill") ||
+      ! strcmp (pspec->name, "enable-stroke"))
+    {
+      GimpVectorLayerOptions *vector_options;
+
+      vector_options = GIMP_VECTOR_LAYER_OPTIONS (options);
+
+      layer->options->enable_fill   = vector_options->enable_fill;
+      layer->options->enable_stroke = vector_options->enable_stroke;
+    }
+
   gimp_vector_layer_refresh (layer);
   gimp_image_flush (gimp_item_get_image (GIMP_ITEM (layer)));
+  
+  layer->options->enable_fill   = enable_fill;
+  layer->options->enable_stroke = enable_stroke;
 }
 
 static void
@@ -202,6 +247,7 @@ vector_layer_options_dialog_response (GtkWidget *widget,
                                       GtkWidget *dialog)
 {
   GimpVectorLayer        *layer;
+  GimpPath               *path;
   GimpVectorLayerOptions *saved_options;
   GimpFillOptions        *fill_options;
   GimpStrokeOptions      *stroke_options;
@@ -215,10 +261,12 @@ vector_layer_options_dialog_response (GtkWidget *widget,
   switch (response_id)
     {
     case GTK_RESPONSE_OK:
-      if (layer && layer->options )
+      if (layer && layer->options)
 	    {
+          layer->options->enable_fill = saved_options->enable_fill;
           gimp_config_sync (G_OBJECT (saved_options->fill_options),
                            G_OBJECT (layer->options->fill_options), 0);
+          layer->options->enable_stroke = saved_options->enable_stroke;
           gimp_config_sync (G_OBJECT (saved_options->stroke_options),
                             G_OBJECT (layer->options->stroke_options), 0);
 
@@ -240,9 +288,39 @@ vector_layer_options_dialog_response (GtkWidget *widget,
                         G_OBJECT (fill_options), 0);
       gimp_config_sync (G_OBJECT (saved_options->stroke_options),
                         G_OBJECT (stroke_options), 0);
+      if (layer && layer->options)
+        {
+          g_object_get (saved_options, "path", &path, NULL);
+          g_object_set (layer->options, "path", path, NULL);
+
+          gimp_vector_layer_refresh (layer);
+          gimp_image_flush (gimp_item_get_image (GIMP_ITEM (layer)));
+        }
 
       if (response_id != RESPONSE_RESET)
         gtk_widget_destroy (dialog);
       break;
+    }
+}
+
+static void
+vector_layer_options_dialog_path_selected (GimpContainerView *view,
+                                           GtkWidget         *dialog)
+{
+  GimpViewable    *item = gimp_container_view_get_1_selected (view);
+  GimpPath        *path = NULL;
+  GimpVectorLayer *layer;
+
+  layer = g_object_get_data (G_OBJECT (dialog), "layer");
+
+  if (item)
+    path = GIMP_PATH (item);
+
+  if (path && GIMP_IS_PATH (path))
+    {
+      g_object_set (layer->options, "path", path, NULL);
+
+      gimp_vector_layer_refresh (layer);
+      gimp_image_flush (gimp_item_get_image (GIMP_ITEM (layer)));
     }
 }

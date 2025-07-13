@@ -71,6 +71,7 @@
 #include <libgimp/gimpselection.h>
 #include <libgimp/gimptextlayer.h>
 #include <libgimp/gimpthumbnailprocedure.h>
+#include <libgimp/gimpvectorlayer.h>
 #include <libgimp/gimpvectorloadprocedure.h>
 
 #include <libgimp/gimp_pdb_headers.h>

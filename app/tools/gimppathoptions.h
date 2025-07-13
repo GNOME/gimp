@@ -28,20 +28,41 @@
 #define GIMP_PATH_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PATH_OPTIONS, GimpPathOptionsClass))
 
 
-typedef struct _GimpPathOptions    GimpPathOptions;
+typedef struct _GimpPathOptions      GimpPathOptions;
 typedef struct _GimpToolOptionsClass GimpPathOptionsClass;
 
 struct _GimpPathOptions
 {
-  GimpToolOptions  parent_instance;
+  GimpToolOptions    parent_instance;
 
-  GimpPathMode     edit_mode;
-  gboolean         polygonal;
+  GimpPathMode       edit_mode;
+  gboolean           polygonal;
+
+  /* vector layer */
+  gboolean           enable_fill;
+  gboolean           enable_stroke;
+  GimpFillOptions   *fill_options;
+  GimpStrokeOptions *stroke_options;
+
+  GimpCustomStyle    fill_style;
+  GeglColor         *fill_foreground;
+  GimpPattern       *fill_pattern;
+  gboolean           fill_antialias;
+
+  GimpCustomStyle    stroke_style;
+  GeglColor         *stroke_foreground;
+  GimpPattern       *stroke_pattern;
+  gboolean           stroke_antialias;
+  gdouble            stroke_width;
+  GimpUnit          *stroke_unit;
+  GimpCapStyle       stroke_cap_style;
+  GimpJoinStyle      stroke_join_style;
+  gdouble            stroke_miter_limit;
+  gdouble            stroke_dash_offset;
 
   /*  options gui  */
-  GtkWidget       *to_selection_button;
-  GtkWidget       *fill_button;
-  GtkWidget       *stroke_button;
+  GtkWidget         *to_selection_button;
+  GtkWidget         *vector_layer_button;
 };
 
 
