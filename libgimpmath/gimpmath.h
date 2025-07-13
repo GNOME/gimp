@@ -18,9 +18,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MATH_H__
-#define __GIMP_MATH_H__
-
+#pragma once
 
 #include <math.h>
 
@@ -41,9 +39,7 @@
 
 #undef __GIMP_MATH_H_INSIDE__
 
-
 G_BEGIN_DECLS
-
 
 /**
  * SECTION: gimpmath
@@ -146,7 +142,4 @@ G_BEGIN_DECLS
  **/
 #define gimp_rad_to_deg(angle) ((angle) * 360.0 / (2.0 * G_PI))
 
-
 G_END_DECLS
-
-#endif /* __GIMP_MATH_H__ */

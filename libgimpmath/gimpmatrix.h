@@ -19,12 +19,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_MATH_H_INSIDE__) && !defined (GIMP_MATH_COMPILATION)
 #error "Only <libgimpmath/gimpmath.h> can be included directly."
 #endif
-
-#ifndef __GIMP_MATRIX_H__
-#define __GIMP_MATRIX_H__
 
 G_BEGIN_DECLS
 
@@ -151,7 +150,4 @@ gdouble       gimp_matrix4_transform_point (const GimpMatrix4 *matrix,
                                             gdouble           *newy,
                                             gdouble           *newz);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_MATRIX_H__ */
