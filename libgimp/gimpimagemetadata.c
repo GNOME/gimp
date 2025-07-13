@@ -166,12 +166,25 @@ _gimp_image_metadata_load_finish (GimpImage             *image,
 
   if (flags & GIMP_METADATA_LOAD_COMMENT)
     {
-      gchar  *comment;
-      GError *error = NULL;
+      GimpParasite *comment_parasite;
+      gchar        *comment = NULL;
+      GError       *error   = NULL;
 
-      comment = gexiv2_metadata_try_get_tag_interpreted_string (GEXIV2_METADATA (metadata),
-                                                                "Exif.Photo.UserComment",
-                                                                &error);
+      comment_parasite = gimp_image_get_parasite (image, "gimp-comment");
+      if (comment_parasite)
+        {
+          guint32  parasite_size;
+
+          comment = (gchar *) gimp_parasite_get_data (comment_parasite, &parasite_size);
+          comment = g_strndup (comment, parasite_size);
+
+          gimp_parasite_free (comment_parasite);
+        }
+
+      if (! comment)
+        comment = gexiv2_metadata_try_get_tag_interpreted_string (GEXIV2_METADATA (metadata),
+                                                                  "Exif.Photo.UserComment",
+                                                                  &error);
       if (error)
         {
           /* XXX. Should this be rather a user-facing error? */
