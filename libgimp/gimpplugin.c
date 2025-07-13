@@ -1801,6 +1801,12 @@ _gimp_plug_in_get_item (GimpPlugIn *plug_in,
                                "id", item_id,
                                NULL);
         }
+      else if (gimp_item_id_is_vector_layer (item_id))
+        {
+          item = g_object_new (GIMP_TYPE_VECTOR_LAYER,
+                               "id", item_id,
+                               NULL);
+        }
       else if (gimp_item_id_is_group_layer (item_id))
         {
           item = g_object_new (GIMP_TYPE_GROUP_LAYER,

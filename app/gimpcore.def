@@ -398,6 +398,7 @@ EXPORTS
 	gimp_item_get_visible
 	gimp_item_height
 	gimp_item_is_text_layer
+	gimp_item_is_vector_layer
 	gimp_item_offsets
 	gimp_item_rename
 	gimp_item_resize
@@ -450,7 +451,7 @@ EXPORTS
 	gimp_marshal_VOID__OBJECT_OBJECT
 	gimp_marshal_VOID__OBJECT_POINTER
 	gimp_marshal_VOID__POINTER_BOXED
-	gimp_marshal_VOID__POINTER_ENUM 
+	gimp_marshal_VOID__POINTER_ENUM
 	gimp_marshal_VOID__STRING_BOOLEAN_UINT_FLAGS
 	gimp_marshal_VOID__STRING_FLAGS
 	gimp_message

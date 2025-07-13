@@ -1,0 +1,144 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# New Vector Layer PDB API
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+
+sub vector_layer_new {
+    $blurb = 'Creates a new vector layer.';
+
+    $help = <<'HELP';
+This procedure creates a new path layer displaying the specified @path. By
+default, the fill and stroke properties will be defined by the context.
+
+
+The new layer still needs to be added to the image as this is not
+automatic. Add the new layer with the [method@Image.insert_layer]
+method.
+
+
+The arguments are kept as simple as necessary for the basic case. All
+vector attributes, however, can be modified with the appropriate
+`gimp_vector_layer_set_*()` procedures.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'path', type => 'path',
+          desc => 'The path to create the layer from' }
+    );
+
+    @outargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The new vector layer. The object belongs to libgimp and you should not free it.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (path == NULL)
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   _("Failed to create vector layer"));
+
+      success = FALSE;
+    }
+
+  if (success)
+    {
+      layer = GIMP_VECTOR_LAYER (gimp_vector_layer_new (image, path, context));
+
+      if (! layer)
+        {
+          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                       _("Failed to create vector layer"));
+
+          success = FALSE;
+        }
+    }
+}
+CODE
+    );
+}
+
+sub vector_layer_refresh {
+    $blurb = 'Rerender the vector layer';
+
+    $help = <<'HELP';
+This procedure causes the vector layer to refresh itself after changes.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The vector layer' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  gimp_vector_layer_refresh (layer);
+}
+CODE
+    );
+}
+
+sub vector_layer_discard {
+    $blurb = 'Discard the vector layer information.';
+
+    $help = <<'HELP';
+Discards the vector information. This makes the layer behave like a normal layer.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The vector layer' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  gimp_vector_layer_discard (layer);
+}
+CODE
+    );
+}
+
+@headers = qw("libgimpbase/gimpbase.h"
+              "core/gimpcontext.h"
+              "path/gimpvectorlayer.h"
+              "gimppdb-utils.h"
+              "gimppdberror.h"
+              "gimp-intl.h");
+
+@procs = qw(vector_layer_new
+            vector_layer_refresh
+            vector_layer_discard);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Vector layer procedures';
+$doc_title = 'gimpvectorlayer';
+$doc_short_desc = 'Functions for querying and manipulating vector layers.';
+$doc_long_desc = 'Functions for querying and manipulating vector layers.';
+
+1;
