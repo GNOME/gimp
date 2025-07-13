@@ -19,14 +19,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_WIN32_IO_H__
-#define __GIMP_WIN32_IO_H__
+#pragma once
 
 #include <io.h>
 #include <direct.h>
 
 G_BEGIN_DECLS
-
 
 #define mkdir(n,a)  _mkdir(n)
 #define chmod(n,f)  _chmod(n,f)
@@ -95,5 +93,3 @@ G_BEGIN_DECLS
 #endif
 
 G_END_DECLS
-
-#endif /* __GIMP_WIN32_IO_H__ */

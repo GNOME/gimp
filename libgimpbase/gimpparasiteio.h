@@ -19,8 +19,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PARASITE_IO_H__
-#define __GIMP_PARASITE_IO_H__
+#pragma once
 
 G_BEGIN_DECLS
 
@@ -83,5 +82,3 @@ gchar * gimp_pixpipe_params_build (GimpPixPipeParams *params) G_GNUC_MALLOC;
 void    gimp_pixpipe_params_free  (GimpPixPipeParams *params);
 
 G_END_DECLS
-
-#endif /* __GIMP_PARASITE_IO_H__ */

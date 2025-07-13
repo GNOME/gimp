@@ -16,12 +16,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_BASE_H_INSIDE__) && !defined (GIMP_BASE_COMPILATION)
 #error "Only <libgimpbase/gimpbase.h> can be included directly."
 #endif
-
-#ifndef __GIMP_RECTANGLE_H__
-#define __GIMP_RECTANGLE_H__
 
 G_BEGIN_DECLS
 
@@ -54,7 +53,4 @@ void      gimp_rectangle_union     (gint  x1,
                                     gint *dest_width,
                                     gint *dest_height);
 
-
 G_END_DECLS
-
-#endif  /* __GIMP_RECTANGLE_H__ */

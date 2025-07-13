@@ -19,12 +19,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_BASE_H_INSIDE__) && !defined (GIMP_BASE_COMPILATION)
 #error "Only <libgimpbase/gimpbase.h> can be included directly."
 #endif
-
-#ifndef __GIMP_ENV_H__
-#define __GIMP_ENV_H__
 
 G_BEGIN_DECLS
 
@@ -77,7 +76,4 @@ void          gimp_path_free                   (GList        *path);
 
 gchar       * gimp_path_get_user_writable_dir  (GList        *path) G_GNUC_MALLOC;
 
-
 G_END_DECLS
-
-#endif  /*  __GIMP_ENV_H__  */

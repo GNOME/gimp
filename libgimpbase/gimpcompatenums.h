@@ -16,9 +16,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COMPAT_ENUMS_H__
-#define __GIMP_COMPAT_ENUMS_H__
-
+#pragma once
 
 G_BEGIN_DECLS
 
@@ -48,7 +46,4 @@ typedef enum /*< skip >*/
 } GimpAddMaskTypeCompat;
 #endif
 
-
 G_END_DECLS
-
-#endif  /* __GIMP_COMPAT_ENUMS_H__ */

@@ -18,16 +18,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_BASE_H_INSIDE__) && !defined (GIMP_BASE_COMPILATION)
 #error "Only <libgimpbase/gimpbase.h> can be included directly."
 #endif
 
-
-#ifndef __GIMP_EXPORT_OPTIONS_H__
-#define __GIMP_EXPORT_OPTIONS_H__
-
 G_BEGIN_DECLS
-
 
 /* For information look into the C source or the html documentation */
 
@@ -35,7 +32,6 @@ G_BEGIN_DECLS
 #define GIMP_TYPE_EXPORT_OPTIONS               (gimp_export_options_get_type ())
 #define GIMP_VALUE_HOLDS_EXPORT_OPTIONS(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_EXPORT_OPTIONS))
 G_DECLARE_FINAL_TYPE (GimpExportOptions, gimp_export_options, GIMP, EXPORT_OPTIONS, GObject)
-
 
 
 /*
@@ -53,7 +49,4 @@ GParamSpec * gimp_param_spec_export_options     (const gchar  *name,
                                                  const gchar  *blurb,
                                                  GParamFlags   flags);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_EXPORT_OPTIONS_H__ */

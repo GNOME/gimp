@@ -16,15 +16,13 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_BASE_H_INSIDE__) && !defined (GIMP_BASE_COMPILATION)
 #error "Only <libgimpbase/gimpbase.h> can be included directly."
 #endif
 
-#ifndef __GIMP_UTILS_H__
-#define __GIMP_UTILS_H__
-
 G_BEGIN_DECLS
-
 
 gchar               * gimp_utf8_strtrim              (const gchar       *str,
                                                       gint               max_chars) G_GNUC_MALLOC;
@@ -92,5 +90,3 @@ void                  gimp_bind_text_domain          (const gchar       *domain_
                                                       const gchar       *dir_name);
 
 G_END_DECLS
-
-#endif  /* __GIMP_UTILS_H__ */

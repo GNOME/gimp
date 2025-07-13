@@ -19,16 +19,13 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_BASE_H_INSIDE__) && !defined (GIMP_BASE_COMPILATION)
 #error "Only <libgimpbase/gimpbase.h> can be included directly."
 #endif
 
-
-#ifndef __GIMP_CHOICE_H__
-#define __GIMP_CHOICE_H__
-
 G_BEGIN_DECLS
-
 
 /* For information look into the C source or the html documentation */
 
@@ -88,7 +85,4 @@ GParamSpec * gimp_param_spec_choice             (const gchar  *name,
 GimpChoice  * gimp_param_spec_choice_get_choice  (GParamSpec *pspec);
 const gchar * gimp_param_spec_choice_get_default (GParamSpec *pspec);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_CHOICE_H__ */

@@ -10,11 +10,9 @@
  * more information and how to use this.
  */
 
-#ifndef __GIMP_RELOC_H__
-#define __GIMP_RELOC_H__
+#pragma once
 
 G_BEGIN_DECLS
-
 
 /* These error codes can be returned from _gimp_reloc_init() or
  * _gimp_reloc_init_lib().
@@ -40,7 +38,4 @@ G_GNUC_INTERNAL gboolean _gimp_reloc_init_lib    (GError **error);
 
 G_GNUC_INTERNAL gchar  * _gimp_reloc_find_prefix (const gchar *default_prefix);
 
-
 G_END_DECLS
-
-#endif /* _GIMPRELOC_H_ */

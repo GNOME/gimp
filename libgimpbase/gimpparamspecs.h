@@ -18,12 +18,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_BASE_H_INSIDE__) && !defined (GIMP_BASE_COMPILATION)
 #error "Only <libgimpbase/gimpbase.h> can be included directly."
 #endif
-
-#ifndef __GIMP_PARAM_SPECS_H__
-#define __GIMP_PARAM_SPECS_H__
 
 G_BEGIN_DECLS
 
@@ -410,7 +409,4 @@ GParamSpec  * gimp_param_spec_core_object_array                 (const gchar   *
 
 GType         gimp_param_spec_core_object_array_get_object_type (GParamSpec *pspec);
 
-
 G_END_DECLS
-
-#endif  /*  __GIMP_PARAM_SPECS_H__  */
