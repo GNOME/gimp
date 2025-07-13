@@ -22,8 +22,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_THUMB_H__
-#define __GIMP_THUMB_H__
+#pragma once
 
 #define __GIMP_THUMB_H_INSIDE__
 
@@ -34,5 +33,3 @@
 #include <libgimpthumb/gimpthumbnail.h>
 
 #undef __GIMP_THUMB_H_INSIDE__
-
-#endif /* __GIMP_THUMB_H__ */

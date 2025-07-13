@@ -19,28 +19,26 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
 
-#ifndef __GIMP_TEXT_LAYER_H__
-#define __GIMP_TEXT_LAYER_H__
+#include <libgimp/gimplayer.h>
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-#include <libgimp/gimplayer.h>
-
-
 #define GIMP_TYPE_TEXT_LAYER (gimp_text_layer_get_type ())
-G_DECLARE_FINAL_TYPE (GimpTextLayer, gimp_text_layer, GIMP, TEXT_LAYER, GimpLayer)
+G_DECLARE_FINAL_TYPE (GimpTextLayer,
+                      gimp_text_layer,
+                      GIMP, TEXT_LAYER,
+                      GimpLayer)
 
 
-GimpTextLayer * gimp_text_layer_get_by_id (gint32       layer_id);
-
+GimpTextLayer * gimp_text_layer_get_by_id (gint32  layer_id);
 
 G_END_DECLS
-
-#endif /* __GIMP_TEXT_LAYER_H__ */

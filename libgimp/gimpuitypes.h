@@ -18,8 +18,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_UI_TYPES_H__
-#define __GIMP_UI_TYPES_H__
+#pragma once
 
 #include <libgimpwidgets/gimpwidgetstypes.h>
 
@@ -53,7 +52,4 @@ typedef struct _GimpGradientChooser           GimpGradientChooser;
 typedef struct _GimpPaletteChooser            GimpPaletteChooser;
 typedef struct _GimpPatternChooser            GimpPatternChooser;
 
-
 G_END_DECLS
-
-#endif /* __GIMP_UI_TYPES_H__ */

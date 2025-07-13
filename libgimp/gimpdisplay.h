@@ -19,21 +19,22 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
 
-#ifndef __GIMP_DISPLAY_H__
-#define __GIMP_DISPLAY_H__
-
 G_BEGIN_DECLS
-
 
 /* For information look into the C source or the html documentation */
 
 
 #define GIMP_TYPE_DISPLAY (gimp_display_get_type ())
-G_DECLARE_FINAL_TYPE (GimpDisplay, gimp_display, GIMP, DISPLAY, GObject)
+G_DECLARE_FINAL_TYPE (GimpDisplay,
+                      gimp_display,
+                      GIMP, DISPLAY,
+                      GObject)
 
 
 gint32        gimp_display_get_id       (GimpDisplay    *display);
@@ -41,7 +42,4 @@ GimpDisplay * gimp_display_get_by_id    (gint32          display_id);
 
 gboolean      gimp_display_is_valid     (GimpDisplay    *display);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_DISPLAY_H__ */

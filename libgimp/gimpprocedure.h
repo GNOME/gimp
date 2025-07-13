@@ -19,12 +19,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
-
-#ifndef __GIMP_PROCEDURE_H__
-#define __GIMP_PROCEDURE_H__
 
 G_BEGIN_DECLS
 
@@ -66,7 +65,10 @@ typedef enum
 
 
 #define GIMP_TYPE_PROCEDURE (gimp_procedure_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpProcedure, gimp_procedure, GIMP, PROCEDURE, GObject)
+G_DECLARE_DERIVABLE_TYPE (GimpProcedure,
+                          gimp_procedure,
+                          GIMP, PROCEDURE,
+                          GObject)
 
 
 /**
@@ -232,7 +234,4 @@ G_GNUC_INTERNAL GimpValueArray      * _gimp_procedure_run_array         (GimpPro
 G_GNUC_INTERNAL gint                  _gimp_procedure_get_ref_count     (GimpProcedure  *procedure,
                                                                          GObject        *object);
 
-
 G_END_DECLS
-
-#endif  /*  __GIMP_PROCEDURE_H__  */

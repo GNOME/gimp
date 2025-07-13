@@ -19,22 +19,24 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
-
-#ifndef __GIMP_PLUG_IN_H__
-#define __GIMP_PLUG_IN_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_PLUG_IN_ERROR           (gimp_plug_in_error_quark ())
+#define GIMP_PLUG_IN_ERROR (gimp_plug_in_error_quark ())
 
 #define GIMP_TYPE_PLUG_IN (gimp_plug_in_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpPlugIn, gimp_plug_in, GIMP, PLUG_IN, GObject)
+G_DECLARE_DERIVABLE_TYPE (GimpPlugIn,
+                          gimp_plug_in,
+                          GIMP, PLUG_IN,
+                          GObject)
 
 
 /**
@@ -214,7 +216,4 @@ void            gimp_plug_in_set_pdb_error_handler  (GimpPlugIn    *plug_in,
 GimpPDBErrorHandler
                 gimp_plug_in_get_pdb_error_handler  (GimpPlugIn    *plug_in);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_PLUG_IN_H__ */

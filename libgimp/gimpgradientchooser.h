@@ -18,26 +18,25 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_UI_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimpui.h> can be included directly."
 #endif
-
-#ifndef __GIMP_GRADIENT_CHOOSER_H__
-#define __GIMP_GRADIENT_CHOOSER_H__
 
 #include <libgimp/gimpresourcechooser.h>
 
 G_BEGIN_DECLS
 
 #define GIMP_TYPE_GRADIENT_CHOOSER (gimp_gradient_chooser_get_type ())
-G_DECLARE_FINAL_TYPE (GimpGradientChooser, gimp_gradient_chooser, GIMP, GRADIENT_CHOOSER, GimpResourceChooser)
+G_DECLARE_FINAL_TYPE (GimpGradientChooser,
+                      gimp_gradient_chooser,
+                      GIMP, GRADIENT_CHOOSER,
+                      GimpResourceChooser)
 
 
 GtkWidget * gimp_gradient_chooser_new (const gchar  *title,
                                        const gchar  *label,
                                        GimpGradient *gradient);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_GRADIENT_CHOOSER_H__ */

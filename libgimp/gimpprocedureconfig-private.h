@@ -19,11 +19,9 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PROCEDURE_CONFIG_PRIVATE_H__
-#define __GIMP_PROCEDURE_CONFIG_PRIVATE_H__
+#pragma once
 
 G_BEGIN_DECLS
-
 
 G_GNUC_INTERNAL void           _gimp_procedure_config_get_values   (GimpProcedureConfig  *config,
                                                                     GimpValueArray       *values);
@@ -58,7 +56,4 @@ gboolean   gimp_procedure_config_load_default  (GimpProcedureConfig  *config,
 gboolean   gimp_procedure_config_save_default  (GimpProcedureConfig  *config,
                                                 GError              **error);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_PROCEDURE_CONFIG_PRIVATE_H__ */

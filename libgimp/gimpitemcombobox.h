@@ -20,12 +20,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_UI_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimpui.h> can be included directly."
 #endif
-
-#ifndef __GIMP_ITEM_COMBO_BOX_H__
-#define __GIMP_ITEM_COMBO_BOX_H__
 
 G_BEGIN_DECLS
 
@@ -49,10 +48,10 @@ G_BEGIN_DECLS
 #define GIMP_IS_PATH_COMBO_BOX(obj)  (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PATH_COMBO_BOX))
 
 
-GType       gimp_drawable_combo_box_get_type (void) G_GNUC_CONST;
-GType       gimp_channel_combo_box_get_type  (void) G_GNUC_CONST;
-GType       gimp_layer_combo_box_get_type    (void) G_GNUC_CONST;
-GType       gimp_path_combo_box_get_type     (void) G_GNUC_CONST;
+GType   gimp_drawable_combo_box_get_type (void) G_GNUC_CONST;
+GType   gimp_channel_combo_box_get_type  (void) G_GNUC_CONST;
+GType   gimp_layer_combo_box_get_type    (void) G_GNUC_CONST;
+GType   gimp_path_combo_box_get_type     (void) G_GNUC_CONST;
 
 /**
  * GimpItemConstraintFunc:
@@ -63,6 +62,7 @@ GType       gimp_path_combo_box_get_type     (void) G_GNUC_CONST;
 typedef gboolean (* GimpItemConstraintFunc) (GimpImage *image,
                                              GimpItem  *item,
                                              gpointer   data);
+
 
 GtkWidget * gimp_drawable_combo_box_new (GimpItemConstraintFunc constraint,
                                          gpointer               data,
@@ -77,7 +77,4 @@ GtkWidget * gimp_path_combo_box_new     (GimpItemConstraintFunc constraint,
                                          gpointer               data,
                                          GDestroyNotify         data_destroy);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_ITEM_COMBO_BOX_H__ */

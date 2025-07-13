@@ -20,8 +20,7 @@
 #error "Only <libgimpcolor/gimpcolor.h> can be included directly."
 #endif
 
-#ifndef __GIMP_BILINEAR_H__
-#define __GIMP_BILINEAR_H__
+#pragma once
 
 G_BEGIN_DECLS
 
@@ -49,7 +48,4 @@ void      gimp_bilinear_rgb      (gdouble    x,
                                   gboolean   has_alpha,
                                   gdouble   *retvalues);
 
-
 G_END_DECLS
-
-#endif  /* __GIMP_BILINEAR_H__ */

@@ -22,11 +22,9 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_THUMB_ENUMS_H__
-#define __GIMP_THUMB_ENUMS_H__
+#pragma once
 
 G_BEGIN_DECLS
-
 
 /**
  * SECTION: gimpthumb-enums
@@ -112,7 +110,4 @@ typedef enum
   GIMP_THUMB_STATE_OK
 } GimpThumbState;
 
-
 G_END_DECLS
-
-#endif  /* __GIMP_THUMB_ENUMS_H__ */

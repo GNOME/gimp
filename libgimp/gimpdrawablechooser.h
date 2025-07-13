@@ -19,30 +19,29 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_UI_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimpui.h> can be included directly."
 #endif
 
-#ifndef __GIMP_DRAWABLE_CHOOSER_H__
-#define __GIMP_DRAWABLE_CHOOSER_H__
-
 G_BEGIN_DECLS
 
 #define GIMP_TYPE_DRAWABLE_CHOOSER (gimp_drawable_chooser_get_type ())
-G_DECLARE_FINAL_TYPE (GimpDrawableChooser, gimp_drawable_chooser, GIMP, DRAWABLE_CHOOSER, GtkBox)
+G_DECLARE_FINAL_TYPE (GimpDrawableChooser,
+                      gimp_drawable_chooser,
+                      GIMP, DRAWABLE_CHOOSER,
+                      GtkBox)
 
 
-GtkWidget *    gimp_drawable_chooser_new          (const gchar          *title,
-                                                   const gchar          *label,
-                                                   GType                 drawable_type,
-                                                   GimpDrawable         *drawable);
+GtkWidget *    gimp_drawable_chooser_new          (const gchar         *title,
+                                                   const gchar         *label,
+                                                   GType                drawable_type,
+                                                   GimpDrawable        *drawable);
 
-GimpDrawable * gimp_drawable_chooser_get_drawable (GimpDrawableChooser  *chooser);
-void           gimp_drawable_chooser_set_drawable (GimpDrawableChooser  *chooser,
-                                                   GimpDrawable         *drawable);
-GtkWidget    * gimp_drawable_chooser_get_label    (GimpDrawableChooser  *widget);
-
+GimpDrawable * gimp_drawable_chooser_get_drawable (GimpDrawableChooser *chooser);
+void           gimp_drawable_chooser_set_drawable (GimpDrawableChooser *chooser,
+                                                   GimpDrawable        *drawable);
+GtkWidget    * gimp_drawable_chooser_get_label    (GimpDrawableChooser *widget);
 
 G_END_DECLS
-
-#endif /* __GIMP_DRAWABLE_CHOOSER_H__ */

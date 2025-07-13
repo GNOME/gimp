@@ -19,12 +19,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
-
-#ifndef __LIBGIMP_GIMP_PIXBUF_H__
-#define __LIBGIMP_GIMP_PIXBUF_H__
 
 G_BEGIN_DECLS
 
@@ -37,7 +36,4 @@ G_GNUC_INTERNAL GdkPixbuf * _gimp_pixbuf_from_data (guchar                 *data
                                                     gint                    bpp,
                                                     GimpPixbufTransparency  alpha);
 
-
 G_END_DECLS
-
-#endif /* __LIBGIMP_GIMP_PIXBUF_H__ */

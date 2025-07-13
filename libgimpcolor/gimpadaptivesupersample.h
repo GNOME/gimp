@@ -20,8 +20,7 @@
 #error "Only <libgimpcolor/gimpcolor.h> can be included directly."
 #endif
 
-#ifndef __GIMP_ADAPTIVE_SUPERSAMPLE_H__
-#define __GIMP_ADAPTIVE_SUPERSAMPLE_H__
+#pragma once
 
 G_BEGIN_DECLS
 
@@ -76,7 +75,4 @@ gulong   gimp_adaptive_supersample_area (gint              x1,
                                          GimpProgressFunc  progress_func,
                                          gpointer          progress_data);
 
-
 G_END_DECLS
-
-#endif  /* __GIMP_ADAPTIVE_SUPERSAMPLE_H__ */

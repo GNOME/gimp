@@ -19,21 +19,22 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_UI_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimpui.h> can be included directly."
 #endif
 
-#ifndef __GIMP_ZOOM_PREVIEW_H__
-#define __GIMP_ZOOM_PREVIEW_H__
-
 G_BEGIN_DECLS
-
 
 /* For information look into the C source or the html documentation */
 
 
 #define GIMP_TYPE_ZOOM_PREVIEW (gimp_zoom_preview_get_type ())
-G_DECLARE_FINAL_TYPE (GimpZoomPreview, gimp_zoom_preview, GIMP, ZOOM_PREVIEW, GimpScrolledPreview)
+G_DECLARE_FINAL_TYPE (GimpZoomPreview,
+                      gimp_zoom_preview,
+                      GIMP, ZOOM_PREVIEW,
+                      GimpScrolledPreview)
 
 
 GtkWidget     * gimp_zoom_preview_new_from_drawable            (GimpDrawable    *drawable);
@@ -49,7 +50,4 @@ GimpDrawable  * gimp_zoom_preview_get_drawable                 (GimpZoomPreview 
 GimpZoomModel * gimp_zoom_preview_get_model                    (GimpZoomPreview *preview);
 gdouble         gimp_zoom_preview_get_factor                   (GimpZoomPreview *preview);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_ZOOM_PREVIEW_H__ */

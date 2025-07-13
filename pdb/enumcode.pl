@@ -58,13 +58,10 @@ print ENUMFILE <<'LGPL';
 
 LGPL
 
-my $guard = "__GIMP_ENUMS_H__";
 print ENUMFILE <<HEADER;
-#ifndef $guard
-#define $guard
+#pragma once
 
 G_BEGIN_DECLS
-
 HEADER
 
 foreach (sort keys %enums) {
@@ -115,10 +112,7 @@ void           gimp_enums_init           (void);
 
 const gchar ** gimp_enums_get_type_names (gint *n_type_names);
 
-
 G_END_DECLS
-
-#endif /* $guard */
 HEADER
 
 close ENUMFILE;

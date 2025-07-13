@@ -19,8 +19,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BATCH_PROCEDURE_H__
-#define __GIMP_BATCH_PROCEDURE_H__
+#pragma once
 
 #include <libgimp/gimpprocedure.h>
 
@@ -51,7 +50,10 @@ typedef GimpValueArray * (* GimpBatchFunc) (GimpProcedure        *procedure,
 
 
 #define GIMP_TYPE_BATCH_PROCEDURE (gimp_batch_procedure_get_type ())
-G_DECLARE_FINAL_TYPE (GimpBatchProcedure, gimp_batch_procedure, GIMP, BATCH_PROCEDURE, GimpProcedure)
+G_DECLARE_FINAL_TYPE (GimpBatchProcedure,
+                      gimp_batch_procedure,
+                      GIMP, BATCH_PROCEDURE,
+                      GimpProcedure)
 
 
 GimpProcedure * gimp_batch_procedure_new                  (GimpPlugIn      *plug_in,
@@ -67,5 +69,3 @@ void            gimp_batch_procedure_set_interpreter_name (GimpBatchProcedure *p
 const gchar *   gimp_batch_procedure_get_interpreter_name (GimpBatchProcedure *procedure);
 
 G_END_DECLS
-
-#endif  /*  __GIMP_BATCH_PROCEDURE_H__  */

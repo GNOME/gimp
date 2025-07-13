@@ -19,12 +19,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
-
-#ifndef __GIMP_PDB_H__
-#define __GIMP_PDB_H__
 
 G_BEGIN_DECLS
 
@@ -32,7 +31,10 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_PDB (gimp_pdb_get_type ())
-G_DECLARE_FINAL_TYPE (GimpPDB, gimp_pdb, GIMP, PDB, GObject)
+G_DECLARE_FINAL_TYPE (GimpPDB,
+                      gimp_pdb,
+                      GIMP, PDB,
+                      GObject)
 
 
 gboolean             gimp_pdb_procedure_exists     (GimpPDB              *pdb,
@@ -65,7 +67,4 @@ G_GNUC_INTERNAL GimpValueArray * _gimp_pdb_run_procedure_array  (GimpPDB        
                                                                  const gchar          *procedure_name,
                                                                  const GimpValueArray *arguments);
 
-
 G_END_DECLS
-
-#endif  /*  __GIMP_PDB_H__  */

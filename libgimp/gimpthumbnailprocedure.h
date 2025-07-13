@@ -19,8 +19,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_THUMBNAIL_PROCEDURE_H__
-#define __GIMP_THUMBNAIL_PROCEDURE_H__
+#pragma once
 
 #include <libgimp/gimpprocedure.h>
 
@@ -64,17 +63,17 @@ typedef GimpValueArray * (* GimpRunThumbnailFunc) (GimpProcedure        *procedu
 
 
 #define GIMP_TYPE_THUMBNAIL_PROCEDURE (gimp_thumbnail_procedure_get_type ())
-G_DECLARE_FINAL_TYPE (GimpThumbnailProcedure, gimp_thumbnail_procedure, GIMP, THUMBNAIL_PROCEDURE, GimpProcedure)
+G_DECLARE_FINAL_TYPE (GimpThumbnailProcedure,
+                      gimp_thumbnail_procedure,
+                      GIMP, THUMBNAIL_PROCEDURE,
+                      GimpProcedure)
 
 
-GimpProcedure * gimp_thumbnail_procedure_new      (GimpPlugIn           *plug_in,
-                                                   const gchar          *name,
-                                                   GimpPDBProcType       proc_type,
-                                                   GimpRunThumbnailFunc  run_func,
-                                                   gpointer              run_data,
-                                                   GDestroyNotify        run_data_destroy);
-
+GimpProcedure * gimp_thumbnail_procedure_new (GimpPlugIn           *plug_in,
+                                              const gchar          *name,
+                                              GimpPDBProcType       proc_type,
+                                              GimpRunThumbnailFunc  run_func,
+                                              gpointer              run_data,
+                                              GDestroyNotify        run_data_destroy);
 
 G_END_DECLS
-
-#endif  /*  __GIMP_THUMBNAIL_PROCEDURE_H__  */

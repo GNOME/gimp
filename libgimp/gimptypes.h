@@ -18,8 +18,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TYPES_H__
-#define __GIMP_TYPES_H__
+#pragma once
 
 #include <libgimpbase/gimpbasetypes.h>
 
@@ -81,7 +80,4 @@ typedef enum
   GIMP_PIXBUF_LARGE_CHECKS
 } GimpPixbufTransparency;
 
-
 G_END_DECLS
-
-#endif /* __GIMP_TYPES_H__ */

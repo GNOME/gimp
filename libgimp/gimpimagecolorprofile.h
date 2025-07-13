@@ -18,12 +18,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
-
-#ifndef __GIMP_IMAGE_COLOR_PROFILE_H__
-#define __GIMP_IMAGE_COLOR_PROFILE_H__
 
 G_BEGIN_DECLS
 
@@ -45,7 +44,4 @@ gboolean           gimp_image_convert_color_profile       (GimpImage            
                                                            GimpColorRenderingIntent   intent,
                                                            gboolean                   bpc);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_IMAGE_COLOR_PROFILE_H__ */

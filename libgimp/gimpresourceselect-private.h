@@ -16,12 +16,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
-
-#ifndef __GIMP_RESOURCE_SELECT_H__
-#define __GIMP_RESOURCE_SELECT_H__
 
 G_BEGIN_DECLS
 
@@ -37,17 +36,16 @@ typedef void (* GimpResourceChoosedCallback) (GimpResource *resource,
                                               gboolean      is_dialog_closing,
                                               gpointer      owner_data);
 
-const gchar * gimp_resource_select_new       (const gchar                 *title,
-                                              GBytes                      *parent_handle,
-                                              GimpResource                *resource,
-                                              GType                        resource_type,
-                                              GimpResourceChoosedCallback  callback,
-                                              gpointer                     owner_data,
-                                              GDestroyNotify               data_destroy);
 
-void          gimp_resource_select_set       (const gchar                 *callback_name,
-                                              GimpResource                *resource);
+const gchar * gimp_resource_select_new (const gchar                 *title,
+                                        GBytes                      *parent_handle,
+                                        GimpResource                *resource,
+                                        GType                        resource_type,
+                                        GimpResourceChoosedCallback  callback,
+                                        gpointer                     owner_data,
+                                        GDestroyNotify               data_destroy);
+
+void          gimp_resource_select_set (const gchar                 *callback_name,
+                                        GimpResource                *resource);
 
 G_END_DECLS
-
-#endif /* __GIMP_RESOURCE_SELECT_H__ */

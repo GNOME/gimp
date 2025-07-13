@@ -24,8 +24,7 @@
 #error "Only <libgimpcolor/gimpcolor.h> can be included directly."
 #endif
 
-#ifndef __GIMP_COLOR_PROFILE_H__
-#define __GIMP_COLOR_PROFILE_H__
+#pragma once
 
 G_BEGIN_DECLS
 
@@ -33,7 +32,10 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_COLOR_PROFILE (gimp_color_profile_get_type ())
-G_DECLARE_FINAL_TYPE (GimpColorProfile, gimp_color_profile, GIMP, COLOR_PROFILE, GObject)
+G_DECLARE_FINAL_TYPE (GimpColorProfile,
+                      gimp_color_profile,
+                      GIMP, COLOR_PROFILE,
+                      GObject)
 
 
 GimpColorProfile * gimp_color_profile_new_rgb_srgb          (void);
@@ -94,7 +96,4 @@ const Babl       * gimp_color_profile_get_format            (GimpColorProfile  *
 const Babl       * gimp_color_profile_get_lcms_format       (const Babl        *format,
                                                              guint32           *lcms_format);
 
-
 G_END_DECLS
-
-#endif  /* __GIMP_COLOR_PROFILE_H__ */

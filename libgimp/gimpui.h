@@ -16,8 +16,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_UI_H__
-#define __GIMP_UI_H__
+#pragma once
 
 #include <gio/gio.h>
 #include <gtk/gtk.h>
@@ -64,7 +63,4 @@ void        gimp_window_set_transient_for         (GtkWindow   *window,
 void        gimp_window_set_transient_for_display (GtkWindow   *window,
                                                    GimpDisplay *display);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_UI_H__ */

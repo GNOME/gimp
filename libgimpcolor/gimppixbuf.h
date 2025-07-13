@@ -23,8 +23,7 @@
 #error "Only <libgimpcolor/gimpcolor.h> can be included directly."
 #endif
 
-#ifndef __GIMP_PIXBUF_H__
-#define __GIMP_PIXBUF_H__
+#pragma once
 
 G_BEGIN_DECLS
 
@@ -37,7 +36,4 @@ GeglBuffer * gimp_pixbuf_create_buffer   (GdkPixbuf *pixbuf);
 guint8     * gimp_pixbuf_get_icc_profile (GdkPixbuf *pixbuf,
                                           gsize     *length);
 
-
 G_END_DECLS
-
-#endif  /* __GIMP_PIXBUF_H__ */

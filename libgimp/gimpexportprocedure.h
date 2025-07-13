@@ -19,8 +19,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_EXPORT_PROCEDURE_H__
-#define __GIMP_EXPORT_PROCEDURE_H__
+#pragma once
 
 #include <libgimp/gimpfileprocedure.h>
 
@@ -54,14 +53,14 @@ G_BEGIN_DECLS
  *
  * Since: 3.0
  **/
-typedef GimpValueArray * (* GimpRunExportFunc) (GimpProcedure        *procedure,
-                                                GimpRunMode           run_mode,
-                                                GimpImage            *image,
-                                                GFile                *file,
-                                                GimpExportOptions    *options,
-                                                GimpMetadata         *metadata,
-                                                GimpProcedureConfig  *config,
-                                                gpointer              run_data);
+typedef GimpValueArray * (* GimpRunExportFunc) (GimpProcedure       *procedure,
+                                                GimpRunMode          run_mode,
+                                                GimpImage           *image,
+                                                GFile               *file,
+                                                GimpExportOptions   *options,
+                                                GimpMetadata        *metadata,
+                                                GimpProcedureConfig *config,
+                                                gpointer             run_data);
 
 /**
  * GimpExportGetCapabilitiesFunc:
@@ -79,14 +78,17 @@ typedef GimpValueArray * (* GimpRunExportFunc) (GimpProcedure        *procedure,
  *
  * Since: 3.0
  **/
-typedef GimpExportCapabilities   (* GimpExportGetCapabilitiesFunc) (GimpProcedure        *procedure,
-                                                                    GimpProcedureConfig  *config,
-                                                                    GimpExportOptions    *options,
-                                                                    gpointer              get_capabilities_data);
+typedef GimpExportCapabilities (* GimpExportGetCapabilitiesFunc) (GimpProcedure        *procedure,
+                                                                  GimpProcedureConfig  *config,
+                                                                  GimpExportOptions    *options,
+                                                                  gpointer              get_capabilities_data);
 
 
 #define GIMP_TYPE_EXPORT_PROCEDURE (gimp_export_procedure_get_type ())
-G_DECLARE_FINAL_TYPE (GimpExportProcedure, gimp_export_procedure, GIMP, EXPORT_PROCEDURE, GimpFileProcedure)
+G_DECLARE_FINAL_TYPE (GimpExportProcedure,
+                      gimp_export_procedure,
+                      GIMP, EXPORT_PROCEDURE,
+                      GimpFileProcedure)
 
 
 GimpProcedure * gimp_export_procedure_new                   (GimpPlugIn                    *plug_in,
@@ -124,7 +126,4 @@ gboolean        gimp_export_procedure_get_support_profile   (GimpExportProcedure
 gboolean        gimp_export_procedure_get_support_thumbnail (GimpExportProcedure           *procedure);
 gboolean        gimp_export_procedure_get_support_comment   (GimpExportProcedure           *procedure);
 
-
 G_END_DECLS
-
-#endif  /*  __GIMP_EXPORT_PROCEDURE_H__  */

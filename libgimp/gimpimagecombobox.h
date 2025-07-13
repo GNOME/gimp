@@ -19,16 +19,16 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_UI_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimpui.h> can be included directly."
 #endif
 
-#ifndef __GIMP_IMAGE_COMBO_BOX_H__
-#define __GIMP_IMAGE_COMBO_BOX_H__
-
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
+
 
 /**
  * GimpImageConstraintFunc:
@@ -39,15 +39,15 @@ typedef gboolean (* GimpImageConstraintFunc) (GimpImage *image,
                                               gpointer   data);
 
 
-#define GIMP_TYPE_IMAGE_COMBO_BOX       (gimp_image_combo_box_get_type ())
-G_DECLARE_FINAL_TYPE (GimpImageComboBox, gimp_image_combo_box, GIMP, IMAGE_COMBO_BOX, GimpIntComboBox)
+#define GIMP_TYPE_IMAGE_COMBO_BOX (gimp_image_combo_box_get_type ())
+G_DECLARE_FINAL_TYPE (GimpImageComboBox,
+                      gimp_image_combo_box,
+                      GIMP, IMAGE_COMBO_BOX,
+                      GimpIntComboBox)
 
 
 GtkWidget * gimp_image_combo_box_new (GimpImageConstraintFunc  constraint,
                                       gpointer                 data,
                                       GDestroyNotify           data_destroy);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_IMAGE_COMBO_BOX_H__ */

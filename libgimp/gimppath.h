@@ -19,12 +19,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
-
-#ifndef __GIMP_PATH_H__
-#define __GIMP_PATH_H__
 
 G_BEGIN_DECLS
 
@@ -32,12 +31,12 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_PATH (gimp_path_get_type ())
-G_DECLARE_FINAL_TYPE (GimpPath, gimp_path, GIMP, PATH, GimpItem)
+G_DECLARE_FINAL_TYPE (GimpPath,
+                      gimp_path,
+                      GIMP, PATH,
+                      GimpItem)
 
 
 GimpPath * gimp_path_get_by_id (gint32 path_id);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_PATH_H__ */

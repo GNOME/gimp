@@ -19,8 +19,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FILE_PROCEDURE_H__
-#define __GIMP_FILE_PROCEDURE_H__
+#pragma once
 
 #include <libgimp/gimpprocedure.h>
 
@@ -30,7 +29,11 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_FILE_PROCEDURE (gimp_file_procedure_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpFileProcedure, gimp_file_procedure, GIMP, FILE_PROCEDURE, GimpProcedure)
+G_DECLARE_DERIVABLE_TYPE (GimpFileProcedure,
+                          gimp_file_procedure,
+                          GIMP, FILE_PROCEDURE,
+                          GimpProcedure)
+
 
 struct _GimpFileProcedureClass
 {
@@ -80,7 +83,4 @@ void            gimp_file_procedure_set_handles_remote
 gboolean        gimp_file_procedure_get_handles_remote
                                                     (GimpFileProcedure *procedure);
 
-
 G_END_DECLS
-
-#endif  /*  __GIMP_FILE_PROCEDURE_H__  */

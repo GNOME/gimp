@@ -16,8 +16,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLOR_H__
-#define __GIMP_COLOR_H__
+#pragma once
 
 #define __GIMP_COLOR_H_INSIDE__
 
@@ -120,7 +119,4 @@ typedef const Babl *                        GimpBablFormat;
 
 GType   gimp_babl_format_get_type           (void) G_GNUC_CONST;
 
-
 G_END_DECLS
-
-#endif  /* __GIMP_COLOR_H__ */

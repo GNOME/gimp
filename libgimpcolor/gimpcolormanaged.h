@@ -23,8 +23,7 @@
 #error "Only <libgimpcolor/gimpcolor.h> can be included directly."
 #endif
 
-#ifndef __GIMP_COLOR_MANAGED_H__
-#define __GIMP_COLOR_MANAGED_H__
+#pragma once
 
 G_BEGIN_DECLS
 
@@ -32,7 +31,11 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_COLOR_MANAGED (gimp_color_managed_get_type ())
-G_DECLARE_INTERFACE (GimpColorManaged, gimp_color_managed, GIMP, COLOR_MANAGED, GObject)
+G_DECLARE_INTERFACE (GimpColorManaged,
+                     gimp_color_managed,
+                     GIMP, COLOR_MANAGED,
+                     GObject)
+
 
 /**
  * GimpColorManagedInterface:
@@ -103,7 +106,4 @@ void                     gimp_color_managed_simulation_intent_changed  (GimpColo
 
 void                     gimp_color_managed_simulation_bpc_changed     (GimpColorManaged *managed);
 
-
 G_END_DECLS
-
-#endif  /* __GIMP_COLOR_MANAGED_IFACE_H__ */

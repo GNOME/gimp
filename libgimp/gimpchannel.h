@@ -18,22 +18,24 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
 
-#ifndef __GIMP_CHANNEL_H__
-#define __GIMP_CHANNEL_H__
+#include <libgimp/gimpdrawable.h>
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
-#include <libgimp/gimpdrawable.h>
-
 
 #define GIMP_TYPE_CHANNEL (gimp_channel_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpChannel, gimp_channel, GIMP, CHANNEL, GimpDrawable)
+G_DECLARE_DERIVABLE_TYPE (GimpChannel,
+                          gimp_channel,
+                          GIMP, CHANNEL,
+                          GimpDrawable)
 
 
 struct _GimpChannelClass
@@ -54,9 +56,6 @@ struct _GimpChannelClass
 };
 
 
-GimpChannel * gimp_channel_get_by_id (gint32       channel_id);
-
+GimpChannel * gimp_channel_get_by_id (gint32  channel_id);
 
 G_END_DECLS
-
-#endif /* __GIMP_CHANNEL_H__ */

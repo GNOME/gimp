@@ -19,11 +19,9 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GP_PARAMS_H__
-#define __GIMP_GP_PARAMS_H__
+#pragma once
 
 G_BEGIN_DECLS
-
 
 GParamSpec     * _gimp_gp_param_def_to_param_spec (const GPParamDef     *param_def);
 void             _gimp_param_spec_to_gp_param_def (GParamSpec           *pspec,
@@ -41,7 +39,4 @@ void             _gimp_gp_params_free             (GPParam              *params,
                                                    gint                  n_params,
                                                    gboolean              full_copy);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_GP_PARAMS_H__ */

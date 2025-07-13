@@ -19,8 +19,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LOAD_PROCEDURE_H__
-#define __GIMP_LOAD_PROCEDURE_H__
+#pragma once
 
 #include <libgimp/gimpfileprocedure.h>
 
@@ -64,7 +63,10 @@ typedef GimpValueArray * (* GimpRunLoadFunc) (GimpProcedure         *procedure,
 
 
 #define GIMP_TYPE_LOAD_PROCEDURE (gimp_load_procedure_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpLoadProcedure, gimp_load_procedure, GIMP, LOAD_PROCEDURE, GimpFileProcedure)
+G_DECLARE_DERIVABLE_TYPE (GimpLoadProcedure,
+                          gimp_load_procedure,
+                          GIMP, LOAD_PROCEDURE,
+                          GimpFileProcedure)
 
 
 struct _GimpLoadProcedureClass
@@ -100,7 +102,4 @@ void            gimp_load_procedure_set_thumbnail_loader (GimpLoadProcedure *pro
                                                           const gchar       *thumbnail_proc);
 const gchar   * gimp_load_procedure_get_thumbnail_loader (GimpLoadProcedure *procedure);
 
-
 G_END_DECLS
-
-#endif  /*  __GIMP_LOAD_PROCEDURE_H__  */

@@ -19,12 +19,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
-
-#ifndef __GIMP_PROCEDURE_CONFIG_H__
-#define __GIMP_PROCEDURE_CONFIG_H__
 
 G_BEGIN_DECLS
 
@@ -32,7 +31,11 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_PROCEDURE_CONFIG (gimp_procedure_config_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpProcedureConfig, gimp_procedure_config, GIMP, PROCEDURE_CONFIG, GObject)
+G_DECLARE_DERIVABLE_TYPE (GimpProcedureConfig,
+                          gimp_procedure_config,
+                          GIMP, PROCEDURE_CONFIG,
+                          GObject)
+
 
 struct _GimpProcedureConfigClass
 {
@@ -81,7 +84,4 @@ void             gimp_procedure_config_set_color_array       (GimpProcedureConfi
 gint             gimp_procedure_config_get_choice_id         (GimpProcedureConfig  *config,
                                                               const gchar          *property_name);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_PROCEDURE_CONFIG_H__ */

@@ -19,25 +19,24 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
 
-#ifndef __GIMP_GRADIENT_H__
-#define __GIMP_GRADIENT_H__
+#include <libgimp/gimpresource.h>
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-#include <libgimp/gimpresource.h>
-
-
 #define GIMP_TYPE_GRADIENT (gimp_gradient_get_type ())
-G_DECLARE_FINAL_TYPE (GimpGradient, gimp_gradient, GIMP, GRADIENT, GimpResource)
-
+G_DECLARE_FINAL_TYPE (GimpGradient,
+                      gimp_gradient,
+                      GIMP, GRADIENT,
+                      GimpResource)
 
 G_END_DECLS
 
-#endif /* __GIMP_GRADIENT_H__ */

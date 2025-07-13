@@ -18,19 +18,17 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
 
-#ifndef __GIMP_LAYER_H__
-#define __GIMP_LAYER_H__
+#include <libgimp/gimpdrawable.h>
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
-
-
-#include <libgimp/gimpdrawable.h>
 
 
 #define GIMP_TYPE_LAYER (gimp_layer_get_type ())
@@ -68,7 +66,5 @@ GimpLayer * gimp_layer_new_from_surface   (GimpImage       *image,
                                            gdouble          progress_start,
                                            gdouble          progress_end) G_GNUC_WARN_UNUSED_RESULT;
 
-
 G_END_DECLS
 
-#endif /* __GIMP_LAYER_H__ */

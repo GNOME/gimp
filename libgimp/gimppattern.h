@@ -19,24 +19,24 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
 
-#ifndef __GIMP_PATTERN_H__
-#define __GIMP_PATTERN_H__
+#include <libgimp/gimpresource.h>
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-#include <libgimp/gimpresource.h>
-
-
 #define GIMP_TYPE_PATTERN (gimp_pattern_get_type ())
-G_DECLARE_FINAL_TYPE (GimpPattern, gimp_pattern, GIMP, PATTERN, GimpResource)
-
+G_DECLARE_FINAL_TYPE (GimpPattern,
+                      gimp_pattern,
+                      GIMP, PATTERN,
+                      GimpResource)
 
 
 GeglBuffer * gimp_pattern_get_buffer (GimpPattern *pattern,
@@ -45,5 +45,3 @@ GeglBuffer * gimp_pattern_get_buffer (GimpPattern *pattern,
                                       const Babl  *format) G_GNUC_WARN_UNUSED_RESULT;
 
 G_END_DECLS
-
-#endif /* __GIMP_PATTERN_H__ */

@@ -22,18 +22,19 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_THUMB_H_INSIDE__) && !defined (GIMP_THUMB_COMPILATION)
 #error "Only <libgimpthumb/gimpthumb.h> can be included directly."
 #endif
 
-#ifndef __GIMP_THUMBNAIL_H__
-#define __GIMP_THUMBNAIL_H__
-
 G_BEGIN_DECLS
 
-
 #define GIMP_TYPE_THUMBNAIL (gimp_thumbnail_get_type ())
-G_DECLARE_FINAL_TYPE (GimpThumbnail, gimp_thumbnail, GIMP, THUMBNAIL, GObject)
+G_DECLARE_FINAL_TYPE (GimpThumbnail,
+                      gimp_thumbnail,
+                      GIMP, THUMBNAIL,
+                      GObject)
 
 
 GimpThumbnail  * gimp_thumbnail_new              (void);
@@ -76,7 +77,4 @@ void             gimp_thumbnail_delete_others    (GimpThumbnail  *thumbnail,
 
 gboolean         gimp_thumbnail_has_failed       (GimpThumbnail  *thumbnail);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_THUMBNAIL_H__ */

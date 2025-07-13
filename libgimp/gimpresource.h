@@ -16,12 +16,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
-
-#ifndef __GIMP_RESOURCE_H__
-#define __GIMP_RESOURCE_H__
 
 G_BEGIN_DECLS
 
@@ -29,7 +28,10 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_RESOURCE (gimp_resource_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpResource, gimp_resource, GIMP, RESOURCE, GObject)
+G_DECLARE_DERIVABLE_TYPE (GimpResource,
+                          gimp_resource,
+                          GIMP, RESOURCE,
+                          GObject)
 
 
 struct _GimpResourceClass
@@ -49,6 +51,7 @@ struct _GimpResourceClass
   void (*_gimp_reserved9) (void);
 };
 
+
 gint32         gimp_resource_get_id      (GimpResource *resource);
 GimpResource * gimp_resource_get_by_id   (gint32        resource_id);
 GimpResource * gimp_resource_get_by_name (GType         resource_type,
@@ -61,7 +64,4 @@ gboolean       gimp_resource_is_gradient (GimpResource *resource);
 gboolean       gimp_resource_is_palette  (GimpResource *resource);
 gboolean       gimp_resource_is_font     (GimpResource *resource);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_RESOURCE_H__ */

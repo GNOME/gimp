@@ -19,41 +19,39 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
 
-#ifndef __GIMP_DRAWABLE_FILTER_H__
-#define __GIMP_DRAWABLE_FILTER_H__
-
 G_BEGIN_DECLS
-
 
 /* For information look into the C source or the html documentation */
 
 
 #define GIMP_TYPE_DRAWABLE_FILTER (gimp_drawable_filter_get_type ())
-G_DECLARE_FINAL_TYPE (GimpDrawableFilter, gimp_drawable_filter, GIMP, DRAWABLE_FILTER, GObject)
+G_DECLARE_FINAL_TYPE (GimpDrawableFilter,
+                      gimp_drawable_filter,
+                      GIMP, DRAWABLE_FILTER,
+                      GObject)
 
 
-gint32                     gimp_drawable_filter_get_id              (GimpDrawableFilter *filter);
-GimpDrawableFilter       * gimp_drawable_filter_get_by_id           (gint32              filter_id);
+gint32                     gimp_drawable_filter_get_id         (GimpDrawableFilter *filter);
+GimpDrawableFilter       * gimp_drawable_filter_get_by_id      (gint32              filter_id);
 
-gboolean                   gimp_drawable_filter_is_valid            (GimpDrawableFilter *filter);
+gboolean                   gimp_drawable_filter_is_valid       (GimpDrawableFilter *filter);
 
-void                       gimp_drawable_filter_set_opacity         (GimpDrawableFilter *filter,
-                                                                     gdouble             opacity);
-void                       gimp_drawable_filter_set_blend_mode      (GimpDrawableFilter *filter,
-                                                                     GimpLayerMode       mode);
-void                       gimp_drawable_filter_set_aux_input       (GimpDrawableFilter *filter,
-                                                                     const gchar        *input_pad_name,
-                                                                     GimpDrawable       *input);
+void                       gimp_drawable_filter_set_opacity    (GimpDrawableFilter *filter,
+                                                                gdouble             opacity);
+void                       gimp_drawable_filter_set_blend_mode (GimpDrawableFilter *filter,
+                                                                GimpLayerMode       mode);
+void                       gimp_drawable_filter_set_aux_input  (GimpDrawableFilter *filter,
+                                                                const gchar        *input_pad_name,
+                                                                GimpDrawable       *input);
 
-GimpDrawableFilterConfig * gimp_drawable_filter_get_config          (GimpDrawableFilter *filter);
+GimpDrawableFilterConfig * gimp_drawable_filter_get_config     (GimpDrawableFilter *filter);
 
-void                       gimp_drawable_filter_update              (GimpDrawableFilter *filter);
-
+void                       gimp_drawable_filter_update         (GimpDrawableFilter *filter);
 
 G_END_DECLS
-
-#endif /* __GIMP_DRAWABLE_FILTER_H__ */

@@ -18,13 +18,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
-
-
-#ifndef __GIMP_IMAGE_METADATA_H__
-#define __GIMP_IMAGE_METADATA_H__
 
 G_BEGIN_DECLS
 
@@ -59,7 +57,4 @@ G_GNUC_INTERNAL gboolean _gimp_image_metadata_save_finish  (GimpImage           
                                                             GFile                 *file,
                                                             GError               **error);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_IMAGE_METADATA_H__ */

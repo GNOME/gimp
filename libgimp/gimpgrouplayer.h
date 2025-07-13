@@ -19,28 +19,26 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
 
-#ifndef __GIMP_GROUP_LAYER_H__
-#define __GIMP_GROUP_LAYER_H__
+#include <libgimp/gimplayer.h>
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-#include <libgimp/gimplayer.h>
-
-
 #define GIMP_TYPE_GROUP_LAYER (gimp_group_layer_get_type ())
-G_DECLARE_FINAL_TYPE (GimpGroupLayer, gimp_group_layer, GIMP, GROUP_LAYER, GimpLayer)
+G_DECLARE_FINAL_TYPE (GimpGroupLayer,
+                      gimp_group_layer,
+                      GIMP, GROUP_LAYER,
+                      GimpLayer)
 
 
-GimpGroupLayer * gimp_group_layer_get_by_id (gint32       layer_id);
-
+GimpGroupLayer * gimp_group_layer_get_by_id (gint32  layer_id);
 
 G_END_DECLS
-
-#endif /* __GIMP_GROUP_LAYER_H__ */

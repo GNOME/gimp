@@ -19,8 +19,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_PROCEDURE_H__
-#define __GIMP_IMAGE_PROCEDURE_H__
+#pragma once
 
 #include <libgimp/gimpprocedure.h>
 
@@ -54,17 +53,17 @@ typedef GimpValueArray * (* GimpRunImageFunc) (GimpProcedure         *procedure,
 
 
 #define GIMP_TYPE_IMAGE_PROCEDURE (gimp_image_procedure_get_type ())
-G_DECLARE_FINAL_TYPE (GimpImageProcedure, gimp_image_procedure, GIMP, IMAGE_PROCEDURE, GimpProcedure)
+G_DECLARE_FINAL_TYPE (GimpImageProcedure,
+                      gimp_image_procedure,
+                      GIMP, IMAGE_PROCEDURE,
+                      GimpProcedure)
 
 
-GimpProcedure * gimp_image_procedure_new      (GimpPlugIn       *plug_in,
-                                               const gchar      *name,
-                                               GimpPDBProcType   proc_type,
-                                               GimpRunImageFunc  run_func,
-                                               gpointer          run_data,
-                                               GDestroyNotify    run_data_destroy);
-
+GimpProcedure * gimp_image_procedure_new (GimpPlugIn       *plug_in,
+                                          const gchar      *name,
+                                          GimpPDBProcType   proc_type,
+                                          GimpRunImageFunc  run_func,
+                                          gpointer          run_data,
+                                          GDestroyNotify    run_data_destroy);
 
 G_END_DECLS
-
-#endif  /*  __GIMP_IMAGE_PROCEDURE_H__  */
