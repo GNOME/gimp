@@ -46,6 +46,11 @@ enum
   N_PROPS
 };
 
+static GParamSpec *object_props[N_PROPS] = { NULL, };
+
+
+typedef struct _GimpObjectPrivate  GimpObjectPrivate;
+
 struct _GimpObjectPrivate
 {
   gchar *name;
@@ -53,6 +58,9 @@ struct _GimpObjectPrivate
   guint  static_name  : 1;
   guint  disconnected : 1;
 };
+
+#define GET_PRIVATE(obj) \
+  ((GimpObjectPrivate *) gimp_object_get_instance_private ((GimpObject *) obj))
 
 
 static void    gimp_object_constructed      (GObject         *object);
@@ -77,7 +85,6 @@ G_DEFINE_TYPE_WITH_CODE (GimpObject, gimp_object, G_TYPE_OBJECT,
 #define parent_class gimp_object_parent_class
 
 static guint object_signals[LAST_SIGNAL] = { 0 };
-static GParamSpec *object_props[N_PROPS] = { NULL, };
 
 
 static void
@@ -125,10 +132,6 @@ gimp_object_class_init (GimpObjectClass *klass)
 static void
 gimp_object_init (GimpObject *object)
 {
-  object->p = gimp_object_get_instance_private (object);
-
-  object->p->name       = NULL;
-  object->p->normalized = NULL;
 }
 
 static void
@@ -142,13 +145,13 @@ gimp_object_constructed (GObject *object)
 static void
 gimp_object_dispose (GObject *object)
 {
-  GimpObject *gimp_object = GIMP_OBJECT (object);
+  GimpObjectPrivate *priv = GET_PRIVATE (object);
 
-  if (! gimp_object->p->disconnected)
+  if (! priv->disconnected)
     {
       g_signal_emit (object, object_signals[DISCONNECT], 0);
 
-      gimp_object->p->disconnected = TRUE;
+      priv->disconnected = TRUE;
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -170,13 +173,12 @@ gimp_object_set_property (GObject      *object,
                           const GValue *value,
                           GParamSpec   *pspec)
 {
-  GimpObject *gimp_object = GIMP_OBJECT (object);
-
   switch (property_id)
     {
     case PROP_NAME:
-      gimp_object_set_name (gimp_object, g_value_get_string (value));
+      gimp_object_set_name (GIMP_OBJECT (object), g_value_get_string (value));
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -189,16 +191,17 @@ gimp_object_get_property (GObject    *object,
                           GValue     *value,
                           GParamSpec *pspec)
 {
-  GimpObject *gimp_object = GIMP_OBJECT (object);
+  GimpObjectPrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_NAME:
-      if (gimp_object->p->static_name)
-        g_value_set_static_string (value, gimp_object->p->name);
+      if (priv->static_name)
+        g_value_set_static_string (value, priv->name);
       else
-        g_value_set_string (value, gimp_object->p->name);
+        g_value_set_string (value, priv->name);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -217,15 +220,17 @@ void
 gimp_object_set_name (GimpObject  *object,
                       const gchar *name)
 {
+  GimpObjectPrivate *priv = GET_PRIVATE (object);
+
   g_return_if_fail (GIMP_IS_OBJECT (object));
 
-  if (! g_strcmp0 (object->p->name, name))
+  if (! g_strcmp0 (priv->name, name))
     return;
 
   gimp_object_name_free (object);
 
-  object->p->name = g_strdup (name);
-  object->p->static_name = FALSE;
+  priv->name = g_strdup (name);
+  priv->static_name = FALSE;
 
   gimp_object_name_changed (object);
   g_object_notify_by_pspec (G_OBJECT (object), object_props[PROP_NAME]);
@@ -244,15 +249,17 @@ void
 gimp_object_set_name_safe (GimpObject  *object,
                            const gchar *name)
 {
+  GimpObjectPrivate *priv = GET_PRIVATE (object);
+
   g_return_if_fail (GIMP_IS_OBJECT (object));
 
-  if (! g_strcmp0 (object->p->name, name))
+  if (! g_strcmp0 (priv->name, name))
     return;
 
   gimp_object_name_free (object);
 
-  object->p->name = gimp_utf8_strtrim (name, 30);
-  object->p->static_name = FALSE;
+  priv->name = gimp_utf8_strtrim (name, 30);
+  priv->static_name = FALSE;
 
   gimp_object_name_changed (object);
   g_object_notify_by_pspec (G_OBJECT (object), object_props[PROP_NAME]);
@@ -275,15 +282,17 @@ void
 gimp_object_set_static_name (GimpObject  *object,
                              const gchar *name)
 {
+  GimpObjectPrivate *priv = GET_PRIVATE (object);
+
   g_return_if_fail (GIMP_IS_OBJECT (object));
 
-  if (! g_strcmp0 (object->p->name, name))
+  if (! g_strcmp0 (priv->name, name))
     return;
 
   gimp_object_name_free (object);
 
-  object->p->name = (gchar *) name;
-  object->p->static_name = TRUE;
+  priv->name = (gchar *) name;
+  priv->static_name = TRUE;
 
   gimp_object_name_changed (object);
   g_object_notify_by_pspec (G_OBJECT (object), object_props[PROP_NAME]);
@@ -307,9 +316,11 @@ void
 gimp_object_take_name (GimpObject *object,
                        gchar      *name)
 {
+  GimpObjectPrivate *priv = GET_PRIVATE (object);
+
   g_return_if_fail (GIMP_IS_OBJECT (object));
 
-  if (! g_strcmp0 (object->p->name, name))
+  if (! g_strcmp0 (priv->name, name))
     {
       g_free (name);
       return;
@@ -317,8 +328,8 @@ gimp_object_take_name (GimpObject *object,
 
   gimp_object_name_free (object);
 
-  object->p->name = name;
-  object->p->static_name = FALSE;
+  priv->name = name;
+  priv->static_name = FALSE;
 
   gimp_object_name_changed (object);
   g_object_notify_by_pspec (G_OBJECT (object), object_props[PROP_NAME]);
@@ -336,10 +347,11 @@ gimp_object_take_name (GimpObject *object,
 const gchar *
 gimp_object_get_name (gconstpointer object)
 {
-  const GimpObject *object_typed = object;
-  g_return_val_if_fail (GIMP_IS_OBJECT (object_typed), NULL);
+  GimpObjectPrivate *priv = GET_PRIVATE ((GimpObject *) object);
 
-  return object_typed->p->name;
+  g_return_val_if_fail (GIMP_IS_OBJECT ((GimpObject *) object), NULL);
+
+  return priv->name;
 }
 
 /**
@@ -371,21 +383,25 @@ gimp_object_name_changed (GimpObject *object)
 void
 gimp_object_name_free (GimpObject *object)
 {
-  if (object->p->normalized)
-    {
-      if (object->p->normalized != object->p->name)
-        g_free (object->p->normalized);
+  GimpObjectPrivate *priv = GET_PRIVATE (object);
 
-      object->p->normalized = NULL;
+  g_return_if_fail (GIMP_IS_OBJECT (object));
+
+  if (priv->normalized)
+    {
+      if (priv->normalized != priv->name)
+        g_free (priv->normalized);
+
+      priv->normalized = NULL;
     }
 
-  if (object->p->name)
+  if (priv->name)
     {
-      if (! object->p->static_name)
-        g_free (object->p->name);
+      if (! priv->static_name)
+        g_free (priv->name);
 
-      object->p->name = NULL;
-      object->p->static_name = FALSE;
+      priv->name = NULL;
+      priv->static_name = FALSE;
     }
 }
 
@@ -406,32 +422,37 @@ gint
 gimp_object_name_collate (GimpObject *object1,
                           GimpObject *object2)
 {
-  if (! object1->p->normalized)
+  GimpObjectPrivate *priv1 = GET_PRIVATE (object1);
+  GimpObjectPrivate *priv2 = GET_PRIVATE (object2);
+
+  if (! priv1->normalized)
     gimp_object_name_normalize (object1);
 
-  if (! object2->p->normalized)
+  if (! priv2->normalized)
     gimp_object_name_normalize (object2);
 
-  return strcmp (object1->p->normalized, object2->p->normalized);
+  return strcmp (priv1->normalized, priv2->normalized);
 }
 
 static void
 gimp_object_name_normalize (GimpObject *object)
 {
-  g_return_if_fail (object->p->normalized == NULL);
+  GimpObjectPrivate *priv = GET_PRIVATE (object);
 
-  if (object->p->name)
+  g_return_if_fail (priv->normalized == NULL);
+
+  if (priv->name)
     {
-      gchar *key = g_utf8_collate_key (object->p->name, -1);
+      gchar *key = g_utf8_collate_key (priv->name, -1);
 
-      if (strcmp (key, object->p->name))
+      if (strcmp (key, priv->name))
         {
-          object->p->normalized = key;
+          priv->normalized = key;
         }
       else
         {
           g_free (key);
-          object->p->normalized = object->p->name;
+          priv->normalized = priv->name;
         }
     }
 }
@@ -447,8 +468,9 @@ gint64
 gimp_object_get_memsize (GimpObject *object,
                          gint64     *gui_size)
 {
-  gint64 my_size     = 0;
-  gint64 my_gui_size = 0;
+  GimpObjectPrivate *priv        = GET_PRIVATE (object);
+  gint64             my_size     = 0;
+  gint64             my_gui_size = 0;
 
   g_return_val_if_fail (object == NULL || GIMP_IS_OBJECT (object), 0);
 
@@ -492,7 +514,7 @@ gimp_object_get_memsize (GimpObject *object,
                                      "(%" G_GINT64_FORMAT ")\n",
                                      indent_buf,
                                      g_type_name (G_TYPE_FROM_INSTANCE (object)),
-                                     object->p->name ? object->p->name : "anonymous",
+                                     priv->name ? priv->name : "anonymous",
                                      memsize,
                                      gui_memsize);
 
@@ -529,10 +551,11 @@ static gint64
 gimp_object_real_get_memsize (GimpObject *object,
                               gint64     *gui_size)
 {
-  gint64 memsize = 0;
+  GimpObjectPrivate *priv    = GET_PRIVATE (object);
+  gint64             memsize = 0;
 
-  if (! object->p->static_name)
-    memsize += gimp_string_get_memsize (object->p->name);
+  if (! priv->static_name)
+    memsize += gimp_string_get_memsize (priv->name);
 
   return memsize + gimp_g_object_get_memsize ((GObject *) object);
 }

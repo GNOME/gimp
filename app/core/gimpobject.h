@@ -18,23 +18,12 @@
 #pragma once
 
 
-#define GIMP_TYPE_OBJECT            (gimp_object_get_type ())
-#define GIMP_OBJECT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OBJECT, GimpObject))
-#define GIMP_OBJECT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_OBJECT, GimpObjectClass))
-#define GIMP_IS_OBJECT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OBJECT))
-#define GIMP_IS_OBJECT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_OBJECT))
-#define GIMP_OBJECT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_OBJECT, GimpObjectClass))
+#define GIMP_TYPE_OBJECT (gimp_object_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpObject,
+                          gimp_object,
+                          GIMP, OBJECT,
+                          GObject)
 
-
-typedef struct _GimpObjectPrivate  GimpObjectPrivate;
-typedef struct _GimpObjectClass    GimpObjectClass;
-
-struct _GimpObject
-{
-  GObject            parent_instance;
-
-  GimpObjectPrivate *p;
-};
 
 struct _GimpObjectClass
 {
@@ -68,5 +57,3 @@ gint          gimp_object_name_collate    (GimpObject       *object1,
                                            GimpObject       *object2);
 gint64        gimp_object_get_memsize     (GimpObject       *object,
                                            gint64           *gui_size);
-
-G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpObject, g_object_unref);
