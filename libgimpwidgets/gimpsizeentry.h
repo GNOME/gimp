@@ -20,12 +20,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
-
-#ifndef __GIMP_SIZE_ENTRY_H__
-#define __GIMP_SIZE_ENTRY_H__
 
 G_BEGIN_DECLS
 
@@ -112,7 +111,5 @@ void        gimp_size_entry_set_activates_default (GimpSizeEntry *gse,
 GtkWidget * gimp_size_entry_get_help_widget       (GimpSizeEntry *gse,
                                                    gint           field);
 
-
 G_END_DECLS
 
-#endif /* __GIMP_SIZE_ENTRY_H__ */

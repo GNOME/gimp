@@ -19,12 +19,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
-
-#ifndef __GIMP_BUTTON_H__
-#define __GIMP_BUTTON_H__
 
 G_BEGIN_DECLS
 
@@ -32,7 +31,11 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_BUTTON (gimp_button_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpButton, gimp_button, GIMP, BUTTON, GtkButton)
+G_DECLARE_DERIVABLE_TYPE (GimpButton,
+                          gimp_button,
+                          GIMP, BUTTON,
+                          GtkButton)
+
 
 struct _GimpButtonClass
 {
@@ -60,7 +63,4 @@ GtkWidget * gimp_button_new              (void);
 void        gimp_button_extended_clicked (GimpButton      *button,
                                           GdkModifierType  modifier_state);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_BUTTON_H__ */

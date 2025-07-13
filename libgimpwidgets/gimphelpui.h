@@ -19,12 +19,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
-
-#ifndef __GIMP_HELP_UI_H__
-#define __GIMP_HELP_UI_H__
 
 G_BEGIN_DECLS
 
@@ -69,7 +68,4 @@ void   gimp_context_help                   (GtkWidget      *widget);
 
 GQuark gimp_help_id_quark           (void) G_GNUC_CONST;
 
-
 G_END_DECLS
-
-#endif /* __GIMP_HELP_UI_H__ */

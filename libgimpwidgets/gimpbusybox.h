@@ -19,17 +19,19 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_BUSY_BOX_H__
-#define __GIMP_BUSY_BOX_H__
-
 G_BEGIN_DECLS
 
 #define GIMP_TYPE_BUSY_BOX (gimp_busy_box_get_type ())
-G_DECLARE_FINAL_TYPE (GimpBusyBox, gimp_busy_box, GIMP, BUSY_BOX, GtkBox)
+G_DECLARE_FINAL_TYPE (GimpBusyBox,
+                      gimp_busy_box,
+                      GIMP, BUSY_BOX,
+                      GtkBox)
 
 
 GtkWidget   * gimp_busy_box_new         (const gchar *message);
@@ -38,7 +40,4 @@ void          gimp_busy_box_set_message (GimpBusyBox *box,
                                          const gchar *message);
 const gchar * gimp_busy_box_get_message (GimpBusyBox *box);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_BUSY_BOX_H__ */

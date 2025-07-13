@@ -13,8 +13,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PICK_BUTTON_PRIVATE_H__
-#define __GIMP_PICK_BUTTON_PRIVATE_H__
+#pragma once
 
 
 typedef struct _GimpPickButtonPrivate
@@ -23,5 +22,3 @@ typedef struct _GimpPickButtonPrivate
   GtkWidget *grab_widget;
 } GimpPickButtonPrivate;
 
-
-#endif /* ! __GIMP_PICK_BUTTON_PRIVATE_H__ */

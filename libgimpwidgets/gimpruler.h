@@ -16,17 +16,19 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_RULER_H__
-#define __GIMP_RULER_H__
-
 G_BEGIN_DECLS
 
 #define GIMP_TYPE_RULER (gimp_ruler_get_type ())
-G_DECLARE_FINAL_TYPE (GimpRuler, gimp_ruler, GIMP, RULER, GtkWidget)
+G_DECLARE_FINAL_TYPE (GimpRuler,
+                      gimp_ruler,
+                      GIMP, RULER,
+                      GtkWidget)
 
 
 GtkWidget * gimp_ruler_new                 (GtkOrientation  orientation);
@@ -52,5 +54,3 @@ void        gimp_ruler_get_range           (GimpRuler      *ruler,
                                             gdouble        *max_size);
 
 G_END_DECLS
-
-#endif /* __GIMP_RULER_H__ */

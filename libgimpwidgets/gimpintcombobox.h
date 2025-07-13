@@ -19,18 +19,19 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_INT_COMBO_BOX_H__
-#define __GIMP_INT_COMBO_BOX_H__
-
 G_BEGIN_DECLS
 
-
 #define GIMP_TYPE_INT_COMBO_BOX (gimp_int_combo_box_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpIntComboBox, gimp_int_combo_box, GIMP, INT_COMBO_BOX, GtkComboBox)
+G_DECLARE_DERIVABLE_TYPE (GimpIntComboBox,
+                          gimp_int_combo_box,
+                          GIMP, INT_COMBO_BOX,
+                          GtkComboBox)
 
 
 struct _GimpIntComboBoxClass
@@ -107,7 +108,4 @@ void          gimp_int_combo_box_set_sensitivity (GimpIntComboBox        *combo_
                                                   gpointer                data,
                                                   GDestroyNotify          destroy);
 
-
 G_END_DECLS
-
-#endif  /* __GIMP_INT_COMBO_BOX_H__ */

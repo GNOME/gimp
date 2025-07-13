@@ -19,12 +19,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
-
-#ifndef __GIMP_ICONS_H__
-#define __GIMP_ICONS_H__
 
 G_BEGIN_DECLS
 
@@ -434,7 +433,4 @@ void     gimp_icons_init           (void);
 
 gboolean gimp_icons_set_icon_theme (GFile *path);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_ICONS_H__ */

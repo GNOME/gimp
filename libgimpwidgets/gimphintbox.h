@@ -19,12 +19,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
-
-#ifndef __GIMP_HINT_BOX_H__
-#define __GIMP_HINT_BOX_H__
 
 G_BEGIN_DECLS
 
@@ -32,12 +31,12 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_HINT_BOX (gimp_hint_box_get_type ())
-G_DECLARE_FINAL_TYPE (GimpHintBox, gimp_hint_box, GIMP, HINT_BOX, GtkBox)
+G_DECLARE_FINAL_TYPE (GimpHintBox,
+                      gimp_hint_box,
+                      GIMP, HINT_BOX,
+                      GtkBox)
 
 
-GtkWidget * gimp_hint_box_new      (const gchar *hint);
-
+GtkWidget * gimp_hint_box_new (const gchar *hint);
 
 G_END_DECLS
-
-#endif /* __GIMP_HINT_BOX_H__ */

@@ -21,18 +21,19 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_NUMBER_PAIR_ENTRY_H__
-#define __GIMP_NUMBER_PAIR_ENTRY_H__
-
 G_BEGIN_DECLS
 
-
 #define GIMP_TYPE_NUMBER_PAIR_ENTRY (gimp_number_pair_entry_get_type ())
-G_DECLARE_FINAL_TYPE (GimpNumberPairEntry, gimp_number_pair_entry, GIMP, NUMBER_PAIR_ENTRY, GtkEntry)
+G_DECLARE_FINAL_TYPE (GimpNumberPairEntry,
+                      gimp_number_pair_entry,
+                      GIMP, NUMBER_PAIR_ENTRY,
+                      GtkEntry)
 
 
 GtkWidget *    gimp_number_pair_entry_new                (const gchar         *separators,
@@ -68,7 +69,4 @@ void           gimp_number_pair_entry_set_user_override  (GimpNumberPairEntry *e
                                                           gboolean             user_override);
 gboolean       gimp_number_pair_entry_get_user_override  (GimpNumberPairEntry *entry);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_NUMBER_PAIR_ENTRY_H__ */

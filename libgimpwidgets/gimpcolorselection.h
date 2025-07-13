@@ -19,12 +19,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
-
-#ifndef __GIMP_COLOR_SELECTION_H__
-#define __GIMP_COLOR_SELECTION_H__
 
 G_BEGIN_DECLS
 
@@ -32,7 +31,10 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_COLOR_SELECTION (gimp_color_selection_get_type ())
-G_DECLARE_FINAL_TYPE (GimpColorSelection, gimp_color_selection, GIMP, COLOR_SELECTION, GtkBox)
+G_DECLARE_FINAL_TYPE (GimpColorSelection,
+                      gimp_color_selection,
+                      GIMP, COLOR_SELECTION,
+                      GtkBox)
 
 
 GtkWidget * gimp_color_selection_new            (void);
@@ -66,7 +68,4 @@ void        gimp_color_selection_set_config     (GimpColorSelection *selection,
 GtkWidget * gimp_color_selection_get_notebook   (GimpColorSelection *selection);
 GtkWidget * gimp_color_selection_get_right_vbox (GimpColorSelection *selection);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_COLOR_SELECTION_H__ */

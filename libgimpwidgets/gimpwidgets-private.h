@@ -19,9 +19,9 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_WIDGETS_PRIVATE_H__
-#define __GIMP_WIDGETS_PRIVATE_H__
+#pragma once
 
+G_BEGIN_DECLS
 
 typedef GeglColor * (* GimpGetColorFunc)      (void);
 typedef void        (* GimpEnsureModulesFunc) (void);
@@ -31,9 +31,6 @@ extern GimpHelpFunc          _gimp_standard_help_func;
 extern GimpGetColorFunc      _gimp_get_foreground_func;
 extern GimpGetColorFunc      _gimp_get_background_func;
 extern GimpEnsureModulesFunc _gimp_ensure_modules_func;
-
-
-G_BEGIN_DECLS
 
 
 void  gimp_widgets_init              (GimpHelpFunc           standard_help_func,
@@ -48,7 +45,4 @@ void  gimp_widget_set_bound_property (GtkWidget             *widget,
                                       GObject               *config,
                                       const gchar           *property_name);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_WIDGETS_PRIVATE_H__ */

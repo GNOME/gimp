@@ -27,18 +27,19 @@
  * provides.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_CHAIN_BUTTON_H__
-#define __GIMP_CHAIN_BUTTON_H__
-
 G_BEGIN_DECLS
 
-
 #define GIMP_TYPE_CHAIN_BUTTON (gimp_chain_button_get_type ())
-G_DECLARE_FINAL_TYPE (GimpChainButton, gimp_chain_button, GIMP, CHAIN_BUTTON, GtkGrid)
+G_DECLARE_FINAL_TYPE (GimpChainButton,
+                      gimp_chain_button,
+                      GIMP, CHAIN_BUTTON,
+                      GtkGrid)
 
 
 GtkWidget   * gimp_chain_button_new           (GimpChainPosition  position);
@@ -53,7 +54,4 @@ gboolean      gimp_chain_button_get_active    (GimpChainButton   *button);
 
 GtkWidget   * gimp_chain_button_get_button    (GimpChainButton   *button);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_CHAIN_BUTTON_H__ */

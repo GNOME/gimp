@@ -22,20 +22,21 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
-
-#ifndef __GIMP_COLOR_NOTEBOOK_H__
-#define __GIMP_COLOR_NOTEBOOK_H__
 
 #include <libgimpwidgets/gimpcolorselector.h>
 
 G_BEGIN_DECLS
 
-
 #define GIMP_TYPE_COLOR_NOTEBOOK (gimp_color_notebook_get_type ())
-G_DECLARE_FINAL_TYPE (GimpColorNotebook, gimp_color_notebook, GIMP, COLOR_NOTEBOOK, GimpColorSelector)
+G_DECLARE_FINAL_TYPE (GimpColorNotebook,
+                      gimp_color_notebook,
+                      GIMP, COLOR_NOTEBOOK,
+                      GimpColorSelector)
 
 
 GtkWidget         * gimp_color_notebook_set_has_page         (GimpColorNotebook *notebook,
@@ -54,7 +55,4 @@ void                gimp_color_notebook_set_simulation       (GimpColorNotebook 
 void                gimp_color_notebook_enable_simulation    (GimpColorNotebook *notebook,
                                                               gboolean           enabled);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_COLOR_NOTEBOOK_H__ */

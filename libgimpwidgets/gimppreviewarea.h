@@ -16,18 +16,19 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_PREVIEW_AREA_H__
-#define __GIMP_PREVIEW_AREA_H__
-
 G_BEGIN_DECLS
 
-
 #define GIMP_TYPE_PREVIEW_AREA (gimp_preview_area_get_type ())
-G_DECLARE_FINAL_TYPE (GimpPreviewArea, gimp_preview_area, GIMP, PREVIEW_AREA, GtkDrawingArea)
+G_DECLARE_FINAL_TYPE (GimpPreviewArea,
+                      gimp_preview_area,
+                      GIMP, PREVIEW_AREA,
+                      GtkDrawingArea)
 
 
 GtkWidget * gimp_preview_area_new              (void);
@@ -94,7 +95,4 @@ void        gimp_preview_area_set_max_size     (GimpPreviewArea *area,
 void        gimp_preview_area_menu_popup       (GimpPreviewArea *area,
                                                 GdkEventButton  *event);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_PREVIEW_AREA_H__ */

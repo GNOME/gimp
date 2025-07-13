@@ -19,27 +19,27 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
-
-#ifndef __GIMP_COLOR_SCALE_ENTRY_H__
-#define __GIMP_COLOR_SCALE_ENTRY_H__
 
 #include <libgimpwidgets/gimpscaleentry.h>
 
 G_BEGIN_DECLS
 
 #define GIMP_TYPE_COLOR_SCALE_ENTRY (gimp_color_scale_entry_get_type ())
-G_DECLARE_FINAL_TYPE (GimpColorScaleEntry, gimp_color_scale_entry, GIMP, COLOR_SCALE_ENTRY, GimpScaleEntry)
+G_DECLARE_FINAL_TYPE (GimpColorScaleEntry,
+                      gimp_color_scale_entry,
+                      GIMP, COLOR_SCALE_ENTRY,
+                      GimpScaleEntry)
 
-GtkWidget     * gimp_color_scale_entry_new        (const gchar *text,
-                                                   gdouble      value,
-                                                   gdouble      lower,
-                                                   gdouble      upper,
-                                                   guint        digits);
 
+GtkWidget * gimp_color_scale_entry_new (const gchar *text,
+                                        gdouble      value,
+                                        gdouble      lower,
+                                        gdouble      upper,
+                                        guint        digits);
 
 G_END_DECLS
-
-#endif /* __GIMP_COLOR_SCALE_ENTRY_H__ */

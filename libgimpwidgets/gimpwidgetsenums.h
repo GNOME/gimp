@@ -16,9 +16,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_WIDGETS_ENUMS_H__
-#define __GIMP_WIDGETS_ENUMS_H__
-
+#pragma once
 
 G_BEGIN_DECLS
 
@@ -237,7 +235,4 @@ typedef enum
   GIMP_ZOOM_PINCH,     /*< skip >*/
 } GimpZoomType;
 
-
 G_END_DECLS
-
-#endif  /* __GIMP_WIDGETS_ENUMS_H__ */

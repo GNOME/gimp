@@ -25,20 +25,22 @@
  * fully functional wired to the preview button.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
-
-#ifndef __GIMP_COLOR_BUTTON_H__
-#define __GIMP_COLOR_BUTTON_H__
 
 #include <libgimpwidgets/gimpbutton.h>
 
 G_BEGIN_DECLS
 
-
 #define GIMP_TYPE_COLOR_BUTTON (gimp_color_button_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpColorButton, gimp_color_button, GIMP, COLOR_BUTTON, GimpButton)
+G_DECLARE_DERIVABLE_TYPE (GimpColorButton,
+                          gimp_color_button,
+                          GIMP, COLOR_BUTTON,
+                          GimpButton)
+
 
 struct _GimpColorButtonClass
 {
@@ -89,9 +91,7 @@ void           gimp_color_button_set_update       (GimpColorButton   *button,
 void           gimp_color_button_set_color_config (GimpColorButton   *button,
                                                    GimpColorConfig   *config);
 
-GSimpleActionGroup * gimp_color_button_get_action_group   (GimpColorButton   *button);
-
+GSimpleActionGroup *
+               gimp_color_button_get_action_group (GimpColorButton   *button);
 
 G_END_DECLS
-
-#endif /* __GIMP_COLOR_BUTTON_H__ */

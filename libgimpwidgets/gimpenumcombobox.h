@@ -19,19 +19,22 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
-
-#ifndef __GIMP_ENUM_COMBO_BOX_H__
-#define __GIMP_ENUM_COMBO_BOX_H__
 
 #include <libgimpwidgets/gimpintcombobox.h>
 
 G_BEGIN_DECLS
 
 #define GIMP_TYPE_ENUM_COMBO_BOX (gimp_enum_combo_box_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpEnumComboBox, gimp_enum_combo_box, GIMP, ENUM_COMBO_BOX, GimpIntComboBox)
+G_DECLARE_DERIVABLE_TYPE (GimpEnumComboBox,
+                          gimp_enum_combo_box,
+                          GIMP, ENUM_COMBO_BOX,
+                          GimpIntComboBox)
+
 
 struct _GimpEnumComboBoxClass
 {
@@ -58,5 +61,3 @@ void        gimp_enum_combo_box_set_icon_prefix  (GimpEnumComboBox *combo_box,
                                                   const gchar      *icon_prefix);
 
 G_END_DECLS
-
-#endif  /* __GIMP_ENUM_COMBO_BOX_H__ */

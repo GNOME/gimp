@@ -19,12 +19,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #ifndef GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
 #error GimpController is unstable API under construction
 #endif
-
-#ifndef __GIMP_CONTROLLER_H__
-#define __GIMP_CONTROLLER_H__
 
 G_BEGIN_DECLS
 
@@ -117,7 +116,11 @@ union _GimpControllerEvent
 
 
 #define GIMP_TYPE_CONTROLLER (gimp_controller_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpController, gimp_controller, GIMP, CONTROLLER, GObject)
+G_DECLARE_DERIVABLE_TYPE (GimpController,
+                          gimp_controller,
+                          GIMP, CONTROLLER,
+                          GObject)
+
 
 struct _GimpControllerClass
 {
@@ -167,7 +170,4 @@ const gchar    * gimp_controller_get_event_blurb (GimpController *controller,
 gboolean         gimp_controller_event (GimpController            *controller,
                                         const GimpControllerEvent *event);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_CONTROLLER_H__ */

@@ -19,18 +19,19 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_COLOR_HEX_ENTRY_H__
-#define __GIMP_COLOR_HEX_ENTRY_H__
-
 G_BEGIN_DECLS
 
-
 #define GIMP_TYPE_COLOR_HEX_ENTRY (gimp_color_hex_entry_get_type ())
-G_DECLARE_FINAL_TYPE (GimpColorHexEntry, gimp_color_hex_entry, GIMP, COLOR_HEX_ENTRY, GtkEntry)
+G_DECLARE_FINAL_TYPE (GimpColorHexEntry,
+                      gimp_color_hex_entry,
+                      GIMP, COLOR_HEX_ENTRY,
+                      GtkEntry)
 
 
 GtkWidget * gimp_color_hex_entry_new       (void);
@@ -39,7 +40,4 @@ void        gimp_color_hex_entry_set_color (GimpColorHexEntry *entry,
                                             GeglColor         *color);
 GeglColor * gimp_color_hex_entry_get_color (GimpColorHexEntry *entry);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_COLOR_HEX_ENTRY_H__ */

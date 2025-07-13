@@ -19,15 +19,13 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_INT_STORE_H__
-#define __GIMP_INT_STORE_H__
-
 G_BEGIN_DECLS
-
 
 /**
  * GimpIntStoreColumns:
@@ -54,7 +52,11 @@ typedef enum
 
 
 #define GIMP_TYPE_INT_STORE (gimp_int_store_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpIntStore, gimp_int_store, GIMP, INT_STORE, GtkListStore)
+G_DECLARE_DERIVABLE_TYPE (GimpIntStore,
+                          gimp_int_store,
+                          GIMP, INT_STORE,
+                          GtkListStore)
+
 
 struct _GimpIntStoreClass
 {
@@ -90,7 +92,4 @@ gboolean   gimp_int_store_lookup_by_user_data (GtkTreeModel  *model,
                                                gpointer       user_data,
                                                GtkTreeIter   *iter);
 
-
 G_END_DECLS
-
-#endif  /* __GIMP_INT_STORE_H__ */

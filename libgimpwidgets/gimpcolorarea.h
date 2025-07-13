@@ -24,18 +24,19 @@
  * handles drag'n'drop.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_COLOR_AREA_H__
-#define __GIMP_COLOR_AREA_H__
-
 G_BEGIN_DECLS
 
-
 #define GIMP_TYPE_COLOR_AREA (gimp_color_area_get_type ())
-G_DECLARE_FINAL_TYPE (GimpColorArea, gimp_color_area, GIMP, COLOR_AREA, GtkDrawingArea)
+G_DECLARE_FINAL_TYPE (GimpColorArea,
+                      gimp_color_area,
+                      GIMP, COLOR_AREA,
+                      GtkDrawingArea)
 
 
 GtkWidget * gimp_color_area_new              (GeglColor         *color,
@@ -59,7 +60,4 @@ void        gimp_color_area_set_out_of_gamut (GimpColorArea     *area,
 void        gimp_color_area_set_color_config (GimpColorArea     *area,
                                               GimpColorConfig   *config);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_COLOR_AREA_H__ */

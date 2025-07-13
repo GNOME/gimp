@@ -19,19 +19,21 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
-
-#ifndef __GIMP_LABEL_ENTRY_H__
-#define __GIMP_LABEL_ENTRY_H__
 
 #include <libgimpwidgets/gimplabeled.h>
 
 G_BEGIN_DECLS
 
 #define GIMP_TYPE_LABEL_ENTRY (gimp_label_entry_get_type ())
-G_DECLARE_FINAL_TYPE (GimpLabelEntry, gimp_label_entry, GIMP, LABEL_ENTRY, GimpLabeled)
+G_DECLARE_FINAL_TYPE (GimpLabelEntry,
+                      gimp_label_entry,
+                      GIMP, LABEL_ENTRY,
+                      GimpLabeled)
 
 
 GtkWidget   * gimp_label_entry_new        (const gchar   *label);
@@ -43,5 +45,3 @@ const gchar * gimp_label_entry_get_value  (GimpLabelEntry *entry);
 GtkWidget   * gimp_label_entry_get_entry  (GimpLabelEntry *entry);
 
 G_END_DECLS
-
-#endif /* __GIMP_LABEL_ENTRY_H__ */

@@ -19,20 +19,21 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_ENUM_STORE_H__
-#define __GIMP_ENUM_STORE_H__
-
 #include <libgimpwidgets/gimpintstore.h>
-
 
 G_BEGIN_DECLS
 
 #define GIMP_TYPE_ENUM_STORE (gimp_enum_store_get_type ())
-G_DECLARE_FINAL_TYPE (GimpEnumStore, gimp_enum_store, GIMP, ENUM_STORE, GimpIntStore)
+G_DECLARE_FINAL_TYPE (GimpEnumStore,
+                      gimp_enum_store,
+                      GIMP, ENUM_STORE,
+                      GimpIntStore)
 
 
 GtkListStore * gimp_enum_store_new                    (GType    enum_type);
@@ -49,7 +50,4 @@ GtkListStore * gimp_enum_store_new_with_values_valist (GType    enum_type,
 void           gimp_enum_store_set_icon_prefix  (GimpEnumStore *store,
                                                  const gchar   *icon_prefix);
 
-
 G_END_DECLS
-
-#endif  /* __GIMP_ENUM_STORE_H__ */

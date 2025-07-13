@@ -18,12 +18,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
-
-#ifndef __GIMP_SPIN_SCALE_H__
-#define __GIMP_SPIN_SCALE_H__
 
 #include <libgimpwidgets/gimpspinbutton.h>
 
@@ -31,7 +30,10 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_SPIN_SCALE (gimp_spin_scale_get_type ())
-G_DECLARE_FINAL_TYPE (GimpSpinScale, gimp_spin_scale, GIMP, SPIN_SCALE, GimpSpinButton)
+G_DECLARE_FINAL_TYPE (GimpSpinScale,
+                      gimp_spin_scale,
+                      GIMP, SPIN_SCALE,
+                      GimpSpinButton)
 
 
 GtkWidget   * gimp_spin_scale_new                 (GtkAdjustment *adjustment,
@@ -61,5 +63,3 @@ gboolean      gimp_spin_scale_get_constrain_drag  (GimpSpinScale *scale);
 const guint   gimp_spin_scale_get_mnemonic_keyval (GimpSpinScale *scale);
 
 G_END_DECLS
-
-#endif  /*  __GIMP_SPIN_SCALE_H__  */

@@ -20,18 +20,19 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_COLOR_SCALE_H__
-#define __GIMP_COLOR_SCALE_H__
-
 G_BEGIN_DECLS
 
-
 #define GIMP_TYPE_COLOR_SCALE (gimp_color_scale_get_type ())
-G_DECLARE_FINAL_TYPE (GimpColorScale, gimp_color_scale, GIMP, COLOR_SCALE, GtkScale)
+G_DECLARE_FINAL_TYPE (GimpColorScale,
+                      gimp_color_scale,
+                      GIMP, COLOR_SCALE,
+                      GtkScale)
 
 
 GtkWidget * gimp_color_scale_new              (GtkOrientation            orientation,
@@ -47,7 +48,4 @@ void        gimp_color_scale_set_color        (GimpColorScale           *scale,
 void        gimp_color_scale_set_color_config (GimpColorScale           *scale,
                                                GimpColorConfig          *config);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_COLOR_SCALE_H__ */

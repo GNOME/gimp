@@ -21,26 +21,29 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
 #include <libgimpwidgets/gimplabelspin.h>
 
-#ifndef __GIMP_SCALE_ENTRY_H__
-#define __GIMP_SCALE_ENTRY_H__
-
 G_BEGIN_DECLS
 
 #define GIMP_TYPE_SCALE_ENTRY (gimp_scale_entry_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpScaleEntry, gimp_scale_entry, GIMP, SCALE_ENTRY, GimpLabelSpin)
+G_DECLARE_DERIVABLE_TYPE (GimpScaleEntry,
+                          gimp_scale_entry,
+                          GIMP, SCALE_ENTRY,
+                          GimpLabelSpin)
+
 
 struct _GimpScaleEntryClass
 {
   GimpLabelSpinClass parent_class;
 
   /*  Class methods  */
-  GtkWidget     * (* new_range_widget) (GtkAdjustment  *adjustment);
+  GtkWidget * (* new_range_widget) (GtkAdjustment  *adjustment);
 
   /* Padding for future expansion */
   void (* _gimp_reserved0) (void);
@@ -55,24 +58,22 @@ struct _GimpScaleEntryClass
   void (* _gimp_reserved9) (void);
 };
 
-GtkWidget     * gimp_scale_entry_new             (const gchar *text,
-                                                  gdouble      value,
-                                                  gdouble      lower,
-                                                  gdouble      upper,
-                                                  guint        digits);
 
-GtkWidget     * gimp_scale_entry_get_range       (GimpScaleEntry *entry);
+GtkWidget * gimp_scale_entry_new             (const gchar    *text,
+                                              gdouble         value,
+                                              gdouble         lower,
+                                              gdouble         upper,
+                                              guint           digits);
 
-void            gimp_scale_entry_set_bounds      (GimpScaleEntry *entry,
-                                                  gdouble         lower,
-                                                  gdouble         upper,
-                                                  gboolean        limit_scale);
+GtkWidget * gimp_scale_entry_get_range       (GimpScaleEntry *entry);
 
-void            gimp_scale_entry_set_logarithmic (GimpScaleEntry *entry,
-                                                  gboolean        logarithmic);
-gboolean        gimp_scale_entry_get_logarithmic (GimpScaleEntry *entry);
+void        gimp_scale_entry_set_bounds      (GimpScaleEntry *entry,
+                                              gdouble         lower,
+                                              gdouble         upper,
+                                              gboolean        limit_scale);
 
+void        gimp_scale_entry_set_logarithmic (GimpScaleEntry *entry,
+                                              gboolean        logarithmic);
+gboolean    gimp_scale_entry_get_logarithmic (GimpScaleEntry *entry);
 
 G_END_DECLS
-
-#endif /* __GIMP_SCALE_ENTRY_H__ */

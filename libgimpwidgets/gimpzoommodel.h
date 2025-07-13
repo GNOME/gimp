@@ -19,18 +19,19 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_ZOOM_MODEL_H__
-#define __GIMP_ZOOM_MODEL_H__
-
 G_BEGIN_DECLS
 
-
 #define GIMP_TYPE_ZOOM_MODEL (gimp_zoom_model_get_type ())
-G_DECLARE_FINAL_TYPE (GimpZoomModel, gimp_zoom_model, GIMP, ZOOM_MODEL, GObject)
+G_DECLARE_FINAL_TYPE (GimpZoomModel,
+                      gimp_zoom_model,
+                      GIMP, ZOOM_MODEL,
+                      GObject)
 
 
 GimpZoomModel * gimp_zoom_model_new          (void);
@@ -54,5 +55,3 @@ gdouble         gimp_zoom_model_zoom_step    (GimpZoomType        zoom_type,
                                               gdouble             delta);
 
 G_END_DECLS
-
-#endif /* __GIMP_ZOOM_MODEL_H__ */

@@ -19,12 +19,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
-
-#ifndef __GIMP_CAIRO_UTILS_H__
-#define __GIMP_CAIRO_UTILS_H__
 
 
 gboolean          gimp_cairo_set_focus_line_pattern     (cairo_t       *cr,
@@ -37,6 +36,3 @@ void              gimp_cairo_set_source_color           (cairo_t         *cr,
                                                          GimpColorConfig *config,
                                                          gboolean         softproof,
                                                          GtkWidget       *widget);
-
-
-#endif /* __GIMP_CAIRO_UTILS_H__ */

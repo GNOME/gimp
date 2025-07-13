@@ -18,17 +18,15 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_SCROLLED_PREVIEW_H__
-#define __GIMP_SCROLLED_PREVIEW_H__
-
 #include "gimppreview.h"
 
 G_BEGIN_DECLS
-
 
 /* For information look into the C source or the html documentation */
 
@@ -76,7 +74,4 @@ void   gimp_scroll_adjustment_values         (GdkEventScroll       *sevent,
                                               gdouble              *hvalue,
                                               gdouble              *vvalue);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_SCROLLED_PREVIEW_H__ */

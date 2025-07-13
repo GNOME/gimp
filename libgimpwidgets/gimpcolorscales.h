@@ -22,27 +22,25 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
-
-#ifndef __GIMP_COLOR_SCALES_H__
-#define __GIMP_COLOR_SCALES_H__
 
 #include <libgimpwidgets/gimpcolorselector.h>
 
 G_BEGIN_DECLS
 
-
 #define GIMP_TYPE_COLOR_SCALES (gimp_color_scales_get_type ())
-G_DECLARE_FINAL_TYPE (GimpColorScales, gimp_color_scales, GIMP, COLOR_SCALES, GimpColorSelector)
+G_DECLARE_FINAL_TYPE (GimpColorScales,
+                      gimp_color_scales,
+                      GIMP, COLOR_SCALES,
+                      GimpColorSelector)
 
 
 void       gimp_color_scales_set_show_rgb_u8 (GimpColorScales *scales,
                                               gboolean         show_rgb_u8);
 gboolean   gimp_color_scales_get_show_rgb_u8 (GimpColorScales *scales);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_COLOR_SCALES_H__ */

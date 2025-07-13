@@ -19,23 +19,26 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_LABELED_H__
-#define __GIMP_LABELED_H__
-
 G_BEGIN_DECLS
 
 #define GIMP_TYPE_LABELED (gimp_labeled_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpLabeled, gimp_labeled, GIMP, LABELED, GtkGrid)
+G_DECLARE_DERIVABLE_TYPE (GimpLabeled,
+                          gimp_labeled,
+                          GIMP, LABELED,
+                          GtkGrid)
+
 
 struct _GimpLabeledClass
 {
-  GtkGridClass       parent_class;
+  GtkGridClass  parent_class;
 
-  /*  Signals        */
+  /*  Signals  */
 
   void (* mnemonic_widget_changed) (GimpLabeled *labeled,
                                     GtkWidget   *widget);
@@ -55,11 +58,11 @@ struct _GimpLabeledClass
    * Returns: (transfer none): the #GtkWidget which the label must be
    *                           set as mnemonic to.
    **/
-  GtkWidget     * (* populate)     (GimpLabeled *labeled,
-                                    gint        *x,
-                                    gint        *y,
-                                    gint        *width,
-                                    gint        *height);
+  GtkWidget * (* populate) (GimpLabeled *labeled,
+                            gint        *x,
+                            gint        *y,
+                            gint        *width,
+                            gint        *height);
 
 
   /* Padding for future expansion */
@@ -75,13 +78,11 @@ struct _GimpLabeledClass
   void (* _gimp_reserved9) (void);
 };
 
-GtkWidget     * gimp_labeled_get_label (GimpLabeled *labeled);
 
-const gchar   * gimp_labeled_get_text  (GimpLabeled *labeled);
-void            gimp_labeled_set_text  (GimpLabeled *labeled,
-                                        const gchar *text);
+GtkWidget   * gimp_labeled_get_label (GimpLabeled *labeled);
 
+const gchar * gimp_labeled_get_text  (GimpLabeled *labeled);
+void          gimp_labeled_set_text  (GimpLabeled *labeled,
+                                      const gchar *text);
 
 G_END_DECLS
-
-#endif /* __GIMP_LABELED_H__ */

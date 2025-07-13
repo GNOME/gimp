@@ -19,12 +19,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
-
-#ifndef __GIMP_SPIN_BUTTON_H__
-#define __GIMP_SPIN_BUTTON_H__
 
 G_BEGIN_DECLS
 
@@ -32,7 +31,10 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_SPIN_BUTTON (gimp_spin_button_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpSpinButton, gimp_spin_button, GIMP, SPIN_BUTTON, GtkSpinButton)
+G_DECLARE_DERIVABLE_TYPE (GimpSpinButton,
+                          gimp_spin_button,
+                          GIMP, SPIN_BUTTON,
+                          GtkSpinButton)
 
 
 struct _GimpSpinButtonClass
@@ -60,7 +62,4 @@ GtkWidget * gimp_spin_button_new_with_range (gdouble        min,
                                              gdouble        max,
                                              gdouble        step);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_SPIN_BUTTON_H__ */

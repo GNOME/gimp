@@ -20,11 +20,9 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_EEVL_H__
-#define __GIMP_EEVL_H__
+#pragma once
 
 G_BEGIN_DECLS
-
 
 /**
  * GimpEevlQuantity:
@@ -93,7 +91,4 @@ gboolean gimp_eevl_evaluate (const gchar            *string,
                              const gchar           **error_pos,
                              GError                **error);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_EEVL_H__ */
