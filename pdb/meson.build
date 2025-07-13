@@ -59,6 +59,7 @@ pdb_names = [
   'text_layer',
   'text_tool',
   'unit',
+  'vector_layer',
 ]
 
 pdb_sources = []

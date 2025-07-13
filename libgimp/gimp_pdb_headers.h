@@ -81,4 +81,5 @@
 #include <libgimp/gimptextlayer_pdb.h>
 #include <libgimp/gimptexttool_pdb.h>
 #include <libgimp/gimpunit_pdb.h>
+#include <libgimp/gimpvectorlayer_pdb.h>
 

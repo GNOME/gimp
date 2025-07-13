@@ -598,6 +598,7 @@ EXPORTS
 	gimp_item_id_is_selection
 	gimp_item_id_is_text_layer
 	gimp_item_id_is_valid
+	gimp_item_id_is_vector_layer
 	gimp_item_is_channel
 	gimp_item_is_drawable
 	gimp_item_is_group
@@ -746,7 +747,9 @@ EXPORTS
 	gimp_param_spec_resource_none_allowed
 	gimp_param_spec_selection
 	gimp_param_spec_text_layer
+	gimp_param_spec_vector_layer
 	gimp_param_text_layer_get_type
+	gimp_param_vector_layer_get_type
 	gimp_path_bezier_stroke_conicto
 	gimp_path_bezier_stroke_cubicto
 	gimp_path_bezier_stroke_lineto
@@ -909,6 +912,9 @@ EXPORTS
 	gimp_procedure_add_unit_argument
 	gimp_procedure_add_unit_aux_argument
 	gimp_procedure_add_unit_return_value
+	gimp_procedure_add_vector_layer_argument
+	gimp_procedure_add_vector_layer_aux_argument
+	gimp_procedure_add_vector_layer_return_value
 	gimp_procedure_config_get_choice_id
 	gimp_procedure_config_get_color_array
 	gimp_procedure_config_get_core_object_array
@@ -1058,6 +1064,11 @@ EXPORTS
 	gimp_tile_width
 	gimp_unit_new
 	gimp_user_time
+	gimp_vector_layer_discard
+	gimp_vector_layer_get_by_id
+	gimp_vector_layer_get_type
+	gimp_vector_layer_new
+	gimp_vector_layer_refresh
 	gimp_vector_load_procedure_extract_dimensions
 	gimp_vector_load_procedure_get_type
 	gimp_vector_load_procedure_new
