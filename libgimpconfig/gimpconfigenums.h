@@ -19,8 +19,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONFIG_ENUMS_H__
-#define __GIMP_CONFIG_ENUMS_H__
+#pragma once
 
 
 #define GIMP_TYPE_COLOR_MANAGEMENT_MODE (gimp_color_management_mode_get_type ())
@@ -63,6 +62,3 @@ typedef enum
   GIMP_COLOR_RENDERING_INTENT_SATURATION,            /*< desc="Saturation"            >*/
   GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC  /*< desc="Absolute colorimetric" >*/
 } GimpColorRenderingIntent;
-
-
-#endif /* __GIMP_CONFIG_ENUMS_H__ */

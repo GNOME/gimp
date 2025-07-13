@@ -19,9 +19,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONFIG_TYPES_H__
-#define __GIMP_CONFIG_TYPES_H__
-
+#pragma once
 
 #include <libgimpbase/gimpbasetypes.h>
 
@@ -34,6 +32,3 @@ typedef struct _GScanner          GimpScanner;
 typedef struct _GimpColorConfig   GimpColorConfig;
 
 #include <libgimpconfig/gimpconfigenums.h>
-
-
-#endif  /* __GIMP_CONFIG_TYPES_H__ */

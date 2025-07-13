@@ -19,12 +19,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_CONFIG_H_INSIDE__) && !defined (GIMP_CONFIG_COMPILATION)
 #error "Only <libgimpconfig/gimpconfig.h> can be included directly."
 #endif
-
-#ifndef __GIMP_CONFIG_WRITER_H__
-#define __GIMP_CONFIG_WRITER_H__
 
 
 /**
@@ -81,6 +80,3 @@ void               gimp_config_writer_close        (GimpConfigWriter  *writer);
 gboolean           gimp_config_writer_finish       (GimpConfigWriter  *writer,
                                                     const gchar       *footer,
                                                     GError           **error);
-
-
-#endif /* __GIMP_CONFIG_WRITER_H__ */

@@ -20,12 +20,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_CONFIG_H_INSIDE__) && !defined (GIMP_CONFIG_COMPILATION)
 #error "Only <libgimpconfig/gimpconfig.h> can be included directly."
 #endif
-
-#ifndef __GIMP_SCANNER_H__
-#define __GIMP_SCANNER_H__
 
 
 /**
@@ -75,6 +74,3 @@ gboolean      gimp_scanner_parse_color              (GimpScanner   *scanner,
                                                      GeglColor    **color);
 gboolean      gimp_scanner_parse_matrix2            (GimpScanner   *scanner,
                                                      GimpMatrix2   *dest);
-
-
-#endif /* __GIMP_SCANNER_H__ */

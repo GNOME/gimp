@@ -19,12 +19,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #if !defined (__GIMP_CONFIG_H_INSIDE__) && !defined (GIMP_CONFIG_COMPILATION)
 #error "Only <libgimpconfig/gimpconfig.h> can be included directly."
 #endif
-
-#ifndef __GIMP_CONFIG_SERIALIZE_H__
-#define __GIMP_CONFIG_SERIALIZE_H__
 
 G_BEGIN_DECLS
 
@@ -46,7 +45,5 @@ gboolean  gimp_config_serialize_value              (const GValue     *value,
                                                     GString          *str,
                                                     gboolean          escaped);
 
-
 G_END_DECLS
 
-#endif /* __GIMP_CONFIG_SERIALIZE_H__ */
