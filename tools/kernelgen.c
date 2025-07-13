@@ -91,8 +91,7 @@ main (int    argc,
           " *   This file was generated using kernelgen as found in the tools dir.\n");
   printf (" *   (threshold = %g)\n", THRESHOLD);
   printf (" */\n\n");
-  printf ("#ifndef __GIMP_BRUSH_CORE_KERNELS_H__\n");
-  printf ("#define __GIMP_BRUSH_CORE_KERNELS_H__\n\n");
+  printf ("#pragma once\n\n");
   printf ("#define KERNEL_WIDTH     %d\n", KERNEL_WIDTH);
   printf ("#define KERNEL_HEIGHT    %d\n", KERNEL_HEIGHT);
   printf ("#define KERNEL_SUBSAMPLE %d\n", SUBSAMPLE);
@@ -120,9 +119,7 @@ main (int    argc,
       printf ("  }%s", j < SUBSAMPLE ? ",\n" : "\n");
     }
 
-  printf ("};\n\n");
-
-  printf ("#endif /* __GIMP_BRUSH_CORE_KERNELS_H__ */\n");
+  printf ("};\n");
 
   return 0;
 }

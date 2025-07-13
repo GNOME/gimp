@@ -27,8 +27,7 @@
  * GTK+ at ftp://ftp.gtk.org/pub/gtk/.
  */
 
-#ifndef __GIMP_COLOR_WHEEL_H__
-#define __GIMP_COLOR_WHEEL_H__
+#pragma once
 
 G_BEGIN_DECLS
 
@@ -93,5 +92,3 @@ void        gimp_color_wheel_set_color_config  (GimpColorWheel  *wheel,
 gboolean    gimp_color_wheel_is_adjusting      (GimpColorWheel  *wheel);
 
 G_END_DECLS
-
-#endif /* __GIMP_COLOR_WHEEL_H__ */

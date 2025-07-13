@@ -115,8 +115,7 @@ if __name__ == "__main__":
   intro_p, items, demos = parse_appdata(infile, args.version)
 
   if args.header:
-    print('#ifndef __WELCOME_DIALOG_DATA_H__')
-    print('#define __WELCOME_DIALOG_DATA_H__\n\n')
+    print('#pragma once\n\n')
 
     print('extern gint          gimp_welcome_dialog_n_items;')
     print('extern const gchar * gimp_welcome_dialog_items[];')
@@ -125,7 +124,6 @@ if __name__ == "__main__":
     print('extern gint          gimp_welcome_dialog_intro_n_paragraphs;')
     print('extern const gchar * gimp_welcome_dialog_intro[];')
 
-    print('\n\n#endif /* __WELCOME_DIALOG_DATA_H__ */')
   else:
     print('#include "config.h"')
     print('#include <glib.h>')

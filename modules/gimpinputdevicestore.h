@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_INPUT_DEVICE_STORE_H__
-#define __GIMP_INPUT_DEVICE_STORE_H__
+#pragma once
 
 
 #define GIMP_TYPE_INPUT_DEVICE_STORE    (gimp_input_device_store_get_type ())
@@ -37,6 +36,3 @@ GimpInputDeviceStore * gimp_input_device_store_new             (void);
 gchar                * gimp_input_device_store_get_device_file (GimpInputDeviceStore  *store,
                                                                 const gchar           *udi);
 GError               * gimp_input_device_store_get_error       (GimpInputDeviceStore  *store);
-
-
-#endif  /* __GIMP_INPUT_DEVICE_STORE_H__ */
