@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CHUNK_ITEARTOR_H__
-#define __GIMP_CHUNK_ITEARTOR_H__
+#pragma once
 
 
 GimpChunkIterator * gimp_chunk_iterator_new               (cairo_region_t      *region);
@@ -39,6 +38,3 @@ gboolean            gimp_chunk_iterator_get_rect          (GimpChunkIterator   *
 
 cairo_region_t    * gimp_chunk_iterator_stop              (GimpChunkIterator   *iter,
                                                            gboolean             free_region);
-
-
-#endif  /*  __GIMP_CHUNK_ITEARTOR_H__  */

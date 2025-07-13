@@ -15,10 +15,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CORE_APP_H__
-#define __GIMP_CORE_APP_H__
+#pragma once
 
-G_BEGIN_DECLS
 
 #define GIMP_APPLICATION_ID "org.gimp.GIMP"
 
@@ -37,7 +35,10 @@ enum
 };
 
 #define GIMP_TYPE_CORE_APP gimp_core_app_get_type()
-G_DECLARE_INTERFACE (GimpCoreApp, gimp_core_app, GIMP, CORE_APP, GObject)
+G_DECLARE_INTERFACE (GimpCoreApp,
+                     gimp_core_app,
+                     GIMP, CORE_APP,
+                     GObject)
 
 struct _GimpCoreAppInterface
 {
@@ -77,8 +78,3 @@ void               gimp_core_app_set_property          (GObject      *object,
                                                         guint         property_id,
                                                         const GValue *value,
                                                         GParamSpec   *pspec);
-
-
-G_END_DECLS
-
-#endif /* __GIMP_CORE_APP_H__ */

@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_LAYER_H__
-#define __GIMP_TEXT_LAYER_H__
-
+#pragma once
 
 #include "core/gimplayer.h"
 
@@ -74,6 +72,3 @@ void        gimp_text_layer_set         (GimpTextLayer *layer,
                                          ...) G_GNUC_NULL_TERMINATED;
 
 gboolean    gimp_item_is_text_layer     (GimpItem      *item);
-
-
-#endif /* __GIMP_TEXT_LAYER_H__ */

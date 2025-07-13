@@ -15,11 +15,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __MENUS_TYPES_H__
-#define __MENUS_TYPES_H__
-
+#pragma once
 
 #include "actions/actions-types.h"
-
-
-#endif /* __MENUS_TYPES_H__ */

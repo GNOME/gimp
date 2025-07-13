@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __ITEMS_ACTIONS_H__
-#define __ITEMS_ACTIONS_H__
+#pragma once
 
 
 void   items_actions_setup  (GimpActionGroup *group,
@@ -24,6 +23,3 @@ void   items_actions_setup  (GimpActionGroup *group,
 void   items_actions_update (GimpActionGroup *group,
                              const gchar     *prefix,
                              GList           *items);
-
-
-#endif /* __ITEMS_ACTIONS_H__ */

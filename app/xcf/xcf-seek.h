@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __XCF_SEEK_H__
-#define __XCF_SEEK_H__
+#pragma once
 
 
 gboolean   xcf_seek_pos (XcfInfo  *info,
                          goffset   pos,
                          GError  **error);
-
-
-#endif  /* __XCF_SEEK_H__ */

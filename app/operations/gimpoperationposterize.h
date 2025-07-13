@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_POSTERIZE_H__
-#define __GIMP_OPERATION_POSTERIZE_H__
-
+#pragma once
 
 #include "gimpoperationpointfilter.h"
 
@@ -50,6 +48,3 @@ struct _GimpOperationPosterizeClass
 
 
 GType   gimp_operation_posterize_get_type (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_OPERATION_POSTERIZE_H__ */

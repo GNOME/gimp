@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_TRANSFORM_H__
-#define __GIMP_IMAGE_TRANSFORM_H__
+#pragma once
 
 
 void   gimp_image_transform (GimpImage              *image,
@@ -29,6 +28,3 @@ void   gimp_image_transform (GimpImage              *image,
                              GimpInterpolationType   interpolation_type,
                              GimpTransformResize     clip_result,
                              GimpProgress           *progress);
-
-
-#endif /* __GIMP_IMAGE_TRANSFORM_H__ */

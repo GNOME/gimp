@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __OPERATIONS_ENUMS_H__
-#define __OPERATIONS_ENUMS_H__
+#pragma once
 
 
 #define GIMP_TYPE_LAYER_COLOR_SPACE (gimp_layer_color_space_get_type ())
@@ -192,6 +191,3 @@ typedef enum  /*< pdb-skip, skip >*/
   GIMP_LAYER_MODE_FLAG_ALPHA_ONLY                =  1 << 5,
   GIMP_LAYER_MODE_FLAG_TRIVIAL                   =  1 << 6
 } GimpLayerModeFlags;
-
-
-#endif /* __OPERATIONS_ENUMS_H__ */

@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_RC_H__
-#define __GIMP_RC_H__
+#pragma once
 
 #include "config/gimppluginconfig.h"
 
@@ -72,6 +71,3 @@ void      gimp_rc_set_unknown_token (GimpRc      *rc,
                                      const gchar *value);
 
 void      gimp_rc_migrate           (GimpRc      *rc);
-
-
-#endif /* GIMP_RC_H__ */

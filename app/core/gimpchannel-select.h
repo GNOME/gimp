@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CHANNEL_SELECT_H__
-#define __GIMP_CHANNEL_SELECT_H__
+#pragma once
 
 
 /*  basic selection functions  */
@@ -155,6 +154,3 @@ void   gimp_channel_select_by_index     (GimpChannel         *channel,
                                          gboolean             feather,
                                          gdouble              feather_radius_x,
                                          gdouble              feather_radius_y);
-
-
-#endif  /*  __GIMP_CHANNEL_SELECT_H__  */

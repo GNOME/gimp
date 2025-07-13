@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_COMBINE_H__
-#define __GIMP_DRAWABLE_COMBINE_H__
+#pragma once
 
 
 /*  virtual functions of GimpDrawable, don't call directly  */
@@ -34,6 +33,3 @@ void   gimp_drawable_real_apply_buffer (GimpDrawable           *drawable,
                                         GeglBuffer             *base_buffer,
                                         gint                    base_x,
                                         gint                    base_y);
-
-
-#endif /* __GIMP_DRAWABLE_COMBINE_H__ */

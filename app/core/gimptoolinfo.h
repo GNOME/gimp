@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_INFO_H__
-#define __GIMP_TOOL_INFO_H__
-
+#pragma once
 
 #include "gimptoolitem.h"
 
@@ -90,6 +88,3 @@ gchar        * gimp_tool_info_get_action_name (GimpToolInfo         *tool_info);
 
 GFile        * gimp_tool_info_get_options_file (GimpToolInfo        *tool_info,
                                                 const gchar         *suffix);
-
-
-#endif  /*  __GIMP_TOOL_INFO_H__  */

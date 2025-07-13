@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_RESOURCE_H__
-#define __GIMP_RESOURCE_H__
-
+#pragma once
 
 #include "gimpviewable.h"
 
@@ -44,6 +42,3 @@ struct _GimpResourceClass
 
 
 GType   gimp_resource_get_type (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_RESOURCE_H__ */

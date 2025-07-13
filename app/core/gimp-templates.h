@@ -15,14 +15,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEMPLATES_H__
-#define __GIMP_TEMPLATES_H__
+#pragma once
 
 
 void  gimp_templates_load    (Gimp        *gimp);
 void  gimp_templates_save    (Gimp        *gimp);
 
 void  gimp_templates_migrate (const gchar *olddir);
-
-
-#endif  /*  __GIMP_TEMPLATES_H__  */

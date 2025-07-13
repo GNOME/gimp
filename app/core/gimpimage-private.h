@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_PRIVATE_H__
-#define __GIMP_IMAGE_PRIVATE_H__
+#pragma once
 
 
 typedef struct _GimpImageFlushAccumulator GimpImageFlushAccumulator;
@@ -154,6 +153,3 @@ struct _GimpImagePrivate
 
 void   gimp_image_take_mask (GimpImage   *image,
                              GimpChannel *mask);
-
-
-#endif  /* __GIMP_IMAGE_PRIVATE_H__ */

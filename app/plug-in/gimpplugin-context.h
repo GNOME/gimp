@@ -17,12 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_CONTEXT_H__
-#define __GIMP_PLUG_IN_CONTEXT_H__
+#pragma once
 
 
 gboolean  gimp_plug_in_context_push (GimpPlugIn *plug_in);
 gboolean  gimp_plug_in_context_pop  (GimpPlugIn *plug_in);
-
-
-#endif /* __GIMP_PLUG_IN_CONTEXT_H__ */

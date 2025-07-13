@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PAINT_CORE_H__
-#define __GIMP_PAINT_CORE_H__
-
+#pragma once
 
 #include "core/gimpobject.h"
 
@@ -226,5 +224,3 @@ void      gimp_paint_core_smooth_coords             (GimpPaintCore    *core,
                                                      GimpPaintOptions *paint_options,
                                                      GimpCoords       *coords);
 
-
-#endif  /*  __GIMP_PAINT_CORE_H__  */

@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __PATH_EXPORT_DIALOG_H__
-#define __PATH_EXPORT_DIALOG_H__
+#pragma once
 
 
 typedef void (* GimpPathExportCallback) (GtkWidget *dialog,
@@ -33,6 +32,3 @@ GtkWidget * path_export_dialog_new (GimpImage                 *image,
                                     gboolean                   active_only,
                                     GimpPathExportCallback     callback,
                                     gpointer                   user_data);
-
-
-#endif /* __PATH_EXPORT_DIALOG_H__ */

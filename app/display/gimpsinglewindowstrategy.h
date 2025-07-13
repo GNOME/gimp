@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SINGLE_WINDOW_STRATEGY_H__
-#define __GIMP_SINGLE_WINDOW_STRATEGY_H__
-
+#pragma once
 
 #include "core/gimpobject.h"
 
@@ -46,9 +44,6 @@ struct _GimpSingleWindowStrategyClass
 };
 
 
-GType        gimp_single_window_strategy_get_type          (void) G_GNUC_CONST;
+GType        gimp_single_window_strategy_get_type      (void) G_GNUC_CONST;
 
-GimpObject * gimp_single_window_strategy_get_singleton     (void);
-
-
-#endif /* __GIMP_SINGLE_WINDOW_STRATEGY_H__ */
+GimpObject * gimp_single_window_strategy_get_singleton (void);

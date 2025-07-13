@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_HISTOGRAM_H__
-#define __GIMP_DRAWABLE_HISTOGRAM_H__
+#pragma once
 
 
 void        gimp_drawable_calculate_histogram       (GimpDrawable  *drawable,
@@ -27,6 +26,3 @@ void        gimp_drawable_calculate_histogram       (GimpDrawable  *drawable,
 GimpAsync * gimp_drawable_calculate_histogram_async (GimpDrawable  *drawable,
                                                      GimpHistogram *histogram,
                                                      gboolean       with_filters);
-
-
-#endif /* __GIMP_HISTOGRAM_H__ */

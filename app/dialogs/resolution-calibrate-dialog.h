@@ -15,12 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __RESOLUTION_CALIBRATE_DIALOG_H__
-#define __RESOLUTION_CALIBRATE_DIALOG_H__
+#pragma once
 
 
 void  resolution_calibrate_dialog (GtkWidget   *resolution_entry,
                                    const gchar *icon_name);
-
-
-#endif /* __RESOLUTION_CALIBRATE_DIALOG_H__ */

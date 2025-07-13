@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GRADIENTS_COMMANDS_H__
-#define __GRADIENTS_COMMANDS_H__
+#pragma once
 
 
 void   gradients_save_as_pov_ray_cmd_callback (GimpAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-
-
-#endif /* __GRADIENTS_COMMANDS_H__ */

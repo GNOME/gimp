@@ -18,8 +18,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ANCHOR_H__
-#define __GIMP_ANCHOR_H__
+#pragma once
+
 
 #define GIMP_ANCHOR(anchor)  ((GimpAnchor *) (anchor))
 
@@ -43,6 +43,3 @@ GimpAnchor  * gimp_anchor_new  (GimpAnchorType    type,
 
 GimpAnchor  * gimp_anchor_copy (const GimpAnchor *anchor);
 void          gimp_anchor_free (GimpAnchor       *anchor);
-
-
-#endif /* __GIMP_ANCHOR_H__ */

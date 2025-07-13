@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __TEXT_TOOL_ACTIONS_H__
-#define __TEXT_TOOL_ACTIONS_H__
+#pragma once
 
 
 void   text_tool_actions_setup  (GimpActionGroup *group);
 void   text_tool_actions_update (GimpActionGroup *group,
                                  gpointer         data);
-
-
-#endif /* __TEXT_TOOL_ACTIONS_H__ */

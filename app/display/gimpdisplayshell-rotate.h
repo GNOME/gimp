@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_ROTATE_H__
-#define __GIMP_DISPLAY_SHELL_ROTATE_H__
+#pragma once
 
 
 void   gimp_display_shell_flip                    (GimpDisplayShell *shell,
@@ -35,6 +34,3 @@ void   gimp_display_shell_rotate_drag             (GimpDisplayShell *shell,
                                                    gboolean          constrain);
 
 void   gimp_display_shell_rotate_update_transform (GimpDisplayShell *shell);
-
-
-#endif  /*  __GIMP_DISPLAY_SHELL_ROTATE_H__  */

@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_MANAGER_CALL_H__
-#define __GIMP_PLUG_IN_MANAGER_CALL_H__
+#pragma once
 
 #ifndef __YES_I_NEED_GIMP_PLUG_IN_MANAGER_CALL__
 #error Do not use gimp_plug_in_manager_call_run*(), use gimp_procedure_execute*() instead.
@@ -54,6 +53,3 @@ GimpValueArray * gimp_plug_in_manager_call_run_temp (GimpPlugInManager      *man
                                                      GimpProgress           *progress,
                                                      GimpTemporaryProcedure *procedure,
                                                      GimpValueArray         *args);
-
-
-#endif /* __GIMP_PLUG_IN_MANAGER_CALL_H__ */

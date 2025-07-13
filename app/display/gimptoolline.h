@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_LINE_H__
-#define __GIMP_TOOL_LINE_H__
-
+#pragma once
 
 #include "gimptoolwidget.h"
 
@@ -94,6 +92,3 @@ const GimpControllerSlider * gimp_tool_line_get_sliders   (GimpToolLine         
 void                         gimp_tool_line_set_selection (GimpToolLine               *line,
                                                            gint                        handle);
 gint                         gimp_tool_line_get_selection (GimpToolLine               *line);
-
-
-#endif /* __GIMP_TOOL_LINE_H__ */

@@ -15,11 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_SCALE_DIALOG_H__
-#define __GIMP_DISPLAY_SHELL_SCALE_DIALOG_H__
+#pragma once
 
 
 void  gimp_display_shell_scale_dialog (GimpDisplayShell *shell);
-
-
-#endif  /*  __GIMP_DISPLAY_SHELL_SCALE_DIALOG_H__  */

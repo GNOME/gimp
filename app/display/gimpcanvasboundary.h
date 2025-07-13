@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_BOUNDARY_H__
-#define __GIMP_CANVAS_BOUNDARY_H__
-
+#pragma once
 
 #include "gimpcanvasitem.h"
 
@@ -55,6 +53,3 @@ GimpCanvasItem * gimp_canvas_boundary_new      (GimpDisplayShell   *shell,
                                                 GimpMatrix3        *transform,
                                                 gdouble             offset_x,
                                                 gdouble             offset_y);
-
-
-#endif /* __GIMP_CANVAS_BOUNDARY_H__ */

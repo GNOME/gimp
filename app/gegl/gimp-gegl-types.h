@@ -17,9 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GEGL_TYPES_H__
-#define __GIMP_GEGL_TYPES_H__
-
+#pragma once
 
 #include "core/core-types.h"
 
@@ -29,6 +27,3 @@
 
 
 typedef struct _GimpApplicator GimpApplicator;
-
-
-#endif /* __GIMP_GEGL_TYPES_H__ */

@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ITEM_STACK_H__
-#define __GIMP_ITEM_STACK_H__
+#pragma once
 
 #include "gimpfilterstack.h"
 
@@ -61,6 +60,3 @@ GimpItem      * gimp_item_stack_get_parent_by_path  (GimpItemStack *stack,
 
 void            gimp_item_stack_invalidate_previews (GimpItemStack *stack);
 void            gimp_item_stack_profile_changed     (GimpItemStack *stack);
-
-
-#endif  /*  __GIMP_ITEM_STACK_H__  */

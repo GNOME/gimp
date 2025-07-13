@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTAINER_TREE_VIEW_H__
-#define __GIMP_CONTAINER_TREE_VIEW_H__
-
+#pragma once
 
 #include "gimpcontainerbox.h"
 
@@ -137,6 +135,3 @@ gboolean    gimp_container_tree_view_name_edited
                                                const gchar           *path_str,
                                                const gchar           *new_name,
                                                GimpContainerTreeView *tree_view);
-
-
-#endif  /*  __GIMP_CONTAINER_TREE_VIEW_H__  */

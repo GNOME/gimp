@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LAYER_H__
-#define __GIMP_LAYER_H__
-
+#pragma once
 
 #include "gimpdrawable.h"
 
@@ -248,6 +246,3 @@ gboolean        gimp_layer_is_alpha_locked     (GimpLayer            *layer,
 
 void          gimp_layer_update_effective_mode (GimpLayer            *layer);
 void       gimp_layer_update_excludes_backdrop (GimpLayer            *layer);
-
-
-#endif /* __GIMP_LAYER_H__ */

@@ -15,12 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __DOCKABLE_MENU_H__
-#define __DOCKABLE_MENU_H__
+#pragma once
 
 
 void   dockable_menu_setup (GimpUIManager *manager,
                             const gchar   *ui_path);
-
-
-#endif /* __DOCKABLE_MENU_H__ */

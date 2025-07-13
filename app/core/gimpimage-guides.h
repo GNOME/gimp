@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_GUIDES_H__
-#define __GIMP_IMAGE_GUIDES_H__
+#pragma once
 
 
 /*  public guide adding API
@@ -49,6 +48,3 @@ GimpGuide * gimp_image_get_guide      (GimpImage *image,
 GimpGuide * gimp_image_get_next_guide (GimpImage *image,
                                        guint32    id,
                                        gboolean  *guide_found);
-
-
-#endif /* __GIMP_IMAGE_GUIDES_H__ */

@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_UTILS_H__
-#define __GIMP_DISPLAY_SHELL_UTILS_H__
+#pragma once
 
 
 void      gimp_display_shell_get_constrained_line_params (GimpDisplayShell *shell,
@@ -40,6 +39,3 @@ gchar   * gimp_display_shell_get_line_status             (GimpDisplayShell *shel
                                                           gdouble           y1,
                                                           gdouble           x2,
                                                           gdouble           y2);
-
-
-#endif  /*  __GIMP_DISPLAY_SHELL_UTILS_H__  */

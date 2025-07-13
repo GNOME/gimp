@@ -20,8 +20,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_OPERATION_H__
-#define __GIMP_DRAWABLE_OPERATION_H__
+#pragma once
 
 
 void   gimp_drawable_apply_operation             (GimpDrawable *drawable,
@@ -38,6 +37,3 @@ void   gimp_drawable_apply_operation_by_name     (GimpDrawable *drawable,
                                                   const gchar  *undo_desc,
                                                   const gchar  *operation_type,
                                                   GObject      *config);
-
-
-#endif /* __GIMP_DRAWABLE_OPERATION_H__ */

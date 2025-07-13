@@ -15,11 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TAGS_H__
-#define __GIMP_TAGS_H__
+#pragma once
 
 
 gboolean gimp_tags_user_install (void);
-
-
-#endif  /*  __GIMP_TAGS_H__  */

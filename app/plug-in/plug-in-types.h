@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __PLUG_IN_TYPES_H__
-#define __PLUG_IN_TYPES_H__
-
+#pragma once
 
 #include "core/core-types.h"
 
@@ -35,6 +33,3 @@ typedef struct _GimpPlugInManager    GimpPlugInManager;
 typedef struct _GimpPlugInMenuBranch GimpPlugInMenuBranch;
 typedef struct _GimpPlugInProcFrame  GimpPlugInProcFrame;
 typedef struct _GimpPlugInShm        GimpPlugInShm;
-
-
-#endif /* __PLUG_IN_TYPES_H__ */

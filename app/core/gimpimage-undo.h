@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE__UNDO_H__
-#define __GIMP_IMAGE__UNDO_H__
+#pragma once
 
 
 gboolean        gimp_image_undo_is_enabled      (GimpImage     *image);
@@ -52,6 +51,3 @@ GimpUndo      * gimp_image_undo_push            (GimpImage     *image,
 GimpUndo      * gimp_image_undo_can_compress    (GimpImage     *image,
                                                  GType          object_type,
                                                  GimpUndoType   undo_type);
-
-
-#endif /* __GIMP_IMAGE__UNDO_H__ */

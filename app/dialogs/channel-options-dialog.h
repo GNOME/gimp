@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __CHANNEL_OPTIONS_DIALOG_H__
-#define __CHANNEL_OPTIONS_DIALOG_H__
+#pragma once
 
 
 typedef void (* GimpChannelOptionsCallback) (GtkWidget     *dialog,
@@ -55,6 +54,3 @@ GtkWidget * channel_options_dialog_new (GimpImage                  *image,
                                         gboolean                    channel_lock_visibility,
                                         GimpChannelOptionsCallback  callback,
                                         gpointer                    user_data);
-
-
-#endif /* __CHANNEL_OPTIONS_DIALOG_H__ */

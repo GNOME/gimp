@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_GUIDE_H__
-#define __GIMP_CANVAS_GUIDE_H__
-
+#pragma once
 
 #include "gimpcanvasitem.h"
 
@@ -57,6 +55,3 @@ GimpCanvasItem * gimp_canvas_guide_new      (GimpDisplayShell    *shell,
 void             gimp_canvas_guide_set      (GimpCanvasItem      *guide,
                                              GimpOrientationType  orientation,
                                              gint                 position);
-
-
-#endif /* __GIMP_CANVAS_GUIDE_H__ */

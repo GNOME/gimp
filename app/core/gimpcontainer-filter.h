@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTAINER_FILTER_H__
-#define __GIMP_CONTAINER_FILTER_H__
+#pragma once
 
 
 GimpContainer * gimp_container_filter                  (GimpContainer         *container,
@@ -33,6 +32,3 @@ gchar        ** gimp_container_get_filtered_name_array (GimpContainer         *c
                                                         const gchar           *regexp);
 GimpObject   ** gimp_container_get_filtered_array      (GimpContainer         *container,
                                                         const gchar           *regexp);
-
-
-#endif  /* __GIMP_CONTAINER_FILTER_H__ */

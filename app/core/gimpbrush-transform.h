@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_TRANSFORM_H__
-#define __GIMP_BRUSH_TRANSFORM_H__
+#pragma once
 
 
 /*  virtual functions of GimpBrush, don't call directly  */
@@ -54,6 +53,3 @@ void          gimp_brush_transform_matrix      (gdouble      width,
                                                 gdouble      angle,
                                                 gboolean     reflect,
                                                 GimpMatrix3 *matrix);
-
-
-#endif  /*  __GIMP_BRUSH_TRANSFORM_H__  */

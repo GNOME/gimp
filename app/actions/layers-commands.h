@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __LAYERS_COMMANDS_H__
-#define __LAYERS_COMMANDS_H__
+#pragma once
 
 
 void   layers_edit_cmd_callback               (GimpAction *action,
@@ -165,6 +164,3 @@ void   layers_lock_alpha_cmd_callback         (GimpAction *action,
 void   layers_color_tag_cmd_callback          (GimpAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-
-
-#endif /* __LAYERS_COMMANDS_H__ */

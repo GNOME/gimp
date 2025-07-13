@@ -23,9 +23,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGEFILE_H__
-#define __GIMP_IMAGEFILE_H__
-
+#pragma once
 
 #include "gimpviewable.h"
 
@@ -85,6 +83,3 @@ gboolean        gimp_imagefile_save_thumbnail        (GimpImagefile  *imagefile,
                                                       GimpImage      *image,
                                                       GError        **error);
 const gchar   * gimp_imagefile_get_desc_string       (GimpImagefile  *imagefile);
-
-
-#endif /* __GIMP_IMAGEFILE_H__ */

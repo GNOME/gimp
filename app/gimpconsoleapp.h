@@ -15,19 +15,18 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONSOLE_APP_H__
-#define __GIMP_CONSOLE_APP_H__
+#pragma once
 
 
 #define GIMP_TYPE_CONSOLE_APP (gimp_console_app_get_type ())
-G_DECLARE_FINAL_TYPE (GimpConsoleApp, gimp_console_app, GIMP, CONSOLE_APP, GApplication)
+G_DECLARE_FINAL_TYPE (GimpConsoleApp,
+                      gimp_console_app,
+                      GIMP, CONSOLE_APP
+                      , GApplication)
 
-GApplication  *    gimp_console_app_new                   (Gimp         *gimp,
-                                                           gboolean      quit,
-                                                           gboolean      as_new,
-                                                           const char  **filenames,
-                                                           const char   *batch_interpreter,
-                                                           const char  **batch_commands);
-
-
-#endif /* __GIMP_CONSOLE_APP_H__ */
+GApplication * gimp_console_app_new (Gimp         *gimp,
+                                         gboolean      quit,
+                                         gboolean      as_new,
+                                         const char  **filenames,
+                                         const char   *batch_interpreter,
+                                         const char  **batch_commands);

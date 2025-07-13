@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TRIVIALLY_CANCELABLE_WAITABLE_H__
-#define __GIMP_TRIVIALLY_CANCELABLE_WAITABLE_H__
-
+#pragma once
 
 #include "gimpuncancelablewaitable.h"
 
@@ -52,6 +50,3 @@ struct _GimpTriviallyCancelableWaitableClass
 GType          gimp_trivially_cancelable_waitable_get_type (void) G_GNUC_CONST;
 
 GimpWaitable * gimp_trivially_cancelable_waitable_new      (GimpWaitable *waitable);
-
-
-#endif /* __GIMP_TRIVIALLY_CANCELABLE_WAITABLE_H__ */

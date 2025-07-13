@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CURSOR_VIEW_H__
-#define __GIMP_CURSOR_VIEW_H__
-
+#pragma once
 
 #include "widgets/gimpeditor.h"
 
@@ -65,6 +63,3 @@ void        gimp_cursor_view_update_cursor     (GimpCursorView  *view,
                                                 gdouble          x,
                                                 gdouble          y);
 void        gimp_cursor_view_clear_cursor      (GimpCursorView  *view);
-
-
-#endif /* __GIMP_CURSOR_VIEW_H__ */

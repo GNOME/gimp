@@ -21,8 +21,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __APP_GIMP_CAIRO_H__
-#define __APP_GIMP_CAIRO_H__
+#pragma once
 
 
 cairo_pattern_t * gimp_cairo_pattern_create_stipple (GeglColor   *fg,
@@ -47,6 +46,3 @@ void              gimp_cairo_rounded_rectangle      (cairo_t     *cr,
 void              gimp_cairo_segments               (cairo_t     *cr,
                                                      GimpSegment *segs,
                                                      gint         n_segs);
-
-
-#endif /* __APP_GIMP_CAIRO_H__ */

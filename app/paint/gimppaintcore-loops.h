@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PAINT_CORE_LOOPS_H__
-#define __GIMP_PAINT_CORE_LOOPS_H__
+#pragma once
 
 
 typedef enum
@@ -65,6 +64,3 @@ typedef struct
 
 void   gimp_paint_core_loops_process (const GimpPaintCoreLoopsParams *params,
                                       GimpPaintCoreLoopsAlgorithm     algorithms);
-
-
-#endif /* __GIMP_PAINT_CORE_LOOPS_H__ */

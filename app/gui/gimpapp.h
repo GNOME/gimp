@@ -14,21 +14,22 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_APP_H__
-#define __GIMP_APP_H__
+#pragma once
 
 
 #define GIMP_TYPE_APP (gimp_app_get_type ())
-G_DECLARE_FINAL_TYPE (GimpApp, gimp_app, GIMP, APP, GtkApplication)
+G_DECLARE_FINAL_TYPE (GimpApp,
+                      gimp_app,
+                      GIMP, APP,
+                      GtkApplication)
 
-GApplication * gimp_app_new                   (Gimp        *gimp,
-                                               gboolean     no_splash,
-                                               gboolean     quit,
-                                               gboolean     as_new,
-                                               const char **filenames,
-                                               const char  *batch_interpreter,
-                                               const char **batch_commands);
 
-gboolean       gimp_app_get_no_splash         (GimpApp     *self);
+GApplication * gimp_app_new           (Gimp        *gimp,
+                                       gboolean     no_splash,
+                                       gboolean     quit,
+                                       gboolean     as_new,
+                                       const char **filenames,
+                                       const char  *batch_interpreter,
+                                       const char **batch_commands);
 
-#endif /* __GIMP_APP_H__ */
+gboolean       gimp_app_get_no_splash (GimpApp     *self);

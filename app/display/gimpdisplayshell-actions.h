@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_ACTIONS_H__
-#define __GIMP_DISPLAY_SHELL_ACTIONS_H__
+#pragma once
 
 
 void   gimp_display_shell_set_action_sensitive (GimpDisplayShell *shell,
@@ -28,6 +27,3 @@ void   gimp_display_shell_set_action_active    (GimpDisplayShell *shell,
 void   gimp_display_shell_set_action_color     (GimpDisplayShell *shell,
                                                 const gchar      *action,
                                                 GeglColor        *color);
-
-
-#endif /* __GIMP_DISPLAY_SHELL_ACTIONS_H__ */

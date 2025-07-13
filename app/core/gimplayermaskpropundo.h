@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LAYER_MASK_PROP_UNDO_H__
-#define __GIMP_LAYER_MASK_PROP_UNDO_H__
-
+#pragma once
 
 #include "gimpitemundo.h"
 
@@ -48,6 +46,3 @@ struct _GimpLayerMaskPropUndoClass
 
 
 GType   gimp_layer_mask_prop_undo_get_type (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_LAYER_MASK_PROP_UNDO_H__ */

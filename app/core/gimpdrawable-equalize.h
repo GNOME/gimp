@@ -15,12 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_EQUALIZE_H__
-#define __GIMP_DRAWABLE_EQUALIZE_H__
+#pragma once
 
 
 void   gimp_drawable_equalize (GimpDrawable *drawable,
                                gboolean      mask_only);
-
-
-#endif  /*  __GIMP_DRAWABLE_EQUALIZE_H__  */

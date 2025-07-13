@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MASK_UNDO_H__
-#define __GIMP_MASK_UNDO_H__
-
+#pragma once
 
 #include "gimpitemundo.h"
 
@@ -53,6 +51,3 @@ struct _GimpMaskUndoClass
 
 
 GType   gimp_mask_undo_get_type (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_MASK_UNDO_H__ */

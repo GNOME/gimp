@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_TREE_VIEW_H__
-#define __GIMP_DRAWABLE_TREE_VIEW_H__
-
+#pragma once
 
 #include "gimpitemtreeview.h"
 
@@ -52,6 +50,3 @@ struct _GimpDrawableTreeViewClass
 
 
 GType   gimp_drawable_tree_view_get_type (void) G_GNUC_CONST;
-
-
-#endif  /*  __GIMP_DRAWABLE_TREE_VIEW_H__  */

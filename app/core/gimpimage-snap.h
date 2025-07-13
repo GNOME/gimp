@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_SNAP_H__
-#define __GIMP_IMAGE_SNAP_H__
+#pragma once
 
 
 typedef struct _GimpImageSnapData
@@ -88,6 +87,3 @@ gboolean   gimp_image_snap_rectangle  (GimpImage         *image,
                                        gboolean           snap_to_path,
                                        gboolean           snap_to_bbox,
                                        gboolean           snap_to_equidistance);
-
-
-#endif /* __GIMP_IMAGE_SNAP_H__ */

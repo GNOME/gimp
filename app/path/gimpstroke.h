@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_STROKE_H__
-#define __GIMP_STROKE_H__
+#pragma once
 
 #include "core/gimpobject.h"
 
@@ -342,10 +341,6 @@ void         gimp_stroke_transform            (GimpStroke            *stroke,
                                                const GimpMatrix3     *matrix,
                                                GQueue                *ret_strokes);
 
-
 GList      * gimp_stroke_get_draw_anchors     (GimpStroke            *stroke);
 GList      * gimp_stroke_get_draw_controls    (GimpStroke            *stroke);
 GArray     * gimp_stroke_get_draw_lines       (GimpStroke            *stroke);
-
-#endif /* __GIMP_STROKE_H__ */
-

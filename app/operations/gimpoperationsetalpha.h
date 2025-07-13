@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_SET_ALPHA_H__
-#define __GIMP_OPERATION_SET_ALPHA_H__
-
+#pragma once
 
 #include <gegl-plugin.h>
 
@@ -50,6 +48,3 @@ struct _GimpOperationSetAlphaClass
 
 
 GType   gimp_operation_set_alpha_get_type (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_OPERATION_SET_ALPHA_H__ */

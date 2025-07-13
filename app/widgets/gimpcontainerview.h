@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTAINER_VIEW_H__
-#define __GIMP_CONTAINER_VIEW_H__
+#pragma once
 
 
 typedef enum
@@ -160,5 +159,3 @@ void               gimp_container_view_get_property       (GObject            *o
                                                            guint               property_id,
                                                            GValue             *value,
                                                            GParamSpec         *pspec);
-
-#endif  /*  __GIMP_CONTAINER_VIEW_H__  */

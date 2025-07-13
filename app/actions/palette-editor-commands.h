@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __PALETTE_EDITOR_COMMANDS_H__
-#define __PALETTE_EDITOR_COMMANDS_H__
+#pragma once
 
 
 void   palette_editor_edit_color_cmd_callback   (GimpAction *action,
@@ -32,6 +31,3 @@ void   palette_editor_delete_color_cmd_callback (GimpAction *action,
 void   palette_editor_zoom_cmd_callback         (GimpAction *action,
                                                  GVariant   *value,
                                                  gpointer    data);
-
-
-#endif /* __PALETTE_EDITOR_COMMANDS_H__ */

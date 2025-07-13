@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_PROP_VIEW_H__
-#define __GIMP_IMAGE_PROP_VIEW_H__
+#pragma once
 
 
 #define GIMP_TYPE_IMAGE_PROP_VIEW            (gimp_image_prop_view_get_type ())
@@ -64,6 +63,3 @@ struct _GimpImagePropViewClass
 GType       gimp_image_prop_view_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_image_prop_view_new      (GimpImage *image);
-
-
-#endif /*  __GIMP_IMAGE_PROP_VIEW_H__  */

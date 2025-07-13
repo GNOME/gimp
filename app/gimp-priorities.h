@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PRIORITIES_H__
-#define __GIMP_PRIORITIES_H__
+#pragma once
 
 
 /* #define G_PRIORITY_HIGH -100 */
@@ -39,6 +38,3 @@
 #define GIMP_PRIORITY_VIEWABLE_IDLE (G_PRIORITY_LOW)
 
 /* #define G_PRIORITY_LOW 300 */
-
-
-#endif /* __GIMP_PRIORITIES_H__ */

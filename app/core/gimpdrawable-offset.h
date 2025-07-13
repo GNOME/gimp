@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_OFFSET_H__
-#define __GIMP_DRAWABLE_OFFSET_H__
+#pragma once
 
 
 void   gimp_drawable_offset (GimpDrawable   *drawable,
@@ -26,6 +25,3 @@ void   gimp_drawable_offset (GimpDrawable   *drawable,
                              GeglColor      *color,
                              gint            offset_x,
                              gint            offset_y);
-
-
-#endif  /*  __GIMP_DRAWABLE_OFFSET_H__  */

@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __PATH_IMPORT_DIALOG_H__
-#define __PATH_IMPORT_DIALOG_H__
+#pragma once
 
 
 typedef void (* GimpPathImportCallback) (GtkWidget *dialog,
@@ -35,6 +34,3 @@ GtkWidget * path_import_dialog_new (GimpImage                 *image,
                                     gboolean                   scale_paths,
                                     GimpPathImportCallback     callback,
                                     gpointer                   user_data);
-
-
-#endif /* __PATH_IMPORT_DIALOG_H__ */

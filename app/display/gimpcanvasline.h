@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_LINE_H__
-#define __GIMP_CANVAS_LINE_H__
-
+#pragma once
 
 #include "gimpcanvasitem.h"
 
@@ -60,6 +58,3 @@ void             gimp_canvas_line_set      (GimpCanvasItem   *line,
                                             gdouble           y1,
                                             gdouble           x2,
                                             gdouble           y2);
-
-
-#endif /* __GIMP_CANVAS_LINE_H__ */

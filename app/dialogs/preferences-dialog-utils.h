@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __PREFERENCES_DIALOG_UTILS_H__
-#define __PREFERENCES_DIALOG_UTILS_H__
+#pragma once
 
 
 #define PREFS_COLOR_BUTTON_WIDTH  40
@@ -155,5 +154,3 @@ void        prefs_gui_config_notify_icon_size (GObject        *config,
                                                GtkRange       *range);
 void        prefs_icon_size_value_changed     (GtkRange       *range,
                                                GimpGuiConfig  *config);
-
-#endif /* __PREFERENCES_DIALOG_H__ */

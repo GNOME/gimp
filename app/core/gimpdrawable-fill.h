@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_FILL_H__
-#define __GIMP_DRAWABLE_FILL_H__
+#pragma once
 
 
 /*  Lowlevel API that is used for initializing entire drawables and
@@ -55,6 +54,3 @@ void       gimp_drawable_fill_scan_convert (GimpDrawable        *drawable,
                                             GimpFillOptions     *options,
                                             GimpScanConvert     *scan_convert,
                                             gboolean             push_undo);
-
-
-#endif /* __GIMP_DRAWABLE_FILL_H__ */

@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GUI_MESSAGE_H__
-#define __GUI_MESSAGE_H__
+#pragma once
 
 
 void gui_message (Gimp                *gimp,
@@ -24,6 +23,3 @@ void gui_message (Gimp                *gimp,
                   GimpMessageSeverity  severity,
                   const gchar         *domain,
                   const gchar         *message);
-
-
-#endif /* __GUI_VTABLE_H__ */

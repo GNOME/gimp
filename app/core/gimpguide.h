@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GUIDE_H__
-#define __GIMP_GUIDE_H__
-
+#pragma once
 
 #include "gimpauxitem.h"
 
@@ -70,6 +68,3 @@ void                gimp_guide_set_position     (GimpGuide           *guide,
 
 GimpGuideStyle      gimp_guide_get_style        (GimpGuide           *guide);
 gboolean            gimp_guide_is_custom        (GimpGuide           *guide);
-
-
-#endif /* __GIMP_GUIDE_H__ */

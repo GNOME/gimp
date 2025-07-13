@@ -18,14 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTROLLERS_H__
-#define __GIMP_CONTROLLERS_H__
+#pragma once
 
 
 void                    gimp_controllers_init       (Gimp *gimp);
 void                    gimp_controllers_exit       (Gimp *gimp);
 
 GimpControllerManager * gimp_get_controller_manager (Gimp *gimp);
-
-
-#endif /* __GIMP_CONTROLLERS_H__ */

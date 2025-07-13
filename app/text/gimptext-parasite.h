@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_PARASITE_H__
-#define __GIMP_TEXT_PARASITE_H__
+#pragma once
 
 
 const gchar  * gimp_text_parasite_name          (void) G_GNUC_CONST;
@@ -32,6 +31,3 @@ GimpText     * gimp_text_from_parasite          (const GimpParasite  *parasite,
 const gchar  * gimp_text_gdyntext_parasite_name (void) G_GNUC_CONST;
 GimpText     * gimp_text_from_gdyntext_parasite (Gimp                *gimp,
                                                  const GimpParasite  *parasite);
-
-
-#endif /* __GIMP_TEXT_PARASITE_H__ */

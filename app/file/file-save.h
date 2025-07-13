@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __FILE_SAVE_H__
-#define __FILE_SAVE_H__
+#pragma once
 
 
 GimpPDBStatusType   file_save (Gimp                 *gimp,
@@ -31,6 +30,3 @@ GimpPDBStatusType   file_save (Gimp                 *gimp,
                                gboolean              export_backward,
                                gboolean              export_forward,
                                GError              **error);
-
-
-#endif /* __FILE_SAVE_H__ */

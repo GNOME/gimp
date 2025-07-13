@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_WINDOW_H__
-#define __GIMP_IMAGE_WINDOW_H__
-
+#pragma once
 
 #include "widgets/gimpwindow.h"
 
@@ -96,5 +94,3 @@ void               gimp_image_window_suspend_keep_pos     (GimpImageWindow  *win
 void               gimp_image_window_resume_keep_pos      (GimpImageWindow  *window);
 
 void               gimp_image_window_update_tabs          (GimpImageWindow  *window);
-
-#endif /* __GIMP_IMAGE_WINDOW_H__ */

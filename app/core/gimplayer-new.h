@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LAYER_NEW_H__
-#define __GIMP_LAYER_NEW_H__
+#pragma once
 
 
 GimpLayer * gimp_layer_new                  (GimpImage        *image,
@@ -46,6 +45,3 @@ GimpLayer * gimp_layer_new_from_pixbuf      (GdkPixbuf        *pixbuf,
                                              const gchar      *name,
                                              gdouble           opacity,
                                              GimpLayerMode     mode);
-
-
-#endif /* __GIMP_LAYER_NEW_H__ */

@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __BRUSHES_ACTIONS_H__
-#define __BRUSHES_ACTIONS_H__
+#pragma once
 
 
 void   brushes_actions_setup  (GimpActionGroup *group);
 void   brushes_actions_update (GimpActionGroup *group,
                                gpointer         data);
-
-
-#endif /* __BRUSHES_ACTIONS_H__ */

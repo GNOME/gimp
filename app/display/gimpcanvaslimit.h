@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_LIMIT_H__
-#define __GIMP_CANVAS_LIMIT_H__
-
+#pragma once
 
 #include "gimpcanvasitem.h"
 
@@ -79,6 +77,3 @@ void             gimp_canvas_limit_center_point    (GimpCanvasLimit  *limit,
                                                     gdouble           y,
                                                     gdouble          *cx,
                                                     gdouble          *cy);
-
-
-#endif /* __GIMP_CANVAS_LIMIT_H__ */

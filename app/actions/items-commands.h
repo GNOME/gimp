@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __ITEMS_COMMANDS_H__
-#define __ITEMS_COMMANDS_H__
+#pragma once
 
 
 void   items_visible_cmd_callback          (GimpAction   *action,
@@ -60,7 +59,3 @@ void   items_stroke_last_vals_cmd_callback (GimpAction   *action,
                                             GimpImage    *image,
                                             GList        *items,
                                             gpointer      data);
-
-
-
-#endif /* __ITEMS_COMMANDS_H__ */

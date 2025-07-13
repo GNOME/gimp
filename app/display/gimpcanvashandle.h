@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_HANDLE_H__
-#define __GIMP_CANVAS_HANDLE_H__
-
+#pragma once
 
 #include "gimpcanvasitem.h"
 
@@ -87,6 +85,3 @@ void             gimp_canvas_handle_set_size     (GimpCanvasItem   *handle,
 void             gimp_canvas_handle_set_angles   (GimpCanvasItem   *handle,
                                                   gdouble           start_handle,
                                                   gdouble           slice_handle);
-
-
-#endif /* __GIMP_CANVAS_HANDLE_H__ */

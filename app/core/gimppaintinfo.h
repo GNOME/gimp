@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PAINT_INFO_H__
-#define __GIMP_PAINT_INFO_H__
-
+#pragma once
 
 #include "gimpviewable.h"
 
@@ -64,6 +62,3 @@ GimpPaintInfo * gimp_paint_info_new          (Gimp          *gimp,
 void            gimp_paint_info_set_standard (Gimp          *gimp,
                                               GimpPaintInfo *paint_info);
 GimpPaintInfo * gimp_paint_info_get_standard (Gimp          *gimp);
-
-
-#endif  /*  __GIMP_PAINT_INFO_H__  */

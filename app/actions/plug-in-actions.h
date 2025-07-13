@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __PLUG_IN_ACTIONS_H__
-#define __PLUG_IN_ACTIONS_H__
+#pragma once
 
 
 void   plug_in_actions_setup  (GimpActionGroup *group);
 void   plug_in_actions_update (GimpActionGroup *group,
                                gpointer         data);
-
-
-#endif /* __PLUG_IN_ACTIONS_H__ */

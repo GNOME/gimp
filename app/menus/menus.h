@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __MENUS_H__
-#define __MENUS_H__
+#pragma once
 
 
 void              menus_init                        (Gimp      *gimp);
@@ -32,6 +31,3 @@ void              menus_remove                      (Gimp      *gimp);
 
 GimpMenuFactory * menus_get_global_menu_factory     (Gimp      *gimp);
 GimpUIManager   * menus_get_image_manager_singleton (Gimp      *gimp);
-
-
-#endif /* __MENUS_H__ */

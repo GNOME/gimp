@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PATTERN_H__
-#define __GIMP_PATTERN_H__
-
+#pragma once
 
 #include "gimpdata.h"
 
@@ -53,6 +51,3 @@ GimpData    * gimp_pattern_get_standard  (GimpContext *context);
 
 GimpTempBuf * gimp_pattern_get_mask      (GimpPattern *pattern);
 GeglBuffer  * gimp_pattern_create_buffer (GimpPattern *pattern);
-
-
-#endif /* __GIMP_PATTERN_H__ */

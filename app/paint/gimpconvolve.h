@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONVOLVE_H__
-#define __GIMP_CONVOLVE_H__
-
+#pragma once
 
 #include "gimpbrushcore.h"
 
@@ -49,6 +47,3 @@ void    gimp_convolve_register (Gimp                      *gimp,
                                 GimpPaintRegisterCallback  callback);
 
 GType   gimp_convolve_get_type (void) G_GNUC_CONST;
-
-
-#endif  /*  __GIMP_CONVOLVE_H__  */

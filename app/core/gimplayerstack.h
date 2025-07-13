@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LAYER_STACK_H__
-#define __GIMP_LAYER_STACK_H__
+#pragma once
 
 #include "gimpdrawablestack.h"
 
@@ -46,6 +45,3 @@ struct _GimpLayerStackClass
 
 GType           gimp_layer_stack_get_type  (void) G_GNUC_CONST;
 GimpContainer * gimp_layer_stack_new       (GType layer_type);
-
-
-#endif  /*  __GIMP_LAYER_STACK_H__  */

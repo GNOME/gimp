@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_CONVERT_TYPE_H__
-#define __GIMP_IMAGE_CONVERT_TYPE_H__
+#pragma once
 
 
 gboolean   gimp_image_convert_type (GimpImage          *image,
@@ -24,6 +23,3 @@ gboolean   gimp_image_convert_type (GimpImage          *image,
                                     GimpColorProfile   *dest_profile,
                                     GimpProgress       *progress,
                                     GError            **error);
-
-
-#endif  /*  __GIMP_IMAGE_CONVERT_TYPE_H__  */

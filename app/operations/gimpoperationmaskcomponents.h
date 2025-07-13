@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_MASK_COMPONENTS_H__
-#define __GIMP_OPERATION_MASK_COMPONENTS_H__
+#pragma once
 
 #include <gegl-plugin.h>
 
@@ -63,6 +62,3 @@ void         gimp_operation_mask_components_process    (const Babl        *forma
                                                         gpointer           out,
                                                         gint               n,
                                                         GimpComponentMask  mask);
-
-
-#endif /* __GIMP_OPERATION_MASK_COMPONENTS_H__ */

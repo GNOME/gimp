@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __METADATA_ROTATION_IMPORT_DIALOG_H__
-#define __METADATA_ROTATION_IMPORT_DIALOG_H__
+#pragma once
 
 
 GimpMetadataRotationPolicy
@@ -27,6 +26,3 @@ metadata_rotation_import_dialog_run (GimpImage   *image,
                                      GimpContext *context,
                                      GtkWidget   *parent,
                                      gboolean    *dont_ask);
-
-
-#endif  /*  __METADATA_ROTATION_IMPORT_DIALOG_H__*/

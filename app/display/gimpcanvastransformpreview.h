@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_TRANSFORM_PREVIEW_H__
-#define __GIMP_CANVAS_TRANSFORM_PREVIEW_H__
-
+#pragma once
 
 #include "gimpcanvasitem.h"
 
@@ -56,6 +54,3 @@ GimpCanvasItem * gimp_canvas_transform_preview_new      (GimpDisplayShell  *shel
                                                          gdouble            y1,
                                                          gdouble            x2,
                                                          gdouble            y2);
-
-
-#endif /* __GIMP_CANVAS_TRANSFORM_PREVIEW_H__ */

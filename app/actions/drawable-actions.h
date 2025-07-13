@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __DRAWABLE_ACTIONS_H__
-#define __DRAWABLE_ACTIONS_H__
+#pragma once
 
 
 void   drawable_actions_setup  (GimpActionGroup *group);
 void   drawable_actions_update (GimpActionGroup *group,
                                 gpointer         data);
-
-
-#endif /* __DRAWABLE_ACTIONS_H__ */

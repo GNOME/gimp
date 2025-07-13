@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ROW_H__
-#define __GIMP_ROW_H__
+#pragma once
 
 
 #define GIMP_TYPE_ROW (gimp_row_get_type ())
@@ -45,6 +44,3 @@ GimpViewable * gimp_row_get_viewable (GimpRow      *row);
 /*  a generic GtkListBoxCreateWidgetFunc  */
 GtkWidget    * gimp_row_create       (gpointer      item,
                                       gpointer      user_data);
-
-
-#endif /* __GIMP_ROW_H__ */

@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_CACHE_H__
-#define __GIMP_BRUSH_CACHE_H__
-
+#pragma once
 
 #include "gimpobject.h"
 
@@ -78,6 +76,3 @@ void             gimp_brush_cache_add      (GimpBrushCache *cache,
                                             gdouble         angle,
                                             gboolean        reflect,
                                             gdouble         hardness);
-
-
-#endif  /*  __GIMP_BRUSH_CACHE_H__  */

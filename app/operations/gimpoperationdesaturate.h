@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_DESATURATE_H__
-#define __GIMP_OPERATION_DESATURATE_H__
-
+#pragma once
 
 #include "gimpoperationpointfilter.h"
 
@@ -50,6 +48,3 @@ struct _GimpOperationDesaturateClass
 
 
 GType   gimp_operation_desaturate_get_type (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_OPERATION_DESATURATE_H__ */

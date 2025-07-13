@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_UNCANCELABLE_WAITABLE_H__
-#define __GIMP_UNCANCELABLE_WAITABLE_H__
+#pragma once
 
 
 #define GIMP_TYPE_UNCANCELABLE_WAITABLE            (gimp_uncancelable_waitable_get_type ())
@@ -49,6 +48,3 @@ struct _GimpUncancelableWaitableClass
 GType          gimp_uncancelable_waitable_get_type (void) G_GNUC_CONST;
 
 GimpWaitable * gimp_uncancelable_waitable_new      (GimpWaitable *waitable);
-
-
-#endif /* __GIMP_UNCANCELABLE_WAITABLE_H__ */

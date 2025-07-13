@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __CURSOR_INFO_COMMANDS_H__
-#define __CURSOR_INFO_COMMANDS_H__
+#pragma once
 
 
 void   cursor_info_sample_merged_cmd_callback (GimpAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-
-
-#endif /* __CURSOR_INFO_COMMANDS_H__ */

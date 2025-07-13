@@ -17,12 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATIONS_H__
-#define __GIMP_OPERATIONS_H__
+#pragma once
 
 
 void   gimp_operations_init (Gimp *gimp);
 void   gimp_operations_exit (Gimp *gimp);
-
-
-#endif /* __GIMP_OPERATIONS_H__ */

@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PROJECTABLE_H__
-#define __GIMP_PROJECTABLE_H__
+#pragma once
 
 
 #define GIMP_TYPE_PROJECTABLE (gimp_projectable_get_type ())
@@ -79,6 +78,3 @@ GeglNode   * gimp_projectable_get_graph          (GimpProjectable *projectable);
 void         gimp_projectable_begin_render       (GimpProjectable *projectable);
 void         gimp_projectable_end_render         (GimpProjectable *projectable);
 void         gimp_projectable_invalidate_preview (GimpProjectable *projectable);
-
-
-#endif  /* __GIMP_PROJECTABLE_H__ */

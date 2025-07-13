@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_PROC_H__
-#define __GIMP_PLUG_IN_PROC_H__
+#pragma once
 
 
 gboolean   gimp_plug_in_set_proc_image_types         (GimpPlugIn    *plug_in,
@@ -92,6 +91,3 @@ gboolean   gimp_plug_in_set_batch_interpreter        (GimpPlugIn   *plug_in,
                                                       const gchar  *proc_name,
                                                       const gchar  *interpreter_name,
                                                       GError      **error);
-
-
-#endif /* __GIMP_PLUG_IN_PROC_H__ */

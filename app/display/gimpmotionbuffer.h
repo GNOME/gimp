@@ -17,9 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MOTION_BUFFER_H__
-#define __GIMP_MOTION_BUFFER_H__
-
+#pragma once
 
 #include "core/gimpobject.h"
 
@@ -94,6 +92,3 @@ void       gimp_motion_buffer_request_stroke       (GimpMotionBuffer *buffer,
 void       gimp_motion_buffer_request_hover        (GimpMotionBuffer *buffer,
                                                     GdkModifierType   state,
                                                     gboolean          proximity);
-
-
-#endif /* __GIMP_MOTION_BUFFER_H__ */

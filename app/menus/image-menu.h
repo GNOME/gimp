@@ -15,12 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __IMAGE_MENU_H__
-#define __IMAGE_MENU_H__
+#pragma once
 
 
 void   image_menu_setup (GimpUIManager *manager,
                          const gchar   *ui_path);
-
-
-#endif /* __IMAGE_MENU_H__ */

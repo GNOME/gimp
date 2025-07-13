@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __ERRORS_H__
-#define __ERRORS_H__
+#pragma once
 
 #ifndef GIMP_APP_GLUE_COMPILATION
 #error You must not #include "errors.h" from an app/ subdir
@@ -34,6 +33,3 @@ GList * errors_recovered (void);
 
 void    gimp_fatal_error (const gchar        *message) G_GNUC_NORETURN;
 void    gimp_terminate   (const gchar        *message) G_GNUC_NORETURN;
-
-
-#endif /* __ERRORS_H__ */

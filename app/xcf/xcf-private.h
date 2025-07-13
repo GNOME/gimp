@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __XCF_PRIVATE_H__
-#define __XCF_PRIVATE_H__
+#pragma once
 
 
 #define XCF_TILE_WIDTH                  64
@@ -147,6 +146,3 @@ struct _XcfInfo
   XcfCompressionType  compression;
   gint                file_version;
 };
-
-
-#endif /* __XCF_PRIVATE_H__ */

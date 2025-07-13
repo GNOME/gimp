@@ -20,8 +20,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GEGL_APPLY_OPERATION_H__
-#define __GIMP_GEGL_APPLY_OPERATION_H__
+#pragma once
 
 
 /*  generic functions, also used by the specific ones below  */
@@ -167,6 +166,3 @@ void   gimp_gegl_apply_transform       (GeglBuffer             *src_buffer,
                                         GeglBuffer             *dest_buffer,
                                         GimpInterpolationType   interpolation_type,
                                         GimpMatrix3            *transform);
-
-
-#endif /* __GIMP_GEGL_APPLY_OPERATION_H__ */

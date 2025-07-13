@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_UNDO_H__
-#define __GIMP_DRAWABLE_UNDO_H__
-
+#pragma once
 
 #include "gimpitemundo.h"
 
@@ -49,6 +47,3 @@ struct _GimpDrawableUndoClass
 
 
 GType   gimp_drawable_undo_get_type (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_DRAWABLE_UNDO_H__ */

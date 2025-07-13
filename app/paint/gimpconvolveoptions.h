@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONVOLVE_OPTIONS_H__
-#define __GIMP_CONVOLVE_OPTIONS_H__
-
+#pragma once
 
 #include "gimppaintoptions.h"
 
@@ -47,6 +45,3 @@ struct _GimpConvolveOptionsClass
 
 
 GType   gimp_convolve_options_get_type (void) G_GNUC_CONST;
-
-
-#endif  /*  __GIMP_CONVOLVE_OPTIONS_H__  */

@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PATH_EXPORT_H__
-#define __GIMP_PATH_EXPORT_H__
+#pragma once
 
 
 gboolean   gimp_path_export_file   (GimpImage    *image,
@@ -25,6 +24,3 @@ gboolean   gimp_path_export_file   (GimpImage    *image,
                                     GError      **error);
 gchar    * gimp_path_export_string (GimpImage    *image,
                                     GList        *path_list);
-
-
-#endif /* __GIMP_PATH_IMPORT_H__ */

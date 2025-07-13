@@ -22,8 +22,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CIRCLE_H__
-#define __GIMP_CIRCLE_H__
+#pragma once
 
 
 #define GIMP_TYPE_CIRCLE (gimp_circle_get_type ())
@@ -50,6 +49,3 @@ gdouble     _gimp_circle_get_angle_and_distance (GimpCircle *circle,
                                                  gdouble     event_x,
                                                  gdouble     event_y,
                                                  gdouble    *distance);
-
-
-#endif /* __GIMP_CIRCLE_H__ */

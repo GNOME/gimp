@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LEVELS_CONFIG_H__
-#define __GIMP_LEVELS_CONFIG_H__
-
+#pragma once
 
 #include "gimpoperationsettings.h"
 
@@ -92,5 +90,3 @@ gboolean   gimp_levels_config_save_cruft       (GimpLevelsConfig      *config,
 gboolean   gimp_levels_config_load_alv         (GimpLevelsConfig      *config,
                                                 GInputStream          *input,
                                                 GError               **error);
-
-#endif /* __GIMP_LEVELS_CONFIG_H__ */

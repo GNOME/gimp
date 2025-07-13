@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_UNDO_PUSH_H__
-#define __GIMP_IMAGE_UNDO_PUSH_H__
+#pragma once
 
 
 /*  image undos  */
@@ -279,6 +278,3 @@ GimpUndo * gimp_image_undo_push_fs_to_layer         (GimpImage     *image,
 
 GimpUndo * gimp_image_undo_push_cantundo            (GimpImage     *image,
                                                      const gchar   *undo_desc);
-
-
-#endif  /* __GIMP_IMAGE_UNDO_PUSH_H__ */

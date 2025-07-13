@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __FILE_UTILS_H__
-#define __FILE_UTILS_H__
+#pragma once
 
 
 GFile     * file_utils_filename_to_file  (Gimp         *gimp,
@@ -28,6 +27,3 @@ GFile     * file_utils_filename_to_file  (Gimp         *gimp,
 GdkPixbuf * file_utils_load_thumbnail    (GFile        *file);
 gboolean    file_utils_save_thumbnail    (GimpImage    *image,
                                           GFile        *file);
-
-
-#endif /* __FILE_UTILS_H__ */

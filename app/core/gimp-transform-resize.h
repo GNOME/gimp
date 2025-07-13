@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TRANSFORM_RESIZE_H__
-#define __GIMP_TRANSFORM_RESIZE_H__
+#pragma once
 
 
 gboolean   gimp_transform_resize_boundary (const GimpMatrix3   *inv,
@@ -29,6 +28,3 @@ gboolean   gimp_transform_resize_boundary (const GimpMatrix3   *inv,
                                            gint                *y1,
                                            gint                *x2,
                                            gint                *y2);
-
-
-#endif  /*  __GIMP_TRANSFORM_RESIZE_H__  */

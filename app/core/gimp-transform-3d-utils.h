@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TRANSFORM_3D_UTILS_H__
-#define __GIMP_TRANSFORM_3D_UTILS_H__
+#pragma once
 
 
 gdouble       gimp_transform_3d_angle_of_view_to_focal_length   (gdouble            angle_of_view,
@@ -90,6 +89,3 @@ void          gimp_transform_3d_matrix                          (GimpMatrix3    
                                                                  gdouble            pivot_x,
                                                                  gdouble            pivot_y,
                                                                  gdouble            pivot_z);
-
-
-#endif /* __GIMP_TRANSFORM_3D_UTILS_H__ */

@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __PDB_TYPES_H__
-#define __PDB_TYPES_H__
-
+#pragma once
 
 #include "core/core-types.h"
 
@@ -49,6 +47,3 @@ typedef enum
   GIMP_PDB_DATA_ACCESS_WRITE  = 1 << 0,
   GIMP_PDB_DATA_ACCESS_RENAME = 1 << 1
 } GimpPDBDataAccess;
-
-
-#endif /* __PDB_TYPES_H__ */

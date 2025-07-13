@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DODGE_BURN_OPTIONS_H__
-#define __GIMP_DODGE_BURN_OPTIONS_H__
-
+#pragma once
 
 #include "gimppaintoptions.h"
 
@@ -48,6 +46,3 @@ struct _GimpDodgeBurnOptionsClass
 
 
 GType   gimp_dodge_burn_options_get_type (void) G_GNUC_CONST;
-
-
-#endif  /*  __GIMP_DODGE_BURN_OPTIONS_H__  */

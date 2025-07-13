@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SPAWN_H__
-#define __GIMP_SPAWN_H__
+#pragma once
 
 
 gboolean   gimp_spawn_async       (gchar       **argv,
@@ -29,6 +28,3 @@ gboolean   gimp_spawn_async       (gchar       **argv,
                                    GError      **error);
 
 void       gimp_spawn_set_cloexec (gint          fd);
-
-
-#endif /* __GIMP_SPAWN_H__ */

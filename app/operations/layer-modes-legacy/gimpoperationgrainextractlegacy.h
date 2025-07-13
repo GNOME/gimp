@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_GRAIN_EXTRACT_LEGACY_H__
-#define __GIMP_OPERATION_GRAIN_EXTRACT_LEGACY_H__
-
+#pragma once
 
 #include "operations/layer-modes/gimpoperationlayermode.h"
 
@@ -48,6 +46,3 @@ struct _GimpOperationGrainExtractLegacyClass
 
 
 GType   gimp_operation_grain_extract_legacy_get_type (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_OPERATION_GRAIN_EXTRACT_LEGACY_H__ */

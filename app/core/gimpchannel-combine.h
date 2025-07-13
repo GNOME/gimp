@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CHANNEL_COMBINE_H__
-#define __GIMP_CHANNEL_COMBINE_H__
+#pragma once
 
 
 void   gimp_channel_combine_rect         (GimpChannel    *mask,
@@ -55,6 +54,3 @@ void   gimp_channel_combine_buffer       (GimpChannel    *mask,
 void   gimp_channel_combine_items        (GimpChannel    *mask,
                                           GList          *items,
                                           GimpChannelOps  op);
-
-
-#endif /* __GIMP_CHANNEL_COMBINE_H__ */

@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __IMAGE_SCALE_DIALOG_H__
-#define __IMAGE_SCALE_DIALOG_H__
+#pragma once
 
 
 GtkWidget * image_scale_dialog_new (GimpImage             *image,
@@ -26,6 +25,3 @@ GtkWidget * image_scale_dialog_new (GimpImage             *image,
                                     GimpInterpolationType  interpolation,
                                     GimpScaleCallback      callback,
                                     gpointer               user_data);
-
-
-#endif /* __IMAGE_SCALE_DIALOG_H__ */

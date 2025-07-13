@@ -20,8 +20,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_LAYER_MODE_BLEND_H__
-#define __GIMP_OPERATION_LAYER_MODE_BLEND_H__
+#pragma once
 
 
 /*  nonsubtractive blend functions  */
@@ -195,6 +194,3 @@ void gimp_operation_layer_mode_blend_color_erase       (GeglOperation *operation
                                                         const gfloat  *layer,
                                                         gfloat        *comp,
                                                         gint           samples);
-
-
-#endif /* __GIMP_OPERATION_LAYER_MODE_BLEND_H__ */

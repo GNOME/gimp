@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MIRROR_H__
-#define __GIMP_MIRROR_H__
-
+#pragma once
 
 #include "gimpsymmetry.h"
 
@@ -57,6 +55,3 @@ struct _GimpMirrorClass
 
 
 GType   gimp_mirror_get_type (void) G_GNUC_CONST;
-
-
-#endif  /*  __GIMP_MIRROR_H__  */

@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __FILTERS_COMMANDS_H__
-#define __FILTERS_COMMANDS_H__
+#pragma once
 
 
 void   filters_apply_cmd_callback             (GimpAction *action,
@@ -37,6 +36,3 @@ void    filters_run_procedure                 (Gimp          *gimp,
                                                GimpDisplay   *display,
                                                GimpProcedure *procedure,
                                                GimpRunMode    run_mode);
-
-
-#endif /* __FILTERS_COMMANDS_H__ */

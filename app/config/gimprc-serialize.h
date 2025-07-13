@@ -18,13 +18,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_RC_SERIALIZE_H__
-#define __GIMP_RC_SERIALIZE_H__
+#pragma once
 
 
 gboolean  gimp_rc_serialize (GimpConfig       *config,
                              GimpConfigWriter *writer,
                              gpointer          data);
-
-
-#endif /* __GIMP_RC_SERIALIZE_H__ */

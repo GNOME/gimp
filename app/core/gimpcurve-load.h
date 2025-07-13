@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CURVE_LOAD_H__
-#define __GIMP_CURVE_LOAD_H__
+#pragma once
 
 
 #define GIMP_CURVE_FILE_EXTENSION ".curve"
@@ -25,6 +24,3 @@
 GList * gimp_curve_load (GFile         *file,
                          GInputStream  *input,
                          GError       **error);
-
-
-#endif /* __GIMP_CURVE_LOAD_H__ */

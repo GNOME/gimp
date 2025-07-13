@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __PLUG_IN_RC_H__
-#define __PLUG_IN_RC_H__
+#pragma once
 
 
 GSList   * plug_in_rc_parse (Gimp    *gimp,
@@ -28,6 +27,3 @@ GSList   * plug_in_rc_parse (Gimp    *gimp,
 gboolean   plug_in_rc_write (GSList  *plug_in_defs,
                              GFile   *file,
                              GError **error);
-
-
-#endif /* __PLUG_IN_RC_H__ */

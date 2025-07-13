@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __APP_GIMP_CONFIG_UTILS_H__
-#define __APP_GIMP_CONFIG_UTILS_H__
+#pragma once
 
 
 void   gimp_config_connect      (GObject     *a,
@@ -31,6 +30,3 @@ void   gimp_config_connect_full (GObject     *a,
                                  const gchar *property_name_b);
 void   gimp_config_disconnect   (GObject     *a,
                                  GObject     *b);
-
-
-#endif  /* __APP_GIMP_CONFIG_UTILS_H__ */

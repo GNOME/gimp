@@ -15,8 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __SPLASH_H__
-#define __SPLASH_H__
+#pragma once
+
 
 void   splash_create    (Gimp         *gimp,
                          gboolean      be_verbose,
@@ -27,6 +27,3 @@ void   splash_destroy   (void);
 void   splash_update    (const gchar *label1,
                          const gchar *label2,
                          gdouble      percentage);
-
-
-#endif /* __SPLASH_H__ */

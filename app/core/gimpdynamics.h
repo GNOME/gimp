@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DYNAMICS_H__
-#define __GIMP_DYNAMICS_H__
-
+#pragma once
 
 #include "gimpdata.h"
 
@@ -72,6 +70,3 @@ gdouble         gimp_dynamics_get_aspect_value  (GimpDynamics           *dynamic
                                                  const GimpCoords       *coords,
                                                  GimpPaintOptions       *options,
                                                  gdouble                 fade_point);
-
-
-#endif  /*  __GIMP_DYNAMICS_H__  */

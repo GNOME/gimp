@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SOURCE_CORE_H__
-#define __GIMP_SOURCE_CORE_H__
-
+#pragma once
 
 #include "gimpbrushcore.h"
 
@@ -103,6 +101,3 @@ void     gimp_source_core_motion     (GimpSourceCore    *source_core,
                                       GimpPaintOptions  *paint_options,
                                       gboolean           self_drawable,
                                       GimpSymmetry      *sym);
-
-
-#endif  /*  __GIMP_SOURCE_CORE_H__  */

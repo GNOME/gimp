@@ -28,6 +28,7 @@
 
 #include "core-types.h"
 
+#include "gimpdata.h"
 #include "gimppadactions.h"
 #include "gimpparamspecs.h"
 
@@ -35,6 +36,7 @@
 
 
 typedef struct _GimpPadAction GimpPadAction;
+
 struct _GimpPadAction
 {
   GimpPadActionType  type;

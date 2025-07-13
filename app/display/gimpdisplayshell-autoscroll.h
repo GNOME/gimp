@@ -15,14 +15,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_AUTOSCROLL_H__
-#define __GIMP_DISPLAY_SHELL_AUTOSCROLL_H__
+#pragma once
 
 
 void   gimp_display_shell_autoscroll_start (GimpDisplayShell *shell,
                                             GdkModifierType   state,
                                             GdkEventMotion   *mevent);
 void   gimp_display_shell_autoscroll_stop  (GimpDisplayShell *shell);
-
-
-#endif /* __GIMP_DISPLAY_SHELL_AUTOSCROLL_H__ */

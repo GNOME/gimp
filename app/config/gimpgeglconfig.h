@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GEGL_CONFIG_H__
-#define __GIMP_GEGL_CONFIG_H__
+#pragma once
 
 
 #define GIMP_TYPE_GEGL_CONFIG            (gimp_gegl_config_get_type ())
@@ -50,6 +49,3 @@ struct _GimpGeglConfigClass
 
 
 GType  gimp_gegl_config_get_type (void) G_GNUC_CONST;
-
-
-#endif /* GIMP_GEGL_CONFIG_H__ */

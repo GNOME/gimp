@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_CURSOR_H__
-#define __GIMP_CANVAS_CURSOR_H__
-
+#pragma once
 
 #include "gimpcanvasitem.h"
 
@@ -54,6 +52,3 @@ GimpCanvasItem * gimp_canvas_cursor_new      (GimpDisplayShell *shell);
 void             gimp_canvas_cursor_set      (GimpCanvasItem   *cursor,
                                               gdouble           x,
                                               gdouble           y);
-
-
-#endif /* __GIMP_CANVAS_CURSOR_H__ */

@@ -15,11 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PARAM_SPECS_DESC_H__
-#define __GIMP_PARAM_SPECS_DESC_H__
+#pragma once
 
 
 gchar * gimp_param_spec_get_desc (GParamSpec *pspec);
-
-
-#endif  /*  __GIMP_PARAM_SPECS_DESC_H__  */

@@ -18,10 +18,8 @@
 /* Misc data definitions used by the convert.c code module.  Moved
    out here simply to unclutter convert.c, mostly. */
 
-#ifndef __GIMP_IMAGE_CONVERT_DATA_H__
-#define __GIMP_IMAGE_CONVERT_DATA_H__
+#pragma once
 
-#include <glib.h>
 
 /* 'web safe' palette. */
 static const guchar webpal[] =
@@ -139,5 +137,3 @@ static const guchar DM_ORIGINAL[32][32] = {
   { 43,233, 27,218, 39,229, 23,214, 42,232, 26,217, 38,228, 22,213, 42,233, 27,217, 38,229, 23,213, 41,232, 26,216, 37,228, 22,212},
   {170,106,154, 90,166,102,150, 86,169,105,153, 89,165,101,149, 85,170,106,154, 90,166,102,150, 86,169,105,153, 89,165,101,149, 85}
 };
-
-#endif /* __GIMP_IMAGE_CONVERT_DATA_H__ */

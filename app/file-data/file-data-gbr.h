@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __FILE_DATA_GBR_H__
-#define __FILE_DATA_GBR_H__
+#pragma once
 
 
 GimpValueArray * file_gbr_load_invoker      (GimpProcedure         *procedure,
@@ -39,6 +38,3 @@ GimpBrush      * file_gbr_drawable_to_brush (GimpDrawable          *drawable,
                                              const GeglRectangle   *rect,
                                              const gchar           *name,
                                              gdouble                spacing);
-
-
-#endif /* __FILE_DATA_GBR_H__ */

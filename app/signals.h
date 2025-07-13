@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __SIGNALS_H__
-#define __SIGNALS_H__
+#pragma once
 
 #ifndef GIMP_APP_GLUE_COMPILATION
 #signal You must not #include "signals.h" from an app/ subdir
@@ -24,6 +23,3 @@
 
 
 void   gimp_init_signal_handlers (gchar **backtrace_file);
-
-
-#endif /* __SIGNALS_H__ */

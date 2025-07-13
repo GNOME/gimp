@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __APP_GIMP_MEMSIZE_H__
-#define __APP_GIMP_MEMSIZE_H__
+#pragma once
 
 
 gint64   gimp_g_type_instance_get_memsize      (GTypeInstance   *instance);
@@ -55,6 +54,3 @@ gint64   gimp_gegl_pyramid_get_memsize         (GeglBuffer      *buffer);
 gint64   gimp_string_get_memsize               (const gchar     *string);
 gint64   gimp_parasite_get_memsize             (GimpParasite    *parasite,
                                                 gint64          *gui_size);
-
-
-#endif /* __APP_GIMP_MEMSIZE_H__ */

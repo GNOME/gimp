@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_ROTATE_H__
-#define __GIMP_IMAGE_ROTATE_H__
+#pragma once
 
 
 void   gimp_image_rotate                     (GimpImage        *image,
@@ -33,6 +32,3 @@ void   gimp_image_apply_metadata_orientation (GimpImage         *image,
                                               GimpContext       *context,
                                               GimpMetadata      *metadata,
                                               GimpProgress      *progress);
-
-
-#endif /* __GIMP_IMAGE_ROTATE_H__ */

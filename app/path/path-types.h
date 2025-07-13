@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __PATH_TYPES_H__
-#define __PATH_TYPES_H__
-
+#pragma once
 
 #include "core/core-types.h"
 
@@ -32,6 +30,3 @@ typedef struct _GimpAnchor       GimpAnchor;
 typedef struct _GimpPath         GimpPath;
 typedef struct _GimpStroke       GimpStroke;
 typedef struct _GimpBezierStroke GimpBezierStroke;
-
-
-#endif /* __PATH_TYPES_H__ */

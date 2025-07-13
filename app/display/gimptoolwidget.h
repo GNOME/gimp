@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_WIDGET_H__
-#define __GIMP_TOOL_WIDGET_H__
-
+#pragma once
 
 #include "core/gimpobject.h"
 
@@ -325,5 +323,3 @@ GimpUIManager *
                                              const GimpCoords      *coords,
                                              GdkModifierType        state,
                                              const gchar          **ui_path);
-
-#endif /* __GIMP_TOOL_WIDGET_H__ */

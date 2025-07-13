@@ -20,8 +20,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_LAYER_MODE_COMPOSITE_H__
-#define __GIMP_OPERATION_LAYER_MODE_COMPOSITE_H__
+#pragma once
 
 
 void gimp_operation_layer_mode_composite_union                 (const gfloat        *in,
@@ -93,6 +92,3 @@ void gimp_operation_layer_mode_composite_clip_to_backdrop_sse2 (const gfloat    
                                                                 gint                 samples);
 
 #endif /* COMPILE_SSE2_INTRINISICS */
-
-
-#endif /* __GIMP_OPERATION_LAYER_MODE_COMPOSITE_H__ */

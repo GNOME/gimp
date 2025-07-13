@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TREE_PROXY_H__
-#define __GIMP_TREE_PROXY_H__
-
+#pragma once
 
 #include "gimplist.h"
 
@@ -61,6 +59,3 @@ GimpContainer * gimp_tree_proxy_get_container     (GimpTreeProxy *tree_proxy);
 void            gimp_tree_proxy_set_flat          (GimpTreeProxy *tree_proxy,
                                                    gboolean       flat);
 gboolean        gimp_tree_proxy_get_flat          (GimpTreeProxy *tree_proxy);
-
-
-#endif  /*  __GIMP_TREE_PROXY_H__  */

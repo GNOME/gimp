@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_H__
-#define __GIMP_DISPLAY_SHELL_H__
+#pragma once
 
 
 /* Apply to a float the same rounding mode used in the renderer */
@@ -364,6 +363,3 @@ void              gimp_display_shell_set_mask      (GimpDisplayShell   *shell,
                                                     gboolean            inverted);
 
 gboolean          gimp_display_shell_is_drawn      (GimpDisplayShell   *shell);
-
-
-#endif /* __GIMP_DISPLAY_SHELL_H__ */

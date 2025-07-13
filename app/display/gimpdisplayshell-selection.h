@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_SELECTION_H__
-#define __GIMP_DISPLAY_SHELL_SELECTION_H__
+#pragma once
 
 
 void   gimp_display_shell_selection_init     (GimpDisplayShell     *shell);
@@ -33,5 +32,3 @@ void   gimp_display_shell_selection_set_show (GimpDisplayShell     *shell,
 
 void   gimp_display_shell_selection_draw     (GimpDisplayShell     *shell,
                                               cairo_t              *cr);
-
-#endif  /*  __GIMP_DISPLAY_SHELL_SELECTION_H__  */

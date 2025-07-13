@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MODIFIERS_MANAGER_H__
-#define __GIMP_MODIFIERS_MANAGER_H__
+#pragma once
 
 
 #define GIMP_TYPE_MODIFIERS_MANAGER            (gimp_modifiers_manager_get_type ())
@@ -78,6 +77,3 @@ void                   gimp_modifiers_manager_remove        (GimpModifiersManage
                                                              guint                 button,
                                                              GdkModifierType       modifiers);
 void                   gimp_modifiers_manager_clear         (GimpModifiersManager *manager);
-
-
-#endif  /* __GIMP_MODIFIERS_MANAGER_H__ */

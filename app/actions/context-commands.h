@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __CONTEXT_COMMANDS_H__
-#define __CONTEXT_COMMANDS_H__
-
+#pragma once
 
 
 void   context_colors_default_cmd_callback        (GimpAction *action,
@@ -139,6 +137,3 @@ void   context_brush_angle_cmd_callback           (GimpAction *action,
 void   context_toggle_dynamics_cmd_callback       (GimpAction *action,
                                                    GVariant   *value,
                                                    gpointer    data);
-
-
-#endif /* __CONTEXT_COMMANDS_H__ */

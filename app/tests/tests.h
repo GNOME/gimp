@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __TESTS_H__
-#define __TESTS_H__
+#pragma once
 
 /* Automake doc says:
    "When no test protocol is in use, an exit status of 0 from a test
@@ -36,6 +35,3 @@ Gimp * gimp_init_for_gui_testing_with_rc (gboolean  show_gui,
 void   gimp_test_run_temp_mainloop       (guint32   running_time);
 void   gimp_test_run_mainloop_until_idle (void);
 void   gimp_test_bail_if_no_display      (void);
-
-
-#endif /* __TESTS_H__ */

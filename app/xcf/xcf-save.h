@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __XCF_SAVE_H__
-#define __XCF_SAVE_H__
+#pragma once
 
 
 gboolean   xcf_save_image (XcfInfo    *info,
                            GimpImage  *image,
                            GError    **error);
-
-
-#endif  /* __XCF_SAVE_H__ */

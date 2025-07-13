@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FLOATING_SELECTION_UNDO_H__
-#define __GIMP_FLOATING_SELECTION_UNDO_H__
-
+#pragma once
 
 #include "gimpitemundo.h"
 
@@ -47,6 +45,3 @@ struct _GimpFloatingSelectionUndoClass
 
 
 GType   gimp_floating_selection_undo_get_type (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_FLOATING_SELECTION_UNDO_H__ */

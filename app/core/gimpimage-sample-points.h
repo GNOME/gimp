@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_SAMPLE_POINTS_H__
-#define __GIMP_IMAGE_SAMPLE_POINTS_H__
+#pragma once
 
 
 /*  public sample point adding API
@@ -55,6 +54,3 @@ GimpSamplePoint * gimp_image_get_sample_point        (GimpImage       *image,
 GimpSamplePoint * gimp_image_get_next_sample_point   (GimpImage       *image,
                                                       guint32          id,
                                                       gboolean        *sample_point_found);
-
-
-#endif /* __GIMP_IMAGE_SAMPLE_POINTS_H__ */

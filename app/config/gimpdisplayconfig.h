@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_CONFIG_H__
-#define __GIMP_DISPLAY_CONFIG_H__
+#pragma once
 
 #include "config/gimpcoreconfig.h"
 
@@ -82,6 +81,3 @@ struct _GimpDisplayConfigClass
 
 
 GType  gimp_display_config_get_type (void) G_GNUC_CONST;
-
-
-#endif /* GIMP_DISPLAY_CONFIG_H__ */

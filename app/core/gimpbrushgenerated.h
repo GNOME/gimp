@@ -17,9 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_GENERATED_H__
-#define __GIMP_BRUSH_GENERATED_H__
-
+#pragma once
 
 #include "gimpbrush.h"
 
@@ -87,6 +85,3 @@ gint    gimp_brush_generated_get_spikes       (GimpBrushGenerated      *brush);
 gfloat  gimp_brush_generated_get_hardness     (GimpBrushGenerated      *brush);
 gfloat  gimp_brush_generated_get_aspect_ratio (GimpBrushGenerated      *brush);
 gfloat  gimp_brush_generated_get_angle        (GimpBrushGenerated      *brush);
-
-
-#endif  /*  __GIMP_BRUSH_GENERATED_H__  */

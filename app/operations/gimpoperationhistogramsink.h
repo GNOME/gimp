@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_HISTOGRAM_SINK_H__
-#define __GIMP_OPERATION_HISTOGRAM_SINK_H__
-
+#pragma once
 
 #include <gegl-plugin.h>
 #include <operation/gegl-operation-sink.h>
@@ -52,5 +50,3 @@ struct _GimpOperationHistogramSinkClass
 
 GType   gimp_operation_histogram_sink_get_type (void) G_GNUC_CONST;
 
-
-#endif /* __GIMP_OPERATION_HISTOGRAM_SINK_C__ */

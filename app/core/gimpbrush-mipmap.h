@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_MIPMAP_H__
-#define __GIMP_BRUSH_MIPMAP_H__
+#pragma once
 
 
 void                gimp_brush_mipmap_clear       (GimpBrush *brush);
@@ -33,6 +32,3 @@ const GimpTempBuf * gimp_brush_mipmap_get_pixmap  (GimpBrush *brush,
                                                    gdouble   *scale_y);
 
 gsize               gimp_brush_mipmap_get_memsize (GimpBrush *brush);
-
-
-#endif  /*  __GIMP_BRUSH_MIPMAP_H__  */

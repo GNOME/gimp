@@ -18,11 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __EXTENSIONS_DIALOG_H__
-#define __EXTENSIONS_DIALOG_H__
+#pragma once
 
 
 GtkWidget * extensions_dialog_new (Gimp *gimp);
-
-
-#endif /* __EXTENSIONS_DIALOG_H__ */

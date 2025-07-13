@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TAGGED_CONTAINER_H__
-#define __GIMP_TAGGED_CONTAINER_H__
-
+#pragma once
 
 #include "gimpfilteredcontainer.h"
 
@@ -62,6 +60,3 @@ void            gimp_tagged_container_set_filter    (GimpTaggedContainer *tagged
 const GList   * gimp_tagged_container_get_filter    (GimpTaggedContainer *tagged_container);
 
 gint            gimp_tagged_container_get_tag_count (GimpTaggedContainer *container);
-
-
-#endif  /* __GIMP_TAGGED_CONTAINER_H__ */

@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_FLOATING_SELECTION_H__
-#define __GIMP_DRAWABLE_FLOATING_SELECTION_H__
+#pragma once
 
 
 GimpLayer  * gimp_drawable_get_floating_sel          (GimpDrawable *drawable);
@@ -26,6 +25,3 @@ void         gimp_drawable_detach_floating_sel       (GimpDrawable *drawable);
 GimpFilter * gimp_drawable_get_floating_sel_filter   (GimpDrawable *drawable);
 
 void         _gimp_drawable_add_floating_sel_filter  (GimpDrawable *drawable);
-
-
-#endif /* __GIMP_DRAWABLE_FLOATING_SELECTION_H__ */

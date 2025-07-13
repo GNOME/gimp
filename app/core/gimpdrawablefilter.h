@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_FILTER_H__
-#define __GIMP_DRAWABLE_FILTER_H__
-
+#pragma once
 
 #include "gimpfilter.h"
 
@@ -155,6 +153,3 @@ void       gimp_drawable_filter_layer_mask_freeze
                                                (GimpDrawableFilter      *filter);
 void       gimp_drawable_filter_refresh_crop   (GimpDrawableFilter      *filter,
                                                 GeglRectangle           *rect);
-
-
-#endif /* __GIMP_DRAWABLE_FILTER_H__ */

@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __FILE_DATA_PAT_H__
-#define __FILE_DATA_PAT_H__
+#pragma once
 
 
 GimpValueArray * file_pat_load_invoker (GimpProcedure         *procedure,
@@ -32,6 +31,3 @@ GimpValueArray * file_pat_save_invoker (GimpProcedure         *procedure,
                                         GimpProgress          *progress,
                                         const GimpValueArray  *args,
                                         GError               **error);
-
-
-#endif /* __FILE_DATA_PAT_H__ */

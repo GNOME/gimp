@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_ERASE_H__
-#define __GIMP_OPERATION_ERASE_H__
-
+#pragma once
 
 #include "gimpoperationlayermode.h"
 
@@ -48,6 +46,3 @@ struct _GimpOperationEraseClass
 
 
 GType   gimp_operation_erase_get_type (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_OPERATION_ERASE_MODE_H__ */

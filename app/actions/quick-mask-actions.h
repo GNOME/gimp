@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __QUICK_MASK_ACTIONS_H__
-#define __QUICK_MASK_ACTIONS_H__
+#pragma once
 
 
 void   quick_mask_actions_setup  (GimpActionGroup *group);
 void   quick_mask_actions_update (GimpActionGroup *group,
                                   gpointer         data);
-
-
-#endif /* __QUICK_MASK_ACTIONS_H__ */

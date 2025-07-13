@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __SAMPLE_POINTS_COMMANDS_H__
-#define __SAMPLE_POINTS_COMMANDS_H__
+#pragma once
 
 
 void   sample_points_sample_merged_cmd_callback (GimpAction *action,
                                                  GVariant   *value,
                                                  gpointer    data);
-
-
-#endif /* __SAMPLE_POINTS_COMMANDS_H__ */

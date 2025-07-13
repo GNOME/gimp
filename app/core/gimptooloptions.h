@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_OPTIONS_H__
-#define __GIMP_TOOL_OPTIONS_H__
-
+#pragma once
 
 #include "gimpcontext.h"
 
@@ -68,6 +66,3 @@ gboolean   gimp_tool_options_deserialize   (GimpToolOptions   *tool_options,
 gboolean   gimp_tool_options_delete        (GimpToolOptions   *tool_options,
                                             GError           **error);
 void       gimp_tool_options_create_folder (void);
-
-
-#endif  /*  __GIMP_TOOL_OPTIONS_H__  */

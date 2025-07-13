@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __PROCEDURE_COMMANDS_H__
-#define __PROCEDURE_COMMANDS_H__
+#pragma once
 
 
 GimpValueArray * procedure_commands_get_run_mode_arg (GimpProcedure  *procedure);
@@ -41,6 +40,3 @@ gboolean      procedure_commands_run_procedure_async (GimpProcedure  *procedure,
                                                       GimpRunMode     run_mode,
                                                       GimpValueArray *args,
                                                       GimpDisplay    *display);
-
-
-#endif /* __PROCEDURE_COMMANDS_H__ */

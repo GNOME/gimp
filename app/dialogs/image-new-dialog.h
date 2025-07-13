@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __IMAGE_NEW_DIALOG_H__
-#define __IMAGE_NEW_DIALOG_H__
+#pragma once
 
 
 GtkWidget * image_new_dialog_new (GimpContext  *context);
@@ -24,6 +23,3 @@ GtkWidget * image_new_dialog_new (GimpContext  *context);
 void        image_new_dialog_set (GtkWidget    *dialog,
                                   GimpImage    *image,
                                   GimpTemplate *template);
-
-
-#endif /* __IMAGE_NEW_DIALOG_H__ */

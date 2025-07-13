@@ -15,12 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __XCF_UTILS_H__
-#define __XCF_UTILS_H__
+#pragma once
 
 
 gboolean   xcf_data_is_zero (const void *data,
                              gint        size);
-
-
-#endif  /* __XCF_UTILS_H__ */

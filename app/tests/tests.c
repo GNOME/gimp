@@ -25,6 +25,7 @@
 #include "gui/gui-types.h"
 
 #include "gui/gui.h"
+#include "gui/gimpapp.h"
 
 #include "actions/actions.h"
 

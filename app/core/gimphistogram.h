@@ -17,9 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_HISTOGRAM_H__
-#define __GIMP_HISTOGRAM_H__
-
+#pragma once
 
 #include "gimpobject.h"
 
@@ -101,6 +99,3 @@ gint            gimp_histogram_n_bins          (GimpHistogram        *histogram)
 gboolean        gimp_histogram_has_channel     (GimpHistogram        *histogram,
                                                 GimpHistogramChannel  channel);
 guint           gimp_histogram_unique_colors   (GimpDrawable         *drawable);
-
-
-#endif /* __GIMP_HISTOGRAM_H__ */

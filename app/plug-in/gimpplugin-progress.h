@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_PROGRESS_H__
-#define __GIMP_PLUG_IN_PROGRESS_H__
+#pragma once
 
 
 gint       gimp_plug_in_progress_attach        (GimpProgress        *progress);
@@ -42,6 +41,3 @@ gboolean   gimp_plug_in_progress_uninstall     (GimpPlugIn          *plug_in,
                                                 const gchar         *progress_callback);
 gboolean   gimp_plug_in_progress_cancel        (GimpPlugIn          *plug_in,
                                                 const gchar         *progress_callback);
-
-
-#endif /* __GIMP_PLUG_IN_PROGRESS_H__ */

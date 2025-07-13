@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PALETTE_H__
-#define __GIMP_PALETTE_H__
-
+#pragma once
 
 #include "gimpdata.h"
 
@@ -127,6 +125,3 @@ void               gimp_palette_set_colormap    (GimpPalette      *palette,
                                                  const guchar     *colormap,
                                                  gint              n_colors,
                                                  gboolean          push_undo_if_image);
-
-
-#endif /* __GIMP_PALETTE_H__ */

@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONFIG_FILE_H__
-#define __GIMP_CONFIG_FILE_H__
+#pragma once
 
 
 typedef gchar * (* GimpCopyPostProcess) (gpointer user_data);
@@ -36,6 +35,3 @@ gboolean   gimp_config_file_copy             (const gchar        *source,
 gboolean   gimp_config_file_backup_on_error  (GFile              *file,
                                               const gchar        *name,
                                               GError            **error);
-
-
-#endif  /* __GIMP_CONFIG_FILE_H__ */

@@ -18,11 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LINEART__
-#define __GIMP_LINEART__
-
+#pragma once
 
 #include "gimpobject.h"
+
 
 #define GIMP_TYPE_LINE_ART            (gimp_line_art_get_type ())
 #define GIMP_LINE_ART(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_LINE_ART, GimpLineArt))
@@ -69,5 +68,3 @@ gboolean             gimp_line_art_is_frozen        (GimpLineArt  *line_art);
 
 GeglBuffer         * gimp_line_art_get              (GimpLineArt  *line_art,
                                                      gfloat      **distmap);
-
-#endif /* __GIMP_LINEART__ */

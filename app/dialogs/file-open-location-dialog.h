@@ -15,11 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __FILE_OPEN_LOCATION_DIALOG_H__
-#define __FILE_OPEN_LOCATION_DIALOG_H__
+#pragma once
 
 
 GtkWidget * file_open_location_dialog_new (Gimp *gimp);
-
-
-#endif /* __FILE_OPEN_LOCATION_DIALOG_H__ */

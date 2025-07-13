@@ -18,13 +18,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __IMAGE_PROPERTIES_DIALOG_H__
-#define __IMAGE_PROPERTIES_DIALOG_H__
+#pragma once
 
 
 GtkWidget * image_properties_dialog_new (GimpImage   *image,
                                          GimpContext *context,
                                          GtkWidget   *parent);
-
-
-#endif  /*  __IMAGE_PROPERTIES_DIALOG_H__  */

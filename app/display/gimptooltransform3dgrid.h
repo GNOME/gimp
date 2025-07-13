@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_TRANSFORM_3D_GRID_H__
-#define __GIMP_TOOL_TRANSFORM_3D_GRID_H__
-
+#pragma once
 
 #include "gimptooltransformgrid.h"
 
@@ -60,6 +58,3 @@ GimpToolWidget * gimp_tool_transform_3d_grid_new      (GimpDisplayShell    *shel
                                                        gdouble              camera_x,
                                                        gdouble              camera_y,
                                                        gdouble              camera_z);
-
-
-#endif /* __GIMP_TOOL_TRANSFORM_3D_GRID_H__ */

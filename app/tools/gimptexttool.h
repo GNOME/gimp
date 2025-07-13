@@ -20,9 +20,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_TOOL_H__
-#define __GIMP_TEXT_TOOL_H__
-
+#pragma once
 
 #include "gimpdrawtool.h"
 
@@ -127,6 +125,3 @@ void       gimp_text_tool_clear_layout           (GimpTextTool  *text_tool);
 gboolean   gimp_text_tool_ensure_layout          (GimpTextTool  *text_tool);
 void       gimp_text_tool_apply                  (GimpTextTool  *text_tool,
                                                   gboolean       push_undo);
-
-
-#endif /* __GIMP_TEXT_TOOL_H__ */

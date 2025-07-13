@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_MERGE_H__
-#define __GIMP_IMAGE_MERGE_H__
+#pragma once
 
 
 GList       * gimp_image_merge_visible_layers  (GimpImage      *image,
@@ -41,6 +40,3 @@ GimpLayer   * gimp_image_flatten               (GimpImage      *image,
 
 GimpPath    * gimp_image_merge_visible_paths   (GimpImage      *image,
                                                 GError        **error);
-
-
-#endif /* __GIMP_IMAGE_MERGE_H__ */

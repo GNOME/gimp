@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_ARC_H__
-#define __GIMP_CANVAS_ARC_H__
-
+#pragma once
 
 #include "gimpcanvasitem.h"
 
@@ -65,5 +63,3 @@ void             gimp_canvas_arc_set      (GimpCanvasItem  *arc,
                                            gdouble          radius_y,
                                            gdouble          start_angle,
                                            gdouble          slice_angle);
-
-#endif /* __GIMP_CANVAS_ARC_H__ */

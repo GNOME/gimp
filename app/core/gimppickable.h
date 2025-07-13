@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PICKABLE_H__
-#define __GIMP_PICKABLE_H__
+#pragma once
 
 
 #define GIMP_TYPE_PICKABLE (gimp_pickable_get_type ())
@@ -80,6 +79,3 @@ gboolean        gimp_pickable_pick_color              (GimpPickable        *pick
                                                        gdouble              average_radius,
                                                        gpointer             pixel,
                                                        GeglColor          **color);
-
-
-#endif  /* __GIMP_PICKABLE_H__ */

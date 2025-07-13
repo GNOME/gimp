@@ -18,14 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_LAYOUT_RENDER_H__
-#define __GIMP_TEXT_LAYOUT_RENDER_H__
+#pragma once
 
 
 void  gimp_text_layout_render (GimpTextLayout    *layout,
                                cairo_t           *cr,
                                GimpTextDirection  base_dir,
                                gboolean           path);
-
-
-#endif /* __GIMP_TEXT_LAYOUT_RENDER_H__ */

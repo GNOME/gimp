@@ -17,9 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PDB_CONTEXT_H__
-#define __GIMP_PDB_CONTEXT_H__
-
+#pragma once
 
 #include "core/gimpcontext.h"
 
@@ -78,6 +76,3 @@ GimpPaintOptions  * gimp_pdb_context_get_paint_options  (GimpPDBContext *context
 GList             * gimp_pdb_context_get_brush_options  (GimpPDBContext *context);
 
 GimpStrokeOptions * gimp_pdb_context_get_stroke_options (GimpPDBContext *context);
-
-
-#endif  /*  __GIMP_PDB_CONTEXT_H__  */

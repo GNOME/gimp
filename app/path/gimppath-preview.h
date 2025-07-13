@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PATH_PREVIEW_H__
-#define __GIMP_PATH_PREVIEW_H__
+#pragma once
 
 
 /*
@@ -29,6 +28,3 @@ GimpTempBuf * gimp_path_get_new_preview (GimpViewable *viewable,
                                          gint          height,
                                          GeglColor    *color,
                                          GeglColor    *background);
-
-
-#endif /* __GIMP_PATH_PREVIEW_H__ */

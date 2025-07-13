@@ -18,18 +18,13 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SHM_H__
-#define __GIMP_SHM_H__
+#pragma once
 
 G_BEGIN_DECLS
-
 
 guchar * _gimp_shm_addr  (void);
 
 void     _gimp_shm_open  (gint shm_ID);
 void     _gimp_shm_close (void);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_SHM_H__ */

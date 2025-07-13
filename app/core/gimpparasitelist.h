@@ -14,9 +14,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PARASITE_LIST_H__
-#define __GIMP_PARASITE_LIST_H__
-
+#pragma once
 
 #include "gimpobject.h"
 
@@ -64,6 +62,3 @@ void                 gimp_parasite_list_foreach  (GimpParasiteList       *list,
                                                   gpointer                user_data);
 const GimpParasite * gimp_parasite_list_find     (GimpParasiteList       *list,
                                                   const gchar            *name);
-
-
-#endif  /*  __GIMP_PARASITE_LIST_H__  */

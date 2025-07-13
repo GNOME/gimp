@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTAINER_TREE_STORE_H__
-#define __GIMP_CONTAINER_TREE_STORE_H__
+#pragma once
 
 
 enum
@@ -95,6 +94,3 @@ gboolean       gimp_container_tree_store_rename_item   (GimpContainerTreeStore *
                                                         GtkTreeIter            *iter);
 void           gimp_container_tree_store_clear_items   (GimpContainerTreeStore *store);
 void           gimp_container_tree_store_set_view_size (GimpContainerTreeStore *store);
-
-
-#endif  /*  __GIMP_CONTAINER_TREE_STORE_H__  */

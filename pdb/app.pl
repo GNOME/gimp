@@ -1209,10 +1209,9 @@ GPL
 	my $internal = "$builddir/internal-procs.h$FILE_EXT";
 	open IFILE, "> $internal" or die "Can't open $internal: $!\n";
 	print IFILE $gpl;
-	my $guard = "__INTERNAL_PROCS_H__";
 	print IFILE <<HEADER;
-#ifndef $guard
-#define $guard
+#pragma once
+
 
 HEADER
 
@@ -1222,11 +1221,6 @@ HEADER
 	foreach (@group_decls) {
 	    print IFILE "void   $_" . ' ' x ($longest - length $_) . " (GimpPDB *pdb);\n";
 	}
-
-	print IFILE <<HEADER;
-
-#endif /* $guard */
-HEADER
 	close IFILE;
 	&write_file($internal, $destdir);
 

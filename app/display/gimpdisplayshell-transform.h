@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_TRANSFORM_H__
-#define __GIMP_DISPLAY_SHELL_TRANSFORM_H__
+#pragma once
 
 
 /*  zoom: functions to transform from image space to unrotated display
@@ -195,6 +194,3 @@ void  gimp_display_shell_untransform_viewport          (GimpDisplayShell   *shel
                                                         gint               *y,
                                                         gint               *width,
                                                         gint               *height);
-
-
-#endif /* __GIMP_DISPLAY_SHELL_TRANSFORM_H__ */

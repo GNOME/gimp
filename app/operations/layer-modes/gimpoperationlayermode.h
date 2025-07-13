@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_LAYER_MODE_H__
-#define __GIMP_OPERATION_LAYER_MODE_H__
-
+#pragma once
 
 #include <gegl-plugin.h>
 
@@ -87,6 +85,3 @@ struct _GimpOperationLayerModeClass
 GType                    gimp_operation_layer_mode_get_type            (void) G_GNUC_CONST;
 
 GimpLayerCompositeRegion gimp_operation_layer_mode_get_affected_region (GimpOperationLayerMode *layer_mode);
-
-
-#endif /* __GIMP_OPERATION_LAYER_MODE_H__ */

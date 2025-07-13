@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PAINT_CORE_UNDO_H__
-#define __GIMP_PAINT_CORE_UNDO_H__
-
+#pragma once
 
 #include "core/gimpundo.h"
 
@@ -48,6 +46,3 @@ struct _GimpPaintCoreUndoClass
 
 
 GType   gimp_paint_core_undo_get_type (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_PAINT_CORE_UNDO_H__ */

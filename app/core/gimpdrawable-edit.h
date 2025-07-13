@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_EDIT_H__
-#define __GIMP_DRAWABLE_EDIT_H__
+#pragma once
 
 
 void   gimp_drawable_edit_clear (GimpDrawable    *drawable,
@@ -24,6 +23,3 @@ void   gimp_drawable_edit_clear (GimpDrawable    *drawable,
 void   gimp_drawable_edit_fill  (GimpDrawable    *drawable,
                                  GimpFillOptions *options,
                                  const gchar     *undo_desc);
-
-
-#endif  /*  __GIMP_DRAWABLE_EDIT_H__  */

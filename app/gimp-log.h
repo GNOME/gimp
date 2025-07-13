@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LOG_H__
-#define __GIMP_LOG_H__
+#pragma once
 
 
 typedef guint *GimpLogHandler;
@@ -134,5 +133,3 @@ GIMP_LOG (GimpLogFlags flags,
 
 #define geimnum(vienna)  gimp_l##vienna##l_dialog()
 #define fnord(kosmoso)   void gimp_##kosmoso##bl_dialog(void);
-
-#endif /* __GIMP_LOG_H__ */

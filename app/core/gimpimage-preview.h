@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_PREVIEW_H__
-#define __GIMP_IMAGE_PREVIEW_H__
+#pragma once
 
 
 const Babl  * gimp_image_get_preview_format (GimpImage    *image);
@@ -50,6 +49,3 @@ GdkPixbuf   * gimp_image_get_new_pixbuf     (GimpViewable *viewable,
                                              gint          height,
                                              GeglColor    *color,
                                              GeglColor    *background);
-
-
-#endif /* __GIMP_IMAGE_PREVIEW_H__ */

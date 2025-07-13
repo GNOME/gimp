@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __SESSION_H__
-#define __SESSION_H__
+#pragma once
 
 
 void       session_init    (Gimp       *gimp);
@@ -29,6 +28,3 @@ void       session_save    (Gimp       *gimp,
 
 gboolean   session_clear   (Gimp       *gimp,
                             GError    **error);
-
-
-#endif  /*  __SESSION_H__  */

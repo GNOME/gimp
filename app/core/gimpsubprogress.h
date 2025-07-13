@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SUB_PROGRESS_H__
-#define __GIMP_SUB_PROGRESS_H__
+#pragma once
 
 
 #define GIMP_TYPE_SUB_PROGRESS            (gimp_sub_progress_get_type ())
@@ -53,7 +52,3 @@ void           gimp_sub_progress_set_range (GimpSubProgress *progress,
 void           gimp_sub_progress_set_step  (GimpSubProgress *progress,
                                             gint             index,
                                             gint             num_steps);
-
-
-
-#endif /* __GIMP_SUB_PROGRESS_H__ */

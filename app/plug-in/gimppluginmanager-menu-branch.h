@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_MANAGER_MENU_BRANCH_H__
-#define __GIMP_PLUG_IN_MANAGER_MENU_BRANCH_H__
+#pragma once
 
 
 struct _GimpPlugInMenuBranch
@@ -37,6 +36,3 @@ void     gimp_plug_in_manager_add_menu_branch   (GimpPlugInManager *manager,
                                                  const gchar       *menu_path,
                                                  const gchar       *menu_label);
 GSList * gimp_plug_in_manager_get_menu_branches (GimpPlugInManager *manager);
-
-
-#endif /* __GIMP_PLUG_IN_MANAGER_MENU_BRANCH_H__ */

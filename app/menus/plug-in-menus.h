@@ -15,12 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __PLUG_IN_MENUS_H__
-#define __PLUG_IN_MENUS_H__
+#pragma once
 
 
 void   plug_in_menus_setup (GimpUIManager *manager,
                             const gchar   *ui_path);
-
-
-#endif /* __PLUG_IN_MENUS_H__ */

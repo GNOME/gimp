@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __TEMPLATES_COMMANDS_H__
-#define __TEMPLATES_COMMANDS_H__
+#pragma once
 
 
 void   templates_create_image_cmd_callback (GimpAction *action,
@@ -34,6 +33,3 @@ void   templates_edit_cmd_callback         (GimpAction *action,
 void   templates_delete_cmd_callback       (GimpAction *action,
                                             GVariant   *value,
                                             gpointer    data);
-
-
-#endif /* __TEMPLATES_COMMANDS_H__ */

@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ID_TABLE_H__
-#define __GIMP_ID_TABLE_H__
-
+#pragma once
 
 #include "gimpobject.h"
 
@@ -63,6 +61,3 @@ gpointer       gimp_id_table_lookup         (GimpIdTable *id_table,
                                              gint         id);
 gboolean       gimp_id_table_remove         (GimpIdTable *id_table,
                                              gint         id);
-
-
-#endif  /*  __GIMP_ID_TABLE_H__  */

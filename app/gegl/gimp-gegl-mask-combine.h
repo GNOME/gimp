@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GEGL_MASK_COMBINE_H__
-#define __GIMP_GEGL_MASK_COMBINE_H__
+#pragma once
 
 
 gboolean   gimp_gegl_mask_combine_rect         (GeglBuffer     *mask,
@@ -46,6 +45,3 @@ gboolean   gimp_gegl_mask_combine_buffer       (GeglBuffer     *mask,
                                                 GimpChannelOps  op,
                                                 gint            off_x,
                                                 gint            off_y);
-
-
-#endif /* __GIMP_GEGL_MASK_COMBINE_H__ */

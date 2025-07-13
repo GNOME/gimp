@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BUFFER_H__
-#define __GIMP_BUFFER_H__
-
+#pragma once
 
 #include "gimpviewable.h"
 
@@ -86,6 +84,3 @@ GimpUnit         * gimp_buffer_get_unit          (GimpBuffer       *buffer);
 void               gimp_buffer_set_color_profile (GimpBuffer       *buffer,
                                                   GimpColorProfile *profile);
 GimpColorProfile * gimp_buffer_get_color_profile (GimpBuffer       *buffer);
-
-
-#endif /* __GIMP_BUFFER_H__ */

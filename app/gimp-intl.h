@@ -15,13 +15,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_INTL_H__
-#define __GIMP_INTL_H__
+#pragma once
+
 
 #ifndef GETTEXT_PACKAGE
 #error "config.h must be included prior to gimp-intl.h"
 #endif
 
 #include <glib/gi18n.h>
-
-#endif /* __GIMP_INTL_H__ */

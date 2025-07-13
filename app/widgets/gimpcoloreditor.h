@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLOR_EDITOR_H__
-#define __GIMP_COLOR_EDITOR_H__
-
+#pragma once
 
 #include "gimpeditor.h"
 
@@ -60,6 +58,3 @@ struct _GimpColorEditorClass
 GType       gimp_color_editor_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_color_editor_new      (GimpContext *context);
-
-
-#endif /* __GIMP_COLOR_EDITOR_H__ */

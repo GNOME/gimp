@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __PALETTES_ACTIONS_H__
-#define __PALETTES_ACTIONS_H__
+#pragma once
 
 
 void   palettes_actions_setup  (GimpActionGroup *group);
 void   palettes_actions_update (GimpActionGroup *group,
                                 gpointer         user_data);
-
-
-#endif /* __PALETTES_ACTIONS_H__ */

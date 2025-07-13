@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_RC_UNKNOWN_H__
-#define __GIMP_RC_UNKNOWN_H__
+#pragma once
 
 
 typedef void  (* GimpConfigForeachFunc) (const gchar *key,
@@ -35,6 +34,3 @@ const gchar * gimp_rc_lookup_unknown_token  (GimpConfig            *config,
 void          gimp_rc_foreach_unknown_token (GimpConfig            *config,
                                              GimpConfigForeachFunc  func,
                                              gpointer               user_data);
-
-
-#endif  /* __GIMP_RC_UNKNOWN_H__ */

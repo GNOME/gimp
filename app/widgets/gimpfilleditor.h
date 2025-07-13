@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FILL_EDITOR_H__
-#define __GIMP_FILL_EDITOR_H__
+#pragma once
 
 
 #define GIMP_TYPE_FILL_EDITOR            (gimp_fill_editor_get_type ())
@@ -52,6 +51,3 @@ GType       gimp_fill_editor_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_fill_editor_new      (GimpFillOptions *options,
                                        gboolean         edit_context,
                                        gboolean         use_custom_style);
-
-
-#endif /* __GIMP_FILL_EDITOR_H__ */

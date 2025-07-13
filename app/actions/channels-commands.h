@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __CHANNELS_COMMANDS_H__
-#define __CHANNELS_COMMANDS_H__
+#pragma once
 
 
 void   channels_edit_attributes_cmd_callback (GimpAction *action,
@@ -69,6 +68,3 @@ void   channels_color_tag_cmd_callback       (GimpAction *action,
 void   channels_select_cmd_callback          (GimpAction *action,
                                               GVariant   *value,
                                               gpointer    data);
-
-
-#endif /* __CHANNELS_COMMANDS_H__ */

@@ -18,10 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PATH_H__
-#define __GIMP_PATH_H__
+#pragma once
 
 #include "core/gimpitem.h"
+
 
 #define GIMP_TYPE_PATH            (gimp_path_get_type ())
 #define GIMP_PATH(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PATH, GimpPath))
@@ -179,6 +179,3 @@ gint            gimp_path_interpolate           (GimpPath           *path,
 
 /* returns a bezier representation */
 const GimpBezierDesc * gimp_path_get_bezier     (GimpPath           *path);
-
-
-#endif /* __GIMP_PATH_H__ */

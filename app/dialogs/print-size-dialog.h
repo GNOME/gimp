@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __PRINT_SIZE_DIALOG_H__
-#define __PRINT_SIZE_DIALOG_H__
+#pragma once
 
 
 typedef void (* GimpResolutionCallback) (GtkWidget *dialog,
@@ -36,6 +35,3 @@ GtkWidget * print_size_dialog_new (GimpImage              *image,
                                    const gchar            *help_id,
                                    GimpResolutionCallback  callback,
                                    gpointer                user_data);
-
-
-#endif  /*  __PRINT_SIZE_DIALOG_H__  */

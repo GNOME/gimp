@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CHANNEL_H__
-#define __GIMP_CHANNEL_H__
+#pragma once
 
 #include "gimpdrawable.h"
 
@@ -214,6 +213,3 @@ void          gimp_channel_shrink             (GimpChannel            *mask,
                                                gboolean                push_undo);
 void          gimp_channel_flood              (GimpChannel            *mask,
                                                gboolean                push_undo);
-
-
-#endif /* __GIMP_CHANNEL_H__ */

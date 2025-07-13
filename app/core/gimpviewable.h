@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VIEWABLE_H__
-#define __GIMP_VIEWABLE_H__
-
+#pragma once
 
 #include "gimpobject.h"
 
@@ -204,6 +202,3 @@ void            gimp_viewable_set_expanded       (GimpViewable  *viewable,
 
 gboolean        gimp_viewable_is_ancestor        (GimpViewable  *ancestor,
                                                   GimpViewable  *descendant);
-
-
-#endif  /* __GIMP_VIEWABLE_H__ */

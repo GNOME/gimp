@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTROLLER_CATEGORY_H__
-#define __GIMP_CONTROLLER_CATEGORY_H__
-
+#pragma once
 
 #include "core/gimpviewable.h"
 
@@ -32,6 +30,3 @@ G_DECLARE_FINAL_TYPE (GimpControllerCategory,
 GimpControllerCategory * gimp_controller_category_new (GType gtype);
 
 GType   gimp_controller_category_get_gtype (GimpControllerCategory *self);
-
-
-#endif /* __GIMP_CONTROLLER_CATEGORY_H__ */

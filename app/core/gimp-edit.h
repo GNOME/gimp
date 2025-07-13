@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_EDIT_H__
-#define __GIMP_EDIT_H__
+#pragma once
 
 
 GimpObject  * gimp_edit_cut                (GimpImage       *image,
@@ -60,6 +59,3 @@ const gchar * gimp_edit_named_copy_visible (GimpImage       *image,
                                             const gchar     *name,
                                             GimpContext     *context,
                                             GError         **error);
-
-
-#endif  /*  __GIMP_EDIT_H__  */

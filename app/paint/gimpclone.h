@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CLONE_H__
-#define __GIMP_CLONE_H__
-
+#pragma once
 
 #include "gimpsourcecore.h"
 
@@ -47,6 +45,3 @@ void    gimp_clone_register (Gimp                      *gimp,
                              GimpPaintRegisterCallback  callback);
 
 GType   gimp_clone_get_type (void) G_GNUC_CONST;
-
-
-#endif  /*  __GIMP_CLONE_H__  */

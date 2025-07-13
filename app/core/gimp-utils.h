@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __APP_GIMP_UTILS_H__
-#define __APP_GIMP_UTILS_H__
+#pragma once
 
 
 #ifdef GIMP_RELEASE
@@ -150,10 +149,6 @@ gint         gimp_view_size_get_larger             (gint view_size);
 gint         gimp_view_size_get_smaller            (gint view_size);
 
 #ifdef G_OS_WIN32
-
 gboolean     gimp_win32_have_wintab                (void);
 gboolean     gimp_win32_have_windows_ink           (void);
-
 #endif
-
-#endif /* __APP_GIMP_UTILS_H__ */

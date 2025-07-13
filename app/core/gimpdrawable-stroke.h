@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef  __GIMP_DRAWABLE_STROKE_H__
-#define  __GIMP_DRAWABLE_STROKE_H__
+#pragma once
 
 
 void       gimp_drawable_stroke_boundary     (GimpDrawable       *drawable,
@@ -40,6 +39,3 @@ void       gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
                                               GimpStrokeOptions *options,
                                               GimpScanConvert   *scan_convert,
                                               gboolean           push_undo);
-
-
-#endif  /*  __GIMP_DRAWABLE_STROKE_H__  */

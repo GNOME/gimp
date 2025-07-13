@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BACKTRACE_BACKEND_H__
-#define __GIMP_BACKTRACE_BACKEND_H__
+#pragma once
 
 
 #if defined (__gnu_linux__) && defined (HAVE_EXECINFO_H)
@@ -29,6 +28,3 @@
 #else
 # define GIMP_BACKTRACE_BACKEND_NONE
 #endif
-
-
-#endif  /*  __GIMP_BACKTRACE_BACKEND_H__  */

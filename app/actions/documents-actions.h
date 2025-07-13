@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __DOCUMENTS_ACTIONS_H__
-#define __DOCUMENTS_ACTIONS_H__
+#pragma once
 
 
 void   documents_actions_setup  (GimpActionGroup *group);
 void   documents_actions_update (GimpActionGroup *group,
                                  gpointer         data);
-
-
-#endif /* __DOCUMENTS_ACTIONS_H__ */

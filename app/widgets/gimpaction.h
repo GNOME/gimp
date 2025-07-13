@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ACTION_H__
-#define __GIMP_ACTION_H__
+#pragma once
 
 G_BEGIN_DECLS
 
@@ -159,5 +158,3 @@ void              gimp_action_set_menu_path       (GimpAction      *action,
                                                    const gchar     *menu_path);
 
 G_END_DECLS
-
-#endif  /* __GIMP_ACTION_H__ */

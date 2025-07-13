@@ -18,10 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PDB_PROGRESS_H__
-#define __GIMP_PDB_PROGRESS_H__
-
-G_BEGIN_DECLS
+#pragma once
 
 
 #define GIMP_TYPE_PDB_PROGRESS            (gimp_pdb_progress_get_type ())
@@ -59,8 +56,3 @@ GType             gimp_pdb_progress_get_type        (void) G_GNUC_CONST;
 
 GimpPdbProgress * gimp_pdb_progress_get_by_callback (GimpPdbProgressClass *klass,
                                                      const gchar          *callback_name);
-
-
-G_END_DECLS
-
-#endif /* __GIMP_PDB_PROGRESS_H__ */

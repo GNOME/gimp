@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __TOOL_OPTIONS_COMMANDS_H__
-#define __TOOL_OPTIONS_COMMANDS_H__
+#pragma once
 
 
 void   tool_options_save_new_preset_cmd_callback (GimpAction *action,
@@ -42,6 +41,3 @@ void   tool_options_reset_cmd_callback           (GimpAction *action,
 void   tool_options_reset_all_cmd_callback       (GimpAction *action,
                                                   GVariant   *value,
                                                   gpointer    data);
-
-
-#endif /* __TOOL_OPTIONS_COMMANDS_H__ */

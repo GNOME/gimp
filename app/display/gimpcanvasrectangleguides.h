@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_RECTANGLE_GUIDES_H__
-#define __GIMP_CANVAS_RECTANGLE_GUIDES_H__
-
+#pragma once
 
 #include "gimpcanvasitem.h"
 
@@ -64,6 +62,3 @@ void             gimp_canvas_rectangle_guides_set      (GimpCanvasItem   *rectan
                                                         gdouble           height,
                                                         GimpGuidesType    type,
                                                         gint              n_guides);
-
-
-#endif /* __GIMP_CANVAS_RECTANGLE_GUIDES_H__ */

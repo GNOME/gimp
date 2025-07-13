@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_WINDOW_H__
-#define __GIMP_WINDOW_H__
+#pragma once
 
 
 #define GIMP_TYPE_WINDOW            (gimp_window_get_type ())
@@ -53,6 +52,3 @@ GType       gimp_window_get_type                 (void) G_GNUC_CONST;
 void        gimp_window_set_primary_focus_widget (GimpWindow *window,
                                                   GtkWidget  *primary_focus);
 GtkWidget * gimp_window_get_primary_focus_widget (GimpWindow *window);
-
-
-#endif /* __GIMP_WINDOW_H__ */

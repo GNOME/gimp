@@ -19,9 +19,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FILTERED_CONTAINER_H__
-#define __GIMP_FILTERED_CONTAINER_H__
-
+#pragma once
 
 #include "gimplist.h"
 
@@ -63,6 +61,3 @@ GType           gimp_filtered_container_get_type (void) G_GNUC_CONST;
 GimpContainer * gimp_filtered_container_new      (GimpContainer        *src_container,
                                                   GimpObjectFilterFunc  filter_func,
                                                   gpointer              filter_data);
-
-
-#endif  /* __GIMP_FILTERED_CONTAINER_H__ */

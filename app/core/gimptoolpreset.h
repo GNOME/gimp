@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_PRESET_H__
-#define __GIMP_TOOL_PRESET_H__
-
+#pragma once
 
 #include "gimpdata.h"
 
@@ -62,6 +60,3 @@ GimpData            * gimp_tool_preset_new           (GimpContext    *context,
                                                       const gchar    *unused);
 
 GimpContextPropMask   gimp_tool_preset_get_prop_mask (GimpToolPreset *preset);
-
-
-#endif  /*  __GIMP_TOOL_PRESET_H__  */

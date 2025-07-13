@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LIST_H__
-#define __GIMP_LIST_H__
-
+#pragma once
 
 #include "gimpcontainer.h"
 
@@ -67,6 +65,3 @@ void            gimp_list_sort          (GimpList     *list,
 void            gimp_list_sort_by_name  (GimpList     *list);
 
 G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpList, g_object_unref);
-
-
-#endif  /* __GIMP_LIST_H__ */

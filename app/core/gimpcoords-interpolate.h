@@ -17,8 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COORDS_INTERPOLATE_H__
-#define __GIMP_COORDS_INTERPOLATE_H__
+#pragma once
+
 
 void       gimp_coords_interpolate_bezier    (const GimpCoords  bezier_pt[4],
                                               gdouble           precision,
@@ -37,5 +37,3 @@ void       gimp_coords_interpolate_catmull   (const GimpCoords  catmull_pt[4],
                                               gdouble           precision,
                                               GArray           *ret_coords,
                                               GArray           *ret_params);
-
-#endif /* __GIMP_COORDS_INTERPOLATE_H__ */

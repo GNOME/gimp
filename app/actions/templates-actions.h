@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __TEMPLATES_ACTIONS_H__
-#define __TEMPLATES_ACTIONS_H__
+#pragma once
 
 
 void   templates_actions_setup  (GimpActionGroup *group);
 void   templates_actions_update (GimpActionGroup *group,
                                  gpointer         data);
-
-
-#endif /* __TEMPLATES_COMMANDS_H__ */

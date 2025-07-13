@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_INTERNAL_DATA__
-#define __GIMP_INTERNAL_DATA__
+#pragma once
 
 
 gboolean   gimp_internal_data_load  (Gimp    *gimp,
@@ -29,6 +28,3 @@ gboolean   gimp_internal_data_save  (Gimp    *gimp,
 
 gboolean   gimp_internal_data_clear (Gimp    *gimp,
                                      GError **error);
-
-
-#endif /* __GIMP_INTERNAL_DATA__ */

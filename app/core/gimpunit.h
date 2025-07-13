@@ -15,16 +15,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __APP_GIMP_UNIT_H__
-#define __APP_GIMP_UNIT_H__
+#pragma once
 
 
-GimpUnit    * _gimp_unit_new                          (Gimp        *gimp,
-                                                       const gchar *name,
-                                                       gdouble      factor,
-                                                       gint         digits,
-                                                       const gchar *symbol,
-                                                       const gchar *abbreviation);
-
-
-#endif  /*  __APP_GIMP_UNIT_H__  */
+GimpUnit * _gimp_unit_new (Gimp        *gimp,
+                           const gchar *name,
+                           gdouble      factor,
+                           gint         digits,
+                           const gchar *symbol,
+                           const gchar *abbreviation);

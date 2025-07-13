@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __SELECT_ACTIONS_H__
-#define __SELECT_ACTIONS_H__
+#pragma once
 
 
 void   select_actions_setup  (GimpActionGroup *group);
 void   select_actions_update (GimpActionGroup *group,
                               gpointer         data);
-
-
-#endif /* __SELECT_ACTIONS_H__ */

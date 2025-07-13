@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_TRANSFORM_GRID_H__
-#define __GIMP_TOOL_TRANSFORM_GRID_H__
-
+#pragma once
 
 #include "gimpcanvashandle.h"
 #include "gimptoolwidget.h"
@@ -94,6 +92,3 @@ GimpToolWidget      * gimp_tool_transform_grid_new        (GimpDisplayShell     
 /*  protected functions  */
 
 GimpTransformHandle   gimp_tool_transform_grid_get_handle (GimpToolTransformGrid *grid);
-
-
-#endif /* __GIMP_TOOL_TRANSFORM_GRID_H__ */

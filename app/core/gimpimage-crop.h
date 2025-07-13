@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_CROP_H__
-#define __GIMP_IMAGE_CROP_H__
+#pragma once
 
 
 void   gimp_image_crop (GimpImage    *image,
@@ -27,6 +26,3 @@ void   gimp_image_crop (GimpImage    *image,
                         gint          width,
                         gint          height,
                         gboolean      crop_layers);
-
-
-#endif  /* __GIMP_IMAGE_CROP_H__ */

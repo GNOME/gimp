@@ -15,12 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PAINT_H__
-#define __GIMP_PAINT_H__
+#pragma once
 
 
 void   gimp_paint_init (Gimp *gimp);
 void   gimp_paint_exit (Gimp *gimp);
-
-
-#endif  /* __GIMP_PAINT_H__ */

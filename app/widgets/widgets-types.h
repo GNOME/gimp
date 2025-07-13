@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __WIDGETS_TYPES_H__
-#define __WIDGETS_TYPES_H__
-
+#pragma once
 
 #include "libgimpwidgets/gimpwidgetstypes.h"
 
@@ -337,6 +335,3 @@ typedef gboolean    (* GimpPanedBoxDroppedFunc)      (GtkWidget         *noteboo
                                                       gpointer           data);
 
 typedef GtkWidget * (* GimpToolOptionsGUIFunc)       (GimpToolOptions   *tool_options);
-
-
-#endif /* __WIDGETS_TYPES_H__ */

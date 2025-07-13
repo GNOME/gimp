@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_CORE_H__
-#define __GIMP_BRUSH_CORE_H__
-
+#pragma once
 
 #include "gimppaintcore.h"
 
@@ -147,6 +145,3 @@ void   gimp_brush_core_eval_transform_symmetry
                                       (GimpBrushCore            *core,
                                        GimpSymmetry             *symmetry,
                                        gint                      stroke);
-
-
-#endif  /*  __GIMP_BRUSH_CORE_H__  */

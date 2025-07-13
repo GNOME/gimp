@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONFIG_DUMP_H__
-#define __GIMP_CONFIG_DUMP_H__
+#pragma once
 
 
 typedef enum
@@ -32,6 +31,3 @@ typedef enum
 
 gboolean  gimp_config_dump (GObject              *gimp,
                             GimpConfigDumpFormat  format);
-
-
-#endif  /* __GIMP_CONFIG_DUMP_H__ */

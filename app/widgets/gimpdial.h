@@ -22,9 +22,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DIAL_H__
-#define __GIMP_DIAL_H__
-
+#pragma once
 
 #include "gimpcircle.h"
 
@@ -45,6 +43,3 @@ struct _GimpDialClass
 GType       gimp_dial_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_dial_new      (void);
-
-
-#endif /* __GIMP_DIAL_H__ */

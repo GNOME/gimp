@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __SELECT_COMMANDS_H__
-#define __SELECT_COMMANDS_H__
+#pragma once
 
 
 void   select_all_cmd_callback              (GimpAction *action,
@@ -68,6 +67,3 @@ void   select_stroke_cmd_callback           (GimpAction *action,
 void   select_stroke_last_vals_cmd_callback (GimpAction *action,
                                              GVariant   *value,
                                              gpointer    data);
-
-
-#endif /* __SELECT_COMMANDS_H__ */

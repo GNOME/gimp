@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GUI_H__
-#define __GIMP_GUI_H__
+#pragma once
 
 
 typedef struct _GimpGui GimpGui;
@@ -210,6 +209,3 @@ GimpMetadataRotationPolicy
                                             GimpImage           *image,
                                             GimpContext         *context,
                                             gboolean            *dont_ask);
-
-
-#endif  /* __GIMP_GUI_H__ */

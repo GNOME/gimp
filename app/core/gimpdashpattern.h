@@ -19,8 +19,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DASH_PATTERN_H__
-#define __GIMP_DASH_PATTERN_H__
+#pragma once
 
 
 #define GIMP_TYPE_DASH_PATTERN               (gimp_dash_pattern_get_type ())
@@ -48,6 +47,3 @@ gdouble        * gimp_dash_pattern_to_double_array   (GArray         *pattern,
 
 GArray         * gimp_dash_pattern_copy              (GArray         *pattern);
 void             gimp_dash_pattern_free              (GArray         *pattern);
-
-
-#endif  /*  __GIMP_DASH_PATTERN_H__  */

@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DATA_H__
-#define __GIMP_DATA_H__
-
+#pragma once
 
 #include "gimpresource.h"
 
@@ -144,6 +142,3 @@ void          gimp_data_get_identifiers  (GimpData     *data,
 #define GIMP_DATA_ERROR (gimp_data_error_quark ())
 
 GQuark        gimp_data_error_quark      (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_DATA_H__ */

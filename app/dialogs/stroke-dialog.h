@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __STROKE_DIALOG_H__
-#define __STROKE_DIALOG_H__
+#pragma once
 
 
 typedef void (* GimpStrokeCallback) (GtkWidget         *dialog,
@@ -39,6 +38,3 @@ GtkWidget * stroke_dialog_new (GList              *items,
                                GimpStrokeOptions  *options,
                                GimpStrokeCallback  callback,
                                gpointer            user_data);
-
-
-#endif  /*  __STROKE_DIALOG_H__  */

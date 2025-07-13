@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PARALLEL_H__
-#define __GIMP_PARALLEL_H__
+#pragma once
 
 
 void        gimp_parallel_init                       (Gimp             *gimp);
@@ -152,6 +151,3 @@ gimp_parallel_run_async_independent (RunAsyncFunc func)
 }
 
 #endif /* __cplusplus */
-
-
-#endif /* __GIMP_PARALLEL_H__ */

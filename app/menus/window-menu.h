@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __WINDOW_MENU_H__
-#define __WINDOW_MENU_H__
+#pragma once
 
 
 void   window_menu_setup (GimpUIManager *manager,
                           const gchar   *group_name,
                           const gchar   *ui_path);
-
-
-#endif /* __WINDOW_MENU_H__ */

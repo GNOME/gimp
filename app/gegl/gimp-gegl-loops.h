@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GEGL_LOOPS_H__
-#define __GIMP_GEGL_LOOPS_H__
+#pragma once
 
 
 void   gimp_gegl_buffer_copy           (GeglBuffer               *src_buffer,
@@ -113,6 +112,3 @@ void   gimp_gegl_average_color         (GeglBuffer               *buffer,
                                         GeglAbyssPolicy           abyss_policy,
                                         const Babl               *format,
                                         gpointer                  color);
-
-
-#endif /* __GIMP_GEGL_LOOPS_H__ */

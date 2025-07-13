@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SYMMETRY_H__
-#define __GIMP_SYMMETRY_H__
-
+#pragma once
 
 #include "gimpobject.h"
 
@@ -101,6 +99,3 @@ GimpParasite * gimp_symmetry_to_parasite    (const GimpSymmetry *symmetry);
 GimpSymmetry * gimp_symmetry_from_parasite  (const GimpParasite *parasite,
                                              GimpImage          *image,
                                              GType               type);
-
-
-#endif  /*  __GIMP_SYMMETRY_H__  */

@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_SCALE_H__
-#define __GIMP_DISPLAY_SHELL_SCALE_H__
+#pragma once
 
 
 gboolean gimp_display_shell_scale_revert             (GimpDisplayShell *shell);
@@ -103,6 +102,3 @@ void     gimp_display_shell_get_rotated_scale        (GimpDisplayShell *shell,
 void  gimp_display_shell_push_zoom_focus_pointer_pos (GimpDisplayShell *shell,
                                                       gint              x,
                                                       gint              y);
-
-
-#endif  /*  __GIMP_DISPLAY_SHELL_SCALE_H__  */

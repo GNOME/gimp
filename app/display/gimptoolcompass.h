@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_COMPASS_H__
-#define __GIMP_TOOL_COMPASS_H__
-
+#pragma once
 
 #include "gimptoolwidget.h"
 
@@ -67,6 +65,3 @@ GimpToolWidget * gimp_tool_compass_new      (GimpDisplayShell       *shell,
                                              gint                    y2,
                                              gint                    y3,
                                              gint                    x3);
-
-
-#endif /* __GIMP_TOOL_COMPASS_H__ */

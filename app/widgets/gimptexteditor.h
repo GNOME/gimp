@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_EDITOR_H__
-#define __GIMP_TEXT_EDITOR_H__
+#pragma once
 
 
 #define GIMP_TYPE_TEXT_EDITOR    (gimp_text_editor_get_type ())
@@ -75,6 +74,3 @@ GimpTextDirection   gimp_text_editor_get_direction (GimpTextEditor    *editor);
 void                gimp_text_editor_set_font_name (GimpTextEditor    *editor,
                                                     const gchar       *font_name);
 const gchar       * gimp_text_editor_get_font_name (GimpTextEditor    *editor);
-
-
-#endif  /* __GIMP_TEXT_EDITOR_H__ */

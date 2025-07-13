@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_PROXY_GROUP_H__
-#define __GIMP_CANVAS_PROXY_GROUP_H__
-
+#pragma once
 
 #include "gimpcanvasgroup.h"
 
@@ -58,6 +56,3 @@ void             gimp_canvas_proxy_group_remove_item (GimpCanvasProxyGroup *grou
                                                       gpointer              object);
 GimpCanvasItem * gimp_canvas_proxy_group_get_item    (GimpCanvasProxyGroup *group,
                                                       gpointer              object);
-
-
-#endif /* __GIMP_CANVAS_PROXY_GROUP_H__ */

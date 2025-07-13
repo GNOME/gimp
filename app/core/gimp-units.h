@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_UNITS_H__
-#define __GIMP_UNITS_H__
+#pragma once
 
 
 void   gimp_units_init  (Gimp *gimp);
@@ -24,6 +23,3 @@ void   gimp_units_exit  (Gimp *gimp);
 
 void   gimp_unitrc_load (Gimp *gimp);
 void   gimp_unitrc_save (Gimp *gimp);
-
-
-#endif  /*  __GIMP_UNITS_H__  */

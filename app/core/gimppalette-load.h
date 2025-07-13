@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PALETTE_LOAD_H__
-#define __GIMP_PALETTE_LOAD_H__
+#pragma once
 
 
 #define GIMP_PALETTE_FILE_EXTENSION ".gpl"
@@ -76,6 +75,3 @@ GList               * gimp_palette_load_sbz           (GimpContext   *context,
 
 GimpPaletteFileFormat gimp_palette_load_detect_format (GFile         *file,
                                                        GInputStream  *input);
-
-
-#endif /* __GIMP_PALETTE_H__ */

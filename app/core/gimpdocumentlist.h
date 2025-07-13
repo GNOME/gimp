@@ -15,10 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DOCUMENT_LIST_H__
-#define __GIMP_DOCUMENT_LIST_H__
+#pragma once
 
-#include "core/gimplist.h"
+#include "gimplist.h"
 
 
 #define GIMP_TYPE_DOCUMENT_LIST           (gimp_document_list_get_type ())
@@ -49,6 +48,3 @@ GimpContainer * gimp_document_list_new      (Gimp             *gimp);
 GimpImagefile * gimp_document_list_add_file (GimpDocumentList *document_list,
                                              GFile            *file,
                                              const gchar      *mime_type);
-
-
-#endif  /*  __GIMP_DOCUMENT_LIST_H__  */

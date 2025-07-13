@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __LANGUAGE_H__
-#define __LANGUAGE_H__
+#pragma once
 
 #ifndef GIMP_APP_GLUE_COMPILATION
 #error You must not #include "language.h" from a subdir
@@ -25,6 +24,3 @@
 
 const gchar * language_init (const gchar  *language,
                              const gchar **system_lang_l10n);
-
-
-#endif /* __LANGUAGE_H__ */

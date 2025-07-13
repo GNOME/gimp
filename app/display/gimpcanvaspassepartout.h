@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_PASSE_PARTOUT_H__
-#define __GIMP_CANVAS_PASSE_PARTOUT_H__
-
+#pragma once
 
 #include "gimpcanvasrectangle.h"
 
@@ -54,6 +52,3 @@ GimpCanvasItem * gimp_canvas_passe_partout_new      (GimpDisplayShell *shell,
                                                      gdouble           y,
                                                      gdouble           width,
                                                      gdouble           height);
-
-
-#endif /* __GIMP_CANVAS_PASSE_PARTOUT_H__ */

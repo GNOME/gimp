@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __PAINT_TYPES_H__
-#define __PAINT_TYPES_H__
-
+#pragma once
 
 #include "core/core-types.h"
 #include "paint/paint-enums.h"
@@ -71,6 +69,3 @@ typedef void (* GimpPaintRegisterCallback) (Gimp        *gimp,
 
 typedef void (* GimpPaintRegisterFunc)     (Gimp                      *gimp,
                                             GimpPaintRegisterCallback  callback);
-
-
-#endif /* __PAINT_TYPES_H__ */

@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __QUICK_MASK_COMMANDS_H__
-#define __QUICK_MASK_COMMANDS_H__
+#pragma once
 
 
 void   quick_mask_toggle_cmd_callback    (GimpAction *action,
@@ -28,6 +27,3 @@ void   quick_mask_invert_cmd_callback    (GimpAction *action,
 void   quick_mask_configure_cmd_callback (GimpAction *action,
                                           GVariant   *value,
                                           gpointer    data);
-
-
-#endif /* __QUICK_MASK_COMMANDS_H__ */

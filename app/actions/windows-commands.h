@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __WINDOWS_COMMANDS_H__
-#define __WINDOWS_COMMANDS_H__
+#pragma once
 
 
 void  windows_hide_docks_cmd_callback             (GimpAction *action,
@@ -48,6 +47,3 @@ void  windows_show_dock_cmd_callback              (GimpAction *action,
 void  windows_open_recent_cmd_callback            (GimpAction *action,
                                                    GVariant   *value,
                                                    gpointer    data);
-
-
-#endif /* __WINDOWS_COMMANDS_H__ */

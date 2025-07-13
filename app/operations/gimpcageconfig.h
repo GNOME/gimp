@@ -17,9 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CAGE_CONFIG_H__
-#define __GIMP_CAGE_CONFIG_H__
-
+#pragma once
 
 #include "gimpoperationsettings.h"
 
@@ -103,6 +101,3 @@ void            gimp_cage_config_toggle_point_selection (GimpCageConfig  *gcc,
 void            gimp_cage_config_deselect_points        (GimpCageConfig  *gcc);
 gboolean        gimp_cage_config_point_is_selected      (GimpCageConfig  *gcc,
                                                          gint             point_number);
-
-
-#endif /* __GIMP_CAGE_CONFIG_H__ */

@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_ITEM_H__
-#define __GIMP_CANVAS_ITEM_H__
-
+#pragma once
 
 #include "core/gimpobject.h"
 
@@ -142,6 +140,3 @@ void             _gimp_canvas_item_stroke          (GimpCanvasItem   *item,
                                                     cairo_t          *cr);
 void             _gimp_canvas_item_fill            (GimpCanvasItem   *item,
                                                     cairo_t          *cr);
-
-
-#endif /* __GIMP_CANVAS_ITEM_H__ */

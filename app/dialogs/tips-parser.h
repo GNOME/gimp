@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __TIPS_PARSER_H__
-#define __TIPS_PARSER_H__
+#pragma once
 
 
 typedef struct _GimpTip GimpTip;
@@ -39,6 +38,3 @@ void      gimp_tip_free       (GimpTip      *tip);
 GList   * gimp_tips_from_file (GFile        *file,
                                GError      **error);
 void      gimp_tips_free      (GList        *tips);
-
-
-#endif /* __TIPS_PARSER_H__ */

@@ -15,11 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __PREFERENCES_DIALOG_H__
-#define __PREFERENCES_DIALOG_H__
+#pragma once
 
 
 GtkWidget * preferences_dialog_create (Gimp *gimp);
-
-
-#endif /* __PREFERENCES_DIALOG_H__ */

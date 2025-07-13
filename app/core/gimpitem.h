@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ITEM_H__
-#define __GIMP_ITEM_H__
-
+#pragma once
 
 #include "gimpfilter.h"
 
@@ -401,6 +399,3 @@ gboolean        gimp_item_mask_intersect     (GimpItem           *item,
 
 gboolean        gimp_item_is_in_set          (GimpItem           *item,
                                               GimpItemSet         set);
-
-
-#endif /* __GIMP_ITEM_H__ */

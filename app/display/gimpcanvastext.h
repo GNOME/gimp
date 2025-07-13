@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMPCANVASTEXT_H__
-#define __GIMPCANVASTEXT_H__
-
+#pragma once
 
 #include "gimpcanvasitem.h"
 
@@ -54,5 +52,3 @@ GimpCanvasItem * gimp_canvas_text_new      (GimpDisplayShell *shell,
                                             gdouble           y,
                                             gdouble           font_size,
                                             gchar            *text);
-
-#endif

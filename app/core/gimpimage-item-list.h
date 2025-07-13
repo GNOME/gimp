@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_ITEM_LIST_H__
-#define __GIMP_IMAGE_ITEM_LIST_H__
+#pragma once
 
 
 gboolean   gimp_image_item_list_bounds    (GimpImage              *image,
@@ -58,6 +57,3 @@ GList    * gimp_image_item_list_get_list  (GimpImage              *image,
                                            GimpItemSet             set);
 
 GList    * gimp_image_item_list_filter    (GList                  *list);
-
-
-#endif /* __GIMP_IMAGE_ITEM_LIST_H__ */

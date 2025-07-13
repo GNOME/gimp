@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_COLORMAP_H__
-#define __GIMP_IMAGE_COLORMAP_H__
+#pragma once
 
 
 #define GIMP_IMAGE_COLORMAP_SIZE 768
@@ -61,6 +60,3 @@ void           gimp_image_add_colormap_entry       (GimpImage     *image,
 gboolean       gimp_image_delete_colormap_entry    (GimpImage     *image,
                                                     gint           color_index,
                                                     gboolean       push_undo);
-
-
-#endif /* __GIMP_IMAGE_COLORMAP_H__ */

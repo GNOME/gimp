@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SMUDGE_H__
-#define __GIMP_SMUDGE_H__
-
+#pragma once
 
 #include "gimpbrushcore.h"
 
@@ -51,5 +49,3 @@ void    gimp_smudge_register (Gimp                      *gimp,
 
 GType   gimp_smudge_get_type (void) G_GNUC_CONST;
 
-
-#endif  /*  __GIMP_SMUDGE_H__  */

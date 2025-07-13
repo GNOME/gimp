@@ -15,12 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __FILE_DATA_H__
-#define __FILE_DATA_H__
+#pragma once
 
 
 void   file_data_init (Gimp *gimp);
 void   file_data_exit (Gimp *gimp);
-
-
-#endif /* __FILE_DATA_H__ */

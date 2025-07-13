@@ -17,9 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_CAGE_TRANSFORM_H__
-#define __GIMP_OPERATION_CAGE_TRANSFORM_H__
-
+#pragma once
 
 #include <gegl-plugin.h>
 #include <operation/gegl-operation-composer.h>
@@ -53,6 +51,3 @@ struct _GimpOperationCageTransformClass
 
 
 GType   gimp_operation_cage_transform_get_type (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_OPERATION_CAGE_TRANSFORM_H__ */

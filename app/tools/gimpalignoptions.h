@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ALIGN_OPTIONS_H__
-#define __GIMP_ALIGN_OPTIONS_H__
-
+#pragma once
 
 #include "core/gimptooloptions.h"
 
@@ -70,6 +68,3 @@ gboolean    gimp_align_options_align_contents    (GimpAlignOptions *options);
 void        gimp_align_options_pick_guide        (GimpAlignOptions *options,
                                                   GimpGuide        *guide,
                                                   gboolean          extend);
-
-
-#endif /* __GIMP_ALIGN_OPTIONS_H__ */

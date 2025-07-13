@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PATH_OPTIONS_H__
-#define __GIMP_PATH_OPTIONS_H__
-
+#pragma once
 
 #include "core/gimptooloptions.h"
 
@@ -50,6 +48,3 @@ struct _GimpPathOptions
 GType       gimp_path_options_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_path_options_gui      (GimpToolOptions *tool_options);
-
-
-#endif  /*  __GIMP_PATH_OPTIONS_H__  */

@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PDB_ERROR_H__
-#define __GIMP_PDB_ERROR_H__
+#pragma once
 
 
 typedef enum
@@ -33,6 +32,3 @@ typedef enum
 #define GIMP_PDB_ERROR (gimp_pdb_error_quark ())
 
 GQuark  gimp_pdb_error_quark (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_PDB_ERROR_H__ */

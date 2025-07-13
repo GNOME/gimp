@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GUI_H__
-#define __GUI_H__
+#pragma once
 
 
 void               gui_libs_init (GOptionContext *context);
@@ -29,5 +28,3 @@ GimpInitStatusFunc gui_init      (Gimp           *gimp,
                                   const gchar    *system_lang_l10n);
 
 gboolean           gui_recover   (gint            n_recoveries);
-
-#endif /* __GUI_H__ */

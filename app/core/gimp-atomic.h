@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ATOMIC_H__
-#define __GIMP_ATOMIC_H__
+#pragma once
 
 
 /*  GSList  */
@@ -27,6 +26,3 @@
 void       gimp_atomic_slist_push_head (GSList   **list,
                                         gpointer   data);
 gpointer   gimp_atomic_slist_pop_head  (GSList   **list);
-
-
-#endif /* __GIMP_ATOMIC_H__ */

@@ -18,12 +18,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GEGL_H__
-#define __GIMP_GEGL_H__
+#pragma once
 
 
 void   gimp_gegl_init (Gimp *gimp);
 void   gimp_gegl_exit (Gimp *gimp);
-
-
-#endif /* __GIMP_GEGL_H__ */

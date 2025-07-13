@@ -17,9 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FILTER_H__
-#define __GIMP_FILTER_H__
-
+#pragma once
 
 #include "gimpviewable.h"
 
@@ -60,6 +58,3 @@ gboolean         gimp_filter_get_is_last_node (GimpFilter     *filter);
 void             gimp_filter_set_applicator   (GimpFilter     *filter,
                                                GimpApplicator *applicator);
 GimpApplicator * gimp_filter_get_applicator   (GimpFilter     *filter);
-
-
-#endif /* __GIMP_FILTER_H__ */

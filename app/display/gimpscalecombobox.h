@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SCALE_COMBO_BOX_H__
-#define __GIMP_SCALE_COMBO_BOX_H__
+#pragma once
 
 
 #define GIMP_TYPE_SCALE_COMBO_BOX            (gimp_scale_combo_box_get_type ())
@@ -55,6 +54,3 @@ GtkWidget * gimp_scale_combo_box_new        (void);
 void        gimp_scale_combo_box_set_scale  (GimpScaleComboBox *combo_box,
                                              gdouble            scale);
 gdouble     gimp_scale_combo_box_get_scale  (GimpScaleComboBox *combo_box);
-
-
-#endif  /* __GIMP_SCALE_COMBO_BOX_H__ */

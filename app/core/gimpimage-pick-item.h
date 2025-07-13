@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_PICK_ITEM_H__
-#define __GIMP_IMAGE_PICK_ITEM_H__
+#pragma once
 
 
 GimpLayer       * gimp_image_pick_layer           (GimpImage *image,
@@ -52,6 +51,3 @@ GimpSamplePoint * gimp_image_pick_sample_point    (GimpImage *image,
                                                    gdouble    y,
                                                    gdouble    epsilon_x,
                                                    gdouble    epsilon_y);
-
-
-#endif /* __GIMP_IMAGE_PICK_ITEM_H__ */

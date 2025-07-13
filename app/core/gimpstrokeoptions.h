@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_STROKE_OPTIONS_H__
-#define __GIMP_STROKE_OPTIONS_H__
-
+#pragma once
 
 #include "gimpfilloptions.h"
 
@@ -76,6 +74,3 @@ void                gimp_stroke_options_prepare              (GimpStrokeOptions 
                                                               GimpContext       *context,
                                                               GimpPaintOptions  *paint_options);
 void                gimp_stroke_options_finish               (GimpStrokeOptions *options);
-
-
-#endif /* __GIMP_STROKE_OPTIONS_H__ */

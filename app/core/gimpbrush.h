@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_H__
-#define __GIMP_BRUSH_H__
-
+#pragma once
 
 #include "gimpdata.h"
 
@@ -148,5 +146,3 @@ GimpVector2            gimp_brush_get_y_axis         (GimpBrush        *brush);
 
 void                   gimp_brush_flush_blur_caches  (GimpBrush        *brush);
 gdouble                gimp_brush_get_blur_hardness  (GimpBrush        *brush);
-
-#endif /* __GIMP_BRUSH_H__ */

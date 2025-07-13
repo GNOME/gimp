@@ -15,12 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __ABOUT_DIALOG_H__
-#define __ABOUT_DIALOG_H__
+#pragma once
 
 
 GtkWidget * about_dialog_create (Gimp           *gimp,
                                  GimpCoreConfig *config);
-
-
-#endif /* __ABOUT_DIALOG_H__ */

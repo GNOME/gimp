@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_LAYOUT_H__
-#define __GIMP_TEXT_LAYOUT_H__
+#pragma once
 
 
 #define GIMP_TYPE_TEXT_LAYOUT    (gimp_text_layout_get_type ())
@@ -81,6 +80,3 @@ void             gimp_text_layout_untransform_point    (GimpTextLayout *layout,
 void             gimp_text_layout_untransform_distance (GimpTextLayout *layout,
                                                         gdouble        *x,
                                                         gdouble        *y);
-
-
-#endif /* __GIMP_TEXT_LAYOUT_H__ */

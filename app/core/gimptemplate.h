@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEMPLATE_H__
-#define __GIMP_TEMPLATE_H__
-
+#pragma once
 
 #include "gimpviewable.h"
 
@@ -96,6 +94,3 @@ GimpFillType        gimp_template_get_fill_type       (GimpTemplate *template);
 const gchar       * gimp_template_get_comment         (GimpTemplate *template);
 
 guint64             gimp_template_get_initial_size    (GimpTemplate *template);
-
-
-#endif /* __GIMP_TEMPLATE__ */

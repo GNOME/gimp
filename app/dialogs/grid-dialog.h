@@ -17,13 +17,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GRID_DIALOG_H__
-#define __GRID_DIALOG_H__
+#pragma once
 
 
 GtkWidget * grid_dialog_new (GimpImage   *image,
                              GimpContext *context,
                              GtkWidget   *parent);
-
-
-#endif  /*  __GRID_DIALOG_H__  */

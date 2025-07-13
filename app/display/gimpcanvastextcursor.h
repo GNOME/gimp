@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_TEXT_CURSOR_H__
-#define __GIMP_CANVAS_TEXT_CURSOR_H__
-
+#pragma once
 
 #include "gimpcanvasitem.h"
 
@@ -53,6 +51,3 @@ GimpCanvasItem * gimp_canvas_text_cursor_new      (GimpDisplayShell *shell,
                                                    PangoRectangle   *cursor,
                                                    gboolean          overwrite,
                                                    GimpTextDirection direction);
-
-
-#endif /* __GIMP_CANVAS_RECTANGLE_H__ */

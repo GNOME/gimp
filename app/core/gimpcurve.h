@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CURVE_H__
-#define __GIMP_CURVE_H__
-
+#pragma once
 
 #include "gimpdata.h"
 
@@ -119,6 +117,3 @@ gboolean             gimp_curve_is_identity       (GimpCurve          *curve);
 void                 gimp_curve_get_uchar         (GimpCurve          *curve,
                                                    gint                n_samples,
                                                    guchar             *samples);
-
-
-#endif /* __GIMP_CURVE_H__ */

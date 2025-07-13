@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_EXPOSE_H__
-#define __GIMP_DISPLAY_SHELL_EXPOSE_H__
+#pragma once
 
 
 void   gimp_display_shell_expose_area   (GimpDisplayShell   *shell,
@@ -27,6 +26,3 @@ void   gimp_display_shell_expose_area   (GimpDisplayShell   *shell,
 void   gimp_display_shell_expose_region (GimpDisplayShell   *shell,
                                          cairo_region_t     *region);
 void   gimp_display_shell_expose_full   (GimpDisplayShell   *shell);
-
-
-#endif /* __GIMP_DISPLAY_SHELL_EXPOSE_H__ */

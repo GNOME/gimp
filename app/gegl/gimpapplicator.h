@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_APPLICATOR_H__
-#define __GIMP_APPLICATOR_H__
+#pragma once
 
 
 #define GIMP_TYPE_APPLICATOR            (gimp_applicator_get_type ())
@@ -141,6 +140,3 @@ const GeglRectangle * gimp_applicator_get_crop (GimpApplicator       *applicator
 
 void         gimp_applicator_blit              (GimpApplicator       *applicator,
                                                 const GeglRectangle  *rect);
-
-
-#endif  /*  __GIMP_APPLICATOR_H__  */

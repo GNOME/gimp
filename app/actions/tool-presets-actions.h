@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __TOOL_PRESETS_ACTIONS_H__
-#define __TOOL_PRESETS_ACTIONS_H__
+#pragma once
 
 
 void   tool_presets_actions_setup  (GimpActionGroup *group);
 void   tool_presets_actions_update (GimpActionGroup *group,
                                     gpointer         user_data);
-
-
-#endif /* __TOOL_PRESET_ACTIONS_H__ */

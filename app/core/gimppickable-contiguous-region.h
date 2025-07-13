@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PICKABLE_CONTIGUOUS_REGION_H__
-#define __GIMP_PICKABLE_CONTIGUOUS_REGION_H__
+#pragma once
 
 
 GeglBuffer * gimp_pickable_contiguous_region_by_seed                (GimpPickable        *pickable,
@@ -44,5 +43,3 @@ GeglBuffer * gimp_pickable_contiguous_region_by_line_art            (GimpPickabl
                                                                      gint                 fill_offset_y,
                                                                      gint                 x,
                                                                      gint                 y);
-
-#endif  /*  __GIMP_PICKABLE_CONTIGUOUS_REGION_H__ */

@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OBJECT_H__
-#define __GIMP_OBJECT_H__
+#pragma once
 
 
 #define GIMP_TYPE_OBJECT            (gimp_object_get_type ())
@@ -71,5 +70,3 @@ gint64        gimp_object_get_memsize     (GimpObject       *object,
                                            gint64           *gui_size);
 
 G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpObject, g_object_unref);
-
-#endif  /* __GIMP_OBJECT_H__ */

@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ITEM_LIST_H__
-#define __GIMP_ITEM_LIST_H__
+#pragma once
 
 
 #define GIMP_TYPE_ITEM_LIST            (gimp_item_list_get_type ())
@@ -66,5 +65,3 @@ gboolean       gimp_item_list_is_pattern    (GimpItemList     *set,
 
 void           gimp_item_list_add           (GimpItemList     *set,
                                              GimpItem         *item);
-
-#endif /* __GIMP_ITEM_LIST_H__ */

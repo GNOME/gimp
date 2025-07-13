@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_FOREACH_H__
-#define __GIMP_DISPLAY_FOREACH_H__
+#pragma once
 
 
 gboolean        gimp_displays_dirty               (Gimp      *gimp);
@@ -32,6 +31,3 @@ gint            gimp_displays_get_num_visible     (Gimp      *gimp);
 void            gimp_displays_set_busy            (Gimp      *gimp);
 void            gimp_displays_unset_busy          (Gimp      *gimp);
 gboolean        gimp_displays_accept_focus_events (Gimp      *gimp);
-
-
-#endif /*  __GIMP_DISPLAY_FOREACH_H__  */

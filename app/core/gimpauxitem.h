@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_AUX_ITEM_H__
-#define __GIMP_AUX_ITEM_H__
+#pragma once
 
 
 #define GIMP_TYPE_AUX_ITEM            (gimp_aux_item_get_type ())
@@ -48,9 +47,6 @@ struct _GimpAuxItemClass
 
 GType     gimp_aux_item_get_type (void) G_GNUC_CONST;
 
-guint32   gimp_aux_item_get_id       (GimpAuxItem *aux_item);
+guint32   gimp_aux_item_get_id   (GimpAuxItem *aux_item);
 
-void      gimp_aux_item_removed      (GimpAuxItem *aux_item);
-
-
-#endif /* __GIMP_AUX_ITEM_H__ */
+void      gimp_aux_item_removed  (GimpAuxItem *aux_item);

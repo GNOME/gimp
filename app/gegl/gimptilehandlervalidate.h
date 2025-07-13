@@ -15,17 +15,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TILE_HANDLER_VALIDATE_H__
-#define __GIMP_TILE_HANDLER_VALIDATE_H__
+#pragma once
 
 #include <gegl-buffer-backend.h>
+
 
 /***
  * GimpTileHandlerValidate is a GeglTileHandler that renders the
  * projection.
  */
-
-G_BEGIN_DECLS
 
 #define GIMP_TYPE_TILE_HANDLER_VALIDATE            (gimp_tile_handler_validate_get_type ())
 #define GIMP_TILE_HANDLER_VALIDATE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TILE_HANDLER_VALIDATE, GimpTileHandlerValidate))
@@ -105,8 +103,3 @@ void                      gimp_tile_handler_validate_buffer_copy       (GeglBuff
                                                                         const GeglRectangle     *src_rect,
                                                                         GeglBuffer              *dst_buffer,
                                                                         const GeglRectangle     *dst_rect);
-
-
-G_END_DECLS
-
-#endif /* __GIMP_TILE_HANDLER_VALIDATE_H__ */

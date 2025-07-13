@@ -18,8 +18,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ITEM_EXCLUSIVE_H__
-#define __GIMP_ITEM_EXCLUSIVE_H__
+#pragma once
+
 
 typedef gboolean        (* GimpItemIsEnabledFunc)    (GimpItem  *item);
 typedef gboolean        (* GimpItemCanSetFunc)       (GimpItem  *item);
@@ -44,6 +44,3 @@ void   gimp_item_toggle_exclusive         (GimpItem             *item,
                                            GimpUndoType          group_undo_type,
                                            gboolean              only_selected,
                                            GimpContext          *context);
-
-
-#endif /* __GIMP_ITEM_EXCLUSIVE_H__ */

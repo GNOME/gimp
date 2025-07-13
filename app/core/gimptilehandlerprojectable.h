@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TILE_HANDLER_PROJECTABLE_H__
-#define __GIMP_TILE_HANDLER_PROJECTABLE_H__
-
+#pragma once
 
 #include "gegl/gimptilehandlervalidate.h"
 
@@ -59,6 +57,3 @@ struct _GimpTileHandlerProjectableClass
 GType             gimp_tile_handler_projectable_get_type (void) G_GNUC_CONST;
 
 GeglTileHandler * gimp_tile_handler_projectable_new      (GimpProjectable *projectable);
-
-
-#endif /* __GIMP_TILE_HANDLER_PROJECTABLE_H__ */

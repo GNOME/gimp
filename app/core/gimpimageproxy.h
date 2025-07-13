@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_PROXY_H__
-#define __GIMP_IMAGE_PROXY_H__
-
+#pragma once
 
 #include "gimpviewable.h"
 
@@ -54,12 +52,9 @@ GType            gimp_image_proxy_get_type         (void) G_GNUC_CONST;
 GimpImageProxy * gimp_image_proxy_new              (GimpImage      *image);
 
 GimpImage      * gimp_image_proxy_get_image        (GimpImageProxy *image_proxy);
-              
+
 void             gimp_image_proxy_set_show_all     (GimpImageProxy *image_proxy,
                                                     gboolean        show_all);
 gboolean         gimp_image_proxy_get_show_all     (GimpImageProxy *image_proxy);
-              
+
 GeglRectangle    gimp_image_proxy_get_bounding_box (GimpImageProxy *image_proxy);
-
-
-#endif /* __GIMP_IMAGE_PROXY_H__ */

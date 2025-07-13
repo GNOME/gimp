@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PATTERN_CLIPBOARD_H__
-#define __GIMP_PATTERN_CLIPBOARD_H__
-
+#pragma once
 
 #include "gimppattern.h"
 
@@ -51,6 +49,3 @@ struct _GimpPatternClipboardClass
 GType      gimp_pattern_clipboard_get_type (void) G_GNUC_CONST;
 
 GimpData * gimp_pattern_clipboard_new      (Gimp *gimp);
-
-
-#endif  /*  __GIMP_PATTERN_CLIPBOARD_H__  */

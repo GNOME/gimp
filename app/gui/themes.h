@@ -15,8 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __THEMES_H__
-#define __THEMES_H__
+#pragma once
+
 
 void     themes_init                 (Gimp          *gimp);
 void     themes_exit                 (Gimp          *gimp);
@@ -36,5 +36,3 @@ void     themes_theme_change_notify  (GimpGuiConfig *config,
 #ifdef G_OS_WIN32
 void     themes_set_title_bar        (Gimp          *gimp);
 #endif
-
-#endif /* __THEMES_H__ */

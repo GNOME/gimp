@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ASYNC_SET_H__
-#define __GIMP_ASYNC_SET_H__
+#pragma once
 
 
 #define GIMP_TYPE_ASYNC_SET            (gimp_async_set_get_type ())
@@ -56,6 +55,3 @@ void           gimp_async_set_remove   (GimpAsyncSet *async_set,
                                         GimpAsync    *async);
 void           gimp_async_set_clear    (GimpAsyncSet *async_set);
 gboolean       gimp_async_set_is_empty (GimpAsyncSet *async_set);
-
-
-#endif /* __GIMP_ASYNC_SET_H__ */

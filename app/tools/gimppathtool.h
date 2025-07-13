@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PATH_TOOL_H__
-#define __GIMP_PATH_TOOL_H__
-
+#pragma once
 
 #include "gimpdrawtool.h"
 
@@ -62,6 +60,3 @@ GType   gimp_path_tool_get_type (void) G_GNUC_CONST;
 
 void    gimp_path_tool_set_path (GimpPathTool             *path_tool,
                                  GimpPath                 *path);
-
-
-#endif  /*  __GIMP_PATH_TOOL_H__  */

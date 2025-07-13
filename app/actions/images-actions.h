@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __IMAGES_ACTIONS_H__
-#define __IMAGES_ACTIONS_H__
+#pragma once
 
 
 void   images_actions_setup  (GimpActionGroup *group);
 void   images_actions_update (GimpActionGroup *group,
                               gpointer         data);
-
-
-#endif /* __IMAGES_ACTIONS_H__ */

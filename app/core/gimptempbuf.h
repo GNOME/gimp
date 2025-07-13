@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEMP_BUF_H__
-#define __GIMP_TEMP_BUF_H__
+#pragma once
 
 
 GimpTempBuf * gimp_temp_buf_new               (gint               width,
@@ -62,6 +61,3 @@ GimpTempBuf * gimp_gegl_buffer_get_temp_buf   (GeglBuffer        *buffer);
 /*  stats  */
 
 guint64       gimp_temp_buf_get_total_memsize (void);
-
-
-#endif  /*  __GIMP_TEMP_BUF_H__  */

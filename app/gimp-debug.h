@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DEBUG_H__
-#define __GIMP_DEBUG_H__
+#pragma once
 
 
 void  gimp_debug_enable_instances (void);
@@ -29,6 +28,3 @@ void  gimp_debug_add_instance     (GObject      *instance,
 void  gimp_debug_remove_instance  (GObject      *instance);
 
 void  gimp_debug_instances        (void);
-
-
-#endif /* __GIMP_DEBUG_H__ */

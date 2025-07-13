@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_CORE_LOOPS_H__
-#define __GIMP_BRUSH_CORE_LOOPS_H__
+#pragma once
 
 
 const GimpTempBuf * gimp_brush_core_subsample_mask  (GimpBrushCore     *core,
@@ -32,6 +31,3 @@ const GimpTempBuf * gimp_brush_core_solidify_mask   (GimpBrushCore     *core,
                                                      const GimpTempBuf *brush_mask,
                                                      gdouble            x,
                                                      gdouble            y);
-
-
-#endif  /*  __GIMP_BRUSH_CORE_LOOPS_H__  */

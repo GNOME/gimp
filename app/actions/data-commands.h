@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __DATA_COMMANDS_H__
-#define __DATA_COMMANDS_H__
+#pragma once
 
 
 void   data_open_as_image_cmd_callback        (GimpAction *action,
@@ -43,6 +42,3 @@ void   data_refresh_cmd_callback              (GimpAction *action,
 void   data_edit_cmd_callback                 (GimpAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-
-
-#endif /* __DATA_COMMANDS_H__ */

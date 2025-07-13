@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __XCF_READ_H__
-#define __XCF_READ_H__
+#pragma once
 
 
 guint   xcf_read_int8      (XcfInfo  *info,
@@ -48,6 +47,3 @@ guint   xcf_read_component (XcfInfo  *info,
 void    xcf_read_from_be   (gint      bpc,
                             guint8   *data,
                             gint      count);
-
-
-#endif  /* __XCF_READ_H__ */

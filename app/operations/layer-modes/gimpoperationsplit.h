@@ -19,9 +19,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_SPLIT_H__
-#define __GIMP_OPERATION_SPLIT_H__
-
+#pragma once
 
 #include "gimpoperationlayermode.h"
 
@@ -49,6 +47,3 @@ struct _GimpOperationSplitClass
 
 
 GType   gimp_operation_split_get_type (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_OPERATION_SPLIT_H__ */

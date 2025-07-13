@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FONT_FACTORY_H__
-#define __GIMP_FONT_FACTORY_H__
-
+#pragma once
 
 #include <pango/pango.h>
 #include "core/gimpdatafactory.h"
@@ -61,5 +59,3 @@ void              gimp_font_factory_get_custom_config_path     (GimpFontFactory 
 GSList          * gimp_font_factory_get_fonts_renaming_config  (GimpFontFactory  *factory);
 
 PangoContext    * gimp_font_factory_get_pango_context          (GimpFontFactory  *factory);
-
-#endif  /*  __GIMP_FONT_FACTORY_H__  */

@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_GRAB_H__
-#define __GIMP_DISPLAY_SHELL_GRAB_H__
+#pragma once
 
 
 gboolean   gimp_display_shell_pointer_grab    (GimpDisplayShell *shell,
@@ -26,6 +25,3 @@ gboolean   gimp_display_shell_pointer_grab    (GimpDisplayShell *shell,
                                                GdkEventMask      event_mask);
 void       gimp_display_shell_pointer_ungrab  (GimpDisplayShell *shell,
                                                const GdkEvent   *event);
-
-
-#endif /* __GIMP_DISPLAY_SHELL_GRAB_H__ */

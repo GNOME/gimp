@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TRANSFORM_UTILS_H__
-#define __GIMP_TRANSFORM_UTILS_H__
+#pragma once
 
 
 #define GIMP_TRANSFORM_NEAR_Z 0.02
@@ -120,6 +119,3 @@ void       gimp_transform_bezier_coords        (const GimpMatrix3   *matrix,
                                                 gint                *n_t_beziers,
                                                 gboolean            *start_in,
                                                 gboolean            *end_in);
-
-
-#endif  /*  __GIMP_TRANSFORM_UTILS_H__  */

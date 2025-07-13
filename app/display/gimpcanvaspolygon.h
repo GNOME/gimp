@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_POLYGON_H__
-#define __GIMP_CANVAS_POLYGON_H__
-
+#pragma once
 
 #include "gimpcanvasitem.h"
 
@@ -63,6 +61,3 @@ GimpCanvasItem * gimp_canvas_polygon_new_from_coords (GimpDisplayShell  *shell,
 void             gimp_canvas_polygon_set_points      (GimpCanvasItem    *polygon,
                                                       const GimpVector2 *points,
                                                       gint               n_points);
-
-
-#endif /* __GIMP_CANVAS_POLYGON_H__ */

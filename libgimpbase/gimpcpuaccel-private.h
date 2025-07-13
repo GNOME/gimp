@@ -18,15 +18,10 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CPU_ACCEL_PRIVATE_H__
-#define __GIMP_CPU_ACCEL_PRIVATE_H__
+#pragma once
 
 G_BEGIN_DECLS
 
-
 void gimp_cpu_accel_set_use (gboolean use);
 
-
 G_END_DECLS
-
-#endif  /* __GIMP_CPU_ACCEL_PRIVATE_H__ */

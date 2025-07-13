@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_FILL_SOURCE_H__
-#define __GIMP_OPERATION_FILL_SOURCE_H__
+#pragma once
 
 
 #define GIMP_TYPE_OPERATION_FILL_SOURCE            (gimp_operation_fill_source_get_type ())
@@ -50,6 +49,3 @@ struct _GimpOperationFillSourceClass
 
 
 GType   gimp_operation_fill_source_get_type (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_OPERATION_FILL_SOURCE_H__ */

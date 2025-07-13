@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __DISPLAY_ENUMS_H__
-#define __DISPLAY_ENUMS_H__
+#pragma once
 
 
 #define GIMP_TYPE_BUTTON_PRESS_TYPE (gimp_button_press_type_get_type ())
@@ -295,6 +294,3 @@ typedef enum  /*< pdb-skip, skip >*/
   GIMP_HIT_INDIRECT,
   GIMP_HIT_DIRECT
 } GimpHit;
-
-
-#endif /* __DISPLAY_ENUMS_H__ */

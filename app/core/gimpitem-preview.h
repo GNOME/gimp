@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ITEM__PREVIEW_H__
-#define __GIMP_ITEM__PREVIEW_H__
+#pragma once
 
 
 /*
@@ -35,6 +34,3 @@ gboolean  gimp_item_get_popup_size   (GimpViewable *viewable,
                                       gboolean      dot_for_dot,
                                       gint         *popup_width,
                                       gint         *popup_height);
-
-
-#endif /* __GIMP_ITEM__PREVIEW_H__ */

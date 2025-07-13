@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTAINER_BOX_H__
-#define __GIMP_CONTAINER_BOX_H__
-
+#pragma once
 
 #include "gimpeditor.h"
 
@@ -53,6 +51,3 @@ GType     gimp_container_box_get_type         (void) G_GNUC_CONST;
 void      gimp_container_box_set_size_request (GimpContainerBox *box,
                                                gint              width,
                                                gint              height);
-
-
-#endif  /*  __GIMP_CONTAINER_BOX_H__  */

@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_OVERWRITE_H__
-#define __GIMP_OPERATION_OVERWRITE_H__
-
+#pragma once
 
 #include "gimpoperationlayermode.h"
 
@@ -48,6 +46,3 @@ struct _GimpOperationOverwriteClass
 
 
 GType   gimp_operation_overwrite_get_type (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_OPERATION_OVERWRITE_MODE_H__ */

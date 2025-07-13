@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_COMPAT_H__
-#define __GIMP_TEXT_COMPAT_H__
+#pragma once
 
 
 /* convenience functions that provide the 1.2 API, only used by the PDB */
@@ -42,6 +41,3 @@ gboolean    text_get_extents (Gimp         *gimp,
                               gint         *height,
                               gint         *ascent,
                               gint         *descent);
-
-
-#endif /* __GIMP_TEXT_COMPAT_H__ */

@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TAGGED_H__
-#define __GIMP_TAGGED_H__
+#pragma once
 
 
 #define GIMP_TYPE_TAGGED (gimp_tagged_get_type ())
@@ -61,6 +60,3 @@ gchar    * gimp_tagged_get_checksum   (GimpTagged *tagged);
 
 gboolean   gimp_tagged_has_tag        (GimpTagged *tagged,
                                        GimpTag    *tag);
-
-
-#endif  /* __GIMP_TAGGED_H__ */

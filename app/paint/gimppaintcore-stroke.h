@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PAINT_CORE_STROKE_H__
-#define __GIMP_PAINT_CORE_STROKE_H__
+#pragma once
 
 
 gboolean   gimp_paint_core_stroke          (GimpPaintCore      *core,
@@ -43,6 +42,3 @@ gboolean   gimp_paint_core_stroke_path     (GimpPaintCore      *core,
                                             GimpPath           *path,
                                             gboolean            push_undo,
                                             GError            **error);
-
-
-#endif  /*  __GIMP_PAINT_CORE_STROKE_H__  */

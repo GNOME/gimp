@@ -15,11 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __USER_INSTALL_DIALOG_H__
-#define __USER_INSTALL_DIALOG_H__
+#pragma once
 
 
 gboolean  user_install_dialog_run (GimpUserInstall *install);
-
-
-#endif /* __USER_INSTALL_DIALOG_H__ */

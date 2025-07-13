@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __COLORMAP_COMMANDS_H__
-#define __COLORMAP_COMMANDS_H__
+#pragma once
 
 
 void   colormap_edit_color_cmd_callback   (GimpAction *action,
@@ -31,6 +30,3 @@ void   colormap_add_color_cmd_callback    (GimpAction *action,
 void   colormap_to_selection_cmd_callback (GimpAction *action,
                                            GVariant   *value,
                                            gpointer    data);
-
-
-#endif /* __COLORMAP_COMMANDS_H__ */

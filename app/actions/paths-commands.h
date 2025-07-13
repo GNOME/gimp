@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __PATHS_COMMANDS_H__
-#define __PATHS_COMMANDS_H__
+#pragma once
 
 
 void   paths_edit_cmd_callback                 (GimpAction *action,
@@ -104,6 +103,3 @@ void   paths_color_tag_cmd_callback            (GimpAction *action,
 void   paths_select_cmd_callback               (GimpAction *action,
                                                 GVariant   *value,
                                                 gpointer    data);
-
-
-#endif /* __PATHS_COMMANDS_H__ */

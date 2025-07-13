@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GRADIENT_SAVE_H__
-#define __GIMP_GRADIENT_SAVE_H__
+#pragma once
 
 
 /*  don't call this function directly, use gimp_data_save() instead  */
@@ -27,6 +26,3 @@ gboolean   gimp_gradient_save     (GimpData       *data,
 gboolean   gimp_gradient_save_pov (GimpGradient   *gradient,
                                    GFile          *file,
                                    GError        **error);
-
-
-#endif /* __GIMP_GRADIENT_SAVE_H__ */

@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PATH_WARP_H__
-#define __GIMP_PATH_WARP_H__
+#pragma once
 
 
 void gimp_path_warp_point   (GimpPath   *path,
@@ -30,7 +29,3 @@ void gimp_path_warp_point   (GimpPath   *path,
 void gimp_path_warp_path    (GimpPath   *path,
                              GimpPath   *path_in,
                              gdouble     yoffset);
-
-
-#endif /* __GIMP_PATH_WARP_H__ */
-

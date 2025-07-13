@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_FILTER_MASK_H__
-#define __GIMP_DRAWABLE_FILTER_MASK_H__
-
+#pragma once
 
 #include "gimpchannel.h"
 
@@ -56,6 +54,3 @@ GimpDrawableFilterMask * gimp_drawable_filter_mask_new        (GimpImage        
 void                     gimp_drawable_filter_mask_set_filter (GimpDrawableFilterMask *mask,
                                                                GimpDrawableFilter     *filter);
 GimpDrawableFilter     * gimp_drawable_filter_mask_get_filter (GimpDrawableFilterMask *mask);
-
-
-#endif /* __GIMP_DRAWABLE_FILTER_MASK_H__ */

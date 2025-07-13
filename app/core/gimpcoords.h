@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COORDS_H__
-#define __GIMP_COORDS_H__
+#pragma once
 
 
 void     gimp_coords_mix            (const gdouble     amul,
@@ -52,6 +51,3 @@ gboolean gimp_coords_equal          (const GimpCoords *a,
 
 gdouble  gimp_coords_direction      (const GimpCoords *a,
                                      const GimpCoords *b);
-
-
-#endif /* __GIMP_COORDS_H__ */

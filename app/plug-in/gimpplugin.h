@@ -17,9 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_H__
-#define __GIMP_PLUG_IN_H__
-
+#pragma once
 
 #include "core/gimpobject.h"
 #include "gimppluginprocframe.h"
@@ -116,6 +114,3 @@ void          gimp_plug_in_set_error_handler (GimpPlugIn             *plug_in,
                                               GimpPDBErrorHandler     handler);
 GimpPDBErrorHandler
               gimp_plug_in_get_error_handler (GimpPlugIn             *plug_in);
-
-
-#endif /* __GIMP_PLUG_IN_H__ */

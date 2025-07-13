@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __DISPLAY_TYPES_H__
-#define __DISPLAY_TYPES_H__
-
+#pragma once
 
 #include "propgui/propgui-types.h"
 
@@ -49,6 +47,3 @@ typedef struct _GimpDisplayXfer          GimpDisplayXfer;
 typedef struct _Selection                Selection;
 
 typedef struct _GimpModifiersManager     GimpModifiersManager;
-
-
-#endif /* __DISPLAY_TYPES_H__ */

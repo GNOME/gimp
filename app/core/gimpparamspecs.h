@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __APP_GIMP_PARAM_SPECS_H__
-#define __APP_GIMP_PARAM_SPECS_H__
+#pragma once
 
 
 /*
@@ -86,6 +85,3 @@ void   gimp_param_spec_enum_exclude_value (GimpParamSpecEnum *espec,
 #define GIMP_COMPILATION
 #include "../../libgimp/gimpparamspecs.h"
 #undef GIMP_COMPILATION
-
-
-#endif  /*  __APP_GIMP_PARAM_SPECS_H__  */

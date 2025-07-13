@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CURSOR_H__
-#define __GIMP_CURSOR_H__
+#pragma once
 
 
 GdkCursor      * gimp_cursor_new    (GdkWindow          *window,
@@ -32,6 +31,3 @@ void             gimp_cursor_set    (GtkWidget          *widget,
 
 GimpCursorType   gimp_cursor_rotate (GimpCursorType      cursor,
                                      gdouble             angle);
-
-
-#endif /*  __GIMP_CURSOR_H__  */

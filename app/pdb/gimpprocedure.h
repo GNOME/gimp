@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PROCEDURE_H__
-#define __GIMP_PROCEDURE_H__
-
+#pragma once
 
 #include "core/gimpviewable.h"
 
@@ -171,7 +169,3 @@ void             gimp_procedure_execute_async      (GimpProcedure    *procedure,
 
 gint             gimp_procedure_name_compare       (GimpProcedure    *proc1,
                                                     GimpProcedure    *proc2);
-
-
-
-#endif  /*  __GIMP_PROCEDURE_H__  */

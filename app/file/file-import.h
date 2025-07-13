@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __FILE_IMPORT_H__
-#define __FILE_IMPORT_H__
+#pragma once
 
 
 void   file_import_image (GimpImage    *image,
@@ -26,6 +25,3 @@ void   file_import_image (GimpImage    *image,
                           GFile        *file,
                           gboolean      interactive,
                           GimpProgress *progress);
-
-
-#endif /* __FILE_IMPORT_H__ */

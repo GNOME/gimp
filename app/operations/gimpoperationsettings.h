@@ -18,9 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_SETTINGS_H__
-#define __GIMP_OPERATION_SETTINGS_H__
-
+#pragma once
 
 #include "core/gimpsettings.h"
 
@@ -68,6 +66,3 @@ void       gimp_operation_settings_config_reset_base     (GimpConfig            
 gboolean   gimp_operation_settings_config_copy_base      (GimpConfig            *src,
                                                           GimpConfig            *dest,
                                                           GParamFlags            flags);
-
-
-#endif /* __GIMP_OPERATION_SETTINGS_H__ */

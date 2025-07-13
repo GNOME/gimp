@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_ITEM_UTILS_H__
-#define __GIMP_CANVAS_ITEM_UTILS_H__
+#pragma once
 
 
 gboolean   gimp_canvas_item_on_handle           (GimpCanvasItem    *item,
@@ -76,6 +75,3 @@ void       gimp_canvas_item_shift_to_center     (GimpHandleAnchor   anchor,
                                                  gint               height,
                                                  gdouble           *shifted_x,
                                                  gdouble           *shifted_y);
-
-
-#endif /* __GIMP_CANVAS_ITEM_UTILS_H__ */

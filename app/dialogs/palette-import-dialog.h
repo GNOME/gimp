@@ -15,11 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __PALETTE_IMPORT_DIALOG_H__
-#define __PALETTE_IMPORT_DIALOG_H__
+#pragma once
 
 
 GtkWidget * palette_import_dialog_new (GimpContext *context);
-
-
-#endif /* __PALETTE_IMPORT_DIALOG_H__ */

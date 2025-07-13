@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_CANVAS_BOUNDARY_H__
-#define __GIMP_CANVAS_CANVAS_BOUNDARY_H__
-
+#pragma once
 
 #include "gimpcanvasrectangle.h"
 
@@ -53,6 +51,3 @@ GimpCanvasItem * gimp_canvas_canvas_boundary_new       (GimpDisplayShell        
 
 void             gimp_canvas_canvas_boundary_set_image (GimpCanvasCanvasBoundary *boundary,
                                                         GimpImage                *image);
-
-
-#endif /* __GIMP_CANVAS_CANVAS_BOUNDARY_H__ */

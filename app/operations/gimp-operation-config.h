@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_CONFIG_H__
-#define __GIMP_OPERATION_CONFIG_H__
+#pragma once
 
 
 void            gimp_operation_config_init_start    (Gimp          *gimp);
@@ -55,6 +54,3 @@ GParamSpec ** gimp_operation_config_list_properties (GObject      *config,
                                                      GType         owner_type,
                                                      GParamFlags   flags,
                                                      guint        *n_pspecs);
-
-
-#endif /* __GIMP_OPERATION_CONFIG_H__ */

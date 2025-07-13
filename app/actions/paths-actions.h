@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __PATHS_ACTIONS_H__
-#define __PATHS_ACTIONS_H__
+#pragma once
 
 
 void   paths_actions_setup  (GimpActionGroup *group);
 void   paths_actions_update (GimpActionGroup *group,
                              gpointer         data);
-
-
-#endif /* __PATHS_ACTIONS_H__ */

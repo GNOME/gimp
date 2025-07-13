@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTROLLER_LIST_H__
-#define __GIMP_CONTROLLER_LIST_H__
+#pragma once
 
 
 #define GIMP_TYPE_CONTROLLER_LIST            (gimp_controller_list_get_type ())
@@ -59,6 +58,3 @@ struct _GimpControllerListClass
 GType       gimp_controller_list_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_controller_list_new      (GimpControllerManager *controller_manager);
-
-
-#endif  /*  __GIMP_CONTROLLER_LIST_H__  */

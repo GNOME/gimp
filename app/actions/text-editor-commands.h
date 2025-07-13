@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __TEXT_EDITOR_COMMANDS_H__
-#define __TEXT_EDITOR_COMMANDS_H__
+#pragma once
 
 
 void   text_editor_load_cmd_callback      (GimpAction *action,
@@ -28,6 +27,3 @@ void   text_editor_clear_cmd_callback     (GimpAction *action,
 void   text_editor_direction_cmd_callback (GimpAction *action,
                                            GVariant   *value,
                                            gpointer    data);
-
-
-#endif /* __TEXT_EDITOR_COMMANDS_H__ */

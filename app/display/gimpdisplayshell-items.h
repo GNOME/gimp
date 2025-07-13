@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_ITEMS_H__
-#define __GIMP_DISPLAY_SHELL_ITEMS_H__
+#pragma once
 
 
 void   gimp_display_shell_items_init            (GimpDisplayShell *shell);
@@ -44,6 +43,3 @@ void   gimp_display_shell_add_tool_item         (GimpDisplayShell *shell,
                                                  GimpCanvasItem   *item);
 void   gimp_display_shell_remove_tool_item      (GimpDisplayShell *shell,
                                                  GimpCanvasItem   *item);
-
-
-#endif /* __GIMP_DISPLAY_SHELL_ITEMS_H__ */

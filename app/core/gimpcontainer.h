@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTAINER_H__
-#define __GIMP_CONTAINER_H__
-
+#pragma once
 
 #include "gimpobject.h"
 
@@ -150,6 +148,3 @@ void         gimp_container_remove_handlers_by_data
                                                 gpointer                 callback_data);
 
 G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpContainer, g_object_unref);
-
-
-#endif  /* __GIMP_CONTAINER_H__ */

@@ -19,9 +19,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_PASS_THROUGH_H__
-#define __GIMP_OPERATION_PASS_THROUGH_H__
-
+#pragma once
 
 #include "gimpoperationreplace.h"
 
@@ -49,6 +47,3 @@ struct _GimpOperationPassThroughClass
 
 
 GType   gimp_operation_pass_through_get_type (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_OPERATION_PASS_THROUGH_H__ */

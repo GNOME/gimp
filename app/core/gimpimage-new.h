@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_NEW_H__
-#define __GIMP_IMAGE_NEW_H__
+#pragma once
 
 
 GimpTemplate * gimp_image_new_get_last_template (Gimp            *gimp,
@@ -41,6 +40,3 @@ GimpImage    * gimp_image_new_from_buffer       (Gimp            *gimp,
 GimpImage    * gimp_image_new_from_pixbuf       (Gimp            *gimp,
                                                  GdkPixbuf       *pixbuf,
                                                  const gchar     *layer_name);
-
-
-#endif /* __GIMP_IMAGE_NEW__ */

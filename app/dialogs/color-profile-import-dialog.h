@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __COLOR_PROFILE_IMPORT_DIALOG_H__
-#define __COLOR_PROFILE_IMPORT_DIALOG_H__
+#pragma once
 
 
 GimpColorProfilePolicy
@@ -30,6 +29,3 @@ color_profile_import_dialog_run (GimpImage                 *image,
                                  GimpColorRenderingIntent  *intent,
                                  gboolean                  *bpc,
                                  gboolean                  *dont_ask);
-
-
-#endif  /*  __COLOR_PROFILE_IMPORT_DIALOG_H__  */

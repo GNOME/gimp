@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_SHADOW_H__
-#define __GIMP_DRAWABLE_SHADOW_H__
+#pragma once
 
 
 GeglBuffer * gimp_drawable_get_shadow_buffer   (GimpDrawable *drawable);
@@ -27,6 +26,3 @@ void         gimp_drawable_free_shadow_buffer  (GimpDrawable *drawable);
 void         gimp_drawable_merge_shadow_buffer (GimpDrawable *drawable,
                                                 gboolean      push_undo,
                                                 const gchar  *undo_desc);
-
-
-#endif /* __GIMP_DRAWABLE_SHADOW_H__ */

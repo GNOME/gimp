@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __TEMPLATE_OPTIONS_DIALOG_H__
-#define __TEMPLATE_OPTIONS_DIALOG_H__
+#pragma once
 
 
 typedef void (* GimpTemplateOptionsCallback) (GtkWidget    *dialog,
@@ -36,6 +35,3 @@ GtkWidget * template_options_dialog_new (GimpTemplate                *template,
                                          const gchar                 *help_id,
                                          GimpTemplateOptionsCallback  callback,
                                          gpointer                     user_data);
-
-
-#endif /* __TEMPLATE_OPTIONS_DIALOG_H__ */

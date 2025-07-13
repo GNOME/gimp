@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLOR_LEGACY_H__
-#define __GIMP_COLOR_LEGACY_H__
+#pragma once
 
 
 void   gimp_rgb_to_hsv_legacy   (gdouble *rgb,
@@ -31,6 +30,3 @@ void   gimp_rgb_to_hsl_legacy   (gdouble *rgb,
                                  gdouble *hsl);
 void   gimp_hsl_to_rgb_legacy   (gdouble *hsl,
                                  gdouble *rgb);
-
-
-#endif /* __GIMP_COLOR_LEGACY_H__ */

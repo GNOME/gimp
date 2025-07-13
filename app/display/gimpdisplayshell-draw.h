@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_DRAW_H__
-#define __GIMP_DISPLAY_SHELL_DRAW_H__
+#pragma once
 
 
 void   gimp_display_shell_draw_selection_out (GimpDisplayShell   *shell,
@@ -38,6 +37,3 @@ void   gimp_display_shell_draw_image         (GimpDisplayShell   *shell,
                                               gint                y,
                                               gint                w,
                                               gint                h);
-
-
-#endif /* __GIMP_DISPLAY_SHELL_DRAW_H__ */

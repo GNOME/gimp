@@ -18,12 +18,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __WELCOME_DIALOG_H__
-#define __WELCOME_DIALOG_H__
+#pragma once
 
 
 GtkWidget * welcome_dialog_create (Gimp     *gimp,
                                    gboolean  show_welcome_page);
-
-
-#endif /* __WELCOME_DIALOG_H__ */

@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PROJECTION_H__
-#define __GIMP_PROJECTION_H__
-
+#pragma once
 
 #include "gimpobject.h"
 
@@ -78,6 +76,3 @@ gint64           gimp_projection_estimate_memsize  (GimpImageBaseType  type,
                                                     GimpComponentType  component_type,
                                                     gint               width,
                                                     gint               height);
-
-
-#endif /*  __GIMP_PROJECTION_H__  */

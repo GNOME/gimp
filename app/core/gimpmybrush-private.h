@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MYBRUSH_PRIVATE_H__
-#define __GIMP_MYBRUSH_PRIVATE_H__
+#pragma once
 
 
 struct _GimpMybrushPrivate
@@ -34,6 +33,3 @@ struct _GimpMybrushPrivate
   gdouble  offset_by_random;
   gboolean eraser;
 };
-
-
-#endif /* __GIMP_MYBRUSH_PRIVATE_H__ */

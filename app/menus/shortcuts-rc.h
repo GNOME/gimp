@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __SHORTCUTS_RC_H__
-#define __SHORTCUTS_RC_H__
+#pragma once
 
 
 gboolean   shortcuts_rc_parse (GtkApplication  *application,
@@ -28,6 +27,3 @@ gboolean   shortcuts_rc_parse (GtkApplication  *application,
 gboolean   shortcuts_rc_write (GtkApplication  *application,
                                GFile           *file,
                                GError         **error);
-
-
-#endif /* __SHORTCUTS_RC_H__ */

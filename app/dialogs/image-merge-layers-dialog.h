@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __IMAGE_MERGE_LAYERS_DIALOG_H__
-#define __IMAGE_MERGE_LAYERS_DIALOG_H__
+#pragma once
 
 
 typedef void (* GimpMergeLayersCallback) (GtkWidget     *dialog,
@@ -37,6 +36,3 @@ GtkWidget *
                                  gboolean                 discard_invisible,
                                  GimpMergeLayersCallback  callback,
                                  gpointer                 user_data);
-
-
-#endif /* __IMAGE_MERGE_LAYERS_DIALOG_H__ */

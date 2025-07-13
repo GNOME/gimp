@@ -15,10 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_STATUSBAR_H__
-#define __GIMP_STATUSBAR_H__
-
-G_BEGIN_DECLS
+#pragma once
 
 
 /*  maximal length of the format string for the cursor-coordinates  */
@@ -176,8 +173,3 @@ void        gimp_statusbar_update_cursor         (GimpStatusbar       *statusbar
                                                   gdouble              x,
                                                   gdouble              y);
 void        gimp_statusbar_clear_cursor          (GimpStatusbar       *statusbar);
-
-
-G_END_DECLS
-
-#endif /* __GIMP_STATUSBAR_H__ */

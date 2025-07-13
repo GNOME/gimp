@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_RESIZE_H__
-#define __GIMP_IMAGE_RESIZE_H__
+#pragma once
 
 
 void   gimp_image_resize              (GimpImage    *image,
@@ -48,6 +47,3 @@ void   gimp_image_resize_to_layers    (GimpImage    *image,
 void   gimp_image_resize_to_selection (GimpImage    *image,
                                        GimpContext  *context,
                                        GimpProgress *progress);
-
-
-#endif /* __GIMP_IMAGE_RESIZE_H__ */

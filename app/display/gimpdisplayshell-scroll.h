@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_SCROLL_H__
-#define __GIMP_DISPLAY_SHELL_SCROLL_H__
+#pragma once
 
 
 void   gimp_display_shell_scroll                     (GimpDisplayShell *shell,
@@ -54,6 +53,3 @@ void   gimp_display_shell_scroll_get_viewport        (GimpDisplayShell *shell,
                                                       gdouble          *y,
                                                       gdouble          *w,
                                                       gdouble          *h);
-
-
-#endif  /*  __GIMP_DISPLAY_SHELL_SCROLL_H__  */

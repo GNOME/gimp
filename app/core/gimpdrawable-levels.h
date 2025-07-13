@@ -15,12 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_LEVELS_H__
-#define __GIMP_DRAWABLE_LEVELS_H__
+#pragma once
 
 
 void   gimp_drawable_levels_stretch (GimpDrawable *drawable,
                                      GimpProgress *progress);
-
-
-#endif  /*  __GIMP_DRAWABLE_LEVELS_H__  */

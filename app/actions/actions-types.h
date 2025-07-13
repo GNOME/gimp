@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __ACTIONS_TYPES_H__
-#define __ACTIONS_TYPES_H__
-
+#pragma once
 
 #include "dialogs/dialogs-types.h"
 #include "tools/tools-types.h"
@@ -51,6 +49,3 @@ typedef enum
   GIMP_SAVE_MODE_EXPORT_AS,
   GIMP_SAVE_MODE_OVERWRITE
 } GimpSaveMode;
-
-
-#endif /* __ACTIONS_TYPES_H__ */

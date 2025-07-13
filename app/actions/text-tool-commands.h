@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __TEXT_TOOL_COMMANDS_H__
-#define __TEXT_TOOL_COMMANDS_H__
+#pragma once
 
 
 void   text_tool_cut_cmd_callback             (GimpAction *action,
@@ -46,6 +45,3 @@ void   text_tool_text_along_path_cmd_callback (GimpAction *action,
 void   text_tool_direction_cmd_callback       (GimpAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-
-
-#endif /* __TEXT_TOOL_COMMANDS_H__ */

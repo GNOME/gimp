@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __APP_H__
-#define __APP_H__
-
+#pragma once
 
 #ifndef GIMP_APP_GLUE_COMPILATION
 #error You must not #include "app.h" from a subdir
@@ -53,6 +51,3 @@ gint  app_run       (const gchar         *full_prog_name,
                      GimpStackTraceMode   stack_trace_mode,
                      GimpPDBCompatMode    pdb_compat_mode,
                      const gchar         *backtrace_file);
-
-
-#endif /* __APP_H__ */

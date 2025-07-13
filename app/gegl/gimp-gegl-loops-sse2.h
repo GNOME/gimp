@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GEGL_LOOPS_SSE2_H__
-#define __GIMP_GEGL_LOOPS_SSE2_H__
+#pragma once
 
 
 #if COMPILE_SSE2_INTRINISICS
@@ -35,6 +34,3 @@ void   gimp_gegl_smudge_with_paint_process_sse2 (gfloat       *accum,
                                                  gfloat        rate);
 
 #endif /* COMPILE_SSE2_INTRINISICS */
-
-
-#endif /* __GIMP_GEGL_LOOPS_SSE2_H__ */

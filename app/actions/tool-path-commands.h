@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __TOOL_PATH_COMMANDS_H__
-#define __TOOL_PATH_COMMANDS_H__
+#pragma once
 
 
 void   tool_path_delete_anchor_cmd_callback  (GimpAction *action,
@@ -35,6 +34,3 @@ void   tool_path_delete_segment_cmd_callback (GimpAction *action,
 void   tool_path_reverse_stroke_cmd_callback (GimpAction *action,
                                               GVariant   *value,
                                               gpointer    data);
-
-
-#endif /* __TOOL_PATH_COMMANDS_H__ */

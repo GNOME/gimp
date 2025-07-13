@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_USER_INSTALL_H__
-#define __GIMP_USER_INSTALL_H__
+#pragma once
 
 
 typedef struct _GimpUserInstall GimpUserInstall;
@@ -35,6 +34,3 @@ void              gimp_user_install_free (GimpUserInstall  *install);
 void   gimp_user_install_set_log_handler (GimpUserInstall        *install,
                                           GimpUserInstallLogFunc  log,
                                           gpointer                user_data);
-
-
-#endif /* __USER_INSTALL_H__ */

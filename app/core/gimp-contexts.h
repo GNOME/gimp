@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTEXTS_H__
-#define __GIMP_CONTEXTS_H__
+#pragma once
 
 
 void       gimp_contexts_init  (Gimp    *gimp);
@@ -31,6 +30,3 @@ gboolean   gimp_contexts_save  (Gimp    *gimp,
 
 gboolean   gimp_contexts_clear (Gimp    *gimp,
                                 GError **error);
-
-
-#endif  /*  __GIMP_CONTEXTS_H__  */

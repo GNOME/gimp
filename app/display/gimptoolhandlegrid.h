@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_HANDLE_GRID_H__
-#define __GIMP_TOOL_HANDLE_GRID_H__
-
+#pragma once
 
 #include "gimptooltransformgrid.h"
 
@@ -57,6 +55,3 @@ GimpToolWidget * gimp_tool_handle_grid_new      (GimpDisplayShell  *shell,
                                                  gdouble            y1,
                                                  gdouble            x2,
                                                  gdouble            y2);
-
-
-#endif /* __GIMP_TOOL_HANDLE_GRID_H__ */

@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DND_H__
-#define __GIMP_DND_H__
+#pragma once
 
 
 #define GIMP_TARGET_URI_LIST \
@@ -289,6 +288,3 @@ void  gimp_dnd_xds_source_add    (GtkWidget               *widget,
                                   GimpDndDragViewableFunc  get_image_func,
                                   gpointer                 data);
 void  gimp_dnd_xds_source_remove (GtkWidget               *widget);
-
-
-#endif /* __GIMP_DND_H__ */

@@ -18,14 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BABL_COMPAT_H__
-#define __GIMP_BABL_COMPAT_H__
+#pragma once
 
 
 GimpImageType   gimp_babl_format_get_image_type (const Babl *format);
 
 const Babl    * gimp_babl_compat_u8_format      (const Babl *format);
 const Babl    * gimp_babl_compat_u8_mask_format (const Babl *format);
-
-
-#endif /* __GIMP_BABL_COMPAT_H__ */

@@ -15,11 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_DUPLICATE_H__
-#define __GIMP_IMAGE_DUPLICATE_H__
+#pragma once
 
 
 GimpImage * gimp_image_duplicate (GimpImage *image);
-
-
-#endif  /*  __GIMP_IMAGE_DUPLICATE_H__  */

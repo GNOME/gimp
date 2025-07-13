@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_THRESHOLD_H__
-#define __GIMP_OPERATION_THRESHOLD_H__
-
+#pragma once
 
 #include "gimpoperationpointfilter.h"
 
@@ -52,6 +50,3 @@ struct _GimpOperationThresholdClass
 
 
 GType   gimp_operation_threshold_get_type (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_OPERATION_THRESHOLD_H__ */

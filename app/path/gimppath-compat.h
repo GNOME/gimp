@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PATH_COMPAT_H__
-#define __GIMP_PATH_COMPAT_H__
+#pragma once
 
 
 typedef struct _GimpPathCompatPoint GimpPathCompatPoint;
@@ -43,6 +42,3 @@ gboolean              gimp_path_compat_is_compatible (GimpImage   *image);
 GimpPathCompatPoint * gimp_path_compat_get_points    (GimpPath    *path,
                                                       gint32      *n_points,
                                                       gint32      *closed);
-
-
-#endif /* __GIMP_PATH_COMPAT_H__ */

@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DATA_FACTORY_H__
-#define __GIMP_DATA_FACTORY_H__
+#pragma once
 
 
 #include "gimpobject.h"
@@ -120,7 +119,3 @@ GList         * gimp_data_factory_get_data_path     (GimpDataFactory  *factory);
 GList         * gimp_data_factory_get_data_path_writable
                                                     (GimpDataFactory  *factory);
 const GList   * gimp_data_factory_get_data_path_ext (GimpDataFactory  *factory);
-
-
-
-#endif  /*  __GIMP_DATA_FACTORY_H__  */

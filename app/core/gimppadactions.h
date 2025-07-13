@@ -15,11 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PAD_ACTIONS_H__
-#define __GIMP_PAD_ACTIONS_H__
-
-
-#include "gimpdata.h"
+#pragma once
 
 
 #define GIMP_TYPE_PAD_ACTIONS            (gimp_pad_actions_get_type ())
@@ -44,13 +40,12 @@ struct _GimpPadActionsClass
   GObjectClass parent_class;
 };
 
-typedef enum _GimpPadActionType GimpPadActionType;
-enum _GimpPadActionType
+typedef enum
 {
   GIMP_PAD_ACTION_BUTTON,
   GIMP_PAD_ACTION_RING,
   GIMP_PAD_ACTION_STRIP
-};
+} GimpPadActionType;
 
 typedef void (* GimpPadActionForeach) (GimpPadActions    *pad_actions,
                                        GimpPadActionType  action_type,
@@ -81,6 +76,3 @@ const gchar    * gimp_pad_actions_get_action    (GimpPadActions       *pad_actio
                                                  GimpPadActionType     action_type,
                                                  guint                 number,
                                                  guint                 mode);
-
-
-#endif /* __GIMP_PAD_ACTIONS_H__ */

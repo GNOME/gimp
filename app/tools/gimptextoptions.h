@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_OPTIONS_H__
-#define __GIMP_TEXT_OPTIONS_H__
-
+#pragma once
 
 #include "core/gimptooloptions.h"
 
@@ -90,6 +88,3 @@ GtkWidget * gimp_text_options_editor_new   (GtkWindow       *parent,
                                             GimpTextBuffer  *text_buffer,
                                             gdouble          xres,
                                             gdouble          yres);
-
-
-#endif /* __GIMP_TEXT_OPTIONS_H__ */

@@ -21,9 +21,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_NAVIGATION_EDITOR_H__
-#define __GIMP_NAVIGATION_EDITOR_H__
-
+#pragma once
 
 #include "widgets/gimpeditor.h"
 
@@ -75,6 +73,3 @@ void        gimp_navigation_editor_popup     (GimpDisplayShell *shell,
                                               GdkEvent         *event,
                                               gint              click_x,
                                               gint              click_y);
-
-
-#endif  /*  __GIMP_NAVIGATION_EDITOR_H__  */

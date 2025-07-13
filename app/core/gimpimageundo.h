@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_UNDO_H__
-#define __GIMP_IMAGE_UNDO_H__
-
+#pragma once
 
 #include "gimpundo.h"
 
@@ -64,6 +62,3 @@ struct _GimpImageUndoClass
 
 
 GType   gimp_image_undo_get_type (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_IMAGE_UNDO_H__ */

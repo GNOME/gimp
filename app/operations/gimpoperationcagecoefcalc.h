@@ -17,9 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_CAGE_COEF_CALC_H__
-#define __GIMP_OPERATION_CAGE_COEF_CALC_H__
-
+#pragma once
 
 #include <gegl-plugin.h>
 #include <operation/gegl-operation-source.h>
@@ -57,6 +55,3 @@ struct _GimpOperationCageCoefCalcClass
 
 
 GType   gimp_operation_cage_coef_calc_get_type (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_OPERATION_CAGE_COEF_CALC_H__ */

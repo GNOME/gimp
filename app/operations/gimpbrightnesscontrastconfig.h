@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRIGHTNESS_CONTRAST_CONFIG_H__
-#define __GIMP_BRIGHTNESS_CONTRAST_CONFIG_H__
-
+#pragma once
 
 #include "gimpoperationsettings.h"
 
@@ -53,6 +51,3 @@ GType   gimp_brightness_contrast_config_get_type (void) G_GNUC_CONST;
 
 GimpLevelsConfig *
 gimp_brightness_contrast_config_to_levels_config (GimpBrightnessContrastConfig *config);
-
-
-#endif /* __GIMP_BRIGHTNESS_CONTRAST_CONFIG_H__ */

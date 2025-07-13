@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __ERROR_CONSOLE_COMMANDS_H__
-#define __ERROR_CONSOLE_COMMANDS_H__
+#pragma once
 
 
 void   error_console_clear_cmd_callback             (GimpAction *action,
@@ -38,6 +37,3 @@ void   error_console_highlight_warning_cmd_callback (GimpAction *action,
 void   error_console_highlight_info_cmd_callback    (GimpAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);
-
-
-#endif /* __ERROR_CONSOLE_COMMANDS_H__ */

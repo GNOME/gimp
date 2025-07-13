@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ASYNC_H__
-#define __GIMP_ASYNC_H__
+#pragma once
 
 
 #define GIMP_TYPE_ASYNC            (gimp_async_get_type ())
@@ -90,6 +89,3 @@ void        gimp_async_cancel_and_wait         (GimpAsync         *async);
 /*  stats  */
 
 gint        gimp_async_get_n_running           (void);
-
-
-#endif /* __GIMP_ASYNC_H__ */

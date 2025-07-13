@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEST_SESSION_UTILS_H__
-#define __GIMP_TEST_SESSION_UTILS_H__
+#pragma once
 
 
 void gimp_test_session_load_and_write_session_files (const gchar *loaded_sessionrc,
@@ -24,6 +23,3 @@ void gimp_test_session_load_and_write_session_files (const gchar *loaded_session
                                                      const gchar *expected_sessionrc,
                                                      const gchar *expected_dockrc,
                                                      gboolean     single_window_mode);
-
-
-#endif /* __GIMP_TEST_SESSION_UTILS_H__ */

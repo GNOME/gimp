@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __DIALOGS_COMMANDS_H__
-#define __DIALOGS_COMMANDS_H__
+#pragma once
 
 
 void   dialogs_create_toplevel_cmd_callback (GimpAction *action,
@@ -25,6 +24,3 @@ void   dialogs_create_toplevel_cmd_callback (GimpAction *action,
 void   dialogs_create_dockable_cmd_callback (GimpAction *action,
                                              GVariant   *value,
                                              gpointer    data);
-
-
-#endif /* __DIALOGS_COMMANDS_H__ */

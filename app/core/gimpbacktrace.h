@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BACKTRACE_H__
-#define __GIMP_BACKTRACE_H__
+#pragma once
 
 
 typedef struct _GimpBacktraceAddressInfo GimpBacktraceAddressInfo;
@@ -65,6 +64,3 @@ guintptr        gimp_backtrace_get_frame_address (GimpBacktrace           *backt
 
 gboolean        gimp_backtrace_get_address_info  (guintptr                  address,
                                                   GimpBacktraceAddressInfo *info);
-
-
-#endif  /*  __GIMP_BACKTRACE_H__  */

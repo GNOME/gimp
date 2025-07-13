@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_STACK_H__
-#define __GIMP_DRAWABLE_STACK_H__
+#pragma once
 
 #include "gimpitemstack.h"
 
@@ -61,6 +60,3 @@ void            gimp_drawable_stack_update    (GimpDrawableStack *stack,
                                                gint               y,
                                                gint               width,
                                                gint               height);
-
-
-#endif  /*  __GIMP_DRAWABLE_STACK_H__  */

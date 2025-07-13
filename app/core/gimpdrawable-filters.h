@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_FILTERS_H__
-#define __GIMP_DRAWABLE_FILTERS_H__
+#pragma once
 
 
 /*  internal functions  */
@@ -61,6 +60,3 @@ gboolean        gimp_drawable_merge_filter          (GimpDrawable *drawable,
                                                      gboolean      clip,
                                                      gboolean      cancellable,
                                                      gboolean      update);
-
-
-#endif /* __GIMP_DRAWABLE_FILTERS_H__ */

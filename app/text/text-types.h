@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __TEXT_TYPES_H__
-#define __TEXT_TYPES_H__
+#pragma once
 
 #include "core/core-types.h"
 
@@ -33,6 +32,3 @@ typedef struct _GimpText        GimpText;
 typedef struct _GimpTextLayer   GimpTextLayer;
 typedef struct _GimpTextLayout  GimpTextLayout;
 typedef struct _GimpTextUndo    GimpTextUndo;
-
-
-#endif /* __TEXT_TYPES_H__ */

@@ -15,14 +15,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_SAVE_H__
-#define __GIMP_BRUSH_SAVE_H__
+#pragma once
 
 
 /*  don't call this function directly, use gimp_data_save() instead  */
 gboolean   gimp_brush_save (GimpData       *data,
                             GOutputStream  *output,
                             GError        **error);
-
-
-#endif  /*  __GIMP_BRUSH_SAVE_H__  */

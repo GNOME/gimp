@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TREE_HANDLER_H__
-#define __GIMP_TREE_HANDLER_H__
-
+#pragma once
 
 #include "core/gimpobject.h"
 
@@ -59,6 +57,3 @@ GimpTreeHandler * gimp_tree_handler_connect    (GimpContainer   *container,
                                                 GCallback        callback,
                                                 gpointer         user_data);
 void              gimp_tree_handler_disconnect (GimpTreeHandler *handler);
-
-
-#endif /* __GIMP_TREE_HANDLER_H__ */

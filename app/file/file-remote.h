@@ -21,8 +21,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __FILE_REMOTE_H__
-#define __FILE_REMOTE_H__
+#pragma once
 
 
 gboolean   file_remote_mount_file           (Gimp          *gimp,
@@ -44,5 +43,3 @@ gboolean   file_remote_upload_image_finish  (Gimp          *gimp,
                                              GFile         *local_file,
                                              GimpProgress  *progress,
                                              GError       **error);
-
-#endif /* __FILE_REMOTE_H__ */

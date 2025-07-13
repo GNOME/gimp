@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CURVE_VIEW_H__
-#define __GIMP_CURVE_VIEW_H__
-
+#pragma once
 
 #include "gimphistogramview.h"
 
@@ -125,6 +123,3 @@ void        gimp_curve_view_set_x_axis_label  (GimpCurveView *view,
                                                const gchar   *label);
 void        gimp_curve_view_set_y_axis_label  (GimpCurveView *view,
                                                const gchar   *label);
-
-
-#endif /* __GIMP_CURVE_VIEW_H__ */

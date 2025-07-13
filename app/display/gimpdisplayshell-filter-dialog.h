@@ -15,11 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_FILTER_DIALOG_H__
-#define __GIMP_DISPLAY_SHELL_FILTER_DIALOG_H__
+#pragma once
 
 
 GtkWidget * gimp_display_shell_filter_dialog_new (GimpDisplayShell *shell);
-
-
-#endif /* __GIMP_DISPLAY_SHELL_FILTER_DIALOG_H__ */

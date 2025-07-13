@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SETTINGS_H__
-#define __GIMP_SETTINGS_H__
-
+#pragma once
 
 #include "gimpviewable.h"
 
@@ -52,6 +50,3 @@ GType   gimp_settings_get_type (void) G_GNUC_CONST;
 
 gint    gimp_settings_compare  (GimpSettings *a,
                                 GimpSettings *b);
-
-
-#endif /* __GIMP_SETTINGS_H__ */

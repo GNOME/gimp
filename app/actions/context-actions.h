@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __CONTEXT_ACTIONS_H__
-#define __CONTEXT_ACTIONS_H__
+#pragma once
 
 
 void   context_actions_setup  (GimpActionGroup *group);
 void   context_actions_update (GimpActionGroup *group,
                                gpointer         data);
-
-
-#endif /* __CONTEXT_ACTIONS_H__ */

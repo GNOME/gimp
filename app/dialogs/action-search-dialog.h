@@ -21,9 +21,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __ACTION_SEARCH_DIALOG_H__
-#define __ACTION_SEARCH_DIALOG_H__
+#pragma once
+
 
 GtkWidget * action_search_dialog_create (Gimp *gimp);
-
-#endif /* __ACTION_SEARCH_DIALOG_H__ */

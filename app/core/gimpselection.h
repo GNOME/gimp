@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SELECTION_H__
-#define __GIMP_SELECTION_H__
-
+#pragma once
 
 #include "gimpchannel.h"
 
@@ -71,6 +69,3 @@ GimpLayer   * gimp_selection_float    (GimpSelection *selection,
                                        gint           off_x,
                                        gint           off_y,
                                        GError       **error);
-
-
-#endif /* __GIMP_SELECTION_H__ */

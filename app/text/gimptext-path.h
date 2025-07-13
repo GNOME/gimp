@@ -18,12 +18,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_PATH_H__
-#define __GIMP_TEXT_PATH_H__
+#pragma once
 
 
 GimpPath * gimp_text_path_new    (GimpImage *image,
                                   GimpText  *text);
-
-
-#endif /* __GIMP_TEXT_PATH_H__ */

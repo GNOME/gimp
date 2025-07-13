@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GEGL_PROCEDURE_H__
-#define __GIMP_GEGL_PROCEDURE_H__
-
+#pragma once
 
 #include "pdb/gimpprocedure.h"
 
@@ -68,5 +66,3 @@ GimpProcedure * gimp_gegl_procedure_new               (Gimp               *gimp,
                                                        const gchar        *icon_name,
                                                        const gchar        *help_id);
 gboolean        gimp_gegl_procedure_is_editing_filter (GimpGeglProcedure  *procedure);
-
-#endif /* __GIMP_GEGL_PROCEDURE_H__ */

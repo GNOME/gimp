@@ -15,12 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __TOOL_OPTIONS_MENU_H__
-#define __TOOL_OPTIONS_MENU_H__
+#pragma once
 
 
 void   tool_options_menu_setup (GimpUIManager *manager,
                                 const gchar   *ui_path);
-
-
-#endif /* __TOOL_OPTIONS_MENU_H__ */

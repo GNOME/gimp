@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_PROGRESS_H__
-#define __GIMP_CANVAS_PROGRESS_H__
-
+#pragma once
 
 #include "gimpcanvasitem.h"
 
@@ -53,6 +51,3 @@ GimpCanvasItem * gimp_canvas_progress_new      (GimpDisplayShell *shell,
                                                 GimpHandleAnchor  anchor,
                                                 gdouble           x,
                                                 gdouble           y);
-
-
-#endif /* __GIMP_CANVAS_PROGRESS_H__ */

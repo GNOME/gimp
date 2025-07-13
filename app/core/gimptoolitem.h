@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_ITEM_H__
-#define __GIMP_TOOL_ITEM_H__
-
+#pragma once
 
 #include "gimpviewable.h"
 
@@ -54,17 +52,14 @@ struct _GimpToolItemClass
 
 
 GType      gimp_tool_item_get_type      (void) G_GNUC_CONST;
-                                        
+
 void       gimp_tool_item_set_visible   (GimpToolItem *tool_item,
                                          gboolean      visible);
 gboolean   gimp_tool_item_get_visible   (GimpToolItem *tool_item);
-                                        
+
 gboolean   gimp_tool_item_get_shown     (GimpToolItem *tool_item);
 
 
 /*  protected  */
 
 void       gimp_tool_item_shown_changed (GimpToolItem *tool_item);
-
-
-#endif  /*  __GIMP_TOOL_ITEM_H__  */

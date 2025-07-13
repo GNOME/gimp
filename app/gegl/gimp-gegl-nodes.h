@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GEGL_NODES_H__
-#define __GIMP_GEGL_NODES_H__
+#pragma once
 
 
 GeglNode * gimp_gegl_create_flatten_node       (GeglColor             *background,
@@ -47,6 +46,3 @@ void       gimp_gegl_node_set_matrix           (GeglNode               *node,
                                                 const GimpMatrix3      *matrix);
 void       gimp_gegl_node_set_color            (GeglNode               *node,
                                                 GeglColor              *color);
-
-
-#endif /* __GIMP_GEGL_NODES_H__ */

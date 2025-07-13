@@ -43,6 +43,7 @@
 
 #include "widgets/gimpwidgets-utils.h"
 
+#include "gimpapp.h"
 #include "splash.h"
 
 #include "gimp-intl.h"

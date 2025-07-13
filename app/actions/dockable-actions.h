@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __DOCKABLE_ACTIONS_H__
-#define __DOCKABLE_ACTIONS_H__
+#pragma once
 
 
 void   dockable_actions_setup  (GimpActionGroup *group);
 void   dockable_actions_update (GimpActionGroup *group,
                                 gpointer         data);
-
-
-#endif /* __DOCKABLE_ACTIONS_H__ */

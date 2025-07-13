@@ -19,11 +19,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DBUS_SERVICE_H__
-#define __GIMP_DBUS_SERVICE_H__
-
+#pragma once
 
 #include "gimpdbusservice-generated.h"
+
 
 /* service name and path should really be org.gimp.GIMP and
  * /org/gimp/GIMP and only the interface be called UI.
@@ -64,6 +63,3 @@ struct _GimpDBusServiceClass
 GType     gimp_dbus_service_get_type (void) G_GNUC_CONST;
 
 GObject * gimp_dbus_service_new      (Gimp *gimp);
-
-
-#endif /* __GIMP_DBUS_SERVICE_H__ */

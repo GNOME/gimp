@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PALETTE_IMPORT__
-#define __GIMP_PALETTE_IMPORT__
+#pragma once
 
 
 GimpPalette * gimp_palette_import_from_gradient      (GimpGradient *gradient,
@@ -44,5 +43,3 @@ GimpPalette * gimp_palette_import_from_file          (GimpContext  *context,
                                                       GFile        *file,
                                                       const gchar  *palette_name,
                                                       GError      **error);
-
-#endif  /* __GIMP_PALETTE_IMPORT_H__ */

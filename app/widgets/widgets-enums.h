@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __WIDGETS_ENUMS_H__
-#define __WIDGETS_ENUMS_H__
+#pragma once
 
 
 /*
@@ -314,6 +313,3 @@ typedef enum  /*< skip >*/
   GIMP_DASHBOARD_HISTORY_DURATION_120_SEC = 120000,
   GIMP_DASHBOARD_HISTORY_DURATION_240_SEC = 240000
 } GimpDashboardHistoryDuration;
-
-
-#endif /* __WIDGETS_ENUMS_H__ */

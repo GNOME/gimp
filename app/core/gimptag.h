@@ -18,11 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TAG_H__
-#define __GIMP_TAG_H__
-
-
-#include <glib-object.h>
+#pragma once
 
 
 #define GIMP_TYPE_TAG            (gimp_tag_get_type ())
@@ -75,6 +71,3 @@ gboolean      gimp_tag_is_tag_separator    (gunichar     c);
 
 void          gimp_tag_or_null_ref         (GimpTag     *tag_or_null);
 void          gimp_tag_or_null_unref       (GimpTag     *tag_or_null);
-
-
-#endif /* __GIMP_TAG_H__ */

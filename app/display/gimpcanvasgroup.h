@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_GROUP_H__
-#define __GIMP_CANVAS_GROUP_H__
-
+#pragma once
 
 #include "gimpcanvasitem.h"
 
@@ -63,6 +61,3 @@ void             gimp_canvas_group_set_group_stroking (GimpCanvasGroup  *group,
                                                        gboolean          group_stroking);
 void             gimp_canvas_group_set_group_filling  (GimpCanvasGroup  *group,
                                                        gboolean          group_filling);
-
-
-#endif /* __GIMP_CANVAS_GROUP_H__ */

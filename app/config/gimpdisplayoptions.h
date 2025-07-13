@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_OPTIONS_H__
-#define __GIMP_DISPLAY_OPTIONS_H__
-
+#pragma once
 
 #define GIMP_TYPE_DISPLAY_OPTIONS            (gimp_display_options_get_type ())
 #define GIMP_TYPE_DISPLAY_OPTIONS_FULLSCREEN (gimp_display_options_fullscreen_get_type ())
@@ -75,6 +73,3 @@ struct _GimpDisplayOptionsClass
 GType  gimp_display_options_get_type            (void) G_GNUC_CONST;
 GType  gimp_display_options_fullscreen_get_type (void) G_GNUC_CONST;
 GType  gimp_display_options_no_image_get_type   (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_DISPLAY_OPTIONS_H__ */

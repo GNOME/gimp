@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OBJECT_QUEUE_H__
-#define __GIMP_OBJECT_QUEUE_H__
-
+#pragma once
 
 #include "gimpsubprogress.h"
 
@@ -61,6 +59,3 @@ void              gimp_object_queue_push_list      (GimpObjectQueue *queue,
                                                     GList           *list);
 
 gpointer          gimp_object_queue_pop            (GimpObjectQueue *queue);
-
-
-#endif /* __GIMP_OBJECT_QUEUE_H__ */

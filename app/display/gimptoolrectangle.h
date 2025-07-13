@@ -21,9 +21,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_RECTANGLE_H__
-#define __GIMP_TOOL_RECTANGLE_H__
-
+#pragma once
 
 #include "gimptoolwidget.h"
 
@@ -119,6 +117,3 @@ void     gimp_tool_rectangle_frame_item       (GimpToolRectangle      *rectangle
                                                GimpItem               *item);
 void     gimp_tool_rectangle_auto_shrink      (GimpToolRectangle      *rectrectangle,
                                                gboolean                shrink_merged);
-
-
-#endif /* __GIMP_TOOL_RECTANGLE_H__ */

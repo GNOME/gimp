@@ -15,8 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GUI_UNIQUE_H__
-#define __GUI_UNIQUE_H__
+#pragma once
+
 
 #ifdef G_OS_WIN32
 #define GIMP_UNIQUE_WIN32_WINDOW_CLASS  L"GimpWin32UniqueHandler"
@@ -26,6 +26,3 @@
 
 void  gui_unique_init (Gimp *gimp);
 void  gui_unique_exit (void);
-
-
-#endif /* __GUI_UNIQUE_H__ */

@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_CLIPBOARD_H__
-#define __GIMP_BRUSH_CLIPBOARD_H__
-
+#pragma once
 
 #include "gimpbrush.h"
 
@@ -53,6 +51,3 @@ GType      gimp_brush_clipboard_get_type (void) G_GNUC_CONST;
 
 GimpData * gimp_brush_clipboard_new      (Gimp     *gimp,
                                           gboolean  mask_only);
-
-
-#endif  /*  __GIMP_BRUSH_CLIPBOARD_H__  */

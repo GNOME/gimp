@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __ICONS_THEMES_H__
-#define __ICONS_THEMES_H__
+#pragma once
 
 
 void        icon_themes_init                    (Gimp        *gimp);
@@ -31,6 +30,3 @@ GFile     * icon_themes_get_theme_dir           (Gimp        *gimp,
                                                  const gchar *theme_name);
 
 gboolean    icon_themes_current_prefer_symbolic (Gimp        *gimp);
-
-
-#endif /* __ICONS_THEMES_H__ */

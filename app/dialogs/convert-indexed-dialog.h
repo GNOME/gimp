@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __CONVERT_INDEXED_DIALOG_H__
-#define __CONVERT_INDEXED_DIALOG_H__
+#pragma once
 
 
 typedef void (* GimpConvertIndexedCallback) (GtkWidget              *dialog,
@@ -43,6 +42,3 @@ GtkWidget * convert_indexed_dialog_new (GimpImage                  *image,
                                         GimpPalette                *custom_palette,
                                         GimpConvertIndexedCallback  callback,
                                         gpointer                    user_data);
-
-
-#endif  /*  __CONVERT_INDEXED_DIALOG_H__  */

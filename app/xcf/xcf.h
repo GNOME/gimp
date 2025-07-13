@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __XCF_H__
-#define __XCF_H__
+#pragma once
 
 
 void        xcf_init        (Gimp           *gimp);
@@ -34,5 +33,3 @@ gboolean    xcf_save_stream (Gimp           *gimp,
                              GFile          *output_file,
                              GimpProgress   *progress,
                              GError        **error);
-
-#endif /* __XCF_H__ */

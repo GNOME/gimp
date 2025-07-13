@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_H__
-#define __GIMP_H__
-
+#pragma once
 
 #include "gimpobject.h"
 #include "gimp-gui.h"
@@ -253,6 +251,3 @@ void           gimp_image_opened           (Gimp                *gimp,
 
 GFile        * gimp_get_temp_file          (Gimp                *gimp,
                                             const gchar         *extension);
-
-
-#endif  /* __GIMP_H__ */

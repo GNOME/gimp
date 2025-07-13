@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_SAMPLE_POINT_H__
-#define __GIMP_CANVAS_SAMPLE_POINT_H__
-
+#pragma once
 
 #include "gimpcanvasitem.h"
 
@@ -58,6 +56,3 @@ GimpCanvasItem * gimp_canvas_sample_point_new      (GimpDisplayShell *shell,
 void             gimp_canvas_sample_point_set      (GimpCanvasItem   *sample_point,
                                                     gint              x,
                                                     gint              y);
-
-
-#endif /* __GIMP_CANVAS_SAMPLE_POINT_H__ */

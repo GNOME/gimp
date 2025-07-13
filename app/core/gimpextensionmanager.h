@@ -18,11 +18,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_EXTENSION_MANAGER_H__
-#define __GIMP_EXTENSION_MANAGER_H__
+#pragma once
 
-
-#include "core/gimpobject.h"
+#include "gimpobject.h"
 
 
 #define GIMP_TYPE_EXTENSION_MANAGER            (gimp_extension_manager_get_type ())
@@ -81,5 +79,3 @@ gboolean               gimp_extension_manager_remove                (GimpExtensi
 gboolean               gimp_extension_manager_undo_remove           (GimpExtensionManager *manager,
                                                                      GimpExtension        *extension,
                                                                      GError              **error);
-
-#endif  /* __GIMP_EXTENSION_MANAGER_H__ */

@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_LAYER_TRANSFORM_H__
-#define __GIMP_TEXT_LAYER_TRANSFORM_H__
+#pragma once
 
 
 void  gimp_text_layer_scale     (GimpItem               *item,
@@ -48,6 +47,3 @@ void  gimp_text_layer_transform (GimpItem               *item,
                                  gboolean                supersample,
                                  GimpTransformResize     clip_result,
                                  GimpProgress           *progress);
-
-
-#endif /* __GIMP_TEXT_LAYER_TRANSFORM_H__ */

@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __XCF_LOAD_H__
-#define __XCF_LOAD_H__
+#pragma once
 
 
 GimpImage * xcf_load_image (Gimp     *gimp,
                             XcfInfo  *info,
                             GError  **error);
-
-
-#endif  /* __XCF_LOAD_H__ */

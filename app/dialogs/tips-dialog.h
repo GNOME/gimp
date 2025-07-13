@@ -15,11 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __TIPS_DIALOG_H__
-#define __TIPS_DIALOG_H__
+#pragma once
 
 
 GtkWidget * tips_dialog_create (Gimp *gimp);
-
-
-#endif /* __TIPS_DIALOG_H__ */

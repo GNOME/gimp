@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GRADIENTS_ACTIONS_H__
-#define __GRADIENTS_ACTIONS_H__
+#pragma once
 
 
 void   gradients_actions_setup  (GimpActionGroup *group);
 void   gradients_actions_update (GimpActionGroup *group,
                                  gpointer         user_data);
-
-
-#endif /* __GRADIENT_ACTIONS_H__ */

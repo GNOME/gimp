@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_CALLBACKS_H__
-#define __GIMP_DISPLAY_SHELL_CALLBACKS_H__
+#pragma once
 
 
 void       gimp_display_shell_canvas_realize          (GtkWidget        *widget,
@@ -41,6 +40,3 @@ void       gimp_display_shell_quick_mask_toggled      (GtkWidget        *widget,
 gboolean   gimp_display_shell_navigation_button_press (GtkWidget        *widget,
                                                        GdkEventButton   *bevent,
                                                        GimpDisplayShell *shell);
-
-
-#endif /* __GIMP_DISPLAY_SHELL_CALLBACKS_H__ */

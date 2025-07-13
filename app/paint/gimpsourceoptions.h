@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SOURCE_OPTIONS_H__
-#define __GIMP_SOURCE_OPTIONS_H__
-
+#pragma once
 
 #include "gimppaintoptions.h"
 
@@ -56,5 +54,3 @@ struct _GimpSourceOptionsClass
 
 GType   gimp_source_options_get_type (void) G_GNUC_CONST;
 
-
-#endif  /*  __GIMP_SOURCE_OPTIONS_H__  */

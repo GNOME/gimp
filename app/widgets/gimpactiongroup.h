@@ -18,8 +18,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
+/*  leave this here  */
 #ifndef __GIMP_ACTION_GROUP_H__
 #define __GIMP_ACTION_GROUP_H__
+#endif
 
 #include "core/gimpobject.h"
 
@@ -253,7 +257,3 @@ void          gimp_action_group_set_action_hide_empty (GimpActionGroup *group,
 void   gimp_action_group_set_action_always_show_image (GimpActionGroup *group,
                                                        const gchar     *action_name,
                                                        gboolean         always_show_image);
-
-
-
-#endif  /* __GIMP_ACTION_GROUP_H__ */

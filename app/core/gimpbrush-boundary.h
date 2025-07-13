@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_BOUNDARY_H__
-#define __GIMP_BRUSH_BOUNDARY_H__
+#pragma once
 
 
 GimpBezierDesc * gimp_brush_real_transform_boundary (GimpBrush *brush,
@@ -27,6 +26,3 @@ GimpBezierDesc * gimp_brush_real_transform_boundary (GimpBrush *brush,
                                                      gdouble    hardness,
                                                      gint      *width,
                                                      gint      *height);
-
-
-#endif /* __GIMP_BRUSH_BOUNDARY_H__ */

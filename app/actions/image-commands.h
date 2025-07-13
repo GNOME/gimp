@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __IMAGE_COMMANDS_H__
-#define __IMAGE_COMMANDS_H__
+#pragma once
 
 
 void   image_new_cmd_callback                      (GimpAction *action,
@@ -106,5 +105,3 @@ void   image_softproof_intent_cmd_callback           (GimpAction *action,
 void   image_softproof_bpc_cmd_callback              (GimpAction *action,
                                                       GVariant   *value,
                                                       gpointer    data);
-
-#endif /* __IMAGE_COMMANDS_H__ */

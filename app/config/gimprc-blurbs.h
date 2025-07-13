@@ -1,8 +1,6 @@
 /*  gimprc-blurbs.h  --  descriptions for gimprc properties  */
 
-#ifndef __GIMP_RC_BLURBS_H__
-#define __GIMP_RC_BLURBS_H__
-
+#pragma once
 
 /*  Not all strings defined here are used in the user interface
  *  (the preferences dialog mainly) and only those that are should
@@ -799,6 +797,3 @@ _("When enabled, a search of actions will also return inactive actions.")
 
 #define ACTION_HISTORY_SIZE_BLURB \
 _("The maximum number of actions saved in history.")
-
-
-#endif  /* __GIMP_RC_BLURBS_H__ */

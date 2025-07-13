@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_CORNER_H__
-#define __GIMP_CANVAS_CORNER_H__
-
+#pragma once
 
 #include "gimpcanvasitem.h"
 
@@ -67,6 +65,3 @@ void             gimp_canvas_corner_set      (GimpCanvasItem   *corner,
                                               gint              corner_width,
                                               gint              corner_height,
                                               gboolean          outside);
-
-
-#endif /* __GIMP_CANVAS_CORNER_H__ */

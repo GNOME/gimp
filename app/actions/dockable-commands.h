@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __DOCKABLE_COMMANDS_H__
-#define __DOCKABLE_COMMANDS_H__
+#pragma once
 
 
 void   dockable_add_tab_cmd_callback         (GimpAction *action,
@@ -44,6 +43,3 @@ void   dockable_tab_style_cmd_callback       (GimpAction *action,
 void   dockable_show_button_bar_cmd_callback (GimpAction *action,
                                               GVariant   *value,
                                               gpointer    data);
-
-
-#endif /* __DOCKABLE_COMMANDS_H__ */

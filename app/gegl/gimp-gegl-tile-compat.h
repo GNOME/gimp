@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GEGL_TILE_COMPAT_H__
-#define __GIMP_GEGL_TILE_COMPAT_H__
+#pragma once
 
 
 gint       gimp_gegl_buffer_get_n_tile_rows (GeglBuffer    *buffer,
@@ -31,6 +30,3 @@ gboolean   gimp_gegl_buffer_get_tile_rect   (GeglBuffer    *buffer,
                                              gint           tile_height,
                                              gint           tile_num,
                                              GeglRectangle *rect);
-
-
-#endif /* __GIMP_GEGL_TILE_COMPAT_H__ */

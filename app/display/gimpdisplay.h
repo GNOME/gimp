@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_IMPL_H__
-#define __GIMP_DISPLAY_IMPL_H__
-
+#pragma once
 
 #include "core/gimpdisplay.h"
 
@@ -89,6 +87,3 @@ void               gimp_display_update_area     (GimpDisplay       *display,
 
 void               gimp_display_flush           (GimpDisplay       *display);
 void               gimp_display_flush_now       (GimpDisplay       *display);
-
-
-#endif /*  __GIMP_DISPLAY_IMPL_H__  */

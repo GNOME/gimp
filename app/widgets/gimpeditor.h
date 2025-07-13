@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_EDITOR_H__
-#define __GIMP_EDITOR_H__
+#pragma once
 
 
 #define GIMP_TYPE_EDITOR (gimp_editor_get_type ())
@@ -97,6 +96,3 @@ GimpMenuFactory *
             gimp_editor_get_menu_factory  (GimpEditor          *editor);
 gpointer  * gimp_editor_get_popup_data    (GimpEditor          *editor);
 gchar     * gimp_editor_get_ui_path       (GimpEditor          *editor);
-
-
-#endif  /*  __GIMP_EDITOR_H__  */

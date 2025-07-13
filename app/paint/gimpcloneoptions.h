@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CLONE_OPTIONS_H__
-#define __GIMP_CLONE_OPTIONS_H__
-
+#pragma once
 
 #include "gimpsourceoptions.h"
 
@@ -46,6 +44,3 @@ struct _GimpCloneOptionsClass
 
 
 GType   gimp_clone_options_get_type (void) G_GNUC_CONST;
-
-
-#endif  /*  __GIMP_CLONE_OPTIONS_H__  */

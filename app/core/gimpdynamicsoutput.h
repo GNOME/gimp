@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DYNAMICS_OUTPUT_H__
-#define __GIMP_DYNAMICS_OUTPUT_H__
-
+#pragma once
 
 #include "gimpobject.h"
 
@@ -63,6 +61,3 @@ gdouble    gimp_dynamics_output_get_aspect_value   (GimpDynamicsOutput *output,
                                                     const GimpCoords   *coords,
                                                     GimpPaintOptions   *options,
                                                     gdouble             fade_point);
-
-
-#endif  /*  __GIMP_DYNAMICS_OUTPUT_H__  */

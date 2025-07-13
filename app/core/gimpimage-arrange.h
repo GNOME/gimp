@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_ARRANGE_H__
-#define __GIMP_IMAGE_ARRANGE_H__
+#pragma once
 
 
 void gimp_image_arrange_objects (GimpImage         *image,
@@ -26,5 +25,3 @@ void gimp_image_arrange_objects (GimpImage         *image,
                                  GObject           *reference,
                                  GimpAlignmentType  reference_alignment,
                                  gboolean           align_contents);
-
-#endif  /*  __GIMP_IMAGE_ARRANGE_H__  */

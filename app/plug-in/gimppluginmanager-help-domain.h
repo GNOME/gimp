@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_MANAGER_HELP_DOMAIN_H__
-#define __GIMP_PLUG_IN_MANAGER_HELP_DOMAIN_H__
+#pragma once
 
 
 void          gimp_plug_in_manager_help_domain_exit (GimpPlugInManager   *manager);
@@ -39,5 +38,3 @@ gint          gimp_plug_in_manager_get_help_domains (GimpPlugInManager   *manage
                                                      gchar             ***help_domains,
                                                      gchar             ***help_uris);
 
-
-#endif /* __GIMP_PLUG_IN_MANAGER_HELP_DOMAIN_H__ */

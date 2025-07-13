@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BEZIER_STROKE_H__
-#define __GIMP_BEZIER_STROKE_H__
+#pragma once
 
 #include "gimpstroke.h"
 
@@ -79,6 +78,3 @@ GimpAnchor * gimp_bezier_stroke_extend      (GimpStroke           *stroke,
                                              const GimpCoords     *coords,
                                              GimpAnchor           *neighbor,
                                              GimpStrokeExtendMode  extend_mode);
-
-
-#endif /* __GIMP_BEZIER_STROKE_H__ */

@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_AIRBRUSH_OPTIONS_H__
-#define __GIMP_AIRBRUSH_OPTIONS_H__
-
+#pragma once
 
 #include "gimppaintoptions.h"
 
@@ -49,5 +47,3 @@ struct _GimpAirbrushOptionsClass
 
 GType   gimp_airbrush_options_get_type (void) G_GNUC_CONST;
 
-
-#endif  /*  __GIMP_AIRBRUSH_OPTIONS_H__  */

@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DATA_LOADER_FACTORY_H__
-#define __GIMP_DATA_LOADER_FACTORY_H__
-
+#pragma once
 
 #include "gimpdatafactory.h"
 
@@ -73,6 +71,3 @@ void              gimp_data_loader_factory_add_loader   (GimpDataFactory        
 void              gimp_data_loader_factory_add_fallback (GimpDataFactory         *factory,
                                                          const gchar             *name,
                                                          GimpDataLoadFunc         load_func);
-
-
-#endif  /*  __GIMP_DATA_LOADER_FACTORY_H__  */

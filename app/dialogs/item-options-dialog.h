@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __ITEM_OPTIONS_DIALOG_H__
-#define __ITEM_OPTIONS_DIALOG_H__
+#pragma once
 
 
 typedef void (* GimpItemOptionsCallback) (GtkWidget    *dialog,
@@ -70,6 +69,3 @@ GtkWidget * item_options_dialog_add_switch           (GtkWidget   *dialog,
 
 void        item_options_dialog_set_switches_visible (GtkWidget   *dialog,
                                                       gboolean     visible);
-
-
-#endif /* __ITEM_OPTIONS_DIALOG_H__ */

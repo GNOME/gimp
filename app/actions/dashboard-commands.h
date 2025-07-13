@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __DASHBOARD_COMMANDS_H__
-#define __DASHBOARD_COMMANDS_H__
+#pragma once
 
 
 void   dashboard_update_interval_cmd_callback        (GimpAction *action,
@@ -43,6 +42,3 @@ void   dashboard_reset_cmd_callback                  (GimpAction *action,
 void   dashboard_low_swap_space_warning_cmd_callback (GimpAction *action,
                                                       GVariant   *value,
                                                       gpointer    data);
-
-
-#endif /* __DASHBOARD_COMMANDS_H__ */

@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_H__
-#define __GIMP_DRAWABLE_H__
-
+#pragma once
 
 #include "gimpitem.h"
 
@@ -236,6 +234,3 @@ void              gimp_drawable_start_paint          (GimpDrawable    *drawable)
 gboolean          gimp_drawable_end_paint            (GimpDrawable    *drawable);
 gboolean          gimp_drawable_flush_paint          (GimpDrawable    *drawable);
 gboolean          gimp_drawable_is_painting          (GimpDrawable    *drawable);
-
-
-#endif /* __GIMP_DRAWABLE_H__ */

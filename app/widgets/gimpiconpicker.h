@@ -19,8 +19,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ICON_PICKER_H__
-#define __GIMP_ICON_PICKER_H__
+#pragma once
 
 
 #define GIMP_TYPE_ICON_PICKER            (gimp_icon_picker_get_type ())
@@ -55,6 +54,3 @@ void          gimp_icon_picker_set_icon_name   (GimpIconPicker *picker,
 GdkPixbuf   * gimp_icon_picker_get_icon_pixbuf (GimpIconPicker *picker);
 void          gimp_icon_picker_set_icon_pixbuf (GimpIconPicker *picker,
                                                 GdkPixbuf      *value);
-
-
-#endif  /*  __GIMP_ICON_PICKER_H__  */

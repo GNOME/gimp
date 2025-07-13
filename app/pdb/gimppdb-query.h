@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PDB_QUERY_H__
-#define __GIMP_PDB_QUERY_H__
+#pragma once
 
 
 gboolean   gimp_pdb_dump  (GimpPDB       *pdb,
@@ -32,6 +31,3 @@ gboolean   gimp_pdb_query (GimpPDB       *pdb,
                            const gchar   *proc_type,
                            gchar       ***procs,
                            GError       **error);
-
-
-#endif /* __GIMP_PDB_QUERY_H__ */

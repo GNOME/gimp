@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_INTERPRETER_DB_H__
-#define __GIMP_INTERPRETER_DB_H__
+#pragma once
 
 
 #define GIMP_TYPE_INTERPRETER_DB            (gimp_interpreter_db_get_type ())
@@ -65,6 +64,3 @@ gchar             * gimp_interpreter_db_resolve  (GimpInterpreterDB  *db,
                                                   const gchar        *program_path,
                                                   gchar             **interp_arg);
 gchar       * gimp_interpreter_db_get_extensions (GimpInterpreterDB  *db);
-
-
-#endif /* __GIMP_INTERPRETER_DB_H__ */

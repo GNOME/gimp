@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SCAN_CONVERT_H__
-#define __GIMP_SCAN_CONVERT_H__
+#pragma once
 
 
 GimpScanConvert *
@@ -76,6 +75,3 @@ void      gimp_scan_convert_compose_value      (GimpScanConvert   *sc,
                                                 gint               off_x,
                                                 gint               off_y,
                                                 gdouble            value);
-
-
-#endif /* __GIMP_SCAN_CONVERT_H__ */

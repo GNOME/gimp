@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_PEN_H__
-#define __GIMP_CANVAS_PEN_H__
-
+#pragma once
 
 #include "gimpcanvaspolygon.h"
 
@@ -55,6 +53,3 @@ GimpCanvasItem * gimp_canvas_pen_new      (GimpDisplayShell  *shell,
                                            GimpContext       *context,
                                            GimpActiveColor    color,
                                            gint               width);
-
-
-#endif /* __GIMP_CANVAS_PEN_H__ */

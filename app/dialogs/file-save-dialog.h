@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __FILE_SAVE_DIALOG_H__
-#define __FILE_SAVE_DIALOG_H__
+#pragma once
 
 
 #define FILE_SAVE_RESPONSE_OTHER_DIALOG -23
@@ -36,7 +35,3 @@ gboolean    file_save_dialog_save_image (GimpProgress        *progress_and_handl
                                          gboolean             export_forward,
                                          gboolean             xcf_compression,
                                          gboolean             verbose_cancel);
-
-
-
-#endif /* __FILE_SAVE_DIALOG_H__ */

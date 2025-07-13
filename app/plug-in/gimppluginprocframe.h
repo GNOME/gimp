@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_PROC_FRAME_H__
-#define __GIMP_PLUG_IN_PROC_FRAME_H__
+#pragma once
 
 
 struct _GimpPlugInProcFrame
@@ -62,6 +61,3 @@ void                  gimp_plug_in_proc_frame_unref   (GimpPlugInProcFrame *proc
 
 GimpValueArray      * gimp_plug_in_proc_frame_get_return_values
                                                       (GimpPlugInProcFrame *proc_frame);
-
-
-#endif /* __GIMP_PLUG_IN_PROC_FRAME_H__ */

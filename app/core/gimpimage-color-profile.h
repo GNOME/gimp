@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_COLOR_PROFILE_H__
-#define __GIMP_IMAGE_COLOR_PROFILE_H__
+#pragma once
 
 
 #define GIMP_ICC_PROFILE_PARASITE_NAME            "icc-profile"
@@ -126,6 +125,3 @@ void                 _gimp_image_update_color_profile  (GimpImage           *ima
 void                 _gimp_image_update_simulation_profile
                                                        (GimpImage           *image,
                                                         const GimpParasite  *icc_parasite);
-
-
-#endif /* __GIMP_IMAGE_COLOR_PROFILE_H__ */

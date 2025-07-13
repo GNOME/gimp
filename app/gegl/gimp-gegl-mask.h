@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GEGL_MASK_H__
-#define __GIMP_GEGL_MASK_H__
+#pragma once
 
 
 gboolean   gimp_gegl_mask_bounds   (GeglBuffer *buffer,
@@ -25,6 +24,3 @@ gboolean   gimp_gegl_mask_bounds   (GeglBuffer *buffer,
                                     gint        *x2,
                                     gint        *y2);
 gboolean   gimp_gegl_mask_is_empty (GeglBuffer *buffer);
-
-
-#endif /* __GIMP_GEGL_MASK_H__ */

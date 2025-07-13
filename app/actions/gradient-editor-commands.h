@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GRADIENT_EDITOR_COMMANDS_H__
-#define __GRADIENT_EDITOR_COMMANDS_H__
+#pragma once
 
 
 enum
@@ -94,6 +93,3 @@ void   gradient_editor_blend_opacity_cmd_callback    (GimpAction *action,
 void   gradient_editor_zoom_cmd_callback             (GimpAction *action,
                                                       GVariant   *value,
                                                       gpointer    data);
-
-
-#endif /* __GRADIENT_EDITOR_COMMANDS_H__ */

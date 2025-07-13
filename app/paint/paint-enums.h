@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __PAINT_ENUMS_H__
-#define __PAINT_ENUMS_H__
+#pragma once
 
 #if 0
    This file is parsed by two scripts, enumgen.pl in pdb,
@@ -88,5 +87,3 @@ typedef enum /*< skip, pdb-skip >*/
   GIMP_PAINT_LOCK_BLINK_PENDING,
   GIMP_PAINT_LOCK_BLINKED,
 } GimpPaintLockBlinkState;
-
-#endif /* __PAINT_ENUMS_H__ */

@@ -15,16 +15,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __TOOLS_TYPES_H__
-#define __TOOLS_TYPES_H__
+#pragma once
 
 #include "paint/paint-types.h"
 #include "display/display-types.h"
 
 #include "tools/tools-enums.h"
-
-
-G_BEGIN_DECLS
 
 
 typedef struct _GimpTool                     GimpTool;
@@ -61,8 +57,3 @@ typedef void (* GimpToolRegisterCallback) (GType                     tool_type,
 
 typedef void (* GimpToolRegisterFunc)     (GimpToolRegisterCallback  callback,
                                            gpointer                  register_data);
-
-
-G_END_DECLS
-
-#endif /* __TOOLS_TYPES_H__ */

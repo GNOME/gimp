@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PATH_UNDO_H__
-#define __GIMP_PATH_UNDO_H__
-
+#pragma once
 
 #include "core/gimpitemundo.h"
 
@@ -49,6 +47,3 @@ struct _GimpPathUndoClass
 
 
 GType   gimp_path_undo_get_type (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_PATH_UNDO_H__ */

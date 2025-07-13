@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef  __GIMP_INK_H__
-#define  __GIMP_INK_H__
-
+#pragma once
 
 #include "gimppaintcore.h"
 #include "gimpink-blob.h"
@@ -55,5 +53,3 @@ void    gimp_ink_register (Gimp                      *gimp,
 
 GType   gimp_ink_get_type (void) G_GNUC_CONST;
 
-
-#endif  /*  __GIMP_INK_H__  */

@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_H__
-#define __GIMP_TEXT_H__
-
+#pragma once
 
 #include "core/gimpobject.h"
 
@@ -90,6 +88,3 @@ GType  gimp_text_get_type           (void) G_GNUC_CONST;
 
 void   gimp_text_get_transformation (GimpText    *text,
                                      GimpMatrix3 *matrix);
-
-
-#endif /* __GIMP_TEXT_H__ */

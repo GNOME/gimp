@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PALETTE_MRU_H__
-#define __GIMP_PALETTE_MRU_H__
-
+#pragma once
 
 #include "gimppalette.h"
 
@@ -57,6 +55,3 @@ void       gimp_palette_mru_save     (GimpPaletteMru *mru,
 
 void       gimp_palette_mru_add      (GimpPaletteMru *mru,
                                       GeglColor      *color);
-
-
-#endif  /*  __GIMP_PALETTE_MRU_H__  */

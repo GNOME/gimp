@@ -17,9 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_PROCEDURE_H__
-#define __GIMP_PLUG_IN_PROCEDURE_H__
-
+#pragma once
 
 #include "pdb/gimpprocedure.h"
 
@@ -149,5 +147,3 @@ void       gimp_plug_in_procedure_handle_return_values (GimpPlugInProcedure *pro
 
                                                         GimpValueArray      *return_vals);
 
-
-#endif /* __GIMP_PLUG_IN_PROCEDURE_H__ */

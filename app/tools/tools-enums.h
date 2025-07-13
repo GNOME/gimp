@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __TOOLS_ENUMS_H__
-#define __TOOLS_ENUMS_H__
+#pragma once
 
 
 /*
@@ -208,6 +207,3 @@ typedef enum /*< skip >*/
   GIMP_MOTION_MODE_EXACT,
   GIMP_MOTION_MODE_COMPRESS
 } GimpMotionMode;
-
-
-#endif /* __TOOLS_ENUMS_H__ */

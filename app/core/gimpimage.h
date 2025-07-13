@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_H__
-#define __GIMP_IMAGE_H__
-
+#pragma once
 
 #include "gimpviewable.h"
 
@@ -512,6 +510,3 @@ void            gimp_image_invalidate_previews   (GimpImage          *image);
 void            gimp_image_set_converting        (GimpImage          *image,
                                                   gboolean            converting);
 gboolean        gimp_image_get_converting        (GimpImage          *image);
-
-
-#endif /* __GIMP_IMAGE_H__ */

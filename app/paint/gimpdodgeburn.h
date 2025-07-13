@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DODGE_BURN_H__
-#define __GIMP_DODGE_BURN_H__
-
+#pragma once
 
 #include "gimpbrushcore.h"
 
@@ -46,6 +44,3 @@ void    gimp_dodge_burn_register (Gimp                      *gimp,
                                   GimpPaintRegisterCallback  callback);
 
 GType   gimp_dodge_burn_get_type (void) G_GNUC_CONST;
-
-
-#endif  /*  __GIMP_DODGE_BURN_H__  */

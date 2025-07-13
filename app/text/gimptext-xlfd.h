@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_XLFD_H__
-#define __GIMP_TEXT_XLFD_H__
+#pragma once
 
 
 /*  handle X Logical Font Descriptions for compat  */
@@ -31,6 +30,3 @@ gboolean   gimp_text_font_size_from_xlfd (const gchar  *xlfd,
 
 void       gimp_text_set_font_from_xlfd  (GimpText     *text,
                                           const gchar  *xlfd);
-
-
-#endif /* __GIMP_TEXT_COMPAT_H__ */

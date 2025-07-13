@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __VIEW_ACTIONS_H__
-#define __VIEW_ACTIONS_H__
+#pragma once
 
 
 void   view_actions_setup  (GimpActionGroup *group);
 void   view_actions_update (GimpActionGroup *group,
                             gpointer         data);
-
-
-#endif /* __VIEW_ACTIONS_H__ */

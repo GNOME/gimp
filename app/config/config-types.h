@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __CONFIG_TYPES_H__
-#define __CONFIG_TYPES_H__
-
+#pragma once
 
 #include "libgimpconfig/gimpconfigtypes.h"
 
@@ -82,6 +80,3 @@ g_set_str (char       **str_pointer,
   return TRUE;
 }
 #endif
-
-
-#endif /* __CONFIG_TYPES_H__ */

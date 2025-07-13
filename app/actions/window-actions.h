@@ -15,14 +15,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __WINDOW_ACTIONS_H__
-#define __WINDOW_ACTIONS_H__
+#pragma once
 
 
 void   window_actions_setup  (GimpActionGroup *group,
                               const gchar     *move_to_screen_help_id);
 void   window_actions_update (GimpActionGroup *group,
                               GtkWidget       *window);
-
-
-#endif /* __WINDOW_ACTIONS_H__ */

@@ -16,9 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_PIPE_LOAD_H__
-#define __GIMP_BRUSH_PIPE_LOAD_H__
-
+#pragma once
 
 #define GIMP_BRUSH_PIPE_FILE_EXTENSION ".gih"
 
@@ -27,6 +25,3 @@ GList * gimp_brush_pipe_load (GimpContext   *context,
                               GFile         *file,
                               GInputStream  *input,
                               GError       **error);
-
-
-#endif  /* __GIMP_BRUSH_PIPE_LOAD_H__ */

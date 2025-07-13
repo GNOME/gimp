@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_SCROLLBARS_H__
-#define __GIMP_DISPLAY_SHELL_SCROLLBARS_H__
+#pragma once
 
 
 void   gimp_display_shell_scrollbars_update           (GimpDisplayShell *shell);
@@ -31,6 +30,3 @@ void   gimp_display_shell_scrollbars_update_steppers  (GimpDisplayShell *shell,
                                                        gint              max_offset_x,
                                                        gint              min_offset_y,
                                                        gint              max_offset_y);
-
-
-#endif  /*  __GIMP_DISPLAY_SHELL_SCROLLBARS_H__  */

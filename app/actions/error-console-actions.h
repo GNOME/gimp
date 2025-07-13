@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __ERROR_CONSOLE_ACIONS_H__
-#define __ERROR_CONSOLE_ACIONS_H__
+#pragma once
 
 
 void   error_console_actions_setup  (GimpActionGroup *group);
 void   error_console_actions_update (GimpActionGroup *group,
                                      gpointer         data);
-
-
-#endif /* __ERROR_CONSOLE_ACTIONS_H__ */

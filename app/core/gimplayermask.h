@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LAYER_MASK_H__
-#define __GIMP_LAYER_MASK_H__
-
+#pragma once
 
 #include "gimpchannel.h"
 
@@ -56,6 +54,3 @@ GimpLayerMask * gimp_layer_mask_new       (GimpImage     *image,
 void            gimp_layer_mask_set_layer (GimpLayerMask *layer_mask,
                                            GimpLayer     *layer);
 GimpLayer     * gimp_layer_mask_get_layer (GimpLayerMask *layer_mask);
-
-
-#endif /* __GIMP_LAYER_MASK_H__ */

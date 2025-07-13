@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CURVE_MAP_H__
-#define __GIMP_CURVE_MAP_H__
+#pragma once
 
 
 gdouble         gimp_curve_map_value         (GimpCurve     *curve,
@@ -29,6 +28,3 @@ void            gimp_curve_map_pixels        (GimpCurve     *curve_colors,
                                               gfloat        *src,
                                               gfloat        *dest,
                                               glong          samples);
-
-
-#endif /* __GIMP_CURVE_MAP_H__ */

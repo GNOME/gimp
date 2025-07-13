@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_SCALE_H__
-#define __GIMP_IMAGE_SCALE_H__
+#pragma once
 
 
 void   gimp_image_scale         (GimpImage             *image,
@@ -31,6 +30,3 @@ GimpImageScaleCheckType
                                  gint                   new_height,
                                  gint64                 max_memsize,
                                  gint64                *new_memsize);
-
-
-#endif /* __GIMP_IMAGE_SCALE_H__ */

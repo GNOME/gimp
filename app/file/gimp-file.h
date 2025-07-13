@@ -18,13 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FILE_H__
-#define __GIMP_FILE_H__
+#pragma once
+
 
 /* Data keys for Gimp */
 #define GIMP_FILE_OPEN_LAST_FILE_KEY     "gimp-file-open-last-file"
 #define GIMP_FILE_SAVE_LAST_FILE_KEY     "gimp-file-save-last-file"
 #define GIMP_FILE_EXPORT_LAST_FILE_KEY   "gimp-file-export-last-file"
-
-
-#endif /* __GIMP_FILE_H__ */

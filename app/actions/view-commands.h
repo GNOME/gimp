@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __VIEW_COMMANDS_H__
-#define __VIEW_COMMANDS_H__
+#pragma once
 
 
 void   view_new_cmd_callback                        (GimpAction *action,
@@ -176,6 +175,3 @@ void   view_shrink_wrap_cmd_callback                (GimpAction *action,
 void   view_fullscreen_cmd_callback                 (GimpAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);
-
-
-#endif /* __VIEW_COMMANDS_H__ */

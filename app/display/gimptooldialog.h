@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_DIALOG_H__
-#define __GIMP_TOOL_DIALOG_H__
+#pragma once
 
 #include "widgets/gimpviewabledialog.h"
 
@@ -52,6 +51,3 @@ GtkWidget * gimp_tool_dialog_new       (GimpToolInfo     *tool_info,
 
 void        gimp_tool_dialog_set_shell (GimpToolDialog   *tool_dialog,
                                         GimpDisplayShell *shell);
-
-
-#endif /* __GIMP_TOOL_DIALOG_H__ */

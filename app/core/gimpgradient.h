@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GRADIENT_H__
-#define __GIMP_GRADIENT_H__
-
+#pragma once
 
 #include "gimpdata.h"
 
@@ -287,6 +285,3 @@ gdouble gimp_gradient_segment_range_move      (GimpGradient         *gradient,
                                                GimpGradientSegment  *range_r,
                                                gdouble               delta,
                                                gboolean              control_compress);
-
-
-#endif /* __GIMP_GRADIENT_H__ */

@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SAMPLE_POINT_UNDO_H__
-#define __GIMP_SAMPLE_POINT_UNDO_H__
-
+#pragma once
 
 #include "gimpauxitemundo.h"
 
@@ -49,6 +47,3 @@ struct _GimpSamplePointUndoClass
 
 
 GType   gimp_sample_point_undo_get_type (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_SAMPLE_POINT_UNDO_H__ */

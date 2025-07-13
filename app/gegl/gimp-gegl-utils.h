@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GEGL_UTILS_H__
-#define __GIMP_GEGL_UTILS_H__
+#pragma once
 
 
 GList       * gimp_gegl_get_op_classes                (void);
@@ -66,6 +65,3 @@ GeglBuffer  * gimp_gegl_buffer_resize                 (GeglBuffer          *buff
 
 gboolean      gimp_gegl_buffer_set_extent             (GeglBuffer          *buffer,
                                                        const GeglRectangle *extent);
-
-
-#endif /* __GIMP_GEGL_UTILS_H__ */

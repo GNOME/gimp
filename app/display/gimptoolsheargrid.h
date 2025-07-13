@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_SHEAR_GRID_H__
-#define __GIMP_TOOL_SHEAR_GRID_H__
-
+#pragma once
 
 #include "gimptooltransformgrid.h"
 
@@ -60,6 +58,3 @@ GimpToolWidget * gimp_tool_shear_grid_new      (GimpDisplayShell    *shell,
                                                 GimpOrientationType  orientation,
                                                 gdouble              shear_x,
                                                 gdouble              shear_y);
-
-
-#endif /* __GIMP_TOOL_SHEAR_GRID_H__ */

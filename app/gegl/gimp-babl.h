@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BABL_H__
-#define __GIMP_BABL_H__
+#pragma once
 
 
 void                gimp_babl_init                         (void);
@@ -59,6 +58,3 @@ const Babl        * gimp_babl_format_change_trc            (const Babl          
                                                             GimpTRCType          trc);
 
 gchar            ** gimp_babl_print_color                  (GeglColor           *color);
-
-
-#endif /* __GIMP_BABL_H__ */

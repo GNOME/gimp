@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_HEADER_H__
-#define __GIMP_BRUSH_HEADER_H__
+#pragma once
 
 
 #define GIMP_BRUSH_MAGIC    (('G' << 24) + ('I' << 16) + \
@@ -44,6 +43,3 @@ struct _GimpBrushHeader
  *  After that comes the brush data -- width * height * bytes bytes of
  *  it...
  */
-
-
-#endif /* __GIMP_BRUSH_HEADER_H__ */

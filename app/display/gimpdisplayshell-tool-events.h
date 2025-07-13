@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_TOOL_EVENTS_H__
-#define __GIMP_DISPLAY_SHELL_TOOL_EVENTS_H__
+#pragma once
 
 
 gboolean   gimp_display_shell_events                  (GtkWidget        *widget,
@@ -67,6 +66,3 @@ gboolean   gimp_display_shell_hruler_button_press     (GtkWidget        *widget,
 gboolean   gimp_display_shell_vruler_button_press     (GtkWidget        *widget,
                                                        GdkEventButton   *bevent,
                                                        GimpDisplayShell *shell);
-
-
-#endif /* __GIMP_DISPLAY_SHELL_TOOL_EVENT_H__ */

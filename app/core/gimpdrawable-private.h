@@ -15,8 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_PRIVATE_H__
-#define __GIMP_DRAWABLE_PRIVATE_H__
+#pragma once
+
 
 struct _GimpDrawablePrivate
 {
@@ -44,5 +44,3 @@ struct _GimpDrawablePrivate
 
   gboolean          push_resize_undo;
 };
-
-#endif /* __GIMP_DRAWABLE_PRIVATE_H__ */

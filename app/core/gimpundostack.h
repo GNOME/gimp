@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_UNDO_STACK_H__
-#define __GIMP_UNDO_STACK_H__
-
+#pragma once
 
 #include "gimpundo.h"
 
@@ -59,6 +57,3 @@ GimpUndo      * gimp_undo_stack_free_bottom (GimpUndoStack       *stack,
                                              GimpUndoMode         undo_mode);
 GimpUndo      * gimp_undo_stack_peek        (GimpUndoStack       *stack);
 gint            gimp_undo_stack_get_depth   (GimpUndoStack       *stack);
-
-
-#endif /* __GIMP_UNDO_STACK_H__ */

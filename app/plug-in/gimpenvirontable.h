@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ENVIRON_TABLE_H__
-#define __GIMP_ENVIRON_TABLE_H__
+#pragma once
 
 
 #define GIMP_TYPE_ENVIRON_TABLE            (gimp_environ_table_get_type ())
@@ -67,6 +66,3 @@ void                gimp_environ_table_clear     (GimpEnvironTable *environ_tabl
 void                gimp_environ_table_clear_all (GimpEnvironTable *environ_table);
 
 gchar            ** gimp_environ_table_get_envp  (GimpEnvironTable *environ_table);
-
-
-#endif /* __GIMP_ENVIRON_TABLE_H__ */

@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_APPEARANCE_H__
-#define __GIMP_DISPLAY_SHELL_APPEARANCE_H__
+#pragma once
 
 
 void       gimp_display_shell_appearance_update        (GimpDisplayShell       *shell);
@@ -95,6 +94,3 @@ void       gimp_display_shell_get_padding              (GimpDisplayShell       *
 void       gimp_display_shell_set_padding_in_show_all  (GimpDisplayShell       *shell,
                                                         gboolean                keep);
 gboolean   gimp_display_shell_get_padding_in_show_all  (GimpDisplayShell       *shell);
-
-
-#endif /* __GIMP_DISPLAY_SHELL_APPEARANCE_H__ */

@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_H__
-#define __GIMP_CANVAS_H__
-
+#pragma once
 
 #include "widgets/gimpoverlaybox.h"
 
@@ -76,6 +74,3 @@ PangoLayout * gimp_canvas_get_layout   (GimpCanvas            *canvas,
 void          gimp_canvas_set_padding  (GimpCanvas            *canvas,
                                         GimpCanvasPaddingMode  padding_mode,
                                         GeglColor             *padding_color);
-
-
-#endif /*  __GIMP_CANVAS_H__  */

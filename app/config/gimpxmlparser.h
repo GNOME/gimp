@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_XML_PARSER_H__
-#define __GIMP_XML_PARSER_H__
+#pragma once
 
 
 GimpXmlParser * gimp_xml_parser_new              (const GMarkupParser *markup_parser,
@@ -41,6 +40,3 @@ gboolean        gimp_xml_parser_parse_buffer     (GimpXmlParser       *parser,
                                                   gssize               len,
                                                   GError             **error);
 void            gimp_xml_parser_free             (GimpXmlParser       *parser);
-
-
-#endif  /* __GIMP_XML_PARSER_H__ */

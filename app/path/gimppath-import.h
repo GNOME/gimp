@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PATH_IMPORT_H__
-#define __GIMP_PATH_IMPORT_H__
+#pragma once
 
 
 gboolean  gimp_path_import_file   (GimpImage    *image,
@@ -39,6 +38,3 @@ gboolean  gimp_path_import_buffer (GimpImage    *image,
                                    gint          position,
                                    GList       **ret_paths,
                                    GError      **error);
-
-
-#endif /* __GIMP_PATH_IMPORT_H__ */

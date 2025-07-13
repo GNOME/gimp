@@ -20,10 +20,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_EARLY_RC_H__
-#define __GIMP_EARLY_RC_H__
+#pragma once
 
 #include "core/core-enums.h"
+
 
 #define GIMP_TYPE_EARLY_RC            (gimp_early_rc_get_type ())
 #define GIMP_EARLY_RC(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_EARLY_RC, GimpEarlyRc))
@@ -65,7 +65,3 @@ gchar        * gimp_early_rc_get_language (GimpEarlyRc *rc);
 #ifdef G_OS_WIN32
 GimpWin32PointerInputAPI gimp_early_rc_get_win32_pointer_input_api (GimpEarlyRc *rc);
 #endif
-
-
-#endif /* GIMP_EARLY_RC_H__ */
-

@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __CORE_ENUMS_H__
-#define __CORE_ENUMS_H__
-
+#pragma once
 
 #if 0
    This file is parsed by two scripts, enumgen.pl in pdb,
@@ -788,6 +786,3 @@ typedef enum  /*< pdb-skip, skip >*/
                              GIMP_ITEM_TYPE_CHANNELS |
                              GIMP_ITEM_TYPE_PATHS)
 } GimpItemTypeMask;
-
-
-#endif /* __CORE_ENUMS_H__ */

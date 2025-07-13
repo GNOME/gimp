@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_GROUP_H__
-#define __GIMP_TOOL_GROUP_H__
-
+#pragma once
 
 #include "gimptoolitem.h"
 
@@ -63,6 +61,3 @@ const gchar   * gimp_tool_group_get_active_tool      (GimpToolGroup *tool_group)
 void            gimp_tool_group_set_active_tool_info (GimpToolGroup *tool_group,
                                                       GimpToolInfo  *tool_info);
 GimpToolInfo  * gimp_tool_group_get_active_tool_info (GimpToolGroup *tool_group);
-
-
-#endif  /*  __GIMP_TOOL_GROUP_H__  */

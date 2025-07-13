@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_LOAD_H__
-#define __GIMP_BRUSH_LOAD_H__
+#pragma once
 
 
 #define GIMP_BRUSH_FILE_EXTENSION        ".gbr"
@@ -38,6 +37,3 @@ GList     * gimp_brush_load_abr    (GimpContext   *context,
                                     GFile         *file,
                                     GInputStream  *input,
                                     GError       **error);
-
-
-#endif /* __GIMP_BRUSH_LOAD_H__ */

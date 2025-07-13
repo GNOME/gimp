@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTAINER_EDITOR_H__
-#define __GIMP_CONTAINER_EDITOR_H__
+#pragma once
 
 
 #define GIMP_TYPE_CONTAINER_EDITOR            (gimp_container_editor_get_type ())
@@ -62,6 +61,3 @@ void             gimp_container_editor_set_selection_mode (GimpContainerEditor *
 void             gimp_container_editor_bind_to_async_set  (GimpContainerEditor *editor,
                                                            GimpAsyncSet        *async_set,
                                                            const gchar         *message);
-
-
-#endif  /*  __GIMP_CONTAINER_EDITOR_H__  */

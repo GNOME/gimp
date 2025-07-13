@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BEZIER_DESC_H__
-#define __GIMP_BEZIER_DESC_H__
+#pragma once
 
 
 #define          GIMP_TYPE_BEZIER_DESC     (gimp_bezier_desc_get_type ())
@@ -42,6 +41,3 @@ void             gimp_bezier_desc_translate           (GimpBezierDesc       *des
 
 GimpBezierDesc * gimp_bezier_desc_copy                (const GimpBezierDesc *desc);
 void             gimp_bezier_desc_free                (GimpBezierDesc       *desc);
-
-
-#endif /* __GIMP_BEZIER_DESC_H__ */

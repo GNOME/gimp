@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_UI_CONFIGURER_H__
-#define __GIMP_UI_CONFIGURER_H__
-
+#pragma once
 
 #include "core/gimpobject.h"
 
@@ -49,9 +47,7 @@ struct _GimpUIConfigurerClass
 };
 
 
-GType         gimp_ui_configurer_get_type  (void) G_GNUC_CONST;
-void          gimp_ui_configurer_configure (GimpUIConfigurer *ui_configurer,
-                                            gboolean          single_window_mode);
+GType   gimp_ui_configurer_get_type  (void) G_GNUC_CONST;
 
-
-#endif  /* __GIMP_UI_CONFIGURER_H__ */
+void    gimp_ui_configurer_configure (GimpUIConfigurer *ui_configurer,
+                                      gboolean          single_window_mode);

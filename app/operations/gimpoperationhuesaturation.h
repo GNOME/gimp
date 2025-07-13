@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_HUE_SATURATION_H__
-#define __GIMP_OPERATION_HUE_SATURATION_H__
-
+#pragma once
 
 #include "gimpoperationpointfilter.h"
 
@@ -52,6 +50,3 @@ GType   gimp_operation_hue_saturation_get_type (void) G_GNUC_CONST;
 void    gimp_operation_hue_saturation_map      (GimpHueSaturationConfig *config,
                                                 GeglColor               *color,
                                                 GimpHueRange             range);
-
-
-#endif /* __GIMP_OPERATION_HUE_SATURATION_H__ */

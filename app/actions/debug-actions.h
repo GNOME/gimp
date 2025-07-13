@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __DEBUG_ACTIONS_H__
-#define __DEBUG_ACTIONS_H__
+#pragma once
 
 
 void   debug_actions_setup  (GimpActionGroup *group);
 void   debug_actions_update (GimpActionGroup *group,
                              gpointer         data);
-
-
-#endif /* __DEBUG_ACTIONS_H__ */

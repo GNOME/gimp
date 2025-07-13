@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __PROPGUI_TYPES_H__
-#define __PROPGUI_TYPES_H__
-
+#pragma once
 
 #include "display/display-enums.h"
 
@@ -141,5 +139,3 @@ typedef GCallback   (* GimpCreateControllerFunc)      (gpointer                 
                                                        gpointer                    callback_data,
                                                        gpointer                   *set_func_data);
 
-
-#endif /* __PROPGUI_TYPES_H__ */

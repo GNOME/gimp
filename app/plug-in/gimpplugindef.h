@@ -17,9 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_DEF_H__
-#define __GIMP_PLUG_IN_DEF_H__
-
+#pragma once
 
 #include "core/gimpobject.h"
 
@@ -71,6 +69,3 @@ void   gimp_plug_in_def_set_needs_query   (GimpPlugInDef       *plug_in_def,
                                            gboolean             needs_query);
 void   gimp_plug_in_def_set_has_init      (GimpPlugInDef       *plug_in_def,
                                            gboolean             has_init);
-
-
-#endif /* __GIMP_PLUG_IN_DEF_H__ */

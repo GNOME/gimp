@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __DEBUG_COMMANDS_H__
-#define __DEBUG_COMMANDS_H__
+#pragma once
 
 
 void   debug_gtk_inspector_cmd_callback           (GimpAction *action,
@@ -40,6 +39,3 @@ void   debug_dump_keyboard_shortcuts_cmd_callback (GimpAction *action,
 void   debug_dump_attached_data_cmd_callback      (GimpAction *action,
                                                    GVariant   *value,
                                                    gpointer    data);
-
-
-#endif /* __DEBUG_COMMANDS_H__ */

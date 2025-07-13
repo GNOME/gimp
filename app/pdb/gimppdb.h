@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PDB_H__
-#define __GIMP_PDB_H__
-
+#pragma once
 
 #include "core/gimpobject.h"
 
@@ -85,6 +83,3 @@ GimpValueArray * gimp_pdb_execute_procedure_by_name      (GimpPDB        *pdb,
                                                           ...);
 
 GList          * gimp_pdb_get_deprecated_procedures      (GimpPDB        *pdb);
-
-
-#endif  /*  __GIMP_PDB_H__  */

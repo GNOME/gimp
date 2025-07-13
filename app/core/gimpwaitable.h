@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_WAITABLE_H__
-#define __GIMP_WAITABLE_H__
+#pragma once
 
 
 #define GIMP_TYPE_WAITABLE (gimp_waitable_get_type ())
@@ -44,6 +43,3 @@ gboolean   gimp_waitable_wait_until (GimpWaitable *waitable,
                                      gint64        end_time);
 gboolean   gimp_waitable_wait_for   (GimpWaitable *waitable,
                                      gint64        wait_duration);
-
-
-#endif  /* __GIMP_WAITABLE_H__ */

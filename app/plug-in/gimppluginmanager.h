@@ -17,9 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_MANAGER_H__
-#define __GIMP_PLUG_IN_MANAGER_H__
-
+#pragma once
 
 #include "core/gimpobject.h"
 
@@ -117,6 +115,3 @@ void    gimp_plug_in_manager_remove_open_plug_in  (GimpPlugInManager   *manager,
 void    gimp_plug_in_manager_plug_in_push         (GimpPlugInManager   *manager,
                                                    GimpPlugIn          *plug_in);
 void    gimp_plug_in_manager_plug_in_pop          (GimpPlugInManager   *manager);
-
-
-#endif  /* __GIMP_PLUG_IN_MANAGER_H__ */

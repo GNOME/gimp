@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PICKABLE_AUTO_SHRINK_H__
-#define __GIMP_PICKABLE_AUTO_SHRINK_H__
+#pragma once
 
 
 typedef enum
@@ -36,6 +35,3 @@ GimpAutoShrink   gimp_pickable_auto_shrink (GimpPickable *pickable,
                                             gint        *shrunk_y,
                                             gint        *shrunk_width,
                                             gint        *shrunk_height);
-
-
-#endif  /* __GIMP_PICKABLE_AUTO_SHRINK_H__ */

@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __FILL_DIALOG_H__
-#define __FILL_DIALOG_H__
+#pragma once
 
 
 typedef void (* GimpFillCallback) (GtkWidget       *dialog,
@@ -40,6 +39,3 @@ GtkWidget * fill_dialog_new (GList            *items,
                              GimpFillOptions  *options,
                              GimpFillCallback  callback,
                              gpointer          user_data);
-
-
-#endif  /*  __FILL_DIALOG_H__  */

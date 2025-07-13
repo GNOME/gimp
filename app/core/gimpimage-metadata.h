@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_METADATA_H__
-#define __GIMP_IMAGE_METADATA_H__
+#pragma once
 
 
 GimpMetadata * gimp_image_get_metadata                    (GimpImage    *image);
@@ -35,6 +34,3 @@ GimpImage    * gimp_image_metadata_load_thumbnail         (Gimp         *gimp,
                                                            gint         *full_image_height,
                                                            const Babl  **format,
                                                            GError      **error);
-
-
-#endif /* __GIMP_IMAGE_METADATA_H__ */

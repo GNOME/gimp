@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TAG_CACHE_H__
-#define __GIMP_TAG_CACHE_H__
-
+#pragma once
 
 #include "gimpobject.h"
 
@@ -58,6 +56,3 @@ void            gimp_tag_cache_load          (GimpTagCache  *cache);
 
 void            gimp_tag_cache_add_container (GimpTagCache  *cache,
                                               GimpContainer *container);
-
-
-#endif  /*  __GIMP_TAG_CACHE_H__  */

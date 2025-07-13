@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __CONVERT_PRECISION_DIALOG_H__
-#define __CONVERT_PRECISION_DIALOG_H__
+#pragma once
 
 
 /*  Don't offer dithering when converting down to more than this
@@ -45,6 +44,3 @@ GtkWidget * convert_precision_dialog_new (GimpImage                    *image,
                                           GeglDitherMethod              channel_dither_method,
                                           GimpConvertPrecisionCallback  callback,
                                           gpointer                      user_data);
-
-
-#endif  /*  __CONVERT_PRECISION_DIALOG_H__  */

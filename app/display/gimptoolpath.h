@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_PATH_H__
-#define __GIMP_TOOL_PATH_H__
-
+#pragma once
 
 #include "gimptoolwidget.h"
 
@@ -73,6 +71,3 @@ void             gimp_tool_path_shift_start     (GimpToolPath     *tool_path);
 void             gimp_tool_path_insert_anchor   (GimpToolPath     *tool_path);
 void             gimp_tool_path_delete_segment  (GimpToolPath     *tool_path);
 void             gimp_tool_path_reverse_stroke  (GimpToolPath     *tool_path);
-
-
-#endif /* __GIMP_TOOL_PATH_H__ */

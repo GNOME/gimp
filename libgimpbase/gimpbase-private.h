@@ -19,9 +19,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BASE_PRIVATE_H__
-#define __GIMP_BASE_PRIVATE_H__
-
+#pragma once
 
 #include <libgimpbase/gimpcpuaccel-private.h>
 #include <libgimpbase/gimpenv-private.h>
@@ -74,5 +72,3 @@ void   gimp_base_exit              (void);
 void   gimp_base_compat_enums_init (void);
 
 G_END_DECLS
-
-#endif /* __GIMP_BASE_PRIVATE_H__ */

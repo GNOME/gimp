@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PATTERN_HEADER_H__
-#define __GIMP_PATTERN_HEADER_H__
+#pragma once
 
 
 #define GIMP_PATTERN_MAGIC    (('G' << 24) + ('P' << 16) + \
@@ -43,6 +42,3 @@ struct _GimpPatternHeader
  *  After that comes the pattern data -- width * height * bytes bytes
  *  of it...
  */
-
-
-#endif  /* __GIMP_PATTERN_HEADER_H__ */

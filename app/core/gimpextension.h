@@ -18,11 +18,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_EXTENSION_H__
-#define __GIMP_EXTENSION_H__
+#pragma once
 
-
-#include "core/gimpobject.h"
+#include "gimpobject.h"
 
 
 #define GIMP_TYPE_EXTENSION            (gimp_extension_get_type ())
@@ -84,5 +82,3 @@ gint            gimp_extension_cmp                     (GimpExtension  *extensio
                                                         GimpExtension  *extension2);
 gint            gimp_extension_id_cmp                  (GimpExtension  *extension1,
                                                         const gchar    *id);
-
-#endif  /* __GIMP_EXTENSION_H__ */

@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __PLUG_IN_ENUMS_H__
-#define __PLUG_IN_ENUMS_H__
+#pragma once
 
 
 #define GIMP_TYPE_PLUG_IN_IMAGE_TYPE (gimp_plug_in_image_type_get_type ())
@@ -60,5 +59,3 @@ typedef enum
   GIMP_FILE_PROCEDURE_GROUP_EXPORT
 } GimpFileProcedureGroup;
 
-
-#endif /* __PLUG_IN_ENUMS_H__ */

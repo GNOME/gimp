@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_H__
-#define __GIMP_DISPLAY_H__
-
+#pragma once
 
 #include "gimpobject.h"
 
@@ -62,6 +60,3 @@ gboolean      gimp_display_present    (GimpDisplay *display);
 gboolean      gimp_display_grab_focus (GimpDisplay *display);
 
 Gimp        * gimp_display_get_gimp  (GimpDisplay *display);
-
-
-#endif /*  __GIMP_DISPLAY_H__  */

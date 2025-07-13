@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __TOOL_PRESET_EDITOR_COMMANDS_H__
-#define __TOOL_PRESET_EDITOR_COMMANDS_H__
+#pragma once
 
 
 void   tool_preset_editor_save_cmd_callback    (GimpAction *action,
@@ -25,6 +24,3 @@ void   tool_preset_editor_save_cmd_callback    (GimpAction *action,
 void   tool_preset_editor_restore_cmd_callback (GimpAction *action,
                                                 GVariant   *value,
                                                 gpointer    data);
-
-
-#endif /* __TOOL_PRESET_EDITOR_COMMANDS_H__ */

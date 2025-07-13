@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_TRANSFORM_GUIDES_H__
-#define __GIMP_CANVAS_TRANSFORM_GUIDES_H__
-
+#pragma once
 
 #include "gimpcanvasitem.h"
 
@@ -68,6 +66,3 @@ void             gimp_canvas_transform_guides_set      (GimpCanvasItem    *guide
                                                         GimpGuidesType     type,
                                                         gint               n_guides,
                                                         gboolean           clip);
-
-
-#endif /* __GIMP_CANVAS_TRANSFORM_GUIDES_H__ */

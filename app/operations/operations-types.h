@@ -17,9 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __OPERATIONS_TYPES_H__
-#define __OPERATIONS_TYPES_H__
-
+#pragma once
 
 #include <gegl-types.h>
 
@@ -71,6 +69,3 @@ typedef  void    (* GimpLayerModeBlendFunc) (GeglOperation          *operation,
                                              const gfloat           *layer,
                                              gfloat                 *out,
                                              gint                    samples);
-
-
-#endif /* __OPERATIONS_TYPES_H__ */

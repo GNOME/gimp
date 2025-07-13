@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PROP_GUI_NEWSPRINT_H__
-#define __GIMP_PROP_GUI_NEWSPRINT_H__
+#pragma once
 
 
 GtkWidget *
@@ -30,6 +29,3 @@ _gimp_prop_gui_new_newsprint (GObject                  *config,
                               GimpCreatePickerFunc      create_picker_func,
                               GimpCreateControllerFunc  create_controller_func,
                               gpointer                  creator);
-
-
-#endif /* __GIMP_PROP_GUI_NEWSPRINT_H__ */

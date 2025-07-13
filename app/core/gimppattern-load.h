@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PATTERN_LOAD_H__
-#define __GIMP_PATTERN_LOAD_H__
+#pragma once
 
 
 #define GIMP_PATTERN_FILE_EXTENSION ".pat"
@@ -30,6 +29,3 @@ GList * gimp_pattern_load_pixbuf (GimpContext   *context,
                                   GFile         *file,
                                   GInputStream  *input,
                                   GError       **error);
-
-
-#endif /* __GIMP_PATTERN_LOAD_H__ */

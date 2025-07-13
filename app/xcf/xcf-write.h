@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __XCF_WRITE_H__
-#define __XCF_WRITE_H__
+#pragma once
 
 
 guint   xcf_write_int8        (XcfInfo        *info,
@@ -59,6 +58,3 @@ guint   xcf_write_component   (XcfInfo        *info,
 void    xcf_write_to_be       (gint            bpc,
                                guint8         *data,
                                gint            count);
-
-
-#endif  /* __XCF_WRITE_H__ */

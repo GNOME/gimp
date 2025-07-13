@@ -19,9 +19,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FONT_H__
-#define __GIMP_FONT_H__
-
+#pragma once
 
 #include "core/gimpdata.h"
 
@@ -70,5 +68,3 @@ enum
 
   PROPERTIES_COUNT
 };
-
-#endif /* __GIMP_FONT_H__ */

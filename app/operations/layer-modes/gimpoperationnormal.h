@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_NORMAL_H__
-#define __GIMP_OPERATION_NORMAL_H__
-
+#pragma once
 
 #include "gimpoperationlayermode.h"
 
@@ -86,6 +84,3 @@ gboolean   gimp_operation_normal_process_sse4 (GeglOperation       *op,
                                                gint                 level);
 
 #endif /* COMPILE_SSE4_1_INTRINISICS */
-
-
-#endif /* __GIMP_OPERATION_NORMAL_H__ */

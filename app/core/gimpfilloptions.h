@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FILL_OPTIONS_H__
-#define __GIMP_FILL_OPTIONS_H__
-
+#pragma once
 
 #include "gimpcontext.h"
 
@@ -94,6 +92,3 @@ void              gimp_fill_options_fill_buffer      (GimpFillOptions     *optio
                                                       GeglBuffer          *buffer,
                                                       gint                 pattern_offset_x,
                                                       gint                 pattern_offset_y);
-
-
-#endif /* __GIMP_FILL_OPTIONS_H__ */

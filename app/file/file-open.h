@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __FILE_OPEN_H__
-#define __FILE_OPEN_H__
+#pragma once
 
 
 GimpImage * file_open_image                 (Gimp                *gimp,
@@ -79,6 +78,3 @@ gboolean    file_open_from_command_line     (Gimp                *gimp,
                                              GFile               *file,
                                              gboolean             as_new,
                                              GObject             *monitor);
-
-
-#endif /* __FILE_OPEN_H__ */

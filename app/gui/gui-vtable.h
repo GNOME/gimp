@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GUI_VTABLE_H__
-#define __GUI_VTABLE_H__
+#pragma once
 
 
 void         gui_vtable_init         (Gimp *gimp);
@@ -25,6 +24,3 @@ void         gui_vtable_init         (Gimp *gimp);
  *  also, gui.h can't contain any Gdk types.
  */
 GdkMonitor * gui_get_initial_monitor (Gimp *gimp);
-
-
-#endif /* __GUI_VTABLE_H__ */

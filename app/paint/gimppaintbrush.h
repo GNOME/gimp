@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PAINTBRUSH_H__
-#define __GIMP_PAINTBRUSH_H__
-
+#pragma once
 
 #include "gimpbrushcore.h"
 
@@ -75,6 +73,3 @@ void    _gimp_paintbrush_motion  (GimpPaintCore             *paint_core,
                                   GimpPaintOptions          *paint_options,
                                   GimpSymmetry              *sym,
                                   gdouble                    opacity);
-
-
-#endif  /*  __GIMP_PAINTBRUSH_H__  */

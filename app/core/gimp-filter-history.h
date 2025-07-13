@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FILTER_HISTORY_H__
-#define __GIMP_FILTER_HISTORY_H__
+#pragma once
 
 
 gint            gimp_filter_history_size   (Gimp          *gimp);
@@ -30,6 +29,3 @@ void            gimp_filter_history_add    (Gimp          *gimp,
 void            gimp_filter_history_remove (Gimp          *gimp,
                                             GimpProcedure *procedure);
 void            gimp_filter_history_clear  (Gimp          *gimp);
-
-
-#endif /* __GIMP_FILTER_HISTORY_H__ */

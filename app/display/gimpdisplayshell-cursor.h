@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_CURSOR_H__
-#define __GIMP_DISPLAY_SHELL_CURSOR_H__
+#pragma once
 
 
 /*  functions dealing with the normal windowing system cursor  */
@@ -42,6 +41,3 @@ void   gimp_display_shell_update_software_cursor (GimpDisplayShell    *shell,
                                                   gdouble              image_x,
                                                   gdouble              image_y);
 void   gimp_display_shell_clear_software_cursor  (GimpDisplayShell    *shell);
-
-
-#endif /* __GIMP_DISPLAY_SHELL_CURSOR_H__ */

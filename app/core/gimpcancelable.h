@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANCELABLE_H__
-#define __GIMP_CANCELABLE_H__
+#pragma once
 
 
 #define GIMP_TYPE_CANCELABLE (gimp_cancelable_get_type ())
@@ -35,7 +34,4 @@ struct _GimpCancelableInterface
 };
 
 
-void    gimp_cancelable_cancel   (GimpCancelable *cancelable);
-
-
-#endif  /* __GIMP_CANCELABLE_H__ */
+void    gimp_cancelable_cancel (GimpCancelable *cancelable);

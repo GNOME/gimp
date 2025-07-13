@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PAINT_OPTIONS_H__
-#define __GIMP_PAINT_OPTIONS_H__
-
+#pragma once
 
 #include "core/gimptooloptions.h"
 
@@ -180,6 +178,3 @@ gboolean gimp_paint_options_is_prop            (const gchar         *prop_name,
 void     gimp_paint_options_copy_props         (GimpPaintOptions    *src,
                                                 GimpPaintOptions    *dest,
                                                 GimpContextPropMask  prop_mask);
-
-
-#endif  /*  __GIMP_PAINT_OPTIONS_H__  */

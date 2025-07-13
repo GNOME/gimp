@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __COLOR_PROFILE_DIALOG_H__
-#define __COLOR_PROFILE_DIALOG_H__
+#pragma once
 
 
 typedef enum
@@ -51,6 +50,3 @@ GtkWidget * color_profile_dialog_new (ColorProfileDialogType    dialog_type,
                                       gboolean                  bpc,
                                       GimpColorProfileCallback  callback,
                                       gpointer                  user_data);
-
-
-#endif  /*  __COLOR_PROFILE_DIALOG_H__  */

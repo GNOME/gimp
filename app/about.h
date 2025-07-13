@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __ABOUT_H__
-#define __ABOUT_H__
+#pragma once
 
 
 #define GIMP_ACRONYM \
@@ -48,6 +47,3 @@
     "\n\n"                                                               \
     "You should have received a copy of the GNU General Public License " \
     "along with GIMP. If not, see: https://www.gnu.org/licenses/")
-
-
-#endif /* __ABOUT_H__ */

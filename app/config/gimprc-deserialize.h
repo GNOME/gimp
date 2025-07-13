@@ -18,14 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_RC_DESERIALIZE_H__
-#define __GIMP_RC_DESERIALIZE_H__
+#pragma once
 
 
 gboolean  gimp_rc_deserialize (GimpConfig *config,
                                GScanner   *scanner,
                                gint        nest_level,
                                gpointer    data);
-
-
-#endif /* __GIMP_RC_DESERIALIZE_H__ */

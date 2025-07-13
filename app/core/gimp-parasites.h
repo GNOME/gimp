@@ -14,8 +14,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PARASITES_H__
-#define __GIMP_PARASITES_H__
+#pragma once
 
 
 /* some wrappers to access gimp->parasites, mainly for the PDB */
@@ -35,6 +34,3 @@ void                  gimp_parasite_shift_parent (GimpParasite       *parasite);
 
 void                  gimp_parasiterc_load       (Gimp               *gimp);
 void                  gimp_parasiterc_save       (Gimp               *gimp);
-
-
-#endif  /*  __GIMP_PARASITES_H__  */

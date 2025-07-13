@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __PATH_OPTIONS_DIALOG_H__
-#define __PATH_OPTIONS_DIALOG_H__
+#pragma once
 
 
 typedef void (* GimpPathOptionsCallback) (GtkWidget    *dialog,
@@ -49,6 +48,3 @@ GtkWidget * path_options_dialog_new    (GimpImage                *image,
                                         gboolean                  path_lock_visibility,
                                         GimpPathOptionsCallback   callback,
                                         gpointer                  user_data);
-
-
-#endif /* __PATH_OPTIONS_DIALOG_H__ */

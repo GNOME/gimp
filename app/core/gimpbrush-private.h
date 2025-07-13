@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_PRIVATE_H__
-#define __GIMP_BRUSH_PRIVATE_H__
+#pragma once
 
 
 struct _GimpBrushPrivate
@@ -42,6 +41,3 @@ struct _GimpBrushPrivate
   GimpBrushCache  *pixmap_cache;
   GimpBrushCache  *boundary_cache;
 };
-
-
-#endif /* __GIMP_BRUSH_PRIVATE_H__ */

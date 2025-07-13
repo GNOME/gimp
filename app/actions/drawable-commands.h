@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __DRAWABLE_COMMANDS_H__
-#define __DRAWABLE_COMMANDS_H__
+#pragma once
 
 
 void   drawable_equalize_cmd_callback       (GimpAction *action,
@@ -42,6 +41,3 @@ void   drawable_flip_cmd_callback           (GimpAction *action,
 void   drawable_rotate_cmd_callback         (GimpAction *action,
                                              GVariant   *value,
                                              gpointer    data);
-
-
-#endif /* __DRAWABLE_COMMANDS_H__ */

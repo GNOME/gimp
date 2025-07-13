@@ -15,11 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __INPUT_DEVICES_DIALOG_H__
-#define __INPUT_DEVICES_DIALOG_H__
+#pragma once
 
 
 GtkWidget * input_devices_dialog_new (Gimp *gimp);
-
-
-#endif /* __INPUT_DEVICES_DIALOG_H__ */

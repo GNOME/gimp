@@ -19,8 +19,7 @@
  *
 */
 
-#ifndef __GIMP_INK_BLOB_H__
-#define __GIMP_INK_BLOB_H__
+#pragma once
 
 
 typedef struct _GimpBlobPoint GimpBlobPoint;
@@ -85,6 +84,3 @@ GimpBlob * gimp_blob_duplicate    (GimpBlob      *b);
 void       gimp_blob_move         (GimpBlob      *b,
                                    gint           x,
                                    gint           y);
-
-
-#endif /* __GIMP_INK_BLOB_H__ */

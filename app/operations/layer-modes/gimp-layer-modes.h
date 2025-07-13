@@ -19,8 +19,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LAYER_MODES_H__
-#define __GIMP_LAYER_MODES_H__
+#pragma once
 
 
 void                       gimp_layer_modes_init                      (void);
@@ -71,5 +70,3 @@ const Babl               * gimp_layer_mode_get_format                 (GimpLayer
 GimpLayerCompositeRegion   gimp_layer_mode_get_included_region        (GimpLayerMode           mode,
                                                                        GimpLayerCompositeMode  composite_mode);
 
-
-#endif /* __GIMP_LAYER_MODES_H__ */

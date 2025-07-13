@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_PATH_H__
-#define __GIMP_CANVAS_PATH_H__
-
+#pragma once
 
 #include "gimpcanvasitem.h"
 
@@ -58,6 +56,3 @@ GimpCanvasItem * gimp_canvas_path_new      (GimpDisplayShell     *shell,
 
 void             gimp_canvas_path_set      (GimpCanvasItem       *path,
                                             const GimpBezierDesc *bezier);
-
-
-#endif /* __GIMP_CANVAS_PATH_H__ */

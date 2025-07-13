@@ -15,12 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_HANDLERS_H__
-#define __GIMP_DISPLAY_HANDLERS_H__
+#pragma once
 
 
 void   gimp_display_connect    (GimpDisplay *display);
 void   gimp_display_disconnect (GimpDisplay *display);
-
-
-#endif /*  __GIMP_DISPLAY_HANDLERS_H__  */

@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_AIRBRUSH_H__
-#define __GIMP_AIRBRUSH_H__
-
+#pragma once
 
 #include "gimppaintbrush.h"
 
@@ -59,6 +57,3 @@ void    gimp_airbrush_register (Gimp                      *gimp,
 GType   gimp_airbrush_get_type (void) G_GNUC_CONST;
 
 void    gimp_airbrush_stamp    (GimpAirbrush              *airbrush);
-
-
-#endif  /*  __GIMP_AIRBRUSH_H__  */

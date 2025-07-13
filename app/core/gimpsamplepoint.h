@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SAMPLE_POINT_H__
-#define __GIMP_SAMPLE_POINT_H__
-
+#pragma once
 
 #include "gimpauxitem.h"
 
@@ -63,6 +61,3 @@ void              gimp_sample_point_set_position  (GimpSamplePoint   *sample_poi
 GimpColorPickMode gimp_sample_point_get_pick_mode (GimpSamplePoint   *sample_point);
 void              gimp_sample_point_set_pick_mode (GimpSamplePoint   *sample_point,
                                                    GimpColorPickMode  pick_mode);
-
-
-#endif /* __GIMP_SAMPLE_POINT_H__ */

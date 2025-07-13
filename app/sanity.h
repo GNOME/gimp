@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __SANITY_H__
-#define __SANITY_H__
+#pragma once
 
 #ifndef GIMP_APP_GLUE_COMPILATION
 #error You must not #include "sanity.h" from an app/ subdir
@@ -25,6 +24,3 @@
 
 const gchar * sanity_check_early (void);
 const gchar * sanity_check_late  (void);
-
-
-#endif /* __SANITY_H__ */

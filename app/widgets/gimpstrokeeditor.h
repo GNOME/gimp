@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_STROKE_EDITOR_H__
-#define __GIMP_STROKE_EDITOR_H__
-
+#pragma once
 
 #include "gimpfilleditor.h"
 
@@ -54,6 +52,3 @@ GtkWidget * gimp_stroke_editor_new      (GimpStrokeOptions *options,
                                          gdouble            resolution,
                                          gboolean           edit_context,
                                          gboolean           use_custom_style);
-
-
-#endif /* __GIMP_STROKE_EDITOR_H__ */

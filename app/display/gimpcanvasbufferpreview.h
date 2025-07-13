@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_BUFFER_PREVIEW_H__
-#define __GIMP_CANVAS_BUFFER_PREVIEW_H__
-
+#pragma once
 
 #include "gimpcanvasitem.h"
 
@@ -51,6 +49,3 @@ GType            gimp_canvas_buffer_preview_get_type (void) G_GNUC_CONST;
 
 GimpCanvasItem * gimp_canvas_buffer_preview_new      (GimpDisplayShell  *shell,
                                                       GeglBuffer        *buffer);
-
-
-#endif /* __GIMP_CANVAS_BUFFER_PREVIEW_H__ */

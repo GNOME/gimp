@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __DIALOGS_ACTIONS_H__
-#define __DIALOGS_ACTIONS_H__
-
+#pragma once
 
 /*  this check is needed for the extern declaration below to be correct  */
 #ifndef __GIMP_ACTION_GROUP_H__
@@ -33,6 +31,3 @@ void       dialogs_actions_update         (GimpActionGroup *group,
                                            gpointer         data);
 
 gboolean   dialogs_actions_toolbox_exists (Gimp            *gimp);
-
-
-#endif /* __DIALOGS_ACTIONS_H__ */

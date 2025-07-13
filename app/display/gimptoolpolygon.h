@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_POLYGON_H__
-#define __GIMP_TOOL_POLYGON_H__
-
+#pragma once
 
 #include "gimptoolwidget.h"
 
@@ -61,6 +59,3 @@ gboolean         gimp_tool_polygon_is_closed  (GimpToolPolygon    *polygon);
 void             gimp_tool_polygon_get_points (GimpToolPolygon    *polygon,
                                                const GimpVector2 **points,
                                                gint               *n_points);
-
-
-#endif /* __GIMP_TOOL_POLYGON_H__ */

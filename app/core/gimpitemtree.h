@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ITEM_TREE_H__
-#define __GIMP_ITEM_TREE_H__
-
+#pragma once
 
 #include "gimpobject.h"
 
@@ -88,6 +86,3 @@ void           gimp_item_tree_rename_item      (GimpItemTree  *tree,
                                                 const gchar   *new_name,
                                                 gboolean       push_undo,
                                                 const gchar   *undo_desc);
-
-
-#endif  /*  __GIMP_ITEM_TREE_H__  */

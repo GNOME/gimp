@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __RESIZE_DIALOG_H__
-#define __RESIZE_DIALOG_H__
+#pragma once
 
 
 typedef void (* GimpResizeCallback) (GtkWidget    *dialog,
@@ -49,6 +48,3 @@ GtkWidget * resize_dialog_new (GimpViewable       *viewable,
                                gboolean            resize_text_layers,
                                GimpResizeCallback  callback,
                                gpointer            user_data);
-
-
-#endif  /*  __RESIZE_DIALOG_H__  */

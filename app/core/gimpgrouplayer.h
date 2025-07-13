@@ -18,11 +18,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GROUP_LAYER_H__
-#define __GIMP_GROUP_LAYER_H__
+#pragma once
 
-
-#include "core/gimplayer.h"
+#include "gimplayer.h"
 
 
 #define GIMP_TYPE_GROUP_LAYER            (gimp_group_layer_get_type ())
@@ -73,6 +71,3 @@ void             _gimp_group_layer_start_transform    (GimpGroupLayer      *grou
                                                        gboolean             push_undo);
 void             _gimp_group_layer_end_transform      (GimpGroupLayer      *group,
                                                        gboolean             push_undo);
-
-
-#endif /* __GIMP_GROUP_LAYER_H__ */

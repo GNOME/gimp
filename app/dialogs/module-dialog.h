@@ -18,10 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __MODULE_DIALOG_H__
+#pragma once
 
 
 GtkWidget * module_dialog_new (Gimp *gimp);
-
-
-#endif  /* __MODULE_DIALOG_H__ */

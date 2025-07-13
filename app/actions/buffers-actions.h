@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __BUFFERS_ACTIONS_H__
-#define __BUFFERS_ACTIONS_H__
+#pragma once
 
 
 void   buffers_actions_setup  (GimpActionGroup *group);
 void   buffers_actions_update (GimpActionGroup *group,
                                gpointer         data);
-
-
-#endif /* __BUFFERS_ACTIONS_H__ */

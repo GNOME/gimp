@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_FLIP_H__
-#define __GIMP_IMAGE_FLIP_H__
+#pragma once
 
 
 void   gimp_image_flip      (GimpImage           *image,
@@ -29,6 +28,3 @@ void   gimp_image_flip_full (GimpImage           *image,
                              gdouble              axis,
                              gboolean             clip_result,
                              GimpProgress        *progress);
-
-
-#endif /* __GIMP_IMAGE_FLIP_H__ */

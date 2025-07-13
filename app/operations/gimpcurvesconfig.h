@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CURVES_CONFIG_H__
-#define __GIMP_CURVES_CONFIG_H__
-
+#pragma once
 
 #include "gimpoperationsettings.h"
 
@@ -80,5 +78,3 @@ gboolean   gimp_curves_config_save_cruft          (GimpCurvesConfig  *config,
 gboolean   gimp_curves_config_load_acv            (GimpCurvesConfig  *config,
                                                    GInputStream      *input,
                                                    GError           **error);
-
-#endif /* __GIMP_CURVES_CONFIG_H__ */

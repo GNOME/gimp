@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_POINT_FILTER_H__
-#define __GIMP_OPERATION_POINT_FILTER_H__
-
+#pragma once
 
 #include <gegl-plugin.h>
 #include <operation/gegl-operation-point-filter.h>
@@ -68,6 +66,3 @@ void    gimp_operation_point_filter_set_property (GObject      *object,
                                                   guint         property_id,
                                                   const GValue *value,
                                                   GParamSpec   *pspec);
-
-
-#endif /* __GIMP_OPERATION_POINT_FILTER_H__ */

@@ -18,15 +18,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DEVICE_MANAGER_H__
-#define __GIMP_DEVICE_MANAGER_H__
-
+#pragma once
 
 #include "core/gimplist.h"
 
 
 G_BEGIN_DECLS
-
 
 #define GIMP_TYPE_DEVICE_MANAGER            (gimp_device_manager_get_type ())
 #define GIMP_DEVICE_MANAGER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DEVICE_MANAGER, GimpDeviceManager))
@@ -64,7 +61,4 @@ void                gimp_device_manager_reset              (GimpDeviceManager *m
 
 void                gimp_device_manager_reconfigure_pads   (GimpDeviceManager *manager);
 
-
 G_END_DECLS
-
-#endif /* __GIMP_DEVICE_MANAGER_H__ */

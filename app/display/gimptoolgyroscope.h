@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_GYROSCOPE_H__
-#define __GIMP_TOOL_GYROSCOPE_H__
-
+#pragma once
 
 #include "gimptoolwidget.h"
 
@@ -53,6 +51,3 @@ struct _GimpToolGyroscopeClass
 GType            gimp_tool_gyroscope_get_type (void) G_GNUC_CONST;
 
 GimpToolWidget * gimp_tool_gyroscope_new      (GimpDisplayShell *shell);
-
-
-#endif /* __GIMP_TOOL_GYROSCOPE_H__ */

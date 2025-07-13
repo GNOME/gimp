@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __SAMPLE_POINTS_ACIONS_H__
-#define __SAMPLE_POINTS_ACIONS_H__
+#pragma once
 
 
 void   sample_points_actions_setup  (GimpActionGroup *group);
 void   sample_points_actions_update (GimpActionGroup *group,
                                      gpointer         data);
-
-
-#endif /* __SAMPLE_POINTS_ACTIONS_H__ */

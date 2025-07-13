@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GRID_H__
-#define __GIMP_GRID_H__
-
+#pragma once
 
 #include "gimpobject.h"
 
@@ -74,6 +72,3 @@ void            gimp_grid_get_offset             (GimpGrid           *grid,
 const gchar   * gimp_grid_parasite_name          (void) G_GNUC_CONST;
 GimpParasite  * gimp_grid_to_parasite            (GimpGrid           *grid);
 GimpGrid      * gimp_grid_from_parasite          (const GimpParasite *parasite);
-
-
-#endif /* __GIMP_GRID_H__ */

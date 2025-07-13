@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __MODIFIERS_H__
-#define __MODIFIERS_H__
+#pragma once
 
 
 void       modifiers_init    (Gimp       *gimp);
@@ -31,6 +30,3 @@ void       modifiers_save    (Gimp       *gimp,
 
 gboolean   modifiers_clear   (Gimp       *gimp,
                               GError    **error);
-
-
-#endif  /*  __MODIFIERS_H__  */

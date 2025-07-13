@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __PATH_ENUMS_H__
-#define __PATH_ENUMS_H__
+#pragma once
 
 
 typedef enum
@@ -41,6 +40,3 @@ typedef enum
   GIMP_STROKE_EXTEND_SIMPLE,
   GIMP_STROKE_EXTEND_EDITABLE
 } GimpStrokeExtendMode;
-
-
-#endif /* __PATH_ENUMS_H__ */

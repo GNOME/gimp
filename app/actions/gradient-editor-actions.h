@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GRADIENT_EDITOR_ACTIONS_H__
-#define __GRADIENT_EDITOR_ACTIONS_H__
+#pragma once
 
 
 void   gradient_editor_actions_setup  (GimpActionGroup *group);
 void   gradient_editor_actions_update (GimpActionGroup *group,
                                        gpointer         data);
-
-
-#endif /* __GRADIENT_EDITOR_ACTIONS_H__ */

@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTROLLER_MANAGER_H__
-#define __GIMP_CONTROLLER_MANAGER_H__
-
+#pragma once
 
 #include "core/gimplist.h"
 
@@ -43,6 +41,3 @@ GimpUIManager  * gimp_controller_manager_get_ui_manager (GimpControllerManager *
 GimpController * gimp_controller_manager_get_wheel      (GimpControllerManager *self);
 GimpController * gimp_controller_manager_get_keyboard   (GimpControllerManager *self);
 GListModel     * gimp_controller_manager_get_categories (GimpControllerManager *self);
-
-
-#endif /* __GIMP_CONTROLLER_MANAGER_H__ */

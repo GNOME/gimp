@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __CORE_TYPES_H__
-#define __CORE_TYPES_H__
-
+#pragma once
 
 #include "libgimpbase/gimpbasetypes.h"
 #include "libgimpmath/gimpmathtypes.h"
@@ -321,5 +319,3 @@ struct _GimpSegment
 #include "pdb/pdb-types.h"
 #include "plug-in/plug-in-types.h"
 
-
-#endif /* __CORE_TYPES_H__ */

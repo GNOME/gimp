@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __WINDOW_COMMANDS_H__
-#define __WINDOW_COMMANDS_H__
+#pragma once
 
 
 void   window_close_cmd_callback          (GimpAction *action,
@@ -28,6 +27,3 @@ void   window_open_display_cmd_callback   (GimpAction *action,
 void   window_move_to_screen_cmd_callback (GimpAction *action,
                                            GVariant   *value,
                                            gpointer    data);
-
-
-#endif /* __WINDOW_COMMANDS_H__ */

@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_CLEANUP_H__
-#define __GIMP_PLUG_IN_CLEANUP_H__
+#pragma once
 
 
 gboolean   gimp_plug_in_cleanup_undo_group_start (GimpPlugIn          *plug_in,
@@ -48,6 +47,3 @@ gboolean   gimp_plug_in_cleanup_remove_shadow    (GimpPlugIn          *plug_in,
 
 void       gimp_plug_in_cleanup                  (GimpPlugIn          *plug_in,
                                                   GimpPlugInProcFrame *proc_frame);
-
-
-#endif /* __GIMP_PLUG_IN_CLEANUP_H__ */

@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_GUI_H__
-#define __GIMP_TOOL_GUI_H__
-
+#pragma once
 
 #include "core/gimpobject.h"
 
@@ -110,6 +108,3 @@ void          gimp_tool_gui_set_response_sensitive (GimpToolGui      *gui,
                                                     gboolean          sensitive);
 void    gimp_tool_gui_set_alternative_button_order (GimpToolGui      *gui,
                                                     ...);
-
-
-#endif /* __GIMP_TOOL_GUI_H__ */

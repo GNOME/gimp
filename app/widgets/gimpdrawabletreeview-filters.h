@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_TREE_VIEW_FILTERS_H__
-#define __GIMP_DRAWABLE_TREE_VIEW_FILTERS_H__
+#pragma once
 
 
 gboolean   _gimp_drawable_tree_view_filter_editor_show    (GimpDrawableTreeView *view,
@@ -27,6 +26,3 @@ gboolean   _gimp_drawable_tree_view_filter_editor_show    (GimpDrawableTreeView 
 void       _gimp_drawable_tree_view_filter_editor_hide    (GimpDrawableTreeView *view);
 
 void       _gimp_drawable_tree_view_filter_editor_destroy (GimpDrawableTreeView *view);
-
-
-#endif  /*  __GIMP_DRAWABLE_TREE_VIEW_FILTERS_H__  */

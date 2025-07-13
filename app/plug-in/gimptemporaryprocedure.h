@@ -17,9 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEMPORARY_PROCEDURE_H__
-#define __GIMP_TEMPORARY_PROCEDURE_H__
-
+#pragma once
 
 #include "gimppluginprocedure.h"
 
@@ -50,6 +48,3 @@ struct _GimpTemporaryProcedureClass
 GType           gimp_temporary_procedure_get_type (void) G_GNUC_CONST;
 
 GimpProcedure * gimp_temporary_procedure_new      (GimpPlugIn *plug_in);
-
-
-#endif /* __GIMP_TEMPORARY_PROCEDURE_H__ */

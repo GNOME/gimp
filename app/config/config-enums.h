@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __CONFIG_ENUMS_H__
-#define __CONFIG_ENUMS_H__
+#pragma once
 
 
 #define GIMP_TYPE_CANVAS_PADDING_MODE (gimp_canvas_padding_mode_get_type ())
@@ -175,6 +174,3 @@ typedef enum
   GIMP_THEME_DARK,   /*< desc="Dark Colors"   >*/
   GIMP_THEME_SYSTEM, /*< desc="System Colors" >*/
 } GimpThemeScheme;
-
-
-#endif /* __CONFIG_ENUMS_H__ */

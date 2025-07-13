@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MYBRUSH_LOAD_H__
-#define __GIMP_MYBRUSH_LOAD_H__
+#pragma once
 
 
 #define GIMP_MYBRUSH_FILE_EXTENSION ".myb"
@@ -28,6 +27,3 @@ GList * gimp_mybrush_load (GimpContext   *context,
                            GFile         *file,
                            GInputStream  *input,
                            GError       **error);
-
-
-#endif /* __GIMP_MYBRUSH_LOAD_H__ */

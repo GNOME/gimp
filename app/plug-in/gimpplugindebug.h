@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_DEBUG_H__
-#define __GIMP_PLUG_IN_DEBUG_H__
+#pragma once
 
 
 typedef enum
@@ -38,6 +37,3 @@ gchar           ** gimp_plug_in_debug_argv (GimpPlugInDebug    *debug,
                                             const gchar        *name,
                                             GimpDebugWrapFlag   flag,
                                             const gchar       **args);
-
-
-#endif /* __GIMP_PLUG_IN_DEBUG_H__ */

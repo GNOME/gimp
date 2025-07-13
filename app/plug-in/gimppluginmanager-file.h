@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_MANAGER_FILE_H__
-#define __GIMP_PLUG_IN_MANAGER_FILE_H__
+#pragma once
 
 
 void       gimp_plug_in_manager_add_load_procedure    (GimpPlugInManager      *manager,
@@ -47,5 +46,3 @@ gimp_plug_in_manager_file_procedure_find_by_mime_type (GimpPlugInManager      *m
                                                        GimpFileProcedureGroup  group,
                                                        const gchar            *mime_type);
 
-
-#endif /* __GIMP_PLUG_IN_MANAGER_FILE_H__ */

@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MULTI_WINDOW_STRATEGY_H__
-#define __GIMP_MULTI_WINDOW_STRATEGY_H__
-
+#pragma once
 
 #include "core/gimpobject.h"
 
@@ -49,6 +47,3 @@ struct _GimpMultiWindowStrategyClass
 GType        gimp_multi_window_strategy_get_type          (void) G_GNUC_CONST;
 
 GimpObject * gimp_multi_window_strategy_get_singleton     (void);
-
-
-#endif /* __GIMP_MULTI_WINDOW_STRATEGY_H__ */

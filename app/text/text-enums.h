@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __TEXT_ENUMS_H__
-#define __TEXT_ENUMS_H__
+#pragma once
 
 
 #define GIMP_TYPE_TEXT_BOX_MODE (gimp_text_box_mode_get_type ())
@@ -41,6 +40,7 @@ typedef enum
   GIMP_TEXT_OUTLINE_STROKE_FILL  /*< desc="Outlined and filled" >*/
 } GimpTextOutline;
 
+
 #define GIMP_TYPE_TEXT_OUTLINE_DIRECTION (gimp_text_outline_direction_get_type ())
 
 GType gimp_text_outline_direction_get_type (void) G_GNUC_CONST;
@@ -51,5 +51,3 @@ typedef enum
   GIMP_TEXT_OUTLINE_DIRECTION_INNER,   /*< desc="Inner"    >*/
   GIMP_TEXT_OUTLINE_DIRECTION_CENTERED /*< desc="Centered" >*/
 } GimpTextOutlineDirection;
-
-#endif /* __TEXT_ENUMS_H__ */

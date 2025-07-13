@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_RENDER_H__
-#define __GIMP_DISPLAY_SHELL_RENDER_H__
+#pragma once
 
 
 void     gimp_display_shell_render_set_scale       (GimpDisplayShell *shell,
@@ -48,6 +47,3 @@ void     gimp_display_shell_render                 (GimpDisplayShell *shell,
                                                     gint              width,
                                                     gint              height,
                                                     gdouble           scale);
-
-
-#endif  /*  __GIMP_DISPLAY_SHELL_RENDER_H__  */

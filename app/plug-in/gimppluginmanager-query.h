@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_MANAGER_QUERY_H__
-#define __GIMP_PLUG_IN_MANAGER_QUERY_H__
+#pragma once
 
 
 gint   gimp_plug_in_manager_query (GimpPlugInManager   *manager,
@@ -28,5 +27,3 @@ gint   gimp_plug_in_manager_query (GimpPlugInManager   *manager,
                                    gchar             ***prog_strs,
                                    gint32             **time_ints);
 
-
-#endif /* __GIMP_PLUG_IN_MANAGER_QUERY_H__ */

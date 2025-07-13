@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_WIDGET_GROUP_H__
-#define __GIMP_TOOL_WIDGET_GROUP_H__
-
+#pragma once
 
 #include "gimptoolwidget.h"
 
@@ -60,6 +58,3 @@ GimpToolWidget * gimp_tool_widget_group_get_focus_widget (GimpToolWidgetGroup *g
 void             gimp_tool_widget_group_set_auto_raise   (GimpToolWidgetGroup *group,
                                                           gboolean             auto_raise);
 gboolean         gimp_tool_widget_group_get_auto_raise   (GimpToolWidgetGroup *group);
-
-
-#endif /* __GIMP_TOOL_WIDGET_GROUP_H__ */

@@ -17,8 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ITEM_TREE_VIEW_SEARCH_H__
-#define __GIMP_ITEM_TREE_VIEW_SEARCH_H__
+#pragma once
 
 
 void   _gimp_item_tree_view_search_create       (GimpItemTreeView *view,
@@ -31,6 +30,3 @@ void   _gimp_item_tree_view_search_hide         (GimpItemTreeView *view);
 void   _gimp_item_tree_view_search_update_links (GimpItemTreeView *view,
                                                  GimpImage        *image,
                                                  GType             item_type);
-
-
-#endif  /*  __GIMP_ITEM_TREE_VIEW_SEARCH_H__  */

@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PERSPECTIVE_CLONE_H__
-#define __GIMP_PERSPECTIVE_CLONE_H__
-
+#pragma once
 
 #include "gimpclone.h"
 
@@ -70,6 +68,3 @@ void    gimp_perspective_clone_get_source_point (GimpPerspectiveClone   *clone,
                                                  gdouble                 y,
                                                  gdouble                *newx,
                                                  gdouble                *newy);
-
-
-#endif  /*  __GIMP_PERSPECTIVE_CLONE_H__  */

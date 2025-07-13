@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PROGRESS_H__
-#define __GIMP_PROGRESS_H__
+#pragma once
 
 
 #define GIMP_TYPE_PROGRESS (gimp_progress_get_type ())
@@ -88,6 +87,3 @@ void           gimp_progress_update_and_flush (gint                 min,
                                                gint                 max,
                                                gint                 current,
                                                gpointer             data);
-
-
-#endif /* __GIMP_PROGRESS_H__ */
