@@ -41,6 +41,8 @@
 #include "paint/gimppaintcore.h"
 #include "paint/gimppaintoptions.h"
 
+#include "path/gimpvectorlayer.h"
+
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -336,6 +338,24 @@ gimp_paint_tool_button_press (GimpTool            *tool,
               gimp_tool_message_literal (tool, display,
                                          _("The selected item's pixels are locked."));
               gimp_tools_blink_lock_box (display->gimp, locked_item);
+              g_list_free (drawables);
+
+              return;
+            }
+        }
+
+      if (gimp_item_is_vector_layer (GIMP_ITEM (drawable)))
+        {
+          gboolean constrain_only;
+
+          /* Allow vector layers to be set as sources */
+          constrain_only = (state & gimp_get_constrain_behavior_mask () &&
+                            ! (state & gimp_get_extend_selection_mask ()));
+          if (! (GIMP_IS_SOURCE_TOOL (tool) && constrain_only))
+            {
+              gimp_tool_message_literal (tool, display,
+                                         _("Vector layers must be rasterized "
+                                           "before they can be painted on."));
               g_list_free (drawables);
 
               return;

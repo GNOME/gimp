@@ -34,6 +34,8 @@
 #include "core/gimpgrid.h"
 #include "core/gimplayer.h"
 
+#include "path/gimpvectorlayer.h"
+
 #include "gimpcanvas.h"
 #include "gimpcanvas-style.h"
 
@@ -430,6 +432,15 @@ gimp_canvas_set_layer_style (GtkWidget *canvas,
     {
       pattern = gimp_cairo_pattern_create_stipple (layer_group_fg, layer_group_bg, 0,
                                                    offset_x, offset_y, render_space);
+    }
+  else if (gimp_item_is_vector_layer (GIMP_ITEM (layer)))
+    {
+      GeglColor *transparent = gegl_color_new ("transparent");
+
+      pattern = gimp_cairo_pattern_create_stipple (transparent, transparent, 0,
+                                                   offset_x, offset_y, render_space);
+
+      g_clear_object (&transparent);
     }
   else
     {

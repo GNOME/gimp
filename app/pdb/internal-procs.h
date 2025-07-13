@@ -81,3 +81,4 @@ void   register_selection_procs           (GimpPDB *pdb);
 void   register_text_layer_procs          (GimpPDB *pdb);
 void   register_text_tool_procs           (GimpPDB *pdb);
 void   register_unit_procs                (GimpPDB *pdb);
+void   register_vector_layer_procs        (GimpPDB *pdb);

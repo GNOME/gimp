@@ -215,6 +215,17 @@ GimpUndo * gimp_image_undo_push_text_layer_convert  (GimpImage     *image,
                                                      GimpTextLayer *layer);
 
 
+/*  vector layer undos  */
+
+GimpUndo * gimp_image_undo_push_vector_layer        (GimpImage        *image,
+                                                     const gchar      *undo_desc,
+                                                     GimpVectorLayer  *layer,
+                                                     const GParamSpec *pspec);
+GimpUndo * gimp_image_undo_push_vector_layer_modified
+                                                    (GimpImage       *image,
+                                                     const gchar     *undo_desc,
+                                                     GimpVectorLayer *layer);
+
 /*  layer mask undos  */
 
 GimpUndo * gimp_image_undo_push_layer_mask_add      (GimpImage     *image,

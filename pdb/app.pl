@@ -383,6 +383,16 @@ gimp_param_spec_text_layer ("$name",
                             $flags)
 CODE
     }
+    elsif ($pdbtype eq 'vector_layer') {
+	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
+	$pspec = <<CODE;
+gimp_param_spec_vector_layer ("$name",
+                              "$nick",
+                              "$blurb",
+                              $none_ok,
+                              $flags)
+CODE
+    }
     elsif ($pdbtype eq 'layer') {
 	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$pspec = <<CODE;

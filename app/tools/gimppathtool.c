@@ -35,12 +35,15 @@
 #include "core/gimpimage-pick-item.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
+#include "core/gimpstrokeoptions.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimpundostack.h"
 
 #include "paint/gimppaintoptions.h" /* GIMP_PAINT_OPTIONS_CONTEXT_MASK */
 
 #include "path/gimppath.h"
+#include "path/gimpvectorlayer.h"
+#include "path/gimpvectorlayeroptions.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdockcontainer.h"
@@ -70,6 +73,7 @@
 
 /*  local function prototypes  */
 
+static void     gimp_path_tool_constructed        (GObject               *object);
 static void     gimp_path_tool_dispose            (GObject               *object);
 
 static void     gimp_path_tool_control            (GimpTool              *tool,
@@ -106,6 +110,12 @@ static void     gimp_path_tool_start              (GimpPathTool          *path_t
                                                    GimpDisplay           *display);
 static void     gimp_path_tool_halt               (GimpPathTool          *path_tool);
 
+static void     gimp_path_tool_image_changed      (GimpPathTool          *path_tool,
+                                                   GimpImage             *image,
+                                                   GimpContext           *context);
+static void     gimp_path_tool_image_selected_layers_changed
+                                                  (GimpPathTool          *path_tool);
+
 static void     gimp_path_tool_tool_path_changed  (GimpToolWidget        *tool_path,
                                                    GimpPathTool          *path_tool);
 static void     gimp_path_tool_tool_path_begin_change
@@ -130,23 +140,12 @@ static void     gimp_path_tool_to_selection_extended
                                                   (GimpPathTool          *path_tool,
                                                    GdkModifierType        state);
 
-static void     gimp_path_tool_fill_path          (GimpPathTool          *path_tool,
-                                                   GtkWidget             *button);
-static void     gimp_path_tool_fill_callback      (GtkWidget             *dialog,
-                                                   GList                 *items,
-                                                   GList                 *drawables,
-                                                   GimpContext           *context,
-                                                   GimpFillOptions       *options,
-                                                   gpointer               data);
-
-static void     gimp_path_tool_stroke_path        (GimpPathTool          *path_tool,
-                                                   GtkWidget             *button);
-static void     gimp_path_tool_stroke_callback    (GtkWidget             *dialog,
-                                                   GList                 *items,
-                                                   GList                 *drawables,
-                                                   GimpContext           *context,
-                                                   GimpStrokeOptions     *options,
-                                                   gpointer               data);
+static void     gimp_path_tool_create_vector_layer(GimpPathTool          *path_tool,
+						                           GtkWidget             *button);
+static void     gimp_path_tool_vector_change_notify
+                                                  (GObject               *options,
+                                                   const GParamSpec      *pspec,
+                                                   GimpVectorLayer       *layer);
 
 
 G_DEFINE_TYPE (GimpPathTool, gimp_path_tool, GIMP_TYPE_DRAW_TOOL)
@@ -179,6 +178,7 @@ gimp_path_tool_class_init (GimpPathToolClass *klass)
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
   GimpToolClass *tool_class   = GIMP_TOOL_CLASS (klass);
 
+  object_class->constructed  = gimp_path_tool_constructed;
   object_class->dispose      = gimp_path_tool_dispose;
 
   tool_class->control        = gimp_path_tool_control;
@@ -204,12 +204,36 @@ gimp_path_tool_init (GimpPathTool *path_tool)
 }
 
 static void
+gimp_path_tool_constructed (GObject *object)
+{
+  GimpPathTool  *path_tool = GIMP_PATH_TOOL (object);
+  GimpContext   *context;
+  GimpToolInfo  *tool_info;
+
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  tool_info = GIMP_TOOL (path_tool)->tool_info;
+
+  context = gimp_get_user_context (tool_info->gimp);
+
+  g_signal_connect_object (context, "image-changed",
+                           G_CALLBACK (gimp_path_tool_image_changed),
+                           path_tool, G_CONNECT_SWAPPED);
+
+  gimp_path_tool_image_changed (path_tool,
+                                gimp_context_get_image (context),
+                                context);
+}
+
+static void
 gimp_path_tool_dispose (GObject *object)
 {
   GimpPathTool *path_tool = GIMP_PATH_TOOL (object);
 
   gimp_path_tool_set_path (path_tool, NULL);
   g_clear_object (&path_tool->widget);
+
+  gimp_path_tool_image_changed (path_tool, NULL, NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -446,6 +470,87 @@ gimp_path_tool_halt (GimpPathTool *path_tool)
 }
 
 static void
+gimp_path_tool_image_changed (GimpPathTool *path_tool,
+                              GimpImage    *image,
+                              GimpContext  *context)
+{
+  if (path_tool->current_image)
+    g_signal_handlers_disconnect_by_func (path_tool->current_image,
+                                          gimp_path_tool_image_selected_layers_changed,
+                                          NULL);
+
+  g_set_weak_pointer (&path_tool->current_image, image);
+
+  if (path_tool->current_image)
+    g_signal_connect_object (path_tool->current_image, "selected-layers-changed",
+                             G_CALLBACK (gimp_path_tool_image_selected_layers_changed),
+                             path_tool, G_CONNECT_SWAPPED);
+
+  gimp_path_tool_image_selected_layers_changed (path_tool);
+}
+
+static void
+gimp_path_tool_image_selected_layers_changed (GimpPathTool *path_tool)
+{
+  GimpPathOptions *options        = GIMP_PATH_TOOL_GET_OPTIONS (path_tool);
+  GList           *current_layers = NULL;
+
+  if (path_tool->current_vector_layer)
+    {
+      g_signal_handlers_disconnect_by_func (options,
+                                            gimp_path_tool_vector_change_notify,
+                                            path_tool->current_vector_layer);
+      g_signal_handlers_disconnect_by_func (options->fill_options,
+                                            gimp_path_tool_vector_change_notify,
+                                            path_tool->current_vector_layer);
+      g_signal_handlers_disconnect_by_func (options->stroke_options,
+                                            gimp_path_tool_vector_change_notify,
+                                            path_tool->current_vector_layer);
+
+      path_tool->current_vector_layer = NULL;
+      gimp_path_tool_set_path (path_tool, NULL);
+    }
+
+  if (path_tool->current_image)
+    current_layers = gimp_image_get_selected_layers (path_tool->current_image);
+
+  /* If we've selected a single vector layer, make its path editable */
+  if (current_layers                      &&
+      g_list_length (current_layers) == 1 &&
+      gimp_item_is_vector_layer (GIMP_ITEM (current_layers->data)))
+    {
+      GimpVectorLayer *vector_layer = current_layers->data;
+
+      gimp_path_tool_set_path (path_tool,
+                               gimp_vector_layer_get_path (vector_layer));
+
+      g_object_set (options,
+                    "enable-fill",   vector_layer->options->enable_fill,
+                    "enable_stroke", vector_layer->options->enable_stroke,
+                    NULL);
+      gimp_config_sync (G_OBJECT (vector_layer->options->stroke_options),
+                        G_OBJECT (options->stroke_options), 0);
+      gimp_config_sync (G_OBJECT (vector_layer->options->fill_options),
+                        G_OBJECT (options->fill_options), 0);
+
+      g_signal_connect_object (options, "notify::enable-fill",
+                               G_CALLBACK (gimp_path_tool_vector_change_notify),
+                               vector_layer, 0);
+      g_signal_connect_object (options, "notify::enable-stroke",
+                               G_CALLBACK (gimp_path_tool_vector_change_notify),
+                               vector_layer, 0);
+      g_signal_connect_object (options->fill_options, "notify",
+                               G_CALLBACK (gimp_path_tool_vector_change_notify),
+                               vector_layer, 0);
+      g_signal_connect_object (options->stroke_options, "notify",
+                               G_CALLBACK (gimp_path_tool_vector_change_notify),
+                               vector_layer, 0);
+
+      path_tool->current_vector_layer = vector_layer;
+    }
+}
+
+static void
 gimp_path_tool_tool_path_changed (GimpToolWidget *tool_path,
                                   GimpPathTool   *path_tool)
 {
@@ -453,9 +558,7 @@ gimp_path_tool_tool_path_changed (GimpToolWidget *tool_path,
   GimpImage        *image = gimp_display_get_image (shell->display);
   GimpPath         *path;
 
-  g_object_get (tool_path,
-                "path", &path,
-                NULL);
+  g_object_get (tool_path, "path", &path, NULL);
 
   if (path != path_tool->path)
     {
@@ -595,19 +698,11 @@ gimp_path_tool_set_path (GimpPathTool *path_tool,
                                                 tool);
         }
 
-      if (options->fill_button)
+      if (options->vector_layer_button)
         {
-          gtk_widget_set_sensitive (options->fill_button, FALSE);
-          g_signal_handlers_disconnect_by_func (options->fill_button,
-                                                gimp_path_tool_fill_path,
-                                                tool);
-        }
-
-      if (options->stroke_button)
-        {
-          gtk_widget_set_sensitive (options->stroke_button, FALSE);
-          g_signal_handlers_disconnect_by_func (options->stroke_button,
-                                                gimp_path_tool_stroke_path,
+          gtk_widget_set_sensitive (options->vector_layer_button, FALSE);
+          g_signal_handlers_disconnect_by_func (options->vector_layer_button,
+                                                gimp_path_tool_create_vector_layer,
                                                 tool);
         }
     }
@@ -642,20 +737,13 @@ gimp_path_tool_set_path (GimpPathTool *path_tool,
       gtk_widget_set_sensitive (options->to_selection_button, TRUE);
     }
 
-  if (options->fill_button)
+  if (options->vector_layer_button)
     {
-      g_signal_connect_swapped (options->fill_button, "clicked",
-                                G_CALLBACK (gimp_path_tool_fill_path),
-                                tool);
-      gtk_widget_set_sensitive (options->fill_button, TRUE);
-    }
+      g_signal_connect_swapped (options->vector_layer_button, "clicked",
+				                G_CALLBACK (gimp_path_tool_create_vector_layer),
+				                tool);
 
-  if (options->stroke_button)
-    {
-      g_signal_connect_swapped (options->stroke_button, "clicked",
-                                G_CALLBACK (gimp_path_tool_stroke_path),
-                                tool);
-      gtk_widget_set_sensitive (options->stroke_button, TRUE);
+      gtk_widget_set_sensitive (options->vector_layer_button, TRUE);
     }
 
   if (tool->display)
@@ -722,180 +810,126 @@ gimp_path_tool_to_selection_extended (GimpPathTool    *path_tool,
   gimp_image_flush (image);
 }
 
-
 static void
-gimp_path_tool_fill_path (GimpPathTool *path_tool,
-                          GtkWidget    *button)
+gimp_path_tool_create_vector_layer (GimpPathTool *path_tool,
+				                    GtkWidget    *button)
 {
-  GimpDialogConfig *config;
-  GimpImage        *image;
-  GList            *drawables;
-  GList            *path_list = NULL;
-  GtkWidget        *dialog;
+  GimpImage       *image;
+  GimpVectorLayer *layer;
+  GimpPathOptions *options = GIMP_PATH_TOOL_GET_OPTIONS (path_tool);
 
   if (! path_tool->path)
     return;
 
   image = gimp_item_get_image (GIMP_ITEM (path_tool->path));
 
-  config = GIMP_DIALOG_CONFIG (image->gimp->config);
+  g_signal_handlers_block_by_func (image,
+                                   gimp_path_tool_image_selected_layers_changed,
+                                   path_tool);
 
-  drawables = gimp_image_get_selected_drawables (image);
-
-  if (! drawables)
+  /* If there's already an active vector layer, create a new blank path */
+  if (path_tool->current_vector_layer)
     {
-      gimp_tool_message (GIMP_TOOL (path_tool),
-                         GIMP_TOOL (path_tool)->display,
-                         _("There are no selected layers or channels to fill."));
-      return;
+      GimpPath *new_path = gimp_path_new (image, _("Vector Layer"));
+
+      gimp_image_add_path (image, new_path, GIMP_IMAGE_ACTIVE_PARENT, -1,
+                           TRUE);
+
+      g_signal_handlers_disconnect_by_func (options,
+                                            gimp_path_tool_vector_change_notify,
+                                            path_tool->current_vector_layer);
+      g_signal_handlers_disconnect_by_func (options->fill_options,
+                                            gimp_path_tool_vector_change_notify,
+                                            path_tool->current_vector_layer);
+      g_signal_handlers_disconnect_by_func (options->stroke_options,
+                                            gimp_path_tool_vector_change_notify,
+                                            path_tool->current_vector_layer);
     }
 
-  if (g_list_length (drawables) == 1 &&
-      gimp_item_is_content_locked (GIMP_ITEM (drawables->data), NULL))
-    {
-      gimp_tool_message (GIMP_TOOL (path_tool),
-                         GIMP_TOOL (path_tool)->display,
-                         _("A selected layer's pixels are locked."));
-      return;
-    }
+  layer = gimp_vector_layer_new (image, path_tool->path,
+				                 gimp_get_user_context (image->gimp));
+  path_tool->current_vector_layer = layer;
 
-  path_list = g_list_prepend (NULL, path_tool->path);
-  dialog = fill_dialog_new (path_list, drawables,
-                            GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (path_tool)),
-                            _("Fill Path"),
-                            GIMP_ICON_TOOL_BUCKET_FILL,
-                            GIMP_HELP_PATH_FILL,
-                            button,
-                            config->fill_options,
-                            gimp_path_tool_fill_callback,
-                            path_tool);
-  gtk_widget_show (dialog);
-  g_list_free (path_list);
-  g_list_free (drawables);
-}
+  gimp_image_add_layer (image,
+                        GIMP_LAYER (layer),
+                        GIMP_IMAGE_ACTIVE_PARENT,
+                        -1,
+                        TRUE);
 
-static void
-gimp_path_tool_fill_callback (GtkWidget       *dialog,
-                              GList           *items,
-                              GList           *drawables,
-                              GimpContext     *context,
-                              GimpFillOptions *options,
-                              gpointer         data)
-{
-  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (context->gimp->config);
-  GimpImage        *image  = gimp_item_get_image (items->data);
-  GError           *error  = NULL;
+  g_object_set (layer->options,
+                "enable-fill",   options->enable_fill,
+                "enable-stroke", options->enable_stroke,
+                NULL);
 
-  gimp_config_sync (G_OBJECT (options),
-                    G_OBJECT (config->fill_options), 0);
+  gimp_config_sync (G_OBJECT (options->fill_options),
+                    G_OBJECT (layer->options->fill_options), 0);
+  gimp_config_sync (G_OBJECT (options->stroke_options),
+                    G_OBJECT (layer->options->stroke_options), 0);
 
-  gimp_image_undo_group_start (image,
-                               GIMP_UNDO_GROUP_DRAWABLE_MOD,
-                               "Fill");
+  g_signal_connect_object (options, "notify::enable-fill",
+                           G_CALLBACK (gimp_path_tool_vector_change_notify),
+                           layer, 0);
+  g_signal_connect_object (options, "notify::enable-stroke",
+                           G_CALLBACK (gimp_path_tool_vector_change_notify),
+                           layer, 0);
+  g_signal_connect_object (options->fill_options, "notify",
+                           G_CALLBACK (gimp_path_tool_vector_change_notify),
+                           layer, 0);
+  g_signal_connect_object (options->stroke_options, "notify",
+                           G_CALLBACK (gimp_path_tool_vector_change_notify),
+                           layer, 0);
 
-  for (GList *iter = items; iter; iter = iter->next)
-    if (! gimp_item_fill (iter->data, drawables, options,
-                          TRUE, NULL, &error))
-      {
-        gimp_message_literal (context->gimp,
-                              G_OBJECT (dialog),
-                              GIMP_MESSAGE_WARNING,
-                              error ? error->message : "NULL");
-
-        g_clear_error (&error);
-        break;
-      }
-
-  gimp_image_undo_group_end (image);
+  gimp_vector_layer_refresh (layer);
   gimp_image_flush (image);
-  gtk_widget_destroy (dialog);
-}
 
-
-static void
-gimp_path_tool_stroke_path (GimpPathTool *path_tool,
-                            GtkWidget    *button)
-{
-  GimpDialogConfig *config;
-  GimpImage        *image;
-  GList            *drawables;
-  GList            *path_list = NULL;
-  GtkWidget        *dialog;
-
-  if (! path_tool->path)
-    return;
-
-  image = gimp_item_get_image (GIMP_ITEM (path_tool->path));
-
-  config = GIMP_DIALOG_CONFIG (image->gimp->config);
-
-  drawables = gimp_image_get_selected_drawables (image);
-
-  if (! drawables)
-    {
-      gimp_tool_message (GIMP_TOOL (path_tool),
-                         GIMP_TOOL (path_tool)->display,
-                         _("There are no selected layers or channels to stroke to."));
-      return;
-    }
-
-  if (g_list_length (drawables) == 1 &&
-      gimp_item_is_content_locked (GIMP_ITEM (drawables->data), NULL))
-    {
-      gimp_tool_message (GIMP_TOOL (path_tool),
-                         GIMP_TOOL (path_tool)->display,
-                         _("A selected layer's pixels are locked."));
-      return;
-    }
-
-  path_list = g_list_prepend (NULL, path_tool->path);
-  dialog = stroke_dialog_new (path_list, drawables,
-                              GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (path_tool)),
-                              _("Stroke Path"),
-                              GIMP_ICON_PATH_STROKE,
-                              GIMP_HELP_PATH_STROKE,
-                              button,
-                              config->stroke_options,
-                              gimp_path_tool_stroke_callback,
-                              path_tool);
-  gtk_widget_show (dialog);
-  g_list_free (path_list);
-  g_list_free (drawables);
+  g_signal_handlers_unblock_by_func (image,
+                                     gimp_path_tool_image_selected_layers_changed,
+                                     path_tool);
 }
 
 static void
-gimp_path_tool_stroke_callback (GtkWidget         *dialog,
-                                GList             *items,
-                                GList             *drawables,
-                                GimpContext       *context,
-                                GimpStrokeOptions *options,
-                                gpointer           data)
+gimp_path_tool_vector_change_notify (GObject          *options,
+                                     const GParamSpec *pspec,
+                                     GimpVectorLayer  *layer)
 {
-  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (context->gimp->config);
-  GimpImage        *image  = gimp_item_get_image (items->data);
-  GError           *error  = NULL;
+  GimpImage *image;
+  gboolean   needs_update = FALSE;
 
-  gimp_config_sync (G_OBJECT (options),
-                    G_OBJECT (config->stroke_options), 0);
+  image = gimp_item_get_image (GIMP_ITEM (layer));
 
-  gimp_image_undo_group_start (image,
-                               GIMP_UNDO_GROUP_DRAWABLE_MOD,
-                               "Stroke");
+  if (GIMP_IS_STROKE_OPTIONS (options))
+    {
+      GimpStrokeOptions *stroke_options = GIMP_STROKE_OPTIONS (options);
 
-  for (GList *iter = items; iter; iter = iter->next)
-    if (! gimp_item_stroke (iter->data, drawables, context, options, NULL,
-                            TRUE, NULL, &error))
-      {
-        gimp_message_literal (context->gimp,
-                              G_OBJECT (dialog),
-                              GIMP_MESSAGE_WARNING,
-                              error ? error->message : "NULL");
+      gimp_config_sync (G_OBJECT (stroke_options),
+                        G_OBJECT (layer->options->stroke_options), 0);
 
-        g_clear_error (&error);
-        break;
-      }
+      needs_update = TRUE;
+    }
+  else if (GIMP_IS_FILL_OPTIONS (options))
+    {
+      GimpFillOptions *fill_options = GIMP_FILL_OPTIONS (options);
 
-  gimp_image_undo_group_end (image);
-  gimp_image_flush (image);
-  gtk_widget_destroy (dialog);
+      gimp_config_sync (G_OBJECT (fill_options),
+                        G_OBJECT (layer->options->fill_options), 0);
+
+      needs_update = TRUE;
+    }
+  else if (GIMP_IS_PATH_OPTIONS (options))
+    {
+      GimpPathOptions *path_options = GIMP_PATH_OPTIONS (options);
+
+      g_object_set (layer->options,
+                    "enable-fill", path_options->enable_fill,
+                    "enable-stroke", path_options->enable_stroke,
+                    NULL);
+
+      needs_update = TRUE;
+    }
+
+  if (needs_update)
+    {
+      gimp_vector_layer_refresh (layer);
+      gimp_image_flush (image);
+    }
 }

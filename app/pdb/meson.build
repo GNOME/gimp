@@ -66,6 +66,7 @@ libappinternalprocs_sources = [
   'text-layer-cmds.c',
   'text-tool-cmds.c',
   'unit-cmds.c',
+  'vector-layer-cmds.c',
 ]
 
 libapppdb = static_library('apppdb',

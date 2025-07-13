@@ -114,6 +114,7 @@ pdb_wrappers_sources = [
   'gimptextlayer_pdb.c',
   'gimptexttool_pdb.c',
   'gimpunit_pdb.c',
+  'gimpvectorlayer_pdb.c',
 ]
 
 pdb_wrappers_headers = [
@@ -173,6 +174,7 @@ pdb_wrappers_headers = [
   'gimptextlayer_pdb.h',
   'gimptexttool_pdb.h',
   'gimpunit_pdb.h',
+  'gimpvectorlayer_pdb.h',
 ]
 
 libgimp_sources_introspectable = [
@@ -214,6 +216,7 @@ libgimp_sources_introspectable = [
   'gimpselection.c',
   'gimptextlayer.c',
   'gimpthumbnailprocedure.c',
+  'gimpvectorlayer.c',
   'gimpvectorloadprocedure.c',
   gimpenums,
   pdb_wrappers_sources,
@@ -276,6 +279,7 @@ libgimp_headers_introspectable = [
   'gimpselection.h',
   'gimptextlayer.h',
   'gimpthumbnailprocedure.h',
+  'gimpvectorlayer.h',
   'gimpvectorloadprocedure.h',
   pdb_wrappers_headers,
 ]

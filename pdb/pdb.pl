@@ -371,6 +371,18 @@ package Gimp::CodeGen::pdb;
 		     take_value_func => 'g_value_set_object ($value, $var)',
 		     headers         => [ qw("text/gimptextlayer.h") ] },
 
+    vector_layer  => { name          => 'VECTOR_LAYER',
+		     gtype           => 'GIMP_TYPE_VECTOR_LAYER',
+		     type            => 'GimpVectorLayer *',
+		     const_type      => 'GimpVectorLayer *',
+		     init_value      => 'NULL',
+		     out_annotate    => '(transfer none)',
+		     get_value_func  => '$var = g_value_get_object ($value)',
+		     dup_value_func  => '$var = GIMP_VALUES_GET_VECTOR_LAYER ($value)',
+		     set_value_func  => 'g_value_set_object ($value, $var)',
+		     take_value_func => 'g_value_set_object ($value, $var)',
+		     headers         => [ qw("path/gimpvectorlayer.h") ] },
+
     group_layer => { name            => 'GROUP_LAYER',
 		     gtype           => 'GIMP_TYPE_GROUP_LAYER',
 		     type            => 'GimpGroupLayer *',

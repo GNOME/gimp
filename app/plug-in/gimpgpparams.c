@@ -46,6 +46,7 @@
 #include "core/gimpunit.h"
 
 #include "path/gimppath.h"
+#include "path/gimpvectorlayer.h"
 
 #include "text/gimpfont.h"
 #include "text/gimptextlayer.h"

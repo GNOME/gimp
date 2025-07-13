@@ -470,6 +470,7 @@ paths_delete_cmd_callback (GimpAction *action,
 {
   GimpImage *image;
   GList     *paths;
+  gboolean   attached_to_vector_layer = FALSE;
   return_if_no_paths (image, paths, data);
 
   paths = g_list_copy (paths);
@@ -479,11 +480,21 @@ paths_delete_cmd_callback (GimpAction *action,
                                _("Remove Paths"));
 
   for (GList *iter = paths; iter; iter = iter->next)
-    gimp_image_remove_path (image, iter->data, TRUE, NULL);
+    {
+      /* Verify path is not attached to vector layer */
+      if (! gimp_path_attached_to_vector_layer (GIMP_PATH (iter->data), image))
+        gimp_image_remove_path (image, iter->data, TRUE, NULL);
+      else
+        attached_to_vector_layer = TRUE;
+    }
 
   gimp_image_undo_group_end (image);
   gimp_image_flush (image);
   g_list_free (paths);
+
+  if (attached_to_vector_layer)
+    gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+                          _("Paths attached to vector layers weren't deleted"));
 }
 
 void

@@ -57,4 +57,5 @@
     text_layer
     text_tool
     unit
+    vector_layer
 );

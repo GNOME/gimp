@@ -39,6 +39,7 @@
 #include "core/gimpparamspecs.h"
 #include "core/gimpselection.h"
 #include "path/gimppath.h"
+#include "path/gimpvectorlayer.h"
 #include "text/gimptextlayer.h"
 
 #include "gimppdb.h"
@@ -175,6 +176,39 @@ item_id_is_text_layer_invoker (GimpProcedure         *procedure,
 
   if (success)
     g_value_set_boolean (gimp_value_array_index (return_vals, 1), text_layer);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+item_id_is_vector_layer_invoker (GimpProcedure         *procedure,
+                                 Gimp                  *gimp,
+                                 GimpContext           *context,
+                                 GimpProgress          *progress,
+                                 const GimpValueArray  *args,
+                                 GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  gint item_id;
+  gboolean vector_layer = FALSE;
+
+  item_id = g_value_get_int (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpItem *item = gimp_item_get_by_id (gimp, item_id);
+
+      vector_layer = (GIMP_IS_LAYER (item) &&
+                      ! gimp_item_is_removed (item) &&
+                      gimp_item_is_vector_layer (item));
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_boolean (gimp_value_array_index (return_vals, 1), vector_layer);
 
   return return_vals;
 }
@@ -1186,6 +1220,37 @@ register_item_procs (GimpPDB *pdb)
                                    g_param_spec_boolean ("text-layer",
                                                          "text layer",
                                                          "TRUE if the item is a text layer, FALSE otherwise.",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-item-id-is-vector-layer
+   */
+  procedure = gimp_procedure_new (item_id_is_vector_layer_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-item-id-is-vector-layer");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns whether the item ID is a vector layer.",
+                                  "This procedure returns %TRUE if the specified item ID is a vector layer.\n"
+                                  "\n"
+                                  "*Note*: in most use cases, you should not use this function. See [func@Gimp.Item.id_is_layer] for a discussion on alternatives.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_int ("item-id",
+                                                 "item id",
+                                                 "The item ID",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("vector-layer",
+                                                         "vector layer",
+                                                         "TRUE if the item is a vector layer, FALSE otherwise.",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

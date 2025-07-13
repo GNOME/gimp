@@ -52,6 +52,7 @@ typedef struct _GimpTextLayer            GimpTextLayer;
 typedef struct _GimpPath                 GimpPath;
 typedef struct _GimpDrawableFilter       GimpDrawableFilter;
 typedef struct _GimpDrawableFilterConfig GimpDrawableFilterConfig;
+typedef struct _GimpVectorLayer          GimpVectorLayer;
 
 typedef struct _GimpDisplay              GimpDisplay;
 

@@ -87,6 +87,7 @@
 #include "text/gimptextlayer.h"
 
 #include "path/gimppath.h"
+#include "path/gimpvectorlayer.h"
 
 #include "gimp-log.h"
 #include "gimp-intl.h"
@@ -5456,6 +5457,17 @@ gimp_image_add_layer (GimpImage *image,
   if (gimp_layer_is_floating_sel (layer))
     gimp_drawable_attach_floating_sel (gimp_layer_get_floating_sel_drawable (layer),
                                        layer);
+
+  /* If the layer is a vector layer, also add its path to the image */
+  if (gimp_item_is_vector_layer (GIMP_ITEM (layer)))
+    {
+      GimpPath *path = gimp_vector_layer_get_path (GIMP_VECTOR_LAYER (layer));
+
+      if (path                                         && 
+          (! gimp_item_is_attached (GIMP_ITEM (path))) &&
+          gimp_item_get_image (GIMP_ITEM (path)) == image)
+        gimp_image_add_path (image, path, NULL, -1, FALSE);   
+    }
 
   if (old_has_alpha != gimp_image_has_alpha (image))
     private->flush_accum.alpha_changed = TRUE;
