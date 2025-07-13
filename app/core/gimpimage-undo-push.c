@@ -57,6 +57,8 @@
 #include "path/gimppathmodundo.h"
 #include "path/gimppathpropundo.h"
 #include "path/gimppathundo.h"
+#include "paths/gimpvectorlayer.h"
+#include "path/gimpvectorlayerundo.h"
 
 #include "text/gimptextlayer.h"
 #include "text/gimptextundo.h"
@@ -872,6 +874,45 @@ gimp_image_undo_push_text_layer_convert (GimpImage     *image,
   return gimp_image_undo_push (image, GIMP_TYPE_TEXT_UNDO,
                                GIMP_UNDO_TEXT_LAYER_CONVERT, undo_desc,
                                GIMP_DIRTY_ITEM,
+                               "item", layer,
+                               NULL);
+}
+
+
+/************************/
+/*  Vector Layer Undos  */
+/************************/
+
+GimpUndo *
+gimp_image_undo_push_vector_layer (GimpImage        *image,
+                                   const gchar      *undo_desc,
+                                   GimpVectorLayer  *layer,
+                                   const GParamSpec *pspec)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_VECTOR_LAYER (layer), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)), NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_VECTOR_LAYER_UNDO,
+                               GIMP_UNDO_VECTOR_LAYER, undo_desc,
+                               GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
+                               "item",  layer,
+                               "param", pspec,
+                               NULL);
+}
+
+GimpUndo *
+gimp_image_undo_push_vector_layer_modified (GimpImage       *image,
+                                            const gchar     *undo_desc,
+                                            GimpVectorLayer *layer)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_VECTOR_LAYER (layer), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)), NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_VECTOR_LAYER_UNDO,
+                               GIMP_UNDO_VECTOR_LAYER_MODIFIED, undo_desc,
+                               GIMP_DIRTY_ITEM_META,
                                "item", layer,
                                NULL);
 }
