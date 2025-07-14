@@ -31,7 +31,10 @@
 #include "libgimp-intl.h"
 
 
-static gchar *     gimp_image_metadata_interpret_comment    (gchar *comment);
+static gchar *     gimp_image_metadata_interpret_comment    (gchar             *comment,
+                                                             gchar             *tag,
+                                                             gboolean           interpret_raw,
+                                                             GimpMetadata      *metadata);
 
 static void        gimp_image_metadata_rotate               (GimpImage         *image,
                                                              GExiv2Orientation  orientation);
@@ -39,31 +42,100 @@ static void        gimp_image_metadata_rotate               (GimpImage         *
 /*  public functions  */
 
 static gchar *
-gimp_image_metadata_interpret_comment (gchar *comment)
+gimp_image_metadata_interpret_comment (gchar        *comment,
+                                       gchar        *tag,
+                                       gboolean      interpret_raw,
+                                       GimpMetadata *metadata)
 {
   /* Exiv2 can return unwanted text at the start of a comment
    * taken from Exif.Photo.UserComment since 0.27.3.
    * Let's remove that part and return NULL if there
    * is nothing else left as comment. */
 
-  if (comment)
+  if (! comment)
+    return NULL;
+
+  if (g_str_has_prefix (comment, "charset=InvalidCharsetId "))
     {
-      if (g_str_has_prefix (comment, "charset=Ascii "))
+      GBytes *bytes = NULL;
+
+      if (tag && interpret_raw)
         {
+          /* The Exif metadata writer forgot to add the charset.
+           * Read the raw data and assume it's UTF-8. */
+          g_printerr ("Invalid charset for tag %s. Using raw data.\n", tag);
+
+          bytes = gexiv2_metadata_try_get_tag_raw (GEXIV2_METADATA (metadata),
+                                                   tag,
+                                                   NULL);
+          if (bytes)
+            {
+              gsize        size, strsize;
+              const gchar *data;
+              gchar       *raw_comment;
+
+              data = g_bytes_get_data (bytes, &size);
+              raw_comment = g_new (gchar, size + 1 );
+              strsize = g_strlcpy (raw_comment, data, size + 1);
+              g_bytes_unref (bytes);
+              g_free (comment);
+
+              if (raw_comment && strsize > 0 &&
+                  g_utf8_validate (raw_comment, size, NULL))
+                {
+                  comment = raw_comment;
+                }
+              else
+                {
+                  g_free (raw_comment);
+                  comment = NULL;
+                }
+
+              /* Fix the tag in our metadata too, that way we don't have to
+               * check for this in other places. */
+              gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
+                                                  tag,
+                                                  comment,
+                                                  NULL);
+            }
+        }
+      else
+        {
+          /* The broken metadata comment was propagated */
           gchar *real_comment;
 
-          /* Skip "charset=Ascii " (length 14) to find the real comment */
-          real_comment = g_strdup (comment + 14);
+          /* Skip "charset=InvalidCharsetId " (length 25) to find the real comment */
+          real_comment = g_strdup (comment + 25);
           g_free (comment);
           comment = real_comment;
-        }
+          g_printerr ("Broken metadata comment was propagated. "
+                      "Removing 'charset=InvalidCharsetId ' from comment.\n");
 
-      if (comment[0] == '\0')
-        {
-          /* Removing an empty comment.*/
-          g_free (comment);
-          return NULL;
+          if (tag)
+            {
+              /* Update the metadata tag */
+              gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
+                                                  tag,
+                                                  comment,
+                                                  NULL);
+            }
         }
+    }
+  else if (g_str_has_prefix (comment, "charset=Ascii "))
+    {
+      gchar *real_comment;
+
+      /* Skip "charset=Ascii " (length 14) to find the real comment */
+      real_comment = g_strdup (comment + 14);
+      g_free (comment);
+      comment = real_comment;
+    }
+
+  if (comment[0] == '\0')
+    {
+      /* Removing an empty comment.*/
+      g_free (comment);
+      return NULL;
     }
 
   return comment;
@@ -167,24 +239,31 @@ _gimp_image_metadata_load_finish (GimpImage             *image,
   if (flags & GIMP_METADATA_LOAD_COMMENT)
     {
       GimpParasite *comment_parasite;
-      gchar        *comment = NULL;
-      GError       *error   = NULL;
+      gchar        *comment      = NULL;
+      gchar        *user_comment = NULL;
+      GError       *error        = NULL;
 
       comment_parasite = gimp_image_get_parasite (image, "gimp-comment");
       if (comment_parasite)
         {
-          guint32  parasite_size;
+          guint32 parasite_size;
 
           comment = (gchar *) gimp_parasite_get_data (comment_parasite, &parasite_size);
           comment = g_strndup (comment, parasite_size);
+          comment = gimp_image_metadata_interpret_comment (comment,
+                                                           NULL,
+                                                           FALSE,
+                                                           metadata);
+
 
           gimp_parasite_free (comment_parasite);
         }
 
-      if (! comment)
-        comment = gexiv2_metadata_try_get_tag_interpreted_string (GEXIV2_METADATA (metadata),
-                                                                  "Exif.Photo.UserComment",
-                                                                  &error);
+      /* UserComment may need special processing, so always read it. */
+      user_comment = gexiv2_metadata_try_get_tag_interpreted_string (GEXIV2_METADATA (metadata),
+                                                                     "Exif.Photo.UserComment",
+                                                                     &error);
+
       if (error)
         {
           /* XXX. Should this be rather a user-facing error? */
@@ -192,68 +271,40 @@ _gimp_image_metadata_load_finish (GimpImage             *image,
                       G_STRFUNC, "Exif.Photo.UserComment", error->message);
           g_clear_error (&error);
         }
-      else if (comment)
+      else if (user_comment)
         {
-          if (g_str_has_prefix (comment, "charset=InvalidCharsetId "))
-            {
-              GBytes *bytes = NULL;
+          user_comment = gimp_image_metadata_interpret_comment (user_comment,
+                                                                "Exif.Photo.UserComment",
+                                                                TRUE,
+                                                                metadata);
 
-              /* The Exif metadata writer forgot to add the charset.
-               * Read the raw data and assume it's UTF-8. */
-              g_printerr ("Invalid charset for tag %s. Using raw data.\n",
-                          "Exif.Photo.UserComment");
-
-              bytes = gexiv2_metadata_try_get_tag_raw (GEXIV2_METADATA (metadata),
-                                                       "Exif.Photo.UserComment",
-                                                       NULL);
-              if (bytes)
-                {
-                  gsize        size, strsize;
-                  const gchar *data;
-                  gchar       *raw_comment;
-
-                  data = g_bytes_get_data (bytes, &size);
-                  raw_comment = g_new (gchar, size + 1 );
-                  strsize = g_strlcpy (raw_comment, data, size + 1);
-                  g_bytes_unref (bytes);
-                  g_free (comment);
-
-                  if (raw_comment && strsize > 0 &&
-                      g_utf8_validate (raw_comment, size, NULL))
-                    {
-                      comment = raw_comment;
-                    }
-                  else
-                    {
-                      g_free (raw_comment);
-                      comment = NULL;
-                    }
-
-                  /* Fix the tag in our metadata too, that way we don't have to
-                   * check for this in other places. */
-                  gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
-                                                      "Exif.Photo.UserComment",
-                                                      comment,
-                                                      NULL);
-                }
-            }
+          if (! comment)
+            comment = user_comment;
           else
-            {
-              comment = gimp_image_metadata_interpret_comment (comment);
-            }
+            g_free (user_comment);
+          user_comment = NULL;
         }
 
-      if (! comment)
+
+      user_comment = gexiv2_metadata_try_get_tag_interpreted_string (GEXIV2_METADATA (metadata),
+                                                                     "Exif.Image.ImageDescription",
+                                                                     &error);
+      if (error)
         {
-          comment = gexiv2_metadata_try_get_tag_interpreted_string (GEXIV2_METADATA (metadata),
-                                                                    "Exif.Image.ImageDescription",
-                                                                    &error);
-          if (error)
-            {
-              g_printerr ("%s: unreadable '%s' metadata tag: %s\n",
-                          G_STRFUNC, "Exif.Image.ImageDescription", error->message);
-              g_clear_error (&error);
-            }
+          g_printerr ("%s: unreadable '%s' metadata tag: %s\n",
+                      G_STRFUNC, "Exif.Image.ImageDescription", error->message);
+          g_clear_error (&error);
+        }
+      else
+        {
+          user_comment = gimp_image_metadata_interpret_comment (user_comment,
+                                                                "Exif.Image.ImageDescription",
+                                                                FALSE,
+                                                                metadata);
+          if (! comment)
+            comment = user_comment;
+          else
+            g_free (user_comment);
         }
 
       if (comment)
