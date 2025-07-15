@@ -445,18 +445,12 @@ gimp_operation_gradient_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_CONTEXT:
-      if (self->context)
-        g_object_unref (self->context);
-
-      self->context = g_value_dup_object (value);
+      g_set_object (&self->context, g_value_get_object (value));
       break;
 
     case PROP_GRADIENT:
       {
-        GimpGradient *gradient = g_value_get_object (value);
-
-        if (gradient)
-          g_object_ref (gradient);
+        GimpGradient *gradient = g_value_dup_object (value);
 
         g_clear_object (&self->gradient);
 

@@ -201,8 +201,6 @@ gimp_pickable_button_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_CONTEXT:
-      if (button->private->context)
-        g_object_unref (button->private->context);
       button->private->context = g_value_dup_object (value);
       break;
     case PROP_PICKABLE:

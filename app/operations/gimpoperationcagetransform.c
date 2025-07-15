@@ -182,9 +182,7 @@ gimp_operation_cage_transform_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_CONFIG:
-      if (self->config)
-        g_object_unref (self->config);
-      self->config = g_value_dup_object (value);
+      g_set_object (&self->config, g_value_get_object (value));
       break;
     case PROP_FILL:
       self->fill_plain_color = g_value_get_boolean (value);

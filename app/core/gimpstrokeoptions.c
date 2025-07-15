@@ -304,9 +304,7 @@ gimp_stroke_options_set_property (GObject      *object,
       break;
 
     case PROP_PAINT_OPTIONS:
-      if (private->paint_options)
-        g_object_unref (private->paint_options);
-      private->paint_options = g_value_dup_object (value);
+      g_set_object (&private->paint_options, g_value_get_object (value));
       break;
     case PROP_EMULATE_DYNAMICS:
       private->emulate_dynamics = g_value_get_boolean (value);

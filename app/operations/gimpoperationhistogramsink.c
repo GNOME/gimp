@@ -155,9 +155,7 @@ gimp_operation_histogram_sink_set_property (GObject      *object,
       break;
 
     case PROP_HISTOGRAM:
-      if (sink->histogram)
-        g_object_unref (sink->histogram);
-      sink->histogram = g_value_dup_object (value);
+      g_set_object (&sink->histogram, g_value_get_object (value));
       break;
 
     default:

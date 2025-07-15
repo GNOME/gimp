@@ -142,10 +142,7 @@ gimp_operation_equalize_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_HISTOGRAM:
-      if (self->histogram)
-        g_object_unref (self->histogram);
-
-      self->histogram = g_value_dup_object (value);
+      g_set_object (&self->histogram, g_value_get_object (value));
 
       if (self->histogram)
         {
