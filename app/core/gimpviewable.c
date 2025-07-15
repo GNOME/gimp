@@ -70,7 +70,7 @@ struct _GimpViewablePrivate
   GdkPixbuf    *icon_pixbuf;
   gint          freeze_count;
   gboolean      invalidate_pending;
-  gboolean      size_changed_prending;
+  gboolean      size_changed_pending;
   GimpViewable *parent;
   gint          depth;
 
@@ -610,7 +610,7 @@ gimp_viewable_size_changed (GimpViewable *viewable)
   if (private->freeze_count == 0)
     g_signal_emit (viewable, viewable_signals[SIZE_CHANGED], 0);
   else
-    private->size_changed_prending = TRUE;
+    private->size_changed_pending = TRUE;
 }
 
 /**
@@ -1395,9 +1395,9 @@ gimp_viewable_preview_thaw (GimpViewable *viewable)
 
   if (private->freeze_count == 0)
     {
-      if (private->size_changed_prending)
+      if (private->size_changed_pending)
         {
-          private->size_changed_prending = FALSE;
+          private->size_changed_pending = FALSE;
 
           gimp_viewable_size_changed (viewable);
         }
