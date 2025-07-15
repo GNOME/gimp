@@ -185,8 +185,6 @@ gimp_pickable_popup_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_CONTEXT:
-      if (popup->priv->context)
-        g_object_unref (popup->priv->context);
       popup->priv->context = g_value_dup_object (value);
       break;
 

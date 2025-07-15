@@ -208,9 +208,7 @@ gimp_operation_profile_transform_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_SRC_PROFILE:
-      if (self->src_profile)
-        g_object_unref (self->src_profile);
-      self->src_profile = g_value_dup_object (value);
+      g_set_object (&self->src_profile, g_value_get_object (value));
       break;
 
     case PROP_SRC_FORMAT:
@@ -218,9 +216,7 @@ gimp_operation_profile_transform_set_property (GObject      *object,
       break;
 
     case PROP_DEST_PROFILE:
-      if (self->dest_profile)
-        g_object_unref (self->dest_profile);
-      self->dest_profile = g_value_dup_object (value);
+      g_set_object (&self->dest_profile, g_value_get_object (value));
       break;
 
     case PROP_DEST_FORMAT:

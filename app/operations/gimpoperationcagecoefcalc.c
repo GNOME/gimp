@@ -136,9 +136,7 @@ gimp_operation_cage_coef_calc_set_property (GObject      *object,
   switch (property_id)
     {
     case GIMP_OPERATION_CAGE_COEF_CALC_PROP_CONFIG:
-      if (self->config)
-        g_object_unref (self->config);
-      self->config = g_value_dup_object (value);
+      g_set_object (&self->config, g_value_get_object (value));
       break;
 
    default:

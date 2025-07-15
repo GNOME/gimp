@@ -265,8 +265,6 @@ gimp_stroke_editor_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_OPTIONS:
-      if (fill_editor->options)
-        g_object_unref (fill_editor->options);
       fill_editor->options = g_value_dup_object (value);
       break;
 

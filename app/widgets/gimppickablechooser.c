@@ -333,8 +333,6 @@ gimp_pickable_chooser_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_CONTEXT:
-      if (chooser->priv->context)
-        g_object_unref (chooser->priv->context);
       chooser->priv->context = g_value_dup_object (value);
       break;
 

@@ -280,9 +280,7 @@ gimp_viewable_set_property (GObject      *object,
       gimp_viewable_set_icon_name (viewable, g_value_get_string (value));
       break;
     case PROP_ICON_PIXBUF:
-      if (private->icon_pixbuf)
-        g_object_unref (private->icon_pixbuf);
-      private->icon_pixbuf = g_value_dup_object (value);
+      g_set_object (&private->icon_pixbuf, g_value_get_object (value));
       gimp_viewable_invalidate_preview (viewable);
       break;
     case PROP_FROZEN:
