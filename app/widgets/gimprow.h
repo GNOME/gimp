@@ -32,6 +32,15 @@ G_DECLARE_DERIVABLE_TYPE (GimpRow,
 struct _GimpRowClass
 {
   GtkListBoxRowClass  parent_class;
+
+  /* signals */
+
+  void   (* edit_name) (GimpRow *row);
+
+  /* virtual functions */
+
+  gboolean (* name_edited) (GimpRow     *row,
+                            const gchar *new_name);
 };
 
 
