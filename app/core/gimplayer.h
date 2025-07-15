@@ -246,3 +246,5 @@ gboolean        gimp_layer_is_alpha_locked     (GimpLayer            *layer,
 
 void          gimp_layer_update_effective_mode (GimpLayer            *layer);
 void       gimp_layer_update_excludes_backdrop (GimpLayer            *layer);
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpLayer, g_object_unref);

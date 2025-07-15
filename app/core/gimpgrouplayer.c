@@ -74,7 +74,8 @@ struct _GimpGroupLayerPrivate
   gboolean        reallocate_projection;
 };
 
-#define GET_PRIVATE(item) ((GimpGroupLayerPrivate *) gimp_group_layer_get_instance_private ((GimpGroupLayer *) (item)))
+#define GET_PRIVATE(item) \
+  ((GimpGroupLayerPrivate *) gimp_group_layer_get_instance_private ((GimpGroupLayer *) (item)))
 
 
 static void            gimp_projectable_iface_init   (GimpProjectableInterface  *iface);
