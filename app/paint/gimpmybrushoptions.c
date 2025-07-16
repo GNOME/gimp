@@ -88,14 +88,14 @@ gimp_mybrush_options_class_init (GimpMybrushOptionsClass *klass)
 
   context_class->mybrush_changed = gimp_mybrush_options_mybrush_changed;
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_RADIUS,
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_VIEW_ZOOM,
                            "viewzoom",
                            _("View Zoom"),
                            NULL,
                            0.0001, G_MAXFLOAT, 1.0,
                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_RADIUS,
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_VIEW_ROTATION,
                            "viewrotation",
                            _("View Rotation"),
                            NULL,
@@ -191,7 +191,7 @@ gimp_mybrush_options_set_property (GObject      *object,
                            g_value_get_double (value) : 1.0f;
       break;
     case PROP_VIEW_ROTATION:
-      options->view_rotation = CLAMP (g_value_get_double (value), 0.0f, 360.0f);
+      options->view_rotation = g_value_get_double (value);
       break;
     case PROP_RADIUS:
       options->radius = g_value_get_double (value);
