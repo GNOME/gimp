@@ -100,6 +100,7 @@ function self_build ([string]$dep, [string]$unstable_branch, [string]$stable_pat
       }
     Set-Location _build-$MSYSTEM_PREFIX
     ninja
+    ninja test
     ninja install
     if ("$LASTEXITCODE" -gt '0' -or "$?" -eq 'False')
       {
