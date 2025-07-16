@@ -203,8 +203,9 @@ gimp_path_class_init (GimpPathClass *klass)
 
   gimp_object_class->get_memsize    = gimp_path_get_memsize;
 
-  viewable_class->get_new_preview   = gimp_path_get_new_preview;
   viewable_class->default_icon_name = "gimp-path";
+  viewable_class->default_name      = _("Path");
+  viewable_class->get_new_preview   = gimp_path_get_new_preview;
 
   item_class->is_attached           = gimp_path_is_attached;
   item_class->get_tree              = gimp_path_get_tree;
@@ -221,7 +222,6 @@ gimp_path_class_init (GimpPathClass *klass)
   item_class->fill                  = gimp_path_fill;
   item_class->stroke                = gimp_path_stroke;
   item_class->to_selection          = gimp_path_to_selection;
-  item_class->default_name          = _("Path");
   item_class->rename_desc           = C_("undo-type", "Rename Path");
   item_class->translate_desc        = C_("undo-type", "Move Path");
   item_class->scale_desc            = C_("undo-type", "Scale Path");

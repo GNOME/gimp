@@ -236,8 +236,9 @@ gimp_channel_class_init (GimpChannelClass *klass)
 
   gimp_object_class->get_memsize    = gimp_channel_get_memsize;
 
-  viewable_class->get_description   = gimp_channel_get_description;
   viewable_class->default_icon_name = "gimp-channel";
+  viewable_class->default_name      = _("Channel");
+  viewable_class->get_description   = gimp_channel_get_description;
 
   filter_class->get_node            = gimp_channel_get_node;
 
@@ -253,7 +254,6 @@ gimp_channel_class_init (GimpChannelClass *klass)
   item_class->fill                 = gimp_channel_fill;
   item_class->stroke               = gimp_channel_stroke;
   item_class->to_selection         = gimp_channel_to_selection;
-  item_class->default_name         = _("Channel");
   item_class->rename_desc          = C_("undo-type", "Rename Channel");
   item_class->translate_desc       = C_("undo-type", "Move Channel");
   item_class->scale_desc           = C_("undo-type", "Scale Channel");

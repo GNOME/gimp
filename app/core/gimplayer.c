@@ -403,6 +403,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   gimp_object_class->get_memsize      = gimp_layer_get_memsize;
 
   viewable_class->default_icon_name   = "gimp-layer";
+  viewable_class->default_name        = _("Layer");
   viewable_class->invalidate_preview  = gimp_layer_invalidate_preview;
   viewable_class->get_description     = gimp_layer_get_description;
 
@@ -424,7 +425,6 @@ gimp_layer_class_init (GimpLayerClass *klass)
   item_class->rotate                  = gimp_layer_rotate;
   item_class->transform               = gimp_layer_transform;
   item_class->to_selection            = gimp_layer_to_selection;
-  item_class->default_name            = _("Layer");
   item_class->rename_desc             = C_("undo-type", "Rename Layer");
   item_class->translate_desc          = C_("undo-type", "Move Layer");
   item_class->scale_desc              = C_("undo-type", "Scale Layer");

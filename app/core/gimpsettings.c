@@ -68,8 +68,9 @@ gimp_settings_class_init (GimpSettingsClass *klass)
   object_class->set_property      = gimp_settings_set_property;
   object_class->get_property      = gimp_settings_get_property;
 
-  viewable_class->get_description = gimp_settings_get_description;
+  viewable_class->default_name    = _("Preset");
   viewable_class->name_editable   = TRUE;
+  viewable_class->get_description = gimp_settings_get_description;
 
   GIMP_CONFIG_PROP_INT64 (object_class, PROP_TIME,
                           "time",

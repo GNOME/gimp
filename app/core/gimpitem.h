@@ -131,7 +131,6 @@ struct _GimpItemClass
                                           gdouble                 feather_radius_x,
                                           gdouble                 feather_radius_y);
 
-  const gchar *default_name;
   const gchar *rename_desc;
   const gchar *translate_desc;
   const gchar *scale_desc;

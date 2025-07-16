@@ -143,6 +143,7 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
   gimp_object_class->get_memsize    = gimp_text_layer_get_memsize;
 
   viewable_class->default_icon_name = "gimp-text-layer";
+  viewable_class->default_name      = _("Text Layer");
 
   item_class->duplicate             = gimp_text_layer_duplicate;
   item_class->rename                = gimp_text_layer_rename;
@@ -154,7 +155,6 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
   item_class->transform             = gimp_text_layer_transform;
 #endif
 
-  item_class->default_name          = _("Text Layer");
   item_class->rename_desc           = _("Rename Text Layer");
   item_class->translate_desc        = _("Move Text Layer");
   item_class->scale_desc            = _("Scale Text Layer");
