@@ -241,6 +241,8 @@ gimp_row_real_edit_name (GimpRow *row)
   GtkWidget      *box;
   GtkWidget      *label;
   GtkWidget      *entry;
+  const gchar    *default_name;
+  gchar          *title;
 
   if (! priv->viewable ||
       ! gimp_viewable_is_name_editable (priv->viewable))
@@ -263,7 +265,11 @@ gimp_row_real_edit_name (GimpRow *row)
   gtk_container_add (GTK_CONTAINER (priv->popover), box);
   gtk_widget_show (box);
 
-  label = gtk_label_new (_("Rename Item"));
+  default_name = GIMP_VIEWABLE_GET_CLASS (priv->viewable)->default_name;
+
+  title = g_strdup_printf (_("Rename %s"), default_name);
+  label = gtk_label_new (title);
+  g_free (title);
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
