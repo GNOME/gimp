@@ -41,6 +41,7 @@ struct _GimpViewableClass
   GimpObjectClass  parent_class;
 
   const gchar     *default_icon_name;
+  const gchar     *default_name;
   const gchar     *name_changed_signal;
   gboolean         name_editable;
 

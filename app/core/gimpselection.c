@@ -159,6 +159,7 @@ gimp_selection_class_init (GimpSelectionClass *klass)
   GimpChannelClass  *channel_class  = GIMP_CHANNEL_CLASS (klass);
 
   viewable_class->default_icon_name   = "gimp-selection";
+  viewable_class->default_name        = _("Selection Mask");
 
   item_class->is_attached             = gimp_selection_is_attached;
   item_class->get_tree                = gimp_selection_get_tree;
@@ -169,7 +170,6 @@ gimp_selection_class_init (GimpSelectionClass *klass)
   item_class->rotate                  = gimp_selection_rotate;
   item_class->fill                    = gimp_selection_fill;
   item_class->stroke                  = gimp_selection_stroke;
-  item_class->default_name            = _("Selection Mask");
   item_class->translate_desc          = C_("undo-type", "Move Selection");
   item_class->fill_desc               = C_("undo-type", "Fill Selection");
   item_class->stroke_desc             = C_("undo-type", "Stroke Selection");

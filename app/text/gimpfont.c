@@ -601,6 +601,7 @@ gimp_font_class_init (GimpFontClass *klass)
   viewable_class->get_new_preview   = gimp_font_get_new_preview;
 
   viewable_class->default_icon_name = "gtk-select-font";
+  viewable_class->default_name      = _("Font");
 }
 
 static void

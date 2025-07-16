@@ -35,6 +35,8 @@
 #include "gimpimage.h"
 #include "gimptempbuf.h"
 
+#include "gimp-intl.h"
+
 
 static void          gimp_color_managed_iface_init (GimpColorManagedInterface *iface);
 
@@ -101,6 +103,7 @@ gimp_buffer_class_init (GimpBufferClass *klass)
   gimp_object_class->get_memsize    = gimp_buffer_get_memsize;
 
   viewable_class->default_icon_name = "edit-paste";
+  viewable_class->default_name      = _("Buffer");
   viewable_class->name_editable     = TRUE;
   viewable_class->get_size          = gimp_buffer_get_size;
   viewable_class->get_preview_size  = gimp_buffer_get_preview_size;

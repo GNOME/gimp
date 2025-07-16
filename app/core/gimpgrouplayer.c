@@ -276,6 +276,7 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   gimp_object_class->get_memsize         = gimp_group_layer_get_memsize;
 
   viewable_class->default_icon_name      = "gimp-group-layer";
+  viewable_class->default_name           = _("Layer Group");
   viewable_class->ancestry_changed       = gimp_group_layer_ancestry_changed;
   viewable_class->get_size               = gimp_group_layer_get_size;
   viewable_class->get_children           = gimp_group_layer_get_children;
@@ -290,7 +291,6 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   item_class->resize                     = gimp_group_layer_resize;
   item_class->get_clip                   = gimp_group_layer_get_clip;
 
-  item_class->default_name               = _("Layer Group");
   item_class->rename_desc                = C_("undo-type", "Rename Layer Group");
   item_class->translate_desc             = C_("undo-type", "Move Layer Group");
   item_class->scale_desc                 = C_("undo-type", "Scale Layer Group");

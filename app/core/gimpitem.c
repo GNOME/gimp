@@ -280,7 +280,6 @@ gimp_item_class_init (GimpItemClass *klass)
   klass->stroke                    = NULL;
   klass->to_selection              = NULL;
 
-  klass->default_name              = NULL;
   klass->rename_desc               = NULL;
   klass->translate_desc            = NULL;
   klass->scale_desc                = NULL;
@@ -775,7 +774,7 @@ gimp_item_new (GType        type,
     gimp_object_set_name (GIMP_OBJECT (item), name);
   else
     gimp_object_set_static_name (GIMP_OBJECT (item),
-                                 GIMP_ITEM_GET_CLASS (item)->default_name);
+                                 GIMP_VIEWABLE_GET_CLASS (item)->default_name);
 
   return item;
 }
@@ -1100,7 +1099,7 @@ gimp_item_rename (GimpItem     *item,
   item_class = GIMP_ITEM_GET_CLASS (item);
 
   if (! new_name || ! *new_name)
-    new_name = item_class->default_name;
+    new_name = GIMP_VIEWABLE_GET_CLASS (item)->default_name;
 
   if (strcmp (new_name, gimp_object_get_name (item)))
     return item_class->rename (item, new_name, item_class->rename_desc, error);
