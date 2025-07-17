@@ -46,11 +46,11 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PLUG_IN_PROC        "plug-in-grid"
-#define PLUG_IN_BINARY      "grid"
-#define PLUG_IN_ROLE        "gimp-grid"
-#define SPIN_BUTTON_WIDTH    8
-#define COLOR_BUTTON_WIDTH  55
+#define PLUG_IN_PROC         "plug-in-grid"
+#define PLUG_IN_BINARY       "grid"
+#define PLUG_IN_ROLE         "gimp-grid"
+#define SPIN_BUTTON_WIDTH     8
+#define COLOR_BUTTON_WIDTH  110
 
 
 typedef struct _Grid      Grid;
@@ -64,7 +64,6 @@ struct _Grid
   GimpProcedureConfig *config;
   GtkWidget           *hcolor_button;
   GtkWidget           *vcolor_button;
-  GtkWidget           *icolor_button;
   GtkWidget           *color_chain;
 };
 
@@ -167,9 +166,9 @@ grid_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         _("Draw a grid on the image"),
-                                        "Draws a grid using the specified "
-                                        "colors. The grid origin is the "
-                                        "upper left corner.",
+                                          "Draws a grid using the specified "
+                                          "colors. The grid origin is the "
+                                          "upper left corner.",
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Tim Newsome",
@@ -178,20 +177,20 @@ grid_create_procedure (GimpPlugIn  *plug_in,
                                       "1997 - 2000");
 
       gimp_procedure_add_int_argument (procedure, "hwidth",
-                                       "H width",
-                                       "Horizontal width",
+                                       _("Horizontal width"),
+                                       _("Horizontal width"),
                                        0, GIMP_MAX_IMAGE_SIZE, 1,
                                        G_PARAM_READWRITE);
 
       gimp_procedure_add_int_argument (procedure, "hspace",
-                                       "H space",
-                                       "Horizontal spacing",
+                                       _("Horizontal spacing"),
+                                       _("Horizontal spacing"),
                                        1, GIMP_MAX_IMAGE_SIZE, 16,
                                        G_PARAM_READWRITE);
 
       gimp_procedure_add_int_argument (procedure, "hoffset",
-                                       "H offset",
-                                       "Horizontal offset",
+                                       _("Horizontal offset"),
+                                       _("Horizontal offset"),
                                        0, GIMP_MAX_IMAGE_SIZE, 8,
                                        G_PARAM_READWRITE);
 
@@ -200,58 +199,88 @@ grid_create_procedure (GimpPlugIn  *plug_in,
        * foreground/background color from context.
        */
       gimp_procedure_add_color_argument (procedure, "hcolor",
-                                         "H color",
                                          "Horizontal color",
+                                         _("Horizontal color"),
                                          TRUE, default_hcolor,
                                          G_PARAM_READWRITE);
 
       gimp_procedure_add_int_argument (procedure, "vwidth",
-                                       "V width",
-                                       "Vertical width",
+                                       _("Vertical width"),
+                                       _("Vertical width"),
                                        0, GIMP_MAX_IMAGE_SIZE, 1,
                                        G_PARAM_READWRITE);
 
       gimp_procedure_add_int_argument (procedure, "vspace",
-                                       "V space",
-                                       "Vertical spacing",
+                                       _("Vertical spacing"),
+                                       _("Vertical spacing"),
                                        1, GIMP_MAX_IMAGE_SIZE, 16,
                                        G_PARAM_READWRITE);
 
       gimp_procedure_add_int_argument (procedure, "voffset",
-                                       "V offset",
-                                       "Vertical offset",
+                                       _("Vertical offset"),
+                                       _("Vertical offset"),
                                        0, GIMP_MAX_IMAGE_SIZE, 8,
                                        G_PARAM_READWRITE);
 
       gimp_procedure_add_color_argument (procedure, "vcolor",
-                                         "V color",
                                          "Vertical color",
+                                         _("Vertical color"),
                                          TRUE, default_vcolor,
                                          G_PARAM_READWRITE);
 
       gimp_procedure_add_int_argument (procedure, "iwidth",
-                                       "I width",
-                                       "Intersection width",
+                                       _("Intersection width"),
+                                       _("Intersection width"),
                                        0, GIMP_MAX_IMAGE_SIZE, 0,
                                        G_PARAM_READWRITE);
 
       gimp_procedure_add_int_argument (procedure, "ispace",
-                                       "I space",
-                                       "Intersection spacing",
+                                       _("Intersection spacing"),
+                                       _("Intersection spacing"),
                                        1, GIMP_MAX_IMAGE_SIZE, 2,
                                        G_PARAM_READWRITE);
 
       gimp_procedure_add_int_argument (procedure, "ioffset",
-                                       "I offset",
-                                       "Intersection offset",
+                                       _("Intersection offset"),
+                                       _("Intersection offset"),
                                        0, GIMP_MAX_IMAGE_SIZE, 6,
                                        G_PARAM_READWRITE);
 
       gimp_procedure_add_color_argument (procedure, "icolor",
-                                         "I color",
-                                         "Intersection color",
+                                         _("Intersection color"),
+                                         _("Intersection color"),
                                          TRUE, default_icolor,
                                          G_PARAM_READWRITE);
+
+      gimp_procedure_add_unit_aux_argument (procedure, "width-unit",
+                                            NULL, NULL,
+                                            TRUE, TRUE, gimp_unit_pixel (),
+                                            GIMP_PARAM_READWRITE);
+      gimp_procedure_add_unit_aux_argument (procedure,
+                                            "intersection-width-unit",
+                                            NULL, NULL,
+                                            TRUE, TRUE, gimp_unit_pixel (),
+                                            GIMP_PARAM_READWRITE);
+
+      gimp_procedure_add_unit_aux_argument (procedure, "space-unit",
+                                            NULL, NULL,
+                                            TRUE, TRUE, gimp_unit_pixel (),
+                                            GIMP_PARAM_READWRITE);
+      gimp_procedure_add_unit_aux_argument (procedure,
+                                            "intersection-space-unit",
+                                            NULL, NULL,
+                                            TRUE, TRUE, gimp_unit_pixel (),
+                                            GIMP_PARAM_READWRITE);
+
+      gimp_procedure_add_unit_aux_argument (procedure, "offset-unit",
+                                            NULL, NULL,
+                                            TRUE, TRUE, gimp_unit_pixel (),
+                                            GIMP_PARAM_READWRITE);
+      gimp_procedure_add_unit_aux_argument (procedure,
+                                            "intersection-offset-unit",
+                                            NULL, NULL,
+                                            TRUE, TRUE, gimp_unit_pixel (),
+                                            GIMP_PARAM_READWRITE);
 
       g_object_unref (default_hcolor);
       g_object_unref (default_vcolor);
@@ -633,138 +662,44 @@ render_grid (GimpImage           *image,
  * GUI stuff
  */
 
-
-static void
-update_values (Grid *grid)
-{
-  GtkWidget *entry;
-  GeglColor *color;
-
-  entry = g_object_get_data (G_OBJECT (main_dialog), "width");
-  g_object_set (grid->config,
-                "hwidth",
-                (gint) RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 0)),
-                "vwidth",
-                (gint) RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 1)),
-                "iwidth",
-                (gint) RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 2)),
-                NULL);
-
-  entry = g_object_get_data (G_OBJECT (main_dialog), "space");
-  g_object_set (grid->config,
-                "hspace",
-                (gint) RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 0)),
-                "vspace",
-                (gint) RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 1)),
-                "ispace",
-                (gint) RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 2)),
-                NULL);
-
-  entry = g_object_get_data (G_OBJECT (main_dialog), "offset");
-  g_object_set (grid->config,
-                "hoffset",
-                (gint) RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 0)),
-                "voffset",
-                (gint) RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 1)),
-                "ioffset",
-                (gint) RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 2)),
-                NULL);
-
-  color = gimp_color_button_get_color (GIMP_COLOR_BUTTON (grid->hcolor_button));
-  g_object_set (grid->config, "hcolor", color, NULL);
-  g_object_unref (color);
-
-  color = gimp_color_button_get_color (GIMP_COLOR_BUTTON (grid->vcolor_button));
-  g_object_set (grid->config, "vcolor", color, NULL);
-  g_object_unref (color);
-
-  color = gimp_color_button_get_color (GIMP_COLOR_BUTTON (grid->icolor_button));
-  g_object_set (grid->config, "icolor", color, NULL);
-  g_object_unref (color);
-}
-
 static void
 update_preview (GimpPreview *preview,
-                Grid        *grid)
+                GObject     *config)
 {
-  update_values (grid);
+  GimpDrawable *drawable = g_object_get_data (config, "drawable");
 
-  render_grid (gimp_item_get_image (GIMP_ITEM (grid->drawable)),
-               grid->drawable, grid->config, preview);
+  render_grid (gimp_item_get_image (GIMP_ITEM (drawable)), drawable,
+               GIMP_PROCEDURE_CONFIG (config), preview);
 }
 
 static void
-entry_callback (GtkWidget *widget,
-                gpointer   data)
-{
-  static gdouble x = -1.0;
-  static gdouble y = -1.0;
-  gdouble new_x;
-  gdouble new_y;
-
-  new_x = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
-  new_y = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
-
-  if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (data)))
-    {
-      if (new_x != x)
-        {
-          y = new_y = x = new_x;
-          gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 1, y);
-        }
-      if (new_y != y)
-        {
-          x = new_x = y = new_y;
-          gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0, x);
-        }
-    }
-  else
-    {
-      x = new_x;
-      y = new_y;
-    }
-}
-
-static void
-color_callback (GtkWidget *widget,
-                gpointer   data)
+color_callback (GObject          *config,
+                const GParamSpec *pspec,
+                gpointer          data)
 {
   Grid      *grid         = GRID (data);
   GtkWidget *chain_button = grid->color_chain;
-  GeglColor *color;
+  GeglColor *color        = NULL;
 
-  color = gimp_color_button_get_color (GIMP_COLOR_BUTTON (widget));
+  g_signal_handlers_block_by_func (config, color_callback, grid);
 
   if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (chain_button)))
     {
-      if (widget == grid->vcolor_button)
+      if (! strcmp (pspec->name, "vcolor"))
         {
-          g_signal_handlers_block_by_func (grid->hcolor_button, color_callback,
-                                           grid);
-          gimp_color_button_set_color (GIMP_COLOR_BUTTON (grid->hcolor_button),
-                                       color);
-          g_signal_handlers_unblock_by_func (grid->hcolor_button,
-                                             color_callback, grid);
+          g_object_get (config, "vcolor", &color, NULL);
+          g_object_set (config, "hcolor", color, NULL);
         }
-      else if (widget == grid->hcolor_button)
+      else if (! strcmp (pspec->name, "hcolor"))
         {
-          g_signal_handlers_block_by_func (grid->vcolor_button, color_callback,
-                                           grid);
-          gimp_color_button_set_color (GIMP_COLOR_BUTTON (grid->vcolor_button),
-                                       color);
-          g_signal_handlers_unblock_by_func (grid->vcolor_button,
-                                             color_callback, grid);
+          g_object_get (config, "hcolor", &color, NULL);
+          g_object_set (config, "vcolor", color, NULL);
         }
+
+      g_clear_object (&color);
     }
 
-  if (widget == grid->hcolor_button)
-    g_object_set (grid->config, "hcolor", color, NULL);
-  else if (widget == grid->vcolor_button)
-    g_object_set (grid->config, "vcolor", color, NULL);
-  else if (widget == grid->icolor_button)
-    g_object_set (grid->config, "icolor", color, NULL);
-
-  g_object_unref (color);
+  g_signal_handlers_unblock_by_func (config, color_callback, grid);
 }
 
 
@@ -775,379 +710,184 @@ dialog (GimpImage           *image,
         GimpProcedureConfig *config)
 {
   Grid            *grid;
-  GimpColorConfig *color_config;
   GtkWidget       *dlg;
-  GtkWidget       *main_vbox;
-  GtkWidget       *vbox;
-  GtkSizeGroup    *group;
+  GtkWidget       *hbox;
   GtkWidget       *label;
   GtkWidget       *preview;
-  GtkWidget       *width;
-  GtkWidget       *space;
-  GtkWidget       *offset;
-  GtkWidget       *chain_button;
-  GimpUnit        *unit;
-  gint             d_width;
-  gint             d_height;
+  GtkWidget       *size_entry;
+  GtkWidget       *color_button;
+  GtkWidget       *color_grid;
+  GeglColor       *hcolor;
+  GeglColor       *vcolor;
   gdouble          xres;
   gdouble          yres;
   gboolean         run;
 
-  gint             hwidth;
-  gint             hspace;
-  gint             hoffset;
-  GeglColor       *hcolor;
-  gint             vwidth;
-  gint             vspace;
-  gint             voffset;
-  GeglColor       *vcolor;
-  gint             iwidth;
-  gint             ispace;
-  gint             ioffset;
-  GeglColor       *icolor;
-
   g_return_val_if_fail (main_dialog == NULL, FALSE);
-
-  g_object_get (config,
-                "hwidth",  &hwidth,
-                "hspace",  &hspace,
-                "hoffset", &hoffset,
-                "hcolor",  &hcolor,
-                "vwidth",  &vwidth,
-                "vspace",  &vspace,
-                "voffset", &voffset,
-                "vcolor",  &vcolor,
-                "iwidth",  &iwidth,
-                "ispace",  &ispace,
-                "ioffset", &ioffset,
-                "icolor",  &icolor,
-                NULL);
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  d_width  = gimp_drawable_get_width  (drawable);
-  d_height = gimp_drawable_get_height (drawable);
+  grid           = GRID (gimp_procedure_get_plug_in (procedure));
+  grid->drawable = drawable;
+  grid->config   = config;
 
-  main_dialog = dlg = gimp_dialog_new (_("Grid"), PLUG_IN_ROLE,
-                                       NULL, 0,
-                                       gimp_standard_help_func, PLUG_IN_PROC,
+  g_object_get (config,
+                "hcolor", &hcolor,
+                "vcolor", &vcolor,
+                NULL);
 
-                                       _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                       _("_OK"),     GTK_RESPONSE_OK,
-
-                                       NULL);
-
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dlg));
+  main_dialog = dlg = gimp_procedure_dialog_new (procedure,
+                                                 GIMP_PROCEDURE_CONFIG (config),
+                                                 _("Grid"));
 
   /*  Get the image resolution and unit  */
   gimp_image_get_resolution (image, &xres, &yres);
-  unit = gimp_image_get_unit (image);
 
-  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dlg))),
-                      main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
+  preview = gimp_procedure_dialog_get_drawable_preview (GIMP_PROCEDURE_DIALOG (dlg),
+                                                        "preview", drawable);
+  g_object_set_data (G_OBJECT (config), "drawable", drawable);
 
-  preview = gimp_drawable_preview_new_from_drawable (drawable);
-  gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
-  gtk_widget_show (preview);
-
-  grid = GRID (gimp_procedure_get_plug_in (procedure));
-  grid->drawable = drawable;
-  grid->config   = config;
   g_signal_connect (preview, "invalidated",
                     G_CALLBACK (update_preview),
-                    grid);
+                    config);
 
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
-
-  /*  The width entries  */
-  width = gimp_size_entry_new (3,                            /*  number_of_fields  */
-                               unit,                         /*  unit              */
-                               "%a",                         /*  unit_format       */
-                               TRUE,                         /*  menu_show_pixels  */
-                               TRUE,                         /*  menu_show_percent */
-                               FALSE,                        /*  show_refval       */
-                               SPIN_BUTTON_WIDTH,            /*  spinbutton_usize  */
-                               GIMP_SIZE_ENTRY_UPDATE_SIZE); /*  update_policy     */
-
-  gtk_box_pack_start (GTK_BOX (vbox), width, FALSE, FALSE, 0);
-  gtk_widget_show (width);
-
-  /*  set the unit back to pixels, since most times we will want pixels */
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (width), gimp_unit_pixel ());
-
-  /*  set the resolution to the image resolution  */
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (width), 0, xres, TRUE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (width), 1, yres, TRUE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (width), 2, xres, TRUE);
-
-  /*  set the size (in pixels) that will be treated as 0% and 100%  */
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (width), 0, 0.0, d_height);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (width), 1, 0.0, d_width);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (width), 2, 0.0, d_width);
-
-  /*  set upper and lower limits (in pixels)  */
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (width), 0, 0.0,
-                                         d_height);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (width), 1, 0.0,
-                                         d_width);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (width), 2, 0.0,
-                                         MAX (d_width, d_height));
-  gtk_grid_set_column_spacing (GTK_GRID (width), 6);
-
-  /*  initialize the values  */
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (width), 0, hwidth);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (width), 1, vwidth);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (width), 2, iwidth);
-
-  /*  attach labels  */
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (width), _("Horizontal\nLines"),
-                                0, 1, 0.0);
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (width), _("Vertical\nLines"),
-                                0, 2, 0.0);
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (width), _("Intersection"),
-                                0, 3, 0.0);
-
-  label = gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (width), _("Width:"),
-                                        1, 0, 0.0);
-
-  group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-  gtk_size_group_add_widget (group, label);
-  g_object_unref (group);
-
-  /*  put a chain_button under the size_entries  */
-  chain_button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
-  if (hwidth == vwidth)
-    gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain_button), TRUE);
-  gtk_grid_attach (GTK_GRID (width), chain_button, 1, 2, 2, 1);
-  gtk_widget_show (chain_button);
-
-  /* connect to the 'value-changed' signal because we have to take care
-   * of keeping the entries in sync when the chainbutton is active
-   */
-  g_signal_connect (width, "value-changed",
-                    G_CALLBACK (entry_callback),
-                    chain_button);
-  g_signal_connect_swapped (width, "value-changed",
+  g_signal_connect_swapped (config, "notify",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  /*  The spacing entries  */
-  space = gimp_size_entry_new (3,                            /*  number_of_fields  */
-                               unit,                         /*  unit              */
-                               "%a",                         /*  unit_format       */
-                               TRUE,                         /*  menu_show_pixels  */
-                               TRUE,                         /*  menu_show_percent */
-                               FALSE,                        /*  show_refval       */
-                               SPIN_BUTTON_WIDTH,            /*  spinbutton_usize  */
-                               GIMP_SIZE_ENTRY_UPDATE_SIZE); /*  update_policy     */
+  /* Create entries for line width, spacing, and offset */
+  gimp_procedure_dialog_get_coordinates (GIMP_PROCEDURE_DIALOG (dlg),
+                                         "width-coordinates", "hwidth",
+                                         "vwidth", "width-unit",
+                                         "%a", GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                         xres, yres);
+  size_entry = gimp_procedure_dialog_get_size_entry (GIMP_PROCEDURE_DIALOG (dlg),
+                                                     "iwidth", TRUE,
+                                                     "intersection-width-unit",
+                                                     "%a",
+                                                     GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                                     xres);
+  label = gtk_grid_get_child_at (GTK_GRID (size_entry), 0, 1);
+  gtk_widget_set_visible (label, FALSE);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (size_entry),
+                                "Intersection width", 0, 1, 0.0);
 
-  gtk_box_pack_start (GTK_BOX (vbox), space, FALSE, FALSE, 0);
-  gtk_widget_show (space);
 
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (space), gimp_unit_pixel ());
+  gimp_procedure_dialog_get_coordinates (GIMP_PROCEDURE_DIALOG (dlg),
+                                         "space-coordinates", "hspace",
+                                         "vspace", "space-unit",
+                                         "%a", GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                         xres, yres);
+  size_entry = gimp_procedure_dialog_get_size_entry (GIMP_PROCEDURE_DIALOG (dlg),
+                                                     "ispace", TRUE,
+                                                     "intersection-space-unit",
+                                                     "%a",
+                                                     GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                                     xres);
+  label = gtk_grid_get_child_at (GTK_GRID (size_entry), 0, 1);
+  gtk_widget_set_visible (label, FALSE);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (size_entry),
+                                "Intersection spacing", 0, 1, 0.0);
 
-  /*  set the resolution to the image resolution  */
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (space), 0, xres, TRUE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (space), 1, yres, TRUE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (space), 2, xres, TRUE);
+  gimp_procedure_dialog_get_coordinates (GIMP_PROCEDURE_DIALOG (dlg),
+                                         "offset-coordinates", "hoffset",
+                                         "voffset", "offset-unit",
+                                         "%a", GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                         xres, yres);
+  size_entry = gimp_procedure_dialog_get_size_entry (GIMP_PROCEDURE_DIALOG (dlg),
+                                                     "ioffset", TRUE,
+                                                     "intersection-offset-unit",
+                                                     "%a",
+                                                     GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                                     xres);
+  label = gtk_grid_get_child_at (GTK_GRID (size_entry), 0, 1);
+  gtk_widget_set_visible (label, FALSE);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (size_entry),
+                                "Intersection offset", 0, 1, 0.0);
 
-  /*  set the size (in pixels) that will be treated as 0% and 100%  */
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 0, 0.0, d_height);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 1, 0.0, d_width);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 2, 0.0, d_width);
+  /* Create color widgets */
+  grid->hcolor_button =
+    gimp_procedure_dialog_get_color_widget (GIMP_PROCEDURE_DIALOG (dlg),
+                                            "hcolor", TRUE,
+                                            GIMP_COLOR_AREA_SMALL_CHECKS);
+  gtk_widget_set_visible (gimp_labeled_get_label (GIMP_LABELED (grid->hcolor_button)),
+                          FALSE);
+  color_button = gimp_label_color_get_color_widget (GIMP_LABEL_COLOR (grid->hcolor_button));
+  g_object_set (color_button, "area-width", COLOR_BUTTON_WIDTH, NULL);
 
-  /*  set upper and lower limits (in pixels)  */
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 0, 1.0,
-                                         d_height);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 1, 1.0,
-                                         d_width);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 2, 0.0,
-                                         MAX (d_width, d_height));
-  gtk_grid_set_column_spacing (GTK_GRID (space), 6);
+  grid->vcolor_button =
+    gimp_procedure_dialog_get_color_widget (GIMP_PROCEDURE_DIALOG (dlg),
+                                            "vcolor", TRUE,
+                                            GIMP_COLOR_AREA_SMALL_CHECKS);
+  gtk_widget_set_visible (gimp_labeled_get_label (GIMP_LABELED (grid->vcolor_button)),
+                          FALSE);
+  color_button = gimp_label_color_get_color_widget (GIMP_LABEL_COLOR (grid->vcolor_button));
+  g_object_set (color_button, "area-width", COLOR_BUTTON_WIDTH, NULL);
 
-  /*  initialize the values  */
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (space), 0, hspace);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (space), 1, vspace);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (space), 2, ispace);
+  color_button =
+    gimp_procedure_dialog_get_color_widget (GIMP_PROCEDURE_DIALOG (dlg),
+                                            "icolor", TRUE,
+                                            GIMP_COLOR_AREA_SMALL_CHECKS);
+  color_button = gimp_label_color_get_color_widget (GIMP_LABEL_COLOR (color_button));
+  g_object_set (color_button, "area-width", COLOR_BUTTON_WIDTH, NULL);
 
-  /*  attach labels  */
-  label = gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (space), _("Spacing:"),
-                                        1, 0, 0.0);
-  gtk_size_group_add_widget (group, label);
+  /* Create layout */
+  hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dlg),
+                                         "width-hbox", "width-coordinates",
+                                         "iwidth", NULL);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (hbox),
+                                  GTK_ORIENTATION_HORIZONTAL);
 
-  /*  put a chain_button under the spacing_entries  */
-  chain_button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
-  if (hspace == vspace)
-    gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain_button), TRUE);
-  gtk_grid_attach (GTK_GRID (space), chain_button, 1, 2, 2, 1);
-  gtk_widget_show (chain_button);
+  hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dlg),
+                                         "space-hbox", "space-coordinates",
+                                         "ispace", NULL);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (hbox),
+                                  GTK_ORIENTATION_HORIZONTAL);
 
-  /* connect to the 'value-changed' and "unit-changed" signals because
-   * we have to take care of keeping the entries in sync when the
-   * chainbutton is active
-   */
-  g_signal_connect (space, "value-changed",
-                    G_CALLBACK (entry_callback),
-                    chain_button);
-  g_signal_connect (space, "unit-changed",
-                    G_CALLBACK (entry_callback),
-                    chain_button);
-  g_signal_connect_swapped (space, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
+  hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dlg),
+                                         "offset-hbox", "offset-coordinates",
+                                         "ioffset", NULL);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (hbox),
+                                  GTK_ORIENTATION_HORIZONTAL);
 
-  /*  The offset entries  */
-  offset = gimp_size_entry_new (3,                            /*  number_of_fields  */
-                                unit,                         /*  unit              */
-                                "%a",                         /*  unit_format       */
-                                TRUE,                         /*  menu_show_pixels  */
-                                TRUE,                         /*  menu_show_percent */
-                                FALSE,                        /*  show_refval       */
-                                SPIN_BUTTON_WIDTH,            /*  spinbutton_usize  */
-                                GIMP_SIZE_ENTRY_UPDATE_SIZE); /*  update_policy     */
+  hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dlg),
+                                         "color-hbox", "icolor", NULL);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (hbox),
+                                  GTK_ORIENTATION_HORIZONTAL);
 
-  gtk_box_pack_start (GTK_BOX (vbox), offset, FALSE, FALSE, 0);
-  gtk_widget_show (offset);
-
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (offset), gimp_unit_pixel ());
-
-  /*  set the resolution to the image resolution  */
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (offset), 0, xres, TRUE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (offset), 1, yres, TRUE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (offset), 2, xres, TRUE);
-
-  /*  set the size (in pixels) that will be treated as 0% and 100%  */
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 0, 0.0, d_height);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 1, 0.0, d_width);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 2, 0.0, d_width);
-
-  /*  set upper and lower limits (in pixels)  */
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 0, 0.0,
-                                         d_height);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 1, 0.0,
-                                         d_width);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 2, 0.0,
-                                         MAX (d_width, d_height));
-  gtk_grid_set_column_spacing (GTK_GRID (offset), 6);
-
-  /*  initialize the values  */
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (offset), 0, hoffset);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (offset), 1, voffset);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (offset), 2, ioffset);
-
-  /*  attach labels  */
-  label = gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (offset), _("Offset:"),
-                                        1, 0, 0.0);
-  gtk_size_group_add_widget (group, label);
-
-  /*  put a chain_button under the offset_entries  */
-  chain_button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
-  if (hoffset == voffset)
-    gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain_button), TRUE);
-  gtk_grid_attach (GTK_GRID (offset), chain_button, 1, 2, 2, 1);
-  gtk_widget_show (chain_button);
-
-  /* connect to the 'value-changed' and "unit-changed" signals because
-   * we have to take care of keeping the entries in sync when the
-   * chainbutton is active
-   */
-  g_signal_connect (offset, "value-changed",
-                    G_CALLBACK (entry_callback),
-                    chain_button);
-  g_signal_connect (offset, "unit-changed",
-                    G_CALLBACK (entry_callback),
-                    chain_button);
-  g_signal_connect_swapped (offset, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-
-  /*  put a chain_button under the color_buttons  */
+  /* Create chain for color button */
+  color_grid        = gtk_grid_new ();
   grid->color_chain = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
   if (gimp_color_is_perceptually_identical (hcolor, vcolor))
     gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (grid->color_chain), TRUE);
-  gtk_grid_attach (GTK_GRID (offset), grid->color_chain, 1, 4, 2, 1);
-  gtk_widget_show (grid->color_chain);
+  g_clear_object (&hcolor);
+  g_clear_object (&vcolor);
 
-  /*  attach color selectors  */
-  grid->hcolor_button = gimp_color_button_new (_("Horizontal Color"),
-                                               COLOR_BUTTON_WIDTH, 16,
-                                               hcolor,
-                                               GIMP_COLOR_AREA_SMALL_CHECKS);
-  gimp_color_button_set_update (GIMP_COLOR_BUTTON (grid->hcolor_button), TRUE);
-  gtk_grid_attach (GTK_GRID (offset), grid->hcolor_button, 1, 3, 1, 1);
-  gtk_widget_show (grid->hcolor_button);
+  gtk_grid_attach (GTK_GRID (color_grid), grid->color_chain, 0, 1, 2, 1);
+  gtk_widget_set_visible (grid->color_chain, TRUE);
 
-  color_config = gimp_get_color_configuration ();
-  gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (grid->hcolor_button),
-                                      color_config);
+  gtk_grid_attach (GTK_GRID (color_grid), grid->hcolor_button, 0, 0, 1, 1);
+  gtk_grid_attach (GTK_GRID (color_grid), grid->vcolor_button, 1, 0, 1, 1);
+  gtk_widget_set_visible (color_grid, TRUE);
 
-  g_signal_connect (grid->hcolor_button, "color-changed",
+  gtk_box_pack_start (GTK_BOX (hbox), color_grid, FALSE, FALSE, 12);
+  gtk_box_reorder_child (GTK_BOX (hbox), color_grid, 0);
+
+  g_signal_connect (config, "notify::hcolor",
                     G_CALLBACK (color_callback),
                     grid);
-  g_signal_connect_swapped (grid->hcolor_button, "color-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-
-  grid->vcolor_button = gimp_color_button_new (_("Vertical Color"),
-                                               COLOR_BUTTON_WIDTH, 16,
-                                               vcolor,
-                                               GIMP_COLOR_AREA_SMALL_CHECKS);
-  gimp_color_button_set_update (GIMP_COLOR_BUTTON (grid->vcolor_button), TRUE);
-  gtk_grid_attach (GTK_GRID (offset), grid->vcolor_button, 2, 3, 1, 1);
-  gtk_widget_show (grid->vcolor_button);
-
-  gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (grid->vcolor_button),
-                                      color_config);
-
-  g_signal_connect (grid->vcolor_button, "color-changed",
+  g_signal_connect (config, "notify::vcolor",
                     G_CALLBACK (color_callback),
                     grid);
-  g_signal_connect_swapped (grid->vcolor_button, "color-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
 
-  grid->icolor_button = gimp_color_button_new (_("Intersection Color"),
-                                               COLOR_BUTTON_WIDTH, 16,
-                                               icolor,
-                                               GIMP_COLOR_AREA_SMALL_CHECKS);
-  gimp_color_button_set_update (GIMP_COLOR_BUTTON (grid->icolor_button), TRUE);
-  gtk_grid_attach (GTK_GRID (offset), grid->icolor_button, 3, 3, 1, 1);
-  gtk_widget_show (grid->icolor_button);
-
-  gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (grid->icolor_button),
-                                      color_config);
-  g_object_unref (color_config);
-  g_object_unref (hcolor);
-  g_object_unref (vcolor);
-  g_object_unref (icolor);
-
-  g_signal_connect (grid->icolor_button, "color-changed",
-                    G_CALLBACK (color_callback),
-                    grid);
-  g_signal_connect_swapped (grid->icolor_button, "color-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dlg),
+                              "preview", "width-hbox",
+                              "space-hbox", "offset-hbox",
+                              "color-hbox", NULL);
 
   gtk_widget_show (dlg);
 
-  g_object_set_data (G_OBJECT (dlg), "width",  width);
-  g_object_set_data (G_OBJECT (dlg), "space",  space);
-  g_object_set_data (G_OBJECT (dlg), "offset", offset);
-
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
-
-  if (run)
-    update_values (grid);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dlg));
 
   gtk_widget_destroy (dlg);
 
