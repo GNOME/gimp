@@ -68,7 +68,7 @@ data_open_as_image_cmd_callback (GimpAction *action,
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
-                              gimp_data_factory_view_get_children_type (view));
+                              gimp_data_factory_view_get_child_type (view));
 
   if (data && gimp_data_get_file (data))
     {
@@ -119,7 +119,7 @@ data_new_cmd_callback (GimpAction *action,
           GtkWidget *edit_button;
 
           gimp_context_set_by_type (context,
-                                    gimp_data_factory_view_get_children_type (view),
+                                    gimp_data_factory_view_get_child_type (view),
                                     GIMP_OBJECT (data));
 
           edit_button = gimp_data_factory_view_get_edit_button (view);
@@ -142,7 +142,7 @@ data_duplicate_cmd_callback (GimpAction *action,
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
-                              gimp_data_factory_view_get_children_type (view));
+                              gimp_data_factory_view_get_child_type (view));
 
   if (data && gimp_data_factory_view_have (view, GIMP_OBJECT (data)))
     {
@@ -155,7 +155,7 @@ data_duplicate_cmd_callback (GimpAction *action,
           GtkWidget *edit_button;
 
           gimp_context_set_by_type (context,
-                                    gimp_data_factory_view_get_children_type (view),
+                                    gimp_data_factory_view_get_child_type (view),
                                     GIMP_OBJECT (new_data));
 
           edit_button = gimp_data_factory_view_get_edit_button (view);
@@ -178,7 +178,7 @@ data_copy_location_cmd_callback (GimpAction *action,
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
-                              gimp_data_factory_view_get_children_type (view));
+                              gimp_data_factory_view_get_child_type (view));
 
   if (data)
     {
@@ -207,7 +207,7 @@ data_show_in_file_manager_cmd_callback (GimpAction *action,
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
-                              gimp_data_factory_view_get_children_type (view));
+                              gimp_data_factory_view_get_child_type (view));
 
   if (data)
     {
@@ -243,7 +243,7 @@ data_delete_cmd_callback (GimpAction *action,
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
-                              gimp_data_factory_view_get_children_type (view));
+                              gimp_data_factory_view_get_child_type (view));
 
   if (data                          &&
       gimp_data_is_deletable (data) &&
@@ -288,7 +288,7 @@ data_edit_cmd_callback (GimpAction *action,
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
-                              gimp_data_factory_view_get_children_type (view));
+                              gimp_data_factory_view_get_child_type (view));
 
   if (data && gimp_data_factory_view_have (view, GIMP_OBJECT (data)))
     {
