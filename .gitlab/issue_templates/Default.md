@@ -20,13 +20,12 @@ https://gitlab.gnome.org/GNOME/gimp/-/issues/?sort=updated_desc&state=all&label_
 
 ### Description of the bug
 
-<!--Please describe your issue with details.
-
-**Code of Conduct**: "Be considerate and respectful" is our main rule.
-E.g. avoid negative emotional writing which only generates more upsetting
-interactions. Thanks!
-
-Add full (not cropped) screenshots or other files using the clip button on GitLab. -->
+<!-- Please describe your issue with details. By "details" we mean:
+- "Be considerate and respectful". This is our main rule.
+  E.g. avoid negative emotional writing which only generates more upsetting
+  interactions.
+- Stay on topic by writting only one bug per report created.
+- Add full (not cropped) screenshots or other files using the clip button on GitLab. -->
 
 ### Reproduction
 
