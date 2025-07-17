@@ -85,7 +85,7 @@ gimp_layer_stack_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (g_type_is_a (gimp_container_get_children_type (container),
+  gimp_assert (g_type_is_a (gimp_container_get_child_type (container),
                             GIMP_TYPE_LAYER));
 
   gimp_container_add_handler (container, "active-changed",

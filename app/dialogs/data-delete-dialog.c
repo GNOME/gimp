@@ -136,7 +136,7 @@ data_delete_dialog_response (GtkWidget        *dialog,
       if (private->context &&
           GIMP_OBJECT (data) ==
           gimp_context_get_by_type (private->context,
-                                    gimp_container_get_children_type (container)))
+                                    gimp_container_get_child_type (container)))
         {
           new_active = gimp_container_get_neighbor_of (container,
                                                        GIMP_OBJECT (data));
@@ -152,7 +152,7 @@ data_delete_dialog_response (GtkWidget        *dialog,
 
       if (new_active)
         gimp_context_set_by_type (private->context,
-                                  gimp_container_get_children_type (container),
+                                  gimp_container_get_child_type (container),
                                   new_active);
     }
 

@@ -322,9 +322,9 @@ gimp_container_icon_view_set_container (GimpContainerView *view,
       if (! container)
         {
           if (gimp_dnd_viewable_source_remove (GTK_WIDGET (icon_view->view),
-                                               gimp_container_get_children_type (old_container)))
+                                               gimp_container_get_child_type (old_container)))
             {
-              if (GIMP_VIEWABLE_CLASS (g_type_class_peek (gimp_container_get_children_type (old_container)))->get_size)
+              if (GIMP_VIEWABLE_CLASS (g_type_class_peek (gimp_container_get_child_type (old_container)))->get_size)
                 gimp_dnd_pixbuf_source_remove (GTK_WIDGET (icon_view->view));
 
               gtk_drag_source_unset (GTK_WIDGET (icon_view->view));
@@ -339,15 +339,15 @@ gimp_container_icon_view_set_container (GimpContainerView *view,
     {
       if (gimp_dnd_drag_source_set_by_type (GTK_WIDGET (icon_view->view),
                                             GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
-                                            gimp_container_get_children_type (container),
+                                            gimp_container_get_child_type (container),
                                             GDK_ACTION_COPY))
         {
           gimp_dnd_viewable_source_add (GTK_WIDGET (icon_view->view),
-                                        gimp_container_get_children_type (container),
+                                        gimp_container_get_child_type (container),
                                         gimp_container_icon_view_drag_viewable,
                                         icon_view);
 
-          if (GIMP_VIEWABLE_CLASS (g_type_class_peek (gimp_container_get_children_type (container)))->get_size)
+          if (GIMP_VIEWABLE_CLASS (g_type_class_peek (gimp_container_get_child_type (container)))->get_size)
             gimp_dnd_pixbuf_source_add (GTK_WIDGET (icon_view->view),
                                         gimp_container_icon_view_drag_pixbuf,
                                         icon_view);
@@ -908,7 +908,7 @@ gimp_container_icon_view_get_selected (GimpContainerView    *view,
       GType        child_type;
 
       context     = gimp_container_view_get_context (view);
-      child_type  = gimp_container_get_children_type (container);
+      child_type  = gimp_container_get_child_type (container);
       signal_name = gimp_context_type_to_signal_name (child_type);
 
       /* As a special case, for containers tied to a context object, we

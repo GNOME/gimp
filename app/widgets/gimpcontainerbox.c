@@ -203,7 +203,8 @@ gimp_container_box_get_preview (GimpDocked   *docked,
 
   gtk_icon_size_lookup (size, &width, &height);
 
-  prop_name = gimp_context_type_to_prop_name (gimp_container_get_children_type (container));
+  prop_name =
+    gimp_context_type_to_prop_name (gimp_container_get_child_type (container));
 
   preview = gimp_prop_view_new (G_OBJECT (context), prop_name,
                                 context, height);

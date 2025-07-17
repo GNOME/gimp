@@ -66,7 +66,7 @@ palettes_popup_invoker (GimpProcedure         *procedure,
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, palette_callback) ||
           ! gimp_pdb_dialog_new (gimp, context, progress,
-                                 gimp_container_get_children_type (container),
+                                 gimp_container_get_child_type (container),
                                  parent_window, popup_title, palette_callback,
                                  GIMP_OBJECT (initial_palette), NULL))
         success = FALSE;
@@ -96,7 +96,7 @@ palettes_close_popup_invoker (GimpProcedure         *procedure,
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, palette_callback) ||
           ! gimp_pdb_dialog_close (gimp,
-                                   gimp_container_get_children_type (container),
+                                   gimp_container_get_child_type (container),
                                    palette_callback))
         success = FALSE;
     }
@@ -127,7 +127,7 @@ palettes_set_popup_invoker (GimpProcedure         *procedure,
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, palette_callback) ||
           ! gimp_pdb_dialog_set (gimp,
-                                 gimp_container_get_children_type (container),
+                                 gimp_container_get_child_type (container),
                                  palette_callback, GIMP_OBJECT (palette), NULL))
         success = FALSE;
     }

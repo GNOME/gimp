@@ -102,7 +102,7 @@ plug_in_run_cmd_callback (GimpAction *action,
           context   = gimp_container_view_get_context (editor->view);
 
           object = gimp_context_get_by_type (context,
-                                             gimp_container_get_children_type (container));
+                                             gimp_container_get_child_type (container));
 
           args = procedure_commands_get_data_args (procedure, object);
         }

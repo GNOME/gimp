@@ -166,7 +166,7 @@ templates_duplicate_cmd_callback (GimpAction *action,
 
       gimp_container_add (container, GIMP_OBJECT (new_template));
       gimp_context_set_by_type (context,
-                                gimp_container_get_children_type (container),
+                                gimp_container_get_child_type (container),
                                 GIMP_OBJECT (new_template));
       g_object_unref (new_template);
 
@@ -326,7 +326,7 @@ templates_delete_response (GtkWidget          *dialog,
         {
           if (new_active)
             gimp_context_set_by_type (delete_data->context,
-                                      gimp_container_get_children_type (delete_data->container),
+                                      gimp_container_get_child_type (delete_data->container),
                                       new_active);
 
           gimp_container_remove (delete_data->container,

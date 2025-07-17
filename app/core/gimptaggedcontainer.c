@@ -266,7 +266,7 @@ gimp_tagged_container_new (GimpContainer *src_container)
 
   g_return_val_if_fail (GIMP_IS_LIST (src_container), NULL);
 
-  child_type = gimp_container_get_children_type (src_container);
+  child_type = gimp_container_get_child_type (src_container);
   sort_func  = gimp_list_get_sort_func (GIMP_LIST (src_container));
 
   tagged_container = g_object_new (GIMP_TYPE_TAGGED_CONTAINER,

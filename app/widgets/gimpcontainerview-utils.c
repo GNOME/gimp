@@ -73,7 +73,7 @@ gimp_container_view_remove_active (GimpContainerView *view)
       GType       child_type;
       GimpObject *active;
 
-      child_type = gimp_container_get_children_type (container);
+      child_type = gimp_container_get_child_type (container);
 
       active = gimp_context_get_by_type (context, child_type);
 

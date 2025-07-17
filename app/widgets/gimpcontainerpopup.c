@@ -118,9 +118,9 @@ gimp_container_popup_confirm (GimpPopup *popup)
   GimpObject         *object;
 
   object = gimp_context_get_by_type (c_popup->context,
-                                     gimp_container_get_children_type (c_popup->container));
+                                     gimp_container_get_child_type (c_popup->container));
   gimp_context_set_by_type (c_popup->orig_context,
-                            gimp_container_get_children_type (c_popup->container),
+                            gimp_container_get_child_type (c_popup->container),
                             object);
 
   GIMP_POPUP_CLASS (parent_class)->confirm (popup);
@@ -174,7 +174,7 @@ gimp_container_popup_new (GimpContainer     *container,
   popup->view_border_width = view_border_width;
 
   g_signal_connect (popup->context,
-                    gimp_context_type_to_signal_name (gimp_container_get_children_type (container)),
+                    gimp_context_type_to_signal_name (gimp_container_get_child_type (container)),
                     G_CALLBACK (gimp_container_popup_context_changed),
                     popup);
 
@@ -341,7 +341,7 @@ gimp_container_popup_create_view (GimpContainerPopup *popup)
   /* Special-casing the object types managed by the context to make sure
    * the right items are selected when opening the popup.
    */
-  child_type  = gimp_container_get_children_type (popup->container);
+  child_type  = gimp_container_get_child_type (popup->container);
   signal_name = gimp_context_type_to_signal_name (child_type);
 
   if (signal_name)

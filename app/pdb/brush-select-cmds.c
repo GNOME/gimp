@@ -66,7 +66,7 @@ brushes_popup_invoker (GimpProcedure         *procedure,
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, brush_callback) ||
           ! gimp_pdb_dialog_new (gimp, context, progress,
-                                 gimp_container_get_children_type (container),
+                                 gimp_container_get_child_type (container),
                                  parent_window, popup_title, brush_callback,
                                  GIMP_OBJECT (initial_brush), NULL))
         success = FALSE;
@@ -96,7 +96,7 @@ brushes_close_popup_invoker (GimpProcedure         *procedure,
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, brush_callback) ||
           ! gimp_pdb_dialog_close (gimp,
-                                   gimp_container_get_children_type (container),
+                                   gimp_container_get_child_type (container),
                                    brush_callback))
         success = FALSE;
     }
@@ -127,7 +127,7 @@ brushes_set_popup_invoker (GimpProcedure         *procedure,
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, brush_callback) ||
           ! gimp_pdb_dialog_set (gimp,
-                                 gimp_container_get_children_type (container),
+                                 gimp_container_get_child_type (container),
                                  brush_callback, GIMP_OBJECT (brush), NULL))
         success = FALSE;
     }

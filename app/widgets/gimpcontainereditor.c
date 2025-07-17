@@ -291,7 +291,7 @@ gimp_container_editor_constructed (GObject *object)
   {
     GList      *objects = NULL;
     GimpObject *object  = gimp_context_get_by_type (editor->priv->context,
-                                                    gimp_container_get_children_type (editor->priv->container));
+                                                    gimp_container_get_child_type (editor->priv->container));
 
     if (object)
       objects = g_list_prepend (objects, object);
@@ -464,7 +464,7 @@ gimp_container_editor_select_items (GimpContainerView   *view,
       const gchar *signal_name;
       GType        child_type;
 
-      child_type  = gimp_container_get_children_type (editor->priv->container);
+      child_type  = gimp_container_get_child_type (editor->priv->container);
       signal_name = gimp_context_type_to_signal_name (child_type);
 
       if (signal_name)

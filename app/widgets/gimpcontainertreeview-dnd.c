@@ -765,7 +765,7 @@ gimp_container_tree_view_real_drop_possible (GimpContainerTreeView   *tree_view,
 
 
       if (g_type_is_a (G_TYPE_FROM_INSTANCE (src_viewable),
-                       gimp_container_get_children_type (container)))
+                       gimp_container_get_child_type (container)))
         {
           /* The drop won't change a thing. This is not a fatal drop
            * failure, unless there is only one source viewable.
@@ -805,7 +805,7 @@ gimp_container_tree_view_real_drop_possible (GimpContainerTreeView   *tree_view,
       if (return_drag_action)
         {
           if (! g_type_is_a (G_TYPE_FROM_INSTANCE (src_viewable),
-                             gimp_container_get_children_type (container)))
+                             gimp_container_get_child_type (container)))
             *return_drag_action = GDK_ACTION_COPY;
         }
     }
