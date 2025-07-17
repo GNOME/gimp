@@ -260,7 +260,7 @@ gimp_container_popup_create_view (GimpContainerPopup *popup)
   GimpEditor  *editor;
   GtkWidget   *button;
   const gchar *signal_name;
-  GType        children_type;
+  GType        child_type;
   gint         rows;
   gint         columns;
 
@@ -341,15 +341,15 @@ gimp_container_popup_create_view (GimpContainerPopup *popup)
   /* Special-casing the object types managed by the context to make sure
    * the right items are selected when opening the popup.
    */
-  children_type = gimp_container_get_children_type (popup->container);
-  signal_name   = gimp_context_type_to_signal_name (children_type);
+  child_type  = gimp_container_get_children_type (popup->container);
+  signal_name = gimp_context_type_to_signal_name (child_type);
 
   if (signal_name)
     {
       GimpObject *object;
       GList      *items = NULL;
 
-      object = gimp_context_get_by_type (popup->orig_context, children_type);
+      object = gimp_context_get_by_type (popup->orig_context, child_type);
       if (object)
         items = g_list_prepend (NULL, object);
 

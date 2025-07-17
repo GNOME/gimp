@@ -462,13 +462,13 @@ gimp_container_editor_select_items (GimpContainerView   *view,
   if (editor->priv->container)
     {
       const gchar *signal_name;
-      GType        children_type;
+      GType        child_type;
 
-      children_type = gimp_container_get_children_type (editor->priv->container);
-      signal_name   = gimp_context_type_to_signal_name (children_type);
+      child_type  = gimp_container_get_children_type (editor->priv->container);
+      signal_name = gimp_context_type_to_signal_name (child_type);
 
       if (signal_name)
-        gimp_context_set_by_type (editor->priv->context, children_type,
+        gimp_context_set_by_type (editor->priv->context, child_type,
                                   GIMP_OBJECT (viewable));
     }
 

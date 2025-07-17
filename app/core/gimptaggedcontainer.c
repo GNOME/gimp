@@ -261,17 +261,17 @@ GimpContainer *
 gimp_tagged_container_new (GimpContainer *src_container)
 {
   GimpTaggedContainer *tagged_container;
-  GType                children_type;
+  GType                child_type;
   GCompareFunc         sort_func;
 
   g_return_val_if_fail (GIMP_IS_LIST (src_container), NULL);
 
-  children_type = gimp_container_get_children_type (src_container);
-  sort_func     = gimp_list_get_sort_func (GIMP_LIST (src_container));
+  child_type = gimp_container_get_children_type (src_container);
+  sort_func  = gimp_list_get_sort_func (GIMP_LIST (src_container));
 
   tagged_container = g_object_new (GIMP_TYPE_TAGGED_CONTAINER,
                                    "sort-func",     sort_func,
-                                   "children-type", children_type,
+                                   "children-type", child_type,
                                    "policy",        GIMP_CONTAINER_POLICY_WEAK,
                                    "unique-names",  FALSE,
                                    "src-container", src_container,

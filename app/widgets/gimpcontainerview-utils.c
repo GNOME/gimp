@@ -70,12 +70,12 @@ gimp_container_view_remove_active (GimpContainerView *view)
 
   if (context && container)
     {
-      GType       children_type;
+      GType       child_type;
       GimpObject *active;
 
-      children_type = gimp_container_get_children_type (container);
+      child_type = gimp_container_get_children_type (container);
 
-      active = gimp_context_get_by_type (context, children_type);
+      active = gimp_context_get_by_type (context, child_type);
 
       if (active)
         {
@@ -84,7 +84,7 @@ gimp_container_view_remove_active (GimpContainerView *view)
           new = gimp_container_get_neighbor_of (container, active);
 
           if (new)
-            gimp_context_set_by_type (context, children_type, new);
+            gimp_context_set_by_type (context, child_type, new);
 
           gimp_container_remove (container, active);
         }
