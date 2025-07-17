@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-06-21 10:25+0000\n"
-"PO-Revision-Date: 2025-06-24 00:09+0200\n"
+"POT-Creation-Date: 2025-06-25 08:35+0000\n"
+"PO-Revision-Date: 2025-06-26 15:37+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -42,7 +42,7 @@ msgstr "Esempio di plugin in C"
 #: plug-ins/common/jigsaw.c:537 plug-ins/common/nl-filter.c:215
 #: plug-ins/common/qbist.c:254 plug-ins/common/sample-colorize.c:425
 #: plug-ins/common/smooth-palette.c:193 plug-ins/common/sparkle.c:301
-#: plug-ins/common/sphere-designer.c:3203 plug-ins/common/tile.c:222
+#: plug-ins/common/sphere-designer.c:3199 plug-ins/common/tile.c:222
 #: plug-ins/common/tile-small.c:312 plug-ins/common/van-gogh-lic.c:242
 #: plug-ins/common/warp.c:344 plug-ins/common/wavelet-decompose.c:179
 #: plug-ins/flame/flame.c:297 plug-ins/fractal-explorer/fractal-explorer.c:427
@@ -71,7 +71,7 @@ msgstr "Esempio plugin in C"
 #: plug-ins/common/file-pdf-export.c:1073 plug-ins/common/file-pdf-load.c:585
 #: plug-ins/common/grid.c:835 plug-ins/common/qbist.c:839
 #: plug-ins/common/qbist.c:881 plug-ins/common/sphere-designer.c:2291
-#: plug-ins/common/sphere-designer.c:2654 plug-ins/common/unit-editor.c:427
+#: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:427
 #: plug-ins/flame/flame.c:617 plug-ins/flame/flame.c:822
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1513
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1551
@@ -144,7 +144,7 @@ msgstr "Esempio di plugin in JavaScript (GJS)"
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2488
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/grid.c:836
-#: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:260
+#: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:260
 #: plug-ins/file-exr/file-exr.c:455 plug-ins/file-psd/psd-load.c:3896
 #: plug-ins/flame/flame.c:823 plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
@@ -1033,7 +1033,7 @@ msgstr "Seme Casuale"
 #: plug-ins/common/curve-bend.c:1249 plug-ins/common/curve-bend.c:1788
 #: plug-ins/common/file-cel.c:989 plug-ins/common/qbist.c:840
 #: plug-ins/common/qbist.c:995 plug-ins/common/sphere-designer.c:2294
-#: plug-ins/common/sphere-designer.c:2703 plug-ins/flame/flame.c:619
+#: plug-ins/common/sphere-designer.c:2704 plug-ins/flame/flame.c:619
 #: plug-ins/flame/flame.c:1234
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:794
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1514
@@ -1049,7 +1049,7 @@ msgstr "A_pri"
 #: plug-ins/common/curve-bend.c:1261 plug-ins/common/curve-bend.c:1823
 #: plug-ins/common/file-pdf-export.c:1072 plug-ins/common/qbist.c:882
 #: plug-ins/common/qbist.c:1003 plug-ins/common/sphere-designer.c:2294
-#: plug-ins/common/sphere-designer.c:2711 plug-ins/flame/flame.c:619
+#: plug-ins/common/sphere-designer.c:2712 plug-ins/flame/flame.c:619
 #: plug-ins/flame/flame.c:1242
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:802
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1552
@@ -2094,7 +2094,7 @@ msgid "Swap the two curves"
 msgstr "Scambia le due curve"
 
 #. The Reset button
-#: plug-ins/common/curve-bend.c:1232 plug-ins/common/sphere-designer.c:2653
+#: plug-ins/common/curve-bend.c:1232 plug-ins/common/sphere-designer.c:2654
 #: plug-ins/common/tile-small.c:523 plug-ins/gimpressionist/preview.c:182
 #: plug-ins/ifs-compose/ifs-compose.c:912
 msgid "_Reset"
@@ -3952,7 +3952,8 @@ msgstr "Profilo di confor_mità"
 
 #: plug-ins/common/file-jp2.c:367 plug-ins/common/file-jp2.c:455
 msgid "Set to ensure compliance with Digital Cinema Specifications"
-msgstr "Impostato per garantire la conformità alle specifiche del cinema digitale"
+msgstr ""
+"Impostato per garantire la conformità alle specifiche del cinema digitale"
 
 #: plug-ins/common/file-jp2.c:368 plug-ins/common/file-jp2.c:456
 msgid "Standard Profile"
@@ -3976,7 +3977,8 @@ msgstr "E_sporta come CMYK"
 
 #: plug-ins/common/file-jp2.c:381 plug-ins/common/file-jp2.c:469
 msgid "Create a CMYK JPEG 2000 image using the soft-proofing color profile"
-msgstr "Crea un'immagine CMYK JPEG 2000 usando il profilo colore del provino video"
+msgstr ""
+"Crea un'immagine CMYK JPEG 2000 usando il profilo colore del provino video"
 
 #: plug-ins/common/file-jp2.c:402 plug-ins/common/file-jp2.c:403
 msgid "Exports files in JPEG 2000 codestream format"
@@ -4168,7 +4170,9 @@ msgstr "Segue un collegamento a un'immagine in un file .lnk"
 msgid ""
 "Opens a .lnk file and if it points to an image, it asks GIMP to open the "
 "linked image."
-msgstr "Apre un file .lnk e, se punta a un'immagine, chiede a GIMP di aprire l'immagine collegata."
+msgstr ""
+"Apre un file .lnk e, se punta a un'immagine, chiede a GIMP di aprire "
+"l'immagine collegata."
 
 #: plug-ins/common/file-lnk.c:210 plug-ins/common/file-lnk.c:225
 #: plug-ins/common/file-lnk.c:234 plug-ins/common/file-lnk.c:247
@@ -4959,7 +4963,8 @@ msgstr "Impossibile leggere i frame APNG. Verranno scartati."
 #: plug-ins/common/file-png.c:1545
 #, c-format
 msgid "Invalid APNG: Image data appeared before actTL chunk."
-msgstr "APNG non valido: i dati dell'immagine sono apparsi prima del blocco actTL."
+msgstr ""
+"APNG non valido: i dati dell'immagine sono apparsi prima del blocco actTL."
 
 #: plug-ins/common/file-png.c:1629
 msgid "Apply PNG Offset"
@@ -6422,7 +6427,9 @@ msgstr "Impossibile leggere la tavolozza da '%s'"
 msgid ""
 "Unable to export '%s'.  The TIM file format does not support images that are "
 "more than %d pixels wide or tall."
-msgstr "Impossibile esportare '%s'. Il formato file TIM non supporta immagini più larghe o alte di %d pixel."
+msgstr ""
+"Impossibile esportare '%s'. Il formato file TIM non supporta immagini più "
+"larghe o alte di %d pixel."
 
 #: plug-ins/common/file-tim.c:854
 msgid "Image Origin"
@@ -8176,7 +8183,8 @@ msgid "Create an image of a textured sphere"
 msgstr "Crea un'immagine di una sfera con texture"
 
 #: plug-ins/common/sphere-designer.c:1834
-#: plug-ins/common/sphere-designer.c:2797
+#: plug-ins/common/sphere-designer.c:2798
+#: plug-ins/common/sphere-designer.c:2826
 msgid "Texture"
 msgstr "Trama"
 
@@ -8185,7 +8193,7 @@ msgid "Bumpmap"
 msgstr "Mappa a sbalzo"
 
 #: plug-ins/common/sphere-designer.c:1838
-#: plug-ins/common/sphere-designer.c:2799
+#: plug-ins/common/sphere-designer.c:2800
 msgid "Light"
 msgstr "Luce"
 
@@ -8202,24 +8210,24 @@ msgstr "Apri file"
 msgid "Save File"
 msgstr "Salva file"
 
-#: plug-ins/common/sphere-designer.c:2649
+#: plug-ins/common/sphere-designer.c:2650
 msgid "Sphere Designer"
 msgstr "Designer sfera"
 
-#: plug-ins/common/sphere-designer.c:2750
+#: plug-ins/common/sphere-designer.c:2751
 msgid "Layers"
 msgstr "Livelli"
 
-#: plug-ins/common/sphere-designer.c:2761
+#: plug-ins/common/sphere-designer.c:2762
 #: plug-ins/gradient-flare/gradient-flare.c:3051
 msgid "_New"
 msgstr "_Nuovo"
 
-#: plug-ins/common/sphere-designer.c:2767
+#: plug-ins/common/sphere-designer.c:2768
 msgid "D_uplicate"
 msgstr "D_uplica"
 
-#: plug-ins/common/sphere-designer.c:2773
+#: plug-ins/common/sphere-designer.c:2774
 #: plug-ins/fractal-explorer/fractal-explorer.c:887
 #: plug-ins/fractal-explorer/fractal-explorer.c:1369
 #: plug-ins/gimpressionist/presets.c:1071
@@ -8228,94 +8236,99 @@ msgstr "D_uplica"
 msgid "_Delete"
 msgstr "Eli_mina"
 
-#: plug-ins/common/sphere-designer.c:2783
+#: plug-ins/common/sphere-designer.c:2784
 msgid "Properties"
 msgstr "Proprietà"
 
-#: plug-ins/common/sphere-designer.c:2798
+#: plug-ins/common/sphere-designer.c:2799
 msgid "Bump"
 msgstr "Sbalzo"
 
-#: plug-ins/common/sphere-designer.c:2806
-msgid "Type:"
-msgstr "Tipo:"
+#: plug-ins/common/sphere-designer.c:2807
+#: plug-ins/gimpressionist/orientmap.c:638
+#: plug-ins/lighting/lighting-main.c:211 plug-ins/lighting/lighting-main.c:334
+#: plug-ins/lighting/lighting-main.c:393 plug-ins/lighting/lighting-main.c:452
+#: plug-ins/lighting/lighting-main.c:511 plug-ins/lighting/lighting-main.c:570
+msgid "Type"
+msgstr "Tipo"
 
-#: plug-ins/common/sphere-designer.c:2825
-msgid "Texture:"
-msgstr "Trama:"
+#: plug-ins/common/sphere-designer.c:2831
+#: plug-ins/imagemap/imap_preferences.c:463 plug-ins/pagecurl/pagecurl.c:228
+msgid "Colors"
+msgstr "Colori"
 
-#: plug-ins/common/sphere-designer.c:2830
-msgid "Colors:"
-msgstr "Colori:"
-
-#: plug-ins/common/sphere-designer.c:2833
-#: plug-ins/common/sphere-designer.c:2844
+#: plug-ins/common/sphere-designer.c:2834
+#: plug-ins/common/sphere-designer.c:2845
 msgid "Color Selection Dialog"
 msgstr "Finestra di selezione del colore"
 
-#. Scale
-#: plug-ins/common/sphere-designer.c:2855 plug-ins/gimpressionist/paper.c:191
-#: plug-ins/ifs-compose/ifs-compose.c:668
-msgid "Scale:"
-msgstr "Scala:"
+#: plug-ins/common/sphere-designer.c:2857
+msgid "Scale"
+msgstr "Scala"
 
-#: plug-ins/common/sphere-designer.c:2863
-msgid "Turbulence:"
-msgstr "Turbolenza:"
+#: plug-ins/common/sphere-designer.c:2865
+msgid "Turbulence"
+msgstr "Turbolenza"
 
-#: plug-ins/common/sphere-designer.c:2871
-msgid "Amount:"
-msgstr "Ammontare:"
+#: plug-ins/common/sphere-designer.c:2873
+msgid "Amount"
+msgstr "Ammontare"
 
-#: plug-ins/common/sphere-designer.c:2878
-msgid "Exp.:"
-msgstr "Esp.:"
+#: plug-ins/common/sphere-designer.c:2881
+msgid "Exp."
+msgstr "Esp."
 
-#: plug-ins/common/sphere-designer.c:2885
+#: plug-ins/common/sphere-designer.c:2888
 msgid "Transformations"
 msgstr "Trasformazioni"
 
-#: plug-ins/common/sphere-designer.c:2899
-msgid "Scale X:"
-msgstr "Scala X:"
+#: plug-ins/common/sphere-designer.c:2897
+#: plug-ins/map-object/map-object-main.c:391
+msgid "Scale X"
+msgstr "Scala X"
 
-#: plug-ins/common/sphere-designer.c:2907
-msgid "Scale Y:"
-msgstr "Scala Y:"
+#: plug-ins/common/sphere-designer.c:2905
+#: plug-ins/map-object/map-object-main.c:396
+msgid "Scale Y"
+msgstr "Scala Y"
 
-#: plug-ins/common/sphere-designer.c:2915
-msgid "Scale Z:"
-msgstr "Scala Z:"
+#: plug-ins/common/sphere-designer.c:2913
+#: plug-ins/map-object/map-object-main.c:401
+msgid "Scale Z"
+msgstr "Scala Z"
 
-#: plug-ins/common/sphere-designer.c:2926
-msgid "Rotate X:"
-msgstr "Rotazione X:"
+#: plug-ins/common/sphere-designer.c:2922
+msgid "Rotate X"
+msgstr "Rotazione X"
 
-#: plug-ins/common/sphere-designer.c:2933
-msgid "Rotate Y:"
-msgstr "Rotazione Y:"
+#: plug-ins/common/sphere-designer.c:2930
+msgid "Rotate Y"
+msgstr "Rotazione Y"
 
-#: plug-ins/common/sphere-designer.c:2940
-msgid "Rotate Z:"
-msgstr "Rotazione Z:"
+#: plug-ins/common/sphere-designer.c:2938
+msgid "Rotate Z"
+msgstr "Rotazione Z"
 
-#: plug-ins/common/sphere-designer.c:2950
-msgid "Position X:"
-msgstr "Posizione X:"
+#: plug-ins/common/sphere-designer.c:2947
+#: plug-ins/map-object/map-object-main.c:165
+msgid "Position X"
+msgstr "Posizione X"
 
-#: plug-ins/common/sphere-designer.c:2958
-msgid "Position Y:"
-msgstr "Posizione Y:"
+#: plug-ins/common/sphere-designer.c:2955
+#: plug-ins/map-object/map-object-main.c:170
+msgid "Position Y"
+msgstr "Posizione Y"
 
-#: plug-ins/common/sphere-designer.c:2966
-msgid "Position Z:"
-msgstr "Posizione Z:"
+#: plug-ins/common/sphere-designer.c:2963
+#: plug-ins/map-object/map-object-main.c:175
+msgid "Position Z"
+msgstr "Posizione Z"
 
-#: plug-ins/common/sphere-designer.c:3098
+#: plug-ins/common/sphere-designer.c:3094
 msgid "Rendering sphere"
 msgstr "Rendering sfera"
 
-#: plug-ins/common/sphere-designer.c:3217
+#: plug-ins/common/sphere-designer.c:3213
 msgid "Region selected for plug-in is empty"
 msgstr "La regione selezionata per il plug-in è vuota"
 
@@ -10341,7 +10354,9 @@ msgstr ""
 msgid ""
 "Unable to export '%s'.  The PSB file format does not support images that are "
 "more than 300,000 pixels wide or tall."
-msgstr "Impossibile esportare '%s'. Il formato del file PSD non supporta immagini più larghe o alte di 300.000 pixel."
+msgstr ""
+"Impossibile esportare '%s'. Il formato del file PSD non supporta immagini "
+"più larghe o alte di 300.000 pixel."
 
 #: plug-ins/file-psd/psd-export.c:2319
 #, c-format
@@ -10357,7 +10372,9 @@ msgstr ""
 msgid ""
 "Unable to export '%s'.  The PSB file format does not support images with "
 "layers that are more than 300,000 pixels wide or tall."
-msgstr "Impossibile esportare '%s'. Il formato del file PSD non supporta immagini con livelli più larghi o alti di 300.000 pixel."
+msgstr ""
+"Impossibile esportare '%s'. Il formato del file PSD non supporta immagini "
+"con livelli più larghi o alti di 300.000 pixel."
 
 #: plug-ins/file-psd/psd-export.c:2632
 msgid ""
@@ -10598,7 +10615,10 @@ msgid ""
 "This plug-in saves files of Adobe Photoshop (TM) native PSD format. These "
 "files may be of any image type supported by GIMP, with or without layers, "
 "layer masks, aux channels and guides."
-msgstr "Questo plug-in salva i file nel formato PSD nativo di Adobe Photoshop (TM). Questi file possono essere di qualsiasi tipo di immagine supportato da GIMP, con o senza livelli, maschere di livello, canali ausiliari e guide."
+msgstr ""
+"Questo plug-in salva i file nel formato PSD nativo di Adobe Photoshop (TM). "
+"Questi file possono essere di qualsiasi tipo di immagine supportato da GIMP, "
+"con o senza livelli, maschere di livello, canali ausiliari e guide."
 
 #: plug-ins/file-psd/psd.c:240 plug-ins/file-psd/psd.c:242
 msgid "Photoshop Large image"
@@ -10613,7 +10633,10 @@ msgid ""
 "This plug-in saves files of Adobe Photoshop (TM) Large native PSB format. "
 "These files may be of any image type supported by GIMP, with or without "
 "layers, layer masks, aux channels and guides."
-msgstr "Questo filtro salva i file nel formato PSB nativo di Adobe Photoshop (TM). Questi file possono essere di qualsiasi tipo di immagine supportato da GIMP, con o senza livelli, maschere di livello, canali ausiliari e guide."
+msgstr ""
+"Questo filtro salva i file nel formato PSB nativo di Adobe Photoshop (TM). "
+"Questi file possono essere di qualsiasi tipo di immagine supportato da GIMP, "
+"con o senza livelli, maschere di livello, canali ausiliari e guide."
 
 #: plug-ins/file-psd/psd.c:275
 msgid "Assign a Clipping _Path"
@@ -12933,13 +12956,6 @@ msgstr "_Rimuovi"
 msgid "Delete selected vector"
 msgstr "Cancella vettore selezionato"
 
-#: plug-ins/gimpressionist/orientmap.c:638
-#: plug-ins/lighting/lighting-main.c:211 plug-ins/lighting/lighting-main.c:334
-#: plug-ins/lighting/lighting-main.c:393 plug-ins/lighting/lighting-main.c:452
-#: plug-ins/lighting/lighting-main.c:511 plug-ins/lighting/lighting-main.c:570
-msgid "Type"
-msgstr "Tipo"
-
 #: plug-ins/gimpressionist/orientmap.c:642
 msgid "_Normal"
 msgstr "_Normale"
@@ -13021,6 +13037,11 @@ msgstr "So_vrapponi"
 #: plug-ins/gimpressionist/paper.c:180
 msgid "Applies the paper as it is (without embossing it)"
 msgstr "Applica l'effetto carta così com'è (senza rilievo)"
+
+#. Scale
+#: plug-ins/gimpressionist/paper.c:191 plug-ins/ifs-compose/ifs-compose.c:668
+msgid "Scale:"
+msgstr "Scala:"
 
 #: plug-ins/gimpressionist/paper.c:193
 msgid "Specifies the scale of the texture (in percent of original file)"
@@ -14428,10 +14449,6 @@ msgstr "Numero di voci M_RU (1 -16):"
 msgid "Select Color"
 msgstr "Seleziona colore"
 
-#: plug-ins/imagemap/imap_preferences.c:463 plug-ins/pagecurl/pagecurl.c:228
-msgid "Colors"
-msgstr "Colori"
-
 #: plug-ins/imagemap/imap_preferences.c:465
 msgid "Normal:"
 msgstr "Normale:"
@@ -15067,23 +15084,11 @@ msgstr "Y"
 msgid "Z"
 msgstr "Z"
 
-#: plug-ins/map-object/map-object-main.c:165
-msgid "Position X"
-msgstr "Posizione X"
-
 #: plug-ins/map-object/map-object-main.c:166
 #: plug-ins/map-object/map-object-main.c:171
 #: plug-ins/map-object/map-object-main.c:176
 msgid "Object position (x,y,z)"
 msgstr "Posizione oggetto (x,y,z)"
-
-#: plug-ins/map-object/map-object-main.c:170
-msgid "Position Y"
-msgstr "Posizione Y"
-
-#: plug-ins/map-object/map-object-main.c:175
-msgid "Position Z"
-msgstr "Posizione Z"
 
 #: plug-ins/map-object/map-object-main.c:182
 #: plug-ins/map-object/map-object-main.c:187
@@ -15269,25 +15274,13 @@ msgstr "Faccia sinistra cubo"
 msgid "Box right face"
 msgstr "Faccia destra cubo"
 
-#: plug-ins/map-object/map-object-main.c:391
-msgid "Scale X"
-msgstr "Scala X"
-
 #: plug-ins/map-object/map-object-main.c:392
 msgid "Box X size"
 msgstr "Dimensione X cubo"
 
-#: plug-ins/map-object/map-object-main.c:396
-msgid "Scale Y"
-msgstr "Scala Y"
-
 #: plug-ins/map-object/map-object-main.c:397
 msgid "Box Y size"
 msgstr "Dimensione Y cubo"
-
-#: plug-ins/map-object/map-object-main.c:401
-msgid "Scale Z"
-msgstr "Scala Z"
 
 #: plug-ins/map-object/map-object-main.c:402
 msgid "Box Z size"
