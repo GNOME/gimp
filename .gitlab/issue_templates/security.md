@@ -8,13 +8,14 @@ It is important that you fill all the fields of the template. -->
 
 - GIMP version number:
 - Package: <!--[flatpak? Installer from gimp.org? If another installer, tell us where from] (write it after the > symbol)-->
-- Operating System: <!--[Windows? macOS? Linux? All?] (write it after the > symbol) -->
+- Operating System: <!--[Windows? macOS? Linux? All? Add OS versions too] (write it after the > symbol) -->
+- (if Linux) Display system: <!--[X11? Wayland? Which compositor and version?] (write it after the > symbol) -->
 
-<!-- Note: security reporters are expected to have verified the bug still exists
+<!-- Note: you are expected to have verified the security issue still exists
 either in the last stable version of GIMP or on updated development code
 (master branch). -->
 
-### Security Report Description
+### Description of the security report
 
 <!-- Please provide a general description of the security issue (with CVE code if possible). -->
 
