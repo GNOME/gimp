@@ -905,11 +905,11 @@ gimp_container_icon_view_get_selected (GimpContainerView    *view,
     {
       const gchar *signal_name;
       GimpContext *context;
-      GType        children_type;
+      GType        child_type;
 
-      context       = gimp_container_view_get_context (view);
-      children_type = gimp_container_get_children_type (container);
-      signal_name   = gimp_context_type_to_signal_name (children_type);
+      context     = gimp_container_view_get_context (view);
+      child_type  = gimp_container_get_children_type (container);
+      signal_name = gimp_context_type_to_signal_name (child_type);
 
       /* As a special case, for containers tied to a context object, we
        * look up this object as being selected.
@@ -918,7 +918,7 @@ gimp_container_icon_view_get_selected (GimpContainerView    *view,
         {
           GimpObject  *object;
 
-          object  = gimp_context_get_by_type (context, children_type);
+          object  = gimp_context_get_by_type (context, child_type);
 
           selected_count = object ? 1 : 0;
           if (items)

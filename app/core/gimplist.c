@@ -429,12 +429,12 @@ gimp_list_get_child_index (GimpContainer *container,
 
 /**
  * gimp_list_new:
- * @children_type: the #GType of objects the list is going to hold
- * @unique_names:  if the list should ensure that all its children
- *                 have unique names.
+ * @child_type:   the #GType of objects the list is going to hold
+ * @unique_names: if the list should ensure that all its children
+ *                have unique names.
  *
  * Creates a new #GimpList object. Since #GimpList is a #GimpContainer
- * implementation, it holds GimpObjects. Thus @children_type must be
+ * implementation, it holds GimpObjects. Thus @child_type must be
  * GIMP_TYPE_OBJECT or a type derived from it.
  *
  * The returned list has the #GIMP_CONTAINER_POLICY_STRONG.
@@ -442,33 +442,33 @@ gimp_list_get_child_index (GimpContainer *container,
  * Returns: a new #GimpList object
  **/
 GimpContainer *
-gimp_list_new (GType    children_type,
+gimp_list_new (GType    child_type,
                gboolean unique_names)
 {
   GimpList *list;
 
-  g_return_val_if_fail (g_type_is_a (children_type, GIMP_TYPE_OBJECT), NULL);
+  g_return_val_if_fail (g_type_is_a (child_type, GIMP_TYPE_OBJECT), NULL);
 
   list = g_object_new (GIMP_TYPE_LIST,
-                       "children-type", children_type,
+                       "children-type", child_type,
                        "policy",        GIMP_CONTAINER_POLICY_STRONG,
                        "unique-names",  unique_names ? TRUE : FALSE,
                        NULL);
 
   /* for debugging purposes only */
-  gimp_object_set_static_name (GIMP_OBJECT (list), g_type_name (children_type));
+  gimp_object_set_static_name (GIMP_OBJECT (list), g_type_name (child_type));
 
   return GIMP_CONTAINER (list);
 }
 
 /**
  * gimp_list_new_weak:
- * @children_type: the #GType of objects the list is going to hold
- * @unique_names:  if the list should ensure that all its children
- *                 have unique names.
+ * @child_type:   the #GType of objects the list is going to hold
+ * @unique_names: if the list should ensure that all its children
+ *                have unique names.
  *
  * Creates a new #GimpList object. Since #GimpList is a #GimpContainer
- * implementation, it holds GimpObjects. Thus @children_type must be
+ * implementation, it holds GimpObjects. Thus @child_type must be
  * GIMP_TYPE_OBJECT or a type derived from it.
  *
  * The returned list has the #GIMP_CONTAINER_POLICY_WEAK.
@@ -476,21 +476,21 @@ gimp_list_new (GType    children_type,
  * Returns: a new #GimpList object
  **/
 GimpContainer *
-gimp_list_new_weak (GType    children_type,
+gimp_list_new_weak (GType    child_type,
                     gboolean unique_names)
 {
   GimpList *list;
 
-  g_return_val_if_fail (g_type_is_a (children_type, GIMP_TYPE_OBJECT), NULL);
+  g_return_val_if_fail (g_type_is_a (child_type, GIMP_TYPE_OBJECT), NULL);
 
   list = g_object_new (GIMP_TYPE_LIST,
-                       "children-type", children_type,
+                       "children-type", child_type,
                        "policy",        GIMP_CONTAINER_POLICY_WEAK,
                        "unique-names",  unique_names ? TRUE : FALSE,
                        NULL);
 
   /* for debugging purposes only */
-  gimp_object_set_static_name (GIMP_OBJECT (list), g_type_name (children_type));
+  gimp_object_set_static_name (GIMP_OBJECT (list), g_type_name (child_type));
 
   return GIMP_CONTAINER (list);
 }

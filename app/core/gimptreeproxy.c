@@ -505,11 +505,11 @@ gimp_tree_proxy_find_object (GimpContainer *container,
 /*  public functions  */
 
 GimpContainer *
-gimp_tree_proxy_new (GType children_type)
+gimp_tree_proxy_new (GType child_type)
 {
   GTypeClass *children_class;
 
-  children_class = g_type_class_ref (children_type);
+  children_class = g_type_class_ref (child_type);
 
   g_return_val_if_fail (G_TYPE_CHECK_CLASS_TYPE (children_class,
                                                  GIMP_TYPE_VIEWABLE),
@@ -518,7 +518,7 @@ gimp_tree_proxy_new (GType children_type)
   g_type_class_unref (children_class);
 
   return g_object_new (GIMP_TYPE_TREE_PROXY,
-                       "children-type", children_type,
+                       "children-type", child_type,
                        "policy",        GIMP_CONTAINER_POLICY_WEAK,
                        "append",        TRUE,
                        NULL);

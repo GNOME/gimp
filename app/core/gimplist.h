@@ -53,9 +53,9 @@ struct _GimpListClass
 
 GType           gimp_list_get_type      (void) G_GNUC_CONST;
 
-GimpContainer * gimp_list_new           (GType         children_type,
+GimpContainer * gimp_list_new           (GType         child_type,
                                          gboolean      unique_names);
-GimpContainer * gimp_list_new_weak      (GType         children_type,
+GimpContainer * gimp_list_new_weak      (GType         child_type,
                                          gboolean      unique_names);
 
 void            gimp_list_reverse       (GimpList     *list);

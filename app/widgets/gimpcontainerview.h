@@ -119,7 +119,7 @@ void               gimp_container_view_set_dnd_widget     (GimpContainerView  *v
 
 void               gimp_container_view_enable_dnd         (GimpContainerView  *editor,
                                                            GtkButton          *button,
-                                                           GType               children_type);
+                                                           GType               child_type);
 
 gboolean           gimp_container_view_select_items       (GimpContainerView  *view,
                                                            GList              *viewables);

@@ -487,17 +487,17 @@ gimp_container_view_set_dnd_widget (GimpContainerView *view,
 void
 gimp_container_view_enable_dnd (GimpContainerView *view,
                                 GtkButton         *button,
-                                GType              children_type)
+                                GType              child_type)
 {
   g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
   g_return_if_fail (GTK_IS_BUTTON (button));
 
   gimp_dnd_viewable_list_dest_add (GTK_WIDGET (button),
-                                   children_type,
+                                   child_type,
                                    gimp_container_view_button_viewables_dropped,
                                    view);
   gimp_dnd_viewable_dest_add (GTK_WIDGET (button),
-                              children_type,
+                              child_type,
                               gimp_container_view_button_viewable_dropped,
                               view);
 }
@@ -620,15 +620,15 @@ gimp_container_view_item_selected (GimpContainerView *view,
   /* HACK */
   if (private->container && private->context)
     {
-      GType        children_type;
+      GType        child_type;
       const gchar *signal_name;
 
-      children_type = gimp_container_get_children_type (private->container);
-      signal_name   = gimp_context_type_to_signal_name (children_type);
+      child_type  = gimp_container_get_children_type (private->container);
+      signal_name = gimp_context_type_to_signal_name (child_type);
 
       if (signal_name)
         {
-          gimp_context_set_by_type (private->context, children_type,
+          gimp_context_set_by_type (private->context, child_type,
                                     GIMP_OBJECT (viewable));
           return TRUE;
         }
@@ -640,19 +640,19 @@ gimp_container_view_item_selected (GimpContainerView *view,
   if (success && private->container && private->context)
     {
       GimpContext *context;
-      GType        children_type;
+      GType        child_type;
 
       /*  ref and remember the context because private->context may
        *  become NULL by calling gimp_context_set_by_type()
        */
-      context       = g_object_ref (private->context);
-      children_type = gimp_container_get_children_type (private->container);
+      context    = g_object_ref (private->context);
+      child_type = gimp_container_get_children_type (private->container);
 
       g_signal_handlers_block_by_func (context,
                                        gimp_container_view_context_changed,
                                        view);
 
-      gimp_context_set_by_type (context, children_type, GIMP_OBJECT (viewable));
+      gimp_context_set_by_type (context, child_type, GIMP_OBJECT (viewable));
 
       g_signal_handlers_unblock_by_func (context,
                                          gimp_container_view_context_changed,
@@ -963,7 +963,7 @@ gimp_container_view_real_get_selected (GimpContainerView  *view,
                                        GList             **items_data)
 {
   GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
-  GType                     children_type;
+  GType                     child_type;
   GimpObject               *object;
 
   if (items)
@@ -981,8 +981,8 @@ gimp_container_view_real_get_selected (GimpContainerView  *view,
   if (! private->container || ! private->context)
     return 0;
 
-  children_type = gimp_container_get_children_type (private->container);
-  if (gimp_context_type_to_property (children_type) == -1)
+  child_type = gimp_container_get_children_type (private->container);
+  if (gimp_context_type_to_property (child_type) == -1)
     {
       /* If you experience this warning, it means you should implement
        * your own definition for get_selected() because the default one
@@ -994,7 +994,7 @@ gimp_container_view_real_get_selected (GimpContainerView  *view,
     }
 
   object = gimp_context_get_by_type (private->context,
-                                     children_type);
+                                     child_type);
 
   /* Base interface provides the API for multi-selection but only
    * implements single selection. Classes must implement their own
@@ -1018,11 +1018,11 @@ gimp_container_view_add_container (GimpContainerView *view,
 
   if (container == private->container)
     {
-      GType              children_type;
+      GType              child_type;
       GimpViewableClass *viewable_class;
 
-      children_type  = gimp_container_get_children_type (container);
-      viewable_class = g_type_class_ref (children_type);
+      child_type  = gimp_container_get_children_type (container);
+      viewable_class = g_type_class_ref (child_type);
 
       private->name_changed_handler =
         gimp_tree_handler_connect (container,
@@ -1234,17 +1234,17 @@ gimp_container_view_thaw (GimpContainerView *view,
 
   if (private->context)
     {
-      GType        children_type;
+      GType        child_type;
       const gchar *signal_name;
 
-      children_type = gimp_container_get_children_type (private->container);
-      signal_name   = gimp_context_type_to_signal_name (children_type);
+      child_type  = gimp_container_get_children_type (private->container);
+      signal_name = gimp_context_type_to_signal_name (child_type);
 
       if (signal_name)
         {
           GimpObject *object;
 
-          object = gimp_context_get_by_type (private->context, children_type);
+          object = gimp_context_get_by_type (private->context, child_type);
 
           gimp_container_view_select_item (view, GIMP_VIEWABLE (object));
         }
@@ -1289,11 +1289,11 @@ static void
 gimp_container_view_connect_context (GimpContainerView *view)
 {
   GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
-  GType                     children_type;
+  GType                     child_type;
   const gchar              *signal_name;
 
-  children_type = gimp_container_get_children_type (private->container);
-  signal_name   = gimp_context_type_to_signal_name (children_type);
+  child_type  = gimp_container_get_children_type (private->container);
+  signal_name = gimp_context_type_to_signal_name (child_type);
 
   if (signal_name)
     {
@@ -1304,14 +1304,14 @@ gimp_container_view_connect_context (GimpContainerView *view)
 
       if (private->dnd_widget)
         gimp_dnd_viewable_dest_add (private->dnd_widget,
-                                    children_type,
+                                    child_type,
                                     gimp_container_view_viewable_dropped,
                                     view);
 
       if (! gimp_container_frozen (private->container))
         {
           GimpObject *object = gimp_context_get_by_type (private->context,
-                                                         children_type);
+                                                         child_type);
 
           gimp_container_view_select_item (view, GIMP_VIEWABLE (object));
         }
@@ -1322,11 +1322,11 @@ static void
 gimp_container_view_disconnect_context (GimpContainerView *view)
 {
   GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
-  GType                     children_type;
+  GType                     child_type;
   const gchar              *signal_name;
 
-  children_type = gimp_container_get_children_type (private->container);
-  signal_name   = gimp_context_type_to_signal_name (children_type);
+  child_type  = gimp_container_get_children_type (private->container);
+  signal_name = gimp_context_type_to_signal_name (child_type);
 
   if (signal_name)
     {
@@ -1338,7 +1338,7 @@ gimp_container_view_disconnect_context (GimpContainerView *view)
         {
           gtk_drag_dest_unset (private->dnd_widget);
           gimp_dnd_viewable_dest_remove (private->dnd_widget,
-                                         children_type);
+                                         child_type);
         }
     }
 }
