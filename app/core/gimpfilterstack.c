@@ -175,9 +175,9 @@ gimp_filter_stack_new (GType filter_type)
   g_return_val_if_fail (g_type_is_a (filter_type, GIMP_TYPE_FILTER), NULL);
 
   return g_object_new (GIMP_TYPE_FILTER_STACK,
-                       "name",          g_type_name (filter_type),
-                       "children-type", filter_type,
-                       "policy",        GIMP_CONTAINER_POLICY_STRONG,
+                       "name",       g_type_name (filter_type),
+                       "child-type", filter_type,
+                       "policy",     GIMP_CONTAINER_POLICY_STRONG,
                        NULL);
 }
 

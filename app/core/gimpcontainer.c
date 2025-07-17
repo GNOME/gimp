@@ -56,7 +56,7 @@ enum
 enum
 {
   PROP_0,
-  PROP_CHILDREN_TYPE,
+  PROP_CHILD_TYPE,
   PROP_POLICY
 };
 
@@ -212,8 +212,8 @@ gimp_container_class_init (GimpContainerClass *klass)
   klass->get_child_by_index      = NULL;
   klass->get_child_index         = NULL;
 
-  g_object_class_install_property (object_class, PROP_CHILDREN_TYPE,
-                                   g_param_spec_gtype ("children-type",
+  g_object_class_install_property (object_class, PROP_CHILD_TYPE,
+                                   g_param_spec_gtype ("child-type",
                                                        NULL, NULL,
                                                        GIMP_TYPE_OBJECT,
                                                        GIMP_PARAM_READWRITE |
@@ -287,7 +287,7 @@ gimp_container_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_CHILDREN_TYPE:
+    case PROP_CHILD_TYPE:
       container->priv->child_type = g_value_get_gtype (value);
       g_type_class_ref (container->priv->child_type);
       break;
@@ -310,7 +310,7 @@ gimp_container_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_CHILDREN_TYPE:
+    case PROP_CHILD_TYPE:
       g_value_set_gtype (value, container->priv->child_type);
       break;
     case PROP_POLICY:

@@ -518,9 +518,9 @@ gimp_tree_proxy_new (GType child_type)
   g_type_class_unref (children_class);
 
   return g_object_new (GIMP_TYPE_TREE_PROXY,
-                       "children-type", child_type,
-                       "policy",        GIMP_CONTAINER_POLICY_WEAK,
-                       "append",        TRUE,
+                       "child-type", child_type,
+                       "policy",     GIMP_CONTAINER_POLICY_WEAK,
+                       "append",     TRUE,
                        NULL);
 }
 

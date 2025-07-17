@@ -450,9 +450,9 @@ gimp_list_new (GType    child_type,
   g_return_val_if_fail (g_type_is_a (child_type, GIMP_TYPE_OBJECT), NULL);
 
   list = g_object_new (GIMP_TYPE_LIST,
-                       "children-type", child_type,
-                       "policy",        GIMP_CONTAINER_POLICY_STRONG,
-                       "unique-names",  unique_names ? TRUE : FALSE,
+                       "child-type",   child_type,
+                       "policy",       GIMP_CONTAINER_POLICY_STRONG,
+                       "unique-names", unique_names ? TRUE : FALSE,
                        NULL);
 
   /* for debugging purposes only */
@@ -484,9 +484,9 @@ gimp_list_new_weak (GType    child_type,
   g_return_val_if_fail (g_type_is_a (child_type, GIMP_TYPE_OBJECT), NULL);
 
   list = g_object_new (GIMP_TYPE_LIST,
-                       "children-type", child_type,
-                       "policy",        GIMP_CONTAINER_POLICY_WEAK,
-                       "unique-names",  unique_names ? TRUE : FALSE,
+                       "child-type",   child_type,
+                       "policy",       GIMP_CONTAINER_POLICY_WEAK,
+                       "unique-names", unique_names ? TRUE : FALSE,
                        NULL);
 
   /* for debugging purposes only */

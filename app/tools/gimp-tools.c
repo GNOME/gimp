@@ -521,8 +521,8 @@ gimp_tools_deserialize (Gimp          *gimp,
   gimp_container_clear (container);
 
   src_container = g_object_new (GIMP_TYPE_LIST,
-                                "children-type", GIMP_TYPE_TOOL_ITEM,
-                                "append",        TRUE,
+                                "child-type", GIMP_TYPE_TOOL_ITEM,
+                                "append",     TRUE,
                                 NULL);
 
   if (gimp_config_deserialize (GIMP_CONFIG (src_container),

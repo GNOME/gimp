@@ -163,9 +163,9 @@ gimp_item_tree_constructed (GObject *object)
   gimp_assert (private->item_type != GIMP_TYPE_ITEM);
 
   tree->container = g_object_new (private->container_type,
-                                  "name",          g_type_name (private->item_type),
-                                  "children-type", private->item_type,
-                                  "policy",        GIMP_CONTAINER_POLICY_STRONG,
+                                  "name",       g_type_name (private->item_type),
+                                  "child-type", private->item_type,
+                                  "policy",     GIMP_CONTAINER_POLICY_STRONG,
                                   NULL);
 }
 

@@ -175,8 +175,8 @@ gimp_tool_widget_group_init (GimpToolWidgetGroup *group)
   priv = group->priv = gimp_tool_widget_group_get_instance_private (group);
 
   priv->children = g_object_new (GIMP_TYPE_LIST,
-                                 "children-type", GIMP_TYPE_TOOL_WIDGET,
-                                 "append",        TRUE,
+                                 "child-type", GIMP_TYPE_TOOL_WIDGET,
+                                 "append",     TRUE,
                                  NULL);
 
   g_signal_connect (priv->children, "add",

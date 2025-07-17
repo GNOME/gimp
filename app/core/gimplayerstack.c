@@ -157,9 +157,9 @@ gimp_layer_stack_new (GType layer_type)
   g_return_val_if_fail (g_type_is_a (layer_type, GIMP_TYPE_LAYER), NULL);
 
   return g_object_new (GIMP_TYPE_LAYER_STACK,
-                       "name",          g_type_name (layer_type),
-                       "children-type", layer_type,
-                       "policy",        GIMP_CONTAINER_POLICY_STRONG,
+                       "name",       g_type_name (layer_type),
+                       "child-type", layer_type,
+                       "policy",     GIMP_CONTAINER_POLICY_STRONG,
                        NULL);
 }
 

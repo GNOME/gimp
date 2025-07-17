@@ -152,7 +152,7 @@ gimp_controller_manager_new (Gimp *gimp)
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   self = g_object_new (GIMP_TYPE_CONTROLLER_MANAGER,
-                       "children-type", GIMP_TYPE_CONTROLLER_INFO,
+                       "child-type", GIMP_TYPE_CONTROLLER_INFO,
                        NULL);
 
   self->gimp = gimp;

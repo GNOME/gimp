@@ -52,9 +52,9 @@ gimp_document_list_new (Gimp *gimp)
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   document_list = g_object_new (GIMP_TYPE_DOCUMENT_LIST,
-                                "name",          "document-list",
-                                "children-type", GIMP_TYPE_IMAGEFILE,
-                                "policy",        GIMP_CONTAINER_POLICY_STRONG,
+                                "name",       "document-list",
+                                "child-type", GIMP_TYPE_IMAGEFILE,
+                                "policy",     GIMP_CONTAINER_POLICY_STRONG,
                                 NULL);
 
   document_list->gimp = gimp;

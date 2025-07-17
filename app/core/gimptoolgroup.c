@@ -147,11 +147,10 @@ gimp_tool_group_init (GimpToolGroup *tool_group)
 {
   tool_group->priv = gimp_tool_group_get_instance_private (tool_group);
 
-  tool_group->priv->children = g_object_new (
-    GIMP_TYPE_LIST,
-    "children-type", GIMP_TYPE_TOOL_INFO,
-    "append",        TRUE,
-    NULL);
+  tool_group->priv->children = g_object_new (GIMP_TYPE_LIST,
+                                             "child-type", GIMP_TYPE_TOOL_INFO,
+                                             "append",     TRUE,
+                                             NULL);
 
   g_signal_connect (tool_group->priv->children, "add",
                     G_CALLBACK (gimp_tool_group_child_add),

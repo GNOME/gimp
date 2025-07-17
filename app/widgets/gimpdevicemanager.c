@@ -295,11 +295,11 @@ gimp_device_manager_new (Gimp *gimp)
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   return g_object_new (GIMP_TYPE_DEVICE_MANAGER,
-                       "gimp",          gimp,
-                       "children-type", GIMP_TYPE_DEVICE_INFO,
-                       "policy",        GIMP_CONTAINER_POLICY_STRONG,
-                       "unique-names",  TRUE,
-                       "sort-func",     gimp_device_info_compare,
+                       "gimp",         gimp,
+                       "child-type",   GIMP_TYPE_DEVICE_INFO,
+                       "policy",       GIMP_CONTAINER_POLICY_STRONG,
+                       "unique-names", TRUE,
+                       "sort-func",    gimp_device_info_compare,
                        NULL);
 }
 
