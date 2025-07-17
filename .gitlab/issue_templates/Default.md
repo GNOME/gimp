@@ -1,6 +1,6 @@
 <!-- ⚠️ IMPORTANT: READ ME! ⚠️
 This is the default template for bug reports.
-For feature requests or performance issues, please switch instead to the appropriate template in the "Choose a template" list.
+For feature requests, performance issues and security reports, please switch instead to the appropriate template in the "Choose a template" list.
 
 It is important that you fill all the fields of the template.
 
