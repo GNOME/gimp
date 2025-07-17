@@ -200,7 +200,9 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
   private->stack = gtk_stack_new ();
   gtk_container_set_border_width (GTK_CONTAINER (private->stack), 12);
   gtk_stack_set_transition_type (GTK_STACK (private->stack),
-                                 GTK_STACK_TRANSITION_TYPE_SLIDE_UP_DOWN);
+                                 gimp_widget_animation_enabled ()          ?
+                                   GTK_STACK_TRANSITION_TYPE_SLIDE_UP_DOWN :
+                                   GTK_STACK_TRANSITION_TYPE_NONE);
   gtk_box_pack_start (GTK_BOX (vbox), private->stack, TRUE, TRUE, 0);
   gtk_widget_show (private->stack);
 }

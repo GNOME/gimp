@@ -90,7 +90,9 @@ extensions_dialog_new (Gimp *gimp)
 
   stack = gtk_stack_new ();
   gtk_stack_set_transition_type (GTK_STACK (stack),
-                                 GTK_STACK_TRANSITION_TYPE_SLIDE_RIGHT);
+                                 gimp_widget_animation_enabled ()        ?
+                                   GTK_STACK_TRANSITION_TYPE_SLIDE_RIGHT :
+                                   GTK_STACK_TRANSITION_TYPE_NONE);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       stack, TRUE, TRUE, 0);
   gtk_widget_show (stack);
