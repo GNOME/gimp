@@ -671,8 +671,12 @@ border {
 }
 
 /* The border around frames in dialogs */
-dialog .frame {
-    border: 1px solid @border-color;
+dialog notebook.frame {
+  border: 1px solid @border-color;
+}
+
+GimpColorNotebook notebook.frame {
+  border-width: 0px;
 }
 
 /* The border around GimpOffsetArea frame in resize dialogs */
