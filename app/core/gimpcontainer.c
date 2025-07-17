@@ -363,7 +363,7 @@ gimp_container_real_remove (GimpContainer *container,
 static GType
 gimp_container_get_item_type (GListModel *list)
 {
-  return gimp_container_get_children_type (GIMP_CONTAINER (list));
+  return gimp_container_get_child_type (GIMP_CONTAINER (list));
 }
 
 static guint
@@ -603,7 +603,7 @@ gimp_container_free_handler (GimpContainer        *container,
 }
 
 GType
-gimp_container_get_children_type (GimpContainer *container)
+gimp_container_get_child_type (GimpContainer *container)
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), G_TYPE_NONE);
 

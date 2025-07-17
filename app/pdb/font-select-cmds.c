@@ -67,7 +67,7 @@ fonts_popup_invoker (GimpProcedure         *procedure,
           ! gimp_pdb_lookup_procedure (gimp->pdb, font_callback) ||
           ! gimp_data_factory_data_wait (gimp->font_factory)     ||
           ! gimp_pdb_dialog_new (gimp, context, progress,
-                                 gimp_container_get_children_type (container),
+                                 gimp_container_get_child_type (container),
                                  parent_window, popup_title, font_callback,
                                  GIMP_OBJECT (initial_font), NULL))
         success = FALSE;
@@ -97,7 +97,7 @@ fonts_close_popup_invoker (GimpProcedure         *procedure,
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, font_callback) ||
           ! gimp_pdb_dialog_close (gimp,
-                                   gimp_container_get_children_type (container),
+                                   gimp_container_get_child_type (container),
                                    font_callback))
         success = FALSE;
     }
@@ -129,7 +129,7 @@ fonts_set_popup_invoker (GimpProcedure         *procedure,
           ! gimp_pdb_lookup_procedure (gimp->pdb, font_callback) ||
           ! gimp_data_factory_data_wait (gimp->font_factory)     ||
           ! gimp_pdb_dialog_set (gimp,
-                                 gimp_container_get_children_type (container),
+                                 gimp_container_get_child_type (container),
                                  font_callback, GIMP_OBJECT (font), NULL))
         success = FALSE;
     }

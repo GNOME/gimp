@@ -296,7 +296,7 @@ gimp_operation_config_serialize (Gimp          *gimp,
     }
   else
     {
-      GType config_type = gimp_container_get_children_type (container);
+      GType config_type = gimp_container_get_child_type (container);
 
       file = gimp_operation_config_get_file (config_type);
     }
@@ -339,7 +339,7 @@ gimp_operation_config_deserialize (Gimp          *gimp,
     }
   else
     {
-      GType config_type = gimp_container_get_children_type (container);
+      GType config_type = gimp_container_get_child_type (container);
 
       file = gimp_operation_config_get_file (config_type);
     }
@@ -631,7 +631,7 @@ gimp_operation_config_add_sep (GimpContainer *container)
 
   if (! sep)
     {
-      sep = g_object_new (gimp_container_get_children_type (container),
+      sep = g_object_new (gimp_container_get_child_type (container),
                           NULL);
 
       gimp_container_add (container, sep);

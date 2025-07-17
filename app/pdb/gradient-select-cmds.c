@@ -72,7 +72,7 @@ gradients_popup_invoker (GimpProcedure         *procedure,
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, gradient_callback) ||
           ! gimp_pdb_dialog_new (gimp, context, progress,
-                                 gimp_container_get_children_type (container),
+                                 gimp_container_get_child_type (container),
                                  parent_window, popup_title, gradient_callback,
                                  GIMP_OBJECT (initial_gradient), NULL))
         success = FALSE;
@@ -102,7 +102,7 @@ gradients_close_popup_invoker (GimpProcedure         *procedure,
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, gradient_callback) ||
           ! gimp_pdb_dialog_close (gimp,
-                                   gimp_container_get_children_type (container),
+                                   gimp_container_get_child_type (container),
                                    gradient_callback))
         success = FALSE;
     }
@@ -133,7 +133,7 @@ gradients_set_popup_invoker (GimpProcedure         *procedure,
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, gradient_callback) ||
           ! gimp_pdb_dialog_set (gimp,
-                                 gimp_container_get_children_type (container),
+                                 gimp_container_get_child_type (container),
                                  gradient_callback, GIMP_OBJECT (gradient), NULL))
         success = FALSE;
     }

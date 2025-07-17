@@ -86,7 +86,7 @@ struct _GimpContainerClass
 
 GType        gimp_container_get_type           (void) G_GNUC_CONST;
 
-GType        gimp_container_get_children_type  (GimpContainer           *container);
+GType        gimp_container_get_child_type     (GimpContainer           *container);
 GimpContainerPolicy gimp_container_get_policy  (GimpContainer           *container);
 gint         gimp_container_get_n_children     (GimpContainer           *container);
 
