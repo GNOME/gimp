@@ -104,9 +104,9 @@ gimp_item_stack_new (GType item_type)
   g_return_val_if_fail (g_type_is_a (item_type, GIMP_TYPE_ITEM), NULL);
 
   return g_object_new (GIMP_TYPE_ITEM_STACK,
-                       "name",          g_type_name (item_type),
-                       "children-type", item_type,
-                       "policy",        GIMP_CONTAINER_POLICY_STRONG,
+                       "name",       g_type_name (item_type),
+                       "child-type", item_type,
+                       "policy",     GIMP_CONTAINER_POLICY_STRONG,
                        NULL);
 }
 

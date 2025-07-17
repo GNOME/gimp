@@ -254,9 +254,9 @@ gimp_init (Gimp *gimp)
   gimp->drawable_filter_table = gimp_id_table_new ();
 
   gimp->displays = g_object_new (GIMP_TYPE_LIST,
-                                 "children-type", GIMP_TYPE_OBJECT,
-                                 "policy",        GIMP_CONTAINER_POLICY_WEAK,
-                                 "append",        TRUE,
+                                 "child-type", GIMP_TYPE_OBJECT,
+                                 "policy",     GIMP_CONTAINER_POLICY_WEAK,
+                                 "append",     TRUE,
                                  NULL);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->displays), "displays");
   gimp->next_display_id = 1;
@@ -268,15 +268,15 @@ gimp_init (Gimp *gimp)
   gimp_data_factories_init (gimp);
 
   gimp->tool_info_list = g_object_new (GIMP_TYPE_LIST,
-                                       "children-type", GIMP_TYPE_TOOL_INFO,
-                                       "append",        TRUE,
+                                       "child-type", GIMP_TYPE_TOOL_INFO,
+                                       "append",     TRUE,
                                        NULL);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->tool_info_list),
                                "tool infos");
 
   gimp->tool_item_list = g_object_new (GIMP_TYPE_LIST,
-                                       "children-type", GIMP_TYPE_TOOL_ITEM,
-                                       "append",        TRUE,
+                                       "child-type", GIMP_TYPE_TOOL_ITEM,
+                                       "append",     TRUE,
                                        NULL);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->tool_item_list),
                                "tool items");

@@ -161,9 +161,9 @@ gimp_drawable_stack_new (GType drawable_type)
   g_return_val_if_fail (g_type_is_a (drawable_type, GIMP_TYPE_DRAWABLE), NULL);
 
   return g_object_new (GIMP_TYPE_DRAWABLE_STACK,
-                       "name",          g_type_name (drawable_type),
-                       "children-type", drawable_type,
-                       "policy",        GIMP_CONTAINER_POLICY_STRONG,
+                       "name",       g_type_name (drawable_type),
+                       "child-type", drawable_type,
+                       "policy",     GIMP_CONTAINER_POLICY_STRONG,
                        NULL);
 }
 

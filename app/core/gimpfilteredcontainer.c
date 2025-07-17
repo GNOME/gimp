@@ -314,7 +314,7 @@ gimp_filtered_container_new (GimpContainer        *src_container,
 
   return g_object_new (GIMP_TYPE_FILTERED_CONTAINER,
                        "sort-func",     sort_func,
-                       "children-type", child_type,
+                       "child-type",    child_type,
                        "policy",        GIMP_CONTAINER_POLICY_WEAK,
                        "unique-names",  FALSE,
                        "src-container", src_container,
