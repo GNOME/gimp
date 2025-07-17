@@ -528,7 +528,7 @@ gimp_data_factory_view_get_data_factory (GimpDataFactoryView *factory_view)
 }
 
 GType
-gimp_data_factory_view_get_children_type (GimpDataFactoryView *factory_view)
+gimp_data_factory_view_get_child_type (GimpDataFactoryView *factory_view)
 {
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY_VIEW (factory_view), G_TYPE_NONE);
 
