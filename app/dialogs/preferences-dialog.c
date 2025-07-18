@@ -1589,6 +1589,9 @@ prefs_dialog_new (Gimp       *gimp,
                                     */
                                    _("Export _IPTC metadata by default when available"),
                                    GTK_BOX (vbox2));
+  button = prefs_check_button_add (object, "export-update-metadata",
+                                   _("Update metadata automatically"),
+                                   GTK_BOX (vbox2));
   hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,
                              _("Metadata can contain sensitive information."));
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);

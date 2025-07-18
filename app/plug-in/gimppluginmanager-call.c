@@ -242,6 +242,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       config.export_exif          = core_config->export_metadata_exif;
       config.export_xmp           = core_config->export_metadata_xmp;
       config.export_iptc          = core_config->export_metadata_iptc;
+      config.update_metadata      = core_config->export_update_metadata;
       config.default_display_id   = display_id;
       config.app_name             = (gchar *) g_get_application_name ();
       config.wm_class             = (gchar *) gimp_get_program_class (manager->gimp);

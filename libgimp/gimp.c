@@ -129,6 +129,7 @@ static gboolean            _export_exif          = FALSE;
 static gboolean            _export_xmp           = FALSE;
 static gboolean            _export_iptc          = FALSE;
 static gboolean            _export_thumbnail     = TRUE;
+static gboolean            _update_metadata      = TRUE;
 static gint32              _num_processors       = 1;
 static GimpCheckSize       _check_size           = GIMP_CHECK_SIZE_MEDIUM_CHECKS;
 static GimpCheckType       _check_type           = GIMP_CHECK_TYPE_GRAY_CHECKS;
@@ -748,6 +749,28 @@ gimp_export_thumbnail (void)
 }
 
 /**
+ * gimp_update_metadata:
+ *
+ * Returns whether file plug-ins should update the
+ * image's metadata.
+ *
+ * Note that metadata that reflects the image characteristics
+ * will still be updated even if this is set to FALSE. This only
+ * concerns metadata changes that are nonessential, like setting
+ * GIMP in Exif.Image.Software, synchronizing the comment with its
+ * equivalent metadata tags, etc.
+ *
+ * Returns: TRUE if preferences are set to update the metadata.
+ *
+ * Since: 3.1
+ **/
+gboolean
+gimp_update_metadata (void)
+{
+  return _update_metadata;
+}
+
+/**
  * gimp_get_num_processors:
  *
  * Returns the number of threads set explicitly by the user in the
@@ -1090,6 +1113,7 @@ _gimp_config (GPConfig *config)
   _export_exif          = config->export_exif      ? TRUE : FALSE;
   _export_xmp           = config->export_xmp       ? TRUE : FALSE;
   _export_iptc          = config->export_iptc      ? TRUE : FALSE;
+  _update_metadata      = config->update_metadata  ? TRUE : FALSE;
   _export_comment       = config->export_comment;
   _num_processors       = config->num_processors;
   _default_display_id   = config->default_display_id;

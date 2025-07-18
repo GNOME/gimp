@@ -130,6 +130,7 @@ struct _GPConfig
   gint8    export_exif;
   gint8    export_xmp;
   gint8    export_iptc;
+  gint8    update_metadata;
   gint32   default_display_id;
   gchar   *app_name;
   gchar   *wm_class;

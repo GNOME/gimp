@@ -104,6 +104,7 @@ struct _GimpCoreConfig
   gboolean                export_metadata_exif;
   gboolean                export_metadata_xmp;
   gboolean                export_metadata_iptc;
+  gboolean                export_update_metadata;
   GimpDebugPolicy         debug_policy;
 #ifdef G_OS_WIN32
   GimpWin32PointerInputAPI win32_pointer_input_api;

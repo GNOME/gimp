@@ -1061,6 +1061,7 @@ EXPORTS
 	gimp_tile_width
 	gimp_trc_type_get_type
 	gimp_unit_new
+	gimp_update_metadata
 	gimp_user_time
 	gimp_vector_load_procedure_extract_dimensions
 	gimp_vector_load_procedure_get_type

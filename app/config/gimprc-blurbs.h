@@ -257,6 +257,15 @@ _("Export XMP metadata by default.")
 #define EXPORT_METADATA_IPTC_BLURB \
 _("Export IPTC metadata by default.")
 
+/* Translators: tooltip for configuration option (checkbox).
+ * It determines what metadata is updated when exporting.
+ */
+#define EXPORT_UPDATE_METADATA_BLURB \
+_("When enabled, add and update metadata automatically. When disabled, " \
+  "only the minimum necessary metadata changes are made, without changing " \
+  "modification date, synchronizing tags, or updating the software and " \
+  "change history metadata.")
+
 #define GENERATE_BACKTRACE_BLURB \
 _("Try generating debug data for bug reporting when appropriate.")
 

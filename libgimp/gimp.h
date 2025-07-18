@@ -186,6 +186,7 @@ gboolean            gimp_export_exif          (void) G_GNUC_CONST;
 gboolean            gimp_export_xmp           (void) G_GNUC_CONST;
 gboolean            gimp_export_iptc          (void) G_GNUC_CONST;
 gboolean            gimp_export_thumbnail     (void) G_GNUC_CONST;
+gboolean            gimp_update_metadata      (void) G_GNUC_CONST;
 gint                gimp_get_num_processors   (void) G_GNUC_CONST;
 GimpCheckSize       gimp_check_size           (void) G_GNUC_CONST;
 GimpCheckType       gimp_check_type           (void) G_GNUC_CONST;

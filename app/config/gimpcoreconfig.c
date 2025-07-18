@@ -121,6 +121,7 @@ enum
   PROP_EXPORT_METADATA_EXIF,
   PROP_EXPORT_METADATA_XMP,
   PROP_EXPORT_METADATA_IPTC,
+  PROP_EXPORT_UPDATE_METADATA,
   PROP_DEBUG_POLICY,
   PROP_CHECK_UPDATES,
   PROP_CHECK_UPDATE_TIMESTAMP,
@@ -793,6 +794,13 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_EXPORT_UPDATE_METADATA,
+                            "export-update-metadata",
+                            "Update metadata automatically",
+                            EXPORT_UPDATE_METADATA_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_DEBUG_POLICY,
                          "debug-policy",
                          "Try generating backtrace upon errors",
@@ -1194,6 +1202,9 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_EXPORT_METADATA_IPTC:
       core_config->export_metadata_iptc = g_value_get_boolean (value);
       break;
+    case PROP_EXPORT_UPDATE_METADATA:
+      core_config->export_update_metadata = g_value_get_boolean (value);
+      break;
     case PROP_DEBUG_POLICY:
       core_config->debug_policy = g_value_get_enum (value);
       break;
@@ -1461,6 +1472,9 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_EXPORT_METADATA_IPTC:
       g_value_set_boolean (value, core_config->export_metadata_iptc);
+      break;
+    case PROP_EXPORT_UPDATE_METADATA:
+      g_value_set_boolean (value, core_config->export_update_metadata);
       break;
     case PROP_DEBUG_POLICY:
       g_value_set_enum (value, core_config->debug_policy);
