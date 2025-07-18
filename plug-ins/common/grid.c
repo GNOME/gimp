@@ -166,9 +166,9 @@ grid_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         _("Draw a grid on the image"),
-                                          "Draws a grid using the specified "
+                                        _("Draws a grid using the specified "
                                           "colors. The grid origin is the "
-                                          "upper left corner.",
+                                          "upper left corner."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Tim Newsome",
@@ -199,7 +199,7 @@ grid_create_procedure (GimpPlugIn  *plug_in,
        * foreground/background color from context.
        */
       gimp_procedure_add_color_argument (procedure, "hcolor",
-                                         "Horizontal color",
+                                         _("Horizontal color"),
                                          _("Horizontal color"),
                                          TRUE, default_hcolor,
                                          G_PARAM_READWRITE);
@@ -223,7 +223,7 @@ grid_create_procedure (GimpPlugIn  *plug_in,
                                        G_PARAM_READWRITE);
 
       gimp_procedure_add_color_argument (procedure, "vcolor",
-                                         "Vertical color",
+                                         _("Vertical color"),
                                          _("Vertical color"),
                                          TRUE, default_vcolor,
                                          G_PARAM_READWRITE);
@@ -770,7 +770,7 @@ dialog (GimpImage           *image,
   label = gtk_grid_get_child_at (GTK_GRID (size_entry), 0, 1);
   gtk_widget_set_visible (label, FALSE);
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (size_entry),
-                                "Intersection width", 0, 1, 0.0);
+                                _("Intersection width"), 0, 1, 0.0);
 
 
   gimp_procedure_dialog_get_coordinates (GIMP_PROCEDURE_DIALOG (dlg),
@@ -787,7 +787,7 @@ dialog (GimpImage           *image,
   label = gtk_grid_get_child_at (GTK_GRID (size_entry), 0, 1);
   gtk_widget_set_visible (label, FALSE);
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (size_entry),
-                                "Intersection spacing", 0, 1, 0.0);
+                                _("Intersection spacing"), 0, 1, 0.0);
 
   gimp_procedure_dialog_get_coordinates (GIMP_PROCEDURE_DIALOG (dlg),
                                          "offset-coordinates", "hoffset",
@@ -803,7 +803,7 @@ dialog (GimpImage           *image,
   label = gtk_grid_get_child_at (GTK_GRID (size_entry), 0, 1);
   gtk_widget_set_visible (label, FALSE);
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (size_entry),
-                                "Intersection offset", 0, 1, 0.0);
+                                _("Intersection offset"), 0, 1, 0.0);
 
   /* Create color widgets */
   grid->hcolor_button =
