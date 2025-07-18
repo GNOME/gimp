@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-07-10 22:00+0000\n"
-"PO-Revision-Date: 2025-07-11 07:22+0800\n"
+"POT-Creation-Date: 2025-07-18 18:16+0000\n"
+"PO-Revision-Date: 2025-07-19 07:27+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -39,7 +39,7 @@ msgid "The GIMP team"
 msgstr "GIMP 团队"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:16 desktop/gimp.desktop.in.in:5
-#: app/about.h:26
+#: app/about.h:25
 msgid "GNU Image Manipulation Program"
 msgstr "GNU 图像处理程序"
 
@@ -119,12 +119,12 @@ msgstr ""
 "GIMP;graphic;design;illustration;painting;图形;图像;图片;照片;设计;绘画;绘制;"
 "幻想;想象;想像;ps;"
 
-#: app/about.h:23
+#: app/about.h:22
 msgid "GIMP"
 msgstr "GIMP"
 
 #. The year of the last commit (UTC) will be inserted into this string.
-#: app/about.h:30
+#: app/about.h:29
 #, c-format
 msgid ""
 "Copyright © 1995-%s\n"
@@ -138,7 +138,7 @@ msgstr ""
 #. * ends with a space, a newline or is end of text.
 #. * Cf. bug 762282.
 #.
-#: app/about.h:39
+#: app/about.h:38
 msgid ""
 "GIMP is free software: you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -379,7 +379,7 @@ msgstr "笔刷编辑器"
 
 #. initialize the list of gimp brushes
 #: app/actions/actions.c:116 app/core/gimp-data-factories.c:358
-#: app/dialogs/dialogs.c:341 app/dialogs/preferences-dialog.c:3514
+#: app/dialogs/dialogs.c:341 app/dialogs/preferences-dialog.c:3515
 msgid "Brushes"
 msgstr "笔刷"
 
@@ -428,7 +428,7 @@ msgstr "可停靠"
 
 #. Document History
 #: app/actions/actions.c:149 app/dialogs/dialogs.c:368
-#: app/dialogs/preferences-dialog.c:1284
+#: app/dialogs/preferences-dialog.c:1285
 msgid "Document History"
 msgstr "文档历史"
 
@@ -463,7 +463,7 @@ msgstr "滤镜"
 
 #. initialize the list of gimp fonts
 #: app/actions/actions.c:173 app/core/gimp-data-factories.c:392
-#: app/dialogs/dialogs.c:359 app/dialogs/preferences-dialog.c:3544
+#: app/dialogs/dialogs.c:359 app/dialogs/preferences-dialog.c:3545
 msgid "Fonts"
 msgstr "字体"
 
@@ -474,12 +474,12 @@ msgstr "渐变编辑器"
 
 #. initialize the list of gimp gradients
 #: app/actions/actions.c:179 app/core/gimp-data-factories.c:383
-#: app/dialogs/dialogs.c:353 app/dialogs/preferences-dialog.c:3538
+#: app/dialogs/dialogs.c:353 app/dialogs/preferences-dialog.c:3539
 msgid "Gradients"
 msgstr "渐变"
 
 #: app/actions/actions.c:182 app/core/gimp-data-factories.c:399
-#: app/dialogs/dialogs.c:365 app/dialogs/preferences-dialog.c:3550
+#: app/dialogs/dialogs.c:365 app/dialogs/preferences-dialog.c:3551
 msgid "Tool Presets"
 msgstr "工具预设"
 
@@ -492,7 +492,7 @@ msgstr "工具预设编辑器"
 msgid "Help"
 msgstr "帮助"
 
-#: app/actions/actions.c:191
+#: app/actions/actions.c:191 app/core/gimpimage.c:602
 msgid "Image"
 msgstr "图像"
 
@@ -508,7 +508,7 @@ msgstr "图层"
 
 #. initialize the list of mypaint brushes
 #: app/actions/actions.c:200 app/core/gimp-data-factories.c:368
-#: app/dialogs/dialogs.c:347 app/dialogs/preferences-dialog.c:3556
+#: app/dialogs/dialogs.c:347 app/dialogs/preferences-dialog.c:3557
 msgid "MyPaint Brushes"
 msgstr "MyPaint 笔刷"
 
@@ -519,23 +519,23 @@ msgstr "色板编辑器"
 
 #. initialize the list of gimp palettes
 #: app/actions/actions.c:206 app/core/gimp-data-factories.c:378
-#: app/dialogs/dialogs.c:356 app/dialogs/preferences-dialog.c:3532
+#: app/dialogs/dialogs.c:356 app/dialogs/preferences-dialog.c:3533
 msgid "Palettes"
 msgstr "色板"
 
 #. initialize the list of gimp patterns
 #: app/actions/actions.c:209 app/core/gimp-data-factories.c:373
-#: app/dialogs/dialogs.c:350 app/dialogs/preferences-dialog.c:3526
+#: app/dialogs/dialogs.c:350 app/dialogs/preferences-dialog.c:3527
 msgid "Patterns"
 msgstr "图案"
 
-#: app/actions/actions.c:212 app/dialogs/preferences-dialog.c:3562
+#: app/actions/actions.c:212 app/dialogs/preferences-dialog.c:3563
 msgid "Plug-ins"
 msgstr "插件"
 
 #. Quick Mask Color
 #: app/actions/actions.c:215 app/core/gimpchannel.c:363
-#: app/dialogs/preferences-dialog.c:1829
+#: app/dialogs/preferences-dialog.c:1830
 msgid "Quick Mask"
 msgstr "快速蒙版"
 
@@ -560,7 +560,7 @@ msgstr "文字工具"
 msgid "Text Editor"
 msgstr "文字编辑器"
 
-#: app/actions/actions.c:233 app/dialogs/dialogs.c:316 app/gui/gui.c:542
+#: app/actions/actions.c:233 app/dialogs/dialogs.c:316 app/gui/gui.c:543
 msgid "Tool Options"
 msgstr "工具选项"
 
@@ -1060,7 +1060,7 @@ msgstr "编辑通道颜色"
 msgid "_Fill opacity:"
 msgstr "填充不透明度(_F)："
 
-#: app/actions/channels-commands.c:167 app/widgets/gimpchanneltreeview.c:333
+#: app/actions/channels-commands.c:167 app/widgets/gimpchanneltreeview.c:327
 msgid "New Channel"
 msgstr "新建通道"
 
@@ -1093,8 +1093,8 @@ msgid_plural "Lower Channels to Bottom"
 msgstr[0] "通道移至底端"
 
 #: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:534
-#: app/display/gimpdisplayshell-dnd.c:703 app/widgets/gimpchanneltreeview.c:266
-#: app/widgets/gimplayertreeview.c:859
+#: app/display/gimpdisplayshell-dnd.c:703 app/widgets/gimpchanneltreeview.c:260
+#: app/widgets/gimplayertreeview.c:855
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s 通道副本"
@@ -2460,7 +2460,7 @@ msgstr "240 秒"
 #: app/actions/edit-commands.c:170 app/actions/error-console-commands.c:101
 #: app/actions/file-commands.c:449 app/actions/gradient-editor-commands.c:410
 #: app/actions/gradient-editor-commands.c:521
-#: app/actions/gradients-commands.c:80 app/actions/plug-in-commands.c:185
+#: app/actions/gradients-commands.c:80 app/actions/plug-in-commands.c:187
 #: app/actions/templates-commands.c:248 app/actions/text-editor-commands.c:65
 #: app/actions/text-tool-commands.c:124 app/actions/tool-options-commands.c:210
 #: app/actions/window-commands.c:77 app/dialogs/color-profile-dialog.c:136
@@ -2478,8 +2478,8 @@ msgstr "240 秒"
 #: app/dialogs/image-scale-dialog.c:210 app/dialogs/input-devices-dialog.c:66
 #: app/dialogs/input-devices-dialog.c:121 app/dialogs/item-options-dialog.c:147
 #: app/dialogs/layer-add-mask-dialog.c:120
-#: app/dialogs/palette-import-dialog.c:161 app/dialogs/preferences-dialog.c:221
-#: app/dialogs/preferences-dialog.c:618 app/dialogs/preferences-dialog.c:1179
+#: app/dialogs/palette-import-dialog.c:161 app/dialogs/preferences-dialog.c:222
+#: app/dialogs/preferences-dialog.c:619 app/dialogs/preferences-dialog.c:1180
 #: app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:178
 #: app/dialogs/resize-dialog.c:225 app/dialogs/resolution-calibrate-dialog.c:73
 #: app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:129
@@ -2493,7 +2493,7 @@ msgstr "240 秒"
 #: app/tools/gimptexttool.c:1774 app/tools/gimptransformgridtool.c:1264
 #: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
 #: app/widgets/gimpcolordialog.c:492 app/widgets/gimpcontrollereditor.c:666
-#: app/widgets/gimpcontrollerlist.c:572 app/widgets/gimpdeviceeditor.c:543
+#: app/widgets/gimpcontrollerlist.c:555 app/widgets/gimpdeviceeditor.c:545
 #: app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228
 #: app/widgets/gimpfiledialog.c:336 app/widgets/gimphelp.c:438
 #: app/widgets/gimphelp.c:773 app/widgets/gimpiconpicker.c:489
@@ -2560,7 +2560,7 @@ msgstr "为该标记添加描述"
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
 #: app/dialogs/welcome-dialog.c:1251 app/display/gimpdisplayshell-dnd.c:646
-#: app/widgets/gimplayertreeview.c:817 app/widgets/gimptoolbox.c:843
+#: app/widgets/gimplayertreeview.c:813 app/widgets/gimptoolbox.c:843
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -2573,8 +2573,8 @@ msgstr ""
 "%s"
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
-#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2437
-#: app/core/gimppalette.c:587 app/core/gimppalette-import.c:223
+#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2438
+#: app/core/gimppalette.c:588 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:774 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "无标题"
@@ -3438,7 +3438,7 @@ msgid "Clear Document History"
 msgstr "清除文档历史"
 
 #: app/actions/documents-commands.c:239 app/actions/edit-commands.c:171
-#: app/dialogs/preferences-dialog.c:619
+#: app/dialogs/preferences-dialog.c:620
 msgid "Cl_ear"
 msgstr "清除(_E)"
 
@@ -4818,7 +4818,7 @@ msgstr "法线映射(_N)…"
 #: app/actions/filters-actions.c:526
 msgctxt "filters-action"
 msgid "_Offset..."
-msgstr "位移(_O)…"
+msgstr "偏移(_O)…"
 
 #: app/actions/filters-actions.c:531
 msgctxt "filters-action"
@@ -6070,7 +6070,7 @@ msgstr "缩放图像"
 
 #. Scaling
 #: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2573
-#: app/dialogs/preferences-dialog.c:1747 app/pdb/image-transform-cmds.c:124
+#: app/dialogs/preferences-dialog.c:1748 app/pdb/image-transform-cmds.c:124
 #: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:375
 #: app/tools/gimpscaletool.c:122
 msgid "Scaling"
@@ -6106,19 +6106,19 @@ msgctxt "images-action"
 msgid "Delete this image"
 msgstr "删除此图像"
 
-#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:568
+#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:563
 msgid "Lock content"
 msgstr "锁定内容"
 
-#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:569
+#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:564
 msgid "Unlock content"
 msgstr "解锁内容"
 
-#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:582
+#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:577
 msgid "Lock position"
 msgstr "锁定位置"
 
-#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:583
+#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:578
 msgid "Unlock position"
 msgstr "解锁位置"
 
@@ -6270,7 +6270,7 @@ msgctxt "layers-action"
 msgid "_Anchor Floating Layer or Mask"
 msgstr "固定浮动图层或蒙版(_A)"
 
-#: app/actions/layers-actions.c:133 app/widgets/gimplayertreeview.c:1271
+#: app/actions/layers-actions.c:133 app/widgets/gimplayertreeview.c:1267
 msgctxt "layers-action"
 msgid "Anchor the floating layer or mask"
 msgstr "固定浮动图层或蒙版"
@@ -6941,8 +6941,8 @@ msgstr "图层属性"
 msgid "Edit Layer Attributes"
 msgstr "编辑图层属性"
 
-#: app/actions/layers-commands.c:359 app/widgets/gimpdrawabletreeview.c:625
-#: app/widgets/gimplayertreeview.c:936
+#: app/actions/layers-commands.c:359 app/widgets/gimpdrawabletreeview.c:649
+#: app/widgets/gimplayertreeview.c:932
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "新建图层"
@@ -7115,7 +7115,7 @@ msgid "Empty Selection"
 msgstr "空选区"
 
 #: app/actions/layers-commands.c:1914 app/actions/layers-commands.c:1958
-#: app/widgets/gimplayertreeview.c:1112
+#: app/widgets/gimplayertreeview.c:1108
 msgid "Set layers opacity"
 msgstr "设置图层不透明度"
 
@@ -7901,15 +7901,15 @@ msgctxt "plug-in-action"
 msgid "Reset all plug-ins to their default settings"
 msgstr "将全部插件重置为其默认设置"
 
-#: app/actions/plug-in-commands.c:180
+#: app/actions/plug-in-commands.c:182
 msgid "Reset all Filters"
 msgstr "重置所有滤镜"
 
-#: app/actions/plug-in-commands.c:186 app/actions/tool-options-commands.c:211
+#: app/actions/plug-in-commands.c:188 app/actions/tool-options-commands.c:211
 #: app/dialogs/fill-dialog.c:114 app/dialogs/grid-dialog.c:101
 #: app/dialogs/image-new-dialog.c:105 app/dialogs/input-devices-dialog.c:65
-#: app/dialogs/input-devices-dialog.c:122 app/dialogs/preferences-dialog.c:222
-#: app/dialogs/preferences-dialog.c:1178 app/dialogs/print-size-dialog.c:122
+#: app/dialogs/input-devices-dialog.c:122 app/dialogs/preferences-dialog.c:223
+#: app/dialogs/preferences-dialog.c:1179 app/dialogs/print-size-dialog.c:122
 #: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
 #: app/tools/gimpfiltertool.c:369 app/tools/gimptransformgridtool.c:1261
@@ -7917,7 +7917,7 @@ msgstr "重置所有滤镜"
 msgid "_Reset"
 msgstr "重置(_R)"
 
-#: app/actions/plug-in-commands.c:200
+#: app/actions/plug-in-commands.c:202
 msgid "Do you really want to reset all filters to default values?"
 msgstr "您真的要将所有滤镜重置到默认值吗？"
 
@@ -8261,7 +8261,7 @@ msgid "Delete Template"
 msgstr "删除模板"
 
 #: app/actions/templates-commands.c:249 app/dialogs/data-delete-dialog.c:88
-#: app/widgets/gimpdeviceeditor.c:544
+#: app/widgets/gimpdeviceeditor.c:546
 msgid "_Delete"
 msgstr "删除(_D)"
 
@@ -9850,7 +9850,7 @@ msgstr "“视图->显示全部”启用时保持画布衬垫"
 #: app/actions/view-actions.c:594
 msgctxt "view-action"
 msgid "Set horizontal scroll offset"
-msgstr "设置水平滚动位移"
+msgstr "设置水平滚动偏移"
 
 #: app/actions/view-actions.c:599
 msgctxt "view-action"
@@ -9885,7 +9885,7 @@ msgstr "页面向右滚动"
 #: app/actions/view-actions.c:632
 msgctxt "view-action"
 msgid "Set vertical scroll offset"
-msgstr "设置竖直滚动位移"
+msgstr "设置竖直滚动偏移"
 
 #: app/actions/view-actions.c:637
 msgctxt "view-action"
@@ -9981,12 +9981,12 @@ msgstr "打开显示器"
 #: app/dialogs/image-new-dialog.c:107 app/dialogs/image-new-dialog.c:327
 #: app/dialogs/input-devices-dialog.c:67 app/dialogs/item-options-dialog.c:148
 #: app/dialogs/keyboard-shortcuts-dialog.c:65
-#: app/dialogs/preferences-dialog.c:1180 app/dialogs/print-size-dialog.c:124
+#: app/dialogs/preferences-dialog.c:1181 app/dialogs/print-size-dialog.c:124
 #: app/dialogs/resolution-calibrate-dialog.c:74
 #: app/dialogs/template-options-dialog.c:119
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
-#: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:191
+#: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:192
 #: app/tools/gimpfiltertool.c:371 app/widgets/gimpcolordialog.c:493
 #: app/widgets/gimpcontrollereditor.c:667
 #: app/widgets/gimpdeviceinfoeditor.c:1161 app/widgets/gimperrordialog.c:76
@@ -10381,23 +10381,23 @@ msgid ""
 "backup of your configuration has been created at '%s'."
 msgstr "解析您的“%s”文件时出错。默认值将被使用。您的配置文件已被备份在“%s”。"
 
-#: app/config/gimpcoreconfig.c:821 app/dialogs/preferences-dialog.c:1912
+#: app/config/gimpcoreconfig.c:821 app/dialogs/preferences-dialog.c:1913
 msgid "Pattern syntax for searching and selecting items:"
 msgstr "用于搜索和选择项目的模式语法："
 
-#: app/config/gimpdialogconfig.c:318 app/core/gimplayer.c:427
+#: app/config/gimpdialogconfig.c:318 app/core/gimplayer.c:406
 msgid "Layer"
 msgstr "图层"
 
-#: app/config/gimpdialogconfig.c:418 app/core/gimpchannel.c:256
+#: app/config/gimpdialogconfig.c:418 app/core/gimpchannel.c:240
 #: app/operations/gimpcurvesconfig.c:119 app/operations/gimplevelsconfig.c:125
 #: app/operations/gimpoperationthreshold.c:94
-#: app/widgets/gimpchanneltreeview.c:339
+#: app/widgets/gimpchanneltreeview.c:333
 msgid "Channel"
 msgstr "通道"
 
-#: app/config/gimpdialogconfig.c:432 app/path/gimppath.c:224
-#: app/widgets/gimppathtreeview.c:259
+#: app/config/gimpdialogconfig.c:432 app/path/gimppath.c:207
+#: app/widgets/gimppathtreeview.c:254
 msgid "Path"
 msgstr "路径"
 
@@ -10413,7 +10413,7 @@ msgstr "透明自定义颜色 2"
 #. *  (the preferences dialog mainly) and only those that are should
 #. *  be marked for translation.
 #.
-#: app/config/gimprc-blurbs.h:13
+#: app/config/gimprc-blurbs.h:11
 msgid ""
 "When enabled, an image will become the active image when its image window "
 "receives the focus. This is useful for window managers using \"click to "
@@ -10422,52 +10422,52 @@ msgstr ""
 "当启用时，当对应的图像窗口获得焦点时，图像将成为激活图像。这对使用“单击获取焦"
 "点”的窗口管理器有用。"
 
-#: app/config/gimprc-blurbs.h:23 app/config/gimprc-blurbs.h:28
+#: app/config/gimprc-blurbs.h:21 app/config/gimprc-blurbs.h:26
 msgid "Sets the dynamics search path."
 msgstr "设置动态搜索路径。"
 
-#: app/config/gimprc-blurbs.h:33
+#: app/config/gimprc-blurbs.h:31
 msgid ""
 "Sets the canvas padding color used if the padding mode is set to custom "
 "color."
 msgstr "设置画布使用的衬垫颜色，如果衬垫模式设为自定义颜色的话。"
 
-#: app/config/gimprc-blurbs.h:37
+#: app/config/gimprc-blurbs.h:35
 msgid ""
 "Specifies whether to keep the canvas padding when \"View -> Show All\" is "
 "enabled."
 msgstr "当“视图->显示全部”启用时指定是否保持画布衬垫。"
 
-#: app/config/gimprc-blurbs.h:41
+#: app/config/gimprc-blurbs.h:39
 msgid "Specifies how the area around the image should be drawn."
 msgstr "指定显示图像四周的区域的方式。"
 
-#: app/config/gimprc-blurbs.h:44
+#: app/config/gimprc-blurbs.h:42
 msgid ""
 "Check for availability of GIMP updates through background internet queries."
 msgstr "通过后台网络查询检查可用的 GIMP 更新。"
 
-#: app/config/gimprc-blurbs.h:47
+#: app/config/gimprc-blurbs.h:45
 msgid "Timestamp of the last update check."
 msgstr "上次检查更新的时间戳。"
 
-#: app/config/gimprc-blurbs.h:53
+#: app/config/gimprc-blurbs.h:51
 msgid "What to do when opening a file with an embedded ICC color profile."
 msgstr "打开带有内嵌 ICC 色彩配置的文件时如何处理。"
 
-#: app/config/gimprc-blurbs.h:56
+#: app/config/gimprc-blurbs.h:54
 msgid "Sets the default folder path for all color profile file dialogs."
 msgstr "为所有特性文件对话框设置默认文件夹路径。"
 
-#: app/config/gimprc-blurbs.h:59
+#: app/config/gimprc-blurbs.h:57
 msgid "Sets the type of mouse pointers to use."
 msgstr "设定所使用的鼠标指针类型。"
 
-#: app/config/gimprc-blurbs.h:62
+#: app/config/gimprc-blurbs.h:60
 msgid "Sets the handedness for cursor positioning."
 msgstr "设定使用右手或左手鼠标指针。"
 
-#: app/config/gimprc-blurbs.h:65
+#: app/config/gimprc-blurbs.h:63
 msgid ""
 "Context-dependent mouse pointers are helpful.  They are enabled by default.  "
 "However, they require overhead that you may want to do without."
@@ -10475,51 +10475,51 @@ msgstr ""
 "环境相关的鼠标指针很有用。它们默认是启用的。但是它们也需要一定的系统负荷，这"
 "点可能您并不想要。"
 
-#: app/config/gimprc-blurbs.h:81
+#: app/config/gimprc-blurbs.h:79
 msgid "Merge menu and title bar (client-side decoration)"
 msgstr "合并菜单和标题栏（客户端侧装饰）"
 
-#: app/config/gimprc-blurbs.h:84
+#: app/config/gimprc-blurbs.h:82
 msgid "Show full image content by default."
 msgstr "默认显示全部图像内容。"
 
-#: app/config/gimprc-blurbs.h:87
+#: app/config/gimprc-blurbs.h:85
 msgid ""
 "When enabled, this will ensure that each pixel of an image gets mapped to a "
 "pixel on the screen."
 msgstr "当启用时，将确保图像的每个点都对应屏幕上的一个像素。"
 
-#: app/config/gimprc-blurbs.h:112
+#: app/config/gimprc-blurbs.h:110
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
 msgstr "这是参考线和网格产生吸附作用的像素距离。"
 
-#: app/config/gimprc-blurbs.h:116
+#: app/config/gimprc-blurbs.h:114
 msgid "Snap to guides by default in new image windows."
 msgstr "在新图像窗口中默认吸附到参考线。"
 
-#: app/config/gimprc-blurbs.h:119
+#: app/config/gimprc-blurbs.h:117
 msgid "Snap to the grid by default in new image windows."
 msgstr "在新图像窗口中默认吸附到网格。"
 
-#: app/config/gimprc-blurbs.h:122
+#: app/config/gimprc-blurbs.h:120
 msgid "Snap to the canvas edges by default in new image windows."
 msgstr "在新图像窗口中默认吸附到画布边缘。"
 
-#: app/config/gimprc-blurbs.h:125
+#: app/config/gimprc-blurbs.h:123
 msgid "Snap to the active path by default in new image windows."
 msgstr "在新图像窗口中默认吸附到活动路径。"
 
-#: app/config/gimprc-blurbs.h:128
+#: app/config/gimprc-blurbs.h:126
 msgid "Snap to the layers bounding boxes by default in new image windows."
 msgstr "在新图像窗口中默认吸附到图层边界。"
 
-#: app/config/gimprc-blurbs.h:131
+#: app/config/gimprc-blurbs.h:129
 msgid ""
 "Snap to the equidistance between three bounding boxes by default in new "
 "image windows."
 msgstr "在新图像窗口中默认吸附到三个边界之间的等距离点。"
 
-#: app/config/gimprc-blurbs.h:134
+#: app/config/gimprc-blurbs.h:132
 msgid ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
 "algorithm.  The seed fill starts at the initially selected pixel and "
@@ -10531,7 +10531,7 @@ msgstr ""
 "个初始选中的像素开始并向各个方向推进，直到与像素原始的颜色差别大于一个指定的"
 "阈值。该值就是默认的阈值。"
 
-#: app/config/gimprc-blurbs.h:147
+#: app/config/gimprc-blurbs.h:145
 msgid ""
 "The window type hint that is set on dock windows and the toolbox window. "
 "This may affect the way your window manager decorates and handles these "
@@ -10540,184 +10540,184 @@ msgstr ""
 "停靠式窗口以及工具窗口的窗口类型提示设置。这可能会影响您的窗口管理器装饰和处"
 "理这些窗口的方式。"
 
-#: app/config/gimprc-blurbs.h:167
+#: app/config/gimprc-blurbs.h:165
 msgid "When enabled, the selected brush will be used for all tools."
 msgstr "当启用时，所有的工具都将使用选中的笔刷。"
 
-#: app/config/gimprc-blurbs.h:170
+#: app/config/gimprc-blurbs.h:168
 msgid "When enabled, the selected dynamics will be used for all tools."
 msgstr "当启用时，所有的工具都将使用选中的动态。"
 
-#: app/config/gimprc-blurbs.h:176
+#: app/config/gimprc-blurbs.h:174
 msgid "When enabled, the selected gradient will be used for all tools."
 msgstr "当启用时，所有的工具都将使用选中的渐变。"
 
-#: app/config/gimprc-blurbs.h:179
+#: app/config/gimprc-blurbs.h:177
 msgid "When enabled, the selected pattern will be used for all tools."
 msgstr "当启用时，所有的工具都将使用选中的图案。"
 
-#: app/config/gimprc-blurbs.h:185
+#: app/config/gimprc-blurbs.h:183
 msgid ""
 "When enabled, the selected auto expand layer settings will be used for all "
 "tools."
 msgstr "当启用时，所有的工具都将使用选中的自动扩展图层设置。"
 
-#: app/config/gimprc-blurbs.h:196
+#: app/config/gimprc-blurbs.h:194
 msgid "Sets the browser used by the help system."
 msgstr "设置帮助系统使用的浏览器。"
 
-#: app/config/gimprc-blurbs.h:204
+#: app/config/gimprc-blurbs.h:202
 msgid "How many recent settings to keep around in filter tools."
 msgstr "在滤镜工具中保留多少最近设置。"
 
-#: app/config/gimprc-blurbs.h:207
+#: app/config/gimprc-blurbs.h:205
 msgid "Default to the last used settings in filter tools."
 msgstr "在滤镜工具中默认为上次使用的设置。"
 
-#: app/config/gimprc-blurbs.h:210
+#: app/config/gimprc-blurbs.h:208
 msgid "Show advanced color options in filter tools."
 msgstr "在滤镜工具中显示高级色彩选项。"
 
-#: app/config/gimprc-blurbs.h:213
+#: app/config/gimprc-blurbs.h:211
 msgid "Sets the text to appear in image window status bars."
 msgstr "设置图像窗口状态栏显示的文字。"
 
-#: app/config/gimprc-blurbs.h:216
+#: app/config/gimprc-blurbs.h:214
 msgid "Sets the text to appear in image window titles."
 msgstr "设置图像窗口标题栏显示的文字。"
 
-#: app/config/gimprc-blurbs.h:219
+#: app/config/gimprc-blurbs.h:217
 msgid ""
 "Promote imported images to floating point precision. Does not apply to "
 "indexed images."
 msgstr "将导入的图像提升为浮点精度。不能应用于索引图像。"
 
-#: app/config/gimprc-blurbs.h:223
+#: app/config/gimprc-blurbs.h:221
 msgid ""
 "When promoting imported images to floating point precision, also add minimal "
 "noise in order to distribute color values a bit."
 msgstr ""
 "将导入的图像提升为浮点精度时，为了使色彩数值分散一点同时添加最少量的噪点。"
 
-#: app/config/gimprc-blurbs.h:227
+#: app/config/gimprc-blurbs.h:225
 msgid "Add an alpha channel to all layers of imported images."
 msgstr "为导入图像的所有图层添加一个透明通道。"
 
-#: app/config/gimprc-blurbs.h:230
+#: app/config/gimprc-blurbs.h:228
 msgid "Which plug-in to use for importing raw digital camera files."
 msgstr "使用哪个插件导入 raw 数码相机文件。"
 
-#: app/config/gimprc-blurbs.h:233
+#: app/config/gimprc-blurbs.h:231
 msgid "Export file type used by default."
 msgstr "默认使用的导出文件类型。"
 
-#: app/config/gimprc-blurbs.h:236
+#: app/config/gimprc-blurbs.h:234
 msgid "Export the image's color profile by default."
 msgstr "默认导出图像的特性文件。"
 
-#: app/config/gimprc-blurbs.h:239
+#: app/config/gimprc-blurbs.h:237
 msgid "Export the image's comment by default."
 msgstr "默认导出图像的注释。"
 
-#: app/config/gimprc-blurbs.h:242 app/dialogs/preferences-dialog.c:1569
+#: app/config/gimprc-blurbs.h:240 app/dialogs/preferences-dialog.c:1570
 msgid "Export the image's thumbnail by default"
 msgstr "默认导出图像的缩略图"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle Exif by default.
 #.
-#: app/config/gimprc-blurbs.h:248
+#: app/config/gimprc-blurbs.h:246
 msgid "Export Exif metadata by default."
 msgstr "默认导出 Exif 元数据。"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle XMP by default.
 #.
-#: app/config/gimprc-blurbs.h:254
+#: app/config/gimprc-blurbs.h:252
 msgid "Export XMP metadata by default."
 msgstr "默认导出 XMP 元数据。"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle IPTC by default.
 #.
-#: app/config/gimprc-blurbs.h:260
+#: app/config/gimprc-blurbs.h:258
 msgid "Export IPTC metadata by default."
 msgstr "默认导出 IPTC 元数据。"
 
-#: app/config/gimprc-blurbs.h:263
+#: app/config/gimprc-blurbs.h:261
 msgid "Try generating debug data for bug reporting when appropriate."
 msgstr "合适时尝试为缺陷报告生成调试数据。"
 
-#: app/config/gimprc-blurbs.h:266
+#: app/config/gimprc-blurbs.h:264
 msgid "Sets the preferred pen and touch input API."
 msgstr "设置首选笔和触摸输入 API。"
 
-#: app/config/gimprc-blurbs.h:269
+#: app/config/gimprc-blurbs.h:267
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
 msgstr "当启用时，将确保打开文件以后图像完整可见，否则将按 1:1 的比例来显示。"
 
-#: app/config/gimprc-blurbs.h:273
+#: app/config/gimprc-blurbs.h:271
 msgid ""
 "Whether to zoom based on distance moved or time spent moving, when zooming "
 "via dragging the mouse."
 msgstr "当通过拖拽鼠标缩放时，是否基于移动距离或移动花费的时间来缩放。"
 
-#: app/config/gimprc-blurbs.h:277
+#: app/config/gimprc-blurbs.h:275
 msgid ""
 "Adjusts the rate at which dragging the mouse will zoom the canvas, in "
 "percentage."
 msgstr "按百分比调整拖拽鼠标缩放画布的速率。"
 
-#: app/config/gimprc-blurbs.h:281
+#: app/config/gimprc-blurbs.h:279
 msgid ""
 "Sets the level of interpolation used for scaling and other transformations."
 msgstr "设置用于缩放和其他变换操作的插值计算的等级。"
 
-#: app/config/gimprc-blurbs.h:288
+#: app/config/gimprc-blurbs.h:286
 msgid "Specifies the language to use for the user interface."
 msgstr "指定用户界面使用的语言。"
 
-#: app/config/gimprc-blurbs.h:291
+#: app/config/gimprc-blurbs.h:289
 msgid ""
 "The last known release version of GIMP as queried from official website."
 msgstr "从官方网站查询到的最近已知发布版本的 GIMP。"
 
-#: app/config/gimprc-blurbs.h:294
+#: app/config/gimprc-blurbs.h:292
 msgid "The version of GIMP config files."
 msgstr "GIMP 配置文件的版本。"
 
-#: app/config/gimprc-blurbs.h:297
+#: app/config/gimprc-blurbs.h:295
 msgid "How many recently opened image filenames to keep on the File menu."
 msgstr "在文件菜单中保留的最近打开图像的文件数。"
 
-#: app/config/gimprc-blurbs.h:300
+#: app/config/gimprc-blurbs.h:298
 msgid "The timestamp for the last known release date."
 msgstr "最近已知发布日期的时间戳。"
 
-#: app/config/gimprc-blurbs.h:303
+#: app/config/gimprc-blurbs.h:301
 msgid "The last revision number for the release."
 msgstr "该发布最近的修订版本号。"
 
-#: app/config/gimprc-blurbs.h:306
+#: app/config/gimprc-blurbs.h:304
 msgid ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
 msgstr "选区轮廓蚂蚁线的循环速度。该值以毫秒（时间越短速度越快）为单位。"
 
-#: app/config/gimprc-blurbs.h:310
+#: app/config/gimprc-blurbs.h:308
 msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
 msgstr ""
 "如果试图创建一幅所需内存比此处指定的数值还要大的图像，GIMP 将警告用户。"
 
-#: app/config/gimprc-blurbs.h:314
+#: app/config/gimprc-blurbs.h:312
 msgid "How to handle \"Orientation\" metadata when opening a file."
 msgstr "在打开文件时如何处理“方向”元数据。"
 
-#: app/config/gimprc-blurbs.h:323
+#: app/config/gimprc-blurbs.h:321
 msgid ""
 "Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -10726,7 +10726,7 @@ msgstr ""
 "设置显示器的水平分辨率，以每英寸的点数为单位。如果设为 0 则强制向 X 服务器查"
 "询水平和竖直分辨率信息。"
 
-#: app/config/gimprc-blurbs.h:328
+#: app/config/gimprc-blurbs.h:326
 msgid ""
 "Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -10735,11 +10735,11 @@ msgstr ""
 "设置显示器的竖直分辨率，以每英寸的点数为单位。如果设为 0 则强制向 X 服务器查"
 "询水平和竖直分辨率信息。"
 
-#: app/config/gimprc-blurbs.h:333
+#: app/config/gimprc-blurbs.h:331
 msgid "When enabled, non-visible layers can be edited as normal."
 msgstr "启用时，不可见图层可以被正常编辑。"
 
-#: app/config/gimprc-blurbs.h:336
+#: app/config/gimprc-blurbs.h:334
 msgid ""
 "If enabled, the move tool sets the edited layer or path as active.  This "
 "used to be the default behavior in older versions."
@@ -10747,17 +10747,17 @@ msgstr ""
 "如果启用，移动工具会将被编辑的图层或路径设为活动的。在旧版本中这曾是默认行"
 "为。"
 
-#: app/config/gimprc-blurbs.h:345
+#: app/config/gimprc-blurbs.h:343
 msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
 msgstr "设置图像窗口右下角的导航预览的大小。"
 
-#: app/config/gimprc-blurbs.h:349
+#: app/config/gimprc-blurbs.h:347
 msgid "Sets how many threads GIMP should use for operations that support it."
 msgstr "对支持多线程的操作设置 GIMP 应该使用多少个线程。"
 
-#: app/config/gimprc-blurbs.h:371
+#: app/config/gimprc-blurbs.h:369
 msgid ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
 "the layers and channels dialog are nice to have but they can slow things "
@@ -10766,23 +10766,23 @@ msgstr ""
 "指定 GIMP 是否应该创建图层和通道的预览。在图层和通道对话框中显示预览有利于工"
 "作效率，但图像很大时将会降低性能。"
 
-#: app/config/gimprc-blurbs.h:376
+#: app/config/gimprc-blurbs.h:374
 msgid ""
 "Sets whether GIMP should create previews of layer groups. Layer group "
 "previews are more expensive than ordinary layer previews."
 msgstr "设置 GIMP 是否创建图层组预览。图层组预览比普通图层预览耗费更多资源。"
 
-#: app/config/gimprc-blurbs.h:380
+#: app/config/gimprc-blurbs.h:378
 msgid ""
 "Sets the preview size used for layers and channel previews in newly created "
 "dialogs."
 msgstr "设置新建对话框中图层和通道的预览大小。"
 
-#: app/config/gimprc-blurbs.h:384
+#: app/config/gimprc-blurbs.h:382
 msgid "Sets the default quick mask color."
 msgstr "设置默认的快速蒙版颜色。"
 
-#: app/config/gimprc-blurbs.h:387
+#: app/config/gimprc-blurbs.h:385
 msgid ""
 "When enabled, the image window will automatically resize itself whenever the "
 "physical image size changes. This setting only takes effect in multi-window "
@@ -10791,18 +10791,18 @@ msgstr ""
 "当启用时，每次图像实际大小发生变化时，图像窗口大小都将自动改变（仅多窗口模式"
 "有效）。"
 
-#: app/config/gimprc-blurbs.h:392
+#: app/config/gimprc-blurbs.h:390
 msgid ""
 "When enabled, the image window will automatically resize itself when zooming "
 "into and out of images. This setting only takes effect in multi-window mode."
 msgstr ""
 "当启用时，每次缩放图像时，图像窗口大小都将自动改变（仅多窗口模式有效）。"
 
-#: app/config/gimprc-blurbs.h:397
+#: app/config/gimprc-blurbs.h:395
 msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr "每次启动时让 GIMP 尝试恢复您上次保存的会话。"
 
-#: app/config/gimprc-blurbs.h:400
+#: app/config/gimprc-blurbs.h:398
 msgid ""
 "When enabled, GIMP will try to restore windows on the monitor they were open "
 "before.  When disabled, windows will appear on the currently used monitor."
@@ -10810,12 +10810,12 @@ msgstr ""
 "当启用时，GIMP 将尝试在各个显示器上恢复之前打开的窗口。当禁用时，这些窗口将恢"
 "复到当前使用的显示器上。"
 
-#: app/config/gimprc-blurbs.h:405
+#: app/config/gimprc-blurbs.h:403
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr "在多个 GIMP 会话间共享当前的工具、图案、颜色和笔刷设置。"
 
-#: app/config/gimprc-blurbs.h:409
+#: app/config/gimprc-blurbs.h:407
 msgid ""
 "When enabled, the same tool and tool options will be used for all input "
 "devices. No tool switching will occur when the input device changes."
@@ -10823,32 +10823,32 @@ msgstr ""
 "启用时，所有输入设备将使用同样的工具和工具选项。当输入设备改变时不会发生工具"
 "切换。"
 
-#: app/config/gimprc-blurbs.h:414
+#: app/config/gimprc-blurbs.h:412
 msgid ""
 "Keep a permanent record of all opened and saved files in the Recent "
 "Documents list."
 msgstr "为最近文档列表中的全部打开和保存过的文件保存一份永久记录。"
 
-#: app/config/gimprc-blurbs.h:418
+#: app/config/gimprc-blurbs.h:416
 msgid "Save the positions and sizes of the main dialogs when GIMP exits."
 msgstr "GIMP 退出时保存主要对话框的位置和大小。"
 
-#: app/config/gimprc-blurbs.h:421
+#: app/config/gimprc-blurbs.h:419
 msgid "Save the tool options when GIMP exits."
 msgstr "GIMP 退出时保存工具选项。"
 
-#: app/config/gimprc-blurbs.h:427
+#: app/config/gimprc-blurbs.h:425
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
 msgstr "当启用时，所有绘画工具都将显示当前笔刷的轮廓预览。"
 
-#: app/config/gimprc-blurbs.h:431
+#: app/config/gimprc-blurbs.h:429
 msgid ""
 "When enabled, the brush outline will snap to individual dabs while painting."
 msgstr "当启用时，绘画时笔刷轮廓将吸附于单独的笔触。"
 
-#: app/config/gimprc-blurbs.h:435
+#: app/config/gimprc-blurbs.h:433
 msgid ""
 "When enabled, dialogs will show a help button that gives access to the "
 "related help page.  Without this button, the help page can still be reached "
@@ -10857,7 +10857,7 @@ msgstr ""
 "当启用时，对话框中将显示一个可以访问相关帮助的帮助按钮。如果没有这个按钮，仍"
 "然可以按 F1 打开帮助页面。"
 
-#: app/config/gimprc-blurbs.h:440
+#: app/config/gimprc-blurbs.h:438
 msgid ""
 "When enabled, the pointer will be shown over the image while using a paint "
 "tool. If both the brush outline and pointer are disabled, the position will "
@@ -10866,117 +10866,117 @@ msgstr ""
 "当启用时，使用绘画工具时鼠标指针将显示在图像上面。如果笔刷轮廓和鼠标指针都被"
 "禁用，对位置的提示将尽可能不引人注目。"
 
-#: app/config/gimprc-blurbs.h:446
+#: app/config/gimprc-blurbs.h:444
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
 msgstr "当启用时，菜单栏将默认可见。这也可以通过“视图->显示菜单栏”命令切换。"
 
-#: app/config/gimprc-blurbs.h:450
+#: app/config/gimprc-blurbs.h:448
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
 msgstr "当启用时，标尺将默认可见。这也可以通过“视图->显示标尺”命令切换。"
 
-#: app/config/gimprc-blurbs.h:454
+#: app/config/gimprc-blurbs.h:452
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr "当启用时，滚动条将默认可见。这也可以通过“视图->显示滚动条”命令切换。"
 
-#: app/config/gimprc-blurbs.h:458
+#: app/config/gimprc-blurbs.h:456
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
 msgstr "当启用时，状态栏将默认可见。这也可以通过“视图->显示状态栏”命令切换。"
 
-#: app/config/gimprc-blurbs.h:462
+#: app/config/gimprc-blurbs.h:460
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
 msgstr "当启用时，选区将默认可见。这也可以通过“视图->显示选区”命令切换。"
 
-#: app/config/gimprc-blurbs.h:466
+#: app/config/gimprc-blurbs.h:464
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
 msgstr ""
 "当启用时，图层边界将默认可见。这也可以通过“视图->显示图层边界”命令切换。"
 
-#: app/config/gimprc-blurbs.h:470
+#: app/config/gimprc-blurbs.h:468
 msgid ""
 "When enabled, the canvas boundary is visible by default. This can also be "
 "toggled with the \"View->Show Canvas Boundary\" command."
 msgstr ""
 "当启用时，画布边界将默认可见。这也可以通过“视图->显示画布边界”命令切换。"
 
-#: app/config/gimprc-blurbs.h:474
+#: app/config/gimprc-blurbs.h:472
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
 msgstr "当启用时，参考线将默认可见。这也可以通过“视图->显示参考线”命令切换。"
 
-#: app/config/gimprc-blurbs.h:478
+#: app/config/gimprc-blurbs.h:476
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
 msgstr "当启用时，网格将默认可见。这也可以通过“视图->显示网格”命令切换。"
 
-#: app/config/gimprc-blurbs.h:482
+#: app/config/gimprc-blurbs.h:480
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
 msgstr "当启用时，采样点将默认可见。这也可以通过“视图->显示采样点”命令切换。"
 
-#: app/config/gimprc-blurbs.h:486
+#: app/config/gimprc-blurbs.h:484
 msgid "Show a tooltip when the pointer hovers over an item."
 msgstr "当指针悬停在项目上时显示工具提示。"
 
-#: app/config/gimprc-blurbs.h:489
+#: app/config/gimprc-blurbs.h:487
 msgid "Use GIMP in a single-window mode."
 msgstr "以单窗口模式使用 GIMP。"
 
-#: app/config/gimprc-blurbs.h:492
+#: app/config/gimprc-blurbs.h:490
 msgid "Hide docks and other windows, leaving only image windows."
 msgstr "隐藏停靠和其他窗口，仅留下图像窗口。"
 
-#: app/config/gimprc-blurbs.h:495
+#: app/config/gimprc-blurbs.h:493
 msgid "Show the image tabs bar in single window mode."
 msgstr "在单窗口模式中显示图像标签栏。"
 
-#: app/config/gimprc-blurbs.h:498
+#: app/config/gimprc-blurbs.h:496
 msgid "Enable the N-Point Deformation tool."
 msgstr "启用 N 点变换工具。"
 
-#: app/config/gimprc-blurbs.h:501
+#: app/config/gimprc-blurbs.h:499
 msgid "Enable the Handle Transform tool."
 msgstr "启用控制柄变换工具。"
 
-#: app/config/gimprc-blurbs.h:504
+#: app/config/gimprc-blurbs.h:502
 msgid "Enable symmetry on painting."
 msgstr "启用对称绘画。"
 
-#: app/config/gimprc-blurbs.h:507
+#: app/config/gimprc-blurbs.h:505
 msgid "Enable the MyPaint Brush tool."
 msgstr "启用 MyPaint 笔刷工具。"
 
-#: app/config/gimprc-blurbs.h:510
+#: app/config/gimprc-blurbs.h:508
 msgid "Enable the Seamless Clone tool."
 msgstr "启用无缝克隆工具。"
 
-#: app/config/gimprc-blurbs.h:513
+#: app/config/gimprc-blurbs.h:511
 msgid "Enable the Paint Select tool."
 msgstr "启用绘制选择工具。"
 
-#: app/config/gimprc-blurbs.h:516
+#: app/config/gimprc-blurbs.h:514
 msgid "What to do when the space bar is pressed in the image window."
 msgstr "当在图像窗口中空格键按下时的行为。"
 
-#: app/config/gimprc-blurbs.h:519
+#: app/config/gimprc-blurbs.h:517
 msgid "The compression method used for tile data stored in the swap file."
 msgstr "用于交换文件中储存的分块数据的压缩方式。"
 
-#: app/config/gimprc-blurbs.h:522
+#: app/config/gimprc-blurbs.h:520
 msgid ""
 "Sets the swap file location. GIMP uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
@@ -10990,21 +10990,21 @@ msgstr ""
 "另外，如果交换文件所在目录通过 NFS 挂载，程序会变得极为缓慢。因此最好将交换文"
 "件放在“/tmp”目录。"
 
-#: app/config/gimprc-blurbs.h:531
+#: app/config/gimprc-blurbs.h:529
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
 msgstr "当启用时，您只要按一个按键组合就可以改变突出显示的菜单项的快捷键。"
 
-#: app/config/gimprc-blurbs.h:535
+#: app/config/gimprc-blurbs.h:533
 msgid "Save changed keyboard shortcuts when GIMP exits."
 msgstr "GIMP 退出时保存已改变的快捷键。"
 
-#: app/config/gimprc-blurbs.h:538
+#: app/config/gimprc-blurbs.h:536
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
 msgstr "GIMP 启动时恢复已保存的快捷键。"
 
-#: app/config/gimprc-blurbs.h:541
+#: app/config/gimprc-blurbs.h:539
 msgid ""
 "Sets the folder for temporary storage. Files will appear here during the "
 "course of running GIMP.  Most files will disappear when GIMP exits, but some "
@@ -11015,253 +11015,253 @@ msgstr ""
 "出以后将消失，但是个别文件可能会留下来，因此最好不要把这个目录与别的用户共"
 "享。"
 
-#: app/config/gimprc-blurbs.h:547
+#: app/config/gimprc-blurbs.h:545
 msgid "The name of the theme to use."
 msgstr "要使用主题的名称。"
 
-#: app/config/gimprc-blurbs.h:550
+#: app/config/gimprc-blurbs.h:548
 msgid "Chooses the color scheme variant of the theme."
 msgstr "选择主题的颜色方案变种。"
 
-#: app/config/gimprc-blurbs.h:556
+#: app/config/gimprc-blurbs.h:554
 msgid "The name of the icon theme to use."
 msgstr "要使用图标主题的名称。"
 
-#: app/config/gimprc-blurbs.h:559
+#: app/config/gimprc-blurbs.h:557
 msgid "Override theme-set icon sizes."
 msgstr "覆盖主题设置的图标大小。"
 
-#: app/config/gimprc-blurbs.h:562
+#: app/config/gimprc-blurbs.h:560
 msgid "Use theme colors for preview"
 msgstr "对预览使用主题颜色"
 
-#: app/config/gimprc-blurbs.h:565
+#: app/config/gimprc-blurbs.h:563
 msgid "The size of the icons to use."
 msgstr "要使用图标的大小。"
 
-#: app/config/gimprc-blurbs.h:568
+#: app/config/gimprc-blurbs.h:566
 msgid "When enabled, symbolic icons will be preferred if available."
 msgstr "启用时，若可用将优先使用符号图标。"
 
-#: app/config/gimprc-blurbs.h:574
+#: app/config/gimprc-blurbs.h:572
 msgid "Tweak font size of the graphical interface."
 msgstr "调整图形界面的字体大小。"
 
-#: app/config/gimprc-blurbs.h:577
+#: app/config/gimprc-blurbs.h:575
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
 msgstr "为“转换到特性文件”对话框设置默认再现意图。"
 
-#: app/config/gimprc-blurbs.h:580
+#: app/config/gimprc-blurbs.h:578
 msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
 msgstr "为“转换到特性文件”对话框设置默认“黑点补偿”状态。"
 
-#: app/config/gimprc-blurbs.h:584
+#: app/config/gimprc-blurbs.h:582
 msgid ""
 "Sets the default layer dithering method for the 'Convert Precision' dialog."
 msgstr "为“转换精度”对话框设置默认图层抖动方式。"
 
-#: app/config/gimprc-blurbs.h:587
+#: app/config/gimprc-blurbs.h:585
 msgid ""
 "Sets the default text layer dithering method for the 'Convert Precision' "
 "dialog."
 msgstr "为“转换精度”对话框设置默认文字图层抖动方式。"
 
-#: app/config/gimprc-blurbs.h:590
+#: app/config/gimprc-blurbs.h:588
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
 msgstr "为“转换精度”对话框设置默认通道抖动方式。"
 
-#: app/config/gimprc-blurbs.h:593
+#: app/config/gimprc-blurbs.h:591
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
 msgstr "为“转换到索引”对话框设置默认色板类型。"
 
-#: app/config/gimprc-blurbs.h:596
+#: app/config/gimprc-blurbs.h:594
 msgid ""
 "Sets the default maximum number of colors for the 'Convert to Indexed' "
 "dialog."
 msgstr "为“转换到索引”对话框设置默认最大颜色数量。"
 
-#: app/config/gimprc-blurbs.h:599
+#: app/config/gimprc-blurbs.h:597
 msgid ""
 "Sets the default 'Remove duplicate colors' state for the 'Convert to "
 "Indexed' dialog."
 msgstr "为“转换到索引”对话框设置默认“移除重复颜色”状态。"
 
-#: app/config/gimprc-blurbs.h:602
+#: app/config/gimprc-blurbs.h:600
 msgid "Sets the default dithering type for the 'Convert to Indexed' dialog."
 msgstr "为“转换到索引”对话框设置默认抖动类型。"
 
-#: app/config/gimprc-blurbs.h:605
+#: app/config/gimprc-blurbs.h:603
 msgid ""
 "Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog."
 msgstr "为“转换到索引”对话框设置默认“抖动透明”状态。"
 
-#: app/config/gimprc-blurbs.h:608
+#: app/config/gimprc-blurbs.h:606
 msgid ""
 "Sets the default 'Dither text layers' state for the 'Convert to Indexed' "
 "dialog."
 msgstr "为“转换到索引”对话框设置默认“抖动文字图层”状态。"
 
-#: app/config/gimprc-blurbs.h:611
+#: app/config/gimprc-blurbs.h:609
 msgid "Sets the default fill type for the 'Canvas Size' dialog."
 msgstr "为“画布大小”对话框设置默认填充类型。"
 
-#: app/config/gimprc-blurbs.h:614
+#: app/config/gimprc-blurbs.h:612
 msgid "Sets the default set of layers to resize for the 'Canvas Size' dialog."
 msgstr "为“画布大小”对话框设置默认的图层缩放设定。"
 
-#: app/config/gimprc-blurbs.h:617
+#: app/config/gimprc-blurbs.h:615
 msgid ""
 "Sets the default 'Resize text layers' state for the 'Canvas Size' dialog."
 msgstr "为“画布大小”对话框设置默认“缩放文字图层”状态。"
 
-#: app/config/gimprc-blurbs.h:620
+#: app/config/gimprc-blurbs.h:618
 msgid "Sets how items are searched and selected from a textual pattern."
 msgstr "设置如何从文本模式中搜索并选择项目。"
 
-#: app/config/gimprc-blurbs.h:623
+#: app/config/gimprc-blurbs.h:621
 msgid "Sets the default layer name for the 'New Layer' dialog."
 msgstr "为“新建图层”对话框设置默认图层名称。"
 
-#: app/config/gimprc-blurbs.h:626
+#: app/config/gimprc-blurbs.h:624
 msgid "Sets the default mode for the 'New Layer' dialog."
 msgstr "为“新建图层”对话框设置默认模式。"
 
-#: app/config/gimprc-blurbs.h:629
+#: app/config/gimprc-blurbs.h:627
 msgid "Sets the default blend space for the 'New Layer' dialog."
 msgstr "为“新建图层”对话框设置默认混合空间。"
 
-#: app/config/gimprc-blurbs.h:632
+#: app/config/gimprc-blurbs.h:630
 msgid "Sets the default composite space for the 'New Layer' dialog."
 msgstr "为“新建图层”对话框设置默认合成空间。"
 
-#: app/config/gimprc-blurbs.h:635
+#: app/config/gimprc-blurbs.h:633
 msgid "Sets the default composite mode for the 'New Layer' dialog."
 msgstr "为“新建图层”对话框设置默认合成模式。"
 
-#: app/config/gimprc-blurbs.h:638
+#: app/config/gimprc-blurbs.h:636
 msgid "Sets the default opacity for the 'New Layer' dialog."
 msgstr "为“新建图层”对话框设置默认不透明度。"
 
-#: app/config/gimprc-blurbs.h:641
+#: app/config/gimprc-blurbs.h:639
 msgid "Sets the default fill type for the 'New Layer' dialog."
 msgstr "为“新建图层”对话框设置默认填充类型。"
 
-#: app/config/gimprc-blurbs.h:644
+#: app/config/gimprc-blurbs.h:642
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
 msgstr "为“图层边界大小”对话框设置默认填充类型。"
 
-#: app/config/gimprc-blurbs.h:647
+#: app/config/gimprc-blurbs.h:645
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
 msgstr "为“添加图层蒙版”对话框设置默认蒙版。"
 
-#: app/config/gimprc-blurbs.h:650
+#: app/config/gimprc-blurbs.h:648
 msgid "Sets the default 'invert mask' state for the 'Add Layer Mask' dialog."
 msgstr "为“添加图层蒙版”对话框设置默认“反转蒙版”状态。"
 
-#: app/config/gimprc-blurbs.h:653
+#: app/config/gimprc-blurbs.h:651
 msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
 msgstr "为“合并可见图层”对话框设置默认合并类型。"
 
-#: app/config/gimprc-blurbs.h:656
+#: app/config/gimprc-blurbs.h:654
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr "为“合并可见图层”对话框设置默认“仅激活图层组”。"
 
-#: app/config/gimprc-blurbs.h:659
+#: app/config/gimprc-blurbs.h:657
 msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
 msgstr "为“合并可见图层”对话框设置默认“丢弃不可见图层”。"
 
-#: app/config/gimprc-blurbs.h:662
+#: app/config/gimprc-blurbs.h:660
 msgid "Sets the default channel name for the 'New Channel' dialog."
 msgstr "为“新建通道”对话框设置默认通道名称。"
 
-#: app/config/gimprc-blurbs.h:665
+#: app/config/gimprc-blurbs.h:663
 msgid "Sets the default color and opacity for the 'New Channel' dialog."
 msgstr "为“新建通道”对话框设置默认颜色和不透明度。"
 
-#: app/config/gimprc-blurbs.h:668
+#: app/config/gimprc-blurbs.h:666
 msgid "Sets the default path name for the 'New Path' dialog."
 msgstr "为“新路径”对话框设置默认路径名称。"
 
-#: app/config/gimprc-blurbs.h:671
+#: app/config/gimprc-blurbs.h:669
 msgid "Sets the default folder path for the 'Export Path' dialog."
 msgstr "为“导出路径”对话框设置默认文件夹路径。"
 
-#: app/config/gimprc-blurbs.h:674
+#: app/config/gimprc-blurbs.h:672
 msgid ""
 "Sets the default 'Export the selected paths' state for the 'Export Path' "
 "dialog."
 msgstr "为“导出路径”对话框设置默认“导出选中路径”状态。"
 
-#: app/config/gimprc-blurbs.h:677
+#: app/config/gimprc-blurbs.h:675
 msgid "Sets the default folder path for the 'Import Path' dialog."
 msgstr "为“导入路径”对话框设置默认文件夹路径。"
 
-#: app/config/gimprc-blurbs.h:680
+#: app/config/gimprc-blurbs.h:678
 msgid ""
 "Sets the default 'Merge imported paths' state for the 'Import Path' dialog."
 msgstr "为“导入路径”对话框设置默认“合并导入的路径”状态。"
 
-#: app/config/gimprc-blurbs.h:683
+#: app/config/gimprc-blurbs.h:681
 msgid ""
 "Sets the default 'Scale imported paths to fit size' state for the 'Import "
 "Path' dialog."
 msgstr "为“导入路径”对话框设置默认“缩放导入的路径到适应大小”状态。"
 
-#: app/config/gimprc-blurbs.h:686
+#: app/config/gimprc-blurbs.h:684
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
 msgstr "为“羽化选区“对话框设置默认羽化半径。"
 
-#: app/config/gimprc-blurbs.h:689
+#: app/config/gimprc-blurbs.h:687
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Feather Selection' dialog."
 msgstr "为“羽化选区”对话框设置默认“选中区域超出图像”配置。"
 
-#: app/config/gimprc-blurbs.h:693
+#: app/config/gimprc-blurbs.h:691
 msgid "Sets the default grow radius for the 'Grow Selection' dialog."
 msgstr "为”增大选区“对话框设置默认增大半径。"
 
-#: app/config/gimprc-blurbs.h:696
+#: app/config/gimprc-blurbs.h:694
 msgid "Sets the default shrink radius for the 'Shrink Selection' dialog."
 msgstr "为”收缩选区“对话框设置默认收缩半径。"
 
-#: app/config/gimprc-blurbs.h:699
+#: app/config/gimprc-blurbs.h:697
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Shrink Selection' dialog."
 msgstr "为“收缩选区”对话框设置默认“选中区域超出图像”配置。"
 
-#: app/config/gimprc-blurbs.h:703
+#: app/config/gimprc-blurbs.h:701
 msgid "Sets the default border radius for the 'Border Selection' dialog."
 msgstr "为“加边选区”对话框设置默认加边半径。"
 
-#: app/config/gimprc-blurbs.h:706
+#: app/config/gimprc-blurbs.h:704
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Border Selection' dialog."
 msgstr "为“加边选区”对话框设置默认“选中区域超出图像”配置。"
 
-#: app/config/gimprc-blurbs.h:710
+#: app/config/gimprc-blurbs.h:708
 msgid "Sets the default border style for the 'Border Selection' dialog."
 msgstr "为“加边选区”对话框设置默认加边样式。"
 
-#: app/config/gimprc-blurbs.h:719
+#: app/config/gimprc-blurbs.h:717
 msgid "Sets the size of the thumbnail shown in the Open dialog."
 msgstr "设置打开文件对话框中缩略图的大小。"
 
-#: app/config/gimprc-blurbs.h:722
+#: app/config/gimprc-blurbs.h:720
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
 msgstr "如果预览的文件小于这里设置的大小，打开对话框中的缩略图将会自动更新。"
 
-#: app/config/gimprc-blurbs.h:726
+#: app/config/gimprc-blurbs.h:724
 msgid ""
 "When the amount of pixel data exceeds this limit, GIMP will start to swap "
 "tiles to disk.  This is a lot slower but it makes it possible to work on "
@@ -11272,53 +11272,53 @@ msgstr ""
 "理无法载入计算机内存 (RAM) 的超大图像成为可能。如果您的计算机内存(RAM)很大，"
 "您可能希望设置一个更大的数值。"
 
-#: app/config/gimprc-blurbs.h:732
+#: app/config/gimprc-blurbs.h:730
 msgid "Show the current foreground and background colors in the toolbox."
 msgstr "在工具箱中显示当前的前景色和背景色。"
 
-#: app/config/gimprc-blurbs.h:735
+#: app/config/gimprc-blurbs.h:733
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
 msgstr "在工具箱中显示活动笔刷、图案和渐变。"
 
-#: app/config/gimprc-blurbs.h:738
+#: app/config/gimprc-blurbs.h:736
 msgid "Use a single toolbox button for grouped tools."
 msgstr "为分组工具使用单独工具箱按钮。"
 
-#: app/config/gimprc-blurbs.h:741
+#: app/config/gimprc-blurbs.h:739
 msgid "Show the currently active image in the toolbox."
 msgstr "在工具箱中显示当前活动的图像。"
 
-#: app/config/gimprc-blurbs.h:744
+#: app/config/gimprc-blurbs.h:742
 msgid "Show the GIMP mascot at the top of the toolbox."
 msgstr "在工具箱顶部显示 GIMP 吉祥物。"
 
-#: app/config/gimprc-blurbs.h:747
+#: app/config/gimprc-blurbs.h:745
 msgid ""
 "The first color to use in the transparency checkerboard, when Transparency "
 "Type is set to Custom colors."
 msgstr "当透明类型设为自定义颜色时，透明棋盘格中使用的第一种颜色。"
 
-#: app/config/gimprc-blurbs.h:751
+#: app/config/gimprc-blurbs.h:749
 msgid ""
 "The second color to use in the transparency checkerboard, when Transparency "
 "Type is set to Custom colors."
 msgstr "当透明类型设为自定义颜色时，透明棋盘格中使用的第二种颜色。"
 
-#: app/config/gimprc-blurbs.h:755
+#: app/config/gimprc-blurbs.h:753
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr "设置图像中透明部分的显示方式。"
 
-#: app/config/gimprc-blurbs.h:758
+#: app/config/gimprc-blurbs.h:756
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr "设置用于表示透明的棋盘格子的大小。"
 
-#: app/config/gimprc-blurbs.h:761
+#: app/config/gimprc-blurbs.h:759
 msgid ""
 "When enabled, GIMP will not save an image if it has not been changed since "
 "it was opened."
 msgstr "当启用时，如果图像自打开以来没有被修改，GIMP 将不会保存。"
 
-#: app/config/gimprc-blurbs.h:765
+#: app/config/gimprc-blurbs.h:763
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
@@ -11326,7 +11326,7 @@ msgstr ""
 "设置允许撤消操作的最小次数。只要还没有达到撤消次数的限制，就可以保存更多的撤"
 "消操作。"
 
-#: app/config/gimprc-blurbs.h:769
+#: app/config/gimprc-blurbs.h:767
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
@@ -11335,27 +11335,27 @@ msgstr ""
 "设置每幅图像撤销历史中用于保存撤消操作的内存上限。与此设置无关，撤消操作至少"
 "可以达到指定的撤消次数。"
 
-#: app/config/gimprc-blurbs.h:774
+#: app/config/gimprc-blurbs.h:772
 msgid "Sets the size of the previews in the Undo History."
 msgstr "设置撤销历史的预览大小。"
 
-#: app/config/gimprc-blurbs.h:777
+#: app/config/gimprc-blurbs.h:775
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "当启用时，按 F1 将打开帮助浏览器。"
 
-#: app/config/gimprc-blurbs.h:780
+#: app/config/gimprc-blurbs.h:778
 msgid "When enabled, uses OpenCL for some operations."
 msgstr "当启用时，将在某些操作时使用 OpenCL。"
 
-#: app/config/gimprc-blurbs.h:791
+#: app/config/gimprc-blurbs.h:789
 msgid "There's a tradeoff between speed and quality of the zoomed-out display."
 msgstr "在缩放显示的速度和质量间存在取舍。"
 
-#: app/config/gimprc-blurbs.h:798
+#: app/config/gimprc-blurbs.h:796
 msgid "When enabled, a search of actions will also return inactive actions."
 msgstr "当启用时，对动作的搜索将同样反馈无效动作。"
 
-#: app/config/gimprc-blurbs.h:801
+#: app/config/gimprc-blurbs.h:799
 msgid "The maximum number of actions saved in history."
 msgstr "历史中保存动作的最大数量。"
 
@@ -12484,7 +12484,7 @@ msgid "Parasites"
 msgstr "内嵌信息"
 
 #. initialize the module list
-#: app/core/gimp.c:858 app/dialogs/preferences-dialog.c:3574
+#: app/core/gimp.c:858 app/dialogs/preferences-dialog.c:3575
 msgid "Modules"
 msgstr "模块"
 
@@ -12534,7 +12534,7 @@ msgstr "删除“%s”失败：%s"
 
 #. initialize the list of gimp dynamics
 #: app/core/gimp-data-factories.c:363 app/core/gimpcontext.c:706
-#: app/dialogs/preferences-dialog.c:3520 app/tools/gimppaintoptions-gui.c:329
+#: app/dialogs/preferences-dialog.c:3521 app/tools/gimppaintoptions-gui.c:329
 msgid "Dynamics"
 msgstr "动态"
 
@@ -12871,7 +12871,13 @@ msgid ""
 "Fatal parse error in brush file: Unable to decode abr format version %d."
 msgstr "笔刷文件中出现致命解析错误：无法解码 abr 格式版本 %d。"
 
-#: app/core/gimpbrush.c:159 app/paint/gimppaintoptions.c:235
+#: app/core/gimpbrush.c:138 app/core/gimpcontext.c:699
+#: app/core/gimpcontext.c:700 app/tools/gimpmybrushoptions-gui.c:64
+#: app/tools/gimppaintoptions-gui.c:156
+msgid "Brush"
+msgstr "笔刷"
+
+#: app/core/gimpbrush.c:160 app/paint/gimppaintoptions.c:235
 msgid "Brush Spacing"
 msgstr "笔刷间距"
 
@@ -12966,6 +12972,10 @@ msgstr "笔刷文件“%s”出现严重解析错误：文件已损坏。"
 #, c-format
 msgid "Fatal parse error in brush file '%s': Inconsistent parameters."
 msgstr "笔刷文件“%s”出现严重解析错误：不一致的参数。"
+
+#: app/core/gimpbuffer.c:106
+msgid "Buffer"
+msgstr "缓冲区"
 
 #: app/core/gimpchannel-select.c:70
 msgctxt "undo-type"
@@ -13144,7 +13154,7 @@ msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "设置通道不透明度"
 
-#: app/core/gimpchannel.c:1815 app/core/gimpselection.c:172
+#: app/core/gimpchannel.c:1815 app/core/gimpselection.c:162
 msgid "Selection Mask"
 msgstr "选区蒙版"
 
@@ -13166,18 +13176,13 @@ msgstr "背景色"
 
 #: app/core/gimpcontext.c:682 app/core/gimpcontext.c:683
 #: app/operations/gimpoperationsettings.c:99
-#: app/widgets/gimplayertreeview.c:293
+#: app/widgets/gimplayertreeview.c:289
 msgid "Opacity"
 msgstr "不透明度"
 
 #: app/core/gimpcontext.c:691 app/core/gimpcontext.c:692
 msgid "Paint Mode"
 msgstr "绘画模式"
-
-#: app/core/gimpcontext.c:699 app/core/gimpcontext.c:700
-#: app/tools/gimpmybrushoptions-gui.c:64 app/tools/gimppaintoptions-gui.c:156
-msgid "Brush"
-msgstr "笔刷"
 
 #: app/core/gimpcontext.c:707
 msgid "Paint dynamics"
@@ -13189,22 +13194,24 @@ msgid "MyPaint Brush"
 msgstr "MyPaint 笔刷"
 
 #: app/core/gimpcontext.c:720 app/core/gimpcontext.c:721
+#: app/core/gimppattern.c:85
 msgid "Pattern"
 msgstr "图案"
 
 #: app/core/gimpcontext.c:727 app/core/gimpcontext.c:728
-#: app/pdb/drawable-edit-cmds.c:255 app/tools/gimpgradientoptions.c:269
-#: app/tools/gimpgradienttool.c:166 app/tools/gimppaintoptions-gui.c:385
+#: app/core/gimpgradient.c:125 app/pdb/drawable-edit-cmds.c:255
+#: app/tools/gimpgradientoptions.c:269 app/tools/gimpgradienttool.c:166
+#: app/tools/gimppaintoptions-gui.c:385
 msgid "Gradient"
 msgstr "渐变"
 
 #: app/core/gimpcontext.c:734 app/core/gimpcontext.c:735
-#: app/widgets/gimpcolorselectorpalette.c:59
+#: app/core/gimppalette.c:130 app/widgets/gimpcolorselectorpalette.c:59
 msgid "Palette"
 msgstr "色板"
 
 #: app/core/gimpcontext.c:741 app/core/gimpcontext.c:742
-#: app/tools/gimptextoptions.c:812
+#: app/text/gimpfont.c:604 app/tools/gimptextoptions.c:812
 msgid "Font"
 msgstr "字体"
 
@@ -13225,11 +13232,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:465 app/core/gimpdatafactory.c:468
-#: app/core/gimpitem.c:572 app/core/gimpitem.c:575
+#: app/core/gimpitem.c:571 app/core/gimpitem.c:574
 msgid "copy"
 msgstr "副本"
 
-#: app/core/gimpdatafactory.c:477 app/core/gimpitem.c:583
+#: app/core/gimpdatafactory.c:477 app/core/gimpitem.c:582
 #, c-format
 msgid "%s copy"
 msgstr "%s 副本"
@@ -13550,243 +13557,243 @@ msgstr "间距单位"
 
 #: app/core/gimpgrid.c:131
 msgid "Offset X"
-msgstr "位移 X"
+msgstr "偏移 X"
 
 #: app/core/gimpgrid.c:132
 msgid ""
 "Horizontal offset of the first grid line; this may be a negative number."
-msgstr "第一条网格线的水平位移；可以是负数。"
+msgstr "第一条网格线的水平偏移；可以是负数。"
 
 #: app/core/gimpgrid.c:140
 msgid "Offset Y"
-msgstr "位移 Y"
+msgstr "偏移 Y"
 
 #: app/core/gimpgrid.c:141
 msgid "Vertical offset of the first grid line; this may be a negative number."
-msgstr "第一条网格线的竖直位移；可以是负数。"
+msgstr "第一条网格线的竖直偏移；可以是负数。"
 
 #: app/core/gimpgrid.c:149
 msgid "Offset unit"
-msgstr "位移单位"
+msgstr "偏移单位"
 
-#: app/core/gimpgrouplayer.c:292
+#: app/core/gimpgrouplayer.c:279
 msgid "Layer Group"
 msgstr "图层组"
 
-#: app/core/gimpgrouplayer.c:293
+#: app/core/gimpgrouplayer.c:294
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "重命名图层组"
 
-#: app/core/gimpgrouplayer.c:294
+#: app/core/gimpgrouplayer.c:295
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "移动图层组"
 
-#: app/core/gimpgrouplayer.c:295
+#: app/core/gimpgrouplayer.c:296
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "缩放图层组"
 
-#: app/core/gimpgrouplayer.c:296
+#: app/core/gimpgrouplayer.c:297
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "改变图层组大小"
 
-#: app/core/gimpgrouplayer.c:297
+#: app/core/gimpgrouplayer.c:298
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "翻转图层组"
 
-#: app/core/gimpgrouplayer.c:298
+#: app/core/gimpgrouplayer.c:299
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "旋转图层组"
 
-#: app/core/gimpgrouplayer.c:299
+#: app/core/gimpgrouplayer.c:300
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "变换图层组"
 
-#: app/core/gimpimage.c:688 app/widgets/gimpsymmetryeditor.c:183
+#: app/core/gimpimage.c:689 app/widgets/gimpsymmetryeditor.c:183
 msgid "Symmetry"
 msgstr "对称"
 
-#: app/core/gimpimage.c:2072 app/pdb/drawable-filter-cmds.c:681
+#: app/core/gimpimage.c:2073 app/pdb/drawable-filter-cmds.c:681
 #: app/widgets/gimpdrawabletreeview-filters.c:863
 msgid "Remove filter"
 msgstr "移除滤镜"
 
-#: app/core/gimpimage.c:2682
+#: app/core/gimpimage.c:2683
 msgid " (exported)"
 msgstr "（已导出）"
 
-#: app/core/gimpimage.c:2686
+#: app/core/gimpimage.c:2687
 msgid " (overwritten)"
 msgstr "（已覆盖）"
 
-#: app/core/gimpimage.c:2695
+#: app/core/gimpimage.c:2696
 msgid " (imported)"
 msgstr "（已导入）"
 
-#: app/core/gimpimage.c:2869 app/core/gimpimage.c:2883
-#: app/core/gimpimage.c:2926
+#: app/core/gimpimage.c:2870 app/core/gimpimage.c:2884
+#: app/core/gimpimage.c:2927
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "图层模式“%s”已添加到 %s"
 
-#: app/core/gimpimage.c:2947
+#: app/core/gimpimage.c:2948
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "图层组已添加到 %s"
 
-#: app/core/gimpimage.c:2954
+#: app/core/gimpimage.c:2955
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "图层组蒙版已添加到 %s"
 
-#: app/core/gimpimage.c:2961
+#: app/core/gimpimage.c:2962
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "图层组位置锁定已添加到 %s"
 
-#: app/core/gimpimage.c:2968
+#: app/core/gimpimage.c:2969
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "图层组透明通道锁定已添加到 %s"
 
-#: app/core/gimpimage.c:2976 app/core/gimpimage.c:3027
+#: app/core/gimpimage.c:2977 app/core/gimpimage.c:3028
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "可见性锁定已添加到 %s"
 
-#: app/core/gimpimage.c:2987
+#: app/core/gimpimage.c:2988
 #, c-format
 msgid "Format of font information in text layer was changed in %s"
 msgstr "文字图层中字体信息的格式已在 %s 中更改"
 
-#: app/core/gimpimage.c:2995
+#: app/core/gimpimage.c:2996
 #, c-format
 msgid "Layer effects were added in %s"
 msgstr "图层效果已添加到 %s"
 
-#: app/core/gimpimage.c:3007
+#: app/core/gimpimage.c:3008
 #, c-format
 msgid "A new perceptual blending space was added in %s"
 msgstr "在 %s 中添加了新的感知混合空间"
 
-#: app/core/gimpimage.c:3036
+#: app/core/gimpimage.c:3037
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "多个路径选区已添加到 %s"
 
-#: app/core/gimpimage.c:3048
+#: app/core/gimpimage.c:3049
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "路径中存储的颜色标签已添加到 %s"
 
-#: app/core/gimpimage.c:3055
+#: app/core/gimpimage.c:3056
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "路径中存储的锁定已添加到 %s"
 
-#: app/core/gimpimage.c:3069
+#: app/core/gimpimage.c:3070
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "高位深图像已添加到 %s"
 
-#: app/core/gimpimage.c:3077
+#: app/core/gimpimage.c:3078
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "高位深图像编码已固定到 %s"
 
-#: app/core/gimpimage.c:3085
+#: app/core/gimpimage.c:3086
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "内置 zlib 压缩已添加到 %s"
 
-#: app/core/gimpimage.c:3102
+#: app/core/gimpimage.c:3103
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "对大于 4GB 图像文件的支持已添加到 %s"
 
-#: app/core/gimpimage.c:3109
+#: app/core/gimpimage.c:3110
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "多个图层选区被添加进 %s"
 
-#: app/core/gimpimage.c:3126
+#: app/core/gimpimage.c:3127
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "画布外参考线添加至 %s"
 
-#: app/core/gimpimage.c:3137
+#: app/core/gimpimage.c:3138
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr "项目设置和项目名称中的模式搜索已添加进 %s"
 
-#: app/core/gimpimage.c:3143
+#: app/core/gimpimage.c:3144
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "多个通道选择已添加进 %s"
 
-#: app/core/gimpimage.c:3258
+#: app/core/gimpimage.c:3259
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "改变图像分辨率"
 
-#: app/core/gimpimage.c:3310
+#: app/core/gimpimage.c:3311
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "改变图像单位"
 
-#: app/core/gimpimage.c:4363
+#: app/core/gimpimage.c:4364
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr "“GIMP 注释”内嵌信息校验失败：注释包含无效的 UTF-8"
 
-#: app/core/gimpimage.c:4425
+#: app/core/gimpimage.c:4426
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "添加内嵌信息到图像"
 
-#: app/core/gimpimage.c:4470
+#: app/core/gimpimage.c:4471
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "从图像删除内嵌信息"
 
-#: app/core/gimpimage.c:5358
+#: app/core/gimpimage.c:5444
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "添加图层"
 
-#: app/core/gimpimage.c:5402 app/core/gimpimage.c:5433
+#: app/core/gimpimage.c:5488 app/core/gimpimage.c:5519
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "删除图层"
 
-#: app/core/gimpimage.c:5427
+#: app/core/gimpimage.c:5513
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "删除浮动选区"
 
-#: app/core/gimpimage.c:5939
+#: app/core/gimpimage.c:5670
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "添加通道"
 
-#: app/core/gimpimage.c:5969 app/core/gimpimage.c:5994
+#: app/core/gimpimage.c:5700 app/core/gimpimage.c:5725
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "删除通道"
 
-#: app/core/gimpimage.c:6054
+#: app/core/gimpimage.c:5785
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "添加路径"
 
-#: app/core/gimpimage.c:6089 app/core/gimpimage.c:6097
+#: app/core/gimpimage.c:5820 app/core/gimpimage.c:5828
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "删除路径"
@@ -13862,7 +13869,7 @@ msgstr "特性文件转换"
 msgid "Colormap of Image #%d (%s)"
 msgstr "图像 #%d 的颜色表 (%s)"
 
-#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:908
+#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:909
 msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "设置颜色表"
@@ -13872,7 +13879,7 @@ msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "重置颜色表"
 
-#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:699
+#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:700
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "改变颜色表项"
@@ -14124,24 +14131,24 @@ msgstr[0] "%d 个图层"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "无法打开缩略图“%s”：%s"
 
-#: app/core/gimpitem.c:1851 app/core/gimpitem.c:1918
+#: app/core/gimpitem.c:1850 app/core/gimpitem.c:1917
 #: app/display/gimpdisplayshell-dnd.c:380 app/tools/gimppathtool.c:758
 #: app/tools/gimppathtool.c:847 app/tools/gimptransformtool.c:704
 #: app/widgets/gimpdrawabletreeview-filters.c:709
 msgid "A selected layer's pixels are locked."
 msgstr "一个选中图层的像素已被锁定。"
 
-#: app/core/gimpitem.c:2227
+#: app/core/gimpitem.c:2226
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "添加内嵌信息"
 
-#: app/core/gimpitem.c:2237
+#: app/core/gimpitem.c:2236
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "添加内嵌信息到项目"
 
-#: app/core/gimpitem.c:2288 app/core/gimpitem.c:2295
+#: app/core/gimpitem.c:2287 app/core/gimpitem.c:2294
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "从项目删除内嵌信息"
@@ -14623,7 +14630,7 @@ msgstr ""
 "不支持的图案尺寸 %d x %d。\n"
 "GIMP 图案的最大尺寸为 %d x %d。"
 
-#: app/core/gimppdbprogress.c:267
+#: app/core/gimppdbprogress.c:259
 #, c-format
 msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
 msgstr "无法执行 %s 回调。相应的插件可能已崩溃。"
@@ -14713,7 +14720,11 @@ msgstr "浮动选区"
 msgid "Floated Layer"
 msgstr "浮动的图层"
 
-#: app/core/gimpsettings.c:152
+#: app/core/gimpsettings.c:71
+msgid "Preset"
+msgstr "预设"
+
+#: app/core/gimpsettings.c:153
 #, c-format
 msgid "Last used: %s"
 msgstr "上次使用：%s"
@@ -14971,7 +14982,7 @@ msgid "Filename"
 msgstr "文件名"
 
 #. Translators: this is a noun
-#: app/core/gimptoolgroup.c:263
+#: app/core/gimptoolgroup.c:262
 msgctxt "tool-item"
 msgid "Group"
 msgstr "分组"
@@ -15134,7 +15145,7 @@ msgstr "锁定位置和大小(_S)"
 
 #: app/dialogs/channel-options-dialog.c:130
 #: app/dialogs/layer-options-dialog.c:169
-#: app/widgets/gimpdrawabletreeview.c:177 app/widgets/gimpitemtreeview.c:596
+#: app/widgets/gimpdrawabletreeview.c:177 app/widgets/gimpitemtreeview.c:591
 msgid "Lock visibility"
 msgstr "锁定可见性"
 
@@ -15388,7 +15399,7 @@ msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "您确定要从列表删除“%s”并在硬盘上删除它吗？"
 
-#: app/dialogs/dialogs-constructors.c:238 app/gui/gui.c:188
+#: app/dialogs/dialogs-constructors.c:238 app/gui/gui.c:189
 #: app/gui/gui-message.c:268
 msgid "GIMP Message"
 msgstr "GIMP 消息"
@@ -15467,23 +15478,23 @@ msgid "Extensions"
 msgstr "扩展名"
 
 #. "gimp-extensions-installed",
-#: app/dialogs/extensions-dialog.c:109 app/dialogs/extensions-dialog.c:110
+#: app/dialogs/extensions-dialog.c:111 app/dialogs/extensions-dialog.c:112
 msgid "Installed Extensions"
 msgstr "已安装扩展"
 
-#: app/dialogs/extensions-dialog.c:125 app/dialogs/extensions-dialog.c:126
+#: app/dialogs/extensions-dialog.c:127 app/dialogs/extensions-dialog.c:128
 msgid "System Extensions"
 msgstr "系统扩展"
 
-#: app/dialogs/extensions-dialog.c:141 app/dialogs/extensions-dialog.c:142
+#: app/dialogs/extensions-dialog.c:143 app/dialogs/extensions-dialog.c:144
 msgid "Install Extensions"
 msgstr "安装扩展"
 
-#: app/dialogs/extensions-dialog.c:159
+#: app/dialogs/extensions-dialog.c:161
 msgid "Search extension:"
 msgstr "搜索扩展："
 
-#: app/dialogs/extensions-dialog.c:175
+#: app/dialogs/extensions-dialog.c:177
 msgid "Search extensions matching these keywords"
 msgstr "搜索匹配这些关键词的扩展"
 
@@ -15632,7 +15643,7 @@ msgstr "丢弃不可见图层(_D)"
 msgid "Create a New Image"
 msgstr "新建图像"
 
-#: app/dialogs/image-new-dialog.c:139 app/dialogs/preferences-dialog.c:1812
+#: app/dialogs/image-new-dialog.c:139 app/dialogs/preferences-dialog.c:1813
 #: app/dialogs/resize-dialog.c:256
 msgid "_Template:"
 msgstr "模板(_T)："
@@ -15663,7 +15674,7 @@ msgstr "图像属性"
 #: app/dialogs/image-properties-dialog.c:68 app/dialogs/module-dialog.c:113
 #: app/dialogs/welcome-dialog.c:193 app/tools/gimpcolorpickertool.c:351
 #: app/tools/gimpgradienttool-editor.c:1818 app/tools/gimpmeasuretool.c:740
-#: app/widgets/gimpcontrollerlist.c:647 app/widgets/gimpcriticaldialog.c:206
+#: app/widgets/gimpcontrollerlist.c:634 app/widgets/gimpcriticaldialog.c:206
 #: app/widgets/gimpcriticaldialog.c:228 app/widgets/gimpsettingsbox.c:636
 #: app/widgets/gimptexteditor.c:164
 msgid "_Close"
@@ -15817,11 +15828,11 @@ msgstr "高度："
 #. The offset labels
 #: app/dialogs/layer-options-dialog.c:312
 msgid "Offset X:"
-msgstr "位移 X："
+msgstr "偏移 X："
 
 #: app/dialogs/layer-options-dialog.c:317
 msgid "Offset Y:"
-msgstr "位移 Y："
+msgstr "偏移 Y："
 
 #: app/dialogs/layer-options-dialog.c:380 app/dialogs/resize-dialog.c:510
 #: app/widgets/gimptemplateeditor.c:489
@@ -15975,7 +15986,7 @@ msgid "Select Source"
 msgstr "选择来源"
 
 #: app/dialogs/palette-import-dialog.c:211
-#: app/dialogs/preferences-dialog.c:1772
+#: app/dialogs/preferences-dialog.c:1773
 msgid "_Gradient"
 msgstr "渐变(_G)"
 
@@ -16047,205 +16058,205 @@ msgstr "该色板未导入：%s"
 msgid "There is no palette to import."
 msgstr "没有色板可导入。"
 
-#: app/dialogs/preferences-dialog.c:214
+#: app/dialogs/preferences-dialog.c:215
 msgid "Reset All Preferences"
 msgstr "重置所有首选项"
 
-#: app/dialogs/preferences-dialog.c:232
+#: app/dialogs/preferences-dialog.c:233
 msgid "Do you really want to reset all preferences to default values?"
 msgstr "您真的要将所有首选项重置到默认值吗？"
 
-#: app/dialogs/preferences-dialog.c:311 app/dialogs/welcome-dialog.c:362
+#: app/dialogs/preferences-dialog.c:312 app/dialogs/welcome-dialog.c:362
 msgid "You will have to restart GIMP for the following changes to take effect:"
 msgstr "您需要重启 GIMP 以使下列改变生效："
 
-#: app/dialogs/preferences-dialog.c:600
+#: app/dialogs/preferences-dialog.c:601
 msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
 msgstr "您的快捷键将在下次您启动 GIMP 的时候重置到默认值。"
 
-#: app/dialogs/preferences-dialog.c:611
+#: app/dialogs/preferences-dialog.c:612
 msgid "Remove all Keyboard Shortcuts"
 msgstr "删除所有的快捷键"
 
-#: app/dialogs/preferences-dialog.c:633
+#: app/dialogs/preferences-dialog.c:634
 msgid "Do you really want to remove all keyboard shortcuts from all menus?"
 msgstr "您真的要从所有菜单中删除所有的快捷键吗？"
 
-#: app/dialogs/preferences-dialog.c:674
+#: app/dialogs/preferences-dialog.c:675
 msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
 msgstr "您的窗口设置将在下次您启动 GIMP 的时候重置到默认值。"
 
-#: app/dialogs/preferences-dialog.c:709
+#: app/dialogs/preferences-dialog.c:710
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
 msgstr "您的输入设备设置将在下次您启动 GIMP 的时候重置到默认值。"
 
-#: app/dialogs/preferences-dialog.c:789
+#: app/dialogs/preferences-dialog.c:790
 msgid ""
 "Your tool options will be reset to default values the next time you start "
 "GIMP."
 msgstr "您的工具选项将在您下次启动 GIMP 时重置到默认值。"
 
-#: app/dialogs/preferences-dialog.c:841 app/dialogs/preferences-dialog.c:2701
+#: app/dialogs/preferences-dialog.c:842 app/dialogs/preferences-dialog.c:2702
 msgid "There's a local installation of the user manual."
 msgstr "已安装用户指南的本地版本。"
 
-#: app/dialogs/preferences-dialog.c:846 app/dialogs/preferences-dialog.c:2707
+#: app/dialogs/preferences-dialog.c:847 app/dialogs/preferences-dialog.c:2708
 msgid "The user manual is not installed locally."
 msgstr "用户指南未在本地安装。"
 
-#: app/dialogs/preferences-dialog.c:1019
+#: app/dialogs/preferences-dialog.c:1020
 msgid "Show s_election"
 msgstr "显示选区(_E)"
 
-#: app/dialogs/preferences-dialog.c:1022
+#: app/dialogs/preferences-dialog.c:1023
 msgid "Show _layer boundary"
 msgstr "显示图层边界(_L)"
 
-#: app/dialogs/preferences-dialog.c:1025
+#: app/dialogs/preferences-dialog.c:1026
 msgid "Show can_vas boundary"
 msgstr "显示画布边界(_V)"
 
-#: app/dialogs/preferences-dialog.c:1028
+#: app/dialogs/preferences-dialog.c:1029
 msgid "Show _guides"
 msgstr "显示参考线(_G)"
 
-#: app/dialogs/preferences-dialog.c:1031
+#: app/dialogs/preferences-dialog.c:1032
 msgid "Show gri_d"
 msgstr "显示网格(_D)"
 
-#: app/dialogs/preferences-dialog.c:1034
+#: app/dialogs/preferences-dialog.c:1035
 msgid "Show _sample points"
 msgstr "显示采样点(_S)"
 
-#: app/dialogs/preferences-dialog.c:1043
+#: app/dialogs/preferences-dialog.c:1044
 msgid "Show _menubar"
 msgstr "显示菜单栏(_M)"
 
-#: app/dialogs/preferences-dialog.c:1047
+#: app/dialogs/preferences-dialog.c:1048
 msgid "Show _rulers"
 msgstr "显示标尺(_R)"
 
-#: app/dialogs/preferences-dialog.c:1050
+#: app/dialogs/preferences-dialog.c:1051
 msgid "Show scroll_bars"
 msgstr "显示滚动条(_B)"
 
-#: app/dialogs/preferences-dialog.c:1053
+#: app/dialogs/preferences-dialog.c:1054
 msgid "Show s_tatusbar"
 msgstr "显示状态栏(_T)"
 
-#: app/dialogs/preferences-dialog.c:1059
+#: app/dialogs/preferences-dialog.c:1060
 msgid "Canvas _padding mode:"
 msgstr "画布衬垫模式(_P)："
 
-#: app/dialogs/preferences-dialog.c:1064
+#: app/dialogs/preferences-dialog.c:1065
 msgid "Custom p_adding color:"
 msgstr "自定义画布填充颜色(_A)："
 
-#: app/dialogs/preferences-dialog.c:1065
+#: app/dialogs/preferences-dialog.c:1066
 msgid "Select Custom Canvas Padding Color"
 msgstr "设置自定义画布衬垫的颜色"
 
-#: app/dialogs/preferences-dialog.c:1074
+#: app/dialogs/preferences-dialog.c:1075
 msgid "_Keep canvas padding in \"Show All\" mode"
 msgstr "在“显示全部”模式中保持画布衬垫(_K)"
 
-#: app/dialogs/preferences-dialog.c:1099
+#: app/dialogs/preferences-dialog.c:1100
 msgid "Snap to _Guides"
 msgstr "吸附到参考线(_G)"
 
-#: app/dialogs/preferences-dialog.c:1102
+#: app/dialogs/preferences-dialog.c:1103
 msgid "S_nap to Grid"
 msgstr "吸附到网格(_N)"
 
-#: app/dialogs/preferences-dialog.c:1105
+#: app/dialogs/preferences-dialog.c:1106
 msgid "Snap to Canvas _Edges"
 msgstr "吸附到画布边缘(_E)"
 
-#: app/dialogs/preferences-dialog.c:1113
+#: app/dialogs/preferences-dialog.c:1114
 msgid "Snap to _Active Path"
 msgstr "吸附到活动路径(_A)"
 
-#: app/dialogs/preferences-dialog.c:1116
+#: app/dialogs/preferences-dialog.c:1117
 msgid "Snap to _Bounding Box"
 msgstr "吸附到边界(_B)"
 
-#: app/dialogs/preferences-dialog.c:1119
+#: app/dialogs/preferences-dialog.c:1120
 msgid "Snap to _Equidistance"
 msgstr "吸附到等距点(_E)"
 
-#: app/dialogs/preferences-dialog.c:1173
+#: app/dialogs/preferences-dialog.c:1174
 msgid "Preferences"
 msgstr "首选项"
 
-#: app/dialogs/preferences-dialog.c:1219 app/dialogs/preferences-dialog.c:1220
+#: app/dialogs/preferences-dialog.c:1220 app/dialogs/preferences-dialog.c:1221
 msgid "System Resources"
 msgstr "系统资源"
 
-#: app/dialogs/preferences-dialog.c:1228
+#: app/dialogs/preferences-dialog.c:1229
 msgid "Resource Consumption"
 msgstr "资源消耗"
 
-#: app/dialogs/preferences-dialog.c:1234
+#: app/dialogs/preferences-dialog.c:1235
 msgid "Minimal number of _undo levels:"
 msgstr "最小撤消级别(_U)："
 
-#: app/dialogs/preferences-dialog.c:1237
+#: app/dialogs/preferences-dialog.c:1238
 msgid "Maximum undo _memory:"
 msgstr "最大撤消内存(_M)："
 
-#: app/dialogs/preferences-dialog.c:1240
+#: app/dialogs/preferences-dialog.c:1241
 msgid "Tile cache _size:"
 msgstr "平铺缓存大小(_S)："
 
-#: app/dialogs/preferences-dialog.c:1243
+#: app/dialogs/preferences-dialog.c:1244
 msgid "Maximum _new image size:"
 msgstr "最大新建图像大小(_N)："
 
-#: app/dialogs/preferences-dialog.c:1247
+#: app/dialogs/preferences-dialog.c:1248
 msgid "S_wap compression:"
 msgstr "交换区压缩(_W)："
 
-#: app/dialogs/preferences-dialog.c:1252
+#: app/dialogs/preferences-dialog.c:1253
 msgid "Number of _threads to use:"
 msgstr "线程使用数量(_T)："
 
-#: app/dialogs/preferences-dialog.c:1260
+#: app/dialogs/preferences-dialog.c:1261
 msgid "Network access"
 msgstr "网络访问"
 
-#: app/dialogs/preferences-dialog.c:1264
+#: app/dialogs/preferences-dialog.c:1265
 msgid "Check for updates (requires internet)"
 msgstr "检查更新（需要网络）"
 
 #. Image Thumbnails
-#: app/dialogs/preferences-dialog.c:1271
+#: app/dialogs/preferences-dialog.c:1272
 msgid "Image Thumbnails"
 msgstr "图像缩略图"
 
-#: app/dialogs/preferences-dialog.c:1276
+#: app/dialogs/preferences-dialog.c:1277
 msgid "Size of _thumbnails:"
 msgstr "缩略图大小(_T)："
 
-#: app/dialogs/preferences-dialog.c:1280
+#: app/dialogs/preferences-dialog.c:1281
 msgid "Maximum _filesize for thumbnailing:"
 msgstr "缩略图最大文件大小(_F)："
 
-#: app/dialogs/preferences-dialog.c:1287
+#: app/dialogs/preferences-dialog.c:1288
 msgid "_Keep record of used files in the Recent Documents list"
 msgstr "保持最近文档列表中使用过文件的记录(_K)"
 
 #. TODO: icon needed.
-#: app/dialogs/preferences-dialog.c:1305 app/dialogs/preferences-dialog.c:1306
+#: app/dialogs/preferences-dialog.c:1306 app/dialogs/preferences-dialog.c:1307
 msgid "Debugging"
 msgstr "调试"
 
-#: app/dialogs/preferences-dialog.c:1313
+#: app/dialogs/preferences-dialog.c:1314
 msgid ""
 "We hope you will never need these settings, but as all software, GIMP has "
 "bugs, and crashes can occur. If it happens, you can help us by reporting "
@@ -16254,169 +16265,169 @@ msgstr ""
 "我们希望您永远不需要这些设置，但和所有软件一样，GIMP 有缺陷，且可能发生崩溃。"
 "如果发生了，您可以通过报告缺陷帮助我们。"
 
-#: app/dialogs/preferences-dialog.c:1322
+#: app/dialogs/preferences-dialog.c:1323
 msgid "Bug Reporting"
 msgstr "缺陷报告"
 
-#: app/dialogs/preferences-dialog.c:1328
+#: app/dialogs/preferences-dialog.c:1329
 msgid "Debug _policy:"
 msgstr "调试策略(_P)："
 
-#: app/dialogs/preferences-dialog.c:1340
+#: app/dialogs/preferences-dialog.c:1341
 msgid "This feature requires \"gdb\" or \"lldb\" installed on your system."
 msgstr "该特性需要您的系统上安装有“gdb”或“lldb”。"
 
-#: app/dialogs/preferences-dialog.c:1344
+#: app/dialogs/preferences-dialog.c:1345
 msgid ""
 "This feature is more efficient with \"gdb\" or \"lldb\" installed on your "
 "system."
 msgstr "您的系统上安装有“gdb”或“lldb”时该特性更有效率。"
 
-#: app/dialogs/preferences-dialog.c:1357 app/dialogs/preferences-dialog.c:1358
+#: app/dialogs/preferences-dialog.c:1358 app/dialogs/preferences-dialog.c:1359
 msgid "Color Management"
 msgstr "色彩管理"
 
-#: app/dialogs/preferences-dialog.c:1367
+#: app/dialogs/preferences-dialog.c:1368
 msgid "R_eset Color Management"
 msgstr "重置色彩管理(_E)"
 
-#: app/dialogs/preferences-dialog.c:1390
+#: app/dialogs/preferences-dialog.c:1391
 msgid "Image display _mode:"
 msgstr "图像显示模式(_M)："
 
 #. Color Managed Display
-#: app/dialogs/preferences-dialog.c:1394
+#: app/dialogs/preferences-dialog.c:1395
 msgid "Color Managed Display"
 msgstr "启用色彩管理"
 
-#: app/dialogs/preferences-dialog.c:1403
+#: app/dialogs/preferences-dialog.c:1404
 msgid "Select Monitor Color Profile"
 msgstr "选择显示器特性文件"
 
-#: app/dialogs/preferences-dialog.c:1404
+#: app/dialogs/preferences-dialog.c:1405
 msgid "_Monitor profile:"
 msgstr "显示器特性文件(_M)："
 
-#: app/dialogs/preferences-dialog.c:1410
+#: app/dialogs/preferences-dialog.c:1411
 msgid "_Try to use the system monitor profile"
 msgstr "尝试使用系统显示器特性文件(_T)"
 
-#: app/dialogs/preferences-dialog.c:1417
+#: app/dialogs/preferences-dialog.c:1418
 msgid "_Rendering intent:"
 msgstr "再现意图(_R)："
 
-#: app/dialogs/preferences-dialog.c:1422
+#: app/dialogs/preferences-dialog.c:1423
 msgid "Use _black point compensation"
 msgstr "使用黑点补偿(_B)"
 
-#: app/dialogs/preferences-dialog.c:1428 app/dialogs/preferences-dialog.c:1443
+#: app/dialogs/preferences-dialog.c:1429 app/dialogs/preferences-dialog.c:1444
 #: app/display/gimpstatusbar.c:577 app/paint/gimpinkoptions.c:94
 msgid "Speed"
 msgstr "速度"
 
-#: app/dialogs/preferences-dialog.c:1429 app/dialogs/preferences-dialog.c:1444
+#: app/dialogs/preferences-dialog.c:1430 app/dialogs/preferences-dialog.c:1445
 #: app/display/gimpstatusbar.c:578
 msgid "Precision / Color Fidelity"
 msgstr "精度/颜色保真度"
 
-#: app/dialogs/preferences-dialog.c:1430
+#: app/dialogs/preferences-dialog.c:1431
 msgid "_Optimize image display for:"
 msgstr "优化图像显示(_O)："
 
 #. Print Simulation (Soft-proofing)
-#: app/dialogs/preferences-dialog.c:1434 app/display/gimpstatusbar.c:489
+#: app/dialogs/preferences-dialog.c:1435 app/display/gimpstatusbar.c:489
 msgid "Soft-Proofing"
 msgstr "启用软打样"
 
-#: app/dialogs/preferences-dialog.c:1445
+#: app/dialogs/preferences-dialog.c:1446
 msgid "O_ptimize soft-proofing for:"
 msgstr "优化软打样(_P)："
 
-#: app/dialogs/preferences-dialog.c:1454
+#: app/dialogs/preferences-dialog.c:1455
 msgid "Mar_k out of gamut colors"
 msgstr "显示超色域警告(_K)"
 
-#: app/dialogs/preferences-dialog.c:1458
+#: app/dialogs/preferences-dialog.c:1459
 msgid "Select Warning Color"
 msgstr "选择警告颜色"
 
 #. Preferred profiles
-#: app/dialogs/preferences-dialog.c:1468
+#: app/dialogs/preferences-dialog.c:1469
 msgid "Preferred Profiles"
 msgstr "首选特性文件"
 
-#: app/dialogs/preferences-dialog.c:1477
+#: app/dialogs/preferences-dialog.c:1478
 msgid "Select Preferred RGB Color Profile"
 msgstr "选择首选的 RGB 特性文件"
 
-#: app/dialogs/preferences-dialog.c:1478
+#: app/dialogs/preferences-dialog.c:1479
 msgid "_RGB profile:"
 msgstr "_RGB 特性文件："
 
-#: app/dialogs/preferences-dialog.c:1485
+#: app/dialogs/preferences-dialog.c:1486
 msgid "Select Preferred Grayscale Color Profile"
 msgstr "选择首选的灰度特性文件"
 
-#: app/dialogs/preferences-dialog.c:1486
+#: app/dialogs/preferences-dialog.c:1487
 msgid "_Grayscale profile:"
 msgstr "灰度特性文件(_G)："
 
-#: app/dialogs/preferences-dialog.c:1493
+#: app/dialogs/preferences-dialog.c:1494
 msgid "Select CMYK Color Profile"
 msgstr "选择 CMYK 特性文件"
 
-#: app/dialogs/preferences-dialog.c:1494
+#: app/dialogs/preferences-dialog.c:1495
 msgid "_CMYK profile:"
 msgstr "_CMYK 特性文件："
 
 #. Policies
-#: app/dialogs/preferences-dialog.c:1499
+#: app/dialogs/preferences-dialog.c:1500
 msgid "Policies"
 msgstr "方案"
 
-#: app/dialogs/preferences-dialog.c:1504
+#: app/dialogs/preferences-dialog.c:1505
 msgid "_File Open behavior:"
 msgstr "文件打开行为(_F)："
 
-#: app/dialogs/preferences-dialog.c:1518 app/dialogs/preferences-dialog.c:1519
+#: app/dialogs/preferences-dialog.c:1519 app/dialogs/preferences-dialog.c:1520
 msgid "Image Import & Export"
 msgstr "图像导入和导出"
 
 #. Import Policies
-#: app/dialogs/preferences-dialog.c:1529
+#: app/dialogs/preferences-dialog.c:1530
 msgid "Import Policies"
 msgstr "导入方案"
 
-#: app/dialogs/preferences-dialog.c:1533
+#: app/dialogs/preferences-dialog.c:1534
 msgid "Promote imported images to _floating point precision"
 msgstr "将导入的图像提升为浮点精度(_F)"
 
-#: app/dialogs/preferences-dialog.c:1542
+#: app/dialogs/preferences-dialog.c:1543
 msgid "_Dither images when promoting to floating point"
 msgstr "提升为浮点时对图像抖动(_D)"
 
-#: app/dialogs/preferences-dialog.c:1547
+#: app/dialogs/preferences-dialog.c:1548
 msgid "_Add an alpha channel to imported images"
 msgstr "为导入的图像添加一个透明通道(_A)"
 
-#: app/dialogs/preferences-dialog.c:1552
+#: app/dialogs/preferences-dialog.c:1553
 msgid "Color _profile policy:"
 msgstr "特性文件方案(_P)："
 
-#: app/dialogs/preferences-dialog.c:1555
+#: app/dialogs/preferences-dialog.c:1556
 msgid "Metadata _rotation policy:"
 msgstr "元数据旋转方案(_R)："
 
 #. Export Policies
-#: app/dialogs/preferences-dialog.c:1559
+#: app/dialogs/preferences-dialog.c:1560
 msgid "Export Policies"
 msgstr "导出方案"
 
-#: app/dialogs/preferences-dialog.c:1563
+#: app/dialogs/preferences-dialog.c:1564
 msgid "Export the i_mage's color profile by default"
 msgstr "默认导出图像的特性文件(_M)"
 
-#: app/dialogs/preferences-dialog.c:1566
+#: app/dialogs/preferences-dialog.c:1567
 msgid "Export the image's comment by default"
 msgstr "默认导出图像的注释"
 
@@ -16425,7 +16436,7 @@ msgstr "默认导出图像的注释"
 #. * It determines how file export
 #. * plug-ins handle Exif by default.
 #.
-#: app/dialogs/preferences-dialog.c:1577
+#: app/dialogs/preferences-dialog.c:1578
 msgid "Export _Exif metadata by default when available"
 msgstr "当可用时默认导出 Exif 元数据(_E)"
 
@@ -16434,7 +16445,7 @@ msgstr "当可用时默认导出 Exif 元数据(_E)"
 #. * It determines how file export
 #. * plug-ins handle XMP by default.
 #.
-#: app/dialogs/preferences-dialog.c:1585
+#: app/dialogs/preferences-dialog.c:1586
 msgid "Export _XMP metadata by default when available"
 msgstr "当可用时默认导出 XMP 元数据(_X)"
 
@@ -16443,37 +16454,37 @@ msgstr "当可用时默认导出 XMP 元数据(_X)"
 #. * It determines how file export
 #. * plug-ins handle IPTC by default.
 #.
-#: app/dialogs/preferences-dialog.c:1593
+#: app/dialogs/preferences-dialog.c:1594
 msgid "Export _IPTC metadata by default when available"
 msgstr "当可用时默认导出 IPTC 元数据(_I)"
 
-#: app/dialogs/preferences-dialog.c:1596
+#: app/dialogs/preferences-dialog.c:1597
 msgid "Metadata can contain sensitive information."
 msgstr "元数据可能包含敏感信息。"
 
 #. Export File Type
-#: app/dialogs/preferences-dialog.c:1600
+#: app/dialogs/preferences-dialog.c:1601
 msgid "Export File Type"
 msgstr "导出文件类型"
 
-#: app/dialogs/preferences-dialog.c:1604
+#: app/dialogs/preferences-dialog.c:1605
 msgid "Default export file t_ype:"
 msgstr "默认导出文件类型(_Y)："
 
 #. Raw Image Importer
-#: app/dialogs/preferences-dialog.c:1608
+#: app/dialogs/preferences-dialog.c:1609
 msgid "Raw Image Importer"
 msgstr "Raw 图像导入"
 
-#: app/dialogs/preferences-dialog.c:1644
+#: app/dialogs/preferences-dialog.c:1645
 msgid "Experimental Playground"
 msgstr "实验性特性试验场"
 
-#: app/dialogs/preferences-dialog.c:1645
+#: app/dialogs/preferences-dialog.c:1646
 msgid "Playground"
 msgstr "试验场"
 
-#: app/dialogs/preferences-dialog.c:1652
+#: app/dialogs/preferences-dialog.c:1653
 msgid ""
 "These features are unfinished, buggy and may crash GIMP. It is unadvised to "
 "use them unless you really know what you are doing or you intend to "
@@ -16483,38 +16494,38 @@ msgstr ""
 "否则不建议使用。"
 
 #. Hardware Acceleration
-#: app/dialogs/preferences-dialog.c:1662
+#: app/dialogs/preferences-dialog.c:1663
 msgid "Hardware Acceleration"
 msgstr "硬件加速"
 
-#: app/dialogs/preferences-dialog.c:1666
+#: app/dialogs/preferences-dialog.c:1667
 msgid ""
 "OpenCL drivers and support are experimental, expect slowdowns and possible "
 "crashes (please report)."
 msgstr "OpenCL 驱动和支持是体验性的，可能出现运行速度减慢和崩溃（请报告）。"
 
-#: app/dialogs/preferences-dialog.c:1672
+#: app/dialogs/preferences-dialog.c:1673
 msgid "Use O_penCL"
 msgstr "使用 OpenCL(_P)"
 
 #. Very unstable tools
-#: app/dialogs/preferences-dialog.c:1677
+#: app/dialogs/preferences-dialog.c:1678
 msgid "Experimental"
 msgstr "试验"
 
-#: app/dialogs/preferences-dialog.c:1681
+#: app/dialogs/preferences-dialog.c:1682
 msgid "_N-Point Deformation tool"
 msgstr "N 点变换工具(_N)"
 
-#: app/dialogs/preferences-dialog.c:1684
+#: app/dialogs/preferences-dialog.c:1685
 msgid "_Seamless Clone tool"
 msgstr "无缝克隆工具(_S)"
 
-#: app/dialogs/preferences-dialog.c:1687
+#: app/dialogs/preferences-dialog.c:1688
 msgid "_Paint Select tool"
 msgstr "绘制选择工具(_P)"
 
-#: app/dialogs/preferences-dialog.c:1709 app/dialogs/preferences-dialog.c:1710
+#: app/dialogs/preferences-dialog.c:1710 app/dialogs/preferences-dialog.c:1711
 msgctxt "preferences"
 msgid "Tool Options"
 msgstr "工具选项"
@@ -16523,568 +16534,568 @@ msgstr "工具选项"
 #. Snapping Distance
 #. General
 #. general device information
-#: app/dialogs/preferences-dialog.c:1719 app/dialogs/preferences-dialog.c:2648
-#: app/dialogs/preferences-dialog.c:3086 app/dialogs/preferences-dialog.c:3110
+#: app/dialogs/preferences-dialog.c:1720 app/dialogs/preferences-dialog.c:2649
+#: app/dialogs/preferences-dialog.c:3087 app/dialogs/preferences-dialog.c:3111
 #: app/widgets/gimpcontrollereditor.c:190
 #: app/widgets/gimpdeviceinfoeditor.c:362
 msgid "General"
 msgstr "常规"
 
-#: app/dialogs/preferences-dialog.c:1722
+#: app/dialogs/preferences-dialog.c:1723
 msgid "Allow _editing on non-visible layers"
 msgstr "允许在不可见图层上编辑(_E)"
 
-#: app/dialogs/preferences-dialog.c:1726
+#: app/dialogs/preferences-dialog.c:1727
 msgid "_Save tool options on exit"
 msgstr "退出时保存工具选项(_S)"
 
-#: app/dialogs/preferences-dialog.c:1730
+#: app/dialogs/preferences-dialog.c:1731
 msgid "Save Tool Options _Now"
 msgstr "立即保存工具选项(_N)"
 
-#: app/dialogs/preferences-dialog.c:1737
+#: app/dialogs/preferences-dialog.c:1738
 msgid "_Reset Saved Tool Options to Default Values"
 msgstr "将工具选项重置为默认值(_R)"
 
-#: app/dialogs/preferences-dialog.c:1751
+#: app/dialogs/preferences-dialog.c:1752
 msgid "Default _interpolation:"
 msgstr "默认插值(_I)："
 
 #. Global Brush, Pattern, ...
-#: app/dialogs/preferences-dialog.c:1759
+#: app/dialogs/preferences-dialog.c:1760
 msgid "Paint Options Shared Between Tools"
 msgstr "工具之间共享的绘画选项"
 
-#: app/dialogs/preferences-dialog.c:1763
+#: app/dialogs/preferences-dialog.c:1764
 msgid "_Brush"
 msgstr "笔刷(_B)"
 
-#: app/dialogs/preferences-dialog.c:1766
+#: app/dialogs/preferences-dialog.c:1767
 msgid "_Dynamics"
 msgstr "动态(_D)"
 
-#: app/dialogs/preferences-dialog.c:1769
+#: app/dialogs/preferences-dialog.c:1770
 msgid "_Pattern"
 msgstr "图案(_P)"
 
-#: app/dialogs/preferences-dialog.c:1775
+#: app/dialogs/preferences-dialog.c:1776
 msgid "E_xpand Layers"
 msgstr "扩展图层(_X)"
 
 #. Move Tool
-#: app/dialogs/preferences-dialog.c:1779
+#: app/dialogs/preferences-dialog.c:1780
 msgid "Move Tool"
 msgstr "移动工具"
 
-#: app/dialogs/preferences-dialog.c:1783
+#: app/dialogs/preferences-dialog.c:1784
 msgid "Set _layer or path as active"
 msgstr "将图层或路径设为活动的(_L)"
 
-#: app/dialogs/preferences-dialog.c:1795
+#: app/dialogs/preferences-dialog.c:1796
 msgid "Default New Image"
 msgstr "默认新图像"
 
-#: app/dialogs/preferences-dialog.c:1796
+#: app/dialogs/preferences-dialog.c:1797
 msgid "Default Image"
 msgstr "默认图像"
 
-#: app/dialogs/preferences-dialog.c:1833
+#: app/dialogs/preferences-dialog.c:1834
 msgid "Quick Mask color:"
 msgstr "快速蒙版颜色："
 
-#: app/dialogs/preferences-dialog.c:1834
+#: app/dialogs/preferences-dialog.c:1835
 msgid "Set the default Quick Mask color"
 msgstr "设置默认的快速蒙版颜色"
 
-#: app/dialogs/preferences-dialog.c:1844
+#: app/dialogs/preferences-dialog.c:1845
 msgid "Default Image Grid"
 msgstr "默认图像网格"
 
-#: app/dialogs/preferences-dialog.c:1845
+#: app/dialogs/preferences-dialog.c:1846
 msgid "Default Grid"
 msgstr "默认网格"
 
-#: app/dialogs/preferences-dialog.c:1865
+#: app/dialogs/preferences-dialog.c:1866
 msgid "User Interface"
 msgstr "用户界面"
 
-#: app/dialogs/preferences-dialog.c:1866
+#: app/dialogs/preferences-dialog.c:1867
 msgid "Interface"
 msgstr "界面"
 
-#: app/dialogs/preferences-dialog.c:1876 app/tools/gimptextoptions.c:195
+#: app/dialogs/preferences-dialog.c:1877 app/tools/gimptextoptions.c:195
 msgid "Language"
 msgstr "语言"
 
 #. Previews
-#: app/dialogs/preferences-dialog.c:1882
+#: app/dialogs/preferences-dialog.c:1883
 msgid "Previews"
 msgstr "预览"
 
-#: app/dialogs/preferences-dialog.c:1885
+#: app/dialogs/preferences-dialog.c:1886
 msgid "_Enable layer & channel previews"
 msgstr "启用图层和通道预览(_E)"
 
-#: app/dialogs/preferences-dialog.c:1893
+#: app/dialogs/preferences-dialog.c:1894
 msgid "Enable layer _group previews"
 msgstr "启用图层组预览(_G)"
 
-#: app/dialogs/preferences-dialog.c:1899
+#: app/dialogs/preferences-dialog.c:1900
 msgid "_Default layer & channel preview size:"
 msgstr "默认图层和通道预览大小(_D)："
 
-#: app/dialogs/preferences-dialog.c:1902
+#: app/dialogs/preferences-dialog.c:1903
 msgid "_Undo preview size:"
 msgstr "撤销预览大小(_U)："
 
-#: app/dialogs/preferences-dialog.c:1905
+#: app/dialogs/preferences-dialog.c:1906
 msgid "Na_vigation preview size:"
 msgstr "导航预览大小(_V)："
 
 #. Item
-#: app/dialogs/preferences-dialog.c:1909
+#: app/dialogs/preferences-dialog.c:1910
 msgid "Item search"
 msgstr "项目搜索"
 
 #. Keyboard Shortcuts
-#: app/dialogs/preferences-dialog.c:1916
+#: app/dialogs/preferences-dialog.c:1917
 msgid "Keyboard Shortcuts"
 msgstr "快捷键"
 
-#: app/dialogs/preferences-dialog.c:1920
+#: app/dialogs/preferences-dialog.c:1921
 msgid "Configure _Keyboard Shortcuts..."
 msgstr "配置快捷键(_K)…"
 
-#: app/dialogs/preferences-dialog.c:1927
+#: app/dialogs/preferences-dialog.c:1928
 msgid "_Save keyboard shortcuts on exit"
 msgstr "退出时保存快捷键(_S)"
 
-#: app/dialogs/preferences-dialog.c:1931
+#: app/dialogs/preferences-dialog.c:1932
 msgid "Save Keyboard Shortcuts _Now"
 msgstr "立即保存快捷键(_N)"
 
-#: app/dialogs/preferences-dialog.c:1938
+#: app/dialogs/preferences-dialog.c:1939
 msgid "_Reset Keyboard Shortcuts to Default Values"
 msgstr "重置快捷键为默认值(_R)"
 
-#: app/dialogs/preferences-dialog.c:1947
+#: app/dialogs/preferences-dialog.c:1948
 msgid "Remove _All Keyboard Shortcuts"
 msgstr "删除所有快捷键(_A)"
 
 #. Themes
-#: app/dialogs/preferences-dialog.c:1959 app/dialogs/preferences-dialog.c:1960
+#: app/dialogs/preferences-dialog.c:1960 app/dialogs/preferences-dialog.c:1961
 #: app/dialogs/welcome-dialog.c:546
 msgid "Theme"
 msgstr "主题"
 
-#: app/dialogs/preferences-dialog.c:1965
+#: app/dialogs/preferences-dialog.c:1966
 msgid "Select Theme"
 msgstr "选择主题"
 
-#: app/dialogs/preferences-dialog.c:2051
+#: app/dialogs/preferences-dialog.c:2052
 msgid "Color scheme variant (if available)"
 msgstr "颜色方案变种（如果可用）"
 
-#: app/dialogs/preferences-dialog.c:2056 app/dialogs/welcome-dialog.c:603
+#: app/dialogs/preferences-dialog.c:2057 app/dialogs/welcome-dialog.c:603
 msgid "_Override icon sizes set by the theme"
 msgstr "覆盖由主题设置的图标大小(_O)"
 
-#: app/dialogs/preferences-dialog.c:2069 app/dialogs/welcome-dialog.c:612
+#: app/dialogs/preferences-dialog.c:2070 app/dialogs/welcome-dialog.c:612
 msgid "Small"
 msgstr "小"
 
-#: app/dialogs/preferences-dialog.c:2071 app/dialogs/welcome-dialog.c:614
+#: app/dialogs/preferences-dialog.c:2072 app/dialogs/welcome-dialog.c:614
 msgid "Medium"
 msgstr "中"
 
-#: app/dialogs/preferences-dialog.c:2073 app/dialogs/welcome-dialog.c:616
+#: app/dialogs/preferences-dialog.c:2074 app/dialogs/welcome-dialog.c:616
 msgid "Large"
 msgstr "大"
 
-#: app/dialogs/preferences-dialog.c:2075 app/dialogs/welcome-dialog.c:618
+#: app/dialogs/preferences-dialog.c:2076 app/dialogs/welcome-dialog.c:618
 msgid "Huge"
 msgstr "庞大"
 
 #. Font sizes.
-#: app/dialogs/preferences-dialog.c:2088 app/dialogs/welcome-dialog.c:634
+#: app/dialogs/preferences-dialog.c:2089 app/dialogs/welcome-dialog.c:634
 msgid "Font Scaling"
 msgstr "字体缩放"
 
-#: app/dialogs/preferences-dialog.c:2090 app/dialogs/welcome-dialog.c:636
+#: app/dialogs/preferences-dialog.c:2091 app/dialogs/welcome-dialog.c:636
 msgid "Font scaling will not work with themes using absolute sizes."
 msgstr "字体缩放无法与使用绝对大小的主题同时生效。"
 
-#: app/dialogs/preferences-dialog.c:2096 app/dialogs/welcome-dialog.c:642
+#: app/dialogs/preferences-dialog.c:2097 app/dialogs/welcome-dialog.c:642
 msgid "50%"
 msgstr "50%"
 
-#: app/dialogs/preferences-dialog.c:2098 app/dialogs/welcome-dialog.c:644
+#: app/dialogs/preferences-dialog.c:2099 app/dialogs/welcome-dialog.c:644
 msgid "100%"
 msgstr "100%"
 
-#: app/dialogs/preferences-dialog.c:2100 app/dialogs/welcome-dialog.c:646
+#: app/dialogs/preferences-dialog.c:2101 app/dialogs/welcome-dialog.c:646
 msgid "200%"
 msgstr "200%"
 
-#: app/dialogs/preferences-dialog.c:2118
+#: app/dialogs/preferences-dialog.c:2119
 msgid "Reload C_urrent Theme"
 msgstr "重新加载当前主题(_U)"
 
-#: app/dialogs/preferences-dialog.c:2130 app/dialogs/preferences-dialog.c:2131
+#: app/dialogs/preferences-dialog.c:2131 app/dialogs/preferences-dialog.c:2132
 msgid "Icon Theme"
 msgstr "图标主题"
 
-#: app/dialogs/preferences-dialog.c:2136
+#: app/dialogs/preferences-dialog.c:2137
 msgid "Select an Icon Theme"
 msgstr "选择图标主题"
 
-#: app/dialogs/preferences-dialog.c:2252 app/dialogs/welcome-dialog.c:596
+#: app/dialogs/preferences-dialog.c:2253 app/dialogs/welcome-dialog.c:596
 msgid "Use symbolic icons if available"
 msgstr "如果可用则使用符号图标"
 
-#: app/dialogs/preferences-dialog.c:2262 app/dialogs/preferences-dialog.c:2263
+#: app/dialogs/preferences-dialog.c:2263 app/dialogs/preferences-dialog.c:2264
 #: app/widgets/gimptoolbox.c:540
 msgid "Toolbox"
 msgstr "工具箱"
 
 #. Appearance
-#: app/dialogs/preferences-dialog.c:2271 app/dialogs/preferences-dialog.c:3169
+#: app/dialogs/preferences-dialog.c:2272 app/dialogs/preferences-dialog.c:3170
 #: app/widgets/gimpgrideditor.c:133
 msgid "Appearance"
 msgstr "外观"
 
-#: app/dialogs/preferences-dialog.c:2275
+#: app/dialogs/preferences-dialog.c:2276
 msgid "Show GIMP _logo (drag-and-drop target)"
 msgstr "显示 GIMP 标志（拖放目标）"
 
-#: app/dialogs/preferences-dialog.c:2279
+#: app/dialogs/preferences-dialog.c:2280
 msgid "Show _foreground & background color"
 msgstr "显示前景色和背景色(_F)"
 
-#: app/dialogs/preferences-dialog.c:2283
+#: app/dialogs/preferences-dialog.c:2284
 msgid "Show active _brush, pattern & gradient"
 msgstr "显示活动笔刷、图案和渐变(_B)"
 
-#: app/dialogs/preferences-dialog.c:2287
+#: app/dialogs/preferences-dialog.c:2288
 msgid "Show active _image"
 msgstr "显示活动图像(_I)"
 
-#: app/dialogs/preferences-dialog.c:2296 app/dialogs/welcome-dialog.c:682
+#: app/dialogs/preferences-dialog.c:2297 app/dialogs/welcome-dialog.c:682
 msgid "Use tool _groups"
 msgstr "使用工具组(_G)"
 
 #. Tool Editor
-#: app/dialogs/preferences-dialog.c:2303
+#: app/dialogs/preferences-dialog.c:2304
 msgid "Tools Configuration"
 msgstr "工具配置"
 
-#: app/dialogs/preferences-dialog.c:2318 app/dialogs/preferences-dialog.c:2319
+#: app/dialogs/preferences-dialog.c:2319 app/dialogs/preferences-dialog.c:2320
 msgid "Dialog Defaults"
 msgstr "对话框默认值"
 
-#: app/dialogs/preferences-dialog.c:2328
+#: app/dialogs/preferences-dialog.c:2329
 msgid "Reset Dialog _Defaults"
 msgstr "重置对话框默认值(_D)"
 
 #. Color profile import dialog
-#: app/dialogs/preferences-dialog.c:2336
+#: app/dialogs/preferences-dialog.c:2337
 msgid "Color Profile Import Dialog"
 msgstr "特性文件导入对话框"
 
-#: app/dialogs/preferences-dialog.c:2341
+#: app/dialogs/preferences-dialog.c:2342
 msgid "Color profile policy:"
 msgstr "特性文件方案："
 
 #. All color profile chooser dialogs
-#: app/dialogs/preferences-dialog.c:2345
+#: app/dialogs/preferences-dialog.c:2346
 msgid "Color Profile File Dialogs"
 msgstr "特性文件对话框"
 
-#: app/dialogs/preferences-dialog.c:2350
+#: app/dialogs/preferences-dialog.c:2351
 msgid "Profile folder:"
 msgstr "特性文件文件夹："
 
-#: app/dialogs/preferences-dialog.c:2351
+#: app/dialogs/preferences-dialog.c:2352
 msgid "Select Default Folder for Color Profiles"
 msgstr "为特性文件选择默认文件夹"
 
 #. Convert to Color Profile Dialog
-#: app/dialogs/preferences-dialog.c:2355
+#: app/dialogs/preferences-dialog.c:2356
 msgid "Convert to Color Profile Dialog"
 msgstr "转换到特性文件对话框"
 
-#: app/dialogs/preferences-dialog.c:2360
+#: app/dialogs/preferences-dialog.c:2361
 msgid "Rendering intent:"
 msgstr "再现意图："
 
-#: app/dialogs/preferences-dialog.c:2364
+#: app/dialogs/preferences-dialog.c:2365
 msgid "Black point compensation"
 msgstr "黑点补偿"
 
 #. Convert Precision Dialog
-#: app/dialogs/preferences-dialog.c:2368
+#: app/dialogs/preferences-dialog.c:2369
 msgid "Precision Conversion Dialog"
 msgstr "精度转换对话框"
 
-#: app/dialogs/preferences-dialog.c:2375
+#: app/dialogs/preferences-dialog.c:2376
 msgid "Dither layers:"
 msgstr "抖动图层："
 
-#: app/dialogs/preferences-dialog.c:2380
+#: app/dialogs/preferences-dialog.c:2381
 msgid "Dither text layers:"
 msgstr "抖动文字图层："
 
-#: app/dialogs/preferences-dialog.c:2385
+#: app/dialogs/preferences-dialog.c:2386
 msgid "Dither channels/masks:"
 msgstr "抖动通道/蒙版："
 
 #. Convert Indexed Dialog
-#: app/dialogs/preferences-dialog.c:2389
+#: app/dialogs/preferences-dialog.c:2390
 msgid "Indexed Conversion Dialog"
 msgstr "索引转换对话框"
 
-#: app/dialogs/preferences-dialog.c:2394
+#: app/dialogs/preferences-dialog.c:2395
 msgid "Colormap:"
 msgstr "颜色表："
 
-#: app/dialogs/preferences-dialog.c:2397
+#: app/dialogs/preferences-dialog.c:2398
 msgid "Maximum number of colors:"
 msgstr "最大颜色数量："
 
-#: app/dialogs/preferences-dialog.c:2401
+#: app/dialogs/preferences-dialog.c:2402
 msgid "Remove unused and duplicate colors from colormap"
 msgstr "从颜色表中移除无用和重复的颜色"
 
-#: app/dialogs/preferences-dialog.c:2407
+#: app/dialogs/preferences-dialog.c:2408
 msgid "Color dithering:"
 msgstr "颜色抖动："
 
-#: app/dialogs/preferences-dialog.c:2411
+#: app/dialogs/preferences-dialog.c:2412
 msgid "Enable dithering of transparency"
 msgstr "启用透明抖动"
 
-#: app/dialogs/preferences-dialog.c:2414
+#: app/dialogs/preferences-dialog.c:2415
 msgid "Enable dithering of text layers"
 msgstr "启用对文字图层的抖动"
 
 #. Filter Dialogs
-#: app/dialogs/preferences-dialog.c:2418
+#: app/dialogs/preferences-dialog.c:2419
 msgid "Filter Dialogs"
 msgstr "滤镜对话框"
 
-#: app/dialogs/preferences-dialog.c:2423
+#: app/dialogs/preferences-dialog.c:2424
 msgid "Keep recent settings:"
 msgstr "保留最近设置："
 
-#: app/dialogs/preferences-dialog.c:2427
+#: app/dialogs/preferences-dialog.c:2428
 msgid "Default to the last used settings"
 msgstr "默认为上次使用的设置"
 
 #. Canvas Size Dialog
-#: app/dialogs/preferences-dialog.c:2431
+#: app/dialogs/preferences-dialog.c:2432
 msgid "Canvas Size Dialog"
 msgstr "画布大小对话框"
 
-#: app/dialogs/preferences-dialog.c:2436 app/dialogs/preferences-dialog.c:2465
+#: app/dialogs/preferences-dialog.c:2437 app/dialogs/preferences-dialog.c:2466
 msgid "Fill with:"
 msgstr "填充："
 
-#: app/dialogs/preferences-dialog.c:2439
+#: app/dialogs/preferences-dialog.c:2440
 msgid "Resize layers:"
 msgstr "改变图层大小："
 
-#: app/dialogs/preferences-dialog.c:2443
+#: app/dialogs/preferences-dialog.c:2444
 msgid "Resize text layers"
 msgstr "改变文字图层大小"
 
 #. New Layer Dialog
-#: app/dialogs/preferences-dialog.c:2447
+#: app/dialogs/preferences-dialog.c:2448
 msgid "New Layer Dialog"
 msgstr "新建图层对话框"
 
-#: app/dialogs/preferences-dialog.c:2452
+#: app/dialogs/preferences-dialog.c:2453
 msgid "Layer name:"
 msgstr "图层名字："
 
-#: app/dialogs/preferences-dialog.c:2456
+#: app/dialogs/preferences-dialog.c:2457
 msgid "Fill type:"
 msgstr "填充类型："
 
 #. Layer Boundary Size Dialog
-#: app/dialogs/preferences-dialog.c:2460
+#: app/dialogs/preferences-dialog.c:2461
 msgid "Layer Boundary Size Dialog"
 msgstr "图层边界大小对话框"
 
 #. Add Layer Mask Dialog
-#: app/dialogs/preferences-dialog.c:2469
+#: app/dialogs/preferences-dialog.c:2470
 msgid "Add Layer Mask Dialog"
 msgstr "添加图层蒙版对话框"
 
-#: app/dialogs/preferences-dialog.c:2474
+#: app/dialogs/preferences-dialog.c:2475
 msgid "Layer mask type:"
 msgstr "图层蒙版类型："
 
-#: app/dialogs/preferences-dialog.c:2478
+#: app/dialogs/preferences-dialog.c:2479
 msgid "Invert mask"
 msgstr "反转蒙版"
 
 #. Merge Layers Dialog
-#: app/dialogs/preferences-dialog.c:2482
+#: app/dialogs/preferences-dialog.c:2483
 msgid "Merge Layers Dialog"
 msgstr "合并图层对话框"
 
-#: app/dialogs/preferences-dialog.c:2489
+#: app/dialogs/preferences-dialog.c:2490
 msgid "Merged layer size:"
 msgstr "合并图层大小："
 
-#: app/dialogs/preferences-dialog.c:2493
+#: app/dialogs/preferences-dialog.c:2494
 msgid "Merge within active groups only"
 msgstr "仅合并活动组内"
 
-#: app/dialogs/preferences-dialog.c:2496
+#: app/dialogs/preferences-dialog.c:2497
 msgid "Discard invisible layers"
 msgstr "丢弃不可见图层"
 
 #. New Channel Dialog
-#: app/dialogs/preferences-dialog.c:2500
+#: app/dialogs/preferences-dialog.c:2501
 msgid "New Channel Dialog"
 msgstr "新建通道对话框"
 
-#: app/dialogs/preferences-dialog.c:2505
+#: app/dialogs/preferences-dialog.c:2506
 msgid "Channel name:"
 msgstr "通道名字："
 
-#: app/dialogs/preferences-dialog.c:2509
+#: app/dialogs/preferences-dialog.c:2510
 msgid "Color and opacity:"
 msgstr "颜色和不透明度："
 
-#: app/dialogs/preferences-dialog.c:2510
+#: app/dialogs/preferences-dialog.c:2511
 msgid "Default New Channel Color and Opacity"
 msgstr "默认的新建通道颜色和不透明度"
 
 #. New Path Dialog
-#: app/dialogs/preferences-dialog.c:2515
+#: app/dialogs/preferences-dialog.c:2516
 msgid "New Path Dialog"
 msgstr "新建路径对话框"
 
-#: app/dialogs/preferences-dialog.c:2520
+#: app/dialogs/preferences-dialog.c:2521
 msgid "Path name:"
 msgstr "路径名字："
 
 #. Export Path Dialog
-#: app/dialogs/preferences-dialog.c:2524
+#: app/dialogs/preferences-dialog.c:2525
 msgid "Export Paths Dialog"
 msgstr "导出路径对话框"
 
-#: app/dialogs/preferences-dialog.c:2529
+#: app/dialogs/preferences-dialog.c:2530
 msgid "Export folder:"
 msgstr "导出文件夹："
 
-#: app/dialogs/preferences-dialog.c:2530
+#: app/dialogs/preferences-dialog.c:2531
 msgid "Select Default Folder for Exporting Paths"
 msgstr "为导出路径选择默认文件夹"
 
-#: app/dialogs/preferences-dialog.c:2534
+#: app/dialogs/preferences-dialog.c:2535
 msgid "Export the selected paths only"
 msgstr "仅导出选中路径"
 
 #. Import Path Dialog
-#: app/dialogs/preferences-dialog.c:2538
+#: app/dialogs/preferences-dialog.c:2539
 msgid "Import Paths Dialog"
 msgstr "导入路径对话框"
 
-#: app/dialogs/preferences-dialog.c:2543
+#: app/dialogs/preferences-dialog.c:2544
 msgid "Import folder:"
 msgstr "导入文件夹："
 
-#: app/dialogs/preferences-dialog.c:2544
+#: app/dialogs/preferences-dialog.c:2545
 msgid "Select Default Folder for Importing Paths"
 msgstr "为导入路径选择默认文件夹"
 
-#: app/dialogs/preferences-dialog.c:2548
+#: app/dialogs/preferences-dialog.c:2549
 msgid "Merge imported paths"
 msgstr "合并导入的路径"
 
-#: app/dialogs/preferences-dialog.c:2551
+#: app/dialogs/preferences-dialog.c:2552
 msgid "Scale imported paths"
 msgstr "缩放导入的路径"
 
 #. Feather Selection Dialog
-#: app/dialogs/preferences-dialog.c:2555
+#: app/dialogs/preferences-dialog.c:2556
 msgid "Feather Selection Dialog"
 msgstr "羽化选区对话框"
 
-#: app/dialogs/preferences-dialog.c:2560
+#: app/dialogs/preferences-dialog.c:2561
 msgid "Feather radius:"
 msgstr "羽化半径："
 
-#: app/dialogs/preferences-dialog.c:2564 app/dialogs/preferences-dialog.c:2586
-#: app/dialogs/preferences-dialog.c:2603
+#: app/dialogs/preferences-dialog.c:2565 app/dialogs/preferences-dialog.c:2587
+#: app/dialogs/preferences-dialog.c:2604
 msgid "Selected areas continue outside the image"
 msgstr "选中区域超出图像"
 
 #. Grow Selection Dialog
-#: app/dialogs/preferences-dialog.c:2568
+#: app/dialogs/preferences-dialog.c:2569
 msgid "Grow Selection Dialog"
 msgstr "增大选区对话框"
 
-#: app/dialogs/preferences-dialog.c:2573
+#: app/dialogs/preferences-dialog.c:2574
 msgid "Grow radius:"
 msgstr "增大半径："
 
 #. Shrink Selection Dialog
-#: app/dialogs/preferences-dialog.c:2577
+#: app/dialogs/preferences-dialog.c:2578
 msgid "Shrink Selection Dialog"
 msgstr "收缩选区对话框"
 
-#: app/dialogs/preferences-dialog.c:2582
+#: app/dialogs/preferences-dialog.c:2583
 msgid "Shrink radius:"
 msgstr "收缩半径："
 
 #. Border Selection Dialog
-#: app/dialogs/preferences-dialog.c:2590
+#: app/dialogs/preferences-dialog.c:2591
 msgid "Border Selection Dialog"
 msgstr "加边选区对话框"
 
-#: app/dialogs/preferences-dialog.c:2595
+#: app/dialogs/preferences-dialog.c:2596
 msgid "Border radius:"
 msgstr "加边半径："
 
-#: app/dialogs/preferences-dialog.c:2599
+#: app/dialogs/preferences-dialog.c:2600
 msgid "Border style:"
 msgstr "加边样式："
 
 #. Fill Options Dialog
-#: app/dialogs/preferences-dialog.c:2607
+#: app/dialogs/preferences-dialog.c:2608
 msgid "Fill Selection Outline & Fill Path Dialogs"
 msgstr "填充选区轮廓和填充路径对话框"
 
 #. Stroke Options Dialog
-#: app/dialogs/preferences-dialog.c:2616
+#: app/dialogs/preferences-dialog.c:2617
 msgid "Stroke Selection & Stroke Path Dialogs"
 msgstr "勾画选区和勾画路径对话框"
 
-#: app/dialogs/preferences-dialog.c:2639 app/dialogs/preferences-dialog.c:2640
+#: app/dialogs/preferences-dialog.c:2640 app/dialogs/preferences-dialog.c:2641
 msgid "Help System"
 msgstr "帮助系统"
 
-#: app/dialogs/preferences-dialog.c:2651
+#: app/dialogs/preferences-dialog.c:2652
 msgid "Show help _buttons"
 msgstr "显示帮助按钮(_B)"
 
-#: app/dialogs/preferences-dialog.c:2656
+#: app/dialogs/preferences-dialog.c:2657
 msgid "Use the online version"
 msgstr "使用在线版本"
 
-#: app/dialogs/preferences-dialog.c:2657
+#: app/dialogs/preferences-dialog.c:2658
 msgid "Use a locally installed copy"
 msgstr "使用本地已安装版本"
 
-#: app/dialogs/preferences-dialog.c:2658
+#: app/dialogs/preferences-dialog.c:2659
 msgid "U_ser manual:"
 msgstr "用户手册(_S)："
 
-#: app/dialogs/preferences-dialog.c:2669
+#: app/dialogs/preferences-dialog.c:2670
 msgid "User interface language"
 msgstr "用户界面语言"
 
@@ -17092,201 +17103,201 @@ msgstr "用户界面语言"
 #. *  that doesn't use the help browser, so don't bother showing
 #. *  the combo.
 #.
-#: app/dialogs/preferences-dialog.c:2728
+#: app/dialogs/preferences-dialog.c:2729
 msgid "Help Browser"
 msgstr "帮助浏览器"
 
-#: app/dialogs/preferences-dialog.c:2735
+#: app/dialogs/preferences-dialog.c:2736
 msgid "H_elp browser to use:"
 msgstr "要使用的帮助浏览器(_E)："
 
-#: app/dialogs/preferences-dialog.c:2741
+#: app/dialogs/preferences-dialog.c:2742
 msgid ""
 "The GIMP help browser doesn't seem to be installed. Using the web browser "
 "instead."
 msgstr "未安装 GIMP 帮助浏览器。使用网络浏览器作为替代。"
 
 #. Action Search
-#: app/dialogs/preferences-dialog.c:2758
+#: app/dialogs/preferences-dialog.c:2759
 msgid "Action Search"
 msgstr "动作搜索"
 
-#: app/dialogs/preferences-dialog.c:2762
+#: app/dialogs/preferences-dialog.c:2763
 msgid "_Maximum History Size:"
 msgstr "最大历史记录(_M)："
 
-#: app/dialogs/preferences-dialog.c:2766
+#: app/dialogs/preferences-dialog.c:2767
 msgid "C_lear Action History"
 msgstr "清空动作历史(_L)"
 
-#: app/dialogs/preferences-dialog.c:2780 app/dialogs/preferences-dialog.c:2781
+#: app/dialogs/preferences-dialog.c:2781 app/dialogs/preferences-dialog.c:2782
 msgid "Display"
 msgstr "显示"
 
 #. Transparency
-#: app/dialogs/preferences-dialog.c:2790
+#: app/dialogs/preferences-dialog.c:2791
 msgid "Transparency"
 msgstr "透明"
 
-#: app/dialogs/preferences-dialog.c:2794
+#: app/dialogs/preferences-dialog.c:2795
 msgid "_Check style:"
 msgstr "十字线样式(_C)："
 
-#: app/dialogs/preferences-dialog.c:2828
+#: app/dialogs/preferences-dialog.c:2829
 msgid "Check _size:"
 msgstr "十字线大小(_S)："
 
 #. Zoom Quality
-#: app/dialogs/preferences-dialog.c:2832
+#: app/dialogs/preferences-dialog.c:2833
 msgid "Zoom Quality"
 msgstr "缩放质量"
 
-#: app/dialogs/preferences-dialog.c:2836
+#: app/dialogs/preferences-dialog.c:2837
 msgid "_Zoom quality:"
 msgstr "缩放质量(_Z)："
 
 #. Monitor Resolution
-#: app/dialogs/preferences-dialog.c:2840
+#: app/dialogs/preferences-dialog.c:2841
 msgid "Monitor Resolution"
 msgstr "监视器分辨率"
 
 #. Pixels
-#: app/dialogs/preferences-dialog.c:2844 app/display/gimpcursorview.c:224
+#: app/dialogs/preferences-dialog.c:2845 app/display/gimpcursorview.c:224
 #: app/widgets/gimpgrideditor.c:205 app/widgets/gimpgrideditor.c:240
 msgid "Pixels"
 msgstr "像素"
 
-#: app/dialogs/preferences-dialog.c:2862 app/widgets/gimpgrideditor.c:201
+#: app/dialogs/preferences-dialog.c:2863 app/widgets/gimpgrideditor.c:201
 #: app/widgets/gimpgrideditor.c:236
 msgid "Horizontal"
 msgstr "水平"
 
-#: app/dialogs/preferences-dialog.c:2864 app/widgets/gimpgrideditor.c:203
+#: app/dialogs/preferences-dialog.c:2865 app/widgets/gimpgrideditor.c:203
 #: app/widgets/gimpgrideditor.c:238
 msgid "Vertical"
 msgstr "竖直"
 
-#: app/dialogs/preferences-dialog.c:2866 app/widgets/gimpimagepropview.c:466
+#: app/dialogs/preferences-dialog.c:2867 app/widgets/gimpimagepropview.c:466
 msgid "ppi"
 msgstr "ppi"
 
-#: app/dialogs/preferences-dialog.c:2884
+#: app/dialogs/preferences-dialog.c:2885
 #, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
 msgstr "自动检测（当前为 %d x %d ppi）(_D)"
 
-#: app/dialogs/preferences-dialog.c:2902
+#: app/dialogs/preferences-dialog.c:2903
 msgid "_Enter manually"
 msgstr "手动输入(_E)"
 
-#: app/dialogs/preferences-dialog.c:2917
+#: app/dialogs/preferences-dialog.c:2918
 msgid "C_alibrate..."
 msgstr "校准(_A)…"
 
-#: app/dialogs/preferences-dialog.c:2947 app/dialogs/preferences-dialog.c:2948
+#: app/dialogs/preferences-dialog.c:2948 app/dialogs/preferences-dialog.c:2949
 msgid "Window Management"
 msgstr "窗口管理"
 
-#: app/dialogs/preferences-dialog.c:2953
+#: app/dialogs/preferences-dialog.c:2954
 msgid "Window Manager Hints"
 msgstr "窗口管理器提示"
 
-#: app/dialogs/preferences-dialog.c:2959
+#: app/dialogs/preferences-dialog.c:2960
 msgid "Hint for _docks and toolbox:"
 msgstr "停靠和工具箱的窗口提示(_D)："
 
-#: app/dialogs/preferences-dialog.c:2962
+#: app/dialogs/preferences-dialog.c:2963
 msgid "Focus"
 msgstr "焦点"
 
-#: app/dialogs/preferences-dialog.c:2966
+#: app/dialogs/preferences-dialog.c:2967
 msgid "Activate the _focused image"
 msgstr "激活获得焦点的图像(_F)"
 
 #. Window Positions
-#: app/dialogs/preferences-dialog.c:2970
+#: app/dialogs/preferences-dialog.c:2971
 msgid "Window Positions"
 msgstr "窗口位置"
 
-#: app/dialogs/preferences-dialog.c:2973
+#: app/dialogs/preferences-dialog.c:2974
 msgid "_Save window positions on exit"
 msgstr "退出时保存窗口位置(_S)"
 
-#: app/dialogs/preferences-dialog.c:2976
+#: app/dialogs/preferences-dialog.c:2977
 msgid "Open windows on the same _monitor they were open before"
 msgstr "在之前打开过窗口的显示器上打开窗口(_M)"
 
-#: app/dialogs/preferences-dialog.c:2980
+#: app/dialogs/preferences-dialog.c:2981
 msgid "Save Window Positions _Now"
 msgstr "立即保存窗口位置(_N)"
 
-#: app/dialogs/preferences-dialog.c:2987
+#: app/dialogs/preferences-dialog.c:2988
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "将已保存的窗口位置重置为默认值(_R)"
 
-#: app/dialogs/preferences-dialog.c:3002 app/dialogs/preferences-dialog.c:3003
+#: app/dialogs/preferences-dialog.c:3003 app/dialogs/preferences-dialog.c:3004
 msgid "Canvas Interaction"
 msgstr "画布交互"
 
 #. Space Bar
-#: app/dialogs/preferences-dialog.c:3012
+#: app/dialogs/preferences-dialog.c:3013
 msgid "Space Bar"
 msgstr "空格键"
 
-#: app/dialogs/preferences-dialog.c:3018
+#: app/dialogs/preferences-dialog.c:3019
 msgid "_While space bar is pressed:"
 msgstr "当空格键被按下时(_W)："
 
 #. Zoom by drag Behavior
-#: app/dialogs/preferences-dialog.c:3022 app/tools/gimpmagnifytool.c:93
+#: app/dialogs/preferences-dialog.c:3023 app/tools/gimpmagnifytool.c:93
 msgid "Zoom"
 msgstr "缩放"
 
-#: app/dialogs/preferences-dialog.c:3028
+#: app/dialogs/preferences-dialog.c:3029
 msgid "Dra_g-to-zoom behavior:"
 msgstr "拖拽缩放行为(_G)："
 
-#: app/dialogs/preferences-dialog.c:3034
+#: app/dialogs/preferences-dialog.c:3035
 msgid "Drag-to-zoom spe_ed:"
 msgstr "拖拽缩放速度(_E)："
 
-#: app/dialogs/preferences-dialog.c:3044 app/dialogs/preferences-dialog.c:3045
+#: app/dialogs/preferences-dialog.c:3045 app/dialogs/preferences-dialog.c:3046
 msgid "Modifiers"
 msgstr "修饰键"
 
-#: app/dialogs/preferences-dialog.c:3056
+#: app/dialogs/preferences-dialog.c:3057
 msgid "_Reset Saved Modifiers Settings to Default Values"
 msgstr "将保存的修饰键设置重置为默认值(_R)"
 
-#: app/dialogs/preferences-dialog.c:3070
+#: app/dialogs/preferences-dialog.c:3071
 msgid "Snapping Behavior"
 msgstr "吸附行为"
 
-#: app/dialogs/preferences-dialog.c:3071
+#: app/dialogs/preferences-dialog.c:3072
 msgid "Snapping"
 msgstr "吸附"
 
-#: app/dialogs/preferences-dialog.c:3078
+#: app/dialogs/preferences-dialog.c:3079
 msgid "Default Behavior in Normal Mode"
 msgstr "普通模式下的默认行为"
 
-#: app/dialogs/preferences-dialog.c:3082
+#: app/dialogs/preferences-dialog.c:3083
 msgid "Default Behavior in Fullscreen Mode"
 msgstr "全屏模式下的默认行为"
 
-#: app/dialogs/preferences-dialog.c:3091
+#: app/dialogs/preferences-dialog.c:3092
 msgid "_Snapping distance:"
 msgstr "吸附距离(_S)："
 
-#: app/dialogs/preferences-dialog.c:3100 app/dialogs/preferences-dialog.c:3101
+#: app/dialogs/preferences-dialog.c:3101 app/dialogs/preferences-dialog.c:3102
 msgid "Image Windows"
 msgstr "图像窗口"
 
-#: app/dialogs/preferences-dialog.c:3118
+#: app/dialogs/preferences-dialog.c:3119
 msgid "Merge menu and title bar"
 msgstr "合并菜单和标题栏"
 
-#: app/dialogs/preferences-dialog.c:3121
+#: app/dialogs/preferences-dialog.c:3122
 msgid ""
 "GIMP will try to convince your system not to decorate image windows. If it "
 "doesn't work properly on your system (i.e. you get 2 title bars), please "
@@ -17295,381 +17306,381 @@ msgstr ""
 "GIMP 将尝试说服您的系统不要装饰图像窗口。如果在您的系统上不能正确工作（比如得"
 "到两个标题栏），请报告缺陷。"
 
-#: app/dialogs/preferences-dialog.c:3131
+#: app/dialogs/preferences-dialog.c:3132
 msgid "Use \"Show _all\" by default"
 msgstr "默认使用“显示全部”(_A)"
 
-#: app/dialogs/preferences-dialog.c:3135
+#: app/dialogs/preferences-dialog.c:3136
 msgid "Use \"_Dot for dot\" by default"
 msgstr "默认使用“点对点”(_D)"
 
-#: app/dialogs/preferences-dialog.c:3141
+#: app/dialogs/preferences-dialog.c:3142
 msgid "Marching ants s_peed:"
 msgstr "蚂蚁线速度(_P)："
 
 #. Zoom & Resize Behavior
-#: app/dialogs/preferences-dialog.c:3145
+#: app/dialogs/preferences-dialog.c:3146
 msgid "Zoom & Resize Behavior"
 msgstr "缩放和改变大小行为"
 
-#: app/dialogs/preferences-dialog.c:3149
+#: app/dialogs/preferences-dialog.c:3150
 msgid "Resize window on _zoom"
 msgstr "缩放时调整窗口大小(_Z)"
 
-#: app/dialogs/preferences-dialog.c:3152
+#: app/dialogs/preferences-dialog.c:3153
 msgid "Resize window on image _size change"
 msgstr "图像大小改变时调整窗口大小(_S)"
 
-#: app/dialogs/preferences-dialog.c:3158
+#: app/dialogs/preferences-dialog.c:3159
 msgid "Show entire image"
 msgstr "显示整张图像"
 
-#: app/dialogs/preferences-dialog.c:3160
+#: app/dialogs/preferences-dialog.c:3161
 msgid "Initial zoom _ratio:"
 msgstr "初始缩放比率(_R)："
 
-#: app/dialogs/preferences-dialog.c:3168
+#: app/dialogs/preferences-dialog.c:3169
 msgid "Image Window Appearance"
 msgstr "图像窗口外观"
 
-#: app/dialogs/preferences-dialog.c:3178
+#: app/dialogs/preferences-dialog.c:3179
 msgid "Default Appearance in Normal Mode"
 msgstr "普通模式下的默认外观"
 
-#: app/dialogs/preferences-dialog.c:3183
+#: app/dialogs/preferences-dialog.c:3184
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "全屏模式下的默认外观"
 
-#: app/dialogs/preferences-dialog.c:3192
+#: app/dialogs/preferences-dialog.c:3193
 msgid "Image Title & Statusbar Format"
 msgstr "图像标题和状态栏格式"
 
-#: app/dialogs/preferences-dialog.c:3193
+#: app/dialogs/preferences-dialog.c:3194
 msgid "Title & Status"
 msgstr "标题和状态"
 
-#: app/dialogs/preferences-dialog.c:3211
+#: app/dialogs/preferences-dialog.c:3212
 msgid "Current format"
 msgstr "当前格式"
 
-#: app/dialogs/preferences-dialog.c:3212
+#: app/dialogs/preferences-dialog.c:3213
 msgid "Default format"
 msgstr "默认格式"
 
-#: app/dialogs/preferences-dialog.c:3213
+#: app/dialogs/preferences-dialog.c:3214
 msgid "Show zoom percentage"
 msgstr "显示缩放百分比"
 
-#: app/dialogs/preferences-dialog.c:3214
+#: app/dialogs/preferences-dialog.c:3215
 msgid "Show zoom ratio"
 msgstr "显示缩放比率"
 
-#: app/dialogs/preferences-dialog.c:3215
+#: app/dialogs/preferences-dialog.c:3216
 msgid "Show image size"
 msgstr "显示图像大小"
 
-#: app/dialogs/preferences-dialog.c:3216
+#: app/dialogs/preferences-dialog.c:3217
 msgid "Show drawable size"
 msgstr "显示可绘区大小"
 
-#: app/dialogs/preferences-dialog.c:3229
+#: app/dialogs/preferences-dialog.c:3230
 msgid "Image Title Format"
 msgstr "图像标题格式"
 
-#: app/dialogs/preferences-dialog.c:3231
+#: app/dialogs/preferences-dialog.c:3232
 msgid "Image Statusbar Format"
 msgstr "图像状态栏格式"
 
-#: app/dialogs/preferences-dialog.c:3325 app/dialogs/preferences-dialog.c:3326
+#: app/dialogs/preferences-dialog.c:3326 app/dialogs/preferences-dialog.c:3327
 msgid "Input Devices"
 msgstr "输入设备"
 
-#: app/dialogs/preferences-dialog.c:3337
+#: app/dialogs/preferences-dialog.c:3338
 msgid "Pointers"
 msgstr "鼠标指针"
 
-#: app/dialogs/preferences-dialog.c:3344
+#: app/dialogs/preferences-dialog.c:3345
 msgid "Pointer _mode:"
 msgstr "指针模式(_M)："
 
-#: app/dialogs/preferences-dialog.c:3347
+#: app/dialogs/preferences-dialog.c:3348
 msgid "Pointer _handedness:"
 msgstr "指针利手(_N)："
 
-#: app/dialogs/preferences-dialog.c:3351
+#: app/dialogs/preferences-dialog.c:3352
 msgid "Paint Tools"
 msgstr "绘画工具"
 
-#: app/dialogs/preferences-dialog.c:3355
+#: app/dialogs/preferences-dialog.c:3356
 msgid "Show _brush outline"
 msgstr "显示笔刷轮廓(_B)"
 
-#: app/dialogs/preferences-dialog.c:3363
+#: app/dialogs/preferences-dialog.c:3364
 msgid "S_nap brush outline to stroke"
 msgstr "吸附笔刷轮廓于笔触(_N)"
 
-#: app/dialogs/preferences-dialog.c:3367
+#: app/dialogs/preferences-dialog.c:3368
 msgid "Show pointer for paint _tools"
 msgstr "为绘画工具显示鼠标指针(_T)"
 
 #. Extended Input Devices
-#: app/dialogs/preferences-dialog.c:3371
+#: app/dialogs/preferences-dialog.c:3372
 msgid "Extended Input Devices"
 msgstr "扩展输入设备"
 
-#: app/dialogs/preferences-dialog.c:3387
+#: app/dialogs/preferences-dialog.c:3388
 msgid "Pointer Input API:"
 msgstr "指针输入 API："
 
-#: app/dialogs/preferences-dialog.c:3398
+#: app/dialogs/preferences-dialog.c:3399
 msgid "S_hare tool and tool options between input devices"
 msgstr "在输入设备间共享工具和工具选项(_H)"
 
-#: app/dialogs/preferences-dialog.c:3402
+#: app/dialogs/preferences-dialog.c:3403
 msgid "Configure E_xtended Input Devices..."
 msgstr "配置扩展输入设备(_X)…"
 
-#: app/dialogs/preferences-dialog.c:3409
+#: app/dialogs/preferences-dialog.c:3410
 msgid "_Save input device settings on exit"
 msgstr "退出时保存输入设备设置(_S)"
 
-#: app/dialogs/preferences-dialog.c:3413
+#: app/dialogs/preferences-dialog.c:3414
 msgid "Save Input Device Settings _Now"
 msgstr "立即保存输入设备设置(_N)"
 
-#: app/dialogs/preferences-dialog.c:3420
+#: app/dialogs/preferences-dialog.c:3421
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "将已保存的输入设备设置重置为默认值(_R)"
 
-#: app/dialogs/preferences-dialog.c:3435
+#: app/dialogs/preferences-dialog.c:3436
 msgid "Additional Input Controllers"
 msgstr "附加输入控制器"
 
-#: app/dialogs/preferences-dialog.c:3436
+#: app/dialogs/preferences-dialog.c:3437
 msgid "Input Controllers"
 msgstr "输入控制器"
 
-#: app/dialogs/preferences-dialog.c:3451 app/dialogs/preferences-dialog.c:3452
+#: app/dialogs/preferences-dialog.c:3452 app/dialogs/preferences-dialog.c:3453
 msgid "Folders"
 msgstr "文件夹"
 
-#: app/dialogs/preferences-dialog.c:3459
+#: app/dialogs/preferences-dialog.c:3460
 msgid "Reset _Folders"
 msgstr "重置文件夹(_F)"
 
-#: app/dialogs/preferences-dialog.c:3475
+#: app/dialogs/preferences-dialog.c:3476
 msgid "_Temporary folder:"
 msgstr "临时文件夹(_T)："
 
-#: app/dialogs/preferences-dialog.c:3476
+#: app/dialogs/preferences-dialog.c:3477
 msgid "Select Folder for Temporary Files"
 msgstr "为临时文件选择文件夹"
 
-#: app/dialogs/preferences-dialog.c:3480
+#: app/dialogs/preferences-dialog.c:3481
 msgid "_Swap folder:"
 msgstr "交换文件夹(_S)："
 
-#: app/dialogs/preferences-dialog.c:3481
+#: app/dialogs/preferences-dialog.c:3482
 msgid "Select Swap Folder"
 msgstr "选择交换文件夹"
 
-#: app/dialogs/preferences-dialog.c:3514
+#: app/dialogs/preferences-dialog.c:3515
 msgid "Brush Folders"
 msgstr "笔刷文件夹"
 
-#: app/dialogs/preferences-dialog.c:3517
+#: app/dialogs/preferences-dialog.c:3518
 msgid "Reset Brush _Folders"
 msgstr "重置笔刷文件夹(_F)"
 
-#: app/dialogs/preferences-dialog.c:3518
+#: app/dialogs/preferences-dialog.c:3519
 msgid "Select Brush Folders"
 msgstr "选择笔刷文件夹"
 
-#: app/dialogs/preferences-dialog.c:3520
+#: app/dialogs/preferences-dialog.c:3521
 msgid "Dynamics Folders"
 msgstr "动态文件夹"
 
-#: app/dialogs/preferences-dialog.c:3523
+#: app/dialogs/preferences-dialog.c:3524
 msgid "Reset Dynamics _Folders"
 msgstr "重置动态文件夹(_F)"
 
-#: app/dialogs/preferences-dialog.c:3524
+#: app/dialogs/preferences-dialog.c:3525
 msgid "Select Dynamics Folders"
 msgstr "选择动态文件夹"
 
-#: app/dialogs/preferences-dialog.c:3526
+#: app/dialogs/preferences-dialog.c:3527
 msgid "Pattern Folders"
 msgstr "图案文件夹"
 
-#: app/dialogs/preferences-dialog.c:3529
+#: app/dialogs/preferences-dialog.c:3530
 msgid "Reset Pattern _Folders"
 msgstr "重置图案文件夹(_F)"
 
-#: app/dialogs/preferences-dialog.c:3530
+#: app/dialogs/preferences-dialog.c:3531
 msgid "Select Pattern Folders"
 msgstr "选择图案文件夹"
 
-#: app/dialogs/preferences-dialog.c:3532
+#: app/dialogs/preferences-dialog.c:3533
 msgid "Palette Folders"
 msgstr "色板文件夹"
 
-#: app/dialogs/preferences-dialog.c:3535
+#: app/dialogs/preferences-dialog.c:3536
 msgid "Reset Palette _Folders"
 msgstr "重置色板文件夹(_F)"
 
-#: app/dialogs/preferences-dialog.c:3536
+#: app/dialogs/preferences-dialog.c:3537
 msgid "Select Palette Folders"
 msgstr "选择色板文件夹"
 
-#: app/dialogs/preferences-dialog.c:3538
+#: app/dialogs/preferences-dialog.c:3539
 msgid "Gradient Folders"
 msgstr "渐变文件夹"
 
-#: app/dialogs/preferences-dialog.c:3541
+#: app/dialogs/preferences-dialog.c:3542
 msgid "Reset Gradient _Folders"
 msgstr "重置渐变文件夹(_F)"
 
-#: app/dialogs/preferences-dialog.c:3542
+#: app/dialogs/preferences-dialog.c:3543
 msgid "Select Gradient Folders"
 msgstr "选择渐变文件夹"
 
-#: app/dialogs/preferences-dialog.c:3544
+#: app/dialogs/preferences-dialog.c:3545
 msgid "Font Folders"
 msgstr "字体文件夹"
 
-#: app/dialogs/preferences-dialog.c:3547
+#: app/dialogs/preferences-dialog.c:3548
 msgid "Reset Font _Folders"
 msgstr "重置字体文件夹(_F)"
 
-#: app/dialogs/preferences-dialog.c:3548
+#: app/dialogs/preferences-dialog.c:3549
 msgid "Select Font Folders"
 msgstr "选择字体文件夹"
 
-#: app/dialogs/preferences-dialog.c:3550
+#: app/dialogs/preferences-dialog.c:3551
 msgid "Tool Preset Folders"
 msgstr "工具预设文件夹"
 
-#: app/dialogs/preferences-dialog.c:3553
+#: app/dialogs/preferences-dialog.c:3554
 msgid "Reset Tool Preset _Folders"
 msgstr "重置工具预设文件夹(_F)"
 
-#: app/dialogs/preferences-dialog.c:3554
+#: app/dialogs/preferences-dialog.c:3555
 msgid "Select Tool Preset Folders"
 msgstr "选择工具预设文件夹"
 
-#: app/dialogs/preferences-dialog.c:3556
+#: app/dialogs/preferences-dialog.c:3557
 msgid "MyPaint Brush Folders"
 msgstr "MyPaint 笔刷文件夹"
 
-#: app/dialogs/preferences-dialog.c:3559
+#: app/dialogs/preferences-dialog.c:3560
 msgid "Reset MyPaint Brush _Folders"
 msgstr "重置 MyPaint 笔刷文件夹(_F)"
 
-#: app/dialogs/preferences-dialog.c:3560
+#: app/dialogs/preferences-dialog.c:3561
 msgid "Select MyPaint Brush Folders"
 msgstr "选择 MyPaint 笔刷文件夹"
 
-#: app/dialogs/preferences-dialog.c:3562
+#: app/dialogs/preferences-dialog.c:3563
 msgid "Plug-in Folders"
 msgstr "插件文件夹"
 
-#: app/dialogs/preferences-dialog.c:3565
+#: app/dialogs/preferences-dialog.c:3566
 msgid "Reset plug-in _Folders"
 msgstr "重置插件文件夹(_F)"
 
-#: app/dialogs/preferences-dialog.c:3566
+#: app/dialogs/preferences-dialog.c:3567
 msgid "Select plug-in Folders"
 msgstr "选择插件文件夹"
 
-#: app/dialogs/preferences-dialog.c:3568
+#: app/dialogs/preferences-dialog.c:3569
 msgid "Scripts"
 msgstr "脚本"
 
-#: app/dialogs/preferences-dialog.c:3568
+#: app/dialogs/preferences-dialog.c:3569
 msgid "Script-Fu Folders"
 msgstr "脚本文件夹"
 
-#: app/dialogs/preferences-dialog.c:3571
+#: app/dialogs/preferences-dialog.c:3572
 msgid "Reset Script-Fu _Folders"
 msgstr "重置脚本文件夹(_F)"
 
-#: app/dialogs/preferences-dialog.c:3572
+#: app/dialogs/preferences-dialog.c:3573
 msgid "Select Script-Fu Folders"
 msgstr "选择脚本文件夹"
 
-#: app/dialogs/preferences-dialog.c:3574
+#: app/dialogs/preferences-dialog.c:3575
 msgid "Module Folders"
 msgstr "模块文件夹"
 
-#: app/dialogs/preferences-dialog.c:3577
+#: app/dialogs/preferences-dialog.c:3578
 msgid "Reset Module _Folders"
 msgstr "重置模块文件夹(_F)"
 
-#: app/dialogs/preferences-dialog.c:3578
+#: app/dialogs/preferences-dialog.c:3579
 msgid "Select Module Folders"
 msgstr "选择模块文件夹"
 
-#: app/dialogs/preferences-dialog.c:3580
+#: app/dialogs/preferences-dialog.c:3581
 msgid "Interpreters"
 msgstr "解释器"
 
-#: app/dialogs/preferences-dialog.c:3580
+#: app/dialogs/preferences-dialog.c:3581
 msgid "Interpreter Folders"
 msgstr "解释器文件夹"
 
-#: app/dialogs/preferences-dialog.c:3583
+#: app/dialogs/preferences-dialog.c:3584
 msgid "Reset Interpreter _Folders"
 msgstr "重置解释器文件夹(_F)"
 
-#: app/dialogs/preferences-dialog.c:3584
+#: app/dialogs/preferences-dialog.c:3585
 msgid "Select Interpreter Folders"
 msgstr "选择解释器文件夹"
 
-#: app/dialogs/preferences-dialog.c:3586
+#: app/dialogs/preferences-dialog.c:3587
 msgid "Environment"
 msgstr "环境"
 
-#: app/dialogs/preferences-dialog.c:3586
+#: app/dialogs/preferences-dialog.c:3587
 msgid "Environment Folders"
 msgstr "环境文件夹"
 
-#: app/dialogs/preferences-dialog.c:3589
+#: app/dialogs/preferences-dialog.c:3590
 msgid "Reset Environment _Folders"
 msgstr "重置环境文件夹(_F)"
 
-#: app/dialogs/preferences-dialog.c:3590
+#: app/dialogs/preferences-dialog.c:3591
 msgid "Select Environment Folders"
 msgstr "选择环境文件夹"
 
-#: app/dialogs/preferences-dialog.c:3592
+#: app/dialogs/preferences-dialog.c:3593
 msgid "Themes"
 msgstr "主题"
 
-#: app/dialogs/preferences-dialog.c:3592
+#: app/dialogs/preferences-dialog.c:3593
 msgid "Theme Folders"
 msgstr "主题文件夹"
 
-#: app/dialogs/preferences-dialog.c:3595
+#: app/dialogs/preferences-dialog.c:3596
 msgid "Reset Theme _Folders"
 msgstr "重置主题文件夹(_F)"
 
-#: app/dialogs/preferences-dialog.c:3596
+#: app/dialogs/preferences-dialog.c:3597
 msgid "Select Theme Folders"
 msgstr "选择主题文件夹"
 
-#: app/dialogs/preferences-dialog.c:3598
+#: app/dialogs/preferences-dialog.c:3599
 msgid "Icon Themes"
 msgstr "图标主题"
 
-#: app/dialogs/preferences-dialog.c:3598
+#: app/dialogs/preferences-dialog.c:3599
 msgid "Icon Theme Folders"
 msgstr "图标主题文件夹"
 
-#: app/dialogs/preferences-dialog.c:3601
+#: app/dialogs/preferences-dialog.c:3602
 msgid "Reset Icon Theme _Folders"
 msgstr "重置图标主题文件夹(_F)"
 
-#: app/dialogs/preferences-dialog.c:3602
+#: app/dialogs/preferences-dialog.c:3603
 msgid "Select Icon Theme Folders"
 msgstr "选择图标主题文件夹"
 
@@ -17814,7 +17825,7 @@ msgstr ""
 #: app/tools/gimpoffsettool.c:130 app/tools/gimpoffsettool.c:472
 #: app/tools/gimptransform3dtool.c:342 app/widgets/gimpgrideditor.c:214
 msgid "Offset"
-msgstr "位移"
+msgstr "偏移"
 
 #: app/dialogs/resize-dialog.c:400 app/tools/gimpoffsettool.c:496
 #: app/tools/gimptransform3dtool.c:270 app/tools/gimptransform3dtool.c:382
@@ -18519,26 +18530,26 @@ msgid "A selected layer is not visible."
 msgstr "一个选中图层不可见。"
 
 #: app/display/gimpdisplayshell-dnd.c:446
-#: app/widgets/gimpdrawabletreeview.c:466
-#: app/widgets/gimpdrawabletreeview.c:652
+#: app/widgets/gimpdrawabletreeview.c:470
+#: app/widgets/gimpdrawabletreeview.c:676
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "将图案放置到图层"
 
 #: app/display/gimpdisplayshell-dnd.c:468
-#: app/widgets/gimpdrawabletreeview.c:497
-#: app/widgets/gimpdrawabletreeview.c:672
+#: app/widgets/gimpdrawabletreeview.c:501
+#: app/widgets/gimpdrawabletreeview.c:696
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "将颜色放置到图层"
 
-#: app/display/gimpdisplayshell-dnd.c:596 app/widgets/gimpitemtreeview.c:1629
-#: app/widgets/gimplayertreeview.c:808
+#: app/display/gimpdisplayshell-dnd.c:596 app/widgets/gimpitemtreeview.c:1632
+#: app/widgets/gimplayertreeview.c:804
 msgid "Drop layers"
 msgstr "拖放图层"
 
 #: app/display/gimpdisplayshell-dnd.c:739
-#: app/display/gimpdisplayshell-dnd.c:756 app/widgets/gimplayertreeview.c:885
+#: app/display/gimpdisplayshell-dnd.c:756 app/widgets/gimplayertreeview.c:881
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "删除缓冲区"
@@ -18631,7 +18642,7 @@ msgstr "（干净）"
 msgid "(none)"
 msgstr "（无）"
 
-#: app/display/gimpdisplayshell-tool-events.c:1766
+#: app/display/gimpdisplayshell-tool-events.c:1767
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "拾取的图层：“%s”"
@@ -20067,7 +20078,7 @@ msgstr "将颜色转换为灰度色调"
 #: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1462
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
-#: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:279
+#: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:275
 msgid "Mode"
 msgstr "模式"
 
@@ -20146,19 +20157,19 @@ msgstr "明度"
 msgid "The alpha value"
 msgstr "透明通道明度"
 
-#: app/gui/gui.c:329
+#: app/gui/gui.c:330
 msgid "Image Recovery"
 msgstr "图像恢复"
 
-#: app/gui/gui.c:331
+#: app/gui/gui.c:332
 msgid "_Discard"
 msgstr "放弃(_D)"
 
-#: app/gui/gui.c:332
+#: app/gui/gui.c:333
 msgid "_Recover"
 msgstr "恢复(_R)"
 
-#: app/gui/gui.c:343
+#: app/gui/gui.c:344
 msgid "Eeek! It looks like GIMP recovered from a crash!"
 msgstr "哈！貌似 GIMP 从崩溃中恢复了！"
 
@@ -20168,7 +20179,7 @@ msgstr "哈！貌似 GIMP 从崩溃中恢复了！"
 #. * suited. It will just work and be replaced by the
 #. * number of images as expected.
 #.
-#: app/gui/gui.c:352
+#: app/gui/gui.c:353
 #, c-format
 msgid ""
 "An image was salvaged from the crash. Do you want to try and recover it?"
@@ -20179,11 +20190,11 @@ msgstr[0] "从崩溃中抢救了 %d 张图像。您想要尝试并恢复它们�
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: app/gui/gui.c:568
+#: app/gui/gui.c:569
 msgid "Documents"
 msgstr "文档"
 
-#: app/gui/splash.c:182
+#: app/gui/splash.c:183
 msgid "GIMP Startup"
 msgstr "GIMP 启动"
 
@@ -21958,7 +21969,7 @@ msgstr "文字内嵌中无效的标记格式"
 msgid "Empty text parasite"
 msgstr "空白文字内嵌"
 
-#: app/text/gimptextlayer.c:157
+#: app/text/gimptextlayer.c:146
 msgid "Text Layer"
 msgstr "文字图层"
 
@@ -23938,27 +23949,27 @@ msgstr "_N 点变形"
 
 #: app/tools/gimpoffsettool.c:132
 msgid "_Offset..."
-msgstr "位移(_O)…"
+msgstr "偏移(_O)…"
 
 #: app/tools/gimpoffsettool.c:214
 msgid "Offset Layer"
-msgstr "图层位移"
+msgstr "图层偏移"
 
 #: app/tools/gimpoffsettool.c:216
 msgid "Offset Layer Mask"
-msgstr "图层蒙版位移"
+msgstr "图层蒙版偏移"
 
 #: app/tools/gimpoffsettool.c:218
 msgid "Offset Channel"
-msgstr "通道位移"
+msgstr "通道偏移"
 
 #: app/tools/gimpoffsettool.c:305 app/tools/gimpoffsettool.c:402
 msgid "Offset: "
-msgstr "位移："
+msgstr "偏移："
 
 #: app/tools/gimpoffsettool.c:429
 msgid "Click-Drag to offset drawable"
-msgstr "单击并拖动使可绘区位移"
+msgstr "单击并拖动使可绘区偏移"
 
 #: app/tools/gimpoffsettool.c:513
 msgid "By width/_2, height/2"
@@ -25511,7 +25522,7 @@ msgid "Percentage of width of brush"
 msgstr "笔刷宽度的百分比"
 
 #: app/widgets/gimpbufferview.c:189 app/widgets/gimpbufferview.c:290
-#: app/widgets/gimpeditor.c:835
+#: app/widgets/gimpeditor.c:863
 msgid "(None)"
 msgstr "（无）"
 
@@ -25801,11 +25812,11 @@ msgctxt "compression"
 msgid "Best compression"
 msgstr "最好压缩"
 
-#: app/widgets/gimpcontainerpopup.c:316
+#: app/widgets/gimpcontainerpopup.c:317
 msgid "Smaller Previews"
 msgstr "减小预览"
 
-#: app/widgets/gimpcontainerpopup.c:321
+#: app/widgets/gimpcontainerpopup.c:322
 msgid "Larger Previews"
 msgstr "增大预览"
 
@@ -25871,11 +25882,15 @@ msgstr "选择事件“%s”的动作"
 msgid "Select Controller Event Action"
 msgstr "选择控制器事件动作"
 
-#: app/widgets/gimpcontrollerinfo.c:113
+#: app/widgets/gimpcontrollerinfo.c:110
+msgid "Input Controller"
+msgstr "输入控制器"
+
+#: app/widgets/gimpcontrollerinfo.c:115
 msgid "Enabled"
 msgstr "已启用"
 
-#: app/widgets/gimpcontrollerinfo.c:120
+#: app/widgets/gimpcontrollerinfo.c:122
 msgid "Debug events"
 msgstr "调试事件"
 
@@ -25936,37 +25951,37 @@ msgstr "键盘事件"
 msgid "Ready"
 msgstr "就绪"
 
-#: app/widgets/gimpcontrollerlist.c:166
+#: app/widgets/gimpcontrollerlist.c:169
 msgid "Available Controllers"
 msgstr "可用控制器"
 
-#: app/widgets/gimpcontrollerlist.c:229
+#: app/widgets/gimpcontrollerlist.c:232
 msgid "Active Controllers"
 msgstr "活动控制器"
 
-#: app/widgets/gimpcontrollerlist.c:251
+#: app/widgets/gimpcontrollerlist.c:254
 msgid "Configure the selected controller"
 msgstr "配置选中控制器"
 
-#: app/widgets/gimpcontrollerlist.c:259
+#: app/widgets/gimpcontrollerlist.c:262
 msgid "Move the selected controller up"
 msgstr "上移选中控制器"
 
-#: app/widgets/gimpcontrollerlist.c:267
+#: app/widgets/gimpcontrollerlist.c:270
 msgid "Move the selected controller down"
 msgstr "下移选中控制器"
 
-#: app/widgets/gimpcontrollerlist.c:441
+#: app/widgets/gimpcontrollerlist.c:398
 #, c-format
 msgid "Add '%s' to the list of active controllers"
 msgstr "将“%s”添加到活动控制器列表"
 
-#: app/widgets/gimpcontrollerlist.c:490
+#: app/widgets/gimpcontrollerlist.c:459
 #, c-format
 msgid "Remove '%s' from the list of active controllers"
 msgstr "从活动控制器列表中删除“%s”"
 
-#: app/widgets/gimpcontrollerlist.c:528
+#: app/widgets/gimpcontrollerlist.c:504
 msgid ""
 "There can only be one active keyboard controller.\n"
 "\n"
@@ -25976,7 +25991,7 @@ msgstr ""
 "\n"
 "在您的活动控制器列表中已经有一个键盘控制器。"
 
-#: app/widgets/gimpcontrollerlist.c:539
+#: app/widgets/gimpcontrollerlist.c:515
 msgid ""
 "There can only be one active wheel controller.\n"
 "\n"
@@ -25986,24 +26001,24 @@ msgstr ""
 "\n"
 "在您的活动控制器列表中已经有一个滚轮控制器。"
 
-#: app/widgets/gimpcontrollerlist.c:566
+#: app/widgets/gimpcontrollerlist.c:549
 msgid "Remove Controller?"
 msgstr "移除控制器吗？"
 
-#: app/widgets/gimpcontrollerlist.c:571
+#: app/widgets/gimpcontrollerlist.c:554
 msgid "_Disable Controller"
 msgstr "禁用控制器(_D)"
 
-#: app/widgets/gimpcontrollerlist.c:573
+#: app/widgets/gimpcontrollerlist.c:556
 msgid "_Remove Controller"
 msgstr "移除控制器(_R)"
 
-#: app/widgets/gimpcontrollerlist.c:585
+#: app/widgets/gimpcontrollerlist.c:569
 #, c-format
 msgid "Remove Controller '%s'?"
 msgstr "移除“%s”控制器吗？"
 
-#: app/widgets/gimpcontrollerlist.c:589
+#: app/widgets/gimpcontrollerlist.c:573
 msgid ""
 "Removing this controller from the list of active controllers will "
 "permanently delete all event mappings you have configured.\n"
@@ -26015,7 +26030,7 @@ msgstr ""
 "\n"
 "选择“禁用控制器”可以禁用控制器而非删除它。"
 
-#: app/widgets/gimpcontrollerlist.c:640
+#: app/widgets/gimpcontrollerlist.c:627
 msgid "Configure Input Controller"
 msgstr "配置输入控制器"
 
@@ -26562,16 +26577,16 @@ msgstr "%s（只读）"
 msgid "Delete the selected device"
 msgstr "删除选中设备"
 
-#: app/widgets/gimpdeviceeditor.c:537
+#: app/widgets/gimpdeviceeditor.c:539
 msgid "Delete Device Settings"
 msgstr "删除设备设置"
 
-#: app/widgets/gimpdeviceeditor.c:558
+#: app/widgets/gimpdeviceeditor.c:560
 #, c-format
 msgid "Delete \"%s\"?"
 msgstr "删除“%s”吗？"
 
-#: app/widgets/gimpdeviceeditor.c:561
+#: app/widgets/gimpdeviceeditor.c:563
 msgid ""
 "You are about to delete this device's stored settings.\n"
 "The next time this device is plugged, default settings will be used."
@@ -26801,7 +26816,7 @@ msgstr "锁定像素"
 msgid "Lock position and size"
 msgstr "锁定位置和大小"
 
-#: app/widgets/gimpdrawabletreeview.c:391
+#: app/widgets/gimpdrawabletreeview.c:395
 msgid "Cannot select items while a floating selection is active."
 msgstr "当浮动选区激活时无法选择项目。"
 
@@ -27245,27 +27260,27 @@ msgid "Indexed color (monochrome)"
 msgid_plural "Indexed color (%d colors)"
 msgstr[0] "索引颜色（%d 个颜色）"
 
-#: app/widgets/gimpitemtreeview.c:570
+#: app/widgets/gimpitemtreeview.c:565
 msgid "Set Item Exclusive Content Lock"
 msgstr "设置项目唯一内容锁定"
 
-#: app/widgets/gimpitemtreeview.c:584
+#: app/widgets/gimpitemtreeview.c:579
 msgid "Set Item Exclusive Position Lock"
 msgstr "设置项目唯一位置锁定"
 
-#: app/widgets/gimpitemtreeview.c:597
+#: app/widgets/gimpitemtreeview.c:592
 msgid "Unlock visibility"
 msgstr "解锁可见性"
 
-#: app/widgets/gimpitemtreeview.c:598
+#: app/widgets/gimpitemtreeview.c:593
 msgid "Set Item Exclusive Visibility Lock"
 msgstr "设置项目唯一可见性锁定"
 
-#: app/widgets/gimpitemtreeview.c:624
+#: app/widgets/gimpitemtreeview.c:619
 msgid "Select items by patterns and store item sets"
 msgstr "按模式选择项目并存储项目集合"
 
-#: app/widgets/gimpitemtreeview.c:1451
+#: app/widgets/gimpitemtreeview.c:1454
 #, c-format
 msgid "%d item selected"
 msgid_plural "%d items selected"
@@ -27324,35 +27339,35 @@ msgstr "无效的正则表达式：%s\n"
 msgid "Switch to another group of modes"
 msgstr "切换到另一组模式"
 
-#: app/widgets/gimplayertreeview.c:417 app/widgets/gimplayertreeview.c:420
+#: app/widgets/gimplayertreeview.c:413 app/widgets/gimplayertreeview.c:416
 msgid "Lock alpha channel"
 msgstr "锁定透明通道"
 
-#: app/widgets/gimplayertreeview.c:418
+#: app/widgets/gimplayertreeview.c:414
 msgid "Unlock alpha channel"
 msgstr "解锁透明通道"
 
-#: app/widgets/gimplayertreeview.c:419
+#: app/widgets/gimplayertreeview.c:415
 msgid "Set Item Exclusive Alpha Channel lock"
 msgstr "设置项目唯一透明通道锁定"
 
-#: app/widgets/gimplayertreeview.c:1055
+#: app/widgets/gimplayertreeview.c:1051
 msgid "Set layers mode"
 msgstr "设置图层模式"
 
-#: app/widgets/gimplayertreeview.c:1263
+#: app/widgets/gimplayertreeview.c:1259
 msgctxt "layers-action"
 msgid "Anchor the floating mask"
 msgstr "固定浮动蒙版"
 
-#: app/widgets/gimplayertreeview.c:1266
+#: app/widgets/gimplayertreeview.c:1262
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
 msgstr "固定浮动图层"
 
 #. No channel. We cannot perform the add
 #. * mask action.
-#: app/widgets/gimplayertreeview.c:1527
+#: app/widgets/gimplayertreeview.c:1523
 msgid "No channels to create a layer mask from."
 msgstr "没有可用于创建图层蒙版的通道。"
 
@@ -27438,7 +27453,7 @@ msgstr ""
 "无法运行 %s 调用。\n"
 "%s"
 
-#: app/widgets/gimppickablechooser.c:244 app/widgets/gimppickablechooser.c:529
+#: app/widgets/gimppickablechooser.c:244 app/widgets/gimppickablechooser.c:527
 msgid "Select an image in the left pane"
 msgstr "在左侧面板中选择图像"
 
@@ -27449,6 +27464,11 @@ msgstr "插件"
 #: app/widgets/gimpprogressdialog.c:229
 msgid "Progress"
 msgstr "进度"
+
+#: app/widgets/gimprow.c:270
+#, c-format
+msgid "Rename %s"
+msgstr "重命名 %s"
 
 #: app/widgets/gimpsamplepointeditor.c:163
 msgid ""
@@ -27931,15 +27951,15 @@ msgstr "%s 预设"
 msgid "[ Base Image ]"
 msgstr "[ 原始图像 ]"
 
-#: app/widgets/gimppathtreeview.c:117
+#: app/widgets/gimppathtreeview.c:112
 msgid "Lock path"
 msgstr "锁定路径"
 
-#: app/widgets/gimppathtreeview.c:120
+#: app/widgets/gimppathtreeview.c:115
 msgid "Lock path position"
 msgstr "锁定路径位置"
 
-#: app/widgets/gimppathtreeview.c:123
+#: app/widgets/gimppathtreeview.c:118
 msgid "Lock path visibility"
 msgstr "锁定路径可见性"
 
