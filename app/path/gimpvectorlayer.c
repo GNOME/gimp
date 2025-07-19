@@ -156,6 +156,7 @@ gimp_vector_layer_class_init (GimpVectorLayerClass *klass)
   gimp_object_class->get_memsize    = gimp_vector_layer_get_memsize;
 
   viewable_class->default_icon_name = "gimp-vector-layer";
+  viewable_class->default_name      = _("Vector Layer");
 
   layer_class->translate            = gimp_vector_layer_translate;
 
@@ -165,7 +166,6 @@ gimp_vector_layer_class_init (GimpVectorLayerClass *klass)
   item_class->flip                  = gimp_vector_layer_flip;
   item_class->rotate                = gimp_vector_layer_rotate;
   item_class->transform             = gimp_vector_layer_transform;
-  item_class->default_name          = _("Vector Layer");
   item_class->rename_desc           = _("Rename Vector Layer");
   item_class->translate_desc        = _("Move Vector Layer");
   item_class->scale_desc            = _("Scale Vector Layer");
