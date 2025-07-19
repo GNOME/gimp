@@ -306,7 +306,6 @@ main_dialog (GimpProcedure       *procedure,
   GtkWidget     *spin;
   GimpZoomModel *model;
   GtkWidget     *map_combo;
-  GtkWidget     *combo;
   gboolean       run = FALSE;
 
   gimp_ui_init (PLUG_IN_BINARY);
@@ -461,8 +460,6 @@ main_dialog (GimpProcedure       *procedure,
                                   "light-type",
                                   "light-color",
                                   NULL);
-  combo = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (appwin),
-                                            "light-type", G_TYPE_NONE);
   g_signal_connect (config, "notify::light-type",
                     G_CALLBACK (lightmenu_callback),
                     config);
