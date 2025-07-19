@@ -1387,7 +1387,7 @@ ReadImage (FILE        *fd,
             {
               if (promote_to_rgb)
                 {
-                  temp = dest + ( (ypos * len) + xpos ) * 4;
+                  temp = dest + ( ((gsize) ypos * len) + xpos ) * 4;
                   *(temp  ) = (guchar) cmap[0][v];
                   *(temp+1) = (guchar) cmap[1][v];
                   *(temp+2) = (guchar) cmap[2][v];
@@ -1395,14 +1395,14 @@ ReadImage (FILE        *fd,
                 }
               else
                 {
-                  temp = dest + ( (ypos * len) + xpos ) * 2;
+                  temp = dest + ( ((gsize) ypos * len) + xpos ) * 2;
                   *temp = (guchar) v;
                   *(temp+1) = (guchar) ((v == Gif89.transparent) ? 0 : 255);
                 }
             }
           else
             {
-              temp = dest + (ypos * len) + xpos;
+              temp = dest + ((gsize) ypos * len) + xpos;
               *temp = (guchar) v;
             }
 
