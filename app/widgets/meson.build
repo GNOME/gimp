@@ -69,6 +69,8 @@ libappwidgets_sources = [
   'gimpcontainertreestore.c',
   'gimpcontainertreeview-dnd.c',
   'gimpcontainertreeview.c',
+  'gimpcontainerview-cruft.c',
+  'gimpcontainerview-private.c',
   'gimpcontainerview-utils.c',
   'gimpcontainerview.c',
   'gimpcontrollereditor.c',
