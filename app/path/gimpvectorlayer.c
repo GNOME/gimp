@@ -416,19 +416,16 @@ gimp_vector_layer_translate (GimpLayer *layer,
                              gint       offset_y)
 {
   GimpVectorLayer *vector_layer = GIMP_VECTOR_LAYER (layer);
-  gint             x, y;
 
   if (vector_layer->options && vector_layer->options->path)
-    gimp_item_translate (GIMP_ITEM (vector_layer->options->path),
-                         offset_x, offset_y, FALSE);
-
-  /* Correct offset for vector layer after moving path */
-  gimp_item_get_offset (GIMP_ITEM (layer), &x, &y);
-
-  x += offset_x;
-  y += offset_y;
-
-  gimp_item_set_offset (GIMP_ITEM (layer), x, y);
+    {
+      gimp_item_translate (GIMP_ITEM (vector_layer->options->path),
+                           offset_x, offset_y, FALSE);
+    }
+  else
+    {
+      GIMP_LAYER_CLASS (parent_class)->translate (layer, offset_x, offset_y);
+    }
 }
 
 static void
@@ -448,6 +445,12 @@ gimp_vector_layer_scale (GimpItem              *item,
                        new_width, new_height, new_offset_x, new_offset_y,
                        interp_type, progress);
     }
+  else
+    {
+      GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
+                                             new_offset_x, new_offset_y,
+                                             interp_type, progress);
+    }
 }
 
 static void
@@ -463,6 +466,11 @@ gimp_vector_layer_flip (GimpItem            *item,
     {
       gimp_item_flip (GIMP_ITEM (vector_layer->options->path),
                       context, flip_type, axis, clip_result);
+    }
+  else
+    {
+      GIMP_ITEM_CLASS (parent_class)->flip (item, context, flip_type,
+                                            axis, clip_result);
     }
 }
 
@@ -480,6 +488,11 @@ gimp_vector_layer_rotate (GimpItem         *item,
     {
       gimp_item_rotate (GIMP_ITEM (vector_layer->options->path),
                         context, rotate_type, center_x, center_y, clip_result);
+    }
+  else
+    {
+      GIMP_ITEM_CLASS (parent_class)->rotate (item, context, rotate_type,
+                                              center_x, center_y, clip_result);
     }
 }
 
@@ -499,6 +512,12 @@ gimp_vector_layer_transform (GimpItem               *item,
       gimp_item_transform (GIMP_ITEM (vector_layer->options->path),
                            context, matrix, direction, interp_type,
                            clip_result, progress);
+    }
+  else
+    {
+      GIMP_ITEM_CLASS (parent_class)->transform (item, context, matrix,
+                                                 direction, interp_type,
+                                                 clip_result, progress);
     }
 }
 
@@ -548,8 +567,10 @@ gimp_vector_layer_new (GimpImage   *image,
 {
   GimpVectorLayer        *layer;
   GimpVectorLayerOptions *options;
-  gint                    width    = gimp_image_get_width (image);
-  gint                    height   = gimp_image_get_height (image);
+  gint                    x      = 0;
+  gint                    y      = 0;
+  gint                    width  = gimp_image_get_width (image);
+  gint                    height = gimp_image_get_height (image);
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_PATH (path), NULL);
@@ -557,10 +578,12 @@ gimp_vector_layer_new (GimpImage   *image,
 
   options = gimp_vector_layer_options_new (image, path, context);
 
+  gimp_item_bounds (GIMP_ITEM (path), &x, &y, &width, &height);
+
   layer =
     GIMP_VECTOR_LAYER (gimp_drawable_new (GIMP_TYPE_VECTOR_LAYER,
                                           image, NULL,
-                                          0, 0, width, height,
+                                          x, y, width, height,
                                           gimp_image_get_layer_format (image,
                                                                        TRUE)));
 
@@ -623,10 +646,25 @@ gimp_vector_layer_render (GimpVectorLayer *layer)
   GimpDrawable *drawable = GIMP_DRAWABLE (layer);
   GimpItem     *item     = GIMP_ITEM (layer);
   GimpImage    *image    = gimp_item_get_image (item);
+  gint          layer_x  = 0;
+  gint          layer_y  = 0;
+  gint          x        = 0;
+  gint          y        = 0;
+  gint          width    = gimp_image_get_width (image);
+  gint          height   = gimp_image_get_height (image);
 
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
 
   g_object_freeze_notify (G_OBJECT (drawable));
+
+  /* Resize vector layer boundaries to current path */
+  gimp_image_undo_freeze (image);
+  gimp_item_get_offset (GIMP_ITEM (layer), &layer_x, &layer_y);
+  gimp_item_bounds (GIMP_ITEM (layer->options->path), &x, &y, &width, &height);
+  gimp_item_resize (GIMP_ITEM (layer), gimp_get_user_context (image->gimp),
+                    GIMP_FILL_TRANSPARENT, width, height,
+                    layer_x - x, layer_y - y);
+  gimp_image_undo_thaw (image);
 
   /* make the layer background transparent */
   gimp_drawable_fill (GIMP_DRAWABLE (layer),
