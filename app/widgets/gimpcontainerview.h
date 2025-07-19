@@ -87,6 +87,7 @@ struct _GimpContainerViewInterface
   /*  the destroy notifier for private->hash_table's values  */
   GDestroyNotify  insert_data_free;
   gboolean        model_is_tree;
+  gboolean        use_list_model;
 };
 
 
