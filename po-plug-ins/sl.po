@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-07-13 18:37+0000\n"
-"PO-Revision-Date: 2025-07-16 09:40+0200\n"
+"POT-Creation-Date: 2025-07-18 18:18+0000\n"
+"PO-Revision-Date: 2025-07-19 11:27+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -40,7 +40,7 @@ msgstr "Primer vstavka v C"
 #: plug-ins/common/curve-bend.c:623 plug-ins/common/decompose.c:385
 #: plug-ins/common/depth-merge.c:291 plug-ins/common/despeckle.c:235
 #: plug-ins/common/destripe.c:173 plug-ins/common/gradient-map.c:214
-#: plug-ins/common/grid.c:281 plug-ins/common/hot.c:314
+#: plug-ins/common/grid.c:310 plug-ins/common/hot.c:314
 #: plug-ins/common/jigsaw.c:537 plug-ins/common/nl-filter.c:215
 #: plug-ins/common/qbist.c:254 plug-ins/common/sample-colorize.c:425
 #: plug-ins/common/smooth-palette.c:193 plug-ins/common/sparkle.c:301
@@ -71,8 +71,8 @@ msgstr "Primer vstavka v C"
 #: plug-ins/common/curve-bend.c:1787 plug-ins/common/curve-bend.c:1822
 #: plug-ins/common/file-gif-export.c:1209 plug-ins/common/file-heif.c:2487
 #: plug-ins/common/file-pdf-export.c:1073 plug-ins/common/file-pdf-load.c:585
-#: plug-ins/common/grid.c:835 plug-ins/common/qbist.c:839
-#: plug-ins/common/qbist.c:881 plug-ins/common/sphere-designer.c:2291
+#: plug-ins/common/qbist.c:839 plug-ins/common/qbist.c:881
+#: plug-ins/common/sphere-designer.c:2291
 #: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:427
 #: plug-ins/flame/flame.c:617 plug-ins/flame/flame.c:822
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1513
@@ -144,10 +144,10 @@ msgstr "Primer vstavka v JavaScriptu (GJS)"
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2488
-#: plug-ins/common/file-pdf-load.c:586 plug-ins/common/grid.c:836
-#: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:260
-#: plug-ins/file-exr/file-exr.c:455 plug-ins/file-psd/psd-load.c:3896
-#: plug-ins/flame/flame.c:823 plug-ins/fractal-explorer/fractal-explorer.c:1403
+#: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2656
+#: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:455
+#: plug-ins/file-psd/psd-load.c:3896 plug-ins/flame/flame.c:823
+#: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/gradient-flare/gradient-flare.c:3452
@@ -335,7 +335,7 @@ msgstr "spodnji rob"
 msgid "_Grid"
 msgstr "_Mreža"
 
-#: plug-ins/common/align-layers.c:236 plug-ins/common/grid.c:831
+#: plug-ins/common/align-layers.c:236 plug-ins/common/grid.c:741
 #: plug-ins/gfig/gfig-dialog.c:1357 plug-ins/gfig/gfig-menu.ui:31
 #: plug-ins/imagemap/imap_main.c:1561 plug-ins/imagemap/imap-menu.ui:192
 #: plug-ins/imagemap/imap-menu.ui:284
@@ -567,7 +567,7 @@ msgstr "_Število odsekov"
 msgid "Number of segments in blinds"
 msgstr "Število odsekov v roletah"
 
-#: plug-ins/common/blinds.c:165 plug-ins/map-object/map-object-ui.c:440
+#: plug-ins/common/blinds.c:165 plug-ins/map-object/map-object-ui.c:409
 msgid "Orient_ation"
 msgstr "Usmer_jenost"
 
@@ -5364,7 +5364,7 @@ msgstr ""
 "Če je omogočeno, se razmerje stranic pri izvozu ohrani. V nasprotnem primeru "
 "bodo uporabljene vrednosti širine in višine."
 
-#: plug-ins/common/file-ps.c:566 plug-ins/map-object/map-object-ui.c:739
+#: plug-ins/common/file-ps.c:566 plug-ins/map-object/map-object-ui.c:722
 msgid "Rotation"
 msgstr "Sukanje"
 
@@ -7260,65 +7260,75 @@ msgstr "Zemljevid preliva"
 msgid "Palette Map"
 msgstr "Zemljevid palete"
 
-#: plug-ins/common/grid.c:164
+#: plug-ins/common/grid.c:163
 msgid "_Grid (legacy)..."
 msgstr "_Mreža (opuščeno) ..."
 
-#: plug-ins/common/grid.c:169
+#: plug-ins/common/grid.c:168
 msgid "Draw a grid on the image"
 msgstr "Na sliko nariši mrežo"
 
-#: plug-ins/common/grid.c:298
-msgid "Drawing grid"
-msgstr "Risanje mreže ..."
-
-#. attach labels
-#: plug-ins/common/grid.c:913
+#: plug-ins/common/grid.c:169
 msgid ""
-"Horizontal\n"
-"Lines"
+"Draws a grid using the specified colors. The grid origin is the upper left "
+"corner."
 msgstr ""
-"Vodoravne\n"
-"črte"
+"Nariše mrežo z določenimi barvami. Izhodišče mreže je zgornji levi kot."
 
-#: plug-ins/common/grid.c:915
-msgid ""
-"Vertical\n"
-"Lines"
-msgstr ""
-"Navpične\n"
-"črte"
+#: plug-ins/common/grid.c:180 plug-ins/common/grid.c:181
+msgid "Horizontal width"
+msgstr "Vodoravna širina"
 
-#: plug-ins/common/grid.c:917
-msgid "Intersection"
-msgstr "Presek"
+#: plug-ins/common/grid.c:186 plug-ins/common/grid.c:187
+msgid "Horizontal spacing"
+msgstr "Vodoravni razmik"
 
-#: plug-ins/common/grid.c:920
-msgid "Width:"
-msgstr "Širina:"
+#: plug-ins/common/grid.c:192 plug-ins/common/grid.c:193
+msgid "Horizontal offset"
+msgstr "Vodoravni odmik"
 
-#. attach labels
-#: plug-ins/common/grid.c:984
-msgid "Spacing:"
-msgstr "Razmik:"
-
-#. attach labels
-#: plug-ins/common/grid.c:1049
-msgid "Offset:"
-msgstr "Zamik:"
-
-#. attach color selectors
-#: plug-ins/common/grid.c:1082
-msgid "Horizontal Color"
+#: plug-ins/common/grid.c:202 plug-ins/common/grid.c:203
+msgid "Horizontal color"
 msgstr "Vodoravna barva"
 
-#: plug-ins/common/grid.c:1101
-msgid "Vertical Color"
+#: plug-ins/common/grid.c:208 plug-ins/common/grid.c:209
+msgid "Vertical width"
+msgstr "Navpična širina"
+
+#: plug-ins/common/grid.c:214 plug-ins/common/grid.c:215
+msgid "Vertical spacing"
+msgstr "Navpični razmik"
+
+#: plug-ins/common/grid.c:220 plug-ins/common/grid.c:221
+msgid "Vertical offset"
+msgstr "Navpični odmik"
+
+#: plug-ins/common/grid.c:226 plug-ins/common/grid.c:227
+msgid "Vertical color"
 msgstr "Navpična barva"
 
-#: plug-ins/common/grid.c:1119
-msgid "Intersection Color"
+#: plug-ins/common/grid.c:232 plug-ins/common/grid.c:233
+#: plug-ins/common/grid.c:773
+msgid "Intersection width"
+msgstr "Širina preseka"
+
+#: plug-ins/common/grid.c:238 plug-ins/common/grid.c:239
+#: plug-ins/common/grid.c:790
+msgid "Intersection spacing"
+msgstr "Razmik presekov"
+
+#: plug-ins/common/grid.c:244 plug-ins/common/grid.c:245
+#: plug-ins/common/grid.c:806
+msgid "Intersection offset"
+msgstr "Odmik preseka"
+
+#: plug-ins/common/grid.c:250 plug-ins/common/grid.c:251
+msgid "Intersection color"
 msgstr "Barva preseka"
+
+#: plug-ins/common/grid.c:327
+msgid "Drawing grid"
+msgstr "Risanje mreže ..."
 
 #: plug-ins/common/guillotine.c:111
 msgid "Slice Using G_uides"
@@ -14904,7 +14914,7 @@ msgstr "Raz_dalja"
 msgid "Distance of observer from surface"
 msgstr "Oddaljenost opazovalca od površine"
 
-#: plug-ins/lighting/lighting-ui.c:247 plug-ins/map-object/map-object-ui.c:395
+#: plug-ins/lighting/lighting-ui.c:247 plug-ins/map-object/map-object-ui.c:364
 msgid "Recompute preview image"
 msgstr "Ponovno izračunaj predogled slike"
 
@@ -14924,7 +14934,7 @@ msgstr "Možnos_ti"
 msgid "_Light"
 msgstr "_Svetloba"
 
-#: plug-ins/lighting/lighting-ui.c:272 plug-ins/map-object/map-object-ui.c:438
+#: plug-ins/lighting/lighting-ui.c:272 plug-ins/map-object/map-object-ui.c:407
 msgid "_Material"
 msgstr "_Material"
 
@@ -14936,16 +14946,16 @@ msgstr "_Poslikaj odtis"
 msgid "_Environment Map"
 msgstr "_Odsev okolja"
 
-#: plug-ins/lighting/lighting-ui.c:281 plug-ins/map-object/map-object-ui.c:451
+#: plug-ins/lighting/lighting-ui.c:281 plug-ins/map-object/map-object-ui.c:420
 msgid "General Options"
 msgstr "Splošne možnosti"
 
-#: plug-ins/lighting/lighting-ui.c:313 plug-ins/map-object/map-object-ui.c:487
+#: plug-ins/lighting/lighting-ui.c:313 plug-ins/map-object/map-object-ui.c:456
 msgid "Light Settings"
 msgstr "Nastavitve luči"
 
-#: plug-ins/lighting/lighting-ui.c:332 plug-ins/map-object/map-object-ui.c:521
-#: plug-ins/map-object/map-object-ui.c:719
+#: plug-ins/lighting/lighting-ui.c:332 plug-ins/map-object/map-object-ui.c:490
+#: plug-ins/map-object/map-object-ui.c:702
 #: plug-ins/print/print-page-layout.c:384
 msgid "Position"
 msgstr "Položaj"
@@ -15259,81 +15269,81 @@ msgstr "Dol_žina valja"
 msgid "Cylinder length"
 msgstr "Dolžina valja"
 
-#: plug-ins/map-object/map-object-ui.c:347
+#: plug-ins/map-object/map-object-ui.c:316
 msgid "Map to Object"
 msgstr "Poslikaj po predmetu"
 
-#: plug-ins/map-object/map-object-ui.c:383
+#: plug-ins/map-object/map-object-ui.c:352
 msgid "_Preview!"
 msgstr "_Predogled!"
 
-#: plug-ins/map-object/map-object-ui.c:413
+#: plug-ins/map-object/map-object-ui.c:382
 msgid "Show _wireframe"
 msgstr "Pokaži _žični model"
 
-#: plug-ins/map-object/map-object-ui.c:422
+#: plug-ins/map-object/map-object-ui.c:391
 msgid "Update preview _live"
 msgstr "Posodo_bi predogled sproti"
 
-#: plug-ins/map-object/map-object-ui.c:432
+#: plug-ins/map-object/map-object-ui.c:401
 msgid "O_ptions"
 msgstr "_Možnosti"
 
-#: plug-ins/map-object/map-object-ui.c:434
+#: plug-ins/map-object/map-object-ui.c:403
 msgid "Li_ght"
 msgstr "Svet_loba"
 
-#: plug-ins/map-object/map-object-ui.c:436
+#: plug-ins/map-object/map-object-ui.c:405
 msgid "_Viewpoint"
 msgstr "_Gledišče"
 
-#: plug-ins/map-object/map-object-ui.c:443
+#: plug-ins/map-object/map-object-ui.c:412
 msgid "Sp_here"
 msgstr "_Krogla"
 
-#: plug-ins/map-object/map-object-ui.c:445
+#: plug-ins/map-object/map-object-ui.c:414
 msgid "_Box"
 msgstr "Ko_cka"
 
-#: plug-ins/map-object/map-object-ui.c:447
+#: plug-ins/map-object/map-object-ui.c:416
 msgid "C_ylinder"
 msgstr "_Valj"
 
-#: plug-ins/map-object/map-object-ui.c:507
+#: plug-ins/map-object/map-object-ui.c:476
 msgid "Direction Vector"
 msgstr "Vektor smeri"
 
-#: plug-ins/map-object/map-object-ui.c:564
+#: plug-ins/map-object/map-object-ui.c:547
 msgid "Viewpoint Position"
 msgstr "Položaj gledišča"
 
-#: plug-ins/map-object/map-object-ui.c:586
+#: plug-ins/map-object/map-object-ui.c:569
 msgid "First Axis"
 msgstr "Prva os"
 
-#: plug-ins/map-object/map-object-ui.c:606
+#: plug-ins/map-object/map-object-ui.c:589
 msgid "Second Axis"
 msgstr "Druga os"
 
-#: plug-ins/map-object/map-object-ui.c:662
+#: plug-ins/map-object/map-object-ui.c:645
 msgid "Intensity Levels"
 msgstr "Ravni jakosti"
 
-#: plug-ins/map-object/map-object-ui.c:676
+#: plug-ins/map-object/map-object-ui.c:659
 msgid "Reflectivity"
 msgstr "Odsevnost"
 
-#: plug-ins/map-object/map-object-ui.c:779
-#: plug-ins/map-object/map-object-ui.c:879
+#: plug-ins/map-object/map-object-ui.c:762
+#: plug-ins/map-object/map-object-ui.c:862
 #: plug-ins/print/print-page-layout.c:253
 msgid "Size"
 msgstr "Velikost"
 
-#: plug-ins/map-object/map-object-ui.c:792
+#: plug-ins/map-object/map-object-ui.c:775
 msgid "Map Images to Box Faces"
 msgstr "Poslikaj s slikami na površini škatle"
 
-#: plug-ins/map-object/map-object-ui.c:860
+#: plug-ins/map-object/map-object-ui.c:843
 msgid "Images for the Cap Faces"
 msgstr "Slike za površino valja"
 
