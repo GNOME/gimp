@@ -9,16 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-07-10 01:31+0000\n"
-"PO-Revision-Date: 2025-07-10 21:27+0300\n"
+"POT-Creation-Date: 2025-07-18 18:18+0000\n"
+"PO-Revision-Date: 2025-07-19 08:49+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
+"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 23.04.3\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:113
@@ -37,7 +37,7 @@ msgstr "Приклад додатка мовою C"
 #: plug-ins/common/curve-bend.c:623 plug-ins/common/decompose.c:385
 #: plug-ins/common/depth-merge.c:291 plug-ins/common/despeckle.c:235
 #: plug-ins/common/destripe.c:173 plug-ins/common/gradient-map.c:214
-#: plug-ins/common/grid.c:281 plug-ins/common/hot.c:314
+#: plug-ins/common/grid.c:310 plug-ins/common/hot.c:314
 #: plug-ins/common/jigsaw.c:537 plug-ins/common/nl-filter.c:215
 #: plug-ins/common/qbist.c:254 plug-ins/common/sample-colorize.c:425
 #: plug-ins/common/smooth-palette.c:193 plug-ins/common/sparkle.c:301
@@ -68,8 +68,8 @@ msgstr "Приклад додатка мовою C"
 #: plug-ins/common/curve-bend.c:1787 plug-ins/common/curve-bend.c:1822
 #: plug-ins/common/file-gif-export.c:1209 plug-ins/common/file-heif.c:2487
 #: plug-ins/common/file-pdf-export.c:1073 plug-ins/common/file-pdf-load.c:585
-#: plug-ins/common/grid.c:835 plug-ins/common/qbist.c:839
-#: plug-ins/common/qbist.c:881 plug-ins/common/sphere-designer.c:2291
+#: plug-ins/common/qbist.c:839 plug-ins/common/qbist.c:881
+#: plug-ins/common/sphere-designer.c:2291
 #: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:427
 #: plug-ins/flame/flame.c:617 plug-ins/flame/flame.c:822
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1513
@@ -141,10 +141,10 @@ msgstr "Приклад додатка мовою JavaScript (GJS)"
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2488
-#: plug-ins/common/file-pdf-load.c:586 plug-ins/common/grid.c:836
-#: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:260
-#: plug-ins/file-exr/file-exr.c:455 plug-ins/file-psd/psd-load.c:3896
-#: plug-ins/flame/flame.c:823 plug-ins/fractal-explorer/fractal-explorer.c:1403
+#: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2656
+#: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:455
+#: plug-ins/file-psd/psd-load.c:3896 plug-ins/flame/flame.c:823
+#: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/gradient-flare/gradient-flare.c:3452
@@ -332,7 +332,7 @@ msgstr "Нижній край"
 msgid "_Grid"
 msgstr "С_ітка"
 
-#: plug-ins/common/align-layers.c:236 plug-ins/common/grid.c:831
+#: plug-ins/common/align-layers.c:236 plug-ins/common/grid.c:741
 #: plug-ins/gfig/gfig-dialog.c:1357 plug-ins/gfig/gfig-menu.ui:31
 #: plug-ins/imagemap/imap_main.c:1561 plug-ins/imagemap/imap-menu.ui:192
 #: plug-ins/imagemap/imap-menu.ui:284
@@ -565,7 +565,7 @@ msgstr "_Кількість сегментів"
 msgid "Number of segments in blinds"
 msgstr "Кількість сегментів у жалюзі"
 
-#: plug-ins/common/blinds.c:165 plug-ins/map-object/map-object-ui.c:440
+#: plug-ins/common/blinds.c:165 plug-ins/map-object/map-object-ui.c:409
 msgid "Orient_ation"
 msgstr "_Орієнтація"
 
@@ -619,8 +619,8 @@ msgstr "Жалюзі"
 #: plug-ins/file-fits/fits.c:673 plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1093
 #: plug-ins/file-psd/psd-load.c:3102 plug-ins/file-sgi/sgi.c:456
-#: plug-ins/file-tiff/file-tiff-load.c:1556
-#: plug-ins/file-tiff/file-tiff-load.c:2365
+#: plug-ins/file-tiff/file-tiff-load.c:1561
+#: plug-ins/file-tiff/file-tiff-load.c:2385
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:559
 #: plug-ins/gfig/gfig-dialog.c:1287 plug-ins/gimpressionist/general.c:147
 #: plug-ins/map-object/map-object-apply.c:241
@@ -1218,7 +1218,7 @@ msgstr "Графік поточних параметрів"
 #: plug-ins/common/procedure-browser.c:169 plug-ins/gfig/gfig-dialog.c:355
 #: plug-ins/gfig/gfig-dialog.c:1215 plug-ins/gfig/gfig-dialog.c:1360
 #: plug-ins/ifs-compose/ifs-compose.c:1213
-#: plug-ins/metadata/metadata-viewer.c:262
+#: plug-ins/metadata/metadata-viewer.c:223
 msgid "_Close"
 msgstr "З_акрити"
 
@@ -1985,8 +1985,7 @@ msgstr "Перетворений шар"
 
 #: plug-ins/common/curve-bend.c:642
 msgid "Can operate on layers only (but was called on channel or mask)."
-msgstr ""
-"Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
+msgstr "Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
 
 #: plug-ins/common/curve-bend.c:656
 msgid "Cannot operate on layers with masks."
@@ -2003,8 +2002,8 @@ msgstr "Неможливо виконувати дії з порожнім ви�
 #: plug-ins/common/file-mng.c:1409 plug-ins/common/file-pcx.c:490
 #: plug-ins/common/file-pcx.c:533 plug-ins/common/file-png.c:800
 #: plug-ins/common/file-png.c:1370 plug-ins/common/file-ps.c:1159
-#: plug-ins/common/file-ps.c:3739 plug-ins/common/file-psp.c:2620
-#: plug-ins/common/file-psp.c:2670 plug-ins/common/file-qoi.c:275
+#: plug-ins/common/file-ps.c:3739 plug-ins/common/file-psp.c:2634
+#: plug-ins/common/file-psp.c:2684 plug-ins/common/file-qoi.c:275
 #: plug-ins/common/file-raw-data.c:577 plug-ins/common/file-raw-data.c:1714
 #: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:562
 #: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:278
@@ -2627,7 +2626,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: plug-ins/file-raw/file-another-rawtherapee.c:346
 #: plug-ins/file-raw/file-darktable.c:467
 #: plug-ins/file-raw/file-rawtherapee.c:345 plug-ins/file-sgi/sgi.c:315
-#: plug-ins/file-tiff/file-tiff-load.c:299
+#: plug-ins/file-tiff/file-tiff-load.c:304
 #, c-format
 msgid "Opening '%s'"
 msgstr "Відкривається «%s»"
@@ -2716,8 +2715,7 @@ msgstr "Програма на C"
 
 #: plug-ins/common/file-csource.c:125
 msgid "Dump image data in RGB(A) format for C source"
-msgstr ""
-"Створити дамп даних зображення у форматі RGB(A) для початкового коду C"
+msgstr "Створити дамп даних зображення у форматі RGB(A) для початкового коду C"
 
 #: plug-ins/common/file-csource.c:127
 msgid "CSource cannot be run non-interactively."
@@ -3337,12 +3335,10 @@ msgid "Too much compressed data, ignoring extra..."
 msgstr "Забагато стиснених даних, ігноруємо зайві..."
 
 #: plug-ins/common/file-gih.c:119
-#| msgid "Placement"
 msgid "Incremental"
 msgstr "Нарощувальний"
 
 #: plug-ins/common/file-gih.c:120
-#| msgid "Singular"
 msgid "Angular"
 msgstr "Кутовий"
 
@@ -3356,7 +3352,6 @@ msgid "Velocity"
 msgstr "Швидкість"
 
 #: plug-ins/common/file-gih.c:123
-#| msgid "Preset"
 msgid "Pressure"
 msgstr "Тиск"
 
@@ -3647,8 +3642,7 @@ msgstr "Завантаження зображень AVCI"
 
 #: plug-ins/common/file-heif.c:502
 msgid "Load AVCI image - H.264 image encapsulated in HEIF"
-msgstr ""
-"Завантаження зображення AVCI — зображення H.264, яке вбудовано до HEIF"
+msgstr "Завантаження зображення AVCI — зображення H.264, яке вбудовано до HEIF"
 
 #: plug-ins/common/file-heif.c:534
 msgid "Exports HEJ2 images"
@@ -4710,7 +4704,7 @@ msgstr "Додати це зображення"
 #: plug-ins/common/file-pdf-export.c:1223
 #: plug-ins/common/file-pdf-export.c:1296
 #: plug-ins/common/file-pdf-export.c:1394 plug-ins/common/file-ps.c:2218
-#: plug-ins/file-tiff/file-tiff-load.c:1558
+#: plug-ins/file-tiff/file-tiff-load.c:1563
 #, c-format
 msgid "Page %d"
 msgstr "Сторінка %d"
@@ -4815,8 +4809,7 @@ msgstr "Зображення Alias Pix"
 
 #: plug-ins/common/file-pix.c:176 plug-ins/common/file-pix.c:178
 msgid "Loads files of the Alias|Wavefront or Esm Software Pix file format"
-msgstr ""
-"Завантажує файли Alias|Wavefront або у форматі файлів Esm Software Pix"
+msgstr "Завантажує файли Alias|Wavefront або у форматі файлів Esm Software Pix"
 
 #: plug-ins/common/file-pix.c:207 plug-ins/common/file-pix.c:209
 msgid "Export file in the Alias|Wavefront pix/matte file format"
@@ -5027,13 +5020,11 @@ msgstr ""
 #: plug-ins/common/file-png.c:1872
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
-msgstr ""
-"Помилка створення PNG (записування struct) під час експортування «%s»."
+msgstr "Помилка створення PNG (записування struct) під час експортування «%s»."
 
 #: plug-ins/common/file-png.c:1881
 #, c-format
-msgid ""
-"Error while exporting '%s'. Could not create PNG header info structure."
+msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Помилка при експортуванні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
@@ -5416,7 +5407,7 @@ msgstr ""
 "Якщо увімкнено, при експортуванні буде збережено пропорції. Якщо не буде "
 "увімкнено, буде використано значення ширини і висоти."
 
-#: plug-ins/common/file-ps.c:566 plug-ins/map-object/map-object-ui.c:739
+#: plug-ins/common/file-ps.c:566 plug-ins/map-object/map-object-ui.c:722
 msgid "Rotation"
 msgstr "Обертання"
 
@@ -5603,179 +5594,179 @@ msgstr "Невідомий тип стискання %d"
 msgid "Unsupported bit depth %d"
 msgstr "Непідтримувана розрядність на канал: %d"
 
-#: plug-ins/common/file-psp.c:1112
+#: plug-ins/common/file-psp.c:1113
 #, c-format
 msgid "Error reading creator keyword chunk"
 msgstr "Помилка зчитування сегменту ключового слова розробника"
 
-#: plug-ins/common/file-psp.c:1118
+#: plug-ins/common/file-psp.c:1119
 #, c-format
 msgid "Invalid keyword chunk header"
 msgstr "Хибний заголовок сегменту ключового слова"
 
-#: plug-ins/common/file-psp.c:1133 plug-ins/common/file-psp.c:1160
+#: plug-ins/common/file-psp.c:1134 plug-ins/common/file-psp.c:1174
 #, c-format
 msgid "Error reading creator keyword data"
 msgstr "Помилка зчитування даних ключового слова розробника"
 
-#: plug-ins/common/file-psp.c:1244 plug-ins/common/file-psp.c:1253
-#: plug-ins/common/file-psp.c:1262
+#: plug-ins/common/file-psp.c:1258 plug-ins/common/file-psp.c:1267
+#: plug-ins/common/file-psp.c:1276
 #, c-format
 msgid "Error reading color block"
 msgstr "Помилка під час читання блоку кольорів"
 
-#: plug-ins/common/file-psp.c:1273
+#: plug-ins/common/file-psp.c:1287
 #, c-format
 msgid "Error: Unsupported palette size"
 msgstr "Помилка: непідтримуваний розмір палітри"
 
-#: plug-ins/common/file-psp.c:1284
+#: plug-ins/common/file-psp.c:1298
 #, c-format
 msgid "Error reading color palette"
 msgstr "Помилка під час читання палітри кольорів"
 
-#: plug-ins/common/file-psp.c:1710 plug-ins/common/file-psp.c:1724
+#: plug-ins/common/file-psp.c:1724 plug-ins/common/file-psp.c:1738
 #, c-format
 msgid "zlib error"
 msgstr "Помилка zlib"
 
-#: plug-ins/common/file-psp.c:1787 plug-ins/common/file-psp.c:1821
-#: plug-ins/common/file-psp.c:1831
+#: plug-ins/common/file-psp.c:1801 plug-ins/common/file-psp.c:1835
+#: plug-ins/common/file-psp.c:1845
 #, c-format
 msgid "Error reading layer extension information"
 msgstr "Помилка зчитування даних щодо розширення шару"
 
-#: plug-ins/common/file-psp.c:1808
+#: plug-ins/common/file-psp.c:1822
 #, c-format
 msgid "Error reading block information"
 msgstr "Помилка зчитування блокових даних"
 
-#: plug-ins/common/file-psp.c:1888
+#: plug-ins/common/file-psp.c:1902
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr "Хибний підблок шару %s, має бути LAYER"
 
-#: plug-ins/common/file-psp.c:1919 plug-ins/common/file-psp.c:1976
+#: plug-ins/common/file-psp.c:1933 plug-ins/common/file-psp.c:1990
 #, c-format
 msgid "Error reading layer information chunk"
 msgstr "Помилка зчитування інформаційного сегменту шару"
 
-#: plug-ins/common/file-psp.c:2018
+#: plug-ins/common/file-psp.c:2032
 #, c-format
 msgid "Invalid layer dimensions: %dx%d"
 msgstr "Хибні розміри шару: %dx%d"
 
-#: plug-ins/common/file-psp.c:2079
+#: plug-ins/common/file-psp.c:2093
 #, c-format
 msgid "Error creating layer"
 msgstr "Помилка при створенні шару"
 
-#: plug-ins/common/file-psp.c:2124
+#: plug-ins/common/file-psp.c:2138
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr "Хибний підблок %s шару, має бути CHANNEL"
 
-#: plug-ins/common/file-psp.c:2140
+#: plug-ins/common/file-psp.c:2154
 #, c-format
 msgid "Error reading channel information chunk"
 msgstr "Помилка читання фрагмента інформації каналу"
 
-#: plug-ins/common/file-psp.c:2163
+#: plug-ins/common/file-psp.c:2177
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
 msgstr "Хибний тип каналу %d у фрагменті інформації каналу"
 
-#: plug-ins/common/file-psp.c:2267 plug-ins/common/file-psp.c:2284
+#: plug-ins/common/file-psp.c:2281 plug-ins/common/file-psp.c:2298
 #, c-format
 msgid "Error reading tube data chunk"
 msgstr "Помилка при читання фрагмента даних тюбика"
 
-#: plug-ins/common/file-psp.c:2371 plug-ins/common/file-psp.c:2387
+#: plug-ins/common/file-psp.c:2385 plug-ins/common/file-psp.c:2401
 #, c-format
 msgid "Error reading selection chunk"
 msgstr "Помилка зчитування фрагмента позначеного"
 
-#: plug-ins/common/file-psp.c:2380
+#: plug-ins/common/file-psp.c:2394
 #, c-format
 msgid "Invalid selection chunk size"
 msgstr "Некоректний розмір фрагмента позначеного"
 
-#: plug-ins/common/file-psp.c:2404
+#: plug-ins/common/file-psp.c:2418
 #, c-format
 msgid "Error reading end of selection chunk"
 msgstr "Помилка зчитування кінця фрагмента позначеного"
 
-#: plug-ins/common/file-psp.c:2429
+#: plug-ins/common/file-psp.c:2443
 #, c-format
 msgid "Error reading extended block chunk header"
 msgstr "Помилка при читанні заголовка фрагмента розширеного блока"
 
-#: plug-ins/common/file-psp.c:2437
+#: plug-ins/common/file-psp.c:2451
 #, c-format
 msgid "Invalid extended block chunk header"
 msgstr "Некоректний заголовок фрагмента розширеного блоку"
 
-#: plug-ins/common/file-psp.c:2448
+#: plug-ins/common/file-psp.c:2462
 #, c-format
 msgid "Invalid extended block chunk size"
 msgstr "Некоректний розмір фрагмента розширеного блоку"
 
-#: plug-ins/common/file-psp.c:2469
+#: plug-ins/common/file-psp.c:2483
 #, c-format
 msgid "Error reading extended chunk grid data"
 msgstr "Помилка зчитування даних ґратки розширеного фрагмента"
 
-#: plug-ins/common/file-psp.c:2497
+#: plug-ins/common/file-psp.c:2511
 #, c-format
 msgid "Error reading extended chunk guide data"
 msgstr "Помилка при читанні розширеного фрагмента даних напрямної"
 
-#: plug-ins/common/file-psp.c:2515
+#: plug-ins/common/file-psp.c:2529
 #, c-format
 msgid "Invalid guide orientation"
 msgstr "Некоректна орієнтація напрямної"
 
-#: plug-ins/common/file-psp.c:2529
+#: plug-ins/common/file-psp.c:2543
 #, c-format
 msgid "Error reading extended block chunk"
 msgstr "Помилка зчитування фрагмента розширеного блоку"
 
-#: plug-ins/common/file-psp.c:2555 plug-ins/common/file-psp.c:2567
-#: plug-ins/common/file-psp.c:2578
+#: plug-ins/common/file-psp.c:2569 plug-ins/common/file-psp.c:2581
+#: plug-ins/common/file-psp.c:2592
 #, c-format
 msgid "Error reading colorprofile chunk"
 msgstr "Помилка під час читання фрагмента профілю кольорів"
 
-#: plug-ins/common/file-psp.c:2631
+#: plug-ins/common/file-psp.c:2645
 #, c-format
 msgid "Error reading file header."
 msgstr "Помилка при читанні заголовка файлу."
 
-#: plug-ins/common/file-psp.c:2638
+#: plug-ins/common/file-psp.c:2652
 #, c-format
 msgid "Incorrect file signature."
 msgstr "Хибна сигнатура файлу."
 
-#: plug-ins/common/file-psp.c:2652
+#: plug-ins/common/file-psp.c:2666
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Непідтримувана версія формату файлу PSP %d.%d."
 
-#: plug-ins/common/file-psp.c:2672
+#: plug-ins/common/file-psp.c:2686
 msgid "invalid block size"
 msgstr "хибний розмір блока"
 
-#: plug-ins/common/file-psp.c:2681
+#: plug-ins/common/file-psp.c:2695
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "Повторний блок загальних атрибутів зображення."
 
-#: plug-ins/common/file-psp.c:2709
+#: plug-ins/common/file-psp.c:2723
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "Відсутній блок загальних атрибутів зображення."
 
-#: plug-ins/common/file-psp.c:2834
+#: plug-ins/common/file-psp.c:2848
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "Експорт ще не реалізовано."
@@ -6316,8 +6307,7 @@ msgstr ""
 
 #: plug-ins/common/file-svg.c:318
 msgid "For security reasons, this should only be used for trusted input!"
-msgstr ""
-"З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
+msgstr "З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
 
 #: plug-ins/common/file-svg.c:325
 msgid "Retry without limits preventing to parse huge data?"
@@ -7338,65 +7328,90 @@ msgstr "Мапа градієнта"
 msgid "Palette Map"
 msgstr "Відбиття палітри"
 
-#: plug-ins/common/grid.c:164
+#: plug-ins/common/grid.c:163
 msgid "_Grid (legacy)..."
 msgstr "_Сітка (старий)..."
 
-#: plug-ins/common/grid.c:169
+#: plug-ins/common/grid.c:168
 msgid "Draw a grid on the image"
 msgstr "Малює сітку на зображенні"
 
-#: plug-ins/common/grid.c:298
-msgid "Drawing grid"
-msgstr "Малювання сітки"
-
-#. attach labels
-#: plug-ins/common/grid.c:913
+#: plug-ins/common/grid.c:169
+#| msgid ""
+#| "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgid ""
-"Horizontal\n"
-"Lines"
+"Draws a grid using the specified colors. The grid origin is the upper left "
+"corner."
 msgstr ""
-"Горизонтальні\n"
-"лінії"
+"Малює сітку з використанням вказаних кольорів. Початок координат сітки буде"
+" розташовано у верхньому лівому куті."
 
-#: plug-ins/common/grid.c:915
-msgid ""
-"Vertical\n"
-"Lines"
-msgstr ""
-"Вертикальні\n"
-"лінії"
+#: plug-ins/common/grid.c:180 plug-ins/common/grid.c:181
+#| msgid "Horizontal"
+msgid "Horizontal width"
+msgstr "Горизонтальна ширина"
 
-#: plug-ins/common/grid.c:917
-msgid "Intersection"
-msgstr "Перетин"
+#: plug-ins/common/grid.c:186 plug-ins/common/grid.c:187
+#| msgid "Horizontal gradient"
+msgid "Horizontal spacing"
+msgstr "Горизонтальний інтервал"
 
-#: plug-ins/common/grid.c:920
-msgid "Width:"
-msgstr "Ширина:"
+#: plug-ins/common/grid.c:192 plug-ins/common/grid.c:193
+#| msgid "Hori_zontal base"
+msgid "Horizontal offset"
+msgstr "Горизонтальний зсув"
 
-#. attach labels
-#: plug-ins/common/grid.c:984
-msgid "Spacing:"
-msgstr "Інтервал:"
-
-#. attach labels
-#: plug-ins/common/grid.c:1049
-msgid "Offset:"
-msgstr "Зсув:"
-
-#. attach color selectors
-#: plug-ins/common/grid.c:1082
-msgid "Horizontal Color"
+#: plug-ins/common/grid.c:202 plug-ins/common/grid.c:203
+#| msgid "Horizontal Color"
+msgid "Horizontal color"
 msgstr "Колір горизонталей"
 
-#: plug-ins/common/grid.c:1101
-msgid "Vertical Color"
+#: plug-ins/common/grid.c:208 plug-ins/common/grid.c:209
+#| msgid "Vertical"
+msgid "Vertical width"
+msgstr "Вертикальна ширина"
+
+#: plug-ins/common/grid.c:214 plug-ins/common/grid.c:215
+#| msgid "_Vert. spacing:"
+msgid "Vertical spacing"
+msgstr "Вертикальний інтервал"
+
+#: plug-ins/common/grid.c:220 plug-ins/common/grid.c:221
+#| msgid "Ver_tical base"
+msgid "Vertical offset"
+msgstr "Вертикальний зсув"
+
+#: plug-ins/common/grid.c:226 plug-ins/common/grid.c:227
+#| msgid "Vertical Color"
+msgid "Vertical color"
 msgstr "Колір вертикалей"
 
-#: plug-ins/common/grid.c:1119
-msgid "Intersection Color"
+#: plug-ins/common/grid.c:232 plug-ins/common/grid.c:233
+#: plug-ins/common/grid.c:773
+#| msgid "Intersection"
+msgid "Intersection width"
+msgstr "Ширина перетину"
+
+#: plug-ins/common/grid.c:238 plug-ins/common/grid.c:239
+#: plug-ins/common/grid.c:790
+#| msgid "Intersection"
+msgid "Intersection spacing"
+msgstr "Інтервал перетину"
+
+#: plug-ins/common/grid.c:244 plug-ins/common/grid.c:245
+#: plug-ins/common/grid.c:806
+#| msgid "Intersection"
+msgid "Intersection offset"
+msgstr "Зсув перетину"
+
+#: plug-ins/common/grid.c:250 plug-ins/common/grid.c:251
+#| msgid "Intersection Color"
+msgid "Intersection color"
 msgstr "Колір перетинів"
+
+#: plug-ins/common/grid.c:327
+msgid "Drawing grid"
+msgstr "Малювання сітки"
 
 #: plug-ins/common/guillotine.c:111
 msgid "Slice Using G_uides"
@@ -11135,17 +11150,17 @@ msgstr ""
 "Призначений профіль проби кольорів не є профілем CMYK.\n"
 "Цей профіль не буде включено до експортованого зображення."
 
-#: plug-ins/file-tiff/file-tiff-load.c:307
+#: plug-ins/file-tiff/file-tiff-load.c:312
 #, c-format
 msgid "Not a TIFF image or image is corrupt."
 msgstr "Не є зображенням TIFF або зображення пошкоджено."
 
-#: plug-ins/file-tiff/file-tiff-load.c:334
+#: plug-ins/file-tiff/file-tiff-load.c:339
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF «%s» не містить каталоги"
 
-#: plug-ins/file-tiff/file-tiff-load.c:341
+#: plug-ins/file-tiff/file-tiff-load.c:346
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -11163,7 +11178,7 @@ msgstr[2] ""
 "Не вдалося виконати облік каталогу TIFF «%s» за заголовком, хоча, здається, "
 "маємо %d сторінок. Буде виконано спробу завантажити файл із цим припущенням."
 
-#: plug-ins/file-tiff/file-tiff-load.c:472
+#: plug-ins/file-tiff/file-tiff-load.c:477
 msgid "Extra channels with unspecified data."
 msgstr "Зайві канали із даними поза специфікацією."
 
@@ -11174,17 +11189,17 @@ msgstr "Зайві канали із даними поза специфікац�
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:484
+#: plug-ins/file-tiff/file-tiff-load.c:489
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "Нестандартний TIFF: зайві канали без поля «ExtraSamples»."
 
-#: plug-ins/file-tiff/file-tiff-load.c:581
+#: plug-ins/file-tiff/file-tiff-load.c:586
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr ""
 "Не вдалося прочитати сторінку %d з %d. Зображення може бути пошкоджено.\n"
 
-#: plug-ins/file-tiff/file-tiff-load.c:610
+#: plug-ins/file-tiff/file-tiff-load.c:615
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
@@ -11193,7 +11208,7 @@ msgstr ""
 "Для цього зображення визначено лінійний колірний профіль, але цей профіль не "
 "встановлено на першому шарі. Шари під шаром %d буде оброблено як нелінійні."
 
-#: plug-ins/file-tiff/file-tiff-load.c:618
+#: plug-ins/file-tiff/file-tiff-load.c:623
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -11203,36 +11218,36 @@ msgstr ""
 "використовуватимемо лише перший з них. Якщо це призведе до некоректних "
 "результатів, вам варто завантажити кожен з шарів як окреме зображення."
 
-#: plug-ins/file-tiff/file-tiff-load.c:630
+#: plug-ins/file-tiff/file-tiff-load.c:635
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr ""
 "Підозрілива бітова глибина: %d для сторінки %d. Можливо, зображення "
 "пошкоджено."
 
-#: plug-ins/file-tiff/file-tiff-load.c:704
+#: plug-ins/file-tiff/file-tiff-load.c:709
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr "Непідтримувана розрядність на канал %d для сторінки %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:719
+#: plug-ins/file-tiff/file-tiff-load.c:724
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr "Не вдалося отримати ширину зображення з «%s»"
 
-#: plug-ins/file-tiff/file-tiff-load.c:727
+#: plug-ins/file-tiff/file-tiff-load.c:732
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr "Не вдалося отримати довжину зображення з «%s»"
 
-#: plug-ins/file-tiff/file-tiff-load.c:735
+#: plug-ins/file-tiff/file-tiff-load.c:740
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr ""
 "Некоректні розміри зображення (%u x %u) для сторінки %d. Можливо, зображення "
 "пошкоджено."
 
-#: plug-ins/file-tiff/file-tiff-load.c:756
+#: plug-ins/file-tiff/file-tiff-load.c:761
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
@@ -11241,7 +11256,7 @@ msgstr ""
 "Не вдалося отримати фотометричні дані з «%s». Зображення стиснено CCITT. "
 "Припускаємо, мінімальний колір — білий."
 
-#: plug-ins/file-tiff/file-tiff-load.c:763
+#: plug-ins/file-tiff/file-tiff-load.c:768
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr ""
@@ -11251,7 +11266,7 @@ msgstr ""
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: plug-ins/file-tiff/file-tiff-load.c:795
+#: plug-ins/file-tiff/file-tiff-load.c:800
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
@@ -11259,7 +11274,7 @@ msgstr ""
 "Для %s не визначено тип каналу прозорості. Припускаємо, що прозорість не "
 "перемножено попередньо"
 
-#: plug-ins/file-tiff/file-tiff-load.c:820
+#: plug-ins/file-tiff/file-tiff-load.c:825
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
@@ -11270,42 +11285,42 @@ msgstr ""
 "встановлено, хоча є додаткові канали. Припускаємо, що перший додатковий "
 "канал не є попередньо помноженими даними прозорості."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1109
+#: plug-ins/file-tiff/file-tiff-load.c:1114
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr "Некоректне або невідоме стискання %u. Вимикаємо стискання."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1167
+#: plug-ins/file-tiff/file-tiff-load.c:1172
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr "Не вдалося створити зображення: %s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1337
+#: plug-ins/file-tiff/file-tiff-load.c:1342
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "Невідомий тип одиниці роздільності %d. Припускаємо точки на дюйм."
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: plug-ins/file-tiff/file-tiff-load.c:1347
+#: plug-ins/file-tiff/file-tiff-load.c:1352
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr ""
 "Попередження: роздільність вказано без типу одиниці. Припускаємо точки на "
 "дюйм."
 
 #. xres but no yres
-#: plug-ins/file-tiff/file-tiff-load.c:1355
+#: plug-ins/file-tiff/file-tiff-load.c:1360
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr ""
 "Попередження: немає даних щодо роздільності y, припускаємо ту саму, що і для "
 "x"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1376
+#: plug-ins/file-tiff/file-tiff-load.c:1381
 msgid "Invalid image resolution info, using default"
 msgstr ""
 "Некоректні дані щодо роздільності зображення, використовуємо типові значення"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1438
+#: plug-ins/file-tiff/file-tiff-load.c:1443
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "Не вдалося отримати мапи кольорів з «%s»"
@@ -11315,25 +11330,25 @@ msgstr "Не вдалося отримати мапи кольорів з «%s»
 #. * and can cause GIMP to become unresponsive and/or stuck.
 #. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:1528
+#: plug-ins/file-tiff/file-tiff-load.c:1533
 #, c-format
 msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
 msgstr ""
 "Підозрілива кількість додаткових каналів: %d. Ймовірно, пошкоджене "
 "зображення."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1593
+#: plug-ins/file-tiff/file-tiff-load.c:1598
 msgid "TIFF Channel"
 msgstr "Канал TIFF"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1751
+#: plug-ins/file-tiff/file-tiff-load.c:1756
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 "Не вдалося прочитати дані з TIFF «%s». Ймовірно, вміст файла пошкоджено."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1787
-#: plug-ins/file-tiff/file-tiff-load.c:1831
+#: plug-ins/file-tiff/file-tiff-load.c:1792
+#: plug-ins/file-tiff/file-tiff-load.c:1836
 #, c-format
 msgid ""
 "Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
@@ -11341,14 +11356,14 @@ msgstr ""
 "Помилка при відкриванні тимчасового файла %s, «%s», для завантаження "
 "метаданих tiff: %s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1912
+#: plug-ins/file-tiff/file-tiff-load.c:1917
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr ""
 "%s: непідтримуваний формат зображення, немає доступного завантажувача RGBA"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2027
-#: plug-ins/file-tiff/file-tiff-load.c:2224
+#: plug-ins/file-tiff/file-tiff-load.c:2032
+#: plug-ins/file-tiff/file-tiff-load.c:2229
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr ""
@@ -11356,35 +11371,35 @@ msgstr ""
 "— %d."
 
 #. Error reading scanline, stop loading
-#: plug-ins/file-tiff/file-tiff-load.c:2036
-#: plug-ins/file-tiff/file-tiff-load.c:2233
+#: plug-ins/file-tiff/file-tiff-load.c:2041
+#: plug-ins/file-tiff/file-tiff-load.c:2238
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 "Не вдалося прочитати рядок сканування. Зображення може бути пошкоджено. "
 "Рядок помилки — %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:2774
+#: plug-ins/file-tiff/file-tiff-load.c:2992
 msgid "Import from TIFF"
 msgstr "Імпорт TIFF"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2782
+#: plug-ins/file-tiff/file-tiff-load.c:3000
 msgid "_Show reduced images"
 msgstr "Показати з_меншені зображення"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2827
+#: plug-ins/file-tiff/file-tiff-load.c:3045
 msgid "Process extra channel as:"
 msgstr "Обробляти зайвий канал як:"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2830
+#: plug-ins/file-tiff/file-tiff-load.c:3048
 msgid "_Non-premultiplied alpha"
 msgstr "Б_ез попередньо помноженої альфи"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2831
+#: plug-ins/file-tiff/file-tiff-load.c:3049
 msgid "Pre_multiplied alpha"
 msgstr "_Попередньо помножена альфа"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2832
+#: plug-ins/file-tiff/file-tiff-load.c:3050
 msgid "Channe_l"
 msgstr "_Канал"
 
@@ -12938,8 +12953,7 @@ msgid "Radial"
 msgstr "Радіальне"
 
 #: plug-ins/gimpressionist/orientation.c:161
-msgid ""
-"Let the direction from the center determine the direction of the stroke"
+msgid "Let the direction from the center determine the direction of the stroke"
 msgstr "Напрямок від центру визначає напрямок мазка"
 
 #: plug-ins/gimpressionist/orientation.c:168 plug-ins/gimpressionist/size.c:175
@@ -13042,8 +13056,7 @@ msgstr "_Вороний"
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
-msgstr ""
-"В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
+msgstr "В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
 
 #: plug-ins/gimpressionist/orientmap.c:668
 msgid "A_ngle:"
@@ -13518,8 +13531,7 @@ msgstr "Введіть назву для копії градієнтного с�
 
 #: plug-ins/gradient-flare/gradient-flare.c:3322
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr ""
-"Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
+msgstr "Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
 
 #: plug-ins/gradient-flare/gradient-flare.c:3332
 msgid "Delete Gradient Flare"
@@ -14331,7 +14343,7 @@ msgstr "_Мапа зображення..."
 msgid "Create a clickable imagemap"
 msgstr "Створити мапу зображення (imagemap)"
 
-#: plug-ins/imagemap/imap_main.c:658 plug-ins/imagemap/imap_settings.c:170
+#: plug-ins/imagemap/imap_main.c:658 plug-ins/imagemap/imap_settings.c:180
 msgid "<Untitled>"
 msgstr "<Без назви>"
 
@@ -14569,39 +14581,39 @@ msgstr "ALT текст"
 msgid "Target"
 msgstr "Ціль"
 
-#: plug-ins/imagemap/imap_settings.c:88
+#: plug-ins/imagemap/imap_settings.c:95
 msgid "Settings for this Mapfile"
 msgstr "Параметри до цього файлу мапи"
 
-#: plug-ins/imagemap/imap_settings.c:92
+#: plug-ins/imagemap/imap_settings.c:100
 msgid "Filename:"
 msgstr "Назва файлу:"
 
-#: plug-ins/imagemap/imap_settings.c:95
+#: plug-ins/imagemap/imap_settings.c:103
 msgid "Image name:"
 msgstr "Назва зображення:"
 
-#: plug-ins/imagemap/imap_settings.c:96
+#: plug-ins/imagemap/imap_settings.c:104
 msgid "Select Image File"
 msgstr "Вибір назви файлу"
 
-#: plug-ins/imagemap/imap_settings.c:99
+#: plug-ins/imagemap/imap_settings.c:107
 msgid "_Title:"
 msgstr "_Заголовок:"
 
-#: plug-ins/imagemap/imap_settings.c:101
+#: plug-ins/imagemap/imap_settings.c:109
 msgid "Aut_hor:"
 msgstr "_Автор:"
 
-#: plug-ins/imagemap/imap_settings.c:103
+#: plug-ins/imagemap/imap_settings.c:111
 msgid "Default _URL:"
 msgstr "Типовий _URL:"
 
-#: plug-ins/imagemap/imap_settings.c:105
+#: plug-ins/imagemap/imap_settings.c:113
 msgid "_Description:"
 msgstr "_Опис:"
 
-#: plug-ins/imagemap/imap_settings.c:127
+#: plug-ins/imagemap/imap_settings.c:135
 msgid "Map File Format"
 msgstr "Формат файлу мапи"
 
@@ -15009,7 +15021,7 @@ msgstr "_Відстань"
 msgid "Distance of observer from surface"
 msgstr "Відстань спостерігача від поверхні"
 
-#: plug-ins/lighting/lighting-ui.c:247 plug-ins/map-object/map-object-ui.c:395
+#: plug-ins/lighting/lighting-ui.c:247 plug-ins/map-object/map-object-ui.c:364
 msgid "Recompute preview image"
 msgstr "Переобчислити перегляд зображення"
 
@@ -15029,7 +15041,7 @@ msgstr "_Параметри"
 msgid "_Light"
 msgstr "С_вітло"
 
-#: plug-ins/lighting/lighting-ui.c:272 plug-ins/map-object/map-object-ui.c:438
+#: plug-ins/lighting/lighting-ui.c:272 plug-ins/map-object/map-object-ui.c:407
 msgid "_Material"
 msgstr "_Матеріал"
 
@@ -15041,16 +15053,16 @@ msgstr "Мапа _рельєфу"
 msgid "_Environment Map"
 msgstr "Мапа с_ередовища"
 
-#: plug-ins/lighting/lighting-ui.c:281 plug-ins/map-object/map-object-ui.c:451
+#: plug-ins/lighting/lighting-ui.c:281 plug-ins/map-object/map-object-ui.c:420
 msgid "General Options"
 msgstr "Загальні параметри"
 
-#: plug-ins/lighting/lighting-ui.c:313 plug-ins/map-object/map-object-ui.c:487
+#: plug-ins/lighting/lighting-ui.c:313 plug-ins/map-object/map-object-ui.c:456
 msgid "Light Settings"
 msgstr "Параметри світла"
 
-#: plug-ins/lighting/lighting-ui.c:332 plug-ins/map-object/map-object-ui.c:521
-#: plug-ins/map-object/map-object-ui.c:719
+#: plug-ins/lighting/lighting-ui.c:332 plug-ins/map-object/map-object-ui.c:490
+#: plug-ins/map-object/map-object-ui.c:702
 #: plug-ins/print/print-page-layout.c:384
 msgid "Position"
 msgstr "Позиція"
@@ -15365,81 +15377,81 @@ msgstr "Дов_жина циліндра"
 msgid "Cylinder length"
 msgstr "Довжина циліндра"
 
-#: plug-ins/map-object/map-object-ui.c:347
+#: plug-ins/map-object/map-object-ui.c:316
 msgid "Map to Object"
 msgstr "Проекція"
 
-#: plug-ins/map-object/map-object-ui.c:383
+#: plug-ins/map-object/map-object-ui.c:352
 msgid "_Preview!"
 msgstr "_Перегляд"
 
-#: plug-ins/map-object/map-object-ui.c:413
+#: plug-ins/map-object/map-object-ui.c:382
 msgid "Show _wireframe"
 msgstr "Показати _каркас"
 
-#: plug-ins/map-object/map-object-ui.c:422
+#: plug-ins/map-object/map-object-ui.c:391
 msgid "Update preview _live"
 msgstr "Оновити перегляд _живих"
 
-#: plug-ins/map-object/map-object-ui.c:432
+#: plug-ins/map-object/map-object-ui.c:401
 msgid "O_ptions"
 msgstr "_Параметри"
 
-#: plug-ins/map-object/map-object-ui.c:434
+#: plug-ins/map-object/map-object-ui.c:403
 msgid "Li_ght"
 msgstr "Св_ітло"
 
-#: plug-ins/map-object/map-object-ui.c:436
+#: plug-ins/map-object/map-object-ui.c:405
 msgid "_Viewpoint"
 msgstr "_Точка перегляду"
 
-#: plug-ins/map-object/map-object-ui.c:443
+#: plug-ins/map-object/map-object-ui.c:412
 msgid "Sp_here"
 msgstr "С_фера"
 
-#: plug-ins/map-object/map-object-ui.c:445
+#: plug-ins/map-object/map-object-ui.c:414
 msgid "_Box"
 msgstr "_Паралелепіпед"
 
-#: plug-ins/map-object/map-object-ui.c:447
+#: plug-ins/map-object/map-object-ui.c:416
 msgid "C_ylinder"
 msgstr "_Циліндр"
 
-#: plug-ins/map-object/map-object-ui.c:507
+#: plug-ins/map-object/map-object-ui.c:476
 msgid "Direction Vector"
 msgstr "Вектор напрямку"
 
-#: plug-ins/map-object/map-object-ui.c:564
+#: plug-ins/map-object/map-object-ui.c:547
 msgid "Viewpoint Position"
 msgstr "Позиція точки перегляду"
 
-#: plug-ins/map-object/map-object-ui.c:586
+#: plug-ins/map-object/map-object-ui.c:569
 msgid "First Axis"
 msgstr "Перша вісь"
 
-#: plug-ins/map-object/map-object-ui.c:606
+#: plug-ins/map-object/map-object-ui.c:589
 msgid "Second Axis"
 msgstr "Друга вісь"
 
-#: plug-ins/map-object/map-object-ui.c:662
+#: plug-ins/map-object/map-object-ui.c:645
 msgid "Intensity Levels"
 msgstr "Рівні інтенсивності"
 
-#: plug-ins/map-object/map-object-ui.c:676
+#: plug-ins/map-object/map-object-ui.c:659
 msgid "Reflectivity"
 msgstr "Коефіцієнт відбиття"
 
-#: plug-ins/map-object/map-object-ui.c:779
-#: plug-ins/map-object/map-object-ui.c:879
+#: plug-ins/map-object/map-object-ui.c:762
+#: plug-ins/map-object/map-object-ui.c:862
 #: plug-ins/print/print-page-layout.c:253
 msgid "Size"
 msgstr "Розмір"
 
-#: plug-ins/map-object/map-object-ui.c:792
+#: plug-ins/map-object/map-object-ui.c:775
 msgid "Map Images to Box Faces"
 msgstr "Спроектувати на площину паралелепіпеда"
 
-#: plug-ins/map-object/map-object-ui.c:860
+#: plug-ins/map-object/map-object-ui.c:843
 msgid "Images for the Cap Faces"
 msgstr "Зображення для основного циліндра"
 
@@ -15865,7 +15877,7 @@ msgstr "За_писати метадані"
 
 #. IPTC tab
 #: plug-ins/metadata/metadata-editor.c:1228
-#: plug-ins/metadata/metadata-viewer.c:391
+#: plug-ins/metadata/metadata-viewer.c:304
 msgid "IPTC"
 msgstr "IPTC"
 
@@ -16169,60 +16181,41 @@ msgstr "Схід"
 msgid "West"
 msgstr "Захід"
 
-#: plug-ins/metadata/metadata-viewer.c:180
+#: plug-ins/metadata/metadata-viewer.c:143
 msgid "_View Metadata"
 msgstr "По_казати метадані"
 
-#: plug-ins/metadata/metadata-viewer.c:184
+#: plug-ins/metadata/metadata-viewer.c:147
 msgid "View metadata (Exif, IPTC, XMP)"
 msgstr "Показати метадані (Exif, IPTC, XMP)"
 
-#: plug-ins/metadata/metadata-viewer.c:255
+#: plug-ins/metadata/metadata-viewer.c:216
 #, c-format
 msgid "Metadata Viewer: %s"
 msgstr "Оглядач метаданих: %s"
 
-#: plug-ins/metadata/metadata-viewer.c:298
-msgid "Exif Tag"
-msgstr "Мітка Exif"
-
-#: plug-ins/metadata/metadata-viewer.c:307
-#: plug-ins/metadata/metadata-viewer.c:345
-#: plug-ins/metadata/metadata-viewer.c:383
-msgctxt "A tag value"
-msgid "Value"
-msgstr "Значення"
-
-#: plug-ins/metadata/metadata-viewer.c:315
+#: plug-ins/metadata/metadata-viewer.c:260
 msgid "Exif"
 msgstr "Exif"
 
-#: plug-ins/metadata/metadata-viewer.c:336
-msgid "XMP Tag"
-msgstr "Мітка XMP"
-
-#: plug-ins/metadata/metadata-viewer.c:353
+#: plug-ins/metadata/metadata-viewer.c:282
 msgid "XMP"
 msgstr "XMP"
 
-#: plug-ins/metadata/metadata-viewer.c:374
-msgid "IPTC Tag"
-msgstr "Мітка IPTC"
-
-#: plug-ins/metadata/metadata-viewer.c:471
+#: plug-ins/metadata/metadata-viewer.c:425
 #, c-format
 msgid "(%lu more character(s))"
 msgstr "(%lu більше символів)"
 
-#: plug-ins/metadata/metadata-viewer.c:717
+#: plug-ins/metadata/metadata-viewer.c:644
 msgid " meter"
 msgstr " метр"
 
-#: plug-ins/metadata/metadata-viewer.c:718
+#: plug-ins/metadata/metadata-viewer.c:645
 msgid " feet"
 msgstr " футів"
 
-#: plug-ins/metadata/metadata-viewer.c:886
+#: plug-ins/metadata/metadata-viewer.c:805
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "(%llu більше байт)"
@@ -16425,8 +16418,7 @@ msgstr "Включаючи _рамку вікна"
 
 #: plug-ins/screenshot/screenshot.c:212
 msgid "Title bar, window borders and shadow will be part of the image"
-msgstr ""
-"Смужка заголовка, рамки вікна та тінь вікна будуть частиною зображення"
+msgstr "Смужка заголовка, рамки вікна та тінь вікна будуть частиною зображення"
 
 #: plug-ins/screenshot/screenshot.c:221
 msgid "Selection d_elay"
@@ -16571,8 +16563,7 @@ msgstr "Альтернативне ото_чення фільтра"
 
 #: plug-ins/selection-to-path/selection-to-path.c:190
 msgid "A second number of adjacent points to consider when filtering."
-msgstr ""
-"Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
+msgstr "Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
 
 #: plug-ins/selection-to-path/selection-to-path.c:196
 msgid "Filter E_psilon"
@@ -16776,6 +16767,42 @@ msgstr "Не знайдено драйвера TWAIN. Не можна скори
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid ""
+#~ "Horizontal\n"
+#~ "Lines"
+#~ msgstr ""
+#~ "Горизонтальні\n"
+#~ "лінії"
+
+#~ msgid ""
+#~ "Vertical\n"
+#~ "Lines"
+#~ msgstr ""
+#~ "Вертикальні\n"
+#~ "лінії"
+
+#~ msgid "Width:"
+#~ msgstr "Ширина:"
+
+#~ msgid "Spacing:"
+#~ msgstr "Інтервал:"
+
+#~ msgid "Offset:"
+#~ msgstr "Зсув:"
+
+#~ msgid "Exif Tag"
+#~ msgstr "Мітка Exif"
+
+#~ msgctxt "A tag value"
+#~ msgid "Value"
+#~ msgstr "Значення"
+
+#~ msgid "XMP Tag"
+#~ msgstr "Мітка XMP"
+
+#~ msgid "IPTC Tag"
+#~ msgstr "Мітка IPTC"
 
 #~ msgid "Type:"
 #~ msgstr "Тип:"
