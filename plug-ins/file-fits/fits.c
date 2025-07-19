@@ -889,11 +889,13 @@ export_fits (GFile        *file,
     }
   else
     {
+      glong       fpixel[3]     = {1, 1, 1};
       gdouble    *rgb_data;
       gdouble    *rgb_output;
       const Babl *rgb_format;
       const Babl *output_format = babl_format ("Y' double");
       const Babl *converted_format;
+
 
       rgb_format = (channelnum == 3) ? babl_format ("R'G'B' double") :
                                        babl_format ("R'G'B'A double");
@@ -943,12 +945,13 @@ export_fits (GFile        *file,
           babl_process (babl_fish (output_format, converted_format),
                         rgb_output, converted_output, nelements);
 
-          if (fits_write_img (fptr, export_type, 1, nelements,
+          if (fits_write_pix (fptr, export_type, fpixel, nelements,
                               converted_output, &status))
             {
               show_fits_errors (status);
               return FALSE;
             }
+          fpixel[2]++;
 
           g_free (converted_output);
         }
