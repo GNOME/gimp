@@ -172,6 +172,9 @@ gimp_operation_cage_coef_calc_prepare (GeglOperation *operation)
   GimpOperationCageCoefCalc *occc   = GIMP_OPERATION_CAGE_COEF_CALC (operation);
   GimpCageConfig            *config = GIMP_CAGE_CONFIG (occc->config);
 
+  if (! config)
+    return;
+
   gegl_operation_set_format (operation,
                              "output",
                              babl_format_n (babl_type ("float"),
@@ -183,8 +186,12 @@ gimp_operation_cage_coef_calc_get_bounding_box (GeglOperation *operation)
 {
   GimpOperationCageCoefCalc *occc   = GIMP_OPERATION_CAGE_COEF_CALC (operation);
   GimpCageConfig            *config = GIMP_CAGE_CONFIG (occc->config);
+  GeglRectangle              rect   = {};
 
-  return gimp_cage_config_get_bounding_box (config);
+  if (config)
+    return gimp_cage_config_get_bounding_box (config);
+
+  return rect;
 }
 
 static gboolean
@@ -207,7 +214,7 @@ gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
 
   format = babl_format_n (babl_type ("float"), 2 * gimp_cage_config_get_n_points (config));
 
-  n_cage_vertices   = gimp_cage_config_get_n_points (config);
+  n_cage_vertices = gimp_cage_config_get_n_points (config);
 
   it = gegl_buffer_iterator_new (output, roi, 0, format,
                                  GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE, 1);
