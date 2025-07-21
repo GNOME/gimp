@@ -28,7 +28,6 @@
 #include <gdk/gdkwin32.h>
 #endif
 
-
 #include "widgets-types.h"
 
 #include "gimpcursor.h"
