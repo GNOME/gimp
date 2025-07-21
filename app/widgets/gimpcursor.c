@@ -24,6 +24,9 @@
 #ifdef GDK_WINDOWING_WAYLAND
 #include <gdk/gdkwayland.h>
 #endif
+#ifdef GDK_WINDOWING_WIN32
+#include <gdk/gdkwin32.h>
+#endif
 
 #include "widgets-types.h"
 
@@ -470,7 +473,7 @@ gimp_cursor_new (GdkWindow          *window,
       /*
        * MacOS needs the hotspot in surface coordinates
        * X11 needs the hotspot in pixel coordinates (not scaled)
-       * Windows doesn't handle scaled cursors at all
+       * Windows requires the hotspots to be scaled beforehand.
        * Broadway does not appear to support surface cursors at all,
        * let alone scaled surface cursors.
        * https://gitlab.gnome.org/GNOME/gimp/-/merge_requests/545#note_1388777
@@ -478,6 +481,9 @@ gimp_cursor_new (GdkWindow          *window,
       if (FALSE                            ||
 #ifdef GDK_WINDOWING_QUARTZ
           GDK_IS_QUARTZ_DISPLAY (display)  ||
+#endif
+#ifdef GDK_WINDOWING_WIN32
+          GDK_IS_WIN32_DISPLAY (display)   ||
 #endif
           FALSE)
         {
