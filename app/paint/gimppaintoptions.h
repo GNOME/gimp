@@ -104,10 +104,12 @@ struct _GimpPaintOptions
   gboolean                  hard;
 
   gboolean                  expand_use;
+  gboolean                  expand_use_shown;
   gdouble                   expand_amount;
   GimpFillType              expand_fill_type;
   GimpAddMaskType           expand_mask_fill_type;
 
+  gboolean                  jitter_settings_shown;
   GimpJitterOptions        *jitter_options;
 
   gboolean                  dynamics_enabled;
@@ -116,6 +118,7 @@ struct _GimpPaintOptions
   GimpFadeOptions          *fade_options;
   GimpGradientPaintOptions *gradient_options;
   GimpSmoothingOptions     *smoothing_options;
+  gboolean                  smoothing_settings_shown;
 
   GimpViewType              brush_view_type;
   GimpViewSize              brush_view_size;

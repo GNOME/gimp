@@ -416,8 +416,9 @@ jitter_options_gui (GimpPaintOptions *paint_options,
                                     0.01, 1.0, 2);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 0.0, 5.0);
 
-  frame = gimp_prop_expanding_frame_new (config, "use-jitter", NULL,
-                                         scale, NULL);
+  frame = gimp_prop_check_expander_new (config, "use-jitter",
+                                        "jitter-settings-shown",
+                                        scale);
 
   return frame;
 }
@@ -433,8 +434,9 @@ smoothing_options_gui (GimpPaintOptions *paint_options,
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
 
-  frame = gimp_prop_expanding_frame_new (config, "use-smoothing", NULL,
-                                         vbox, NULL);
+  frame = gimp_prop_check_expander_new (config, "use-smoothing",
+                                        "smoothing-settings-shown",
+                                        vbox);
 
   scale = gimp_prop_spin_scale_new (config, "smoothing-quality",
                                     1, 10, 1);
@@ -533,8 +535,9 @@ expand_options_gui (GimpPaintOptions *paint_options,
                                           _("Fill Layer Mask With"), 0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
-  frame = gimp_prop_expanding_frame_new (config, "expand-use", NULL,
-                                         vbox, NULL);
+  frame = gimp_prop_check_expander_new (config, "expand-use",
+                                        "expand-layers-settings-shown",
+                                        vbox);
 
   return frame;
 }
