@@ -64,8 +64,9 @@ static void gui_unique_quartz_exit (void);
         andReplyWith:(NSAppleEventDescriptor *) replyEvent;
 @end
 
-static Gimp                   *unique_gimp   = NULL;
-static GimpAppleEventHandler  *event_handler = NULL;
+static Gimp                   *unique_gimp                            = NULL;
+static GimpAppleEventHandler  *event_handler                          = NULL;
+static void                  (^themeChangeHandler) (NSNotification *) = NULL;
 
 #else
 
@@ -346,6 +347,22 @@ gui_unique_quartz_init (Gimp *gimp)
 
   unique_gimp = gimp;
 
+  themeChangeHandler = ^(NSNotification *notification)
+  {
+    themes_theme_change_notify (GIMP_GUI_CONFIG (unique_gimp->config), NULL, unique_gimp);
+  };
+
+  /* Observe macOS theme changes (Light, Dark) via distributed notifications.
+   * When the "AppleInterfaceThemeChangedNotification" fires, the block runs
+   * on the main thread (via mainQueue), calling themes_theme_change_notify()
+   * to update GIMP's UI theme accordingly.
+   */
+  [[NSDistributedNotificationCenter defaultCenter]
+    addObserverForName: @"AppleInterfaceThemeChangedNotification"
+                object: nil
+                 queue: [NSOperationQueue mainQueue]
+            usingBlock: themeChangeHandler];
+
   /* Using the event handler is a hack, it is necessary because
    * gtkosx_application will drop the file open events if any
    * event processing is done before gtkosx_application_ready is
@@ -371,6 +388,12 @@ gui_unique_quartz_exit (void)
       removeEventHandlerForEventClass: kCoreEventClass
                            andEventID: kAEOpenDocuments];
 
+  [[NSDistributedNotificationCenter defaultCenter]
+    removeObserver: themeChangeHandler
+              name: @"AppleInterfaceThemeChangedNotification"
+            object: nil];
+
+  themeChangeHandler = NULL;
   [event_handler release];
 
   event_handler = NULL;

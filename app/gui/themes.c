@@ -25,6 +25,9 @@
 #ifdef G_OS_WIN32
 #include <windows.h>
 #endif
+#ifdef __APPLE__
+#include <CoreFoundation/CoreFoundation.h>
+#endif
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
@@ -63,6 +66,9 @@ static void   themes_theme_settings_portal_changed (GDBusProxy            *proxy
                                                     const gchar           *signal_name,
                                                     GVariant              *parameters,
                                                     Gimp                  *gimp);
+#endif
+#if defined(__APPLE__)
+static gboolean themes_macos_is_dark_mode_active   (void);
 #endif
 
 
@@ -403,6 +409,13 @@ themes_apply_theme (Gimp          *gimp,
   if (config->theme_scheme == GIMP_THEME_SYSTEM)
     {
       prefer_dark_theme = gimp_is_win32_system_theme_dark ();
+      color_scheme = prefer_dark_theme ? GIMP_THEME_DARK : GIMP_THEME_LIGHT;
+    }
+  else
+#elif defined(__APPLE__)
+  if (config->theme_scheme == GIMP_THEME_SYSTEM)
+    {
+      prefer_dark_theme = themes_macos_is_dark_mode_active ();
       color_scheme = prefer_dark_theme ? GIMP_THEME_DARK : GIMP_THEME_LIGHT;
     }
   else
@@ -852,6 +865,25 @@ themes_theme_settings_portal_changed (GDBusProxy  *proxy,
   g_variant_unref (value);
 }
 #endif
+
+#ifdef __APPLE__
+static gboolean
+themes_macos_is_dark_mode_active (void)
+{
+  gboolean    is_dark = FALSE;
+  CFStringRef style;
+
+  style = CFPreferencesCopyAppValue (CFSTR ("AppleInterfaceStyle"), kCFPreferencesCurrentUser);
+  if (style)
+    {
+      if (CFStringCompare (style, CFSTR ("Dark"), kCFCompareCaseInsensitive) == kCFCompareEqualTo)
+        is_dark = TRUE;
+      CFRelease(style);
+    }
+
+    return is_dark;
+}
+#endif /* __APPLE__ */
 
 #ifdef G_OS_WIN32
 void
