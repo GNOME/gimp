@@ -933,6 +933,8 @@ build_dialog (GimpPlay *play,
   /* Play toolbar */
 
   toolbar = gtk_toolbar_new ();
+  gtk_style_context_add_class (gtk_widget_get_style_context (toolbar),
+                               "flat");
   play->play_button = add_tool_button (toolbar, "win.play",
                                        "media-playback-start",
                                        NULL, _("Start playback"));

@@ -306,6 +306,10 @@ toolbar {
   background-color: @widget-bg-color;
 }
 
+toolbar.flat {
+  background-color: @bg-color;
+}
+
 /* Prevent overly thick border around image buttons */
 .image-button image, button image {
   -gtk-icon-shadow: 0 0 transparent;
