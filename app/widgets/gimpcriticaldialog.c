@@ -117,9 +117,7 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
   gtk_window_set_resizable (GTK_WINDOW (dialog), TRUE);
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
-#if defined(__APPLE__) || defined(_WIN32)
   gtk_window_set_titlebar (GTK_WINDOW (dialog), NULL);
-#endif
 
   dialog->main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (dialog->main_vbox), 6);
