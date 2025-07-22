@@ -674,7 +674,6 @@ border {
 dialog notebook.frame {
   border: 1px solid @border-color;
 }
-
 GimpColorNotebook notebook.frame {
   border-width: 0px;
 }
@@ -792,6 +791,11 @@ actionbar revealer box {
   border-width: 0px;
   border-top-width: 1px;
   border-top-color: @strong-border-color;
+}
+
+statusbar progressbar trough,
+statusbar progressbar progress {
+  min-height: 10px;
 }
 
 /* Sidebar in File > Open */
