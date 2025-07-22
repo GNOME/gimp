@@ -185,7 +185,7 @@ static gdouble     get_duration_factor       (gint             index);
 static gint        get_fps                   (gint             index);
 static gdouble     get_scale                 (gint             index);
 static void        update_scale              (gdouble          scale);
-
+static void        update_frame_label        (void);
 
 /* tag util functions*/
 static gint        parse_ms_tag              (const gchar     *str);
@@ -216,6 +216,7 @@ DEFINE_STD_SET_I18N
 static GtkWidget         *window                    = NULL;
 static GdkWindow         *root_win                  = NULL;
 static GtkWidget         *progress;
+static GtkWidget         *frame_label               = NULL;
 static GtkWidget         *speedcombo                = NULL;
 static GtkWidget         *fpscombo                  = NULL;
 static GtkWidget         *zoomcombo                 = NULL;
@@ -950,11 +951,16 @@ build_dialog (GimpPlay *play,
 
   /* Progress bar. */
 
+  frame_label = gtk_label_new ("");
+  gtk_widget_set_margin_start (frame_label, 12);
+  gtk_box_pack_start (GTK_BOX (hbox), frame_label, FALSE, FALSE, 0);
+  gtk_widget_set_visible (frame_label, TRUE);
+
   adj = gtk_adjustment_new (0, 0, 1, 1, 1, 1);
 
   progress = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, adj);
-  gtk_scale_set_draw_value (GTK_SCALE (progress), TRUE);
   gtk_scale_set_digits (GTK_SCALE (progress), 0);
+  gtk_scale_set_draw_value (GTK_SCALE (progress), FALSE);
   gtk_box_pack_end (GTK_BOX (hbox), progress, TRUE, TRUE, 0);
   gtk_widget_set_visible (progress, TRUE);
 
@@ -1102,8 +1108,9 @@ init_frames (GimpPlay *play)
     frame_number = 0;
 
   adj = gtk_range_get_adjustment (GTK_RANGE (progress));
-
   gtk_adjustment_set_upper (GTK_ADJUSTMENT (adj), total_frames);
+
+  update_frame_label ();
 }
 
 static void
@@ -1228,6 +1235,7 @@ show_frame (void)
   gtk_adjustment_set_value (GTK_ADJUSTMENT (adj), frame_number);
   g_signal_handlers_unblock_by_func (progress, timeline_changed, NULL);
 
+  update_frame_label ();
 }
 
 
@@ -1657,6 +1665,26 @@ update_scale (gdouble scale)
     }
 }
 
+static void
+update_frame_label (void)
+{
+  gchar *text;
+
+  if (total_frames < 10)
+    text = g_strdup_printf ("%d/%d", frame_number, total_frames - 1);
+  else if (total_frames < 100)
+    text = g_strdup_printf ("%02d/%d", frame_number, total_frames - 1);
+  else if (total_frames < 1000)
+    text = g_strdup_printf ("%03d/%d", frame_number, total_frames - 1);
+  else if (total_frames < 10000)
+    text = g_strdup_printf ("%04d/%d", frame_number, total_frames - 1);
+  else
+    text = g_strdup_printf ("%05d/%d", frame_number, total_frames - 1);
+
+  gtk_label_set_text (GTK_LABEL (frame_label), text);
+  g_free (text);
+}
+
 /*
  * Callback emitted when the user hits the Enter key of the zoom combo.
  */
@@ -1685,10 +1713,10 @@ zoomcombo_changed (GtkWidget *combo,
 }
 
 static void
-timeline_changed (GtkWidget       *range,
-                  GtkScrollType   *scroll,
-                  gdouble          value,
-                  gpointer         data)
+timeline_changed (GtkWidget     *range,
+                  GtkScrollType *scroll,
+                  gdouble        value,
+                  gpointer       data)
 {
   frame_number = (gint) value;
 
