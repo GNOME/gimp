@@ -166,6 +166,10 @@ static void        zoomcombo_activated       (GtkEntry        *combo,
                                               gpointer         data);
 static void        zoomcombo_changed         (GtkWidget       *combo,
                                               gpointer         data);
+static void        timeline_changed          (GtkWidget       *range,
+                                              GtkScrollType   *scroll,
+                                              gdouble          value,
+                                              gpointer         data);
 static gboolean    repaint_sda               (GtkWidget       *darea,
                                               cairo_t         *cr,
                                               gpointer         data);
@@ -181,7 +185,7 @@ static gdouble     get_duration_factor       (gint             index);
 static gint        get_fps                   (gint             index);
 static gdouble     get_scale                 (gint             index);
 static void        update_scale              (gdouble          scale);
-
+static void        update_frame_label        (void);
 
 /* tag util functions*/
 static gint        parse_ms_tag              (const gchar     *str);
@@ -212,6 +216,7 @@ DEFINE_STD_SET_I18N
 static GtkWidget         *window                    = NULL;
 static GdkWindow         *root_win                  = NULL;
 static GtkWidget         *progress;
+static GtkWidget         *frame_label               = NULL;
 static GtkWidget         *speedcombo                = NULL;
 static GtkWidget         *fpscombo                  = NULL;
 static GtkWidget         *zoomcombo                 = NULL;
@@ -491,7 +496,7 @@ da_size_callback (GtkWidget     *widget,
       zoomcombo_text_child = GTK_ENTRY (gtk_bin_get_child (GTK_BIN (zoomcombo)));
       if (zoomcombo_text_child)
         {
-          char* new_entry_text = g_strdup_printf  (_("%.1f %%"), scale * 100.0);
+          char* new_entry_text = g_strdup_printf (_("%.1f %%"), scale * 100.0);
 
           gtk_entry_set_text (zoomcombo_text_child, new_entry_text);
           g_free (new_entry_text);
@@ -549,8 +554,8 @@ sda_size_callback (GtkWidget     *widget,
       zoomcombo_text_child = GTK_ENTRY (gtk_bin_get_child (GTK_BIN (zoomcombo)));
       if (zoomcombo_text_child)
         {
-          char* new_entry_text = g_strdup_printf  (_("%.1f %%"),
-                                                   shape_scale * 100.0);
+          char* new_entry_text = g_strdup_printf (_("%.1f %%"),
+                                                  shape_scale * 100.0);
 
           gtk_entry_set_text (zoomcombo_text_child, new_entry_text);
           g_free (new_entry_text);
@@ -731,17 +736,19 @@ static GtkWidget *
 build_dialog (GimpPlay *play,
               gchar    *imagename)
 {
-  GtkWidget *toolbar;
-  GtkWidget *frame;
-  GtkWidget *viewport;
-  GtkWidget *main_vbox;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *abox;
-  GdkVisual *rgba;
-  GAction   *action;
-  gint       index;
-  gchar     *text;
+  GtkWidget     *toolbar;
+  GtkWidget     *frame;
+  GtkWidget     *entry;
+  GtkWidget     *viewport;
+  GtkWidget     *main_vbox;
+  GtkWidget     *vbox;
+  GtkWidget     *hbox;
+  GtkWidget     *abox;
+  GtkAdjustment *adj;
+  GdkVisual     *rgba;
+  GAction       *action;
+  gint           index;
+  gchar         *text;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
@@ -765,25 +772,121 @@ build_dialog (GimpPlay *play,
   gtk_container_add (GTK_CONTAINER (window), main_vbox);
   gtk_widget_set_visible (main_vbox, TRUE);
 
-  toolbar = gtk_toolbar_new ();
-  play->play_button = add_tool_button (toolbar, "win.play", "media-playback-start",
-                                       NULL, _("Start playback"));
-  play->step_back_button = add_tool_button (toolbar, "win.step-back", "media-skip-backward",
-                                            _("Step _back"), _("Step back to previous frame"));
-  play->step_button = add_tool_button (toolbar, "win.step", "media-skip-forward",
-                                       _("_Step"), _("Step to next frame"));
-  play->rewind_button = add_tool_button (toolbar, "win.rewind", "media-seek-backward",
-                                         NULL, _("Rewind the animation"));
-  add_tool_separator (toolbar, FALSE);
-  add_tool_button (toolbar, "win.detach", GIMP_ICON_DETACH,
-                   _("Detach"), _("Detach the animation from the dialog window"));
-  add_tool_button (toolbar, "win.refresh", GIMP_ICON_VIEW_REFRESH,
-                   NULL, _("Reload the image"));
-  add_tool_separator (toolbar, TRUE);
-  add_tool_button (toolbar, "win.help", "help-browser",
-                   NULL, NULL);
+  /* Top option bar. */
 
-  gtk_box_pack_start (GTK_BOX (main_vbox), toolbar, FALSE, FALSE, 0);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_set_visible (hbox, TRUE);
+
+  /* Set up the frame disposal combo. */
+  frame_disposal_combo = gtk_combo_box_text_new ();
+
+  /* 2 styles of default frame disposals: cumulative layers and one
+   * frame per layer.
+   */
+  text = g_strdup (_("Cumulative layers (combine)"));
+  gtk_combo_box_text_insert_text (GTK_COMBO_BOX_TEXT (frame_disposal_combo),
+                                  DISPOSE_COMBINE, text);
+  g_free (text);
+
+  text = g_strdup (_("One frame per layer (replace)"));
+  gtk_combo_box_text_insert_text (GTK_COMBO_BOX_TEXT (frame_disposal_combo),
+                                  DISPOSE_REPLACE, text);
+  g_free (text);
+
+  gtk_combo_box_set_active (GTK_COMBO_BOX (frame_disposal_combo),
+                            settings.default_frame_disposal);
+
+  g_signal_connect (frame_disposal_combo, "changed",
+                    G_CALLBACK (framecombo_changed),
+                    play);
+
+  gtk_box_pack_start (GTK_BOX (hbox), frame_disposal_combo, FALSE, FALSE, 0);
+  gtk_widget_set_visible (frame_disposal_combo, TRUE);
+
+  /* fps combo */
+  fpscombo = gtk_combo_box_text_new ();
+  gtk_box_pack_start (GTK_BOX (hbox), fpscombo, FALSE, FALSE, 0);
+  gtk_widget_set_visible (fpscombo, TRUE);
+
+  for (index = 0; index < 9; index++)
+    {
+      /* list is given in "fps" - frames per second */
+      text = g_strdup_printf  (_("%d fps"), get_fps (index));
+      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (fpscombo), text);
+      g_free (text);
+      if (settings.default_frame_duration == 1000 / get_fps(index))
+        gtk_combo_box_set_active (GTK_COMBO_BOX (fpscombo), index);
+    }
+
+  g_signal_connect (fpscombo, "changed",
+                    G_CALLBACK (fpscombo_changed),
+                    NULL);
+
+  gimp_help_set_help_data (fpscombo, _("Default framerate"), NULL);
+
+  /* Speed Combo */
+  speedcombo = gtk_combo_box_text_new ();
+  gtk_box_pack_start (GTK_BOX (hbox), speedcombo, FALSE, FALSE, 0);
+  gtk_widget_set_visible (speedcombo, TRUE);
+
+  for (index = 0; index < 7; index++)
+    {
+      text = g_strdup_printf  ("%g\303\227", (100 / get_duration_factor (index)) / 100);
+      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (speedcombo), text);
+      g_free (text);
+    }
+
+  gtk_combo_box_set_active (GTK_COMBO_BOX (speedcombo), settings.duration_index);
+
+  g_signal_connect (speedcombo, "changed",
+                    G_CALLBACK (speedcombo_changed),
+                    NULL);
+
+  gimp_help_set_help_data (speedcombo, _("Playback speed"), NULL);
+
+  action = g_action_map_lookup_action (G_ACTION_MAP (window), "speed-reset");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action), FALSE);
+
+  /* Zoom */
+  zoomcombo = gtk_combo_box_text_new_with_entry ();
+  entry = gtk_bin_get_child (GTK_BIN (zoomcombo));
+  gtk_entry_set_width_chars (GTK_ENTRY (entry), 9);
+  gtk_box_pack_start (GTK_BOX (hbox), zoomcombo, FALSE, FALSE, 0);
+  gtk_widget_set_visible (zoomcombo, TRUE);
+  for (index = 0; index < 5; index++)
+    {
+      /* list is given in "fps" - frames per second */
+      text = g_strdup_printf (_("%.1f %%"), get_scale (index) * 100.0);
+      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (zoomcombo), text);
+      g_free (text);
+    }
+
+  /* 1.0 by default. */
+  gtk_combo_box_set_active (GTK_COMBO_BOX (zoomcombo), 2);
+
+  g_signal_connect (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (zoomcombo))),
+                    "activate",
+                    G_CALLBACK (zoomcombo_activated),
+                    NULL);
+  g_signal_connect (zoomcombo, "changed",
+                    G_CALLBACK (zoomcombo_changed),
+                    NULL);
+
+  gimp_help_set_help_data (zoomcombo, _("Zoom"), NULL);
+
+  /* Other settings */
+
+  toolbar = gtk_toolbar_new ();
+  add_tool_separator (toolbar, TRUE);
+  add_tool_button (toolbar, "win.refresh", GIMP_ICON_VIEW_REFRESH,
+                   _("Reload"), _("Reload the image"));
+  add_tool_button (toolbar, "win.detach", GIMP_ICON_DETACH,
+                   _("Detach"), _("Detach the animation from the dialog"
+                                  " window"));
+  add_tool_button (toolbar, "win.help", "help-browser",
+                   _("Help"), NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), toolbar, TRUE, TRUE, 0);
   gtk_widget_set_visible (toolbar, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
@@ -827,106 +930,45 @@ build_dialog (GimpPlay *play,
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_set_visible (hbox, TRUE);
 
+  /* Play toolbar */
+
+  toolbar = gtk_toolbar_new ();
+  gtk_style_context_add_class (gtk_widget_get_style_context (toolbar),
+                               "flat");
+  play->play_button = add_tool_button (toolbar, "win.play",
+                                       "media-playback-start",
+                                       NULL, _("Start playback"));
+  play->step_back_button = add_tool_button (toolbar, "win.step-back",
+                                            "media-skip-backward",
+                                            _("Step _back"),
+                                            _("Step back to previous frame"));
+  play->step_button = add_tool_button (toolbar, "win.step",
+                                       "media-skip-forward", _("_Step"),
+                                       _("Step to next frame"));
+  play->rewind_button = add_tool_button (toolbar, "win.rewind",
+                                         "media-seek-backward", NULL,
+                                         _("Rewind the animation"));
+  gtk_box_pack_start (GTK_BOX (hbox), toolbar, FALSE, FALSE, 0);
+  gtk_widget_set_visible (toolbar, TRUE);
+
   /* Progress bar. */
 
-  progress = gtk_progress_bar_new ();
-  gtk_progress_bar_set_show_text (GTK_PROGRESS_BAR (progress), TRUE);
+  frame_label = gtk_label_new ("");
+  gtk_widget_set_margin_start (frame_label, 12);
+  gtk_box_pack_start (GTK_BOX (hbox), frame_label, FALSE, FALSE, 0);
+  gtk_widget_set_visible (frame_label, TRUE);
+
+  adj = gtk_adjustment_new (0, 0, 1, 1, 1, 1);
+
+  progress = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, adj);
+  gtk_scale_set_digits (GTK_SCALE (progress), 0);
+  gtk_scale_set_draw_value (GTK_SCALE (progress), FALSE);
   gtk_box_pack_end (GTK_BOX (hbox), progress, TRUE, TRUE, 0);
   gtk_widget_set_visible (progress, TRUE);
 
-  /* Zoom */
-  zoomcombo = gtk_combo_box_text_new_with_entry ();
-  gtk_box_pack_end (GTK_BOX (hbox), zoomcombo, FALSE, FALSE, 0);
-  gtk_widget_set_visible (zoomcombo, TRUE);
-  for (index = 0; index < 5; index++)
-    {
-      /* list is given in "fps" - frames per second */
-      text = g_strdup_printf  (_("%.1f %%"), get_scale (index) * 100.0);
-      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (zoomcombo), text);
-      g_free (text);
-    }
-
-  gtk_combo_box_set_active (GTK_COMBO_BOX (zoomcombo), 2); /* 1.0 by default. */
-
-  g_signal_connect (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (zoomcombo))),
-                    "activate",
-                    G_CALLBACK (zoomcombo_activated),
-                    NULL);
-  g_signal_connect (zoomcombo, "changed",
-                    G_CALLBACK (zoomcombo_changed),
-                    NULL);
-
-  gimp_help_set_help_data (zoomcombo, _("Zoom"), NULL);
-
-  /* fps combo */
-  fpscombo = gtk_combo_box_text_new ();
-  gtk_box_pack_end (GTK_BOX (hbox), fpscombo, FALSE, FALSE, 0);
-  gtk_widget_set_visible (fpscombo, TRUE);
-
-  for (index = 0; index < 9; index++)
-    {
-      /* list is given in "fps" - frames per second */
-      text = g_strdup_printf  (_("%d fps"), get_fps (index));
-      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (fpscombo), text);
-      g_free (text);
-      if (settings.default_frame_duration == 1000 / get_fps(index))
-        gtk_combo_box_set_active (GTK_COMBO_BOX (fpscombo), index);
-    }
-
-  g_signal_connect (fpscombo, "changed",
-                    G_CALLBACK (fpscombo_changed),
-                    NULL);
-
-  gimp_help_set_help_data (fpscombo, _("Default framerate"), NULL);
-
-  /* Speed Combo */
-  speedcombo = gtk_combo_box_text_new ();
-  gtk_box_pack_end (GTK_BOX (hbox), speedcombo, FALSE, FALSE, 0);
-  gtk_widget_set_visible (speedcombo, TRUE);
-
-  for (index = 0; index < 7; index++)
-    {
-      text = g_strdup_printf  ("%g\303\227", (100 / get_duration_factor (index)) / 100);
-      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (speedcombo), text);
-      g_free (text);
-    }
-
-  gtk_combo_box_set_active (GTK_COMBO_BOX (speedcombo), settings.duration_index);
-
-  g_signal_connect (speedcombo, "changed",
-                    G_CALLBACK (speedcombo_changed),
-                    NULL);
-
-  gimp_help_set_help_data (speedcombo, _("Playback speed"), NULL);
-
-  action = g_action_map_lookup_action (G_ACTION_MAP (window), "speed-reset");
-  g_simple_action_set_enabled (G_SIMPLE_ACTION (action), FALSE);
-
-  /* Set up the frame disposal combo. */
-  frame_disposal_combo = gtk_combo_box_text_new ();
-
-  /* 2 styles of default frame disposals: cumulative layers and one
-   * frame per layer.
-   */
-  text = g_strdup (_("Cumulative layers (combine)"));
-  gtk_combo_box_text_insert_text (GTK_COMBO_BOX_TEXT (frame_disposal_combo),
-                                  DISPOSE_COMBINE, text);
-  g_free (text);
-
-  text = g_strdup (_("One frame per layer (replace)"));
-  gtk_combo_box_text_insert_text (GTK_COMBO_BOX_TEXT (frame_disposal_combo),
-                                  DISPOSE_REPLACE, text);
-  g_free (text);
-
-  gtk_combo_box_set_active (GTK_COMBO_BOX (frame_disposal_combo),
-                            settings.default_frame_disposal);
-
-  g_signal_connect (frame_disposal_combo, "changed",
-                    G_CALLBACK (framecombo_changed),
-                    play);
-
-  gtk_box_pack_end (GTK_BOX (hbox), frame_disposal_combo, FALSE, FALSE, 0);
-  gtk_widget_set_visible (frame_disposal_combo, TRUE);
+  g_signal_connect_object (progress, "change-value",
+                           G_CALLBACK (timeline_changed),
+                           NULL, 0);
 
   gtk_window_set_resizable (GTK_WINDOW (window), TRUE);
   gtk_window_set_default_size (GTK_WINDOW (window), width + 20, height + 90);
@@ -986,15 +1028,16 @@ static void
 init_frames (GimpPlay *play)
 {
   /* Frames are associated to an unused image. */
-  gint          i;
-  GimpLayer    *new_frame;
-  GimpLayer    *previous_frame;
-  GimpLayer    *new_layer;
-  gboolean      animated;
-  gint          duration = 0;
-  DisposeType   disposal = settings.default_frame_disposal;
-  gchar        *layer_name;
-  GList        *iter;
+  gint           i;
+  GimpLayer     *new_frame;
+  GimpLayer     *previous_frame;
+  GimpLayer     *new_layer;
+  gboolean       animated;
+  gint           duration = 0;
+  DisposeType    disposal = settings.default_frame_disposal;
+  gchar         *layer_name;
+  GList         *iter;
+  GtkAdjustment *adj;
 
   total_frames = g_list_length (layers);
 
@@ -1065,6 +1108,11 @@ init_frames (GimpPlay *play)
   /* Keep the same frame number, unless it is now invalid. */
   if (frame_number >= total_frames)
     frame_number = 0;
+
+  adj = gtk_range_get_adjustment (GTK_RANGE (progress));
+  gtk_adjustment_set_upper (GTK_ADJUSTMENT (adj), total_frames);
+
+  update_frame_label ();
 }
 
 static void
@@ -1181,16 +1229,15 @@ render_frame (gint32 whichframe)
 static void
 show_frame (void)
 {
-  gchar *text;
+  GtkAdjustment *adj;
 
-  /* update the dialog's progress bar */
-  gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (progress),
-                                 ((gfloat) frame_number /
-                                  (gfloat) (total_frames - 0.999)));
+  adj = gtk_range_get_adjustment (GTK_RANGE (progress));
 
-  text = g_strdup_printf (_("Frame %d of %d"), frame_number + 1, total_frames);
-  gtk_progress_bar_set_text (GTK_PROGRESS_BAR (progress), text);
-  g_free (text);
+  g_signal_handlers_block_by_func (progress, timeline_changed, NULL);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (adj), frame_number);
+  g_signal_handlers_unblock_by_func (progress, timeline_changed, NULL);
+
+  update_frame_label ();
 }
 
 
@@ -1620,6 +1667,26 @@ update_scale (gdouble scale)
     }
 }
 
+static void
+update_frame_label (void)
+{
+  gchar *text;
+
+  if (total_frames < 10)
+    text = g_strdup_printf ("%d/%d", frame_number, total_frames - 1);
+  else if (total_frames < 100)
+    text = g_strdup_printf ("%02d/%d", frame_number, total_frames - 1);
+  else if (total_frames < 1000)
+    text = g_strdup_printf ("%03d/%d", frame_number, total_frames - 1);
+  else if (total_frames < 10000)
+    text = g_strdup_printf ("%04d/%d", frame_number, total_frames - 1);
+  else
+    text = g_strdup_printf ("%05d/%d", frame_number, total_frames - 1);
+
+  gtk_label_set_text (GTK_LABEL (frame_label), text);
+  g_free (text);
+}
+
 /*
  * Callback emitted when the user hits the Enter key of the zoom combo.
  */
@@ -1645,6 +1712,21 @@ zoomcombo_changed (GtkWidget *combo,
   /* If no index, user is probably editing by hand. We wait for them to click "Enter". */
   if (index != -1)
     update_scale (get_scale (index));
+}
+
+static void
+timeline_changed (GtkWidget     *range,
+                  GtkScrollType *scroll,
+                  gdouble        value,
+                  gpointer       data)
+{
+  if (value < total_frames)
+    {
+      frame_number = (gint) value;
+
+      render_frame (frame_number);
+      show_frame ();
+    }
 }
 
 static void
