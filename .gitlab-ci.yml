@@ -423,7 +423,7 @@ gimp-flatpak-x64:
     expire_in: 2 days
 
 
-## AppImage CI (Debian) ##
+## Snap CI (Debian) ##
 .snap:
   extends: .default
   rules:
@@ -455,24 +455,19 @@ deps-snap:
     - mkdir -p /kaniko/.docker
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     # Install deps
-    - echo "FROM ubuntu:noble" > Dockerfile
-    - echo "RUN printf \"\e[0Ksection_start:0000000001:deps_install[collapsed=true]\r\e[0KInstalling dependencies provided by Ubuntu\n\"" >> Dockerfile
-    - echo "RUN apt-get update -qq" >> Dockerfile
-    ## 'ca-certificates' is NOT a gimp dep, it is installed only to our Docker image work
-    - echo "RUN apt-get install -qq -y --no-install-recommends ca-certificates" >> Dockerfile
-    - echo "RUN apt-get install -qq -y --no-install-recommends snapd" >> Dockerfile
-    - echo "RUN service snapd start \\" >> Dockerfile
-    - echo "RUN snap install snapd" >> Dockerfile
-    - echo "RUN snap install snapcraft --classic" >> Dockerfile
-    - echo "RUN snap install lxd" >> Dockerfile
-    - echo "RUN lxd init --auto" >> Dockerfile
-    - echo "RUN usermod -a -G lxd user" >> Dockerfile
+    - echo "FROM ghcr.io/canonical/snapcraft:8_core24" > Dockerfile
+    - echo "ENV SNAPCRAFT_BUILD_ENVIRONMENT=host" >> Dockerfile
+    - echo "RUN ln -s /snap/snapcraft/current/usr/share/snapcraft/extensions /snap/snapcraft/current/share/snapcraft/extensions" >> Dockerfile
+    # echo "RUN echo 'exec \$SNAP/bin/python \$SNAP/bin/snapcraft \"\$@\"' >> /snap/bin/snapcraft" >> Dockerfile
     # Build some dependencies
-    - echo "WORKDIR $CI_PROJECT_DIR/build/linux/snap" >> Dockerfile2
-    - echo "RUN echo \$(whoami)" >> Dockerfile2;
-    - echo "RUN newgrp lxd | snapcraft --verbosity=trace --build-for=\$(dpkg --print-architecture)" >> Dockerfile2;
-    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER} --cache=true --cache-ttl=120h --image-fs-extract-retry 1 --verbosity=warn
-    - if [ -f 'Dockerfile2' ]; then /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile2 --destination build-debian-${DEB_VERSION}-${RUNNER}-temp --cache=false --no-push --verbosity=warn; fi
+    - echo "FROM $CI_REGISTRY_IMAGE:build-snap-noble-${RUNNER}" > Dockerfile2;
+    - echo "COPY build/linux/snap /root/project" >> Dockerfile2;
+    - echo "COPY build/linux/snap /" >> Dockerfile2
+    - echo "WORKDIR /root/project" >> Dockerfile2;
+    - echo "RUN cat /snap/bin/snapcraft" >> Dockerfile2
+    - echo "RUN snapcraft --verbose" >> Dockerfile2;
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile_test --destination $CI_REGISTRY_IMAGE:build-snap-noble-${RUNNER} --cache=true --cache-ttl=120h --image-fs-extract-retry 1 --verbosity=warn
+    - if [ -f 'Dockerfile2' ]; then /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile2 --destination build-snap-noble-${RUNNER}-temp --cache=false --no-push --verbosity=warn; fi
   artifacts:
     paths:
       - _install-${RUNNER}/

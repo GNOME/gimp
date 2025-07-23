@@ -45,6 +45,10 @@ slots:
     name: org.gimp.GIMP.UI
 
 plugs:
+  gnome-46-2404:
+    interface: content
+    target: $SNAP/gnome-platform
+    default-provider: gnome-46-2404
   ffmpeg-2404:
     interface: content
     target: ffmpeg-platform
@@ -76,7 +80,7 @@ parts:
     source: https://gitlab.gnome.org/GNOME/babl.git
     source-depth: 1
     build-environment:
-      - CLICOLOR_FORCE: 1
+      - CLICOLOR_FORCE: '1'
       - CFLAGS: -fdiagnostics-color=always
       - CXXFLAGS: -fdiagnostics-color=always
     plugin: meson
@@ -92,7 +96,7 @@ parts:
     source: https://gitlab.gnome.org/GNOME/gegl.git
     source-depth: 1
     build-environment:
-      - CLICOLOR_FORCE: 1
+      - CLICOLOR_FORCE: '1'
       - CFLAGS: -fdiagnostics-color=always
       - CXXFLAGS: -fdiagnostics-color=always
     plugin: meson
@@ -120,7 +124,7 @@ parts:
     source: ../../..
     source-type: local
     build-environment:
-      - CLICOLOR_FORCE: 1
+      - CLICOLOR_FORCE: '1'
       - CFLAGS: -fdiagnostics-color=always
       - CXXFLAGS: -fdiagnostics-color=always
     plugin: meson
@@ -169,13 +173,3 @@ parts:
       current_path=$(grep "# (plug-in-path" ${CRAFT_PART_INSTALL}/etc/gimp/3.0/gimprc | cut -d '"' -f2)
       echo "(plug-in-path \"${current_path}\")" >> ${CRAFT_PART_INSTALL}/etc/gimp/3.0/gimprc
       craftctl default
-
-  cleanup:
-    after: [gimp]
-    source: https://github.com/canonical/gpu-snap.git
-    plugin: dump
-    override-prime: |
-      craftctl default
-      for snap in "core24" "gnome-46-2404" "ffmpeg-2404"; do
-          cd "/snap/$snap/current" && find . -type f,l -exec rm -rf "$CRAFT_PRIME/{}" \;
-      done
