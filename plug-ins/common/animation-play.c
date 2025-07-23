@@ -1720,10 +1720,10 @@ timeline_changed (GtkWidget     *range,
                   gdouble        value,
                   gpointer       data)
 {
-  frame_number = (gint) value;
-
-  if (frame_number < total_frames)
+  if (value < total_frames)
     {
+      frame_number = (gint) value;
+
       render_frame (frame_number);
       show_frame ();
     }
