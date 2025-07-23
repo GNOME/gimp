@@ -1143,8 +1143,10 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_LAST_KNOWN_RELEASE:
       if (core_config->last_known_release != g_value_get_string (value))
         {
-          g_set_str (&core_config->last_known_release,
-                     g_value_get_string (value));
+          const gchar *version = g_value_get_string (value);
+
+          if (gimp_version_cmp (version, NULL) > 0)
+            g_set_str (&core_config->last_known_release, version);
         }
       break;
     case PROP_CONFIG_VERSION:

@@ -36,6 +36,7 @@
 
 #include "core/core-types.h"
 #include "core/gimp.h"
+#include "core/gimp-utils.h"
 
 #include "config/gimpcoreconfig.h"
 #include "config/gimpguiconfig.h"
@@ -66,15 +67,6 @@ static void          gimp_check_updates_callback     (GObject          *source,
 static void          gimp_update_about_dialog        (GimpCoreConfig   *config,
                                                       const GParamSpec *pspec,
                                                       gpointer          user_data);
-
-static gboolean      gimp_version_break              (const gchar      *v,
-                                                      gint             *major,
-                                                      gint             *minor,
-                                                      gint             *micro,
-                                                      gint             *rc,
-                                                      gboolean         *is_git);
-static gint          gimp_version_cmp                (const gchar      *v1,
-                                                      const gchar      *v2);
 
 static const gchar * gimp_get_version_url            (void);
 
@@ -457,141 +449,6 @@ gimp_update_about_dialog (GimpCoreConfig   *config,
                   config->last_known_release);
 #endif
     }
-}
-
-static gboolean
-gimp_version_break (const gchar *v,
-                    gint        *major,
-                    gint        *minor,
-                    gint        *micro,
-                    gint        *rc,
-                    gboolean    *is_git)
-{
-  gchar **versions;
-
-  *major  = 0;
-  *minor  = 0;
-  *micro  = 0;
-  *rc     = 0;
-  *is_git = FALSE;
-
-  if (v == NULL)
-    return FALSE;
-
-  versions = g_strsplit_set (v, ".", 3);
-  if (versions[0] != NULL)
-    {
-      *major = g_ascii_strtoll (versions[0], NULL, 10);
-      if (versions[1] != NULL)
-        {
-          *minor = g_ascii_strtoll (versions[1], NULL, 10);
-          if (versions[2] != NULL)
-            {
-              gchar **micro_rc_git;
-
-              *micro = g_ascii_strtoll (versions[2], NULL, 10);
-
-              micro_rc_git = g_strsplit_set (versions[2], "-", 2);
-
-              if (g_strv_length (micro_rc_git) > 1 &&
-                  strlen (micro_rc_git[1]) > 2     &&
-                  micro_rc_git[1][0] == 'R'           &&
-                  micro_rc_git[1][1] == 'C')
-                {
-                  gchar **rc_git;
-
-                  *rc = g_ascii_strtoll (micro_rc_git[1] + 2, NULL, 10);
-
-                  rc_git = g_strsplit_set (micro_rc_git[1], "+", 2);
-
-                  if (g_strv_length (rc_git) > 1 &&
-                      strlen (rc_git[1]) == 3    &&
-                      rc_git[1][0] == 'g'        &&
-                      rc_git[1][1] == 'i'        &&
-                      rc_git[1][2] == 't')
-                    {
-                      *is_git = TRUE;
-                    }
-
-                  g_strfreev (rc_git);
-                }
-
-              g_strfreev (micro_rc_git);
-            }
-        }
-    }
-
-  g_strfreev (versions);
-
-  return (*major > 0 || *minor > 0 || *micro > 0);
-}
-
-/**
- * gimp_version_cmp:
- * @v1: a string representing a version, ex. "2.10.22".
- * @v2: a string representing another version, ex. "2.99.2".
- *
- * If @v2 is %NULL, @v1 is compared to the currently running version.
- *
- * Returns: an integer less than, equal to, or greater than zero if @v1
- *          is found to represent a version respectively, lower than,
- *          matching, or greater than @v2.
- */
-static gint
-gimp_version_cmp (const gchar *v1,
-                  const gchar *v2)
-{
-  gint     major1;
-  gint     minor1;
-  gint     micro1;
-  gint     rc1;
-  gboolean is_git1;
-  gint     major2  = GIMP_MAJOR_VERSION;
-  gint     minor2  = GIMP_MINOR_VERSION;
-  gint     micro2  = GIMP_MICRO_VERSION;
-  gint     rc2     = 0;
-  gboolean is_git2 = FALSE;
-
-#if defined(GIMP_RC_VERSION)
-  rc2 = GIMP_RC_VERSION;
-#if defined(GIMP_IS_RC_GIT)
-  is_git2 = TRUE;
-#endif
-#endif
-
-  g_return_val_if_fail (v1 != NULL, -1);
-
-  if (! gimp_version_break (v1, &major1, &minor1, &micro1, &rc1, &is_git1))
-    {
-      /* If version is not properly parsed, something is wrong with
-       * upstream version number or parsing. This should not happen.
-       */
-      g_printerr ("%s: version not properly formatted: %s\n",
-                  G_STRFUNC, v1);
-
-      return -1;
-    }
-  if (v2 && ! gimp_version_break (v2, &major2, &minor2, &micro2, &rc2, &is_git2))
-    {
-      g_printerr ("%s: version not properly formatted: %s\n",
-                  G_STRFUNC, v2);
-
-      return 1;
-    }
-
-  if (major1 == major2 && minor1 == minor2 && micro1 == micro2 &&
-      rc1 == rc2 && is_git1 == is_git2)
-    return 0;
-  else if (major1 > major2                                                                    ||
-           (major1 == major2 && minor1 > minor2)                                              ||
-           (major1 == major2 && minor1 == minor2 && micro1 > micro2)                          ||
-           /* RC 0 is the real release, so it's "higher" than any other. */
-           (major1 == major2 && minor1 == minor2 && micro1 == micro2 && rc1 == 0 && rc2 > 0)  ||
-           (major1 == major2 && minor1 == minor2 && micro1 == micro2 && rc1 > rc2 && rc2 > 0) ||
-           (major1 == major2 && minor1 == minor2 && micro1 == micro2 && rc1 == rc2 && is_git1))
-    return 1;
-  else
-    return -1;
 }
 
 static const gchar *
