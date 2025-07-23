@@ -1,0 +1,181 @@
+name: gimp
+title: GIMP
+summary: GNU Image Manipulation Program
+description: |
+  Whether you are a graphic designer, photographer, illustrator, or scientist,
+  GIMP provides you with sophisticated tools to get your job done. You can
+  further enhance your productivity with GIMP thanks to many customization
+  options and 3rd party plugins.
+
+website: https://gimp.org/
+contact: https://gitlab.gnome.org/GNOME/gimp/-/issues
+issues: https://gitlab.gnome.org/GNOME/gimp/-/issues
+source-code: https://gitlab.gnome.org/GNOME/gimp
+license: MIT
+
+version: 3.0.4
+
+grade: stable
+confinement: strict
+base: core24
+compression: lzo
+
+platforms:
+  amd64:
+    build-on: [amd64]
+    build-for: [amd64]
+  arm64:
+    build-on: [arm64]
+    build-for: [arm64]
+
+layout:
+  /etc/gimp:
+    bind: $SNAP/etc/gimp
+  /usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/babl-0.1:
+    bind: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/babl-0.1
+  /usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gegl-0.4:
+    bind: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gegl-0.4
+  /usr/share/locale:
+    bind: $SNAP/usr/share/locale
+
+slots:
+  dbus-gimp:
+    interface: dbus
+    bus: session
+    name: org.gimp.GIMP.UI
+
+plugs:
+  ffmpeg-2404:
+    interface: content
+    target: ffmpeg-platform
+    default-provider: ffmpeg-2404
+
+apps:
+  gimp:
+    command: usr/bin/gimp
+    extensions: [gnome]
+    desktop: usr/share/applications/gimp.desktop
+    common-id: org.gimp.GIMP
+    environment:
+      HOME: $SNAP_REAL_HOME
+      GI_TYPELIB_PATH: $SNAP/gnome-platform/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gjs/girepository-1.0:$GI_TYPELIB_PATH
+      LD_LIBRARY_PATH: $SNAP/usr/local/lib:$SNAP/usr/local/lib/libheif:$SNAP/lib:$SNAP/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$SNAP/gnome-platform/usr/lib:$SNAP/gnome-platform/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$SNAP/usr/lib:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/lapack:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/blas
+      LIBHEIF_PLUGIN_PATH: $SNAP/usr/local/lib/libheif
+    slots:
+      - dbus-gimp
+    plugs:
+      - cups-control
+      - browser-support
+      - home
+      - network
+      - removable-media
+      - unity7
+
+parts:
+  babl:
+    source: https://gitlab.gnome.org/GNOME/babl.git
+    source-depth: 1
+    build-environment:
+      - CLICOLOR_FORCE: 1
+      - CFLAGS: -fdiagnostics-color=always
+      - CXXFLAGS: -fdiagnostics-color=always
+    plugin: meson
+    meson-parameters:
+      - -Dprefix=/usr
+      - -Dwith-docs=false
+      - -Dgi-docgen=disabled
+      - -Dpkgconfig.relocatable=true
+
+  gegl:
+    after:
+      - babl
+    source: https://gitlab.gnome.org/GNOME/gegl.git
+    source-depth: 1
+    build-environment:
+      - CLICOLOR_FORCE: 1
+      - CFLAGS: -fdiagnostics-color=always
+      - CXXFLAGS: -fdiagnostics-color=always
+    plugin: meson
+    meson-parameters:
+      - -Dprefix=/usr
+      - -Ddocs=false
+      - -Dgi-docgen=disabled
+      - -Dworkshop=true
+      - -Dpkgconfig.relocatable=true
+    build-packages:
+      - libmaxflow-dev
+      - libopenexr-dev
+      - libsuitesparse-dev
+    stage-packages:
+      - libgraphblas7
+      - liblapack3
+      - libmaxflow0
+      - libopenexr-3-1-30
+      - libumfpack6
+
+  gimp:
+    after:
+      - babl
+      - gegl
+    source: ../../..
+    source-type: local
+    build-environment:
+      - CLICOLOR_FORCE: 1
+      - CFLAGS: -fdiagnostics-color=always
+      - CXXFLAGS: -fdiagnostics-color=always
+    plugin: meson
+    meson-parameters:
+      - -Dprefix=/usr
+      - -Dgi-docgen=disabled
+      - -Drelocatable-bundle=yes
+      - -Dpkgconfig.relocatable=true
+      - -Dcheck-update=no
+      - -Denable-default-bin=enabled
+      - -Dbuild-id=org.gimp.GIMP.snapcraft.stable
+    build-packages:
+      - bison
+      - flex
+      - libcfitsio-dev
+      - libgexiv2-dev
+      - libgs-dev
+      - libmng-dev
+      - libmypaint-dev
+      - libqoi-dev
+      - libwmf-dev
+      - libxmu-dev
+      - xsltproc
+    build-snaps:
+      - ffmpeg-2404
+    stage-packages:
+      - glib-networking
+      - libgexiv2-2
+      - libgs10
+      - libmng2
+      - libmypaint-1.5-1
+      - libwmf-0.2-7
+      - libxmu6
+      - mypaint-brushes
+      - poppler-data
+    override-stage: |
+      # fix gimp python interpreters file
+      cat <<EOF > ${CRAFT_PART_INSTALL}/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/gimp/3.0/interpreters/pygimp.interp
+      python=/usr/bin/python3
+      python3=/usr/bin/python3
+      /usr/bin/python=/usr/bin/python3
+      /usr/bin/python3=/usr/bin/python3
+      :Python:E::py::python3:
+      EOF
+      # update gimp's plugin search path so it will pick up plugins mounted over snapd's content interface
+      current_path=$(grep "# (plug-in-path" ${CRAFT_PART_INSTALL}/etc/gimp/3.0/gimprc | cut -d '"' -f2)
+      echo "(plug-in-path \"${current_path}\")" >> ${CRAFT_PART_INSTALL}/etc/gimp/3.0/gimprc
+      craftctl default
+
+  cleanup:
+    after: [gimp]
+    source: https://github.com/canonical/gpu-snap.git
+    plugin: dump
+    override-prime: |
+      craftctl default
+      for snap in "core24" "gnome-46-2404" "ffmpeg-2404"; do
+          cd "/snap/$snap/current" && find . -type f,l -exec rm -rf "$CRAFT_PRIME/{}" \;
+      done

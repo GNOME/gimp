@@ -423,6 +423,65 @@ gimp-flatpak-x64:
     expire_in: 2 days
 
 
+## AppImage CI (Debian) ##
+.snap:
+  extends: .default
+  rules:
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Snap.*/'
+      interruptible: true
+    - if: '$GIMP_CI_SNAP != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_SNAP.*/'
+    - <<: *CI_COMMIT
+    - <<: *CI_RELEASE
+  parallel:
+    matrix:
+      - RUNNER: [aarch64, x86_64_v2]
+  tags:
+    - $RUNNER
+  image: $CI_REGISTRY_IMAGE:build-snap-noble-${RUNNER}
+  before_script:
+    - export GIMP_PREFIX="${CI_PROJECT_DIR}/_install-${RUNNER}"
+  timeout: 20m
+
+deps-snap:
+  extends: .snap
+  stage: dependencies
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  variables:
+    PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
+  script:
+    - export container=docker
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    # Install deps
+    - echo "FROM ubuntu:noble" > Dockerfile
+    - echo "RUN printf \"\e[0Ksection_start:0000000001:deps_install[collapsed=true]\r\e[0KInstalling dependencies provided by Ubuntu\n\"" >> Dockerfile
+    - echo "RUN apt-get update -qq" >> Dockerfile
+    ## 'ca-certificates' is NOT a gimp dep, it is installed only to our Docker image work
+    - echo "RUN apt-get install -qq -y --no-install-recommends ca-certificates" >> Dockerfile
+    - echo "RUN apt-get install -qq -y --no-install-recommends snapd" >> Dockerfile
+    - echo "RUN service snapd start \\" >> Dockerfile
+    - echo "RUN snap install snapd" >> Dockerfile
+    - echo "RUN snap install snapcraft --classic" >> Dockerfile
+    - echo "RUN snap install lxd" >> Dockerfile
+    - echo "RUN lxd init --auto" >> Dockerfile
+    - echo "RUN usermod -a -G lxd user" >> Dockerfile
+    # Build some dependencies
+    - echo "WORKDIR $CI_PROJECT_DIR/build/linux/snap" >> Dockerfile2
+    - echo "RUN echo \$(whoami)" >> Dockerfile2;
+    - echo "RUN newgrp lxd | snapcraft --verbosity=trace --build-for=\$(dpkg --print-architecture)" >> Dockerfile2;
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER} --cache=true --cache-ttl=120h --image-fs-extract-retry 1 --verbosity=warn
+    - if [ -f 'Dockerfile2' ]; then /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile2 --destination build-debian-${DEB_VERSION}-${RUNNER}-temp --cache=false --no-push --verbosity=warn; fi
+  artifacts:
+    paths:
+      - _install-${RUNNER}/
+      - babl/_build-${RUNNER}/meson-logs/meson-log.txt
+      - babl/_build-${RUNNER}/config.h
+      - gegl/_build-${RUNNER}/meson-logs/meson-log.txt
+      - gegl/_build-${RUNNER}/config.h
+    expire_in: 2 hours
+
 ## WINDOWS pipelines (native MSYS2) ##
 .win:
   extends: .default
