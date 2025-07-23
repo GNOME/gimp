@@ -3,8 +3,9 @@ spec:
     distribution_pipeline:
       description: 'Pipelines that creates installable GIMP'
       options:
-        - GIMP_CI_APPIMAGE #trigger the appimage making.
+        - GIMP_CI_APPIMAGE #trigger the appimage making (base & fast).
         - GIMP_CI_FLATPAK #trigger the flatpak build and publishing (base but slow)
+        - GIMP_CI_SNAP #trigger the snap build (base but slow)
         - GIMP_CI_WIN_INSTALLER #trigger all native MSYS2 builds then creates Inno Windows installer (base but slow)
         - GIMP_CI_MS_STORE #trigger arm64 and x64 native MSYS2 builds then creates a .msixbundle (base but slow)
         - none
@@ -419,6 +420,53 @@ gimp-flatpak-x64:
     expire_in: 2 days
 
 
+## Snap CI (Ubuntu) ##
+.snap:
+  extends: .default
+  rules:
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Snap.*/'
+      interruptible: true
+    - if: '$GIMP_CI_SNAP != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_SNAP.*/'
+  parallel:
+    matrix:
+      - DPKG_ARCH: [arm64, amd64]
+  image:
+    name: $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_CORE_VERSION}
+    entrypoint: [""]
+  variables:
+    SNAPCRAFT_CORE_VERSION: "8_core24"
+    #@brunvonlope private credentials. We are using these for now
+    #until we don't get acess to 'gimp' entry on Snap Store: https://github.com/snapcrafters/gimp/issues/447
+    LAUNCHPAD_CREDENTIALS_ACCESS_TOKEN: pPs367Km5glpfXXK9BQl
+    LAUNCHPAD_CREDENTIALS_ACCESS_SECRET: PQ0r1JGdHQRWQCS255jNZdglCcK4KDmsGRSZxl4CZwWvMF00GLRFbz1185L08cjh5zWqhQddsvmgLg7l
+  timeout: 120m
+
+deps-snap:
+  extends: .snap
+  stage: dependencies
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  script:
+    - sh build/linux/snap/1_build-deps-snapcraft.sh
+
+gimp-snap:
+  extends: .snap
+  needs: ["deps-snap"]
+  stage: build
+  variables:
+    #Snapcraft/launchpad does not allow shallow clones
+    GIT_DEPTH: 0
+    GIT_SUBMODULE_STRATEGY: recursive
+  script:
+    - sh build/linux/snap/2_build-gimp-snapcraft.sh
+  artifacts:
+    paths:
+      - temp*.snap
+      - snapcraft*.txt
+    expire_in: 2 days
+
+
 ## WINDOWS pipelines (native MSYS2) ##
 .win:
   extends: .default
@@ -756,6 +804,22 @@ dist-flatpak-weekly:
     expose_as: 'Linux flatpak'
     paths:
       - build/linux/flatpak/_Output/
+    expire_in: 8 days
+
+dist-snap-weekly:
+  extends: .default
+  rules:
+    - !reference [.snap, rules]
+  needs: ["gimp-snap"]
+  stage: distribution
+  image: !reference [.snap, image]
+  variables: !reference [.snap, variables]
+  script:
+    - sh build/linux/snap/3_dist-gimp-snapcraft.sh
+  artifacts:
+    expose_as: 'Linux snap'
+    paths:
+      - build/linux/snap/_Output/
     expire_in: 8 days
 
 dist-installer-weekly:
