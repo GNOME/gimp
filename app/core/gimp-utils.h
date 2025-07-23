@@ -146,8 +146,8 @@ GimpImage  * gimp_create_image_from_buffer         (Gimp              *gimp,
                                                     GeglBuffer        *buffer,
                                                     const gchar       *image_name);
 
-gint         gimp_view_size_get_larger             (gint view_size);
-gint         gimp_view_size_get_smaller            (gint view_size);
+gint         gimp_view_size_get_larger             (gint               view_size);
+gint         gimp_view_size_get_smaller            (gint               view_size);
 
 #ifdef G_OS_WIN32
 
@@ -159,5 +159,8 @@ gboolean     gimp_win32_have_windows_ink           (void);
 GList      * gimp_get_type_children                (GType              type,
                                                     GList             *types,
                                                     GList             *excluded);
+
+gint         gimp_version_cmp                      (const gchar       *v1,
+                                                    const gchar       *v2);
 
 #endif /* __APP_GIMP_UTILS_H__ */
