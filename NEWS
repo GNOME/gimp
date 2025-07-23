@@ -20,6 +20,14 @@ Core:
     "path".
   - Some cleanup of outdated disabled unit tests and other warnings.
   - Restructuration of internal GimpControllerManager API.
+  - Various code have been moving away from GtkTreeView and some new
+    internal classes were added as a preparation for GTK4 port.
+
+Tools:
+
+  - MyPaint brush tool was ported to the newer MyPaintSurface2 API. A
+    consequence is that we now depend on mypaint-brushes-2.0 instead of
+    mypaint-brushes-1.0.
 
 Graphical User Interface:
 
@@ -28,6 +36,27 @@ Graphical User Interface:
     set.
   - Make the comment text area sensitive in Export procedure dialogs
     depending on whether "Save Comment" checkbox is checked or not.
+  - In various GUI using a GtkStack (Input Controller dialogue,
+    Preferences dialogue, and Welcome dialogue), we now turn off
+    animations when it is set OFF system-wide.
+
+Plug-Ins:
+
+  - TIFF - Add support for the following features, based on unofficial
+    documentation and user-provided sample files:
+    * Sets the selected layer based on the image-level metadata.
+    * Sets the visibility of the background layer based on the image
+      level metadata.
+    * Sets the blend mode and color tag of each layer, based on extended
+      layer-level metadata. Legacy blend modes are used, based on
+      user feedback and comparison with Sketchbook.
+    * Creates group layers and stores layers in them. Layers are read from
+      top to bottom, and layer groups are added and filled based on layer
+      level metadata.
+  - Animation Playback was redesigned to more closely resemble standard
+    playback UIs. The redesign also changes the progress bar to a
+    GtkScale, so users can more easily move to different frames on the
+    timeline.
 
 PDB:
 
