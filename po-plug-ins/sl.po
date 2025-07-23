@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-07-18 18:18+0000\n"
-"PO-Revision-Date: 2025-07-19 11:27+0200\n"
+"POT-Creation-Date: 2025-07-23 00:37+0000\n"
+"PO-Revision-Date: 2025-07-23 13:45+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -416,130 +416,133 @@ msgstr "Iskanje ozadja animacije ..."
 msgid "Optimizing animation"
 msgstr "Optimiziranje animacije ..."
 
-#: plug-ins/common/animation-play.c:329
+#: plug-ins/common/animation-play.c:334
 msgid "_Playback..."
 msgstr "_Predvajaj …"
 
-#: plug-ins/common/animation-play.c:334
+#: plug-ins/common/animation-play.c:339
 msgid "Preview a GIMP layer-based animation"
 msgstr "Pokaži predogled animacije GIMP na osnovi plasti"
 
-#: plug-ins/common/animation-play.c:369
+#: plug-ins/common/animation-play.c:374
 #, c-format
 msgid "Procedure '%s' only works in interactive mode."
 msgstr "Procedura »%s« deluje le v interaktivnem načinu."
 
-#: plug-ins/common/animation-play.c:387 plug-ins/common/animation-play.c:770
-#: plug-ins/common/animation-play.c:1393
+#: plug-ins/common/animation-play.c:392 plug-ins/common/animation-play.c:940
+#: plug-ins/common/animation-play.c:1440
 msgid "Start playback"
 msgstr "Zaženi predvajanje"
 
-#: plug-ins/common/animation-play.c:388 plug-ins/common/animation-play.c:772
+#: plug-ins/common/animation-play.c:393 plug-ins/common/animation-play.c:944
 msgid "Step back to previous frame"
 msgstr "Korak na prejšnjo sličico"
 
-#: plug-ins/common/animation-play.c:389 plug-ins/common/animation-play.c:774
+#: plug-ins/common/animation-play.c:394 plug-ins/common/animation-play.c:947
 msgid "Step to next frame"
 msgstr "Korak na naslednjo sličico"
 
-#: plug-ins/common/animation-play.c:390 plug-ins/common/animation-play.c:776
+#: plug-ins/common/animation-play.c:395 plug-ins/common/animation-play.c:950
 msgid "Rewind the animation"
 msgstr "Previj animacijo na začetek"
 
-#: plug-ins/common/animation-play.c:395
+#: plug-ins/common/animation-play.c:400
 msgid "Increase the speed of the animation"
 msgstr "Pohitrite animacijo"
 
-#: plug-ins/common/animation-play.c:396
+#: plug-ins/common/animation-play.c:401
 msgid "Decrease the speed of the animation"
 msgstr "Upočasnite animacijo"
 
-#: plug-ins/common/animation-play.c:397
+#: plug-ins/common/animation-play.c:402
 msgid "Reset the speed of the animation"
 msgstr "Ponastavite hitrost animacije"
 
-#: plug-ins/common/animation-play.c:402 plug-ins/common/animation-play.c:779
+#: plug-ins/common/animation-play.c:407 plug-ins/common/animation-play.c:885
 msgid "Detach the animation from the dialog window"
 msgstr "Odpni animacijo od pogovornega okna"
 
-#: plug-ins/common/animation-play.c:403 plug-ins/common/animation-play.c:781
+#: plug-ins/common/animation-play.c:408 plug-ins/common/animation-play.c:883
 msgid "Reload the image"
 msgstr "Ponovno naloži sliko"
 
-#: plug-ins/common/animation-play.c:404 plug-ins/imagemap/imap-menu.ui:26
+#: plug-ins/common/animation-play.c:409 plug-ins/imagemap/imap-menu.ui:26
 msgid "Quit"
 msgstr "Izhod"
 
 #. list is given in "fps" - frames per second
-#: plug-ins/common/animation-play.c:494 plug-ins/common/animation-play.c:552
-#: plug-ins/common/animation-play.c:844
+#: plug-ins/common/animation-play.c:499 plug-ins/common/animation-play.c:557
+#: plug-ins/common/animation-play.c:860
 #, c-format
 msgid "%.1f %%"
 msgstr "%.1f %%"
 
 #. Image Name
-#: plug-ins/common/animation-play.c:691
+#: plug-ins/common/animation-play.c:696
 msgid "Animation Playback:"
 msgstr "Predvajanje animacije:"
 
-#: plug-ins/common/animation-play.c:772
-msgid "Step _back"
-msgstr "Korak na_zaj"
+#. 2 styles of default frame disposals: cumulative layers and one
+#. * frame per layer.
+#.
+#: plug-ins/common/animation-play.c:787 plug-ins/common/file-gif-export.c:221
+msgid "Cumulative layers (combine)"
+msgstr "kumulativne plasti (združuj)"
 
-#: plug-ins/common/animation-play.c:774
-msgid "_Step"
-msgstr "_Korak"
+#: plug-ins/common/animation-play.c:792 plug-ins/common/file-gif-export.c:222
+msgid "One frame per layer (replace)"
+msgstr "ena sličica na plast (zamenjaj)"
 
-#: plug-ins/common/animation-play.c:779
-msgid "Detach"
-msgstr "Odpni"
+#. list is given in "fps" - frames per second
+#: plug-ins/common/animation-play.c:815
+#, c-format
+msgid "%d fps"
+msgstr "%d sl/s"
+
+#: plug-ins/common/animation-play.c:826
+msgid "Default framerate"
+msgstr "Privzeta hitrost sličic"
+
+#: plug-ins/common/animation-play.c:846
+msgid "Playback speed"
+msgstr "Hitrost predvajanja"
 
 #. Zoom Options
-#: plug-ins/common/animation-play.c:859
+#: plug-ins/common/animation-play.c:876
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:679
 #: plug-ins/imagemap/imap-menu.ui:271
 msgid "Zoom"
 msgstr "Povečava"
 
-#. list is given in "fps" - frames per second
-#: plug-ins/common/animation-play.c:869
-#, c-format
-msgid "%d fps"
-msgstr "%d sl/s"
+#: plug-ins/common/animation-play.c:883
+msgid "Reload"
+msgstr "Znova naloži"
 
-#: plug-ins/common/animation-play.c:880
-msgid "Default framerate"
-msgstr "Privzeta hitrost sličic"
+#: plug-ins/common/animation-play.c:885
+msgid "Detach"
+msgstr "Odpni"
 
-#: plug-ins/common/animation-play.c:900
-msgid "Playback speed"
-msgstr "Hitrost predvajanja"
+#: plug-ins/common/animation-play.c:888 plug-ins/imagemap/imap-menu.ui:212
+msgid "Help"
+msgstr "Pomoč"
 
-#. 2 styles of default frame disposals: cumulative layers and one
-#. * frame per layer.
-#.
-#: plug-ins/common/animation-play.c:911 plug-ins/common/file-gif-export.c:221
-msgid "Cumulative layers (combine)"
-msgstr "kumulativne plasti (združuj)"
+#: plug-ins/common/animation-play.c:943
+msgid "Step _back"
+msgstr "Korak na_zaj"
 
-#: plug-ins/common/animation-play.c:916 plug-ins/common/file-gif-export.c:222
-msgid "One frame per layer (replace)"
-msgstr "ena sličica na plast (zamenjaj)"
+#: plug-ins/common/animation-play.c:946
+msgid "_Step"
+msgstr "_Korak"
 
-#: plug-ins/common/animation-play.c:1012
+#: plug-ins/common/animation-play.c:1055
 msgid "Memory could not be allocated to the frame container."
 msgstr "Za vsebnik sličic ni bilo mogoče dodeliti pomnilnika."
 
-#: plug-ins/common/animation-play.c:1079
+#: plug-ins/common/animation-play.c:1127
 msgid "Invalid image. Did you close it?"
 msgstr "Neveljavna slika. Ali ste jo zaprli?"
 
-#: plug-ins/common/animation-play.c:1191
-#, c-format
-msgid "Frame %d of %d"
-msgstr "Sličica %d od %d"
-
-#: plug-ins/common/animation-play.c:1393
+#: plug-ins/common/animation-play.c:1440
 msgid "Stop playback"
 msgstr "Zaustavi predvajanje"
 
@@ -567,7 +570,7 @@ msgstr "_Število odsekov"
 msgid "Number of segments in blinds"
 msgstr "Število odsekov v roletah"
 
-#: plug-ins/common/blinds.c:165 plug-ins/map-object/map-object-ui.c:409
+#: plug-ins/common/blinds.c:165 plug-ins/map-object/map-object-ui.c:408
 msgid "Orient_ation"
 msgstr "Usmer_jenost"
 
@@ -5364,7 +5367,7 @@ msgstr ""
 "Če je omogočeno, se razmerje stranic pri izvozu ohrani. V nasprotnem primeru "
 "bodo uporabljene vrednosti širine in višine."
 
-#: plug-ins/common/file-ps.c:566 plug-ins/map-object/map-object-ui.c:722
+#: plug-ins/common/file-ps.c:566 plug-ins/map-object/map-object-ui.c:719
 msgid "Rotation"
 msgstr "Sukanje"
 
@@ -9739,7 +9742,7 @@ msgstr "FITS HDU"
 msgid "FITS export cannot handle images with alpha channels"
 msgstr "Izvažanje v FITS ne podpira slik s kanali alfa"
 
-#: plug-ins/file-fits/fits.c:995
+#: plug-ins/file-fits/fits.c:998
 msgid "Open FITS File"
 msgstr "Odpri datoteko FITS"
 
@@ -14599,10 +14602,6 @@ msgstr "Uporabi vodila Gimpa …"
 msgid "Create Guides..."
 msgstr "Ustvari vodila …"
 
-#: plug-ins/imagemap/imap-menu.ui:212
-msgid "Help"
-msgstr "Pomoč"
-
 #: plug-ins/imagemap/imap-menu.ui:215 plug-ins/screenshot/screenshot.c:540
 msgid "Contents"
 msgstr "Vsebina"
@@ -14914,7 +14913,7 @@ msgstr "Raz_dalja"
 msgid "Distance of observer from surface"
 msgstr "Oddaljenost opazovalca od površine"
 
-#: plug-ins/lighting/lighting-ui.c:247 plug-ins/map-object/map-object-ui.c:364
+#: plug-ins/lighting/lighting-ui.c:247 plug-ins/map-object/map-object-ui.c:363
 msgid "Recompute preview image"
 msgstr "Ponovno izračunaj predogled slike"
 
@@ -14934,7 +14933,7 @@ msgstr "Možnos_ti"
 msgid "_Light"
 msgstr "_Svetloba"
 
-#: plug-ins/lighting/lighting-ui.c:272 plug-ins/map-object/map-object-ui.c:407
+#: plug-ins/lighting/lighting-ui.c:272 plug-ins/map-object/map-object-ui.c:406
 msgid "_Material"
 msgstr "_Material"
 
@@ -14946,16 +14945,16 @@ msgstr "_Poslikaj odtis"
 msgid "_Environment Map"
 msgstr "_Odsev okolja"
 
-#: plug-ins/lighting/lighting-ui.c:281 plug-ins/map-object/map-object-ui.c:420
+#: plug-ins/lighting/lighting-ui.c:281 plug-ins/map-object/map-object-ui.c:419
 msgid "General Options"
 msgstr "Splošne možnosti"
 
-#: plug-ins/lighting/lighting-ui.c:313 plug-ins/map-object/map-object-ui.c:456
+#: plug-ins/lighting/lighting-ui.c:313 plug-ins/map-object/map-object-ui.c:455
 msgid "Light Settings"
 msgstr "Nastavitve luči"
 
-#: plug-ins/lighting/lighting-ui.c:332 plug-ins/map-object/map-object-ui.c:490
-#: plug-ins/map-object/map-object-ui.c:702
+#: plug-ins/lighting/lighting-ui.c:332 plug-ins/map-object/map-object-ui.c:487
+#: plug-ins/map-object/map-object-ui.c:699
 #: plug-ins/print/print-page-layout.c:384
 msgid "Position"
 msgstr "Položaj"
@@ -15269,81 +15268,81 @@ msgstr "Dol_žina valja"
 msgid "Cylinder length"
 msgstr "Dolžina valja"
 
-#: plug-ins/map-object/map-object-ui.c:316
+#: plug-ins/map-object/map-object-ui.c:315
 msgid "Map to Object"
 msgstr "Poslikaj po predmetu"
 
-#: plug-ins/map-object/map-object-ui.c:352
+#: plug-ins/map-object/map-object-ui.c:351
 msgid "_Preview!"
 msgstr "_Predogled!"
 
-#: plug-ins/map-object/map-object-ui.c:382
+#: plug-ins/map-object/map-object-ui.c:381
 msgid "Show _wireframe"
 msgstr "Pokaži _žični model"
 
-#: plug-ins/map-object/map-object-ui.c:391
+#: plug-ins/map-object/map-object-ui.c:390
 msgid "Update preview _live"
 msgstr "Posodo_bi predogled sproti"
 
-#: plug-ins/map-object/map-object-ui.c:401
+#: plug-ins/map-object/map-object-ui.c:400
 msgid "O_ptions"
 msgstr "_Možnosti"
 
-#: plug-ins/map-object/map-object-ui.c:403
+#: plug-ins/map-object/map-object-ui.c:402
 msgid "Li_ght"
 msgstr "Svet_loba"
 
-#: plug-ins/map-object/map-object-ui.c:405
+#: plug-ins/map-object/map-object-ui.c:404
 msgid "_Viewpoint"
 msgstr "_Gledišče"
 
-#: plug-ins/map-object/map-object-ui.c:412
+#: plug-ins/map-object/map-object-ui.c:411
 msgid "Sp_here"
 msgstr "_Krogla"
 
-#: plug-ins/map-object/map-object-ui.c:414
+#: plug-ins/map-object/map-object-ui.c:413
 msgid "_Box"
 msgstr "Ko_cka"
 
-#: plug-ins/map-object/map-object-ui.c:416
+#: plug-ins/map-object/map-object-ui.c:415
 msgid "C_ylinder"
 msgstr "_Valj"
 
-#: plug-ins/map-object/map-object-ui.c:476
+#: plug-ins/map-object/map-object-ui.c:473
 msgid "Direction Vector"
 msgstr "Vektor smeri"
 
-#: plug-ins/map-object/map-object-ui.c:547
+#: plug-ins/map-object/map-object-ui.c:544
 msgid "Viewpoint Position"
 msgstr "Položaj gledišča"
 
-#: plug-ins/map-object/map-object-ui.c:569
+#: plug-ins/map-object/map-object-ui.c:566
 msgid "First Axis"
 msgstr "Prva os"
 
-#: plug-ins/map-object/map-object-ui.c:589
+#: plug-ins/map-object/map-object-ui.c:586
 msgid "Second Axis"
 msgstr "Druga os"
 
-#: plug-ins/map-object/map-object-ui.c:645
+#: plug-ins/map-object/map-object-ui.c:642
 msgid "Intensity Levels"
 msgstr "Ravni jakosti"
 
-#: plug-ins/map-object/map-object-ui.c:659
+#: plug-ins/map-object/map-object-ui.c:656
 msgid "Reflectivity"
 msgstr "Odsevnost"
 
-#: plug-ins/map-object/map-object-ui.c:762
-#: plug-ins/map-object/map-object-ui.c:862
+#: plug-ins/map-object/map-object-ui.c:759
+#: plug-ins/map-object/map-object-ui.c:859
 #: plug-ins/print/print-page-layout.c:253
 msgid "Size"
 msgstr "Velikost"
 
-#: plug-ins/map-object/map-object-ui.c:775
+#: plug-ins/map-object/map-object-ui.c:772
 msgid "Map Images to Box Faces"
 msgstr "Poslikaj s slikami na površini škatle"
 
-#: plug-ins/map-object/map-object-ui.c:843
+#: plug-ins/map-object/map-object-ui.c:840
 msgid "Images for the Cap Faces"
 msgstr "Slike za površino valja"
 
