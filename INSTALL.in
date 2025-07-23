@@ -151,14 +151,7 @@ help in that regard:
 
         https://github.com/mypaint/mypaint-brushes
 
-     If installing from repository, install from branch "v1.3.x" or the
-     last tag "v1.y.z" (e.g. "v1.3.1" at time of writing).
-     In particular do NOT install from `master` branch which installs
-     brushes incompatible with GIMP (the `master` branch and v2 brushes
-     are targeted to software using recent libmypaint which GIMP wasn't
-     ported to yet).
-
-     Also this is a data packages and therefore it will install the
+     Note that this is a data packages and therefore it will install the
      pkg-config file inside `$PREFIX/share/pkgconfig/`. If you install
      mypaint-brushes from repository in a non-standard prefix, you will
      have to make sure your $PKG_CONFIG_PATH environment variable also
@@ -271,7 +264,7 @@ help in that regard:
      librsvg              @RSVG_REQUIRED_VERSION@
      libtiff              @LIBTIFF_REQUIRED_VERSION@
      Little CMS           @LCMS_REQUIRED_VERSION@
-     mypaint-brushes-1.0
+     mypaint-brushes-2.0
      pangocairo           @PANGO_REQUIRED_VERSION@
      poppler-data         @POPPLER_DATA_REQUIRED_VERSION@
      PyGObject
