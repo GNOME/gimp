@@ -374,22 +374,28 @@ gimp-debian-x64:
     expire_in: 2 days
 
 
-## Flatpak CI ##
-.flatpak-x64:
+## Flatpak CI (Fedora) ##
+.flatpak:
   extends: .default
   rules:
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Flatpak.*/'
       interruptible: true
     - if: '$GIMP_CI_FLATPAK != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_FLATPAK.*/'
+  parallel:
+    matrix:
+      - RUNNER: [flatpak-aarch64, flatpak-x86_64]
   tags:
-    - flatpak
-  image: 'quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master'
+    - $RUNNER
+  image: quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master
+  variables:
+    RUN_TESTS: 0
+    MESON_DIST: 0
   before_script:
     - export GIMP_PREFIX="${CI_PROJECT_DIR}/_install"
-  timeout: 40m
+  timeout: 60m
 
-deps-flatpak-x64:
-  extends: .flatpak-x64
+deps-flatpak:
+  extends: .flatpak
   stage: dependencies
   #https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/1502
   #cache:
@@ -400,15 +406,15 @@ deps-flatpak-x64:
     - sh build/linux/flatpak/1_build-deps-flatpakbuilder.sh
   artifacts:
     paths:
-      - .flatpak-builder.tar
+      - .flatpak-builder-$RUNNER.tar
       - flatpak-builder.log
       - babl-meson-log.tar
       - gegl-meson-log.tar
     expire_in: 2 hours
 
-gimp-flatpak-x64:
-  extends: .flatpak-x64
-  needs: ["deps-flatpak-x64"]
+gimp-flatpak:
+  extends: .flatpak
+  needs: ["deps-flatpak"]
   stage: build
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
@@ -416,7 +422,8 @@ gimp-flatpak-x64:
     - sh build/linux/flatpak/2_build-gimp-flatpakbuilder.sh
   artifacts:
     paths:
-      - repo.tar
+      - temp*.flatpak
+      - repo*.tar
       - gimp-meson-log.tar
     expire_in: 2 days
 
@@ -800,7 +807,7 @@ dist-flatpak-weekly:
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Flatpak.*/'
       interruptible: true
     - if: '$GIMP_CI_FLATPAK != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_FLATPAK.*/'
-  needs: ["gimp-flatpak-x64"]
+  needs: ["gimp-flatpak"]
   stage: distribution
   script:
     - sh build/linux/flatpak/3_dist-gimp-flatpakbuilder.sh
