@@ -45,6 +45,7 @@ gimp_image_get_preview_format (GimpImage *image)
   switch (gimp_image_get_base_type (image))
     {
     case GIMP_RGB:
+    case GIMP_CMYK:
     case GIMP_GRAY:
       return gimp_projectable_get_format (GIMP_PROJECTABLE (image));
 

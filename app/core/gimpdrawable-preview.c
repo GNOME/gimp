@@ -166,6 +166,7 @@ gimp_drawable_get_preview_format (GimpDrawable *drawable)
   switch (gimp_drawable_get_base_type (drawable))
     {
     case GIMP_RGB:
+    case GIMP_CMYK:
     case GIMP_GRAY:
       return gimp_drawable_get_format (drawable);
 

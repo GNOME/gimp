@@ -141,15 +141,22 @@ GType gimp_component_mask_get_type (void) G_GNUC_CONST;
 
 typedef enum /*< pdb-skip >*/
 {
-  GIMP_COMPONENT_MASK_RED   = 1 << 0,
-  GIMP_COMPONENT_MASK_GREEN = 1 << 1,
-  GIMP_COMPONENT_MASK_BLUE  = 1 << 2,
-  GIMP_COMPONENT_MASK_ALPHA = 1 << 3,
+  GIMP_COMPONENT_MASK_RED        = 1 << 0,
+  GIMP_COMPONENT_MASK_GREEN      = 1 << 1,
+  GIMP_COMPONENT_MASK_BLUE       = 1 << 2,
+  GIMP_COMPONENT_MASK_ALPHA      = 1 << 3,
+  GIMP_COMPONENT_MASK_ALPHA_CMYK = 1 << 4,
 
   GIMP_COMPONENT_MASK_ALL = (GIMP_COMPONENT_MASK_RED   |
                              GIMP_COMPONENT_MASK_GREEN |
                              GIMP_COMPONENT_MASK_BLUE  |
-                             GIMP_COMPONENT_MASK_ALPHA)
+                             GIMP_COMPONENT_MASK_ALPHA),
+
+  GIMP_COMPONENT_MASK_CMYK_ALL = (GIMP_COMPONENT_MASK_RED   |
+                                  GIMP_COMPONENT_MASK_GREEN |
+                                  GIMP_COMPONENT_MASK_BLUE  |
+                                  GIMP_COMPONENT_MASK_ALPHA |
+                                  GIMP_COMPONENT_MASK_ALPHA_CMYK)
 } GimpComponentMask;
 
 

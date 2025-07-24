@@ -36,7 +36,8 @@ enum
 {
   PROP_0,
   PROP_MASK,
-  PROP_ALPHA
+  PROP_ALPHA,
+  PROP_IMAGE_FORMAT,
 };
 
 
@@ -114,6 +115,11 @@ gimp_operation_mask_components_class_init (GimpOperationMaskComponentsClass *kla
                                                         (GParamFlags) (
                                                           G_PARAM_READWRITE |
                                                           G_PARAM_CONSTRUCT)));
+
+  g_object_class_install_property (object_class, PROP_IMAGE_FORMAT,
+                                   g_param_spec_pointer ("image-format",
+                                                         "Image format", NULL,
+                                                         G_PARAM_READWRITE));
 }
 
 static void
@@ -139,6 +145,10 @@ gimp_operation_mask_components_get_property (GObject    *object,
       g_value_set_double (value, self->alpha);
       break;
 
+    case PROP_IMAGE_FORMAT:
+      g_value_set_pointer (value, (gpointer) self->image_format);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -161,6 +171,10 @@ gimp_operation_mask_components_set_property (GObject      *object,
 
     case PROP_ALPHA:
       self->alpha = g_value_get_double (value);
+      break;
+
+    case PROP_IMAGE_FORMAT:
+      self->image_format = (const Babl *) g_value_get_pointer (value);
       break;
 
     default:
@@ -189,8 +203,11 @@ get_alpha_value (const Babl *format,
       }
 
     DEF_CASE ( 4, guint8)
+    DEF_CASE ( 5, guint8)
     DEF_CASE ( 8, guint16)
+    DEF_CASE (10, guint16)
     DEF_CASE (16, guint32)
+    DEF_CASE (20, guint32)
 
     #undef DEF_CASE
 
@@ -206,6 +223,7 @@ struct ProcessGeneric
   process (gconstpointer     in_buf,
            gconstpointer     aux_buf,
            gpointer          out_buf,
+           gint              pix_range,
            gint              n,
            GimpComponentMask mask,
            T                 alpha_value)
@@ -213,12 +231,13 @@ struct ProcessGeneric
     T    *out = (T *) out_buf;
     gint  i;
     gint  c;
+    gint  alpha_index = pix_range - 1;
 
     if (aux_buf)
       {
-        const T *in[4];
+        const T *in[pix_range];
 
-        for (c = 0; c < 4; c++)
+        for (c = 0; c < pix_range; c++)
           {
             if (mask & (1 << c))
               in[c] = (const T *) aux_buf + c;
@@ -228,14 +247,14 @@ struct ProcessGeneric
 
         for (i = 0; i < n; i++)
           {
-            for (c = 0; c < 4; c++)
+            for (c = 0; c < pix_range; c++)
               {
                 out[c] = *in[c];
 
-                in[c] += 4;
+                in[c] += pix_range;
               }
 
-            out += 4;
+            out += pix_range;
           }
       }
     else
@@ -244,7 +263,7 @@ struct ProcessGeneric
 
         for (i = 0; i < n; i++)
           {
-            for (c = 0; c < 3; c++)
+            for (c = 0; c < alpha_index; c++)
               {
                 if (mask & (1 << c))
                   out[c] = 0;
@@ -252,13 +271,13 @@ struct ProcessGeneric
                   out[c] = in[c];
               }
 
-            if (mask & (1 << 3))
-              out[3] = alpha_value;
+            if (mask & (1 << alpha_index))
+              out[alpha_index] = alpha_value;
             else
-              out[3] = in[3];
+              out[alpha_index] = in[alpha_index];
 
-            in  += 4;
-            out += 4;
+            in  += pix_range;
+            out += pix_range;
           }
       }
   }
@@ -278,6 +297,7 @@ struct Process<guint8>
   process (gconstpointer     in_buf,
            gconstpointer     aux_buf,
            gpointer          out_buf,
+           gint              pix_range,
            gint              n,
            GimpComponentMask mask,
            guint8            alpha_value)
@@ -288,10 +308,10 @@ struct Process<guint8>
     gint           i;
     gint           c;
 
-    if (((guintptr) in_buf | (guintptr) aux_buf | (guintptr) out_buf) % 4)
+    if (((guintptr) in_buf | (guintptr) aux_buf | (guintptr) out_buf) % pix_range)
       {
-        ProcessGeneric<guint8>::process (in_buf, aux_buf, out_buf, n,
-                                         mask, alpha_value);
+        ProcessGeneric<guint8>::process (in_buf, aux_buf, out_buf, pix_range,
+                                         n, mask, alpha_value);
 
         return;
       }
@@ -299,7 +319,7 @@ struct Process<guint8>
     in  = (const guint32 *) in_buf;
     out = (guint32       *) out_buf;
 
-    for (c = 0; c < 4; c++)
+    for (c = 0; c < pix_range; c++)
       {
         if (! (mask & (1 << c)))
           in_mask |= 0xff << (8 * c);
@@ -333,7 +353,8 @@ struct Process<guint8>
           }
         else
           {
-            guint32 alpha_mask = alpha_value << 24;
+            gint    alpha      = pix_range - 1;
+            guint32 alpha_mask = alpha_value << (8 * alpha);
 
             for (i = 0; i < n; i++)
               {
@@ -359,8 +380,8 @@ gimp_operation_mask_components_process (GimpOperationMaskComponents *self,
                                         const GeglRectangle         *roi,
                                         gint                         level)
 {
-  Process<T>::process (in_buf, aux_buf, out_buf, samples,
-                       self->mask, self->alpha_value);
+  Process<T>::process (in_buf, aux_buf, out_buf, (self->is_cmyk? 5 : 4),
+                       samples, self->mask, self->alpha_value);
 
   return TRUE;
 }
@@ -372,6 +393,8 @@ gimp_operation_mask_components_prepare (GeglOperation *operation)
   const Babl                  *format;
   const Babl                  *aux_format;
 
+  self->is_cmyk = FALSE;
+
   format = gimp_operation_mask_components_get_format (gegl_operation_get_source_format (operation, "input"));
   aux_format = gimp_operation_mask_components_get_format (gegl_operation_get_source_format (operation, "aux"));
 
@@ -381,6 +404,14 @@ gimp_operation_mask_components_prepare (GeglOperation *operation)
      * output.
      */
     format = aux_format;
+
+  if (self->image_format &&
+      babl_space_is_cmyk (babl_format_get_space (self->image_format)))
+      {
+        format = babl_format_with_space ("CMYKA float",
+                                         babl_format_get_space (self->image_format));
+        self->is_cmyk = TRUE;
+      }
 
   gegl_operation_set_format (operation, "input",  format);
   gegl_operation_set_format (operation, "aux",    format);
@@ -395,16 +426,19 @@ gimp_operation_mask_components_prepare (GeglOperation *operation)
       switch (babl_format_get_bytes_per_pixel (format))
         {
         case 4:
+        case 5:
           self->process = (gpointer)
                             gimp_operation_mask_components_process<guint8>;
           break;
 
         case 8:
+        case 10:
           self->process = (gpointer)
                             gimp_operation_mask_components_process<guint16>;
           break;
 
         case 16:
+        case 20:
           self->process = (gpointer)
                             gimp_operation_mask_components_process<guint32>;
           break;
@@ -431,7 +465,8 @@ gimp_operation_mask_components_get_bounding_box (GeglOperation *operation)
       if (in_rect)
         return *in_rect;
     }
-  else if (self->mask == GIMP_COMPONENT_MASK_ALL)
+  else if ((self->mask == GIMP_COMPONENT_MASK_ALL && ! self->is_cmyk) ||
+           self->mask == GIMP_COMPONENT_MASK_CMYK_ALL)
     {
       if (aux_rect)
         return *aux_rect;
@@ -463,7 +498,8 @@ gimp_operation_mask_components_parent_process (GeglOperation        *operation,
 
       return TRUE;
     }
-  else if (self->mask == GIMP_COMPONENT_MASK_ALL)
+  else if ((self->mask == GIMP_COMPONENT_MASK_ALL && ! self->is_cmyk) ||
+           self->mask == GIMP_COMPONENT_MASK_CMYK_ALL)
     {
       GObject *aux = gegl_operation_context_get_object (context, "aux");
 
@@ -553,6 +589,22 @@ gimp_operation_mask_components_get_format (const Babl *input_format)
           else if (! strcmp (type_name, "float"))
             format = babl_format ("R'G'B'A float");
         }
+      else if (! strcmp (model_name, "CMYK")  ||
+               ! strcmp (model_name, "cmyk")  ||
+               ! strcmp (model_name, "CMYKA") ||
+               ! strcmp (model_name, "cmykA"))
+        {
+          if (! strcmp (type_name, "u8"))
+            format = babl_format ("CMYKA u8");
+          else if (! strcmp (type_name, "u16"))
+            format = babl_format ("CMYKA u16");
+          else if (! strcmp (type_name, "u32"))
+            format = babl_format ("CMYKA u32");
+          else if (! strcmp (type_name, "half"))
+            format = babl_format ("CMYKA half");
+          else if (! strcmp (type_name, "float"))
+            format = babl_format ("CMYKA float");
+        }
     }
 
   if (! format)
@@ -580,15 +632,27 @@ gimp_operation_mask_components_process (const Babl        *format,
   switch (babl_format_get_bytes_per_pixel (format))
     {
     case 4:
-      Process<guint8>::process (in, aux, out, n, mask, 0);
+      Process<guint8>::process (in, aux, out, 4, n, mask, 0);
+      break;
+
+    case 5:
+      Process<guint8>::process (in, aux, out, 5, n, mask, 0);
       break;
 
     case 8:
-      Process<guint16>::process (in, aux, out, n, mask, 0);
+      Process<guint16>::process (in, aux, out, 4, n, mask, 0);
+      break;
+
+    case 10:
+      Process<guint16>::process (in, aux, out, 5, n, mask, 0);
       break;
 
     case 16:
-      Process<guint32>::process (in, aux, out, n, mask, 0);
+      Process<guint32>::process (in, aux, out, 4, n, mask, 0);
+      break;
+
+    case 20:
+      Process<guint32>::process (in, aux, out, 5, n, mask, 0);
       break;
 
     default:

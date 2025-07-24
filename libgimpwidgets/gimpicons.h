@@ -117,10 +117,14 @@ G_BEGIN_DECLS
 #define GIMP_ICON_CHANNEL                   "gimp-channel"
 #define GIMP_ICON_CHANNEL_ALPHA             "gimp-channel-alpha"
 #define GIMP_ICON_CHANNEL_BLUE              "gimp-channel-blue"
+#define GIMP_ICON_CHANNEL_CYAN              "gimp-channel-cyan"
 #define GIMP_ICON_CHANNEL_GRAY              "gimp-channel-gray"
 #define GIMP_ICON_CHANNEL_GREEN             "gimp-channel-green"
 #define GIMP_ICON_CHANNEL_INDEXED           "gimp-channel-indexed"
+#define GIMP_ICON_CHANNEL_KEY               "gimp-channel-key"
+#define GIMP_ICON_CHANNEL_MAGENTA           "gimp-channel-magenta"
 #define GIMP_ICON_CHANNEL_RED               "gimp-channel-red"
+#define GIMP_ICON_CHANNEL_YELLOW            "gimp-channel-yellow"
 
 #define GIMP_ICON_CLOSE                     "gimp-close"
 #define GIMP_ICON_CLOSE_ALL                 "gimp-close-all"
@@ -149,6 +153,7 @@ G_BEGIN_DECLS
 #define GIMP_ICON_CONTROLLER_WHEEL          "gimp-controller-wheel"
 
 #define GIMP_ICON_CONVERT_RGB               "gimp-convert-rgb"
+#define GIMP_ICON_CONVERT_CMYK              "gimp-convert-cmyk"
 #define GIMP_ICON_CONVERT_GRAYSCALE         "gimp-convert-grayscale"
 #define GIMP_ICON_CONVERT_INDEXED           "gimp-convert-indexed"
 #define GIMP_ICON_CONVERT_PRECISION         GIMP_ICON_CONVERT_RGB

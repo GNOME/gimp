@@ -1069,6 +1069,10 @@ get_projection_format (GimpProjectable   *projectable,
       return gimp_image_get_format (image, GIMP_RGB, precision, TRUE,
                                     gimp_image_get_layer_space (image));
 
+    case GIMP_CMYK:
+      return gimp_image_get_format (image, GIMP_CMYK, precision, TRUE,
+                                    gimp_image_get_layer_space (image));
+
     case GIMP_GRAY:
       return gimp_image_get_format (image, GIMP_GRAY, precision, TRUE,
                                     gimp_image_get_layer_space (image));

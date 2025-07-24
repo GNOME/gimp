@@ -222,6 +222,7 @@ GimpImageBaseType gimp_drawable_get_base_type        (GimpDrawable    *drawable)
 GimpComponentType gimp_drawable_get_component_type   (GimpDrawable    *drawable);
 GimpPrecision     gimp_drawable_get_precision        (GimpDrawable    *drawable);
 gboolean          gimp_drawable_is_rgb               (GimpDrawable    *drawable);
+gboolean          gimp_drawable_is_cmyk              (GimpDrawable    *drawable);
 gboolean          gimp_drawable_is_gray              (GimpDrawable    *drawable);
 gboolean          gimp_drawable_is_indexed           (GimpDrawable    *drawable);
 

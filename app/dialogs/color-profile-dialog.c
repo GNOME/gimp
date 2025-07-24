@@ -176,6 +176,24 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
       dest_label = _("Convert to");
       break;
 
+    case COLOR_PROFILE_DIALOG_CONVERT_TO_CMYK:
+      dialog =
+        gimp_viewable_dialog_new (g_list_prepend (NULL, image), context,
+                                  _("CMYK Conversion"),
+                                  "gimp-image-convert-cmyk",
+                                  GIMP_ICON_CONVERT_CMYK,
+                                  _("Convert Image to CMYK"),
+                                  parent,
+                                  gimp_standard_help_func,
+                                  GIMP_HELP_IMAGE_CONVERT_CMYK,
+
+                                  _("_Cancel"),  GTK_RESPONSE_CANCEL,
+                                  _("C_onvert"), GTK_RESPONSE_OK,
+
+                                  NULL);
+      dest_label = _("Convert to");
+      break;
+
     case COLOR_PROFILE_DIALOG_CONVERT_TO_GRAY:
       dialog =
         gimp_viewable_dialog_new (g_list_prepend (NULL, image), context,
@@ -272,7 +290,8 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
 
   color_profile_dest_changed (private->combo, private);
 
-  if (dialog_type == COLOR_PROFILE_DIALOG_CONVERT_TO_PROFILE)
+  if (dialog_type == COLOR_PROFILE_DIALOG_CONVERT_TO_PROFILE ||
+      dialog_type == COLOR_PROFILE_DIALOG_CONVERT_TO_CMYK)
     {
       GtkWidget *vbox;
       GtkWidget *hbox;
@@ -352,6 +371,10 @@ color_profile_combo_box_new (ProfileDialog *private)
 
         case COLOR_PROFILE_DIALOG_CONVERT_TO_RGB:
           base_type = GIMP_RGB;
+          break;
+
+        case COLOR_PROFILE_DIALOG_CONVERT_TO_CMYK:
+          base_type = GIMP_CMYK;
           break;
 
         case COLOR_PROFILE_DIALOG_CONVERT_TO_GRAY:
@@ -458,6 +481,11 @@ color_profile_dest_changed (GtkWidget     *combo,
 {
   GimpColorProfile *dest_profile = NULL;
   GFile            *file;
+  GtkWidget        *convert_button;
+
+  convert_button =
+    gtk_dialog_get_widget_for_response (GTK_DIALOG (private->dialog),
+                                        GTK_RESPONSE_OK);
 
   file = gimp_color_profile_combo_box_get_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo));
 
@@ -485,10 +513,16 @@ color_profile_dest_changed (GtkWidget     *combo,
                                          C_("profile", "None"));
     }
 
+  gtk_widget_set_sensitive (convert_button, TRUE);
   if (dest_profile)
     {
       gimp_color_profile_view_set_profile (GIMP_COLOR_PROFILE_VIEW (private->dest_view),
                                            dest_profile);
       g_object_unref (dest_profile);
+    }
+  else
+    {
+      if (private->dialog_type == COLOR_PROFILE_DIALOG_CONVERT_TO_CMYK)
+        gtk_widget_set_sensitive (convert_button, FALSE);
     }
 }

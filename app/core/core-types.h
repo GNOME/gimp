@@ -30,12 +30,18 @@
 
 /*  former base/ defines  */
 
-#define MAX_CHANNELS  4
+#define MAX_CHANNELS  5
 
 #define RED           0
 #define GREEN         1
 #define BLUE          2
 #define ALPHA         3
+
+#define CYAN          0
+#define MAGENTA       1
+#define YELLOW        2
+#define KEY           3
+#define ALPHA_C       4
 
 #define GRAY          0
 #define ALPHA_G       1

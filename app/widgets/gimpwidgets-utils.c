@@ -2126,7 +2126,14 @@ gimp_color_profile_store_add_defaults (GimpColorProfileStore  *store,
   profile = gimp_babl_get_builtin_color_profile (base_type,
                                                  gimp_babl_trc (precision));
 
-  if (base_type == GIMP_GRAY)
+  if (base_type == GIMP_CMYK)
+    {
+      /* TODO: No default CMYK profile yet */
+      label = NULL;
+
+      profile = gimp_color_config_get_cmyk_color_profile (config, &my_error);
+    }
+  else if (base_type == GIMP_GRAY)
     {
       label = g_strdup_printf (_("Built-in grayscale (%s)"),
                                gimp_color_profile_get_label (profile));
@@ -2141,15 +2148,27 @@ gimp_color_profile_store_add_defaults (GimpColorProfileStore  *store,
       profile = gimp_color_config_get_rgb_color_profile (config, &my_error);
     }
 
-  gimp_color_profile_store_add_file (store, NULL, label);
-  g_free (label);
+  if (label)
+    {
+      gimp_color_profile_store_add_file (store, NULL, label);
+      g_free (label);
+    }
 
   if (profile)
     {
       gchar *path;
       GFile *file;
 
-      if (base_type == GIMP_GRAY)
+      if (base_type == GIMP_CMYK)
+        {
+          g_object_get (config, "cmyk-profile", &path, NULL);
+          file = gimp_file_new_for_config_path (path, NULL);
+          g_free (path);
+
+          label = g_strdup_printf (_("Preferred CMYK (%s)"),
+                                   gimp_color_profile_get_label (profile));
+        }
+      else if (base_type == GIMP_GRAY)
         {
           g_object_get (config, "gray-profile", &path, NULL);
           file = gimp_file_new_for_config_path (path, NULL);
