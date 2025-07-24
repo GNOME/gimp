@@ -156,6 +156,10 @@ gimp_channel_type_get_type (void)
     { GIMP_CHANNEL_RED, "GIMP_CHANNEL_RED", "red" },
     { GIMP_CHANNEL_GREEN, "GIMP_CHANNEL_GREEN", "green" },
     { GIMP_CHANNEL_BLUE, "GIMP_CHANNEL_BLUE", "blue" },
+    { GIMP_CHANNEL_CYAN, "GIMP_CHANNEL_CYAN", "cyan" },
+    { GIMP_CHANNEL_MAGENTA, "GIMP_CHANNEL_MAGENTA", "magenta" },
+    { GIMP_CHANNEL_YELLOW, "GIMP_CHANNEL_YELLOW", "yellow" },
+    { GIMP_CHANNEL_KEY, "GIMP_CHANNEL_KEY", "key" },
     { GIMP_CHANNEL_GRAY, "GIMP_CHANNEL_GRAY", "gray" },
     { GIMP_CHANNEL_INDEXED, "GIMP_CHANNEL_INDEXED", "indexed" },
     { GIMP_CHANNEL_ALPHA, "GIMP_CHANNEL_ALPHA", "alpha" },
@@ -167,6 +171,10 @@ gimp_channel_type_get_type (void)
     { GIMP_CHANNEL_RED, NC_("channel-type", "Red"), NULL },
     { GIMP_CHANNEL_GREEN, NC_("channel-type", "Green"), NULL },
     { GIMP_CHANNEL_BLUE, NC_("channel-type", "Blue"), NULL },
+    { GIMP_CHANNEL_CYAN, NC_("channel-type", "Cyan"), NULL },
+    { GIMP_CHANNEL_MAGENTA, NC_("channel-type", "Magenta"), NULL },
+    { GIMP_CHANNEL_YELLOW, NC_("channel-type", "Yellow"), NULL },
+    { GIMP_CHANNEL_KEY, NC_("channel-type", "Key"), NULL },
     { GIMP_CHANNEL_GRAY, NC_("channel-type", "Gray"), NULL },
     { GIMP_CHANNEL_INDEXED, NC_("channel-type", "Indexed"), NULL },
     { GIMP_CHANNEL_ALPHA, NC_("channel-type", "Alpha"), NULL },
@@ -854,6 +862,7 @@ gimp_image_base_type_get_type (void)
   static const GEnumValue values[] =
   {
     { GIMP_RGB, "GIMP_RGB", "rgb" },
+    { GIMP_CMYK, "GIMP_CMYK", "cmyk" },
     { GIMP_GRAY, "GIMP_GRAY", "gray" },
     { GIMP_INDEXED, "GIMP_INDEXED", "indexed" },
     { 0, NULL, NULL }
@@ -862,6 +871,7 @@ gimp_image_base_type_get_type (void)
   static const GimpEnumDesc descs[] =
   {
     { GIMP_RGB, NC_("image-base-type", "RGB color"), NULL },
+    { GIMP_CMYK, NC_("image-base-type", "CMYK color"), NULL },
     { GIMP_GRAY, NC_("image-base-type", "Grayscale"), NULL },
     { GIMP_INDEXED, NC_("image-base-type", "Indexed color"), NULL },
     { 0, NULL, NULL }
@@ -887,6 +897,8 @@ gimp_image_type_get_type (void)
   {
     { GIMP_RGB_IMAGE, "GIMP_RGB_IMAGE", "rgb-image" },
     { GIMP_RGBA_IMAGE, "GIMP_RGBA_IMAGE", "rgba-image" },
+    { GIMP_CMYK_IMAGE, "GIMP_CMYK_IMAGE", "cmyk-image" },
+    { GIMP_CMYKA_IMAGE, "GIMP_CMYKA_IMAGE", "cmyka-image" },
     { GIMP_GRAY_IMAGE, "GIMP_GRAY_IMAGE", "gray-image" },
     { GIMP_GRAYA_IMAGE, "GIMP_GRAYA_IMAGE", "graya-image" },
     { GIMP_INDEXED_IMAGE, "GIMP_INDEXED_IMAGE", "indexed-image" },
@@ -898,6 +910,8 @@ gimp_image_type_get_type (void)
   {
     { GIMP_RGB_IMAGE, NC_("image-type", "RGB"), NULL },
     { GIMP_RGBA_IMAGE, NC_("image-type", "RGB-alpha"), NULL },
+    { GIMP_CMYK_IMAGE, NC_("image-type", "CMYK"), NULL },
+    { GIMP_CMYKA_IMAGE, NC_("image-type", "CMYK-alpha"), NULL },
     { GIMP_GRAY_IMAGE, NC_("image-type", "Grayscale"), NULL },
     { GIMP_GRAYA_IMAGE, NC_("image-type", "Grayscale-alpha"), NULL },
     { GIMP_INDEXED_IMAGE, NC_("image-type", "Indexed"), NULL },
@@ -1918,6 +1932,7 @@ gimp_export_capabilities_get_type (void)
   static const GFlagsValue values[] =
   {
     { GIMP_EXPORT_CAN_HANDLE_RGB, "GIMP_EXPORT_CAN_HANDLE_RGB", "can-handle-rgb" },
+    { GIMP_EXPORT_CAN_HANDLE_CMYK, "GIMP_EXPORT_CAN_HANDLE_CMYK", "can-handle-cmyk" },
     { GIMP_EXPORT_CAN_HANDLE_GRAY, "GIMP_EXPORT_CAN_HANDLE_GRAY", "can-handle-gray" },
     { GIMP_EXPORT_CAN_HANDLE_INDEXED, "GIMP_EXPORT_CAN_HANDLE_INDEXED", "can-handle-indexed" },
     { GIMP_EXPORT_CAN_HANDLE_BITMAP, "GIMP_EXPORT_CAN_HANDLE_BITMAP", "can-handle-bitmap" },
@@ -1934,6 +1949,7 @@ gimp_export_capabilities_get_type (void)
   static const GimpFlagsDesc descs[] =
   {
     { GIMP_EXPORT_CAN_HANDLE_RGB, "GIMP_EXPORT_CAN_HANDLE_RGB", NULL },
+    { GIMP_EXPORT_CAN_HANDLE_CMYK, "GIMP_EXPORT_CAN_HANDLE_CMYK", NULL },
     { GIMP_EXPORT_CAN_HANDLE_GRAY, "GIMP_EXPORT_CAN_HANDLE_GRAY", NULL },
     { GIMP_EXPORT_CAN_HANDLE_INDEXED, "GIMP_EXPORT_CAN_HANDLE_INDEXED", NULL },
     { GIMP_EXPORT_CAN_HANDLE_BITMAP, "GIMP_EXPORT_CAN_HANDLE_BITMAP", NULL },

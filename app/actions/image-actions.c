@@ -186,6 +186,11 @@ static const GimpRadioActionEntry image_convert_base_type_actions[] =
     NC_("image-convert-action", "Convert the image to the RGB colorspace"),
     GIMP_RGB, GIMP_HELP_IMAGE_CONVERT_RGB },
 
+  { "image-convert-cmyk", GIMP_ICON_CONVERT_CMYK,
+    NC_("image-convert-action", "_CMYK..."), NULL, { NULL },
+    NC_("image-convert-action", "Convert the image to the CMYK colorspace"),
+    GIMP_CMYK, GIMP_HELP_IMAGE_CONVERT_CMYK },
+
   { "image-convert-grayscale", GIMP_ICON_CONVERT_GRAYSCALE,
     NC_("image-convert-action", "_Grayscale"), NULL, { NULL },
     NC_("image-convert-action", "Convert the image to grayscale"),
@@ -434,6 +439,7 @@ image_actions_update (GimpActionGroup *group,
       switch (base_type)
         {
         case GIMP_RGB:     action = "image-convert-rgb";       break;
+        case GIMP_CMYK:    action = "image-convert-cmyk";      break;
         case GIMP_GRAY:    action = "image-convert-grayscale"; break;
         case GIMP_INDEXED: action = "image-convert-indexed";   break;
         }
@@ -532,6 +538,7 @@ image_actions_update (GimpActionGroup *group,
     }
 
   SET_SENSITIVE ("image-convert-rgb",       image);
+  SET_SENSITIVE ("image-convert-cmyk",      image);
   SET_SENSITIVE ("image-convert-grayscale", image);
   SET_SENSITIVE ("image-convert-indexed",   image && !groups && is_u8_gamma);
 

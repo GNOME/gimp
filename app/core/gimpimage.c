@@ -1570,6 +1570,11 @@ gimp_image_get_proj_format (GimpProjectable *projectable)
                                     gimp_image_get_precision (image), TRUE,
                                     gimp_image_get_layer_space (image));
 
+    case GIMP_CMYK:
+      return gimp_image_get_format (image, GIMP_CMYK,
+                                    gimp_image_get_precision (image), TRUE,
+                                    gimp_image_get_layer_space (image));
+
     case GIMP_GRAY:
       return gimp_image_get_format (image, GIMP_GRAY,
                                     gimp_image_get_precision (image), TRUE,
@@ -1687,9 +1692,18 @@ gimp_image_get_graph (GimpProjectable *projectable)
   GeglNode          *channels_node;
   GeglNode          *output;
   GimpComponentMask  mask;
+  const Babl        *image_format;
+
+  image_format = gimp_image_get_layer_format (image, TRUE);
 
   if (private->graph)
-    return private->graph;
+    {
+      gegl_node_set (private->visible_mask,
+                     "image-format", image_format,
+                     NULL);
+
+      return private->graph;
+    }
 
   private->graph = gegl_node_new ();
 
@@ -1698,13 +1712,17 @@ gimp_image_get_graph (GimpProjectable *projectable)
 
   gegl_node_add_child (private->graph, layers_node);
 
-  mask = ~gimp_image_get_visible_mask (image) & GIMP_COMPONENT_MASK_ALL;
+  if (gimp_image_get_base_type (image) == GIMP_CMYK)
+    mask = ~gimp_image_get_visible_mask (image) & GIMP_COMPONENT_MASK_CMYK_ALL;
+  else
+    mask = ~gimp_image_get_visible_mask (image) & GIMP_COMPONENT_MASK_ALL;
 
   private->visible_mask =
     gegl_node_new_child (private->graph,
-                         "operation", "gimp:mask-components",
-                         "mask",      mask,
-                         "alpha",     1.0,
+                         "operation",    "gimp:mask-components",
+                         "mask",         mask,
+                         "alpha",        1.0,
+                         "image-format", image_format,
                          NULL);
 
   gegl_node_link (layers_node, private->visible_mask);
@@ -2263,6 +2281,7 @@ gimp_image_get_format (GimpImage         *image,
   switch (base_type)
     {
     case GIMP_RGB:
+    case GIMP_CMYK:
     case GIMP_GRAY:
       return gimp_babl_format (base_type, precision, with_alpha, space);
 
@@ -3577,6 +3596,26 @@ gimp_image_get_component_format (GimpImage       *image,
                                          gimp_image_get_precision (image),
                                          ALPHA);
 
+    case GIMP_CHANNEL_CYAN:
+      return gimp_babl_component_format (GIMP_CMYK,
+                                         gimp_image_get_precision (image),
+                                         CYAN);
+
+    case GIMP_CHANNEL_MAGENTA:
+      return gimp_babl_component_format (GIMP_CMYK,
+                                         gimp_image_get_precision (image),
+                                         MAGENTA);
+
+    case GIMP_CHANNEL_YELLOW:
+      return gimp_babl_component_format (GIMP_CMYK,
+                                         gimp_image_get_precision (image),
+                                         YELLOW);
+
+    case GIMP_CHANNEL_KEY:
+      return gimp_babl_component_format (GIMP_CMYK,
+                                         gimp_image_get_precision (image),
+                                         KEY);
+
     case GIMP_CHANNEL_GRAY:
       return gimp_babl_component_format (GIMP_GRAY,
                                          gimp_image_get_precision (image),
@@ -3601,12 +3640,17 @@ gimp_image_get_component_index (GimpImage       *image,
     case GIMP_CHANNEL_RED:     return RED;
     case GIMP_CHANNEL_GREEN:   return GREEN;
     case GIMP_CHANNEL_BLUE:    return BLUE;
+    case GIMP_CHANNEL_CYAN:    return CYAN;
+    case GIMP_CHANNEL_MAGENTA: return MAGENTA;
+    case GIMP_CHANNEL_YELLOW:  return YELLOW;
+    case GIMP_CHANNEL_KEY:     return KEY;
     case GIMP_CHANNEL_GRAY:    return GRAY;
     case GIMP_CHANNEL_INDEXED: return INDEXED;
     case GIMP_CHANNEL_ALPHA:
       switch (gimp_image_get_base_type (image))
         {
         case GIMP_RGB:     return ALPHA;
+        case GIMP_CMYK:    return ALPHA_C;
         case GIMP_GRAY:    return ALPHA_G;
         case GIMP_INDEXED: return ALPHA_I;
         }
@@ -3695,6 +3739,14 @@ gimp_image_get_active_mask (GimpImage *image)
       mask |= (private->active[ALPHA]) ? GIMP_COMPONENT_MASK_ALPHA : 0;
       break;
 
+    case GIMP_CMYK:
+      mask |= (private->active[CYAN])    ? GIMP_COMPONENT_MASK_RED        : 0;
+      mask |= (private->active[MAGENTA]) ? GIMP_COMPONENT_MASK_GREEN      : 0;
+      mask |= (private->active[YELLOW])  ? GIMP_COMPONENT_MASK_BLUE       : 0;
+      mask |= (private->active[KEY])     ? GIMP_COMPONENT_MASK_ALPHA      : 0;
+      mask |= (private->active[ALPHA_C]) ? GIMP_COMPONENT_MASK_ALPHA_CMYK : 0;
+      break;
+
     case GIMP_GRAY:
     case GIMP_INDEXED:
       mask |= (private->active[GRAY])    ? GIMP_COMPONENT_MASK_RED   : 0;
@@ -3729,7 +3781,10 @@ gimp_image_set_component_visible (GimpImage       *image,
         {
           GimpComponentMask mask;
 
-          mask = ~gimp_image_get_visible_mask (image) & GIMP_COMPONENT_MASK_ALL;
+          if (gimp_image_get_base_type (image) == GIMP_CMYK)
+            mask = ~gimp_image_get_visible_mask (image) & GIMP_COMPONENT_MASK_CMYK_ALL;
+          else
+            mask = ~gimp_image_get_visible_mask (image) & GIMP_COMPONENT_MASK_ALL;
 
           gegl_node_set (private->visible_mask,
                          "mask", mask,
@@ -3793,6 +3848,14 @@ gimp_image_get_visible_mask (GimpImage *image)
       mask |= (private->visible[GREEN]) ? GIMP_COMPONENT_MASK_GREEN : 0;
       mask |= (private->visible[BLUE])  ? GIMP_COMPONENT_MASK_BLUE  : 0;
       mask |= (private->visible[ALPHA]) ? GIMP_COMPONENT_MASK_ALPHA : 0;
+      break;
+
+    case GIMP_CMYK:
+      mask |= (private->visible[CYAN])    ? GIMP_COMPONENT_MASK_RED        : 0;
+      mask |= (private->visible[MAGENTA]) ? GIMP_COMPONENT_MASK_GREEN      : 0;
+      mask |= (private->visible[YELLOW])  ? GIMP_COMPONENT_MASK_BLUE       : 0;
+      mask |= (private->visible[KEY])     ? GIMP_COMPONENT_MASK_ALPHA      : 0;
+      mask |= (private->visible[ALPHA_C]) ? GIMP_COMPONENT_MASK_ALPHA_CMYK : 0;
       break;
 
     case GIMP_GRAY:

@@ -219,6 +219,32 @@ babl_descriptions[] =
   { "R'G'B'A double", N_("RGB-alpha") },
   { "R~G~B~A double", N_("RGB-alpha") },
 
+  { "CMYK u8",        N_("CMYK") },
+  { "cmyk u8",        N_("CMYK") },
+  { "CMYK u16",       N_("CMYK") },
+  { "cmyk u16",       N_("CMYK") },
+  { "CMYK u32",       N_("CMYK") },
+  { "cmyk u32",       N_("CMYK") },
+  { "CMYK half",      N_("CMYK") },
+  { "cmyk half",      N_("CMYK") },
+  { "CMYK float",     N_("CMYK") },
+  { "cmyk float",     N_("CMYK") },
+  { "CMYK double",    N_("CMYK") },
+  { "cmyk double",    N_("CMYK") },
+
+  { "CMYKA u8",       N_("CMYK-alpha") },
+  { "cmykA u8",       N_("CMYK-alpha") },
+  { "CMYKA u16",      N_("CMYK-alpha") },
+  { "cmykA u16",      N_("CMYK-alpha") },
+  { "CMYKA u32",      N_("CMYK-alpha") },
+  { "cmykA u32",      N_("CMYK-alpha") },
+  { "CMYKA half",     N_("CMYK-alpha") },
+  { "cmykA half",     N_("CMYK-alpha") },
+  { "CMYKA float",    N_("CMYK-alpha") },
+  { "cmykA float",    N_("CMYK-alpha") },
+  { "CMYKA double",   N_("CMYK-alpha") },
+  { "cmykA double",   N_("CMYK-alpha") },
+
   { "Y u8",           N_("Grayscale") },
   { "Y' u8",          N_("Grayscale") },
   { "Y~ u8",          N_("Grayscale") },
@@ -313,6 +339,58 @@ babl_descriptions[] =
   { "B double",       N_("Blue component") },
   { "B' double",      N_("Blue component") },
   { "B~ double",      N_("Blue component") },
+
+  { "Cyan u8",        N_("Cyan component") },
+  { "cyan u8",        N_("Cyan component") },
+  { "Cyan u16",       N_("Cyan component") },
+  { "cyan u16",       N_("Cyan component") },
+  { "Cyan u32",       N_("Cyan component") },
+  { "cyan u32",       N_("Cyan component") },
+  { "Cyan half",      N_("Cyan component") },
+  { "cyan half",      N_("Cyan component") },
+  { "Cyan float",     N_("Cyan component") },
+  { "cyan float",     N_("Cyan component") },
+  { "Cyan double",    N_("Cyan component") },
+  { "cyan double",    N_("Cyan component") },
+
+  { "Magenta u8",     N_("Magenta component") },
+  { "magenta u8",     N_("Magenta component") },
+  { "Magenta u16",    N_("Magenta component") },
+  { "magenta u16",    N_("Magenta component") },
+  { "Magenta u32",    N_("Magenta component") },
+  { "magenta u32",    N_("Magenta component") },
+  { "Magenta half",   N_("Magenta component") },
+  { "magenta half",   N_("Magenta component") },
+  { "Magenta float",  N_("Magenta component") },
+  { "magenta float",  N_("Magenta component") },
+  { "Magenta double", N_("Magenta component") },
+  { "magenta double", N_("Magenta component") },
+
+  { "Yellow u8",      N_("Yellow component") },
+  { "yellow u8",      N_("Yellow component") },
+  { "Yellow u16",     N_("Yellow component") },
+  { "yellow u16",     N_("Yellow component") },
+  { "Yellow u32",     N_("Yellow component") },
+  { "yellow u32",     N_("Yellow component") },
+  { "Yellow half",    N_("Yellow component") },
+  { "yellow half",    N_("Yellow component") },
+  { "Yellow float",   N_("Yellow component") },
+  { "yellow float",   N_("Yellow component") },
+  { "Yellow double",  N_("Yellow component") },
+  { "yellow double",  N_("Yellow component") },
+
+  { "Key u8",         N_("Key component") },
+  { "key u8",         N_("Key component") },
+  { "Key u16",        N_("Key component") },
+  { "key u16",        N_("Key component") },
+  { "Key u32",        N_("Key component") },
+  { "key u32",        N_("Key component") },
+  { "Key half",       N_("Key component") },
+  { "key half",       N_("Key component") },
+  { "Key float",      N_("Key component") },
+  { "key float",      N_("Key component") },
+  { "Key double",     N_("Key component") },
+  { "key double",     N_("Key component") },
 
   { "A u8",           N_("Alpha component") },
   { "A u16",          N_("Alpha component") },
@@ -446,6 +524,10 @@ gimp_babl_format_get_color_profile (const Babl *format)
           base_type = GIMP_RGB;
           break;
 
+        case GIMP_CMYK:
+          base_type = GIMP_CMYK;
+          break;
+
         case GIMP_GRAY:
           base_type = GIMP_GRAY;
           break;
@@ -504,6 +586,15 @@ gimp_babl_format_get_base_type (const Babl *format)
       ! strcmp (name, "Y~A"))
     {
       return GIMP_GRAY;
+    }
+  else if (! strcmp (name, "CMYK")      ||
+           ! strcmp (name, "cmyk")      ||
+           ! strcmp (name, "CMYKA")     ||
+           ! strcmp (name, "cmykA")     ||
+           ! strcmp (name, "CaMaYaKaA") ||
+           ! strcmp (name, "camayakaA"))
+    {
+      return GIMP_CMYK;
     }
   else if (! strcmp (name, "RGB")        ||
            ! strcmp (name, "R'G'B'")     ||
@@ -619,10 +710,16 @@ gimp_babl_format_get_trc (const Babl *format)
 
   name = babl_get_name (babl_format_get_model (format));
 
-  if (! strcmp (name, "Y")    ||
-      ! strcmp (name, "YA")   ||
-      ! strcmp (name, "RGB")  ||
-      ! strcmp (name, "RGBA") ||
+  if (! strcmp (name, "Y")         ||
+      ! strcmp (name, "YA")        ||
+      ! strcmp (name, "CMYK")      ||
+      ! strcmp (name, "cmyk")      ||
+      ! strcmp (name, "CMYKA")     ||
+      ! strcmp (name, "cmykA")     ||
+      ! strcmp (name, "CaMaYaKaA") ||
+      ! strcmp (name, "camayakaA") ||
+      ! strcmp (name, "RGB")       ||
+      ! strcmp (name, "RGBA")      ||
       ! strcmp (name, "RaGaBaA"))
     {
       return GIMP_TRC_LINEAR;
@@ -803,6 +900,7 @@ gimp_babl_is_valid (GimpImageBaseType base_type,
   switch (base_type)
     {
     case GIMP_RGB:
+    case GIMP_CMYK:
     case GIMP_GRAY:
       return TRUE;
 
@@ -957,6 +1055,62 @@ gimp_babl_format (GimpImageBaseType  base_type,
             return babl_format_with_space ("R~G~B~A double", space);
           else
             return babl_format_with_space ("R~G~B~ double", space);
+
+        default:
+          break;
+        }
+      break;
+
+    case GIMP_CMYK:
+      switch (precision)
+        {
+        case GIMP_PRECISION_U8_LINEAR:
+        case GIMP_PRECISION_U8_NON_LINEAR:
+        case GIMP_PRECISION_U8_PERCEPTUAL:
+          if (with_alpha)
+            return babl_format_with_space ("CMYKA u8", space);
+          else
+            return babl_format_with_space ("CMYK u8", space);
+
+        case GIMP_PRECISION_U16_LINEAR:
+        case GIMP_PRECISION_U16_NON_LINEAR:
+        case GIMP_PRECISION_U16_PERCEPTUAL:
+          if (with_alpha)
+            return babl_format_with_space ("CMYKA u16", space);
+          else
+            return babl_format_with_space ("CMYK u16", space);
+
+        case GIMP_PRECISION_U32_LINEAR:
+        case GIMP_PRECISION_U32_NON_LINEAR:
+        case GIMP_PRECISION_U32_PERCEPTUAL:
+          if (with_alpha)
+            return babl_format_with_space ("CMYKA u32", space);
+          else
+            return babl_format_with_space ("CMYK u32", space);
+
+        case GIMP_PRECISION_HALF_LINEAR:
+        case GIMP_PRECISION_HALF_NON_LINEAR:
+        case GIMP_PRECISION_HALF_PERCEPTUAL:
+          if (with_alpha)
+            return babl_format_with_space ("CMYKA half", space);
+          else
+            return babl_format_with_space ("CMYK half", space);
+
+        case GIMP_PRECISION_FLOAT_LINEAR:
+        case GIMP_PRECISION_FLOAT_NON_LINEAR:
+        case GIMP_PRECISION_FLOAT_PERCEPTUAL:
+          if (with_alpha)
+            return babl_format_with_space ("CMYKA float", space);
+          else
+            return babl_format_with_space ("CMYK float", space);
+
+        case GIMP_PRECISION_DOUBLE_LINEAR:
+        case GIMP_PRECISION_DOUBLE_NON_LINEAR:
+        case GIMP_PRECISION_DOUBLE_PERCEPTUAL:
+          if (with_alpha)
+            return babl_format_with_space ("CMYKA double", space);
+          else
+            return babl_format_with_space ("CMYK double", space);
 
         default:
           break;
@@ -1333,6 +1487,100 @@ gimp_babl_component_format (GimpImageBaseType base_type,
           break;
         }
       break;
+
+    case GIMP_CMYK:
+      switch (precision)
+        {
+        case GIMP_PRECISION_U8_LINEAR:
+        case GIMP_PRECISION_U8_NON_LINEAR:
+        case GIMP_PRECISION_U8_PERCEPTUAL:
+          switch (index)
+            {
+            case 0: return babl_format ("Cyan u8");
+            case 1: return babl_format ("Magenta u8");
+            case 2: return babl_format ("Yellow u8");
+            case 3: return babl_format ("Key u8");
+            case 4: return babl_format ("A u8");
+            default:
+              break;
+            }
+          break;
+
+        case GIMP_PRECISION_U16_LINEAR:
+        case GIMP_PRECISION_U16_NON_LINEAR:
+        case GIMP_PRECISION_U16_PERCEPTUAL:
+          switch (index)
+            {
+            case 0: return babl_format ("Cyan u16");
+            case 1: return babl_format ("Magenta u16");
+            case 2: return babl_format ("Yellow u16");
+            case 3: return babl_format ("Key u16");
+            case 4: return babl_format ("A u16");
+            default:
+              break;
+            }
+          break;
+
+        case GIMP_PRECISION_U32_LINEAR:
+        case GIMP_PRECISION_U32_NON_LINEAR:
+        case GIMP_PRECISION_U32_PERCEPTUAL:
+          switch (index)
+            {
+            case 0: return babl_format ("Cyan u32");
+            case 1: return babl_format ("Magenta u32");
+            case 2: return babl_format ("Yellow u32");
+            case 3: return babl_format ("Key u32");
+            case 4: return babl_format ("A u32");
+            default:
+              break;
+            }
+          break;
+
+        case GIMP_PRECISION_HALF_LINEAR:
+        case GIMP_PRECISION_HALF_NON_LINEAR:
+        case GIMP_PRECISION_HALF_PERCEPTUAL:
+          switch (index)
+            {
+            case 0: return babl_format ("Cyan half");
+            case 1: return babl_format ("Magenta half");
+            case 2: return babl_format ("Yellow half");
+            case 3: return babl_format ("Key half");
+            case 4: return babl_format ("A half");
+            default:
+              break;
+            }
+          break;
+
+        case GIMP_PRECISION_FLOAT_LINEAR:
+        case GIMP_PRECISION_FLOAT_NON_LINEAR:
+        case GIMP_PRECISION_FLOAT_PERCEPTUAL:
+          switch (index)
+            {
+            case 0: return babl_format ("Cyan float");
+            case 1: return babl_format ("Magenta float");
+            case 2: return babl_format ("Yellow float");
+            case 3: return babl_format ("Key float");
+            case 4: return babl_format ("A float");
+            default:
+              break;
+            }
+          break;
+
+        case GIMP_PRECISION_DOUBLE_LINEAR:
+        case GIMP_PRECISION_DOUBLE_NON_LINEAR:
+        case GIMP_PRECISION_DOUBLE_PERCEPTUAL:
+          switch (index)
+            {
+            case 0: return babl_format ("Cyan double");
+            case 1: return babl_format ("Magenta double");
+            case 2: return babl_format ("Yellow double");
+            case 3: return babl_format ("Key double");
+            case 4: return babl_format ("A double");
+            default:
+              break;
+            }
+          break;
+        }
 
     case GIMP_GRAY:
       switch (precision)

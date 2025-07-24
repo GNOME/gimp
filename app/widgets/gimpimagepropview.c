@@ -474,6 +474,7 @@ gimp_image_prop_view_update (GimpImagePropView *view)
   switch (type)
     {
     case GIMP_RGB:
+    case GIMP_CMYK:
     case GIMP_GRAY:
       profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
       g_snprintf (buf, sizeof (buf), "%s: %s", desc,

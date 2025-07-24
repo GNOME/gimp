@@ -128,6 +128,10 @@ typedef enum
  * @GIMP_CHANNEL_RED:     Red
  * @GIMP_CHANNEL_GREEN:   Green
  * @GIMP_CHANNEL_BLUE:    Blue
+ * @GIMP_CHANNEL_CYAN:    Cyan
+ * @GIMP_CHANNEL_MAGENTA: Magenta
+ * @GIMP_CHANNEL_YELLOW:  Yellow
+ * @GIMP_CHANNEL_KEY:     Key
  * @GIMP_CHANNEL_GRAY:    Gray
  * @GIMP_CHANNEL_INDEXED: Indexed
  * @GIMP_CHANNEL_ALPHA:   Alpha
@@ -143,6 +147,10 @@ typedef enum
   GIMP_CHANNEL_RED,      /*< desc="Red"     >*/
   GIMP_CHANNEL_GREEN,    /*< desc="Green"   >*/
   GIMP_CHANNEL_BLUE,     /*< desc="Blue"    >*/
+  GIMP_CHANNEL_CYAN,     /*< desc="Cyan"    >*/
+  GIMP_CHANNEL_MAGENTA,  /*< desc="Magenta" >*/
+  GIMP_CHANNEL_YELLOW,   /*< desc="Yellow"  >*/
+  GIMP_CHANNEL_KEY,      /*< desc="Key"     >*/
   GIMP_CHANNEL_GRAY,     /*< desc="Gray"    >*/
   GIMP_CHANNEL_INDEXED,  /*< desc="Indexed" >*/
   GIMP_CHANNEL_ALPHA     /*< desc="Alpha"   >*/
@@ -580,6 +588,7 @@ typedef enum
 /**
  * GimpImageBaseType:
  * @GIMP_RGB:     RGB color
+ * @GIMP_CMYK:    CMYK color
  * @GIMP_GRAY:    Grayscale
  * @GIMP_INDEXED: Indexed color
  *
@@ -592,6 +601,7 @@ GType gimp_image_base_type_get_type (void) G_GNUC_CONST;
 typedef enum
 {
   GIMP_RGB,     /*< desc="RGB color"     >*/
+  GIMP_CMYK,    /*< desc="CMYK color"    >*/
   GIMP_GRAY,    /*< desc="Grayscale"     >*/
   GIMP_INDEXED  /*< desc="Indexed color" >*/
 } GimpImageBaseType;
@@ -601,6 +611,8 @@ typedef enum
  * GimpImageType:
  * @GIMP_RGB_IMAGE:      RGB
  * @GIMP_RGBA_IMAGE:     RGB-alpha
+ * @GIMP_CMYK_IMAGE:     CMYK
+ * @GIMP_CMYKA_IMAGE:    CMYK-alpha
  * @GIMP_GRAY_IMAGE:     Grayscale
  * @GIMP_GRAYA_IMAGE:    Grayscale-alpha
  * @GIMP_INDEXED_IMAGE:  Indexed
@@ -616,6 +628,8 @@ typedef enum
 {
   GIMP_RGB_IMAGE,      /*< desc="RGB"             >*/
   GIMP_RGBA_IMAGE,     /*< desc="RGB-alpha"       >*/
+  GIMP_CMYK_IMAGE,     /*< desc="CMYK"            >*/
+  GIMP_CMYKA_IMAGE,    /*< desc="CMYK-alpha"      >*/
   GIMP_GRAY_IMAGE,     /*< desc="Grayscale"       >*/
   GIMP_GRAYA_IMAGE,    /*< desc="Grayscale-alpha" >*/
   GIMP_INDEXED_IMAGE,  /*< desc="Indexed"         >*/
@@ -1304,6 +1318,7 @@ typedef enum
 /**
  * GimpExportCapabilities:
  * @GIMP_EXPORT_CAN_HANDLE_RGB:                 Handles RGB images
+ * @GIMP_EXPORT_CAN_HANDLE_CMYK:                Handles CMYK images
  * @GIMP_EXPORT_CAN_HANDLE_GRAY:                Handles grayscale images
  * @GIMP_EXPORT_CAN_HANDLE_INDEXED:             Handles indexed images
  * @GIMP_EXPORT_CAN_HANDLE_BITMAP:              Handles two-color indexed images
@@ -1324,16 +1339,17 @@ GType gimp_export_capabilities_get_type (void) G_GNUC_CONST;
 typedef enum
 {
   GIMP_EXPORT_CAN_HANDLE_RGB                 = 1 << 0,
-  GIMP_EXPORT_CAN_HANDLE_GRAY                = 1 << 1,
-  GIMP_EXPORT_CAN_HANDLE_INDEXED             = 1 << 2,
-  GIMP_EXPORT_CAN_HANDLE_BITMAP              = 1 << 3,
-  GIMP_EXPORT_CAN_HANDLE_ALPHA               = 1 << 4,
-  GIMP_EXPORT_CAN_HANDLE_LAYERS              = 1 << 5,
-  GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION = 1 << 6,
-  GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS         = 1 << 7,
-  GIMP_EXPORT_CAN_HANDLE_LAYER_EFFECTS       = 1 << 8,
-  GIMP_EXPORT_NEEDS_ALPHA                    = 1 << 9,
-  GIMP_EXPORT_NEEDS_CROP                     = 1 << 10
+  GIMP_EXPORT_CAN_HANDLE_CMYK                = 1 << 1,
+  GIMP_EXPORT_CAN_HANDLE_GRAY                = 1 << 2,
+  GIMP_EXPORT_CAN_HANDLE_INDEXED             = 1 << 3,
+  GIMP_EXPORT_CAN_HANDLE_BITMAP              = 1 << 4,
+  GIMP_EXPORT_CAN_HANDLE_ALPHA               = 1 << 5,
+  GIMP_EXPORT_CAN_HANDLE_LAYERS              = 1 << 6,
+  GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION = 1 << 7,
+  GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS         = 1 << 8,
+  GIMP_EXPORT_CAN_HANDLE_LAYER_EFFECTS       = 1 << 9,
+  GIMP_EXPORT_NEEDS_ALPHA                    = 1 << 10,
+  GIMP_EXPORT_NEEDS_CROP                     = 1 << 11
 } GimpExportCapabilities;
 
 

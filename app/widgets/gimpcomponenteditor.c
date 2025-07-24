@@ -346,6 +346,14 @@ gimp_component_editor_create_components (GimpComponentEditor *editor)
       components[2] = GIMP_CHANNEL_BLUE;
       break;
 
+    case GIMP_CMYK:
+      n_components  = 4;
+      components[0] = GIMP_CHANNEL_CYAN;
+      components[1] = GIMP_CHANNEL_MAGENTA;
+      components[2] = GIMP_CHANNEL_YELLOW;
+      components[3] = GIMP_CHANNEL_KEY;
+      break;
+
     case GIMP_GRAY:
       n_components  = 1;
       components[0] = GIMP_CHANNEL_GRAY;
