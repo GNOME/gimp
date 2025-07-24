@@ -42,8 +42,6 @@ if ("$PSCommandPath" -like "*1_build-deps-msys2.ps1*" -or "$CI_JOB_NAME" -like "
   {
     & $MSYS_ROOT\usr\bin\pacman --noconfirm -Suy
   }
-# TODO: When we drop 32-bit support, move an unconditional mypaint-brushes2 dependency back to all-deps-uni.txt
-& $MSYS_ROOT\usr\bin\pacman --noconfirm -S --needed $(if ($MSYSTEM_PREFIX -ne 'mingw32') { "$(if ($MSYSTEM_PREFIX -eq 'clangarm64') { 'mingw-w64-clang-aarch64' } else { 'mingw-w64-clang-x86_64' })-mypaint-brushes2" } else { 'mingw-w64-i686-mypaint-brushes' })
 & $MSYS_ROOT\usr\bin\pacman --noconfirm -S --needed $(if ($MSYSTEM_PREFIX -ne 'mingw32') { "$(if ($MSYSTEM_PREFIX -eq 'clangarm64') { 'mingw-w64-clang-aarch64' } else { 'mingw-w64-clang-x86_64' })-perl" }) (Get-Content build/windows/all-deps-uni.txt | Where-Object { $_.Trim() -ne '' }).Replace('${MINGW_PACKAGE_PREFIX}',$(if ($MINGW_PACKAGE_PREFIX) { "$MINGW_PACKAGE_PREFIX" } elseif ($MSYSTEM_PREFIX -eq 'clangarm64') { 'mingw-w64-clang-aarch64' } else { 'mingw-w64-clang-x86_64' })).Replace(' \','')
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):deps_install$([char]13)$([char]27)[0K"
 

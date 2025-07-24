@@ -147,7 +147,7 @@ help in that regard:
      incompatible with the version 2 (which is still experimental anyway
      and has no stable release at time of writing).
 
- 11. We also need the mypaint-brushes data package:
+ 11. We also need the mypaint-brushes v2 data package:
 
         https://github.com/mypaint/mypaint-brushes
 

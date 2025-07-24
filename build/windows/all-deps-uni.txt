@@ -36,6 +36,7 @@ ${MINGW_PACKAGE_PREFIX}-libtiff \
 ${MINGW_PACKAGE_PREFIX}-libwebp \
 ${MINGW_PACKAGE_PREFIX}-libwmf \
 ${MINGW_PACKAGE_PREFIX}-maxflow \
+${MINGW_PACKAGE_PREFIX}-mypaint-brushes2 \
 ${MINGW_PACKAGE_PREFIX}-openexr \
 ${MINGW_PACKAGE_PREFIX}-openjpeg2 \
 ${MINGW_PACKAGE_PREFIX}-pango \
