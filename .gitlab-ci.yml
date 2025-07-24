@@ -77,7 +77,6 @@ workflow:
       - 'scheduler_failure'
   needs: []
   # Default Docker image (unless otherwise defined)
-  image: debian:${DEB_VERSION}
   variables:
     DEB_VERSION: "bookworm"
     # Common cloning procedure
@@ -437,7 +436,6 @@ gimp-flatpak-x64:
       - RUNNER: [aarch64, x86_64_v2]
   tags:
     - $RUNNER
-  image: $CI_REGISTRY_IMAGE:build-snap-noble-${RUNNER}
   before_script:
     - export GIMP_PREFIX="${CI_PROJECT_DIR}/_install-${RUNNER}"
   timeout: 20m
@@ -451,26 +449,15 @@ deps-snap:
   variables:
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   script:
-    - export container=docker
-    - mkdir -p /kaniko/.docker
-    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
-    # Install deps
-    - echo "FROM ghcr.io/canonical/snapcraft:8_core24" > Dockerfile
-    - echo "ENV SNAPCRAFT_BUILD_ENVIRONMENT=host" >> Dockerfile
-    - echo "RUN ln -s /snap/snapcraft/current/usr/share/snapcraft/extensions /snap/snapcraft/current/share/snapcraft/extensions" >> Dockerfile
-    # echo "RUN echo 'exec \$SNAP/bin/python \$SNAP/bin/snapcraft \"\$@\"' >> /snap/bin/snapcraft" >> Dockerfile
-    # Build some dependencies
-    - echo "FROM $CI_REGISTRY_IMAGE:build-snap-noble-${RUNNER}" > Dockerfile2;
-    - echo "COPY build/linux/snap /root/project" >> Dockerfile2;
-    - echo "COPY build/linux/snap /" >> Dockerfile2
-    - echo "WORKDIR /root/project" >> Dockerfile2;
-    - echo "RUN cat /snap/bin/snapcraft" >> Dockerfile2
-    - echo "RUN snapcraft --verbose" >> Dockerfile2;
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile_test --destination $CI_REGISTRY_IMAGE:build-snap-noble-${RUNNER} --cache=true --cache-ttl=120h --image-fs-extract-retry 1 --verbosity=warn
+    - echo "FROM $CI_REGISTRY_IMAGE:build-snap-noble-${RUNNER}" > Dockerfile2
+    - echo "RUN systemctl status snapd.service" >> Dockerfile2
+    - echo "RUN snap install emoji" >> Dockerfile2
     - if [ -f 'Dockerfile2' ]; then /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile2 --destination build-snap-noble-${RUNNER}-temp --cache=false --no-push --verbosity=warn; fi
   artifacts:
     paths:
       - _install-${RUNNER}/
+      - build/linux/snap/*.log
       - babl/_build-${RUNNER}/meson-logs/meson-log.txt
       - babl/_build-${RUNNER}/config.h
       - gegl/_build-${RUNNER}/meson-logs/meson-log.txt
