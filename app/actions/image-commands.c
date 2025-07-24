@@ -88,6 +88,14 @@ static void   image_convert_rgb_callback       (GtkWidget                *dialog
                                                 gboolean                  bpc,
                                                 gpointer                  user_data);
 
+static void   image_convert_cmyk_callback      (GtkWidget                *dialog,
+                                                GimpImage                *image,
+                                                GimpColorProfile         *new_profile,
+                                                GFile                    *new_file,
+                                                GimpColorRenderingIntent  intent,
+                                                gboolean                  bpc,
+                                                gpointer                  user_data);
+
 static void   image_convert_gray_callback      (GtkWidget                *dialog,
                                                 GimpImage                *image,
                                                 GimpColorProfile         *new_profile,
@@ -277,8 +285,10 @@ image_convert_base_type_cmd_callback (GimpAction *action,
   switch (base_type)
     {
     case GIMP_RGB:
+    case GIMP_CMYK:
     case GIMP_GRAY:
-      if (gimp_image_get_color_profile (image))
+      if (gimp_image_get_color_profile (image) ||
+          base_type == GIMP_CMYK)
         {
           ColorProfileDialogType    dialog_type;
           GimpColorProfileCallback  callback;
@@ -298,6 +308,13 @@ image_convert_base_type_cmd_callback (GimpAction *action,
 
               default_profile = gimp_babl_get_builtin_color_profile (GIMP_RGB,
                                                                      trc);
+            }
+          else if (base_type == GIMP_CMYK)
+            {
+              dialog_type = COLOR_PROFILE_DIALOG_CONVERT_TO_CMYK;
+              callback    = image_convert_cmyk_callback;
+
+              default_profile = NULL;
             }
           else
             {
@@ -1092,6 +1109,44 @@ image_convert_rgb_callback (GtkWidget                *dialog,
                                   gimp_color_profile_get_label (new_profile));
 
   if (! gimp_image_convert_type (image, GIMP_RGB, new_profile,
+                                 progress, &error))
+    {
+      gimp_message (image->gimp, G_OBJECT (dialog),
+                    GIMP_MESSAGE_ERROR,
+                    "%s", error->message);
+      g_clear_error (&error);
+
+      if (progress)
+        gimp_progress_end (progress);
+
+      return;
+    }
+
+  if (progress)
+    gimp_progress_end (progress);
+
+  gimp_image_flush (image);
+
+ gtk_widget_destroy (dialog);
+}
+
+static void
+image_convert_cmyk_callback (GtkWidget                *dialog,
+                             GimpImage                *image,
+                             GimpColorProfile         *new_profile,
+                             GFile                    *new_file,
+                             GimpColorRenderingIntent  intent,
+                             gboolean                  bpc,
+                             gpointer                  user_data)
+{
+  GimpProgress *progress = user_data;
+  GError       *error    = NULL;
+
+  progress = gimp_progress_start (progress, FALSE,
+                                  _("Converting to CMYK (%s)"),
+                                  gimp_color_profile_get_label (new_profile));
+
+  if (! gimp_image_convert_type (image, GIMP_CMYK, new_profile,
                                  progress, &error))
     {
       gimp_message (image->gimp, G_OBJECT (dialog),

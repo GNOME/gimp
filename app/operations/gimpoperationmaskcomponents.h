@@ -40,10 +40,12 @@ struct _GimpOperationMaskComponents
 
   GimpComponentMask           mask;
   gdouble                     alpha;
+  const Babl                 *image_format;
 
   guint32                     alpha_value;
   gpointer                    process;
   const Babl                 *format;
+  gboolean                    is_cmyk;
 };
 
 struct _GimpOperationMaskComponentsClass
