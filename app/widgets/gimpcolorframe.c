@@ -801,6 +801,21 @@ gimp_color_frame_update (GimpColorFrame *frame)
               /* TRANSLATORS: A for Alpha (color transparency) */
               names[values_len++] = C_("Alpha channel", "A:");
           }
+        else if (base_type == GIMP_CMYK)
+          {
+            /* TRANSLATORS: C for Cyan (CMYK) */
+            names[values_len++] = C_("CMYK", "C:");
+            /* TRANSLATORS: M for Magenta (CMYK) */
+            names[values_len++] = C_("CMYK", "M:");
+            /* TRANSLATORS: Y for Yellow (CMYK) */
+            names[values_len++] = C_("CMYK", "Y:");
+            /* TRANSLATORS: K for Key (CMYK) */
+            names[values_len++] = C_("CMYK", "K:");
+
+            if (has_alpha)
+              /* TRANSLATORS: A for Alpha (color transparency) */
+              names[values_len++] = C_("Alpha channel", "A:");
+          }
         else if (base_type == GIMP_RGB || base_type == GIMP_INDEXED)
           {
             /* TRANSLATORS: R for Red (RGB) */
