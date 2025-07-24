@@ -315,6 +315,7 @@
         <submenu>
           <attribute name="label" translatable="yes" context="image-action">_Mode</attribute>
           <item><attribute name="action">app.image-convert-rgb</attribute></item>
+          <item><attribute name="action">app.image-convert-cmyk</attribute></item>
           <item><attribute name="action">app.image-convert-grayscale</attribute></item>
           <item><attribute name="action">app.image-convert-indexed</attribute></item>
         </submenu>
