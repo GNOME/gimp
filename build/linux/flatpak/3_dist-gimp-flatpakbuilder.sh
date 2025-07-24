@@ -16,44 +16,49 @@ fi
 
 
 # GLOBAL INFO
-APP_ID=$(awk -F'"' '/"app-id"/ {print $4; exit}' build/linux/flatpak/org.gimp.GIMP-nightly.json)
+for FLATPAK in $(find . -maxdepth 1 -iname "*.flatpak"); do
+FLATPAK=$(echo "$FLATPAK" | sed 's|^\./temp_||')
+ARCH=$(echo "$FLATPAK" | sed 's/.*-\([^-]*\)\.flatpak/\1/')
 
 
-# GIMP FILES AS REPO
+# GIMP FILES AS REPO (FOR FURTHER PUBLISHING)
 if [ "$GITLAB_CI" ]; then
   # Extract previously exported OSTree repo/
-  tar xf repo.tar --warning=no-timestamp
+  if [ -d 'repo' ]; then
+    rm -fr repo
+  fi
+  mkdir repo
+  tar xf repo-$ARCH.tar -C repo/ --warning=no-timestamp
 fi
 
 
-# CONSTRUCT .FLATPAK
-# Generate a Flatpak "bundle" to be tested with GNOME runtime installed
-# (it is NOT a real/full bundle, deps from GNOME runtime are not bundled)
-printf "\e[0Ksection_start:`date +%s`:flat_making[collapsed=true]\r\e[0KPackaging repo as ${APP_ID}.flatpak\n"
-flatpak build-bundle repo ${APP_ID}.flatpak --runtime-repo=https://nightly.gnome.org/gnome-nightly.flatpakrepo ${APP_ID} $(awk -F'"' '/"branch"/ {print $4; exit}' build/linux/flatpak/org.gimp.GIMP-nightly.json)
-printf "(INFO): Suceeded. To test this build, install it from the artifact with: flatpak install --user ${APP_ID}.flatpak -y\n"
-printf "\e[0Ksection_end:`date +%s`:flat_making\r\e[0K\n"
+# FINISH .FLATPAK
+printf "\e[0Ksection_start:`date +%s`:${FLATPAK}_making[collapsed=true]\r\e[0KFinishing ${FLATPAK}\n"
+mv temp_${FLATPAK} ${FLATPAK}
+printf "(INFO): Suceeded. To test this build, install it from the artifact with: flatpak install --user ${FLATPAK} -y\n"
+printf "\e[0Ksection_end:`date +%s`:${FLATPAK}_making\r\e[0K\n"
 
 
 # GENERATE SHASUMS FOR .FLATPAK
-printf "\e[0Ksection_start:`date +%s`:flat_trust[collapsed=true]\r\e[0KChecksumming ${APP_ID}.flatpak\n"
-printf "(INFO): ${APP_ID}.flatpak SHA-256: $(sha256sum ${APP_ID}.flatpak | cut -d ' ' -f 1)\n"
-printf "(INFO): ${APP_ID}.flatpak SHA-512: $(sha512sum ${APP_ID}.flatpak | cut -d ' ' -f 1)\n"
-printf "\e[0Ksection_end:`date +%s`:flat_trust\r\e[0K\n"
+printf "\e[0Ksection_start:`date +%s`:${FLATPAK}_trust[collapsed=true]\r\e[0KChecksumming ${FLATPAK}\n"
+printf "(INFO): ${FLATPAK} SHA-256: $(sha256sum ${FLATPAK} | cut -d ' ' -f 1)\n"
+printf "(INFO): ${FLATPAK} SHA-512: $(sha512sum ${FLATPAK} | cut -d ' ' -f 1)\n"
+printf "\e[0Ksection_end:`date +%s`:${FLATPAK}_trust\r\e[0K\n"
 
 
 if [ "$GITLAB_CI" ]; then
   output_dir='build/linux/flatpak/_Output'
   mkdir -p $output_dir
-  mv ${APP_ID}* $output_dir
+  mv ${FLATPAK} $output_dir
 fi
 
 
 # PUBLISH GIMP REPO IN GNOME NIGHTLY
 # We take the commands from 'flatpak_ci_initiative.yml'
 if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
-  printf "\e[0Ksection_start:`date +%s`:flat_publish[collapsed=true]\r\e[0KPublishing repo to GNOME nightly\n"
+  printf "\e[0Ksection_start:`date +%s`:${FLATPAK}_publish[collapsed=true]\r\e[0KPublishing $ARCH repo to GNOME nightly\n"
   curl https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml --output flatpak_ci_initiative.yml
   eval "$(sed -n -e '/flatpak build-update-repo/,/exit $result/ { s/    - //; p }' flatpak_ci_initiative.yml)"
-  printf "\e[0Ksection_end:`date +%s`:flat_publish\r\e[0K\n"
+  printf "\e[0Ksection_end:`date +%s`:${FLATPAK}_publish\r\e[0K\n"
 fi
+done

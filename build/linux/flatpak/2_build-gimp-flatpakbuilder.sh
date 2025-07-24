@@ -24,7 +24,7 @@ eval "$(sed -n '/Install part/,/End of check/p' build/linux/flatpak/1_build-deps
 
 if [ "$GITLAB_CI" ]; then
   # Extract deps from previous job
-  tar xf .flatpak-builder.tar
+  tar xf .flatpak-builder-$RUNNER.tar
 fi
 
 
@@ -49,12 +49,19 @@ if [ "$GITLAB_CI" ]; then
 fi
 printf "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K\n"
 
+
+# Bundle files for distribution on 3_dist-gimp-flatpakbuilder.sh
+printf "\e[0Ksection_start:`date +%s`:gimp_bundle[collapsed=true]\r\e[0KCreating OSTree repo\n"
 ## Cleanup GIMP_PREFIX (not working) and export it to OSTree repo
 ## https://github.com/flatpak/flatpak-builder/issues/14
-printf "\e[0Ksection_start:`date +%s`:gimp_bundle[collapsed=true]\r\e[0KCreating OSTree repo\n"
 eval $FLATPAK_BUILDER $BUILDER_ARGS --finish-only --repo=repo \
                       "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
 if [ "$GITLAB_CI" ]; then
-  tar cf repo.tar repo/
+  tar cf repo-$(uname -m).tar repo/
 fi
+## Make testable .flatpak "bundle" from OSTree repo
+## (it is NOT a real/full bundle, deps from GNOME runtime are not bundled)
+APP_ID=$(awk -F'"' '/"app-id"/ {print $4; exit}' build/linux/flatpak/org.gimp.GIMP-nightly.json)
+BRANCH=$(awk -F'"' '/"branch"/ {print $4; exit}' build/linux/flatpak/org.gimp.GIMP-nightly.json)
+flatpak build-bundle repo temp_${APP_ID}-$(uname -m).flatpak --runtime-repo=https://nightly.gnome.org/gnome-nightly.flatpakrepo ${APP_ID} ${BRANCH}
 printf "\e[0Ksection_end:`date +%s`:gimp_bundle\r\e[0K\n"
