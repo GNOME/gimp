@@ -23,9 +23,12 @@ fi
 # Install part of the deps
 eval "$(sed -n '/Install part/,/End of check/p' build/linux/flatpak/1_build-deps-flatpak.sh)"
 
+flatpak remote-add --user --if-not-exists --from flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak install --user flathub org.gnome.Sdk/$(uname -m)/48 org.gnome.Platform/$(uname -m)/48 -y
+
 if [ "$GITLAB_CI" ]; then
   # Extract deps from previous job
-  tar xf .flatpak-builder.tar
+  tar xf .flatpak-builder-${RUNNER:-$(uname -m)}.tar
 fi
 
 
@@ -52,7 +55,7 @@ elif [ "$GITLAB_CI" ] || [ "$1" = '--ci' ]; then
   eval $FLATPAK_BUILDER --force-clean --user --disable-rofiles-fuse --keep-build-dirs --build-only --disable-download \
                         "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json > gimp-flatpak-builder.log 2>&1 || { cat gimp-flatpak-builder.log; exit 1; }
   if [ "$GITLAB_CI"  ]; then
-    tar cf gimp-meson-log.tar .flatpak-builder/build/gimp-1/_flatpak_build/meson-logs/meson-log.txt
+    tar cf gimp-meson-log-${RUNNER:-$(uname -m)}.tar .flatpak-builder/build/gimp-1/_flatpak_build/meson-logs/meson-log.txt
   fi
   printf "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K\n"
 
@@ -62,7 +65,7 @@ elif [ "$GITLAB_CI" ] || [ "$1" = '--ci' ]; then
   eval $FLATPAK_BUILDER --user --disable-rofiles-fuse --finish-only --repo=repo \
                         "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
   if [ "$GITLAB_CI"  ]; then
-    tar cf repo.tar repo/
+    tar cf repo-${RUNNER:-$(uname -m)}.tar repo/
   fi
   printf "\e[0Ksection_end:`date +%s`:gimp_bundle\r\e[0K\n"
 fi
