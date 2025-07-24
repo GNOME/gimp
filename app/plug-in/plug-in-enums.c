@@ -15,9 +15,11 @@ gimp_plug_in_image_type_get_type (void)
   static const GFlagsValue values[] =
   {
     { GIMP_PLUG_IN_RGB_IMAGE, "GIMP_PLUG_IN_RGB_IMAGE", "rgb-image" },
+    { GIMP_PLUG_IN_CMYK_IMAGE, "GIMP_PLUG_IN_CMYK_IMAGE", "cmyk-image" },
     { GIMP_PLUG_IN_GRAY_IMAGE, "GIMP_PLUG_IN_GRAY_IMAGE", "gray-image" },
     { GIMP_PLUG_IN_INDEXED_IMAGE, "GIMP_PLUG_IN_INDEXED_IMAGE", "indexed-image" },
     { GIMP_PLUG_IN_RGBA_IMAGE, "GIMP_PLUG_IN_RGBA_IMAGE", "rgba-image" },
+    { GIMP_PLUG_IN_CMYKA_IMAGE, "GIMP_PLUG_IN_CMYKA_IMAGE", "cmyka-image" },
     { GIMP_PLUG_IN_GRAYA_IMAGE, "GIMP_PLUG_IN_GRAYA_IMAGE", "graya-image" },
     { GIMP_PLUG_IN_INDEXEDA_IMAGE, "GIMP_PLUG_IN_INDEXEDA_IMAGE", "indexeda-image" },
     { 0, NULL, NULL }
@@ -26,9 +28,11 @@ gimp_plug_in_image_type_get_type (void)
   static const GimpFlagsDesc descs[] =
   {
     { GIMP_PLUG_IN_RGB_IMAGE, "GIMP_PLUG_IN_RGB_IMAGE", NULL },
+    { GIMP_PLUG_IN_CMYK_IMAGE, "GIMP_PLUG_IN_CMYK_IMAGE", NULL },
     { GIMP_PLUG_IN_GRAY_IMAGE, "GIMP_PLUG_IN_GRAY_IMAGE", NULL },
     { GIMP_PLUG_IN_INDEXED_IMAGE, "GIMP_PLUG_IN_INDEXED_IMAGE", NULL },
     { GIMP_PLUG_IN_RGBA_IMAGE, "GIMP_PLUG_IN_RGBA_IMAGE", NULL },
+    { GIMP_PLUG_IN_CMYKA_IMAGE, "GIMP_PLUG_IN_CMYKA_IMAGE", NULL },
     { GIMP_PLUG_IN_GRAYA_IMAGE, "GIMP_PLUG_IN_GRAYA_IMAGE", NULL },
     { GIMP_PLUG_IN_INDEXEDA_IMAGE, "GIMP_PLUG_IN_INDEXEDA_IMAGE", NULL },
     { 0, NULL, NULL }

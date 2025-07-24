@@ -960,7 +960,10 @@ static GimpComponentMask
 gimp_drawable_real_get_active_mask (GimpDrawable *drawable)
 {
   /*  Return all, because that skips the component mask op when painting  */
-  return GIMP_COMPONENT_MASK_ALL;
+  if (gimp_drawable_get_base_type (drawable) == GIMP_CMYK)
+    return GIMP_COMPONENT_MASK_CMYK_ALL;
+  else
+    return GIMP_COMPONENT_MASK_ALL;
 }
 
 static gboolean
@@ -2038,6 +2041,14 @@ gimp_drawable_is_rgb (GimpDrawable *drawable)
 }
 
 gboolean
+gimp_drawable_is_cmyk (GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+
+  return (gimp_drawable_get_base_type (drawable) == GIMP_CMYK);
+}
+
+gboolean
 gimp_drawable_is_gray (GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
@@ -2076,10 +2087,31 @@ gimp_drawable_get_component_format (GimpDrawable    *drawable,
                                          gimp_drawable_get_precision (drawable),
                                          BLUE);
 
+    /* TODO: Make conditional on CMYK */
     case GIMP_CHANNEL_ALPHA:
       return gimp_babl_component_format (GIMP_RGB,
                                          gimp_drawable_get_precision (drawable),
                                          ALPHA);
+
+    case GIMP_CHANNEL_CYAN:
+      return gimp_babl_component_format (GIMP_CMYK,
+                                         gimp_drawable_get_precision (drawable),
+                                         CYAN);
+
+    case GIMP_CHANNEL_MAGENTA:
+      return gimp_babl_component_format (GIMP_CMYK,
+                                         gimp_drawable_get_precision (drawable),
+                                         MAGENTA);
+
+    case GIMP_CHANNEL_YELLOW:
+      return gimp_babl_component_format (GIMP_CMYK,
+                                         gimp_drawable_get_precision (drawable),
+                                         YELLOW);
+
+    case GIMP_CHANNEL_KEY:
+      return gimp_babl_component_format (GIMP_CMYK,
+                                         gimp_drawable_get_precision (drawable),
+                                         KEY);
 
     case GIMP_CHANNEL_GRAY:
       return gimp_babl_component_format (GIMP_GRAY,
@@ -2105,12 +2137,17 @@ gimp_drawable_get_component_index (GimpDrawable    *drawable,
     case GIMP_CHANNEL_RED:     return RED;
     case GIMP_CHANNEL_GREEN:   return GREEN;
     case GIMP_CHANNEL_BLUE:    return BLUE;
+    case GIMP_CHANNEL_CYAN:    return CYAN;
+    case GIMP_CHANNEL_MAGENTA: return MAGENTA;
+    case GIMP_CHANNEL_YELLOW:  return YELLOW;
+    case GIMP_CHANNEL_KEY:     return KEY;
     case GIMP_CHANNEL_GRAY:    return GRAY;
     case GIMP_CHANNEL_INDEXED: return INDEXED;
     case GIMP_CHANNEL_ALPHA:
       switch (gimp_drawable_get_base_type (drawable))
         {
         case GIMP_RGB:     return ALPHA;
+        case GIMP_CMYK:    return ALPHA_C;
         case GIMP_GRAY:    return ALPHA_G;
         case GIMP_INDEXED: return ALPHA_I;
         }

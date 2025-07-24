@@ -331,6 +331,12 @@ gimp_plug_in_procedure_get_sensitive (GimpProcedure  *procedure,
         case GIMP_RGBA_IMAGE:
           sensitive = proc->image_types_val & GIMP_PLUG_IN_RGBA_IMAGE;
           break;
+        case GIMP_CMYK_IMAGE:
+          sensitive = proc->image_types_val & GIMP_PLUG_IN_CMYK_IMAGE;
+          break;
+        case GIMP_CMYKA_IMAGE:
+          sensitive = proc->image_types_val & GIMP_PLUG_IN_CMYKA_IMAGE;
+          break;
         case GIMP_GRAY_IMAGE:
           sensitive = proc->image_types_val & GIMP_PLUG_IN_GRAY_IMAGE;
           break;
@@ -962,6 +968,21 @@ image_types_parse (const gchar *name,
               types |= GIMP_PLUG_IN_RGB_IMAGE;
               image_types += strlen ("RGB");
             }
+          else if (g_str_has_prefix (image_types, "CMYKA"))
+            {
+              types |= GIMP_PLUG_IN_CMYKA_IMAGE;
+              image_types += strlen ("CMYKA");
+            }
+          else if (g_str_has_prefix (image_types, "CMYK*"))
+            {
+              types |= GIMP_PLUG_IN_CMYK_IMAGE | GIMP_PLUG_IN_CMYKA_IMAGE;
+              image_types += strlen ("CMYK*");
+            }
+          else if (g_str_has_prefix (image_types, "CMYK"))
+            {
+              types |= GIMP_PLUG_IN_CMYK_IMAGE;
+              image_types += strlen ("CMYK");
+            }
           else if (g_str_has_prefix (image_types, "GRAYA"))
             {
               types |= GIMP_PLUG_IN_GRAYA_IMAGE;
@@ -995,6 +1016,7 @@ image_types_parse (const gchar *name,
           else if (g_str_has_prefix (image_types, "*"))
             {
               types |= (GIMP_PLUG_IN_RGB_IMAGE     | GIMP_PLUG_IN_RGBA_IMAGE  |
+                        GIMP_PLUG_IN_CMYK_IMAGE    | GIMP_PLUG_IN_CMYKA_IMAGE |
                         GIMP_PLUG_IN_GRAY_IMAGE    | GIMP_PLUG_IN_GRAYA_IMAGE |
                         GIMP_PLUG_IN_INDEXED_IMAGE | GIMP_PLUG_IN_INDEXEDA_IMAGE);
               image_types += strlen ("*");
@@ -1051,6 +1073,24 @@ gimp_plug_in_procedure_set_image_types (GimpPlugInProcedure *proc,
       else
         {
           types = g_list_prepend (types, _("RGB with alpha"));
+        }
+    }
+
+  if (proc->image_types_val &
+      (GIMP_PLUG_IN_CMYK_IMAGE | GIMP_PLUG_IN_CMYKA_IMAGE))
+    {
+      if ((proc->image_types_val & GIMP_PLUG_IN_CMYK_IMAGE) &&
+          (proc->image_types_val & GIMP_PLUG_IN_CMYKA_IMAGE))
+        {
+          types = g_list_prepend (types, _("CMYK"));
+        }
+      else if (proc->image_types_val & GIMP_PLUG_IN_CMYK_IMAGE)
+        {
+          types = g_list_prepend (types, _("CMYK without alpha"));
+        }
+      else
+        {
+          types = g_list_prepend (types, _("CMYK with alpha"));
         }
     }
 

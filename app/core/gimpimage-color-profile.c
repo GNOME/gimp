@@ -550,6 +550,16 @@ gimp_image_validate_color_profile_by_format (const Babl         *format,
           return FALSE;
         }
     }
+  else if (gimp_babl_format_get_base_type (format) == GIMP_CMYK)
+    {
+      if (! gimp_color_profile_is_cmyk (profile))
+        {
+          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                               _("ICC profile validation failed: "
+                                 "Color profile is not for CMYK color space"));
+          return FALSE;
+        }
+    }
   else
     {
       if (! gimp_color_profile_is_rgb (profile))
@@ -682,6 +692,7 @@ gimp_image_convert_color_profile (GimpImage                *image,
   switch (gimp_image_get_base_type (image))
     {
     case GIMP_RGB:
+    case GIMP_CMYK:
     case GIMP_GRAY:
       gimp_image_convert_profile_layers (image,
                                          src_profile, dest_profile,
@@ -732,7 +743,9 @@ gimp_image_import_color_profile (GimpImage    *image,
       intent = GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
       bpc    = TRUE;
 
-      if (gimp_image_get_base_type (image) == GIMP_GRAY)
+      if (gimp_image_get_base_type (image) == GIMP_CMYK)
+        pref_profile = gimp_color_config_get_cmyk_color_profile (image->gimp->config->color_management, NULL);
+      else if (gimp_image_get_base_type (image) == GIMP_GRAY)
         pref_profile = gimp_color_config_get_gray_color_profile (image->gimp->config->color_management, NULL);
       else
         pref_profile = gimp_color_config_get_rgb_color_profile (image->gimp->config->color_management, NULL);

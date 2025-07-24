@@ -63,6 +63,18 @@ gimp_babl_format_get_image_type (const Babl *format)
     {
       return GIMP_RGBA_IMAGE;
     }
+  else if (! strcmp (name, "CMYK")  ||
+           ! strcmp (name, "cmyk"))
+    {
+      return GIMP_CMYK_IMAGE;
+    }
+  else if (! strcmp (name, "CMYKA")     ||
+           ! strcmp (name, "cmykA")     ||
+           ! strcmp (name, "CaMaYaKaA") ||
+           ! strcmp (name, "camayakaA"))
+    {
+      return GIMP_CMYKA_IMAGE;
+    }
   else if (babl_format_is_palette (format))
     {
       if (babl_format_has_alpha (format))
