@@ -86,6 +86,10 @@ gimp_image_convert_type (GimpImage          *image,
       undo_desc = C_("undo-type", "Convert Image to RGB");
       break;
 
+    case GIMP_CMYK:
+      undo_desc = C_("undo-type", "Convert Image to CMYK");
+      break;
+
     case GIMP_GRAY:
       undo_desc = C_("undo-type", "Convert Image to Grayscale");
       break;
@@ -144,10 +148,12 @@ gimp_image_convert_type (GimpImage          *image,
   if (old_type == GIMP_INDEXED)
     gimp_image_unset_colormap (image, TRUE);
 
-  /*  When converting to/from GRAY, set the new profile.
+  /*  When converting to/from GRAY or CMYK, set the new profile.
    */
   if (old_type == GIMP_GRAY ||
-      new_type == GIMP_GRAY)
+      new_type == GIMP_GRAY ||
+      old_type == GIMP_CMYK ||
+      new_type == GIMP_CMYK)
     {
       gimp_image_set_color_profile (image, dest_profile, NULL);
     }

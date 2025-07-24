@@ -85,7 +85,15 @@ color_profile_import_dialog_run (GimpImage                 *image,
   src_profile   = gimp_image_get_color_profile (image);
   *dest_profile = gimp_image_get_builtin_color_profile (image);
 
-  if (gimp_image_get_base_type (image) == GIMP_GRAY)
+  if (gimp_image_get_base_type (image) == GIMP_CMYK)
+    {
+      frame_title = _("Convert the image to the built-in CMYK color profile?");
+
+      pref_profile = gimp_color_config_get_cmyk_color_profile (image->gimp->config->color_management, NULL);
+      if (pref_profile && gimp_color_profile_is_equal (pref_profile, *dest_profile))
+        g_clear_object (&pref_profile);
+    }
+  else if (gimp_image_get_base_type (image) == GIMP_GRAY)
     {
       frame_title = _("Convert the image to the built-in grayscale color profile?");
 
@@ -157,7 +165,9 @@ color_profile_import_dialog_run (GimpImage                 *image,
 
   if (pref_profile)
     {
-      if (gimp_image_get_base_type (image) == GIMP_GRAY)
+      if (gimp_image_get_base_type (image) == GIMP_CMYK)
+        frame_title  = _("Convert the image to the preferred CMYK color profile?");
+      else if (gimp_image_get_base_type (image) == GIMP_GRAY)
         frame_title  = _("Convert the image to the preferred grayscale color profile?");
       else
         frame_title = _("Convert the image to the preferred RGB color profile?");
