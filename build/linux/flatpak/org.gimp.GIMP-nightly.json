@@ -359,54 +359,6 @@
             ]
         },
         {
-            "name": "ghostscript",
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10051/ghostscript-10.05.1.tar.gz",
-                    "sha512": "ac1ab58f474467006d7735858e42a3db9a07aa092f907b14f1147447d08c8b4f5b499bca31c09c1558304787fe59d666c9f1aa531d219f27e17d5f9c9523f58c",
-                    "x-checker-data": {
-                        "//": "Bypass broken url-template with anitya checker - See https://github.com/flathub/flatpak-external-data-checker/issues/360",
-                        "type": "json",
-                        "url": "https://api.github.com/repos/ArtifexSoftware/ghostpdl-downloads/releases/latest",
-                        "version-query": ".name | split(\" \") | .[1]",
-                        "url-query": ".assets[] | select(.name|test(\"^ghostscript-(.*).tar.gz$\")) | .browser_download_url"
-                    }
-                },
-                {
-                    "type": "shell",
-                    "commands": [
-                        "cp -p /usr/share/automake-*/config.{sub,guess} freetype/builds/unix/",
-                        "cp -p /usr/share/automake-*/config.{sub,guess} ijs/",
-                        "cp -p /usr/share/automake-*/config.{sub,guess} jpeg/",
-                        "cp -p /usr/share/automake-*/config.{sub,guess} libpng/",
-                        "cp -p /usr/share/automake-*/config.{sub,guess} lcms2mt/",
-                        "cp -p /usr/share/automake-*/config.{sub,guess} tiff/config/",
-                        "rm -rf libpng/pngread.c"
-                    ]
-                }
-            ],
-            "config-opts": [
-                "--disable-cups",
-                "--disable-gtk",
-                "--without-tesseract",
-                "--without-libpaper",
-                "--without-pdftoraster"
-            ],
-            "make-args": [
-                "so"
-            ],
-            "make-install-args": [
-                "soinstall"
-            ],
-            "cleanup": [
-                "/bin",
-                "/include",
-                "/lib/pkgconfig",
-                "/share"
-            ]
-        },
-        {
             "name": "libmypaint",
             "sources": [
                 {
@@ -447,9 +399,10 @@
                     ],
                     "buildsystem": "cmake-ninja",
                     "config-opts": [
+                        "-DCMAKE_POLICY_VERSION_MINIMUM=3.5...3.6",
                         "-DDISABLE_WERROR=ON",
                         "-DBUILD_TESTING=OFF"
-                    ],
+],
                     "cleanup": [
                         "/include",
                         "/lib/pkgconfig"
@@ -515,7 +468,7 @@
                 "-DWITH_EXAMPLES=OFF",
                 "-DENABLE_PLUGIN_LOADING=ON",
                 "-DWITH_LIBDE265_PLUGIN=ON",
-                "-DWITH_X265_PLUGIN=ON",
+                "-DWITH_X265_PLUGIN=OFF",
                 "-DWITH_DAV1D=ON",
                 "-DWITH_DAV1D_PLUGIN=OFF",
                 "-DWITH_AOM_DECODER=ON",
@@ -559,108 +512,6 @@
                     "cleanup": [
                         "/lib/libheif/bin",
                         "/lib/libheif/include"
-                    ]
-                },
-                {
-                    "name": "libx265",
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_4.1.tar.gz",
-                            "sha256": "a31699c6a89806b74b0151e5e6a7df65de4b49050482fe5ebf8a4379d7af8f29",
-                            "x-checker-data": {
-                                "type": "anitya",
-                                "project-id": 7275,
-                                "stable-only": true,
-                                "url-template": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_$version.tar.gz"
-                            }
-                        },
-                        {
-                            "type": "shell",
-                            "commands": [
-                                "ln -s ${FLATPAK_DEST}/lib/libheif/lib/libx265-10.a",
-                                "ln -s ${FLATPAK_DEST}/lib/libheif/lib/libx265-12.a",
-                                "rm -fr ${FLATPAK_DEST}/lib/libheif/lib/libx265.so*"
-                            ]
-                        }
-                    ],
-                    "subdir": "source",
-                    "buildsystem": "cmake-ninja",
-                    "config-opts": [
-                        "-DCMAKE_CXX_COMPILER_LAUNCHER=ccache",
-                        "-DCMAKE_CXX_COMPILER=c++",
-                        "-DCMAKE_INSTALL_PREFIX=/app/lib/libheif",
-                        "-DEXTRA_LIB='libx265-10.a;libx265-12.a'",
-                        "-DEXTRA_LINK_FLAGS=-L/app/lib/libheif/lib",
-                        "-DLINKED_10BIT=ON",
-                        "-DLINKED_12BIT=ON",
-                        "-DENABLE_CLI=OFF",
-                        "-DENABLE_ASSEMBLY=OFF"
-                    ],
-                    "cleanup": [
-                        "/lib/libheif/bin",
-                        "/lib/libheif/include"
-                    ],
-                    "modules": [
-                        {
-                            "name": "libx265-10bpc",
-                            "sources": [
-                                {
-                                    "type": "archive",
-                                    "url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_4.1.tar.gz",
-                                    "sha256": "a31699c6a89806b74b0151e5e6a7df65de4b49050482fe5ebf8a4379d7af8f29",
-                                    "x-checker-data": {
-                                        "type": "anitya",
-                                        "project-id": 7275,
-                                        "stable-only": true,
-                                        "url-template": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_$version.tar.gz"
-                                    }
-                                }
-                            ],
-                            "subdir": "source",
-                            "buildsystem": "cmake-ninja",
-                            "config-opts": [
-                                "-DCMAKE_INSTALL_PREFIX=/app/lib/libheif",
-                                "-DHIGH_BIT_DEPTH=ON",
-                                "-DEXPORT_C_API=OFF",
-                                "-DENABLE_SHARED=OFF",
-                                "-DENABLE_CLI=OFF",
-                                "-DENABLE_ASSEMBLY=OFF"
-                            ],
-                            "post-install": [
-                                "mv ${FLATPAK_DEST}/lib/libheif/lib/libx265.a ${FLATPAK_DEST}/lib/libheif/lib/libx265-10.a"
-                            ]
-                        },
-                        {
-                            "name": "libx265-12bpc",
-                            "sources": [
-                                {
-                                    "type": "archive",
-                                    "url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_4.1.tar.gz",
-                                    "sha256": "a31699c6a89806b74b0151e5e6a7df65de4b49050482fe5ebf8a4379d7af8f29",
-                                    "x-checker-data": {
-                                        "type": "anitya",
-                                        "project-id": 7275,
-                                        "stable-only": true,
-                                        "url-template": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_$version.tar.gz"
-                                    }
-                                }
-                            ],
-                            "subdir": "source",
-                            "buildsystem": "cmake-ninja",
-                            "config-opts": [
-                                "-DCMAKE_INSTALL_PREFIX=/app/lib/libheif",
-                                "-DHIGH_BIT_DEPTH=ON",
-                                "-DEXPORT_C_API=OFF",
-                                "-DENABLE_SHARED=OFF",
-                                "-DENABLE_CLI=OFF",
-                                "-DENABLE_ASSEMBLY=OFF",
-                                "-DMAIN12=ON"
-                            ],
-                            "post-install": [
-                                "mv ${FLATPAK_DEST}/lib/libheif/lib/libx265.a ${FLATPAK_DEST}/lib/libheif/lib/libx265-12.a"
-                            ]
-                        }
                     ]
                 }
             ]
