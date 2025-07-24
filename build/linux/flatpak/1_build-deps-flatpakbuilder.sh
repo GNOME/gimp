@@ -87,6 +87,6 @@ if [ "$GITLAB_CI" ]; then
   tar cf gegl-meson-log.tar .flatpak-builder/build/gegl-1/_flatpak_build/meson-logs/meson-log.txt
   printf "\e[0Ksection_end:`date +%s`:gegl_build\r\e[0K\n"
 
-  ## Save built deps for 'gimp-flatpak-x64' job
-  tar cf .flatpak-builder.tar .flatpak-builder/
+  ## Save built deps for 'gimp-flatpak' job
+  tar cf .flatpak-builder-$RUNNER.tar .flatpak-builder/
 fi
