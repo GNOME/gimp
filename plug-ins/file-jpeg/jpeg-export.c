@@ -136,14 +136,14 @@ background_jpeg_save (PreviewPersistent *pp)
               gchar   *size_text;
 
               size_text = g_format_size (size);
-              text = g_strdup_printf (_("File size: %s"), size_text);
+              text = g_strdup_printf (_("File size without metadata: %s"), size_text);
               g_free (size_text);
 
               g_object_unref (info);
             }
           else
             {
-              text = g_strdup_printf (_("File size: %s"), error->message);
+              text = g_strdup_printf (_("File size without metadata: %s"), error->message);
               g_clear_error (&error);
             }
 
@@ -714,7 +714,7 @@ export_image (GFile                *file,
       pp->jerr.error_exit = background_error_exit;
 
       gtk_label_set_text (GTK_LABEL (preview_size),
-                          _("Calculating file size..."));
+                          _("Calculating approximate file size..."));
 
       pp->source_id = g_idle_add ((GSourceFunc) background_jpeg_save, pp);
 
@@ -804,7 +804,7 @@ make_preview (GimpProcedureConfig *config)
     }
   else
     {
-      gtk_label_set_text (GTK_LABEL (preview_size), _("File size: unknown"));
+      gtk_label_set_text (GTK_LABEL (preview_size), _("File size without metadata: unknown"));
 
       gimp_displays_flush ();
     }
@@ -880,7 +880,7 @@ save_dialog (GimpProcedure       *procedure,
 
   /* File size label. */
   preview_size = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                                  "preview-size", _("File size: unknown"),
+                                                  "preview-size", _("File size without metadata: unknown"),
                                                   FALSE, FALSE);
   gtk_label_set_xalign (GTK_LABEL (preview_size), 0.0);
   gtk_label_set_ellipsize (GTK_LABEL (preview_size), PANGO_ELLIPSIZE_END);
@@ -888,7 +888,7 @@ save_dialog (GimpProcedure       *procedure,
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   gimp_help_set_help_data (preview_size,
-                           _("Enable preview to obtain the file size."), NULL);
+                           _("Enable preview to obtain the approximate file size."), NULL);
 
 
   /* Profile label. */
