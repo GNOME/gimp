@@ -673,17 +673,18 @@ static GimpImage *
 load_image (GFile   *file,
             GError **error)
 {
-  GInputStream    *input;
-  GeglBuffer      *buffer;
-  GimpImage * volatile image = NULL;
-  GimpLayer       *layer;
-  char             buf[BUFLEN + 4];  /* buffer for random things like scanning */
-  PNMInfo         *pnminfo;
-  PNMScanner      *volatile scan;
-  gint             ctr;
-  GimpPrecision    precision;
-  gboolean         is_pam    = FALSE;
-  GimpImageType    layer_type;
+  GInputStream         *input;
+  GeglBuffer           *buffer;
+  GimpImage * volatile  image = NULL;
+  GimpImageBaseType     image_type;
+  GimpLayer            *layer;
+  GimpImageType         layer_type;
+  char                  buf[BUFLEN + 4];  /* buffer for random things like scanning */
+  PNMInfo              *pnminfo;
+  PNMScanner           *volatile scan;
+  gint                  ctr;
+  GimpPrecision         precision;
+  gboolean              is_pam    = FALSE;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              g_file_get_parse_name (file));
@@ -815,9 +816,12 @@ load_image (GFile   *file,
   /* Create a new image of the proper size and associate the filename
    * with it.
    */
+  image_type = (pnminfo->np >= 3) ? GIMP_RGB : GIMP_GRAY;
+  if (pnminfo->tupltype && ! strcmp (pnminfo->tupltype, "CMYK"))
+    image_type = GIMP_CMYK;
+
   image = gimp_image_new_with_precision (pnminfo->xres, pnminfo->yres,
-                                         (pnminfo->np >= 3) ? GIMP_RGB : GIMP_GRAY,
-                                         precision);
+                                         image_type, precision);
 
   switch (pnminfo->np)
     {
@@ -841,6 +845,8 @@ load_image (GFile   *file,
     default:
       layer_type = GIMP_GRAY_IMAGE;
     }
+  if (image_type == GIMP_CMYK)
+    layer_type = GIMP_CMYK_IMAGE;
 
   layer = gimp_layer_new (image, _("Background"), pnminfo->xres, pnminfo->yres,
                           layer_type, 100,
@@ -1392,6 +1398,10 @@ create_pam_header (const gchar      **header_string,
       *np         = 4;
       *format     = babl_format ("R'G'B'A u8");
       *rowbufsize = xres * 4;
+      break;
+
+    /* TODO: Add CMYK export support for PAM */
+    default:
       break;
     }
 

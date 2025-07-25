@@ -185,6 +185,7 @@ jpegxl_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
                                               GIMP_EXPORT_CAN_HANDLE_RGB  |
+                                              GIMP_EXPORT_CAN_HANDLE_CMYK |
                                               GIMP_EXPORT_CAN_HANDLE_GRAY |
                                               GIMP_EXPORT_CAN_HANDLE_ALPHA,
                                               NULL, NULL, NULL);
@@ -248,8 +249,7 @@ jpegxl_create_procedure (GimpPlugIn  *plug_in,
 /* The Key data is stored in a separate extra
  * channel. We combine the CMY values from the
  * main image with the K values to create
- * the final layer buffer.
- */
+ * the final layer buffer. */
 static void
 create_cmyk_layer (GimpImage   *image,
                    GimpLayer   *layer,
@@ -263,18 +263,14 @@ create_cmyk_layer (GimpImage   *image,
   const Babl         *cmy_format   = NULL;
   const Babl         *cmyka_format = NULL;
   const Babl         *key_format   = NULL;
-  const Babl         *rgb_format   = NULL;
   GeglBuffer         *output_buffer;
-  GeglBuffer         *picture_buffer;
   GeglBuffer         *cmy_buffer;
   GeglBuffer         *key_buffer;
   GeglBufferIterator *iter;
-  GeglColor          *fill_color   = gegl_color_new ("rgba(0.0,0.0,0.0,0.0)");
   gint                width;
   gint                height;
   gint                n_components = 3;
   const Babl         *type         = babl_type (type_format);
-  GString            *rgb_type     = g_string_new (NULL);
   GString            *cmy_type     = g_string_new (NULL);
   GString            *cmyka_type   = g_string_new (NULL);
 
@@ -287,11 +283,9 @@ create_cmyk_layer (GimpImage   *image,
   gimp_image_insert_layer (image, layer, NULL, 0);
   output_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
-  g_string_printf (rgb_type, has_alpha ? "R'G'B'A %s" : "R'G'B' %s", type_format);
   g_string_printf (cmy_type, "cmyk %s", type_format);
   g_string_printf (cmyka_type, "cmykA %s", type_format);
 
-  rgb_format = babl_format (rgb_type->str);
   cmy_format = babl_format_with_space ( cmy_type->str, space);
   cmyka_format = babl_format_with_space ( cmyka_type->str, space);
 
@@ -307,10 +301,6 @@ create_cmyk_layer (GimpImage   *image,
   key_format = babl_format_with_space (babl_format_get_encoding (key_format),
                                        space);
 
-  picture_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
-                                    has_alpha ? cmyka_format : cmy_format);
-  gegl_buffer_set_color (picture_buffer, NULL, fill_color);
-
   cmy_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
                                 babl_format_n (type, n_components));
   key_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
@@ -322,11 +312,11 @@ create_cmyk_layer (GimpImage   *image,
   gegl_buffer_set (key_buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
                    key_format, key_data, GEGL_AUTO_ROWSTRIDE);
 
-  iter = gegl_buffer_iterator_new (picture_buffer,
+  iter = gegl_buffer_iterator_new (output_buffer,
                                    GEGL_RECTANGLE (0, 0, width, height), 0,
                                    has_alpha ? cmyka_format : cmy_format,
                                    GEGL_BUFFER_READWRITE,
-                                   GEGL_ABYSS_NONE, 4);
+                                   GEGL_ABYSS_NONE, 3);
 
   gegl_buffer_iterator_add (iter, cmy_buffer,
                             GEGL_RECTANGLE (0, 0, width, height), 0,
@@ -336,68 +326,48 @@ create_cmyk_layer (GimpImage   *image,
                             GEGL_RECTANGLE (0, 0, width, height), 0,
                             key_format, GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
-  gegl_buffer_iterator_add (iter, output_buffer,
-                            GEGL_RECTANGLE (0, 0, width, height), 0,
-                            rgb_format, GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
-
   while (gegl_buffer_iterator_next (iter))
     {
-      guchar *pixel  = iter->items[0].data;
+      guchar *output = iter->items[0].data;
       guchar *cmy    = iter->items[1].data;
       guchar *k      = iter->items[2].data;
-      guchar *output = iter->items[3].data;
       gint    length = iter->length;
-      gint    row    = length;
 
       while (length--)
         {
           gint i;
 
           for (i = 0; i < 3 * bit_depth; i++)
-            pixel[i] = cmy[i];
+            output[i] = cmy[i];
 
           for (i = 0; i < bit_depth; i++)
-            pixel[i + (3 * bit_depth)] = k[i];
+            output[i + (3 * bit_depth)] = k[i];
 
           if (has_alpha)
             {
               for (i = 0; i < bit_depth; i++)
-                pixel[i + (4 * bit_depth)] = cmy[i + (3 * bit_depth)];
-            }
-
-          pixel += 4 * bit_depth;
-          cmy   += 3 * bit_depth;
-          k     += bit_depth;
-
-          if (has_alpha)
-            {
-              pixel += bit_depth;
-              cmy   += bit_depth;
+                output[i + (4 * bit_depth)] = cmy[i + (3 * bit_depth)];
             }
 
           output += 4 * bit_depth;
+          cmy    += 3 * bit_depth;
+          k      += bit_depth;
+
+          if (has_alpha)
+            {
+              cmy    += bit_depth;
+              output += bit_depth;
+            }
         }
-
-        /* Convert row from CMYK/A to RGB, due to layer buffers
-         * having a maximum of 4 colors currently */
-        pixel -= (4 * bit_depth) * row;
-        if (has_alpha)
-          pixel -= row * bit_depth;
-        output -= (4 * bit_depth) * row;
-
-        babl_process (babl_fish (has_alpha ? cmyka_format : cmy_format, rgb_format),
-                      pixel, output, row);
     }
 
   g_object_unref (output_buffer);
-  g_object_unref (picture_buffer);
   g_object_unref (cmy_buffer);
   g_object_unref (key_buffer);
   g_free (key_data);
 
   g_string_free (cmyka_type, TRUE);
   g_string_free (cmy_type, TRUE);
-  g_string_free (rgb_type, TRUE);
 }
 
 static GimpImage *
@@ -895,7 +865,7 @@ load_image (GFile                 *file,
     }
   else /* RGB or CMYK */
     {
-      image = gimp_image_new_with_precision (basicinfo.xsize, basicinfo.ysize, GIMP_RGB,
+      image = gimp_image_new_with_precision (basicinfo.xsize, basicinfo.ysize, is_cmyk ? GIMP_CMYK: GIMP_RGB,
                                              loadlinear ? precision_linear : precision_non_linear);
 
       if (profile)
@@ -906,7 +876,7 @@ load_image (GFile                 *file,
             }
           else if (is_cmyk && gimp_color_profile_is_cmyk (profile))
             {
-              gimp_image_set_simulation_profile (image, profile);
+             gimp_image_set_color_profile (image, profile);
 
               space = gimp_color_profile_get_space (profile,
                                                     GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
@@ -914,10 +884,16 @@ load_image (GFile                 *file,
             }
         }
 
-      layer = gimp_layer_new (image, "Background",
-                              basicinfo.xsize, basicinfo.ysize,
-                              (basicinfo.alpha_bits > 0) ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE, 100,
-                              gimp_image_get_default_new_layer_mode (image));
+      if (! is_cmyk)
+        layer = gimp_layer_new (image, "Background",
+                                basicinfo.xsize, basicinfo.ysize,
+                                (basicinfo.alpha_bits > 0) ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE, 100,
+                                gimp_image_get_default_new_layer_mode (image));
+      else
+        layer = gimp_layer_new (image, "Background",
+                                basicinfo.xsize, basicinfo.ysize,
+                                (basicinfo.alpha_bits > 0) ? GIMP_CMYKA_IMAGE : GIMP_CMYK_IMAGE, 100,
+                                gimp_image_get_default_new_layer_mode (image));
     }
 
   if (is_cmyk)
@@ -1360,6 +1336,7 @@ export_image (GFile               *file,
   FILE                    *outfile;
   GeglBuffer              *buffer;
   GimpImageType            drawable_type;
+  GimpImageBaseType        image_type;
 
   gint                     drawable_width;
   gint                     drawable_height;
@@ -1400,15 +1377,16 @@ export_image (GFile               *file,
   speed = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
                                                "speed");
 
-  if (cmyk)
-    {
-      /* CMYK is allways saved as lossless */
-      lossless = TRUE;
-    }
-
+  image_type      = gimp_image_get_base_type (image);
   drawable_type   = gimp_drawable_type (drawable);
   drawable_width  = gimp_drawable_get_width (drawable);
   drawable_height = gimp_drawable_get_height (drawable);
+
+  if (cmyk || image_type == GIMP_CMYK)
+    {
+      /* CMYK is always saved as lossless */
+      lossless = TRUE;
+    }
 
   JxlEncoderInitBasicInfo(&output_info);
 
@@ -1416,16 +1394,21 @@ export_image (GFile               *file,
     {
       output_info.uses_original_profile = JXL_TRUE;
 
-      if (cmyk)
+      if (cmyk && ! (image_type == GIMP_CMYK))
         profile = gimp_image_get_simulation_profile (image);
       else
         profile = gimp_image_get_effective_color_profile (image);
+
+      /* Once we've retrieved either the simulation or color profile,
+       * the export code for CMYK is identicaly */
+      if (image_type == GIMP_CMYK)
+        cmyk = TRUE;
 
       /* CMYK profile is required for export. If not assigned,
        * disable CMYK flag and revert to RGB */
       if (cmyk && ! profile)
         {
-          cmyk = FALSE;
+          cmyk    = FALSE;
           profile = gimp_image_get_effective_color_profile (image);
         }
 
@@ -1766,7 +1749,7 @@ export_image (GFile               *file,
   gimp_progress_update (0.5);
 
   status = JxlEncoderAddImageFrame (encoder_options, &pixel_format,
-                                    (cmyk) ? cmy_buffer : picture_buffer,
+                                    cmyk ? cmy_buffer : picture_buffer,
                                     buffer_size);
   if (status != JXL_ENC_SUCCESS)
     {
@@ -2033,10 +2016,18 @@ save_dialog (GimpImage     *image,
                              -1);
   gimp_help_set_help_data (profile_label,
                            _("Name of the color profile used for CMYK export."), NULL);
-  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
-                                    "cmyk-frame", "cmyk", FALSE,
-                                    "profile-label");
-  cmyk_profile = gimp_image_get_simulation_profile (image);
+
+  if (gimp_image_get_base_type (image) != GIMP_CMYK)
+    {
+      gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                        "cmyk-frame", "cmyk", FALSE,
+                                        "profile-label");
+      cmyk_profile = gimp_image_get_simulation_profile (image);
+    }
+  else
+    {
+      cmyk_profile = gimp_image_get_simulation_profile (image);
+    }
 
   if (! cmyk_profile)
     {
@@ -2068,12 +2059,19 @@ save_dialog (GimpImage     *image,
                                        cmyk_profile != NULL,
                                        NULL, NULL, FALSE);
 
-  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
-                              "lossless", "compression",
-                              "speed", "save-bit-depth",
-                              "cmyk-frame",
-                              "include-exif", "include-xmp",
-                              NULL);
+  if (gimp_image_get_base_type (image) != GIMP_CMYK)
+    gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                                "lossless", "compression",
+                                "speed", "save-bit-depth",
+                                "cmyk-frame",
+                                "include-exif", "include-xmp",
+                                NULL);
+  else
+    gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                                "lossless", "compression",
+                                "speed", "save-bit-depth",
+                                "include-exif", "include-xmp",
+                                NULL);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
@@ -2105,29 +2103,25 @@ jpegxl_export (GimpProcedure        *procedure,
       gimp_ui_init (PLUG_IN_BINARY);
 
       if (! save_dialog (image, procedure, G_OBJECT (config)))
-        {
-          status = GIMP_PDB_CANCEL;
-        }
+        status = GIMP_PDB_CANCEL;
     }
 
-  export = gimp_export_options_get_image (options, &image);
+  export    = gimp_export_options_get_image (options, &image);
   drawables = gimp_image_list_layers (image);
 
   if (status == GIMP_PDB_SUCCESS)
     {
       GimpMetadataSaveFlags metadata_flags;
 
-      GimpMetadata *metadata = gimp_image_metadata_save_prepare (image, "image/jxl", &metadata_flags);
+      GimpMetadata *metadata = gimp_image_metadata_save_prepare (image,
+                                                                 "image/jxl",
+                                                                 &metadata_flags);
 
       if (! export_image (file, config, image, drawables->data, metadata, &error))
-        {
-          status = GIMP_PDB_EXECUTION_ERROR;
-        }
+        status = GIMP_PDB_EXECUTION_ERROR;
 
       if (metadata)
-        {
-          g_object_unref (metadata);
-        }
+        g_object_unref (metadata);
     }
 
   if (export == GIMP_EXPORT_EXPORT)

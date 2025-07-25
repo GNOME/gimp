@@ -472,6 +472,10 @@ load_image_metadata (GFile        *file,
             img_a.color_mode = PSD_RGB;
             break;
 
+          case GIMP_CMYK:
+            img_a.color_mode = PSD_CMYK;
+            break;
+
           case GIMP_GRAY:
             img_a.color_mode = PSD_GRAYSCALE;
             break;
@@ -1585,8 +1589,11 @@ create_gimp_image (PSDimage *img_a,
       img_a->base_type = GIMP_INDEXED;
       break;
 
-    case PSD_LAB:
     case PSD_CMYK:
+      img_a->base_type = GIMP_CMYK;
+      break;
+
+    case PSD_LAB:
     case PSD_RGB:
       img_a->base_type = GIMP_RGB;
       break;
@@ -1605,7 +1612,7 @@ create_gimp_image (PSDimage *img_a,
         break;
 
       case 16:
-        if (img_a->color_mode == PSD_CMYK || img_a->color_mode == PSD_LAB)
+        if (img_a->color_mode == PSD_LAB)
           precision = GIMP_PRECISION_FLOAT_NON_LINEAR;
         else
           precision = GIMP_PRECISION_U16_NON_LINEAR;
@@ -1613,7 +1620,7 @@ create_gimp_image (PSDimage *img_a,
 
       case 8:
       case 1:
-        if (img_a->color_mode == PSD_CMYK || img_a->color_mode == PSD_LAB)
+        if (img_a->color_mode == PSD_LAB)
           precision = GIMP_PRECISION_FLOAT_NON_LINEAR;
         else
           precision = GIMP_PRECISION_U8_NON_LINEAR;
@@ -1713,46 +1720,6 @@ add_image_resources (GimpImage     *image,
     }
 
   return 0;
-}
-
-static guchar *
-psd_convert_cmyk_to_srgb (PSDimage *img_a,
-                          guchar   *dst,
-                          guchar   *src,
-                          gint      width,
-                          gint      height,
-                          gboolean  alpha,
-                          GError  **error)
-{
-  const Babl *fish        = NULL;
-  const Babl *base_format = NULL;
-  const Babl *space       = NULL;
-
-  if (img_a->cmyk_profile &&
-      gimp_color_profile_is_cmyk (img_a->cmyk_profile))
-    {
-      /* If no CMYK profile attached, babl_format_with_space ()
-       * will ignore the NULL space value and process the image
-       * as if it were just using babl_format ()
-       */
-      space = gimp_color_profile_get_space (img_a->cmyk_profile,
-                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                            error);
-    }
-
-  if (img_a->bps == 8)
-    base_format = babl_format_with_space (alpha ? "cmykA u8" : "cmyk u8", space);
-  else
-    base_format = babl_format_with_space (alpha ? "cmykA u16" : "cmyk u16", space);
-
-  if (! alpha)
-    fish = babl_fish (base_format, "R'G'B' float");
-  else
-    fish = babl_fish (base_format, "R'G'B'A float");
-
-  babl_process (fish, src, dst, width * height);
-
-  return (guchar*) dst;
 }
 
 static guchar *
@@ -2591,11 +2558,9 @@ add_layers (GimpImage     *image,
                       gint                 src_step = bps;
                       gint                 dst_step = bps * base_channels;
 
-                      if (img_a->color_mode == PSD_CMYK || img_a->color_mode == PSD_LAB)
-                        {
-                          dst0 = gegl_scratch_alloc (base_channels * bps *
-                                                     iter->length);
-                        }
+                      if (img_a->color_mode == PSD_LAB)
+                        dst0 = gegl_scratch_alloc (base_channels * bps *
+                                                   iter->length);
 
                       for (cidx = 0; cidx < base_channels; ++cidx)
                         {
@@ -2633,17 +2598,7 @@ add_layers (GimpImage     *image,
                             }
                         }
 
-                      if (img_a->color_mode == PSD_CMYK)
-                        {
-                          psd_convert_cmyk_to_srgb (
-                            img_a,
-                            iter->items[0].data, dst0,
-                            roi->width, roi->height,
-                            alpha, error);
-
-                          gegl_scratch_free (dst0);
-                        }
-                      else if (img_a->color_mode == PSD_LAB)
+                      if (img_a->color_mode == PSD_LAB)
                         {
                           psd_convert_lab_to_srgb (
                             img_a,
@@ -3108,20 +3063,7 @@ add_merged_image (GimpImage     *image,
 
       buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
-      if (img_a->color_mode == PSD_CMYK)
-        {
-          guchar *dst0;
-
-          dst0 = g_malloc (base_channels * layer_size * sizeof(float));
-          psd_convert_cmyk_to_srgb (img_a,
-                                    dst0, pixels,
-                                    img_a->columns, img_a->rows,
-                                    img_a->transparency || alpha_channel,
-                                    error);
-          g_free (pixels);
-          pixels = dst0;
-       }
-      else if (img_a->color_mode == PSD_LAB)
+      if (img_a->color_mode == PSD_LAB)
         {
           guchar *dst0;
 
@@ -3142,9 +3084,6 @@ add_merged_image (GimpImage     *image,
                                             img_a->transparency ||
                                             alpha_channel),
                        pixels, GEGL_AUTO_ROWSTRIDE);
-
-      if (img_a->color_mode == PSD_CMYK)
-        img_a->color_mode = PSD_RGB;
 
       /* Merged image data is blended against white.  Unblend it. */
       if (img_a->transparency)
@@ -3397,6 +3336,10 @@ get_gimp_image_type (GimpImageBaseType image_base_type,
 
   switch (image_base_type)
     {
+    case GIMP_CMYK:
+      image_type = (alpha) ? GIMP_CMYKA_IMAGE : GIMP_CMYK_IMAGE;
+      break;
+
     case GIMP_GRAY:
       image_type = (alpha) ? GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE;
       break;
@@ -3708,6 +3651,44 @@ get_layer_format (PSDimage *img_a,
 
   switch (get_gimp_image_type (img_a->base_type, alpha))
     {
+    case GIMP_CMYK_IMAGE:
+      switch (img_a->bps)
+        {
+        /* Photoshop does not support 32 bpc CMYK images */
+        case 16:
+          format = babl_format ("cmyk u16");
+          break;
+
+        case 8:
+        case 1:
+          format = babl_format ("cmyk u8");
+
+          break;
+
+        default:
+          return NULL;
+          break;
+        }
+      break;
+
+    case GIMP_CMYKA_IMAGE:
+      switch (img_a->bps)
+        {
+        case 16:
+          format = babl_format ("cmykA u16");
+          break;
+
+        case 8:
+        case 1:
+          format = babl_format ("cmykA u8");
+          break;
+
+        default:
+          return NULL;
+          break;
+        }
+      break;
+
     case GIMP_GRAY_IMAGE:
       switch (img_a->bps)
         {
@@ -3761,13 +3742,13 @@ get_layer_format (PSDimage *img_a,
           break;
 
         case 16:
-          format = babl_format ((img_a->color_mode == PSD_CMYK || img_a->color_mode == PSD_LAB) ?
+          format = babl_format ((img_a->color_mode == PSD_LAB) ?
                                 "R'G'B' float" : "R'G'B' u16");
           break;
 
         case 8:
         case 1:
-          format = babl_format ((img_a->color_mode == PSD_CMYK || img_a->color_mode == PSD_LAB) ?
+          format = babl_format ((img_a->color_mode == PSD_LAB) ?
                                 "R'G'B' float" : "R'G'B' u8");
           break;
 
@@ -3785,13 +3766,13 @@ get_layer_format (PSDimage *img_a,
           break;
 
         case 16:
-          format = babl_format ((img_a->color_mode == PSD_CMYK || img_a->color_mode == PSD_LAB) ?
+          format = babl_format ((img_a->color_mode == PSD_LAB) ?
                                 "R'G'B'A float" : "R'G'B'A u16");
           break;
 
         case 8:
         case 1:
-          format = babl_format ((img_a->color_mode == PSD_CMYK || img_a->color_mode == PSD_LAB) ?
+          format = babl_format ((img_a->color_mode == PSD_LAB) ?
                                 "R'G'B'A float" : "R'G'B'A u8");
           break;
 

@@ -1041,7 +1041,8 @@ load_image (GimpProcedure        *procedure,
           break;
 
         case PHOTOMETRIC_SEPARATED:
-          layer_type = alpha ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
+          image_type = GIMP_CMYK;
+          layer_type = alpha ? GIMP_CMYKA_IMAGE : GIMP_CMYK_IMAGE;
           /* It's possible that a CMYK image might not have an
            * attached profile, so we'll check for it and set up
            * space accordingly
@@ -1180,14 +1181,7 @@ load_image (GimpProcedure        *procedure,
             images_list = g_list_prepend (images_list, *image);
         }
 
-      /* attach CMYK profile to GimpImage if applicable */
-      if (profile && gimp_color_profile_is_cmyk (profile))
-        {
-          gimp_image_set_simulation_profile (*image, profile);
-          g_clear_object (&profile);
-        }
-
-      /* attach non-CMYK color profile */
+      /* attach color profile */
       if (profile)
         {
           if (pages.target == GIMP_PAGE_SELECTOR_TARGET_IMAGES || profile == first_profile)

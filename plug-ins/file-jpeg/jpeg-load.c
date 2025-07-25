@@ -75,7 +75,6 @@ load_image (GFile        *file,
   const Babl        *space;
   const gchar       *encoding;
   const gchar       *layer_name     = NULL;
-  GimpColorProfile  *cmyk_profile   = NULL;
   gint               tile_height;
   gint               i;
   guchar            *photoshop_data = NULL;
@@ -221,8 +220,8 @@ load_image (GFile        *file,
     case 4:
       if (cinfo.out_color_space == JCS_CMYK)
         {
-          image_type = GIMP_RGB;
-          layer_type = GIMP_RGB_IMAGE;
+          image_type = GIMP_CMYK;
+          layer_type = GIMP_CMYK_IMAGE;
           break;
         }
       /*fallthrough*/
@@ -344,11 +343,16 @@ load_image (GFile        *file,
           profile = gimp_color_profile_new_from_icc_profile (icc_data,
                                                              icc_length,
                                                              NULL);
-          if (cinfo.out_color_space == JCS_CMYK)
+
+          if (profile)
             {
-              /* don't attach the profile if we are transforming */
-              cmyk_profile = profile;
-              profile = NULL;
+              space = gimp_color_profile_get_space (profile,
+                                                    GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                    error);
+            }
+          else
+            {
+              space = NULL;
             }
 
           if (profile)
@@ -387,17 +391,6 @@ load_image (GFile        *file,
   if (cinfo.out_color_space == JCS_CMYK)
     {
       encoding = "cmyk u8";
-      if (cmyk_profile)
-        {
-          space = gimp_color_profile_get_space (cmyk_profile,
-                                                GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                                error);
-          gimp_image_set_simulation_profile (image, cmyk_profile);
-        }
-      else
-        {
-          space = NULL;
-        }
     }
   else
     {
@@ -415,7 +408,6 @@ load_image (GFile        *file,
           else
             encoding = "Y' u16";
         }
-      space = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
     }
   format = babl_format_with_space (encoding, space);
 
@@ -514,7 +506,6 @@ load_image (GFile        *file,
 
  finish:
 
-  g_clear_object (&cmyk_profile);
   /* Step 8: Release JPEG decompression object */
 
   /* This is an important step since it will release a good deal of memory. */
@@ -749,7 +740,7 @@ load_thumbnail_image (GFile         *file,
     case 4:
       if (cinfo.out_color_space == JCS_CMYK)
         {
-          *type = GIMP_RGB_IMAGE;
+          *type = GIMP_CMYK_IMAGE;
           break;
         }
       /*fallthrough*/

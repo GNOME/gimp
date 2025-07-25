@@ -83,6 +83,9 @@ export_merge (GimpImage  *image,
         case GIMP_RGB:
           layer_type = GIMP_RGBA_IMAGE;
           break;
+        case GIMP_CMYK:
+          layer_type = GIMP_CMYKA_IMAGE;
+          break;
         case GIMP_GRAY:
           layer_type = GIMP_GRAYA_IMAGE;
           break;
@@ -580,8 +583,9 @@ gimp_export_options_get_image (GimpExportOptions  *options,
   /* Get capabilities from ExportOptions */
   g_object_get (options, "capabilities", &capabilities, NULL);
 
-  g_return_val_if_fail (capabilities & (GIMP_EXPORT_CAN_HANDLE_RGB |
-                                        GIMP_EXPORT_CAN_HANDLE_GRAY |
+  g_return_val_if_fail (capabilities & (GIMP_EXPORT_CAN_HANDLE_RGB     |
+                                        GIMP_EXPORT_CAN_HANDLE_CMYK    |
+                                        GIMP_EXPORT_CAN_HANDLE_GRAY    |
                                         GIMP_EXPORT_CAN_HANDLE_INDEXED |
                                         GIMP_EXPORT_CAN_HANDLE_BITMAP),
                         GIMP_EXPORT_IGNORE);
@@ -795,6 +799,32 @@ gimp_export_options_get_image (GimpExportOptions  *options,
           else if (capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY)
             actions = g_slist_prepend (actions,
                                        &export_action_convert_grayscale);
+          else if (capabilities & GIMP_EXPORT_CAN_HANDLE_BITMAP)
+            actions = g_slist_prepend (actions,
+                                       &export_action_convert_bitmap);
+        }
+      break;
+
+    case GIMP_CMYK:
+      if (! (capabilities & GIMP_EXPORT_CAN_HANDLE_CMYK))
+        {
+          if ((capabilities & GIMP_EXPORT_CAN_HANDLE_RGB) &&
+              (capabilities & GIMP_EXPORT_CAN_HANDLE_INDEXED))
+            actions = g_slist_prepend (actions,
+                                       &export_action_convert_rgb_or_indexed);
+          else if ((capabilities & GIMP_EXPORT_CAN_HANDLE_INDEXED) &&
+                   (capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY))
+            actions = g_slist_prepend (actions,
+                                       &export_action_convert_indexed_or_grayscale);
+          else if (capabilities & GIMP_EXPORT_CAN_HANDLE_RGB)
+            actions = g_slist_prepend (actions,
+                                       &export_action_convert_rgb);
+          else if (capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY)
+            actions = g_slist_prepend (actions,
+                                       &export_action_convert_grayscale);                                                            
+          else if (capabilities & GIMP_EXPORT_CAN_HANDLE_INDEXED)
+            actions = g_slist_prepend (actions,
+                                       &export_action_convert_indexed);
           else if (capabilities & GIMP_EXPORT_CAN_HANDLE_BITMAP)
             actions = g_slist_prepend (actions,
                                        &export_action_convert_bitmap);
