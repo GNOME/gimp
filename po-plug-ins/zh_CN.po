@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-07-18 18:18+0000\n"
-"PO-Revision-Date: 2025-07-19 07:22+0800\n"
+"POT-Creation-Date: 2025-07-23 00:37+0000\n"
+"PO-Revision-Date: 2025-07-24 16:40+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -411,130 +411,133 @@ msgstr "寻找动画背景"
 msgid "Optimizing animation"
 msgstr "优化动画"
 
-#: plug-ins/common/animation-play.c:329
+#: plug-ins/common/animation-play.c:334
 msgid "_Playback..."
 msgstr "回放(_P)..."
 
-#: plug-ins/common/animation-play.c:334
+#: plug-ins/common/animation-play.c:339
 msgid "Preview a GIMP layer-based animation"
 msgstr "预览一个基于 GIMP 图层的动画"
 
-#: plug-ins/common/animation-play.c:369
+#: plug-ins/common/animation-play.c:374
 #, c-format
 msgid "Procedure '%s' only works in interactive mode."
 msgstr "程序“%s”仅在交互式模式中有效。"
 
-#: plug-ins/common/animation-play.c:387 plug-ins/common/animation-play.c:770
-#: plug-ins/common/animation-play.c:1393
+#: plug-ins/common/animation-play.c:392 plug-ins/common/animation-play.c:940
+#: plug-ins/common/animation-play.c:1440
 msgid "Start playback"
 msgstr "开始回放"
 
-#: plug-ins/common/animation-play.c:388 plug-ins/common/animation-play.c:772
+#: plug-ins/common/animation-play.c:393 plug-ins/common/animation-play.c:944
 msgid "Step back to previous frame"
 msgstr "后退到上一帧"
 
-#: plug-ins/common/animation-play.c:389 plug-ins/common/animation-play.c:774
+#: plug-ins/common/animation-play.c:394 plug-ins/common/animation-play.c:947
 msgid "Step to next frame"
 msgstr "跳到下一帧"
 
-#: plug-ins/common/animation-play.c:390 plug-ins/common/animation-play.c:776
+#: plug-ins/common/animation-play.c:395 plug-ins/common/animation-play.c:950
 msgid "Rewind the animation"
 msgstr "快退动画"
 
-#: plug-ins/common/animation-play.c:395
+#: plug-ins/common/animation-play.c:400
 msgid "Increase the speed of the animation"
 msgstr "提高动画的速度"
 
-#: plug-ins/common/animation-play.c:396
+#: plug-ins/common/animation-play.c:401
 msgid "Decrease the speed of the animation"
 msgstr "降低动画的速度"
 
-#: plug-ins/common/animation-play.c:397
+#: plug-ins/common/animation-play.c:402
 msgid "Reset the speed of the animation"
 msgstr "重置动画速度"
 
-#: plug-ins/common/animation-play.c:402 plug-ins/common/animation-play.c:779
+#: plug-ins/common/animation-play.c:407 plug-ins/common/animation-play.c:885
 msgid "Detach the animation from the dialog window"
 msgstr "从对话窗口中分离动画"
 
-#: plug-ins/common/animation-play.c:403 plug-ins/common/animation-play.c:781
+#: plug-ins/common/animation-play.c:408 plug-ins/common/animation-play.c:883
 msgid "Reload the image"
 msgstr "重新载入图像"
 
-#: plug-ins/common/animation-play.c:404 plug-ins/imagemap/imap-menu.ui:26
+#: plug-ins/common/animation-play.c:409 plug-ins/imagemap/imap-menu.ui:26
 msgid "Quit"
 msgstr "退出"
 
 #. list is given in "fps" - frames per second
-#: plug-ins/common/animation-play.c:494 plug-ins/common/animation-play.c:552
-#: plug-ins/common/animation-play.c:844
+#: plug-ins/common/animation-play.c:499 plug-ins/common/animation-play.c:557
+#: plug-ins/common/animation-play.c:860
 #, c-format
 msgid "%.1f %%"
 msgstr "%.1f %%"
 
 #. Image Name
-#: plug-ins/common/animation-play.c:691
+#: plug-ins/common/animation-play.c:696
 msgid "Animation Playback:"
 msgstr "动画回放："
 
-#: plug-ins/common/animation-play.c:772
-msgid "Step _back"
-msgstr "后退(_B)"
+#. 2 styles of default frame disposals: cumulative layers and one
+#. * frame per layer.
+#.
+#: plug-ins/common/animation-play.c:787 plug-ins/common/file-gif-export.c:221
+msgid "Cumulative layers (combine)"
+msgstr "累积图层（组合）"
 
-#: plug-ins/common/animation-play.c:774
-msgid "_Step"
-msgstr "单步(_S)"
+#: plug-ins/common/animation-play.c:792 plug-ins/common/file-gif-export.c:222
+msgid "One frame per layer (replace)"
+msgstr "每图层一帧（替换）"
 
-#: plug-ins/common/animation-play.c:779
-msgid "Detach"
-msgstr "分离"
+#. list is given in "fps" - frames per second
+#: plug-ins/common/animation-play.c:815
+#, c-format
+msgid "%d fps"
+msgstr "%d fps"
+
+#: plug-ins/common/animation-play.c:826
+msgid "Default framerate"
+msgstr "默认帧率"
+
+#: plug-ins/common/animation-play.c:846
+msgid "Playback speed"
+msgstr "回放速度"
 
 #. Zoom Options
-#: plug-ins/common/animation-play.c:859
+#: plug-ins/common/animation-play.c:876
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:679
 #: plug-ins/imagemap/imap-menu.ui:271
 msgid "Zoom"
 msgstr "缩放"
 
-#. list is given in "fps" - frames per second
-#: plug-ins/common/animation-play.c:869
-#, c-format
-msgid "%d fps"
-msgstr "%d fps"
+#: plug-ins/common/animation-play.c:883
+msgid "Reload"
+msgstr "重新载入"
 
-#: plug-ins/common/animation-play.c:880
-msgid "Default framerate"
-msgstr "默认帧率"
+#: plug-ins/common/animation-play.c:885
+msgid "Detach"
+msgstr "分离"
 
-#: plug-ins/common/animation-play.c:900
-msgid "Playback speed"
-msgstr "回放速度"
+#: plug-ins/common/animation-play.c:888 plug-ins/imagemap/imap-menu.ui:212
+msgid "Help"
+msgstr "帮助"
 
-#. 2 styles of default frame disposals: cumulative layers and one
-#. * frame per layer.
-#.
-#: plug-ins/common/animation-play.c:911 plug-ins/common/file-gif-export.c:221
-msgid "Cumulative layers (combine)"
-msgstr "累积图层（组合）"
+#: plug-ins/common/animation-play.c:943
+msgid "Step _back"
+msgstr "后退(_B)"
 
-#: plug-ins/common/animation-play.c:916 plug-ins/common/file-gif-export.c:222
-msgid "One frame per layer (replace)"
-msgstr "每图层一帧（替换）"
+#: plug-ins/common/animation-play.c:946
+msgid "_Step"
+msgstr "单步(_S)"
 
-#: plug-ins/common/animation-play.c:1012
+#: plug-ins/common/animation-play.c:1055
 msgid "Memory could not be allocated to the frame container."
 msgstr "无法将内存分配到该帧容器。"
 
-#: plug-ins/common/animation-play.c:1079
+#: plug-ins/common/animation-play.c:1127
 msgid "Invalid image. Did you close it?"
 msgstr "无效图像。您关闭了它吗？"
 
-#: plug-ins/common/animation-play.c:1191
-#, c-format
-msgid "Frame %d of %d"
-msgstr "帧 %d/%d"
-
-#: plug-ins/common/animation-play.c:1393
+#: plug-ins/common/animation-play.c:1440
 msgid "Stop playback"
 msgstr "停止回放"
 
@@ -562,7 +565,7 @@ msgstr "段数(_N)"
 msgid "Number of segments in blinds"
 msgstr "百叶窗中的分段数量"
 
-#: plug-ins/common/blinds.c:165 plug-ins/map-object/map-object-ui.c:409
+#: plug-ins/common/blinds.c:165 plug-ins/map-object/map-object-ui.c:408
 msgid "Orient_ation"
 msgstr "方向(_A)"
 
@@ -5264,7 +5267,7 @@ msgid ""
 "and height values will be used."
 msgstr "如果启用，在导出时将保持宽高比例。否则将使用指定的宽度和高度值。"
 
-#: plug-ins/common/file-ps.c:566 plug-ins/map-object/map-object-ui.c:722
+#: plug-ins/common/file-ps.c:566 plug-ins/map-object/map-object-ui.c:719
 msgid "Rotation"
 msgstr "旋转"
 
@@ -9564,7 +9567,7 @@ msgstr "FITS HDU"
 msgid "FITS export cannot handle images with alpha channels"
 msgstr "FITS 导出无法处理带透明通道的图像"
 
-#: plug-ins/file-fits/fits.c:995
+#: plug-ins/file-fits/fits.c:998
 msgid "Open FITS File"
 msgstr "打开 FITS 文件"
 
@@ -14331,10 +14334,6 @@ msgstr "使用 GIMP 参考线…"
 msgid "Create Guides..."
 msgstr "创建参考线…"
 
-#: plug-ins/imagemap/imap-menu.ui:212
-msgid "Help"
-msgstr "帮助"
-
 #: plug-ins/imagemap/imap-menu.ui:215 plug-ins/screenshot/screenshot.c:540
 msgid "Contents"
 msgstr "内容"
@@ -14643,7 +14642,7 @@ msgstr "距离(_D)"
 msgid "Distance of observer from surface"
 msgstr "观察器至表面的距离"
 
-#: plug-ins/lighting/lighting-ui.c:247 plug-ins/map-object/map-object-ui.c:364
+#: plug-ins/lighting/lighting-ui.c:247 plug-ins/map-object/map-object-ui.c:363
 msgid "Recompute preview image"
 msgstr "重新计算预览图像"
 
@@ -14663,7 +14662,7 @@ msgstr "选项(_T)"
 msgid "_Light"
 msgstr "光源(_L)"
 
-#: plug-ins/lighting/lighting-ui.c:272 plug-ins/map-object/map-object-ui.c:407
+#: plug-ins/lighting/lighting-ui.c:272 plug-ins/map-object/map-object-ui.c:406
 msgid "_Material"
 msgstr "材质(_M)"
 
@@ -14675,16 +14674,16 @@ msgstr "凹凸映射(_B)"
 msgid "_Environment Map"
 msgstr "环境映射(_E)"
 
-#: plug-ins/lighting/lighting-ui.c:281 plug-ins/map-object/map-object-ui.c:420
+#: plug-ins/lighting/lighting-ui.c:281 plug-ins/map-object/map-object-ui.c:419
 msgid "General Options"
 msgstr "常规选项"
 
-#: plug-ins/lighting/lighting-ui.c:313 plug-ins/map-object/map-object-ui.c:456
+#: plug-ins/lighting/lighting-ui.c:313 plug-ins/map-object/map-object-ui.c:455
 msgid "Light Settings"
 msgstr "光源设置"
 
-#: plug-ins/lighting/lighting-ui.c:332 plug-ins/map-object/map-object-ui.c:490
-#: plug-ins/map-object/map-object-ui.c:702
+#: plug-ins/lighting/lighting-ui.c:332 plug-ins/map-object/map-object-ui.c:487
+#: plug-ins/map-object/map-object-ui.c:699
 #: plug-ins/print/print-page-layout.c:384
 msgid "Position"
 msgstr "位置"
@@ -14998,81 +14997,81 @@ msgstr "圆柱长度(_D)"
 msgid "Cylinder length"
 msgstr "圆柱体长度"
 
-#: plug-ins/map-object/map-object-ui.c:316
+#: plug-ins/map-object/map-object-ui.c:315
 msgid "Map to Object"
 msgstr "映射到物体"
 
-#: plug-ins/map-object/map-object-ui.c:352
+#: plug-ins/map-object/map-object-ui.c:351
 msgid "_Preview!"
 msgstr "预览(_P)！"
 
-#: plug-ins/map-object/map-object-ui.c:382
+#: plug-ins/map-object/map-object-ui.c:381
 msgid "Show _wireframe"
 msgstr "显示网格(_W)"
 
-#: plug-ins/map-object/map-object-ui.c:391
+#: plug-ins/map-object/map-object-ui.c:390
 msgid "Update preview _live"
 msgstr "实时更新预览(_L)"
 
-#: plug-ins/map-object/map-object-ui.c:401
+#: plug-ins/map-object/map-object-ui.c:400
 msgid "O_ptions"
 msgstr "选项(_P)"
 
-#: plug-ins/map-object/map-object-ui.c:403
+#: plug-ins/map-object/map-object-ui.c:402
 msgid "Li_ght"
 msgstr "光源(_G)"
 
-#: plug-ins/map-object/map-object-ui.c:405
+#: plug-ins/map-object/map-object-ui.c:404
 msgid "_Viewpoint"
 msgstr "观察点(_V)"
 
-#: plug-ins/map-object/map-object-ui.c:412
+#: plug-ins/map-object/map-object-ui.c:411
 msgid "Sp_here"
 msgstr "球体(_H)"
 
-#: plug-ins/map-object/map-object-ui.c:414
+#: plug-ins/map-object/map-object-ui.c:413
 msgid "_Box"
 msgstr "方盒(_B)"
 
-#: plug-ins/map-object/map-object-ui.c:416
+#: plug-ins/map-object/map-object-ui.c:415
 msgid "C_ylinder"
 msgstr "圆柱体(_Y)"
 
-#: plug-ins/map-object/map-object-ui.c:476
+#: plug-ins/map-object/map-object-ui.c:473
 msgid "Direction Vector"
 msgstr "方向矢量"
 
-#: plug-ins/map-object/map-object-ui.c:547
+#: plug-ins/map-object/map-object-ui.c:544
 msgid "Viewpoint Position"
 msgstr "观察点位置"
 
-#: plug-ins/map-object/map-object-ui.c:569
+#: plug-ins/map-object/map-object-ui.c:566
 msgid "First Axis"
 msgstr "第一个坐标轴"
 
-#: plug-ins/map-object/map-object-ui.c:589
+#: plug-ins/map-object/map-object-ui.c:586
 msgid "Second Axis"
 msgstr "第二个坐标轴"
 
-#: plug-ins/map-object/map-object-ui.c:645
+#: plug-ins/map-object/map-object-ui.c:642
 msgid "Intensity Levels"
 msgstr "强度级别"
 
-#: plug-ins/map-object/map-object-ui.c:659
+#: plug-ins/map-object/map-object-ui.c:656
 msgid "Reflectivity"
 msgstr "反射率"
 
-#: plug-ins/map-object/map-object-ui.c:762
-#: plug-ins/map-object/map-object-ui.c:862
+#: plug-ins/map-object/map-object-ui.c:759
+#: plug-ins/map-object/map-object-ui.c:859
 #: plug-ins/print/print-page-layout.c:253
 msgid "Size"
 msgstr "大小"
 
-#: plug-ins/map-object/map-object-ui.c:775
+#: plug-ins/map-object/map-object-ui.c:772
 msgid "Map Images to Box Faces"
 msgstr "将图像映射到方盒表面"
 
-#: plug-ins/map-object/map-object-ui.c:843
+#: plug-ins/map-object/map-object-ui.c:840
 msgid "Images for the Cap Faces"
 msgstr "上下底面的图像"
 
@@ -16359,6 +16358,10 @@ msgstr "未发现 TWAIN 驱动，扫描不可用"
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "从扫描仪/相机传送数据"
+
+#, c-format
+#~ msgid "Frame %d of %d"
+#~ msgstr "帧 %d/%d"
 
 #~ msgid ""
 #~ "Horizontal\n"
