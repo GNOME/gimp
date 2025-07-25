@@ -480,6 +480,7 @@ export_edit_options (GimpProcedure        *procedure,
   else
     {
       capabilities = (GIMP_EXPORT_CAN_HANDLE_RGB     |
+                      GIMP_EXPORT_CAN_HANDLE_CMYK    |
                       GIMP_EXPORT_CAN_HANDLE_GRAY    |
                       GIMP_EXPORT_CAN_HANDLE_INDEXED |
                       GIMP_EXPORT_CAN_HANDLE_ALPHA);

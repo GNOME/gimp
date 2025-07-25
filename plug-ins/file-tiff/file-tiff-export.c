@@ -279,51 +279,52 @@ save_layer (TIFF        *tif,
             gboolean     out_linear,
             GError     **error)
 {
-  gboolean          status = FALSE;
-  gushort           red[256];
-  gushort           grn[256];
-  gushort           blu[256];
-  gint              cols, rows, row, i;
-  glong             rowsperstrip;
-  gushort           compression;
-  gushort           extra_samples[1];
-  gboolean          alpha;
-  gshort            predictor;
-  gshort            photometric;
-  const Babl       *format;
-  const Babl       *type;
-  gshort            samplesperpixel;
-  gshort            bitspersample;
-  gshort            sampleformat;
-  gint              bytesperrow;
-  guchar           *src = NULL;
-  guchar           *data = NULL;
-  GimpPalette      *palette;
-  guchar           *cmap;
-  gint              num_colors;
-  gint              success;
-  GimpImageType     drawable_type;
-  GeglBuffer       *buffer = NULL;
-  gint              tile_height;
-  gint              y, yend;
-  gboolean          is_bw    = FALSE;
-  gboolean          invert   = TRUE;
-  const guchar      bw_map[] = { 0, 0, 0, 255, 255, 255 };
-  const guchar      wb_map[] = { 255, 255, 255, 0, 0, 0 };
-  gchar            *layer_name = NULL;
-  const gdouble     progress_base = (gdouble) page / (gdouble) num_pages;
-  const gdouble     progress_fraction = 1.0 / (gdouble) num_pages;
-  gdouble           xresolution;
-  gdouble           yresolution;
-  gushort           save_unit = RESUNIT_INCH;
-  gint              offset_x, offset_y;
-  gint              config_compression;
-  gchar            *config_comment;
-  gboolean          config_save_comment;
-  gboolean          config_save_transp_pixels;
-  gboolean          config_save_geotiff_tags;
-  gboolean          config_save_profile;
-  gboolean          config_cmyk;
+  gboolean           status = FALSE;
+  gushort            red[256];
+  gushort            grn[256];
+  gushort            blu[256];
+  gint               cols, rows, row, i;
+  glong              rowsperstrip;
+  gushort            compression;
+  gushort            extra_samples[1];
+  gboolean           alpha;
+  gshort             predictor;
+  gshort             photometric;
+  const Babl        *format;
+  const Babl        *type;
+  gshort             samplesperpixel;
+  gshort             bitspersample;
+  gshort             sampleformat;
+  gint               bytesperrow;
+  guchar            *src = NULL;
+  guchar            *data = NULL;
+  GimpPalette       *palette;
+  guchar            *cmap;
+  gint               num_colors;
+  gint               success;
+  GimpImageBaseType  image_type;
+  GimpImageType      drawable_type;
+  GeglBuffer        *buffer = NULL;
+  gint               tile_height;
+  gint               y, yend;
+  gboolean           is_bw    = FALSE;
+  gboolean           invert   = TRUE;
+  const guchar       bw_map[] = { 0, 0, 0, 255, 255, 255 };
+  const guchar       wb_map[] = { 255, 255, 255, 0, 0, 0 };
+  gchar             *layer_name = NULL;
+  const gdouble      progress_base = (gdouble) page / (gdouble) num_pages;
+  const gdouble      progress_fraction = 1.0 / (gdouble) num_pages;
+  gdouble            xresolution;
+  gdouble            yresolution;
+  gushort            save_unit = RESUNIT_INCH;
+  gint               offset_x, offset_y;
+  gint               config_compression;
+  gchar             *config_comment;
+  gboolean           config_save_comment;
+  gboolean           config_save_transp_pixels;
+  gboolean           config_save_geotiff_tags;
+  gboolean           config_save_profile;
+  gboolean           config_cmyk;
 
   g_object_get (config,
                 "gimp-comment",            &config_comment,
@@ -351,6 +352,7 @@ save_layer (TIFF        *tif,
   tile_height = gimp_tile_height ();
   rowsperstrip = tile_height;
 
+  image_type    = gimp_image_get_base_type (image);
   drawable_type = gimp_drawable_type (GIMP_DRAWABLE (layer));
   buffer        = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
@@ -446,6 +448,21 @@ save_layer (TIFF        *tif,
         }
       break;
 
+    case GIMP_CMYK_IMAGE:
+      predictor       = 2;
+      samplesperpixel = 4;
+      photometric     = PHOTOMETRIC_SEPARATED;
+      alpha           = FALSE;
+
+      format = babl_format_new (babl_model ("CMYK"),
+                                type,
+                                babl_component ("Cyan"),
+                                babl_component ("Magenta"),
+                                babl_component ("Yellow"),
+                                babl_component ("Key"),
+                                NULL);
+      break;
+
     case GIMP_GRAY_IMAGE:
       samplesperpixel = 1;
       photometric     = PHOTOMETRIC_MINISBLACK;
@@ -517,6 +534,22 @@ save_layer (TIFF        *tif,
                                         NULL);
             }
         }
+      break;
+
+    case GIMP_CMYKA_IMAGE:
+      predictor       = 2;
+      samplesperpixel = 5;
+      photometric     = PHOTOMETRIC_SEPARATED;
+      alpha           = TRUE;
+
+      format = babl_format_new (babl_model ("CMYKA"),
+                                type,
+                                babl_component ("Cyan"),
+                                babl_component ("Magenta"),
+                                babl_component ("Yellow"),
+                                babl_component ("Key"),
+                                babl_component ("A"),
+                                NULL);
       break;
 
     case GIMP_GRAYA_IMAGE:
@@ -611,6 +644,7 @@ save_layer (TIFF        *tif,
       goto out;
     }
 
+  /* Used if exporting a non-CMYK image as CMYK */
   if (config_cmyk)
     {
       if (alpha)
@@ -669,7 +703,9 @@ save_layer (TIFF        *tif,
     }
 
 #ifdef TIFFTAG_ICCPROFILE
-  if (config_save_profile || config_cmyk)
+  if (config_save_profile ||
+      config_cmyk         ||
+      image_type == GIMP_CMYK)
     {
       const guint8     *icc_data     = NULL;
       gsize             icc_length;
@@ -677,7 +713,7 @@ save_layer (TIFF        *tif,
       GimpColorProfile *cmyk_profile = NULL;
 
       profile = gimp_image_get_effective_color_profile (orig_image);
-      if (config_cmyk)
+      if (config_cmyk && (image_type != GIMP_CMYK))
         cmyk_profile = gimp_image_get_simulation_profile (image);
 
       /* If a non-CMYK profile was assigned as the simulation profile,
@@ -700,7 +736,7 @@ save_layer (TIFF        *tif,
     }
 #endif
 
-  /* Set CMYK Properties */
+  /* Set CMYK Properties if exporting a non-CMYK image as CMYK */
   if (config_cmyk)
     {
       photometric = PHOTOMETRIC_SEPARATED;
@@ -848,6 +884,8 @@ save_layer (TIFF        *tif,
                 }
               break;
 
+            case GIMP_CMYK_IMAGE:
+            case GIMP_CMYKA_IMAGE:
             case GIMP_GRAY_IMAGE:
             case GIMP_GRAYA_IMAGE:
             case GIMP_RGB_IMAGE:
@@ -1049,6 +1087,7 @@ export_image (GFile         *file,
 {
   TIFF             *tif                 = NULL;
   const Babl       *space               = NULL;
+  GimpImageBaseType image_type;
   gboolean          status              = FALSE;
   gboolean          out_linear          = FALSE;
   gint32            num_layers;
@@ -1070,8 +1109,9 @@ export_image (GFile         *file,
                 "cmyk",                  &config_cmyk,
                 NULL);
 
-  layers = gimp_image_list_layers (image);
-  layers = g_list_reverse (layers);
+  image_type = gimp_image_get_base_type (image);
+  layers     = gimp_image_list_layers (image);
+  layers     = g_list_reverse (layers);
   num_layers = g_list_length (layers);
 
   gimp_progress_init_printf (_("Exporting '%s'"),
@@ -1094,7 +1134,7 @@ export_image (GFile         *file,
       GimpColorProfile *profile;
       GError           *error = NULL;
 
-      if (config_cmyk)
+      if (config_cmyk && (image_type != GIMP_CMYK))
         {
           profile = gimp_image_get_simulation_profile (image);
 
@@ -1114,7 +1154,7 @@ export_image (GFile         *file,
 
       if (profile)
         space = gimp_color_profile_get_space (profile,
-                                              config_cmyk ?
+                                              (config_cmyk && (image_type != GIMP_CMYK)) ?
                                               gimp_image_get_simulation_intent (image) :
                                               GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                               &error);
@@ -1316,11 +1356,19 @@ save_dialog (GimpImage     *image,
                              -1);
   gimp_help_set_help_data (profile_label,
                            _("Name of the color profile used for CMYK export."), NULL);
-  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
-                                    "cmyk-frame", "cmyk", FALSE,
-                                    "profile-label");
 
-  cmyk_profile = gimp_image_get_simulation_profile (image);
+  if (gimp_image_get_base_type (image) != GIMP_CMYK)
+    {
+      gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                        "cmyk-frame", "cmyk", FALSE,
+                                        "profile-label");
+      cmyk_profile = gimp_image_get_simulation_profile (image);
+    }
+  else
+    {
+      cmyk_profile = gimp_image_get_color_profile (image);
+    }
+
   if (cmyk_profile)
     {
       gchar *label_text;
@@ -1357,7 +1405,6 @@ save_dialog (GimpImage     *image,
                                 "bigtiff",
                                 "layers-frame",
                                 "save-transparent-pixels",
-                                "cmyk-frame",
                                 NULL);
   else
     gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
@@ -1365,8 +1412,11 @@ save_dialog (GimpImage     *image,
                                 "bigtiff",
                                 "layers-frame",
                                 "save-transparent-pixels",
-                                "cmyk-frame",
                                 NULL);
+
+  if (gimp_image_get_base_type (image) != GIMP_CMYK)
+    gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                                "cmyk-frame", NULL);
 
   compression = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config), "compression");
 

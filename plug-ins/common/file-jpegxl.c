@@ -2026,7 +2026,7 @@ save_dialog (GimpImage     *image,
     }
   else
     {
-      cmyk_profile = gimp_image_get_simulation_profile (image);
+      cmyk_profile = gimp_image_get_color_profile (image);
     }
 
   if (! cmyk_profile)
