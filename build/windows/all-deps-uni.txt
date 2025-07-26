@@ -13,7 +13,6 @@ ${MINGW_PACKAGE_PREFIX}-appstream-glib \
 ${MINGW_PACKAGE_PREFIX}-atk \
 ${MINGW_PACKAGE_PREFIX}-cairo \
 ${MINGW_PACKAGE_PREFIX}-cfitsio \
-${MINGW_PACKAGE_PREFIX}-drmingw \
 ${MINGW_PACKAGE_PREFIX}-gettext-tools \
 ${MINGW_PACKAGE_PREFIX}-gexiv2 \
 ${MINGW_PACKAGE_PREFIX}-ghostscript \
