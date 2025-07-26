@@ -189,8 +189,8 @@ svg_create_procedure (GimpPlugIn  *plug_in,
                                           _("_Paths"),
                                           _("Whether and how to import paths so that they can be used with the path tool"),
                                           gimp_choice_new_with_values ("no-import",     0, _("Don't import paths"),        NULL,
-                                                                       "import",        0, _("Import paths individually"), NULL,
-                                                                       "import-merged", 0, _("Merge imported paths"),      NULL,
+                                                                       "import",        1, _("Import paths individually"), NULL,
+                                                                       "import-merged", 2, _("Merge imported paths"),      NULL,
                                                                        NULL),
                                           "no-import", G_PARAM_READWRITE);
     }
