@@ -204,39 +204,41 @@ export_image (GFile                *file,
   static struct jpeg_compress_struct cinfo;
   static struct my_error_mgr         jerr;
 
-  GimpImageType     drawable_type;
-  GeglBuffer       *buffer;
-  const gchar      *encoding;
-  const Babl       *format;
-  const Babl       *space;
-  JpegSubsampling   subsampling;
-  FILE             * volatile outfile;
-  guchar           *data;
-  guchar           *src;
-  GimpColorProfile *profile      = NULL;
-  GimpColorProfile *cmyk_profile = NULL;
+  GimpImageBaseType  image_type;
+  GimpImageType      drawable_type;
+  GeglBuffer        *buffer;
+  const gchar       *encoding;
+  const Babl        *format;
+  const Babl        *space;
+  JpegSubsampling    subsampling;
+  FILE              * volatile outfile;
+  guchar            *data;
+  guchar            *src;
+  GimpColorProfile  *profile      = NULL;
+  GimpColorProfile  *cmyk_profile = NULL;
 
-  gboolean         has_alpha;
-  gboolean         out_linear = FALSE;
-  gint             rowstride, yend;
+  gboolean           has_alpha;
+  gboolean           out_linear = FALSE;
+  gint               rowstride;
+  gint               yend;
 
-  gint             quality;
-  gdouble          dquality      = 1.0;
-  gdouble          smoothing;
-  gboolean         optimize;
-  gboolean         progressive;
-  gboolean         cmyk;
-  gint             subsmp;
-  gboolean         baseline;
-  gint             restart;
-  gint             dct;
-  gboolean         save_profile          = TRUE;
-  gboolean         save_comment;
-  gboolean         use_orig_quality      = FALSE;
-  gint             orig_num_quant_tables = -1;
-  gboolean         use_arithmetic_coding = FALSE;
-  gboolean         use_restart           = FALSE;
-  gchar           *comment;
+  gint               quality;
+  gdouble            dquality      = 1.0;
+  gdouble            smoothing;
+  gboolean           optimize;
+  gboolean           progressive;
+  gboolean           cmyk;
+  gint               subsmp;
+  gboolean           baseline;
+  gint               restart;
+  gint               dct;
+  gboolean           save_profile          = TRUE;
+  gboolean           save_comment;
+  gboolean           use_orig_quality      = FALSE;
+  gint               orig_num_quant_tables = -1;
+  gboolean           use_arithmetic_coding = FALSE;
+  gboolean           use_restart           = FALSE;
+  gchar            *comment;
 
   g_object_get (config,
                 "quality",                   &dquality,
@@ -264,9 +266,11 @@ export_image (GFile                *file,
 
   quality = (gint) (dquality * 100.0 + 0.5);
 
+  image_type    = gimp_image_get_base_type (image);
   drawable_type = gimp_drawable_type (drawable);
+
   buffer = gimp_drawable_get_buffer (drawable);
-  space = gimp_drawable_get_format (drawable);
+  space  = gimp_drawable_get_format (drawable);
 
   if (! preview)
     gimp_progress_init_printf (_("Exporting '%s'"),
@@ -392,6 +396,14 @@ export_image (GFile                *file,
         encoding = "R'G'B' u8";
       break;
 
+    case GIMP_CMYK_IMAGE:
+      /* # of color components per pixel */
+      cinfo.input_components = 4;
+      has_alpha = FALSE;
+
+      encoding = "cmyk u8";
+      break;
+
     case GIMP_GRAY_IMAGE:
       /* # of color components per pixel */
       cinfo.input_components = 1;
@@ -414,6 +426,14 @@ export_image (GFile                *file,
         encoding = "R'G'B' u8";
       break;
 
+    case GIMP_CMYKA_IMAGE:
+      /* # of color components per pixel */
+      cinfo.input_components = 5 - 1;
+      has_alpha = TRUE;
+
+      encoding = "cmyk u8";
+      break;
+
     case GIMP_GRAYA_IMAGE:
       /* # of color components per pixel (minus the GIMP alpha channel) */
       cinfo.input_components = 2 - 1;
@@ -429,7 +449,8 @@ export_image (GFile                *file,
       return FALSE;
     }
 
-  if (cmyk)
+  /* Used if non-CMYK images are exported as CMYK */
+  if (cmyk && image_type != GIMP_CMYK)
     {
       if (save_profile)
         {
@@ -477,7 +498,7 @@ export_image (GFile                *file,
   cinfo.image_width  = gegl_buffer_get_width (buffer);
   cinfo.image_height = gegl_buffer_get_height (buffer);
   /* colorspace of input image */
-  if (cmyk)
+  if (cmyk || image_type == GIMP_CMYK)
     {
       cinfo.input_components = 4;
       cinfo.in_color_space   = JCS_CMYK;
@@ -495,7 +516,7 @@ export_image (GFile                *file,
    */
   jpeg_set_defaults (&cinfo);
 
-  if (cmyk_profile)
+  if (cmyk_profile || image_type == GIMP_CMYK)
     jpeg_set_colorspace (&cinfo, JCS_CMYK);
 
   jpeg_set_quality (&cinfo, quality, baseline);
@@ -973,15 +994,26 @@ save_dialog (GimpProcedure       *procedure,
 
   /* Put options in two column form so the dialog fits on
    * smaller screens. */
-  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
-                                  "options",
-                                  "quality",
-                                  "use-original-quality",
-                                  "preview-size",
-                                  "show-preview",
-                                  "progressive",
-                                  "cmyk-frame",
-                                  NULL);
+  if (gimp_image_get_base_type (image) != GIMP_CMYK)
+    gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "options",
+                                    "quality",
+                                    "use-original-quality",
+                                    "preview-size",
+                                    "show-preview",
+                                    "progressive",
+                                    "cmyk-frame",
+                                    NULL);
+  else
+    gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "options",
+                                    "quality",
+                                    "use-original-quality",
+                                    "preview-size",
+                                    "show-preview",
+                                    "progressive",
+                                    NULL);
+
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
                                     "option-frame", "option-title", FALSE,
                                     "options");

@@ -199,7 +199,8 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
                                           "jpg,jpeg,jpe");
 
       gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
-                                              GIMP_EXPORT_CAN_HANDLE_RGB |
+                                              GIMP_EXPORT_CAN_HANDLE_RGB  |
+                                              GIMP_EXPORT_CAN_HANDLE_CMYK |
                                               GIMP_EXPORT_CAN_HANDLE_GRAY,
                                               NULL, NULL, NULL);
 
