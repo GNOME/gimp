@@ -1010,74 +1010,6 @@ color_sycc_to_rgb (opj_image_t *img)
     }
 }
 
-static gboolean
-color_cmyk_to_rgb (opj_image_t *image)
-{
-  float C, M, Y, K;
-  float sC, sM, sY, sK;
-  unsigned int w, h, max, i;
-
-  w = image->comps[0].w;
-  h = image->comps[0].h;
-
-  if ((image->numcomps < 4) ||
-      (image->comps[0].dx != image->comps[1].dx) ||
-      (image->comps[0].dx != image->comps[2].dx) ||
-      (image->comps[0].dx != image->comps[3].dx) ||
-      (image->comps[0].dy != image->comps[1].dy) ||
-      (image->comps[0].dy != image->comps[2].dy) ||
-      (image->comps[0].dy != image->comps[3].dy))
-    {
-      g_warning ("Cannot convert in color_cmyk_to_rgb()");
-      return FALSE;
-    }
-
-  max = w * h;
-
-  sC = 1.0f / (float) ((1 << image->comps[0].prec) - 1);
-  sM = 1.0f / (float) ((1 << image->comps[1].prec) - 1);
-  sY = 1.0f / (float) ((1 << image->comps[2].prec) - 1);
-  sK = 1.0f / (float) ((1 << image->comps[3].prec) - 1);
-
-  for (i = 0; i < max; ++i)
-    {
-      /* CMYK values from 0 to 1 */
-      C = (float) (image->comps[0].data[i]) * sC;
-      M = (float) (image->comps[1].data[i]) * sM;
-      Y = (float) (image->comps[2].data[i]) * sY;
-      K = (float) (image->comps[3].data[i]) * sK;
-
-      /* Invert all CMYK values */
-      C = 1.0f - C;
-      M = 1.0f - M;
-      Y = 1.0f - Y;
-      K = 1.0f - K;
-
-      /* CMYK -> RGB : RGB results from 0 to 255 */
-      image->comps[0].data[i] = (int) (255.0f * C * K); /* R */
-      image->comps[1].data[i] = (int) (255.0f * M * K); /* G */
-      image->comps[2].data[i] = (int) (255.0f * Y * K); /* B */
-    }
-
-  image->comps[0].prec = 8;
-  image->comps[1].prec = 8;
-  image->comps[2].prec = 8;
-  image->numcomps -= 1;
-  image->color_space = OPJ_CLRSPC_SRGB;
-
-  for (i = 3; i < image->numcomps; ++i)
-    {
-      memcpy(&(image->comps[i]), &(image->comps[i + 1]),
-             sizeof (image->comps[i]));
-    }
-
-  /* Restore the count so the OpenJPEG destroy function works
-   * properly */
-  image->numcomps += 1;
-
-  return TRUE;
-}
-
 /*
  * This code has been adopted from sjpx_openjpeg.c of ghostscript
  */
@@ -1327,7 +1259,8 @@ export_dialog (GimpProcedure         *procedure,
       g_object_unref (cmyk_profile);
     }
 
-  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), "cmyk-frame", NULL);
+  if (gimp_image_get_base_type (image) != GIMP_CMYK)
+    gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), "cmyk-frame", NULL);
 #endif
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), "resolution",
@@ -1534,18 +1467,6 @@ load_image (GimpProcedure     *procedure,
           goto out;
         }
     }
-  else if (image->color_space == OPJ_CLRSPC_CMYK)
-    {
-      if (! color_cmyk_to_rgb (image))
-        {
-          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       _("Couldn't convert CMYK JP2 image in '%s' to RGB."),
-                       gimp_file_get_utf8_name (file));
-          goto out;
-        }
-
-      num_components--;
-    }
   else if (image->color_space == OPJ_CLRSPC_EYCC)
     {
       if (! color_esycc_to_rgb (image))
@@ -1557,8 +1478,16 @@ load_image (GimpProcedure     *procedure,
         }
     }
 
-  /* At this point, the image should be converted to Gray or RGB. */
-  if (image->color_space == OPJ_CLRSPC_GRAY)
+  /* At this point, the image should be converted to CMYK, Gray, or RGB. */
+  if (image->color_space == OPJ_CLRSPC_CMYK)
+    {
+      base_type  = GIMP_CMYK;
+      image_type = GIMP_CMYK_IMAGE;
+
+      if (num_components == 5)
+        image_type = GIMP_CMYKA_IMAGE;
+    }
+  else if (image->color_space == OPJ_CLRSPC_GRAY)
     {
       base_type  = GIMP_GRAY;
       image_type = GIMP_GRAY_IMAGE;
@@ -1745,6 +1674,26 @@ export_image (GFile          *file,
       color_space = OPJ_CLRSPC_SRGB;
       break;
 
+    case GIMP_CMYKA_IMAGE:
+      if (precision == 8)
+        format = babl_format ("CMYKA u8");
+      else
+        format = babl_format ("CMYKA u16");
+
+      channels    = 5;
+      color_space = OPJ_CLRSPC_CMYK;
+      break;
+
+    case GIMP_CMYK_IMAGE:
+      if (precision == 8)
+        format = babl_format ("CMYK u8");
+      else
+        format = babl_format ("CMYK u16");
+
+      channels    = 4;
+      color_space = OPJ_CLRSPC_CMYK;
+      break;
+
     case GIMP_GRAYA_IMAGE:
       if (precision == 8)
         format = babl_format ("Y'A u8");
@@ -1769,6 +1718,7 @@ export_image (GFile          *file,
       g_assert_not_reached ();
     }
 
+  /* Used when non-CMYK images are exported as CMYK */
   if (cmyk)
     {
       if (precision == 8)
@@ -1889,7 +1839,7 @@ export_image (GFile          *file,
       strncpy (parameters.cp_comment, comment, strlen (comment));
     }
 
-  if (! cmyk)
+  if (! cmyk && gimp_image_get_base_type (image) != GIMP_CMYK)
     parameters.tcp_mct = (channels >= 3) ? 1 : 0;
 
   /* Quality of 0 is lossless */
