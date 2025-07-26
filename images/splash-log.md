@@ -7,9 +7,6 @@ This list was created through `git` archeology, especially since some of them
 apparently never made it to a release (not even a development release). If any
 image was missed, we welcome edits.
 
-For reminder, GIMP website also displays a [list of past
-splashes](https://www.gimp.org/about/splash/) which may not be as exhaustive.
-
 # Stable releases
 # 3 series
 
