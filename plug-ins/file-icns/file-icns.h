@@ -50,6 +50,7 @@ typedef struct _IcnsResource
   gchar    type[5];
   guint32  size;
   guint32  cursor;
+  guint32  dark_mode_cursor;
   guchar  *data;
 } IcnsResource;
 

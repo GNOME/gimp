@@ -38,34 +38,33 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-IcnsResource * resource_load     (FILE         *file);
+IcnsResource * resource_load     (FILE           *file);
 
-IcnsResource * resource_find     (IcnsResource *list,
-                                  gchar        *type,
-                                  gint          max);
+IcnsResource * resource_find     (IcnsResource   *list,
+                                  gchar          *type,
+                                  gint            max);
 
-gboolean       resource_get_next (IcnsResource *icns,
-                                  IcnsResource *res);
+gboolean       resource_get_next (IcnsResource   *icns,
+                                  IcnsResource   *res);
 
-void           icns_slurp        (guchar       *dest,
-                                  IconType     *icontype,
-                                  IcnsResource *icns,
-                                  IcnsResource *mask);
+void           icns_slurp        (guchar         *dest,
+                                  IconType       *icontype,
+                                  IcnsResource   *icns,
+                                  IcnsResource   *mask);
 
-gboolean       icns_decompress   (guchar       *dest,
-                                  IconType     *icontype,
-                                  gint          n_channels,
-                                  IcnsResource *image,
-                                  IcnsResource *mask);
+gboolean       icns_decompress   (guchar         *dest,
+                                  IconType       *icontype,
+                                  gint            n_channels,
+                                  IcnsResource   *image,
+                                  IcnsResource   *mask);
 
-void           icns_attach_image (GimpImage    *image,
-                                  IconType     *icontype,
-                                  IcnsResource *icns,
-                                  IcnsResource *mask,
-                                  gboolean      isOSX);
+void           icns_attach_image (GimpImage      *image,
+                                  IconType       *icontype,
+                                  IcnsResource   *icns,
+                                  IcnsResource   *mask,
+                                  gboolean        isOSX);
 
-GimpImage *    icns_load         (IcnsResource *icns,
-                                  GFile        *file);
+GimpImage *    icns_load         (IcnsResource   *icns);
 
 /* Ported from Brion Vibber's icnsload.c code, under the GPL license, version 3
  * or any later version of the license */
@@ -145,6 +144,13 @@ resource_get_next (IcnsResource *icns,
   res->cursor = sizeof (IcnsResourceHeader);
   res->data   = &(icns->data[icns->cursor]);
 
+  /* Get location of dark mode icons starting point */
+  if (icns->data[icns->cursor]     == 0xFD &&
+      icns->data[icns->cursor + 1] == 0xD9 &&
+      icns->data[icns->cursor + 2] == 0x2F &&
+      icns->data[icns->cursor + 3] == 0xA8)
+    icns->dark_mode_cursor = icns->cursor;
+
   icns->cursor += res->size;
   if (icns->cursor > icns->size)
     {
@@ -159,8 +165,7 @@ resource_get_next (IcnsResource *icns,
 }
 
 GimpImage *
-icns_load (IcnsResource *icns,
-           GFile        *file)
+icns_load (IcnsResource *icns)
 {
   IcnsResource *resources;
   guint         nResources;
@@ -563,8 +568,58 @@ icns_load_image (GFile        *file,
       g_message ("Invalid or corrupt icns resource file.");
       return NULL;
     }
+  icns->dark_mode_cursor = -1;
 
-  image = icns_load (icns, file);
+  image = icns_load (icns);
+
+  /* macOS 10.14 added an optional section for nested Dark Mode icons.
+   * It is a nested ICNS file with the header changed from `icns` to
+   * 0xFDD92FA8. We will import those icons in a group layer */
+  if (icns->dark_mode_cursor != -1)
+    {
+      GimpImage *dark_mode_image = NULL;
+
+      icns->cursor = icns->dark_mode_cursor + 8;
+
+      dark_mode_image = icns_load (icns);
+      if (dark_mode_image)
+        {
+          GimpGroupLayer  *group;
+          GimpLayer      **layers;
+          GimpLayer       *new_layer;
+          GList           *selected_layer = NULL;
+          gint             icon_count;
+
+          layers     = gimp_image_get_layers (dark_mode_image);
+          icon_count = gimp_core_object_array_get_length ((GObject **) layers);
+
+          group = gimp_group_layer_new (image, "Dark Mode Icons");
+          gimp_image_insert_layer (image, GIMP_LAYER (group), NULL, icon_count);
+
+          for (gint i = 0; i < icon_count; i++)
+            {
+              new_layer =
+                gimp_layer_new_from_drawable (GIMP_DRAWABLE (layers[i]),
+                                              image);
+
+              gimp_item_set_name (GIMP_ITEM (new_layer),
+                                  gimp_item_get_name (GIMP_ITEM (layers[i])));
+              gimp_image_insert_layer (image, new_layer, GIMP_LAYER (group),
+                                       i);
+            }
+          g_free (layers);
+
+          /* Set selection at the top */
+          layers = gimp_image_get_layers (image);
+          selected_layer = g_list_prepend (selected_layer, layers[0]);
+          gimp_image_set_selected_layers (image,
+                                          (const GimpLayer **) selected_layer);
+
+          g_list_free (selected_layer);
+          g_free (layers);
+          gimp_image_delete (dark_mode_image);
+        }
+    }
 
   g_free (icns);
 
