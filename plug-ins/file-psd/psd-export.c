@@ -528,6 +528,8 @@ gimpBaseTypeToPsdMode (GimpImageBaseType gimpBaseType)
     {
     case GIMP_RGB:
       return 3;                                         /* RGB */
+    case GIMP_CMYK:
+      return 4;                                         /* CMYK */
     case GIMP_GRAY:
       return 1;                                         /* Grayscale */
     case GIMP_INDEXED:
@@ -556,6 +558,8 @@ nChansLayer (gint gimpBaseType,
     {
     case GIMP_RGB:
       return 3 + incAlpha + incMask;     /* R,G,B & Alpha & Mask (if any) */
+    case GIMP_CMYK:
+      return 4 + incAlpha + incMask;     /* C,M,Y,K & Alpha & Mask (if any) */
     case GIMP_GRAY:
       return 1 + incAlpha + incMask;     /* G & Alpha & Mask (if any) */
     case GIMP_INDEXED:
@@ -603,6 +607,7 @@ save_header (GOutputStream      *output,
                     PSDImageData.image_height, PSDImageData.image_width,
                     PSDImageData.baseType,     PSDImageData.nChannels);
 
+  /* If export a non-CMYK image as CMYK */
   if (options->cmyk)
     {
       nChannels =
@@ -739,7 +744,7 @@ save_resources (GOutputStream      *output,
 
 
   /* --------------- Write Channel names --------------- */
-  if (! options->cmyk)
+  if (! options->cmyk && gimp_image_get_base_type (image) != GIMP_CMYK)
     {
       if (PSDImageData.nChannels > 0 ||
           gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)))
@@ -1013,7 +1018,7 @@ save_resources (GOutputStream      *output,
   {
     GimpColorProfile *profile = NULL;
 
-    if (options->cmyk)
+    if (options->cmyk && gimp_image_get_base_type (image) != GIMP_CMYK)
       {
         profile = gimp_image_get_simulation_profile (image);
 
@@ -1491,8 +1496,7 @@ save_layer_and_mask (GOutputStream      *output,
                                     hasMask);
 
       /* Manually set channels to 4 or 5 when export as CMYK;
-       * Can be removed once CMYK channels are accessible in GIMP
-       */
+       * Can be removed once CMYK channels are accessible in GIMP */
       if (options->cmyk)
         {
           nChannelsLayer =
@@ -2258,7 +2262,7 @@ export_image (GFile          *file,
 
   IFDBG(1) g_debug ("Function: export_image");
 
-  if (resource_options.cmyk)
+  if (resource_options.cmyk || gimp_image_get_base_type (image) == GIMP_CMYK)
     resource_options.duotone = FALSE;
 
   max_dim = (! resource_options.psb) ? 30000 : 300000;
@@ -2450,6 +2454,14 @@ get_pixel_format (GimpDrawable *drawable)
 
     case GIMP_GRAYA_IMAGE:
       model = "Y'A";
+      break;
+
+    case GIMP_CMYK_IMAGE:
+      model = "cmyk";
+      break;
+
+    case GIMP_CMYKA_IMAGE:
+      model = "cmykA";
       break;
 
     case GIMP_RGB_IMAGE:
@@ -2793,7 +2805,7 @@ save_dialog (GimpImage     *image,
                                 "cmyk-frame",
                                 "duotone-frame",
                                 NULL);
-  else
+  else if (gimp_image_get_base_type (image) != GIMP_CMYK)
     gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
                                 "cmyk-frame",
                                 NULL);
