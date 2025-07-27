@@ -646,7 +646,10 @@ gimp_file_dialog_set_sensitive (GimpFileDialog *dialog,
       if (! g_list_next (list))
         break;
 
-      gtk_widget_set_sensitive (list->data, sensitive);
+      /* Don't freeze GimpProgressBox, otherwise we won't see the
+       * progress bar's movement when loading images */
+      if (! GIMP_IS_PROGRESS_BOX (list->data))
+        gtk_widget_set_sensitive (list->data, sensitive);
     }
 
   g_list_free (children);
