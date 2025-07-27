@@ -498,21 +498,46 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
     case GIMP_TRANSFORM_TYPE_LAYER:
       {
         GList *drawables;
-        gint   offset_x;
-        gint   offset_y;
-        gint   x, y;
-        gint   width, height;
+        GList *iter;
+        gint   x      = G_MAXINT;
+        gint   y      = G_MAXINT;
+        gint   width  = G_MININT;
+        gint   height = G_MININT;
 
         drawables = gimp_image_get_selected_drawables (image);
+        non_empty = FALSE;
 
-        gimp_item_get_offset (GIMP_ITEM (drawables->data), &offset_x, &offset_y);
+        for (iter = drawables; iter; iter = iter->next)
+          {
+            gint     offset_x;
+            gint     offset_y;
+            gint     mask_off_x;
+            gint     mask_off_y;
+            gint     mask_width;
+            gint     mask_height;
+            gboolean has_pixels;
 
-        non_empty = gimp_item_mask_intersect (GIMP_ITEM (drawables->data),
-                                              &x, &y, &width, &height);
-        tr_tool->x1 = x + offset_x;
-        tr_tool->y1 = y + offset_y;
-        tr_tool->x2 = x + width  + offset_x;
-        tr_tool->y2 = y + height + offset_y;
+            gimp_item_get_offset (GIMP_ITEM (iter->data), &offset_x,
+                                  &offset_y);
+            /* This is the bounds relatively to the drawable. */
+            has_pixels = gimp_item_mask_intersect (GIMP_ITEM (iter->data),
+                                                   &mask_off_x, &mask_off_y,
+                                                   &mask_width, &mask_height);
+
+            if (has_pixels)
+              non_empty = TRUE;
+
+            /* The bounds relatively to the image. */
+            x      = MIN (offset_x + mask_off_x, x);
+            y      = MIN (offset_y + mask_off_y, y);
+            width  = MAX (offset_x + mask_off_x + mask_width, width);
+            height = MAX (offset_y + mask_off_y + mask_height, height);
+          }
+
+        tr_tool->x1 = x;
+        tr_tool->y1 = y;
+        tr_tool->x2 = width;
+        tr_tool->y2 = height;
 
         g_list_free (drawables);
       }
