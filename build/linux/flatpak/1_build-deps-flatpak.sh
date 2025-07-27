@@ -50,46 +50,46 @@ fi
 
 
 # Build some deps (including babl and GEGL)
-if [ -z "$GITLAB_CI" ] && [ "$1" != '--ci' ]; then
-  eval $FLATPAK_BUILDER --force-clean --ccache --state-dir=../.flatpak-builder --keep-build-dirs --stop-at=gimp \
-                        "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json 2>&1 | tee flatpak-builder.log
+if [ -z "$GITLAB_CI" ]; then
+  BUILDER_ARGS='--ccache --state-dir=../.flatpak-builder'
+else
+  BUILDER_ARGS='--user --disable-rofiles-fuse'
+fi
 
-elif [ "$GITLAB_CI" ] || [ "$1" = '--ci' ]; then
-  printf "\e[0Ksection_start:`date +%s`:deps_build[collapsed=true]\r\e[0KBuilding dependencies not present in GNOME runtime\n"
-  if [ "$CI_PIPELINE_SOURCE" = 'schedule' ]; then
-    #Check dependencies versions with flatpak-external-data-checker
-    export FLATPAK_SYSTEM_HELPER_ON_SESSION=foo
-    flatpak install --user https://dl.flathub.org/repo/appstream/org.flathub.flatpak-external-data-checker.flatpakref -y
-    if ! flatpak run --user --filesystem=$CI_PROJECT_DIR org.flathub.flatpak-external-data-checker \
-                     --check-outdated build/linux/flatpak/org.gimp.GIMP-nightly.json; then
-      printf "\033[31m(ERROR)\033[0m: Some dependencies sources are outdated. Please, update them on the manifest.\n"
-      exit 1
-    else
-      printf "(INFO): All dependencies sources are up to date. Building them...\n" 
-    fi
+printf "\e[0Ksection_start:`date +%s`:deps_build[collapsed=true]\r\e[0KBuilding dependencies not present in GNOME runtime\n"
+if [ "$CI_PIPELINE_SOURCE" = 'schedule' ]; then
+  #Check dependencies versions with flatpak-external-data-checker
+  export FLATPAK_SYSTEM_HELPER_ON_SESSION=foo
+  flatpak install --user https://dl.flathub.org/repo/appstream/org.flathub.flatpak-external-data-checker.flatpakref -y
+  if ! flatpak run --user --filesystem=$CI_PROJECT_DIR org.flathub.flatpak-external-data-checker \
+                   --check-outdated build/linux/flatpak/org.gimp.GIMP-nightly.json; then
+    printf "\033[31m(ERROR)\033[0m: Some dependencies sources are outdated. Please, update them on the manifest.\n"
+    exit 1
+  else
+    printf "(INFO): All dependencies sources are up to date. Building them...\n" 
   fi
-  ## (The deps building is too long and no complete output would be collected,
-  ## even from GitLab runner messages. So, let's silent and save logs as a file.)
-  eval $FLATPAK_BUILDER --force-clean --user --disable-rofiles-fuse --keep-build-dirs --build-only --stop-at=babl \
-                        "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json > flatpak-builder.log 2>&1
-  printf "\e[0Ksection_end:`date +%s`:deps_build\r\e[0K\n"
+fi
+## (The deps building is too long and no complete output would be collected,
+## even from GitLab runner messages. So, let's silent and save logs as a file.)
+eval $FLATPAK_BUILDER --force-clean $BUILDER_ARGS --keep-build-dirs --build-only --stop-at=babl \
+                      "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json > flatpak-builder.log 2>&1
+printf "\e[0Ksection_end:`date +%s`:deps_build\r\e[0K\n"
 
-  printf "\e[0Ksection_start:`date +%s`:babl_build[collapsed=true]\r\e[0KBuilding babl\n"
-  eval $FLATPAK_BUILDER --force-clean --user --disable-rofiles-fuse --keep-build-dirs --build-only --stop-at=gegl \
-                        "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
-  if [ "$GITLAB_CI" ]; then
-    tar cf babl-meson-log.tar .flatpak-builder/build/babl-1/_flatpak_build/meson-logs/meson-log.txt
-  fi
-  printf "\e[0Ksection_end:`date +%s`:babl_build\r\e[0K\n"
+printf "\e[0Ksection_start:`date +%s`:babl_build[collapsed=true]\r\e[0KBuilding babl\n"
+eval $FLATPAK_BUILDER --force-clean $BUILDER_ARGS --keep-build-dirs --build-only --stop-at=gegl \
+                      "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
+if [ "$GITLAB_CI" ]; then
+  tar cf babl-meson-log.tar .flatpak-builder/build/babl-1/_flatpak_build/meson-logs/meson-log.txt
+fi
+printf "\e[0Ksection_end:`date +%s`:babl_build\r\e[0K\n"
 
-  printf "\e[0Ksection_start:`date +%s`:gegl_build[collapsed=true]\r\e[0KBuilding gegl\n"
-  eval $FLATPAK_BUILDER --force-clean --user --disable-rofiles-fuse --keep-build-dirs --build-only --stop-at=gimp \
-                        "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
-  if [ "$GITLAB_CI" ]; then
-    tar cf gegl-meson-log.tar .flatpak-builder/build/gegl-1/_flatpak_build/meson-logs/meson-log.txt
-    printf "\e[0Ksection_end:`date +%s`:gegl_build\r\e[0K\n"
+printf "\e[0Ksection_start:`date +%s`:gegl_build[collapsed=true]\r\e[0KBuilding gegl\n"
+eval $FLATPAK_BUILDER --force-clean $BUILDER_ARGS --keep-build-dirs --build-only --stop-at=gimp \
+                      "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
+if [ "$GITLAB_CI" ]; then
+  tar cf gegl-meson-log.tar .flatpak-builder/build/gegl-1/_flatpak_build/meson-logs/meson-log.txt
+  printf "\e[0Ksection_end:`date +%s`:gegl_build\r\e[0K\n"
 
-    ## Save built deps for 'gimp-flatpak-x64' job
-    tar cf .flatpak-builder.tar .flatpak-builder/
-  fi
+  ## Save built deps for 'gimp-flatpak-x64' job
+  tar cf .flatpak-builder.tar .flatpak-builder/
 fi
