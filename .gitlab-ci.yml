@@ -93,7 +93,7 @@ workflow:
 
 stages:
   - dependencies
-  - gimp
+  - build
   - analysis
   - distribution
 
@@ -260,7 +260,7 @@ deps-debian:
 gimp-debian:
   extends: .debian
   needs: ["deps-debian"]
-  stage: gimp
+  stage: build
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
   script:
@@ -407,7 +407,7 @@ deps-flatpak-x64:
 gimp-flatpak-x64:
   extends: .flatpak-x64
   needs: ["deps-flatpak-x64"]
-  stage: gimp
+  stage: build
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
   script:
@@ -494,7 +494,7 @@ deps-win:
 gimp-win:
   extends: .win
   needs: ["deps-win"]
-  stage: gimp
+  stage: build
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
   script:
