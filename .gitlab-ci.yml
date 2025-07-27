@@ -395,7 +395,7 @@ deps-flatpak-x64:
     #paths:
       #- .flatpak-builder/
   script:
-    - sh build/linux/flatpak/1_build-deps-flatpak.sh
+    - sh build/linux/flatpak/1_build-deps-flatpakbuilder.sh
   artifacts:
     paths:
       - .flatpak-builder.tar
@@ -411,7 +411,7 @@ gimp-flatpak-x64:
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
   script:
-    - sh build/linux/flatpak/2_build-gimp-flatpak.sh
+    - sh build/linux/flatpak/2_build-gimp-flatpakbuilder.sh
   artifacts:
     paths:
       - repo.tar
@@ -751,7 +751,7 @@ dist-flatpak-weekly:
   needs: ["gimp-flatpak-x64"]
   stage: distribution
   script:
-    - sh build/linux/flatpak/3_dist-gimp-flatpak.sh
+    - sh build/linux/flatpak/3_dist-gimp-flatpakbuilder.sh
   artifacts:
     expose_as: 'Linux flatpak'
     paths:
