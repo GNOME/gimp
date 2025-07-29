@@ -134,6 +134,7 @@ read_dds (GFile                *file,
           GError              **error)
 {
   GimpImage         *image       = NULL;
+  GimpParasite      *parasite    = NULL;
   guint              layer_index = 0;
   guchar            *buf, *pixels;
   FILE              *fp;
@@ -742,6 +743,16 @@ read_dds (GFile                *file,
 
   if (flip_import)
     gimp_image_flip (image, GIMP_ORIENTATION_VERTICAL);
+
+  /* Store original format to use as a default for export */
+  if (load_info.comp_format)
+    {
+      parasite = gimp_parasite_new ("dds-compression-format",
+                                    GIMP_PARASITE_PERSISTENT,
+                                    1, (gpointer) &load_info.comp_format);
+      gimp_image_attach_parasite (image, parasite);
+      gimp_parasite_free (parasite);
+    }
 
   *ret_image = image;
 
