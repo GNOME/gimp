@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-Python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-05-25 16:27+0000\n"
-"PO-Revision-Date: 2025-05-26 11:58+0200\n"
+"POT-Creation-Date: 2025-07-29 19:20+0000\n"
+"PO-Revision-Date: 2025-07-29 21:25+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: sl.libreoffice.org\n"
 "Language: sl\n"
@@ -76,6 +76,26 @@ msgstr "Zapiši ločeno datoteko CSS"
 #: plug-ins/python/colorxhtml.py:235
 msgid "Choose File"
 msgstr "Izberite datoteko"
+
+#: plug-ins/python/file-openraster.py:504
+#: plug-ins/python/file-openraster.py:505
+msgid "export an OpenRaster (.ora) file"
+msgstr "izvozite datoteko OpenRaster (.ora)"
+
+#: plug-ins/python/file-openraster.py:507
+#: plug-ins/python/file-openraster.py:513
+msgid "OpenRaster"
+msgstr "OpenRaster"
+
+#: plug-ins/python/file-openraster.py:514
+#: plug-ins/python/file-openraster.py:515
+msgid "load an OpenRaster (.ora) file"
+msgstr "naloži datoteko OpenRaster (.ora)"
+
+#: plug-ins/python/file-openraster.py:524
+#: plug-ins/python/file-openraster.py:525
+msgid "loads a thumbnail from an OpenRaster (.ora) file"
+msgstr "naloži sličico iz datoteke OpenRaster (.ora)"
 
 #: plug-ins/python/foggify.py:119
 msgid "Add a layer of fog"
