@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-07-23 00:37+0000\n"
-"PO-Revision-Date: 2025-07-24 16:40+0800\n"
+"POT-Creation-Date: 2025-07-29 19:28+0000\n"
+"PO-Revision-Date: 2025-07-30 06:59+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -9950,20 +9950,20 @@ msgstr "指针作者（可选）"
 
 #: plug-ins/file-jpeg/jpeg-export.c:139 plug-ins/file-jpeg/jpeg-export.c:146
 #, c-format
-msgid "File size: %s"
-msgstr "文件大小：%s"
+msgid "File size without metadata: %s"
+msgstr "不带元数据的文件大小：%s"
 
 #: plug-ins/file-jpeg/jpeg-export.c:717
-msgid "Calculating file size..."
-msgstr "正在计算文件大小..."
+msgid "Calculating approximate file size..."
+msgstr "正在计算近似文件大小…"
 
 #: plug-ins/file-jpeg/jpeg-export.c:807 plug-ins/file-jpeg/jpeg-export.c:883
-msgid "File size: unknown"
-msgstr "文件大小：未知"
+msgid "File size without metadata: unknown"
+msgstr "不带元数据的文件大小：未知"
 
 #: plug-ins/file-jpeg/jpeg-export.c:891
-msgid "Enable preview to obtain the file size."
-msgstr "启用预览以获得文件大小。"
+msgid "Enable preview to obtain the approximate file size."
+msgstr "启用预览以获得近似文件大小。"
 
 #: plug-ins/file-jpeg/jpeg-load.c:241
 msgid "JPEG preview"
@@ -16358,6 +16358,10 @@ msgstr "未发现 TWAIN 驱动，扫描不可用"
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "从扫描仪/相机传送数据"
+
+#, c-format
+#~ msgid "File size: %s"
+#~ msgstr "文件大小：%s"
 
 #, c-format
 #~ msgid "Frame %d of %d"
