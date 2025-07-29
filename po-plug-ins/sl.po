@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-07-23 00:37+0000\n"
-"PO-Revision-Date: 2025-07-23 13:45+0200\n"
+"POT-Creation-Date: 2025-07-27 18:17+0000\n"
+"PO-Revision-Date: 2025-07-28 17:13+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -10131,20 +10131,20 @@ msgstr "Avtor kazalca (neobvezno)"
 
 #: plug-ins/file-jpeg/jpeg-export.c:139 plug-ins/file-jpeg/jpeg-export.c:146
 #, c-format
-msgid "File size: %s"
-msgstr "Velikost datoteke: %s"
+msgid "File size without metadata: %s"
+msgstr "Velikost datoteke brez metapodatkov: %s"
 
 #: plug-ins/file-jpeg/jpeg-export.c:717
-msgid "Calculating file size..."
-msgstr "Izračun velikosti datoteke ..."
+msgid "Calculating approximate file size..."
+msgstr "Računanje približne velikosti datoteke ..."
 
 #: plug-ins/file-jpeg/jpeg-export.c:807 plug-ins/file-jpeg/jpeg-export.c:883
-msgid "File size: unknown"
-msgstr "Velikost datoteke: neznana"
+msgid "File size without metadata: unknown"
+msgstr "Velikost datoteke brez metapodatkov: neznana"
 
 #: plug-ins/file-jpeg/jpeg-export.c:891
-msgid "Enable preview to obtain the file size."
-msgstr "Omogoči predogled za izračun velikosti datoteke."
+msgid "Enable preview to obtain the approximate file size."
+msgstr "Omogočite predogled za izračun približne velikosti datoteke."
 
 #: plug-ins/file-jpeg/jpeg-load.c:241
 msgid "JPEG preview"
