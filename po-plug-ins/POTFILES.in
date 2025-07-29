@@ -46,6 +46,7 @@ plug-ins/common/file-jp2.c
 plug-ins/common/file-jpegxl.c
 plug-ins/common/file-lnk.c
 plug-ins/common/file-mng.c
+plug-ins/common/file-paa.c
 plug-ins/common/file-pat.c
 plug-ins/common/file-pcx.c
 plug-ins/common/file-pdf-export.c
