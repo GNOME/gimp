@@ -50,7 +50,6 @@
 #include "gimpdnd.h"
 #include "gimpdrawabletreeview.h"
 #include "gimpdrawabletreeview-filters.h"
-#include "gimplayertreeview.h" /* FIXME */
 #include "gimpviewrenderer.h"
 
 #include "gimp-intl.h"
