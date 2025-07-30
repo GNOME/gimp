@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpcontainerview.h
- * Copyright (C) 2001-2010 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2025 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,10 @@ typedef enum
 
 
 #define GIMP_TYPE_CONTAINER_VIEW (gimp_container_view_get_type ())
-G_DECLARE_INTERFACE (GimpContainerView, gimp_container_view, GIMP, CONTAINER_VIEW, GtkWidget)
+G_DECLARE_INTERFACE (GimpContainerView,
+                     gimp_container_view,
+                     GIMP, CONTAINER_VIEW,
+                     GtkWidget)
 
 
 struct _GimpContainerViewInterface
@@ -43,22 +46,25 @@ struct _GimpContainerViewInterface
   GTypeInterface base_iface;
 
   /*  signals  */
-  gboolean (* select_items)       (GimpContainerView *view,
-                                   GList             *items,
-                                   GList             *paths);
-
-  void     (* activate_item)      (GimpContainerView *view,
-                                   GimpViewable      *object,
-                                   gpointer           insert_data);
+  void     (* selection_changed)  (GimpContainerView *view);
+  void     (* item_activated)     (GimpContainerView *view,
+                                   GimpViewable      *object);
 
   /*  virtual functions  */
-  void     (* set_container)      (GimpContainerView *view,
-                                   GimpContainer     *container);
-  void     (* set_context)        (GimpContainerView *view,
-                                   GimpContext       *context);
-  void     (* set_selection_mode) (GimpContainerView *view,
-                                   GtkSelectionMode   mode);
+  void     (* set_container)      (GimpContainerView  *view,
+                                   GimpContainer      *container);
+  void     (* set_context)        (GimpContainerView  *view,
+                                   GimpContext        *context);
+  void     (* set_selection_mode) (GimpContainerView  *view,
+                                   GtkSelectionMode    mode);
+  void     (* set_view_size)      (GimpContainerView  *view);
 
+  gboolean (* set_selected)       (GimpContainerView  *view,
+                                   GList              *items);
+  gint     (* get_selected)       (GimpContainerView  *view,
+                                   GList             **items);
+
+  /*  cruft  */
   gpointer (* insert_item)        (GimpContainerView *view,
                                    GimpViewable      *object,
                                    gpointer           parent_insert_data,
@@ -78,11 +84,6 @@ struct _GimpContainerViewInterface
                                    GimpViewable      *object,
                                    gpointer           insert_data);
   void     (* clear_items)        (GimpContainerView *view);
-  void     (* set_view_size)      (GimpContainerView *view);
-  gint     (* get_selected)       (GimpContainerView  *view,
-                                   GList             **items,
-                                   GList             **insert_data);
-
 
   /*  the destroy notifier for private->hash_table's values  */
   GDestroyNotify  insert_data_free;
@@ -121,42 +122,37 @@ void               gimp_container_view_enable_dnd         (GimpContainerView  *e
                                                            GtkButton          *button,
                                                            GType               child_type);
 
-gboolean           gimp_container_view_select_items       (GimpContainerView  *view,
+gboolean           gimp_container_view_set_selected       (GimpContainerView  *view,
                                                            GList              *viewables);
-gboolean           gimp_container_view_select_item        (GimpContainerView  *view,
+gboolean           gimp_container_view_set_1_selected     (GimpContainerView  *view,
                                                            GimpViewable       *viewable);
-void               gimp_container_view_activate_item      (GimpContainerView  *view,
-                                                           GimpViewable       *viewable);
+
 gint               gimp_container_view_get_selected       (GimpContainerView  *view,
-                                                           GList             **items,
-                                                           GList             **items_data);
+                                                           GList             **items);
+GimpViewable     * gimp_container_view_get_1_selected     (GimpContainerView  *view);
+
 gboolean           gimp_container_view_is_item_selected   (GimpContainerView  *view,
                                                            GimpViewable       *viewable);
 
+
 /*  protected  */
 
-gpointer           gimp_container_view_lookup             (GimpContainerView  *view,
+gpointer           _gimp_container_view_lookup            (GimpContainerView  *view,
                                                            GimpViewable       *viewable);
-gboolean           gimp_container_view_contains           (GimpContainerView *view,
+gboolean           _gimp_container_view_contains          (GimpContainerView *view,
                                                            GList             *viewables);
 
 
-gboolean           gimp_container_view_item_selected      (GimpContainerView  *view,
-                                                           GimpViewable       *item);
-gboolean           gimp_container_view_multi_selected     (GimpContainerView  *view,
-                                                           GList              *items,
-                                                           GList              *paths);
-void               gimp_container_view_item_activated     (GimpContainerView  *view,
+void               _gimp_container_view_selection_changed (GimpContainerView  *view);
+void               _gimp_container_view_item_activated    (GimpContainerView  *view,
                                                            GimpViewable       *item);
 
-/*  convenience functions  */
-
-void               gimp_container_view_install_properties (GObjectClass       *klass);
-void               gimp_container_view_set_property       (GObject            *object,
+void               _gimp_container_view_install_properties(GObjectClass       *klass);
+void               _gimp_container_view_set_property      (GObject            *object,
                                                            guint               property_id,
                                                            const GValue       *value,
                                                            GParamSpec         *pspec);
-void               gimp_container_view_get_property       (GObject            *object,
+void               _gimp_container_view_get_property      (GObject            *object,
                                                            guint               property_id,
                                                            GValue             *value,
                                                            GParamSpec         *pspec);

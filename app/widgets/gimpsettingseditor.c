@@ -89,9 +89,8 @@ static gboolean
           gimp_settings_editor_row_separator_func (GtkTreeModel        *model,
                                                    GtkTreeIter         *iter,
                                                    gpointer             data);
-static gboolean gimp_settings_editor_select_items (GimpContainerView   *view,
-                                                   GList               *viewables,
-                                                   GList               *paths,
+static void   gimp_settings_editor_selection_changed
+                                                  (GimpContainerView   *view,
                                                    GimpSettingsEditor  *editor);
 static void   gimp_settings_editor_import_clicked (GtkWidget           *widget,
                                                    GimpSettingsEditor  *editor);
@@ -178,8 +177,8 @@ gimp_settings_editor_constructed (GObject *object)
                                         gimp_settings_editor_row_separator_func,
                                         private->view, NULL);
 
-  g_signal_connect (tree_view, "select-items",
-                    G_CALLBACK (gimp_settings_editor_select_items),
+  g_signal_connect (tree_view, "selection-changed",
+                    G_CALLBACK (gimp_settings_editor_selection_changed),
                     editor);
 
   gimp_container_tree_view_connect_name_edited (tree_view,
@@ -298,26 +297,31 @@ gimp_settings_editor_row_separator_func (GtkTreeModel *model,
   return name == NULL;
 }
 
-static gboolean
-gimp_settings_editor_select_items (GimpContainerView  *view,
-                                   GList              *viewables,
-                                   GList              *paths,
-                                   GimpSettingsEditor *editor)
+static void
+gimp_settings_editor_selection_changed (GimpContainerView  *view,
+                                        GimpSettingsEditor *editor)
 {
   GimpSettingsEditorPrivate *private = GET_PRIVATE (editor);
   gboolean                   sensitive;
+  GList                     *items;
+  gint                       n_items;
 
-  g_return_val_if_fail (g_list_length (viewables) < 2, FALSE);
+  n_items = gimp_container_view_get_selected (view, &items);
 
-  private->selected_setting = viewables ? G_OBJECT (viewables->data) : NULL;
+  g_warn_if_fail (n_items  < 2);
+
+  if (n_items == 1)
+    private->selected_setting = items->data;
+  else
+    private->selected_setting = NULL;
+
+  g_list_free (items);
 
   sensitive = (private->selected_setting != NULL &&
                gimp_object_get_name (private->selected_setting));
 
   gtk_widget_set_sensitive (private->export_button, sensitive);
   gtk_widget_set_sensitive (private->delete_button, sensitive);
-
-  return TRUE;
 }
 
 static void
@@ -352,8 +356,8 @@ gimp_settings_editor_delete_clicked (GtkWidget          *widget,
       gimp_container_remove (private->container,
                              GIMP_OBJECT (private->selected_setting));
 
-      gimp_container_view_select_item (GIMP_CONTAINER_VIEW (private->view),
-                                       GIMP_VIEWABLE (new));
+      gimp_container_view_set_1_selected (GIMP_CONTAINER_VIEW (private->view),
+                                          GIMP_VIEWABLE (new));
 
       gimp_operation_config_serialize (private->gimp, private->container, NULL);
     }

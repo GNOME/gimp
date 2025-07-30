@@ -347,15 +347,11 @@ gimp_container_popup_create_view (GimpContainerPopup *popup)
   if (signal_name)
     {
       GimpObject *object;
-      GList      *items = NULL;
 
       object = gimp_context_get_by_type (popup->orig_context, child_type);
-      if (object)
-        items = g_list_prepend (NULL, object);
 
-      gimp_container_view_select_items (popup->editor->view, items);
-
-      g_list_free (items);
+      gimp_container_view_set_1_selected (popup->editor->view,
+                                          GIMP_VIEWABLE (object));
     }
 }
 

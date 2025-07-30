@@ -105,6 +105,8 @@ struct _GimpItemTreeViewPrivate
   GtkWidget       *multi_selection_label;
 
   GtkWidget       *search_button;
+
+  gint             block_selection_changed;
 };
 
 typedef struct
@@ -153,6 +155,10 @@ static void   gimp_item_tree_view_image_flush       (GimpImage         *image,
 static gboolean
               gimp_item_tree_view_image_flush_idle  (gpointer           user_data);
 
+static void   gimp_item_tree_view_selection_changed (GimpContainerView *view);
+static void   gimp_item_tree_view_item_activated    (GimpContainerView *view,
+                                                     GimpViewable      *item);
+
 static void   gimp_item_tree_view_set_container     (GimpContainerView *view,
                                                      GimpContainer     *container);
 static void   gimp_item_tree_view_set_context       (GimpContainerView *view,
@@ -163,12 +169,6 @@ static gpointer gimp_item_tree_view_insert_item     (GimpContainerView *view,
                                                      gpointer           parent_insert_data,
                                                      gint               index);
 static void  gimp_item_tree_view_insert_items_after (GimpContainerView *view);
-static gboolean gimp_item_tree_view_select_items    (GimpContainerView *view,
-                                                     GList             *items,
-                                                     GList             *paths);
-static void   gimp_item_tree_view_activate_item     (GimpContainerView *view,
-                                                     GimpViewable      *item,
-                                                     gpointer           insert_data);
 
 static gboolean gimp_item_tree_view_drop_possible   (GimpContainerTreeView *view,
                                                      GimpDndType        src_type,
@@ -194,7 +194,7 @@ static void gimp_item_tree_view_new_list_dropped    (GtkWidget         *widget,
                                                      GList             *viewables,
                                                      gpointer           data);
 
-static void   gimp_item_tree_view_item_changed      (GimpImage         *image,
+static void   gimp_item_tree_view_items_changed     (GimpImage         *image,
                                                      GimpItemTreeView  *view);
 static void   gimp_item_tree_view_size_changed      (GimpImage         *image,
                                                      GimpItemTreeView  *view);
@@ -346,12 +346,13 @@ gimp_item_tree_view_view_iface_init (GimpContainerViewInterface *iface)
 {
   parent_view_iface = g_type_interface_peek_parent (iface);
 
+  iface->selection_changed  = gimp_item_tree_view_selection_changed;
+  iface->item_activated     = gimp_item_tree_view_item_activated;
   iface->set_container      = gimp_item_tree_view_set_container;
   iface->set_context        = gimp_item_tree_view_set_context;
+
   iface->insert_item        = gimp_item_tree_view_insert_item;
   iface->insert_items_after = gimp_item_tree_view_insert_items_after;
-  iface->select_items       = gimp_item_tree_view_select_items;
-  iface->activate_item      = gimp_item_tree_view_activate_item;
 }
 
 static void
@@ -862,8 +863,6 @@ gimp_item_tree_view_set_image (GimpItemTreeView *view,
   g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
 
   g_signal_emit (view, view_signals[SET_IMAGE], 0, image);
-
-  gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (view)), view);
 }
 
 GimpImage *
@@ -1022,8 +1021,8 @@ gimp_item_tree_view_blink_lock (GimpItemTreeView *view,
   g_return_if_fail (GIMP_IS_ITEM (item));
 
   /* Find the item in the tree view. */
-  iter = gimp_container_view_lookup (GIMP_CONTAINER_VIEW (view),
-                                     (GimpViewable *) item);
+  iter = _gimp_container_view_lookup (GIMP_CONTAINER_VIEW (view),
+                                      GIMP_VIEWABLE (item));
   path = gtk_tree_model_get_path (GIMP_CONTAINER_TREE_VIEW (view)->model, iter);
 
   /* Scroll dockable to make sure the cell is showing. */
@@ -1113,7 +1112,7 @@ gimp_item_tree_view_real_set_image (GimpItemTreeView *view,
   if (view->priv->image)
     {
       g_signal_handlers_disconnect_by_func (view->priv->image,
-                                            gimp_item_tree_view_item_changed,
+                                            gimp_item_tree_view_items_changed,
                                             view);
       g_signal_handlers_disconnect_by_func (view->priv->image,
                                             gimp_item_tree_view_size_changed,
@@ -1148,7 +1147,7 @@ gimp_item_tree_view_real_set_image (GimpItemTreeView *view,
 
       g_signal_connect (view->priv->image,
                         GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->signal_name,
-                        G_CALLBACK (gimp_item_tree_view_item_changed),
+                        G_CALLBACK (gimp_item_tree_view_items_changed),
                         view);
       g_signal_connect (view->priv->image, "size-changed",
                         G_CALLBACK (gimp_item_tree_view_size_changed),
@@ -1167,7 +1166,7 @@ gimp_item_tree_view_real_set_image (GimpItemTreeView *view,
                         G_CALLBACK (gimp_item_tree_view_floating_selection_changed),
                         view);
 
-      gimp_item_tree_view_item_changed (view->priv->image, view);
+      gimp_item_tree_view_items_changed (view->priv->image, view);
     }
 
   /* Call this even with no image, allowing to empty the link list. */
@@ -1243,6 +1242,44 @@ gimp_item_tree_view_image_flush_idle (gpointer user_data)
 
 
 /*  GimpContainerView methods  */
+
+static void
+gimp_item_tree_view_selection_changed (GimpContainerView *view)
+{
+  GimpItemTreeViewClass *item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (view);
+  GimpItemTreeView      *item_view       = GIMP_ITEM_TREE_VIEW (view);
+
+  parent_view_iface->selection_changed (view);
+
+  if (item_view->priv->block_selection_changed == 0)
+    {
+      GList *items;
+
+      gimp_container_view_get_selected (view, &items);
+
+      gimp_image_set_selected_items (item_view->priv->image,
+                                     item_view_class->item_type,
+                                     items);
+
+      g_list_free (items);
+    }
+}
+
+static void
+gimp_item_tree_view_item_activated (GimpContainerView *view,
+                                    GimpViewable      *item)
+{
+  GimpItemTreeViewClass *item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (view);
+
+  parent_view_iface->item_activated (view, item);
+
+  if (item_view_class->activate_action)
+    {
+      gimp_ui_manager_activate_action (gimp_editor_get_ui_manager (GIMP_EDITOR (view)),
+                                       item_view_class->action_group,
+                                       item_view_class->activate_action);
+    }
+}
 
 static void
 gimp_item_tree_view_set_container (GimpContainerView *view,
@@ -1409,79 +1446,7 @@ gimp_item_tree_view_insert_items_after (GimpContainerView *view)
 
   selected_items = gimp_image_get_selected_items (item_view->priv->image,
                                                   item_view_class->item_type);
-  gimp_container_view_select_items (view, selected_items);
-}
-
-static gboolean
-gimp_item_tree_view_select_items (GimpContainerView *view,
-                                  GList             *items,
-                                  GList             *paths)
-{
-  GimpItemTreeView *tree_view         = GIMP_ITEM_TREE_VIEW (view);
-  gboolean          options_sensitive = FALSE;
-  gboolean          success;
-
-  success = parent_view_iface->select_items (view, items, paths);
-
-  if (items)
-    {
-      GimpItemTreeViewClass *item_view_class;
-
-      item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (tree_view);
-
-      if (TRUE) /* XXX: test if new selection same as old. */
-        {
-          gimp_image_set_selected_items (tree_view->priv->image,
-                                         item_view_class->item_type,
-                                         items);
-
-          items = gimp_image_get_selected_items (tree_view->priv->image,
-                                                 item_view_class->item_type);
-        }
-
-      options_sensitive = TRUE;
-    }
-
-  gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (tree_view)), tree_view);
-
-  if (tree_view->priv->options_box)
-    gtk_widget_set_sensitive (tree_view->priv->options_box, options_sensitive);
-
-  if (g_list_length (items) > 1)
-    {
-      gchar *str;
-
-      str = g_strdup_printf (ngettext ("%d item selected", "%d items selected",
-                                       g_list_length (items)),
-                             g_list_length (items));
-      gtk_label_set_text (GTK_LABEL (tree_view->priv->multi_selection_label), str);
-      g_free (str);
-      gtk_widget_set_opacity (tree_view->priv->multi_selection_label, 1.0);
-    }
-  else
-    {
-      gtk_widget_set_opacity (tree_view->priv->multi_selection_label, 0.0);
-    }
-
-  return success;
-}
-
-static void
-gimp_item_tree_view_activate_item (GimpContainerView *view,
-                                   GimpViewable      *item,
-                                   gpointer           insert_data)
-{
-  GimpItemTreeViewClass *item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (view);
-
-  if (parent_view_iface->activate_item)
-    parent_view_iface->activate_item (view, item, insert_data);
-
-  if (item_view_class->activate_action)
-    {
-      gimp_ui_manager_activate_action (gimp_editor_get_ui_manager (GIMP_EDITOR (view)),
-                                       item_view_class->action_group,
-                                       item_view_class->activate_action);
-    }
+  gimp_container_view_set_selected (view, selected_items);
 }
 
 static gboolean
@@ -1707,7 +1672,7 @@ gimp_item_tree_view_new_dropped (GtkWidget    *widget,
   GimpContainerView     *view            = GIMP_CONTAINER_VIEW (data);
 
   if (item_view_class->new_default_action &&
-      viewable && gimp_container_view_lookup (view, viewable))
+      viewable && _gimp_container_view_lookup (view, viewable))
     {
       GimpAction *action;
 
@@ -1740,24 +1705,52 @@ gimp_item_tree_view_new_list_dropped (GtkWidget    *widget,
                                         item_view_class->new_default_action);
 
   if (item_view_class->new_default_action && viewables && action &&
-      gimp_container_view_contains (view, viewables))
+      _gimp_container_view_contains (view, viewables))
     gimp_action_activate (action);
 }
+
 
 /*  GimpImage callbacks  */
 
 static void
-gimp_item_tree_view_item_changed (GimpImage        *image,
-                                  GimpItemTreeView *view)
+gimp_item_tree_view_items_changed (GimpImage        *image,
+                                   GimpItemTreeView *item_view)
 {
   GType  item_type;
   GList *items;
 
-  item_type = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->item_type;
+  item_type = GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view)->item_type;
 
-  items = gimp_image_get_selected_items (view->priv->image, item_type);
+  items = gimp_image_get_selected_items (item_view->priv->image, item_type);
 
-  gimp_container_view_select_items (GIMP_CONTAINER_VIEW (view), items);
+  item_view->priv->block_selection_changed++;
+
+  gimp_container_view_set_selected (GIMP_CONTAINER_VIEW (item_view), items);
+
+  item_view->priv->block_selection_changed--;
+
+  gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (item_view)),
+                          item_view);
+
+  if (item_view->priv->options_box)
+    gtk_widget_set_sensitive (item_view->priv->options_box, items != NULL);
+
+  if (g_list_length (items) > 1)
+    {
+      gchar *str;
+
+      str = g_strdup_printf (ngettext ("%d item selected", "%d items selected",
+                                       g_list_length (items)),
+                             g_list_length (items));
+      gtk_label_set_text (GTK_LABEL (item_view->priv->multi_selection_label),
+                          str);
+      g_free (str);
+      gtk_widget_set_opacity (item_view->priv->multi_selection_label, 1.0);
+    }
+  else
+    {
+      gtk_widget_set_opacity (item_view->priv->multi_selection_label, 0.0);
+    }
 }
 
 static void
@@ -1842,8 +1835,7 @@ gimp_item_tree_view_visible_changed (GimpItem         *item,
   GimpContainerTreeView *tree_view      = GIMP_CONTAINER_TREE_VIEW (view);
   GtkTreeIter           *iter;
 
-  iter = gimp_container_view_lookup (container_view,
-                                     (GimpViewable *) item);
+  iter = _gimp_container_view_lookup (container_view, GIMP_VIEWABLE (item));
 
   if (iter)
     {
@@ -1980,8 +1972,7 @@ gimp_item_tree_view_color_tag_changed (GimpItem         *item,
   GimpContainerTreeView *tree_view      = GIMP_CONTAINER_TREE_VIEW (view);
   GtkTreeIter           *iter;
 
-  iter = gimp_container_view_lookup (container_view,
-                                     (GimpViewable *) item);
+  iter = _gimp_container_view_lookup (container_view, GIMP_VIEWABLE (item));
 
   if (iter)
     {
@@ -2024,8 +2015,7 @@ gimp_item_tree_view_lock_changed (GimpItem         *item,
   const gchar           *icon_name;
   gint                   n_locks;
 
-  iter = gimp_container_view_lookup (container_view,
-                                     (GimpViewable *) item);
+  iter = _gimp_container_view_lookup (container_view, GIMP_VIEWABLE (item));
 
   n_locks = gimp_item_tree_view_get_n_locks (view, item, &icon_name);
 
@@ -2291,7 +2281,7 @@ gimp_item_tree_view_row_expanded (GtkTreeView      *tree_view,
       GimpViewRenderer       *renderer;
       GimpItem               *expanded_item;
 
-      store    = GIMP_CONTAINER_TREE_STORE (GIMP_CONTAINER_TREE_VIEW (item_view)->model);
+      store = GIMP_CONTAINER_TREE_STORE (GIMP_CONTAINER_TREE_VIEW (item_view)->model);
       renderer = gimp_container_tree_store_get_renderer (store, iter);
       expanded_item = GIMP_ITEM (renderer->viewable);
       g_object_unref (renderer);
@@ -2299,8 +2289,8 @@ gimp_item_tree_view_row_expanded (GtkTreeView      *tree_view,
       for (list = selected_items; list; list = list->next)
         {
           /*  don't select an item while it is being inserted  */
-          if (! gimp_container_view_lookup (GIMP_CONTAINER_VIEW (item_view),
-                                            list->data))
+          if (! _gimp_container_view_lookup (GIMP_CONTAINER_VIEW (item_view),
+                                             list->data))
             return;
 
           /*  select items only if they were made visible by expanding
@@ -2310,8 +2300,12 @@ gimp_item_tree_view_row_expanded (GtkTreeView      *tree_view,
             return;
         }
 
-      gimp_container_view_select_items (GIMP_CONTAINER_VIEW (item_view),
+      item_view->priv->block_selection_changed++;
+
+      gimp_container_view_set_selected (GIMP_CONTAINER_VIEW (item_view),
                                         selected_items);
+
+      item_view->priv->block_selection_changed--;
     }
 }
 

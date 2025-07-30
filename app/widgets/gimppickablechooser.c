@@ -91,13 +91,10 @@ static void   gimp_pickable_chooser_get_property   (GObject             *object,
 static void   gimp_pickable_chooser_image_changed  (GimpContext         *context,
                                                     GimpImage           *image,
                                                     GimpPickableChooser *chooser);
-static void   gimp_pickable_chooser_item_activate  (GimpContainerView   *view,
+static void   gimp_pickable_chooser_item_activated (GimpContainerView   *view,
                                                     GimpPickable        *pickable,
-                                                    gpointer             unused,
                                                     GimpPickableChooser *chooser);
 static void   gimp_pickable_chooser_items_selected (GimpContainerView   *view,
-                                                    GList               *items,
-                                                    GList               *paths,
                                                     GimpPickableChooser *chooser);
 
 
@@ -122,7 +119,7 @@ gimp_pickable_chooser_class_init (GimpPickableChooserClass *klass)
    * @chooser:
    *
    * Emitted when a pickable is activated, which is mostly forwarding when
-   * "activate-item" signal is emitted from any of either the image, layer or
+   * "item-activated" signal is emitted from any of either the image, layer or
    * channel view. E.g. this happens when one double-click on one of the
    * pickables.
    */
@@ -229,10 +226,10 @@ gimp_pickable_chooser_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (vbox), chooser->priv->image_view, TRUE, TRUE, 0);
   gtk_widget_show (chooser->priv->image_view);
 
-  g_signal_connect_object (chooser->priv->image_view, "activate-item",
-                           G_CALLBACK (gimp_pickable_chooser_item_activate),
+  g_signal_connect_object (chooser->priv->image_view, "item-activated",
+                           G_CALLBACK (gimp_pickable_chooser_item_activated),
                            G_OBJECT (chooser), 0);
-  g_signal_connect_object (chooser->priv->image_view, "select-items",
+  g_signal_connect_object (chooser->priv->image_view, "selection-changed",
                            G_CALLBACK (gimp_pickable_chooser_items_selected),
                            G_OBJECT (chooser), 0);
 
@@ -270,10 +267,10 @@ gimp_pickable_chooser_constructed (GObject *object)
                                 gtk_label_new (_("Layers")));
       gtk_widget_show (chooser->priv->layer_view);
 
-      g_signal_connect_object (chooser->priv->layer_view, "activate-item",
-                               G_CALLBACK (gimp_pickable_chooser_item_activate),
+      g_signal_connect_object (chooser->priv->layer_view, "item-activated",
+                               G_CALLBACK (gimp_pickable_chooser_item_activated),
                                G_OBJECT (chooser), 0);
-      g_signal_connect_object (chooser->priv->layer_view, "select-items",
+      g_signal_connect_object (chooser->priv->layer_view, "selection-changed",
                                G_CALLBACK (gimp_pickable_chooser_items_selected),
                                G_OBJECT (chooser), 0);
     }
@@ -295,10 +292,10 @@ gimp_pickable_chooser_constructed (GObject *object)
                                 gtk_label_new (_("Channels")));
       gtk_widget_show (chooser->priv->channel_view);
 
-      g_signal_connect_object (chooser->priv->channel_view, "activate-item",
-                               G_CALLBACK (gimp_pickable_chooser_item_activate),
+      g_signal_connect_object (chooser->priv->channel_view, "item-activated",
+                               G_CALLBACK (gimp_pickable_chooser_item_activated),
                                G_OBJECT (chooser), 0);
-      g_signal_connect_object (chooser->priv->channel_view, "select-items",
+      g_signal_connect_object (chooser->priv->channel_view, "selection-changed",
                                G_CALLBACK (gimp_pickable_chooser_items_selected),
                                G_OBJECT (chooser), 0);
     }
@@ -456,37 +453,37 @@ gimp_pickable_chooser_set_pickable (GimpPickableChooser *chooser,
 
       if (GIMP_IS_IMAGE (pickable))
         {
-          gimp_container_view_select_item (GIMP_CONTAINER_VIEW (chooser->priv->image_view),
-                                           GIMP_VIEWABLE (pickable));
+          gimp_container_view_set_1_selected (GIMP_CONTAINER_VIEW (chooser->priv->image_view),
+                                              GIMP_VIEWABLE (pickable));
           gimp_context_set_image (chooser->priv->context, GIMP_IMAGE (pickable));
         }
       else if (GIMP_IS_LAYER (pickable))
         {
           gimp_context_set_image (chooser->priv->context, gimp_item_get_image (GIMP_ITEM (pickable)));
-          gimp_container_view_select_item (GIMP_CONTAINER_VIEW (chooser->priv->layer_view),
-                                           GIMP_VIEWABLE (pickable));
+          gimp_container_view_set_1_selected (GIMP_CONTAINER_VIEW (chooser->priv->layer_view),
+                                              GIMP_VIEWABLE (pickable));
         }
       else if (GIMP_IS_CHANNEL (pickable))
         {
           gimp_context_set_image (chooser->priv->context, gimp_item_get_image (GIMP_ITEM (pickable)));
-          gimp_container_view_select_item (GIMP_CONTAINER_VIEW (chooser->priv->channel_view),
-                                           GIMP_VIEWABLE (pickable));
+          gimp_container_view_set_1_selected (GIMP_CONTAINER_VIEW (chooser->priv->channel_view),
+                                              GIMP_VIEWABLE (pickable));
         }
       else
         {
           g_return_if_fail (pickable == NULL);
-          gimp_container_view_select_item (GIMP_CONTAINER_VIEW (chooser->priv->image_view), NULL);
+          gimp_container_view_set_1_selected (GIMP_CONTAINER_VIEW (chooser->priv->image_view), NULL);
           gimp_context_set_image (chooser->priv->context, NULL);
         }
-      g_signal_connect_object (chooser->priv->image_view, "select-items",
+      g_signal_connect_object (chooser->priv->image_view, "selection-changed",
                                G_CALLBACK (gimp_pickable_chooser_items_selected),
                                G_OBJECT (chooser), 0);
       if (chooser->priv->layer_view != NULL)
-        g_signal_connect_object (chooser->priv->layer_view, "select-items",
+        g_signal_connect_object (chooser->priv->layer_view, "selection-changed",
                                  G_CALLBACK (gimp_pickable_chooser_items_selected),
                                  G_OBJECT (chooser), 0);
       if (chooser->priv->channel_view != NULL)
-        g_signal_connect_object (chooser->priv->channel_view, "select-items",
+        g_signal_connect_object (chooser->priv->channel_view, "selection-changed",
                                  G_CALLBACK (gimp_pickable_chooser_items_selected),
                                  G_OBJECT (chooser), 0);
     }
@@ -537,7 +534,7 @@ gimp_pickable_chooser_image_changed (GimpContext         *context,
                                             chooser);
       gimp_container_view_set_container (GIMP_CONTAINER_VIEW (chooser->priv->layer_view),
                                          layers);
-      g_signal_connect_object (chooser->priv->layer_view, "select-items",
+      g_signal_connect_object (chooser->priv->layer_view, "selection-changed",
                                G_CALLBACK (gimp_pickable_chooser_items_selected),
                                G_OBJECT (chooser), 0);
     }
@@ -548,35 +545,36 @@ gimp_pickable_chooser_image_changed (GimpContext         *context,
                                             chooser);
       gimp_container_view_set_container (GIMP_CONTAINER_VIEW (chooser->priv->channel_view),
                                          channels);
-      g_signal_connect_object (chooser->priv->channel_view, "select-items",
+      g_signal_connect_object (chooser->priv->channel_view, "selection-changed",
                                G_CALLBACK (gimp_pickable_chooser_items_selected),
                                G_OBJECT (chooser), 0);
     }
-  g_signal_connect_object (chooser->priv->image_view, "select-items",
+  g_signal_connect_object (chooser->priv->image_view, "selection-changed",
                            G_CALLBACK (gimp_pickable_chooser_items_selected),
                            G_OBJECT (chooser), 0);
 }
 
 static void
-gimp_pickable_chooser_item_activate (GimpContainerView   *view,
-                                     GimpPickable        *pickable,
-                                     gpointer             unused,
-                                     GimpPickableChooser *chooser)
+gimp_pickable_chooser_item_activated (GimpContainerView   *view,
+                                      GimpPickable        *pickable,
+                                      GimpPickableChooser *chooser)
 {
   g_signal_emit (chooser, signals[ACTIVATE], 0, pickable);
 }
 
 static void
 gimp_pickable_chooser_items_selected (GimpContainerView   *view,
-                                      GList               *items,
-                                      GList               *paths,
                                       GimpPickableChooser *chooser)
 {
   GimpPickable *pickable = NULL;
+  gint          n_items;
+  GList        *items;
 
-  g_return_if_fail (g_list_length (items) <= 1);
+  n_items = gimp_container_view_get_selected (view, &items);
 
-  if (items != NULL)
+  g_return_if_fail (n_items <= 1);
+
+  if (items)
     pickable = items->data;
 
   gimp_pickable_chooser_set_pickable (chooser, pickable);

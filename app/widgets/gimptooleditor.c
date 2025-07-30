@@ -76,13 +76,12 @@ static void            gimp_tool_editor_view_iface_init           (GimpContainer
 
 static void            gimp_tool_editor_constructed               (GObject                    *object);
 
-static gboolean        gimp_tool_editor_select_items              (GimpContainerView          *view,
-                                                                   GList                      *items,
-                                                                   GList                      *paths);
 static void            gimp_tool_editor_set_container             (GimpContainerView          *container_view,
                                                                    GimpContainer              *container);
 static void            gimp_tool_editor_set_context               (GimpContainerView          *container_view,
                                                                    GimpContext                *context);
+static gboolean        gimp_tool_editor_set_selected              (GimpContainerView          *view,
+                                                                   GList                      *items);
 
 static gboolean        gimp_tool_editor_drop_possible             (GimpContainerTreeView      *tree_view,
                                                                    GimpDndType                 src_type,
@@ -169,9 +168,9 @@ gimp_tool_editor_view_iface_init (GimpContainerViewInterface *iface)
   if (! parent_view_iface)
     parent_view_iface = g_type_default_interface_peek (GIMP_TYPE_CONTAINER_VIEW);
 
-  iface->select_items  = gimp_tool_editor_select_items;
   iface->set_container = gimp_tool_editor_set_container;
   iface->set_context   = gimp_tool_editor_set_context;
+  iface->set_selected  = gimp_tool_editor_set_selected;
 }
 
 static void
@@ -278,22 +277,6 @@ gimp_tool_editor_constructed (GObject *object)
   gimp_tool_editor_update_sensitivity (tool_editor);
 }
 
-static gboolean
-gimp_tool_editor_select_items (GimpContainerView   *container_view,
-                               GList               *viewables,
-                               GList               *paths)
-{
-  GimpToolEditor *tool_editor = GIMP_TOOL_EDITOR (container_view);
-  gboolean        result;
-
-  result = parent_view_iface->select_items (container_view,
-                                            viewables, paths);
-
-  gimp_tool_editor_update_sensitivity (tool_editor);
-
-  return result;
-}
-
 static void
 gimp_tool_editor_set_container (GimpContainerView *container_view,
                                 GimpContainer     *container)
@@ -314,6 +297,20 @@ gimp_tool_editor_set_context (GimpContainerView *container_view,
   parent_view_iface->set_context (container_view, context);
 
   gimp_tool_editor_update_container (tool_editor);
+}
+
+static gboolean
+gimp_tool_editor_set_selected (GimpContainerView *container_view,
+                               GList             *items)
+{
+  GimpToolEditor *tool_editor = GIMP_TOOL_EDITOR (container_view);
+  gboolean        result;
+
+  result = parent_view_iface->set_selected (container_view, items);
+
+  gimp_tool_editor_update_sensitivity (tool_editor);
+
+  return result;
 }
 
 static gboolean
@@ -367,7 +364,7 @@ gimp_tool_editor_drop_viewables (GimpContainerTreeView   *tree_view,
                                                                  drop_pos);
 
   if (src_viewables)
-    gimp_container_view_select_items (container_view, src_viewables);
+    gimp_container_view_set_selected (container_view, src_viewables);
 }
 
 static void
@@ -406,7 +403,8 @@ gimp_tool_editor_new_group_clicked (GtkButton      *button,
 
       g_object_unref (group);
 
-      gimp_container_view_select_item (container_view, GIMP_VIEWABLE (group));
+      gimp_container_view_set_1_selected (container_view,
+                                          GIMP_VIEWABLE (group));
     }
 }
 
@@ -566,10 +564,10 @@ gimp_tool_editor_delete_clicked (GtkButton      *button,
       gimp_container_thaw (dest_container);
       gimp_container_thaw (src_container);
 
-      gimp_container_view_select_item (
-        container_view,
-        GIMP_VIEWABLE (gimp_container_get_child_by_index (dest_container,
-                                                          index)));
+      gimp_container_view_set_1_selected
+        (container_view,
+         GIMP_VIEWABLE (gimp_container_get_child_by_index (dest_container,
+                                                           index)));
 
       g_object_unref (tool_item);
     }
@@ -593,7 +591,7 @@ gimp_tool_editor_tool_item_notify (GimpToolItem   *tool_item,
   GimpContainerView     *container_view = GIMP_CONTAINER_VIEW (tool_editor);
   GtkTreeIter           *iter;
 
-  iter = gimp_container_view_lookup (container_view,
+  iter = _gimp_container_view_lookup (container_view,
                                      GIMP_VIEWABLE (tool_item));
 
   if (iter)
