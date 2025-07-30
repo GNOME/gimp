@@ -174,33 +174,33 @@ drawable_actions_update (GimpActionGroup *group,
         {
           GimpItem *item;
 
-          if (gimp_item_get_visible (iter->data))
-            has_visible = TRUE;
-
-          if (gimp_item_can_lock_content (iter->data))
-            {
-              if (! gimp_item_get_lock_content (iter->data))
-                locked = FALSE;
-              can_lock = TRUE;
-            }
-
-          if (gimp_item_can_lock_position (iter->data))
-            {
-              if (! gimp_item_get_lock_position (iter->data))
-                locked_pos = FALSE;
-              can_lock_pos = TRUE;
-            }
-
-          if (gimp_viewable_get_children (GIMP_VIEWABLE (iter->data)))
-            none_children = FALSE;
-
-          if (! gimp_drawable_is_rgb (iter->data))
-            all_rgb = FALSE;
-
           if (GIMP_IS_LAYER_MASK (iter->data))
             item = GIMP_ITEM (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (iter->data)));
           else
             item = GIMP_ITEM (iter->data);
+
+          if (gimp_item_get_visible (item))
+            has_visible = TRUE;
+
+          if (gimp_item_can_lock_content (item))
+            {
+              if (! gimp_item_get_lock_content (item))
+                locked = FALSE;
+              can_lock = TRUE;
+            }
+
+          if (gimp_item_can_lock_position (item))
+            {
+              if (! gimp_item_get_lock_position (item))
+                locked_pos = FALSE;
+              can_lock_pos = TRUE;
+            }
+
+          if (gimp_viewable_get_children (GIMP_VIEWABLE (item)))
+            none_children = FALSE;
+
+          if (! gimp_drawable_is_rgb (iter->data))
+            all_rgb = FALSE;
 
           if (gimp_item_is_content_locked (item, NULL))
             all_writable = FALSE;
