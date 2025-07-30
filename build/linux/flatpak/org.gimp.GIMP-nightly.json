@@ -175,8 +175,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.3.4.tar.gz",
-                    "sha256": "63abac7c52f280e3e16fc868ac40e06449733bb19179008248ae7e34e4f19824",
+                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.3.5.tar.gz",
+                    "sha256": "cb0c88710c906c9bfc59027eb147e780d508c7be1a90b43af3ec9e3c2987b70d",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 13289,
@@ -781,8 +781,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v7.10.3.tar.gz",
-                    "sha256": "09e7bcc8e5de0a5b55d2ae9fd6378d5f4dc1b85a933593339a0872b24e2cc102",
+                    "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v7.11.0.tar.gz",
+                    "sha256": "93ed4c4e546a49fc75884c3a8b807d5af4a91e39d191fbbc60a07380b12a35d1",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 4908,
