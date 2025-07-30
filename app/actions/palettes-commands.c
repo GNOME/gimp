@@ -117,9 +117,7 @@ palettes_merge_callback (GtkWidget   *widget,
   context = gimp_container_view_get_context (editor->view);
   factory = gimp_data_factory_view_get_data_factory (view);
 
-  gimp_container_view_get_selected (editor->view, &selected, NULL);
-
-  if (g_list_length (selected) < 2)
+  if (gimp_container_view_get_selected (editor->view, &selected) < 2)
     {
       gimp_message_literal (context->gimp,
                             G_OBJECT (editor), GIMP_MESSAGE_WARNING,

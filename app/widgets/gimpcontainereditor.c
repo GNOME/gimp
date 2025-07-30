@@ -85,13 +85,10 @@ static void   gimp_container_editor_get_property     (GObject             *objec
                                                       GValue              *value,
                                                       GParamSpec          *pspec);
 
-static gboolean gimp_container_editor_select_items   (GimpContainerView   *view,
-                                                      GList               *items,
-                                                      GList               *paths,
+static void   gimp_container_editor_selection_changed(GimpContainerView   *view,
                                                       GimpContainerEditor *editor);
-static void   gimp_container_editor_activate_item    (GtkWidget           *widget,
+static void   gimp_container_editor_item_activated   (GtkWidget           *widget,
                                                       GimpViewable        *viewable,
-                                                      gpointer             insert_data,
                                                       GimpContainerEditor *editor);
 
 static GtkWidget * gimp_container_editor_get_preview (GimpDocked       *docked,
@@ -273,33 +270,13 @@ gimp_container_editor_constructed (GObject *object)
                           editor->view,           "visible",
                           G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
 
-  /*  Connect "select-items" with G_CONNECT_AFTER because it's a
-   *  RUN_LAST signal and the default handler selecting the row must
-   *  run before signal connections. See bug #784176.
-   */
-  g_signal_connect_object (editor->view, "select-items",
-                           G_CALLBACK (gimp_container_editor_select_items),
-                           editor, G_CONNECT_AFTER);
-
-  g_signal_connect_object (editor->view, "activate-item",
-                           G_CALLBACK (gimp_container_editor_activate_item),
+  g_signal_connect_object (editor->view, "selection-changed",
+                           G_CALLBACK (gimp_container_editor_selection_changed),
                            editor, 0);
-  /* g_signal_connect_object (editor->view, "context-item", XXX maybe listen to popup-menu? */
-  /*                          G_CALLBACK (gimp_container_editor_context_item), */
-  /*                          editor, 0); */
 
-  {
-    GList      *objects = NULL;
-    GimpObject *object  = gimp_context_get_by_type (editor->priv->context,
-                                                    gimp_container_get_child_type (editor->priv->container));
-
-    if (object)
-      objects = g_list_prepend (objects, object);
-
-    gimp_container_editor_select_items (editor->view, objects, NULL, editor);
-
-    g_list_free (objects);
-  }
+  g_signal_connect_object (editor->view, "item-activated",
+                           G_CALLBACK (gimp_container_editor_item_activated),
+                           editor, 0);
 }
 
 static void
@@ -429,22 +406,25 @@ gimp_container_editor_set_selection_mode (GimpContainerEditor *editor,
                                           mode);
 }
 
+
 /*  private functions  */
 
-static gboolean
-gimp_container_editor_select_items (GimpContainerView   *view,
-                                    GList               *items,
-                                    GList               *paths,
-                                    GimpContainerEditor *editor)
+static void
+gimp_container_editor_selection_changed (GimpContainerView   *view,
+                                         GimpContainerEditor *editor)
 {
   GimpContainerEditorClass *klass       = GIMP_CONTAINER_EDITOR_GET_CLASS (editor);
   GimpViewable             *viewable    = NULL;
   GimpEditor               *editor_view = NULL;
+  GList                    *items;
+
+  gimp_container_view_get_selected (view, &items);
 
   /* XXX Right now a GimpContainerEditor only supports 1 item selected
    * at once. Let's see later if we want to allow more.
+   *
+   * g_warn_if_fail (n_items < 2);
    */
-  /*g_return_val_if_fail (g_list_length (items) < 2, FALSE);*/
 
   /* The editor view may get destroyed through a chain of signals when
    * changing the context viewables with gimp_context_set_by_type().
@@ -458,19 +438,6 @@ gimp_container_editor_select_items (GimpContainerView   *view,
 
   if (klass->select_item)
     klass->select_item (editor, viewable);
-
-  if (editor->priv->container)
-    {
-      const gchar *signal_name;
-      GType        child_type;
-
-      child_type  = gimp_container_get_child_type (editor->priv->container);
-      signal_name = gimp_context_type_to_signal_name (child_type);
-
-      if (signal_name)
-        gimp_context_set_by_type (editor->priv->context, child_type,
-                                  GIMP_OBJECT (viewable));
-    }
 
   if (viewable && editor_view)
     {
@@ -486,14 +453,13 @@ gimp_container_editor_select_items (GimpContainerView   *view,
 
   g_clear_weak_pointer (&editor_view);
 
-  return TRUE;
+  g_list_free (items);
 }
 
 static void
-gimp_container_editor_activate_item (GtkWidget           *widget,
-                                     GimpViewable        *viewable,
-                                     gpointer             insert_data,
-                                     GimpContainerEditor *editor)
+gimp_container_editor_item_activated (GtkWidget           *widget,
+                                      GimpViewable        *viewable,
+                                      GimpContainerEditor *editor)
 {
   GimpContainerEditorClass *klass = GIMP_CONTAINER_EDITOR_GET_CLASS (editor);
 

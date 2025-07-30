@@ -97,10 +97,8 @@ static void   gimp_device_editor_remove_device  (GimpContainer     *container,
 static void   gimp_device_editor_device_changed (GimpDeviceInfo    *info,
                                                  GimpDeviceEditor  *editor);
 
-static gboolean gimp_device_editor_select_device (GimpContainerView *view,
-                                                  GList             *viewables,
-                                                  GList             *paths,
-                                                  GimpDeviceEditor  *editor);
+static void   gimp_device_editor_select_device  (GimpContainerView *view,
+                                                 GimpDeviceEditor  *editor);
 
 static void   gimp_device_editor_delete_clicked (GtkWidget         *button,
                                                  GimpDeviceEditor  *editor);
@@ -150,7 +148,7 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
   gtk_paned_pack1 (GTK_PANED (editor), private->treeview, TRUE, FALSE);
   gtk_widget_show (private->treeview);
 
-  g_signal_connect_object (private->treeview, "select-items",
+  g_signal_connect_object (private->treeview, "selection-changed",
                            G_CALLBACK (gimp_device_editor_select_device),
                            G_OBJECT (editor), 0);
 
@@ -367,8 +365,8 @@ gimp_device_editor_add_device (GimpContainer    *container,
                        gimp_object_get_name (info));
   gtk_widget_show (widget);
 
-  iter = gimp_container_view_lookup (GIMP_CONTAINER_VIEW (private->treeview),
-                                     GIMP_VIEWABLE (info));
+  iter = _gimp_container_view_lookup (GIMP_CONTAINER_VIEW (private->treeview),
+                                      GIMP_VIEWABLE (info));
 
   if (iter)
     {
@@ -392,8 +390,8 @@ gimp_device_editor_remove_device (GimpContainer    *container,
   GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
   GtkTreeIter             *iter;
 
-  iter = gimp_container_view_lookup (GIMP_CONTAINER_VIEW (private->treeview),
-                                     GIMP_VIEWABLE (info));
+  iter = _gimp_container_view_lookup (GIMP_CONTAINER_VIEW (private->treeview),
+                                      GIMP_VIEWABLE (info));
 
   if (iter)
     {
@@ -418,8 +416,8 @@ gimp_device_editor_device_changed (GimpDeviceInfo   *info,
   GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
   GtkTreeIter             *iter;
 
-  iter = gimp_container_view_lookup (GIMP_CONTAINER_VIEW (private->treeview),
-                                     GIMP_VIEWABLE (info));
+  iter = _gimp_container_view_lookup (GIMP_CONTAINER_VIEW (private->treeview),
+                                      GIMP_VIEWABLE (info));
 
   if (iter)
     {
@@ -434,17 +432,16 @@ gimp_device_editor_device_changed (GimpDeviceInfo   *info,
     }
 }
 
-static gboolean
+static void
 gimp_device_editor_select_device (GimpContainerView *view,
-                                  GList             *viewables,
-                                  GList             *paths,
                                   GimpDeviceEditor  *editor)
 {
   GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
+  GimpViewable            *item;
 
-  g_return_val_if_fail (g_list_length (viewables) < 2, FALSE);
+  item = gimp_container_view_get_1_selected (view);
 
-  if (viewables)
+  if (item)
     {
       GimpContainerTreeView *treeview;
       GtkWidget             *widget;
@@ -463,14 +460,15 @@ gimp_device_editor_select_device (GimpContainerView *view,
                               GIMP_CONTAINER_TREE_STORE_COLUMN_USER_DATA, &widget,
                               GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER,  &renderer,
                               -1);
-          if (renderer->viewable == viewables->data && widget)
+
+          if (renderer->viewable == item && widget)
             {
               GimpDeviceInfo *info;
               gboolean        delete_sensitive = FALSE;
 
               gtk_stack_set_visible_child (GTK_STACK (private->stack), widget);
 
-              g_object_get (widget ,"info", &info, NULL);
+              g_object_get (widget, "info", &info, NULL);
 
               gtk_label_set_text (GTK_LABEL (private->label),
                                   gimp_object_get_name (info));
@@ -488,11 +486,10 @@ gimp_device_editor_select_device (GimpContainerView *view,
 
               break;
             }
+
           g_object_unref (renderer);
         }
     }
-
-  return TRUE;
 }
 
 static void
@@ -506,18 +503,17 @@ gimp_device_editor_delete_response (GtkWidget        *dialog,
 
   if (response_id == GTK_RESPONSE_OK)
     {
-      GList *selected;
+      GimpViewable *item;
 
-      if (gimp_container_view_get_selected (GIMP_CONTAINER_VIEW (private->treeview),
-                                            &selected, NULL))
+      item = gimp_container_view_get_1_selected (GIMP_CONTAINER_VIEW (private->treeview));
+
+      if (item)
         {
           GimpContainer *devices;
 
           devices = GIMP_CONTAINER (gimp_devices_get_manager (private->gimp));
 
-          gimp_container_remove (devices, selected->data);
-
-          g_list_free (selected);
+          gimp_container_remove (devices, GIMP_OBJECT (item));
         }
     }
 
@@ -530,10 +526,11 @@ gimp_device_editor_delete_clicked (GtkWidget        *button,
 {
   GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
   GtkWidget               *dialog;
-  GList                   *selected;
+  GimpViewable            *item;
 
-  if (! gimp_container_view_get_selected (GIMP_CONTAINER_VIEW (private->treeview),
-                                          &selected, NULL))
+  item = gimp_container_view_get_1_selected (GIMP_CONTAINER_VIEW (private->treeview));
+
+  if (! item)
     return;
 
   dialog = gimp_message_dialog_new (_("Delete Device Settings"),
@@ -558,14 +555,12 @@ gimp_device_editor_delete_clicked (GtkWidget        *button,
 
   gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                                      _("Delete \"%s\"?"),
-                                     gimp_object_get_name (selected->data));
+                                     gimp_object_get_name (item));
   gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                              _("You are about to delete this device's "
                                "stored settings.\n"
                                "The next time this device is plugged, "
                                "default settings will be used."));
-
-  g_list_free (selected);
 
   gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
 

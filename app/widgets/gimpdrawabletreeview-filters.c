@@ -83,16 +83,12 @@ struct _GimpDrawableTreeViewFiltersEditor
 static void   gimp_drawable_filters_editor_set_sensitive
                                               (GimpDrawableTreeView  *view);
 
-static gboolean
-              gimp_drawable_filters_editor_view_select_items
+static void   gimp_drawable_filters_editor_view_selection_changed
                                               (GimpContainerView     *view,
-                                               GList                 *filters,
-                                               GList                 *paths,
                                                GimpDrawableTreeView  *drawable_view);
-static void   gimp_drawable_filters_editor_view_activate_item
+static void   gimp_drawable_filters_editor_view_item_activated
                                               (GtkWidget             *widget,
                                                GimpViewable          *viewable,
-                                               gpointer               insert_data,
                                                GimpDrawableTreeView  *view);
 static void   gimp_drawable_filters_editor_view_visible_cell_toggled
                                               (GtkCellRendererToggle *toggle,
@@ -386,11 +382,11 @@ _gimp_drawable_tree_view_filter_editor_show (GimpDrawableTreeView *view,
             }
         }
 
-      g_signal_connect (filter_tree_view, "select-items",
-                        G_CALLBACK (gimp_drawable_filters_editor_view_select_items),
+      g_signal_connect (filter_tree_view, "selection-changed",
+                        G_CALLBACK (gimp_drawable_filters_editor_view_selection_changed),
                         view);
-      g_signal_connect_object (filter_tree_view, "activate-item",
-                               G_CALLBACK (gimp_drawable_filters_editor_view_activate_item),
+      g_signal_connect_object (filter_tree_view, "item-activated",
+                               G_CALLBACK (gimp_drawable_filters_editor_view_item_activated),
                                view, 0);
 
       gtk_box_pack_start (GTK_BOX (editor->vbox),
@@ -446,10 +442,10 @@ _gimp_drawable_tree_view_filter_editor_hide (GimpDrawableTreeView *view)
   if (editor->view)
     {
       g_signal_handlers_disconnect_by_func (editor->view,
-                                            gimp_drawable_filters_editor_view_select_items,
+                                            gimp_drawable_filters_editor_view_selection_changed,
                                             view);
       g_signal_handlers_disconnect_by_func (editor->view,
-                                            gimp_drawable_filters_editor_view_activate_item,
+                                            gimp_drawable_filters_editor_view_item_activated,
                                             view);
 
       g_clear_pointer (&editor->view, gtk_widget_destroy);
@@ -529,37 +525,38 @@ gimp_drawable_filters_editor_set_sensitive (GimpDrawableTreeView *view)
     }
 }
 
-static gboolean
-gimp_drawable_filters_editor_view_select_items (GimpContainerView    *view,
-                                                GList                *filters,
-                                                GList                *paths,
-                                                GimpDrawableTreeView *drawable_view)
+static void
+gimp_drawable_filters_editor_view_selection_changed (GimpContainerView    *view,
+                                                     GimpDrawableTreeView *drawable_view)
 {
   GimpDrawableTreeViewFiltersEditor *editor = drawable_view->editor;
+  GList                             *items;
+  gint                               n_items;
 
-  g_return_val_if_fail (g_list_length (filters) <= 1, FALSE);
+  n_items = gimp_container_view_get_selected (view, &items);
+
+  g_warn_if_fail (n_items <= 1);
 
   editor->filter = NULL;
 
-  if (filters)
+  if (items)
     {
       /* Don't set floating selection as active filter */
-      if (GIMP_IS_DRAWABLE_FILTER (filters->data))
+      if (GIMP_IS_DRAWABLE_FILTER (items->data))
         {
-          editor->filter = filters->data;
+          editor->filter = items->data;
         }
     }
 
   gimp_drawable_filters_editor_set_sensitive (drawable_view);
 
-  return FALSE;
+  g_list_free (items);
 }
 
 static void
-gimp_drawable_filters_editor_view_activate_item (GtkWidget            *widget,
-                                                 GimpViewable         *viewable,
-                                                 gpointer              insert_data,
-                                                 GimpDrawableTreeView *view)
+gimp_drawable_filters_editor_view_item_activated (GtkWidget            *widget,
+                                                  GimpViewable         *viewable,
+                                                  GimpDrawableTreeView *view)
 {
   GimpDrawableTreeViewFiltersEditor *editor = view->editor;
 
@@ -614,8 +611,8 @@ gimp_drawable_filters_editor_active_changed (GimpFilter            *filter,
 {
   GtkTreeIter *iter;
 
-  iter = gimp_container_view_lookup (GIMP_CONTAINER_VIEW (view),
-                                     (GimpViewable *) filter);
+  iter = _gimp_container_view_lookup (GIMP_CONTAINER_VIEW (view),
+                                      (GimpViewable *) filter);
 
   if (iter)
     gtk_tree_store_set (GTK_TREE_STORE (view->model), iter,

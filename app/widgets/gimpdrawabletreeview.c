@@ -76,14 +76,13 @@ static void     gimp_drawable_tree_view_style_updated (GtkWidget                
 
 static void     gimp_drawable_tree_view_set_container (GimpContainerView          *view,
                                                        GimpContainer              *container);
+static gboolean gimp_drawable_tree_view_set_selected  (GimpContainerView          *view,
+                                                       GList                      *items);
+
 static gpointer gimp_drawable_tree_view_insert_item   (GimpContainerView          *view,
                                                        GimpViewable               *viewable,
                                                        gpointer                    parent_insert_data,
                                                        gint                        index);
-
-static gboolean gimp_drawable_tree_view_select_items  (GimpContainerView          *view,
-                                                       GList                      *items,
-                                                       GList                      *paths);
 
 static gboolean gimp_drawable_tree_view_drop_possible (GimpContainerTreeView      *view,
                                                        GimpDndType                 src_type,
@@ -182,8 +181,9 @@ gimp_drawable_tree_view_view_iface_init (GimpContainerViewInterface *iface)
   parent_view_iface = g_type_interface_peek_parent (iface);
 
   iface->set_container = gimp_drawable_tree_view_set_container;
+  iface->set_selected  = gimp_drawable_tree_view_set_selected;
+
   iface->insert_item   = gimp_drawable_tree_view_insert_item;
-  iface->select_items  = gimp_drawable_tree_view_select_items;
 }
 
 static void
@@ -340,36 +340,9 @@ gimp_drawable_tree_view_set_container (GimpContainerView *view,
                                  view);
 }
 
-static gpointer
-gimp_drawable_tree_view_insert_item (GimpContainerView *view,
-                                     GimpViewable      *viewable,
-                                     gpointer           parent_insert_data,
-                                     gint               index)
-{
-  GimpContainerTreeView *tree_view     = GIMP_CONTAINER_TREE_VIEW (view);
-  GimpDrawableTreeView  *drawable_view = GIMP_DRAWABLE_TREE_VIEW (view);
-  GimpContainer         *filters;
-  GtkTreeIter           *iter;
-  gint                   n_filters;
-
-  iter = parent_view_iface->insert_item (view, viewable,
-                                         parent_insert_data, index);
-
-  filters   = gimp_drawable_get_filters (GIMP_DRAWABLE (viewable));
-  n_filters = gimp_container_get_n_children (filters);
-
-  gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
-                      drawable_view->priv->model_column_filters,
-                      n_filters > 0,
-                      -1);
-
-  return iter;
-}
-
 static gboolean
-gimp_drawable_tree_view_select_items (GimpContainerView *view,
-                                      GList             *items,
-                                      GList             *paths)
+gimp_drawable_tree_view_set_selected (GimpContainerView *view,
+                                      GList             *items)
 {
   GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (view);
   GimpImage        *image     = gimp_item_tree_view_get_image (item_view);
@@ -397,10 +370,37 @@ gimp_drawable_tree_view_select_items (GimpContainerView *view,
     }
 
   if (success)
-    success = parent_view_iface->select_items (view, items, paths);
+    success = parent_view_iface->set_selected (view, items);
 
   return success;
 }
+
+static gpointer
+gimp_drawable_tree_view_insert_item (GimpContainerView *view,
+                                     GimpViewable      *viewable,
+                                     gpointer           parent_insert_data,
+                                     gint               index)
+{
+  GimpContainerTreeView *tree_view     = GIMP_CONTAINER_TREE_VIEW (view);
+  GimpDrawableTreeView  *drawable_view = GIMP_DRAWABLE_TREE_VIEW (view);
+  GimpContainer         *filters;
+  GtkTreeIter           *iter;
+  gint                   n_filters;
+
+  iter = parent_view_iface->insert_item (view, viewable,
+                                         parent_insert_data, index);
+
+  filters   = gimp_drawable_get_filters (GIMP_DRAWABLE (viewable));
+  n_filters = gimp_container_get_n_children (filters);
+
+  gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
+                      drawable_view->priv->model_column_filters,
+                      n_filters > 0,
+                      -1);
+
+  return iter;
+}
+
 
 /*  GimpContainerTreeView methods  */
 
@@ -567,7 +567,7 @@ gimp_drawable_tree_view_floating_selection_changed (GimpImage            *image,
   items = g_list_copy (items);
 
   /*  update button states  */
-  gimp_container_view_select_items (GIMP_CONTAINER_VIEW (view), items);
+  gimp_container_view_set_selected (GIMP_CONTAINER_VIEW (view), items);
 
   g_list_free (items);
 }
@@ -582,8 +582,8 @@ gimp_drawable_tree_view_filters_changed (GimpDrawable         *drawable,
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   GtkTreeIter           *iter;
 
-  iter = gimp_container_view_lookup (GIMP_CONTAINER_VIEW (view),
-                                     (GimpViewable *) drawable);
+  iter = _gimp_container_view_lookup (GIMP_CONTAINER_VIEW (view),
+                                      (GimpViewable *) drawable);
 
   if (iter)
     {

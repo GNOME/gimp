@@ -69,10 +69,10 @@ gimp_container_box_class_init (GimpContainerBoxClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->constructed  = gimp_container_box_constructed;
-  object_class->set_property = gimp_container_view_set_property;
-  object_class->get_property = gimp_container_view_get_property;
+  object_class->set_property = _gimp_container_view_set_property;
+  object_class->get_property = _gimp_container_view_get_property;
 
-  gimp_container_view_install_properties (object_class);
+  _gimp_container_view_install_properties (object_class);
 }
 
 static void

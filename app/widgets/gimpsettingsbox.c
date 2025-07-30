@@ -90,7 +90,8 @@ struct _GimpSettingsBoxPrivate
   GFile         *last_file;
 };
 
-#define GET_PRIVATE(item) ((GimpSettingsBoxPrivate *) gimp_settings_box_get_instance_private ((GimpSettingsBox *) (item)))
+#define GET_PRIVATE(item) \
+  ((GimpSettingsBoxPrivate *) gimp_settings_box_get_instance_private ((GimpSettingsBox *) (item)))
 
 
 static void      gimp_settings_box_constructed   (GObject           *object);
@@ -112,10 +113,7 @@ static gboolean
             gimp_settings_box_row_separator_func (GtkTreeModel      *model,
                                                   GtkTreeIter       *iter,
                                                   gpointer           data);
-static gboolean
-              gimp_settings_box_setting_selected (GimpContainerView *view,
-                                                  GList             *objects,
-                                                  GList             *paths,
+static void  gimp_settings_box_setting_selected  (GimpContainerView *view,
                                                   GimpSettingsBox   *box);
 static gboolean gimp_settings_box_menu_press     (GtkWidget         *widget,
                                                   GdkEventButton    *bevent,
@@ -304,7 +302,7 @@ gimp_settings_box_constructed (GObject *object)
   gimp_help_set_help_data (private->combo, _("Pick a preset from the list"),
                            NULL);
 
-  g_signal_connect_after (private->combo, "select-items",
+  g_signal_connect_after (private->combo, "selection_changed",
                           G_CALLBACK (gimp_settings_box_setting_selected),
                           box);
 
@@ -541,19 +539,22 @@ gimp_settings_box_row_separator_func (GtkTreeModel *model,
   return name == NULL;
 }
 
-static gboolean
+static void
 gimp_settings_box_setting_selected (GimpContainerView *view,
-                                    GList             *objects,
-                                    GList             *paths,
                                     GimpSettingsBox   *box)
 {
-  g_return_val_if_fail (g_list_length (objects) < 2, FALSE);
+  GList *items;
+  gint   n_items;
 
-  if (objects)
+  n_items = gimp_container_view_get_selected (view, &items);
+
+  g_warn_if_fail (n_items < 2);
+
+  if (items)
     g_signal_emit (box, settings_box_signals[SELECTED], 0,
-                   objects->data);
+                   items->data);
 
-  return TRUE;
+  g_list_free (items);
 }
 
 static gboolean
@@ -920,13 +921,11 @@ void
 gimp_settings_box_add_current (GimpSettingsBox *box,
                                gint             max_recent)
 {
-  GimpSettingsBoxPrivate *private;
-  GimpConfig             *config = NULL;
+  GimpSettingsBoxPrivate *private = GET_PRIVATE (box);
+  GimpConfig             *config  = NULL;
   GList                  *list;
 
   g_return_if_fail (GIMP_IS_SETTINGS_BOX (box));
-
-  private = GET_PRIVATE (box);
 
   for (list = GIMP_LIST (private->container)->queue->head;
        list;
@@ -977,11 +976,9 @@ gimp_settings_box_add_current (GimpSettingsBox *box,
 void
 gimp_settings_box_unset (GimpSettingsBox *box)
 {
-  GimpSettingsBoxPrivate *private;
+  GimpSettingsBoxPrivate *private = GET_PRIVATE (box);;
 
   g_return_if_fail (GIMP_IS_SETTINGS_BOX (box));
 
-  private = GET_PRIVATE (box);
-
-  gimp_container_view_select_items (GIMP_CONTAINER_VIEW (private->combo), NULL);
+  gimp_container_view_set_selected (GIMP_CONTAINER_VIEW (private->combo), NULL);
 }

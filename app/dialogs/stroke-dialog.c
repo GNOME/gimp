@@ -276,8 +276,8 @@ stroke_dialog_response (GtkWidget    *dialog,
 
         gimp_config_reset (GIMP_CONFIG (private->options));
 
-        gimp_container_view_select_item (GIMP_CONTAINER_VIEW (private->tool_combo),
-                                         GIMP_VIEWABLE (tool_info->paint_info));
+        gimp_container_view_set_1_selected (GIMP_CONTAINER_VIEW (private->tool_combo),
+                                            GIMP_VIEWABLE (tool_info->paint_info));
 
       }
       break;

@@ -193,7 +193,6 @@ gimp_container_view_add_foreach (GimpViewable      *viewable,
 
   insert_data = view_iface->insert_item (view, viewable,
                                          parent_insert_data, -1);
-
   g_hash_table_insert (private->item_hash, viewable, insert_data);
 
   children = gimp_viewable_get_children (viewable);
@@ -363,7 +362,7 @@ gimp_container_view_thaw (GimpContainerView *view,
 
           object = gimp_context_get_by_type (private->context, child_type);
 
-          gimp_container_view_select_item (view, GIMP_VIEWABLE (object));
+          gimp_container_view_set_1_selected (view, GIMP_VIEWABLE (object));
         }
     }
 }
