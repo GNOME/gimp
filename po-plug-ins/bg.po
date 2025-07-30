@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-07-12 21:16+0000\n"
-"PO-Revision-Date: 2025-07-12 23:25+0200\n"
+"POT-Creation-Date: 2025-07-30 03:39+0000\n"
+"PO-Revision-Date: 2025-07-30 12:25+0200\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -36,7 +36,7 @@ msgstr "Примерна приставка на C"
 #: plug-ins/common/curve-bend.c:623 plug-ins/common/decompose.c:385
 #: plug-ins/common/depth-merge.c:291 plug-ins/common/despeckle.c:235
 #: plug-ins/common/destripe.c:173 plug-ins/common/gradient-map.c:214
-#: plug-ins/common/grid.c:281 plug-ins/common/hot.c:314
+#: plug-ins/common/grid.c:310 plug-ins/common/hot.c:314
 #: plug-ins/common/jigsaw.c:537 plug-ins/common/nl-filter.c:215
 #: plug-ins/common/qbist.c:254 plug-ins/common/sample-colorize.c:425
 #: plug-ins/common/smooth-palette.c:193 plug-ins/common/sparkle.c:301
@@ -67,8 +67,8 @@ msgstr "Примерна приставка на C"
 #: plug-ins/common/curve-bend.c:1787 plug-ins/common/curve-bend.c:1822
 #: plug-ins/common/file-gif-export.c:1209 plug-ins/common/file-heif.c:2487
 #: plug-ins/common/file-pdf-export.c:1073 plug-ins/common/file-pdf-load.c:585
-#: plug-ins/common/grid.c:835 plug-ins/common/qbist.c:839
-#: plug-ins/common/qbist.c:881 plug-ins/common/sphere-designer.c:2291
+#: plug-ins/common/qbist.c:839 plug-ins/common/qbist.c:881
+#: plug-ins/common/sphere-designer.c:2291
 #: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:427
 #: plug-ins/flame/flame.c:617 plug-ins/flame/flame.c:822
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1513
@@ -140,10 +140,10 @@ msgstr "Примерна приставка на JavaScript (GJS)"
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2488
-#: plug-ins/common/file-pdf-load.c:586 plug-ins/common/grid.c:836
-#: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:260
-#: plug-ins/file-exr/file-exr.c:455 plug-ins/file-psd/psd-load.c:3896
-#: plug-ins/flame/flame.c:823 plug-ins/fractal-explorer/fractal-explorer.c:1403
+#: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2656
+#: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:455
+#: plug-ins/file-psd/psd-load.c:3896 plug-ins/flame/flame.c:823
+#: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/gradient-flare/gradient-flare.c:3452
@@ -331,7 +331,7 @@ msgstr "Долен край"
 msgid "_Grid"
 msgstr "_Мрежа"
 
-#: plug-ins/common/align-layers.c:236 plug-ins/common/grid.c:831
+#: plug-ins/common/align-layers.c:236 plug-ins/common/grid.c:741
 #: plug-ins/gfig/gfig-dialog.c:1357 plug-ins/gfig/gfig-menu.ui:31
 #: plug-ins/imagemap/imap_main.c:1561 plug-ins/imagemap/imap-menu.ui:192
 #: plug-ins/imagemap/imap-menu.ui:284
@@ -414,130 +414,133 @@ msgstr "Намиране на фона на анимацията"
 msgid "Optimizing animation"
 msgstr "Оптимизиране на анимацията"
 
-#: plug-ins/common/animation-play.c:329
+#: plug-ins/common/animation-play.c:334
 msgid "_Playback..."
 msgstr "_Изпълнение…"
 
-#: plug-ins/common/animation-play.c:334
+#: plug-ins/common/animation-play.c:339
 msgid "Preview a GIMP layer-based animation"
 msgstr "Предварителен преглед на анимация, базирана на слоеве"
 
-#: plug-ins/common/animation-play.c:369
+#: plug-ins/common/animation-play.c:374
 #, c-format
 msgid "Procedure '%s' only works in interactive mode."
 msgstr "Процедурата „%s“ работи само в интерактивен режим."
 
-#: plug-ins/common/animation-play.c:387 plug-ins/common/animation-play.c:770
-#: plug-ins/common/animation-play.c:1393
+#: plug-ins/common/animation-play.c:392 plug-ins/common/animation-play.c:940
+#: plug-ins/common/animation-play.c:1440
 msgid "Start playback"
 msgstr "Изпълнение"
 
-#: plug-ins/common/animation-play.c:388 plug-ins/common/animation-play.c:772
+#: plug-ins/common/animation-play.c:393 plug-ins/common/animation-play.c:944
 msgid "Step back to previous frame"
 msgstr "Стъпка към предишния кадър"
 
-#: plug-ins/common/animation-play.c:389 plug-ins/common/animation-play.c:774
+#: plug-ins/common/animation-play.c:394 plug-ins/common/animation-play.c:947
 msgid "Step to next frame"
 msgstr "Стъпка към следващия кадър"
 
-#: plug-ins/common/animation-play.c:390 plug-ins/common/animation-play.c:776
+#: plug-ins/common/animation-play.c:395 plug-ins/common/animation-play.c:950
 msgid "Rewind the animation"
 msgstr "Превъртане на анимацията"
 
-#: plug-ins/common/animation-play.c:395
+#: plug-ins/common/animation-play.c:400
 msgid "Increase the speed of the animation"
 msgstr "Увеличаване на скоростта на анимацията"
 
-#: plug-ins/common/animation-play.c:396
+#: plug-ins/common/animation-play.c:401
 msgid "Decrease the speed of the animation"
 msgstr "Намаляване на скоростта на анимацията"
 
-#: plug-ins/common/animation-play.c:397
+#: plug-ins/common/animation-play.c:402
 msgid "Reset the speed of the animation"
 msgstr "Стандартна скорост на анимацията"
 
-#: plug-ins/common/animation-play.c:402 plug-ins/common/animation-play.c:779
+#: plug-ins/common/animation-play.c:407 plug-ins/common/animation-play.c:885
 msgid "Detach the animation from the dialog window"
 msgstr "Отделяне на анимацията от диалоговия прозорец"
 
-#: plug-ins/common/animation-play.c:403 plug-ins/common/animation-play.c:781
+#: plug-ins/common/animation-play.c:408 plug-ins/common/animation-play.c:883
 msgid "Reload the image"
 msgstr "Презареждане на изображението"
 
-#: plug-ins/common/animation-play.c:404 plug-ins/imagemap/imap-menu.ui:26
+#: plug-ins/common/animation-play.c:409 plug-ins/imagemap/imap-menu.ui:26
 msgid "Quit"
 msgstr "Спиране"
 
 #. list is given in "fps" - frames per second
-#: plug-ins/common/animation-play.c:494 plug-ins/common/animation-play.c:552
-#: plug-ins/common/animation-play.c:844
+#: plug-ins/common/animation-play.c:499 plug-ins/common/animation-play.c:557
+#: plug-ins/common/animation-play.c:860
 #, c-format
 msgid "%.1f %%"
 msgstr "%.1f %%"
 
 #. Image Name
-#: plug-ins/common/animation-play.c:691
+#: plug-ins/common/animation-play.c:696
 msgid "Animation Playback:"
 msgstr "Изпълнение на анимацията:"
 
-#: plug-ins/common/animation-play.c:772
-msgid "Step _back"
-msgstr "Стъпка на_зад"
+#. 2 styles of default frame disposals: cumulative layers and one
+#. * frame per layer.
+#.
+#: plug-ins/common/animation-play.c:787 plug-ins/common/file-gif-export.c:221
+msgid "Cumulative layers (combine)"
+msgstr "Сливане на слоевете (комбиниране)"
 
-#: plug-ins/common/animation-play.c:774
-msgid "_Step"
-msgstr "Стъпка на_пред"
+#: plug-ins/common/animation-play.c:792 plug-ins/common/file-gif-export.c:222
+msgid "One frame per layer (replace)"
+msgstr "Един кадър на слой (заместване)"
 
-#: plug-ins/common/animation-play.c:779
-msgid "Detach"
-msgstr "Отделяне"
+#. list is given in "fps" - frames per second
+#: plug-ins/common/animation-play.c:815
+#, c-format
+msgid "%d fps"
+msgstr "%d кдр./сек."
+
+#: plug-ins/common/animation-play.c:826
+msgid "Default framerate"
+msgstr "Стандартна честота на кадрите"
+
+#: plug-ins/common/animation-play.c:846
+msgid "Playback speed"
+msgstr "Скорост на изпълнение"
 
 #. Zoom Options
-#: plug-ins/common/animation-play.c:859
+#: plug-ins/common/animation-play.c:876
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:679
 #: plug-ins/imagemap/imap-menu.ui:271
 msgid "Zoom"
 msgstr "Увеличение"
 
-#. list is given in "fps" - frames per second
-#: plug-ins/common/animation-play.c:869
-#, c-format
-msgid "%d fps"
-msgstr "%d кдр./сек."
+#: plug-ins/common/animation-play.c:883
+msgid "Reload"
+msgstr "Презареждане"
 
-#: plug-ins/common/animation-play.c:880
-msgid "Default framerate"
-msgstr "Стандартна честота на кадрите"
+#: plug-ins/common/animation-play.c:885
+msgid "Detach"
+msgstr "Отделяне"
 
-#: plug-ins/common/animation-play.c:900
-msgid "Playback speed"
-msgstr "Скорост на изпълнение"
+#: plug-ins/common/animation-play.c:888 plug-ins/imagemap/imap-menu.ui:212
+msgid "Help"
+msgstr "Помощ"
 
-#. 2 styles of default frame disposals: cumulative layers and one
-#. * frame per layer.
-#.
-#: plug-ins/common/animation-play.c:911 plug-ins/common/file-gif-export.c:221
-msgid "Cumulative layers (combine)"
-msgstr "Сливане на слоевете (комбиниране)"
+#: plug-ins/common/animation-play.c:943
+msgid "Step _back"
+msgstr "Стъпка на_зад"
 
-#: plug-ins/common/animation-play.c:916 plug-ins/common/file-gif-export.c:222
-msgid "One frame per layer (replace)"
-msgstr "Един кадър на слой (заместване)"
+#: plug-ins/common/animation-play.c:946
+msgid "_Step"
+msgstr "Стъпка на_пред"
 
-#: plug-ins/common/animation-play.c:1012
+#: plug-ins/common/animation-play.c:1055
 msgid "Memory could not be allocated to the frame container."
 msgstr "Не може да се задели памет за контейнера на кадъра."
 
-#: plug-ins/common/animation-play.c:1079
+#: plug-ins/common/animation-play.c:1127
 msgid "Invalid image. Did you close it?"
 msgstr "Неправилно изображение. Дали го затворихте?"
 
-#: plug-ins/common/animation-play.c:1191
-#, c-format
-msgid "Frame %d of %d"
-msgstr "Кадър %d от %d"
-
-#: plug-ins/common/animation-play.c:1393
+#: plug-ins/common/animation-play.c:1440
 msgid "Stop playback"
 msgstr "Спиране"
 
@@ -565,7 +568,7 @@ msgstr "_Брой сегменти"
 msgid "Number of segments in blinds"
 msgstr "_Брой сегменти в щорите"
 
-#: plug-ins/common/blinds.c:165 plug-ins/map-object/map-object-ui.c:440
+#: plug-ins/common/blinds.c:165 plug-ins/map-object/map-object-ui.c:408
 msgid "Orient_ation"
 msgstr "О_риентация"
 
@@ -619,8 +622,8 @@ msgstr "Щори"
 #: plug-ins/file-fits/fits.c:673 plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1093
 #: plug-ins/file-psd/psd-load.c:3102 plug-ins/file-sgi/sgi.c:456
-#: plug-ins/file-tiff/file-tiff-load.c:1556
-#: plug-ins/file-tiff/file-tiff-load.c:2365
+#: plug-ins/file-tiff/file-tiff-load.c:1561
+#: plug-ins/file-tiff/file-tiff-load.c:2385
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:559
 #: plug-ins/gfig/gfig-dialog.c:1287 plug-ins/gimpressionist/general.c:147
 #: plug-ins/map-object/map-object-apply.c:241
@@ -2625,7 +2628,7 @@ msgstr "Неочакван край или грешка при четене на
 #: plug-ins/file-raw/file-another-rawtherapee.c:346
 #: plug-ins/file-raw/file-darktable.c:467
 #: plug-ins/file-raw/file-rawtherapee.c:345 plug-ins/file-sgi/sgi.c:315
-#: plug-ins/file-tiff/file-tiff-load.c:299
+#: plug-ins/file-tiff/file-tiff-load.c:304
 #, c-format
 msgid "Opening '%s'"
 msgstr "Отваряне на „%s“"
@@ -4718,7 +4721,7 @@ msgstr "Добавяне на изображението"
 #: plug-ins/common/file-pdf-export.c:1223
 #: plug-ins/common/file-pdf-export.c:1296
 #: plug-ins/common/file-pdf-export.c:1394 plug-ins/common/file-ps.c:2218
-#: plug-ins/file-tiff/file-tiff-load.c:1558
+#: plug-ins/file-tiff/file-tiff-load.c:1563
 #, c-format
 msgid "Page %d"
 msgstr "Страница %d"
@@ -5417,7 +5420,7 @@ msgstr ""
 "Когато е включено, пропорциите на размерите се запазват при изнасяне. В "
 "противен случай ще се ползват зададените височина и широчина."
 
-#: plug-ins/common/file-ps.c:566 plug-ins/map-object/map-object-ui.c:739
+#: plug-ins/common/file-ps.c:566 plug-ins/map-object/map-object-ui.c:719
 msgid "Rotation"
 msgstr "Завъртане"
 
@@ -7323,65 +7326,74 @@ msgstr "Преоцветяване по преливка"
 msgid "Palette Map"
 msgstr "Преоцветяване по палитра"
 
-#: plug-ins/common/grid.c:164
+#: plug-ins/common/grid.c:163
 msgid "_Grid (legacy)..."
 msgstr "_Мрежа (остаряло)…"
 
-#: plug-ins/common/grid.c:169
+#: plug-ins/common/grid.c:168
 msgid "Draw a grid on the image"
 msgstr "Рисуване на мрежа върху изображението"
 
-#: plug-ins/common/grid.c:298
+#: plug-ins/common/grid.c:169
+msgid ""
+"Draws a grid using the specified colors. The grid origin is the upper left "
+"corner."
+msgstr "Изчертаване на решетка в зададените цветове. Началото е горе-вляво."
+
+#: plug-ins/common/grid.c:180 plug-ins/common/grid.c:181
+msgid "Horizontal width"
+msgstr "Хоризонтална широчина"
+
+#: plug-ins/common/grid.c:186 plug-ins/common/grid.c:187
+msgid "Horizontal spacing"
+msgstr "Хоризонтално отстояние"
+
+#: plug-ins/common/grid.c:192 plug-ins/common/grid.c:193
+msgid "Horizontal offset"
+msgstr "Хоризонтално отместване"
+
+#: plug-ins/common/grid.c:202 plug-ins/common/grid.c:203
+msgid "Horizontal color"
+msgstr "Цвят за хоризонталите"
+
+#: plug-ins/common/grid.c:208 plug-ins/common/grid.c:209
+msgid "Vertical width"
+msgstr "Вертикална широчина"
+
+#: plug-ins/common/grid.c:214 plug-ins/common/grid.c:215
+msgid "Vertical spacing"
+msgstr "Вертикално отстояние"
+
+#: plug-ins/common/grid.c:220 plug-ins/common/grid.c:221
+msgid "Vertical offset"
+msgstr "Вертикално отместване"
+
+#: plug-ins/common/grid.c:226 plug-ins/common/grid.c:227
+msgid "Vertical color"
+msgstr "Цвят за вертикалите"
+
+#: plug-ins/common/grid.c:232 plug-ins/common/grid.c:233
+#: plug-ins/common/grid.c:773
+msgid "Intersection width"
+msgstr "Широчина на пресичане"
+
+#: plug-ins/common/grid.c:238 plug-ins/common/grid.c:239
+#: plug-ins/common/grid.c:790
+msgid "Intersection spacing"
+msgstr "Отстояние на пресичанията"
+
+#: plug-ins/common/grid.c:244 plug-ins/common/grid.c:245
+#: plug-ins/common/grid.c:806
+msgid "Intersection offset"
+msgstr "Отместване на пресичанията"
+
+#: plug-ins/common/grid.c:250 plug-ins/common/grid.c:251
+msgid "Intersection color"
+msgstr "Цвят за пресичанията"
+
+#: plug-ins/common/grid.c:327
 msgid "Drawing grid"
 msgstr "Мрежа за рисуване"
-
-#. attach labels
-#: plug-ins/common/grid.c:913
-msgid ""
-"Horizontal\n"
-"Lines"
-msgstr ""
-"Хоризонтални\n"
-"линии"
-
-#: plug-ins/common/grid.c:915
-msgid ""
-"Vertical\n"
-"Lines"
-msgstr ""
-"Вертикални\n"
-"линии"
-
-#: plug-ins/common/grid.c:917
-msgid "Intersection"
-msgstr "Пресичане"
-
-#: plug-ins/common/grid.c:920
-msgid "Width:"
-msgstr "Широчина:"
-
-#. attach labels
-#: plug-ins/common/grid.c:984
-msgid "Spacing:"
-msgstr "Разстояние:"
-
-#. attach labels
-#: plug-ins/common/grid.c:1049
-msgid "Offset:"
-msgstr "Отместване:"
-
-#. attach color selectors
-#: plug-ins/common/grid.c:1082
-msgid "Horizontal Color"
-msgstr "Цвят по хоризонтала"
-
-#: plug-ins/common/grid.c:1101
-msgid "Vertical Color"
-msgstr "Цвят по вертикала"
-
-#: plug-ins/common/grid.c:1119
-msgid "Intersection Color"
-msgstr "Цвят на пресичане"
 
 #: plug-ins/common/guillotine.c:111
 msgid "Slice Using G_uides"
@@ -9791,7 +9803,7 @@ msgstr "FITS HDU"
 msgid "FITS export cannot handle images with alpha channels"
 msgstr "FITS не поддържа изображения с канали на прозрачност"
 
-#: plug-ins/file-fits/fits.c:995
+#: plug-ins/file-fits/fits.c:998
 msgid "Open FITS File"
 msgstr "Отваряне на файл във формат FITS"
 
@@ -10181,20 +10193,20 @@ msgstr "Автор на курсор (незадължително)"
 
 #: plug-ins/file-jpeg/jpeg-export.c:139 plug-ins/file-jpeg/jpeg-export.c:146
 #, c-format
-msgid "File size: %s"
-msgstr "Размер на файла: %s"
+msgid "File size without metadata: %s"
+msgstr "Размер на файла без метаданните: %s"
 
 #: plug-ins/file-jpeg/jpeg-export.c:717
-msgid "Calculating file size..."
-msgstr "Изчисляване на размера на файла…"
+msgid "Calculating approximate file size..."
+msgstr "Изчисляване на приблизителния размер на файла…"
 
 #: plug-ins/file-jpeg/jpeg-export.c:807 plug-ins/file-jpeg/jpeg-export.c:883
-msgid "File size: unknown"
-msgstr "Размер на файла: неизвестен"
+msgid "File size without metadata: unknown"
+msgstr "Размер на файла без метаданните: неизвестен"
 
 #: plug-ins/file-jpeg/jpeg-export.c:891
-msgid "Enable preview to obtain the file size."
-msgstr "Включете предварителния преглед, за да получите размера на файла."
+msgid "Enable preview to obtain the approximate file size."
+msgstr "Включете предварителния преглед, за да получите приблизителния размер на файла."
 
 #: plug-ins/file-jpeg/jpeg-load.c:241
 msgid "JPEG preview"
@@ -11105,17 +11117,17 @@ msgstr ""
 "Зададеният цветови профил на коректура на CMYK.\n"
 "Този профил няма да се включи в изнесеното изображение."
 
-#: plug-ins/file-tiff/file-tiff-load.c:307
+#: plug-ins/file-tiff/file-tiff-load.c:312
 #, c-format
 msgid "Not a TIFF image or image is corrupt."
 msgstr "Това изображение не е TIFF или е повредено."
 
-#: plug-ins/file-tiff/file-tiff-load.c:334
+#: plug-ins/file-tiff/file-tiff-load.c:339
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF „%s“ не съдържа директории"
 
-#: plug-ins/file-tiff/file-tiff-load.c:341
+#: plug-ins/file-tiff/file-tiff-load.c:346
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -11132,7 +11144,7 @@ msgstr[1] ""
 "се определи, но изглежда има %d страници. Пробва се зареждане на файла база "
 "това това допускане."
 
-#: plug-ins/file-tiff/file-tiff-load.c:472
+#: plug-ins/file-tiff/file-tiff-load.c:477
 msgid "Extra channels with unspecified data."
 msgstr "Допълнителни канали с неуказани данни."
 
@@ -11143,19 +11155,19 @@ msgstr "Допълнителни канали с неуказани данни."
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:484
+#: plug-ins/file-tiff/file-tiff-load.c:489
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr ""
 "Несъвместими канали на TIFF: има допълнителни канали, в които липсва полето "
 "„ExtraSamples“."
 
-#: plug-ins/file-tiff/file-tiff-load.c:581
+#: plug-ins/file-tiff/file-tiff-load.c:586
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr ""
 "Не може да се прочете страница %d от %d. Изображението може да е повредено.\n"
 
-#: plug-ins/file-tiff/file-tiff-load.c:610
+#: plug-ins/file-tiff/file-tiff-load.c:615
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
@@ -11164,7 +11176,7 @@ msgstr ""
 "Това изображение е с линеен цветови профил, но той не е зададен на първия "
 "слой. Приема се, че слоевете под #%d са нелинейни."
 
-#: plug-ins/file-tiff/file-tiff-load.c:618
+#: plug-ins/file-tiff/file-tiff-load.c:623
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -11174,36 +11186,36 @@ msgstr ""
 "Ако това доведе до неправилни резултати, пробвайте да заредите всеки слой "
 "като отделно изображение."
 
-#: plug-ins/file-tiff/file-tiff-load.c:630
+#: plug-ins/file-tiff/file-tiff-load.c:635
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr ""
 "Подозрителна дълбочина на цвета: %d за страница %d. Изображението може да е "
 "повредено."
 
-#: plug-ins/file-tiff/file-tiff-load.c:704
+#: plug-ins/file-tiff/file-tiff-load.c:709
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr "Неподдържана дълбочина на цвета: %d на страница %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:719
+#: plug-ins/file-tiff/file-tiff-load.c:724
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr "Широчината на изображението не може да се получи от „%s“"
 
-#: plug-ins/file-tiff/file-tiff-load.c:727
+#: plug-ins/file-tiff/file-tiff-load.c:732
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr "Височината на изображението не може да се получи от „%s“"
 
-#: plug-ins/file-tiff/file-tiff-load.c:735
+#: plug-ins/file-tiff/file-tiff-load.c:740
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr ""
 "Неправилни размери на изображение (%u×%u) за страница %d. Изображението може "
 "да е повредено."
 
-#: plug-ins/file-tiff/file-tiff-load.c:756
+#: plug-ins/file-tiff/file-tiff-load.c:761
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
@@ -11212,7 +11224,7 @@ msgstr ""
 "Фотометричните данни не може да се заредят от „%s“. Изображението е "
 "компресирано по CCITT. Приема се, че минималната стойност е бяло"
 
-#: plug-ins/file-tiff/file-tiff-load.c:763
+#: plug-ins/file-tiff/file-tiff-load.c:768
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr ""
@@ -11222,7 +11234,7 @@ msgstr ""
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: plug-ins/file-tiff/file-tiff-load.c:795
+#: plug-ins/file-tiff/file-tiff-load.c:800
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
@@ -11230,7 +11242,7 @@ msgstr ""
 "Не е дефиниран вид канал за прозрачност за „%s“. Приема се, че прозрачността "
 "не е предварително приложена"
 
-#: plug-ins/file-tiff/file-tiff-load.c:820
+#: plug-ins/file-tiff/file-tiff-load.c:825
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
@@ -11241,17 +11253,17 @@ msgstr ""
 "не е зададено, а присъстват допълнителни канали. Приема се, че първият "
 "допълнителен канал е неприложена прозрачност."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1109
+#: plug-ins/file-tiff/file-tiff-load.c:1114
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr "Неправилна или непозната компресия %u. Задава се, че няма компресия."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1167
+#: plug-ins/file-tiff/file-tiff-load.c:1172
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr "Не може да се създаде ново изображение: %s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1337
+#: plug-ins/file-tiff/file-tiff-load.c:1342
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr ""
@@ -11260,25 +11272,25 @@ msgstr ""
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: plug-ins/file-tiff/file-tiff-load.c:1347
+#: plug-ins/file-tiff/file-tiff-load.c:1352
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr ""
 "ПРЕДУПРЕЖДЕНИЕ: зададена е разделителна способност без мерна единица, задава "
 "се точки на инч (dpi)"
 
 #. xres but no yres
-#: plug-ins/file-tiff/file-tiff-load.c:1355
+#: plug-ins/file-tiff/file-tiff-load.c:1360
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr ""
 "ПРЕДУПРЕЖДЕНИЕ: липсва информация за разделителната способност по Y. Задава "
 "се същата като за X"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1376
+#: plug-ins/file-tiff/file-tiff-load.c:1381
 msgid "Invalid image resolution info, using default"
 msgstr ""
 "Неправилна разделителна способност на изображение. Задава се стандартната"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1438
+#: plug-ins/file-tiff/file-tiff-load.c:1443
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "Цветовата карта не може да се получи от „%s“"
@@ -11288,24 +11300,24 @@ msgstr "Цветовата карта не може да се получи от 
 #. * and can cause GIMP to become unresponsive and/or stuck.
 #. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:1528
+#: plug-ins/file-tiff/file-tiff-load.c:1533
 #, c-format
 msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
 msgstr "Подозрителен брой допълнителни канали: %d. Вероятно файлът е повреден."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1593
+#: plug-ins/file-tiff/file-tiff-load.c:1598
 msgid "TIFF Channel"
 msgstr "Канал TIFF"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1751
+#: plug-ins/file-tiff/file-tiff-load.c:1756
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 "Никакви данни не може да се прочетат от файла TIFF „%s“. Вероятно файлът е "
 "повреден."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1787
-#: plug-ins/file-tiff/file-tiff-load.c:1831
+#: plug-ins/file-tiff/file-tiff-load.c:1792
+#: plug-ins/file-tiff/file-tiff-load.c:1836
 #, c-format
 msgid ""
 "Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
@@ -11313,48 +11325,48 @@ msgstr ""
 "Грешка при опит за отваряне на временен файл %s „%s“ за зареждане на "
 "метаданните на TIFF: %s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1912
+#: plug-ins/file-tiff/file-tiff-load.c:1917
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr ""
 "%s: неподдържан формат на изображение. Липсва модул за зареждане на RGBA"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2027
-#: plug-ins/file-tiff/file-tiff-load.c:2224
+#: plug-ins/file-tiff/file-tiff-load.c:2032
+#: plug-ins/file-tiff/file-tiff-load.c:2229
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr ""
 "Неуспешно прочитане на плочка. Изображението може да е повредено на ред %d."
 
 #. Error reading scanline, stop loading
-#: plug-ins/file-tiff/file-tiff-load.c:2036
-#: plug-ins/file-tiff/file-tiff-load.c:2233
+#: plug-ins/file-tiff/file-tiff-load.c:2041
+#: plug-ins/file-tiff/file-tiff-load.c:2238
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 "Неуспешно изчитане на ред. Изображението може да е повредено на ред %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:2774
+#: plug-ins/file-tiff/file-tiff-load.c:2992
 msgid "Import from TIFF"
 msgstr "Внасяне от TIFF"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2782
+#: plug-ins/file-tiff/file-tiff-load.c:3000
 msgid "_Show reduced images"
 msgstr "Показване на _намалени изображения"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2827
+#: plug-ins/file-tiff/file-tiff-load.c:3045
 msgid "Process extra channel as:"
 msgstr "Обработка на допълнителния канал като:"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2830
+#: plug-ins/file-tiff/file-tiff-load.c:3048
 msgid "_Non-premultiplied alpha"
 msgstr "_Неприложена прозрачност"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2831
+#: plug-ins/file-tiff/file-tiff-load.c:3049
 msgid "Pre_multiplied alpha"
 msgstr "_Приложена прозрачност"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2832
+#: plug-ins/file-tiff/file-tiff-load.c:3050
 msgid "Channe_l"
 msgstr "_Канал"
 
@@ -14678,10 +14690,6 @@ msgstr "Използване на водачите на Gimp…"
 msgid "Create Guides..."
 msgstr "Създаване на водачи…"
 
-#: plug-ins/imagemap/imap-menu.ui:212
-msgid "Help"
-msgstr "Помощ"
-
 #: plug-ins/imagemap/imap-menu.ui:215 plug-ins/screenshot/screenshot.c:540
 msgid "Contents"
 msgstr "Съдържание"
@@ -14990,7 +14998,7 @@ msgstr "_Разстояние"
 msgid "Distance of observer from surface"
 msgstr "Разстояние на наблюдателя от повърхността"
 
-#: plug-ins/lighting/lighting-ui.c:247 plug-ins/map-object/map-object-ui.c:395
+#: plug-ins/lighting/lighting-ui.c:247 plug-ins/map-object/map-object-ui.c:363
 msgid "Recompute preview image"
 msgstr "Преизчисляване на предварителния преглед"
 
@@ -15010,7 +15018,7 @@ msgstr "_Настройки"
 msgid "_Light"
 msgstr "_Светлина"
 
-#: plug-ins/lighting/lighting-ui.c:272 plug-ins/map-object/map-object-ui.c:438
+#: plug-ins/lighting/lighting-ui.c:272 plug-ins/map-object/map-object-ui.c:406
 msgid "_Material"
 msgstr "_Материал"
 
@@ -15022,16 +15030,16 @@ msgstr "_Релеф"
 msgid "_Environment Map"
 msgstr "_Карта на средата"
 
-#: plug-ins/lighting/lighting-ui.c:281 plug-ins/map-object/map-object-ui.c:451
+#: plug-ins/lighting/lighting-ui.c:281 plug-ins/map-object/map-object-ui.c:419
 msgid "General Options"
 msgstr "Общи настройки"
 
-#: plug-ins/lighting/lighting-ui.c:313 plug-ins/map-object/map-object-ui.c:487
+#: plug-ins/lighting/lighting-ui.c:313 plug-ins/map-object/map-object-ui.c:455
 msgid "Light Settings"
 msgstr "Настройки на светлината"
 
-#: plug-ins/lighting/lighting-ui.c:332 plug-ins/map-object/map-object-ui.c:521
-#: plug-ins/map-object/map-object-ui.c:719
+#: plug-ins/lighting/lighting-ui.c:332 plug-ins/map-object/map-object-ui.c:487
+#: plug-ins/map-object/map-object-ui.c:699
 #: plug-ins/print/print-page-layout.c:384
 msgid "Position"
 msgstr "Позиция"
@@ -15346,81 +15354,81 @@ msgstr "_Дължина на цилиндъра"
 msgid "Cylinder length"
 msgstr "Дължина на цилиндъра"
 
-#: plug-ins/map-object/map-object-ui.c:347
+#: plug-ins/map-object/map-object-ui.c:315
 msgid "Map to Object"
 msgstr "Преобразуване към обект"
 
-#: plug-ins/map-object/map-object-ui.c:383
+#: plug-ins/map-object/map-object-ui.c:351
 msgid "_Preview!"
 msgstr "_Предварителен преглед!"
 
-#: plug-ins/map-object/map-object-ui.c:413
+#: plug-ins/map-object/map-object-ui.c:381
 msgid "Show _wireframe"
 msgstr "Показване на _скелета"
 
-#: plug-ins/map-object/map-object-ui.c:422
+#: plug-ins/map-object/map-object-ui.c:390
 msgid "Update preview _live"
 msgstr "_Обновяване на предварителния преглед"
 
-#: plug-ins/map-object/map-object-ui.c:432
+#: plug-ins/map-object/map-object-ui.c:400
 msgid "O_ptions"
 msgstr "_Настройки"
 
-#: plug-ins/map-object/map-object-ui.c:434
+#: plug-ins/map-object/map-object-ui.c:402
 msgid "Li_ght"
 msgstr "_Осветление"
 
-#: plug-ins/map-object/map-object-ui.c:436
+#: plug-ins/map-object/map-object-ui.c:404
 msgid "_Viewpoint"
 msgstr "_Изглед"
 
-#: plug-ins/map-object/map-object-ui.c:443
+#: plug-ins/map-object/map-object-ui.c:411
 msgid "Sp_here"
 msgstr "_Сфера"
 
-#: plug-ins/map-object/map-object-ui.c:445
+#: plug-ins/map-object/map-object-ui.c:413
 msgid "_Box"
 msgstr "_Кутия"
 
-#: plug-ins/map-object/map-object-ui.c:447
+#: plug-ins/map-object/map-object-ui.c:415
 msgid "C_ylinder"
 msgstr "_Цилиндър"
 
-#: plug-ins/map-object/map-object-ui.c:507
+#: plug-ins/map-object/map-object-ui.c:473
 msgid "Direction Vector"
 msgstr "Вектор на посока"
 
-#: plug-ins/map-object/map-object-ui.c:564
+#: plug-ins/map-object/map-object-ui.c:544
 msgid "Viewpoint Position"
 msgstr "Позиция на гледната точка"
 
-#: plug-ins/map-object/map-object-ui.c:586
+#: plug-ins/map-object/map-object-ui.c:566
 msgid "First Axis"
 msgstr "Първа ос"
 
-#: plug-ins/map-object/map-object-ui.c:606
+#: plug-ins/map-object/map-object-ui.c:586
 msgid "Second Axis"
 msgstr "Втора ос"
 
-#: plug-ins/map-object/map-object-ui.c:662
+#: plug-ins/map-object/map-object-ui.c:642
 msgid "Intensity Levels"
 msgstr "Нива на интензитет"
 
-#: plug-ins/map-object/map-object-ui.c:676
+#: plug-ins/map-object/map-object-ui.c:656
 msgid "Reflectivity"
 msgstr "Отражателност"
 
-#: plug-ins/map-object/map-object-ui.c:779
-#: plug-ins/map-object/map-object-ui.c:879
+#: plug-ins/map-object/map-object-ui.c:759
+#: plug-ins/map-object/map-object-ui.c:859
 #: plug-ins/print/print-page-layout.c:253
 msgid "Size"
 msgstr "Размер"
 
-#: plug-ins/map-object/map-object-ui.c:792
+#: plug-ins/map-object/map-object-ui.c:772
 msgid "Map Images to Box Faces"
 msgstr "Разполагане на изображенията по стените на кутията"
 
-#: plug-ins/map-object/map-object-ui.c:860
+#: plug-ins/map-object/map-object-ui.c:840
 msgid "Images for the Cap Faces"
 msgstr "Изображения за лицата на капаците"
 
@@ -16742,6 +16750,37 @@ msgstr "Липсва драйвер за TWAIN, не може да се скан
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "Прехвърляне на данни от скенер/фотоапарат"
+
+#, c-format
+#~ msgid "Frame %d of %d"
+#~ msgstr "Кадър %d от %d"
+
+#~ msgid ""
+#~ "Horizontal\n"
+#~ "Lines"
+#~ msgstr ""
+#~ "Хоризонтални\n"
+#~ "линии"
+
+#~ msgid ""
+#~ "Vertical\n"
+#~ "Lines"
+#~ msgstr ""
+#~ "Вертикални\n"
+#~ "линии"
+
+#~ msgid "Width:"
+#~ msgstr "Широчина:"
+
+#~ msgid "Spacing:"
+#~ msgstr "Разстояние:"
+
+#~ msgid "Offset:"
+#~ msgstr "Отместване:"
+
+#, c-format
+#~ msgid "File size: %s"
+#~ msgstr "Размер на файла: %s"
 
 #~ msgid "Type:"
 #~ msgstr "Вид:"
