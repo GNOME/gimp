@@ -22,7 +22,6 @@ fi
 printf "\e[0Ksection_start:`date +%s`:snap_environ[collapsed=true]\r\e[0KPreparing build environment\n"
 ## Option 1: no container environment (recommended)
 export SNAPCRAFT_BUILD_ENVIRONMENT=host
- 
 ## Option 2: containerized environment by lxd
 #sudo snap install lxd
 #sudo lxd init --auto
