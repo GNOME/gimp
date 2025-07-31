@@ -37,13 +37,13 @@ GIMP_DIR="$PWD/"
 cd ${GIMP_DIR}${PARENT_DIR}
 if [ "$GITLAB_CI" ]; then
   apt-get update >/dev/null 2>&1
-  apt-get install -y --no-install-recommends ca-certificates wget curl binutils debuginfod >/dev/null 2>&1
+  apt-get install -y --no-install-recommends ca-certificates wget curl >/dev/null 2>&1
 fi
 export HOST_ARCH=$(uname -m)
 export APPIMAGE_EXTRACT_AND_RUN=1
 
 if [ ! "$(find $GIMP_DIR -maxdepth 1 -iname "AppDir*")" ] || [ "$MODE" = '--bundle-only' ]; then
-  ## For now, we always use the latest go-appimagetool for bundling. See: https://github.com/probonopd/go-appimage/issues/275
+  ## we use go-appimagetool for part of the bundling
   if [ "$GITLAB_CI" ]; then
     apt-get install -y --no-install-recommends file patchelf >/dev/null 2>&1
   fi
@@ -215,6 +215,8 @@ bund_usr ()
           mv $dest_path/${2##*/} $USR_DIR/$4
           rm -r "$dest_path"
         fi
+
+      #when '--bundler' is set, do not copy found targets using bund_usr
       else
         printf "(INFO): skipping $target_path (will be bundled by the tool)\n"
         if echo "$target_path" | grep -q 'bin' || echo "$target_path" | grep -q '.so'; then
@@ -235,6 +237,7 @@ conf_app ()
   #Prefix from which to expand the var
   prefix=$UNIX_PREFIX
   case $1 in
+    #actually, using conf_app to set babl, gegl or gimp vars is not needed when built relocatable
     *BABL*|*GEGL*|*GIMP*)
       prefix=$GIMP_PREFIX
   esac
@@ -353,14 +356,14 @@ bund_usr "$GIMP_PREFIX" "bin/gimp-debug-tool*" --dest "libexec"
 ### Introspected plug-ins
 bund_usr "$GIMP_PREFIX" "lib/girepository-*/*.typelib"
 conf_app GI_TYPELIB_PATH "${LIB_DIR}/${LIB_SUBDIR}girepository-*"
-#### JavaScript plug-ins support
-bund_usr "$UNIX_PREFIX" "bin/gjs*"
-bund_usr "$UNIX_PREFIX" "lib/gjs/girepository-1.0/Gjs*" --dest "${LIB_DIR}/${LIB_SUBDIR}girepository-1.0"
 #### Python plug-ins support
 bund_usr "$UNIX_PREFIX" "bin/python*"
 bund_usr "$UNIX_PREFIX" "lib/python*"
 wipe_usr ${LIB_DIR}/*.pyc
 conf_app PYTHONDONTWRITEBYTECODE "1" --no-expand
+#### JavaScript plug-ins support
+bund_usr "$UNIX_PREFIX" "bin/gjs*"
+bund_usr "$UNIX_PREFIX" "lib/gjs/girepository-1.0/Gjs*" --dest "${LIB_DIR}/${LIB_SUBDIR}girepository-1.0"
 ####FIXME: lua crashes with loop: See: #11895
 #bund_usr "$UNIX_PREFIX" "bin/luajit" --rename "lua"
 #bund_usr "$UNIX_PREFIX" "lib/liblua5.1-lgi*"
@@ -412,6 +415,7 @@ echo "usr/${LIB_DIR}/${LIB_SUBDIR}gconv
 
 ## Debug symbols (not shipped since ad155fd5)
 #if [ "$GITLAB_CI" ]; then
+#  apt-get install -y --no-install-recommends binutils debuginfod
 #  export DEBUGINFOD_URLS="https://debuginfod.debian.net"
 #fi
 #for bin in $(find "$USR_DIR/bin" "$USR_DIR/$LIB_DIR" "$(dirname $APP_DIR/$LD_LINUX)" ! -iname "*.dumb*" -type f -exec head -c 4 {} \; -exec echo " {}" \;  | grep ^.ELF); do
