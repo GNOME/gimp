@@ -24,6 +24,7 @@ fi
 # (it is NOT a real/full bundle, deps from GNOME runtime are not bundled)
 printf "\e[0Ksection_start:`date +%s`:flat_making[collapsed=true]\r\e[0KPackaging repo as ${APP_ID}.flatpak\n"
 flatpak build-bundle repo ${APP_ID}.flatpak --runtime-repo=https://nightly.gnome.org/gnome-nightly.flatpakrepo ${APP_ID} ${BRANCH}
+printf "(INFO): Suceeded. To test this build, install it from the artifact with: flatpak install --user ${APP_ID}.flatpak -y\n"
 printf "\e[0Ksection_end:`date +%s`:flat_making\r\e[0K\n"
 
 
