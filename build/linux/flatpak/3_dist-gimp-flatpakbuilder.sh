@@ -7,9 +7,19 @@ case $(readlink /proc/$$/exe) in
 esac
 set -e
 
+if [ -z "$GITLAB_CI" ]; then
+  # Make the script work locally
+  if [ "$0" != 'build/linux/flatpak/3_dist-gimp-flatpakbuilder.sh' ] && [ $(basename "$PWD") != 'flatpak' ]; then
+    printf '\033[31m(ERROR)\033[0m: Script called from wrong dir. Please, read: https://developer.gimp.org/core/setup/build/linux/\n'
+    exit 1
+  elif [ $(basename "$PWD") = 'flatpak' ]; then
+    cd ../../..
+  fi
+fi
+
 
 # GLOBAL INFO
-APP_ID='org.gimp.GIMP.Nightly'
+$APP_ID=$(awk -F'"' '/"app-id"/ {print $4; exit}' build/linux/flatpak/org.gimp.GIMP-nightly.json)
 
 
 # GIMP FILES AS REPO
@@ -23,7 +33,7 @@ fi
 # Generate a Flatpak "bundle" to be tested with GNOME runtime installed
 # (it is NOT a real/full bundle, deps from GNOME runtime are not bundled)
 printf "\e[0Ksection_start:`date +%s`:flat_making[collapsed=true]\r\e[0KPackaging repo as ${APP_ID}.flatpak\n"
-flatpak build-bundle repo ${APP_ID}.flatpak --runtime-repo=https://nightly.gnome.org/gnome-nightly.flatpakrepo ${APP_ID} ${BRANCH}
+flatpak build-bundle repo ${APP_ID}.flatpak --runtime-repo=https://nightly.gnome.org/gnome-nightly.flatpakrepo ${APP_ID} $(awk -F'"' '/"branch"/ {print $4; exit}' build/linux/flatpak/org.gimp.GIMP-nightly.json)
 printf "(INFO): Suceeded. To test this build, install it from the artifact with: flatpak install --user ${APP_ID}.flatpak -y\n"
 printf "\e[0Ksection_end:`date +%s`:flat_making\r\e[0K\n"
 
