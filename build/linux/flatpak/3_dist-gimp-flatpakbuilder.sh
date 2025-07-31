@@ -19,7 +19,7 @@ fi
 
 
 # GLOBAL INFO
-$APP_ID=$(awk -F'"' '/"app-id"/ {print $4; exit}' build/linux/flatpak/org.gimp.GIMP-nightly.json)
+APP_ID=$(awk -F'"' '/"app-id"/ {print $4; exit}' build/linux/flatpak/org.gimp.GIMP-nightly.json)
 
 
 # GIMP FILES AS REPO
