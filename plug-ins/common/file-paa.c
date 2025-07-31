@@ -310,7 +310,8 @@ load_image (GFile                *file,
 
       if (image == NULL)
         image = gimp_image_new (width, height, image_type);
-      layer = gimp_layer_new (image, NULL, width, height, layer_type, 100,
+      layer = gimp_layer_new (image, _("Main surface"), width, height,
+                              layer_type, 100,
                               gimp_image_get_default_new_layer_mode (image));
       gimp_image_insert_layer (image, layer, NULL, num_mipmaps);
 
@@ -330,12 +331,13 @@ load_image (GFile                *file,
         {
           guchar *uncompressed_data;
           gint    estimated_size;
-          guchar  pixels[width * height * 4];
+          guint   dims = width * height;
+          guchar  pixels[dims * 4];
 
           if (paa_type != RGBA_8888)
-            estimated_size = width * height * 2;
+            estimated_size = dims * 2;
           else
-            estimated_size = width * height * 4;
+            estimated_size = dims * 4;
 
           uncompressed_data = g_malloc0 (estimated_size);
           if (! decode_lzss (raw_data, uncompressed_data, estimated_size))
@@ -345,6 +347,7 @@ load_image (GFile                *file,
                            gimp_file_get_utf8_name (file));
 
               g_free (raw_data);
+              g_free (uncompressed_data);
               g_object_unref (buffer);
               return NULL;
             }
@@ -384,7 +387,7 @@ load_image (GFile                *file,
               case RGBA_8888:
               case GRAY_ALPHA:
                 gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
-                                   NULL, uncompressed_data, GEGL_AUTO_ROWSTRIDE);
+                                 NULL, uncompressed_data, GEGL_AUTO_ROWSTRIDE);
                 break;
 
               default:
@@ -444,11 +447,11 @@ read_tag (FILE    *fp,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Could not read tag"));
+      g_free (data);
 
       return FALSE;
     }
-  if (data)
-    g_free (data);
+  g_free (data);
 
   return TRUE;
 }
@@ -457,16 +460,16 @@ read_tag (FILE    *fp,
  * https://github.com/PackJC/Paint.NET-PAA-PAC-Importer/
    blob/main/BIS/Core/Compression/LZSS.cs */
 static gboolean
-decode_lzss (guchar *raw_data, //input.ReadByte()
-             guchar *uncompressed_data, //dst
-             gint    estimated_size) //Num1
+decode_lzss (guchar *raw_data,
+             guchar *uncompressed_data,
+             gint    estimated_size)
 {
   gchar  char_array[4113];
   gint   index       = 4078;
-  gint   flag        = 0; //Num4
+  gint   flag        = 0;
   gint   raw_index   = 0;
-  gint   data_index  = 0; //Num2
-  guchar pixel       = 0; //Num3
+  gint   data_index  = 0;
+  guchar pixel       = 0;
 
   if (estimated_size <= 0)
     return FALSE;
