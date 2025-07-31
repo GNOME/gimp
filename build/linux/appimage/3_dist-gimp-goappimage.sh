@@ -43,10 +43,7 @@ export HOST_ARCH=$(uname -m)
 export APPIMAGE_EXTRACT_AND_RUN=1
 
 if [ ! "$(find $GIMP_DIR -maxdepth 1 -iname "AppDir*")" ] || [ "$MODE" = '--bundle-only' ]; then
-  ## For now, we always use the latest go-appimagetool for bundling. See: https://github.com/probonopd/go-appimage/issues/275
-  if [ "$GITLAB_CI" ]; then
-    apt-get install -y --no-install-recommends file patchelf >/dev/null 2>&1
-  fi
+  ## we use go-appimagetool for bundling files for the .appimage
   bundler="$PWD/go-appimagetool.AppImage"
   rm -f "$bundler" >/dev/null
   wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-${HOST_ARCH}.AppImage" | head -n 1 | cut -d '"' -f 2) >/dev/null 2>&1
