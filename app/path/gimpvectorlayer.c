@@ -657,14 +657,12 @@ gimp_vector_layer_render (GimpVectorLayer *layer)
 
   g_object_freeze_notify (G_OBJECT (drawable));
 
-  /* Resize vector layer boundaries to current path */
-  gimp_image_undo_freeze (image);
+  /* TODO: Resize more efficiently and without undo history */
   gimp_item_get_offset (GIMP_ITEM (layer), &layer_x, &layer_y);
   gimp_item_bounds (GIMP_ITEM (layer->options->path), &x, &y, &width, &height);
   gimp_item_resize (GIMP_ITEM (layer), gimp_get_user_context (image->gimp),
                     GIMP_FILL_TRANSPARENT, width, height,
                     layer_x - x, layer_y - y);
-  gimp_image_undo_thaw (image);
 
   /* make the layer background transparent */
   gimp_drawable_fill (GIMP_DRAWABLE (layer),

@@ -175,6 +175,9 @@ gint            gimp_path_interpolate           (GimpPath           *path,
                                                  gint                max_points,
                                                  GimpCoords         *ret_coords);
 
+gboolean        gimp_path_attached_to_vector_layer
+                                                (GimpPath           *path,
+                                                 GimpImage          *image);
 /* usually overloaded */
 
 /* returns a bezier representation */
