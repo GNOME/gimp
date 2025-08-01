@@ -1,20 +1,17 @@
 #!/bin/sh
 
+# Ensure the script work properly
 case $(readlink /proc/$$/exe) in
   *bash)
     set -o posix
     ;;
 esac
 set -e
-
-if [ -z "$GITLAB_CI" ]; then
-  # Make the script work locally
-  if [ "$0" != 'build/linux/flatpak/3_dist-gimp-flatpakbuilder.sh' ] && [ $(basename "$PWD") != 'flatpak' ]; then
-    printf '\033[31m(ERROR)\033[0m: Script called from wrong dir. Please, read: https://developer.gimp.org/core/setup/build/linux/\n'
-    exit 1
-  elif [ $(basename "$PWD") = 'flatpak' ]; then
-    cd ../../..
-  fi
+if [ "$0" != 'build/linux/flatpak/3_dist-gimp-flatpakbuilder.sh' ] && [ $(basename "$PWD") != 'flatpak' ]; then
+  printf '\033[31m(ERROR)\033[0m: Script called from wrong dir. Please, read: https://developer.gimp.org/core/setup/build/linux/\n'
+  exit 1
+elif [ $(basename "$PWD") = 'flatpak' ]; then
+  cd ../../..
 fi
 
 

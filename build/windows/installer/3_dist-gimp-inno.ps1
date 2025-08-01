@@ -8,22 +8,20 @@ param ($revision = "$GIMP_CI_WIN_INSTALLER",
        $GIMP64 = 'gimp-clang64',
        $GIMPA64 = 'gimp-clangarm64')
 
+# Ensure the script work properly
 $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $true
-
+if (-not (Test-Path build\windows\installer) -and -not (Test-Path 3_dist-gimp-inno.ps1 -Type Leaf) -or $PSScriptRoot -notlike "*build\windows\installer*")
+  {
+    Write-Host '(ERROR): Script called from wrong dir. Please, call the script from gimp source.' -ForegroundColor Red
+    exit 1
+  }
+elseif (Test-Path 3_dist-gimp-inno.ps1 -Type Leaf)
+  {
+    Set-Location ..\..\..
+  }
 if (-not $GITLAB_CI)
   {
-    # Make the script work locally
-    if (-not (Test-Path build\windows\installer) -and -not (Test-Path 3_dist-gimp-inno.ps1 -Type Leaf) -or $PSScriptRoot -notlike "*build\windows\installer*")
-      {
-        Write-Host '(ERROR): Script called from wrong dir. Please, call the script from gimp source.' -ForegroundColor Red
-        exit 1
-      }
-    elseif (Test-Path 3_dist-gimp-inno.ps1 -Type Leaf)
-      {
-        Set-Location ..\..\..
-      }
-
     $PARENT_DIR = '..\'
   }
 

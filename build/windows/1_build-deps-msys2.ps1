@@ -1,21 +1,19 @@
 #!/usr/bin/env pwsh
 
+# Ensure the script work properly
 $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $true
-
+if (-not (Test-Path build\windows) -and -not (Test-Path 1_build-deps-msys2.ps1 -Type Leaf) -or $PSScriptRoot -notlike "*build\windows*")
+  {
+    Write-Host '(ERROR): Script called from wrong dir. Please, read: https://developer.gimp.org/core/setup/build/windows/' -ForegroundColor Red
+    exit 1
+  }
+elseif (Test-Path 1_build-deps-msys2.ps1 -Type Leaf)
+  {
+    Set-Location ..\..
+  }
 if (-not $GITLAB_CI)
   {
-    # Make the script work locally
-    if (-not (Test-Path build\windows) -and -not (Test-Path 1_build-deps-msys2.ps1 -Type Leaf) -or $PSScriptRoot -notlike "*build\windows*")
-      {
-        Write-Host '(ERROR): Script called from wrong dir. Please, read: https://developer.gimp.org/core/setup/build/windows/' -ForegroundColor Red
-        exit 1
-      }
-    elseif (Test-Path 1_build-deps-msys2.ps1 -Type Leaf)
-      {
-        Set-Location ..\..
-      }
-
     $GIT_DEPTH = '1'
 
     $PARENT_DIR = '\..'

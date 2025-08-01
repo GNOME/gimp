@@ -11,22 +11,20 @@ if [ "$REVISION" = '--bundle-only' ]; then
 fi
 BUILD_DIR="$3"
 
+# Ensure the script work properly
 case $(readlink /proc/$$/exe) in
   *bash)
     set -o posix
     ;;
 esac
 set -e
-
+if [ "$0" != 'build/linux/appimage/3_dist-gimp-goappimage.sh' ] && [ $(basename "$PWD") != 'appimage' ]; then
+  printf '\033[31m(ERROR)\033[0m: Script called from wrong dir. Please, call this script from the root of gimp git dir\n'
+  exit 1
+elif [ $(basename "$PWD") = 'appimage' ]; then
+  cd ../../..
+fi
 if [ -z "$GITLAB_CI" ]; then
-  # Make the script work locally
-  if [ "$0" != 'build/linux/appimage/3_dist-gimp-goappimage.sh' ] && [ $(basename "$PWD") != 'appimage' ]; then
-    printf '\033[31m(ERROR)\033[0m: Script called from wrong dir. Please, call this script from the root of gimp git dir\n'
-    exit 1
-  elif [ $(basename "$PWD") = 'appimage' ]; then
-    cd ../../..
-  fi
-
   export PARENT_DIR='../'
 fi
 
