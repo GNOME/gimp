@@ -122,6 +122,7 @@ stages:
   timeout: 20m
 
 .debian_environ: &ENVIRON
+# See: https://testing.developer.gimp.org/core/setup/build/#preparing-for-building
 - printf "\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KPreparing build environment\n"
 - gcc -print-multi-os-directory 2>/dev/null | grep -q ./ && export LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || export LIB_DIR="lib"
 - gcc -print-multiarch 2>/dev/null | grep -q . && export LIB_SUBDIR=$(echo $(gcc -print-multiarch)'/') || export LIB_SUBDIR=
@@ -518,6 +519,7 @@ gimp-snap:
   timeout: 40m
 
 .win_environ: &WIN_ENVIRON
+# See: https://testing.developer.gimp.org/core/setup/build/windows/#prepare-for-building
 - Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):win_environ[collapsed=true]$([char]13)$([char]27)[0KPreparing build environment"
 ## Build-time vars
 - $env:PKG_CONFIG_PATH = "$GIMP_PREFIX/lib/pkgconfig;$MSYS_ROOT/$MSYSTEM_PREFIX/lib/pkgconfig;$MSYS_ROOT/$MSYSTEM_PREFIX/share/pkgconfig"
