@@ -226,19 +226,21 @@ foreach ($bundle in $supported_archs)
     ### Set custom GIMP version (major.minor.micro+revision.0)
     (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@CUSTOM_GIMP_VERSION@","$CUSTOM_GIMP_VERSION"} |
     Set-Content $msix_arch\AppxManifest.xml
-    ### Set GIMP mutex version (major.minor or major)
+    ### Set some things based on GIMP mutex version (major.minor or major)
     if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
       {
+        #Needed to differentiate on Start Menu etc 
         $channel_suffix=" (Insider)"
       }
     else
       {
+        #Needed to differentiate on PowerShell etc
         $mutex_suffix="-$GIMP_MUTEX_VERSION"
       }
     (Get-Content $msix_arch\AppxManifest.xml)                         | Foreach-Object {$_ -replace "@GIMP_MUTEX_VERSION@","$GIMP_MUTEX_VERSION"} |
     Foreach-Object {$_ -replace "@CHANNEL_SUFFIX@","$channel_suffix"} | Foreach-Object {$_ -replace "@MUTEX_SUFFIX@","$mutex_suffix"}             |
     Set-Content $msix_arch\AppxManifest.xml
-    ### Match supported filetypes
+    ### List supported filetypes
     $file_types = Get-Content "$build_dir\plug-ins\file_associations.list" | Foreach-Object {"              <uap:FileType>." + $_} |
                   Foreach-Object {$_ +  "</uap:FileType>"}                 | Where-Object {$_ -notmatch 'xcf'}
     (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@FILE_TYPES@","$file_types"}  |
@@ -252,10 +254,10 @@ foreach ($bundle in $supported_archs)
         exit 1
       }
     Write-Output "(INFO): generating resources*.pri from $icons_path"
-    ### Copy pre-generated icons to each msix_arch
+    ### Copy pre-generated icons to msix_arch\Assets
     New-Item $msix_arch\Assets -ItemType Directory | Out-Null
     Copy-Item "$icons_path\*.png" $msix_arch\Assets\ -Recurse
-    ### Generate resources*.pri
+    ### Generate temp priconfig.xml then resources*.pri
     Set-Location $msix_arch
     makepri createconfig /cf priconfig.xml /dq lang-en-US /pv 10.0.0 | Out-File ..\winsdk.log
     Set-Location ..\
