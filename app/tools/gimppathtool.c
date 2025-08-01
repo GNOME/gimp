@@ -520,7 +520,7 @@ gimp_path_tool_image_selected_layers_changed (GimpPathTool *path_tool)
 
           if (vector_layer->options && vector_layer->options->path)
             gimp_path_tool_set_path (path_tool,
-                                       vector_layer->options->path);
+                                     vector_layer->options->path);
         }
     }
 }

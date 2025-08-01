@@ -40,6 +40,7 @@
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo-push.h"
+#include "core/gimpitemstack.h"
 #include "core/gimppaintinfo.h"
 #include "core/gimpstrokeoptions.h"
 
@@ -50,6 +51,8 @@
 #include "gimppath.h"
 #include "gimppath-preview.h"
 #include "gimpstroke.h"
+#include "gimpvectorlayer.h"
+#include "gimpvectorlayeroptions.h"
 
 #include "gimp-intl.h"
 
@@ -163,6 +166,10 @@ static gint       gimp_path_real_interpolate        (GimpPath          *path,
                                                      gdouble            precision,
                                                      gint               max_points,
                                                      GimpCoords        *ret_coords);
+
+static gboolean   gimp_path_attached_to_vector_layer_rec
+                                                    (GimpPath          *path,
+                                                     GList             *layers);
 
 static GimpBezierDesc * gimp_path_make_bezier       (GimpPath          *path);
 static GimpBezierDesc * gimp_path_real_make_bezier  (GimpPath          *path);
@@ -1198,6 +1205,84 @@ gimp_path_real_interpolate (GimpPath    *path,
   g_printerr ("gimp_path_interpolate: default implementation\n");
 
   return 0;
+}
+
+gboolean
+gimp_path_attached_to_vector_layer (GimpPath  *path,
+                                    GimpImage *image)
+{
+  GList *layers;
+  GList *list;
+
+  g_return_val_if_fail (GIMP_IS_PATH (path), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+
+  layers = gimp_image_get_layer_iter (image);
+
+  for (list = layers; list; list = g_list_next (list))
+    {
+      if (GIMP_IS_VECTOR_LAYER (list->data))
+        {
+          GimpVectorLayer *vector_layer = GIMP_VECTOR_LAYER (list->data);
+
+          if (vector_layer->options       &&
+              vector_layer->options->path &&
+              (path == vector_layer->options->path))
+            return TRUE;
+        }
+
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (list->data)))
+        {
+          GimpContainer *container;
+          GList         *iter2;
+
+          container = gimp_viewable_get_children (GIMP_VIEWABLE (list->data));
+
+          iter2 =
+            gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (container));
+
+          if (gimp_path_attached_to_vector_layer_rec (path, iter2))
+            return TRUE;
+        }
+    }
+
+  return FALSE;
+}
+
+static gboolean
+gimp_path_attached_to_vector_layer_rec (GimpPath  *path,
+                                        GList     *layers)
+{
+  GList *list;
+
+  for (list = layers; list; list = g_list_next (list))
+    {
+      if (GIMP_IS_VECTOR_LAYER (list->data))
+        {
+          GimpVectorLayer *vector_layer = GIMP_VECTOR_LAYER (list->data);
+
+          if (vector_layer->options       &&
+              vector_layer->options->path &&
+              (path == vector_layer->options->path))
+            return TRUE;
+        }
+
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (list->data)))
+        {
+          GimpContainer *container;
+          GList         *iter2;
+
+          container = gimp_viewable_get_children (GIMP_VIEWABLE (list->data));
+
+          iter2 =
+            gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (container));
+
+          if (gimp_path_attached_to_vector_layer_rec (path, iter2))
+            return TRUE;
+        }
+    }
+
+  return FALSE;
 }
 
 const GimpBezierDesc *
