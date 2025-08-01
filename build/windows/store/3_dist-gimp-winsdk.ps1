@@ -173,8 +173,14 @@ foreach ($bundle in $supported_archs)
       }
     Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):${msix_arch}_making[collapsed=true]$([char]13)$([char]27)[0KMaking ${temp_text}$msix_arch MSIX"
 
-    ## Prevent Git going crazy
-    $ig_content = "`n$msix_arch`n*.appxsym`n*.zip"
+    ## Create temporary dir
+    if (Test-Path $msix_arch)
+      {
+        Remove-Item $msix_arch/ -Recurse
+      }
+    New-Item $msix_arch -ItemType Directory | Out-Null
+    ### Prevent Git going crazy
+    $ig_content = "`n$msix_arch"
     if (Test-Path .gitignore -Type Leaf)
       {
         if (-not (Test-Path .gitignore.bak -Type Leaf))
@@ -188,13 +194,6 @@ foreach ($bundle in $supported_archs)
         New-Item .gitignore | Out-Null
         Set-Content .gitignore "$ig_content"
       }
-
-    ## Create temporary dir
-    if (Test-Path $msix_arch)
-      {
-        Remove-Item $msix_arch/ -Recurse
-      }
-    New-Item $msix_arch -ItemType Directory | Out-Null
 
 
     # 3. PREPARE MSIX "SOURCE"
@@ -309,6 +308,11 @@ foreach ($bundle in $supported_archs)
     Write-Output "(INFO): packaging $MSIX_ARTIFACT"
     makeappx pack /d $msix_arch /p $MSIX_ARTIFACT /o | Out-File winsdk.log -Append
     Remove-Item $msix_arch/ -Recurse
+    Remove-Item .gitignore
+    if (Test-Path .gitignore.bak -Type Leaf)
+      {
+        Rename-Item .gitignore.bak .gitignore
+      }
     Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):${msix_arch}_making$([char]13)$([char]27)[0K"
   } #END of 'foreach ($bundle'
 
@@ -431,12 +435,6 @@ if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
       }
   }
 
-
-Remove-Item .gitignore
-if (Test-Path .gitignore.bak -Type Leaf)
-  {
-    Rename-Item .gitignore.bak .gitignore
-  }
 
 if ($GITLAB_CI)
   {
