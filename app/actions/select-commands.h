@@ -21,6 +21,9 @@
 void   select_all_cmd_callback              (GimpAction *action,
                                              GVariant   *value,
                                              gpointer    data);
+void   select_layer_cmd_callback            (GimpAction *action,
+                                             GVariant   *value,
+                                             gpointer    data);
 void   select_none_cmd_callback             (GimpAction *action,
                                              GVariant   *value,
                                              gpointer    data);

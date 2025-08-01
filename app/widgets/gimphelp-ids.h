@@ -69,6 +69,7 @@
 
 #define GIMP_HELP_SELECTION_DIALOG                "gimp-selection-dialog"
 #define GIMP_HELP_SELECTION_ALL                   "gimp-selection-all"
+#define GIMP_HELP_SELECTION_LAYERS                "gimp-selection-layers"
 #define GIMP_HELP_SELECTION_NONE                  "gimp-selection-none"
 #define GIMP_HELP_SELECTION_INVERT                "gimp-selection-invert"
 #define GIMP_HELP_SELECTION_FLOAT                 "gimp-selection-float"

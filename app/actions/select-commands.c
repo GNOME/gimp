@@ -30,6 +30,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
+#include "core/gimpchannel-combine.h"
 #include "core/gimpimage.h"
 #include "core/gimpselection.h"
 
@@ -85,6 +86,42 @@ select_all_cmd_callback (GimpAction *action,
   return_if_no_image (image, data);
 
   gimp_channel_all (gimp_image_get_mask (image), TRUE);
+  gimp_image_flush (image);
+}
+
+void
+select_layer_cmd_callback (GimpAction *action,
+                           GVariant   *value,
+                           gpointer    data)
+{
+  GimpChannelOps ops;
+  GimpImage     *image;
+  GimpItem      *item;
+  GList         *iter;
+  GList         *layers;
+
+  return_if_no_image (image, data);
+
+  ops = GIMP_CHANNEL_OP_REPLACE;
+  layers = gimp_image_get_selected_layers (image);
+
+  if (g_list_length (layers) > 0)
+    gimp_channel_push_undo (gimp_image_get_mask (image),
+                            C_("undo-type", "Select Layers"));
+
+  for (iter = layers; iter; iter = iter->next)
+    {
+      item = GIMP_ITEM (iter->data);
+      gimp_channel_combine_rect (gimp_image_get_mask (image),
+                                 ops,
+                                 gimp_item_get_offset_x (item),
+                                 gimp_item_get_offset_y (item),
+                                 gimp_item_get_width (item),
+                                 gimp_item_get_height (item));
+
+      ops = GIMP_CHANNEL_OP_ADD;
+    }
+
   gimp_image_flush (image);
 }
 
