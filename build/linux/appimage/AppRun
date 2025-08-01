@@ -9,10 +9,10 @@ fi
 
 
 ## Minimum runtime paths. See: #13527 and #13603
-export PATH="$APPDIR"/usr/bin/:"$PATH"
+export PATH="${APPDIR}/usr/bin/:$PATH"
 unset LD_PRELOAD
 unset LD_LIBRARY_PATH
-export XDG_DATA_DIRS="$APPDIR"/usr/share/:"$XDG_DATA_DIRS"
+export XDG_DATA_DIRS="${APPDIR}/usr/share/"
 
 
 ## Other needed runtime paths (added by 3_dist-gimp-goappimage.sh)
