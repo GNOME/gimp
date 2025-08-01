@@ -202,12 +202,15 @@ foreach ($bundle in $supported_archs)
     ## 3.1. CONFIGURE MANIFEST
     Write-Output "(INFO): configuring AppxManifest.xml for $msix_arch"
     Copy-Item build\windows\store\AppxManifest.xml $msix_arch
+    function conf_manifest ([string]$search, [string]$replace)
+    {
+      (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "$search","$replace"} |
+      Set-Content $msix_arch\AppxManifest.xml
+    }
     ### Set msix_arch
-    (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "neutral","$msix_arch"} |
-    Set-Content $msix_arch\AppxManifest.xml
+    conf_manifest 'neutral' "$msix_arch"
     ### Set Identity Name
-    (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@IDENTITY_NAME@","$IDENTITY_NAME"} |
-    Set-Content $msix_arch\AppxManifest.xml
+    conf_manifest '@IDENTITY_NAME@' "$IDENTITY_NAME"
     ### Set Display Name (the name shown in MS Store)
     if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
       {
@@ -221,25 +224,23 @@ foreach ($bundle in $supported_archs)
       {
         $display_name='GIMP'
       }
-    (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@DISPLAY_NAME@","$display_name"} |
-    Set-Content $msix_arch\AppxManifest.xml
+    conf_manifest '@DISPLAY_NAME@' "$display_name"
     ### Set custom GIMP version (major.minor.micro+revision.0)
-    (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@CUSTOM_GIMP_VERSION@","$CUSTOM_GIMP_VERSION"} |
-    Set-Content $msix_arch\AppxManifest.xml
+    conf_manifest '@CUSTOM_GIMP_VERSION@' "$CUSTOM_GIMP_VERSION"
     ### Set some things based on GIMP mutex version (major.minor or major)
+    conf_manifest '@GIMP_MUTEX_VERSION@' "$GIMP_MUTEX_VERSION"
+    #### Needed to differentiate on Start Menu etc 
     if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
       {
-        #Needed to differentiate on Start Menu etc 
         $channel_suffix=" (Insider)"
       }
-    else
+    conf_manifest '@CHANNEL_SUFFIX@' "$channel_suffix"
+    #### Needed to differentiate on PowerShell etc
+    if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)
       {
-        #Needed to differentiate on PowerShell etc
         $mutex_suffix="-$GIMP_MUTEX_VERSION"
       }
-    (Get-Content $msix_arch\AppxManifest.xml)                         | Foreach-Object {$_ -replace "@GIMP_MUTEX_VERSION@","$GIMP_MUTEX_VERSION"} |
-    Foreach-Object {$_ -replace "@CHANNEL_SUFFIX@","$channel_suffix"} | Foreach-Object {$_ -replace "@MUTEX_SUFFIX@","$mutex_suffix"}             |
-    Set-Content $msix_arch\AppxManifest.xml
+    conf_manifest '@MUTEX_SUFFIX@' "$mutex_suffix"
     ### List supported filetypes
     $file_types = Get-Content "$build_dir\plug-ins\file_associations.list" | Foreach-Object {"              <uap:FileType>." + $_} |
                   Foreach-Object {$_ +  "</uap:FileType>"}                 | Where-Object {$_ -notmatch 'xcf'}
