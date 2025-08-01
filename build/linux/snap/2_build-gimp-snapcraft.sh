@@ -1,20 +1,17 @@
 #!/bin/sh
 
+# Ensure the script work properly
 case $(readlink /proc/$$/exe) in
   *bash)
     set -o posix
     ;;
 esac
 set -e
-
-if [ -z "$GITLAB_CI" ]; then
-  # Make the script work locally
-  if [ "$0" != 'build/linux/snap/2_build-gimp-snapcraft.sh' ] && [ $(basename "$PWD") != 'snap' ]; then
-    printf '\033[31m(ERROR)\033[0m: Script called from wrong dir. Please, call this script from the root of gimp git dir\n'
-    exit 1
-  elif [ $(basename "$PWD") = 'snap' ]; then
-    cd ../../..
-  fi
+if [ "$0" != 'build/linux/snap/2_build-gimp-snapcraft.sh' ] && [ $(basename "$PWD") != 'snap' ]; then
+  printf '\033[31m(ERROR)\033[0m: Script called from wrong dir. Please, call this script from the root of gimp git dir\n'
+  exit 1
+elif [ $(basename "$PWD") = 'snap' ]; then
+  cd ../../..
 fi
 
 
