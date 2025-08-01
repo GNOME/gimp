@@ -198,6 +198,13 @@ foreach ($bundle in $supported_archs)
 
 
     # 3. PREPARE MSIX "SOURCE"
+    # (We test the existence of the icons here (and not on 3.2) to avoid creating AppxManifest.xml for nothing)
+    $icons_path = "$build_dir\build\windows\store\Assets"
+    if (-not (Test-Path "$icons_path"))
+      {
+        Write-Host "(ERROR): MS Store icons not found. You can tweak 'build/windows/2_build-gimp-msys2.ps1' or configure GIMP with '-Dms-store=true' to build them." -ForegroundColor red
+        exit 1
+      }
 
     ## 3.1. CONFIGURE MANIFEST
     Write-Output "(INFO): configuring AppxManifest.xml for $msix_arch"
@@ -248,12 +255,6 @@ foreach ($bundle in $supported_archs)
     Set-Content $msix_arch\AppxManifest.xml
 
     ## 3.2. CREATE ICON ASSETS
-    $icons_path = "$build_dir\build\windows\store\Assets"
-    if (-not (Test-Path "$icons_path"))
-      {
-        Write-Host "(ERROR): MS Store icons not found. You can tweak 'build/windows/2_build-gimp-msys2.ps1' or configure GIMP with '-Dms-store=true' to build them." -ForegroundColor red
-        exit 1
-      }
     Write-Output "(INFO): generating resources*.pri from $icons_path"
     ### Copy pre-generated icons to msix_arch\Assets
     New-Item $msix_arch\Assets -ItemType Directory | Out-Null
