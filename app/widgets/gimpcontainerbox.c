@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpcontainerbox.c
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2004-2025 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@
 
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
+#include "core/gimp-utils.h"
 
 #include "gimpcontainerbox.h"
 #include "gimpcontainerview.h"
@@ -41,20 +42,47 @@
 #include "gimpviewrenderer.h"
 
 
+typedef struct _GimpContainerBoxPrivate GimpContainerBoxPrivate;
+
+struct _GimpContainerBoxPrivate
+{
+  GtkGesture *zoom_gesture;
+  gdouble     zoom_last_value;
+  gdouble     zoom_accum_scroll_delta;
+};
+
+#define GET_PRIVATE(obj) \
+  ((GimpContainerBoxPrivate *) gimp_container_box_get_instance_private ((GimpContainerBox *) (obj)))
+
+
 static void   gimp_container_box_view_iface_init   (GimpContainerViewInterface *iface);
-static void   gimp_container_box_docked_iface_init (GimpDockedInterface *iface);
+static void   gimp_container_box_docked_iface_init (GimpDockedInterface        *iface);
 
-static void   gimp_container_box_constructed       (GObject      *object);
+static void   gimp_container_box_constructed         (GObject          *object);
+static void   gimp_container_box_finalize            (GObject          *object);
 
-static GtkWidget * gimp_container_box_get_preview  (GimpDocked   *docked,
-                                                    GimpContext  *context,
-                                                    GtkIconSize   size);
-static void        gimp_container_box_set_context  (GimpDocked   *docked,
-                                                    GimpContext  *context);
+static void   gimp_container_box_set_context         (GimpDocked       *docked,
+                                                      GimpContext      *context);
+static GtkWidget *
+              gimp_container_box_get_preview         (GimpDocked       *docked,
+                                                      GimpContext      *context,
+                                                      GtkIconSize       size);
+
+static gboolean
+              gimp_container_box_scroll_to_zoom      (GtkWidget        *widget,
+                                                      GdkEventScroll   *event,
+                                                      GimpContainerBox *box);
+static void   gimp_container_box_zoom_gesture_begin  (GtkGestureZoom   *gesture,
+                                                      GdkEventSequence *sequence,
+                                                      GimpContainerBox *box);
+static void   gimp_container_box_zoom_gesture_update (GtkGestureZoom   *gesture,
+                                                      GdkEventSequence *sequence,
+                                                      GimpContainerBox *box);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpContainerBox, gimp_container_box,
                          GIMP_TYPE_EDITOR,
+                         G_ADD_PRIVATE (GimpContainerBox)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
                                                 gimp_container_box_view_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
@@ -69,6 +97,7 @@ gimp_container_box_class_init (GimpContainerBoxClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->constructed  = gimp_container_box_constructed;
+  object_class->finalize     = gimp_container_box_finalize;
   object_class->set_property = _gimp_container_view_set_property;
   object_class->get_property = _gimp_container_view_get_property;
 
@@ -78,15 +107,33 @@ gimp_container_box_class_init (GimpContainerBoxClass *klass)
 static void
 gimp_container_box_init (GimpContainerBox *box)
 {
-  GtkWidget *sb;
+  GimpContainerBoxPrivate *priv = GET_PRIVATE (box);
+  GtkWidget               *sb;
 
   box->scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_box_pack_start (GTK_BOX (box), box->scrolled_win, TRUE, TRUE, 0);
   gtk_widget_show (box->scrolled_win);
 
-  sb = gtk_scrolled_window_get_vscrollbar (GTK_SCROLLED_WINDOW (box->scrolled_win));
+  gtk_widget_add_events (box->scrolled_win, GDK_TOUCHPAD_GESTURE_MASK);
 
+  g_signal_connect (box->scrolled_win, "scroll-event",
+                    G_CALLBACK (gimp_container_box_scroll_to_zoom),
+                    box);
+
+  sb = gtk_scrolled_window_get_vscrollbar (GTK_SCROLLED_WINDOW (box->scrolled_win));
   gtk_widget_set_can_focus (sb, FALSE);
+
+  priv->zoom_gesture = gtk_gesture_zoom_new (GTK_WIDGET (box->scrolled_win));
+  gtk_event_controller_set_propagation_phase (GTK_EVENT_CONTROLLER (priv->zoom_gesture),
+                                              GTK_PHASE_CAPTURE);
+
+  /* The default signal handler needs to run first to setup scale delta */
+  g_signal_connect_after (priv->zoom_gesture, "begin",
+                          G_CALLBACK (gimp_container_box_zoom_gesture_begin),
+                          box);
+  g_signal_connect_after (priv->zoom_gesture, "update",
+                          G_CALLBACK (gimp_container_box_zoom_gesture_update),
+                          box);
 }
 
 static void
@@ -120,6 +167,16 @@ gimp_container_box_constructed (GObject *object)
    */
   gimp_container_view_set_dnd_widget (GIMP_CONTAINER_VIEW (box),
                                       box->scrolled_win);
+
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+}
+
+static void
+gimp_container_box_finalize (GObject *object)
+{
+  GimpContainerBoxPrivate *priv = GET_PRIVATE (object);
+
+  g_clear_object (&priv->zoom_gesture);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 }
@@ -218,4 +275,112 @@ gimp_container_box_get_preview (GimpDocked   *docked,
                                     width, height, border_width);
 
   return preview;
+}
+
+/* We want to zoom on each 1/4 scroll events to roughly match zooming
+ * behavior  of the main canvas. Each step of GIMP_VIEW_SIZE_* is
+ * approximately  of sqrt(2) = 1.4 relative change. The main canvas
+ * on the other hand has zoom step equal to ZOOM_MIN_STEP=1.1
+ * (see gimp_zoom_model_zoom_step).
+ */
+#define SCROLL_ZOOM_STEP_SIZE 0.25
+
+static gboolean
+gimp_container_box_scroll_to_zoom (GtkWidget        *widget,
+                                   GdkEventScroll   *event,
+                                   GimpContainerBox *box)
+{
+  GimpContainerBoxPrivate *priv = GET_PRIVATE (box);
+  GimpContainerView       *view = GIMP_CONTAINER_VIEW (box);
+  gint                     view_border_width;
+  gint                     view_size;
+
+  if ((event->state & GDK_CONTROL_MASK) == 0)
+    return FALSE;
+
+  if (event->direction == GDK_SCROLL_UP)
+    priv->zoom_accum_scroll_delta -= SCROLL_ZOOM_STEP_SIZE;
+  else if (event->direction == GDK_SCROLL_DOWN)
+    priv->zoom_accum_scroll_delta += SCROLL_ZOOM_STEP_SIZE;
+  else if (event->direction == GDK_SCROLL_SMOOTH)
+    priv->zoom_accum_scroll_delta += event->delta_y * SCROLL_ZOOM_STEP_SIZE;
+  else
+    return FALSE;
+
+  view_size = gimp_container_view_get_view_size (view, &view_border_width);
+
+  if (priv->zoom_accum_scroll_delta > 1)
+    {
+      priv->zoom_accum_scroll_delta -= 1;
+
+      view_size = gimp_view_size_get_smaller (view_size);
+    }
+  else if (priv->zoom_accum_scroll_delta < -1)
+    {
+      priv->zoom_accum_scroll_delta += 1;
+
+      view_size = gimp_view_size_get_larger (view_size);
+    }
+  else
+    {
+      return TRUE;
+    }
+
+  gimp_container_view_set_view_size (view, view_size, view_border_width);
+
+  return TRUE;
+}
+
+#define ZOOM_GESTURE_STEP_SIZE 1.2
+
+static void
+gimp_container_box_zoom_gesture_begin (GtkGestureZoom   *gesture,
+                                       GdkEventSequence *sequence,
+                                       GimpContainerBox *box)
+{
+  GimpContainerBoxPrivate *priv = GET_PRIVATE (box);
+
+  priv->zoom_last_value = gtk_gesture_zoom_get_scale_delta (gesture);
+}
+
+static void
+gimp_container_box_zoom_gesture_update (GtkGestureZoom   *gesture,
+                                        GdkEventSequence *sequence,
+                                        GimpContainerBox *box)
+{
+  GimpContainerBoxPrivate *priv = GET_PRIVATE (box);
+  GimpContainerView       *view = GIMP_CONTAINER_VIEW (box);
+  gdouble                  current_scale;
+  gdouble                  last_value;
+  gdouble                  min_increase;
+  gdouble                  max_decrease;
+  gint                     view_border_width;
+  gint                     view_size;
+
+  last_value   = priv->zoom_last_value;
+  min_increase = last_value * ZOOM_GESTURE_STEP_SIZE;
+  max_decrease = last_value / ZOOM_GESTURE_STEP_SIZE;
+
+  view_size = gimp_container_view_get_view_size (view, &view_border_width);
+
+  current_scale = gtk_gesture_zoom_get_scale_delta (gesture);
+
+  if (current_scale > min_increase)
+    {
+      last_value = min_increase;
+      view_size  = gimp_view_size_get_larger (view_size);
+    }
+  else if (current_scale < max_decrease)
+    {
+      last_value = max_decrease;
+      view_size  = gimp_view_size_get_smaller (view_size);
+    }
+  else
+    {
+      return;
+    }
+
+  priv->zoom_last_value = last_value;
+
+  gimp_container_view_set_view_size (view, view_size, view_border_width);
 }
