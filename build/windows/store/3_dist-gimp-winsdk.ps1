@@ -142,172 +142,171 @@ if (-not (Test-Path "$a64_bundle") -and -not (Test-Path "$x64_bundle"))
 elseif ((Test-Path "$a64_bundle") -and -not (Test-Path "$x64_bundle"))
   {
     Write-Output "(INFO): Arch: arm64"
+    $supported_archs = "$a64_bundle"
   }
 elseif (-not (Test-Path "$a64_bundle") -and (Test-Path "$x64_bundle"))
   {
     Write-Output "(INFO): Arch: x64"
+    $supported_archs = "$x64_bundle"
   }
 elseif ((Test-Path "$a64_bundle") -and (Test-Path "$x64_bundle"))
   {
     Write-Output "(INFO): Arch: arm64 and x64"
+    $supported_archs = "$a64_bundle","$x64_bundle"
   }
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):msix_info$([char]13)$([char]27)[0K"
 
 
-$supported_archs = "$a64_bundle","$x64_bundle"
 foreach ($bundle in $supported_archs)
   {
-    if (Test-Path "$bundle")
+    if ((Test-Path $a64_bundle) -and (Test-Path $x64_bundle))
       {
-        if ((Test-Path $a64_bundle) -and (Test-Path $x64_bundle))
+        $temp_text='temporary '
+      }
+    if (("$bundle" -like '*a64*') -or ("$bundle" -like '*aarch64*') -or ("$bundle" -like '*arm64*'))
+      {
+        $msix_arch = 'arm64'
+      }
+    else
+      {
+        $msix_arch = 'x64'
+      }
+    Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):${msix_arch}_making[collapsed=true]$([char]13)$([char]27)[0KMaking ${temp_text}$msix_arch MSIX"
+
+    ## Prevent Git going crazy
+    $ig_content = "`n$msix_arch`n*.appxsym`n*.zip"
+    if (Test-Path .gitignore -Type Leaf)
+      {
+        if (-not (Test-Path .gitignore.bak -Type Leaf))
           {
-            $temp_text='temporary '
+            Copy-Item .gitignore .gitignore.bak
           }
-        if (("$bundle" -like '*a64*') -or ("$bundle" -like '*aarch64*') -or ("$bundle" -like '*arm64*'))
-          {
-            $msix_arch = 'arm64'
-          }
-        else
-          {
-            $msix_arch = 'x64'
-          }
-        Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):${msix_arch}_making[collapsed=true]$([char]13)$([char]27)[0KMaking ${temp_text}$msix_arch MSIX"
+        Add-Content .gitignore "$ig_content"
+      }
+    else
+      {
+        New-Item .gitignore | Out-Null
+        Set-Content .gitignore "$ig_content"
+      }
 
-        ## Prevent Git going crazy
-        $ig_content = "`n$msix_arch`n*.appxsym`n*.zip"
-        if (Test-Path .gitignore -Type Leaf)
-          {
-            if (-not (Test-Path .gitignore.bak -Type Leaf))
-              {
-                Copy-Item .gitignore .gitignore.bak
-              }
-            Add-Content .gitignore "$ig_content"
-          }
-        else
-          {
-            New-Item .gitignore | Out-Null
-            Set-Content .gitignore "$ig_content"
-          }
-
-        ## Create temporary dir
-        if (Test-Path $msix_arch)
-          {
-            Remove-Item $msix_arch/ -Recurse
-          }
-        New-Item $msix_arch -ItemType Directory | Out-Null
-
-
-        # 3. PREPARE MSIX "SOURCE"
-
-        ## 3.1. CONFIGURE MANIFEST
-        Write-Output "(INFO): configuring AppxManifest.xml for $msix_arch"
-        Copy-Item build\windows\store\AppxManifest.xml $msix_arch
-        ### Set msix_arch
-        (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "neutral","$msix_arch"} |
-        Set-Content $msix_arch\AppxManifest.xml
-        ### Set Identity Name
-        (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@IDENTITY_NAME@","$IDENTITY_NAME"} |
-        Set-Content $msix_arch\AppxManifest.xml
-        ### Set Display Name (the name shown in MS Store)
-        if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
-          {
-            $display_name='GIMP (Insider)'
-          }
-        elseif (($GIMP_RELEASE -and $GIMP_UNSTABLE) -or $GIMP_RC_VERSION)
-          {
-            $display_name='GIMP (Preview)'
-          }
-        else
-          {
-            $display_name='GIMP'
-          }
-        (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@DISPLAY_NAME@","$display_name"} |
-        Set-Content $msix_arch\AppxManifest.xml
-        ### Set custom GIMP version (major.minor.micro+revision.0)
-        (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@CUSTOM_GIMP_VERSION@","$CUSTOM_GIMP_VERSION"} |
-        Set-Content $msix_arch\AppxManifest.xml
-        ### Set GIMP mutex version (major.minor or major)
-        if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
-          {
-            $channel_suffix=" (Insider)"
-          }
-        else
-          {
-            $mutex_suffix="-$GIMP_MUTEX_VERSION"
-          }
-        (Get-Content $msix_arch\AppxManifest.xml)                         | Foreach-Object {$_ -replace "@GIMP_MUTEX_VERSION@","$GIMP_MUTEX_VERSION"} |
-        Foreach-Object {$_ -replace "@CHANNEL_SUFFIX@","$channel_suffix"} | Foreach-Object {$_ -replace "@MUTEX_SUFFIX@","$mutex_suffix"}             |
-        Set-Content $msix_arch\AppxManifest.xml
-        ### Match supported filetypes
-        $file_types = Get-Content "$build_dir\plug-ins\file_associations.list" | Foreach-Object {"              <uap:FileType>." + $_} |
-                      Foreach-Object {$_ +  "</uap:FileType>"}                 | Where-Object {$_ -notmatch 'xcf'}
-        (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@FILE_TYPES@","$file_types"}  |
-        Set-Content $msix_arch\AppxManifest.xml
-
-        ## 3.2. CREATE ICON ASSETS
-        $icons_path = "$build_dir\build\windows\store\Assets"
-        if (-not (Test-Path "$icons_path"))
-          {
-            Write-Host "(ERROR): MS Store icons not found. You can tweak 'build/windows/2_build-gimp-msys2.ps1' or configure GIMP with '-Dms-store=true' to build them." -ForegroundColor red
-            exit 1
-          }
-        Write-Output "(INFO): generating resources*.pri from $icons_path"
-        ### Copy pre-generated icons to each msix_arch
-        New-Item $msix_arch\Assets -ItemType Directory | Out-Null
-        Copy-Item "$icons_path\*.png" $msix_arch\Assets\ -Recurse
-        ### Generate resources*.pri
-        Set-Location $msix_arch
-        makepri createconfig /cf priconfig.xml /dq lang-en-US /pv 10.0.0 | Out-File ..\winsdk.log
-        Set-Location ..\
-        makepri new /pr $msix_arch /cf $msix_arch\priconfig.xml /of $msix_arch | Out-File winsdk.log -Append
-        Remove-Item $msix_arch\priconfig.xml
-
-
-        # 4. COPY GIMP FILES
-        Write-Output "(INFO): preparing GIMP files in $msix_arch VFS"
-        $vfs = "$msix_arch\VFS\ProgramFilesX64\GIMP"
-
-        ## Copy files into VFS folder (to support external 3P plug-ins)
-        Copy-Item "$bundle" "$vfs" -Recurse -Force
-
-        ## Set revision on about dialog (this does the same as '-Drevision' build option)
-        if (-not $GIMP_RC_VERSION)
-          {
-            (Get-Content "$vfs\share\gimp\*\gimp-release") | Foreach-Object {$_ -replace "revision=0","revision=$revision"} |
-            Set-Content "$vfs\share\gimp\*\gimp-release"
-          }
-
-        ## Disable Update check (ONLY FOR RELEASES)
-        if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)
-          {
-            Add-Content "$vfs\share\gimp\*\gimp-release" 'check-update=false'
-          }
-
-        ## Remove uneeded files (to match the Inno Windows Installer artifact)
-        Get-ChildItem "$vfs" -Recurse -Include (".gitignore", "gimp.cmd") | Remove-Item -Recurse
-
-
-        # 5.A. MAKE .MSIX AND CORRESPONDING .APPXSYM
-
-        ## Make .appxsym for each msix_arch (ONLY FOR RELEASES)
-        $APPXSYM = "${IDENTITY_NAME}_${CUSTOM_GIMP_VERSION}_$msix_arch.appxsym"
-        if ($CI_COMMIT_TAG -match 'GIMP_[0-9]*_[0-9]*_[0-9]*' -or $GIMP_CI_MS_STORE -like 'MSIXUPLOAD*')
-          {
-            Write-Output "(INFO): making $APPXSYM"
-            Get-ChildItem $msix_arch -Filter *.pdb -Recurse | Compress-Archive -DestinationPath "$APPXSYM.zip"
-            Rename-Item "$APPXSYM.zip" "$APPXSYM"
-            #(To not ship .pdb we need an online symbol server pointed on _NT_SYMBOL_PATH)
-            #Get-ChildItem $msix_arch -Include *.pdb -Recurse -Force | Remove-Item -Recurse -Force
-          }
-
-        ## Make .msix from each msix_arch
-        $MSIX_ARTIFACT = $APPXSYM -replace '.appxsym','.msix'
-        Write-Output "(INFO): packaging $MSIX_ARTIFACT"
-        makeappx pack /d $msix_arch /p $MSIX_ARTIFACT /o | Out-File winsdk.log -Append
+    ## Create temporary dir
+    if (Test-Path $msix_arch)
+      {
         Remove-Item $msix_arch/ -Recurse
-        Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):${msix_arch}_making$([char]13)$([char]27)[0K"
-      } #END of 'if (Test-Path...'
-  } #END of 'foreach ($msix_arch...'
+      }
+    New-Item $msix_arch -ItemType Directory | Out-Null
+
+
+    # 3. PREPARE MSIX "SOURCE"
+
+    ## 3.1. CONFIGURE MANIFEST
+    Write-Output "(INFO): configuring AppxManifest.xml for $msix_arch"
+    Copy-Item build\windows\store\AppxManifest.xml $msix_arch
+    ### Set msix_arch
+    (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "neutral","$msix_arch"} |
+    Set-Content $msix_arch\AppxManifest.xml
+    ### Set Identity Name
+    (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@IDENTITY_NAME@","$IDENTITY_NAME"} |
+    Set-Content $msix_arch\AppxManifest.xml
+    ### Set Display Name (the name shown in MS Store)
+    if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
+      {
+        $display_name='GIMP (Insider)'
+      }
+    elseif (($GIMP_RELEASE -and $GIMP_UNSTABLE) -or $GIMP_RC_VERSION)
+      {
+        $display_name='GIMP (Preview)'
+      }
+    else
+      {
+        $display_name='GIMP'
+      }
+    (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@DISPLAY_NAME@","$display_name"} |
+    Set-Content $msix_arch\AppxManifest.xml
+    ### Set custom GIMP version (major.minor.micro+revision.0)
+    (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@CUSTOM_GIMP_VERSION@","$CUSTOM_GIMP_VERSION"} |
+    Set-Content $msix_arch\AppxManifest.xml
+    ### Set GIMP mutex version (major.minor or major)
+    if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
+      {
+        $channel_suffix=" (Insider)"
+      }
+    else
+      {
+        $mutex_suffix="-$GIMP_MUTEX_VERSION"
+      }
+    (Get-Content $msix_arch\AppxManifest.xml)                         | Foreach-Object {$_ -replace "@GIMP_MUTEX_VERSION@","$GIMP_MUTEX_VERSION"} |
+    Foreach-Object {$_ -replace "@CHANNEL_SUFFIX@","$channel_suffix"} | Foreach-Object {$_ -replace "@MUTEX_SUFFIX@","$mutex_suffix"}             |
+    Set-Content $msix_arch\AppxManifest.xml
+    ### Match supported filetypes
+    $file_types = Get-Content "$build_dir\plug-ins\file_associations.list" | Foreach-Object {"              <uap:FileType>." + $_} |
+                  Foreach-Object {$_ +  "</uap:FileType>"}                 | Where-Object {$_ -notmatch 'xcf'}
+    (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@FILE_TYPES@","$file_types"}  |
+    Set-Content $msix_arch\AppxManifest.xml
+
+    ## 3.2. CREATE ICON ASSETS
+    $icons_path = "$build_dir\build\windows\store\Assets"
+    if (-not (Test-Path "$icons_path"))
+      {
+        Write-Host "(ERROR): MS Store icons not found. You can tweak 'build/windows/2_build-gimp-msys2.ps1' or configure GIMP with '-Dms-store=true' to build them." -ForegroundColor red
+        exit 1
+      }
+    Write-Output "(INFO): generating resources*.pri from $icons_path"
+    ### Copy pre-generated icons to each msix_arch
+    New-Item $msix_arch\Assets -ItemType Directory | Out-Null
+    Copy-Item "$icons_path\*.png" $msix_arch\Assets\ -Recurse
+    ### Generate resources*.pri
+    Set-Location $msix_arch
+    makepri createconfig /cf priconfig.xml /dq lang-en-US /pv 10.0.0 | Out-File ..\winsdk.log
+    Set-Location ..\
+    makepri new /pr $msix_arch /cf $msix_arch\priconfig.xml /of $msix_arch | Out-File winsdk.log -Append
+    Remove-Item $msix_arch\priconfig.xml
+
+
+    # 4. COPY GIMP FILES
+    Write-Output "(INFO): preparing GIMP files in $msix_arch VFS"
+    $vfs = "$msix_arch\VFS\ProgramFilesX64\GIMP"
+
+    ## Copy files into VFS folder (to support external 3P plug-ins)
+    Copy-Item "$bundle" "$vfs" -Recurse -Force
+
+    ## Set revision on about dialog (this does the same as '-Drevision' build option)
+    if (-not $GIMP_RC_VERSION)
+      {
+        (Get-Content "$vfs\share\gimp\*\gimp-release") | Foreach-Object {$_ -replace "revision=0","revision=$revision"} |
+        Set-Content "$vfs\share\gimp\*\gimp-release"
+      }
+
+    ## Disable Update check (ONLY FOR RELEASES)
+    if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)
+      {
+        Add-Content "$vfs\share\gimp\*\gimp-release" 'check-update=false'
+      }
+
+    ## Remove uneeded files (to match the Inno Windows Installer artifact)
+    Get-ChildItem "$vfs" -Recurse -Include (".gitignore", "gimp.cmd") | Remove-Item -Recurse
+
+
+    # 5.A. MAKE .MSIX AND CORRESPONDING .APPXSYM
+
+    ## Make .appxsym for each msix_arch (ONLY FOR RELEASES)
+    $APPXSYM = "${IDENTITY_NAME}_${CUSTOM_GIMP_VERSION}_$msix_arch.appxsym"
+    if ($CI_COMMIT_TAG -match 'GIMP_[0-9]*_[0-9]*_[0-9]*' -or $GIMP_CI_MS_STORE -like 'MSIXUPLOAD*')
+      {
+        Write-Output "(INFO): making $APPXSYM"
+        Get-ChildItem $msix_arch -Filter *.pdb -Recurse | Compress-Archive -DestinationPath "$APPXSYM.zip"
+        Rename-Item "$APPXSYM.zip" "$APPXSYM"
+        #(To not ship .pdb we need an online symbol server pointed on _NT_SYMBOL_PATH)
+        #Get-ChildItem $msix_arch -Include *.pdb -Recurse -Force | Remove-Item -Recurse -Force
+      }
+
+    ## Make .msix from each msix_arch
+    $MSIX_ARTIFACT = $APPXSYM -replace '.appxsym','.msix'
+    Write-Output "(INFO): packaging $MSIX_ARTIFACT"
+    makeappx pack /d $msix_arch /p $MSIX_ARTIFACT /o | Out-File winsdk.log -Append
+    Remove-Item $msix_arch/ -Recurse
+    Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):${msix_arch}_making$([char]13)$([char]27)[0K"
+  } #END of 'foreach ($bundle'
 
 
 # 5.B. MAKE .MSIXBUNDLE OR SUBSEQUENT .MSIXUPLOAD
