@@ -123,8 +123,8 @@ stages:
 
 .debian_environ: &ENVIRON
 - printf "\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KPreparing build environment\n"
-- gcc -print-multi-os-directory 2>/dev/null | grep ./ && export LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || export LIB_DIR="lib"
-- gcc -print-multiarch 2>/dev/null | grep . && export LIB_SUBDIR=$(echo $(gcc -print-multiarch)'/')
+- gcc -print-multi-os-directory 2>/dev/null | grep -q ./ && export LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || export LIB_DIR="lib"
+- gcc -print-multiarch 2>/dev/null | grep -q . && export LIB_SUBDIR=$(echo $(gcc -print-multiarch)'/') || export LIB_SUBDIR=
 ## Build-time vars
 - export PKG_CONFIG_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
 - export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"
