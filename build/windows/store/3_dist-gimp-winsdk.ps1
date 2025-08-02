@@ -354,6 +354,7 @@ if (((Test-Path $a64_bundle) -and (Test-Path $x64_bundle)) -and (Get-ChildItem *
 # (Partner Center does the same thing before publishing)
 if (-not $GITLAB_CI -and $wack -eq 'WACK')
   {
+    Write-Output "(INFO): certifying $MSIX_ARTIFACT with WACK"
     ## Prepare file naming
     ## (appcert CLI does NOT allow relative paths)
     $fullpath = $PWD
@@ -379,7 +380,6 @@ if (-not $GITLAB_CI -and $wack -eq 'WACK')
         Write-Host "(ERROR): 'sudo' is not in normal/inline mode. Please change it in Settings." -ForegroundColor Red
         exit 1
       }
-    Write-Output "(INFO): certifying $MSIX_ARTIFACT with WACK"
     sudo appcert test -appxpackagepath $fullpath\$MSIX_ARTIFACT -reportoutputpath $fullpath\$xml_artifact
 
     ## Output overall result
