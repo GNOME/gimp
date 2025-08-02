@@ -1,0 +1,25 @@
+From 101e0880fca41e2223df7eec56d9e84e90b9ed56 Mon Sep 17 00:00:00 2001
+From: Jeff McKenna <jmckenna@gatewaygeomatics.com>
+Date: Mon, 19 May 2025 11:55:24 -0300
+Subject: [PATCH] bump CMake min required version
+
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 9892645..83e197e 100755
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -9,7 +9,7 @@ IF(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
+ 		)
+ ENDIF()
+ 
+-CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
++CMAKE_MINIMUM_REQUIRED(VERSION 3.15)
+ 
+ # Suppress warning about WIN32 no longer being defined on Cygwin:
+ SET(CMAKE_LEGACY_CYGWIN_WIN32 0)
+-- 
+2.49.0.windows.1
+
