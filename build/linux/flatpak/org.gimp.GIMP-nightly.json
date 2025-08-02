@@ -774,7 +774,6 @@
                 "-DTESTS=OFF"
             ],
             "cleanup": [
-                "/bin",
                 "/include",
                 "/lib/pkgconfig"
             ]
