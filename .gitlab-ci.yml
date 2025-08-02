@@ -267,6 +267,10 @@ gimp-debian:
     GIT_SUBMODULE_STRATEGY: recursive
   script:
     - *ENVIRON
+    - cat /etc/os-release
+    - cat /etc/*-release
+    - cat /proc/version
+    - lsb_release -a
     # Build GIMP
     - printf "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP\n"
     - meson setup _build-${RUNNER} -Dprefix="${GIMP_PREFIX}"
@@ -385,6 +389,10 @@ gimp-debian-x64:
     - flatpak
   image: 'quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master'
   before_script:
+    - cat /etc/os-release
+    - cat /etc/*-release
+    - cat /proc/version
+    - lsb_release -a
     - export GIMP_PREFIX="${CI_PROJECT_DIR}/_install"
   timeout: 40m
 

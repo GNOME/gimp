@@ -14,6 +14,12 @@ elif [ $(basename "$PWD") = 'snap' ]; then
   cd ../../..
 fi
 
+cat /etc/os-release
+cat /etc/*-release
+cat /proc/version
+lsb_release -a
+
+exit 1
 
 # Prepare env
 printf "\e[0Ksection_start:`date +%s`:snap_environ[collapsed=true]\r\e[0KPreparing build environment\n"
