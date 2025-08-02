@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-07-29 19:28+0000\n"
-"PO-Revision-Date: 2025-07-30 06:59+0800\n"
+"POT-Creation-Date: 2025-08-01 23:24+0000\n"
+"PO-Revision-Date: 2025-08-02 08:01+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -1967,21 +1967,22 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/common/file-cel.c:382 plug-ins/common/file-dicom.c:360
 #: plug-ins/common/file-farbfeld.c:273 plug-ins/common/file-gif-load.c:481
 #: plug-ins/common/file-iff.c:282 plug-ins/common/file-lnk.c:200
-#: plug-ins/common/file-mng.c:1409 plug-ins/common/file-pcx.c:490
-#: plug-ins/common/file-pcx.c:533 plug-ins/common/file-png.c:800
-#: plug-ins/common/file-png.c:1370 plug-ins/common/file-ps.c:1159
-#: plug-ins/common/file-ps.c:3739 plug-ins/common/file-psp.c:2634
-#: plug-ins/common/file-psp.c:2684 plug-ins/common/file-qoi.c:275
-#: plug-ins/common/file-raw-data.c:577 plug-ins/common/file-raw-data.c:1714
-#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:562
-#: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:278
-#: plug-ins/common/file-wbmp.c:250 plug-ins/common/file-wbmp.c:329
-#: plug-ins/common/file-xbm.c:725 plug-ins/common/file-xmc.c:656
-#: plug-ins/common/file-xmc.c:895 plug-ins/common/file-xwd.c:465
-#: plug-ins/common/sphere-designer.c:2094 plug-ins/file-bmp/bmp-load.c:276
-#: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:260
-#: plug-ins/file-fits/fits.c:368 plug-ins/file-fli/fli-gimp.c:440
-#: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:552
+#: plug-ins/common/file-mng.c:1409 plug-ins/common/file-paa.c:190
+#: plug-ins/common/file-pcx.c:490 plug-ins/common/file-pcx.c:533
+#: plug-ins/common/file-png.c:800 plug-ins/common/file-png.c:1370
+#: plug-ins/common/file-ps.c:1159 plug-ins/common/file-ps.c:3739
+#: plug-ins/common/file-psp.c:2634 plug-ins/common/file-psp.c:2684
+#: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:577
+#: plug-ins/common/file-raw-data.c:1714 plug-ins/common/file-sunras.c:435
+#: plug-ins/common/file-svg.c:562 plug-ins/common/file-tga.c:427
+#: plug-ins/common/file-tim.c:278 plug-ins/common/file-wbmp.c:250
+#: plug-ins/common/file-wbmp.c:329 plug-ins/common/file-xbm.c:725
+#: plug-ins/common/file-xmc.c:656 plug-ins/common/file-xmc.c:895
+#: plug-ins/common/file-xwd.c:465 plug-ins/common/sphere-designer.c:2094
+#: plug-ins/file-bmp/bmp-load.c:276 plug-ins/file-dds/ddsread.c:169
+#: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:368
+#: plug-ins/file-fli/fli-gimp.c:440 plug-ins/file-fli/fli-gimp.c:491
+#: plug-ins/file-icns/file-icns-load.c:552
 #: plug-ins/file-icns/file-icns-load.c:604 plug-ins/file-ico/ico-load.c:685
 #: plug-ins/file-ico/ico-load.c:823 plug-ins/file-ico/ico-load.c:1025
 #: plug-ins/file-jpeg/jpeg-load.c:106 plug-ins/file-jpeg/jpeg-load.c:699
@@ -4283,6 +4284,51 @@ msgid ""
 msgstr ""
 "这些选项仅在被导出的图像有多个图层时可用。您正在试图导出的图像仅有一个图层。"
 
+#: plug-ins/common/file-paa.c:150
+msgid "PAA Image"
+msgstr "PAA 图像"
+
+#: plug-ins/common/file-paa.c:153
+msgid "Load file in the PAA file format"
+msgstr "加载 PAA 格式的文件"
+
+#: plug-ins/common/file-paa.c:154
+msgid "Load file in the Bohemia Interactive PAA file format"
+msgstr "加载波希米亚互动 PAA 格式的文件"
+
+#: plug-ins/common/file-paa.c:232 plug-ins/common/file-paa.c:269
+#: plug-ins/common/file-paa.c:290 plug-ins/common/file-pcx.c:646
+#: plug-ins/common/file-tim.c:364 plug-ins/common/file-tim.c:390
+#: plug-ins/common/file-tim.c:453 plug-ins/common/file-tim.c:498
+#, c-format
+msgid "Could not read header from '%s'"
+msgstr "无法从“%s”读取文件头"
+
+#: plug-ins/common/file-paa.c:255
+#, c-format
+msgid "Currently unsupported PAA format: '%d'"
+msgstr "当前不支持的 PAA 格式：“%d”"
+
+#: plug-ins/common/file-paa.c:305
+#, c-format
+msgid "Couldn't read image data from '%s'"
+msgstr "无法从“%s”读取图像数据"
+
+#: plug-ins/common/file-paa.c:313
+msgid "Main surface"
+msgstr "主表面"
+
+#: plug-ins/common/file-paa.c:346
+#, c-format
+msgid "Couldn't decompress image data from '%s'"
+msgstr "无法解压缩“%s”中的图像数据"
+
+#: plug-ins/common/file-paa.c:421 plug-ins/common/file-paa.c:438
+#: plug-ins/common/file-paa.c:449
+#, c-format
+msgid "Could not read tag"
+msgstr "无法读取标签"
+
 #: plug-ins/common/file-pat.c:112
 msgid "GIMP pattern"
 msgstr "GIMP 图案"
@@ -4374,13 +4420,6 @@ msgstr "未加载混合模式 DCX 图像"
 #, c-format
 msgid "%s: Could not load all DCX images: %s\n"
 msgstr "%s：无法加载所有 DCX 图像：%s\n"
-
-#: plug-ins/common/file-pcx.c:646 plug-ins/common/file-tim.c:364
-#: plug-ins/common/file-tim.c:390 plug-ins/common/file-tim.c:453
-#: plug-ins/common/file-tim.c:498
-#, c-format
-msgid "Could not read header from '%s'"
-msgstr "无法从“%s”读取文件头"
 
 #: plug-ins/common/file-pcx.c:656
 #, c-format
@@ -19543,9 +19582,6 @@ msgstr "从扫描仪/相机传送数据"
 
 #~ msgid "Allo_w tile splitting"
 #~ msgstr "允许切割瓦片(_W)"
-
-#~ msgid "_Pitted surfaces"
-#~ msgstr "粒状表面(_P)"
 
 #~ msgid "_FG/BG lighting"
 #~ msgstr "前景/背景光照(_F)"
