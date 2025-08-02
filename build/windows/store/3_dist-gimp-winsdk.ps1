@@ -133,7 +133,6 @@ else
     $revision = "0"
   }
 $CUSTOM_GIMP_VERSION = "$GIMP_APP_VERSION.${micro_digit}${revision}.0"
-
 Write-Output "(INFO): Identity: $IDENTITY_NAME | Version: $CUSTOM_GIMP_VERSION (major: $major, minor: $minor, micro: ${micro}${revision_text})"
 
 ## Autodetects what arch bundles will be packaged
@@ -175,7 +174,6 @@ foreach ($bundle in $supported_archs)
         $msix_arch = 'x64'
       }
     Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):${msix_arch}_making[collapsed=true]$([char]13)$([char]27)[0KMaking ${temp_text}$msix_arch MSIX"
-
     ## Create temporary dir
     if (Test-Path $msix_arch)
       {
@@ -200,7 +198,7 @@ foreach ($bundle in $supported_archs)
 
 
     # 3. PREPARE MSIX "SOURCE"
-    # (We test the existence of the icons here (and not on 3.2) to avoid creating AppxManifest.xml for nothing)
+    # (We test the existence of the icons here (and not on 3.2.) to avoid creating AppxManifest.xml for nothing)
     $icons_path = "$build_dir\build\windows\store\Assets"
     if (-not (Test-Path "$icons_path"))
       {
