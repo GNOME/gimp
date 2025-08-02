@@ -43,13 +43,12 @@ $env:PATH = "${win_sdk_path}bin\${win_sdk_version}.0\$cpu_arch;${win_sdk_path}Ap
 if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags/',''}))
   {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-
     $msstore_tag = (Invoke-WebRequest https://api.github.com/repos/microsoft/msstore-cli/releases | ConvertFrom-Json)[0].tag_name
+    
     $xmlObject = New-Object XML
     $xmlObject.Load("https://raw.githubusercontent.com/microsoft/msstore-cli/refs/heads/rel/$msstore_tag/MSStore.API/MSStore.API.csproj")
     $dotnet_major = ($xmlObject.Project.PropertyGroup.TargetFramework | Out-String) -replace "`r`n",'' -replace 'net',''
     $dotnet_tag = ((Invoke-WebRequest https://api.github.com/repos/dotnet/runtime/releases | ConvertFrom-Json).tag_name | Select-String "$dotnet_major" | Select-Object -First 1).ToString() -replace 'v',''
-
     if (-not (Test-Path "$Env:ProgramFiles\dotnet\shared\Microsoft.NETCore.App\$dotnet_major*\"))
       {
         Write-Output "(INFO): downloading .NET v$dotnet_tag"
