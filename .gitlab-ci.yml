@@ -108,7 +108,7 @@ stages:
     - <<: *CI_RELEASE
   parallel:
     matrix:
-      - RUNNER: [aarch64, x86_64_v2]
+      - RUNNER: [aarch64, x86_64_v3]
   tags:
     - $RUNNER
   image: $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}
@@ -431,6 +431,8 @@ gimp-flatpak-x64:
   parallel:
     matrix:
       - DPKG_ARCH: [arm64, amd64]
+  tags:
+    - x86_64_v2
   image:
     name: $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_CORE_VERSION}
     entrypoint: [""]
