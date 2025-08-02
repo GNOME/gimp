@@ -1,0 +1,25 @@
+From 78e5ac35c13c5cbccc5933083edceb0d3eaeaa21 Mon Sep 17 00:00:00 2001
+From: yaswanthsastry <yaswanth.sastry@multicorewareinc.com>
+Date: Wed, 7 May 2025 16:38:47 +0530
+Subject: [PATCH] Bump CMake Version for dynamicHDR10
+
+---
+ source/dynamicHDR10/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/source/dynamicHDR10/CMakeLists.txt b/source/dynamicHDR10/CMakeLists.txt
+index 22fb79d44..4243338c6 100644
+--- a/source/dynamicHDR10/CMakeLists.txt
++++ b/source/dynamicHDR10/CMakeLists.txt
+@@ -10,7 +10,7 @@ add_library(dynamicHDR10 OBJECT
+     hdr10plus.h
+     api.cpp )
+ 
+-cmake_minimum_required (VERSION 2.8.11)
++cmake_minimum_required (VERSION 2.8.11...3.26)
+ project(dynamicHDR10)
+ include(CheckIncludeFiles)
+ include(CheckFunctionExists)
+-- 
+2.49.0.windows.1
+
