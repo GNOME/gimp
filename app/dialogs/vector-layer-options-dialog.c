@@ -149,8 +149,8 @@ vector_layer_options_dialog_new (GimpVectorLayer *layer,
   combo = gimp_container_combo_box_new (gimp_image_get_paths (gimp_item_get_image (GIMP_ITEM (layer))),
                                         context,
                                         GIMP_VIEW_SIZE_SMALL, 1);
-  gimp_container_view_select_item (GIMP_CONTAINER_VIEW (combo),
-                                   GIMP_VIEWABLE (saved_options->path));
+  gimp_container_view_set_1_selected (GIMP_CONTAINER_VIEW (combo),
+                                      GIMP_VIEWABLE (saved_options->path));
   g_signal_connect_object (combo, "select-items",
                            G_CALLBACK (vector_layer_options_dialog_path_selected),
                            dialog, 0);
