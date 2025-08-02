@@ -374,6 +374,12 @@
                     }
                 },
                 {
+                    "type": "patch",
+                    "paths": [
+                        "patches/gcc15.patch"
+                    ]
+                },
+                {
                     "type": "shell",
                     "commands": [
                         "cp -p /usr/share/automake-*/config.{sub,guess} freetype/builds/unix/",
@@ -447,6 +453,7 @@
                     ],
                     "buildsystem": "cmake-ninja",
                     "config-opts": [
+                        "-DCMAKE_POLICY_VERSION_MINIMUM=3.9",
                         "-DDISABLE_WERROR=ON",
                         "-DBUILD_TESTING=OFF"
                     ],
@@ -576,6 +583,12 @@
                             }
                         },
                         {
+                            "type": "patch",
+                            "paths": [
+                                "patches/0001-Fix-build-with-GCC-15.patch"
+                            ]
+                        },
+                        {
                             "type": "shell",
                             "commands": [
                                 "ln -s ${FLATPAK_DEST}/lib/libheif/lib/libx265-10.a",
@@ -587,6 +600,7 @@
                     "subdir": "source",
                     "buildsystem": "cmake-ninja",
                     "config-opts": [
+                        "-DCMAKE_POLICY_VERSION_MINIMUM=3.5",
                         "-DCMAKE_CXX_COMPILER_LAUNCHER=ccache",
                         "-DCMAKE_CXX_COMPILER=c++",
                         "-DCMAKE_INSTALL_PREFIX=/app/lib/libheif",
@@ -615,11 +629,18 @@
                                         "stable-only": true,
                                         "url-template": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_$version.tar.gz"
                                     }
+                                },
+                                {
+                                    "type": "patch",
+                                    "paths": [
+                                        "patches/0001-Fix-build-with-GCC-15.patch"
+                                    ]
                                 }
                             ],
                             "subdir": "source",
                             "buildsystem": "cmake-ninja",
                             "config-opts": [
+                                "-DCMAKE_POLICY_VERSION_MINIMUM=3.5",
                                 "-DCMAKE_INSTALL_PREFIX=/app/lib/libheif",
                                 "-DHIGH_BIT_DEPTH=ON",
                                 "-DEXPORT_C_API=OFF",
@@ -644,11 +665,18 @@
                                         "stable-only": true,
                                         "url-template": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_$version.tar.gz"
                                     }
+                                },
+                                {
+                                    "type": "patch",
+                                    "paths": [
+                                        "patches/0001-Fix-build-with-GCC-15.patch"
+                                    ]
                                 }
                             ],
                             "subdir": "source",
                             "buildsystem": "cmake-ninja",
                             "config-opts": [
+                                "-DCMAKE_POLICY_VERSION_MINIMUM=3.5",
                                 "-DCMAKE_INSTALL_PREFIX=/app/lib/libheif",
                                 "-DHIGH_BIT_DEPTH=ON",
                                 "-DEXPORT_C_API=OFF",

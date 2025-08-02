@@ -1,0 +1,21 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: "Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
+Date: Thu, 5 Jun 2025 21:45:58 +0200
+Subject: [PATCH] Fix build with GCC 15
+
+---
+ source/dynamicHDR10/json11/json11.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/source/dynamicHDR10/json11/json11.cpp b/source/dynamicHDR10/json11/json11.cpp
+index 762577735466..74f990a51683 100644
+--- a/source/dynamicHDR10/json11/json11.cpp
++++ b/source/dynamicHDR10/json11/json11.cpp
+@@ -25,6 +25,7 @@
+ #include <cstdlib>
+ #include <cstdio>
+ #include <limits>
++#include <cstdint>
+ 
+ #if _MSC_VER
+ #pragma warning(disable: 4510) //const member cannot be default initialized

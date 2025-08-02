@@ -1,0 +1,652 @@
+From ae940946473ceb8c5353bc6e7f04673c6e60502d Mon Sep 17 00:00:00 2001
+From: Alex Cherepanov <alex@coscript.biz>
+Date: Thu, 3 Apr 2025 17:19:41 +0100
+Subject: [PATCH] Bug 708160: Fix compatibility with C23 compilers
+
+---
+ base/gdevkrnlsclass.c      |  4 ++--
+ base/gdevkrnlsclass.h      |  4 ++--
+ base/gdevnup.c             |  4 ++--
+ base/gp.h                  |  4 ++--
+ base/gsfcmap.c             |  4 ++--
+ base/gsovrc.c              |  4 ++--
+ base/gsstate.h             |  6 +++---
+ base/gxccache.c            |  3 ++-
+ base/gxcmap.c              |  2 +-
+ base/gxdownscale.c         |  5 +++--
+ base/gxdownscale.h         |  4 ++--
+ base/gxfapi.h              |  2 +-
+ base/gximag3x.c            |  4 ++--
+ base/gxiscale.c            |  4 ++--
+ base/stdpre.h              |  6 ++++--
+ contrib/eplaser/gdevescv.c |  2 +-
+ contrib/eplaser/gdevescv.h |  2 +-
+ contrib/gdevmd2k.c         |  5 +++--
+ contrib/lips4/gdevl4r.c    |  2 +-
+ contrib/lips4/gdevl4v.c    |  4 ++--
+ contrib/opvp/gdevopvp.c    |  4 ++--
+ devices/gdevcdj.c          |  4 ++--
+ devices/gdevpdfimg.h       |  6 +++---
+ devices/vector/gdevpdfd.c  |  4 ++--
+ devices/vector/gdevpdtt.c  | 16 ++++++----------
+ devices/vector/gdevpx.c    |  4 ++--
+ devices/vector/gdevxps.c   |  8 ++++----
+ pcl/pcl/pcpage.h           |  6 +++---
+ pcl/pl/plmain.h            |  4 ++--
+ pdf/pdf_device.c           |  6 +++---
+ psi/zcontrol.c             |  4 ++--
+ psi/zfdecode.c             |  5 +++--
+ psi/zfunc4.c               |  6 +++---
+ xps/xpstop.c               |  8 +++++---
+ 34 files changed, 82 insertions(+), 78 deletions(-)
+
+diff --git a/base/gdevkrnlsclass.c b/base/gdevkrnlsclass.c
+index b93d673920..7eb375a3a9 100644
+--- a/base/gdevkrnlsclass.c
++++ b/base/gdevkrnlsclass.c
+@@ -1,4 +1,4 @@
+-/* Copyright (C) 2001-2023 Artifex Software, Inc.
++/* Copyright (C) 2001-2025 Artifex Software, Inc.
+    All Rights Reserved.
+ 
+    This software is provided AS-IS with no warranty, either express or
+@@ -29,7 +29,7 @@
+  * of devices which the push of the compositor claims are already installed (to prevent
+  * a second copy being installed by gdev_prn_open).
+  */
+-int install_internal_subclass_devices(gx_device **ppdev, int *devices_loaded)
++int install_internal_subclass_devices(gx_device **ppdev, bool *devices_loaded)
+ {
+     int code = 0;
+     gx_device *dev = (gx_device *)*ppdev, *saved;
+diff --git a/base/gdevkrnlsclass.h b/base/gdevkrnlsclass.h
+index 649532fa8d..3143d29d84 100644
+--- a/base/gdevkrnlsclass.h
++++ b/base/gdevkrnlsclass.h
+@@ -1,4 +1,4 @@
+-/* Copyright (C) 2001-2023 Artifex Software, Inc.
++/* Copyright (C) 2001-2025 Artifex Software, Inc.
+    All Rights Reserved.
+ 
+    This software is provided AS-IS with no warranty, either express or
+@@ -29,6 +29,6 @@ extern gx_device_flp  gs_flp_device;
+ 
+ extern gx_device_nup gs_nup_device;
+ 
+-int install_internal_subclass_devices(gx_device **ppdev, int *devices_loaded);
++int install_internal_subclass_devices(gx_device **ppdev, bool *devices_loaded);
+ 
+ #endif /* gdev_subclass_dev_INCLUDED */
+diff --git a/base/gdevnup.c b/base/gdevnup.c
+index 8998806820..e4833b8e58 100644
+--- a/base/gdevnup.c
++++ b/base/gdevnup.c
+@@ -1,4 +1,4 @@
+-/* Copyright (C) 2001-2023 Artifex Software, Inc.
++/* Copyright (C) 2001-2025 Artifex Software, Inc.
+    All Rights Reserved.
+ 
+    This software is provided AS-IS with no warranty, either express or
+@@ -682,7 +682,7 @@ nup_dev_spec_op(gx_device *dev, int dev_spec_op, void *data, int size)
+         case gxdso_get_dev_param:
+             {
+                 dev_param_req_t *request = (dev_param_req_t *)data;
+-                int code = false;
++                bool code = false;
+ 
+                 /* We need to disable pdfmark writing, primarily for CropBox, but also	*/
+                 /* they are probably not relevant for multiple input files to a single	*/
+diff --git a/base/gp.h b/base/gp.h
+index ad5bb61c7e..cf2c9cf398 100644
+--- a/base/gp.h
++++ b/base/gp.h
+@@ -1,4 +1,4 @@
+-/* Copyright (C) 2001-2023 Artifex Software, Inc.
++/* Copyright (C) 2001-2025 Artifex Software, Inc.
+    All Rights Reserved.
+ 
+    This software is provided AS-IS with no warranty, either express or
+@@ -646,7 +646,7 @@ int gp_fseek_impl(FILE *strm, gs_offset_t offset, int origin);
+ /* Create a second open gp_file on the basis of a given one */
+ FILE *gp_fdup_impl(FILE *f, const char *mode);
+ 
+-int gp_fseekable_impl(FILE *f);
++bool gp_fseekable_impl(FILE *f);
+ 
+ /* Force given file into binary mode (no eol translations, etc) */
+ /* if 2nd param true, text mode if 2nd param false */
+diff --git a/base/gsfcmap.c b/base/gsfcmap.c
+index dd241d7665..a5c40ba295 100644
+--- a/base/gsfcmap.c
++++ b/base/gsfcmap.c
+@@ -1,4 +1,4 @@
+-/* Copyright (C) 2001-2023 Artifex Software, Inc.
++/* Copyright (C) 2001-2025 Artifex Software, Inc.
+    All Rights Reserved.
+ 
+    This software is provided AS-IS with no warranty, either express or
+@@ -221,7 +221,7 @@ gs_cmap_create_char_identity(gs_cmap_t **ppcmap, int num_bytes, int wmode,
+ /*
+  * Check for identity CMap. Uses a fast check for special cases.
+  */
+-int
++bool
+ gs_cmap_is_identity(const gs_cmap_t *pcmap, int font_index_only)
+ {
+     return pcmap->procs->is_identity(pcmap, font_index_only);
+diff --git a/base/gsovrc.c b/base/gsovrc.c
+index 35f3064bdd..10bd7508b8 100644
+--- a/base/gsovrc.c
++++ b/base/gsovrc.c
+@@ -1,4 +1,4 @@
+-/* Copyright (C) 2001-2024 Artifex Software, Inc.
++/* Copyright (C) 2001-2025 Artifex Software, Inc.
+    All Rights Reserved.
+ 
+    This software is provided AS-IS with no warranty, either express or
+@@ -297,7 +297,7 @@ gs_create_overprint(
+  * This is used by the gs_pdf1.4_device (and eventually the PDFWrite
+  * device), which implements overprint and overprint mode directly.
+  */
+-int
++bool
+ gs_is_overprint_compositor(const gs_composite_t * pct)
+ {
+     return pct->type == &gs_composite_overprint_type;
+diff --git a/base/gsstate.h b/base/gsstate.h
+index 263b1bd73c..a53133983c 100644
+--- a/base/gsstate.h
++++ b/base/gsstate.h
+@@ -1,4 +1,4 @@
+-/* Copyright (C) 2001-2023 Artifex Software, Inc.
++/* Copyright (C) 2001-2025 Artifex Software, Inc.
+    All Rights Reserved.
+ 
+    This software is provided AS-IS with no warranty, either express or
+@@ -54,8 +54,8 @@ int gs_do_set_overprint(gs_gstate *);
+ int gs_currentrenderingintent(const gs_gstate *);
+ int gs_setrenderingintent(gs_gstate *, int);
+ 
+-int gs_currentblackptcomp(const gs_gstate *);
+-int gs_setblackptcomp(gs_gstate *, int);
++bool gs_currentblackptcomp(const gs_gstate *);
++int gs_setblackptcomp(gs_gstate *, bool);
+ 
+ int gs_initgraphics(gs_gstate *);
+ int gs_initgraphics_no_cspace(gs_gstate *);
+diff --git a/base/gxcmap.c b/base/gxcmap.c
+index 32b4f20efb..7108dc2d81 100644
+--- a/base/gxcmap.c
++++ b/base/gxcmap.c
+@@ -601,7 +601,7 @@ gx_no_concretize_color(const gs_client_color * pcc, const gs_color_space * pcs,
+ /* If someone has specified a table for handling named spot colors then we will
+    be attempting to do the special handling to go directly to the device colors
+    here */
+-bool
++int
+ gx_remap_named_color(const gs_client_color * pcc, const gs_color_space * pcs,
+ gx_device_color * pdc, const gs_gstate * pgs, gx_device * dev,
+ gs_color_select_t select)
+diff --git a/base/gxdownscale.c b/base/gxdownscale.c
+index 09ab7a6810..e34ce5d4a8 100644
+--- a/base/gxdownscale.c
++++ b/base/gxdownscale.c
+@@ -1,4 +1,4 @@
+-/* Copyright (C) 2001-2024 Artifex Software, Inc.
++/* Copyright (C) 2001-2025 Artifex Software, Inc.
+    All Rights Reserved.
+ 
+    This software is provided AS-IS with no warranty, either express or
+@@ -3376,7 +3376,8 @@ int gx_downscaler_read_params(gs_param_list        *plist,
+                               int                   features)
+ {
+     int code;
+-    int downscale, mfs, ets, deskew;
++    int downscale, mfs, ets;
++    bool deskew;
+     int trap_w, trap_h;
+     const char *param_name;
+     gs_param_int_array trap_order;
+diff --git a/base/gxdownscale.h b/base/gxdownscale.h
+index 752c499d83..95f3e4e24e 100644
+--- a/base/gxdownscale.h
++++ b/base/gxdownscale.h
+@@ -1,4 +1,4 @@
+-/* Copyright (C) 2001-2023 Artifex Software, Inc.
++/* Copyright (C) 2001-2025 Artifex Software, Inc.
+    All Rights Reserved.
+ 
+    This software is provided AS-IS with no warranty, either express or
+@@ -124,7 +124,7 @@ typedef struct gx_downscaler_params_s
+     int trap_h;
+     int trap_order[GS_CLIENT_COLOR_MAX_COMPONENTS];
+     int ets;
+-    int do_skew_detection;
++    bool do_skew_detection;
+ } gx_downscaler_params;
+ 
+ /* To use the downscaler:
+diff --git a/base/gxfapi.h b/base/gxfapi.h
+index 184fa9a3c2..e94d496e33 100644
+--- a/base/gxfapi.h
++++ b/base/gxfapi.h
+@@ -348,7 +348,7 @@ struct gs_fapi_server_s
+     gs_fapi_retcode(*get_decodingID) (gs_fapi_server *server, gs_fapi_font *ff, const char **decodingID);
+     gs_fapi_retcode(*get_font_bbox) (gs_fapi_server *server, gs_fapi_font *ff, int BBox[4], int unitsPerEm[2]);
+     gs_fapi_retcode(*get_font_proportional_feature) (gs_fapi_server *server, gs_fapi_font *ff, bool *bProportional);
+-    gs_fapi_retcode(*can_retrieve_char_by_name) (gs_fapi_server *server, gs_fapi_font *ff, gs_fapi_char_ref *c, int *result);
++    gs_fapi_retcode(*can_retrieve_char_by_name) (gs_fapi_server *server, gs_fapi_font *ff, gs_fapi_char_ref *c, bool *result);
+     gs_fapi_retcode(*can_replace_metrics) (gs_fapi_server *server, gs_fapi_font *ff, gs_fapi_char_ref *c, int *result);
+     gs_fapi_retcode(*can_simulate_style) (gs_fapi_server *server, gs_fapi_font *ff, gs_fapi_style style, void *style_data);
+     gs_fapi_retcode(*get_fontmatrix) (gs_fapi_server *server, gs_matrix *m);
+diff --git a/base/gximag3x.c b/base/gximag3x.c
+index 8eef04b3e5..de7e069270 100644
+--- a/base/gximag3x.c
++++ b/base/gximag3x.c
+@@ -1,4 +1,4 @@
+-/* Copyright (C) 2001-2024 Artifex Software, Inc.
++/* Copyright (C) 2001-2025 Artifex Software, Inc.
+    All Rights Reserved.
+ 
+    This software is provided AS-IS with no warranty, either express or
+@@ -391,7 +391,7 @@ check_image3x_extent(double mask_coeff, double data_coeff)
+  * pmcs->{InterleaveType,width,height,full_height,depth,data,y,skip}.
+  * If the mask is omitted, sets pmcs->depth = 0 and returns normally.
+  */
+-static bool
++static int
+ check_image3x_mask(const gs_image3x_t *pim, const gs_image3x_mask_t *pimm,
+                    const image3x_channel_values_t *ppcv,
+                    image3x_channel_values_t *pmcv,
+diff --git a/base/gxiscale.c b/base/gxiscale.c
+index 84f9261016..25e479ae0b 100644
+--- a/base/gxiscale.c
++++ b/base/gxiscale.c
+@@ -1,4 +1,4 @@
+-/* Copyright (C) 2001-2024 Artifex Software, Inc.
++/* Copyright (C) 2001-2025 Artifex Software, Inc.
+    All Rights Reserved.
+ 
+    This software is provided AS-IS with no warranty, either express or
+@@ -112,7 +112,7 @@ device_allows_imagemask_interpolation(gx_device *dev)
+     char data[] = "NoInterpolateImagemasks";
+     dev_param_req_t request;
+     gs_c_param_list list;
+-    int nointerpolate = 0;
++    bool nointerpolate = false;
+     int code;
+ 
+     gs_c_param_list_write(&list, dev->memory);
+diff --git a/base/stdpre.h b/base/stdpre.h
+index dda30b6a44..2f9c84e0d6 100644
+--- a/base/stdpre.h
++++ b/base/stdpre.h
+@@ -1,4 +1,4 @@
+-/* Copyright (C) 2001-2023 Artifex Software, Inc.
++/* Copyright (C) 2001-2025 Artifex Software, Inc.
+    All Rights Reserved.
+ 
+    This software is provided AS-IS with no warranty, either express or
+@@ -341,7 +341,9 @@ typedef signed char schar;
+  * and the MetroWerks C++ compiler insists that bool be equivalent to
+  * unsigned char.
+  */
+-#ifndef __cplusplus
++
++/* C23 has bool as a builtin type. */
++#if !defined(__cplusplus) && (!defined(__STDC_VERSION__) || __STDC_VERSION__ < 202311L)
+ #ifdef __BEOS__
+ typedef unsigned char bool;
+ #else
+diff --git a/contrib/eplaser/gdevescv.c b/contrib/eplaser/gdevescv.c
+index d69f64195a..fbf1bce40b 100644
+--- a/contrib/eplaser/gdevescv.c
++++ b/contrib/eplaser/gdevescv.c
+@@ -183,7 +183,7 @@ esmv_initialize_device_procs(gx_device *dev)
+         0,			/*   int           prev_paper_height; */\
+         0,			/*   int           prev_num_copies; */\
+         -1,			/*   int           prev_feed_mode; */\
+-        0,			/*   int           orientation; */\
++        false,			/*   bool          orientation; */\
+         ESCPAGE_FACEUP_DEFAULT,	/*   bool          faceup; */\
+         ESCPAGE_MEDIATYPE_DEFAULT, /*   int           MediaType; */\
+         0,			/*   bool          first_page; */\
+diff --git a/contrib/eplaser/gdevescv.h b/contrib/eplaser/gdevescv.h
+index 922107b318..5fca57625b 100644
+--- a/contrib/eplaser/gdevescv.h
++++ b/contrib/eplaser/gdevescv.h
+@@ -126,7 +126,7 @@ typedef struct gx_device_escv_s {
+   int           prev_paper_height;
+   int           prev_num_copies;
+   int           prev_feed_mode;
+-  int           orientation;
++  bool          orientation;
+   bool          faceup;
+   int           MediaType;
+   bool          first_page;
+diff --git a/contrib/gdevmd2k.c b/contrib/gdevmd2k.c
+index 826846f967..74f0cff603 100644
+--- a/contrib/gdevmd2k.c
++++ b/contrib/gdevmd2k.c
+@@ -157,10 +157,11 @@ alps_get_params(gx_device *pdev, gs_param_list *plist)
+ }
+ 
+ static int
+-alps_put_param_bool(gs_param_list *plist, gs_param_name pname, int *pvalue,
++alps_put_param_bool(gs_param_list *plist, gs_param_name pname, bool *pvalue,
+                    int ecode)
+ {
+-    int code, value;
++    int code;
++    bool value;
+     switch (code = param_read_bool(plist, pname, &value)) {
+     default:
+         return code;
+diff --git a/contrib/lips4/gdevl4r.c b/contrib/lips4/gdevl4r.c
+index 8c909452a6..d39b17decf 100644
+--- a/contrib/lips4/gdevl4r.c
++++ b/contrib/lips4/gdevl4r.c
+@@ -496,7 +496,7 @@ lips4_put_params(gx_device * pdev, gs_param_list * plist)
+     int code;
+     gs_param_name param_name;
+     gs_param_string pmedia;
+-    bool nup = lips4->nup;
++    int nup = lips4->nup;
+     bool faceup = lips4->faceup;
+     int old_bpp = pdev->color_info.depth;
+     int bpp = 0;
+diff --git a/contrib/lips4/gdevl4v.c b/contrib/lips4/gdevl4v.c
+index bd9917948a..d318881807 100644
+--- a/contrib/lips4/gdevl4v.c
++++ b/contrib/lips4/gdevl4v.c
+@@ -224,7 +224,7 @@ static int lips4v_setflat(gx_device_vector * vdev, double flatness);
+ static int
+ lips4v_setlogop(gx_device_vector * vdev, gs_logical_operation_t lop,
+                  gs_logical_operation_t diff);
+-static int lips4v_can_handle_hl_color(gx_device_vector * vdev, const gs_gstate * pgs,
++static bool lips4v_can_handle_hl_color(gx_device_vector * vdev, const gs_gstate * pgs,
+                   const gx_drawing_color * pdc);
+ static int
+ 
+@@ -1220,7 +1220,7 @@ lips4v_setlogop(gx_device_vector * vdev, gs_logical_operation_t lop,
+ }
+ 
+ /*--- added for Ghostscritp 8.15 ---*/
+-static int
++static bool
+ lips4v_can_handle_hl_color(gx_device_vector * vdev, const gs_gstate * pgs1,
+               const gx_drawing_color * pdc)
+ {
+diff --git a/contrib/opvp/gdevopvp.c b/contrib/opvp/gdevopvp.c
+index dc45b2215f..6f947f8406 100644
+--- a/contrib/opvp/gdevopvp.c
++++ b/contrib/opvp/gdevopvp.c
+@@ -265,7 +265,7 @@ static  int opvp_setdash(gx_device_vector *, const float *, uint, double);
+ static  int opvp_setflat(gx_device_vector *, double);
+ static  int opvp_setlogop(gx_device_vector *, gs_logical_operation_t,
+                           gs_logical_operation_t);
+-static  int opvp_can_handle_hl_color(gx_device_vector *, const gs_gstate *, const gx_drawing_color *);
++static  bool opvp_can_handle_hl_color(gx_device_vector *, const gs_gstate *, const gx_drawing_color *);
+ static  int opvp_setfillcolor(gx_device_vector *, const gs_gstate *, const gx_drawing_color *);
+ static  int opvp_setstrokecolor(gx_device_vector *, const gs_gstate *,const gx_drawing_color *);
+ static  int opvp_vector_dopath(gx_device_vector *, const gx_path *,
+@@ -4947,7 +4947,7 @@ opvp_setlogop(
+ }
+ 
+ /*--- added for Ghostscript 8.15 ---*/
+-static int
++static bool
+ opvp_can_handle_hl_color(gx_device_vector * vdev,
+               const gs_gstate * pgs1, const gx_drawing_color * pdc)
+ {
+diff --git a/devices/gdevcdj.c b/devices/gdevcdj.c
+index 8515ddebe9..75d9c919bc 100644
+--- a/devices/gdevcdj.c
++++ b/devices/gdevcdj.c
+@@ -1,4 +1,4 @@
+-/* Copyright (C) 2001-2023 Artifex Software, Inc.
++/* Copyright (C) 2001-2025 Artifex Software, Inc.
+    All Rights Reserved.
+ 
+    This software is provided AS-IS with no warranty, either express or
+@@ -337,7 +337,7 @@ typedef struct gx_device_bjc800_s gx_device_bjc;
+     bool mediaWeight_isSet;	/* Say if weight is an integer or null */ \
+     int mediaWeight;		/* Weigth of the media */ \
+     int printQuality;		/* Cf. strings below */ \
+-    bool ditheringType;		/* Do dithering */ \
++    int ditheringType;		/* Do dithering */ \
+     int colorComponents;	/* The number of *desired* color comps */ \
+     int printColors		/* 0: Transparent, \
+                                    1: C, 2: M, 4: Y, 7: K (Color decomp). \
+diff --git a/devices/gdevpdfimg.h b/devices/gdevpdfimg.h
+index 4df399c0c1..4f624891b7 100644
+--- a/devices/gdevpdfimg.h
++++ b/devices/gdevpdfimg.h
+@@ -1,4 +1,4 @@
+-/* Copyright (C) 2001-2023 Artifex Software, Inc.
++/* Copyright (C) 2001-2025 Artifex Software, Inc.
+    All Rights Reserved.
+ 
+    This software is provided AS-IS with no warranty, either express or
+@@ -74,8 +74,8 @@ typedef struct gx_device_pdf_image_s {
+     PCLm_temp_file_t temp_stream;
+     int NextObject;
+ 
+-    int Tumble;
+-    int Tumble2;
++    bool Tumble;
++    bool Tumble2;
+ 
+     /* OCR data */
+     struct {
+diff --git a/devices/vector/gdevpdfd.c b/devices/vector/gdevpdfd.c
+index a346ea4c21..2e970ecc5a 100644
+--- a/devices/vector/gdevpdfd.c
++++ b/devices/vector/gdevpdfd.c
+@@ -1,4 +1,4 @@
+-/* Copyright (C) 2001-2024 Artifex Software, Inc.
++/* Copyright (C) 2001-2025 Artifex Software, Inc.
+    All Rights Reserved.
+ 
+    This software is provided AS-IS with no warranty, either express or
+@@ -108,7 +108,7 @@ pdf_setlinewidth(gx_device_vector * vdev, double width)
+     return psdf_setlinewidth(vdev, fabs(width));
+ }
+ 
+-static int
++static bool
+ pdf_can_handle_hl_color(gx_device_vector * vdev, const gs_gstate * pgs,
+                  const gx_drawing_color * pdc)
+ {
+diff --git a/devices/vector/gdevpdtt.c b/devices/vector/gdevpdtt.c
+index f25dcba870..3e45ff9fab 100644
+--- a/devices/vector/gdevpdtt.c
++++ b/devices/vector/gdevpdtt.c
+@@ -1,4 +1,4 @@
+-/* Copyright (C) 2001-2024 Artifex Software, Inc.
++/* Copyright (C) 2001-2025 Artifex Software, Inc.
+    All Rights Reserved.
+ 
+    This software is provided AS-IS with no warranty, either express or
+@@ -3272,18 +3272,14 @@ static void pdf_type3_get_initial_matrix(gx_device * dev, gs_matrix * pmat)
+     gs_matrix_scale(pmat, pdev->HWResolution[0] / 72.0, pdev->HWResolution[0] / 72.0, pmat);
+ }
+ 
+-static int pdf_query_purge_cached_char(const gs_memory_t *mem, cached_char *cc, void *data)
++static bool pdf_query_purge_cached_char(const gs_memory_t *mem, cached_char *cc, void *data)
+ {
+     cached_char *to_purge = (cached_char *)data;
+ 
+-
+-    if (cc->code == to_purge->code && cc_pair(cc) == cc_pair(to_purge) &&
+-        cc->subpix_origin.x == to_purge->subpix_origin.x &&
+-        cc->subpix_origin.y == to_purge->subpix_origin.y &&
+-        cc->wmode == to_purge->wmode && cc_depth(cc) == cc_depth(to_purge)
+-        )
+-        return 1;
+-    return 0;
++    return cc->code == to_purge->code && cc_pair(cc) == cc_pair(to_purge) &&
++           cc->subpix_origin.x == to_purge->subpix_origin.x &&
++           cc->subpix_origin.y == to_purge->subpix_origin.y &&
++           cc->wmode == to_purge->wmode && cc_depth(cc) == cc_depth(to_purge);
+ }
+ 
+ static int ProcessTextForOCR(gs_text_enum_t *pte)
+diff --git a/devices/vector/gdevpx.c b/devices/vector/gdevpx.c
+index 9a9edfb126..7f2c4b749a 100644
+--- a/devices/vector/gdevpx.c
++++ b/devices/vector/gdevpx.c
+@@ -1,4 +1,4 @@
+-/* Copyright (C) 2001-2023 Artifex Software, Inc.
++/* Copyright (C) 2001-2025 Artifex Software, Inc.
+    All Rights Reserved.
+ 
+    This software is provided AS-IS with no warranty, either express or
+@@ -1393,7 +1393,7 @@ pclxl_setlogop(gx_device_vector * vdev, gs_logical_operation_t lop,
+     return 0;
+ }
+ 
+-static int
++static bool
+ pclxl_can_handle_hl_color(gx_device_vector * vdev, const gs_gstate * pgs,
+                           const gx_drawing_color * pdc)
+ {
+diff --git a/devices/vector/gdevxps.c b/devices/vector/gdevxps.c
+index 5ae9a688ab..df26c11c36 100644
+--- a/devices/vector/gdevxps.c
++++ b/devices/vector/gdevxps.c
+@@ -1,4 +1,4 @@
+-/* Copyright (C) 2001-2024 Artifex Software, Inc.
++/* Copyright (C) 2001-2025 Artifex Software, Inc.
+    All Rights Reserved.
+ 
+    This software is provided AS-IS with no warranty, either express or
+@@ -271,7 +271,7 @@ static int
+ xps_setlogop(gx_device_vector *vdev, gs_logical_operation_t lop,
+              gs_logical_operation_t diff);
+ 
+-static int
++static bool
+ xps_can_handle_hl_color(gx_device_vector *vdev, const gs_gstate *pgs,
+                         const gx_drawing_color * pdc);
+ static int
+@@ -1480,12 +1480,12 @@ xps_setlogop(gx_device_vector *vdev, gs_logical_operation_t lop,
+ 
+         /* Other state */
+ 
+-static int
++static bool
+ xps_can_handle_hl_color(gx_device_vector *vdev, const gs_gstate *pgs,
+                           const gx_drawing_color *pdc)
+ {
+     if_debug0m('_', vdev->memory, "xps_can_handle_hl_color\n");
+-    return 0;
++    return false;
+ }
+ 
+ /* Paths */
+diff --git a/pdf/pdf_device.c b/pdf/pdf_device.c
+index 44ecd36cd0..bd524784e1 100644
+--- a/pdf/pdf_device.c
++++ b/pdf/pdf_device.c
+@@ -1,4 +1,4 @@
+-/* Copyright (C) 2019-2024 Artifex Software, Inc.
++/* Copyright (C) 2019-2025 Artifex Software, Inc.
+    All Rights Reserved.
+ 
+    This software is provided AS-IS with no warranty, either express or
+@@ -45,7 +45,7 @@ bool pdfi_device_check_param_bool(gx_device *dev, const char *param)
+ {
+     int code;
+     gs_c_param_list list;
+-    int value;
++    bool value;
+ 
+     code = pdfi_device_check_param(dev, param, &list);
+     if (code < 0)
+@@ -57,7 +57,7 @@ bool pdfi_device_check_param_bool(gx_device *dev, const char *param)
+     if (code < 0)
+         value = false;
+     gs_c_param_list_release(&list);
+-    return (bool)value;
++    return value;
+ }
+ 
+ /* Set value of string device parameter */
+diff --git a/psi/zcontrol.c b/psi/zcontrol.c
+index a406845ec9..463ed763a0 100644
+--- a/psi/zcontrol.c
++++ b/psi/zcontrol.c
+@@ -1,4 +1,4 @@
+-/* Copyright (C) 2001-2023 Artifex Software, Inc.
++/* Copyright (C) 2001-2025 Artifex Software, Inc.
+    All Rights Reserved.
+ 
+    This software is provided AS-IS with no warranty, either express or
+@@ -990,7 +990,7 @@ const op_def zcontrol3_op_defs[] = {
+  * interpreter to catch them, so that we can signal the error with the
+  * object still on the operand stack.
+  */
+-static bool
++static int
+ check_for_exec(const_os_ptr op)
+ {
+     if (!r_has_attr(op, a_execute) && /* only true if noaccess */
+diff --git a/psi/zfdecode.c b/psi/zfdecode.c
+index 3f074880f6..31789650b0 100644
+--- a/psi/zfdecode.c
++++ b/psi/zfdecode.c
+@@ -190,7 +190,7 @@ filter_read_predictor(i_ctx_t *i_ctx_p, int npop,
+ int
+ zlz_setup(os_ptr op, stream_LZW_state * plzs)
+ {
+-    int code;
++    int code, ech;
+     const ref *dop;
+ 
+     s_LZW_set_defaults_inline(plzs);
+@@ -200,7 +200,7 @@ zlz_setup(os_ptr op, stream_LZW_state * plzs)
+     } else
+         dop = 0;
+     if (   (code = dict_int_param(dop, "EarlyChange", 0, 1, 1,
+-                                  &plzs->EarlyChange)) < 0 ||
++                                  &ech)) < 0 ||
+            /*
+             * The following are not PostScript standard, although
+             * LanguageLevel 3 provides the first two under different
+@@ -214,6 +214,7 @@ zlz_setup(os_ptr op, stream_LZW_state * plzs)
+                                    &plzs->BlockData)) < 0
+         )
+         return code;
++    plzs->EarlyChange = ech != 0;
+     return 0;
+ }
+ 
+diff --git a/psi/zfunc4.c b/psi/zfunc4.c
+index 3a8013bd37..a941f3a0ca 100644
+--- a/psi/zfunc4.c
++++ b/psi/zfunc4.c
+@@ -1,4 +1,4 @@
+-/* Copyright (C) 2001-2024 Artifex Software, Inc.
++/* Copyright (C) 2001-2025 Artifex Software, Inc.
+    All Rights Reserved.
+ 
+    This software is provided AS-IS with no warranty, either express or
+@@ -468,7 +468,7 @@ gs_build_function_4(i_ctx_t *i_ctx_p, const ref *op, const gs_function_params_t
+     int code;
+     byte *ops;
+     uint size;
+-    int AllowRepeat = 1; /* Default to permitting Repeat, devices which can't handle it implement the spec_op */
++    bool AllowRepeat = true; /* Default to permitting Repeat, devices which can't handle it implement the spec_op */
+ 
+     *(gs_function_params_t *)&params = *mnDR;
+     params.ops.data = 0;	/* in case of failure */
+@@ -548,7 +548,7 @@ int make_type4_function(i_ctx_t * i_ctx_p, ref *arr, ref *pproc, gs_function_t *
+     float *ptr;
+     ref alternatespace, *palternatespace = &alternatespace;
+     PS_colour_space_t *space, *altspace;
+-    int AllowRepeat = 1; /* Default to permitting Repeat, devices which can't handle it implement the spec_op */
++    bool AllowRepeat = true; /* Default to permitting Repeat, devices which can't handle it implement the spec_op */
+ 
+     code = get_space_object(i_ctx_p, arr, &space);
+     if (code < 0)
