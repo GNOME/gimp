@@ -315,7 +315,7 @@ gimp-debian:
     - <<: *CI_RELEASE
   parallel:
     matrix:
-      - RUNNER: x86_64_v2
+      - RUNNER: x86_64_v3
   tags: []
 
 deps-debian-x64:
