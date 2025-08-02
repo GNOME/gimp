@@ -457,11 +457,11 @@ if ($GITLAB_CI)
 if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags/',''}))
   {
     Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):msix_submission[collapsed=true]$([char]13)$([char]27)[0KSubmitting $MSIX_ARTIFACT to Microsoft Store"
-    ## Connect with Microsoft Entra credentials (stored on GitLab)
-    ## (The last one can be revoked at any time in MS Entra Admin center)
+    ## Needed credentials for submission
+    ### Connect with our Microsoft Entra credentials (stored on GitLab)
+    ### (The last one can be revoked at any time in MS Entra Admin center)
     msstore reconfigure --tenantId $TENANT_ID --sellerId $SELLER_ID --clientId $CLIENT_ID --clientSecret $CLIENT_SECRET
-
-    ## Set product_id (which is not confidential) needed by HTTP calls of some commands
+    ### Set product_id (which is not confidential) needed by HTTP calls of some commands
     if ($GIMP_UNSTABLE -or $GIMP_RC_VERSION)
       {
         $PRODUCT_ID="9NZVDVP54JMR"
