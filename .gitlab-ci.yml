@@ -787,8 +787,9 @@ dist-appimage-weekly:
     expire_in: 8 days
 
 include:
-  project: 'GNOME/citemplates'
-  file: 'flatpak/flatpak_ci_initiative.yml'
+  project: GNOME/citemplates
+  file: flatpak/flatpak_ci_initiative.yml
+  ref: abd1886a05ec162d8214a8607cb7a4598e09816e
 
 dist-flatpak-weekly:
   extends:
