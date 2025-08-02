@@ -1,0 +1,24 @@
+From 42864e12b0d7af01b1cf989d6da9e9a4477775a1 Mon Sep 17 00:00:00 2001
+From: Rudi Heitbaum <rudi@heitbaum.com>
+Date: Fri, 28 Mar 2025 23:14:48 +1100
+Subject: [PATCH] Allow build with cmake 4.0.0
+
+Update the min version to match parent CMakeLists.txt 3.9...3.12
+---
+ apps/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/apps/CMakeLists.txt b/apps/CMakeLists.txt
+index f7c9dec..ef2271d 100644
+--- a/apps/CMakeLists.txt
++++ b/apps/CMakeLists.txt
+@@ -1,5 +1,5 @@
+ 
+-cmake_minimum_required(VERSION 2.8)  # see ../CMakeLists.txt for why 2.8
++cmake_minimum_required(VERSION 3.9...3.12)
+ 
+ if(POLICY CMP0075)
+     cmake_policy(SET CMP0075 NEW)
+-- 
+2.49.0.windows.1
+

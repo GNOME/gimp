@@ -359,54 +359,6 @@
             ]
         },
         {
-            "name": "ghostscript",
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10051/ghostscript-10.05.1.tar.gz",
-                    "sha512": "ac1ab58f474467006d7735858e42a3db9a07aa092f907b14f1147447d08c8b4f5b499bca31c09c1558304787fe59d666c9f1aa531d219f27e17d5f9c9523f58c",
-                    "x-checker-data": {
-                        "//": "Bypass broken url-template with anitya checker - See https://github.com/flathub/flatpak-external-data-checker/issues/360",
-                        "type": "json",
-                        "url": "https://api.github.com/repos/ArtifexSoftware/ghostpdl-downloads/releases/latest",
-                        "version-query": ".name | split(\" \") | .[1]",
-                        "url-query": ".assets[] | select(.name|test(\"^ghostscript-(.*).tar.gz$\")) | .browser_download_url"
-                    }
-                },
-                {
-                    "type": "shell",
-                    "commands": [
-                        "cp -p /usr/share/automake-*/config.{sub,guess} freetype/builds/unix/",
-                        "cp -p /usr/share/automake-*/config.{sub,guess} ijs/",
-                        "cp -p /usr/share/automake-*/config.{sub,guess} jpeg/",
-                        "cp -p /usr/share/automake-*/config.{sub,guess} libpng/",
-                        "cp -p /usr/share/automake-*/config.{sub,guess} lcms2mt/",
-                        "cp -p /usr/share/automake-*/config.{sub,guess} tiff/config/",
-                        "rm -rf libpng/pngread.c"
-                    ]
-                }
-            ],
-            "config-opts": [
-                "--disable-cups",
-                "--disable-gtk",
-                "--without-tesseract",
-                "--without-libpaper",
-                "--without-pdftoraster"
-            ],
-            "make-args": [
-                "so"
-            ],
-            "make-install-args": [
-                "soinstall"
-            ],
-            "cleanup": [
-                "/bin",
-                "/include",
-                "/lib/pkgconfig",
-                "/share"
-            ]
-        },
-        {
             "name": "libmypaint",
             "sources": [
                 {
@@ -443,6 +395,12 @@
                                 "type": "git",
                                 "tag-pattern": "^json-c-([\\d.]+)-[\\d]+$"
                             }
+                        },
+                        {
+                            "type": "patch",
+                            "paths": [
+                                "patches/0001-Allow-build-with-cmake-4.0.0.patch"
+                            ]
                         }
                     ],
                     "buildsystem": "cmake-ninja",
@@ -580,6 +538,15 @@
                             }
                         },
                         {
+                            "type": "patch",
+                            "paths": [
+                                "patches/0001-Fix-CMake-build-error-with-latest-CMake-4.0-release.patch",
+                                "patches/0002-Fix-for-CMake-Build-Errors-in-MacOS.patch",
+                                "patches/0003-Bump-CMake-Version-for-dynamicHDR10.patch",
+                                "patches/0004-Fix-build-with-GCC-15.patch"
+                            ]
+                        },
+                        {
                             "type": "shell",
                             "commands": [
                                 "ln -s ${FLATPAK_DEST}/lib/libheif/lib/libx265-10.a",
@@ -619,6 +586,15 @@
                                         "stable-only": true,
                                         "url-template": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_$version.tar.gz"
                                     }
+                                },
+                                {
+                                    "type": "patch",
+                                    "paths": [
+                                        "patches/0001-Fix-CMake-build-error-with-latest-CMake-4.0-release.patch",
+                                        "patches/0002-Fix-for-CMake-Build-Errors-in-MacOS.patch",
+                                        "patches/0003-Bump-CMake-Version-for-dynamicHDR10.patch",
+                                        "patches/0004-Fix-build-with-GCC-15.patch"
+                                    ]
                                 }
                             ],
                             "subdir": "source",
@@ -648,6 +624,15 @@
                                         "stable-only": true,
                                         "url-template": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_$version.tar.gz"
                                     }
+                                },
+                                {
+                                    "type": "patch",
+                                    "paths": [
+                                        "patches/0001-Fix-CMake-build-error-with-latest-CMake-4.0-release.patch",
+                                        "patches/0002-Fix-for-CMake-Build-Errors-in-MacOS.patch",
+                                        "patches/0003-Bump-CMake-Version-for-dynamicHDR10.patch",
+                                        "patches/0004-Fix-build-with-GCC-15.patch"
+                                    ]
                                 }
                             ],
                             "subdir": "source",
@@ -766,12 +751,27 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://src.fedoraproject.org/repo/pkgs/cfitsio/cfitsio-4.5.0.tar.gz/sha512/03746bf49cfcd97991be54f3e4dd51fb45c7b3a75f581dc6ab9ee5726a342dc11b651667807fd67e5318576d9b15e3580dd62ceab02fd684feff7ee6bb2edc7c/cfitsio-4.5.0.tar.gz",
-                    "sha256": "e4854fc3365c1462e493aa586bfaa2f3d0bb8c20b75a524955db64c27427ce09"
+                    "url": "https://github.com/HEASARC/cfitsio/archive/refs/tags/cfitsio-4.6.2.tar.gz",
+                    "sha256": "83f710f9441e7c703eeb485c9a475f50801ae7fad32ac7e356a406d318b4c02f",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 270,
+                        "stable-only": true,
+                        "url-template": "https://github.com/HEASARC/cfitsio/archive/refs/tags/cfitsio-$version.tar.gz"
+                    }
+                },
+                {
+                    "type": "patch",
+                    "paths": [
+                        "patches/0001-bump-CMake-min-required-version.patch"
+                    ]
                 }
             ],
-            "config-opts": [
-                "--enable-reentrant"
+           "buildsystem": "cmake-ninja",
+           "builddir": true,
+           "config-opts": [
+                "-DUTILS=OFF",
+                "-DTESTS=OFF"
             ],
             "cleanup": [
                 "/bin",
@@ -861,6 +861,9 @@
                 }
             ],
             "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+            ],
             "cleanup": [
                 "/include",
                 "/lib/pkgconfig"
