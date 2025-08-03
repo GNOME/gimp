@@ -15,6 +15,12 @@ elif [ $(basename "$PWD") = 'snap' ]; then
 fi
 
 
+# Get snapcraft version
+printf "\e[0Ksection_start:`date +%s`:snap_tlkt\r\e[0KChecking snap tools\n"
+printf "(INFO): snapcraft version: $(snapcraft --version | sed 's|snapcraft ||')\n"
+printf "\e[0Ksection_end:`date +%s`:snap_tlkt\r\e[0K\n"
+
+
 # Global info
 for SNAP in $(find . -maxdepth 1 -iname "*.snap"); do
 SNAP=$(echo "$SNAP" | sed 's|^\./temp_||')
