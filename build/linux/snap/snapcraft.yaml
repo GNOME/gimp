@@ -148,7 +148,8 @@ parts:
       - bison
       - flex
       - libaa1-dev
-      - libappstream-glib-dev
+      - libappstream-dev
+      - libarchive-dev
       - libcfitsio-dev
       - libexpat1-dev
       - libgexiv2-dev

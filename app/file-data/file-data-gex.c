@@ -76,7 +76,8 @@ static gboolean   file_gex_validate_path  (const gchar     *path,
                                            gchar          **plugin_id,
                                            GError         **error);
 static gboolean   file_gex_validate       (GFile           *file,
-                                           AsComponent    **appstream,
+                                           AsMetadata     **metadata,
+                                           AsComponent    **component,
                                            GError         **error);
 static gchar *    file_gex_decompress     (GFile           *file,
                                            gchar           *plugin_id,
@@ -189,7 +190,8 @@ file_gex_validate_path (const gchar  *path,
 /**
  * file_gex_validate:
  * @file:
- * @appstream:
+ * @metadata:
+ * @component:
  * @error:
  *
  * Validate the extension file with the following tests:
@@ -201,19 +203,21 @@ file_gex_validate_path (const gchar  *path,
  * - The extension ID resulting from the AppStream parsing must
  *   correspond to the extension ID resulting from the top folder.
  *
- * Returns: TRUE on success and allocates @appstream, FALSE otherwise
- *          with @error set.
+ * Returns: TRUE on success, allocates @metadata and sets @component,
+ *          FALSE otherwise with @error set.
  */
 static gboolean
 file_gex_validate (GFile        *file,
-                   AsComponent  **appstream,
-                   GError       **error)
+                   AsMetadata  **metadata,
+                   AsComponent **component,
+                   GError      **error)
 {
   GInputStream *input;
   gboolean      success = FALSE;
 
   g_return_val_if_fail (error != NULL && *error == NULL, FALSE);
-  g_return_val_if_fail (appstream != NULL && *appstream == NULL, FALSE);
+  g_return_val_if_fail (metadata != NULL && *metadata == NULL, FALSE);
+  g_return_val_if_fail (component != NULL && *component == NULL, FALSE);
 
   input = G_INPUT_STREAM (g_file_read (file, NULL, error));
 
@@ -285,15 +289,35 @@ file_gex_validate (GFile        *file,
                 {
                   if (appdata)
                     {
-                      *appstream = as_component_new ();
+                      *metadata = as_metadata_new ();
+                      success   = as_metadata_parse_bytes (*metadata, appdata, AS_FORMAT_KIND_XML, error);
 
-                      if (g_strcmp0 (as_component_get_id (*appstream), plugin_id) != 0)
+                      if (success)
                         {
-                          *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
-                                                _("GIMP extension '%s' directory (%s) different from AppStream id: %s"),
-                                                gimp_file_get_utf8_name (file),
-                                                plugin_id, as_component_get_id (*appstream));
-                          g_clear_object (appstream);
+#if AS_CHECK_VERSION(1, 0, 0)
+                          AsComponentBox *components;
+
+                          components = as_metadata_get_components (*metadata);
+                          *component = as_component_box_index (components, 0);
+#else
+                          GPtrArray *components;
+
+                          components = as_metadata_get_components (*metadata);
+                          *component = g_ptr_array_index (components, 0);
+#endif
+
+                          if (g_strcmp0 (as_component_get_id (*component), plugin_id) != 0)
+                            {
+                              *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
+                                                    _("GIMP extension '%s' directory (%s) different from AppStream id: %s"),
+                                                    gimp_file_get_utf8_name (file),
+                                                    plugin_id, as_component_get_id (*component));
+                              g_clear_object (metadata);
+                            }
+                        }
+                      else
+                        {
+                          g_clear_object (metadata);
                         }
                     }
                   else
@@ -508,18 +532,22 @@ file_gex_load_invoker (GimpProcedure         *procedure,
 {
   GimpValueArray *return_vals;
   GFile          *file;
-  gchar          *ext_dir = NULL;
-  AsComponent    *appdata = NULL;
-  gboolean        success = FALSE;
+  gchar          *ext_dir   = NULL;
+  AsMetadata     *metadata  = NULL;
+  AsComponent    *component = NULL;
+  gboolean        success   = FALSE;
 
   gimp_set_busy (gimp);
 
   file = g_value_get_object (gimp_value_array_index (args, 1));
 
-  success = file_gex_validate (file, &appdata, error);
+  success = file_gex_validate (file, &metadata, &component, error);
   if (success)
-    ext_dir = file_gex_decompress (file, (gchar *) as_component_get_id (appdata),
-                                   error);
+    {
+      ext_dir = file_gex_decompress (file, (gchar *) as_component_get_id (component),
+                                     error);
+      g_object_unref (metadata);
+    }
 
   if (ext_dir)
     {

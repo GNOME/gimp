@@ -21,7 +21,7 @@
 #include "config.h"
 
 #include <appstream.h>
-#include <gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -48,7 +48,8 @@ struct _GimpExtensionPrivate
 {
   gchar       *path;
 
-  AsComponent *app;
+  AsMetadata  *metadata;
+  AsComponent *component;
   gboolean     writable;
   gboolean     running;
 
@@ -145,8 +146,7 @@ gimp_extension_finalize (GObject *object)
   gimp_extension_clean (extension);
 
   g_free (extension->p->path);
-  if (extension->p->app)
-    g_object_unref (extension->p->app);
+  g_clear_object (&extension->p->metadata);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -223,26 +223,26 @@ gimp_extension_new (const gchar *dir,
 const gchar *
 gimp_extension_get_name (GimpExtension *extension)
 {
-  g_return_val_if_fail (extension->p->app != NULL, NULL);
+  g_return_val_if_fail (extension->p->component != NULL, NULL);
 
-  return as_component_get_name (extension->p->app);
+  return as_component_get_name (extension->p->component);
 }
 
 const gchar *
 gimp_extension_get_comment (GimpExtension *extension)
 {
 
-  g_return_val_if_fail (extension->p->app != NULL, NULL);
+  g_return_val_if_fail (extension->p->component != NULL, NULL);
 
-  return as_component_get_summary (extension->p->app);
+  return as_component_get_summary (extension->p->component);
 }
 
 const gchar *
 gimp_extension_get_description (GimpExtension *extension)
 {
-  g_return_val_if_fail (extension->p->app != NULL, NULL);
+  g_return_val_if_fail (extension->p->component != NULL, NULL);
 
-  return as_component_get_description (extension->p->app);
+  return as_component_get_description (extension->p->component);
 }
 
 GdkPixbuf *
@@ -255,12 +255,12 @@ gimp_extension_get_screenshot (GimpExtension  *extension,
   AsScreenshot    *screenshot   = NULL;
   const GPtrArray *screenshots;
 
-  g_return_val_if_fail (extension->p->app != NULL, NULL);
+  g_return_val_if_fail (extension->p->component != NULL, NULL);
 
 #if AS_CHECK_VERSION(1, 0, 0)
-  screenshots = as_component_get_screenshots_all (extension->p->app);
+  screenshots = as_component_get_screenshots_all (extension->p->component);
 #else
-  screenshots = as_component_get_screenshots (extension->p->app);
+  screenshots = as_component_get_screenshots (extension->p->component);
 #endif
 
   if (screenshots == NULL || screenshots->len == 0)
@@ -281,7 +281,8 @@ gimp_extension_get_screenshot (GimpExtension  *extension,
 
   if (screenshot == NULL)
     {
-      g_printerr (_("Invalid AppStream metadata: Failed to find default screenshot for: \"%s\""), as_component_get_id (extension->p->app));
+      g_printerr (_("Invalid AppStream metadata: failed to find default screenshot for extension \"%s\""),
+                  as_component_get_id (extension->p->component));
     }
 
   if (screenshot)
@@ -368,13 +369,13 @@ gboolean
 gimp_extension_load (GimpExtension  *extension,
                      GError        **error)
 {
-  AsComponent    *app;
+  AsMetadata     *metadata;
+  AsComponent    *component;
 #if AS_CHECK_VERSION(1, 0, 0)
   AsComponentBox *components   = NULL;
 #else
   GPtrArray      *components   = NULL;
 #endif
-  AsMetadata     *metadata;
   GPtrArray      *extends;
   GPtrArray      *relations;
   AsRelease      *release      = NULL;
@@ -389,7 +390,8 @@ gimp_extension_load (GimpExtension  *extension,
   gboolean        success      = FALSE;
   gboolean        has_require  = FALSE;
 
-  g_clear_object (&extension->p->app);
+  g_clear_object (&extension->p->metadata);
+  extension->p->component = NULL;
 
   /* Search in subdirectory if a file with the same name as
    * directory and ending with ".metainfo.xml" exists.
@@ -406,16 +408,16 @@ gimp_extension_load (GimpExtension  *extension,
 
 #if AS_CHECK_VERSION(1, 0, 0)
   components = as_metadata_get_components (metadata);
-  app = as_component_box_index (components, 0);
+  component  = as_component_box_index (components, 0);
 #else
   components = as_metadata_get_components (metadata);
-  app = g_ptr_array_index (components, 0);
+  component  = g_ptr_array_index (components, 0);
 #endif
 
-  g_free (file);
+  g_object_unref (file);
   g_free (path);
 
-  if (success && as_component_get_kind (app) != AS_COMPONENT_KIND_ADDON)
+  if (success && as_component_get_kind (component) != AS_COMPONENT_KIND_ADDON)
     {
       /* Properly setting the type will allow extensions to be
        * distributed appropriately through other means.
@@ -424,11 +426,11 @@ gimp_extension_load (GimpExtension  *extension,
         *error = g_error_new (GIMP_EXTENSION_ERROR,
                               GIMP_EXTENSION_BAD_APPDATA,
                               _("Extension AppData must be of type \"addon\", found \"%s\" instead."),
-                              as_component_kind_to_string (as_component_get_kind (app)));
+                              as_component_kind_to_string (as_component_get_kind (component)));
       success = FALSE;
     }
 
-  extends = as_component_get_extends (app);
+  extends = as_component_get_extends (component);
   if (success &&
       ! g_ptr_array_find_with_equal_func (extends, "org.gimp.GIMP",
                                           g_str_equal, NULL))
@@ -444,7 +446,7 @@ gimp_extension_load (GimpExtension  *extension,
     }
 
   if (success &&
-      g_strcmp0 (as_component_get_id (app),
+      g_strcmp0 (as_component_get_id (component),
                  gimp_object_get_name (extension)) != 0)
     {
       /* Extension IDs will be unique and we want therefore the
@@ -454,25 +456,25 @@ gimp_extension_load (GimpExtension  *extension,
         *error = g_error_new (GIMP_EXTENSION_ERROR,
                               GIMP_EXTENSION_FAILED,
                               _("Extension AppData id (\"%s\") and directory (\"%s\") must be the same."),
-                              as_component_get_id (app), gimp_object_get_name (extension));
+                              as_component_get_id (component), gimp_object_get_name (extension));
       success = FALSE;
     }
 
 #if AS_CHECK_VERSION(1, 0, 0)
-  rlist = as_component_get_releases_plain (app);
+  rlist = as_component_get_releases_plain (component);
   if (rlist != NULL && !as_release_list_is_empty (rlist))
     {
       release = as_release_list_index (rlist, 0);
     }
 #else
-  rlist = as_component_get_releases (app);
+  rlist = as_component_get_releases (component);
   if (rlist != NULL && rlist->len > 0)
     {
       release = g_ptr_array_index (rlist, 0);
     }
 #endif
 
-  if (success && (!release || ! as_release_get_version (release)))
+  if (success && (! release || ! as_release_get_version (release)))
     {
       /* We don't need the detail, just to know that the extension has a
        * release tag with a version. This is very important since it is
@@ -485,7 +487,7 @@ gimp_extension_load (GimpExtension  *extension,
       success = FALSE;
     }
 
-  relations = as_component_get_requires (app);
+  relations = as_component_get_requires (component);
   if (success && relations != NULL)
     {
       for (guint i = 0; i < relations->len; i++)
@@ -497,18 +499,19 @@ gimp_extension_load (GimpExtension  *extension,
             {
               has_require = TRUE;
 
-              if (!as_relation_version_compare(relation, GIMP_VERSION, error)) {
+              if (! as_relation_version_compare (relation, GIMP_VERSION, error))
+                {
                   success = FALSE;
                   break;
-              }
+                }
             }
           else if (error && *error == NULL)
             {
-              *error = g_error_new(GIMP_EXTENSION_ERROR,
-                                  GIMP_EXTENSION_FAILED,
-                                  _("Unsupported <relation> \"%s\" (type %s)."),
-                                  as_relation_get_value_str(relation),
-                                  as_relation_item_kind_to_string(as_relation_get_item_kind(relation)));
+              *error = g_error_new (GIMP_EXTENSION_ERROR,
+                                    GIMP_EXTENSION_FAILED,
+                                    _("Unsupported <relation> \"%s\" (type %s)."),
+                                    as_relation_get_value_str(relation),
+                                    as_relation_item_kind_to_string(as_relation_get_item_kind(relation)));
               success = FALSE;
               break;
             }
@@ -526,9 +529,14 @@ gimp_extension_load (GimpExtension  *extension,
     }
 
   if (success)
-    extension->p->app = app;
+    {
+      extension->p->metadata  = metadata;
+      extension->p->component = component;
+    }
   else
-    g_object_unref (app);
+    {
+      g_clear_object (&metadata);
+    }
 
   return success;
 }
@@ -540,11 +548,11 @@ gimp_extension_run (GimpExtension  *extension,
   GHashTable *metadata;
   gchar      *value;
 
-  g_return_val_if_fail (extension->p->app != NULL, FALSE);
+  g_return_val_if_fail (extension->p->component != NULL, FALSE);
   g_return_val_if_fail (error && *error == NULL, FALSE);
 
   gimp_extension_clean (extension);
-  metadata = as_component_get_custom (extension->p->app);
+  metadata = as_component_get_custom (extension->p->component);
 
   value = g_hash_table_lookup (metadata, "GIMP::brush-path");
   extension->p->brush_paths = gimp_extension_validate_paths (extension,

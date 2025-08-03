@@ -577,7 +577,7 @@ conf.set('HAVE_LIBSOCKET', libsocket.found())
 ################################################################################
 # Check for extension support
 
-appstream_minver = '0.16.2'
+appstream_minver = '0.16.1'
 appstream = dependency('appstream', version: '>='+appstream_minver)
 
 libarchive = dependency('libarchive')
@@ -1671,7 +1671,7 @@ install_conf = configuration_data()
 install_conf.set('GIMP_APP_VERSION', gimp_app_version)
 install_conf.set('GIMP_PKGCONFIG_VERSION', gimp_version)
 install_conf.set('GIMP_VERSION', gimp_version)
-install_conf.set('APPSTREAM_REQUIRED_VERSION', appstream_minver)
+install_conf.set('APPSTREAM_REQUIRED_VERSION',    appstream_minver)
 install_conf.set('ATK_REQUIRED_VERSION',          atk_minver)
 install_conf.set('BABL_REQUIRED_VERSION',         babl_minver)
 install_conf.set('CAIRO_PDF_REQUIRED_VERSION',    cairopdf_minver)
