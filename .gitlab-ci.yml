@@ -392,7 +392,7 @@ gimp-debian-x64:
     MESON_DIST: 0
   before_script:
     - export GIMP_PREFIX="${CI_PROJECT_DIR}/_install"
-  timeout: 60m
+  timeout: 90m
 
 deps-flatpak:
   extends: .flatpak
