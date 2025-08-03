@@ -116,6 +116,7 @@ else
 fi
 printf "(INFO): App ID: $APP_ID | Version: $CUSTOM_GIMP_VERSION\n"
 
+## Autodetects what archs will be bundled and/or packaged
 supported_archs=$(find . -maxdepth 1 -iname "AppDir*")
 if [ "$supported_archs" = '' ]; then
   printf "(INFO): Arch: $(uname -m)\n"
@@ -130,7 +131,7 @@ printf "\e[0Ksection_end:`date +%s`:apmg_info\r\e[0K\n"
 
 
 # 3. GIMP FILES (IN APPDIR)
-if [ ! "$(find . -maxdepth 1 -iname "AppDir*")" ] || [ "$MODE" = '--bundle-only' ]; then
+if [ "$supported_archs" = '' ] || [ "$MODE" = '--bundle-only' ]; then
 printf "\e[0Ksection_start:`date +%s`:apmg_files[collapsed=true]\r\e[0KPreparing GIMP files in AppDir-$HOST_ARCH/usr\n"
 grep -q 'relocatable-bundle=yes' $BUILD_DIR/meson-logs/meson-log.txt && export RELOCATABLE_BUNDLE_ON=1
 if [ -z "$RELOCATABLE_BUNDLE_ON" ]; then
