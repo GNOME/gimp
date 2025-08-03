@@ -26,7 +26,7 @@ else
   printf '\033[31m(ERROR)\033[0m: flatpak-builder not found. Please, install it using your package manager.\n'
   exit 1
 fi
-builder_version=$(eval $FLATPAK_BUILDER --version | sed 's/flatpak-builder//' | sed 's/-//' | sed 's/ //' | sed 's/\.//g')
+export builder_version=$(eval $FLATPAK_BUILDER --version | sed 's/flatpak-builder//' | sed 's/-//' | sed 's/ //' | sed 's/\.//g')
 if [ "$builder_version" -lt '143' ]; then
   ## Pre-1.4.3 flatpak-builder fails at Cmake deps, let's prevent this
   printf "\033[31m(ERROR)\033[0m: Installed flatpak-builder is too old. Our .json manifest requires at least 1.4.3.\n"

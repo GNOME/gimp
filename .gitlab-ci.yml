@@ -383,7 +383,7 @@ gimp-debian-x64:
     - if: '$GIMP_CI_FLATPAK != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_FLATPAK.*/'
   parallel:
     matrix:
-      - RUNNER: [flatpak-aarch64, flatpak-x86_64]
+      - RUNNER: [flatpak-x86_64]
   tags:
     - $RUNNER
   image: quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master
