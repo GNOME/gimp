@@ -22,11 +22,21 @@ printf "\e[0Ksection_end:`date +%s`:snap_tlkt\r\e[0K\n"
 
 
 # Global info
-for SNAP in $(find . -maxdepth 1 -iname "*.snap"); do
-SNAP=$(echo "$SNAP" | sed 's|^\./temp_||')
+printf "\e[0Ksection_start:`date +%s`:snap_info\r\e[0KGetting snap global info\n"
+supported_archs=$(find . -maxdepth 1 -iname "*.snap")
+if echo "$supported_archs" | grep -q 'arm64' && ! echo "$supported_archs" | grep -q 'amd64'; then
+  printf '(INFO): Arch: arm64\n'
+elif ! echo "$supported_archs" | grep -q 'arm64' && echo "$supported_archs" | grep -q 'amd64'; then
+  printf '(INFO): Arch: amd64\n'
+elif echo "$supported_archs" | grep -q 'arm64' && echo "$supported_archs" | grep -q 'amd64'; then
+  printf '(INFO): Arch: arm64 and amd64\n'
+fi
+printf "\e[0Ksection_end:`date +%s`:snap_info\r\e[0K\n"
 
 
 # Finish .snap to be exposed as artifact
+for SNAP in $supported_archs; do
+SNAP=$(echo "$SNAP" | sed 's|^\./temp_||')
 printf "\e[0Ksection_start:`date +%s`:${SNAP}_making[collapsed=true]\r\e[0KFinishing ${SNAP}\n"
 mv temp_${SNAP} ${SNAP}
 printf "(INFO): Suceeded. To test this build, install it from the artifact with: sudo snap install --dangerous ${SNAP}\n"
