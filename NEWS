@@ -19,7 +19,8 @@ Core:
   - Internal classes, config items and actions renamed from "vectors" to
     "path".
   - Some cleanup of outdated disabled unit tests and other warnings.
-  - Restructuration of internal GimpControllerManager API.
+  - Restructuration of internal GimpControllerManager and
+    GimpContainerView API.
   - Various code have been moving away from GtkTreeView and some new
     internal classes were added as a preparation for GTK4 port.
 
@@ -28,6 +29,8 @@ Tools:
   - MyPaint brush tool was ported to the newer MyPaintSurface2 API. A
     consequence is that we now depend on mypaint-brushes-2.0 instead of
     mypaint-brushes-1.0.
+  - Seamless Clone (Playground): made to work again, but is still too
+    slow to move out of Playground.
 
 Graphical User Interface:
 
@@ -39,6 +42,7 @@ Graphical User Interface:
   - In various GUI using a GtkStack (Input Controller dialogue,
     Preferences dialogue, and Welcome dialogue), we now turn off
     animations when it is set OFF system-wide.
+  - "System" color scheme now also works on macOS.
 
 Plug-Ins:
 
@@ -57,10 +61,19 @@ Plug-Ins:
     playback UIs. The redesign also changes the progress bar to a
     GtkScale, so users can more easily move to different frames on the
     timeline.
+  - PAA textures: initial import support (includes RGBA 4444, 5551,
+    8888, and Grayscale with Alpha channel. It does not yet cover DXT1 -
+    5 texture import support).
+
 
 PDB:
 
   - gimp-file-save properly sets associated save or exported files.
+
+Build:
+
+  - Add nightly Snap package.
+  - Add nightly Aarch64 flatpak.
 
 
 Overview of Changes from GIMP 3.0.4 to GIMP 3.1.2
