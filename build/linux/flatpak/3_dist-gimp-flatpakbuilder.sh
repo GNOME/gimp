@@ -27,12 +27,22 @@ printf "\e[0Ksection_end:`date +%s`:flat_tlkt\r\e[0K\n"
 
 
 # GLOBAL INFO
-for FLATPAK in $(find . -maxdepth 1 -iname "*.flatpak"); do
-FLATPAK=$(echo "$FLATPAK" | sed 's|^\./temp_||')
-ARCH=$(echo "$FLATPAK" | sed 's/.*-\([^-]*\)\.flatpak/\1/')
+printf "\e[0Ksection_start:`date +%s`:flat_info\r\e[0KGetting flatpak global info\n"
+supported_archs=$(find . -maxdepth 1 -iname "*.flatpak")
+if echo "$supported_archs" | grep -q 'aarch64' && ! echo "$supported_archs" | grep -q 'x86_64'; then
+  printf '(INFO): Arch: aarch64\n'
+elif ! echo "$supported_archs" | grep -q 'aarch64' && echo "$supported_archs" | grep -q 'x86_64'; then
+  printf '(INFO): Arch: x86_64\n'
+elif echo "$supported_archs" | grep -q 'aarch64' && echo "$supported_archs" | grep -q 'x86_64'; then
+  printf '(INFO): Arch: aarch64 and x86_64\n'
+fi
+printf "\e[0Ksection_end:`date +%s`:flat_info\r\e[0K\n"
 
 
 # GIMP FILES AS REPO (FOR FURTHER PUBLISHING)
+for FLATPAK in $supported_archs; do
+FLATPAK=$(echo "$FLATPAK" | sed 's|^\./temp_||')
+ARCH=$(echo "$FLATPAK" | sed 's/.*-\([^-]*\)\.flatpak/\1/')
 if [ "$GITLAB_CI" ]; then
   # Extract previously exported OSTree repo/
   if [ -d 'repo' ]; then

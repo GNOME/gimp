@@ -115,6 +115,17 @@ else
   export CUSTOM_GIMP_VERSION="${GIMP_VERSION}-${REVISION}"
 fi
 printf "(INFO): App ID: $APP_ID | Version: $CUSTOM_GIMP_VERSION\n"
+
+supported_archs=$(find . -maxdepth 1 -iname "AppDir*")
+if [ "$supported_archs" = '' ]; then
+  printf "(INFO): Arch: $(uname -m)\n"
+elif echo "$supported_archs" | grep -q 'aarch64' && ! echo "$supported_archs" | grep -q 'x86_64'; then
+  printf '(INFO): Arch: aarch64\n'
+elif ! echo "$supported_archs" | grep -q 'aarch64' && echo "$supported_archs" | grep -q 'x86_64'; then
+  printf '(INFO): Arch: x86_64\n'
+elif echo "$supported_archs" | grep -q 'aarch64' && echo "$supported_archs" | grep -q 'x86_64'; then
+  printf '(INFO): Arch: aarch64 and x86_64\n'
+fi
 printf "\e[0Ksection_end:`date +%s`:apmg_info\r\e[0K\n"
 
 
@@ -442,7 +453,7 @@ fi
 
 
 # 4. PREPARE .APPIMAGE-SPECIFIC "SOURCE"
-for APP_DIR in $(find . -maxdepth 1 -iname "AppDir*"); do
+for APP_DIR in $supported_archs; do
 export ARCH=$(echo $APP_DIR | sed -e 's|AppDir-||' -e 's|./||')
 printf "\e[0Ksection_start:`date +%s`:${ARCH}_source[collapsed=true]\r\e[0KMaking AppImage assets for $ARCH\n"
 export USR_DIR="$APP_DIR/usr"
