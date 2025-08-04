@@ -377,6 +377,9 @@ gimp_size_entry_new (gint                       number_of_fields,
                             G_CALLBACK (gimp_size_entry_refval_callback),
                             gsef);
 
+          gimp_size_entry_attach_eevl (GTK_SPIN_BUTTON (gsef->refval_spinbutton),
+                                       gsef);
+
           gtk_widget_show (gsef->refval_spinbutton);
         }
 
@@ -486,6 +489,9 @@ gimp_size_entry_add_field  (GimpSizeEntry *gse,
       g_signal_connect (gsef->refval_adjustment, "value-changed",
                         G_CALLBACK (gimp_size_entry_refval_callback),
                         gsef);
+
+      gimp_size_entry_attach_eevl (GTK_SPIN_BUTTON (gsef->refval_spinbutton),
+                                   gsef);
     }
 
   digits = ((gse->unit == gimp_unit_pixel ()) ? gsef->refval_digits :
