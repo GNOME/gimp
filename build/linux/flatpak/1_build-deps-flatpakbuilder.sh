@@ -44,15 +44,14 @@ fi
 if [ -z "$GIMP_PREFIX" ]; then
   export GIMP_PREFIX="$PWD/../_install"
 fi
-
-
-# Build some deps (including babl and GEGL)
 if [ -z "$GITLAB_CI" ]; then
   BUILDER_ARGS='--ccache --state-dir=../.flatpak-builder'
 else
-  BUILDER_ARGS='--user --disable-rofiles-fuse'
+  BUILDER_ARGS='--disable-rofiles-fuse'
 fi
 
+
+# Build some deps (including babl and GEGL)
 printf "\e[0Ksection_start:`date +%s`:deps_build[collapsed=true]\r\e[0KBuilding dependencies not present in GNOME runtime\n"
 if [ "$CI_PIPELINE_SOURCE" = 'schedule' ]; then
   #Check dependencies versions with flatpak-external-data-checker
