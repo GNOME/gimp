@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-05-27 08:53+0000\n"
-"PO-Revision-Date: 2025-06-03 15:40+0200\n"
+"POT-Creation-Date: 2025-08-02 11:19+0000\n"
+"PO-Revision-Date: 2025-08-02 17:01+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -69,6 +69,26 @@ msgstr "Skriv ei eiga CSS-fil"
 #: plug-ins/python/colorxhtml.py:235
 msgid "Choose File"
 msgstr "Vel fil"
+
+#: plug-ins/python/file-openraster.py:504
+#: plug-ins/python/file-openraster.py:505
+msgid "export an OpenRaster (.ora) file"
+msgstr "eksporter ei OpenRaste-file (.ora)"
+
+#: plug-ins/python/file-openraster.py:507
+#: plug-ins/python/file-openraster.py:513
+msgid "OpenRaster"
+msgstr "OpenRaster"
+
+#: plug-ins/python/file-openraster.py:514
+#: plug-ins/python/file-openraster.py:515
+msgid "load an OpenRaster (.ora) file"
+msgstr "last inn ei OpenRaste-file (.ora)"
+
+#: plug-ins/python/file-openraster.py:524
+#: plug-ins/python/file-openraster.py:525
+msgid "loads a thumbnail from an OpenRaster (.ora) file"
+msgstr "lastar ein miniatyr frå ei OpenRaste-file (.ora)"
 
 #: plug-ins/python/foggify.py:119
 msgid "Add a layer of fog"
@@ -231,7 +251,6 @@ msgid "Export palette as Krita .kpl"
 msgstr "Eksporter paletten som Krita .kpl"
 
 #: plug-ins/python/palette-export-as-kpl.py:170
-#| msgid "_Sort Palette..."
 msgid "_Krita palette..."
 msgstr "_Krita-palett …"
 
@@ -240,7 +259,6 @@ msgid "_Palette to export"
 msgstr "Paletten som skal _eksporterast"
 
 #: plug-ins/python/palette-export-as-kpl.py:184
-#| msgid "_File..."
 msgid "_File (.kpl)"
 msgstr "_Fil (.kpl)"
 
