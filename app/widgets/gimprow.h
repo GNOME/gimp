@@ -34,42 +34,45 @@ struct _GimpRowClass
   GtkListBoxRowClass  parent_class;
 
   /*  virtual functions  */
-  void     (* set_context)   (GimpRow      *row,
-                              GimpContext  *context);
-  void     (* set_viewable)  (GimpRow      *row,
-                              GimpViewable *viewable);
-  void     (* set_view_size) (GimpRow      *row);
+  void     (* set_context)     (GimpRow      *row,
+                                GimpContext  *context);
+  void     (* set_viewable)    (GimpRow      *row,
+                                GimpViewable *viewable);
+  void     (* set_view_size)   (GimpRow      *row);
+  void     (* monitor_changed) (GimpRow      *row);
 
   /*  signal for keybinding  */
-  void     (* edit_name)    (GimpRow      *row);
+  void     (* edit_name)       (GimpRow      *row);
 
   /*  virtual functions  */
-  gboolean (* name_edited)  (GimpRow      *row,
-                             const gchar  *new_name);
+  gboolean (* name_edited)     (GimpRow      *row,
+                                const gchar  *new_name);
 };
 
 
-GtkWidget    * gimp_row_new           (GimpContext  *context,
-                                       GimpViewable *viewable);
+GtkWidget    * gimp_row_new             (GimpContext  *context,
+                                         GimpViewable *viewable);
 
-void           gimp_row_set_context   (GimpRow      *row,
-                                       GimpContext  *context);
-GimpContext  * gimp_row_get_context   (GimpRow      *row);
+void           gimp_row_set_context     (GimpRow      *row,
+                                         GimpContext  *context);
+GimpContext  * gimp_row_get_context     (GimpRow      *row);
 
-void           gimp_row_set_viewable  (GimpRow      *row,
-                                       GimpViewable *viewable);
-GimpViewable * gimp_row_get_viewable  (GimpRow      *row);
+void           gimp_row_set_viewable    (GimpRow      *row,
+                                         GimpViewable *viewable);
+GimpViewable * gimp_row_get_viewable    (GimpRow      *row);
 
-void           gimp_row_set_view_size (GimpRow      *row,
-                                       gint          view_size,
-                                       gint          view_border_width);
-gint           gimp_row_get_view_size (GimpRow      *row,
-                                       gint         *view_border_width);
+void           gimp_row_set_view_size   (GimpRow      *row,
+                                         gint          view_size,
+                                         gint          view_border_width);
+gint           gimp_row_get_view_size   (GimpRow      *row,
+                                         gint         *view_border_width);
+
+void           gimp_row_monitor_changed (GimpRow      *row);
 
 
 /*  a generic GtkListBoxCreateWidgetFunc  */
-GtkWidget    * gimp_row_create        (gpointer      item,
-                                       gpointer      user_data);
+GtkWidget    * gimp_row_create          (gpointer      item,
+                                         gpointer      user_data);
 
 
 #endif /* __GIMP_ROW_H__ */
