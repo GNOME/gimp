@@ -178,7 +178,7 @@ gimp_container_box_finalize (GObject *object)
 
   g_clear_object (&priv->zoom_gesture);
 
-  G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 void
