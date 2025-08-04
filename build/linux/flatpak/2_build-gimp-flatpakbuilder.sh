@@ -35,7 +35,7 @@ fi
 if [ -z "$GITLAB_CI" ]; then
   BUILDER_ARGS='--ccache --state-dir=../.flatpak-builder'
 else
-  BUILDER_ARGS='--user --disable-rofiles-fuse'
+  BUILDER_ARGS='--disable-rofiles-fuse'
 fi
 
 
