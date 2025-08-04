@@ -91,11 +91,19 @@ static void       gimp_row_get_property          (GObject          *object,
                                                   GValue           *value,
                                                   GParamSpec       *pspec);
 
+static void       gimp_row_style_updated         (GtkWidget        *widget);
+static gboolean   gimp_row_query_tooltip         (GtkWidget        *widget,
+                                                  gint              x,
+                                                  gint              y,
+                                                  gboolean          keyboard_tooltip,
+                                                  GtkTooltip       *tooltip);
+
 static void       gimp_row_real_set_context      (GimpRow          *row,
                                                   GimpContext      *context);
 static void       gimp_row_real_set_viewable     (GimpRow          *row,
                                                   GimpViewable     *viewable);
 static void       gimp_row_real_set_view_size    (GimpRow          *row);
+static void       gimp_row_real_monitor_changed  (GimpRow          *row);
 static void       gimp_row_real_edit_name        (GimpRow          *row);
 static gboolean   gimp_row_real_name_edited      (GimpRow          *row,
                                                   const gchar      *new_name);
@@ -124,19 +132,24 @@ static guint row_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_row_class_init (GimpRowClass *klass)
 {
-  GObjectClass  *object_class = G_OBJECT_CLASS (klass);
-  GtkBindingSet *binding_set;
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GtkBindingSet  *binding_set;
 
-  object_class->constructed  = gimp_row_constructed;
-  object_class->dispose      = gimp_row_dispose;
-  object_class->set_property = gimp_row_set_property;
-  object_class->get_property = gimp_row_get_property;
+  object_class->constructed   = gimp_row_constructed;
+  object_class->dispose       = gimp_row_dispose;
+  object_class->set_property  = gimp_row_set_property;
+  object_class->get_property  = gimp_row_get_property;
 
-  klass->set_context         = gimp_row_real_set_context;
-  klass->set_viewable        = gimp_row_real_set_viewable;
-  klass->set_view_size       = gimp_row_real_set_view_size;
-  klass->edit_name           = gimp_row_real_edit_name;
-  klass->name_edited         = gimp_row_real_name_edited;
+  widget_class->style_updated = gimp_row_style_updated;
+  widget_class->query_tooltip = gimp_row_query_tooltip;
+
+  klass->set_context          = gimp_row_real_set_context;
+  klass->set_viewable         = gimp_row_real_set_viewable;
+  klass->set_view_size        = gimp_row_real_set_view_size;
+  klass->monitor_changed      = gimp_row_real_monitor_changed;
+  klass->edit_name            = gimp_row_real_edit_name;
+  klass->name_edited          = gimp_row_real_name_edited;
 
   row_signals[EDIT_NAME] =
     g_signal_new ("edit-name",
@@ -189,6 +202,8 @@ gimp_row_init (GimpRow *row)
 {
   GimpRowPrivate *priv = GET_PRIVATE (row);
   GtkWidget      *ebox;
+
+  gtk_widget_set_has_tooltip (GTK_WIDGET (row), TRUE);
 
   priv->box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_container_add (GTK_CONTAINER (row), priv->box);
@@ -326,6 +341,49 @@ gimp_row_get_property (GObject    *object,
 }
 
 static void
+gimp_row_style_updated (GtkWidget *widget)
+{
+  GimpRowPrivate *priv = GET_PRIVATE (widget);
+
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
+
+  if (priv->view)
+    gimp_view_renderer_invalidate (GIMP_VIEW (priv->view)->renderer);
+}
+
+static gboolean
+gimp_row_query_tooltip (GtkWidget  *widget,
+                        gint        x,
+                        gint        y,
+                        gboolean    keyboard_tooltip,
+                        GtkTooltip *tooltip)
+{
+  GimpRowPrivate *priv     = GET_PRIVATE (widget);
+  gboolean        show_tip = FALSE;
+
+  if (priv->viewable)
+    {
+      gchar *desc;
+      gchar *tip;
+
+      desc = gimp_viewable_get_description (priv->viewable, &tip);
+
+      if (tip)
+        {
+          gtk_tooltip_set_text (tooltip, tip);
+
+          show_tip = TRUE;
+
+          g_free (tip);
+        }
+
+      g_free (desc);
+    }
+
+  return show_tip;
+}
+
+static void
 gimp_row_real_set_context (GimpRow     *row,
                            GimpContext *context)
 {
@@ -387,6 +445,15 @@ gimp_row_real_set_view_size (GimpRow *row)
     gimp_view_renderer_set_size (GIMP_VIEW (priv->view)->renderer,
                                  priv->view_size,
                                  priv->view_border_width);
+}
+
+static void
+gimp_row_real_monitor_changed (GimpRow *row)
+{
+  GimpRowPrivate *priv = GET_PRIVATE (row);
+
+  if (priv->view)
+    gimp_view_renderer_free_color_transform (GIMP_VIEW (priv->view)->renderer);
 }
 
 static void
@@ -557,6 +624,14 @@ gimp_row_get_view_size (GimpRow *row,
     *view_border_width = priv->view_border_width;
 
   return priv->view_size;
+}
+
+void
+gimp_row_monitor_changed (GimpRow *row)
+{
+  g_return_if_fail (GIMP_IS_ROW (row));
+
+  GIMP_ROW_GET_CLASS (row)->monitor_changed (row);
 }
 
 GtkWidget *
