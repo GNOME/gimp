@@ -425,7 +425,6 @@ gimp_link_set_file (GimpLink *link,
                     GFile    *file)
 {
   g_return_if_fail (GIMP_IS_LINK (link));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (link)));
   g_return_if_fail (G_IS_FILE (file) || file == NULL);
 
   if (file && g_file_equal (file, link->p->file))
@@ -471,9 +470,14 @@ gimp_link_is_broken (GimpLink *link,
 GimpLink *
 gimp_link_duplicate (GimpLink *link)
 {
+  GimpLink *new_link;
+
   g_return_val_if_fail (GIMP_IS_LINK (link), NULL);
 
-  return gimp_link_new (link->p->gimp, link->p->file);
+  new_link = gimp_link_new (link->p->gimp, link->p->file);
+  gimp_link_set_absolute_path (new_link, gimp_link_get_absolute_path (link));
+
+  return new_link;
 }
 
 void

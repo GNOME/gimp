@@ -99,11 +99,9 @@ static void   layer_options_dialog_mode_notify    (GtkWidget          *widget,
 static void   layer_options_dialog_rename_toggled (GtkWidget          *widget,
                                                    LayerOptionsDialog *private);
 
-
-static void   layer_options_fill_changed          (GtkWidget            *combo,
-                                                   GtkWidget            *file_select);
 static void   layer_options_file_set              (GtkFileChooserButton *widget,
                                                    LayerOptionsDialog   *private);
+
 
 /*  public functions  */
 
@@ -168,6 +166,8 @@ layer_options_dialog_new (GimpImage                *image,
   private->rename_text_layers = FALSE;
   private->callback           = callback;
   private->user_data          = user_data;
+
+  private->link               = NULL;
 
   if (layer && gimp_item_is_text_layer (GIMP_ITEM (layer)))
     private->rename_text_layers = GIMP_TEXT_LAYER (layer)->auto_rename;
@@ -385,39 +385,6 @@ layer_options_dialog_new (GimpImage                *image,
 
   row += 2;
 
-  if (! layer)
-    {
-      GtkWidget *right_vbox = item_options_dialog_get_right_vbox (dialog);
-      GtkWidget *open_dialog;
-
-      /*  The fill type  */
-      combo = gimp_enum_combo_box_new (GIMP_TYPE_FILL_TYPE);
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, row,
-                                _("_Fill with:"), 0.0, 0.5,
-                                combo, 1);
-
-      /* File chooser dialog. */
-      open_dialog = gimp_open_dialog_new (private->gimp);
-      gtk_window_set_title (GTK_WINDOW (open_dialog),
-                            _("Select Linked Image"));
-
-      /* File chooser button. */
-      file_select = gtk_file_chooser_button_new_with_dialog (open_dialog);
-      gtk_box_pack_end (GTK_BOX (right_vbox), file_select, FALSE, FALSE, 1);
-
-      gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                                  private->fill_type,
-                                  G_CALLBACK (gimp_int_combo_box_get_active),
-                                  &private->fill_type, NULL);
-      g_signal_connect (combo, "changed",
-                        G_CALLBACK (layer_options_fill_changed),
-                        file_select);
-      g_signal_connect (file_select, "file-set",
-                        G_CALLBACK (layer_options_file_set),
-                        private);
-      layer_options_fill_changed (combo, file_select);
-    }
-
   if (layer)
     {
       GtkWidget     *left_vbox = item_options_dialog_get_vbox (dialog);
@@ -460,7 +427,32 @@ layer_options_dialog_new (GimpImage                *image,
           g_signal_connect (file_select, "file-set",
                             G_CALLBACK (layer_options_file_set),
                             private);
+
+          private->link = gimp_link_duplicate (link);
+
+          /* Absolute path checkbox. */
+          button = gtk_check_button_new_with_mnemonic (_("S_tore with absolute path"));
+          gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                                    NULL, 0.0, 0.5,
+                                    button, 2);
+          g_object_bind_property (G_OBJECT (private->link), "absolute-path",
+                                  G_OBJECT (button),        "active",
+                                  G_BINDING_SYNC_CREATE |
+                                  G_BINDING_BIDIRECTIONAL);
+          gtk_widget_set_visible (button, TRUE);
         }
+    }
+  else
+    {
+      /*  The fill type  */
+      combo = gimp_enum_combo_box_new (GIMP_TYPE_FILL_TYPE);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, row,
+                                _("_Fill with:"), 0.0, 0.5,
+                                combo, 1);
+      gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                                  private->fill_type,
+                                  G_CALLBACK (gimp_int_combo_box_get_active),
+                                  &private->fill_type, NULL);
     }
 
   button = item_options_dialog_get_lock_position (dialog);
@@ -636,32 +628,18 @@ layer_options_dialog_rename_toggled (GtkWidget          *widget,
 }
 
 static void
-layer_options_fill_changed (GtkWidget *combo,
-                            GtkWidget *file_select)
-{
-  gint value = GIMP_FILL_FOREGROUND;
-
-  g_return_if_fail (GIMP_IS_ENUM_COMBO_BOX (combo));
-  g_return_if_fail (GTK_IS_WIDGET (file_select));
-
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo), &value);
-  gtk_widget_set_visible (file_select, (value == GIMP_FILL_LINK));
-}
-
-static void
 layer_options_file_set (GtkFileChooserButton *widget,
                         LayerOptionsDialog   *private)
 {
-  GimpLink *link = NULL;
-  GFile    *file;
+  GFile *file;
 
   file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (widget));
   if (file)
     {
-      link = gimp_link_new (private->gimp, file);
-      if (gimp_link_is_broken (link, TRUE))
+      gimp_link_set_file (private->link, file);
+      if (gimp_link_is_broken (private->link, TRUE))
         {
-          g_clear_object (&link);
+          gimp_link_set_file (private->link, NULL);
           g_signal_handlers_block_by_func (widget,
                                            G_CALLBACK (layer_options_file_set),
                                            private);
@@ -672,6 +650,4 @@ layer_options_file_set (GtkFileChooserButton *widget,
         }
     }
   g_clear_object (&file);
-
-  private->link = link;
 }
