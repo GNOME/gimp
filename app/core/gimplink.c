@@ -46,7 +46,8 @@ enum
 {
   PROP_0,
   PROP_GIMP,
-  PROP_FILE
+  PROP_FILE,
+  PROP_ABSOLUTE_PATH
 };
 
 enum
@@ -60,6 +61,7 @@ struct _GimpLinkPrivate
   Gimp         *gimp;
   GFile        *file;
   GFileMonitor *monitor;
+  gboolean      absolute_path;
 
   gboolean      broken;
   guint         idle_changed_source;
@@ -69,22 +71,27 @@ struct _GimpLinkPrivate
   gint          height;
 };
 
-static void       gimp_link_finalize       (GObject           *object);
-static void       gimp_link_get_property   (GObject           *object,
-                                            guint              property_id,
-                                            GValue            *value,
-                                            GParamSpec        *pspec);
-static void       gimp_link_set_property   (GObject           *object,
-                                            guint              property_id,
-                                            const GValue      *value,
-                                            GParamSpec        *pspec);
+static void       gimp_link_finalize          (GObject           *object);
+static void       gimp_link_get_property      (GObject           *object,
+                                               guint              property_id,
+                                               GValue            *value,
+                                               GParamSpec        *pspec);
+static void       gimp_link_set_property      (GObject           *object,
+                                               guint              property_id,
+                                               const GValue      *value,
+                                               GParamSpec        *pspec);
 
-static void       gimp_link_file_changed   (GFileMonitor      *monitor,
-                                            GFile             *file,
-                                            GFile             *other_file,
-                                            GFileMonitorEvent  event_type,
-                                            GimpLink          *link);
-static gboolean   gimp_link_emit_changed   (gpointer           data);
+static void       gimp_link_file_changed      (GFileMonitor      *monitor,
+                                               GFile             *file,
+                                               GFile             *other_file,
+                                               GFileMonitorEvent  event_type,
+                                               GimpLink          *link);
+static gboolean   gimp_link_emit_changed      (gpointer           data);
+
+static gchar    * gimp_link_get_relative_path (GimpLink          *link,
+                                               GFile             *parent,
+                                               gint               n_back);
+
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpLink, gimp_link, GIMP_TYPE_OBJECT)
 
@@ -117,6 +124,10 @@ gimp_link_class_init (GimpLinkClass *klass)
   g_object_class_install_property (object_class, PROP_FILE,
                                    g_param_spec_object ("file", NULL, NULL,
                                                         G_TYPE_FILE,
+                                                        GIMP_PARAM_READWRITE));
+  g_object_class_install_property (object_class, PROP_ABSOLUTE_PATH,
+                                   g_param_spec_boolean ("absolute-path", NULL, NULL,
+                                                        FALSE,
                                                         GIMP_PARAM_READWRITE));
 }
 
@@ -161,6 +172,9 @@ gimp_link_get_property (GObject      *object,
     case PROP_FILE:
       g_value_set_object (value, link->p->file);
       break;
+    case PROP_ABSOLUTE_PATH:
+      g_value_set_boolean (value, link->p->absolute_path);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -202,6 +216,9 @@ gimp_link_set_property (GObject      *object,
           gimp_object_set_name_safe (GIMP_OBJECT (object), basename);
           g_free (basename);
         }
+      break;
+    case PROP_ABSOLUTE_PATH:
+      link->p->absolute_path = g_value_get_boolean (value);
       break;
 
     default:
@@ -255,6 +272,85 @@ gimp_link_emit_changed (gpointer data)
   return G_SOURCE_REMOVE;
 }
 
+/**
+ * gimp_link_get_relative_path:
+ * @link: the image this link is associated with.
+ * @parent: (transfer full): a #GFile object.
+ * @n_back: set it to 0 when calling it initially.
+ *
+ * This is a variant of g_file_get_relative_path() which will work even
+ * when the @link file is not a child of @parent. In this case, the
+ * relative link will use "../" as many times as necessary until a
+ * common parent folder is found.
+ *
+ * In case no parent is found (it may happen for instance on Windows,
+ * with various file system roots), an absolute path is returned
+ * instead, ensuring that we never return %NULL.
+ *
+ * Note that this function takes ownership of @parent and will take care
+ * of freeing it. This allows for tail recursion.
+ *
+ * Returns: a path from @link relatively to @parent, falling back
+ *          to an absolute path if a relative path cannot be constructed.
+ **/
+static gchar *
+gimp_link_get_relative_path (GimpLink *link,
+                             GFile    *parent,
+                             gint      n_back)
+{
+  gchar *relative_path;
+
+  g_return_val_if_fail (GIMP_IS_LINK (link), NULL);
+  g_return_val_if_fail (parent != NULL && n_back >= 0, NULL);
+
+  relative_path = g_file_get_relative_path (parent, link->p->file);
+
+  if (relative_path == NULL)
+    {
+      GFile *grand_parent = g_file_get_parent (parent);
+
+      g_object_unref (parent);
+
+      if (grand_parent == NULL)
+        /* This may happen e.g. on Windows where there are several roots
+         * so it is not always possible to make a relative path.
+         */
+        return g_file_get_path (link->p->file);
+      else
+        return gimp_link_get_relative_path (link, grand_parent, n_back + 1);
+    }
+  else
+    {
+      g_object_unref (parent);
+
+      if (n_back > 0)
+        {
+          GStrvBuilder  *builder;
+          gchar        **array;
+          gchar         *dots;
+          gchar         *relpath;
+
+          builder = g_strv_builder_new ();
+          for (gint i = 0; i < n_back; i++)
+            g_strv_builder_add (builder, "..");
+
+          array   = g_strv_builder_end (builder);
+          dots    = g_strjoinv (G_DIR_SEPARATOR_S, array);
+          relpath = g_build_filename (dots, relative_path, NULL);
+
+          g_free (relative_path);
+          g_free (dots);
+          g_strfreev (array);
+          g_strv_builder_unref (builder);
+
+          relative_path = relpath;
+        }
+
+      return relative_path;
+    }
+}
+
+
 /*  public functions  */
 
 /**
@@ -262,7 +358,9 @@ gimp_link_emit_changed (gpointer data)
  * @gimp: #Gimp object.
  * @file: a #GFile object.
  *
- * Creates a new text layer.
+ * Creates a new link object. By default, all link objects are created
+ * as being relative to the path of the image they will be associated
+ * with.
  *
  * Return value: a new #GimpLink or %NULL in case of a problem
  **/
@@ -276,17 +374,48 @@ gimp_link_new (Gimp  *gimp,
   g_return_val_if_fail (G_IS_FILE (file), NULL);
 
   link = g_object_new (GIMP_TYPE_LINK,
-                       "gimp", gimp,
-                       "file", file,
+                       "gimp",          gimp,
+                       "file",          file,
+                       "absolute-path", FALSE,
                        NULL);
 
   return GIMP_LINK (link);
 }
 
+/*
+ * gimp_link_get_file:
+ * @link: the #GimpLink object.
+ * @xcf_file: optional XCF file from which @path will be relative to.
+ * @path: optional returned path of the returned file.
+ *
+ * If @path is non-%NULL, it will be set to the file system path for the
+ * returned %GFile, either as an absolute or relative path, depending on
+ * how @link was set.
+ * Note that it is possible for @path to be absolute even when it is set
+ * to be a relative path, in cases where no relative path can be
+ * constructed from @xcf_file.
+ *
+ * Returns: the %GFile which %link is syncing too.
+ */
 GFile *
-gimp_link_get_file (GimpLink *link)
+gimp_link_get_file (GimpLink  *link,
+                    GFile     *xcf_file,
+                    gchar    **path)
 {
   g_return_val_if_fail (GIMP_IS_LINK (link), NULL);
+  g_return_val_if_fail ((path == NULL && xcf_file == NULL) ||
+                        (*path == NULL && xcf_file != NULL &&
+                         g_file_has_parent (xcf_file, NULL)), NULL);
+
+  if (path != NULL)
+    {
+      if (link->p->absolute_path)
+        *path = g_file_get_path (link->p->file);
+      else
+        *path = gimp_link_get_relative_path (link,
+                                             g_file_get_parent (xcf_file),
+                                             0);
+    }
 
   return link->p->file;
 }
@@ -295,6 +424,7 @@ void
 gimp_link_set_file (GimpLink *link,
                     GFile    *file)
 {
+  g_return_if_fail (GIMP_IS_LINK (link));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (link)));
   g_return_if_fail (G_IS_FILE (file) || file == NULL);
 
@@ -304,6 +434,23 @@ gimp_link_set_file (GimpLink *link,
   g_object_set (link,
                 "file", file,
                 NULL);
+}
+
+gboolean
+gimp_link_get_absolute_path (GimpLink *link)
+{
+  g_return_val_if_fail (GIMP_IS_LINK (link), FALSE);
+
+  return link->p->absolute_path;
+}
+
+void
+gimp_link_set_absolute_path (GimpLink *link,
+                             gboolean  absolute_path)
+{
+  g_return_if_fail (GIMP_IS_LINK (link));
+
+  link->p->absolute_path = absolute_path;
 }
 
 gboolean
@@ -322,7 +469,7 @@ gimp_link_is_broken (GimpLink *link,
 }
 
 GimpLink *
-gimp_link_duplicate (GimpLink  *link)
+gimp_link_duplicate (GimpLink *link)
 {
   g_return_val_if_fail (GIMP_IS_LINK (link), NULL);
 

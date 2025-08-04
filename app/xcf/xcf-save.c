@@ -1732,13 +1732,11 @@ xcf_save_prop (XcfInfo    *info,
     case PROP_LINK_LAYER_DATA:
       {
         GimpLinkLayer *layer = va_arg (args, GimpLinkLayer *);
-        GFile         *file;
-        const gchar   *path;
+        gchar         *path  = NULL;
         guint32        flags;
 
         flags = gimp_link_layer_get_xcf_flags (layer);
-        file = gimp_link_get_file (gimp_link_layer_get_link (layer));
-        path = g_file_peek_path (file);
+        gimp_link_get_file (gimp_link_layer_get_link (layer), info->file, &path);
 
         size = 4 + strlen (path) ? strlen (path) + 5 : 4;
 
@@ -1747,6 +1745,8 @@ xcf_save_prop (XcfInfo    *info,
 
         xcf_write_int32_check_error (info, &flags, 1, va_end (args));
         xcf_write_string_check_error (info, (gchar **) &path, 1, va_end (args));
+
+        g_free (path);
       }
       break;
 

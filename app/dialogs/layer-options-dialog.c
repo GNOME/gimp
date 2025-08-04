@@ -450,7 +450,8 @@ layer_options_dialog_new (GimpImage                *image,
           file_select = gtk_file_chooser_button_new_with_dialog (open_dialog);
           link = gimp_link_layer_get_link (GIMP_LINK_LAYER (layer));
           gtk_file_chooser_set_file (GTK_FILE_CHOOSER (file_select),
-                                     gimp_link_get_file (link), NULL);
+                                     gimp_link_get_file (link, NULL, NULL),
+                                     NULL);
           gtk_widget_show (file_select);
           gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                                     _("_Linked image:"), 0.0, 0.5,
