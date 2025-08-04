@@ -1967,6 +1967,7 @@ xcf_load_layer_props (XcfInfo    *info,
         case PROP_LINK_LAYER_DATA:
             {
               GimpLink *link;
+              GFile    *folder;
               gchar    *path;
               guint32   flags;
               gboolean  is_selected_layer;
@@ -1974,7 +1975,10 @@ xcf_load_layer_props (XcfInfo    *info,
               xcf_read_int32 (info, &flags, 1);
               xcf_read_string (info, &path, 1);
 
-              link = gimp_link_new (info->gimp, g_file_new_for_path (path));
+              folder = g_file_get_parent (info->file);
+              link   = gimp_link_new (info->gimp, g_file_resolve_relative_path (folder, path));
+
+              g_object_unref (folder);
               g_free (path);
 
               is_selected_layer = (g_list_find (info->selected_layers, *layer ) != NULL);

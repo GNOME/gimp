@@ -51,29 +51,34 @@ struct _GimpLinkClass
 };
 
 
-GType        gimp_link_get_type    (void) G_GNUC_CONST;
+GType        gimp_link_get_type          (void) G_GNUC_CONST;
 
-GimpLink   * gimp_link_new         (Gimp           *gimp,
-                                    GFile          *file);
+GimpLink   * gimp_link_new               (Gimp           *gimp,
+                                          GFile          *file);
 
-GFile      * gimp_link_get_file    (GimpLink       *link);
-void         gimp_link_set_file    (GimpLink       *layer,
-                                    GFile          *file);
+GFile      * gimp_link_get_file          (GimpLink       *link,
+                                          GFile          *parent,
+                                          gchar         **path);
+void         gimp_link_set_file          (GimpLink       *layer,
+                                          GFile          *file);
+gboolean     gimp_link_get_absolute_path (GimpLink       *link);
+void         gimp_link_set_absolute_path (GimpLink       *layer,
+                                          gboolean        absolute_path);
 
-gboolean     gimp_link_is_broken   (GimpLink       *link,
-                                    gboolean        recheck);
-GimpLink   * gimp_link_duplicate   (GimpLink       *link);
+gboolean     gimp_link_is_broken         (GimpLink       *link,
+                                          gboolean        recheck);
+GimpLink   * gimp_link_duplicate         (GimpLink       *link);
 
-void         gimp_link_set_size    (GimpLink       *link,
-                                    gint            width,
-                                    gint            height);
-void         gimp_link_get_size    (GimpLink       *link,
-                                    gint           *width,
-                                    gint           *height);
-gboolean     gimp_link_is_vector   (GimpLink       *link);
+void         gimp_link_set_size          (GimpLink       *link,
+                                          gint            width,
+                                          gint            height);
+void         gimp_link_get_size          (GimpLink       *link,
+                                          gint           *width,
+                                          gint           *height);
+gboolean     gimp_link_is_vector         (GimpLink       *link);
 
-GeglBuffer * gimp_link_get_buffer  (GimpLink       *link,
-                                    GimpProgress   *progress,
-                                    GError        **error);
+GeglBuffer * gimp_link_get_buffer        (GimpLink       *link,
+                                          GimpProgress   *progress,
+                                          GError        **error);
 
 #endif /* __GIMP_LINK_H__ */
