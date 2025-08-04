@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTAINER_TREE_VIEW_PRIVATE_H__
-#define __GIMP_CONTAINER_TREE_VIEW_PRIVATE_H__
+#pragma once
 
 
 struct _GimpContainerTreeViewPrivate
@@ -42,6 +41,3 @@ struct _GimpContainerTreeViewPrivate
 
   gboolean            dnd_drop_to_empty;
 };
-
-
-#endif  /*  __GIMP_CONTAINER_TREE_VIEW_PRIVATE_H__  */
