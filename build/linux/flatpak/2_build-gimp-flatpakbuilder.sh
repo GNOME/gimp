@@ -32,15 +32,14 @@ fi
 if [ -z "$GIMP_PREFIX" ]; then
   export GIMP_PREFIX="$PWD/../_install"
 fi
-
-
-# Build GIMP only
 if [ -z "$GITLAB_CI" ]; then
   BUILDER_ARGS='--ccache --state-dir=../.flatpak-builder'
 else
   BUILDER_ARGS='--user --disable-rofiles-fuse'
 fi
 
+
+# Build GIMP only
 printf "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP\n"
 eval $FLATPAK_BUILDER --force-clean $BUILDER_ARGS --keep-build-dirs --build-only --disable-download \
                       "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json > gimp-flatpak-builder.log 2>&1 || { cat gimp-flatpak-builder.log; exit 1; }
