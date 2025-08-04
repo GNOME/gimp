@@ -13,7 +13,6 @@ if [ "$0" != 'build/linux/flatpak/2_build-gimp-flatpakbuilder.sh' ] && [ $(basen
 elif [ $(basename "$PWD") = 'flatpak' ]; then
   cd ../../..
 fi
-
 if [ -z "$GITLAB_CI" ]; then
   git submodule update --init
 fi
