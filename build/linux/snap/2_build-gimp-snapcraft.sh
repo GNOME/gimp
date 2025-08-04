@@ -13,6 +13,9 @@ if [ "$0" != 'build/linux/snap/2_build-gimp-snapcraft.sh' ] && [ $(basename "$PW
 elif [ $(basename "$PWD") = 'snap' ]; then
   cd ../../..
 fi
+if [ -z "$GITLAB_CI" ]; then
+  git submodule update --init
+fi
 
 
 # Prepare env
