@@ -37,6 +37,8 @@
 #include "core/gimpimage-undo.h"
 #include "core/gimpimagefile.h"
 #include "core/gimplayer.h"
+#include "core/gimplink.h"
+#include "core/gimplinklayer.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimpprogress.h"
 
@@ -53,15 +55,29 @@
 #include "gimp-intl.h"
 
 
-static void     file_open_sanitize_image       (GimpImage           *image,
-                                                gboolean             as_new);
-static void     file_open_convert_items        (GimpImage           *dest_image,
-                                                const gchar         *basename,
-                                                GList               *items);
-static GList *  file_open_get_layers           (GimpImage           *image,
-                                                gboolean             merge_visible,
-                                                gint                *n_visible);
-static gboolean file_open_file_proc_is_import  (GimpPlugInProcedure *file_proc);
+static GimpImage * file_open_or_link_image        (Gimp                *gimp,
+                                                   GimpContext         *context,
+                                                   GimpProgress        *progress,
+                                                   GFile               *file,
+                                                   gint                 vector_width,
+                                                   gint                 vector_height,
+                                                   gboolean             as_new,
+                                                   GimpPlugInProcedure *file_proc,
+                                                   GimpRunMode          run_mode,
+                                                   gboolean            *file_proc_handles_vector,
+                                                   GimpPDBStatusType   *status,
+                                                   const gchar        **mime_type,
+                                                   GError             **error);
+
+static void        file_open_sanitize_image       (GimpImage           *image,
+                                                   gboolean             as_new);
+static void        file_open_convert_items        (GimpImage           *dest_image,
+                                                   const gchar         *basename,
+                                                   GList               *items);
+static GList     * file_open_get_layers           (GimpImage           *image,
+                                                   gboolean             merge_visible,
+                                                   gint                *n_visible);
+static gboolean    file_open_file_proc_is_import  (GimpPlugInProcedure *file_proc);
 
 
 /*  public functions  */
@@ -519,7 +535,7 @@ file_open_with_proc_and_display (Gimp                *gimp,
                                  GimpPDBStatusType   *status,
                                  GError             **error)
 {
-  GimpImage   *image;
+  GimpImage   *image     = NULL;
   const gchar *mime_type = NULL;
   GimpRunMode  run_mode  = GIMP_RUN_INTERACTIVE;
 
@@ -533,15 +549,15 @@ file_open_with_proc_and_display (Gimp                *gimp,
   if (gimp->no_interface)
     run_mode = GIMP_RUN_NONINTERACTIVE;
 
-  image = file_open_image (gimp, context, progress,
-                           file, 0, 0,
-                           as_new,
-                           file_proc,
-                           run_mode,
-                           NULL,
-                           status,
-                           &mime_type,
-                           error);
+  image = file_open_or_link_image (gimp, context, progress,
+                                   file, 0, 0,
+                                   as_new,
+                                   file_proc,
+                                   run_mode,
+                                   NULL,
+                                   status,
+                                   &mime_type,
+                                   error);
 
   if (image)
     {
@@ -560,15 +576,19 @@ file_open_with_proc_and_display (Gimp                *gimp,
           gimp_image_get_n_layers (image) == 1)
         {
           GimpObject *layer = gimp_image_get_layer_iter (image)->data;
-          gchar      *basename;
 
-          basename = g_path_get_basename (gimp_file_get_utf8_name (file));
+          if (! GIMP_IS_LINK_LAYER (layer))
+            {
+              gchar *basename;
 
-          gimp_item_rename (GIMP_ITEM (layer), basename, NULL);
-          gimp_image_undo_free (image);
-          gimp_image_clean_all (image);
+              basename = g_path_get_basename (gimp_file_get_utf8_name (file));
 
-          g_free (basename);
+              gimp_item_rename (GIMP_ITEM (layer), basename, NULL);
+              gimp_image_undo_free (image);
+              gimp_image_clean_all (image);
+
+              g_free (basename);
+            }
         }
 
       if (gimp_create_display (image->gimp, image, gimp_unit_pixel (), 1.0,
@@ -634,14 +654,14 @@ file_open_layers (Gimp                *gimp,
   g_return_val_if_fail (status != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  new_image = file_open_image (gimp, context, progress,
-                               file,
-                               gimp_image_get_width (dest_image),
-                               gimp_image_get_height (dest_image),
-                               FALSE,
-                               file_proc,
-                               run_mode,
-                               NULL, status, &mime_type, error);
+  new_image = file_open_or_link_image (gimp, context, progress,
+                                       file,
+                                       gimp_image_get_width (dest_image),
+                                       gimp_image_get_height (dest_image),
+                                       FALSE,
+                                       file_proc,
+                                       run_mode,
+                                       NULL, status, &mime_type, error);
 
   if (new_image)
     {
@@ -748,6 +768,78 @@ file_open_from_command_line (Gimp     *gimp,
 
 /*  private functions  */
 
+static GimpImage *
+file_open_or_link_image (Gimp                *gimp,
+                         GimpContext         *context,
+                         GimpProgress        *progress,
+                         GFile               *file,
+                         gint                 vector_width,
+                         gint                 vector_height,
+                         gboolean             as_new,
+                         GimpPlugInProcedure *file_proc,
+                         GimpRunMode          run_mode,
+                         gboolean            *file_proc_handles_vector,
+                         GimpPDBStatusType   *status,
+                         const gchar        **mime_type,
+                         GError             **error)
+{
+  GimpImage *image = NULL;
+
+  if (! file_proc)
+    file_proc = gimp_plug_in_manager_file_procedure_find (gimp->plug_in_manager,
+                                                          GIMP_FILE_PROCEDURE_GROUP_OPEN,
+                                                          file, error);
+
+  if (g_file_is_native (file) &&
+      file_proc != NULL       &&
+      file_open_file_proc_is_import (file_proc))
+    {
+      GimpLink *link = gimp_link_new (gimp, file);
+
+      if (gimp_link_is_broken (link, TRUE, error))
+        {
+          *status = GIMP_PDB_EXECUTION_ERROR;
+        }
+      else
+        {
+          GimpLayer *layer;
+          gint       width;
+          gint       height;
+
+          gimp_link_get_size (link, &width, &height);
+          image = gimp_image_new (gimp, width, height,
+                                  gimp_link_get_base_type (link),
+                                  gimp_link_get_precision (link));
+          layer = gimp_link_layer_new (image, link);
+          gimp_image_add_layer (image, layer, NULL, 0, FALSE);
+
+          gimp_image_set_load_proc (image, gimp_link_get_load_proc (link));
+          file_proc = gimp_image_get_load_proc (image);
+          if (mime_type)
+            *mime_type = g_slist_nth_data (file_proc->mime_types_list, 0);
+          if (file_proc_handles_vector)
+            *file_proc_handles_vector = file_proc->handles_vector;
+
+          *status = GIMP_PDB_SUCCESS;
+        }
+    }
+  else
+    {
+      image = file_open_image (gimp, context, progress,
+                               file,
+                               vector_width, vector_height,
+                               as_new,
+                               file_proc,
+                               run_mode,
+                               file_proc_handles_vector,
+                               status,
+                               mime_type,
+                               error);
+    }
+
+  return image;
+}
+
 static void
 file_open_sanitize_image (GimpImage *image,
                           gboolean   as_new)
@@ -845,7 +937,18 @@ file_open_get_layers (GimpImage *image,
 static gboolean
 file_open_file_proc_is_import (GimpPlugInProcedure *file_proc)
 {
-  return !(file_proc &&
-           file_proc->mime_types &&
-           strcmp (file_proc->mime_types, "image/x-xcf") == 0);
+  const gchar *proc_name;
+
+  g_return_val_if_fail (file_proc != NULL, TRUE);
+
+  proc_name = gimp_object_get_name (file_proc);
+
+  return (g_strcmp0 (proc_name, "gimp-xcf-load") != 0 &&
+          /* Assuming that all file-compressor file are XCF.
+           * So far, this is always true with current file-compressor
+           * implementation.
+           */
+          g_strcmp0 (proc_name, "file-gz-load")  != 0 &&
+          g_strcmp0 (proc_name, "file-bz2-load") != 0 &&
+          g_strcmp0 (proc_name, "file-xz-load")  != 0);
 }
