@@ -697,6 +697,15 @@ gimp_viewable_calc_preview_size (gint       aspect_width,
 }
 
 gboolean
+gimp_viewable_has_preview (GimpViewable  *viewable)
+{
+  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), FALSE);
+
+  return (GIMP_VIEWABLE_GET_CLASS (viewable)->get_preview     != NULL ||
+          GIMP_VIEWABLE_GET_CLASS (viewable)->get_new_preview != NULL);
+}
+
+gboolean
 gimp_viewable_get_size (GimpViewable  *viewable,
                         gint          *width,
                         gint          *height)
