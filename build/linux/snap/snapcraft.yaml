@@ -147,7 +147,7 @@ parts:
     build-packages:
       - bison
       - flex
-      - libaa1-dev
+      - libaa1-dev #https://github.com/ubuntu/gnome-sdk/issues/322
       - libarchive-dev #https://github.com/ubuntu/gnome-sdk/issues/318
       - libcfitsio-dev #https://github.com/ubuntu/gnome-sdk/issues/320
       - libexpat1-dev
