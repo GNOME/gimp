@@ -595,7 +595,7 @@ gimp_link_layer_set_link (GimpLinkLayer *layer,
 
   /* TODO: look deeper into the link paths. */
   if (layer->p->link == link)
-    return ! gimp_link_is_broken (link, FALSE);
+    return ! gimp_link_is_broken (link, FALSE, NULL);
 
   if (gimp_item_is_attached (GIMP_ITEM (layer)) && push_undo)
     gimp_image_undo_push_link_layer (gimp_item_get_image (GIMP_ITEM (layer)),

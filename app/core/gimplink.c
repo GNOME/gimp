@@ -58,17 +58,21 @@ enum
 
 struct _GimpLinkPrivate
 {
-  Gimp         *gimp;
-  GFile        *file;
-  GFileMonitor *monitor;
-  gboolean      absolute_path;
+  Gimp                *gimp;
+  GFile               *file;
+  GFileMonitor        *monitor;
+  gboolean             absolute_path;
 
-  gboolean      broken;
-  guint         idle_changed_source;
+  gboolean             broken;
+  GError              *error;
+  guint                idle_changed_source;
 
-  gboolean      is_vector;
-  gint          width;
-  gint          height;
+  gboolean             is_vector;
+  gint                 width;
+  gint                 height;
+  GimpImageBaseType    base_type;
+  GimpPrecision        precision;
+  GimpPlugInProcedure *load_proc;
 };
 
 static void       gimp_link_finalize          (GObject           *object);
@@ -134,13 +138,17 @@ gimp_link_class_init (GimpLinkClass *klass)
 static void
 gimp_link_init (GimpLink *link)
 {
-  link->p          = gimp_link_get_instance_private (link);
-  link->p->gimp    = NULL;
-  link->p->file    = NULL;
-  link->p->monitor = NULL;
-  link->p->broken  = TRUE;
-  link->p->width   = 0;
-  link->p->height  = 0;
+  link->p            = gimp_link_get_instance_private (link);
+  link->p->gimp      = NULL;
+  link->p->file      = NULL;
+  link->p->monitor   = NULL;
+  link->p->broken    = TRUE;
+  link->p->error     = NULL;
+  link->p->width     = 0;
+  link->p->height    = 0;
+  link->p->base_type = GIMP_RGB;
+  link->p->precision = GIMP_PRECISION_U8_PERCEPTUAL;
+  link->p->load_proc = NULL;
 
   link->p->idle_changed_source = 0;
 }
@@ -247,6 +255,10 @@ gimp_link_file_changed (GFileMonitor      *monitor,
       break;
     case G_FILE_MONITOR_EVENT_DELETED:
       link->p->broken = TRUE;
+      g_clear_error (&link->p->error);
+      g_set_error_literal (&link->p->error,
+                           G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("The file got deleted"));
       break;
 
     default:
@@ -453,16 +465,22 @@ gimp_link_set_absolute_path (GimpLink *link,
 }
 
 gboolean
-gimp_link_is_broken (GimpLink *link,
-                     gboolean  recheck)
+gimp_link_is_broken (GimpLink  *link,
+                     gboolean   recheck,
+                     GError   **error)
 {
   GeglBuffer *buffer;
+
+  g_return_val_if_fail (error == NULL || *error == NULL, TRUE);
 
   if (recheck)
     {
       buffer = gimp_link_get_buffer (link, NULL, NULL);
       g_clear_object (&buffer);
     }
+
+  if (link->p->broken && link->p->error)
+    *error = g_error_copy (link->p->error);
 
   return link->p->broken;
 }
@@ -498,6 +516,30 @@ gimp_link_get_size (GimpLink *link,
   *height = link->p->height;
 }
 
+GimpImageBaseType
+gimp_link_get_base_type (GimpLink *link)
+{
+  g_return_val_if_fail (GIMP_IS_LINK (link) && ! link->p->broken, GIMP_RGB);
+
+  return link->p->base_type;
+}
+
+GimpPrecision
+gimp_link_get_precision (GimpLink *link)
+{
+  g_return_val_if_fail (GIMP_IS_LINK (link) && ! link->p->broken, GIMP_PRECISION_U8_PERCEPTUAL);
+
+  return link->p->precision;
+}
+
+GimpPlugInProcedure *
+gimp_link_get_load_proc (GimpLink *link)
+{
+  g_return_val_if_fail (GIMP_IS_LINK (link) && ! link->p->broken, NULL);
+
+  return link->p->load_proc;
+}
+
 gboolean
 gimp_link_is_vector (GimpLink *link)
 {
@@ -509,7 +551,10 @@ gimp_link_get_buffer (GimpLink      *link,
                       GimpProgress  *progress,
                       GError       **error)
 {
-  GeglBuffer *buffer = NULL;
+  GeglBuffer *buffer     = NULL;
+  GError     *real_error = NULL;
+
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   if (link->p->file)
     {
@@ -529,7 +574,7 @@ gimp_link_get_buffer (GimpLink      *link,
                                 */
                                GIMP_RUN_NONINTERACTIVE,
                                &link->p->is_vector,
-                               &status, &mime_type, error);
+                               &status, &mime_type, &real_error);
 
       if (image && status == GIMP_PDB_SUCCESS)
         {
@@ -542,6 +587,12 @@ gimp_link_get_buffer (GimpLink      *link,
           gimp_projection_flush_now (gimp_image_get_projection (image), TRUE);
           buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (image));
           g_object_ref (buffer);
+
+          link->p->base_type = gimp_image_get_base_type (image);
+          link->p->precision = gimp_image_get_precision (image);
+          link->p->width     = gimp_image_get_width (image);
+          link->p->height    = gimp_image_get_height (image);
+          link->p->load_proc = gimp_image_get_load_proc (image);
         }
 
       /* Only keep the buffer, free the rest. */
@@ -549,6 +600,21 @@ gimp_link_get_buffer (GimpLink      *link,
     }
 
   link->p->broken = (buffer == NULL);
+  g_clear_error (&link->p->error);
+  if (link->p->broken)
+    {
+      if (real_error)
+        link->p->error = g_error_copy (real_error);
+      else
+        g_set_error_literal (&link->p->error,
+                             G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                             _("No file was set"));
+    }
+
+  if (error)
+    *error = real_error;
+  else
+    g_clear_error (&real_error);
 
   return buffer;
 }
