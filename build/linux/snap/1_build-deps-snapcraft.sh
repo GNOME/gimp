@@ -39,3 +39,31 @@ else
   echo "RUN printf 'access_secret = %s\n' $LAUNCHPAD_CREDENTIALS_ACCESS_SECRET >> $SNAPCRAFT_CREDENTIALS_PATH" >> Dockerfile
   /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_CORE_VERSION} --cache=true --cache-ttl=120h --image-fs-extract-retry 1 --verbosity=warn
 fi 
+
+
+# Prepare env
+if [ -z "$GITLAB_CI" ]; then
+printf "\e[0Ksection_start:`date +%s`:snap_environ[collapsed=true]\r\e[0KPreparing build environment\n"
+## portable environment which works on CI (unlike lxd) and on VMs (unlike multipass)
+export SNAPCRAFT_BUILD_ENVIRONMENT=host
+build_environment_option='--destructive-mode'
+## (snapcraft does not allow to freely set the .yaml path, so let's just temporarely copy it)
+cp build/linux/snap/snapcraft.yaml .
+printf "\e[0Ksection_end:`date +%s`:snap_environ\r\e[0K\n"
+
+
+# Build babl and gegl
+printf "\e[0Ksection_start:`date +%s`:deps_install[collapsed=true]\r\e[0KInstalling dependencies provided by Ubuntu\n"
+sudo snapcraft pull $build_environment_option --build-for=${DPKG_ARCH:-$(dpkg --print-architecture)} --verbosity=verbose
+printf "\e[0Ksection_end:`date +%s`:deps_install\r\e[0K\n"
+  
+printf "\e[0Ksection_start:`date +%s`:babl_build[collapsed=true]\r\e[0KBuilding babl\n"
+sudo snapcraft stage babl $build_environment_option --build-for=${DPKG_ARCH:-$(dpkg --print-architecture)} --verbosity=verbose
+printf "\e[0Ksection_end:`date +%s`:babl_build\r\e[0K\n"
+  
+printf "\e[0Ksection_start:`date +%s`:gegl_build[collapsed=true]\r\e[0KBuilding gegl\n"
+sudo snapcraft stage gegl $build_environment_option --build-for=${DPKG_ARCH:-$(dpkg --print-architecture)} --verbosity=verbose
+printf "\e[0Ksection_end:`date +%s`:gegl_build\r\e[0K\n"
+
+rm snapcraft.yaml
+fi
