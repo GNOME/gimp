@@ -77,13 +77,22 @@ plugs:
     default-provider: ffmpeg-2404
 
 parts:
-  babl:
-    source: https://gitlab.gnome.org/GNOME/babl.git
-    source-depth: 1
-    build-environment:
+  buildenv:
+    plugin: nil
+    build-environment: &SNAP_ENVIRON
       - CLICOLOR_FORCE: '1'
       - CFLAGS: -fdiagnostics-color=always
       - CXXFLAGS: -fdiagnostics-color=always
+      - LD_LIBRARY_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$LD_LIBRARY_PATH
+      - GI_TYPELIB_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0:$GI_TYPELIB_PATH
+      #FIXME: needed to generate splash image because babl and gegl not fully relocatable yet
+      - BABL_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/babl-0.1
+      - GEGL_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gegl-0.4
+
+  babl:
+    source: https://gitlab.gnome.org/GNOME/babl.git
+    source-depth: 1
+    build-environment: *SNAP_ENVIRON
     plugin: meson
     meson-parameters:
       - -Dprefix=/usr
@@ -95,10 +104,7 @@ parts:
       - babl
     source: https://gitlab.gnome.org/GNOME/gegl.git
     source-depth: 1
-    build-environment:
-      - CLICOLOR_FORCE: '1'
-      - CFLAGS: -fdiagnostics-color=always
-      - CXXFLAGS: -fdiagnostics-color=always
+    build-environment: *SNAP_ENVIRON
     plugin: meson
     meson-parameters:
       - -Dprefix=/usr
@@ -125,15 +131,7 @@ parts:
       craftctl default
       #FIXME: g_tls_backend_supports_tls is not being found on SDK
       patch -p1 < $CRAFT_PROJECT_DIR/build/linux/snap/patches/0001-meson-Disable-glib-networking-test-for-Snap.patch
-    build-environment:
-      - CLICOLOR_FORCE: '1'
-      - CFLAGS: -fdiagnostics-color=always
-      - CXXFLAGS: -fdiagnostics-color=always
-      - LD_LIBRARY_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$LD_LIBRARY_PATH
-      - GI_TYPELIB_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0:$GI_TYPELIB_PATH
-      #FIXME: needed to generate splash image because babl and gegl not fully relocatable yet
-      - BABL_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/babl-0.1
-      - GEGL_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gegl-0.4
+    build-environment: *SNAP_ENVIRON
     plugin: meson
     meson-parameters:
       - -Dprefix=/usr
