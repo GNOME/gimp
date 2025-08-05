@@ -1695,6 +1695,9 @@ prefs_dialog_new (Gimp       *gimp,
            */
           gimp_help_set_help_data (button, "Missing GEGL operation 'gegl:paint-select'.", NULL);
         }
+      button = prefs_check_button_add (object, "playground-use-list-box",
+                                       _("Use GtkListBox in simple lists"),
+                                       GTK_BOX (vbox2));
     }
 
 

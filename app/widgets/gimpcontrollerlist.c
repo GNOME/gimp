@@ -51,6 +51,7 @@
 #include "gimpmessagedialog.h"
 #include "gimppropwidgets.h"
 #include "gimprow.h"
+#include "gimprow-utils.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 
@@ -290,13 +291,13 @@ gimp_controller_list_constructed (GObject *object)
   categories = gimp_controller_manager_get_categories (list->controller_manager);
   gtk_list_box_bind_model (GTK_LIST_BOX (list->available_controllers),
                            categories,
-                           gimp_row_create,
+                           gimp_row_create_for_context,
                            gimp_get_user_context (gimp_controller_manager_get_gimp (list->controller_manager)),
                            NULL);
 
   gtk_list_box_bind_model (GTK_LIST_BOX (list->active_controllers),
                            G_LIST_MODEL (list->controller_manager),
-                           gimp_row_create,
+                           gimp_row_create_for_context,
                            gimp_get_user_context (gimp_controller_manager_get_gimp (list->controller_manager)),
                            NULL);
 }
