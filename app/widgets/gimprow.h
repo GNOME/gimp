@@ -70,9 +70,4 @@ gint           gimp_row_get_view_size   (GimpRow      *row,
 void           gimp_row_monitor_changed (GimpRow      *row);
 
 
-/*  a generic GtkListBoxCreateWidgetFunc  */
-GtkWidget    * gimp_row_create          (gpointer      item,
-                                         gpointer      user_data);
-
-
 #endif /* __GIMP_ROW_H__ */

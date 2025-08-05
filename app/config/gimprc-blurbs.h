@@ -512,6 +512,9 @@ _("Enable the Seamless Clone tool.")
 #define PLAYGROUND_PAINT_SELECT_TOOL_BLURB \
 _("Enable the Paint Select tool.")
 
+#define PLAYGROUND_USE_LIST_BOX_BLURB \
+_("Use the new GtkListBox widget for simple lists.")
+
 #define SPACE_BAR_ACTION_BLURB \
 _("What to do when the space bar is pressed in the image window.")
 

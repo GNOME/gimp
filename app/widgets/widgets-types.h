@@ -90,6 +90,7 @@ typedef struct _GimpContainerBox             GimpContainerBox;
 typedef struct _GimpContainerComboBox        GimpContainerComboBox;
 typedef struct _GimpContainerEntry           GimpContainerEntry;
 typedef struct _GimpContainerIconView        GimpContainerIconView;
+typedef struct _GimpContainerListView        GimpContainerListView;
 typedef struct _GimpContainerTreeStore       GimpContainerTreeStore;
 typedef struct _GimpContainerTreeView        GimpContainerTreeView;
 typedef struct _GimpContainerView            GimpContainerView; /* dummy typedef */

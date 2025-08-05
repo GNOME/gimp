@@ -28,6 +28,9 @@
 
 #include "widgets-types.h"
 
+#include "config/gimpguiconfig.h" /* playground */
+
+#include "core/gimp.h" /* playground */
 #include "core/gimpasyncset.h"
 #include "core/gimpcontext.h"
 #include "core/gimplist.h"
@@ -35,6 +38,7 @@
 
 #include "gimpcontainereditor.h"
 #include "gimpcontainericonview.h"
+#include "gimpcontainerlistview.h"
 #include "gimpcontainertreeview.h"
 #include "gimpcontainerview.h"
 #include "gimpdocked.h"
@@ -230,11 +234,18 @@ gimp_container_editor_constructed (GObject *object)
       break;
 
     case GIMP_VIEW_TYPE_LIST:
-      editor->view =
-        GIMP_CONTAINER_VIEW (gimp_container_tree_view_new (editor->priv->container,
-                                                           editor->priv->context,
-                                                           editor->priv->view_size,
-                                                           editor->priv->view_border_width));
+      if (GIMP_GUI_CONFIG (editor->priv->context->gimp->config)->playground_use_list_box)
+        editor->view =
+          GIMP_CONTAINER_VIEW (gimp_container_list_view_new (editor->priv->container,
+                                                             editor->priv->context,
+                                                             editor->priv->view_size,
+                                                             editor->priv->view_border_width));
+      else
+        editor->view =
+          GIMP_CONTAINER_VIEW (gimp_container_tree_view_new (editor->priv->container,
+                                                             editor->priv->context,
+                                                             editor->priv->view_size,
+                                                             editor->priv->view_border_width));
       break;
 
     default:

@@ -30,6 +30,8 @@
 #include "core/gimpcontext.h"
 #include "core/gimpviewable.h"
 
+#include "gimpdnd.h"
+#include "gimpeditor.h"
 #include "gimprow.h"
 #include "gimpview.h"
 #include "gimpviewrenderer.h"
@@ -91,6 +93,8 @@ static void       gimp_row_get_property          (GObject          *object,
                                                   GValue           *value,
                                                   GParamSpec       *pspec);
 
+static gboolean   gimp_row_button_press_event    (GtkWidget        *widget,
+                                                  GdkEventButton   *bevent);
 static void       gimp_row_style_updated         (GtkWidget        *widget);
 static gboolean   gimp_row_query_tooltip         (GtkWidget        *widget,
                                                   gint              x,
@@ -121,6 +125,13 @@ static void       gimp_row_label_long_pressed    (GtkGesture       *gesture,
 static void       gimp_row_rename_entry_activate (GtkEntry         *entry,
                                                   GimpRow          *row);
 
+static GimpViewable *
+                  gimp_row_drag_viewable         (GtkWidget        *widget,
+                                                  GimpContext     **context,
+                                                  gpointer          data);
+static GdkPixbuf *gimp_row_drag_pixbuf           (GtkWidget        *widget,
+                                                  gpointer          data);
+
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpRow, gimp_row, GTK_TYPE_LIST_BOX_ROW)
 
@@ -136,20 +147,21 @@ gimp_row_class_init (GimpRowClass *klass)
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
   GtkBindingSet  *binding_set;
 
-  object_class->constructed   = gimp_row_constructed;
-  object_class->dispose       = gimp_row_dispose;
-  object_class->set_property  = gimp_row_set_property;
-  object_class->get_property  = gimp_row_get_property;
+  object_class->constructed        = gimp_row_constructed;
+  object_class->dispose            = gimp_row_dispose;
+  object_class->set_property       = gimp_row_set_property;
+  object_class->get_property       = gimp_row_get_property;
 
-  widget_class->style_updated = gimp_row_style_updated;
-  widget_class->query_tooltip = gimp_row_query_tooltip;
+  widget_class->button_press_event = gimp_row_button_press_event;
+  widget_class->style_updated      = gimp_row_style_updated;
+  widget_class->query_tooltip      = gimp_row_query_tooltip;
 
-  klass->set_context          = gimp_row_real_set_context;
-  klass->set_viewable         = gimp_row_real_set_viewable;
-  klass->set_view_size        = gimp_row_real_set_view_size;
-  klass->monitor_changed      = gimp_row_real_monitor_changed;
-  klass->edit_name            = gimp_row_real_edit_name;
-  klass->name_edited          = gimp_row_real_name_edited;
+  klass->set_context               = gimp_row_real_set_context;
+  klass->set_viewable              = gimp_row_real_set_viewable;
+  klass->set_view_size             = gimp_row_real_set_view_size;
+  klass->monitor_changed           = gimp_row_real_monitor_changed;
+  klass->edit_name                 = gimp_row_real_edit_name;
+  klass->name_edited               = gimp_row_real_name_edited;
 
   row_signals[EDIT_NAME] =
     g_signal_new ("edit-name",
@@ -235,7 +247,8 @@ gimp_row_init (GimpRow *row)
 static void
 gimp_row_constructed (GObject *object)
 {
-  GimpRowPrivate *priv = GET_PRIVATE (object);
+  GimpRowPrivate *priv    = GET_PRIVATE (object);
+  gboolean        preview = FALSE;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -243,9 +256,16 @@ gimp_row_constructed (GObject *object)
                               priv->view_size,
                               priv->view_border_width,
                               FALSE);
+  GIMP_VIEW (priv->view)->eat_button_events = FALSE;
+  GIMP_VIEW (priv->view)->show_popup        = TRUE;
   gtk_box_pack_start (GTK_BOX (priv->box), priv->view, FALSE, FALSE, 0);
-  gtk_widget_set_visible (priv->view, TRUE);
 
+  if (priv->viewable)
+    preview = (GIMP_VIEWABLE_GET_CLASS (priv->viewable)->get_preview     != NULL ||
+               GIMP_VIEWABLE_GET_CLASS (priv->viewable)->get_new_preview != NULL);
+
+  gtk_widget_set_visible (priv->icon, ! preview);
+  gtk_widget_set_visible (priv->view, preview);
 }
 
 static void
@@ -340,6 +360,43 @@ gimp_row_get_property (GObject    *object,
     }
 }
 
+static gboolean
+gimp_row_button_press_event (GtkWidget      *widget,
+                             GdkEventButton *bevent)
+{
+  GdkEvent *event = (GdkEvent *) bevent;
+  gboolean  context_menu;
+
+  GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, bevent);
+
+  context_menu = gdk_event_triggers_context_menu (event);
+
+  if (bevent->button == 1 || context_menu)
+    {
+      GtkWidget *list_box = gtk_widget_get_parent (widget);
+
+      if (GTK_IS_LIST_BOX (list_box))
+        {
+          gtk_list_box_select_row (GTK_LIST_BOX (list_box),
+                                   GTK_LIST_BOX_ROW (widget));
+
+          if (context_menu)
+            {
+              GtkWidget *editor = gtk_widget_get_ancestor (widget,
+                                                           GIMP_TYPE_EDITOR);
+
+              if (editor)
+                {
+                  return gimp_editor_popup_menu_at_pointer (GIMP_EDITOR (editor),
+                                                            event);
+               }
+            }
+        }
+    }
+
+  return FALSE;
+}
+
 static void
 gimp_row_style_updated (GtkWidget *widget)
 {
@@ -400,7 +457,12 @@ static void
 gimp_row_real_set_viewable (GimpRow      *row,
                             GimpViewable *viewable)
 {
-  GimpRowPrivate *priv = GET_PRIVATE (row);
+  GimpRowPrivate *priv          = GET_PRIVATE (row);
+  GType           viewable_type = G_TYPE_NONE;
+  gboolean        preview       = FALSE;
+
+  if (viewable)
+    viewable_type = G_TYPE_FROM_INSTANCE (viewable);
 
   if (priv->viewable)
     {
@@ -410,6 +472,36 @@ gimp_row_real_set_viewable (GimpRow      *row,
       g_signal_handlers_disconnect_by_func (priv->viewable,
                                             gimp_row_viewable_name_changed,
                                             row);
+
+      if (! viewable)
+        {
+          if (gimp_dnd_viewable_source_remove (GTK_WIDGET (row),
+                                               G_TYPE_FROM_INSTANCE (priv->viewable)))
+            {
+              if (gimp_viewable_get_size (priv->viewable, NULL, NULL))
+                gimp_dnd_pixbuf_source_remove (GTK_WIDGET (row));
+
+              gtk_drag_source_unset (GTK_WIDGET (row));
+            }
+        }
+    }
+  else if (viewable)
+    {
+      if (gimp_dnd_drag_source_set_by_type (GTK_WIDGET (row),
+                                            GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
+                                            viewable_type,
+                                            GDK_ACTION_COPY))
+        {
+          gimp_dnd_viewable_source_add (GTK_WIDGET (row),
+                                        viewable_type,
+                                        gimp_row_drag_viewable,
+                                        NULL);
+
+          if (gimp_viewable_get_size (viewable, NULL, NULL))
+            gimp_dnd_pixbuf_source_add (GTK_WIDGET (row),
+                                        gimp_row_drag_pixbuf,
+                                        NULL);
+        }
     }
 
   g_set_object (&priv->viewable, viewable);
@@ -423,13 +515,24 @@ gimp_row_real_set_viewable (GimpRow      *row,
       g_signal_connect (priv->viewable, "notify::icon-name",
                         G_CALLBACK (gimp_row_viewable_icon_changed),
                         row);
+
+      preview = (GIMP_VIEWABLE_GET_CLASS (priv->viewable)->get_preview     != NULL ||
+                 GIMP_VIEWABLE_GET_CLASS (priv->viewable)->get_new_preview != NULL);
     }
 
   gimp_row_viewable_name_changed (priv->viewable, row);
-  gimp_row_viewable_icon_changed (priv->viewable, NULL, row);
+
+  if (priv->icon)
+    {
+      gtk_widget_set_visible (priv->icon, ! preview);
+      gimp_row_viewable_icon_changed (priv->viewable, NULL, row);
+    }
 
   if (priv->view)
-    gimp_view_set_viewable (GIMP_VIEW (priv->view), priv->viewable);
+    {
+      gtk_widget_set_visible (priv->view, preview);
+      gimp_view_set_viewable (GIMP_VIEW (priv->view), priv->viewable);
+    }
 }
 
 static void
@@ -634,13 +737,6 @@ gimp_row_monitor_changed (GimpRow *row)
   GIMP_ROW_GET_CLASS (row)->monitor_changed (row);
 }
 
-GtkWidget *
-gimp_row_create (gpointer item,
-                 gpointer user_data)
-{
-  return gimp_row_new (user_data, item);
-}
-
 
 /*  private functions  */
 
@@ -701,4 +797,36 @@ gimp_row_rename_entry_activate (GtkEntry *entry,
     }
 
   gtk_popover_popdown (GTK_POPOVER (priv->popover));
+}
+
+static GimpViewable *
+gimp_row_drag_viewable (GtkWidget    *widget,
+                        GimpContext **context,
+                        gpointer      data)
+{
+  GimpRowPrivate *priv = GET_PRIVATE (widget);
+
+  if (context)
+    *context = priv->context;
+
+  return priv->viewable;
+}
+
+static GdkPixbuf *
+gimp_row_drag_pixbuf (GtkWidget *widget,
+                      gpointer   data)
+{
+  GimpRowPrivate *priv = GET_PRIVATE (widget);
+  gint            width;
+  gint            height;
+
+  if (priv->viewable &&
+      gimp_viewable_get_size (priv->viewable, &width, &height))
+    {
+      return gimp_viewable_get_new_pixbuf (priv->viewable,
+                                           priv->context,
+                                           width, height, NULL, NULL);
+    }
+
+  return NULL;
 }
