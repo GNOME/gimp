@@ -54,7 +54,15 @@ fi
 
 
 # FINISH .FLATPAK
+# Generate a Flatpak "bundle" to be tested with GNOME runtime installed
+# (it is NOT a real/full bundle, deps from GNOME runtime are not bundled)
 printf "\e[0Ksection_start:`date +%s`:${FLATPAK}_making[collapsed=true]\r\e[0KFinishing ${FLATPAK}\n"
+if [ -z "$GITLAB_CI" ]; then
+  #build-bundle is not arch neutral so on CI it is run on 2_build-gimp-flatpakbuilder.sh
+  APP_ID=$(awk -F'"' '/"app-id"/ {print $4; exit}' build/linux/flatpak/org.gimp.GIMP-nightly.json)
+  BRANCH=$(awk -F'"' '/"branch"/ {print $4; exit}' build/linux/flatpak/org.gimp.GIMP-nightly.json)
+  flatpak build-bundle repo temp_${APP_ID}-$(uname -m).flatpak --runtime-repo=https://nightly.gnome.org/gnome-nightly.flatpakrepo ${APP_ID} ${BRANCH}
+fi
 mv temp_${FLATPAK} ${FLATPAK}
 printf "(INFO): Suceeded. To test this build, install it from the artifact with: flatpak install --user ${FLATPAK} -y\n"
 printf "\e[0Ksection_end:`date +%s`:${FLATPAK}_making\r\e[0K\n"
