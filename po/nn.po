@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-07-30 18:48+0000\n"
-"PO-Revision-Date: 2025-08-01 17:38+0200\n"
+"POT-Creation-Date: 2025-08-05 06:50+0000\n"
+"PO-Revision-Date: 2025-08-05 13:02+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -373,7 +373,7 @@ msgstr "Penselredigering"
 
 #. initialize the list of gimp brushes
 #: app/actions/actions.c:116 app/core/gimp-data-factories.c:358
-#: app/dialogs/dialogs.c:341 app/dialogs/preferences-dialog.c:3511
+#: app/dialogs/dialogs.c:341 app/dialogs/preferences-dialog.c:3507
 msgid "Brushes"
 msgstr "Penslar"
 
@@ -383,7 +383,7 @@ msgstr "Bufferar"
 
 #: app/actions/actions.c:122 app/dialogs/dialogs.c:380
 #: app/propgui/gimppropgui-newsprint.c:160
-#: app/widgets/gimppickablechooser.c:295
+#: app/widgets/gimppickablechooser.c:292
 msgid "Channels"
 msgstr "Kanalar"
 
@@ -422,7 +422,7 @@ msgstr "Kan limast inn"
 
 #. Document History
 #: app/actions/actions.c:149 app/dialogs/dialogs.c:368
-#: app/dialogs/preferences-dialog.c:1285
+#: app/dialogs/preferences-dialog.c:1281
 msgid "Document History"
 msgstr "Dokumentlogg"
 
@@ -457,7 +457,7 @@ msgstr "Filter"
 
 #. initialize the list of gimp fonts
 #: app/actions/actions.c:173 app/core/gimp-data-factories.c:392
-#: app/dialogs/dialogs.c:359 app/dialogs/preferences-dialog.c:3541
+#: app/dialogs/dialogs.c:359 app/dialogs/preferences-dialog.c:3537
 msgid "Fonts"
 msgstr "Skrifttypar"
 
@@ -468,12 +468,12 @@ msgstr "Fargeovergangsredigering"
 
 #. initialize the list of gimp gradients
 #: app/actions/actions.c:179 app/core/gimp-data-factories.c:383
-#: app/dialogs/dialogs.c:353 app/dialogs/preferences-dialog.c:3535
+#: app/dialogs/dialogs.c:353 app/dialogs/preferences-dialog.c:3531
 msgid "Gradients"
 msgstr "Fargeovergangar"
 
 #: app/actions/actions.c:182 app/core/gimp-data-factories.c:399
-#: app/dialogs/dialogs.c:365 app/dialogs/preferences-dialog.c:3547
+#: app/dialogs/dialogs.c:365 app/dialogs/preferences-dialog.c:3543
 msgid "Tool Presets"
 msgstr "Verktøyforval"
 
@@ -491,18 +491,18 @@ msgid "Image"
 msgstr "Bilete"
 
 #: app/actions/actions.c:194 app/dialogs/dialogs.c:338
-#: app/widgets/gimppickablechooser.c:214
+#: app/widgets/gimppickablechooser.c:211
 msgid "Images"
 msgstr "Bilete"
 
 #: app/actions/actions.c:197 app/dialogs/dialogs.c:376
-#: app/dialogs/resize-dialog.c:171 app/widgets/gimppickablechooser.c:270
+#: app/dialogs/resize-dialog.c:171 app/widgets/gimppickablechooser.c:267
 msgid "Layers"
 msgstr "Lag"
 
 #. initialize the list of mypaint brushes
 #: app/actions/actions.c:200 app/core/gimp-data-factories.c:368
-#: app/dialogs/dialogs.c:347 app/dialogs/preferences-dialog.c:3553
+#: app/dialogs/dialogs.c:347 app/dialogs/preferences-dialog.c:3549
 msgid "MyPaint Brushes"
 msgstr "MyPaint-penslar"
 
@@ -513,23 +513,23 @@ msgstr "Palettredigering"
 
 #. initialize the list of gimp palettes
 #: app/actions/actions.c:206 app/core/gimp-data-factories.c:378
-#: app/dialogs/dialogs.c:356 app/dialogs/preferences-dialog.c:3529
+#: app/dialogs/dialogs.c:356 app/dialogs/preferences-dialog.c:3525
 msgid "Palettes"
 msgstr "Palettar"
 
 #. initialize the list of gimp patterns
 #: app/actions/actions.c:209 app/core/gimp-data-factories.c:373
-#: app/dialogs/dialogs.c:350 app/dialogs/preferences-dialog.c:3523
+#: app/dialogs/dialogs.c:350 app/dialogs/preferences-dialog.c:3519
 msgid "Patterns"
 msgstr "Mønsterelement"
 
-#: app/actions/actions.c:212 app/dialogs/preferences-dialog.c:3559
+#: app/actions/actions.c:212 app/dialogs/preferences-dialog.c:3555
 msgid "Plug-ins"
 msgstr "Programtillegg"
 
 #. Quick Mask Color
 #: app/actions/actions.c:215 app/core/gimpchannel.c:363
-#: app/dialogs/preferences-dialog.c:1830
+#: app/dialogs/preferences-dialog.c:1826
 msgid "Quick Mask"
 msgstr "Snarmaske"
 
@@ -580,13 +580,13 @@ msgid "Windows"
 msgstr "Vindauge"
 
 #. value description and new value shown in the status bar
-#: app/actions/actions.c:650
+#: app/actions/actions.c:649
 #, c-format
 msgid "%s: %.2f"
 msgstr "%s: %.2f"
 
 #. value description and new value shown in the status bar
-#: app/actions/actions.c:676
+#: app/actions/actions.c:675
 #, c-format
 msgid "%s: %d"
 msgstr "%s: %d"
@@ -1092,7 +1092,7 @@ msgstr[1] "Senk kanal til botnen"
 
 #: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:534
 #: app/display/gimpdisplayshell-dnd.c:703 app/widgets/gimpchanneltreeview.c:260
-#: app/widgets/gimplayertreeview.c:855
+#: app/widgets/gimplayertreeview.c:837
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s-kanalkopi"
@@ -2475,10 +2475,10 @@ msgstr "240 sekund"
 #: app/dialogs/image-new-dialog.c:106 app/dialogs/image-new-dialog.c:326
 #: app/dialogs/image-scale-dialog.c:210 app/dialogs/input-devices-dialog.c:66
 #: app/dialogs/input-devices-dialog.c:121 app/dialogs/item-options-dialog.c:147
-#: app/dialogs/layer-add-mask-dialog.c:120
+#: app/dialogs/layer-add-mask-dialog.c:118
 #: app/dialogs/palette-import-dialog.c:161 app/dialogs/preferences-dialog.c:222
-#: app/dialogs/preferences-dialog.c:619 app/dialogs/preferences-dialog.c:1180
-#: app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:178
+#: app/dialogs/preferences-dialog.c:615 app/dialogs/preferences-dialog.c:1176
+#: app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:176
 #: app/dialogs/resize-dialog.c:225 app/dialogs/resolution-calibrate-dialog.c:73
 #: app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:129
 #: app/dialogs/template-options-dialog.c:118
@@ -2491,12 +2491,12 @@ msgstr "240 sekund"
 #: app/tools/gimptexttool.c:1774 app/tools/gimptransformgridtool.c:1264
 #: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
 #: app/widgets/gimpcolordialog.c:492 app/widgets/gimpcontrollereditor.c:666
-#: app/widgets/gimpcontrollerlist.c:555 app/widgets/gimpdeviceeditor.c:545
+#: app/widgets/gimpcontrollerlist.c:555 app/widgets/gimpdeviceeditor.c:542
 #: app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228
 #: app/widgets/gimpfiledialog.c:336 app/widgets/gimphelp.c:438
 #: app/widgets/gimphelp.c:773 app/widgets/gimpiconpicker.c:489
 #: app/widgets/gimpmodifierseditor.c:688 app/widgets/gimppdbdialog.c:148
-#: app/widgets/gimpprogressdialog.c:91 app/widgets/gimpsettingsbox.c:705
+#: app/widgets/gimpprogressdialog.c:91 app/widgets/gimpsettingsbox.c:706
 msgid "_Cancel"
 msgstr "_Avbryt"
 
@@ -2558,7 +2558,7 @@ msgstr "Skriv inn ei beskriving av markøren"
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
 #: app/dialogs/welcome-dialog.c:1247 app/display/gimpdisplayshell-dnd.c:646
-#: app/widgets/gimplayertreeview.c:813 app/widgets/gimptoolbox.c:843
+#: app/widgets/gimplayertreeview.c:795 app/widgets/gimptoolbox.c:843
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -3436,7 +3436,7 @@ msgid "Clear Document History"
 msgstr "Tøm dokumentloggen"
 
 #: app/actions/documents-commands.c:239 app/actions/edit-commands.c:171
-#: app/dialogs/preferences-dialog.c:620
+#: app/dialogs/preferences-dialog.c:616
 msgid "Cl_ear"
 msgstr "_Tøm"
 
@@ -3970,7 +3970,7 @@ msgid "Copied pixels to the clipboard."
 msgstr "Kopierte pikslar til utklippstavla."
 
 #: app/actions/edit-commands.c:444 app/actions/edit-commands.c:734
-#: app/tools/gimpseamlessclonetool.c:303
+#: app/tools/gimpseamlessclonetool.c:304
 msgid "There is no image data in the clipboard to paste."
 msgstr "Det er ingen biletdata i utklippstavla å lime inn."
 
@@ -4112,7 +4112,7 @@ msgstr "Lagra feilloggen til fil"
 #: app/actions/error-console-commands.c:102 app/actions/gradients-commands.c:81
 #: app/dialogs/file-save-dialog.c:759 app/dialogs/path-export-dialog.c:89
 #: app/display/gimpdisplayshell-close.c:179 app/widgets/gimpsavedialog.c:142
-#: app/widgets/gimpsettingsbox.c:707
+#: app/widgets/gimpsettingsbox.c:708
 msgid "_Save"
 msgstr "_Lagra"
 
@@ -5056,30 +5056,30 @@ msgstr "Vis dialogvindauget for det sist brukte filteret"
 #. * which we append "..." as the standardized labelling to indicate
 #. * that this action raises a dialog.
 #.
-#: app/actions/filters-actions.c:854
+#: app/actions/filters-actions.c:857
 #, c-format
 msgid "%s..."
 msgstr "%s..."
 
-#: app/actions/filters-actions.c:1186
+#: app/actions/filters-actions.c:1219
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "_Gjenta «%s»"
 
-#: app/actions/filters-actions.c:1187
+#: app/actions/filters-actions.c:1220
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "Vis «%s» igjen"
 
-#: app/actions/filters-actions.c:1225
+#: app/actions/filters-actions.c:1258
 msgid "Repeat Last"
 msgstr "Gjenta siste"
 
-#: app/actions/filters-actions.c:1227
+#: app/actions/filters-actions.c:1260
 msgid "Re-Show Last"
 msgstr "Vis siste igjen"
 
-#: app/actions/filters-actions.c:1230 app/actions/filters-actions.c:1232
+#: app/actions/filters-actions.c:1263 app/actions/filters-actions.c:1265
 msgid "No last used filters"
 msgstr "Ingen sist brukte filter"
 
@@ -6095,7 +6095,7 @@ msgstr "Skaler biletet"
 
 #. Scaling
 #: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2573
-#: app/dialogs/preferences-dialog.c:1748 app/pdb/image-transform-cmds.c:124
+#: app/dialogs/preferences-dialog.c:1744 app/pdb/image-transform-cmds.c:124
 #: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:375
 #: app/tools/gimpscaletool.c:122
 msgid "Scaling"
@@ -6131,19 +6131,19 @@ msgctxt "images-action"
 msgid "Delete this image"
 msgstr "Slett dette biletet"
 
-#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:563
+#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:564
 msgid "Lock content"
 msgstr "Lås innhaldet"
 
-#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:564
+#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:565
 msgid "Unlock content"
 msgstr "Lås opp innhaldet"
 
-#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:577
+#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:578
 msgid "Lock position"
 msgstr "Lås plasseringa"
 
-#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:578
+#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:579
 msgid "Unlock position"
 msgstr "Lås opp plasseringa"
 
@@ -6295,7 +6295,7 @@ msgctxt "layers-action"
 msgid "_Anchor Floating Layer or Mask"
 msgstr "_Forankra det flytande laget eller maska"
 
-#: app/actions/layers-actions.c:133 app/widgets/gimplayertreeview.c:1267
+#: app/actions/layers-actions.c:133 app/widgets/gimplayertreeview.c:1249
 msgctxt "layers-action"
 msgid "Anchor the floating layer or mask"
 msgstr "Forankra det flytande laget eller maska"
@@ -6974,7 +6974,7 @@ msgid "Edit Layer Attributes"
 msgstr "Rediger lagattributta"
 
 #: app/actions/layers-commands.c:359 app/widgets/gimpdrawabletreeview.c:648
-#: app/widgets/gimplayertreeview.c:932
+#: app/widgets/gimplayertreeview.c:914
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "Nytt lag"
@@ -7159,7 +7159,7 @@ msgid "Empty Selection"
 msgstr "Tomt utval"
 
 #: app/actions/layers-commands.c:1914 app/actions/layers-commands.c:1958
-#: app/widgets/gimplayertreeview.c:1108
+#: app/widgets/gimplayertreeview.c:1090
 msgid "Set layers opacity"
 msgstr "Set dekkevne for laga"
 
@@ -7408,7 +7408,7 @@ msgstr "Flett saman palettane"
 msgid "Enter a name for the merged palette"
 msgstr "Skriv inn namnet på den fletta paletten"
 
-#: app/actions/palettes-commands.c:126
+#: app/actions/palettes-commands.c:124
 msgid "There must be at least two palettes selected to merge."
 msgstr "Det må vera minst to palettar for å fletta."
 
@@ -7957,7 +7957,7 @@ msgstr "Tilbakestill alle filtera"
 #: app/dialogs/fill-dialog.c:114 app/dialogs/grid-dialog.c:101
 #: app/dialogs/image-new-dialog.c:105 app/dialogs/input-devices-dialog.c:65
 #: app/dialogs/input-devices-dialog.c:122 app/dialogs/preferences-dialog.c:223
-#: app/dialogs/preferences-dialog.c:1179 app/dialogs/print-size-dialog.c:122
+#: app/dialogs/preferences-dialog.c:1175 app/dialogs/print-size-dialog.c:122
 #: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
 #: app/tools/gimpfiltertool.c:369 app/tools/gimptransformgridtool.c:1261
@@ -8313,7 +8313,7 @@ msgid "Delete Template"
 msgstr "Slett malen"
 
 #: app/actions/templates-commands.c:249 app/dialogs/data-delete-dialog.c:88
-#: app/widgets/gimpdeviceeditor.c:546
+#: app/widgets/gimpdeviceeditor.c:543
 msgid "_Delete"
 msgstr "_Slett"
 
@@ -8411,7 +8411,7 @@ msgstr "Opna tekstfil (UTF-8)"
 #: app/dialogs/file-open-location-dialog.c:81
 #: app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:718
 #: app/widgets/gimpiconpicker.c:490 app/widgets/gimpopendialog.c:87
-#: app/widgets/gimpsettingsbox.c:707
+#: app/widgets/gimpsettingsbox.c:708
 msgid "_Open"
 msgstr "_Opna"
 
@@ -10039,7 +10039,7 @@ msgstr "Opna visinga"
 #: app/dialogs/image-new-dialog.c:107 app/dialogs/image-new-dialog.c:327
 #: app/dialogs/input-devices-dialog.c:67 app/dialogs/item-options-dialog.c:148
 #: app/dialogs/keyboard-shortcuts-dialog.c:65
-#: app/dialogs/preferences-dialog.c:1181 app/dialogs/print-size-dialog.c:124
+#: app/dialogs/preferences-dialog.c:1177 app/dialogs/print-size-dialog.c:124
 #: app/dialogs/resolution-calibrate-dialog.c:74
 #: app/dialogs/template-options-dialog.c:119
 #: app/display/gimpdisplayshell-filter-dialog.c:88
@@ -10446,7 +10446,7 @@ msgstr ""
 "Tolkinga av «%s»-fila feila. Brukar standardverdiar i staden. Det er laga "
 "ein reservekopi av innstillingane på «%s»."
 
-#: app/config/gimpcoreconfig.c:821 app/dialogs/preferences-dialog.c:1913
+#: app/config/gimpcoreconfig.c:821 app/dialogs/preferences-dialog.c:1909
 msgid "Pattern syntax for searching and selecting items:"
 msgstr "Mønstersyntaks for å søkja og merkja element:"
 
@@ -10704,7 +10704,7 @@ msgstr "Eksporter fargeprofilen for biletet som standard."
 msgid "Export the image's comment by default."
 msgstr "Eksporter biletmerknadane som standard."
 
-#: app/config/gimprc-blurbs.h:240 app/dialogs/preferences-dialog.c:1570
+#: app/config/gimprc-blurbs.h:240 app/dialogs/preferences-dialog.c:1566
 msgid "Export the image's thumbnail by default"
 msgstr "Eksporter biletminiatyren som standard"
 
@@ -12686,7 +12686,7 @@ msgid "Parasites"
 msgstr "Parasitter"
 
 #. initialize the module list
-#: app/core/gimp.c:858 app/dialogs/preferences-dialog.c:3571
+#: app/core/gimp.c:858 app/dialogs/preferences-dialog.c:3567
 msgid "Modules"
 msgstr "Modular"
 
@@ -12736,7 +12736,7 @@ msgstr "Sletting av «%s» feila: %s"
 
 #. initialize the list of gimp dynamics
 #: app/core/gimp-data-factories.c:363 app/core/gimpcontext.c:706
-#: app/dialogs/preferences-dialog.c:3517 app/tools/gimppaintoptions-gui.c:329
+#: app/dialogs/preferences-dialog.c:3513 app/tools/gimppaintoptions-gui.c:329
 msgid "Dynamics"
 msgstr "Dynamisk"
 
@@ -12781,32 +12781,46 @@ msgstr "Innlimt lag"
 msgid "Global Buffer"
 msgstr "Global buffer"
 
-#: app/core/gimpextension.c:366
+#: app/core/gimpextension.c:284
+#, c-format
+msgid ""
+"Invalid AppStream metadata: failed to find default screenshot for extension "
+"\"%s\""
+msgstr ""
+"Ugyldige AppStream-metadata: fann ikkje standard skjermdump for utvidinga "
+"«%s»"
+
+#: app/core/gimpextension.c:310
+#, c-format
+msgid "Invalid AppStream metadata: Error loading image: \"%s\""
+msgstr "Ugyldige AppStream-metadata: Feil ved lasting av biletet: «%s»"
+
+#: app/core/gimpextension.c:428
 #, c-format
 msgid "Extension AppData must be of type \"addon\", found \"%s\" instead."
 msgstr "Utvidinga AppData må vera av typen «addon», fann «%s» i staden."
 
-#: app/core/gimpextension.c:382
+#: app/core/gimpextension.c:444
 #, c-format
 msgid "Extension AppData must extend \"org.gimp.GIMP\"."
 msgstr "Utvidinga AppData må utvida «org.gimp.GIMP»."
 
-#: app/core/gimpextension.c:396
+#: app/core/gimpextension.c:458
 #, c-format
 msgid "Extension AppData id (\"%s\") and directory (\"%s\") must be the same."
 msgstr "ID (\"%s\") og mappa (\"%s\") for utvidinga AppData må vera det same."
 
-#: app/core/gimpextension.c:411
+#: app/core/gimpextension.c:486
 #, c-format
 msgid "Extension AppData must advertise a version in a <release> tag."
 msgstr "Utvidinga AppData må annonsera ein versjon i ein <release>-tagg."
 
-#: app/core/gimpextension.c:445
+#: app/core/gimpextension.c:512
 #, c-format
-msgid "Unsupported <requires> \"%s\" (type %s)."
-msgstr "Utan støtte <requires> «%s» (type %s)."
+msgid "Unsupported <relation> \"%s\" (type %s)."
+msgstr "Ustøtta <relation> «%s» (type %s)."
 
-#: app/core/gimpextension.c:460
+#: app/core/gimpextension.c:527
 #, c-format
 msgid ""
 "<requires><id>org.gimp.GIMP</id></requires> for version comparison is "
@@ -12815,22 +12829,22 @@ msgstr ""
 "<requires><id>org.gimp.GIMP</id></requires> for samanlikning av versjonar er "
 "obligatorisk."
 
-#: app/core/gimpextension.c:755
+#: app/core/gimpextension.c:827
 #, c-format
 msgid "'%s' is not a relative path."
 msgstr "«%s» er ikkje ein relativ bane."
 
-#: app/core/gimpextension.c:789
+#: app/core/gimpextension.c:861
 #, c-format
 msgid "'%s' is not a child of the extension."
 msgstr "«%s» er ikkje underordna utvidinga."
 
-#: app/core/gimpextension.c:803
+#: app/core/gimpextension.c:875
 #, c-format
 msgid "'%s' is not a directory."
 msgstr "«%s» er ikkje ei mappe."
 
-#: app/core/gimpextension.c:817
+#: app/core/gimpextension.c:889
 #, c-format
 msgid "'%s' is not a valid file."
 msgstr "«%s» er ikkje gyldig fil."
@@ -13387,7 +13401,7 @@ msgstr "Bakgrunnsfarge"
 
 #: app/core/gimpcontext.c:682 app/core/gimpcontext.c:683
 #: app/operations/gimpoperationsettings.c:99
-#: app/widgets/gimplayertreeview.c:289
+#: app/widgets/gimplayertreeview.c:290
 msgid "Opacity"
 msgstr "Dekkevne"
 
@@ -13509,7 +13523,7 @@ msgid "Error loading '%s'"
 msgstr "Feil ved lasting av «%s»:"
 
 #: app/core/gimpdataloaderfactory.c:492 app/file-data/file-data-gbr.c:101
-#: app/file-data/file-data-gex.c:343 app/file-data/file-data-gex.c:493
+#: app/file-data/file-data-gex.c:361 app/file-data/file-data-gex.c:511
 #: app/file-data/file-data-gih.c:99 app/file-data/file-data-pat.c:102
 #: app/xcf/xcf.c:436
 #, c-format
@@ -13634,28 +13648,28 @@ msgid "Custom style"
 msgstr "Sjølvvald stil"
 
 #: app/core/gimpfilloptions.c:128 app/pdb/gimppdbcontext.c:101
-#: app/tools/gimpbucketfilloptions.c:186 app/tools/gimpselectionoptions.c:89
+#: app/tools/gimpbucketfilloptions.c:183 app/tools/gimpselectionoptions.c:89
 #: app/tools/gimptextoptions.c:178
 msgid "Antialiasing"
 msgstr "Kantutjamning"
 
-#: app/core/gimpfilloptions.c:135 app/tools/gimpbucketfilloptions.c:196
+#: app/core/gimpfilloptions.c:135 app/tools/gimpbucketfilloptions.c:193
 #: app/tools/gimpselectionoptions.c:96
 msgid "Feather edges"
 msgstr "Mjuke kantar"
 
-#: app/core/gimpfilloptions.c:136 app/tools/gimpbucketfilloptions.c:197
+#: app/core/gimpfilloptions.c:136 app/tools/gimpbucketfilloptions.c:194
 msgid "Enable feathering of fill edges"
 msgstr "Slå på utglatting av fyllkantane"
 
 #: app/core/gimpfilloptions.c:142 app/paint/gimpmybrushoptions.c:107
-#: app/tools/gimpbucketfilloptions.c:203 app/tools/gimpcoloroptions.c:86
+#: app/tools/gimpbucketfilloptions.c:200 app/tools/gimpcoloroptions.c:86
 #: app/tools/gimprectangleselectoptions.c:101
 #: app/tools/gimpselectionoptions.c:103 app/widgets/gimpbrusheditor.c:160
 msgid "Radius"
 msgstr "Radius"
 
-#: app/core/gimpfilloptions.c:143 app/tools/gimpbucketfilloptions.c:204
+#: app/core/gimpfilloptions.c:143 app/tools/gimpbucketfilloptions.c:201
 #: app/tools/gimpselectionoptions.c:104
 msgid "Radius of feathering"
 msgstr "Sløringsradius"
@@ -13837,8 +13851,8 @@ msgstr "Transformer laggruppa"
 msgid "Symmetry"
 msgstr "Symmetri"
 
-#: app/core/gimpimage.c:2073 app/pdb/drawable-filter-cmds.c:681
-#: app/widgets/gimpdrawabletreeview-filters.c:863
+#: app/core/gimpimage.c:2073 app/pdb/drawable-filter-cmds.c:702
+#: app/widgets/gimpdrawabletreeview-filters.c:860
 msgid "Remove filter"
 msgstr "Fjern filteret"
 
@@ -14238,7 +14252,7 @@ msgid "Cannot merge down to a layer group."
 msgstr "Kan ikkje flette ned til ei laggruppe."
 
 #: app/core/gimpimage-merge.c:345
-#: app/widgets/gimpdrawabletreeview-filters.c:837
+#: app/widgets/gimpdrawabletreeview-filters.c:834
 msgid "The layer to merge down to is locked."
 msgstr "Laget som skal flettast nedover er låst."
 
@@ -14361,7 +14375,7 @@ msgstr "Fekk ikkje til å opna miniatyren «%s»: %s"
 #: app/core/gimpitem.c:1850 app/core/gimpitem.c:1917
 #: app/display/gimpdisplayshell-dnd.c:380 app/tools/gimppathtool.c:758
 #: app/tools/gimppathtool.c:847 app/tools/gimptransformtool.c:729
-#: app/widgets/gimpdrawabletreeview-filters.c:709
+#: app/widgets/gimpdrawabletreeview-filters.c:706
 msgid "A selected layer's pixels are locked."
 msgstr "Pikslane i det merkte laget er låst."
 
@@ -14577,20 +14591,20 @@ msgstr "Kan ikkje gje lagmaskene nytt namn."
 msgid "Select transparent pixels instead of gray ones"
 msgstr "Vel gjennomsiktige pikslar i staden for grå"
 
-#: app/core/gimplineart.c:349 app/tools/gimpbucketfilloptions.c:239
+#: app/core/gimplineart.c:349 app/tools/gimpbucketfilloptions.c:236
 msgid "Line art detection threshold"
 msgstr "Deteksjonsgrense for strekteikningar"
 
-#: app/core/gimplineart.c:350 app/tools/gimpbucketfilloptions.c:240
+#: app/core/gimplineart.c:350 app/tools/gimpbucketfilloptions.c:237
 msgid "Threshold to detect contour (higher values will include more pixels)"
 msgstr ""
 "Terskel for å oppdaga omriss (høgare verdiar vil ta med fleire pikslar)"
 
-#: app/core/gimplineart.c:356 app/tools/gimpbucketfilloptions.c:246
+#: app/core/gimplineart.c:356 app/tools/gimpbucketfilloptions.c:243
 msgid "Maximum growing size"
 msgstr "Maksimum vekststorleik"
 
-#: app/core/gimplineart.c:357 app/tools/gimpbucketfilloptions.c:247
+#: app/core/gimplineart.c:357 app/tools/gimpbucketfilloptions.c:244
 msgid "Maximum number of pixels grown under the line art"
 msgstr "Det høgaste talet på pikslar som veks under strekteikninga"
 
@@ -15183,8 +15197,7 @@ msgstr "Bilettype"
 msgid "Precision"
 msgstr "Presisjon"
 
-#: app/core/gimptemplate.c:212 app/operations/gimpcurvesconfig.c:105
-#: app/operations/gimplevelsconfig.c:111 app/widgets/gimphistogrameditor.c:128
+#: app/core/gimptemplate.c:212 app/widgets/gimphistogrameditor.c:128
 msgid "Linear/Perceptual"
 msgstr "Lineær / Perseptuell"
 
@@ -15204,7 +15217,7 @@ msgstr "Simulert fargetilpassing"
 msgid "Use Black Point Compensation for Simulation"
 msgstr "Bruk svartpunktkompensering for simuleringa"
 
-#: app/core/gimptemplate.c:250 app/tools/gimpbucketfilloptions.c:147
+#: app/core/gimptemplate.c:250 app/tools/gimpbucketfilloptions.c:144
 msgid "Fill type"
 msgstr "Fylltype"
 
@@ -15372,7 +15385,7 @@ msgstr "Lås plassering og _storleik"
 
 #: app/dialogs/channel-options-dialog.c:130
 #: app/dialogs/layer-options-dialog.c:169
-#: app/widgets/gimpdrawabletreeview.c:176 app/widgets/gimpitemtreeview.c:591
+#: app/widgets/gimpdrawabletreeview.c:175 app/widgets/gimpitemtreeview.c:592
 msgid "Lock visibility"
 msgstr "Lås synlegheita"
 
@@ -15872,7 +15885,7 @@ msgstr "_Fjern usynlege lag"
 msgid "Create a New Image"
 msgstr "Laga eit nytt bilete"
 
-#: app/dialogs/image-new-dialog.c:139 app/dialogs/preferences-dialog.c:1813
+#: app/dialogs/image-new-dialog.c:139 app/dialogs/preferences-dialog.c:1809
 #: app/dialogs/resize-dialog.c:256
 msgid "_Template:"
 msgstr "_Malar:"
@@ -15905,7 +15918,7 @@ msgstr "Bileteigenskapar"
 #: app/dialogs/welcome-dialog.c:193 app/tools/gimpcolorpickertool.c:351
 #: app/tools/gimpgradienttool-editor.c:1818 app/tools/gimpmeasuretool.c:740
 #: app/widgets/gimpcontrollerlist.c:634 app/widgets/gimpcriticaldialog.c:210
-#: app/widgets/gimpcriticaldialog.c:232 app/widgets/gimpsettingsbox.c:636
+#: app/widgets/gimpcriticaldialog.c:232 app/widgets/gimpsettingsbox.c:637
 #: app/widgets/gimptexteditor.c:164
 msgid "_Close"
 msgstr "_Lukk"
@@ -16001,32 +16014,32 @@ msgstr ""
 msgid "S_ave keyboard shortcuts on exit"
 msgstr "_Lagra tastesnarvegane ved avslutning"
 
-#: app/dialogs/layer-add-mask-dialog.c:106
+#: app/dialogs/layer-add-mask-dialog.c:104
 msgid "Add Layer Mask"
 msgid_plural "Add Layer Masks"
 msgstr[0] "Legg til ei lagmaske"
 msgstr[1] "Legg til lagmasker"
 
-#: app/dialogs/layer-add-mask-dialog.c:108
+#: app/dialogs/layer-add-mask-dialog.c:106
 #, c-format
 msgid "Add a Mask to the Layer"
 msgid_plural "Add Masks to %d Layers"
 msgstr[0] "Legg ei maske til laget"
 msgstr[1] "Legg masker til %d lag"
 
-#: app/dialogs/layer-add-mask-dialog.c:121
+#: app/dialogs/layer-add-mask-dialog.c:119
 msgid "_Add"
 msgstr "_Legg til"
 
-#: app/dialogs/layer-add-mask-dialog.c:150
+#: app/dialogs/layer-add-mask-dialog.c:148
 msgid "Initialize Layer Mask to:"
 msgstr "Set startverdien for lagmaska til:"
 
-#: app/dialogs/layer-add-mask-dialog.c:185
+#: app/dialogs/layer-add-mask-dialog.c:183
 msgid "In_vert mask"
 msgstr "In_verter maska"
 
-#: app/dialogs/layer-add-mask-dialog.c:220
+#: app/dialogs/layer-add-mask-dialog.c:218
 msgid "Please select a channel first"
 msgstr "Vel først ein kanal"
 
@@ -16227,7 +16240,7 @@ msgid "Select Source"
 msgstr "Vel kjelde"
 
 #: app/dialogs/palette-import-dialog.c:211
-#: app/dialogs/preferences-dialog.c:1773
+#: app/dialogs/preferences-dialog.c:1769
 msgid "_Gradient"
 msgstr "_Fargeovergang"
 
@@ -16313,7 +16326,7 @@ msgid "You will have to restart GIMP for the following changes to take effect:"
 msgstr ""
 "Du må starta GIMP på nytt for at dei følgjande endringane skal tre i kraft:"
 
-#: app/dialogs/preferences-dialog.c:601
+#: app/dialogs/preferences-dialog.c:597
 msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
@@ -16321,15 +16334,15 @@ msgstr ""
 "Tastatursnarvegane dine vert tilbakestilte til standardverdiane neste gong "
 "du opnar GIMP."
 
-#: app/dialogs/preferences-dialog.c:612
+#: app/dialogs/preferences-dialog.c:608
 msgid "Remove all Keyboard Shortcuts"
 msgstr "Fjern alle snarvegtastane"
 
-#: app/dialogs/preferences-dialog.c:634
+#: app/dialogs/preferences-dialog.c:630
 msgid "Do you really want to remove all keyboard shortcuts from all menus?"
 msgstr "Vil du verkeleg fjerna alle snarvegtastane frå alle menyane?"
 
-#: app/dialogs/preferences-dialog.c:675
+#: app/dialogs/preferences-dialog.c:671
 msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
@@ -16337,7 +16350,7 @@ msgstr ""
 "Vidaugeinnstillingane dine vert sett tilbake til standardverdiane neste gong "
 "du opnar GIMP."
 
-#: app/dialogs/preferences-dialog.c:710
+#: app/dialogs/preferences-dialog.c:706
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
@@ -16345,7 +16358,7 @@ msgstr ""
 "Innstillingane dine for inndataeiningane vert sett til standardverdiane "
 "neste gang du opnar GIMP."
 
-#: app/dialogs/preferences-dialog.c:790
+#: app/dialogs/preferences-dialog.c:786
 msgid ""
 "Your tool options will be reset to default values the next time you start "
 "GIMP."
@@ -16353,161 +16366,161 @@ msgstr ""
 "Verktøyinnstillingane dine vert tilbakestilte til standardverdiane neste "
 "gang du opnar GIMP."
 
-#: app/dialogs/preferences-dialog.c:842 app/dialogs/preferences-dialog.c:2698
+#: app/dialogs/preferences-dialog.c:838 app/dialogs/preferences-dialog.c:2694
 msgid "There's a local installation of the user manual."
 msgstr "Handboka er installert lokalt."
 
-#: app/dialogs/preferences-dialog.c:847 app/dialogs/preferences-dialog.c:2704
+#: app/dialogs/preferences-dialog.c:843 app/dialogs/preferences-dialog.c:2700
 msgid "The user manual is not installed locally."
 msgstr "Handboka er ikkje installert lokalt."
 
-#: app/dialogs/preferences-dialog.c:1020
+#: app/dialogs/preferences-dialog.c:1016
 msgid "Show s_election"
 msgstr "Vis _utval"
 
-#: app/dialogs/preferences-dialog.c:1023
+#: app/dialogs/preferences-dialog.c:1019
 msgid "Show _layer boundary"
 msgstr "Vis lag_grense"
 
-#: app/dialogs/preferences-dialog.c:1026
+#: app/dialogs/preferences-dialog.c:1022
 msgid "Show can_vas boundary"
 msgstr "Vis lerretsgrensene"
 
-#: app/dialogs/preferences-dialog.c:1029
+#: app/dialogs/preferences-dialog.c:1025
 msgid "Show _guides"
 msgstr "Vis _hjelpelinjer"
 
-#: app/dialogs/preferences-dialog.c:1032
+#: app/dialogs/preferences-dialog.c:1028
 msgid "Show gri_d"
 msgstr "Vis r_utenett"
 
-#: app/dialogs/preferences-dialog.c:1035
+#: app/dialogs/preferences-dialog.c:1031
 msgid "Show _sample points"
 msgstr "Vis _prøvepunkta"
 
-#: app/dialogs/preferences-dialog.c:1044
+#: app/dialogs/preferences-dialog.c:1040
 msgid "Show _menubar"
 msgstr "Vis _menylinja"
 
-#: app/dialogs/preferences-dialog.c:1048
+#: app/dialogs/preferences-dialog.c:1044
 msgid "Show _rulers"
 msgstr "Vis _linjalane"
 
-#: app/dialogs/preferences-dialog.c:1051
+#: app/dialogs/preferences-dialog.c:1047
 msgid "Show scroll_bars"
 msgstr "Vis _rullefelta"
 
-#: app/dialogs/preferences-dialog.c:1054
+#: app/dialogs/preferences-dialog.c:1050
 msgid "Show s_tatusbar"
 msgstr "Vis _statuslinja"
 
-#: app/dialogs/preferences-dialog.c:1060
+#: app/dialogs/preferences-dialog.c:1056
 msgid "Canvas _padding mode:"
 msgstr "Lerret_fyllmodus:"
 
-#: app/dialogs/preferences-dialog.c:1065
+#: app/dialogs/preferences-dialog.c:1061
 msgid "Custom p_adding color:"
 msgstr "Sjølvvald _fyllfarge:"
 
-#: app/dialogs/preferences-dialog.c:1066
+#: app/dialogs/preferences-dialog.c:1062
 msgid "Select Custom Canvas Padding Color"
 msgstr "Vel sjølvvald lerretfarge"
 
-#: app/dialogs/preferences-dialog.c:1075
+#: app/dialogs/preferences-dialog.c:1071
 msgid "_Keep canvas padding in \"Show All\" mode"
 msgstr "_Behald lerretsfyllinga i «Vis alle»-modus"
 
-#: app/dialogs/preferences-dialog.c:1100
+#: app/dialogs/preferences-dialog.c:1096
 msgid "Snap to _Guides"
 msgstr "Fest til _hjelpelinjene"
 
-#: app/dialogs/preferences-dialog.c:1103
+#: app/dialogs/preferences-dialog.c:1099
 msgid "S_nap to Grid"
 msgstr "Fest til _rutenettet"
 
-#: app/dialogs/preferences-dialog.c:1106
+#: app/dialogs/preferences-dialog.c:1102
 msgid "Snap to Canvas _Edges"
 msgstr "Fest til _lerretkantane"
 
-#: app/dialogs/preferences-dialog.c:1114
+#: app/dialogs/preferences-dialog.c:1110
 msgid "Snap to _Active Path"
 msgstr "Fest til _gjeldande bane"
 
-#: app/dialogs/preferences-dialog.c:1117
+#: app/dialogs/preferences-dialog.c:1113
 msgid "Snap to _Bounding Box"
 msgstr "Fest til _avgrensingsboks"
 
-#: app/dialogs/preferences-dialog.c:1120
+#: app/dialogs/preferences-dialog.c:1116
 msgid "Snap to _Equidistance"
 msgstr "Fest til _midtlinjene"
 
-#: app/dialogs/preferences-dialog.c:1174
+#: app/dialogs/preferences-dialog.c:1170
 msgid "Preferences"
 msgstr "Innstillingar"
 
-#: app/dialogs/preferences-dialog.c:1220 app/dialogs/preferences-dialog.c:1221
+#: app/dialogs/preferences-dialog.c:1216 app/dialogs/preferences-dialog.c:1217
 msgid "System Resources"
 msgstr "Systemressursar"
 
-#: app/dialogs/preferences-dialog.c:1229
+#: app/dialogs/preferences-dialog.c:1225
 msgid "Resource Consumption"
 msgstr "Ressursbruk"
 
-#: app/dialogs/preferences-dialog.c:1235
+#: app/dialogs/preferences-dialog.c:1231
 msgid "Minimal number of _undo levels:"
 msgstr "Minimum _angrenivå:"
 
-#: app/dialogs/preferences-dialog.c:1238
+#: app/dialogs/preferences-dialog.c:1234
 msgid "Maximum undo _memory:"
 msgstr "Maksimalt angre_minne:"
 
-#: app/dialogs/preferences-dialog.c:1241
+#: app/dialogs/preferences-dialog.c:1237
 msgid "Tile cache _size:"
 msgstr "_Storleik på mellomlageret:"
 
-#: app/dialogs/preferences-dialog.c:1244
+#: app/dialogs/preferences-dialog.c:1240
 msgid "Maximum _new image size:"
 msgstr "Maksimumsformat for _nye bilete:"
 
-#: app/dialogs/preferences-dialog.c:1248
+#: app/dialogs/preferences-dialog.c:1244
 msgid "S_wap compression:"
 msgstr "­_Byt komprimering:"
 
-#: app/dialogs/preferences-dialog.c:1253
+#: app/dialogs/preferences-dialog.c:1249
 msgid "Number of _threads to use:"
 msgstr "Talet på _trådar som kan brukast:"
 
-#: app/dialogs/preferences-dialog.c:1261
+#: app/dialogs/preferences-dialog.c:1257
 msgid "Network access"
 msgstr "Nettverkstilgang"
 
-#: app/dialogs/preferences-dialog.c:1265
+#: app/dialogs/preferences-dialog.c:1261
 msgid "Check for updates (requires internet)"
 msgstr "Sjå etter oppdateringar (krev Internett)"
 
 #. Image Thumbnails
-#: app/dialogs/preferences-dialog.c:1272
+#: app/dialogs/preferences-dialog.c:1268
 msgid "Image Thumbnails"
 msgstr "Biletminiatyrar"
 
-#: app/dialogs/preferences-dialog.c:1277
+#: app/dialogs/preferences-dialog.c:1273
 msgid "Size of _thumbnails:"
 msgstr "Storleik på _miniatyrbileta:"
 
-#: app/dialogs/preferences-dialog.c:1281
+#: app/dialogs/preferences-dialog.c:1277
 msgid "Maximum _filesize for thumbnailing:"
 msgstr "Maksimal filstorleik for miniatyrar:"
 
-#: app/dialogs/preferences-dialog.c:1288
+#: app/dialogs/preferences-dialog.c:1284
 msgid "_Keep record of used files in the Recent Documents list"
 msgstr "_Behald lista over brukte filer i dokumentloggen"
 
 #. TODO: icon needed.
-#: app/dialogs/preferences-dialog.c:1306 app/dialogs/preferences-dialog.c:1307
+#: app/dialogs/preferences-dialog.c:1302 app/dialogs/preferences-dialog.c:1303
 msgid "Debugging"
 msgstr "Avlusing"
 
-#: app/dialogs/preferences-dialog.c:1314
+#: app/dialogs/preferences-dialog.c:1310
 msgid ""
 "We hope you will never need these settings, but as all software, GIMP has "
 "bugs, and crashes can occur. If it happens, you can help us by reporting "
@@ -16518,20 +16531,20 @@ msgstr ""
 "dette skjer, håpar me du vil rapportera dette slik at me kan gjera GIMP "
 "betre."
 
-#: app/dialogs/preferences-dialog.c:1323
+#: app/dialogs/preferences-dialog.c:1319
 msgid "Bug Reporting"
 msgstr "Feilrapportering"
 
-#: app/dialogs/preferences-dialog.c:1329
+#: app/dialogs/preferences-dialog.c:1325
 msgid "Debug _policy:"
 msgstr "Avlusings_policy:"
 
-#: app/dialogs/preferences-dialog.c:1341
+#: app/dialogs/preferences-dialog.c:1337
 msgid "This feature requires \"gdb\" or \"lldb\" installed on your system."
 msgstr ""
 "Denne funksjonen krev at «gdb» eller «lldb» er installert på systemet ditt."
 
-#: app/dialogs/preferences-dialog.c:1345
+#: app/dialogs/preferences-dialog.c:1341
 msgid ""
 "This feature is more efficient with \"gdb\" or \"lldb\" installed on your "
 "system."
@@ -16539,151 +16552,151 @@ msgstr ""
 "Denne funksjonen er meir effektiv viss «gdb» eller «lldb» er installert på "
 "systemet ditt."
 
-#: app/dialogs/preferences-dialog.c:1358 app/dialogs/preferences-dialog.c:1359
+#: app/dialogs/preferences-dialog.c:1354 app/dialogs/preferences-dialog.c:1355
 msgid "Color Management"
 msgstr "Fargestyring"
 
-#: app/dialogs/preferences-dialog.c:1368
+#: app/dialogs/preferences-dialog.c:1364
 msgid "R_eset Color Management"
 msgstr "_Tilbakestill fargestyringa"
 
-#: app/dialogs/preferences-dialog.c:1391
+#: app/dialogs/preferences-dialog.c:1387
 msgid "Image display _mode:"
 msgstr "_Biletvisingsmodus:"
 
 #. Color Managed Display
-#: app/dialogs/preferences-dialog.c:1395
+#: app/dialogs/preferences-dialog.c:1391
 msgid "Color Managed Display"
 msgstr "Fargestyrt vising"
 
-#: app/dialogs/preferences-dialog.c:1404
+#: app/dialogs/preferences-dialog.c:1400
 msgid "Select Monitor Color Profile"
 msgstr "Vel fargeprofil for skjermen"
 
-#: app/dialogs/preferences-dialog.c:1405
+#: app/dialogs/preferences-dialog.c:1401
 msgid "_Monitor profile:"
 msgstr "_Skjermprofil:"
 
-#: app/dialogs/preferences-dialog.c:1411
+#: app/dialogs/preferences-dialog.c:1407
 msgid "_Try to use the system monitor profile"
 msgstr "_Prøv å bruka skjermprofilen i systemet"
 
-#: app/dialogs/preferences-dialog.c:1418
+#: app/dialogs/preferences-dialog.c:1414
 msgid "_Rendering intent:"
 msgstr "_Fargetilpassing:"
 
-#: app/dialogs/preferences-dialog.c:1423
+#: app/dialogs/preferences-dialog.c:1419
 msgid "Use _black point compensation"
 msgstr "Bruk _svartpunktkompensering"
 
-#: app/dialogs/preferences-dialog.c:1429 app/dialogs/preferences-dialog.c:1444
+#: app/dialogs/preferences-dialog.c:1425 app/dialogs/preferences-dialog.c:1440
 #: app/display/gimpstatusbar.c:577 app/paint/gimpinkoptions.c:94
 msgid "Speed"
 msgstr "Fart"
 
-#: app/dialogs/preferences-dialog.c:1430 app/dialogs/preferences-dialog.c:1445
+#: app/dialogs/preferences-dialog.c:1426 app/dialogs/preferences-dialog.c:1441
 #: app/display/gimpstatusbar.c:578
 msgid "Precision / Color Fidelity"
 msgstr "Presisjon / fargegjengjeving"
 
-#: app/dialogs/preferences-dialog.c:1431
+#: app/dialogs/preferences-dialog.c:1427
 msgid "_Optimize image display for:"
 msgstr "_Optimaliser biletvisinga for:"
 
 #. Print Simulation (Soft-proofing)
-#: app/dialogs/preferences-dialog.c:1435 app/display/gimpstatusbar.c:489
+#: app/dialogs/preferences-dialog.c:1431 app/display/gimpstatusbar.c:489
 msgid "Soft-Proofing"
 msgstr "Utskriftssimulering"
 
-#: app/dialogs/preferences-dialog.c:1446
+#: app/dialogs/preferences-dialog.c:1442
 msgid "O_ptimize soft-proofing for:"
 msgstr "_Best mogleg utskriftssimulering for:"
 
-#: app/dialogs/preferences-dialog.c:1455
+#: app/dialogs/preferences-dialog.c:1451
 msgid "Mar_k out of gamut colors"
 msgstr "Merk fargane som er _utanfor gamut"
 
-#: app/dialogs/preferences-dialog.c:1459
+#: app/dialogs/preferences-dialog.c:1455
 msgid "Select Warning Color"
 msgstr "Vel åtvaringsfarge"
 
 #. Preferred profiles
-#: app/dialogs/preferences-dialog.c:1469
+#: app/dialogs/preferences-dialog.c:1465
 msgid "Preferred Profiles"
 msgstr "Føretrekte profilar"
 
-#: app/dialogs/preferences-dialog.c:1478
+#: app/dialogs/preferences-dialog.c:1474
 msgid "Select Preferred RGB Color Profile"
 msgstr "Vel den føretrekte RGB-fargeprofilen"
 
-#: app/dialogs/preferences-dialog.c:1479
+#: app/dialogs/preferences-dialog.c:1475
 msgid "_RGB profile:"
 msgstr "_RGB-profil:"
 
-#: app/dialogs/preferences-dialog.c:1486
+#: app/dialogs/preferences-dialog.c:1482
 msgid "Select Preferred Grayscale Color Profile"
 msgstr "Vel føretrekt gråtone-fargeprofil"
 
-#: app/dialogs/preferences-dialog.c:1487
+#: app/dialogs/preferences-dialog.c:1483
 msgid "_Grayscale profile:"
 msgstr "_Gråtoneprofil:"
 
-#: app/dialogs/preferences-dialog.c:1494
+#: app/dialogs/preferences-dialog.c:1490
 msgid "Select CMYK Color Profile"
 msgstr "Vel ein CMYK fargeprofil"
 
-#: app/dialogs/preferences-dialog.c:1495
+#: app/dialogs/preferences-dialog.c:1491
 msgid "_CMYK profile:"
 msgstr "_CMYK- profil:"
 
 #. Policies
-#: app/dialogs/preferences-dialog.c:1500
+#: app/dialogs/preferences-dialog.c:1496
 msgid "Policies"
 msgstr "Policy"
 
-#: app/dialogs/preferences-dialog.c:1505
+#: app/dialogs/preferences-dialog.c:1501
 msgid "_File Open behavior:"
 msgstr "_Oppførsel ved opning av fila:"
 
-#: app/dialogs/preferences-dialog.c:1519 app/dialogs/preferences-dialog.c:1520
+#: app/dialogs/preferences-dialog.c:1515 app/dialogs/preferences-dialog.c:1516
 msgid "Image Import & Export"
 msgstr "Bileteksport og -import"
 
 #. Import Policies
-#: app/dialogs/preferences-dialog.c:1530
+#: app/dialogs/preferences-dialog.c:1526
 msgid "Import Policies"
 msgstr "Importpolicy"
 
-#: app/dialogs/preferences-dialog.c:1534
+#: app/dialogs/preferences-dialog.c:1530
 msgid "Promote imported images to _floating point precision"
 msgstr "Konverter importerte biletet til _desimaltalspresisjon"
 
-#: app/dialogs/preferences-dialog.c:1543
+#: app/dialogs/preferences-dialog.c:1539
 msgid "_Dither images when promoting to floating point"
 msgstr "_Jamn ut bileta når du konverter biletet til desimaltal"
 
-#: app/dialogs/preferences-dialog.c:1548
+#: app/dialogs/preferences-dialog.c:1544
 msgid "_Add an alpha channel to imported images"
 msgstr "_Legg til ein alfakanal i importerte bilete"
 
-#: app/dialogs/preferences-dialog.c:1553
+#: app/dialogs/preferences-dialog.c:1549
 msgid "Color _profile policy:"
 msgstr "Fargeprofil-policy:"
 
-#: app/dialogs/preferences-dialog.c:1556
+#: app/dialogs/preferences-dialog.c:1552
 msgid "Metadata _rotation policy:"
 msgstr "_Roteringspolicy for metadata:"
 
 #. Export Policies
-#: app/dialogs/preferences-dialog.c:1560
+#: app/dialogs/preferences-dialog.c:1556
 msgid "Export Policies"
 msgstr "Eksport-policy"
 
-#: app/dialogs/preferences-dialog.c:1564
+#: app/dialogs/preferences-dialog.c:1560
 msgid "Export the i_mage's color profile by default"
 msgstr "Eksporter fargeprofilen for biletet som standard"
 
-#: app/dialogs/preferences-dialog.c:1567
+#: app/dialogs/preferences-dialog.c:1563
 msgid "Export the image's comment by default"
 msgstr "Eksporter merknadane i biletet som standard"
 
@@ -16692,7 +16705,7 @@ msgstr "Eksporter merknadane i biletet som standard"
 #. * It determines how file export
 #. * plug-ins handle Exif by default.
 #.
-#: app/dialogs/preferences-dialog.c:1578
+#: app/dialogs/preferences-dialog.c:1574
 msgid "Export _Exif metadata by default when available"
 msgstr "Eksporter _Exif metadata som standard når dei er tilgjengelege"
 
@@ -16701,7 +16714,7 @@ msgstr "Eksporter _Exif metadata som standard når dei er tilgjengelege"
 #. * It determines how file export
 #. * plug-ins handle XMP by default.
 #.
-#: app/dialogs/preferences-dialog.c:1586
+#: app/dialogs/preferences-dialog.c:1582
 msgid "Export _XMP metadata by default when available"
 msgstr "Eksporter _XMP metadata som standard når dei er tilgjengelege"
 
@@ -16710,37 +16723,37 @@ msgstr "Eksporter _XMP metadata som standard når dei er tilgjengelege"
 #. * It determines how file export
 #. * plug-ins handle IPTC by default.
 #.
-#: app/dialogs/preferences-dialog.c:1594
+#: app/dialogs/preferences-dialog.c:1590
 msgid "Export _IPTC metadata by default when available"
 msgstr "Eksporter _IPTC metadata som standard når dei er tilgjengelege"
 
-#: app/dialogs/preferences-dialog.c:1597
+#: app/dialogs/preferences-dialog.c:1593
 msgid "Metadata can contain sensitive information."
 msgstr "Metadata kan innehalda sensitiv informasjon."
 
 #. Export File Type
-#: app/dialogs/preferences-dialog.c:1601
+#: app/dialogs/preferences-dialog.c:1597
 msgid "Export File Type"
 msgstr "Eksportfiltype"
 
-#: app/dialogs/preferences-dialog.c:1605
+#: app/dialogs/preferences-dialog.c:1601
 msgid "Default export file t_ype:"
 msgstr "Standard filtype for _eksport:"
 
 #. Raw Image Importer
-#: app/dialogs/preferences-dialog.c:1609
+#: app/dialogs/preferences-dialog.c:1605
 msgid "Raw Image Importer"
 msgstr "Importeraren for raw-bilete"
 
-#: app/dialogs/preferences-dialog.c:1645
+#: app/dialogs/preferences-dialog.c:1641
 msgid "Experimental Playground"
 msgstr "Eksperimentell leikeplass"
 
-#: app/dialogs/preferences-dialog.c:1646
+#: app/dialogs/preferences-dialog.c:1642
 msgid "Playground"
 msgstr "Leikeplass"
 
-#: app/dialogs/preferences-dialog.c:1653
+#: app/dialogs/preferences-dialog.c:1649
 msgid ""
 "These features are unfinished, buggy and may crash GIMP. It is unadvised to "
 "use them unless you really know what you are doing or you intend to "
@@ -16751,11 +16764,11 @@ msgstr ""
 "eller har tenkt å bidra."
 
 #. Hardware Acceleration
-#: app/dialogs/preferences-dialog.c:1663
+#: app/dialogs/preferences-dialog.c:1659
 msgid "Hardware Acceleration"
 msgstr "Maskinvareakselerasjon"
 
-#: app/dialogs/preferences-dialog.c:1667
+#: app/dialogs/preferences-dialog.c:1663
 msgid ""
 "OpenCL drivers and support are experimental, expect slowdowns and possible "
 "crashes (please report)."
@@ -16763,28 +16776,28 @@ msgstr ""
 "OpenCL-drivarane og støtta er eksperimentell. Du kan rekna med at ting går "
 "saktare og moglege krasj (lever i tilfelle rapport)"
 
-#: app/dialogs/preferences-dialog.c:1673
+#: app/dialogs/preferences-dialog.c:1669
 msgid "Use O_penCL"
 msgstr "Bruk _OpenCL"
 
 #. Very unstable tools
-#: app/dialogs/preferences-dialog.c:1678
+#: app/dialogs/preferences-dialog.c:1674
 msgid "Experimental"
 msgstr "Eksperimentell"
 
-#: app/dialogs/preferences-dialog.c:1682
+#: app/dialogs/preferences-dialog.c:1678
 msgid "_N-Point Deformation tool"
 msgstr "Verktøyet _N-punktdeformasjon"
 
-#: app/dialogs/preferences-dialog.c:1685
+#: app/dialogs/preferences-dialog.c:1681
 msgid "_Seamless Clone tool"
 msgstr "Verktøyet for _saumlaus kloning"
 
-#: app/dialogs/preferences-dialog.c:1688
+#: app/dialogs/preferences-dialog.c:1684
 msgid "_Paint Select tool"
 msgstr "Verktøyet for å _teikna utval"
 
-#: app/dialogs/preferences-dialog.c:1710 app/dialogs/preferences-dialog.c:1711
+#: app/dialogs/preferences-dialog.c:1706 app/dialogs/preferences-dialog.c:1707
 msgctxt "preferences"
 msgid "Tool Options"
 msgstr "Verktøyinnstillingar"
@@ -16793,569 +16806,569 @@ msgstr "Verktøyinnstillingar"
 #. Snapping Distance
 #. General
 #. general device information
-#: app/dialogs/preferences-dialog.c:1720 app/dialogs/preferences-dialog.c:2645
-#: app/dialogs/preferences-dialog.c:3083 app/dialogs/preferences-dialog.c:3107
+#: app/dialogs/preferences-dialog.c:1716 app/dialogs/preferences-dialog.c:2641
+#: app/dialogs/preferences-dialog.c:3079 app/dialogs/preferences-dialog.c:3103
 #: app/widgets/gimpcontrollereditor.c:190
 #: app/widgets/gimpdeviceinfoeditor.c:362
 msgid "General"
 msgstr "Generelt"
 
-#: app/dialogs/preferences-dialog.c:1723
+#: app/dialogs/preferences-dialog.c:1719
 msgid "Allow _editing on non-visible layers"
 msgstr "Tillat redigering av ikkje-synlege lag"
 
-#: app/dialogs/preferences-dialog.c:1727
+#: app/dialogs/preferences-dialog.c:1723
 msgid "_Save tool options on exit"
 msgstr "_Lagra verktøyinnstillingane ved avslutning"
 
-#: app/dialogs/preferences-dialog.c:1731
+#: app/dialogs/preferences-dialog.c:1727
 msgid "Save Tool Options _Now"
 msgstr "Lagra verktøyinnstillingane _no"
 
-#: app/dialogs/preferences-dialog.c:1738
+#: app/dialogs/preferences-dialog.c:1734
 msgid "_Reset Saved Tool Options to Default Values"
 msgstr "_Tilbakestill verktøyinnstillingane til standardverdiar"
 
-#: app/dialogs/preferences-dialog.c:1752
+#: app/dialogs/preferences-dialog.c:1748
 msgid "Default _interpolation:"
 msgstr "Førehandsvald _interpolasjon:"
 
 #. Global Brush, Pattern, ...
-#: app/dialogs/preferences-dialog.c:1760
+#: app/dialogs/preferences-dialog.c:1756
 msgid "Paint Options Shared Between Tools"
 msgstr "Teikneinnstillingar felles for fleire verktøy"
 
-#: app/dialogs/preferences-dialog.c:1764
+#: app/dialogs/preferences-dialog.c:1760
 msgid "_Brush"
 msgstr "_Pensel"
 
-#: app/dialogs/preferences-dialog.c:1767
+#: app/dialogs/preferences-dialog.c:1763
 msgid "_Dynamics"
 msgstr "_Dynamikk"
 
-#: app/dialogs/preferences-dialog.c:1770
+#: app/dialogs/preferences-dialog.c:1766
 msgid "_Pattern"
 msgstr "_Mønsterelement"
 
-#: app/dialogs/preferences-dialog.c:1776
+#: app/dialogs/preferences-dialog.c:1772
 msgid "E_xpand Layers"
 msgstr "_Ekspanderte lag"
 
 #. Move Tool
-#: app/dialogs/preferences-dialog.c:1780
+#: app/dialogs/preferences-dialog.c:1776
 msgid "Move Tool"
 msgstr "Flytteverktøyet"
 
-#: app/dialogs/preferences-dialog.c:1784
+#: app/dialogs/preferences-dialog.c:1780
 msgid "Set _layer or path as active"
 msgstr "Set _lag eller bane som tilgjengelege"
 
-#: app/dialogs/preferences-dialog.c:1796
+#: app/dialogs/preferences-dialog.c:1792
 msgid "Default New Image"
 msgstr "Standardinnstillingar for nytt bilete"
 
-#: app/dialogs/preferences-dialog.c:1797
+#: app/dialogs/preferences-dialog.c:1793
 msgid "Default Image"
 msgstr "Standardinnstillingar for bilete"
 
-#: app/dialogs/preferences-dialog.c:1834
+#: app/dialogs/preferences-dialog.c:1830
 msgid "Quick Mask color:"
 msgstr "Farge på snarmaske:"
 
-#: app/dialogs/preferences-dialog.c:1835
+#: app/dialogs/preferences-dialog.c:1831
 msgid "Set the default Quick Mask color"
 msgstr "Redige farge på snarmaske"
 
-#: app/dialogs/preferences-dialog.c:1845
+#: app/dialogs/preferences-dialog.c:1841
 msgid "Default Image Grid"
 msgstr "Standard rutenett for bilete"
 
-#: app/dialogs/preferences-dialog.c:1846
+#: app/dialogs/preferences-dialog.c:1842
 msgid "Default Grid"
 msgstr "Standard rutenett"
 
-#: app/dialogs/preferences-dialog.c:1866
+#: app/dialogs/preferences-dialog.c:1862
 msgid "User Interface"
 msgstr "Brukargrensesnitt"
 
-#: app/dialogs/preferences-dialog.c:1867
+#: app/dialogs/preferences-dialog.c:1863
 msgid "Interface"
 msgstr "Grensesnitt"
 
-#: app/dialogs/preferences-dialog.c:1877 app/tools/gimptextoptions.c:195
+#: app/dialogs/preferences-dialog.c:1873 app/tools/gimptextoptions.c:195
 msgid "Language"
 msgstr "Språk"
 
 #. Previews
-#: app/dialogs/preferences-dialog.c:1883
+#: app/dialogs/preferences-dialog.c:1879
 msgid "Previews"
 msgstr "Førehandsvisingar"
 
-#: app/dialogs/preferences-dialog.c:1886
+#: app/dialogs/preferences-dialog.c:1882
 msgid "_Enable layer & channel previews"
 msgstr "_Slå på førehandsvisingar for lag og kanalar"
 
-#: app/dialogs/preferences-dialog.c:1894
+#: app/dialogs/preferences-dialog.c:1890
 msgid "Enable layer _group previews"
 msgstr "_Slå på førehandsvisingar for laggrupper"
 
-#: app/dialogs/preferences-dialog.c:1900
+#: app/dialogs/preferences-dialog.c:1896
 msgid "_Default layer & channel preview size:"
 msgstr "Standard storleik for førehandsvising av _lag og kanalar:"
 
-#: app/dialogs/preferences-dialog.c:1903
+#: app/dialogs/preferences-dialog.c:1899
 msgid "_Undo preview size:"
 msgstr "_Angra førehandsvisingsstorleiken:"
 
-#: app/dialogs/preferences-dialog.c:1906
+#: app/dialogs/preferences-dialog.c:1902
 msgid "Na_vigation preview size:"
 msgstr "Standard storleik for førehandsvising av _navigering:"
 
 #. Item
-#: app/dialogs/preferences-dialog.c:1910
+#: app/dialogs/preferences-dialog.c:1906
 msgid "Item search"
 msgstr "Elementsøk"
 
 #. Keyboard Shortcuts
-#: app/dialogs/preferences-dialog.c:1917
+#: app/dialogs/preferences-dialog.c:1913
 msgid "Keyboard Shortcuts"
 msgstr "Tastatursnarvegar"
 
-#: app/dialogs/preferences-dialog.c:1921
+#: app/dialogs/preferences-dialog.c:1917
 msgid "Configure _Keyboard Shortcuts..."
 msgstr "Set opp _tastatursnarvegar …"
 
-#: app/dialogs/preferences-dialog.c:1928
+#: app/dialogs/preferences-dialog.c:1924
 msgid "_Save keyboard shortcuts on exit"
 msgstr "_Lagra tastatursnarvegane ved avslutning"
 
-#: app/dialogs/preferences-dialog.c:1932
+#: app/dialogs/preferences-dialog.c:1928
 msgid "Save Keyboard Shortcuts _Now"
 msgstr "Lagra tastatursnarvegane _no"
 
-#: app/dialogs/preferences-dialog.c:1939
+#: app/dialogs/preferences-dialog.c:1935
 msgid "_Reset Keyboard Shortcuts to Default Values"
 msgstr "_Tilbakestill tastatursnarvegane til standardverdiar"
 
-#: app/dialogs/preferences-dialog.c:1948
+#: app/dialogs/preferences-dialog.c:1944
 msgid "Remove _All Keyboard Shortcuts"
 msgstr "Fjern _alle snarvegtastane"
 
 #. Themes
-#: app/dialogs/preferences-dialog.c:1960 app/dialogs/preferences-dialog.c:1961
+#: app/dialogs/preferences-dialog.c:1956 app/dialogs/preferences-dialog.c:1957
 #: app/dialogs/welcome-dialog.c:546
 msgid "Theme"
 msgstr "Tema"
 
-#: app/dialogs/preferences-dialog.c:1966
+#: app/dialogs/preferences-dialog.c:1962
 msgid "Select Theme"
 msgstr "Vel tema"
 
-#: app/dialogs/preferences-dialog.c:2048
+#: app/dialogs/preferences-dialog.c:2044
 msgid "Color scheme variant (if available)"
 msgstr "Bruk fargeskjemavarianten om tilgjengeleg"
 
-#: app/dialogs/preferences-dialog.c:2053 app/dialogs/welcome-dialog.c:599
+#: app/dialogs/preferences-dialog.c:2049 app/dialogs/welcome-dialog.c:599
 msgid "_Override icon sizes set by the theme"
 msgstr "_Overstyrer ikonstorleiken sett av temaet"
 
-#: app/dialogs/preferences-dialog.c:2066 app/dialogs/welcome-dialog.c:608
+#: app/dialogs/preferences-dialog.c:2062 app/dialogs/welcome-dialog.c:608
 msgid "Small"
 msgstr "Små"
 
-#: app/dialogs/preferences-dialog.c:2068 app/dialogs/welcome-dialog.c:610
+#: app/dialogs/preferences-dialog.c:2064 app/dialogs/welcome-dialog.c:610
 msgid "Medium"
 msgstr "Middels"
 
-#: app/dialogs/preferences-dialog.c:2070 app/dialogs/welcome-dialog.c:612
+#: app/dialogs/preferences-dialog.c:2066 app/dialogs/welcome-dialog.c:612
 msgid "Large"
 msgstr "Store"
 
-#: app/dialogs/preferences-dialog.c:2072 app/dialogs/welcome-dialog.c:614
+#: app/dialogs/preferences-dialog.c:2068 app/dialogs/welcome-dialog.c:614
 msgid "Huge"
 msgstr "Ekstra stor"
 
 #. Font sizes.
-#: app/dialogs/preferences-dialog.c:2085 app/dialogs/welcome-dialog.c:630
+#: app/dialogs/preferences-dialog.c:2081 app/dialogs/welcome-dialog.c:630
 msgid "Font Scaling"
 msgstr "Skalering sv skrift"
 
-#: app/dialogs/preferences-dialog.c:2087 app/dialogs/welcome-dialog.c:632
+#: app/dialogs/preferences-dialog.c:2083 app/dialogs/welcome-dialog.c:632
 msgid "Font scaling will not work with themes using absolute sizes."
 msgstr ""
 "Skaleringa av skrift verkar ikkje med tema som brukar absolutte storleikar."
 
-#: app/dialogs/preferences-dialog.c:2093 app/dialogs/welcome-dialog.c:638
+#: app/dialogs/preferences-dialog.c:2089 app/dialogs/welcome-dialog.c:638
 msgid "50%"
 msgstr "50 %"
 
-#: app/dialogs/preferences-dialog.c:2095 app/dialogs/welcome-dialog.c:640
+#: app/dialogs/preferences-dialog.c:2091 app/dialogs/welcome-dialog.c:640
 msgid "100%"
 msgstr "100 %"
 
-#: app/dialogs/preferences-dialog.c:2097 app/dialogs/welcome-dialog.c:642
+#: app/dialogs/preferences-dialog.c:2093 app/dialogs/welcome-dialog.c:642
 msgid "200%"
 msgstr "200 %"
 
-#: app/dialogs/preferences-dialog.c:2115
+#: app/dialogs/preferences-dialog.c:2111
 msgid "Reload C_urrent Theme"
 msgstr "Last _gjeldande tema på nytt"
 
-#: app/dialogs/preferences-dialog.c:2127 app/dialogs/preferences-dialog.c:2128
+#: app/dialogs/preferences-dialog.c:2123 app/dialogs/preferences-dialog.c:2124
 msgid "Icon Theme"
 msgstr "Ikontema"
 
-#: app/dialogs/preferences-dialog.c:2133
+#: app/dialogs/preferences-dialog.c:2129
 msgid "Select an Icon Theme"
 msgstr "Vel eit ikontema"
 
-#: app/dialogs/preferences-dialog.c:2249 app/dialogs/welcome-dialog.c:592
+#: app/dialogs/preferences-dialog.c:2245 app/dialogs/welcome-dialog.c:592
 msgid "Use symbolic icons if available"
 msgstr "Bruk ikonsymbol om tilgjengelege"
 
-#: app/dialogs/preferences-dialog.c:2259 app/dialogs/preferences-dialog.c:2260
+#: app/dialogs/preferences-dialog.c:2255 app/dialogs/preferences-dialog.c:2256
 #: app/widgets/gimptoolbox.c:540
 msgid "Toolbox"
 msgstr "Verktøykassen"
 
 #. Appearance
-#: app/dialogs/preferences-dialog.c:2268 app/dialogs/preferences-dialog.c:3166
+#: app/dialogs/preferences-dialog.c:2264 app/dialogs/preferences-dialog.c:3162
 #: app/widgets/gimpgrideditor.c:133
 msgid "Appearance"
 msgstr "Utsjånad"
 
-#: app/dialogs/preferences-dialog.c:2272
+#: app/dialogs/preferences-dialog.c:2268
 msgid "Show GIMP _logo (drag-and-drop target)"
 msgstr "Vis GIMP-_logoen (dra og slepp)"
 
-#: app/dialogs/preferences-dialog.c:2276
+#: app/dialogs/preferences-dialog.c:2272
 msgid "Show _foreground & background color"
 msgstr "Vel _forgrunns- og bakgrunnsfarge"
 
-#: app/dialogs/preferences-dialog.c:2280
+#: app/dialogs/preferences-dialog.c:2276
 msgid "Show active _brush, pattern & gradient"
 msgstr "Vis _penslar, mønsterelement og fargeovergangar som er i bruk"
 
-#: app/dialogs/preferences-dialog.c:2284
+#: app/dialogs/preferences-dialog.c:2280
 msgid "Show active _image"
 msgstr "Vis biletet som er i bruk"
 
-#: app/dialogs/preferences-dialog.c:2293 app/dialogs/welcome-dialog.c:678
+#: app/dialogs/preferences-dialog.c:2289 app/dialogs/welcome-dialog.c:678
 msgid "Use tool _groups"
 msgstr "Bruk _verktøygrupper"
 
 #. Tool Editor
-#: app/dialogs/preferences-dialog.c:2300
+#: app/dialogs/preferences-dialog.c:2296
 msgid "Tools Configuration"
 msgstr "Verktøyoppsettet"
 
-#: app/dialogs/preferences-dialog.c:2315 app/dialogs/preferences-dialog.c:2316
+#: app/dialogs/preferences-dialog.c:2311 app/dialogs/preferences-dialog.c:2312
 msgid "Dialog Defaults"
 msgstr "Standardar for dialogmenyen"
 
-#: app/dialogs/preferences-dialog.c:2325
+#: app/dialogs/preferences-dialog.c:2321
 msgid "Reset Dialog _Defaults"
 msgstr "Tilbakestill _standarden for dialogvindauga"
 
 #. Color profile import dialog
-#: app/dialogs/preferences-dialog.c:2333
+#: app/dialogs/preferences-dialog.c:2329
 msgid "Color Profile Import Dialog"
 msgstr "Dialogvindauget for import av fargeprofilar"
 
-#: app/dialogs/preferences-dialog.c:2338
+#: app/dialogs/preferences-dialog.c:2334
 msgid "Color profile policy:"
 msgstr "Fargeprofil-policy:"
 
 #. All color profile chooser dialogs
-#: app/dialogs/preferences-dialog.c:2342
+#: app/dialogs/preferences-dialog.c:2338
 msgid "Color Profile File Dialogs"
 msgstr "Dialogvindauge for fargeprofilar"
 
-#: app/dialogs/preferences-dialog.c:2347
+#: app/dialogs/preferences-dialog.c:2343
 msgid "Profile folder:"
 msgstr "Profilmappe:"
 
-#: app/dialogs/preferences-dialog.c:2348
+#: app/dialogs/preferences-dialog.c:2344
 msgid "Select Default Folder for Color Profiles"
 msgstr "Vel standardmappe for fargeprofilar"
 
 #. Convert to Color Profile Dialog
-#: app/dialogs/preferences-dialog.c:2352
+#: app/dialogs/preferences-dialog.c:2348
 msgid "Convert to Color Profile Dialog"
 msgstr "Dialogvindauge for konvertering til fargeprofil"
 
-#: app/dialogs/preferences-dialog.c:2357
+#: app/dialogs/preferences-dialog.c:2353
 msgid "Rendering intent:"
 msgstr "Fargetilpassing:"
 
-#: app/dialogs/preferences-dialog.c:2361
+#: app/dialogs/preferences-dialog.c:2357
 msgid "Black point compensation"
 msgstr "Svartpunktkompensering"
 
 #. Convert Precision Dialog
-#: app/dialogs/preferences-dialog.c:2365
+#: app/dialogs/preferences-dialog.c:2361
 msgid "Precision Conversion Dialog"
 msgstr "Dialogvindauge for presisjonskonvertering"
 
-#: app/dialogs/preferences-dialog.c:2372
+#: app/dialogs/preferences-dialog.c:2368
 msgid "Dither layers:"
 msgstr "Jamn ut laga:"
 
-#: app/dialogs/preferences-dialog.c:2377
+#: app/dialogs/preferences-dialog.c:2373
 msgid "Dither text layers:"
 msgstr "Jamn ut tekstlaga:"
 
-#: app/dialogs/preferences-dialog.c:2382
+#: app/dialogs/preferences-dialog.c:2378
 msgid "Dither channels/masks:"
 msgstr "Jamn ut kanalar/masker:"
 
 #. Convert Indexed Dialog
-#: app/dialogs/preferences-dialog.c:2386
+#: app/dialogs/preferences-dialog.c:2382
 msgid "Indexed Conversion Dialog"
 msgstr "Dialogvindauge for indeksert konvertering"
 
-#: app/dialogs/preferences-dialog.c:2391
+#: app/dialogs/preferences-dialog.c:2387
 msgid "Colormap:"
 msgstr "Fargekart:"
 
-#: app/dialogs/preferences-dialog.c:2394
+#: app/dialogs/preferences-dialog.c:2390
 msgid "Maximum number of colors:"
 msgstr "Høgaste tal på fargar:"
 
-#: app/dialogs/preferences-dialog.c:2398
+#: app/dialogs/preferences-dialog.c:2394
 msgid "Remove unused and duplicate colors from colormap"
 msgstr "Fjern ubrukte fargar og duplikatfargar frå fargekartet"
 
-#: app/dialogs/preferences-dialog.c:2404
+#: app/dialogs/preferences-dialog.c:2400
 msgid "Color dithering:"
 msgstr "Fargeutjamning:"
 
-#: app/dialogs/preferences-dialog.c:2408
+#: app/dialogs/preferences-dialog.c:2404
 msgid "Enable dithering of transparency"
 msgstr "Slå på utjamning av gjennomsikt"
 
-#: app/dialogs/preferences-dialog.c:2411
+#: app/dialogs/preferences-dialog.c:2407
 msgid "Enable dithering of text layers"
 msgstr "Slå på utjamning av tekstlag"
 
 #. Filter Dialogs
-#: app/dialogs/preferences-dialog.c:2415
+#: app/dialogs/preferences-dialog.c:2411
 msgid "Filter Dialogs"
 msgstr "Dialogvindauga for filter"
 
-#: app/dialogs/preferences-dialog.c:2420
+#: app/dialogs/preferences-dialog.c:2416
 msgid "Keep recent settings:"
 msgstr "Behald gjeldande innstillingar:"
 
-#: app/dialogs/preferences-dialog.c:2424
+#: app/dialogs/preferences-dialog.c:2420
 msgid "Default to the last used settings"
 msgstr "Standard er å gå tilbake til dei sist brukte innstillingane"
 
 #. Canvas Size Dialog
-#: app/dialogs/preferences-dialog.c:2428
+#: app/dialogs/preferences-dialog.c:2424
 msgid "Canvas Size Dialog"
 msgstr "Dialogvindauget for storleiken på lerretet"
 
-#: app/dialogs/preferences-dialog.c:2433 app/dialogs/preferences-dialog.c:2462
+#: app/dialogs/preferences-dialog.c:2429 app/dialogs/preferences-dialog.c:2458
 msgid "Fill with:"
 msgstr "Fyll med:"
 
-#: app/dialogs/preferences-dialog.c:2436
+#: app/dialogs/preferences-dialog.c:2432
 msgid "Resize layers:"
 msgstr "Tilbakestill lagstorleiken:"
 
-#: app/dialogs/preferences-dialog.c:2440
+#: app/dialogs/preferences-dialog.c:2436
 msgid "Resize text layers"
 msgstr "Endra storleiken på tekstlaga"
 
 #. New Layer Dialog
-#: app/dialogs/preferences-dialog.c:2444
+#: app/dialogs/preferences-dialog.c:2440
 msgid "New Layer Dialog"
 msgstr "Nytt dialogvindauge for lag"
 
-#: app/dialogs/preferences-dialog.c:2449
+#: app/dialogs/preferences-dialog.c:2445
 msgid "Layer name:"
 msgstr "Lagnamn:"
 
-#: app/dialogs/preferences-dialog.c:2453
+#: app/dialogs/preferences-dialog.c:2449
 msgid "Fill type:"
 msgstr "Fylltype:"
 
 #. Layer Boundary Size Dialog
-#: app/dialogs/preferences-dialog.c:2457
+#: app/dialogs/preferences-dialog.c:2453
 msgid "Layer Boundary Size Dialog"
 msgstr "Dialogvindauge for storleik på laggrense"
 
 #. Add Layer Mask Dialog
-#: app/dialogs/preferences-dialog.c:2466
+#: app/dialogs/preferences-dialog.c:2462
 msgid "Add Layer Mask Dialog"
 msgstr "Legg til dialogvindauge for lagmaske"
 
-#: app/dialogs/preferences-dialog.c:2471
+#: app/dialogs/preferences-dialog.c:2467
 msgid "Layer mask type:"
 msgstr "Lagmasketype:"
 
-#: app/dialogs/preferences-dialog.c:2475
+#: app/dialogs/preferences-dialog.c:2471
 msgid "Invert mask"
 msgstr "Inverter maska"
 
 #. Merge Layers Dialog
-#: app/dialogs/preferences-dialog.c:2479
+#: app/dialogs/preferences-dialog.c:2475
 msgid "Merge Layers Dialog"
 msgstr "Dialogvindauget for «Flett lag»"
 
-#: app/dialogs/preferences-dialog.c:2486
+#: app/dialogs/preferences-dialog.c:2482
 msgid "Merged layer size:"
 msgstr "Fletta lagstorleik:"
 
-#: app/dialogs/preferences-dialog.c:2490
+#: app/dialogs/preferences-dialog.c:2486
 msgid "Merge within active groups only"
 msgstr "Flett berre innføre grupper som er i bruk"
 
-#: app/dialogs/preferences-dialog.c:2493
+#: app/dialogs/preferences-dialog.c:2489
 msgid "Discard invisible layers"
 msgstr "Fjern usynlege lag"
 
 #. New Channel Dialog
-#: app/dialogs/preferences-dialog.c:2497
+#: app/dialogs/preferences-dialog.c:2493
 msgid "New Channel Dialog"
 msgstr "Dialogvindauge for ny kanal"
 
-#: app/dialogs/preferences-dialog.c:2502
+#: app/dialogs/preferences-dialog.c:2498
 msgid "Channel name:"
 msgstr "Kanalnamn:"
 
-#: app/dialogs/preferences-dialog.c:2506
+#: app/dialogs/preferences-dialog.c:2502
 msgid "Color and opacity:"
 msgstr "Farge og gjennomsikt:"
 
-#: app/dialogs/preferences-dialog.c:2507
+#: app/dialogs/preferences-dialog.c:2503
 msgid "Default New Channel Color and Opacity"
 msgstr "Standard farge og gjennomsikt for ny kanal"
 
 #. New Path Dialog
-#: app/dialogs/preferences-dialog.c:2512
+#: app/dialogs/preferences-dialog.c:2508
 msgid "New Path Dialog"
 msgstr "Nytt dialogvindauge for banar"
 
-#: app/dialogs/preferences-dialog.c:2517
+#: app/dialogs/preferences-dialog.c:2513
 msgid "Path name:"
 msgstr "Namn på bane:"
 
 #. Export Path Dialog
-#: app/dialogs/preferences-dialog.c:2521
+#: app/dialogs/preferences-dialog.c:2517
 msgid "Export Paths Dialog"
 msgstr "Dialogvindauge for eksport av banar"
 
-#: app/dialogs/preferences-dialog.c:2526
+#: app/dialogs/preferences-dialog.c:2522
 msgid "Export folder:"
 msgstr "Eksportmappe::"
 
-#: app/dialogs/preferences-dialog.c:2527
+#: app/dialogs/preferences-dialog.c:2523
 msgid "Select Default Folder for Exporting Paths"
 msgstr "Vel standardmappe for eksportering av banar"
 
-#: app/dialogs/preferences-dialog.c:2531
+#: app/dialogs/preferences-dialog.c:2527
 msgid "Export the selected paths only"
 msgstr "Eksporter berre dei merkte banane"
 
 #. Import Path Dialog
-#: app/dialogs/preferences-dialog.c:2535
+#: app/dialogs/preferences-dialog.c:2531
 msgid "Import Paths Dialog"
 msgstr "Dialogvindauge for import av banar"
 
-#: app/dialogs/preferences-dialog.c:2540
+#: app/dialogs/preferences-dialog.c:2536
 msgid "Import folder:"
 msgstr "Importmappe:"
 
-#: app/dialogs/preferences-dialog.c:2541
+#: app/dialogs/preferences-dialog.c:2537
 msgid "Select Default Folder for Importing Paths"
 msgstr "Vel standardmappe for å importera banar"
 
-#: app/dialogs/preferences-dialog.c:2545
+#: app/dialogs/preferences-dialog.c:2541
 msgid "Merge imported paths"
 msgstr "Flett saman importerte banar"
 
-#: app/dialogs/preferences-dialog.c:2548
+#: app/dialogs/preferences-dialog.c:2544
 msgid "Scale imported paths"
 msgstr "Skaler importerte banar"
 
 #. Feather Selection Dialog
-#: app/dialogs/preferences-dialog.c:2552
+#: app/dialogs/preferences-dialog.c:2548
 msgid "Feather Selection Dialog"
 msgstr "Dialogvindauget for mjuke kantar"
 
-#: app/dialogs/preferences-dialog.c:2557
+#: app/dialogs/preferences-dialog.c:2553
 msgid "Feather radius:"
 msgstr "Radius for mjuke kantar:"
 
-#: app/dialogs/preferences-dialog.c:2561 app/dialogs/preferences-dialog.c:2583
-#: app/dialogs/preferences-dialog.c:2600
+#: app/dialogs/preferences-dialog.c:2557 app/dialogs/preferences-dialog.c:2579
+#: app/dialogs/preferences-dialog.c:2596
 msgid "Selected areas continue outside the image"
 msgstr "Merkte område held fram utføre biletet"
 
 #. Grow Selection Dialog
-#: app/dialogs/preferences-dialog.c:2565
+#: app/dialogs/preferences-dialog.c:2561
 msgid "Grow Selection Dialog"
 msgstr "Auk dialogvindauget for utval"
 
-#: app/dialogs/preferences-dialog.c:2570
+#: app/dialogs/preferences-dialog.c:2566
 msgid "Grow radius:"
 msgstr "Aukingsradius:"
 
 #. Shrink Selection Dialog
-#: app/dialogs/preferences-dialog.c:2574
+#: app/dialogs/preferences-dialog.c:2570
 msgid "Shrink Selection Dialog"
 msgstr "Krymp dialogvindauget for utval"
 
-#: app/dialogs/preferences-dialog.c:2579
+#: app/dialogs/preferences-dialog.c:2575
 msgid "Shrink radius:"
 msgstr "Krymperadius:"
 
 #. Border Selection Dialog
-#: app/dialogs/preferences-dialog.c:2587
+#: app/dialogs/preferences-dialog.c:2583
 msgid "Border Selection Dialog"
 msgstr "Dialogvindauget for kantutval"
 
-#: app/dialogs/preferences-dialog.c:2592
+#: app/dialogs/preferences-dialog.c:2588
 msgid "Border radius:"
 msgstr "Kantradius:"
 
-#: app/dialogs/preferences-dialog.c:2596
+#: app/dialogs/preferences-dialog.c:2592
 msgid "Border style:"
 msgstr "Kantstil:"
 
 #. Fill Options Dialog
-#: app/dialogs/preferences-dialog.c:2604
+#: app/dialogs/preferences-dialog.c:2600
 msgid "Fill Selection Outline & Fill Path Dialogs"
 msgstr "Fyll omrisset av utvalet og dialogvindauga for fyll bane"
 
 #. Stroke Options Dialog
-#: app/dialogs/preferences-dialog.c:2613
+#: app/dialogs/preferences-dialog.c:2609
 msgid "Stroke Selection & Stroke Path Dialogs"
 msgstr "Dialogvindauge for strok av utval og bane"
 
-#: app/dialogs/preferences-dialog.c:2636 app/dialogs/preferences-dialog.c:2637
+#: app/dialogs/preferences-dialog.c:2632 app/dialogs/preferences-dialog.c:2633
 msgid "Help System"
 msgstr "Hjelpsystemet"
 
-#: app/dialogs/preferences-dialog.c:2648
+#: app/dialogs/preferences-dialog.c:2644
 msgid "Show help _buttons"
 msgstr "Vis hjelp_knappar"
 
-#: app/dialogs/preferences-dialog.c:2653
+#: app/dialogs/preferences-dialog.c:2649
 msgid "Use the online version"
 msgstr "Bruk hjelp frå nettet"
 
-#: app/dialogs/preferences-dialog.c:2654
+#: app/dialogs/preferences-dialog.c:2650
 msgid "Use a locally installed copy"
 msgstr "Bruk ein lokal installert kopi"
 
-#: app/dialogs/preferences-dialog.c:2655
+#: app/dialogs/preferences-dialog.c:2651
 msgid "U_ser manual:"
 msgstr "_Brukarhandboka:"
 
-#: app/dialogs/preferences-dialog.c:2666
+#: app/dialogs/preferences-dialog.c:2662
 msgid "User interface language"
 msgstr "Språket i brukargrensesnittet"
 
@@ -17363,15 +17376,15 @@ msgstr "Språket i brukargrensesnittet"
 #. *  that doesn't use the help browser, so don't bother showing
 #. *  the combo.
 #.
-#: app/dialogs/preferences-dialog.c:2725
+#: app/dialogs/preferences-dialog.c:2721
 msgid "Help Browser"
 msgstr "Hjelplesar"
 
-#: app/dialogs/preferences-dialog.c:2732
+#: app/dialogs/preferences-dialog.c:2728
 msgid "H_elp browser to use:"
 msgstr "_Hjelpelesaren som skal brukast:"
 
-#: app/dialogs/preferences-dialog.c:2738
+#: app/dialogs/preferences-dialog.c:2734
 msgid ""
 "The GIMP help browser doesn't seem to be installed. Using the web browser "
 "instead."
@@ -17380,187 +17393,187 @@ msgstr ""
 "i staden."
 
 #. Action Search
-#: app/dialogs/preferences-dialog.c:2755
+#: app/dialogs/preferences-dialog.c:2751
 msgid "Action Search"
 msgstr "Handlingssøk"
 
-#: app/dialogs/preferences-dialog.c:2759
+#: app/dialogs/preferences-dialog.c:2755
 msgid "_Maximum History Size:"
 msgstr "_Maksimumstorleik for loggen:"
 
-#: app/dialogs/preferences-dialog.c:2763
+#: app/dialogs/preferences-dialog.c:2759
 msgid "C_lear Action History"
 msgstr "_Tøm handlingsloggen"
 
-#: app/dialogs/preferences-dialog.c:2777 app/dialogs/preferences-dialog.c:2778
+#: app/dialogs/preferences-dialog.c:2773 app/dialogs/preferences-dialog.c:2774
 msgid "Display"
 msgstr "Skjerm"
 
 #. Transparency
-#: app/dialogs/preferences-dialog.c:2787
+#: app/dialogs/preferences-dialog.c:2783
 msgid "Transparency"
 msgstr "Gjennomsikt"
 
-#: app/dialogs/preferences-dialog.c:2791
+#: app/dialogs/preferences-dialog.c:2787
 msgid "_Check style:"
 msgstr "_Kontroller stil:"
 
-#: app/dialogs/preferences-dialog.c:2825
+#: app/dialogs/preferences-dialog.c:2821
 msgid "Check _size:"
 msgstr "Rute_storleik:"
 
 #. Zoom Quality
-#: app/dialogs/preferences-dialog.c:2829
+#: app/dialogs/preferences-dialog.c:2825
 msgid "Zoom Quality"
 msgstr "Skaleringskvalitet"
 
-#: app/dialogs/preferences-dialog.c:2833
+#: app/dialogs/preferences-dialog.c:2829
 msgid "_Zoom quality:"
 msgstr "_Skaleringskvalitet:"
 
 #. Monitor Resolution
-#: app/dialogs/preferences-dialog.c:2837
+#: app/dialogs/preferences-dialog.c:2833
 msgid "Monitor Resolution"
 msgstr "Skjermoppløysing"
 
 #. Pixels
-#: app/dialogs/preferences-dialog.c:2841 app/display/gimpcursorview.c:224
+#: app/dialogs/preferences-dialog.c:2837 app/display/gimpcursorview.c:224
 #: app/widgets/gimpgrideditor.c:205 app/widgets/gimpgrideditor.c:240
 msgid "Pixels"
 msgstr "Pikslar"
 
-#: app/dialogs/preferences-dialog.c:2859 app/widgets/gimpgrideditor.c:201
+#: app/dialogs/preferences-dialog.c:2855 app/widgets/gimpgrideditor.c:201
 #: app/widgets/gimpgrideditor.c:236
 msgid "Horizontal"
 msgstr "Vassrett"
 
-#: app/dialogs/preferences-dialog.c:2861 app/widgets/gimpgrideditor.c:203
+#: app/dialogs/preferences-dialog.c:2857 app/widgets/gimpgrideditor.c:203
 #: app/widgets/gimpgrideditor.c:238
 msgid "Vertical"
 msgstr "Loddrett"
 
-#: app/dialogs/preferences-dialog.c:2863 app/widgets/gimpimagepropview.c:466
+#: app/dialogs/preferences-dialog.c:2859 app/widgets/gimpimagepropview.c:466
 msgid "ppi"
 msgstr "ppi"
 
-#: app/dialogs/preferences-dialog.c:2881
+#: app/dialogs/preferences-dialog.c:2877
 #, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
 msgstr "_Finn automatisk. (Er no %d × %d ppi)"
 
-#: app/dialogs/preferences-dialog.c:2899
+#: app/dialogs/preferences-dialog.c:2895
 msgid "_Enter manually"
 msgstr "_Skriv inn manuelt"
 
-#: app/dialogs/preferences-dialog.c:2914
+#: app/dialogs/preferences-dialog.c:2910
 msgid "C_alibrate..."
 msgstr "_Kalibrer …"
 
-#: app/dialogs/preferences-dialog.c:2944 app/dialogs/preferences-dialog.c:2945
+#: app/dialogs/preferences-dialog.c:2940 app/dialogs/preferences-dialog.c:2941
 msgid "Window Management"
 msgstr "Vindaugehandsaming"
 
-#: app/dialogs/preferences-dialog.c:2950
+#: app/dialogs/preferences-dialog.c:2946
 msgid "Window Manager Hints"
 msgstr "Vindaugetypar"
 
-#: app/dialogs/preferences-dialog.c:2956
+#: app/dialogs/preferences-dialog.c:2952
 msgid "Hint for _docks and toolbox:"
 msgstr "_Hint for dokkpanel og verktøykassen:"
 
-#: app/dialogs/preferences-dialog.c:2959
+#: app/dialogs/preferences-dialog.c:2955
 msgid "Focus"
 msgstr "Fokus"
 
-#: app/dialogs/preferences-dialog.c:2963
+#: app/dialogs/preferences-dialog.c:2959
 msgid "Activate the _focused image"
 msgstr "Ta i bruk biletet som har _fokus"
 
 #. Window Positions
-#: app/dialogs/preferences-dialog.c:2967
+#: app/dialogs/preferences-dialog.c:2963
 msgid "Window Positions"
 msgstr "Vindaugeposisjonar"
 
-#: app/dialogs/preferences-dialog.c:2970
+#: app/dialogs/preferences-dialog.c:2966
 msgid "_Save window positions on exit"
 msgstr "_Lagra vindaugeposisjonane ved avslutning"
 
-#: app/dialogs/preferences-dialog.c:2973
+#: app/dialogs/preferences-dialog.c:2969
 msgid "Open windows on the same _monitor they were open before"
 msgstr "Opna vindauge i den skjermen dei var opna i tidlegare"
 
-#: app/dialogs/preferences-dialog.c:2977
+#: app/dialogs/preferences-dialog.c:2973
 msgid "Save Window Positions _Now"
 msgstr "Lagra vindaugeposisjonane _no"
 
-#: app/dialogs/preferences-dialog.c:2984
+#: app/dialogs/preferences-dialog.c:2980
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "Tilbakestill lagra vindaugeposisjonar til standardverdiane"
 
-#: app/dialogs/preferences-dialog.c:2999 app/dialogs/preferences-dialog.c:3000
+#: app/dialogs/preferences-dialog.c:2995 app/dialogs/preferences-dialog.c:2996
 msgid "Canvas Interaction"
 msgstr "Lerretsinteraksjon"
 
 #. Space Bar
-#: app/dialogs/preferences-dialog.c:3009
+#: app/dialogs/preferences-dialog.c:3005
 msgid "Space Bar"
 msgstr "Mellomromstast"
 
-#: app/dialogs/preferences-dialog.c:3015
+#: app/dialogs/preferences-dialog.c:3011
 msgid "_While space bar is pressed:"
 msgstr "_Medan mellomromstasten er nede:"
 
 #. Zoom by drag Behavior
-#: app/dialogs/preferences-dialog.c:3019 app/tools/gimpmagnifytool.c:93
+#: app/dialogs/preferences-dialog.c:3015 app/tools/gimpmagnifytool.c:93
 msgid "Zoom"
 msgstr "Lupe"
 
-#: app/dialogs/preferences-dialog.c:3025
+#: app/dialogs/preferences-dialog.c:3021
 msgid "Dra_g-to-zoom behavior:"
 msgstr "_Dra-til-skalerings-verkemåte:"
 
-#: app/dialogs/preferences-dialog.c:3031
+#: app/dialogs/preferences-dialog.c:3027
 msgid "Drag-to-zoom spe_ed:"
 msgstr "Dra-til-_skaleringsfart:"
 
-#: app/dialogs/preferences-dialog.c:3041 app/dialogs/preferences-dialog.c:3042
+#: app/dialogs/preferences-dialog.c:3037 app/dialogs/preferences-dialog.c:3038
 msgid "Modifiers"
 msgstr "Modifikatorar"
 
-#: app/dialogs/preferences-dialog.c:3053
+#: app/dialogs/preferences-dialog.c:3049
 msgid "_Reset Saved Modifiers Settings to Default Values"
 msgstr ""
 "_Tilbakestill lagra innstillingar for modifikatorane til standardverdiane"
 
-#: app/dialogs/preferences-dialog.c:3067
+#: app/dialogs/preferences-dialog.c:3063
 msgid "Snapping Behavior"
 msgstr "Innstillingar for festing"
 
-#: app/dialogs/preferences-dialog.c:3068
+#: app/dialogs/preferences-dialog.c:3064
 msgid "Snapping"
 msgstr "Festing"
 
-#: app/dialogs/preferences-dialog.c:3075
+#: app/dialogs/preferences-dialog.c:3071
 msgid "Default Behavior in Normal Mode"
 msgstr "Standard oppførsel i normalmodus"
 
-#: app/dialogs/preferences-dialog.c:3079
+#: app/dialogs/preferences-dialog.c:3075
 msgid "Default Behavior in Fullscreen Mode"
 msgstr "Standard oppførsel i fullskjermmodus"
 
-#: app/dialogs/preferences-dialog.c:3088
+#: app/dialogs/preferences-dialog.c:3084
 msgid "_Snapping distance:"
 msgstr "Feste_avstand:"
 
-#: app/dialogs/preferences-dialog.c:3097 app/dialogs/preferences-dialog.c:3098
+#: app/dialogs/preferences-dialog.c:3093 app/dialogs/preferences-dialog.c:3094
 msgid "Image Windows"
 msgstr "Biletvindauge"
 
-#: app/dialogs/preferences-dialog.c:3115
+#: app/dialogs/preferences-dialog.c:3111
 msgid "Merge menu and title bar"
 msgstr "Slå saman meny- og tittellinja"
 
-#: app/dialogs/preferences-dialog.c:3118
+#: app/dialogs/preferences-dialog.c:3114
 msgid ""
 "GIMP will try to convince your system not to decorate image windows. If it "
 "doesn't work properly on your system (i.e. you get 2 title bars), please "
@@ -17570,382 +17583,382 @@ msgstr ""
 "Viss det ikkje fungerer som det skal på systemet ditt (dvs. du får 2 "
 "tittellinjer), ver gild å rapporter dette."
 
-#: app/dialogs/preferences-dialog.c:3128
+#: app/dialogs/preferences-dialog.c:3124
 msgid "Use \"Show _all\" by default"
 msgstr "Bruk «Vis _alle» som standard"
 
-#: app/dialogs/preferences-dialog.c:3132
+#: app/dialogs/preferences-dialog.c:3128
 msgid "Use \"_Dot for dot\" by default"
 msgstr "Bruk «_punkt for punkt» som standard"
 
-#: app/dialogs/preferences-dialog.c:3138
+#: app/dialogs/preferences-dialog.c:3134
 msgid "Marching ants s_peed:"
 msgstr "Farten på dei «marsjerende _maura»:"
 
 #. Zoom & Resize Behavior
-#: app/dialogs/preferences-dialog.c:3142
+#: app/dialogs/preferences-dialog.c:3138
 msgid "Zoom & Resize Behavior"
 msgstr "Oppførsel ved endring av visinga"
 
-#: app/dialogs/preferences-dialog.c:3146
+#: app/dialogs/preferences-dialog.c:3142
 msgid "Resize window on _zoom"
 msgstr "_Endra vindaugestorleik ved endring av biletvisinga"
 
-#: app/dialogs/preferences-dialog.c:3149
+#: app/dialogs/preferences-dialog.c:3145
 msgid "Resize window on image _size change"
 msgstr "_Tilpass vindauget etter biletformatet"
 
-#: app/dialogs/preferences-dialog.c:3155
+#: app/dialogs/preferences-dialog.c:3151
 msgid "Show entire image"
 msgstr "Vis heile bilete"
 
-#: app/dialogs/preferences-dialog.c:3157
+#: app/dialogs/preferences-dialog.c:3153
 msgid "Initial zoom _ratio:"
 msgstr "Format ved _opning:"
 
-#: app/dialogs/preferences-dialog.c:3165
+#: app/dialogs/preferences-dialog.c:3161
 msgid "Image Window Appearance"
 msgstr "Innstillingar for biletvindauget"
 
-#: app/dialogs/preferences-dialog.c:3175
+#: app/dialogs/preferences-dialog.c:3171
 msgid "Default Appearance in Normal Mode"
 msgstr "Standard utsjånad i normalmodus"
 
-#: app/dialogs/preferences-dialog.c:3180
+#: app/dialogs/preferences-dialog.c:3176
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Standard utsjånad i fullskjermmodus"
 
-#: app/dialogs/preferences-dialog.c:3189
+#: app/dialogs/preferences-dialog.c:3185
 msgid "Image Title & Statusbar Format"
 msgstr "Format for tittel- og statuslinjene i biletet"
 
-#: app/dialogs/preferences-dialog.c:3190
+#: app/dialogs/preferences-dialog.c:3186
 msgid "Title & Status"
 msgstr "Tittel og status"
 
-#: app/dialogs/preferences-dialog.c:3208
+#: app/dialogs/preferences-dialog.c:3204
 msgid "Current format"
 msgstr "Gjeldande format"
 
-#: app/dialogs/preferences-dialog.c:3209
+#: app/dialogs/preferences-dialog.c:3205
 msgid "Default format"
 msgstr "Standardformat"
 
-#: app/dialogs/preferences-dialog.c:3210
+#: app/dialogs/preferences-dialog.c:3206
 msgid "Show zoom percentage"
 msgstr "Vis forstørringa i prosent"
 
-#: app/dialogs/preferences-dialog.c:3211
+#: app/dialogs/preferences-dialog.c:3207
 msgid "Show zoom ratio"
 msgstr "Vis forstørringsforhold"
 
-#: app/dialogs/preferences-dialog.c:3212
+#: app/dialogs/preferences-dialog.c:3208
 msgid "Show image size"
 msgstr "Vis _storleik på bilete"
 
-#: app/dialogs/preferences-dialog.c:3213
+#: app/dialogs/preferences-dialog.c:3209
 msgid "Show drawable size"
 msgstr "Vis storleik på teiknemediet"
 
-#: app/dialogs/preferences-dialog.c:3226
+#: app/dialogs/preferences-dialog.c:3222
 msgid "Image Title Format"
 msgstr "Tittelformat for biletet"
 
-#: app/dialogs/preferences-dialog.c:3228
+#: app/dialogs/preferences-dialog.c:3224
 msgid "Image Statusbar Format"
 msgstr "Statuslinjeformat for biletet"
 
-#: app/dialogs/preferences-dialog.c:3322 app/dialogs/preferences-dialog.c:3323
+#: app/dialogs/preferences-dialog.c:3318 app/dialogs/preferences-dialog.c:3319
 msgid "Input Devices"
 msgstr "Inndataeiningar"
 
-#: app/dialogs/preferences-dialog.c:3334
+#: app/dialogs/preferences-dialog.c:3330
 msgid "Pointers"
 msgstr "Peikarar"
 
-#: app/dialogs/preferences-dialog.c:3341
+#: app/dialogs/preferences-dialog.c:3337
 msgid "Pointer _mode:"
 msgstr "Peikar_modus:"
 
-#: app/dialogs/preferences-dialog.c:3344
+#: app/dialogs/preferences-dialog.c:3340
 msgid "Pointer _handedness:"
 msgstr "_Lateralitet for peikar:"
 
-#: app/dialogs/preferences-dialog.c:3348
+#: app/dialogs/preferences-dialog.c:3344
 msgid "Paint Tools"
 msgstr "Teikneverktøya"
 
-#: app/dialogs/preferences-dialog.c:3352
+#: app/dialogs/preferences-dialog.c:3348
 msgid "Show _brush outline"
 msgstr "Vis _penselomriss"
 
-#: app/dialogs/preferences-dialog.c:3360
+#: app/dialogs/preferences-dialog.c:3356
 msgid "S_nap brush outline to stroke"
 msgstr "_Fest penselomriss til strok"
 
-#: app/dialogs/preferences-dialog.c:3364
+#: app/dialogs/preferences-dialog.c:3360
 msgid "Show pointer for paint _tools"
 msgstr "Vis peikar for teikneverktøya"
 
 #. Extended Input Devices
-#: app/dialogs/preferences-dialog.c:3368
+#: app/dialogs/preferences-dialog.c:3364
 msgid "Extended Input Devices"
 msgstr "Utvida inndataeiningar"
 
-#: app/dialogs/preferences-dialog.c:3384
+#: app/dialogs/preferences-dialog.c:3380
 msgid "Pointer Input API:"
 msgstr "Peikarinndata AP:"
 
-#: app/dialogs/preferences-dialog.c:3395
+#: app/dialogs/preferences-dialog.c:3391
 msgid "S_hare tool and tool options between input devices"
 msgstr "Del verktøy og verktøyinnstillingane mellom inndataeiningane"
 
-#: app/dialogs/preferences-dialog.c:3399
+#: app/dialogs/preferences-dialog.c:3395
 msgid "Configure E_xtended Input Devices..."
 msgstr "Set opp _utvida inndataeiningar …"
 
-#: app/dialogs/preferences-dialog.c:3406
+#: app/dialogs/preferences-dialog.c:3402
 msgid "_Save input device settings on exit"
 msgstr "_Lagra innstillingar for inndataeiningar ved avslutning"
 
-#: app/dialogs/preferences-dialog.c:3410
+#: app/dialogs/preferences-dialog.c:3406
 msgid "Save Input Device Settings _Now"
 msgstr "Lagra innstillingar for inndataeiningar _no"
 
-#: app/dialogs/preferences-dialog.c:3417
+#: app/dialogs/preferences-dialog.c:3413
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr ""
 "_Tilbakestill lagra innstillingar for inndataeiningar til standardverdiane"
 
-#: app/dialogs/preferences-dialog.c:3432
+#: app/dialogs/preferences-dialog.c:3428
 msgid "Additional Input Controllers"
 msgstr "Ekstra inndatakontrollelement"
 
-#: app/dialogs/preferences-dialog.c:3433
+#: app/dialogs/preferences-dialog.c:3429
 msgid "Input Controllers"
 msgstr "Inndatakontrollelement"
 
-#: app/dialogs/preferences-dialog.c:3448 app/dialogs/preferences-dialog.c:3449
+#: app/dialogs/preferences-dialog.c:3444 app/dialogs/preferences-dialog.c:3445
 msgid "Folders"
 msgstr "Mapper"
 
-#: app/dialogs/preferences-dialog.c:3456
+#: app/dialogs/preferences-dialog.c:3452
 msgid "Reset _Folders"
 msgstr "Tilbakestill _mappene"
 
-#: app/dialogs/preferences-dialog.c:3472
+#: app/dialogs/preferences-dialog.c:3468
 msgid "_Temporary folder:"
 msgstr "_Mellombels mappe:"
 
-#: app/dialogs/preferences-dialog.c:3473
+#: app/dialogs/preferences-dialog.c:3469
 msgid "Select Folder for Temporary Files"
 msgstr "Vel mappe for mellombels filer"
 
-#: app/dialogs/preferences-dialog.c:3477
+#: app/dialogs/preferences-dialog.c:3473
 msgid "_Swap folder:"
 msgstr "_Vekselmappe:"
 
-#: app/dialogs/preferences-dialog.c:3478
+#: app/dialogs/preferences-dialog.c:3474
 msgid "Select Swap Folder"
 msgstr "Vel mellomlagringsmappe"
 
-#: app/dialogs/preferences-dialog.c:3511
+#: app/dialogs/preferences-dialog.c:3507
 msgid "Brush Folders"
 msgstr "Penselmapper"
 
-#: app/dialogs/preferences-dialog.c:3514
+#: app/dialogs/preferences-dialog.c:3510
 msgid "Reset Brush _Folders"
 msgstr "Tilbakestill _penselmappene"
 
-#: app/dialogs/preferences-dialog.c:3515
+#: app/dialogs/preferences-dialog.c:3511
 msgid "Select Brush Folders"
 msgstr "Vel penselmapper"
 
-#: app/dialogs/preferences-dialog.c:3517
+#: app/dialogs/preferences-dialog.c:3513
 msgid "Dynamics Folders"
 msgstr "Mapper for dynamikk"
 
-#: app/dialogs/preferences-dialog.c:3520
+#: app/dialogs/preferences-dialog.c:3516
 msgid "Reset Dynamics _Folders"
 msgstr "Tilbakestill _dynamikkmapperne"
 
-#: app/dialogs/preferences-dialog.c:3521
+#: app/dialogs/preferences-dialog.c:3517
 msgid "Select Dynamics Folders"
 msgstr "Vel dynamikkmapper"
 
-#: app/dialogs/preferences-dialog.c:3523
+#: app/dialogs/preferences-dialog.c:3519
 msgid "Pattern Folders"
 msgstr "Mønstermapper"
 
-#: app/dialogs/preferences-dialog.c:3526
+#: app/dialogs/preferences-dialog.c:3522
 msgid "Reset Pattern _Folders"
 msgstr "Tilbakestill _mapper for mønsterelement"
 
-#: app/dialogs/preferences-dialog.c:3527
+#: app/dialogs/preferences-dialog.c:3523
 msgid "Select Pattern Folders"
 msgstr "Vel mapper for mønsterelement"
 
-#: app/dialogs/preferences-dialog.c:3529
+#: app/dialogs/preferences-dialog.c:3525
 msgid "Palette Folders"
 msgstr "Palettmapper"
 
-#: app/dialogs/preferences-dialog.c:3532
+#: app/dialogs/preferences-dialog.c:3528
 msgid "Reset Palette _Folders"
 msgstr "Tilbakestill _palettmappene"
 
-#: app/dialogs/preferences-dialog.c:3533
+#: app/dialogs/preferences-dialog.c:3529
 msgid "Select Palette Folders"
 msgstr "Vel palettmapper"
 
-#: app/dialogs/preferences-dialog.c:3535
+#: app/dialogs/preferences-dialog.c:3531
 msgid "Gradient Folders"
 msgstr "Mapper for fargeovergangar"
 
-#: app/dialogs/preferences-dialog.c:3538
+#: app/dialogs/preferences-dialog.c:3534
 msgid "Reset Gradient _Folders"
 msgstr "Tilbakestill _fargeovergangsmappene"
 
-#: app/dialogs/preferences-dialog.c:3539
+#: app/dialogs/preferences-dialog.c:3535
 msgid "Select Gradient Folders"
 msgstr "Vel fargeovergangsmapper"
 
-#: app/dialogs/preferences-dialog.c:3541
+#: app/dialogs/preferences-dialog.c:3537
 msgid "Font Folders"
 msgstr "Skrifttypemapper"
 
-#: app/dialogs/preferences-dialog.c:3544
+#: app/dialogs/preferences-dialog.c:3540
 msgid "Reset Font _Folders"
 msgstr "Tilbakestill _skrifttypemappene"
 
-#: app/dialogs/preferences-dialog.c:3545
+#: app/dialogs/preferences-dialog.c:3541
 msgid "Select Font Folders"
 msgstr "Vel skrifttypemapper"
 
-#: app/dialogs/preferences-dialog.c:3547
+#: app/dialogs/preferences-dialog.c:3543
 msgid "Tool Preset Folders"
 msgstr "Mapper for verktøyforvala"
 
-#: app/dialogs/preferences-dialog.c:3550
+#: app/dialogs/preferences-dialog.c:3546
 msgid "Reset Tool Preset _Folders"
 msgstr "Tilbakestill mappene for _verktøyforvala"
 
-#: app/dialogs/preferences-dialog.c:3551
+#: app/dialogs/preferences-dialog.c:3547
 msgid "Select Tool Preset Folders"
 msgstr "Rediger mappene for verktøyforvala"
 
-#: app/dialogs/preferences-dialog.c:3553
+#: app/dialogs/preferences-dialog.c:3549
 msgid "MyPaint Brush Folders"
 msgstr "MyPaint-penselmappene"
 
-#: app/dialogs/preferences-dialog.c:3556
+#: app/dialogs/preferences-dialog.c:3552
 msgid "Reset MyPaint Brush _Folders"
 msgstr "Tilbakestill _MyPaint-penselmappene"
 
-#: app/dialogs/preferences-dialog.c:3557
+#: app/dialogs/preferences-dialog.c:3553
 msgid "Select MyPaint Brush Folders"
 msgstr "Vel MyPaint-penselmappene"
 
-#: app/dialogs/preferences-dialog.c:3559
+#: app/dialogs/preferences-dialog.c:3555
 msgid "Plug-in Folders"
 msgstr "Mapper for programtillegg"
 
-#: app/dialogs/preferences-dialog.c:3562
+#: app/dialogs/preferences-dialog.c:3558
 msgid "Reset plug-in _Folders"
 msgstr "Tilbakestill mapper for _programtillegg"
 
-#: app/dialogs/preferences-dialog.c:3563
+#: app/dialogs/preferences-dialog.c:3559
 msgid "Select plug-in Folders"
 msgstr "Vel mapper for programtillegg"
 
-#: app/dialogs/preferences-dialog.c:3565
+#: app/dialogs/preferences-dialog.c:3561
 msgid "Scripts"
 msgstr "Skript"
 
-#: app/dialogs/preferences-dialog.c:3565
+#: app/dialogs/preferences-dialog.c:3561
 msgid "Script-Fu Folders"
 msgstr "Script-Fu-mapper"
 
-#: app/dialogs/preferences-dialog.c:3568
+#: app/dialogs/preferences-dialog.c:3564
 msgid "Reset Script-Fu _Folders"
 msgstr "Tilbakestill _Script-Fu-mappene"
 
-#: app/dialogs/preferences-dialog.c:3569
+#: app/dialogs/preferences-dialog.c:3565
 msgid "Select Script-Fu Folders"
 msgstr "Vel Script-Fu-mapper"
 
-#: app/dialogs/preferences-dialog.c:3571
+#: app/dialogs/preferences-dialog.c:3567
 msgid "Module Folders"
 msgstr "Modulmapper"
 
-#: app/dialogs/preferences-dialog.c:3574
+#: app/dialogs/preferences-dialog.c:3570
 msgid "Reset Module _Folders"
 msgstr "Tilbakestill _mapper for modular"
 
-#: app/dialogs/preferences-dialog.c:3575
+#: app/dialogs/preferences-dialog.c:3571
 msgid "Select Module Folders"
 msgstr "Vel mapper for modular"
 
-#: app/dialogs/preferences-dialog.c:3577
+#: app/dialogs/preferences-dialog.c:3573
 msgid "Interpreters"
 msgstr "Tolkar"
 
-#: app/dialogs/preferences-dialog.c:3577
+#: app/dialogs/preferences-dialog.c:3573
 msgid "Interpreter Folders"
 msgstr "Mapper for interpreter"
 
-#: app/dialogs/preferences-dialog.c:3580
+#: app/dialogs/preferences-dialog.c:3576
 msgid "Reset Interpreter _Folders"
 msgstr "Tilbakestill mappene for _tolkar"
 
-#: app/dialogs/preferences-dialog.c:3581
+#: app/dialogs/preferences-dialog.c:3577
 msgid "Select Interpreter Folders"
 msgstr "Vel mappe for interpreter"
 
-#: app/dialogs/preferences-dialog.c:3583
+#: app/dialogs/preferences-dialog.c:3579
 msgid "Environment"
 msgstr "Omgivnadar"
 
-#: app/dialogs/preferences-dialog.c:3583
+#: app/dialogs/preferences-dialog.c:3579
 msgid "Environment Folders"
 msgstr "Mapper for omgivnadar"
 
-#: app/dialogs/preferences-dialog.c:3586
+#: app/dialogs/preferences-dialog.c:3582
 msgid "Reset Environment _Folders"
 msgstr "Tilbakestill mapper for _omgivnadar"
 
-#: app/dialogs/preferences-dialog.c:3587
+#: app/dialogs/preferences-dialog.c:3583
 msgid "Select Environment Folders"
 msgstr "Vel mapper for omgivnadar"
 
-#: app/dialogs/preferences-dialog.c:3589
+#: app/dialogs/preferences-dialog.c:3585
 msgid "Themes"
 msgstr "Tema"
 
-#: app/dialogs/preferences-dialog.c:3589
+#: app/dialogs/preferences-dialog.c:3585
 msgid "Theme Folders"
 msgstr "Temamapper"
 
-#: app/dialogs/preferences-dialog.c:3592
+#: app/dialogs/preferences-dialog.c:3588
 msgid "Reset Theme _Folders"
 msgstr "Tilbakestill _temamappene"
 
-#: app/dialogs/preferences-dialog.c:3593
+#: app/dialogs/preferences-dialog.c:3589
 msgid "Select Theme Folders"
 msgstr "Vel temamapper"
 
-#: app/dialogs/preferences-dialog.c:3595
+#: app/dialogs/preferences-dialog.c:3591
 msgid "Icon Themes"
 msgstr "Ikontema"
 
-#: app/dialogs/preferences-dialog.c:3595
+#: app/dialogs/preferences-dialog.c:3591
 msgid "Icon Theme Folders"
 msgstr "Mappe for ikontema"
 
-#: app/dialogs/preferences-dialog.c:3598
+#: app/dialogs/preferences-dialog.c:3594
 msgid "Reset Icon Theme _Folders"
 msgstr "Tilbakestill mappene for _ikontema"
 
-#: app/dialogs/preferences-dialog.c:3599
+#: app/dialogs/preferences-dialog.c:3595
 msgid "Select Icon Theme Folders"
 msgstr "Vel mappe for ikontema"
 
@@ -17981,74 +17994,74 @@ msgstr "_Y-oppløysing:"
 msgid "pixels/%a"
 msgstr "pikslar/%a"
 
-#: app/dialogs/quit-dialog.c:171
+#: app/dialogs/quit-dialog.c:169
 msgid "Quit GIMP"
 msgstr "Avslutt GIMP"
 
-#: app/dialogs/quit-dialog.c:171
+#: app/dialogs/quit-dialog.c:169
 msgid "Close All Images"
 msgstr "Lukk alle bileta"
 
-#: app/dialogs/quit-dialog.c:283
+#: app/dialogs/quit-dialog.c:281
 msgid "If you quit GIMP now, these changes will be lost."
 msgstr "Du vil mista desse endringane dersom du sluttar av GIMP no."
 
-#: app/dialogs/quit-dialog.c:286
+#: app/dialogs/quit-dialog.c:284
 msgid "If you close these images now, changes will be lost."
 msgstr "Du vil mista alle endringane dersom du lukkar biletet no."
 
 #. TRANSLATORS: unless your language
 #. msgstr[0] applies to 1 only (as
 #. in English), replace "one" with %d.
-#: app/dialogs/quit-dialog.c:373
+#: app/dialogs/quit-dialog.c:371
 #, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
 msgstr[0] "Eitt bilete er endra utan lagring:"
 msgstr[1] "%d bilete er endra utan lagring:"
 
-#: app/dialogs/quit-dialog.c:384
+#: app/dialogs/quit-dialog.c:382
 #, c-format
 msgid "Press %s to quit."
 msgstr "Trykk %s for å avslutta."
 
-#: app/dialogs/quit-dialog.c:387
+#: app/dialogs/quit-dialog.c:385
 #, c-format
 msgid "Press %s to close all images."
 msgstr "Trykk %s for å lukka alle bilete."
 
-#: app/dialogs/quit-dialog.c:391 app/dialogs/user-install-dialog.c:90
+#: app/dialogs/quit-dialog.c:389 app/dialogs/user-install-dialog.c:90
 msgid "_Quit"
 msgstr "_Avslutt"
 
-#: app/dialogs/quit-dialog.c:391
+#: app/dialogs/quit-dialog.c:389
 msgid "Cl_ose"
 msgstr "_Lukk"
 
-#: app/dialogs/quit-dialog.c:415
+#: app/dialogs/quit-dialog.c:413
 #, c-format
 msgid "Press %s to discard all changes and quit."
 msgstr "Trykk %s for å annullera alle endringar og avslutta."
 
-#: app/dialogs/quit-dialog.c:418
+#: app/dialogs/quit-dialog.c:416
 #, c-format
 msgid "Press %s to discard all changes and close all images."
 msgstr "Trykk %s for å annullera alle endringar og lukka alle bilete."
 
-#: app/dialogs/quit-dialog.c:426 app/display/gimpdisplayshell-close.c:182
+#: app/dialogs/quit-dialog.c:424 app/display/gimpdisplayshell-close.c:182
 msgid "_Discard Changes"
 msgstr "_Avslutt utan lagring"
 
-#: app/dialogs/quit-dialog.c:526
+#: app/dialogs/quit-dialog.c:516
 #, c-format
 msgid "Exported to %s"
 msgstr "Eksportert til %s"
 
-#: app/dialogs/quit-dialog.c:627
+#: app/dialogs/quit-dialog.c:617
 msgid "Save this image"
 msgstr "Lagra dette biletet"
 
-#: app/dialogs/quit-dialog.c:629
+#: app/dialogs/quit-dialog.c:619
 msgid "Save as"
 msgstr "Lagra som"
 
@@ -18811,7 +18824,7 @@ msgstr "Kan ikkje endra pikslane i laggrupper."
 
 #: app/display/gimpdisplayshell-dnd.c:390 app/tools/gimpfiltertool.c:334
 #: app/tools/gimppainttool.c:371 app/tools/gimptransformtool.c:738
-#: app/widgets/gimpdrawabletreeview-filters.c:702
+#: app/widgets/gimpdrawabletreeview-filters.c:699
 msgid "A selected layer is not visible."
 msgstr "Eit merkt lag er ikkje synleg."
 
@@ -18829,13 +18842,13 @@ msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Slepp farge i laget"
 
-#: app/display/gimpdisplayshell-dnd.c:596 app/widgets/gimpitemtreeview.c:1632
-#: app/widgets/gimplayertreeview.c:804
+#: app/display/gimpdisplayshell-dnd.c:596 app/widgets/gimpitemtreeview.c:1597
+#: app/widgets/gimplayertreeview.c:786
 msgid "Drop layers"
 msgstr "Slepp lag"
 
 #: app/display/gimpdisplayshell-dnd.c:739
-#: app/display/gimpdisplayshell-dnd.c:756 app/widgets/gimplayertreeview.c:881
+#: app/display/gimpdisplayshell-dnd.c:756 app/widgets/gimplayertreeview.c:863
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "Sluppe buffer"
@@ -19462,44 +19475,44 @@ msgstr "«%s» er ikkje gyldig URI-skjema"
 msgid "Invalid character sequence in URI"
 msgstr "Ugyldig teiknsekvens i URI"
 
-#: app/file-data/file-data-gex.c:146
+#: app/file-data/file-data-gex.c:147
 #, c-format
 msgid "Absolute path are forbidden in GIMP extension '%s': %s"
 msgstr "Absolutt sti er ikkje lov å bruka i GIMP-utvidinga «%s»: %s"
 
-#: app/file-data/file-data-gex.c:157
+#: app/file-data/file-data-gex.c:158
 #, c-format
 msgid "File not allowed in root of GIMP extension '%s': %s"
 msgstr "Fila er ikkje tillate i rota til GIMP-utvidinga «%s»: %s"
 
-#: app/file-data/file-data-gex.c:168
+#: app/file-data/file-data-gex.c:169
 #, c-format
 msgid "File not in GIMP extension '%s' folder id '%s': %s"
 msgstr "Fila er ikkje i GIMP-utvidinga «%s» mappe-ID «%s»: %s"
 
-#: app/file-data/file-data-gex.c:264 app/file-data/file-data-gex.c:411
-#: app/file-data/file-data-gex.c:429 app/file-data/file-data-gex.c:446
-#: app/file-data/file-data-gex.c:460
+#: app/file-data/file-data-gex.c:268 app/file-data/file-data-gex.c:429
+#: app/file-data/file-data-gex.c:447 app/file-data/file-data-gex.c:464
+#: app/file-data/file-data-gex.c:478
 #, c-format
 msgid "Fatal error when uncompressing GIMP extension '%s': %s"
 msgstr "Fatal feil ved dekomprimeringa av GIMP-utvidinga «%s»: %s"
 
-#: app/file-data/file-data-gex.c:299
+#: app/file-data/file-data-gex.c:312
 #, c-format
 msgid "GIMP extension '%s' directory (%s) different from AppStream id: %s"
 msgstr "Mappa %s for GIMP-utvidinga «%s» er ulik AppStream-ID: %s"
 
-#: app/file-data/file-data-gex.c:308
+#: app/file-data/file-data-gex.c:326
 #, c-format
 msgid "GIMP extension '%s' requires an AppStream file: %s"
 msgstr "GIMP-utvidinga «%s» treng ei AppStream-fil: %s"
 
-#: app/file-data/file-data-gex.c:323 app/file-data/file-data-gex.c:470
+#: app/file-data/file-data-gex.c:341 app/file-data/file-data-gex.c:488
 #, c-format
 msgid "Invalid GIMP extension '%s': %s"
 msgstr "Ugyldig GIMP-utviding «%s»: %s"
 
-#: app/file-data/file-data-gex.c:438
+#: app/file-data/file-data-gex.c:456
 #, c-format
 msgid "Warning when uncompressing GIMP extension '%s': %s\n"
 msgstr "Åtvaring når du dekomprimerer GIMP-utvidiinga «%s»: %s\n"
@@ -20216,9 +20229,13 @@ msgstr "Gul–blå"
 msgid "Preserve Luminosity"
 msgstr "Behald lysstyrken"
 
+#: app/operations/gimpcurvesconfig.c:105 app/operations/gimplevelsconfig.c:111
+msgid "Tone Reproduction Curve"
+msgstr "Tonereproduksjonskurve"
+
 #: app/operations/gimpcurvesconfig.c:106 app/operations/gimplevelsconfig.c:112
-msgid "Work on linear or perceptual RGB"
-msgstr "Arbeid på lineær eller perseptuell RGB"
+msgid "Work on linear or perceptual RGB, or following the image's TRC"
+msgstr "Arbeid på lineær eller perseptuell RGB eller følj TRC for biletet"
 
 #: app/operations/gimpcurvesconfig.c:113 app/operations/gimplevelsconfig.c:119
 msgid "Linear"
@@ -20373,7 +20390,7 @@ msgstr "Omformar fargane til gråtoner"
 #: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1462
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
-#: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:275
+#: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:276
 msgid "Mode"
 msgstr "Modus"
 
@@ -20549,8 +20566,8 @@ msgstr "Kloning"
 msgid "No patterns available for use with this tool."
 msgstr "Ingen mønsterelement er tilgjengelege for bruk med dette verktøyet."
 
-#: app/paint/gimpcloneoptions.c:67 app/tools/gimpbucketfilloptions.c:217
-#: app/tools/gimpbucketfilloptions.c:772 app/tools/gimpcloneoptions-gui.c:246
+#: app/paint/gimpcloneoptions.c:67 app/tools/gimpbucketfilloptions.c:214
+#: app/tools/gimpbucketfilloptions.c:760 app/tools/gimpcloneoptions-gui.c:246
 msgid "Source"
 msgstr "Kjelde"
 
@@ -20916,7 +20933,7 @@ msgid "No erasing effect"
 msgstr "Ingen sletteeffekt"
 
 #: app/paint/gimpsmudgeoptions.c:93 app/paint/gimpsourceoptions.c:110
-#: app/pdb/gimppdbcontext.c:129 app/tools/gimpbucketfilloptions.c:171
+#: app/pdb/gimppdbcontext.c:129 app/tools/gimpbucketfilloptions.c:168
 #: app/tools/gimpcoloroptions.c:70 app/tools/gimphealtool.c:101
 #: app/tools/gimpregionselectoptions.c:98
 msgid "Sample merged"
@@ -21461,7 +21478,7 @@ msgstr "Prøvepunktterskel"
 msgid "Sample transparent"
 msgstr "Prøvepunktgjennomsikt"
 
-#: app/pdb/gimppdbcontext.c:158 app/tools/gimpbucketfilloptions.c:178
+#: app/pdb/gimppdbcontext.c:158 app/tools/gimpbucketfilloptions.c:175
 #: app/tools/gimpregionselectoptions.c:105
 msgid "Diagonal neighbors"
 msgstr "Diagonale naboar"
@@ -22626,32 +22643,32 @@ msgstr "Kon_trast"
 msgid "Edit these Settings as Levels"
 msgstr "Rediger desse innstillingane som nivå"
 
-#: app/tools/gimpbucketfilloptions.c:155
+#: app/tools/gimpbucketfilloptions.c:152
 msgid "Fill selection"
 msgstr "Fyll utvalet"
 
-#: app/tools/gimpbucketfilloptions.c:156
+#: app/tools/gimpbucketfilloptions.c:153
 msgid "Which area will be filled"
 msgstr "Kva område som skal fyllast"
 
-#: app/tools/gimpbucketfilloptions.c:163
+#: app/tools/gimpbucketfilloptions.c:160
 msgid "Fill transparent areas"
 msgstr "Fyll gjennomsiktige område"
 
-#: app/tools/gimpbucketfilloptions.c:164
+#: app/tools/gimpbucketfilloptions.c:161
 msgid "Allow completely transparent regions to be filled"
 msgstr "Tillat fylling av heilt gjennomsiktige område"
 
-#: app/tools/gimpbucketfilloptions.c:172
+#: app/tools/gimpbucketfilloptions.c:169
 msgid "Base filled area on all visible layers"
 msgstr "Baser fylt område på alle synlege lag"
 
-#: app/tools/gimpbucketfilloptions.c:179
+#: app/tools/gimpbucketfilloptions.c:176
 #: app/tools/gimpregionselectoptions.c:106
 msgid "Treat diagonally neighboring pixels as connected"
 msgstr "Handsam diagonalt nærliggjande pikslar som samankopla"
 
-#: app/tools/gimpbucketfilloptions.c:187
+#: app/tools/gimpbucketfilloptions.c:184
 msgid ""
 "Base fill opacity on color difference from the clicked pixel (see threshold) "
 "or on line  art borders. Disable antialiasing to fill the entire area "
@@ -22661,52 +22678,52 @@ msgstr ""
 "klikka på (sjå terskel) eller på strekteikningskantar. Slå av utjamning for "
 "å fylla heile området jamt."
 
-#: app/tools/gimpbucketfilloptions.c:210 app/tools/gimpbucketfilloptions.c:232
+#: app/tools/gimpbucketfilloptions.c:207 app/tools/gimpbucketfilloptions.c:229
 #: app/tools/gimpgradientoptions.c:122 app/tools/gimpregionselectoptions.c:113
 #: app/tools/gimpthresholdtool.c:93
 msgid "Threshold"
 msgstr "Terskel"
 
-#: app/tools/gimpbucketfilloptions.c:211 app/tools/gimpbucketfilloptions.c:233
+#: app/tools/gimpbucketfilloptions.c:208 app/tools/gimpbucketfilloptions.c:230
 #: app/tools/gimpregionselectoptions.c:114
 msgid "Maximum color difference"
 msgstr "Maksimal fargedifferanse"
 
-#: app/tools/gimpbucketfilloptions.c:218
+#: app/tools/gimpbucketfilloptions.c:215
 msgid "Source image for line art computation"
 msgstr "Kjeldebiletet for å rekna ut strekteikninga"
 
-#: app/tools/gimpbucketfilloptions.c:225
+#: app/tools/gimpbucketfilloptions.c:222
 msgid "Manual closure in fill layer"
 msgstr "Manuell lukking i fylllaget"
 
-#: app/tools/gimpbucketfilloptions.c:226
+#: app/tools/gimpbucketfilloptions.c:223
 msgid ""
 "Consider pixels of selected layer and filled with the fill color as line art "
 "closure"
 msgstr "Sjå på pikslar av vald lag og fylt med fyllfargen som strektegning"
 
-#: app/tools/gimpbucketfilloptions.c:253
+#: app/tools/gimpbucketfilloptions.c:250
 msgid "Stroke borders"
 msgstr "Strek opp kantane"
 
-#: app/tools/gimpbucketfilloptions.c:254
+#: app/tools/gimpbucketfilloptions.c:251
 msgid "Stroke fill borders with last stroke options"
 msgstr "Stryk fyllkantane med dei sist brukte strok-innstillingane"
 
-#: app/tools/gimpbucketfilloptions.c:260
+#: app/tools/gimpbucketfilloptions.c:257
 msgid "Stroke tool"
 msgstr "Strokverktøy"
 
-#: app/tools/gimpbucketfilloptions.c:261
+#: app/tools/gimpbucketfilloptions.c:258
 msgid "The tool to stroke the fill borders with"
 msgstr "Verktøyet som fyllkantane skal strykast med"
 
-#: app/tools/gimpbucketfilloptions.c:266
+#: app/tools/gimpbucketfilloptions.c:263
 msgid "Automatic closure"
 msgstr "Automatisk lukking"
 
-#: app/tools/gimpbucketfilloptions.c:267
+#: app/tools/gimpbucketfilloptions.c:264
 msgid ""
 "Geometric analysis of the stroke contours to close line arts by splines/"
 "segments"
@@ -22714,73 +22731,73 @@ msgstr ""
 "Geometrisk analyse av strekkonturane for å lukka strekteikning ved spline/"
 "segment"
 
-#: app/tools/gimpbucketfilloptions.c:273
+#: app/tools/gimpbucketfilloptions.c:270
 msgid "Maximum gap length"
 msgstr "Sørste gaplengda"
 
-#: app/tools/gimpbucketfilloptions.c:274
+#: app/tools/gimpbucketfilloptions.c:271
 msgid "Maximum gap (in pixels) in line art which can be closed"
 msgstr "Høgaste opninga (i pikslar) for å lukka strekteikninga"
 
-#: app/tools/gimpbucketfilloptions.c:280 app/tools/gimpbucketfilloptions.c:730
+#: app/tools/gimpbucketfilloptions.c:277 app/tools/gimpbucketfilloptions.c:718
 msgid "Fill by"
 msgstr "Fyll med"
 
-#: app/tools/gimpbucketfilloptions.c:281
+#: app/tools/gimpbucketfilloptions.c:278
 msgid "Criterion used for determining color similarity"
 msgstr "Kriteria for å finne fargelikskap"
 
-#: app/tools/gimpbucketfilloptions.c:580
+#: app/tools/gimpbucketfilloptions.c:568
 msgid ""
 "Opaque pixels will be considered as line art instead of low luminance pixels"
 msgstr ""
 "Ugjennomsiktige pikslar vert sett på som del av strekteikning i staden for "
 "pikslar med låg lysstyrke"
 
-#: app/tools/gimpbucketfilloptions.c:632
+#: app/tools/gimpbucketfilloptions.c:620
 msgid "No valid source drawable selected"
 msgstr "Inge gyldige teikneelementkjelder valde"
 
-#: app/tools/gimpbucketfilloptions.c:634
+#: app/tools/gimpbucketfilloptions.c:622
 msgid "The source drawable has no alpha channel"
 msgstr "Kjeldeteikneelementet har ikkje alfakanal"
 
 #. fill type
-#: app/tools/gimpbucketfilloptions.c:676
+#: app/tools/gimpbucketfilloptions.c:664
 #, c-format
 msgid "Fill Type  (%s)"
 msgstr "Fyll med (%s)"
 
 #. fill selection
-#: app/tools/gimpbucketfilloptions.c:689
+#: app/tools/gimpbucketfilloptions.c:677
 #, c-format
 msgid "Affected Area  (%s)"
 msgstr "Påverka område (%s)"
 
 #. Similar color frame
-#: app/tools/gimpbucketfilloptions.c:696
+#: app/tools/gimpbucketfilloptions.c:684
 msgid "Finding Similar Colors"
 msgstr "Finn liknande fargar"
 
-#: app/tools/gimpbucketfilloptions.c:747
+#: app/tools/gimpbucketfilloptions.c:735
 msgid "Line Art Detection"
 msgstr "Oppdag strekteikning"
 
-#: app/tools/gimpbucketfilloptions.c:757
+#: app/tools/gimpbucketfilloptions.c:745
 msgid "(computing...)"
 msgstr "(reknar ut …)"
 
-#: app/tools/gimpbucketfilloptions.c:777
+#: app/tools/gimpbucketfilloptions.c:765
 msgid "Detect opacity rather than grayscale"
 msgstr "Oppdagar dekkevne i staden fro gråtoner"
 
 #. Line Art Closure: frame label
-#: app/tools/gimpbucketfilloptions.c:787
+#: app/tools/gimpbucketfilloptions.c:775
 msgid "Line Art Closure"
 msgstr "Lukking av strekteikning"
 
 #. Line Art Borders: frame label
-#: app/tools/gimpbucketfilloptions.c:818
+#: app/tools/gimpbucketfilloptions.c:806
 msgid "Fill borders"
 msgstr "Fyll kantane"
 
@@ -23651,21 +23668,21 @@ msgctxt "command"
 msgid "Fuzzy Select"
 msgstr "Tryllestaven"
 
-#: app/tools/gimpgegltool.c:83 app/tools/gimpgegltool.c:297
-#: app/tools/gimpgegltool.c:299 app/tools/gimpoperationtool.c:132
+#: app/tools/gimpgegltool.c:85 app/tools/gimpgegltool.c:302
+#: app/tools/gimpgegltool.c:304 app/tools/gimpoperationtool.c:132
 msgid "GEGL Operation"
 msgstr "GEGL-operasjon"
 
-#: app/tools/gimpgegltool.c:84
+#: app/tools/gimpgegltool.c:86
 msgid "Run an arbitrary GEGL operation"
 msgstr "Køyr ein valfri GEGL-operasjon"
 
-#: app/tools/gimpgegltool.c:85
+#: app/tools/gimpgegltool.c:87
 msgid "_GEGL Operation..."
 msgstr "_GEGL-operasjon …"
 
 #. The options vbox
-#: app/tools/gimpgegltool.c:233
+#: app/tools/gimpgegltool.c:238
 msgid "Select an operation from the list above"
 msgstr "Vel ein operasjon frå nedtrekkslista ovanfor"
 
@@ -24793,19 +24810,20 @@ msgid ""
 msgstr ""
 "Maksimal skala for raffineringspunkt som skal brukast for interpoleringsmaska"
 
-#: app/tools/gimpseamlessclonetool.c:192 app/tools/gimpseamlessclonetool.c:755
+#: app/tools/gimpseamlessclonetool.c:193 app/tools/gimpseamlessclonetool.c:711
+#: app/tools/gimpseamlessclonetool.c:760
 msgid "Seamless Clone"
 msgstr "Saumlaus kloning"
 
-#: app/tools/gimpseamlessclonetool.c:193
+#: app/tools/gimpseamlessclonetool.c:194
 msgid "Seamless Clone: Seamlessly paste one image into another"
 msgstr "Saumlaus kloning: Målar eit bilete saumlaust inn i eit anna"
 
-#: app/tools/gimpseamlessclonetool.c:194
+#: app/tools/gimpseamlessclonetool.c:195
 msgid "_Seamless Clone"
 msgstr "_Saumlaus kloning"
 
-#: app/tools/gimpseamlessclonetool.c:794
+#: app/tools/gimpseamlessclonetool.c:799
 msgid "Cloning the foreground object"
 msgstr "Klonar forgrunnsobjektet"
 
@@ -26980,20 +26998,20 @@ msgstr "Løyser symbolinformasjon …"
 msgid "%s (read only)"
 msgstr "%s (berre for lesing)"
 
-#: app/widgets/gimpdeviceeditor.c:160
+#: app/widgets/gimpdeviceeditor.c:158
 msgid "Delete the selected device"
 msgstr "Slett det valde utsyret"
 
-#: app/widgets/gimpdeviceeditor.c:539
+#: app/widgets/gimpdeviceeditor.c:536
 msgid "Delete Device Settings"
 msgstr "Slett innstillingane for utstyret"
 
-#: app/widgets/gimpdeviceeditor.c:560
+#: app/widgets/gimpdeviceeditor.c:557
 #, c-format
 msgid "Delete \"%s\"?"
 msgstr "Slette \"%s\"?"
 
-#: app/widgets/gimpdeviceeditor.c:563
+#: app/widgets/gimpdeviceeditor.c:560
 msgid ""
 "You are about to delete this device's stored settings.\n"
 "The next time this device is plugged, default settings will be used."
@@ -27217,48 +27235,48 @@ msgstr ""
 "Når denne er slått på, vil dialogvindauget automatisk følgje biletet du "
 "arbeider med."
 
-#: app/widgets/gimpdrawabletreeview.c:172
+#: app/widgets/gimpdrawabletreeview.c:171
 msgid "Lock pixels"
 msgstr "Lås pikslar"
 
-#: app/widgets/gimpdrawabletreeview.c:174
+#: app/widgets/gimpdrawabletreeview.c:173
 msgid "Lock position and size"
 msgstr "Lås plassering og storleik"
 
-#: app/widgets/gimpdrawabletreeview.c:394
+#: app/widgets/gimpdrawabletreeview.c:367
 msgid "Cannot select items while a floating selection is active."
 msgstr "Kan ikkje velja element når eit flytande utval er slått på."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:183
+#: app/widgets/gimpdrawabletreeview-filters.c:179
 msgid "Layer Effects"
 msgstr "Lageffektar"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:213
+#: app/widgets/gimpdrawabletreeview-filters.c:209
 msgid "Toggle the visibility of all filters."
 msgstr "Slå visinga av banen av/på."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:229
+#: app/widgets/gimpdrawabletreeview-filters.c:225
 msgid "Edit the selected filter."
 msgstr "Rediger det valde filteret."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:245
+#: app/widgets/gimpdrawabletreeview-filters.c:241
 msgid "Raise filter one step up in the stack."
 msgstr "Flytt filteret opp eit hakk i lagstabelen."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:260
+#: app/widgets/gimpdrawabletreeview-filters.c:256
 msgid "Lower filter one step down in the stack."
 msgstr "Flytt filteret ned eit hakk i stabelen."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:276
+#: app/widgets/gimpdrawabletreeview-filters.c:272
 msgid "Merge all active filters down."
 msgstr "Flett alle filtera som er i bruk nedover."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:292
+#: app/widgets/gimpdrawabletreeview-filters.c:288
 msgid "Remove the selected filter."
 msgstr "Fjern det merkte filteret."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:768
-#: app/widgets/gimpdrawabletreeview-filters.c:794
+#: app/widgets/gimpdrawabletreeview-filters.c:765
+#: app/widgets/gimpdrawabletreeview-filters.c:791
 msgid "Cannot reorder a filter that is being edited."
 msgstr "Kan ikkje endra rekkjefølgja på eit filter som er redigert."
 
@@ -27675,27 +27693,27 @@ msgid_plural "Indexed color (%d colors)"
 msgstr[0] "Indeksert farge"
 msgstr[1] "Indeksert farge (%d fargar)"
 
-#: app/widgets/gimpitemtreeview.c:565
+#: app/widgets/gimpitemtreeview.c:566
 msgid "Set Item Exclusive Content Lock"
 msgstr "Set elementet eksklusiv innhaldslås"
 
-#: app/widgets/gimpitemtreeview.c:579
+#: app/widgets/gimpitemtreeview.c:580
 msgid "Set Item Exclusive Position Lock"
 msgstr "Set elementet eksklusiv plasseringslås"
 
-#: app/widgets/gimpitemtreeview.c:592
+#: app/widgets/gimpitemtreeview.c:593
 msgid "Unlock visibility"
 msgstr "Lås opp synlegheita"
 
-#: app/widgets/gimpitemtreeview.c:593
+#: app/widgets/gimpitemtreeview.c:594
 msgid "Set Item Exclusive Visibility Lock"
 msgstr "Set elementet eksklusiv visingslås"
 
-#: app/widgets/gimpitemtreeview.c:619
+#: app/widgets/gimpitemtreeview.c:620
 msgid "Select items by patterns and store item sets"
 msgstr "Vel element etter mønster og lagra elementsettet"
 
-#: app/widgets/gimpitemtreeview.c:1454
+#: app/widgets/gimpitemtreeview.c:1742
 #, c-format
 msgid "%d item selected"
 msgid_plural "%d items selected"
@@ -27755,35 +27773,35 @@ msgstr "Ugyldig regulært uttrykk: %s\n"
 msgid "Switch to another group of modes"
 msgstr "Byt til ei anna modusgruppe"
 
-#: app/widgets/gimplayertreeview.c:413 app/widgets/gimplayertreeview.c:416
+#: app/widgets/gimplayertreeview.c:414 app/widgets/gimplayertreeview.c:417
 msgid "Lock alpha channel"
 msgstr "Lås alfakanalen"
 
-#: app/widgets/gimplayertreeview.c:414
+#: app/widgets/gimplayertreeview.c:415
 msgid "Unlock alpha channel"
 msgstr "Lås opp alfakanalen"
 
-#: app/widgets/gimplayertreeview.c:415
+#: app/widgets/gimplayertreeview.c:416
 msgid "Set Item Exclusive Alpha Channel lock"
 msgstr "Set elementet eksklusiv alfakanallås"
 
-#: app/widgets/gimplayertreeview.c:1051
+#: app/widgets/gimplayertreeview.c:1033
 msgid "Set layers mode"
 msgstr "Set lagmodus"
 
-#: app/widgets/gimplayertreeview.c:1259
+#: app/widgets/gimplayertreeview.c:1241
 msgctxt "layers-action"
 msgid "Anchor the floating mask"
 msgstr "Forankra den flytande maska"
 
-#: app/widgets/gimplayertreeview.c:1262
+#: app/widgets/gimplayertreeview.c:1244
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
 msgstr "Forankra det flytande laget"
 
 #. No channel. We cannot perform the add
 #. * mask action.
-#: app/widgets/gimplayertreeview.c:1523
+#: app/widgets/gimplayertreeview.c:1505
 msgid "No channels to create a layer mask from."
 msgstr "Ingen kanal å laga lagmaske frå."
 
@@ -27870,7 +27888,7 @@ msgstr ""
 "Det er uråd å køyra %s ein gong til.\n"
 "%s"
 
-#: app/widgets/gimppickablechooser.c:244 app/widgets/gimppickablechooser.c:527
+#: app/widgets/gimppickablechooser.c:241 app/widgets/gimppickablechooser.c:524
 msgid "Select an image in the left pane"
 msgstr "Vel eit bilete i det venstre feltet"
 
@@ -27882,7 +27900,7 @@ msgstr "Programtillegg"
 msgid "Progress"
 msgstr "Framgang"
 
-#: app/widgets/gimprow.c:270
+#: app/widgets/gimprow.c:492
 #, c-format
 msgid "Rename %s"
 msgstr "Gje %s nytt namn"
@@ -27969,55 +27987,55 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "Ugyldig UTF-8"
 
-#: app/widgets/gimpsettingsbox.c:304
+#: app/widgets/gimpsettingsbox.c:302
 msgid "Pick a preset from the list"
 msgstr "Vel eit forval frå lista"
 
-#: app/widgets/gimpsettingsbox.c:328
+#: app/widgets/gimpsettingsbox.c:326
 msgid "Save the current settings as named preset"
 msgstr "Lagra dei gjeldande innstillingar som namngjeve forval"
 
-#: app/widgets/gimpsettingsbox.c:346
+#: app/widgets/gimpsettingsbox.c:344
 msgid "Manage presets"
 msgstr "Handsam forvala"
 
-#: app/widgets/gimpsettingsbox.c:359
+#: app/widgets/gimpsettingsbox.c:357
 msgid "_Import Current Settings from File..."
 msgstr "_Importer dei gjeldande innstillingane frå ei fil …"
 
-#: app/widgets/gimpsettingsbox.c:364
+#: app/widgets/gimpsettingsbox.c:362
 msgid "_Export Current Settings to File..."
 msgstr "_Eksporter dei gjeldande innstillingane til ei fil …"
 
-#: app/widgets/gimpsettingsbox.c:370
+#: app/widgets/gimpsettingsbox.c:368
 msgid "_Manage Saved Presets..."
 msgstr "_Handsam dei lagra forvala …"
 
-#: app/widgets/gimpsettingsbox.c:584
+#: app/widgets/gimpsettingsbox.c:585
 msgid "Save Settings as Named Preset"
 msgstr "Lagra innstillingar som namngjeve forval"
 
-#: app/widgets/gimpsettingsbox.c:587
+#: app/widgets/gimpsettingsbox.c:588
 msgid "Enter a name for the preset"
 msgstr "Skriv eit namn for forvala"
 
-#: app/widgets/gimpsettingsbox.c:588
+#: app/widgets/gimpsettingsbox.c:589
 msgid "Saved Settings"
 msgstr "Lagra innstillingar"
 
-#: app/widgets/gimpsettingsbox.c:631
+#: app/widgets/gimpsettingsbox.c:632
 msgid "Manage Saved Presets"
 msgstr "Handsam dei lagra forvala"
 
-#: app/widgets/gimpsettingseditor.c:192
+#: app/widgets/gimpsettingseditor.c:191
 msgid "Import presets from a file"
 msgstr "Importer forvala frå ei fil"
 
-#: app/widgets/gimpsettingseditor.c:201
+#: app/widgets/gimpsettingseditor.c:200
 msgid "Export the selected presets to a file"
 msgstr "Lagra dei markerte forvala til ei fil"
 
-#: app/widgets/gimpsettingseditor.c:210
+#: app/widgets/gimpsettingseditor.c:209
 msgid "Delete the selected preset"
 msgstr "Slett det markerte forvalet"
 
@@ -28324,31 +28342,31 @@ msgstr ""
 msgid "Also in group:"
 msgstr "Også i gruppa:"
 
-#: app/widgets/gimptooleditor.c:243
+#: app/widgets/gimptooleditor.c:242
 msgid "Create a new tool group"
 msgstr "Lag ei ny verktøygruppe"
 
-#: app/widgets/gimptooleditor.c:250
+#: app/widgets/gimptooleditor.c:249
 msgid "Raise this item"
 msgstr "Lyft dette elementet"
 
-#: app/widgets/gimptooleditor.c:251
+#: app/widgets/gimptooleditor.c:250
 msgid "Raise this item to the top"
 msgstr "Sett dette elementet øvst"
 
-#: app/widgets/gimptooleditor.c:258
+#: app/widgets/gimptooleditor.c:257
 msgid "Lower this item"
 msgstr "Senk dette elementet"
 
-#: app/widgets/gimptooleditor.c:259
+#: app/widgets/gimptooleditor.c:258
 msgid "Lower this item to the bottom"
 msgstr "Sett dette elementet nedst"
 
-#: app/widgets/gimptooleditor.c:266
+#: app/widgets/gimptooleditor.c:265
 msgid "Delete this tool group"
 msgstr "Slett denne verktøygruppa"
 
-#: app/widgets/gimptooleditor.c:273
+#: app/widgets/gimptooleditor.c:272
 msgid "Reset tool order and visibility"
 msgstr "Tilbakestill rekkefølgja og visinga av verktøy"
 
@@ -28369,7 +28387,7 @@ msgstr "Slett verktøyforvala …"
 msgid "%s Preset"
 msgstr "Forval for %s"
 
-#: app/widgets/gimpundoeditor.c:262
+#: app/widgets/gimpundoeditor.c:261
 msgid "[ Base Image ]"
 msgstr "[ Basisbilete ]"
 
