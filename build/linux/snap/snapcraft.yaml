@@ -149,7 +149,6 @@ parts:
       - bison
       - flex
       - libaa1-dev
-      - libappstream-dev
       - libarchive-dev #https://github.com/ubuntu/gnome-sdk/issues/318
       - libcfitsio-dev #https://github.com/ubuntu/gnome-sdk/issues/320
       - libexpat1-dev
