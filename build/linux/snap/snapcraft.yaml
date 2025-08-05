@@ -113,7 +113,7 @@ parts:
       - -Dworkshop=true
     build-packages:
       - libmaxflow-dev
-      - libopenexr-dev
+      - libopenexr-dev #https://github.com/ubuntu/gnome-sdk/issues/321
       - libsuitesparse-dev
     stage-packages:
       - graphviz
@@ -147,19 +147,19 @@ parts:
       - flex
       - libaa1-dev
       - libappstream-dev
-      - libarchive-dev
-      - libcfitsio-dev
+      - libarchive-dev #https://github.com/ubuntu/gnome-sdk/issues/318
+      - libcfitsio-dev #https://github.com/ubuntu/gnome-sdk/issues/320
       - libexpat1-dev
       - libgexiv2-dev
       - libgs-dev
       - libheif-dev
-      - libjxl-dev
+      - libjxl-dev #https://github.com/ubuntu/gnome-sdk/issues/317
       - libmng-dev
       - libmypaint-dev
       - libqoi-dev
       - libwmf-dev
       - libxmu-dev
-      - libxpm-dev
+      - libxpm-dev #https://github.com/ubuntu/gnome-sdk/issues/319
       - xsltproc
     stage-packages:
       - libgexiv2-2
