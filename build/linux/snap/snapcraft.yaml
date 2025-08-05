@@ -120,7 +120,6 @@ parts:
     stage-packages:
       - graphviz
       - libmaxflow0
-      - libopenexr-3-1-30
       - libumfpack6
 
   gimp:
