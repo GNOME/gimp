@@ -261,8 +261,7 @@ gimp_row_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (priv->box), priv->view, FALSE, FALSE, 0);
 
   if (priv->viewable)
-    preview = (GIMP_VIEWABLE_GET_CLASS (priv->viewable)->get_preview     != NULL ||
-               GIMP_VIEWABLE_GET_CLASS (priv->viewable)->get_new_preview != NULL);
+    preview = gimp_viewable_has_preview (priv->viewable);
 
   gtk_widget_set_visible (priv->icon, ! preview);
   gtk_widget_set_visible (priv->view, preview);
@@ -516,8 +515,7 @@ gimp_row_real_set_viewable (GimpRow      *row,
                         G_CALLBACK (gimp_row_viewable_icon_changed),
                         row);
 
-      preview = (GIMP_VIEWABLE_GET_CLASS (priv->viewable)->get_preview     != NULL ||
-                 GIMP_VIEWABLE_GET_CLASS (priv->viewable)->get_new_preview != NULL);
+      preview = gimp_viewable_has_preview (priv->viewable);
     }
 
   gimp_row_viewable_name_changed (priv->viewable, row);
