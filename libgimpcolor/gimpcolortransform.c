@@ -26,6 +26,9 @@
 #include <string.h>
 
 #include <lcms2.h>
+#ifdef HAVE_LCMS_FAST_FLOAT_PLUGIN
+#include <lcms2_fast_float.h>
+#endif
 
 #include <gio/gio.h>
 #include <gegl.h>
@@ -127,6 +130,10 @@ gimp_color_transform_class_init (GimpColorTransformClass *klass)
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_DOUBLE);
+
+#ifdef HAVE_LCMS_FAST_FLOAT_PLUGIN
+  cmsPlugin (cmsFastFloatExtensions ());
+#endif
 
   cmsSetLogErrorHandler (lcms_error_handler);
 }

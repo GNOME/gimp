@@ -476,6 +476,10 @@ json_glib_minver  = '1.2.6'
 json_glib         = dependency('json-glib-1.0',      version: '>='+json_glib_minver)
 lcms_minver       = '2.8'
 lcms              = dependency('lcms2',              version: '>='+lcms_minver)
+if cc.has_header('lcms2_fast_float.h')
+  conf.set('HAVE_LCMS_FAST_FLOAT_PLUGIN', 1)
+endif
+
 libmypaint_minver = '1.5.0'
 libmypaint        = dependency('libmypaint',         version: '>='+libmypaint_minver)
 mypaint_brushes   = dependency('mypaint-brushes-2.0')
