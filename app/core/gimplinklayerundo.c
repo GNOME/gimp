@@ -195,4 +195,6 @@ gimp_link_layer_undo_pop (GimpUndo            *undo,
 
   layer_undo->modified = modified;
   layer_undo->link     = link;
+
+  gimp_drawable_update_all (GIMP_DRAWABLE (layer));
 }
