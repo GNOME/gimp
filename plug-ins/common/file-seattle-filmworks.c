@@ -103,7 +103,7 @@ static GimpImage      * load_image                         (GFile               
                                                             GimpRunMode            run_mode,
                                                             GError               **error);
 
-static GimpImage      * load_swf93a                        (FILE                  *fp,
+static GimpImage      * load_sfw93a                        (FILE                  *fp,
                                                             gsize                  file_size,
                                                             GError               **error);
 
@@ -241,7 +241,7 @@ load_image (GFile        *file,
   if (fread (magic, 1, 6, fp) != 6)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Invalid file. 1"));
+                   _("Invalid file."));
       fclose (fp);
       return NULL;
     }
@@ -250,7 +250,7 @@ load_image (GFile        *file,
   /* Read magic number to determine type */
   if (strcmp (magic, "SFW93A") == 0)
     {
-      image = load_swf93a (fp, file_size, error);
+      image = load_sfw93a (fp, file_size, error);
 
       if (image == NULL)
         {
@@ -261,15 +261,15 @@ load_image (GFile        *file,
   else if (strcmp (magic, "SFW94A") == 0)
     {
       GimpProcedure  *procedure;
-      GimpValueArray *return_vals   = NULL;
-      GFile          *temp_file     = NULL;
+      GimpValueArray *return_vals     = NULL;
+      GFile          *temp_file       = NULL;
       FILE           *temp_fp;
       guchar          data[file_size - 0xE0];
       gint            jpeg_start;
       gint            jpeg_data;
-      guint           index          = 0;
-      guint           metadata_index = 0;
-      guint           metadata_len[2];
+      guint           index           = 0;
+      guint           metadata_index  = 0;
+      guint           metadata_len[2] = { 0, 0 };
       gchar          *roll_num;
       gchar          *photo_date;
       gint            fixed_marker;
@@ -280,7 +280,7 @@ load_image (GFile        *file,
           fread (&data, file_size - 0xE0, 1, fp) != 1)
         {
           g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                       _("Invalid file. 2"));
+                       _("Invalid file."));
           fclose (fp);
           return NULL;
         }
@@ -337,7 +337,7 @@ load_image (GFile        *file,
       if (index > file_size - 13)
         {
           g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                       _("Invalid file. 5"));
+                       _("Invalid file."));
           return NULL;
         }
 
@@ -356,7 +356,7 @@ load_image (GFile        *file,
       if (index > file_size)
         {
           g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                       _("Invalid file. 6"));
+                       _("Invalid file."));
           return NULL;
         }
 
@@ -367,7 +367,7 @@ load_image (GFile        *file,
             {
               g_set_error (error,
                            G_FILE_ERROR, g_file_error_from_errno (errno),
-                           _("Invalid file. 7"));
+                           _("Invalid file."));
               return NULL;
             }
 
@@ -377,7 +377,7 @@ load_image (GFile        *file,
             {
               g_set_error (error,
                            G_FILE_ERROR, g_file_error_from_errno (errno),
-                           _("Invalid file. 8"));
+                           _("Invalid file."));
               return NULL;
             }
 
@@ -449,18 +449,36 @@ load_image (GFile        *file,
         {
           GimpParasite *parasite;
           gchar        *comment;
+          gchar        *verified_comment;
 
           comment = g_strdup_printf ("%s\n%s", roll_num, photo_date);
 
-          parasite = gimp_parasite_new ("gimp-comment",
-                                        GIMP_PARASITE_PERSISTENT,
-                                        strlen (comment) + 1, comment);
-          gimp_image_attach_parasite (image, parasite);
-          gimp_parasite_free (parasite);
-
-          g_free (comment);
           g_free (roll_num);
           g_free (photo_date);
+
+          verified_comment = g_convert (comment, -1, "utf-8", "iso8859-1",
+                                        NULL, NULL, NULL);
+
+          if (verified_comment)
+            g_free (comment);
+          else
+            verified_comment = comment;
+
+          if (! g_utf8_validate (verified_comment, -1, NULL))
+            {
+              g_printerr ("Invalid comment ignored.\n");
+            }
+          else
+            {
+              parasite = gimp_parasite_new ("gimp-comment",
+                                            GIMP_PARASITE_PERSISTENT,
+                                            strlen (verified_comment) + 1,
+                                            verified_comment);
+              gimp_image_attach_parasite (image, parasite);
+              gimp_parasite_free (parasite);
+
+              g_free (verified_comment);
+            }
         }
     }
   else
@@ -475,7 +493,7 @@ load_image (GFile        *file,
 }
 
 static GimpImage *
-load_swf93a (FILE    *fp,
+load_sfw93a (FILE    *fp,
              gsize    file_size,
              GError **error)
 {
@@ -493,7 +511,7 @@ load_swf93a (FILE    *fp,
   if (fread (&data, file_size - 30, 1, fp) != 1)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Invalid file. 9"));
+                   _("Invalid file."));
       return NULL;
     }
 
