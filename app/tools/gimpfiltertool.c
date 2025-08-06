@@ -1232,6 +1232,9 @@ gimp_filter_tool_halt (GimpFilterTool *filter_tool)
     }
 
   filter_tool->existing_filter = NULL;
+
+  if (tool_manager_get_active (tool->tool_info->gimp) == tool)
+    tool_manager_swap_tools (tool->tool_info->gimp);
 }
 
 static void

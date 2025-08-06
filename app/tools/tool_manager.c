@@ -711,6 +711,16 @@ tool_manager_select_tool (GimpToolManager *tool_manager,
             tool_manager->history = g_list_delete_link (tool_manager->history,
                                                         g_list_last (tool_manager->history));
         }
+
+      if (g_list_length (tool_manager->history) > 1)
+        {
+          /* Never store filter tool in history (only as current tool). */
+          GList        *prev_list = g_list_nth (tool_manager->history, 1);
+          GimpToolInfo *prev_tool = prev_list->data;
+
+          if (g_type_is_a (prev_tool->tool_type, GIMP_TYPE_FILTER_TOOL))
+            tool_manager->history = g_list_delete_link (tool_manager->history, prev_list);
+        }
     }
 
   g_set_object (&tool_manager->active_tool, tool);
