@@ -150,7 +150,7 @@ parts:
       - libaa1-dev #https://github.com/ubuntu/gnome-sdk/issues/322
       - libarchive-dev #https://github.com/ubuntu/gnome-sdk/issues/318
       - libcfitsio-dev #https://github.com/ubuntu/gnome-sdk/issues/320
-      - libexpat1-dev
+      - libexpat1-dev #it is on Gnome SDK Snap but inexplicably the linker can't find it
       - libgexiv2-dev
       - libgs-dev
       - libheif-dev
