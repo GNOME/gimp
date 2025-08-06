@@ -1589,9 +1589,12 @@ HELP
   GimpStrokeOptions *options =
     gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
 
-  g_object_get (options,
-                "emulate-brush-dynamics", &emulate_dynamics,
-		NULL);
+  if (options)
+    g_object_get (options,
+                  "emulate-brush-dynamics", &emulate_dynamics,
+		  NULL);
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -1630,6 +1633,138 @@ CODE
     );
 }
 
+sub context_get_paint_fade_length {
+    $blurb = 'Get the paint fade length.';
+
+    $help = <<'HELP';
+Get the paint fade length for paint tools and the gradient tool.
+HELP
+
+    $author = 'Alx Sa.';
+    $copyright = 'Alx Sa.';
+    $date = '2025';
+    $since = '3.2';
+
+    @outargs = (
+	{ name  => 'fade_length', type  => '0.0 <= double <= 32767.0',
+	  desc  => 'The paint fade length setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-paintbrush");
+
+  if (options)
+    g_object_get (options,
+                  "fade-length", &fade_length,
+		  NULL);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub context_set_paint_fade_length {
+    $blurb = 'Set the paint fade length.';
+
+    $help = <<'HELP';
+Set the paint fade length for paint tools and the gradient tool.
+HELP
+
+    $author = 'Alx Sa.';
+    $copyright = 'Alx Sa.';
+    $date = '2025';
+    $since = '3.2';
+
+    @inargs = (
+        { name => 'fade_length', type => '0.0 <= double <= 32767.0',
+          desc => 'The paint fade length setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-paintbrush");
+
+  g_object_set (options,
+                "fade-length", fade_length,
+		NULL);
+}
+CODE
+    );
+}
+
+sub context_get_paint_fade_repeat {
+    $blurb = 'Get the paint fade repeat type.';
+
+    $help = <<'HELP';
+Get the paint fade repeat type for paint tools and the gradient tool.
+HELP
+
+    $author = 'Alx Sa.';
+    $copyright = 'Alx Sa.';
+    $date = '2025';
+    $since = '3.2';
+
+    @outargs = (
+	{ name  => 'fade_repeat', type  => 'enum GimpRepeatMode',
+	  desc  => 'The paint fade repeat type setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-paintbrush");
+
+  if (options)
+    g_object_get (options,
+                  "fade-repeat", &fade_repeat,
+		  NULL);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub context_set_paint_fade_repeat {
+    $blurb = 'Set the paint fade repeat type.';
+
+    $help = <<'HELP';
+Set the paint fade repeat type for paint tools and the gradient tool.
+HELP
+
+    $author = 'Alx Sa.';
+    $copyright = 'Alx Sa.';
+    $date = '2025';
+    $since = '3.2';
+
+    @inargs = (
+        { name => 'fade_repeat', type => 'enum GimpRepeatMode',
+          desc => 'The paint fade repeat type setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-paintbrush");
+  g_object_set (options,
+                "fade-repeat", fade_repeat,
+		NULL);
+}
+CODE
+    );
+}
 
 sub context_get_mypaint_brush {
     $blurb = 'Get the currently active MyPaint brush.';
@@ -3534,6 +3669,8 @@ CODE
             context_get_gradient_blend_color_space context_set_gradient_blend_color_space
             context_get_gradient_repeat_mode context_set_gradient_repeat_mode
             context_get_gradient_reverse context_set_gradient_reverse
+            context_get_paint_fade_length context_set_paint_fade_length
+            context_get_paint_fade_repeat context_set_paint_fade_repeat
             context_get_palette context_set_palette
             context_get_font context_set_font
             context_get_antialias context_set_antialias

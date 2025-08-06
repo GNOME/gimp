@@ -2591,6 +2591,146 @@ gimp_context_set_gradient_reverse (gboolean reverse)
 }
 
 /**
+ * gimp_context_get_paint_fade_length:
+ *
+ * Get the paint fade length.
+ *
+ * Get the paint fade length for paint tools and the gradient tool.
+ *
+ * Returns: The paint fade length setting.
+ *
+ * Since: 3.2
+ **/
+gdouble
+gimp_context_get_paint_fade_length (void)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gdouble fade_length = 0.0;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-context-get-paint-fade-length",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    fade_length = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return fade_length;
+}
+
+/**
+ * gimp_context_set_paint_fade_length:
+ * @fade_length: The paint fade length setting.
+ *
+ * Set the paint fade length.
+ *
+ * Set the paint fade length for paint tools and the gradient tool.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_context_set_paint_fade_length (gdouble fade_length)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_DOUBLE, fade_length,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-context-set-paint-fade-length",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_paint_fade_repeat:
+ *
+ * Get the paint fade repeat type.
+ *
+ * Get the paint fade repeat type for paint tools and the gradient
+ * tool.
+ *
+ * Returns: The paint fade repeat type setting.
+ *
+ * Since: 3.2
+ **/
+GimpRepeatMode
+gimp_context_get_paint_fade_repeat (void)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpRepeatMode fade_repeat = 0;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-context-get-paint-fade-repeat",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    fade_repeat = GIMP_VALUES_GET_ENUM (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return fade_repeat;
+}
+
+/**
+ * gimp_context_set_paint_fade_repeat:
+ * @fade_repeat: The paint fade repeat type setting.
+ *
+ * Set the paint fade repeat type.
+ *
+ * Set the paint fade repeat type for paint tools and the gradient
+ * tool.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_context_set_paint_fade_repeat (GimpRepeatMode fade_repeat)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_REPEAT_MODE, fade_repeat,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-context-set-paint-fade-repeat",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * gimp_context_get_palette:
  *
  * Get the currently active palette.
