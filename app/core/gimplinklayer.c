@@ -645,6 +645,8 @@ gimp_link_layer_discard (GimpLinkLayer *layer)
                                    _("Discard Link"), layer);
 
   layer->p->modified = TRUE;
+
+  gimp_drawable_update_all (GIMP_DRAWABLE (layer));
 }
 
 void
