@@ -787,7 +787,6 @@ gimp_context_init (GimpContext *context)
 
   context->tool_info       = NULL;
   context->tool_name       = NULL;
-  context->last_tool_info  = NULL;
 
   context->paint_info      = NULL;
   context->paint_name      = NULL;
@@ -999,7 +998,6 @@ gimp_context_dispose (GObject *object)
   g_clear_object (&context->buffer);
   g_clear_object (&context->imagefile);
   g_clear_object (&context->template);
-  g_clear_object (&context->last_tool_info);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -2156,14 +2154,6 @@ gimp_context_get_tool (GimpContext *context)
   return context->tool_info;
 }
 
-GimpToolInfo *
-gimp_context_get_last_tool (GimpContext *context)
-{
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-
-  return context->last_tool_info;
-}
-
 void
 gimp_context_set_tool (GimpContext  *context,
                        GimpToolInfo *tool_info)
@@ -2218,19 +2208,15 @@ gimp_context_tool_removed (GimpContainer *container,
                            GimpToolInfo  *tool_info,
                            GimpContext   *context)
 {
-  if (tool_info == context->tool_info || tool_info == context->last_tool_info)
+  if (tool_info == context->tool_info)
     {
-      /* If the removed tool is the current one, switch back to the last tool.
-       * This is more user-friendly than just setting to NULL. */
-      if (tool_info == context->tool_info)
-        {
-          if (context->last_tool_info != NULL)
-            gimp_context_swap_tools (context);
-          else
-            gimp_context_set_tool (context, NULL);
-        }
+      g_signal_handlers_disconnect_by_func (context->tool_info,
+                                            gimp_context_tool_dirty,
+                                            context);
+      g_clear_object (&context->tool_info);
 
-      context->last_tool_info = NULL;
+      if (! gimp_container_frozen (container))
+        gimp_context_tool_list_thaw (container, context);
     }
 }
 
@@ -2254,6 +2240,8 @@ gimp_context_real_set_tool (GimpContext  *context,
                                             context);
     }
 
+  g_set_object (&context->tool_info, tool_info);
+
   if (tool_info)
     {
       g_signal_connect_object (tool_info, "name-changed",
@@ -2268,27 +2256,10 @@ gimp_context_real_set_tool (GimpContext  *context,
         gimp_context_real_set_paint_info (context, tool_info->paint_info);
     }
 
-  /* Instead of unref-ing the current tool, save it as last_tool_info
-   * for possible use of gimp_context_swap_tools.
-   */
-  if (context->last_tool_info)
-    g_object_unref (context->last_tool_info);
-
-  context->last_tool_info = context->tool_info;
-
-  /* Now we set the new tool. */
-  context->tool_info = tool_info ? g_object_ref (tool_info) : NULL;
-
   g_object_notify (G_OBJECT (context), "tool");
   gimp_context_tool_changed (context);
 }
 
-void
-gimp_context_swap_tools (GimpContext *context)
-{
-  if (context->last_tool_info)
-    gimp_context_set_tool (context, context->last_tool_info);
-}
 
 /*****************************************************************************/
 /*  paint info  **************************************************************/

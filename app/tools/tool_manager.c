@@ -55,6 +55,8 @@ struct _GimpToolManager
   GimpTool      *active_tool;
   GSList        *tool_stack;
 
+  GList         *history;
+
   GimpToolGroup *active_tool_group;
 
   GimpImage     *image;
@@ -119,7 +121,8 @@ tool_manager_init (Gimp *gimp)
 
   tool_manager = g_slice_new0 (GimpToolManager);
 
-  tool_manager->gimp = gimp;
+  tool_manager->gimp    = gimp;
+  tool_manager->history = NULL;
 
   g_object_set_qdata (G_OBJECT (gimp), tool_manager_quark, tool_manager);
 
@@ -209,6 +212,8 @@ tool_manager_exit (Gimp *gimp)
 
   tool_manager_set_active_tool_group (tool_manager, NULL);
 
+  g_list_free (tool_manager->history);
+
   g_slice_free (GimpToolManager, tool_manager);
 
   g_object_set_qdata (G_OBJECT (gimp), tool_manager_quark, NULL);
@@ -274,6 +279,20 @@ tool_manager_pop_tool (Gimp *gimp)
 
       g_object_unref (tool);
     }
+}
+
+void
+tool_manager_swap_tools (Gimp *gimp)
+{
+  GimpToolManager *tool_manager;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  tool_manager = tool_manager_get (gimp);
+
+  if (g_list_length (tool_manager->history) > 1)
+    gimp_context_set_tool (tool_manager->gimp->user_context,
+                           g_list_nth_data (tool_manager->history, 1));
 }
 
 gboolean
@@ -669,6 +688,28 @@ tool_manager_select_tool (GimpToolManager *tool_manager,
 
           tool_manager_control_active (gimp, GIMP_TOOL_ACTION_HALT, display);
           tool_manager_focus_display_active (gimp, NULL);
+        }
+    }
+
+  if (tool_manager->history == NULL ||
+      tool_manager->history->data != tool->tool_info)
+    {
+      /* Update the history up to 3 element maximum and avoiding
+       * duplicates.
+       */
+      GList *found;
+
+      if ((found = g_list_find (tool_manager->history, tool->tool_info)))
+        {
+          tool_manager->history = g_list_remove_link (tool_manager->history, found);
+          tool_manager->history = g_list_concat (found, tool_manager->history);
+        }
+      else
+        {
+          tool_manager->history = g_list_prepend (tool_manager->history, tool->tool_info);
+          if (g_list_length (tool_manager->history) > 3)
+            tool_manager->history = g_list_delete_link (tool_manager->history,
+                                                        g_list_last (tool_manager->history));
         }
     }
 

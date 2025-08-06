@@ -18,6 +18,10 @@
 #pragma once
 
 
+void   tools_swap_cmd_callback                      (GimpAction *action,
+                                                     GVariant   *value,
+                                                     gpointer    data);
+
 void   tools_select_cmd_callback                    (GimpAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);

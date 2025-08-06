@@ -58,7 +58,6 @@ struct _GimpContext
 
   GimpToolInfo         *tool_info;
   gchar                *tool_name;
-  GimpToolInfo         *last_tool_info;
 
   GimpPaintInfo        *paint_info;
   gchar                *paint_name;
@@ -238,10 +237,8 @@ void             gimp_context_display_changed     (GimpContext     *context);
 
 /*  tool  */
 GimpToolInfo   * gimp_context_get_tool            (GimpContext     *context);
-GimpToolInfo   * gimp_context_get_last_tool       (GimpContext     *context);
 void             gimp_context_set_tool            (GimpContext     *context,
                                                    GimpToolInfo    *tool_info);
-void             gimp_context_swap_tools          (GimpContext     *context);
 
 void             gimp_context_tool_changed        (GimpContext     *context);
 

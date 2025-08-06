@@ -26,6 +26,9 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
+#include "tools/tools-types.h"
+#include "tools/tool_manager.h"
+
 #include "dialogs/dialogs-types.h"
 
 #include "display/gimpdisplay.h"
@@ -480,11 +483,9 @@ swap_tools (gconstpointer data)
 
               gimp_context_set_tool (user_context, second_tool_info);
               g_assert (gimp_context_get_tool (user_context) == second_tool_info);
-              g_assert (gimp_context_get_last_tool (user_context) == first_tool_info);
 
-              gimp_context_swap_tools (user_context);
+              tool_manager_swap_tools (gimp);
               g_assert (gimp_context_get_tool (user_context) == first_tool_info);
-              g_assert (gimp_context_get_last_tool (user_context) == second_tool_info);
             }
         }
     }

@@ -42,6 +42,15 @@
 #include "gimp-intl.h"
 
 
+static const GimpActionEntry tools_actions[] =
+{
+  { "tools-swap", NULL,
+    NC_("tools-action", "Activate _Last Tool"), NULL, { "<shift>X", NULL },
+    NC_("tools-action", "Switch back to the last activated tool"),
+    tools_swap_cmd_callback,
+    GIMP_HELP_TOOLBOX_SWAP_TOOLS }
+};
+
 static const GimpStringActionEntry tools_alternative_actions[] =
 {
   { "tools-by-color-select-short", GIMP_ICON_TOOL_BY_COLOR_SELECT,
@@ -652,6 +661,10 @@ void
 tools_actions_setup (GimpActionGroup *group)
 {
   GList *list;
+
+  gimp_action_group_add_actions (group, "tools-action",
+                                 tools_actions,
+                                 G_N_ELEMENTS (tools_actions));
 
   gimp_action_group_add_string_actions (group, "tools-action",
                                         tools_alternative_actions,

@@ -66,6 +66,18 @@ static void   tools_activate_enum_action (const gchar *action_desc,
 /*  public functions  */
 
 void
+tools_swap_cmd_callback (GimpAction *action,
+                         GVariant   *value,
+                         gpointer    data)
+{
+  Gimp *gimp;
+
+  return_if_no_gimp (gimp, data);
+
+  tool_manager_swap_tools (gimp);
+}
+
+void
 tools_select_cmd_callback (GimpAction *action,
                            GVariant   *value,
                            gpointer    data)

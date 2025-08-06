@@ -54,13 +54,7 @@ static const GimpActionEntry context_actions[] =
     NC_("context-action", "S_wap Colors"), NULL, { "X", NULL },
     NC_("context-action", "Exchange foreground and background colors"),
     context_colors_swap_cmd_callback,
-    GIMP_HELP_TOOLBOX_SWAP_COLORS },
-
-  { "context-tools-swap", NULL,
-    NC_("context-action", "_Last Tool"), NULL, { "<shift>X", NULL },
-    NC_("context-action", "Switch back to the last activated tool"),
-    context_tools_swap_cmd_callback,
-    GIMP_HELP_TOOLBOX_SWAP_TOOLS }
+    GIMP_HELP_TOOLBOX_SWAP_COLORS }
 };
 
 static GimpEnumActionEntry context_palette_foreground_actions[] =
