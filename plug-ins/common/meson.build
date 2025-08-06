@@ -135,7 +135,7 @@ endif
 
 if wmf.found()
   common_plugins_list += { 'name': 'file-wmf',
-    'deps': [ gtk3, gegl, wmf, ],
+    'deps': [ gtk3, gegl, wmf, expat, ],
   }
 endif
 

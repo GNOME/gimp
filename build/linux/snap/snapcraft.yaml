@@ -83,7 +83,6 @@ parts:
       - CLICOLOR_FORCE: '1'
       - CFLAGS: -fdiagnostics-color=always
       - CXXFLAGS: -fdiagnostics-color=always
-      - C_INCLUDE_PATH: /snap/gnome-46-2404-sdk/current/usr/include:${C_INCLUDE_PATH:+:$C_INCLUDE_PATH}
       - LD_LIBRARY_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$LD_LIBRARY_PATH
       - GI_TYPELIB_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0:$GI_TYPELIB_PATH
       #FIXME: needed to generate splash image because babl and gegl not fully relocatable yet

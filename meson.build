@@ -942,6 +942,9 @@ wmf_minver = '0.2.8'
 wmf = dependency('libwmf', version: '>='+wmf_minver,
   required: get_option('wmf')
 )
+expat = dependency('expat',
+  required: get_option('wmf')
+)
 
 openjpeg_minver = '2.1.0'
 openjpeg = dependency('libopenjp2', version: '>='+openjpeg_minver,
