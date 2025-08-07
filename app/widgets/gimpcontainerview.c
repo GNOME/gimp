@@ -488,45 +488,6 @@ gimp_container_view_is_item_selected (GimpContainerView *view,
 
 /*  protected functions, only to be used by implementors  */
 
-gpointer
-_gimp_container_view_lookup (GimpContainerView *view,
-                             GimpViewable      *viewable)
-{
-  GimpContainerViewPrivate *private;
-
-  g_return_val_if_fail (GIMP_IS_CONTAINER_VIEW (view), NULL);
-  g_return_val_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable), NULL);
-
-  /*  we handle the NULL viewable here as a workaround for bug #149906 */
-  if (! viewable)
-    return NULL;
-
-  private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
-
-  return g_hash_table_lookup (private->item_hash, viewable);
-}
-
-gboolean
-_gimp_container_view_contains (GimpContainerView *view,
-                               GList             *viewables)
-{
-  GimpContainerViewPrivate *private;
-  GList                    *iter;
-
-  g_return_val_if_fail (GIMP_IS_CONTAINER_VIEW (view), FALSE);
-  g_return_val_if_fail (viewables, FALSE);
-
-  private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
-
-  for (iter = viewables; iter; iter = iter->next)
-    {
-      if (! g_hash_table_contains (private->item_hash, iter->data))
-        return FALSE;
-    }
-
-  return TRUE;
-}
-
 void
 _gimp_container_view_selection_changed (GimpContainerView *view)
 {
@@ -734,11 +695,6 @@ gimp_container_view_real_set_container (GimpContainerView *view,
       if (private->context)
         gimp_container_view_disconnect_context (view);
 
-#if 0
-      /* needed? */
-      gimp_container_view_set_selected (view, NULL);
-#endif
-
       if (! GIMP_CONTAINER_VIEW_GET_IFACE (view)->use_list_model)
         _gimp_container_view_disconnect_cruft (view);
     }
@@ -892,10 +848,8 @@ gimp_container_view_button_viewables_dropped (GtkWidget *widget,
 {
   GimpContainerView *view = GIMP_CONTAINER_VIEW (data);
 
-  if (viewables)
+  if (viewables && gimp_container_view_set_selected (view, viewables))
     {
-      gimp_container_view_set_selected (view, viewables);
-
       gtk_button_clicked (GTK_BUTTON (widget));
     }
 }
@@ -909,10 +863,8 @@ gimp_container_view_button_viewable_dropped (GtkWidget    *widget,
 {
   GimpContainerView *view = GIMP_CONTAINER_VIEW (data);
 
-  if (viewable && _gimp_container_view_lookup (view, viewable))
+  if (viewable && gimp_container_view_set_1_selected (view, viewable))
     {
-      gimp_container_view_set_1_selected (view, viewable);
-
       gtk_button_clicked (GTK_BUTTON (widget));
     }
 }

@@ -58,6 +58,7 @@
 #include "gimpcellrendererviewable.h"
 #include "gimpcontainertreestore.h"
 #include "gimpcontainerview.h"
+#include "gimpcontainerview-cruft.h"
 #include "gimpdnd.h"
 #include "gimphelp-ids.h"
 #include "gimplayermodebox.h"

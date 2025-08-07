@@ -21,7 +21,12 @@
 #pragma once
 
 
-void   _gimp_container_view_connect_cruft    (GimpContainerView *view);
-void   _gimp_container_view_disconnect_cruft (GimpContainerView *view);
+void      _gimp_container_view_connect_cruft    (GimpContainerView *view);
+void      _gimp_container_view_disconnect_cruft (GimpContainerView *view);
 
-void   _gimp_container_view_real_clear_items (GimpContainerView *view);
+void      _gimp_container_view_real_clear_items (GimpContainerView *view);
+
+gpointer  _gimp_container_view_lookup           (GimpContainerView *view,
+                                                 GimpViewable      *viewable);
+gboolean  _gimp_container_view_contains         (GimpContainerView *view,
+                                                 GList             *viewables);

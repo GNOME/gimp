@@ -48,6 +48,7 @@
 #include "gimpaction.h"
 #include "gimpcontainertreestore.h"
 #include "gimpcontainerview.h"
+#include "gimpcontainerview-cruft.h"
 #include "gimpdnd.h"
 #include "gimpdocked.h"
 #include "gimpitemtreeview.h"
