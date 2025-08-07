@@ -2657,6 +2657,7 @@ load_dialog (GFile         *file,
   GtkWidget *sw;
   GtkWidget *viewport;
   GtkWidget *frame;
+  GtkWidget *box;
   gboolean   run;
   gint       sample_spacing;
   gint       width  = 0;
@@ -2802,11 +2803,23 @@ load_dialog (GFile         *file,
                                             "palette-box");
   gtk_frame_set_label (GTK_FRAME (frame), _("Palette"));
 
+  /* Adjust layout to be accessible for smaller screens */
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "settings-box",
+                                  "image-frame", "palette-frame",
+                                  NULL);
+
+  box = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                        "layout-box",
+                                        "preview-frame", "settings-box",
+                                        NULL);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (box),
+                                  GTK_ORIENTATION_HORIZONTAL);
+  gtk_box_set_spacing (GTK_BOX (box), 12);
+  gtk_widget_set_size_request (box, PREVIEW_SIZE * 2, -1);
+
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
-                              "preview-frame",
-                              "image-frame",
-                              "palette-frame",
-                              NULL);
+                              "layout-box", NULL);
 
   g_signal_connect_swapped (config, "notify::width",
                             G_CALLBACK (preview_update_size),
