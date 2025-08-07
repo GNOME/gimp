@@ -87,6 +87,8 @@ parts:
       #FIXME: needed to generate splash image because babl and gegl not fully relocatable yet
       - BABL_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/babl-0.1
       - GEGL_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gegl-0.4
+      #FIXME: GNOME SDK is not setting this runtime var required by glib-networking test on gimp build
+      - GIO_MODULE_DIR: /snap/gnome-46-2404-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gio/modules
 
   babl:
     source: https://gitlab.gnome.org/GNOME/babl.git
@@ -127,10 +129,6 @@ parts:
       - gegl
     source: .
     source-type: local
-    override-pull: |
-      craftctl default
-      #FIXME: g_tls_backend_supports_tls is not being found on SDK
-      patch -p1 < $CRAFT_PROJECT_DIR/build/linux/snap/patches/0001-meson-Disable-glib-networking-test-for-Snap.patch
     build-environment: *SNAP_ENVIRON
     plugin: meson
     meson-parameters:
