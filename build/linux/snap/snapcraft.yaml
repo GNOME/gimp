@@ -11,7 +11,7 @@ website: https://gimp.org/
 contact: https://www.gimp.org/discuss.html
 issues: https://gitlab.gnome.org/GNOME/gimp/-/issues
 source-code: https://gitlab.gnome.org/GNOME/gimp
-license: MIT
+license: GPL-3.0+
 
 version: 3.1.3
 grade: devel
