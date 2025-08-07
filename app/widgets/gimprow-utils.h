@@ -21,9 +21,12 @@
 #pragma once
 
 
+GType       gimp_row_type_from_viewable_type   (GType    viewable_type);
+
+
 /*  GtkListBoxCreateWidgetFunc  */
 
-GtkWidget * gimp_row_create_for_context        (gpointer      item,
-                                                gpointer      context);
-GtkWidget * gimp_row_create_for_container_view (gpointer      item,
-                                                gpointer      container_view);
+GtkWidget * gimp_row_create_for_context        (gpointer item,
+                                                gpointer context);
+GtkWidget * gimp_row_create_for_container_view (gpointer item,
+                                                gpointer container_view);

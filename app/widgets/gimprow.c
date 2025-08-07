@@ -33,6 +33,7 @@
 #include "gimpdnd.h"
 #include "gimpeditor.h"
 #include "gimprow.h"
+#include "gimprow-utils.h"
 #include "gimpview.h"
 #include "gimpviewrenderer.h"
 
@@ -72,8 +73,8 @@ struct _GimpRowPrivate
 
   GtkWidget    *icon;
   GtkWidget    *view;
-
   GtkWidget    *label;
+
   GtkWidget    *popover;
   GtkGesture   *label_long_press;
 };
@@ -107,15 +108,17 @@ static void       gimp_row_real_set_context      (GimpRow          *row,
 static void       gimp_row_real_set_viewable     (GimpRow          *row,
                                                   GimpViewable     *viewable);
 static void       gimp_row_real_set_view_size    (GimpRow          *row);
+static void       gimp_row_real_icon_changed     (GimpRow          *row);
+static void       gimp_row_real_name_changed     (GimpRow          *row);
 static void       gimp_row_real_monitor_changed  (GimpRow          *row);
 static void       gimp_row_real_edit_name        (GimpRow          *row);
 static gboolean   gimp_row_real_name_edited      (GimpRow          *row,
                                                   const gchar      *new_name);
 
-static void       gimp_row_viewable_icon_changed (GimpViewable     *viewable,
+static void       gimp_row_icon_changed          (GimpViewable     *viewable,
                                                   const GParamSpec *pspec,
                                                   GimpRow          *row);
-static void       gimp_row_viewable_name_changed (GimpViewable     *viewable,
+static void       gimp_row_name_changed          (GimpViewable     *viewable,
                                                   GimpRow          *row);
 
 static void       gimp_row_label_long_pressed    (GtkGesture       *gesture,
@@ -159,6 +162,8 @@ gimp_row_class_init (GimpRowClass *klass)
   klass->set_context               = gimp_row_real_set_context;
   klass->set_viewable              = gimp_row_real_set_viewable;
   klass->set_view_size             = gimp_row_real_set_view_size;
+  klass->icon_changed              = gimp_row_real_icon_changed;
+  klass->name_changed              = gimp_row_real_name_changed;
   klass->monitor_changed           = gimp_row_real_monitor_changed;
   klass->edit_name                 = gimp_row_real_edit_name;
   klass->name_edited               = gimp_row_real_name_edited;
@@ -466,10 +471,10 @@ gimp_row_real_set_viewable (GimpRow      *row,
   if (priv->viewable)
     {
       g_signal_handlers_disconnect_by_func (priv->viewable,
-                                            gimp_row_viewable_icon_changed,
+                                            gimp_row_icon_changed,
                                             row);
       g_signal_handlers_disconnect_by_func (priv->viewable,
-                                            gimp_row_viewable_name_changed,
+                                            gimp_row_name_changed,
                                             row);
 
       if (! viewable)
@@ -509,21 +514,21 @@ gimp_row_real_set_viewable (GimpRow      *row,
     {
       g_signal_connect (priv->viewable,
                         GIMP_VIEWABLE_GET_CLASS (viewable)->name_changed_signal,
-                        G_CALLBACK (gimp_row_viewable_name_changed),
+                        G_CALLBACK (gimp_row_name_changed),
                         row);
       g_signal_connect (priv->viewable, "notify::icon-name",
-                        G_CALLBACK (gimp_row_viewable_icon_changed),
+                        G_CALLBACK (gimp_row_icon_changed),
                         row);
 
       preview = gimp_viewable_has_preview (priv->viewable);
     }
 
-  gimp_row_viewable_name_changed (priv->viewable, row);
+  gimp_row_name_changed (priv->viewable, row);
 
   if (priv->icon)
     {
       gtk_widget_set_visible (priv->icon, ! preview);
-      gimp_row_viewable_icon_changed (priv->viewable, NULL, row);
+      gimp_row_icon_changed (priv->viewable, NULL, row);
     }
 
   if (priv->view)
@@ -546,6 +551,31 @@ gimp_row_real_set_view_size (GimpRow *row)
     gimp_view_renderer_set_size (GIMP_VIEW (priv->view)->renderer,
                                  priv->view_size,
                                  priv->view_border_width);
+}
+
+static void
+gimp_row_real_icon_changed (GimpRow *row)
+{
+  GimpRowPrivate *priv      = GET_PRIVATE (row);
+  const gchar    *icon_name = NULL;
+
+  if (priv->viewable)
+    icon_name = gimp_viewable_get_icon_name (priv->viewable);
+
+  gtk_image_set_from_icon_name (GTK_IMAGE (priv->icon), icon_name,
+                                GTK_ICON_SIZE_BUTTON);
+}
+
+static void
+gimp_row_real_name_changed (GimpRow *row)
+{
+  GimpRowPrivate *priv        = GET_PRIVATE (row);
+  const gchar    *description = NULL;
+
+  if (priv->viewable)
+    description = gimp_viewable_get_description (priv->viewable, NULL);
+
+  gtk_label_set_text (GTK_LABEL (priv->label), description);
 }
 
 static void
@@ -626,10 +656,14 @@ GtkWidget *
 gimp_row_new (GimpContext  *context,
               GimpViewable *viewable)
 {
+  GType row_type;
+
   g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
 
-  return g_object_new (GIMP_TYPE_ROW,
+  row_type = gimp_row_type_from_viewable_type (G_OBJECT_TYPE (viewable));
+
+  return g_object_new (row_type,
                        "context",  context,
                        "viewable", viewable,
                        NULL);
@@ -735,35 +769,52 @@ gimp_row_monitor_changed (GimpRow *row)
   GIMP_ROW_GET_CLASS (row)->monitor_changed (row);
 }
 
+GtkWidget *
+_gimp_row_get_icon (GimpRow *row)
+{
+  GimpRowPrivate *priv = GET_PRIVATE (row);
+
+  g_return_val_if_fail (GIMP_IS_ROW (row), NULL);
+
+  return priv->icon;
+}
+
+GtkWidget *
+_gimp_row_get_view (GimpRow *row)
+{
+  GimpRowPrivate *priv = GET_PRIVATE (row);
+
+  g_return_val_if_fail (GIMP_IS_ROW (row), NULL);
+
+  return priv->view;
+}
+
+GtkWidget *
+_gimp_row_get_label (GimpRow *row)
+{
+  GimpRowPrivate *priv = GET_PRIVATE (row);
+
+  g_return_val_if_fail (GIMP_IS_ROW (row), NULL);
+
+  return priv->label;
+}
+
 
 /*  private functions  */
 
 static void
-gimp_row_viewable_icon_changed (GimpViewable     *viewable,
-                                const GParamSpec *pspec,
-                                GimpRow          *row)
+gimp_row_icon_changed (GimpViewable     *viewable,
+                       const GParamSpec *pspec,
+                       GimpRow          *row)
 {
-  GimpRowPrivate *priv      = GET_PRIVATE (row);
-  const gchar    *icon_name = NULL;
-
-  if (priv->viewable)
-    icon_name = gimp_viewable_get_icon_name (viewable);
-
-  gtk_image_set_from_icon_name (GTK_IMAGE (priv->icon), icon_name,
-                                GTK_ICON_SIZE_BUTTON);
+  GIMP_ROW_GET_CLASS (row)->icon_changed (row);
 }
 
 static void
-gimp_row_viewable_name_changed (GimpViewable *viewable,
-                                GimpRow      *row)
+gimp_row_name_changed (GimpViewable *viewable,
+                       GimpRow      *row)
 {
-  GimpRowPrivate *priv        = GET_PRIVATE (row);
-  const gchar    *description = NULL;
-
-  if (priv->viewable)
-    description = gimp_viewable_get_description (viewable, NULL);
-
-  gtk_label_set_text (GTK_LABEL (priv->label), description);
+  GIMP_ROW_GET_CLASS (row)->name_changed (row);
 }
 
 static void
@@ -818,6 +869,8 @@ gimp_row_drag_pixbuf (GtkWidget *widget,
   gint            width;
   gint            height;
 
+  g_printerr ("drag pixbuf\n");
+
   if (priv->viewable &&
       gimp_viewable_get_size (priv->viewable, &width, &height))
     {
@@ -825,6 +878,8 @@ gimp_row_drag_pixbuf (GtkWidget *widget,
                                            priv->context,
                                            width, height, NULL, NULL);
     }
+
+  g_printerr ("failed\n");
 
   return NULL;
 }

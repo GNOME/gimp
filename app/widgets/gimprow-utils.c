@@ -33,6 +33,17 @@
 #include "gimprow-utils.h"
 
 
+GType
+gimp_row_type_from_viewable_type (GType viewable_type)
+{
+  GType row_type = GIMP_TYPE_ROW;
+
+  g_return_val_if_fail (g_type_is_a (viewable_type, GIMP_TYPE_VIEWABLE),
+                        G_TYPE_NONE);
+
+  return row_type;
+}
+
 GtkWidget *
 gimp_row_create_for_context (gpointer item,
                              gpointer context)
