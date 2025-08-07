@@ -176,3 +176,7 @@ parts:
       current_path=$(grep "# (plug-in-path" ${CRAFT_PART_INSTALL}/etc/gimp/3.0/gimprc | cut -d '"' -f2)
       echo "(plug-in-path \"${current_path}\")" >> ${CRAFT_PART_INSTALL}/etc/gimp/3.0/gimprc
       craftctl default
+    override-prime: |
+      # get gimp icon for proper desktop integration
+      cp $CRAFT_STAGE/usr/share/icons/hicolor/scalable/apps/gimp.svg $CRAFT_PRIME/gimp
+      craftctl default
