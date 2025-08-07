@@ -174,14 +174,6 @@ parts:
       - mypaint-brushes
       - poppler-data
     override-stage: |
-      # fix gimp python interpreters file
-      cat <<EOF > ${CRAFT_PART_INSTALL}/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/gimp/3.0/interpreters/pygimp.interp
-      python=/usr/bin/python3
-      python3=/usr/bin/python3
-      /usr/bin/python=/usr/bin/python3
-      /usr/bin/python3=/usr/bin/python3
-      :Python:E::py::python3:
-      EOF
       # update gimp's plugin search path so it will pick up plugins mounted over snapd's content interface
       current_path=$(grep "# (plug-in-path" ${CRAFT_PART_INSTALL}/etc/gimp/3.0/gimprc | cut -d '"' -f2)
       echo "(plug-in-path \"${current_path}\")" >> ${CRAFT_PART_INSTALL}/etc/gimp/3.0/gimprc
