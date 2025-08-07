@@ -674,8 +674,10 @@ static void
 gimp_device_info_updated (GimpDeviceInfo *info)
 {
   g_return_if_fail (GIMP_IS_DEVICE_INFO (info));
-  g_return_if_fail ((info->priv->device == NULL && info->priv->display == NULL) ||
-                    (GDK_IS_DEVICE (info->priv->device) && GDK_IS_DISPLAY (info->priv->display)));
+  g_return_if_fail ((info->priv->device == NULL &&
+                     info->priv->display == NULL) ||
+                    (GDK_IS_DEVICE (info->priv->device) &&
+                     GDK_IS_DISPLAY (info->priv->display)));
 
   g_object_freeze_notify (G_OBJECT (info));
 
