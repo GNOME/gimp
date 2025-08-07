@@ -254,7 +254,7 @@ gimp_link_layer_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_LINK:
-      gimp_link_layer_set_link (layer, g_value_get_object (value), TRUE);
+      gimp_link_layer_set_link (layer, g_value_get_object (value), FALSE);
       break;
     case PROP_AUTO_RENAME:
       layer->p->auto_rename = g_value_get_boolean (value);
@@ -305,10 +305,9 @@ gimp_link_layer_duplicate (GimpItem *item,
         {
           GimpLink *link = gimp_link_duplicate (layer->p->link);
 
-          /* XXX Shouldn't we block rendering it, and just always copy
-           * the buffer? This should be faster.
-           */
           gimp_link_layer_set_link (new_layer, link, FALSE);
+
+          g_object_unref (link);
         }
 
       gimp_config_sync (G_OBJECT (layer), G_OBJECT (new_layer), 0);
@@ -566,11 +565,9 @@ gimp_link_layer_new (GimpImage *image,
   gimp_layer_set_mode (GIMP_LAYER (layer),
                        gimp_image_get_default_new_layer_mode (image),
                        FALSE);
+
   if (! gimp_link_layer_set_link (layer, link, FALSE))
-    {
-      g_object_unref (layer);
-      return NULL;
-    }
+    g_clear_object (&layer);
 
   return GIMP_LAYER (layer);
 }
@@ -593,10 +590,6 @@ gimp_link_layer_set_link (GimpLinkLayer *layer,
   g_return_val_if_fail (GIMP_IS_LINK_LAYER (layer), FALSE);
   g_return_val_if_fail (GIMP_IS_LINK (link), FALSE);
 
-  /* TODO: look deeper into the link paths. */
-  if (layer->p->link == link)
-    return ! gimp_link_is_broken (link, FALSE, NULL);
-
   if (gimp_item_is_attached (GIMP_ITEM (layer)) && push_undo)
     gimp_image_undo_push_link_layer (gimp_item_get_image (GIMP_ITEM (layer)),
                                      _("Set layer link"), layer);
@@ -607,13 +600,12 @@ gimp_link_layer_set_link (GimpLinkLayer *layer,
                                             G_CALLBACK (gimp_link_layer_link_changed),
                                             layer);
 
-      g_clear_object (&layer->p->link);
     }
+
+  g_set_object (&layer->p->link, link);
 
   if (link)
     {
-      layer->p->link = g_object_ref (link);
-
       g_signal_connect_object (link, "changed",
                                G_CALLBACK (gimp_link_layer_link_changed),
                                layer, G_CONNECT_SWAPPED);
@@ -775,7 +767,7 @@ gimp_link_layer_render (GimpLinkLayer *layer)
   /* TODO: I could imagine a GimpBusyBox (to be made as GimpProgress) in
    * the later list showing layer update.
    */
-  buffer = gimp_link_get_buffer (layer->p->link, NULL, NULL);
+  buffer = gimp_link_get_buffer (layer->p->link);
 
   if (! buffer)
     return FALSE;
@@ -840,7 +832,6 @@ gimp_link_layer_render (GimpLinkLayer *layer)
 
   gimp_gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE,
                          gimp_drawable_get_buffer (drawable), NULL);
-  g_object_unref (buffer);
 
   g_object_thaw_notify (G_OBJECT (drawable));
 

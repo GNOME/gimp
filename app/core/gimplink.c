@@ -47,7 +47,8 @@ enum
   PROP_0,
   PROP_GIMP,
   PROP_FILE,
-  PROP_ABSOLUTE_PATH
+  PROP_ABSOLUTE_PATH,
+  N_PROPS
 };
 
 enum
@@ -63,6 +64,7 @@ struct _GimpLinkPrivate
   GFileMonitor        *monitor;
   gboolean             absolute_path;
 
+  GeglBuffer          *buffer;
   gboolean             broken;
   GError              *error;
   guint                idle_changed_source;
@@ -92,16 +94,22 @@ static void       gimp_link_file_changed      (GFileMonitor      *monitor,
                                                GimpLink          *link);
 static gboolean   gimp_link_emit_changed      (gpointer           data);
 
+static void       gimp_link_update_buffer     (GimpLink          *link,
+                                               GimpProgress      *progress,
+                                               GError           **error);
 static gchar    * gimp_link_get_relative_path (GimpLink          *link,
                                                GFile             *parent,
                                                gint               n_back);
+
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpLink, gimp_link, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_link_parent_class
 
-static guint link_signals[LAST_SIGNAL] = { 0 };
+static guint       link_signals[LAST_SIGNAL] = { 0 };
+
+static GParamSpec *link_props[N_PROPS]       = { NULL, };
 
 static void
 gimp_link_class_init (GimpLinkClass *klass)
@@ -120,19 +128,19 @@ gimp_link_class_init (GimpLinkClass *klass)
   object_class->get_property = gimp_link_get_property;
   object_class->set_property = gimp_link_set_property;
 
-  g_object_class_install_property (object_class, PROP_GIMP,
-                                   g_param_spec_object ("gimp", NULL, NULL,
+  link_props[PROP_GIMP]          = g_param_spec_object ("gimp", NULL, NULL,
                                                         GIMP_TYPE_GIMP,
                                                         GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
-  g_object_class_install_property (object_class, PROP_FILE,
-                                   g_param_spec_object ("file", NULL, NULL,
+                                                        G_PARAM_CONSTRUCT_ONLY);
+  link_props[PROP_FILE]          = g_param_spec_object ("file", NULL, NULL,
                                                         G_TYPE_FILE,
-                                                        GIMP_PARAM_READWRITE));
-  g_object_class_install_property (object_class, PROP_ABSOLUTE_PATH,
-                                   g_param_spec_boolean ("absolute-path", NULL, NULL,
-                                                        FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_EXPLICIT_NOTIFY);
+  link_props[PROP_ABSOLUTE_PATH] = g_param_spec_boolean ("absolute-path", NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE);
+
+  g_object_class_install_properties (object_class, N_PROPS, link_props);
 }
 
 static void
@@ -142,6 +150,7 @@ gimp_link_init (GimpLink *link)
   link->p->gimp      = NULL;
   link->p->file      = NULL;
   link->p->monitor   = NULL;
+  link->p->buffer    = NULL;
   link->p->broken    = TRUE;
   link->p->error     = NULL;
   link->p->width     = 0;
@@ -160,6 +169,8 @@ gimp_link_finalize (GObject *object)
 
   g_clear_object (&link->p->file);
   g_clear_object (&link->p->monitor);
+  g_clear_object (&link->p->buffer);
+  g_clear_error  (&link->p->error);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -204,26 +215,7 @@ gimp_link_set_property (GObject      *object,
       link->p->gimp = g_value_get_object (value);
       break;
     case PROP_FILE:
-      if (link->p->file)
-        g_object_unref (link->p->file);
-      if (link->p->monitor)
-        g_object_unref (link->p->monitor);
-
-      link->p->is_vector = FALSE;
-      link->p->file = g_value_dup_object (value);
-
-      if (link->p->file)
-        {
-          gchar *basename;
-
-          basename = g_file_get_basename (link->p->file);
-          link->p->monitor = g_file_monitor_file (link->p->file, G_FILE_MONITOR_NONE, NULL, NULL);
-          g_signal_connect (link->p->monitor, "changed",
-                            G_CALLBACK (gimp_link_file_changed),
-                            link);
-          gimp_object_set_name_safe (GIMP_OBJECT (object), basename);
-          g_free (basename);
-        }
+      gimp_link_set_file (link, g_value_get_object (value), NULL, NULL);
       break;
     case PROP_ABSOLUTE_PATH:
       link->p->absolute_path = g_value_get_boolean (value);
@@ -278,10 +270,95 @@ gimp_link_emit_changed (gpointer data)
 {
   GimpLink *link = GIMP_LINK (data);
 
+  gimp_link_update_buffer (link, NULL, NULL);
+
   g_signal_emit (link, link_signals[CHANGED], 0);
   link->p->idle_changed_source = 0;
 
   return G_SOURCE_REMOVE;
+}
+
+static void
+gimp_link_update_buffer (GimpLink      *link,
+                         GimpProgress  *progress,
+                         GError       **error)
+{
+  GeglBuffer *buffer     = NULL;
+  GError     *real_error = NULL;
+
+  g_return_if_fail (GIMP_IS_LINK (link));
+  g_return_if_fail (error == NULL || *error == NULL);
+
+  link->p->is_vector = FALSE;
+  g_clear_error (&link->p->error);
+
+  if (link->p->file)
+    {
+      GimpImage         *image;
+      GimpPDBStatusType  status;
+      const gchar       *mime_type = NULL;
+
+      image = file_open_image (link->p->gimp,
+                               gimp_get_user_context (link->p->gimp),
+                               progress,
+                               link->p->file,
+                               link->p->width, link->p->height,
+                               FALSE, NULL,
+                               /* XXX We might want interactive opening
+                                * for a first opening (when done through
+                                * GUI), but not for every re-render.
+                                */
+                               GIMP_RUN_NONINTERACTIVE,
+                               &link->p->is_vector,
+                               &status, &mime_type, &real_error);
+
+      if (image && status == GIMP_PDB_SUCCESS)
+        {
+          /* If we don't flush the projection first, the buffer may be empty.
+           * I do wonder if the flushing and updating of the link could
+           * not be multi-threaded with gimp_projection_flush() instead,
+           * then notifying the update through signals. For very heavy
+           * images, would it be a better UX? XXX
+           */
+          gimp_projection_flush_now (gimp_image_get_projection (image), TRUE);
+          buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (image));
+          g_object_ref (buffer);
+
+          link->p->base_type = gimp_image_get_base_type (image);
+          link->p->precision = gimp_image_get_precision (image);
+          link->p->width     = gimp_image_get_width (image);
+          link->p->height    = gimp_image_get_height (image);
+          link->p->load_proc = gimp_image_get_load_proc (image);
+        }
+
+      /* Only keep the buffer, free the rest. */
+      g_clear_object (&image);
+    }
+
+  link->p->broken = (buffer == NULL);
+  if (link->p->broken)
+    {
+      if (real_error)
+        link->p->error = g_error_copy (real_error);
+      else
+        g_set_error_literal (&link->p->error,
+                             G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                             _("No file was set"));
+    }
+
+  if (error)
+    *error = real_error;
+  else
+    g_clear_error (&real_error);
+
+  if (buffer)
+    {
+      /* Keep the old buffer if the link is broken (outdated image is
+       * better than none).
+       */
+      g_clear_object (&link->p->buffer);
+      link->p->buffer = buffer;
+    }
 }
 
 /**
@@ -377,21 +454,66 @@ gimp_link_get_relative_path (GimpLink *link,
  * Return value: a new #GimpLink or %NULL in case of a problem
  **/
 GimpLink *
-gimp_link_new (Gimp  *gimp,
-               GFile *file)
+gimp_link_new (Gimp          *gimp,
+               GFile         *file,
+               GimpProgress  *progress,
+               GError       **error)
 {
-  GimpObject *link;
+  GimpLink *link;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (G_IS_FILE (file), NULL);
 
   link = g_object_new (GIMP_TYPE_LINK,
                        "gimp",          gimp,
-                       "file",          file,
                        "absolute-path", FALSE,
                        NULL);
 
+  gimp_link_set_file (link, file, progress, error);
+
   return GIMP_LINK (link);
+}
+
+GimpLink *
+gimp_link_duplicate (GimpLink *link)
+{
+  GimpLink *new_link;
+
+  g_return_val_if_fail (GIMP_IS_LINK (link), NULL);
+
+  new_link = g_object_new (GIMP_TYPE_LINK,
+                           "gimp",          link->p->gimp,
+                           "absolute-path", gimp_link_get_absolute_path (link),
+                           NULL);
+
+  /* Copy things manually as we do not need to trigger a load. */
+  new_link->p->file      = link->p->file ? g_object_ref (link->p->file) : NULL;
+
+  new_link->p->buffer    = link->p->buffer ? gegl_buffer_dup (link->p->buffer) : NULL;
+  new_link->p->broken    = link->p->broken;
+  new_link->p->error     = link->p->error ? g_error_copy (link->p->error) : NULL;
+
+  new_link->p->is_vector = link->p->is_vector;
+  new_link->p->width     = link->p->width;
+  new_link->p->height    = link->p->height;
+  new_link->p->base_type = link->p->base_type;
+  new_link->p->precision = link->p->precision;
+  new_link->p->load_proc = link->p->load_proc;
+
+  if (new_link->p->file)
+    {
+      gchar *basename;
+
+      basename = g_file_get_basename (new_link->p->file);
+      new_link->p->monitor = g_file_monitor_file (new_link->p->file, G_FILE_MONITOR_NONE, NULL, NULL);
+      g_signal_connect (new_link->p->monitor, "changed",
+                        G_CALLBACK (gimp_link_file_changed),
+                        new_link);
+      gimp_object_set_name_safe (GIMP_OBJECT (new_link), basename);
+      g_free (basename);
+    }
+
+  return new_link;
 }
 
 /*
@@ -433,18 +555,39 @@ gimp_link_get_file (GimpLink  *link,
 }
 
 void
-gimp_link_set_file (GimpLink *link,
-                    GFile    *file)
+gimp_link_set_file (GimpLink      *link,
+                    GFile         *file,
+                    GimpProgress  *progress,
+                    GError       **error)
 {
   g_return_if_fail (GIMP_IS_LINK (link));
   g_return_if_fail (G_IS_FILE (file) || file == NULL);
+  g_return_if_fail (error == NULL || *error == NULL);
 
-  if (file && g_file_equal (file, link->p->file))
+  if (file == link->p->file ||
+      (file && link->p->file && g_file_equal (file, link->p->file)))
     return;
 
-  g_object_set (link,
-                "file", file,
-                NULL);
+  g_clear_object (&link->p->monitor);
+
+  g_set_object (&link->p->file, file);
+
+  gimp_link_update_buffer (link, progress, error);
+
+  if (link->p->file)
+    {
+      gchar *basename;
+
+      basename = g_file_get_basename (link->p->file);
+      link->p->monitor = g_file_monitor_file (link->p->file, G_FILE_MONITOR_NONE, NULL, NULL);
+      g_signal_connect (link->p->monitor, "changed",
+                        G_CALLBACK (gimp_link_file_changed),
+                        link);
+      gimp_object_set_name_safe (GIMP_OBJECT (link), basename);
+      g_free (basename);
+    }
+
+  g_object_notify_by_pspec (G_OBJECT (link), link_props[PROP_FILE]);
 }
 
 gboolean
@@ -465,37 +608,11 @@ gimp_link_set_absolute_path (GimpLink *link,
 }
 
 gboolean
-gimp_link_is_broken (GimpLink  *link,
-                     gboolean   recheck,
-                     GError   **error)
+gimp_link_is_broken (GimpLink *link)
 {
-  GeglBuffer *buffer;
-
-  g_return_val_if_fail (error == NULL || *error == NULL, TRUE);
-
-  if (recheck)
-    {
-      buffer = gimp_link_get_buffer (link, NULL, NULL);
-      g_clear_object (&buffer);
-    }
-
-  if (link->p->broken && link->p->error)
-    *error = g_error_copy (link->p->error);
+  g_return_val_if_fail (GIMP_IS_LINK (link), TRUE);
 
   return link->p->broken;
-}
-
-GimpLink *
-gimp_link_duplicate (GimpLink *link)
-{
-  GimpLink *new_link;
-
-  g_return_val_if_fail (GIMP_IS_LINK (link), NULL);
-
-  new_link = gimp_link_new (link->p->gimp, link->p->file);
-  gimp_link_set_absolute_path (new_link, gimp_link_get_absolute_path (link));
-
-  return new_link;
 }
 
 void
@@ -503,6 +620,8 @@ gimp_link_set_size (GimpLink *link,
                     gint      width,
                     gint      height)
 {
+  g_return_if_fail (GIMP_IS_LINK (link));
+
   link->p->width  = width;
   link->p->height = height;
 }
@@ -512,6 +631,8 @@ gimp_link_get_size (GimpLink *link,
                     gint     *width,
                     gint     *height)
 {
+  g_return_if_fail (GIMP_IS_LINK (link));
+
   *width  = link->p->width;
   *height = link->p->height;
 }
@@ -543,78 +664,15 @@ gimp_link_get_load_proc (GimpLink *link)
 gboolean
 gimp_link_is_vector (GimpLink *link)
 {
+  g_return_val_if_fail (GIMP_IS_LINK (link), FALSE);
+
   return link->p->is_vector;
 }
 
 GeglBuffer *
-gimp_link_get_buffer (GimpLink      *link,
-                      GimpProgress  *progress,
-                      GError       **error)
+gimp_link_get_buffer (GimpLink *link)
 {
-  GeglBuffer *buffer     = NULL;
-  GError     *real_error = NULL;
+  g_return_val_if_fail (GIMP_IS_LINK (link), NULL);
 
-  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
-
-  if (link->p->file)
-    {
-      GimpImage         *image;
-      GimpPDBStatusType  status;
-      const gchar       *mime_type = NULL;
-
-      image = file_open_image (link->p->gimp,
-                               gimp_get_user_context (link->p->gimp),
-                               progress,
-                               link->p->file,
-                               link->p->width, link->p->height,
-                               FALSE, NULL,
-                               /* XXX We might want interactive opening
-                                * for a first opening (when done through
-                                * GUI), but not for every re-render.
-                                */
-                               GIMP_RUN_NONINTERACTIVE,
-                               &link->p->is_vector,
-                               &status, &mime_type, &real_error);
-
-      if (image && status == GIMP_PDB_SUCCESS)
-        {
-          /* If we don't flush the projection first, the buffer may be empty.
-           * I do wonder if the flushing and updating of the link could
-           * not be multi-threaded with gimp_projection_flush() instead,
-           * then notifying the update through signals. For very heavy
-           * images, would it be a better UX? XXX
-           */
-          gimp_projection_flush_now (gimp_image_get_projection (image), TRUE);
-          buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (image));
-          g_object_ref (buffer);
-
-          link->p->base_type = gimp_image_get_base_type (image);
-          link->p->precision = gimp_image_get_precision (image);
-          link->p->width     = gimp_image_get_width (image);
-          link->p->height    = gimp_image_get_height (image);
-          link->p->load_proc = gimp_image_get_load_proc (image);
-        }
-
-      /* Only keep the buffer, free the rest. */
-      g_clear_object (&image);
-    }
-
-  link->p->broken = (buffer == NULL);
-  g_clear_error (&link->p->error);
-  if (link->p->broken)
-    {
-      if (real_error)
-        link->p->error = g_error_copy (real_error);
-      else
-        g_set_error_literal (&link->p->error,
-                             G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                             _("No file was set"));
-    }
-
-  if (error)
-    *error = real_error;
-  else
-    g_clear_error (&real_error);
-
-  return buffer;
+  return link->p->buffer;
 }

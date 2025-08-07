@@ -636,10 +636,10 @@ layer_options_file_set (GtkFileChooserButton *widget,
   file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (widget));
   if (file)
     {
-      gimp_link_set_file (private->link, file);
-      if (gimp_link_is_broken (private->link, TRUE, NULL))
+      gimp_link_set_file (private->link, file, NULL, NULL);
+      if (gimp_link_is_broken (private->link))
         {
-          gimp_link_set_file (private->link, NULL);
+          gimp_link_set_file (private->link, NULL, NULL, NULL);
           g_signal_handlers_block_by_func (widget,
                                            G_CALLBACK (layer_options_file_set),
                                            private);
