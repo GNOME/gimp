@@ -377,6 +377,8 @@ gimp-debian-x64:
 ## Flatpak CI (Fedora) ##
 .flatpak:
   extends: .default
+  #We need to specify this since .flatpak from flatpak_ci_initiative.yml sets to true
+  interruptible: false
   rules:
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Flatpak.*/'
       interruptible: true
