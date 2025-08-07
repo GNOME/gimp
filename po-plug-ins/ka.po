@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-08-02 11:18+0000\n"
-"PO-Revision-Date: 2025-08-03 03:17+0200\n"
+"POT-Creation-Date: 2025-08-07 02:16+0000\n"
+"PO-Revision-Date: 2025-08-07 05:31+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -330,11 +330,11 @@ msgstr "ბადე"
 
 #: plug-ins/common/align-layers.c:242
 msgid "Ignore the _bottom layer even if visible"
-msgstr ""
+msgstr "ქვედა ფენის გამოტოვე_ბა მაშინაც კი, თუ ის ხილულია"
 
 #: plug-ins/common/align-layers.c:243
 msgid "Ignore the bottom layer even if visible"
-msgstr ""
+msgstr "ქვედა ფენის გამოტოვება მაშინაც კი, თუ ის ხილულია"
 
 #: plug-ins/common/align-layers.c:249
 msgid "_Use the (invisible) bottom layer as the base"
@@ -347,7 +347,7 @@ msgstr ""
 #: plug-ins/common/align-layers.c:299
 #, c-format
 msgid "There are not enough layers to align."
-msgstr ""
+msgstr "გასასწორებლად ფენები საკმარისი არაა."
 
 #: plug-ins/common/align-layers.c:747
 msgid "Align Visible Layers"
@@ -375,7 +375,7 @@ msgstr "_ოპტიმიზაციის გაუქმება"
 
 #: plug-ins/common/animation-optimize.c:232
 msgid "Remove optimization to make editing easier"
-msgstr ""
+msgstr "ოპტიმიზაციის მოცილება ჩასწორების გასაადვილებლად"
 
 #: plug-ins/common/animation-optimize.c:251
 msgid "_Remove Backdrop"
@@ -407,12 +407,12 @@ msgstr "_დაკვრა..."
 
 #: plug-ins/common/animation-play.c:339
 msgid "Preview a GIMP layer-based animation"
-msgstr ""
+msgstr "GIMP-ის ფენებზე-ბაზირებული ანიმაციის მინიატურა"
 
 #: plug-ins/common/animation-play.c:374
 #, c-format
 msgid "Procedure '%s' only works in interactive mode."
-msgstr ""
+msgstr "პროცედურა '%s', მხოლოდ, ინტერაქტიულ რეჟიმში მუშაობს."
 
 #: plug-ins/common/animation-play.c:392 plug-ins/common/animation-play.c:940
 #: plug-ins/common/animation-play.c:1440
@@ -421,7 +421,7 @@ msgstr "დაკვრის დაწყება"
 
 #: plug-ins/common/animation-play.c:393 plug-ins/common/animation-play.c:944
 msgid "Step back to previous frame"
-msgstr ""
+msgstr "ნაბიჯი უკან წინა კადრამდე"
 
 #: plug-ins/common/animation-play.c:394 plug-ins/common/animation-play.c:947
 msgid "Step to next frame"
@@ -433,11 +433,11 @@ msgstr "_ანიმაციის გადახვევა"
 
 #: plug-ins/common/animation-play.c:400
 msgid "Increase the speed of the animation"
-msgstr ""
+msgstr "ანიმაციის სიჩქარის გაზრდა"
 
 #: plug-ins/common/animation-play.c:401
 msgid "Decrease the speed of the animation"
-msgstr ""
+msgstr "ანიმაციის სიჩქარის შემცირება"
 
 #: plug-ins/common/animation-play.c:402
 msgid "Reset the speed of the animation"
@@ -445,7 +445,7 @@ msgstr "ანიმაციის სიჩქარის ნაგული�
 
 #: plug-ins/common/animation-play.c:407 plug-ins/common/animation-play.c:885
 msgid "Detach the animation from the dialog window"
-msgstr ""
+msgstr "ანიმაციის მოხსნა დიალოგის ფანჯრიდან"
 
 #: plug-ins/common/animation-play.c:408 plug-ins/common/animation-play.c:883
 msgid "Reload the image"
@@ -632,7 +632,7 @@ msgstr "_სისქე"
 
 #: plug-ins/common/border-average.c:141
 msgid "Border size to take in count"
-msgstr ""
+msgstr "საზღვრის ზომა მხედველობაში მისაღებად"
 
 #: plug-ins/common/border-average.c:145
 msgid "Thickness unit of measure"
@@ -640,7 +640,7 @@ msgstr "სისქის საზომი ერთეული"
 
 #: plug-ins/common/border-average.c:146
 msgid "Border size unit of measure"
-msgstr ""
+msgstr "საზღვრის საზომი ერთეული"
 
 #: plug-ins/common/border-average.c:150
 msgid "Bucket Si_ze"
@@ -790,7 +790,7 @@ msgstr "დელტა ფუნქცია"
 
 #: plug-ins/common/cml-explorer.c:140
 msgid "Delta function stepped"
-msgstr ""
+msgstr "საფეხურებიანი დელტა ფუნქცია"
 
 #: plug-ins/common/cml-explorer.c:141
 msgid "sin^p-based function"
@@ -875,11 +875,11 @@ msgstr "შებრუნებული მნიშვნელობის �
 
 #: plug-ins/common/cml-explorer.c:204
 msgid "With random power (0,10)"
-msgstr ""
+msgstr "შემთხვევით ხარისხში (0,10)"
 
 #: plug-ins/common/cml-explorer.c:205
 msgid "With random power (0,1)"
-msgstr ""
+msgstr "შემთხვევით ხარისხში (0,1)"
 
 #: plug-ins/common/cml-explorer.c:206
 msgid "With gradient power (0,1)"
@@ -915,7 +915,7 @@ msgstr "ყველა თეთრი"
 
 #: plug-ins/common/cml-explorer.c:227
 msgid "The first row of the image"
-msgstr ""
+msgstr "გამოსახულების პირველი მწკრივი"
 
 #: plug-ins/common/cml-explorer.c:228
 msgid "Continuous gradient"
@@ -1114,7 +1114,7 @@ msgstr "პარამეტრების კოირება"
 
 #: plug-ins/common/cml-explorer.c:1650
 msgid "Selective Load Settings"
-msgstr ""
+msgstr "პარამეტრების შერეჩევითი ჩატვირთვა"
 
 #: plug-ins/common/cml-explorer.c:1670
 msgid "Source channel in file:"
@@ -1942,16 +1942,17 @@ msgstr ""
 #: plug-ins/common/file-ps.c:1159 plug-ins/common/file-ps.c:3739
 #: plug-ins/common/file-psp.c:2634 plug-ins/common/file-psp.c:2684
 #: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:577
-#: plug-ins/common/file-raw-data.c:1714 plug-ins/common/file-sunras.c:435
-#: plug-ins/common/file-svg.c:562 plug-ins/common/file-tga.c:427
-#: plug-ins/common/file-tim.c:278 plug-ins/common/file-wbmp.c:250
-#: plug-ins/common/file-wbmp.c:329 plug-ins/common/file-xbm.c:725
-#: plug-ins/common/file-xmc.c:656 plug-ins/common/file-xmc.c:895
-#: plug-ins/common/file-xwd.c:465 plug-ins/common/sphere-designer.c:2094
-#: plug-ins/file-bmp/bmp-load.c:276 plug-ins/file-dds/ddsread.c:169
-#: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:368
-#: plug-ins/file-fli/fli-gimp.c:440 plug-ins/file-fli/fli-gimp.c:491
-#: plug-ins/file-icns/file-icns-load.c:552
+#: plug-ins/common/file-raw-data.c:1714
+#: plug-ins/common/file-seattle-filmworks.c:232
+#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:562
+#: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:278
+#: plug-ins/common/file-wbmp.c:250 plug-ins/common/file-wbmp.c:329
+#: plug-ins/common/file-xbm.c:725 plug-ins/common/file-xmc.c:656
+#: plug-ins/common/file-xmc.c:895 plug-ins/common/file-xwd.c:465
+#: plug-ins/common/sphere-designer.c:2094 plug-ins/file-bmp/bmp-load.c:276
+#: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:260
+#: plug-ins/file-fits/fits.c:368 plug-ins/file-fli/fli-gimp.c:440
+#: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:552
 #: plug-ins/file-icns/file-icns-load.c:604 plug-ins/file-ico/ico-load.c:685
 #: plug-ins/file-ico/ico-load.c:823 plug-ins/file-ico/ico-load.c:1025
 #: plug-ins/file-jpeg/jpeg-load.c:106 plug-ins/file-jpeg/jpeg-load.c:699
@@ -3061,7 +3062,7 @@ msgstr ""
 
 #: plug-ins/common/file-gif-load.c:247
 msgid "Jeff's Image Format"
-msgstr ""
+msgstr "ჯეფის გამოსახულების ფორმატი"
 
 #: plug-ins/common/file-gif-load.c:488
 msgid "GIF magic code"
@@ -3070,12 +3071,12 @@ msgstr "GIF-ის ჯადოსნური კოდი"
 #: plug-ins/common/file-gif-load.c:498
 #, c-format
 msgid "This is not a GIF file: incorrect magic code"
-msgstr ""
+msgstr "ეს GIF ფაილი არაა: არასწორი ჯადოსნური კოდი"
 
 #: plug-ins/common/file-gif-load.c:507
 #, c-format
 msgid "Incorrect GIF version: not '87a' or '89a'"
-msgstr ""
+msgstr "არასწორი GIF-ის ვერსია: ის არც '87a'-ა, არც '89a'-ა"
 
 #: plug-ins/common/file-gif-load.c:517
 #, c-format
@@ -3330,11 +3331,11 @@ msgstr ""
 
 #: plug-ins/common/file-gih.c:521
 msgid "Width Mismatch!"
-msgstr ""
+msgstr "სიგანის შეუსაბამობა!"
 
 #: plug-ins/common/file-gih.c:522
 msgid "Height Mismatch!"
-msgstr ""
+msgstr "სიმაღლის შეუსაბამობა!"
 
 #: plug-ins/common/file-gih.c:569
 #, c-format
@@ -4063,6 +4064,13 @@ msgstr ""
 #: plug-ins/common/file-lnk.c:210 plug-ins/common/file-lnk.c:225
 #: plug-ins/common/file-lnk.c:234 plug-ins/common/file-lnk.c:247
 #: plug-ins/common/file-lnk.c:264 plug-ins/common/file-pnm.c:725
+#: plug-ins/common/file-seattle-filmworks.c:244
+#: plug-ins/common/file-seattle-filmworks.c:283
+#: plug-ins/common/file-seattle-filmworks.c:340
+#: plug-ins/common/file-seattle-filmworks.c:359
+#: plug-ins/common/file-seattle-filmworks.c:370
+#: plug-ins/common/file-seattle-filmworks.c:380
+#: plug-ins/common/file-seattle-filmworks.c:514
 #, c-format
 msgid "Invalid file."
 msgstr "არასწორი ფაილი."
@@ -5922,6 +5930,32 @@ msgstr ""
 #: plug-ins/common/file-raw-data.c:2883
 msgid "_Planar"
 msgstr ""
+
+#: plug-ins/common/file-seattle-filmworks.c:159
+msgid "Seattle FilmWorks Image"
+msgstr ""
+
+#: plug-ins/common/file-seattle-filmworks.c:162
+#: plug-ins/common/file-seattle-filmworks.c:164
+#| msgid "Load file in the IFF file format"
+msgid "Load file in the Seattle FilmWorks file format"
+msgstr "ფაილის ჩატვირთვა Seattle FilmWorks ფორმატში"
+
+#: plug-ins/common/file-seattle-filmworks.c:326
+#, c-format
+msgid "Uncompressed SFW94A format is not yet supported."
+msgstr ""
+
+#: plug-ins/common/file-seattle-filmworks.c:415
+#: plug-ins/common/file-seattle-filmworks.c:529
+#, c-format
+msgid "Unable to convert SFW image."
+msgstr ""
+
+#: plug-ins/common/file-seattle-filmworks.c:487
+#, c-format
+msgid "Unsupported SFW format '%s'"
+msgstr "მხარდაუჭერელი SFW ფორმატი: \"%s\""
 
 #: plug-ins/common/file-sunras.c:276 plug-ins/common/file-sunras.c:302
 msgid "SUN Rasterfile image"
