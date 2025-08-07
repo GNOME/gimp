@@ -31,12 +31,9 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpfilteredcontainer.h"
-#include "core/gimplist.h"
 
 #include "gimpcontainerview.h"
-#include "gimpcontainerview-cruft.h"
-#include "gimpcontainertreestore.h"
-#include "gimpcontainertreeview.h"
+#include "gimpcontainerlistview.h"
 #include "gimpdeviceeditor.h"
 #include "gimpdeviceinfo.h"
 #include "gimpdeviceinfoeditor.h"
@@ -44,7 +41,6 @@
 #include "gimpdevices.h"
 #include "gimpmessagebox.h"
 #include "gimpmessagedialog.h"
-#include "gimpviewrenderer.h"
 
 #include "gimp-intl.h"
 
@@ -60,17 +56,17 @@ typedef struct _GimpDeviceEditorPrivate GimpDeviceEditorPrivate;
 
 struct _GimpDeviceEditorPrivate
 {
-  Gimp      *gimp;
+  Gimp          *gimp;
 
-  GQuark     name_changed_handler;
+  GimpContainer *filtered;
 
-  GtkWidget *treeview;
-  GtkWidget *delete_button;
+  GtkWidget     *list_view;
+  GtkWidget     *delete_button;
 
-  GtkWidget *label;
-  GtkWidget *image;
+  GtkWidget     *label;
+  GtkWidget     *image;
 
-  GtkWidget *stack;
+  GtkWidget     *stack;
 };
 
 
@@ -80,6 +76,7 @@ struct _GimpDeviceEditorPrivate
 
 static void   gimp_device_editor_constructed    (GObject           *object);
 static void   gimp_device_editor_dispose        (GObject           *object);
+static void   gimp_device_editor_finalize       (GObject           *object);
 static void   gimp_device_editor_set_property   (GObject           *object,
                                                  guint              property_id,
                                                  const GValue      *value,
@@ -89,16 +86,17 @@ static void   gimp_device_editor_get_property   (GObject           *object,
                                                  GValue            *value,
                                                  GParamSpec        *pspec);
 
+static void   gimp_device_editor_style_updated  (GtkWidget         *widget);
+
 static void   gimp_device_editor_add_device     (GimpContainer     *container,
                                                  GimpDeviceInfo    *info,
                                                  GimpDeviceEditor  *editor);
 static void   gimp_device_editor_remove_device  (GimpContainer     *container,
                                                  GimpDeviceInfo    *info,
                                                  GimpDeviceEditor  *editor);
-static void   gimp_device_editor_device_changed (GimpDeviceInfo    *info,
-                                                 GimpDeviceEditor  *editor);
 
-static void   gimp_device_editor_select_device  (GimpContainerView *view,
+static void   gimp_device_editor_select_device  (GimpContext       *view,
+                                                 GimpDeviceInfo    *info,
                                                  GimpDeviceEditor  *editor);
 
 static void   gimp_device_editor_delete_clicked (GtkWidget         *button,
@@ -114,12 +112,16 @@ G_DEFINE_TYPE_WITH_PRIVATE (GimpDeviceEditor, gimp_device_editor,
 static void
 gimp_device_editor_class_init (GimpDeviceEditorClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructed  = gimp_device_editor_constructed;
-  object_class->dispose      = gimp_device_editor_dispose;
-  object_class->set_property = gimp_device_editor_set_property;
-  object_class->get_property = gimp_device_editor_get_property;
+  object_class->constructed   = gimp_device_editor_constructed;
+  object_class->dispose       = gimp_device_editor_dispose;
+  object_class->finalize      = gimp_device_editor_finalize;
+  object_class->set_property  = gimp_device_editor_set_property;
+  object_class->get_property  = gimp_device_editor_get_property;
+
+  widget_class->style_updated = gimp_device_editor_style_updated;
 
   g_object_class_install_property (object_class, PROP_GIMP,
                                    g_param_spec_object ("gimp",
@@ -136,25 +138,19 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
   GtkWidget               *vbox;
   GtkWidget               *ebox;
   GtkWidget               *hbox;
-  gint                     icon_width;
-  gint                     icon_height;
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
                                   GTK_ORIENTATION_HORIZONTAL);
   gtk_paned_set_wide_handle (GTK_PANED (editor), TRUE);
 
-  gtk_icon_size_lookup (GTK_ICON_SIZE_BUTTON, &icon_width, &icon_height);
-  private->treeview = gimp_container_tree_view_new (NULL, NULL, icon_height, 0);
-  gtk_widget_set_size_request (private->treeview, 300, -1);
-  gtk_paned_pack1 (GTK_PANED (editor), private->treeview, TRUE, FALSE);
-  gtk_widget_show (private->treeview);
-
-  g_signal_connect_object (private->treeview, "selection-changed",
-                           G_CALLBACK (gimp_device_editor_select_device),
-                           G_OBJECT (editor), 0);
+  private->list_view = gimp_container_list_view_new (NULL, NULL,
+                                                     GIMP_VIEW_SIZE_MEDIUM, 0);
+  gtk_widget_set_size_request (private->list_view, 300, -1);
+  gtk_paned_pack1 (GTK_PANED (editor), private->list_view, TRUE, FALSE);
+  gtk_widget_show (private->list_view);
 
   private->delete_button =
-    gimp_editor_add_button (GIMP_EDITOR (private->treeview),
+    gimp_editor_add_button (GIMP_EDITOR (private->list_view),
                             GIMP_ICON_EDIT_DELETE,
                             _("Delete the selected device"),
                             NULL,
@@ -199,9 +195,9 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
   private->stack = gtk_stack_new ();
   gtk_container_set_border_width (GTK_CONTAINER (private->stack), 12);
   gtk_stack_set_transition_type (GTK_STACK (private->stack),
-                                 gimp_widget_animation_enabled ()          ?
-                                   GTK_STACK_TRANSITION_TYPE_SLIDE_UP_DOWN :
-                                   GTK_STACK_TRANSITION_TYPE_NONE);
+                                 gimp_widget_animation_enabled () ?
+                                 GTK_STACK_TRANSITION_TYPE_CROSSFADE :
+                                 GTK_STACK_TRANSITION_TYPE_NONE);
   gtk_box_pack_start (GTK_BOX (vbox), private->stack, TRUE, TRUE, 0);
   gtk_widget_show (private->stack);
 }
@@ -242,7 +238,6 @@ gimp_device_editor_constructed (GObject *object)
   GimpDeviceEditor        *editor  = GIMP_DEVICE_EDITOR (object);
   GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
   GimpContainer           *devices;
-  GimpContainer           *filtered;
   GimpContext             *context;
   GList                   *list;
 
@@ -251,65 +246,61 @@ gimp_device_editor_constructed (GObject *object)
   gimp_assert (GIMP_IS_GIMP (private->gimp));
 
   devices = GIMP_CONTAINER (gimp_devices_get_manager (private->gimp));
-  filtered = gimp_filtered_container_new (devices, gimp_device_editor_filter, NULL);
 
-  /*  connect to "remove" before the container view does so we can get
-   *  the stack child stored in its model
-   */
-  g_signal_connect (devices, "remove",
+  private->filtered = gimp_filtered_container_new (devices,
+                                                   gimp_device_editor_filter,
+                                          NULL);
+  gimp_container_view_set_container (GIMP_CONTAINER_VIEW (private->list_view),
+                                     private->filtered);
+
+  g_signal_connect (private->filtered, "add",
+                    G_CALLBACK (gimp_device_editor_add_device),
+                    editor);
+  g_signal_connect (private->filtered, "remove",
                     G_CALLBACK (gimp_device_editor_remove_device),
                     editor);
 
-  gimp_container_view_set_container (GIMP_CONTAINER_VIEW (private->treeview),
-                                     filtered);
-
   context = gimp_context_new (private->gimp, "device-editor-list", NULL);
-  gimp_container_view_set_context (GIMP_CONTAINER_VIEW (private->treeview),
+  gimp_container_view_set_context (GIMP_CONTAINER_VIEW (private->list_view),
                                    context);
   g_object_unref (context);
 
-  g_signal_connect (devices, "add",
-                    G_CALLBACK (gimp_device_editor_add_device),
-                    editor);
+  g_signal_connect_object (context, "tool-preset-changed",
+                           G_CALLBACK (gimp_device_editor_select_device),
+                           G_OBJECT (editor), 0);
 
-  private->name_changed_handler =
-    gimp_container_add_handler (devices, "name-changed",
-                                G_CALLBACK (gimp_device_editor_device_changed),
-                                editor);
-
-  for (list = GIMP_LIST (devices)->queue->head;
+  for (list = GIMP_LIST (private->filtered)->queue->head;
        list;
        list = g_list_next (list))
     {
       gimp_device_editor_add_device (devices, list->data, editor);
     }
 
-  g_object_unref (devices);
 }
 
 static void
 gimp_device_editor_dispose (GObject *object)
 {
   GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (object);
-  GimpContainer           *devices;
 
-  devices = GIMP_CONTAINER (gimp_devices_get_manager (private->gimp));
-
-  g_signal_handlers_disconnect_by_func (devices,
+  g_signal_handlers_disconnect_by_func (private->filtered,
                                         gimp_device_editor_add_device,
                                         object);
-
-  g_signal_handlers_disconnect_by_func (devices,
+  g_signal_handlers_disconnect_by_func (private->filtered,
                                         gimp_device_editor_remove_device,
                                         object);
 
-  if (private->name_changed_handler)
-    {
-      gimp_container_remove_handler (devices, private->name_changed_handler);
-      private->name_changed_handler = 0;
-    }
-
   G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_device_editor_finalize (GObject *object)
+{
+  GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (object);
+
+  g_clear_object (&private->filtered);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -353,34 +344,32 @@ gimp_device_editor_get_property (GObject    *object,
 }
 
 static void
+gimp_device_editor_style_updated (GtkWidget *widget)
+{
+  GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (widget);
+  gint                     icon_width;
+  gint                     icon_height;
+
+  gtk_icon_size_lookup (GTK_ICON_SIZE_BUTTON, &icon_width, &icon_height);
+
+  gimp_container_view_set_view_size (GIMP_CONTAINER_VIEW (private->list_view),
+                                     icon_height, 0);
+
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
+}
+
+static void
 gimp_device_editor_add_device (GimpContainer    *container,
                                GimpDeviceInfo   *info,
                                GimpDeviceEditor *editor)
 {
   GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
   GtkWidget               *widget;
-  GtkTreeIter             *iter;
 
   widget = gimp_device_info_editor_new (info);
   gtk_stack_add_named (GTK_STACK (private->stack), widget,
                        gimp_object_get_name (info));
   gtk_widget_show (widget);
-
-  iter = _gimp_container_view_lookup (GIMP_CONTAINER_VIEW (private->treeview),
-                                      GIMP_VIEWABLE (info));
-
-  if (iter)
-    {
-      GimpContainerTreeView *treeview;
-
-      treeview = GIMP_CONTAINER_TREE_VIEW (private->treeview);
-
-      gtk_tree_store_set (GTK_TREE_STORE (treeview->model), iter,
-                          GIMP_CONTAINER_TREE_STORE_COLUMN_USER_DATA, widget,
-                          GIMP_CONTAINER_TREE_STORE_COLUMN_NAME_SENSITIVE,
-                          gimp_device_info_get_device (info, NULL) != NULL,
-                          -1);
-    }
 }
 
 static void
@@ -389,107 +378,38 @@ gimp_device_editor_remove_device (GimpContainer    *container,
                                   GimpDeviceEditor *editor)
 {
   GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
-  GtkTreeIter             *iter;
+  GtkWidget               *widget;
 
-  iter = _gimp_container_view_lookup (GIMP_CONTAINER_VIEW (private->treeview),
-                                      GIMP_VIEWABLE (info));
+  widget = gtk_stack_get_child_by_name (GTK_STACK (private->stack),
+                                        gimp_object_get_name (info));
 
-  if (iter)
-    {
-      GimpContainerTreeView *treeview;
-      GtkWidget             *widget;
-
-      treeview = GIMP_CONTAINER_TREE_VIEW (private->treeview);
-
-      gtk_tree_model_get (treeview->model, iter,
-                          GIMP_CONTAINER_TREE_STORE_COLUMN_USER_DATA, &widget,
-                          -1);
-
-      if (widget)
-        gtk_widget_destroy (widget);
-    }
+  if (widget)
+    gtk_widget_destroy (widget);
 }
 
 static void
-gimp_device_editor_device_changed (GimpDeviceInfo   *info,
-                                   GimpDeviceEditor *editor)
+gimp_device_editor_select_device (GimpContext      *context,
+                                  GimpDeviceInfo   *info,
+                                  GimpDeviceEditor *editor)
 {
   GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
-  GtkTreeIter             *iter;
+  GtkWidget               *widget;
 
-  iter = _gimp_container_view_lookup (GIMP_CONTAINER_VIEW (private->treeview),
-                                      GIMP_VIEWABLE (info));
+  widget = gtk_stack_get_child_by_name (GTK_STACK (private->stack),
+                                        gimp_object_get_name (info));
 
-  if (iter)
+  if (widget)
     {
-      GimpContainerTreeView *treeview;
+      gtk_stack_set_visible_child (GTK_STACK (private->stack), widget);
 
-      treeview = GIMP_CONTAINER_TREE_VIEW (private->treeview);
+      gtk_label_set_text (GTK_LABEL (private->label),
+                          gimp_object_get_name (info));
+      gtk_image_set_from_icon_name (GTK_IMAGE (private->image),
+                                    gimp_viewable_get_icon_name (GIMP_VIEWABLE (info)),
+                                    GTK_ICON_SIZE_BUTTON);
 
-      gtk_tree_store_set (GTK_TREE_STORE (treeview->model), iter,
-                          GIMP_CONTAINER_TREE_STORE_COLUMN_NAME_SENSITIVE,
-                          gimp_device_info_get_device (info, NULL) != NULL,
-                          -1);
-    }
-}
-
-static void
-gimp_device_editor_select_device (GimpContainerView *view,
-                                  GimpDeviceEditor  *editor)
-{
-  GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
-  GimpViewable            *item;
-
-  item = gimp_container_view_get_1_selected (view);
-
-  if (item)
-    {
-      GimpContainerTreeView *treeview;
-      GtkWidget             *widget;
-      GtkTreeIter            iter;
-      gboolean               iter_valid;
-
-      treeview = GIMP_CONTAINER_TREE_VIEW (private->treeview);
-
-      for (iter_valid = gtk_tree_model_get_iter_first (treeview->model, &iter);
-           iter_valid;
-           iter_valid = gtk_tree_model_iter_next (treeview->model, &iter))
-        {
-          GimpViewRenderer *renderer;
-
-          gtk_tree_model_get (treeview->model, &iter,
-                              GIMP_CONTAINER_TREE_STORE_COLUMN_USER_DATA, &widget,
-                              GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER,  &renderer,
-                              -1);
-
-          if (renderer->viewable == item && widget)
-            {
-              GimpDeviceInfo *info;
-              gboolean        delete_sensitive = FALSE;
-
-              gtk_stack_set_visible_child (GTK_STACK (private->stack), widget);
-
-              g_object_get (widget, "info", &info, NULL);
-
-              gtk_label_set_text (GTK_LABEL (private->label),
-                                  gimp_object_get_name (info));
-              gtk_image_set_from_icon_name (GTK_IMAGE (private->image),
-                                            gimp_viewable_get_icon_name (GIMP_VIEWABLE (info)),
-                                            GTK_ICON_SIZE_BUTTON);
-
-              if (! gimp_device_info_get_device (info, NULL))
-                delete_sensitive = TRUE;
-
-              gtk_widget_set_sensitive (private->delete_button, delete_sensitive);
-
-              g_object_unref (info);
-              g_object_unref (renderer);
-
-              break;
-            }
-
-          g_object_unref (renderer);
-        }
+      gtk_widget_set_sensitive (private->delete_button,
+                                ! gimp_device_info_get_device (info, NULL));
     }
 }
 
@@ -506,7 +426,7 @@ gimp_device_editor_delete_response (GtkWidget        *dialog,
     {
       GimpViewable *item;
 
-      item = gimp_container_view_get_1_selected (GIMP_CONTAINER_VIEW (private->treeview));
+      item = gimp_container_view_get_1_selected (GIMP_CONTAINER_VIEW (private->list_view));
 
       if (item)
         {
@@ -529,7 +449,7 @@ gimp_device_editor_delete_clicked (GtkWidget        *button,
   GtkWidget               *dialog;
   GimpViewable            *item;
 
-  item = gimp_container_view_get_1_selected (GIMP_CONTAINER_VIEW (private->treeview));
+  item = gimp_container_view_get_1_selected (GIMP_CONTAINER_VIEW (private->list_view));
 
   if (! item)
     return;
