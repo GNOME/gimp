@@ -83,6 +83,7 @@ parts:
       - CXXFLAGS: -fdiagnostics-color=always
       - LD_LIBRARY_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$LD_LIBRARY_PATH
       - GI_TYPELIB_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0:$GI_TYPELIB_PATH
+      - LIBHEIF_PLUGIN_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libheif/plugins
       #FIXME: needed to generate splash image because babl and gegl not fully relocatable yet
       - BABL_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/babl-0.1
       - GEGL_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gegl-0.4
