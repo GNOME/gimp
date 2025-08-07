@@ -38,6 +38,9 @@ struct _GimpRowClass
   void     (* set_viewable)    (GimpRow      *row,
                                 GimpViewable *viewable);
   void     (* set_view_size)   (GimpRow      *row);
+
+  void     (* icon_changed)    (GimpRow      *row);
+  void     (* name_changed)    (GimpRow      *row);
   void     (* monitor_changed) (GimpRow      *row);
 
   /*  signal for keybinding  */
@@ -67,3 +70,10 @@ gint           gimp_row_get_view_size   (GimpRow      *row,
                                          gint         *view_border_width);
 
 void           gimp_row_monitor_changed (GimpRow      *row);
+
+
+/*  protected  */
+
+GtkWidget    * _gimp_row_get_icon       (GimpRow      *row);
+GtkWidget    * _gimp_row_get_view       (GimpRow      *row);
+GtkWidget    * _gimp_row_get_label      (GimpRow      *row);
