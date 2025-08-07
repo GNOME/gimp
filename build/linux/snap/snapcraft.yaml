@@ -119,7 +119,7 @@ parts:
       - libopenexr-dev #https://github.com/ubuntu/gnome-sdk/issues/321
       - libsuitesparse-dev
     stage-packages:
-      - graphviz
+      - graphviz #https://github.com/ubuntu/gnome-sdk/issues/324
       - libmaxflow0
       - libumfpack6
 
