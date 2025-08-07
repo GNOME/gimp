@@ -313,7 +313,7 @@ create_group (GimpColorScales           *scales,
                                     scale_defs[i].default_value,
                                     scale_defs[i].spin_min_value,
                                     scale_defs[i].spin_max_value,
-                                    1);
+                                    is_u8 ? 0 : 1);
       gtk_grid_attach (GTK_GRID (grid), scales->scales[i], 1, row, 3, 1);
       gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scales->scales[i]),
                                       1.0, scale_defs[i].scale_inc);
