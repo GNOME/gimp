@@ -73,10 +73,6 @@ plugs:
     interface: content
     target: $SNAP/gnome-platform
     default-provider: gnome-46-2404
-  ffmpeg-2404:
-    interface: content
-    target: ffmpeg-platform
-    default-provider: ffmpeg-2404
 
 parts:
   buildenv:
@@ -144,8 +140,6 @@ parts:
       - -Dcheck-update=no
       - -Denable-default-bin=enabled
       - -Dbuild-id=org.gimp.GIMP.snapcraft.experimental
-    build-snaps:
-      - ffmpeg-2404
     build-packages:
       - bison
       - flex
