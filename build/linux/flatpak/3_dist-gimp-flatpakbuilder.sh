@@ -28,8 +28,17 @@ printf "\e[0Ksection_end:`date +%s`:flat_tlkt\r\e[0K\n"
 
 # GLOBAL INFO
 printf "\e[0Ksection_start:`date +%s`:flat_info\r\e[0KGetting flatpak global info\n"
+## Get proper app ID and update branch
+APP_ID=$(awk -F'"' '/"app-id"/ {print $4; exit}' build/linux/flatpak/org.gimp.GIMP-nightly.json)
+BRANCH=$(awk -F'"' '/"branch"/ {print $4; exit}' build/linux/flatpak/org.gimp.GIMP-nightly.json)
+printf "(INFO): App ID: $APP_ID (branch: $BRANCH)\n"
+
+## Autodetects what archs will be packaged
 supported_archs=$(find . -maxdepth 1 -iname "*.flatpak")
-if echo "$supported_archs" | grep -q 'aarch64' && ! echo "$supported_archs" | grep -q 'x86_64'; then
+if [ "$supported_archs" = '' ]; then
+  printf "(INFO): Arch: $(uname -m)\n"
+  export supported_archs="./temp_${APP_ID}-$(uname -m).flatpak"
+elif echo "$supported_archs" | grep -q 'aarch64' && ! echo "$supported_archs" | grep -q 'x86_64'; then
   printf '(INFO): Arch: aarch64\n'
 elif ! echo "$supported_archs" | grep -q 'aarch64' && echo "$supported_archs" | grep -q 'x86_64'; then
   printf '(INFO): Arch: x86_64\n'
@@ -59,8 +68,6 @@ fi
 printf "\e[0Ksection_start:`date +%s`:${FLATPAK}_making[collapsed=true]\r\e[0KFinishing ${FLATPAK}\n"
 if [ -z "$GITLAB_CI" ]; then
   #build-bundle is not arch neutral so on CI it is run on 2_build-gimp-flatpakbuilder.sh
-  APP_ID=$(awk -F'"' '/"app-id"/ {print $4; exit}' build/linux/flatpak/org.gimp.GIMP-nightly.json)
-  BRANCH=$(awk -F'"' '/"branch"/ {print $4; exit}' build/linux/flatpak/org.gimp.GIMP-nightly.json)
   flatpak build-bundle repo temp_${APP_ID}-$(uname -m).flatpak --runtime-repo=https://nightly.gnome.org/gnome-nightly.flatpakrepo ${APP_ID} ${BRANCH}
 fi
 mv temp_${FLATPAK} ${FLATPAK}
