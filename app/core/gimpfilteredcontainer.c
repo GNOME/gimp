@@ -60,6 +60,9 @@ static void     gimp_filtered_container_real_src_thaw   (GimpFilteredContainer *
 
 static gboolean gimp_filtered_container_object_matches  (GimpFilteredContainer *filtered_container,
                                                          GimpObject            *object);
+static void     gimp_filtered_container_src_sort_func   (GimpContainer         *src,
+                                                         GParamSpec            *pspec,
+                                                         GimpFilteredContainer *filtered_container);
 static void     gimp_filtered_container_src_add         (GimpContainer         *src_container,
                                                          GimpObject            *obj,
                                                          GimpFilteredContainer *filtered_container);
@@ -149,6 +152,9 @@ gimp_filtered_container_dispose (GObject *object)
   if (filtered_container->src_container)
     {
       g_signal_handlers_disconnect_by_func (filtered_container->src_container,
+                                            gimp_filtered_container_src_sort_func,
+                                            filtered_container);
+      g_signal_handlers_disconnect_by_func (filtered_container->src_container,
                                             gimp_filtered_container_src_add,
                                             filtered_container);
       g_signal_handlers_disconnect_by_func (filtered_container->src_container,
@@ -188,6 +194,9 @@ gimp_filtered_container_set_property (GObject      *object,
     case PROP_SRC_CONTAINER:
       filtered_container->src_container = g_value_dup_object (value);
 
+      g_signal_connect (filtered_container->src_container, "notify::sort-func",
+                        G_CALLBACK (gimp_filtered_container_src_sort_func),
+                        filtered_container);
       g_signal_connect (filtered_container->src_container, "add",
                         G_CALLBACK (gimp_filtered_container_src_add),
                         filtered_container);
@@ -330,6 +339,16 @@ gimp_filtered_container_object_matches (GimpFilteredContainer *filtered_containe
   return (! filtered_container->filter_func ||
           filtered_container->filter_func (object,
                                            filtered_container->filter_data));
+}
+
+static void
+gimp_filtered_container_src_sort_func (GimpContainer         *src,
+                                       GParamSpec            *pspec,
+                                       GimpFilteredContainer *filtered_container)
+{
+  GCompareFunc sort_func = gimp_list_get_sort_func (GIMP_LIST (src));
+
+  gimp_list_set_sort_func (GIMP_LIST (filtered_container), sort_func);
 }
 
 static void
