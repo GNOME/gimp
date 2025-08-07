@@ -34,6 +34,7 @@
 #include "core/gimplist.h"
 
 #include "gimpcontainerview.h"
+#include "gimpcontainerview-cruft.h"
 #include "gimpcontainertreestore.h"
 #include "gimpcontainertreeview.h"
 #include "gimpdeviceeditor.h"

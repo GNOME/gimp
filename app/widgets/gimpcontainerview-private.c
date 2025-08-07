@@ -81,10 +81,11 @@ _gimp_container_view_get_private (GimpContainerView *view)
 
       private->view_border_width = 1;
 
-      private->item_hash = g_hash_table_new_full (g_direct_hash,
-                                                  g_direct_equal,
-                                                  NULL,
-                                                  view_iface->insert_data_free);
+      if (! GIMP_CONTAINER_VIEW_GET_IFACE (view)->use_list_model)
+        private->item_hash = g_hash_table_new_full (g_direct_hash,
+                                                    g_direct_equal,
+                                                    NULL,
+                                                    view_iface->insert_data_free);
 
       g_object_set_qdata_full ((GObject *) view, private_key, private,
                                (GDestroyNotify)

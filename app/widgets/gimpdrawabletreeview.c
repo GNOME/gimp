@@ -47,6 +47,7 @@
 
 #include "gimpcontainertreestore.h"
 #include "gimpcontainerview.h"
+#include "gimpcontainerview-cruft.h"
 #include "gimpdnd.h"
 #include "gimpdrawabletreeview.h"
 #include "gimpdrawabletreeview-filters.h"

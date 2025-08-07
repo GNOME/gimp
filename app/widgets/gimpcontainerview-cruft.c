@@ -113,6 +113,45 @@ _gimp_container_view_real_clear_items (GimpContainerView *view)
   g_hash_table_remove_all (private->item_hash);
 }
 
+gpointer
+_gimp_container_view_lookup (GimpContainerView *view,
+                             GimpViewable      *viewable)
+{
+  GimpContainerViewPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_CONTAINER_VIEW (view), NULL);
+  g_return_val_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable), NULL);
+
+  /*  we handle the NULL viewable here as a workaround for bug #149906 */
+  if (! viewable)
+    return NULL;
+
+  private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
+
+  return g_hash_table_lookup (private->item_hash, viewable);
+}
+
+gboolean
+_gimp_container_view_contains (GimpContainerView *view,
+                               GList             *viewables)
+{
+  GimpContainerViewPrivate *private;
+  GList                    *iter;
+
+  g_return_val_if_fail (GIMP_IS_CONTAINER_VIEW (view), FALSE);
+  g_return_val_if_fail (viewables, FALSE);
+
+  private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
+
+  for (iter = viewables; iter; iter = iter->next)
+    {
+      if (! g_hash_table_contains (private->item_hash, iter->data))
+        return FALSE;
+    }
+
+  return TRUE;
+}
+
 
 /*  private functions  */
 

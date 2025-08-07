@@ -43,6 +43,7 @@
 #include "gimpcontainertreeview.h"
 #include "gimpcontainertreeview-private.h"
 #include "gimpcontainerview.h"
+#include "gimpcontainerview-cruft.h"
 #include "gimpdnd.h"
 #include "gimpviewrenderer.h"
 #include "gimpwidgets-utils.h"

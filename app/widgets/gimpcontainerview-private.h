@@ -32,8 +32,6 @@ struct _GimpContainerViewPrivate
   GimpContainer   *container;
   GimpContext     *context;
 
-  GHashTable      *item_hash;
-
   gint             view_size;
   gint             view_border_width;
   gboolean         reorderable;
@@ -42,6 +40,8 @@ struct _GimpContainerViewPrivate
   /*  initialized by subclass  */
   GtkWidget       *dnd_widget;
 
+  /*  cruft  */
+  GHashTable      *item_hash;
   GimpTreeHandler *name_changed_handler;
   GimpTreeHandler *expanded_changed_handler;
 };

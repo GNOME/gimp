@@ -39,6 +39,7 @@
 
 #include "gimpcontainertreestore.h"
 #include "gimpcontainerview.h"
+#include "gimpcontainerview-cruft.h"
 #include "gimpdnd.h"
 #include "gimpviewrenderer.h"
 #include "gimptooleditor.h"
