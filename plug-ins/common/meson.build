@@ -52,6 +52,7 @@ common_plugins_list = [
     'deps': [ gtk3, gegl, zlib, ],
   },
   { 'name': 'file-raw-data', },
+  { 'name': 'file-seattle-filmworks', },
   { 'name': 'file-sunras', },
   { 'name': 'file-svg',
     'deps': [ gtk3, gegl, rsvg, ],
