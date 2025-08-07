@@ -829,14 +829,18 @@ hrz_load (GimpProcedure         *procedure,
 
   fclose (data->fp);
 
-  /* HRZ file values range from 0 to 63. We need to scale them to 0 - 255. */
+  /* HRZ file values range from 0 to 64. We need to scale them to 0 - 255. */
   pixels = (guchar *) g_malloc (pixel_len);
   gegl_buffer_get (data->buffer, GEGL_RECTANGLE (0, 0, 256, 240), 1.0,
                    babl_format ("R'G'B' u8"), pixels,
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
   for (gint i = 0; i < pixel_len; i++)
-    pixels[i] = (pixels[i] >> 4) | (pixels[i] << 2);
+    {
+      gfloat fraction = pixels[i] / 64.0f;
+
+      pixels[i] = (guchar) (255 * fraction);
+    }
 
   gegl_buffer_set (data->buffer, GEGL_RECTANGLE (0, 0, 256, 240), 0,
                    babl_format ("R'G'B' u8"), pixels,
@@ -2780,6 +2784,7 @@ load_dialog (GFile         *file,
   GtkWidget *sw;
   GtkWidget *viewport;
   GtkWidget *frame;
+  GtkWidget *box;
   gboolean   run;
   gint       sample_spacing;
   gint       width  = 0;
@@ -2925,11 +2930,23 @@ load_dialog (GFile         *file,
                                             "palette-box");
   gtk_frame_set_label (GTK_FRAME (frame), _("Palette"));
 
+  /* Adjust layout to be accessible for smaller screens */
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "settings-box",
+                                  "image-frame", "palette-frame",
+                                  NULL);
+
+  box = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                        "layout-box",
+                                        "preview-frame", "settings-box",
+                                        NULL);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (box),
+                                  GTK_ORIENTATION_HORIZONTAL);
+  gtk_box_set_spacing (GTK_BOX (box), 12);
+  gtk_widget_set_size_request (box, PREVIEW_SIZE * 2, -1);
+
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
-                              "preview-frame",
-                              "image-frame",
-                              "palette-frame",
-                              NULL);
+                              "layout-box", NULL);
 
   g_signal_connect_swapped (config, "notify::width",
                             G_CALLBACK (preview_update_size),
