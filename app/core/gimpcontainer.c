@@ -884,12 +884,12 @@ gimp_container_thaw (GimpContainer *container)
 
   if (container->priv->freeze_count == 0)
     {
-      g_signal_emit (container, container_signals[THAW], 0);
-
       g_list_model_items_changed (G_LIST_MODEL (container), 0,
                                   container->priv->n_children_before_freeze,
                                   container->priv->n_children);
       container->priv->n_children_before_freeze = 0;
+
+      g_signal_emit (container, container_signals[THAW], 0);
     }
 }
 
