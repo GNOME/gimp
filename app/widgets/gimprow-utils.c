@@ -29,8 +29,10 @@
 #include "core/gimpviewable.h"
 
 #include "gimpcontainerview.h"
+#include "gimpdeviceinfo.h"
 #include "gimprow.h"
 #include "gimprow-utils.h"
+#include "gimprowdeviceinfo.h"
 
 
 GType
@@ -40,6 +42,11 @@ gimp_row_type_from_viewable_type (GType viewable_type)
 
   g_return_val_if_fail (g_type_is_a (viewable_type, GIMP_TYPE_VIEWABLE),
                         G_TYPE_NONE);
+
+  if (g_type_is_a (viewable_type, GIMP_TYPE_DEVICE_INFO))
+    {
+      row_type = GIMP_TYPE_ROW_DEVICE_INFO;
+    }
 
   return row_type;
 }
