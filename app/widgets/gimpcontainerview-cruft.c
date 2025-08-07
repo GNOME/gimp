@@ -383,27 +383,7 @@ static void
 gimp_container_view_thaw (GimpContainerView *view,
                           GimpContainer     *container)
 {
-  GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
-
   gimp_container_view_add_container (view, container);
-
-  if (private->context)
-    {
-      GType        child_type;
-      const gchar *signal_name;
-
-      child_type  = gimp_container_get_child_type (private->container);
-      signal_name = gimp_context_type_to_signal_name (child_type);
-
-      if (signal_name)
-        {
-          GimpObject *object;
-
-          object = gimp_context_get_by_type (private->context, child_type);
-
-          gimp_container_view_set_1_selected (view, GIMP_VIEWABLE (object));
-        }
-    }
 }
 
 static void

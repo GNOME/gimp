@@ -70,6 +70,11 @@ static gboolean
 static gint   gimp_container_view_real_get_selected  (GimpContainerView  *view,
                                                       GList             **list);
 
+static void   gimp_container_view_container_freeze   (GimpContainerView  *view,
+                                                      GimpContainer      *container);
+static void   gimp_container_view_container_thaw     (GimpContainerView  *view,
+                                                      GimpContainer      *container);
+
 static void   gimp_container_view_connect_context    (GimpContainerView *view);
 static void   gimp_container_view_disconnect_context (GimpContainerView *view);
 static void   gimp_container_view_context_changed    (GimpContext        *context,
@@ -491,9 +496,14 @@ gimp_container_view_is_item_selected (GimpContainerView *view,
 void
 _gimp_container_view_selection_changed (GimpContainerView *view)
 {
+  GimpContainerViewPrivate *private;
+
   g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
 
-  g_signal_emit (view, view_signals[SELECTION_CHANGED], 0);
+  private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
+
+  if (! gimp_container_frozen (private->container))
+    g_signal_emit (view, view_signals[SELECTION_CHANGED], 0);
 }
 
 void
@@ -695,6 +705,13 @@ gimp_container_view_real_set_container (GimpContainerView *view,
       if (private->context)
         gimp_container_view_disconnect_context (view);
 
+      g_signal_handlers_disconnect_by_func (private->container,
+                                            gimp_container_view_container_freeze,
+                                            view);
+      g_signal_handlers_disconnect_by_func (private->container,
+                                            gimp_container_view_container_thaw,
+                                            view);
+
       if (! GIMP_CONTAINER_VIEW_GET_IFACE (view)->use_list_model)
         _gimp_container_view_disconnect_cruft (view);
     }
@@ -705,6 +722,15 @@ gimp_container_view_real_set_container (GimpContainerView *view,
     {
       if (! GIMP_CONTAINER_VIEW_GET_IFACE (view)->use_list_model)
         _gimp_container_view_connect_cruft (view);
+
+      g_signal_connect_object (private->container, "freeze",
+                               G_CALLBACK (gimp_container_view_container_freeze),
+                               view,
+                               G_CONNECT_SWAPPED);
+      g_signal_connect_object (private->container, "thaw",
+                               G_CALLBACK (gimp_container_view_container_thaw),
+                               view,
+                               G_CONNECT_SWAPPED);
 
       if (private->context)
         gimp_container_view_connect_context (view);
@@ -754,6 +780,37 @@ gimp_container_view_real_get_selected (GimpContainerView  *view,
     *items = NULL;
 
   return 0;
+}
+
+static void
+gimp_container_view_container_freeze (GimpContainerView *view,
+                                      GimpContainer     *container)
+{
+}
+
+static void
+gimp_container_view_container_thaw (GimpContainerView *view,
+                                    GimpContainer     *container)
+{
+  GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
+
+  if (private->context)
+    {
+      GType        child_type;
+      const gchar *signal_name;
+
+      child_type  = gimp_container_get_child_type (private->container);
+      signal_name = gimp_context_type_to_signal_name (child_type);
+
+      if (signal_name)
+        {
+          GimpObject *object;
+
+          object = gimp_context_get_by_type (private->context, child_type);
+
+          gimp_container_view_set_1_selected (view, GIMP_VIEWABLE (object));
+        }
+    }
 }
 
 static void
