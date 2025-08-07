@@ -794,9 +794,9 @@ file_open_or_link_image (Gimp                *gimp,
       file_proc != NULL       &&
       file_open_file_proc_is_import (file_proc))
     {
-      GimpLink *link = gimp_link_new (gimp, file);
+      GimpLink *link = gimp_link_new (gimp, file, progress, error);
 
-      if (gimp_link_is_broken (link, TRUE, error))
+      if (gimp_link_is_broken (link))
         {
           *status = GIMP_PDB_EXECUTION_ERROR;
         }
@@ -822,6 +822,8 @@ file_open_or_link_image (Gimp                *gimp,
 
           *status = GIMP_PDB_SUCCESS;
         }
+
+      g_clear_object (&link);
     }
   else
     {

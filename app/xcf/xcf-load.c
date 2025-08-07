@@ -2188,7 +2188,7 @@ xcf_load_layer_props (XcfInfo    *info,
               xcf_read_string (info, &path, 1);
 
               folder = g_file_get_parent (info->file);
-              link   = gimp_link_new (info->gimp, g_file_resolve_relative_path (folder, path));
+              link   = gimp_link_new (info->gimp, g_file_resolve_relative_path (folder, path), NULL, NULL);
 
               g_object_unref (folder);
               g_free (path);
