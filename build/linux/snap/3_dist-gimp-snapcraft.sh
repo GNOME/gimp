@@ -23,6 +23,25 @@ printf "\e[0Ksection_end:`date +%s`:snap_tlkt\r\e[0K\n"
 
 # Global info
 printf "\e[0Ksection_start:`date +%s`:snap_info\r\e[0KGetting snap global info\n"
+cp build/linux/snap/snapcraft.yaml .
+
+## Get info about GIMP version
+GIMP_VERSION=$(awk '/^version:/ { print $2 }' snapcraft.yaml)
+
+## Set proper Snap name and update track
+NAME=$(awk '/^name:/ { print $2 }' snapcraft.yaml)
+gimp_release=$([ "$(awk '/^grade:/ { print $2 }' snapcraft.yaml)" != 'devel' ] && echo true || echo false)
+gimp_unstable=$(minor=$(echo "$GIMP_VERSION" | cut -d. -f2); [ $((minor % 2)) -ne 0 ] && echo true || echo false)
+if [ "$gimp_release" = false ] || echo "$GIMP_VERSION" | grep -q 'git'; then
+  export TRACK="experimental"
+elif [ "$gimp_release" = true ] && [ "$gimp_unstable" = true ] || echo "$GIMP_VERSION" | grep -q 'RC'; then
+  export TRACK="preview"
+else
+  export TRACK="latest"
+fi
+printf "(INFO): Name: $NAME (track: $TRACK) | Version: $GIMP_VERSION\n"
+
+## Autodetects what archs will be packaged
 supported_archs=$(find . -maxdepth 1 -iname "*.snap")
 if echo "$supported_archs" | grep -q 'arm64' && ! echo "$supported_archs" | grep -q 'amd64'; then
   printf '(INFO): Arch: arm64\n'
@@ -60,7 +79,9 @@ fi
 # Publish GIMP snap on Snap Store
 #if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
 #  printf "\e[0Ksection_start:`date +%s`:${SNAP}_publish[collapsed=true]\r\e[0KPublishing snap to Snap Store\n"
-#  snapcraft upload --release=experimental/stable ${SNAP}
+#  snapcraft upload --release=$TRACK/stable ${SNAP}
 #  printf "\e[0Ksection_end:`date +%s`:${SNAP}_publish\r\e[0K\n"
 #fi
 done
+
+rm snapcraft.yaml
