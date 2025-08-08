@@ -75,8 +75,8 @@ struct _GimpRowPrivate
   GtkWidget    *view;
   GtkWidget    *label;
 
-  GtkWidget    *popover;
-  GtkGesture   *label_long_press;
+  GtkWidget    *rename_popover;
+  GtkGesture   *rename_long_press;
 };
 
 #define GET_PRIVATE(obj) \
@@ -239,12 +239,12 @@ gimp_row_init (GimpRow *row)
   gtk_container_add (GTK_CONTAINER (ebox), priv->label);
   gtk_widget_set_visible (priv->label, TRUE);
 
-  priv->label_long_press = gtk_gesture_long_press_new (ebox);
+  priv->rename_long_press = gtk_gesture_long_press_new (ebox);
   gtk_event_controller_set_propagation_phase
-    (GTK_EVENT_CONTROLLER (priv->label_long_press),
+    (GTK_EVENT_CONTROLLER (priv->rename_long_press),
      GTK_PHASE_TARGET);
 
-  g_signal_connect (priv->label_long_press, "pressed",
+  g_signal_connect (priv->rename_long_press, "pressed",
                     G_CALLBACK (gimp_row_label_long_pressed),
                     row);
 }
@@ -279,8 +279,8 @@ gimp_row_dispose (GObject *object)
 
   gimp_row_set_viewable (GIMP_ROW (object), NULL);
 
-  g_clear_pointer (&priv->popover, gtk_widget_destroy);
-  g_clear_object  (&priv->label_long_press);
+  g_clear_pointer (&priv->rename_popover, gtk_widget_destroy);
+  g_clear_object  (&priv->rename_long_press);
 
   gimp_row_set_context  (GIMP_ROW (object), NULL);
   gimp_row_set_viewable (GIMP_ROW (object), NULL);
@@ -604,18 +604,18 @@ gimp_row_real_edit_name (GimpRow *row)
       return;
     }
 
-  priv->popover = gtk_popover_new (priv->label);
-  gtk_popover_set_modal (GTK_POPOVER (priv->popover), TRUE);
+  priv->rename_popover = gtk_popover_new (priv->label);
+  gtk_popover_set_modal (GTK_POPOVER (priv->rename_popover), TRUE);
 
-  g_object_add_weak_pointer (G_OBJECT (priv->popover),
-                             (gpointer) &priv->popover);
+  g_object_add_weak_pointer (G_OBJECT (priv->rename_popover),
+                             (gpointer) &priv->rename_popover);
 
-  g_signal_connect (priv->popover, "closed",
+  g_signal_connect (priv->rename_popover, "closed",
                     G_CALLBACK (gtk_widget_destroy),
                     NULL);
 
   box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_add (GTK_CONTAINER (priv->popover), box);
+  gtk_container_add (GTK_CONTAINER (priv->rename_popover), box);
   gtk_widget_show (box);
 
   default_name = GIMP_VIEWABLE_GET_CLASS (priv->viewable)->default_name;
@@ -635,7 +635,7 @@ gimp_row_real_edit_name (GimpRow *row)
                     G_CALLBACK (gimp_row_rename_entry_activate),
                     row);
 
-  gtk_popover_popup (GTK_POPOVER (priv->popover));
+  gtk_popover_popup (GTK_POPOVER (priv->rename_popover));
 }
 
 static gboolean
@@ -832,10 +832,15 @@ gimp_row_rename_entry_activate (GtkEntry *entry,
 {
   GimpRowPrivate *priv = GET_PRIVATE (row);
   const gchar    *old_name;
-  const gchar    *new_name;
+  gchar          *new_name;
 
   old_name = gimp_object_get_name (priv->viewable);
-  new_name = gtk_entry_get_text (entry);
+
+  /*  Dup the new name, and popdown before renaming, because it can
+   *  destroy the row and the popup.
+   */
+  new_name = g_strdup (gtk_entry_get_text (entry));
+  gtk_popover_popdown (GTK_POPOVER (priv->rename_popover));
 
   if (g_strcmp0 (old_name, new_name))
     {
@@ -845,7 +850,7 @@ gimp_row_rename_entry_activate (GtkEntry *entry,
         }
     }
 
-  gtk_popover_popdown (GTK_POPOVER (priv->popover));
+  g_free (new_name);
 }
 
 static GimpViewable *
