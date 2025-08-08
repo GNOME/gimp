@@ -57,6 +57,7 @@ if [ "$GITLAB_CI" ]; then
   tar cf repo-$(uname -m).tar repo/
   
   ## On CI, make the .flatpak prematurely on each runner since build-bundle is not arch neutral
-  eval "$(sed -n -e '/app-id/,/flatpak build-bundle/ { s/  //; p }' build/linux/flatpak/3_dist-gimp-flatpakbuilder.sh)"
+  eval "$(sed -n -e '/APP_ID=/,/BRANCH=/ { s/  //; p }' build/linux/flatpak/3_dist-gimp-flatpakbuilder.sh)"
+  eval "$(grep 'build-bundle repo' build/linux/flatpak/3_dist-gimp-flatpakbuilder.sh | sed 's/  //')"
 fi
 printf "\e[0Ksection_end:`date +%s`:gimp_bundle\r\e[0K\n"
