@@ -249,7 +249,7 @@ gimp_device_editor_constructed (GObject *object)
 
   private->filtered = gimp_filtered_container_new (devices,
                                                    gimp_device_editor_filter,
-                                          NULL);
+                                                   NULL);
   gimp_container_view_set_container (GIMP_CONTAINER_VIEW (private->list_view),
                                      private->filtered);
 
