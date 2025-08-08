@@ -66,6 +66,7 @@ static void   gimp_tree_proxy_container_remove    (GimpContainer *container,
                                                    GimpTreeProxy *tree_proxy);
 static void   gimp_tree_proxy_container_reorder   (GimpContainer *container,
                                                    GimpObject    *object,
+                                                   gint           old_index,
                                                    gint           new_index,
                                                    GimpTreeProxy *tree_proxy);
 static void   gimp_tree_proxy_container_freeze    (GimpContainer *container,
@@ -213,6 +214,7 @@ gimp_tree_proxy_container_remove (GimpContainer *container,
 static void
 gimp_tree_proxy_container_reorder (GimpContainer *container,
                                    GimpObject    *object,
+                                   gint           old_index,
                                    gint           new_index,
                                    GimpTreeProxy *tree_proxy)
 {

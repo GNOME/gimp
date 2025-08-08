@@ -99,6 +99,7 @@ static void             gimp_tool_widget_group_children_remove     (GimpContaine
                                                                     GimpToolWidgetGroup   *group);
 static void             gimp_tool_widget_group_children_reorder    (GimpContainer         *container,
                                                                     GimpToolWidget        *child,
+                                                                    gint                   old_index,
                                                                     gint                   new_index,
                                                                     GimpToolWidgetGroup   *group);
 
@@ -513,6 +514,7 @@ gimp_tool_widget_group_children_remove (GimpContainer       *container,
 static void
 gimp_tool_widget_group_children_reorder (GimpContainer       *container,
                                          GimpToolWidget      *child,
+                                         gint                 old_index,
                                          gint                 new_index,
                                          GimpToolWidgetGroup *group)
 {

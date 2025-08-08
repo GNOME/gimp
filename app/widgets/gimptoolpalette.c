@@ -86,7 +86,8 @@ static void     gimp_tool_palette_tool_remove         (GimpContainer   *containe
                                                        GimpToolPalette *palette);
 static void     gimp_tool_palette_tool_reorder        (GimpContainer   *container,
                                                        GimpToolItem    *tool_item,
-                                                       gint             index,
+                                                       gint             old_index,
+                                                       gint             new_index,
                                                        GimpToolPalette *palette);
 
 static void     gimp_tool_palette_add_button          (GimpToolPalette *palette,
@@ -430,7 +431,8 @@ gimp_tool_palette_tool_remove (GimpContainer   *container,
 static void
 gimp_tool_palette_tool_reorder (GimpContainer   *container,
                                 GimpToolItem    *tool_item,
-                                gint             index,
+                                gint             old_index,
+                                gint             new_index,
                                 GimpToolPalette *palette)
 {
   GimpToolPalettePrivate *private = GET_PRIVATE (palette);
@@ -440,9 +442,9 @@ gimp_tool_palette_tool_reorder (GimpContainer   *container,
 
   if (tool_button)
     {
-      gtk_tool_item_group_set_item_position (
-        GTK_TOOL_ITEM_GROUP (private->group),
-        GTK_TOOL_ITEM (tool_button), index);
+      gtk_tool_item_group_set_item_position
+        (GTK_TOOL_ITEM_GROUP (private->group),
+         GTK_TOOL_ITEM (tool_button), new_index);
     }
 }
 

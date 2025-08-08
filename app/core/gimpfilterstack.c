@@ -40,6 +40,7 @@ static void   gimp_filter_stack_remove           (GimpContainer   *container,
                                                   GimpObject      *object);
 static void   gimp_filter_stack_reorder          (GimpContainer   *container,
                                                   GimpObject      *object,
+                                                  gint             old_index,
                                                   gint             new_index);
 
 static void   gimp_filter_stack_add_node         (GimpFilterStack *stack,
@@ -147,6 +148,7 @@ gimp_filter_stack_remove (GimpContainer *container,
 static void
 gimp_filter_stack_reorder (GimpContainer *container,
                            GimpObject    *object,
+                           gint           old_index,
                            gint           new_index)
 {
   GimpFilterStack *stack  = GIMP_FILTER_STACK (container);
@@ -155,7 +157,8 @@ gimp_filter_stack_reorder (GimpContainer *container,
   if (stack->graph && gimp_filter_get_active (filter))
     gimp_filter_stack_remove_node (stack, filter);
 
-  GIMP_CONTAINER_CLASS (parent_class)->reorder (container, object, new_index);
+  GIMP_CONTAINER_CLASS (parent_class)->reorder (container, object,
+                                                old_index, new_index);
 
   if (gimp_filter_get_active (filter))
     {

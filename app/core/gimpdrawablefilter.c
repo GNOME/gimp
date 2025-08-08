@@ -173,6 +173,7 @@ static void       gimp_drawable_filter_lock_alpha_changed    (GimpLayer         
 
 static void       gimp_drawable_filter_reorder               (GimpFilterStack    *stack,
                                                               GimpDrawableFilter *reordered_filter,
+                                                              gint                old_index,
                                                               gint                new_index,
                                                               GimpDrawableFilter *filter);
 
@@ -2015,6 +2016,7 @@ gimp_drawable_filter_lock_alpha_changed (GimpLayer          *layer,
 static void
 gimp_drawable_filter_reorder (GimpFilterStack    *stack,
                               GimpDrawableFilter *reordered_filter,
+                              gint                old_index,
                               gint                new_index,
                               GimpDrawableFilter *filter)
 {
@@ -2032,6 +2034,8 @@ gimp_drawable_filter_reorder (GimpFilterStack    *stack,
            * it's organized.
            */
           GIMP_IS_DRAWABLE_FILTER (GIMP_LIST (stack)->queue->head->data))
-        gimp_drawable_filter_sync_format (GIMP_LIST (stack)->queue->head->data);
+        {
+          gimp_drawable_filter_sync_format (GIMP_LIST (stack)->queue->head->data);
+        }
     }
 }

@@ -47,6 +47,7 @@ static void   gimp_drawable_stack_remove           (GimpContainer     *container
                                                     GimpObject        *object);
 static void   gimp_drawable_stack_reorder          (GimpContainer     *container,
                                                     GimpObject        *object,
+                                                    gint               old_index,
                                                     gint               new_index);
 
 static void   gimp_drawable_stack_drawable_update  (GimpItem          *item,
@@ -142,11 +143,13 @@ gimp_drawable_stack_remove (GimpContainer *container,
 static void
 gimp_drawable_stack_reorder (GimpContainer *container,
                              GimpObject    *object,
+                             gint           old_index,
                              gint           new_index)
 {
   GimpDrawableStack *stack  = GIMP_DRAWABLE_STACK (container);
 
-  GIMP_CONTAINER_CLASS (parent_class)->reorder (container, object, new_index);
+  GIMP_CONTAINER_CLASS (parent_class)->reorder (container, object,
+                                                old_index, new_index);
 
   if (gimp_filter_get_active (GIMP_FILTER (object)))
     gimp_drawable_stack_drawable_active (GIMP_ITEM (object), stack);

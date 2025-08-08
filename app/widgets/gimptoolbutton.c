@@ -133,6 +133,7 @@ static void         gimp_tool_button_tool_remove         (GimpContainer       *c
                                                           GimpToolButton      *tool_button);
 static void         gimp_tool_button_tool_reorder        (GimpContainer       *container,
                                                           GimpToolInfo        *tool_info,
+                                                          gint                 old_index,
                                                           gint                 new_index,
                                                           GimpToolButton      *tool_button);
 
@@ -788,6 +789,7 @@ gimp_tool_button_tool_remove (GimpContainer  *container,
 static void
 gimp_tool_button_tool_reorder (GimpContainer  *container,
                                GimpToolInfo   *tool_info,
+                               gint            old_index,
                                gint            new_index,
                                GimpToolButton *tool_button)
 {

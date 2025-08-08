@@ -61,6 +61,7 @@ static void         gimp_list_remove             (GimpContainer           *conta
                                                   GimpObject              *object);
 static void         gimp_list_reorder            (GimpContainer           *container,
                                                   GimpObject              *object,
+                                                  gint                     old_index,
                                                   gint                     new_index);
 static void         gimp_list_clear              (GimpContainer           *container);
 static gboolean     gimp_list_have               (GimpContainer           *container,
@@ -297,6 +298,7 @@ gimp_list_remove (GimpContainer *container,
 static void
 gimp_list_reorder (GimpContainer *container,
                    GimpObject    *object,
+                   gint           old_index,
                    gint           new_index)
 {
   GimpList *list = GIMP_LIST (container);
@@ -308,7 +310,8 @@ gimp_list_reorder (GimpContainer *container,
   else
     g_queue_push_nth (list->queue, object, new_index);
 
-  GIMP_CONTAINER_CLASS (parent_class)->reorder (container, object, new_index);
+  GIMP_CONTAINER_CLASS (parent_class)->reorder (container, object,
+                                                old_index, new_index);
 }
 
 static void

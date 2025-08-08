@@ -57,6 +57,7 @@ static void      windows_menu_display_remove             (GimpContainer     *con
                                                           GimpUIManager     *manager);
 static void      windows_menu_display_reorder            (GimpContainer     *container,
                                                           GimpDisplay       *display,
+                                                          gint               old_index,
                                                           gint               new_index,
                                                           GimpUIManager     *manager);
 static void      windows_menu_image_notify               (GimpDisplay       *display,
@@ -175,6 +176,7 @@ windows_menu_display_remove (GimpContainer *container,
 static void
 windows_menu_display_reorder (GimpContainer *container,
                               GimpDisplay   *display,
+                              gint           old_index,
                               gint           new_index,
                               GimpUIManager *manager)
 {
