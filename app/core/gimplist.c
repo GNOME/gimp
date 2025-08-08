@@ -307,6 +307,8 @@ gimp_list_reorder (GimpContainer *container,
     g_queue_push_tail (list->queue, object);
   else
     g_queue_push_nth (list->queue, object, new_index);
+
+  GIMP_CONTAINER_CLASS (parent_class)->reorder (container, object, new_index);
 }
 
 static void
