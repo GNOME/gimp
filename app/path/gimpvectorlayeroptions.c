@@ -263,6 +263,7 @@ gimp_vector_layer_options_set_property (GObject      *object,
           gimp_config_sync (g_value_get_object (value),
                             G_OBJECT (options->fill_options), 0);
       break;
+
     case PROP_STROKE_OPTIONS:
       if (g_value_get_object (value))
         {

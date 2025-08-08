@@ -139,24 +139,6 @@ static void     gimp_path_tool_to_selection_extended
                                                   (GimpPathTool          *path_tool,
                                                    GdkModifierType        state);
 
-static void     gimp_path_tool_fill_path          (GimpPathTool          *path_tool,
-                                                   GtkWidget             *button);
-static void     gimp_path_tool_fill_callback      (GtkWidget             *dialog,
-                                                   GList                 *items,
-                                                   GList                 *drawables,
-                                                   GimpContext           *context,
-                                                   GimpFillOptions       *options,
-                                                   gpointer               data);
-
-static void     gimp_path_tool_stroke_path        (GimpPathTool          *path_tool,
-                                                   GtkWidget             *button);
-static void     gimp_path_tool_stroke_callback    (GtkWidget             *dialog,
-                                                   GList                 *items,
-                                                   GList                 *drawables,
-                                                   GimpContext           *context,
-                                                   GimpStrokeOptions     *options,
-                                                   gpointer               data);
-
 static void     gimp_path_tool_create_vector_layer(GimpPathTool          *path_tool,
 						                           GtkWidget             *button);
 
@@ -533,9 +515,7 @@ gimp_path_tool_tool_path_changed (GimpToolWidget *tool_path,
   GimpImage        *image = gimp_display_get_image (shell->display);
   GimpPath         *path;
 
-  g_object_get (tool_path,
-                "path", &path,
-                NULL);
+  g_object_get (tool_path, "path", &path, NULL);
 
   if (path != path_tool->path)
     {
@@ -675,22 +655,6 @@ gimp_path_tool_set_path (GimpPathTool *path_tool,
                                                 tool);
         }
 
-      if (options->fill_button)
-        {
-          gtk_widget_set_sensitive (options->fill_button, FALSE);
-          g_signal_handlers_disconnect_by_func (options->fill_button,
-                                                gimp_path_tool_fill_path,
-                                                tool);
-        }
-
-      if (options->stroke_button)
-        {
-          gtk_widget_set_sensitive (options->stroke_button, FALSE);
-          g_signal_handlers_disconnect_by_func (options->stroke_button,
-                                                gimp_path_tool_stroke_path,
-                                                tool);
-        }
-
       if (options->vector_layer_button)
         {
           gtk_widget_set_sensitive (options->vector_layer_button, FALSE);
@@ -728,22 +692,6 @@ gimp_path_tool_set_path (GimpPathTool *path_tool,
                                 G_CALLBACK (gimp_path_tool_to_selection_extended),
                                 tool);
       gtk_widget_set_sensitive (options->to_selection_button, TRUE);
-    }
-
-  if (options->fill_button)
-    {
-      g_signal_connect_swapped (options->fill_button, "clicked",
-                                G_CALLBACK (gimp_path_tool_fill_path),
-                                tool);
-      gtk_widget_set_sensitive (options->fill_button, TRUE);
-    }
-
-  if (options->stroke_button)
-    {
-      g_signal_connect_swapped (options->stroke_button, "clicked",
-                                G_CALLBACK (gimp_path_tool_stroke_path),
-                                tool);
-      gtk_widget_set_sensitive (options->stroke_button, TRUE);
     }
 
   if (options->vector_layer_button)
@@ -817,184 +765,6 @@ gimp_path_tool_to_selection_extended (GimpPathTool    *path_tool,
                           gimp_modifiers_to_channel_op (state),
                           TRUE, FALSE, 0, 0);
   gimp_image_flush (image);
-}
-
-
-static void
-gimp_path_tool_fill_path (GimpPathTool *path_tool,
-                          GtkWidget    *button)
-{
-  GimpDialogConfig *config;
-  GimpImage        *image;
-  GList            *drawables;
-  GList            *path_list = NULL;
-  GtkWidget        *dialog;
-
-  if (! path_tool->path)
-    return;
-
-  image = gimp_item_get_image (GIMP_ITEM (path_tool->path));
-
-  config = GIMP_DIALOG_CONFIG (image->gimp->config);
-
-  drawables = gimp_image_get_selected_drawables (image);
-
-  if (! drawables)
-    {
-      gimp_tool_message (GIMP_TOOL (path_tool),
-                         GIMP_TOOL (path_tool)->display,
-                         _("There are no selected layers or channels to fill."));
-      return;
-    }
-
-  if (g_list_length (drawables) == 1 &&
-      gimp_item_is_content_locked (GIMP_ITEM (drawables->data), NULL))
-    {
-      gimp_tool_message (GIMP_TOOL (path_tool),
-                         GIMP_TOOL (path_tool)->display,
-                         _("A selected layer's pixels are locked."));
-      return;
-    }
-
-  path_list = g_list_prepend (NULL, path_tool->path);
-  dialog = fill_dialog_new (path_list, drawables,
-                            GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (path_tool)),
-                            _("Fill Path"),
-                            GIMP_ICON_TOOL_BUCKET_FILL,
-                            GIMP_HELP_PATH_FILL,
-                            button,
-                            config->fill_options,
-                            gimp_path_tool_fill_callback,
-                            path_tool);
-  gtk_widget_show (dialog);
-  g_list_free (path_list);
-  g_list_free (drawables);
-}
-
-static void
-gimp_path_tool_fill_callback (GtkWidget       *dialog,
-                              GList           *items,
-                              GList           *drawables,
-                              GimpContext     *context,
-                              GimpFillOptions *options,
-                              gpointer         data)
-{
-  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (context->gimp->config);
-  GimpImage        *image  = gimp_item_get_image (items->data);
-  GError           *error  = NULL;
-
-  gimp_config_sync (G_OBJECT (options),
-                    G_OBJECT (config->fill_options), 0);
-
-  gimp_image_undo_group_start (image,
-                               GIMP_UNDO_GROUP_DRAWABLE_MOD,
-                               "Fill");
-
-  for (GList *iter = items; iter; iter = iter->next)
-    if (! gimp_item_fill (iter->data, drawables, options,
-                          TRUE, NULL, &error))
-      {
-        gimp_message_literal (context->gimp,
-                              G_OBJECT (dialog),
-                              GIMP_MESSAGE_WARNING,
-                              error ? error->message : "NULL");
-
-        g_clear_error (&error);
-        break;
-      }
-
-  gimp_image_undo_group_end (image);
-  gimp_image_flush (image);
-  gtk_widget_destroy (dialog);
-}
-
-
-static void
-gimp_path_tool_stroke_path (GimpPathTool *path_tool,
-                            GtkWidget    *button)
-{
-  GimpDialogConfig *config;
-  GimpImage        *image;
-  GList            *drawables;
-  GList            *path_list = NULL;
-  GtkWidget        *dialog;
-
-  if (! path_tool->path)
-    return;
-
-  image = gimp_item_get_image (GIMP_ITEM (path_tool->path));
-
-  config = GIMP_DIALOG_CONFIG (image->gimp->config);
-
-  drawables = gimp_image_get_selected_drawables (image);
-
-  if (! drawables)
-    {
-      gimp_tool_message (GIMP_TOOL (path_tool),
-                         GIMP_TOOL (path_tool)->display,
-                         _("There are no selected layers or channels to stroke to."));
-      return;
-    }
-
-  if (g_list_length (drawables) == 1 &&
-      gimp_item_is_content_locked (GIMP_ITEM (drawables->data), NULL))
-    {
-      gimp_tool_message (GIMP_TOOL (path_tool),
-                         GIMP_TOOL (path_tool)->display,
-                         _("A selected layer's pixels are locked."));
-      return;
-    }
-
-  path_list = g_list_prepend (NULL, path_tool->path);
-  dialog = stroke_dialog_new (path_list, drawables,
-                              GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (path_tool)),
-                              _("Stroke Path"),
-                              GIMP_ICON_PATH_STROKE,
-                              GIMP_HELP_PATH_STROKE,
-                              button,
-                              config->stroke_options,
-                              gimp_path_tool_stroke_callback,
-                              path_tool);
-  gtk_widget_show (dialog);
-  g_list_free (path_list);
-  g_list_free (drawables);
-}
-
-static void
-gimp_path_tool_stroke_callback (GtkWidget         *dialog,
-                                GList             *items,
-                                GList             *drawables,
-                                GimpContext       *context,
-                                GimpStrokeOptions *options,
-                                gpointer           data)
-{
-  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (context->gimp->config);
-  GimpImage        *image  = gimp_item_get_image (items->data);
-  GError           *error  = NULL;
-
-  gimp_config_sync (G_OBJECT (options),
-                    G_OBJECT (config->stroke_options), 0);
-
-  gimp_image_undo_group_start (image,
-                               GIMP_UNDO_GROUP_DRAWABLE_MOD,
-                               "Stroke");
-
-  for (GList *iter = items; iter; iter = iter->next)
-    if (! gimp_item_stroke (iter->data, drawables, context, options, NULL,
-                            TRUE, NULL, &error))
-      {
-        gimp_message_literal (context->gimp,
-                              G_OBJECT (dialog),
-                              GIMP_MESSAGE_WARNING,
-                              error ? error->message : "NULL");
-
-        g_clear_error (&error);
-        break;
-      }
-
-  gimp_image_undo_group_end (image);
-  gimp_image_flush (image);
-  gtk_widget_destroy (dialog);
 }
 
 static void

@@ -367,7 +367,7 @@ gimp_vector_layer_push_undo (GimpDrawable *drawable,
 
 static gint64
 gimp_vector_layer_get_memsize (GimpObject *object,
-                             gint64     *gui_size)
+                               gint64     *gui_size)
 {
   GimpVectorLayer *vector_layer = GIMP_VECTOR_LAYER (object);
   gint64           memsize      = 0;
@@ -383,7 +383,7 @@ static GimpItem *
 gimp_vector_layer_duplicate (GimpItem *item,
                              GType     new_type)
 {
-  GimpItem *new_item;
+  GimpItem  *new_item;
 
   g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
 
@@ -402,7 +402,6 @@ gimp_vector_layer_duplicate (GimpItem *item,
           g_object_set (new_vector_layer,
                         "vector-layer-options", new_options,
                         NULL);
-
           g_object_unref (new_options);
         }
     }
@@ -628,6 +627,9 @@ gimp_vector_layer_discard (GimpVectorLayer *layer)
 					                   layer, NULL);
 
   g_object_set (layer, "vector-layer-options", NULL, NULL);
+
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));
+  gimp_image_flush (gimp_item_get_image (GIMP_ITEM (layer)));
 }
 
 gboolean
