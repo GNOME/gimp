@@ -37,6 +37,7 @@
 #include "gimpcontainerbox.h"
 #include "gimpcontainereditor.h"
 #include "gimpcontainerpopup.h"
+#include "gimpcontainerlistview.h"
 #include "gimpcontainertreeview.h"
 #include "gimpcontainerview.h"
 #include "gimpdialogfactory.h"
@@ -277,14 +278,28 @@ gimp_container_popup_create_view (GimpContainerPopup *popup)
 
   if (popup->view_type == GIMP_VIEW_TYPE_LIST)
     {
-      GtkWidget *search_entry;
+      GimpContainerView *view = popup->editor->view;
+      GtkWidget         *entry;
 
-      search_entry = gtk_entry_new ();
-      gtk_box_pack_end (GTK_BOX (popup->editor->view), search_entry,
-                        FALSE, FALSE, 0);
-      gtk_tree_view_set_search_entry (GTK_TREE_VIEW (GIMP_CONTAINER_TREE_VIEW (GIMP_CONTAINER_VIEW (popup->editor->view))->view),
-                                      GTK_ENTRY (search_entry));
-      gtk_widget_show (search_entry);
+      entry = gtk_search_entry_new ();
+      gtk_box_pack_end (GTK_BOX (view), entry, FALSE, FALSE, 0);
+
+      if (GIMP_IS_CONTAINER_TREE_VIEW (view))
+        {
+          GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+
+          gtk_tree_view_set_search_entry (GTK_TREE_VIEW (tree_view->view),
+                                          GTK_ENTRY (entry));
+        }
+      else
+        {
+          GimpContainerListView *list_view = GIMP_CONTAINER_LIST_VIEW (view);
+
+          gimp_container_list_view_set_search_entry (list_view,
+                                                     GTK_SEARCH_ENTRY (entry));
+        }
+
+      gtk_widget_show (entry);
     }
 
   /* lame workaround for bug #761998 */
