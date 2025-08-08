@@ -812,7 +812,7 @@ dist-flatpak-weekly:
   needs: ["gimp-flatpak"]
   stage: distribution
   script:
-    - sh -x build/linux/flatpak/3_dist-gimp-flatpakbuilder.sh
+    - sh build/linux/flatpak/3_dist-gimp-flatpakbuilder.sh
   artifacts:
     expose_as: 'Linux flatpak'
     paths:
