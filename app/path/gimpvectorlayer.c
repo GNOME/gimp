@@ -646,6 +646,7 @@ static gboolean
 gimp_vector_layer_render (GimpVectorLayer *layer)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (layer);
+  GeglBuffer   *buffer   = NULL;
   GimpItem     *item     = GIMP_ITEM (layer);
   GimpImage    *image    = gimp_item_get_image (item);
   gint          layer_x  = 0;
@@ -659,12 +660,16 @@ gimp_vector_layer_render (GimpVectorLayer *layer)
 
   g_object_freeze_notify (G_OBJECT (drawable));
 
-  /* TODO: Resize more efficiently and without undo history */
+  /* Resize layer according to path size */
   gimp_item_get_offset (GIMP_ITEM (layer), &layer_x, &layer_y);
   gimp_item_bounds (GIMP_ITEM (layer->options->path), &x, &y, &width, &height);
-  gimp_item_resize (GIMP_ITEM (layer), gimp_get_user_context (image->gimp),
-                    GIMP_FILL_TRANSPARENT, width, height,
-                    layer_x - x, layer_y - y);
+
+  buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
+                            gimp_drawable_get_format (drawable));
+  gimp_drawable_set_buffer (drawable, FALSE, NULL, buffer);
+  g_object_unref (buffer);
+
+  gimp_item_set_offset (GIMP_ITEM (layer), x, y);
 
   /* make the layer background transparent */
   gimp_drawable_fill (GIMP_DRAWABLE (layer),
