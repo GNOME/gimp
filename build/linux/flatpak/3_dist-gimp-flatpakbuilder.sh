@@ -57,8 +57,7 @@ if [ "$GITLAB_CI" ]; then
   if [ -d 'repo' ]; then
     rm -fr repo
   fi
-  mkdir repo
-  tar xf repo-$ARCH.tar -C repo/ --warning=no-timestamp
+  tar xf repo-$ARCH.tar --warning=no-timestamp
 fi
 
 
