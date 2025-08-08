@@ -93,7 +93,7 @@ fi
 if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
   printf "\e[0Ksection_start:`date +%s`:${FLATPAK}_publish[collapsed=true]\r\e[0KPublishing $ARCH repo to GNOME nightly\n"
   curl https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml --output flatpak_ci_initiative.yml
-  eval "$(sed -n -e '/BUILD_ID=/,/exit $result/ { s/    - //; p }' flatpak_ci_initiative.yml)"
+  eval "$(sed -n -e '/flatpak build-update-repo/,/exit $result/ { s/    - //; p }' flatpak_ci_initiative.yml)"
   printf "\e[0Ksection_end:`date +%s`:${FLATPAK}_publish\r\e[0K\n"
 fi
 done

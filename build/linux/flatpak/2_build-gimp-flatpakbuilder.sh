@@ -54,7 +54,6 @@ printf "\e[0Ksection_start:`date +%s`:gimp_bundle[collapsed=true]\r\e[0KCreating
 eval $FLATPAK_BUILDER $BUILDER_ARGS --finish-only --repo=repo \
                       "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
 if [ "$GITLAB_CI" ]; then
-  flatpak build-update-repo --generate-static-deltas repo/
   tar cf repo-$(uname -m).tar repo/
   
   ## On CI, make the .flatpak prematurely on each runner since build-bundle is not arch neutral
