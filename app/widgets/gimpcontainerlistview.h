@@ -50,3 +50,7 @@ GtkWidget * gimp_container_list_view_new      (GimpContainer *container,
                                                GimpContext   *context,
                                                gint           view_size,
                                                gint           view_border_width);
+
+void        gimp_container_list_view_set_search_entry
+                                              (GimpContainerListView *list_view,
+                                               GtkSearchEntry        *entry);

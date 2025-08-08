@@ -232,6 +232,16 @@ gimp_container_list_view_new (GimpContainer *container,
   return GTK_WIDGET (list_view);
 }
 
+void
+gimp_container_list_view_set_search_entry (GimpContainerListView *list_view,
+                                           GtkSearchEntry        *entry)
+{
+  g_return_if_fail (GIMP_IS_CONTAINER_LIST_VIEW (list_view));
+  g_return_if_fail (GTK_IS_SEARCH_ENTRY (entry));
+
+  g_printerr ("implement gimp_container_list_view_set_search_entry()\n");
+}
+
 
 /*  GimpContainerView methods  */
 
