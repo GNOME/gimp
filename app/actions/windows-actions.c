@@ -59,7 +59,8 @@ static void  windows_actions_display_remove            (GimpContainer     *conta
                                                         GimpActionGroup   *group);
 static void  windows_actions_display_reorder           (GimpContainer     *container,
                                                         GimpDisplay       *display,
-                                                        gint               position,
+                                                        gint               old_index,
+                                                        gint               new_index,
                                                         GimpActionGroup   *group);
 static void  windows_actions_image_notify              (GimpDisplay       *display,
                                                         const GParamSpec  *unused,
@@ -336,6 +337,7 @@ windows_actions_display_remove (GimpContainer   *container,
 static void
 windows_actions_display_reorder (GimpContainer   *container,
                                  GimpDisplay     *display,
+                                 gint             old_index,
                                  gint             new_index,
                                  GimpActionGroup *group)
 {

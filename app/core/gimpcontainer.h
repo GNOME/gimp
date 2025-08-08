@@ -58,6 +58,7 @@ struct _GimpContainerClass
                                        GimpObject              *object);
   void         (* reorder)            (GimpContainer           *container,
                                        GimpObject              *object,
+                                       gint                     old_index,
                                        gint                     new_index);
   void         (* freeze)             (GimpContainer           *container);
   void         (* thaw)               (GimpContainer           *container);

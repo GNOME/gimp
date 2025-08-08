@@ -108,6 +108,7 @@ static void       gimp_container_real_remove     (GimpContainer    *container,
                                                   GimpObject       *object);
 static void       gimp_container_real_reorder    (GimpContainer    *container,
                                                   GimpObject       *object,
+                                                  gint              old_index,
                                                   gint              new_index);
 
 static GType      gimp_container_get_item_type   (GListModel       *list);
@@ -172,9 +173,10 @@ gimp_container_class_init (GimpContainerClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpContainerClass, reorder),
                   NULL, NULL,
-                  gimp_marshal_VOID__OBJECT_INT,
-                  G_TYPE_NONE, 2,
+                  gimp_marshal_VOID__OBJECT_INT_INT,
+                  G_TYPE_NONE, 3,
                   GIMP_TYPE_OBJECT,
+                  G_TYPE_INT,
                   G_TYPE_INT);
 
   container_signals[FREEZE] =
@@ -363,6 +365,7 @@ gimp_container_real_remove (GimpContainer *container,
 static void
 gimp_container_real_reorder (GimpContainer *container,
                              GimpObject    *object,
+                             gint           old_index,
                              gint           new_index)
 {
 }
@@ -834,7 +837,7 @@ gimp_container_reorder (GimpContainer *container,
                         GimpObject    *object,
                         gint           new_index)
 {
-  gint index;
+  gint old_index;
 
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
   g_return_val_if_fail (object != NULL, FALSE);
@@ -848,19 +851,19 @@ gimp_container_reorder (GimpContainer *container,
   if (new_index == -1)
     new_index = container->priv->n_children - 1;
 
-  index = gimp_container_get_child_index (container, object);
+  old_index = gimp_container_get_child_index (container, object);
 
-  if (index == -1)
+  if (old_index == -1)
     {
       g_warning ("%s: container %p does not contain object %p",
                  G_STRFUNC, container, object);
       return FALSE;
     }
 
-  if (index != new_index)
+  if (old_index != new_index)
     {
       g_signal_emit (container, container_signals[REORDER], 0,
-                     object, new_index);
+                     object, old_index, new_index);
 
       if (container->priv->freeze_count          == 0 &&
           container->priv->suspend_items_changed == 0)
@@ -868,9 +871,9 @@ gimp_container_reorder (GimpContainer *container,
           gint new_index = gimp_container_get_child_index (container, object);
 
           g_list_model_items_changed (G_LIST_MODEL (container),
-                                      MIN (index, new_index),
-                                      ABS (index - new_index) + 1,
-                                      ABS (index - new_index) + 1);
+                                      MIN (old_index, new_index),
+                                      ABS (old_index - new_index) + 1,
+                                      ABS (old_index - new_index) + 1);
         }
     }
 

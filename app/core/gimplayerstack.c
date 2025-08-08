@@ -39,6 +39,7 @@ static void   gimp_layer_stack_remove                  (GimpContainer *container
                                                         GimpObject    *object);
 static void   gimp_layer_stack_reorder                 (GimpContainer *container,
                                                         GimpObject    *object,
+                                                        gint           old_index,
                                                         gint           new_index);
 
 static void   gimp_layer_stack_layer_active            (GimpLayer      *layer,
@@ -130,6 +131,7 @@ gimp_layer_stack_remove (GimpContainer *container,
 static void
 gimp_layer_stack_reorder (GimpContainer *container,
                           GimpObject    *object,
+                          gint           old_index,
                           gint           new_index)
 {
   GimpLayerStack *stack = GIMP_LAYER_STACK (container);
@@ -142,7 +144,8 @@ gimp_layer_stack_reorder (GimpContainer *container,
   if (update_backdrop)
     index = gimp_container_get_child_index (container, object);
 
-  GIMP_CONTAINER_CLASS (parent_class)->reorder (container, object, new_index);
+  GIMP_CONTAINER_CLASS (parent_class)->reorder (container, object,
+                                                old_index, new_index);
 
   if (update_backdrop)
     gimp_layer_stack_update_range (stack, index, new_index);

@@ -56,6 +56,7 @@ static void   gimp_container_view_remove           (GimpContainerView  *view,
 
 static void   gimp_container_view_reorder          (GimpContainerView  *view,
                                                     GimpViewable       *viewable,
+                                                    gint                old_index,
                                                     gint                new_index,
                                                     GimpContainer      *container);
 
@@ -355,6 +356,7 @@ gimp_container_view_remove (GimpContainerView *view,
 static void
 gimp_container_view_reorder (GimpContainerView *view,
                              GimpViewable      *viewable,
+                             gint               old_index,
                              gint               new_index,
                              GimpContainer     *container)
 {

@@ -59,6 +59,7 @@ static void    file_actions_last_opened_update  (GimpContainer   *container,
 static void    file_actions_last_opened_reorder (GimpContainer   *container,
                                                  GimpImagefile   *unused1,
                                                  gint             unused2,
+                                                 gint             unused3,
                                                  GimpActionGroup *group);
 static void    file_actions_close_all_update    (GimpContainer   *images,
                                                  GimpObject      *unused,
@@ -434,6 +435,7 @@ static void
 file_actions_last_opened_reorder (GimpContainer   *container,
                                   GimpImagefile   *unused1,
                                   gint             unused2,
+                                  gint             unused3,
                                   GimpActionGroup *group)
 {
   file_actions_last_opened_update (container, unused1, group);
