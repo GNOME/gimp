@@ -106,6 +106,9 @@ static void       gimp_container_real_add        (GimpContainer    *container,
                                                   GimpObject       *object);
 static void       gimp_container_real_remove     (GimpContainer    *container,
                                                   GimpObject       *object);
+static void       gimp_container_real_reorder    (GimpContainer    *container,
+                                                  GimpObject       *object,
+                                                  gint              new_index);
 
 static GType      gimp_container_get_item_type   (GListModel       *list);
 static guint      gimp_container_get_n_items     (GListModel       *list);
@@ -198,7 +201,7 @@ gimp_container_class_init (GimpContainerClass *klass)
 
   klass->add                     = gimp_container_real_add;
   klass->remove                  = gimp_container_real_remove;
-  klass->reorder                 = NULL;
+  klass->reorder                 = gimp_container_real_reorder;
   klass->freeze                  = NULL;
   klass->thaw                    = NULL;
 
@@ -355,6 +358,13 @@ gimp_container_real_remove (GimpContainer *container,
                             GimpObject    *object)
 {
   container->priv->n_children--;
+}
+
+static void
+gimp_container_real_reorder (GimpContainer *container,
+                             GimpObject    *object,
+                             gint           new_index)
+{
 }
 
 
@@ -775,6 +785,8 @@ gimp_container_insert (GimpContainer *container,
                        GimpObject    *object,
                        gint           index)
 {
+  gboolean success = FALSE;
+
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
   g_return_val_if_fail (object != NULL, FALSE);
   g_return_val_if_fail (G_TYPE_CHECK_INSTANCE_TYPE (object,
@@ -795,12 +807,18 @@ gimp_container_insert (GimpContainer *container,
 
   if (gimp_container_add (container, object))
     {
-      return gimp_container_reorder (container, object, index);
+      /*  set success to TRUE even if reorder() fails, because the
+       *  object has in fact been added
+       */
+      success = TRUE;
+
+      gimp_container_reorder (container, object, index);
     }
 
   container->priv->suspend_items_changed--;
 
-  if (container->priv->freeze_count          == 0 &&
+  if (success                                     &&
+      container->priv->freeze_count          == 0 &&
       container->priv->suspend_items_changed == 0)
     {
       gint index = gimp_container_get_child_index (container, object);
@@ -808,7 +826,7 @@ gimp_container_insert (GimpContainer *container,
       g_list_model_items_changed (G_LIST_MODEL (container), index, 0, 1);
     }
 
-  return FALSE;
+  return success;
 }
 
 gboolean
