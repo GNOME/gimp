@@ -51,3 +51,6 @@ GType     gimp_container_box_get_type         (void) G_GNUC_CONST;
 void      gimp_container_box_set_size_request (GimpContainerBox *box,
                                                gint              width,
                                                gint              height);
+
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpContainerBox, g_object_unref)
