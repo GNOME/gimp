@@ -55,4 +55,7 @@ void      gimp_container_box_set_size_request (GimpContainerBox *box,
                                                gint              height);
 
 
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpContainerBox, g_object_unref)
+
+
 #endif  /*  __GIMP_CONTAINER_BOX_H__  */

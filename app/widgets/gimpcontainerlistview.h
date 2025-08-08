@@ -23,20 +23,12 @@
 #include "gimpcontainerbox.h"
 
 
-#define GIMP_TYPE_CONTAINER_LIST_VIEW            (gimp_container_list_view_get_type ())
-#define GIMP_CONTAINER_LIST_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTAINER_LIST_VIEW, GimpContainerListView))
-#define GIMP_CONTAINER_LIST_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTAINER_LIST_VIEW, GimpContainerListViewClass))
-#define GIMP_IS_CONTAINER_LIST_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTAINER_LIST_VIEW))
-#define GIMP_IS_CONTAINER_LIST_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTAINER_LIST_VIEW))
-#define GIMP_CONTAINER_LIST_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONTAINER_LIST_VIEW, GimpContainerListViewClass))
+#define GIMP_TYPE_CONTAINER_LIST_VIEW (gimp_container_list_view_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpContainerListView,
+                          gimp_container_list_view,
+                          GIMP, CONTAINER_LIST_VIEW,
+                          GimpContainerBox)
 
-
-typedef struct _GimpContainerListViewClass GimpContainerListViewClass;
-
-struct _GimpContainerListView
-{
-  GimpContainerBox   parent_instance;
-};
 
 struct _GimpContainerListViewClass
 {
