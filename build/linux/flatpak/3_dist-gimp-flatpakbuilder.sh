@@ -48,7 +48,7 @@ fi
 printf "\e[0Ksection_end:`date +%s`:flat_info\r\e[0K\n"
 
 
-# GIMP FILES AS REPO (FOR FURTHER PUBLISHING)
+# GIMP FILES AS REPO (FOR .FLATPAK MAKING AND/OR FURTHER PUBLISHING)
 for FLATPAK in $supported_archs; do
 FLATPAK=$(echo "$FLATPAK" | sed 's|^\./temp_||')
 ARCH=$(echo "$FLATPAK" | sed 's/.*-\([^-]*\)\.flatpak/\1/')
