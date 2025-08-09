@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LINK_LAYER_H__
-#define __GIMP_LINK_LAYER_H__
-
+#pragma once
 
 #include "gimplayer.h"
 
@@ -70,5 +68,3 @@ guint32     gimp_link_layer_get_xcf_flags (GimpLinkLayer  *layer);
 void        gimp_link_layer_from_layer    (GimpLayer     **layer,
                                            GimpLink       *link,
                                            guint32         flags);
-
-#endif /* __GIMP_LINK_LAYER_H__ */

@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LINK_H__
-#define __GIMP_LINK_H__
-
+#pragma once
 
 #include "gimpitem.h"
 
@@ -88,6 +86,3 @@ GimpPlugInProcedure * gimp_link_get_load_proc     (GimpLink      *link);
 gboolean              gimp_link_is_vector         (GimpLink       *link);
 
 GeglBuffer          * gimp_link_get_buffer        (GimpLink       *link);
-
-
-#endif /* __GIMP_LINK_H__ */
