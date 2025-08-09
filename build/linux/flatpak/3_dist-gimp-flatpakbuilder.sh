@@ -17,7 +17,10 @@ fi
 
 # CHECK FLATPAK-BUILDER AND OTHER TOOLS
 printf "\e[0Ksection_start:`date +%s`:flat_tlkt\r\e[0KChecking flatpak tools\n"
+## flatpak-builder (we don't use it on this particular script but it is useful to know its version)
 eval "$(sed -n '/Install part/,/End of check/p' build/linux/flatpak/1_build-deps-flatpakbuilder.sh)"
+
+## flat-manager (only for master branch)
 if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
   #flat-manager is unreproducible: https://github.com/flatpak/flat-manager/issues/155
   flatmanager_text=" | flat-manager version: unknown"
