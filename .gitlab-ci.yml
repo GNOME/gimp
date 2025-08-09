@@ -544,7 +544,7 @@ deps-win:
   extends: .win
   stage: dependencies
   script:
-    - build/windows/1_build-deps-msys2.ps1
+    - build\windows\1_build-deps-msys2.ps1
   artifacts:
     paths:
       - _install-$MSYSTEM_PREFIX/
@@ -559,7 +559,7 @@ gimp-win:
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
   script:
-    - build/windows/2_build-gimp-msys2.ps1
+    - build\windows\2_build-gimp-msys2.ps1
   artifacts:
     paths:
       - gimp-$MSYSTEM_PREFIX/
@@ -846,7 +846,7 @@ dist-installer-weekly:
   variables:
     MSYS_ROOT: 'C:/msys64'
   script:
-    - build/windows/installer/3_dist-gimp-inno.ps1
+    - build\windows\installer\3_dist-gimp-inno.ps1
   artifacts:
     expose_as: 'Windows exe'
     paths:
