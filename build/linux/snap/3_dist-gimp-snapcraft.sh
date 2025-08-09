@@ -23,6 +23,8 @@ printf "\e[0Ksection_end:`date +%s`:snap_tlkt\r\e[0K\n"
 
 # Global info
 printf "\e[0Ksection_start:`date +%s`:snap_info\r\e[0KGetting snap global info\n"
+#(we do not use config.h like other scripts because the info is on snapcraft.yaml too
+#and `snapcraft remote-build` from previous job does not get config.h from launchpad)
 cp build/linux/snap/snapcraft.yaml .
 
 ## Get info about GIMP version
