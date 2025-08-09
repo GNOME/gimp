@@ -36,12 +36,12 @@
 enum
 {
   PROP_0,
-  PROP_PREV_MODIFIED,
   PROP_PREV_LINK
 };
 
 
 static void     gimp_link_layer_undo_constructed  (GObject             *object);
+static void     gimp_link_layer_undo_finalize     (GObject             *object);
 static void     gimp_link_layer_undo_set_property (GObject             *object,
                                                    guint                property_id,
                                                    const GValue        *value,
@@ -72,18 +72,13 @@ gimp_link_layer_undo_class_init (GimpLinkLayerUndoClass *klass)
   GimpUndoClass   *undo_class        = GIMP_UNDO_CLASS (klass);
 
   object_class->constructed      = gimp_link_layer_undo_constructed;
+  object_class->finalize         = gimp_link_layer_undo_finalize;
   object_class->set_property     = gimp_link_layer_undo_set_property;
   object_class->get_property     = gimp_link_layer_undo_get_property;
 
   gimp_object_class->get_memsize = gimp_link_layer_undo_get_memsize;
 
   undo_class->pop                = gimp_link_layer_undo_pop;
-
-  g_object_class_install_property (object_class, PROP_PREV_MODIFIED,
-                                   g_param_spec_boolean ("prev-modified", NULL, NULL,
-                                                         TRUE,
-                                                         GIMP_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_PREV_LINK,
                                    g_param_spec_object ("prev-link",
@@ -103,6 +98,7 @@ gimp_link_layer_undo_constructed (GObject *object)
 {
   GimpLinkLayerUndo *undo = GIMP_LINK_LAYER_UNDO (object);
   GimpLinkLayer     *layer;
+  GimpLink          *link;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -110,8 +106,18 @@ gimp_link_layer_undo_constructed (GObject *object)
 
   layer = GIMP_LINK_LAYER (GIMP_ITEM_UNDO (undo)->item);
 
-  undo->link     = gimp_link_layer_get_link (layer);
-  undo->modified = ! gimp_item_is_link_layer (GIMP_ITEM (layer));
+  link       = gimp_link_layer_get_link (layer);
+  undo->link = link ? gimp_link_duplicate (link) : NULL;
+}
+
+static void
+gimp_link_layer_undo_finalize (GObject *object)
+{
+  GimpLinkLayerUndo *undo = GIMP_LINK_LAYER_UNDO (object);
+
+  g_clear_object (&undo->link);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -124,11 +130,9 @@ gimp_link_layer_undo_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_PREV_MODIFIED:
-      undo->modified = g_value_get_boolean (value);
-      break;
     case PROP_PREV_LINK:
-      undo->link = g_value_get_object (value);
+      g_clear_object (&undo->link);
+      undo->link = g_value_get_object (value) ? gimp_link_duplicate (g_value_get_object (value)) : NULL;
       break;
 
     default:
@@ -147,9 +151,6 @@ gimp_link_layer_undo_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_PREV_MODIFIED:
-      g_value_set_boolean (value, undo->modified);
-      break;
     case PROP_PREV_LINK:
       g_value_set_object (value, undo->link);
       break;
@@ -183,18 +184,15 @@ gimp_link_layer_undo_pop (GimpUndo            *undo,
   GimpLinkLayerUndo *layer_undo = GIMP_LINK_LAYER_UNDO (undo);
   GimpLinkLayer     *layer      = GIMP_LINK_LAYER (GIMP_ITEM_UNDO (undo)->item);
   GimpLink          *link;
-  gboolean           modified;
 
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
-  modified = ! gimp_item_is_link_layer (GIMP_ITEM (layer));
-  link     = gimp_link_layer_get_link (layer);
+  link = gimp_link_layer_get_link (layer);
+  link = link ? g_object_ref (link) : NULL;
 
   gimp_link_layer_set_link (layer, layer_undo->link, FALSE);
-  g_object_set (layer, "modified", layer_undo->modified, NULL);
 
-  layer_undo->modified = modified;
-  layer_undo->link     = link;
+  g_clear_object (&layer_undo->link);
 
-  gimp_drawable_update_all (GIMP_DRAWABLE (layer));
+  layer_undo->link = link;
 }

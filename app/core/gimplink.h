@@ -67,8 +67,11 @@ void                  gimp_link_set_file          (GimpLink       *layer,
                                                    GimpProgress   *progress,
                                                    GError        **error);
 gboolean              gimp_link_get_absolute_path (GimpLink       *link);
-void                  gimp_link_set_absolute_path (GimpLink       *layer,
+void                  gimp_link_set_absolute_path (GimpLink       *link,
                                                    gboolean        absolute_path);
+void                  gimp_link_freeze            (GimpLink       *link);
+void                  gimp_link_thaw              (GimpLink       *link);
+gboolean              gimp_link_is_monitored      (GimpLink       *link);
 
 gboolean              gimp_link_is_broken         (GimpLink       *link);
 

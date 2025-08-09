@@ -992,7 +992,8 @@ layers_actions_update (GimpActionGroup *group,
           gimp_action_group_set_action_active (group, action, TRUE);
 
           text_layer = gimp_item_is_text_layer (GIMP_ITEM (layer));
-          link_layer = gimp_item_is_link_layer (GIMP_ITEM (layer));
+          if (GIMP_IS_LINK_LAYER (layer))
+            link_layer = gimp_link_layer_is_monitored (GIMP_LINK_LAYER (layer));
         }
     }
 

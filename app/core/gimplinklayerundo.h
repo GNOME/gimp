@@ -39,7 +39,6 @@ struct _GimpLinkLayerUndo
 {
   GimpItemUndo  parent_instance;
 
-  gboolean      modified;
   GimpLink     *link;
 };
 

@@ -97,6 +97,7 @@ static gboolean   gimp_link_emit_changed      (gpointer           data);
 static void       gimp_link_update_buffer     (GimpLink          *link,
                                                GimpProgress      *progress,
                                                GError           **error);
+static void       gimp_link_start_monitoring  (GimpLink          *link);
 static gchar    * gimp_link_get_relative_path (GimpLink          *link,
                                                GFile             *parent,
                                                gint               n_back);
@@ -361,6 +362,17 @@ gimp_link_update_buffer (GimpLink      *link,
     }
 }
 
+static void
+gimp_link_start_monitoring (GimpLink *link)
+{
+  link->p->monitor = g_file_monitor_file (link->p->file,
+                                          G_FILE_MONITOR_WATCH_HARD_LINKS,
+                                          NULL, NULL);
+  g_signal_connect (link->p->monitor, "changed",
+                    G_CALLBACK (gimp_link_file_changed),
+                    link);
+}
+
 /**
  * gimp_link_get_relative_path:
  * @link: the image this link is associated with.
@@ -505,12 +517,11 @@ gimp_link_duplicate (GimpLink *link)
       gchar *basename;
 
       basename = g_file_get_basename (new_link->p->file);
-      new_link->p->monitor = g_file_monitor_file (new_link->p->file, G_FILE_MONITOR_NONE, NULL, NULL);
-      g_signal_connect (new_link->p->monitor, "changed",
-                        G_CALLBACK (gimp_link_file_changed),
-                        new_link);
       gimp_object_set_name_safe (GIMP_OBJECT (new_link), basename);
       g_free (basename);
+
+      if (gimp_link_is_monitored (link))
+        gimp_link_start_monitoring (new_link);
     }
 
   return new_link;
@@ -579,12 +590,10 @@ gimp_link_set_file (GimpLink      *link,
       gchar *basename;
 
       basename = g_file_get_basename (link->p->file);
-      link->p->monitor = g_file_monitor_file (link->p->file, G_FILE_MONITOR_NONE, NULL, NULL);
-      g_signal_connect (link->p->monitor, "changed",
-                        G_CALLBACK (gimp_link_file_changed),
-                        link);
       gimp_object_set_name_safe (GIMP_OBJECT (link), basename);
       g_free (basename);
+
+      gimp_link_start_monitoring (link);
     }
 
   g_object_notify_by_pspec (G_OBJECT (link), link_props[PROP_FILE]);
@@ -607,6 +616,33 @@ gimp_link_set_absolute_path (GimpLink *link,
   link->p->absolute_path = absolute_path;
 }
 
+void
+gimp_link_freeze (GimpLink *link)
+{
+  g_return_if_fail (GIMP_IS_LINK (link));
+  g_return_if_fail (link->p->monitor != NULL);
+
+  g_clear_object (&link->p->monitor);
+}
+
+void
+gimp_link_thaw (GimpLink *link)
+{
+  g_return_if_fail (GIMP_IS_LINK (link));
+  g_return_if_fail (G_IS_FILE (link->p->file) && link->p->monitor == NULL);
+
+  gimp_link_update_buffer (link, NULL, NULL);
+  gimp_link_start_monitoring (link);
+}
+
+gboolean
+gimp_link_is_monitored (GimpLink *link)
+{
+  g_return_val_if_fail (GIMP_IS_LINK (link), FALSE);
+
+  return (link->p->monitor != NULL);
+}
+
 gboolean
 gimp_link_is_broken (GimpLink *link)
 {
@@ -624,6 +660,9 @@ gimp_link_set_size (GimpLink *link,
 
   link->p->width  = width;
   link->p->height = height;
+
+  if (link->p->monitor && link->p->is_vector)
+    gimp_link_update_buffer (link, NULL, NULL);
 }
 
 void
