@@ -133,7 +133,7 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
         }
 
       if (! gimp_update_metadata ())
-        *suggested_flags &= ~GIMP_METADATA_UPDATE;
+        *suggested_flags &= ~GIMP_METADATA_SAVE_UPDATE;
 
       /* Exif */
 
@@ -334,7 +334,7 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
         *suggested_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
 
       if (! gimp_update_metadata ())
-        *suggested_flags &= ~GIMP_METADATA_UPDATE;
+        *suggested_flags &= ~GIMP_METADATA_SAVE_UPDATE;
     }
 
   /* Color profile */
