@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-05-25 16:27+0000\n"
-"PO-Revision-Date: 2025-06-14 12:58+0200\n"
+"POT-Creation-Date: 2025-07-25 22:17+0200\n"
+"PO-Revision-Date: 2025-07-25 22:27+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -73,6 +73,26 @@ msgstr "Skriv en separat CSS-fil"
 #: plug-ins/python/colorxhtml.py:235
 msgid "Choose File"
 msgstr "Välj fil"
+
+#: plug-ins/python/file-openraster.py:504
+#: plug-ins/python/file-openraster.py:505
+msgid "export an OpenRaster (.ora) file"
+msgstr "exportera en OpenRaster-fil (.ora)"
+
+#: plug-ins/python/file-openraster.py:507
+#: plug-ins/python/file-openraster.py:513
+msgid "OpenRaster"
+msgstr "OpenRaster"
+
+#: plug-ins/python/file-openraster.py:514
+#: plug-ins/python/file-openraster.py:515
+msgid "load an OpenRaster (.ora) file"
+msgstr "läs in en OpenRaster-fil (.ora)"
+
+#: plug-ins/python/file-openraster.py:524
+#: plug-ins/python/file-openraster.py:525
+msgid "loads a thumbnail from an OpenRaster (.ora) file"
+msgstr "läser in en miniatyrbild från en OpenRaster-fil (.ora)"
 
 #: plug-ins/python/foggify.py:119
 msgid "Add a layer of fog"
