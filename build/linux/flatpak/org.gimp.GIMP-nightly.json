@@ -171,8 +171,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v3.1.12.tar.gz",
-                            "sha256": "8a1bc258f3149b5729c2f4f8ffd337c0e57f09096e4ba9784329f40c4a9035da",
+                            "url": "https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v3.2.0.tar.gz",
+                            "sha256": "f3c0c4210b5e6fe17d90cd7ebbe9638eea9fb458421d00eddb4d1a9d5ad47b36",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 223366,
@@ -843,8 +843,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://gitlab.com/graphviz/graphviz/-/archive/13.1.1/graphviz-13.1.1.tar.gz",
-                    "sha256": "2183297bc5030951fed6c0511b39712057126d2098baa02fd914b09b5a19b820",
+                    "url": "https://gitlab.com/graphviz/graphviz/-/archive/13.1.2/graphviz-13.1.2.tar.gz",
+                    "sha256": "0e79b8402e8ea13f05c0fc0e30604f1d0731cd3f60f85850cedac7e0ee420ef8",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 1249,
