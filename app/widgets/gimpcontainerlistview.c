@@ -47,6 +47,9 @@ typedef struct _GimpContainerListViewPrivate GimpContainerListViewPrivate;
 struct _GimpContainerListViewPrivate
 {
   GtkListBox *view;
+
+  gboolean    reordering;
+  GList      *reordering_selected;
 };
 
 #define GET_PRIVATE(obj) \
@@ -72,6 +75,24 @@ static gboolean gimp_container_list_view_set_selected      (GimpContainerView   
 static gint     gimp_container_list_view_get_selected      (GimpContainerView     *view,
                                                             GList                **items);
 
+static void     gimp_container_list_view_reorder           (GimpContainer         *container,
+                                                            GimpObject            *object,
+                                                            gint                   old_index,
+                                                            gint                   new_index,
+                                                            GimpContainerView     *view);
+static void     gimp_container_list_view_before_items_changed
+                                                           (GimpContainer         *container,
+                                                            guint                  position,
+                                                            guint                  removed,
+                                                            guint                  added,
+                                                            GimpContainerView     *view);
+static void     gimp_container_list_view_after_items_changed
+                                                           (GimpContainer         *container,
+                                                            guint                  position,
+                                                            guint                  removed,
+                                                            guint                  added,
+                                                            GimpContainerView     *view);
+
 static void     gimp_container_list_view_selected_rows_changed
                                                             (GtkListBox            *box,
                                                              GimpContainerListView *list_view);
@@ -79,7 +100,7 @@ static void     gimp_container_list_view_row_activated      (GtkListBox         
                                                              GimpRow               *row,
                                                              GimpContainerListView *list_view);
 
-static void     gimp_container_list_view_monitor_changed   (GimpContainerListView *view);
+static void     gimp_container_list_view_monitor_changed    (GimpContainerListView *view);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpContainerListView,
@@ -165,6 +186,11 @@ gimp_container_list_view_constructed (GObject *object)
 static void
 gimp_container_list_view_finalize (GObject *object)
 {
+  GimpContainerListViewPrivate *priv = GET_PRIVATE (object);
+
+  g_list_free_full (priv->reordering_selected, g_object_unref);
+  priv->reordering_selected = NULL;
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -256,6 +282,16 @@ gimp_container_list_view_set_container (GimpContainerView *view,
 
   if (old_container)
     {
+      g_signal_handlers_disconnect_by_func (old_container,
+                                            gimp_container_list_view_reorder,
+                                            view);
+      g_signal_handlers_disconnect_by_func (old_container,
+                                            gimp_container_list_view_before_items_changed,
+                                            view);
+      g_signal_handlers_disconnect_by_func (old_container,
+                                            gimp_container_list_view_after_items_changed,
+                                            view);
+
 #if 0
       list_view->priv->dnd_renderer = NULL;
 
@@ -320,9 +356,20 @@ gimp_container_list_view_set_container (GimpContainerView *view,
 
   if (container)
     {
+      g_signal_connect (container, "reorder",
+                        G_CALLBACK (gimp_container_list_view_reorder),
+                        view);
+      g_signal_connect (container, "items-changed",
+                        G_CALLBACK (gimp_container_list_view_before_items_changed),
+                        view);
+
       gtk_list_box_bind_model (priv->view, G_LIST_MODEL (container),
                                gimp_row_create_for_container_view,
                                view, NULL);
+
+      g_signal_connect (container, "items-changed",
+                        G_CALLBACK (gimp_container_list_view_after_items_changed),
+                        view);
 
 #if 0
       gimp_container_list_view_expand_rows (list_view->model,
@@ -492,6 +539,53 @@ gimp_container_list_view_get_selected (GimpContainerView  *view,
   return n_selected;
 }
 
+static void
+gimp_container_list_view_reorder (GimpContainer     *container,
+                                  GimpObject        *object,
+                                  gint               old_index,
+                                  gint               new_index,
+                                  GimpContainerView *view)
+{
+  GimpContainerListViewPrivate *priv = GET_PRIVATE (view);
+
+  priv->reordering = TRUE;
+}
+
+static void
+gimp_container_list_view_before_items_changed (GimpContainer     *container,
+                                               guint              position,
+                                               guint              removed,
+                                               guint              added,
+                                               GimpContainerView *view)
+{
+  GimpContainerListViewPrivate *priv = GET_PRIVATE (view);
+
+  if (priv->reordering)
+    {
+      gimp_container_view_get_selected (view, &priv->reordering_selected);
+      g_list_foreach (priv->reordering_selected, (GFunc) g_object_ref, NULL);
+    }
+}
+
+static void
+gimp_container_list_view_after_items_changed (GimpContainer     *container,
+                                              guint              position,
+                                              guint              removed,
+                                              guint              added,
+                                              GimpContainerView *view)
+{
+  GimpContainerListViewPrivate *priv = GET_PRIVATE (view);
+
+  if (priv->reordering)
+    {
+      gimp_container_view_set_selected (view, priv->reordering_selected);
+
+      g_list_free_full (priv->reordering_selected, g_object_unref);
+      priv->reordering_selected = NULL;
+
+      priv->reordering = FALSE;
+    }
+}
 
 static void
 gimp_container_list_view_selected_rows_changed (GtkListBox            *box,
