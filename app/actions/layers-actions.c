@@ -1014,7 +1014,8 @@ layers_actions_update (GimpActionGroup *group,
 
           text_layer   = gimp_item_is_text_layer (GIMP_ITEM (layer));
           vector_layer = gimp_item_is_vector_layer (GIMP_ITEM (layer));
-          link_layer   = gimp_item_is_link_layer (GIMP_ITEM (layer));
+          if (GIMP_IS_LINK_LAYER (layer))
+            link_layer = gimp_link_layer_is_monitored (GIMP_LINK_LAYER (layer));
         }
     }
 

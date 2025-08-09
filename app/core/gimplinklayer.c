@@ -63,14 +63,13 @@ enum
   PROP_0,
   PROP_LINK,
   PROP_AUTO_RENAME,
-  PROP_MODIFIED,
-  PROP_SCALED_ONLY
+  PROP_SCALED_ONLY,
+  N_PROPS
 };
 
 struct _GimpLinkLayerPrivate
 {
   GimpLink *link;
-  gboolean  modified;
   gboolean  scaled_only;
   gboolean  auto_rename;
 };
@@ -125,7 +124,6 @@ static void       gimp_link_layer_convert_type   (GimpLayer         *layer,
                                                   gboolean           push_undo,
                                                   GimpProgress      *progress);
 
-static void       gimp_link_layer_link_changed   (GimpLinkLayer     *layer);
 static gboolean   gimp_link_layer_render         (GimpLinkLayer     *layer);
 
 static void       gimp_link_layer_set_xcf_flags  (GimpLinkLayer     *layer,
@@ -134,6 +132,8 @@ static void       gimp_link_layer_set_xcf_flags  (GimpLinkLayer     *layer,
 G_DEFINE_TYPE_WITH_PRIVATE (GimpLinkLayer, gimp_link_layer, GIMP_TYPE_LAYER)
 
 #define parent_class gimp_link_layer_parent_class
+
+static GParamSpec *link_layer_props[N_PROPS] = { NULL, };
 
 
 static void
@@ -172,29 +172,25 @@ gimp_link_layer_class_init (GimpLinkLayerClass *klass)
 
   layer_class->convert_type         = gimp_link_layer_convert_type;
 
-  g_object_class_install_property (object_class, PROP_LINK,
-                                   g_param_spec_object ("link",
-                                                        NULL, NULL,
-                                                        GIMP_TYPE_LINK,
-                                                        GIMP_PARAM_READWRITE));
+  link_layer_props[PROP_LINK]        = g_param_spec_object ("link",
+                                                            NULL, NULL,
+                                                            GIMP_TYPE_LINK,
+                                                            GIMP_PARAM_READWRITE |
+                                                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_AUTO_RENAME,
-                            "auto-rename",
-                            NULL, NULL,
-                            TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+  link_layer_props[PROP_AUTO_RENAME] = g_param_spec_boolean ("auto-rename",
+                                                             NULL, NULL,
+                                                             TRUE,
+                                                             GIMP_PARAM_READWRITE |
+                                                             GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_MODIFIED,
-                            "modified",
-                            NULL, NULL,
-                            FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+  link_layer_props[PROP_SCALED_ONLY] = g_param_spec_boolean ("scaled-only",
+                                                             NULL, NULL,
+                                                             FALSE,
+                                                             GIMP_PARAM_READWRITE |
+                                                             GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SCALED_ONLY,
-                            "scaled-only",
-                            NULL, NULL,
-                            FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+  g_object_class_install_properties (object_class, N_PROPS, link_layer_props);
 }
 
 static void
@@ -230,9 +226,6 @@ gimp_link_layer_get_property (GObject      *object,
     case PROP_AUTO_RENAME:
       g_value_set_boolean (value, layer->p->auto_rename);
       break;
-    case PROP_MODIFIED:
-      g_value_set_boolean (value, layer->p->modified);
-      break;
     case PROP_SCALED_ONLY:
       g_value_set_boolean (value, layer->p->scaled_only);
       break;
@@ -258,9 +251,6 @@ gimp_link_layer_set_property (GObject      *object,
       break;
     case PROP_AUTO_RENAME:
       layer->p->auto_rename = g_value_get_boolean (value);
-      break;
-    case PROP_MODIFIED:
-      layer->p->modified = g_value_get_boolean (value);
       break;
     case PROP_SCALED_ONLY:
       layer->p->scaled_only = g_value_get_boolean (value);
@@ -300,23 +290,21 @@ gimp_link_layer_duplicate (GimpItem *item,
     {
       GimpLinkLayer *layer     = GIMP_LINK_LAYER (item);
       GimpLinkLayer *new_layer = GIMP_LINK_LAYER (new_item);
+      GimpLink      *link      = NULL;
 
       if (layer->p->link)
         {
-          GimpLink *link = gimp_link_duplicate (layer->p->link);
-
+          link = gimp_link_duplicate (layer->p->link);
           gimp_link_layer_set_link (new_layer, link, FALSE);
-
-          g_object_unref (link);
         }
 
       gimp_config_sync (G_OBJECT (layer), G_OBJECT (new_layer), 0);
 
-      if (layer->p->modified)
+      if (! link || ! gimp_link_is_monitored (link))
         {
           GeglBuffer *buffer;
-          gint            width;
-          gint            height;
+          gint        width;
+          gint        height;
 
           buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
           width  = gegl_buffer_get_width (buffer);
@@ -337,8 +325,10 @@ gimp_link_layer_duplicate (GimpItem *item,
                                  gimp_drawable_get_buffer (GIMP_DRAWABLE (new_layer)), NULL);
         }
 
-      new_layer->p->modified    = layer->p->modified;
       new_layer->p->scaled_only = layer->p->scaled_only;
+      new_layer->p->auto_rename = layer->p->auto_rename;
+
+      g_clear_object (&link);
     }
 
   return new_item;
@@ -395,7 +385,8 @@ gimp_link_layer_scale (GimpItem              *item,
   if (queue)
     gimp_object_queue_pop (queue);
 
-  if (gimp_link_is_vector (link_layer->p->link) && ! link_layer->p->modified)
+  if (gimp_link_is_vector (link_layer->p->link) &&
+      gimp_link_is_monitored (link_layer->p->link))
     {
       /* Non-modified vector images are always recomputed from the
        * source file and therefore are always sharp.
@@ -407,7 +398,7 @@ gimp_link_layer_scale (GimpItem              *item,
     {
       gboolean scaled_only = FALSE;
 
-      if (! link_layer->p->modified || link_layer->p->scaled_only)
+      if (gimp_link_is_monitored (link_layer->p->link) || link_layer->p->scaled_only)
         {
           /* Raster images whose only modification are previous scaling
            * are scaled back from the source file. Though they are still
@@ -451,7 +442,7 @@ gimp_link_layer_set_buffer (GimpDrawable        *drawable,
   GimpLinkLayer *layer = GIMP_LINK_LAYER (drawable);
   GimpImage     *image = gimp_item_get_image (GIMP_ITEM (layer));
 
-  if (push_undo && ! layer->p->modified)
+  if (push_undo && gimp_link_is_monitored (layer->p->link))
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_DRAWABLE_MOD,
                                  undo_desc);
 
@@ -460,11 +451,11 @@ gimp_link_layer_set_buffer (GimpDrawable        *drawable,
                                                   buffer,
                                                   bounds);
 
-  if (push_undo && ! layer->p->modified)
+  if (push_undo && gimp_link_is_monitored (layer->p->link))
     {
       gimp_image_undo_push_link_layer (image, NULL, layer);
 
-      g_object_set (drawable, "modified", TRUE, NULL);
+      gimp_link_freeze (layer->p->link);
       g_object_set (drawable, "scaled-only", FALSE, NULL);
 
       gimp_image_undo_group_end (image);
@@ -482,20 +473,24 @@ gimp_link_layer_push_undo (GimpDrawable *drawable,
 {
   GimpLinkLayer *layer = GIMP_LINK_LAYER (drawable);
   GimpImage     *image = gimp_item_get_image (GIMP_ITEM (layer));
+  gboolean       monitored;
 
-  if (! layer->p->modified)
-    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_DRAWABLE, undo_desc);
+  monitored = gimp_link_is_monitored (layer->p->link);
+
+  if (monitored)
+    {
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_DRAWABLE, undo_desc);
+
+      gimp_image_undo_push_link_layer (image, NULL, layer);
+      gimp_link_freeze (layer->p->link);
+    }
 
   GIMP_DRAWABLE_CLASS (parent_class)->push_undo (drawable, undo_desc,
                                                  buffer,
                                                  x, y, width, height);
 
-  if (! layer->p->modified)
+  if (monitored)
     {
-      gimp_image_undo_push_link_layer (image, NULL, layer);
-
-      g_object_set (drawable, "modified", TRUE, NULL);
-
       gimp_image_undo_group_end (image);
     }
 }
@@ -515,7 +510,7 @@ gimp_link_layer_convert_type (GimpLayer         *layer,
   GimpImage     *image      = gimp_item_get_image (GIMP_ITEM (link_layer));
 
   if (! link_layer->p->link   ||
-      link_layer->p->modified ||
+      ! gimp_link_is_monitored (link_layer->p->link) ||
       layer_dither_type != GEGL_DITHER_NONE)
     {
       GIMP_LAYER_CLASS (parent_class)->convert_type (layer, dest_image,
@@ -597,7 +592,7 @@ gimp_link_layer_set_link (GimpLinkLayer *layer,
   if (layer->p->link)
     {
       g_signal_handlers_disconnect_by_func (layer->p->link,
-                                            G_CALLBACK (gimp_link_layer_link_changed),
+                                            G_CALLBACK (gimp_link_layer_render),
                                             layer);
 
     }
@@ -607,11 +602,11 @@ gimp_link_layer_set_link (GimpLinkLayer *layer,
   if (link)
     {
       g_signal_connect_object (link, "changed",
-                               G_CALLBACK (gimp_link_layer_link_changed),
+                               G_CALLBACK (gimp_link_layer_render),
                                layer, G_CONNECT_SWAPPED);
 
-      g_object_set (layer, "modified", FALSE, NULL);
-      rendered = gimp_link_layer_render (layer);
+      if (gimp_link_is_monitored (link))
+        rendered = gimp_link_layer_render (layer);
     }
 
   g_object_notify (G_OBJECT (layer), "link");
@@ -636,9 +631,12 @@ gimp_link_layer_discard (GimpLinkLayer *layer)
   gimp_image_undo_push_link_layer (gimp_item_get_image (GIMP_ITEM (layer)),
                                    _("Discard Link"), layer);
 
-  layer->p->modified = TRUE;
+  gimp_link_freeze (layer->p->link);
 
+  /* Triggers thumbnail update. */
   gimp_drawable_update_all (GIMP_DRAWABLE (layer));
+  /* Triggers contextual menu update. */
+  gimp_image_flush (gimp_item_get_image (GIMP_ITEM (layer)));
 }
 
 void
@@ -650,15 +648,17 @@ gimp_link_layer_monitor (GimpLinkLayer *layer)
   gimp_image_undo_push_link_layer (gimp_item_get_image (GIMP_ITEM (layer)),
                                    _("Monitor Link"), layer);
 
-  layer->p->modified = FALSE;
+  gimp_link_thaw (layer->p->link);
   gimp_link_layer_render (layer);
 }
 
 gboolean
-gimp_item_is_link_layer (GimpItem *item)
+gimp_link_layer_is_monitored (GimpLinkLayer *layer)
 {
-  return (GIMP_IS_LINK_LAYER (item)       &&
-          ! GIMP_LINK_LAYER (item)->p->modified);
+  g_return_val_if_fail (GIMP_IS_LINK_LAYER (layer), FALSE);
+
+  return (GIMP_LINK_LAYER (layer)->p->link &&
+          gimp_link_is_monitored (GIMP_LINK_LAYER (layer)->p->link));
 }
 
 guint32
@@ -671,7 +671,7 @@ gimp_link_layer_get_xcf_flags (GimpLinkLayer *link_layer)
   if (! link_layer->p->auto_rename)
     flags |= LINK_LAYER_XCF_DONT_AUTO_RENAME;
 
-  if (link_layer->p->modified)
+  if (! gimp_link_is_monitored (link_layer->p->link))
     flags |= LINK_LAYER_XCF_MODIFIED;
 
   return flags;
@@ -736,13 +736,6 @@ gimp_link_layer_from_layer (GimpLayer **layer,
 }
 
 /*  private functions  */
-
-static void
-gimp_link_layer_link_changed (GimpLinkLayer *layer)
-{
-  if (! layer->p->modified)
-    gimp_link_layer_render (layer);
-}
 
 static gboolean
 gimp_link_layer_render (GimpLinkLayer *layer)
@@ -849,6 +842,10 @@ gimp_link_layer_set_xcf_flags (GimpLinkLayer *layer,
 
   g_object_set (layer,
                 "auto-rename", (flags & LINK_LAYER_XCF_DONT_AUTO_RENAME) == 0,
-                "modified",    (flags & LINK_LAYER_XCF_MODIFIED)         != 0,
                 NULL);
+
+  if ((flags & LINK_LAYER_XCF_MODIFIED) != 0)
+    gimp_link_freeze (layer->p->link);
+  else
+    gimp_link_thaw (layer->p->link);
 }
