@@ -9,16 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-08-01 18:54+0000\n"
-"PO-Revision-Date: 2025-08-01 22:10+0300\n"
+"POT-Creation-Date: 2025-08-09 18:45+0000\n"
+"PO-Revision-Date: 2025-08-09 21:56+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
-"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 23.04.3\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:113
@@ -612,14 +612,15 @@ msgstr "Жалюзі"
 #: plug-ins/common/file-pcx.c:718 plug-ins/common/file-pcx.c:726
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1082
 #: plug-ins/common/file-pnm.c:845 plug-ins/common/file-qoi.c:296
-#: plug-ins/common/file-raw-data.c:1877 plug-ins/common/file-sunras.c:1059
-#: plug-ins/common/file-tga.c:1103 plug-ins/common/file-tim.c:402
-#: plug-ins/common/file-tim.c:509 plug-ins/common/file-wbmp.c:389
-#: plug-ins/common/file-wbmp.c:465 plug-ins/common/file-xbm.c:887
-#: plug-ins/common/film.c:865 plug-ins/common/smooth-palette.c:301
-#: plug-ins/common/tile.c:396 plug-ins/file-bmp/bmp-load.c:809
-#: plug-ins/file-exr/file-exr.c:302 plug-ins/file-faxg3/faxg3.c:578
-#: plug-ins/file-fits/fits.c:673 plug-ins/file-jpeg/jpeg-load.c:252
+#: plug-ins/common/file-raw-data.c:820 plug-ins/common/file-raw-data.c:2004
+#: plug-ins/common/file-sunras.c:1059 plug-ins/common/file-tga.c:1103
+#: plug-ins/common/file-tim.c:402 plug-ins/common/file-tim.c:509
+#: plug-ins/common/file-wbmp.c:389 plug-ins/common/file-wbmp.c:465
+#: plug-ins/common/file-xbm.c:887 plug-ins/common/film.c:865
+#: plug-ins/common/smooth-palette.c:301 plug-ins/common/tile.c:396
+#: plug-ins/file-bmp/bmp-load.c:809 plug-ins/file-exr/file-exr.c:302
+#: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:673
+#: plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1093
 #: plug-ins/file-psd/psd-load.c:3102 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1561
@@ -1237,8 +1238,8 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/common/file-dicom.c:1541 plug-ins/common/file-farbfeld.c:355
 #: plug-ins/common/file-mng.c:875 plug-ins/common/file-mng.c:1225
 #: plug-ins/common/file-pcx.c:1200 plug-ins/common/file-pdf-export.c:680
-#: plug-ins/common/file-png.c:1915 plug-ins/common/file-raw-data.c:1382
-#: plug-ins/common/file-raw-data.c:1411 plug-ins/common/file-sunras.c:614
+#: plug-ins/common/file-png.c:1915 plug-ins/common/file-raw-data.c:1509
+#: plug-ins/common/file-raw-data.c:1538 plug-ins/common/file-sunras.c:614
 #: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:630
 #: plug-ins/common/file-xmc.c:1272 plug-ins/common/sphere-designer.c:2205
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
@@ -1988,7 +1989,8 @@ msgstr "Перетворений шар"
 
 #: plug-ins/common/curve-bend.c:642
 msgid "Can operate on layers only (but was called on channel or mask)."
-msgstr "Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
+msgstr ""
+"Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
 
 #: plug-ins/common/curve-bend.c:656
 msgid "Cannot operate on layers with masks."
@@ -2007,17 +2009,18 @@ msgstr "Неможливо виконувати дії з порожнім ви�
 #: plug-ins/common/file-png.c:800 plug-ins/common/file-png.c:1370
 #: plug-ins/common/file-ps.c:1159 plug-ins/common/file-ps.c:3739
 #: plug-ins/common/file-psp.c:2634 plug-ins/common/file-psp.c:2684
-#: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:577
-#: plug-ins/common/file-raw-data.c:1714 plug-ins/common/file-sunras.c:435
-#: plug-ins/common/file-svg.c:562 plug-ins/common/file-tga.c:427
-#: plug-ins/common/file-tim.c:278 plug-ins/common/file-wbmp.c:250
-#: plug-ins/common/file-wbmp.c:329 plug-ins/common/file-xbm.c:725
-#: plug-ins/common/file-xmc.c:656 plug-ins/common/file-xmc.c:895
-#: plug-ins/common/file-xwd.c:465 plug-ins/common/sphere-designer.c:2094
-#: plug-ins/file-bmp/bmp-load.c:276 plug-ins/file-dds/ddsread.c:169
-#: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:368
-#: plug-ins/file-fli/fli-gimp.c:440 plug-ins/file-fli/fli-gimp.c:491
-#: plug-ins/file-icns/file-icns-load.c:552
+#: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:608
+#: plug-ins/common/file-raw-data.c:796 plug-ins/common/file-raw-data.c:1841
+#: plug-ins/common/file-seattle-filmworks.c:232
+#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:562
+#: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:278
+#: plug-ins/common/file-wbmp.c:250 plug-ins/common/file-wbmp.c:329
+#: plug-ins/common/file-xbm.c:725 plug-ins/common/file-xmc.c:656
+#: plug-ins/common/file-xmc.c:895 plug-ins/common/file-xwd.c:465
+#: plug-ins/common/sphere-designer.c:2094 plug-ins/file-bmp/bmp-load.c:276
+#: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:260
+#: plug-ins/file-fits/fits.c:368 plug-ins/file-fli/fli-gimp.c:440
+#: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:552
 #: plug-ins/file-icns/file-icns-load.c:604 plug-ins/file-ico/ico-load.c:685
 #: plug-ins/file-ico/ico-load.c:823 plug-ins/file-ico/ico-load.c:1025
 #: plug-ins/file-jpeg/jpeg-load.c:106 plug-ins/file-jpeg/jpeg-load.c:699
@@ -2382,7 +2385,7 @@ msgstr "_Перекриття"
 msgid "Overlap"
 msgstr "Перекриття"
 
-#: plug-ins/common/depth-merge.c:252 plug-ins/common/file-raw-data.c:364
+#: plug-ins/common/depth-merge.c:252 plug-ins/common/file-raw-data.c:374
 msgid "O_ffset"
 msgstr "_Зсув"
 
@@ -2511,7 +2514,7 @@ msgid "This plug-in tries to remove vertical stripes from an image."
 msgstr "Цей додаток намагається вилучити вертикальні смуги з зображення."
 
 #: plug-ins/common/destripe.c:140 plug-ins/common/file-html-table.c:199
-#: plug-ins/common/file-ps.c:525 plug-ins/common/file-raw-data.c:354
+#: plug-ins/common/file-ps.c:525 plug-ins/common/file-raw-data.c:364
 #: plug-ins/common/smooth-palette.c:134 plug-ins/imagemap/imap_grid.c:258
 msgid "_Width"
 msgstr "_Ширина"
@@ -2617,16 +2620,17 @@ msgstr "Кінець файлу або помилка при читанні за
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
 #: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
 #: plug-ins/common/file-png.c:792 plug-ins/common/file-pnm.c:688
-#: plug-ins/common/file-ps.c:1149 plug-ins/common/file-raw-data.c:1706
-#: plug-ins/common/file-sunras.c:427 plug-ins/common/file-tga.c:419
-#: plug-ins/common/file-wbmp.c:242 plug-ins/common/file-wbmp.c:321
-#: plug-ins/common/file-wmf.c:618 plug-ins/common/file-xbm.c:717
-#: plug-ins/common/file-xmc.c:646 plug-ins/common/file-xpm.c:361
-#: plug-ins/common/file-xwd.c:457 plug-ins/file-bmp/bmp-load.c:265
-#: plug-ins/file-exr/file-exr.c:197 plug-ins/file-faxg3/faxg3.c:244
-#: plug-ins/file-fli/fli-gimp.c:483 plug-ins/file-icns/file-icns-load.c:544
-#: plug-ins/file-ico/ico-load.c:677 plug-ins/file-ico/ico-load.c:815
-#: plug-ins/file-jpeg/jpeg-load.c:97 plug-ins/file-psd/psd-load.c:202
+#: plug-ins/common/file-ps.c:1149 plug-ins/common/file-raw-data.c:787
+#: plug-ins/common/file-raw-data.c:1833 plug-ins/common/file-sunras.c:427
+#: plug-ins/common/file-tga.c:419 plug-ins/common/file-wbmp.c:242
+#: plug-ins/common/file-wbmp.c:321 plug-ins/common/file-wmf.c:618
+#: plug-ins/common/file-xbm.c:717 plug-ins/common/file-xmc.c:646
+#: plug-ins/common/file-xpm.c:361 plug-ins/common/file-xwd.c:457
+#: plug-ins/file-bmp/bmp-load.c:265 plug-ins/file-exr/file-exr.c:197
+#: plug-ins/file-faxg3/faxg3.c:244 plug-ins/file-fli/fli-gimp.c:483
+#: plug-ins/file-icns/file-icns-load.c:544 plug-ins/file-ico/ico-load.c:677
+#: plug-ins/file-ico/ico-load.c:815 plug-ins/file-jpeg/jpeg-load.c:97
+#: plug-ins/file-psd/psd-load.c:202
 #: plug-ins/file-raw/file-another-rawtherapee.c:346
 #: plug-ins/file-raw/file-darktable.c:467
 #: plug-ins/file-raw/file-rawtherapee.c:345 plug-ins/file-sgi/sgi.c:315
@@ -2719,7 +2723,8 @@ msgstr "Програма на C"
 
 #: plug-ins/common/file-csource.c:125
 msgid "Dump image data in RGB(A) format for C source"
-msgstr "Створити дамп даних зображення у форматі RGB(A) для початкового коду C"
+msgstr ""
+"Створити дамп даних зображення у форматі RGB(A) для початкового коду C"
 
 #: plug-ins/common/file-csource.c:127
 msgid "CSource cannot be run non-interactively."
@@ -3646,7 +3651,8 @@ msgstr "Завантаження зображень AVCI"
 
 #: plug-ins/common/file-heif.c:502
 msgid "Load AVCI image - H.264 image encapsulated in HEIF"
-msgstr "Завантаження зображення AVCI — зображення H.264, яке вбудовано до HEIF"
+msgstr ""
+"Завантаження зображення AVCI — зображення H.264, яке вбудовано до HEIF"
 
 #: plug-ins/common/file-heif.c:534
 msgid "Exports HEJ2 images"
@@ -3758,7 +3764,7 @@ msgid "The width for each table cell. Can be a number or a percent."
 msgstr "Ширина кожної комірки. Може бути числом чи відсотком."
 
 #: plug-ins/common/file-html-table.c:206 plug-ins/common/file-ps.c:532
-#: plug-ins/common/file-raw-data.c:359 plug-ins/common/smooth-palette.c:140
+#: plug-ins/common/file-raw-data.c:369 plug-ins/common/smooth-palette.c:140
 #: plug-ins/imagemap/imap_grid.c:264
 msgid "_Height"
 msgstr "_Висота"
@@ -4213,6 +4219,14 @@ msgstr ""
 #: plug-ins/common/file-lnk.c:210 plug-ins/common/file-lnk.c:225
 #: plug-ins/common/file-lnk.c:234 plug-ins/common/file-lnk.c:247
 #: plug-ins/common/file-lnk.c:264 plug-ins/common/file-pnm.c:725
+#: plug-ins/common/file-raw-data.c:812
+#: plug-ins/common/file-seattle-filmworks.c:244
+#: plug-ins/common/file-seattle-filmworks.c:283
+#: plug-ins/common/file-seattle-filmworks.c:340
+#: plug-ins/common/file-seattle-filmworks.c:359
+#: plug-ins/common/file-seattle-filmworks.c:370
+#: plug-ins/common/file-seattle-filmworks.c:380
+#: plug-ins/common/file-seattle-filmworks.c:514
 #, c-format
 msgid "Invalid file."
 msgstr "Неправильний файл."
@@ -4382,17 +4396,14 @@ msgstr ""
 "один шар. Ви ж експортуєте зображення з одним шаром."
 
 #: plug-ins/common/file-paa.c:150
-#| msgid "PNM Image"
 msgid "PAA Image"
 msgstr "Зображення PAA"
 
 #: plug-ins/common/file-paa.c:153
-#| msgid "Loads files in the PNM file format"
 msgid "Load file in the PAA file format"
 msgstr "Завантажити файл у форматі PAA"
 
 #: plug-ins/common/file-paa.c:154
-#| msgid "Load file in the Farbfeld file format"
 msgid "Load file in the Bohemia Interactive PAA file format"
 msgstr "Завантажити файл у форматі Bohemia Interactive PAA"
 
@@ -4406,13 +4417,11 @@ msgstr "Не вдається зчитати заголовок з «%s»"
 
 #: plug-ins/common/file-paa.c:255
 #, c-format
-#| msgid "Unsupported DXGI Format: %u"
 msgid "Currently unsupported PAA format: '%d'"
 msgstr "Непідтримуваний у поточній версії формат PAA: «%d»"
 
 #: plug-ins/common/file-paa.c:305
 #, c-format
-#| msgid "Could not get image width from '%s'"
 msgid "Couldn't read image data from '%s'"
 msgstr "Не вдалося прочитати зображення з «%s»"
 
@@ -4422,14 +4431,12 @@ msgstr "Основна поверхня"
 
 #: plug-ins/common/file-paa.c:346
 #, c-format
-#| msgid "Couldn't decompress JP2 image in '%s'."
 msgid "Couldn't decompress image data from '%s'"
 msgstr "Не вдалося розпакувати дані зображення з «%s»"
 
 #: plug-ins/common/file-paa.c:421 plug-ins/common/file-paa.c:438
 #: plug-ins/common/file-paa.c:449
 #, c-format
-#| msgid "Could not create image."
 msgid "Could not read tag"
 msgstr "Не вдалося прочитати теґ"
 
@@ -4858,7 +4865,8 @@ msgstr "Зображення Alias Pix"
 
 #: plug-ins/common/file-pix.c:176 plug-ins/common/file-pix.c:178
 msgid "Loads files of the Alias|Wavefront or Esm Software Pix file format"
-msgstr "Завантажує файли Alias|Wavefront або у форматі файлів Esm Software Pix"
+msgstr ""
+"Завантажує файли Alias|Wavefront або у форматі файлів Esm Software Pix"
 
 #: plug-ins/common/file-pix.c:207 plug-ins/common/file-pix.c:209
 msgid "Export file in the Alias|Wavefront pix/matte file format"
@@ -5069,11 +5077,13 @@ msgstr ""
 #: plug-ins/common/file-png.c:1872
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
-msgstr "Помилка створення PNG (записування struct) під час експортування «%s»."
+msgstr ""
+"Помилка створення PNG (записування struct) під час експортування «%s»."
 
 #: plug-ins/common/file-png.c:1881
 #, c-format
-msgid "Error while exporting '%s'. Could not create PNG header info structure."
+msgid ""
+"Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Помилка при експортуванні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
@@ -5845,208 +5855,208 @@ msgstr "Експортувати зображення у форматі QOI (Qui
 msgid "Failed to read QOI file"
 msgstr "Не вдалося прочитати файл QOI"
 
-#: plug-ins/common/file-raw-data.c:335 plug-ins/common/file-raw-data.c:507
+#: plug-ins/common/file-raw-data.c:345 plug-ins/common/file-raw-data.c:538
 msgid "Raw image data"
 msgstr "Raw Image Data"
 
-#: plug-ins/common/file-raw-data.c:338 plug-ins/common/file-raw-data.c:340
+#: plug-ins/common/file-raw-data.c:348 plug-ins/common/file-raw-data.c:350
 msgid "Load raw images, specifying image information"
 msgstr ""
 "Завантажити зображення цифрових негативів із визначенням даних зображення"
 
-#: plug-ins/common/file-raw-data.c:355
+#: plug-ins/common/file-raw-data.c:365
 msgid "Image width in number of pixels"
 msgstr "Ширина зображення у кількості пікселях"
 
-#: plug-ins/common/file-raw-data.c:360
+#: plug-ins/common/file-raw-data.c:370
 msgid "Image height in number of pixels"
 msgstr "Висота зображення у кількості пікселях"
 
-#: plug-ins/common/file-raw-data.c:365
+#: plug-ins/common/file-raw-data.c:375
 msgid "Offset to beginning of image in raw data"
 msgstr "Зсув початку зображення у необроблених даних"
 
-#: plug-ins/common/file-raw-data.c:370
+#: plug-ins/common/file-raw-data.c:380
 msgid "Pi_xel format"
 msgstr "_Формат у пікселях"
 
-#: plug-ins/common/file-raw-data.c:371
+#: plug-ins/common/file-raw-data.c:381
 msgid "The layout of pixel data, such as components and their order"
 msgstr "Компонування даних пікселів, зокрема компоненти та їхній порядок"
 
-#: plug-ins/common/file-raw-data.c:372
+#: plug-ins/common/file-raw-data.c:382
 msgid "RGB 8-bit"
 msgstr "RGB, 8 біт"
 
-#: plug-ins/common/file-raw-data.c:373
+#: plug-ins/common/file-raw-data.c:383
 msgid "RGB 16-bit"
 msgstr "RGB, 16 біт"
 
-#: plug-ins/common/file-raw-data.c:374
+#: plug-ins/common/file-raw-data.c:384
 msgid "RGB 32-bit"
 msgstr "RGB, 32 біт"
 
-#: plug-ins/common/file-raw-data.c:375
+#: plug-ins/common/file-raw-data.c:385
 msgid "RGBA 8-bit"
 msgstr "RGBA, 8 біт"
 
-#: plug-ins/common/file-raw-data.c:376
+#: plug-ins/common/file-raw-data.c:386
 msgid "RGBA 16-bit"
 msgstr "RGBA, 16 біт"
 
-#: plug-ins/common/file-raw-data.c:377
+#: plug-ins/common/file-raw-data.c:387
 msgid "RGBA 32-bit"
 msgstr "RGBA, 32 біт"
 
-#: plug-ins/common/file-raw-data.c:378
+#: plug-ins/common/file-raw-data.c:388
 msgid "RGB565"
 msgstr "RGB565"
 
-#: plug-ins/common/file-raw-data.c:379
+#: plug-ins/common/file-raw-data.c:389
 msgid "BGR565"
 msgstr "BGR565"
 
-#: plug-ins/common/file-raw-data.c:380
+#: plug-ins/common/file-raw-data.c:390
 msgid "B&W 1 bit"
 msgstr "Чорно-біле, 1 біт"
 
-#: plug-ins/common/file-raw-data.c:381
+#: plug-ins/common/file-raw-data.c:391
 msgid "Grayscale 2-bit"
 msgstr "Градації сірого, 2 біт"
 
-#: plug-ins/common/file-raw-data.c:382
+#: plug-ins/common/file-raw-data.c:392
 msgid "Grayscale 4-bit"
 msgstr "Градації сірого, 4 біт"
 
-#: plug-ins/common/file-raw-data.c:383
+#: plug-ins/common/file-raw-data.c:393
 msgid "Grayscale 8-bit"
 msgstr "Градації сірого, 8 біт"
 
-#: plug-ins/common/file-raw-data.c:384
+#: plug-ins/common/file-raw-data.c:394
 msgid "Grayscale 16-bit"
 msgstr "Градації сірого, 16 біт"
 
-#: plug-ins/common/file-raw-data.c:385
+#: plug-ins/common/file-raw-data.c:395
 msgid "Grayscale 32-bit"
 msgstr "Градації сірого, 32 біт"
 
-#: plug-ins/common/file-raw-data.c:386
+#: plug-ins/common/file-raw-data.c:396
 msgid "Grayscale-Alpha 8-bit"
 msgstr "Градації сірого + альфа, 8 біт"
 
-#: plug-ins/common/file-raw-data.c:387
+#: plug-ins/common/file-raw-data.c:397
 msgid "Grayscale-Alpha 16-bit"
 msgstr "Градації сірого + альфа, 16 біт"
 
-#: plug-ins/common/file-raw-data.c:388
+#: plug-ins/common/file-raw-data.c:398
 msgid "Grayscale-Alpha 32-bit"
 msgstr "Градації сірого + альфа, 32 біт"
 
-#: plug-ins/common/file-raw-data.c:389
+#: plug-ins/common/file-raw-data.c:399
 msgid "Indexed"
 msgstr "Індексований"
 
-#: plug-ins/common/file-raw-data.c:390
+#: plug-ins/common/file-raw-data.c:400
 msgid "Indexed Alpha"
 msgstr "Індексоване з альфа-каналом"
 
-#: plug-ins/common/file-raw-data.c:394
+#: plug-ins/common/file-raw-data.c:404
 msgid "_Data type"
 msgstr "Т_ип даних"
 
-#: plug-ins/common/file-raw-data.c:395
+#: plug-ins/common/file-raw-data.c:405
 msgid "Data type used to represent pixel values"
 msgstr "Тип даних, який використано для представлення значень пікселів"
 
-#: plug-ins/common/file-raw-data.c:396
+#: plug-ins/common/file-raw-data.c:406
 msgid "Unsigned Integer"
 msgstr "Додатне ціле число"
 
-#: plug-ins/common/file-raw-data.c:397
+#: plug-ins/common/file-raw-data.c:407
 msgid "Signed Integer"
 msgstr "Ціле зі знаком"
 
-#: plug-ins/common/file-raw-data.c:398
+#: plug-ins/common/file-raw-data.c:408
 msgid "Floating Point"
 msgstr "З рухомою крапкою"
 
-#: plug-ins/common/file-raw-data.c:402
+#: plug-ins/common/file-raw-data.c:412
 msgid "_Endianness"
 msgstr "По_рядок байтів"
 
-#: plug-ins/common/file-raw-data.c:403
+#: plug-ins/common/file-raw-data.c:413
 msgid "Order of sequences of bytes"
 msgstr "Порядок послідовностей байтів"
 
-#: plug-ins/common/file-raw-data.c:404
+#: plug-ins/common/file-raw-data.c:414
 msgid "Little Endian"
 msgstr "Прямий порядок"
 
-#: plug-ins/common/file-raw-data.c:405
+#: plug-ins/common/file-raw-data.c:415
 msgid "Big Endian"
 msgstr "Зворотний порядок"
 
-#: plug-ins/common/file-raw-data.c:409
+#: plug-ins/common/file-raw-data.c:419
 msgid "Planar confi_guration"
 msgstr "Пло_щинна конфігурація"
 
-#: plug-ins/common/file-raw-data.c:410 plug-ins/common/file-raw-data.c:530
+#: plug-ins/common/file-raw-data.c:420 plug-ins/common/file-raw-data.c:561
 msgid "How color pixel data are stored"
 msgstr "Як зберігаються дані кольорових пікселів"
 
-#: plug-ins/common/file-raw-data.c:411 plug-ins/common/file-raw-data.c:531
+#: plug-ins/common/file-raw-data.c:421 plug-ins/common/file-raw-data.c:562
 msgid "Contiguous"
 msgstr "Неперервний"
 
-#: plug-ins/common/file-raw-data.c:412 plug-ins/common/file-raw-data.c:532
+#: plug-ins/common/file-raw-data.c:422 plug-ins/common/file-raw-data.c:563
 msgid "Planar"
 msgstr "Планарний"
 
-#: plug-ins/common/file-raw-data.c:419 plug-ins/common/file-raw-data.c:480
+#: plug-ins/common/file-raw-data.c:429 plug-ins/common/file-raw-data.c:490
 msgid "Palette Offse_t"
 msgstr "Зс_ув палітри"
 
-#: plug-ins/common/file-raw-data.c:420 plug-ins/common/file-raw-data.c:481
+#: plug-ins/common/file-raw-data.c:430 plug-ins/common/file-raw-data.c:491
 msgid "Offset to beginning of data in the palette file"
 msgstr "Зсув початку даних у файлі палітри"
 
-#: plug-ins/common/file-raw-data.c:425 plug-ins/common/file-raw-data.c:486
-#: plug-ins/common/file-raw-data.c:537
+#: plug-ins/common/file-raw-data.c:435 plug-ins/common/file-raw-data.c:496
+#: plug-ins/common/file-raw-data.c:568
 msgid "Palette's la_yout"
 msgstr "_Компонування палітри"
 
-#: plug-ins/common/file-raw-data.c:426 plug-ins/common/file-raw-data.c:487
-#: plug-ins/common/file-raw-data.c:538
+#: plug-ins/common/file-raw-data.c:436 plug-ins/common/file-raw-data.c:497
+#: plug-ins/common/file-raw-data.c:569
 msgid "The layout for the palette's color channels"
 msgstr "Компонування для каналів кольорів палітри"
 
-#: plug-ins/common/file-raw-data.c:427 plug-ins/common/file-raw-data.c:488
-#: plug-ins/common/file-raw-data.c:539
+#: plug-ins/common/file-raw-data.c:437 plug-ins/common/file-raw-data.c:498
+#: plug-ins/common/file-raw-data.c:570
 msgid "R, G, B (normal)"
 msgstr "R, G, B (звичайний)"
 
-#: plug-ins/common/file-raw-data.c:428 plug-ins/common/file-raw-data.c:489
-#: plug-ins/common/file-raw-data.c:540
+#: plug-ins/common/file-raw-data.c:438 plug-ins/common/file-raw-data.c:499
+#: plug-ins/common/file-raw-data.c:571
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (у стилі BMP)"
 
-#: plug-ins/common/file-raw-data.c:432 plug-ins/common/file-raw-data.c:493
+#: plug-ins/common/file-raw-data.c:442 plug-ins/common/file-raw-data.c:503
 msgid "_Palette File"
 msgstr "Файл _палітри"
 
-#: plug-ins/common/file-raw-data.c:433 plug-ins/common/file-raw-data.c:494
+#: plug-ins/common/file-raw-data.c:443 plug-ins/common/file-raw-data.c:504
 msgid "The file containing palette data"
 msgstr "Файл, що містить дані палітри"
 
-#: plug-ins/common/file-raw-data.c:445 plug-ins/common/file-raw-data.c:2787
+#: plug-ins/common/file-raw-data.c:455 plug-ins/common/file-raw-data.c:2915
 msgid "Digital Elevation Model data"
 msgstr "Дані цифрової моделі рельєфу"
 
-#: plug-ins/common/file-raw-data.c:448
+#: plug-ins/common/file-raw-data.c:458
 msgid "Load HGT data as images"
 msgstr "Завантажити дані HGT як зображення"
 
-#: plug-ins/common/file-raw-data.c:449
+#: plug-ins/common/file-raw-data.c:459
 msgid ""
 "Load Digital Elevation Model data in HGT format from the Shuttle Radar "
 "Topography Mission as images. Though the output image will be RGB, all "
@@ -6061,39 +6071,39 @@ msgstr ""
 "кольорові на другому кроці, наприклад, за допомогою додатка «Мапа "
 "градієнтів»."
 
-#: plug-ins/common/file-raw-data.c:469
+#: plug-ins/common/file-raw-data.c:479
 msgid "Sa_mple spacing"
 msgstr "_Інтервал дискретизації"
 
-#: plug-ins/common/file-raw-data.c:470
+#: plug-ins/common/file-raw-data.c:480
 msgid "The sample spacing of the data."
 msgstr "Інтервал дискретизації даних."
 
-#: plug-ins/common/file-raw-data.c:471
+#: plug-ins/common/file-raw-data.c:481
 msgid "Auto-Detect"
 msgstr "Автоматичне визначення"
 
-#: plug-ins/common/file-raw-data.c:472
+#: plug-ins/common/file-raw-data.c:482
 msgid "SRTM-1 (1 arc second)"
 msgstr "SRTM-1 (1 кутова сек)"
 
-#: plug-ins/common/file-raw-data.c:473
+#: plug-ins/common/file-raw-data.c:483
 msgid "SRTM-3 (3 arc seconds)"
 msgstr "SRTM-3 (3 кутові сек)"
 
-#: plug-ins/common/file-raw-data.c:510 plug-ins/common/file-raw-data.c:511
+#: plug-ins/common/file-raw-data.c:541 plug-ins/common/file-raw-data.c:542
 msgid "Dump images to disk in raw format"
 msgstr "Створити дамп зображень на диску у форматі цифрових негативів"
 
-#: plug-ins/common/file-raw-data.c:529
+#: plug-ins/common/file-raw-data.c:560
 msgid "Planar configuration"
 msgstr "Площинна конфігурація"
 
-#: plug-ins/common/file-raw-data.c:546
+#: plug-ins/common/file-raw-data.c:577
 msgid "Raw Data"
 msgstr "Необроблені дані"
 
-#: plug-ins/common/file-raw-data.c:611
+#: plug-ins/common/file-raw-data.c:642
 #, c-format
 msgid ""
 "%d is not a valid sample spacing. Valid values are: 0 (auto-detect), 1 and 3."
@@ -6101,7 +6111,7 @@ msgstr ""
 "%d не є правильним простором вибірки. Допустимі значення: 0 "
 "(автовизначення), 1 і 3."
 
-#: plug-ins/common/file-raw-data.c:624
+#: plug-ins/common/file-raw-data.c:655
 #, c-format
 msgid ""
 "Auto-detection of sample spacing failed. \"%s\" does not appear to be a "
@@ -6113,12 +6123,12 @@ msgstr ""
 "файли HGT: SRTM-1 і SRTM-3. Якщо вам відомий варіант, запустіть з аргументом "
 "1 або 3."
 
-#: plug-ins/common/file-raw-data.c:1590
+#: plug-ins/common/file-raw-data.c:1717
 #, c-format
 msgid "Could not open '%s' for size verification: %s"
 msgstr "Не вдається відкрити файл «%s» для перевірки розміру: %s"
 
-#: plug-ins/common/file-raw-data.c:2678
+#: plug-ins/common/file-raw-data.c:2806
 msgid "Load Image from Raw Data"
 msgstr "Завантаження зображення з Raw-даних"
 
@@ -6126,45 +6136,72 @@ msgstr "Завантаження зображення з Raw-даних"
 #. * used for 3D surface modeling or relief maps; so it must be
 #. * translated by the proper technical term in your language.
 #.
-#: plug-ins/common/file-raw-data.c:2781
+#: plug-ins/common/file-raw-data.c:2909
 msgid "Digital Elevation Model data (1 arc-second)"
 msgstr "Дані цифрової моделі рельєфу (1 кутова сек)"
 
-#: plug-ins/common/file-raw-data.c:2784
+#: plug-ins/common/file-raw-data.c:2912
 msgid "Digital Elevation Model data (3 arc-seconds)"
 msgstr "Дані цифрової моделі рельєфу (3 кутові сек)"
 
-#: plug-ins/common/file-raw-data.c:2791
+#: plug-ins/common/file-raw-data.c:2919
 msgid "Image"
 msgstr "Зображення"
 
-#: plug-ins/common/file-raw-data.c:2803
+#: plug-ins/common/file-raw-data.c:2931
 msgid "Palette"
 msgstr "Палітра"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
-#: plug-ins/common/file-raw-data.c:2873
+#: plug-ins/common/file-raw-data.c:3013
 #, c-format
 msgid "_Contiguous (%s)"
 msgstr "_Неперервний (%s)"
 
-#: plug-ins/common/file-raw-data.c:2875
+#: plug-ins/common/file-raw-data.c:3015
 msgid "_Contiguous"
 msgstr "_Неперервний"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
-#: plug-ins/common/file-raw-data.c:2881
+#: plug-ins/common/file-raw-data.c:3021
 #, c-format
 msgid "_Planar (%s)"
 msgstr "_Планарний (%s)"
 
-#: plug-ins/common/file-raw-data.c:2883
+#: plug-ins/common/file-raw-data.c:3023
 msgid "_Planar"
 msgstr "_Планарний"
+
+#: plug-ins/common/file-seattle-filmworks.c:159
+msgid "Seattle FilmWorks Image"
+msgstr "Зображення Seattle FilmWorks"
+
+#: plug-ins/common/file-seattle-filmworks.c:162
+#: plug-ins/common/file-seattle-filmworks.c:164
+#| msgid "Load file in the Farbfeld file format"
+msgid "Load file in the Seattle FilmWorks file format"
+msgstr "Завантажити файл у форматі Seattle FilmWorks"
+
+#: plug-ins/common/file-seattle-filmworks.c:326
+#, c-format
+msgid "Uncompressed SFW94A format is not yet supported."
+msgstr "Підтримки формату SFW94A без стискання ще не передбачено."
+
+#: plug-ins/common/file-seattle-filmworks.c:415
+#: plug-ins/common/file-seattle-filmworks.c:529
+#, c-format
+msgid "Unable to convert SFW image."
+msgstr "Не вдалося перетворити зображення SFW."
+
+#: plug-ins/common/file-seattle-filmworks.c:487
+#, c-format
+#| msgid "Unsupported DXGI Format: %u"
+msgid "Unsupported SFW format '%s'"
+msgstr "Непідтримуваний формат SFW «%s»"
 
 #: plug-ins/common/file-sunras.c:276 plug-ins/common/file-sunras.c:302
 msgid "SUN Rasterfile image"
@@ -6356,7 +6393,8 @@ msgstr ""
 
 #: plug-ins/common/file-svg.c:318
 msgid "For security reasons, this should only be used for trusted input!"
-msgstr "З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
+msgstr ""
+"З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
 
 #: plug-ins/common/file-svg.c:325
 msgid "Retry without limits preventing to parse huge data?"
@@ -10254,22 +10292,18 @@ msgstr "Автор вказівника (необов'язковий)"
 
 #: plug-ins/file-jpeg/jpeg-export.c:139 plug-ins/file-jpeg/jpeg-export.c:146
 #, c-format
-#| msgid "Failed to load metadata: %s"
 msgid "File size without metadata: %s"
 msgstr "Розмір файла без метаданих: %s"
 
 #: plug-ins/file-jpeg/jpeg-export.c:717
-#| msgid "Calculating file size..."
 msgid "Calculating approximate file size..."
 msgstr "Обчислюємо приблизний розмір файла…"
 
 #: plug-ins/file-jpeg/jpeg-export.c:807 plug-ins/file-jpeg/jpeg-export.c:883
-#| msgid "File size: unknown"
 msgid "File size without metadata: unknown"
 msgstr "Розмір файла без метаданих: невідомий"
 
 #: plug-ins/file-jpeg/jpeg-export.c:891
-#| msgid "Enable preview to obtain the file size."
 msgid "Enable preview to obtain the approximate file size."
 msgstr "Увімкніть перегляд, щоб бачити приблизний розмір файла."
 
@@ -12992,7 +13026,8 @@ msgid "Radial"
 msgstr "Радіальне"
 
 #: plug-ins/gimpressionist/orientation.c:161
-msgid "Let the direction from the center determine the direction of the stroke"
+msgid ""
+"Let the direction from the center determine the direction of the stroke"
 msgstr "Напрямок від центру визначає напрямок мазка"
 
 #: plug-ins/gimpressionist/orientation.c:168 plug-ins/gimpressionist/size.c:175
@@ -13095,7 +13130,8 @@ msgstr "_Вороний"
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
-msgstr "В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
+msgstr ""
+"В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
 
 #: plug-ins/gimpressionist/orientmap.c:668
 msgid "A_ngle:"
@@ -13570,7 +13606,8 @@ msgstr "Введіть назву для копії градієнтного с�
 
 #: plug-ins/gradient-flare/gradient-flare.c:3322
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr "Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
+msgstr ""
+"Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
 
 #: plug-ins/gradient-flare/gradient-flare.c:3332
 msgid "Delete Gradient Flare"
@@ -16453,7 +16490,8 @@ msgstr "Включаючи _рамку вікна"
 
 #: plug-ins/screenshot/screenshot.c:212
 msgid "Title bar, window borders and shadow will be part of the image"
-msgstr "Смужка заголовка, рамки вікна та тінь вікна будуть частиною зображення"
+msgstr ""
+"Смужка заголовка, рамки вікна та тінь вікна будуть частиною зображення"
 
 #: plug-ins/screenshot/screenshot.c:221
 msgid "Selection d_elay"
@@ -16598,7 +16636,8 @@ msgstr "Альтернативне ото_чення фільтра"
 
 #: plug-ins/selection-to-path/selection-to-path.c:190
 msgid "A second number of adjacent points to consider when filtering."
-msgstr "Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
+msgstr ""
+"Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
 
 #: plug-ins/selection-to-path/selection-to-path.c:196
 msgid "Filter E_psilon"
