@@ -23,8 +23,8 @@ printf "\e[0Ksection_end:`date +%s`:snap_tlkt\r\e[0K\n"
 
 # Global info
 printf "\e[0Ksection_start:`date +%s`:snap_info\r\e[0KGetting snap global info\n"
-#(we do not use config.h like other scripts because the info is on snapcraft.yaml too
-#and `snapcraft remote-build` from previous job does not get config.h from launchpad)
+#(we do not use config.h like other scripts because the info needs to be on snapcraft.yaml too
+#so taking such info from the .yaml ensures we not forget to manually update it)
 cp build/linux/snap/snapcraft.yaml .
 
 ## Get info about GIMP version
@@ -63,8 +63,8 @@ for SNAP in $supported_archs; do
 SNAP=$(echo "$SNAP" | sed 's|^\./temp_||')
 printf "\e[0Ksection_start:`date +%s`:${SNAP}_making[collapsed=true]\r\e[0KFinishing ${SNAP}\n"
 if [ -z "$GITLAB_CI" ]; then
-  #as explained in 2_build-gimp-snapcraft.sh, we can only make snaps this way locally due to remote-build limitations
-  sudo snapcraft pack --destructive-mode --output temp_${SNAP}
+  #as explained in 2_build-gimp-snapcraft.sh, we can only make snaps this way locally due to snapcraft design
+  sudo snapcraft pack --destructive-mode --output temp_${NAME}_${GIMP_VERSION}_$(dpkg --print-architecture).snap
 fi
 mv temp_${SNAP} ${SNAP}
 printf "(INFO): Suceeded. To test this build, install it from the artifact with: sudo snap install --dangerous ${SNAP}\n"
