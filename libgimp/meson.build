@@ -364,6 +364,7 @@ libgimp = library('gimp-'+ gimp_api_version,
     drmingw,
     math,
     pango,
+    pangocairo,
     pangoft2,
   ],
   sources: [

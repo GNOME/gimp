@@ -53,6 +53,8 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #endif
 
+#include <pango/pangocairo.h>
+
 #include <babl/babl.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -643,6 +645,9 @@ main (int    argc,
 
     g_free (bin_dir);
   }
+
+  /* Trigger fontconfig initialization early */
+  pango_cairo_font_map_get_default ();
 
 #ifndef _WIN64
   {

@@ -82,6 +82,8 @@
 
 #include <locale.h>
 
+#include <pango/pangocairo.h>
+
 #include "gimp.h"
 
 #include "libgimpbase/gimpbase-private.h"
@@ -272,6 +274,9 @@ gimp_main (GType  plug_in_type,
       }
   }
 #endif /* HAVE_EXCHNDL */
+
+  /* Trigger fontconfig initialization early */
+  pango_cairo_font_map_get_default ();
 
 #ifndef _WIN64
   {
