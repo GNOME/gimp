@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-11-24 22:00+0000\n"
-"PO-Revision-Date: 2022-12-07 01:45+0200\n"
+"POT-Creation-Date: 2025-01-15 09:23+0000\n"
+"PO-Revision-Date: 2025-07-04 22:44+0300\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2);;\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.6\n"
 
 #: build/windows/installer/lang/setup.isl.xml.in:7
 msgid "License Agreement"
@@ -29,9 +29,10 @@ msgstr "Program de instalare creat de Jernej Simonèiè, jernej-gimp@ena.si"
 
 #: build/windows/installer/lang/setup.isl.xml.in:13
 #: build/windows/installer/lang/setup.isl.xml.in:16
-msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
+msgid ""
+"This version of GIMP requires Windows 10, or a newer version of Windows."
 msgstr ""
-"Această versiune GIMP necesită Windows 7, sau o versiune Windows mai nouă."
+"Această versiune GIMP necesită Windows 10, sau o versiune Windows mai nouă."
 
 #: build/windows/installer/lang/setup.isl.xml.in:23
 msgid "Development version"
@@ -47,13 +48,13 @@ msgid ""
 "gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
 "installation anyway?"
 msgstr ""
-"Aceasta este o versiune GIMP de dezvoltare, în care este posibil ca unele "
-"caracteristici să nu fie terminate sau să fie instabile.%nAceastă versiune "
-"GIMP nu este destinată lucrului de zi cu zi, deoarece poate fi instabilă și "
-"s-ar putea să vă pierdeți munca.%nDacă întâmpinați probleme, verificați mai "
-"întâi dacă acestea nu au fost cumva deja rezolvate în GIT înainte de a "
-"contacta dezvoltatorii, sau raportați problema în GIMP gitlab:%n_https://"
-"gitlab.gnome.org/GNOME/gimp/issues%n%nDoriți să continuați oricum instalarea?"
+"Aceasta este o versiune GIMP de dezvoltare, în care unele caracteristici s-"
+"ar putea să fie incomplete sau să fie instabile.%nAceastă versiune GIMP nu "
+"este destinată lucrului de zi cu zi, deoarece ar putea fi instabilă și s-ar "
+"putea să vă pierdeți munca.%nDacă întâmpinați probleme, înainte de a "
+"contacta dezvoltatorii, verificați dacă acestea nu au fost cumva deja "
+"rezolvate în GIT, sau raportați problema în GIMP gitlab:%n_https://"
+"gitlab.gnome.org/GNOME/gimp/issues%n%nDoriți să continuați instalarea oricum?"
 
 #: build/windows/installer/lang/setup.isl.xml.in:31
 #: build/windows/installer/lang/setup.isl.xml.in:54
@@ -81,11 +82,10 @@ msgid ""
 "it's recommended to change the display colour depth to 32BPP before "
 "continuing."
 msgstr ""
-"Programul de instalare a detectat că Windows-ul nu rulează în modul de "
-"afișare pe 32 de biți per pixel. Aceasta este o cauză cunoscută ca fiind "
-"generatoare de probleme de stabilitate în cadrul GIMP, de aceea se recomandă "
-"să schimbați profunzimea de culoare a afișajului la 32BPP înainte de a "
-"continua."
+"Programul de instalare a detectat că Windows nu rulează în modul de afișare "
+"de 32 de biți per pixel. Este cunoscut faptul că acest lucru poate genera "
+"probleme de stabilitate în cadrul GIMP, de aceea se recomandă schimbarea "
+"adâncimii de culoare a afișării la 32BPP înainte de a continua."
 
 #: build/windows/installer/lang/setup.isl.xml.in:57
 msgid "E&xit"
@@ -140,7 +140,7 @@ msgstr "Biblioteci run-time"
 
 #: build/windows/installer/lang/setup.isl.xml.in:101
 msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
-msgstr "Bibliotecile run-time utilizate de GIMP, inclusiv mediul run-time GTK"
+msgstr "Biblioteci run-time utilizate de GIMP, inclusiv mediul run-time GTK"
 
 #: build/windows/installer/lang/setup.isl.xml.in:105
 msgid "Debug symbols"
@@ -148,92 +148,76 @@ msgstr "Simboluri de depanare"
 
 #: build/windows/installer/lang/setup.isl.xml.in:109
 msgid "Include information to help with debugging GIMP"
-msgstr "Include informații care să vă ajute la depanarea GIMP"
+msgstr "Include informații care să ajute la depanarea GIMP"
 
 #: build/windows/installer/lang/setup.isl.xml.in:113
-msgid "MS-Windows engine for GTK"
-msgstr "Motor MS-Windows pentru GTK"
-
 #: build/windows/installer/lang/setup.isl.xml.in:117
-msgid "Native Windows look for GIMP"
-msgstr "Aspect nativ Windows pentru GIMP"
-
-#: build/windows/installer/lang/setup.isl.xml.in:121
-msgid "Support for old plug-ins"
-msgstr "Suport pentru plugin-uri vechi"
-
-#: build/windows/installer/lang/setup.isl.xml.in:125
-msgid "Install libraries needed by old third-party plug-ins"
-msgstr "Instalează bibliotecile necesare plugin-urilor unor părți terțe"
-
-#: build/windows/installer/lang/setup.isl.xml.in:129
-#: build/windows/installer/lang/setup.isl.xml.in:133
 msgid "Translations"
 msgstr "Traduceri"
 
-#: build/windows/installer/lang/setup.isl.xml.in:137
+#: build/windows/installer/lang/setup.isl.xml.in:121
 msgid "Python scripting"
 msgstr "Scripturi Python"
 
-#: build/windows/installer/lang/setup.isl.xml.in:141
+#: build/windows/installer/lang/setup.isl.xml.in:125
 msgid "Allows you to use GIMP plugins written in Python scripting language."
 msgstr ""
-"Vă permite să utilizați plugin-uri GIMP scrise în limbajul de script Python."
+"Permite utilizarea de plugin-uri GIMP scrise în limbajul de script Python."
 
-#: build/windows/installer/lang/setup.isl.xml.in:145
+#: build/windows/installer/lang/setup.isl.xml.in:129
 msgid "Lua scripting"
 msgstr "Scripturi Lua"
 
-#: build/windows/installer/lang/setup.isl.xml.in:149
+#: build/windows/installer/lang/setup.isl.xml.in:133
 msgid "Allows you to use GIMP plugins written in Lua scripting language."
 msgstr ""
-"Vă permite să utilizați plugin-uri GIMP scrise în limbajul de script Lua."
+"Permite utilizarea de plugin-uri GIMP scrise în limbajul de script Lua."
 
-#: build/windows/installer/lang/setup.isl.xml.in:153
+#: build/windows/installer/lang/setup.isl.xml.in:137
 msgid "MyPaint brushes"
 msgstr "Peneluri MyPaint"
 
-#: build/windows/installer/lang/setup.isl.xml.in:157
+#: build/windows/installer/lang/setup.isl.xml.in:141
 msgid "Install the default set of MyPaint brushes"
 msgstr "Instalează setul implicit de peneluri MyPaint"
 
-#: build/windows/installer/lang/setup.isl.xml.in:161
+#: build/windows/installer/lang/setup.isl.xml.in:145
 msgid "PostScript support"
 msgstr "Suport PostScript"
 
-#: build/windows/installer/lang/setup.isl.xml.in:165
+#: build/windows/installer/lang/setup.isl.xml.in:149
 msgid "Allow GIMP to load PostScript files"
 msgstr "Permite GIMP să încarce fișiere PostScript"
 
-#: build/windows/installer/lang/setup.isl.xml.in:169
+#: build/windows/installer/lang/setup.isl.xml.in:153
 msgid "Support for 32-bit plug-ins"
 msgstr "Suport pentru plugin-uri pe 32 de biți"
 
-#: build/windows/installer/lang/setup.isl.xml.in:173
+#: build/windows/installer/lang/setup.isl.xml.in:157
 msgid ""
-"Include files necessary for using 32-bit plug-ins.%nRequired for Python "
+"Include files necessary for using 32-bit plug-ins.%nRequired for TWAIN "
 "support."
 msgstr ""
 "Include fișierele necesare pentru utilizarea plugin-urilor pe 32 de biți."
-"%nSunt necesare pentru suportul Python."
+"%nNecesar pentru suportul TWAIN."
 
-#: build/windows/installer/lang/setup.isl.xml.in:178
+#: build/windows/installer/lang/setup.isl.xml.in:162
 msgid "Additional icons:"
 msgstr "Pictograme adiționale:"
 
-#: build/windows/installer/lang/setup.isl.xml.in:182
+#: build/windows/installer/lang/setup.isl.xml.in:166
 msgid "Create a &desktop icon"
 msgstr "Creează o pictogramă pe &desktop"
 
-#: build/windows/installer/lang/setup.isl.xml.in:186
+#: build/windows/installer/lang/setup.isl.xml.in:170
 msgid "Create a &Quick Launch icon"
 msgstr "Creează o pictogramă pe bara &Quick Launch"
 
-#: build/windows/installer/lang/setup.isl.xml.in:190
+#: build/windows/installer/lang/setup.isl.xml.in:174
 msgid "Remove previous GIMP version"
 msgstr "Elimină versiunea GIMP precedentă"
 
-#: build/windows/installer/lang/setup.isl.xml.in:195
+#: build/windows/installer/lang/setup.isl.xml.in:179
 msgid ""
 "There was a problem updating GIMP's environment in %1. If you get any errors "
 "loading the plug-ins, try uninstalling and re-installing GIMP."
@@ -242,43 +226,43 @@ msgstr ""
 "erori la încărcarea plugin-urilor, încercați să dezinstalați și să "
 "reinstalați GIMP."
 
-#: build/windows/installer/lang/setup.isl.xml.in:199
+#: build/windows/installer/lang/setup.isl.xml.in:183
 msgid "Error extracting temporary data."
 msgstr "Eroare la extragerea datelor temporare."
 
-#: build/windows/installer/lang/setup.isl.xml.in:203
+#: build/windows/installer/lang/setup.isl.xml.in:187
 msgid "Error updating Python interpreter info."
 msgstr "Eroare la actualizarea informațiilor despre interpretorul Python."
 
-#: build/windows/installer/lang/setup.isl.xml.in:207
+#: build/windows/installer/lang/setup.isl.xml.in:191
 msgid "Error updating MyPaint brushes info."
 msgstr "Eroare la actualizarea informațiilor despre penelurile MyPaint."
 
-#: build/windows/installer/lang/setup.isl.xml.in:211
+#: build/windows/installer/lang/setup.isl.xml.in:195
 msgid "There was an error updating %1."
 msgstr "A apărut o eroare la actualizarea %1."
 
-#: build/windows/installer/lang/setup.isl.xml.in:215
+#: build/windows/installer/lang/setup.isl.xml.in:199
 msgid "There was an error updating GIMP's configuration file %1."
 msgstr "A apărut o eroare la actualizarea fișierului %1 de configurare GIMP."
 
-#: build/windows/installer/lang/setup.isl.xml.in:220
+#: build/windows/installer/lang/setup.isl.xml.in:204
 msgid "Edit with GIMP"
 msgstr "Editare cu GIMP"
 
-#: build/windows/installer/lang/setup.isl.xml.in:225
+#: build/windows/installer/lang/setup.isl.xml.in:209
 msgid "Select file associations"
 msgstr "Selectați asocierile de fișier"
 
-#: build/windows/installer/lang/setup.isl.xml.in:229
+#: build/windows/installer/lang/setup.isl.xml.in:213
 msgid "Extensions:"
 msgstr "Extensii:"
 
-#: build/windows/installer/lang/setup.isl.xml.in:233
+#: build/windows/installer/lang/setup.isl.xml.in:217
 msgid "Select the file types you wish to associate with GIMP"
 msgstr "Selectați tipurile de fișier care doriți să fie asociate cu GIMP"
 
-#: build/windows/installer/lang/setup.isl.xml.in:237
+#: build/windows/installer/lang/setup.isl.xml.in:221
 msgid ""
 "This will make selected files open in GIMP when you double-click them in "
 "Explorer."
@@ -286,27 +270,27 @@ msgstr ""
 "Acest lucru va face ca fișierele selectate să fie deschise în GIMP atunci "
 "când se dă dublu clic pe ele în Explorer."
 
-#: build/windows/installer/lang/setup.isl.xml.in:241
+#: build/windows/installer/lang/setup.isl.xml.in:225
 msgid "Select &All"
 msgstr "Selecte&ază tot"
 
-#: build/windows/installer/lang/setup.isl.xml.in:245
+#: build/windows/installer/lang/setup.isl.xml.in:229
 msgid "Unselect &All"
 msgstr "Deselecte&ază tot"
 
-#: build/windows/installer/lang/setup.isl.xml.in:249
+#: build/windows/installer/lang/setup.isl.xml.in:233
 msgid "Select &Unused"
 msgstr "Selectează cele &nefolosite"
 
-#: build/windows/installer/lang/setup.isl.xml.in:254
+#: build/windows/installer/lang/setup.isl.xml.in:238
 msgid "File types to associate with GIMP:"
 msgstr "Tipuri de fișiere asociate cu GIMP:"
 
-#: build/windows/installer/lang/setup.isl.xml.in:258
+#: build/windows/installer/lang/setup.isl.xml.in:242
 msgid "Removing previous version of GIMP:"
 msgstr "Eliminare versiune GIMP precedentă:"
 
-#: build/windows/installer/lang/setup.isl.xml.in:262
+#: build/windows/installer/lang/setup.isl.xml.in:246
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
 "the automatic uninstall of old version has failed.%n%nPlease remove the "
@@ -320,13 +304,13 @@ msgstr ""
 "alegeți o instalare personalizată și selectați un dosar de instalare diferit."
 "%n%nAcum programul de instalare se va închide."
 
-#: build/windows/installer/lang/setup.isl.xml.in:266
+#: build/windows/installer/lang/setup.isl.xml.in:250
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
-"Setup couldn't determine how to remove the old version automatically.%n"
-"%nPlease remove the previous version of GIMP and any add-ons yourself before "
-"installing this version in %2, or choose a Custom install, and select a "
-"different installation folder.%n%nThe Setup will now exit."
+"Setup couldn't determine how to remove the old version automatically."
+"%n%nPlease remove the previous version of GIMP and any add-ons yourself "
+"before installing this version in %2, or choose a Custom install, and select "
+"a different installation folder.%n%nThe Setup will now exit."
 msgstr ""
 "GIMP %1 nu poate fi instalat peste versiunea GIMP instalată în prezent, iar "
 "programul de dezinstalare nu a putut determina cum să elimine versiunea "
@@ -335,66 +319,66 @@ msgstr ""
 "instalare personalizată și selectați un dosar de instalare diferit.%n%nAcum "
 "programul de instalare se va închide."
 
-#: build/windows/installer/lang/setup.isl.xml.in:270
+#: build/windows/installer/lang/setup.isl.xml.in:254
 msgid ""
 "Previous GIMP version was removed successfully, but Windows has to be "
 "restarted before the Setup can continue.%n%nAfter restarting your computer, "
 "Setup will continue next time an administrator logs in."
 msgstr ""
 "Versiunea GIMP precedentă a fost eliminată cu succes, dar Windows trebuie să "
-"fie repornit înainte ca instalarea să poată să continue.%n%nDupă repornirea "
+"fie repornit înainte ca instalarea să poată continua.%n%nDupă repornirea "
 "calculatorului, programul de instalare va continua la prima conectare a unui "
 "administrator."
 
-#: build/windows/installer/lang/setup.isl.xml.in:275
+#: build/windows/installer/lang/setup.isl.xml.in:259
 msgid "There was an error restarting the Setup. (%1)"
 msgstr "A apărut o eroare la repornirea programului de instalare. (%1)"
 
-#: build/windows/installer/lang/setup.isl.xml.in:279
+#: build/windows/installer/lang/setup.isl.xml.in:263
 msgid "Cleaning up old files..."
 msgstr "Se curăță fișierele vechi..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:284
+#: build/windows/installer/lang/setup.isl.xml.in:268
 msgid "Remember: GIMP is Free Software.%n%nPlease visit"
 msgstr "Țineți minte: GIMP este software liber.%n%nVizitați"
 
-#: build/windows/installer/lang/setup.isl.xml.in:288
+#: build/windows/installer/lang/setup.isl.xml.in:272
 msgid "for free updates."
 msgstr "pentru actualizări gratuite."
 
-#: build/windows/installer/lang/setup.isl.xml.in:292
+#: build/windows/installer/lang/setup.isl.xml.in:276
 msgid "Setting up file associations..."
 msgstr "Se configurează asocierile de fișiere..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:295
+#: build/windows/installer/lang/setup.isl.xml.in:279
 msgid "Setting up environment for GIMP Python extension..."
 msgstr "Se configurează mediul pentru extensiile Python GIMP..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:298
+#: build/windows/installer/lang/setup.isl.xml.in:282
 msgid "Setting up MyPaint brushes..."
 msgstr "Se configurează penelurile MyBrushes..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:301
+#: build/windows/installer/lang/setup.isl.xml.in:285
 msgid "Setting up GIMP environment..."
 msgstr "Se configurează mediul GIMP..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:304
+#: build/windows/installer/lang/setup.isl.xml.in:288
 msgid "Setting up GIMP configuration for 32-bit plug-in support..."
 msgstr "Se configurează GIMP pentru suportul plugin-urilor pe 32 de biți..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:309
+#: build/windows/installer/lang/setup.isl.xml.in:293
 msgid "Launch GIMP"
 msgstr "Pornește GIMP"
 
-#: build/windows/installer/lang/setup.isl.xml.in:314
+#: build/windows/installer/lang/setup.isl.xml.in:298
 msgid "Removing add-on"
 msgstr "Eliminare supliment"
 
-#: build/windows/installer/lang/setup.isl.xml.in:318
+#: build/windows/installer/lang/setup.isl.xml.in:302
 msgid "Internal error (%1)."
 msgstr "Eroare internă (%1)."
 
-#: build/windows/installer/lang/setup.isl.xml.in:323
+#: build/windows/installer/lang/setup.isl.xml.in:307
 msgid ""
 "GIMP does not appear to be installed in the selected directory. Continue "
 "anyway?"
