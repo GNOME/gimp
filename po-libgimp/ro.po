@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-11-24 21:59+0000\n"
-"PO-Revision-Date: 2022-12-06 01:55+0200\n"
+"POT-Creation-Date: 2025-08-06 18:37+0000\n"
+"PO-Revision-Date: 2025-08-09 02:58+0300\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -16,91 +16,102 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.6\n"
 
-#: libgimp/gimpbrushselectbutton.c:178
-msgid "Brush Selection"
-msgstr "Selecție de penel"
-
-#: libgimp/gimpbrushselectbutton.c:887 libgimp/gimppatternselectbutton.c:674
+#: libgimp/gimpbrushchooser.c:134 libgimp/gimppatternchooser.c:129
 msgid "_Browse..."
 msgstr "_Răsfoiește..."
 
-#: libgimp/gimpexport.c:332 libgimp/gimpexport.c:368
+#: libgimp/gimpdrawablechooser.c:238
+msgid "Browse..."
+msgstr "Răsfoiește..."
+
+#: libgimp/gimpexportoptions.c:347 libgimp/gimpexportoptions.c:383
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "Plugin-ul %s nu poate manipula straturi"
 
-#: libgimp/gimpexport.c:333 libgimp/gimpexport.c:342 libgimp/gimpexport.c:351
-#: libgimp/gimpexport.c:369
+#: libgimp/gimpexportoptions.c:348 libgimp/gimpexportoptions.c:357
+#: libgimp/gimpexportoptions.c:366 libgimp/gimpexportoptions.c:384
 msgid "Merge Visible Layers"
-msgstr "Fuzionează straturile vizibile"
+msgstr "Îmbină straturile vizibile"
 
-# hm ?
-#: libgimp/gimpexport.c:341
+#: libgimp/gimpexportoptions.c:356
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
 "Plugin-ul %s nu poate manipula decalajele, dimensiunea sau opacitatea de "
 "strat"
 
-#: libgimp/gimpexport.c:350 libgimp/gimpexport.c:359
+#: libgimp/gimpexportoptions.c:365 libgimp/gimpexportoptions.c:374
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "Plugin-ul %s poate manipula straturi numai sub formă de cadre animate"
 
-#: libgimp/gimpexport.c:351 libgimp/gimpexport.c:360
+#: libgimp/gimpexportoptions.c:366 libgimp/gimpexportoptions.c:375
 msgid "Save as Animation"
 msgstr "Salvează ca animație"
 
-#: libgimp/gimpexport.c:360 libgimp/gimpexport.c:369 libgimp/gimpexport.c:378
-#: libgimp/gimpexport.c:387
+#: libgimp/gimpexportoptions.c:375 libgimp/gimpexportoptions.c:384
+#: libgimp/gimpexportoptions.c:393 libgimp/gimpexportoptions.c:411
 msgid "Flatten Image"
 msgstr "Aplatizează imaginea"
 
-#: libgimp/gimpexport.c:377
+#: libgimp/gimpexportoptions.c:392
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "Plugin-ul %s nu poate manipula transparența"
 
-#: libgimp/gimpexport.c:386
+#: libgimp/gimpexportoptions.c:401
+#, c-format
+msgid "%s plug-in can't handle layer effects"
+msgstr "Plugin-ul %s nu poate gestiona efectele de strat"
+
+#: libgimp/gimpexportoptions.c:402
+msgid "Merge Layer Effects"
+msgstr "Îmbină efectele de strat"
+
+#: libgimp/gimpexportoptions.c:410
 #, c-format
 msgid "%s plug-in can't handle transparent layers"
 msgstr "Plugin-ul %s nu poate manipula straturi transparente"
 
-#: libgimp/gimpexport.c:395
+#: libgimp/gimpexportoptions.c:419
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "Plugin-ul %s nu poate manipula măștile de strat"
 
-#: libgimp/gimpexport.c:396
+#: libgimp/gimpexportoptions.c:420
 msgid "Apply Layer Masks"
 msgstr "Aplică măștile de strat"
 
-#: libgimp/gimpexport.c:404
+#: libgimp/gimpexportoptions.c:428
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "Plugin-ul %s poate manipula numai imagini RGB"
 
-#: libgimp/gimpexport.c:405 libgimp/gimpexport.c:443 libgimp/gimpexport.c:452
+#: libgimp/gimpexportoptions.c:429 libgimp/gimpexportoptions.c:467
+#: libgimp/gimpexportoptions.c:476
 msgid "Convert to RGB"
 msgstr "Convertește la RGB"
 
-#: libgimp/gimpexport.c:413
+#: libgimp/gimpexportoptions.c:437
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "Plugin-ul %s poate manipula numai imagini în tonuri de gri"
 
-#: libgimp/gimpexport.c:414 libgimp/gimpexport.c:443 libgimp/gimpexport.c:464
+#: libgimp/gimpexportoptions.c:438 libgimp/gimpexportoptions.c:467
+#: libgimp/gimpexportoptions.c:488
 msgid "Convert to Grayscale"
 msgstr "Convertește la tonuri de gri"
 
-#: libgimp/gimpexport.c:422
+#: libgimp/gimpexportoptions.c:446
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "Plugin-ul %s poate manipula numai imagini indexate"
 
-#: libgimp/gimpexport.c:423 libgimp/gimpexport.c:452 libgimp/gimpexport.c:462
+#: libgimp/gimpexportoptions.c:447 libgimp/gimpexportoptions.c:476
+#: libgimp/gimpexportoptions.c:486
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -108,13 +119,13 @@ msgstr ""
 "Convertește la imagine indexată folosind configurările implicite\n"
 "(efectuați manual pentru a ajusta rezultatul)"
 
-#: libgimp/gimpexport.c:432
+#: libgimp/gimpexportoptions.c:456
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
 "Plugin-ul %s poate manipula numai imagini bitmap indexate (două culori)"
 
-#: libgimp/gimpexport.c:433
+#: libgimp/gimpexportoptions.c:457
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -123,231 +134,233 @@ msgstr ""
 "bitmap\n"
 "(efectuați manual pentru a ajusta rezultatul)"
 
-#: libgimp/gimpexport.c:442
+#: libgimp/gimpexportoptions.c:466
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "Plugin-ul %s poate manipula numai imagini RGB sau în tonuri de gri"
 
-#: libgimp/gimpexport.c:451
+#: libgimp/gimpexportoptions.c:475
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr "Plugin-ul %s poate manipula numai imagini RGB sau indexate"
 
-#: libgimp/gimpexport.c:461
+#: libgimp/gimpexportoptions.c:485
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
 "Plugin-ul %s poate manipula numai imagini în tonuri de gri sau indexate"
 
-#: libgimp/gimpexport.c:472
+#: libgimp/gimpexportoptions.c:496
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "Plugin-ul %s necesită un canal alfa"
 
-#: libgimp/gimpexport.c:473
+#: libgimp/gimpexportoptions.c:497
 msgid "Add Alpha Channel"
 msgstr "Adaugă un canal alfa"
 
-#: libgimp/gimpexport.c:481
+#: libgimp/gimpexportoptions.c:505
 #, c-format
 msgid "%s plug-in needs to crop the layers to the image bounds"
 msgstr "Plugin-ul %s necesită decuparea straturilor la limitele imaginii"
 
-#: libgimp/gimpexport.c:482
+#: libgimp/gimpexportoptions.c:506
 msgid "Crop Layers"
 msgstr "Decupează straturile"
 
-#: libgimp/gimpexport.c:482
+#: libgimp/gimpexportoptions.c:506
 msgid "Resize Image to Layers"
 msgstr "Redimensionează imaginea la straturi"
 
-#: libgimp/gimpexport.c:541
-msgid "Confirm Save"
-msgstr "Confirmă salvarea"
+#: libgimp/gimpexportprocedure.c:550
+msgid "Save _Exif"
+msgstr "Salvează metadatele _Exif"
 
-#: libgimp/gimpexport.c:546 libgimp/gimpexport.c:628 libgimp/gimpexport.c:1199
-#: libgimp/gimpproceduredialog.c:303 libgimpwidgets/gimpcolorbutton.c:553
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
-#: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:274
-#: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
-#: libgimpwidgets/gimpquerybox.c:479
-msgid "_Cancel"
-msgstr "_Anulează"
+#: libgimp/gimpexportprocedure.c:551
+msgid "Save Exif (Exchangeable image file format) metadata"
+msgstr "Salvează metadatele Exif (Exchangeable image file format)"
 
-#: libgimp/gimpexport.c:547
-msgid "C_onfirm"
-msgstr "C_onfirmă"
+#: libgimp/gimpexportprocedure.c:559
+msgid "Save _IPTC"
+msgstr "Salvează metadatele _IPTC"
 
-#: libgimp/gimpexport.c:623
-msgid "Export File"
-msgstr "Export de fișier"
-
-#: libgimp/gimpexport.c:627
-msgid "_Ignore"
-msgstr "_Ignoră"
-
-#: libgimp/gimpexport.c:629 libgimp/gimpexport.c:1200
-#: libgimp/gimpproceduredialog.c:275
-msgid "_Export"
-msgstr "_Exportă"
-
-# a fost: din următoarele motive (iar motivele sunt de obicei unul singur)
-#. the headline
-#: libgimp/gimpexport.c:659
-#, c-format
-msgid ""
-"Your image should be exported before it can be saved as %s for the following "
-"reasons:"
+#: libgimp/gimpexportprocedure.c:560
+msgid "Save IPTC (International Press Telecommunications Council) metadata"
 msgstr ""
-"Imaginea trebuie exportată înainte de a putea fi salvată ca %s, deoarece:"
+"Salvează metadatele IPTC (International Press Telecommunications Council)"
 
-# convertire conform discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/4c3cad3138a3566d
-#. the footline
-#: libgimp/gimpexport.c:733
-msgid "The export conversion won't modify your original image."
-msgstr "Convertirea pentru export nu va modifica imaginea originală."
+#: libgimp/gimpexportprocedure.c:568
+msgid "Save _XMP"
+msgstr "Salvează metadatele _XMP"
 
-#: libgimp/gimpexport.c:853
-#, c-format
-msgid ""
-"You are about to save a layer mask as %s.\n"
-"This will not save the visible layers."
-msgstr ""
-"Sunteți pe cale de a salva un strat de mască ca %s.\n"
-"Acest lucru nu va salva straturile vizibile."
+#: libgimp/gimpexportprocedure.c:569
+msgid "Save XMP (Extensible Metadata Platform) metadata"
+msgstr "Salvează metadatele XMP (Extensible Metadata Platform)"
 
-#: libgimp/gimpexport.c:859
-#, c-format
-msgid ""
-"You are about to save a channel (saved selection) as %s.\n"
-"This will not save the visible layers."
-msgstr ""
-"Sunteți pe cale de a salva un canal (selecție salvată) ca %s.\n"
-"Acest lucru nu va salva straturile vizibile."
+#: libgimp/gimpexportprocedure.c:577
+msgid "Save color _profile"
+msgstr "Salvează _profilul de culoare"
 
-#. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
+#: libgimp/gimpexportprocedure.c:578
+msgid "Save the ICC color profile as metadata"
+msgstr "Salvează profilul de culoare ICC ca metadate"
+
+#: libgimp/gimpexportprocedure.c:586
+msgid "Save _thumbnail"
+msgstr "Salvează minia_tura"
+
+#: libgimp/gimpexportprocedure.c:587
+msgid "Save a smaller representation of the image as metadata"
+msgstr "Salvează o reprezentare mai mică a imaginii ca metadate"
+
+#: libgimp/gimpexportprocedure.c:595
+msgid "Save c_omment"
+msgstr "Salvează c_omentariul"
+
+#: libgimp/gimpexportprocedure.c:596
+msgid "Save a comment as metadata"
+msgstr "Salvează un comentariu ca metadate"
+
+#: libgimp/gimpexportprocedure.c:600
+msgid "Comment"
+msgstr "Comentariu"
+
+#: libgimp/gimpexportprocedure.c:601
+msgid "Image comment"
+msgstr "Comentariu de imagine"
+
+#: libgimp/gimpexportproceduredialog.c:155
+msgid "Metadata"
+msgstr "Metadate"
+
+#: libgimp/gimpexportproceduredialog.c:164
+msgid "Edit Metadata"
+msgstr "Editare metadate"
+
+#: libgimp/gimpexportproceduredialog.c:164
+msgid "(edit)"
+msgstr "(editare)"
+
+# titlu pe bară
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:397
+#: libgimp/gimpexportproceduredialog.c:460
 #, c-format
 msgid "Export Image as %s"
-msgstr "Exportă imaginea ca %s"
+msgstr "Export de imagine în format %s"
 
-#: libgimp/gimpfontselectbutton.c:137
-msgid "Font Selection"
-msgstr "Selecție font"
-
-#: libgimp/gimpgradientselectbutton.c:155
-msgid "Gradient Selection"
-msgstr "Selecție degrade"
-
-#: libgimp/gimpimagemetadata.c:306
+#: libgimp/gimpimagemetadata.c:124
 msgid "Background"
 msgstr "Fundal"
 
-#: libgimp/gimpimagemetadata-save.c:654 modules/controller-midi.c:426
+#: libgimp/gimpimagemetadata-save.c:770 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
-#: libgimp/gimppaletteselectbutton.c:136
-msgid "Palette Selection"
-msgstr "Selecție paletă"
+#: libgimp/gimploadprocedure.c:273 libgimp/gimpvectorloadprocedure.c:445
+#, c-format
+msgid ""
+"This file loading plug-in returned SUCCESS as a status without an image. "
+"This is a bug in the plug-in code. Contact the plug-in developer."
+msgstr ""
+"Acest plugin care încarcă fișiere a returnat starea SUCCESS (SUCCESS) fără o "
+"imagine. Aceasta este o eroare în codul plugin-ului. Contactați "
+"dezvoltatorul plugin-ului."
 
-#: libgimp/gimppatternselectbutton.c:165
-msgid "Pattern Selection"
-msgstr "Selecție model"
+#: libgimp/gimpparamspecs-desc.c:68
+msgid "Allowed values:"
+msgstr "Valori permise:"
 
 #. procedure executed successfully
-#: libgimp/gimppdb.c:552
+#: libgimp/gimppdb.c:335
 msgid "success"
 msgstr "succes"
 
 #. procedure execution failed
-#: libgimp/gimppdb.c:556
+#: libgimp/gimppdb.c:339
 msgid "execution error"
 msgstr "eroare de execuție"
 
 #. procedure called incorrectly
-#: libgimp/gimppdb.c:560
+#: libgimp/gimppdb.c:343
 msgid "calling error"
 msgstr "eroare de apelare"
 
 #. procedure execution cancelled
-#: libgimp/gimppdb.c:564
+#: libgimp/gimppdb.c:347
 msgid "cancelled"
 msgstr "anulat"
 
-#: libgimp/gimpprocbrowserdialog.c:162
+#: libgimp/gimpprocbrowserdialog.c:152
 msgid "by name"
 msgstr "după nume"
 
-#: libgimp/gimpprocbrowserdialog.c:163
+#: libgimp/gimpprocbrowserdialog.c:153
 msgid "by description"
 msgstr "după descriere"
 
-#: libgimp/gimpprocbrowserdialog.c:164
+#: libgimp/gimpprocbrowserdialog.c:154
 msgid "by help"
 msgstr "după ajutor"
 
-#: libgimp/gimpprocbrowserdialog.c:165
+#: libgimp/gimpprocbrowserdialog.c:155
 msgid "by authors"
-msgstr ""
+msgstr "după autori"
 
-#: libgimp/gimpprocbrowserdialog.c:166
+#: libgimp/gimpprocbrowserdialog.c:156
 msgid "by copyright"
 msgstr "după drepturi de autor"
 
-#: libgimp/gimpprocbrowserdialog.c:167
+#: libgimp/gimpprocbrowserdialog.c:157
 msgid "by date"
 msgstr "după dată"
 
-#: libgimp/gimpprocbrowserdialog.c:168
+#: libgimp/gimpprocbrowserdialog.c:158
 msgid "by type"
 msgstr "după tip"
 
 #. count label
-#: libgimp/gimpprocbrowserdialog.c:369 libgimp/gimpprocbrowserdialog.c:527
-#: libgimpwidgets/gimpbrowser.c:168
+#: libgimp/gimpprocbrowserdialog.c:358 libgimp/gimpprocbrowserdialog.c:516
+#: libgimpwidgets/gimpbrowser.c:161
 msgid "No matches"
 msgstr "Nicio potrivire"
 
-#: libgimp/gimpprocbrowserdialog.c:372
+#: libgimp/gimpprocbrowserdialog.c:361
 msgid "Search term invalid or incomplete"
 msgstr "Termenul de căutat nu este valid sau nu este complet"
 
-#: libgimp/gimpprocbrowserdialog.c:381
+#: libgimp/gimpprocbrowserdialog.c:370
 msgid "Searching"
 msgstr "Căutare"
 
-#: libgimp/gimpprocbrowserdialog.c:393
+#: libgimp/gimpprocbrowserdialog.c:382
 msgid "Searching by name"
 msgstr "Căutare după nume"
 
-#: libgimp/gimpprocbrowserdialog.c:414
+#: libgimp/gimpprocbrowserdialog.c:403
 msgid "Searching by description"
 msgstr "Căutare după descriere"
 
-#: libgimp/gimpprocbrowserdialog.c:422
+#: libgimp/gimpprocbrowserdialog.c:411
 msgid "Searching by help"
 msgstr "Căutare după ajutor"
 
-#: libgimp/gimpprocbrowserdialog.c:430
+#: libgimp/gimpprocbrowserdialog.c:419
 msgid "Searching by authors"
-msgstr ""
+msgstr "Căutare după autori"
 
-#: libgimp/gimpprocbrowserdialog.c:438
+#: libgimp/gimpprocbrowserdialog.c:427
 msgid "Searching by copyright"
 msgstr "Căutare după drepturi de autor"
 
-#: libgimp/gimpprocbrowserdialog.c:446
+#: libgimp/gimpprocbrowserdialog.c:435
 msgid "Searching by date"
 msgstr "Căutare după dată"
 
-#: libgimp/gimpprocbrowserdialog.c:454
+#: libgimp/gimpprocbrowserdialog.c:443
 msgid "Searching by type"
 msgstr "Căutare după tip"
 
-#: libgimp/gimpprocbrowserdialog.c:467
+#: libgimp/gimpprocbrowserdialog.c:456
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
@@ -356,11 +369,11 @@ msgstr[1] "%d proceduri"
 msgstr[2] "%d de proceduri"
 
 # hm ? sau interogarea introdusă ?
-#: libgimp/gimpprocbrowserdialog.c:476
+#: libgimp/gimpprocbrowserdialog.c:465
 msgid "No matches for your query"
 msgstr "Nicio potrivire pentru interogarea dumneavoastră"
 
-#: libgimp/gimpprocbrowserdialog.c:480
+#: libgimp/gimpprocbrowserdialog.c:469
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
@@ -368,102 +381,145 @@ msgstr[0] "%d procedură se potrivește cu interogarea dumneavoastră"
 msgstr[1] "%d proceduri se potrivesc cu interogarea dumneavoastră"
 msgstr[2] "%d de proceduri se potrivesc cu interogarea dumneavoastră"
 
-#: libgimp/gimpprocedure.c:1917
+#: libgimp/gimpprocedure.c:2161
 #, c-format
 msgid "Procedure '%s' returned no return values"
-msgstr ""
+msgstr "Procedura „%s” nu a returnat nicio valoare"
 
-#: libgimp/gimpprocedure.c:2008
+#: libgimp/gimpprocedure.c:2367
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr ""
+"Procedura „%s” a returnat un tip de valoare greșit pentru valoarea returnată "
+"„%s” (#%d). Se aștepta %s, s-a obținut %s."
 
-#: libgimp/gimpprocedure.c:2020
+#: libgimp/gimpprocedure.c:2379
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
-"%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' "
+"(#%d). Expected %s, got %s."
 msgstr ""
+"Procedura „%s” a fost apelată cu un tip de valoare greșit pentru argumentul "
+"„%s” (#%d). Se aștepta %s, dar s-a obținut %s."
 
-#: libgimp/gimpprocedure.c:2055
+#: libgimp/gimpprocedure.c:2414
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr ""
+"Procedura „%s” a returnat „%s” ca valoare returnată „%s” (#%d, tip %s). "
+"Această valoare este în afara intervalului."
 
-#: libgimp/gimpprocedure.c:2069
+#: libgimp/gimpprocedure.c:2428
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr ""
+"Procedura „%s” a fost apelată cu valoarea „%s” pentru argumentul „%s” (#%d, "
+"tip %s). Această valoare este în afara intervalului."
 
-#: libgimp/gimpprocedure.c:2113
+#: libgimp/gimpprocedure.c:2472
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
-msgstr ""
+msgstr "Procedura „%s” a returnat un șir UTF-8 nevalid pentru argumentul „%s”."
 
-#: libgimp/gimpprocedure.c:2123
+#: libgimp/gimpprocedure.c:2482
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
 "'%s'."
 msgstr ""
+"Procedura „%s” a fost apelată cu un șir UTF-8 nevalid pentru argumentul „%s”."
 
-#: libgimp/gimpproceduredialog.c:273
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:184
+#: libgimp/gimpproceduredialog.c:314 libgimp/gimpproceduredialog.c:613
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 msgid "_Open"
 msgstr "_Deschide"
 
-#: libgimp/gimpproceduredialog.c:277 libgimpwidgets/gimpcolorbutton.c:554
-#: libgimpwidgets/gimpfileentry.c:467 libgimpwidgets/gimpquerybox.c:274
-#: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
-#: libgimpwidgets/gimpquerybox.c:479
+#: libgimp/gimpproceduredialog.c:316 libgimp/gimpproceduredialog.c:615
+msgid "_Export"
+msgstr "_Exportă"
+
+#: libgimp/gimpproceduredialog.c:318 libgimp/gimpproceduredialog.c:617
+#: libgimpwidgets/gimpcolorbutton.c:553 libgimpwidgets/gimpfilechooser.c:713
+#: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:276
+#: libgimpwidgets/gimpquerybox.c:339 libgimpwidgets/gimpquerybox.c:405
+#: libgimpwidgets/gimpquerybox.c:481
 msgid "_OK"
 msgstr "_OK"
 
-#: libgimp/gimpproceduredialog.c:285 libgimpwidgets/gimpcolorbutton.c:552
+#: libgimp/gimpproceduredialog.c:326 libgimpwidgets/gimpcolorbutton.c:551
 msgid "_Reset"
-msgstr "Resetea_ză"
+msgstr "_Restabilește"
 
-#: libgimp/gimpproceduredialog.c:337
+#: libgimp/gimpproceduredialog.c:344 libgimpwidgets/gimpcolorbutton.c:552
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:172
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:182
+#: libgimpwidgets/gimpfilechooser.c:714 libgimpwidgets/gimpfileentry.c:465
+#: libgimpwidgets/gimpquerybox.c:276 libgimpwidgets/gimpquerybox.c:339
+#: libgimpwidgets/gimpquerybox.c:405 libgimpwidgets/gimpquerybox.c:481
+msgid "_Cancel"
+msgstr "_Anulează"
+
+#: libgimp/gimpproceduredialog.c:379
 msgid "_Load Saved Settings"
-msgstr ""
+msgstr "Încarcă setările sa_lvate"
 
-#: libgimp/gimpproceduredialog.c:338
+#: libgimp/gimpproceduredialog.c:380
 msgid "Load settings saved with \"Save Settings\" button"
-msgstr ""
+msgstr "Încărcă setările salvate cu butonul „Salvează setările”"
 
-#: libgimp/gimpproceduredialog.c:350
+#: libgimp/gimpproceduredialog.c:392
 msgid "_Save Settings"
-msgstr ""
+msgstr "_Salvează setările"
 
-#: libgimp/gimpproceduredialog.c:351
+#: libgimp/gimpproceduredialog.c:393
 msgid "Store current settings for later reuse"
-msgstr ""
+msgstr "Stochează setările curente pentru reutilizare ulterioară"
 
-#: libgimp/gimpproceduredialog.c:1964
+#: libgimp/gimpproceduredialog.c:892
+msgid "Brush Chooser"
+msgstr "Selector de peneluri"
+
+#: libgimp/gimpproceduredialog.c:896
+msgid "Font Chooser"
+msgstr "Selector de fonturi"
+
+#: libgimp/gimpproceduredialog.c:900
+msgid "Gradient Chooser"
+msgstr "Selector de degradeuri"
+
+#: libgimp/gimpproceduredialog.c:904
+msgid "Palette Chooser"
+msgstr "Selector de palete"
+
+#: libgimp/gimpproceduredialog.c:908
+msgid "Pattern Chooser"
+msgstr "Selector de modele"
+
+#: libgimp/gimpproceduredialog.c:2789
 msgid "Reset to _Initial Values"
-msgstr ""
+msgstr "Restabilește la valorile _inițiale"
 
-#: libgimp/gimpproceduredialog.c:1973
+#: libgimp/gimpproceduredialog.c:2798
 msgid "Reset to _Factory Defaults"
-msgstr ""
+msgstr "Restabilește la valorile impli_cite"
 
 #: libgimp/gimpprocview.c:176
 msgid "Image types:"
-msgstr ""
+msgstr "Tipuri de imagine:"
 
 #: libgimp/gimpprocview.c:179
 msgid "Menu label:"
-msgstr ""
+msgstr "Etichetă meniu:"
 
 #: libgimp/gimpprocview.c:187
 msgid "Menu path:"
-msgstr ""
+msgstr "Cale meniu:"
 
 #: libgimp/gimpprocview.c:202
 msgid "Parameters"
@@ -479,7 +535,7 @@ msgstr "Informații adiționale"
 
 #: libgimp/gimpprocview.c:263
 msgid "Authors:"
-msgstr ""
+msgstr "Autori:"
 
 #: libgimp/gimpprocview.c:266
 msgid "Date:"
@@ -489,342 +545,448 @@ msgstr "Dată:"
 msgid "Copyright:"
 msgstr "Drepturi de autor:"
 
-#: libgimp/gimpsaveproceduredialog.c:166
-msgid "Metadata"
+#: libgimp/gimppropwidgets.c:191
+#, c-format
+msgid "Choose layer: %s"
+msgstr "Alegeți startul: %s"
+
+#: libgimp/gimppropwidgets.c:193
+#, c-format
+msgid "Choose channel: %s"
+msgstr "Alegeți canalul: %s"
+
+#: libgimp/gimppropwidgets.c:195
+#, c-format
+msgid "Choose drawable: %s"
+msgstr "Alegeți elementul desenabil: %s"
+
+#: libgimp/gimpresolutionentry-private.c:136
+msgid ""
+"This unit is used to select the pixel density and show dimensions in "
+"physical unit"
 msgstr ""
+"Această unitate este utilizată pentru a selecta densitatea pixelilor și a "
+"afișa dimensiunile în unități fizice"
 
-#: libgimp/gimpsaveproceduredialog.c:175
-msgid "Edit Metadata"
+#: libgimp/gimpresolutionentry-private.c:144
+#: libgimp/gimpvectorloadprocedure.c:125
+msgid "_Keep aspect ratio"
+msgstr "_Păstrează raportul de aspect"
+
+#: libgimp/gimpresolutionentry-private.c:145
+#: libgimp/gimpvectorloadprocedure.c:126
+msgid "Force dimensions with aspect ratio"
+msgstr "Forțează dimensiunile cu raportul de aspect"
+
+#: libgimp/gimpresolutionentry-private.c:199
+#: libgimp/gimpresolutionentry-private.c:200
+#, c-format
+msgid "pixels/%a"
+msgstr "pixeli/%a"
+
+#: libgimp/gimpvectorloadprocedure.c:111
+msgid "_Width (pixels)"
+msgstr "_Width (pixels)"
+
+#: libgimp/gimpvectorloadprocedure.c:118
+msgid "_Height (pixels)"
+msgstr "Î_nălțime (pixeli)"
+
+#: libgimp/gimpvectorloadprocedure.c:130
+msgid "_Prefer native dimensions"
+msgstr "_Preferă dimensiuni native"
+
+#: libgimp/gimpvectorloadprocedure.c:131
+msgid "Load and use dimensions from source file"
+msgstr "Încarcă și utilizează dimensiuni din fișierul sursă"
+
+#: libgimp/gimpvectorloadprocedure.c:139
+msgid "Resolu_tion"
+msgstr "_Rezoluție"
+
+#: libgimp/gimpvectorloadprocedure.c:140
+msgid "Pixel Density: number of pixels per physical unit"
+msgstr "Densitatea pixelilor: numărul de pixeli pe unitate fizică"
+
+#: libgimp/gimpvectorloadprocedure.c:145
+msgid "Unit"
+msgstr "Unitate de măsură"
+
+#: libgimp/gimpvectorloadprocedure.c:146
+msgid "Physical unit"
+msgstr "Unitate fizică"
+
+#: libgimp/gimpvectorloadprocedure.c:368
+msgid ""
+"dimensions could neither be extracted nor computed from the vector image's "
+"data."
 msgstr ""
+"dimensiunile nu au putut fi nici extrase, nici calculate din datele imaginii "
+"vectoriale."
 
-#: libgimp/gimpsaveproceduredialog.c:175
-msgid "(edit)"
+#: libgimp/gimpvectorloadprocedure.c:373
+msgid "Vector image loading plug-in failed: "
+msgstr "Încărcarea plugin-ului de imagine vectorială a eșuat: "
+
+#: libgimp/gimpvectorloadprocedure.c:397
+msgid ""
+"Dimensions cannot be 0 and no native dimensions could be extracted from the "
+"vector image."
 msgstr ""
+"Dimensiunile nu pot fi 0 și nu s-au putut extrage dimensiuni native din "
+"imaginea vectorială."
 
-#: libgimp/gimpunitcache.c:54
-msgid "percent"
-msgstr "procent"
+#. TRANSLATORS: the %s is a vector format name, e.g. "SVG" or "PDF",
+#. * followed by 2D dimensions with unit, e.g. "200 inch x 400 inch"
+#.
+#: libgimp/gimpvectorloadproceduredialog.c:131
+#, c-format
+msgid "Source %s file size: %%.%df %s × %%.%df %s"
+msgstr "Dimensiunea fișierului sursă %s: %%.%df %s × %%.%df %s"
 
-#: libgimpbase/gimpbaseenums.c:31
+#. TRANSLATOR: the %s is a vector format name, e.g. "SVG" or "PDF".
+#: libgimp/gimpvectorloadproceduredialog.c:168
+#, c-format
+msgid "Source %s file's aspect ratio: %%.%df × %%.%df"
+msgstr "Raportul de aspect al fișierului sursă %s: %%.%df × %%.%df"
+
+#: libgimp/gimpvectorloadproceduredialog.c:176
+#, c-format
+msgid "Approximated source %s file size: %%.%df %s × %%.%df %s"
+msgstr "Dimensiunea aproximativă a fișierului sursă %s: %%.%df %s × %%.%df %s"
+
+#. TRANSLATOR: the %s is a vector format name, e.g. "SVG" or "PDF".
+#: libgimp/gimpvectorloadproceduredialog.c:189
+#, c-format
+msgid "The source %s file does not specify a size!"
+msgstr "Fișierul sursă %s nu specifică o dimensiune!"
+
+#. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
+#: libgimp/gimpvectorloadproceduredialog.c:330
+#, c-format
+msgid "Load %s Image"
+msgstr "Încărcare imagine %s"
+
+#: libgimpbase/gimpbaseenums.c:30
 msgctxt "add-mask-type"
 msgid "_White (full opacity)"
 msgstr "_Alb (opacitate totală)"
 
-#: libgimpbase/gimpbaseenums.c:32
+#: libgimpbase/gimpbaseenums.c:31
 msgctxt "add-mask-type"
 msgid "_Black (full transparency)"
 msgstr "_Negru (transparență totală)"
 
-#: libgimpbase/gimpbaseenums.c:33
+#: libgimpbase/gimpbaseenums.c:32
 msgctxt "add-mask-type"
 msgid "Layer's _alpha channel"
 msgstr "Canalul _alfa al stratului"
 
-#: libgimpbase/gimpbaseenums.c:34
+#: libgimpbase/gimpbaseenums.c:33
 msgctxt "add-mask-type"
 msgid "_Transfer layer's alpha channel"
 msgstr "_Transferul canalului alfa al stratului"
 
-#: libgimpbase/gimpbaseenums.c:35
+#: libgimpbase/gimpbaseenums.c:34
 msgctxt "add-mask-type"
 msgid "_Selection"
 msgstr "_Selecție"
 
-#: libgimpbase/gimpbaseenums.c:36
+#: libgimpbase/gimpbaseenums.c:35
 msgctxt "add-mask-type"
 msgid "_Grayscale copy of layer"
 msgstr "Copia în tonuri de _gri a stratului"
 
-#: libgimpbase/gimpbaseenums.c:37
+#: libgimpbase/gimpbaseenums.c:36
 msgctxt "add-mask-type"
 msgid "C_hannel"
 msgstr "_Canal"
 
-#: libgimpbase/gimpbaseenums.c:67
+#: libgimpbase/gimpbaseenums.c:66
 msgctxt "brush-generated-shape"
 msgid "Circle"
 msgstr "Cerc"
 
-#: libgimpbase/gimpbaseenums.c:68
+#: libgimpbase/gimpbaseenums.c:67
 msgctxt "brush-generated-shape"
 msgid "Square"
 msgstr "Pătrat"
 
-#: libgimpbase/gimpbaseenums.c:69
+#: libgimpbase/gimpbaseenums.c:68
 msgctxt "brush-generated-shape"
 msgid "Diamond"
 msgstr "Romb"
 
-#: libgimpbase/gimpbaseenums.c:99
+#: libgimpbase/gimpbaseenums.c:98
 msgctxt "cap-style"
 msgid "Butt"
 msgstr "Retezat"
 
-#: libgimpbase/gimpbaseenums.c:100
+#: libgimpbase/gimpbaseenums.c:99
 msgctxt "cap-style"
 msgid "Round"
 msgstr "Rotund"
 
-#: libgimpbase/gimpbaseenums.c:101
+#: libgimpbase/gimpbaseenums.c:100
 msgctxt "cap-style"
 msgid "Square"
 msgstr "Pătrat"
 
-#: libgimpbase/gimpbaseenums.c:132
+#: libgimpbase/gimpbaseenums.c:131
 msgctxt "channel-ops"
 msgid "Add to the current selection"
 msgstr "Adaugă la selecția curentă"
 
-#: libgimpbase/gimpbaseenums.c:133
+#: libgimpbase/gimpbaseenums.c:132
 msgctxt "channel-ops"
 msgid "Subtract from the current selection"
 msgstr "Scade din selecția curentă"
 
-#: libgimpbase/gimpbaseenums.c:134
+#: libgimpbase/gimpbaseenums.c:133
 msgctxt "channel-ops"
 msgid "Replace the current selection"
 msgstr "Înlocuiește selecția curentă"
 
-#: libgimpbase/gimpbaseenums.c:135
+#: libgimpbase/gimpbaseenums.c:134
 msgctxt "channel-ops"
 msgid "Intersect with the current selection"
 msgstr "Intersectează cu selecția curentă"
 
-#: libgimpbase/gimpbaseenums.c:168
+#: libgimpbase/gimpbaseenums.c:167
 msgctxt "channel-type"
 msgid "Red"
 msgstr "Roșu"
 
-#: libgimpbase/gimpbaseenums.c:169
+#: libgimpbase/gimpbaseenums.c:168
 msgctxt "channel-type"
 msgid "Green"
 msgstr "Verde"
 
-#: libgimpbase/gimpbaseenums.c:170
+#: libgimpbase/gimpbaseenums.c:169
 msgctxt "channel-type"
 msgid "Blue"
 msgstr "Albastru"
 
-#: libgimpbase/gimpbaseenums.c:171
+#: libgimpbase/gimpbaseenums.c:170
 msgctxt "channel-type"
 msgid "Gray"
 msgstr "Gri"
 
-#: libgimpbase/gimpbaseenums.c:172
+#: libgimpbase/gimpbaseenums.c:171
 msgctxt "channel-type"
 msgid "Indexed"
 msgstr "Indexat"
 
-#: libgimpbase/gimpbaseenums.c:173
+#: libgimpbase/gimpbaseenums.c:172
 msgctxt "channel-type"
 msgid "Alpha"
 msgstr "Alfa"
 
 # dropdown pentru tabla de șah, în preferințe -> afișor
-#: libgimpbase/gimpbaseenums.c:203
+#: libgimpbase/gimpbaseenums.c:202
 msgctxt "check-size"
 msgid "Small"
 msgstr "Mică"
 
 # dropdown pentru tabla de șah, în preferințe -> afișor
-#: libgimpbase/gimpbaseenums.c:204
+#: libgimpbase/gimpbaseenums.c:203
 msgctxt "check-size"
 msgid "Medium"
 msgstr "Medie"
 
 # dropdown pentru tabla de șah, în preferințe -> afișor
-#: libgimpbase/gimpbaseenums.c:205
+#: libgimpbase/gimpbaseenums.c:204
 msgctxt "check-size"
 msgid "Large"
 msgstr "Mare"
 
 # dropdown pentru tabla de șah, în preferințe -> afișor
-#: libgimpbase/gimpbaseenums.c:239
+#: libgimpbase/gimpbaseenums.c:238
 msgctxt "check-type"
 msgid "Light checks"
 msgstr "Tablă de șah luminoasă"
 
 # dropdown pentru tabla de șah, în preferințe -> afișor
-#: libgimpbase/gimpbaseenums.c:240
+#: libgimpbase/gimpbaseenums.c:239
 msgctxt "check-type"
 msgid "Mid-tone checks"
 msgstr "Tablă de șah de luminozitate medie"
 
 # dropdown pentru tabla de șah, în preferințe -> afișor
-#: libgimpbase/gimpbaseenums.c:241
+#: libgimpbase/gimpbaseenums.c:240
 msgctxt "check-type"
 msgid "Dark checks"
 msgstr "Tablă de șah întunecată"
 
 # dropdown pentru tabla de șah, în preferințe -> afișor
-#: libgimpbase/gimpbaseenums.c:242
+#: libgimpbase/gimpbaseenums.c:241
 msgctxt "check-type"
 msgid "White only"
 msgstr "Numai alb"
 
 # dropdown pentru tabla de șah, în preferințe -> afișor
-#: libgimpbase/gimpbaseenums.c:243
+#: libgimpbase/gimpbaseenums.c:242
 msgctxt "check-type"
 msgid "Gray only"
 msgstr "Numai gri"
 
 # dropdown pentru tabla de șah, în preferințe -> afișor
-#: libgimpbase/gimpbaseenums.c:244
+#: libgimpbase/gimpbaseenums.c:243
 msgctxt "check-type"
 msgid "Black only"
 msgstr "Numai negru"
 
-#: libgimpbase/gimpbaseenums.c:245
+#: libgimpbase/gimpbaseenums.c:244
 msgctxt "check-type"
 msgid "Custom checks"
-msgstr ""
+msgstr "Verificări personalizate"
 
-#: libgimpbase/gimpbaseenums.c:274
+#: libgimpbase/gimpbaseenums.c:273
 msgctxt "clone-type"
 msgid "Image"
 msgstr "Imagine"
 
-#: libgimpbase/gimpbaseenums.c:275
+#: libgimpbase/gimpbaseenums.c:274
 msgctxt "clone-type"
 msgid "Pattern"
 msgstr "Model"
 
-#: libgimpbase/gimpbaseenums.c:311
+#: libgimpbase/gimpbaseenums.c:310
 msgctxt "color-tag"
 msgid "None"
 msgstr "Fără"
 
-#: libgimpbase/gimpbaseenums.c:312
+#: libgimpbase/gimpbaseenums.c:311
 msgctxt "color-tag"
 msgid "Blue"
 msgstr "Albastru"
 
-#: libgimpbase/gimpbaseenums.c:313
+#: libgimpbase/gimpbaseenums.c:312
 msgctxt "color-tag"
 msgid "Green"
 msgstr "Verde"
 
-#: libgimpbase/gimpbaseenums.c:314
+#: libgimpbase/gimpbaseenums.c:313
 msgctxt "color-tag"
 msgid "Yellow"
 msgstr "Galben"
 
-#: libgimpbase/gimpbaseenums.c:315
+#: libgimpbase/gimpbaseenums.c:314
 msgctxt "color-tag"
 msgid "Orange"
 msgstr "Portocaliu"
 
-#: libgimpbase/gimpbaseenums.c:316
+#: libgimpbase/gimpbaseenums.c:315
 msgctxt "color-tag"
 msgid "Brown"
 msgstr "Maro"
 
-#: libgimpbase/gimpbaseenums.c:317
+#: libgimpbase/gimpbaseenums.c:316
 msgctxt "color-tag"
 msgid "Red"
 msgstr "Roșu"
 
-#: libgimpbase/gimpbaseenums.c:318
+#: libgimpbase/gimpbaseenums.c:317
 msgctxt "color-tag"
 msgid "Violet"
 msgstr "Violet"
 
-#: libgimpbase/gimpbaseenums.c:319
+#: libgimpbase/gimpbaseenums.c:318
 msgctxt "color-tag"
 msgid "Gray"
 msgstr "Gri"
 
-#: libgimpbase/gimpbaseenums.c:352
+#: libgimpbase/gimpbaseenums.c:351
 msgctxt "component-type"
 msgid "8-bit integer"
 msgstr "Număr întreg pe 8 biți"
 
-#: libgimpbase/gimpbaseenums.c:353
+#: libgimpbase/gimpbaseenums.c:352
 msgctxt "component-type"
 msgid "16-bit integer"
 msgstr "Număr întreg pe 16 biți"
 
-#: libgimpbase/gimpbaseenums.c:354
+#: libgimpbase/gimpbaseenums.c:353
 msgctxt "component-type"
 msgid "32-bit integer"
 msgstr "Număr întreg pe 32 de biți"
 
-#: libgimpbase/gimpbaseenums.c:355
+#: libgimpbase/gimpbaseenums.c:354
 msgctxt "component-type"
 msgid "16-bit floating point"
 msgstr "Virgulă mobilă pe 16 biți"
 
-#: libgimpbase/gimpbaseenums.c:356
+#: libgimpbase/gimpbaseenums.c:355
 msgctxt "component-type"
 msgid "32-bit floating point"
 msgstr "Virgulă mobilă pe 32 biți"
 
-#: libgimpbase/gimpbaseenums.c:357
+#: libgimpbase/gimpbaseenums.c:356
 msgctxt "component-type"
 msgid "64-bit floating point"
 msgstr "Virgulă mobilă pe 64 de biți"
 
+#: libgimpbase/gimpbaseenums.c:387
+msgctxt "convert-palette-type"
+msgid "_Generate optimum palette"
+msgstr "_Generează o paletă optimă"
+
 #: libgimpbase/gimpbaseenums.c:388
 msgctxt "convert-palette-type"
-msgid "Generate optimum palette"
-msgstr "Generează o paletă optimă"
+msgid "Use _web-optimized palette"
+msgstr "Folosește o paletă optimizată pentru _web"
 
 #: libgimpbase/gimpbaseenums.c:389
 msgctxt "convert-palette-type"
-msgid "Use web-optimized palette"
-msgstr "Folosește o paletă optimizată pentru web"
+msgid "Use _black and white (1-bit) palette"
+msgstr "Folosește o paletă al_b-negru (1 bit)"
 
 #: libgimpbase/gimpbaseenums.c:390
 msgctxt "convert-palette-type"
-msgid "Use black and white (1-bit) palette"
-msgstr "Folosește o paletă alb-negru (1 bit)"
+msgid "Use custom _palette"
+msgstr "Folosește o paletă _personalizată"
 
-#: libgimpbase/gimpbaseenums.c:391
-msgctxt "convert-palette-type"
-msgid "Use custom palette"
-msgstr "Folosește o paletă personalizată"
-
-#: libgimpbase/gimpbaseenums.c:420
+#: libgimpbase/gimpbaseenums.c:419
 msgctxt "convolve-type"
 msgid "Blur"
-msgstr "Atenuare de claritate"
+msgstr "Estompare de claritate"
 
-#: libgimpbase/gimpbaseenums.c:421
+#: libgimpbase/gimpbaseenums.c:420
 msgctxt "convolve-type"
 msgid "Sharpen"
 msgstr "Intensificare de claritate"
 
-#: libgimpbase/gimpbaseenums.c:453
+#: libgimpbase/gimpbaseenums.c:452
 msgctxt "desaturate-mode"
 msgid "Lightness (HSL)"
 msgstr "Luminozitate (HSL)"
 
-#: libgimpbase/gimpbaseenums.c:454
+#: libgimpbase/gimpbaseenums.c:453
 msgctxt "desaturate-mode"
 msgid "Luma"
 msgstr "Luma (luminanță relativă)"
 
-#: libgimpbase/gimpbaseenums.c:455
+#: libgimpbase/gimpbaseenums.c:454
 msgctxt "desaturate-mode"
 msgid "Average (HSI Intensity)"
 msgstr "Mediu (intensitate HSL)"
 
-#: libgimpbase/gimpbaseenums.c:456
+#: libgimpbase/gimpbaseenums.c:455
 msgctxt "desaturate-mode"
 msgid "Luminance"
 msgstr "Luminanță"
 
-#: libgimpbase/gimpbaseenums.c:457
+#: libgimpbase/gimpbaseenums.c:456
 msgctxt "desaturate-mode"
 msgid "Value (HSV)"
 msgstr "Valoare (HSV)"
 
-#: libgimpbase/gimpbaseenums.c:486
+#: libgimpbase/gimpbaseenums.c:485
 msgctxt "dodge-burn-type"
 msgid "Dodge"
 msgstr "Albire"
 
-#: libgimpbase/gimpbaseenums.c:487
+#: libgimpbase/gimpbaseenums.c:486
 msgctxt "dodge-burn-type"
 msgid "Burn"
 msgstr "Înnegrire"
@@ -841,808 +1003,849 @@ msgstr "Culoarea de fundal"
 
 #: libgimpbase/gimpbaseenums.c:521
 msgctxt "fill-type"
+msgid "Middle Gray (CIELAB)"
+msgstr "Gri mediu (CIELAB)"
+
+#: libgimpbase/gimpbaseenums.c:522
+msgctxt "fill-type"
 msgid "White"
 msgstr "Alb"
 
-#: libgimpbase/gimpbaseenums.c:522
+#: libgimpbase/gimpbaseenums.c:523
 msgctxt "fill-type"
 msgid "Transparency"
 msgstr "Transparență"
 
-#: libgimpbase/gimpbaseenums.c:523
+#: libgimpbase/gimpbaseenums.c:524
 msgctxt "fill-type"
 msgid "Pattern"
 msgstr "Model"
 
-#: libgimpbase/gimpbaseenums.c:581
+#: libgimpbase/gimpbaseenums.c:582
 msgctxt "gradient-blend-color-space"
 msgid "Perceptual RGB"
 msgstr "RGB perceptiv"
 
-#: libgimpbase/gimpbaseenums.c:582
+#: libgimpbase/gimpbaseenums.c:583
 msgctxt "gradient-blend-color-space"
 msgid "Linear RGB"
 msgstr "RGB liniar"
 
-#: libgimpbase/gimpbaseenums.c:583
+#: libgimpbase/gimpbaseenums.c:584
 msgctxt "gradient-blend-color-space"
 msgid "CIE Lab"
 msgstr "CIE Lab"
 
-#: libgimpbase/gimpbaseenums.c:613
+#: libgimpbase/gimpbaseenums.c:614
 msgctxt "gradient-segment-color"
 msgid "RGB"
 msgstr "RGB"
 
 # hm ?
-#: libgimpbase/gimpbaseenums.c:614
+#: libgimpbase/gimpbaseenums.c:615
 msgctxt "gradient-segment-color"
 msgid "HSV (counter-clockwise hue)"
 msgstr "HSV (nuanță în sens antiorar)"
 
 #. Translators: this is an abbreviated version of "HSV (counter-clockwise hue)".
 #. Keep it short.
-#: libgimpbase/gimpbaseenums.c:617
+#: libgimpbase/gimpbaseenums.c:618
 msgctxt "gradient-segment-color"
 msgid "HSV (ccw)"
 msgstr "HSV (sens anti-orar)"
 
 # hm ?
-#: libgimpbase/gimpbaseenums.c:618
+#: libgimpbase/gimpbaseenums.c:619
 msgctxt "gradient-segment-color"
 msgid "HSV (clockwise hue)"
 msgstr "HSV (nuanță în sens orar)"
 
 #. Translators: this is an abbreviated version of "HSV (clockwise hue)".
 #. Keep it short.
-#: libgimpbase/gimpbaseenums.c:621
+#: libgimpbase/gimpbaseenums.c:622
 msgctxt "gradient-segment-color"
 msgid "HSV (cw)"
 msgstr "HSV (sens orar)"
 
-#: libgimpbase/gimpbaseenums.c:654
+#: libgimpbase/gimpbaseenums.c:655
 msgctxt "gradient-segment-type"
 msgid "Linear"
 msgstr "Liniar"
 
-#: libgimpbase/gimpbaseenums.c:655
+#: libgimpbase/gimpbaseenums.c:656
 msgctxt "gradient-segment-type"
 msgid "Curved"
 msgstr "Curbat"
 
-#: libgimpbase/gimpbaseenums.c:656
+#: libgimpbase/gimpbaseenums.c:657
 msgctxt "gradient-segment-type"
 msgid "Sinusoidal"
 msgstr "Sinusoidal"
 
-#: libgimpbase/gimpbaseenums.c:657
+#: libgimpbase/gimpbaseenums.c:658
 msgctxt "gradient-segment-type"
 msgid "Spherical (increasing)"
 msgstr "Sferic (creștere)"
 
 #. Translators: this is an abbreviated version of "Spherical (increasing)".
 #. Keep it short.
-#: libgimpbase/gimpbaseenums.c:660
+#: libgimpbase/gimpbaseenums.c:661
 msgctxt "gradient-segment-type"
 msgid "Spherical (inc)"
 msgstr "Sferic (creștere)"
 
-#: libgimpbase/gimpbaseenums.c:661
+#: libgimpbase/gimpbaseenums.c:662
 msgctxt "gradient-segment-type"
 msgid "Spherical (decreasing)"
 msgstr "Sferic (descreștere)"
 
 #. Translators: this is an abbreviated version of "Spherical (decreasing)".
 #. Keep it short.
-#: libgimpbase/gimpbaseenums.c:664
+#: libgimpbase/gimpbaseenums.c:665
 msgctxt "gradient-segment-type"
 msgid "Spherical (dec)"
 msgstr "Sferic (descreștere)"
 
-#: libgimpbase/gimpbaseenums.c:665
+#: libgimpbase/gimpbaseenums.c:666
 msgctxt "gradient-segment-type"
 msgid "Step"
 msgstr "Pas"
 
-#: libgimpbase/gimpbaseenums.c:703
+#: libgimpbase/gimpbaseenums.c:704
 msgctxt "gradient-type"
 msgid "Linear"
 msgstr "Liniar"
 
-#: libgimpbase/gimpbaseenums.c:704
+#: libgimpbase/gimpbaseenums.c:705
 msgctxt "gradient-type"
 msgid "Bi-linear"
 msgstr "Bi-liniar"
 
-#: libgimpbase/gimpbaseenums.c:705
+#: libgimpbase/gimpbaseenums.c:706
 msgctxt "gradient-type"
 msgid "Radial"
 msgstr "Radial"
 
-#: libgimpbase/gimpbaseenums.c:706
+#: libgimpbase/gimpbaseenums.c:707
 msgctxt "gradient-type"
 msgid "Square"
 msgstr "Pătrat"
 
-#: libgimpbase/gimpbaseenums.c:707
+#: libgimpbase/gimpbaseenums.c:708
 msgctxt "gradient-type"
 msgid "Conical (symmetric)"
 msgstr "Conic (simetric)"
 
 #. Translators: this is an abbreviated version of "Conical (symmetric)".
 #. Keep it short.
-#: libgimpbase/gimpbaseenums.c:710
+#: libgimpbase/gimpbaseenums.c:711
 msgctxt "gradient-type"
 msgid "Conical (sym)"
 msgstr "Conic (simetric)"
 
-#: libgimpbase/gimpbaseenums.c:711
+#: libgimpbase/gimpbaseenums.c:712
 msgctxt "gradient-type"
 msgid "Conical (asymmetric)"
 msgstr "Conic (asimetric)"
 
 #. Translators: this is an abbreviated version of "Conical (asymmetric)".
 #. Keep it short.
-#: libgimpbase/gimpbaseenums.c:714
+#: libgimpbase/gimpbaseenums.c:715
 msgctxt "gradient-type"
 msgid "Conical (asym)"
 msgstr "Conic (asimetric)"
 
-#: libgimpbase/gimpbaseenums.c:715
+#: libgimpbase/gimpbaseenums.c:716
 msgctxt "gradient-type"
 msgid "Shaped (angular)"
 msgstr "Modelat (unghiular)"
 
-#: libgimpbase/gimpbaseenums.c:716
+#: libgimpbase/gimpbaseenums.c:717
 msgctxt "gradient-type"
 msgid "Shaped (spherical)"
 msgstr "Modelat (sferic)"
 
-#: libgimpbase/gimpbaseenums.c:717
+#: libgimpbase/gimpbaseenums.c:718
 msgctxt "gradient-type"
 msgid "Shaped (dimpled)"
 msgstr "Modelat (scobit)"
 
-#: libgimpbase/gimpbaseenums.c:718
+#: libgimpbase/gimpbaseenums.c:719
 msgctxt "gradient-type"
 msgid "Spiral (clockwise)"
 msgstr "Spirală (sens orar)"
 
 #. Translators: this is an abbreviated version of "Spiral (clockwise)".
 #. Keep it short.
-#: libgimpbase/gimpbaseenums.c:721
+#: libgimpbase/gimpbaseenums.c:722
 msgctxt "gradient-type"
 msgid "Spiral (cw)"
 msgstr "Spirală (sens orar)"
 
-#: libgimpbase/gimpbaseenums.c:722
+#: libgimpbase/gimpbaseenums.c:723
 msgctxt "gradient-type"
 msgid "Spiral (counter-clockwise)"
 msgstr "Spirală (sens anti-orar)"
 
 #. Translators: this is an abbreviated version of "Spiral (counter-clockwise)".
 #. Keep it short.
-#: libgimpbase/gimpbaseenums.c:725
+#: libgimpbase/gimpbaseenums.c:726
 msgctxt "gradient-type"
 msgid "Spiral (ccw)"
 msgstr "Spirală (sens anti-orar)"
 
-#: libgimpbase/gimpbaseenums.c:757
+#: libgimpbase/gimpbaseenums.c:758
 msgctxt "grid-style"
 msgid "Intersections (dots)"
 msgstr "Intersecții (puncte)"
 
-#: libgimpbase/gimpbaseenums.c:758
+#: libgimpbase/gimpbaseenums.c:759
 msgctxt "grid-style"
 msgid "Intersections (crosshairs)"
 msgstr "Intersecții (reticule)"
 
 # hm ? dashed e liniuțe nu puncte
-#: libgimpbase/gimpbaseenums.c:759
+#: libgimpbase/gimpbaseenums.c:760
 msgctxt "grid-style"
 msgid "Dashed"
 msgstr "Punctată"
 
 # hm ? dashed e liniuțe nu puncte
-#: libgimpbase/gimpbaseenums.c:760
+#: libgimpbase/gimpbaseenums.c:761
 msgctxt "grid-style"
 msgid "Double dashed"
 msgstr "Punctată dublu"
 
-#: libgimpbase/gimpbaseenums.c:761
+#: libgimpbase/gimpbaseenums.c:762
 msgctxt "grid-style"
 msgid "Solid"
 msgstr "Solidă"
 
-#: libgimpbase/gimpbaseenums.c:831
+#: libgimpbase/gimpbaseenums.c:832
 msgctxt "icon-type"
 msgid "Icon name"
 msgstr "Nume pictogramă"
 
-#: libgimpbase/gimpbaseenums.c:832
+#: libgimpbase/gimpbaseenums.c:833
 msgctxt "icon-type"
 msgid "Pixbuf"
-msgstr ""
+msgstr "Pixbuf"
 
-#: libgimpbase/gimpbaseenums.c:833
+#: libgimpbase/gimpbaseenums.c:834
 msgctxt "icon-type"
 msgid "Image file"
 msgstr "Fișier de imagine"
 
-#: libgimpbase/gimpbaseenums.c:863
+#: libgimpbase/gimpbaseenums.c:864
 msgctxt "image-base-type"
 msgid "RGB color"
 msgstr "Culoare RGB"
 
-#: libgimpbase/gimpbaseenums.c:864
+#: libgimpbase/gimpbaseenums.c:865
 msgctxt "image-base-type"
 msgid "Grayscale"
 msgstr "Tonuri de gri"
 
-#: libgimpbase/gimpbaseenums.c:865
+#: libgimpbase/gimpbaseenums.c:866
 msgctxt "image-base-type"
 msgid "Indexed color"
 msgstr "Culoare indexată"
 
-#: libgimpbase/gimpbaseenums.c:898
+#: libgimpbase/gimpbaseenums.c:899
 msgctxt "image-type"
 msgid "RGB"
 msgstr "RGB"
 
-#: libgimpbase/gimpbaseenums.c:899
+#: libgimpbase/gimpbaseenums.c:900
 msgctxt "image-type"
 msgid "RGB-alpha"
 msgstr "RGB-alfa"
 
-#: libgimpbase/gimpbaseenums.c:900
+#: libgimpbase/gimpbaseenums.c:901
 msgctxt "image-type"
 msgid "Grayscale"
 msgstr "Tonuri de gri"
 
-#: libgimpbase/gimpbaseenums.c:901
+#: libgimpbase/gimpbaseenums.c:902
 msgctxt "image-type"
 msgid "Grayscale-alpha"
 msgstr "Tonuri de gri-alfa"
 
-#: libgimpbase/gimpbaseenums.c:902
+#: libgimpbase/gimpbaseenums.c:903
 msgctxt "image-type"
 msgid "Indexed"
 msgstr "Indexat"
 
-#: libgimpbase/gimpbaseenums.c:903
+#: libgimpbase/gimpbaseenums.c:904
 msgctxt "image-type"
 msgid "Indexed-alpha"
 msgstr "Alfa-indexat"
 
-#: libgimpbase/gimpbaseenums.c:933
+#: libgimpbase/gimpbaseenums.c:934
 msgctxt "ink-blob-type"
 msgid "Circle"
 msgstr "Cerc"
 
-#: libgimpbase/gimpbaseenums.c:934
+#: libgimpbase/gimpbaseenums.c:935
 msgctxt "ink-blob-type"
 msgid "Square"
 msgstr "Pătrat"
 
-#: libgimpbase/gimpbaseenums.c:935
+#: libgimpbase/gimpbaseenums.c:936
 msgctxt "ink-blob-type"
 msgid "Diamond"
 msgstr "Romb"
 
-#: libgimpbase/gimpbaseenums.c:967
+#: libgimpbase/gimpbaseenums.c:968
 msgctxt "interpolation-type"
 msgid "None"
 msgstr "Fără"
 
 # dropdown pentru scalare, în preferințe -> opțiuni de instrument
-#: libgimpbase/gimpbaseenums.c:968
+#: libgimpbase/gimpbaseenums.c:969
 msgctxt "interpolation-type"
 msgid "Linear"
 msgstr "Liniară"
 
 # dropdown pentru scalare, în preferințe -> opțiuni de instrument
-#: libgimpbase/gimpbaseenums.c:969
+#: libgimpbase/gimpbaseenums.c:970
 msgctxt "interpolation-type"
 msgid "Cubic"
 msgstr "Cubică"
 
-#: libgimpbase/gimpbaseenums.c:970
+#: libgimpbase/gimpbaseenums.c:971
 msgctxt "interpolation-type"
 msgid "NoHalo"
 msgstr "Fără halo"
 
-#: libgimpbase/gimpbaseenums.c:971
+#: libgimpbase/gimpbaseenums.c:972
 msgctxt "interpolation-type"
 msgid "LoHalo"
 msgstr "Halo redus"
 
-#: libgimpbase/gimpbaseenums.c:1001
+#: libgimpbase/gimpbaseenums.c:1002
 msgctxt "join-style"
 msgid "Miter"
 msgstr "Unghi ascuțit"
 
-#: libgimpbase/gimpbaseenums.c:1002
+#: libgimpbase/gimpbaseenums.c:1003
 msgctxt "join-style"
 msgid "Round"
 msgstr "Rotund"
 
-#: libgimpbase/gimpbaseenums.c:1003
+#: libgimpbase/gimpbaseenums.c:1004
 msgctxt "join-style"
 msgid "Bevel"
 msgstr "Teșit"
 
-#: libgimpbase/gimpbaseenums.c:1064
+#: libgimpbase/gimpbaseenums.c:1065
 msgctxt "merge-type"
 msgid "Expanded as necessary"
 msgstr "Extins după cum este necesar"
 
-#: libgimpbase/gimpbaseenums.c:1065
+#: libgimpbase/gimpbaseenums.c:1066
 msgctxt "merge-type"
 msgid "Clipped to image"
 msgstr "Decupat la imagine"
 
-#: libgimpbase/gimpbaseenums.c:1066
+#: libgimpbase/gimpbaseenums.c:1067
 msgctxt "merge-type"
 msgid "Clipped to bottom layer"
 msgstr "Decupat la stratul de jos"
 
-#: libgimpbase/gimpbaseenums.c:1067
+#: libgimpbase/gimpbaseenums.c:1068
 msgctxt "merge-type"
 msgid "Flatten"
 msgstr "Aplatizare"
 
-#: libgimpbase/gimpbaseenums.c:1161
+#: libgimpbase/gimpbaseenums.c:1162
 msgctxt "orientation-type"
 msgid "Horizontal"
 msgstr "Orizontal"
 
-#: libgimpbase/gimpbaseenums.c:1162
+#: libgimpbase/gimpbaseenums.c:1163
 msgctxt "orientation-type"
 msgid "Vertical"
 msgstr "Vertical"
 
-#: libgimpbase/gimpbaseenums.c:1163
+#: libgimpbase/gimpbaseenums.c:1164
 msgctxt "orientation-type"
 msgid "Unknown"
 msgstr "Necunoscut"
 
-#: libgimpbase/gimpbaseenums.c:1192
+#: libgimpbase/gimpbaseenums.c:1193
 msgctxt "paint-application-mode"
 msgid "Constant"
 msgstr "Constant"
 
-#: libgimpbase/gimpbaseenums.c:1193
+#: libgimpbase/gimpbaseenums.c:1194
 msgctxt "paint-application-mode"
 msgid "Incremental"
 msgstr "Incremental"
 
-#: libgimpbase/gimpbaseenums.c:1254
+#: libgimpbase/gimpbaseenums.c:1255
 msgctxt "pdb-proc-type"
 msgid "Internal GIMP procedure"
 msgstr "Procedură internă GIMP"
 
-#: libgimpbase/gimpbaseenums.c:1255
+#: libgimpbase/gimpbaseenums.c:1256
 msgctxt "pdb-proc-type"
 msgid "GIMP Plug-In"
 msgstr "Plug-in GIMP"
 
-#: libgimpbase/gimpbaseenums.c:1256
-msgctxt "pdb-proc-type"
-msgid "GIMP Extension"
-msgstr "Extensie GIMP"
-
 #: libgimpbase/gimpbaseenums.c:1257
+msgctxt "pdb-proc-type"
+msgid "GIMP Persistent Plug-In"
+msgstr "Plug-in GIMP persistent"
+
+#: libgimpbase/gimpbaseenums.c:1258
 msgctxt "pdb-proc-type"
 msgid "Temporary Procedure"
 msgstr "Procedură temporară"
 
-#: libgimpbase/gimpbaseenums.c:1344
+#: libgimpbase/gimpbaseenums.c:1339
 msgctxt "precision"
 msgid "8-bit linear integer"
 msgstr "Număr întreg liniar pe 8 biți"
 
-#: libgimpbase/gimpbaseenums.c:1345
+#: libgimpbase/gimpbaseenums.c:1340
 msgctxt "precision"
 msgid "8-bit non-linear integer"
-msgstr ""
+msgstr "Întreg neliniar pe 8 biți"
 
-#: libgimpbase/gimpbaseenums.c:1346
+#: libgimpbase/gimpbaseenums.c:1341
 msgctxt "precision"
 msgid "8-bit perceptual integer"
-msgstr ""
+msgstr "Întreg perceptiv pe 8 biți"
 
-#: libgimpbase/gimpbaseenums.c:1347
+#: libgimpbase/gimpbaseenums.c:1342
 msgctxt "precision"
 msgid "16-bit linear integer"
 msgstr "Număr întreg liniar pe 16 biți"
 
-#: libgimpbase/gimpbaseenums.c:1348
+#: libgimpbase/gimpbaseenums.c:1343
 msgctxt "precision"
 msgid "16-bit non-linear integer"
-msgstr ""
+msgstr "Întreg neliniar pe 16 biți"
 
-#: libgimpbase/gimpbaseenums.c:1349
+#: libgimpbase/gimpbaseenums.c:1344
 msgctxt "precision"
 msgid "16-bit perceptual integer"
-msgstr ""
+msgstr "Întreg perceptiv pe 16 biți"
 
-#: libgimpbase/gimpbaseenums.c:1350
+#: libgimpbase/gimpbaseenums.c:1345
 msgctxt "precision"
 msgid "32-bit linear integer"
 msgstr "Număr întreg liniar pe 32 de biți"
 
-#: libgimpbase/gimpbaseenums.c:1351
+#: libgimpbase/gimpbaseenums.c:1346
 msgctxt "precision"
 msgid "32-bit non-linear integer"
-msgstr ""
+msgstr "Întreg neliniar pe 32 de biți"
 
-#: libgimpbase/gimpbaseenums.c:1352
+#: libgimpbase/gimpbaseenums.c:1347
 msgctxt "precision"
 msgid "32-bit perceptual integer"
-msgstr ""
+msgstr "Întreg perceptiv pe 32 de biți"
 
-#: libgimpbase/gimpbaseenums.c:1353
+#: libgimpbase/gimpbaseenums.c:1348
 msgctxt "precision"
 msgid "16-bit linear floating point"
 msgstr "Virgulă mobilă liniară pe 16 biți"
 
-#: libgimpbase/gimpbaseenums.c:1354
+#: libgimpbase/gimpbaseenums.c:1349
 msgctxt "precision"
 msgid "16-bit non-linear floating point"
-msgstr ""
+msgstr "Virgulă mobilă neliniară pe 16 biți"
 
-#: libgimpbase/gimpbaseenums.c:1355
+#: libgimpbase/gimpbaseenums.c:1350
 msgctxt "precision"
 msgid "16-bit perceptual floating point"
-msgstr ""
+msgstr "Virgulă mobilă perceptivă pe 16 biți"
 
-#: libgimpbase/gimpbaseenums.c:1356
+#: libgimpbase/gimpbaseenums.c:1351
 msgctxt "precision"
 msgid "32-bit linear floating point"
 msgstr "Virgulă mobilă liniară pe 32 de biți"
 
-#: libgimpbase/gimpbaseenums.c:1357
+#: libgimpbase/gimpbaseenums.c:1352
 msgctxt "precision"
 msgid "32-bit non-linear floating point"
-msgstr ""
+msgstr "Virgulă mobilă neliniară pe 32 de biți"
 
-#: libgimpbase/gimpbaseenums.c:1358
+#: libgimpbase/gimpbaseenums.c:1353
 msgctxt "precision"
 msgid "32-bit perceptual floating point"
-msgstr ""
+msgstr "Virgulă mobilă perceptivă pe 32 de biți"
 
-#: libgimpbase/gimpbaseenums.c:1359
+#: libgimpbase/gimpbaseenums.c:1354
 msgctxt "precision"
 msgid "64-bit linear floating point"
 msgstr "Virgulă mobilă liniară pe 64 de biți"
 
-#: libgimpbase/gimpbaseenums.c:1360
+#: libgimpbase/gimpbaseenums.c:1355
 msgctxt "precision"
 msgid "64-bit non-linear floating point"
-msgstr ""
+msgstr "Virgulă mobilă neliniară pe 64 de biți"
 
-#: libgimpbase/gimpbaseenums.c:1361
+#: libgimpbase/gimpbaseenums.c:1356
 msgctxt "precision"
 msgid "64-bit perceptual floating point"
-msgstr ""
+msgstr "Virgulă mobilă perceptivă pe 64 de biți"
 
-#: libgimpbase/gimpbaseenums.c:1472
+#: libgimpbase/gimpbaseenums.c:1461
 msgctxt "repeat-mode"
 msgid "None (extend)"
 msgstr "Fără (extins)"
 
-#: libgimpbase/gimpbaseenums.c:1473
+#: libgimpbase/gimpbaseenums.c:1462
+msgctxt "repeat-mode"
+msgid "None (truncate)"
+msgstr "Fără (trunchiat)"
+
+#: libgimpbase/gimpbaseenums.c:1463
 msgctxt "repeat-mode"
 msgid "Sawtooth wave"
 msgstr "Undă în dinte de ferăstrău"
 
-#: libgimpbase/gimpbaseenums.c:1474
+#: libgimpbase/gimpbaseenums.c:1464
 msgctxt "repeat-mode"
 msgid "Triangular wave"
 msgstr "Undă triunghiulară"
 
-#: libgimpbase/gimpbaseenums.c:1475
-msgctxt "repeat-mode"
-msgid "Truncate"
-msgstr "Trunchiază"
-
 # hm ? sau rulează ?
-#: libgimpbase/gimpbaseenums.c:1537
+#: libgimpbase/gimpbaseenums.c:1526
 msgctxt "run-mode"
 msgid "Run interactively"
 msgstr "Execută interactiv"
 
 # hm ? sau rulează ?
-#: libgimpbase/gimpbaseenums.c:1538
+#: libgimpbase/gimpbaseenums.c:1527
 msgctxt "run-mode"
 msgid "Run non-interactively"
 msgstr "Execută non-interactiv"
 
 # hm ? sau rulează ?
-#: libgimpbase/gimpbaseenums.c:1539
+#: libgimpbase/gimpbaseenums.c:1528
 msgctxt "run-mode"
 msgid "Run with last used values"
 msgstr "Execută cu ultimele valori folosite"
 
-#: libgimpbase/gimpbaseenums.c:1577
+#: libgimpbase/gimpbaseenums.c:1566
 msgctxt "select-criterion"
 msgid "Composite"
 msgstr "Compozit"
 
-#: libgimpbase/gimpbaseenums.c:1578
+#: libgimpbase/gimpbaseenums.c:1567
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "Roșu"
 
-#: libgimpbase/gimpbaseenums.c:1579
+#: libgimpbase/gimpbaseenums.c:1568
 msgctxt "select-criterion"
 msgid "Green"
 msgstr "Verde"
 
-#: libgimpbase/gimpbaseenums.c:1580
+#: libgimpbase/gimpbaseenums.c:1569
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "Albastru"
 
-#: libgimpbase/gimpbaseenums.c:1581
+#: libgimpbase/gimpbaseenums.c:1570
 msgctxt "select-criterion"
 msgid "HSV Hue"
 msgstr "Nuanță HSV"
 
-#: libgimpbase/gimpbaseenums.c:1582
+#: libgimpbase/gimpbaseenums.c:1571
 msgctxt "select-criterion"
 msgid "HSV Saturation"
 msgstr "Saturație HSV"
 
-#: libgimpbase/gimpbaseenums.c:1583
+#: libgimpbase/gimpbaseenums.c:1572
 msgctxt "select-criterion"
 msgid "HSV Value"
 msgstr "Valoare HSV"
 
-#: libgimpbase/gimpbaseenums.c:1584
+#: libgimpbase/gimpbaseenums.c:1573
 msgctxt "select-criterion"
 msgid "LCh Lightness"
 msgstr "Luminozitate LCh"
 
-#: libgimpbase/gimpbaseenums.c:1585
+#: libgimpbase/gimpbaseenums.c:1574
 msgctxt "select-criterion"
 msgid "LCh Chroma"
 msgstr "Croma LCh"
 
-#: libgimpbase/gimpbaseenums.c:1586
+#: libgimpbase/gimpbaseenums.c:1575
 msgctxt "select-criterion"
 msgid "LCh Hue"
 msgstr "Nuanță LCh"
 
-#: libgimpbase/gimpbaseenums.c:1587
+#: libgimpbase/gimpbaseenums.c:1576
 msgctxt "select-criterion"
 msgid "Alpha"
 msgstr "Alfa"
 
-#: libgimpbase/gimpbaseenums.c:1616
+#: libgimpbase/gimpbaseenums.c:1605
 msgctxt "size-type"
 msgid "Pixels"
 msgstr "Pixeli"
 
-#: libgimpbase/gimpbaseenums.c:1617
+#: libgimpbase/gimpbaseenums.c:1606
 msgctxt "size-type"
 msgid "Points"
 msgstr "Puncte"
 
-#: libgimpbase/gimpbaseenums.c:1678
+#: libgimpbase/gimpbaseenums.c:1667
 msgctxt "stroke-method"
 msgid "Stroke line"
 msgstr "Linie de contur"
 
-#: libgimpbase/gimpbaseenums.c:1679
+#: libgimpbase/gimpbaseenums.c:1668
 msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
 msgstr "Conturare cu un instrument de pictură"
 
-#: libgimpbase/gimpbaseenums.c:1712
+#: libgimpbase/gimpbaseenums.c:1701
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "De la stânga la dreapta"
 
-#: libgimpbase/gimpbaseenums.c:1713
+#: libgimpbase/gimpbaseenums.c:1702
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "De la dreapta la stânga"
 
-#: libgimpbase/gimpbaseenums.c:1714
+#: libgimpbase/gimpbaseenums.c:1703
 msgctxt "text-direction"
 msgid "Vertical, right to left (mixed orientation)"
 msgstr "Linii de text vertical, de la dreapta la stânga (orientare mixtă)"
 
-#: libgimpbase/gimpbaseenums.c:1715
+#: libgimpbase/gimpbaseenums.c:1704
 msgctxt "text-direction"
 msgid "Vertical, right to left (upright orientation)"
 msgstr "Linii de text vertical, de la dreapta la stânga (orientare verticală)"
 
-#: libgimpbase/gimpbaseenums.c:1716
+#: libgimpbase/gimpbaseenums.c:1705
 msgctxt "text-direction"
 msgid "Vertical, left to right (mixed orientation)"
 msgstr "Linii de text vertical, de la stânga la dreapta (orientare mixtă)"
 
-#: libgimpbase/gimpbaseenums.c:1717
+#: libgimpbase/gimpbaseenums.c:1706
 msgctxt "text-direction"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "Linii de text vertical, de la stânga la dreapta (orientare verticală)"
 
 # selecție la hinting
-#: libgimpbase/gimpbaseenums.c:1748
+#: libgimpbase/gimpbaseenums.c:1737
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "Deloc"
 
 # selecție la hinting
-#: libgimpbase/gimpbaseenums.c:1749
+#: libgimpbase/gimpbaseenums.c:1738
 msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "Ușor"
 
 # selecție la hinting
-#: libgimpbase/gimpbaseenums.c:1750
+#: libgimpbase/gimpbaseenums.c:1739
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Mediu"
 
 # selecție la hinting
-#: libgimpbase/gimpbaseenums.c:1751
+#: libgimpbase/gimpbaseenums.c:1740
 msgctxt "text-hint-style"
 msgid "Full"
 msgstr "Total"
 
-#: libgimpbase/gimpbaseenums.c:1782
+#: libgimpbase/gimpbaseenums.c:1771
 msgctxt "text-justification"
 msgid "Left justified"
 msgstr "Aliniat la stânga"
 
-#: libgimpbase/gimpbaseenums.c:1783
+#: libgimpbase/gimpbaseenums.c:1772
 msgctxt "text-justification"
 msgid "Right justified"
 msgstr "Aliniat la dreapta"
 
-#: libgimpbase/gimpbaseenums.c:1784
+#: libgimpbase/gimpbaseenums.c:1773
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "Centrat"
 
-#: libgimpbase/gimpbaseenums.c:1785
+#: libgimpbase/gimpbaseenums.c:1774
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "Umplut"
 
-#: libgimpbase/gimpbaseenums.c:1815
+#: libgimpbase/gimpbaseenums.c:1804
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Tonuri întunecate"
 
-#: libgimpbase/gimpbaseenums.c:1816
+#: libgimpbase/gimpbaseenums.c:1805
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Tonuri medii"
 
-#: libgimpbase/gimpbaseenums.c:1817
+#: libgimpbase/gimpbaseenums.c:1806
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Tonuri luminoase"
 
-#: libgimpbase/gimpbaseenums.c:1846
+#: libgimpbase/gimpbaseenums.c:1835
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Normal (înainte)"
 
-#: libgimpbase/gimpbaseenums.c:1847
+#: libgimpbase/gimpbaseenums.c:1836
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Corectiv (înapoi)"
 
 # listă drop down după „Decupare:” la opțiunile unor instrumente
-#: libgimpbase/gimpbaseenums.c:1878
+#: libgimpbase/gimpbaseenums.c:1867
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Ajustează"
 
 # listă drop down după „Decupare:” la opțiunile unor instrumente
-#: libgimpbase/gimpbaseenums.c:1879
+#: libgimpbase/gimpbaseenums.c:1868
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Decupează"
 
 # listă drop down după „Decupare:” la opțiunile unor instrumente
-#: libgimpbase/gimpbaseenums.c:1880
+#: libgimpbase/gimpbaseenums.c:1869
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Decupează la rezultat"
 
 # listă drop down după „Decupare:” la opțiunile unor instrumente
-#: libgimpbase/gimpbaseenums.c:1881
+#: libgimpbase/gimpbaseenums.c:1870
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Decupează cu raport de aspect"
 
-#: libgimpbase/gimpmetadata.c:1072
+#: libgimpbase/gimpmetadata.c:1218
+#, c-format
 msgid "Can load metadata only from local files"
 msgstr "Poate încărca metadata numai din fișiere locale"
 
-#: libgimpbase/gimpmetadata.c:1128
+#: libgimpbase/gimpmetadata.c:1274
+#, c-format
 msgid "Can save metadata only to local files"
 msgstr "Metadatele pot fi salvate numai în fișierele locale"
 
-#: libgimpbase/gimpmetadata.c:1176
+#: libgimpbase/gimpmetadata.c:1323
+#, c-format
 msgid "Invalid Exif data size."
 msgstr "Dimensiune nevalidă de date Exif."
 
-#: libgimpbase/gimpmetadata.c:1205
+#: libgimpbase/gimpmetadata.c:1368
+#, c-format
 msgid "Parsing Exif data failed."
 msgstr "Analizarea datelor Exif a eșuat."
 
-#: libgimpbase/gimpmetadata.c:1255
+#: libgimpbase/gimpmetadata.c:1420
+#, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Analizarea datelor IPTC a eșuat."
 
-#: libgimpbase/gimpmetadata.c:1303
+#: libgimpbase/gimpmetadata.c:1468
+#, c-format
 msgid "Parsing XMP data failed."
 msgstr "Analizarea datelor XMP a eșuat."
 
-#: libgimpbase/gimputils.c:219 libgimpbase/gimputils.c:224
+#: libgimpbase/gimpunit.c:82
+msgctxt "unit-plural"
+msgid "pixels"
+msgstr "pixeli"
+
+#: libgimpbase/gimpunit.c:89
+msgctxt "unit-plural"
+msgid "inches"
+msgstr "inci"
+
+#: libgimpbase/gimpunit.c:95
+msgctxt "unit-plural"
+msgid "millimeters"
+msgstr "milimetri"
+
+#: libgimpbase/gimpunit.c:102
+msgctxt "unit-plural"
+msgid "points"
+msgstr "puncte"
+
+#: libgimpbase/gimpunit.c:108
+msgctxt "unit-plural"
+msgid "picas"
+msgstr "picas"
+
+#: libgimpbase/gimpunit.c:118
+msgctxt "unit-plural"
+msgid "percent"
+msgstr "procent"
+
+#: libgimpbase/gimputils.c:220 libgimpbase/gimputils.c:225
 msgid "(invalid UTF-8 string)"
 msgstr "(șir UTF-8 nevalid)"
 
-#: libgimpbase/gimputils.c:394
+#: libgimpbase/gimputils.c:395
 msgid "File path is NULL"
 msgstr "Calea de fișier este NULL"
 
-#: libgimpbase/gimputils.c:403 libgimpbase/gimputils.c:414
+#: libgimpbase/gimputils.c:403
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "Eroare la convertirea numelui de fișier UTF-8 în caractere extinse"
 
-#: libgimpbase/gimputils.c:422
+#: libgimpbase/gimputils.c:411
 msgid "ILCreateFromPath() failed"
 msgstr "ILCreateFromPath() a eșuat"
 
-#: libgimpbase/gimputils.c:459
+#: libgimpbase/gimputils.c:450
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "Nu se poate converti „%s” într-un NSURL valid."
 
-#: libgimpbase/gimputils.c:487
+#: libgimpbase/gimputils.c:478
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "Conectarea la org.freedesktop.FileManager1 a eșuat: "
 
-#: libgimpbase/gimputils.c:511
+#: libgimpbase/gimputils.c:502
 msgid "Calling ShowItems failed: "
 msgstr "Apelarea ShowItems a eșuat: "
 
-#: libgimpcolor/gimpcolorprofile.c:258
+#: libgimpcolor/gimpcolorprofile.c:259
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "„%s” nu pare să fie un profil de culoare ICC"
 
-#: libgimpcolor/gimpcolorprofile.c:304
+#: libgimpcolor/gimpcolorprofile.c:305
 msgid "Data does not appear to be an ICC color profile"
 msgstr "Datele nu par să fie un profil de culoare ICC"
 
-#: libgimpcolor/gimpcolorprofile.c:361
+#: libgimpcolor/gimpcolorprofile.c:362
 msgid "Could not save color profile to memory"
 msgstr "Nu s-a putut salva profilul de culoare în memorie"
 
-#: libgimpcolor/gimpcolorprofile.c:578
+#: libgimpcolor/gimpcolorprofile.c:579
 msgid "(unnamed profile)"
 msgstr "(profil nedenumit)"
 
-#: libgimpcolor/gimpcolorprofile.c:620
+#: libgimpcolor/gimpcolorprofile.c:621 libgimpwidgets/gimpcolorselect.c:2083
 #, c-format
 msgid "Model: %s"
 msgstr "Model: %s"
 
-#: libgimpcolor/gimpcolorprofile.c:629
+#: libgimpcolor/gimpcolorprofile.c:630
 #, c-format
 msgid "Manufacturer: %s"
 msgstr "Producător: %s"
 
-#: libgimpcolor/gimpcolorprofile.c:638
+#: libgimpcolor/gimpcolorprofile.c:639
 #, c-format
 msgid "Copyright: %s"
 msgstr "Drepturi de autor: %s"
@@ -1735,6 +1938,10 @@ msgid ""
 "some other color space, including soft-proofing to a printer or other output "
 "device profile."
 msgstr ""
+"Profilul de culoare de utilizat pentru verificarea soft din spațiul de "
+"culoare al imaginii către un alt spațiu de culoare, inclusiv simulare de "
+"tipărire (soft-proofing) pentru o imprimantă sau un alt profil de dispozitiv "
+"de ieșire."
 
 #: libgimpconfig/gimpcolorconfig.c:79
 msgid ""
@@ -1769,11 +1976,16 @@ msgid ""
 "simulation device (usually your monitor). Try them all and choose what looks "
 "the best."
 msgstr ""
+"Cum sunt convertite culorile din spațiul de culoare al imaginii în "
+"dispozitivul de simulare de ieșire (de obicei, monitorul). Încercați-le pe "
+"toate și alegeți ce arată cel mai bine."
 
 #: libgimpconfig/gimpcolorconfig.c:99
 msgid ""
 "Try with and without black point compensation and choose what looks best."
 msgstr ""
+"Încercați cu și fără compensarea punctului negru și alegeți ce arată cel mai "
+"bine."
 
 #: libgimpconfig/gimpcolorconfig.c:103
 msgid ""
@@ -1795,130 +2007,152 @@ msgid "The color to use for marking colors which are out of gamut."
 msgstr ""
 "Culorile de folosit pentru marcarea culorilor care sunt în afara gamei."
 
-#: libgimpconfig/gimpcolorconfig.c:210
+#: libgimpconfig/gimpcolorconfig.c:114
+msgid ""
+"When enabled, set the color scales to display 0...255 instead of percentages"
+msgstr ""
+"Când opțiunea este activată, determină scalele de culoare să afișeze 0...255 "
+"în loc de procentaje"
+
+#: libgimpconfig/gimpcolorconfig.c:118
+msgid ""
+"When enabled, set the color scales to display HSV blend mode instead of LCh"
+msgstr ""
+"Când opțiunea este activată, determină scalele de culoare să afișeze modul "
+"de amestec HSV în loc de LCh"
+
+#: libgimpconfig/gimpcolorconfig.c:225
 msgid "Mode of operation"
 msgstr "Mod de operare"
 
-#: libgimpconfig/gimpcolorconfig.c:218
+#: libgimpconfig/gimpcolorconfig.c:233
 msgid "Preferred RGB profile"
 msgstr "Profilul RGB preferat"
 
-#: libgimpconfig/gimpcolorconfig.c:225
+#: libgimpconfig/gimpcolorconfig.c:240
 msgid "Preferred grayscale profile"
 msgstr "Profilul în tonuri de gri preferat"
 
-#: libgimpconfig/gimpcolorconfig.c:232
+#: libgimpconfig/gimpcolorconfig.c:247
 msgid "CMYK profile"
 msgstr "Profil CMYK"
 
-#: libgimpconfig/gimpcolorconfig.c:239
+#: libgimpconfig/gimpcolorconfig.c:254
 msgid "Monitor profile"
 msgstr "Profil de monitor"
 
-#: libgimpconfig/gimpcolorconfig.c:246
+#: libgimpconfig/gimpcolorconfig.c:261
 msgid "Use the system monitor profile"
 msgstr "Folosește profilul din sistem al monitorului"
 
-#: libgimpconfig/gimpcolorconfig.c:253
+#: libgimpconfig/gimpcolorconfig.c:268
 msgid "Simulation profile for soft-proofing"
 msgstr "Profilul de simulare pentru simularea de tipărire (soft-proofing)"
 
-#: libgimpconfig/gimpcolorconfig.c:260
+#: libgimpconfig/gimpcolorconfig.c:275
 msgid "Display rendering intent"
 msgstr "Intenția de randare a afișorului"
 
-#: libgimpconfig/gimpcolorconfig.c:268
+#: libgimpconfig/gimpcolorconfig.c:283
 msgid "Use black point compensation for the display"
 msgstr "Folosește compensarea punctului de negru pentru afișor"
 
-#: libgimpconfig/gimpcolorconfig.c:275
+#: libgimpconfig/gimpcolorconfig.c:290
 msgid "Optimize display color transformations"
 msgstr "Optimizează transformările de culoare ale afișorului"
 
-#: libgimpconfig/gimpcolorconfig.c:282
+#: libgimpconfig/gimpcolorconfig.c:297
 msgid "Soft-proofing rendering intent"
 msgstr "Intenția de randare pentru simularea de tipărire (soft-proofing)"
 
-#: libgimpconfig/gimpcolorconfig.c:290
+#: libgimpconfig/gimpcolorconfig.c:305
 msgid "Use black point compensation for soft-proofing"
 msgstr ""
 "Folosește compensarea punctului de negru pentru simularea de tipărire (soft-"
 "proofing)"
 
-#: libgimpconfig/gimpcolorconfig.c:297
+#: libgimpconfig/gimpcolorconfig.c:312
 msgid "Optimize soft-proofing color transformations"
 msgstr ""
 "Optimizează transformările de culoare pentru simularea de tipărire (soft-"
 "proofing)"
 
-#: libgimpconfig/gimpcolorconfig.c:304
+#: libgimpconfig/gimpcolorconfig.c:319
 msgid "Mark out of gamut colors"
 msgstr "Marchează culorile din afara gamei"
 
-#: libgimpconfig/gimpcolorconfig.c:311
+#: libgimpconfig/gimpcolorconfig.c:326
 msgid "Out of gamut warning color"
 msgstr "Culoarea avertismentului de culori în afara gamei"
 
-#: libgimpconfig/gimpcolorconfig.c:661 libgimpconfig/gimpcolorconfig.c:854
+#: libgimpconfig/gimpcolorconfig.c:334
+msgid "Show RGB 0..255 scales"
+msgstr "Arată scalele RGB 0...255"
+
+#: libgimpconfig/gimpcolorconfig.c:341
+msgid "Show HSV instead of LCH"
+msgstr "Arată HSV în loc de LCh"
+
+#: libgimpconfig/gimpcolorconfig.c:706 libgimpconfig/gimpcolorconfig.c:895
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Profilul de culoare „%s” nu este pentru spațiul de culoare RGB."
 
-#: libgimpconfig/gimpcolorconfig.c:705 libgimpconfig/gimpcolorconfig.c:904
+#: libgimpconfig/gimpcolorconfig.c:749 libgimpconfig/gimpcolorconfig.c:945
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "Profilul de culoare „%s” nu este pentru spațiul de culoare GRAY."
 
-#: libgimpconfig/gimpcolorconfig.c:749 libgimpconfig/gimpcolorconfig.c:954
+#: libgimpconfig/gimpcolorconfig.c:792 libgimpconfig/gimpcolorconfig.c:995
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Profilul de culoare „%s” nu este pentru spațiul de culoare CMYK."
 
 # hm ? inspirat din fr și es
-#: libgimpconfig/gimpconfig-deserialize.c:116
+#: libgimpconfig/gimpconfig-deserialize.c:124
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "valoarea pentru elementul %s nu este un șir valid UTF-8"
 
 #. please don't translate 'yes' and 'no'
-#: libgimpconfig/gimpconfig-deserialize.c:480
+#: libgimpconfig/gimpconfig-deserialize.c:505
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "se aștepta „yes” sau „no” pentru expresia booleană %s, s-a obținut „%s”"
 
-#: libgimpconfig/gimpconfig-deserialize.c:595
+#: libgimpconfig/gimpconfig-deserialize.c:620
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "valoare „%s” nevalidă pentru expresia %s"
 
-#: libgimpconfig/gimpconfig-deserialize.c:610
+#: libgimpconfig/gimpconfig-deserialize.c:635
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "valoare „%ld” nevalidă pentru expresia %s"
 
-#: libgimpconfig/gimpconfig-deserialize.c:679
+#: libgimpconfig/gimpconfig-deserialize.c:704
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "în timpul analizării expresiei „%s”: %s"
 
 #: libgimpconfig/gimpconfig-iface.c:664 libgimpconfig/gimpconfig-iface.c:677
-#: libgimpconfig/gimpscanner.c:774 libgimpconfig/gimpscanner.c:856
-#: libgimpwidgets/gimpcolorprofilestore.c:761
+#: libgimpconfig/gimpscanner.c:886 libgimpconfig/gimpscanner.c:964
+#: libgimpwidgets/gimpcolorprofilestore.c:756
 msgid "fatal parse error"
 msgstr "eroare fatală de analiză"
 
 # hm ?
-#: libgimpconfig/gimpconfig-path.c:506
+#: libgimpconfig/gimpconfig-path.c:513
 msgid "File has no path representation"
 msgstr "Fișierul nu are o reprezentare de cale"
 
-#: libgimpconfig/gimpconfig-path.c:593
+#: libgimpconfig/gimpconfig-path.c:600
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Nu se poate extinde ${%s}"
 
-#: libgimpconfig/gimpconfigwriter.c:95 libgimpconfig/gimpconfigwriter.c:725
+#: libgimpconfig/gimpconfigwriter.c:95 libgimpconfig/gimpconfigwriter.c:727
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Eroare la scrierea pe „%s”: %s"
@@ -1933,47 +2167,47 @@ msgstr "Nu s-a putut crea directorul „%s” pentru „%s”: "
 msgid "Could not create temporary file for '%s': "
 msgstr "Nu s-a putut crea fișierul temporar pentru „%s”: "
 
-#: libgimpconfig/gimpconfigwriter.c:835
+#: libgimpconfig/gimpconfigwriter.c:837
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "Eroare la scrierea „%s”: %s"
 
-#: libgimpconfig/gimpscanner.c:422
+#: libgimpconfig/gimpscanner.c:424
 msgid "invalid UTF-8 string"
 msgstr "șir UTF-8 nevalid"
 
 #. please don't translate 'yes' and 'no'
-#: libgimpconfig/gimpscanner.c:649
+#: libgimpconfig/gimpscanner.c:651
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr "se aștepta „yes” sau „no” pentru expresia booleană, s-a obținut „%s”"
 
-#: libgimpconfig/gimpscanner.c:883
+#: libgimpconfig/gimpscanner.c:991
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Eroare la analizarea „%s” în linia %d: %s"
 
-#: libgimpmodule/gimpmodule.c:172 libgimpmodule/gimpmodule.c:190
-#: libgimpmodule/gimpmodule.c:451 libgimpmodule/gimpmodule.c:474
-#: libgimpmodule/gimpmodule.c:524
+#: libgimpmodule/gimpmodule.c:223 libgimpmodule/gimpmodule.c:241
+#: libgimpmodule/gimpmodule.c:515 libgimpmodule/gimpmodule.c:538
+#: libgimpmodule/gimpmodule.c:589
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Eroare la încărcarea modulului „%s”: %s"
 
-#: libgimpmodule/gimpmoduledb.c:500
+#: libgimpmodule/gimpmoduledb.c:458
 msgid "Module error"
 msgstr "Eroare de modúl"
 
-#: libgimpmodule/gimpmoduledb.c:501
+#: libgimpmodule/gimpmoduledb.c:459
 msgid "Loaded"
 msgstr "Încărcat"
 
-#: libgimpmodule/gimpmoduledb.c:502
+#: libgimpmodule/gimpmoduledb.c:460
 msgid "Load failed"
 msgstr "Încărcarea a eșuat"
 
 # hm ? sau nu este încărcat ?
-#: libgimpmodule/gimpmoduledb.c:503
+#: libgimpmodule/gimpmoduledb.c:461
 msgid "Not loaded"
 msgstr "Neîncărcat"
 
@@ -1991,36 +2225,37 @@ msgstr ""
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Crearea dosarului de miniaturi „%s” a eșuat."
 
-#: libgimpthumb/gimpthumbnail.c:481
+#: libgimpthumb/gimpthumbnail.c:523
+#, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "Miniatura nu conține niciun marcaj Thumb::URI"
 
-#: libgimpthumb/gimpthumbnail.c:878
+#: libgimpthumb/gimpthumbnail.c:920
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Nu s-a putut crea miniatura pentru %s: %s"
 
-#: libgimpwidgets/gimpbrowser.c:141
+#: libgimpwidgets/gimpbrowser.c:134
 msgid "_Search:"
 msgstr "_Caută:"
 
-#: libgimpwidgets/gimpcolorbutton.c:152
+#: libgimpwidgets/gimpcolorbutton.c:375
 msgid "_Foreground Color"
 msgstr "_Culoare de prim-plan"
 
-#: libgimpwidgets/gimpcolorbutton.c:156
+#: libgimpwidgets/gimpcolorbutton.c:376
 msgid "_Background Color"
 msgstr "_Culoade de fundal"
 
-#: libgimpwidgets/gimpcolorbutton.c:160
+#: libgimpwidgets/gimpcolorbutton.c:381
 msgid "Blac_k"
 msgstr "_Negru"
 
-#: libgimpwidgets/gimpcolorbutton.c:164
+#: libgimpwidgets/gimpcolorbutton.c:382
 msgid "_White"
 msgstr "_Alb"
 
-#: libgimpwidgets/gimpcolorhexentry.c:134
+#: libgimpwidgets/gimpcolorhexentry.c:125
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -2028,32 +2263,32 @@ msgstr ""
 "Notație de culoare în hexazecimal, așa cum este folosită în HTML și CSS.  "
 "Această intrare acceptă de asemenea și nume de culoare CSS."
 
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:108
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:107
 msgid "All files (*.*)"
 msgstr "Toate fișierele (*.*)"
 
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:113
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:112
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Profil de culoare ICC (*.icc, *.icm)"
 
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:174
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 msgid "_Save"
 msgstr "_Salvează"
 
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:346
-#: libgimpwidgets/gimppatheditor.c:267
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:347
+#: libgimpwidgets/gimppatheditor.c:288
 msgid "Folder"
 msgstr "Dosar"
 
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:351
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:352
 msgid "Not a regular file."
 msgstr "Nu este un fișier obișnuit."
 
-#: libgimpwidgets/gimpcolorprofilestore.c:160
+#: libgimpwidgets/gimpcolorprofilestore.c:156
 msgid "Select color profile from disk..."
 msgstr "Selectați un profil de culoare de pe disc..."
 
-#: libgimpwidgets/gimpcolorprofilestore.c:289
+#: libgimpwidgets/gimpcolorprofilestore.c:284
 msgctxt "profile"
 msgid "None"
 msgstr "Fără"
@@ -2066,124 +2301,189 @@ msgstr "Producător: "
 msgid "Copyright: "
 msgstr "Drepturi de autor: "
 
-#: libgimpwidgets/gimpcolorscales.c:205
+#: libgimpwidgets/gimpcolorscales.c:195
 msgid "Scales"
-msgstr "Scări"
+msgstr "Scale"
 
-#: libgimpwidgets/gimpcolorscales.c:434
+#. TODO: in future, this could be a better thought localized
+#. * string, but for now, I had to preserve string freeze.
+#.
+#: libgimpwidgets/gimpcolorscales.c:359 libgimpwidgets/gimpcolorscales.c:691
+#: libgimpwidgets/gimpcolorselect.c:2094 modules/color-selector-water.c:206
+#: modules/color-selector-water.c:242 modules/color-selector-wheel.c:136
+#: modules/color-selector-wheel.c:175
+msgid "Profile: sRGB"
+msgstr "Profil: sRGB"
+
+#: libgimpwidgets/gimpcolorscales.c:456
 msgid "0..100"
 msgstr "0..100"
 
-#: libgimpwidgets/gimpcolorscales.c:436
+#: libgimpwidgets/gimpcolorscales.c:458
 msgid "0..255"
 msgstr "0..255"
 
-#: libgimpwidgets/gimpcolorscales.c:457
+#: libgimpwidgets/gimpcolorscales.c:479
 msgid "LCh"
 msgstr "LCh"
 
-#: libgimpwidgets/gimpcolorscales.c:459
+#: libgimpwidgets/gimpcolorscales.c:481
 msgid "HSV"
 msgstr "HSV"
 
-#: libgimpwidgets/gimpcolorselection.c:247
+#: libgimpwidgets/gimpcolorscales.c:708 libgimpwidgets/gimpcolorselect.c:2113
+#: modules/color-selector-cmyk.c:321 modules/color-selector-cmyk.c:405
+#: modules/color-selector-water.c:258 modules/color-selector-wheel.c:191
+#, c-format
+msgid "Profile: %s"
+msgstr "Profil: %s"
+
+#: libgimpwidgets/gimpcolorscales.c:722 libgimpwidgets/gimpcolorselect.c:2126
+#: modules/color-selector-water.c:267 modules/color-selector-wheel.c:200
+msgid "Profile: <i>unknown</i>"
+msgstr "Profil: <i>necunoscut</i>"
+
+#: libgimpwidgets/gimpcolorselect.c:530 libgimpwidgets/gimpcolorselect.c:809
+#: libgimpwidgets/gimpcolorselect.c:826
+msgid "Soft-Proof Profile: <i>unknown</i>"
+msgstr "Profil de simulare de tipărire (soft-proofing): <i>necunoscut</i>"
+
+#: libgimpwidgets/gimpcolorselect.c:793
+msgid "Soft-Proof Profile: sRGB"
+msgstr "Profil de simulare de tipărire (soft-proofing): sRGB"
+
+#: libgimpwidgets/gimpcolorselect.c:800
+#, c-format
+msgid "Soft-Proof Profile: %s"
+msgstr "Profil de simulare de tipărire (soft-proofing): %s"
+
+#: libgimpwidgets/gimpcolorselection.c:233
 msgid "Current:"
 msgstr "Curentă:"
 
-#: libgimpwidgets/gimpcolorselection.c:256
+#: libgimpwidgets/gimpcolorselection.c:242
 msgid "Old:"
 msgstr "Veche:"
 
-#: libgimpwidgets/gimpcolorselection.c:343
+#: libgimpwidgets/gimpcolorselection.c:327
 msgid "HTML _notation:"
 msgstr "_Notație HTML:"
 
-#: libgimpwidgets/gimpfileentry.c:167
+#: libgimpwidgets/gimpcontroller.c:114
+msgid "The controller's name"
+msgstr "Numele controlerului"
+
+#: libgimpwidgets/gimpcontroller.c:122
+msgid "The controller's state, as human-readable string"
+msgstr "Starea controlerului, ca șir de caractere lizibil de către om"
+
+#: libgimpwidgets/gimpdialog.c:196
+msgid "_Help"
+msgstr "A_jutor"
+
+#: libgimpwidgets/gimpfileentry.c:166
 msgid "Show file location in the file manager"
 msgstr "Arată locația fișierului în gestionarul de fișiere"
 
 # hm ?
-#: libgimpwidgets/gimpfileentry.c:238
+#: libgimpwidgets/gimpfileentry.c:237
 msgid "Open a file selector to browse your folders"
 msgstr "Deschide un selector de fișiere pentru explorarea dosarelor"
 
 # hm ?
-#: libgimpwidgets/gimpfileentry.c:239
+#: libgimpwidgets/gimpfileentry.c:238
 msgid "Open a file selector to browse your files"
 msgstr "Deschide un selector de fișiere pentru explorarea acestora"
 
-#: libgimpwidgets/gimpfileentry.c:251
+#: libgimpwidgets/gimpfileentry.c:250
 msgid "Indicates whether or not the folder exists"
 msgstr "Indică dacă există sau nu dosarul"
 
-#: libgimpwidgets/gimpfileentry.c:252
+#: libgimpwidgets/gimpfileentry.c:251
 msgid "Indicates whether or not the file exists"
 msgstr "Indică dacă există sau nu fișierul"
 
-#: libgimpwidgets/gimpfileentry.c:428
+#: libgimpwidgets/gimpfileentry.c:427
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Fișierul nu poate fi arătat în gestionarul de fișiere: %s"
 
-#: libgimpwidgets/gimpfileentry.c:455
+#: libgimpwidgets/gimpfileentry.c:454
 msgid "Select Folder"
 msgstr "Selectează dosarul"
 
-#: libgimpwidgets/gimpfileentry.c:457
+#: libgimpwidgets/gimpfileentry.c:456
 msgid "Select File"
 msgstr "Selectează fișierul"
 
-#: libgimpwidgets/gimphelpui.c:384
+#: libgimpwidgets/gimphelpui.c:387
 msgid "Press F1 for more help"
 msgstr "Apăsați F1 pentru mai mult ajutor"
 
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
 #.
-#: libgimpwidgets/gimpintstore.c:255
+#: libgimpwidgets/gimpintstore.c:256
 msgid "(Empty)"
 msgstr "(Gol)"
 
-#: libgimpwidgets/gimpmemsizeentry.c:252
+#: libgimpwidgets/gimpmemsizeentry.c:242
 msgid "Kibibyte"
 msgstr "Kibibaiți"
 
-#: libgimpwidgets/gimpmemsizeentry.c:253
+#: libgimpwidgets/gimpmemsizeentry.c:243
 msgid "Mebibyte"
 msgstr "Mebibaiți"
 
-#: libgimpwidgets/gimpmemsizeentry.c:254
+#: libgimpwidgets/gimpmemsizeentry.c:244
 msgid "Gibibyte"
 msgstr "Gibibaiți"
 
+#: libgimpwidgets/gimppageselector.c:182
+msgid "N Pages"
+msgstr "N pagini"
+
+#: libgimpwidgets/gimppageselector.c:183
+msgid "The number of pages to open"
+msgstr "Numărul de pagini de deschis"
+
+#: libgimpwidgets/gimppageselector.c:196
+msgid "Target"
+msgstr "Țintă"
+
+#: libgimpwidgets/gimppageselector.c:197
+msgid "the target to open to"
+msgstr "ținta către care să se deschidă"
+
 #. Count label
-#: libgimpwidgets/gimppageselector.c:283 libgimpwidgets/gimppageselector.c:1079
+#: libgimpwidgets/gimppageselector.c:275 libgimpwidgets/gimppageselector.c:1014
 msgid "Nothing selected"
 msgstr "Nu este selectat nimic"
 
-#: libgimpwidgets/gimppageselector.c:301
-msgid "Select _All"
-msgstr "Selecte_ază tot"
-
-#: libgimpwidgets/gimppageselector.c:321
-msgid "Select _range:"
-msgstr "Selectează _intervalul:"
-
-#: libgimpwidgets/gimppageselector.c:333
+#: libgimpwidgets/gimppageselector.c:289
 msgid "Open _pages as"
 msgstr "Deschide _paginile ca"
 
-#: libgimpwidgets/gimppageselector.c:461 libgimpwidgets/gimppageselector.c:659
+#. Select all button & range entry
+#: libgimpwidgets/gimppageselector.c:301
+msgid "Select _range:"
+msgstr "Selectează _intervalul:"
+
+#: libgimpwidgets/gimppageselector.c:323
+msgid "Select _All"
+msgstr "Selecte_ază tot"
+
+#: libgimpwidgets/gimppageselector.c:444 libgimpwidgets/gimppageselector.c:621
 #, c-format
 msgid "Page %d"
 msgstr "Pgina %d"
 
-#: libgimpwidgets/gimppageselector.c:1084
+#: libgimpwidgets/gimppageselector.c:1019
 msgid "One page selected"
 msgstr "O pagină selectată"
 
-#: libgimpwidgets/gimppageselector.c:1091
-#: libgimpwidgets/gimppageselector.c:1095
+#: libgimpwidgets/gimppageselector.c:1026
+#: libgimpwidgets/gimppageselector.c:1030
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
@@ -2191,27 +2491,27 @@ msgstr[0] "%d pagină selectată"
 msgstr[1] "%d pagini selectate"
 msgstr[2] "%d de pagini selectate"
 
-#: libgimpwidgets/gimppatheditor.c:178
+#: libgimpwidgets/gimppatheditor.c:199
 msgid "Add a new folder"
 msgstr "Adaugă un dosar nou"
 
-#: libgimpwidgets/gimppatheditor.c:196
+#: libgimpwidgets/gimppatheditor.c:217
 msgid "Move the selected folder up"
 msgstr "Mută mai sus dosarul selectat"
 
-#: libgimpwidgets/gimppatheditor.c:214
+#: libgimpwidgets/gimppatheditor.c:235
 msgid "Move the selected folder down"
 msgstr "Mută mai jos dosarul selectat"
 
-#: libgimpwidgets/gimppatheditor.c:232
+#: libgimpwidgets/gimppatheditor.c:253
 msgid "Remove the selected folder from the list"
 msgstr "Elimină din listă dosarul selectat"
 
-#: libgimpwidgets/gimppatheditor.c:258
+#: libgimpwidgets/gimppatheditor.c:279
 msgid "Writable"
 msgstr "Scriibil"
 
-#: libgimpwidgets/gimppickbutton.c:123
+#: libgimpwidgets/gimppickbutton.c:143
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -2220,27 +2520,27 @@ msgstr ""
 "selecta acea culoare."
 
 #. toggle button to (de)activate the instant preview
-#: libgimpwidgets/gimppreview.c:288
+#: libgimpwidgets/gimppreview.c:284
 msgid "_Preview"
 msgstr "_Previzualizează"
 
-#: libgimpwidgets/gimppreviewarea.c:146
+#: libgimpwidgets/gimppreviewarea.c:154
 msgid "Check Size"
 msgstr "Dimensiune tablă de șah"
 
-#: libgimpwidgets/gimppreviewarea.c:154
+#: libgimpwidgets/gimppreviewarea.c:162
 msgid "Check Style"
 msgstr "Stil tablă de șah"
 
-#: libgimpwidgets/gimppreviewarea.c:162
+#: libgimpwidgets/gimppreviewarea.c:170
 msgid "Custom Checks Color 1"
-msgstr ""
+msgstr "Culoare personalizată tablă de șah 1"
 
-#: libgimpwidgets/gimppreviewarea.c:169
+#: libgimpwidgets/gimppreviewarea.c:177
 msgid "Custom Checks Color 2"
-msgstr ""
+msgstr "Culoare personalizată tablă de șah 2"
 
-#: libgimpwidgets/gimppropwidgets.c:2475
+#: libgimpwidgets/gimppropwidgets.c:2552
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2250,7 +2550,7 @@ msgstr[2] ""
 "Acest câmp de introducere a textului este limitat la %d de caractere."
 
 # a se vedea discuția de aici http://groups.google.com/group/diacritice/browse_thread/thread/d337452063d57f0f
-#: libgimpwidgets/gimpwidgets.c:259
+#: libgimpwidgets/gimpwidgets.c:260
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -2259,31 +2559,31 @@ msgstr ""
 "aceasta vă permite să repetați o anumită operație „aleatoare”"
 
 # a se vedea discuția de aici http://groups.google.com/group/diacritice/browse_thread/thread/d337452063d57f0f
-#: libgimpwidgets/gimpwidgets.c:263
+#: libgimpwidgets/gimpwidgets.c:264
 msgid "_New Seed"
 msgstr "Sămânță _nouă"
 
 # a se vedea discuția de aici http://groups.google.com/group/diacritice/browse_thread/thread/d337452063d57f0f
-#: libgimpwidgets/gimpwidgets.c:279
+#: libgimpwidgets/gimpwidgets.c:280
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "Însămânțează generatorul de numere aleatoare cu un număr aleator generat"
 
-#: libgimpwidgets/gimpwidgets.c:283
+#: libgimpwidgets/gimpwidgets.c:284
 msgid "_Randomize"
 msgstr "_Randomizează"
 
-#: libgimpwidgets/gimpwidgets-private.c:50
+#: libgimpwidgets/gimpwidgets-private.c:51
 msgctxt "input-mode"
 msgid "Disabled"
 msgstr "Dezactivat"
 
-#: libgimpwidgets/gimpwidgets-private.c:51
+#: libgimpwidgets/gimpwidgets-private.c:52
 msgctxt "input-mode"
 msgid "Screen"
 msgstr "Ecran"
 
-#: libgimpwidgets/gimpwidgets-private.c:52
+#: libgimpwidgets/gimpwidgets-private.c:53
 msgctxt "input-mode"
 msgid "Window"
 msgstr "Fereastră"
@@ -2484,14 +2784,13 @@ msgstr "Galben"
 msgid "Black"
 msgstr "Negru"
 
-#: modules/color-selector-cmyk.c:296 modules/color-selector-cmyk.c:382
+#: modules/color-selector-cmyk.c:265
+msgid "Total Ink Coverage"
+msgstr "Acoperire totală cu cerneală"
+
+#: modules/color-selector-cmyk.c:308 modules/color-selector-cmyk.c:387
 msgid "Profile: (none)"
 msgstr "Profil: (fără)"
-
-#: modules/color-selector-cmyk.c:309 modules/color-selector-cmyk.c:400
-#, c-format
-msgid "Profile: %s"
-msgstr "Profil: %s"
 
 #: modules/color-selector-water.c:96
 msgid "Watercolor style color selector"
@@ -2501,145 +2800,145 @@ msgstr "Selector de culoare stil acuarelă"
 msgid "Watercolor"
 msgstr "Acuarelă"
 
-#: modules/color-selector-water.c:198
+#: modules/color-selector-water.c:197
 msgid "Pressure"
 msgstr "Presiune"
 
-#: modules/color-selector-wheel.c:72
+#: modules/color-selector-wheel.c:76
 msgid "HSV color wheel"
 msgstr "Roată de culoare HSV"
 
-#: modules/color-selector-wheel.c:104
+#: modules/color-selector-wheel.c:108
 msgid "Wheel"
 msgstr "Roată"
 
-#: modules/controller-dx-dinput.c:156
+#: modules/controller-dx-dinput.c:154
 msgid "DirectX DirectInput event controller"
 msgstr "Controler de evenimente DirectInput DirectX"
 
-#: modules/controller-dx-dinput.c:196 modules/controller-linux-input.c:218
+#: modules/controller-dx-dinput.c:194 modules/controller-linux-input.c:218
 #: modules/controller-midi.c:212
 msgid "Device:"
 msgstr "Dispozitiv:"
 
-#: modules/controller-dx-dinput.c:197
+#: modules/controller-dx-dinput.c:195
 msgid "The device to read DirectInput events from."
 msgstr "Dispozitivul de la care sunt citite evenimentele DirectInput."
 
 # hm ?
-#: modules/controller-dx-dinput.c:206
+#: modules/controller-dx-dinput.c:204
 msgid "DirectX DirectInput"
 msgstr "DirectInput DirectX"
 
-#: modules/controller-dx-dinput.c:419
+#: modules/controller-dx-dinput.c:417
 #, c-format
 msgid "Button %d"
 msgstr "Buton %d"
 
-#: modules/controller-dx-dinput.c:422
+#: modules/controller-dx-dinput.c:420
 #, c-format
 msgid "Button %d Press"
 msgstr "Apăsare buton %d"
 
-#: modules/controller-dx-dinput.c:425
+#: modules/controller-dx-dinput.c:423
 #, c-format
 msgid "Button %d Release"
 msgstr "Eliberare buton %d"
 
-#: modules/controller-dx-dinput.c:442 modules/controller-linux-input.c:90
+#: modules/controller-dx-dinput.c:440 modules/controller-linux-input.c:90
 msgid "X Move Left"
 msgstr "Mișcare X la stânga"
 
-#: modules/controller-dx-dinput.c:445 modules/controller-linux-input.c:91
+#: modules/controller-dx-dinput.c:443 modules/controller-linux-input.c:91
 msgid "X Move Right"
 msgstr "Mișcare X la dreapta"
 
 # hm ?
-#: modules/controller-dx-dinput.c:451
+#: modules/controller-dx-dinput.c:449
 msgid "Y Move Away"
 msgstr "Mutare Y mai departe"
 
 # hm ?
-#: modules/controller-dx-dinput.c:454
+#: modules/controller-dx-dinput.c:452
 msgid "Y Move Near"
 msgstr "Mutare Y mai aproape"
 
-#: modules/controller-dx-dinput.c:460 modules/controller-linux-input.c:94
+#: modules/controller-dx-dinput.c:458 modules/controller-linux-input.c:94
 msgid "Z Move Up"
 msgstr "Mișcare Z în sus"
 
-#: modules/controller-dx-dinput.c:463 modules/controller-linux-input.c:95
+#: modules/controller-dx-dinput.c:461 modules/controller-linux-input.c:95
 msgid "Z Move Down"
 msgstr "Mișcare Z în jos"
 
 # hm ?
-#: modules/controller-dx-dinput.c:469
+#: modules/controller-dx-dinput.c:467
 msgid "X Axis Tilt Away"
 msgstr "Înclinare axa X departe"
 
 # hm ?
-#: modules/controller-dx-dinput.c:472
+#: modules/controller-dx-dinput.c:470
 msgid "X Axis Tilt Near"
 msgstr "Înclinare axa X aproape"
 
 # hm ?
-#: modules/controller-dx-dinput.c:478 modules/controller-linux-input.c:99
+#: modules/controller-dx-dinput.c:476 modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Right"
 msgstr "Înclinare spre dreapta pe axa Y"
 
 # hm ?
-#: modules/controller-dx-dinput.c:481 modules/controller-linux-input.c:100
+#: modules/controller-dx-dinput.c:479 modules/controller-linux-input.c:100
 msgid "Y Axis Tilt Left"
 msgstr "Înclinare spre stânga pe axa Y"
 
 # hm ?
-#: modules/controller-dx-dinput.c:487 modules/controller-linux-input.c:101
+#: modules/controller-dx-dinput.c:485 modules/controller-linux-input.c:101
 msgid "Z Axis Turn Left"
 msgstr "Întoarcere la stânga pe axa Z"
 
 # hm ?
-#: modules/controller-dx-dinput.c:490 modules/controller-linux-input.c:102
+#: modules/controller-dx-dinput.c:488 modules/controller-linux-input.c:102
 msgid "Z Axis Turn Right"
 msgstr "Întoarcere la dreapta pe axa Z"
 
-#: modules/controller-dx-dinput.c:501
+#: modules/controller-dx-dinput.c:499
 #, c-format
 msgid "Slider %d Increase"
 msgstr "Cursor  Crește %d"
 
-#: modules/controller-dx-dinput.c:504
+#: modules/controller-dx-dinput.c:502
 #, c-format
 msgid "Slider %d Decrease"
 msgstr "Cursor  Scade %d"
 
 # hm ?
-#: modules/controller-dx-dinput.c:514
+#: modules/controller-dx-dinput.c:512
 #, c-format
 msgid "POV %d X View"
 msgstr "Vizualizare X a punctului de vizualizare %d"
 
 # hm ?
-#: modules/controller-dx-dinput.c:517
+#: modules/controller-dx-dinput.c:515
 #, c-format
 msgid "POV %d Y View"
 msgstr "Vizualizare Y a punctului de vizualizare %d"
 
 # hm ?
-#: modules/controller-dx-dinput.c:520
+#: modules/controller-dx-dinput.c:518
 #, c-format
 msgid "POV %d Return"
 msgstr "Revenire a punctului de vizualizare %d"
 
-#: modules/controller-dx-dinput.c:1081
+#: modules/controller-dx-dinput.c:1079
 msgid "DirectInput Events"
 msgstr "Evenimente DirectInput"
 
-#: modules/controller-dx-dinput.c:1092 modules/controller-linux-input.c:525
+#: modules/controller-dx-dinput.c:1090 modules/controller-linux-input.c:525
 #: modules/controller-midi.c:505
 msgid "No device configured"
 msgstr "Niciun dispozitiv configurat"
 
-#: modules/controller-dx-dinput.c:1117 modules/controller-linux-input.c:588
+#: modules/controller-dx-dinput.c:1115 modules/controller-linux-input.c:588
 msgid "Device not available"
 msgstr "Dispozitivul nu este disponibil"
 
@@ -2866,84 +3165,91 @@ msgid ""
 "defined filmic look to be used before ODT (display or output space ICC "
 "profile)"
 msgstr ""
+"ACES RRT (RRT = Reference Rendering Transform). Un filtru de afișare de "
+"culori de simulare HDR în SDR, folosind o aproximare doar a luminanței al "
+"ACES RRT, un aspect filmic predefinit care va fi utilizat înainte de ODT "
+"(profilul ICC al spațiului de afișare sau de ieșire)."
 
 #: modules/display-filter-aces-rrt.c:121
 msgid "Pre-transform change in stops"
-msgstr ""
+msgstr "Modificare în trepte de diafragmă înainte de transformare"
 
 #: modules/display-filter-aces-rrt.c:126
 msgid "Aces RRT"
-msgstr ""
+msgstr "Aces RRT"
 
-#: modules/display-filter-clip-warning.c:121
+#. Translators: "Clip Warning" is the name of a (color) display filter
+#. * that highlights pixels outside of the color space range.
+#. * Shown as a label description.
+#: modules/display-filter-clip-warning.c:125
 msgid "Clip warning color display filter"
 msgstr "Filtru de afișare color pentru avertizarea de decupare"
 
-#: modules/display-filter-clip-warning.c:158
+#: modules/display-filter-clip-warning.c:166
 msgid "Show shadows"
 msgstr "Arată umbrele"
 
-#: modules/display-filter-clip-warning.c:159
+#: modules/display-filter-clip-warning.c:167
 msgid "Show warning for pixels with a negative component"
 msgstr "Arată un avertisment pentru pixelii cu o componentă negativă"
 
-#: modules/display-filter-clip-warning.c:165
+#: modules/display-filter-clip-warning.c:173
 msgid "Shadows color"
 msgstr "Culoare pentru umbre"
 
-#: modules/display-filter-clip-warning.c:166
+#: modules/display-filter-clip-warning.c:174
 msgid "Shadows warning color"
 msgstr "Culoare de avertisment pentru umbre"
 
-#: modules/display-filter-clip-warning.c:178
+#: modules/display-filter-clip-warning.c:185
 msgid "Show highlights"
 msgstr "Arată tonurile luminoase"
 
-#: modules/display-filter-clip-warning.c:179
+#: modules/display-filter-clip-warning.c:186
 msgid "Show warning for pixels with a component greater than one"
 msgstr "Arată un avertisment pentru pixelii cu o componentă mai mare de unu"
 
-#: modules/display-filter-clip-warning.c:185
+#: modules/display-filter-clip-warning.c:194
 msgid "Highlights color"
 msgstr "Culoare pentru tonurile luminoase"
 
-#: modules/display-filter-clip-warning.c:186
+#: modules/display-filter-clip-warning.c:195
 msgid "Highlights warning color"
 msgstr "Culoare de avertisment pentru tonurile luminoase"
 
-#: modules/display-filter-clip-warning.c:198
+#: modules/display-filter-clip-warning.c:206
 msgid "Show bogus"
 msgstr "Arată defecțiunea"
 
-#: modules/display-filter-clip-warning.c:199
+#: modules/display-filter-clip-warning.c:207
 msgid "Show warning for pixels with an infinite or NaN component"
 msgstr "Arată un avertisment pentru pixelii cu o componentă infinită sau NaN"
 
-#: modules/display-filter-clip-warning.c:205
+#: modules/display-filter-clip-warning.c:215
 msgid "Bogus color"
 msgstr "Culoare pentru defecțiune"
 
-#: modules/display-filter-clip-warning.c:206
+#: modules/display-filter-clip-warning.c:216
 msgid "Bogus warning color"
 msgstr "Culoare de avertisment de defecțiune"
 
-#: modules/display-filter-clip-warning.c:218
+#: modules/display-filter-clip-warning.c:227
 msgid "Include alpha component"
 msgstr "Include componenta alfa"
 
-#: modules/display-filter-clip-warning.c:219
+#: modules/display-filter-clip-warning.c:228
 msgid "Include alpha component in the warning"
 msgstr "Include componenta alfa în avertisment"
 
-#: modules/display-filter-clip-warning.c:225
+#: modules/display-filter-clip-warning.c:234
 msgid "Include transparent pixels"
 msgstr "Include pixelii transparenți"
 
-#: modules/display-filter-clip-warning.c:226
+#: modules/display-filter-clip-warning.c:235
 msgid "Include fully transparent pixels in the warning"
 msgstr "Includeți pixelii complet transparenți în avertisment"
 
-#: modules/display-filter-clip-warning.c:230
+#: modules/display-filter-clip-warning.c:239
 msgid "Clip Warning"
 msgstr "Avertizare de decupare"
 
@@ -2995,194 +3301,3 @@ msgstr "Cicli de contrast"
 #: modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Contrast"
-
-#~ msgid "GIMP 2.10"
-#~ msgstr "GIMP 2.10"
-
-#, c-format
-#~ msgid "Rotate %s?"
-#~ msgstr "Rotiți %s?"
-
-#~ msgid "_Keep Original"
-#~ msgstr "_Păstrează originalul"
-
-#~ msgid "_Rotate"
-#~ msgstr "_Rotește"
-
-#~ msgid "Original"
-#~ msgstr "Original"
-
-#~ msgid "Rotated"
-#~ msgstr "Rotit"
-
-#~ msgid "This image contains Exif orientation metadata."
-#~ msgstr "Această imagine conține metadate EXIF de orientare."
-
-#~ msgid "Would you like to rotate the image?"
-#~ msgstr "Doriți să fie rotită imaginea?"
-
-#~ msgid "_Don't ask me again"
-#~ msgstr "Nu mă mai întraba _din nou"
-
-#~ msgid "by author"
-#~ msgstr "după autor"
-
-#~ msgid "Searching by author"
-#~ msgstr "Căutare după autor"
-
-#~ msgid "Author:"
-#~ msgstr "Autor:"
-
-#~ msgctxt "blend-mode"
-#~ msgid "FG to BG (RGB)"
-#~ msgstr "Prim-plan la fundal (RGB)"
-
-#~ msgctxt "blend-mode"
-#~ msgid "FG to BG (HSV)"
-#~ msgstr "Prim-plan la fundal (HSV)"
-
-#~ msgctxt "blend-mode"
-#~ msgid "FG to transparent"
-#~ msgstr "Prim-plan la transparent"
-
-#~ msgctxt "blend-mode"
-#~ msgid "Custom gradient"
-#~ msgstr "Degrade personalizat"
-
-# imperativ pentru consecvență în cadrul aceluiași meniu
-#~ msgctxt "bucket-fill-mode"
-#~ msgid "FG color fill"
-#~ msgstr "Umple cu culoarea de prim-plan"
-
-# imperativ pentru consecvență în cadrul aceluiași meniu
-#~ msgctxt "bucket-fill-mode"
-#~ msgid "BG color fill"
-#~ msgstr "Umple cu culoarea de fundal"
-
-# imperativ pentru consecvență în cadrul aceluiași meniu
-#~ msgctxt "bucket-fill-mode"
-#~ msgid "Pattern fill"
-#~ msgstr "Umple cu un model"
-
-#~ msgctxt "icon-type"
-#~ msgid "Inline pixbuf"
-#~ msgstr "Inline pixbuf"
-
-#~ msgctxt "precision"
-#~ msgid "8-bit gamma integer"
-#~ msgstr "Număr întreg gamma pe 8 biți"
-
-#~ msgctxt "precision"
-#~ msgid "16-bit gamma integer"
-#~ msgstr "Număr întreg gamma pe 16 biți"
-
-#~ msgctxt "precision"
-#~ msgid "32-bit gamma integer"
-#~ msgstr "Număr întreg gamma pe 32 de biți"
-
-#~ msgctxt "precision"
-#~ msgid "16-bit gamma floating point"
-#~ msgstr "Virgulă mobilă gamma pe 16 biți"
-
-#~ msgctxt "precision"
-#~ msgid "32-bit gamma floating point"
-#~ msgstr "Virgulă mobilă gamma pe 32 de biți"
-
-#~ msgctxt "precision"
-#~ msgid "64-bit gamma floating point"
-#~ msgstr "Virgulă mobilă gamma pe 64 de biți"
-
-#, c-format
-#~ msgid "Conversion of the filename to system codepage failed."
-#~ msgstr ""
-#~ "Convertirea numelui de fișier în codul de pagină al sistemului a eșuat."
-
-#~ msgid ""
-#~ "The color profile to use for soft-proofing from your image's color space "
-#~ "to some other color space, including soft-proofing to a printer or other "
-#~ "output device profile. "
-#~ msgstr ""
-#~ "Profilul de culoare de folosit pentru simularea de tipărire (soft-"
-#~ "proofing) de la spațiul de culoare al imaginii către un alt spațiu de "
-#~ "culoare, inclusiv simulare de tipărire către o imprimantă sau un alt "
-#~ "profil de dispozitiv de ieșire. "
-
-#~ msgid ""
-#~ "How colors are converted from your image's color space to the output "
-#~ "simulation device (usually your monitor). Try them all and choose what "
-#~ "looks the best. "
-#~ msgstr ""
-#~ "Modul în care sunt convertite culorile din spațiul de culoare al imaginii "
-#~ "în dispozitivul de simulare de ieșire (de obicei monitorul propriu). "
-#~ "Încercați-le pe toate și alegeți varianta care arată cel mai bine. "
-
-#~ msgid ""
-#~ "Try with and without black point compensation and choose what looks best. "
-#~ msgstr ""
-#~ "Încercați cu și fără compensarea punctului de negru și alegeți varianta "
-#~ "care arată cel mai bine. "
-
-#~ msgid "_Help"
-#~ msgstr "A_jutor"
-
-#~ msgid "Anchor"
-#~ msgstr "Ancoră"
-
-#~ msgid "C_enter"
-#~ msgstr "C_entrează"
-
-#~ msgid "_Duplicate"
-#~ msgstr "_Duplică"
-
-#~ msgid "Linked"
-#~ msgstr "Legat"
-
-#~ msgid "Paste as New"
-#~ msgstr "Lipește ca nou"
-
-#~ msgid "Paste Into"
-#~ msgstr "Lipește în"
-
-#~ msgid "Visible"
-#~ msgstr "Vizibil"
-
-# buton de acțiune în fereastra de stroke path
-#~ msgid "_Stroke"
-#~ msgstr "Con_turează"
-
-#~ msgid "L_etter Spacing"
-#~ msgstr "Spați_ere între litere"
-
-#~ msgid "L_ine Spacing"
-#~ msgstr "Spaț_iere între rânduri"
-
-#~ msgid "Re_size"
-#~ msgstr "Redimen_sionează"
-
-#~ msgid "_Scale"
-#~ msgstr "_Scalează"
-
-#~ msgid "Cr_op"
-#~ msgstr "_Decupează"
-
-#~ msgid "_Select"
-#~ msgstr "_Selectează"
-
-#~ msgid "_Transform"
-#~ msgstr "_Transformă"
-
-#~ msgid "_Shear"
-#~ msgstr "_Înclină"
-
-# valabil la unitățile de măsură de afișate ca drop-down menu
-#~ msgid "More..."
-#~ msgstr "Mai multe..."
-
-#~ msgid "Unit Selection"
-#~ msgstr "Selecție unitate de măsură"
-
-#~ msgid "Unit"
-#~ msgstr "Unitate de măsură"
-
-#~ msgid "Factor"
-#~ msgstr "Factor"
