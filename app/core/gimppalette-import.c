@@ -207,7 +207,7 @@ gimp_palette_import_create_image_palette (gpointer data,
   gint         n_colors;
   gchar       *lab;
   GeglColor   *color;
-  guint8       rgb[3];
+  guint8       rgb[4];
 
   n_colors = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (palette),
                                                  "import-n-colors"));
@@ -228,6 +228,12 @@ gimp_palette_import_create_image_palette (gpointer data,
   rgb[0] = (guchar) color_tab->r + (color_tab->r_adj / color_tab->count);
   rgb[1] = (guchar) color_tab->g + (color_tab->g_adj / color_tab->count);
   rgb[2] = (guchar) color_tab->b + (color_tab->b_adj / color_tab->count);
+  /* TODO: We only receive the RGB values, so if the format has alpha, it
+   * becomes transparent when used outside of a palette. For now, we'll set
+   * alpha to 255, but in the future, a less RGB-specific implementation
+   * would be ideal */
+  if (babl_format_has_alpha (format))
+    rgb[3] = 255;
 
   gegl_color_set_pixel (color, format, rgb);
 
