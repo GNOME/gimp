@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-11-24 21:59+0000\n"
-"PO-Revision-Date: 2022-12-07 01:11+0200\n"
+"POT-Creation-Date: 2025-08-06 19:18+0000\n"
+"PO-Revision-Date: 2025-08-10 20:35+0300\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -17,562 +17,684 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2);;\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.6\n"
 
-#: plug-ins/python/colorxhtml.py:91
+#: plug-ins/python/colorxhtml.py:78
 msgid "Save as colored HTML text..."
-msgstr ""
+msgstr "Salvează ca text HTML colorat..."
 
-#: plug-ins/python/colorxhtml.py:96
-msgid "Read characters from file..."
-msgstr ""
-
-#: plug-ins/python/colorxhtml.py:115
-msgid "Characters"
-msgstr ""
-
-#: plug-ins/python/colorxhtml.py:116
-msgid "Characters that will be used as colored pixels. "
-msgstr ""
-
-#: plug-ins/python/colorxhtml.py:125
-msgid "Characters or file location"
-msgstr ""
-
-#: plug-ins/python/colorxhtml.py:131
-msgid "Read characters from file"
-msgstr ""
-
-#: plug-ins/python/colorxhtml.py:134
-msgid ""
-"If set, the Characters text entry will be used as a file name, from which "
-"the characters will be read. Otherwise, the characters in the text entry "
-"will be used to render the image."
-msgstr ""
-
-#: plug-ins/python/colorxhtml.py:140
-msgid "Choose file"
-msgstr ""
-
-#: plug-ins/python/colorxhtml.py:147
-msgid "Font Size(px)"
-msgstr ""
-
-#: plug-ins/python/colorxhtml.py:159
-msgid "Write separate CSS file"
-msgstr ""
-
-#: plug-ins/python/colorxhtml.py:215
+#: plug-ins/python/colorxhtml.py:137
 msgid "Saving as colored XHTML"
 msgstr "Salvare ca XHTML colorat"
 
-#: plug-ins/python/colorxhtml.py:284 plug-ins/python/colorxhtml.py:285
-msgid "_Read characters from file, if true, or use text entry"
+#: plug-ins/python/colorxhtml.py:211
+msgid "Save as colored HTML text"
+msgstr "Salvează ca text HTML colorat"
+
+#: plug-ins/python/colorxhtml.py:214
+msgid "Colored HTML text"
+msgstr "Text HTML colorat"
+
+#: plug-ins/python/colorxhtml.py:222
+msgid "Rea_d characters from file"
+msgstr "Citește caractere _din fișier"
+
+#: plug-ins/python/colorxhtml.py:223
+msgid "Read characters from file, if true, or use text entry"
 msgstr ""
+"Citește caracterele din fișier, dacă este adevărat, sau folosește "
+"introducerea de text"
 
-#: plug-ins/python/colorxhtml.py:289 plug-ins/python/colorxhtml.py:290
-msgid "_File to read or characters to use"
-msgstr "_Fișier de citit sau caracter pentru a fi utilizat"
+#: plug-ins/python/colorxhtml.py:225
+msgid "Charac_ters"
+msgstr "Carac_tere"
 
-#: plug-ins/python/colorxhtml.py:294 plug-ins/python/colorxhtml.py:295
+#: plug-ins/python/colorxhtml.py:226
+msgid "Characters that will be used as colored pixels."
+msgstr "Caracterele care vor fi utilizate drept pixeli colorați."
+
+#: plug-ins/python/colorxhtml.py:228
 msgid "Fo_nt size in pixels"
 msgstr "Dimensiune de fo_nt în pixeli"
 
-#: plug-ins/python/colorxhtml.py:299 plug-ins/python/colorxhtml.py:300
+#: plug-ins/python/colorxhtml.py:229
+msgid "Font size in pixels"
+msgstr "Dimensiunea fontului în pixeli"
+
+#: plug-ins/python/colorxhtml.py:231
 msgid "_Write a separate CSS file"
 msgstr "_Scrie un fișier CSS separat"
 
-#: plug-ins/python/colorxhtml.py:320
-msgid "Save as colored HTML text"
-msgstr ""
+#: plug-ins/python/colorxhtml.py:232
+msgid "Write a separate CSS file"
+msgstr "Scrie un fișier CSS separat"
 
-#: plug-ins/python/colorxhtml.py:323
-msgid "Colored HTML text"
-msgstr ""
+#. GUI only, used to create a widget to open a file if source-file is enabled
+#: plug-ins/python/colorxhtml.py:235
+msgid "Choose File"
+msgstr "Alegeți fișierul"
 
-#: plug-ins/python/foggify.py:104
-msgid "Layer _name"
-msgstr ""
+#: plug-ins/python/file-openraster.py:504
+#: plug-ins/python/file-openraster.py:505
+msgid "export an OpenRaster (.ora) file"
+msgstr "exportă un fișier OpenRaster (.ora)"
 
-#: plug-ins/python/foggify.py:105
-msgid "Layer name"
-msgstr ""
+#: plug-ins/python/file-openraster.py:507
+#: plug-ins/python/file-openraster.py:513
+msgid "OpenRaster"
+msgstr "OpenRaster"
 
-#: plug-ins/python/foggify.py:106
-msgid "Clouds"
-msgstr "Nori"
+#: plug-ins/python/file-openraster.py:514
+#: plug-ins/python/file-openraster.py:515
+msgid "load an OpenRaster (.ora) file"
+msgstr "încarcă un fișier OpenRaster (.ora)"
 
-#: plug-ins/python/foggify.py:109
-msgid "_Turbulence"
-msgstr "_Turbulență"
+#: plug-ins/python/file-openraster.py:524
+#: plug-ins/python/file-openraster.py:525
+msgid "loads a thumbnail from an OpenRaster (.ora) file"
+msgstr "încarcă o miniatură de la un fișier OpenRaster (.ora)"
 
-#: plug-ins/python/foggify.py:110
-msgid "Turbulence"
-msgstr ""
-
-#: plug-ins/python/foggify.py:114
-msgid "O_pacity"
-msgstr ""
-
-#: plug-ins/python/foggify.py:115
-msgid "Opacity"
-msgstr ""
-
-#: plug-ins/python/foggify.py:124
-msgid "_Fog color"
-msgstr "_Culoare de ceață"
-
-#: plug-ins/python/foggify.py:125
-msgid "Fog color"
-msgstr ""
-
-#: plug-ins/python/foggify.py:141
+#: plug-ins/python/foggify.py:119
 msgid "Add a layer of fog"
 msgstr "Adaugă un strat de ceață"
 
-#: plug-ins/python/foggify.py:142
+#: plug-ins/python/foggify.py:120
 msgid "Adds a layer of fog to the image."
-msgstr ""
+msgstr "Adaugă un strat de ceață la imagine."
 
-#: plug-ins/python/foggify.py:144
+#: plug-ins/python/foggify.py:122
 msgid "_Fog..."
 msgstr "_Ceață..."
 
-#: plug-ins/python/gradients-save-as-css.py:83
-msgid "CSS file..."
-msgstr ""
+#: plug-ins/python/foggify.py:128
+msgid "Layer _name"
+msgstr "_Numele stratului"
+
+#: plug-ins/python/foggify.py:128
+msgid "Layer name"
+msgstr "Numele stratului"
+
+#: plug-ins/python/foggify.py:129
+msgid "Clouds"
+msgstr "Nori"
+
+#: plug-ins/python/foggify.py:130
+msgid "_Fog color"
+msgstr "_Culoarea ceții"
+
+#: plug-ins/python/foggify.py:130
+msgid "Fog color"
+msgstr "Culoarea ceții"
+
+#: plug-ins/python/foggify.py:132
+msgid "_Turbulence"
+msgstr "_Turbulență"
+
+#: plug-ins/python/foggify.py:132
+msgid "Turbulence"
+msgstr "Turbulență"
+
+#: plug-ins/python/foggify.py:134
+msgid "O_pacity"
+msgstr "O_pacitate"
+
+#: plug-ins/python/foggify.py:134
+msgid "Opacity"
+msgstr "Opacitate"
+
+#: plug-ins/python/gradients-save-as-css.py:131
+#: plug-ins/python/gradients-save-as-css.py:132
+msgid "Creates a new palette from a given gradient"
+msgstr "Creează o nouă paletă dintr-un degrade dat"
+
+#: plug-ins/python/gradients-save-as-css.py:134
+msgid "Save Gradient as CSS..."
+msgstr "Salvează degradeul ca CSS..."
+
+#: plug-ins/python/gradients-save-as-css.py:140
+#: plug-ins/python/palette-export-as-kpl.py:176
+#: plug-ins/python/palette-offset.py:55 plug-ins/python/palette-sort.py:354
+#: plug-ins/python/palette-to-gradient.py:145
+#: plug-ins/python/python-console/python-console.py:323
+msgid "Run mode"
+msgstr "Mod de rulare"
 
 #: plug-ins/python/gradients-save-as-css.py:141
-#: plug-ins/python/palette-sort.py:332
-#: plug-ins/python/python-console/python-console.py:336
-msgid "Run mode"
-msgstr ""
-
-#: plug-ins/python/gradients-save-as-css.py:142
-#: plug-ins/python/palette-sort.py:333
-#: plug-ins/python/python-console/python-console.py:336
+#: plug-ins/python/palette-export-as-kpl.py:177
+#: plug-ins/python/palette-offset.py:56 plug-ins/python/palette-sort.py:355
+#: plug-ins/python/palette-to-gradient.py:146
+#: plug-ins/python/python-console/python-console.py:324
 msgid "The run mode"
-msgstr ""
+msgstr "Módul de rulare"
 
-#: plug-ins/python/gradients-save-as-css.py:146
-msgid "Gradient to use"
-msgstr "Degrade de folosit"
+#: plug-ins/python/gradients-save-as-css.py:144
+msgid "_Gradient to use"
+msgstr "De_gradeul de utilizat"
 
-#: plug-ins/python/gradients-save-as-css.py:149
-msgid "File"
-msgstr ""
+#: plug-ins/python/gradients-save-as-css.py:148
+msgid "_File"
+msgstr "_Fișier"
 
-#: plug-ins/python/gradients-save-as-css.py:167
-#: plug-ins/python/gradients-save-as-css.py:168
-msgid "Creates a new palette from a given gradient"
-msgstr ""
-
-#: plug-ins/python/histogram-export.py:92
-msgid "Pixel count"
-msgstr "Număr de pixeli"
-
-#: plug-ins/python/histogram-export.py:93
-msgid "Normalized"
-msgstr "Normalizat"
-
-#: plug-ins/python/histogram-export.py:94
-msgid "Percent"
-msgstr "Procent"
-
-#: plug-ins/python/histogram-export.py:166
+#: plug-ins/python/histogram-export.py:153
 msgid "File is either a directory or file name is empty."
-msgstr ""
+msgstr "Fișierul este fie un director, fie numele fișierului este gol."
 
-#: plug-ins/python/histogram-export.py:169
+#: plug-ins/python/histogram-export.py:156
 msgid "Directory not found."
-msgstr ""
+msgstr "Directorul nu a fost găsit."
 
-#: plug-ins/python/histogram-export.py:203
+#: plug-ins/python/histogram-export.py:170
 msgid "Histogram Export..."
-msgstr ""
+msgstr "Export de histogramă..."
 
-#: plug-ins/python/histogram-export.py:230
-msgid "_File..."
-msgstr ""
-
-#: plug-ins/python/histogram-export.py:238
-msgid "Choose export file..."
-msgstr ""
-
-#: plug-ins/python/histogram-export.py:244
-msgid "Histogram Export file..."
-msgstr ""
-
-#. Bucket size parameter
-#: plug-ins/python/histogram-export.py:250
-#: plug-ins/python/histogram-export.py:320
-msgid "_Bucket Size"
-msgstr "Dimensiunea _găleții"
-
-# în original pare a fi greșit
-#. Sample average parameter
-#: plug-ins/python/histogram-export.py:258
-#: plug-ins/python/histogram-export.py:325
-msgid "Sample _Average"
-msgstr "Eș_antionare fuzionată"
-
-#: plug-ins/python/histogram-export.py:259
-msgid ""
-"If checked, the histogram is generated from merging all visible layers. "
-"Otherwise, the histogram is only for the current layer."
-msgstr ""
-
-#. Output format parameter
-#: plug-ins/python/histogram-export.py:265
-msgid "_Output Format"
-msgstr ""
-
-#: plug-ins/python/histogram-export.py:316
-msgid "Histogram _File"
-msgstr "_Fișier de histogramă"
-
-#: plug-ins/python/histogram-export.py:330
-msgid "Output format"
-msgstr "Format de ieșire"
-
-#: plug-ins/python/histogram-export.py:352
+#: plug-ins/python/histogram-export.py:213
 msgid "Exports the image histogram to a text file (CSV)"
 msgstr "Exportă histograma imaginii într-un fișier text (CSV)"
 
-#: plug-ins/python/histogram-export.py:355
+#: plug-ins/python/histogram-export.py:216
 msgid "_Export histogram..."
 msgstr "_Export de histogramă..."
 
-#: plug-ins/python/palette-offset.py:46 plug-ins/python/palette-offset.py:47
-#: plug-ins/python/palette-sort.py:339 plug-ins/python/palette-sort.py:340
-#: plug-ins/python/palette-sort.py:398 plug-ins/python/palette-sort.py:399
-#: plug-ins/python/palette-to-gradient.py:103
-msgid "Palette"
-msgstr "Paletă"
+#. TODO: GFile props still don't have labels + only load existing files
+#. (here we likely want to create a new file).
+#: plug-ins/python/histogram-export.py:224
+msgid "Histogram File"
+msgstr "Fișier histogramă"
 
-#: plug-ins/python/palette-offset.py:58
-msgid "Off_set"
-msgstr "_Decalaj"
+#: plug-ins/python/histogram-export.py:225
+msgid "Histogram export file"
+msgstr "Fișier de exportare a histogramei"
 
-#: plug-ins/python/palette-offset.py:59
-msgid "Offset"
-msgstr ""
+#: plug-ins/python/histogram-export.py:227
+msgid "_Bucket Size"
+msgstr "Dimensiunea _găleții"
 
-#: plug-ins/python/palette-offset.py:70
-msgid "Name of the edited palette"
-msgstr ""
+#: plug-ins/python/histogram-export.py:227
+msgid "Bucket Size"
+msgstr "Dimensiunea găleții"
 
-#: plug-ins/python/palette-offset.py:71
-msgid ""
-"Name of the newly created palette if read-only or the input palette otherwise"
-msgstr ""
+#: plug-ins/python/histogram-export.py:229
+msgid "Sample _Average"
+msgstr "Medi_a eșantionului"
 
-#: plug-ins/python/palette-offset.py:91
+#: plug-ins/python/histogram-export.py:229
+msgid "Sample Average"
+msgstr "Media eșantionului"
+
+#: plug-ins/python/histogram-export.py:232
+msgid "Pixel Count"
+msgstr "Număr de pixeli"
+
+#: plug-ins/python/histogram-export.py:233
+msgid "Normalized"
+msgstr "Normalizat"
+
+#: plug-ins/python/histogram-export.py:234
+msgid "Percent"
+msgstr "Procent"
+
+#: plug-ins/python/histogram-export.py:235
+msgid "Output _format"
+msgstr "_Format de ieșire"
+
+#: plug-ins/python/histogram-export.py:235
+msgid "Output format"
+msgstr "Format de ieșire"
+
+#: plug-ins/python/palette-export-as-kpl.py:55
+msgid "Options"
+msgstr "Opțiuni"
+
+#: plug-ins/python/palette-export-as-kpl.py:60
+msgid "_Export"
+msgstr "_Exportă"
+
+#: plug-ins/python/palette-export-as-kpl.py:167
+#: plug-ins/python/palette-export-as-kpl.py:168
+msgid "Export palette as Krita .kpl"
+msgstr "Exportă paleta ca Krita .kpl"
+
+#: plug-ins/python/palette-export-as-kpl.py:170
+msgid "_Krita palette..."
+msgstr "Paletă _Krita..."
+
+#: plug-ins/python/palette-export-as-kpl.py:180
+msgid "_Palette to export"
+msgstr "_Paletă de exportat"
+
+#: plug-ins/python/palette-export-as-kpl.py:184
+msgid "_File (.kpl)"
+msgstr "_Fișier (.kpl)"
+
+#: plug-ins/python/palette-export-as-kpl.py:187
+msgid "Commen_t"
+msgstr "Comen_tariu"
+
+#: plug-ins/python/palette-export-as-kpl.py:188
+msgid "Optional comment"
+msgstr "Comentariu opțional"
+
+#: plug-ins/python/palette-export-as-kpl.py:191
+msgid "Re_ad only"
+msgstr "Do_ar în citire"
+
+#: plug-ins/python/palette-export-as-kpl.py:192
+msgid "The palette will be locked on import"
+msgstr "Paleta va fi blocată la import"
+
+#: plug-ins/python/palette-offset.py:48
 msgid "_Offset Palette..."
 msgstr "_Decalează paleta..."
 
-#: plug-ins/python/palette-offset.py:92
+#: plug-ins/python/palette-offset.py:49
 msgid "Offset the colors in a palette"
 msgstr "Decalează culorile într-o paletă"
 
-#: plug-ins/python/palette-offset.py:140
-msgid "Offset Palette..."
-msgstr ""
+#: plug-ins/python/palette-offset.py:59 plug-ins/python/palette-sort.py:358
+#: plug-ins/python/palette-to-gradient.py:149
+msgid "_Palette"
+msgstr "_Paletă"
 
-#: plug-ins/python/palette-sort.py:40
+#: plug-ins/python/palette-offset.py:60 plug-ins/python/palette-sort.py:359
+#: plug-ins/python/palette-sort.py:400 plug-ins/python/palette-sort.py:401
+#: plug-ins/python/palette-to-gradient.py:150
+msgid "Palette"
+msgstr "Paletă"
+
+#: plug-ins/python/palette-offset.py:63
+msgid "O_ffset"
+msgstr "_Decalaj"
+
+#: plug-ins/python/palette-offset.py:63
+msgid "Offset"
+msgstr "Decalaj"
+
+#: plug-ins/python/palette-offset.py:65
+msgid "The edited palette"
+msgstr "Paleta editată"
+
+#: plug-ins/python/palette-offset.py:66
+msgid "The newly created palette when read-only, otherwise the input palette"
+msgstr ""
+"Paleta nou creată atunci când este doar pentru citire, altfel paleta de "
+"intrare"
+
+#. TODO: Re-incorporate LAB and LCHab options with GeglColor
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:465
 msgid "Red"
 msgstr "Roșu"
 
-#: plug-ins/python/palette-sort.py:40
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:466
 msgid "Green"
 msgstr "Verde"
 
-#: plug-ins/python/palette-sort.py:40
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:467
 msgid "Blue"
 msgstr "Albastru"
 
-#: plug-ins/python/palette-sort.py:41
+#: plug-ins/python/palette-sort.py:46 plug-ins/python/palette-sort.py:468
 msgid "Luma (Y)"
 msgstr "Luminanță (Y)"
 
-#: plug-ins/python/palette-sort.py:42
+#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:469
 msgid "Hue"
 msgstr "Nuanță"
 
-#: plug-ins/python/palette-sort.py:42
+#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:470
 msgid "Saturation"
 msgstr "Saturație"
 
-#: plug-ins/python/palette-sort.py:42
+#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:471
 msgid "Value"
 msgstr "Valoare"
 
-#: plug-ins/python/palette-sort.py:43
+#: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:472
 msgid "Saturation (HSL)"
 msgstr "Saturație (HSL)"
 
-#: plug-ins/python/palette-sort.py:43
+#: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:473
 msgid "Lightness (HSL)"
 msgstr "Luminozitate (HSL)"
 
-#: plug-ins/python/palette-sort.py:44
+#: plug-ins/python/palette-sort.py:49 plug-ins/python/palette-sort.py:474
 msgid "Index"
 msgstr "Index"
 
-#: plug-ins/python/palette-sort.py:45
+#: plug-ins/python/palette-sort.py:50 plug-ins/python/palette-sort.py:475
 msgid "Random"
 msgstr "Aleator"
 
-#: plug-ins/python/palette-sort.py:90
-msgid "Lightness (LAB)"
-msgstr "Luminozitate (LAB)"
-
-#: plug-ins/python/palette-sort.py:91
-msgid "A-color"
-msgstr "Culoare A"
-
-#: plug-ins/python/palette-sort.py:91
-msgid "B-color"
-msgstr "Culoare B"
-
-#: plug-ins/python/palette-sort.py:92
-msgid "Chroma (LCHab)"
-msgstr "Crominanță (LCHab)"
-
-#: plug-ins/python/palette-sort.py:93
-msgid "Hue (LCHab)"
-msgstr "Nuanță (LCHab)"
-
-#: plug-ins/python/palette-sort.py:327
-msgid "All"
-msgstr "Tot"
-
-#: plug-ins/python/palette-sort.py:327
-msgid "Slice / Array"
-msgstr "Felie / Matrice"
-
-#: plug-ins/python/palette-sort.py:327
-msgid "Autoslice (fg->bg)"
-msgstr "Feliere automată (prim-plan->fundal)"
-
-#: plug-ins/python/palette-sort.py:327
-msgid "Partitioned"
-msgstr "Partiționat"
-
-#: plug-ins/python/palette-sort.py:344
-msgid "Se_lections"
-msgstr "Se_lecții"
-
-#: plug-ins/python/palette-sort.py:351
-msgid "Slice _expression"
-msgstr "_Expresia feliei"
-
-#: plug-ins/python/palette-sort.py:358
-msgid "Channel to _sort"
-msgstr "Canal de _sortat"
-
-#: plug-ins/python/palette-sort.py:363 plug-ins/python/palette-sort.py:375
-msgid "_Ascending"
-msgstr "_Ascendent"
-
-#: plug-ins/python/palette-sort.py:364 plug-ins/python/palette-sort.py:376
-msgid "Ascending"
+#: plug-ins/python/palette-sort.py:94
+msgid ""
+"\n"
+"    Format is 'start:nrows,length' . All items are optional.\n"
+"\n"
+"    The empty string selects all items, as does ':'\n"
+"    ':4,' makes a 4-row selection out of all colors (length auto-"
+"determined)\n"
+"    ':4' also.\n"
+"    ':1,4' selects the first 4 colors\n"
+"    ':,4' selects rows of 4 colors (nrows auto-determined)\n"
+"    ':3,4' selects 3 rows of 4 colors\n"
+"    '4:' selects a single row of all colors after 4, inclusive.\n"
+"    '3:,4' selects rows of 4 colors, starting at 3 (nrows auto-determined)\n"
+"    '2:3,4' selects 3 rows of 4 colors (12 colors total), beginning at index "
+"2.\n"
+"    '4' is illegal (ambiguous)\n"
 msgstr ""
+"\n"
+"Formatul este 'start:nrows,length'. Toate elementele sunt opționale.\n"
+"\n"
+"Șirul gol selectează toate elementele, la fel ca și ':'\n"
+"':4,' face o selecție de 4 rânduri din toate culorile (lungimea este "
+"determinată automat)\n"
+"':4' de asemenea.\n"
+"':1,4' selectează primele 4 culori\n"
+"':,4' selectează rânduri de 4 culori (nrows este determinat automat)\n"
+"':3,4' selectează 3 rânduri de 4 culori\n"
+"'4:' selectează un singur rând din toate culorile după 4, inclusiv.\n"
+"'3:,4' selectează rânduri de 4 culori, începând de la 3 (nrows este "
+"determinat automat)\n"
+"'2:3,4' selectează 3 rânduri de 4 culori (12 culori în total), începând de "
+"la indexul 2.\n"
+"'4' este nelegal (ambiguu)\n"
 
-#: plug-ins/python/palette-sort.py:370
-msgid "Secondary Channel to s_ort"
-msgstr "Canalul secundar de s_ortat"
-
-#: plug-ins/python/palette-sort.py:380
-msgid "_Quantization"
-msgstr "_Cuantificare"
-
-#: plug-ins/python/palette-sort.py:381
-msgid "Quantization"
-msgstr ""
-
-#: plug-ins/python/palette-sort.py:386
-msgid "_Partitioning channel"
-msgstr "Canal de _partiționare"
-
-#: plug-ins/python/palette-sort.py:391
-msgid "Partition q_uantization"
-msgstr "C_uantificare de partiționare"
-
-#: plug-ins/python/palette-sort.py:392
-msgid "Partition quantization"
-msgstr ""
-
-#: plug-ins/python/palette-sort.py:417
+#: plug-ins/python/palette-sort.py:343
 msgid "_Sort Palette..."
 msgstr "_Sortează paleta..."
 
-#: plug-ins/python/palette-sort.py:422
+#: plug-ins/python/palette-sort.py:345
 msgid "Sort the colors in a palette"
 msgstr "Sortează culorile într-o paletă"
 
-#: plug-ins/python/palette-to-gradient.py:115
-#: plug-ins/python/palette-to-gradient.py:116
-msgid "Name of the newly created gradient"
-msgstr ""
+#: plug-ins/python/palette-sort.py:364
+msgid "All"
+msgstr "Tot"
 
-#: plug-ins/python/palette-to-gradient.py:138
+#: plug-ins/python/palette-sort.py:365
+msgid "Slice / Array"
+msgstr "Felie / Matrice"
+
+#: plug-ins/python/palette-sort.py:366
+msgid "Autoslice (fg->bg)"
+msgstr "Feliere automată (prim-plan->fundal)"
+
+#: plug-ins/python/palette-sort.py:367
+msgid "Partitioned"
+msgstr "Partiționat"
+
+#: plug-ins/python/palette-sort.py:368
+msgid "Select_ions"
+msgstr "Selecț_ii"
+
+#: plug-ins/python/palette-sort.py:368
+msgid "Selections"
+msgstr "Selecții"
+
+#. TODO: It would be much simpler to replace the slice expression with three
+#. separate parameters: start-index, number-of-rows, row_length
+#: plug-ins/python/palette-sort.py:372
+msgid "Slice _expression"
+msgstr "_Expresia feliei"
+
+#: plug-ins/python/palette-sort.py:377
+msgid "Channel _to sort"
+msgstr "Canalul de sor_tat"
+
+#: plug-ins/python/palette-sort.py:377
+msgid "Channel to sort"
+msgstr "Canalul de sortat"
+
+#: plug-ins/python/palette-sort.py:379
+msgid "_Ascending"
+msgstr "_Ascendent"
+
+#: plug-ins/python/palette-sort.py:379 plug-ins/python/palette-sort.py:386
+msgid "Ascending"
+msgstr "Crescător"
+
+#: plug-ins/python/palette-sort.py:383
+msgid "Secondary C_hannel to sort"
+msgstr "_Canalul secundar de sortat"
+
+#: plug-ins/python/palette-sort.py:384
+msgid "Secondary Channel to sort"
+msgstr "Canalul secundar de sortat"
+
+#: plug-ins/python/palette-sort.py:386
+msgid "Ascen_ding"
+msgstr "_Crescător"
+
+#: plug-ins/python/palette-sort.py:388
+msgid "_Quantization"
+msgstr "_Cuantificare"
+
+#: plug-ins/python/palette-sort.py:389
+msgid "Quantization"
+msgstr "Cuantizare"
+
+#: plug-ins/python/palette-sort.py:393
+msgid "Partitionin_g channel"
+msgstr "_Canal de partiționare"
+
+#: plug-ins/python/palette-sort.py:394
+msgid "Partitioning channel"
+msgstr "Canal de partiționare"
+
+#: plug-ins/python/palette-sort.py:396
+msgid "Partition q_uantization"
+msgstr "C_uantificare de partiționare"
+
+#: plug-ins/python/palette-sort.py:397
+msgid "Partition quantization"
+msgstr "Cuantizare partiții"
+
+#: plug-ins/python/palette-sort.py:476
+msgid "Lightness (LAB)"
+msgstr "Luminozitate (LAB)"
+
+#: plug-ins/python/palette-sort.py:477
+msgid "A-color"
+msgstr "Culoare A"
+
+#: plug-ins/python/palette-sort.py:478
+msgid "B-color"
+msgstr "Culoare B"
+
+#: plug-ins/python/palette-sort.py:479
+msgid "Chroma (LCHab)"
+msgstr "Crominanță (LCHab)"
+
+#: plug-ins/python/palette-sort.py:480
+msgid "Hue (LCHab)"
+msgstr "Nuanță (LCHab)"
+
+#: plug-ins/python/palette-to-gradient.py:129
 msgid "Palette to _Gradient"
 msgstr "Paletă la de_grade"
 
-#: plug-ins/python/palette-to-gradient.py:139
+#: plug-ins/python/palette-to-gradient.py:130
 msgid "Create a gradient using colors from the palette"
 msgstr "Creează un degrade folosind culorile din paletă"
 
-#: plug-ins/python/palette-to-gradient.py:140
+#: plug-ins/python/palette-to-gradient.py:131
 msgid "Create a new gradient using colors from the palette."
-msgstr ""
+msgstr "Creează un nou degrade folosind culori din paletă."
 
-#: plug-ins/python/palette-to-gradient.py:143
+#: plug-ins/python/palette-to-gradient.py:134
 msgid "Palette to _Repeating Gradient"
 msgstr "Paletă la degrade _repetitiv"
 
-#: plug-ins/python/palette-to-gradient.py:144
+#: plug-ins/python/palette-to-gradient.py:135
 msgid "Create a repeating gradient using colors from the palette"
 msgstr "Creează un degrade repetitiv folosind culorile din paletă"
 
-#: plug-ins/python/palette-to-gradient.py:145
+#: plug-ins/python/palette-to-gradient.py:136
 msgid "Create a new repeating gradient using colors from the palette."
-msgstr ""
+msgstr "Creează un nou degrade repetitiv folosind culori din paletă."
 
-#: plug-ins/python/python-console/python-console.py:77
+#: plug-ins/python/palette-to-gradient.py:153
+#: plug-ins/python/palette-to-gradient.py:154
+msgid "The newly created gradient"
+msgstr "Degradeul nou creat"
+
+#: plug-ins/python/python-console/python-console.py:79
 msgid "Python Console"
 msgstr "Consolă Python"
 
 #: plug-ins/python/python-console/python-console.py:81
+#: plug-ins/python/python-console/python-console.py:279
+msgid "_Save"
+msgstr "_Salvează"
+
+#: plug-ins/python/python-console/python-console.py:82
+msgid "Cl_ear"
+msgstr "Gol_ește"
+
+#: plug-ins/python/python-console/python-console.py:83
 msgid "_Browse..."
 msgstr "_Răsfoiește..."
 
-#: plug-ins/python/python-console/python-console.py:257
+#: plug-ins/python/python-console/python-console.py:84
+#: plug-ins/python/python-console/python-console.py:227
+msgid "_Close"
+msgstr "În_chide"
+
+#: plug-ins/python/python-console/python-console.py:224
 msgid "Python Procedure Browser"
 msgstr "Navigator de procedură Python"
 
-#: plug-ins/python/python-console/python-console.py:285
+#: plug-ins/python/python-console/python-console.py:226
+msgid "_Apply"
+msgstr "_Aplică"
+
+#: plug-ins/python/python-console/python-console.py:252
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Nu s-a putut deschide „%s” pentru scriere: %s"
 
-#: plug-ins/python/python-console/python-console.py:300
+#: plug-ins/python/python-console/python-console.py:267
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Nu s-a putut scrie în „%s”: %s"
 
-#: plug-ins/python/python-console/python-console.py:309
+#: plug-ins/python/python-console/python-console.py:276
 msgid "Save Python-Fu Console Output"
 msgstr "Salvează ieșirea consolei Python-Fu"
 
-#: plug-ins/python/python-console/python-console.py:357
-msgid "Python _Console"
-msgstr ""
+#: plug-ins/python/python-console/python-console.py:278
+#: plug-ins/python/spyro-plus.py:1750
+msgid "_Cancel"
+msgstr "_Anulează"
 
-#: plug-ins/python/python-console/python-console.py:358
+#: plug-ins/python/python-console/python-console.py:316
+msgid "Python _Console"
+msgstr "_Consolă Python"
+
+#: plug-ins/python/python-console/python-console.py:317
 msgid "Interactive GIMP Python interpreter"
 msgstr "Interpretor interactiv GIMP Python"
 
-#: plug-ins/python/python-console/python-console.py:359
+#: plug-ins/python/python-console/python-console.py:318
 msgid "Type in commands and see results"
-msgstr ""
+msgstr "Introduceți comenzile și vedeți rezultatele"
 
-#: plug-ins/python/spyro-plus.py:49
+#: plug-ins/python/spyro-plus.py:51
 msgid "Spyro Layer"
 msgstr "Strat spyro"
 
-#: plug-ins/python/spyro-plus.py:50
+#: plug-ins/python/spyro-plus.py:52
 msgid "Spyro Path"
 msgstr "Traseu spyro"
 
-#: plug-ins/python/spyro-plus.py:60
-msgid "As New Layer"
-msgstr ""
-
-#: plug-ins/python/spyro-plus.py:61
-msgid "Redraw on last active layer"
-msgstr ""
-
 #: plug-ins/python/spyro-plus.py:62
-msgid "As Path"
-msgstr ""
+msgid "As New Layer"
+msgstr "Ca strat nou"
 
-#: plug-ins/python/spyro-plus.py:110
+#: plug-ins/python/spyro-plus.py:63
+msgid "Redraw on last active layer"
+msgstr "Redesenează pe ultimul strat activ"
+
+#: plug-ins/python/spyro-plus.py:64
+msgid "As Path"
+msgstr "Ca traseu"
+
+#: plug-ins/python/spyro-plus.py:112 plug-ins/python/spyro-plus.py:2270
 msgid "Circle"
 msgstr "Cerc"
 
-#: plug-ins/python/spyro-plus.py:146
+#: plug-ins/python/spyro-plus.py:148 plug-ins/python/spyro-plus.py:2274
 msgid "Polygon-Star"
 msgstr "Stea-poligon"
 
 #. Sine wave on a circle ring.
-#: plug-ins/python/spyro-plus.py:162 plug-ins/python/spyro-plus.py:989
+#: plug-ins/python/spyro-plus.py:164 plug-ins/python/spyro-plus.py:1011
+#: plug-ins/python/spyro-plus.py:2265 plug-ins/python/spyro-plus.py:2275
 msgid "Sine"
 msgstr "Sinusoidal"
 
 #. Semi-circles, based on a polygon
-#: plug-ins/python/spyro-plus.py:172
+#: plug-ins/python/spyro-plus.py:174 plug-ins/python/spyro-plus.py:2276
 msgid "Bumps"
 msgstr "Protuberanțe"
 
-#: plug-ins/python/spyro-plus.py:277
+#: plug-ins/python/spyro-plus.py:279
 msgid "Rack"
 msgstr "Raft"
 
-#: plug-ins/python/spyro-plus.py:321
+#: plug-ins/python/spyro-plus.py:323
 msgid "Frame"
 msgstr "Cadru"
 
-#: plug-ins/python/spyro-plus.py:438
+#: plug-ins/python/spyro-plus.py:436 plug-ins/python/spyro-plus.py:2273
 msgid "Selection"
 msgstr "Selecție"
 
-#: plug-ins/python/spyro-plus.py:525
+#: plug-ins/python/spyro-plus.py:541 plug-ins/python/spyro-plus.py:2310
 msgid "Pencil"
 msgstr "Creion"
 
-#: plug-ins/python/spyro-plus.py:541
+#: plug-ins/python/spyro-plus.py:557 plug-ins/python/spyro-plus.py:2311
 msgid "AirBrush"
 msgstr "Aerograf"
 
-#: plug-ins/python/spyro-plus.py:601
+#: plug-ins/python/spyro-plus.py:624 plug-ins/python/spyro-plus.py:2308
 msgid "Preview"
 msgstr "Previzualizare"
 
-#: plug-ins/python/spyro-plus.py:606
+#: plug-ins/python/spyro-plus.py:629 plug-ins/python/spyro-plus.py:2312
 msgid "Stroke"
 msgstr "Tușă"
 
-#: plug-ins/python/spyro-plus.py:653
+#: plug-ins/python/spyro-plus.py:676 plug-ins/python/spyro-plus.py:2309
 msgid "PaintBrush"
 msgstr "Pensulă de pictură"
 
-#: plug-ins/python/spyro-plus.py:655
+#: plug-ins/python/spyro-plus.py:680 plug-ins/python/spyro-plus.py:2313
 msgid "Ink"
 msgstr "Cerneală"
 
-#: plug-ins/python/spyro-plus.py:656
+#: plug-ins/python/spyro-plus.py:681 plug-ins/python/spyro-plus.py:2314
 msgid "MyPaintBrush"
 msgstr "Pensulă MyPaint"
 
-#: plug-ins/python/spyro-plus.py:975
+#: plug-ins/python/spyro-plus.py:997 plug-ins/python/spyro-plus.py:2263
 msgid "Spyrograph"
 msgstr "Spyrograph"
 
-#: plug-ins/python/spyro-plus.py:982
+#: plug-ins/python/spyro-plus.py:1004 plug-ins/python/spyro-plus.py:2264
 msgid "Epitrochoid"
 msgstr "Epitrochoid"
 
-#: plug-ins/python/spyro-plus.py:1009
+#: plug-ins/python/spyro-plus.py:1031 plug-ins/python/spyro-plus.py:2266
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: plug-ins/python/spyro-plus.py:1456
+#: plug-ins/python/spyro-plus.py:1487 plug-ins/python/spyro-plus.py:2267
 msgid "Curve Type"
 msgstr "Tip de curbă"
 
-#: plug-ins/python/spyro-plus.py:1457
+#: plug-ins/python/spyro-plus.py:1488
 msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
@@ -580,22 +702,23 @@ msgstr ""
 "Un model epitrochoid este atunci când roata dințată mobilă este pe partea "
 "exterioară a roții dințate fixe."
 
-#: plug-ins/python/spyro-plus.py:1462
+#. TODO: Add Clone option once it's fixed
+#: plug-ins/python/spyro-plus.py:1493 plug-ins/python/spyro-plus.py:2316
 msgid "Tool"
 msgstr "Instrument"
 
-#: plug-ins/python/spyro-plus.py:1463
+#: plug-ins/python/spyro-plus.py:1494
 msgid ""
 "The tool with which to draw the pattern. The Preview tool just draws quickly."
 msgstr ""
 "Instrumentul cu care să fie desenat modelul. Instrumentul de previzualizare "
 "desenează doar o schiță rapidă."
 
-#: plug-ins/python/spyro-plus.py:1468
+#: plug-ins/python/spyro-plus.py:1499
 msgid "Long Gradient"
 msgstr "Degrade lung"
 
-#: plug-ins/python/spyro-plus.py:1470
+#: plug-ins/python/spyro-plus.py:1501
 msgid ""
 "When unchecked, the current tool settings will be used. When checked, will "
 "use a long gradient to match the length of the pattern, based on current "
@@ -606,11 +729,11 @@ msgstr ""
 "pentru a se potrivi cu lungimea modelului, pe baza degradeului curent și a "
 "modului de repetare din configurările instrumentului de degrade."
 
-#: plug-ins/python/spyro-plus.py:1490
+#: plug-ins/python/spyro-plus.py:1521
 msgid "Specify pattern using one of the following tabs:"
 msgstr "Specificați modelul folosind una dintre următoarele file:"
 
-#: plug-ins/python/spyro-plus.py:1492
+#: plug-ins/python/spyro-plus.py:1523
 msgid ""
 "The pattern is specified only by the active tab. Toy Kit is similar to "
 "Gears, but it uses gears and hole numbers which are found in toy kits. If "
@@ -622,7 +745,7 @@ msgstr ""
 "regăsesc în kiturile de jucării. Dacă urmați instrucțiunile din manualele "
 "kitului de jucării, rezultatele ar trebui să fie similare."
 
-#: plug-ins/python/spyro-plus.py:1516
+#: plug-ins/python/spyro-plus.py:1547
 msgid ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
@@ -630,11 +753,11 @@ msgstr ""
 "Numărul de dinți ai roții dințate fixe. Dimensiunea roții dințate fixe este "
 "proporțională cu numărul de dinți."
 
-#: plug-ins/python/spyro-plus.py:1519 plug-ins/python/spyro-plus.py:1547
+#: plug-ins/python/spyro-plus.py:1550 plug-ins/python/spyro-plus.py:1578
 msgid "Fixed Gear Teeth"
 msgstr "Dinții roții dințate fixe"
 
-#: plug-ins/python/spyro-plus.py:1527
+#: plug-ins/python/spyro-plus.py:1558
 msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
@@ -642,15 +765,15 @@ msgstr ""
 "Numărul de dinți ai roții dințate mobile. Dimensiunea roții dințate mobile "
 "este proporțională cu numărul de dinți."
 
-#: plug-ins/python/spyro-plus.py:1530 plug-ins/python/spyro-plus.py:1552
+#: plug-ins/python/spyro-plus.py:1561 plug-ins/python/spyro-plus.py:1583
 msgid "Moving Gear Teeth"
 msgstr "Dinții roții dințate mobile"
 
-#: plug-ins/python/spyro-plus.py:1535
+#: plug-ins/python/spyro-plus.py:1566
 msgid "Hole percent"
 msgstr "Procentul găurii"
 
-#: plug-ins/python/spyro-plus.py:1536
+#: plug-ins/python/spyro-plus.py:1567
 msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
@@ -658,11 +781,11 @@ msgstr ""
 "Cât de departe să fie gaura din centrul roții dințate mobile. 100% înseamnă "
 "că gaura este la marginea roții dințate."
 
-#: plug-ins/python/spyro-plus.py:1557
+#: plug-ins/python/spyro-plus.py:1588
 msgid "Hole Number"
 msgstr "Numărul de găuri"
 
-#: plug-ins/python/spyro-plus.py:1558
+#: plug-ins/python/spyro-plus.py:1589
 msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
@@ -671,27 +794,27 @@ msgstr ""
 "aproape de centru. Numărul maxim de găuri este diferit pentru fiecare roată "
 "dințată."
 
-#: plug-ins/python/spyro-plus.py:1569
+#: plug-ins/python/spyro-plus.py:1600
 msgid "Flower Petals"
 msgstr "Petale de floare"
 
-#: plug-ins/python/spyro-plus.py:1570
+#: plug-ins/python/spyro-plus.py:1601
 msgid "The number of petals in the pattern."
 msgstr "Numărul de petale în model."
 
-#: plug-ins/python/spyro-plus.py:1575
+#: plug-ins/python/spyro-plus.py:1606
 msgid "Petal Skip"
 msgstr "Petale omise"
 
-#: plug-ins/python/spyro-plus.py:1576
+#: plug-ins/python/spyro-plus.py:1607
 msgid "The number of petals to advance for drawing the next petal."
 msgstr "Numărul de petale de avansat pentru desenarea următoarei petale."
 
-#: plug-ins/python/spyro-plus.py:1581
+#: plug-ins/python/spyro-plus.py:1612
 msgid "Hole Radius(%)"
 msgstr "Raza găurii (%)"
 
-#: plug-ins/python/spyro-plus.py:1582
+#: plug-ins/python/spyro-plus.py:1613
 msgid ""
 "The radius of the hole in the center of the pattern where nothing will be "
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
@@ -701,11 +824,11 @@ msgstr ""
 "procent din dimensiunea modelului. O valoare de 0 nu va produce nicio gaură. "
 "O valoare de 99 va produce o linie subțire pe margine."
 
-#: plug-ins/python/spyro-plus.py:1603
+#: plug-ins/python/spyro-plus.py:1634
 msgid "Width(%)"
 msgstr "Lățime(%)"
 
-#: plug-ins/python/spyro-plus.py:1604
+#: plug-ins/python/spyro-plus.py:1635
 msgid ""
 "The width of the pattern as a percentage of the size of the pattern. A Value "
 "of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
@@ -715,23 +838,23 @@ msgstr ""
 "desena doar un model subțire. O valoare de 100 va umple întreaga roată "
 "dințată fixă."
 
-#: plug-ins/python/spyro-plus.py:1615
+#: plug-ins/python/spyro-plus.py:1646
 msgid "Visual"
 msgstr "Vizual"
 
-#: plug-ins/python/spyro-plus.py:1621
+#: plug-ins/python/spyro-plus.py:1652
 msgid "Toy Kit"
 msgstr "Kit de jucării"
 
-#: plug-ins/python/spyro-plus.py:1627
+#: plug-ins/python/spyro-plus.py:1658
 msgid "Gears"
 msgstr "Roți dințate"
 
-#: plug-ins/python/spyro-plus.py:1640 plug-ins/python/spyro-plus.py:1684
+#: plug-ins/python/spyro-plus.py:1671 plug-ins/python/spyro-plus.py:1715
 msgid "Rotation"
 msgstr "Rotație"
 
-#: plug-ins/python/spyro-plus.py:1641
+#: plug-ins/python/spyro-plus.py:1672
 msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
@@ -739,11 +862,11 @@ msgstr ""
 "Rotația modelului, în grade. Poziția de pornire a roții dințate mobile în "
 "roata dințată fixă."
 
-#: plug-ins/python/spyro-plus.py:1664
+#: plug-ins/python/spyro-plus.py:1695 plug-ins/python/spyro-plus.py:2277
 msgid "Shape"
 msgstr "Formă"
 
-#: plug-ins/python/spyro-plus.py:1665
+#: plug-ins/python/spyro-plus.py:1696
 msgid ""
 "The shape of the fixed gear to be used inside current selection. Rack is a "
 "long round-edged shape provided in the toy kits. Frame hugs the boundaries "
@@ -757,39 +880,40 @@ msgstr ""
 "notația roții dințate pentru a atinge limita. Selecția va îmbrățișa "
 "granițele selecției curente - încercați ceva non-dreptunghiular."
 
-#: plug-ins/python/spyro-plus.py:1674
+#: plug-ins/python/spyro-plus.py:1705
 msgid "Sides"
 msgstr "Fețe"
 
-#: plug-ins/python/spyro-plus.py:1674
+#: plug-ins/python/spyro-plus.py:1705
 msgid "Number of sides of the shape."
 msgstr "Numărul de fețe ale formei."
 
-#: plug-ins/python/spyro-plus.py:1679
+#: plug-ins/python/spyro-plus.py:1710
 msgid "Morph"
 msgstr "Transformare"
 
-#: plug-ins/python/spyro-plus.py:1679
+#: plug-ins/python/spyro-plus.py:1710
 msgid "Morph fixed gear shape. Only affects some of the shapes."
 msgstr "Transformă roata dințată fixă. Afectează doar unele dintre forme."
 
-#: plug-ins/python/spyro-plus.py:1684
+#: plug-ins/python/spyro-plus.py:1715
 msgid "Rotation of the fixed gear, in degrees"
 msgstr "Rotația roții dințate fixe, în grade"
 
-#: plug-ins/python/spyro-plus.py:1699
+#: plug-ins/python/spyro-plus.py:1730
 msgid "Margin (px)"
 msgstr "Margine (px)"
 
-#: plug-ins/python/spyro-plus.py:1699
+#: plug-ins/python/spyro-plus.py:1730
 msgid "Margin from edge of selection."
 msgstr "Marginea de la marginea selecției."
 
-#: plug-ins/python/spyro-plus.py:1704
+#: plug-ins/python/spyro-plus.py:1735 plug-ins/python/spyro-plus.py:2298
+#: plug-ins/python/spyro-plus.py:2299
 msgid "Make width and height equal"
 msgstr "Lățime și înălțime egală"
 
-#: plug-ins/python/spyro-plus.py:1706
+#: plug-ins/python/spyro-plus.py:1737
 msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
@@ -798,11 +922,15 @@ msgstr ""
 "curentă. Când opțiunea este bifată, modelul va avea aceeași lățime și "
 "înălțime și va fi centrat."
 
-#: plug-ins/python/spyro-plus.py:1721
+#: plug-ins/python/spyro-plus.py:1751
+msgid "_OK"
+msgstr "_OK"
+
+#: plug-ins/python/spyro-plus.py:1752
 msgid "Re_draw"
 msgstr "Re_desenează"
 
-#: plug-ins/python/spyro-plus.py:1723
+#: plug-ins/python/spyro-plus.py:1754
 msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
@@ -811,15 +939,15 @@ msgstr ""
 "schimbați selecția, apăsați acest buton pentru a previzualiza modul în care "
 "arată modelul."
 
-#: plug-ins/python/spyro-plus.py:1726
+#: plug-ins/python/spyro-plus.py:1757
 msgid "_Reset"
-msgstr "_Resetează"
+msgstr "_Restabilește"
 
-#: plug-ins/python/spyro-plus.py:1734
+#: plug-ins/python/spyro-plus.py:1765
 msgid "Save"
-msgstr ""
+msgstr "Salvează"
 
-#: plug-ins/python/spyro-plus.py:1735
+#: plug-ins/python/spyro-plus.py:1766
 msgid ""
 "Choose whether to save as new layer, redraw on last active layer, or save to "
 "path"
@@ -827,254 +955,130 @@ msgstr ""
 "Alegeți dacă să fie salvat ca strat nou, să fie redesenat pe ultimul strat "
 "activ sau să fie salvat la traseu"
 
-#: plug-ins/python/spyro-plus.py:1749
+#: plug-ins/python/spyro-plus.py:1780
 msgid "Spyrogimp"
 msgstr "Spyrogimp"
 
-#: plug-ins/python/spyro-plus.py:1758 plug-ins/python/spyro-plus.py:2295
+#: plug-ins/python/spyro-plus.py:1789 plug-ins/python/spyro-plus.py:2252
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr ""
 "Desenați trasee spyrograph folosind configurările și selecția actuală a "
 "instrumentelor."
 
-#: plug-ins/python/spyro-plus.py:1771
+#: plug-ins/python/spyro-plus.py:1802
 msgid "Curve Pattern"
 msgstr "Model de curbă"
 
-#: plug-ins/python/spyro-plus.py:1774
+#: plug-ins/python/spyro-plus.py:1805
 msgid "Fixed Gear"
 msgstr "Roată dințată fixă"
 
-#: plug-ins/python/spyro-plus.py:1777
+#: plug-ins/python/spyro-plus.py:1808
 msgid "Size"
 msgstr "Dimensiune"
 
 # raportare de stare
-#: plug-ins/python/spyro-plus.py:2133
+#: plug-ins/python/spyro-plus.py:2164
 msgid "Rendering Pattern"
 msgstr "Randare model"
 
-#: plug-ins/python/spyro-plus.py:2145
+#: plug-ins/python/spyro-plus.py:2176
 msgid "Please wait : Rendering Pattern"
 msgstr "Așteptați: se randează modelul"
 
-#: plug-ins/python/spyro-plus.py:2211 plug-ins/python/spyro-plus.py:2212
-msgid ""
-"The curve type { Spyrograph (0), Epitrochoid (1), Sine (2), Lissajous(3) }"
-msgstr ""
-
-#: plug-ins/python/spyro-plus.py:2216 plug-ins/python/spyro-plus.py:2217
-msgid "Shape of fixed gear"
-msgstr ""
-
-#: plug-ins/python/spyro-plus.py:2221 plug-ins/python/spyro-plus.py:2222
-msgid "Number of sides of fixed gear (3 or greater). Only used by some shapes."
-msgstr ""
-
-#: plug-ins/python/spyro-plus.py:2226 plug-ins/python/spyro-plus.py:2227
-msgid "Morph shape of fixed gear, between 0 and 1. Only used by some shapes."
-msgstr ""
-
-#: plug-ins/python/spyro-plus.py:2231 plug-ins/python/spyro-plus.py:2232
-msgid "Number of teeth for fixed gear"
-msgstr ""
-
-#: plug-ins/python/spyro-plus.py:2236 plug-ins/python/spyro-plus.py:2237
-msgid "Number of teeth for moving gear"
-msgstr ""
-
-#: plug-ins/python/spyro-plus.py:2241 plug-ins/python/spyro-plus.py:2243
-msgid ""
-"Location of hole in moving gear in percent, where 100 means that the hole is "
-"at the edge of the gear, and 0 means the hole is at the center"
-msgstr ""
-
-#: plug-ins/python/spyro-plus.py:2248 plug-ins/python/spyro-plus.py:2249
-msgid "Margin from selection, in pixels"
-msgstr ""
-
-#: plug-ins/python/spyro-plus.py:2253 plug-ins/python/spyro-plus.py:2254
-msgid "Make height and width equal"
-msgstr ""
-
-#: plug-ins/python/spyro-plus.py:2258 plug-ins/python/spyro-plus.py:2259
-msgid "Pattern rotation, in degrees"
-msgstr ""
-
-#: plug-ins/python/spyro-plus.py:2263 plug-ins/python/spyro-plus.py:2264
-msgid "Shape rotation of fixed gear, in degrees"
-msgstr ""
-
-#: plug-ins/python/spyro-plus.py:2268 plug-ins/python/spyro-plus.py:2269
-msgid "Tool to use for drawing the pattern."
-msgstr ""
-
-#: plug-ins/python/spyro-plus.py:2273 plug-ins/python/spyro-plus.py:2275
-msgid ""
-"Whether to apply a long gradient to match the length of the pattern. Only "
-"applicable to some of the tools."
-msgstr ""
-
-#: plug-ins/python/spyro-plus.py:2296
+#: plug-ins/python/spyro-plus.py:2253
 msgid ""
 "Uses current tool settings to draw Spyrograph patterns. The size and "
 "location of the pattern is based on the current selection."
 msgstr ""
+"Folosește setările curente ale instrumentului pentru a desena modele "
+"spyrograph. Dimensiunea și locația modelului se bazează pe selecția curentă."
 
-#: plug-ins/python/spyro-plus.py:2299
+#: plug-ins/python/spyro-plus.py:2256
 msgid "Spyrogimp..."
 msgstr "Spyrogimp..."
 
-#~ msgid "Missing exception information"
-#~ msgstr "Lipsește informația despre excepție"
+#: plug-ins/python/spyro-plus.py:2271
+msgid "rack"
+msgstr "rack"
 
-#, python-format
-#~ msgid "An error occurred running %s"
-#~ msgstr "A apărut o eroare în timpul rulării %s"
+#: plug-ins/python/spyro-plus.py:2272
+msgid "frame"
+msgstr ""
 
-#~ msgid "_More Information"
-#~ msgstr "_Mai multe informații"
+#: plug-ins/python/spyro-plus.py:2279
+msgid "Si_des"
+msgstr "_Laturi"
 
-#~ msgid "No"
-#~ msgstr "Nu"
+#: plug-ins/python/spyro-plus.py:2280
+msgid "Number of sides of fixed gear (3 or greater). Only used by some shapes."
+msgstr ""
+"Numărul de laturi ale roții dințate fixe (3 sau mai mult). Folosit doar de "
+"anumite forme."
 
-#~ msgid "Yes"
-#~ msgstr "Da"
+#: plug-ins/python/spyro-plus.py:2282
+msgid "_Morph"
+msgstr "Transfor_mare"
 
-#~ msgid "Python-Fu File Selection"
-#~ msgstr "Selecție de fișier Python-Fu"
+#: plug-ins/python/spyro-plus.py:2283
+msgid "Morph shape of fixed gear, between 0 and 1. Only used by some shapes."
+msgstr ""
+"Transformă forma angrenajului fix, între 0 și 1. Folosită doar de anumite "
+"forme."
 
-#~ msgid "Python-Fu Folder Selection"
-#~ msgstr "Selecție de dosar Python-Fu"
+#: plug-ins/python/spyro-plus.py:2285
+msgid "Fi_xed Gear Teeth"
+msgstr "Dinți de angrenaj fi_x"
 
-#, python-format
-#~ msgid "Invalid input for '%s'"
-#~ msgstr "Intrarea pentru „%s” nu este validă"
+#: plug-ins/python/spyro-plus.py:2286 plug-ins/python/spyro-plus.py:2289
+msgid "Number of teeth for fixed gear."
+msgstr "Numărul de dinți pentru angrenaj fix."
 
-#~ msgid "Python-Fu Color Selection"
-#~ msgstr "Selecție de culoare Python-Fu"
+#: plug-ins/python/spyro-plus.py:2288
+msgid "Mo_ving Gear Teeth"
+msgstr "_Dinți de angrenaj în mișcare"
 
-#~ msgid "Save as colored XHTML"
-#~ msgstr "Salvează ca XHTML colorat"
+#: plug-ins/python/spyro-plus.py:2291
+msgid "_Hole Radius (%)"
+msgstr "_Raza găurii (%)"
 
-#~ msgid "Colored XHTML"
-#~ msgstr "XHTML colorat"
+#: plug-ins/python/spyro-plus.py:2292
+msgid ""
+"Location of hole in moving gear in percent, where 100 means that the hole is "
+"at the edge of the gear, and 0 means the hole is at the center"
+msgstr ""
+"Locația găurii în roata dințată în mișcare, în procente, unde 100 înseamnă "
+"că gaura este la marginea roții dințate, iar 0 înseamnă că gaura este în "
+"centru"
 
-#~ msgid "Character _source"
-#~ msgstr "_Sursă caracter"
+#: plug-ins/python/spyro-plus.py:2295
+msgid "Margin (_px)"
+msgstr "Margine (_px)"
 
-#~ msgid "Source code"
-#~ msgstr "Cod sursă"
+#: plug-ins/python/spyro-plus.py:2296
+msgid "Margin from selection, in pixels"
+msgstr "Marginea din selecție, în pixeli"
 
-#~ msgid "Text file"
-#~ msgstr "Fișier text"
+#: plug-ins/python/spyro-plus.py:2301 plug-ins/python/spyro-plus.py:2304
+msgid "_Rotation"
+msgstr "_Rotație"
 
-#~ msgid "Entry box"
-#~ msgstr "Căsuță de intrare"
+#: plug-ins/python/spyro-plus.py:2302
+msgid "Pattern rotation, in degrees"
+msgstr "Rotația modelului, în grade"
 
-#~ msgid "File Name"
-#~ msgstr "Nume de fișier"
+#: plug-ins/python/spyro-plus.py:2305
+msgid "Shape rotation of fixed gear, in degrees"
+msgstr "Rotația formei angrenajului fix, în grade"
 
-#~ msgid "_Image"
-#~ msgstr "_Imagine"
+#: plug-ins/python/spyro-plus.py:2319
+msgid "Long _Gradient"
+msgstr "De_grade lung"
 
-#~ msgid "_Drawable"
-#~ msgstr "_Desenabil"
-
-#~ msgid "_Layer name"
-#~ msgstr "_Nume de strat"
-
-#~ msgid "Op_acity"
-#~ msgstr "Op_acitate"
-
-#~ msgid "Slice"
-#~ msgstr "Felie"
-
-#~ msgid ""
-#~ "Cuts an image along its guides, creates images and a HTML table snippet"
-#~ msgstr ""
-#~ "Taie o imagine în lungul ghidajelor ei, creează un fragment de imagine și "
-#~ "tebelă HTML"
-
-#~ msgid "_Slice..."
-#~ msgstr "_Felie..."
-
-#~ msgid "Path for HTML export"
-#~ msgstr "Cale pentru exportul HTML"
-
-#~ msgid "Filename for export"
-#~ msgstr "Nume de fișier de exportat"
-
-#~ msgid "Image name prefix"
-#~ msgstr "Prefix de nume de imagine"
-
-#~ msgid "Image format"
-#~ msgstr "Format de imagine"
-
-#~ msgid "Separate image folder"
-#~ msgstr "Dosar de imagine separat"
-
-#~ msgid "Folder for image export"
-#~ msgstr "Dosar pentru export de imagine"
-
-#~ msgid "Space between table elements"
-#~ msgstr "Spațiu între elementele de tabel"
-
-#~ msgid "Javascript for onmouseover and clicked"
-#~ msgstr "Javascript pentru onmouseover și clicked"
-
-# hm ?
-#~ msgid "Skip animation for table caps"
-#~ msgstr "Ignoră animația pentru capetele de tabel"
-
-#~ msgid "_Console"
-#~ msgstr "_Consolă"
-
-#~ msgid "Add a drop shadow to a layer, and optionally bevel it"
-#~ msgstr "Adaugă o umbră detașată la un strat și opțional scoate-l în relief"
-
-#~ msgid "_Drop Shadow and Bevel..."
-#~ msgstr "_Umbră detașată și scoatere în relief..."
-
-#~ msgid "_Shadow blur"
-#~ msgstr "_Neclaritate umbră"
-
-# hm ?
-#~ msgid "_Bevel"
-#~ msgstr "Î_n relief"
-
-#~ msgid "_Drop shadow"
-#~ msgstr "_Umbră detașată"
-
-#~ msgid "Drop shadow _X displacement"
-#~ msgstr "Deplasare pe axa _X a umbrei detașate"
-
-#~ msgid "Drop shadow _Y displacement"
-#~ msgstr "Deplasare pe axa _Y a umbrei detașate"
-
-#~ msgid ""
-#~ "Save\n"
-#~ "as New Layer"
-#~ msgstr ""
-#~ "Salvează\n"
-#~ "ca strat nou"
-
-#~ msgid ""
-#~ "Redraw on\n"
-#~ "Active layer"
-#~ msgstr ""
-#~ "Redesenează\n"
-#~ "pe stratul curent"
-
-#~ msgid ""
-#~ "Save\n"
-#~ "as Path"
-#~ msgstr ""
-#~ "Salvează\n"
-#~ "ca traseu"
-
-#~ msgid "_Cancel"
-#~ msgstr "_Anulează"
-
-#~ msgid "_OK"
-#~ msgstr "_OK"
+#: plug-ins/python/spyro-plus.py:2320
+msgid ""
+"Whether to apply a long gradient to match the length of the pattern. Only "
+"applicable to some of the tools."
+msgstr ""
+"Dacă să fie aplicat un degrade lung pentru a se potrivi cu lungimea "
+"modelului. Se aplică numai anumitor instrumente."
