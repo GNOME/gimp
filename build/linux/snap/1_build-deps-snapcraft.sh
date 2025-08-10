@@ -15,55 +15,56 @@ elif [ $(basename "$PWD") = 'snap' ]; then
 fi
 
 
-# Install part of the deps (snapcraft)
-if [ -z "$GITLAB_CI" ]; then
-  #Only snapcraft snap is available locally
-  if ! which snapcraft >/dev/null 2>&1; then
-    sudo apt update
-    sudo apt install snapd
-    sudo snap install snapd
-    sudo snap install snapcraft --classic
-  fi
-else
-  #Only snapcraft docker image is available in CI
-  echo "FROM ghcr.io/canonical/snapcraft:${SNAPCRAFT_CORE_VERSION}" > Dockerfile
-  echo "ENTRYPOINT [\"\"]" >> Dockerfile
-  echo "RUN apt-get update -y" >> Dockerfile
-  echo "RUN apt-get install -y git" >> Dockerfile
-  export SNAPCRAFT_CREDENTIALS_PATH="$HOME/.local/share/snapcraft/launchpad-credentials"
-  echo "RUN mkdir -p $(dirname $SNAPCRAFT_CREDENTIALS_PATH)" >> Dockerfile
-  echo "RUN printf '[1]\n' > $SNAPCRAFT_CREDENTIALS_PATH" >> Dockerfile
-  echo "RUN printf 'consumer_key = System-wide:\ Ubuntu (Ubuntu-vai)\n' >> $SNAPCRAFT_CREDENTIALS_PATH" >> Dockerfile && sed 's|\\ Ubuntu| Ubuntu|g' -i Dockerfile
-  echo "RUN printf 'consumer_secret = \n' >> $SNAPCRAFT_CREDENTIALS_PATH" >> Dockerfile
-  echo "RUN printf 'access_token = %s\n' $LAUNCHPAD_CREDENTIALS_ACCESS_TOKEN >> $SNAPCRAFT_CREDENTIALS_PATH" >> Dockerfile
-  echo "RUN printf 'access_secret = %s\n' $LAUNCHPAD_CREDENTIALS_ACCESS_SECRET >> $SNAPCRAFT_CREDENTIALS_PATH" >> Dockerfile
-  /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_CORE_VERSION} --cache=true --cache-ttl=120h --image-fs-extract-retry 1 --verbosity=warn
-fi 
+# Install part of the deps
+if ! which snapcraft >/dev/null 2>&1; then
+  printf '(INFO): installing snapcraft\n'
+  sudo apt update -y
+  sudo apt install -y snapd
+  sudo snap install snapd
+  sudo snap install snapcraft --classic
+fi #End of check
+
+if [ "$GITLAB_CI" ] && [ "$1" = '--install-snaps' ]; then
+  #snapd can not be used to install snaps on CI since it is a daemon so we manually "install" them
+  GNOME_SDK=$(grep '^_SDK_SNAP' $(sudo find $(dirname $(which snapcraft))/.. -name gnome.py | grep -i extensions) | sed -n "s/.*\"$(sed -n 's/^base:[[:space:]]*//p' build/linux/snap/snapcraft.yaml)\": *\"\\([^\"]*\\)\".*/\\1/p")
+  gnome_runtime=$(echo $GNOME_SDK | sed 's/-sdk//')
+  mesa_runtime="mesa-$(echo $GNOME_SDK | sed -n 's/.*-\([0-9]\+\)-sdk/\1/p')"
+  for snap in $GNOME_SDK $gnome_runtime $mesa_runtime; do
+    if [ ! -d /snap/$snap/ ]; then
+      curl --progress-bar -L -o ${snap}.snap $(curl --progress-bar -H 'Snap-Device-Series: 16' https://api.snapcraft.io/v2/snaps/info/$snap | jq -r --arg arch "$(dpkg --print-architecture)" '.["channel-map"][] | select(.channel.architecture == $arch and .channel.track == "latest" and .channel.risk == "stable") | .download.url')
+      mkdir -p /snap/$snap/current
+      unsquashfs -d /snap/$snap/current ${snap}.snap
+    fi
+  done
+  exit 0
+fi
 
 
-# Prepare env
-if [ -z "$GITLAB_CI" ]; then
-printf "\e[0Ksection_start:`date +%s`:snap_environ[collapsed=true]\r\e[0KPreparing build environment\n"
-## portable environment which works on CI (unlike lxd) and on VMs (unlike multipass)
-export SNAPCRAFT_BUILD_ENVIRONMENT=host
-build_environment_option='--destructive-mode'
-## (snapcraft does not allow to freely set the .yaml path, so let's just temporarely copy it)
+# Prepare env (snapcraft does not allow to freely set the .yaml path)
 cp build/linux/snap/snapcraft.yaml .
-printf "\e[0Ksection_end:`date +%s`:snap_environ\r\e[0K\n"
 
 
-# Build babl and gegl
+# Build babl and GEGL
 printf "\e[0Ksection_start:`date +%s`:deps_install[collapsed=true]\r\e[0KInstalling dependencies provided by Ubuntu\n"
-sudo snapcraft pull $build_environment_option --build-for=${DPKG_ARCH:-$(dpkg --print-architecture)} --verbosity=verbose
+sudo snapcraft pull --destructive-mode --build-for=$(dpkg --print-architecture) --verbosity=verbose
 printf "\e[0Ksection_end:`date +%s`:deps_install\r\e[0K\n"
-  
+
 printf "\e[0Ksection_start:`date +%s`:babl_build[collapsed=true]\r\e[0KBuilding babl\n"
-sudo snapcraft stage babl $build_environment_option --build-for=${DPKG_ARCH:-$(dpkg --print-architecture)} --verbosity=verbose
+sudo snapcraft stage babl --destructive-mode --build-for=$(dpkg --print-architecture) --verbosity=verbose
+if [ "$GITLAB_CI" ]; then
+  tar cf babl-meson-log.tar /root/parts/babl/build/meson-logs/meson-log.txt >/dev/null 2>&1
+fi
 printf "\e[0Ksection_end:`date +%s`:babl_build\r\e[0K\n"
   
 printf "\e[0Ksection_start:`date +%s`:gegl_build[collapsed=true]\r\e[0KBuilding gegl\n"
-sudo snapcraft stage gegl $build_environment_option --build-for=${DPKG_ARCH:-$(dpkg --print-architecture)} --verbosity=verbose
-printf "\e[0Ksection_end:`date +%s`:gegl_build\r\e[0K\n"
+sudo snapcraft stage gegl --destructive-mode --build-for=$(dpkg --print-architecture) --verbosity=verbose
+if [ "$GITLAB_CI" ]; then
+  tar cf gegl-meson-log.tar /root/parts/gegl/build/meson-logs/meson-log.txt >/dev/null 2>&1
+  printf "\e[0Ksection_end:`date +%s`:gegl_build\r\e[0K\n"
+
+  ## Save built deps for 'gimp-snap' job
+  tar cf _install-$RUNNER.tar /root/stage/ >/dev/null 2>&1
+  tar cf _build-$RUNNER.tar /root/parts/ >/dev/null 2>&1
+fi
 
 rm snapcraft.yaml
-fi

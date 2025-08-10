@@ -18,33 +18,38 @@ if [ -z "$GITLAB_CI" ]; then
 fi
 
 
-# Prepare env
-printf "\e[0Ksection_start:`date +%s`:snap_environ[collapsed=true]\r\e[0KPreparing build environment\n"
-## portable environment which works on CI (unlike lxd) and on VMs (unlike multipass)
-export SNAPCRAFT_BUILD_ENVIRONMENT=host
-build_environment_option='--destructive-mode'
-## (snapcraft does not allow to freely set the .yaml path, so let's just temporarely copy it)
+# Install part of the deps
+eval "$(sed -n '/Install part/,/End of check/p' build/linux/snap/1_build-deps-snapcraft.sh)"
+
+if [ "$GITLAB_CI" ]; then
+  # Extract deps from previous job
+  tar xf _install-$RUNNER.tar -C /
+  tar xf _build-$RUNNER.tar -C /
+fi
+
+
+# Prepare env (snapcraft does not allow to freely set the .yaml path)
 cp build/linux/snap/snapcraft.yaml .
-printf "\e[0Ksection_end:`date +%s`:snap_environ\r\e[0K\n"
 
 
-# Build (babl, gegl and) GIMP
-printf "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding (babl, gegl and) GIMP\n"
-if [ -z "$GITLAB_CI" ]; then
-  sudo snapcraft stage gimp $build_environment_option --build-for=${DPKG_ARCH:-$(dpkg --print-architecture)} --verbosity=verbose
-else
-  ## (snapcraft remote-build does not allow building in parts, so we need to build and pack everything in one go)
-  snapcraft remote-build --launchpad-accept-public-upload --build-for=$DPKG_ARCH --launchpad-timeout=7200 --verbosity=verbose
+# Build GIMP
+printf "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP\n"
+sudo snapcraft stage gimp --destructive-mode --build-for=$(dpkg --print-architecture) --verbosity=verbose > gimp-snapcraft.log 2>&1 || { cat gimp-snapcraft.log; exit 1; }
+if [ "$GITLAB_CI" ]; then
+  tar cf gimp-meson-log.tar /root/parts/gimp/build/meson-logs/meson-log.txt >/dev/null 2>&1
 fi
 printf "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K\n"
 
+
 # Bundle
-printf "\e[0Ksection_start:`date +%s`:gimp_bundle[collapsed=true]\r\e[0KBundling GIMP\n"
-if [ -z "$GITLAB_CI" ]; then
-  sudo snapcraft prime $build_environment_option --build-for=${DPKG_ARCH:-$(dpkg --print-architecture)} --verbosity=verbose
-else
-  # Rename .snap bundle file to avoid confusion (the distribution of the .snap is done only in 3_dist-gimp-snapcraft.sh)
-  mv *.snap temp_$(echo *.snap)
+printf "\e[0Ksection_start:`date +%s`:gimp_bundle[collapsed=true]\r\e[0KCreating prime dir\n"
+sudo mkdir /tmp/craft-state
+sudo snapcraft prime --destructive-mode --build-for=$(dpkg --print-architecture) --verbosity=trace >> gimp-snapcraft.log 2>&1 || { cat gimp-snapcraft.log; exit 1; }
+
+if [ "$GITLAB_CI" ]; then
+  ## On CI, make the .snap prematurely on each runner since snapcraft does not allow multiple prime/ directories
+  eval "$(sed -n -e '/GIMP_VERSION=/,/NAME=/ { s/  //; p }' build/linux/snap/3_dist-gimp-snapcraft.sh)"
+  eval "$(grep 'snapcraft pack' build/linux/snap/3_dist-gimp-snapcraft.sh | sed 's/  //')"
 fi
 printf "\e[0Ksection_end:`date +%s`:gimp_bundle\r\e[0K\n"
 

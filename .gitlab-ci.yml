@@ -439,19 +439,14 @@ gimp-flatpak:
     - if: '$GIMP_CI_SNAP != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_SNAP.*/'
   parallel:
     matrix:
-      - DPKG_ARCH: [arm64, amd64]
+      - RUNNER: [aarch64, x86_64_v3]
   tags:
-    - x86_64_v2
-  image:
-    name: $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_CORE_VERSION}
-    entrypoint: [""]
+    - $RUNNER
+  image: $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER}
   variables:
-    SNAPCRAFT_CORE_VERSION: "8_core24"
-    #@brunvonlope private credentials. We are using these for now
-    #until we don't get acess to 'gimp' entry on Snap Store: https://github.com/snapcrafters/gimp/issues/447
-    LAUNCHPAD_CREDENTIALS_ACCESS_TOKEN: pPs367Km5glpfXXK9BQl
-    LAUNCHPAD_CREDENTIALS_ACCESS_SECRET: PQ0r1JGdHQRWQCS255jNZdglCcK4KDmsGRSZxl4CZwWvMF00GLRFbz1185L08cjh5zWqhQddsvmgLg7l
-  timeout: 120m
+    SNAPCRAFT_BASE_VERSION: "8_core24"
+    RUNNER: x86_64_v3
+  timeout: 40m
 
 deps-snap:
   extends: .snap
@@ -460,7 +455,30 @@ deps-snap:
     name: gcr.io/kaniko-project/executor:debug
     entrypoint: [""]
   script:
-    - sh build/linux/snap/1_build-deps-snapcraft.sh
+    - echo "FROM ghcr.io/canonical/snapcraft:${SNAPCRAFT_BASE_VERSION}" > Dockerfile
+    - echo "ENTRYPOINT [\"\"]" >> Dockerfile
+    - echo "WORKDIR $CI_PROJECT_DIR" >> Dockerfile
+    - echo "ENV GITLAB_CI=1" >> Dockerfile
+    - echo "ENV RUNNER=$RUNNER" >> Dockerfile
+    - echo "RUN apt-get update -y" >> Dockerfile
+    - echo "RUN apt-get install -y curl jq squashfs-tools sudo" >> Dockerfile
+    # https://github.com/canonical/snapcraft-rocks/issues/37
+    - echo "RUN cp -r /usr/lib/python3.12/site-packages/extensions/* /usr/share/snapcraft/extensions/" >> Dockerfile
+    # https://github.com/canonical/snapcraft-rocks/issues/33
+    - echo "RUN ln -s /usr/libexec/snapcraft/craftctl /usr/bin/craftctl" >> Dockerfile
+    - echo "RUN sh build/linux/snap/1_build-deps-snapcraft.sh --install-snaps" >> Dockerfile;
+    # Build babl and GEGL
+    - echo "FROM $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER}" > Dockerfile2;
+    - echo "RUN sh build/linux/snap/1_build-deps-snapcraft.sh" >> Dockerfile2;
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER} --cache=true --cache-ttl=120h --image-fs-extract-retry 1 --verbosity=warn
+    - if [ -f 'Dockerfile2' ]; then /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile2 --destination build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER}-temp --cache=false --no-push --verbosity=warn; fi
+  artifacts:
+    paths:
+      - _install-$RUNNER.tar
+      - _build-$RUNNER.tar
+      - babl-meson-log.tar
+      - gegl-meson-log.tar
+    expire_in: 2 hours
 
 gimp-snap:
   extends: .snap
@@ -475,7 +493,8 @@ gimp-snap:
   artifacts:
     paths:
       - temp*.snap
-      - snapcraft*.txt
+      - gimp-snapcraft.log
+      - gimp-meson-log.tar
     expire_in: 2 days
 
 
