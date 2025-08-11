@@ -54,7 +54,9 @@ struct _GimpRowClass
 
 
 GtkWidget    * gimp_row_new             (GimpContext  *context,
-                                         GimpViewable *viewable);
+                                         GimpViewable *viewable,
+                                         gint          view_size,
+                                         gint          view_border_width);
 
 void           gimp_row_set_context     (GimpRow      *row,
                                          GimpContext  *context);
