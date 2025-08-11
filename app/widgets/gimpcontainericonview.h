@@ -48,8 +48,6 @@ struct _GimpContainerIconView
 
   GtkCellRenderer              *renderer_cell;
 
-  Gimp                         *dnd_gimp; /* eek */
-
   GimpContainerIconViewPrivate *priv;
 };
 
