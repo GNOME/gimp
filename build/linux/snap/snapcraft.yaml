@@ -47,10 +47,6 @@ apps:
       - home
       - network
       - removable-media
-      - desktop
-      - desktop-legacy
-      - wayland
-      - unity7
     extensions: [gnome]
 
 layout:
@@ -67,12 +63,6 @@ slots:
     interface: dbus
     bus: session
     name: org.gimp.GIMP.UI
-
-plugs:
-  gnome-46-2404:
-    interface: content
-    target: $SNAP/gnome-platform
-    default-provider: gnome-46-2404
 
 parts:
   buildenv:
