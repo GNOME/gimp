@@ -216,9 +216,9 @@ gimp_container_view_set_container (GimpContainerView *view,
 
   g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
   g_return_if_fail (container == NULL || GIMP_IS_CONTAINER (container));
-  if (container)
-    g_return_if_fail (g_type_is_a (gimp_container_get_child_type (container),
-                                   GIMP_TYPE_VIEWABLE));
+  g_return_if_fail (container == NULL ||
+                    g_type_is_a (gimp_container_get_child_type (container),
+                                 GIMP_TYPE_VIEWABLE));
 
   private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
