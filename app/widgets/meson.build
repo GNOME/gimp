@@ -193,6 +193,8 @@ libappwidgets_sources = [
   'gimprow.c',
   'gimprow-utils.c',
   'gimprowdeviceinfo.c',
+  'gimprowseparator.c',
+  'gimprowsettings.c',
   'gimpsamplepointeditor.c',
   'gimpsavedialog.c',
   'gimpsearchpopup.c',
