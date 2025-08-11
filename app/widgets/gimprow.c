@@ -654,18 +654,27 @@ gimp_row_real_name_edited (GimpRow     *row,
 
 GtkWidget *
 gimp_row_new (GimpContext  *context,
-              GimpViewable *viewable)
+              GimpViewable *viewable,
+              gint          view_size,
+              gint          view_border_width)
 {
   GType row_type;
 
   g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
+  g_return_val_if_fail (view_size > 0 &&
+                        view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
+  g_return_val_if_fail (view_border_width >= 0 &&
+                        view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
+                        NULL);
 
   row_type = gimp_row_type_from_viewable (viewable);
 
   return g_object_new (row_type,
-                       "context",  context,
-                       "viewable", viewable,
+                       "context",           context,
+                       "viewable",          viewable,
+                       "view-size",         view_size,
+                       "view-border-width", view_border_width,
                        NULL);
 }
 
