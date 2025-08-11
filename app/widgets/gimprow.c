@@ -661,7 +661,7 @@ gimp_row_new (GimpContext  *context,
   g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
 
-  row_type = gimp_row_type_from_viewable_type (G_OBJECT_TYPE (viewable));
+  row_type = gimp_row_type_from_viewable (viewable);
 
   return g_object_new (row_type,
                        "context",  context,
@@ -767,6 +767,16 @@ gimp_row_monitor_changed (GimpRow *row)
   g_return_if_fail (GIMP_IS_ROW (row));
 
   GIMP_ROW_GET_CLASS (row)->monitor_changed (row);
+}
+
+GtkWidget *
+_gimp_row_get_box (GimpRow *row)
+{
+  GimpRowPrivate *priv = GET_PRIVATE (row);
+
+  g_return_val_if_fail (GIMP_IS_ROW (row), NULL);
+
+  return priv->box;
 }
 
 GtkWidget *

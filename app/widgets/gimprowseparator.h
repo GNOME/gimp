@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimprow-utils.h
+ * gimprowseparator.h
  * Copyright (C) 2025 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,13 +20,11 @@
 
 #pragma once
 
+#include "gimprow.h"
 
-GType       gimp_row_type_from_viewable        (GimpViewable *viewable);
 
-
-/*  GtkListBoxCreateWidgetFunc  */
-
-GtkWidget * gimp_row_create_for_context        (gpointer      item,
-                                                gpointer      context);
-GtkWidget * gimp_row_create_for_container_view (gpointer      item,
-                                                gpointer      container_view);
+#define GIMP_TYPE_ROW_SEPARATOR (gimp_row_separator_get_type ())
+G_DECLARE_FINAL_TYPE (GimpRowSeparator,
+                      gimp_row_separator,
+                      GIMP, ROW_SEPARATOR,
+                      GimpRow)

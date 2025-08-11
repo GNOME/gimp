@@ -26,24 +26,32 @@
 #include "widgets-types.h"
 
 #include "core/gimpcontext.h"
-#include "core/gimpviewable.h"
+#include "core/gimpsettings.h"
 
 #include "gimpcontainerview.h"
 #include "gimpdeviceinfo.h"
 #include "gimprow.h"
 #include "gimprow-utils.h"
 #include "gimprowdeviceinfo.h"
+#include "gimprowseparator.h"
+#include "gimprowsettings.h"
 
 
 GType
-gimp_row_type_from_viewable_type (GType viewable_type)
+gimp_row_type_from_viewable (GimpViewable *viewable)
 {
   GType row_type = GIMP_TYPE_ROW;
 
-  g_return_val_if_fail (g_type_is_a (viewable_type, GIMP_TYPE_VIEWABLE),
-                        G_TYPE_NONE);
+  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), G_TYPE_NONE);
 
-  if (g_type_is_a (viewable_type, GIMP_TYPE_DEVICE_INFO))
+  if (GIMP_IS_SETTINGS (viewable))
+    {
+      if (gimp_object_get_name (viewable))
+        row_type = GIMP_TYPE_ROW_SETTINGS;
+      else
+        row_type = GIMP_TYPE_ROW_SEPARATOR;
+    }
+  else if (GIMP_IS_DEVICE_INFO (viewable))
     {
       row_type = GIMP_TYPE_ROW_DEVICE_INFO;
     }

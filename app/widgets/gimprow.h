@@ -74,6 +74,7 @@ void           gimp_row_monitor_changed (GimpRow      *row);
 
 /*  protected  */
 
+GtkWidget    * _gimp_row_get_box        (GimpRow      *row);
 GtkWidget    * _gimp_row_get_icon       (GimpRow      *row);
 GtkWidget    * _gimp_row_get_view       (GimpRow      *row);
 GtkWidget    * _gimp_row_get_label      (GimpRow      *row);
