@@ -297,11 +297,11 @@ gimp_container_icon_view_new (GimpContainer *container,
 
   gimp_container_view_set_view_size (view, view_size, 0 /* ignore border */);
 
-  if (container)
-    gimp_container_view_set_container (view, container);
-
   if (context)
     gimp_container_view_set_context (view, context);
+
+  if (container)
+    gimp_container_view_set_container (view, container);
 
   return GTK_WIDGET (icon_view);
 }
@@ -375,9 +375,9 @@ gimp_container_icon_view_set_context (GimpContainerView *view,
     gimp_container_tree_store_set_context (GIMP_CONTAINER_TREE_STORE (icon_view->model),
                                            context);
 
-  if (context != NULL)
+  if (context)
     {
-      if (icon_view->priv->color_scheme_handler_id == 0)
+      if (! icon_view->priv->color_scheme_handler_id)
         icon_view->priv->color_scheme_handler_id =
           g_signal_connect_object (context->gimp->config,
                                    "notify::theme-color-scheme",

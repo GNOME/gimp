@@ -181,26 +181,16 @@ gimp_container_entry_new (GimpContainer *container,
                           gint           view_size,
                           gint           view_border_width)
 {
-  GtkWidget         *entry;
-  GimpContainerView *view;
-
   g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
                         NULL);
   g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
 
-  entry = g_object_new (GIMP_TYPE_CONTAINER_ENTRY, NULL);
-
-  view = GIMP_CONTAINER_VIEW (entry);
-
-  gimp_container_view_set_view_size (view, view_size, view_border_width);
-
-  if (container)
-    gimp_container_view_set_container (view, container);
-
-  if (context)
-    gimp_container_view_set_context (view, context);
-
-  return entry;
+  return g_object_new (GIMP_TYPE_CONTAINER_ENTRY,
+                       "view-size",         view_size,
+                       "view-border-width", view_border_width,
+                       "context",           context,
+                       "container",         container,
+                       NULL);
 }
 
 
