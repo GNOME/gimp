@@ -257,7 +257,8 @@ gimp_row_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  priv->view = gimp_view_new (priv->context, priv->viewable,
+  priv->view = gimp_view_new (priv->context,
+                              priv->viewable,
                               priv->view_size,
                               priv->view_border_width,
                               FALSE);
@@ -525,11 +526,8 @@ gimp_row_real_set_viewable (GimpRow      *row,
 
   gimp_row_name_changed (priv->viewable, row);
 
-  if (priv->icon)
-    {
-      gtk_widget_set_visible (priv->icon, ! preview);
-      gimp_row_icon_changed (priv->viewable, NULL, row);
-    }
+  gtk_widget_set_visible (priv->icon, ! preview);
+  gimp_row_icon_changed (priv->viewable, NULL, row);
 
   if (priv->view)
     {
@@ -543,9 +541,8 @@ gimp_row_real_set_view_size (GimpRow *row)
 {
   GimpRowPrivate *priv = GET_PRIVATE (row);
 
-  if (priv->icon)
-    gtk_image_set_pixel_size (GTK_IMAGE (priv->icon),
-                              priv->view_size);
+  gtk_image_set_pixel_size (GTK_IMAGE (priv->icon),
+                            priv->view_size);
 
   if (priv->view)
     gimp_view_renderer_set_size (GIMP_VIEW (priv->view)->renderer,
