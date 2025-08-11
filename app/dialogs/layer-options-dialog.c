@@ -36,7 +36,7 @@
 #include "text/gimptext.h"
 #include "text/gimptextlayer.h"
 
-#include "widgets/gimpcontainertreeview.h"
+#include "widgets/gimpcontainerlistview.h"
 #include "widgets/gimplayermodebox.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -398,7 +398,7 @@ layer_options_dialog_new (GimpImage                *image,
 
       filters = gimp_drawable_get_filters (GIMP_DRAWABLE (layer));
 
-      view = gimp_container_tree_view_new (filters, context,
+      view = gimp_container_list_view_new (filters, context,
                                            GIMP_VIEW_SIZE_SMALL, 0);
       gtk_container_add (GTK_CONTAINER (frame), view);
       gtk_widget_show (view);
