@@ -101,11 +101,6 @@ gimp_row_settings_name_edited (GimpRow     *row,
 
       /*  set name after time so the object is reordered correctly  */
       gimp_object_take_name (object, name);
-
-#if 0
-      gimp_operation_config_serialize (private->gimp, private->container,
-                                       NULL);
-#endif
     }
   else
     {
