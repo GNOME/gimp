@@ -238,26 +238,21 @@ gimp_container_combo_box_new (GimpContainer *container,
                               gint           view_size,
                               gint           view_border_width)
 {
-  GtkWidget         *combo_box;
-  GimpContainerView *view;
-
   g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
                         NULL);
   g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (view_size > 0 &&
+                        view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
+  g_return_val_if_fail (view_border_width >= 0 &&
+                        view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
+                        NULL);
 
-  combo_box = g_object_new (GIMP_TYPE_CONTAINER_COMBO_BOX, NULL);
-
-  view = GIMP_CONTAINER_VIEW (combo_box);
-
-  gimp_container_view_set_view_size (view, view_size, view_border_width);
-
-  if (container)
-    gimp_container_view_set_container (view, container);
-
-  if (context)
-    gimp_container_view_set_context (view, context);
-
-  return combo_box;
+  return g_object_new (GIMP_TYPE_CONTAINER_COMBO_BOX,
+                       "view-size",         view_size,
+                       "view-border-width", view_border_width,
+                       "context",           context,
+                       "container",         container,
+                       NULL);
 }
 
 

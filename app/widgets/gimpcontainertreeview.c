@@ -457,11 +457,11 @@ gimp_container_tree_view_new (GimpContainer *container,
 
   gimp_container_view_set_view_size (view, view_size, view_border_width);
 
-  if (container)
-    gimp_container_view_set_container (view, container);
-
   if (context)
     gimp_container_view_set_context (view, context);
+
+  if (container)
+    gimp_container_view_set_container (view, container);
 
   return GTK_WIDGET (tree_view);
 }

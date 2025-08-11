@@ -231,9 +231,6 @@ gimp_container_list_view_new (GimpContainer *container,
                               gint           view_size,
                               gint           view_border_width)
 {
-  GimpContainerListView *list_view;
-  GimpContainerView     *view;
-
   g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
                         NULL);
   g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
@@ -243,19 +240,12 @@ gimp_container_list_view_new (GimpContainer *container,
                         view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         NULL);
 
-  list_view = g_object_new (GIMP_TYPE_CONTAINER_LIST_VIEW, NULL);
-
-  view = GIMP_CONTAINER_VIEW (list_view);
-
-  gimp_container_view_set_view_size (view, view_size, view_border_width);
-
-  if (container)
-    gimp_container_view_set_container (view, container);
-
-  if (context)
-    gimp_container_view_set_context (view, context);
-
-  return GTK_WIDGET (list_view);
+  return g_object_new (GIMP_TYPE_CONTAINER_LIST_VIEW,
+                       "view-size",         view_size,
+                       "view-border-width", view_border_width,
+                       "context",           context,
+                       "container",         container,
+                       NULL);
 }
 
 void
