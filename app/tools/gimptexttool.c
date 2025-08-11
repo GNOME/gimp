@@ -551,6 +551,13 @@ gimp_text_tool_button_press (GimpTool            *tool,
 
               if (text_tool->text && text_tool->text != text)
                 {
+                  if (text_tool->style_overlay)
+                    {
+                      gtk_widget_destroy (text_tool->style_overlay);
+                      text_tool->style_overlay = NULL;
+                      text_tool->style_editor  = NULL;
+                    }
+
                   gimp_text_tool_editor_start (text_tool);
                 }
             }
