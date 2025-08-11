@@ -283,25 +283,13 @@ gimp_container_list_view_set_container (GimpContainerView *view,
                                             view);
 
 #if 0
-      list_view->priv->dnd_renderer = NULL;
-
-      g_signal_handlers_disconnect_by_func (list_view->view,
-                                            gimp_container_list_view_row_expanded,
-                                            list_view);
       if (! container)
         {
           if (gimp_dnd_viewable_list_source_remove (GTK_WIDGET (list_view->view),
                                                     gimp_container_get_child_type (old_container)))
             {
-              if (GIMP_VIEWABLE_CLASS (g_type_class_peek (gimp_container_get_child_type (old_container)))->get_size)
-                gimp_dnd_pixbuf_source_remove (GTK_WIDGET (list_view->view));
-
               gtk_drag_source_unset (GTK_WIDGET (list_view->view));
             }
-
-          g_signal_handlers_disconnect_by_func (list_view->view,
-                                                gimp_container_list_view_button,
-                                                list_view);
         }
 #endif
 
@@ -319,26 +307,7 @@ gimp_container_list_view_set_container (GimpContainerView *view,
                                              gimp_container_get_child_type (container),
                                              gimp_container_list_view_drag_viewable_list,
                                              list_view);
-          gimp_dnd_viewable_source_add (GTK_WIDGET (list_view->view),
-                                        gimp_container_get_child_type (container),
-                                        gimp_container_list_view_drag_viewable,
-                                        list_view);
-
-          if (GIMP_VIEWABLE_CLASS (g_type_class_peek (gimp_container_get_child_type (container)))->get_size)
-            gimp_dnd_pixbuf_source_add (GTK_WIDGET (list_view->view),
-                                        gimp_container_list_view_drag_pixbuf,
-                                        list_view);
         }
-
-      /*  connect button_press_event after DND so we can keep the list from
-       *  selecting the item on button2
-       */
-      g_signal_connect (list_view->view, "button-press-event",
-                        G_CALLBACK (gimp_container_list_view_button),
-                        list_view);
-      g_signal_connect (list_view->view, "button-release-event",
-                        G_CALLBACK (gimp_container_list_view_button),
-                        list_view);
 #endif
     }
 
@@ -360,26 +329,7 @@ gimp_container_list_view_set_container (GimpContainerView *view,
       g_signal_connect (container, "items-changed",
                         G_CALLBACK (gimp_container_list_view_after_items_changed),
                         view);
-
-#if 0
-      gimp_container_list_view_expand_rows (list_view->model,
-                                            list_view->view,
-                                            NULL);
-
-      g_signal_connect (list_view->view,
-                        "row-collapsed",
-                        G_CALLBACK (gimp_container_list_view_row_expanded),
-                        list_view);
-      g_signal_connect (list_view->view,
-                        "row-expanded",
-                        G_CALLBACK (gimp_container_list_view_row_expanded),
-                        list_view);
-#endif
     }
-
-#if 0
-  gtk_list_view_columns_autosize (list_view->view);
-#endif
 }
 
 static void
