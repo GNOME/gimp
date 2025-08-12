@@ -7,8 +7,6 @@
     "command": "gimp",
     "build-options": {
         "env": {
-            "CC": "ccache cc",
-            "CXX": "ccache c++",
             "CLICOLOR_FORCE": "1"
         },
         "cflags": "-fdiagnostics-color=always",
@@ -524,8 +522,6 @@
                     "subdir": "source",
                     "buildsystem": "cmake-ninja",
                     "config-opts": [
-                        "-DCMAKE_CXX_COMPILER_LAUNCHER=ccache",
-                        "-DCMAKE_CXX_COMPILER=c++",
                         "-DCMAKE_INSTALL_PREFIX=/app/lib/libheif",
                         "-DEXTRA_LIB='libx265-10.a;libx265-12.a'",
                         "-DEXTRA_LINK_FLAGS=-L/app/lib/libheif/lib",
@@ -799,10 +795,6 @@
                     ],
                     "buildsystem": "cmake-ninja",
                     "config-opts": [
-                        "-DCMAKE_C_COMPILER_LAUNCHER=ccache",
-                        "-DCMAKE_C_COMPILER=cc",
-                        "-DCMAKE_Fortran_COMPILER_LAUNCHER=ccache",
-                        "-DCMAKE_Fortran_COMPILER=gfortran",
                         "-DBUILD_SHARED_LIBS=ON",
                         "-DDYNAMIC_ARCH=ON",
                         "-DUSE_OPENMP=ON",

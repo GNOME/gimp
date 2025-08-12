@@ -159,7 +159,6 @@ deps-debian:
     - echo "RUN apt-get install -qq -y --no-install-recommends \\" >> Dockerfile
     - echo "appstream
             bison
-            ccache
             clang
             desktop-file-utils
             flex
