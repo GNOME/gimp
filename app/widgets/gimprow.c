@@ -509,7 +509,7 @@ gimp_row_real_set_viewable (GimpRow      *row,
         }
     }
 
-  g_set_object (&priv->viewable, viewable);
+  g_set_weak_pointer (&priv->viewable, viewable);
 
   if (priv->viewable)
     {
