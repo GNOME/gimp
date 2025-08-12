@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-08-01 15:39+0000\n"
-"PO-Revision-Date: 2025-08-01 17:57+0200\n"
+"POT-Creation-Date: 2025-08-09 10:46+0000\n"
+"PO-Revision-Date: 2025-08-09 13:53+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -614,14 +614,15 @@ msgstr "Persienne"
 #: plug-ins/common/file-pcx.c:718 plug-ins/common/file-pcx.c:726
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1082
 #: plug-ins/common/file-pnm.c:845 plug-ins/common/file-qoi.c:296
-#: plug-ins/common/file-raw-data.c:1877 plug-ins/common/file-sunras.c:1059
-#: plug-ins/common/file-tga.c:1103 plug-ins/common/file-tim.c:402
-#: plug-ins/common/file-tim.c:509 plug-ins/common/file-wbmp.c:389
-#: plug-ins/common/file-wbmp.c:465 plug-ins/common/file-xbm.c:887
-#: plug-ins/common/film.c:865 plug-ins/common/smooth-palette.c:301
-#: plug-ins/common/tile.c:396 plug-ins/file-bmp/bmp-load.c:809
-#: plug-ins/file-exr/file-exr.c:302 plug-ins/file-faxg3/faxg3.c:578
-#: plug-ins/file-fits/fits.c:673 plug-ins/file-jpeg/jpeg-load.c:252
+#: plug-ins/common/file-raw-data.c:820 plug-ins/common/file-raw-data.c:2004
+#: plug-ins/common/file-sunras.c:1059 plug-ins/common/file-tga.c:1103
+#: plug-ins/common/file-tim.c:402 plug-ins/common/file-tim.c:509
+#: plug-ins/common/file-wbmp.c:389 plug-ins/common/file-wbmp.c:465
+#: plug-ins/common/file-xbm.c:887 plug-ins/common/film.c:865
+#: plug-ins/common/smooth-palette.c:301 plug-ins/common/tile.c:396
+#: plug-ins/file-bmp/bmp-load.c:809 plug-ins/file-exr/file-exr.c:302
+#: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:673
+#: plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1093
 #: plug-ins/file-psd/psd-load.c:3102 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1561
@@ -1237,8 +1238,8 @@ msgstr "Lagra parametrane for CML-utforskaren"
 #: plug-ins/common/file-dicom.c:1541 plug-ins/common/file-farbfeld.c:355
 #: plug-ins/common/file-mng.c:875 plug-ins/common/file-mng.c:1225
 #: plug-ins/common/file-pcx.c:1200 plug-ins/common/file-pdf-export.c:680
-#: plug-ins/common/file-png.c:1915 plug-ins/common/file-raw-data.c:1382
-#: plug-ins/common/file-raw-data.c:1411 plug-ins/common/file-sunras.c:614
+#: plug-ins/common/file-png.c:1915 plug-ins/common/file-raw-data.c:1509
+#: plug-ins/common/file-raw-data.c:1538 plug-ins/common/file-sunras.c:614
 #: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:630
 #: plug-ins/common/file-xmc.c:1272 plug-ins/common/sphere-designer.c:2205
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
@@ -2003,17 +2004,18 @@ msgstr "Kan ikkje arbeida på ei tom markering."
 #: plug-ins/common/file-png.c:800 plug-ins/common/file-png.c:1370
 #: plug-ins/common/file-ps.c:1159 plug-ins/common/file-ps.c:3739
 #: plug-ins/common/file-psp.c:2634 plug-ins/common/file-psp.c:2684
-#: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:577
-#: plug-ins/common/file-raw-data.c:1714 plug-ins/common/file-sunras.c:435
-#: plug-ins/common/file-svg.c:562 plug-ins/common/file-tga.c:427
-#: plug-ins/common/file-tim.c:278 plug-ins/common/file-wbmp.c:250
-#: plug-ins/common/file-wbmp.c:329 plug-ins/common/file-xbm.c:725
-#: plug-ins/common/file-xmc.c:656 plug-ins/common/file-xmc.c:895
-#: plug-ins/common/file-xwd.c:465 plug-ins/common/sphere-designer.c:2094
-#: plug-ins/file-bmp/bmp-load.c:276 plug-ins/file-dds/ddsread.c:169
-#: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:368
-#: plug-ins/file-fli/fli-gimp.c:440 plug-ins/file-fli/fli-gimp.c:491
-#: plug-ins/file-icns/file-icns-load.c:552
+#: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:608
+#: plug-ins/common/file-raw-data.c:796 plug-ins/common/file-raw-data.c:1841
+#: plug-ins/common/file-seattle-filmworks.c:232
+#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:562
+#: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:278
+#: plug-ins/common/file-wbmp.c:250 plug-ins/common/file-wbmp.c:329
+#: plug-ins/common/file-xbm.c:725 plug-ins/common/file-xmc.c:656
+#: plug-ins/common/file-xmc.c:895 plug-ins/common/file-xwd.c:465
+#: plug-ins/common/sphere-designer.c:2094 plug-ins/file-bmp/bmp-load.c:276
+#: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:260
+#: plug-ins/file-fits/fits.c:368 plug-ins/file-fli/fli-gimp.c:440
+#: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:552
 #: plug-ins/file-icns/file-icns-load.c:604 plug-ins/file-ico/ico-load.c:685
 #: plug-ins/file-ico/ico-load.c:823 plug-ins/file-ico/ico-load.c:1025
 #: plug-ins/file-jpeg/jpeg-load.c:106 plug-ins/file-jpeg/jpeg-load.c:699
@@ -2378,7 +2380,7 @@ msgstr "O_verlapping"
 msgid "Overlap"
 msgstr "Overlapping"
 
-#: plug-ins/common/depth-merge.c:252 plug-ins/common/file-raw-data.c:364
+#: plug-ins/common/depth-merge.c:252 plug-ins/common/file-raw-data.c:374
 msgid "O_ffset"
 msgstr "Forskyving"
 
@@ -2507,7 +2509,7 @@ msgid "This plug-in tries to remove vertical stripes from an image."
 msgstr "Dette programtillegget prøver å fjerna loddrette striper frå biletet."
 
 #: plug-ins/common/destripe.c:140 plug-ins/common/file-html-table.c:199
-#: plug-ins/common/file-ps.c:525 plug-ins/common/file-raw-data.c:354
+#: plug-ins/common/file-ps.c:525 plug-ins/common/file-raw-data.c:364
 #: plug-ins/common/smooth-palette.c:134 plug-ins/imagemap/imap_grid.c:258
 msgid "_Width"
 msgstr "_Breidd"
@@ -2613,16 +2615,17 @@ msgstr "EOF (filslutt) eller feil ved lesing av biletheading"
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
 #: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
 #: plug-ins/common/file-png.c:792 plug-ins/common/file-pnm.c:688
-#: plug-ins/common/file-ps.c:1149 plug-ins/common/file-raw-data.c:1706
-#: plug-ins/common/file-sunras.c:427 plug-ins/common/file-tga.c:419
-#: plug-ins/common/file-wbmp.c:242 plug-ins/common/file-wbmp.c:321
-#: plug-ins/common/file-wmf.c:618 plug-ins/common/file-xbm.c:717
-#: plug-ins/common/file-xmc.c:646 plug-ins/common/file-xpm.c:361
-#: plug-ins/common/file-xwd.c:457 plug-ins/file-bmp/bmp-load.c:265
-#: plug-ins/file-exr/file-exr.c:197 plug-ins/file-faxg3/faxg3.c:244
-#: plug-ins/file-fli/fli-gimp.c:483 plug-ins/file-icns/file-icns-load.c:544
-#: plug-ins/file-ico/ico-load.c:677 plug-ins/file-ico/ico-load.c:815
-#: plug-ins/file-jpeg/jpeg-load.c:97 plug-ins/file-psd/psd-load.c:202
+#: plug-ins/common/file-ps.c:1149 plug-ins/common/file-raw-data.c:787
+#: plug-ins/common/file-raw-data.c:1833 plug-ins/common/file-sunras.c:427
+#: plug-ins/common/file-tga.c:419 plug-ins/common/file-wbmp.c:242
+#: plug-ins/common/file-wbmp.c:321 plug-ins/common/file-wmf.c:618
+#: plug-ins/common/file-xbm.c:717 plug-ins/common/file-xmc.c:646
+#: plug-ins/common/file-xpm.c:361 plug-ins/common/file-xwd.c:457
+#: plug-ins/file-bmp/bmp-load.c:265 plug-ins/file-exr/file-exr.c:197
+#: plug-ins/file-faxg3/faxg3.c:244 plug-ins/file-fli/fli-gimp.c:483
+#: plug-ins/file-icns/file-icns-load.c:544 plug-ins/file-ico/ico-load.c:677
+#: plug-ins/file-ico/ico-load.c:815 plug-ins/file-jpeg/jpeg-load.c:97
+#: plug-ins/file-psd/psd-load.c:202
 #: plug-ins/file-raw/file-another-rawtherapee.c:346
 #: plug-ins/file-raw/file-darktable.c:467
 #: plug-ins/file-raw/file-rawtherapee.c:345 plug-ins/file-sgi/sgi.c:315
@@ -3741,7 +3744,7 @@ msgid "The width for each table cell. Can be a number or a percent."
 msgstr "Breidda for kvar tabellcelle. Kan vere eit fast tal eller i prosent."
 
 #: plug-ins/common/file-html-table.c:206 plug-ins/common/file-ps.c:532
-#: plug-ins/common/file-raw-data.c:359 plug-ins/common/smooth-palette.c:140
+#: plug-ins/common/file-raw-data.c:369 plug-ins/common/smooth-palette.c:140
 #: plug-ins/imagemap/imap_grid.c:264
 msgid "_Height"
 msgstr "_Høgd"
@@ -4193,6 +4196,14 @@ msgstr ""
 #: plug-ins/common/file-lnk.c:210 plug-ins/common/file-lnk.c:225
 #: plug-ins/common/file-lnk.c:234 plug-ins/common/file-lnk.c:247
 #: plug-ins/common/file-lnk.c:264 plug-ins/common/file-pnm.c:725
+#: plug-ins/common/file-raw-data.c:812
+#: plug-ins/common/file-seattle-filmworks.c:244
+#: plug-ins/common/file-seattle-filmworks.c:283
+#: plug-ins/common/file-seattle-filmworks.c:340
+#: plug-ins/common/file-seattle-filmworks.c:359
+#: plug-ins/common/file-seattle-filmworks.c:370
+#: plug-ins/common/file-seattle-filmworks.c:380
+#: plug-ins/common/file-seattle-filmworks.c:514
 #, c-format
 msgid "Invalid file."
 msgstr "Ugyldig fil."
@@ -5789,208 +5800,208 @@ msgstr "Eksporter bilete i QOI-filformat (Heilt OK bilete)"
 msgid "Failed to read QOI file"
 msgstr "Klarte ikkje lesa QOI-fila"
 
-#: plug-ins/common/file-raw-data.c:335 plug-ins/common/file-raw-data.c:507
+#: plug-ins/common/file-raw-data.c:345 plug-ins/common/file-raw-data.c:538
 msgid "Raw image data"
 msgstr "Raw biletdata"
 
-#: plug-ins/common/file-raw-data.c:338 plug-ins/common/file-raw-data.c:340
+#: plug-ins/common/file-raw-data.c:348 plug-ins/common/file-raw-data.c:350
 msgid "Load raw images, specifying image information"
 msgstr "Last inn raw-bilete, spesifiser biletinformasjonen"
 
-#: plug-ins/common/file-raw-data.c:355
+#: plug-ins/common/file-raw-data.c:365
 msgid "Image width in number of pixels"
 msgstr "Biletbreidda som talet på pikslar"
 
-#: plug-ins/common/file-raw-data.c:360
+#: plug-ins/common/file-raw-data.c:370
 msgid "Image height in number of pixels"
 msgstr "Bilethøgda som talet på pikslar"
 
-#: plug-ins/common/file-raw-data.c:365
+#: plug-ins/common/file-raw-data.c:375
 msgid "Offset to beginning of image in raw data"
 msgstr "Forskyving til bilete i raw-data"
 
-#: plug-ins/common/file-raw-data.c:370
+#: plug-ins/common/file-raw-data.c:380
 msgid "Pi_xel format"
 msgstr "Pi_kselformat"
 
-#: plug-ins/common/file-raw-data.c:371
+#: plug-ins/common/file-raw-data.c:381
 msgid "The layout of pixel data, such as components and their order"
 msgstr ""
 "Utforminga av pikseldata, for eksempel komponentar og rekkjefølgja på dei"
 
-#: plug-ins/common/file-raw-data.c:372
+#: plug-ins/common/file-raw-data.c:382
 msgid "RGB 8-bit"
 msgstr "RGB 8-bitar"
 
-#: plug-ins/common/file-raw-data.c:373
+#: plug-ins/common/file-raw-data.c:383
 msgid "RGB 16-bit"
 msgstr "RGB 16-bitar"
 
-#: plug-ins/common/file-raw-data.c:374
+#: plug-ins/common/file-raw-data.c:384
 msgid "RGB 32-bit"
 msgstr "RGB 32-bitar"
 
-#: plug-ins/common/file-raw-data.c:375
+#: plug-ins/common/file-raw-data.c:385
 msgid "RGBA 8-bit"
 msgstr "RGBA 8-bitar"
 
-#: plug-ins/common/file-raw-data.c:376
+#: plug-ins/common/file-raw-data.c:386
 msgid "RGBA 16-bit"
 msgstr "RGBA 16-bitar"
 
-#: plug-ins/common/file-raw-data.c:377
+#: plug-ins/common/file-raw-data.c:387
 msgid "RGBA 32-bit"
 msgstr "RGBA 32-bitar"
 
-#: plug-ins/common/file-raw-data.c:378
+#: plug-ins/common/file-raw-data.c:388
 msgid "RGB565"
 msgstr "RGB565"
 
-#: plug-ins/common/file-raw-data.c:379
+#: plug-ins/common/file-raw-data.c:389
 msgid "BGR565"
 msgstr "BGR565"
 
-#: plug-ins/common/file-raw-data.c:380
+#: plug-ins/common/file-raw-data.c:390
 msgid "B&W 1 bit"
 msgstr "S&K 1 bit"
 
-#: plug-ins/common/file-raw-data.c:381
+#: plug-ins/common/file-raw-data.c:391
 msgid "Grayscale 2-bit"
 msgstr "Gråtone 2-bitar"
 
-#: plug-ins/common/file-raw-data.c:382
+#: plug-ins/common/file-raw-data.c:392
 msgid "Grayscale 4-bit"
 msgstr "Gråtone 4-bitar"
 
-#: plug-ins/common/file-raw-data.c:383
+#: plug-ins/common/file-raw-data.c:393
 msgid "Grayscale 8-bit"
 msgstr "Gråtone 8-bitar"
 
-#: plug-ins/common/file-raw-data.c:384
+#: plug-ins/common/file-raw-data.c:394
 msgid "Grayscale 16-bit"
 msgstr "Gråtone 16-bitar"
 
-#: plug-ins/common/file-raw-data.c:385
+#: plug-ins/common/file-raw-data.c:395
 msgid "Grayscale 32-bit"
 msgstr "Gråtone 32-bitar"
 
-#: plug-ins/common/file-raw-data.c:386
+#: plug-ins/common/file-raw-data.c:396
 msgid "Grayscale-Alpha 8-bit"
 msgstr "Gråtone-alfa 8-bitar"
 
-#: plug-ins/common/file-raw-data.c:387
+#: plug-ins/common/file-raw-data.c:397
 msgid "Grayscale-Alpha 16-bit"
 msgstr "Gråtone-alfa 16-bitar"
 
-#: plug-ins/common/file-raw-data.c:388
+#: plug-ins/common/file-raw-data.c:398
 msgid "Grayscale-Alpha 32-bit"
 msgstr "Gråtone-alfa 32-bitar"
 
-#: plug-ins/common/file-raw-data.c:389
+#: plug-ins/common/file-raw-data.c:399
 msgid "Indexed"
 msgstr "Indeksert"
 
-#: plug-ins/common/file-raw-data.c:390
+#: plug-ins/common/file-raw-data.c:400
 msgid "Indexed Alpha"
 msgstr "Indeksert alfa"
 
-#: plug-ins/common/file-raw-data.c:394
+#: plug-ins/common/file-raw-data.c:404
 msgid "_Data type"
 msgstr "_Data-type"
 
-#: plug-ins/common/file-raw-data.c:395
+#: plug-ins/common/file-raw-data.c:405
 msgid "Data type used to represent pixel values"
 msgstr "Data-type brukt for å representera pikselverdiar"
 
-#: plug-ins/common/file-raw-data.c:396
+#: plug-ins/common/file-raw-data.c:406
 msgid "Unsigned Integer"
 msgstr "Heiltal utan forteikn"
 
-#: plug-ins/common/file-raw-data.c:397
+#: plug-ins/common/file-raw-data.c:407
 msgid "Signed Integer"
 msgstr "Heiltal med forteikn"
 
-#: plug-ins/common/file-raw-data.c:398
+#: plug-ins/common/file-raw-data.c:408
 msgid "Floating Point"
 msgstr "Desimaltal"
 
-#: plug-ins/common/file-raw-data.c:402
+#: plug-ins/common/file-raw-data.c:412
 msgid "_Endianness"
 msgstr "_Byterekkjefølgje"
 
-#: plug-ins/common/file-raw-data.c:403
+#: plug-ins/common/file-raw-data.c:413
 msgid "Order of sequences of bytes"
 msgstr "Rekkjefølgja på sekvensar av bytes"
 
-#: plug-ins/common/file-raw-data.c:404
+#: plug-ins/common/file-raw-data.c:414
 msgid "Little Endian"
 msgstr "Little Endian"
 
-#: plug-ins/common/file-raw-data.c:405
+#: plug-ins/common/file-raw-data.c:415
 msgid "Big Endian"
 msgstr "Big Endian"
 
-#: plug-ins/common/file-raw-data.c:409
+#: plug-ins/common/file-raw-data.c:419
 msgid "Planar confi_guration"
 msgstr "_Planaroppsett"
 
-#: plug-ins/common/file-raw-data.c:410 plug-ins/common/file-raw-data.c:530
+#: plug-ins/common/file-raw-data.c:420 plug-ins/common/file-raw-data.c:561
 msgid "How color pixel data are stored"
 msgstr "Korleis data om fargepikslar vert lagra"
 
-#: plug-ins/common/file-raw-data.c:411 plug-ins/common/file-raw-data.c:531
+#: plug-ins/common/file-raw-data.c:421 plug-ins/common/file-raw-data.c:562
 msgid "Contiguous"
 msgstr "Tilstøytande"
 
-#: plug-ins/common/file-raw-data.c:412 plug-ins/common/file-raw-data.c:532
+#: plug-ins/common/file-raw-data.c:422 plug-ins/common/file-raw-data.c:563
 msgid "Planar"
 msgstr "Planar"
 
-#: plug-ins/common/file-raw-data.c:419 plug-ins/common/file-raw-data.c:480
+#: plug-ins/common/file-raw-data.c:429 plug-ins/common/file-raw-data.c:490
 msgid "Palette Offse_t"
 msgstr "Palett_forskyving"
 
-#: plug-ins/common/file-raw-data.c:420 plug-ins/common/file-raw-data.c:481
+#: plug-ins/common/file-raw-data.c:430 plug-ins/common/file-raw-data.c:491
 msgid "Offset to beginning of data in the palette file"
 msgstr "Forskyving til byrjinga av dataa i palettfila"
 
-#: plug-ins/common/file-raw-data.c:425 plug-ins/common/file-raw-data.c:486
-#: plug-ins/common/file-raw-data.c:537
+#: plug-ins/common/file-raw-data.c:435 plug-ins/common/file-raw-data.c:496
+#: plug-ins/common/file-raw-data.c:568
 msgid "Palette's la_yout"
 msgstr "Palett_utforming"
 
-#: plug-ins/common/file-raw-data.c:426 plug-ins/common/file-raw-data.c:487
-#: plug-ins/common/file-raw-data.c:538
+#: plug-ins/common/file-raw-data.c:436 plug-ins/common/file-raw-data.c:497
+#: plug-ins/common/file-raw-data.c:569
 msgid "The layout for the palette's color channels"
 msgstr "Utforminga av fargekanalane i paletten"
 
-#: plug-ins/common/file-raw-data.c:427 plug-ins/common/file-raw-data.c:488
-#: plug-ins/common/file-raw-data.c:539
+#: plug-ins/common/file-raw-data.c:437 plug-ins/common/file-raw-data.c:498
+#: plug-ins/common/file-raw-data.c:570
 msgid "R, G, B (normal)"
 msgstr "R, G, B (normal)"
 
-#: plug-ins/common/file-raw-data.c:428 plug-ins/common/file-raw-data.c:489
-#: plug-ins/common/file-raw-data.c:540
+#: plug-ins/common/file-raw-data.c:438 plug-ins/common/file-raw-data.c:499
+#: plug-ins/common/file-raw-data.c:571
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (BMP-stil)"
 
-#: plug-ins/common/file-raw-data.c:432 plug-ins/common/file-raw-data.c:493
+#: plug-ins/common/file-raw-data.c:442 plug-ins/common/file-raw-data.c:503
 msgid "_Palette File"
 msgstr "Pal_ettfil"
 
-#: plug-ins/common/file-raw-data.c:433 plug-ins/common/file-raw-data.c:494
+#: plug-ins/common/file-raw-data.c:443 plug-ins/common/file-raw-data.c:504
 msgid "The file containing palette data"
 msgstr "Fila inneheld palettdata"
 
-#: plug-ins/common/file-raw-data.c:445 plug-ins/common/file-raw-data.c:2787
+#: plug-ins/common/file-raw-data.c:455 plug-ins/common/file-raw-data.c:2915
 msgid "Digital Elevation Model data"
 msgstr "Digital elevasjonsmodelldata"
 
-#: plug-ins/common/file-raw-data.c:448
+#: plug-ins/common/file-raw-data.c:458
 msgid "Load HGT data as images"
 msgstr "Last inn HGT-data som bilete"
 
-#: plug-ins/common/file-raw-data.c:449
+#: plug-ins/common/file-raw-data.c:459
 msgid ""
 "Load Digital Elevation Model data in HGT format from the Shuttle Radar "
 "Topography Mission as images. Though the output image will be RGB, all "
@@ -6005,39 +6016,39 @@ msgstr ""
 "som eit andre steg, for eksempel med programtillegget «Fargelegg frå "
 "fargeovergang»."
 
-#: plug-ins/common/file-raw-data.c:469
+#: plug-ins/common/file-raw-data.c:479
 msgid "Sa_mple spacing"
 msgstr "_Prøveavstand"
 
-#: plug-ins/common/file-raw-data.c:470
+#: plug-ins/common/file-raw-data.c:480
 msgid "The sample spacing of the data."
 msgstr "Prøveavstanden for dataa."
 
-#: plug-ins/common/file-raw-data.c:471
+#: plug-ins/common/file-raw-data.c:481
 msgid "Auto-Detect"
 msgstr "Automatisk gjenkjenning"
 
-#: plug-ins/common/file-raw-data.c:472
+#: plug-ins/common/file-raw-data.c:482
 msgid "SRTM-1 (1 arc second)"
 msgstr "SRTM-1 (1 bogesekund)"
 
-#: plug-ins/common/file-raw-data.c:473
+#: plug-ins/common/file-raw-data.c:483
 msgid "SRTM-3 (3 arc seconds)"
 msgstr "SRTM-3 (3 bogesekund)"
 
-#: plug-ins/common/file-raw-data.c:510 plug-ins/common/file-raw-data.c:511
+#: plug-ins/common/file-raw-data.c:541 plug-ins/common/file-raw-data.c:542
 msgid "Dump images to disk in raw format"
 msgstr "Dump bilete til disk i raw-format"
 
-#: plug-ins/common/file-raw-data.c:529
+#: plug-ins/common/file-raw-data.c:560
 msgid "Planar configuration"
 msgstr "Planaroppsett"
 
-#: plug-ins/common/file-raw-data.c:546
+#: plug-ins/common/file-raw-data.c:577
 msgid "Raw Data"
 msgstr "Raw data"
 
-#: plug-ins/common/file-raw-data.c:611
+#: plug-ins/common/file-raw-data.c:642
 #, c-format
 msgid ""
 "%d is not a valid sample spacing. Valid values are: 0 (auto-detect), 1 and 3."
@@ -6045,7 +6056,7 @@ msgstr ""
 "%d er ikkje ein gyldig prøveavstand. Gyldige verdiar er: 0 (automatisk "
 "gjenkjenning), 1 og 3."
 
-#: plug-ins/common/file-raw-data.c:624
+#: plug-ins/common/file-raw-data.c:655
 #, c-format
 msgid ""
 "Auto-detection of sample spacing failed. \"%s\" does not appear to be a "
@@ -6057,12 +6068,12 @@ msgstr ""
 "HGT-filer er: SRTM-1 og SRTM-3. Viss du kjenner varianten, køyr med argument "
 "1 eller 3."
 
-#: plug-ins/common/file-raw-data.c:1590
+#: plug-ins/common/file-raw-data.c:1717
 #, c-format
 msgid "Could not open '%s' for size verification: %s"
 msgstr "Kan ikkje opna «%s» for stadfesting av storleiken: %s"
 
-#: plug-ins/common/file-raw-data.c:2678
+#: plug-ins/common/file-raw-data.c:2806
 msgid "Load Image from Raw Data"
 msgstr "Last biletet frå Raw Data"
 
@@ -6070,45 +6081,70 @@ msgstr "Last biletet frå Raw Data"
 #. * used for 3D surface modeling or relief maps; so it must be
 #. * translated by the proper technical term in your language.
 #.
-#: plug-ins/common/file-raw-data.c:2781
+#: plug-ins/common/file-raw-data.c:2909
 msgid "Digital Elevation Model data (1 arc-second)"
 msgstr "Digital elevasjonsmodelldata (1 bogesekund)"
 
-#: plug-ins/common/file-raw-data.c:2784
+#: plug-ins/common/file-raw-data.c:2912
 msgid "Digital Elevation Model data (3 arc-seconds)"
 msgstr "Digital elevasjonsmodelldata (3 bogesekund)"
 
-#: plug-ins/common/file-raw-data.c:2791
+#: plug-ins/common/file-raw-data.c:2919
 msgid "Image"
 msgstr "Bilete"
 
-#: plug-ins/common/file-raw-data.c:2803
+#: plug-ins/common/file-raw-data.c:2931
 msgid "Palette"
 msgstr "Palett"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
-#: plug-ins/common/file-raw-data.c:2873
+#: plug-ins/common/file-raw-data.c:3013
 #, c-format
 msgid "_Contiguous (%s)"
 msgstr "_Tilstøytande (%s)"
 
-#: plug-ins/common/file-raw-data.c:2875
+#: plug-ins/common/file-raw-data.c:3015
 msgid "_Contiguous"
 msgstr "_Tilstøytande"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
-#: plug-ins/common/file-raw-data.c:2881
+#: plug-ins/common/file-raw-data.c:3021
 #, c-format
 msgid "_Planar (%s)"
 msgstr "_Planar (%s)"
 
-#: plug-ins/common/file-raw-data.c:2883
+#: plug-ins/common/file-raw-data.c:3023
 msgid "_Planar"
 msgstr "_Planar"
+
+#: plug-ins/common/file-seattle-filmworks.c:159
+msgid "Seattle FilmWorks Image"
+msgstr "Seattle FilmWorks bilete"
+
+#: plug-ins/common/file-seattle-filmworks.c:162
+#: plug-ins/common/file-seattle-filmworks.c:164
+msgid "Load file in the Seattle FilmWorks file format"
+msgstr "Last inn fila i Seattle FilmWorks-format"
+
+#: plug-ins/common/file-seattle-filmworks.c:326
+#, c-format
+msgid "Uncompressed SFW94A format is not yet supported."
+msgstr "Det er førebels ikkje støtte for SFW94A-format."
+
+#: plug-ins/common/file-seattle-filmworks.c:415
+#: plug-ins/common/file-seattle-filmworks.c:529
+#, c-format
+msgid "Unable to convert SFW image."
+msgstr "Fekk ikkje konvertert SFW-biletet."
+
+#: plug-ins/common/file-seattle-filmworks.c:487
+#, c-format
+msgid "Unsupported SFW format '%s'"
+msgstr "Har ikkje støtte for SFW-formatet «%s»"
 
 #: plug-ins/common/file-sunras.c:276 plug-ins/common/file-sunras.c:302
 msgid "SUN Rasterfile image"
