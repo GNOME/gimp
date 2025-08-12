@@ -26,6 +26,7 @@
 #include "widgets-types.h"
 
 #include "core/gimpcontext.h"
+#include "core/gimpdrawablefilter.h"
 #include "core/gimpsettings.h"
 
 #include "gimpcontainerview.h"
@@ -33,6 +34,7 @@
 #include "gimprow.h"
 #include "gimprow-utils.h"
 #include "gimprowdeviceinfo.h"
+#include "gimprowdrawablefilter.h"
 #include "gimprowseparator.h"
 #include "gimprowsettings.h"
 
@@ -44,7 +46,15 @@ gimp_row_type_from_viewable (GimpViewable *viewable)
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), G_TYPE_NONE);
 
-  if (GIMP_IS_SETTINGS (viewable))
+  if (GIMP_IS_DRAWABLE_FILTER (viewable))
+    {
+      row_type = GIMP_TYPE_ROW_DRAWABLE_FILTER;
+    }
+  else if (GIMP_IS_FILTER (viewable))
+    {
+      row_type = GIMP_TYPE_ROW_FILTER;
+    }
+  else if (GIMP_IS_SETTINGS (viewable))
     {
       if (gimp_object_get_name (viewable))
         row_type = GIMP_TYPE_ROW_SETTINGS;
@@ -55,6 +65,12 @@ gimp_row_type_from_viewable (GimpViewable *viewable)
     {
       row_type = GIMP_TYPE_ROW_DEVICE_INFO;
     }
+
+#if 0
+  g_printerr ("viewable/row type: %s/%s\n",
+              g_type_name (G_OBJECT_TYPE (viewable)),
+              g_type_name (row_type));
+#endif
 
   return row_type;
 }
