@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_UI_MANAGER_H__
-#define __GIMP_UI_MANAGER_H__
-
+#pragma once
 
 #include "core/gimpobject.h"
 
@@ -172,6 +170,3 @@ void            gimp_ui_manager_ui_popup_at_rect
                                              const GdkEvent          *trigger_event,
                                              GDestroyNotify           popdown_func,
                                              gpointer                 popdown_data);
-
-
-#endif  /* __GIMP_UI_MANAGER_H__ */

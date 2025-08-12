@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FONT_FACTORY_VIEW_H__
-#define __GIMP_FONT_FACTORY_VIEW_H__
+#pragma once
 
 #include "gimpdatafactoryview.h"
 
@@ -53,6 +52,3 @@ GtkWidget * gimp_font_factory_view_new      (GimpViewType     view_type,
                                              gint             view_size,
                                              gint             view_border_width,
                                              GimpMenuFactory *menu_factory);
-
-
-#endif  /*  __GIMP_FONT_FACTORY_VIEW_H__  */

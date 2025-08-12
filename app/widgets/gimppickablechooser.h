@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PICKABLE_CHOOSER_H__
-#define __GIMP_PICKABLE_CHOOSER_H__
+#pragma once
 
 
 #define GIMP_TYPE_PICKABLE_CHOOSER            (gimp_pickable_chooser_get_type ())
@@ -61,6 +60,3 @@ GtkWidget    * gimp_pickable_chooser_new          (GimpContext         *context,
 GimpPickable * gimp_pickable_chooser_get_pickable (GimpPickableChooser *chooser);
 void           gimp_pickable_chooser_set_pickable (GimpPickableChooser *chooser,
                                                    GimpPickable        *pickable);
-
-
-#endif  /*  __GIMP_PICKABLE_CHOOSER_H__  */

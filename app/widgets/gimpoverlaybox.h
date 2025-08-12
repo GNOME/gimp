@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OVERLAY_BOX_H__
-#define __GIMP_OVERLAY_BOX_H__
+#pragma once
 
 
 #define GIMP_TYPE_OVERLAY_BOX            (gimp_overlay_box_get_type ())
@@ -71,6 +70,3 @@ void        gimp_overlay_box_set_child_opacity   (GimpOverlayBox *box,
 void        gimp_overlay_box_scroll              (GimpOverlayBox *box,
                                                   gint            offset_x,
                                                   gint            offset_y);
-
-
-#endif /*  __GIMP_OVERLAY_BOX_H__  */

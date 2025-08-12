@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_BUFFER_H__
-#define __GIMP_TEXT_BUFFER_H__
+#pragma once
 
 
 #define GIMP_TYPE_TEXT_BUFFER            (gimp_text_buffer_get_type ())
@@ -186,5 +185,3 @@ gboolean         gimp_text_buffer_save                 (GimpTextBuffer     *buff
 GList          * gimp_text_buffer_get_tags_on_iter     (GimpTextBuffer     *buffer,
                                                         const GtkTextIter  *iter);
 GList          * gimp_text_buffer_get_all_tags         (GimpTextBuffer     *buffer);
-
-#endif /* __GIMP_TEXT_BUFFER_H__ */

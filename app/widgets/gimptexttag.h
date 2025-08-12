@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_TAG_H__
-#define __GIMP_TEXT_TAG_H__
+#pragma once
 
 
 /*  GtkTextTag property names  */
@@ -40,6 +39,3 @@ gboolean   gimp_text_tag_get_fg_color (GtkTextTag  *tag,
                                        GeglColor  **color);
 gboolean   gimp_text_tag_get_bg_color (GtkTextTag  *tag,
                                        GeglColor  **color);
-
-
-#endif /* __GIMP_TEXT_TAG_H__ */

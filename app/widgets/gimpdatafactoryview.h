@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DATA_FACTORY_VIEW_H__
-#define __GIMP_DATA_FACTORY_VIEW_H__
-
+#pragma once
 
 #include "gimpcontainereditor.h"
 
@@ -72,6 +70,3 @@ GType             gimp_data_factory_view_get_child_type           (GimpDataFacto
 gboolean          gimp_data_factory_view_has_data_new_func        (GimpDataFactoryView *factory_view);
 gboolean          gimp_data_factory_view_have                     (GimpDataFactoryView *factory_view,
                                                                    GimpObject          *object);
-
-
-#endif  /*  __GIMP_DATA_FACTORY_VIEW_H__  */

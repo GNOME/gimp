@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DYNAMICS_OUTPUT_EDITOR_H__
-#define __GIMP_DYNAMICS_OUTPUT_EDITOR_H__
+#pragma once
 
 
 #define GIMP_TYPE_DYNAMICS_OUTPUT_EDITOR            (gimp_dynamics_output_editor_get_type ())
@@ -46,6 +45,3 @@ struct _GimpDynamicsOutputEditorClass
 GType       gimp_dynamics_output_editor_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_dynamics_output_editor_new      (GimpDynamicsOutput *output);
-
-
-#endif /* __GIMP_DYNAMICS_OUTPUT_EDITOR_H__ */

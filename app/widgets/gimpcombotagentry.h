@@ -18,10 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COMBO_TAG_ENTRY_H__
-#define __GIMP_COMBO_TAG_ENTRY_H__
+#pragma once
 
 #include "gimptagentry.h"
+
 
 #define GIMP_TYPE_COMBO_TAG_ENTRY            (gimp_combo_tag_entry_get_type ())
 #define GIMP_COMBO_TAG_ENTRY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COMBO_TAG_ENTRY, GimpComboTagEntry))
@@ -50,6 +50,3 @@ GType       gimp_combo_tag_entry_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_combo_tag_entry_new      (GimpTaggedContainer *container,
                                            GimpTagEntryMode     mode);
-
-
-#endif  /*  __GIMP_COMBO_TAG_ENTRY_H__  */

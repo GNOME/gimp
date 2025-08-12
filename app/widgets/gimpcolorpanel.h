@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLOR_PANEL_H__
-#define __GIMP_COLOR_PANEL_H__
+#pragma once
 
 
 #define GIMP_TYPE_COLOR_PANEL            (gimp_color_panel_get_type ())
@@ -66,6 +65,3 @@ void        gimp_color_panel_set_user_context_aware
 
 void        gimp_color_panel_dialog_response (GimpColorPanel       *panel,
                                               GimpColorDialogState  state);
-
-
-#endif  /*  __GIMP_COLOR_PANEL_H__  */

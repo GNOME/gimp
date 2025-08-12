@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SELECTION_DATA_H__
-#define __GIMP_SELECTION_DATA_H__
+#pragma once
 
 
 /*  uri list  */
@@ -114,6 +113,3 @@ GimpTemplate  * gimp_selection_data_get_template  (GtkSelectionData *selection,
                                                    Gimp             *gimp);
 GimpToolItem  * gimp_selection_data_get_tool_item (GtkSelectionData *selection,
                                                    Gimp             *gimp);
-
-
-#endif /* __GIMP_SELECTION_DATA_H__ */

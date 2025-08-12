@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEMPLATE_EDITOR_H__
-#define __GIMP_TEMPLATE_EDITOR_H__
+#pragma once
 
 
 #define GIMP_TYPE_TEMPLATE_EDITOR            (gimp_template_editor_get_type ())
@@ -58,6 +57,3 @@ GtkWidget    * gimp_template_editor_get_resolution_se
                                                   (GimpTemplateEditor *editor);
 GtkWidget    * gimp_template_editor_get_resolution_chain
                                                   (GimpTemplateEditor *editor);
-
-
-#endif  /*  __GIMP_TEMPLATE_EDITOR_H__  */

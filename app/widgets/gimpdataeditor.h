@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DATA_EDITOR_H__
-#define __GIMP_DATA_EDITOR_H__
-
+#pragma once
 
 #include "gimpeditor.h"
 
@@ -72,6 +70,3 @@ GimpData  * gimp_data_editor_get_data        (GimpDataEditor *editor);
 void        gimp_data_editor_set_edit_active (GimpDataEditor *editor,
                                               gboolean        edit_active);
 gboolean    gimp_data_editor_get_edit_active (GimpDataEditor *editor);
-
-
-#endif  /*  __GIMP_DATA_EDITOR_H__  */

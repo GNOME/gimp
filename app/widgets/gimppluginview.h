@@ -19,8 +19,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_VIEW_H__
-#define __GIMP_PLUG_IN_VIEW_H__
+#pragma once
 
 
 #define GIMP_TYPE_PLUG_IN_VIEW            (gimp_plug_in_view_get_type ())
@@ -55,6 +54,3 @@ GtkWidget * gimp_plug_in_view_new         (GSList         *procedures);
 gchar     * gimp_plug_in_view_get_plug_in (GimpPlugInView *view);
 gboolean    gimp_plug_in_view_set_plug_in (GimpPlugInView *view,
                                            const gchar    *path);
-
-
-#endif  /*  __GIMP_PLUG_IN_VIEW_H__  */

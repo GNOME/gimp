@@ -18,10 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PROGRESS_BOX_H__
-#define __GIMP_PROGRESS_BOX_H__
-
-G_BEGIN_DECLS
+#pragma once
 
 
 #define GIMP_TYPE_PROGRESS_BOX            (gimp_progress_box_get_type ())
@@ -55,8 +52,3 @@ struct _GimpProgressBoxClass
 GType       gimp_progress_box_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_progress_box_new      (void);
-
-
-G_END_DECLS
-
-#endif /* __GIMP_PROGRESS_BOX_H__ */

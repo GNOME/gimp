@@ -18,12 +18,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_SELECT_H__
-#define __GIMP_BRUSH_SELECT_H__
+#pragma once
 
 #include "gimppdbdialog.h"
-
-G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_BRUSH_SELECT            (gimp_brush_select_get_type ())
@@ -48,8 +45,3 @@ struct _GimpBrushSelectClass
 
 
 GType  gimp_brush_select_get_type (void) G_GNUC_CONST;
-
-
-G_END_DECLS
-
-#endif /* __GIMP_BRUSH_SELECT_H__ */

@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTAINER_POPUP_H__
-#define __GIMP_CONTAINER_POPUP_H__
-
+#pragma once
 
 #include "gimppopup.h"
 
@@ -83,6 +81,3 @@ void         gimp_container_popup_set_view_type (GimpContainerPopup *popup,
 GimpViewSize gimp_container_popup_get_view_size (GimpContainerPopup *popup);
 void         gimp_container_popup_set_view_size (GimpContainerPopup *popup,
                                                  GimpViewSize        view_size);
-
-
-#endif  /*  __GIMP_CONTAINER_POPUP_H__  */

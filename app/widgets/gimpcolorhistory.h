@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLOR_HISTORY_H__
-#define __GIMP_COLOR_HISTORY_H__
+#pragma once
 
 
 #define GIMP_TYPE_COLOR_HISTORY            (gimp_color_history_get_type ())
@@ -59,6 +58,3 @@ GType       gimp_color_history_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_color_history_new      (GimpContext     *context,
                                          gint             history_size);
-
-
-#endif /* __GIMP_COLOR_HISTORY_H__ */

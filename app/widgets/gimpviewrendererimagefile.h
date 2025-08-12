@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VIEW_RENDERER_IMAGEFILE_H__
-#define __GIMP_VIEW_RENDERER_IMAGEFILE_H__
-
+#pragma once
 
 #include "gimpviewrenderer.h"
 
@@ -47,6 +45,3 @@ struct _GimpViewRendererImagefileClass
 
 
 GType   gimp_view_renderer_imagefile_get_type (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_VIEW_RENDERER_IMAGEFILE_H__ */

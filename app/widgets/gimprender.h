@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_RENDER_H__
-#define __GIMP_RENDER_H__
+#pragma once
 
 
 void              gimp_render_init         (Gimp *gimp);
@@ -24,6 +23,3 @@ void              gimp_render_exit         (Gimp *gimp);
 
 const GeglColor * gimp_render_check_color1 (void);
 const GeglColor * gimp_render_check_color2 (void);
-
-
-#endif /* __GIMP_RENDER_H__ */

@@ -19,9 +19,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_EDITOR_H__
-#define __GIMP_TOOL_EDITOR_H__
-
+#pragma once
 
 #include "gimpcontainertreeview.h"
 
@@ -58,6 +56,3 @@ GtkWidget * gimp_tool_editor_new            (GimpContainer  *container,
                                              gint            view_border_width);
 
 void        gimp_tool_editor_revert_changes (GimpToolEditor *tool_editor);
-
-
-#endif  /*  __GIMP_TOOL_EDITOR_H__  */

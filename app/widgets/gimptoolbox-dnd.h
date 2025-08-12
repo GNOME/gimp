@@ -15,12 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOLBOX_DND_H__
-#define __GIMP_TOOLBOX_DND_H__
+#pragma once
 
 
 void   gimp_toolbox_dnd_init (GimpToolbox *toolbox,
                               GtkWidget   *vbox);
-
-
-#endif /* __GIMP_TOOLBOX_DND_H__ */

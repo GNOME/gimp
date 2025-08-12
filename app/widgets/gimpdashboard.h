@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DASHBOARD_H__
-#define __GIMP_DASHBOARD_H__
-
+#pragma once
 
 #include "gimpeditor.h"
 
@@ -90,6 +88,3 @@ gboolean                       gimp_dashboard_get_low_swap_space_warning (GimpDa
 
 void                           gimp_dashboard_menu_setup                 (GimpUIManager                 *manager,
                                                                           const gchar                   *ui_path);
-
-
-#endif  /*  __GIMP_DASHBOARD_H__  */

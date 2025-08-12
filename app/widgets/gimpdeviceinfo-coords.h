@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DEVICE_INFO_COORDS_H__
-#define __GIMP_DEVICE_INFO_COORDS_H__
+#pragma once
 
 
 gboolean gimp_device_info_get_event_coords   (GimpDeviceInfo  *info,
@@ -38,6 +37,3 @@ gboolean gimp_device_info_get_event_state    (GimpDeviceInfo  *info,
 void     gimp_device_info_get_device_state   (GimpDeviceInfo  *info,
                                               GdkWindow       *window,
                                               GdkModifierType *state);
-
-
-#endif /* __GIMP_DEVICE_INFO_COORDS_H__ */

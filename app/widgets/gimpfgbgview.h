@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FG_BG_VIEW_H__
-#define __GIMP_FG_BG_VIEW_H__
+#pragma once
 
 
 #define GIMP_TYPE_FG_BG_VIEW            (gimp_fg_bg_view_get_type ())
@@ -53,6 +52,3 @@ GtkWidget * gimp_fg_bg_view_new         (GimpContext  *context);
 
 void        gimp_fg_bg_view_set_context (GimpFgBgView *view,
                                          GimpContext  *context);
-
-
-#endif  /*  __GIMP_FG_BG_VIEW_H__  */

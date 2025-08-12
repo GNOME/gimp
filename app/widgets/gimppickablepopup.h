@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PICKABLE_POPUP_H__
-#define __GIMP_PICKABLE_POPUP_H__
-
+#pragma once
 
 #include "gimppopup.h"
 
@@ -56,6 +54,3 @@ GtkWidget    * gimp_pickable_popup_new          (GimpContext       *context,
                                                  gint               view_border_width);
 
 GimpPickable * gimp_pickable_popup_get_pickable (GimpPickablePopup *popup);
-
-
-#endif  /*  __GIMP_PICKABLE_POPUP_H__  */

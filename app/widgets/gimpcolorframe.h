@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLOR_FRAME_H__
-#define __GIMP_COLOR_FRAME_H__
+#pragma once
 
 
 #define GIMP_COLOR_FRAME_ROWS 6
@@ -111,6 +110,3 @@ void        gimp_color_frame_set_color_config   (GimpColorFrame     *frame,
 
 void        gimp_color_frame_set_image          (GimpColorFrame     *frame,
                                                  GimpImage          *image);
-
-
-#endif  /*  __GIMP_COLOR_FRAME_H__  */

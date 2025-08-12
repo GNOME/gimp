@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MENU_H__
-#define __GIMP_MENU_H__
+#pragma once
 
 
 #define GIMP_TYPE_MENU            (gimp_menu_get_type ())
@@ -53,6 +52,3 @@ GtkWidget  * gimp_menu_new        (GimpUIManager *manager);
 void         gimp_menu_merge      (GimpMenu      *menu,
                                    GimpMenu      *menu2,
                                    gboolean       top);
-
-
-#endif /* __GIMP_MENU_H__ */

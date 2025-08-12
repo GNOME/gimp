@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TAG_ENTRY_H__
-#define __GIMP_TAG_ENTRY_H__
+#pragma once
 
 
 #define GIMP_TYPE_TAG_ENTRY            (gimp_tag_entry_get_type ())
@@ -81,6 +80,3 @@ void           gimp_tag_entry_set_tag_string     (GimpTagEntry        *entry,
                                                   const gchar         *tag_string);
 
 const gchar  * gimp_tag_entry_get_separator      (void);
-
-
-#endif  /*  __GIMP_TAG_ENTRY_H__  */

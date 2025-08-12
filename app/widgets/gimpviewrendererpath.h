@@ -19,10 +19,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VIEW_RENDERER_PATH_H__
-#define __GIMP_VIEW_RENDERER_PATH_H__
+#pragma once
 
 #include "gimpviewrenderer.h"
+
 
 #define GIMP_TYPE_VIEW_RENDERER_PATH            (gimp_view_renderer_path_get_type ())
 #define GIMP_VIEW_RENDERER_PATH(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VIEW_RENDERER_PATH, GimpViewRendererPath))
@@ -46,6 +46,3 @@ struct _GimpViewRendererPathClass
 
 
 GType   gimp_view_renderer_path_get_type (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_VIEW_RENDERER_PATH_H__ */

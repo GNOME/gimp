@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_EDITOR_H__
-#define __GIMP_IMAGE_EDITOR_H__
-
+#pragma once
 
 #include "gimpeditor.h"
 
@@ -55,6 +53,3 @@ GType       gimp_image_editor_get_type  (void) G_GNUC_CONST;
 void        gimp_image_editor_set_image (GimpImageEditor *editor,
                                          GimpImage       *image);
 GimpImage * gimp_image_editor_get_image (GimpImageEditor *editor);
-
-
-#endif /* __GIMP_IMAGE_EDITOR_H__ */

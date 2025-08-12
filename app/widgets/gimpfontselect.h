@@ -18,12 +18,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FONT_SELECT_H__
-#define __GIMP_FONT_SELECT_H__
+#pragma once
 
 #include "gimppdbdialog.h"
-
-G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_FONT_SELECT            (gimp_font_select_get_type ())
@@ -48,8 +45,3 @@ struct _GimpFontSelectClass
 
 
 GType  gimp_font_select_get_type (void) G_GNUC_CONST;
-
-
-G_END_DECLS
-
-#endif /* __GIMP_FONT_SELECT_H__ */

@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DOCKBOOK_H__
-#define __GIMP_DOCKBOOK_H__
+#pragma once
 
 
 #define GIMP_TYPE_DOCKBOOK            (gimp_dockbook_get_type ())
@@ -85,6 +84,3 @@ void            gimp_dockbook_add_drag_callback       (GimpDockbookDragCallback 
                                                        gpointer                  data);
 void            gimp_dockbook_remove_drag_callback    (GimpDockbookDragCallback  callback,
                                                        gpointer                  data);
-
-
-#endif /* __GIMP_DOCKBOOK_H__ */

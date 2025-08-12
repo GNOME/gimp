@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ACTION_EDITOR_H__
-#define __GIMP_ACTION_EDITOR_H__
+#pragma once
 
 
 #define GIMP_TYPE_ACTION_EDITOR            (gimp_action_editor_get_type ())
@@ -50,6 +49,3 @@ GType       gimp_action_editor_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_action_editor_new      (Gimp        *gimp,
                                          const gchar *select_action,
                                          gboolean     show_shortcuts);
-
-
-#endif  /*  __GIMP_ACTION_EDITOR_H__  */

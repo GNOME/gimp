@@ -20,9 +20,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_HELP_H__
-#define __GIMP_HELP_H__
-
+#pragma once
 
 #include "gimphelptypes.h"
 
@@ -51,6 +49,3 @@ void             gimp_help_register_domain (const gchar    *domain_name,
 GimpHelpDomain * gimp_help_lookup_domain   (const gchar    *domain_name);
 
 GList          * gimp_help_parse_locales   (const gchar    *help_locales);
-
-
-#endif /* ! __GIMP_HELP_H__ */

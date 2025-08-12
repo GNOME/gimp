@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_THUMB_BOX_H__
-#define __GIMP_THUMB_BOX_H__
+#pragma once
 
 
 #define GIMP_TYPE_THUMB_BOX            (gimp_thumb_box_get_type ())
@@ -61,6 +60,3 @@ void        gimp_thumb_box_take_file  (GimpThumbBox *box,
                                        GFile        *file);
 void        gimp_thumb_box_take_files (GimpThumbBox *box,
                                        GSList       *files);
-
-
-#endif  /*  __GIMP_THUMB_BOX_H__  */

@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DOCUMENT_VIEW_H__
-#define __GIMP_DOCUMENT_VIEW_H__
-
+#pragma once
 
 #include "gimpcontainereditor.h"
 
@@ -58,6 +56,3 @@ GtkWidget * gimp_document_view_new      (GimpViewType     view_type,
                                          gint             view_size,
                                          gint             view_border_width,
                                          GimpMenuFactory *menu_factory);
-
-
-#endif  /*  __GIMP_DOCUMENT_VIEW_H__  */

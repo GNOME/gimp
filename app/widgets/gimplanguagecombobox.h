@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LANGUAGE_COMBO_BOX_H__
-#define __GIMP_LANGUAGE_COMBO_BOX_H__
+#pragma once
 
 
 #define GIMP_TYPE_LANGUAGE_COMBO_BOX            (gimp_language_combo_box_get_type ())
@@ -46,6 +45,3 @@ GtkWidget * gimp_language_combo_box_new      (gboolean              manual_l18n,
 gchar     * gimp_language_combo_box_get_code (GimpLanguageComboBox *combo);
 gboolean    gimp_language_combo_box_set_code (GimpLanguageComboBox *combo,
                                               const gchar          *code);
-
-
-#endif  /* __GIMP_LANGUAGE_COMBO_BOX_H__ */

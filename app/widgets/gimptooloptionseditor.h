@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_OPTIONS_EDITOR_H__
-#define __GIMP_TOOL_OPTIONS_EDITOR_H__
-
+#pragma once
 
 #include "gimpeditor.h"
 
@@ -53,6 +51,3 @@ GType             gimp_tool_options_editor_get_type         (void) G_GNUC_CONST;
 GtkWidget       * gimp_tool_options_editor_new              (Gimp                  *gimp,
                                                              GimpMenuFactory       *menu_factory);
 GimpToolOptions * gimp_tool_options_editor_get_tool_options (GimpToolOptionsEditor *editor);
-
-
-#endif  /*  __GIMP_TOOL_OPTIONS_EDITOR_H__  */

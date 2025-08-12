@@ -15,15 +15,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GEGL_FILTER_INFO_H__
-#define __GIMP_GEGL_FILTER_INFO_H__
+#pragma once
 
 #include <glib-object.h>
 
 G_BEGIN_DECLS
 
 #define GIMP_GEGL_FILTER_TYPE_INFO gimp_gegl_filter_info_get_type ()
-G_DECLARE_FINAL_TYPE (GimpGeglFilterInfo, gimp_gegl_filter_info, GIMP, GEGL_FILTER_INFO, GObject)
-G_END_DECLS
+G_DECLARE_FINAL_TYPE (GimpGeglFilterInfo,
+                      gimp_gegl_filter_info,
+                      GIMP, GEGL_FILTER_INFO,
+                      GObject)
 
-#endif
+G_END_DECLS

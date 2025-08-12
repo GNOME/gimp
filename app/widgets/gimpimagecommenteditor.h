@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_COMMENT_EDITOR_H__
-#define __GIMP_IMAGE_COMMENT_EDITOR_H__
-
+#pragma once
 
 #include "gimpimageparasiteview.h"
 
@@ -52,6 +50,3 @@ struct _GimpImageCommentEditorClass
 GType       gimp_image_comment_editor_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_image_comment_editor_new      (GimpImage *image);
-
-
-#endif /*  __GIMP_IMAGE_COMMENT_EDITOR_H__  */

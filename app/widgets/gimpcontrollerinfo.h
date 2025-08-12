@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTROLLER_INFO_H__
-#define __GIMP_CONTROLLER_INFO_H__
-
+#pragma once
 
 #include "core/gimpviewable.h"
 
@@ -77,6 +75,3 @@ gboolean gimp_controller_info_get_enabled       (GimpControllerInfo         *inf
 void     gimp_controller_info_set_event_snooper (GimpControllerInfo         *info,
                                                  GimpControllerEventSnooper  snooper,
                                                  gpointer                    snooper_data);
-
-
-#endif /* __GIMP_CONTROLLER_INFO_H__ */

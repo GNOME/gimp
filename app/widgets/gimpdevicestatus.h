@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DEVICE_STATUS_H__
-#define __GIMP_DEVICE_STATUS_H__
-
+#pragma once
 
 #include "gimpeditor.h"
 
@@ -60,6 +58,3 @@ struct _GimpDeviceStatusClass
 GType       gimp_device_status_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_device_status_new      (Gimp *gimp);
-
-
-#endif  /*  __GIMP_DEVICE_STATUS_H__  */

@@ -19,9 +19,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOGGLE_ACTION_H__
-#define __GIMP_TOGGLE_ACTION_H__
-
+#pragma once
 
 #include "gimpactionimpl.h"
 
@@ -77,6 +75,3 @@ gboolean          gimp_toggle_action_get_active (GimpToggleAction *action);
 
 void             _gimp_toggle_action_set_active (GimpToggleAction *action,
                                                  gboolean          active);
-
-
-#endif  /* __GIMP_TOGGLE_ACTION_H__ */

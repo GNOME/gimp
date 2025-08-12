@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SESSION_INFO_H__
-#define __GIMP_SESSION_INFO_H__
-
+#pragma once
 
 #include "core/gimpobject.h"
 
@@ -92,6 +90,3 @@ gint              gimp_session_info_get_height              (GimpSessionInfo    
 
 void              gimp_session_info_set_position_accuracy   (gint                    accuracy);
 gint              gimp_session_info_apply_position_accuracy (gint                    position);
-
-
-#endif  /* __GIMP_SESSION_INFO_H__ */

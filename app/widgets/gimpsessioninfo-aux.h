@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SESSION_INFO_AUX_H__
-#define __GIMP_SESSION_INFO_AUX_H__
+#pragma once
 
 
 /**
@@ -50,6 +49,3 @@ void         gimp_session_info_aux_serialize      (GimpConfigWriter    *writer,
                                                    GList               *aux_info);
 GTokenType   gimp_session_info_aux_deserialize    (GScanner            *scanner,
                                                    GList              **aux_list);
-
-
-#endif  /* __GIMP_SESSION_INFO_AUX_H__ */

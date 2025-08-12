@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MENU_MODEL_H__
-#define __GIMP_MENU_MODEL_H__
+#pragma once
 
 
 #define GIMP_TYPE_MENU_MODEL            (gimp_menu_model_get_type ())
@@ -62,6 +61,3 @@ void             gimp_menu_model_set_title    (GimpMenuModel *model,
 void             gimp_menu_model_set_color    (GimpMenuModel *model,
                                                const gchar   *path,
                                                GeglColor     *color);
-
-
-#endif /* __GIMP_MENU_MODEL_H__ */

@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLORMAP_SELECTION_H__
-#define __GIMP_COLORMAP_SELECTION_H__
+#pragma once
 
 
 #define GIMP_TYPE_COLORMAP_SELECTION            (gimp_colormap_selection_get_type ())
@@ -80,5 +79,4 @@ void               gimp_colormap_selection_get_entry_rect (GimpColormapSelection
                                                            GimpPaletteEntry      *entry,
                                                            GdkRectangle          *rect);
 
-#endif /* __GIMP_COLORMAP_SELECTION_H__ */
 

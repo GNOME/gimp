@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_HANDLE_BAR_H__
-#define __GIMP_HANDLE_BAR_H__
+#pragma once
 
 
 #define GIMP_TYPE_HANDLE_BAR            (gimp_handle_bar_get_type ())
@@ -68,6 +67,3 @@ gboolean    gimp_handle_bar_get_limits     (GimpHandleBar  *bar,
 
 void        gimp_handle_bar_connect_events (GimpHandleBar  *bar,
                                             GtkWidget      *event_source);
-
-
-#endif  /*  __GIMP_HANDLE_BAR_H__  */

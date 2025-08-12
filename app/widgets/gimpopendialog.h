@@ -18,12 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPEN_DIALOG_H__
-#define __GIMP_OPEN_DIALOG_H__
+#pragma once
 
 #include "gimpfiledialog.h"
 
-G_BEGIN_DECLS
 
 #define GIMP_TYPE_OPEN_DIALOG            (gimp_open_dialog_get_type ())
 #define GIMP_OPEN_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPEN_DIALOG, GimpOpenDialog))
@@ -55,7 +53,3 @@ GtkWidget * gimp_open_dialog_new        (Gimp           *gimp);
 void        gimp_open_dialog_set_image  (GimpOpenDialog *dialog,
                                          GimpImage      *image,
                                          gboolean        open_as_layers);
-
-G_END_DECLS
-
-#endif /* __GIMP_OPEN_DIALOG_H__ */

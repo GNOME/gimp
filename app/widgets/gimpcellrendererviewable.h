@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CELL_RENDERER_VIEWABLE_H__
-#define __GIMP_CELL_RENDERER_VIEWABLE_H__
+#pragma once
 
 
 #define GIMP_TYPE_CELL_RENDERER_VIEWABLE            (gimp_cell_renderer_viewable_get_type ())
@@ -60,6 +59,3 @@ gboolean          gimp_cell_renderer_viewable_pre_clicked (GimpCellRendererViewa
 void              gimp_cell_renderer_viewable_clicked     (GimpCellRendererViewable *cell,
                                                            const gchar              *path,
                                                            GdkModifierType           state);
-
-
-#endif /* __GIMP_CELL_RENDERER_VIEWABLE_H__ */

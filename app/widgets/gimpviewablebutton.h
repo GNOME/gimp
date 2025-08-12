@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VIEWABLE_BUTTON_H__
-#define __GIMP_VIEWABLE_BUTTON_H__
+#pragma once
 
 
 #define GIMP_TYPE_VIEWABLE_BUTTON            (gimp_viewable_button_get_type ())
@@ -79,6 +78,3 @@ void         gimp_viewable_button_set_view_type (GimpViewableButton *button,
 gint         gimp_viewable_button_get_view_size (GimpViewableButton *button);
 void         gimp_viewable_button_set_view_size (GimpViewableButton *button,
                                                  GimpViewSize        view_size);
-
-
-#endif /* __GIMP_VIEWABLE_BUTTON_H__ */

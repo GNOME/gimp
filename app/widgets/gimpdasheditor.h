@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DASH_EDITOR_H__
-#define __GIMP_DASH_EDITOR_H__
+#pragma once
 
 
 #define GIMP_TYPE_DASH_EDITOR            (gimp_dash_editor_get_type ())
@@ -65,6 +64,3 @@ GtkWidget * gimp_dash_editor_new         (GimpStrokeOptions *stroke_options);
 
 void        gimp_dash_editor_shift_left  (GimpDashEditor    *editor);
 void        gimp_dash_editor_shift_right (GimpDashEditor    *editor);
-
-
-#endif /* __GIMP_DASH_EDITOR_H__ */

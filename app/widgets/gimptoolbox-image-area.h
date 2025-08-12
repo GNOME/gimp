@@ -15,13 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOLBOX_IMAGE_AREA_H__
-#define __GIMP_TOOLBOX_IMAGE_AREA_H__
+#pragma once
 
 
 GtkWidget * gimp_toolbox_image_area_create (GimpToolbox *toolbox,
                                             gint         width,
                                             gint         height);
-
-
-#endif  /*  __GIMP_TOOLBOX_IMAGE_AREA_H__  */

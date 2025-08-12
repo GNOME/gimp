@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PIVOT_SELECTOR_H__
-#define __GIMP_PIVOT_SELECTOR_H__
+#pragma once
 
 
 #define GIMP_TYPE_PIVOT_SELECTOR            (gimp_pivot_selector_get_type ())
@@ -73,6 +72,3 @@ void        gimp_pivot_selector_get_bounds   (GimpPivotSelector *selector,
                                               gdouble           *top,
                                               gdouble           *right,
                                               gdouble           *bottom);
-
-
-#endif /* __GIMP_PIVOT_SELECTOR_H__ */

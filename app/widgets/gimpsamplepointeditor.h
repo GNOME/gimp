@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SAMPLE_POINT_EDITOR_H__
-#define __GIMP_SAMPLE_POINT_EDITOR_H__
-
+#pragma once
 
 #include "gimpimageeditor.h"
 
@@ -64,6 +62,3 @@ GtkWidget * gimp_sample_point_editor_new               (GimpMenuFactory *menu_fa
 void        gimp_sample_point_editor_set_sample_merged (GimpSamplePointEditor *editor,
                                                         gboolean               sample_merged);
 gboolean    gimp_sample_point_editor_get_sample_merged (GimpSamplePointEditor *editor);
-
-
-#endif /* __GIMP_SAMPLE_POINT_EDITOR_H__ */

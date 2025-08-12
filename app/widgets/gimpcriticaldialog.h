@@ -18,10 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CRITICAL_DIALOG_H__
-#define __GIMP_CRITICAL_DIALOG_H__
-
-G_BEGIN_DECLS
+#pragma once
 
 
 #define GIMP_TYPE_CRITICAL_DIALOG            (gimp_critical_dialog_get_type ())
@@ -69,8 +66,3 @@ void        gimp_critical_dialog_add      (GtkWidget          *dialog,
                                            gboolean            is_fatal,
                                            const gchar        *program,
                                            gint                pid);
-
-
-G_END_DECLS
-
-#endif /* __GIMP_CRITICAL_DIALOG_H__ */

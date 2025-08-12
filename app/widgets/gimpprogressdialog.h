@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PROGRESS_DIALOG_H__
-#define __GIMP_PROGRESS_DIALOG_H__
+#pragma once
 
 
 #define GIMP_TYPE_PROGRESS_DIALOG            (gimp_progress_dialog_get_type ())
@@ -48,6 +47,3 @@ struct _GimpProgressDialogClass
 GType       gimp_progress_dialog_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_progress_dialog_new      (void);
-
-
-#endif /* __GIMP_PROGRESS_DIALOG_H__ */

@@ -18,12 +18,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PICKABLE_SELECT_H__
-#define __GIMP_PICKABLE_SELECT_H__
+#pragma once
 
 #include "gimppdbdialog.h"
-
-G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_PICKABLE_SELECT            (gimp_pickable_select_get_type ())
@@ -50,8 +47,3 @@ struct _GimpPickableSelectClass
 
 
 GType  gimp_pickable_select_get_type (void) G_GNUC_CONST;
-
-
-G_END_DECLS
-
-#endif /* __GIMP_PICKABLE_SELECT_H__ */

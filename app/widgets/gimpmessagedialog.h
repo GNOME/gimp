@@ -18,10 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MESSAGE_DIALOG_H__
-#define __GIMP_MESSAGE_DIALOG_H__
-
-G_BEGIN_DECLS
+#pragma once
 
 
 #define GIMP_TYPE_MESSAGE_DIALOG            (gimp_message_dialog_get_type ())
@@ -56,8 +53,3 @@ GtkWidget * gimp_message_dialog_new      (const gchar       *title,
                                           GimpHelpFunc       help_func,
                                           const gchar       *help_id,
                                           ...) G_GNUC_NULL_TERMINATED;
-
-
-G_END_DECLS
-
-#endif /* __GIMP_MESSAGE_DIALOG_H__ */

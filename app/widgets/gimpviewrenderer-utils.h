@@ -18,11 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VIEW_RENDERER_UTILS_H__
-#define __GIMP_VIEW_RENDERER_UTILS_H__
+#pragma once
 
 
 GType   gimp_view_renderer_type_from_viewable_type (GType viewable_type);
-
-
-#endif /* __GIMP_VIEW_RENDERER_UTILS_H__ */

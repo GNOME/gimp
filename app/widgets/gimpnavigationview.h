@@ -21,8 +21,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_NAVIGATION_VIEW_H__
-#define __GIMP_NAVIGATION_VIEW_H__
+#pragma once
 
 #include "gimpview.h"
 
@@ -82,6 +81,3 @@ void    gimp_navigation_view_get_local_marker
                                            gint               *height);
 void    gimp_navigation_view_grab_pointer (GimpNavigationView *view,
                                            GdkEvent           *event);
-
-
-#endif /* __GIMP_NAVIGATION_VIEW_H__ */

@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VIEW_RENDERER_FRAME_H__
-#define __GIMP_VIEW_RENDERER_FRAME_H__
+#pragma once
 
 
 GdkPixbuf * gimp_view_renderer_get_frame_pixbuf (GimpViewRenderer *renderer,
@@ -29,6 +28,3 @@ GdkPixbuf * gimp_view_renderer_get_frame_pixbuf (GimpViewRenderer *renderer,
 
 void        gimp_view_renderer_get_frame_size   (gint             *width,
                                                  gint             *height);
-
-
-#endif /* __GIMP_VIEW_RENDERER_FRAME_H__ */

@@ -18,11 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DIALOG_FACTORY_H__
-#define __GIMP_DIALOG_FACTORY_H__
-
+#pragma once
 
 #include "core/gimpobject.h"
+
 
 #define GIMP_DIALOG_VISIBILITY_KEY "gimp-dialog-visibility"
 
@@ -205,6 +204,3 @@ gboolean            gimp_dialog_factory_get_has_min_size     (GtkWindow         
 
 GimpDialogFactory * gimp_dialog_factory_get_singleton        (void);
 void                gimp_dialog_factory_set_singleton        (GimpDialogFactory       *factory);
-
-
-#endif  /*  __GIMP_DIALOG_FACTORY_H__  */

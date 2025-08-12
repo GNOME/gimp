@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OVERLAY_DIALOG_H__
-#define __GIMP_OVERLAY_DIALOG_H__
-
+#pragma once
 
 #include "gimpoverlayframe.h"
 
@@ -88,6 +86,3 @@ void        gimp_overlay_dialog_set_default_response   (GimpOverlayDialog *overl
 void        gimp_overlay_dialog_set_response_sensitive (GimpOverlayDialog *overlay,
                                                         gint               response_id,
                                                         gboolean           sensitive);
-
-
-#endif /* __GIMP_OVERLAY_DIALOG_H__ */

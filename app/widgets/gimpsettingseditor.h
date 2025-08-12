@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SETTINGS_EDITOR_H__
-#define __GIMP_SETTINGS_EDITOR_H__
+#pragma once
 
 
 #define GIMP_TYPE_SETTINGS_EDITOR            (gimp_settings_editor_get_type ())
@@ -48,6 +47,3 @@ GType       gimp_settings_editor_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_settings_editor_new      (Gimp          *gimp,
                                            GObject       *config,
                                            GimpContainer *container);
-
-
-#endif  /*  __GIMP_SETTINGS_EDITOR_H__  */

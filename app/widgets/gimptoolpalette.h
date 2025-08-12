@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_PALETTE_H__
-#define __GIMP_TOOL_PALETTE_H__
+#pragma once
 
 
 #define GIMP_TYPE_TOOL_PALETTE            (gimp_tool_palette_get_type ())
@@ -51,6 +50,3 @@ void        gimp_tool_palette_set_toolbox     (GimpToolPalette   *palette,
 gboolean    gimp_tool_palette_get_button_size (GimpToolPalette   *palette,
                                                gint              *width,
                                                gint              *height);
-
-
-#endif /* __GIMP_TOOL_PALETTE_H__ */

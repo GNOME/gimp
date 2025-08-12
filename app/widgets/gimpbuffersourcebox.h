@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BUFFER_SOURCE_BOX_H__
-#define __GIMP_BUFFER_SOURCE_BOX_H__
+#pragma once
 
 
 #define GIMP_TYPE_BUFFER_SOURCE_BOX            (gimp_buffer_source_box_get_type ())
@@ -53,6 +52,3 @@ GtkWidget * gimp_buffer_source_box_new        (GimpContext         *context,
                                                const gchar         *name);
 
 GtkWidget * gimp_buffer_source_box_get_toggle (GimpBufferSourceBox *box);
-
-
-#endif  /*  __GIMP_BUFFER_SOURCE_BOX_H__  */

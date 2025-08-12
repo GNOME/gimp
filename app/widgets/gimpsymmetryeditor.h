@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SYMMETRY_EDITOR_H__
-#define __GIMP_SYMMETRY_EDITOR_H__
-
+#pragma once
 
 #include "gimpimageeditor.h"
 
@@ -52,6 +50,3 @@ struct _GimpSymmetryEditorClass
 GType       gimp_symmetry_editor_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_symmetry_editor_new      (GimpMenuFactory *menu_factory);
-
-
-#endif  /*  __GIMP_SYMMETRY_EDITOR_H__  */

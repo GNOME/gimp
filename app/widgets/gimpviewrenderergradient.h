@@ -18,10 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VIEW_RENDERER_GRADIENT_H__
-#define __GIMP_VIEW_RENDERER_GRADIENT_H__
+#pragma once
 
 #include "gimpviewrenderer.h"
+
 
 #define GIMP_TYPE_VIEW_RENDERER_GRADIENT            (gimp_view_renderer_gradient_get_type ())
 #define GIMP_VIEW_RENDERER_GRADIENT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VIEW_RENDERER_GRADIENT, GimpViewRendererGradient))
@@ -60,6 +60,3 @@ void    gimp_view_renderer_gradient_set_reverse (GimpViewRendererGradient    *re
 void    gimp_view_renderer_gradient_set_blend_color_space
                                                 (GimpViewRendererGradient    *renderer,
                                                  GimpGradientBlendColorSpace  blend_color_space);
-
-
-#endif /* __GIMP_VIEW_RENDERER_GRADIENT_H__ */

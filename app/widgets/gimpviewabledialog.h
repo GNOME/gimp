@@ -18,10 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VIEWABLE_DIALOG_H__
-#define __GIMP_VIEWABLE_DIALOG_H__
-
-G_BEGIN_DECLS
+#pragma once
 
 
 #define GIMP_TYPE_VIEWABLE_DIALOG            (gimp_viewable_dialog_get_type ())
@@ -70,8 +67,3 @@ GtkWidget * gimp_viewable_dialog_new      (GList              *viewables,
 void    gimp_viewable_dialog_set_viewables (GimpViewableDialog *dialog,
                                             GList              *viewables,
                                             GimpContext        *context);
-
-
-G_END_DECLS
-
-#endif /* __GIMP_VIEWABLE_DIALOG_H__ */

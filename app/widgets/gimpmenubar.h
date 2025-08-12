@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MENU_BAR_H__
-#define __GIMP_MENU_BAR_H__
+#pragma once
 
 
 #define GIMP_TYPE_MENU_BAR            (gimp_menu_bar_get_type ())
@@ -35,9 +34,9 @@ typedef struct _GimpMenuBarClass   GimpMenuBarClass;
 
 struct _GimpMenuBar
 {
-  GtkMenuBar           parent_instance;
+  GtkMenuBar          parent_instance;
 
-  GimpMenuBarPrivate  *priv;
+  GimpMenuBarPrivate *priv;
 };
 
 struct _GimpMenuBarClass
@@ -46,10 +45,7 @@ struct _GimpMenuBarClass
 };
 
 
-GType        gimp_menu_bar_get_type   (void) G_GNUC_CONST;
+GType       gimp_menu_bar_get_type (void) G_GNUC_CONST;
 
-GtkWidget  * gimp_menu_bar_new        (GimpMenuModel *model,
-                                       GimpUIManager *manager);
-
-
-#endif /* __GIMP_MENU_BAR_H__ */
+GtkWidget * gimp_menu_bar_new      (GimpMenuModel *model,
+                                    GimpUIManager *manager);

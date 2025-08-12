@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTAINER_ENTRY_H__
-#define __GIMP_CONTAINER_ENTRY_H__
+#pragma once
 
 
 #define GIMP_TYPE_CONTAINER_ENTRY            (gimp_container_entry_get_type ())
@@ -51,6 +50,3 @@ GtkWidget * gimp_container_entry_new      (GimpContainer *container,
                                            GimpContext   *context,
                                            gint           view_size,
                                            gint           view_border_width);
-
-
-#endif  /*  __GIMP_CONTAINER_ENTRY_H__  */

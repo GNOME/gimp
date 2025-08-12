@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PALETTE_VIEW_H__
-#define __GIMP_PALETTE_VIEW_H__
+#pragma once
 
 #include "gimpview.h"
 
@@ -71,6 +70,3 @@ GimpPaletteEntry * gimp_palette_view_get_selected_entry (GimpPaletteView *view);
 void               gimp_palette_view_get_entry_rect     (GimpPaletteView  *view,
                                                          GimpPaletteEntry *entry,
                                                          GdkRectangle     *rect);
-
-
-#endif /* __GIMP_PALETTE_VIEW_H__ */

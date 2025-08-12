@@ -20,10 +20,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_RADIO_ACTION_H__
-#define __GIMP_RADIO_ACTION_H__
+#pragma once
 
 #include "gimptoggleaction.h"
+
 
 #define GIMP_TYPE_RADIO_ACTION            (gimp_radio_action_get_type ())
 #define GIMP_RADIO_ACTION(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_RADIO_ACTION, GimpRadioAction))
@@ -70,6 +70,3 @@ const gchar * gimp_radio_action_get_group_label   (GimpRadioAction *action);
 gint          gimp_radio_action_get_current_value (GimpRadioAction *action);
 void          gimp_radio_action_set_current_value (GimpRadioAction *action,
                                                    gint             current_value);
-
-
-#endif  /* __GIMP_RADIO_ACTION_H__ */

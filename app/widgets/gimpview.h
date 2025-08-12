@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VIEW_H__
-#define __GIMP_VIEW_H__
+#pragma once
 
 
 #define GIMP_TYPE_VIEW            (gimp_view_get_type ())
@@ -103,6 +102,3 @@ void           gimp_view_set_viewable      (GimpView      *view,
                                             GimpViewable  *viewable);
 void           gimp_view_set_expand        (GimpView      *view,
                                             gboolean       expand);
-
-
-#endif /* __GIMP_VIEW_H__ */

@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ACCEL_LABEL_H__
-#define __GIMP_ACCEL_LABEL_H__
+#pragma once
 
 
 #define GIMP_TYPE_ACCEL_LABEL            (gimp_accel_label_get_type ())
@@ -53,6 +52,3 @@ GtkWidget  * gimp_accel_label_new        (GimpAction     *action);
 void         gimp_accel_label_set_action (GimpAccelLabel *accel_label,
                                           GimpAction     *action);
 GimpAction * gimp_accel_label_get_action (GimpAccelLabel *accel_label);
-
-
-#endif /* __GIMP_ACCEL_LABEL_H__ */

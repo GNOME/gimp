@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MENU_SHELL_H__
-#define __GIMP_MENU_SHELL_H__
+#pragma once
 
 
 #define GIMP_TYPE_MENU_SHELL               (gimp_menu_shell_get_type ())
@@ -85,6 +84,3 @@ void            gimp_menu_shell_set_property        (GObject       *object,
                                                      GParamSpec    *pspec);
 
 GimpUIManager * gimp_menu_shell_get_manager         (GimpMenuShell *shell);
-
-
-#endif  /* __GIMP_MENU_SHELL_H__ */

@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMPRESSIONIST_H
-#define __GIMPRESSIONIST_H
+#pragma once
 
 /* Includes necessary for the correct processing of this file. */
 #include <libgimp/gimp.h>
@@ -181,7 +180,3 @@ void gimpressionist_scale_entry_update_int    (GimpLabelSpin *entry,
                                                gint          *value);
 
 #define CLAMP_UP_TO(x, max) (CLAMP((x),(0),(max-1)))
-
-#endif /* #ifndef __GIMPRESSIONIST_H */
-
-

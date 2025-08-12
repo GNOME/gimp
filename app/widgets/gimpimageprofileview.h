@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_PROFILE_VIEW_H__
-#define __GIMP_IMAGE_PROFILE_VIEW_H__
-
+#pragma once
 
 #include "gimpimageparasiteview.h"
 
@@ -51,6 +49,3 @@ struct _GimpImageProfileViewClass
 GType       gimp_image_profile_view_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_image_profile_view_new      (GimpImage *image);
-
-
-#endif /*  __GIMP_IMAGE_PROFILE_VIEW_H__  */

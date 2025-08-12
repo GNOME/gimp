@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CELL_RENDERER_BUTTON_H__
-#define __GIMP_CELL_RENDERER_BUTTON_H__
+#pragma once
 
 
 #define GIMP_TYPE_CELL_RENDERER_BUTTON            (gimp_cell_renderer_button_get_type ())
@@ -54,6 +53,3 @@ GtkCellRenderer * gimp_cell_renderer_button_new      (void);
 void              gimp_cell_renderer_button_clicked  (GimpCellRendererButton *cell,
                                                       const gchar            *path,
                                                       GdkModifierType         state);
-
-
-#endif /* __GIMP_CELL_RENDERER_BUTTON_H__ */

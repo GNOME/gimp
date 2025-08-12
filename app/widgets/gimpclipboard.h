@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CLIPBOARD_H__
-#define __GIMP_CLIPBOARD_H__
+#pragma once
 
 
 void         gimp_clipboard_init       (Gimp        *gimp);
@@ -45,6 +44,3 @@ void         gimp_clipboard_set_text   (Gimp        *gimp,
                                         const gchar *text);
 void         gimp_clipboard_set_curve  (Gimp        *gimp,
                                         GimpCurve   *curve);
-
-
-#endif /* __GIMP_CLIPBOARD_H__ */

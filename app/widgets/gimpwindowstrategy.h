@@ -18,12 +18,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_WINDOW_STRATEGY_H__
-#define __GIMP_WINDOW_STRATEGY_H__
+#pragma once
 
 
 #define GIMP_TYPE_WINDOW_STRATEGY (gimp_window_strategy_get_type ())
-G_DECLARE_INTERFACE (GimpWindowStrategy, gimp_window_strategy, GIMP, WINDOW_STRATEGY, GObject)
+G_DECLARE_INTERFACE (GimpWindowStrategy,
+                     gimp_window_strategy,
+                     GIMP, WINDOW_STRATEGY,
+                     GObject)
 
 
 struct _GimpWindowStrategyInterface
@@ -44,6 +46,3 @@ GtkWidget * gimp_window_strategy_show_dockable_dialog (GimpWindowStrategy *strat
                                                        GimpDialogFactory  *factory,
                                                        GdkMonitor         *monitor,
                                                        const gchar        *identifiers);
-
-
-#endif  /*  __GIMP_WINDOW_STRATEGY_H__  */

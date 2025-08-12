@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GRADIENT_EDITOR_H__
-#define __GIMP_GRADIENT_EDITOR_H__
-
+#pragma once
 
 #include "gimpdataeditor.h"
 
@@ -117,6 +115,3 @@ void        gimp_gradient_editor_zoom             (GimpGradientEditor   *editor,
                                                    GimpZoomType          zoom_type,
                                                    gdouble               delta,
                                                    gdouble               zoom_focus_x);
-
-
-#endif  /* __GIMP_GRADIENT_EDITOR_H__ */

@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PICKABLE_BUTTON_H__
-#define __GIMP_PICKABLE_BUTTON_H__
+#pragma once
 
 
 #define GIMP_TYPE_PICKABLE_BUTTON            (gimp_pickable_button_get_type ())
@@ -55,6 +54,3 @@ GtkWidget    * gimp_pickable_button_new          (GimpContext        *context,
 GimpPickable * gimp_pickable_button_get_pickable (GimpPickableButton *button);
 void           gimp_pickable_button_set_pickable (GimpPickableButton *button,
                                                   GimpPickable       *pickable);
-
-
-#endif /* __GIMP_PICKABLE_BUTTON_H__ */

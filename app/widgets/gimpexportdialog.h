@@ -18,12 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_EXPORT_DIALOG_H__
-#define __GIMP_EXPORT_DIALOG_H__
+#pragma once
 
 #include "gimpfiledialog.h"
 
-G_BEGIN_DECLS
 
 #define GIMP_TYPE_EXPORT_DIALOG            (gimp_export_dialog_get_type ())
 #define GIMP_EXPORT_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_EXPORT_DIALOG, GimpExportDialog))
@@ -55,7 +53,3 @@ GtkWidget * gimp_export_dialog_new       (Gimp             *gimp);
 void        gimp_export_dialog_set_image (GimpExportDialog *dialog,
                                           GimpImage        *image,
                                           GimpObject       *display);
-
-G_END_DECLS
-
-#endif /* __GIMP_EXPORT_DIALOG_H__ */

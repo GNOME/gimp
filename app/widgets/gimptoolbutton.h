@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_BUTTON_H__
-#define __GIMP_TOOL_BUTTON_H__
+#pragma once
 
 
 #define GIMP_TYPE_TOOL_BUTTON            (gimp_tool_button_get_type ())
@@ -58,6 +57,3 @@ void           gimp_tool_button_set_tool_item (GimpToolButton *tool_button,
 GimpToolItem * gimp_tool_button_get_tool_item (GimpToolButton *tool_button);
 
 GimpToolInfo * gimp_tool_button_get_tool_info (GimpToolButton *tool_button);
-
-
-#endif /* __GIMP_TOOL_BUTTON_H__ */

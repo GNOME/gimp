@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PROCEDURE_ACTION_H__
-#define __GIMP_PROCEDURE_ACTION_H__
-
+#pragma once
 
 #include "gimpactionimpl.h"
 
@@ -57,6 +55,3 @@ GimpProcedureAction * gimp_procedure_action_new      (const gchar   *name,
                                                       const gchar   *help_id,
                                                       GimpProcedure *procedure,
                                                       GimpContext   *context);
-
-
-#endif  /* __GIMP_PROCEDURE_ACTION_H__ */

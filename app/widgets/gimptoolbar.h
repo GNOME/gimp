@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOLBAR_H__
-#define __GIMP_TOOLBAR_H__
+#pragma once
 
 
 #define GIMP_TYPE_TOOLBAR            (gimp_toolbar_get_type ())
@@ -50,6 +49,3 @@ GType        gimp_toolbar_get_type   (void) G_GNUC_CONST;
 
 GtkWidget  * gimp_toolbar_new        (GimpMenuModel *model,
                                       GimpUIManager *manager);
-
-
-#endif /* __GIMP_TOOLBAR_H__ */

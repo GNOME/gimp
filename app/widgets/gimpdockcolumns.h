@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DOCK_COLUMNS_H__
-#define __GIMP_DOCK_COLUMNS_H__
+#pragma once
 
 
 #define GIMP_TYPE_DOCK_COLUMNS            (gimp_dock_columns_get_type ())
@@ -75,6 +74,3 @@ void                gimp_dock_columns_set_context        (GimpDockColumns   *doc
                                                           GimpContext       *context);
 GimpDialogFactory * gimp_dock_columns_get_dialog_factory (GimpDockColumns   *dock_columns);
 GimpUIManager     * gimp_dock_columns_get_ui_manager     (GimpDockColumns   *dock_columns);
-
-
-#endif /* __GIMP_DOCK_COLUMNS_H__ */

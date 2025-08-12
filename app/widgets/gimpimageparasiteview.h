@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_PARASITE_VIEW_H__
-#define __GIMP_IMAGE_PARASITE_VIEW_H__
+#pragma once
 
 
 #define GIMP_TYPE_IMAGE_PARASITE_VIEW            (gimp_image_parasite_view_get_type ())
@@ -55,6 +54,3 @@ GtkWidget          * gimp_image_parasite_view_new          (GimpImage   *image,
                                                             const gchar *parasite);
 GimpImage          * gimp_image_parasite_view_get_image    (GimpImageParasiteView *view);
 const GimpParasite * gimp_image_parasite_view_get_parasite (GimpImageParasiteView *view);
-
-
-#endif /*  __GIMP_IMAGE_PARASITE_VIEW_H__  */

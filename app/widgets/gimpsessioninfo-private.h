@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SESSION_INFO_PRIVATE_H__
-#define __GIMP_SESSION_INFO_PRIVATE_H__
+#pragma once
 
 
 struct _GimpSessionInfoPrivate
@@ -48,6 +47,3 @@ struct _GimpSessionInfoPrivate
   /*  list of GimpSessionInfoDock  */
   GList                  *docks;
 };
-
-
-#endif /* __GIMP_SESSION_INFO_PRIVATE_H__ */

@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTAINER_TREE_VIEW_DND_H__
-#define __GIMP_CONTAINER_TREE_VIEW_DND_H__
+#pragma once
 
 
 void     gimp_container_tree_view_drag_failed (GtkWidget             *widget,
@@ -66,6 +65,3 @@ gimp_container_tree_view_real_drop_viewables (GimpContainerTreeView   *tree_view
                                               GList                   *src_viewables,
                                               GimpViewable            *dest_viewable,
                                               GtkTreeViewDropPosition  drop_pos);
-
-
-#endif  /*  __GIMP_CONTAINER_TREE_VIEW_DND_H__  */

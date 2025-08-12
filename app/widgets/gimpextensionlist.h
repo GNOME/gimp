@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_EXTENSION_LIST_H__
-#define __GIMP_EXTENSION_LIST_H__
+#pragma once
 
 
 #define GIMP_TYPE_EXTENSION_LIST            (gimp_extension_list_get_type ())
@@ -44,8 +43,8 @@ struct _GimpExtensionListClass
 {
   GtkListBoxClass           parent_class;
 
-  void         (* extension_activated) (GimpExtensionList *list,
-                                        GimpExtension     *extension);
+  void (* extension_activated) (GimpExtensionList *list,
+                                GimpExtension     *extension);
 };
 
 
@@ -57,5 +56,3 @@ void         gimp_extension_list_show_system  (GimpExtensionList *list);
 void         gimp_extension_list_show_user    (GimpExtensionList *list);
 void         gimp_extension_list_show_search  (GimpExtensionList *list,
                                                const gchar       *search_terms);
-
-#endif /* __GIMP_EXTENSION_LIST_H__ */

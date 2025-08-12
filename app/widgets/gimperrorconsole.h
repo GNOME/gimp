@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ERROR_CONSOLE_H__
-#define __GIMP_ERROR_CONSOLE_H__
-
+#pragma once
 
 #include "gimpeditor.h"
 
@@ -68,6 +66,3 @@ void        gimp_error_console_add      (GimpErrorConsole    *console,
                                          GimpMessageSeverity  severity,
                                          const gchar         *domain,
                                          const gchar         *message);
-
-
-#endif  /*  __GIMP_ERROR_CONSOLE_H__  */

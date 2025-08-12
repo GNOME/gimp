@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FILE_PROC_VIEW_H__
-#define __GIMP_FILE_PROC_VIEW_H__
+#pragma once
 
 
 #define GIMP_TYPE_FILE_PROC_VIEW            (gimp_file_proc_view_get_type ())
@@ -61,6 +60,3 @@ gboolean              gimp_file_proc_view_set_proc    (GimpFileProcView     *vie
                                                        GimpPlugInProcedure  *proc);
 
 gchar               * gimp_file_proc_view_get_help_id (GimpFileProcView     *view);
-
-
-#endif  /*  __GIMP_FILE_PROC_VIEW_H__  */

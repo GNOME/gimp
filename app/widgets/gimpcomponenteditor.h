@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COMPONENT_EDITOR_H__
-#define __GIMP_COMPONENT_EDITOR_H__
-
+#pragma once
 
 #include "gimpimageeditor.h"
 
@@ -64,6 +62,3 @@ GtkWidget * gimp_component_editor_new           (gint                 view_size,
                                                  GimpMenuFactory     *menu_factory);
 void        gimp_component_editor_set_view_size (GimpComponentEditor *editor,
                                                  gint                 view_size);
-
-
-#endif  /*  __GIMP_COMPONENT_EDITOR_H__  */

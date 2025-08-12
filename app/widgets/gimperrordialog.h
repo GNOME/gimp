@@ -18,10 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ERROR_DIALOG_H__
-#define __GIMP_ERROR_DIALOG_H__
-
-G_BEGIN_DECLS
+#pragma once
 
 
 #define GIMP_TYPE_ERROR_DIALOG            (gimp_error_dialog_get_type ())
@@ -57,9 +54,3 @@ void        gimp_error_dialog_add      (GimpErrorDialog *dialog,
                                         const gchar     *icon_name,
                                         const gchar     *domain,
                                         const gchar     *message);
-
-
-
-G_END_DECLS
-
-#endif /* __GIMP_ERROR_DIALOG_H__ */

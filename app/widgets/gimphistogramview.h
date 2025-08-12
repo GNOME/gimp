@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_HISTOGRAM_VIEW_H__
-#define __GIMP_HISTOGRAM_VIEW_H__
+#pragma once
 
 
 #define GIMP_TYPE_HISTOGRAM_VIEW            (gimp_histogram_view_get_type ())
@@ -85,6 +84,3 @@ void            gimp_histogram_view_set_range      (GimpHistogramView   *view,
 void            gimp_histogram_view_get_range      (GimpHistogramView   *view,
                                                     gint                *start,
                                                     gint                *end);
-
-
-#endif /* __GIMP_HISTOGRAM_VIEW_H__ */

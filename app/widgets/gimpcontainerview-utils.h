@@ -18,13 +18,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTAINER_VIEW_UTILS_H__
-#define __GIMP_CONTAINER_VIEW_UTILS_H__
+#pragma once
 
 
 GimpContainerView * gimp_container_view_get_by_dockable (GimpDockable      *dockable);
 
 void                gimp_container_view_remove_active   (GimpContainerView *view);
-
-
-#endif  /*  __GIMP_CONTAINER_VIEW_UTILS_H__  */

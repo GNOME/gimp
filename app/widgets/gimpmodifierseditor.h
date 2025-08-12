@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MODIFIERS_EDITOR_H__
-#define __GIMP_MODIFIERS_EDITOR_H__
+#pragma once
 
 
 #define GIMP_TYPE_MODIFIERS_EDITOR            (gimp_modifiers_editor_get_type ())
@@ -46,12 +45,9 @@ struct _GimpModifiersEditorClass
 };
 
 
-GType          gimp_modifiers_editor_get_type (void) G_GNUC_CONST;
+GType       gimp_modifiers_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget    * gimp_modifiers_editor_new      (GimpModifiersManager *manager,
-                                               Gimp                 *gimp);
+GtkWidget * gimp_modifiers_editor_new      (GimpModifiersManager *manager,
+                                            Gimp                 *gimp);
 
-void           gimp_modifiers_editor_clear    (GimpModifiersEditor  *editor);
-
-
-#endif /* __GIMP_MODIFIERS_EDITOR_H__ */
+void        gimp_modifiers_editor_clear    (GimpModifiersEditor  *editor);

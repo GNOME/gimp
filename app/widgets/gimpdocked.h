@@ -18,12 +18,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DOCKED_H__
-#define __GIMP_DOCKED_H__
+#pragma once
 
 
 #define GIMP_TYPE_DOCKED (gimp_docked_get_type ())
-G_DECLARE_INTERFACE (GimpDocked, gimp_docked, GIMP, DOCKED, GtkWidget)
+G_DECLARE_INTERFACE (GimpDocked,
+                     gimp_docked,
+                     GIMP, DOCKED,
+                     GtkWidget)
 
 
 /**
@@ -84,6 +86,3 @@ gboolean        gimp_docked_has_button_bar      (GimpDocked   *docked);
 void            gimp_docked_set_show_button_bar (GimpDocked   *docked,
                                                  gboolean      show);
 gboolean        gimp_docked_get_show_button_bar (GimpDocked   *docked);
-
-
-#endif  /* __GIMP_DOCKED_H__ */

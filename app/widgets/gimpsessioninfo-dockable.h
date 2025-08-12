@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SESSION_INFO_DOCKABLE_H__
-#define __GIMP_SESSION_INFO_DOCKABLE_H__
+#pragma once
 
 
 /**
@@ -54,6 +53,3 @@ GimpSessionInfoDockable *
 
 GimpDockable * gimp_session_info_dockable_restore     (GimpSessionInfoDockable  *info,
                                                        GimpDock                 *dock);
-
-
-#endif  /* __GIMP_SESSION_INFO_DOCKABLE_H__ */

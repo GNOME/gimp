@@ -18,10 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MESSAGE_BOX_H__
-#define __GIMP_MESSAGE_BOX_H__
-
-G_BEGIN_DECLS
+#pragma once
 
 
 #define GIMP_TYPE_MESSAGE_BOX            (gimp_message_box_get_type ())
@@ -65,8 +62,3 @@ void        gimp_message_box_set_markup       (GimpMessageBox *box,
                                                const gchar    *format,
                                                ...) G_GNUC_PRINTF (2, 3);
 gint        gimp_message_box_repeat           (GimpMessageBox *box);
-
-
-G_END_DECLS
-
-#endif /* __GIMP_MESSAGE_BOX_H__ */

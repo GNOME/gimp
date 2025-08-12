@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_POPUP_H__
-#define __GIMP_POPUP_H__
+#pragma once
 
 
 #define GIMP_TYPE_POPUP            (gimp_popup_get_type ())
@@ -50,6 +49,3 @@ GType   gimp_popup_get_type (void) G_GNUC_CONST;
 
 void    gimp_popup_show     (GimpPopup *popup,
                              GtkWidget *widget);
-
-
-#endif  /*  __GIMP_POPUP_H__  */

@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DEVICE_INFO_EDITOR_H__
-#define __GIMP_DEVICE_INFO_EDITOR_H__
+#pragma once
 
 
 #define GIMP_TYPE_DEVICE_INFO_EDITOR            (gimp_device_info_editor_get_type ())
@@ -46,6 +45,3 @@ struct _GimpDeviceInfoEditorClass
 GType       gimp_device_info_editor_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_device_info_editor_new      (GimpDeviceInfo *info);
-
-
-#endif /* __GIMP_DEVICE_INFO_EDITOR_H__ */

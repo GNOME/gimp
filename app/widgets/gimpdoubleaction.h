@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DOUBLE_ACTION_H__
-#define __GIMP_DOUBLE_ACTION_H__
-
+#pragma once
 
 #include "gimpactionimpl.h"
 
@@ -58,6 +56,3 @@ GimpDoubleAction * gimp_double_action_new      (const gchar *name,
                                                 const gchar *help_id,
                                                 gdouble      value,
                                                 GimpContext *context);
-
-
-#endif  /* __GIMP_DOUBLE_ACTION_H__ */

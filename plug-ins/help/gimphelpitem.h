@@ -20,8 +20,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_HELP_ITEM_H__
-#define __GIMP_HELP_ITEM_H__
+#pragma once
 
 
 struct _GimpHelpItem
@@ -42,6 +41,3 @@ GimpHelpItem * gimp_help_item_new  (const gchar   *ref,
                                     const gchar   *sort,
                                     const gchar   *parent);
 void           gimp_help_item_free (GimpHelpItem  *item);
-
-
-#endif /* __GIMP_HELP_ITEM_H__ */

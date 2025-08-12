@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_PRESET_EDITOR_H__
-#define __GIMP_TOOL_PRESET_EDITOR_H__
-
+#pragma once
 
 #include "gimpdataeditor.h"
 
@@ -50,6 +48,3 @@ GType       gimp_tool_preset_editor_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_tool_preset_editor_new      (GimpContext     *context,
                                               GimpMenuFactory *menu_factory);
-
-
-#endif /* __GIMP_TOOL_PRESET_EDITOR_H__ */

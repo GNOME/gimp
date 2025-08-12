@@ -18,10 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SEARCH_POPUP_H__
-#define __GIMP_SEARCH_POPUP_H__
+#pragma once
 
 #include "gimppopup.h"
+
 
 #define GIMP_TYPE_SEARCH_POPUP            (gimp_search_popup_get_type ())
 #define GIMP_SEARCH_POPUP(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SEARCH_POPUP, GimpSearchPopup))
@@ -70,5 +70,3 @@ GtkWidget * gimp_search_popup_new        (Gimp                    *gimp,
 void        gimp_search_popup_add_result (GimpSearchPopup *popup,
                                           GimpAction      *action,
                                           gint             section);
-
-#endif  /*  __GIMP_SEARCH_POPUP_H__  */

@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTROLLER_EDITOR_H__
-#define __GIMP_CONTROLLER_EDITOR_H__
+#pragma once
 
 
 #define GIMP_TYPE_CONTROLLER_EDITOR            (gimp_controller_editor_get_type ())
@@ -59,6 +58,3 @@ GType       gimp_controller_editor_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_controller_editor_new      (GimpControllerInfo *info,
                                              GimpContext        *context);
-
-
-#endif  /*  __GIMP_CONTROLLER_EDITOR_H__  */

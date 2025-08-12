@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ENUM_ACTION_H__
-#define __GIMP_ENUM_ACTION_H__
-
+#pragma once
 
 #include "gimpactionimpl.h"
 
@@ -60,6 +58,3 @@ GimpEnumAction * gimp_enum_action_new      (const gchar *name,
                                             gint         value,
                                             gboolean     value_variable,
                                             GimpContext *context);
-
-
-#endif  /* __GIMP_ENUM_ACTION_H__ */

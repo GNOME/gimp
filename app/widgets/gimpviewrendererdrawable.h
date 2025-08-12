@@ -18,10 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VIEW_RENDERER_DRAWABLE_H__
-#define __GIMP_VIEW_RENDERER_DRAWABLE_H__
+#pragma once
 
 #include "gimpviewrenderer.h"
+
 
 #define GIMP_TYPE_VIEW_RENDERER_DRAWABLE            (gimp_view_renderer_drawable_get_type ())
 #define GIMP_VIEW_RENDERER_DRAWABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VIEW_RENDERER_DRAWABLE, GimpViewRendererDrawable))
@@ -48,6 +48,3 @@ struct _GimpViewRendererDrawableClass
 
 
 GType   gimp_view_renderer_drawable_get_type (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_VIEW_RENDERER_DRAWABLE_H__ */

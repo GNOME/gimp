@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_PROXY_H__
-#define __GIMP_TEXT_PROXY_H__
+#pragma once
 
 
 #define GIMP_TYPE_TEXT_PROXY            (gimp_text_proxy_get_type ())
@@ -53,6 +52,3 @@ struct _GimpTextProxyClass
 GType       gimp_text_proxy_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_text_proxy_new      (void);
-
-
-#endif /* __GIMP_TEXT_PROXY_H__ */

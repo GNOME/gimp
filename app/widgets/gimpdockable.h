@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DOCKABLE_H__
-#define __GIMP_DOCKABLE_H__
+#pragma once
 
 
 #define GIMP_DOCKABLE_DRAG_OFFSET (-6)
@@ -93,6 +92,3 @@ GimpUIManager * gimp_dockable_get_menu          (GimpDockable  *dockable,
                                                  gpointer      *popup_data);
 
 void            gimp_dockable_detach            (GimpDockable  *dockable);
-
-
-#endif /* __GIMP_DOCKABLE_H__ */

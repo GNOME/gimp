@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OVERLAY_CHILD_H__
-#define __GIMP_OVERLAY_CHILD_H__
+#pragma once
 
 
 typedef struct _GimpOverlayChild GimpOverlayChild;
@@ -82,6 +81,3 @@ gboolean           gimp_overlay_child_pick                 (GimpOverlayBox   *bo
                                                             GimpOverlayChild *child,
                                                             gdouble           box_x,
                                                             gdouble           box_y);
-
-
-#endif /* __GIMP_OVERLAY_CHILD_H__ */

@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LANGUAGE_STORE_H__
-#define __GIMP_LANGUAGE_STORE_H__
+#pragma once
 
 
 enum
@@ -61,5 +60,3 @@ GtkListStore * gimp_language_store_new      (void);
 gboolean       gimp_language_store_lookup   (GimpLanguageStore *store,
                                              const gchar       *code,
                                              GtkTreeIter       *iter);
-
-#endif  /* __GIMP_LANGUAGE_STORE_H__ */

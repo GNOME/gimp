@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COMPRESSION_COMBO_BOX_H__
-#define __GIMP_COMPRESSION_COMBO_BOX_H__
+#pragma once
 
 
 #define GIMP_TYPE_COMPRESSION_COMBO_BOX            (gimp_compression_combo_box_get_type ())
@@ -51,5 +50,3 @@ GtkWidget * gimp_compression_combo_box_new             (void);
 void        gimp_compression_combo_box_set_compression (GimpCompressionComboBox *combo_box,
                                                         const gchar             *compression);
 gchar     * gimp_compression_combo_box_get_compression (GimpCompressionComboBox *combo_box);
-
-#endif  /* __GIMP_COMPRESSION_COMBO_BOX_H__ */

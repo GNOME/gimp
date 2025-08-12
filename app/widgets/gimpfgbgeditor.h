@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FG_BG_EDITOR_H__
-#define __GIMP_FG_BG_EDITOR_H__
+#pragma once
 
 
 typedef enum
@@ -89,6 +88,3 @@ void        gimp_fg_bg_editor_set_context (GimpFgBgEditor  *editor,
                                            GimpContext     *context);
 void        gimp_fg_bg_editor_set_active  (GimpFgBgEditor  *editor,
                                            GimpActiveColor  active);
-
-
-#endif  /*  __GIMP_FG_BG_EDITOR_H__  */

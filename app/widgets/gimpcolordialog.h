@@ -17,9 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLOR_DIALOG_H__
-#define __GIMP_COLOR_DIALOG_H__
-
+#pragma once
 
 #include "gimpviewabledialog.h"
 
@@ -80,6 +78,3 @@ GtkWidget * gimp_color_dialog_new       (GimpViewable      *viewable,
 void        gimp_color_dialog_set_color (GimpColorDialog   *dialog,
                                          GeglColor         *color);
 GeglColor * gimp_color_dialog_get_color (GimpColorDialog   *dialog);
-
-
-#endif /* __GIMP_COLOR_DIALOG_H__ */

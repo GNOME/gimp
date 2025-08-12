@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VIEWABLE_BOX_H__
-#define __GIMP_VIEWABLE_BOX_H__
+#pragma once
 
 
 GtkWidget * gimp_brush_box_new         (GimpContainer *container,
@@ -106,6 +105,3 @@ GtkWidget * gimp_prop_font_box_new     (GimpContainer *container,
                                         gint           spacing,
                                         const gchar   *view_type_prop,
                                         const gchar   *view_size_prop);
-
-
-#endif /* __GIMP_VIEWABLE_BOX_H__ */

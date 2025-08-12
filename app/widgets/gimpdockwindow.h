@@ -19,9 +19,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DOCK_WINDOW_H__
-#define __GIMP_DOCK_WINDOW_H__
-
+#pragma once
 
 #include "widgets/gimpwindow.h"
 
@@ -79,7 +77,3 @@ void                gimp_dock_window_setup                  (GimpDockWindow    *
 gboolean            gimp_dock_window_has_toolbox            (GimpDockWindow    *dock_window);
 
 GimpDockWindow    * gimp_dock_window_from_dock              (GimpDock          *dock);
-
-
-
-#endif /* __GIMP_DOCK_WINDOW_H__ */

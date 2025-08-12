@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SESSION_INFO_BOOK_H__
-#define __GIMP_SESSION_INFO_BOOK_H__
+#pragma once
 
 
 /**
@@ -53,6 +52,3 @@ GimpSessionInfoBook *
 
 GimpDockbook * gimp_session_info_book_restore   (GimpSessionInfoBook  *info,
                                                  GimpDock             *dock);
-
-
-#endif  /* __GIMP_SESSION_INFO_BOOK_H__ */

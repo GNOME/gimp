@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_HELP_IDS_H__
-#define __GIMP_HELP_IDS_H__
+#pragma once
 
 
 #define GIMP_HELP_MAIN                            "gimp-main"
@@ -804,5 +803,3 @@
 #define GIMP_HELP_EXTENSIONS_INSTALLED            "gimp-extensions-installed"
 #define GIMP_HELP_EXTENSIONS_SYSTEM               "gimp-extensions-system"
 #define GIMP_HELP_EXTENSIONS_INSTALL              "gimp-extensions-install"
-
-#endif /* __GIMP_HELP_IDS_H__ */

@@ -18,10 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VIEW_RENDERER_PALETTE_H__
-#define __GIMP_VIEW_RENDERER_PALETTE_H__
+#pragma once
 
 #include "gimpviewrenderer.h"
+
 
 #define GIMP_TYPE_VIEW_RENDERER_PALETTE            (gimp_view_renderer_palette_get_type ())
 #define GIMP_VIEW_RENDERER_PALETTE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VIEW_RENDERER_PALETTE, GimpViewRendererPalette))
@@ -58,6 +58,3 @@ void    gimp_view_renderer_palette_set_cell_size (GimpViewRendererPalette *rende
                                                   gint                     cell_size);
 void    gimp_view_renderer_palette_set_draw_grid (GimpViewRendererPalette *renderer,
                                                   gboolean                 draw_grid);
-
-
-#endif /* __GIMP_VIEW_RENDERER_PALETTE_H__ */

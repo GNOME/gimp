@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VIEW_POPUP_H__
-#define __GIMP_VIEW_POPUP_H__
+#pragma once
 
 
 gboolean   gimp_view_popup_show (GtkWidget      *widget,
@@ -29,6 +28,3 @@ gboolean   gimp_view_popup_show (GtkWidget      *widget,
                                  gint            view_width,
                                  gint            view_height,
                                  gboolean        dot_for_dot);
-
-
-#endif /* __GIMP_VIEW_POPUP_H__ */

@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LANGUAGE_ENTRY_H__
-#define __GIMP_LANGUAGE_ENTRY_H__
+#pragma once
 
 
 #define GIMP_TYPE_LANGUAGE_ENTRY            (gimp_language_entry_get_type ())
@@ -45,6 +44,3 @@ GtkWidget   * gimp_language_entry_new      (void);
 const gchar * gimp_language_entry_get_code (GimpLanguageEntry *entry);
 gboolean      gimp_language_entry_set_code (GimpLanguageEntry *entry,
                                             const gchar       *code);
-
-
-#endif  /* __GIMP_LANGUAGE_ENTRY_H__ */

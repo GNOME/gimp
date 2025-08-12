@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLOR_DISPLAY_EDITOR_H__
-#define __GIMP_COLOR_DISPLAY_EDITOR_H__
+#pragma once
 
 
 #define GIMP_TYPE_COLOR_DISPLAY_EDITOR            (gimp_color_display_editor_get_type ())
@@ -74,6 +73,3 @@ GtkWidget * gimp_color_display_editor_new      (Gimp                  *gimp,
                                                 GimpColorDisplayStack *stack,
                                                 GimpColorConfig       *config,
                                                 GimpColorManaged      *managed);
-
-
-#endif  /*  __GIMP_COLOR_DISPLAY_EDITOR_H__  */

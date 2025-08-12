@@ -22,8 +22,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_BUFFER_SERIALIZE_H__
-#define __GIMP_TEXT_BUFFER_SERIALIZE_H__
+#pragma once
 
 
 #define WORD_JOINER        "\342\201\240"
@@ -49,7 +48,3 @@ void       gimp_text_buffer_pre_serialize    (GimpTextBuffer    *buffer,
                                               GtkTextBuffer     *content);
 void       gimp_text_buffer_post_deserialize (GimpTextBuffer    *buffer,
                                               GtkTextBuffer     *content);
-
-
-
-#endif /* __GIMP_TEXT_BUFFER_SERIALIZE_H__ */

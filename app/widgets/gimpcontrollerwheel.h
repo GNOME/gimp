@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTROLLER_WHEEL_H__
-#define __GIMP_CONTROLLER_WHEEL_H__
-
+#pragma once
 
 #define GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
 #include "libgimpwidgets/gimpcontroller.h"
@@ -51,6 +49,3 @@ GType      gimp_controller_wheel_get_type (void) G_GNUC_CONST;
 
 gboolean   gimp_controller_wheel_scroll   (GimpControllerWheel  *wheel,
                                            const GdkEventScroll *sevent);
-
-
-#endif /* __GIMP_CONTROLLER_WHEEL_H__ */

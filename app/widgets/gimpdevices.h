@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DEVICES_H__
-#define __GIMP_DEVICES_H__
+#pragma once
 
 
 void                gimp_devices_init           (Gimp       *gimp);
@@ -43,6 +42,3 @@ gboolean            gimp_devices_check_callback (GtkWidget  *widget,
                                                  Gimp       *gimp);
 gboolean            gimp_devices_check_change   (Gimp       *gimp,
                                                  GdkDevice  *device);
-
-
-#endif /* __GIMP_DEVICES_H__ */

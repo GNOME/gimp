@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TAG_POPUP_H__
-#define __GIMP_TAG_POPUP_H__
+#pragma once
 
 
 #define GIMP_TYPE_TAG_POPUP            (gimp_tag_popup_get_type ())
@@ -80,6 +79,3 @@ GtkWidget * gimp_tag_popup_new      (GimpComboTagEntry *entry);
 
 void        gimp_tag_popup_show     (GimpTagPopup      *popup,
                                      GdkEvent          *event);
-
-
-#endif  /*  __GIMP_TAG_POPUP_H__  */

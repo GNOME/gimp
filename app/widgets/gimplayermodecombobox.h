@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LAYER_MODE_COMBO_BOX_H__
-#define __GIMP_LAYER_MODE_COMBO_BOX_H__
+#pragma once
 
 
 #define GIMP_TYPE_LAYER_MODE_COMBO_BOX            (gimp_layer_mode_combo_box_get_type ())
@@ -61,6 +60,3 @@ GimpLayerMode          gimp_layer_mode_combo_box_get_mode    (GimpLayerModeCombo
 void                   gimp_layer_mode_combo_box_set_group   (GimpLayerModeComboBox *combo,
                                                               GimpLayerModeGroup     group);
 GimpLayerModeGroup     gimp_layer_mode_combo_box_get_group   (GimpLayerModeComboBox *combo);
-
-
-#endif  /* __GIMP_LAYER_MODE_COMBO_BOX_H__ */

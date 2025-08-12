@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OVERLAY_FRAME_H__
-#define __GIMP_OVERLAY_FRAME_H__
+#pragma once
 
 
 #define GIMP_TYPE_OVERLAY_FRAME            (gimp_overlay_frame_get_type ())
@@ -47,6 +46,3 @@ struct _GimpOverlayFrameClass
 GType       gimp_overlay_frame_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_overlay_frame_new      (void);
-
-
-#endif /* __GIMP_OVERLAY_FRAME_H__ */

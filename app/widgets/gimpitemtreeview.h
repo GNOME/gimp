@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ITEM_TREE_VIEW_H__
-#define __GIMP_ITEM_TREE_VIEW_H__
-
+#pragma once
 
 #include "gimpcontainertreeview.h"
 
@@ -149,6 +147,3 @@ gint        gimp_item_tree_view_get_drop_index    (GimpItemTreeView *view,
                                                    GimpViewable     *dest_viewable,
                                                    GtkTreeViewDropPosition drop_pos,
                                                    GimpViewable    **parent);
-
-
-#endif  /*  __GIMP_ITEM_TREE_VIEW_H__  */

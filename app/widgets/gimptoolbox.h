@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOLBOX_H__
-#define __GIMP_TOOLBOX_H__
-
+#pragma once
 
 #include "gimpdock.h"
 
@@ -53,7 +51,3 @@ GtkWidget         * gimp_toolbox_new                (GimpDialogFactory *factory,
 GimpContext       * gimp_toolbox_get_context        (GimpToolbox       *toolbox);
 void                gimp_toolbox_set_drag_handler   (GimpToolbox       *toolbox,
                                                      GimpPanedBox      *drag_handler);
-
-
-
-#endif /* __GIMP_TOOLBOX_H__ */

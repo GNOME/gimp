@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MENU_DOCK_H__
-#define __GIMP_MENU_DOCK_H__
-
+#pragma once
 
 #include "gimpdock.h"
 
@@ -51,7 +49,3 @@ struct _GimpMenuDockClass
 GType       gimp_menu_dock_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_menu_dock_new      (void);
-
-
-
-#endif /* __GIMP_MENU_DOCK_H__ */

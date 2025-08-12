@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VIEW_RENDERER_H__
-#define __GIMP_VIEW_RENDERER_H__
+#pragma once
 
 
 #define GIMP_VIEW_MAX_BORDER_WIDTH 16
@@ -164,6 +163,3 @@ GimpColorTransform *
                                                   const Babl       *src_format,
                                                   const Babl       *dest_format);
 void   gimp_view_renderer_free_color_transform   (GimpViewRenderer *renderer);
-
-
-#endif /* __GIMP_VIEW_RENDERER_H__ */

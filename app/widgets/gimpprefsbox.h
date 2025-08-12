@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PREFS_BOX_H__
-#define __GIMP_PREFS_BOX_H__
+#pragma once
 
 
 #define GIMP_TYPE_PREFS_BOX            (gimp_prefs_box_get_type ())
@@ -72,6 +71,3 @@ GtkWidget   * gimp_prefs_box_set_page_resettable   (GimpPrefsBox *box,
 
 GtkWidget   * gimp_prefs_box_get_tree_view         (GimpPrefsBox *box);
 GtkWidget   * gimp_prefs_box_get_stack             (GimpPrefsBox *box);
-
-
-#endif  /*  __GIMP_PREFS_BOX_H__  */

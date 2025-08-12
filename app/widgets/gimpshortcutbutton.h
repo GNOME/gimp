@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SHORTCUT_BUTTON_H__
-#define __GIMP_SHORTCUT_BUTTON_H__
+#pragma once
 
 
 #define GIMP_TYPE_SHORTCUT_BUTTON            (gimp_shortcut_button_get_type ())
@@ -65,6 +64,3 @@ void           gimp_shortcut_button_set_accelerator  (GimpShortcutButton  *butto
 void           gimp_shortcut_button_accepts_modifier (GimpShortcutButton *button,
                                                       gboolean            only,
                                                       gboolean            unique);
-
-
-#endif /* __GIMP_SHORTCUT_BUTTON_H__ */

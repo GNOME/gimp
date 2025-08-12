@@ -123,7 +123,9 @@ main (int    argc,
  *\n\
  * You should have received a copy of the GNU General Public License\n\
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.\n\
- */\n";
+ */\n\
+\n\
+#pragma once\n";
 
   if (! gimp_language_store_parser_init (&error))
     {

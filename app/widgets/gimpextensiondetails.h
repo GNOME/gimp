@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_EXTENSION_DETAILS_H__
-#define __GIMP_EXTENSION_DETAILS_H__
+#pragma once
 
 
 #define GIMP_TYPE_EXTENSION_DETAILS            (gimp_extension_details_get_type ())
@@ -52,6 +51,3 @@ GtkWidget  * gimp_extension_details_new          (void);
 
 void         gimp_extension_details_set          (GimpExtensionDetails *details,
                                                   GimpExtension        *extension);
-
-#endif /* __GIMP_EXTENSION_DETAILS_H__ */
-

@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ACTION_HISTORY_H__
-#define __GIMP_ACTION_HISTORY_H__
+#pragma once
 
 
 typedef gboolean (* GimpActionMatchFunc) (GimpAction  *action,
@@ -41,6 +40,3 @@ gboolean   gimp_action_history_is_blacklisted_action (const gchar         *actio
 gboolean   gimp_action_history_is_excluded_action    (const gchar         *action_name);
 
 void       gimp_action_history_action_activated      (GimpAction          *action);
-
-
-#endif  /* __GIMP_ACTION_HISTORY_H__ */

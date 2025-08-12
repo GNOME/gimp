@@ -18,10 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FILE_DIALOG_H__
-#define __GIMP_FILE_DIALOG_H__
-
-G_BEGIN_DECLS
+#pragma once
 
 
 #define GIMP_TYPE_FILE_DIALOG            (gimp_file_dialog_get_type ())
@@ -99,8 +96,3 @@ void    gimp_file_dialog_save_state         (GimpFileDialog      *dialog,
                                              const gchar         *state_name);
 void    gimp_file_dialog_load_state         (GimpFileDialog      *dialog,
                                              const gchar         *state_name);
-
-
-G_END_DECLS
-
-#endif /* __GIMP_FILE_DIALOG_H__ */

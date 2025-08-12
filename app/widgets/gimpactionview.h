@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ACTION_VIEW_H__
-#define __GIMP_ACTION_VIEW_H__
+#pragma once
 
 
 enum
@@ -70,6 +69,3 @@ GtkWidget * gimp_action_view_new        (Gimp           *gimp,
 
 void        gimp_action_view_set_filter (GimpActionView *view,
                                          const gchar    *filter);
-
-
-#endif  /*  __GIMP_ACTION_VIEW_H__  */

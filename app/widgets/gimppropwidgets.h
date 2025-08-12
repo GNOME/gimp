@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_APP_PROP_WIDGETS_H__
-#define __GIMP_APP_PROP_WIDGETS_H__
+#pragma once
 
 
 /*  GParamBoolean  */
@@ -133,6 +132,3 @@ gboolean _gimp_prop_widgets_get_numeric_values (GObject     *object,
                                                 gdouble     *lower,
                                                 gdouble     *upper,
                                                 const gchar *strloc);
-
-
-#endif /* __GIMP_APP_PROP_WIDGETS_H__ */

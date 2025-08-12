@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLORMAP_EDITOR_H__
-#define __GIMP_COLORMAP_EDITOR_H__
-
+#pragma once
 
 #include "gimpimageeditor.h"
 
@@ -61,6 +59,3 @@ gboolean    gimp_colormap_editor_set_index          (GimpColormapEditor *editor,
                                                      GeglColor          *color);
 
 gint        gimp_colormap_editor_max_index          (GimpColormapEditor *editor);
-
-
-#endif /* __GIMP_COLORMAP_EDITOR_H__ */

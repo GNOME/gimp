@@ -18,10 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SIZE_BOX_H__
-#define __GIMP_SIZE_BOX_H__
-
-G_BEGIN_DECLS
+#pragma once
 
 
 #define GIMP_TYPE_SIZE_BOX            (gimp_size_box_get_type ())
@@ -56,9 +53,4 @@ struct _GimpSizeBoxClass
 };
 
 
-GType       gimp_size_box_get_type (void) G_GNUC_CONST;
-
-
-G_END_DECLS
-
-#endif /* __GIMP_SIZE_BOX_H__ */
+GType   gimp_size_box_get_type (void) G_GNUC_CONST;

@@ -20,8 +20,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_HELP_DOMAIN_H__
-#define __GIMP_HELP_DOMAIN_H__
+#pragma once
 
 
 struct _GimpHelpDomain
@@ -46,6 +45,3 @@ gchar          * gimp_help_domain_map           (GimpHelpDomain    *domain,
                                                  GimpHelpLocale   **locale,
                                                  gboolean          *fatal_error);
 void             gimp_help_domain_exit          (void);
-
-
-#endif /* ! __GIMP_HELP_DOMAIN_H__ */

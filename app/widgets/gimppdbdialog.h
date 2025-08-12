@@ -18,10 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PDB_DIALOG_H__
-#define __GIMP_PDB_DIALOG_H__
-
-G_BEGIN_DECLS
+#pragma once
 
 
 #define GIMP_TYPE_PDB_DIALOG            (gimp_pdb_dialog_get_type ())
@@ -82,8 +79,3 @@ void            gimp_pdb_dialog_run_callback    (GimpPdbDialog     **dialog,
 
 GimpPdbDialog * gimp_pdb_dialog_get_by_callback (GimpPdbDialogClass *klass,
                                                  const gchar        *callback_name);
-
-
-G_END_DECLS
-
-#endif /* __GIMP_PDB_DIALOG_H__ */

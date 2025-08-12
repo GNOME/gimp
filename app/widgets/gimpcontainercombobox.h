@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTAINER_COMBO_BOX_H__
-#define __GIMP_CONTAINER_COMBO_BOX_H__
+#pragma once
 
 
 #define GIMP_TYPE_CONTAINER_COMBO_BOX            (gimp_container_combo_box_get_type ())
@@ -52,6 +51,3 @@ GtkWidget * gimp_container_combo_box_new      (GimpContainer *container,
                                                GimpContext   *context,
                                                gint           view_size,
                                                gint           view_border_width);
-
-
-#endif  /*  __GIMP_CONTAINER_COMBO_BOX_H__  */

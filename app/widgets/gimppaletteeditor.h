@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PALETTE_EDITOR_H__
-#define __GIMP_PALETTE_EDITOR_H__
-
+#pragma once
 
 #include "gimpdataeditor.h"
 
@@ -77,6 +75,3 @@ gboolean    gimp_palette_editor_set_index  (GimpPaletteEditor *editor,
                                             GeglColor         *color);
 
 gint        gimp_palette_editor_max_index  (GimpPaletteEditor *editor);
-
-
-#endif /* __GIMP_PALETTE_EDITOR_H__ */

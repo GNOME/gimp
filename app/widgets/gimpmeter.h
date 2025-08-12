@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_METER_H__
-#define __GIMP_METER_H__
+#pragma once
 
 
 #define GIMP_TYPE_METER            (gimp_meter_get_type ())
@@ -123,6 +122,3 @@ gboolean                gimp_meter_get_led_active            (GimpMeter         
 void                    gimp_meter_set_led_color             (GimpMeter             *meter,
                                                               GeglColor             *color);
 GeglColor             * gimp_meter_get_led_color             (GimpMeter             *meter);
-
-
-#endif /* __GIMP_METER_H__ */

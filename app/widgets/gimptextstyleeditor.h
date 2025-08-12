@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_STYLE_EDITOR_H__
-#define __GIMP_TEXT_STYLE_EDITOR_H__
+#pragma once
 
 
 #define GIMP_TYPE_TEXT_STYLE_EDITOR            (gimp_text_style_editor_get_type ())
@@ -84,6 +83,3 @@ GtkWidget * gimp_text_style_editor_new       (Gimp                 *gimp,
 
 GList     * gimp_text_style_editor_list_tags (GimpTextStyleEditor  *editor,
                                               GList               **remove_tags);
-
-
-#endif /*  __GIMP_TEXT_STYLE_EDITOR_H__  */

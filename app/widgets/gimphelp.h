@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_HELP_H__
-#define __GIMP_HELP_H__
+#pragma once
 
 
 /*  the main help function
@@ -47,5 +46,3 @@ void       gimp_help_user_manual_changed      (Gimp *gimp);
 
 
 GList    * gimp_help_get_installed_languages  (void);
-
-#endif /* __GIMP_HELP_H__ */

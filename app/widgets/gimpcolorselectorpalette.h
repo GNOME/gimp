@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLOR_SELECTOR_PALETTE_H__
-#define __GIMP_COLOR_SELECTOR_PALETTE_H__
+#pragma once
 
 
 #define GIMP_TYPE_COLOR_SELECTOR_PALETTE            (gimp_color_selector_palette_get_type ())
@@ -49,6 +48,3 @@ struct _GimpColorSelectorPaletteClass
 
 
 GType   gimp_color_selector_palette_get_type (void) G_GNUC_CONST;
-
-
-#endif /* __GIMP_COLOR_SELECTOR_PALETTE_H__ */

@@ -21,8 +21,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DND_XDS_H__
-#define __GIMP_DND_XDS_H__
+#pragma once
 
 
 void  gimp_dnd_xds_source_set (GdkDragContext   *context,
@@ -30,6 +29,3 @@ void  gimp_dnd_xds_source_set (GdkDragContext   *context,
 void  gimp_dnd_xds_save_image (GdkDragContext   *context,
                                GimpImage        *image,
                                GtkSelectionData *selection);
-
-
-#endif /* __GIMP_DND_XDS_H__ */

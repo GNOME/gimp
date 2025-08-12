@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DOCK_CONTAINER_H__
-#define __GIMP_DOCK_CONTAINER_H__
+#pragma once
 
 
 #define GIMP_TYPE_DOCK_CONTAINER (gimp_dock_container_get_type ())
@@ -50,6 +49,3 @@ void                gimp_dock_container_add_dock           (GimpDockContainer   
                                                             GimpSessionInfoDock *dock_info);
 GimpAlignmentType   gimp_dock_container_get_dock_side      (GimpDockContainer   *container,
                                                             GimpDock            *dock);
-
-
-#endif  /*  __GIMP_DOCK_CONTAINER_H__  */

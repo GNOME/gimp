@@ -18,12 +18,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SESSION_MANAGED_H__
-#define __GIMP_SESSION_MANAGED_H__
+#pragma once
 
 
 #define GIMP_TYPE_SESSION_MANAGED (gimp_session_managed_get_type ())
-G_DECLARE_INTERFACE (GimpSessionManaged, gimp_session_managed, GIMP, SESSION_MANAGED, GtkWidget)
+G_DECLARE_INTERFACE (GimpSessionManaged,
+                     gimp_session_managed,
+                     GIMP, SESSION_MANAGED,
+                     GtkWidget)
 
 
 struct _GimpSessionManagedInterface
@@ -37,9 +39,6 @@ struct _GimpSessionManagedInterface
 };
 
 
-GList            * gimp_session_managed_get_aux_info (GimpSessionManaged *session_managed);
-void               gimp_session_managed_set_aux_info (GimpSessionManaged *session_managed,
-                                                      GList              *aux_info);
-
-
-#endif  /*  __GIMP_SESSION_MANAGED_H__  */
+GList * gimp_session_managed_get_aux_info (GimpSessionManaged *session_managed);
+void    gimp_session_managed_set_aux_info (GimpSessionManaged *session_managed,
+                                           GList              *aux_info);

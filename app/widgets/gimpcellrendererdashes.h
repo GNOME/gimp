@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CELL_RENDERER_DASHES_H__
-#define __GIMP_CELL_RENDERER_DASHES_H__
+#pragma once
 
 
 #define GIMP_TYPE_CELL_RENDERER_DASHES            (gimp_cell_renderer_dashes_get_type ())
@@ -48,6 +47,3 @@ struct _GimpCellRendererDashesClass
 GType             gimp_cell_renderer_dashes_get_type (void) G_GNUC_CONST;
 
 GtkCellRenderer * gimp_cell_renderer_dashes_new      (void);
-
-
-#endif /* __GIMP_CELL_RENDERER_DASHES_H__ */

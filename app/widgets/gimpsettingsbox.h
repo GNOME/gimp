@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SETTINGS_BOX_H__
-#define __GIMP_SETTINGS_BOX_H__
+#pragma once
 
 
 #define GIMP_TYPE_SETTINGS_BOX            (gimp_settings_box_get_type ())
@@ -71,6 +70,3 @@ void        gimp_settings_box_add_current (GimpSettingsBox *box,
                                            gint             max_recent);
 
 void        gimp_settings_box_unset       (GimpSettingsBox *box);
-
-
-#endif  /*  __GIMP_SETTINGS_BOX_H__  */

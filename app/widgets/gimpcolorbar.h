@@ -15,8 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLOR_BAR_H__
-#define __GIMP_COLOR_BAR_H__
+#pragma once
 
 
 #define GIMP_TYPE_COLOR_BAR            (gimp_color_bar_get_type ())
@@ -55,6 +54,3 @@ void        gimp_color_bar_set_buffers (GimpColorBar         *bar,
                                         const guchar         *red,
                                         const guchar         *green,
                                         const guchar         *blue);
-
-
-#endif  /*  __GIMP_COLOR_BAR_H__  */

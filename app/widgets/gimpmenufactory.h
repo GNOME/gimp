@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MENU_FACTORY_H__
-#define __GIMP_MENU_FACTORY_H__
-
+#pragma once
 
 #include "core/gimpobject.h"
 
@@ -75,6 +73,3 @@ GimpUIManager   * gimp_menu_factory_get_manager          (GimpMenuFactory   *fac
 void              gimp_menu_factory_delete_manager       (GimpMenuFactory   *factory,
                                                           const gchar       *identifier,
                                                           gpointer           callback_data);
-
-
-#endif  /*  __GIMP_MENU_FACTORY_H__  */

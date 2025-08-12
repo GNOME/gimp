@@ -20,8 +20,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_HELP_LOCALE_H__
-#define __GIMP_HELP_LOCALE_H__
+#pragma once
 
 
 struct _GimpHelpLocale
@@ -46,6 +45,3 @@ gboolean         gimp_help_locale_parse (GimpHelpLocale    *locale,
                                          const gchar       *help_domain,
                                          GimpHelpProgress  *progress,
                                          GError           **error);
-
-
-#endif /* __GIMP_HELP_LOCALE_H__ */

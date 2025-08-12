@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SESSION_INFO_DOCK_H__
-#define __GIMP_SESSION_INFO_DOCK_H__
+#pragma once
 
 
 /**
@@ -59,6 +58,3 @@ GimpDock            * gimp_session_info_dock_restore     (GimpSessionInfoDock  *
                                                           GimpDialogFactory    *factory,
                                                           GdkMonitor           *monitor,
                                                           GimpDockContainer    *dock_container);
-
-
-#endif  /* __GIMP_SESSION_INFO_DOCK_H__ */

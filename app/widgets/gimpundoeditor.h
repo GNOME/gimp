@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_UNDO_EDITOR_H__
-#define __GIMP_UNDO_EDITOR_H__
-
+#pragma once
 
 #include "gimpimageeditor.h"
 
@@ -58,6 +56,3 @@ GType       gimp_undo_editor_get_type  (void) G_GNUC_CONST;
 
 GtkWidget * gimp_undo_editor_new       (GimpCoreConfig  *config,
                                         GimpMenuFactory *menu_factory);
-
-
-#endif /* __GIMP_UNDO_EDITOR_H__ */

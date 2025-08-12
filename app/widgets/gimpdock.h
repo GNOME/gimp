@@ -18,8 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DOCK_H__
-#define __GIMP_DOCK_H__
+#pragma once
 
 
 #define GIMP_TYPE_DOCK            (gimp_dock_get_type ())
@@ -105,6 +104,3 @@ void                gimp_dock_add_book                (GimpDock       *dock,
                                                        gint            index);
 void                gimp_dock_remove_book             (GimpDock       *dock,
                                                        GimpDockbook   *dockbook);
-
-
-#endif /* __GIMP_DOCK_H__ */

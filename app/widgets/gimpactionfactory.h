@@ -18,9 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ACTION_FACTORY_H__
-#define __GIMP_ACTION_FACTORY_H__
-
+#pragma once
 
 #include "core/gimpobject.h"
 
@@ -80,6 +78,3 @@ GimpActionGroup *   gimp_action_factory_get_group      (GimpActionFactory       
 void                gimp_action_factory_delete_group   (GimpActionFactory         *factory,
                                                         const gchar               *identifier,
                                                         gpointer                   user_data);
-
-
-#endif  /*  __GIMP_ACTION_FACTORY_H__  */

@@ -20,8 +20,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_HELP_PROGRESS_H__
-#define __GIMP_HELP_PROGRESS_H__
+#pragma once
 
 
 typedef struct
@@ -46,6 +45,3 @@ GimpHelpProgress * gimp_help_progress_new    (const GimpHelpProgressVTable *vtab
 void               gimp_help_progress_free   (GimpHelpProgress *progress);
 
 void               gimp_help_progress_cancel (GimpHelpProgress *progress);
-
-
-#endif /* ! __GIMP_HELP_PROGRESS_H__ */
