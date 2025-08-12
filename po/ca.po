@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2025-05-30 16:10+0000\n"
-"PO-Revision-Date: 2025-05-31 13:33+0100\n"
+"PO-Revision-Date: 2025-08-12 13:33+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -145,7 +145,7 @@ msgid ""
 msgstr ""
 "El GIMP és programari lliure; podeu distribuir-lo i/o modificar-lo sota els termes de la llicència GNU General Public License de la manera en què està publicada per la Free Software Foundation; ja sigui la versió 3 de la llicència, o bé (si preferiu) qualsevol versió posterior.\n"
 "\n"
-"El GIMP es distribueix amb la voluntat què pugui ser útil, però SENSE CAP GARANTIA, ni tan sols les garanties implícites MERCANTILS o ESPECÍFIQUES PER A UN PROPÒSIT DETERMINAT. Si voleu més informació, vegeu la llicència GNU General Public License per a més detalls.\n"
+"El GIMP es distribueix amb la voluntat que pugui ser útil, però SENSE CAP GARANTIA, ni tan sols les garanties implícites MERCANTILS o ESPECÍFIQUES PER A UN PROPÒSIT DETERMINAT. Si voleu més informació, vegeu la llicència GNU General Public License per a més detalls.\n"
 "\n"
 "Heu d'haver rebut una còpia de la llicència GNU General Public License juntament amb el GIMP; si no és així, consulteu: https://www.gnu.org/licenses/"
 
@@ -253,7 +253,7 @@ msgstr "Surt immediatament després de realitzar les accions sol·licitades"
 #: app/main.c:246
 msgid "Send messages to console instead of using a dialog"
 msgstr ""
-"Mostra els avisos a la consola en comptes d'utilitzar un quadre de diàleg"
+"Envia els missatges a la consola en comptes d'utilitzar un quadre de diàleg"
 
 #. don't translate the mode names (off|on|warn)
 #: app/main.c:252
@@ -3448,7 +3448,7 @@ msgid ""
 "recent documents list."
 msgstr ""
 "Si es buida l'historial de documents, es perdran tots els elements de la "
-"llista de totes les aplicacions."
+"llista de documents recents."
 
 #: app/actions/drawable-actions.c:45
 msgctxt "drawable-action"
@@ -8254,7 +8254,7 @@ msgstr "Eixampla la selecció"
 
 #: app/actions/select-commands.c:300
 msgid "Grow selection by"
-msgstr "Eixampla la selecció uns"
+msgstr "Eixampla la selecció per"
 
 #: app/actions/select-commands.c:349
 msgid "Border Selection"
@@ -10426,7 +10426,7 @@ msgstr "Finestra normal"
 #: app/config/config-enums.c:344
 msgctxt "window-hint"
 msgid "Utility window"
-msgstr "Finestra flotant"
+msgstr "Finestra d'utilitats"
 
 #: app/config/config-enums.c:345
 msgctxt "window-hint"
@@ -25032,7 +25032,7 @@ msgstr "Sagnat"
 
 #: app/tools/gimptextoptions.c:219
 msgid "Indentation of the first line"
-msgstr "Indexació de la primera línia"
+msgstr "Sagnat de la primera línia"
 
 #: app/tools/gimptextoptions.c:226
 msgid "Line spacing"
@@ -25194,7 +25194,7 @@ msgstr "Editor de text del GIMP"
 
 #: app/tools/gimpthresholdtool.c:95
 msgid "_Threshold..."
-msgstr "_Llindar blanc i negre..."
+msgstr "_Llindar..."
 
 #: app/tools/gimpthresholdtool.c:212
 msgid "Apply Threshold"
@@ -28474,7 +28474,7 @@ msgstr ""
 msgid "Drag to an XDS enabled file-manager to save the image."
 msgstr ""
 "Per a desar la imatge arrossegueu-la a un gestor de fitxers compatible amb "
-"XSD."
+"XDS."
 
 #: app/widgets/gimptoolbox-indicator-area.c:172
 msgid ""
