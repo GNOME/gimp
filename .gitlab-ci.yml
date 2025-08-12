@@ -463,7 +463,7 @@ deps-snap:
     - echo "RUN apt-get update -y" >> Dockerfile
     - echo "RUN apt-get install -y curl jq squashfs-tools sudo" >> Dockerfile
     # https://github.com/canonical/snapcraft-rocks/issues/37
-    - echo "RUN cp -r /usr/lib/python3.12/site-packages/extensions/* /usr/share/snapcraft/extensions/" >> Dockerfile
+    - echo "RUN cp -r /usr/lib/python3.*/site-packages/extensions/* /usr/share/snapcraft/extensions/" >> Dockerfile
     # https://github.com/canonical/snapcraft-rocks/issues/33
     - echo "RUN ln -s /usr/libexec/snapcraft/craftctl /usr/bin/craftctl" >> Dockerfile
     - echo "RUN sh build/linux/snap/1_build-deps-snapcraft.sh --install-snaps" >> Dockerfile;
