@@ -1,5 +1,4 @@
 ${MINGW_PACKAGE_PREFIX}-binutils \
-${MINGW_PACKAGE_PREFIX}-ccache \
 ${MINGW_PACKAGE_PREFIX}-gi-docgen \
 ${MINGW_PACKAGE_PREFIX}-gobject-introspection \
 ${MINGW_PACKAGE_PREFIX}-headers-git \
