@@ -697,12 +697,18 @@ gimp_viewable_calc_preview_size (gint       aspect_width,
 }
 
 gboolean
-gimp_viewable_has_preview (GimpViewable  *viewable)
+gimp_viewable_has_preview (GimpViewable *viewable)
 {
+  GimpViewableClass *viewable_class;
+
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), FALSE);
 
-  return (GIMP_VIEWABLE_GET_CLASS (viewable)->get_preview     != NULL ||
-          GIMP_VIEWABLE_GET_CLASS (viewable)->get_new_preview != NULL);
+  viewable_class = GIMP_VIEWABLE_GET_CLASS (viewable);
+
+  return (viewable_class->get_preview     ||
+          viewable_class->get_new_preview ||
+          viewable_class->get_pixbuf      ||
+          viewable_class->get_new_pixbuf);
 }
 
 gboolean
