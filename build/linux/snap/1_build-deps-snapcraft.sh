@@ -54,6 +54,7 @@ cp build/linux/snap/snapcraft.yaml .
 
 # Build babl and GEGL
 printf "\e[0Ksection_start:`date +%s`:deps_install[collapsed=true]\r\e[0KInstalling dependencies not present in GNOME runtime snap\n"
+## (we build on Ubuntu host env with '--destructive-mode' which works both locally and on CI container (unlike lxd) and VMs (unlike multipass))
 sudo snapcraft pull --destructive-mode --build-for=$(dpkg --print-architecture) --verbosity=verbose
 printf "\e[0Ksection_end:`date +%s`:deps_install\r\e[0K\n"
 
