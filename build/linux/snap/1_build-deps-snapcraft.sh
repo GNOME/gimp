@@ -22,11 +22,19 @@ if ! which snapcraft >/dev/null 2>&1; then
   sudo apt install -y snapd
   sudo snap install snapd
   sudo snap install snapcraft --classic
+fi
+if [ "$GITLAB_CI" ]; then
+  base_target=$(sed -n 's/^base:[[:space:]]*//p' build/linux/snap/snapcraft.yaml)
+  base_host=$(grep 'SNAPCRAFT_BASE_VERSION:' .gitlab-ci.yml | sed 's/.*SNAPCRAFT_BASE_VERSION:[[:space:]]*"\([^_"]*\)_\([^"]*\)".*/\2/')
+  if [ "$base_host" != "$base_target" ]; then
+    printf "\033[31m(ERROR)\033[0m: The $base_target base required in snapcraft.yaml is not installed. Please, change the snapcraft-rocks image in the following .gitlab-ci.yml var: SNAPCRAFT_BASE_VERSION.\n"
+    exit 1
+  fi
 fi #End of check
 
 if [ "$GITLAB_CI" ] && [ "$1" = '--install-snaps' ]; then
   #snapd can not be used to install snaps on CI since it is a daemon so we manually "install" them
-  GNOME_SDK=$(grep '^_SDK_SNAP' $(sudo find $(dirname $(which snapcraft))/.. -name gnome.py | grep -i extensions) | sed -n "s/.*\"$(sed -n 's/^base:[[:space:]]*//p' build/linux/snap/snapcraft.yaml)\": *\"\\([^\"]*\\)\".*/\\1/p")
+  GNOME_SDK=$(grep '^_SDK_SNAP' $(sudo find $(dirname $(which snapcraft))/.. -name gnome.py | grep -i extensions) | sed -n "s/.*\"$base_target\": *\"\\([^\"]*\\)\".*/\\1/p")
   gnome_runtime=$(echo $GNOME_SDK | sed 's/-sdk//')
   mesa_runtime="mesa-$(echo $GNOME_SDK | sed -n 's/.*-\([0-9]\+\)-sdk/\1/p')"
   for snap in $GNOME_SDK $gnome_runtime $mesa_runtime; do
