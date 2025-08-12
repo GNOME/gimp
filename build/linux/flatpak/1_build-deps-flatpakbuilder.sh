@@ -87,5 +87,5 @@ if [ "$GITLAB_CI" ]; then
   printf "\e[0Ksection_end:`date +%s`:gegl_build\r\e[0K\n"
 
   ## Save built deps for 'gimp-flatpak' job
-  tar cf .flatpak-builder-$RUNNER.tar .flatpak-builder/
+  tar cf _build-$RUNNER.tar .flatpak-builder/
 fi
