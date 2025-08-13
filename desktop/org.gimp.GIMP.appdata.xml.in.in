@@ -82,6 +82,35 @@
   </provides>
 
   <releases>
+    <release version="3.1.4" date="2025-08-14" type="development">
+      <description>
+        <p>
+        Our second development release finally contains the initial implementation of the two new types of
+        less-destructive layers which are the key points of upcoming GIMP 3.2.
+        </p>
+        <ul>
+          <li demo="toolbox:path">
+          New type of layers: vector layers.
+          </li>
+          <li>
+          New type of layers: link layers.
+          </li>
+          <li demo="toolbox:mypaint-brush,
+                    tool-options:gain">
+          MyPaint brushes version 2 are now supported, with new "Gain" setting
+          </li>
+          <li>Code restructuration and factorization in preparation for future GTK4 port and better layer effect UI</li>
+          <li>New setting "Update metadata automatically" in Preferences > Image Import &amp; Export > Export Policies</li>
+          <li>The cursors when hovering and clicking spin scales were changed</li>
+          <li>The "System" color scheme now works on macOS too</li>
+          <li>The Welcome dialog will now recognize your standard shortcuts to create or open files</li>
+          <li>A new GEGL Filter Browser was added</li>
+          <li>Animation Playback and Raw Image data load dialogs were redesigned</li>
+          <li>TIFF support improved to handle various unofficial features set by third-party software</li>
+          <li>New import support for the following image formats: PAA textures, Seattle Filmworks photos and HRZ Slow Scan Television Images</li>
+        </ul>
+      </description>
+    </release>
     <release version="3.1.2" date="2025-06-22" type="development">
       <description>
         <p>
