@@ -8,6 +8,7 @@ endif
 
 tests = [
   'color-parser',
+  'constants',
   'export-options',
   'image',
   'palette',
