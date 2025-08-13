@@ -44,8 +44,7 @@ Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0)
 ## Download Inno
 ## (We need to ensure that TLS 1.2 is enabled because of some runners)
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-#Post-6.4.2 Inno have awfully broken task dialogs: https://groups.google.com/g/innosetup/c/g0V_QE3Zf5Y/m/Daki-eb8EQAJ
-Invoke-WebRequest https://files.jrsoftware.org/is/6/innosetup-6.4.2.exe -OutFile ..\is.exe
+Invoke-WebRequest https://jrsoftware.org/download.php/is.exe -OutFile ..\is.exe
 $inno_version_downloaded = (Get-Item ..\is.exe).VersionInfo.ProductVersion -replace ' ',''
 
 ## Install or Update Inno
