@@ -47,24 +47,40 @@ struct _GimpLinkLayerClass
 };
 
 
-GType       gimp_link_layer_get_type      (void) G_GNUC_CONST;
+GType       gimp_link_layer_get_type             (void) G_GNUC_CONST;
 
-GimpLayer * gimp_link_layer_new           (GimpImage     *image,
-                                           GimpLink      *link);
+GimpLayer * gimp_link_layer_new                  (GimpImage             *image,
+                                                  GimpLink              *link);
 
-GimpLink  * gimp_link_layer_get_link      (GimpLinkLayer *layer);
-gboolean    gimp_link_layer_set_link      (GimpLinkLayer *layer,
-                                           GimpLink      *link,
-                                           gboolean       push_undo);
+GimpLink  * gimp_link_layer_get_link             (GimpLinkLayer         *layer);
+gboolean    gimp_link_layer_set_link             (GimpLinkLayer         *layer,
+                                                  GimpLink              *link,
+                                                  gboolean               push_undo);
+gboolean    gimp_link_layer_set_link_with_matrix (GimpLinkLayer         *layer,
+                                                  GimpLink              *link,
+                                                  GimpMatrix3           *matrix,
+                                                  GimpInterpolationType  interpolation_type,
+                                                  gint                   offset_x,
+                                                  gint                   offset_y,
+                                                  gboolean               push_undo);
 
-void        gimp_link_layer_discard       (GimpLinkLayer *layer);
-void        gimp_link_layer_monitor       (GimpLinkLayer *layer);
-gboolean    gimp_link_layer_is_monitored  (GimpLinkLayer *layer);
+void        gimp_link_layer_discard              (GimpLinkLayer         *layer);
+void        gimp_link_layer_monitor              (GimpLinkLayer         *layer);
+gboolean    gimp_link_layer_is_monitored         (GimpLinkLayer         *layer);
 
+gboolean    gimp_link_layer_get_transform        (GimpLinkLayer         *layer,
+                                                  GimpMatrix3           *matrix,
+                                                  gint                  *offset_x,
+                                                  gint                  *offset_y,
+                                                  GimpInterpolationType *interpolation);
+gboolean    gimp_link_layer_set_transform        (GimpLinkLayer         *layer,
+                                                  GimpMatrix3           *matrix,
+                                                  GimpInterpolationType  interpolation_type,
+                                                  gboolean               push_undo);
 
 /* Only to be used for XCF loading/saving. */
 
-guint32     gimp_link_layer_get_xcf_flags (GimpLinkLayer  *layer);
-void        gimp_link_layer_from_layer    (GimpLayer     **layer,
-                                           GimpLink       *link,
-                                           guint32         flags);
+guint32     gimp_link_layer_get_xcf_flags        (GimpLinkLayer         *layer);
+void        gimp_link_layer_from_layer           (GimpLayer            **layer,
+                                                  GimpLink              *link,
+                                                  guint32                flags);

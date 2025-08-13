@@ -108,6 +108,11 @@ gimp_link_layer_undo_constructed (GObject *object)
 
   link       = gimp_link_layer_get_link (layer);
   undo->link = link ? gimp_link_duplicate (link) : NULL;
+  gimp_link_layer_get_transform (layer,
+                                 &undo->matrix,
+                                 &undo->offset_x,
+                                 &undo->offset_y,
+                                 &undo->interpolation);
 }
 
 static void
@@ -181,18 +186,33 @@ gimp_link_layer_undo_pop (GimpUndo            *undo,
                           GimpUndoMode         undo_mode,
                           GimpUndoAccumulator *accum)
 {
-  GimpLinkLayerUndo *layer_undo = GIMP_LINK_LAYER_UNDO (undo);
-  GimpLinkLayer     *layer      = GIMP_LINK_LAYER (GIMP_ITEM_UNDO (undo)->item);
-  GimpLink          *link;
+  GimpLinkLayerUndo     *layer_undo = GIMP_LINK_LAYER_UNDO (undo);
+  GimpLinkLayer         *layer      = GIMP_LINK_LAYER (GIMP_ITEM_UNDO (undo)->item);
+  GimpLink              *link;
+  GimpMatrix3            matrix;
+  gint                   offset_x;
+  gint                   offset_y;
+  GimpInterpolationType  interpolation;
 
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
   link = gimp_link_layer_get_link (layer);
   link = link ? g_object_ref (link) : NULL;
 
-  gimp_link_layer_set_link (layer, layer_undo->link, FALSE);
+  gimp_link_layer_get_transform (layer, &matrix, &offset_x, &offset_y, &interpolation);
+  gimp_link_layer_set_link_with_matrix (layer, layer_undo->link,
+                                        &layer_undo->matrix,
+                                        layer_undo->interpolation,
+                                        layer_undo->offset_x,
+                                        layer_undo->offset_y,
+                                        FALSE);
+
+
+  layer_undo->matrix        = matrix;
+  layer_undo->interpolation = interpolation;
+  layer_undo->offset_x      = offset_x;
+  layer_undo->offset_y      = offset_y;
 
   g_clear_object (&layer_undo->link);
-
   layer_undo->link = link;
 }

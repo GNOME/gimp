@@ -107,7 +107,8 @@ struct _GimpItemClass
                                           GimpTransformDirection  direction,
                                           GimpInterpolationType   interpolation_type,
                                           GimpTransformResize     clip_result,
-                                          GimpProgress           *progress);
+                                          GimpProgress           *progress,
+                                          gboolean                push_undo);
   GimpTransformResize (* get_clip)       (GimpItem               *item,
                                           GimpTransformResize     clip_result);
   gboolean        (* fill)               (GimpItem               *item,

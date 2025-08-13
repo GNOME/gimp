@@ -35,14 +35,18 @@ typedef struct _GimpLinkLayerUndoClass GimpLinkLayerUndoClass;
 
 struct _GimpLinkLayerUndo
 {
-  GimpItemUndo  parent_instance;
+  GimpItemUndo           parent_instance;
 
-  GimpLink     *link;
+  GimpLink              *link;
+  GimpMatrix3            matrix;
+  gint                   offset_x;
+  gint                   offset_y;
+  GimpInterpolationType  interpolation;
 };
 
 struct _GimpLinkLayerUndoClass
 {
-  GimpItemUndoClass  parent_class;
+  GimpItemUndoClass      parent_class;
 };
 
 
