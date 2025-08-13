@@ -94,9 +94,9 @@ fi
 # PUBLISH GIMP REPO IN GNOME NIGHTLY
 # We take the commands from 'flatpak_ci_initiative.yml'
 if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
-  printf "\e[0Ksection_start:`date +%s`:${FLATPAK}_publish[collapsed=true]\r\e[0KPublishing $ARCH repo to GNOME nightly\n"
+  printf "\e[0Ksection_start:`date +%s`:${FLATPAK}_submission[collapsed=true]\r\e[0KPublishing $ARCH repo to GNOME nightly\n"
   curl https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml --output flatpak_ci_initiative.yml
   eval "$(sed -n -e '/flatpak build-update-repo/,/purge/ { s/    - //; p }' flatpak_ci_initiative.yml)"
-  printf "\e[0Ksection_end:`date +%s`:${FLATPAK}_publish\r\e[0K\n"
+  printf "\e[0Ksection_end:`date +%s`:${FLATPAK}_submission\r\e[0K\n"
 fi
 done

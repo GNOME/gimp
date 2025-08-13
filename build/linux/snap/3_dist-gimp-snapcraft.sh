@@ -87,9 +87,9 @@ fi
 
 # Publish GIMP snap on Snap Store
 #if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
-#  printf "\e[0Ksection_start:`date +%s`:${SNAP}_publish[collapsed=true]\r\e[0KPublishing snap to Snap Store\n"
+#  printf "\e[0Ksection_start:`date +%s`:${SNAP}_submission[collapsed=true]\r\e[0KPublishing snap to Snap Store\n"
 #  snapcraft upload --release=$TRACK/stable $output_dir/${SNAP}
-#  printf "\e[0Ksection_end:`date +%s`:${SNAP}_publish\r\e[0K\n"
+#  printf "\e[0Ksection_end:`date +%s`:${SNAP}_submission\r\e[0K\n"
 #fi
 done
 
