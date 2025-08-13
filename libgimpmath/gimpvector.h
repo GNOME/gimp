@@ -22,11 +22,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_MATH_H_INSIDE__) && !defined (GIMP_MATH_COMPILATION)
 #error "Only <libgimpmath/gimpmath.h> can be included directly."
 #endif
+
+#ifndef __GIMP_VECTOR_H__
+#define __GIMP_VECTOR_H__
 
 G_BEGIN_DECLS
 
@@ -153,4 +154,7 @@ void        gimp_vector_3d_to_2d           (gint               sx,
                                             const GimpVector3 *vp,
                                             const GimpVector3 *p);
 
+
 G_END_DECLS
+
+#endif  /* __GIMP_VECTOR_H__ */

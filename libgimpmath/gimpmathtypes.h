@@ -18,9 +18,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __GIMP_MATH_TYPES_H__
+#define __GIMP_MATH_TYPES_H__
+
 
 #include <libgimpbase/gimpbasetypes.h>
+
 
 G_BEGIN_DECLS
 
@@ -125,4 +128,7 @@ struct _GimpVector4
   gdouble x, y, z, w;
 };
 
+
 G_END_DECLS
+
+#endif /* __GIMP_MATH_TYPES_H__ */
