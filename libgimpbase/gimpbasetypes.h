@@ -16,7 +16,9 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __GIMP_BASE_TYPES_H__
+#define __GIMP_BASE_TYPES_H__
+
 
 #include <libgimpcolor/gimpcolortypes.h>
 #include <libgimpmath/gimpmathtypes.h>
@@ -102,4 +104,7 @@ void                  gimp_flags_set_value_descriptions (GType                fl
                                                          const GimpFlagsDesc *descriptions);
 const GimpFlagsDesc * gimp_flags_get_value_descriptions (GType                flags_type);
 
+
 G_END_DECLS
+
+#endif  /* __GIMP_BASE_TYPES_H__ */

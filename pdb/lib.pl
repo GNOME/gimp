@@ -780,12 +780,14 @@ LGPL
         print HFILE $lgpl_top;
         print HFILE " * $hname\n";
         print HFILE $lgpl_bottom;
+ 	my $guard = "__GIMP_\U$group\E_PDB_H__";
 	print HFILE <<HEADER;
-#pragma once
-
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
+
+#ifndef $guard
+#define $guard
 
 G_BEGIN_DECLS
 
@@ -794,7 +796,10 @@ G_BEGIN_DECLS
 
 $body
 
+
 G_END_DECLS
+
+#endif /* $guard */
 HEADER
 	close HFILE;
 	&write_file($hfile, $destdir);

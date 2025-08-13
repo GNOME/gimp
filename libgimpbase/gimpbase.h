@@ -16,7 +16,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __GIMP_BASE_H__
+#define __GIMP_BASE_H__
 
 #define __GIMP_BASE_H_INSIDE__
 
@@ -41,3 +42,5 @@
 #include <libgimpbase/gimpvaluearray.h>
 
 #undef __GIMP_BASE_H_INSIDE__
+
+#endif  /* __GIMP_BASE_H__ */

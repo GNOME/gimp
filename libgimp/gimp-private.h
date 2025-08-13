@@ -18,10 +18,15 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __GIMP_PRIVATE_H__
+#define __GIMP_PRIVATE_H__
 
 G_BEGIN_DECLS
 
+
 void   _gimp_config (GPConfig *config);
 
+
 G_END_DECLS
+
+#endif /* __GIMP_PRIVATE_H__ */

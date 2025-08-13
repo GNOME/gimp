@@ -16,7 +16,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __GIMP_BASE_ENUMS_H__
+#define __GIMP_BASE_ENUMS_H__
 
 
 /**
@@ -1363,4 +1364,7 @@ typedef enum
   GIMP_FILE_CHOOSER_ACTION_CREATE_FOLDER = 3,
 } GimpFileChooserAction;
 
+
 G_END_DECLS
+
+#endif  /* __GIMP_BASE_ENUMS_H__ */

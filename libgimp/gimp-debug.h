@@ -18,9 +18,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __GIMP_DEBUG_H__
+#define __GIMP_DEBUG_H__
 
 G_BEGIN_DECLS
+
 
 typedef enum
 {
@@ -40,5 +42,7 @@ void   _gimp_debug_configure (GimpStackTraceMode stack_trace_mode);
 guint  _gimp_get_debug_flags (void);
 void   _gimp_debug_stop  (void);
 
+
 G_END_DECLS
 
+#endif /* __GIMP_DEBUG_H__ */

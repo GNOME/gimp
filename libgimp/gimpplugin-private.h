@@ -19,9 +19,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __GIMP_PLUG_IN_PRIVATE_H__
+#define __GIMP_PLUG_IN_PRIVATE_H__
 
 G_BEGIN_DECLS
+
 
 G_GNUC_INTERNAL void            _gimp_plug_in_query                  (GimpPlugIn      *plug_in);
 G_GNUC_INTERNAL void            _gimp_plug_in_init                   (GimpPlugIn      *plug_in);
@@ -59,4 +61,7 @@ G_GNUC_INTERNAL GimpResource  * _gimp_plug_in_get_resource           (GimpPlugIn
 
 G_GNUC_INTERNAL gboolean        _gimp_plug_in_manage_memory_manually (GimpPlugIn      *plug_in);
 
+
 G_END_DECLS
+
+#endif /* __GIMP_PLUG_IN_PRIVATE_H__ */

@@ -23,7 +23,8 @@
 #error "Only <libgimpbase/gimpbase.h> can be included directly."
 #endif
 
-#pragma once
+#ifndef __GIMP_UNIT_H__
+#define __GIMP_UNIT_H__
 
 G_BEGIN_DECLS
 
@@ -103,3 +104,5 @@ gboolean     gimp_param_spec_unit_pixel_allowed   (GParamSpec  *pspec);
 gboolean     gimp_param_spec_unit_percent_allowed (GParamSpec  *pspec);
 
 G_END_DECLS
+
+#endif /* __GIMP_UNIT_H__ */
