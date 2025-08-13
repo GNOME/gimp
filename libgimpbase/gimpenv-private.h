@@ -18,7 +18,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __GIMP_ENV_PRIVATE_H__
+#define __GIMP_ENV_PRIVATE_H__
 
 G_BEGIN_DECLS
 
@@ -27,4 +28,7 @@ G_BEGIN_DECLS
 
 void          gimp_env_init                    (gboolean      plug_in);
 
+
 G_END_DECLS
+
+#endif  /*  __GIMP_ENV_PRIVATE_H__  */

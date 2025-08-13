@@ -16,7 +16,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __GIMP_SIGNAL_H__
+#define __GIMP_SIGNAL_H__
 
 #include <signal.h>
 
@@ -37,9 +38,11 @@ G_BEGIN_DECLS
  **/
 typedef void (* GimpSignalHandlerFunc) (gint signum);
 
-
 GimpSignalHandlerFunc  gimp_signal_private (gint                   signum,
                                             GimpSignalHandlerFunc  handler,
                                             gint                   flags);
 
+
 G_END_DECLS
+
+#endif /* __GIMP_SIGNAL_H__ */

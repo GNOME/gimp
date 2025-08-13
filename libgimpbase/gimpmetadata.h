@@ -19,17 +19,16 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
-#include <gexiv2/gexiv2.h>
+#ifndef __GIMP_METADATA_H__
+#define __GIMP_METADATA_H__
 
 G_BEGIN_DECLS
 
+#include <gexiv2/gexiv2.h>
+
+
 #define GIMP_TYPE_METADATA (gimp_metadata_get_type ())
-G_DECLARE_FINAL_TYPE (GimpMetadata,
-                      gimp_metadata,
-                      GIMP, METADATA,
-                      GExiv2Metadata)
+G_DECLARE_FINAL_TYPE (GimpMetadata, gimp_metadata, GIMP, METADATA, GExiv2Metadata)
 
 
 /**
@@ -158,3 +157,5 @@ gboolean       gimp_metadata_is_tag_supported    (const gchar            *tag,
                                                   const gchar            *mime_type);
 
 G_END_DECLS
+
+#endif /* __GIMP_METADATA_H__ */

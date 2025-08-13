@@ -16,7 +16,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __GIMP_WIRE_H__
+#define __GIMP_WIRE_H__
 
 G_BEGIN_DECLS
 
@@ -145,4 +146,7 @@ G_GNUC_INTERNAL gboolean
                                                    gint            count,
                                                    gpointer        user_data);
 
+
 G_END_DECLS
+
+#endif /* __GIMP_WIRE_H__ */

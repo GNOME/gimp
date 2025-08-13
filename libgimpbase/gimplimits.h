@@ -19,13 +19,15 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_BASE_H_INSIDE__) && !defined (GIMP_BASE_COMPILATION)
 #error "Only <libgimpbase/gimpbase.h> can be included directly."
 #endif
 
+#ifndef __GIMP_LIMITS_H__
+#define __GIMP_LIMITS_H__
+
 G_BEGIN_DECLS
+
 
 /**
  * SECTION: gimplimits
@@ -89,4 +91,7 @@ G_BEGIN_DECLS
                                                   *  and must be < G_MAXDOUBLE
                                                   */
 
+
 G_END_DECLS
+
+#endif /* __GIMP_LIMITS_H__ */

@@ -16,7 +16,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __GIMP_PROTOCOL_H__
+#define __GIMP_PROTOCOL_H__
 
 G_BEGIN_DECLS
 
@@ -417,4 +418,7 @@ gboolean  gp_extension_ack_write    (GIOChannel      *channel,
 gboolean  gp_has_init_write         (GIOChannel      *channel,
                                      gpointer         user_data);
 
+
 G_END_DECLS
+
+#endif /* __GIMP_PROTOCOL_H__ */

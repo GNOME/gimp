@@ -18,11 +18,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_BASE_H_INSIDE__) && !defined (GIMP_BASE_COMPILATION)
 #error "Only <libgimpbase/gimpbase.h> can be included directly."
 #endif
+
+#ifndef __GIMP_VALUE_ARRAY_H__
+#define __GIMP_VALUE_ARRAY_H__
 
 G_BEGIN_DECLS
 
@@ -96,4 +97,7 @@ GParamSpec * gimp_param_spec_value_array                  (const gchar    *name,
 
 GParamSpec * gimp_param_spec_value_array_get_element_spec (GParamSpec *pspec);
 
+
 G_END_DECLS
+
+#endif /* __GIMP_VALUE_ARRAY_H__ */
