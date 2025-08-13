@@ -19,18 +19,16 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_CONFIG_H_INSIDE__) && !defined (GIMP_CONFIG_COMPILATION)
 #error "Only <libgimpconfig/gimpconfig.h> can be included directly."
 #endif
 
+#ifndef __GIMP_COLOR_CONFIG_H__
+#define __GIMP_COLOR_CONFIG_H__
+
 
 #define GIMP_TYPE_COLOR_CONFIG (gimp_color_config_get_type ())
-G_DECLARE_FINAL_TYPE (GimpColorConfig,
-                      gimp_color_config,
-                      GIMP, COLOR_CONFIG,
-                      GObject)
+G_DECLARE_FINAL_TYPE (GimpColorConfig, gimp_color_config, GIMP, COLOR_CONFIG, GObject)
 
 
 GimpColorManagementMode
@@ -60,3 +58,5 @@ GimpColorProfile * gimp_color_config_get_display_color_profile    (GimpColorConf
 GimpColorProfile * gimp_color_config_get_simulation_color_profile (GimpColorConfig  *config,
                                                                    GError          **error);
 
+
+#endif /* GIMP_COLOR_CONFIG_H__ */

@@ -16,7 +16,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __GIMP_CONFIG_H__
+#define __GIMP_CONFIG_H__
 
 #include <gegl.h>
 
@@ -40,3 +41,5 @@
 #include <libgimpconfig/gimpcolorconfig.h>
 
 #undef __GIMP_CONFIG_H_INSIDE__
+
+#endif  /* __GIMP_CONFIG_H__ */

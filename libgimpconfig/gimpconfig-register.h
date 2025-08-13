@@ -19,11 +19,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_CONFIG_H_INSIDE__) && !defined (GIMP_CONFIG_COMPILATION)
 #error "Only <libgimpconfig/gimpconfig.h> can be included directly."
 #endif
+
+#ifndef __GIMP_CONFIG_REGISTER_H__
+#define __GIMP_CONFIG_REGISTER_H__
 
 G_BEGIN_DECLS
 
@@ -35,4 +36,7 @@ GType   gimp_config_type_register (GType         parent_type,
                                    GParamSpec  **pspecs,
                                    gint          n_pspecs);
 
+
 G_END_DECLS
+
+#endif /* __GIMP_CONFIG_REGISTER_H__ */

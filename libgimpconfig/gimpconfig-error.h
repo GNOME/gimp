@@ -18,11 +18,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_CONFIG_H_INSIDE__) && !defined (GIMP_CONFIG_COMPILATION)
 #error "Only <libgimpconfig/gimpconfig.h> can be included directly."
 #endif
+
+#ifndef __GIMP_CONFIG_ERROR_H__
+#define __GIMP_CONFIG_ERROR_H__
 
 G_BEGIN_DECLS
 
@@ -50,7 +51,9 @@ typedef enum
 
 #define GIMP_CONFIG_ERROR (gimp_config_error_quark ())
 
-GQuark   gimp_config_error_quark (void) G_GNUC_CONST;
+GQuark        gimp_config_error_quark   (void) G_GNUC_CONST;
+
 
 G_END_DECLS
 
+#endif  /* __GIMP_CONFIG_ERROR_H__ */
