@@ -31,6 +31,7 @@
 #include "libgimpmath/gimpmath.h"
 
 #include "gimpbasetypes.h"
+#include "gimpversion.h"
 
 #include "gimplimits.h"
 #include "gimpmetadata.h"
@@ -38,6 +39,11 @@
 #include "gimpunit.h"
 
 #include "libgimp/libgimp-intl.h"
+
+
+#if GIMP_CHECK_VERSION(3, 99, 0)
+#warning libgimpbase/gimpmetadata.h: rename GIMP_METADATA_SAVE_UPDATE as GIMP_METADATA_UPDATE?
+#endif
 
 /**
  * SECTION: gimpmetadata
