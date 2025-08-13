@@ -1367,6 +1367,7 @@ load_image (GimpProcedure     *procedure,
   const Babl          *file_format;
   gint                 bpp;
   GimpPrecision        image_precision;
+  guint                signed_offset;
   gint                 precision_actual, precision_scaled;
   gint                 temp;
   gboolean             linear = FALSE;
@@ -1594,6 +1595,17 @@ load_image (GimpProcedure     *procedure,
   precision_scaled = get_valid_precision (precision_actual);
   image_precision = get_image_precision (precision_scaled, linear);
 
+  signed_offset = 0;
+  if (image->comps[0].sgnd)
+    {
+      switch (precision_scaled)
+        {
+          case 32: signed_offset = G_MAXINT32 - 1; break;
+          case 16: signed_offset = G_MAXINT16 - 1; break;
+          default: signed_offset = G_MAXINT8 - 1;
+        }
+    }
+
   gimp_image = gimp_image_new_with_precision (width, height,
                                               base_type, image_precision);
 
@@ -1623,9 +1635,9 @@ load_image (GimpProcedure     *procedure,
           for (k = 0; k < width; k++)
             {
               if (shift >= 0)
-                temp = image->comps[j].data[i * width + k] << shift;
+                temp = (image->comps[j].data[i * width + k] + signed_offset) << shift;
               else /* precision_actual > 32 */
-                temp = image->comps[j].data[i * width + k] >> (- shift);
+                temp = (image->comps[j].data[i * width + k] + signed_offset) >> (- shift);
 
               c = (unsigned char *) &temp;
               for (it = 0; it < (precision_scaled / 8); it++)
