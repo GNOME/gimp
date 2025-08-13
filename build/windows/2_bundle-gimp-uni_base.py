@@ -177,10 +177,6 @@ if not os.getenv("GIMP_UNSTABLE") and os.getenv("GIMP_RELEASE"):
 ## Binaries for GObject Introspection support. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/13170
 bundle(GIMP_PREFIX, "lib/girepository-*/*.typelib")
 bundle(MSYSTEM_PREFIX, "bin/libgirepository-*.dll")
-### FIXME: luajit crashes at startup: See: https://gitlab.gnome.org/GNOME/gimp/-/issues/11597
-#bundle(MSYSTEM_PREFIX, "bin/luajit.exe")
-#bundle(MSYSTEM_PREFIX, "lib/lua")
-#bundle(MSYSTEM_PREFIX, "share/lua")
 ### Python support
 #python.exe is needed for plug-ins output in `gimp-console*.exe`
 bundle(MSYSTEM_PREFIX, "bin/python.exe")
@@ -189,6 +185,10 @@ if not os.getenv("GIMP_UNSTABLE") and os.getenv("GIMP_RELEASE"):
   bundle(MSYSTEM_PREFIX, "bin/pythonw.exe")
 bundle(MSYSTEM_PREFIX, "lib/python*")
 clean(GIMP_DISTRIB, "lib/python*/*.pyc")
+### FIXME: luajit crashes at startup: See: https://gitlab.gnome.org/GNOME/gimp/-/issues/11597
+#bundle(MSYSTEM_PREFIX, "bin/luajit.exe")
+#bundle(MSYSTEM_PREFIX, "lib/lua")
+#bundle(MSYSTEM_PREFIX, "share/lua")
 
 ### We save the list of already copied DLLs to keep a state between 2_bundle-gimp-uni_dep runs.
 done_dll = Path(f"{os.getenv('MESON_BUILD_ROOT')}/done-dll.list")
