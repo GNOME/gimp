@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-10-10 03:43+0000\n"
-"PO-Revision-Date: 2024-10-11 15:42+0200\n"
+"PO-Revision-Date: 2025-08-13 15:42+0200\n"
 "Last-Translator: Jordi Mas i Hernàndez, <jmas@softcatala.org>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -513,7 +513,7 @@ msgstr "%d fps"
 
 #: plug-ins/common/animation-play.c:874
 msgid "Default framerate"
-msgstr "Fotogrames per defecte"
+msgstr "Velocitat dels fotogrames per defecte"
 
 #: plug-ins/common/animation-play.c:894
 msgid "Playback speed"
@@ -783,7 +783,7 @@ msgstr "k{x(1-x)}^p"
 
 #: plug-ins/common/cml-explorer.c:134
 msgid "k{x(1-x)}^p stepped"
-msgstr "k{x(1-x)}^p desplaçada"
+msgstr "k{x(1-x)}^p pas a pas"
 
 #: plug-ins/common/cml-explorer.c:135
 msgid "kx^p"
@@ -1194,11 +1194,11 @@ msgstr "Paràmetre k:"
 
 #: plug-ins/common/cml-explorer.c:1837
 msgid "Range low:"
-msgstr "Rang curt:"
+msgstr "Rang inferior:"
 
 #: plug-ins/common/cml-explorer.c:1844
 msgid "Range high:"
-msgstr "Rang llarg:"
+msgstr "Rang superior:"
 
 #: plug-ins/common/cml-explorer.c:1855
 msgid "Plot a Graph of the Settings"
@@ -1294,11 +1294,11 @@ msgstr "S'ha produït un error: no es poden carregar els paràmetres"
 
 #: plug-ins/common/colormap-remap.c:181
 msgid "R_earrange Colormap..."
-msgstr "Ajusta _els colors..."
+msgstr "Reord_ena el mapa de colors..."
 
 #: plug-ins/common/colormap-remap.c:187
 msgid "Rearrange the colormap"
-msgstr "Torna a ajustar el mapa de colors"
+msgstr "Reordena el mapa de colors"
 
 #: plug-ins/common/colormap-remap.c:188
 msgid ""
@@ -1383,7 +1383,7 @@ msgid ""
 "Drag and drop colors to rearrange the colormap.\n"
 "The numbers shown are the original indices."
 msgstr ""
-"Arrossegueu colors per a ajustar el mapa de colors.\n"
+"Arrossegueu colors per a reordenar el mapa de colors.\n"
 "Els nombres que es mostren són els índexs originals."
 
 #: plug-ins/common/colormap-remap.c:728
@@ -1954,7 +1954,7 @@ msgstr "Punt X superior"
 #: plug-ins/common/curve-bend.c:477 plug-ins/common/curve-bend.c:501
 msgid "Array of 17 x point coords { 0.0 <= x <= 1.0 or -1 for unused point }"
 msgstr ""
-"Matriu de 17 coordenades x de punt  { 0.0<= x<= 1.0 o -1 per a un punt no "
+"Matriu de 17 coordenades x de punt { 0.0<= x<= 1.0 o -1 per a un punt no "
 "utilitzat }"
 
 #: plug-ins/common/curve-bend.c:482 plug-ins/common/curve-bend.c:483
@@ -1968,7 +1968,7 @@ msgstr "Punt Y superior"
 #: plug-ins/common/curve-bend.c:489 plug-ins/common/curve-bend.c:513
 msgid "Array of 17 y point coords { 0.0 <= y <= 1.0 or -1 for unused point }"
 msgstr ""
-"Matriu de 17 coordenades y de punt  { 0.0<= y<= 1.0 o -1 per a un punt no "
+"Matriu de 17 coordenades y de punt { 0.0<= y<= 1.0 o -1 per a un punt no "
 "utilitzat }"
 
 #: plug-ins/common/curve-bend.c:494 plug-ins/common/curve-bend.c:495
@@ -2973,7 +2973,7 @@ msgstr "Radiance RGBE"
 
 #: plug-ins/common/file-gegl.c:132 plug-ins/file-exr/file-exr.c:111
 msgid "OpenEXR image"
-msgstr "Obre la imatge EXR"
+msgstr "Imatge OpenEXR"
 
 #: plug-ins/common/file-gegl.c:356
 #, c-format
@@ -3003,7 +3003,7 @@ msgid ""
 msgstr ""
 "Exporta un fitxer en format GIF, amb una possible animació, transparència i "
 "comentari. Per a exportar una animació, opera en un fitxer multicapa i dona "
-"el paràmetre «com a animació» coem a CERT. El connector interpretarà un alfa "
+"el paràmetre «com a animació» com a CERT. El connector interpretarà un alfa "
 "menor del 50% com a transparent. Quan s'executa de forma no interactiva, el "
 "valor del comentari es pren del paràsit «gimp-comment»."
 
@@ -3429,7 +3429,7 @@ msgstr "L'alçada no coincideix!"
 #: plug-ins/common/file-gih.c:577
 #, c-format
 msgid "Displays as a %d × %d grid on each layer"
-msgstr "Mostra com una graella %d s %d a cada capa"
+msgstr "Mostra com una graella %d × %d a cada capa"
 
 #: plug-ins/common/file-gih.c:763
 msgid "Ranks:"
@@ -3802,7 +3802,7 @@ msgstr "Carrega fitxers en el format de fitxer IFF"
 
 #: plug-ins/common/file-iff.c:254
 msgid "Invalid or missing ILBM image"
-msgstr "Imatge ILBM no és vàlida o falta"
+msgstr "Imatge ILBM és invàlida o inexistent"
 
 #: plug-ins/common/file-iff.c:268
 msgid "ILBM contains no image data - likely a palette file"
@@ -4017,7 +4017,7 @@ msgstr "Exporta com a _CMYK"
 #: plug-ins/common/file-jpegxl.c:234
 msgid "Create a CMYK JPEG XL image using the soft-proofing color profile"
 msgstr ""
-"Crea una imatge JPEG gran amb model CMYK utilitzant el perfil de color de "
+"Crea una imatge JPEG XL amb model CMYK utilitzant el perfil de color de "
 "provatura suau"
 
 #: plug-ins/common/file-jpegxl.c:2039
@@ -4239,7 +4239,7 @@ msgstr "Imatge PCX de ZSoft"
 
 #: plug-ins/common/file-pcx.c:214
 msgid "Loads files in Zsoft PCX file format"
-msgstr "Carrega fitxers en el format de fitxer DCX de ZSoft"
+msgstr "Carrega fitxers en el format de fitxer PCX de Zsoft"
 
 #: plug-ins/common/file-pcx.c:223 plug-ins/common/file-pcx.c:257
 msgid "_Palette Options"
@@ -4352,12 +4352,12 @@ msgstr "No es poden exportar imatges amb canal alfa."
 #: plug-ins/common/file-pcx.c:1172
 #, c-format
 msgid "Invalid X offset: %d"
-msgstr "La coordenada X no és vàlida: %d"
+msgstr "Desplaçament X no vàlid: %d"
 
 #: plug-ins/common/file-pcx.c:1178
 #, c-format
 msgid "Invalid Y offset: %d"
-msgstr "La coordenada Y no és vàlida: %d"
+msgstr "Desplaçament Y no vàlid: %d"
 
 #: plug-ins/common/file-pcx.c:1184
 #, c-format
@@ -10465,7 +10465,7 @@ msgstr "Sinar en brut"
 
 #: plug-ins/file-raw/file-raw-formats.h:125
 msgid "Raw Kodak"
-msgstr "Kodaken brut"
+msgstr "Kodak en brut"
 
 #: plug-ins/file-raw/file-raw-formats.h:136
 msgid "Raw Adobe DNG Digital Negative"
@@ -12248,7 +12248,7 @@ msgstr "Ep, on ha anat l'objecte?"
 
 #: plug-ins/gfig/gfig-dobject.c:926
 msgid "Error reading file"
-msgstr "S'ha produït un error en llegir el fitxer"
+msgstr "S'ha produït un error en escriure el fitxer"
 
 #: plug-ins/gfig/gfig-dobject.c:1024
 msgid "Editing read-only object - you will not be able to save it"
