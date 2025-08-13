@@ -172,7 +172,7 @@ To fill data for a new entry:
 		name="Bahasa Indonesia" />
 	<iso_639_entry
 		dl_code="is"
-		inno_code="Languages\\Icelandic.isl"
+		inno_code="Languages\\Unofficial\\Icelandic.isl"
 		name="Íslenska" />
 	<iso_639_entry
 		dl_code="it"
