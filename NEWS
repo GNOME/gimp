@@ -21,8 +21,26 @@ Core:
   - Some cleanup of outdated disabled unit tests and other warnings.
   - Restructuration of internal GimpControllerManager and
     GimpContainerView API.
+  - GimpContainerListView now uses a GtkListBox. A Playground switch was
+    added to use the new widgets in all views that can be switched
+    between list and grid view (brushes, patterns etc.). This won't
+    likely get out of Playground before GIMP 4 because it is far too
+    slow right now (and apparently we'll need GTK4 for making it fast as
+    our current lists).
   - Various code have been moving away from GtkTreeView and some new
     internal classes were added as a preparation for GTK4 port.
+  - GEX format updated to use standard <custom/> instead of <metadata/>
+    per update in the AppStream specs in the last few years. This
+    doesn't make any compatibility issue since this format is purely
+    internal only for now, not public.
+  - New setting "Update metadata automatically" in Preferences > Image
+    Import & Export > Export Policies. When enabled, add and update
+    metadata automatically. When disabled, only the minimum necessary
+    metadata changes are made, without changing modification date,
+    synchronizing tags, or updating the software and change history
+    metadata. This new setting is enabled by default.
+  - Fix palette import to properly import colors with alpha values from
+    palettes.
 
 Tools:
 
@@ -43,6 +61,11 @@ Graphical User Interface:
     Preferences dialogue, and Welcome dialogue), we now turn off
     animations when it is set OFF system-wide.
   - "System" color scheme now also works on macOS.
+  - GimpSpinScale cursors now changed to "pointer" when hovering the
+    slider area and "col-resize" when actually grabbing the cursor.
+  - The Welcome dialog will now recognize your standard shortcuts to
+    create a new file, open a file or open one of the 10 most recent
+    files.
 
 Plug-Ins:
 
@@ -61,19 +84,48 @@ Plug-Ins:
     playback UIs. The redesign also changes the progress bar to a
     GtkScale, so users can more easily move to different frames on the
     timeline.
-  - PAA textures: initial import support (includes RGBA 4444, 5551,
-    8888, and Grayscale with Alpha channel. It does not yet cover DXT1 -
-    5 texture import support).
+  - New GEGL Filter Browser plug-in to list and inspect all available
+    filters for development purpose.
+  - New import support:
+    * PAA textures: initial import support (includes RGBA 4444, 5551,
+      8888, and Grayscale with Alpha channel. It does not yet cover DXT1
+      - 5 texture import support).
+    * Seattle Filmworks photos (earliest format SFW93A, and the most
+      common format SFW94A). Both formats are essentially mangled JPEGs,
+      though mangled in different ways.
+    * HRZ Slow Scan Television Images (restored, as it used to be
+      implemented and removed in 2004).
+  - Raw Image data plug-in dialog redesigned to be on a two-column
+    layout to avoid over-high dialog.
 
+API:
 
-PDB:
-
+  - GimpTRCType enum type made available in libgimp and PDB.
   - gimp-file-save properly sets associated save or exported files.
+  - New PDB/libgimp functions:
+    * gimp_drawable_filter_operation_get_available()
+    * gimp_drawable_filter_operation_get_details()
+    * gimp_drawable_filter_operation_get_pspecs()
+  - GimpSizeEntry (libgimpwidget) can now parse mathematical expressions
+    in their reference value spin buttons too.
+  - GimpColorScales (libgimpwidget) will now set its decimals to 0 when
+    creating u8 RGB color selectors. This change will help further
+    distinguish between the 0...00 and 0..255 views in the Color
+    Selectors. It will also better convey to users that u8 is an integer
+    value rather than a floating point.
+  - Favor existing image comment instead of always loading comment from
+    metadata.
+  - Improve handling of comment metadata with
+    "charset=[ascii|InvalidCharsetId]" prefixes.
+  - New GIMP_METADATA_SAVE_UPDATE value in enum type
+    GimpMetadataSaveFlags (libgimpbase).
 
 Build:
 
   - Add nightly Snap package.
   - Add nightly Aarch64 flatpak.
+  - appstream-glib dependency replaced with libappstream
+  - Installer uses latest InnoSetup now.
 
 
 Overview of Changes from GIMP 3.0.4 to GIMP 3.1.2
