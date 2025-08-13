@@ -148,6 +148,7 @@ static void       gimp_link_layer_convert_type   (GimpLayer         *layer,
                                                   gboolean           push_undo,
                                                   GimpProgress      *progress);
 
+static void       gimp_link_layer_render_full    (GimpLinkLayer     *layer);
 static gboolean   gimp_link_layer_render_link    (GimpLinkLayer     *layer);
 
 static void       gimp_link_layer_set_xcf_flags  (GimpLinkLayer     *layer,
@@ -334,6 +335,9 @@ gimp_link_layer_duplicate (GimpItem *item,
       GimpLinkLayer *layer     = GIMP_LINK_LAYER (item);
       GimpLinkLayer *new_layer = GIMP_LINK_LAYER (new_item);
       GimpLink      *link      = NULL;
+      GeglBuffer    *buffer;
+      gint           width;
+      gint           height;
 
       if (layer->p->link)
         {
@@ -343,37 +347,30 @@ gimp_link_layer_duplicate (GimpItem *item,
 
       gimp_config_sync (G_OBJECT (layer), G_OBJECT (new_layer), 0);
 
-      if (! link || ! gimp_link_is_monitored (link))
+      buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+      width  = gegl_buffer_get_width (buffer);
+      height = gegl_buffer_get_height (buffer);
+
+      if (width  != gimp_item_get_width  (GIMP_ITEM (new_layer)) ||
+          height != gimp_item_get_height (GIMP_ITEM (new_layer)))
         {
-          GeglBuffer *buffer;
-          gint        width;
-          gint        height;
+          GeglBuffer    *new_buffer;
+          GeglRectangle  bounds;
 
-          buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
-          width  = gegl_buffer_get_width (buffer);
-          height = gegl_buffer_get_height (buffer);
+          gimp_item_get_offset (GIMP_ITEM (new_layer), &bounds.x, &bounds.y);
+          bounds.width  = 0;
+          bounds.height = 0;
 
-          if (width  != gimp_item_get_width  (GIMP_ITEM (new_layer)) ||
-              height != gimp_item_get_height (GIMP_ITEM (new_layer)))
-            {
-              GeglBuffer    *new_buffer;
-              GeglRectangle  bounds;
-
-              gimp_item_get_offset (GIMP_ITEM (new_layer), &bounds.x, &bounds.y);
-              bounds.width  = 0;
-              bounds.height = 0;
-
-              new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
-                                            gimp_drawable_get_format (GIMP_DRAWABLE (new_layer)));
-              GIMP_DRAWABLE_CLASS (parent_class)->set_buffer (GIMP_DRAWABLE (new_layer),
-                                                              FALSE, NULL,
-                                                              new_buffer, &bounds);
-              g_object_unref (new_buffer);
-            }
-
-          gimp_gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE,
-                                 gimp_drawable_get_buffer (GIMP_DRAWABLE (new_layer)), NULL);
+          new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
+                                        gimp_drawable_get_format (GIMP_DRAWABLE (new_layer)));
+          GIMP_DRAWABLE_CLASS (parent_class)->set_buffer (GIMP_DRAWABLE (new_layer),
+                                                          FALSE, NULL,
+                                                          new_buffer, &bounds);
+          g_object_unref (new_buffer);
         }
+
+      gimp_gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE,
+                             gimp_drawable_get_buffer (GIMP_DRAWABLE (new_layer)), NULL);
 
       new_layer->p->scaled_only   = layer->p->scaled_only;
       new_layer->p->auto_rename   = layer->p->auto_rename;
@@ -786,7 +783,7 @@ gimp_link_layer_set_link_with_matrix (GimpLinkLayer         *layer,
   if (layer->p->link)
     {
       g_signal_handlers_disconnect_by_func (layer->p->link,
-                                            G_CALLBACK (gimp_link_layer_render_link),
+                                            G_CALLBACK (gimp_link_layer_render_full),
                                             layer);
 
     }
@@ -796,13 +793,14 @@ gimp_link_layer_set_link_with_matrix (GimpLinkLayer         *layer,
   if (link)
     {
       g_signal_connect_object (link, "changed",
-                               G_CALLBACK (gimp_link_layer_render_link),
+                               G_CALLBACK (gimp_link_layer_render_full),
                                layer, G_CONNECT_SWAPPED);
 
       if (gimp_link_is_monitored (link))
         {
           if (matrix == NULL)
             {
+              gimp_matrix3_identity (&layer->p->matrix);
               rendered = gimp_link_layer_render_link (layer);
             }
           else
@@ -857,6 +855,7 @@ gimp_link_layer_monitor (GimpLinkLayer *layer)
                                    _("Monitor Link"), layer);
 
   gimp_link_thaw (layer->p->link);
+  gimp_matrix3_identity (&layer->p->matrix);
   gimp_link_layer_render_link (layer);
 }
 
@@ -1007,6 +1006,28 @@ gimp_link_layer_from_layer (GimpLayer **layer,
 }
 
 /*  private functions  */
+
+static void
+gimp_link_layer_render_full (GimpLinkLayer *layer)
+{
+  gimp_link_layer_render_link (layer);
+  if (! gimp_matrix3_is_identity (&layer->p->matrix))
+    {
+      Gimp *gimp = (gimp_item_get_image (GIMP_ITEM (layer)))->gimp;
+
+      gimp_item_set_offset (GIMP_ITEM (layer), layer->p->offset_x, layer->p->offset_y);
+
+      layer->p->keep_monitoring = TRUE;
+      GIMP_ITEM_CLASS (parent_class)->transform (GIMP_ITEM (layer),
+                                                 gimp_get_user_context (gimp),
+                                                 &layer->p->matrix,
+                                                 GIMP_TRANSFORM_FORWARD,
+                                                 layer->p->interpolation,
+                                                 GIMP_TRANSFORM_RESIZE_ADJUST,
+                                                 NULL, FALSE);
+      layer->p->keep_monitoring = FALSE;
+    }
+}
 
 static gboolean
 gimp_link_layer_render_link (GimpLinkLayer *layer)
