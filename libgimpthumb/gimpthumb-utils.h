@@ -26,9 +26,11 @@
 #error "Only <libgimpthumb/gimpthumb.h> can be included directly."
 #endif
 
-#pragma once
+#ifndef __GIMP_THUMB_UTILS_H__
+#define __GIMP_THUMB_UTILS_H__
 
 G_BEGIN_DECLS
+
 
 gboolean            gimp_thumb_init                   (const gchar    *creator,
                                                        const gchar    *thumb_basedir);
@@ -65,4 +67,7 @@ G_GNUC_INTERNAL void    _gimp_thumbs_delete_others    (const gchar    *uri,
                                                        GimpThumbSize   size);
 G_GNUC_INTERNAL gchar * _gimp_thumb_filename_from_uri (const gchar    *uri);
 
+
 G_END_DECLS
+
+#endif /* __GIMP_THUMB_UTILS_H__ */

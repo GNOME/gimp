@@ -16,10 +16,13 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __GIMP_COLOR_TYPES_H__
+#define __GIMP_COLOR_TYPES_H__
+
 
 #include <libgimpbase/gimpbasetypes.h>
 #include <libgimpconfig/gimpconfigtypes.h>
+
 
 G_BEGIN_DECLS
 
@@ -30,4 +33,7 @@ typedef struct _GimpColorManaged   GimpColorManaged;  /* dummy typedef */
 typedef struct _GimpColorProfile   GimpColorProfile;
 typedef struct _GimpColorTransform GimpColorTransform;
 
+
 G_END_DECLS
+
+#endif  /* __GIMP_COLOR_TYPES_H__ */

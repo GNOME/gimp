@@ -18,11 +18,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_UI_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimpui.h> can be included directly."
 #endif
+
+#ifndef __GIMP_RESOLUTION_ENTRY__
+#define __GIMP_RESOLUTION_ENTRY__
 
 G_BEGIN_DECLS
 
@@ -40,40 +41,40 @@ G_BEGIN_DECLS
  * with a much nicer API and also adding a property widget function.
  */
 #define GIMP_TYPE_RESOLUTION_ENTRY (gimp_resolution_entry_get_type ())
-G_DECLARE_FINAL_TYPE (GimpResolutionEntry,
-                      gimp_resolution_entry,
-                      GIMP, RESOLUTION_ENTRY,
-                      GtkGrid)
+G_DECLARE_FINAL_TYPE (GimpResolutionEntry, gimp_resolution_entry, GIMP, RESOLUTION_ENTRY, GtkGrid)
 
+typedef struct _GimpResolutionEntry GimpResolutionEntry;
 
-GtkWidget * gimp_prop_resolution_entry_new          (GObject             *config,
-                                                     const gchar         *width_prop,
-                                                     const gchar         *height_prop,
-                                                     const gchar         *ppi_prop,
-                                                     const gchar         *unit_prop);
-GtkWidget * gimp_resolution_entry_new               (const gchar         *width_label,
-                                                     gint                 width,
-                                                     const gchar         *height_label,
-                                                     gint                 height,
-                                                     const gchar         *res_label,
-                                                     gdouble              pixel_density,
-                                                     GimpUnit            *display_unit);
+GtkWidget * gimp_prop_resolution_entry_new          (GObject                  *config,
+                                                     const gchar              *width_prop,
+                                                     const gchar              *height_prop,
+                                                     const gchar              *ppi_prop,
+                                                     const gchar              *unit_prop);
+GtkWidget * gimp_resolution_entry_new               (const gchar              *width_label,
+                                                     gint                      width,
+                                                     const gchar              *height_label,
+                                                     gint                      height,
+                                                     const gchar              *res_label,
+                                                     gdouble                   pixel_density,
+                                                     GimpUnit                 *display_unit);
 
-void        gimp_resolution_entry_set_width         (GimpResolutionEntry *entry,
-                                                     gint                 width);
-void        gimp_resolution_entry_set_height        (GimpResolutionEntry *entry,
-                                                     gint                 height);
-void        gimp_resolution_entry_set_pixel_density (GimpResolutionEntry *entry,
-                                                     gdouble              ppi);
-void        gimp_resolution_entry_set_unit          (GimpResolutionEntry *entry,
-                                                     GimpUnit            *unit);
-void        gimp_resolution_entry_set_keep_ratio    (GimpResolutionEntry *entry,
-                                                     gboolean             keep_ratio);
+void        gimp_resolution_entry_set_width         (GimpResolutionEntry      *entry,
+                                                     gint                      width);
+void        gimp_resolution_entry_set_height        (GimpResolutionEntry      *entry,
+                                                     gint                      height);
+void        gimp_resolution_entry_set_pixel_density (GimpResolutionEntry      *entry,
+                                                     gdouble                   ppi);
+void        gimp_resolution_entry_set_unit          (GimpResolutionEntry      *entry,
+                                                     GimpUnit                 *unit);
+void        gimp_resolution_entry_set_keep_ratio    (GimpResolutionEntry      *entry,
+                                                     gboolean                  keep_ratio);
 
-gint        gimp_resolution_entry_get_width         (GimpResolutionEntry *entry);
-gint        gimp_resolution_entry_get_height        (GimpResolutionEntry *entry);
-gdouble     gimp_resolution_entry_get_density       (GimpResolutionEntry *entry);
-GimpUnit  * gimp_resolution_entry_get_unit          (GimpResolutionEntry *entry);
-gboolean    gimp_resolution_entry_get_keep_ratio    (GimpResolutionEntry *entry);
+gint        gimp_resolution_entry_get_width         (GimpResolutionEntry      *entry);
+gint        gimp_resolution_entry_get_height        (GimpResolutionEntry      *entry);
+gdouble     gimp_resolution_entry_get_density       (GimpResolutionEntry      *entry);
+GimpUnit  * gimp_resolution_entry_get_unit          (GimpResolutionEntry      *entry);
+gboolean    gimp_resolution_entry_get_keep_ratio    (GimpResolutionEntry      *entry);
 
 G_END_DECLS
+
+#endif /* __GIMP_RESOLUTION_ENTRY__ */

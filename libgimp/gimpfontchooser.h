@@ -18,25 +18,26 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_UI_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimpui.h> can be included directly."
 #endif
+
+#ifndef __GIMP_FONT_CHOOSER_H__
+#define __GIMP_FONT_CHOOSER_H__
 
 #include <libgimp/gimpresourcechooser.h>
 
 G_BEGIN_DECLS
 
 #define GIMP_TYPE_FONT_CHOOSER (gimp_font_chooser_get_type ())
-G_DECLARE_FINAL_TYPE (GimpFontChooser,
-                      gimp_font_chooser,
-                      GIMP, FONT_CHOOSER,
-                      GimpResourceChooser)
+G_DECLARE_FINAL_TYPE (GimpFontChooser, gimp_font_chooser, GIMP, FONT_CHOOSER, GimpResourceChooser)
 
 
 GtkWidget * gimp_font_chooser_new (const gchar *title,
                                    const gchar *label,
                                    GimpFont    *font);
 
+
 G_END_DECLS
+
+#endif /* __GIMP_FONT_CHOOSER_H__ */

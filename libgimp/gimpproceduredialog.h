@@ -18,11 +18,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_UI_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimpui.h> can be included directly."
 #endif
+
+#ifndef __GIMP_PROCEDURE_DIALOG_H__
+#define __GIMP_PROCEDURE_DIALOG_H__
 
 G_BEGIN_DECLS
 
@@ -30,11 +31,7 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_PROCEDURE_DIALOG (gimp_procedure_dialog_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpProcedureDialog,
-                          gimp_procedure_dialog,
-                          GIMP, PROCEDURE_DIALOG,
-                          GimpDialog)
-
+G_DECLARE_DERIVABLE_TYPE (GimpProcedureDialog, gimp_procedure_dialog, GIMP, PROCEDURE_DIALOG, GimpDialog)
 
 struct _GimpProcedureDialogClass
 {
@@ -189,4 +186,7 @@ void        gimp_procedure_dialog_set_sensitive_if_in (GimpProcedureDialog *dial
 
 gboolean    gimp_procedure_dialog_run               (GimpProcedureDialog *dialog);
 
+
 G_END_DECLS
+
+#endif /* __GIMP_PROCEDURE_DIALOG_H__ */

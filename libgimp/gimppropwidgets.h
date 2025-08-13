@@ -19,34 +19,40 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_UI_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimpui.h> can be included directly."
 #endif
 
+
+#ifndef __GIMP_PROP_WIDGETS_H__
+#define __GIMP_PROP_WIDGETS_H__
+
 G_BEGIN_DECLS
+
 
 /*  GimpParamResource  */
 
-GtkWidget * gimp_prop_brush_chooser_new    (GObject     *config,
-                                            const gchar *property_name,
-                                            const gchar *chooser_title);
-GtkWidget * gimp_prop_font_chooser_new     (GObject     *config,
-                                            const gchar *property_name,
-                                            const gchar *chooser_title);
-GtkWidget * gimp_prop_gradient_chooser_new (GObject     *config,
-                                            const gchar *property_name,
-                                            const gchar *chooser_title);
-GtkWidget * gimp_prop_palette_chooser_new  (GObject     *config,
-                                            const gchar *property_name,
-                                            const gchar *chooser_title);
-GtkWidget * gimp_prop_pattern_chooser_new  (GObject     *config,
-                                            const gchar *property_name,
-                                            const gchar *chooser_title);
-GtkWidget * gimp_prop_drawable_chooser_new (GObject     *config,
-                                            const gchar *property_name,
-                                            const gchar *chooser_title);
+GtkWidget     * gimp_prop_brush_chooser_new     (GObject              *config,
+                                                 const gchar          *property_name,
+                                                 const gchar          *chooser_title);
+GtkWidget     * gimp_prop_font_chooser_new      (GObject              *config,
+                                                 const gchar          *property_name,
+                                                 const gchar          *chooser_title);
+GtkWidget     * gimp_prop_gradient_chooser_new  (GObject              *config,
+                                                 const gchar          *property_name,
+                                                 const gchar          *chooser_title);
+GtkWidget     * gimp_prop_palette_chooser_new   (GObject              *config,
+                                                 const gchar          *property_name,
+                                                 const gchar          *chooser_title);
+GtkWidget     * gimp_prop_pattern_chooser_new   (GObject              *config,
+                                                 const gchar          *property_name,
+                                                 const gchar          *chooser_title);
+
+GtkWidget     * gimp_prop_drawable_chooser_new  (GObject              *config,
+                                                 const gchar          *property_name,
+                                                 const gchar          *chooser_title);
+
 
 G_END_DECLS
 
+#endif /* __GIMP_PROP_WIDGETS_H__ */

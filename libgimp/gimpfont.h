@@ -19,27 +19,28 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
 
-#include <libgimp/gimpresource.h>
+#ifndef __GIMP_FONT_H__
+#define __GIMP_FONT_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
+#include <libgimp/gimpresource.h>
+
+
 #define GIMP_TYPE_FONT (gimp_font_get_type ())
-G_DECLARE_FINAL_TYPE (GimpFont,
-                      gimp_font,
-                      GIMP, FONT,
-                      GimpResource)
+G_DECLARE_FINAL_TYPE (GimpFont, gimp_font, GIMP, FONT, GimpResource)
 
 
 PangoFontDescription * gimp_font_get_pango_font_description (GimpFont *font);
 
+
 G_END_DECLS
 
+#endif /* __GIMP_FONT_H__ */

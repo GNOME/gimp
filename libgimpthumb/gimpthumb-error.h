@@ -22,13 +22,15 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_THUMB_H_INSIDE__) && !defined (GIMP_THUMB_COMPILATION)
 #error "Only <libgimpthumb/gimpthumb.h> can be included directly."
 #endif
 
+#ifndef __GIMP_THUMB_ERROR_H__
+#define __GIMP_THUMB_ERROR_H__
+
 G_BEGIN_DECLS
+
 
 /**
  * GimpThumbError:
@@ -56,4 +58,7 @@ typedef enum
 
 GQuark  gimp_thumb_error_quark (void) G_GNUC_CONST;
 
+
 G_END_DECLS
+
+#endif  /* __GIMP_THUMB_ERROR_H__ */

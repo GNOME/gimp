@@ -19,11 +19,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
+
+#ifndef __GIMP_PROCEDURE_PARAMS_H__
+#define __GIMP_PROCEDURE_PARAMS_H__
 
 G_BEGIN_DECLS
 
@@ -1139,4 +1140,7 @@ void gimp_procedure_add_pattern_return_value           (GimpProcedure *procedure
                                                         const gchar   *blurb,
                                                         GParamFlags    flags);
 
+
 G_END_DECLS
+
+#endif /* __GIMP_PROCEDURE_PARAMS_H__ */

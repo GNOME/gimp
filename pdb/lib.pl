@@ -840,12 +840,14 @@ SECTION_DOCS
         print PFILE $lgpl_top;
         print PFILE " * gimp_pdb_headers.h\n";
         print PFILE $lgpl_bottom;
+	my $guard = "__GIMP_PDB_HEADERS_H__";
 	print PFILE <<HEADER;
-#pragma once
-
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
+
+#ifndef $guard
+#define $guard
 
 HEADER
 	my @groups;
@@ -864,6 +866,7 @@ HEADER
 	}
 	print PFILE <<HEADER;
 
+#endif /* $guard */
 HEADER
 	close PFILE;
 	&write_file($gimp_pdb_headers, $destdir);

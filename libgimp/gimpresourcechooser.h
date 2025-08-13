@@ -16,20 +16,17 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_UI_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimpui.h> can be included directly."
 #endif
 
+#ifndef __GIMP_RESOURCE_CHOOSER_H__
+#define __GIMP_RESOURCE_CHOOSER_H__
+
 G_BEGIN_DECLS
 
 #define GIMP_TYPE_RESOURCE_CHOOSER (gimp_resource_chooser_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpResourceChooser,
-                          gimp_resource_chooser,
-                          GIMP, RESOURCE_CHOOSER,
-                          GtkBox)
-
+G_DECLARE_DERIVABLE_TYPE (GimpResourceChooser, gimp_resource_chooser, GIMP, RESOURCE_CHOOSER, GtkBox)
 
 struct _GimpResourceChooserClass
 {
@@ -64,3 +61,5 @@ G_GNUC_INTERNAL void  _gimp_resource_chooser_set_clickable   (GimpResourceChoose
                                                               GtkWidget            *widget);
 
 G_END_DECLS
+
+#endif /* __GIMP_RESOURCE_CHOOSER_H__ */

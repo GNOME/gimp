@@ -18,22 +18,21 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_UI_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimpui.h> can be included directly."
 #endif
 
+#ifndef __GIMP_DRAWABLE_PREVIEW_H__
+#define __GIMP_DRAWABLE_PREVIEW_H__
+
 G_BEGIN_DECLS
+
 
 /* For information look into the C source or the html documentation */
 
 
 #define GIMP_TYPE_DRAWABLE_PREVIEW (gimp_drawable_preview_get_type ())
-G_DECLARE_FINAL_TYPE (GimpDrawablePreview,
-                      gimp_drawable_preview,
-                      GIMP, DRAWABLE_PREVIEW,
-                      GimpScrolledPreview)
+G_DECLARE_FINAL_TYPE (GimpDrawablePreview, gimp_drawable_preview, GIMP, DRAWABLE_PREVIEW, GimpScrolledPreview)
 
 
 GtkWidget    * gimp_drawable_preview_new_from_drawable (GimpDrawable        *drawable);
@@ -50,5 +49,8 @@ G_GNUC_INTERNAL gboolean  _gimp_drawable_preview_get_bounds      (GimpDrawable  
                                                                   gint            *xmax,
                                                                   gint            *ymax);
 
+
 G_END_DECLS
+
+#endif /* __GIMP_DRAWABLE_PREVIEW_H__ */
 

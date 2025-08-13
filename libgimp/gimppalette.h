@@ -19,24 +19,23 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
 
-#include <libgimp/gimpresource.h>
+#ifndef __GIMP_PALETTE_H__
+#define __GIMP_PALETTE_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
+#include <libgimp/gimpresource.h>
+
+
 #define GIMP_TYPE_PALETTE (gimp_palette_get_type ())
-G_DECLARE_FINAL_TYPE (GimpPalette,
-                      gimp_palette,
-                      GIMP, PALETTE,
-                      GimpResource)
+G_DECLARE_FINAL_TYPE (GimpPalette, gimp_palette, GIMP, PALETTE, GimpResource)
 
 
 guint8    * gimp_palette_get_colormap (GimpPalette *palette,
@@ -50,3 +49,5 @@ gboolean    gimp_palette_set_colormap (GimpPalette *palette,
                                        gsize        num_bytes);
 
 G_END_DECLS
+
+#endif /* __GIMP_PALETTE_H__ */

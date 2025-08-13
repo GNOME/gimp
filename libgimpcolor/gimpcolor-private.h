@@ -16,8 +16,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
+#ifndef __GIMP_COLOR_PRIVATE_H__
+#define __GIMP_COLOR_PRIVATE_H__
 
 /* Legacy definition to calculate luminance from sRGB.
  *
@@ -35,3 +35,6 @@
 #define GIMP_RGB_LUMINANCE(r,g,b) ((r) * GIMP_RGB_LUMINANCE_RED   + \
                                    (g) * GIMP_RGB_LUMINANCE_GREEN + \
                                    (b) * GIMP_RGB_LUMINANCE_BLUE)
+
+
+#endif  /* __GIMP_COLOR_PRIVATE_H__ */

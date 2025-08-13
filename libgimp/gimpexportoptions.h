@@ -19,11 +19,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
+
+#ifndef __LIBGIMP_GIMP_EXPORT_OPTIONS_H__
+#define __LIBGIMP_GIMP_EXPORT_OPTIONS_H__
 
 G_BEGIN_DECLS
 
@@ -44,7 +45,11 @@ typedef enum
 } GimpExportReturn;
 
 
-GimpExportReturn gimp_export_options_get_image (GimpExportOptions  *options,
-                                                GimpImage         **image) G_GNUC_WARN_UNUSED_RESULT;
+GimpExportReturn    gimp_export_options_get_image     (GimpExportOptions  *options,
+                                                       GimpImage         **image) G_GNUC_WARN_UNUSED_RESULT;
+
 
 G_END_DECLS
+
+
+#endif /* __LIBGIMP_GIMP_EXPORT_OPTIONS_H__ */

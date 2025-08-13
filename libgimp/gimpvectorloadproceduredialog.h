@@ -18,11 +18,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_UI_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimpui.h> can be included directly."
 #endif
+
+#ifndef __GIMP_VECTOR_LOAD_PROCEDURE_DIALOG_H__
+#define __GIMP_VECTOR_LOAD_PROCEDURE_DIALOG_H__
 
 G_BEGIN_DECLS
 
@@ -30,10 +31,7 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_VECTOR_LOAD_PROCEDURE_DIALOG (gimp_vector_load_procedure_dialog_get_type ())
-G_DECLARE_FINAL_TYPE (GimpVectorLoadProcedureDialog,
-                      gimp_vector_load_procedure_dialog,
-                      GIMP, VECTOR_LOAD_PROCEDURE_DIALOG,
-                      GimpProcedureDialog)
+G_DECLARE_FINAL_TYPE (GimpVectorLoadProcedureDialog, gimp_vector_load_procedure_dialog, GIMP, VECTOR_LOAD_PROCEDURE_DIALOG, GimpProcedureDialog)
 
 
 GtkWidget * gimp_vector_load_procedure_dialog_new (GimpVectorLoadProcedure *procedure,
@@ -41,4 +39,8 @@ GtkWidget * gimp_vector_load_procedure_dialog_new (GimpVectorLoadProcedure *proc
                                                    GimpVectorLoadData      *extracted_data,
                                                    GFile                   *file);
 
+
+
 G_END_DECLS
+
+#endif /* __GIMP_VECTOR_LOAD_PROCEDURE_DIALOG_H__ */

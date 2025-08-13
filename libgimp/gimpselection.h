@@ -18,31 +18,33 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
 
-#include <libgimp/gimpchannel.h>
+#ifndef __GIMP_SELECTION_H__
+#define __GIMP_SELECTION_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
+#include <libgimp/gimpchannel.h>
+
+
 #define GIMP_TYPE_SELECTION (gimp_selection_get_type ())
-G_DECLARE_FINAL_TYPE (GimpSelection,
-                      gimp_selection,
-                      GIMP, SELECTION,
-                      GimpChannel)
+G_DECLARE_FINAL_TYPE (GimpSelection, gimp_selection, GIMP, SELECTION, GimpChannel)
 
 
-GimpSelection * gimp_selection_get_by_id (gint32         selection_id);
+GimpSelection * gimp_selection_get_by_id (gint32        selection_id);
 
-GimpLayer     * gimp_selection_float     (GimpImage     *image,
+GimpLayer     * gimp_selection_float     (GimpImage    *image,
                                           GimpDrawable **drawables,
-                                          gint           offx,
-                                          gint           offy);
+                                          gint          offx,
+                                          gint          offy);
+
 
 G_END_DECLS
+
+#endif /* __GIMP_SELECTION_H__ */

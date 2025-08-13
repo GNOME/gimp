@@ -24,7 +24,8 @@
 #error "Only <libgimpcolor/gimpcolor.h> can be included directly."
 #endif
 
-#pragma once
+#ifndef __GIMP_COLOR_TRANSFORM_H__
+#define __GIMP_COLOR_TRANSFORM_H__
 
 G_BEGIN_DECLS
 
@@ -51,10 +52,7 @@ typedef enum
 
 
 #define GIMP_TYPE_COLOR_TRANSFORM (gimp_color_transform_get_type ())
-G_DECLARE_FINAL_TYPE (GimpColorTransform,
-                      gimp_color_transform,
-                      GIMP, COLOR_TRANSFORM,
-                      GObject)
+G_DECLARE_FINAL_TYPE (GimpColorTransform, gimp_color_transform, GIMP, COLOR_TRANSFORM, GObject)
 
 
 GimpColorTransform *
@@ -91,4 +89,7 @@ void    gimp_color_transform_process_buffer   (GimpColorTransform       *transfo
 gboolean gimp_color_transform_can_gegl_copy   (GimpColorProfile         *src_profile,
                                                GimpColorProfile         *dest_profile);
 
+
 G_END_DECLS
+
+#endif  /* __GIMP_COLOR_TRANSFORM_H__ */

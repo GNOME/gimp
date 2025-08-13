@@ -18,11 +18,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_UI_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimpui.h> can be included directly."
 #endif
+
+#ifndef __GIMP_EXPORT_PROCEDURE_DIALOG_H__
+#define __GIMP_EXPORT_PROCEDURE_DIALOG_H__
 
 G_BEGIN_DECLS
 
@@ -30,10 +31,7 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_EXPORT_PROCEDURE_DIALOG (gimp_export_procedure_dialog_get_type ())
-G_DECLARE_FINAL_TYPE (GimpExportProcedureDialog,
-                      gimp_export_procedure_dialog,
-                      GIMP, EXPORT_PROCEDURE_DIALOG,
-                      GimpProcedureDialog)
+G_DECLARE_FINAL_TYPE (GimpExportProcedureDialog, gimp_export_procedure_dialog, GIMP, EXPORT_PROCEDURE_DIALOG, GimpProcedureDialog)
 
 
 GtkWidget * gimp_export_procedure_dialog_new          (GimpExportProcedure       *procedure,
@@ -43,4 +41,7 @@ GtkWidget * gimp_export_procedure_dialog_new          (GimpExportProcedure      
 void        gimp_export_procedure_dialog_add_metadata (GimpExportProcedureDialog *dialog,
                                                        const gchar               *property);
 
+
 G_END_DECLS
+
+#endif /* __GIMP_EXPORT_PROCEDURE_DIALOG_H__ */

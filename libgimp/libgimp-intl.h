@@ -18,7 +18,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __LIBGIMP_INTL_H__
+#define __LIBGIMP_INTL_H__
 
 #ifndef GETTEXT_PACKAGE
 #error "config.h must be included prior to libgimp-intl.h"
@@ -39,3 +40,6 @@
 
 #define N_(String) (String)
 #define NC_(Context,String) (String)
+
+
+#endif /* __LIBGIMP_INTL_H__ */

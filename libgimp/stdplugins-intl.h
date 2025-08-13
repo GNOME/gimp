@@ -18,7 +18,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __STDPLUGINS_INTL_H__
+#define __STDPLUGINS_INTL_H__
 
 #ifndef GETTEXT_PACKAGE
 #error "config.h must be included prior to stdplugins-intl.h"
@@ -39,3 +40,6 @@ set_i18n (GimpPlugIn   *plug_in,                                     \
 };
 
 #define STD_SET_I18N set_i18n
+
+
+#endif /* __STDPLUGINS_INTL_H__ */

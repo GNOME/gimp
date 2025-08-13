@@ -18,22 +18,21 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_UI_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimpui.h> can be included directly."
 #endif
 
+#ifndef __GIMP_PROC_BROWSER_DIALOG_H__
+#define __GIMP_PROC_BROWSER_DIALOG_H__
+
 G_BEGIN_DECLS
+
 
 /* For information look into the C source or the html documentation */
 
 
 #define GIMP_TYPE_PROC_BROWSER_DIALOG (gimp_proc_browser_dialog_get_type ())
-G_DECLARE_FINAL_TYPE (GimpProcBrowserDialog,
-                      gimp_proc_browser_dialog,
-                      GIMP, PROC_BROWSER_DIALOG,
-                      GimpDialog)
+G_DECLARE_FINAL_TYPE (GimpProcBrowserDialog, gimp_proc_browser_dialog, GIMP, PROC_BROWSER_DIALOG, GimpDialog)
 
 
 GtkWidget * gimp_proc_browser_dialog_new          (const gchar  *title,
@@ -44,4 +43,7 @@ GtkWidget * gimp_proc_browser_dialog_new          (const gchar  *title,
 
 gchar     * gimp_proc_browser_dialog_get_selected (GimpProcBrowserDialog *dialog);
 
+
 G_END_DECLS
+
+#endif  /* __GIMP_PROC_BROWSER_DIALOG_H__ */

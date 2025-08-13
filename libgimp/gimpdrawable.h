@@ -18,24 +18,23 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
 
-#include <libgimp/gimpitem.h>
+#ifndef __GIMP_DRAWABLE_H__
+#define __GIMP_DRAWABLE_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
+#include <libgimp/gimpitem.h>
+
+
 #define GIMP_TYPE_DRAWABLE (gimp_drawable_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpDrawable,
-                          gimp_drawable,
-                          GIMP, DRAWABLE,
-                          GimpItem)
+G_DECLARE_DERIVABLE_TYPE (GimpDrawable, gimp_drawable, GIMP, DRAWABLE, GimpItem)
 
 
 struct _GimpDrawableClass
@@ -112,4 +111,7 @@ void                 gimp_drawable_merge_new_filter       (GimpDrawable         
                                                            gdouble                 opacity,
                                                            ...) G_GNUC_NULL_TERMINATED;
 
+
 G_END_DECLS
+
+#endif /* __GIMP_DRAWABLE_H__ */

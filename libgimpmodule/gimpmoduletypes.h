@@ -16,9 +16,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __GIMP_MODULE_TYPES_H__
+#define __GIMP_MODULE_TYPES_H__
+
 
 #include <libgimpbase/gimpbasetypes.h>
+
 
 G_BEGIN_DECLS
 
@@ -29,4 +32,7 @@ typedef struct _GimpModule     GimpModule;
 typedef struct _GimpModuleInfo GimpModuleInfo;
 typedef struct _GimpModuleDB   GimpModuleDB;
 
+
 G_END_DECLS
+
+#endif  /* __GIMP_MODULE_TYPES_H__ */

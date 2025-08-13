@@ -19,24 +19,23 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
 
-#include <libgimp/gimpresource.h>
+#ifndef __GIMP_BRUSH_H__
+#define __GIMP_BRUSH_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
+#include <libgimp/gimpresource.h>
+
+
 #define GIMP_TYPE_BRUSH (gimp_brush_get_type ())
-G_DECLARE_FINAL_TYPE (GimpBrush,
-                      gimp_brush,
-                      GIMP, BRUSH,
-                      GimpResource)
+G_DECLARE_FINAL_TYPE (GimpBrush, gimp_brush, GIMP, BRUSH, GimpResource)
 
 
 GeglBuffer * gimp_brush_get_buffer (GimpBrush  *brush,
@@ -49,3 +48,5 @@ GeglBuffer * gimp_brush_get_mask   (GimpBrush  *brush,
                                     const Babl *format) G_GNUC_WARN_UNUSED_RESULT;
 
 G_END_DECLS
+
+#endif /* __GIMP_BRUSH_H__ */

@@ -19,11 +19,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
+
+#ifndef __GIMP_DRAWABLE_FILTER_CONFIG_H__
+#define __GIMP_DRAWABLE_FILTER_CONFIG_H__
 
 G_BEGIN_DECLS
 
@@ -31,11 +32,7 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_DRAWABLE_FILTER_CONFIG (gimp_drawable_filter_config_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpDrawableFilterConfig,
-                          gimp_drawable_filter_config,
-                          GIMP, DRAWABLE_FILTER_CONFIG,
-                          GObject)
-
+G_DECLARE_DERIVABLE_TYPE (GimpDrawableFilterConfig, gimp_drawable_filter_config, GIMP, DRAWABLE_FILTER_CONFIG, GObject)
 
 struct _GimpDrawableFilterConfigClass
 {
@@ -54,4 +51,7 @@ struct _GimpDrawableFilterConfigClass
   void (* _gimp_reserved9) (void);
 };
 
+
 G_END_DECLS
+
+#endif /* __GIMP_DRAWABLE_FILTER_CONFIG_H__ */

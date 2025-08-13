@@ -18,11 +18,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
+
+#ifndef __GIMP_PROGRESS_H__
+#define __GIMP_PROGRESS_H__
 
 G_BEGIN_DECLS
 
@@ -131,5 +132,7 @@ gboolean      gimp_progress_set_text_printf (const gchar              *format,
 
 gboolean      gimp_progress_update          (gdouble                   percentage);
 
+
 G_END_DECLS
 
+#endif /* __GIMP_PROGRESS_H__ */

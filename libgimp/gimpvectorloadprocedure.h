@@ -19,7 +19,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __GIMP_VECTOR_LOAD_PROCEDURE_H__
+#define __GIMP_VECTOR_LOAD_PROCEDURE_H__
 
 #include <libgimp/gimpfileprocedure.h>
 
@@ -150,23 +151,20 @@ typedef GimpValueArray * (* GimpRunVectorLoadFunc)       (GimpProcedure         
  *
  * Since: 3.0
  **/
-typedef gboolean (* GimpExtractVectorFunc) (GimpProcedure        *procedure,
-                                            GimpRunMode           run_mode,
-                                            GFile                *file,
-                                            GimpMetadata         *metadata,
-                                            GimpProcedureConfig  *config,
-                                            GimpVectorLoadData   *extracted_data,
-                                            gpointer             *data_for_run,
-                                            GDestroyNotify       *data_for_run_destroy,
-                                            gpointer              extract_data,
-                                            GError              **error);
+typedef gboolean         (* GimpExtractVectorFunc) (GimpProcedure             *procedure,
+                                                    GimpRunMode                run_mode,
+                                                    GFile                     *file,
+                                                    GimpMetadata              *metadata,
+                                                    GimpProcedureConfig       *config,
+                                                    GimpVectorLoadData        *extracted_data,
+                                                    gpointer                  *data_for_run,
+                                                    GDestroyNotify            *data_for_run_destroy,
+                                                    gpointer                   extract_data,
+                                                    GError                   **error);
 
 
 #define GIMP_TYPE_VECTOR_LOAD_PROCEDURE (gimp_vector_load_procedure_get_type ())
-G_DECLARE_FINAL_TYPE (GimpVectorLoadProcedure,
-                      gimp_vector_load_procedure,
-                      GIMP, VECTOR_LOAD_PROCEDURE,
-                      GimpLoadProcedure)
+G_DECLARE_FINAL_TYPE (GimpVectorLoadProcedure, gimp_vector_load_procedure, GIMP, VECTOR_LOAD_PROCEDURE, GimpLoadProcedure)
 
 
 GimpProcedure * gimp_vector_load_procedure_new                (GimpPlugIn                 *plug_in,
@@ -184,4 +182,7 @@ gboolean        gimp_vector_load_procedure_extract_dimensions (GimpVectorLoadPro
                                                                GimpVectorLoadData         *data,
                                                                GError                    **error);
 
+
 G_END_DECLS
+
+#endif  /*  __GIMP_VECTOR_LOAD_PROCEDURE_H__  */

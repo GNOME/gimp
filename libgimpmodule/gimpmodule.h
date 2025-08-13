@@ -19,7 +19,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __GIMP_MODULE_H__
+#define __GIMP_MODULE_H__
 
 #include <gio/gio.h>
 #include <gmodule.h>
@@ -33,6 +34,7 @@
 #undef __GIMP_MODULE_H_INSIDE__
 
 G_BEGIN_DECLS
+
 
 /**
  * GIMP_MODULE_ABI_VERSION:
@@ -126,7 +128,7 @@ struct _GimpModuleInfo
  *
  * Returns: The info struct describing the module.
  **/
-typedef const GimpModuleInfo * (* GimpModuleQueryFunc) (GTypeModule *module);
+typedef const GimpModuleInfo * (* GimpModuleQueryFunc)    (GTypeModule *module);
 
 /**
  * GimpModuleRegisterFunc:
@@ -141,7 +143,7 @@ typedef const GimpModuleInfo * (* GimpModuleQueryFunc) (GTypeModule *module);
  *
  * Returns: Whether the registration was succesfull
  **/
-typedef gboolean (* GimpModuleRegisterFunc) (GTypeModule *module);
+typedef gboolean               (* GimpModuleRegisterFunc) (GTypeModule *module);
 
 
 /* GimpModules have to implement these */
@@ -150,11 +152,7 @@ G_MODULE_EXPORT gboolean               gimp_module_register (GTypeModule *module
 
 
 #define GIMP_TYPE_MODULE (gimp_module_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpModule,
-                          gimp_module,
-                          GIMP, MODULE,
-                          GTypeModule)
-
+G_DECLARE_DERIVABLE_TYPE (GimpModule, gimp_module, GIMP, MODULE, GTypeModule)
 
 struct _GimpModuleClass
 {
@@ -195,4 +193,7 @@ const gchar          * gimp_module_get_last_error (GimpModule      *module);
 
 gboolean               gimp_module_query_module   (GimpModule      *module);
 
+
 G_END_DECLS
+
+#endif  /* __GIMP_MODULE_H__ */

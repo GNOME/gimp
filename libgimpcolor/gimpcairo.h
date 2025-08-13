@@ -20,7 +20,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __GIMP_CAIRO_H__
+#define __GIMP_CAIRO_H__
 
 
 cairo_pattern_t * gimp_cairo_checkerboard_create   (cairo_t         *cr,
@@ -149,3 +150,6 @@ GeglBuffer      * gimp_cairo_surface_create_buffer (cairo_surface_t *surface,
     (a) = ta;                                      \
   } G_STMT_END
 #endif
+
+
+#endif /* __GIMP_CAIRO_H__ */

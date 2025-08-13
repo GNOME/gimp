@@ -18,7 +18,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __GIMP_H__
+#define __GIMP_H__
 
 #include <cairo.h>
 #include <glib-object.h>
@@ -81,6 +82,7 @@
 #endif
 
 G_BEGIN_DECLS
+
 
 /**
  * GIMP_MAIN:
@@ -201,4 +203,7 @@ const gchar       * gimp_icon_theme_dir       (void) G_GNUC_CONST;
 
 const gchar       * gimp_get_progname         (void) G_GNUC_CONST;
 
+
 G_END_DECLS
+
+#endif /* __GIMP_H__ */

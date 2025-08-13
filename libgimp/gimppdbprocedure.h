@@ -19,7 +19,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __GIMP_PDB_PROCEDURE_H__
+#define __GIMP_PDB_PROCEDURE_H__
 
 G_BEGIN_DECLS
 
@@ -27,13 +28,13 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_PDB_PROCEDURE (_gimp_pdb_procedure_get_type ())
-G_DECLARE_FINAL_TYPE (GimpPDBProcedure,
-                      _gimp_pdb_procedure,
-                      GIMP, PDB_PROCEDURE,
-                      GimpProcedure)
+G_DECLARE_FINAL_TYPE (GimpPDBProcedure, _gimp_pdb_procedure, GIMP, PDB_PROCEDURE, GimpProcedure)
 
 
 G_GNUC_INTERNAL GimpProcedure * _gimp_pdb_procedure_new (GimpPDB     *pdb,
                                                          const gchar *name);
 
+
 G_END_DECLS
+
+#endif  /*  __GIMP_PDB_PROCEDURE_H__  */

@@ -19,7 +19,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __GIMP_TILE_BACKEND_PLUGIN_H__
+#define __GIMP_TILE_BACKEND_PLUGIN_H__
 
 #include <gegl-buffer-backend.h>
 
@@ -55,3 +56,5 @@ GeglTileBackend * _gimp_tile_backend_plugin_new      (GimpDrawable *drawable,
                                                       gint          shadow);
 
 G_END_DECLS
+
+#endif /* __GIMP_TILE_BACKEND_PLUGIN_H__ */

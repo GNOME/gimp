@@ -16,19 +16,17 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_MODULE_H_INSIDE__) && !defined (GIMP_MODULE_COMPILATION)
 #error "Only <libgimpmodule/gimpmodule.h> can be included directly."
 #endif
 
+#ifndef __GIMP_MODULE_DB_H__
+#define __GIMP_MODULE_DB_H__
+
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_MODULE_DB (gimp_module_db_get_type ())
-G_DECLARE_FINAL_TYPE (GimpModuleDB,
-                      gimp_module_db,
-                      GIMP, MODULE_DB,
-                      GObject)
+#define GIMP_TYPE_MODULE_DB            (gimp_module_db_get_type ())
+G_DECLARE_FINAL_TYPE (GimpModuleDB, gimp_module_db, GIMP, MODULE_DB, GObject)
 
 
 GimpModuleDB * gimp_module_db_new              (gboolean      verbose);
@@ -46,4 +44,7 @@ void           gimp_module_db_load             (GimpModuleDB *db,
 void           gimp_module_db_refresh          (GimpModuleDB *db,
                                                 const gchar  *module_path);
 
+
 G_END_DECLS
+
+#endif  /* __GIMP_MODULE_DB_H__ */

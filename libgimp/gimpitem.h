@@ -19,11 +19,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
+
+#ifndef __GIMP_ITEM_H__
+#define __GIMP_ITEM_H__
 
 G_BEGIN_DECLS
 
@@ -31,10 +32,7 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_ITEM (gimp_item_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpItem,
-                          gimp_item,
-                          GIMP, ITEM,
-                          GObject)
+G_DECLARE_DERIVABLE_TYPE (GimpItem, gimp_item, GIMP, ITEM, GObject)
 
 
 struct _GimpItemClass
@@ -70,4 +68,7 @@ gboolean    gimp_item_is_path        (GimpItem *item);
 
 GList     * gimp_item_list_children (GimpItem *item);
 
+
 G_END_DECLS
+
+#endif /* __GIMP_ITEM_H__ */
