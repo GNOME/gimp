@@ -23,7 +23,7 @@ Source: "{#SRC_DIR}\{#FileLine}*"; DestDir: "{app}\32\{#Copy(FileLine,1,Len(File
 	#else
 		//include files from a certain directory
 		#define OutputDir Copy(FileLine,1,RPos("\",FileLine)-1)
-Source: "{#SRC_DIR}\{#FileLine}"; DestDir: "{app}\32\{#OutputDir}"; Components: gimp32on64; Flags: restartreplace replacesameversion uninsrestartdelete ignoreversion
+Source: "{#SRC_DIR}\{#FileLine}"; DestDir: "{app}\32\{#OutputDir}"; Components: gimp32on64; Flags: restartreplace uninsrestartdelete ignoreversion
 	#endif
 #endsub
 
