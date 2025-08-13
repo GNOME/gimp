@@ -22,14 +22,16 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __GIMP_COLOR_SELECT_H__
+#define __GIMP_COLOR_SELECT_H__
 
 G_BEGIN_DECLS
 
+
 #define GIMP_TYPE_COLOR_SELECT (gimp_color_select_get_type ())
-G_DECLARE_FINAL_TYPE (GimpColorSelect,
-                      gimp_color_select,
-                      GIMP, COLOR_SELECT,
-                      GimpColorSelector)
+G_DECLARE_FINAL_TYPE (GimpColorSelect, gimp_color_select, GIMP, COLOR_SELECT, GimpColorSelector)
+
 
 G_END_DECLS
+
+#endif /* __GIMP_COLOR_SELECT_H__ */

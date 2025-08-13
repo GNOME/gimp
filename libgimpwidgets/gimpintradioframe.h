@@ -19,21 +19,20 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
 #include <libgimpwidgets/gimpframe.h>
 
+#ifndef __GIMP_INT_RADIO_FRAME_H__
+#define __GIMP_INT_RADIO_FRAME_H__
+
 G_BEGIN_DECLS
 
+
 #define GIMP_TYPE_INT_RADIO_FRAME (gimp_int_radio_frame_get_type ())
-G_DECLARE_FINAL_TYPE (GimpIntRadioFrame,
-                      gimp_int_radio_frame,
-                      GIMP, INT_RADIO_FRAME,
-                      GimpFrame)
+G_DECLARE_FINAL_TYPE (GimpIntRadioFrame, gimp_int_radio_frame, GIMP, INT_RADIO_FRAME, GimpFrame)
 
 
 /**
@@ -59,6 +58,7 @@ typedef  gboolean (* GimpIntRadioFrameSensitivityFunc) (gint      value,
                                                         gpointer  user_data,
                                                         gint     *new_value,
                                                         gpointer  data);
+
 
 
 GtkWidget   * gimp_int_radio_frame_new_from_store  (const gchar       *title,
@@ -97,4 +97,7 @@ void          gimp_int_radio_frame_set_sensitivity (GimpIntRadioFrame *radio_fra
                                                     gpointer           data,
                                                     GDestroyNotify     destroy);
 
+
 G_END_DECLS
+
+#endif  /* __GIMP_INT_RADIO_FRAME_H__ */

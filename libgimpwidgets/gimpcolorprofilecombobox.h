@@ -19,19 +19,17 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
+#ifndef __GIMP_COLOR_PROFILE_COMBO_BOX_H__
+#define __GIMP_COLOR_PROFILE_COMBO_BOX_H__
+
 G_BEGIN_DECLS
 
 #define GIMP_TYPE_COLOR_PROFILE_COMBO_BOX (gimp_color_profile_combo_box_get_type ())
-G_DECLARE_FINAL_TYPE (GimpColorProfileComboBox,
-                      gimp_color_profile_combo_box,
-                      GIMP, COLOR_PROFILE_COMBO_BOX,
-                      GtkComboBox)
+G_DECLARE_FINAL_TYPE (GimpColorProfileComboBox, gimp_color_profile_combo_box, GIMP, COLOR_PROFILE_COMBO_BOX, GtkComboBox)
 
 
 GtkWidget * gimp_color_profile_combo_box_new                (GtkWidget    *dialog,
@@ -51,4 +49,7 @@ void        gimp_color_profile_combo_box_set_active_profile (GimpColorProfileCom
 
 GFile *     gimp_color_profile_combo_box_get_active_file    (GimpColorProfileComboBox *combo);
 
+
 G_END_DECLS
+
+#endif  /* __GIMP_COLOR_PROFILE_COMBO_BOX_H__ */

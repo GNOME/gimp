@@ -18,11 +18,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
+
+#ifndef __GIMP_WIDGETS_UTILS_H__
+#define __GIMP_WIDGETS_UTILS_H__
 
 G_BEGIN_DECLS
 
@@ -80,4 +81,7 @@ G_GNUC_INTERNAL void _gimp_widget_get_profiles       (GtkWidget         *widget,
                                                       GimpColorProfile **proof_profile,
                                                       GimpColorProfile **dest_profile);
 
+
 G_END_DECLS
+
+#endif /* __GIMP_WIDGETS_UTILS_H__ */

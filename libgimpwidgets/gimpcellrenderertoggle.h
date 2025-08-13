@@ -19,19 +19,18 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
+#ifndef __GIMP_CELL_RENDERER_TOGGLE_H__
+#define __GIMP_CELL_RENDERER_TOGGLE_H__
+
 G_BEGIN_DECLS
 
+
 #define GIMP_TYPE_CELL_RENDERER_TOGGLE (gimp_cell_renderer_toggle_get_type ())
-G_DECLARE_FINAL_TYPE (GimpCellRendererToggle,
-                      gimp_cell_renderer_toggle,
-                      GIMP, CELL_RENDERER_TOGGLE,
-                      GtkCellRendererToggle)
+G_DECLARE_FINAL_TYPE (GimpCellRendererToggle, gimp_cell_renderer_toggle, GIMP, CELL_RENDERER_TOGGLE, GtkCellRendererToggle)
 
 
 GtkCellRenderer * gimp_cell_renderer_toggle_new     (const gchar            *icon_name);
@@ -40,4 +39,7 @@ void              gimp_cell_renderer_toggle_clicked (GimpCellRendererToggle *cel
                                                      const gchar            *path,
                                                      GdkModifierType         state);
 
+
 G_END_DECLS
+
+#endif /* __GIMP_CELL_RENDERER_TOGGLE_H__ */

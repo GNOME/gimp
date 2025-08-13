@@ -19,19 +19,17 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
+#ifndef __GIMP_FILE_CHOOSER_H__
+#define __GIMP_FILE_CHOOSER_H__
+
 G_BEGIN_DECLS
 
 #define GIMP_TYPE_FILE_CHOOSER (gimp_file_chooser_get_type ())
-G_DECLARE_FINAL_TYPE (GimpFileChooser,
-                      gimp_file_chooser,
-                      GIMP, FILE_CHOOSER,
-                      GtkBox)
+G_DECLARE_FINAL_TYPE (GimpFileChooser, gimp_file_chooser, GIMP, FILE_CHOOSER, GtkBox)
 
 
 GtkWidget             * gimp_file_chooser_new              (GimpFileChooserAction  action,
@@ -57,4 +55,7 @@ void                    gimp_file_chooser_set_title        (GimpFileChooser     
 
 GtkWidget             * gimp_file_chooser_get_label_widget (GimpFileChooser       *chooser);
 
+
 G_END_DECLS
+
+#endif /* __GIMP_FILE_CHOOSER_H__ */

@@ -15,9 +15,11 @@
  */
 
 /* Private header file which is not meant to be exported. */
+#ifndef __GIMP_PICK_BUTTON_KWIN_H__
+#define __GIMP_PICK_BUTTON_KWIN_H__
 
-#pragma once
+gboolean _gimp_pick_button_kwin_available (void);
+void     _gimp_pick_button_kwin_pick      (GimpPickButton *button);
 
+#endif /* __GIMP_PICK_BUTTON_KWIN_H__ */
 
-G_GNUC_INTERNAL gboolean _gimp_pick_button_kwin_available (void);
-G_GNUC_INTERNAL void     _gimp_pick_button_kwin_pick      (GimpPickButton *button);

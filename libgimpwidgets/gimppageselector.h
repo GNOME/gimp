@@ -19,19 +19,17 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
+#ifndef __GIMP_PAGE_SELECTOR_H__
+#define __GIMP_PAGE_SELECTOR_H__
+
 G_BEGIN_DECLS
 
 #define GIMP_TYPE_PAGE_SELECTOR (gimp_page_selector_get_type ())
-G_DECLARE_FINAL_TYPE (GimpPageSelector,
-                      gimp_page_selector,
-                      GIMP, PAGE_SELECTOR,
-                      GtkBox)
+G_DECLARE_FINAL_TYPE (GimpPageSelector, gimp_page_selector, GIMP, PAGE_SELECTOR, GtkBox)
 
 
 GtkWidget * gimp_page_selector_new                (void);
@@ -73,3 +71,5 @@ void        gimp_page_selector_select_range       (GimpPageSelector *selector,
 gchar     * gimp_page_selector_get_selected_range (GimpPageSelector *selector);
 
 G_END_DECLS
+
+#endif /* __GIMP_PAGE_SELECTOR_H__ */

@@ -19,13 +19,15 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
+#ifndef __GIMP_UNIT_STORE_H__
+#define __GIMP_UNIT_STORE_H__
+
 G_BEGIN_DECLS
+
 
 enum
 {
@@ -43,11 +45,7 @@ enum
 
 
 #define GIMP_TYPE_UNIT_STORE (gimp_unit_store_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpUnitStore,
-                          gimp_unit_store,
-                          GIMP, UNIT_STORE,
-                          GObject)
-
+G_DECLARE_DERIVABLE_TYPE (GimpUnitStore, gimp_unit_store, GIMP, UNIT_STORE, GObject)
 
 struct _GimpUnitStoreClass
 {
@@ -99,4 +97,7 @@ void            gimp_unit_store_get_values       (GimpUnitStore *store,
 
 void            _gimp_unit_store_sync_units      (GimpUnitStore *store);
 
+
 G_END_DECLS
+
+#endif  /* __GIMP_UNIT_STORE_H__ */

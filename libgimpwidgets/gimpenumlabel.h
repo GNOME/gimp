@@ -19,24 +19,26 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
+#ifndef __GIMP_ENUM__LABEL_H__
+#define __GIMP_ENUM__LABEL_H__
+
 G_BEGIN_DECLS
 
+
 #define GIMP_TYPE_ENUM_LABEL (gimp_enum_label_get_type ())
-G_DECLARE_FINAL_TYPE (GimpEnumLabel,
-                      gimp_enum_label,
-                      GIMP, ENUM_LABEL,
-                      GtkScale)
+G_DECLARE_FINAL_TYPE (GimpEnumLabel, gimp_enum_label, GIMP, ENUM_LABEL, GtkScale)
 
 
-GtkWidget * gimp_enum_label_new       (GType          enum_type,
-                                       gint           value);
-void        gimp_enum_label_set_value (GimpEnumLabel *label,
-                                       gint           value);
+GtkWidget * gimp_enum_label_new              (GType          enum_type,
+                                              gint           value);
+void        gimp_enum_label_set_value        (GimpEnumLabel *label,
+                                              gint           value);
+
 
 G_END_DECLS
+
+#endif  /* __GIMP_ENUM_LABEL_H__ */

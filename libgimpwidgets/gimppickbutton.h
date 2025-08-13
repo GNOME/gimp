@@ -16,20 +16,18 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
+#ifndef __GIMP_PICK_BUTTON_H__
+#define __GIMP_PICK_BUTTON_H__
+
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_PICK_BUTTON (gimp_pick_button_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpPickButton,
-                          gimp_pick_button,
-                          GIMP, PICK_BUTTON,
-                          GtkButton)
 
+#define GIMP_TYPE_PICK_BUTTON (gimp_pick_button_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpPickButton, gimp_pick_button, GIMP, PICK_BUTTON, GtkButton)
 
 struct _GimpPickButtonClass
 {
@@ -52,10 +50,12 @@ struct _GimpPickButtonClass
 };
 
 
-GtkWidget * gimp_pick_button_new (void);
+GtkWidget * gimp_pick_button_new      (void);
 
 /*  for internal use only  */
 G_GNUC_INTERNAL void _gimp_pick_button_default_pick (GimpPickButton *button);
 
+
 G_END_DECLS
 
+#endif /* __GIMP_PICK_BUTTON_H__ */

@@ -19,11 +19,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
+
+#ifndef __GIMP_COLOR_DISPLAY_STACK_H__
+#define __GIMP_COLOR_DISPLAY_STACK_H__
 
 G_BEGIN_DECLS
 
@@ -31,14 +32,11 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_COLOR_DISPLAY_STACK (gimp_color_display_stack_get_type ())
-G_DECLARE_FINAL_TYPE (GimpColorDisplayStack,
-                      gimp_color_display_stack,
-                      GIMP, COLOR_DISPLAY_STACK,
-                      GObject)
+G_DECLARE_FINAL_TYPE (GimpColorDisplayStack, gimp_color_display_stack, GIMP, COLOR_DISPLAY_STACK, GObject)
 
 
-GimpColorDisplayStack * gimp_color_display_stack_new   (void);
-GimpColorDisplayStack * gimp_color_display_stack_clone (GimpColorDisplayStack *stack);
+GimpColorDisplayStack * gimp_color_display_stack_new      (void);
+GimpColorDisplayStack * gimp_color_display_stack_clone    (GimpColorDisplayStack *stack);
 
 void    gimp_color_display_stack_changed         (GimpColorDisplayStack *stack);
 
@@ -56,4 +54,7 @@ void    gimp_color_display_stack_convert_buffer  (GimpColorDisplayStack *stack,
                                                   GeglBuffer            *buffer,
                                                   GeglRectangle         *area);
 
+
 G_END_DECLS
+
+#endif /* __GIMP_COLOR_DISPLAY_STACK_H__ */

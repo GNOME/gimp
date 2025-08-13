@@ -19,40 +19,40 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
+
+#ifndef __GIMP_LABEL_COLOR_H__
+#define __GIMP_LABEL_COLOR_H__
 
 #include <libgimpwidgets/gimplabeled.h>
 
 G_BEGIN_DECLS
 
 #define GIMP_TYPE_LABEL_COLOR (gimp_label_color_get_type ())
-G_DECLARE_FINAL_TYPE (GimpLabelColor,
-                      gimp_label_color,
-                      GIMP, LABEL_COLOR,
-                      GimpLabeled)
+G_DECLARE_FINAL_TYPE (GimpLabelColor, gimp_label_color, GIMP, LABEL_COLOR, GimpLabeled)
 
 
-GtkWidget * gimp_label_color_new              (const gchar    *label,
-                                               GeglColor      *color,
-                                               gboolean        editable);
+GtkWidget * gimp_label_color_new              (const gchar       *label,
+                                               GeglColor         *color,
+                                               gboolean           editable);
 
 /* TODO: it would be interesting for such a widget to have an API to
  * customize the label being also above or below, left or right. I could
  * imagine wanting to pretty-list several colors with specific layouts.
  */
 
-void        gimp_label_color_set_value        (GimpLabelColor *color,
-                                               GeglColor      *value);
-GeglColor * gimp_label_color_get_value        (GimpLabelColor *color);
+void        gimp_label_color_set_value        (GimpLabelColor     *color,
+                                               GeglColor          *value);
+GeglColor * gimp_label_color_get_value        (GimpLabelColor     *color);
 
-void        gimp_label_color_set_editable     (GimpLabelColor *color,
-                                               gboolean        editable);
-gboolean    gimp_label_color_is_editable      (GimpLabelColor *color);
+void        gimp_label_color_set_editable     (GimpLabelColor     *color,
+                                               gboolean            editable);
+gboolean    gimp_label_color_is_editable      (GimpLabelColor     *color);
 
-GtkWidget * gimp_label_color_get_color_widget (GimpLabelColor *color);
+GtkWidget * gimp_label_color_get_color_widget (GimpLabelColor     *color);
 
 G_END_DECLS
+
+#endif /* __GIMP_LABEL_COLOR_H__ */

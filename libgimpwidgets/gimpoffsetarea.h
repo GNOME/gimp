@@ -19,21 +19,20 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
+#ifndef __GIMP_OFFSET_AREA_H__
+#define __GIMP_OFFSET_AREA_H__
+
 G_BEGIN_DECLS
+
 
 /* For information look into the C source or the html documentation */
 
 #define GIMP_TYPE_OFFSET_AREA (gimp_offset_area_get_type ())
-G_DECLARE_FINAL_TYPE (GimpOffsetArea,
-                      gimp_offset_area,
-                      GIMP, OFFSET_AREA,
-                      GtkDrawingArea)
+G_DECLARE_FINAL_TYPE (GimpOffsetArea, gimp_offset_area, GIMP, OFFSET_AREA, GtkDrawingArea)
 
 
 GtkWidget * gimp_offset_area_new         (gint            orig_width,
@@ -48,4 +47,7 @@ void        gimp_offset_area_set_offsets (GimpOffsetArea *offset_area,
                                           gint            offset_x,
                                           gint            offset_y);
 
+
 G_END_DECLS
+
+#endif /* __GIMP_OFFSET_AREA_H__ */

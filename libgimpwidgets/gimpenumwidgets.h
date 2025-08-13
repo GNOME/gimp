@@ -19,13 +19,15 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
+#ifndef __GIMP_ENUM_WIDGETS_H__
+#define __GIMP_ENUM_WIDGETS_H__
+
 G_BEGIN_DECLS
+
 
 GtkWidget * gimp_enum_radio_box_new               (GType          enum_type,
                                                    GCallback      callback,
@@ -78,3 +80,5 @@ void        gimp_enum_icon_box_set_icon_size      (GtkWidget     *icon_box,
                                                    GtkIconSize    icon_size);
 
 G_END_DECLS
+
+#endif  /* __GIMP_ENUM_WIDGETS_H__ */

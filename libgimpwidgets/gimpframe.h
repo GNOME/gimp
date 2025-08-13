@@ -19,11 +19,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
+
+#ifndef __GIMP_FRAME_H__
+#define __GIMP_FRAME_H__
 
 G_BEGIN_DECLS
 
@@ -31,11 +32,7 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_FRAME (gimp_frame_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpFrame,
-                          gimp_frame,
-                          GIMP, FRAME,
-                          GtkFrame)
-
+G_DECLARE_DERIVABLE_TYPE (GimpFrame, gimp_frame, GIMP, FRAME, GtkFrame)
 
 struct _GimpFrameClass
 {
@@ -55,6 +52,9 @@ struct _GimpFrameClass
 };
 
 
-GtkWidget * gimp_frame_new (const gchar *label);
+GtkWidget * gimp_frame_new       (const gchar *label);
+
 
 G_END_DECLS
+
+#endif /* __GIMP_FRAME_H__ */

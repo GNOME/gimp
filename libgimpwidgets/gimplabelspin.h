@@ -19,29 +19,26 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
+
+#ifndef __GIMP_LABEL_SPIN_H__
+#define __GIMP_LABEL_SPIN_H__
 
 #include <libgimpwidgets/gimplabeled.h>
 
 G_BEGIN_DECLS
 
 #define GIMP_TYPE_LABEL_SPIN (gimp_label_spin_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpLabelSpin,
-                          gimp_label_spin,
-                          GIMP, LABEL_SPIN,
-                          GimpLabeled)
-
+G_DECLARE_DERIVABLE_TYPE (GimpLabelSpin, gimp_label_spin, GIMP, LABEL_SPIN, GimpLabeled)
 
 struct _GimpLabelSpinClass
 {
-  GimpLabeledClass  parent_class;
+  GimpLabeledClass   parent_class;
 
   /*  Signals */
-  void (* value_changed) (GimpLabelSpin *spin);
+  void            (* value_changed)    (GimpLabelSpin *spin);
 
   /* Padding for future expansion */
   void (* _gimp_reserved0) (void);
@@ -55,7 +52,6 @@ struct _GimpLabelSpinClass
   void (* _gimp_reserved8) (void);
   void (* _gimp_reserved9) (void);
 };
-
 
 GtkWidget  * gimp_label_spin_new             (const gchar   *text,
                                               gdouble        value,
@@ -76,3 +72,5 @@ void         gimp_label_spin_set_digits      (GimpLabelSpin *spin,
 GtkWidget  * gimp_label_spin_get_spin_button (GimpLabelSpin *spin);
 
 G_END_DECLS
+
+#endif /* __GIMP_LABEL_SPIN_H__ */

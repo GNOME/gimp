@@ -19,19 +19,18 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
+#ifndef __GIMP_MEMSIZE_ENTRY_H__
+#define __GIMP_MEMSIZE_ENTRY_H__
+
 G_BEGIN_DECLS
 
+
 #define GIMP_TYPE_MEMSIZE_ENTRY (gimp_memsize_entry_get_type ())
-G_DECLARE_FINAL_TYPE (GimpMemsizeEntry,
-                      gimp_memsize_entry,
-                      GIMP, MEMSIZE_ENTRY,
-                      GtkBox)
+G_DECLARE_FINAL_TYPE (GimpMemsizeEntry, gimp_memsize_entry, GIMP, MEMSIZE_ENTRY, GtkBox)
 
 
 GtkWidget * gimp_memsize_entry_new            (guint64           value,
@@ -43,4 +42,7 @@ guint64     gimp_memsize_entry_get_value      (GimpMemsizeEntry *entry);
 
 GtkWidget * gimp_memsize_entry_get_spinbutton (GimpMemsizeEntry *entry);
 
+
 G_END_DECLS
+
+#endif /* __GIMP_MEMSIZE_ENTRY_H__ */

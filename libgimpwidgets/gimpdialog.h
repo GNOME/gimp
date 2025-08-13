@@ -19,11 +19,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
+
+#ifndef __GIMP_DIALOG_H__
+#define __GIMP_DIALOG_H__
 
 G_BEGIN_DECLS
 
@@ -31,11 +32,7 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_DIALOG (gimp_dialog_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpDialog,
-                          gimp_dialog,
-                          GIMP, DIALOG,
-                          GtkDialog)
-
+G_DECLARE_DERIVABLE_TYPE (GimpDialog, gimp_dialog, GIMP, DIALOG, GtkDialog)
 
 struct _GimpDialogClass
 {
@@ -91,7 +88,6 @@ GBytes    * gimp_dialog_get_native_handle  (GimpDialog     *dialog);
 /*  for internal use only!  */
 void        gimp_dialogs_show_help_button  (gboolean        show);
 
-
 /* gimp_dialog_set_alternative_button_order() doesn't need a dedicated
  * wrapper function because anyway it won't be introspectable.
  * GObject-Introspection bindings will have to use
@@ -102,4 +98,7 @@ void        gimp_dialogs_show_help_button  (gboolean        show);
   gtk_dialog_set_alternative_button_order(d,f);          \
   G_GNUC_END_IGNORE_DEPRECATIONS;
 
+
 G_END_DECLS
+
+#endif /* __GIMP_DIALOG_H__ */

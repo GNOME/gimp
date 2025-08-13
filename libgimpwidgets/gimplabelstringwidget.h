@@ -19,26 +19,27 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
+
+#ifndef __GIMP_LABEL_STRING_WIDGET_H__
+#define __GIMP_LABEL_STRING_WIDGET_H__
 
 #include <libgimpwidgets/gimplabeled.h>
 
 G_BEGIN_DECLS
 
 #define GIMP_TYPE_LABEL_STRING_WIDGET (gimp_label_string_widget_get_type ())
-G_DECLARE_FINAL_TYPE (GimpLabelStringWidget,
-                      gimp_label_string_widget,
-                      GIMP, LABEL_STRING_WIDGET,
-                      GimpLabeled)
+G_DECLARE_FINAL_TYPE (GimpLabelStringWidget, gimp_label_string_widget, GIMP, LABEL_STRING_WIDGET, GimpLabeled)
 
 
-GtkWidget * gimp_label_string_widget_new        (const gchar           *text,
-                                                 GtkWidget             *widget);
+GtkWidget  * gimp_label_string_widget_new        (const gchar           *text,
+                                                  GtkWidget             *widget);
 
-GtkWidget * gimp_label_string_widget_get_widget (GimpLabelStringWidget *widget);
+GtkWidget  * gimp_label_string_widget_get_widget (GimpLabelStringWidget *widget);
+
 
 G_END_DECLS
+
+#endif /* __GIMP_LABEL_STRING_WIDGET_H__ */

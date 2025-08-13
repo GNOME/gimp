@@ -18,16 +18,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __GIMP_COLOR_PROFILE_VIEW_H__
+#define __GIMP_COLOR_PROFILE_VIEW_H__
 
 G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_COLOR_PROFILE_VIEW (gimp_color_profile_view_get_type ())
-G_DECLARE_FINAL_TYPE (GimpColorProfileView,
-                      gimp_color_profile_view,
-                      GIMP, COLOR_PROFILE_VIEW,
-                      GtkTextView)
+G_DECLARE_FINAL_TYPE (GimpColorProfileView, gimp_color_profile_view, GIMP, COLOR_PROFILE_VIEW, GtkTextView)
 
 
 GtkWidget * gimp_color_profile_view_new         (void);
@@ -39,3 +37,4 @@ void        gimp_color_profile_view_set_error   (GimpColorProfileView *view,
 
 G_END_DECLS
 
+#endif /* __GIMP_COLOR_PROFILE_VIEW_H__ */

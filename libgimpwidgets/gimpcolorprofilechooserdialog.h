@@ -19,19 +19,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __GIMP_COLOR_PROFILE_CHOOSER_DIALOG_H__
+#define __GIMP_COLOR_PROFILE_CHOOSER_DIALOG_H__
 
 G_BEGIN_DECLS
 
+
 #define GIMP_TYPE_COLOR_PROFILE_CHOOSER_DIALOG (gimp_color_profile_chooser_dialog_get_type ())
-G_DECLARE_FINAL_TYPE (GimpColorProfileChooserDialog,
-                      gimp_color_profile_chooser_dialog,
-                      GIMP, COLOR_PROFILE_CHOOSER_DIALOG,
-                      GtkFileChooserDialog)
+G_DECLARE_FINAL_TYPE (GimpColorProfileChooserDialog, gimp_color_profile_chooser_dialog, GIMP, COLOR_PROFILE_CHOOSER_DIALOG, GtkFileChooserDialog)
 
+GtkWidget * gimp_color_profile_chooser_dialog_new      (const gchar          *title,
+                                                        GtkWindow            *parent,
+                                                        GtkFileChooserAction  action);
 
-GtkWidget * gimp_color_profile_chooser_dialog_new (const gchar          *title,
-                                                   GtkWindow            *parent,
-                                                   GtkFileChooserAction  action);
 
 G_END_DECLS
+
+#endif /* __GIMP_COLOR_PROFILE_CHOOSER_DIALOG_H__ */

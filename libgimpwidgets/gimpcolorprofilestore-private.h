@@ -19,7 +19,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __GIMP_COLOR_PROFILE_STORE_PRIVATE_H__
+#define __GIMP_COLOR_PROFILE_STORE_PRIVATE_H__
 
 
 typedef enum
@@ -51,3 +52,6 @@ G_GNUC_INTERNAL gboolean  _gimp_color_profile_store_history_find_profile
 
 G_GNUC_INTERNAL void      _gimp_color_profile_store_history_reorder (GimpColorProfileStore *store,
                                                                      GtkTreeIter           *iter);
+
+
+#endif  /* __GIMP_COLOR_PROFILE_STORE_PRIVATE_H__ */

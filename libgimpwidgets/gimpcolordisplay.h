@@ -19,11 +19,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
+
+#ifndef __GIMP_COLOR_DISPLAY_H__
+#define __GIMP_COLOR_DISPLAY_H__
 
 G_BEGIN_DECLS
 
@@ -31,10 +32,7 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_COLOR_DISPLAY (gimp_color_display_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpColorDisplay,
-                          gimp_color_display,
-                          GIMP, COLOR_DISPLAY,
-                          GObject)
+G_DECLARE_DERIVABLE_TYPE (GimpColorDisplay, gimp_color_display, GIMP, COLOR_DISPLAY, GObject)
 
 
 struct _GimpColorDisplayClass
@@ -88,4 +86,7 @@ gboolean           gimp_color_display_get_enabled     (GimpColorDisplay *display
 GimpColorConfig  * gimp_color_display_get_config      (GimpColorDisplay *display);
 GimpColorManaged * gimp_color_display_get_managed     (GimpColorDisplay *display);
 
+
 G_END_DECLS
+
+#endif /* __GIMP_COLOR_DISPLAY_H__ */

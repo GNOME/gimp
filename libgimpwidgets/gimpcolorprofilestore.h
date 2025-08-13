@@ -19,19 +19,18 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
+#ifndef __GIMP_COLOR_PROFILE_STORE_H__
+#define __GIMP_COLOR_PROFILE_STORE_H__
+
 G_BEGIN_DECLS
 
+
 #define GIMP_TYPE_COLOR_PROFILE_STORE (gimp_color_profile_store_get_type ())
-G_DECLARE_FINAL_TYPE (GimpColorProfileStore,
-                      gimp_color_profile_store,
-                      GIMP, COLOR_PROFILE_STORE,
-                      GtkListStore)
+G_DECLARE_FINAL_TYPE (GimpColorProfileStore, gimp_color_profile_store, GIMP, COLOR_PROFILE_STORE, GtkListStore)
 
 
 GtkListStore * gimp_color_profile_store_new      (GFile                 *history);
@@ -40,4 +39,7 @@ void           gimp_color_profile_store_add_file (GimpColorProfileStore *store,
                                                   GFile                 *file,
                                                   const gchar           *label);
 
+
 G_END_DECLS
+
+#endif  /* __GIMP_COLOR_PROFILE_STORE_H__ */

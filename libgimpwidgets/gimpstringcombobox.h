@@ -19,29 +19,27 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
+#ifndef __GIMP_STRING_COMBO_BOX_H__
+#define __GIMP_STRING_COMBO_BOX_H__
+
 G_BEGIN_DECLS
+
 
 /**
  * GimpStringSensitivityFunc:
  * @id: the string value from the column @id_column as passed to [ctor@StringComboBox.new].
  * @data: (closure): the data passed in [method@StringComboBox.set_sensitivity].
  */
-typedef gboolean (* GimpStringSensitivityFunc) (const gchar *id,
-                                                gpointer     data);
+typedef  gboolean (* GimpStringSensitivityFunc) (const gchar *id,
+                                                 gpointer     data);
 
 
 #define GIMP_TYPE_STRING_COMBO_BOX (gimp_string_combo_box_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpStringComboBox,
-                          gimp_string_combo_box,
-                          GIMP, STRING_COMBO_BOX,
-                          GtkComboBox)
-
+G_DECLARE_DERIVABLE_TYPE (GimpStringComboBox, gimp_string_combo_box, GIMP, STRING_COMBO_BOX, GtkComboBox)
 
 struct _GimpStringComboBoxClass
 {
@@ -74,3 +72,5 @@ void        gimp_string_combo_box_set_sensitivity (GimpStringComboBox        *co
                                                    GDestroyNotify             destroy);
 
 G_END_DECLS
+
+#endif  /* __GIMP_STRING_COMBO_BOX_H__ */

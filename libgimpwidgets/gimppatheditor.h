@@ -19,11 +19,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
+
+#ifndef __GIMP_PATH_EDITOR_H__
+#define __GIMP_PATH_EDITOR_H__
 
 G_BEGIN_DECLS
 
@@ -31,11 +32,10 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_PATH_EDITOR (gimp_path_editor_get_type ())
-G_DECLARE_FINAL_TYPE (GimpPathEditor,
-                      gimp_path_editor,
-                      GIMP, PATH_EDITOR,
-                      GtkBox)
+G_DECLARE_FINAL_TYPE (GimpPathEditor, gimp_path_editor, GIMP, PATH_EDITOR, GtkBox)
 
+
+/* For information look into the C source or the html documentation */
 
 GtkWidget * gimp_path_editor_new               (const gchar    *title,
                                                 const gchar    *path);
@@ -55,3 +55,5 @@ void        gimp_path_editor_set_dir_writable  (GimpPathEditor *editor,
                                                 gboolean        writable);
 
 G_END_DECLS
+
+#endif /* __GIMP_PATH_EDITOR_H__ */

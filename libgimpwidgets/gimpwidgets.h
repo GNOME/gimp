@@ -19,7 +19,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __GIMP_WIDGETS_H__
+#define __GIMP_WIDGETS_H__
 
 #define __GIMP_WIDGETS_H_INSIDE__
 
@@ -208,4 +209,7 @@ void gimp_float_adjustment_update        (GtkAdjustment   *adjustment,
 void gimp_double_adjustment_update       (GtkAdjustment   *adjustment,
                                           gpointer         data);
 
+
 G_END_DECLS
+
+#endif /* __GIMP_WIDGETS_H__ */

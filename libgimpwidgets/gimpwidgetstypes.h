@@ -18,7 +18,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef __GIMP_WIDGETS_TYPES_H__
+#define __GIMP_WIDGETS_TYPES_H__
 
 #include <libgimpconfig/gimpconfigtypes.h>
 
@@ -109,4 +110,7 @@ typedef struct _GimpZoomModel                 GimpZoomModel;
 typedef void (* GimpHelpFunc) (const gchar *help_id,
                                gpointer     help_data);
 
+
 G_END_DECLS
+
+#endif /* __GIMP_WIDGETS_TYPES_H__ */
