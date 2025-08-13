@@ -122,7 +122,8 @@ struct _GimpLayerClass
                                                GimpTransformDirection  direction,
                                                GimpInterpolationType   interpolation_type,
                                                GimpTransformResize     clip_result,
-                                               GimpProgress           *progress);
+                                               GimpProgress           *progress,
+                                               gboolean                push_undo);
   void          (* convert_type)              (GimpLayer              *layer,
                                                GimpImage              *dest_image,
                                                const Babl             *new_format,

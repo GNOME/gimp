@@ -766,7 +766,7 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
         {
           result = gimp_drawable_transform_paste (drawable, new_buffer, profile,
                                                   new_offset_x, new_offset_y,
-                                                  new_layer);
+                                                  new_layer, TRUE);
           g_object_unref (new_buffer);
         }
     }
@@ -848,7 +848,7 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
         {
           result = gimp_drawable_transform_paste (drawable, new_buffer, profile,
                                                   new_offset_x, new_offset_y,
-                                                  new_layer);
+                                                  new_layer, TRUE);
           g_object_unref (new_buffer);
         }
     }
@@ -933,7 +933,7 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
         {
           result = gimp_drawable_transform_paste (drawable, new_buffer, profile,
                                                   new_offset_x, new_offset_y,
-                                                  new_layer);
+                                                  new_layer, TRUE);
           g_object_unref (new_buffer);
         }
     }
@@ -1026,11 +1026,11 @@ gimp_drawable_transform_paste (GimpDrawable     *drawable,
                                GimpColorProfile *buffer_profile,
                                gint              offset_x,
                                gint              offset_y,
-                               gboolean          new_layer)
+                               gboolean          new_layer,
+                               gboolean          push_undo)
 {
-  GimpImage   *image;
-  GimpLayer   *layer     = NULL;
-  const gchar *undo_desc = NULL;
+  GimpImage *image;
+  GimpLayer *layer = NULL;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
@@ -1039,14 +1039,19 @@ gimp_drawable_transform_paste (GimpDrawable     *drawable,
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  if (GIMP_IS_LAYER (drawable))
-    undo_desc = C_("undo-type", "Transform Layer");
-  else if (GIMP_IS_CHANNEL (drawable))
-    undo_desc = C_("undo-type", "Transform Channel");
-  else
-    return NULL;
+  if (push_undo)
+    {
+      const gchar *undo_desc = NULL;
 
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE, undo_desc);
+      if (GIMP_IS_LAYER (drawable))
+        undo_desc = C_("undo-type", "Transform Layer");
+      else if (GIMP_IS_CHANNEL (drawable))
+        undo_desc = C_("undo-type", "Transform Channel");
+      else
+        return NULL;
+
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE, undo_desc);
+    }
 
   if (new_layer)
     {
@@ -1066,13 +1071,14 @@ gimp_drawable_transform_paste (GimpDrawable     *drawable,
     }
   else
     {
-      gimp_drawable_set_buffer_full (drawable, TRUE, NULL,
+      gimp_drawable_set_buffer_full (drawable, push_undo, NULL,
                                      buffer,
                                      GEGL_RECTANGLE (offset_x, offset_y, 0, 0),
                                      TRUE);
     }
 
-  gimp_image_undo_group_end (image);
+  if (push_undo)
+    gimp_image_undo_group_end (image);
 
   return drawable;
 }

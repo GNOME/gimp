@@ -159,7 +159,8 @@ static void            gimp_group_layer_transform    (GimpLayer       *layer,
                                                       GimpTransformDirection direction,
                                                       GimpInterpolationType  interpolation_type,
                                                       GimpTransformResize clip_result,
-                                                      GimpProgress      *progress);
+                                                      GimpProgress      *progress,
+                                                      gboolean           push_undo);
 static void            gimp_group_layer_convert_type (GimpLayer         *layer,
                                                       GimpImage         *dest_image,
                                                       const Babl        *new_format,
@@ -1016,7 +1017,8 @@ gimp_group_layer_transform (GimpLayer              *layer,
                             GimpTransformDirection  direction,
                             GimpInterpolationType   interpolation_type,
                             GimpTransformResize     clip_result,
-                            GimpProgress           *progress)
+                            GimpProgress           *progress,
+                            gboolean                push_undo)
 {
   GimpGroupLayer        *group   = GIMP_GROUP_LAYER (layer);
   GimpGroupLayerPrivate *private = GET_PRIVATE (layer);

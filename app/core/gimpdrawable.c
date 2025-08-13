@@ -142,7 +142,8 @@ static void       gimp_drawable_transform          (GimpItem          *item,
                                                     GimpTransformDirection direction,
                                                     GimpInterpolationType interpolation_type,
                                                     GimpTransformResize clip_result,
-                                                    GimpProgress      *progress);
+                                                    GimpProgress      *progress,
+                                                    gboolean           push_undo);
 
 static const guint8 *
                   gimp_drawable_get_icc_profile    (GimpColorManaged  *managed,
@@ -742,7 +743,7 @@ gimp_drawable_flip (GimpItem            *item,
   if (buffer)
     {
       gimp_drawable_transform_paste (drawable, buffer, buffer_profile,
-                                     new_off_x, new_off_y, FALSE);
+                                     new_off_x, new_off_y, FALSE, TRUE);
       g_object_unref (buffer);
     }
 }
@@ -774,7 +775,7 @@ gimp_drawable_rotate (GimpItem         *item,
   if (buffer)
     {
       gimp_drawable_transform_paste (drawable, buffer, buffer_profile,
-                                     new_off_x, new_off_y, FALSE);
+                                     new_off_x, new_off_y, FALSE, TRUE);
       g_object_unref (buffer);
     }
 }
@@ -786,7 +787,8 @@ gimp_drawable_transform (GimpItem               *item,
                          GimpTransformDirection  direction,
                          GimpInterpolationType   interpolation_type,
                          GimpTransformResize     clip_result,
-                         GimpProgress           *progress)
+                         GimpProgress           *progress,
+                         gboolean                push_undo)
 {
   GimpDrawable     *drawable = GIMP_DRAWABLE (item);
   GeglBuffer       *buffer;
@@ -809,7 +811,7 @@ gimp_drawable_transform (GimpItem               *item,
   if (buffer)
     {
       gimp_drawable_transform_paste (drawable, buffer, buffer_profile,
-                                     new_off_x, new_off_y, FALSE);
+                                     new_off_x, new_off_y, FALSE, push_undo);
       g_object_unref (buffer);
     }
 }

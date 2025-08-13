@@ -169,7 +169,8 @@ static void       gimp_layer_transform          (GimpItem           *item,
                                                  GimpTransformDirection direction,
                                                  GimpInterpolationType  interpolation_type,
                                                  GimpTransformResize clip_result,
-                                                 GimpProgress       *progress);
+                                                 GimpProgress       *progress,
+                                                 gboolean            push_undo);
 static void       gimp_layer_to_selection       (GimpItem           *item,
                                                  GimpChannelOps      op,
                                                  gboolean            antialias,
@@ -248,7 +249,8 @@ static void       gimp_layer_real_transform     (GimpLayer          *layer,
                                                  GimpTransformDirection direction,
                                                  GimpInterpolationType  interpolation_type,
                                                  GimpTransformResize clip_result,
-                                                 GimpProgress       *progress);
+                                                 GimpProgress       *progress,
+                                                 gboolean            push_undo);
 static void       gimp_layer_real_convert_type  (GimpLayer          *layer,
                                                  GimpImage          *dest_image,
                                                  const Babl         *new_format,
@@ -1298,7 +1300,8 @@ gimp_layer_transform (GimpItem               *item,
                       GimpTransformDirection  direction,
                       GimpInterpolationType   interpolation_type,
                       GimpTransformResize     clip_result,
-                      GimpProgress           *progress)
+                      GimpProgress           *progress,
+                      gboolean                push_undo)
 {
   GimpLayer       *layer = GIMP_LAYER (item);
   GimpObjectQueue *queue = NULL;
@@ -1328,7 +1331,7 @@ gimp_layer_transform (GimpItem               *item,
   GIMP_LAYER_GET_CLASS (layer)->transform (layer, context, matrix, direction,
                                            interpolation_type,
                                            clip_result,
-                                           progress);
+                                           progress, push_undo);
 
   if (layer->mask)
     {
@@ -1743,7 +1746,8 @@ gimp_layer_real_transform (GimpLayer              *layer,
                            GimpTransformDirection  direction,
                            GimpInterpolationType   interpolation_type,
                            GimpTransformResize     clip_result,
-                           GimpProgress           *progress)
+                           GimpProgress           *progress,
+                           gboolean                push_undo)
 {
   if (! gimp_matrix3_is_simple (matrix) &&
       ! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
@@ -1753,7 +1757,7 @@ gimp_layer_real_transform (GimpLayer              *layer,
                                              context, matrix, direction,
                                              interpolation_type,
                                              clip_result,
-                                             progress);
+                                             progress, push_undo);
 }
 
 static void

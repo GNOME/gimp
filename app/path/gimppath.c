@@ -117,7 +117,8 @@ static void       gimp_path_transform        (GimpItem          *item,
                                               GimpTransformDirection direction,
                                               GimpInterpolationType interp_type,
                                               GimpTransformResize   clip_result,
-                                              GimpProgress      *progress);
+                                              GimpProgress      *progress,
+                                              gboolean           push_undo);
 static GimpTransformResize
                   gimp_path_get_clip         (GimpItem          *item,
                                               GimpTransformResize clip_result);
@@ -611,7 +612,8 @@ gimp_path_transform (GimpItem               *item,
                      GimpTransformDirection  direction,
                      GimpInterpolationType   interpolation_type,
                      GimpTransformResize     clip_result,
-                     GimpProgress           *progress)
+                     GimpProgress           *progress,
+                     gboolean                push_undo)
 {
   GimpPath    *path = GIMP_PATH (item);
   GimpMatrix3  local_matrix;
@@ -620,9 +622,10 @@ gimp_path_transform (GimpItem               *item,
 
   gimp_path_freeze (path);
 
-  gimp_image_undo_push_path_mod (gimp_item_get_image (item),
-                                 _("Transform Path"),
-                                 path);
+  if (push_undo)
+    gimp_image_undo_push_path_mod (gimp_item_get_image (item),
+                                   _("Transform Path"),
+                                   path);
 
   local_matrix = *matrix;
 

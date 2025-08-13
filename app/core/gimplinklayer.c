@@ -29,6 +29,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
 
@@ -69,9 +70,19 @@ enum
 
 struct _GimpLinkLayerPrivate
 {
-  GimpLink *link;
-  gboolean  scaled_only;
-  gboolean  auto_rename;
+  GimpLink              *link;
+  gboolean               scaled_only;
+  gboolean               auto_rename;
+
+  GimpMatrix3            matrix;
+  gint                   offset_x;
+  gint                   offset_y;
+  GimpInterpolationType  interpolation;
+
+  /* A transient value only useful to know when to drop monitoring after
+   * a buffer update.
+   */
+  gboolean               keep_monitoring;
 };
 
 static void       gimp_link_layer_finalize       (GObject           *object);
@@ -93,6 +104,11 @@ static gboolean   gimp_link_layer_rename         (GimpItem          *item,
                                                   const gchar       *new_name,
                                                   const gchar       *undo_desc,
                                                   GError           **error);
+
+static void       gimp_link_layer_translate      (GimpItem              *item,
+                                                  gdouble                offset_x,
+                                                  gdouble                offset_y,
+                                                  gboolean               push_undo);
 static void       gimp_link_layer_scale          (GimpItem              *item,
                                                   gint                   new_width,
                                                   gint                   new_height,
@@ -100,6 +116,14 @@ static void       gimp_link_layer_scale          (GimpItem              *item,
                                                   gint                   new_offset_y,
                                                   GimpInterpolationType  interpolation_type,
                                                   GimpProgress          *progress);
+static void       gimp_link_layer_transform      (GimpItem               *item,
+                                                  GimpContext            *context,
+                                                  const GimpMatrix3      *matrix,
+                                                  GimpTransformDirection  direction,
+                                                  GimpInterpolationType   interpolation_type,
+                                                  GimpTransformResize     clip_result,
+                                                  GimpProgress           *progress,
+                                                  gboolean                push_undo);
 
 static void       gimp_link_layer_set_buffer     (GimpDrawable      *drawable,
                                                   gboolean           push_undo,
@@ -124,10 +148,18 @@ static void       gimp_link_layer_convert_type   (GimpLayer         *layer,
                                                   gboolean           push_undo,
                                                   GimpProgress      *progress);
 
-static gboolean   gimp_link_layer_render         (GimpLinkLayer     *layer);
+static gboolean   gimp_link_layer_render_link    (GimpLinkLayer     *layer);
 
 static void       gimp_link_layer_set_xcf_flags  (GimpLinkLayer     *layer,
                                                   guint32            flags);
+static gboolean
+               gimp_link_layer_is_scaling_matrix (GimpLinkLayer     *layer,
+                                                  const GimpMatrix3 *matrix,
+                                                  gint              *new_width,
+                                                  gint              *new_height,
+                                                  gint              *new_offset_x,
+                                                  gint              *new_offset_y);
+
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpLinkLayer, gimp_link_layer, GIMP_TYPE_LAYER)
 
@@ -157,7 +189,9 @@ gimp_link_layer_class_init (GimpLinkLayerClass *klass)
 
   item_class->duplicate             = gimp_link_layer_duplicate;
   item_class->rename                = gimp_link_layer_rename;
+  item_class->translate             = gimp_link_layer_translate;
   item_class->scale                 = gimp_link_layer_scale;
+  item_class->transform             = gimp_link_layer_transform;
 
   item_class->rename_desc           = _("Rename Link Layer");
   item_class->translate_desc        = _("Move Link Layer");
@@ -196,8 +230,17 @@ gimp_link_layer_class_init (GimpLinkLayerClass *klass)
 static void
 gimp_link_layer_init (GimpLinkLayer *layer)
 {
-  layer->p       = gimp_link_layer_get_instance_private (layer);
-  layer->p->link = NULL;
+  layer->p         = gimp_link_layer_get_instance_private (layer);
+  layer->p->link   = NULL;
+  gimp_matrix3_identity (&layer->p->matrix);
+
+  layer->p->scaled_only   = FALSE;
+  layer->p->auto_rename   = FALSE;
+  layer->p->offset_x      = 0;
+  layer->p->offset_y      = 0;
+  layer->p->interpolation = GIMP_INTERPOLATION_NONE;
+
+  layer->p->keep_monitoring = FALSE;
 }
 
 static void
@@ -313,11 +356,18 @@ gimp_link_layer_duplicate (GimpItem *item,
           if (width  != gimp_item_get_width  (GIMP_ITEM (new_layer)) ||
               height != gimp_item_get_height (GIMP_ITEM (new_layer)))
             {
-              GeglBuffer *new_buffer;
+              GeglBuffer    *new_buffer;
+              GeglRectangle  bounds;
+
+              gimp_item_get_offset (GIMP_ITEM (new_layer), &bounds.x, &bounds.y);
+              bounds.width  = 0;
+              bounds.height = 0;
 
               new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
                                             gimp_drawable_get_format (GIMP_DRAWABLE (new_layer)));
-              gimp_drawable_set_buffer (GIMP_DRAWABLE (new_layer), FALSE, NULL, new_buffer);
+              GIMP_DRAWABLE_CLASS (parent_class)->set_buffer (GIMP_DRAWABLE (new_layer),
+                                                              FALSE, NULL,
+                                                              new_buffer, &bounds);
               g_object_unref (new_buffer);
             }
 
@@ -325,8 +375,14 @@ gimp_link_layer_duplicate (GimpItem *item,
                                  gimp_drawable_get_buffer (GIMP_DRAWABLE (new_layer)), NULL);
         }
 
-      new_layer->p->scaled_only = layer->p->scaled_only;
-      new_layer->p->auto_rename = layer->p->auto_rename;
+      new_layer->p->scaled_only   = layer->p->scaled_only;
+      new_layer->p->auto_rename   = layer->p->auto_rename;
+      new_layer->p->matrix        = layer->p->matrix;
+      new_layer->p->offset_x      = layer->p->offset_x;
+      new_layer->p->offset_y      = layer->p->offset_y;
+      new_layer->p->interpolation = layer->p->interpolation;
+
+      new_layer->p->keep_monitoring = FALSE;
 
       g_clear_object (&link);
     }
@@ -348,6 +404,20 @@ gimp_link_layer_rename (GimpItem     *item,
     }
 
   return FALSE;
+}
+
+static void
+gimp_link_layer_translate (GimpItem *item,
+                           gdouble   offset_x,
+                           gdouble   offset_y,
+                           gboolean  push_undo)
+{
+  GimpLinkLayer *layer = GIMP_LINK_LAYER (item);
+
+  if (! gimp_matrix3_is_identity (&layer->p->matrix))
+    gimp_matrix3_translate (&layer->p->matrix, offset_x, offset_y);
+
+  GIMP_ITEM_CLASS (parent_class)->translate (item, offset_x, offset_y, push_undo);
 }
 
 static void
@@ -385,37 +455,70 @@ gimp_link_layer_scale (GimpItem              *item,
   if (queue)
     gimp_object_queue_pop (queue);
 
-  if (gimp_link_is_vector (link_layer->p->link) &&
-      gimp_link_is_monitored (link_layer->p->link))
+  if (gimp_link_is_vector (link_layer->p->link)    &&
+      gimp_link_is_monitored (link_layer->p->link) &&
+      gimp_matrix3_is_identity (&link_layer->p->matrix))
     {
       /* Non-modified vector images are always recomputed from the
        * source file and therefore are always sharp.
        */
       gimp_link_set_size (link_layer->p->link, new_width, new_height);
-      gimp_link_layer_render (link_layer);
+      gimp_item_set_offset (item, new_offset_x, new_offset_y);
+      gimp_link_layer_render_link (link_layer);
+    }
+  else if (! gimp_matrix3_is_identity (&link_layer->p->matrix))
+    {
+      GimpMatrix3 matrix = link_layer->p->matrix;
+      gdouble     x_scale_factor;
+      gdouble     y_scale_factor;
+      gint        offset_x;
+      gint        offset_y;
+
+      x_scale_factor = (gdouble) new_width / gimp_item_get_width (item);
+      y_scale_factor = (gdouble) new_height / gimp_item_get_height (item);
+
+      gimp_matrix3_scale (&matrix, x_scale_factor, y_scale_factor);
+
+      gimp_link_layer_set_transform (link_layer, &matrix, interpolation_type, TRUE);
+
+      /* Unfortunately we can't know the proper translation offset to
+       * set before we replay the full matrix (the offsets may have been
+       * changed in previous transformations).
+       * To avoid re-loading the source image twice though, I don't call
+       * gimp_link_layer_set_transform() again but directly edit the
+       * matrix and set the offset.
+       */
+      gimp_item_get_offset (item, &offset_x, &offset_y);
+      gimp_matrix3_translate (&link_layer->p->matrix,
+                              new_offset_x - offset_x,
+                              new_offset_y - offset_y);
+      gimp_item_set_offset (item, new_offset_x, new_offset_y);
+      gimp_drawable_update_all (GIMP_DRAWABLE (layer));
+    }
+  else if (gimp_link_is_monitored (link_layer->p->link))
+    {
+      GimpMatrix3 matrix = link_layer->p->matrix;
+      gdouble     x_scale_factor;
+      gdouble     y_scale_factor;
+      gint        offset_x;
+      gint        offset_y;
+
+      x_scale_factor = (gdouble) new_width / gimp_item_get_width (item);
+      y_scale_factor = (gdouble) new_height / gimp_item_get_height (item);
+
+      gimp_matrix3_scale (&matrix, x_scale_factor, y_scale_factor);
+      gimp_item_get_offset (item, &offset_x, &offset_y);
+      gimp_matrix3_translate (&matrix,
+                              new_offset_x - offset_x,
+                              new_offset_y - offset_y);
+      gimp_link_layer_set_transform (link_layer, &matrix, interpolation_type, TRUE);
     }
   else
     {
-      gboolean scaled_only = FALSE;
-
-      if (gimp_link_is_monitored (link_layer->p->link) || link_layer->p->scaled_only)
-        {
-          /* Raster images whose only modification are previous scaling
-           * are scaled back from the source file. Though they are still
-           * considered "modified" after a scaling (unlike vector
-           * images) and therefore are demoted to work like normal
-           * layers, scaling is still special-cased for better image
-           * quality.
-           */
-          gimp_link_layer_render (link_layer);
-          scaled_only = TRUE;
-        }
-
       GIMP_ITEM_CLASS (parent_class)->scale (GIMP_ITEM (layer),
                                              new_width, new_height,
                                              new_offset_x, new_offset_y,
                                              interpolation_type, progress);
-      g_object_set (layer, "scaled-only", scaled_only, NULL);
     }
 
   if (layer->mask)
@@ -433,6 +536,81 @@ gimp_link_layer_scale (GimpItem              *item,
 }
 
 static void
+gimp_link_layer_transform (GimpItem               *item,
+                           GimpContext            *context,
+                           const GimpMatrix3      *matrix,
+                           GimpTransformDirection  direction,
+                           GimpInterpolationType   interpolation_type,
+                           GimpTransformResize     clip_result,
+                           GimpProgress           *progress,
+                           gboolean                push_undo)
+{
+  GimpLinkLayer *layer = GIMP_LINK_LAYER (item);
+  gboolean       keep_monitoring;
+
+  if (gimp_matrix3_is_identity (matrix))
+    return;
+
+  if (gimp_link_is_vector (layer->p->link)    &&
+      gimp_link_is_monitored (layer->p->link) &&
+      gimp_matrix3_is_identity (&layer->p->matrix))
+    {
+      gint new_width;
+      gint new_height;
+      gint new_offset_x;
+      gint new_offset_y;
+
+      if (gimp_link_layer_is_scaling_matrix (layer, matrix,
+                                             &new_width, &new_height,
+                                             &new_offset_x, &new_offset_y))
+        {
+          /* Scaling when no other transformation has happened yet is
+           * special-case for vector links, because we can do even
+           * better by reloading from source.
+           */
+          gimp_link_layer_scale (item, new_width, new_height,
+                                 new_offset_x, new_offset_y,
+                                 interpolation_type, progress);
+          return;
+        }
+    }
+
+  /* Clipping would produce different results when applied on a single
+   * step of multiple transformations. So only "adjust" transformations
+   * are stored non-destructively. Any clip/crop transformation triggers
+   * a destructive transform.
+   *
+   * Note: we could also store non-destructively a single clipped
+   * transformation, but that would be harder to document and explain.
+   */
+  keep_monitoring = (gimp_link_is_monitored (layer->p->link) &&
+                     clip_result == GIMP_TRANSFORM_RESIZE_ADJUST);
+
+  if (keep_monitoring)
+    {
+      GimpMatrix3 left  = *matrix;
+      GimpMatrix3 right = layer->p->matrix;
+
+      if (direction == GIMP_TRANSFORM_BACKWARD)
+        gimp_matrix3_invert (&left);
+
+      gimp_matrix3_mult (&left, &right);
+      gimp_link_layer_set_transform (layer, &right, interpolation_type, TRUE);
+    }
+  else
+    {
+      /* Reset the transformation matrix. */
+      gimp_matrix3_identity (&layer->p->matrix);
+
+      GIMP_ITEM_CLASS (parent_class)->transform (item, context,
+                                                 matrix, direction,
+                                                 interpolation_type,
+                                                 clip_result, progress,
+                                                 push_undo);
+    }
+}
+
+static void
 gimp_link_layer_set_buffer (GimpDrawable        *drawable,
                             gboolean             push_undo,
                             const gchar         *undo_desc,
@@ -442,21 +620,23 @@ gimp_link_layer_set_buffer (GimpDrawable        *drawable,
   GimpLinkLayer *layer = GIMP_LINK_LAYER (drawable);
   GimpImage     *image = gimp_item_get_image (GIMP_ITEM (layer));
 
-  if (push_undo && gimp_link_is_monitored (layer->p->link))
-    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_DRAWABLE_MOD,
-                                 undo_desc);
+  if (push_undo)
+    {
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_DRAWABLE_MOD, undo_desc);
+      gimp_image_undo_push_link_layer (image, NULL, layer);
+    }
 
   GIMP_DRAWABLE_CLASS (parent_class)->set_buffer (drawable,
-                                                  push_undo, undo_desc,
+                                                  FALSE, undo_desc,
                                                   buffer,
                                                   bounds);
 
-  if (push_undo && gimp_link_is_monitored (layer->p->link))
+  if (push_undo)
     {
-      gimp_image_undo_push_link_layer (image, NULL, layer);
-
-      gimp_link_freeze (layer->p->link);
-      g_object_set (drawable, "scaled-only", FALSE, NULL);
+      if (layer->p->link                          &&
+          gimp_link_is_monitored (layer->p->link) &&
+          ! layer->p->keep_monitoring)
+        gimp_link_freeze (layer->p->link);
 
       gimp_image_undo_group_end (image);
     }
@@ -527,7 +707,7 @@ gimp_link_layer_convert_type (GimpLayer         *layer,
       if (push_undo)
         gimp_image_undo_push_link_layer (image, NULL, link_layer);
 
-      gimp_link_layer_render (link_layer);
+      gimp_link_layer_render_link (link_layer);
     }
 }
 
@@ -580,6 +760,20 @@ gimp_link_layer_set_link (GimpLinkLayer *layer,
                           GimpLink      *link,
                           gboolean       push_undo)
 {
+  return gimp_link_layer_set_link_with_matrix (layer, link, NULL,
+                                               GIMP_INTERPOLATION_NONE,
+                                               0, 0, push_undo);
+}
+
+gboolean
+gimp_link_layer_set_link_with_matrix (GimpLinkLayer         *layer,
+                                      GimpLink              *link,
+                                      GimpMatrix3           *matrix,
+                                      GimpInterpolationType  interpolation_type,
+                                      gint                   offset_x,
+                                      gint                   offset_y,
+                                      gboolean               push_undo)
+{
   gboolean rendered = FALSE;
 
   g_return_val_if_fail (GIMP_IS_LINK_LAYER (layer), FALSE);
@@ -592,7 +786,7 @@ gimp_link_layer_set_link (GimpLinkLayer *layer,
   if (layer->p->link)
     {
       g_signal_handlers_disconnect_by_func (layer->p->link,
-                                            G_CALLBACK (gimp_link_layer_render),
+                                            G_CALLBACK (gimp_link_layer_render_link),
                                             layer);
 
     }
@@ -602,11 +796,25 @@ gimp_link_layer_set_link (GimpLinkLayer *layer,
   if (link)
     {
       g_signal_connect_object (link, "changed",
-                               G_CALLBACK (gimp_link_layer_render),
+                               G_CALLBACK (gimp_link_layer_render_link),
                                layer, G_CONNECT_SWAPPED);
 
       if (gimp_link_is_monitored (link))
-        rendered = gimp_link_layer_render (layer);
+        {
+          if (matrix == NULL)
+            {
+              rendered = gimp_link_layer_render_link (layer);
+            }
+          else
+            {
+              if (! gimp_matrix3_is_identity (matrix))
+                {
+                  layer->p->offset_x = offset_x;
+                  layer->p->offset_y = offset_y;
+                }
+              rendered = gimp_link_layer_set_transform (layer, matrix, interpolation_type, push_undo);
+            }
+        }
     }
 
   g_object_notify (G_OBJECT (layer), "link");
@@ -649,7 +857,7 @@ gimp_link_layer_monitor (GimpLinkLayer *layer)
                                    _("Monitor Link"), layer);
 
   gimp_link_thaw (layer->p->link);
-  gimp_link_layer_render (layer);
+  gimp_link_layer_render_link (layer);
 }
 
 gboolean
@@ -659,6 +867,69 @@ gimp_link_layer_is_monitored (GimpLinkLayer *layer)
 
   return (GIMP_LINK_LAYER (layer)->p->link &&
           gimp_link_is_monitored (GIMP_LINK_LAYER (layer)->p->link));
+}
+
+gboolean
+gimp_link_layer_get_transform (GimpLinkLayer         *layer,
+                               GimpMatrix3           *matrix,
+                               gint                  *offset_x,
+                               gint                  *offset_y,
+                               GimpInterpolationType *interpolation)
+{
+  g_return_val_if_fail (GIMP_IS_LINK_LAYER (layer), FALSE);
+
+  *matrix        = layer->p->matrix;
+  *offset_x      = layer->p->offset_x;
+  *offset_y      = layer->p->offset_y;
+  *interpolation = layer->p->interpolation;
+
+  return ! gimp_matrix3_is_identity (matrix);
+}
+
+gboolean
+gimp_link_layer_set_transform (GimpLinkLayer         *layer,
+                               GimpMatrix3           *matrix,
+                               GimpInterpolationType  interpolation_type,
+                               gboolean               push_undo)
+{
+  Gimp     *gimp;
+  gboolean  rendered;
+
+  g_return_val_if_fail (GIMP_IS_LINK_LAYER (layer), FALSE);
+  g_return_val_if_fail (gimp_link_is_monitored (layer->p->link), FALSE);
+
+  gimp = (gimp_item_get_image (GIMP_ITEM (layer)))->gimp;
+
+  if (gimp_matrix3_is_identity (&layer->p->matrix))
+    /* First transformation: store the initial offset. */
+    gimp_item_get_offset (GIMP_ITEM (layer), &layer->p->offset_x, &layer->p->offset_y);
+
+  gimp_item_set_offset (GIMP_ITEM (layer), layer->p->offset_x, layer->p->offset_y);
+
+  rendered = gimp_link_layer_render_link (layer);
+  if (! gimp_matrix3_is_identity (matrix))
+    {
+      layer->p->keep_monitoring = TRUE;
+      GIMP_ITEM_CLASS (parent_class)->transform (GIMP_ITEM (layer),
+                                                 gimp_get_user_context (gimp),
+                                                 matrix,
+                                                 GIMP_TRANSFORM_FORWARD,
+                                                 interpolation_type,
+                                                 GIMP_TRANSFORM_RESIZE_ADJUST,
+                                                 NULL, push_undo);
+      layer->p->keep_monitoring = FALSE;
+    }
+
+  layer->p->matrix = *matrix;
+
+  /* Interpolations are used to obtain reasonable quality. Considering
+   * that doing a single transform will always be better than several
+   * transforms in a row, it's OK to just drop the interpolation
+   * algorithm of previous transforms. We just store the last one.
+   */
+  layer->p->interpolation = interpolation_type;
+
+  return rendered;
 }
 
 guint32
@@ -738,7 +1009,7 @@ gimp_link_layer_from_layer (GimpLayer **layer,
 /*  private functions  */
 
 static gboolean
-gimp_link_layer_render (GimpLinkLayer *layer)
+gimp_link_layer_render_link (GimpLinkLayer *layer)
 {
   GimpDrawable   *drawable;
   GimpItem       *item;
@@ -773,11 +1044,19 @@ gimp_link_layer_render (GimpLinkLayer *layer)
   if ((width  != gimp_item_get_width  (item) ||
        height != gimp_item_get_height (item)))
     {
-      GeglBuffer *new_buffer;
+      GeglBuffer    *new_buffer;
+      GeglRectangle  bounds;
+
+      gimp_item_get_offset (GIMP_ITEM (drawable),
+                            &bounds.x, &bounds.y);
+      bounds.width  = 0;
+      bounds.height = 0;
 
       new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
                                     gimp_drawable_get_format (drawable));
-      gimp_drawable_set_buffer (drawable, FALSE, NULL, new_buffer);
+      GIMP_DRAWABLE_CLASS (parent_class)->set_buffer (drawable,
+                                                      FALSE, NULL,
+                                                      new_buffer, &bounds);
       g_object_unref (new_buffer);
 
       if (gimp_layer_get_mask (GIMP_LAYER (layer)))
@@ -848,4 +1127,40 @@ gimp_link_layer_set_xcf_flags (GimpLinkLayer *layer,
     gimp_link_freeze (layer->p->link);
   else
     gimp_link_thaw (layer->p->link);
+}
+
+static gboolean
+gimp_link_layer_is_scaling_matrix (GimpLinkLayer     *layer,
+                                   const GimpMatrix3 *matrix,
+                                   gint              *new_width,
+                                   gint              *new_height,
+                                   gint              *new_offset_x,
+                                   gint              *new_offset_y)
+{
+  gboolean is_scaling;
+
+  /* Scaling 3x3 matrix on a 2D plane (with optional translation). */
+  is_scaling = (matrix->coeff[0][0] > 0.0 && matrix->coeff[0][1] == 0.0 &&
+                matrix->coeff[1][0] == 0.0 && matrix->coeff[1][1] > 0.0 &&
+                matrix->coeff[2][0] == 0.0 && matrix->coeff[2][1] == 0.0 && matrix->coeff[2][2] == 1.0);
+
+  if (is_scaling)
+    {
+      gint width;
+      gint height;
+      gint offset_x;
+      gint offset_y;
+
+      width  = gimp_item_get_width (GIMP_ITEM (layer));
+      height = gimp_item_get_height (GIMP_ITEM (layer));
+      gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
+
+      *new_width  = (gint) (width * matrix->coeff[0][0]);
+      *new_height = (gint) (height * matrix->coeff[0][0]);
+
+      *new_offset_x = (gint) (offset_x + matrix->coeff[0][2]);
+      *new_offset_y = (gint) (offset_y + matrix->coeff[1][2]);
+    }
+
+  return is_scaling;
 }

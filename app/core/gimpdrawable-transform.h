@@ -87,4 +87,5 @@ GimpDrawable         * gimp_drawable_transform_paste             (GimpDrawable  
                                                                   GimpColorProfile        *buffer_profile,
                                                                   gint                     offset_x,
                                                                   gint                     offset_y,
-                                                                  gboolean                 new_layer);
+                                                                  gboolean                 new_layer,
+                                                                  gboolean                 push_undo);

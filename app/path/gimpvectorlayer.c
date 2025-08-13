@@ -119,7 +119,8 @@ static void       gimp_vector_layer_transform       (GimpItem               *ite
                                                      GimpTransformDirection  direction,
                                                      GimpInterpolationType   interp_type,
                                                      GimpTransformResize     clip_result,
-                                                     GimpProgress           *progress);
+                                                     GimpProgress           *progress,
+                                                     gboolean                push_undo);
 
 static gboolean   gimp_vector_layer_render          (GimpVectorLayer        *layer);
 static void       gimp_vector_layer_render_path     (GimpVectorLayer        *layer);
@@ -497,7 +498,8 @@ gimp_vector_layer_transform (GimpItem               *item,
                              GimpTransformDirection  direction,
                              GimpInterpolationType   interp_type,
                              GimpTransformResize     clip_result,
-                             GimpProgress           *progress)
+                             GimpProgress           *progress,
+                             gboolean                push_undo)
 {
   GimpVectorLayer *vector_layer = GIMP_VECTOR_LAYER (item);
 
@@ -511,7 +513,7 @@ gimp_vector_layer_transform (GimpItem               *item,
     {
       GIMP_ITEM_CLASS (parent_class)->transform (item, context, matrix,
                                                  direction, interp_type,
-                                                 clip_result, progress);
+                                                 clip_result, progress, push_undo);
     }
 }
 

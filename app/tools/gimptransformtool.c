@@ -924,7 +924,7 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
           gimp_drawable_transform_paste (GIMP_DRAWABLE (selected_objects->data),
                                          new_buffer, buffer_profile,
                                          new_offset_x, new_offset_y,
-                                         new_layer);
+                                         new_layer, TRUE);
           g_object_unref (new_buffer);
         }
       break;

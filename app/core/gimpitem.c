@@ -1777,7 +1777,7 @@ gimp_item_transform (GimpItem               *item,
   g_object_freeze_notify (G_OBJECT (item));
 
   item_class->transform (item, context, matrix, direction, interpolation,
-                         clip_result, progress);
+                         clip_result, progress, TRUE);
 
   g_object_thaw_notify (G_OBJECT (item));
 
