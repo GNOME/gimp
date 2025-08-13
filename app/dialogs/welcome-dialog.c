@@ -1007,19 +1007,20 @@ welcome_dialog_create_release_page (Gimp      *gimp,
         {
           GtkWidget *row;
           gchar     *markup;
+          gchar     *text;
+
+          text = g_markup_escape_text (_((gchar *) gimp_welcome_dialog_items[i]), -1);
 
           /* Add a bold dot for pretty listing. */
           if (i < gimp_welcome_dialog_n_items &&
               gimp_welcome_dialog_demos[i] != NULL)
             {
-              markup = g_strdup_printf ("<span weight='ultrabold'>\xe2\x96\xb6</span>  %s",
-                                        _((gchar *) gimp_welcome_dialog_items[i]));
+              markup = g_strdup_printf ("<span weight='ultrabold'>\xe2\x96\xb6</span>  %s", text);
               n_demos++;
             }
           else
             {
-              markup = g_strdup_printf ("<span weight='ultrabold'>\xe2\x80\xa2</span>  %s",
-                                        _((gchar *) gimp_welcome_dialog_items[i]));
+              markup = g_strdup_printf ("<span weight='ultrabold'>\xe2\x80\xa2</span>  %s", text);
             }
 
           row = gtk_list_box_row_new ();
@@ -1036,6 +1037,7 @@ welcome_dialog_create_release_page (Gimp      *gimp,
           gtk_widget_show_all (row);
 
           g_free (markup);
+          g_free (text);
         }
       gtk_container_add (GTK_CONTAINER (scrolled_window), listbox);
       gtk_list_box_set_selection_mode (GTK_LIST_BOX (listbox),
