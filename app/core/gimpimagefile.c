@@ -71,6 +71,10 @@ struct _GimpImagefilePrivate
 
   gchar         *description;
   gboolean       static_desc;
+
+  gint           popup_size;
+  gint           popup_width;
+  gint           popup_height;
 };
 
 #define GET_PRIVATE(imagefile) ((GimpImagefilePrivate *) gimp_imagefile_get_instance_private ((GimpImagefile *) (imagefile)))
@@ -81,6 +85,12 @@ static void        gimp_imagefile_finalize         (GObject        *object);
 
 static void        gimp_imagefile_name_changed     (GimpObject     *object);
 
+static gboolean    gimp_imagefile_get_popup_size   (GimpViewable  *viewable,
+                                                    gint           width,
+                                                    gint           height,
+                                                    gboolean       dot_for_dot,
+                                                    gint          *popup_width,
+                                                    gint          *popup_height);
 static GdkPixbuf * gimp_imagefile_get_new_pixbuf   (GimpViewable   *viewable,
                                                     GimpContext    *context,
                                                     gint            width,
@@ -147,6 +157,7 @@ gimp_imagefile_class_init (GimpImagefileClass *klass)
   gimp_object_class->name_changed     = gimp_imagefile_name_changed;
 
   viewable_class->name_changed_signal = "info-changed";
+  viewable_class->get_popup_size      = gimp_imagefile_get_popup_size;
   viewable_class->get_new_pixbuf      = gimp_imagefile_get_new_pixbuf;
   viewable_class->get_description     = gimp_imagefile_get_description;
 
@@ -220,6 +231,28 @@ gimp_imagefile_name_changed (GimpObject *object)
 
   if (gimp_object_get_name (object))
     private->file = g_file_new_for_uri (gimp_object_get_name (object));
+}
+
+static gboolean
+gimp_imagefile_get_popup_size (GimpViewable *viewable,
+                               gint          width,
+                               gint          height,
+                               gboolean      dot_for_dot,
+                               gint         *popup_width,
+                               gint         *popup_height)
+{
+  GimpImagefilePrivate *private = GET_PRIVATE (viewable);
+
+  if (width  < private->popup_width ||
+      height < private->popup_height)
+    {
+      *popup_width  = private->popup_width;
+      *popup_height = private->popup_height;
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 static GdkPixbuf *
@@ -931,11 +964,9 @@ gimp_imagefile_load_thumb (GimpImagefile *imagefile,
   gchar                *image_uri;
   gint                  image_width;
   gint                  image_height;
-  GdkPixbuf            *pixbuf    = NULL;
-  GError               *error     = NULL;
-  gint                  size      = MAX (width, height);
-  gint                  pixbuf_width;
-  gint                  pixbuf_height;
+  GdkPixbuf            *pixbuf = NULL;
+  GError               *error  = NULL;
+  gint                  size;
   gint                  preview_width;
   gint                  preview_height;
 
@@ -945,6 +976,19 @@ gimp_imagefile_load_thumb (GimpImagefile *imagefile,
                 "image-width",  &image_width,
                 "image-height", &image_height,
                 NULL);
+
+  /*  use the size remembered below if a pixbuf of the remembered
+   *  dimensions is requested
+   */
+  if (width  == private->popup_width &&
+      height == private->popup_height)
+    {
+      size = private->popup_size;
+    }
+  else
+    {
+      size = MAX (width, height);
+    }
 
   if (gimp_thumbnail_peek_thumb (thumbnail, size) < GIMP_THUMB_STATE_EXISTS)
     return NULL;
@@ -975,11 +1019,16 @@ gimp_imagefile_load_thumb (GimpImagefile *imagefile,
       return NULL;
     }
 
-  pixbuf_width  = gdk_pixbuf_get_width  (pixbuf);
-  pixbuf_height = gdk_pixbuf_get_height (pixbuf);
+  /*  remember the actual dimensions of the returned pixbuf, and the
+   *  size used to request it, so we can later use that size to get a
+   *  popup.
+   */
+  private->popup_size   = size;
+  private->popup_width  = gdk_pixbuf_get_width  (pixbuf);
+  private->popup_height = gdk_pixbuf_get_height (pixbuf);
 
-  gimp_viewable_calc_preview_size (pixbuf_width,
-                                   pixbuf_height,
+  gimp_viewable_calc_preview_size (private->popup_width,
+                                   private->popup_height,
                                    width,
                                    height,
                                    TRUE, 1.0, 1.0,
@@ -987,7 +1036,8 @@ gimp_imagefile_load_thumb (GimpImagefile *imagefile,
                                    &preview_height,
                                    NULL);
 
-  if (preview_width < pixbuf_width || preview_height < pixbuf_height)
+  if (preview_width  != private->popup_width ||
+      preview_height != private->popup_height)
     {
       GdkPixbuf *scaled = gdk_pixbuf_scale_simple (pixbuf,
                                                    preview_width,
@@ -995,18 +1045,15 @@ gimp_imagefile_load_thumb (GimpImagefile *imagefile,
                                                    GDK_INTERP_BILINEAR);
       g_object_unref (pixbuf);
       pixbuf = scaled;
-
-      pixbuf_width  = preview_width;
-      pixbuf_height = preview_height;
     }
 
   if (gdk_pixbuf_get_n_channels (pixbuf) != 3)
     {
       GdkPixbuf *tmp = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8,
-                                       pixbuf_width, pixbuf_height);
+                                       preview_width, preview_height);
 
       gdk_pixbuf_composite_color (pixbuf, tmp,
-                                  0, 0, pixbuf_width, pixbuf_height,
+                                  0, 0, preview_width, preview_height,
                                   0.0, 0.0, 1.0, 1.0,
                                   GDK_INTERP_NEAREST, 255,
                                   0, 0, GIMP_CHECK_SIZE_SM,
