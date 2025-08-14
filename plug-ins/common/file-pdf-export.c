@@ -839,20 +839,16 @@ export_edit_options (GimpProcedure        *procedure,
 {
   GimpExportCapabilities capabilities;
   gboolean               apply_masks;
-  gboolean               layers_as_page;
 
   g_object_get (G_OBJECT (config),
-                "apply-masks",     &apply_masks,
-                "layers-as-pages", &layers_as_page,
+                "apply-masks", &apply_masks,
                 NULL);
 
-  capabilities = (GIMP_EXPORT_CAN_HANDLE_RGB     |
-                  GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                  GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                  GIMP_EXPORT_CAN_HANDLE_ALPHA);
-
-  if (layers_as_page)
-    capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
+  capabilities = (GIMP_EXPORT_CAN_HANDLE_RGB    |
+                  GIMP_EXPORT_CAN_HANDLE_ALPHA  |
+                  GIMP_EXPORT_CAN_HANDLE_GRAY   |
+                  GIMP_EXPORT_CAN_HANDLE_LAYERS |
+                  GIMP_EXPORT_CAN_HANDLE_INDEXED);
 
   if (! apply_masks)
     capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS;
