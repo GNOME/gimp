@@ -54,52 +54,9 @@
 #include "gimp-intl.h"
 
 
-typedef struct
-{
-  const gchar *name;
-  const gchar *collection;
-  gboolean     is_internal;
-} SearchData;
+const gchar * gimp_pdb_get_data_label (GType data_type);
 
 
-static GimpResource * gimp_pdb_get_data_factory_item    (Gimp         *gimp,
-                                                         GType         data_type,
-                                                         const gchar  *name,
-                                                         const gchar  *collection,
-                                                         gboolean      is_internal);
-const gchar *         gimp_pdb_get_data_label           (GType         data_type);
-
-static gboolean       gimp_pdb_search_in_data_container (GimpData     *data,
-                                                         SearchData   *search_data);;
-
-
-GimpDataFactory *
-gimp_pdb_get_data_factory (Gimp  *gimp,
-                           GType  data_type)
-{
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (g_type_is_a (data_type, GIMP_TYPE_DATA), NULL);
-
-  if (g_type_is_a (data_type, GIMP_TYPE_BRUSH_GENERATED))
-    return gimp->brush_factory;
-  else if (g_type_is_a (data_type, GIMP_TYPE_BRUSH))
-    return gimp->brush_factory;
-  else if (g_type_is_a (data_type, GIMP_TYPE_PATTERN))
-    return gimp->pattern_factory;
-  else if (g_type_is_a (data_type, GIMP_TYPE_GRADIENT))
-    return gimp->gradient_factory;
-  else if (g_type_is_a (data_type, GIMP_TYPE_PALETTE))
-    return gimp->palette_factory;
-  else if (g_type_is_a (data_type, GIMP_TYPE_FONT))
-    return gimp->font_factory;
-  else if (g_type_is_a (data_type, GIMP_TYPE_DYNAMICS))
-    return gimp->dynamics_factory;
-  else if (g_type_is_a (data_type, GIMP_TYPE_MYBRUSH))
-    return gimp->mybrush_factory;
-
-  /* If we reach this, it means we forgot a data factory in our list! */
-  g_return_val_if_reached (NULL);
-}
 
 GList *
 gimp_pdb_get_resources (Gimp               *gimp,
@@ -129,7 +86,7 @@ gimp_pdb_get_resources (Gimp               *gimp,
       return NULL;
     }
 
-  factory = gimp_pdb_get_data_factory (gimp, data_type);
+  factory = gimp_get_data_factory (gimp, data_type);
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
 
   container = gimp_data_factory_get_container (factory);
@@ -193,8 +150,9 @@ gimp_pdb_get_resource (Gimp               *gimp,
                        GimpPDBDataAccess   access,
                        GError            **error)
 {
-  GimpResource *resource;
-  const gchar  *label;
+  GimpDataFactory *factory;
+  GimpResource    *resource;
+  const gchar     *label;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
@@ -212,7 +170,8 @@ gimp_pdb_get_resource (Gimp               *gimp,
       return NULL;
     }
 
-  resource = gimp_pdb_get_data_factory_item (gimp, data_type, name, NULL, TRUE);
+  factory = gimp_get_data_factory (gimp, data_type);
+  resource = GIMP_RESOURCE (gimp_data_factory_get_data (factory, name, NULL, TRUE));
 
   if (! resource)
     {
@@ -258,8 +217,9 @@ gimp_pdb_get_resource_by_id (Gimp               *gimp,
                              GimpPDBDataAccess   access,
                              GError            **error)
 {
-  GimpResource *resource;
-  const gchar  *label;
+  GimpDataFactory *factory;
+  GimpResource    *resource;
+  const gchar     *label;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
@@ -277,7 +237,8 @@ gimp_pdb_get_resource_by_id (Gimp               *gimp,
       return NULL;
     }
 
-  resource = gimp_pdb_get_data_factory_item (gimp, data_type, name, collection, is_internal);
+  factory = gimp_get_data_factory (gimp, data_type);
+  resource = GIMP_RESOURCE (gimp_data_factory_get_data (factory, name, collection, is_internal));
 
   if (! resource)
     {
@@ -836,50 +797,6 @@ gimp_pdb_is_canonical_procedure (const gchar  *procedure_name,
 
 /* Private functions. */
 
-static GimpResource *
-gimp_pdb_get_data_factory_item (Gimp        *gimp,
-                                GType        data_type,
-                                const gchar *name,
-                                const gchar *collection,
-                                gboolean     is_internal)
-{
-  GimpDataFactory *factory;
-  GimpContainer   *container;
-  GimpObject      *resource;
-
-  factory = gimp_pdb_get_data_factory (gimp, data_type);
-  g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
-
-  container = gimp_data_factory_get_container (factory);
-
-  if (collection == NULL)
-    {
-      resource = gimp_container_get_child_by_name (container, name);
-    }
-  else
-    {
-      SearchData *data = g_new (SearchData, 1);
-
-      data->name        = name;
-      data->collection  = collection;
-      data->is_internal = is_internal;
-      resource = gimp_container_search (container,
-                                        (GimpContainerSearchFunc) gimp_pdb_search_in_data_container,
-                                        data);
-      g_free (data);
-    }
-
-  if (! resource)
-    resource = gimp_container_get_child_by_name (gimp_data_factory_get_container_obsolete (factory),
-                                                 name);
-
-  if (! resource && ! strcmp (name, "Standard"))
-    resource = (GimpObject *) gimp_data_factory_data_get_standard (factory,
-                                                                   gimp_get_user_context (gimp));
-
-  return (GimpResource *) resource;
-}
-
 const gchar *
 gimp_pdb_get_data_label (GType data_type)
 {
@@ -904,11 +821,4 @@ gimp_pdb_get_data_label (GType data_type)
 
   /* If we reach this, it means we forgot a data type in our list! */
   g_return_val_if_reached (NULL);
-}
-
-static gboolean
-gimp_pdb_search_in_data_container (GimpData   *data,
-                                   SearchData *search_data)
-{
-  return gimp_data_identify (data, search_data->name, search_data->collection, search_data->is_internal);
 }

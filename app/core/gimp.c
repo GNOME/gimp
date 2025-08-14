@@ -55,6 +55,7 @@
 #include "gimp-units.h"
 #include "gimp-utils.h"
 #include "gimpbrush.h"
+#include "gimpbrushgenerated.h"
 #include "gimpbuffer.h"
 #include "gimpcontext.h"
 #include "gimpdynamics.h"
@@ -74,6 +75,8 @@
 #include "gimptemplate.h"
 #include "gimptoolinfo.h"
 #include "gimptreeproxy.h"
+
+#include "text/gimpfont.h"
 
 #include "gimp-intl.h"
 
@@ -1267,6 +1270,34 @@ gimp_get_temp_file (Gimp        *gimp,
   g_object_unref (dir);
 
   return file;
+}
+
+GimpDataFactory *
+gimp_get_data_factory (Gimp  *gimp,
+                       GType  data_type)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (g_type_is_a (data_type, GIMP_TYPE_DATA), NULL);
+
+  if (g_type_is_a (data_type, GIMP_TYPE_BRUSH_GENERATED))
+    return gimp->brush_factory;
+  else if (g_type_is_a (data_type, GIMP_TYPE_BRUSH))
+    return gimp->brush_factory;
+  else if (g_type_is_a (data_type, GIMP_TYPE_PATTERN))
+    return gimp->pattern_factory;
+  else if (g_type_is_a (data_type, GIMP_TYPE_GRADIENT))
+    return gimp->gradient_factory;
+  else if (g_type_is_a (data_type, GIMP_TYPE_PALETTE))
+    return gimp->palette_factory;
+  else if (g_type_is_a (data_type, GIMP_TYPE_FONT))
+    return gimp->font_factory;
+  else if (g_type_is_a (data_type, GIMP_TYPE_DYNAMICS))
+    return gimp->dynamics_factory;
+  else if (g_type_is_a (data_type, GIMP_TYPE_MYBRUSH))
+    return gimp->mybrush_factory;
+
+  /* If we reach this, it means we forgot a data factory in our list! */
+  g_return_val_if_reached (NULL);
 }
 
 static gboolean

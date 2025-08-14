@@ -251,3 +251,7 @@ void           gimp_image_opened           (Gimp                *gimp,
 
 GFile        * gimp_get_temp_file          (Gimp                *gimp,
                                             const gchar         *extension);
+
+GimpDataFactory *
+               gimp_get_data_factory       (Gimp                *gimp,
+                                            GType                data_type);
