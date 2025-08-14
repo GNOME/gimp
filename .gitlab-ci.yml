@@ -813,9 +813,7 @@ dist-flatpak-weekly:
     - .default
     - .publish_nightly
   rules:
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Flatpak.*/'
-      interruptible: true
-    - if: '$GIMP_CI_FLATPAK != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_FLATPAK.*/'
+    - !reference [.flatpak, rules]
   needs: ["gimp-flatpak"]
   stage: distribution
   script:
