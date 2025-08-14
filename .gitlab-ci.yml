@@ -491,32 +491,32 @@ gimp-snap:
 
 
 ## WINDOWS pipelines (native MSYS2) ##
+.installer_pipeline_merge: &INSTALLER_MERGE
+  if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Windows Installer.*/'
+  interruptible: true
+.installer_pipeline_custom: &INSTALLER_CUSTOM
+  if: '$GIMP_CI_WIN_INSTALLER != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_WIN_INSTALLER.*/'
+  variables:
+    INSTALLER_OPTION: '-Dwindows-installer=true'
+
+.store_pipeline_merge: &STORE_MERGE
+  if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Microsoft Store.*/'
+  interruptible: true
+.store_pipelines_custom: &STORE_CUSTOM
+  if: '$GIMP_CI_MS_STORE != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_MS_STORE.*/'
+  variables:
+    STORE_OPTION: '-Dms-store=true'
+
 .win:
   extends: .default
   rules:
+    - <<: *INSTALLER_MERGE
+    - <<: *INSTALLER_CUSTOM
+    - <<: *STORE_MERGE
+    - <<: *STORE_CUSTOM
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Windows Installer.*/ && $CI_MERGE_REQUEST_LABELS =~ /.*Package:Microsoft Store.*/'
       interruptible: true
-      variables:
-        INSTALLER_OPTION: '-Dwindows-installer=true'
-        STORE_OPTION: '-Dms-store=true'
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Windows Installer.*/'
-      interruptible: true
-      variables:
-        INSTALLER_OPTION: '-Dwindows-installer=true'
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Microsoft Store.*/ && $CI_JOB_NAME =~ /.*64.*/ && $CI_JOB_NAME !~ /.*installer.*/'
-      interruptible: true
-      variables:
-        STORE_OPTION: '-Dms-store=true'
     - if: '$GIMP_CI_WIN_INSTALLER != null && $GIMP_CI_MS_STORE != null'
-      variables:
-        INSTALLER_OPTION: '-Dwindows-installer=true'
-        STORE_OPTION: '-Dms-store=true'
-    - if: '$GIMP_CI_WIN_INSTALLER != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_WIN_INSTALLER.*/'
-      variables:
-        INSTALLER_OPTION: '-Dwindows-installer=true'
-    - if: '$GIMP_CI_MS_STORE != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_MS_STORE.*/ && $CI_JOB_NAME =~ /.*64.*/ && $CI_JOB_NAME !~ /.*installer.*/'
-      variables:
-        STORE_OPTION: '-Dms-store=true'
     - <<: *CI_RELEASE
       variables:
         INSTALLER_OPTION: '-Dwindows-installer=true'
@@ -588,8 +588,9 @@ gimp-win:
 .win-x86:
   extends: .win
   rules:
-    - !reference [.win, rules]
-    - if: '$GIMP_CI_MSYS2_WIN32 != null'
+    - <<: *CI_RELEASE
+    - <<: *INSTALLER_MERGE
+    - <<: *INSTALLER_CUSTOM
   parallel:
     matrix:
       - RUNNER: win32-ps
@@ -843,7 +844,9 @@ dist-snap-weekly:
 dist-installer-weekly:
   extends: .default
   rules:
-    - !reference [.win, rules]
+    - <<: *INSTALLER_MERGE
+    - <<: *INSTALLER_CUSTOM
+    - <<: *CI_RELEASE
   needs: ["gimp-win", "gimp-win-x86"]
   stage: distribution
   tags:
@@ -862,9 +865,8 @@ dist-installer-weekly:
 dist-store-weekly:
   extends: .default
   rules:
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Microsoft Store.*/'
-      interruptible: true
-    - if: '$GIMP_CI_MS_STORE != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_MS_STORE.*/'
+    - <<: *STORE_MERGE
+    - <<: *STORE_CUSTOM
     - <<: *CI_RELEASE
   needs: ["gimp-win"]
   stage: distribution
