@@ -445,7 +445,7 @@ gimp-flatpak:
   variables:
     SNAPCRAFT_BASE_VERSION: "8_core24"
     RUNNER: x86_64_v3
-  timeout: 40m
+  timeout: 20m
 
 deps-snap:
   extends: .snap
