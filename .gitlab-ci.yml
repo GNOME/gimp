@@ -398,11 +398,6 @@ gimp-debian-x64:
 deps-flatpak:
   extends: .flatpak
   stage: dependencies
-  #https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/1502
-  #cache:
-    #key: ${CI_JOB_NAME_SLUG}
-    #paths:
-      #- .flatpak-builder/
   script:
     - sh build/linux/flatpak/1_build-deps-flatpakbuilder.sh
   artifacts:
