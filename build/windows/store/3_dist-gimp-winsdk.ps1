@@ -37,7 +37,12 @@ else
   }
 
 ## Windows SDK
-$win_sdk_version = Get-ItemProperty Registry::'HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Microsoft SDKs\Windows\v10.0' | Select-Object -ExpandProperty ProductVersion
+$win_sdk_version = Get-ItemProperty Registry::'HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Microsoft SDKs\Windows\v10.0' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty ProductVersion
+if ("$win_sdk_version" -eq '')
+  {
+    Write-Host '(ERROR): Windows SDK installation not found. Please, install it from: https://developer.microsoft.com/windows/downloads/windows-sdk/' -ForegroundColor Red
+    exit 1
+  }
 $win_sdk_path = Get-ItemProperty Registry::'HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Microsoft SDKs\Windows\v10.0' | Select-Object -ExpandProperty InstallationFolder
 $env:PATH = "${win_sdk_path}bin\${win_sdk_version}.0\$cpu_arch;${win_sdk_path}App Certification Kit;" + $env:PATH
 
