@@ -29,7 +29,7 @@ Base rule to update the "GNU Image Manipulation Program" entry:
   You can find the installed dependencies by running:
 
 ```sh
-ls "/snap/gnome*-sdk/current/usr/lib/$(gcc -print-multiarch)/pkgconfig"
+ls "$(echo /snap/gnome*-sdk/current/usr/lib/$(gcc -print-multiarch)/pkgconfig)"
 ```
 
 ## Versioning the snap
