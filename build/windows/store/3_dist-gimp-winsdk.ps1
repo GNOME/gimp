@@ -42,7 +42,7 @@ if ("$win_sdk_version" -eq '')
   {
     $xmlObject = New-Object XML
     $xmlObject.Load("$PWD\build\windows\store\AppxManifest.xml")
-    $nt_build_max = $xmlObject.Package.Dependencies.TargetDeviceFamily.MaxVersionTested
+    $nt_build_max = (($xmlObject.Package.Dependencies.TargetDeviceFamily.MaxVersionTested | Out-String).Trim()) -replace '..$',''
     Write-Host "(ERROR): Windows SDK installation not found. Please, install it with: winget install Microsoft.WindowsSDK.${nt_build_max}" -ForegroundColor Red
     exit 1
   }
