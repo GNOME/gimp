@@ -420,6 +420,7 @@ gimp-flatpak:
     paths:
       - temp*.flatpak
       - repo*.tar
+      - gimp-flatpak-builder.log
       - gimp-meson-log.tar
     expire_in: 2 days
 
