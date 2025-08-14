@@ -1600,9 +1600,14 @@ load_image (GimpProcedure     *procedure,
     {
       switch (precision_scaled)
         {
-          case 32: signed_offset = G_MAXINT32 - 1; break;
-          case 16: signed_offset = G_MAXINT16 - 1; break;
-          default: signed_offset = G_MAXINT8 - 1;
+          case 32:
+            signed_offset = G_MAXINT32 - 1;
+            break;
+          case 16:
+            signed_offset = G_MAXINT16 - 1;
+            break;
+          default:
+            signed_offset = G_MAXINT8 - 1;
         }
     }
 
