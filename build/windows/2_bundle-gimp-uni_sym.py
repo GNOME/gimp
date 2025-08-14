@@ -3,6 +3,9 @@ import os
 import shutil
 import fnmatch
 
+# This .py script should not even exist
+# Ideally meson should take care of it automatically.
+# See: https://github.com/mesonbuild/meson/issues/12977
 for build_root, _, build_bins in os.walk(os.getenv("MESON_BUILD_ROOT")):
   for file in build_bins:
     if fnmatch.fnmatch(file, '*.dll') or fnmatch.fnmatch(file, '*.exe'):
