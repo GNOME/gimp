@@ -145,6 +145,9 @@ static gboolean xcf_save_effect        (XcfInfo           *info,
                                         GimpImage         *image,
                                         GimpFilter        *filter,
                                         GError           **error);
+static gboolean xcf_save_color         (XcfInfo           *info,
+                                        GeglColor         *color,
+                                        GError           **error);
 static gboolean xcf_save_path          (XcfInfo           *info,
                                         GimpImage         *image,
                                         GimpPath          *path,
@@ -1836,63 +1839,7 @@ xcf_save_prop (XcfInfo    *info,
             case FILTER_PROP_COLOR:
               {
                 GeglColor *color = g_value_get_object (&filter_value);
-
-                if (color)
-                  {
-                    const gchar   *encoding;
-                    const Babl    *format = gegl_color_get_format (color);
-                    const Babl    *space;
-                    GBytes        *bytes;
-                    gconstpointer  data;
-                    gsize          data_length;
-                    int            profile_length = 0;
-
-                    if (babl_format_is_palette (format))
-                      {
-                        guint8     pixel[40];
-                        GeglColor *palette_color;
-
-                        /* As a special case, we don't want to serialize
-                         * palette colors, because they are just too much
-                         * dependent on external data and cannot be
-                         * deserialized back safely. So we convert them first.
-                         */
-                         palette_color = gegl_color_duplicate (color);
-
-                         format = babl_format_with_space ("R'G'B'A u8", format);
-                         gegl_color_get_pixel (palette_color, format, pixel);
-                         gegl_color_set_pixel (color, format, pixel);
-
-                         g_object_unref (palette_color);
-                      }
-
-                    encoding = babl_format_get_encoding (format);
-                    xcf_write_string_check_error (info, (gchar **) &encoding, 1, va_end (args));
-
-                    bytes = gegl_color_get_bytes (color, format);
-                    data  = (guint8 *) g_bytes_get_data (bytes, &data_length);
-
-                    xcf_write_int32_check_error (info, (guint32 *) &data_length, 1, ;);
-                    xcf_write_int8_check_error (info, (const guint8 *) data, data_length, ;);
-                    g_bytes_unref (bytes);
-
-                    space = babl_format_get_space (format);
-                    if (space != babl_space ("sRGB"))
-                      {
-                        guint8 *profile_data;
-
-                        profile_data = (guint8 *) babl_space_get_icc (babl_format_get_space (format),
-                                                                      &profile_length);
-                        xcf_write_int32_check_error (info, (guint32 *) &profile_length, 1, ;);
-
-                        if (profile_data)
-                          xcf_write_int8_check_error (info, profile_data, profile_length, ;);
-                      }
-                    else
-                      {
-                        xcf_write_int32_check_error (info, (guint32 *) &profile_length, 1, ;);
-                      }
-                  }
+                xcf_check_error (xcf_save_color (info, color, error), va_end (args));
               }
               break;
 
@@ -2198,6 +2145,79 @@ xcf_save_effect (XcfInfo     *info,
   effect_mask = GIMP_CHANNEL (gimp_drawable_filter_get_mask (filter_drawable));
   xcf_check_error (xcf_save_channel (info, image, effect_mask,
                                      error), ;);
+
+  return TRUE;
+}
+
+static gboolean
+xcf_save_color (XcfInfo    *info,
+                GeglColor  *color,
+                GError    **error)
+{
+  GError *tmp_error = NULL;
+
+  if (color)
+    {
+      const gchar   *encoding;
+      const Babl    *format = gegl_color_get_format (color);
+      const Babl    *space;
+      GBytes        *bytes;
+      gconstpointer  data;
+      gsize          data_length;
+      int            profile_length = 0;
+
+      if (babl_format_is_palette (format))
+        {
+          guint8     pixel[40];
+          GeglColor *palette_color;
+
+          /* As a special case, we don't want to serialize
+           * palette colors, because they are just too much
+           * dependent on external data and cannot be
+           * deserialized back safely. So we convert them first.
+           */
+          palette_color = gegl_color_duplicate (color);
+
+          format = babl_format_with_space ("R'G'B'A u8", format);
+          gegl_color_get_pixel (palette_color, format, pixel);
+          gegl_color_set_pixel (color, format, pixel);
+
+          g_object_unref (palette_color);
+        }
+
+      encoding = babl_format_get_encoding (format);
+      xcf_write_string_check_error (info, (gchar **) &encoding, 1, ;);
+
+      bytes = gegl_color_get_bytes (color, format);
+      data  = (guint8 *) g_bytes_get_data (bytes, &data_length);
+
+      xcf_write_int32_check_error (info, (guint32 *) &data_length, 1, ;);
+      xcf_write_int8_check_error (info, (const guint8 *) data, data_length, ;);
+      g_bytes_unref (bytes);
+
+      space = babl_format_get_space (format);
+      if (space != babl_space ("sRGB"))
+        {
+          guint8 *profile_data;
+
+          profile_data = (guint8 *) babl_space_get_icc (babl_format_get_space (format),
+                                                        &profile_length);
+          xcf_write_int32_check_error (info, (guint32 *) &profile_length, 1, ;);
+
+          if (profile_data)
+            xcf_write_int8_check_error (info, profile_data, profile_length, ;);
+        }
+      else
+        {
+          xcf_write_int32_check_error (info, (guint32 *) &profile_length, 1, ;);
+        }
+    }
+  else
+    {
+      guint32 uint_val = 0;
+
+      xcf_write_int32 (info, &uint_val, 1, &tmp_error);
+    }
 
   return TRUE;
 }
