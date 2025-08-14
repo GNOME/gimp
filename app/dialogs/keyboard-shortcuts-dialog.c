@@ -53,6 +53,7 @@ keyboard_shortcuts_dialog_new (Gimp *gimp)
   GtkWidget *editor;
   GtkWidget *box;
   GtkWidget *button;
+  gchar     *hint;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -80,10 +81,13 @@ keyboard_shortcuts_dialog_new (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (vbox), editor, TRUE, TRUE, 0);
   gtk_widget_show (editor);
 
-  box = gimp_hint_box_new (_("To edit a shortcut key, click on the "
-                             "corresponding row and type a new "
-                             "accelerator, or press backspace to "
-                             "clear."));
+  hint = g_strdup_printf (_("To edit a shortcut key, select the "
+                            "corresponding row, click on its \"%s\""
+                            "column and type a new accelerator, "
+                            "or press backspace to clear."), _("Shortcut"));
+  box = gimp_hint_box_new (hint);
+  g_free (hint);
+
   gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
   gtk_widget_show (box);
 
