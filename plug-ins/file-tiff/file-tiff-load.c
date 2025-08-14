@@ -2672,7 +2672,8 @@ convert_alias_blend (gint     alias_blend_mode,
     default:
       if (is_group_layer)
         blend_mode = GIMP_LAYER_MODE_PASS_THROUGH;
-      blend_mode = GIMP_LAYER_MODE_NORMAL_LEGACY;
+      else
+        blend_mode = GIMP_LAYER_MODE_NORMAL_LEGACY;
     }
 
   return blend_mode;
