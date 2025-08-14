@@ -25,7 +25,6 @@
 #ifdef GDK_WINDOWING_WAYLAND
 #include <gdk/gdkwayland.h>
 #endif
-#include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
@@ -43,21 +42,21 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpimagefile.h"
 
-#include "dialogs/file-open-dialog.h"
-
 #include "file/file-open.h"
-
-#include "gui/icon-themes.h"
-#include "gui/themes.h"
-
-#include "menus/menus.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpprefsbox.h"
+#include "widgets/gimprow.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "menus/menus.h"
+
+#include "gui/icon-themes.h"
+#include "gui/themes.h"
+
+#include "file-open-dialog.h"
 #include "preferences-dialog-utils.h"
 #include "welcome-dialog.h"
 #include "welcome-dialog-data.h"
@@ -815,14 +814,10 @@ welcome_dialog_create_creation_page (Gimp       *gimp,
     {
       GimpImagefile *imagefile = NULL;
       GtkWidget     *row;
-      GtkWidget     *grid;
-      GtkWidget     *name_label;
-      GtkWidget     *thumbnail = NULL;
       GFile         *file;
-      GimpThumbnail *icon;
       const gchar   *name;
       gchar         *basename;
-      gchar          action_name[20];
+      gchar         *action_name;
 
       imagefile = (GimpImagefile *)
         gimp_container_get_child_by_index (gimp->documents, i);
@@ -844,48 +839,15 @@ welcome_dialog_create_creation_page (Gimp       *gimp,
           continue;
         }
 
-      row = gtk_list_box_row_new ();
-      g_object_set_data_full (G_OBJECT (row),
-                              "file", file,
-                              NULL);
+      row = gimp_row_new (gimp_get_user_context (gimp),
+                          GIMP_VIEWABLE (imagefile),
+                          32, 0);
 
-      g_snprintf (action_name, sizeof (action_name), "file-open-recent-%02u", i + 1);
-      g_object_set_data_full (G_OBJECT (row), "action_name", g_strdup (action_name), NULL);
+      action_name = g_strdup_printf ("file-open-recent-%02u", i + 1);
+      g_object_set_data_full (G_OBJECT (row), "action_name", action_name,
+                              g_free);
 
-      grid = gtk_grid_new ();
-      gtk_grid_set_column_spacing (GTK_GRID (grid), 12);
-      gtk_container_add (GTK_CONTAINER (row), grid);
-
-      icon = gimp_imagefile_get_thumbnail (imagefile);
-      if (icon)
-        {
-          GdkPixbuf *pixbuf = NULL;
-
-          pixbuf = gimp_thumbnail_load_thumb (icon, 1, NULL);
-          if (! pixbuf)
-            pixbuf = gimp_widget_load_icon (grid, GIMP_ICON_DIALOG_QUESTION,
-                                            32);
-
-          if (pixbuf)
-            {
-              pixbuf = gdk_pixbuf_scale_simple (pixbuf,
-                                                32, 32,
-                                                GDK_INTERP_BILINEAR);
-
-              thumbnail = gtk_image_new_from_pixbuf (pixbuf);
-            }
-        }
-
-      if (thumbnail)
-        gtk_grid_attach (GTK_GRID (grid), thumbnail, 1, 0, 1, 1);
-
-      name_label = gtk_label_new (basename);
-      gtk_label_set_ellipsize (GTK_LABEL (name_label), PANGO_ELLIPSIZE_MIDDLE);
-      g_free (basename);
-      g_object_set (name_label, "xalign", 0.0, NULL);
-      gtk_grid_attach (GTK_GRID (grid), name_label, 2, 0, 1, 1);
-
-      gtk_widget_show_all (row);
+      gtk_widget_set_visible (row, TRUE);
       gtk_list_box_insert (GTK_LIST_BOX (listbox), row, -1);
     }
 
@@ -1307,7 +1269,8 @@ welcome_open_images_callback (GtkWidget  *button,
 
       for (GList *iter = rows; iter; iter = iter->next)
         {
-          action_name = (gchar *) g_object_get_data (G_OBJECT (iter->data), "action_name");
+          action_name = (gchar *) g_object_get_data (G_OBJECT (iter->data),
+                                                     "action_name");
 
           if (gimp_ui_manager_activate_action (manager, "file", action_name))
             opened = TRUE;
