@@ -40,7 +40,10 @@ else
 $win_sdk_version = Get-ItemProperty Registry::'HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Microsoft SDKs\Windows\v10.0' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty ProductVersion
 if ("$win_sdk_version" -eq '')
   {
-    Write-Host '(ERROR): Windows SDK installation not found. Please, install it from: https://developer.microsoft.com/windows/downloads/windows-sdk/' -ForegroundColor Red
+    $xmlObject = New-Object XML
+    $xmlObject.Load("$PWD\build\windows\store\AppxManifest.xml")
+    $nt_build_max = $xmlObject.Package.Dependencies.TargetDeviceFamily.MaxVersionTested
+    Write-Host "(ERROR): Windows SDK installation not found. Please, install it with: winget install Microsoft.WindowsSDK.${nt_build_max}" -ForegroundColor Red
     exit 1
   }
 $win_sdk_path = Get-ItemProperty Registry::'HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Microsoft SDKs\Windows\v10.0' | Select-Object -ExpandProperty InstallationFolder
