@@ -77,6 +77,14 @@ struct _GimpDataFactoryPrivate
   GimpAsyncSet            *async_set;
 };
 
+typedef struct
+{
+  const gchar *name;
+  const gchar *collection;
+  gboolean     is_internal;
+} SearchData;
+
+
 #define GET_PRIVATE(obj) (((GimpDataFactory *) (obj))->priv)
 
 
@@ -108,6 +116,9 @@ static void       gimp_data_factory_path_notify         (GObject             *ob
                                                          GimpDataFactory     *factory);
 static GFile    * gimp_data_factory_get_save_dir        (GimpDataFactory     *factory,
                                                          GError             **error);
+
+static gboolean   gimp_data_factory_search_in_container (GimpData            *data,
+                                                         SearchData          *search_data);
 
 
 G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (GimpDataFactory, gimp_data_factory,
@@ -650,6 +661,47 @@ gimp_data_factory_data_cancel (GimpDataFactory *factory)
   GIMP_DATA_FACTORY_GET_CLASS (factory)->data_cancel (factory);
 }
 
+GimpData *
+gimp_data_factory_get_data (GimpDataFactory *factory,
+                            const gchar     *name,
+                            const gchar     *collection,
+                            gboolean         is_internal)
+{
+  GimpContainer *container;
+  GimpObject    *data;
+
+  g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
+
+  container = gimp_data_factory_get_container (factory);
+
+  if (collection == NULL)
+    {
+      data = gimp_container_get_child_by_name (container, name);
+    }
+  else
+    {
+      SearchData *search_data = g_new (SearchData, 1);
+
+      search_data->name        = name;
+      search_data->collection  = collection;
+      search_data->is_internal = is_internal;
+      data = gimp_container_search (container,
+                                    (GimpContainerSearchFunc) gimp_data_factory_search_in_container,
+                                    search_data);
+      g_free (search_data);
+    }
+
+  if (! data)
+    data = gimp_container_get_child_by_name (gimp_data_factory_get_container_obsolete (factory),
+                                             name);
+
+  if (! data && ! strcmp (name, "Standard"))
+    data = (GimpObject *) gimp_data_factory_data_get_standard (factory,
+                                                               gimp_get_user_context (factory->priv->gimp));
+
+  return (GimpData *) data;
+}
+
 gboolean
 gimp_data_factory_has_data_new_func (GimpDataFactory *factory)
 {
@@ -1037,4 +1089,11 @@ gimp_data_factory_get_save_dir (GimpDataFactory  *factory,
   g_list_free_full (writable_path, (GDestroyNotify) g_object_unref);
 
   return writable_dir;
+}
+
+static gboolean
+gimp_data_factory_search_in_container (GimpData   *data,
+                                       SearchData *search_data)
+{
+  return gimp_data_identify (data, search_data->name, search_data->collection, search_data->is_internal);
 }

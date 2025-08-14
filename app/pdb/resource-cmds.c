@@ -29,6 +29,7 @@
 
 #include "pdb-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpbrush.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpgradient.h"
@@ -422,7 +423,7 @@ resource_duplicate_invoker (GimpProcedure         *procedure,
     {
       GimpDataFactory *factory;
 
-      factory = gimp_pdb_get_data_factory (gimp, G_TYPE_FROM_INSTANCE (resource));
+      factory = gimp_get_data_factory (gimp, G_TYPE_FROM_INSTANCE (resource));
 
       resource_copy = (GimpResource *)
         gimp_data_factory_data_duplicate (factory, GIMP_DATA (resource));
@@ -491,7 +492,7 @@ resource_delete_invoker (GimpProcedure         *procedure,
     {
       GimpDataFactory *factory;
 
-      factory = gimp_pdb_get_data_factory (gimp, G_TYPE_FROM_INSTANCE (resource));
+      factory = gimp_get_data_factory (gimp, G_TYPE_FROM_INSTANCE (resource));
 
       if (gimp_data_is_deletable (GIMP_DATA (resource)))
         success = gimp_data_factory_data_delete (factory, GIMP_DATA (resource),

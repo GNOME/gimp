@@ -406,7 +406,7 @@ sub resource_duplicate {
 {
   GimpDataFactory *factory;
 
-  factory = gimp_pdb_get_data_factory (gimp, G_TYPE_FROM_INSTANCE (resource));
+  factory = gimp_get_data_factory (gimp, G_TYPE_FROM_INSTANCE (resource));
 
   resource_copy = (GimpResource *)
     gimp_data_factory_data_duplicate (factory, GIMP_DATA (resource));
@@ -473,7 +473,7 @@ HELP
 {
   GimpDataFactory *factory;
 
-  factory = gimp_pdb_get_data_factory (gimp, G_TYPE_FROM_INSTANCE (resource));
+  factory = gimp_get_data_factory (gimp, G_TYPE_FROM_INSTANCE (resource));
 
   if (gimp_data_is_deletable (GIMP_DATA (resource)))
     success = gimp_data_factory_data_delete (factory, GIMP_DATA (resource),
@@ -486,7 +486,8 @@ CODE
 }
 
 
-@headers = qw("core/gimpbrush.h"
+@headers = qw("core/gimp.h"
+              "core/gimpbrush.h"
               "core/gimpdatafactory.h"
               "core/gimpgradient.h"
               "core/gimppalette.h"

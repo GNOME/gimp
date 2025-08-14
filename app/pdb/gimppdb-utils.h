@@ -19,9 +19,6 @@
 #define __GIMP_PDB_UTILS_H__
 
 
-GimpDataFactory * gimp_pdb_get_data_factory       (Gimp               *gimp,
-                                                   GType               data_type);
-
 GList           * gimp_pdb_get_resources          (Gimp               *gimp,
                                                    GType               data_type,
                                                    const gchar        *name,
