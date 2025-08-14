@@ -14,7 +14,7 @@ Base rule to update the "GNU Image Manipulation Program" entry:
 
 * Similarly to our Flatpak, GIMP Snap uses a [GNOME runtime](https://github.com/ubuntu/gnome-sdk),
   which contains a base of libraries, some of which are dependencies of GIMP.
-  The runtime version is determined by the `base:` snap version in snapcraft.yaml,
+  The runtime version is determined by the `base:` snap version in snapcraft.yaml.
   It is recommended to update that key value following Ubuntu release cycle.
 
 * Other GIMP dependencies which are not available in the GNOME runtime snap
@@ -29,7 +29,7 @@ Base rule to update the "GNU Image Manipulation Program" entry:
   You can find the installed dependencies by running:
 
 ```sh
-ls /snap/gnome*-sdk/current/usr/lib/$(gcc -print-multiarch)/pkgconfig
+ls "/snap/gnome*-sdk/current/usr/lib/$(gcc -print-multiarch)/pkgconfig"
 ```
 
 ## Versioning the snap
