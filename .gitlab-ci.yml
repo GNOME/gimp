@@ -700,7 +700,7 @@ cppcheck:
     - apt-get update
     - apt-get install -y cppcheck
     - cppcheck -q -j8 --enable=all --force --output-file=cppcheck.xml --xml --xml-version=2
-        -i _build -i babl -i gegl -i _install -i .local -i .cache -i gimp-x64 .
+        -i _build -i babl -i gegl -i _install .
     - mkdir report
     - cppcheck-htmlreport --source-dir=. --title=gimp --file=cppcheck.xml --report-dir=report
   artifacts:
