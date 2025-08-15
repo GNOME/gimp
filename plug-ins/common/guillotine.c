@@ -284,6 +284,7 @@ guillotine (GimpImage *image,
               if (! new_image)
                 {
                   g_warning ("Couldn't create new image.");
+                  g_object_unref (file);
                   g_free (hformat);
                   g_free (format);
                   return images;

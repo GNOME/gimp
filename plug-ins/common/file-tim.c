@@ -768,7 +768,7 @@ export_image (GFile                *file,
       fwrite (&height, 2, 1, fp);
 
       /* Writing actual image data */
-      indexes = g_malloc (width * height);
+      indexes = g_malloc ((guint32) width * height);
       gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, width, height),
                        1.0, NULL, indexes,
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);

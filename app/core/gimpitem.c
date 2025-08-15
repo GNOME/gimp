@@ -2650,7 +2650,8 @@ gimp_item_mask_bounds (GimpItem *item,
       ! gimp_channel_is_empty (selection) &&
       gimp_item_bounds (GIMP_ITEM (selection), &x, &y, &width, &height))
     {
-      gint off_x, off_y;
+      gint off_x = 0;
+      gint off_y = 0;
       gint x2, y2;
 
       gimp_item_get_offset (item, &off_x, &off_y);
@@ -2724,7 +2725,8 @@ gimp_item_mask_intersect (GimpItem *item,
       gimp_item_bounds (GIMP_ITEM (selection),
                         &tmp_x, &tmp_y, &tmp_width, &tmp_height))
     {
-      gint off_x, off_y;
+      gint off_x = 0;
+      gint off_y = 0;
 
       gimp_item_get_offset (item, &off_x, &off_y);
 
