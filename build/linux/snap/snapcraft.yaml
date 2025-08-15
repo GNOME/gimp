@@ -1,18 +1,5 @@
 name: gimp
-title: GIMP
-summary: GNU Image Manipulation Program
-description: |
-  Whether you are a graphic designer, photographer, illustrator, or scientist,
-  GIMP provides you with sophisticated tools to get your job done. You can
-  further enhance your productivity with GIMP thanks to many customization
-  options and 3rd party plugins.
-
-website: https://gimp.org/
-contact: https://www.gimp.org/discuss.html
-issues: https://gitlab.gnome.org/GNOME/gimp/-/issues
-source-code: https://gitlab.gnome.org/GNOME/gimp
-license: GPL-3.0+
-
+adopt-info: gimp
 version: 3.1.3
 grade: devel
 base: core24
@@ -168,6 +155,8 @@ parts:
       current_path=$(grep "# (plug-in-path" ${CRAFT_PART_INSTALL}/etc/gimp/3.0/gimprc | cut -d '"' -f2)
       echo "(plug-in-path \"${current_path}\")" >> ${CRAFT_PART_INSTALL}/etc/gimp/3.0/gimprc
       craftctl default
+    parse-info:
+      - usr/share/metainfo/org.gimp.GIMP.appdata.xml
     override-prime: |
       # get gimp icon for proper desktop integration
       cp $CRAFT_STAGE/usr/share/icons/hicolor/scalable/apps/gimp.svg $CRAFT_PRIME/gimp
