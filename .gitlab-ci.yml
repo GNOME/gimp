@@ -531,8 +531,6 @@ gimp-snap:
     - $RUNNER
   variables:
     MSYS_ROOT: 'C:/msys64'
-    CC: cc
-    CXX: c++
     #meson.build forces non-relocatable .pc. See: https://github.com/mesonbuild/meson/issues/14346
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   before_script:
