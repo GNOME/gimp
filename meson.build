@@ -322,19 +322,32 @@ endif
 
 
 if platform_windows and cc.get_id() == 'clang'
-  # Optimize DWARF symbols to Dr. Mingw
-  # https://github.com/jrfonseca/drmingw/issues/42
-  compiler_args += '-gdwarf-aranges'
   # Workaround to get colored output
   # https://github.com/msys2/MINGW-packages/issues/2988
   compiler_args += '-fansi-escape-codes'
 endif
 
-# Generate native .pdb (CodeView) debug symbols (for DIA or DbgHelp debuggers and LLDB)
-pdb_support = cc.has_argument('-gcodeview') and cc.has_link_argument('-Wl,--pdb=')
-if platform_windows and pdb_support and cc.get_id() == 'clang'
-  compiler_args += '-gcodeview'
-  linker_args += '-Wl,--pdb='
+
+# DEBUG SYMBOLS
+debugging_format = 'disabled'
+if get_option('buildtype') == 'debug' or get_option('buildtype') == 'debugoptimized'
+  if not platform_windows
+    # DWARF symbols for GCC and LLDB on Unix
+    debugging_format = 'native'
+  elif platform_windows and get_option('win-debugging') == 'native' and cc.has_argument('-gcodeview') and cc.has_link_argument('-Wl,--pdb=') and cc.get_id() == 'clang'
+    # CodeView symbols for DIA or DbgHelp debuggers and LLDB on Windows
+    debugging_format = 'native'
+    compiler_args += '-gcodeview'
+    linker_args += '-Wl,--pdb='
+  else
+    # DWARF symbols for GCC and LLDB on Windows (fallback)
+    debugging_format = 'DWARF'
+    if cc.get_id() == 'clang'
+      # Optimize DWARF symbols to Dr. Mingw
+      # https://github.com/jrfonseca/drmingw/issues/42
+      compiler_args += '-gdwarf-aranges'
+    endif
+  endif
 endif
 
 
@@ -2044,7 +2057,7 @@ pkgconfig.generate(libgimpui,
 # Install native debug data (.pdb) on Windows
 # Ideally meson should take care of it automatically.
 # See: https://github.com/mesonbuild/meson/issues/12977
-if platform_windows and pdb_support and cc.get_id() == 'clang'
+if debugging_format == 'native'
   install_win_debug_script = find_program('build/windows/2_bundle-gimp-uni_sym.py')
   meson.add_install_script(install_win_debug_script)
 endif
@@ -2094,6 +2107,7 @@ final_message = [
 '''  Default ICC directory (Linux): @0@'''.format(icc_directory),
 '''  32-bit DLL folder (Win32):     @0@'''.format(get_option('win32-32bits-dll-folder')),
 '''  Dashboard backtraces:          @0@'''.format(dashboard_backtrace),
+'''  Debug symbols format:          @0@'''.format(debugging_format),
 '''  Binary symlinks:               @0@'''.format(enable_default_bin),
 '''  OpenMP:                        @0@'''.format(have_openmp),
 '',
