@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-08-15 16:02+0000\n"
-"PO-Revision-Date: 2025-08-15 19:04+0300\n"
+"POT-Creation-Date: 2025-08-15 16:59+0000\n"
+"PO-Revision-Date: 2025-08-15 20:51+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -4029,6 +4029,18 @@ msgstr "Експортує файли у форматі потоку коду JP
 msgid "_Number of Resolutions"
 msgstr "_Кількість роздільностей"
 
+#. Not having color information is expected.
+#: plug-ins/common/file-jp2.c:1212
+#| msgid "JPEG 2000 codestream"
+msgid "Opening JPEG 2000 codestream"
+msgstr "Відкриття кодового потоку JPEG 2000"
+
+#. Unexpected, but let's be a bit flexible and ask.
+#: plug-ins/common/file-jp2.c:1215
+#| msgid "JPEG 2000 image"
+msgid "JPEG 2000 image with no color space"
+msgstr "Зображення JPEG 2000 без простору кольорів"
+
 #: plug-ins/common/file-jp2.c:1240
 #, c-format
 msgid "Unsupported JPEG 2000%s '%s' with %d components."
@@ -6610,7 +6622,6 @@ msgstr "«%s»: некоректне значення заголовка OTA"
 
 #: plug-ins/common/file-wbmp.c:391
 #, c-format
-#| msgid "Invalid layer dimensions: %dx%d"
 msgid "'%s': Invalid dimensions %u x %u"
 msgstr "«%s»: некоректні розміри, %u x %u"
 
