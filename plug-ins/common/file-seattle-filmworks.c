@@ -506,9 +506,8 @@ load_sfw93a (FILE    *fp,
   FILE           *temp_fp;
   guchar          data[file_size - 30];
 
-  fseek (fp, 30, SEEK_SET);
-
-  if (fread (&data, file_size - 30, 1, fp) != 1)
+  if (fseek (fp, 30, SEEK_SET) < 0 ||
+      fread (&data, file_size - 30, 1, fp) != 1)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Invalid file."));

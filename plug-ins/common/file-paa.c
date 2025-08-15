@@ -43,8 +43,8 @@ typedef enum
 {
   RGBA_4444  = 0x4444,
   RGBA_5551  = 0x1555,
-  RGBA_8888  = 0x8888,
   GRAY_ALPHA = 0x8080,
+  RGBA_8888  = 0x8888,
   DXT1       = 0xFF01,
   DXT2       = 0xFF02,
   DXT3       = 0xFF03,
@@ -327,11 +327,11 @@ load_image (GFile                *file,
       buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
       /* Non-DDS textures are compressed with LZSS */
-      if (paa_type <= GRAY_ALPHA)
+      if (paa_type <= RGBA_8888)
         {
           guchar *uncompressed_data;
           gint    estimated_size;
-          guint   dims = width * height;
+          guint   dims = (guint32) width * height;
           guchar  pixels[dims * 4];
 
           if (paa_type != RGBA_8888)

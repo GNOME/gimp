@@ -1392,6 +1392,9 @@ load_apng_image (GFile      *file,
       if (! png_id)
         {
           fclose (fp);
+          if (ihdr_chunk.data)
+            g_free (ihdr_chunk.data);
+
           g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                        _("Could not read APNG frames. "
                          "They will be discarded."));
@@ -1426,6 +1429,9 @@ load_apng_image (GFile      *file,
       else
         {
           fclose (fp);
+          if (ihdr_chunk.data)
+            g_free (ihdr_chunk.data);
+
           g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                        _("Could not read APNG frames. "
                          "They will be discarded."));
@@ -1600,6 +1606,8 @@ load_apng_image (GFile      *file,
             }
           g_list_free (other_chunks);
         }
+      if (prior_pixels)
+        g_free (prior_pixels);
     }
 
   fclose (fp);
