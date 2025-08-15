@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-08-09 18:45+0000\n"
-"PO-Revision-Date: 2025-08-09 21:56+0300\n"
+"POT-Creation-Date: 2025-08-15 16:02+0000\n"
+"PO-Revision-Date: 2025-08-15 19:04+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -67,7 +67,7 @@ msgstr "Приклад додатка мовою C"
 #: plug-ins/common/cml-explorer.c:2144 plug-ins/common/cml-explorer.c:2354
 #: plug-ins/common/curve-bend.c:1787 plug-ins/common/curve-bend.c:1822
 #: plug-ins/common/file-gif-export.c:1209 plug-ins/common/file-heif.c:2487
-#: plug-ins/common/file-pdf-export.c:1073 plug-ins/common/file-pdf-load.c:585
+#: plug-ins/common/file-pdf-export.c:1069 plug-ins/common/file-pdf-load.c:585
 #: plug-ins/common/qbist.c:839 plug-ins/common/qbist.c:881
 #: plug-ins/common/sphere-designer.c:2291
 #: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:427
@@ -608,14 +608,14 @@ msgstr "Жалюзі"
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:728
 #: plug-ins/common/file-farbfeld.c:296 plug-ins/common/file-gegl.c:446
 #: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:408
-#: plug-ins/common/file-jp2.c:1604 plug-ins/common/file-pcx.c:710
+#: plug-ins/common/file-jp2.c:1621 plug-ins/common/file-pcx.c:710
 #: plug-ins/common/file-pcx.c:718 plug-ins/common/file-pcx.c:726
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1082
 #: plug-ins/common/file-pnm.c:845 plug-ins/common/file-qoi.c:296
 #: plug-ins/common/file-raw-data.c:820 plug-ins/common/file-raw-data.c:2004
 #: plug-ins/common/file-sunras.c:1059 plug-ins/common/file-tga.c:1103
 #: plug-ins/common/file-tim.c:402 plug-ins/common/file-tim.c:509
-#: plug-ins/common/file-wbmp.c:389 plug-ins/common/file-wbmp.c:465
+#: plug-ins/common/file-wbmp.c:398 plug-ins/common/file-wbmp.c:474
 #: plug-ins/common/file-xbm.c:887 plug-ins/common/film.c:865
 #: plug-ins/common/smooth-palette.c:301 plug-ins/common/tile.c:396
 #: plug-ins/file-bmp/bmp-load.c:809 plug-ins/file-exr/file-exr.c:302
@@ -1049,7 +1049,7 @@ msgstr "_Відкрити"
 #. The Save button
 #: plug-ins/common/cml-explorer.c:1459 plug-ins/common/cml-explorer.c:2145
 #: plug-ins/common/curve-bend.c:1261 plug-ins/common/curve-bend.c:1823
-#: plug-ins/common/file-pdf-export.c:1072 plug-ins/common/qbist.c:882
+#: plug-ins/common/file-pdf-export.c:1068 plug-ins/common/qbist.c:882
 #: plug-ins/common/qbist.c:1003 plug-ins/common/sphere-designer.c:2294
 #: plug-ins/common/sphere-designer.c:2712 plug-ins/flame/flame.c:619
 #: plug-ins/flame/flame.c:1242
@@ -1238,7 +1238,7 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/common/file-dicom.c:1541 plug-ins/common/file-farbfeld.c:355
 #: plug-ins/common/file-mng.c:875 plug-ins/common/file-mng.c:1225
 #: plug-ins/common/file-pcx.c:1200 plug-ins/common/file-pdf-export.c:680
-#: plug-ins/common/file-png.c:1915 plug-ins/common/file-raw-data.c:1509
+#: plug-ins/common/file-png.c:1923 plug-ins/common/file-raw-data.c:1509
 #: plug-ins/common/file-raw-data.c:1538 plug-ins/common/file-sunras.c:614
 #: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:630
 #: plug-ins/common/file-xmc.c:1272 plug-ins/common/sphere-designer.c:2205
@@ -2616,7 +2616,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #.
 #: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:352
 #: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:473
-#: plug-ins/common/file-heif.c:1049 plug-ins/common/file-jp2.c:1376
+#: plug-ins/common/file-heif.c:1049 plug-ins/common/file-jp2.c:1377
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
 #: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
 #: plug-ins/common/file-png.c:792 plug-ins/common/file-pnm.c:688
@@ -2701,9 +2701,9 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #.
 #: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:347
 #: plug-ins/common/file-gif-export.c:939 plug-ins/common/file-html-table.c:360
-#: plug-ins/common/file-jp2.c:1783 plug-ins/common/file-jpegxl.c:1389
+#: plug-ins/common/file-jp2.c:1800 plug-ins/common/file-jpegxl.c:1389
 #: plug-ins/common/file-pcx.c:1083 plug-ins/common/file-pix.c:636
-#: plug-ins/common/file-png.c:1907 plug-ins/common/file-pnm.c:1623
+#: plug-ins/common/file-png.c:1915 plug-ins/common/file-pnm.c:1623
 #: plug-ins/common/file-ps.c:1369 plug-ins/common/file-qoi.c:350
 #: plug-ins/common/file-sunras.c:605 plug-ins/common/file-tga.c:1217
 #: plug-ins/common/file-tim.c:622 plug-ins/common/file-xbm.c:1026
@@ -4053,63 +4053,63 @@ msgstr "Назва профілю кольорів, який використа�
 msgid "Profile: %s"
 msgstr "Профіль: %s"
 
-#: plug-ins/common/file-jp2.c:1384 plug-ins/common/file-wmf.c:238
+#: plug-ins/common/file-jp2.c:1385 plug-ins/common/file-wmf.c:238
 #: plug-ins/common/file-wmf.c:596
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr "Не вдається відкрити «%s» для читання."
 
-#: plug-ins/common/file-jp2.c:1393
+#: plug-ins/common/file-jp2.c:1394
 #, c-format
 msgid "Failed to initialize decoder for '%s', out of memory?"
 msgstr "Не вдалося ініціалізувати декодер для «%s». Не вистачає пам'яті?"
 
-#: plug-ins/common/file-jp2.c:1409
+#: plug-ins/common/file-jp2.c:1410
 #, c-format
 msgid "Couldn't set parameters on decoder for '%s'."
 msgstr "Не вдається встановити параметри декодера для «%s»."
 
-#: plug-ins/common/file-jp2.c:1417
+#: plug-ins/common/file-jp2.c:1418
 #, c-format
 msgid "Couldn't read JP2 header from '%s'."
 msgstr "Не вдається зчитати заголовок JP2 з «%s»"
 
-#: plug-ins/common/file-jp2.c:1425
+#: plug-ins/common/file-jp2.c:1426
 #, c-format
 msgid "Couldn't decode JP2 image in '%s'."
 msgstr "Не вдається декодувати зображення JP2 в «%s»"
 
-#: plug-ins/common/file-jp2.c:1433
+#: plug-ins/common/file-jp2.c:1434
 #, c-format
 msgid "Couldn't decompress JP2 image in '%s'."
 msgstr "Не вдається розпакувати зображення JP2 в «%s»"
 
-#: plug-ins/common/file-jp2.c:1464
+#: plug-ins/common/file-jp2.c:1465
 #, c-format
 msgid "Couldn't decode CIELAB JP2 image in '%s'."
 msgstr "Не вдається декодувати зображення CIELAB JP2 в «%s»."
 
-#: plug-ins/common/file-jp2.c:1521
+#: plug-ins/common/file-jp2.c:1522
 #, c-format
 msgid "Unknown color space in JP2 codestream '%s'."
 msgstr "Невідомий колірний простір у кодовому потоці JP2 «%s»."
 
-#: plug-ins/common/file-jp2.c:1532
+#: plug-ins/common/file-jp2.c:1533
 #, c-format
 msgid "Couldn't convert YCbCr JP2 image '%s' to RGB."
 msgstr "Неможливо перетворити зображення YCbCr JP2 «%s» в RGB."
 
-#: plug-ins/common/file-jp2.c:1542
+#: plug-ins/common/file-jp2.c:1543
 #, c-format
 msgid "Couldn't convert CMYK JP2 image in '%s' to RGB."
 msgstr "Неможливо перетворити зображення CMYK JP2 в «%s» в RGB."
 
-#: plug-ins/common/file-jp2.c:1554
+#: plug-ins/common/file-jp2.c:1555
 #, c-format
 msgid "Couldn't convert xvYCC JP2 image in '%s' to RGB."
 msgstr "Неможливо перетворити зображення xvYCC JP2 в «%s» в RGB."
 
-#: plug-ins/common/file-jp2.c:1581
+#: plug-ins/common/file-jp2.c:1582
 #, c-format
 msgid "Unsupported color space in JP2 image '%s'."
 msgstr "Невідомий колірний простір у зображенні JP2 «%s»."
@@ -4226,7 +4226,7 @@ msgstr ""
 #: plug-ins/common/file-seattle-filmworks.c:359
 #: plug-ins/common/file-seattle-filmworks.c:370
 #: plug-ins/common/file-seattle-filmworks.c:380
-#: plug-ins/common/file-seattle-filmworks.c:514
+#: plug-ins/common/file-seattle-filmworks.c:513
 #, c-format
 msgid "Invalid file."
 msgstr "Неправильний файл."
@@ -4374,7 +4374,7 @@ msgstr "Записати фрагмент tIME (час створення)"
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: plug-ins/common/file-mng.c:723 plug-ins/common/file-png.c:2773
+#: plug-ins/common/file-mng.c:723 plug-ins/common/file-png.c:2781
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Не вдається зберегти прозорість, натомість зберігатиметься непрозорість."
@@ -4541,13 +4541,13 @@ msgstr "%s: не вдалося завантажити усі зображенн
 msgid "'%s' is not a PCX file"
 msgstr "«%s»: не є файлом PCX"
 
-#: plug-ins/common/file-pcx.c:672 plug-ins/common/file-wbmp.c:454
+#: plug-ins/common/file-pcx.c:672 plug-ins/common/file-wbmp.c:463
 #: plug-ins/file-bmp/bmp-load.c:606 plug-ins/file-psd/psd-load.c:572
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Непідтримувана ширина зображення: %d"
 
-#: plug-ins/common/file-pcx.c:679 plug-ins/common/file-wbmp.c:460
+#: plug-ins/common/file-pcx.c:679 plug-ins/common/file-wbmp.c:469
 #: plug-ins/file-bmp/bmp-load.c:615 plug-ins/file-psd/psd-load.c:564
 #, c-format
 msgid "Unsupported or invalid image height: %d"
@@ -4716,7 +4716,7 @@ msgstr ""
 "Переконайтесь, що ввели правильну назву файла й вибрана адреса не лише для "
 "читання! "
 
-#: plug-ins/common/file-pdf-export.c:984
+#: plug-ins/common/file-pdf-export.c:980
 #, c-format
 msgid ""
 "The following fonts cannot be found: %s.\n"
@@ -4728,49 +4728,49 @@ msgstr ""
 "шрифти, яких не вистачає, до експортування зображення. Якщо ви цього не "
 "зробите, досягти прийнятних результатів не вдасться."
 
-#: plug-ins/common/file-pdf-export.c:1054
+#: plug-ins/common/file-pdf-export.c:1050
 msgid "Export Image as Multi-Page PDF"
 msgstr "Експортувати зображення як багатосторінковий PDF"
 
-#: plug-ins/common/file-pdf-export.c:1055
+#: plug-ins/common/file-pdf-export.c:1051
 #: plug-ins/metadata/metadata-editor.c:5604
 msgid "_Export"
 msgstr "_Експорт"
 
-#: plug-ins/common/file-pdf-export.c:1064
+#: plug-ins/common/file-pdf-export.c:1060
 msgid "Save to:"
 msgstr "Зберегти у:"
 
-#: plug-ins/common/file-pdf-export.c:1068
+#: plug-ins/common/file-pdf-export.c:1064
 msgid "Browse..."
 msgstr "Огляд…"
 
-#: plug-ins/common/file-pdf-export.c:1069
+#: plug-ins/common/file-pdf-export.c:1065
 msgid "Multipage PDF export"
 msgstr "Експортування в PDF з кількома сторінками"
 
-#: plug-ins/common/file-pdf-export.c:1113
+#: plug-ins/common/file-pdf-export.c:1109
 msgid "Remove the selected pages"
 msgstr "Вилучити вибрані сторінки"
 
-#: plug-ins/common/file-pdf-export.c:1127
+#: plug-ins/common/file-pdf-export.c:1123
 msgid "Add this image"
 msgstr "Додати це зображення"
 
-#: plug-ins/common/file-pdf-export.c:1223
-#: plug-ins/common/file-pdf-export.c:1296
-#: plug-ins/common/file-pdf-export.c:1394 plug-ins/common/file-ps.c:2218
+#: plug-ins/common/file-pdf-export.c:1219
+#: plug-ins/common/file-pdf-export.c:1292
+#: plug-ins/common/file-pdf-export.c:1390 plug-ins/common/file-ps.c:2218
 #: plug-ins/file-tiff/file-tiff-load.c:1563
 #, c-format
 msgid "Page %d"
 msgstr "Сторінка %d"
 
-#: plug-ins/common/file-pdf-export.c:1263
+#: plug-ins/common/file-pdf-export.c:1259
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr ""
 "Помилка! Щоб зберегти файл, потрібно додати щонайменше одне зображення!"
 
-#: plug-ins/common/file-pdf-export.c:1441 plug-ins/print/print-draw-page.c:125
+#: plug-ins/common/file-pdf-export.c:1437 plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "Неможливо опрацювати розмір (ширину чи висоту) зображення."
 
@@ -5042,30 +5042,30 @@ msgstr ""
 msgid "Importing APNG frames from '%s'"
 msgstr "Імпортування кадрів APNG з «%s»"
 
-#: plug-ins/common/file-png.c:1396 plug-ins/common/file-png.c:1430
-#: plug-ins/common/file-png.c:1454
+#: plug-ins/common/file-png.c:1399 plug-ins/common/file-png.c:1436
+#: plug-ins/common/file-png.c:1460
 #, c-format
 msgid "Could not read APNG frames. They will be discarded."
 msgstr "Не вдалося прочитати кадри APNG. Їх буде відкинуто."
 
-#: plug-ins/common/file-png.c:1545
+#: plug-ins/common/file-png.c:1551
 #, c-format
 msgid "Invalid APNG: Image data appeared before actTL chunk."
 msgstr "Некоректний APNG: дані зображення розташовано до фрагмента actTL."
 
-#: plug-ins/common/file-png.c:1629
+#: plug-ins/common/file-png.c:1637
 msgid "Apply PNG Offset"
 msgstr "Застосувати зміщення PNG"
 
-#: plug-ins/common/file-png.c:1633
+#: plug-ins/common/file-png.c:1641
 msgid "Ignore PNG offset"
 msgstr "Знехтувати зміщення PNG"
 
-#: plug-ins/common/file-png.c:1634
+#: plug-ins/common/file-png.c:1642
 msgid "Apply PNG offset to layer"
 msgstr "Застосувати до шару зміщення PNG"
 
-#: plug-ins/common/file-png.c:1659
+#: plug-ins/common/file-png.c:1667
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -5074,13 +5074,13 @@ msgstr ""
 "Зображення формату PNG, яке ви імпортуєте, має зміщення %d, %d. Застосувати "
 "це зміщення до шару?"
 
-#: plug-ins/common/file-png.c:1872
+#: plug-ins/common/file-png.c:1880
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr ""
 "Помилка створення PNG (записування struct) під час експортування «%s»."
 
-#: plug-ins/common/file-png.c:1881
+#: plug-ins/common/file-png.c:1889
 #, c-format
 msgid ""
 "Error while exporting '%s'. Could not create PNG header info structure."
@@ -5088,7 +5088,7 @@ msgstr ""
 "Помилка при експортуванні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
 
-#: plug-ins/common/file-png.c:1889
+#: plug-ins/common/file-png.c:1897
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Помилка при експортуванні «%s». Не вдається експортувати зображення."
@@ -6182,7 +6182,6 @@ msgstr "Зображення Seattle FilmWorks"
 
 #: plug-ins/common/file-seattle-filmworks.c:162
 #: plug-ins/common/file-seattle-filmworks.c:164
-#| msgid "Load file in the Farbfeld file format"
 msgid "Load file in the Seattle FilmWorks file format"
 msgstr "Завантажити файл у форматі Seattle FilmWorks"
 
@@ -6192,14 +6191,13 @@ msgid "Uncompressed SFW94A format is not yet supported."
 msgstr "Підтримки формату SFW94A без стискання ще не передбачено."
 
 #: plug-ins/common/file-seattle-filmworks.c:415
-#: plug-ins/common/file-seattle-filmworks.c:529
+#: plug-ins/common/file-seattle-filmworks.c:528
 #, c-format
 msgid "Unable to convert SFW image."
 msgstr "Не вдалося перетворити зображення SFW."
 
 #: plug-ins/common/file-seattle-filmworks.c:487
 #, c-format
-#| msgid "Unsupported DXGI Format: %u"
 msgid "Unsupported SFW format '%s'"
 msgstr "Непідтримуваний формат SFW «%s»"
 
@@ -6609,6 +6607,12 @@ msgstr "«%s»: некоректне значення типу OTA"
 #, c-format
 msgid "'%s': Invalid OTA header value"
 msgstr "«%s»: некоректне значення заголовка OTA"
+
+#: plug-ins/common/file-wbmp.c:391
+#, c-format
+#| msgid "Invalid layer dimensions: %dx%d"
+msgid "'%s': Invalid dimensions %u x %u"
+msgstr "«%s»: некоректні розміри, %u x %u"
 
 #: plug-ins/common/file-wmf.c:177
 msgid "Microsoft WMF file"
@@ -11452,27 +11456,27 @@ msgstr ""
 "Не вдалося прочитати рядок сканування. Зображення може бути пошкоджено. "
 "Рядок помилки — %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:2992
+#: plug-ins/file-tiff/file-tiff-load.c:2993
 msgid "Import from TIFF"
 msgstr "Імпорт TIFF"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3000
+#: plug-ins/file-tiff/file-tiff-load.c:3001
 msgid "_Show reduced images"
 msgstr "Показати з_меншені зображення"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3045
+#: plug-ins/file-tiff/file-tiff-load.c:3046
 msgid "Process extra channel as:"
 msgstr "Обробляти зайвий канал як:"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3048
+#: plug-ins/file-tiff/file-tiff-load.c:3049
 msgid "_Non-premultiplied alpha"
 msgstr "Б_ез попередньо помноженої альфи"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3049
+#: plug-ins/file-tiff/file-tiff-load.c:3050
 msgid "Pre_multiplied alpha"
 msgstr "_Попередньо помножена альфа"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3050
+#: plug-ins/file-tiff/file-tiff-load.c:3051
 msgid "Channe_l"
 msgstr "_Канал"
 
