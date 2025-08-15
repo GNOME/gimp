@@ -143,7 +143,6 @@ deps-debian:
     entrypoint: [""]
   variables:
     GIT_STRATEGY: none
-    UMFPACK: libumfpack5
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   script:
     - export container=docker
@@ -207,7 +206,7 @@ deps-debian:
             librsvg2-dev
             libsuitesparse-dev
             libtiff-dev
-            $UMFPACK
+            libumfpack5
             libunwind-dev
             libwebp-dev
             libwmf-dev
