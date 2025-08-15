@@ -2361,6 +2361,8 @@ select_colors_gray (QuantizeObj *quantobj,
   /* Compute the representative color for each box, fill colormap */
   for (i = 0; i < numboxes; i++)
     compute_color_gray (quantobj, histogram, boxlist + i, i);
+
+  g_free (boxlist);
 }
 
 
