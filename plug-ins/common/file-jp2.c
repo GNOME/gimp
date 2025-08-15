@@ -1209,10 +1209,10 @@ open_dialog (GimpProcedure    *procedure,
 
   if (format == OPJ_CODEC_J2K)
     /* Not having color information is expected. */
-    title = "Opening JPEG 2000 codestream";
+    title = _("Opening JPEG 2000 codestream");
   else
     /* Unexpected, but let's be a bit flexible and ask. */
-    title = "JPEG 2000 image with no color space";
+    title = _("JPEG 2000 image with no color space");
 
   gimp_ui_init (PLUG_IN_BINARY);
 
