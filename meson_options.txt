@@ -29,6 +29,8 @@ option('with-sendmail',     type: 'string',  value: '',   description: 'Use Send
 option('win32-32bits-dll-folder', type: 'string',  value: '32/bin', description: 'alternative folder with 32-bit versions of DLL libraries on Windows')
 option('libunwind',         type: 'boolean', value: true, description: 'Build with libunwind for backtrace')
 option('libbacktrace',      type: 'boolean', value: true, description: 'Build with libbacktrace support')
+option('win-debugging',     type: 'combo',   value: 'native', description: 'Build with native/CodeView debug symbols or with DWARF',
+                                             choices: [ 'native', 'dwarf' ])
 
 # Features
 
