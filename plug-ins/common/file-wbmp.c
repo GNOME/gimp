@@ -385,6 +385,15 @@ load_otb_image (GFile   *file,
       height = GUINT16_FROM_BE (height);
     }
 
+  if (width == 0 || height == 0)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                    _("'%s': Invalid dimensions %u x %u"),
+                    gimp_file_get_utf8_name (file),
+                    width, height);
+      goto out;
+    }
+
   image = gimp_image_new (width, height, GIMP_INDEXED);
   layer = gimp_layer_new (image, _("Background"), width, height,
                           GIMP_INDEXED_IMAGE, 100,
@@ -394,7 +403,7 @@ load_otb_image (GFile   *file,
                              babl_format ("R'G'B' u8"), (guint8 *) mono, 6);
   gimp_image_insert_layer (image, layer, NULL, 0);
 
-  total_size = width * height;
+  total_size = (gsize) width * height;
   dest       = g_malloc0 (total_size);
 
   while (ReadOK (fd, &value, 1))
