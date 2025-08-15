@@ -82,6 +82,7 @@ parts:
 
   babl:
     source: https://gitlab.gnome.org/GNOME/babl.git
+    #source-tag: BABL_0_1_114
     source-depth: 1
     build-environment: *SNAP_ENVIRON
     plugin: meson
@@ -95,6 +96,7 @@ parts:
     after:
       - babl
     source: https://gitlab.gnome.org/GNOME/gegl.git
+    #source-tag: GEGL_0_4_62
     source-depth: 1
     build-environment: *SNAP_ENVIRON
     plugin: meson

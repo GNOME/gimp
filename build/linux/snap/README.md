@@ -34,7 +34,8 @@ ls "$(echo /snap/gnome*-sdk/current/usr/lib/$(gcc -print-multiarch)/pkgconfig)"
 
 ## Versioning the snap
 
-Aside from bumping commits of babl, gegl and gimp parts, we:
+Aside from (un)commenting and bumping babl and gegl source-tag and
+setting the version of gimp, we:
 
 * For a **nightly** build, set "devel" on "grade" and
   use "experimental" on build-id at gimp part "meson-parameters".
