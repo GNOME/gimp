@@ -31,7 +31,9 @@ install_data([
     'sgi-tests.ini',
     'tga-tests.ini',
     'tif-tests.ini',
+    'wbmp-tests.ini',
     'webp-tests.ini',
+    'wmf-tests.ini',
     'xcf-tests.ini',
     # file format specific config files for export testing
     'bmp-export-tests.ini',
