@@ -1909,10 +1909,7 @@ gimp_transform_grid_tool_add_filter (GimpDrawable  *drawable,
   GimpLayerMode  mode = GIMP_LAYER_MODE_NORMAL;
 
   if (GIMP_IS_LAYER (drawable))
-    {
-      gimp_layer_get_effective_mode (GIMP_LAYER (drawable),
-                                     &mode, NULL, NULL, NULL);
-    }
+    mode = gimp_layer_get_mode (GIMP_LAYER (drawable));
 
   if (mode != GIMP_LAYER_MODE_PASS_THROUGH)
     {
