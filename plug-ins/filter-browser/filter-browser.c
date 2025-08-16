@@ -417,7 +417,7 @@ create_filter_info_view (GimpGeglFilterInfo *filter_info)
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 8);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  buf   = g_strdup_printf ("operation name: %s", name);
+  buf   = g_strdup_printf (_("Operation name: %s"), name);
   label = gtk_label_new (buf);
   g_free (buf);
   gtk_label_set_selectable (GTK_LABEL (label), TRUE);
@@ -430,7 +430,7 @@ create_filter_info_view (GimpGeglFilterInfo *filter_info)
       gchar *categories_buf = NULL;
 
       categories_buf = g_strdelimit (g_strdup (categories), ":", ' ');
-      buf   = g_strdup_printf ("categories: %s", categories_buf);
+      buf   = g_strdup_printf (_("Categories: %s"), categories_buf);
       g_free (categories_buf);
       label = gtk_label_new (buf);
       g_free (buf);
@@ -498,7 +498,7 @@ create_filter_info_view (GimpGeglFilterInfo *filter_info)
       vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 8);
       gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-      buf   = g_strdup_printf ("license: %s", license);
+      buf   = g_strdup_printf (_("License: %s"), license);
       label = gtk_label_new (buf);
       g_free (buf);
 
