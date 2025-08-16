@@ -1523,6 +1523,7 @@ ReadJeffsImage (FILE       *fd,
   guint     count = 0;
   guint     pos   = 0;
   guint     mask  = 0;
+  gint      ret;
 
   /* Indexes are stored as 1, 2, 4, or 8 bits per pixel
    * in the uncompressed image. */
@@ -1564,15 +1565,14 @@ ReadJeffsImage (FILE       *fd,
 
       count += block_size;
     }
-  count = 0;
 
-  zs.next_in  = (guchar *) compressed;
-  zs.avail_in = count;
-  zs.next_out = (guchar *) indexes;
-  zs.avail_in = len * height;
-  zs.zalloc   = Z_NULL;
-  zs.zfree    = Z_NULL;
-  zs.opaque   = Z_NULL;
+  zs.next_in   = (guchar *) compressed;
+  zs.avail_in  = count;
+  zs.next_out  = (guchar *) indexes;
+  zs.avail_out = len * height;
+  zs.zalloc    = Z_NULL;
+  zs.zfree     = Z_NULL;
+  zs.opaque    = Z_NULL;
 
   if (inflateInit (&zs) != Z_OK)
     {
@@ -1581,7 +1581,15 @@ ReadJeffsImage (FILE       *fd,
       g_free (indexes);
       return FALSE;
     }
-  inflate (&zs, Z_NO_FLUSH);
+  ret = inflate (&zs, Z_NO_FLUSH);
+  if (ret != Z_OK && ret != Z_STREAM_END)
+    {
+      read_error (_("inflate failed"), *image, error);
+      inflateEnd (&zs);
+      g_free (compressed);
+      g_free (indexes);
+      return FALSE;
+    }
 
   /* We then extract the indexes based on the bits per pixel
    * set in the header */
