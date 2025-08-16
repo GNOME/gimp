@@ -23,7 +23,6 @@ option('check-update',      type: 'combo', value: 'platform-default',
 option('bug-report-url',    type: 'string',  value: '',   description: 'URL used by the debug dialog to report bugs')
 option('gimpdir',           type: 'string',  value: '',   description: 'Change default gimpdir from ~/.config/GIMP/3.0 to ~/.config/DIR/3.0 (if relative), or to DIR (if absolute)')
 option('icc-directory',     type: 'string',  value: '',   description: 'Path to default color profiles for this system')
-option('directx-sdk-dir',   type: 'string',  value: '',   description: 'Prefix where the DirectX SDK is installed(optional)')
 option('with-sendmail',     type: 'string',  value: '',   description: 'Use Sendmail instead of Xdg-email')
 
 option('win32-32bits-dll-folder', type: 'string',  value: '32/bin', description: 'alternative folder with 32-bit versions of DLL libraries on Windows')
