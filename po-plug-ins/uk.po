@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-08-15 16:59+0000\n"
-"PO-Revision-Date: 2025-08-15 20:51+0300\n"
+"POT-Creation-Date: 2025-08-16 13:39+0000\n"
+"PO-Revision-Date: 2025-08-16 17:22+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -3208,7 +3208,7 @@ msgid "global colormap"
 msgstr "загальна мапа кольорів"
 
 #: plug-ins/common/file-gif-load.c:556 plug-ins/common/file-gif-load.c:1191
-#: plug-ins/common/file-gif-load.c:1546 plug-ins/common/file-gif-load.c:1556
+#: plug-ins/common/file-gif-load.c:1547 plug-ins/common/file-gif-load.c:1557
 #: plug-ins/common/file-gif-load.c:1579
 msgid "image data"
 msgstr "дані зображення"
@@ -3342,6 +3342,11 @@ msgstr ""
 #: plug-ins/common/file-gif-load.c:1498
 msgid "Too much compressed data, ignoring extra..."
 msgstr "Забагато стиснених даних, ігноруємо зайві..."
+
+#: plug-ins/common/file-gif-load.c:1587
+#| msgid "Save failed"
+msgid "inflate failed"
+msgstr "не вдалося розпакувати"
 
 #: plug-ins/common/file-gih.c:119
 msgid "Incremental"
@@ -4031,13 +4036,11 @@ msgstr "_Кількість роздільностей"
 
 #. Not having color information is expected.
 #: plug-ins/common/file-jp2.c:1212
-#| msgid "JPEG 2000 codestream"
 msgid "Opening JPEG 2000 codestream"
 msgstr "Відкриття кодового потоку JPEG 2000"
 
 #. Unexpected, but let's be a bit flexible and ask.
 #: plug-ins/common/file-jp2.c:1215
-#| msgid "JPEG 2000 image"
 msgid "JPEG 2000 image with no color space"
 msgstr "Зображення JPEG 2000 без простору кольорів"
 
