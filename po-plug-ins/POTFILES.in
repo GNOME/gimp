@@ -133,6 +133,7 @@ plug-ins/file-webp/file-webp.c
 plug-ins/file-webp/file-webp-dialog.c
 plug-ins/file-webp/file-webp-export.c
 plug-ins/file-webp/file-webp-load.c
+plug-ins/filter-browser/filter-browser.c
 plug-ins/flame/flame.c
 plug-ins/fractal-explorer/fractal-explorer-dialogs.c
 plug-ins/fractal-explorer/fractal-explorer.c
