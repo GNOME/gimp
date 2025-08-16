@@ -282,20 +282,21 @@ foreach ($bundle in $supported_archs)
     ## Copy files into VFS folder (to support external 3P plug-ins)
     Copy-Item "$bundle" "$vfs" -Recurse -Force
 
-    ## Set revision on about dialog (this does the same as '-Drevision' build option)
+    ## Versioning adjustments
+    ### Set revision on about dialog (this does the same as '-Drevision' build option)
     if (-not $GIMP_RC_VERSION)
       {
         (Get-Content "$vfs\share\gimp\*\gimp-release") | Foreach-Object {$_ -replace "revision=0","revision=$revision"} |
         Set-Content "$vfs\share\gimp\*\gimp-release"
       }
-
-    ## Disable Update check (ONLY FOR RELEASES)
+    ### Disable Update check (ONLY FOR RELEASES)
     if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)
       {
         Add-Content "$vfs\share\gimp\*\gimp-release" 'check-update=false'
       }
 
-    ## Remove uneeded files (to match the Inno Windows Installer artifact)
+    ## Parity adjustments (to match the Inno Windows Installer artifact)
+    ## The .msix VFS files SHOULD BE IDENTICAL to the .exe installer and vice-versa
     Get-ChildItem "$vfs" -Recurse -Include (".gitignore", "gimp.cmd") | Remove-Item -Recurse
 
 
