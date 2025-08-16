@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-08-16 14:59+0000\n"
-"PO-Revision-Date: 2025-08-16 17:10+0200\n"
+"POT-Creation-Date: 2025-08-16 21:22+0000\n"
+"PO-Revision-Date: 2025-08-17 00:53+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -1219,7 +1219,8 @@ msgid "Graph of the Current Settings"
 msgstr "Graf trenutnih nastavitev"
 
 #: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:562
-#: plug-ins/common/procedure-browser.c:169 plug-ins/gfig/gfig-dialog.c:355
+#: plug-ins/common/procedure-browser.c:169
+#: plug-ins/filter-browser/filter-browser.c:728 plug-ins/gfig/gfig-dialog.c:355
 #: plug-ins/gfig/gfig-dialog.c:1215 plug-ins/gfig/gfig-dialog.c:1360
 #: plug-ins/ifs-compose/ifs-compose.c:1213
 #: plug-ins/metadata/metadata-viewer.c:223
@@ -7729,6 +7730,7 @@ msgstr ""
 "namestili v menije."
 
 #: plug-ins/common/plugin-browser.c:373
+#: plug-ins/filter-browser/filter-browser.c:609
 msgid "Searching by name"
 msgstr "Iskanje po imenu"
 
@@ -7742,6 +7744,7 @@ msgstr[2] "%d vstavka"
 msgstr[3] "%d vstavki"
 
 #: plug-ins/common/plugin-browser.c:398
+#: plug-ins/filter-browser/filter-browser.c:676
 msgid "No matches for your query"
 msgstr "Ni zadetkov"
 
@@ -7755,6 +7758,7 @@ msgstr[2] "%d vstavka ustrezata povpraševanju"
 msgstr[3] "%d vstavki ustrezajo povpraševanju"
 
 #: plug-ins/common/plugin-browser.c:532
+#: plug-ins/filter-browser/filter-browser.c:678
 msgid "No matches"
 msgstr "Ni zadetkov"
 
@@ -11605,6 +11609,93 @@ msgstr "Spodletelo dekodiranje sličice animiranega WebP iz »%s«"
 msgid "Frame %d (%dms)"
 msgstr "Sličica %d (%d ms)"
 
+#: plug-ins/filter-browser/filter-browser.c:287
+#: plug-ins/filter-browser/filter-browser.c:322
+msgid "Allowed values:"
+msgstr "Dovoljene vrednosti:"
+
+#.
+#. *  Scales
+#.
+#.
+#. *    Scales
+#.
+#: plug-ins/filter-browser/filter-browser.c:463
+#: plug-ins/gradient-flare/gradient-flare.c:2949
+#: plug-ins/gradient-flare/gradient-flare.c:3699
+#: plug-ins/gradient-flare/gradient-flare.c:3801
+#: plug-ins/gradient-flare/gradient-flare.c:3932
+msgid "Parameters"
+msgstr "Parametri"
+
+#: plug-ins/filter-browser/filter-browser.c:495
+msgid "Additional Information"
+msgstr "Dodatne podrobnosti"
+
+#: plug-ins/filter-browser/filter-browser.c:612
+msgid "Searching by title"
+msgstr "Iskanje po imenu"
+
+#: plug-ins/filter-browser/filter-browser.c:615
+msgid "Searching by description"
+msgstr "Iskanje po opisu"
+
+#: plug-ins/filter-browser/filter-browser.c:618
+msgid "Searching by category"
+msgstr "Iskanje po kategorijah"
+
+#: plug-ins/filter-browser/filter-browser.c:683
+#, c-format
+msgid "%d filter matches your query"
+msgid_plural "%d filters match your query"
+msgstr[0] "%d vstavkov ustreza povpraševanju fitlra"
+msgstr[1] "%d vstavek ustreza povpraševanju filtra"
+msgstr[2] "%d vstavka ustrezata povpraševanju filtra"
+msgstr[3] "%d vstavki ustrezajo povpraševanju filtra"
+
+#: plug-ins/filter-browser/filter-browser.c:689
+#, c-format
+msgid "%d filter"
+msgid_plural "%d filters"
+msgstr[0] "%d filtrov"
+msgstr[1] "%d filter"
+msgstr[2] "%d fittra"
+msgstr[3] "%d filtti"
+
+#: plug-ins/filter-browser/filter-browser.c:722
+msgid "GEGL Filter Browser"
+msgstr "Brskalnik filtrov GEGL"
+
+#: plug-ins/filter-browser/filter-browser.c:739
+msgid "by name"
+msgstr "po imenu"
+
+#: plug-ins/filter-browser/filter-browser.c:740
+msgid "by title"
+msgstr "po naslovu"
+
+#: plug-ins/filter-browser/filter-browser.c:741
+msgid "by description"
+msgstr "po opisu"
+
+#: plug-ins/filter-browser/filter-browser.c:828
+msgid "_GEGL Filter Browser"
+msgstr "Brskalnik filtrov _GEGL"
+
+#: plug-ins/filter-browser/filter-browser.c:833
+msgid "Display information about available GEGL operations (i.e., filters)."
+msgstr "Prikaži informacije o razpoložljivih operacijah GEGL (tj. filtrih)."
+
+#: plug-ins/filter-browser/filter-browser.c:835
+msgid ""
+"Shows a list of all GEGL operations, their details and what parameters they "
+"are configured with. The list contains operations provided by GEGL itself, "
+"GIMP and plug-ins loaded by GEGL."
+msgstr ""
+"Prikaže seznam vseh operacij GEGL, njihove podrobnosti in parametre, s "
+"katerimi so prilagojeni. Seznam vsebuje operacije, ki jih zagotavljajo sam "
+"GEGL, GIMP ter vtičniki, ki jih naloži GEGL."
+
 #: plug-ins/flame/flame.c:179
 msgid "_Flame..."
 msgstr "_Plamen ..."
@@ -13467,19 +13558,6 @@ msgstr "_X:"
 #: plug-ins/gradient-flare/gradient-flare.c:2909
 msgid "_Y:"
 msgstr "_Y:"
-
-#.
-#. *  Scales
-#.
-#.
-#. *    Scales
-#.
-#: plug-ins/gradient-flare/gradient-flare.c:2949
-#: plug-ins/gradient-flare/gradient-flare.c:3699
-#: plug-ins/gradient-flare/gradient-flare.c:3801
-#: plug-ins/gradient-flare/gradient-flare.c:3932
-msgid "Parameters"
-msgstr "Parametri"
 
 #: plug-ins/gradient-flare/gradient-flare.c:2983
 msgid "_Settings"
