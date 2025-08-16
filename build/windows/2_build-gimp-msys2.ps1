@@ -45,22 +45,16 @@ if (-not (Test-Path _build-$MSYSTEM_PREFIX\build.ninja -Type Leaf))
     #FIXME: There is no GJS for Windows. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/5891
     meson setup _build-$MSYSTEM_PREFIX -Dprefix="$GIMP_PREFIX" $NON_RELOCATABLE_OPTION `
                                        $INSTALLER_OPTION $STORE_OPTION $PKGCONF_RELOCATABLE_OPTION `
-                                       -Denable-default-bin=enabled -Dbuild-id='org.gimp.GIMP_official'
+                                       -Denable-default-bin=enabled -Dbuild-id='org.gimp.GIMP_official' `
+                                       *>&1 | Tee-Object -Variable out -ErrorAction Continue; if ($LASTEXITCODE) { exit 1 }
   }
 Set-Location _build-$MSYSTEM_PREFIX
-ninja
+ninja *>&1 | Tee-Object -Variable out -ErrorAction Continue; if ($LASTEXITCODE) { exit 1 }
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):gimp_build$([char]13)$([char]27)[0K"
 
 
 # Bundle GIMP
 Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):gimp_bundle[collapsed=true]$([char]13)$([char]27)[0KCreating bundle"
-ninja install | Out-File ninja_install.log
-if ("$LASTEXITCODE" -gt '0' -or "$?" -eq 'False')
-  {
-    ## We need to manually check failures in pre-7.4 PS
-    Get-Content ninja_install.log
-    exit 1
-  }
-Remove-Item ninja_install.log
+ninja install *>&1 | Tee-Object out.log -ErrorAction Continue; if ($LASTEXITCODE) { Get-Content out.log; exit 1 } else { Remove-Item out.log }
 Set-Location ..
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):gimp_bundle$([char]13)$([char]27)[0K"

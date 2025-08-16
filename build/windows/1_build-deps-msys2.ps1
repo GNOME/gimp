@@ -38,9 +38,9 @@ if (-not $MSYSTEM_PREFIX)
 Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):deps_install[collapsed=true]$([char]13)$([char]27)[0KInstalling dependencies provided by MSYS2"
 if ("$PSCommandPath" -like "*1_build-deps-msys2.ps1*" -or "$CI_JOB_NAME" -like "*deps*")
   {
-    & $MSYS_ROOT\usr\bin\pacman --noconfirm -Suy
+    & $MSYS_ROOT\usr\bin\pacman --noconfirm -Suy *>&1 | Tee-Object -Variable out -ErrorAction Continue; if ($LASTEXITCODE) { exit 1 }
   }
-& $MSYS_ROOT\usr\bin\pacman --noconfirm -S --needed $(if ($MSYSTEM_PREFIX -ne 'mingw32') { "$(if ($MSYSTEM_PREFIX -eq 'clangarm64') { 'mingw-w64-clang-aarch64' } else { 'mingw-w64-clang-x86_64' })-perl" }) (Get-Content build/windows/all-deps-uni.txt | Where-Object { $_.Trim() -ne '' -and -not $_.Trim().StartsWith('#') }).Replace('${MINGW_PACKAGE_PREFIX}',$(if ($MINGW_PACKAGE_PREFIX) { "$MINGW_PACKAGE_PREFIX" } elseif ($MSYSTEM_PREFIX -eq 'clangarm64') { 'mingw-w64-clang-aarch64' } else { 'mingw-w64-clang-x86_64' })).Replace(' \','')
+& $MSYS_ROOT\usr\bin\pacman --noconfirm -S --needed $(if ($MSYSTEM_PREFIX -ne 'mingw32') { "$(if ($MSYSTEM_PREFIX -eq 'clangarm64') { 'mingw-w64-clang-aarch64' } else { 'mingw-w64-clang-x86_64' })-perl" }) (Get-Content build/windows/all-deps-uni.txt | Where-Object { $_.Trim() -ne '' -and -not $_.Trim().StartsWith('#') }).Replace('${MINGW_PACKAGE_PREFIX}',$(if ($MINGW_PACKAGE_PREFIX) { "$MINGW_PACKAGE_PREFIX" } elseif ($MSYSTEM_PREFIX -eq 'clangarm64') { 'mingw-w64-clang-aarch64' } else { 'mingw-w64-clang-x86_64' })).Replace(' \','') *>&1 | Tee-Object -Variable out -ErrorAction Continue; if ($LASTEXITCODE) { exit 1 }
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):deps_install$([char]13)$([char]27)[0K"
 
 
@@ -93,16 +93,11 @@ function self_build ([string]$dep, [string]$unstable_branch, [string]$stable_pat
     ## Configure and/or build
     if (-not (Test-Path _build-$MSYSTEM_PREFIX\build.ninja -Type Leaf))
       {
-        meson setup _build-$MSYSTEM_PREFIX -Dprefix="$GIMP_PREFIX" $PKGCONF_RELOCATABLE_OPTION $option1 $option2
+        meson setup _build-$MSYSTEM_PREFIX -Dprefix="$GIMP_PREFIX" $PKGCONF_RELOCATABLE_OPTION $option1 $option2  *>&1 | Tee-Object -Variable out -ErrorAction Continue; if ($LASTEXITCODE) { exit 1 }
       }
     Set-Location _build-$MSYSTEM_PREFIX
-    ninja
-    ninja install
-    if ("$LASTEXITCODE" -gt '0' -or "$?" -eq 'False')
-      {
-        ## We need to manually check failures in pre-7.4 PS
-        exit 1
-      }
+    ninja *>&1 | Tee-Object -Variable out -ErrorAction Continue; if ($LASTEXITCODE) { exit 1 }
+    ninja install *>&1 | Tee-Object out.log -ErrorAction Continue; if ($LASTEXITCODE) { Get-Content out.log; exit 1 } else { Remove-Item out.log }
     Set-Location ../..
     Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):${dep}_build$([char]13)$([char]27)[0K"
   }
