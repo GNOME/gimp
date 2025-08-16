@@ -282,7 +282,7 @@ foreach ($bundle in $supported_archs)
     ## Copy files into VFS folder (to support external 3P plug-ins)
     Copy-Item "$bundle" "$vfs" -Recurse -Force
 
-    ## Versioning adjustments
+    ## MSIX-specific adjustments (needed because we use the same gimp-* bundle as base to both .exe and .msix)
     ### Set revision on about dialog (this does the same as '-Drevision' build option)
     if (-not $GIMP_RC_VERSION)
       {
@@ -295,8 +295,7 @@ foreach ($bundle in $supported_archs)
         Add-Content "$vfs\share\gimp\*\gimp-release" 'check-update=false'
       }
 
-    ## Parity adjustments (to match the Inno Windows Installer artifact)
-    ## The .msix VFS files SHOULD BE IDENTICAL to the .exe installer and vice-versa
+    ## Parity adjustments (to make the .msix IDENTICAL TO THE .EXE INSTALLER, except for the adjustments above)
     Get-ChildItem "$vfs" -Recurse -Include (".gitignore", "gimp.cmd") | Remove-Item -Recurse
 
 
