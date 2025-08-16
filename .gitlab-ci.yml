@@ -30,7 +30,8 @@ workflow:
 ##################################################
 
 ## 1. On MERGE REQUESTS, the following are triggered:
-## - Abbreviated Linux Clang build (base & fast)
+## - Abbreviated Linux Clang build
+## - Building quality tests (static code analysis)
 ## - clang-format (static code analysis)
 ## - Execution tests (dynamic code analysis)
 .pipeline_merge: &CI_MERGE
@@ -43,20 +44,22 @@ workflow:
   # GitLab is quite sensitive about rules 'if' order so be careful
 
 ## 3. On COMMITS except tags.
-## - Linux Clang build (base & fast)
+## - Linux Clang build
+## - Building quality tests (static code analysis)
 ## - Execution tests (dynamic code analysis)
-## - Source tarball (base & fast)
-## - Developer documentation (base & fast)
+## - Source tarball
+## - Developer documentation 
 .pipeline_commit: &CI_COMMIT
   if: '$CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null && $CI_COMMIT_TAG == null'
   interruptible: true
   variables: {}
 
 ## 4. RELEASES.
-## - Source tarball (base & fast)
-## - Developer documentation (base & fast)
-## - Inno Windows installer (base but slow)
-## - MS Store .msixupload (base but slow)
+## - Source tarball
+## - Developer documentation
+## - Linux .appimage
+## - Inno Windows installer 
+## - MS Store .msixupload
 .pipeline_release: &CI_RELEASE
   if: '$CI_COMMIT_TAG != null'
   interruptible: false
