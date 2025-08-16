@@ -208,7 +208,7 @@ gimp_file_proc_view_new (Gimp        *gimp,
   gtk_tree_view_append_column (view, column);
 
   column = gtk_tree_view_column_new ();
-  gtk_tree_view_column_set_title (column, _("Extensions"));
+  gtk_tree_view_column_set_title (column, C_("File extension", "Extensions"));
 
   cell = gtk_cell_renderer_text_new ();
   gtk_tree_view_column_pack_start (column, cell, TRUE);

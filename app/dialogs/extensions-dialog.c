@@ -73,7 +73,7 @@ extensions_dialog_new (Gimp *gimp)
   GtkWidget   *widget;
   GtkTreeIter  top_iter;
 
-  dialog = gimp_dialog_new (_("Extensions"), "gimp-extensions",
+  dialog = gimp_dialog_new (C_("GIMP extensions", "Extensions"), "gimp-extensions",
                             NULL, 0, NULL,
                             GIMP_HELP_EXTENSIONS_DIALOG,
                             _("_OK"), GTK_RESPONSE_OK,
