@@ -1005,23 +1005,7 @@ conf.set('HAVE_LIBGUDEV', gudev.found())
 
 
 # DirectX DirectInput
-directx = no_dep
-directx_sdk_path = get_option('directx-sdk-dir')
-if directx_sdk_path != '' and platform_windows
-  if directx_sdk_path.contains(' ') or directx_sdk_path.contains('\\')
-    error('\n'.join([
-      'The DirectX SDK path should be given :',
-      '* without spaces (use MSys mounts)',
-      '* with plain (forward) slashes only,'
-    ]))
-  endif
-
-  directx = declare_dependency(
-    dependencies: cc.find_library('dxguid',
-                                  dirs: directx_sdk_path / 'Lib' / 'x86'),
-    include_directories: directx_sdk_path / 'Include',
-  )
-endif
+directx = platform_windows ? cc.find_library('dxguid') : no_dep
 conf.set('HAVE_DX_DINPUT', directx.found())
 
 cfitsio_dep = dependency('cfitsio', required: get_option('fits'))

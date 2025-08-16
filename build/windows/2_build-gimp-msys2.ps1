@@ -43,9 +43,9 @@ Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0)
 if (-not (Test-Path _build-$MSYSTEM_PREFIX\build.ninja -Type Leaf))
   {
     #FIXME: There is no GJS for Windows. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/5891
-    meson setup _build-$MSYSTEM_PREFIX -Dprefix="$GIMP_PREFIX" -Djavascript=disabled `
-                                       -Ddirectx-sdk-dir="$MSYS_ROOT/$MSYSTEM_PREFIX" -Denable-default-bin=enabled `
-                                       -Dbuild-id='org.gimp.GIMP_official' $INSTALLER_OPTION $STORE_OPTION $PKGCONF_RELOCATABLE_OPTION $NON_RELOCATABLE_OPTION
+    meson setup _build-$MSYSTEM_PREFIX -Dprefix="$GIMP_PREFIX" $NON_RELOCATABLE_OPTION `
+                                       $INSTALLER_OPTION $STORE_OPTION $PKGCONF_RELOCATABLE_OPTION `
+                                       -Denable-default-bin=enabled -Dbuild-id='org.gimp.GIMP_official'
   }
 Set-Location _build-$MSYSTEM_PREFIX
 ninja
