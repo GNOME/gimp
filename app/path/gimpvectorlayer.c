@@ -29,6 +29,7 @@
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "path-types.h"
 
@@ -86,7 +87,7 @@ static void       gimp_vector_layer_push_undo       (GimpDrawable           *dra
                                                      gint                    height);
 
 static gint64     gimp_vector_layer_get_memsize     (GimpObject             *object,
-						                             gint64                 *gui_size);
+                                                     gint64                 *gui_size);
 
 static GimpItem * gimp_vector_layer_duplicate       (GimpItem               *item,
                                                      GType                   new_type);
@@ -176,7 +177,7 @@ gimp_vector_layer_class_init (GimpVectorLayerClass *klass)
   GIMP_CONFIG_PROP_OBJECT (object_class, PROP_VECTOR_LAYER_OPTIONS,
                            "vector-layer-options", NULL, NULL,
                            GIMP_TYPE_VECTOR_LAYER_OPTIONS,
-                           G_PARAM_STATIC_STRINGS);
+                           G_PARAM_STATIC_STRINGS | G_PARAM_EXPLICIT_NOTIFY);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_MODIFIED,
                             "modified",
@@ -248,33 +249,7 @@ gimp_vector_layer_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_VECTOR_LAYER_OPTIONS:
-      if (vector_layer->options)
-        {
-          g_signal_handlers_disconnect_by_func (vector_layer->options,
-                                                G_CALLBACK  (gimp_vector_layer_changed_options),
-                                                vector_layer);
-          if (vector_layer->options->path)
-	        g_signal_handlers_disconnect_by_func (vector_layer->options->path,
-                                                  G_CALLBACK (gimp_vector_layer_removed_options_path),
-                                                  vector_layer);
-
-          g_object_unref (vector_layer->options);
-        }
-
-      vector_layer->options = g_value_dup_object (value);
-
-      if (vector_layer->options)
-        {
-          if (vector_layer->options->path)
-            g_signal_connect_object (vector_layer->options->path, "removed",
-                                     G_CALLBACK (gimp_vector_layer_removed_options_path),
-                                     vector_layer, G_CONNECT_SWAPPED);
-
-          g_signal_connect_object (vector_layer->options, "notify",
-                                   G_CALLBACK (gimp_vector_layer_changed_options),
-                                   vector_layer, G_CONNECT_SWAPPED);
-
-	    }
+      gimp_vector_layer_set_vector_options (vector_layer, g_value_get_object (value));
       break;
     case PROP_MODIFIED:
       vector_layer->modified = g_value_get_boolean (value);
@@ -295,16 +270,31 @@ gimp_vector_layer_set_vector_options (GimpVectorLayer        *layer,
       g_signal_handlers_disconnect_by_func (layer->options,
                                             G_CALLBACK (gimp_vector_layer_changed_options),
                                             layer);
+
+      if (layer->options->path)
+        g_signal_handlers_disconnect_by_func (layer->options->path,
+                                              G_CALLBACK (gimp_vector_layer_removed_options_path),
+                                              layer);
+
       g_object_unref (layer->options);
     }
 
-  layer->options = options;
+  g_set_object (&layer->options, options);
   gimp_vector_layer_changed_options (layer);
 
   if (layer->options)
-    g_signal_connect_object (layer->options, "notify",
-                             G_CALLBACK (gimp_vector_layer_changed_options),
-                             layer, G_CONNECT_SWAPPED);
+    {
+      if (layer->options->path)
+        g_signal_connect_object (layer->options->path, "removed",
+                                 G_CALLBACK (gimp_vector_layer_removed_options_path),
+                                 layer, G_CONNECT_SWAPPED);
+
+      g_signal_connect_object (layer->options, "notify",
+                               G_CALLBACK (gimp_vector_layer_changed_options),
+                               layer, G_CONNECT_SWAPPED);
+    }
+
+  g_object_notify (G_OBJECT (layer), "vector-layer-options");
 }
 
 static void
@@ -611,6 +601,7 @@ gimp_vector_layer_new (GimpImage   *image,
                        FALSE);
 
   gimp_vector_layer_set_vector_options (layer, options);
+  g_object_unref (options);
 
   return layer;
 }
@@ -659,8 +650,8 @@ gimp_vector_layer_discard (GimpVectorLayer *layer)
 
   if (layer->options->path)
     gimp_image_undo_push_vector_layer (gimp_item_get_image (GIMP_ITEM (layer)),
-					                   _("Discard Vector Information"),
-					                   layer, NULL);
+                                       _("Discard Vector Information"),
+                                       layer, NULL);
 
   g_object_set (layer, "vector-layer-options", NULL, NULL);
 
@@ -705,7 +696,8 @@ gimp_vector_layer_render (GimpVectorLayer *layer)
   gimp_item_bounds (GIMP_ITEM (layer->options->path), &x, &y, &width, &height);
 
   buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                            width + stroke, height + stroke),
+                                            (gint) ceil (width + stroke),
+                                            (gint) ceil (height + stroke)),
                             gimp_drawable_get_format (drawable));
   gimp_drawable_set_buffer (drawable, FALSE, NULL, buffer);
   g_object_unref (buffer);
