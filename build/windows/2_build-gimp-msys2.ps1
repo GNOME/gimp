@@ -35,7 +35,6 @@ if (-not $GIMP_PREFIX)
     #FIXME:'gimpenv' have buggy code about Windows paths. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/12284
     $GIMP_PREFIX = "$PWD\..\_install".Replace('\', '/')
   }
-
 Invoke-Expression ((Get-Content .gitlab-ci.yml | Select-String 'win_environ\[' -Context 0,7) -replace '> ','' -replace '- ','')
 
 
