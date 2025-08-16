@@ -41,8 +41,6 @@ struct _GimpVectorLayer
   GimpLayer               parent_instance;
 
   GimpVectorLayerOptions *options;
-  const gchar            *parasite;
-
   gboolean                modified;
 };
 

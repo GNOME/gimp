@@ -190,7 +190,6 @@ static void
 gimp_vector_layer_init (GimpVectorLayer *layer)
 {
   layer->options  = NULL;
-  layer->parasite = NULL;
   layer->modified = FALSE;
 }
 
@@ -203,13 +202,6 @@ gimp_vector_layer_finalize (GObject *object)
     {
       g_object_unref (layer->options);
       layer->options = NULL;
-    }
-
-  if (layer->parasite)
-    {
-      gimp_parasite_list_remove (gimp_item_get_parasites (GIMP_ITEM (layer)),
-                                 layer->parasite);
-      layer->parasite = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -777,14 +769,6 @@ static void
 gimp_vector_layer_changed_options (GimpVectorLayer *layer)
 {
   GimpItem *item = GIMP_ITEM (layer);
-
-  if (layer->parasite)
-    {
-      /* parasite is out of date, discard it */
-      gimp_parasite_list_remove (gimp_item_get_parasites (GIMP_ITEM (layer)),
-                                 layer->parasite);
-      layer->parasite = NULL;
-    }
 
   if (layer->options && !layer->options->path)
     gimp_vector_layer_discard (layer);

@@ -3016,6 +3016,14 @@ gimp_image_get_xcf_version (GimpImage    *image,
            */
           version = MAX (23, version);
         }
+
+      /* Need version 24 for vector layers. */
+      if (GIMP_IS_VECTOR_LAYER (layer))
+        {
+          ADD_REASON (g_strdup_printf (_("Vector layers were added in %s"),
+                                       "GIMP 3.2"));
+          version = MAX (24, version);
+        }
     }
   g_list_free (items);
 

@@ -38,9 +38,12 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpdashpattern.h"
+#include "core/gimpdatafactory.h"
 #include "core/gimpdrawable-filters.h"
 #include "core/gimpdrawable-private.h" /* eek */
 #include "core/gimpdrawablefilter.h"
+#include "core/gimpfilloptions.h"
 #include "core/gimpfilterstack.h"
 #include "core/gimpgrid.h"
 #include "core/gimpgrouplayer.h"
@@ -58,10 +61,13 @@
 #include "core/gimpitemstack.h"
 #include "core/gimplayer-floating-selection.h"
 #include "core/gimplayer-new.h"
+#include "core/gimplayer-xcf.h"
 #include "core/gimplayermask.h"
 #include "core/gimpparasitelist.h"
+#include "core/gimppattern.h"
 #include "core/gimpprogress.h"
 #include "core/gimpselection.h"
+#include "core/gimpstrokeoptions.h"
 #include "core/gimpsymmetry.h"
 #include "core/gimptemplate.h"
 #include "core/gimpunit.h"
@@ -74,7 +80,7 @@
 #include "path/gimppath.h"
 #include "path/gimppath-compat.h"
 #include "path/gimpvectorlayer.h"
-#include "path/gimpvectorlayer-xcf.h"
+#include "path/gimpvectorlayeroptions.h"
 
 #include "text/gimptextlayer.h"
 #include "text/gimptextlayer-xcf.h"
@@ -115,6 +121,30 @@ typedef struct
 
   gboolean               unsupported_operation;
 } FilterData;
+
+typedef struct
+{
+  GimpTattoo       path_tattoo;
+  gboolean         modified;
+  gboolean         enable_fill;
+  gboolean         enable_stroke;
+
+  GimpCustomStyle  fill_style;
+  gboolean         fill_antialias;
+  GeglColor       *fill_color;
+  GimpPattern     *fill_pattern;
+
+  GimpCustomStyle  stroke_style;
+  gboolean         stroke_antialias;
+  GeglColor       *stroke_color;
+  GimpPattern     *stroke_pattern;
+  gdouble          stroke_width;
+  GimpCapStyle     stroke_cap_style;
+  GimpJoinStyle    stroke_join_style;
+  gdouble          stroke_miter_limit;
+  gsize            n_stroke_dashes;
+  gdouble         *stroke_dashes;
+} VectorLayerData;
 
 static void            xcf_load_add_masks     (GimpImage     *image);
 static void            xcf_load_add_effects   (XcfInfo       *info,
@@ -161,6 +191,9 @@ static GeglColor     * xcf_load_color         (XcfInfo       *info,
                                                goffset        next_prop,
                                                gboolean      *valid_prop_value,
                                                GError       **error);
+static GimpData      * xcf_load_data          (XcfInfo       *info,
+                                               GType          data_type,
+                                               GError       **error);
 static GimpPath      * xcf_load_path          (XcfInfo       *info,
                                                GimpImage     *image);
 static GimpLayerMask * xcf_load_layer_mask    (XcfInfo       *info,
@@ -202,6 +235,9 @@ static void            xcf_fix_item_path       (GimpLayer    *layer,
                                                 GList       **path,
                                                 GList        *broken_paths);
 
+static void            xcf_load_free_vector_data (VectorLayerData *data);
+
+
 #define xcf_progress_update(info) G_STMT_START  \
   {                                             \
     if (info->progress)                         \
@@ -228,6 +264,7 @@ xcf_load_image (Gimp     *gimp,
   gint                n_broken_channels       = 0;
   gint                n_broken_paths          = 0;
   gint                n_broken_effects        = 0;
+  GList              *layers;
   GList              *broken_paths            = NULL;
   GList              *group_layers            = NULL;
   GList              *syms;
@@ -905,6 +942,90 @@ xcf_load_image (Gimp     *gimp,
             goto error;
         }
     }
+
+  /* Once all items are loaded, we transform any vector layer in
+   * waiting. We could not create vector layers directly because we
+   * needed the paths to be loaded first.
+   */
+  layers = gimp_image_get_layer_list (image);
+  for (iter = layers; iter; iter = g_list_next (iter))
+    {
+      GimpLayer       *layer = iter->data;
+      VectorLayerData *data;
+
+      data = g_object_get_data (G_OBJECT (layer), "gimp-vector-layer-data");
+
+      if (data != NULL)
+        {
+          GimpLayer              *vlayer;
+          GimpVectorLayerOptions *options;
+          GimpPath               *path;
+          GArray                 *dash_pattern;
+          GList                  *selected;
+          GList                  *linked;
+          gboolean                floating;
+
+          selected = g_list_find (info->selected_layers, layer);
+          linked   = g_list_find (info->linked_layers, layer);
+          floating = (info->floating_sel == layer);
+
+          path = gimp_image_get_path_by_tattoo (image, data->path_tattoo);
+          if (path == NULL)
+            {
+              GIMP_LOG (XCF,
+                        "Failed to load path associated with vector layer \"%s\". "
+                        "The vector layer is downgraded to a raster layer.",
+                        gimp_object_get_name (layer));
+              g_object_set_data (G_OBJECT (layer), "gimp-vector-layer-data", NULL);
+              continue;
+            }
+          options = gimp_vector_layer_options_new (image, path,
+                                                   gimp_get_user_context (info->gimp));
+          options->enable_fill   = data->enable_fill;
+          options->enable_stroke = data->enable_stroke;
+
+          gimp_fill_options_set_custom_style (options->fill_options, data->fill_style);
+          gimp_fill_options_set_antialias (options->fill_options, data->fill_antialias);
+          gimp_context_set_foreground (GIMP_CONTEXT (options->fill_options), data->fill_color);
+          gimp_context_set_pattern (GIMP_CONTEXT (options->fill_options), data->fill_pattern);
+
+          gimp_fill_options_set_custom_style (GIMP_FILL_OPTIONS (options->stroke_options), data->stroke_style);
+          gimp_fill_options_set_antialias (GIMP_FILL_OPTIONS (options->stroke_options), data->stroke_antialias);
+          gimp_context_set_foreground (GIMP_CONTEXT (options->stroke_options), data->stroke_color);
+          gimp_context_set_pattern (GIMP_CONTEXT (options->stroke_options), data->stroke_pattern);
+
+          dash_pattern = gimp_dash_pattern_from_double_array (data->n_stroke_dashes, data->stroke_dashes);
+          gimp_stroke_options_take_dash_pattern (options->stroke_options, GIMP_DASH_CUSTOM, dash_pattern);
+
+          g_object_set (G_OBJECT (options->stroke_options),
+                        "width",       data->stroke_width,
+                        "cap-style",   data->stroke_cap_style,
+                        "join-style",  data->stroke_join_style,
+                        "miter-limit", data->stroke_miter_limit,
+                        NULL);
+
+          vlayer = gimp_layer_from_layer (layer, GIMP_TYPE_VECTOR_LAYER,
+                                          "image",                image,
+                                          "vector-layer-options", options,
+                                          NULL);
+          g_object_unref (options);
+          GIMP_VECTOR_LAYER (vlayer)->modified = data->modified;
+
+          if (selected)
+            {
+              info->selected_layers = g_list_delete_link (info->selected_layers, selected);
+              info->selected_layers = g_list_prepend (info->selected_layers, vlayer);
+            }
+          if (linked)
+            {
+              info->linked_layers = g_list_delete_link (info->linked_layers, linked);
+              info->linked_layers = g_list_prepend (info->linked_layers, vlayer);
+            }
+          if (floating)
+            info->floating_sel = vlayer;
+        }
+    }
+  g_list_free (layers);
 
   if (info->selected_layers)
     {
@@ -1965,6 +2086,92 @@ xcf_load_layer_props (XcfInfo    *info,
 
         case PROP_TEXT_LAYER_FLAGS:
           xcf_read_int32 (info, text_layer_flags, 1);
+          break;
+
+        case PROP_VECTOR_LAYER:
+          {
+            VectorLayerData *data;
+            guint32          uint_val;
+            gfloat           float_val;
+            goffset          next_prop;
+            gboolean         valid_color = TRUE;
+            GError          *error       = NULL;
+
+            next_prop = info->cp + prop_size;
+
+            data = g_new0 (VectorLayerData, 1);
+
+            xcf_read_int32 (info, (guint32 *) &uint_val, 1);
+            data->modified = (gboolean) uint_val;
+
+            xcf_read_int32 (info, (guint32 *) &uint_val, 1);
+            data->path_tattoo = (GimpTattoo) uint_val;
+            xcf_read_int32 (info, (guint32 *) &uint_val, 1);
+            data->enable_fill = (gboolean) uint_val;
+            xcf_read_int32 (info, (guint32 *) &uint_val, 1);
+            data->enable_stroke = (gboolean) uint_val;
+
+            xcf_read_int32 (info, (guint32 *) &uint_val, 1);
+            data->fill_style = (GimpCustomStyle) uint_val;
+            xcf_read_int32 (info, (guint32 *) &uint_val, 1);
+            data->fill_antialias = (gboolean) uint_val;
+
+            data->fill_color = xcf_load_color (info, next_prop, &valid_color, &error);
+            if (error)
+              {
+                gimp_message (info->gimp, G_OBJECT (info->progress),
+                              GIMP_MESSAGE_WARNING,
+                              "Warning, invalid color in XCF file: %s",
+                              error->message);
+                g_clear_error (&error);
+                valid_color = TRUE;
+              }
+            data->fill_pattern = GIMP_PATTERN (xcf_load_data (info, GIMP_TYPE_PATTERN, &error));
+            /* Just ignore errors here? */
+            g_clear_error (&error);
+
+            xcf_read_int32 (info, (guint32 *) &uint_val, 1);
+            data->stroke_style = (GimpCustomStyle) uint_val;
+            xcf_read_int32 (info, (guint32 *) &uint_val, 1);
+            data->stroke_antialias = (gboolean) uint_val;
+
+            data->stroke_color = xcf_load_color (info, next_prop, &valid_color, &error);
+            if (error)
+              {
+                gimp_message (info->gimp, G_OBJECT (info->progress),
+                              GIMP_MESSAGE_WARNING,
+                              "Warning, invalid color in XCF file: %s",
+                              error->message);
+                g_clear_error (&error);
+                valid_color = TRUE;
+              }
+            /* Just ignore errors here? */
+            data->stroke_pattern = GIMP_PATTERN (xcf_load_data (info, GIMP_TYPE_PATTERN, &error));
+            g_clear_error (&error);
+
+            xcf_read_float (info, (gfloat *) &float_val, 1);
+            data->stroke_width = (gfloat) float_val;
+            xcf_read_int32 (info, (guint32 *) &uint_val, 1);
+            data->stroke_cap_style = (GimpCapStyle) uint_val;
+            xcf_read_int32 (info, (guint32 *) &uint_val, 1);
+            data->stroke_join_style = (GimpJoinStyle) uint_val;
+            xcf_read_float (info, (gfloat *) &float_val, 1);
+            data->stroke_miter_limit = (gfloat) float_val;
+
+            xcf_read_int32 (info, (guint32 *) &uint_val, 1);
+            data->n_stroke_dashes = (gboolean) uint_val;
+
+            data->stroke_dashes = g_new0 (gdouble, data->n_stroke_dashes);
+            for (gint i = 0; i < data->n_stroke_dashes; i++)
+              {
+                xcf_read_float (info, (gfloat *) &float_val, 1);
+                data->stroke_dashes[i] = (gdouble) float_val;
+              }
+
+            g_object_set_data_full (G_OBJECT (*layer),
+                                    "gimp-vector-layer-data", data,
+                                    (GDestroyNotify) xcf_load_free_vector_data);
+          }
           break;
 
         case PROP_GROUP_ITEM:
@@ -3089,7 +3296,7 @@ xcf_load_layer (XcfInfo    *info,
 
   xcf_progress_update (info);
 
-  /* call the evil text and vector layer hack that might change our layer pointer */
+  /* call the evil text layer hack that might change our layer pointer */
   selected = g_list_find (info->selected_layers, layer);
   linked   = g_list_find (info->linked_layers, layer);
   floating = (info->floating_sel == layer);
@@ -3108,16 +3315,6 @@ xcf_load_layer (XcfInfo    *info,
         {
           info->linked_layers = g_list_delete_link (info->linked_layers, linked);
           info->linked_layers = g_list_prepend (info->linked_layers, layer);
-        }
-      if (floating)
-        info->floating_sel = layer;
-    }
-  else if (gimp_vector_layer_xcf_load_hack (&layer))
-    {
-      if (selected)
-        {
-          info->selected_layers = g_list_delete_link (info->selected_layers, selected);
-          info->selected_layers = g_list_prepend (info->selected_layers, layer);
         }
       if (floating)
         info->floating_sel = layer;
@@ -3535,7 +3732,7 @@ xcf_load_color (XcfInfo   *info,
                 gboolean  *valid_prop_value,
                 GError   **error)
 {
-  GeglColor  *color = gegl_color_new (NULL);
+  GeglColor  *color;
   const Babl *format;
   gchar      *encoding;
   guint8     *data  = NULL;
@@ -3619,11 +3816,40 @@ xcf_load_color (XcfInfo   *info,
       format = babl_format_with_space (babl_format_get_encoding (format), space);
     }
 
+  color = gegl_color_new (NULL);
   gegl_color_set_pixel (color, format, data);
 
   g_free (data);
 
   return color;
+}
+
+static GimpData *
+xcf_load_data (XcfInfo  *info,
+               GType     data_type,
+               GError  **error)
+{
+  GimpData        *data = NULL;
+  GimpDataFactory *factory;
+  gchar           *name;
+  gchar           *collection;
+  gboolean         is_internal;
+  guint32          uint_val;
+
+  xcf_read_string (info, &name,   1);
+  if (name != NULL)
+    {
+      xcf_read_string (info, &collection,   1);
+      xcf_read_int32 (info, (guint32 *) &uint_val, 1);
+      is_internal = (gboolean) uint_val;
+
+      factory = gimp_get_data_factory (info->gimp, data_type);
+      data = gimp_data_factory_get_data (factory, name, collection, is_internal);
+      g_free (name);
+      g_free (collection);
+    }
+
+  return data;
 }
 
 /* The new path structure since XCF 18. */
@@ -4862,4 +5088,14 @@ xcf_fix_item_path (GimpLayer  *layer,
           break;
         }
     }
+}
+
+static void
+xcf_load_free_vector_data (VectorLayerData *data)
+{
+  g_clear_object (&data->fill_color);
+  g_clear_object (&data->stroke_color);
+  g_clear_pointer (&data->stroke_dashes, g_free);
+
+  g_free (data);
 }

@@ -13,9 +13,7 @@ libapppath_sources = [
   'gimpstroke-new.c',
   'gimpstroke.c',
   'gimpvectorlayer.c',
-  'gimpvectorlayer-xcf.c',
   'gimpvectorlayeroptions.c',
-  'gimpvectorlayeroptions-parasite.c',
   'gimpvectorlayerundo.c',
 ]
 
