@@ -30,6 +30,7 @@
 #include "core/gimp.h"
 #include "core/gimpdrawable-private.h" /* eek */
 #include "core/gimpimage.h"
+#include "core/gimplayer-xcf.h"
 #include "core/gimpparasitelist.h"
 
 #include "gimptext.h"
@@ -46,10 +47,6 @@ enum
   TEXT_LAYER_XCF_DONT_AUTO_RENAME  = 1 << 0,
   TEXT_LAYER_XCF_MODIFIED          = 1 << 1
 };
-
-
-static GimpLayer * gimp_text_layer_from_layer (GimpLayer *layer,
-                                               GimpText  *text);
 
 
 gboolean
@@ -105,7 +102,11 @@ gimp_text_layer_xcf_load_hack (GimpLayer **layer)
 
   if (text)
     {
-      *layer = gimp_text_layer_from_layer (*layer, text);
+      *layer = gimp_layer_from_layer (*layer, GIMP_TYPE_TEXT_LAYER,
+                                      "image", gimp_item_get_image (GIMP_ITEM (*layer)),
+                                      NULL);
+      gimp_text_layer_set_text (GIMP_TEXT_LAYER (*layer), text);
+      g_object_unref (text);
 
       /*  let the text layer knows what parasite was used to create it  */
       GIMP_TEXT_LAYER (*layer)->text_parasite        = name;
@@ -168,62 +169,4 @@ gimp_text_layer_set_xcf_flags (GimpTextLayer *text_layer,
                 "auto-rename", (flags & TEXT_LAYER_XCF_DONT_AUTO_RENAME) == 0,
                 "modified",    (flags & TEXT_LAYER_XCF_MODIFIED)         != 0,
                 NULL);
-}
-
-
-/**
- * gimp_text_layer_from_layer:
- * @layer: a #GimpLayer object
- * @text: a #GimpText object
- *
- * Converts a standard #GimpLayer and a #GimpText object into a
- * #GimpTextLayer. The new text layer takes ownership of the @text and
- * @layer objects.  The @layer object is rendered unusable by this
- * function. Don't even try to use if afterwards!
- *
- * This is a gross hack that is needed in order to load text layers
- * from XCF files in a backwards-compatible way. Please don't use it
- * for anything else!
- *
- * Returns: a newly allocated #GimpTextLayer object
- **/
-static GimpLayer *
-gimp_text_layer_from_layer (GimpLayer *layer,
-                            GimpText  *text)
-{
-  GimpTextLayer *text_layer;
-  GimpDrawable  *drawable;
-
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
-  g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
-
-  text_layer = g_object_new (GIMP_TYPE_TEXT_LAYER,
-                             "image", gimp_item_get_image (GIMP_ITEM (layer)),
-                             NULL);
-
-  gimp_item_replace_item (GIMP_ITEM (text_layer), GIMP_ITEM (layer));
-
-  drawable = GIMP_DRAWABLE (text_layer);
-
-  gimp_drawable_steal_buffer (drawable, GIMP_DRAWABLE (layer));
-
-  gimp_layer_set_opacity         (GIMP_LAYER (text_layer),
-                                  gimp_layer_get_opacity (layer), FALSE);
-  gimp_layer_set_mode            (GIMP_LAYER (text_layer),
-                                  gimp_layer_get_mode (layer), FALSE);
-  gimp_layer_set_blend_space     (GIMP_LAYER (text_layer),
-                                  gimp_layer_get_blend_space (layer), FALSE);
-  gimp_layer_set_composite_space (GIMP_LAYER (text_layer),
-                                  gimp_layer_get_composite_space (layer), FALSE);
-  gimp_layer_set_composite_mode  (GIMP_LAYER (text_layer),
-                                  gimp_layer_get_composite_mode (layer), FALSE);
-  gimp_layer_set_lock_alpha      (GIMP_LAYER (text_layer),
-                                  gimp_layer_get_lock_alpha (layer), FALSE);
-
-  gimp_text_layer_set_text (text_layer, text);
-
-  g_object_unref (text);
-  g_object_unref (layer);
-
-  return GIMP_LAYER (text_layer);
 }

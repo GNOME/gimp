@@ -185,6 +185,7 @@ libappcore_sources = [
   'gimpitemundo.c',
   'gimplayer-floating-selection.c',
   'gimplayer-new.c',
+  'gimplayer-xcf.c',
   'gimplayer.c',
   'gimplayermask.c',
   'gimplayermaskpropundo.c',
