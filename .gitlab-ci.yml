@@ -545,11 +545,11 @@ gimp-snap:
 # See: https://testing.developer.gimp.org/core/setup/build/windows/#prepare-for-building
 - Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):win_environ[collapsed=true]$([char]13)$([char]27)[0KPreparing build environment"
 ## Build-time vars
-- $env:PKG_CONFIG_PATH = "$GIMP_PREFIX/lib/pkgconfig;$MSYS_ROOT/$MSYSTEM_PREFIX/lib/pkgconfig;$MSYS_ROOT/$MSYSTEM_PREFIX/share/pkgconfig"
-- $env:XDG_DATA_DIRS = "$GIMP_PREFIX/share;$MSYS_ROOT/$MSYSTEM_PREFIX/share"
+- $env:PKG_CONFIG_PATH = "$GIMP_PREFIX/lib/pkgconfig;$env:MSYS_ROOT/$env:MSYSTEM_PREFIX/lib/pkgconfig;$env:MSYS_ROOT/$env:MSYSTEM_PREFIX/share/pkgconfig"
+- $env:XDG_DATA_DIRS = "$GIMP_PREFIX/share;$env:MSYS_ROOT/$env:MSYSTEM_PREFIX/share"
 ## Runtime vars
-- $env:PATH = "$GIMP_PREFIX/bin;$MSYS_ROOT/$MSYSTEM_PREFIX/bin;" + $env:PATH
-- $env:GI_TYPELIB_PATH = "$GIMP_PREFIX/lib/girepository-1.0;$MSYS_ROOT/$MSYSTEM_PREFIX/lib/girepository-1.0"
+- $env:PATH = "$GIMP_PREFIX/bin;$env:MSYS_ROOT/$env:MSYSTEM_PREFIX/bin;$env:PATH"
+- $env:GI_TYPELIB_PATH = "$GIMP_PREFIX/lib/girepository-1.0;$env:MSYS_ROOT/$env:MSYSTEM_PREFIX/lib/girepository-1.0"
 - Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):win_environ$([char]13)$([char]27)[0K"
 
 deps-win:

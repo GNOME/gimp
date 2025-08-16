@@ -2,7 +2,7 @@
 
 # Ensure the script work properly
 $ErrorActionPreference = 'Stop'
-$PSNativeCommandUseErrorActionPreference = $true
+$PSNativeCommandUseErrorActionPreference = $false #to ensure error catching as in pre-7.4 PS
 if (-not (Test-Path build\windows) -and -not (Test-Path 1_build-deps-msys2.ps1 -Type Leaf) -or $PSScriptRoot -notlike "*build\windows*")
   {
     Write-Host '(ERROR): Script called from wrong dir. Please, read: https://developer.gimp.org/core/setup/build/windows/' -ForegroundColor Red
@@ -21,26 +21,26 @@ if (-not $GITLAB_CI)
 
 
 # Install the required (pre-built) packages for babl, GEGL and GIMP
-if (-not $MSYS_ROOT)
+if (-not $env:MSYS_ROOT)
   {
-    $MSYS_ROOT = $(Get-ChildItem HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall -Recurse | ForEach-Object { Get-ItemProperty $_.PSPath -ErrorAction SilentlyContinue } | Where-Object { $_.PSObject.Properties.Value -like "*The MSYS2 Developers*" } | ForEach-Object { return "$($_.InstallLocation)" }) -replace '\\','/'
-    if ("$MSYS_ROOT" -eq '')
+    $env:MSYS_ROOT = $(Get-ChildItem HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall -Recurse | ForEach-Object { Get-ItemProperty $_.PSPath -ErrorAction SilentlyContinue } | Where-Object { $_.PSObject.Properties.Value -like "*The MSYS2 Developers*" } | ForEach-Object { return "$($_.InstallLocation)" }) -replace '\\','/'
+    if ("$env:MSYS_ROOT" -eq '')
       {
         Write-Host '(ERROR): MSYS2 installation not found. Please, install it with: winget install MSYS2.MSYS2' -ForegroundColor Red
         exit 1
       }
   }
-if (-not $MSYSTEM_PREFIX)
+if (-not $env:MSYSTEM_PREFIX)
   {
-    $MSYSTEM_PREFIX = if ((Get-WmiObject Win32_ComputerSystem).SystemType -like 'ARM64*') { 'clangarm64' } else { 'clang64' }
+    $env:MSYSTEM_PREFIX = if ((Get-WmiObject Win32_ComputerSystem).SystemType -like 'ARM64*') { 'clangarm64' } else { 'clang64' }
   }
 
 Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):deps_install[collapsed=true]$([char]13)$([char]27)[0KInstalling dependencies provided by MSYS2"
 if ("$PSCommandPath" -like "*1_build-deps-msys2.ps1*" -or "$CI_JOB_NAME" -like "*deps*")
   {
-    & $MSYS_ROOT\usr\bin\pacman --noconfirm -Suy
+    powershell -Command { $ProgressPreference = 'SilentlyContinue'; $env:PATH="$env:MSYS_ROOT\usr\bin;$env:PATH"; pacman --noconfirm -Suy }; if ("$LASTEXITCODE" -gt '0') { exit 1 }
   }
-& $MSYS_ROOT\usr\bin\pacman --noconfirm -S --needed $(if ($MSYSTEM_PREFIX -ne 'mingw32') { "$(if ($MSYSTEM_PREFIX -eq 'clangarm64') { 'mingw-w64-clang-aarch64' } else { 'mingw-w64-clang-x86_64' })-perl" }) (Get-Content build/windows/all-deps-uni.txt | Where-Object { $_.Trim() -ne '' -and -not $_.Trim().StartsWith('#') }).Replace('${MINGW_PACKAGE_PREFIX}',$(if ($MINGW_PACKAGE_PREFIX) { "$MINGW_PACKAGE_PREFIX" } elseif ($MSYSTEM_PREFIX -eq 'clangarm64') { 'mingw-w64-clang-aarch64' } else { 'mingw-w64-clang-x86_64' })).Replace(' \','')
+powershell -Command { $ProgressPreference = 'SilentlyContinue'; $env:PATH="$env:MSYS_ROOT\usr\bin;$env:PATH"; pacman --noconfirm -S --needed $(if ($env:MSYSTEM_PREFIX -ne 'mingw32') { "$(if ($env:MSYSTEM_PREFIX -eq 'clangarm64') { 'mingw-w64-clang-aarch64' } else { 'mingw-w64-clang-x86_64' })-perl" }) (Get-Content build/windows/all-deps-uni.txt | Where-Object { $_.Trim() -ne '' -and -not $_.Trim().StartsWith('#') }).Replace('${MINGW_PACKAGE_PREFIX}',$(if ($env:MINGW_PACKAGE_PREFIX) { "$env:MINGW_PACKAGE_PREFIX" } elseif ($env:MSYSTEM_PREFIX -eq 'clangarm64') { 'mingw-w64-clang-aarch64' } else { 'mingw-w64-clang-x86_64' })).Replace(' \','') }; if ("$LASTEXITCODE" -gt '0') { exit 1 }
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):deps_install$([char]13)$([char]27)[0K"
 
 
@@ -91,13 +91,13 @@ function self_build ([string]$dep, [string]$unstable_branch, [string]$stable_pat
     git pull
 
     ## Configure and/or build
-    if (-not (Test-Path _build-$MSYSTEM_PREFIX\build.ninja -Type Leaf))
+    if (-not (Test-Path _build-$env:MSYSTEM_PREFIX\build.ninja -Type Leaf))
       {
-        meson setup _build-$MSYSTEM_PREFIX -Dprefix="$GIMP_PREFIX" $PKGCONF_RELOCATABLE_OPTION $option1 $option2
+        meson setup _build-$env:MSYSTEM_PREFIX -Dprefix="$GIMP_PREFIX" $PKGCONF_RELOCATABLE_OPTION $option1 $option2; if ("$LASTEXITCODE" -gt '0') { exit 1 }
       }
-    Set-Location _build-$MSYSTEM_PREFIX
-    ninja
-    ninja install
+    Set-Location _build-$env:MSYSTEM_PREFIX
+    ninja; if ("$LASTEXITCODE" -gt '0') { exit 1 }
+    ninja install; if ("$LASTEXITCODE" -gt '0') { exit 1 }
     if ("$LASTEXITCODE" -gt '0' -or "$?" -eq 'False')
       {
         ## We need to manually check failures in pre-7.4 PS

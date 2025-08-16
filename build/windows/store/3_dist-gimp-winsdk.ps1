@@ -9,7 +9,7 @@ param ($revision = "$GIMP_CI_MS_STORE",
 
 # Ensure the script work properly
 $ErrorActionPreference = 'Stop'
-$PSNativeCommandUseErrorActionPreference = $true
+$PSNativeCommandUseErrorActionPreference = $false #to ensure error catching as in pre-7.4 PS
 if (-not (Test-Path build\windows\store) -and -not (Test-Path 3_dist-gimp-winsdk.ps1 -Type Leaf) -or $PSScriptRoot -notlike "*build\windows\store*")
   {
     Write-Host '(ERROR): Script called from wrong dir. Please, call the script from gimp source.' -ForegroundColor Red
@@ -269,9 +269,9 @@ foreach ($bundle in $supported_archs)
     Copy-Item "$icons_path\*.png" $msix_arch\Assets\ -Recurse
     ### Generate temp priconfig.xml then resources*.pri
     Set-Location $msix_arch
-    makepri createconfig /cf priconfig.xml /dq lang-en-US /pv 10.0.0 | Out-File ..\winsdk.log
+    makepri createconfig /cf priconfig.xml /dq lang-en-US /pv 10.0.0 | Out-File ..\winsdk.log; if ("$LASTEXITCODE" -gt '0') { exit 1 }
     Set-Location ..\
-    makepri new /pr $msix_arch /cf $msix_arch\priconfig.xml /of $msix_arch | Out-File winsdk.log -Append
+    makepri new /pr $msix_arch /cf $msix_arch\priconfig.xml /of $msix_arch | Out-File winsdk.log -Append; if ("$LASTEXITCODE" -gt '0') { exit 1 }
     Remove-Item $msix_arch\priconfig.xml
 
 
@@ -315,7 +315,7 @@ foreach ($bundle in $supported_archs)
     ## Make .msix from each msix_arch
     $MSIX_ARTIFACT = $APPXSYM -replace '.appxsym','.msix'
     Write-Output "(INFO): packaging $MSIX_ARTIFACT"
-    makeappx pack /d $msix_arch /p $MSIX_ARTIFACT /o | Out-File winsdk.log -Append
+    makeappx pack /d $msix_arch /p $MSIX_ARTIFACT /o | Out-File winsdk.log -Append; if ("$LASTEXITCODE" -gt '0') { exit 1 }
     Remove-Item $msix_arch/ -Recurse
     Remove-Item .gitignore
     if (Test-Path .gitignore.bak -Type Leaf)
@@ -343,7 +343,7 @@ if (((Test-Path $a64_bundle) -and (Test-Path $x64_bundle)) -and (Get-ChildItem *
     ##  also to make sure against Partner Center getting confused)
     New-Item _TempOutput -ItemType Directory | Out-Null
     Move-Item *.msix _TempOutput/
-    makeappx bundle /bv "${CUSTOM_GIMP_VERSION}" /d _TempOutput /p $MSIXBUNDLE /o
+    makeappx bundle /bv "${CUSTOM_GIMP_VERSION}" /d _TempOutput /p $MSIXBUNDLE /o; if ("$LASTEXITCODE" -gt '0') { exit 1 }
     Remove-Item _TempOutput/ -Recurse
 
     ## Make .msixupload (ONLY FOR RELEASES)
