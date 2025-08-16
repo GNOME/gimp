@@ -207,7 +207,7 @@ msgstr "Fitxer de l'histograma"
 
 #: plug-ins/python/histogram-export.py:226
 msgid "Histogram export file"
-msgstr "Exporta l'histograma del fitxer"
+msgstr "Fitxer d'exportació de l'histograma"
 
 #: plug-ins/python/histogram-export.py:227
 msgid "_Bucket Size"
