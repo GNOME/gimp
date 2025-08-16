@@ -33,7 +33,7 @@ Source: "{#DEPS_DIR}\{#DDIR}\bin\*"; DestDir: "{app}\bin"; Excludes: "libgimp*.d
 Source: "{#DEPS_DIR}\{#DDIR}\lib\*"; DestDir: "{app}\lib"; Excludes: "gimp,Gimp*.typelib,*.pdb,*.a,*.pc,lua,gluas.dll,python3.12"; Components: deps{#COMPONENT}; Flags: {#COMMON_FLAGS}
 
 ;Optional arch-specific components (full installation)
-#ifdef DEBUG_SYMBOLS
+#if defined(DEBUG_SYMBOLS) && PLATFORM != X86
 Source: "{#GIMP_DIR}\{#DIR}\*.pdb"; DestDir: "{app}"; Components: debug{#COMPONENT}; Flags: {#COMMON_FLAGS}
 #endif
 

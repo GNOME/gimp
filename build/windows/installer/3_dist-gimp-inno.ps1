@@ -10,7 +10,7 @@ param ($revision = "$GIMP_CI_WIN_INSTALLER",
 
 # Ensure the script work properly
 $ErrorActionPreference = 'Stop'
-$PSNativeCommandUseErrorActionPreference = $true
+$PSNativeCommandUseErrorActionPreference = $false #to ensure error catching as in pre-7.4 PS
 if (-not (Test-Path build\windows\installer) -and -not (Test-Path 3_dist-gimp-inno.ps1 -Type Leaf) -or $PSScriptRoot -notlike "*build\windows\installer*")
   {
     Write-Host '(ERROR): Script called from wrong dir. Please, call the script from gimp source.' -ForegroundColor Red
@@ -31,10 +31,7 @@ if (-not $GITLAB_CI)
 #if (-not (Get-Command "python" -ErrorAction SilentlyContinue) -or "$(Get-Command "python" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source)" -like '*WindowsApps*')
 #  {
     Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'MSYS_ROOT\)' -Context 0,12) -replace '> ','')
-    #Need to install python modules (see lang\fix_msg.py)
-    $env:MSYS_ROOT = "$MSYS_ROOT"
-    #Needed to run python
-    $env:PATH = "$MSYS_ROOT/$MSYSTEM_PREFIX/bin;" + $env:PATH
+    $env:PATH = "$env:MSYS_ROOT/$env:MSYSTEM_PREFIX/bin;$env:PATH"
 #  }
 
 
@@ -213,12 +210,7 @@ Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):i
 $INSTALLER="gimp-${CUSTOM_GIMP_VERSION}-setup.exe"
 Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):installer_making[collapsed=true]$([char]13)$([char]27)[0KConstructing $INSTALLER installer"
 Set-Location build\windows\installer
-iscc -DREVISION="$revision" -DBUILD_DIR="$BUILD_DIR" -DGIMP_DIR="$GIMP_BASE" -DDIR32="$GIMP32" -DDIR64="$GIMP64" -DDIRA64="$GIMPA64" -DDEPS_DIR="$GIMP_BASE" -DDDIR32="$GIMP32" -DDDIR64="$GIMP64" -DDDIRA64="$GIMPA64" -DDEBUG_SYMBOLS -DPYTHON base_gimp3264.iss | Out-Null
-if ("$LASTEXITCODE" -gt '0' -or "$?" -eq 'False')
-  {
-    ## We need to manually check failures in pre-7.4 PS
-    exit 1
-  }
+iscc -DREVISION="$revision" -DBUILD_DIR="$BUILD_DIR" -DGIMP_DIR="$GIMP_BASE" -DDIR32="$GIMP32" -DDIR64="$GIMP64" -DDIRA64="$GIMPA64" -DDEPS_DIR="$GIMP_BASE" -DDDIR32="$GIMP32" -DDDIR64="$GIMP64" -DDDIRA64="$GIMPA64" -DDEBUG_SYMBOLS -DPYTHON base_gimp3264.iss | Out-Null; if ("$LASTEXITCODE" -gt '0') { exit 1 }
 Set-Location $GIMP_BASE
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_making$([char]13)$([char]27)[0K"
 
