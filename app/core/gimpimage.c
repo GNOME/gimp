@@ -3203,6 +3203,10 @@ gimp_image_get_xcf_version (GimpImage    *image,
       if (gimp_version)   *gimp_version   = 300;
       if (version_string) *version_string = "GIMP 3.0";
       break;
+    case 24:
+      if (gimp_version)   *gimp_version   = 320;
+      if (version_string) *version_string = "GIMP 3.2";
+      break;
     }
 
   if (version_reason && reasons)
@@ -5471,10 +5475,10 @@ gimp_image_add_layer (GimpImage *image,
     {
       GimpPath *path = gimp_vector_layer_get_path (GIMP_VECTOR_LAYER (layer));
 
-      if (path                                         && 
+      if (path                                         &&
           (! gimp_item_is_attached (GIMP_ITEM (path))) &&
           gimp_item_get_image (GIMP_ITEM (path)) == image)
-        gimp_image_add_path (image, path, NULL, -1, FALSE);   
+        gimp_image_add_path (image, path, NULL, -1, FALSE);
     }
 
   if (old_has_alpha != gimp_image_has_alpha (image))
