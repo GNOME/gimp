@@ -98,11 +98,6 @@ function self_build ([string]$dep, [string]$unstable_branch, [string]$stable_pat
     Set-Location _build-$env:MSYSTEM_PREFIX
     ninja; if ("$LASTEXITCODE" -gt '0') { exit 1 }
     ninja install; if ("$LASTEXITCODE" -gt '0') { exit 1 }
-    if ("$LASTEXITCODE" -gt '0' -or "$?" -eq 'False')
-      {
-        ## We need to manually check failures in pre-7.4 PS
-        exit 1
-      }
     Set-Location ../..
     Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):${dep}_build$([char]13)$([char]27)[0K"
   }
