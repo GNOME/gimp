@@ -56,44 +56,44 @@ Invoke-Expression ((Get-Content $GIMP_DIR\.gitlab-ci.yml | Select-String 'win_en
 
 
 # Build babl and GEGL
-function self_build ([string]$dep, [string]$unstable_branch, [string]$stable_patch, [string]$option1, [string]$option2)
+function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$options)
   {
+    $dep = ($repo -split "/")[-1] -replace '.git',''
     Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):${dep}_build[collapsed=true]$([char]13)$([char]27)[0KBuilding $dep"
-
     ## Make sure that the deps repos are fine
     if (-not (Test-Path $dep))
       {
-        $repo="https://gitlab.gnome.org/GNOME/$dep.git"
-        # For tagged jobs (i.e. release or test jobs for upcoming releases), use the
-        # last tag. Otherwise use the default branch's HEAD.
-        if ($CI_COMMIT_TAG)
+        ### For tagged jobs (i.e. release or test jobs for upcoming releases), use the
+        ### last tag. Otherwise use the default branch's HEAD.
+        $repo = if ($repo -notlike '*/*') { "https://gitlab.gnome.org/GNOME/$dep.git" } else { $repo }
+        if (($repo -like '*babl*' -or $repo -like '*gegl*') -and $CI_COMMIT_TAG)
           {
-            $tagprefix="$dep".ToUpper()
-            $tag = (git ls-remote --exit-code --refs --sort=version:refname $repo refs/tags/${tagprefix}_[0-9]*_[0-9]*_[0-9]* | Select-Object -Last 1).Split('refs/')[-1]
-            $git_options="--branch=$tag"
-            Write-Output "Using tagged release of ${dep}: $tag"
+            $tag_branch = (git ls-remote --exit-code --refs --sort=version:refname $repo refs/tags/$($dep.ToUpper())_[0-9]*_[0-9]*_[0-9]* | Select-Object -Last 1).Split('refs/')[-1]
           }
-        elseif ($unstable_branch)
+        else
           {
-            $git_options="--branch=$unstable_branch"
+            $tag_branch = if ($null -eq $branch -or $branch -eq '' -or $branch -like '*.patch*' -or $branch -like '-*') { 'master' } else { $branch }
           }
-        git clone $git_options --depth $GIT_DEPTH $repo
-
-        # This allows to add some minor patch on a dependency without having a proper new release.
-        if ($CI_COMMIT_TAG -and $stable_patch)
-          {
-            Set-Location $dep
-            git apply $GIMP_DIR\$stable_patch
-            Set-Location ..
-          }
+        Write-Output "Using tag/branch of ${dep}: ${tag_branch}"
+        git clone --branch=${tag_branch} --depth $GIT_DEPTH $repo
       }
     Set-Location $dep
     git pull
+    if ($branch -like "*.patch*" -or $patches)
+      {
+        ### This allows to add some minor patch on a dependency without having a proper new release.
+        foreach ($patch in $(if ($branch -like '*.patch*') { $branch } else { $patches }))
+          {
+            git apply $GIMP_DIR\$patch
+          }
+      }
 
     ## Configure and/or build
     if (-not (Test-Path _build-$env:MSYSTEM_PREFIX\build.ninja -Type Leaf))
       {
-        meson setup _build-$env:MSYSTEM_PREFIX -Dprefix="$GIMP_PREFIX" $PKGCONF_RELOCATABLE_OPTION $option1 $option2; if ("$LASTEXITCODE" -gt '0') { exit 1 }
+        meson setup _build-$env:MSYSTEM_PREFIX -Dprefix="$GIMP_PREFIX" $PKGCONF_RELOCATABLE_OPTION `
+                                               $(if ($branch -like '-*') { "$branch" } elseif ($patches -like '-*') { "$patches" } else { "$options" });
+        if ("$LASTEXITCODE" -gt '0') { exit 1 }
       }
     Set-Location _build-$env:MSYSTEM_PREFIX
     ninja; if ("$LASTEXITCODE" -gt '0') { exit 1 }
@@ -103,6 +103,6 @@ function self_build ([string]$dep, [string]$unstable_branch, [string]$stable_pat
   }
 
 self_build babl
-self_build gegl master build/windows/patches/0001-meson-only-generate-CodeView-.pdb-symbols-on-Windows.patch
+self_build gegl @('build/windows/patches/0001-meson-only-generate-CodeView-.pdb-symbols-on-Windows.patch') @('-Dworkshop=true')
 
 Set-Location $GIMP_DIR
