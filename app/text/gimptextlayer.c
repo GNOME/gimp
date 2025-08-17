@@ -85,6 +85,8 @@ static void       gimp_text_layer_set_property   (GObject           *object,
 static gint64     gimp_text_layer_get_memsize    (GimpObject        *object,
                                                   gint64            *gui_size);
 
+static void       gimp_text_layer_size_changed   (GimpViewable      *viewable);
+
 static GimpItem * gimp_text_layer_duplicate      (GimpItem          *item,
                                                   GType              new_type);
 static gboolean   gimp_text_layer_rename         (GimpItem          *item,
@@ -144,6 +146,7 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
 
   viewable_class->default_icon_name = "gimp-text-layer";
   viewable_class->default_name      = _("Text Layer");
+  viewable_class->size_changed      = gimp_text_layer_size_changed;
 
   item_class->duplicate             = gimp_text_layer_duplicate;
   item_class->rename                = gimp_text_layer_rename;
@@ -270,6 +273,19 @@ gimp_text_layer_get_memsize (GimpObject *object,
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
+}
+
+static void
+gimp_text_layer_size_changed (GimpViewable *viewable)
+{
+  GimpTextLayer *text_layer = GIMP_TEXT_LAYER (viewable);
+
+  /* TODO: For now, we only let the size_changed () call bubble up to
+   * gimp_drawable_size_changed () if the layer has been rasterized by
+   * a transform. This prevents filters like Drop Shadow from being
+   * cropped just by typing */
+  if (text_layer->modified)
+    GIMP_VIEWABLE_CLASS (parent_class)->size_changed (viewable);
 }
 
 static GimpItem *
