@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-08-09 18:58+0000\n"
-"PO-Revision-Date: 2025-08-10 19:09+0800\n"
+"POT-Creation-Date: 2025-08-16 23:00+0000\n"
+"PO-Revision-Date: 2025-08-17 08:00+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -68,7 +68,7 @@ msgstr "C 语言插件示例"
 #: plug-ins/common/cml-explorer.c:2144 plug-ins/common/cml-explorer.c:2354
 #: plug-ins/common/curve-bend.c:1787 plug-ins/common/curve-bend.c:1822
 #: plug-ins/common/file-gif-export.c:1209 plug-ins/common/file-heif.c:2487
-#: plug-ins/common/file-pdf-export.c:1073 plug-ins/common/file-pdf-load.c:585
+#: plug-ins/common/file-pdf-export.c:1069 plug-ins/common/file-pdf-load.c:585
 #: plug-ins/common/qbist.c:839 plug-ins/common/qbist.c:881
 #: plug-ins/common/sphere-designer.c:2291
 #: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:427
@@ -605,14 +605,14 @@ msgstr "百叶窗"
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:728
 #: plug-ins/common/file-farbfeld.c:296 plug-ins/common/file-gegl.c:446
 #: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:408
-#: plug-ins/common/file-jp2.c:1604 plug-ins/common/file-pcx.c:710
+#: plug-ins/common/file-jp2.c:1621 plug-ins/common/file-pcx.c:710
 #: plug-ins/common/file-pcx.c:718 plug-ins/common/file-pcx.c:726
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1082
 #: plug-ins/common/file-pnm.c:845 plug-ins/common/file-qoi.c:296
 #: plug-ins/common/file-raw-data.c:820 plug-ins/common/file-raw-data.c:2004
 #: plug-ins/common/file-sunras.c:1059 plug-ins/common/file-tga.c:1103
 #: plug-ins/common/file-tim.c:402 plug-ins/common/file-tim.c:509
-#: plug-ins/common/file-wbmp.c:389 plug-ins/common/file-wbmp.c:465
+#: plug-ins/common/file-wbmp.c:398 plug-ins/common/file-wbmp.c:474
 #: plug-ins/common/file-xbm.c:887 plug-ins/common/film.c:865
 #: plug-ins/common/smooth-palette.c:301 plug-ins/common/tile.c:396
 #: plug-ins/file-bmp/bmp-load.c:809 plug-ins/file-exr/file-exr.c:302
@@ -1041,7 +1041,7 @@ msgstr "打开(_O)"
 #. The Save button
 #: plug-ins/common/cml-explorer.c:1459 plug-ins/common/cml-explorer.c:2145
 #: plug-ins/common/curve-bend.c:1261 plug-ins/common/curve-bend.c:1823
-#: plug-ins/common/file-pdf-export.c:1072 plug-ins/common/qbist.c:882
+#: plug-ins/common/file-pdf-export.c:1068 plug-ins/common/qbist.c:882
 #: plug-ins/common/qbist.c:1003 plug-ins/common/sphere-designer.c:2294
 #: plug-ins/common/sphere-designer.c:2712 plug-ins/flame/flame.c:619
 #: plug-ins/flame/flame.c:1242
@@ -1210,7 +1210,8 @@ msgid "Graph of the Current Settings"
 msgstr "当前设置的曲线图"
 
 #: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:562
-#: plug-ins/common/procedure-browser.c:169 plug-ins/gfig/gfig-dialog.c:355
+#: plug-ins/common/procedure-browser.c:169
+#: plug-ins/filter-browser/filter-browser.c:728 plug-ins/gfig/gfig-dialog.c:355
 #: plug-ins/gfig/gfig-dialog.c:1215 plug-ins/gfig/gfig-dialog.c:1360
 #: plug-ins/ifs-compose/ifs-compose.c:1213
 #: plug-ins/metadata/metadata-viewer.c:223
@@ -1229,7 +1230,7 @@ msgstr "保存 CML 探索器参数"
 #: plug-ins/common/file-dicom.c:1541 plug-ins/common/file-farbfeld.c:355
 #: plug-ins/common/file-mng.c:875 plug-ins/common/file-mng.c:1225
 #: plug-ins/common/file-pcx.c:1200 plug-ins/common/file-pdf-export.c:680
-#: plug-ins/common/file-png.c:1915 plug-ins/common/file-raw-data.c:1509
+#: plug-ins/common/file-png.c:1923 plug-ins/common/file-raw-data.c:1509
 #: plug-ins/common/file-raw-data.c:1538 plug-ins/common/file-sunras.c:614
 #: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:630
 #: plug-ins/common/file-xmc.c:1272 plug-ins/common/sphere-designer.c:2205
@@ -2575,7 +2576,7 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #.
 #: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:352
 #: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:473
-#: plug-ins/common/file-heif.c:1049 plug-ins/common/file-jp2.c:1376
+#: plug-ins/common/file-heif.c:1049 plug-ins/common/file-jp2.c:1377
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
 #: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
 #: plug-ins/common/file-png.c:792 plug-ins/common/file-pnm.c:688
@@ -2658,9 +2659,9 @@ msgstr "“%s”：读取色板数据时遇到文件尾或错误"
 #.
 #: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:347
 #: plug-ins/common/file-gif-export.c:939 plug-ins/common/file-html-table.c:360
-#: plug-ins/common/file-jp2.c:1783 plug-ins/common/file-jpegxl.c:1389
+#: plug-ins/common/file-jp2.c:1800 plug-ins/common/file-jpegxl.c:1389
 #: plug-ins/common/file-pcx.c:1083 plug-ins/common/file-pix.c:636
-#: plug-ins/common/file-png.c:1907 plug-ins/common/file-pnm.c:1623
+#: plug-ins/common/file-png.c:1915 plug-ins/common/file-pnm.c:1623
 #: plug-ins/common/file-ps.c:1369 plug-ins/common/file-qoi.c:350
 #: plug-ins/common/file-sunras.c:605 plug-ins/common/file-tga.c:1217
 #: plug-ins/common/file-tim.c:622 plug-ins/common/file-xbm.c:1026
@@ -3142,7 +3143,7 @@ msgid "global colormap"
 msgstr "全局颜色表"
 
 #: plug-ins/common/file-gif-load.c:556 plug-ins/common/file-gif-load.c:1191
-#: plug-ins/common/file-gif-load.c:1546 plug-ins/common/file-gif-load.c:1556
+#: plug-ins/common/file-gif-load.c:1547 plug-ins/common/file-gif-load.c:1557
 #: plug-ins/common/file-gif-load.c:1579
 msgid "image data"
 msgstr "图像数据"
@@ -3272,6 +3273,10 @@ msgstr ""
 #: plug-ins/common/file-gif-load.c:1498
 msgid "Too much compressed data, ignoring extra..."
 msgstr "太多压缩的数据，正在忽略额外数据…"
+
+#: plug-ins/common/file-gif-load.c:1587
+msgid "inflate failed"
+msgstr "填充失败"
 
 #: plug-ins/common/file-gih.c:119
 msgid "Incremental"
@@ -3942,6 +3947,16 @@ msgstr "以 JPEG 2000 码流格式导出文件"
 msgid "_Number of Resolutions"
 msgstr "分辨率数量(_N)"
 
+#. Not having color information is expected.
+#: plug-ins/common/file-jp2.c:1212
+msgid "Opening JPEG 2000 codestream"
+msgstr "打开 JPEG 2000 码流"
+
+#. Unexpected, but let's be a bit flexible and ask.
+#: plug-ins/common/file-jp2.c:1215
+msgid "JPEG 2000 image with no color space"
+msgstr "JPEG 2000 图像不带色彩空间"
+
 #: plug-ins/common/file-jp2.c:1240
 #, c-format
 msgid "Unsupported JPEG 2000%s '%s' with %d components."
@@ -3966,63 +3981,63 @@ msgstr "用于 CMYK 导出的特性文件的名称。"
 msgid "Profile: %s"
 msgstr "特性文件：%s"
 
-#: plug-ins/common/file-jp2.c:1384 plug-ins/common/file-wmf.c:238
+#: plug-ins/common/file-jp2.c:1385 plug-ins/common/file-wmf.c:238
 #: plug-ins/common/file-wmf.c:596
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr "无法打开“%s”并读取"
 
-#: plug-ins/common/file-jp2.c:1393
+#: plug-ins/common/file-jp2.c:1394
 #, c-format
 msgid "Failed to initialize decoder for '%s', out of memory?"
 msgstr "为“%s”初始化解码器失败，内存不足吗？"
 
-#: plug-ins/common/file-jp2.c:1409
+#: plug-ins/common/file-jp2.c:1410
 #, c-format
 msgid "Couldn't set parameters on decoder for '%s'."
 msgstr "无法对“%s”的解码器设置参数。"
 
-#: plug-ins/common/file-jp2.c:1417
+#: plug-ins/common/file-jp2.c:1418
 #, c-format
 msgid "Couldn't read JP2 header from '%s'."
 msgstr "无法从“%s”读取 JP2 文件头。"
 
-#: plug-ins/common/file-jp2.c:1425
+#: plug-ins/common/file-jp2.c:1426
 #, c-format
 msgid "Couldn't decode JP2 image in '%s'."
 msgstr "无法解码“%s”中的 JP2 图像。"
 
-#: plug-ins/common/file-jp2.c:1433
+#: plug-ins/common/file-jp2.c:1434
 #, c-format
 msgid "Couldn't decompress JP2 image in '%s'."
 msgstr "无法解压缩“%s”中的 JP2 图像。"
 
-#: plug-ins/common/file-jp2.c:1464
+#: plug-ins/common/file-jp2.c:1465
 #, c-format
 msgid "Couldn't decode CIELAB JP2 image in '%s'."
 msgstr "无法解码“%s”中的 CIELAB JP2 图像。"
 
-#: plug-ins/common/file-jp2.c:1521
+#: plug-ins/common/file-jp2.c:1522
 #, c-format
 msgid "Unknown color space in JP2 codestream '%s'."
 msgstr "JP2 码流“%s”带有未知色彩空间。"
 
-#: plug-ins/common/file-jp2.c:1532
+#: plug-ins/common/file-jp2.c:1533
 #, c-format
 msgid "Couldn't convert YCbCr JP2 image '%s' to RGB."
 msgstr "无法转换 YCbCr JP2 图像“%s”为 RGB。"
 
-#: plug-ins/common/file-jp2.c:1542
+#: plug-ins/common/file-jp2.c:1543
 #, c-format
 msgid "Couldn't convert CMYK JP2 image in '%s' to RGB."
 msgstr "无法转换“%s”中的 CMYK JP2 图像为 RGB。"
 
-#: plug-ins/common/file-jp2.c:1554
+#: plug-ins/common/file-jp2.c:1555
 #, c-format
 msgid "Couldn't convert xvYCC JP2 image in '%s' to RGB."
 msgstr "无法转换“%s”中的 xvYCC JP2 图像为 RGB。"
 
-#: plug-ins/common/file-jp2.c:1581
+#: plug-ins/common/file-jp2.c:1582
 #, c-format
 msgid "Unsupported color space in JP2 image '%s'."
 msgstr "不支持 JP2 图像“%s”中的色彩空间。"
@@ -4133,7 +4148,7 @@ msgstr "打开 .lnk 文件且如果其指向图像，将会使 GIMP 打开该链
 #: plug-ins/common/file-seattle-filmworks.c:359
 #: plug-ins/common/file-seattle-filmworks.c:370
 #: plug-ins/common/file-seattle-filmworks.c:380
-#: plug-ins/common/file-seattle-filmworks.c:514
+#: plug-ins/common/file-seattle-filmworks.c:513
 #, c-format
 msgid "Invalid file."
 msgstr "无效文件。"
@@ -4276,7 +4291,7 @@ msgstr "写入 tIME（创建时间）数据块"
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: plug-ins/common/file-mng.c:723 plug-ins/common/file-png.c:2773
+#: plug-ins/common/file-mng.c:723 plug-ins/common/file-png.c:2781
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "无法无损地保存透明度，以不透明保存。"
 
@@ -4437,13 +4452,13 @@ msgstr "%s：无法加载所有 DCX 图像：%s\n"
 msgid "'%s' is not a PCX file"
 msgstr "“%s”不是 PCX 文件"
 
-#: plug-ins/common/file-pcx.c:672 plug-ins/common/file-wbmp.c:454
+#: plug-ins/common/file-pcx.c:672 plug-ins/common/file-wbmp.c:463
 #: plug-ins/file-bmp/bmp-load.c:606 plug-ins/file-psd/psd-load.c:572
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "不支持或无效的图像宽度：%d"
 
-#: plug-ins/common/file-pcx.c:679 plug-ins/common/file-wbmp.c:460
+#: plug-ins/common/file-pcx.c:679 plug-ins/common/file-wbmp.c:469
 #: plug-ins/file-bmp/bmp-load.c:615 plug-ins/file-psd/psd-load.c:564
 #, c-format
 msgid "Unsupported or invalid image height: %d"
@@ -4608,7 +4623,7 @@ msgstr ""
 "%s\n"
 "请确保您输入了有效文件名且选中的位置不是只读！"
 
-#: plug-ins/common/file-pdf-export.c:984
+#: plug-ins/common/file-pdf-export.c:980
 #, c-format
 msgid ""
 "The following fonts cannot be found: %s.\n"
@@ -4619,48 +4634,48 @@ msgstr ""
 "建议在导出前将您的文字图层转换为图像或安装缺少的字体，否则您的设计可能不会正"
 "确显示。"
 
-#: plug-ins/common/file-pdf-export.c:1054
+#: plug-ins/common/file-pdf-export.c:1050
 msgid "Export Image as Multi-Page PDF"
 msgstr "导出图像为多页面 PDF"
 
-#: plug-ins/common/file-pdf-export.c:1055
+#: plug-ins/common/file-pdf-export.c:1051
 #: plug-ins/metadata/metadata-editor.c:5604
 msgid "_Export"
 msgstr "导出(_E)"
 
-#: plug-ins/common/file-pdf-export.c:1064
+#: plug-ins/common/file-pdf-export.c:1060
 msgid "Save to:"
 msgstr "保存到："
 
-#: plug-ins/common/file-pdf-export.c:1068
+#: plug-ins/common/file-pdf-export.c:1064
 msgid "Browse..."
 msgstr "浏览…"
 
-#: plug-ins/common/file-pdf-export.c:1069
+#: plug-ins/common/file-pdf-export.c:1065
 msgid "Multipage PDF export"
 msgstr "多页面 PDF 导出"
 
-#: plug-ins/common/file-pdf-export.c:1113
+#: plug-ins/common/file-pdf-export.c:1109
 msgid "Remove the selected pages"
 msgstr "删除选中页面"
 
-#: plug-ins/common/file-pdf-export.c:1127
+#: plug-ins/common/file-pdf-export.c:1123
 msgid "Add this image"
 msgstr "添加该图像"
 
-#: plug-ins/common/file-pdf-export.c:1223
-#: plug-ins/common/file-pdf-export.c:1296
-#: plug-ins/common/file-pdf-export.c:1394 plug-ins/common/file-ps.c:2218
+#: plug-ins/common/file-pdf-export.c:1219
+#: plug-ins/common/file-pdf-export.c:1292
+#: plug-ins/common/file-pdf-export.c:1390 plug-ins/common/file-ps.c:2218
 #: plug-ins/file-tiff/file-tiff-load.c:1563
 #, c-format
 msgid "Page %d"
 msgstr "第 %d 页"
 
-#: plug-ins/common/file-pdf-export.c:1263
+#: plug-ins/common/file-pdf-export.c:1259
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "错误！为了保存该文件，应该添加至少一副图像！"
 
-#: plug-ins/common/file-pdf-export.c:1441 plug-ins/print/print-draw-page.c:125
+#: plug-ins/common/file-pdf-export.c:1437 plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "无法处理该图像的尺寸（无论宽度或高度）。"
 
@@ -4919,47 +4934,47 @@ msgstr "PNG 文件中指定的偏移导致图层定位在图像以外。"
 msgid "Importing APNG frames from '%s'"
 msgstr "从“%s”导入 APNG 帧"
 
-#: plug-ins/common/file-png.c:1396 plug-ins/common/file-png.c:1430
-#: plug-ins/common/file-png.c:1454
+#: plug-ins/common/file-png.c:1399 plug-ins/common/file-png.c:1436
+#: plug-ins/common/file-png.c:1460
 #, c-format
 msgid "Could not read APNG frames. They will be discarded."
 msgstr "无法读取 APNG 帧。它们将被丢弃。"
 
-#: plug-ins/common/file-png.c:1545
+#: plug-ins/common/file-png.c:1551
 #, c-format
 msgid "Invalid APNG: Image data appeared before actTL chunk."
 msgstr "无效的 APNG：图像数据出现在 actTL 数据块之前。"
 
-#: plug-ins/common/file-png.c:1629
+#: plug-ins/common/file-png.c:1637
 msgid "Apply PNG Offset"
 msgstr "应用 PNG 偏移"
 
-#: plug-ins/common/file-png.c:1633
+#: plug-ins/common/file-png.c:1641
 msgid "Ignore PNG offset"
 msgstr "忽略 PNG 偏移"
 
-#: plug-ins/common/file-png.c:1634
+#: plug-ins/common/file-png.c:1642
 msgid "Apply PNG offset to layer"
 msgstr "对图层应用 PNG 偏移"
 
-#: plug-ins/common/file-png.c:1659
+#: plug-ins/common/file-png.c:1667
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
 "to apply this offset to the layer?"
 msgstr "您导入的 PNG 图像指定了“%d，%d”偏移。您想要对图层应用该偏移吗？"
 
-#: plug-ins/common/file-png.c:1872
+#: plug-ins/common/file-png.c:1880
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "导出“%s”时创建 PNG 写入结构出错。"
 
-#: plug-ins/common/file-png.c:1881
+#: plug-ins/common/file-png.c:1889
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr "导出“%s”出错。无法创建 PNG 文件头信息结构。"
 
-#: plug-ins/common/file-png.c:1889
+#: plug-ins/common/file-png.c:1897
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "导出“%s”出错。无法导出图像。"
@@ -6028,7 +6043,7 @@ msgid "Uncompressed SFW94A format is not yet supported."
 msgstr "尚未支持未压缩的 SFW94A 格式。"
 
 #: plug-ins/common/file-seattle-filmworks.c:415
-#: plug-ins/common/file-seattle-filmworks.c:529
+#: plug-ins/common/file-seattle-filmworks.c:528
 #, c-format
 msgid "Unable to convert SFW image."
 msgstr "无法转换 SFW 图像。"
@@ -6434,6 +6449,11 @@ msgstr "“%s”：无效的 OTA 类型值"
 #, c-format
 msgid "'%s': Invalid OTA header value"
 msgstr "“%s”：无效的 OTA 头部值"
+
+#: plug-ins/common/file-wbmp.c:391
+#, c-format
+msgid "'%s': Invalid dimensions %u x %u"
+msgstr "“%s”：无效尺寸 %u x %u"
 
 #: plug-ins/common/file-wmf.c:177
 msgid "Microsoft WMF file"
@@ -7567,6 +7587,7 @@ msgstr ""
 "现插件菜单的树形列表。也可以帮助您找到新安装插件在菜单中的位置。"
 
 #: plug-ins/common/plugin-browser.c:373
+#: plug-ins/filter-browser/filter-browser.c:609
 msgid "Searching by name"
 msgstr "按名称搜索"
 
@@ -7577,6 +7598,7 @@ msgid_plural "%d plug-ins"
 msgstr[0] "%d 个插件"
 
 #: plug-ins/common/plugin-browser.c:398
+#: plug-ins/filter-browser/filter-browser.c:676
 msgid "No matches for your query"
 msgstr "您的查询无匹配结果"
 
@@ -7587,6 +7609,7 @@ msgid_plural "%d plug-ins match your query"
 msgstr[0] "共有 %d 个插件和您的查询匹配"
 
 #: plug-ins/common/plugin-browser.c:532
+#: plug-ins/filter-browser/filter-browser.c:678
 msgid "No matches"
 msgstr "无匹配"
 
@@ -11097,27 +11120,27 @@ msgstr "读取分块失败。图像可能在第 %d 行损坏。"
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr "读取扫描线失败。图像可能在第 %d 行损坏。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2992
+#: plug-ins/file-tiff/file-tiff-load.c:2993
 msgid "Import from TIFF"
 msgstr "从 TIFF 导入"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3000
+#: plug-ins/file-tiff/file-tiff-load.c:3001
 msgid "_Show reduced images"
 msgstr "显示缩减的图像(_S)"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3045
+#: plug-ins/file-tiff/file-tiff-load.c:3046
 msgid "Process extra channel as:"
 msgstr "处理额外通道为："
 
-#: plug-ins/file-tiff/file-tiff-load.c:3048
+#: plug-ins/file-tiff/file-tiff-load.c:3049
 msgid "_Non-premultiplied alpha"
 msgstr "非自左乘透明(_N)"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3049
+#: plug-ins/file-tiff/file-tiff-load.c:3050
 msgid "Pre_multiplied alpha"
 msgstr "自左乘透明(_M)"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3050
+#: plug-ins/file-tiff/file-tiff-load.c:3051
 msgid "Channe_l"
 msgstr "通道(_L)"
 
@@ -11335,6 +11358,86 @@ msgstr "从“%s”解码 WebP 动画帧失败"
 #, c-format
 msgid "Frame %d (%dms)"
 msgstr "第 %d 帧（%dms）"
+
+#: plug-ins/filter-browser/filter-browser.c:287
+#: plug-ins/filter-browser/filter-browser.c:322
+msgid "Allowed values:"
+msgstr "允许的值："
+
+#.
+#. *  Scales
+#.
+#.
+#. *    Scales
+#.
+#: plug-ins/filter-browser/filter-browser.c:463
+#: plug-ins/gradient-flare/gradient-flare.c:2949
+#: plug-ins/gradient-flare/gradient-flare.c:3699
+#: plug-ins/gradient-flare/gradient-flare.c:3801
+#: plug-ins/gradient-flare/gradient-flare.c:3932
+msgid "Parameters"
+msgstr "参数"
+
+#: plug-ins/filter-browser/filter-browser.c:495
+msgid "Additional Information"
+msgstr "附加信息"
+
+#: plug-ins/filter-browser/filter-browser.c:612
+msgid "Searching by title"
+msgstr "按标题搜索"
+
+#: plug-ins/filter-browser/filter-browser.c:615
+msgid "Searching by description"
+msgstr "按描述搜索"
+
+#: plug-ins/filter-browser/filter-browser.c:618
+msgid "Searching by category"
+msgstr "按分类搜索"
+
+#: plug-ins/filter-browser/filter-browser.c:683
+#, c-format
+msgid "%d filter matches your query"
+msgid_plural "%d filters match your query"
+msgstr[0] "%d 个滤镜和您的查询匹配"
+
+#: plug-ins/filter-browser/filter-browser.c:689
+#, c-format
+msgid "%d filter"
+msgid_plural "%d filters"
+msgstr[0] "%d 个滤镜"
+
+#: plug-ins/filter-browser/filter-browser.c:722
+msgid "GEGL Filter Browser"
+msgstr "GEGL 滤镜浏览器"
+
+#: plug-ins/filter-browser/filter-browser.c:739
+msgid "by name"
+msgstr "按名称"
+
+#: plug-ins/filter-browser/filter-browser.c:740
+msgid "by title"
+msgstr "按标题"
+
+#: plug-ins/filter-browser/filter-browser.c:741
+msgid "by description"
+msgstr "按描述"
+
+#: plug-ins/filter-browser/filter-browser.c:828
+msgid "_GEGL Filter Browser"
+msgstr "_GEGL 滤镜浏览器"
+
+#: plug-ins/filter-browser/filter-browser.c:833
+msgid "Display information about available GEGL operations (i.e., filters)."
+msgstr "显示关于可用 GEGL 操作的信息（如滤镜等）。"
+
+#: plug-ins/filter-browser/filter-browser.c:835
+msgid ""
+"Shows a list of all GEGL operations, their details and what parameters they "
+"are configured with. The list contains operations provided by GEGL itself, "
+"GIMP and plug-ins loaded by GEGL."
+msgstr ""
+"显示列出所有 GEGL 操作、其详情和配置参数的列表。该列表包含由 GEGL 自身、GIMP "
+"和 GEGL 加载插件等提供的操作。"
 
 #: plug-ins/flame/flame.c:179
 msgid "_Flame..."
@@ -13185,19 +13288,6 @@ msgstr "_X："
 #: plug-ins/gradient-flare/gradient-flare.c:2909
 msgid "_Y:"
 msgstr "_Y："
-
-#.
-#. *  Scales
-#.
-#.
-#. *    Scales
-#.
-#: plug-ins/gradient-flare/gradient-flare.c:2949
-#: plug-ins/gradient-flare/gradient-flare.c:3699
-#: plug-ins/gradient-flare/gradient-flare.c:3801
-#: plug-ins/gradient-flare/gradient-flare.c:3932
-msgid "Parameters"
-msgstr "参数"
 
 #: plug-ins/gradient-flare/gradient-flare.c:2983
 msgid "_Settings"
