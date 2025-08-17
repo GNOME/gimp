@@ -252,6 +252,7 @@ app/dialogs/user-install-dialog.c
 app/dialogs/path-export-dialog.c
 app/dialogs/path-import-dialog.c
 app/dialogs/path-options-dialog.c
+app/dialogs/vector-layer-options-dialog.c
 app/dialogs/welcome-dialog.c
 
 app/display/display-enums.c
@@ -361,6 +362,8 @@ app/paint/paint-enums.c
 app/path/gimppath.c
 app/path/gimppath-export.c
 app/path/gimppath-import.c
+app/path/gimpvectorlayer.c
+app/path/gimpvectorlayeroptions.c
 
 app/pdb/channel-cmds.c
 app/pdb/drawable-cmds.c
@@ -389,6 +392,7 @@ app/pdb/pdb-cmds.c
 app/pdb/resource-cmds.c
 app/pdb/selection-cmds.c
 app/pdb/text-layer-cmds.c
+app/pdb/vector-layer-cmds.c
 
 app/plug-in/gimpenvirontable.c
 app/plug-in/gimpinterpreterdb.c
