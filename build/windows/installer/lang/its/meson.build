@@ -1,3 +1,5 @@
+#Here we generate rules for XML translation extraction by 'i18n.merge_file' on the parent lang/meson.build)
+
 xgettext = find_program('xgettext', version: '>=0.23', required: false)
 
 its_conf = configuration_data()
