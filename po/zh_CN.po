@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-08-09 18:55+0000\n"
-"PO-Revision-Date: 2025-08-10 19:15+0800\n"
+"POT-Creation-Date: 2025-08-16 22:58+0000\n"
+"PO-Revision-Date: 2025-08-17 08:10+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -2559,9 +2559,8 @@ msgstr "为该标记添加描述"
 #: app/dialogs/file-open-dialog.c:288
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/dialogs/welcome-dialog.c:1247 app/display/gimpdisplayshell-dnd.c:646
-#: app/widgets/gimplayertreeview.c:796 app/widgets/gimptoolbox.c:843
-#: app/widgets/gimptoolbox-dnd.c:178
+#: app/display/gimpdisplayshell-dnd.c:646 app/widgets/gimplayertreeview.c:796
+#: app/widgets/gimptoolbox.c:843 app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -8357,14 +8356,14 @@ msgstr "打开文本文件 (UTF-8)"
 
 #: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:125
 #: app/dialogs/file-open-location-dialog.c:81
-#: app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:718
+#: app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:790
 #: app/widgets/gimpiconpicker.c:490 app/widgets/gimpopendialog.c:87
 #: app/widgets/gimpsettingsbox.c:708
 msgid "_Open"
 msgstr "打开(_O)"
 
 #: app/actions/text-editor-commands.c:140 app/actions/text-tool-commands.c:226
-#: app/config/gimpconfig-file.c:73 app/core/gimppalette-import.c:520
+#: app/config/gimpconfig-file.c:73 app/core/gimppalette-import.c:526
 #: app/plug-in/gimpenvirontable.c:289 app/plug-in/gimpinterpreterdb.c:234
 #: app/tools/gimpfiltertool-settings.c:170 app/widgets/gimptextbuffer.c:1650
 #, c-format
@@ -13649,7 +13648,7 @@ msgid "Symmetry"
 msgstr "对称"
 
 #: app/core/gimpimage.c:2073 app/pdb/drawable-filter-cmds.c:702
-#: app/widgets/gimpdrawabletreeview-filters.c:861
+#: app/widgets/gimpdrawabletreeview-filters.c:740
 msgid "Remove filter"
 msgstr "移除滤镜"
 
@@ -14042,7 +14041,7 @@ msgid "Cannot merge down to a layer group."
 msgstr "无法向下合并到图层组。"
 
 #: app/core/gimpimage-merge.c:345
-#: app/widgets/gimpdrawabletreeview-filters.c:835
+#: app/widgets/gimpdrawabletreeview-filters.c:714
 msgid "The layer to merge down to is locked."
 msgstr "要向下合并的目标图层已被锁定。"
 
@@ -14109,53 +14108,53 @@ msgstr "缩放图像"
 msgid "Can't undo %s"
 msgstr "无法撤消 %s"
 
-#: app/core/gimpimagefile.c:803
+#: app/core/gimpimagefile.c:836
 msgid "Folder"
 msgstr "文件夹"
 
-#: app/core/gimpimagefile.c:808
+#: app/core/gimpimagefile.c:841
 msgid "Special File"
 msgstr "特殊文件"
 
-#: app/core/gimpimagefile.c:824
+#: app/core/gimpimagefile.c:857
 msgid "Remote File"
 msgstr "远程文件"
 
-#: app/core/gimpimagefile.c:843
+#: app/core/gimpimagefile.c:876
 msgid "Click to create preview"
 msgstr "单击生成预览"
 
-#: app/core/gimpimagefile.c:849
+#: app/core/gimpimagefile.c:882
 msgid "Loading preview..."
 msgstr "正在加载预览…"
 
-#: app/core/gimpimagefile.c:855
+#: app/core/gimpimagefile.c:888
 msgid "Preview is out of date"
 msgstr "预览已经过时"
 
-#: app/core/gimpimagefile.c:861
+#: app/core/gimpimagefile.c:894
 msgid "Cannot create preview"
 msgstr "无法生成预览"
 
-#: app/core/gimpimagefile.c:871
+#: app/core/gimpimagefile.c:904
 msgid "(Preview may be out of date)"
 msgstr "（预览可能已经过时）"
 
 #. pixel size
-#: app/core/gimpimagefile.c:880 app/widgets/gimpimagepropview.c:438
+#: app/core/gimpimagefile.c:913 app/widgets/gimpimagepropview.c:438
 #: app/widgets/gimpsizebox.c:429 app/widgets/gimptemplateeditor.c:734
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
 msgstr[0] "%d x %d 像素"
 
-#: app/core/gimpimagefile.c:903 app/display/gimpdisplayshell-title.c:394
+#: app/core/gimpimagefile.c:936 app/display/gimpdisplayshell-title.c:394
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
 msgstr[0] "%d 个图层"
 
-#: app/core/gimpimagefile.c:967
+#: app/core/gimpimagefile.c:1011
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "无法打开缩略图“%s”：%s"
@@ -14163,7 +14162,7 @@ msgstr "无法打开缩略图“%s”：%s"
 #: app/core/gimpitem.c:1850 app/core/gimpitem.c:1917
 #: app/display/gimpdisplayshell-dnd.c:380 app/tools/gimppathtool.c:758
 #: app/tools/gimppathtool.c:847 app/tools/gimptransformtool.c:729
-#: app/widgets/gimpdrawabletreeview-filters.c:707
+#: app/widgets/gimpdrawabletreeview-filters.c:586
 msgid "A selected layer's pixels are locked."
 msgstr "一个选中图层的像素已被锁定。"
 
@@ -14428,7 +14427,7 @@ msgstr "并行转化 MyPaint 笔刷失败。"
 msgid "%s (occurs %u)"
 msgstr "%s（发生 %u）"
 
-#: app/core/gimppalette-import.c:567
+#: app/core/gimppalette-import.c:573
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "未知类型的色板文件：%s"
@@ -15501,9 +15500,10 @@ msgstr "前景/背景"
 msgid "FG/BG Color"
 msgstr "前景/背景颜色"
 
-#: app/dialogs/extensions-dialog.c:76 app/widgets/gimpfileprocview.c:211
+#: app/dialogs/extensions-dialog.c:76
+msgctxt "GIMP extensions"
 msgid "Extensions"
-msgstr "扩展名"
+msgstr "扩展"
 
 #. "gimp-extensions-installed",
 #: app/dialogs/extensions-dialog.c:111 app/dialogs/extensions-dialog.c:112
@@ -15667,7 +15667,7 @@ msgstr "仅合并活动组内(_G)"
 msgid "_Discard invisible layers"
 msgstr "丢弃不可见图层(_D)"
 
-#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:703
+#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:775
 msgid "Create a New Image"
 msgstr "新建图像"
 
@@ -15700,7 +15700,7 @@ msgid "Image Properties"
 msgstr "图像属性"
 
 #: app/dialogs/image-properties-dialog.c:68 app/dialogs/module-dialog.c:113
-#: app/dialogs/welcome-dialog.c:193 app/tools/gimpcolorpickertool.c:351
+#: app/dialogs/welcome-dialog.c:213 app/tools/gimpcolorpickertool.c:351
 #: app/tools/gimpgradienttool-editor.c:1818 app/tools/gimpmeasuretool.c:740
 #: app/widgets/gimpcontrollerlist.c:635 app/widgets/gimpcriticaldialog.c:210
 #: app/widgets/gimpcriticaldialog.c:232 app/widgets/gimpsettingsbox.c:637
@@ -16094,7 +16094,7 @@ msgstr "重置所有首选项"
 msgid "Do you really want to reset all preferences to default values?"
 msgstr "您真的要将所有首选项重置到默认值吗？"
 
-#: app/dialogs/preferences-dialog.c:312 app/dialogs/welcome-dialog.c:362
+#: app/dialogs/preferences-dialog.c:312 app/dialogs/welcome-dialog.c:434
 msgid "You will have to restart GIMP for the following changes to take effect:"
 msgstr "您需要重启 GIMP 以使下列改变生效："
 
@@ -16720,7 +16720,7 @@ msgstr "删除所有快捷键(_A)"
 
 #. Themes
 #: app/dialogs/preferences-dialog.c:1962 app/dialogs/preferences-dialog.c:1963
-#: app/dialogs/welcome-dialog.c:546
+#: app/dialogs/welcome-dialog.c:618
 msgid "Theme"
 msgstr "主题"
 
@@ -16732,44 +16732,44 @@ msgstr "选择主题"
 msgid "Color scheme variant (if available)"
 msgstr "颜色方案变种（如果可用）"
 
-#: app/dialogs/preferences-dialog.c:2055 app/dialogs/welcome-dialog.c:599
+#: app/dialogs/preferences-dialog.c:2055 app/dialogs/welcome-dialog.c:671
 msgid "_Override icon sizes set by the theme"
 msgstr "覆盖由主题设置的图标大小(_O)"
 
-#: app/dialogs/preferences-dialog.c:2068 app/dialogs/welcome-dialog.c:608
+#: app/dialogs/preferences-dialog.c:2068 app/dialogs/welcome-dialog.c:680
 msgid "Small"
 msgstr "小"
 
-#: app/dialogs/preferences-dialog.c:2070 app/dialogs/welcome-dialog.c:610
+#: app/dialogs/preferences-dialog.c:2070 app/dialogs/welcome-dialog.c:682
 msgid "Medium"
 msgstr "中"
 
-#: app/dialogs/preferences-dialog.c:2072 app/dialogs/welcome-dialog.c:612
+#: app/dialogs/preferences-dialog.c:2072 app/dialogs/welcome-dialog.c:684
 msgid "Large"
 msgstr "大"
 
-#: app/dialogs/preferences-dialog.c:2074 app/dialogs/welcome-dialog.c:614
+#: app/dialogs/preferences-dialog.c:2074 app/dialogs/welcome-dialog.c:686
 msgid "Huge"
 msgstr "庞大"
 
 #. Font sizes.
-#: app/dialogs/preferences-dialog.c:2087 app/dialogs/welcome-dialog.c:630
+#: app/dialogs/preferences-dialog.c:2087 app/dialogs/welcome-dialog.c:702
 msgid "Font Scaling"
 msgstr "字体缩放"
 
-#: app/dialogs/preferences-dialog.c:2089 app/dialogs/welcome-dialog.c:632
+#: app/dialogs/preferences-dialog.c:2089 app/dialogs/welcome-dialog.c:704
 msgid "Font scaling will not work with themes using absolute sizes."
 msgstr "字体缩放无法与使用绝对大小的主题同时生效。"
 
-#: app/dialogs/preferences-dialog.c:2095 app/dialogs/welcome-dialog.c:638
+#: app/dialogs/preferences-dialog.c:2095 app/dialogs/welcome-dialog.c:710
 msgid "50%"
 msgstr "50%"
 
-#: app/dialogs/preferences-dialog.c:2097 app/dialogs/welcome-dialog.c:640
+#: app/dialogs/preferences-dialog.c:2097 app/dialogs/welcome-dialog.c:712
 msgid "100%"
 msgstr "100%"
 
-#: app/dialogs/preferences-dialog.c:2099 app/dialogs/welcome-dialog.c:642
+#: app/dialogs/preferences-dialog.c:2099 app/dialogs/welcome-dialog.c:714
 msgid "200%"
 msgstr "200%"
 
@@ -16785,7 +16785,7 @@ msgstr "图标主题"
 msgid "Select an Icon Theme"
 msgstr "选择图标主题"
 
-#: app/dialogs/preferences-dialog.c:2251 app/dialogs/welcome-dialog.c:592
+#: app/dialogs/preferences-dialog.c:2251 app/dialogs/welcome-dialog.c:664
 msgid "Use symbolic icons if available"
 msgstr "如果可用则使用符号图标"
 
@@ -16816,7 +16816,7 @@ msgstr "显示活动笔刷、图案和渐变(_B)"
 msgid "Show active _image"
 msgstr "显示活动图像(_I)"
 
-#: app/dialogs/preferences-dialog.c:2295 app/dialogs/welcome-dialog.c:678
+#: app/dialogs/preferences-dialog.c:2295 app/dialogs/welcome-dialog.c:750
 msgid "Use tool _groups"
 msgstr "使用工具组(_G)"
 
@@ -17984,7 +17984,7 @@ msgid "_Next Tip"
 msgstr "后一条提示(_N)"
 
 #. a link to the related section in the user manual
-#: app/dialogs/tips-dialog.c:196 app/dialogs/welcome-dialog.c:1093
+#: app/dialogs/tips-dialog.c:196 app/dialogs/welcome-dialog.c:1134
 msgid "Learn more"
 msgstr "了解更多"
 
@@ -18062,39 +18062,39 @@ msgid "Lock path _visibility"
 msgstr "锁定路径可见性(_V)"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:186
+#: app/dialogs/welcome-dialog.c:206
 #, c-format
 msgid "Welcome to GIMP %s"
 msgstr "欢迎使用 GIMP %s"
 
-#: app/dialogs/welcome-dialog.c:235 app/dialogs/welcome-dialog.c:236
+#: app/dialogs/welcome-dialog.c:255 app/dialogs/welcome-dialog.c:256
 msgid "Welcome"
 msgstr "欢迎"
 
-#: app/dialogs/welcome-dialog.c:250 app/dialogs/welcome-dialog.c:251
+#: app/dialogs/welcome-dialog.c:270 app/dialogs/welcome-dialog.c:271
 msgid "Personalize"
 msgstr "个性化"
 
-#: app/dialogs/welcome-dialog.c:262 app/dialogs/welcome-dialog.c:263
+#: app/dialogs/welcome-dialog.c:282 app/dialogs/welcome-dialog.c:283
 msgid "Contribute"
 msgstr "贡献"
 
-#: app/dialogs/welcome-dialog.c:274 app/dialogs/welcome-dialog.c:275
+#: app/dialogs/welcome-dialog.c:294 app/dialogs/welcome-dialog.c:295
 msgid "Create"
 msgstr "创建"
 
-#: app/dialogs/welcome-dialog.c:292 app/dialogs/welcome-dialog.c:293
+#: app/dialogs/welcome-dialog.c:312 app/dialogs/welcome-dialog.c:313
 msgid "Release Notes"
 msgstr "发行注记"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:426
+#: app/dialogs/welcome-dialog.c:498
 #, c-format
 msgid "You installed GIMP %s!"
 msgstr "您已经安装了 GIMP %s！"
 
 #. Welcome message: left
-#: app/dialogs/welcome-dialog.c:440
+#: app/dialogs/welcome-dialog.c:512
 msgid ""
 "GIMP is Free Software for image authoring and manipulation.\n"
 "Want to know more?"
@@ -18102,22 +18102,22 @@ msgstr ""
 "GIMP 是一个用于图像创作和处理的自由软件。\n"
 "想要了解更多吗？"
 
-#: app/dialogs/welcome-dialog.c:469
+#: app/dialogs/welcome-dialog.c:541
 msgid "GIMP website"
 msgstr "GIMP 网站"
 
-#: app/dialogs/welcome-dialog.c:473
+#: app/dialogs/welcome-dialog.c:545
 msgid "Tutorials"
 msgstr "教程"
 
-#: app/dialogs/welcome-dialog.c:478
+#: app/dialogs/welcome-dialog.c:550
 msgid "Documentation"
 msgstr "文档"
 
 #. XXX: should we add API docs for plug-in developers once it's
 #. * properly set up?
 #. Welcome message: right
-#: app/dialogs/welcome-dialog.c:486
+#: app/dialogs/welcome-dialog.c:558
 msgid ""
 "GIMP is Community Software under the GNU general public license v3.\n"
 "Want to contribute?"
@@ -18125,74 +18125,74 @@ msgstr ""
 "GIMP 是一个通过 GNU 通用公共许可证 v3 版本授权的社区软件。\n"
 "想要贡献一份力量吗？"
 
-#: app/dialogs/welcome-dialog.c:511
+#: app/dialogs/welcome-dialog.c:583
 msgid "Contributing"
 msgstr "贡献"
 
-#: app/dialogs/welcome-dialog.c:516
+#: app/dialogs/welcome-dialog.c:588
 msgid "Donating"
 msgstr "捐助"
 
-#: app/dialogs/welcome-dialog.c:557
+#: app/dialogs/welcome-dialog.c:629
 msgid "Color scheme"
 msgstr "颜色方案"
 
-#: app/dialogs/welcome-dialog.c:583
+#: app/dialogs/welcome-dialog.c:655
 msgid "Icon theme"
 msgstr "图标主题"
 
-#: app/dialogs/welcome-dialog.c:596
+#: app/dialogs/welcome-dialog.c:668
 msgid "Icon Scaling"
 msgstr "图标缩放"
 
-#: app/dialogs/welcome-dialog.c:655
+#: app/dialogs/welcome-dialog.c:727
 msgid "GUI Language (requires restart)"
 msgstr "界面语言（需要重启）"
 
-#: app/dialogs/welcome-dialog.c:660
+#: app/dialogs/welcome-dialog.c:732
 msgid "Additional Customizations"
 msgstr "更多自定义"
 
-#: app/dialogs/welcome-dialog.c:664
+#: app/dialogs/welcome-dialog.c:736
 msgid "Merge menu and title bar (requires restart)"
 msgstr "合并菜单和标题栏（需要重启）"
 
-#: app/dialogs/welcome-dialog.c:672
+#: app/dialogs/welcome-dialog.c:744
 msgid "Enable check for updates (requires internet)"
 msgstr "启用检查更新（需要网络）"
 
-#: app/dialogs/welcome-dialog.c:706
+#: app/dialogs/welcome-dialog.c:778
 msgid "C_reate"
 msgstr "创建(_R)"
 
-#: app/dialogs/welcome-dialog.c:715
+#: app/dialogs/welcome-dialog.c:787
 msgid "Open an Existing Image"
 msgstr "打开现有图像"
 
 #. Recent Files
-#: app/dialogs/welcome-dialog.c:727
+#: app/dialogs/welcome-dialog.c:799
 msgid "Recent Images"
 msgstr "最近图像"
 
-#: app/dialogs/welcome-dialog.c:819
+#: app/dialogs/welcome-dialog.c:858
 msgid "O_pen Selected Images"
 msgstr "打开选中图像(_P)"
 
-#: app/dialogs/welcome-dialog.c:828
+#: app/dialogs/welcome-dialog.c:867
 msgid ""
 "Show on Start (You can show the Welcome dialog again from the \"Help\" menu)"
 msgstr "启动时显示（您可以通过“帮助”菜单再次显示欢迎对话框）"
 
-#: app/dialogs/welcome-dialog.c:856
+#: app/dialogs/welcome-dialog.c:895
 #, c-format
 msgid "Ways to contribute"
 msgstr "贡献方式"
 
-#: app/dialogs/welcome-dialog.c:865 app/dialogs/welcome-dialog.c:876
+#: app/dialogs/welcome-dialog.c:904 app/dialogs/welcome-dialog.c:915
 msgid "Report Bugs"
 msgstr "报告缺陷"
 
-#: app/dialogs/welcome-dialog.c:867
+#: app/dialogs/welcome-dialog.c:906
 #, c-format
 msgid ""
 "As any application, GIMP is not bug-free, so reporting bugs that you "
@@ -18201,50 +18201,50 @@ msgstr ""
 "像任何应用程序一样，GIMP 不是没有缺陷的，所以报告您遇到的缺陷对于开发工作非常"
 "重要。"
 
-#: app/dialogs/welcome-dialog.c:880 app/dialogs/welcome-dialog.c:890
+#: app/dialogs/welcome-dialog.c:919 app/dialogs/welcome-dialog.c:929
 msgid "Write Code"
 msgstr "编写代码"
 
-#: app/dialogs/welcome-dialog.c:882
+#: app/dialogs/welcome-dialog.c:921
 #, c-format
 msgid ""
 "Our Developer Website is where you want to start learning about being a code "
 "contributor."
 msgstr "我们的开发者网站会是您想要开始学习成为代码贡献者的地方。"
 
-#: app/dialogs/welcome-dialog.c:894 app/dialogs/welcome-dialog.c:904
+#: app/dialogs/welcome-dialog.c:933 app/dialogs/welcome-dialog.c:943
 msgid "Translate"
 msgstr "翻译"
 
-#: app/dialogs/welcome-dialog.c:896
+#: app/dialogs/welcome-dialog.c:935
 #, c-format
 msgid "Contact the respective translation team for your language"
 msgstr "联系您所用语言的翻译团队"
 
-#: app/dialogs/welcome-dialog.c:908
+#: app/dialogs/welcome-dialog.c:947
 msgid "Donate"
 msgstr "捐助"
 
-#: app/dialogs/welcome-dialog.c:910
+#: app/dialogs/welcome-dialog.c:949
 #, c-format
 msgid "Donating money is important: it makes GIMP sustainable."
 msgstr "捐助资金很重要：它使 GIMP 可持续发展。"
 
-#: app/dialogs/welcome-dialog.c:918
+#: app/dialogs/welcome-dialog.c:957
 msgid "Donate via Liberapay"
 msgstr "通过 Liberapay 捐助"
 
-#: app/dialogs/welcome-dialog.c:921
+#: app/dialogs/welcome-dialog.c:960
 msgid "Other donation options"
 msgstr "其他捐助选项"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:955
+#: app/dialogs/welcome-dialog.c:994
 #, c-format
 msgid "GIMP %s Release Notes"
 msgstr "GIMP %s 发布记录"
 
-#: app/dialogs/welcome-dialog.c:1066
+#: app/dialogs/welcome-dialog.c:1107
 #, c-format
 msgid "Click on release items with a %s bullet point to get a tour."
 msgstr "在带有 %s 项目符号的发布项目上点击来获取导览。"
@@ -18561,7 +18561,7 @@ msgstr "不能修改图层组的像素。"
 
 #: app/display/gimpdisplayshell-dnd.c:390 app/tools/gimpfiltertool.c:334
 #: app/tools/gimppainttool.c:371 app/tools/gimptransformtool.c:738
-#: app/widgets/gimpdrawabletreeview-filters.c:700
+#: app/widgets/gimpdrawabletreeview-filters.c:579
 msgid "A selected layer is not visible."
 msgstr "一个选中图层不可见。"
 
@@ -25533,20 +25533,20 @@ msgstr "快捷键“%1$s”已被“%3$s”组的“%2$s”占用。"
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr "重新分配快捷键将导致它从“%s”中被去掉。"
 
-#: app/widgets/gimpactionview.c:729
+#: app/widgets/gimpactionview.c:741
 msgid "Invalid shortcut."
 msgstr "无效的快捷键。"
 
-#: app/widgets/gimpactionview.c:736 app/widgets/gimpactionview.c:822
+#: app/widgets/gimpactionview.c:748 app/widgets/gimpactionview.c:834
 msgid "F1 cannot be remapped."
 msgstr "无法重新映射 F1。"
 
-#: app/widgets/gimpactionview.c:744
+#: app/widgets/gimpactionview.c:756
 #, c-format
 msgid "Alt+%d is used to switch to display %d and cannot be remapped."
 msgstr "Alt+%d 被用于切换到显示 %d 且不能被重新映射。"
 
-#: app/widgets/gimpactionview.c:790
+#: app/widgets/gimpactionview.c:802
 msgid "Changing shortcut failed."
 msgstr "改变快捷键失败。"
 
@@ -26814,7 +26814,7 @@ msgid "Do you want to replace it with the image you are saving?"
 msgstr "您真的要将它替换为您正在保存的图像吗？"
 
 #. String used to separate dockables, e.g. "Tool Options, Layers"
-#: app/widgets/gimpdock.h:34
+#: app/widgets/gimpdock.h:33
 msgctxt "dock"
 msgid ", "
 msgstr "，"
@@ -26822,7 +26822,7 @@ msgstr "，"
 #. String used to separate books (GtkNotebooks) within a dock,
 #. e.g. "Tool Options, Layers - Brushes"
 #.
-#: app/widgets/gimpdock.h:39
+#: app/widgets/gimpdock.h:38
 msgctxt "dock"
 msgid " - "
 msgstr " - "
@@ -26830,7 +26830,7 @@ msgstr " - "
 #. String used to separate dock columns,
 #. e.g. "Tool Options, Layers - Brushes | Gradients"
 #.
-#: app/widgets/gimpdock.h:44
+#: app/widgets/gimpdock.h:43
 msgctxt "dock"
 msgid " | "
 msgstr " | "
@@ -26861,36 +26861,36 @@ msgstr "锁定位置和大小"
 msgid "Cannot select items while a floating selection is active."
 msgstr "当浮动选区激活时无法选择项目。"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:180
+#: app/widgets/gimpdrawabletreeview-filters.c:164
 msgid "Layer Effects"
 msgstr "图层效果"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:210
+#: app/widgets/gimpdrawabletreeview-filters.c:194
 msgid "Toggle the visibility of all filters."
 msgstr "切换所有滤镜的可见性。"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:226
+#: app/widgets/gimpdrawabletreeview-filters.c:210
 msgid "Edit the selected filter."
 msgstr "编辑选中滤镜。"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:242
+#: app/widgets/gimpdrawabletreeview-filters.c:226
 msgid "Raise filter one step up in the stack."
 msgstr "在堆叠中将滤镜升高一步。"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:257
+#: app/widgets/gimpdrawabletreeview-filters.c:241
 msgid "Lower filter one step down in the stack."
 msgstr "在堆叠中将滤镜降低一步。"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:273
+#: app/widgets/gimpdrawabletreeview-filters.c:257
 msgid "Merge all active filters down."
 msgstr "向下合并所有活动滤镜。"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:289
+#: app/widgets/gimpdrawabletreeview-filters.c:273
 msgid "Remove the selected filter."
 msgstr "移除选中滤镜。"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:766
-#: app/widgets/gimpdrawabletreeview-filters.c:792
+#: app/widgets/gimpdrawabletreeview-filters.c:645
+#: app/widgets/gimpdrawabletreeview-filters.c:671
 msgid "Cannot reorder a filter that is being edited."
 msgstr "无法重新排列正在编辑的滤镜。"
 
@@ -26974,6 +26974,11 @@ msgstr "选择文件类型 (_T)"
 #: app/widgets/gimpfileprocview.c:199
 msgid "File Type"
 msgstr "文件类型"
+
+#: app/widgets/gimpfileprocview.c:211
+msgctxt "File extension"
+msgid "Extensions"
+msgstr "扩展名"
 
 #: app/widgets/gimpfilleditor.c:160
 msgid "Fill BG Color"
@@ -27506,7 +27511,7 @@ msgstr "插件"
 msgid "Progress"
 msgstr "进度"
 
-#: app/widgets/gimprow.c:623
+#: app/widgets/gimprow.c:620
 #, c-format
 msgid "Rename %s"
 msgstr "重命名 %s"
@@ -27628,15 +27633,15 @@ msgstr "已保存设置"
 msgid "Manage Saved Presets"
 msgstr "管理保存的预设"
 
-#: app/widgets/gimpsettingseditor.c:191
+#: app/widgets/gimpsettingseditor.c:176
 msgid "Import presets from a file"
 msgstr "从一个文件导入预设"
 
-#: app/widgets/gimpsettingseditor.c:200
+#: app/widgets/gimpsettingseditor.c:185
 msgid "Export the selected presets to a file"
 msgstr "导出选中的预设到一个文件"
 
-#: app/widgets/gimpsettingseditor.c:209
+#: app/widgets/gimpsettingseditor.c:194
 msgid "Delete the selected preset"
 msgstr "删除选中的预设"
 
