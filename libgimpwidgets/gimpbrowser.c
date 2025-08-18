@@ -79,10 +79,6 @@ static void      gimp_browser_combo_changed    (GtkComboBox           *combo,
                                                 GimpBrowser           *browser);
 static void      gimp_browser_entry_changed    (GtkEntry              *entry,
                                                 GimpBrowser           *browser);
-static void      gimp_browser_entry_icon_press (GtkEntry              *entry,
-                                                GtkEntryIconPosition   icon_pos,
-                                                GdkEvent              *event,
-                                                GimpBrowser           *browser);
 static gboolean  gimp_browser_search_timeout   (gpointer               data);
 
 
@@ -115,10 +111,9 @@ gimp_browser_class_init (GimpBrowserClass *klass)
 static void
 gimp_browser_init (GimpBrowser *browser)
 {
-  GtkWidget *hbox;
-  GtkWidget *label;
-  GtkWidget *scrolled_window;
-  GtkWidget *viewport;
+  GtkWidget *hbox            = NULL;
+  GtkWidget *scrolled_window = NULL;
+  GtkWidget *viewport        = NULL;
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (browser),
                                   GTK_ORIENTATION_HORIZONTAL);
@@ -136,29 +131,12 @@ gimp_browser_init (GimpBrowser *browser)
   gtk_box_pack_start (GTK_BOX (browser->left_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  label = gtk_label_new_with_mnemonic (_("_Search:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  browser->search_entry = gtk_entry_new ();
+  browser->search_entry = gtk_search_entry_new ();
   gtk_box_pack_start (GTK_BOX (hbox), browser->search_entry, TRUE, TRUE, 0);
   gtk_widget_show (browser->search_entry);
 
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), browser->search_entry);
-
   g_signal_connect (browser->search_entry, "changed",
                     G_CALLBACK (gimp_browser_entry_changed),
-                    browser);
-
-  gtk_entry_set_icon_from_icon_name (GTK_ENTRY (browser->search_entry),
-                                     GTK_ENTRY_ICON_SECONDARY, "edit-clear");
-  gtk_entry_set_icon_activatable (GTK_ENTRY (browser->search_entry),
-                                  GTK_ENTRY_ICON_SECONDARY, TRUE);
-  gtk_entry_set_icon_sensitive (GTK_ENTRY (browser->search_entry),
-                                GTK_ENTRY_ICON_SECONDARY, FALSE);
-
-  g_signal_connect (browser->search_entry, "icon-press",
-                    G_CALLBACK (gimp_browser_entry_icon_press),
                     browser);
 
   /* count label */
@@ -429,31 +407,13 @@ gimp_browser_entry_changed (GtkEntry    *entry,
                             GimpBrowser *browser)
 {
   gimp_browser_queue_search (browser);
-
-  gtk_entry_set_icon_sensitive (entry,
-                                GTK_ENTRY_ICON_SECONDARY,
-                                gtk_entry_get_text_length (entry) > 0);
-}
-
-static void
-gimp_browser_entry_icon_press (GtkEntry              *entry,
-                               GtkEntryIconPosition   icon_pos,
-                               GdkEvent              *event,
-                               GimpBrowser           *browser)
-{
-  GdkEventButton *bevent = (GdkEventButton *) event;
-
-  if (icon_pos == GTK_ENTRY_ICON_SECONDARY && bevent->button == 1)
-    {
-      gtk_entry_set_text (entry, "");
-    }
 }
 
 static gboolean
 gimp_browser_search_timeout (gpointer data)
 {
-  GimpBrowser *browser = GIMP_BROWSER (data);
-  const gchar *search_string;
+  GimpBrowser *browser       = GIMP_BROWSER (data);
+  const gchar *search_string = NULL;
 
   search_string = gtk_entry_get_text (GTK_ENTRY (browser->search_entry));
 
