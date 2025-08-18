@@ -239,7 +239,7 @@ Name: "{autodesktop}\GIMP {#CUSTOM_GIMP_VERSION}"; Filename: "{app}\bin\gimp-{#G
 Filename: "{app}\bin\gimp-{#GIMP_MUTEX_VERSION}.exe"; Description: "{cm:LaunchGimp}"; Flags: unchecked postinstall nowait skipifsilent
 
 
-;4.1 GIMP FILES
+;4.1 GIMP FILES (make sure that the resulting .exe installer content is identical to the .msix and vice-versa)
 [Types]
 Name: full; Description: "{cm:TypeFull}"
 Name: compact; Description: "{cm:TypeCompact}"
