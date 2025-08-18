@@ -20,10 +20,6 @@ elseif (Test-Path 3_dist-gimp-inno.ps1 -Type Leaf)
   {
     Set-Location ..\..\..
   }
-if (-not $GITLAB_CI)
-  {
-    $PARENT_DIR = '..\'
-  }
 
 
 # This script needs a bit of Python to work
@@ -45,7 +41,7 @@ Invoke-WebRequest https://jrsoftware.org/download.php/is.exe -OutFile ..\is.exe
 $inno_version_downloaded = (Get-Item ..\is.exe).VersionInfo.ProductVersion -replace ' ',''
 
 ## Install or Update Inno
-$broken_inno = Get-ChildItem $Env:Tmp -Filter *.isl.bak -ErrorAction SilentlyContinue
+$broken_inno = Get-ChildItem $env:TMP -Filter *.isl.bak -ErrorAction SilentlyContinue
 $inno_version = Get-ItemProperty Registry::'HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup*' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty DisplayVersion
 if ("$broken_inno" -or "$inno_version" -ne "$inno_version_downloaded")
   {
@@ -130,7 +126,6 @@ Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):i
 
 # 3. PREPARE INSTALLER "SOURCE"
 Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):installer_source[collapsed=true]$([char]13)$([char]27)[0KMaking installer assets"
-
 ## Custom installer strings translations and other assets
 ## (They are loaded with '-DBUILD_DIR')
 if (-not (Test-Path "$BUILD_DIR\build\windows\installer"))
@@ -150,39 +145,36 @@ $langsArray_unofficial = $xmlObject.iso_639_entries.iso_639_entry | Select-Objec
 ### Complete Inno source with not released translations: https://jrsoftware.org/files/istrans/
 function download_langs ([array]$langsArray)
 {
+  git clone --depth 1 https://github.com/jrsoftware/issrc.git "$env:TMP\issrc"
   foreach ($langfile in $langsArray)
     {
       $langfilePath = "$INNO_PATH\$langfile"
       if ($langfile -ne '' -and -not (Test-Path "$langfilePath" -Type Leaf))
         {
           Write-Output "(INFO): temporarily installing $($langfilePath -replace '\\\\','\')"
-          Copy-Item "${PARENT_DIR}issrc\Files\$langfile" "$langfilePath" -Force
+          New-Item $(Split-Path -Parent $langfilePath) -ItemType Directory -Force | Out-Null
+          Copy-Item "$env:TMP\issrc\Files\$langfile" "$langfilePath" -Force
         }
     }
+  Remove-Item "$env:TMP\issrc" -Recurse -Force
 }
-git clone --depth 1 https://github.com/jrsoftware/issrc.git "${PARENT_DIR}issrc"
 download_langs $langsArray_Official
-New-Item "$INNO_PATH\Languages\Unofficial" -ItemType Directory -Force | Out-Null
 download_langs $langsArray_unofficial
-Remove-Item "${PARENT_DIR}issrc" -Recurse -Force
 ### Patch 'AppVer*' against Inno pervasive behavior: https://groups.google.com/g/innosetup/c/w0sebw5YAeg
 function fix_msg ([array]$langsArray, [string]$AppVer)
 {
   foreach ($langfile in $langsArray)
     {
       $langfilePath = "$INNO_PATH\$langfile" -replace '\\\\','\'
-
       if ($AppVer -ne 'revert')
         {
-          Copy-Item "$langfilePath" "$Env:Tmp\$(Split-Path $langfile -Leaf).bak" -Force
-
+          Copy-Item "$langfilePath" "$env:TMP\$(Split-Path $langfile -Leaf).bak" -Force
           #Prefer Python since PowerShell/.NET doesn't handle well files with different encodings
           python build\windows\installer\lang\fix_msg.py "$langfilePath" $AppVer
         }
-
       else #($AppVer -eq 'revert')
         {
-          Move-Item "$Env:Tmp\$(Split-Path $langfile -Leaf).bak" "$langfilePath" -Force
+          Move-Item "$env:TMP\$(Split-Path $langfile -Leaf).bak" "$langfilePath" -Force
         }
     }
 }
