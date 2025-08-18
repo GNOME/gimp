@@ -848,7 +848,7 @@ gimp_view_drag_pixbuf (GtkWidget *widget,
 
   if (viewable && gimp_viewable_get_size (viewable, &width, &height))
     return gimp_viewable_get_new_pixbuf (viewable, view->renderer->context,
-                                         width, height, NULL, NULL);
+                                         width, height, NULL);
 
   return NULL;
 }

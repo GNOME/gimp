@@ -94,14 +94,12 @@ static GimpTempBuf      * gimp_image_proxy_get_new_preview          (GimpViewabl
                                                                      GimpContext                *context,
                                                                      gint                        width,
                                                                      gint                        height,
-                                                                     GeglColor                  *color,
-                                                                     GeglColor                  *background);
+                                                                     GeglColor                  *fg_color);
 static GdkPixbuf        * gimp_image_proxy_get_new_pixbuf           (GimpViewable               *viewable,
                                                                      GimpContext                *context,
                                                                      gint                        width,
                                                                      gint                        height,
-                                                                     GeglColor                  *color,
-                                                                     GeglColor                  *background);
+                                                                     GeglColor                  *fg_color);
 static gchar            * gimp_image_proxy_get_description          (GimpViewable               *viewable,
                                                                      gchar                     **tooltip);
 
@@ -378,8 +376,7 @@ gimp_image_proxy_get_new_preview (GimpViewable *viewable,
                                   GimpContext  *context,
                                   gint          width,
                                   gint          height,
-                                  GeglColor    *color G_GNUC_UNUSED,
-                                  GeglColor    *background G_GNUC_UNUSED)
+                                  GeglColor    *fg_color G_GNUC_UNUSED)
 {
   GimpImageProxy *image_proxy = GIMP_IMAGE_PROXY (viewable);
   GimpImage      *image       = image_proxy->priv->image;
@@ -421,8 +418,7 @@ gimp_image_proxy_get_new_pixbuf (GimpViewable *viewable,
                                  GimpContext  *context,
                                  gint          width,
                                  gint          height,
-                                 GeglColor    *color G_GNUC_UNUSED,
-                                 GeglColor    *background G_GNUC_UNUSED)
+                                 GeglColor    *fg_color G_GNUC_UNUSED)
 {
   GimpImageProxy     *image_proxy = GIMP_IMAGE_PROXY (viewable);
   GimpImage          *image       = image_proxy->priv->image;

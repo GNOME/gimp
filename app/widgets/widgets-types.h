@@ -263,6 +263,7 @@ typedef struct _GimpViewRenderer             GimpViewRenderer;
 typedef struct _GimpViewRendererBrush        GimpViewRendererBrush;
 typedef struct _GimpViewRendererBuffer       GimpViewRendererBuffer;
 typedef struct _GimpViewRendererDrawable     GimpViewRendererDrawable;
+typedef struct _GimpViewRendererFont         GimpViewRendererFont;
 typedef struct _GimpViewRendererGradient     GimpViewRendererGradient;
 typedef struct _GimpViewRendererImage        GimpViewRendererImage;
 typedef struct _GimpViewRendererImagefile    GimpViewRendererImagefile;

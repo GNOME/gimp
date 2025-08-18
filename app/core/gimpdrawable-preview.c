@@ -113,8 +113,7 @@ gimp_drawable_get_new_preview (GimpViewable *viewable,
                                GimpContext  *context,
                                gint          width,
                                gint          height,
-                               GeglColor    *color G_GNUC_UNUSED,
-                               GeglColor    *background G_GNUC_UNUSED)
+                               GeglColor    *fg_color G_GNUC_UNUSED)
 {
   GimpItem  *item  = GIMP_ITEM (viewable);
   GimpImage *image = gimp_item_get_image (item);
@@ -135,8 +134,7 @@ gimp_drawable_get_new_pixbuf (GimpViewable *viewable,
                               GimpContext  *context,
                               gint          width,
                               gint          height,
-                              GeglColor    *color G_GNUC_UNUSED,
-                              GeglColor    *background G_GNUC_UNUSED)
+                              GeglColor    *fg_color G_GNUC_UNUSED)
 {
   GimpItem  *item  = GIMP_ITEM (viewable);
   GimpImage *image = gimp_item_get_image (item);

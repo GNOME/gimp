@@ -254,6 +254,7 @@ libappwidgets_sources = [
   'gimpviewrendererbrush.c',
   'gimpviewrendererbuffer.c',
   'gimpviewrendererdrawable.c',
+  'gimpviewrendererfont.c',
   'gimpviewrenderergradient.c',
   'gimpviewrendererimage.c',
   'gimpviewrendererimagefile.c',

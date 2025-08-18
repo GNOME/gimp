@@ -37,13 +37,16 @@
 
 #include "vectors/gimppath.h"
 
+#include "text/gimpfont.h"
+
 #include "gimpviewrenderer-utils.h"
 #include "gimpviewrendererbrush.h"
 #include "gimpviewrendererbuffer.h"
-#include "gimpviewrendererlayer.h"
+#include "gimpviewrendererfont.h"
 #include "gimpviewrenderergradient.h"
 #include "gimpviewrendererimage.h"
 #include "gimpviewrendererimagefile.h"
+#include "gimpviewrendererlayer.h"
 #include "gimpviewrendererpalette.h"
 #include "gimpviewrendererpath.h"
 
@@ -92,6 +95,10 @@ gimp_view_renderer_type_from_viewable_type (GType viewable_type)
   else if (g_type_is_a (viewable_type, GIMP_TYPE_PALETTE))
     {
       type = GIMP_TYPE_VIEW_RENDERER_PALETTE;
+    }
+  else if (g_type_is_a (viewable_type, GIMP_TYPE_FONT))
+    {
+      type = GIMP_TYPE_VIEW_RENDERER_FONT;
     }
 
   return type;

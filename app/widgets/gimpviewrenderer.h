@@ -56,6 +56,7 @@ struct _GimpViewRenderer
 
   /*< protected >*/
   cairo_surface_t    *surface;
+  GimpViewBG          surface_bg;
 
   gint                size;
 
@@ -66,6 +67,9 @@ struct _GimpViewRenderer
 struct _GimpViewRendererClass
 {
   GObjectClass   parent_class;
+
+  GimpViewBG     default_bg;
+  GimpViewBG     follow_theme_bg;
 
   GdkPixbuf     *frame;
   gint           frame_left;
@@ -143,7 +147,9 @@ void   gimp_view_renderer_draw             (GimpViewRenderer   *renderer,
 
 void   gimp_view_renderer_render_temp_buf_simple (GimpViewRenderer *renderer,
                                                   GtkWidget        *widget,
-                                                  GimpTempBuf      *temp_buf);
+                                                  GimpTempBuf      *temp_buf,
+                                                  GimpViewBG        inside_bg,
+                                                  GimpViewBG        outside_bg);
 void   gimp_view_renderer_render_temp_buf        (GimpViewRenderer *renderer,
                                                   GtkWidget        *widget,
                                                   GimpTempBuf      *temp_buf,

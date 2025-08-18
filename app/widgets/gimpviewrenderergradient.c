@@ -55,9 +55,12 @@ gimp_view_renderer_gradient_class_init (GimpViewRendererGradientClass *klass)
 {
   GimpViewRendererClass *renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
 
-  renderer_class->set_context = gimp_view_renderer_gradient_set_context;
-  renderer_class->invalidate  = gimp_view_renderer_gradient_invalidate;
-  renderer_class->render      = gimp_view_renderer_gradient_render;
+  renderer_class->default_bg      = GIMP_VIEW_BG_CHECKS;
+  renderer_class->follow_theme_bg = GIMP_VIEW_BG_CHECKS;
+
+  renderer_class->set_context     = gimp_view_renderer_gradient_set_context;
+  renderer_class->invalidate      = gimp_view_renderer_gradient_invalidate;
+  renderer_class->render          = gimp_view_renderer_gradient_render;
 }
 
 static void

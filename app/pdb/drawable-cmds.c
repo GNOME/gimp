@@ -980,7 +980,7 @@ drawable_thumbnail_invoker (GimpProcedure         *procedure,
 
       if (image->gimp->config->layer_previews)
         buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (drawable), context,
-                                             width, height, NULL, NULL);
+                                             width, height, NULL);
       else
         buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (drawable),
                                                width, height,

@@ -50,8 +50,7 @@ static GimpTempBuf * gimp_pattern_get_new_preview   (GimpViewable         *viewa
                                                      GimpContext          *context,
                                                      gint                  width,
                                                      gint                  height,
-                                                     GeglColor            *color,
-                                                     GeglColor            *background);
+                                                     GeglColor            *fg_color);
 static gchar       * gimp_pattern_get_description   (GimpViewable         *viewable,
                                                      gchar               **tooltip);
 
@@ -145,8 +144,7 @@ gimp_pattern_get_new_preview (GimpViewable *viewable,
                               GimpContext  *context,
                               gint          width,
                               gint          height,
-                              GeglColor    *color G_GNUC_UNUSED,
-                              GeglColor    *background G_GNUC_UNUSED)
+                              GeglColor    *fg_color G_GNUC_UNUSED)
 {
   GimpPattern *pattern     = GIMP_PATTERN (viewable);
   GimpTempBuf *temp_buf;
