@@ -3,10 +3,9 @@
 # Parameters
 param ($revision = "$GIMP_CI_WIN_INSTALLER",
        $BUILD_DIR,
-       $GIMP_BASE = "$PWD",
-       $GIMP32 = 'gimp-mingw32',
-       $GIMP64 = 'gimp-clang64',
-       $GIMPA64 = 'gimp-clangarm64')
+       $ARM64_BUNDLE = "$PWD\gimp-clangarm64",
+       $X64_BUNDLE = "$PWD\gimp-clang64",
+       $X86_BUNDLE = "$PWD\gimp-mingw32")
 
 # Ensure the script work properly
 $ErrorActionPreference = 'Stop'
@@ -101,20 +100,28 @@ else
   }
 Write-Output "(INFO): GIMP version: $CUSTOM_GIMP_VERSION"
 
-## FIXME: Our Inno scripts can't construct an one-arch installer
-$supported_archs = "$GIMP32","$GIMP64","$GIMPA64"
-foreach ($bundle in $supported_archs)
+## Autodetects what arch bundles will be packaged
+# (The .iss script supports creating both an installer per arch or an universal installer with all arches)
+if (-not (Test-Path "$ARM64_BUNDLE") -and -not (Test-Path "$X64_BUNDLE") -and -not (Test-Path "$X86_BUNDLE"))
   {
-    if (-not (Test-Path "$bundle"))
-      {
-        Write-Host "(ERROR): $bundle bundle not found. You need all the three archs bundles to make the installer." -ForegroundColor red
-      }
-  }
-if ((-not (Test-Path "$GIMP32")) -or (-not (Test-Path "$GIMP64")) -or (-not (Test-Path "$GIMPA64")))
-  {
+    Write-Host "(ERROR): No bundle found. You can tweak 'build/windows/2_build-gimp-msys2.ps1' or configure GIMP with '-Dwindows-installer=true' to make one." -ForegroundColor red
     exit 1
   }
-Write-Output "(INFO): Arch: universal (x86, x64 and arm64)"
+elseif ((Test-Path "$ARM64_BUNDLE") -and -not (Test-Path "$X64_BUNDLE") -and -not (Test-Path "$X86_BUNDLE"))
+  {
+    Write-Output "(INFO): Arch: arm64"
+    $supported_archs=@("-DARM64_BUNDLE=$ARM64_BUNDLE")
+  }
+elseif (-not (Test-Path "$ARM64_BUNDLE") -and (Test-Path "$X64_BUNDLE") -and -not (Test-Path "$X86_BUNDLE"))
+  {
+    Write-Output "(INFO): Arch: x64"
+    $supported_archs=@("-DX64_BUNDLE=$X64_BUNDLE")
+  }
+elseif ((Test-Path "$ARM64_BUNDLE") -and (Test-Path "$X64_BUNDLE") -and (Test-Path "$X86_BUNDLE"))
+  {
+    Write-Output "(INFO): Arch: arm64, x64 and x86"
+    $supported_archs=@("-DARM64_BUNDLE=$ARM64_BUNDLE", "-DX64_BUNDLE=$X64_BUNDLE", "-DX86_BUNDLE=$X86_BUNDLE")
+  }
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_info$([char]13)$([char]27)[0K"
 
 
@@ -183,27 +190,33 @@ Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):i
 #  The resulting .exe installer content should be identical to the .msix and vice-versa)
 
 ## Get 32-bit TWAIN deps list
-Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):installer_files[collapsed=true]$([char]13)$([char]27)[0KGenerating 32-bit TWAIN dependencies list"
-$twain_list_file = 'build\windows\installer\base_twain32on64.list'
-Copy-Item $twain_list_file "$twain_list_file.bak"
-$twain_list = (python build\windows\2_bundle-gimp-uni_dep.py --debug debug-only $(Resolve-Path $GIMP32/lib/gimp/*/plug-ins/twain/twain.exe) $MSYS_ROOT/mingw32/ $GIMP32/ 32 |
-              Select-String 'Installed' -CaseSensitive -Context 0,1000) -replace "  `t- ",'bin\'
-(Get-Content $twain_list_file) | Foreach-Object {$_ -replace "@DEPS_GENLIST@","$twain_list"} | Set-Content $twain_list_file
-(Get-Content $twain_list_file) | Select-string 'Installed' -notmatch | Set-Content $twain_list_file
-Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_files$([char]13)$([char]27)[0K"
+if (Test-Path "$X86_BUNDLE")
+  {
+    Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):installer_files[collapsed=true]$([char]13)$([char]27)[0KGenerating 32-bit TWAIN dependencies list"
+    $twain_list_file = 'build\windows\installer\base_twain32on64.list'
+    Copy-Item $twain_list_file "$twain_list_file.bak"
+    $twain_list = (python build\windows\2_bundle-gimp-uni_dep.py --debug debug-only $(Resolve-Path $X86_BUNDLE/lib/gimp/*/plug-ins/twain/twain.exe) $env:MSYS_ROOT/mingw32/ $X86_BUNDLE/ 32 |
+                  Select-String 'Installed' -CaseSensitive -Context 0,1000) -replace "  `t- ",'bin\'
+    (Get-Content $twain_list_file) | Foreach-Object {$_ -replace "@DEPS_GENLIST@","$twain_list"} | Set-Content $twain_list_file
+    (Get-Content $twain_list_file) | Select-string 'Installed' -notmatch | Set-Content $twain_list_file
+    Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_files$([char]13)$([char]27)[0K"
+  }
 
 
 # 5. COMPILE .EXE INSTALLER
 $INSTALLER="gimp-${CUSTOM_GIMP_VERSION}-setup.exe"
 Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):installer_making[collapsed=true]$([char]13)$([char]27)[0KConstructing $INSTALLER installer"
 Set-Location build\windows\installer
-iscc -DREVISION="$revision" -DBUILD_DIR="$BUILD_DIR" -DGIMP_DIR="$GIMP_BASE" -DDIR32="$GIMP32" -DDIR64="$GIMP64" -DDIRA64="$GIMPA64" -DDEPS_DIR="$GIMP_BASE" -DDDIR32="$GIMP32" -DDDIR64="$GIMP64" -DDDIRA64="$GIMPA64" -DDEBUG_SYMBOLS -DPYTHON base_gimp3264.iss | Out-Null; if ("$LASTEXITCODE" -gt '0') { exit 1 }
-Set-Location $GIMP_BASE
+iscc -DREVISION="$revision" -DBUILD_DIR="$BUILD_DIR" $supported_archs -DDEBUG_SYMBOLS -DPYTHON base_gimp3264.iss | Out-Null; if ("$LASTEXITCODE" -gt '0') { exit 1 }
+Set-Location ..\..\..
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_making$([char]13)$([char]27)[0K"
 
 ## Revert change done in TWAIN list
-Remove-Item $twain_list_file
-Move-Item "$twain_list_file.bak" $twain_list_file
+if ($twain_list_file)
+  {
+    Remove-Item $twain_list_file
+    Move-Item "$twain_list_file.bak" $twain_list_file
+  }
 ## Clean changes in Inno installation
 fix_msg 'Default.isl' revert
 fix_msg $langsArray_Official revert
@@ -236,7 +249,7 @@ Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):i
 if ($GITLAB_CI)
   {
     # GitLab doesn't support wildcards when using "expose_as" so let's move to a dir
-    $output_dir = "$GIMP_BASE\build\windows\installer\_Output"
+    $output_dir = "$PWD\build\windows\installer\_Output"
     New-Item $output_dir -ItemType Directory | Out-Null
-    Move-Item $GIMP_BASE\$INSTALLER* $output_dir
+    Move-Item $INSTALLER* $output_dir
   }
