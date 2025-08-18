@@ -4,7 +4,7 @@
 param ($revision = "$GIMP_CI_MS_STORE",
        $wack = 'Non-WACK',
        $build_dir,
-       $a64_bundle = 'gimp-clangarm64',
+       $arm64_bundle = 'gimp-clangarm64',
        $x64_bundle = 'gimp-clang64')
 
 # Ensure the script work properly
@@ -144,32 +144,32 @@ $CUSTOM_GIMP_VERSION = "$GIMP_APP_VERSION.${micro_digit}${revision}.0"
 Write-Output "(INFO): Identity: $IDENTITY_NAME | Version: $CUSTOM_GIMP_VERSION (major: $major, minor: $minor, micro: ${micro}${revision_text})"
 
 ## Autodetects what arch bundles will be packaged
-if (-not (Test-Path "$a64_bundle") -and -not (Test-Path "$x64_bundle"))
+if (-not (Test-Path "$arm64_bundle") -and -not (Test-Path "$x64_bundle"))
   {
     Write-Host "(ERROR): No bundle found. You can tweak 'build/windows/2_build-gimp-msys2.ps1' or configure GIMP with '-Dms-store=true' to make one." -ForegroundColor red
     exit 1
   }
-elseif ((Test-Path "$a64_bundle") -and -not (Test-Path "$x64_bundle"))
+elseif ((Test-Path "$arm64_bundle") -and -not (Test-Path "$x64_bundle"))
   {
     Write-Output "(INFO): Arch: arm64"
-    $supported_archs = "$a64_bundle"
+    $supported_archs = "$arm64_bundle"
   }
-elseif (-not (Test-Path "$a64_bundle") -and (Test-Path "$x64_bundle"))
+elseif (-not (Test-Path "$arm64_bundle") -and (Test-Path "$x64_bundle"))
   {
     Write-Output "(INFO): Arch: x64"
     $supported_archs = "$x64_bundle"
   }
-elseif ((Test-Path "$a64_bundle") -and (Test-Path "$x64_bundle"))
+elseif ((Test-Path "$arm64_bundle") -and (Test-Path "$x64_bundle"))
   {
     Write-Output "(INFO): Arch: arm64 and x64"
-    $supported_archs = "$a64_bundle","$x64_bundle"
+    $supported_archs = "$arm64_bundle","$x64_bundle"
   }
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):msix_info$([char]13)$([char]27)[0K"
 
 
 foreach ($bundle in $supported_archs)
   {
-    if ((Test-Path $a64_bundle) -and (Test-Path $x64_bundle))
+    if ((Test-Path $arm64_bundle) -and (Test-Path $x64_bundle))
       {
         $temp_text='temporary '
       }
@@ -327,7 +327,7 @@ foreach ($bundle in $supported_archs)
 
 
 # 5.B. MAKE .MSIXBUNDLE OR SUBSEQUENT .MSIXUPLOAD
-if (((Test-Path $a64_bundle) -and (Test-Path $x64_bundle)) -and (Get-ChildItem *.msix -Recurse).Count -gt 1)
+if (((Test-Path $arm64_bundle) -and (Test-Path $x64_bundle)) -and (Get-ChildItem *.msix -Recurse).Count -gt 1)
   {
     $MSIXBUNDLE = "${IDENTITY_NAME}_${CUSTOM_GIMP_VERSION}_neutral.msixbundle"
     $MSIX_ARTIFACT = "$MSIXBUNDLE"
