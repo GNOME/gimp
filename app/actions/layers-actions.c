@@ -62,9 +62,9 @@ static const GimpActionEntry layers_actions[] =
     layers_edit_text_cmd_callback,
     GIMP_HELP_LAYER_EDIT },
 
-{ "layers-edit-vector", GIMP_ICON_TOOL_PATH,
-    N_("Path Tool"), NULL, { NULL },
-    N_("Activate the path tool on this vector layer's path"),
+  { "layers-edit-vector", GIMP_ICON_TOOL_PATH,
+    NC_("layers-action", "Path Tool"), NULL, { NULL },
+    NC_("layers-action", "Activate the path tool on this vector layer's path"),
     layers_edit_vector_cmd_callback,
     GIMP_HELP_TOOL_PATH },
 
