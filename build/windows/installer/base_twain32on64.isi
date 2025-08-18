@@ -13,7 +13,7 @@
 #define ReplStr
 
 #define Line=0
-#define SRC_DIR GIMP_DIR32
+#define SRC_DIR X86_BUNDLE
 
 //avoid too much nesting
 #sub DoActualWork
@@ -37,9 +37,9 @@ Source: "{#SRC_DIR}\{#FileLine}"; DestDir: "{app}\32\{#OutputDir}"; Components: 
 			//skip comments and empty lines
 		#elif Copy(FileLine,1,1)=="!"
 			#if Copy(FileLine,2)=="GIMP"
-				#expr SRC_DIR=GIMP_DIR32
+				#expr SRC_DIR=X86_BUNDLE
 			#elif Copy(FileLine,2)=="GTK"
-				#expr SRC_DIR=DEPS_DIR32
+				#expr SRC_DIR=X86_BUNDLE
 			#elif Copy(FileLine,2)=="end"
 				#define public Finished 1
 				//finished

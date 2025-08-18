@@ -3,56 +3,47 @@
 [Files]
 #endif
 
-#if PLATFORM==X86
-	#define DIR DIR32
-	#define DDIR DDIR32
-	#define COMPONENT "32"
-#elif PLATFORM==X64
-	#define DIR DIR64
-	#define DDIR DDIR64
-	#define COMPONENT "64"
-#elif PLATFORM==ARM64
-	#define DIR DIRA64
-	#define DDIR DDIRA64
-	#define COMPONENT "ARM64"
-#else
-	#error "Unknown PLATFORM:" + PLATFORM
+#ifndef BUNDLE
+	#error "Unknown BUNDLE."
+#endif
+#ifndef COMPONENT
+	#error "Unknown COMPONENT."
 #endif
 
 ;Required arch-specific components (compact installation)
 #define OPTIONAL_DLL="libgs*.dll,lua*.dll,corelgilua*.dll,gluas.dll,libpython*.dll"
 #define OPTIONAL_EXE="file-ps.exe,lua*.exe,python*.exe,twain.exe"
 
-Source: "{#GIMP_DIR}\{#DIR}\bin\libgimp*.dll"; DestDir: "{app}\bin"; Components: gimp{#COMPONENT}; Flags: {#COMMON_FLAGS}
-Source: "{#GIMP_DIR}\{#DIR}\bin\gimp*.exe"; DestDir: "{app}\bin"; Components: gimp{#COMPONENT}; Flags: {#COMMON_FLAGS}
-Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\*.dll"; DestDir: "{app}\lib\gimp"; Components: gimp{#COMPONENT}; Flags: {#COMMON_FLAGS}
-Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\*.exe"; DestDir: "{app}\lib\gimp"; Excludes: "{#OPTIONAL_EXE}"; Components: gimp{#COMPONENT}; Flags: {#COMMON_FLAGS}
-Source: "{#GIMP_DIR}\{#DIR}\lib\girepository-1.0\Gimp*.typelib"; DestDir: "{app}\lib\girepository-1.0"; Components: gimp{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\bin\libgimp*.dll"; DestDir: "{app}\bin"; Components: gimp{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\bin\gimp*.exe"; DestDir: "{app}\bin"; Components: gimp{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\lib\gimp\*.dll"; DestDir: "{app}\lib\gimp"; Components: gimp{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\lib\gimp\*.exe"; DestDir: "{app}\lib\gimp"; Excludes: "{#OPTIONAL_EXE}"; Components: gimp{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\lib\girepository-1.0\Gimp*.typelib"; DestDir: "{app}\lib\girepository-1.0"; Components: gimp{#COMPONENT}; Flags: {#COMMON_FLAGS}
 
-Source: "{#DEPS_DIR}\{#DDIR}\bin\*"; DestDir: "{app}\bin"; Excludes: "libgimp*.dll,gimp*.exe,*.pdb,{#OPTIONAL_DLL},{#OPTIONAL_EXE}"; Components: deps{#COMPONENT}; Flags: {#COMMON_FLAGS}
-Source: "{#DEPS_DIR}\{#DDIR}\lib\*"; DestDir: "{app}\lib"; Excludes: "gimp,Gimp*.typelib,*.pdb,*.a,*.pc,lua,gluas.dll,python3.12"; Components: deps{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\bin\*"; DestDir: "{app}\bin"; Excludes: "libgimp*.dll,gimp*.exe,*.pdb,{#OPTIONAL_DLL},{#OPTIONAL_EXE}"; Components: deps{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\lib\*"; DestDir: "{app}\lib"; Excludes: "gimp,Gimp*.typelib,*.pdb,*.a,*.pc,lua,gluas.dll,python3.12"; Components: deps{#COMPONENT}; Flags: {#COMMON_FLAGS}
 
 ;Optional arch-specific components (full installation)
-#if defined(DEBUG_SYMBOLS) && PLATFORM != X86
-Source: "{#GIMP_DIR}\{#DIR}\*.pdb"; DestDir: "{app}"; Components: debug{#COMPONENT}; Flags: {#COMMON_FLAGS}
+#if defined(DEBUG_SYMBOLS) && COMPONENT != "X86"
+Source: "{#BUNDLE}\*.pdb"; DestDir: "{app}"; Components: debug{#COMPONENT}; Flags: {#COMMON_FLAGS}
 #endif
 
-Source: "{#GIMP_DIR}\{#DIR}\include\*.h**"; DestDir: "{app}\include"; Components: dev{#COMPONENT}; Flags: {#COMMON_FLAGS}
-Source: "{#GIMP_DIR}\{#DIR}\lib\*.a"; DestDir: "{app}\lib"; Components: dev{#COMPONENT}; Flags: {#COMMON_FLAGS}
-Source: "{#GIMP_DIR}\{#DIR}\lib\pkgconfig\*"; DestDir: "{app}\lib\pkgconfig"; Components: dev{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\include\*.h**"; DestDir: "{app}\include"; Components: dev{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\lib\*.a"; DestDir: "{app}\lib"; Components: dev{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\lib\pkgconfig\*"; DestDir: "{app}\lib\pkgconfig"; Components: dev{#COMPONENT}; Flags: {#COMMON_FLAGS}
 
-Source: "{#DEPS_DIR}\{#DDIR}\bin\libgs*.dll"; DestDir: "{app}\bin"; Components: gs{#COMPONENT}; Flags: {#COMMON_FLAGS}
-Source: "{#GIMP_DIR}\{#DIR}\lib\file-ps.exe"; DestDir: "{app}\lib"; Components: gs{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\bin\libgs*.dll"; DestDir: "{app}\bin"; Components: gs{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\lib\file-ps.exe"; DestDir: "{app}\lib"; Components: gs{#COMPONENT}; Flags: {#COMMON_FLAGS}
 
 #ifdef LUA
-Source: "{#DEPS_DIR}\{#DDIR}\bin\lua*.dll"; DestDir: "{app}\bin"; Components: lua{#COMPONENT}; Flags: {#COMMON_FLAGS}
-Source: "{#DEPS_DIR}\{#DDIR}\bin\lua*.exe"; DestDir: "{app}\bin"; Components: lua{#COMPONENT}; Flags: {#COMMON_FLAGS}
-Source: "{#DEPS_DIR}\{#DDIR}\lib\corelgilua*.dll"; DestDir: "{app}\lib"; Components: lua{#COMPONENT}; Flags: {#COMMON_FLAGS}
-Source: "{#DEPS_DIR}\{#DDIR}\lib\gluas.dll"; DestDir: "{app}\lib"; Components: lua{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\bin\lua*.dll"; DestDir: "{app}\bin"; Components: lua{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\bin\lua*.exe"; DestDir: "{app}\bin"; Components: lua{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\lib\corelgilua*.dll"; DestDir: "{app}\lib"; Components: lua{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\lib\gluas.dll"; DestDir: "{app}\lib"; Components: lua{#COMPONENT}; Flags: {#COMMON_FLAGS}
 #endif
 
 #ifdef PYTHON
-Source: "{#DEPS_DIR}\{#DDIR}\bin\libpython*.dll"; DestDir: "{app}\bin"; Components: py{#COMPONENT}; Flags: {#COMMON_FLAGS}
-Source: "{#DEPS_DIR}\{#DDIR}\bin\python*.exe"; DestDir: "{app}\bin"; Components: py{#COMPONENT}; Flags: {#COMMON_FLAGS}
-Source: "{#DEPS_DIR}\{#DDIR}\lib\python3.12\*"; DestDir: "{app}\lib\python3.12"; Excludes: "*.pdb,*.py"; Components: py{#COMPONENT}; Flags: {#COMMON_FLAGS} createallsubdirs
+Source: "{#BUNDLE}\bin\libpython*.dll"; DestDir: "{app}\bin"; Components: py{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\bin\python*.exe"; DestDir: "{app}\bin"; Components: py{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\lib\python3.12\*"; DestDir: "{app}\lib\python3.12"; Excludes: "*.pdb,*.py"; Components: py{#COMPONENT}; Flags: {#COMMON_FLAGS} createallsubdirs
 #endif

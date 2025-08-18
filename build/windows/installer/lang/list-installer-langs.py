@@ -93,7 +93,7 @@ elif sys.argv[1] == 'files':
     # Change po
     po_clean = po.replace('@', '_')
     # Create line
-    files_line = f'Source: "{{#GIMP_DIR32}}\\share\\locale\\{po}\\*"; DestDir: "{{app}}\\share\\locale\\{po}"; Components: loc\\{po_clean}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion'
+    files_line = f'Source: "{{#MAIN_BUNDLE}}\\share\\locale\\{po}\\*"; DestDir: "{{app}}\\share\\locale\\{po}"; Components: loc\\{po_clean}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion'
     files_list.append(files_line)
   output_file = os.path.join(MESON_BUILD_ROOT, 'build/windows/installer/base_po-files.list')
   with open(output_file, 'w') as f:

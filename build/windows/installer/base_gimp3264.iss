@@ -108,6 +108,32 @@
 	#define CUSTOM_GIMP_VERSION ORIGINAL_GIMP_VERSION + "-" + REVISION
 #endif
 
+;This script supports creating both an installer per arch or an universal installer with all arches
+#if Defined(ARM64_BUNDLE) && !Defined(X64_BUNDLE) && !Defined(X86_BUNDLE)
+#define ARCHS_ALLOWED="arm64"
+#define ARCHS_INSTALLED="arm64"
+#define GIMP_ARCHS="gimpARM64"
+#define DEPS_ARCHS="depsARM64"
+#define PY_ARCHS="pyARM64"
+#define LUA_ARCHS="luaARM64"
+#endif
+#if !Defined(ARM64_BUNDLE) && Defined(X64_BUNDLE) && !Defined(X86_BUNDLE)
+#define ARCHS_ALLOWED="x64os"
+#define ARCHS_INSTALLED="x64os"
+#define GIMP_ARCHS="gimpX64"
+#define DEPS_ARCHS="depsX64"
+#define PY_ARCHS="pyX64"
+#define LUA_ARCHS="luaX64"
+#endif
+#if Defined(ARM64_BUNDLE) && Defined(X64_BUNDLE) && Defined(X86_BUNDLE)
+#define ARCHS_ALLOWED="x86compatible"
+#define ARCHS_INSTALLED="x64os arm64"
+#define GIMP_ARCHS="gimpARM64 or gimpX64 or gimpX86"
+#define DEPS_ARCHS="depsARM64 or depsX64 or depsX86"
+#define PY_ARCHS="pyARM64 or pyX64 or pyX86"
+#define LUA_ARCHS="luaARM64 or luaX64 or luaX86"
+#endif
+
 ;Optional Build-time params: DEBUG_SYMBOLS, LUA, PYTHON, NOCOMPRESSION, NOFILES, DEVEL_WARNING
 
 ;Optional Run-time params: /configoverride= /disablecheckupdate=false|true /debugresume=0|1 /resumeinstall=0|1|2
@@ -170,7 +196,7 @@ AppSupportURL=https://www.gimp.org/docs/
 LZMANumBlockThreads=4
 LZMABlockSize=76800
 #ifdef NOCOMPRESSION
-OutputDir={#GIMP_DIR}\unc
+OutputDir=..\..\..\unc
 Compression=none
 DiskSpanning=yes
 DiskSliceSize=max
@@ -194,10 +220,11 @@ LZMANumFastBytes=273
 ;3.3.3 EXE FILE DETAILS
 AppName=GIMP
 SetupIconFile={#ASSETS_DIR}\setup.ico
-OutputDir={#GIMP_DIR}
+OutputDir=..\..\..
 OutputBaseFileName=gimp-{#CUSTOM_GIMP_VERSION}-setup
 OutputManifestFile=inno.log
-ArchitecturesInstallIn64BitMode=x64os arm64
+ArchitecturesAllowed={#ARCHS_ALLOWED}
+ArchitecturesInstallIn64BitMode={#ARCHS_INSTALLED}
 MinVersion=10.0.18362
 //keep this MinVersion consistent with build\windows\store\AppxManifest.xml and devel-docs\os-support.txt
 
@@ -248,39 +275,81 @@ Name: custom; Description: "{cm:TypeCustom}"; Flags: iscustom
 [Components]
 ;Required components (minimal install)
 ;GIMP files
-Name: gimp32; Description: "{cm:ComponentsGimp,{#GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('32')
-Name: gimp64; Description: "{cm:ComponentsGimp,{#GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('x64')
+#ifdef ARM64_BUNDLE
 Name: gimpARM64; Description: "{cm:ComponentsGimp,{#GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('arm64')
+#endif
+#ifdef X64_BUNDLE
+Name: gimpX64; Description: "{cm:ComponentsGimp,{#GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('x64')
+#endif
+#ifdef X86_BUNDLE
+Name: gimpX86; Description: "{cm:ComponentsGimp,{#GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('32')
+#endif
 ;Deps files
-Name: deps32; Description: "{cm:ComponentsDeps,{#FULL_GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('32')
-Name: deps64; Description: "{cm:ComponentsDeps,{#FULL_GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('x64')
+#ifdef ARM64_BUNDLE
 Name: depsARM64; Description: "{cm:ComponentsDeps,{#FULL_GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('arm64')
+#endif
+#ifdef X64_BUNDLE
+Name: depsX64; Description: "{cm:ComponentsDeps,{#FULL_GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('x64')
+#endif
+#ifdef X86_BUNDLE
+Name: depsX86; Description: "{cm:ComponentsDeps,{#FULL_GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('32')
+#endif
 
 ;Optional components (complete install)
 #ifdef DEBUG_SYMBOLS
-Name: debug32; Description: "{cm:ComponentsDebug}"; Types: full custom; Flags: disablenouninstallwarning; Check: Check3264('32')
-Name: debug64; Description: "{cm:ComponentsDebug}"; Types: full custom; Flags: disablenouninstallwarning; Check: Check3264('x64')
+#ifdef ARM64_BUNDLE
 Name: debugARM64; Description: "{cm:ComponentsDebug}"; Types: full custom; Flags: disablenouninstallwarning; Check: Check3264('arm64')
 #endif
+#ifdef X64_BUNDLE
+Name: debugX64; Description: "{cm:ComponentsDebug}"; Types: full custom; Flags: disablenouninstallwarning; Check: Check3264('x64')
+#endif
+#ifdef X86_BUNDLE
+Name: debugX86; Description: "{cm:ComponentsDebug}"; Types: full custom; Flags: disablenouninstallwarning; Check: Check3264('32')
+#endif
+#endif
 ;Development files
-Name: dev32; Description: "{cm:ComponentsDev}"; Types: full custom; Flags: disablenouninstallwarning; Check: Check3264('32')
-Name: dev64; Description: "{cm:ComponentsDev}"; Types: full custom; Flags: disablenouninstallwarning; Check: Check3264('x64')
+#ifdef ARM64_BUNDLE
 Name: devARM64; Description: "{cm:ComponentsDev}"; Types: full custom; Flags: disablenouninstallwarning; Check: Check3264('arm64')
+#endif
+#ifdef X64_BUNDLE
+Name: devX64; Description: "{cm:ComponentsDev}"; Types: full custom; Flags: disablenouninstallwarning; Check: Check3264('x64')
+#endif
+#ifdef X86_BUNDLE
+Name: devX86; Description: "{cm:ComponentsDev}"; Types: full custom; Flags: disablenouninstallwarning; Check: Check3264('32')
+#endif
 ;PostScript support
-Name: gs32; Description: "{cm:ComponentsGhostscript}"; Types: full custom; Check: Check3264('32')
-Name: gs64; Description: "{cm:ComponentsGhostscript}"; Types: full custom; Check: Check3264('x64')
+#ifdef ARM64_BUNDLE
 Name: gsARM64; Description: "{cm:ComponentsGhostscript}"; Types: full custom; Check: Check3264('arm64')
+#endif
+#ifdef X64_BUNDLE
+Name: gsX64; Description: "{cm:ComponentsGhostscript}"; Types: full custom; Check: Check3264('x64')
+#endif
+#ifdef X86_BUNDLE
+Name: gsX86; Description: "{cm:ComponentsGhostscript}"; Types: full custom; Check: Check3264('32')
+#endif
 ;Lua plug-ins support
 #ifdef LUA
-Name: lua32; Description: "{cm:ComponentsLua}"; Types: full custom; Check: Check3264('32')
-Name: lua64; Description: "{cm:ComponentsLua}"; Types: full custom; Check: Check3264('x64')
+#ifdef ARM64_BUNDLE
 Name: luaARM64; Description: "{cm:ComponentsLua}"; Types: full custom; Check: Check3264('arm64')
+#endif
+#ifdef X64_BUNDLE
+Name: luaX64; Description: "{cm:ComponentsLua}"; Types: full custom; Check: Check3264('x64')
+#endif
+#ifdef X86_BUNDLE
+Name: luaX86; Description: "{cm:ComponentsLua}"; Types: full custom; Check: Check3264('32')
+#endif
 #endif
 ;Python plug-ins support
 #ifdef PYTHON
-Name: py32; Description: "{cm:ComponentsPython}"; Types: full custom; Check: Check3264('32')
-Name: py64; Description: "{cm:ComponentsPython}"; Types: full custom; Check: Check3264('x64')
+#ifdef ARM64_BUNDLE
 Name: pyARM64; Description: "{cm:ComponentsPython}"; Types: full custom; Check: Check3264('arm64')
+#endif
+#ifdef X64_BUNDLE
+Name: pyX64; Description: "{cm:ComponentsPython}"; Types: full custom; Check: Check3264('x64')
+#endif
+#ifdef X86_BUNDLE
+Name: pyX86; Description: "{cm:ComponentsPython}"; Types: full custom; Check: Check3264('32')
+#endif
 #endif
 ;Locales
 Name: loc; Description: "{cm:ComponentsTranslations}"; Types: full custom
@@ -288,7 +357,9 @@ Name: loc; Description: "{cm:ComponentsTranslations}"; Types: full custom
 ;MyPaint Brushes
 Name: mypaint; Description: "{cm:ComponentsMyPaint}"; Types: full custom
 ;32-bit TWAIN support
+#ifdef X86_BUNDLE
 Name: gimp32on64; Description: "{cm:ComponentsGimp32}"; Types: full custom; Flags: checkablealone; Check: Check3264('64')
+#endif
 
 [Files]
 ;setup files
@@ -302,81 +373,95 @@ Source: "{#ASSETS_DIR}\installsplash_top.scale-250.bmp"; Flags: dontcopy
 Source: "{#ASSETS_DIR}\installsplash_bottom.bmp"; Flags: dontcopy
 
 #ifndef NOFILES
-#define X86 1
-#define X64 2
-#define ARM64 3
-#define GIMP_DIR32 GIMP_DIR + "\" + DIR32
-#define GIMP_DIR64 GIMP_DIR + "\" + DIR64
-#define GIMP_DIRA64 GIMP_DIR + "\" + DIR64
-#define DDIR32 DIR32
-#define DDIR64 DIR64
-#define DDIRA64 DIRA64
-#define DEPS_DIR32 DEPS_DIR + "\" + DDIR32
-#define DEPS_DIR64 DEPS_DIR + "\" + DDIR64
-#define DEPS_DIRA64 DEPS_DIR + "\" + DDIRA64
-
+#ifdef X86_BUNDLE
+#define MAIN_BUNDLE X86_BUNDLE
+#endif
+#ifdef X64_BUNDLE
+#define MAIN_BUNDLE X64_BUNDLE
+#endif
+#ifdef ARM64_BUNDLE
+#define MAIN_BUNDLE ARM64_BUNDLE
+#endif
 #define COMMON_FLAGS="recursesubdirs restartreplace uninsrestartdelete ignoreversion"
 
 ;Required arch-neutral files (compact install)
-#define GIMP_ARCHS="gimp32 or gimp64 or gimpARM64"
 #define OPTIONAL_EXT="*.pdb,*.lua,*.py"
-Source: "{#GIMP_DIR32}\etc\gimp\*"; DestDir: "{app}\etc\gimp"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
-Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ\default.env"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
-Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\gimp-script-fu-interpreter.interp"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
-Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\extensions\*"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\extensions"; Excludes: "*.dll,*.exe,{#OPTIONAL_EXT}"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
-Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins\*"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins"; Excludes: "*.dll,*.exe,{#OPTIONAL_EXT}"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
-Source: "{#GIMP_DIR32}\share\gimp\*"; DestDir: "{app}\share\gimp"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS} createallsubdirs
-Source: "{#GIMP_DIR32}\share\icons\hicolor\*"; DestDir: "{app}\share\icons\hicolor"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
-#define DEPS_ARCHS="deps32 or deps64 or depsARM64"
-Source: "{#DEPS_DIR32}\etc\*"; DestDir: "{app}\etc"; Excludes: "gimp"; Components: {#DEPS_ARCHS}; Flags: {#COMMON_FLAGS}
-Source: "{#DEPS_DIR32}\share\*"; DestDir: "{app}\share"; Excludes: "gimp,icons\hicolor,locale\*,mypaint-data"; Components: {#DEPS_ARCHS}; Flags: {#COMMON_FLAGS} createallsubdirs
+Source: "{#MAIN_BUNDLE}\etc\gimp\*"; DestDir: "{app}\etc\gimp"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
+Source: "{#MAIN_BUNDLE}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ\default.env"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
+Source: "{#MAIN_BUNDLE}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\gimp-script-fu-interpreter.interp"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
+Source: "{#MAIN_BUNDLE}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\extensions\*"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\extensions"; Excludes: "*.dll,*.exe,{#OPTIONAL_EXT}"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
+Source: "{#MAIN_BUNDLE}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins\*"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins"; Excludes: "*.dll,*.exe,{#OPTIONAL_EXT}"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
+Source: "{#MAIN_BUNDLE}\share\gimp\*"; DestDir: "{app}\share\gimp"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS} createallsubdirs
+Source: "{#MAIN_BUNDLE}\share\icons\hicolor\*"; DestDir: "{app}\share\icons\hicolor"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
+Source: "{#MAIN_BUNDLE}\etc\*"; DestDir: "{app}\etc"; Excludes: "gimp"; Components: {#DEPS_ARCHS}; Flags: {#COMMON_FLAGS}
+Source: "{#MAIN_BUNDLE}\share\*"; DestDir: "{app}\share"; Excludes: "gimp,icons\hicolor,locale\*,mypaint-data"; Components: {#DEPS_ARCHS}; Flags: {#COMMON_FLAGS} createallsubdirs
 
 ;Optional arch-neutral files (full install)
 #ifdef LUA
-Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\lua.interp"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters"; Components: (lua32 or lua64 or luaARM64); Flags: {#COMMON_FLAGS}
-Source: "{#GIMP_DIR32}\*.lua"; DestDir: "{app}"; Excludes: "share\gimp\*.lua"; Components: (lua32 or lua64 or luaARM64); Flags: {#COMMON_FLAGS}
+Source: "{#MAIN_BUNDLE}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\lua.interp"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters"; Components: {#LUA_ARCHS}; Flags: {#COMMON_FLAGS}
+Source: "{#MAIN_BUNDLE}\*.lua"; DestDir: "{app}"; Excludes: "share\gimp\*.lua"; Components: {#LUA_ARCHS}; Flags: {#COMMON_FLAGS}
 #endif
 #ifdef PYTHON
-Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ\py*.env"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ"; Components: (py32 or py64 or pyARM64); Flags: {#COMMON_FLAGS}
-Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\pygimp.interp"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters"; Components: (py32 or py64 or pyARM64); Flags: {#COMMON_FLAGS}
-Source: "{#GIMP_DIR32}\*.py"; DestDir: "{app}"; Components: (py32 or py64 or pyARM64); Flags: {#COMMON_FLAGS}
+Source: "{#MAIN_BUNDLE}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ\py*.env"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ"; Components: {#PY_ARCHS}; Flags: {#COMMON_FLAGS}
+Source: "{#MAIN_BUNDLE}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\pygimp.interp"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters"; Components: {#PY_ARCHS}; Flags: {#COMMON_FLAGS}
+Source: "{#MAIN_BUNDLE}\*.py"; DestDir: "{app}"; Components: {#PY_ARCHS}; Flags: {#COMMON_FLAGS}
 #endif
-Source: "{#GIMP_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: dontcopy {#COMMON_FLAGS}
+Source: "{#MAIN_BUNDLE}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: dontcopy {#COMMON_FLAGS}
 #include ASSETS_DIR + "\base_po-files.list"
-Source: "{#DEPS_DIR32}\share\mypaint-data\*"; DestDir: "{app}\share\mypaint-data"; Components: mypaint; Flags: {#COMMON_FLAGS}
+Source: "{#MAIN_BUNDLE}\share\mypaint-data\*"; DestDir: "{app}\share\mypaint-data"; Components: mypaint; Flags: {#COMMON_FLAGS}
 
 ;Required and optional arch specific files (binaries), except TWAIN in x64 and amd64
 ;i686
-#define PLATFORM X86
+#ifdef X86_BUNDLE
+#define BUNDLE ARM64_BUNDLE
+#define COMPONENT "ARM64"
 ;Set solid break for 32-bit binaries. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/13801
 #define COMMON_FLAGS="recursesubdirs restartreplace uninsrestartdelete ignoreversion solidbreak"
 #include "base_executables.isi"
 ;TWAIN is always installed in the 32-bit version of GIMP
-Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins\twain.exe"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins"; Components: gimp32; Flags: {#COMMON_FLAGS}
-;x86_64
+Source: "{#X86_BUNDLE}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins\twain.exe"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins"; Components: gimpX86; Flags: {#COMMON_FLAGS}
 ;Restore common flags
 #define COMMON_FLAGS="recursesubdirs restartreplace uninsrestartdelete ignoreversion"
-#define PLATFORM X64
+#endif
+
+;x86_64
+#ifdef X64_BUNDLE
+#define BUNDLE X64_BUNDLE
+#define COMPONENT "X64"
 #include "base_executables.isi"
+#endif
+
 ;AArch64
-#define PLATFORM ARM64
+#ifdef ARM64_BUNDLE
+#define BUNDLE ARM64_BUNDLE
+#define COMPONENT "ARM64"
 #include "base_executables.isi"
+#endif
 
 ;Optional 32-bit specific bins for TWAIN, since x64 and arm64 twain drivers are rare
+#ifdef X86_BUNDLE
 #include "base_twain32on64.isi"
-Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins\twain"; Components: gimp32on64; Flags: {#COMMON_FLAGS}
+Source: "{#X86_BUNDLE}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins\twain"; Components: gimp32on64; Flags: {#COMMON_FLAGS}
+#endif
 
 ;upgrade zlib1.dll in System32 if it's present there to avoid breaking plugins
 ;sharedfile flag will ensure that the upgraded file is left behind on uninstall to avoid breaking other programs that use the file
-Source: "{#DEPS_DIR32}\bin\zlib1.dll"; DestDir: "{sys}"; Components: {#GIMP_ARCHS}; Flags: restartreplace sharedfile 32bit uninsrestartdelete comparetimestamp; Check: BadSysDLL('zlib1.dll',32)
-Source: "{#DEPS_DIR64}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimp64; Flags: restartreplace sharedfile uninsrestartdelete comparetimestamp; Check: BadSysDLL('zlib1.dll',64)
+#ifdef ARM64_BUNDLE
+Source: "{#ARM64_BUNDLE}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimpARM64; Flags: restartreplace sharedfile uninsrestartdelete comparetimestamp; Check: BadSysDLL('zlib1.dll',64)
+#endif
+#ifdef X64_BUNDLE
+Source: "{#X64_BUNDLE}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimpX64; Flags: restartreplace sharedfile uninsrestartdelete comparetimestamp; Check: BadSysDLL('zlib1.dll',64)
+#endif
+#ifdef X86_BUNDLE
+Source: "{#X86_BUNDLE}\bin\zlib1.dll"; DestDir: "{sys}"; Components: {#GIMP_ARCHS}; Flags: restartreplace sharedfile 32bit uninsrestartdelete comparetimestamp; Check: BadSysDLL('zlib1.dll',32)
+#endif
 
 ;allow specific config files to be overridden if '/configoverride=' is set at run time
 #define FindHandle
 #sub ProcessConfigFile
   #define FileName FindGetFileName(FindHandle)
 Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\{#ConfigDir}"; Flags: external restartreplace; Check: CheckExternalConf('{#FileName}')
-  #if BaseDir != GIMP_DIR32
+  #if BaseDir != MAIN_BUNDLE
 Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\32\{#ConfigDir}"; Components: gimp32on64; Flags: external restartreplace; Check: CheckExternalConf('{#FileName}')
   #endif
 #endsub
@@ -390,7 +475,7 @@ Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\32\{#ConfigDir}
     #expr FindClose(FindHandle)
   #endif
 #endsub
-#define public BaseDir GIMP_DIR32
+#define public BaseDir MAIN_BUNDLE
 #define public ConfigDir "etc\gimp\" + GIMP_PKGCONFIG_VERSION
 #expr ProcessConfigDir
 #define public ConfigDir "etc\fonts"
@@ -400,8 +485,9 @@ Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\32\{#ConfigDir}
 
 ;We need at least an empty folder to avoid GIMP*_LOCALEDIR warnings
 [Dirs]
+#ifdef X86_BUNDLE
 Name: "{app}\32\share\locale"; Components: gimp32on64; Flags: uninsalwaysuninstall
-
+#endif
 
 ;4.2 SPECIAL-CASE FILES TO BE WIPED
 [InstallDelete]
