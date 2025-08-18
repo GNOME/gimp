@@ -22,25 +22,13 @@ elseif (Test-Path 3_dist-gimp-inno.ps1 -Type Leaf)
   }
 
 
-# This script needs a bit of Python to work
-#FIXME: Restore the condition when TWAIN 32-bit support is dropped
-#if (-not (Get-Command "python" -ErrorAction SilentlyContinue) -or "$(Get-Command "python" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source)" -like '*WindowsApps*')
-#  {
-    Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'MSYS_ROOT\)' -Context 0,12) -replace '> ','')
-    $env:PATH = "$env:MSYS_ROOT/$env:MSYSTEM_PREFIX/bin;$env:PATH"
-#  }
-
-
 # 1. GET INNO
 Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):installer_tlkt$([char]13)$([char]27)[0KChecking Inno installation"
-
-## Download Inno
+## Install or Update Inno (if needed)
 ## (We need to ensure that TLS 1.2 is enabled because of some runners)
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 Invoke-WebRequest https://jrsoftware.org/download.php/is.exe -OutFile ..\is.exe
 $inno_version_downloaded = (Get-Item ..\is.exe).VersionInfo.ProductVersion -replace ' ',''
-
-## Install or Update Inno
 $broken_inno = Get-ChildItem $env:TMP -Filter *.isl.bak -ErrorAction SilentlyContinue
 $inno_version = Get-ItemProperty Registry::'HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup*' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty DisplayVersion
 if ("$broken_inno" -or "$inno_version" -ne "$inno_version_downloaded")
@@ -62,12 +50,18 @@ if ("$broken_inno" -or "$inno_version" -ne "$inno_version_downloaded")
     Wait-Process is
   }
 Remove-Item ..\is.exe
-Write-Output "(INFO): Installed Inno: $inno_version_downloaded"
-
-## Get Inno install path
 $INNO_PATH = Get-ItemProperty (Resolve-Path Registry::'HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup*') | Select-Object -ExpandProperty InstallLocation
 #$INNO_PATH = [regex]::Matches((Get-Content ..\innosetup.log | Select-String ISCC.exe), '(?<=filename: ).+?(?=\\ISCC.exe)').Value
 Set-Alias iscc "$INNO_PATH\iscc.exe"
+
+## This script needs a bit of Python to work
+#FIXME: Restore the condition when TWAIN 32-bit support is dropped
+#if (-not (Get-Command "python" -ErrorAction SilentlyContinue) -or "$(Get-Command "python" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source)" -like '*WindowsApps*')
+#  {
+    Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'MSYS_ROOT\)' -Context 0,12) -replace '> ','')
+    $env:PATH = "$env:MSYS_ROOT/$env:MSYSTEM_PREFIX/bin;$env:PATH"
+#  }
+Write-Output "(INFO): Installed Inno: $inno_version_downloaded | Installed Python: $((python --version) -replace '[^0-9.]', '')"
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_tlkt$([char]13)$([char]27)[0K"
 
 
