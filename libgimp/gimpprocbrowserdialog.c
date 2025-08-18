@@ -181,6 +181,7 @@ gimp_proc_browser_dialog_init (GimpProcBrowserDialog *dialog)
   renderer = gtk_cell_renderer_text_new ();
   gtk_cell_renderer_text_set_fixed_height_from_font
     (GTK_CELL_RENDERER_TEXT (renderer), 1);
+  g_object_set (renderer, "ellipsize", PANGO_ELLIPSIZE_MIDDLE, NULL);
 
   gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (dialog->tree_view),
                                                -1, NULL,
