@@ -44,7 +44,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-08-15 22:06+0200\n"
-"PO-Revision-Date: 2025-08-15 22:14+0200\n"
+"PO-Revision-Date: 2025-08-18 10:00+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -775,7 +775,7 @@ msgstr "Elimina i canali selezionati"
 #: ../app/actions/channels-actions.c:76
 msgctxt "channels-action"
 msgid "_Raise Channels"
-msgstr "Al_za i canali"
+msgstr "Al_za canali"
 
 #: ../app/actions/channels-actions.c:77
 msgctxt "channels-action"
@@ -785,7 +785,7 @@ msgstr "Alza questi canali di una posizione nella pila canali"
 #: ../app/actions/channels-actions.c:82
 msgctxt "channels-action"
 msgid "Raise Channels to _Top"
-msgstr "Alza i canali fino in _cima"
+msgstr "Alza canali fino in _cima"
 
 #: ../app/actions/channels-actions.c:84
 msgctxt "channels-action"
@@ -795,7 +795,7 @@ msgstr "Alza questi canali fino alla cima della pila canali"
 #: ../app/actions/channels-actions.c:89
 msgctxt "channels-action"
 msgid "_Lower Channels"
-msgstr "A_bbassa i canali"
+msgstr "A_bbassa canali"
 
 #: ../app/actions/channels-actions.c:90
 msgctxt "channels-action"
@@ -805,7 +805,7 @@ msgstr "Abbassa questi canali di una posizione nella pila canali"
 #: ../app/actions/channels-actions.c:95
 msgctxt "channels-action"
 msgid "Lower Channels to _Bottom"
-msgstr "Abbassa i canali fino in _fondo"
+msgstr "Abbassa canali fino in _fondo"
 
 #: ../app/actions/channels-actions.c:97
 msgctxt "channels-action"
