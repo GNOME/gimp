@@ -1157,7 +1157,6 @@ _gimp_config (GPConfig *config)
   /* XXX Running gegl_init() before gegl_config() is not appreciated by
    * GEGL and generates a bunch of CRITICALs.
    */
-  babl_init ();
 
   g_clear_object (&_check_custom_color1);
   _check_custom_color1 = gegl_color_new (NULL);
