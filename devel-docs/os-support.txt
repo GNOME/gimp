@@ -25,7 +25,12 @@ Hardware:
 
 ### Windows
 
-Windows 10 and over.
+Windows 10.0.18362.0 (aka 1903) and over.
+
+(NOTE TO MAINTAINERS:
+If you update this file, so update MinVersion
+on build/windows/installer/*gimp3264.iss and
+on build/windows/store/AppxManifest.xml too)
 
 Hardware:
 * x86 32 and 64-bit
