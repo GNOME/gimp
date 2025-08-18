@@ -25,6 +25,8 @@
 
 #include "widgets-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpbrushpipe.h"
 #include "core/gimpbrushgenerated.h"
@@ -32,19 +34,18 @@
 #include "core/gimptempbuf.h"
 
 #include "gimpviewrendererbrush.h"
+#include "gimpwidgets-utils.h"
 
 
-static void   gimp_view_renderer_brush_finalize    (GObject          *object);
+static void   gimp_view_renderer_brush_finalize (GObject          *object);
 
-static void   gimp_view_renderer_brush_set_context (GimpViewRenderer *renderer,
-                                                    GimpContext      *context);
-static void   gimp_view_renderer_brush_render      (GimpViewRenderer *renderer,
-                                                    GtkWidget        *widget);
-static void   gimp_view_renderer_brush_draw        (GimpViewRenderer *renderer,
-                                                    GtkWidget        *widget,
-                                                    cairo_t          *cr,
-                                                    gint              available_width,
-                                                    gint              available_height);
+static void   gimp_view_renderer_brush_render   (GimpViewRenderer *renderer,
+                                                 GtkWidget        *widget);
+static void   gimp_view_renderer_brush_draw     (GimpViewRenderer *renderer,
+                                                 GtkWidget        *widget,
+                                                 cairo_t          *cr,
+                                                 gint              available_width,
+                                                 gint              available_height);
 
 static gboolean gimp_view_renderer_brush_render_timeout (gpointer    data);
 
@@ -61,11 +62,13 @@ gimp_view_renderer_brush_class_init (GimpViewRendererBrushClass *klass)
   GObjectClass          *object_class   = G_OBJECT_CLASS (klass);
   GimpViewRendererClass *renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
 
-  object_class->finalize      = gimp_view_renderer_brush_finalize;
+  object_class->finalize = gimp_view_renderer_brush_finalize;
 
-  renderer_class->set_context = gimp_view_renderer_brush_set_context;
-  renderer_class->render      = gimp_view_renderer_brush_render;
-  renderer_class->draw        = gimp_view_renderer_brush_draw;
+  renderer_class->default_bg      = GIMP_VIEW_BG_WHITE;
+  renderer_class->follow_theme_bg = GIMP_VIEW_BG_USE_STYLE;
+
+  renderer_class->render          = gimp_view_renderer_brush_render;
+  renderer_class->draw            = gimp_view_renderer_brush_draw;
 }
 
 static void
@@ -90,43 +93,15 @@ gimp_view_renderer_brush_finalize (GObject *object)
 }
 
 static void
-gimp_view_renderer_brush_set_context (GimpViewRenderer *renderer,
-                                      GimpContext      *context)
-{
-  if (renderer->context)
-    {
-      g_signal_handlers_disconnect_by_func (renderer->context->gimp->config,
-                                            G_CALLBACK (gimp_view_renderer_invalidate),
-                                            renderer);
-    }
-
-  GIMP_VIEW_RENDERER_CLASS (parent_class)->set_context (renderer, context);
-
-  if (renderer->context)
-    {
-      g_signal_connect_object (renderer->context->gimp->config,
-                               "notify::viewables-follow-theme",
-                               G_CALLBACK (gimp_view_renderer_invalidate),
-                               renderer, G_CONNECT_SWAPPED);
-      g_signal_connect_object (renderer->context->gimp->config,
-                               "notify::theme-color-scheme",
-                               G_CALLBACK (gimp_view_renderer_invalidate),
-                               renderer, G_CONNECT_SWAPPED);
-    }
-}
-
-static void
 gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
                                  GtkWidget        *widget)
 {
-  GimpViewRendererBrush *renderbrush   = GIMP_VIEW_RENDERER_BRUSH (renderer);
+  GimpViewRendererBrush *renderbrush = GIMP_VIEW_RENDERER_BRUSH (renderer);
   GimpTempBuf           *temp_buf;
-  GeglColor             *color         = NULL;
-  GeglColor             *background    = NULL;
-  gboolean               follow_theme  = FALSE;
-  GimpViewBG             view_bg_style = GIMP_VIEW_BG_WHITE;
-  gint                   temp_buf_x    = 0;
-  gint                   temp_buf_y    = 0;
+  GeglColor             *fg_color   = NULL;
+  GimpViewBG             bg_style   = GIMP_VIEW_BG_WHITE;
+  gint                   temp_buf_x = 0;
+  gint                   temp_buf_y = 0;
   gint                   temp_buf_width;
   gint                   temp_buf_height;
 
@@ -136,41 +111,17 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
       renderbrush->pipe_timeout_id = 0;
     }
 
-  g_object_get (renderer->context->gimp->config,
-                "viewables-follow-theme", &follow_theme,
-                NULL);
-  if (follow_theme)
+  if (renderer->context &&
+      GIMP_GUI_CONFIG (renderer->context->gimp->config)->viewables_follow_theme)
     {
-      GtkStyleContext *style;
-      GdkRGBA         *fg_color = NULL;
-      GdkRGBA         *bg_color = NULL;
-
-      style = gtk_widget_get_style_context (widget);
-      gtk_style_context_get (style, gtk_style_context_get_state (style),
-                             GTK_STYLE_PROPERTY_COLOR,            &fg_color,
-                             GTK_STYLE_PROPERTY_BACKGROUND_COLOR, &bg_color,
-                             NULL);
-      if (fg_color)
-        {
-          color = gegl_color_new (NULL);
-          gegl_color_set_rgba_with_space (color,
-                                          fg_color->red, fg_color->green, fg_color->blue, 1.0,
-                                          NULL);
-
-          background = gegl_color_new (NULL);
-          gegl_color_set_rgba_with_space (background,
-                                          bg_color->red, bg_color->green, bg_color->blue, 1.0,
-                                          NULL);
-          view_bg_style = GIMP_VIEW_BG_USE_STYLE;
-        }
-      g_clear_pointer (&fg_color, gdk_rgba_free);
-      g_clear_pointer (&bg_color, gdk_rgba_free);
+      fg_color = gimp_get_style_color (widget, GTK_STYLE_PROPERTY_COLOR);
+      bg_style = GIMP_VIEW_BG_USE_STYLE;
     }
 
-  temp_buf = gimp_viewable_get_new_preview (renderer->viewable, renderer->context,
-                                            renderer->width, renderer->height, color, background);
-  g_clear_object (&color);
-  g_clear_object (&background);
+  temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
+                                            renderer->context,
+                                            renderer->width, renderer->height,
+                                            fg_color);
 
   temp_buf_width  = gimp_temp_buf_get_width  (temp_buf);
   temp_buf_height = gimp_temp_buf_get_height (temp_buf);
@@ -181,33 +132,21 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
   if (temp_buf_height < renderer->height)
     temp_buf_y = (renderer->height - temp_buf_height) / 2;
 
-  if (renderer->is_popup)
-    {
-      gimp_view_renderer_render_temp_buf (renderer, widget, temp_buf,
-                                          temp_buf_x, temp_buf_y,
-                                          -1,
-                                          view_bg_style,
-                                          view_bg_style);
-
-      gimp_temp_buf_unref (temp_buf);
-
-      if (GIMP_IS_BRUSH_PIPE (renderer->viewable))
-        {
-          renderbrush->widget = widget;
-          renderbrush->pipe_animation_index = 0;
-          renderbrush->pipe_timeout_id =
-            g_timeout_add (300, gimp_view_renderer_brush_render_timeout,
-                           renderbrush);
-        }
-
-      return;
-    }
-
   gimp_view_renderer_render_temp_buf (renderer, widget, temp_buf,
                                       temp_buf_x, temp_buf_y,
                                       -1,
-                                      view_bg_style,
-                                      view_bg_style);
+                                      bg_style,
+                                      bg_style);
+
+  if (renderer->is_popup &&
+      GIMP_IS_BRUSH_PIPE (renderer->viewable))
+    {
+      renderbrush->widget = widget;
+      renderbrush->pipe_animation_index = 0;
+      renderbrush->pipe_timeout_id =
+        g_timeout_add (300, gimp_view_renderer_brush_render_timeout,
+                       renderbrush);
+    }
 
   gimp_temp_buf_unref (temp_buf);
 }
@@ -220,10 +159,8 @@ gimp_view_renderer_brush_render_timeout (gpointer data)
   GimpBrushPipe         *brush_pipe;
   GimpBrush             *brush;
   GimpTempBuf           *temp_buf;
-  GeglColor             *color         = NULL;
-  GeglColor             *background    = NULL;
-  gboolean               follow_theme  = FALSE;
-  GimpViewBG             view_bg_style = GIMP_VIEW_BG_WHITE;
+  GeglColor             *fg_color   = NULL;
+  GimpViewBG             bg_style   = GIMP_VIEW_BG_WHITE;
   gint                   temp_buf_x = 0;
   gint                   temp_buf_y = 0;
   gint                   temp_buf_width;
@@ -239,35 +176,13 @@ gimp_view_renderer_brush_render_timeout (gpointer data)
 
   brush_pipe = GIMP_BRUSH_PIPE (renderer->viewable);
 
-  g_object_get (renderer->context->gimp->config,
-                "viewables-follow-theme", &follow_theme,
-                NULL);
-  if (follow_theme)
+  if (renderer->context &&
+      GIMP_GUI_CONFIG (renderer->context->gimp->config)->viewables_follow_theme)
     {
-      GtkStyleContext *style;
-      GdkRGBA         *bg_color = NULL;
-      GdkRGBA         *fg_color = NULL;
+      bg_style = GIMP_VIEW_BG_USE_STYLE;
 
-      style = gtk_widget_get_style_context (renderbrush->widget);
-      gtk_style_context_get (style, gtk_style_context_get_state (style),
-                             GTK_STYLE_PROPERTY_COLOR,            &fg_color,
-                             GTK_STYLE_PROPERTY_BACKGROUND_COLOR, &bg_color,
-                             NULL);
-      if (fg_color)
-        {
-          color = gegl_color_new (NULL);
-          gegl_color_set_rgba_with_space (color,
-                                          fg_color->red, fg_color->green, fg_color->blue, 1.0,
-                                          NULL);
-
-          background = gegl_color_new (NULL);
-          gegl_color_set_rgba_with_space (background,
-                                          bg_color->red, bg_color->green, bg_color->blue, 1.0,
-                                          NULL);
-          view_bg_style = GIMP_VIEW_BG_USE_STYLE;
-        }
-      g_clear_pointer (&fg_color, gdk_rgba_free);
-      g_clear_pointer (&bg_color, gdk_rgba_free);
+      fg_color = gimp_get_style_color (renderbrush->widget,
+                                       GTK_STYLE_PROPERTY_COLOR);
     }
 
   renderbrush->pipe_animation_index++;
@@ -282,9 +197,8 @@ gimp_view_renderer_brush_render_timeout (gpointer data)
                                             renderer->context,
                                             renderer->width,
                                             renderer->height,
-                                            color, background);
-  g_clear_object (&color);
-  g_clear_object (&background);
+                                            fg_color);
+  g_clear_object (&fg_color);
 
   temp_buf_width  = gimp_temp_buf_get_width  (temp_buf);
   temp_buf_height = gimp_temp_buf_get_height (temp_buf);
@@ -298,8 +212,8 @@ gimp_view_renderer_brush_render_timeout (gpointer data)
   gimp_view_renderer_render_temp_buf (renderer, renderbrush->widget, temp_buf,
                                       temp_buf_x, temp_buf_y,
                                       -1,
-                                      view_bg_style,
-                                      view_bg_style);
+                                      bg_style,
+                                      bg_style);
 
   gimp_temp_buf_unref (temp_buf);
 

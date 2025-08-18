@@ -80,8 +80,7 @@ static GimpTempBuf * gimp_brush_get_new_preview       (GimpViewable         *vie
                                                        GimpContext          *context,
                                                        gint                  width,
                                                        gint                  height,
-                                                       GeglColor            *color,
-                                                       GeglColor            *background);
+                                                       GeglColor            *fg_color);
 static gchar       * gimp_brush_get_description       (GimpViewable         *viewable,
                                                        gchar               **tooltip);
 
@@ -276,8 +275,7 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
                             GimpContext  *context,
                             gint          width,
                             gint          height,
-                            GeglColor    *color,
-                            GeglColor    *background)
+                            GeglColor    *fg_color)
 {
   GimpBrush         *brush       = GIMP_BRUSH (viewable);
   const GimpTempBuf *mask_buf    = brush->priv->mask;
@@ -373,10 +371,10 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
     }
   else
     {
-      guint8 rgb[3] = {0, 0, 0};
+      guint8 rgb[3] = { 0, 0, 0 };
 
-      if (color != NULL)
-        gegl_color_get_pixel (color, babl_format ("R'G'B' u8"), rgb);
+      if (fg_color)
+        gegl_color_get_pixel (fg_color, babl_format ("R'G'B' u8"), rgb);
 
       for (y = 0; y < mask_height; y++)
         {

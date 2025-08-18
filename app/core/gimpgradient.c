@@ -63,8 +63,7 @@ static GimpTempBuf * gimp_gradient_get_new_preview   (GimpViewable        *viewa
                                                       GimpContext         *context,
                                                       gint                 width,
                                                       gint                 height,
-                                                      GeglColor           *color,
-                                                      GeglColor           *background);
+                                                      GeglColor           *fg_color);
 
 static const gchar * gimp_gradient_get_extension     (GimpData            *data);
 static void          gimp_gradient_copy              (GimpData            *data,
@@ -219,8 +218,7 @@ gimp_gradient_get_new_preview (GimpViewable *viewable,
                                GimpContext  *context,
                                gint          width,
                                gint          height,
-                               GeglColor    *color G_GNUC_UNUSED,
-                               GeglColor    *background G_GNUC_UNUSED)
+                               GeglColor    *fg_color G_GNUC_UNUSED)
 {
   GimpGradient        *gradient = GIMP_GRADIENT (viewable);
   GimpGradientSegment *seg      = NULL;

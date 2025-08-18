@@ -83,8 +83,7 @@ static GimpTempBuf * gimp_undo_get_new_preview     (GimpViewable        *viewabl
                                                     GimpContext         *context,
                                                     gint                 width,
                                                     gint                 height,
-                                                    GeglColor           *color,
-                                                    GeglColor           *background);
+                                                    GeglColor           *fg_color);
 
 static void          gimp_undo_real_pop            (GimpUndo            *undo,
                                                     GimpUndoMode         undo_mode,
@@ -304,8 +303,7 @@ gimp_undo_get_new_preview (GimpViewable *viewable,
                            GimpContext  *context,
                            gint          width,
                            gint          height,
-                           GeglColor    *color G_GNUC_UNUSED,
-                           GeglColor    *background G_GNUC_UNUSED)
+                           GeglColor    *fg_color G_GNUC_UNUSED)
 {
   GimpUndo *undo = GIMP_UNDO (viewable);
 
@@ -495,7 +493,7 @@ gimp_undo_create_preview_private (GimpUndo    *undo,
     }
 
   undo->preview = gimp_viewable_get_new_preview (preview_viewable, context,
-                                                 width, height, NULL, NULL);
+                                                 width, height, NULL);
 
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (undo));
 }
