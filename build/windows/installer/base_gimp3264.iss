@@ -198,7 +198,8 @@ OutputDir={#GIMP_DIR}
 OutputBaseFileName=gimp-{#CUSTOM_GIMP_VERSION}-setup
 OutputManifestFile=inno.log
 ArchitecturesInstallIn64BitMode=x64os arm64
-MinVersion=10.0
+MinVersion=10.0.18362
+//keep this MinVersion consistent with build\windows\store\AppxManifest.xml and devel-docs\os-support.txt
 
 
 ;3.4.1 INSTALLER PAGES
