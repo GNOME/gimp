@@ -81,7 +81,7 @@
 
 
 ;2 GLOBAL VARIABLES SET BY PARAMS
-;Meson don't support C++ style comments. See: https://github.com/mesonbuild/meson/issues/14260
+;FIXME: Meson don't support C++ style comments. See: https://github.com/mesonbuild/meson/issues/14260
 #include BUILD_DIR + "\config_clean.h"
 
 ;Main GIMP versions:

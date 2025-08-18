@@ -80,7 +80,7 @@ ForEach ($line in $(Select-String 'define' $CONFIG_PATH -AllMatches))
   {
     Invoke-Expression $($line -replace '^.*#' -replace 'define ','$' -replace ' ','=')
   }
-#Meson don't support C++ style comments. See: https://github.com/mesonbuild/meson/issues/14260
+#FIXME: Meson don't support C++ style comments. See: https://github.com/mesonbuild/meson/issues/14260
 $CLEANCONFIG_PATH ="$(Split-Path -Parent $CONFIG_PATH)\config_clean.h"
 if (Test-Path $CLEANCONFIG_PATH)
   {
