@@ -81,9 +81,6 @@ script_fu_run_image_procedure (GimpProcedure        *procedure, /* GimpImageProc
 
   ts_set_run_mode (run_mode);
 
-  /* Need Gegl.  Also inits ui, needed when mode is interactive. */
-  gimp_ui_init ("script-fu");
-
   begin_interpret_default_dialect ();
 
   script_fu_progress_init (gimp_procedure_get_menu_label (procedure));
@@ -93,6 +90,8 @@ script_fu_run_image_procedure (GimpProcedure        *procedure, /* GimpImageProc
     case GIMP_RUN_INTERACTIVE:
       {
         guint n_specs;
+
+        gimp_ui_init ("script-fu");
 
         g_free (g_object_class_list_properties (G_OBJECT_GET_CLASS (config), &n_specs));
         if (n_specs > 1)
@@ -167,9 +166,6 @@ script_fu_run_regular_procedure (GimpProcedure        *procedure,
   g_object_get (config, "run-mode", &run_mode, NULL);
   ts_set_run_mode (run_mode);
 
-  /* Need Gegl.  Also inits ui, needed when mode is interactive. */
-  gimp_ui_init ("script-fu");
-
   begin_interpret_default_dialect ();
 
   script_fu_progress_init (gimp_procedure_get_menu_label (procedure));
@@ -179,6 +175,8 @@ script_fu_run_regular_procedure (GimpProcedure        *procedure,
     case GIMP_RUN_INTERACTIVE:
       {
         guint n_specs;
+
+        gimp_ui_init ("script-fu");
 
         g_free (g_object_class_list_properties (G_OBJECT_GET_CLASS (config), &n_specs));
         if (n_specs > SF_ARGS_SKIPPED_REGULAR)
@@ -254,9 +252,6 @@ script_fu_run_procedure (GimpProcedure       *procedure,
 
   ts_set_run_mode (run_mode);
 
-  /* Need Gegl.  Also inits ui, needed when mode is interactive. */
-  gimp_ui_init ("script-fu");
-
   begin_interpret_default_dialect ();
 
   script_fu_progress_init (gimp_procedure_get_menu_label (procedure));
@@ -266,6 +261,8 @@ script_fu_run_procedure (GimpProcedure       *procedure,
     case GIMP_RUN_INTERACTIVE:
       {
         gint min_args = 0;
+
+        gimp_ui_init ("script-fu");
 
         /*  First, try to collect the standard script arguments...  */
         min_args = script_fu_script_collect_standard_args (script, pspecs, n_pspecs, config);

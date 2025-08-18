@@ -217,11 +217,6 @@ script_fu_interpreter_query_procedures (GimpPlugIn *plug_in)
 
   g_debug ("%s", G_STRFUNC);
 
-  /* Init ui, gegl, babl.
-   * Need gegl in registration phase, to get defaults for color formal args.
-   */
-  gimp_ui_init ("script-fu-interpreter");
-
   result = script_fu_interpreter_list_defined_proc_names (plug_in, path_to_this_script);
   if (g_list_length (result) < 1)
     g_warning ("No procedures defined in %s", path_to_this_script);
@@ -242,11 +237,5 @@ static GimpProcedure *
 script_fu_interpreter_create_procedure (GimpPlugIn  *plug_in,
                                         const gchar *proc_name)
 {
-  /* Init ui, gegl, babl.
-   * Some plugins need gegl color in registration phase.
-   * create_procedure is also called at run phase, this suffices for both phases.
-   */
-  gimp_ui_init ("script-fu-interpreter");
-
   return script_fu_interpreter_create_proc (plug_in, proc_name, path_to_this_script);
 }
