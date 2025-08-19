@@ -120,6 +120,7 @@ stages:
     CXX: "clang++"
     CC_LD: lld
     CXX_LD: lld
+    PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   before_script:
     - export GIMP_PREFIX="${CI_PROJECT_DIR}/_install-${RUNNER}"
   timeout: 20m
@@ -146,7 +147,6 @@ deps-debian:
     entrypoint: [""]
   variables:
     GIT_STRATEGY: none
-    PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   script:
     - export container=docker
     - mkdir -p /kaniko/.docker
@@ -245,7 +245,7 @@ deps-debian:
     ## Build GEGL
     - echo "RUN printf \"\e[0Ksection_start:`date +%s`:gegl_build[collapsed=true]\r\e[0KBuilding gegl\n\"" >> Dockerfile2;
     - echo "RUN git clone --branch \"\$([ \"$CI_COMMIT_TAG\" ] && echo \"\$(git ls-remote --tags --exit-code --refs https://gitlab.gnome.org/GNOME/gegl.git | grep -oi \"GEGL_[0-9]*_[0-9]*_[0-9]*\" | sort --version-sort | tail -1)\" || echo \"master\")\" --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git" $CI_PROJECT_DIR/gegl >> Dockerfile2;
-    - echo "RUN meson setup $CI_PROJECT_DIR/gegl/_build-${RUNNER} $CI_PROJECT_DIR/gegl -Dprefix=\"${GIMP_PREFIX}\" $PKGCONF_RELOCATABLE_OPTION $WORKSHOP_OPTION" >> Dockerfile2;
+    - echo "RUN meson setup $CI_PROJECT_DIR/gegl/_build-${RUNNER} $CI_PROJECT_DIR/gegl -Dprefix=\"${GIMP_PREFIX}\" $PKGCONF_RELOCATABLE_OPTION -Dworkshop=true" >> Dockerfile2;
     - echo "RUN ninja -C $CI_PROJECT_DIR/gegl/_build-${RUNNER}" >> Dockerfile2;
     - echo "RUN ninja -C $CI_PROJECT_DIR/gegl/_build-${RUNNER} install" >> Dockerfile2;
     - echo "RUN printf \"\e[0Ksection_end:`date +%s`:gegl_build\r\e[0K\n\"" >> Dockerfile2;
@@ -323,10 +323,9 @@ deps-debian-x64:
   extends: .debian-x64
   stage: !reference [deps-debian, stage]
   image: !reference [deps-debian, image]
-  variables:
-    GIT_STRATEGY: none
-    WORKSHOP_OPTION: '-Dworkshop=true'
+  variables: !reference [deps-debian, variables]
   script:
+    - unset PKGCONF_RELOCATABLE_OPTION
     - !reference [deps-debian, script]
   artifacts: !reference [deps-debian, artifacts]
 
