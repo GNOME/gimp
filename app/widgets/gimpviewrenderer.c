@@ -65,7 +65,6 @@ enum
 struct _GimpViewRendererPrivate
 {
   cairo_pattern_t    *pattern;
-  cairo_surface_t    *icon_surface;
   gchar              *bg_icon_name;
 
   GimpColorConfig    *color_config;
@@ -164,8 +163,6 @@ gimp_view_renderer_init (GimpViewRenderer *renderer)
 {
   renderer->priv = gimp_view_renderer_get_instance_private (renderer);
 
-  renderer->viewable = NULL;
-
   renderer->dot_for_dot  = TRUE;
 
   renderer->border_type  = GIMP_VIEW_BORDER_BLACK;
@@ -183,6 +180,7 @@ gimp_view_renderer_dispose (GObject *object)
   GimpViewRenderer *renderer = GIMP_VIEW_RENDERER (object);
 
   g_clear_object (&renderer->border_color);
+
   if (renderer->viewable)
     gimp_view_renderer_set_viewable (renderer, NULL);
 
@@ -204,7 +202,6 @@ gimp_view_renderer_finalize (GObject *object)
 
   g_clear_pointer (&renderer->priv->pattern, cairo_pattern_destroy);
   g_clear_pointer (&renderer->surface, cairo_surface_destroy);
-  g_clear_pointer (&renderer->priv->icon_surface, cairo_surface_destroy);
   g_clear_pointer (&renderer->priv->bg_icon_name, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -352,7 +349,6 @@ gimp_view_renderer_set_viewable (GimpViewRenderer *renderer,
     return;
 
   g_clear_pointer (&renderer->surface, cairo_surface_destroy);
-  g_clear_pointer (&renderer->priv->icon_surface, cairo_surface_destroy);
 
   gimp_view_renderer_free_color_transform (renderer);
 
@@ -476,7 +472,7 @@ gimp_view_renderer_set_size_full (GimpViewRenderer *renderer,
 
 void
 gimp_view_renderer_set_dot_for_dot (GimpViewRenderer *renderer,
-                                    gboolean             dot_for_dot)
+                                    gboolean          dot_for_dot)
 {
   g_return_if_fail (GIMP_IS_VIEW_RENDERER (renderer));
 
@@ -682,7 +678,8 @@ gimp_view_renderer_draw (GimpViewRenderer *renderer,
 
       gimp_view_renderer_render_icon (renderer,
                                       widget,
-                                      viewable_class->default_icon_name);
+                                      viewable_class->default_icon_name,
+                                      gtk_widget_get_scale_factor (widget));
       renderer->priv->needs_render = FALSE;
 
       g_type_class_unref (viewable_class);
@@ -815,37 +812,28 @@ gimp_view_renderer_real_draw (GimpViewRenderer *renderer,
       cairo_translate (cr, -offset_x, -offset_y);
     }
 
-  if (renderer->priv->icon_surface)
+  if (renderer->surface)
     {
-      gint  scale_factor = gtk_widget_get_scale_factor (widget);
-      gint  width;
-      gint  height;
-      gint  x, y;
+      gdouble scale_x;
+      gdouble scale_y;
+      gint    width;
+      gint    height;
+      gint    x, y;
 
-      width  = cairo_image_surface_get_width  (renderer->priv->icon_surface);
-      height = cairo_image_surface_get_height (renderer->priv->icon_surface);
+      width  = cairo_image_surface_get_width  (renderer->surface);
+      height = cairo_image_surface_get_height (renderer->surface);
 
-      width  /= scale_factor;
-      height /= scale_factor;
+      cairo_surface_get_device_scale (renderer->surface, &scale_x, &scale_y);
+
+      width  /= scale_x;
+      height /= scale_y;
 
       x = (available_width  - width)  / 2;
       y = (available_height - height) / 2;
 
       cairo_rectangle (cr, x, y, width, height);
 
-      cairo_set_source_surface (cr, renderer->priv->icon_surface, x, y);
-      cairo_fill (cr);
-    }
-  else if (renderer->surface)
-    {
-      gint width    = renderer->width;
-      gint height   = renderer->height;
-      gint offset_x = (available_width  - width)  / 2;
-      gint offset_y = (available_height - height) / 2;
-
-      cairo_rectangle (cr, offset_x, offset_y, width, height);
-
-      cairo_set_source_surface (cr, renderer->surface, offset_x, offset_y);
+      cairo_set_source_surface (cr, renderer->surface, x, y);
       cairo_fill (cr);
     }
 }
@@ -878,7 +866,8 @@ gimp_view_renderer_real_render (GimpViewRenderer *renderer,
                                      fg_color);
   if (pixbuf)
     {
-      gimp_view_renderer_render_pixbuf (renderer, widget, pixbuf);
+      gimp_view_renderer_render_pixbuf (renderer, widget,
+                                        pixbuf, scale_factor);
       g_clear_object (&fg_color);
       return;
     }
@@ -899,7 +888,8 @@ gimp_view_renderer_real_render (GimpViewRenderer *renderer,
     }
 
   icon_name = gimp_viewable_get_icon_name (renderer->viewable);
-  gimp_view_renderer_render_icon (renderer, widget, icon_name);
+  gimp_view_renderer_render_icon (renderer, widget,
+                                  icon_name, scale_factor);
 
   g_clear_object (&fg_color);
 }
@@ -974,12 +964,11 @@ gimp_view_renderer_render_temp_buf (GimpViewRenderer *renderer,
                                     GimpViewBG        inside_bg,
                                     GimpViewBG        outside_bg)
 {
-  g_clear_pointer (&renderer->priv->icon_surface, cairo_surface_destroy);
+  g_clear_pointer (&renderer->surface, cairo_surface_destroy);
 
-  if (! renderer->surface)
-    renderer->surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
-                                                    renderer->width,
-                                                    renderer->height);
+  renderer->surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
+                                                  renderer->width,
+                                                  renderer->height);
 
   gimp_view_render_temp_buf_to_surface (renderer,
                                         widget,
@@ -998,13 +987,12 @@ gimp_view_renderer_render_temp_buf (GimpViewRenderer *renderer,
 void
 gimp_view_renderer_render_pixbuf (GimpViewRenderer *renderer,
                                   GtkWidget        *widget,
-                                  GdkPixbuf        *pixbuf)
+                                  GdkPixbuf        *pixbuf,
+                                  gint              pixbuf_scale)
 {
   GimpColorTransform *transform;
   const Babl         *format;
-  gint                scale_factor;
 
-  g_clear_pointer (&renderer->priv->icon_surface, cairo_surface_destroy);
   g_clear_pointer (&renderer->surface, cairo_surface_destroy);
 
   format = gimp_pixbuf_get_format (pixbuf);
@@ -1048,20 +1036,19 @@ gimp_view_renderer_render_pixbuf (GimpViewRenderer *renderer,
       g_object_ref (pixbuf);
     }
 
-  scale_factor = gtk_widget_get_scale_factor (widget);
-
-  renderer->priv->icon_surface =
-    gdk_cairo_surface_create_from_pixbuf (pixbuf, scale_factor, NULL);
+  renderer->surface = gdk_cairo_surface_create_from_pixbuf (pixbuf,
+                                                            pixbuf_scale,
+                                                            NULL);
   g_object_unref (pixbuf);
 }
 
 void
 gimp_view_renderer_render_icon (GimpViewRenderer *renderer,
                                 GtkWidget        *widget,
-                                const gchar      *icon_name)
+                                const gchar      *icon_name,
+                                gint              icon_scale)
 {
   GdkPixbuf *pixbuf;
-  gint       scale_factor;
   gint       width;
   gint       height;
 
@@ -1069,39 +1056,37 @@ gimp_view_renderer_render_icon (GimpViewRenderer *renderer,
   g_return_if_fail (GTK_IS_WIDGET (widget));
   g_return_if_fail (icon_name != NULL);
 
-  g_clear_pointer (&renderer->priv->icon_surface, cairo_surface_destroy);
   g_clear_pointer (&renderer->surface, cairo_surface_destroy);
-
-  scale_factor = gtk_widget_get_scale_factor (widget);
 
   pixbuf = gimp_widget_load_icon (widget, icon_name,
                                   MIN (renderer->width, renderer->height));
   width  = gdk_pixbuf_get_width (pixbuf);
   height = gdk_pixbuf_get_height (pixbuf);
 
-  if (width  > renderer->width  * scale_factor ||
-      height > renderer->height * scale_factor)
+  if (width  > renderer->width  * icon_scale ||
+      height > renderer->height * icon_scale)
     {
       GdkPixbuf *scaled_pixbuf;
 
       gimp_viewable_calc_preview_size (width, height,
-                                       renderer->width  * scale_factor,
-                                       renderer->height * scale_factor,
+                                       renderer->width  * icon_scale,
+                                       renderer->height * icon_scale,
                                        TRUE, 1.0, 1.0,
                                        &width, &height,
                                        NULL);
 
       scaled_pixbuf = gdk_pixbuf_scale_simple (pixbuf,
-                                               width  * scale_factor,
-                                               height * scale_factor,
+                                               width  * icon_scale,
+                                               height * icon_scale,
                                                GDK_INTERP_BILINEAR);
 
       g_object_unref (pixbuf);
       pixbuf = scaled_pixbuf;
     }
 
-  renderer->priv->icon_surface =
-    gdk_cairo_surface_create_from_pixbuf (pixbuf, scale_factor, NULL);
+  renderer->surface = gdk_cairo_surface_create_from_pixbuf (pixbuf,
+                                                            icon_scale,
+                                                            NULL);
   g_object_unref (pixbuf);
 }
 

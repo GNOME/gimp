@@ -74,7 +74,6 @@ G_DEFINE_TYPE_WITH_PRIVATE (GimpViewRendererDrawable,
 
 /*  private functions  */
 
-
 static void
 gimp_view_renderer_drawable_class_init (GimpViewRendererDrawableClass *klass)
 {
@@ -193,7 +192,9 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
       renderdrawable->priv->prev_width  = 0;
       renderdrawable->priv->prev_height = 0;
 
-      gimp_view_renderer_render_icon (renderer, widget, icon_name);
+      gimp_view_renderer_render_icon (renderer, widget,
+                                      icon_name,
+                                      gtk_widget_get_scale_factor (widget));
 
       return;
     }
@@ -325,7 +326,9 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
           if (renderer->width  != renderdrawable->priv->prev_width ||
               renderer->height != renderdrawable->priv->prev_height)
             {
-              gimp_view_renderer_render_icon (renderer, widget, icon_name);
+              gimp_view_renderer_render_icon (renderer, widget,
+                                              icon_name,
+                                              gtk_widget_get_scale_factor (widget));
             }
         }
 
@@ -339,7 +342,9 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
       renderdrawable->priv->prev_width  = 0;
       renderdrawable->priv->prev_height = 0;
 
-      gimp_view_renderer_render_icon (renderer, widget, icon_name);
+      gimp_view_renderer_render_icon (renderer, widget,
+                                      icon_name,
+                                      gtk_widget_get_scale_factor (widget));
     }
 }
 

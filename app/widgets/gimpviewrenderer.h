@@ -160,10 +160,12 @@ void   gimp_view_renderer_render_temp_buf        (GimpViewRenderer *renderer,
                                                   GimpViewBG        outside_bg);
 void   gimp_view_renderer_render_pixbuf          (GimpViewRenderer *renderer,
                                                   GtkWidget        *widget,
-                                                  GdkPixbuf        *pixbuf);
+                                                  GdkPixbuf        *pixbuf,
+                                                  gint              pixbuf_scale);
 void   gimp_view_renderer_render_icon            (GimpViewRenderer *renderer,
                                                   GtkWidget        *widget,
-                                                  const gchar      *icon_name);
+                                                  const gchar      *icon_name,
+                                                  gint              icon_scale);
 GimpColorTransform *
        gimp_view_renderer_get_color_transform    (GimpViewRenderer *renderer,
                                                   GtkWidget        *widget,
