@@ -117,14 +117,6 @@
 #define PY_ARCHS="pyARM64"
 #define LUA_ARCHS="luaARM64"
 #endif
-#if !Defined(ARM64_BUNDLE) && Defined(X64_BUNDLE) && !Defined(X86_BUNDLE)
-#define ARCHS_ALLOWED="x64os"
-#define ARCHS_INSTALLED="x64os"
-#define GIMP_ARCHS="gimpX64"
-#define DEPS_ARCHS="depsX64"
-#define PY_ARCHS="pyX64"
-#define LUA_ARCHS="luaX64"
-#endif
 #if Defined(ARM64_BUNDLE) && Defined(X64_BUNDLE) && Defined(X86_BUNDLE)
 #define ARCHS_ALLOWED="x86compatible"
 #define ARCHS_INSTALLED="x64os arm64"
@@ -132,6 +124,14 @@
 #define DEPS_ARCHS="depsARM64 or depsX64 or depsX86"
 #define PY_ARCHS="pyARM64 or pyX64 or pyX86"
 #define LUA_ARCHS="luaARM64 or luaX64 or luaX86"
+#endif
+#if !Defined(ARM64_BUNDLE) && Defined(X64_BUNDLE)
+#define ARCHS_ALLOWED="x64os"
+#define ARCHS_INSTALLED="x64os"
+#define GIMP_ARCHS="gimpX64"
+#define DEPS_ARCHS="depsX64"
+#define PY_ARCHS="pyX64"
+#define LUA_ARCHS="luaX64"
 #endif
 
 ;Optional Build-time params: DEBUG_SYMBOLS, LUA, PYTHON, NOCOMPRESSION, NOFILES, DEVEL_WARNING

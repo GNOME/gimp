@@ -493,6 +493,10 @@ gimp-snap:
 .win:
   extends: .default
   rules:
+    #Developers (on GNOME/gimp namespace) can create multi-arch installers (.exe or .msixbundle)
+    #Non developers (e.g. on MRs), however, can create x64-only installers (.exe or .msix)
+    - if: '$RUNNER == "windows-aarch64" && $CI_PROJECT_NAMESPACE != "GNOME"'
+      when: never
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Windows Installer.*/ && $CI_MERGE_REQUEST_LABELS =~ /.*Package:Microsoft Store.*/'
       interruptible: true
       variables:
@@ -562,7 +566,10 @@ deps-win:
 
 gimp-win:
   extends: .win
-  needs: ["deps-win"]
+  needs:
+    - job: deps-win
+      #to allow running outside 'GNOME/gimp' namespace (on MRs)
+      optional: true
   stage: build
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
@@ -838,10 +845,14 @@ dist-installer-weekly:
   extends: .default
   rules:
     - !reference [.win, rules]
-  needs: ["gimp-win", "gimp-win-x86"]
+  needs:
+    - job: gimp-win
+      #to allow running outside 'GNOME/gimp' namespace (on MRs)
+      optional: true
+    - job: gimp-win-x86
   stage: distribution
   tags:
-    - windows-aarch64
+    - win32-ps
   variables:
     MSYS_ROOT: 'C:/msys64'
   script:
@@ -860,7 +871,10 @@ dist-store-weekly:
       interruptible: true
     - if: '$GIMP_CI_MS_STORE != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_MS_STORE.*/'
     - <<: *CI_RELEASE
-  needs: ["gimp-win"]
+  needs:
+    - job: gimp-win
+      #to allow running outside 'GNOME/gimp' namespace (on MRs)
+      optional: true
   stage: distribution
   tags:
     - win32-ps
