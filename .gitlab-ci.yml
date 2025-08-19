@@ -589,7 +589,7 @@ gimp-win:
 
 
 ## WINDOWS x86 legacy CI (native MSYS2) ##
-.win-x86:
+.win-eol:
   extends: .win
   parallel:
     matrix:
@@ -600,16 +600,16 @@ gimp-win:
     CC: cc
     CXX: c++
 
-deps-win-x86:
-  extends: .win-x86
+deps-win-eol:
+  extends: .win-eol
   stage: !reference [deps-win, stage]
   script:
     - !reference [deps-win, script]
   artifacts: !reference [deps-win, artifacts]
 
-gimp-win-x86:
-  extends: .win-x86
-  needs: ["deps-win-x86"]
+gimp-win-eol:
+  extends: .win-eol
+  needs: ["deps-win-eol"]
   stage: !reference [gimp-win, stage]
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
@@ -849,7 +849,7 @@ dist-installer-weekly:
     - job: gimp-win
       #to allow running outside 'GNOME/gimp' namespace (on MRs)
       optional: true
-    - job: gimp-win-x86
+    - job: gimp-win-eol
   stage: distribution
   tags:
     - win32-ps
