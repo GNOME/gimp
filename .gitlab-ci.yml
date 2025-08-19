@@ -299,7 +299,6 @@ gimp-debian:
   rules:
     - <<: *CI_MERGE
     - <<: *CI_COMMIT
-    - if: '$GIMP_CI_MESON_CLANG != null'
       variables: {}
     - if: '$GIMP_CI_MESON_GCC != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_MESON_GCC.*/'
       variables:
@@ -312,7 +311,6 @@ gimp-debian:
       variables:
         MESON_OPTIONS: "-Dvector-icons=false"
         VARIANT: "-raster"
-    - if: '$GIMP_CI_SOURCES != null'
     - <<: *CI_RELEASE
   parallel:
     matrix:
@@ -587,9 +585,6 @@ gimp-win:
 ## WINDOWS x86 legacy CI (native MSYS2) ##
 .win-x86:
   extends: .win
-  rules:
-    - !reference [.win, rules]
-    - if: '$GIMP_CI_MSYS2_WIN32 != null'
   parallel:
     matrix:
       - RUNNER: win32-ps
@@ -715,7 +710,6 @@ sources-debian:
   extends: .default
   rules:
     - <<: *CI_COMMIT
-    - if: '$GIMP_CI_SOURCES != null'
     - <<: *CI_RELEASE
   needs: ["gimp-debian-nonreloc"]
   stage: distribution
@@ -737,7 +731,6 @@ dev-docs:
   extends: .default
   rules:
     - <<: *CI_COMMIT
-    - if: '$GIMP_CI_SOURCES != null'
     - <<: *CI_RELEASE
   needs: ["deps-debian-nonreloc", "gimp-debian-nonreloc"]
   stage: distribution
