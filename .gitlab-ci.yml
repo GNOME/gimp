@@ -294,7 +294,7 @@ gimp-debian:
 
 
 ## GNU/Linux 64-bit CIs (Debian) ##
-.debian-x64:
+.debian-nonreloc:
   extends: .debian
   rules:
     - <<: *CI_MERGE
@@ -319,8 +319,8 @@ gimp-debian:
       - RUNNER: x86_64_v3
   tags: []
 
-deps-debian-x64:
-  extends: .debian-x64
+deps-debian-nonreloc:
+  extends: .debian-nonreloc
   stage: !reference [deps-debian, stage]
   image: !reference [deps-debian, image]
   variables:
@@ -329,9 +329,9 @@ deps-debian-x64:
     - !reference [deps-debian, script]
   artifacts: !reference [deps-debian, artifacts]
 
-gimp-debian-x64:
-  extends: .debian-x64
-  needs: ["deps-debian-x64"]
+gimp-debian-nonreloc:
+  extends: .debian-nonreloc
+  needs: ["deps-debian-nonreloc"]
   stage: !reference [gimp-debian, stage]
   variables: !reference [gimp-debian, variables]
   script:
@@ -623,12 +623,12 @@ gimp-win-x86:
 file-plug-in-tests:
   # FIXME: Do we need another job testing this under Windows? MSYS2 usually has
   #        the latest deps. It might be a good idea to test that too, maybe weekly?
-  extends: .debian-x64
+  extends: .debian-nonreloc
   rules:
     # Don't run on release since the plug-in doesn't get installed in releases
     - <<: *CI_MERGE
     - <<: *CI_COMMIT
-  needs: ["gimp-debian-x64"]
+  needs: ["gimp-debian-nonreloc"]
   stage: analysis
   variables:
     GIT_STRATEGY: none
@@ -717,7 +717,7 @@ sources-debian:
     - <<: *CI_COMMIT
     - if: '$GIMP_CI_SOURCES != null'
     - <<: *CI_RELEASE
-  needs: ["gimp-debian-x64"]
+  needs: ["gimp-debian-nonreloc"]
   stage: distribution
   variables:
     GIT_STRATEGY: none
@@ -739,7 +739,7 @@ dev-docs:
     - <<: *CI_COMMIT
     - if: '$GIMP_CI_SOURCES != null'
     - <<: *CI_RELEASE
-  needs: ["deps-debian-x64", "gimp-debian-x64"]
+  needs: ["deps-debian-nonreloc", "gimp-debian-nonreloc"]
   stage: distribution
   variables:
     GIT_STRATEGY: none
