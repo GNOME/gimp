@@ -112,15 +112,15 @@ elseif ((Test-Path "$ARM64_BUNDLE") -and -not (Test-Path "$X64_BUNDLE") -and -no
     Write-Output "(INFO): Arch: arm64"
     $supported_archs=@("-DARM64_BUNDLE=$ARM64_BUNDLE")
   }
-elseif (-not (Test-Path "$ARM64_BUNDLE") -and (Test-Path "$X64_BUNDLE") -and -not (Test-Path "$X86_BUNDLE"))
-  {
-    Write-Output "(INFO): Arch: x64"
-    $supported_archs=@("-DX64_BUNDLE=$X64_BUNDLE")
-  }
 elseif ((Test-Path "$ARM64_BUNDLE") -and (Test-Path "$X64_BUNDLE") -and (Test-Path "$X86_BUNDLE"))
   {
     Write-Output "(INFO): Arch: arm64, x64 and x86"
     $supported_archs=@("-DARM64_BUNDLE=$ARM64_BUNDLE", "-DX64_BUNDLE=$X64_BUNDLE", "-DX86_BUNDLE=$X86_BUNDLE")
+  }
+elseif (-not (Test-Path "$ARM64_BUNDLE") -and (Test-Path "$X64_BUNDLE"))
+  {
+    Write-Output "(INFO): Arch: x64"
+    $supported_archs=@("-DX64_BUNDLE=$X64_BUNDLE")
   }
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_info$([char]13)$([char]27)[0K"
 
