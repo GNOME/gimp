@@ -225,9 +225,7 @@ deps-debian:
     # Prepare environ
     - echo "FROM $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}" > Dockerfile2;
     - echo "RUN printf \"\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KPreparing build environment\n\"" >> Dockerfile2;
-    - export LIB_DIR="lib";
-    - export LIB_SUBDIR=$([ "$(uname -m)" = 'aarch64' ] && echo "aarch64-linux-gnu/" || echo "x86_64-linux-gnu/");
-    - echo "ENV PKG_CONFIG_PATH=\"${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}\"" >> Dockerfile2;
+    - echo "ENV PKG_CONFIG_PATH=\"${GIMP_PREFIX}/lib/$([ "$(uname -m)" = 'aarch64' ] && echo "aarch64-linux-gnu/" || echo "x86_64-linux-gnu/")pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}\"" >> Dockerfile2;
     - echo "ENV XDG_DATA_DIRS=\"${GIMP_PREFIX}/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}\"" >> Dockerfile2;
     - echo "ENV CC=\"$CC\"" >> Dockerfile2;
     - echo "ENV CXX=\"$CXX\"" >> Dockerfile2;
