@@ -65,7 +65,7 @@ gimp_view_renderer_brush_class_init (GimpViewRendererBrushClass *klass)
   object_class->finalize = gimp_view_renderer_brush_finalize;
 
   renderer_class->default_bg      = GIMP_VIEW_BG_WHITE;
-  renderer_class->follow_theme_bg = GIMP_VIEW_BG_USE_STYLE;
+  renderer_class->follow_theme_bg = GIMP_VIEW_BG_STYLE;
 
   renderer_class->render          = gimp_view_renderer_brush_render;
   renderer_class->draw            = gimp_view_renderer_brush_draw;
@@ -115,7 +115,7 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
       GIMP_GUI_CONFIG (renderer->context->gimp->config)->viewables_follow_theme)
     {
       fg_color = gimp_get_style_color (widget, GTK_STYLE_PROPERTY_COLOR);
-      bg_style = GIMP_VIEW_BG_USE_STYLE;
+      bg_style = GIMP_VIEW_BG_STYLE;
     }
 
   temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
@@ -179,7 +179,7 @@ gimp_view_renderer_brush_render_timeout (gpointer data)
   if (renderer->context &&
       GIMP_GUI_CONFIG (renderer->context->gimp->config)->viewables_follow_theme)
     {
-      bg_style = GIMP_VIEW_BG_USE_STYLE;
+      bg_style = GIMP_VIEW_BG_STYLE;
 
       fg_color = gimp_get_style_color (renderbrush->widget,
                                        GTK_STYLE_PROPERTY_COLOR);

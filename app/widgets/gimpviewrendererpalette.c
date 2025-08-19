@@ -56,8 +56,8 @@ gimp_view_renderer_palette_class_init (GimpViewRendererPaletteClass *klass)
 
   object_class->finalize          = gimp_view_renderer_palette_finalize;
 
-  renderer_class->default_bg      = GIMP_VIEW_BG_USE_STYLE;
-  renderer_class->follow_theme_bg = GIMP_VIEW_BG_USE_STYLE;
+  renderer_class->default_bg      = GIMP_VIEW_BG_STYLE;
+  renderer_class->follow_theme_bg = GIMP_VIEW_BG_STYLE;
 
   renderer_class->render          = gimp_view_renderer_palette_render;
 }
