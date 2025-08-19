@@ -10,8 +10,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-05-25 16:27+0000\n"
-"PO-Revision-Date: 2025-05-26 11:41+0200\n"
+"POT-Creation-Date: 2025-07-30 18:51+0000\n"
+"PO-Revision-Date: 2025-07-31 12:59+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -72,6 +72,26 @@ msgstr "Schrijf naar een afzonderlijk CSS-bestand"
 #: plug-ins/python/colorxhtml.py:235
 msgid "Choose File"
 msgstr "Bestand kiezen"
+
+#: plug-ins/python/file-openraster.py:504
+#: plug-ins/python/file-openraster.py:505
+msgid "export an OpenRaster (.ora) file"
+msgstr "een bestand OpenRaster (.ora) exporteren"
+
+#: plug-ins/python/file-openraster.py:507
+#: plug-ins/python/file-openraster.py:513
+msgid "OpenRaster"
+msgstr "OpenRaster"
+
+#: plug-ins/python/file-openraster.py:514
+#: plug-ins/python/file-openraster.py:515
+msgid "load an OpenRaster (.ora) file"
+msgstr "een bestand OpenRaster (.ora) laden"
+
+#: plug-ins/python/file-openraster.py:524
+#: plug-ins/python/file-openraster.py:525
+msgid "loads a thumbnail from an OpenRaster (.ora) file"
+msgstr "laadt een miniatuur uit een bestand OpenRaster (.ora)"
 
 #: plug-ins/python/foggify.py:119
 msgid "Add a layer of fog"
@@ -548,7 +568,7 @@ msgstr "Toep_assen"
 #: plug-ins/python/python-console/python-console.py:252
 #, python-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Kon '%s' niet openen om te schrijven: %s"
+msgstr "Kon ‘%s’ niet openen om te schrijven: %s"
 
 #: plug-ins/python/python-console/python-console.py:267
 #, python-format
