@@ -42,7 +42,8 @@ static void   gimp_view_renderer_layer_render (GimpViewRenderer *renderer,
                                                GtkWidget        *widget);
 
 
-G_DEFINE_TYPE (GimpViewRendererLayer, gimp_view_renderer_layer,
+G_DEFINE_TYPE (GimpViewRendererLayer,
+               gimp_view_renderer_layer,
                GIMP_TYPE_VIEW_RENDERER_DRAWABLE)
 
 #define parent_class gimp_view_renderer_layer_parent_class
@@ -92,7 +93,9 @@ gimp_view_renderer_layer_render (GimpViewRenderer *renderer,
     }
 
   if (icon_name)
-    gimp_view_renderer_render_icon (renderer, widget, icon_name);
+    gimp_view_renderer_render_icon (renderer, widget,
+                                    icon_name,
+                                    gtk_widget_get_scale_factor (widget));
   else
     GIMP_VIEW_RENDERER_CLASS (parent_class)->render (renderer, widget);
 }

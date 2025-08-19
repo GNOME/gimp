@@ -117,6 +117,8 @@ gimp_view_renderer_buffer_render (GimpViewRenderer *renderer,
 
       icon_name = gimp_viewable_get_icon_name (renderer->viewable);
 
-      gimp_view_renderer_render_icon (renderer, widget, icon_name);
+      gimp_view_renderer_render_icon (renderer, widget,
+                                      icon_name,
+                                      gtk_widget_get_scale_factor (widget));
     }
 }

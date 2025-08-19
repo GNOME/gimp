@@ -45,7 +45,8 @@ static GdkPixbuf * gimp_view_renderer_imagefile_get_icon (GimpImagefile    *imag
                                                           gint              size);
 
 
-G_DEFINE_TYPE (GimpViewRendererImagefile, gimp_view_renderer_imagefile,
+G_DEFINE_TYPE (GimpViewRendererImagefile,
+               gimp_view_renderer_imagefile,
                GIMP_TYPE_VIEW_RENDERER)
 
 #define parent_class gimp_view_renderer_imagefile_parent_class
@@ -87,14 +88,16 @@ gimp_view_renderer_imagefile_render (GimpViewRenderer *renderer,
 
   if (pixbuf)
     {
-      gimp_view_renderer_render_pixbuf (renderer, widget, pixbuf);
+      gimp_view_renderer_render_pixbuf (renderer, widget,
+                                        pixbuf, scale_factor);
       g_object_unref (pixbuf);
     }
   else
     {
       const gchar *icon_name = gimp_viewable_get_icon_name (renderer->viewable);
 
-      gimp_view_renderer_render_icon (renderer, widget, icon_name);
+      gimp_view_renderer_render_icon (renderer, widget,
+                                      icon_name, scale_factor);
     }
 }
 
