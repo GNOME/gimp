@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-08-16 13:39+0000\n"
-"PO-Revision-Date: 2025-08-16 17:22+0300\n"
+"POT-Creation-Date: 2025-08-17 13:28+0000\n"
+"PO-Revision-Date: 2025-08-17 18:28+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -1219,7 +1219,8 @@ msgid "Graph of the Current Settings"
 msgstr "Графік поточних параметрів"
 
 #: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:562
-#: plug-ins/common/procedure-browser.c:169 plug-ins/gfig/gfig-dialog.c:355
+#: plug-ins/common/procedure-browser.c:169
+#: plug-ins/filter-browser/filter-browser.c:728 plug-ins/gfig/gfig-dialog.c:355
 #: plug-ins/gfig/gfig-dialog.c:1215 plug-ins/gfig/gfig-dialog.c:1360
 #: plug-ins/ifs-compose/ifs-compose.c:1213
 #: plug-ins/metadata/metadata-viewer.c:223
@@ -3344,7 +3345,6 @@ msgid "Too much compressed data, ignoring extra..."
 msgstr "Забагато стиснених даних, ігноруємо зайві..."
 
 #: plug-ins/common/file-gif-load.c:1587
-#| msgid "Save failed"
 msgid "inflate failed"
 msgstr "не вдалося розпакувати"
 
@@ -7808,6 +7808,7 @@ msgstr ""
 "для пошуку місця, куди встановлені додатки додають себе у меню."
 
 #: plug-ins/common/plugin-browser.c:373
+#: plug-ins/filter-browser/filter-browser.c:609
 msgid "Searching by name"
 msgstr "Триває пошук за назвою"
 
@@ -7820,6 +7821,7 @@ msgstr[1] "%d розширення"
 msgstr[2] "%d розширень"
 
 #: plug-ins/common/plugin-browser.c:398
+#: plug-ins/filter-browser/filter-browser.c:676
 msgid "No matches for your query"
 msgstr "Відповідностей не знайдено"
 
@@ -7832,6 +7834,7 @@ msgstr[1] "%d модулі відповідає запиту"
 msgstr[2] "%d модулів відповідає запиту"
 
 #: plug-ins/common/plugin-browser.c:532
+#: plug-ins/filter-browser/filter-browser.c:678
 msgid "No matches"
 msgstr "Немає відповідностей"
 
@@ -11711,6 +11714,102 @@ msgstr "Не вдалось декодувати кадр анімованого
 msgid "Frame %d (%dms)"
 msgstr "Кадр %d (%dмс)"
 
+#: plug-ins/filter-browser/filter-browser.c:287
+#: plug-ins/filter-browser/filter-browser.c:322
+#| msgid "Scale value by:"
+msgid "Allowed values:"
+msgstr "Дозволені значення:"
+
+#.
+#. *  Scales
+#.
+#.
+#. *    Scales
+#.
+#: plug-ins/filter-browser/filter-browser.c:463
+#: plug-ins/gradient-flare/gradient-flare.c:2949
+#: plug-ins/gradient-flare/gradient-flare.c:3699
+#: plug-ins/gradient-flare/gradient-flare.c:3801
+#: plug-ins/gradient-flare/gradient-flare.c:3932
+msgid "Parameters"
+msgstr "Параметри"
+
+#: plug-ins/filter-browser/filter-browser.c:495
+#| msgid "Additional Options"
+msgid "Additional Information"
+msgstr "Додаткові відомості"
+
+#: plug-ins/filter-browser/filter-browser.c:612
+#| msgid "Searching by name"
+msgid "Searching by title"
+msgstr "Пошук за заголовком"
+
+#: plug-ins/filter-browser/filter-browser.c:615
+#| msgid "Series Description"
+msgid "Searching by description"
+msgstr "Пошук за описом"
+
+#: plug-ins/filter-browser/filter-browser.c:618
+#| msgid "Searching by name"
+msgid "Searching by category"
+msgstr "Пошук за категорією"
+
+#: plug-ins/filter-browser/filter-browser.c:683
+#, c-format
+#| msgid "%d plug-in matches your query"
+#| msgid_plural "%d plug-ins match your query"
+msgid "%d filter matches your query"
+msgid_plural "%d filters match your query"
+msgstr[0] "%d фільтр відповідає запиту"
+msgstr[1] "%d фільтри відповідає запиту"
+msgstr[2] "%d фільтрів відповідає запиту"
+
+#: plug-ins/filter-browser/filter-browser.c:689
+#, c-format
+#| msgid "NL Filter"
+msgid "%d filter"
+msgid_plural "%d filters"
+msgstr[0] "%d фільтр"
+msgstr[1] "%d фільтри"
+msgstr[2] "%d фільтрів"
+
+#: plug-ins/filter-browser/filter-browser.c:722
+#| msgid "GIMP Help Browser"
+msgid "GEGL Filter Browser"
+msgstr "Навігатор фільтрами GEGL"
+
+#: plug-ins/filter-browser/filter-browser.c:739
+msgid "by name"
+msgstr "за назвою"
+
+#: plug-ins/filter-browser/filter-browser.c:740
+#| msgid "Untitled"
+msgid "by title"
+msgstr "за заголовком"
+
+#: plug-ins/filter-browser/filter-browser.c:741
+#| msgid "Description"
+msgid "by description"
+msgstr "за описом"
+
+#: plug-ins/filter-browser/filter-browser.c:828
+msgid "_GEGL Filter Browser"
+msgstr "Навігатор фільтрами _GEGL"
+
+#: plug-ins/filter-browser/filter-browser.c:833
+msgid "Display information about available GEGL operations (i.e., filters)."
+msgstr "Показати дані щодо доступних дій GEGL (тобто фільтрів)."
+
+#: plug-ins/filter-browser/filter-browser.c:835
+msgid ""
+"Shows a list of all GEGL operations, their details and what parameters they "
+"are configured with. The list contains operations provided by GEGL itself, "
+"GIMP and plug-ins loaded by GEGL."
+msgstr ""
+"Показує список усіх дій GEGL, подробиці щодо них та їхніх параметрів. У"
+" списку буде показано дії, які надаються бібліотеками GEGL, GIMP і"
+" додатками, які завантажено GEGL."
+
 #: plug-ins/flame/flame.c:179
 msgid "_Flame..."
 msgstr "_Полум'я..."
@@ -12896,7 +12995,7 @@ msgstr "Суцільно пофарбоване тло"
 
 #: plug-ins/gimpressionist/general.c:195
 msgid "Use a transparent background; Only the strokes painted will be visible"
-msgstr "Використовувати прозоре тло; лише нанесені мазки будуть видимі"
+msgstr "Використовувати прозоре тло; видимими будуть лише нанесені мазки"
 
 #: plug-ins/gimpressionist/general.c:212
 msgid "Paint edges"
@@ -13574,19 +13673,6 @@ msgstr "_X:"
 #: plug-ins/gradient-flare/gradient-flare.c:2909
 msgid "_Y:"
 msgstr "_Y:"
-
-#.
-#. *  Scales
-#.
-#.
-#. *    Scales
-#.
-#: plug-ins/gradient-flare/gradient-flare.c:2949
-#: plug-ins/gradient-flare/gradient-flare.c:3699
-#: plug-ins/gradient-flare/gradient-flare.c:3801
-#: plug-ins/gradient-flare/gradient-flare.c:3932
-msgid "Parameters"
-msgstr "Параметри"
 
 #: plug-ins/gradient-flare/gradient-flare.c:2983
 msgid "_Settings"
