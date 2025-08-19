@@ -708,6 +708,7 @@ cppcheck:
 sources-debian:
   extends: .default
   rules:
+    # Don't run on MRs since non-merged/non-upstream code can't be distributed by us
     - <<: *CI_COMMIT
     - <<: *CI_RELEASE
   needs: ["gimp-debian-nonreloc"]
@@ -729,6 +730,7 @@ sources-debian:
 dev-docs:
   extends: .default
   rules:
+    # Don't run on MRs since non-merged/non-upstream code can't be distributed by us
     - <<: *CI_COMMIT
     - <<: *CI_RELEASE
   needs: ["deps-debian-nonreloc", "gimp-debian-nonreloc"]
