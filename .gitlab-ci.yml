@@ -153,6 +153,7 @@ deps-debian:
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     # Install deps
     - echo "FROM debian:${DEB_VERSION}" > Dockerfile
+    - echo "WORKDIR $CI_PROJECT_DIR" >> Dockerfile
     - echo "RUN printf \"\e[0Ksection_start:0000000001:deps_install[collapsed=true]\r\e[0KInstalling dependencies provided by Debian $DEB_VERSION\n\"" >> Dockerfile
     - echo "RUN apt-get update -qq" >> Dockerfile
     ## 'ca-certificates' is NOT a gimp dep, it is installed only to our Docker image work
@@ -237,17 +238,17 @@ deps-debian:
     # Build some dependencies
     ## Build babl
     - echo "RUN printf \"\e[0Ksection_start:`date +%s`:babl_build[collapsed=true]\r\e[0KBuilding babl\n\"" >> Dockerfile2;
-    - echo "RUN git clone --branch \"\$([ \"$CI_COMMIT_TAG\" ] && echo \"\$(git ls-remote --tags --exit-code --refs https://gitlab.gnome.org/GNOME/babl.git | grep -oi \"BABL_[0-9]*_[0-9]*_[0-9]*\" | sort --version-sort | tail -1)\" || echo \"master\")\" --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git" $CI_PROJECT_DIR/babl >> Dockerfile2;
-    - echo "RUN meson setup $CI_PROJECT_DIR/babl/_build-${RUNNER} $CI_PROJECT_DIR/babl -Dprefix=\"${GIMP_PREFIX}\" $PKGCONF_RELOCATABLE_OPTION" >> Dockerfile2;
-    - echo "RUN ninja -C $CI_PROJECT_DIR/babl/_build-${RUNNER}" >> Dockerfile2;
-    - echo "RUN ninja -C $CI_PROJECT_DIR/babl/_build-${RUNNER} install" >> Dockerfile2;
+    - echo "RUN git clone --branch \"\$([ \"$CI_COMMIT_TAG\" ] && echo \"\$(git ls-remote --tags --exit-code --refs https://gitlab.gnome.org/GNOME/babl.git | grep -oi \"BABL_[0-9]*_[0-9]*_[0-9]*\" | sort --version-sort | tail -1)\" || echo \"master\")\" --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git" babl >> Dockerfile2;
+    - echo "RUN meson setup babl/_build-${RUNNER} babl -Dprefix=\"${GIMP_PREFIX}\" $PKGCONF_RELOCATABLE_OPTION" >> Dockerfile2;
+    - echo "RUN ninja -C babl/_build-${RUNNER}" >> Dockerfile2;
+    - echo "RUN ninja -C babl/_build-${RUNNER} install" >> Dockerfile2;
     - echo "RUN printf \"\e[0Ksection_end:`date +%s`:babl_build\r\e[0K\n\"" >> Dockerfile2;
     ## Build GEGL
     - echo "RUN printf \"\e[0Ksection_start:`date +%s`:gegl_build[collapsed=true]\r\e[0KBuilding gegl\n\"" >> Dockerfile2;
-    - echo "RUN git clone --branch \"\$([ \"$CI_COMMIT_TAG\" ] && echo \"\$(git ls-remote --tags --exit-code --refs https://gitlab.gnome.org/GNOME/gegl.git | grep -oi \"GEGL_[0-9]*_[0-9]*_[0-9]*\" | sort --version-sort | tail -1)\" || echo \"master\")\" --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git" $CI_PROJECT_DIR/gegl >> Dockerfile2;
-    - echo "RUN meson setup $CI_PROJECT_DIR/gegl/_build-${RUNNER} $CI_PROJECT_DIR/gegl -Dprefix=\"${GIMP_PREFIX}\" $PKGCONF_RELOCATABLE_OPTION -Dworkshop=true" >> Dockerfile2;
-    - echo "RUN ninja -C $CI_PROJECT_DIR/gegl/_build-${RUNNER}" >> Dockerfile2;
-    - echo "RUN ninja -C $CI_PROJECT_DIR/gegl/_build-${RUNNER} install" >> Dockerfile2;
+    - echo "RUN git clone --branch \"\$([ \"$CI_COMMIT_TAG\" ] && echo \"\$(git ls-remote --tags --exit-code --refs https://gitlab.gnome.org/GNOME/gegl.git | grep -oi \"GEGL_[0-9]*_[0-9]*_[0-9]*\" | sort --version-sort | tail -1)\" || echo \"master\")\" --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git" gegl >> Dockerfile2;
+    - echo "RUN meson setup gegl/_build-${RUNNER} gegl -Dprefix=\"${GIMP_PREFIX}\" $PKGCONF_RELOCATABLE_OPTION -Dworkshop=true" >> Dockerfile2;
+    - echo "RUN ninja -C gegl/_build-${RUNNER}" >> Dockerfile2;
+    - echo "RUN ninja -C gegl/_build-${RUNNER} install" >> Dockerfile2;
     - echo "RUN printf \"\e[0Ksection_end:`date +%s`:gegl_build\r\e[0K\n\"" >> Dockerfile2;
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER} --cache=true --cache-ttl=120h --image-fs-extract-retry 1 --verbosity=warn
     - if [ -f 'Dockerfile2' ]; then /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile2 --destination build-debian-${DEB_VERSION}-${RUNNER}-temp --cache=false --no-push --verbosity=warn; fi
