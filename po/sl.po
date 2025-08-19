@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-08-17 04:47+0000\n"
-"PO-Revision-Date: 2025-08-17 10:54+0200\n"
+"POT-Creation-Date: 2025-08-19 17:01+0000\n"
+"PO-Revision-Date: 2025-08-19 19:33+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -2499,6 +2499,7 @@ msgstr "240 s"
 #: app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:129
 #: app/dialogs/template-options-dialog.c:118
 #: app/dialogs/path-export-dialog.c:88 app/dialogs/path-import-dialog.c:93
+#: app/dialogs/vector-layer-options-dialog.c:104
 #: app/display/gimpdisplayshell-close.c:181
 #: app/display/gimpdisplayshell-filter-dialog.c:87
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
@@ -2587,7 +2588,7 @@ msgstr ""
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
 #: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2439
-#: app/core/gimppalette.c:588 app/core/gimppalette-import.c:223
+#: app/core/gimppalette.c:586 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:774 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "Neimenovano"
@@ -6189,10 +6190,12 @@ msgid "Edit this text layer content on canvas"
 msgstr "Uredi vsebino te plasti besedila na platnu"
 
 #: app/actions/layers-actions.c:66
+msgctxt "layers-action"
 msgid "Path Tool"
 msgstr "Orodje Pot"
 
 #: app/actions/layers-actions.c:67
+msgctxt "layers-action"
 msgid "Activate the path tool on this vector layer's path"
 msgstr "Aktivirajte orodje poti na poti te vektorske plasti"
 
@@ -8033,6 +8036,7 @@ msgstr "Ponastavi vse filtre"
 #: app/dialogs/input-devices-dialog.c:122 app/dialogs/preferences-dialog.c:223
 #: app/dialogs/preferences-dialog.c:1175 app/dialogs/print-size-dialog.c:122
 #: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
+#: app/dialogs/vector-layer-options-dialog.c:103
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
 #: app/tools/gimpfiltertool.c:369 app/tools/gimptransformgridtool.c:1261
 #: app/widgets/gimpcolordialog.c:491 app/widgets/gimpcolordisplayeditor.c:326
@@ -13216,13 +13220,13 @@ msgstr ""
 "Usodna napaka razhroščevanja datoteke čopiča: zapisa abr različice %d ni "
 "mogoče odkodirati."
 
-#: app/core/gimpbrush.c:138 app/core/gimpcontext.c:699
+#: app/core/gimpbrush.c:137 app/core/gimpcontext.c:699
 #: app/core/gimpcontext.c:700 app/tools/gimpmybrushoptions-gui.c:64
 #: app/tools/gimppaintoptions-gui.c:156
 msgid "Brush"
 msgstr "Čopič"
 
-#: app/core/gimpbrush.c:160 app/paint/gimppaintoptions.c:235
+#: app/core/gimpbrush.c:159 app/paint/gimppaintoptions.c:235
 msgid "Brush Spacing"
 msgstr "Razmik čopiča"
 
@@ -13321,7 +13325,7 @@ msgid "Fatal parse error in brush file '%s': Inconsistent parameters."
 msgstr ""
 "Usodna napaka pri razčlenjevanju datoteke čopiča »%s«: neskladni parametri."
 
-#: app/core/gimpbuffer.c:106
+#: app/core/gimpbuffer.c:104
 msgid "Buffer"
 msgstr "Medpomnilnik"
 
@@ -13542,24 +13546,24 @@ msgid "MyPaint Brush"
 msgstr "Čopič MyPaint"
 
 #: app/core/gimpcontext.c:720 app/core/gimpcontext.c:721
-#: app/core/gimppattern.c:85
+#: app/core/gimppattern.c:84
 msgid "Pattern"
 msgstr "Vzorec"
 
 #: app/core/gimpcontext.c:727 app/core/gimpcontext.c:728
-#: app/core/gimpgradient.c:125 app/pdb/drawable-edit-cmds.c:255
+#: app/core/gimpgradient.c:124 app/pdb/drawable-edit-cmds.c:255
 #: app/tools/gimpgradientoptions.c:269 app/tools/gimpgradienttool.c:166
 #: app/tools/gimppaintoptions-gui.c:385
 msgid "Gradient"
 msgstr "Preliv"
 
 #: app/core/gimpcontext.c:734 app/core/gimpcontext.c:735
-#: app/core/gimppalette.c:130 app/widgets/gimpcolorselectorpalette.c:59
+#: app/core/gimppalette.c:129 app/widgets/gimpcolorselectorpalette.c:59
 msgid "Palette"
 msgstr "Paleta"
 
 #: app/core/gimpcontext.c:741 app/core/gimpcontext.c:742
-#: app/text/gimpfont.c:604 app/tools/gimptextoptions.c:812
+#: app/text/gimpfont.c:603 app/tools/gimptextoptions.c:812
 msgid "Font"
 msgstr "Pisava"
 
@@ -14233,7 +14237,7 @@ msgstr "Pretvorba barvnega profila"
 msgid "Colormap of Image #%d (%s)"
 msgstr "Katalog barv slike #%d (%s)"
 
-#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:909
+#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:907
 msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "Nastavi katalog barv"
@@ -14243,7 +14247,7 @@ msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "Prekliči nastavitev katalog barv"
 
-#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:700
+#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:698
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "Spremeni vnos kataloga barv"
@@ -14444,40 +14448,40 @@ msgstr "Spremeni merilo slike"
 msgid "Can't undo %s"
 msgstr "Ni mogoče razveljaviti %s"
 
-#: app/core/gimpimagefile.c:836
+#: app/core/gimpimagefile.c:834
 msgid "Folder"
 msgstr "Mapa"
 
-#: app/core/gimpimagefile.c:841
+#: app/core/gimpimagefile.c:839
 msgid "Special File"
 msgstr "Posebna datoteka"
 
-#: app/core/gimpimagefile.c:857
+#: app/core/gimpimagefile.c:855
 msgid "Remote File"
 msgstr "Oddaljena datoteka"
 
-#: app/core/gimpimagefile.c:876
+#: app/core/gimpimagefile.c:874
 msgid "Click to create preview"
 msgstr "Kliknite za tvorbo predogleda"
 
-#: app/core/gimpimagefile.c:882
+#: app/core/gimpimagefile.c:880
 msgid "Loading preview..."
 msgstr "Nalaganje predogleda ..."
 
-#: app/core/gimpimagefile.c:888
+#: app/core/gimpimagefile.c:886
 msgid "Preview is out of date"
 msgstr "Predogled je zastarel"
 
-#: app/core/gimpimagefile.c:894
+#: app/core/gimpimagefile.c:892
 msgid "Cannot create preview"
 msgstr "Predogleda ni mogoče ustvariti"
 
-#: app/core/gimpimagefile.c:904
+#: app/core/gimpimagefile.c:902
 msgid "(Preview may be out of date)"
 msgstr "(predogled je morda zastarel)"
 
 #. pixel size
-#: app/core/gimpimagefile.c:913 app/widgets/gimpimagepropview.c:438
+#: app/core/gimpimagefile.c:911 app/widgets/gimpimagepropview.c:438
 #: app/widgets/gimpsizebox.c:429 app/widgets/gimptemplateeditor.c:734
 #, c-format
 msgid "%d × %d pixel"
@@ -14487,7 +14491,7 @@ msgstr[1] "%d × %d slik. točka"
 msgstr[2] "%d × %d slik. točki"
 msgstr[3] "%d × %d slik. točke"
 
-#: app/core/gimpimagefile.c:936 app/display/gimpdisplayshell-title.c:394
+#: app/core/gimpimagefile.c:934 app/display/gimpdisplayshell-title.c:394
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
@@ -14496,7 +14500,7 @@ msgstr[1] "%d plast"
 msgstr[2] "%d plasti"
 msgstr[3] "%d plasti"
 
-#: app/core/gimpimagefile.c:1011
+#: app/core/gimpimagefile.c:1009
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Sličice za predogled »%s« ni mogoče odpreti: %s"
@@ -18447,6 +18451,18 @@ msgstr "Zakleni polo_žaj poti"
 msgid "Lock path _visibility"
 msgstr "Zakleni _vidljivost poti"
 
+#: app/dialogs/vector-layer-options-dialog.c:99
+msgid "Edit Vector Layer Attributes"
+msgstr "Uredi lastnosti vektorske plasti"
+
+#: app/dialogs/vector-layer-options-dialog.c:105
+msgid "_Apply"
+msgstr "_Uveljavi"
+
+#: app/dialogs/vector-layer-options-dialog.c:274
+msgid "Fill/Stroke Vector Layer"
+msgstr "Polnilo / poteza vektorske plasti"
+
 #. Translators: the %s string will be the version, e.g. "3.0".
 #: app/dialogs/welcome-dialog.c:206
 #, c-format
@@ -21252,6 +21268,54 @@ msgstr "V medpomnilniku ni poti"
 msgid "Failed to import paths from '%s': %s"
 msgstr "Poti ni mogoče uvoziti iz »%s«: %s"
 
+#: app/path/gimpvectorlayer.c:159 app/tools/gimppathtool.c:833
+msgid "Vector Layer"
+msgstr "Vektorska plast"
+
+#: app/path/gimpvectorlayer.c:169
+msgid "Rename Vector Layer"
+msgstr "Preimenuj vektorsko plast"
+
+#: app/path/gimpvectorlayer.c:170
+msgid "Move Vector Layer"
+msgstr "Premakni vektorsko plast"
+
+#: app/path/gimpvectorlayer.c:171
+msgid "Scale Vector Layer"
+msgstr "Spremeni merilo vektorske plasti"
+
+#: app/path/gimpvectorlayer.c:172
+msgid "Resize Vector Layer"
+msgstr "Spremeni velikost vektorske plasti"
+
+#: app/path/gimpvectorlayer.c:173
+msgid "Flip Vector Layer"
+msgstr "Prezrcali vektorsko plast"
+
+#: app/path/gimpvectorlayer.c:174
+msgid "Rotate Vector Layer"
+msgstr "Zasukaj vektorsko plast"
+
+#: app/path/gimpvectorlayer.c:175
+msgid "Transform Vector Layer"
+msgstr "Preoblikuj vektorsko plast"
+
+#: app/path/gimpvectorlayer.c:524
+msgid "Discard Vector Informations"
+msgstr "Zavrzi podatke o vektorju"
+
+#: app/path/gimpvectorlayer.c:648
+msgid "Discard Vector Information"
+msgstr "Zavrzi podatke o vektorju"
+
+#: app/path/gimpvectorlayeroptions.c:114
+msgid "Fill Style"
+msgstr "Slog polnila"
+
+#: app/path/gimpvectorlayeroptions.c:126
+msgid "Stroke Style"
+msgstr "Slog poteze"
+
 #: app/pdb/channel-cmds.c:199
 msgid "Combine Masks"
 msgstr "Združi maske"
@@ -21870,6 +21934,11 @@ msgstr "Določite atribute plasti besedila"
 #: app/pdb/text-layer-cmds.c:246
 msgid "Set text layer markup"
 msgstr "Določite označevanje plasti besedila"
+
+#: app/pdb/vector-layer-cmds.c:71 app/pdb/vector-layer-cmds.c:83
+#, c-format
+msgid "Failed to create vector layer"
+msgstr "Ustvarjanje vektorske plasti ni uspelo"
 
 #: app/plug-in/gimpenvirontable.c:329
 #, c-format
@@ -24709,10 +24778,6 @@ msgstr "Orodje Poti: Ustvari in uredi poti"
 #: app/tools/gimppathtool.c:169
 msgid "Pat_hs"
 msgstr "Po_ti"
-
-#: app/tools/gimppathtool.c:833
-msgid "Vector Layer"
-msgstr "Vektorska plast"
 
 #: app/tools/gimppenciltool.c:54
 msgid "Pencil Tool: Hard edge painting using a brush"
