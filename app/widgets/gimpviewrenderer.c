@@ -142,8 +142,8 @@ gimp_view_renderer_class_init (GimpViewRendererClass *klass)
   object_class->dispose  = gimp_view_renderer_dispose;
   object_class->finalize = gimp_view_renderer_finalize;
 
-  klass->default_bg      = GIMP_VIEW_BG_USE_STYLE;
-  klass->follow_theme_bg = GIMP_VIEW_BG_USE_STYLE;
+  klass->default_bg      = GIMP_VIEW_BG_STYLE;
+  klass->follow_theme_bg = GIMP_VIEW_BG_STYLE;
 
   klass->frame           = NULL;
   klass->frame_left      = 0;
@@ -168,7 +168,7 @@ gimp_view_renderer_init (GimpViewRenderer *renderer)
   renderer->border_type  = GIMP_VIEW_BORDER_BLACK;
   renderer->border_color = gegl_color_new ("black");
 
-  renderer->surface_bg   = GIMP_VIEW_BG_USE_STYLE;
+  renderer->surface_bg   = GIMP_VIEW_BG_STYLE;
   renderer->size         = -1;
 
   renderer->priv->needs_render = TRUE;
@@ -805,7 +805,7 @@ gimp_view_renderer_real_draw (GimpViewRenderer *renderer,
           cairo_fill (cr);
           break;
 
-        case GIMP_VIEW_BG_USE_STYLE:
+        case GIMP_VIEW_BG_STYLE:
           break;
         }
 
@@ -855,8 +855,8 @@ gimp_view_renderer_real_render (GimpViewRenderer *renderer,
     {
       fg_color = gimp_get_style_color (widget, GTK_STYLE_PROPERTY_COLOR);
 
-      inside_bg  = GIMP_VIEW_BG_USE_STYLE;
-      outside_bg = GIMP_VIEW_BG_USE_STYLE;
+      inside_bg  = GIMP_VIEW_BG_STYLE;
+      outside_bg = GIMP_VIEW_BG_STYLE;
     }
 
   pixbuf = gimp_viewable_get_pixbuf (renderer->viewable,
@@ -1244,7 +1244,7 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
       cairo_paint (cr);
       break;
 
-    case GIMP_VIEW_BG_USE_STYLE:
+    case GIMP_VIEW_BG_STYLE:
       break;
     }
 
@@ -1277,7 +1277,7 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
           cairo_fill (cr);
           break;
 
-        case GIMP_VIEW_BG_USE_STYLE:
+        case GIMP_VIEW_BG_STYLE:
           break;
         }
     }

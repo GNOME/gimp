@@ -41,7 +41,7 @@ gimp_view_renderer_font_class_init (GimpViewRendererFontClass *klass)
   GimpViewRendererClass *renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
 
   renderer_class->default_bg      = GIMP_VIEW_BG_WHITE;
-  renderer_class->follow_theme_bg = GIMP_VIEW_BG_USE_STYLE;
+  renderer_class->follow_theme_bg = GIMP_VIEW_BG_STYLE;
 }
 
 static void
