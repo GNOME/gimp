@@ -434,7 +434,7 @@ paths_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("paths-export", n_selected_paths > 0);
   SET_SENSITIVE ("paths-import", image);
 
-  SET_SENSITIVE ("paths-to-vector-layer", n_selected_paths > 0);
+  SET_SENSITIVE ("paths-to-vector-layer", n_selected_paths == 1);
 
   SET_SENSITIVE ("paths-selection-to-path",          image && !mask_empty);
   SET_SENSITIVE ("paths-selection-to-path-advanced", image && !mask_empty);

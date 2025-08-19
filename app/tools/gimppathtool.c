@@ -740,8 +740,8 @@ gimp_path_tool_set_path (GimpPathTool *path_tool,
   if (options->vector_layer_button)
     {
       g_signal_connect_swapped (options->vector_layer_button, "clicked",
-				                G_CALLBACK (gimp_path_tool_create_vector_layer),
-				                tool);
+                                G_CALLBACK (gimp_path_tool_create_vector_layer),
+                                tool);
 
       gtk_widget_set_sensitive (options->vector_layer_button, TRUE);
     }

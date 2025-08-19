@@ -269,9 +269,12 @@ gimp_vector_layer_set_vector_options (GimpVectorLayer        *layer,
                                               layer);
 
       g_object_unref (layer->options);
+      layer->options = NULL;
     }
 
-  g_set_object (&layer->options, options);
+  if (options)
+    g_set_object (&layer->options, options);
+
   gimp_vector_layer_changed_options (layer);
 
   if (layer->options)
@@ -770,7 +773,7 @@ gimp_vector_layer_changed_options (GimpVectorLayer *layer)
 {
   GimpItem *item = GIMP_ITEM (layer);
 
-  if (layer->options && !layer->options->path)
+  if (layer->options && ! layer->options->path)
     gimp_vector_layer_discard (layer);
   else if (gimp_item_is_attached (item))
     gimp_vector_layer_refresh (layer);
