@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-08-17 13:26+0000\n"
-"PO-Revision-Date: 2025-08-17 17:54+0300\n"
+"POT-Creation-Date: 2025-08-19 15:41+0000\n"
+"PO-Revision-Date: 2025-08-19 18:48+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -2503,6 +2503,7 @@ msgstr "240 секунд"
 #: app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:129
 #: app/dialogs/template-options-dialog.c:118
 #: app/dialogs/path-export-dialog.c:88 app/dialogs/path-import-dialog.c:93
+#: app/dialogs/vector-layer-options-dialog.c:104
 #: app/display/gimpdisplayshell-close.c:181
 #: app/display/gimpdisplayshell-filter-dialog.c:87
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
@@ -2591,7 +2592,7 @@ msgstr ""
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
 #: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2439
-#: app/core/gimppalette.c:588 app/core/gimppalette-import.c:223
+#: app/core/gimppalette.c:586 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:774 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "Без назви"
@@ -6199,13 +6200,14 @@ msgid "Edit this text layer content on canvas"
 msgstr "Редагувати вміст цього текстового шару на полотні"
 
 #: app/actions/layers-actions.c:66
-#| msgid "Path Toolpath"
+#| msgid "Path Tool"
+msgctxt "layers-action"
 msgid "Path Tool"
 msgstr "Інструмент «Контур»"
 
 #: app/actions/layers-actions.c:67
-#| msgctxt "layers-action"
-#| msgid "Activate the default edit action for this type of layer"
+#| msgid "Activate the path tool on this vector layer's path"
+msgctxt "layers-action"
 msgid "Activate the path tool on this vector layer's path"
 msgstr "Активувати інструмент контурів для цього контуру векторного шару"
 
@@ -6410,27 +6412,21 @@ msgid "Warp this layer's text along the current path"
 msgstr "Викривити текст цього шару за поточним контуром"
 
 #: app/actions/layers-actions.c:203
-#| msgid "Fill type"
 msgctxt "layers-action"
 msgid "Fill / Stroke"
 msgstr "Заповнення / Штрих"
 
 #: app/actions/layers-actions.c:204
-#| msgctxt "layers-action"
-#| msgid "Activate the default edit action for this type of layer"
 msgctxt "layers-action"
 msgid "Edit the fill and stroke of this vector layer"
 msgstr "Редагувати заповнення і штрихи цього векторного шару"
 
 #: app/actions/layers-actions.c:209
-#| msgid "Discard Text Information"
 msgctxt "layers-action"
 msgid "Discard Vector Information"
 msgstr "Відкинути дані щодо векторних елементів"
 
 #: app/actions/layers-actions.c:210
-#| msgctxt "layers-action"
-#| msgid "Turn these text layers into normal layers"
 msgctxt "layers-action"
 msgid "Turn this vector layer into a normal layer"
 msgstr "Перетворити цей векторний шар на звичайний шар"
@@ -7259,7 +7255,6 @@ msgid "Unlock alpha channels"
 msgstr "Розблокувати альфа-канали"
 
 #: app/actions/layers-commands.c:2671
-#| msgid "Fill type"
 msgid "Fill / Stroke"
 msgstr "Заповнення / Штрих"
 
@@ -7658,8 +7653,6 @@ msgid "I_mport Path..."
 msgstr "_Імпорт контуру…"
 
 #: app/actions/paths-actions.c:155
-#| msgctxt "paths-action"
-#| msgid "Path to selection"
 msgctxt "paths-action"
 msgid "Path to Vector Layer"
 msgstr "Контур у векторний шар"
@@ -8056,6 +8049,7 @@ msgstr "Перезавантажити усі фільтри"
 #: app/dialogs/input-devices-dialog.c:122 app/dialogs/preferences-dialog.c:223
 #: app/dialogs/preferences-dialog.c:1175 app/dialogs/print-size-dialog.c:122
 #: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
+#: app/dialogs/vector-layer-options-dialog.c:103
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
 #: app/tools/gimpfiltertool.c:369 app/tools/gimptransformgridtool.c:1261
 #: app/widgets/gimpcolordialog.c:491 app/widgets/gimpcolordisplayeditor.c:326
@@ -12669,15 +12663,11 @@ msgid "Convert text layer"
 msgstr "Перетворити текстовий шар"
 
 #: app/core/core-enums.c:1385
-#| msgctxt "undo-type"
-#| msgid "Text layer"
 msgctxt "undo-type"
 msgid "Vector layer"
 msgstr "Векторний шар"
 
 #: app/core/core-enums.c:1386
-#| msgctxt "undo-type"
-#| msgid "Text layer modification"
 msgctxt "undo-type"
 msgid "Vector layer modification"
 msgstr "Зміна векторного шару"
@@ -13282,13 +13272,13 @@ msgstr ""
 "Критична помилка аналізу файлу пензля: не вдалося декодувати версію формату "
 "abr %d."
 
-#: app/core/gimpbrush.c:138 app/core/gimpcontext.c:699
+#: app/core/gimpbrush.c:137 app/core/gimpcontext.c:699
 #: app/core/gimpcontext.c:700 app/tools/gimpmybrushoptions-gui.c:64
 #: app/tools/gimppaintoptions-gui.c:156
 msgid "Brush"
 msgstr "Пензель"
 
-#: app/core/gimpbrush.c:160 app/paint/gimppaintoptions.c:235
+#: app/core/gimpbrush.c:159 app/paint/gimppaintoptions.c:235
 msgid "Brush Spacing"
 msgstr "Інтервал пензля"
 
@@ -13385,7 +13375,7 @@ msgid "Fatal parse error in brush file '%s': Inconsistent parameters."
 msgstr ""
 "Критична помилка аналізу файла пензля «%s»: неузгодженість у параметрах."
 
-#: app/core/gimpbuffer.c:106
+#: app/core/gimpbuffer.c:104
 msgid "Buffer"
 msgstr "Буфер"
 
@@ -13606,24 +13596,24 @@ msgid "MyPaint Brush"
 msgstr "Пензель MyPaint"
 
 #: app/core/gimpcontext.c:720 app/core/gimpcontext.c:721
-#: app/core/gimppattern.c:85
+#: app/core/gimppattern.c:84
 msgid "Pattern"
 msgstr "Текстура"
 
 #: app/core/gimpcontext.c:727 app/core/gimpcontext.c:728
-#: app/core/gimpgradient.c:125 app/pdb/drawable-edit-cmds.c:255
+#: app/core/gimpgradient.c:124 app/pdb/drawable-edit-cmds.c:255
 #: app/tools/gimpgradientoptions.c:269 app/tools/gimpgradienttool.c:166
 #: app/tools/gimppaintoptions-gui.c:385
 msgid "Gradient"
 msgstr "Градієнт"
 
 #: app/core/gimpcontext.c:734 app/core/gimpcontext.c:735
-#: app/core/gimppalette.c:130 app/widgets/gimpcolorselectorpalette.c:59
+#: app/core/gimppalette.c:129 app/widgets/gimpcolorselectorpalette.c:59
 msgid "Palette"
 msgstr "Палітра"
 
 #: app/core/gimpcontext.c:741 app/core/gimpcontext.c:742
-#: app/text/gimpfont.c:604 app/tools/gimptextoptions.c:812
+#: app/text/gimpfont.c:603 app/tools/gimptextoptions.c:812
 msgid "Font"
 msgstr "Шрифт"
 
@@ -14101,7 +14091,6 @@ msgstr "Новий простір відчуттєвого злиття коль
 
 #: app/core/gimpimage.c:3023
 #, c-format
-#| msgid "Layer groups were added in %s"
 msgid "Vector layers were added in %s"
 msgstr "У %s було додано векторні шари"
 
@@ -14303,7 +14292,7 @@ msgstr "Перетворення профілю кольорів"
 msgid "Colormap of Image #%d (%s)"
 msgstr "Карта кольорів зображення #%d (%s)"
 
-#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:909
+#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:907
 msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "Вказати карту кольорів"
@@ -14313,7 +14302,7 @@ msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "Вернути карту кольорів"
 
-#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:700
+#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:698
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "Змінити запис карти кольорів"
@@ -14515,40 +14504,40 @@ msgstr "Масштабувати зображення"
 msgid "Can't undo %s"
 msgstr "Не вдалось скасувати %s"
 
-#: app/core/gimpimagefile.c:836
+#: app/core/gimpimagefile.c:834
 msgid "Folder"
 msgstr "Тека"
 
-#: app/core/gimpimagefile.c:841
+#: app/core/gimpimagefile.c:839
 msgid "Special File"
 msgstr "Особливий файл"
 
-#: app/core/gimpimagefile.c:857
+#: app/core/gimpimagefile.c:855
 msgid "Remote File"
 msgstr "Віддалений файл"
 
-#: app/core/gimpimagefile.c:876
+#: app/core/gimpimagefile.c:874
 msgid "Click to create preview"
 msgstr "Натисніть для створення файла перегляду"
 
-#: app/core/gimpimagefile.c:882
+#: app/core/gimpimagefile.c:880
 msgid "Loading preview..."
 msgstr "Завантаження файла попереднього перегляду…"
 
-#: app/core/gimpimagefile.c:888
+#: app/core/gimpimagefile.c:886
 msgid "Preview is out of date"
 msgstr "Файл попереднього перегляду застарів"
 
-#: app/core/gimpimagefile.c:894
+#: app/core/gimpimagefile.c:892
 msgid "Cannot create preview"
 msgstr "Не вдалось створити файл попереднього перегляду"
 
-#: app/core/gimpimagefile.c:904
+#: app/core/gimpimagefile.c:902
 msgid "(Preview may be out of date)"
 msgstr "(Можливо, файл попереднього перегляду застарів)"
 
 #. pixel size
-#: app/core/gimpimagefile.c:913 app/widgets/gimpimagepropview.c:438
+#: app/core/gimpimagefile.c:911 app/widgets/gimpimagepropview.c:438
 #: app/widgets/gimpsizebox.c:429 app/widgets/gimptemplateeditor.c:734
 #, c-format
 msgid "%d × %d pixel"
@@ -14558,7 +14547,7 @@ msgstr[1] "%d x %d точки"
 msgstr[2] "%d x %d точок"
 msgstr[3] "%d x %d точка"
 
-#: app/core/gimpimagefile.c:936 app/display/gimpdisplayshell-title.c:394
+#: app/core/gimpimagefile.c:934 app/display/gimpdisplayshell-title.c:394
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
@@ -14567,7 +14556,7 @@ msgstr[1] "%d шари"
 msgstr[2] "%d шарів"
 msgstr[3] "%d шар"
 
-#: app/core/gimpimagefile.c:1011
+#: app/core/gimpimagefile.c:1009
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Не вдалось відкрити файл мініатюри «%s»: %s"
@@ -15922,7 +15911,6 @@ msgid "FG/BG Color"
 msgstr "Колір пер.плану/тла"
 
 #: app/dialogs/extensions-dialog.c:76
-#| msgid "Extensions"
 msgctxt "GIMP extensions"
 msgid "Extensions"
 msgstr "Розширення"
@@ -18529,6 +18517,23 @@ msgstr "Замкнути _позицію контура"
 #: app/dialogs/path-options-dialog.c:110
 msgid "Lock path _visibility"
 msgstr "Заблокувати видимість _шляху"
+
+#: app/dialogs/vector-layer-options-dialog.c:99
+#| msgid "Edit Layer Attributes"
+msgid "Edit Vector Layer Attributes"
+msgstr "Зміна ознак векторного шару"
+
+#: app/dialogs/vector-layer-options-dialog.c:105
+#| msgctxt "undo-type"
+#| msgid "Apply Lens"
+msgid "_Apply"
+msgstr "_Застосувати"
+
+#: app/dialogs/vector-layer-options-dialog.c:274
+#| msgctxt "paths-action"
+#| msgid "Path to Vector Layer"
+msgid "Fill/Stroke Vector Layer"
+msgstr "Заповнення або штрих векторного шару"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
 #: app/dialogs/welcome-dialog.c:206
@@ -21358,6 +21363,67 @@ msgstr "У буфері не знайдено контурів"
 msgid "Failed to import paths from '%s': %s"
 msgstr "Не вдалось імпортувати з «%s»: %s"
 
+#: app/path/gimpvectorlayer.c:159 app/tools/gimppathtool.c:833
+msgid "Vector Layer"
+msgstr "Векторний шар"
+
+#: app/path/gimpvectorlayer.c:169
+#| msgid "Rename Text Layer"
+msgid "Rename Vector Layer"
+msgstr "Перейменувати векторний шар"
+
+#: app/path/gimpvectorlayer.c:170
+#| msgid "Vector Layer"
+msgid "Move Vector Layer"
+msgstr "Пересунути векторний шар"
+
+#: app/path/gimpvectorlayer.c:171
+#| msgid "Scale Text Layer"
+msgid "Scale Vector Layer"
+msgstr "Масштабувати векторний шар"
+
+#: app/path/gimpvectorlayer.c:172
+#| msgid "Resize Text Layer"
+msgid "Resize Vector Layer"
+msgstr "Змінити розміри векторного шару"
+
+#: app/path/gimpvectorlayer.c:173
+#| msgid "Vector Layer"
+msgid "Flip Vector Layer"
+msgstr "Віддзеркалити векторний шар"
+
+#: app/path/gimpvectorlayer.c:174
+#| msgid "Rotate Text Layer"
+msgid "Rotate Vector Layer"
+msgstr "Обертати векторний шар"
+
+#: app/path/gimpvectorlayer.c:175
+#| msgid "Transform Text Layer"
+msgid "Transform Vector Layer"
+msgstr "Перетворити векторний шар"
+
+#: app/path/gimpvectorlayer.c:524
+#| msgctxt "layers-action"
+#| msgid "Discard Vector Information"
+msgid "Discard Vector Informations"
+msgstr "Відкинути дані щодо векторних елементів"
+
+#: app/path/gimpvectorlayer.c:648
+#| msgctxt "layers-action"
+#| msgid "Discard Vector Information"
+msgid "Discard Vector Information"
+msgstr "Відкинути дані щодо векторних елементів"
+
+#: app/path/gimpvectorlayeroptions.c:114
+#| msgid "Fill type"
+msgid "Fill Style"
+msgstr "Стиль заповнення"
+
+#: app/path/gimpvectorlayeroptions.c:126
+#| msgid "Stroke tool"
+msgid "Stroke Style"
+msgstr "Стиль штриха"
+
 #: app/pdb/channel-cmds.c:199
 msgid "Combine Masks"
 msgstr "Об'єднати маски"
@@ -21982,6 +22048,12 @@ msgstr "Зміна ознак текстового шару"
 #: app/pdb/text-layer-cmds.c:246
 msgid "Set text layer markup"
 msgstr "Встановити розмітку текстового шару"
+
+#: app/pdb/vector-layer-cmds.c:71 app/pdb/vector-layer-cmds.c:83
+#, c-format
+#| msgid "Failed to create text layer"
+msgid "Failed to create vector layer"
+msgstr "Не вдалося створити векторний шар"
 
 #: app/plug-in/gimpenvirontable.c:329
 #, c-format
@@ -24784,8 +24856,8 @@ msgstr "Не вдалось малювати на групі шарів"
 #: app/tools/gimppainttool.c:357
 msgid "Vector layers must be rasterized before they can be painted on."
 msgstr ""
-"Перш ніж на векторних шарах можна буде малювати, їх слід перетворити на"
-" растрові."
+"Перш ніж на векторних шарах можна буде малювати, їх слід перетворити на "
+"растрові."
 
 #: app/tools/gimppainttool.c:747
 #, c-format
@@ -24801,13 +24873,10 @@ msgid "The selected layer's alpha channel is locked."
 msgstr "Канал прозорості позначеного шару заблоковано."
 
 #: app/tools/gimppathoptions.c:137
-#| msgid "Enabled"
 msgid "Enable Fill"
 msgstr "Увімкнути заповнення"
 
 #: app/tools/gimppathoptions.c:143
-#| msgctxt "undo-type"
-#| msgid "Render Stroke"
 msgid "Enable Stroke"
 msgstr "Увімкнути мазки"
 
@@ -24830,7 +24899,6 @@ msgid "Selection from Path"
 msgstr "Вибір з текстур"
 
 #: app/tools/gimppathoptions.c:576
-#| msgid "Create _New Layer"
 msgid "Create New Vector Layer"
 msgstr "Створити векторний шар"
 
@@ -24841,11 +24909,6 @@ msgstr "Контури: створення та редагування конт�
 #: app/tools/gimppathtool.c:169
 msgid "Pat_hs"
 msgstr "Кон_тури"
-
-#: app/tools/gimppathtool.c:833
-#| msgid "Text Layer"
-msgid "Vector Layer"
-msgstr "Векторний шар"
 
 #: app/tools/gimppenciltool.c:54
 msgid "Pencil Tool: Hard edge painting using a brush"
@@ -27668,7 +27731,6 @@ msgid "File Type"
 msgstr "Тип файла"
 
 #: app/widgets/gimpfileprocview.c:211
-#| msgid "Extensions"
 msgctxt "File extension"
 msgid "Extensions"
 msgstr "Суфікси назв"
@@ -29681,10 +29743,6 @@ msgstr "Меню журналу скасувань"
 #~ msgctxt "undo-type"
 #~ msgid "Apply Canvas"
 #~ msgstr "Застосувати полотно"
-
-#~ msgctxt "undo-type"
-#~ msgid "Apply Lens"
-#~ msgstr "Застосувати лінзу"
 
 #~ msgctxt "undo-type"
 #~ msgid "Stretch Contrast HSV"
