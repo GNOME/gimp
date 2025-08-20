@@ -163,16 +163,13 @@ elseif ((Test-Path "$arm64_bundle") -and (Test-Path "$x64_bundle"))
   {
     Write-Output "(INFO): Arch: arm64 and x64"
     $supported_archs = "$arm64_bundle","$x64_bundle"
+    $temp_text='temporary '
   }
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):msix_info$([char]13)$([char]27)[0K"
 
 
 foreach ($bundle in $supported_archs)
   {
-    if ((Test-Path $arm64_bundle) -and (Test-Path $x64_bundle))
-      {
-        $temp_text='temporary '
-      }
     if (("$bundle" -like '*a64*') -or ("$bundle" -like '*aarch64*') -or ("$bundle" -like '*arm64*'))
       {
         $msix_arch = 'arm64'
@@ -181,7 +178,6 @@ foreach ($bundle in $supported_archs)
       {
         $msix_arch = 'x64'
       }
-    Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):${msix_arch}_making[collapsed=true]$([char]13)$([char]27)[0KMaking ${temp_text}$msix_arch MSIX"
     ## Create temporary dir
     if (Test-Path $msix_arch)
       {
@@ -206,6 +202,7 @@ foreach ($bundle in $supported_archs)
 
 
     # 3. PREPARE MSIX "SOURCE"
+    Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):${msix_arch}_source[collapsed=true]$([char]13)$([char]27)[0KMaking assets for $msix_arch MSIX"
     # (We test the existence of the icons here (and not on 3.2.) to avoid creating AppxManifest.xml for nothing)
     $icons_path = "$build_dir\build\windows\store\Assets"
     if (-not (Test-Path "$icons_path"))
@@ -273,12 +270,12 @@ foreach ($bundle in $supported_archs)
     Set-Location ..\
     makepri new /pr $msix_arch /cf $msix_arch\priconfig.xml /of $msix_arch | Out-File winsdk.log -Append; if ("$LASTEXITCODE" -gt '0') { exit 1 }
     Remove-Item $msix_arch\priconfig.xml
+    Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):${msix_arch}_source$([char]13)$([char]27)[0K"
 
 
     # 4. COPY GIMP FILES
-    Write-Output "(INFO): preparing GIMP files in $msix_arch VFS"
+    Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):${msix_arch}_files[collapsed=true]$([char]13)$([char]27)[0KPreparing GIMP files in $msix_arch VFS"
     $vfs = "$msix_arch\VFS\ProgramFilesX64\GIMP"
-
     ## Copy files into VFS folder (to support external 3P plug-ins)
     Copy-Item "$bundle" "$vfs" -Recurse -Force
 
@@ -297,10 +294,11 @@ foreach ($bundle in $supported_archs)
 
     ## Parity adjustments (to make the .msix IDENTICAL TO THE .EXE INSTALLER, except for the adjustments above)
     Get-ChildItem "$vfs" -Recurse -Include (".gitignore", "gimp.cmd") | Remove-Item -Recurse
+    Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):${msix_arch}_files$([char]13)$([char]27)[0K"
 
 
     # 5.A. MAKE .MSIX AND CORRESPONDING .APPXSYM
-
+    Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):${msix_arch}_making[collapsed=true]$([char]13)$([char]27)[0KPackaging ${temp_text}$msix_arch MSIX"
     ## Make .appxsym for each msix_arch (ONLY FOR RELEASES)
     $APPXSYM = "${IDENTITY_NAME}_${CUSTOM_GIMP_VERSION}_$msix_arch.appxsym"
     if ($CI_COMMIT_TAG -match 'GIMP_[0-9]*_[0-9]*_[0-9]*' -or $GIMP_CI_MS_STORE -like 'MSIXUPLOAD*')
