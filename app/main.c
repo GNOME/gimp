@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+﻿/* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -623,12 +623,15 @@ main (int    argc,
 
   /* On Windows, set DLL search path to $INSTALLDIR/bin so that .exe
    * plug-ins in the plug-ins directory can find libgimp and file
-   * library DLLs without needing to set external PATH.
+   * library DLLs. We also set external PATH just in case
+   * (see #14716 and many other issues labeled as 'DLL Hell').
    */
   {
     const gchar *install_dir;
     gchar       *bin_dir;
     LPWSTR       w_bin_dir;
+    size_t       path_len;
+    gchar       *path;
 
     w_bin_dir = NULL;
     install_dir = gimp_installation_directory ();
@@ -640,6 +643,32 @@ main (int    argc,
         SetDllDirectoryW (w_bin_dir);
         g_free (w_bin_dir);
       }
+
+#ifdef ENABLE_RELOCATABLE_RESOURCES
+    path_len = strlen (g_getenv ("PATH") ? g_getenv ("PATH") : "") + strlen (bin_dir) + 2;
+    path = g_try_malloc (path_len);
+    if (path == NULL)
+      {
+        g_warning ("Failed to allocate memory");
+        app_exit (EXIT_FAILURE);
+      }
+    if (g_getenv ("PATH"))
+      g_snprintf (path, path_len, "%s;%s", bin_dir, g_getenv ("PATH"));
+    else
+      g_snprintf (path, path_len, "%s", bin_dir);
+    g_setenv ("PATH", path, TRUE);
+    g_free (path);
+
+    const gchar *new_path = g_getenv ("PATH");
+    if (new_path != NULL)
+      {
+        g_print ("PATH is set to: %s\n", new_path);
+      }
+    else
+      {
+        g_print ("PATH is not set.\n");
+      }
+#endif
 
     g_free (bin_dir);
   }
