@@ -413,8 +413,8 @@ Source: "{#MAIN_BUNDLE}\share\mypaint-data\*"; DestDir: "{app}\share\mypaint-dat
 ;Required and optional arch specific files (binaries), except TWAIN in x64 and amd64
 ;i686
 #ifdef X86_BUNDLE
-#define BUNDLE ARM64_BUNDLE
-#define COMPONENT "ARM64"
+#define BUNDLE X86_BUNDLE
+#define COMPONENT "X86"
 ;Set solid break for 32-bit binaries. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/13801
 #define COMMON_FLAGS="recursesubdirs restartreplace uninsrestartdelete ignoreversion solidbreak"
 #include "base_executables.isi"
