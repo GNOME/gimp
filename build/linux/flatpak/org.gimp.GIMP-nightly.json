@@ -161,8 +161,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v3.2.0.tar.gz",
-                            "sha256": "f3c0c4210b5e6fe17d90cd7ebbe9638eea9fb458421d00eddb4d1a9d5ad47b36",
+                            "url": "https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v3.2.1.tar.gz",
+                            "sha256": "b2c8a44c3e4695b74e9644c76f5f5480767355c6f98cde58ba0e82b4ad8c63ce",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 223366,
