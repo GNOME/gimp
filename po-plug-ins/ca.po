@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-10-10 03:43+0000\n"
-"PO-Revision-Date: 2025-08-13 15:42+0200\n"
+"PO-Revision-Date: 2025-08-20 15:42+0200\n"
 "Last-Translator: Jordi Mas i Hernàndez, <jmas@softcatala.org>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -4539,7 +4539,7 @@ msgstr "Suprimeix les pàgines seleccionades"
 
 #: plug-ins/common/file-pdf-export.c:1123
 msgid "Add this image"
-msgstr "Afegeix aquesta Imatge"
+msgstr "Afegeix aquesta imatge"
 
 #: plug-ins/common/file-pdf-export.c:1219
 #: plug-ins/common/file-pdf-export.c:1292
@@ -4736,7 +4736,7 @@ msgid ""
 "When checked, save as 1, 2, 4, or 8-bit depending on number of colors used. "
 "When unchecked, always save as 8-bit"
 msgstr ""
-"Quan està marcada, es desarà com a 1, 2, 4 o 8 bits depenent del nombre de "
+"Quan està marcat, es desarà com a 1, 2, 4 o 8 bits depenent del nombre de "
 "colors utilitzats. Quan no estigui marcat, sempre es desarà com a 8 bits"
 
 #: plug-ins/common/file-png.c:297
@@ -4895,7 +4895,7 @@ msgstr "L'exportació PNM gestiona tots els tipus d'imatge sense transparència.
 #: plug-ins/common/file-pnm.c:378 plug-ins/common/file-pnm.c:421
 #: plug-ins/common/file-pnm.c:464 plug-ins/common/file-pnm.c:508
 msgid "_Data formatting"
-msgstr "Formació de _dades"
+msgstr "Formatació de les _dades"
 
 #: plug-ins/common/file-pnm.c:379 plug-ins/common/file-pnm.c:422
 #: plug-ins/common/file-pnm.c:465 plug-ins/common/file-pnm.c:509
@@ -5103,7 +5103,7 @@ msgstr "_Acoloriment"
 
 #: plug-ins/common/file-ps.c:420
 msgid "Import color format"
-msgstr "Exporta el format de color"
+msgstr "Importa el format de color"
 
 #: plug-ins/common/file-ps.c:421
 msgid "B/W"
@@ -6177,7 +6177,7 @@ msgstr "_Origen"
 
 #: plug-ins/common/file-tga.c:321
 msgid "Image origin"
-msgstr "Imatge original"
+msgstr "Origen de la imatge"
 
 #: plug-ins/common/file-tga.c:322
 msgid "Bottom left"
@@ -6271,7 +6271,7 @@ msgstr "XBM"
 
 #: plug-ins/common/file-xbm.c:219
 msgid "_Write comment"
-msgstr "_Escriu un Comentari"
+msgstr "_Escriu un comentari"
 
 #: plug-ins/common/file-xbm.c:220
 msgid "Write a comment at the beginning of the file."
@@ -6397,7 +6397,7 @@ msgstr "Cursor de ratolí X11"
 
 #: plug-ins/common/file-xmc.c:303
 msgid "Loads files of X11 Mouse Cursor file format"
-msgstr "Carrega fitxers en el format de fitxer BMP"
+msgstr "Carrega els fitxers del format de fitxer del cursor del ratolí X11"
 
 #: plug-ins/common/file-xmc.c:305
 msgid "This plug-in loads X11 Mouse Cursor (XMC) files."
@@ -6516,12 +6516,12 @@ msgstr "«%s» no és un cursor X vàlid."
 #: plug-ins/common/file-xmc.c:676
 #, c-format
 msgid "Frame %d of '%s' is too wide for an X cursor."
-msgstr "L'amplada del marc %d de «%s» és massa gran pel cursor X."
+msgstr "L'amplada del marc %d de «%s» és massa gran per al cursor X."
 
 #: plug-ins/common/file-xmc.c:684
 #, c-format
 msgid "Frame %d of '%s' is too high for an X cursor."
-msgstr "L'alçada del marc %d de «%s» és massa gran pel cursor X."
+msgstr "L'alçada del marc %d de «%s» és massa gran per al cursor X."
 
 #: plug-ins/common/file-xmc.c:955
 #, c-format
@@ -6531,12 +6531,12 @@ msgstr "manca un fragment de la imatge a «%s»."
 #: plug-ins/common/file-xmc.c:996
 #, c-format
 msgid "'%s' is too wide for an X cursor."
-msgstr "L'amplada de «%s» és massa gran pel cursor X."
+msgstr "L'amplada de «%s» és massa gran per al cursor X."
 
 #: plug-ins/common/file-xmc.c:1005
 #, c-format
 msgid "'%s' is too high for an X cursor."
-msgstr "L'alçada de «%s» és massa gran pel cursor X."
+msgstr "L'alçada de «%s» és massa gran per al cursor X."
 
 #: plug-ins/common/file-xmc.c:1069
 #, c-format
@@ -8996,7 +8996,7 @@ msgstr "YCoCg (DXT5)"
 
 #: plug-ins/file-dds/dds.c:208
 msgid "YCoCg scaled (DXT5)"
-msgstr "YCoCg escalat(DXT5)"
+msgstr "YCoCg escalat (DXT5)"
 
 #: plug-ins/file-dds/dds.c:214
 msgid "Use percept_ual error metric"
@@ -9577,7 +9577,7 @@ msgstr "Capçalera no vàlida: el número màgic és incorrecte!"
 
 #: plug-ins/file-fli/fli.c:513
 msgid "Error writing frame header. "
-msgstr "S'ha produït un error en llegir la capçalera del fitxer. "
+msgstr "S'ha produït un error en escriure la capçalera del fitxer. "
 
 #: plug-ins/file-fli/fli.c:537 plug-ins/file-fli/fli.c:547
 #: plug-ins/file-fli/fli.c:556 plug-ins/file-fli/fli.c:575
@@ -10007,7 +10007,7 @@ msgstr "4:4:4 (la millor qualitat)"
 
 #: plug-ins/file-jpeg/jpeg.c:243
 msgid "4:2:2 (chroma halved horizontally)"
-msgstr "4:2:2 vertical (croma reduït a la meitat)"
+msgstr "4:2:2 vertical (croma reduït a la meitat horitzontalment)"
 
 #: plug-ins/file-jpeg/jpeg.c:244
 msgid "4:4:0 (chroma halved vertically)"
@@ -10597,7 +10597,7 @@ msgstr "RLE agressiu (no funciona amb SGI)"
 #: plug-ins/file-sgi/sgi.c:322
 #, c-format
 msgid "Could not open '%s' for reading."
-msgstr "No s'ha pogut obrir «%s» per a escriure-hi."
+msgstr "No s'ha pogut obrir «%s» per a llegir-hi."
 
 #: plug-ins/file-sgi/sgi.c:338
 #, c-format
@@ -10625,7 +10625,7 @@ msgstr "Imatge TIFF o BigTIFF"
 
 #: plug-ins/file-tiff/file-tiff.c:167
 msgid "Loads files of the TIFF and BigTIFF file formats"
-msgstr "Carrega fitxers en els formats de fitxer FITS i BigTIFF"
+msgstr "Carrega fitxers en els formats de fitxer TIFF i BigTIFF"
 
 #: plug-ins/file-tiff/file-tiff.c:168
 msgid ""
@@ -11016,7 +11016,7 @@ msgstr "Importa des d'un TIFF"
 
 #: plug-ins/file-tiff/file-tiff-load.c:2784
 msgid "_Show reduced images"
-msgstr "_Mostra la imatge reduïda"
+msgstr "_Mostra les imatges reduïdes"
 
 #: plug-ins/file-tiff/file-tiff-load.c:2829
 msgid "Process extra channel as:"

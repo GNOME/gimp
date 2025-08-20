@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-10-10 03:43+0000\n"
-"PO-Revision-Date: 2024-10-11 11:13+0200\n"
+"PO-Revision-Date: 2025-08-20 11:13+0200\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -1044,7 +1044,7 @@ msgstr "RGB"
 #: libgimpbase/gimpbaseenums.c:616
 msgctxt "gradient-segment-color"
 msgid "HSV (counter-clockwise hue)"
-msgstr "HSV (to antihorari)"
+msgstr "HSV (to amb sentit antihorari)"
 
 #. Translators: this is an abbreviated version of "HSV (counter-clockwise hue)".
 #. Keep it short.
@@ -1056,7 +1056,7 @@ msgstr "HSV (antihorari)"
 #: libgimpbase/gimpbaseenums.c:620
 msgctxt "gradient-segment-color"
 msgid "HSV (clockwise hue)"
-msgstr "HSV (to antihorari)"
+msgstr "HSV (to amb sentit horari)"
 
 #. Translators: this is an abbreviated version of "HSV (clockwise hue)".
 #. Keep it short.
@@ -1171,7 +1171,7 @@ msgstr "Forma (ensotat)"
 #: libgimpbase/gimpbaseenums.c:720
 msgctxt "gradient-type"
 msgid "Spiral (clockwise)"
-msgstr "Espiral (antihorari)"
+msgstr "Espiral (amb sentit horari)"
 
 #. Translators: this is an abbreviated version of "Spiral (clockwise)".
 #. Keep it short.
@@ -1183,7 +1183,7 @@ msgstr "Espiral (horari)"
 #: libgimpbase/gimpbaseenums.c:724
 msgctxt "gradient-type"
 msgid "Spiral (counter-clockwise)"
-msgstr "Espiral (antihorari)"
+msgstr "Espiral (amb sentit antihorari)"
 
 #. Translators: this is an abbreviated version of "Spiral (counter-clockwise)".
 #. Keep it short.
@@ -1725,7 +1725,7 @@ msgstr "Les metadades només es poden desar a fitxers locals"
 #: libgimpbase/gimpmetadata.c:1320
 #, c-format
 msgid "Invalid Exif data size."
-msgstr "Les dades EXIF no són vàlides."
+msgstr "Mida de dades Exif no vàlida."
 
 #: libgimpbase/gimpmetadata.c:1365
 #, c-format
@@ -1823,7 +1823,7 @@ msgstr "(perfil sense nom)"
 #: libgimpcolor/gimpcolorprofile.c:621
 #, c-format
 msgid "Model: %s"
-msgstr "Mode: %s"
+msgstr "Model: %s"
 
 #: libgimpcolor/gimpcolorprofile.c:630
 #, c-format
@@ -2834,7 +2834,7 @@ msgstr "Eix X cap enfora"
 
 #: modules/controller-dx-dinput.c:470
 msgid "X Axis Tilt Near"
-msgstr "Eix Y cap endavant"
+msgstr "Eix X cap endavant"
 
 #: modules/controller-dx-dinput.c:476 modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Right"
@@ -2948,7 +2948,7 @@ msgstr "Botó del mig"
 
 #: modules/controller-linux-input.c:72
 msgid "Button Side"
-msgstr "Botó del cantó"
+msgstr "Botó lateral"
 
 #: modules/controller-linux-input.c:73
 msgid "Button Extra"
@@ -3160,7 +3160,7 @@ msgstr "Color ressaltat"
 
 #: modules/display-filter-clip-warning.c:195
 msgid "Highlights warning color"
-msgstr "Ressalta el color d'avís"
+msgstr "Color d'avís dels ressaltats"
 
 #: modules/display-filter-clip-warning.c:206
 msgid "Show bogus"

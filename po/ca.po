@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2025-05-30 16:10+0000\n"
-"PO-Revision-Date: 2025-08-12 13:33+0100\n"
+"PO-Revision-Date: 2025-08-20 13:33+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -10401,7 +10401,7 @@ msgstr "Per distància"
 #: app/config/config-enums.c:283
 msgctxt "drag-zoom-mode"
 msgid "By duration"
-msgstr "Per saturació"
+msgstr "Per durada"
 
 #: app/config/config-enums.c:312
 msgctxt "space-bar-action"
