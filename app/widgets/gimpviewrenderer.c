@@ -165,8 +165,7 @@ gimp_view_renderer_init (GimpViewRenderer *renderer)
 
   renderer->dot_for_dot  = TRUE;
 
-  renderer->border_type  = GIMP_VIEW_BORDER_BLACK;
-  renderer->border_color = gegl_color_new ("black");
+  renderer->border_type  = GIMP_VIEW_BORDER_STYLE_FG;
 
   renderer->surface_bg   = GIMP_VIEW_BG_STYLE;
   renderer->size         = -1;
@@ -203,6 +202,7 @@ gimp_view_renderer_finalize (GObject *object)
   g_clear_pointer (&renderer->priv->pattern, cairo_pattern_destroy);
   g_clear_pointer (&renderer->surface, cairo_surface_destroy);
   g_clear_pointer (&renderer->priv->bg_icon_name, g_free);
+  g_clear_object  (&renderer->border_color);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -513,27 +513,17 @@ gimp_view_renderer_set_border_type (GimpViewRenderer   *renderer,
     case GIMP_VIEW_BORDER_RED:
       border_color = gegl_color_new ("red");
       break;
+    case GIMP_VIEW_BORDER_STYLE_FG:
+      /* get later when we have a widget */
+      break;
+    case GIMP_VIEW_BORDER_STYLE_BG:
+      border_color = gegl_color_new ("transparent");
+      break;
     }
 
-  gimp_view_renderer_set_border_color (renderer, border_color);
-  if (border_color)
-    g_object_unref (border_color);
-}
+  g_set_object (&renderer->border_color, border_color);
 
-void
-gimp_view_renderer_set_border_color (GimpViewRenderer *renderer,
-                                     GeglColor        *color)
-{
-  g_return_if_fail (GIMP_IS_VIEW_RENDERER (renderer));
-  g_return_if_fail (color != NULL);
-
-  if (! gimp_color_is_perceptually_identical (renderer->border_color, color))
-    {
-      g_clear_object (&renderer->border_color);
-      renderer->border_color = gegl_color_duplicate (color);
-
-      gimp_view_renderer_update_idle (renderer);
-    }
+  gimp_view_renderer_update_idle (renderer);
 }
 
 void
@@ -691,14 +681,21 @@ gimp_view_renderer_draw (GimpViewRenderer *renderer,
 
   if (renderer->border_width > 0)
     {
-      gint    width  = renderer->width  + renderer->border_width;
-      gint    height = renderer->height + renderer->border_width;
-      gdouble x, y;
+      GeglColor *color;
+      gint       width  = renderer->width  + renderer->border_width;
+      gint       height = renderer->height + renderer->border_width;
+      gdouble    x, y;
+
+      if (renderer->border_color)
+        color = g_object_ref (renderer->border_color);
+      else
+        color = gimp_get_style_color (widget, GTK_STYLE_PROPERTY_COLOR);
 
       cairo_set_line_width (cr, renderer->border_width);
       cairo_set_line_join (cr, CAIRO_LINE_JOIN_ROUND);
-      gimp_cairo_set_source_color (cr, renderer->border_color, NULL, FALSE,
-                                   widget);
+      gimp_cairo_set_source_color (cr, color, NULL, FALSE, widget);
+
+      g_object_unref (color);
 
       x = (available_width  - width)  / 2.0;
       y = (available_height - height) / 2.0;

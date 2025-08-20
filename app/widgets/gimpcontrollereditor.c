@@ -647,7 +647,6 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
       GtkWidget        *view;
       gchar            *title;
       GimpViewRenderer *renderer;
-      GeglColor        *color = gegl_color_new ("transparent");
 
       title = g_strdup_printf (_("Select Action for Event '%s'"),
                                event_blurb);
@@ -707,13 +706,11 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
        * GimpView border to transparent */
       renderer =
         GIMP_VIEW (GIMP_VIEWABLE_DIALOG (editor->edit_dialog)->view)->renderer;
-      gimp_view_renderer_set_border_color (renderer, color);
+      gimp_view_renderer_set_border_type (renderer, GIMP_VIEW_BORDER_STYLE_BG);
 
       g_free (event_name);
       g_free (event_blurb);
       g_free (action_name);
-
-      g_object_unref (color);
     }
 }
 

@@ -122,8 +122,6 @@ void   gimp_view_renderer_set_dot_for_dot  (GimpViewRenderer   *renderer,
                                             gboolean            dot_for_dot);
 void   gimp_view_renderer_set_border_type  (GimpViewRenderer   *renderer,
                                             GimpViewBorderType  border_type);
-void   gimp_view_renderer_set_border_color (GimpViewRenderer   *renderer,
-                                            GeglColor          *border_color);
 void   gimp_view_renderer_set_background   (GimpViewRenderer   *renderer,
                                             const gchar        *icon_name);
 void   gimp_view_renderer_set_color_config (GimpViewRenderer   *renderer,
