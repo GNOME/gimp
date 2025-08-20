@@ -9,4 +9,7 @@
   "*Allow commits from members who can merge to the target branch.*"
 
 - No AI-generated contents allowed (neither code nor text, images…).
-  Only human created works please! -->
+  Only human created works please! 
+  
+- You can request the devs to allow installable packages to be
+  generated from this MR by writting ~Package: in the comments -->
