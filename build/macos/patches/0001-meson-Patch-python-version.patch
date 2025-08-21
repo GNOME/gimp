@@ -1,0 +1,24 @@
+From 9ee6b4e10c0b429358640aac4e081e2aca329ddb Mon Sep 17 00:00:00 2001
+From: Bruno Lopes <brunvonlope@outlook.com>
+Date: Sat, 10 Jan 2026 15:49:22 -0300
+Subject: [PATCH] meson: Patch python version
+
+---
+ meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/meson.build b/meson.build
+index cd51137d6f..b59fb6cceb 100644
+--- a/meson.build
++++ b/meson.build
+@@ -130,7 +130,7 @@ versionconfig.set('GIMP_API_VERSION',   gimp_api_version)
+ pkgconfig = import('pkgconfig')
+ i18n      = import('i18n')
+ gnome     = import('gnome')
+-python    = import('python').find_installation()
++python    = import('python').find_installation('python3.13')
+ simd      = import('unstable-simd')
+ fs        = import('fs')
+
+--
+2.50.1 (Apple Git-155)

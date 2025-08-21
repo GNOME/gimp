@@ -1,5 +1,7 @@
-## macOS files not here
+## Note about macOS build situation
 
-macOS build files are not stored here yet.
+These macOS build files on GIMP repo do not fully support older macOS yet.
+You can use them only the latest 3 versions of macOS.
 
-They are in: [gimp-macos-build](https://gitlab.gnome.org/Infrastructure/gimp-macos-build) repo.
+The build files for older macOS are in: [gimp-macos-build]
+(https://gitlab.gnome.org/Infrastructure/gimp-macos-build) repo.

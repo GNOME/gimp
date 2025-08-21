@@ -1,0 +1,67 @@
+#!/bin/sh
+
+# this is poor man xdg-email wrapper for osx.
+# It is intended to emulate xdg-email functionality using Mail.app and oascript.
+# currently only --attach --subject and --body commands are supported
+# and only first email address is used
+
+# There is now ling args support in osx getopt, so we are doing this hack
+# and transforming long options to short ones
+#
+# Written by Alex Samorukov, samm@os2.kiev.ua
+
+for arg in "$@"; do
+  shift
+  case "$arg" in
+    "--attach") set -- "$@" "-a" ;;
+    "--subject") set -- "$@" "-s" ;;
+    "--body")   set -- "$@" "-b" ;;
+    "--help")   set -- "$@" "-h" ;;
+    *)        set -- "$@" "$arg"
+  esac
+done
+
+# Default behavior
+rest=false; ws=false
+
+ATTACH=""
+SUBJECT=""
+BODY=""
+# Parse short options
+OPTIND=1
+while getopts "a:s:b:h" opt
+do
+  case "$opt" in
+    "a")  ATTACH="$OPTARG"; ;;
+    "s")  SUBJECT="$OPTARG";  ;;
+    "b")  BODY="$OPTARG";  ;;
+    "h") echo "sends email using Mail.app from commandline"; exit 1 ;;
+  esac
+done
+shift $(expr $OPTIND - 1) # remove options from positional parameters
+
+TO_ADDR="$1"
+
+SCRIPT="
+set recipientName to \"\"
+set recipientAddress to \"${TO_ADDR}\"
+set theSubject to \"${SUBJECT}\"
+set theContent to \"${BODY}\"
+set theAttachmentFile to \"${ATTACH}\" -- the attachment path
+
+tell application \"Mail\"
+        ## set focus
+        activate
+        ## Create the message
+        set theMessage to make new outgoing message with properties {subject:theSubject, content:theContent, visible:true}
+
+        ## attach file
+        tell theMessage to make new attachment with properties {file name:theAttachmentFile}
+
+        ## Set a recipient
+        tell theMessage
+                make new to recipient with properties {name:recipientName, address:recipientAddress}
+        end tell
+end tell
+"
+echo "$SCRIPT"|/usr/bin/osascript
