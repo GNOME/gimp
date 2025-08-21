@@ -192,7 +192,6 @@ if get_option('ms-store')
   gen_icon_conf.set('TILE_WIDTH',  'none')
   gen_icon_conf.set('TILE_HEIGHT', 'none')
   gen_icon_conf.set('LOGO_SIZE',       44)
-  gen_icon_conf.set('PLATE_FIX',    'yes')
   gen_icon_conf.merge_from(gen_conf)
   gen_applist_py = configure_file(input : 'gen-gimp-png.py.in',
                                   output : 'gen-' + icon_name + '.py',

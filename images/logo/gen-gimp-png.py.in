@@ -86,7 +86,7 @@ def export_absolute_img(size):
     config.set_property("file", Gio.file_new_for_path(export_dir + '@NAME@.targetsize-' + size_str + '.png'))
     Gimp.Procedure.run(procedure, config)
 
-    if '@PLATE_FIX@' =='yes':
+    if '@NAME@' =='AppList':
       procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
       config    = procedure.create_config()
       drawables = image.get_selected_drawables()
