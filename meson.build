@@ -1216,6 +1216,25 @@ if xvfb_run.found() and dbus_run_session.found()
   )
 endif
 
+# Set bug report URL
+
+# Allowing third-party packagers to set their own bugtracker URL, in
+# order to filter first packaging bugs from core bugs.
+bug_report_url = get_option('bug-report-url')
+
+if bug_report_url == ''
+  message('''
+    NOTE: if you plan on packaging GIMP for distribution, it is recommended
+    to override the bug report URL with option:
+      -Dbug-report-url=https://example.com/
+    so that you can filter packaging bugs from core bugs before reporting upstream.
+  ''')
+
+  bug_report_url = project_url_issues
+endif
+conf.set_quoted('PACKAGE_BUGREPORT', project_url_issues)
+conf.set_quoted('BUG_REPORT_URL', bug_report_url)
+
 # Build identifiers #
 
 conf.set_quoted('GIMP_BUILD_ID', get_option('build-id'))
@@ -1706,9 +1725,15 @@ if is_git_repository
   endif
 endif
 
+configure_file(
+  output: 'config.h',
+  configuration: conf
+)
+compiler_args +='-DHAVE_CONFIG_H'
+
+
 add_project_arguments(compiler_args, language: [ 'c', 'cpp' ])
 add_project_link_arguments(linker_args, language: [ 'c', 'cpp' ])
-
 
 ################################################################################
 # Miscellaneous targets
@@ -2045,31 +2070,6 @@ foreach dir : [
 endforeach
 
 ################################################################################
-
-# Set bug report URL
-
-# Allowing third-party packagers to set their own bugtracker URL, in
-# order to filter first packaging bugs from core bugs.
-bug_report_url = get_option('bug-report-url')
-
-if bug_report_url == ''
-  message('''
-    NOTE: if you plan on packaging GIMP for distribution, it is recommended
-    to override the bug report URL with option:
-      -Dbug-report-url=https://example.com/
-    so that you can filter packaging bugs from core bugs before reporting upstream.
-  ''')
-
-  bug_report_url = project_url_issues
-endif
-conf.set_quoted('PACKAGE_BUGREPORT', project_url_issues)
-conf.set_quoted('BUG_REPORT_URL', bug_report_url)
-
-configure_file(
-  output: 'config.h',
-  configuration: conf
-)
-compiler_args +='-DHAVE_CONFIG_H'
 
 final_message = [
 '''Extra Binaries:''',
