@@ -270,6 +270,7 @@ gimp-debian:
     # Build GIMP
     - printf "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP\n"
     - meson setup _build-${RUNNER} -Dprefix="${GIMP_PREFIX}"
+                                   -Dgi-docgen=disabled
                                    -Dpkgconfig.relocatable=true
                                    -Drelocatable-bundle=yes
                                    -Dcheck-update=yes
