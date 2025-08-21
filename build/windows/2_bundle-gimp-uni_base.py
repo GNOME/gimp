@@ -160,6 +160,8 @@ if not os.getenv("GIMP_UNSTABLE") and os.getenv("GIMP_RELEASE"):
   bundle(MSYSTEM_PREFIX, "bin/pythonw.exe")
 bundle(MSYSTEM_PREFIX, "lib/python*")
 clean(GIMP_DISTRIB, "lib/python*/*.pyc")
+#####Needed for internet connection on python. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/14722
+bundle(MSYSTEM_PREFIX, "etc/ssl/cert.pem")
 #### FIXME: luajit crashes at startup: See: https://gitlab.gnome.org/GNOME/gimp/-/issues/11597
 #bundle(MSYSTEM_PREFIX, "bin/luajit.exe")
 #bundle(MSYSTEM_PREFIX, "lib/lua")
