@@ -1,0 +1,191 @@
+From fc8868bdd2900e6bc1399dc336d73ac1c27e60f5 Mon Sep 17 00:00:00 2001
+From: Bruno Lopes <brunvonlope@outlook.com>
+Date: Tue, 6 Jan 2026 09:59:35 -0300
+Subject: [PATCH] app, libgimpwidgets, meson, plug-ins: Patch macOS bundle
+
+This is needed because our current code assumes that
+the prefix is .app/Contents/Resources, which should not.
+---
+ app/config/gimpcoreconfig.c          |  2 +-
+ app/main.c                           | 39 +++++++++++++---------------
+ libgimpbase/gimpenv.c                | 12 +++++----
+ libgimpwidgets/gimpwidgets-private.c |  2 +-
+ meson.build                          |  2 +-
+ plug-ins/common/file-wmf.c           |  4 +--
+ 6 files changed, 30 insertions(+), 31 deletions(-)
+
+diff --git a/app/config/gimpcoreconfig.c b/app/config/gimpcoreconfig.c
+index a4591055d6..853cf99f10 100644
+--- a/app/config/gimpcoreconfig.c
++++ b/app/config/gimpcoreconfig.c
+@@ -311,7 +311,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
+
+ #ifdef ENABLE_RELOCATABLE_RESOURCES
+   mypaint_brushes = g_build_filename ("${gimp_installation_dir}",
+-                                      "share", "mypaint-data",
++                                      "Resources", "mypaint-data",
+                                       "2.0", "brushes", NULL);
+ #else
+   mypaint_brushes = g_strdup (MYPAINT_BRUSHES_DIR);
+diff --git a/app/main.c b/app/main.c
+index d577dd0b04..b0c326ac5c 100644
+--- a/app/main.c
++++ b/app/main.c
+@@ -355,13 +355,13 @@ gimp_macos_setenv (const char * progname)
+       gboolean need_pythonhome = TRUE;
+
+       bin_dir = g_path_get_dirname (resolved_path);
+-      tmp = g_strdup_printf ("%s/../Resources/lib", bin_dir);
++      tmp = g_strdup_printf ("%s/../Frameworks", bin_dir);
+       lib_dir = g_canonicalize_filename (tmp, NULL);
+       g_free (tmp);
+-      tmp = g_strdup_printf ("%s/../Resources/share", bin_dir);
++      tmp = g_strdup_printf ("%s/../Resources", bin_dir);
+       share_dir = g_canonicalize_filename (tmp, NULL);
+       g_free (tmp);
+-      tmp = g_strdup_printf ("%s/../Resources/etc", bin_dir);
++      tmp = g_strdup_printf ("%s/../SharedSupport", bin_dir);
+       etc_dir = g_canonicalize_filename (tmp, NULL);
+       g_free (tmp);
+
+@@ -392,23 +392,6 @@ gimp_macos_setenv (const char * progname)
+             }
+         }
+
+-      /* Detect we were built in homebrew for MacOS (for PYTHONHOME purposes) */
+-      tmp = g_strdup_printf ("%s/../Frameworks/Python.framework", share_dir);
+-      if (tmp && !stat (tmp, &sb) && S_ISDIR (sb.st_mode))
+-        {
+-          g_print ("GIMP was built with homebrew\n");
+-          need_pythonhome = FALSE;
+-        }
+-      g_free (tmp);
+-      /* Detect we were built in MacPorts for MacOS (for PYTHONHOME purposes) */
+-      tmp = g_strdup_printf ("%s/../Library/Frameworks/Python.framework", share_dir);
+-      if (tmp && !stat (tmp, &sb) && S_ISDIR (sb.st_mode))
+-        {
+-          g_print ("GIMP was built with MacPorts\n");
+-          need_pythonhome = FALSE;
+-        }
+-      g_free (tmp);
+-
+       /* Minimum runtime paths */
+       path_len = strlen (g_getenv ("PATH") ? g_getenv ("PATH") : "") + strlen (bin_dir) + 2;
+       path = g_try_malloc (path_len);
+@@ -461,6 +444,20 @@ gimp_macos_setenv (const char * progname)
+       g_setenv ("GTK_IM_MODULE", tmp, TRUE);
+       g_free (tmp);
+
++      /* Packaging-specific paths */
++      tmp = g_strdup_printf ("%s/%s/%s", lib_dir, GIMP_PACKAGE, GIMP_PLUGIN_VERSION);
++      g_setenv ("GIMP3_PLUGINDIR", tmp, TRUE);
++      g_free (tmp);
++      tmp = g_strdup_printf ("%s/%s/%s", share_dir, GIMP_PACKAGE, GIMP_DATA_VERSION);
++      g_setenv ("GIMP3_DATADIR", tmp, TRUE);
++      g_free (tmp);
++      tmp = g_strdup_printf ("%s/locale", share_dir);
++      g_setenv ("GIMP3_LOCALEDIR", tmp, TRUE);
++      g_free (tmp);
++      tmp = g_strdup_printf ("%s/%s/%s", etc_dir, GIMP_PACKAGE, GIMP_SYSCONF_VERSION);
++      g_setenv ("GIMP3_SYSCONFDIR", tmp, TRUE);
++      g_free (tmp);
++
+       /* Other needed runtime paths (related to features) */
+       tmp = g_strdup_printf ("%s/fonts", etc_dir);
+       g_setenv ("FONTCONFIG_PATH", tmp, TRUE);
+@@ -479,7 +476,7 @@ gimp_macos_setenv (const char * progname)
+       g_free (tmp);
+       if (need_pythonhome)
+         {
+-          tmp = g_strdup_printf ("%s/Library/Frameworks/Python.framework/Versions/%s", share_dir, PYTHON_VERSION);
++          tmp = g_strdup_printf ("%s/Python.framework/Versions/%s", lib_dir, PYTHON_VERSION);
+           g_setenv ("PYTHONHOME", tmp, TRUE);
+           g_free (tmp);
+         }
+diff --git a/libgimpbase/gimpenv.c b/libgimpbase/gimpenv.c
+index 0af4f2f653..7293fe4bb1 100644
+--- a/libgimpbase/gimpenv.c
++++ b/libgimpbase/gimpenv.c
+@@ -415,17 +415,18 @@ gimp_installation_directory (void)
+
+   {
+     NSAutoreleasePool *pool;
+-    NSString          *resource_path;
++    NSString          *app_path;
++    gchar             *app_gpath;
+     gchar             *basename;
+     gchar             *basepath;
+     gchar             *dirname;
+
+     pool = [[NSAutoreleasePool alloc] init];
+
+-    resource_path = [[NSBundle mainBundle] resourcePath];
++    app_path = [[NSBundle mainBundle] bundlePath];
+
+-    basename = g_path_get_basename ([resource_path UTF8String]);
+-    basepath = g_path_get_dirname ([resource_path UTF8String]);
++    basename = g_path_get_basename ([app_path UTF8String]);
++    basepath = g_path_get_dirname ([app_path UTF8String]);
+     dirname  = g_path_get_basename (basepath);
+
+     if (! strcmp (basename, ".libs"))
+@@ -488,7 +489,8 @@ gimp_installation_directory (void)
+       {
+         /*  if none of the above match, we assume that we are really in a bundle  */
+
+-        toplevel = g_strdup ([resource_path UTF8String]);
++        app_gpath = g_strdup ([app_path UTF8String]);
++        toplevel = g_strconcat (app_gpath, "/Contents", NULL);
+       }
+
+     g_free (basename);
+diff --git a/libgimpwidgets/gimpwidgets-private.c b/libgimpwidgets/gimpwidgets-private.c
+index 0ebe7fa7e0..c7ab6d6950 100644
+--- a/libgimpwidgets/gimpwidgets-private.c
++++ b/libgimpwidgets/gimpwidgets-private.c
+@@ -97,7 +97,7 @@ gimp_widgets_init (GimpHelpFunc           standard_help_func,
+     {
+       cat_dir  = "apps";
+ #ifdef ENABLE_RELOCATABLE_RESOURCES
+-      base_dir = g_build_filename (gimp_installation_directory (), "share", "icons", "hicolor", NULL);
++      base_dir = g_build_filename (gimp_installation_directory (), "Resources", "icons", "hicolor", NULL);
+ #else
+       base_dir = g_build_filename (DATAROOTDIR, "icons", "hicolor", NULL);
+ #endif
+diff --git a/meson.build b/meson.build
+index 9614be6197..b18955cdf9 100644
+--- a/meson.build
++++ b/meson.build
+@@ -536,7 +536,7 @@ mypaint_brushes   = dependency('mypaint-brushes-2.0')
+
+ if relocatable_bundle
+   mypaint_brushes_dir = '${gimp_installation_dir}'\
+-                        /'share'/'mypaint-data'/'2.0'/'brushes'
++                        /'Resources'/'mypaint-data'/'2.0'/'brushes'
+ else
+   mypaint_brushes_dir = mypaint_brushes.get_variable(pkgconfig: 'brushesdir')
+ endif
+diff --git a/plug-ins/common/file-wmf.c b/plug-ins/common/file-wmf.c
+index 62c33ab221..b7517e0624 100644
+--- a/plug-ins/common/file-wmf.c
++++ b/plug-ins/common/file-wmf.c
+@@ -382,7 +382,7 @@ load_wmf_size (GFile       *file,
+
+ #ifdef ENABLE_RELOCATABLE_RESOURCES
+   wmffontdirs[0] = g_build_filename (gimp_installation_directory (),
+-                                     "share/libwmf/fonts", NULL);
++                                     "Resources/libwmf/fonts", NULL);
+   flags |= WMF_OPT_FONTDIRS;
+   api_options.fontdirs = wmffontdirs;
+ #endif
+@@ -529,7 +529,7 @@ wmf_load_file (GFile   *file,
+
+ #ifdef ENABLE_RELOCATABLE_RESOURCES
+   wmffontdirs[0] = g_build_filename (gimp_installation_directory (),
+-                                     "share/libwmf/fonts/", NULL);
++                                     "Resources/libwmf/fonts/", NULL);
+   flags |= WMF_OPT_FONTDIRS;
+   api_options.fontdirs = wmffontdirs;
+ #endif
+--
+2.50.1 (Apple Git-155)

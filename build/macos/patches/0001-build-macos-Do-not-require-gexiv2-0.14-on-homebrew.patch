@@ -1,0 +1,49 @@
+From 2dd50107f6a700527741eb2373a8ba26975a961c Mon Sep 17 00:00:00 2001
+From: Bruno Lopes <brunvonlope@outlook.com>
+Date: Fri, 26 Dec 2025 19:54:22 -0300
+Subject: [PATCH] build/macos: Do not require gexiv2-0.14 on homebrew
+
+---
+ libgimp/meson.build | 2 +-
+ meson.build         | 6 ++----
+ 2 files changed, 3 insertions(+), 5 deletions(-)
+
+diff --git a/libgimp/meson.build b/libgimp/meson.build
+index c12e60c2cd..738564c2b9 100644
+--- a/libgimp/meson.build
++++ b/libgimp/meson.build
+@@ -387,7 +387,7 @@ libgimp_deps_table = [
+     { 'gir': 'cairo-1.0',         'vapi': 'cairo-1.0',       },
+     { 'gir': 'GdkPixbuf-2.0',     'vapi': 'gdk-pixbuf-2.0',  },
+     { 'gir': 'Gegl-0.4',          'vapi': 'gegl-0.4',        },
+-    { 'gir': 'GExiv2-0.10',       'vapi': 'gexiv2',          },
++    { 'gir': 'GExiv2-0.16',       'vapi': 'gexiv2-0.16',     },
+     { 'gir': 'Gio-2.0',           'vapi': 'gio-2.0',         },
+     { 'gir': gio_specific_gir,    'vapi': gio_specific_vapi, },
+     { 'gir': 'GLib-2.0',          'vapi': 'glib-2.0',        },
+diff --git a/meson.build b/meson.build
+index 97662d62d7..4fcf576cce 100644
+--- a/meson.build
++++ b/meson.build
+@@ -454,9 +454,8 @@ gegl_minver       = '0.4.66'
+ gegl              = dependency('gegl-0.4',           version: '>='+gegl_minver)
+ exiv2_minver      = '0.27.4'
+ exiv2             = dependency('exiv2',              version: '>='+exiv2_minver)
+-gexiv2_minver     = '0.14.0'
+-gexiv2_maxver     = '0.15.0'
+-gexiv2            = dependency('gexiv2',             version: ['>='+gexiv2_minver, '<'+gexiv2_maxver])
++gexiv2_minver     = '0.16.0'
++gexiv2            = dependency('gexiv2-0.16',        version: '>='+gexiv2_minver)
+
+ gio               = dependency('gio-2.0')
+ gio_specific_name = platform_windows ? 'gio-windows-2.0' : 'gio-unix-2.0'
+@@ -1686,7 +1685,6 @@ install_conf.set('GDK_PIXBUF_REQUIRED_VERSION',   gdk_pixbuf_minver)
+ install_conf.set('GEGL_REQUIRED_VERSION',         gegl_minver)
+ install_conf.set('EXIV2_REQUIRED_VERSION',        exiv2_minver)
+ install_conf.set('GEXIV2_REQUIRED_VERSION',       gexiv2_minver)
+-install_conf.set('GEXIV2_MAX_VERSION',            gexiv2_maxver)
+ install_conf.set('GLIB_REQUIRED_VERSION',         glib_minver)
+ install_conf.set('GTK_REQUIRED_VERSION',          gtk3_minver)
+ install_conf.set('HARFBUZZ_REQUIRED_VERSION',     harfbuzz_minver)
+--
+2.50.1 (Apple Git-155)
