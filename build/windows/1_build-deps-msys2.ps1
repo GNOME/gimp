@@ -20,6 +20,10 @@ if (-not $GITLAB_CI)
   }
 
 
+"echo installer option is $INSTALLER_OPTION"
+"echo store option is $STORE_OPTION"
+
+
 # Install the required (pre-built) packages for babl, GEGL and GIMP
 if (-not $env:MSYS_ROOT)
   {

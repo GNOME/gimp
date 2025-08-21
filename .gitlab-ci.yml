@@ -497,29 +497,19 @@ gimp-snap:
     #Non developers (e.g. on MRs), however, can create x64-only installers (.exe or .msix)
     - if: '$RUNNER == "windows-aarch64" && $CI_PROJECT_NAMESPACE != "GNOME"'
       when: never
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Windows Installer.*/ && $CI_MERGE_REQUEST_LABELS =~ /.*Package:Microsoft Store.*/'
-      interruptible: true
-      variables:
-        INSTALLER_OPTION: '-Dwindows-installer=true'
-        STORE_OPTION: '-Dms-store=true'
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Windows Installer.*/ && $CI_JOB_NAME !~ /.*store.*/'
       interruptible: true
-      variables:
-        INSTALLER_OPTION: '-Dwindows-installer=true'
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Microsoft Store.*/ && $CI_JOB_NAME !~ /.*mingw32.*/ && $CI_JOB_NAME !~ /.*installer.*/'
-      interruptible: true
-      variables:
-        STORE_OPTION: '-Dms-store=true'
-    - if: '$GIMP_CI_WIN_INSTALLER != null && $GIMP_CI_MS_STORE != null'
-      variables:
-        INSTALLER_OPTION: '-Dwindows-installer=true'
-        STORE_OPTION: '-Dms-store=true'
     - if: '($GIMP_CI_WIN_INSTALLER != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_WIN_INSTALLER.*/) && $CI_JOB_NAME !~ /.*store.*/'
       variables:
-        INSTALLER_OPTION: '-Dwindows-installer=true'
+        INSTALLER_OPTION: '-Dwindows-installer=true'    
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Microsoft Store.*/ && $CI_JOB_NAME !~ /.*mingw32.*/ && $CI_JOB_NAME !~ /.*installer.*/'
+      interruptible: true
     - if: '($GIMP_CI_MS_STORE != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_MS_STORE.*/) && $CI_JOB_NAME !~ /.*mingw32.*/ && $CI_JOB_NAME !~ /.*installer.*/'
       variables:
         STORE_OPTION: '-Dms-store=true'
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Windows Installer.*/ && $CI_MERGE_REQUEST_LABELS =~ /.*Package:Microsoft Store.*/'
+      interruptible: true
+    - if: '$GIMP_CI_WIN_INSTALLER != null && $GIMP_CI_MS_STORE != null'
     - <<: *CI_RELEASE
       variables:
         INSTALLER_OPTION: '-Dwindows-installer=true'
