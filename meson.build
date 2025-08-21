@@ -1023,13 +1023,12 @@ else
   xdg_email = find_program(xdg_email_path, required: false)
   if xdg_email.found()
     xdg_email_path = xdg_email.full_path()
-  else
+    email_message = '@0@ (@1@)'.format(true, xdg_email_path)
+  elif not xdg_email.found() and not platform_windows
     mail_warning = 'Xdg-email not found, but required at runtime for email sending.'
     warning(mail_warning)
     warnings += mail_warning
   endif
-
-  email_message = '@0@ (@1@)'.format(true, xdg_email_path)
 endif
 
 
