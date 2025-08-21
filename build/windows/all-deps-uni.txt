@@ -44,6 +44,7 @@ ${MINGW_PACKAGE_PREFIX}-pango \
 ${MINGW_PACKAGE_PREFIX}-poppler \
 ${MINGW_PACKAGE_PREFIX}-poppler-data \
 ${MINGW_PACKAGE_PREFIX}-python \
+${MINGW_PACKAGE_PREFIX}-python-certifi \
 ${MINGW_PACKAGE_PREFIX}-python-gobject \
 ${MINGW_PACKAGE_PREFIX}-qoi \
 ${MINGW_PACKAGE_PREFIX}-suitesparse \
