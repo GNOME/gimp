@@ -502,11 +502,11 @@ gimp-snap:
       variables:
         INSTALLER_OPTION: '-Dwindows-installer=true'
         STORE_OPTION: '-Dms-store=true'
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Windows Installer.*/'
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Windows Installer.*/ && $CI_JOB_NAME !~ /.*store.*/'
       interruptible: true
       variables:
         INSTALLER_OPTION: '-Dwindows-installer=true'
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Microsoft Store.*/ && $CI_JOB_NAME =~ /.*64.*/ && $CI_JOB_NAME !~ /.*installer.*/'
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Microsoft Store.*/ && $CI_JOB_NAME !~ /.*mingw32.*/ && $CI_JOB_NAME !~ /.*installer.*/'
       interruptible: true
       variables:
         STORE_OPTION: '-Dms-store=true'
@@ -514,10 +514,10 @@ gimp-snap:
       variables:
         INSTALLER_OPTION: '-Dwindows-installer=true'
         STORE_OPTION: '-Dms-store=true'
-    - if: '$GIMP_CI_WIN_INSTALLER != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_WIN_INSTALLER.*/'
+    - if: '($GIMP_CI_WIN_INSTALLER != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_WIN_INSTALLER.*/) && $CI_JOB_NAME !~ /.*store.*/'
       variables:
         INSTALLER_OPTION: '-Dwindows-installer=true'
-    - if: '$GIMP_CI_MS_STORE != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_MS_STORE.*/ && $CI_JOB_NAME =~ /.*64.*/ && $CI_JOB_NAME !~ /.*installer.*/'
+    - if: '($GIMP_CI_MS_STORE != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_MS_STORE.*/) && $CI_JOB_NAME !~ /.*mingw32.*/ && $CI_JOB_NAME !~ /.*installer.*/'
       variables:
         STORE_OPTION: '-Dms-store=true'
     - <<: *CI_RELEASE
@@ -867,10 +867,7 @@ dist-installer-weekly:
 dist-store-weekly:
   extends: .default
   rules:
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Microsoft Store.*/'
-      interruptible: true
-    - if: '$GIMP_CI_MS_STORE != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_MS_STORE.*/'
-    - <<: *CI_RELEASE
+    - !reference [.win, rules]
   needs:
     - job: gimp-win
       #to allow running outside 'GNOME/gimp' namespace (on MRs)
