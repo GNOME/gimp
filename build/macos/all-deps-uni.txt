@@ -1,0 +1,50 @@
+# For easier quality of life and to avoid disparity between pacakges,
+# KEEP THIS FILE ORDERING SIMILAR to build/windows/all-deps-uni.txt
+
+# BUILD-TIME ONLY DEPS
+gettext \
+gi-docgen \
+gobject-introspection +quartz -x11|homebrew:gobject-introspection \
+libxslt|homebrew:libxslt \
+meson|homebrew:meson \
+pkgconfig|homebrew:pkgconf \
+vala -valadoc \
+
+# RUNTIME DEPS
+aalib -x11 \
+appstream -x11|homebrew:appstream \
+atk \
+cairo +quartz -x11|homebrew:cairo \
+#cfitsio not built by Apple Clang
+gexiv2|homebrew:gexiv2 \
+ghostscript -x11|homebrew:ghostscript \
+glib2 +quartz -x11|homebrew:glib \
+glib-networking|homebrew:glib-networking \
+graphviz -x11|homebrew:graphviz \
+gtk3 +quartz -x11|homebrew:gtk+3 \ adwaita-icon-theme +quartz -x11|homebrew:adwaita-icon-theme \ shared-mime-info|homebrew:shared-mime-info \
+iso-codes|homebrew:iso-codes \
+json-glib|homebrew:json-glib \
+lcms2|homebrew:lcms2 \
+libarchive|homebrew:libarchive \
+libheif \
+libjpeg-turbo|homebrew:libjpeg-turbo \
+libjxl \
+libmng \
+libmypaint \
+libpng|homebrew:libpng \
+librsvg|homebrew:librsvg \
+tiff \
+webp \
+libwmf -x11|homebrew:libwmf \
+#maxflow not available yet
+mypaint-brushes|homebrew:mypaint-brushes \
+openexr \
+openjpeg \
+pango +quartz -x11 \
+poppler|homebrew:poppler \
+poppler-data \
+python313|homebrew:python \ py313-certifi|homebrew:certifi
+py313-gobject3|homebrew:pygobject3 \
+qoi \
+#suitesparse not built by Apple Clang
+#xpm depends on x11

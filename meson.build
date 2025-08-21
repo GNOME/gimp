@@ -2115,6 +2115,12 @@ if get_option('windows-installer') or get_option('ms-store')
   meson.add_install_script(install_win_bundling_script)
 endif
 
+# On macOS, install deps in an .app bundle before distributing
+if get_option('dmg')
+  install_macos_debug_script = find_program('build/macos/2_bundle-gimp-uni_base.py')
+  meson.add_install_script(install_macos_debug_script)
+endif
+
 ################################################################################
 # Subdir installations
 

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>en</string>
+    <key>CFBundleExecutable</key>
+    <string>gimp%MUTEX_SUFFIX%</string>
+    <key>CFBundleIconFile</key>
+    <string>AppIcon.icns</string>
+    <key>CFBundleIdentifier</key>
+    <string>%BUNDLE_IDENTIFIER%</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>%BUNDLE_NAME%</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleSupportedPlatforms</key>
+    <array>
+      <string>MacOSX</string>
+    </array>
+    <key>CFBundleShortVersionString</key>
+    <string>%GIMP_VERSION%</string>
+    <key>CFBundleSignature</key>
+    <string>GIMP</string>
+    <key>CFBundleVersion</key>
+    <string>%GIMP_VERSION%</string>
+    <key>NSHumanReadableCopyright</key>
+    <string>© The GIMP Team</string>
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.photography</string>
+    <!--keep LSMinimumSystemVersion consistent with devel-docs/os-support.txt-->
+    <key>LSMinimumSystemVersion</key>
+    <string>14.0</string>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    <key>NSRequiresAquaSystemAppearance</key>
+    <false/>
+    <key>NLSRequiresNativeExecution</key>
+    <true/>
+  </dict>
+</plist>
