@@ -80,7 +80,7 @@ workflow:
       - 'runner_system_failure'
       - 'scheduler_failure'
   needs: []
-  # Default Docker image (unless otherwise defined)
+  # Default Docker image (keep variables: DEB_VERSION: consistent with devel-docs/os-support.txt)
   image: debian:${DEB_VERSION}
   variables:
     DEB_VERSION: "bookworm"

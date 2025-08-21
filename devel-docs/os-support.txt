@@ -9,11 +9,13 @@ developers maintaining GIMP for this platform will decide.
 
 ### GNU/Linux, *BSD…
 
-Until GIMP 3.0 release, Debian 12 "bookworm" stable will be our baseline target.
+Debian 12 "bookworm" stable is our baseline target.
 I.e. that we can bump a minimum dependency version only if it is in Debian
-bookworm.
+bookworm. See: https://developer.gimp.org/core/setup/build/linux/#supported-distributions
 
-After GIMP 3.0 release, we might get back to depend on Debian Testing.
+(NOTE TO MAINTAINERS:
+If you update this file, so update DEB_VERSION
+on .gitlab-ci.yml too)
 
 ### macOS
 
