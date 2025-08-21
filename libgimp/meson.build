@@ -421,6 +421,7 @@ libgimp_dep = declare_dependency(
     cairo,
     gdk_pixbuf,
     gegl,
+    gexiv2,
   ],
   link_with: [
     libgimp,
@@ -438,7 +439,6 @@ libgimpui = library('gimpui-'+ gimp_api_version,
   libgimpui_sources,
   dependencies: [
     libgimp_dep,
-    gexiv2,
     gtk3,
   ],
   sources: [

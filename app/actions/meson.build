@@ -101,6 +101,6 @@ libappactions = static_library('appactions',
   include_directories: [ rootInclude, rootAppInclude, ],
   c_args: '-DG_LOG_DOMAIN="Gimp-Actions"',
   dependencies: [
-    gegl, gdk_pixbuf, gtk3,
+    gegl, gdk_pixbuf, gtk3, gexiv2,
   ],
 )

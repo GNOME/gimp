@@ -28,7 +28,7 @@ help_plugin_lib = static_library('help_plugin',
   plugin_sources,
   include_directories: [ rootInclude, ],
   dependencies: [
-    gtk3, gegl, cairo, gio, gdk_pixbuf,
+    libgimpui_dep, gio,
   ],
   install: false,
 )

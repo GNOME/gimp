@@ -207,7 +207,7 @@ libgimpwidgets = library('gimpwidgets-'+ gimp_api_version,
   libgimpwidgets_sources,
   include_directories: rootInclude,
   dependencies: [
-    gegl, gtk3, lcms, math, mscms
+    gegl, gexiv2, gtk3, lcms, math, mscms
   ],
   c_args: [ '-DG_LOG_DOMAIN="LibGimpWidgets"', '-DGIMP_WIDGETS_COMPILATION', ],
   link_with: [

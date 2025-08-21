@@ -22,6 +22,6 @@ libapppath = static_library('apppath',
   include_directories: [ rootInclude, rootAppInclude, ],
   c_args: '-DG_LOG_DOMAIN="Gimp-Path"',
   dependencies: [
-    cairo, gegl, gdk_pixbuf,
+    cairo, gegl, gdk_pixbuf, gexiv2
   ],
 )
