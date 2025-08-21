@@ -592,12 +592,6 @@ if not pango_check
 endif
 
 ################################################################################
-# Optional Dependencies
-
-libsocket         = cc.find_library('socket', required: false)
-conf.set('HAVE_LIBSOCKET', libsocket.found())
-
-################################################################################
 # Check for extension support
 
 appstream_minver = '0.16.1'
