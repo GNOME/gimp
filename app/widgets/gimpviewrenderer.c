@@ -64,6 +64,9 @@ enum
 
 struct _GimpViewRendererPrivate
 {
+  GimpViewBorderType  border_type;
+  GeglColor          *border_color;
+
   cairo_pattern_t    *pattern;
   gchar              *bg_icon_name;
 
@@ -163,13 +166,11 @@ gimp_view_renderer_init (GimpViewRenderer *renderer)
 {
   renderer->priv = gimp_view_renderer_get_instance_private (renderer);
 
-  renderer->dot_for_dot  = TRUE;
+  renderer->dot_for_dot = TRUE;
+  renderer->surface_bg  = GIMP_VIEW_BG_STYLE;
+  renderer->size        = -1;
 
-  renderer->border_type  = GIMP_VIEW_BORDER_STYLE_FG;
-
-  renderer->surface_bg   = GIMP_VIEW_BG_STYLE;
-  renderer->size         = -1;
-
+  renderer->priv->border_type  = GIMP_VIEW_BORDER_STYLE_FG;
   renderer->priv->needs_render = TRUE;
 }
 
@@ -178,13 +179,13 @@ gimp_view_renderer_dispose (GObject *object)
 {
   GimpViewRenderer *renderer = GIMP_VIEW_RENDERER (object);
 
-  g_clear_object (&renderer->border_color);
-
   if (renderer->viewable)
     gimp_view_renderer_set_viewable (renderer, NULL);
 
   if (renderer->context)
     gimp_view_renderer_set_context (renderer, NULL);
+
+  g_clear_object (&renderer->priv->border_color);
 
   if (renderer->priv->color_config)
     gimp_view_renderer_set_color_config (renderer, NULL);
@@ -199,10 +200,10 @@ gimp_view_renderer_finalize (GObject *object)
 {
   GimpViewRenderer *renderer = GIMP_VIEW_RENDERER (object);
 
-  g_clear_pointer (&renderer->priv->pattern, cairo_pattern_destroy);
   g_clear_pointer (&renderer->surface, cairo_surface_destroy);
+  g_clear_pointer (&renderer->priv->pattern, cairo_pattern_destroy);
   g_clear_pointer (&renderer->priv->bg_icon_name, g_free);
-  g_clear_object  (&renderer->border_color);
+  g_clear_object  (&renderer->priv->border_color);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -496,7 +497,7 @@ gimp_view_renderer_set_border_type (GimpViewRenderer   *renderer,
 
   g_return_if_fail (GIMP_IS_VIEW_RENDERER (renderer));
 
-  renderer->border_type = border_type;
+  renderer->priv->border_type = border_type;
 
   switch (border_type)
     {
@@ -521,9 +522,18 @@ gimp_view_renderer_set_border_type (GimpViewRenderer   *renderer,
       break;
     }
 
-  g_set_object (&renderer->border_color, border_color);
+  g_set_object (&renderer->priv->border_color, border_color);
 
   gimp_view_renderer_update_idle (renderer);
+}
+
+GimpViewBorderType
+gimp_view_renderer_get_border_type (GimpViewRenderer *renderer)
+{
+  g_return_val_if_fail (GIMP_IS_VIEW_RENDERER (renderer),
+                        GIMP_VIEW_BORDER_STYLE_FG);
+
+  return renderer->priv->border_type;
 }
 
 void
@@ -686,8 +696,8 @@ gimp_view_renderer_draw (GimpViewRenderer *renderer,
       gint       height = renderer->height + renderer->border_width;
       gdouble    x, y;
 
-      if (renderer->border_color)
-        color = g_object_ref (renderer->border_color);
+      if (renderer->priv->border_color)
+        color = g_object_ref (renderer->priv->border_color);
       else
         color = gimp_get_style_color (widget, GTK_STYLE_PROPERTY_COLOR);
 

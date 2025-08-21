@@ -51,9 +51,6 @@ struct _GimpViewRenderer
   guint               dot_for_dot : 1;
   guint               is_popup    : 1;
 
-  GimpViewBorderType  border_type;
-  GeglColor          *border_color;
-
   /*< protected >*/
   cairo_surface_t    *surface;
   GimpViewBG          surface_bg;
@@ -121,8 +118,12 @@ void   gimp_view_renderer_set_size_full    (GimpViewRenderer   *renderer,
                                             gint                border_width);
 void   gimp_view_renderer_set_dot_for_dot  (GimpViewRenderer   *renderer,
                                             gboolean            dot_for_dot);
+
 void   gimp_view_renderer_set_border_type  (GimpViewRenderer   *renderer,
                                             GimpViewBorderType  border_type);
+GimpViewBorderType
+       gimp_view_renderer_get_border_type  (GimpViewRenderer   *renderer);
+
 void   gimp_view_renderer_set_background   (GimpViewRenderer   *renderer,
                                             const gchar        *icon_name);
 void   gimp_view_renderer_set_color_config (GimpViewRenderer   *renderer,
