@@ -1,6 +1,6 @@
 
 modules_deps = [
-  gtk3, babl, gegl, math,
+  gtk3, babl, gegl, gexiv2, math,
 ]
 
 color_selector_libs = [

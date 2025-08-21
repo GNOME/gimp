@@ -48,7 +48,7 @@ if have_vala and have_gobject_introspection
     'goat-exercise-vala.vala',
     include_directories: [ rootInclude, ],
     dependencies: [
-      libgimp_vapi, libgimpui_vapi, gtk3, gegl, math,
+      libgimp_vapi, libgimpui_vapi, libgimpui_dep, math,
     ],
     c_args: [
       '-DGETTEXT_PACKAGE="@0@"'.format('org.gimp.extension.goat-exercises'),

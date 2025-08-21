@@ -31,7 +31,7 @@ libappgui = static_library('appgui',
   include_directories: [ rootInclude, rootAppInclude, ],
   c_args: '-DG_LOG_DOMAIN="Gimp-GUI"',
   dependencies: [
-    cairo, gegl, gdk_pixbuf, gio_specific, gtk3
+    cairo, gegl, gdk_pixbuf, gexiv2, gio_specific, gtk3
   ],
   install: false,
 )

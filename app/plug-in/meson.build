@@ -56,6 +56,6 @@ libappplugin = static_library('appplug-in',
   include_directories: [ rootInclude, rootAppInclude, ],
   c_args: '-DG_LOG_DOMAIN="Gimp-Plug-In"',
   dependencies: [
-    cairo, gegl, gdk_pixbuf,
+    cairo, gegl, gdk_pixbuf, gexiv2,
   ],
 )

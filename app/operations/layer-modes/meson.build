@@ -49,5 +49,6 @@ libapplayermodes = static_library('applayermodes',
     cairo,
     gegl,
     gdk_pixbuf,
+    gexiv2
   ],
 )

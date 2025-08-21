@@ -16,6 +16,7 @@ libappfiledata = static_library('appfiledata',
     cairo,
     gdk_pixbuf,
     gegl,
+    gexiv2,
     libarchive,
   ],
 )

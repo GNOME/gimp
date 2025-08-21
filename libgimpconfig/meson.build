@@ -70,7 +70,7 @@ libgimpconfig = library('gimpconfig-' + gimp_api_version,
   libgimpconfig_sources,
   include_directories: rootInclude,
   dependencies: [
-    cairo, gdk_pixbuf, gegl, gio, gio_specific,
+    cairo, gdk_pixbuf, gegl, gexiv2, gio, gio_specific,
   ],
   c_args: [ '-DG_LOG_DOMAIN="LibGimpConfig"', '-DGIMP_CONFIG_COMPILATION', ],
   link_with: [

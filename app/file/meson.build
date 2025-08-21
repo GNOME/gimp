@@ -11,6 +11,6 @@ libappfile = static_library('appfile',
   include_directories: [ rootInclude, rootAppInclude, ],
   c_args: '-DG_LOG_DOMAIN="Gimp-File"',
   dependencies: [
-    gegl, gdk_pixbuf,
+    gegl, gdk_pixbuf, gexiv2
   ],
 )
