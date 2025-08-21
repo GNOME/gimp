@@ -293,9 +293,11 @@ gimp_cell_renderer_viewable_render (GtkCellRenderer      *cell,
       if (! (flags & GTK_CELL_RENDERER_SELECTED))
         {
           /* this is an ugly hack. The cell state should be passed to
-           * the view renderer, so that it can adjust its border.
-           * (or something like this) */
-          if (cellviewable->renderer->border_type == GIMP_VIEW_BORDER_WHITE)
+           * the view renderer, so that it can adjust its border.  (or
+           * something like this)
+           */
+          if (gimp_view_renderer_get_border_type (cellviewable->renderer) ==
+              GIMP_VIEW_BORDER_WHITE)
             gimp_view_renderer_set_border_type (cellviewable->renderer,
                                                 GIMP_VIEW_BORDER_BLACK);
 
