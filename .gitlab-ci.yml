@@ -220,7 +220,8 @@ deps-debian:
             poppler-data
             python3
             python3-gi
-            python3-gi-cairo" >> Dockerfile
+            python3-gi-cairo
+            xdg-utils" >> Dockerfile
     - echo "RUN printf \"\e[0Ksection_end:0000000002:deps_install\r\e[0K\n\"" >> Dockerfile
     # Prepare environ
     - echo "FROM $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}" > Dockerfile2;

@@ -361,6 +361,8 @@ if [ "$GIMP_UNSTABLE" ] || [ -z "$GIMP_RELEASE" ]; then
   #TODO: remove this on Debian Trixie (which have Mesa 24.2)
   conf_app LIBGL_DRIVERS_PATH "${LIB_DIR}/${LIB_SUBDIR}dri"
 fi
+### xdg-email test
+bund_usr "$UNIX_PREFIX" "bin/xdg-email"
 ### Debug dialog
 bund_usr "$GIMP_PREFIX" "bin/gimp-debug-tool*" --dest "libexec"
 ### Introspected plug-ins
