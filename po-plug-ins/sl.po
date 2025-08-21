@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-08-16 21:22+0000\n"
-"PO-Revision-Date: 2025-08-17 00:53+0200\n"
+"POT-Creation-Date: 2025-08-21 18:53+0000\n"
+"PO-Revision-Date: 2025-08-21 21:18+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -11614,6 +11614,16 @@ msgstr "Sličica %d (%d ms)"
 msgid "Allowed values:"
 msgstr "Dovoljene vrednosti:"
 
+#: plug-ins/filter-browser/filter-browser.c:420
+#, c-format
+msgid "Operation name: %s"
+msgstr "Ime operacije: %s"
+
+#: plug-ins/filter-browser/filter-browser.c:433
+#, c-format
+msgid "Categories: %s"
+msgstr "Kategorije: %s"
+
 #.
 #. *  Scales
 #.
@@ -11631,6 +11641,11 @@ msgstr "Parametri"
 #: plug-ins/filter-browser/filter-browser.c:495
 msgid "Additional Information"
 msgstr "Dodatne podrobnosti"
+
+#: plug-ins/filter-browser/filter-browser.c:501
+#, c-format
+msgid "License: %s"
+msgstr "Dovoljenje: %s"
 
 #: plug-ins/filter-browser/filter-browser.c:612
 msgid "Searching by title"
