@@ -150,6 +150,7 @@ parts:
       - libxmu6
       - mypaint-brushes
       - poppler-data
+      - xdg-utils
     override-stage: |
       # update gimp's plugin search path so it will pick up plugins mounted over snapd's content interface
       current_path=$(grep "# (plug-in-path" ${CRAFT_PART_INSTALL}/etc/gimp/3.0/gimprc | cut -d '"' -f2)
