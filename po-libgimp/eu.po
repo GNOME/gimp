@@ -6,15 +6,15 @@
 # Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2004, 2006, 2008.
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2007, 2011, 2013, 2018.
 # Edurne Labaka <elabaka@uzei.com>, 2015.
-# Asier Sarasua Garmendia <asiersarasua@ni.eus>, 2018, 2019, 2021, 2022, 2023.
-# Asier Sarasua Garmendia <asiersarasua@ni.eus>, 2024, 2025.
+# Asier Saratsua Garmendia <asiersarasua@ni.eus>, 2018, 2019, 2021, 2022, 2023.
+# Asier Saratsua Garmendia <asiersarasua@ni.eus>, 2024, 2025.
 #
 msgid ""
 msgstr "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-12-26 16:54+0000\n"
-"PO-Revision-Date: 2025-01-04 10:00+0100\n"
-"Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
+"POT-Creation-Date: 2025-08-17 13:28+0000\n"
+"PO-Revision-Date: 2025-08-18 10:00+0100\n"
+"Last-Translator: Asier Saratsua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
@@ -30,255 +30,255 @@ msgstr "_Arakatu..."
 msgid "Browse..."
 msgstr "Arakatu..."
 
-#: libgimp/gimpexportoptions.c:341 libgimp/gimpexportoptions.c:377
+#: libgimp/gimpexportoptions.c:347 libgimp/gimpexportoptions.c:383
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "%s pluginak ezin ditu geruzak maneiatu"
 
-#: libgimp/gimpexportoptions.c:342 libgimp/gimpexportoptions.c:351
-#: libgimp/gimpexportoptions.c:360 libgimp/gimpexportoptions.c:378
+#: libgimp/gimpexportoptions.c:348 libgimp/gimpexportoptions.c:357
+#: libgimp/gimpexportoptions.c:366 libgimp/gimpexportoptions.c:384
 msgid "Merge Visible Layers"
 msgstr "Batu ikusgai dauden geruzak"
 
-#: libgimp/gimpexportoptions.c:350
+#: libgimp/gimpexportoptions.c:356
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr "%s pluginak ezin ditu geruzen desplazamenduak, tamaina edo opakutasuna maneiatu"
 
-#: libgimp/gimpexportoptions.c:359 libgimp/gimpexportoptions.c:368
+#: libgimp/gimpexportoptions.c:365 libgimp/gimpexportoptions.c:374
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "%s pluginak geruzak animazio-marko gisa bakarrik maneia ditzake"
 
-#: libgimp/gimpexportoptions.c:360 libgimp/gimpexportoptions.c:369
+#: libgimp/gimpexportoptions.c:366 libgimp/gimpexportoptions.c:375
 msgid "Save as Animation"
 msgstr "Gorde animazio gisa"
 
-#: libgimp/gimpexportoptions.c:369 libgimp/gimpexportoptions.c:378
-#: libgimp/gimpexportoptions.c:387 libgimp/gimpexportoptions.c:405
+#: libgimp/gimpexportoptions.c:375 libgimp/gimpexportoptions.c:384
+#: libgimp/gimpexportoptions.c:393 libgimp/gimpexportoptions.c:411
 msgid "Flatten Image"
 msgstr "Berdindu irudia"
 
-#: libgimp/gimpexportoptions.c:386
+#: libgimp/gimpexportoptions.c:392
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "%s pluginak ezin du gardentasuna maneiatu"
 
-#: libgimp/gimpexportoptions.c:395
+#: libgimp/gimpexportoptions.c:401
 #, c-format
 msgid "%s plug-in can't handle layer effects"
 msgstr "%s pluginak ezin ditu geruza-efektuak maneiatu"
 
-#: libgimp/gimpexportoptions.c:396
+#: libgimp/gimpexportoptions.c:402
 msgid "Merge Layer Effects"
 msgstr "Batu geruza-efektuak"
 
-#: libgimp/gimpexportoptions.c:404
+#: libgimp/gimpexportoptions.c:410
 #, c-format
 msgid "%s plug-in can't handle transparent layers"
 msgstr "%s pluginak ezin ditu geruza gardenak maneiatu"
 
-#: libgimp/gimpexportoptions.c:413
+#: libgimp/gimpexportoptions.c:419
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "%s pluginak ezin ditu geruza-maskarak maneiatu"
 
-#: libgimp/gimpexportoptions.c:414
+#: libgimp/gimpexportoptions.c:420
 msgid "Apply Layer Masks"
 msgstr "Aplikatu geruza-maskarak"
 
-#: libgimp/gimpexportoptions.c:422
+#: libgimp/gimpexportoptions.c:428
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "%s pluginak RGB irudiak soilik maneia ditzake"
 
-#: libgimp/gimpexportoptions.c:423 libgimp/gimpexportoptions.c:461
-#: libgimp/gimpexportoptions.c:470
+#: libgimp/gimpexportoptions.c:429 libgimp/gimpexportoptions.c:467
+#: libgimp/gimpexportoptions.c:476
 msgid "Convert to RGB"
 msgstr "Bihurtu RGBra"
 
-#: libgimp/gimpexportoptions.c:431
+#: libgimp/gimpexportoptions.c:437
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "%s pluginak gris-eskalako irudiak soilik maneia ditzake"
 
-#: libgimp/gimpexportoptions.c:432 libgimp/gimpexportoptions.c:461
-#: libgimp/gimpexportoptions.c:482
+#: libgimp/gimpexportoptions.c:438 libgimp/gimpexportoptions.c:467
+#: libgimp/gimpexportoptions.c:488
 msgid "Convert to Grayscale"
 msgstr "Bihurtu gris-eskalara"
 
-#: libgimp/gimpexportoptions.c:440
+#: libgimp/gimpexportoptions.c:446
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "%s pluginak indexatutako irudiak soilik maneia ditzake"
 
-#: libgimp/gimpexportoptions.c:441 libgimp/gimpexportoptions.c:470
-#: libgimp/gimpexportoptions.c:480
+#: libgimp/gimpexportoptions.c:447 libgimp/gimpexportoptions.c:476
+#: libgimp/gimpexportoptions.c:486
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr "Bihurtu indexatu ezarpen lehenetsiak erabiliz\n"
 "(egin eskuz emaitza doitzeko)"
 
-#: libgimp/gimpexportoptions.c:450
+#: libgimp/gimpexportoptions.c:456
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr "%s pluginak indexatutako bit-map (bi kolore) irudiak soilik maneia ditzake"
 
-#: libgimp/gimpexportoptions.c:451
+#: libgimp/gimpexportoptions.c:457
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr "Bihurtu indexatura bit-mapen ezarpen lehenetsiak erabiliz\n"
 "(egin eskuz emaitza doitzeko)"
 
-#: libgimp/gimpexportoptions.c:460
+#: libgimp/gimpexportoptions.c:466
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "%s  pluginak RGB edo gris-eskalako irudiak soilik maneia ditzake"
 
-#: libgimp/gimpexportoptions.c:469
+#: libgimp/gimpexportoptions.c:475
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr "%s  pluginak RGB irudiak edo irudi indexatuak soilik maneia ditzake"
 
-#: libgimp/gimpexportoptions.c:479
+#: libgimp/gimpexportoptions.c:485
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr "%s pluginak gris-eskalako edo indexatutako irudiak soilik maneia ditzake"
 
-#: libgimp/gimpexportoptions.c:490
+#: libgimp/gimpexportoptions.c:496
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "%s pluginak alfa kanala behar du"
 
-#: libgimp/gimpexportoptions.c:491
+#: libgimp/gimpexportoptions.c:497
 msgid "Add Alpha Channel"
 msgstr "Gehitu alfa kanala"
 
-#: libgimp/gimpexportoptions.c:499
+#: libgimp/gimpexportoptions.c:505
 #, c-format
 msgid "%s plug-in needs to crop the layers to the image bounds"
 msgstr "%s pluginak geruzak moztu behar ditu irudiaren mugetatik"
 
-#: libgimp/gimpexportoptions.c:500
+#: libgimp/gimpexportoptions.c:506
 msgid "Crop Layers"
 msgstr "Moztu geruzak"
 
-#: libgimp/gimpexportoptions.c:500
+#: libgimp/gimpexportoptions.c:506
 msgid "Resize Image to Layers"
 msgstr "Aldatu irudien tamaina geruzetara"
 
-#: libgimp/gimpexportprocedure.c:536
+#: libgimp/gimpexportprocedure.c:550
 msgid "Save _Exif"
 msgstr "Gorde _EXIFa"
 
-#: libgimp/gimpexportprocedure.c:537
+#: libgimp/gimpexportprocedure.c:551
 msgid "Save Exif (Exchangeable image file format) metadata"
 msgstr "Gorde EXIF (Exchangeable image file format) metadatuak"
 
-#: libgimp/gimpexportprocedure.c:542
+#: libgimp/gimpexportprocedure.c:559
 msgid "Save _IPTC"
 msgstr "Gorde _IPTCa"
 
-#: libgimp/gimpexportprocedure.c:543
+#: libgimp/gimpexportprocedure.c:560
 msgid "Save IPTC (International Press Telecommunications Council) metadata"
 msgstr "Gorde IPTC (International Press Telecommunications Council) metadatuak"
 
-#: libgimp/gimpexportprocedure.c:548
+#: libgimp/gimpexportprocedure.c:568
 msgid "Save _XMP"
 msgstr "Gorde _XMPa"
 
-#: libgimp/gimpexportprocedure.c:549
+#: libgimp/gimpexportprocedure.c:569
 msgid "Save XMP (Extensible Metadata Platform) metadata"
 msgstr "Gorde XMP (Extensible Metadata Platforma) metadatuak"
 
-#: libgimp/gimpexportprocedure.c:554
+#: libgimp/gimpexportprocedure.c:577
 msgid "Save color _profile"
 msgstr "Gorde kolore-_profila"
 
-#: libgimp/gimpexportprocedure.c:555
+#: libgimp/gimpexportprocedure.c:578
 msgid "Save the ICC color profile as metadata"
 msgstr "Gorde ICC kolore-profila metadatu gisa"
 
-#: libgimp/gimpexportprocedure.c:560
+#: libgimp/gimpexportprocedure.c:586
 msgid "Save _thumbnail"
 msgstr "Gorde _miniatura"
 
-#: libgimp/gimpexportprocedure.c:561
+#: libgimp/gimpexportprocedure.c:587
 msgid "Save a smaller representation of the image as metadata"
 msgstr "Gorde irudiaren ordezko txikiagoa metadatu gisa"
 
-#: libgimp/gimpexportprocedure.c:567
+#: libgimp/gimpexportprocedure.c:595
 msgid "Save c_omment"
 msgstr "Gorde ir_uzkina"
 
-#: libgimp/gimpexportprocedure.c:568
+#: libgimp/gimpexportprocedure.c:596
 msgid "Save a comment as metadata"
 msgstr "Gorde iruzkina metadatu gisa"
 
-#: libgimp/gimpexportprocedure.c:572
+#: libgimp/gimpexportprocedure.c:600
 msgid "Comment"
 msgstr "Iruzkina"
 
-#: libgimp/gimpexportprocedure.c:573
+#: libgimp/gimpexportprocedure.c:601
 msgid "Image comment"
 msgstr "Irudi-iruzkina"
 
-#: libgimp/gimpexportproceduredialog.c:150
+#: libgimp/gimpexportproceduredialog.c:155
 msgid "Metadata"
 msgstr "Metadatuak"
 
-#: libgimp/gimpexportproceduredialog.c:159
+#: libgimp/gimpexportproceduredialog.c:164
 msgid "Edit Metadata"
 msgstr "Editatu metadatuak"
 
-#: libgimp/gimpexportproceduredialog.c:159
+#: libgimp/gimpexportproceduredialog.c:164
 msgid "(edit)"
 msgstr "(editatu)"
 
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexportproceduredialog.c:436
+#: libgimp/gimpexportproceduredialog.c:460
 #, c-format
 msgid "Export Image as %s"
 msgstr "Esportatu irudia %s gisa"
 
-#: libgimp/gimpimagemetadata.c:124
+#: libgimp/gimpimagemetadata.c:196
 msgid "Background"
 msgstr "Atzeko planoa"
 
-#: libgimp/gimpimagemetadata-save.c:770 modules/controller-midi.c:426
+#: libgimp/gimpimagemetadata-save.c:787 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
-#: libgimp/gimploadprocedure.c:271 libgimp/gimpvectorloadprocedure.c:445
+#: libgimp/gimploadprocedure.c:273 libgimp/gimpvectorloadprocedure.c:445
 #, c-format
 msgid ""
 "This file loading plug-in returned SUCCESS as a status without an image. "
 "This is a bug in the plug-in code. Contact the plug-in developer."
 msgstr "Fitxategiak kargatzeko plugin honek ARRAKASTA itzuli du egoera gisa, baina irudirik gabe. Pluginaren kodeak akatsa du, jarri harremanetan pluginaren garatzailearekin."
 
-#: libgimp/gimpparamspecs-desc.c:65
+#: libgimp/gimpparamspecs-desc.c:68
 msgid "Allowed values:"
 msgstr "Onartutako balioak:"
 
 #. procedure executed successfully
-#: libgimp/gimppdb.c:337
+#: libgimp/gimppdb.c:335
 msgid "success"
 msgstr "ongi burutu da"
 
 #. procedure execution failed
-#: libgimp/gimppdb.c:341
+#: libgimp/gimppdb.c:339
 msgid "execution error"
 msgstr "exekuzioko errorea"
 
 #. procedure called incorrectly
-#: libgimp/gimppdb.c:345
+#: libgimp/gimppdb.c:343
 msgid "calling error"
 msgstr "deiaren errorea"
 
 #. procedure execution cancelled
-#: libgimp/gimppdb.c:349
+#: libgimp/gimppdb.c:347
 msgid "cancelled"
 msgstr "bertan behera utzita"
 
@@ -370,45 +370,45 @@ msgid_plural "%d procedures match your query"
 msgstr[0] "prozedura %d bat dator kontsultarekin"
 msgstr[1] "%d prozedura bat datoz kontsultarekin"
 
-#: libgimp/gimpprocedure.c:2158
+#: libgimp/gimpprocedure.c:2161
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "'%s' prozedurak ez du itzulerako baliorik itzuli"
 
-#: libgimp/gimpprocedure.c:2335
+#: libgimp/gimpprocedure.c:2367
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr "'%s' prozedurak itzulerako '%s' (#%d) balioaren okerreko balio mota itzuli du. %s espero zen, baina %s jaso da."
 
-#: libgimp/gimpprocedure.c:2347
+#: libgimp/gimpprocedure.c:2379
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' "
 "(#%d). Expected %s, got %s."
 msgstr "'%s' prozedurak itzulerako '%s' (#%d) argumentuaren okerreko balio mota itzuli du. %s espero zen, baina %s jaso da."
 
-#: libgimp/gimpprocedure.c:2382
+#: libgimp/gimpprocedure.c:2414
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr "'%s' prozedurak '%s' itzuli du '%s' (#%d, %s mota) itzulerako balio gisa. Balio hau barrutiz kanpo dago."
 
-#: libgimp/gimpprocedure.c:2396
+#: libgimp/gimpprocedure.c:2428
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr "'%1$s' prozedurak '%3$s' (#%4$d, %5$s mota) argumentua '%2$s' balioarekin deitu du. Balio hau barrutiz kanpo dago."
 
-#: libgimp/gimpprocedure.c:2440
+#: libgimp/gimpprocedure.c:2472
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "'%s' prozedurak baliogabeko UTF-8 kate bat itzuli du '%s' argumenturako."
 
-#: libgimp/gimpprocedure.c:2450
+#: libgimp/gimpprocedure.c:2482
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -425,9 +425,10 @@ msgid "_Export"
 msgstr "_Esportatu"
 
 #: libgimp/gimpproceduredialog.c:318 libgimp/gimpproceduredialog.c:617
-#: libgimpwidgets/gimpcolorbutton.c:553 libgimpwidgets/gimpfileentry.c:466
-#: libgimpwidgets/gimpquerybox.c:274 libgimpwidgets/gimpquerybox.c:337
-#: libgimpwidgets/gimpquerybox.c:403 libgimpwidgets/gimpquerybox.c:479
+#: libgimpwidgets/gimpcolorbutton.c:553 libgimpwidgets/gimpfilechooser.c:713
+#: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:276
+#: libgimpwidgets/gimpquerybox.c:339 libgimpwidgets/gimpquerybox.c:405
+#: libgimpwidgets/gimpquerybox.c:481
 msgid "_OK"
 msgstr "_Ados"
 
@@ -438,9 +439,9 @@ msgstr "_Berrezarri"
 #: libgimp/gimpproceduredialog.c:344 libgimpwidgets/gimpcolorbutton.c:552
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:172
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:182
-#: libgimpwidgets/gimpfileentry.c:465 libgimpwidgets/gimpquerybox.c:274
-#: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
-#: libgimpwidgets/gimpquerybox.c:479
+#: libgimpwidgets/gimpfilechooser.c:714 libgimpwidgets/gimpfileentry.c:465
+#: libgimpwidgets/gimpquerybox.c:276 libgimpwidgets/gimpquerybox.c:339
+#: libgimpwidgets/gimpquerybox.c:405 libgimpwidgets/gimpquerybox.c:481
 msgid "_Cancel"
 msgstr "_Utzi"
 
@@ -460,31 +461,31 @@ msgstr "_Gorde ezarpenak"
 msgid "Store current settings for later reuse"
 msgstr "Bitegiratu uneko ezarpenak geroago erabili ahal izateko"
 
-#: libgimp/gimpproceduredialog.c:847
+#: libgimp/gimpproceduredialog.c:892
 msgid "Brush Chooser"
 msgstr "Brotxaren hautatzailea"
 
-#: libgimp/gimpproceduredialog.c:851
+#: libgimp/gimpproceduredialog.c:896
 msgid "Font Chooser"
 msgstr "Letra-tipoen hautatzailea"
 
-#: libgimp/gimpproceduredialog.c:855
+#: libgimp/gimpproceduredialog.c:900
 msgid "Gradient Chooser"
 msgstr "Gradienteen hautatzailea"
 
-#: libgimp/gimpproceduredialog.c:859
+#: libgimp/gimpproceduredialog.c:904
 msgid "Palette Chooser"
 msgstr "Paleten hautatzailea"
 
-#: libgimp/gimpproceduredialog.c:863
+#: libgimp/gimpproceduredialog.c:908
 msgid "Pattern Chooser"
 msgstr "Ereduen hautatzailea"
 
-#: libgimp/gimpproceduredialog.c:2665
+#: libgimp/gimpproceduredialog.c:2789
 msgid "Reset to _Initial Values"
 msgstr "Berrezarri _hasierako balioak"
 
-#: libgimp/gimpproceduredialog.c:2674
+#: libgimp/gimpproceduredialog.c:2798
 msgid "Reset to _Factory Defaults"
 msgstr "Berrezarri _fabrikako lehenetsiak"
 
@@ -892,23 +893,23 @@ msgstr "32 bit, koma mugikorra"
 
 #: libgimpbase/gimpbaseenums.c:387
 msgctxt "convert-palette-type"
-msgid "Generate optimum palette"
-msgstr "Sortu paleta optimoa"
+msgid "_Generate optimum palette"
+msgstr "Sortu paleta _optimoa"
 
 #: libgimpbase/gimpbaseenums.c:388
 msgctxt "convert-palette-type"
-msgid "Use web-optimized palette"
-msgstr "Erabili weberako optimizatutako paleta"
+msgid "Use _web-optimized palette"
+msgstr "Erabili _weberako optimizatutako paleta"
 
 #: libgimpbase/gimpbaseenums.c:389
 msgctxt "convert-palette-type"
-msgid "Use black and white (1-bit) palette"
-msgstr "Erabili paleta zuri-beltza (1 bitekoa)"
+msgid "Use _black and white (1-bit) palette"
+msgstr "Erabili paleta _zuri-beltza (1 bitekoa)"
 
 #: libgimpbase/gimpbaseenums.c:390
 msgctxt "convert-palette-type"
-msgid "Use custom palette"
-msgstr "Erabili paleta pertsonalizatua"
+msgid "Use custom _palette"
+msgstr "Erabili paleta _pertsonalizatua"
 
 #: libgimpbase/gimpbaseenums.c:419
 msgctxt "convolve-type"
@@ -1676,62 +1677,62 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Moztu itxurarekin"
 
-#: libgimpbase/gimpmetadata.c:1218
+#: libgimpbase/gimpmetadata.c:1224
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Metadatuak fitxategi lokaletatik soilik karga daitezke"
 
-#: libgimpbase/gimpmetadata.c:1274
+#: libgimpbase/gimpmetadata.c:1280
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Metadatuak fitxategi lokaletan soilik gorde daitezke"
 
-#: libgimpbase/gimpmetadata.c:1323
+#: libgimpbase/gimpmetadata.c:1329
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "EXIF datuen baliogabeko tamaina."
 
-#: libgimpbase/gimpmetadata.c:1368
+#: libgimpbase/gimpmetadata.c:1374
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "EXIF datuen analisiak huts egin du."
 
-#: libgimpbase/gimpmetadata.c:1420
+#: libgimpbase/gimpmetadata.c:1426
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "IPTC datuen analisiak huts egin du."
 
-#: libgimpbase/gimpmetadata.c:1468
+#: libgimpbase/gimpmetadata.c:1474
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "XMP datuen analisiak huts egin du."
 
-#: libgimpbase/gimpunit.c:81
+#: libgimpbase/gimpunit.c:82
 msgctxt "unit-plural"
 msgid "pixels"
 msgstr "pixel"
 
-#: libgimpbase/gimpunit.c:88
+#: libgimpbase/gimpunit.c:89
 msgctxt "unit-plural"
 msgid "inches"
 msgstr "hazbete"
 
-#: libgimpbase/gimpunit.c:94
+#: libgimpbase/gimpunit.c:95
 msgctxt "unit-plural"
 msgid "millimeters"
 msgstr "milimetro"
 
-#: libgimpbase/gimpunit.c:101
+#: libgimpbase/gimpunit.c:102
 msgctxt "unit-plural"
 msgid "points"
 msgstr "puntu"
 
-#: libgimpbase/gimpunit.c:107
+#: libgimpbase/gimpunit.c:108
 msgctxt "unit-plural"
 msgid "picas"
 msgstr "pika"
 
-#: libgimpbase/gimpunit.c:117
+#: libgimpbase/gimpunit.c:118
 msgctxt "unit-plural"
 msgid "percent"
 msgstr "ehunekoa"
@@ -2098,19 +2099,19 @@ msgstr "Errorea %2$d lerroan '%1$s' analizatzean : %3$s"
 msgid "Module '%s' load error: %s"
 msgstr "Errorea '%s' modulua kargatzean: %s"
 
-#: libgimpmodule/gimpmoduledb.c:450
+#: libgimpmodule/gimpmoduledb.c:458
 msgid "Module error"
 msgstr "Modulu-errorea"
 
-#: libgimpmodule/gimpmoduledb.c:451
+#: libgimpmodule/gimpmoduledb.c:459
 msgid "Loaded"
 msgstr "Kargatuta"
 
-#: libgimpmodule/gimpmoduledb.c:452
+#: libgimpmodule/gimpmoduledb.c:460
 msgid "Load failed"
 msgstr "Huts egin du kargatzean"
 
-#: libgimpmodule/gimpmoduledb.c:453
+#: libgimpmodule/gimpmoduledb.c:461
 msgid "Not loaded"
 msgstr "Ez da kargatu"
 
@@ -2232,7 +2233,7 @@ msgid "HSV"
 msgstr "HSV"
 
 #: libgimpwidgets/gimpcolorscales.c:708 libgimpwidgets/gimpcolorselect.c:2113
-#: modules/color-selector-cmyk.c:301 modules/color-selector-cmyk.c:385
+#: modules/color-selector-cmyk.c:321 modules/color-selector-cmyk.c:405
 #: modules/color-selector-water.c:258 modules/color-selector-wheel.c:191
 #, c-format
 msgid "Profile: %s"
@@ -2354,33 +2355,34 @@ msgid "the target to open to"
 msgstr "zein helburutan irekiko den"
 
 #. Count label
-#: libgimpwidgets/gimppageselector.c:275 libgimpwidgets/gimppageselector.c:1018
+#: libgimpwidgets/gimppageselector.c:275 libgimpwidgets/gimppageselector.c:1014
 msgid "Nothing selected"
 msgstr "Ez da ezer hautatu"
 
-#: libgimpwidgets/gimppageselector.c:293
-msgid "Select _All"
-msgstr "Hautatu _dena"
-
-#: libgimpwidgets/gimppageselector.c:313
-msgid "Select _range:"
-msgstr "Hautatu _barrutia:"
-
-#: libgimpwidgets/gimppageselector.c:325
+#: libgimpwidgets/gimppageselector.c:289
 msgid "Open _pages as"
 msgstr "Ireki _orrialdeak honela"
 
-#: libgimpwidgets/gimppageselector.c:448 libgimpwidgets/gimppageselector.c:625
+#. Select all button & range entry
+#: libgimpwidgets/gimppageselector.c:301
+msgid "Select _range:"
+msgstr "Hautatu _barrutia:"
+
+#: libgimpwidgets/gimppageselector.c:323
+msgid "Select _All"
+msgstr "Hautatu _dena"
+
+#: libgimpwidgets/gimppageselector.c:444 libgimpwidgets/gimppageselector.c:621
 #, c-format
 msgid "Page %d"
 msgstr "%d. orria"
 
-#: libgimpwidgets/gimppageselector.c:1023
+#: libgimpwidgets/gimppageselector.c:1019
 msgid "One page selected"
 msgstr "Orrialde bat hautatuta"
 
+#: libgimpwidgets/gimppageselector.c:1026
 #: libgimpwidgets/gimppageselector.c:1030
-#: libgimpwidgets/gimppageselector.c:1034
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
@@ -2434,28 +2436,28 @@ msgstr "Lauza pertsonalizatuen 1. kolorea"
 msgid "Custom Checks Color 2"
 msgstr "Lauza pertsonalizatuen 2. kolorea"
 
-#: libgimpwidgets/gimppropwidgets.c:2474
+#: libgimpwidgets/gimppropwidgets.c:2552
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "Sarrerako testu-eremua karaktere %dera mugatua."
 msgstr[1] "Sarrerako testu-eremua %d karakteretara mugatua."
 
-#: libgimpwidgets/gimpwidgets.c:259
+#: libgimpwidgets/gimpwidgets.c:260
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr "Erabili balio hau ausazko zenbaki-sortzailearen hazi gisa, hala \"ausazko\" eragiketa jakin bat errepika dezakezu"
 
-#: libgimpwidgets/gimpwidgets.c:263
+#: libgimpwidgets/gimpwidgets.c:264
 msgid "_New Seed"
 msgstr "_Hazi berria"
 
-#: libgimpwidgets/gimpwidgets.c:279
+#: libgimpwidgets/gimpwidgets.c:280
 msgid "Seed random number generator with a generated random number"
 msgstr "Hasi ausazko zenbaki-sortzailea sortutako ausazko zenbaki batekin"
 
-#: libgimpwidgets/gimpwidgets.c:283
+#: libgimpwidgets/gimpwidgets.c:284
 msgid "_Randomize"
 msgstr "_Ausaz nahasi"
 
@@ -2626,51 +2628,55 @@ msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Txikiagotu"
 
-#: modules/color-selector-cmyk.c:85
+#: modules/color-selector-cmyk.c:87
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYK kolore-hautatzailea (kolore-profilean erabilia)"
 
-#: modules/color-selector-cmyk.c:119
+#: modules/color-selector-cmyk.c:121
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: modules/color-selector-cmyk.c:143
+#: modules/color-selector-cmyk.c:145
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: modules/color-selector-cmyk.c:145
+#: modules/color-selector-cmyk.c:147
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: modules/color-selector-cmyk.c:147
+#: modules/color-selector-cmyk.c:149
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: modules/color-selector-cmyk.c:149
+#: modules/color-selector-cmyk.c:151
 msgid "_K"
 msgstr "_K"
 
-#: modules/color-selector-cmyk.c:153
+#: modules/color-selector-cmyk.c:155
 msgid "Cyan"
 msgstr "Cyana"
 
-#: modules/color-selector-cmyk.c:154
+#: modules/color-selector-cmyk.c:156
 msgid "Magenta"
 msgstr "Magenta"
 
-#: modules/color-selector-cmyk.c:155
+#: modules/color-selector-cmyk.c:157
 msgid "Yellow"
 msgstr "Horia"
 
-#: modules/color-selector-cmyk.c:156
+#: modules/color-selector-cmyk.c:158
 msgid "Black"
 msgstr "Beltza"
 
-#: modules/color-selector-cmyk.c:288 modules/color-selector-cmyk.c:367
+#: modules/color-selector-cmyk.c:265
+msgid "Total Ink Coverage"
+msgstr "Tinta-estaldura osoa"
+
+#: modules/color-selector-cmyk.c:308 modules/color-selector-cmyk.c:387
 msgid "Profile: (none)"
 msgstr "Profila: (bat ere ez)"
 
