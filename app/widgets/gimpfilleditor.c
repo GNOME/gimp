@@ -154,6 +154,7 @@ gimp_fill_editor_constructed (GObject *object)
                                         GIMP_CONTEXT (editor->options));
           gimp_enum_radio_box_add (GTK_BOX (box), color_button,
                                    GIMP_FILL_STYLE_FG_COLOR, FALSE);
+          gimp_color_button_set_update (GIMP_COLOR_BUTTON (color_button), TRUE);
 
           color_button = gimp_prop_color_button_new (G_OBJECT (editor->options),
                                                      "background",
@@ -165,6 +166,7 @@ gimp_fill_editor_constructed (GObject *object)
           gimp_enum_radio_box_add (GTK_BOX (box), color_button,
                                    GIMP_FILL_STYLE_BG_COLOR, FALSE);
         }
+      gimp_color_button_set_update (GIMP_COLOR_BUTTON (color_button), TRUE);
 
       pattern_box = gimp_prop_pattern_box_new (NULL,
                                                GIMP_CONTEXT (editor->options),
