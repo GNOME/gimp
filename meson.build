@@ -1714,13 +1714,6 @@ endif
 bug_report_url = get_option('bug-report-url')
 
 if bug_report_url == ''
-  message('''
-    NOTE: if you plan on packaging GIMP for distribution, it is recommended
-    to override the bug report URL with option:
-      -Dbug-report-url=https://example.com/
-    so that you can filter packaging bugs from core bugs before reporting upstream.
-  ''')
-
   bug_report_url = project_url_issues
 endif
 conf.set_quoted('PACKAGE_BUGREPORT', project_url_issues)
@@ -2138,6 +2131,15 @@ final_message = [
 ]
 
 message('\n'.join(final_message))
+
+if bug_report_url == project_url_issues
+  message('''
+    NOTE: if you plan on packaging GIMP for distribution, it is recommended
+    to override the bug report URL with option:
+      -Dbug-report-url=https://example.com/
+    so that you can filter packaging bugs from core bugs before reporting upstream.
+  ''')
+endif
 
 if warnings.length() > 0
   warning('Warnings occurred during configuration')
