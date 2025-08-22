@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-08-17 09:18+0000\n"
-"PO-Revision-Date: 2025-08-17 12:24+0200\n"
+"POT-Creation-Date: 2025-08-19 17:34+0000\n"
+"PO-Revision-Date: 2025-08-21 03:30+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -2462,6 +2462,7 @@ msgstr "240 წამი"
 #: app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:129
 #: app/dialogs/template-options-dialog.c:118
 #: app/dialogs/path-export-dialog.c:88 app/dialogs/path-import-dialog.c:93
+#: app/dialogs/vector-layer-options-dialog.c:104
 #: app/display/gimpdisplayshell-close.c:181
 #: app/display/gimpdisplayshell-filter-dialog.c:87
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
@@ -2550,7 +2551,7 @@ msgstr ""
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
 #: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2439
-#: app/core/gimppalette.c:588 app/core/gimppalette-import.c:223
+#: app/core/gimppalette.c:586 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:774 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "უსათაურო"
@@ -6147,12 +6148,14 @@ msgid "Edit this text layer content on canvas"
 msgstr "ტილოზე არსებული ტექსტური ფენის შემცველობის ჩასწორება"
 
 #: app/actions/layers-actions.c:66
+msgctxt "layers-action"
 msgid "Path Tool"
 msgstr "ბილიკის ხელსაწყო"
 
 #: app/actions/layers-actions.c:67
+msgctxt "layers-action"
 msgid "Activate the path tool on this vector layer's path"
-msgstr "ბილიკის ხელსაწყის გააქტიურება ამ ვექტორული ფენის ბილიკზე"
+msgstr "ბილიკის ხელსაწყოს გააქტიურება ამ ვექტორული ფენის ბილიკზე"
 
 #: app/actions/layers-actions.c:72
 msgctxt "layers-action"
@@ -6960,7 +6963,7 @@ msgstr "ფენის ატრიბუტები"
 
 #: app/actions/layers-commands.c:344
 msgid "Edit Layer Attributes"
-msgstr "ფენის ატრიბუტების რედაქტირება"
+msgstr "ფენის ატრიბუტების ჩასწორება"
 
 #: app/actions/layers-commands.c:413 app/widgets/gimpdrawabletreeview.c:649
 #: app/widgets/gimplayertreeview.c:915
@@ -7945,6 +7948,7 @@ msgstr "ყველა ფილტრის საწყის მნიშვ
 #: app/dialogs/input-devices-dialog.c:122 app/dialogs/preferences-dialog.c:223
 #: app/dialogs/preferences-dialog.c:1175 app/dialogs/print-size-dialog.c:122
 #: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
+#: app/dialogs/vector-layer-options-dialog.c:103
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
 #: app/tools/gimpfiltertool.c:369 app/tools/gimptransformgridtool.c:1261
 #: app/widgets/gimpcolordialog.c:491 app/widgets/gimpcolordisplayeditor.c:326
@@ -12997,13 +13001,13 @@ msgstr ""
 "ფუნჯის ფაილის დამუშავების შეცდომა:abr ფორმატის %d ვერსიის დეკოდირების "
 "შეცდომა."
 
-#: app/core/gimpbrush.c:138 app/core/gimpcontext.c:699
+#: app/core/gimpbrush.c:137 app/core/gimpcontext.c:699
 #: app/core/gimpcontext.c:700 app/tools/gimpmybrushoptions-gui.c:64
 #: app/tools/gimppaintoptions-gui.c:156
 msgid "Brush"
 msgstr "ფუნჯი"
 
-#: app/core/gimpbrush.c:160 app/paint/gimppaintoptions.c:235
+#: app/core/gimpbrush.c:159 app/paint/gimppaintoptions.c:235
 msgid "Brush Spacing"
 msgstr "ფუნჯებს შორის დაცილება"
 
@@ -13099,7 +13103,7 @@ msgstr "ფუნჯის ფაილის (%s) დამუშავებ�
 msgid "Fatal parse error in brush file '%s': Inconsistent parameters."
 msgstr "ფუნჯის ფაილის (%s) დამუშავების შეცდომა: ცვლადი პარამეტრები."
 
-#: app/core/gimpbuffer.c:106
+#: app/core/gimpbuffer.c:104
 msgid "Buffer"
 msgstr "ბუფერი"
 
@@ -13320,24 +13324,24 @@ msgid "MyPaint Brush"
 msgstr "MyPaint-ის ფუნჯი"
 
 #: app/core/gimpcontext.c:720 app/core/gimpcontext.c:721
-#: app/core/gimppattern.c:85
+#: app/core/gimppattern.c:84
 msgid "Pattern"
 msgstr "შაბლონი"
 
 #: app/core/gimpcontext.c:727 app/core/gimpcontext.c:728
-#: app/core/gimpgradient.c:125 app/pdb/drawable-edit-cmds.c:255
+#: app/core/gimpgradient.c:124 app/pdb/drawable-edit-cmds.c:255
 #: app/tools/gimpgradientoptions.c:269 app/tools/gimpgradienttool.c:166
 #: app/tools/gimppaintoptions-gui.c:385
 msgid "Gradient"
 msgstr "გრადიენტი"
 
 #: app/core/gimpcontext.c:734 app/core/gimpcontext.c:735
-#: app/core/gimppalette.c:130 app/widgets/gimpcolorselectorpalette.c:59
+#: app/core/gimppalette.c:129 app/widgets/gimpcolorselectorpalette.c:59
 msgid "Palette"
 msgstr "პალიტრა"
 
 #: app/core/gimpcontext.c:741 app/core/gimpcontext.c:742
-#: app/text/gimpfont.c:604 app/tools/gimptextoptions.c:812
+#: app/text/gimpfont.c:603 app/tools/gimptextoptions.c:812
 msgid "Font"
 msgstr "ფონტი"
 
@@ -13999,7 +14003,7 @@ msgstr "ფერის პროფილის გადაყვანა"
 msgid "Colormap of Image #%d (%s)"
 msgstr "#%d (%s) გამოსახულების ფერების რუკა"
 
-#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:909
+#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:907
 msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "ფერების რუკის დაყენება"
@@ -14009,7 +14013,7 @@ msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "ფერების რუკის დაყენების მოხსნა"
 
-#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:700
+#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:698
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "ფერების რუკის ერთეულის შეცვლა"
@@ -14210,53 +14214,53 @@ msgstr "გამოსახულების მასშტაბირე�
 msgid "Can't undo %s"
 msgstr "შეუძლებელია %s-ის დაბრუნება"
 
-#: app/core/gimpimagefile.c:836
+#: app/core/gimpimagefile.c:834
 msgid "Folder"
 msgstr "საქაღალდე"
 
-#: app/core/gimpimagefile.c:841
+#: app/core/gimpimagefile.c:839
 msgid "Special File"
 msgstr "სპეციალური ფაილი"
 
-#: app/core/gimpimagefile.c:857
+#: app/core/gimpimagefile.c:855
 msgid "Remote File"
 msgstr "ფაილის ამოღება"
 
-#: app/core/gimpimagefile.c:876
+#: app/core/gimpimagefile.c:874
 msgid "Click to create preview"
 msgstr "დააჭირეთ მინიატურის შესაქმნელად"
 
-#: app/core/gimpimagefile.c:882
+#: app/core/gimpimagefile.c:880
 msgid "Loading preview..."
 msgstr "მინიატურის ჩატვირთვა..."
 
-#: app/core/gimpimagefile.c:888
+#: app/core/gimpimagefile.c:886
 msgid "Preview is out of date"
 msgstr "მინიატურა ძალიან ძველია"
 
-#: app/core/gimpimagefile.c:894
+#: app/core/gimpimagefile.c:892
 msgid "Cannot create preview"
 msgstr "მინატურის შექმნის შეცდომა"
 
-#: app/core/gimpimagefile.c:904
+#: app/core/gimpimagefile.c:902
 msgid "(Preview may be out of date)"
 msgstr "(მინიატურა შეიძლება ძალიან ძველი იყოს)"
 
 #. pixel size
-#: app/core/gimpimagefile.c:913 app/widgets/gimpimagepropview.c:438
+#: app/core/gimpimagefile.c:911 app/widgets/gimpimagepropview.c:438
 #: app/widgets/gimpsizebox.c:429 app/widgets/gimptemplateeditor.c:734
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
 msgstr[0] "%d x %d პიქსელი"
 
-#: app/core/gimpimagefile.c:936 app/display/gimpdisplayshell-title.c:394
+#: app/core/gimpimagefile.c:934 app/display/gimpdisplayshell-title.c:394
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
 msgstr[0] "%d ფენა"
 
-#: app/core/gimpimagefile.c:1011
+#: app/core/gimpimagefile.c:1009
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "მინიატურის გახსნის შეცდომა %s:%s"
@@ -18154,6 +18158,18 @@ msgstr "კონტურის მდებარეობის ჩაკე�
 msgid "Lock path _visibility"
 msgstr "ხილვადობის ბილიკის _ჩაკეტვა"
 
+#: app/dialogs/vector-layer-options-dialog.c:99
+msgid "Edit Vector Layer Attributes"
+msgstr "ვექტორული ფენის ატრიბუტების ჩასწორება"
+
+#: app/dialogs/vector-layer-options-dialog.c:105
+msgid "_Apply"
+msgstr "გ_ადატარება"
+
+#: app/dialogs/vector-layer-options-dialog.c:274
+msgid "Fill/Stroke Vector Layer"
+msgstr "ვექტორულ ფენის შევსება/გამოძრავება"
+
 #. Translators: the %s string will be the version, e.g. "3.0".
 #: app/dialogs/welcome-dialog.c:206
 #, c-format
@@ -20913,6 +20929,54 @@ msgstr "ბუფერში კონტურები ვერ მოიძ
 msgid "Failed to import paths from '%s': %s"
 msgstr "%s-დან კონტურების შემოტანის შეცდომა: %s"
 
+#: app/path/gimpvectorlayer.c:159 app/tools/gimppathtool.c:833
+msgid "Vector Layer"
+msgstr "ვექტორული ფენა"
+
+#: app/path/gimpvectorlayer.c:169
+msgid "Rename Vector Layer"
+msgstr "ვექტორული ფენის ხელის გადარქმევა"
+
+#: app/path/gimpvectorlayer.c:170
+msgid "Move Vector Layer"
+msgstr "ვექტორის ფენის გადატანა"
+
+#: app/path/gimpvectorlayer.c:171
+msgid "Scale Vector Layer"
+msgstr "ვექტორული ფენის მასშტაბირება"
+
+#: app/path/gimpvectorlayer.c:172
+msgid "Resize Vector Layer"
+msgstr "ვექტორული ფენის ზომის შეცვლა"
+
+#: app/path/gimpvectorlayer.c:173
+msgid "Flip Vector Layer"
+msgstr "ვექტორული ფენის გადაბრუნება"
+
+#: app/path/gimpvectorlayer.c:174
+msgid "Rotate Vector Layer"
+msgstr "ვექტორული ფენის შებრუნება"
+
+#: app/path/gimpvectorlayer.c:175
+msgid "Transform Vector Layer"
+msgstr "ვექტორული ფენის ტრანსფორმირება"
+
+#: app/path/gimpvectorlayer.c:524
+msgid "Discard Vector Informations"
+msgstr "ვექტორის ინფორმაციების მოცილება"
+
+#: app/path/gimpvectorlayer.c:648
+msgid "Discard Vector Information"
+msgstr "ვექტორის ინფორმაციის მოცილება"
+
+#: app/path/gimpvectorlayeroptions.c:114
+msgid "Fill Style"
+msgstr "შევსების სტილი"
+
+#: app/path/gimpvectorlayeroptions.c:126
+msgid "Stroke Style"
+msgstr "შემოსაზღვრის სტილი"
+
 #: app/pdb/channel-cmds.c:199
 msgid "Combine Masks"
 msgstr "ნიღბების შეერთება"
@@ -21508,6 +21572,11 @@ msgstr "ტექსტის ფენის ატრიბუტის და
 msgid "Set text layer markup"
 msgstr "ტექსტის ფენის ატრიბუტის დაყენება"
 
+#: app/pdb/vector-layer-cmds.c:71 app/pdb/vector-layer-cmds.c:83
+#, c-format
+msgid "Failed to create vector layer"
+msgstr "ვექტორული ფენის შექმნის შეცდომა"
+
 #: app/plug-in/gimpenvirontable.c:329
 #, c-format
 msgid "Empty variable name in environment file %s"
@@ -22089,7 +22158,7 @@ msgstr "ტექსტური ფენა"
 
 #: app/text/gimptextlayer.c:161
 msgid "Rename Text Layer"
-msgstr "ტექსტური ფენის გადარქმევა"
+msgstr "ტექსტური ფენის სახელის გადარქმევა"
 
 #: app/text/gimptextlayer.c:162
 msgid "Move Text Layer"
@@ -24278,10 +24347,6 @@ msgstr "კონტურების ხელსაწყო: შექმე
 #: app/tools/gimppathtool.c:169
 msgid "Pat_hs"
 msgstr "კონტურე_ბი"
-
-#: app/tools/gimppathtool.c:833
-msgid "Vector Layer"
-msgstr "ვექტორული ფენა"
 
 #: app/tools/gimppenciltool.c:54
 msgid "Pencil Tool: Hard edge painting using a brush"
@@ -29036,10 +29101,6 @@ msgstr "დაბრუნების ისტორია"
 #~ msgctxt "undo-type"
 #~ msgid "Apply Canvas"
 #~ msgstr "ტილოზე დადება"
-
-#~ msgctxt "undo-type"
-#~ msgid "Apply Lens"
-#~ msgstr "ლინზის დადება"
 
 #~ msgctxt "undo-type"
 #~ msgid "Stretch Contrast HSV"
