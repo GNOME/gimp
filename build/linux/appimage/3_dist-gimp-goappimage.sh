@@ -175,7 +175,8 @@ bund_usr ()
                    $(dirname $(echo $2 | sed "s|lib/|/usr/${LIB_DIR}/|g" | sed "s|*|no_scape|g"))"
       ;;
     share*|include*|etc*)
-      search_path="$(dirname $(echo $2 | sed "s|${2%%/*}|$1/${2%%/*}|g" | sed "s|*|no_scape|g"))"
+      search_path="$(dirname $(echo $2 | sed "s|${2%%/*}|$1/${2%%/*}|g" | sed "s|*|no_scape|g")) \
+                   $(dirname $(echo /$2 | sed "s|*|no_scape|g"))"
       ;;
   esac
   for path in $search_path; do
@@ -186,7 +187,7 @@ bund_usr ()
 
     #Copy found targets from search_path to bundle dir
     for target_path in $(find $expanded_path -maxdepth 1 -name ${2##*/}); do
-      dest_path="$(dirname $(echo $target_path | sed "s|$1/|${USR_DIR}/|g"))"
+      dest_path="$(dirname $(echo $target_path | sed -e "s|^$1/|${USR_DIR}/|" -e t -e "s|^/|${USR_DIR}/|"))"
       output_dest_path="$dest_path"
       if [ "$3" = '--dest' ] || [ "$3" = '--rename' ]; then
         if [ "$3" = '--dest' ]; then
@@ -366,11 +367,13 @@ bund_usr "$GIMP_PREFIX" "bin/gimp-debug-tool*" --dest "libexec"
 ### Introspected plug-ins
 bund_usr "$GIMP_PREFIX" "lib/girepository-*/*.typelib"
 conf_app GI_TYPELIB_PATH "${LIB_DIR}/${LIB_SUBDIR}girepository-*"
-#### Python plug-ins support
+#### Python plug-ins support (including internet support for .py plug-ins)
 bund_usr "$UNIX_PREFIX" "bin/python*"
 bund_usr "$UNIX_PREFIX" "lib/python*"
 wipe_usr ${LIB_DIR}/*.pyc
 conf_app PYTHONDONTWRITEBYTECODE "1" --no-expand
+bund_usr "$UNIX_PREFIX" "etc/ssl/certs"
+conf_app SSL_CERT_DIR "etc/ssl/certs"
 #### JavaScript plug-ins support
 bund_usr "$UNIX_PREFIX" "bin/gjs*"
 bund_usr "$UNIX_PREFIX" "lib/gjs/girepository-1.0/Gjs*" --dest "${LIB_DIR}/${LIB_SUBDIR}girepository-1.0"

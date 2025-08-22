@@ -282,7 +282,7 @@ gimp-debian:
     - printf "\e[0Ksection_start:`date +%s`:gimp_bundle[collapsed=true]\r\e[0KCreating bundle\n"
     - ninja install > ninja_install.log 2>&1 || { cat ninja_install.log; exit 1; }
     - cd ..
-    - sh build/linux/appimage/3_dist-gimp-goappimage.sh --bundle-only > goappimage.log 2>&1 || { cat goappimage.log; exit 1; }
+    - sh -x build/linux/appimage/3_dist-gimp-goappimage.sh --bundle-only
     - printf "\e[0Ksection_end:`date +%s`:gimp_bundle\r\e[0K\n"
   artifacts:
     paths:
