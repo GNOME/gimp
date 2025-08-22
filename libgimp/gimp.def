@@ -99,6 +99,8 @@ EXPORTS
 	gimp_context_get_line_width_unit
 	gimp_context_get_mypaint_brush
 	gimp_context_get_opacity
+	gimp_context_get_paint_fade_length
+	gimp_context_get_paint_fade_repeat
 	gimp_context_get_paint_method
 	gimp_context_get_paint_mode
 	gimp_context_get_palette
@@ -162,6 +164,8 @@ EXPORTS
 	gimp_context_set_line_width_unit
 	gimp_context_set_mypaint_brush
 	gimp_context_set_opacity
+	gimp_context_set_paint_fade_length
+	gimp_context_set_paint_fade_repeat
 	gimp_context_set_paint_method
 	gimp_context_set_paint_mode
 	gimp_context_set_palette

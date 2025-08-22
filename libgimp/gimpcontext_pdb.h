@@ -105,6 +105,10 @@ GimpRepeatMode                gimp_context_get_gradient_repeat_mode       (void)
 gboolean                      gimp_context_set_gradient_repeat_mode       (GimpRepeatMode                 repeat_mode);
 gboolean                      gimp_context_get_gradient_reverse           (void);
 gboolean                      gimp_context_set_gradient_reverse           (gboolean                       reverse);
+gdouble                       gimp_context_get_paint_fade_length          (void);
+gboolean                      gimp_context_set_paint_fade_length          (gdouble                        fade_length);
+GimpRepeatMode                gimp_context_get_paint_fade_repeat          (void);
+gboolean                      gimp_context_set_paint_fade_repeat          (GimpRepeatMode                 fade_repeat);
 GimpPalette*                  gimp_context_get_palette                    (void);
 gboolean                      gimp_context_set_palette                    (GimpPalette                   *palette);
 GimpFont*                     gimp_context_get_font                       (void);

@@ -1451,18 +1451,25 @@ context_get_emulate_brush_dynamics_invoker (GimpProcedure         *procedure,
                                             const GimpValueArray  *args,
                                             GError               **error)
 {
+  gboolean success = TRUE;
   GimpValueArray *return_vals;
   gboolean emulate_dynamics = FALSE;
 
   GimpStrokeOptions *options =
     gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
 
-  g_object_get (options,
-                "emulate-brush-dynamics", &emulate_dynamics,
-                NULL);
+  if (options)
+    g_object_get (options,
+                  "emulate-brush-dynamics", &emulate_dynamics,
+                  NULL);
+  else
+    success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_boolean (gimp_value_array_index (return_vals, 1), emulate_dynamics);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_boolean (gimp_value_array_index (return_vals, 1), emulate_dynamics);
 
   return return_vals;
 }
@@ -1877,6 +1884,125 @@ context_set_gradient_reverse_invoker (GimpProcedure         *procedure,
         g_object_set (list->data,
                       "gradient-reverse", reverse,
                        NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+context_get_paint_fade_length_invoker (GimpProcedure         *procedure,
+                                       Gimp                  *gimp,
+                                       GimpContext           *context,
+                                       GimpProgress          *progress,
+                                       const GimpValueArray  *args,
+                                       GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  gdouble fade_length = 0.0;
+
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-paintbrush");
+
+  if (options)
+    g_object_get (options,
+                  "fade-length", &fade_length,
+                  NULL);
+  else
+    success = FALSE;
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_double (gimp_value_array_index (return_vals, 1), fade_length);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+context_set_paint_fade_length_invoker (GimpProcedure         *procedure,
+                                       Gimp                  *gimp,
+                                       GimpContext           *context,
+                                       GimpProgress          *progress,
+                                       const GimpValueArray  *args,
+                                       GError               **error)
+{
+  gboolean success = TRUE;
+  gdouble fade_length;
+
+  fade_length = g_value_get_double (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpPaintOptions *options =
+        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                            "gimp-paintbrush");
+
+      g_object_set (options,
+                    "fade-length", fade_length,
+                    NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+context_get_paint_fade_repeat_invoker (GimpProcedure         *procedure,
+                                       Gimp                  *gimp,
+                                       GimpContext           *context,
+                                       GimpProgress          *progress,
+                                       const GimpValueArray  *args,
+                                       GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  gint fade_repeat = 0;
+
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-paintbrush");
+
+  if (options)
+    g_object_get (options,
+                  "fade-repeat", &fade_repeat,
+                  NULL);
+  else
+    success = FALSE;
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_enum (gimp_value_array_index (return_vals, 1), fade_repeat);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+context_set_paint_fade_repeat_invoker (GimpProcedure         *procedure,
+                                       Gimp                  *gimp,
+                                       GimpContext           *context,
+                                       GimpProgress          *progress,
+                                       const GimpValueArray  *args,
+                                       GError               **error)
+{
+  gboolean success = TRUE;
+  gint fade_repeat;
+
+  fade_repeat = g_value_get_enum (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpPaintOptions *options =
+        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                            "gimp-paintbrush");
+      g_object_set (options,
+                    "fade-repeat", fade_repeat,
+                    NULL);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -4733,6 +4859,100 @@ register_context_procs (GimpPDB *pdb)
                                                      "Reverse",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-paint-fade-length
+   */
+  procedure = gimp_procedure_new (context_get_paint_fade_length_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-paint-fade-length");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the paint fade length.",
+                                  "Get the paint fade length for paint tools and the gradient tool.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alx Sa.",
+                                         "Alx Sa.",
+                                         "2025");
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("fade-length",
+                                                        "fade length",
+                                                        "The paint fade length setting",
+                                                        0.0, 32767.0, 0.0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-paint-fade-length
+   */
+  procedure = gimp_procedure_new (context_set_paint_fade_length_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-paint-fade-length");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the paint fade length.",
+                                  "Set the paint fade length for paint tools and the gradient tool.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alx Sa.",
+                                         "Alx Sa.",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("fade-length",
+                                                    "fade length",
+                                                    "The paint fade length setting",
+                                                    0.0, 32767.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-paint-fade-repeat
+   */
+  procedure = gimp_procedure_new (context_get_paint_fade_repeat_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-paint-fade-repeat");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the paint fade repeat type.",
+                                  "Get the paint fade repeat type for paint tools and the gradient tool.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alx Sa.",
+                                         "Alx Sa.",
+                                         "2025");
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_enum ("fade-repeat",
+                                                      "fade repeat",
+                                                      "The paint fade repeat type setting",
+                                                      GIMP_TYPE_REPEAT_MODE,
+                                                      GIMP_REPEAT_NONE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-paint-fade-repeat
+   */
+  procedure = gimp_procedure_new (context_set_paint_fade_repeat_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-paint-fade-repeat");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the paint fade repeat type.",
+                                  "Set the paint fade repeat type for paint tools and the gradient tool.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alx Sa.",
+                                         "Alx Sa.",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("fade-repeat",
+                                                  "fade repeat",
+                                                  "The paint fade repeat type setting",
+                                                  GIMP_TYPE_REPEAT_MODE,
+                                                  GIMP_REPEAT_NONE,
+                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
