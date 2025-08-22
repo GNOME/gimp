@@ -185,7 +185,7 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
       if (gimp_update_metadata ())
         {
           /* XMP uses datetime in ISO 8601 format */
-          datetime_buf = g_date_time_format (datetime, "%Y:%m:%dT%T\%:z");
+          datetime_buf = g_date_time_format (datetime, "%Y-%m-%dT%T\%:z");
 
           gexiv2_metadata_try_set_tag_string (g2metadata,
                                               "Xmp.xmp.ModifyDate",
