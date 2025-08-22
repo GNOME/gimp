@@ -415,6 +415,7 @@ send_image (GObject       *config,
     }
   if (receipt != NULL && strlen (receipt) > 0)
     {
+      mailcmd[i++] = "--to";
       mailcmd[i++] = receipt;
     }
   mailcmd[i] = NULL;
