@@ -7,6 +7,7 @@ publisher stops supporting it, or if it is nearly not used anymore.
 There is no accurate rule though, and it also mostly depends on what the
 developers maintaining GIMP for this platform will decide.
 
+
 ### GNU/Linux, *BSD…
 
 Debian 12 "bookworm" stable is our baseline target.
@@ -18,13 +19,20 @@ If you update this file, so update DEB_VERSION
 on .gitlab-ci.yml of this repo and
 min-support on content/gimp_versions.json of gimp-web repo)
 
+
 ### macOS
 
 Compatibility with MacOS 11 and over.
 
+(NOTE TO MAINTAINERS:
+If you update this file, so update LSMinimumSystemVersion
+on package/info.plist.tmpl of gimp-macos-build repo and
+min-support on content/gimp_versions.json of gimp-web repo)
+
 Hardware:
 * x86_64 (Intel)
 * ARM 64-bit (Apple Silicon)
+
 
 ### Windows
 
