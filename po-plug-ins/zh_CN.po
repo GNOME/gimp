@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-08-16 23:00+0000\n"
-"PO-Revision-Date: 2025-08-17 08:00+0800\n"
+"POT-Creation-Date: 2025-08-21 23:21+0000\n"
+"PO-Revision-Date: 2025-08-22 09:07+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -11364,6 +11364,16 @@ msgstr "第 %d 帧（%dms）"
 msgid "Allowed values:"
 msgstr "允许的值："
 
+#: plug-ins/filter-browser/filter-browser.c:420
+#, c-format
+msgid "Operation name: %s"
+msgstr "操作名称：%s"
+
+#: plug-ins/filter-browser/filter-browser.c:433
+#, c-format
+msgid "Categories: %s"
+msgstr "类别：%s"
+
 #.
 #. *  Scales
 #.
@@ -11381,6 +11391,11 @@ msgstr "参数"
 #: plug-ins/filter-browser/filter-browser.c:495
 msgid "Additional Information"
 msgstr "附加信息"
+
+#: plug-ins/filter-browser/filter-browser.c:501
+#, c-format
+msgid "License: %s"
+msgstr "许可证：%s"
 
 #: plug-ins/filter-browser/filter-browser.c:612
 msgid "Searching by title"
