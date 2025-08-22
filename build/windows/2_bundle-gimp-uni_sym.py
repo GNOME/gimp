@@ -3,6 +3,11 @@ import os
 import shutil
 import fnmatch
 
+if not os.getenv("MESON_BUILD_ROOT"):
+  # On Windows, this script is run if meson option 'win-debugging' is set to 'native'
+  print("\033[31m(ERROR)\033[0m: Script called standalone. Please just build GIMP on Windows and this script will be called if needed.")
+  sys.exit(1)
+
 # This .py script should not even exist
 # Ideally meson should take care of it automatically.
 # See: https://github.com/mesonbuild/meson/issues/12977
