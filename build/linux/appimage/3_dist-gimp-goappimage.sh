@@ -175,7 +175,8 @@ bund_usr ()
                    $(dirname $(echo $2 | sed "s|lib/|/usr/${LIB_DIR}/|g" | sed "s|*|no_scape|g"))"
       ;;
     share*|include*|etc*)
-      search_path="$(dirname $(echo $2 | sed "s|${2%%/*}|$1/${2%%/*}|g" | sed "s|*|no_scape|g"))"
+      search_path="$(dirname $(echo $2 | sed "s|${2%%/*}|$1/${2%%/*}|g" | sed "s|*|no_scape|g")) \
+                   $(dirname $(echo /$2 | sed "s|*|no_scape|g"))"
       ;;
   esac
   for path in $search_path; do
@@ -186,7 +187,7 @@ bund_usr ()
 
     #Copy found targets from search_path to bundle dir
     for target_path in $(find $expanded_path -maxdepth 1 -name ${2##*/}); do
-      dest_path="$(dirname $(echo $target_path | sed "s|$1/|${USR_DIR}/|g"))"
+      dest_path="$(dirname $(echo $target_path | sed -e "s|^$1/|${USR_DIR}/|" -e t -e "s|^/|${USR_DIR}/|"))"
       output_dest_path="$dest_path"
       if [ "$3" = '--dest' ] || [ "$3" = '--rename' ]; then
         if [ "$3" = '--dest' ]; then
