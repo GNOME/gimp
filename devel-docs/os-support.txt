@@ -15,7 +15,8 @@ bookworm. See: https://developer.gimp.org/core/setup/build/linux/#supported-dist
 
 (NOTE TO MAINTAINERS:
 If you update this file, so update DEB_VERSION
-on .gitlab-ci.yml too)
+on .gitlab-ci.yml of this repo and
+min-support on content/gimp_versions.json of gimp-web repo)
 
 ### macOS
 
@@ -32,7 +33,8 @@ Windows 10.0.18362.0 (aka 1903) and over.
 (NOTE TO MAINTAINERS:
 If you update this file, so update MinVersion
 on build/windows/installer/*gimp3264.iss and
-on build/windows/store/AppxManifest.xml too)
+on build/windows/store/AppxManifest.xml of this repo and
+min-support on content/gimp_versions.json of gimp-web repo)
 
 Hardware:
 * x86 32 and 64-bit
