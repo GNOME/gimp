@@ -1167,6 +1167,9 @@ gimp_clipboard_send_image (GtkClipboard     *clipboard,
 {
   GimpClipboard *gimp_clip = gimp_clipboard_get (gimp);
 
+  if (gimp_clip == NULL)
+    return;
+
   gimp_set_busy (gimp);
 
   if (info == 0)
@@ -1249,6 +1252,9 @@ gimp_clipboard_send_buffer (GtkClipboard     *clipboard,
   GimpClipboard *gimp_clip = gimp_clipboard_get (gimp);
   GdkPixbuf     *pixbuf;
 
+  if (gimp_clip == NULL)
+    return;
+
   gimp_set_busy (gimp);
 
   pixbuf = gimp_viewable_get_pixbuf (GIMP_VIEWABLE (gimp_clip->buffer),
@@ -1293,6 +1299,9 @@ gimp_clipboard_send_svg (GtkClipboard     *clipboard,
 {
   GimpClipboard *gimp_clip = gimp_clipboard_get (gimp);
 
+  if (gimp_clip == NULL)
+    return;
+
   gimp_set_busy (gimp);
 
   if (gimp_clip->svg)
@@ -1316,6 +1325,9 @@ gimp_clipboard_send_curve (GtkClipboard     *clipboard,
                            Gimp             *gimp)
 {
   GimpClipboard *gimp_clip = gimp_clipboard_get (gimp);
+
+  if (gimp_clip == NULL)
+    return;
 
   gimp_set_busy (gimp);
 
