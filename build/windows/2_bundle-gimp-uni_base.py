@@ -7,6 +7,8 @@ import sys
 from pathlib import Path
 from glob import glob
 
+# This script is used to create a GIMP bundle dir on Windows. A bundle
+# is used as source of files for making both .exe installer and .msix package
 if not os.getenv("MESON_BUILD_ROOT"):
   # Let's prevent contributors from creating broken bundles
   print("\033[31m(ERROR)\033[0m: Script called standalone. Please build GIMP targeting installer or msix creation.")
