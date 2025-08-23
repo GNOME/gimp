@@ -762,17 +762,17 @@ compose_run (GimpProcedure        *procedure,
         }
     }
 
-    if (strcmp (name, RECOMPOSE_PROC) != 0)
-      {
-        compose_idx = gimp_procedure_config_get_choice_id (config, "compose-type");
+  if (strcmp (name, RECOMPOSE_PROC) != 0)
+    {
+      compose_idx = gimp_procedure_config_get_choice_id (config, "compose-type");
 
-        if (compose_idx >= 0 && compose_idx < G_N_ELEMENTS (compose_dsc))
-          {
-            g_strlcpy (composevals.compose_type,
-                       compose_dsc[compose_idx].compose_type,
-                       sizeof (composevals.compose_type));
-          }
-      }
+      if (compose_idx >= 0 && compose_idx < G_N_ELEMENTS (compose_dsc))
+        {
+          g_strlcpy (composevals.compose_type,
+                     compose_dsc[compose_idx].compose_type,
+                     sizeof (composevals.compose_type));
+        }
+    }
 
   gimp_progress_init (_("Composing"));
 

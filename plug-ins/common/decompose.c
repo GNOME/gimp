@@ -217,11 +217,11 @@ static const Extract extract[] =
 
   { N_("LCH"), "CIE LCH(ab)", TRUE, 3, FALSE, { CPN_LCH_L, CPN_LCH_C, CPN_LCH_H } },
 
-  { N_("YCbCr470"),  "Y'CbCr", TRUE, 3, FALSE, { CPN_YCBCR_Y, CPN_YCBCR_CB, CPN_YCBCR_CR} },
-  { N_("YCbCr470f"), "Y'CbCr", TRUE, 3, TRUE,  { CPN_YCBCR_Y, CPN_YCBCR_CB, CPN_YCBCR_CR} },
+  { N_("YCbCr_ITU_R470"), "Y'CbCr", TRUE, 3, FALSE, { CPN_YCBCR_Y, CPN_YCBCR_CB, CPN_YCBCR_CR} },
+  { N_("YCbCr_ITU_R709"), "Y'CbCr", TRUE, 3, TRUE,  { CPN_YCBCR_Y, CPN_YCBCR_CB, CPN_YCBCR_CR} },
 
-  { N_("YCbCr709"),  "Y'CbCr709", TRUE, 3, FALSE, { CPN_YCBCR709_Y, CPN_YCBCR709_CB, CPN_YCBCR709_CR} },
-  { N_("YCbCr709f"), "Y'CbCr709", TRUE, 3, TRUE,  { CPN_YCBCR709_Y, CPN_YCBCR709_CB, CPN_YCBCR709_CR} }
+  { N_("YCbCr_ITU_R470_256"), "Y'CbCr709", TRUE, 3, FALSE, { CPN_YCBCR709_Y, CPN_YCBCR709_CB, CPN_YCBCR709_CR} },
+  { N_("YCbCr_ITU_R709_256"), "Y'CbCr709", TRUE, 3, TRUE,  { CPN_YCBCR709_Y, CPN_YCBCR709_CB, CPN_YCBCR709_CR} }
 };
 
 
@@ -296,18 +296,18 @@ decompose_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_add_choice_argument (procedure, "decompose-type",
                                           _("Color _model"),
                                           _("The model to decompose to"),
-                                          gimp_choice_new_with_values ("rgb",        0, _("RGB"),                NULL,
-                                                                       "rgba",       1, _("RGBA"),               NULL,
-                                                                       "alpha",      2, _("Alpha"),              NULL,
-                                                                       "hsv",        3, _("HSV"),                NULL,
-                                                                       "hsl",        4, _("HSL"),                NULL,
-                                                                       "cmyk",       5, _("CMYK"),               NULL,
-                                                                       "lab",        6, _("LAB"),                NULL,
-                                                                       "lch",        7, _("LCH"),                NULL,
-                                                                       "ycbcr470",   8, _("YCbCr ITU R470"),     NULL,
-                                                                       "ycbcr709",   9, _("YCbCr ITU R709"),     NULL,
-                                                                       "ycbcr470f", 10, _("YCbCr ITU R470 256"), NULL,
-                                                                       "ycbcr709f", 11, _("YCbCr ITU R709 256"), NULL,
+                                          gimp_choice_new_with_values ("rgb",                 0, _("RGB"),                NULL,
+                                                                       "rgba",                1, _("RGBA"),               NULL,
+                                                                       "alpha",               2, _("Alpha"),              NULL,
+                                                                       "hsv",                 3, _("HSV"),                NULL,
+                                                                       "hsl",                 4, _("HSL"),                NULL,
+                                                                       "cmyk",                5, _("CMYK"),               NULL,
+                                                                       "lab",                 6, _("LAB"),                NULL,
+                                                                       "lch",                 7, _("LCH"),                NULL,
+                                                                       "ycbcr_itu_r470",      8, _("YCbCr ITU R470"),     NULL,
+                                                                       "ycbcr_itu_r709",      9, _("YCbCr ITU R709"),     NULL,
+                                                                       "ycbcr_itu_r470_256", 10, _("YCbCr ITU R470 256"), NULL,
+                                                                       "ycbcr_itu_r709_256", 11, _("YCbCr ITU R709 256"), NULL,
                                                                        NULL),
                                           "rgb",
                                           G_PARAM_READWRITE);
@@ -473,7 +473,7 @@ decompose (GimpImage    *image,
   GeglBuffer    *src_buffer;
   GeglBuffer    *dst_buffer[MAX_EXTRACT_IMAGES];
   GimpPrecision  precision;
-  gboolean       requirements      = FALSE;
+  gboolean       requirements     = FALSE;
   gboolean       decomp_has_alpha = FALSE;
   gchar         *config_extract_type;
   gboolean       config_as_layers;
