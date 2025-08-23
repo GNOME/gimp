@@ -599,6 +599,28 @@ gimp_procedure_create_config_with_prefix (GimpProcedure  *procedure,
                        NULL);
 }
 
+static gchar *
+sanitize_menu_path_separators (const gchar *menu_path)
+{
+  gchar *menu_path_clean = g_strdup (menu_path);
+  gchar *hit             = NULL;
+
+  /* Get rid of all trailing path separators */
+  while (g_str_has_suffix (menu_path_clean, "/"))
+    menu_path_clean[strlen (menu_path_clean) - 1] = '\0';
+
+  /* Search the menu path for all occurences of doubled path separators. */
+  while ((hit = strstr (menu_path_clean, "//")) != 0)
+    {
+      /* Shift the string by one to overwrite the first path separator while
+       * preserving the end of the string without having to re-allocate. */
+      for (; *hit != '\0'; hit++)
+        *hit = *(hit+1);
+    }
+
+  return menu_path_clean;
+}
+
 
 /*  public functions  */
 
@@ -962,7 +984,8 @@ void
 gimp_procedure_add_menu_path (GimpProcedure *procedure,
                               const gchar   *menu_path)
 {
-  GimpProcedurePrivate *priv;
+  GimpProcedurePrivate *priv            = NULL;
+  gchar                *menu_path_clean = NULL;
 
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
   g_return_if_fail (menu_path != NULL);
@@ -971,11 +994,14 @@ gimp_procedure_add_menu_path (GimpProcedure *procedure,
 
   g_return_if_fail (priv->menu_label != NULL);
 
-  priv->menu_paths = g_list_append (priv->menu_paths, g_strdup (menu_path));
+  /* sanitize_menu_path_separators already creates a copy of menu_path */
+  menu_path_clean = sanitize_menu_path_separators (menu_path);
+
+  priv->menu_paths = g_list_append (priv->menu_paths, menu_path_clean);
 
   if (priv->installed)
     _gimp_pdb_add_proc_menu_path (gimp_procedure_get_name (procedure),
-                                  menu_path);
+                                  menu_path_clean);
 }
 
 /**
