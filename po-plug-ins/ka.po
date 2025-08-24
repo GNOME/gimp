@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-08-17 09:20+0000\n"
-"PO-Revision-Date: 2025-08-17 12:19+0200\n"
+"POT-Creation-Date: 2025-08-22 01:20+0000\n"
+"PO-Revision-Date: 2025-08-22 06:03+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.7\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:113
 msgid "Plug-In Example in _C"
@@ -11153,6 +11153,16 @@ msgstr ""
 msgid "Allowed values:"
 msgstr "ნებადართული მნიშვნელობები:"
 
+#: plug-ins/filter-browser/filter-browser.c:420
+#, c-format
+msgid "Operation name: %s"
+msgstr "ოპერაციის სახელი: %s"
+
+#: plug-ins/filter-browser/filter-browser.c:433
+#, c-format
+msgid "Categories: %s"
+msgstr "კატეგორიები: %s"
+
 #.
 #. *  Scales
 #.
@@ -11170,6 +11180,11 @@ msgstr "პარამეტრები"
 #: plug-ins/filter-browser/filter-browser.c:495
 msgid "Additional Information"
 msgstr "დამატებითი პარამეტრები"
+
+#: plug-ins/filter-browser/filter-browser.c:501
+#, c-format
+msgid "License: %s"
+msgstr "ლიცენზია: %s"
 
 #: plug-ins/filter-browser/filter-browser.c:612
 msgid "Searching by title"
@@ -14368,19 +14383,19 @@ msgstr "ღია 2"
 
 #: plug-ins/lighting/lighting-main.c:195
 msgid "Light 3"
-msgstr ""
+msgstr "სინათლე 3"
 
 #: plug-ins/lighting/lighting-main.c:196
 msgid "Light 4"
-msgstr ""
+msgstr "სინათლე 4"
 
 #: plug-ins/lighting/lighting-main.c:197
 msgid "Light 5"
-msgstr ""
+msgstr "სინათლე 5"
 
 #: plug-ins/lighting/lighting-main.c:198
 msgid "Light 6"
-msgstr ""
+msgstr "სინათლე 6"
 
 #: plug-ins/lighting/lighting-main.c:204
 msgid "Isolate"
