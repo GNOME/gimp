@@ -2,7 +2,6 @@
  * GIMP plug-in for browsing available GEGL filters.
  *
  * Copyright (C) 2025 Ondřej Míchal <harrymichal@seznam.cz>
- * Copyright (C) 2017 Øyvind Kolås <pippin@gimp.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
