@@ -64,6 +64,11 @@ struct _GimpClipboard
   GimpBuffer     *buffer;
   gchar          *svg;
   GimpCurve      *curve;
+
+#ifdef G_OS_WIN32
+  gboolean        storing;
+  guint           max_info;
+#endif
 };
 
 
@@ -114,6 +119,11 @@ gimp_clipboard_init (Gimp *gimp)
 
   gimp_clip = gimp_clipboard_new (gimp->be_verbose);
 
+#ifdef G_OS_WIN32
+  gimp_clip->storing  = FALSE;
+  gimp_clip->max_info = 1;
+#endif
+
   g_object_set_data_full (G_OBJECT (gimp), GIMP_CLIPBOARD_KEY,
                           gimp_clip, (GDestroyNotify) gimp_clipboard_free);
 }
@@ -131,6 +141,11 @@ gimp_clipboard_exit (Gimp *gimp)
   if (clipboard &&
       gtk_clipboard_get_owner (clipboard) == G_OBJECT (gimp))
     {
+#ifdef G_OS_WIN32
+      GimpClipboard *gimp_clip = gimp_clipboard_get (gimp);
+
+      gimp_clip->storing = TRUE;
+#endif
       gtk_clipboard_store (clipboard);
     }
 
@@ -1166,6 +1181,28 @@ gimp_clipboard_send_image (GtkClipboard     *clipboard,
     {
       GdkPixbuf *pixbuf;
 
+#ifdef G_OS_WIN32
+      /* On Windows gtk_clipboard_store ignores the number of items we have
+       * set to be stored, instead storing all. Since this can be a long list,
+       * shutting down GIMP on Windows can take considerable time when you
+       * have a larger selection on the clipboard. So we manually stop
+       * handling every target larger than 1 (png) and even stop handling
+       * png after the first time, since it often gets called multiple times
+       * for png.
+       */
+      if (gimp_clip->storing)
+        {
+          if (info > gimp_clip->max_info)
+            {
+              gimp_unset_busy (gimp);
+              return;
+            }
+          else
+            {
+              gimp_clip->max_info = 0;
+            }
+        }
+#endif
       gimp_pickable_flush (GIMP_PICKABLE (gimp_clip->image));
 
       pixbuf = gimp_viewable_get_pixbuf (GIMP_VIEWABLE (gimp_clip->image),
