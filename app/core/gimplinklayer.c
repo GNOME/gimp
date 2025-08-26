@@ -686,20 +686,16 @@ gimp_link_layer_convert_type (GimpLayer         *layer,
   GimpLinkLayer *link_layer = GIMP_LINK_LAYER (layer);
   GimpImage     *image      = gimp_item_get_image (GIMP_ITEM (link_layer));
 
-  if (! link_layer->p->link   ||
-      ! gimp_link_is_monitored (link_layer->p->link) ||
-      layer_dither_type != GEGL_DITHER_NONE)
-    {
-      GIMP_LAYER_CLASS (parent_class)->convert_type (layer, dest_image,
-                                                     new_format,
-                                                     src_profile,
-                                                     dest_profile,
-                                                     layer_dither_type,
-                                                     mask_dither_type,
-                                                     push_undo,
-                                                     progress);
-    }
-  else
+  GIMP_LAYER_CLASS (parent_class)->convert_type (layer, dest_image,
+                                                 new_format,
+                                                 src_profile,
+                                                 dest_profile,
+                                                 layer_dither_type,
+                                                 mask_dither_type,
+                                                 push_undo,
+                                                 progress);
+
+  if (link_layer->p->link && gimp_link_is_monitored (link_layer->p->link))
     {
       if (push_undo)
         gimp_image_undo_push_link_layer (image, NULL, link_layer);
