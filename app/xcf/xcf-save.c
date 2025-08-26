@@ -741,9 +741,11 @@ xcf_save_layer_props (XcfInfo    *info,
     {
       xcf_check_error (xcf_save_prop (info, image, PROP_VECTOR_LAYER, error, layer), ;);
     }
-
-  if (GIMP_IS_LINK_LAYER (layer))
-    xcf_check_error (xcf_save_prop (info, image, PROP_LINK_LAYER_DATA, error, layer), ;);
+  else if (GIMP_IS_LINK_LAYER (layer))
+    {
+      xcf_check_error (xcf_save_prop (info, image, PROP_LINK_LAYER, error, layer), ;);
+      xcf_check_error (xcf_save_prop (info, image, PROP_TRANSFORM, error, layer), ;);
+    }
 
   if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
     {
@@ -1729,7 +1731,7 @@ xcf_save_prop (XcfInfo    *info,
       }
     break;
 
-    case PROP_LINK_LAYER_DATA:
+    case PROP_LINK_LAYER:
       {
         GimpLinkLayer *layer = va_arg (args, GimpLinkLayer *);
         gchar         *path  = NULL;
@@ -1738,7 +1740,7 @@ xcf_save_prop (XcfInfo    *info,
         flags = gimp_link_layer_get_xcf_flags (layer);
         gimp_link_get_file (gimp_link_layer_get_link (layer), info->file, &path);
 
-        size = 4 + strlen (path) ? strlen (path) + 5 : 4;
+        size = 4 + (strlen (path) ? strlen (path) + 1 : 4);
 
         xcf_write_prop_type_check_error (info, prop_type, va_end (args));
         xcf_write_int32_check_error (info, &size, 1, va_end (args));
@@ -1747,6 +1749,44 @@ xcf_save_prop (XcfInfo    *info,
         xcf_write_string_check_error (info, (gchar **) &path, 1, va_end (args));
 
         g_free (path);
+      }
+      break;
+
+    case PROP_TRANSFORM:
+      {
+        GimpLinkLayer         *layer = va_arg (args, GimpLinkLayer *);
+        GimpMatrix3            matrix;
+        gint                   offset_x;
+        gint                   offset_y;
+        GimpInterpolationType  interpolation;
+        gint32                 int_val;
+        guint32                uint_val;
+        gfloat                 mfloat[9];
+
+        gimp_link_layer_get_transform (layer, &matrix, &offset_x, &offset_y, &interpolation);
+
+        size = 4 * 12;
+
+        xcf_write_prop_type_check_error (info, prop_type, va_end (args));
+        xcf_write_int32_check_error (info, &size, 1, va_end (args));
+
+        int_val = (gint32) offset_x;
+        xcf_write_int32_check_error (info, (guint32 *) &int_val, 1, va_end (args));
+        int_val = (gint32) offset_y;
+        xcf_write_int32_check_error (info, (guint32 *) &int_val, 1, va_end (args));
+        uint_val = (guint32) interpolation;
+        xcf_write_int32_check_error (info, &uint_val, 1, va_end (args));
+
+        mfloat[0] = matrix.coeff[0][0];
+        mfloat[1] = matrix.coeff[0][1];
+        mfloat[2] = matrix.coeff[0][2];
+        mfloat[3] = matrix.coeff[1][0];
+        mfloat[4] = matrix.coeff[1][1];
+        mfloat[5] = matrix.coeff[1][2];
+        mfloat[6] = matrix.coeff[2][0];
+        mfloat[7] = matrix.coeff[2][1];
+        mfloat[8] = matrix.coeff[2][2];
+        xcf_write_float_check_error (info, mfloat, 9, va_end (args));
       }
       break;
 

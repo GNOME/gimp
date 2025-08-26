@@ -73,7 +73,8 @@ typedef enum
   PROP_FILTER_ARGUMENT    = 45,
   PROP_FILTER_CLIP        = 46,
   PROP_VECTOR_LAYER       = 47,
-  PROP_LINK_LAYER_DATA    = 48,
+  PROP_LINK_LAYER         = 48,
+  PROP_TRANSFORM          = 49,
 } PropType;
 
 typedef enum

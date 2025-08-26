@@ -81,6 +81,5 @@ gboolean    gimp_link_layer_set_transform        (GimpLinkLayer         *layer,
 /* Only to be used for XCF loading/saving. */
 
 guint32     gimp_link_layer_get_xcf_flags        (GimpLinkLayer         *layer);
-void        gimp_link_layer_from_layer           (GimpLayer            **layer,
-                                                  GimpLink              *link,
+void        gimp_link_layer_set_xcf_flags        (GimpLinkLayer         *layer,
                                                   guint32                flags);

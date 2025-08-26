@@ -148,6 +148,14 @@ typedef struct
   gdouble         *stroke_dashes;
 } VectorLayerData;
 
+typedef struct
+{
+  gint                  offset_x;
+  gint                  offset_y;
+  GimpInterpolationType interpolation;
+  GimpMatrix3           matrix;
+} LayerTransformData;
+
 static void            xcf_load_add_masks     (GimpImage     *image);
 static void            xcf_load_add_effects   (XcfInfo       *info,
                                                GimpImage     *image);
@@ -946,19 +954,20 @@ xcf_load_image (Gimp     *gimp,
         }
     }
 
-  /* Once all items are loaded, we transform any vector layer in
-   * waiting. We could not create vector layers directly because we
-   * needed the paths to be loaded first.
-   */
   layers = gimp_image_get_layer_list (image);
   for (iter = layers; iter; iter = g_list_next (iter))
     {
-      GimpLayer       *layer = iter->data;
-      VectorLayerData *data;
+      GimpLayer          *layer = iter->data;
+      VectorLayerData    *vdata;
+      LayerTransformData *tdata;
 
-      data = g_object_get_data (G_OBJECT (layer), "gimp-vector-layer-data");
+      /* Once all items are loaded, we transform any vector layer in
+       * waiting. We could not create vector layers directly because we
+       * needed the paths to be loaded first.
+       */
+      vdata = g_object_get_data (G_OBJECT (layer), "gimp-vector-layer-data");
 
-      if (data != NULL)
+      if (vdata != NULL)
         {
           GimpLayer              *vlayer;
           GimpVectorLayerOptions *options;
@@ -972,7 +981,7 @@ xcf_load_image (Gimp     *gimp,
           linked   = g_list_find (info->linked_layers, layer);
           floating = (info->floating_sel == layer);
 
-          path = gimp_image_get_path_by_tattoo (image, data->path_tattoo);
+          path = gimp_image_get_path_by_tattoo (image, vdata->path_tattoo);
           if (path == NULL)
             {
               GIMP_LOG (XCF,
@@ -984,27 +993,27 @@ xcf_load_image (Gimp     *gimp,
             }
           options = gimp_vector_layer_options_new (image, path,
                                                    gimp_get_user_context (info->gimp));
-          options->enable_fill   = data->enable_fill;
-          options->enable_stroke = data->enable_stroke;
+          options->enable_fill   = vdata->enable_fill;
+          options->enable_stroke = vdata->enable_stroke;
 
-          gimp_fill_options_set_custom_style (options->fill_options, data->fill_style);
-          gimp_fill_options_set_antialias (options->fill_options, data->fill_antialias);
-          gimp_context_set_foreground (GIMP_CONTEXT (options->fill_options), data->fill_color);
-          gimp_context_set_pattern (GIMP_CONTEXT (options->fill_options), data->fill_pattern);
+          gimp_fill_options_set_custom_style (options->fill_options, vdata->fill_style);
+          gimp_fill_options_set_antialias (options->fill_options, vdata->fill_antialias);
+          gimp_context_set_foreground (GIMP_CONTEXT (options->fill_options), vdata->fill_color);
+          gimp_context_set_pattern (GIMP_CONTEXT (options->fill_options), vdata->fill_pattern);
 
-          gimp_fill_options_set_custom_style (GIMP_FILL_OPTIONS (options->stroke_options), data->stroke_style);
-          gimp_fill_options_set_antialias (GIMP_FILL_OPTIONS (options->stroke_options), data->stroke_antialias);
-          gimp_context_set_foreground (GIMP_CONTEXT (options->stroke_options), data->stroke_color);
-          gimp_context_set_pattern (GIMP_CONTEXT (options->stroke_options), data->stroke_pattern);
+          gimp_fill_options_set_custom_style (GIMP_FILL_OPTIONS (options->stroke_options), vdata->stroke_style);
+          gimp_fill_options_set_antialias (GIMP_FILL_OPTIONS (options->stroke_options), vdata->stroke_antialias);
+          gimp_context_set_foreground (GIMP_CONTEXT (options->stroke_options), vdata->stroke_color);
+          gimp_context_set_pattern (GIMP_CONTEXT (options->stroke_options), vdata->stroke_pattern);
 
-          dash_pattern = gimp_dash_pattern_from_double_array (data->n_stroke_dashes, data->stroke_dashes);
+          dash_pattern = gimp_dash_pattern_from_double_array (vdata->n_stroke_dashes, vdata->stroke_dashes);
           gimp_stroke_options_take_dash_pattern (options->stroke_options, GIMP_DASH_CUSTOM, dash_pattern);
 
           g_object_set (G_OBJECT (options->stroke_options),
-                        "width",       data->stroke_width,
-                        "cap-style",   data->stroke_cap_style,
-                        "join-style",  data->stroke_join_style,
-                        "miter-limit", data->stroke_miter_limit,
+                        "width",       vdata->stroke_width,
+                        "cap-style",   vdata->stroke_cap_style,
+                        "join-style",  vdata->stroke_join_style,
+                        "miter-limit", vdata->stroke_miter_limit,
                         NULL);
 
           vlayer = gimp_layer_from_layer (layer, GIMP_TYPE_VECTOR_LAYER,
@@ -1012,7 +1021,7 @@ xcf_load_image (Gimp     *gimp,
                                           "vector-layer-options", options,
                                           NULL);
           g_object_unref (options);
-          GIMP_VECTOR_LAYER (vlayer)->modified = data->modified;
+          GIMP_VECTOR_LAYER (vlayer)->modified = vdata->modified;
 
           if (selected)
             {
@@ -1026,6 +1035,43 @@ xcf_load_image (Gimp     *gimp,
             }
           if (floating)
             info->floating_sel = vlayer;
+
+          layer = vlayer;
+        }
+
+      /* If any layer has a transformation matrix, we apply it.
+       *
+       * XXX Right now, this can only be applied to link layers, but
+       * eventually we should be able to port this to any type of layer
+       * as a last-minute transformation in-one concept which would work
+       * as a lesser-destruction edit when applying several
+       * transformations.
+       */
+      tdata = g_object_get_data (G_OBJECT (layer), "gimp-layer-transform-data");
+      if (tdata != NULL)
+        {
+          if (! GIMP_IS_LINK_LAYER (layer))
+            {
+              GIMP_LOG (XCF,
+                        "PROP_TRANSFORM property can only be applied on link layers. "
+                        "The transformation on layer \"%s\" was dropped.",
+                        gimp_object_get_name (layer));
+              g_object_set_data (G_OBJECT (layer), "gimp-layer-transform-data", NULL);
+              continue;
+            }
+          else if (! gimp_link_layer_is_monitored (GIMP_LINK_LAYER (layer)) ||
+                   gimp_link_is_broken (gimp_link_layer_get_link (GIMP_LINK_LAYER (layer))))
+            {
+              /* The loaded buffer from XCF will already be transformed.
+               * It's not an error.
+               */
+              g_object_set_data (G_OBJECT (layer), "gimp-layer-transform-data", NULL);
+              continue;
+            }
+
+          gimp_item_set_offset (GIMP_ITEM (layer), tdata->offset_x, tdata->offset_y);
+          gimp_link_layer_set_transform (GIMP_LINK_LAYER (layer), &tdata->matrix, tdata->interpolation, FALSE);
+          g_object_set_data (G_OBJECT (layer), "gimp-layer-transform-data", NULL);
         }
     }
   g_list_free (layers);
@@ -2176,13 +2222,19 @@ xcf_load_layer_props (XcfInfo    *info,
                                     (GDestroyNotify) xcf_load_free_vector_data);
           }
 
-        case PROP_LINK_LAYER_DATA:
+        case PROP_LINK_LAYER:
             {
               GimpLink *link;
               GFile    *folder;
               gchar    *path;
               guint32   flags;
-              gboolean  is_selected_layer;
+              GList    *selected;
+              GList    *linked;
+              gboolean  floating;
+
+              selected = g_list_find (info->selected_layers, *layer);
+              linked   = g_list_find (info->linked_layers, *layer);
+              floating = (info->floating_sel == *layer);
 
               xcf_read_int32 (info, &flags, 1);
               xcf_read_string (info, &path, 1);
@@ -2190,17 +2242,62 @@ xcf_load_layer_props (XcfInfo    *info,
               folder = g_file_get_parent (info->file);
               link   = gimp_link_new (info->gimp, g_file_resolve_relative_path (folder, path), NULL, NULL);
 
+              *layer = gimp_layer_from_layer (*layer, GIMP_TYPE_LINK_LAYER,
+                                              "image", image,
+                                              NULL);
+
+              gimp_link_layer_set_link (GIMP_LINK_LAYER (*layer), link, FALSE);
+              gimp_link_layer_set_xcf_flags (GIMP_LINK_LAYER (*layer), flags);
+
+              if (selected)
+                {
+                  info->selected_layers = g_list_delete_link (info->selected_layers, selected);
+                  info->selected_layers = g_list_prepend (info->selected_layers, *layer);
+                }
+              if (linked)
+                {
+                  info->linked_layers = g_list_delete_link (info->linked_layers, linked);
+                  info->linked_layers = g_list_prepend (info->linked_layers, *layer);
+                }
+              if (floating)
+                info->floating_sel = *layer;
+
+              g_object_unref (link);
               g_object_unref (folder);
               g_free (path);
+            }
+          break;
 
-              is_selected_layer = (g_list_find (info->selected_layers, *layer ) != NULL);
-              if (is_selected_layer)
-                info->selected_layers = g_list_remove (info->selected_layers, *layer);
+        case PROP_TRANSFORM:
+            {
+              LayerTransformData *data;
+              gint32              int_val[2];
+              guint32             uint_val;
+              gfloat              mfloat[9];
 
-              gimp_link_layer_from_layer (layer, link, flags);
+              data = g_new0 (LayerTransformData, 1);
 
-              if (is_selected_layer)
-                info->selected_layers = g_list_prepend (info->selected_layers, *layer);
+              xcf_read_int32 (info, (guint32 *) int_val, 2);
+              data->offset_x = (gint) int_val[0];
+              data->offset_y = (gint) int_val[1];
+
+              xcf_read_int32 (info, &uint_val, 1);
+              data->interpolation = (GimpInterpolationType) uint_val;
+
+              xcf_read_float (info, mfloat, 9);
+              data->matrix.coeff[0][0] = (gdouble) mfloat[0];
+              data->matrix.coeff[0][1] = (gdouble) mfloat[1];
+              data->matrix.coeff[0][2] = (gdouble) mfloat[2];
+              data->matrix.coeff[1][0] = (gdouble) mfloat[3];
+              data->matrix.coeff[1][1] = (gdouble) mfloat[4];
+              data->matrix.coeff[1][2] = (gdouble) mfloat[5];
+              data->matrix.coeff[2][0] = (gdouble) mfloat[6];
+              data->matrix.coeff[2][1] = (gdouble) mfloat[7];
+              data->matrix.coeff[2][2] = (gdouble) mfloat[8];
+
+              g_object_set_data_full (G_OBJECT (*layer),
+                                      "gimp-layer-transform-data", data,
+                                      (GDestroyNotify) g_free);
             }
           break;
 
@@ -2332,7 +2429,7 @@ xcf_check_layer_props (XcfInfo    *info,
             return FALSE;
           break;
 
-        case PROP_LINK_LAYER_DATA:
+        case PROP_LINK_LAYER:
           *is_link_layer = TRUE;
 
           if (! xcf_skip_unknown_prop (info, prop_size))
@@ -3379,7 +3476,13 @@ xcf_load_layer (XcfInfo    *info,
    * optimization and because the hierarchy's extents don't match
    * the group layer's tiles)
    */
-  if (! gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
+  if (! gimp_viewable_get_children (GIMP_VIEWABLE (layer)) &&
+      /* Link layers are loaded from XCF only if they are not monitored
+       * or if the link is broken.
+       */
+      (! GIMP_IS_LINK_LAYER (layer)                             ||
+       ! gimp_link_layer_is_monitored (GIMP_LINK_LAYER (layer)) ||
+       gimp_link_is_broken (gimp_link_layer_get_link (GIMP_LINK_LAYER (layer)))))
     {
       if (hierarchy_offset < cur_offset)
         {
