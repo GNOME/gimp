@@ -138,7 +138,7 @@ HELP
   GimpPDBStatusType  status;
 
   layers = file_open_layers (gimp, context, progress,
-                             image, FALSE,
+                             image, FALSE, FALSE,
                              file, run_mode, NULL, &status, error);
 
   if (layers)
@@ -186,7 +186,7 @@ HELP
   GimpPDBStatusType  status;
 
   layer_list = file_open_layers (gimp, context, progress,
-                                 image, FALSE,
+                                 image, FALSE, FALSE,
                                  file, run_mode, NULL, &status, error);
 
   if (layer_list)

@@ -14,6 +14,7 @@
         </submenu>
         <item><attribute name="action">app.file-open</attribute></item>
         <item><attribute name="action">app.file-open-as-layers</attribute></item>
+        <item><attribute name="action">app.file-open-as-link-layers</attribute></item>
         <item><attribute name="action">app.file-open-location</attribute></item>
         <submenu>
           <attribute name="label" translatable="yes" context="file-action">Open _Recent</attribute>

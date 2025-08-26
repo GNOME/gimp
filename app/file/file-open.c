@@ -55,7 +55,7 @@
 #include "gimp-intl.h"
 
 
-static GimpImage * file_open_or_link_image        (Gimp                *gimp,
+static GimpImage * file_open_link_image           (Gimp                *gimp,
                                                    GimpContext         *context,
                                                    GimpProgress        *progress,
                                                    GFile               *file,
@@ -78,6 +78,8 @@ static GList     * file_open_get_layers           (GimpImage           *image,
                                                    gboolean             merge_visible,
                                                    gint                *n_visible);
 static gboolean    file_open_file_proc_is_import  (GimpPlugInProcedure *file_proc);
+static gboolean    file_open_valid_permissions    (GFile               *file,
+                                                   GError             **error);
 
 
 /*  public functions  */
@@ -135,46 +137,8 @@ file_open_image (Gimp                *gimp,
         }
     }
 
-  /* FIXME enable these tests for remote files again, needs testing */
-  if (g_file_is_native (file))
-    {
-      GFileInfo *info;
-
-      info = g_file_query_info (file,
-                                G_FILE_ATTRIBUTE_STANDARD_TYPE ","
-                                G_FILE_ATTRIBUTE_ACCESS_CAN_READ,
-                                G_FILE_QUERY_INFO_NONE,
-                                NULL, error);
-
-      if (info != NULL)
-        {
-          if (g_file_info_get_attribute_uint32 (info, G_FILE_ATTRIBUTE_STANDARD_TYPE) != G_FILE_TYPE_REGULAR)
-            {
-              g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                                   _("Not a regular file"));
-              g_object_unref (info);
-              return NULL;
-            }
-
-          if (! g_file_info_get_attribute_boolean (info,
-                                                   G_FILE_ATTRIBUTE_ACCESS_CAN_READ))
-            {
-              g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                                   _("Permission denied"));
-              g_object_unref (info);
-              return NULL;
-            }
-
-          g_object_unref (info);
-        }
-      else
-        {
-          /* File likely does not exists. error will already have a more
-           * accurate reason.
-           */
-          return NULL;
-        }
-    }
+  if (! file_open_valid_permissions (file, error))
+    return NULL;
 
   if (! file_proc)
     file_proc = gimp_plug_in_manager_file_procedure_find (gimp->plug_in_manager,
@@ -519,9 +483,8 @@ file_open_with_display (Gimp               *gimp,
                         GError            **error)
 {
   return file_open_with_proc_and_display (gimp, context, progress,
-                                          file, as_new, NULL,
-                                          monitor,
-                                          status, error);
+                                          file, as_new, FALSE, NULL,
+                                          monitor, status, error);
 }
 
 GimpImage *
@@ -530,6 +493,7 @@ file_open_with_proc_and_display (Gimp                *gimp,
                                  GimpProgress        *progress,
                                  GFile               *file,
                                  gboolean             as_new,
+                                 gboolean             as_link,
                                  GimpPlugInProcedure *file_proc,
                                  GObject             *monitor,
                                  GimpPDBStatusType   *status,
@@ -549,15 +513,26 @@ file_open_with_proc_and_display (Gimp                *gimp,
   if (gimp->no_interface)
     run_mode = GIMP_RUN_NONINTERACTIVE;
 
-  image = file_open_or_link_image (gimp, context, progress,
-                                   file, 0, 0,
-                                   as_new,
-                                   file_proc,
-                                   run_mode,
-                                   NULL,
-                                   status,
-                                   &mime_type,
-                                   error);
+  if (as_link)
+    image = file_open_link_image (gimp, context, progress,
+                                  file, 0, 0,
+                                  as_new,
+                                  file_proc,
+                                  run_mode,
+                                  NULL,
+                                  status,
+                                  &mime_type,
+                                  error);
+  else
+    image = file_open_image (gimp, context, progress,
+                             file, 0, 0,
+                             as_new,
+                             file_proc,
+                             run_mode,
+                             NULL,
+                             status,
+                             &mime_type,
+                             error);
 
   if (image)
     {
@@ -636,6 +611,7 @@ file_open_layers (Gimp                *gimp,
                   GimpProgress        *progress,
                   GimpImage           *dest_image,
                   gboolean             merge_visible,
+                  gboolean             as_link,
                   GFile               *file,
                   GimpRunMode          run_mode,
                   GimpPlugInProcedure *file_proc,
@@ -654,14 +630,24 @@ file_open_layers (Gimp                *gimp,
   g_return_val_if_fail (status != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  new_image = file_open_or_link_image (gimp, context, progress,
-                                       file,
-                                       gimp_image_get_width (dest_image),
-                                       gimp_image_get_height (dest_image),
-                                       FALSE,
-                                       file_proc,
-                                       run_mode,
-                                       NULL, status, &mime_type, error);
+  if (as_link)
+    new_image = file_open_link_image (gimp, context, progress,
+                                      file,
+                                      gimp_image_get_width (dest_image),
+                                      gimp_image_get_height (dest_image),
+                                      FALSE,
+                                      file_proc,
+                                      run_mode,
+                                      NULL, status, &mime_type, error);
+  else
+    new_image = file_open_image (gimp, context, progress,
+                                 file,
+                                 gimp_image_get_width (dest_image),
+                                 gimp_image_get_height (dest_image),
+                                 FALSE,
+                                 file_proc,
+                                 run_mode,
+                                 NULL, status, &mime_type, error);
 
   if (new_image)
     {
@@ -769,30 +755,38 @@ file_open_from_command_line (Gimp     *gimp,
 /*  private functions  */
 
 static GimpImage *
-file_open_or_link_image (Gimp                *gimp,
-                         GimpContext         *context,
-                         GimpProgress        *progress,
-                         GFile               *file,
-                         gint                 vector_width,
-                         gint                 vector_height,
-                         gboolean             as_new,
-                         GimpPlugInProcedure *file_proc,
-                         GimpRunMode          run_mode,
-                         gboolean            *file_proc_handles_vector,
-                         GimpPDBStatusType   *status,
-                         const gchar        **mime_type,
-                         GError             **error)
+file_open_link_image (Gimp                *gimp,
+                      GimpContext         *context,
+                      GimpProgress        *progress,
+                      GFile               *file,
+                      gint                 vector_width,
+                      gint                 vector_height,
+                      gboolean             as_new,
+                      GimpPlugInProcedure *file_proc,
+                      GimpRunMode          run_mode,
+                      gboolean            *file_proc_handles_vector,
+                      GimpPDBStatusType   *status,
+                      const gchar        **mime_type,
+                      GError             **error)
 {
   GimpImage *image = NULL;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (status != NULL, NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   if (! file_proc)
     file_proc = gimp_plug_in_manager_file_procedure_find (gimp->plug_in_manager,
                                                           GIMP_FILE_PROCEDURE_GROUP_OPEN,
                                                           file, error);
 
-  if (g_file_is_native (file) &&
-      file_proc != NULL       &&
-      file_open_file_proc_is_import (file_proc))
+  if (! file_open_valid_permissions (file, error))
+    return NULL;
+
+  if (g_file_is_native (file) && file_proc != NULL)
     {
       GimpLink *link = gimp_link_new (gimp, file, progress, error);
 
@@ -825,18 +819,16 @@ file_open_or_link_image (Gimp                *gimp,
 
       g_clear_object (&link);
     }
-  else
+  else if (! g_file_is_native (file))
     {
-      image = file_open_image (gimp, context, progress,
-                               file,
-                               vector_width, vector_height,
-                               as_new,
-                               file_proc,
-                               run_mode,
-                               file_proc_handles_vector,
-                               status,
-                               mime_type,
-                               error);
+      gchar *uri = g_file_get_uri (file);
+
+      if (error && ! *error)
+        g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                     _("Only platform-native file paths are supported: '%s' cannot be opened as link."),
+                     uri);
+
+      g_free (uri);
     }
 
   return image;
@@ -953,4 +945,54 @@ file_open_file_proc_is_import (GimpPlugInProcedure *file_proc)
           g_strcmp0 (proc_name, "file-gz-load")  != 0 &&
           g_strcmp0 (proc_name, "file-bz2-load") != 0 &&
           g_strcmp0 (proc_name, "file-xz-load")  != 0);
+}
+
+static gboolean
+file_open_valid_permissions (GFile   *file,
+                             GError **error)
+{
+  /* FIXME enable these tests for remote files again, needs testing */
+  if (g_file_is_native (file))
+    {
+      GFileInfo *info;
+
+      info = g_file_query_info (file,
+                                G_FILE_ATTRIBUTE_STANDARD_TYPE ","
+                                G_FILE_ATTRIBUTE_ACCESS_CAN_READ,
+                                G_FILE_QUERY_INFO_NONE,
+                                NULL, error);
+
+      if (info != NULL)
+        {
+          if (g_file_info_get_attribute_uint32 (info, G_FILE_ATTRIBUTE_STANDARD_TYPE) != G_FILE_TYPE_REGULAR)
+            {
+              g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                                   _("Not a regular file"));
+              g_object_unref (info);
+              return FALSE;
+            }
+
+          if (! g_file_info_get_attribute_boolean (info,
+                                                   G_FILE_ATTRIBUTE_ACCESS_CAN_READ))
+            {
+              g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                                   _("Permission denied"));
+              g_object_unref (info);
+              return FALSE;
+            }
+
+          g_object_unref (info);
+        }
+      else
+        {
+          /* File likely does not exists. error will already have a more
+           * accurate reason.
+           */
+          return FALSE;
+        }
+
+      return TRUE;
+    }
+
+  return FALSE;
 }

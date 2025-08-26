@@ -135,7 +135,7 @@ file_load_layer_invoker (GimpProcedure         *procedure,
       GimpPDBStatusType  status;
 
       layers = file_open_layers (gimp, context, progress,
-                                 image, FALSE,
+                                 image, FALSE, FALSE,
                                  file, run_mode, NULL, &status, error);
 
       if (layers)
@@ -181,7 +181,7 @@ file_load_layers_invoker (GimpProcedure         *procedure,
       GimpPDBStatusType  status;
 
       layer_list = file_open_layers (gimp, context, progress,
-                                     image, FALSE,
+                                     image, FALSE, FALSE,
                                      file, run_mode, NULL, &status, error);
 
       if (layer_list)

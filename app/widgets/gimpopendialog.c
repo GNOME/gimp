@@ -66,7 +66,7 @@ gimp_open_dialog_init (GimpOpenDialog *dialog)
 static void
 gimp_open_dialog_dispose (GObject *object)
 {
-  gimp_open_dialog_set_image (GIMP_OPEN_DIALOG (object), NULL, FALSE);
+  gimp_open_dialog_set_image (GIMP_OPEN_DIALOG (object), NULL, FALSE, FALSE);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -99,16 +99,19 @@ gimp_open_dialog_new (Gimp *gimp)
 void
 gimp_open_dialog_set_image (GimpOpenDialog *dialog,
                             GimpImage      *image,
-                            gboolean        open_as_layers)
+                            gboolean        open_as_layers,
+                            gboolean        open_as_link)
 {
   GimpFileDialog *file_dialog;
 
   g_return_if_fail (GIMP_IS_OPEN_DIALOG (dialog));
   g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
+  g_return_if_fail (! open_as_link || open_as_layers);
 
   file_dialog = GIMP_FILE_DIALOG (dialog);
 
   g_set_weak_pointer (&file_dialog->image, image);
 
   dialog->open_as_layers = open_as_layers;
+  dialog->open_as_link   = open_as_link;
 }

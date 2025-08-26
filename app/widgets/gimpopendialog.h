@@ -38,6 +38,7 @@ struct _GimpOpenDialog
   GimpFileDialog       parent_instance;
 
   gboolean             open_as_layers;
+  gboolean             open_as_link;
 };
 
 struct _GimpOpenDialogClass
@@ -52,4 +53,5 @@ GtkWidget * gimp_open_dialog_new        (Gimp           *gimp);
 
 void        gimp_open_dialog_set_image  (GimpOpenDialog *dialog,
                                          GimpImage      *image,
-                                         gboolean        open_as_layers);
+                                         gboolean        open_as_layers,
+                                         gboolean        open_as_link);

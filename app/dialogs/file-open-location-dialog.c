@@ -204,7 +204,7 @@ file_open_location_response (GtkDialog *dialog,
           image = file_open_with_proc_and_display (gimp,
                                                    gimp_get_user_context (gimp),
                                                    GIMP_PROGRESS (box),
-                                                   file, FALSE, NULL,
+                                                   file, FALSE, FALSE, NULL,
                                                    G_OBJECT (gimp_widget_get_monitor (entry)),
                                                    &status, &error);
 

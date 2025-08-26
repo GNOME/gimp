@@ -24,6 +24,9 @@ void   file_open_cmd_callback                 (GimpAction *action,
 void   file_open_as_layers_cmd_callback       (GimpAction *action,
                                                GVariant   *value,
                                                gpointer    data);
+void   file_open_as_link_layer_cmd_callback   (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
 void   file_open_location_cmd_callback        (GimpAction *action,
                                                GVariant   *value,
                                                gpointer    data);

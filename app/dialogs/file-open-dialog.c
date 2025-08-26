@@ -55,11 +55,13 @@ static void       file_open_dialog_response    (GtkWidget           *dialog,
 static GimpImage *file_open_dialog_open_image  (GtkWidget           *dialog,
                                                 Gimp                *gimp,
                                                 GFile               *file,
-                                                GimpPlugInProcedure *load_proc);
+                                                GimpPlugInProcedure *load_proc,
+                                                gboolean             as_link);
 static gboolean   file_open_dialog_open_layers (GtkWidget           *dialog,
                                                 GimpImage           *image,
                                                 GFile               *file,
-                                                GimpPlugInProcedure *load_proc);
+                                                GimpPlugInProcedure *load_proc,
+                                                gboolean             as_link);
 
 
 /*  public functions  */
@@ -147,13 +149,14 @@ file_open_dialog_response (GtkWidget *dialog,
         {
           if (! file_dialog->image)
             {
-              gimp_open_dialog_set_image (
-                open_dialog,
-                file_open_dialog_open_image (dialog,
-                                             gimp,
-                                             file,
-                                             file_dialog->file_proc),
-                TRUE);
+              gimp_open_dialog_set_image (open_dialog,
+                                          file_open_dialog_open_image (dialog,
+                                                                       gimp,
+                                                                       file,
+                                                                       file_dialog->file_proc,
+                                                                       open_dialog->open_as_link),
+                                          TRUE,
+                                          open_dialog->open_as_link);
 
               if (file_dialog->image)
                 {
@@ -170,7 +173,8 @@ file_open_dialog_response (GtkWidget *dialog,
           else if (file_open_dialog_open_layers (dialog,
                                                  file_dialog->image,
                                                  file,
-                                                 file_dialog->file_proc))
+                                                 file_dialog->file_proc,
+                                                 open_dialog->open_as_link))
             {
               success = TRUE;
             }
@@ -180,7 +184,8 @@ file_open_dialog_response (GtkWidget *dialog,
           if (file_open_dialog_open_image (dialog,
                                            gimp,
                                            file,
-                                           file_dialog->file_proc))
+                                           file_dialog->file_proc,
+                                           open_dialog->open_as_link))
             {
               success = TRUE;
 
@@ -227,7 +232,8 @@ static GimpImage *
 file_open_dialog_open_image (GtkWidget           *dialog,
                              Gimp                *gimp,
                              GFile               *file,
-                             GimpPlugInProcedure *load_proc)
+                             GimpPlugInProcedure *load_proc,
+                             gboolean             as_link)
 {
   GimpImage         *image;
   GimpPDBStatusType  status;
@@ -236,7 +242,7 @@ file_open_dialog_open_image (GtkWidget           *dialog,
   image = file_open_with_proc_and_display (gimp,
                                            gimp_get_user_context (gimp),
                                            GIMP_PROGRESS (dialog),
-                                           file, FALSE,
+                                           file, FALSE, as_link,
                                            load_proc,
                                            G_OBJECT (gimp_widget_get_monitor (dialog)),
                                            &status, &error);
@@ -256,7 +262,8 @@ static gboolean
 file_open_dialog_open_layers (GtkWidget           *dialog,
                               GimpImage           *image,
                               GFile               *file,
-                              GimpPlugInProcedure *load_proc)
+                              GimpPlugInProcedure *load_proc,
+                              gboolean             as_link)
 {
   GList             *new_layers;
   GimpPDBStatusType  status;
@@ -265,7 +272,7 @@ file_open_dialog_open_layers (GtkWidget           *dialog,
   new_layers = file_open_layers (image->gimp,
                                  gimp_get_user_context (image->gimp),
                                  GIMP_PROGRESS (dialog),
-                                 image, FALSE,
+                                 image, FALSE, as_link,
                                  file, GIMP_RUN_INTERACTIVE, load_proc,
                                  &status, &error);
 
