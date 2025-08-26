@@ -41,6 +41,9 @@ Core:
     metadata. This new setting is enabled by default.
   - Fix palette import to properly import colors with alpha values from
     palettes.
+  - New layer type: vector layers.
+  - Fill/Stroke editor are now live-previewing color changes for vector
+    layer fill/stroke and text layer outlines.
 
 Tools:
 
@@ -49,6 +52,7 @@ Tools:
     mypaint-brushes-1.0.
   - Seamless Clone (Playground): made to work again, but is still too
     slow to move out of Playground.
+  - The Paths tool has updated UI to create vector layers.
 
 Graphical User Interface:
 
@@ -106,6 +110,10 @@ API:
     * gimp_drawable_filter_operation_get_available()
     * gimp_drawable_filter_operation_get_details()
     * gimp_drawable_filter_operation_get_pspecs()
+    * gimp_context_get_paint_fade_length()
+    * gimp_context_get_paint_fade_repeat()
+    * gimp_context_set_paint_fade_length()
+    * gimp_context_set_paint_fade_repeat()
   - GimpSizeEntry (libgimpwidget) can now parse mathematical expressions
     in their reference value spin buttons too.
   - GimpColorScales (libgimpwidget) will now set its decimals to 0 when
@@ -119,6 +127,8 @@ API:
     "charset=[ascii|InvalidCharsetId]" prefixes.
   - New GIMP_METADATA_SAVE_UPDATE value in enum type
     GimpMetadataSaveFlags (libgimpbase).
+  - Modernize setting "Exif.Image.DateTime" metadata by setting the
+    timezone additionally.
 
 Build:
 
@@ -126,6 +136,9 @@ Build:
   - Add nightly Aarch64 flatpak.
   - appstream-glib dependency replaced with libappstream
   - Installer uses latest InnoSetup now.
+  - New configure option -Dwin-debugging allowing to choose DWARF debug
+    symbols on Windows instead of the native (CodeView) symbols. This
+    will be useful for people wishing to debug with GDB in particular.
 
 
 Overview of Changes from GIMP 3.0.4 to GIMP 3.1.2
