@@ -548,6 +548,10 @@ gimp_link_layer_transform (GimpItem               *item,
   if (gimp_matrix3_is_identity (matrix))
     return;
 
+  if (push_undo)
+    gimp_image_undo_push_link_layer (gimp_item_get_image (GIMP_ITEM (layer)),
+                                     _("Transform Link Layer"), layer);
+
   if (gimp_link_is_vector (layer->p->link)    &&
       gimp_link_is_monitored (layer->p->link) &&
       gimp_matrix3_is_identity (&layer->p->matrix))
