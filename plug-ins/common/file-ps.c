@@ -295,11 +295,10 @@ typedef struct
   gint           level;
 } SaveDialogVals;
 
-static gboolean  save_dialog               (GimpProcedure *procedure,
-                                            GObject       *config,
-                                            GimpImage     *image);
-static void      save_unit_changed_update  (GtkWidget     *widget,
-                                            gpointer       data);
+static gboolean  save_dialog               (GimpProcedure       *procedure,
+                                            GObject             *config,
+                                            GimpImage           *image);
+static void      save_unit_changed_update  (GimpProcedureConfig *config);
 
 
 G_DEFINE_TYPE (PostScript, ps, GIMP_TYPE_PLUG_IN)
@@ -3835,8 +3834,9 @@ load_dialog (GFile              *file,
 
   /* Dialog formatting */
   hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
-                                         "ps-top-row",
-                                         "rendering-box",
+                                         "ps-anti-aliasing-box",
+                                         "text-alpha-bits",
+                                         "graphic-alpha-bits",
                                          NULL);
   gtk_box_set_spacing (GTK_BOX (hbox), 12);
   gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
@@ -3847,15 +3847,12 @@ load_dialog (GFile              *file,
   vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                          "ps-bottom-row",
                                          "coloring",
-                                         "text-alpha-bits",
-                                         "graphic-alpha-bits",
+                                         "ps-anti-aliasing-box",
                                          NULL);
   gtk_box_set_spacing (GTK_BOX (vbox), 12);
-  gtk_box_set_homogeneous (GTK_BOX (vbox), TRUE);
-  gtk_widget_set_margin_bottom (vbox, 12);
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
-                              "ps-top-row",
+                              "rendering-box",
                               "ps-bottom-row",
                               NULL);
 
@@ -3872,6 +3869,7 @@ load_dialog (GFile              *file,
           gimp_page_selector_select_all (GIMP_PAGE_SELECTOR (selector));
           range = gimp_page_selector_get_selected_range (GIMP_PAGE_SELECTOR (selector));
         }
+      gimp_page_selector_unselect_all (GIMP_PAGE_SELECTOR (selector));
 
       g_object_set (config,
                     "pages", range,
@@ -3902,13 +3900,11 @@ save_dialog (GimpProcedure *procedure,
              GObject       *config,
              GimpImage     *image)
 {
-  GtkWidget      *dialog;
-  GtkListStore   *store;
-  GtkWidget      *toggle;
-  GtkWidget      *combo;
-  GtkWidget      *widget;
-  GtkWidget      *hbox, *vbox;
-  gboolean        run;
+  GtkWidget    *dialog;
+  GtkListStore *store;
+  GtkWidget    *toggle;
+  GtkWidget    *hbox, *vbox;
+  gboolean      run;
 
   dialog = gimp_export_procedure_dialog_new (GIMP_EXPORT_PROCEDURE (procedure),
                                              GIMP_PROCEDURE_CONFIG (config),
@@ -3938,10 +3934,7 @@ save_dialog (GimpProcedure *procedure,
                                     FALSE, "image-box");
 
   /* Unit */
-  widget = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
-                                             "unit", G_TYPE_NONE);
-  combo = gimp_label_string_widget_get_widget (GIMP_LABEL_STRING_WIDGET (widget));
-  g_signal_connect (combo, "changed",
+  g_signal_connect (config, "notify::unit",
                     G_CALLBACK (save_unit_changed_update),
                     config);
 
@@ -4002,16 +3995,14 @@ save_dialog (GimpProcedure *procedure,
 }
 
 static void
-save_unit_changed_update (GtkWidget *widget,
-                          gpointer   data)
+save_unit_changed_update (GimpProcedureConfig *config)
 {
-  GimpProcedureConfig *config = GIMP_PROCEDURE_CONFIG (data);
-  gdouble              factor;
-  gboolean             unit_mm;
-  gdouble              width;
-  gdouble              height;
-  gdouble              x_offset;
-  gdouble              y_offset;
+  gdouble  factor;
+  gboolean unit_mm;
+  gdouble  width;
+  gdouble  height;
+  gdouble  x_offset;
+  gdouble  y_offset;
 
   g_object_get (config,
                 "width",    &width,
