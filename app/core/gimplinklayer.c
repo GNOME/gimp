@@ -51,6 +51,8 @@
 
 #include "gimp-intl.h"
 
+#define EPSILON 1e-10
+
 
 enum
 {
@@ -1097,8 +1099,8 @@ gimp_link_layer_is_scaling_matrix (GimpLinkLayer     *layer,
 
   /* Scaling 3x3 matrix on a 2D plane (with optional translation). */
   is_scaling = (matrix->coeff[0][0] > 0.0 && matrix->coeff[0][1] == 0.0 &&
-                matrix->coeff[1][0] == 0.0 && matrix->coeff[1][1] > 0.0 &&
-                matrix->coeff[2][0] == 0.0 && matrix->coeff[2][1] == 0.0 && matrix->coeff[2][2] == 1.0);
+                matrix->coeff[1][0] < EPSILON && matrix->coeff[1][1] > 0.0 &&
+                matrix->coeff[2][0] < EPSILON && matrix->coeff[2][1] < EPSILON && matrix->coeff[2][2] == 1.0);
 
   if (is_scaling)
     {
@@ -1112,10 +1114,10 @@ gimp_link_layer_is_scaling_matrix (GimpLinkLayer     *layer,
       gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
 
       *new_width  = (gint) (width * matrix->coeff[0][0]);
-      *new_height = (gint) (height * matrix->coeff[0][0]);
+      *new_height = (gint) (height * matrix->coeff[1][1]);
 
-      *new_offset_x = (gint) (offset_x + matrix->coeff[0][2]);
-      *new_offset_y = (gint) (offset_y + matrix->coeff[1][2]);
+      *new_offset_x = (gint) (offset_x * matrix->coeff[0][0] + matrix->coeff[0][2]);
+      *new_offset_y = (gint) (offset_y * matrix->coeff[1][1] + matrix->coeff[1][2]);
     }
 
   return is_scaling;
