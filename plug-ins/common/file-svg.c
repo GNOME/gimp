@@ -74,7 +74,6 @@ static GList          * svg_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure  * svg_create_procedure (GimpPlugIn            *plug_in,
                                               const gchar           *name);
 
-static GimpUnit      * svg_rsvg_to_gimp_unit (RsvgUnit               unit);
 static gboolean        svg_extract           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GFile                 *file,
@@ -115,8 +114,11 @@ static GimpPDBStatusType   load_dialog       (GFile                 *file,
                                               GimpVectorLoadData     extracted_data,
                                               GError               **error);
 
+#if LIBRSVG_CHECK_VERSION(2, 46, 0)
+static GimpUnit      * svg_rsvg_to_gimp_unit (RsvgUnit               unit);
 static void              svg_destroy_surface (guchar                *pixels,
                                               cairo_surface_t       *surface);
+#endif
 
 
 
@@ -196,32 +198,6 @@ svg_create_procedure (GimpPlugIn  *plug_in,
     }
 
   return procedure;
-}
-
-static GimpUnit *
-svg_rsvg_to_gimp_unit (RsvgUnit unit)
-{
-  switch (unit)
-    {
-    case RSVG_UNIT_PERCENT:
-      return gimp_unit_percent ();
-    case RSVG_UNIT_PX:
-      return gimp_unit_pixel ();
-    case RSVG_UNIT_IN:
-      return gimp_unit_inch ();
-    case RSVG_UNIT_MM:
-      return gimp_unit_mm ();
-    case RSVG_UNIT_PT:
-      return gimp_unit_point ();
-    case RSVG_UNIT_PC:
-      return gimp_unit_pica ();
-    case RSVG_UNIT_CM:
-    case RSVG_UNIT_EM:
-    case RSVG_UNIT_EX:
-      /*case RSVG_UNIT_CH:*/
-    default:
-      return NULL;
-    }
 }
 
 static gboolean
@@ -707,7 +683,7 @@ load_rsvg_pixbuf (RsvgHandle  *handle,
   vals.resolution = resolution;
   vals.width      = width;
   vals.height     = height;
-  rsvg_handle_set_size_callback (handle, load_set_size_callback, vals, NULL);
+  rsvg_handle_set_size_callback (handle, load_set_size_callback, (gpointer) &vals, NULL);
   pixbuf = rsvg_handle_get_pixbuf (handle);
 #endif
 
@@ -816,9 +792,37 @@ load_dialog (GFile                *file,
   return run ? GIMP_PDB_SUCCESS : GIMP_PDB_CANCEL;
 }
 
+#if LIBRSVG_CHECK_VERSION(2, 46, 0)
+static GimpUnit *
+svg_rsvg_to_gimp_unit (RsvgUnit unit)
+{
+  switch (unit)
+    {
+    case RSVG_UNIT_PERCENT:
+      return gimp_unit_percent ();
+    case RSVG_UNIT_PX:
+      return gimp_unit_pixel ();
+    case RSVG_UNIT_IN:
+      return gimp_unit_inch ();
+    case RSVG_UNIT_MM:
+      return gimp_unit_mm ();
+    case RSVG_UNIT_PT:
+      return gimp_unit_point ();
+    case RSVG_UNIT_PC:
+      return gimp_unit_pica ();
+    case RSVG_UNIT_CM:
+    case RSVG_UNIT_EM:
+    case RSVG_UNIT_EX:
+      /*case RSVG_UNIT_CH:*/
+    default:
+      return NULL;
+    }
+}
+
 static void
 svg_destroy_surface (guchar          *pixels,
                      cairo_surface_t *surface)
 {
   cairo_surface_destroy (surface);
 }
+#endif
