@@ -132,6 +132,10 @@ gimp_vector_load_procedure_constructed (GObject *object)
                                        FALSE,
                                        G_PARAM_READWRITE);
 
+#if GIMP_CHECK_VERSION(3, 99, 0)
+#warning Make per-coordinate x/y pixel density. Simplify plug-ins/common/file-svg.c code when not keeping ratio.
+#endif
+
   /* Note: the "pixel-density" is saved in pixels per inch. "physical-unit"
    * property is only there for display.
    */
