@@ -213,7 +213,7 @@ static const GimpActionEntry layers_actions[] =
     GIMP_HELP_LAYER_TEXT_ALONG_PATH },
 
   { "layers-vector-fill-stroke", NULL,
-    NC_("layers-action", "Fill / Stroke"), NULL, { NULL },
+    NC_("layers-action", "Fill / Stroke..."), NULL, { NULL },
     NC_("layers-action", "Edit the fill and stroke of this vector layer"),
     layers_vector_fill_stroke_cmd_callback,
     GIMP_HELP_LAYER_VECTOR_FILL_STROKE },
