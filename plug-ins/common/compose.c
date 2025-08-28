@@ -861,13 +861,17 @@ static GeglBuffer *
 get_buffer_with_filters (GimpLayer *layer)
 {
   GimpImage  *image = gimp_item_get_image (GIMP_ITEM (layer));
-  GimpLayer  *temp  = gimp_layer_copy (layer);
+  GimpImage  *tmp_image;
+  GimpLayer  *temp;
   GeglBuffer *src_buffer;
   GeglBuffer *dst_buffer;
 
-  gimp_image_insert_layer (image, temp, NULL,
-                           gimp_image_get_item_position (image,
-                                                         GIMP_ITEM (layer)));
+  tmp_image = gimp_image_new (gimp_image_get_width (image),
+                              gimp_image_get_height (image),
+                              gimp_image_get_base_type (image));
+  temp = gimp_layer_new_from_drawable (GIMP_DRAWABLE (layer), tmp_image);
+
+  gimp_image_insert_layer (tmp_image, temp, NULL, 0);
 
   gimp_drawable_merge_filters (GIMP_DRAWABLE (temp));
 
@@ -877,8 +881,8 @@ get_buffer_with_filters (GimpLayer *layer)
 
   gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dst_buffer, NULL);
 
-  gimp_image_remove_layer (image, temp);
   g_object_unref (src_buffer);
+  gimp_image_delete (tmp_image);
 
   return dst_buffer;
 }
