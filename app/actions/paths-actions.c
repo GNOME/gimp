@@ -154,7 +154,7 @@ static const GimpActionEntry paths_actions[] =
   { "paths-to-vector-layer", NULL,
     NC_("paths-action", "Path to Vector Layer"), NULL, { NULL }, NULL,
     path_to_vector_layer_cmd_callback,
-    NULL },
+    GIMP_HELP_PATH_TO_VECTOR_LAYER },
 };
 
 static const GimpToggleActionEntry paths_toggle_actions[] =

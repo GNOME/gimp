@@ -216,13 +216,13 @@ static const GimpActionEntry layers_actions[] =
     NC_("layers-action", "Fill / Stroke"), NULL, { NULL },
     NC_("layers-action", "Edit the fill and stroke of this vector layer"),
     layers_vector_fill_stroke_cmd_callback,
-    NULL },
+    GIMP_HELP_LAYER_VECTOR_FILL_STROKE },
 
   { "layers-vector-discard", NULL,
     NC_("layers-action", "Discard Vector Information"), NULL, { NULL },
     NC_("layers-action", "Turn this vector layer into a normal layer"),
     layers_vector_discard_cmd_callback,
-    NULL },
+    GIMP_HELP_LAYER_VECTOR_DISCARD },
 
   { "layers-resize", GIMP_ICON_OBJECT_RESIZE,
     NC_("layers-action", "Layer B_oundary Size..."), NULL, { NULL },

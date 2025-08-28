@@ -2719,7 +2719,7 @@ layers_vector_fill_stroke_cmd_callback (GimpAction *action,
                                                 action_data_get_context (data),
                                                 _("Fill / Stroke"),
                                                 "gimp-vector-layer-stroke",
-                                                NULL,
+                                                GIMP_HELP_LAYER_VECTOR_FILL_STROKE,
                                                 widget);
       gtk_widget_show (dialog);
     }
