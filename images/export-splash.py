@@ -19,4 +19,4 @@ config.set_property("time", False)
 config.set_property("format", "rgb8")
 retval = procedure.run(config)
 if retval.index(0) != Gimp.PDBStatusType.SUCCESS:
-  sys.exit(os.EX_SOFTWARE)
+  sys.exit(70)

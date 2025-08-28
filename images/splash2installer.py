@@ -22,7 +22,7 @@ def export_scaled_img(image, target_height, export_path):
   config.set_property("file", Gio.file_new_for_path(export_path))
   retval = procedure.run(config)
   if retval.index(0) != Gimp.PDBStatusType.SUCCESS:
-    sys.exit(os.EX_SOFTWARE)
+    sys.exit(70)
   img.delete()
 
 
@@ -53,7 +53,7 @@ def export_blurred_img(image, target_height, export_path):
   config.set_property("file", Gio.file_new_for_path(export_path))
   retval = procedure.run(config)
   if retval.index(0) != Gimp.PDBStatusType.SUCCESS:
-    sys.exit(os.EX_SOFTWARE)
+    sys.exit(70)
   img.delete()
 
 
@@ -75,7 +75,7 @@ def export_cropped_img(image, target_width, target_height, export_path):
   config.set_property("file", Gio.file_new_for_path(export_path))
   retval = procedure.run(config)
   if retval.index(0) != Gimp.PDBStatusType.SUCCESS:
-    sys.exit(os.EX_SOFTWARE)
+    sys.exit(70)
   img.delete()
 
 
