@@ -865,7 +865,7 @@ file_revert_confirm_response (GtkWidget   *dialog,
 
       new_image = file_open_image (gimp, gimp_get_user_context (gimp),
                                    GIMP_PROGRESS (display),
-                                   file, 0, 0, FALSE, NULL,
+                                   file, 0, 0, TRUE, FALSE, NULL,
                                    GIMP_RUN_INTERACTIVE,
                                    NULL, &status, NULL, &error);
 

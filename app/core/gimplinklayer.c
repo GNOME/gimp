@@ -459,7 +459,7 @@ gimp_link_layer_scale (GimpItem              *item,
       /* Non-modified vector images are always recomputed from the
        * source file and therefore are always sharp.
        */
-      gimp_link_set_size (link_layer->p->link, new_width, new_height);
+      gimp_link_set_size (link_layer->p->link, new_width, new_height, FALSE);
       gimp_item_set_offset (item, new_offset_x, new_offset_y);
       gimp_link_layer_render_link (link_layer);
     }

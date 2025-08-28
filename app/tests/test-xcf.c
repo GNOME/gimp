@@ -279,6 +279,7 @@ gimp_test_load_image (Gimp  *gimp,
                            NULL /*progress*/,
                            file,
                            0, 0, /* vector width, height */
+                           TRUE, /* vector keep ratio */
                            FALSE /*as_new*/,
                            proc,
                            GIMP_RUN_NONINTERACTIVE,

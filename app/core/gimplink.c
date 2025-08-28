@@ -72,6 +72,7 @@ struct _GimpLinkPrivate
   gboolean             is_vector;
   gint                 width;
   gint                 height;
+  gboolean             keep_ratio;
   GimpImageBaseType    base_type;
   GimpPrecision        precision;
   GimpPlugInProcedure *load_proc;
@@ -216,7 +217,7 @@ gimp_link_set_property (GObject      *object,
       link->p->gimp = g_value_get_object (value);
       break;
     case PROP_FILE:
-      gimp_link_set_file (link, g_value_get_object (value), NULL, NULL);
+      gimp_link_set_file (link, g_value_get_object (value), 0, 0, FALSE, NULL, NULL);
       break;
     case PROP_ABSOLUTE_PATH:
       link->p->absolute_path = g_value_get_boolean (value);
@@ -304,6 +305,7 @@ gimp_link_update_buffer (GimpLink      *link,
                                progress,
                                link->p->file,
                                link->p->width, link->p->height,
+                               link->p->keep_ratio,
                                FALSE, NULL,
                                /* XXX We might want interactive opening
                                 * for a first opening (when done through
@@ -468,6 +470,9 @@ gimp_link_get_relative_path (GimpLink *link,
 GimpLink *
 gimp_link_new (Gimp          *gimp,
                GFile         *file,
+               gint           vector_width,
+               gint           vector_height,
+               gboolean       keep_ratio,
                GimpProgress  *progress,
                GError       **error)
 {
@@ -481,7 +486,7 @@ gimp_link_new (Gimp          *gimp,
                        "absolute-path", FALSE,
                        NULL);
 
-  gimp_link_set_file (link, file, progress, error);
+  gimp_link_set_file (link, file, vector_width, vector_height, keep_ratio, progress, error);
 
   return GIMP_LINK (link);
 }
@@ -568,6 +573,9 @@ gimp_link_get_file (GimpLink  *link,
 void
 gimp_link_set_file (GimpLink      *link,
                     GFile         *file,
+                    gint           vector_width,
+                    gint           vector_height,
+                    gboolean       keep_ratio,
                     GimpProgress  *progress,
                     GError       **error)
 {
@@ -577,7 +585,18 @@ gimp_link_set_file (GimpLink      *link,
 
   if (file == link->p->file ||
       (file && link->p->file && g_file_equal (file, link->p->file)))
-    return;
+    {
+      if (link->p->width != vector_width   ||
+          link->p->height != vector_height ||
+          link->p->keep_ratio != keep_ratio)
+        gimp_link_set_size (link, vector_width, vector_height, keep_ratio);
+
+      return;
+    }
+
+  link->p->width      = vector_width;
+  link->p->height     = vector_height;
+  link->p->keep_ratio = keep_ratio;
 
   g_clear_object (&link->p->monitor);
 
@@ -654,12 +673,14 @@ gimp_link_is_broken (GimpLink *link)
 void
 gimp_link_set_size (GimpLink *link,
                     gint      width,
-                    gint      height)
+                    gint      height,
+                    gboolean  keep_ratio)
 {
   g_return_if_fail (GIMP_IS_LINK (link));
 
-  link->p->width  = width;
-  link->p->height = height;
+  link->p->width      = width;
+  link->p->height     = height;
+  link->p->keep_ratio = keep_ratio;
 
   if (link->p->monitor && link->p->is_vector)
     gimp_link_update_buffer (link, NULL, NULL);

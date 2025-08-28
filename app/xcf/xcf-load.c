@@ -2231,6 +2231,7 @@ xcf_load_layer_props (XcfInfo    *info,
               GList    *selected;
               GList    *linked;
               gboolean  floating;
+              guint32   dimensions[2];
 
               selected = g_list_find (info->selected_layers, *layer);
               linked   = g_list_find (info->linked_layers, *layer);
@@ -2238,9 +2239,12 @@ xcf_load_layer_props (XcfInfo    *info,
 
               xcf_read_int32 (info, &flags, 1);
               xcf_read_string (info, &path, 1);
+              xcf_read_int32 (info, dimensions, 2);
 
               folder = g_file_get_parent (info->file);
-              link   = gimp_link_new (info->gimp, g_file_resolve_relative_path (folder, path), NULL, NULL);
+              link   = gimp_link_new (info->gimp, g_file_resolve_relative_path (folder, path),
+                                      (gint) dimensions[0], (gint) dimensions[1],
+                                      FALSE, NULL, NULL);
 
               *layer = gimp_layer_from_layer (*layer, GIMP_TYPE_LINK_LAYER,
                                               "image", image,

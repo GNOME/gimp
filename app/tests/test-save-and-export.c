@@ -119,6 +119,7 @@ opened_xcf_file_files (gconstpointer data)
                            NULL /*progress*/,
                            file,
                            0, 0, /* vector width, height */
+                           TRUE, /* vector keep ratio */
                            FALSE /*as_new*/,
                            NULL /*file_proc*/,
                            GIMP_RUN_NONINTERACTIVE,
@@ -161,6 +162,7 @@ imported_file_files (gconstpointer data)
                            NULL /*progress*/,
                            file,
                            0, 0, /* vector width, height */
+                           TRUE, /* vector keep ratio */
                            FALSE /*as_new*/,
                            NULL /*file_proc*/,
                            GIMP_RUN_NONINTERACTIVE,
@@ -211,6 +213,7 @@ saved_imported_file_files (gconstpointer data)
                            NULL /*progress*/,
                            import_file,
                            0, 0, /* vector width, height */
+                           TRUE, /* vector keep ratio */
                            FALSE /*as_new*/,
                            NULL /*file_proc*/,
                            GIMP_RUN_NONINTERACTIVE,
@@ -320,6 +323,7 @@ clear_import_file_after_export (gconstpointer data)
                            NULL /*progress*/,
                            file,
                            0, 0, /* vector width, height */
+                           TRUE, /* vector keep ratio */
                            FALSE /*as_new*/,
                            NULL /*file_proc*/,
                            GIMP_RUN_NONINTERACTIVE,

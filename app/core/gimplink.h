@@ -53,6 +53,9 @@ GType                 gimp_link_get_type          (void) G_GNUC_CONST;
 
 GimpLink            * gimp_link_new               (Gimp           *gimp,
                                                    GFile          *file,
+                                                   gint            vector_width,
+                                                   gint            vector_height,
+                                                   gboolean        keep_ratio,
                                                    GimpProgress  *progress,
                                                    GError       **error);
 GimpLink            * gimp_link_duplicate         (GimpLink       *link);
@@ -62,6 +65,9 @@ GFile               * gimp_link_get_file          (GimpLink       *link,
                                                    gchar         **path);
 void                  gimp_link_set_file          (GimpLink       *layer,
                                                    GFile          *file,
+                                                   gint            vector_width,
+                                                   gint            vector_height,
+                                                   gboolean        keep_ratio,
                                                    GimpProgress   *progress,
                                                    GError        **error);
 gboolean              gimp_link_get_absolute_path (GimpLink       *link);
@@ -75,7 +81,8 @@ gboolean              gimp_link_is_broken         (GimpLink       *link);
 
 void                  gimp_link_set_size          (GimpLink       *link,
                                                    gint            width,
-                                                   gint            height);
+                                                   gint            height,
+                                                   gboolean        keep_ratio);
 void                  gimp_link_get_size          (GimpLink       *link,
                                                    gint           *width,
                                                    gint           *height);

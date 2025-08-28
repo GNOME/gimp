@@ -1735,18 +1735,26 @@ xcf_save_prop (XcfInfo    *info,
       {
         GimpLinkLayer *layer = va_arg (args, GimpLinkLayer *);
         gchar         *path  = NULL;
+        gint           width;
+        gint           height;
+        guint32        dimensions[2];
         guint32        flags;
 
         flags = gimp_link_layer_get_xcf_flags (layer);
         gimp_link_get_file (gimp_link_layer_get_link (layer), info->file, &path);
 
-        size = 4 + (strlen (path) ? strlen (path) + 1 : 4);
+        size = 3 * 4 + (strlen (path) ? strlen (path) + 1 : 4);
 
         xcf_write_prop_type_check_error (info, prop_type, va_end (args));
         xcf_write_int32_check_error (info, &size, 1, va_end (args));
 
         xcf_write_int32_check_error (info, &flags, 1, va_end (args));
         xcf_write_string_check_error (info, (gchar **) &path, 1, va_end (args));
+
+        gimp_link_get_size (gimp_link_layer_get_link (layer), &width, &height);
+        dimensions[0] = width;
+        dimensions[1] = height;
+        xcf_write_int32_check_error (info, dimensions, 2, va_end (args));
 
         g_free (path);
       }

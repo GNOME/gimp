@@ -636,10 +636,27 @@ layer_options_file_set (GtkFileChooserButton *widget,
   file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (widget));
   if (file)
     {
-      gimp_link_set_file (private->link, file, NULL, NULL);
+      gint width  = 0;
+      gint height = 0;
+
+      if (private->layer)
+        {
+          width  = gimp_item_get_width (GIMP_ITEM (private->layer));
+          height = gimp_item_get_height (GIMP_ITEM (private->layer));
+
+          if (width == 0 || height == 0)
+            {
+              GimpImage *image = gimp_item_get_image (GIMP_ITEM (private->layer));
+
+              width  = gimp_image_get_width (image);
+              height = gimp_image_get_height (image);
+            }
+        }
+
+      gimp_link_set_file (private->link, file, width, height, TRUE, NULL, NULL);
       if (gimp_link_is_broken (private->link))
         {
-          gimp_link_set_file (private->link, NULL, NULL, NULL);
+          gimp_link_set_file (private->link, NULL, width, height, TRUE, NULL, NULL);
           g_signal_handlers_block_by_func (widget,
                                            G_CALLBACK (layer_options_file_set),
                                            private);
