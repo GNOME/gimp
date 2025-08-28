@@ -323,14 +323,7 @@
                 {
                     "type": "archive",
                     "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10060rc1/ghostscript-10.06.0rc1.tar.gz",
-                    "sha512": "5702574db8465c7af7d608029a0f86c9a16c249585fb912fb748ea0c077dadef420f8ae4648688b78389ce125de3a8719094154655baa6cc999dec06929a43a8",
-                    "x-checker-data": {
-                        "//": "Bypass broken url-template with anitya checker - See https://github.com/flathub/flatpak-external-data-checker/issues/360",
-                        "type": "json",
-                        "url": "https://api.github.com/repos/ArtifexSoftware/ghostpdl-downloads/releases/latest",
-                        "version-query": ".name | split(\" \") | .[1]",
-                        "url-query": ".assets[] | select(.name|test(\"^ghostscript-(.*).tar.gz$\")) | .browser_download_url"
-                    }
+                    "sha512": "5702574db8465c7af7d608029a0f86c9a16c249585fb912fb748ea0c077dadef420f8ae4648688b78389ce125de3a8719094154655baa6cc999dec06929a43a8"
                 },
                 {
                     "type": "shell",
