@@ -26,6 +26,7 @@
 #define GIMP_HELP_FILE_NEW                        "gimp-file-new"
 #define GIMP_HELP_FILE_OPEN                       "gimp-file-open"
 #define GIMP_HELP_FILE_OPEN_AS_LAYER              "gimp-file-open-as-layer"
+#define GIMP_HELP_FILE_OPEN_AS_LINK_LAYER         "gimp-file-open-as-link-layer"
 #define GIMP_HELP_FILE_OPEN_LOCATION              "gimp-file-open-location"
 #define GIMP_HELP_FILE_OPEN_BY_EXTENSION          "gimp-file-open-by-extension"
 #define GIMP_HELP_FILE_OPEN_RECENT                "gimp-file-open-recent"

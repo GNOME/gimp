@@ -86,7 +86,7 @@ static const GimpActionEntry file_actions[] =
     NC_("file-action", "Op_en as Link Layer..."), NULL, { "<primary><alt><shift>O", NULL },
     NC_("file-action", "Open an image file as Link layer"),
     file_open_as_link_layer_cmd_callback,
-    GIMP_HELP_FILE_OPEN_AS_LAYER },
+    GIMP_HELP_FILE_OPEN_AS_LINK_LAYER },
 
   { "file-open-location", GIMP_ICON_WEB,
     NC_("file-action", "Open _Location..."), NULL, { NULL },
