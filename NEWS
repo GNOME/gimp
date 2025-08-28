@@ -41,7 +41,9 @@ Core:
     metadata. This new setting is enabled by default.
   - Fix palette import to properly import colors with alpha values from
     palettes.
-  - New layer type: vector layers.
+  - New layer types:
+    * vector layers
+    * link layers
   - Fill/Stroke editor are now live-previewing color changes for vector
     layer fill/stroke and text layer outlines.
 
@@ -53,6 +55,8 @@ Tools:
   - Seamless Clone (Playground): made to work again, but is still too
     slow to move out of Playground.
   - The Paths tool has updated UI to create vector layers.
+  - Text tool: bold, italic and underline can now be applied with
+    commonly used shortcuts (Ctrl+b, i and u respectively).
 
 Graphical User Interface:
 
