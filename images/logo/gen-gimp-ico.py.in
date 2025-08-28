@@ -30,11 +30,9 @@ for size in sizes:
 
   config.set_property("width",  size)
   config.set_property("height", size)
-  Gimp.Procedure.run(procedure, config)
   v = Gimp.Procedure.run(procedure, config)
-
   if v.index(0) != Gimp.PDBStatusType.SUCCESS:
-    sys.exit(os.EX_SOFTWARE)
+    sys.exit(70)
 
   tmp_image = v.index(1)
   drawables = tmp_image.get_selected_drawables()
@@ -49,9 +47,6 @@ config.set_property("image", image)
 config.set_property("num-drawables", len(drawables))
 config.set_property("drawables", Gimp.ObjectArray.new(Gimp.Drawable, drawables, False))
 config.set_property("file", Gio.file_new_for_path(output_path))
-Gimp.Procedure.run(procedure, config)
-
 v = Gimp.Procedure.run(procedure, config)
-
 if v.index(0) != Gimp.PDBStatusType.SUCCESS:
-  sys.exit(os.EX_SOFTWARE)
+  sys.exit(70)

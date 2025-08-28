@@ -9,11 +9,9 @@ def export_scaled_img(img_width, img_height, scale):
   logo_dim    = img_height * 0.71
   config.set_property("width",  logo_dim)
   config.set_property("height", logo_dim)
-  Gimp.Procedure.run(procedure, config)
   v = Gimp.Procedure.run(procedure, config)
-
   if v.index(0) != Gimp.PDBStatusType.SUCCESS:
-    sys.exit(os.EX_SOFTWARE)
+    sys.exit(70)
 
   image = v.index(1)
   image.resize(img_width, img_height, (img_width-logo_dim)/2, (img_height-logo_dim)/2)
@@ -26,7 +24,9 @@ def export_scaled_img(img_width, img_height, scale):
   drawables = image.get_selected_drawables()
   config.set_property("image", image)
   config.set_property("file", Gio.file_new_for_path('build/windows/installer/gimp.scale-' + scale + '.bmp'))
-  Gimp.Procedure.run(procedure, config)
+  v = Gimp.Procedure.run(procedure, config)
+  if v.index(0) != Gimp.PDBStatusType.SUCCESS:
+    sys.exit(70)
 
 # https://jrsoftware.org/ishelp/index.php?topic=setup_wizardsmallimagefile
 export_scaled_img(58, 58, '100')

@@ -29,10 +29,9 @@ def export_img(sizes, type='none', type_param='none'):
             base_size   = size * scale / 100
             config.set_property("width",  base_size)
             config.set_property("height", base_size)
-            Gimp.Procedure.run(procedure, config)
             v = Gimp.Procedure.run(procedure, config)
             if v.index(0) != Gimp.PDBStatusType.SUCCESS:
-                sys.exit(os.EX_SOFTWARE)
+                sys.exit(70)
             tmp_image = v.index(1)
             drawables = tmp_image.get_selected_drawables()
             layer1 = Gimp.Layer.new_from_drawable (drawables[0], image)
@@ -44,10 +43,9 @@ def export_img(sizes, type='none', type_param='none'):
             wilber_size = base_size * 7 / 8
             config.set_property("width",  wilber_size)
             config.set_property("height", wilber_size)
-            Gimp.Procedure.run(procedure, config)
             v = Gimp.Procedure.run(procedure, config)
             if v.index(0) != Gimp.PDBStatusType.SUCCESS:
-                sys.exit(os.EX_SOFTWARE)
+                sys.exit(70)
             tmp_image = v.index(1)
             drawables = tmp_image.get_selected_drawables()
             layer2 = Gimp.Layer.new_from_drawable (drawables[0], image)
@@ -73,10 +71,9 @@ def export_img(sizes, type='none', type_param='none'):
             config.set_property("file", Gio.file_new_for_path(export_dir + 'fileicon' + variant + '.targetsize-' + size_str + '.@OUTPUT_TYPE@'))
         else:
             config.set_property("file", Gio.file_new_for_path(export_dir + 'fileicon' + variant + '.@OUTPUT_TYPE@'))
-        Gimp.Procedure.run(procedure, config)
         v = Gimp.Procedure.run(procedure, config)
         if v.index(0) != Gimp.PDBStatusType.SUCCESS:
-            sys.exit(os.EX_SOFTWARE)
+            sys.exit(70)
 
 
 if '@OUTPUT_TYPE@' == 'ico':

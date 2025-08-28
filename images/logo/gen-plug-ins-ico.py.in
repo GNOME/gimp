@@ -29,15 +29,11 @@ for size in sizes:
   procedure   = Gimp.get_pdb().lookup_procedure("file-svg-load")
   config      = procedure.create_config()
   config.set_property("file", Gio.file_new_for_path(input1_path))
-
   config.set_property("width",  size)
   config.set_property("height", size)
-  Gimp.Procedure.run(procedure, config)
   v = Gimp.Procedure.run(procedure, config)
-
   if v.index(0) != Gimp.PDBStatusType.SUCCESS:
-    sys.exit(os.EX_SOFTWARE)
-
+    sys.exit(70)
   tmp_image = v.index(1)
   drawables = tmp_image.get_selected_drawables()
   layer1 = Gimp.Layer.new_from_drawable (drawables[0], image)
@@ -47,15 +43,11 @@ for size in sizes:
   # 2. Loading Wilber.
   config.set_property("file", Gio.file_new_for_path(input2_path))
   wilber_size = size * 7 / 8
-
   config.set_property("width",  wilber_size)
   config.set_property("height", wilber_size)
-  Gimp.Procedure.run(procedure, config)
   v = Gimp.Procedure.run(procedure, config)
-
   if v.index(0) != Gimp.PDBStatusType.SUCCESS:
-    sys.exit(os.EX_SOFTWARE)
-
+    sys.exit(70)
   tmp_image = v.index(1)
   drawables = tmp_image.get_selected_drawables()
   layer2 = Gimp.Layer.new_from_drawable (drawables[0], image)
@@ -71,9 +63,6 @@ config    = procedure.create_config()
 drawables = image.get_selected_drawables()
 config.set_property("image", image)
 config.set_property("file", Gio.file_new_for_path(output_path))
-Gimp.Procedure.run(procedure, config)
-
 v = Gimp.Procedure.run(procedure, config)
-
 if v.index(0) != Gimp.PDBStatusType.SUCCESS:
-  sys.exit(os.EX_SOFTWARE)
+  sys.exit(70)

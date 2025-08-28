@@ -13,12 +13,9 @@ offset_y    = 77
 procedure = Gimp.get_pdb().lookup_procedure("gimp-file-load")
 config    = procedure.create_config()
 config.set_property("file", Gio.file_new_for_path(base_path))
-Gimp.Procedure.run(procedure, config)
 v = Gimp.Procedure.run(procedure, config)
-
 if v.index(0) != Gimp.PDBStatusType.SUCCESS:
-  sys.exit(os.EX_SOFTWARE)
-
+  sys.exit(70)
 image = v.index(1)
 
 # 2. Loading Wilber.
@@ -27,12 +24,9 @@ config    = procedure.create_config()
 config.set_property("file", Gio.file_new_for_path(wilber_path))
 config.set_property("width",  wilber_size)
 config.set_property("height", wilber_size)
-Gimp.Procedure.run(procedure, config)
 v = Gimp.Procedure.run(procedure, config)
-
 if v.index(0) != Gimp.PDBStatusType.SUCCESS:
-  sys.exit(os.EX_SOFTWARE)
-
+  sys.exit(70)
 tmp_image = v.index(1)
 drawables = tmp_image.get_selected_drawables()
 layer2 = Gimp.Layer.new_from_drawable (drawables[0], image)
@@ -42,10 +36,11 @@ tmp_image.delete()
 
 # 3. Merging the background and Wilber on top.
 image.merge_down(layer2, Gimp.MergeType.CLIP_TO_IMAGE)
-
 procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
 config    = procedure.create_config()
 drawables = image.get_selected_drawables()
 config.set_property("image", image)
 config.set_property("file", Gio.file_new_for_path(output_path))
-Gimp.Procedure.run(procedure, config)
+v = Gimp.Procedure.run(procedure, config)
+if v.index(0) != Gimp.PDBStatusType.SUCCESS:
+  sys.exit(70)

@@ -22,11 +22,9 @@ def export_relative_img(scale):
   logo_size   = @LOGO_SIZE@ * scale / 100
   config.set_property("width",  logo_size)
   config.set_property("height", logo_size)
-  Gimp.Procedure.run(procedure, config)
   v = Gimp.Procedure.run(procedure, config)
-
   if v.index(0) != Gimp.PDBStatusType.SUCCESS:
-    sys.exit(os.EX_SOFTWARE)
+    sys.exit(70)
 
   image = v.index(1)
 
@@ -43,7 +41,9 @@ def export_relative_img(scale):
     config.set_property("image", image)
     scale_str = str(scale)
     config.set_property("file", Gio.file_new_for_path(export_dir + '@NAME@.png'))
-    Gimp.Procedure.run(procedure, config)
+    v = Gimp.Procedure.run(procedure, config)
+    if v.index(0) != Gimp.PDBStatusType.SUCCESS:
+      sys.exit(70)
 
   procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
   config    = procedure.create_config()
@@ -51,7 +51,9 @@ def export_relative_img(scale):
   config.set_property("image", image)
   scale_str = str(scale)
   config.set_property("file", Gio.file_new_for_path(export_dir + '@NAME@.scale-' + scale_str + '.png'))
-  Gimp.Procedure.run(procedure, config)
+  v = Gimp.Procedure.run(procedure, config)
+  if v.index(0) != Gimp.PDBStatusType.SUCCESS:
+    sys.exit(70)
 
 
 def export_absolute_img(size):
@@ -60,11 +62,9 @@ def export_absolute_img(size):
   config.set_property("file", Gio.file_new_for_path('@SRCDIR@/gimp-logo.svg'))
   config.set_property("width",  size)
   config.set_property("height", size)
-  Gimp.Procedure.run(procedure, config)
   v = Gimp.Procedure.run(procedure, config)
-
   if v.index(0) != Gimp.PDBStatusType.SUCCESS:
-    sys.exit(os.EX_SOFTWARE)
+    sys.exit(70)
 
   image = v.index(1)
 
@@ -75,7 +75,9 @@ def export_absolute_img(size):
     config.set_property("image", image)
     size_str = str(size)
     config.set_property("file", Gio.file_new_for_path(export_dir + '@NAME@.png'))
-    Gimp.Procedure.run(procedure, config)
+    v = Gimp.Procedure.run(procedure, config)
+    if v.index(0) != Gimp.PDBStatusType.SUCCESS:
+      sys.exit(70)
 
   else:
     procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
@@ -84,7 +86,9 @@ def export_absolute_img(size):
     config.set_property("image", image)
     size_str = str(size)
     config.set_property("file", Gio.file_new_for_path(export_dir + '@NAME@.targetsize-' + size_str + '.png'))
-    Gimp.Procedure.run(procedure, config)
+    v = Gimp.Procedure.run(procedure, config)
+    if v.index(0) != Gimp.PDBStatusType.SUCCESS:
+      sys.exit(70)
 
     if '@NAME@' =='AppList':
       procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
@@ -93,7 +97,9 @@ def export_absolute_img(size):
       config.set_property("image", image)
       size_str = str(size)
       config.set_property("file", Gio.file_new_for_path(export_dir + '@NAME@.targetsize-' + size_str + '_altform-unplated.png'))
-      Gimp.Procedure.run(procedure, config)
+      v = Gimp.Procedure.run(procedure, config)
+      if v.index(0) != Gimp.PDBStatusType.SUCCESS:
+        sys.exit(70)
 
       procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
       config    = procedure.create_config()
@@ -101,7 +107,9 @@ def export_absolute_img(size):
       config.set_property("image", image)
       size_str = str(size)
       config.set_property("file", Gio.file_new_for_path(export_dir + '@NAME@.targetsize-' + size_str + '_altform-lightunplated.png'))
-      Gimp.Procedure.run(procedure, config)
+      v = Gimp.Procedure.run(procedure, config)
+      if v.index(0) != Gimp.PDBStatusType.SUCCESS:
+        sys.exit(70)
 
 
 export_relative_img(100)
