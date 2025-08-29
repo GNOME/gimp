@@ -12,8 +12,8 @@
 msgid ""
 msgstr "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-08-17 13:28+0000\n"
-"PO-Revision-Date: 2025-08-18 20:00+0100\n"
+"POT-Creation-Date: 2025-08-29 08:15+0000\n"
+"PO-Revision-Date: 2025-08-29 20:00+0100\n"
 "Last-Translator: Asier Saratsua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
@@ -252,7 +252,7 @@ msgid "_Horizontal style"
 msgstr "Estilo _horizontala"
 
 #: plug-ins/common/align-layers.c:193 plug-ins/common/align-layers.c:215
-#: plug-ins/common/file-ps.c:431 plug-ins/common/file-ps.c:440
+#: plug-ins/common/file-ps.c:430 plug-ins/common/file-ps.c:439
 #: plug-ins/file-dds/dds.c:198 plug-ins/file-tiff/file-tiff.c:247
 #: plug-ins/fractal-explorer/fractal-explorer.c:345
 #: plug-ins/fractal-explorer/fractal-explorer.c:355
@@ -1201,7 +1201,7 @@ msgstr "Uneko ezarpenen grafikoa"
 
 #: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:562
 #: plug-ins/common/procedure-browser.c:169
-#: plug-ins/filter-browser/filter-browser.c:728 plug-ins/gfig/gfig-dialog.c:355
+#: plug-ins/filter-browser/filter-browser.c:727 plug-ins/gfig/gfig-dialog.c:355
 #: plug-ins/gfig/gfig-dialog.c:1215 plug-ins/gfig/gfig-dialog.c:1360
 #: plug-ins/ifs-compose/ifs-compose.c:1213
 #: plug-ins/metadata/metadata-viewer.c:223
@@ -1782,15 +1782,15 @@ msgstr "Retinex: iragaztea"
 
 #: plug-ins/common/crop-zealous.c:113
 msgid "_Zealous Crop"
-msgstr "_Kontuz moztea..."
+msgstr "Moztu _alde guztietatik..."
 
 #: plug-ins/common/crop-zealous.c:117
 msgid "Autocrop unused space from edges and middle"
-msgstr "Moztu automatikoki erabili gabeko tartea ertzetatik eta erditik"
+msgstr "Moztu automatikoki erabili gabeko tartea alde guztietatik (ertzetatik zein erditik)"
 
 #: plug-ins/common/crop-zealous.c:142
 msgid "Zealous cropping"
-msgstr "Kontuz mozten"
+msgstr "Alde guztietatik mozten"
 
 #: plug-ins/common/crop-zealous.c:282
 msgid "Nothing to crop."
@@ -1802,7 +1802,7 @@ msgstr "Tolestu _kurba..."
 
 #: plug-ins/common/curve-bend.c:400
 msgid "Bend the image using two control curves"
-msgstr "Tolestu irudia bi kurba-kontrolak erabiliz"
+msgstr "Tolestu irudia bi kurba-kontrol erabiliz"
 
 #: plug-ins/common/curve-bend.c:401
 msgid ""
@@ -1948,12 +1948,12 @@ msgstr "Ezin da hautapen hutsekin lan egin"
 #: plug-ins/common/file-mng.c:1409 plug-ins/common/file-paa.c:190
 #: plug-ins/common/file-pcx.c:490 plug-ins/common/file-pcx.c:533
 #: plug-ins/common/file-png.c:800 plug-ins/common/file-png.c:1370
-#: plug-ins/common/file-ps.c:1159 plug-ins/common/file-ps.c:3739
+#: plug-ins/common/file-ps.c:1158 plug-ins/common/file-ps.c:3738
 #: plug-ins/common/file-psp.c:2634 plug-ins/common/file-psp.c:2684
 #: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:608
 #: plug-ins/common/file-raw-data.c:796 plug-ins/common/file-raw-data.c:1841
 #: plug-ins/common/file-seattle-filmworks.c:232
-#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:562
+#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:556
 #: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:278
 #: plug-ins/common/file-wbmp.c:250 plug-ins/common/file-wbmp.c:329
 #: plug-ins/common/file-xbm.c:725 plug-ins/common/file-xmc.c:656
@@ -2450,7 +2450,7 @@ msgid "This plug-in tries to remove vertical stripes from an image."
 msgstr "Plugin honek irudietako marra bertikalak kentzen saiatzen da."
 
 #: plug-ins/common/destripe.c:140 plug-ins/common/file-html-table.c:199
-#: plug-ins/common/file-ps.c:525 plug-ins/common/file-raw-data.c:364
+#: plug-ins/common/file-ps.c:524 plug-ins/common/file-raw-data.c:364
 #: plug-ins/common/smooth-palette.c:134 plug-ins/imagemap/imap_grid.c:258
 msgid "_Width"
 msgstr "_Zabalera"
@@ -2554,7 +2554,7 @@ msgstr "EOF edo errorea irudiaren goiburua irakurtzean"
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
 #: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
 #: plug-ins/common/file-png.c:792 plug-ins/common/file-pnm.c:688
-#: plug-ins/common/file-ps.c:1149 plug-ins/common/file-raw-data.c:787
+#: plug-ins/common/file-ps.c:1148 plug-ins/common/file-raw-data.c:787
 #: plug-ins/common/file-raw-data.c:1833 plug-ins/common/file-sunras.c:427
 #: plug-ins/common/file-tga.c:419 plug-ins/common/file-wbmp.c:242
 #: plug-ins/common/file-wbmp.c:321 plug-ins/common/file-wmf.c:618
@@ -2636,7 +2636,7 @@ msgstr "'%s': EOF edo errorea paletaren datuak irakurtzean"
 #: plug-ins/common/file-jp2.c:1800 plug-ins/common/file-jpegxl.c:1389
 #: plug-ins/common/file-pcx.c:1083 plug-ins/common/file-pix.c:636
 #: plug-ins/common/file-png.c:1915 plug-ins/common/file-pnm.c:1623
-#: plug-ins/common/file-ps.c:1369 plug-ins/common/file-qoi.c:350
+#: plug-ins/common/file-ps.c:1368 plug-ins/common/file-qoi.c:350
 #: plug-ins/common/file-sunras.c:605 plug-ins/common/file-tga.c:1217
 #: plug-ins/common/file-tim.c:622 plug-ins/common/file-xbm.c:1026
 #: plug-ins/common/file-xpm.c:682 plug-ins/common/file-xwd.c:693
@@ -2821,7 +2821,7 @@ msgstr "GIMPek ez du %s onartzen pixeleko laginekin batera: %d"
 msgid "Cannot save images with alpha channel."
 msgstr "Ezin izan da alfa kanalak dituzten irudiak gorde."
 
-#: plug-ins/common/file-dicom.c:1525 plug-ins/common/file-ps.c:1364
+#: plug-ins/common/file-dicom.c:1525 plug-ins/common/file-ps.c:1363
 #: plug-ins/common/file-xwd.c:688 plug-ins/file-fits/fits.c:641
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -3644,7 +3644,7 @@ msgstr "Gelaxka bakoitzeko testua."
 msgid "The width for each table cell. Can be a number or a percent."
 msgstr "Taulako gelaxka bakoitzaren zabalera. Zenbaki bat edo ehuneko bat izan daiteke."
 
-#: plug-ins/common/file-html-table.c:206 plug-ins/common/file-ps.c:532
+#: plug-ins/common/file-html-table.c:206 plug-ins/common/file-ps.c:531
 #: plug-ins/common/file-raw-data.c:369 plug-ins/common/smooth-palette.c:140
 #: plug-ins/imagemap/imap_grid.c:264
 msgid "_Height"
@@ -4608,7 +4608,7 @@ msgstr "Gorde irudi hau"
 
 #: plug-ins/common/file-pdf-export.c:1219
 #: plug-ins/common/file-pdf-export.c:1292
-#: plug-ins/common/file-pdf-export.c:1390 plug-ins/common/file-ps.c:2218
+#: plug-ins/common/file-pdf-export.c:1390 plug-ins/common/file-ps.c:2217
 #: plug-ins/file-tiff/file-tiff-load.c:1563
 #, c-format
 msgid "Page %d"
@@ -4800,7 +4800,7 @@ msgstr "Aktibatuta dagoenean, gorde 1, 2, 4 edo 8 bit-etan, erabilitako kolore k
 msgid "PNG export format"
 msgstr "PNG esportazio-formatua"
 
-#: plug-ins/common/file-png.c:397 plug-ins/common/file-ps.c:424
+#: plug-ins/common/file-png.c:397 plug-ins/common/file-ps.c:423
 msgid "Automatic"
 msgstr "Automatikoa"
 
@@ -5110,63 +5110,63 @@ msgstr "PAM: Sakonera baliogabea."
 msgid "PAM: Unsupported tupltype."
 msgstr "PAM: Onartzen ez den tupltype."
 
-#: plug-ins/common/file-ps.c:362 plug-ins/common/file-ps.c:471
+#: plug-ins/common/file-ps.c:361 plug-ins/common/file-ps.c:470
 msgid "PostScript document"
 msgstr "PostScript dokumentua"
 
-#: plug-ins/common/file-ps.c:365 plug-ins/common/file-ps.c:366
+#: plug-ins/common/file-ps.c:364 plug-ins/common/file-ps.c:365
 msgid "Load PostScript documents"
 msgstr "Kargatu PostScript dokumentuak"
 
-#: plug-ins/common/file-ps.c:370
+#: plug-ins/common/file-ps.c:369
 msgid "PostScript"
 msgstr "PostScript"
 
-#: plug-ins/common/file-ps.c:381
+#: plug-ins/common/file-ps.c:380
 msgid "Encapsulated PostScript image"
 msgstr "PostScript kapsulatuko irudia"
 
-#: plug-ins/common/file-ps.c:384 plug-ins/common/file-ps.c:385
+#: plug-ins/common/file-ps.c:383 plug-ins/common/file-ps.c:384
 msgid "Load Encapsulated PostScript images"
 msgstr "Kargatu PostScript kapsulatuko irudia"
 
-#: plug-ins/common/file-ps.c:389 plug-ins/common/file-ps.c:490
+#: plug-ins/common/file-ps.c:388 plug-ins/common/file-ps.c:489
 msgid "Encapsulated PostScript"
 msgstr "PostScript kapsulatua"
 
-#: plug-ins/common/file-ps.c:407
+#: plug-ins/common/file-ps.c:406
 msgid "Try _Bounding Box"
 msgstr "Probatu _muga-koadroa"
 
-#: plug-ins/common/file-ps.c:408
+#: plug-ins/common/file-ps.c:407
 msgid "FALSE: Use width/height, TRUE: Use BoundingBox"
 msgstr "FALTSUA: Erabili zabalera/altuera, EGIA: Erabili muga-koadroa"
 
-#: plug-ins/common/file-ps.c:413
+#: plug-ins/common/file-ps.c:412
 msgid "_Pages"
 msgstr "_Orrialdeak"
 
-#: plug-ins/common/file-ps.c:414
+#: plug-ins/common/file-ps.c:413
 msgid "Pages to load (e.g.: 1,3,5-7)"
 msgstr "Kargatuko diren orriak (adibidez 1,3,5-7)"
 
-#: plug-ins/common/file-ps.c:419
+#: plug-ins/common/file-ps.c:418
 msgid "Colorin_g"
 msgstr "Ko_loreztatzea"
 
-#: plug-ins/common/file-ps.c:420
+#: plug-ins/common/file-ps.c:419
 msgid "Import color format"
 msgstr "Inportatu kolore-formatua"
 
-#: plug-ins/common/file-ps.c:421
+#: plug-ins/common/file-ps.c:420
 msgid "B/W"
 msgstr "Z/B"
 
-#: plug-ins/common/file-ps.c:422 plug-ins/imagemap/imap-menu.ui:101
+#: plug-ins/common/file-ps.c:421 plug-ins/imagemap/imap-menu.ui:101
 msgid "Gray"
 msgstr "Grisa"
 
-#: plug-ins/common/file-ps.c:423 plug-ins/common/file-xpm.c:488
+#: plug-ins/common/file-ps.c:422 plug-ins/common/file-xpm.c:488
 #: plug-ins/gimpressionist/color.c:65 plug-ins/gimpressionist/general.c:179
 #: plug-ins/imagemap/imap-menu.ui:96 plug-ins/lighting/lighting-main.c:222
 #: plug-ins/lighting/lighting-main.c:345 plug-ins/lighting/lighting-main.c:404
@@ -5175,205 +5175,205 @@ msgstr "Grisa"
 msgid "Color"
 msgstr "Kolorea"
 
-#: plug-ins/common/file-ps.c:429
+#: plug-ins/common/file-ps.c:428
 msgid "Te_xt anti-aliasing"
 msgstr "Testu-a_ntialiasinga"
 
-#: plug-ins/common/file-ps.c:430
+#: plug-ins/common/file-ps.c:429
 msgid "Text anti-aliasing strength"
 msgstr "Testu-antialiasingaren sendotasuna"
 
-#: plug-ins/common/file-ps.c:432 plug-ins/common/file-ps.c:441
+#: plug-ins/common/file-ps.c:431 plug-ins/common/file-ps.c:440
 msgid "Weak"
 msgstr "Ahula"
 
-#: plug-ins/common/file-ps.c:433 plug-ins/common/file-ps.c:442
+#: plug-ins/common/file-ps.c:432 plug-ins/common/file-ps.c:441
 msgid "Strong"
 msgstr "Indartsua"
 
-#: plug-ins/common/file-ps.c:438
+#: plug-ins/common/file-ps.c:437
 msgid "Gra_phic anti-aliasing"
 msgstr "Grafiko-_antialiasinga"
 
-#: plug-ins/common/file-ps.c:439
+#: plug-ins/common/file-ps.c:438
 msgid "Graphic anti-aliasing strength"
 msgstr "Grafikoa-antialiasingaren sendotasuna"
 
-#: plug-ins/common/file-ps.c:453
+#: plug-ins/common/file-ps.c:452
 msgid "Loads a small preview from a PostScript or PDF document"
 msgstr "Aurrebista txiki bat kargatzen du PostScript edo PDF dokumentu batetik"
 
-#: plug-ins/common/file-ps.c:474
+#: plug-ins/common/file-ps.c:473
 msgid "Export image as PostScript document"
 msgstr "Esportatu irudia PostScript dokumentu gisa"
 
-#: plug-ins/common/file-ps.c:475 plug-ins/common/file-ps.c:495
+#: plug-ins/common/file-ps.c:474 plug-ins/common/file-ps.c:494
 msgid ""
 "PostScript exporting handles all image types except those with alpha "
 "channels."
 msgstr "PostScript esportazioak irudi mota guztiak maneiatu ditzake, alfa kanalak dituztenak salbu."
 
-#: plug-ins/common/file-ps.c:481
+#: plug-ins/common/file-ps.c:480
 msgid "PS"
 msgstr "PS"
 
-#: plug-ins/common/file-ps.c:493
+#: plug-ins/common/file-ps.c:492
 msgid "Export image as Encapsulated PostScript image"
 msgstr "Esportatu irudia PostScript kapsulatu gisa"
 
-#: plug-ins/common/file-ps.c:501
+#: plug-ins/common/file-ps.c:500
 msgid "EPS"
 msgstr "EPS"
 
-#: plug-ins/common/file-ps.c:526
+#: plug-ins/common/file-ps.c:525
 msgid "Width of the image in PostScript file (0: use input image size)"
 msgstr "Irudiaren zabalera PostScript fitxategian (0: erabili sarrerako irudi-tamaina)"
 
-#: plug-ins/common/file-ps.c:533
+#: plug-ins/common/file-ps.c:532
 msgid "Height of the image in PostScript file (0: use input image size)"
 msgstr "Irudiaren altuera PostScript fitxategian (0: erabili sarrerako irudi-tamaina)"
 
-#: plug-ins/common/file-ps.c:539
+#: plug-ins/common/file-ps.c:538
 msgid "_X offset"
 msgstr "_X desplazamendua"
 
-#: plug-ins/common/file-ps.c:540
+#: plug-ins/common/file-ps.c:539
 msgid "X-offset to image from lower left corner"
 msgstr "Irudiaren X desplazamendua beheko ezkerreko izkinatik"
 
-#: plug-ins/common/file-ps.c:545
+#: plug-ins/common/file-ps.c:544
 msgid "Y o_ffset"
 msgstr "_Y desplazamendua"
 
-#: plug-ins/common/file-ps.c:546
+#: plug-ins/common/file-ps.c:545
 msgid "Y-offset to image from lower left corner"
 msgstr "Irudiaren Y desplazamendua beheko ezkerreko izkinatik"
 
-#: plug-ins/common/file-ps.c:551
+#: plug-ins/common/file-ps.c:550
 msgid "_Unit"
 msgstr "_Unitatea"
 
-#: plug-ins/common/file-ps.c:552
+#: plug-ins/common/file-ps.c:551
 msgid "Unit of measure for offset values"
 msgstr "Neurketa-unitatea desplazamendu-balioetarako"
 
-#: plug-ins/common/file-ps.c:553
+#: plug-ins/common/file-ps.c:552
 msgid "Inch"
 msgstr "Hazbetea"
 
-#: plug-ins/common/file-ps.c:554
+#: plug-ins/common/file-ps.c:553
 msgid "Millimeter"
 msgstr "Milimetroa"
 
-#: plug-ins/common/file-ps.c:559
+#: plug-ins/common/file-ps.c:558
 msgid "_Keep aspect ratio"
 msgstr "_Mantendu aspektu-erlazioa"
 
-#: plug-ins/common/file-ps.c:560
+#: plug-ins/common/file-ps.c:559
 msgid ""
 "If enabled, aspect ratio will be maintained on export. Otherwise, the width "
 "and height values will be used."
 msgstr "Gaituta badago, aspektu-erlazioa mantenduko da esportatzean. Bestela, zabaleraren eta altueraren balioak erabiliko dira."
 
-#: plug-ins/common/file-ps.c:566 plug-ins/map-object/map-object-ui.c:719
+#: plug-ins/common/file-ps.c:565 plug-ins/map-object/map-object-ui.c:719
 msgid "Rotation"
 msgstr "Biraketa"
 
-#: plug-ins/common/file-ps.c:572
+#: plug-ins/common/file-ps.c:571
 msgid "PostScript Level _2"
 msgstr "PostScript 2. maila"
 
-#: plug-ins/common/file-ps.c:573
+#: plug-ins/common/file-ps.c:572
 msgid ""
 "If enabled, export in PostScript Level 2 format. Otherwise, export in "
 "PostScript Level 1 format."
 msgstr "Gaituta badago, 2. mailako PostScript formatuan esportatzen du. Bestela, 1. mailako PostScript formatuan."
 
-#: plug-ins/common/file-ps.c:579
+#: plug-ins/common/file-ps.c:578
 msgid "Encapsula_ted PostScript"
 msgstr "PostScript _kapsulatua"
 
-#: plug-ins/common/file-ps.c:580
+#: plug-ins/common/file-ps.c:579
 msgid ""
 "If enabled, export as Encapsulated PostScript. Otherwise, export as "
 "PostScript."
 msgstr "Gaituta badago, PostScript kapsulatu gisa esportatzen du. Bestela, PostScript gisa."
 
-#: plug-ins/common/file-ps.c:586 plug-ins/imagemap/imap_grid.c:301
+#: plug-ins/common/file-ps.c:585 plug-ins/imagemap/imap_grid.c:301
 msgid "_Preview"
 msgstr "_Aurrebista"
 
-#: plug-ins/common/file-ps.c:587
+#: plug-ins/common/file-ps.c:586
 msgid "Show Preview"
 msgstr "Erakutsi aurrebista"
 
-#: plug-ins/common/file-ps.c:592
+#: plug-ins/common/file-ps.c:591
 msgid "Preview Si_ze"
 msgstr "T_amainaren aurrebista"
 
-#: plug-ins/common/file-ps.c:593
+#: plug-ins/common/file-ps.c:592
 msgid "Maximum size of preview. Set to 0 for no preview."
 msgstr "Aurrebistaren gehieneko tamaina. Ezarri 0 aurrebistarik ez sortzeko."
 
-#: plug-ins/common/file-ps.c:1170
+#: plug-ins/common/file-ps.c:1169
 #, c-format
 msgid "Could not interpret PostScript file '%s'"
 msgstr "Ezin izan da '%s' PostScript fitxategia interpretatu"
 
-#: plug-ins/common/file-ps.c:1252
+#: plug-ins/common/file-ps.c:1251
 msgid "Rendered EPS"
 msgstr "EPS errendatua"
 
-#: plug-ins/common/file-ps.c:1280
+#: plug-ins/common/file-ps.c:1279
 #, c-format
 msgid "%s-pages"
 msgstr "%s-orriak"
 
-#: plug-ins/common/file-ps.c:1351
+#: plug-ins/common/file-ps.c:1350
 #, c-format
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "PostScript esportazioak ezin ditu maneiatu alfa kanalak dituzten irudiak"
 
-#: plug-ins/common/file-ps.c:3822
+#: plug-ins/common/file-ps.c:3821
 msgid "Pages:"
 msgstr "Orrialdeak:"
 
-#: plug-ins/common/file-ps.c:3826
+#: plug-ins/common/file-ps.c:3825
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Orrialdeak kargatzeko (adib.: 1-4 edo 1,3,5-7)"
 
-#: plug-ins/common/file-ps.c:3832
+#: plug-ins/common/file-ps.c:3831
 msgid "Open as"
 msgstr "Ireki honela"
 
-#: plug-ins/common/file-ps.c:3923
+#: plug-ins/common/file-ps.c:3919
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr "Txandakatutakoan, irudia eskalatu egingo da adierazitako tamainan sartzeko, aspektu-erlazioa aldatu gabe."
 
-#: plug-ins/common/file-ps.c:3929
+#: plug-ins/common/file-ps.c:3925
 msgid "Image Size"
 msgstr "Irudi-tamaina"
 
 #. Rotation
-#: plug-ins/common/file-ps.c:3949
+#: plug-ins/common/file-ps.c:3942
 msgid "_0"
 msgstr "_0"
 
-#: plug-ins/common/file-ps.c:3950
+#: plug-ins/common/file-ps.c:3943
 msgid "_90"
 msgstr "_90"
 
-#: plug-ins/common/file-ps.c:3951
+#: plug-ins/common/file-ps.c:3944
 msgid "_180"
 msgstr "_180"
 
-#: plug-ins/common/file-ps.c:3952
+#: plug-ins/common/file-ps.c:3945
 msgid "_270"
 msgstr "_270"
 
-#: plug-ins/common/file-ps.c:3959
+#: plug-ins/common/file-ps.c:3952
 msgid "Output"
 msgstr "Irteera"
 
@@ -6099,32 +6099,32 @@ msgstr "EOF aurkitu da irakurtzean"
 msgid "Write error occurred"
 msgstr "Errorea gertatu da idaztean"
 
-#: plug-ins/common/file-svg.c:167
+#: plug-ins/common/file-svg.c:173
 msgid "SVG image"
 msgstr "SVG irudia"
 
-#: plug-ins/common/file-svg.c:180
+#: plug-ins/common/file-svg.c:186
 msgid "SVG"
 msgstr "SVG"
 
-#: plug-ins/common/file-svg.c:189
+#: plug-ins/common/file-svg.c:195
 msgid "_Paths"
 msgstr "_Bideak"
 
-#: plug-ins/common/file-svg.c:190
+#: plug-ins/common/file-svg.c:196
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
 msgstr "Bideak nola inportatuko diren bideen tresnarekin erabiliak izan daitezen"
 
-#: plug-ins/common/file-svg.c:191
+#: plug-ins/common/file-svg.c:197
 msgid "Don't import paths"
 msgstr "Ez inportatu bideak"
 
-#: plug-ins/common/file-svg.c:192
+#: plug-ins/common/file-svg.c:198
 msgid "Import paths individually"
 msgstr "Inportatu bideak banaka"
 
-#: plug-ins/common/file-svg.c:193
+#: plug-ins/common/file-svg.c:199
 msgid "Merge imported paths"
 msgstr "Batu inportatutako bideak"
 
@@ -6133,15 +6133,15 @@ msgstr "Batu inportatutako bideak"
 #. * unsafe, possibly consumming too much memory with malicious XML
 #. * files.
 #.
-#: plug-ins/common/file-svg.c:276
+#: plug-ins/common/file-svg.c:245
 msgid "Disable safety size limits?"
 msgstr "Desgaitu segurtasuneko tamaina-mugak?"
 
-#: plug-ins/common/file-svg.c:281
+#: plug-ins/common/file-svg.c:250
 msgid "_No"
 msgstr "_Ez"
 
-#: plug-ins/common/file-svg.c:282
+#: plug-ins/common/file-svg.c:251
 msgid "_Yes"
 msgstr "_Bai"
 
@@ -6155,7 +6155,7 @@ msgstr "_Bai"
 #. * cases. Instead of this, we need to ask each and every time, in
 #. * case it might be the huge data error.
 #.
-#: plug-ins/common/file-svg.c:306
+#: plug-ins/common/file-svg.c:275
 msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to "
@@ -6163,24 +6163,24 @@ msgid ""
 msgstr "Analisi-errore bat gertatu da.\n"
 "Segurtasuneko mugak desgaitzea lagungarria izan daiteke. SVG fitxategi maltzurrek memoria aasko kontsumitzeko erabili dezakete hori."
 
-#: plug-ins/common/file-svg.c:318
+#: plug-ins/common/file-svg.c:287
 msgid "For security reasons, this should only be used for trusted input!"
 msgstr "Segurtasun-arrazoiengatik, hau sarrera fidagarriekin soilik erabili beharko litzateke."
 
-#: plug-ins/common/file-svg.c:325
+#: plug-ins/common/file-svg.c:294
 msgid "Retry without limits preventing to parse huge data?"
 msgstr "Berriro saiatu datu multzo erraldoiak analizatzea eragozten dituzten mugak kenduta?"
 
-#: plug-ins/common/file-svg.c:564 plug-ins/file-exr/file-exr.c:378
+#: plug-ins/common/file-svg.c:558 plug-ins/file-exr/file-exr.c:378
 #: plug-ins/file-exr/file-exr.c:392
 msgid "Unknown reason"
 msgstr "Arrazoi ezezaguna"
 
-#: plug-ins/common/file-svg.c:570
+#: plug-ins/common/file-svg.c:564
 msgid "Rendering SVG"
 msgstr "SVG errendatzen"
 
-#: plug-ins/common/file-svg.c:580
+#: plug-ins/common/file-svg.c:574
 msgid "Rendered SVG"
 msgstr "SVG errendatua"
 
@@ -7479,7 +7479,7 @@ msgid ""
 msgstr "Pluginen menuen sistema arakatzea ahalbidetzen du. Pluginen izenak bilatu daitezke, izenaren arabera edo menuko kokalekuaren arabera ordenatu, eta pluginen menuen zuhaitz-adierazpen bat ikusi daiteke. Plugin berriak zein menutan instalatu diren aurkitzeko ere izan daiteke lagungarria."
 
 #: plug-ins/common/plugin-browser.c:373
-#: plug-ins/filter-browser/filter-browser.c:609
+#: plug-ins/filter-browser/filter-browser.c:608
 msgid "Searching by name"
 msgstr "Izenaren arabera bilatzen"
 
@@ -7491,7 +7491,7 @@ msgstr[0] "plugin %d"
 msgstr[1] "%d plugin"
 
 #: plug-ins/common/plugin-browser.c:398
-#: plug-ins/filter-browser/filter-browser.c:676
+#: plug-ins/filter-browser/filter-browser.c:675
 msgid "No matches for your query"
 msgstr "Ez dago bat etortzerik zure kontsultarako"
 
@@ -7503,7 +7503,7 @@ msgstr[0] "Plugin %d bat dator kontsultarekin"
 msgstr[1] "%d plugin bat datoz kontsultarekin"
 
 #: plug-ins/common/plugin-browser.c:532
-#: plug-ins/filter-browser/filter-browser.c:678
+#: plug-ins/filter-browser/filter-browser.c:677
 msgid "No matches"
 msgstr "Bat etortzerik ez"
 
@@ -11203,10 +11203,20 @@ msgstr "Ezin izan da '%s' WebP animatuaren fotograma deskodetu"
 msgid "Frame %d (%dms)"
 msgstr "%d fotograma (%dms)"
 
-#: plug-ins/filter-browser/filter-browser.c:287
-#: plug-ins/filter-browser/filter-browser.c:322
+#: plug-ins/filter-browser/filter-browser.c:286
+#: plug-ins/filter-browser/filter-browser.c:321
 msgid "Allowed values:"
 msgstr "Onartutako balioak:"
+
+#: plug-ins/filter-browser/filter-browser.c:419
+#, c-format
+msgid "Operation name: %s"
+msgstr "Eragiketaren izena: %s"
+
+#: plug-ins/filter-browser/filter-browser.c:432
+#, c-format
+msgid "Categories: %s"
+msgstr "Kategoriak: %s"
 
 #.
 #. *  Scales
@@ -11214,7 +11224,7 @@ msgstr "Onartutako balioak:"
 #.
 #. *    Scales
 #.
-#: plug-ins/filter-browser/filter-browser.c:463
+#: plug-ins/filter-browser/filter-browser.c:462
 #: plug-ins/gradient-flare/gradient-flare.c:2949
 #: plug-ins/gradient-flare/gradient-flare.c:3699
 #: plug-ins/gradient-flare/gradient-flare.c:3801
@@ -11222,61 +11232,66 @@ msgstr "Onartutako balioak:"
 msgid "Parameters"
 msgstr "Parametroak"
 
-#: plug-ins/filter-browser/filter-browser.c:495
+#: plug-ins/filter-browser/filter-browser.c:494
 msgid "Additional Information"
 msgstr "Informazio gehigarria"
 
-#: plug-ins/filter-browser/filter-browser.c:612
+#: plug-ins/filter-browser/filter-browser.c:500
+#, c-format
+msgid "License: %s"
+msgstr "Lizentzia: %s"
+
+#: plug-ins/filter-browser/filter-browser.c:611
 msgid "Searching by title"
 msgstr "Izenburuaren arabera bilatzen"
 
-#: plug-ins/filter-browser/filter-browser.c:615
+#: plug-ins/filter-browser/filter-browser.c:614
 msgid "Searching by description"
 msgstr "Deskribapenaren arabera bilatzen"
 
-#: plug-ins/filter-browser/filter-browser.c:618
+#: plug-ins/filter-browser/filter-browser.c:617
 msgid "Searching by category"
 msgstr "Kategoriaren arabera bilatzen"
 
-#: plug-ins/filter-browser/filter-browser.c:683
+#: plug-ins/filter-browser/filter-browser.c:682
 #, c-format
 msgid "%d filter matches your query"
 msgid_plural "%d filters match your query"
 msgstr[0] "Iragazki %d dator bat zure kontsultarekin"
 msgstr[1] "%d iragazki datoz bat zure kontsultarekin"
 
-#: plug-ins/filter-browser/filter-browser.c:689
+#: plug-ins/filter-browser/filter-browser.c:688
 #, c-format
 msgid "%d filter"
 msgid_plural "%d filters"
 msgstr[0] "Iragazki %d"
 msgstr[1] "%d iragazki"
 
-#: plug-ins/filter-browser/filter-browser.c:722
+#: plug-ins/filter-browser/filter-browser.c:721
 msgid "GEGL Filter Browser"
 msgstr "GEGL iragazkien arakatzailea"
 
-#: plug-ins/filter-browser/filter-browser.c:739
+#: plug-ins/filter-browser/filter-browser.c:738
 msgid "by name"
 msgstr "izenaren arabera"
 
-#: plug-ins/filter-browser/filter-browser.c:740
+#: plug-ins/filter-browser/filter-browser.c:739
 msgid "by title"
 msgstr "izenburuaren arabera"
 
-#: plug-ins/filter-browser/filter-browser.c:741
+#: plug-ins/filter-browser/filter-browser.c:740
 msgid "by description"
 msgstr "deskribapenaren arabera"
 
-#: plug-ins/filter-browser/filter-browser.c:828
+#: plug-ins/filter-browser/filter-browser.c:827
 msgid "_GEGL Filter Browser"
 msgstr "_GEGL iragazkien arakatzailea"
 
-#: plug-ins/filter-browser/filter-browser.c:833
+#: plug-ins/filter-browser/filter-browser.c:832
 msgid "Display information about available GEGL operations (i.e., filters)."
 msgstr "Bistaratu erabilgarri dauden GEGL eragiketen (iragazkien) informazioa"
 
-#: plug-ins/filter-browser/filter-browser.c:835
+#: plug-ins/filter-browser/filter-browser.c:834
 msgid ""
 "Shows a list of all GEGL operations, their details and what parameters they "
 "are configured with. The list contains operations provided by GEGL itself, "
