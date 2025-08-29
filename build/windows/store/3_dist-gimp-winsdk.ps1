@@ -490,10 +490,7 @@ if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags
     #    Write-Host "(ERROR): appdata does not match main meson file. Submission can't be done." -ForegroundColor red
     #    exit 1
     #  }
-    #$store_changelog = ''
-    #foreach ($p in $xmlObject.component.releases.release[0].description.p){$store_changelog += "$p"}
-    #foreach ($li in $xmlObject.component.releases.release[0].description.ul.li){$store_changelog += "- $li`n"}
-    #$store_changelog = $store_changelog -replace "  ",'' -replace '(?m)^\s*?\n' -replace '"',"'"
+    #$store_changelog = ($xmlObject.component.releases.release[0].description.SelectNodes(".//p | .//li") | ForEach-Object { $text = ($_.InnerText).Trim() -replace '\s*\r?\n\s*', ' '; if ($_.Name -eq 'li') { "- $text" } else { $text } } ) -join "`n"
     ###Prepare submission info
     #$jsonObject = msstore submission getListingAssets $PRODUCT_ID | Select-Object -Skip 5 | ConvertFrom-Json
     #$jsonObject.'ReleaseNotes' = "$store_changelog"
