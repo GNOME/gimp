@@ -12,8 +12,8 @@
 msgid ""
 msgstr "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-08-17 13:26+0000\n"
-"PO-Revision-Date: 2025-08-18 20:00+0100\n"
+"POT-Creation-Date: 2025-08-29 08:13+0000\n"
+"PO-Revision-Date: 2025-08-29 20:00+0100\n"
 "Last-Translator: Asier Saratsua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
@@ -285,31 +285,31 @@ msgstr "Erakutsi eginbide esperimentalak agerian dituen hobespen-orria"
 msgid "Show an image submenu with debug actions"
 msgstr "Erakutsi irudiaren azpimenua arazketa-ekintzekin"
 
-#: app/main.c:736
+#: app/main.c:757
 msgid "[FILE|URI...]"
 msgstr "[FITXATEGIA|URIa...]"
 
-#: app/main.c:766
+#: app/main.c:787
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
 msgstr "GIMPek ezin izan du erabiltzailearen interfaze grafikoa abiarazi.\n"
 "Ziurtatu zure pantaila-ingurunerako konfigurazio egokia badagoela."
 
-#: app/main.c:830
+#: app/main.c:851
 msgid "Another GIMP instance is already running."
 msgstr "GIMPen beste instantzia bat exekutatzen dago."
 
-#: app/main.c:919
+#: app/main.c:940
 msgid "GIMP output. Type any character to close this window."
 msgstr "GIMP irteera. Sakatu edozer tekla leihoa ixteko."
 
-#: app/main.c:920
+#: app/main.c:941
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Sakatu edozer tekla leihoa ixteko)\n"
 
-#: app/main.c:937
+#: app/main.c:958
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "GIMP irteera. Leiho hau minimiza dezakezu, baina ez itxi."
 
@@ -456,7 +456,7 @@ msgstr "Tresnen aurrezarpenen editorea"
 msgid "Help"
 msgstr "Laguntza"
 
-#: app/actions/actions.c:191 app/core/gimpimage.c:603
+#: app/actions/actions.c:191 app/core/gimpimage.c:604
 msgid "Image"
 msgstr "Irudia"
 
@@ -2426,11 +2426,11 @@ msgstr "240 Segundoak"
 
 #: app/actions/dashboard-commands.c:121 app/actions/documents-commands.c:238
 #: app/actions/edit-commands.c:170 app/actions/error-console-commands.c:101
-#: app/actions/file-commands.c:449 app/actions/gradient-editor-commands.c:410
+#: app/actions/file-commands.c:472 app/actions/gradient-editor-commands.c:410
 #: app/actions/gradient-editor-commands.c:521
 #: app/actions/gradients-commands.c:80 app/actions/plug-in-commands.c:187
 #: app/actions/templates-commands.c:248 app/actions/text-editor-commands.c:65
-#: app/actions/text-tool-commands.c:124 app/actions/tool-options-commands.c:210
+#: app/actions/text-tool-commands.c:154 app/actions/tool-options-commands.c:210
 #: app/actions/window-commands.c:77 app/dialogs/color-profile-dialog.c:136
 #: app/dialogs/color-profile-dialog.c:154
 #: app/dialogs/color-profile-dialog.c:172
@@ -2453,6 +2453,7 @@ msgstr "240 Segundoak"
 #: app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:129
 #: app/dialogs/template-options-dialog.c:118
 #: app/dialogs/path-export-dialog.c:88 app/dialogs/path-import-dialog.c:93
+#: app/dialogs/vector-layer-options-dialog.c:104
 #: app/display/gimpdisplayshell-close.c:181
 #: app/display/gimpdisplayshell-filter-dialog.c:87
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
@@ -2460,7 +2461,7 @@ msgstr "240 Segundoak"
 #: app/tools/gimpfiltertool.c:370 app/tools/gimpforegroundselecttool.c:333
 #: app/tools/gimptexttool.c:1774 app/tools/gimptransformgridtool.c:1264
 #: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
-#: app/widgets/gimpcolordialog.c:492 app/widgets/gimpcontrollereditor.c:666
+#: app/widgets/gimpcolordialog.c:492 app/widgets/gimpcontrollereditor.c:665
 #: app/widgets/gimpcontrollerlist.c:556 app/widgets/gimpdeviceeditor.c:463
 #: app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228
 #: app/widgets/gimpfiledialog.c:336 app/widgets/gimphelp.c:438
@@ -2523,8 +2524,8 @@ msgid "Enter a description for the marker"
 msgstr "Sartu markatzailearen deskribapen bat"
 
 #: app/actions/data-commands.c:90 app/actions/documents-commands.c:393
-#: app/actions/file-commands.c:211 app/dialogs/file-open-dialog.c:247
-#: app/dialogs/file-open-dialog.c:288
+#: app/actions/file-commands.c:234 app/dialogs/file-open-dialog.c:253
+#: app/dialogs/file-open-dialog.c:295
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
 #: app/display/gimpdisplayshell-dnd.c:646 app/widgets/gimplayertreeview.c:796
@@ -2539,14 +2540,14 @@ msgstr "Ezin izan da '%s' ireki:\n"
 "%s"
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
-#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2439
-#: app/core/gimppalette.c:588 app/core/gimppalette-import.c:223
+#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2440
+#: app/core/gimppalette.c:586 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:774 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "Izengabea"
 
 #: app/actions/data-commands.c:224 app/actions/documents-commands.c:195
-#: app/actions/file-commands.c:555
+#: app/actions/file-commands.c:578
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Ezin da fitxategia erakutsi fitxategi-kudeatzailean: %s"
@@ -4102,157 +4103,167 @@ msgstr "Ireki irudia geruzen gisa"
 
 #: app/actions/file-actions.c:86
 msgctxt "file-action"
+msgid "Op_en as Link Layer..."
+msgstr "I_reki geruza estekatu gisa..."
+
+#: app/actions/file-actions.c:87
+msgctxt "file-action"
+msgid "Open an image file as Link layer"
+msgstr "Ireki irudi-fitxategi bat geruza estekatu gisa"
+
+#: app/actions/file-actions.c:92
+msgctxt "file-action"
 msgid "Open _Location..."
 msgstr "Ireki _kokalekua..."
 
-#: app/actions/file-actions.c:87
+#: app/actions/file-actions.c:93
 msgctxt "file-action"
 msgid "Open an image file from a specified location"
 msgstr "Ireki irudiaren fitxategia kokaleku zehatz batetik"
 
-#: app/actions/file-actions.c:92
+#: app/actions/file-actions.c:98
 msgctxt "file-action"
 msgid "Create _Template..."
 msgstr "Sortu _txantiloia..."
 
-#: app/actions/file-actions.c:93
+#: app/actions/file-actions.c:99
 msgctxt "file-action"
 msgid "Create a new template from this image"
 msgstr "Sortu txantiloi berria irudi honetatik"
 
-#: app/actions/file-actions.c:98
+#: app/actions/file-actions.c:104
 msgctxt "file-action"
 msgid "Re_vert"
 msgstr "_Leheneratu"
 
-#: app/actions/file-actions.c:99
+#: app/actions/file-actions.c:105
 msgctxt "file-action"
 msgid "Reload the image file from disk"
 msgstr "Birkargatu irudi-fitxategia diskotik"
 
-#: app/actions/file-actions.c:104
+#: app/actions/file-actions.c:110
 msgctxt "file-action"
 msgid "C_lose All"
 msgstr "It_xi dena"
 
-#: app/actions/file-actions.c:105
+#: app/actions/file-actions.c:111
 msgctxt "file-action"
 msgid "Close all opened images"
 msgstr "Itxi irekitako irudi denak"
 
-#: app/actions/file-actions.c:110
+#: app/actions/file-actions.c:116
 msgctxt "file-action"
 msgid "Copy _Image Location"
 msgstr "Kopiatu _irudiaren kokalekua"
 
-#: app/actions/file-actions.c:111
+#: app/actions/file-actions.c:117
 msgctxt "file-action"
 msgid "Copy image file location to clipboard"
 msgstr "Kopiatu irudi-fitxategiaren kokalekua arbelean"
 
-#: app/actions/file-actions.c:116
+#: app/actions/file-actions.c:122
 msgctxt "file-action"
 msgid "Show in _File Manager"
 msgstr "Erakutsi _fitxategi-kudeatzailean"
 
-#: app/actions/file-actions.c:117
+#: app/actions/file-actions.c:123
 msgctxt "file-action"
 msgid "Show image file location in the file manager"
 msgstr "Erakutsi irudi-fitxategiaren kokalekua fitxategi-kudeatzailean"
 
-#: app/actions/file-actions.c:122
+#: app/actions/file-actions.c:128
 msgctxt "file-action"
 msgid "_Quit"
 msgstr "I_rten"
 
-#: app/actions/file-actions.c:123
+#: app/actions/file-actions.c:129
 msgctxt "file-action"
 msgid "Quit the GNU Image Manipulation Program"
 msgstr "Irten Irudiak Manipulatzeko GNU Programatik"
 
-#: app/actions/file-actions.c:131 app/actions/file-actions.c:302
+#: app/actions/file-actions.c:137 app/actions/file-actions.c:308
 msgctxt "file-action"
 msgid "_Save"
 msgstr "_Gorde"
 
-#: app/actions/file-actions.c:132
+#: app/actions/file-actions.c:138
 msgctxt "file-action"
 msgid "Save this image"
 msgstr "Gorde irudi hau"
 
-#: app/actions/file-actions.c:137
+#: app/actions/file-actions.c:143
 msgctxt "file-action"
 msgid "Save _As..."
 msgstr "Gorde _honela..."
 
-#: app/actions/file-actions.c:138
+#: app/actions/file-actions.c:144
 msgctxt "file-action"
 msgid "Save this image with a different name"
 msgstr "Gorde irudia beste izen batekin"
 
-#: app/actions/file-actions.c:143
+#: app/actions/file-actions.c:149
 msgctxt "file-action"
 msgid "Save a Cop_y..."
 msgstr "Gorde _kopia..."
 
-#: app/actions/file-actions.c:145
+#: app/actions/file-actions.c:151
 msgctxt "file-action"
 msgid ""
 "Save a copy of this image, without affecting the source file (if any) or the "
 "current state of the image"
 msgstr "Gorde irudi honen kopia bat iturburuko fitxategia (egonez gero) edo irudiaren uneko egoera ukitu gabe"
 
-#: app/actions/file-actions.c:151
+#: app/actions/file-actions.c:157
 msgctxt "file-action"
 msgid "Save and Close..."
 msgstr "Gorde eta itxi..."
 
-#: app/actions/file-actions.c:152
+#: app/actions/file-actions.c:158
 msgctxt "file-action"
 msgid "Save this image and close its window"
 msgstr "Gorde irudia eta itxi dagokion leihoa"
 
-#: app/actions/file-actions.c:157 app/actions/file-actions.c:347
+#: app/actions/file-actions.c:163 app/actions/file-actions.c:353
 msgctxt "file-action"
 msgid "E_xport..."
 msgstr "E_sportatu..."
 
-#: app/actions/file-actions.c:158
+#: app/actions/file-actions.c:164
 msgctxt "file-action"
 msgid "Export the image"
 msgstr "Esportatu irudia"
 
-#: app/actions/file-actions.c:163
+#: app/actions/file-actions.c:169
 msgctxt "file-action"
 msgid "Over_write"
 msgstr "_Gainidatzi"
 
-#: app/actions/file-actions.c:164
+#: app/actions/file-actions.c:170
 msgctxt "file-action"
 msgid "Export the image back to the imported file in the import format"
 msgstr "Esportatu irudia inportatutako fitxategian (inportatutako formatuan)"
 
-#: app/actions/file-actions.c:169
+#: app/actions/file-actions.c:175
 msgctxt "file-action"
 msgid "E_xport As..."
 msgstr "Es_portatu honela..."
 
-#: app/actions/file-actions.c:170
+#: app/actions/file-actions.c:176
 msgctxt "file-action"
 msgid "Export the image to various file formats such as PNG or JPEG"
 msgstr "Esportatu irudia hainbat fitxategi-formatutan, hala nola PNG edo JPEG"
 
-#: app/actions/file-actions.c:308
+#: app/actions/file-actions.c:314
 msgctxt "file-action"
 msgid "_Save..."
 msgstr "_Gorde..."
 
-#: app/actions/file-actions.c:314
+#: app/actions/file-actions.c:320
 #, c-format
 msgid "Export to %s"
 msgstr "Esportatu hona: %s"
 
-#: app/actions/file-actions.c:330
+#: app/actions/file-actions.c:336
 #, c-format
 msgid "Over_write %s"
 msgstr "_Gainidatzi %s"
@@ -4260,69 +4271,73 @@ msgstr "_Gainidatzi %s"
 #. TRANSLATORS: the %s will be replaced by the file name of a
 #. * recently opened image.
 #.
-#: app/actions/file-actions.c:402
+#: app/actions/file-actions.c:408
 #, c-format
 msgid "Open \"%s\""
 msgstr "Ireki \"%s\""
 
-#: app/actions/file-commands.c:120 app/actions/file-commands.c:579
+#: app/actions/file-commands.c:121 app/actions/file-commands.c:602
 #: app/widgets/gimpopendialog.c:84
 msgid "Open Image"
 msgstr "Ireki irudia"
 
-#: app/actions/file-commands.c:142
+#: app/actions/file-commands.c:143
 msgid "Open Image as Layers"
 msgstr "Ireki irudia geruza gisa"
 
-#: app/actions/file-commands.c:307
+#: app/actions/file-commands.c:165
+msgid "Open Image as Link Layer"
+msgstr "Ireki irudia geruza estekatu gisa"
+
+#: app/actions/file-commands.c:330
 msgid "No changes need to be saved"
 msgstr "Ez dago aldaketarik gordetzeko"
 
-#: app/actions/file-commands.c:314 app/actions/file-commands.c:790
+#: app/actions/file-commands.c:337 app/actions/file-commands.c:814
 #: app/widgets/gimpsavedialog.c:139
 msgid "Save Image"
 msgstr "Gorde irudia"
 
-#: app/actions/file-commands.c:320
+#: app/actions/file-commands.c:343
 msgid "Save a Copy of the Image"
 msgstr "Gorde irudiaren kopia bat"
 
-#: app/actions/file-commands.c:398
+#: app/actions/file-commands.c:421
 msgid "Create New Template"
 msgstr "Sortu txantiloi berria"
 
-#: app/actions/file-commands.c:402
+#: app/actions/file-commands.c:425
 msgid "Enter a name for this template"
 msgstr "Sartu txantiloi honentzako izena"
 
-#: app/actions/file-commands.c:432
+#: app/actions/file-commands.c:455
 msgid "Revert failed. No file name associated with this image."
 msgstr "Ezin izan da leheneratu. Ez dago irudi honi lotutako fitxategi-izenik."
 
-#: app/actions/file-commands.c:444
+#: app/actions/file-commands.c:467
 msgid "Revert Image"
 msgstr "Leheneratu irudia"
 
-#: app/actions/file-commands.c:450
+#: app/actions/file-commands.c:473
 msgid "_Revert"
 msgstr "_Leheneratu"
 
-#: app/actions/file-commands.c:468
+#: app/actions/file-commands.c:491
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Leheneratu '%s' '%s'(e)ra?"
 
-#: app/actions/file-commands.c:473
+#: app/actions/file-commands.c:496
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
 msgstr "Diskoan gordetako irudira leheneratzean, aldaketa guztiak galduko dituzu, desegiteko informazio guztia barne."
 
-#: app/actions/file-commands.c:812
+#: app/actions/file-commands.c:836
 msgid "(Unnamed Template)"
 msgstr "(Txantiloi izengabea)"
 
-#: app/actions/file-commands.c:859
+#: app/actions/file-commands.c:883
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -5507,7 +5522,7 @@ msgstr "Editatu gradiente hau"
 msgid "Save '%s' as POV-Ray"
 msgstr "Gorde \"%s\" POV-Ray gisa"
 
-#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:897
+#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:898
 msgctxt "help-action"
 msgid "_Help"
 msgstr "_Laguntza"
@@ -5984,7 +5999,7 @@ msgstr "Iraultzen"
 msgid "Rotating"
 msgstr "Biratzen"
 
-#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1378
+#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1419
 msgid "Cannot crop because the current selection is empty."
 msgstr "Ezin da moztu uneko hautapena hutsik dagoelako."
 
@@ -6033,7 +6048,7 @@ msgid "Scale Image"
 msgstr "Eskalatu irudia"
 
 #. Scaling
-#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2627
+#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2676
 #: app/dialogs/preferences-dialog.c:1750 app/pdb/image-transform-cmds.c:124
 #: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:375
 #: app/tools/gimpscaletool.c:122
@@ -6098,809 +6113,831 @@ msgstr "Ez dago betetzeko prest dagoen geruza edo kanalik hautatuta."
 msgid "There are no selected layers or channels to stroke to."
 msgstr "Ez dago trazatua izateko prest dagoen geruza edo kanalik hautatuta."
 
-#: app/actions/layers-actions.c:54
+#: app/actions/layers-actions.c:55
 msgctxt "layers-action"
 msgid "Default Edit Action"
 msgstr "Edizio-ekintza lehenetsia"
 
-#: app/actions/layers-actions.c:55
+#: app/actions/layers-actions.c:56
 msgctxt "layers-action"
 msgid "Activate the default edit action for this type of layer"
 msgstr "Aktibatu geruza mota honen edizio-ekintza lehenetsia"
 
-#: app/actions/layers-actions.c:60
+#: app/actions/layers-actions.c:61
 msgctxt "layers-action"
 msgid "Edit Te_xt on canvas"
 msgstr "Editatu te_stua oihalean"
 
-#: app/actions/layers-actions.c:61
+#: app/actions/layers-actions.c:62
 msgctxt "layers-action"
 msgid "Edit this text layer content on canvas"
 msgstr "Editatu testu-geruza honen edukia oihalean"
 
-#: app/actions/layers-actions.c:66
+#: app/actions/layers-actions.c:67
+msgctxt "layers-action"
 msgid "Path Tool"
 msgstr "Bideen tresna"
 
-#: app/actions/layers-actions.c:67
+#: app/actions/layers-actions.c:68
+msgctxt "layers-action"
 msgid "Activate the path tool on this vector layer's path"
 msgstr "Aktibatu bideen tresna geruza bektorial honetako bidean"
 
-#: app/actions/layers-actions.c:72
+#: app/actions/layers-actions.c:73
 msgctxt "layers-action"
 msgid "_Edit Layer Attributes..."
 msgstr "_Editatu geruza-atributuak..."
 
-#: app/actions/layers-actions.c:73
+#: app/actions/layers-actions.c:74
 msgctxt "layers-action"
 msgid "Edit the layer's name"
 msgstr "Editatu geruzaren izena"
 
-#: app/actions/layers-actions.c:78 app/actions/layers-actions.c:1028
+#: app/actions/layers-actions.c:79 app/actions/layers-actions.c:1044
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "Geruza _berria..."
 
-#: app/actions/layers-actions.c:79
+#: app/actions/layers-actions.c:80
 msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "Sortu geruza berria eta gehitu irudiari"
 
-#: app/actions/layers-actions.c:84 app/actions/layers-actions.c:1029
+#: app/actions/layers-actions.c:85 app/actions/layers-actions.c:1045
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "Geruza _berria"
 
-#: app/actions/layers-actions.c:85
+#: app/actions/layers-actions.c:86
 msgctxt "layers-action"
 msgid "Create new layers with last used values"
 msgstr "Sortu geruza berriak erabilitako azken balioekin"
 
-#: app/actions/layers-actions.c:90
+#: app/actions/layers-actions.c:91
 msgctxt "layers-action"
 msgid "New from _Visible"
 msgstr "Berria _ikusgaitik"
 
-#: app/actions/layers-actions.c:92
+#: app/actions/layers-actions.c:93
 msgctxt "layers-action"
 msgid "Create a new layer from what is visible in this image"
 msgstr "Sortu geruza berria irudi honetan ikusgai dagoenetik"
 
-#: app/actions/layers-actions.c:97
+#: app/actions/layers-actions.c:98
 msgctxt "layers-action"
 msgid "New Layer _Group"
 msgstr "Geruza _talde berria"
 
-#: app/actions/layers-actions.c:98
+#: app/actions/layers-actions.c:99
 msgctxt "layers-action"
 msgid "Create a new layer group and add it to the image"
 msgstr "Sortu geruza talde berria eta gehitu irudiari"
 
-#: app/actions/layers-actions.c:103
+#: app/actions/layers-actions.c:104
 msgctxt "layers-action"
 msgid "D_uplicate Layers"
 msgstr "_Bikoiztu geruzak"
 
-#: app/actions/layers-actions.c:105
+#: app/actions/layers-actions.c:106
 msgctxt "layers-action"
 msgid "Create duplicates of selected layers and add them to the image"
 msgstr "Sortu hautatutako geruzen bikoitzak eta gehitu irudiari"
 
-#: app/actions/layers-actions.c:110
+#: app/actions/layers-actions.c:111
 msgctxt "layers-action"
 msgid "_Delete Layers"
 msgstr "_Ezabatu geruzak"
 
-#: app/actions/layers-actions.c:111
+#: app/actions/layers-actions.c:112
 msgctxt "layers-action"
 msgid "Delete selected layers"
 msgstr "Ezabatu hautatutako geruzak"
 
-#: app/actions/layers-actions.c:116
+#: app/actions/layers-actions.c:117
 msgctxt "layers-action"
 msgid "_Raise Layers"
 msgstr "_Goratu geruzak"
 
-#: app/actions/layers-actions.c:117
+#: app/actions/layers-actions.c:118
 msgctxt "layers-action"
 msgid "Raise the selected layers one step in the layer stack"
 msgstr "Goratu hautatutako geruzak urrats bat geruza-pilan"
 
-#: app/actions/layers-actions.c:122
+#: app/actions/layers-actions.c:123
 msgctxt "layers-action"
 msgid "Layers to _Top"
 msgstr "Ge_ruzak goienera"
 
-#: app/actions/layers-actions.c:123
+#: app/actions/layers-actions.c:124
 msgctxt "layers-action"
 msgid "Move the selected layers to the top of the layer stack"
 msgstr "Eraman hautatutako geruzak geruza-pilaren goreneraino"
 
-#: app/actions/layers-actions.c:128
+#: app/actions/layers-actions.c:129
 msgctxt "layers-action"
 msgid "_Lower Layers"
 msgstr "B_eheratu geruzak"
 
-#: app/actions/layers-actions.c:129
+#: app/actions/layers-actions.c:130
 msgctxt "layers-action"
 msgid "Lower the selected layers one step in the layer stack"
 msgstr "Beheratu hautatutako geruzak urrats bat geruza-pilan"
 
-#: app/actions/layers-actions.c:134
+#: app/actions/layers-actions.c:135
 msgctxt "layers-action"
 msgid "Layers to _Bottom"
 msgstr "Geruzak _baxuenera"
 
-#: app/actions/layers-actions.c:135
+#: app/actions/layers-actions.c:136
 msgctxt "layers-action"
 msgid "Move the selected layers to the bottom of the layer stack"
 msgstr "Eraman hautatutako geruzak geruza-pilaren beheraino"
 
-#: app/actions/layers-actions.c:140
+#: app/actions/layers-actions.c:141
 msgctxt "layers-action"
 msgid "_Anchor Floating Layer or Mask"
 msgstr "_Ainguratu geruza edo maskara mugikorra"
 
-#: app/actions/layers-actions.c:141 app/widgets/gimplayertreeview.c:1250
+#: app/actions/layers-actions.c:142 app/widgets/gimplayertreeview.c:1250
 msgctxt "layers-action"
 msgid "Anchor the floating layer or mask"
 msgstr "Ainguratu geruza edo maskara mugikorra"
 
-#: app/actions/layers-actions.c:146 app/actions/layers-actions.c:155
+#: app/actions/layers-actions.c:147 app/actions/layers-actions.c:156
 msgctxt "layers-action"
 msgid "Merge Do_wn"
 msgstr "Ba_tu beherantz"
 
-#: app/actions/layers-actions.c:147 app/actions/layers-actions.c:156
+#: app/actions/layers-actions.c:148 app/actions/layers-actions.c:157
 msgctxt "layers-action"
 msgid "Merge these layers with the first visible layer below each"
 msgstr "Batu geruza hauek azpiko aurreneko geruza ikusgaiarekin"
 
-#: app/actions/layers-actions.c:161
+#: app/actions/layers-actions.c:162
 msgctxt "layers-action"
 msgid "Merge Layer Groups"
 msgstr "Batu geruza taldeak"
 
-#: app/actions/layers-actions.c:162
+#: app/actions/layers-actions.c:163
 msgctxt "layers-action"
 msgid "Merge the layer groups' layers into one normal layer"
 msgstr "Batu geruza taldeko geruzak geruza normal bakarrean"
 
-#: app/actions/layers-actions.c:167
+#: app/actions/layers-actions.c:168
 msgctxt "layers-action"
 msgid "Merge _Visible Layers..."
 msgstr "Batu _ikusgai dauden geruzak..."
 
-#: app/actions/layers-actions.c:168
+#: app/actions/layers-actions.c:169
 msgctxt "layers-action"
 msgid "Merge all visible layers into one layer"
 msgstr "Batu ikusgai dauden geruza guztiak geruza bakarrean"
 
-#: app/actions/layers-actions.c:173
+#: app/actions/layers-actions.c:174
 msgctxt "layers-action"
 msgid "Merge _Visible Layers"
 msgstr "Batu _ikusgai dauden geruzak"
 
-#: app/actions/layers-actions.c:174
+#: app/actions/layers-actions.c:175
 msgctxt "layers-action"
 msgid "Merge all visible layers with last used values"
 msgstr "Batu ikusgai dauden geruza guztiak azken aldian erabilitako balioekin"
 
-#: app/actions/layers-actions.c:179
+#: app/actions/layers-actions.c:180
 msgctxt "layers-action"
 msgid "_Flatten Image"
 msgstr "_Berdindu irudia"
 
-#: app/actions/layers-actions.c:180
+#: app/actions/layers-actions.c:181
 msgctxt "layers-action"
 msgid "Merge all layers into one and remove transparency"
 msgstr "Batu geruza guztiak geruza bakarrean eta kendu gardentasuna"
 
-#: app/actions/layers-actions.c:185
+#: app/actions/layers-actions.c:186
+msgctxt "layers-action"
+msgid "_Discard Link Information"
+msgstr "_Baztertu estekaren informazioa"
+
+#: app/actions/layers-actions.c:187
+msgctxt "layers-action"
+msgid "Turn this link layer into a normal layer"
+msgstr "Bihurtu geruza estekatu hau geruza normal"
+
+#: app/actions/layers-actions.c:192
+msgctxt "layers-action"
+msgid "_Monitor Linked Image"
+msgstr "_Monitorizatu estekatutako irudia"
+
+#: app/actions/layers-actions.c:193
+msgctxt "layers-action"
+msgid "Discard any transformation and monitor the linked file again"
+msgstr "Baztertu transformazioak eta monitorizatu berriro estekatutako fitxategia"
+
+#: app/actions/layers-actions.c:198
 msgctxt "layers-action"
 msgid "_Discard Text Information"
 msgstr "_Baztertu testuaren informazioa"
 
-#: app/actions/layers-actions.c:186
+#: app/actions/layers-actions.c:199
 msgctxt "layers-action"
 msgid "Turn these text layers into normal layers"
 msgstr "Bihurtu testu-geruza hauek geruza normal"
 
-#: app/actions/layers-actions.c:191
+#: app/actions/layers-actions.c:204
 msgctxt "layers-action"
 msgid "Text to _Path"
 msgstr "Testua _bide"
 
-#: app/actions/layers-actions.c:192
+#: app/actions/layers-actions.c:205
 msgctxt "layers-action"
 msgid "Create paths from text layers"
 msgstr "Sortu bideak testu-geruzetatik"
 
-#: app/actions/layers-actions.c:197
+#: app/actions/layers-actions.c:210
 msgctxt "layers-action"
 msgid "Text alon_g Path"
 msgstr "Testua bidean _zehar"
 
-#: app/actions/layers-actions.c:198
+#: app/actions/layers-actions.c:211
 msgctxt "layers-action"
 msgid "Warp this layer's text along the current path"
 msgstr "Bihurritu geruzaren testua uneko bidean zehar"
 
-#: app/actions/layers-actions.c:203
+#: app/actions/layers-actions.c:216
 msgctxt "layers-action"
-msgid "Fill / Stroke"
-msgstr "Betegarria / trazua"
+msgid "Fill / Stroke..."
+msgstr "Betegarria / trazua..."
 
-#: app/actions/layers-actions.c:204
+#: app/actions/layers-actions.c:217
 msgctxt "layers-action"
 msgid "Edit the fill and stroke of this vector layer"
 msgstr "Editatu geruza bektorial honen betegarria eta trazua"
 
-#: app/actions/layers-actions.c:209
+#: app/actions/layers-actions.c:222
 msgctxt "layers-action"
 msgid "Discard Vector Information"
 msgstr "Baztertu informazio bektoriala"
 
-#: app/actions/layers-actions.c:210
+#: app/actions/layers-actions.c:223
 msgctxt "layers-action"
 msgid "Turn this vector layer into a normal layer"
 msgstr "Bihurtu geruza bektorial hau geruza normalera"
 
-#: app/actions/layers-actions.c:215
+#: app/actions/layers-actions.c:228
 msgctxt "layers-action"
 msgid "Layer B_oundary Size..."
 msgstr "Geruzaren _mugaren tamaina..."
 
-#: app/actions/layers-actions.c:216
+#: app/actions/layers-actions.c:229
 msgctxt "layers-action"
 msgid "Adjust the layer dimensions"
 msgstr "Doitu geruzaren dimentsioak"
 
-#: app/actions/layers-actions.c:221
+#: app/actions/layers-actions.c:234
 msgctxt "layers-action"
 msgid "Layers to _Image Size"
 msgstr "Geruzak _irudi-tamainara"
 
-#: app/actions/layers-actions.c:222
+#: app/actions/layers-actions.c:235
 msgctxt "layers-action"
 msgid "Resize the layers to the size of the image"
 msgstr "Aldatu geruzak irudiaren tamainara"
 
-#: app/actions/layers-actions.c:227
+#: app/actions/layers-actions.c:240
 msgctxt "layers-action"
 msgid "_Scale Layer..."
 msgstr "_Eskalatu geruza..."
 
-#: app/actions/layers-actions.c:228
+#: app/actions/layers-actions.c:241
 msgctxt "layers-action"
 msgid "Change the size of the layer content"
 msgstr "Aldatu geruzaren edukiaren tamaina"
 
-#: app/actions/layers-actions.c:233
+#: app/actions/layers-actions.c:246
 msgctxt "layers-action"
 msgid "_Resize Layers to Selection"
 msgstr "_Aldatu geruzen tamaina hautapenera"
 
-#: app/actions/layers-actions.c:234
+#: app/actions/layers-actions.c:247
 msgctxt "layers-action"
 msgid "Resize the layers to the extents of the selection"
 msgstr "Aldatu geruzen tamaina hautapenaren mugetaraino"
 
-#: app/actions/layers-actions.c:239
+#: app/actions/layers-actions.c:252
 msgctxt "layers-action"
 msgid "Crop Layers to C_ontent"
 msgstr "Moztu geruzak _edukira"
 
-#: app/actions/layers-actions.c:240
+#: app/actions/layers-actions.c:253
 msgctxt "layers-action"
 msgid ""
 "Crop the layers to the extents of their content (remove empty borders from "
 "the layer)"
 msgstr "Moztu geruzak beren edukiaren mugetaraino (kendu geruzaren ertz hutsak)"
 
-#: app/actions/layers-actions.c:245 app/actions/layers-actions.c:255
+#: app/actions/layers-actions.c:258 app/actions/layers-actions.c:268
 msgctxt "layers-action"
 msgid "Add La_yer Masks..."
 msgstr "_Gehitu geruza-maskarak..."
 
-#: app/actions/layers-actions.c:247 app/actions/layers-actions.c:257
+#: app/actions/layers-actions.c:260 app/actions/layers-actions.c:270
 msgctxt "layers-action"
 msgid ""
 "Add masks to selected layers that allows non-destructive editing of "
 "transparency"
 msgstr "Gehitu maskarak gardentasuna modu ez suntsikorrean editatzeko"
 
-#: app/actions/layers-actions.c:262
+#: app/actions/layers-actions.c:275
 msgctxt "layers-action"
 msgid "Add La_yer Masks with Last Values"
 msgstr "Gehitu _geruza-maskarak azken balioekin"
 
-#: app/actions/layers-actions.c:264
+#: app/actions/layers-actions.c:277
 msgctxt "layers-action"
 msgid "Add mask to selected layers with last used values"
 msgstr "Gehitu maskara azken aldian erabilitako balioak dituen geruza hautatuei"
 
-#: app/actions/layers-actions.c:269
+#: app/actions/layers-actions.c:282
 msgctxt "layers-action"
 msgid "Add Alpha C_hannel"
 msgstr "Gehitu al_fa kanala"
 
-#: app/actions/layers-actions.c:270
+#: app/actions/layers-actions.c:283
 msgctxt "layers-action"
 msgid "Add transparency information to the layer"
 msgstr "Gehitu gardentasunaren datuak geruzari"
 
-#: app/actions/layers-actions.c:275
+#: app/actions/layers-actions.c:288
 msgctxt "layers-action"
 msgid "_Remove Alpha Channel"
 msgstr "_Kendu alfa kanala"
 
-#: app/actions/layers-actions.c:276
+#: app/actions/layers-actions.c:289
 msgctxt "layers-action"
 msgid "Remove transparency information from the layer"
 msgstr "Kendu gardentasunaren datuak geruzatik"
 
-#: app/actions/layers-actions.c:284
+#: app/actions/layers-actions.c:297
 msgctxt "layers-action"
 msgid "_Edit Layer Mask"
 msgstr "_Editatu geruza-maskara"
 
-#: app/actions/layers-actions.c:285
+#: app/actions/layers-actions.c:298
 msgctxt "layers-action"
 msgid "Work on the layer mask"
 msgstr "Egin lana geruza-maskaran"
 
-#: app/actions/layers-actions.c:291
+#: app/actions/layers-actions.c:304
 msgctxt "layers-action"
 msgid "S_how Layer Masks"
 msgstr "E_rakutsi geruza-maskarak"
 
-#: app/actions/layers-actions.c:297
+#: app/actions/layers-actions.c:310
 msgctxt "layers-action"
 msgid "_Disable Layer Masks"
 msgstr "_Desgaitu geruza-maskarak"
 
-#: app/actions/layers-actions.c:298
+#: app/actions/layers-actions.c:311
 msgctxt "layers-action"
 msgid "Dismiss the effect of the layer masks"
 msgstr "Baztertu geruza-maskaren efektua"
 
-#: app/actions/layers-actions.c:304
+#: app/actions/layers-actions.c:317
 msgctxt "layers-action"
 msgid "Toggle Layer _Visibility"
 msgstr "Txandakatu geruzaren _ikusgaitasuna"
 
-#: app/actions/layers-actions.c:310
+#: app/actions/layers-actions.c:323
 msgctxt "layers-action"
 msgid "L_ock Pixels of Layer"
 msgstr "B_lokeatu geruzako pixelak"
 
-#: app/actions/layers-actions.c:316
+#: app/actions/layers-actions.c:329
 msgctxt "layers-action"
 msgid "L_ock Position of Layer"
 msgstr "Bl_okeatu geruzaren kokalekua"
 
-#: app/actions/layers-actions.c:322
+#: app/actions/layers-actions.c:335
 msgctxt "layers-action"
 msgid "Lock Alph_a Channel"
 msgstr "Blokeatu _alfa kanala"
 
-#: app/actions/layers-actions.c:324
+#: app/actions/layers-actions.c:337
 msgctxt "layers-action"
 msgid "Keep transparency information on this layer from being modified"
 msgstr "Mantendu gardentasunaren datuak geruzan, datuak aldatzea saihesteko"
 
-#: app/actions/layers-actions.c:333 app/actions/layers-actions.c:360
-#: app/actions/layers-actions.c:387
+#: app/actions/layers-actions.c:346 app/actions/layers-actions.c:373
+#: app/actions/layers-actions.c:400
 msgctxt "layers-action"
 msgid "Auto"
 msgstr "Auto"
 
-#: app/actions/layers-actions.c:334
+#: app/actions/layers-actions.c:347
 msgctxt "layers-action"
 msgid "Layer Blend Space: Auto"
 msgstr "Geruzaren nahaste-espazioa: automatikoa"
 
-#: app/actions/layers-actions.c:339 app/actions/layers-actions.c:366
+#: app/actions/layers-actions.c:352 app/actions/layers-actions.c:379
 msgctxt "layers-action"
 msgid "RGB (linear)"
 msgstr "RGB (lineala)"
 
-#: app/actions/layers-actions.c:340
+#: app/actions/layers-actions.c:353
 msgctxt "layers-action"
 msgid "Layer Blend Space: RGB (linear)"
 msgstr "Geruzaren nahaste-espazioa: RGB (lineala)"
 
-#: app/actions/layers-actions.c:345 app/actions/layers-actions.c:372
+#: app/actions/layers-actions.c:358 app/actions/layers-actions.c:385
 msgctxt "layers-action"
 msgid "RGB (from color profile)"
 msgstr "RGB (kolore-profiletik)"
 
-#: app/actions/layers-actions.c:346
+#: app/actions/layers-actions.c:359
 msgctxt "layers-action"
 msgid "Layer Blend Space: RGB (from color profile)"
 msgstr "Geruzaren nahaste-espazioa: RGB (kolore-profiletik)"
 
-#: app/actions/layers-actions.c:351 app/actions/layers-actions.c:378
+#: app/actions/layers-actions.c:364 app/actions/layers-actions.c:391
 msgctxt "layers-action"
 msgid "RGB (perceptual)"
 msgstr "RGB (pertzepziozkoa)"
 
-#: app/actions/layers-actions.c:352
+#: app/actions/layers-actions.c:365
 msgctxt "layers-action"
 msgid "Layer Blend Space: RGB (perceptual)"
 msgstr "Geruzaren nahaste-espazioa: RGB (pertzepziozkoa)"
 
-#: app/actions/layers-actions.c:361
+#: app/actions/layers-actions.c:374
 msgctxt "layers-action"
 msgid "Layer Composite Space: Auto"
 msgstr "Geruzaren konposizio-espazioa: automatikoa"
 
-#: app/actions/layers-actions.c:367
+#: app/actions/layers-actions.c:380
 msgctxt "layers-action"
 msgid "Layer Composite Space: RGB (linear)"
 msgstr "Geruzaren konposizio-espazioa: RGB (lineala)"
 
-#: app/actions/layers-actions.c:373
+#: app/actions/layers-actions.c:386
 msgctxt "layers-action"
 msgid "Layer Composite Space: RGB (from color profile)"
 msgstr "Geruzaren konposizio-espazioa: RGB (kolore-profiletik)"
 
-#: app/actions/layers-actions.c:379
+#: app/actions/layers-actions.c:392
 msgctxt "layers-action"
 msgid "Layer Composite Space: RGB (perceptual)"
 msgstr "Geruzaren konposizio-espazioa: RGB (pertzepziozkoa)"
 
-#: app/actions/layers-actions.c:388
+#: app/actions/layers-actions.c:401
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Auto"
 msgstr "Geruzaren konposizio modua: automatikoa"
 
-#: app/actions/layers-actions.c:393
+#: app/actions/layers-actions.c:406
 msgctxt "layers-action"
 msgid "Union"
 msgstr "Bilketa"
 
-#: app/actions/layers-actions.c:394
+#: app/actions/layers-actions.c:407
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Union"
 msgstr "Geruzaren konposizio modua: batuketa"
 
-#: app/actions/layers-actions.c:399
+#: app/actions/layers-actions.c:412
 msgctxt "layers-action"
 msgid "Clip to Backdrop"
 msgstr "Ebaki atzekora"
 
-#: app/actions/layers-actions.c:400
+#: app/actions/layers-actions.c:413
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Clip to Backdrop"
 msgstr "Geruzaren konposizio modua: ebaki atzekora"
 
-#: app/actions/layers-actions.c:405
+#: app/actions/layers-actions.c:418
 msgctxt "layers-action"
 msgid "Clip to Layer"
 msgstr "Ebaki geruzara"
 
-#: app/actions/layers-actions.c:406
+#: app/actions/layers-actions.c:419
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Clip to Layer"
 msgstr "Geruzaren konposizio modua: ebaki geruzara"
 
-#: app/actions/layers-actions.c:411
+#: app/actions/layers-actions.c:424
 msgctxt "layers-action"
 msgid "Intersection"
 msgstr "Ebakigunea"
 
-#: app/actions/layers-actions.c:412
+#: app/actions/layers-actions.c:425
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Intersection"
 msgstr "Geruzaren konposizio modua: Ebakidura"
 
-#: app/actions/layers-actions.c:420
+#: app/actions/layers-actions.c:433
 msgctxt "layers-action"
 msgid "None"
 msgstr "Bat ere ez"
 
-#: app/actions/layers-actions.c:421
+#: app/actions/layers-actions.c:434
 msgctxt "layers-action"
 msgid "Layer Color Tag: Clear"
 msgstr "Geruzaren kolore-etiketa: garbitu"
 
-#: app/actions/layers-actions.c:426
+#: app/actions/layers-actions.c:439
 msgctxt "layers-action"
 msgid "Blue"
 msgstr "Urdina"
 
-#: app/actions/layers-actions.c:427
+#: app/actions/layers-actions.c:440
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Blue"
 msgstr "Geruzaren kolore-etiketa: ezarri urdina"
 
-#: app/actions/layers-actions.c:432
+#: app/actions/layers-actions.c:445
 msgctxt "layers-action"
 msgid "Green"
 msgstr "Berdea"
 
-#: app/actions/layers-actions.c:433
+#: app/actions/layers-actions.c:446
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Green"
 msgstr "Geruzaren kolore-etiketa: ezarri berdea"
 
-#: app/actions/layers-actions.c:438
+#: app/actions/layers-actions.c:451
 msgctxt "layers-action"
 msgid "Yellow"
 msgstr "Horia"
 
-#: app/actions/layers-actions.c:439
+#: app/actions/layers-actions.c:452
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Yellow"
 msgstr "Geruzaren kolore-etiketa: ezarri horia"
 
-#: app/actions/layers-actions.c:444
+#: app/actions/layers-actions.c:457
 msgctxt "layers-action"
 msgid "Orange"
 msgstr "Laranja"
 
-#: app/actions/layers-actions.c:445
+#: app/actions/layers-actions.c:458
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Orange"
 msgstr "Geruzaren kolore-etiketa: ezarri laranja"
 
-#: app/actions/layers-actions.c:450
+#: app/actions/layers-actions.c:463
 msgctxt "layers-action"
 msgid "Brown"
 msgstr "Marroia"
 
-#: app/actions/layers-actions.c:451
+#: app/actions/layers-actions.c:464
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Brown"
 msgstr "Geruzaren kolore-etiketa: ezarri marroia"
 
-#: app/actions/layers-actions.c:456
+#: app/actions/layers-actions.c:469
 msgctxt "layers-action"
 msgid "Red"
 msgstr "Gorria"
 
-#: app/actions/layers-actions.c:457
+#: app/actions/layers-actions.c:470
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Red"
 msgstr "Geruzaren kolore-etiketa: ezarri gorria"
 
-#: app/actions/layers-actions.c:462
+#: app/actions/layers-actions.c:475
 msgctxt "layers-action"
 msgid "Violet"
 msgstr "Bioleta"
 
-#: app/actions/layers-actions.c:463
+#: app/actions/layers-actions.c:476
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Violet"
 msgstr "Geruzaren kolore-etiketa: ezarri bioleta"
 
-#: app/actions/layers-actions.c:468
+#: app/actions/layers-actions.c:481
 msgctxt "layers-action"
 msgid "Gray"
 msgstr "Grisa"
 
-#: app/actions/layers-actions.c:469
+#: app/actions/layers-actions.c:482
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Gray"
 msgstr "Geruzaren kolore-etiketa: ezarri grisa"
 
-#: app/actions/layers-actions.c:477
+#: app/actions/layers-actions.c:490
 msgctxt "layers-action"
 msgid "Apply Layer _Masks"
 msgstr "Aplikatu geruza-mas_karak"
 
-#: app/actions/layers-actions.c:478
+#: app/actions/layers-actions.c:491
 msgctxt "layers-action"
 msgid "Apply the effect of the layer masks and remove them"
 msgstr "Aplikatu geruza-maskaren efektua eta kendu maskarak"
 
-#: app/actions/layers-actions.c:483
+#: app/actions/layers-actions.c:496
 msgctxt "layers-action"
 msgid "Delete Layer Mas_ks"
 msgstr "E_zabatu geruza-maskarak"
 
-#: app/actions/layers-actions.c:484
+#: app/actions/layers-actions.c:497
 msgctxt "layers-action"
 msgid "Remove layer masks and their effect"
 msgstr "Kendu geruza-maskarak eta beren efektua"
 
-#: app/actions/layers-actions.c:492
+#: app/actions/layers-actions.c:505
 msgctxt "layers-action"
 msgid "_Masks to Selection"
 msgstr "_Maskarak hautapenera"
 
-#: app/actions/layers-actions.c:493
+#: app/actions/layers-actions.c:506
 msgctxt "layers-action"
 msgid "Replace the selection with the layer masks"
 msgstr "Ordeztu hautapena geruza-maskarekin"
 
-#: app/actions/layers-actions.c:498
+#: app/actions/layers-actions.c:511
 msgctxt "layers-action"
 msgid "_Add Masks to Selection"
 msgstr "_Gehitu maskarak hautapenari"
 
-#: app/actions/layers-actions.c:499
+#: app/actions/layers-actions.c:512
 msgctxt "layers-action"
 msgid "Add the layer masks to the current selection"
 msgstr "Gehitu geruza-maskarak uneko hautapenari"
 
-#: app/actions/layers-actions.c:504
+#: app/actions/layers-actions.c:517
 msgctxt "layers-action"
 msgid "_Subtract Masks from Selection"
 msgstr "_Kendu maskarak hautapenetik"
 
-#: app/actions/layers-actions.c:505
+#: app/actions/layers-actions.c:518
 msgctxt "layers-action"
 msgid "Subtract the layer masks from the current selection"
 msgstr "Kendu geruza-maskarak uneko hautapenetik"
 
-#: app/actions/layers-actions.c:510
+#: app/actions/layers-actions.c:523
 msgctxt "layers-action"
 msgid "_Intersect Masks with Selection"
 msgstr "_Egin maskaren eta hautapenaren ebakidura"
 
-#: app/actions/layers-actions.c:511
+#: app/actions/layers-actions.c:524
 msgctxt "layers-action"
 msgid "Intersect the layer masks with the current selection"
 msgstr "Egin ebakidura geruza-maskaren eta uneko hautapenaren artean"
 
-#: app/actions/layers-actions.c:519
+#: app/actions/layers-actions.c:532
 msgctxt "layers-action"
 msgid "Al_pha to Selection"
 msgstr "_Alfa hautapenera"
 
-#: app/actions/layers-actions.c:521
+#: app/actions/layers-actions.c:534
 msgctxt "layers-action"
 msgid "Replace the selection with the layer's alpha channel"
 msgstr "Ordeztu hautapena geruzaren alfa kanalarekin"
 
-#: app/actions/layers-actions.c:526
+#: app/actions/layers-actions.c:539
 msgctxt "layers-action"
 msgid "A_dd Alpha to Selection"
 msgstr "_Gehitu alfa hautapenari"
 
-#: app/actions/layers-actions.c:528
+#: app/actions/layers-actions.c:541
 msgctxt "layers-action"
 msgid "Add the layer's alpha channel to the current selection"
 msgstr "Gehitu geruzaren alfa kanala uneko hautapenari"
 
-#: app/actions/layers-actions.c:533
+#: app/actions/layers-actions.c:546
 msgctxt "layers-action"
 msgid "_Subtract Alpha from Selection"
 msgstr "_Kendu alfa hautapenetik"
 
-#: app/actions/layers-actions.c:535
+#: app/actions/layers-actions.c:548
 msgctxt "layers-action"
 msgid "Subtract the layer's alpha channel from the current selection"
 msgstr "Kendu geruzaren alfa kanala uneko hautapenetik"
 
-#: app/actions/layers-actions.c:540
+#: app/actions/layers-actions.c:553
 msgctxt "layers-action"
 msgid "_Intersect Alpha with Selection"
 msgstr "_Egin ebakidura alfa hautapenarekin"
 
-#: app/actions/layers-actions.c:542
+#: app/actions/layers-actions.c:555
 msgctxt "layers-action"
 msgid "Intersect the layer's alpha channel with the current selection"
 msgstr "Egin geruzaren alfa kanalaren eta uneko hautapenaren ebakidura"
 
-#: app/actions/layers-actions.c:550
+#: app/actions/layers-actions.c:563
 msgctxt "layers-action"
 msgid "Select _Top Layer"
 msgstr "Hautatu _goiko geruza"
 
-#: app/actions/layers-actions.c:551
+#: app/actions/layers-actions.c:564
 msgctxt "layers-action"
 msgid "Select the topmost layer"
 msgstr "Hautatu goreneko geruza"
 
-#: app/actions/layers-actions.c:556
+#: app/actions/layers-actions.c:569
 msgctxt "layers-action"
 msgid "Select _Bottom Layer"
 msgstr "Hautatu _beheko geruza"
 
-#: app/actions/layers-actions.c:557
+#: app/actions/layers-actions.c:570
 msgctxt "layers-action"
 msgid "Select the bottommost layer"
 msgstr "Hautatu behereneko geruza"
 
-#: app/actions/layers-actions.c:562
+#: app/actions/layers-actions.c:575
 msgctxt "layers-action"
 msgid "Select _Previous Layers"
 msgstr "Hautatu a_urreko geruzak"
 
-#: app/actions/layers-actions.c:564
+#: app/actions/layers-actions.c:577
 msgctxt "layers-action"
 msgid ""
 "Select the layers above each currently selected layer. Layers will not be "
 "selected outside their current group level."
 msgstr "Hautatu unean hautatuta dagoen geruza bakoitzaren gaineko geruzak. Geruzak ez dira beren maila-taldetik kanpo hautatuko."
 
-#: app/actions/layers-actions.c:570
+#: app/actions/layers-actions.c:583
 msgctxt "layers-action"
 msgid "Select _Next Layers"
 msgstr "Hautatu _hurrengo geruzak"
 
-#: app/actions/layers-actions.c:572
+#: app/actions/layers-actions.c:585
 msgctxt "layers-action"
 msgid ""
 "Select the layers below each currently selected layer. Layers will not be "
 "selected outside their current group level."
 msgstr "Hautatu unean hautatuta dagoen geruza bakoitzaren azpiko geruzak. Geruzak ez dira beren maila-taldetik kanpo hautatuko."
 
-#: app/actions/layers-actions.c:578
+#: app/actions/layers-actions.c:591
 msgctxt "layers-action"
 msgid "Select Previous Layers (flattened view)"
 msgstr "Hautatu aurreko geruzak (ikuspegi laua)"
 
-#: app/actions/layers-actions.c:579
+#: app/actions/layers-actions.c:592
 msgctxt "layers-action"
 msgid "Select the layers above each currently selected layer"
 msgstr "Hautatu unean hautatutako geruzaren gaineko geruzak"
 
-#: app/actions/layers-actions.c:584
+#: app/actions/layers-actions.c:597
 msgctxt "layers-action"
 msgid "Select Next Layers (flattened view)"
 msgstr "Hautatu hurrengo geruzak (ikuspegi laua)"
 
-#: app/actions/layers-actions.c:585
+#: app/actions/layers-actions.c:598
 msgctxt "layers-action"
 msgid "Select the layers below each currently selected layer"
 msgstr "Hautatu unean hautatutako geruzaren azpiko geruzak"
 
-#: app/actions/layers-actions.c:593
+#: app/actions/layers-actions.c:606
 msgctxt "layers-action"
 msgid "Layer Opacity: Set"
 msgstr "Geruzaren opakutasuna: ezarri"
 
-#: app/actions/layers-actions.c:597
+#: app/actions/layers-actions.c:610
 msgctxt "layers-action"
 msgid "Layer Opacity: Make Completely Transparent"
 msgstr "Geruza-opakutasuna: egin erabat garden"
 
-#: app/actions/layers-actions.c:601
+#: app/actions/layers-actions.c:614
 msgctxt "layers-action"
 msgid "Layer Opacity: Make Completely Opaque"
 msgstr "Geruza-opakutasuna: egin erabat opaku"
 
-#: app/actions/layers-actions.c:605
+#: app/actions/layers-actions.c:618
 msgctxt "layers-action"
 msgid "Layer Opacity: Make More Transparent"
 msgstr "Geruza-opakutasuna: egin gardenago"
 
-#: app/actions/layers-actions.c:609
+#: app/actions/layers-actions.c:622
 msgctxt "layers-action"
 msgid "Layer Opacity: Make More Opaque"
 msgstr "Geruza-opakutasuna: egin opakuago"
 
-#: app/actions/layers-actions.c:613
+#: app/actions/layers-actions.c:626
 msgctxt "layers-action"
 msgid "Layer Opacity: Make 10% More Transparent"
 msgstr "Geruza-opakutasuna: egin %10 gardenago"
 
-#: app/actions/layers-actions.c:617
+#: app/actions/layers-actions.c:630
 msgctxt "layers-action"
 msgid "Layer Opacity: Make 10% More Opaque"
 msgstr "Geruza-opakutasuna: egin %10 opakuago"
 
-#: app/actions/layers-actions.c:625
+#: app/actions/layers-actions.c:638
 msgctxt "layers-action"
 msgid "Layer Mode: Select First"
 msgstr "Geruza modua: hautatu lehena"
 
-#: app/actions/layers-actions.c:629
+#: app/actions/layers-actions.c:642
 msgctxt "layers-action"
 msgid "Layer Mode: Select Last"
 msgstr "Geruza modua: hautatu azkena"
 
-#: app/actions/layers-actions.c:633
+#: app/actions/layers-actions.c:646
 msgctxt "layers-action"
 msgid "Layer Mode: Select Previous"
 msgstr "Geruza modua: hautatu aurrekoa"
 
-#: app/actions/layers-actions.c:637
+#: app/actions/layers-actions.c:650
 msgctxt "layers-action"
 msgid "Layer Mode: Select Next"
 msgstr "Geruza modua: hautatu hurrengoa"
@@ -6908,239 +6945,247 @@ msgstr "Geruza modua: hautatu hurrengoa"
 #. Will be followed with e.g. "Shift-Click
 #. on thumbnail"
 #.
-#: app/actions/layers-actions.c:666
+#: app/actions/layers-actions.c:679
 msgid "Shortcut: "
 msgstr "Laster-tekla: "
 
 #. Will be prepended with a modifier key
 #. string, e.g. "Shift"
 #.
-#: app/actions/layers-actions.c:671
+#: app/actions/layers-actions.c:684
 msgid "-Click on thumbnail in Layers dockable"
 msgstr "-Egin klik 'Geruzak' atrakagarriko koadro txikiaren gainean"
 
-#: app/actions/layers-actions.c:1023 app/actions/layers-actions.c:1024
+#: app/actions/layers-actions.c:1039 app/actions/layers-actions.c:1040
 msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "Geruza _berrira"
 
-#: app/actions/layers-commands.c:341 app/actions/layers-commands.c:2468
+#: app/actions/layers-commands.c:346 app/actions/layers-commands.c:2514
 msgid "Layer Attributes"
 msgstr "Geruza-atributuak"
 
-#: app/actions/layers-commands.c:344
+#: app/actions/layers-commands.c:349
 msgid "Edit Layer Attributes"
 msgstr "Editatu geruza-atributuak"
 
-#: app/actions/layers-commands.c:413 app/widgets/gimpdrawabletreeview.c:649
+#: app/actions/layers-commands.c:418 app/widgets/gimpdrawabletreeview.c:649
 #: app/widgets/gimplayertreeview.c:915
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "Geruza berria"
 msgstr[1] "Geruza berriak"
 
-#: app/actions/layers-commands.c:414
+#: app/actions/layers-commands.c:419
 #, c-format
 msgid "Create a New Layer"
 msgid_plural "Create %d New Layers"
 msgstr[0] "Sortu geruza berria"
 msgstr[1] "Sortu %d geruza berri"
 
-#: app/actions/layers-commands.c:499 app/actions/layers-commands.c:2353
+#: app/actions/layers-commands.c:504 app/actions/layers-commands.c:2397
 msgid "New layer"
 msgid_plural "New layers"
 msgstr[0] "Geruza berria"
 msgstr[1] "Geruza berriak"
 
-#: app/actions/layers-commands.c:581
+#: app/actions/layers-commands.c:586
 msgid "Visible"
 msgstr "Ikusgai"
 
-#: app/actions/layers-commands.c:611
+#: app/actions/layers-commands.c:616
 msgid "New layer group"
 msgid_plural "New layer groups"
 msgstr[0] "Geruza talde berria"
 msgstr[1] "Geruza talde berriak"
 
-#: app/actions/layers-commands.c:733
+#: app/actions/layers-commands.c:738
 msgid "Raise Layer"
 msgid_plural "Raise Layers"
 msgstr[0] "Goratu geruza"
 msgstr[1] "Goratu geruzak"
 
-#: app/actions/layers-commands.c:768
+#: app/actions/layers-commands.c:773
 msgid "Raise Layer to Top"
 msgid_plural "Raise Layers to Top"
 msgstr[0] "Goratu geruza goienera"
 msgstr[1] "Goratu geruzak goienera"
 
-#: app/actions/layers-commands.c:812
+#: app/actions/layers-commands.c:817
 msgid "Lower Layer"
 msgid_plural "Lower Layers"
 msgstr[0] "Beheratu geruza"
 msgstr[1] "Beheratu geruzak"
 
-#: app/actions/layers-commands.c:849
+#: app/actions/layers-commands.c:854
 msgid "Lower Layer to Bottom"
 msgid_plural "Lower Layers to Bottom"
 msgstr[0] "Beheratu geruza beherenera"
 msgstr[1] "Beheratu geruzak beherenera"
 
-#: app/actions/layers-commands.c:876
+#: app/actions/layers-commands.c:881
 msgid "Duplicate layers"
 msgstr "Bikoiztu geruzak"
 
-#: app/actions/layers-commands.c:1024
+#: app/actions/layers-commands.c:1029
 #, c-format
 msgctxt "undo-type"
 msgid "Merge %d Layer Groups"
 msgstr "Batu %d geruza talde"
 
-#: app/actions/layers-commands.c:1085
+#: app/actions/layers-commands.c:1090
 #, c-format
 msgctxt "undo-type"
 msgid "Remove %d Layers"
 msgstr "Kendu %d geruza"
 
-#: app/actions/layers-commands.c:1113 app/text/gimptextlayer.c:600
+#: app/actions/layers-commands.c:1118
+msgid "Discard Links"
+msgstr "Baztertu estekak"
+
+#: app/actions/layers-commands.c:1136
+msgid "Monitor Links"
+msgstr "Monitorizatu estekak"
+
+#: app/actions/layers-commands.c:1154 app/text/gimptextlayer.c:600
 msgid "Discard Text Information"
 msgstr "Baztertu informazioaren testua"
 
-#: app/actions/layers-commands.c:1133
+#: app/actions/layers-commands.c:1174
 msgid "Add Paths"
 msgstr "Gehitu bideak"
 
-#: app/actions/layers-commands.c:1262
+#: app/actions/layers-commands.c:1303
 msgid "Set Layer Boundary Size"
 msgstr "Ezarri geruzaren mugaren tamaina"
 
-#: app/actions/layers-commands.c:1292
+#: app/actions/layers-commands.c:1333
 msgid "Layers to Image Size"
 msgstr "Geruzak irudi-tamainara"
 
-#: app/actions/layers-commands.c:1344
+#: app/actions/layers-commands.c:1385
 msgid "Scale Layer"
 msgstr "Eskalatu geruza"
 
-#: app/actions/layers-commands.c:1383
+#: app/actions/layers-commands.c:1424
 #, c-format
 msgid "Crop Layer to Selection"
 msgid_plural "Crop %d Layers to Selection"
 msgstr[0] "Moztu geruza hautapenera"
 msgstr[1] "Moztu %d geruza hautapenera"
 
-#: app/actions/layers-commands.c:1448
+#: app/actions/layers-commands.c:1489
 msgid ""
 "Cannot crop because none of the selected layers have content or they are "
 "already cropped to their content."
 msgstr "Ezin da moztu geruza hautatuek ez dutelako edukirik edo dagoeneko bere edukira moztuta daudelako."
 
-#: app/actions/layers-commands.c:1454
+#: app/actions/layers-commands.c:1495
 #, c-format
 msgid "Crop Layer to Content"
 msgid_plural "Crop %d Layers to Content"
 msgstr[0] "Moztu geruza edukira"
 msgstr[1] "Moztu %d geruza edukira"
 
-#: app/actions/layers-commands.c:1592 app/actions/layers-commands.c:2560
+#: app/actions/layers-commands.c:1633 app/actions/layers-commands.c:2609
 msgid "Add Layer Masks"
 msgstr "Gehitu geruza-maskarak"
 
-#: app/actions/layers-commands.c:1644
+#: app/actions/layers-commands.c:1685
 msgid "Apply Layer Masks"
 msgstr "Aplikatu geruza-maskarak"
 
-#: app/actions/layers-commands.c:1648
+#: app/actions/layers-commands.c:1689
 msgid "Delete Layer Masks"
 msgstr "Ezabatu geruza-maskarak"
 
-#: app/actions/layers-commands.c:1739
+#: app/actions/layers-commands.c:1780
 msgid "Show Layer Masks"
 msgstr "Erakutsi geruza-maskarak"
 
-#: app/actions/layers-commands.c:1790
+#: app/actions/layers-commands.c:1831
 msgid "Disable Layer Masks"
 msgstr "Desgaitu geruza-maskarak"
 
-#: app/actions/layers-commands.c:1829
+#: app/actions/layers-commands.c:1870
 msgctxt "undo-type"
 msgid "Masks to Selection"
 msgstr "Maskarak hautapenera"
 
-#: app/actions/layers-commands.c:1833
+#: app/actions/layers-commands.c:1874
 msgctxt "undo-type"
 msgid "Add Masks to Selection"
 msgstr "Gehitu maskarak hautapenari"
 
-#: app/actions/layers-commands.c:1837
+#: app/actions/layers-commands.c:1878
 msgctxt "undo-type"
 msgid "Subtract Masks from Selection"
 msgstr "Kendu maskarak hautapenetik"
 
-#: app/actions/layers-commands.c:1841
+#: app/actions/layers-commands.c:1882
 msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
 msgstr "Egin maskaren eta hautapenaren ebakidura"
 
-#: app/actions/layers-commands.c:1864
+#: app/actions/layers-commands.c:1905
 msgid "Add Alpha Channel"
 msgstr "Gehitu alfa kanala"
 
-#: app/actions/layers-commands.c:1885
+#: app/actions/layers-commands.c:1926
 msgid "Remove Alpha Channel"
 msgstr "Kendu alfa kanala"
 
-#: app/actions/layers-commands.c:1913 app/core/gimpchannel-select.c:433
-#: app/core/gimplayer.c:435
+#: app/actions/layers-commands.c:1954 app/core/gimpchannel-select.c:433
+#: app/core/gimplayer.c:437
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Alfa hautapenera"
 
-#: app/actions/layers-commands.c:1917 app/core/gimpchannel-select.c:427
+#: app/actions/layers-commands.c:1958 app/core/gimpchannel-select.c:427
 msgctxt "undo-type"
 msgid "Add Alpha to Selection"
 msgstr "Gehitu alfa hautapenari"
 
-#: app/actions/layers-commands.c:1921 app/core/gimpchannel-select.c:430
+#: app/actions/layers-commands.c:1962 app/core/gimpchannel-select.c:430
 msgctxt "undo-type"
 msgid "Subtract Alpha from Selection"
 msgstr "Kendu alfa hautapenetik"
 
-#: app/actions/layers-commands.c:1925 app/core/gimpchannel-select.c:436
+#: app/actions/layers-commands.c:1966 app/core/gimpchannel-select.c:436
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
 msgstr "Egin alfaren eta hautapenaren ebakidura"
 
-#: app/actions/layers-commands.c:1938
+#: app/actions/layers-commands.c:1979
 msgid "Empty Selection"
 msgstr "Hautapen hutsa"
 
-#: app/actions/layers-commands.c:1968 app/actions/layers-commands.c:2012
+#: app/actions/layers-commands.c:2009 app/actions/layers-commands.c:2053
 #: app/widgets/gimplayertreeview.c:1091
 msgid "Set layers opacity"
 msgstr "Ezarri geruzen opakutasuna"
 
-#: app/actions/layers-commands.c:2082
+#: app/actions/layers-commands.c:2123
 msgid "Set layers' blend space"
 msgstr "Ezarri geruzen nahaste-espazioa"
 
-#: app/actions/layers-commands.c:2136
+#: app/actions/layers-commands.c:2177
 msgid "Set layers' composite space"
 msgstr "Ezarri geruzen konposizio-espazioa"
 
-#: app/actions/layers-commands.c:2190
+#: app/actions/layers-commands.c:2231
 msgid "Set layers' composite mode"
 msgstr "Ezarri geruzen konposizio-modua"
 
-#: app/actions/layers-commands.c:2275
+#: app/actions/layers-commands.c:2316
 msgid "Lock alpha channels"
 msgstr "Blokeatu alfa kanalak"
 
-#: app/actions/layers-commands.c:2275
+#: app/actions/layers-commands.c:2316
 msgid "Unlock alpha channels"
 msgstr "Desblokeatu alfa kanalak"
 
-#: app/actions/layers-commands.c:2671
+#: app/actions/layers-commands.c:2720
 msgid "Fill / Stroke"
 msgstr "Betegarria / trazua"
 
@@ -7927,6 +7972,7 @@ msgstr "Berrezarri iragazki guztiak"
 #: app/dialogs/input-devices-dialog.c:122 app/dialogs/preferences-dialog.c:223
 #: app/dialogs/preferences-dialog.c:1175 app/dialogs/print-size-dialog.c:122
 #: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
+#: app/dialogs/vector-layer-options-dialog.c:103
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
 #: app/tools/gimpfiltertool.c:369 app/tools/gimptransformgridtool.c:1261
 #: app/widgets/gimpcolordialog.c:491 app/widgets/gimpcolordisplayeditor.c:326
@@ -8367,11 +8413,11 @@ msgctxt "text-editor-action"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "Bertikala, ezkerretik eskuinera (gorako orientazioa)"
 
-#: app/actions/text-editor-commands.c:61 app/actions/text-tool-commands.c:120
+#: app/actions/text-editor-commands.c:61 app/actions/text-tool-commands.c:150
 msgid "Open Text File (UTF-8)"
 msgstr "Ireki testu-fitxategia (UTF-8)"
 
-#: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:125
+#: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:155
 #: app/dialogs/file-open-location-dialog.c:81
 #: app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:790
 #: app/widgets/gimpiconpicker.c:490 app/widgets/gimpopendialog.c:87
@@ -8379,7 +8425,7 @@ msgstr "Ireki testu-fitxategia (UTF-8)"
 msgid "_Open"
 msgstr "_Ireki"
 
-#: app/actions/text-editor-commands.c:140 app/actions/text-tool-commands.c:226
+#: app/actions/text-editor-commands.c:140 app/actions/text-tool-commands.c:256
 #: app/config/gimpconfig-file.c:73 app/core/gimppalette-import.c:526
 #: app/plug-in/gimpenvirontable.c:289 app/plug-in/gimpinterpreterdb.c:234
 #: app/tools/gimpfiltertool-settings.c:170 app/widgets/gimptextbuffer.c:1650
@@ -8404,75 +8450,90 @@ msgstr "_Itsatsi"
 
 #: app/actions/text-tool-actions.c:65
 msgctxt "text-tool-action"
+msgid "_Bold"
+msgstr "_Lodia"
+
+#: app/actions/text-tool-actions.c:70
+msgctxt "text-tool-action"
+msgid "_Italic"
+msgstr "_Etzana"
+
+#: app/actions/text-tool-actions.c:75
+msgctxt "text-tool-action"
+msgid "_Underline"
+msgstr "_Azpimarratua"
+
+#: app/actions/text-tool-actions.c:80
+msgctxt "text-tool-action"
 msgid "_Delete"
 msgstr "Ez_abatu"
 
-#: app/actions/text-tool-actions.c:70
+#: app/actions/text-tool-actions.c:85
 msgctxt "text-tool-action"
 msgid "_Open text file..."
 msgstr "_Ireki testu-fitxategia..."
 
-#: app/actions/text-tool-actions.c:75
+#: app/actions/text-tool-actions.c:90
 msgctxt "text-tool-action"
 msgid "Cl_ear"
 msgstr "_Garbitu"
 
-#: app/actions/text-tool-actions.c:76
+#: app/actions/text-tool-actions.c:91
 msgctxt "text-tool-action"
 msgid "Clear all text"
 msgstr "Garbitu testu osoa"
 
-#: app/actions/text-tool-actions.c:81
+#: app/actions/text-tool-actions.c:96
 msgctxt "text-tool-action"
 msgid "Text to _Path"
 msgstr "Testua _bide"
 
-#: app/actions/text-tool-actions.c:83
+#: app/actions/text-tool-actions.c:98
 msgctxt "text-tool-action"
 msgid "Create a path from the outlines of the current text"
 msgstr "Sortu bidea uneko testuaren eskemetatik"
 
-#: app/actions/text-tool-actions.c:88
+#: app/actions/text-tool-actions.c:103
 msgctxt "text-tool-action"
 msgid "Text _along Path"
 msgstr "Testua bidean _zehar"
 
-#: app/actions/text-tool-actions.c:90
+#: app/actions/text-tool-actions.c:105
 msgctxt "text-tool-action"
 msgid "Bend the text along the currently active path"
 msgstr "Egin testuak uneko bidea aktiboan zehar jarraitzea"
 
-#: app/actions/text-tool-actions.c:98
+#: app/actions/text-tool-actions.c:113
 msgctxt "text-tool-action"
 msgid "From left to right"
 msgstr "Ezkerretik eskuinera"
 
-#: app/actions/text-tool-actions.c:103
+#: app/actions/text-tool-actions.c:118
 msgctxt "text-tool-action"
 msgid "From right to left"
 msgstr "Eskuinetik ezkerrera"
 
-#: app/actions/text-tool-actions.c:108
+#: app/actions/text-tool-actions.c:123
 msgctxt "text-tool-action"
 msgid "Vertical, right to left (mixed orientation)"
 msgstr "Bertikala, eskuinetik ezkerrera (orientazio nahasia)"
 
-#: app/actions/text-tool-actions.c:113
+#: app/actions/text-tool-actions.c:128
 msgctxt "text-tool-action"
 msgid "Vertical, right to left (upright orientation)"
 msgstr "Bertikala, eskuinetik ezkerrera (gorako orientazioa)"
 
-#: app/actions/text-tool-actions.c:118
+#: app/actions/text-tool-actions.c:133
 msgctxt "text-tool-action"
 msgid "Vertical, left to right (mixed orientation)"
 msgstr "Bertikala, ezkerretik eskuinera (orientazio nahasia)"
 
-#: app/actions/text-tool-actions.c:123
+#: app/actions/text-tool-actions.c:138
 msgctxt "text-tool-action"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "Bertikala, ezkerretik eskuinera (gorako orientazioa)"
 
-#: app/actions/text-tool-commands.c:188
+#: app/actions/text-tool-commands.c:218
 #, c-format
 msgid "Text along path failed: %s"
 msgstr "Huts egin du testua bide gainean jartzeak: %s"
@@ -10004,7 +10065,7 @@ msgstr "Ireki pantaila"
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
 #: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:192
 #: app/tools/gimpfiltertool.c:371 app/widgets/gimpcolordialog.c:493
-#: app/widgets/gimpcontrollereditor.c:667
+#: app/widgets/gimpcontrollereditor.c:666
 #: app/widgets/gimpdeviceinfoeditor.c:1161 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:180 app/widgets/gimpmodifierseditor.c:689
 #: app/widgets/gimppdbdialog.c:146
@@ -10047,7 +10108,7 @@ msgctxt "windows-action"
 msgid "Switch to the previous image"
 msgstr "Aldatu aurreko irudira"
 
-#: app/actions/windows-actions.c:115 menus/image-menu.ui.in.in:886
+#: app/actions/windows-actions.c:115 menus/image-menu.ui.in.in:887
 msgctxt "windows-action"
 msgid "_Tabs Position"
 msgstr "_Fitxen kokalekua"
@@ -10401,7 +10462,7 @@ msgstr "Errorea gertatu da '%s' fitxategia analizatzean. Lehenetsitako balioak e
 msgid "Pattern syntax for searching and selecting items:"
 msgstr "Elementuak bilatu eta hautatzeko eredu-sintaxia:"
 
-#: app/config/gimpdialogconfig.c:318 app/core/gimplayer.c:406
+#: app/config/gimpdialogconfig.c:318 app/core/gimplayer.c:408
 msgid "Layer"
 msgstr "Geruza"
 
@@ -10412,7 +10473,7 @@ msgstr "Geruza"
 msgid "Channel"
 msgstr "Kanala"
 
-#: app/config/gimpdialogconfig.c:432 app/path/gimppath.c:214
+#: app/config/gimpdialogconfig.c:432 app/path/gimppath.c:215
 #: app/widgets/gimppathtreeview.c:254
 msgid "Path"
 msgstr "Bide-izena"
@@ -11923,538 +11984,543 @@ msgctxt "trc-type"
 msgid "Perceptual"
 msgstr "Pertzepziozkoa"
 
-#: app/core/core-enums.c:1299
+#: app/core/core-enums.c:1300
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "<<baliogabea>>"
 
-#: app/core/core-enums.c:1300
+#: app/core/core-enums.c:1301
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr "Eskalatu irudia"
 
-#: app/core/core-enums.c:1301
+#: app/core/core-enums.c:1302
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr "Aldatu irudia tamainaz"
 
-#: app/core/core-enums.c:1302
+#: app/core/core-enums.c:1303
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "Irauli irudia"
 
-#: app/core/core-enums.c:1303
+#: app/core/core-enums.c:1304
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "Biratu irudia"
 
-#: app/core/core-enums.c:1304
+#: app/core/core-enums.c:1305
 msgctxt "undo-type"
 msgid "Transform image"
 msgstr "Eraldatu irudia"
 
-#: app/core/core-enums.c:1305
+#: app/core/core-enums.c:1306
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "Moztu irudia"
 
-#: app/core/core-enums.c:1306
+#: app/core/core-enums.c:1307
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "Bihurtu irudia"
 
-#: app/core/core-enums.c:1307
+#: app/core/core-enums.c:1308
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "Ezabatu elementua"
 
-#: app/core/core-enums.c:1308 app/core/core-enums.c:1362
+#: app/core/core-enums.c:1309 app/core/core-enums.c:1363
 msgctxt "undo-type"
 msgid "Reorder item"
 msgstr "Ordenatu berriro elementua"
 
-#: app/core/core-enums.c:1309
+#: app/core/core-enums.c:1310
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "Batu geruzak"
 
-#: app/core/core-enums.c:1310
+#: app/core/core-enums.c:1311
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "Batu bideak"
 
-#: app/core/core-enums.c:1311
+#: app/core/core-enums.c:1312
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "Maskara azkarra"
 
-#: app/core/core-enums.c:1312 app/core/core-enums.c:1352
+#: app/core/core-enums.c:1313 app/core/core-enums.c:1353
 #: app/core/gimpimage-grid.c:64
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "Sareta"
 
-#: app/core/core-enums.c:1313
+#: app/core/core-enums.c:1314
 msgctxt "undo-type"
 msgid "Colormap remapping"
 msgstr "Kolore-maparen birmapatzea"
 
-#: app/core/core-enums.c:1314 app/core/core-enums.c:1356
+#: app/core/core-enums.c:1315 app/core/core-enums.c:1357
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "Gida"
 
-#: app/core/core-enums.c:1315 app/core/core-enums.c:1357
+#: app/core/core-enums.c:1316 app/core/core-enums.c:1358
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "Lagin-puntua"
 
-#: app/core/core-enums.c:1316 app/core/core-enums.c:1358
+#: app/core/core-enums.c:1317 app/core/core-enums.c:1359
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "Geruza/kanala"
 
-#: app/core/core-enums.c:1317 app/core/core-enums.c:1359
+#: app/core/core-enums.c:1318 app/core/core-enums.c:1360
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "Geruzaren/kanalaren aldaketa"
 
-#: app/core/core-enums.c:1318 app/core/core-enums.c:1361
+#: app/core/core-enums.c:1319 app/core/core-enums.c:1362
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "Hautapen-maskara"
 
-#: app/core/core-enums.c:1319 app/core/core-enums.c:1365
+#: app/core/core-enums.c:1320 app/core/core-enums.c:1366
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "Elementuaren ikusgaitasuna"
 
-#: app/core/core-enums.c:1320
+#: app/core/core-enums.c:1321
 msgctxt "undo-type"
 msgid "Lock/Unlock contents"
 msgstr "Blokeatu/desblokeatu edukiak"
 
-#: app/core/core-enums.c:1321 app/core/core-enums.c:1368
+#: app/core/core-enums.c:1322 app/core/core-enums.c:1369
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
 msgstr "Blokeatu/desblokeatu kokalekua"
 
-#: app/core/core-enums.c:1322 app/core/core-enums.c:1369
+#: app/core/core-enums.c:1323 app/core/core-enums.c:1370
 msgctxt "undo-type"
 msgid "Lock/Unlock visibility"
 msgstr "Blokeatu/desblokeatu ikusgaitasuna"
 
-#: app/core/core-enums.c:1323
+#: app/core/core-enums.c:1324
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr "Elementuaren propietateak"
 
-#: app/core/core-enums.c:1324 app/core/core-enums.c:1364
+#: app/core/core-enums.c:1325 app/core/core-enums.c:1365
 msgctxt "undo-type"
 msgid "Move item"
 msgstr "Aldatu lekuz elementua"
 
-#: app/core/core-enums.c:1325
+#: app/core/core-enums.c:1326
 msgctxt "undo-type"
 msgid "Scale item"
 msgstr "Eskalatu elementua"
 
-#: app/core/core-enums.c:1326
+#: app/core/core-enums.c:1327
 msgctxt "undo-type"
 msgid "Resize item"
 msgstr "Aldatu elementua tamainaz"
 
-#: app/core/core-enums.c:1327
+#: app/core/core-enums.c:1328
 msgctxt "undo-type"
 msgid "Add layer"
 msgstr "Gehitu geruza"
 
-#: app/core/core-enums.c:1328
+#: app/core/core-enums.c:1329
 msgctxt "undo-type"
 msgid "Add alpha channel"
 msgstr "Gehitu alfa kanala"
 
-#: app/core/core-enums.c:1329 app/core/core-enums.c:1387
+#: app/core/core-enums.c:1330 app/core/core-enums.c:1389
 msgctxt "undo-type"
 msgid "Add layer masks"
 msgstr "Gehitu geruza-maskarak"
 
-#: app/core/core-enums.c:1330 app/core/core-enums.c:1389
+#: app/core/core-enums.c:1331 app/core/core-enums.c:1391
 msgctxt "undo-type"
 msgid "Apply layer masks"
 msgstr "Aplikatu geruza-maskarak"
 
-#: app/core/core-enums.c:1331
+#: app/core/core-enums.c:1332
 msgctxt "undo-type"
 msgid "Remove alpha channel"
 msgstr "Kendu alfa kanala"
 
-#: app/core/core-enums.c:1332
+#: app/core/core-enums.c:1333
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channels"
 msgstr "Blokeatu/desblokeatu alfa kanalak"
 
-#: app/core/core-enums.c:1333
+#: app/core/core-enums.c:1334
 msgctxt "undo-type"
 msgid "Set layers opacity"
 msgstr "Ezarri geruzen opakutasuna"
 
-#: app/core/core-enums.c:1334
+#: app/core/core-enums.c:1335
 msgctxt "undo-type"
 msgid "Set layers mode"
 msgstr "Ezarri geruzen modua"
 
-#: app/core/core-enums.c:1335
+#: app/core/core-enums.c:1336
 msgctxt "undo-type"
 msgid "Add channels"
 msgstr "Gehitu kanalak"
 
-#: app/core/core-enums.c:1336 app/core/core-enums.c:1397
+#: app/core/core-enums.c:1337 app/core/core-enums.c:1399
 msgctxt "undo-type"
 msgid "Floating selection to layer"
 msgstr "Hautapen mugikorra geruzara"
 
-#: app/core/core-enums.c:1337
+#: app/core/core-enums.c:1338
 msgctxt "undo-type"
 msgid "Float selection"
 msgstr "Hautapen mugikorra"
 
-#: app/core/core-enums.c:1338
+#: app/core/core-enums.c:1339
 msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Ainguratu hautapen mugikorra"
 
-#: app/core/core-enums.c:1339 app/core/gimp-edit.c:884
+#: app/core/core-enums.c:1340 app/core/gimp-edit.c:884
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Itsatsi"
 
-#: app/core/core-enums.c:1340 app/core/gimp-edit.c:1246
+#: app/core/core-enums.c:1341 app/core/gimp-edit.c:1246
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Ebaki"
 
-#: app/core/core-enums.c:1341
+#: app/core/core-enums.c:1342
 msgctxt "undo-type"
 msgid "Text"
 msgstr "Testua"
 
-#: app/core/core-enums.c:1342 app/core/gimpdrawable-transform.c:717
+#: app/core/core-enums.c:1343 app/core/gimpdrawable-transform.c:717
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Eraldatu"
 
-#: app/core/core-enums.c:1343 app/core/core-enums.c:1399
+#: app/core/core-enums.c:1344 app/core/core-enums.c:1401
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "Margoa"
 
-#: app/core/core-enums.c:1344 app/core/core-enums.c:1402
+#: app/core/core-enums.c:1345 app/core/core-enums.c:1404
 msgctxt "undo-type"
 msgid "Attach parasite"
 msgstr "Erantsi parasitoa"
 
-#: app/core/core-enums.c:1345 app/core/core-enums.c:1403
+#: app/core/core-enums.c:1346 app/core/core-enums.c:1405
 msgctxt "undo-type"
 msgid "Remove parasite"
 msgstr "Kendu parasitoa"
 
-#: app/core/core-enums.c:1346
+#: app/core/core-enums.c:1347
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr "Inportatu bideak"
 
-#: app/core/core-enums.c:1347
+#: app/core/core-enums.c:1348
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "Plugina"
 
-#: app/core/core-enums.c:1348
+#: app/core/core-enums.c:1349
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "Irudi mota"
 
-#: app/core/core-enums.c:1349
+#: app/core/core-enums.c:1350
 msgctxt "undo-type"
 msgid "Image precision"
 msgstr "Irudiaren zehaztasuna"
 
-#: app/core/core-enums.c:1350
+#: app/core/core-enums.c:1351
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "Irudiaren tamaina"
 
-#: app/core/core-enums.c:1351
+#: app/core/core-enums.c:1352
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "Irudiaren bereizmen-aldaketa"
 
-#: app/core/core-enums.c:1353
+#: app/core/core-enums.c:1354
 msgctxt "undo-type"
 msgid "Change metadata"
 msgstr "Aldatu metadatuak"
 
-#: app/core/core-enums.c:1354
+#: app/core/core-enums.c:1355
 msgctxt "undo-type"
 msgid "Change indexed palette"
 msgstr "Aldatu paleta indexatua"
 
-#: app/core/core-enums.c:1355
+#: app/core/core-enums.c:1356
 msgctxt "undo-type"
 msgid "Hide/Unhide color profile"
 msgstr "Ezkutatu/erakutsi kolore-profila"
 
-#: app/core/core-enums.c:1360
+#: app/core/core-enums.c:1361
 msgctxt "undo-type"
 msgid "Layer/Channel format"
 msgstr "Geruzaren/kanalaren formatua"
 
-#: app/core/core-enums.c:1363
+#: app/core/core-enums.c:1364
 msgctxt "undo-type"
 msgid "Rename item"
 msgstr "Aldatu izena elementuari"
 
-#: app/core/core-enums.c:1366
+#: app/core/core-enums.c:1367
 msgctxt "undo-type"
 msgid "Item color tag"
 msgstr "Elementuaren kolore-etiketa"
 
-#: app/core/core-enums.c:1367
+#: app/core/core-enums.c:1368
 msgctxt "undo-type"
 msgid "Lock/Unlock content"
 msgstr "Blokeatu/desblokeatu edukia"
 
-#: app/core/core-enums.c:1370
+#: app/core/core-enums.c:1371
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "Geruza berria"
 
-#: app/core/core-enums.c:1371
+#: app/core/core-enums.c:1372
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "Ezabatu geruza"
 
-#: app/core/core-enums.c:1372
+#: app/core/core-enums.c:1373
 msgctxt "undo-type"
 msgid "Set layer mode"
 msgstr "Ezarri geruza modua"
 
-#: app/core/core-enums.c:1373
+#: app/core/core-enums.c:1374
 msgctxt "undo-type"
 msgid "Set layer opacity"
 msgstr "Ezarri geruzaren opakutasuna"
 
-#: app/core/core-enums.c:1374
+#: app/core/core-enums.c:1375
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "Blokeatu/desblokeatu alfa kanala"
 
-#: app/core/core-enums.c:1375
+#: app/core/core-enums.c:1376
+msgctxt "undo-type"
+msgid "Link layer"
+msgstr "Geruza estekatua"
+
+#: app/core/core-enums.c:1377
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
 msgstr "Eseki taldearen tamaina aldatzea"
 
-#: app/core/core-enums.c:1376
+#: app/core/core-enums.c:1378
 msgctxt "undo-type"
 msgid "Resume group layer resize"
 msgstr "Jarraitu taldearen tamaina aldatzea"
 
-#: app/core/core-enums.c:1377
+#: app/core/core-enums.c:1379
 msgctxt "undo-type"
 msgid "Suspend group layer mask"
 msgstr "Eseki geruza taldearen maskara"
 
-#: app/core/core-enums.c:1378
+#: app/core/core-enums.c:1380
 msgctxt "undo-type"
 msgid "Resume group layer mask"
 msgstr "Jarraitu geruza taldearen maskara"
 
-#: app/core/core-enums.c:1379
+#: app/core/core-enums.c:1381
 msgctxt "undo-type"
 msgid "Start transforming group layer"
 msgstr "Hasi geruza taldea eraldatzen"
 
-#: app/core/core-enums.c:1380
+#: app/core/core-enums.c:1382
 msgctxt "undo-type"
 msgid "End transforming group layer"
 msgstr "Amaitu geruza taldea eraldatzen"
 
-#: app/core/core-enums.c:1381
+#: app/core/core-enums.c:1383
 msgctxt "undo-type"
 msgid "Convert group layer"
 msgstr "Bihurtu taldearen tamaina"
 
-#: app/core/core-enums.c:1382
+#: app/core/core-enums.c:1384
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "Testu-geruza"
 
-#: app/core/core-enums.c:1383
+#: app/core/core-enums.c:1385
 msgctxt "undo-type"
 msgid "Text layer modification"
 msgstr "Testu-geruzaren aldaketa"
 
-#: app/core/core-enums.c:1384
+#: app/core/core-enums.c:1386
 msgctxt "undo-type"
 msgid "Convert text layer"
 msgstr "Bihurtu testu-geruza"
 
-#: app/core/core-enums.c:1385
+#: app/core/core-enums.c:1387
 msgctxt "undo-type"
 msgid "Vector layer"
 msgstr "Geruza bektoriala"
 
-#: app/core/core-enums.c:1386
+#: app/core/core-enums.c:1388
 msgctxt "undo-type"
 msgid "Vector layer modification"
 msgstr "Geruza bektorialaren aldaketa"
 
-#: app/core/core-enums.c:1388
+#: app/core/core-enums.c:1390
 msgctxt "undo-type"
 msgid "Delete layer masks"
 msgstr "Ezabatu geruza-maskarak"
 
-#: app/core/core-enums.c:1390
+#: app/core/core-enums.c:1392
 msgctxt "undo-type"
 msgid "Show layer masks"
 msgstr "Erakutsi geruza-maskarak"
 
-#: app/core/core-enums.c:1391
+#: app/core/core-enums.c:1393
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "Kanal berria"
 
-#: app/core/core-enums.c:1392
+#: app/core/core-enums.c:1394
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr "Ezabatu kanala"
 
-#: app/core/core-enums.c:1393
+#: app/core/core-enums.c:1395
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "Kanal-kolorea"
 
-#: app/core/core-enums.c:1394
+#: app/core/core-enums.c:1396
 msgctxt "undo-type"
 msgid "New path"
 msgstr "Bide berria"
 
-#: app/core/core-enums.c:1395
+#: app/core/core-enums.c:1397
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "Ezabatu bidea"
 
-#: app/core/core-enums.c:1396
+#: app/core/core-enums.c:1398
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "Bidearen aldaketa"
 
-#: app/core/core-enums.c:1398
+#: app/core/core-enums.c:1400
 msgctxt "undo-type"
 msgid "Transform grid"
 msgstr "Eraldatu sareta"
 
-#: app/core/core-enums.c:1400
+#: app/core/core-enums.c:1402
 msgctxt "undo-type"
 msgid "Ink"
 msgstr "Tinta"
 
-#: app/core/core-enums.c:1401
+#: app/core/core-enums.c:1403
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "Hautatu aurreko planoa"
 
-#: app/core/core-enums.c:1404
+#: app/core/core-enums.c:1406
 msgctxt "undo-type"
 msgid "Add effect"
 msgstr "Gehitu efektua"
 
-#: app/core/core-enums.c:1405
+#: app/core/core-enums.c:1407
 msgctxt "undo-type"
 msgid "Remove effect"
 msgstr "Kendu efektua"
 
-#: app/core/core-enums.c:1406
+#: app/core/core-enums.c:1408
 msgctxt "undo-type"
 msgid "Reorder effect"
 msgstr "Berrordenatu efektua"
 
-#: app/core/core-enums.c:1407
+#: app/core/core-enums.c:1409
 msgctxt "undo-type"
 msgid "Effect modification"
 msgstr "Efektuaren aldaketa"
 
-#: app/core/core-enums.c:1408
+#: app/core/core-enums.c:1410
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "Ezin da desegin"
 
-#: app/core/core-enums.c:1443
+#: app/core/core-enums.c:1445
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "Txikitxoa"
 
-#: app/core/core-enums.c:1444
+#: app/core/core-enums.c:1446
 msgctxt "view-size"
 msgid "Very small"
 msgstr "Oso txikia"
 
-#: app/core/core-enums.c:1445
+#: app/core/core-enums.c:1447
 msgctxt "view-size"
 msgid "Small"
 msgstr "Txikia"
 
-#: app/core/core-enums.c:1446
+#: app/core/core-enums.c:1448
 msgctxt "view-size"
 msgid "Medium"
 msgstr "Tartekoa"
 
-#: app/core/core-enums.c:1447
+#: app/core/core-enums.c:1449
 msgctxt "view-size"
 msgid "Large"
 msgstr "Handia"
 
-#: app/core/core-enums.c:1448
+#: app/core/core-enums.c:1450
 msgctxt "view-size"
 msgid "Very large"
 msgstr "Oso handia"
 
-#: app/core/core-enums.c:1449
+#: app/core/core-enums.c:1451
 msgctxt "view-size"
 msgid "Huge"
 msgstr "Itzela"
 
-#: app/core/core-enums.c:1450
+#: app/core/core-enums.c:1452
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "Ikaragarria"
 
-#: app/core/core-enums.c:1451
+#: app/core/core-enums.c:1453
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "Erraldoia"
 
-#: app/core/core-enums.c:1479
+#: app/core/core-enums.c:1481
 msgctxt "view-type"
 msgid "View as list"
 msgstr "Ikusi zerrenda gisa"
 
-#: app/core/core-enums.c:1480
+#: app/core/core-enums.c:1482
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "Ikusi sareta gisa"
 
-#: app/core/core-enums.c:1509
+#: app/core/core-enums.c:1511
 msgctxt "select-method"
 msgid "Selection by basic text search"
 msgstr "Oinarrizko testu-bilaketa bidezko hautapena"
 
-#: app/core/core-enums.c:1510
+#: app/core/core-enums.c:1512
 msgctxt "select-method"
 msgid "Selection by regular expression search"
 msgstr "Adierazpen erregularren bilaketa bidezko hautapena"
 
-#: app/core/core-enums.c:1511
+#: app/core/core-enums.c:1513
 msgctxt "select-method"
 msgid "Selection by glob pattern search"
 msgstr "Eredu globalen bilaketa bidezko hautapena"
@@ -12876,13 +12942,13 @@ msgid ""
 "Fatal parse error in brush file: Unable to decode abr format version %d."
 msgstr "Analisi-errore larria brotxa-fitxategian: ezin da deskodetu formatu laburreko %d bertsioa."
 
-#: app/core/gimpbrush.c:138 app/core/gimpcontext.c:699
+#: app/core/gimpbrush.c:137 app/core/gimpcontext.c:699
 #: app/core/gimpcontext.c:700 app/tools/gimpmybrushoptions-gui.c:64
 #: app/tools/gimppaintoptions-gui.c:156
 msgid "Brush"
 msgstr "Brotxa"
 
-#: app/core/gimpbrush.c:160 app/paint/gimppaintoptions.c:235
+#: app/core/gimpbrush.c:159 app/paint/gimppaintoptions.c:235
 msgid "Brush Spacing"
 msgstr "Brotxaren tartea"
 
@@ -12978,7 +13044,7 @@ msgstr "Analisi-errore larria '%s' brotxa-fitxategian: fitxategia hondatuta dago
 msgid "Fatal parse error in brush file '%s': Inconsistent parameters."
 msgstr "Analisi-errore larria '%s' brotxa-fitxategian: Parametro funsgabeak."
 
-#: app/core/gimpbuffer.c:106
+#: app/core/gimpbuffer.c:104
 msgid "Buffer"
 msgstr "Bufferra"
 
@@ -13048,7 +13114,7 @@ msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Biratu kanala"
 
-#: app/core/gimpchannel.c:263 app/core/gimpdrawable-transform.c:1045
+#: app/core/gimpchannel.c:263 app/core/gimpdrawable-transform.c:1049
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Eraldatu kanala"
@@ -13199,24 +13265,24 @@ msgid "MyPaint Brush"
 msgstr "MyPaint brotxa"
 
 #: app/core/gimpcontext.c:720 app/core/gimpcontext.c:721
-#: app/core/gimppattern.c:85
+#: app/core/gimppattern.c:84
 msgid "Pattern"
 msgstr "Eredua"
 
 #: app/core/gimpcontext.c:727 app/core/gimpcontext.c:728
-#: app/core/gimpgradient.c:125 app/pdb/drawable-edit-cmds.c:255
+#: app/core/gimpgradient.c:124 app/pdb/drawable-edit-cmds.c:255
 #: app/tools/gimpgradientoptions.c:269 app/tools/gimpgradienttool.c:166
 #: app/tools/gimppaintoptions-gui.c:385
 msgid "Gradient"
 msgstr "Gradientea"
 
 #: app/core/gimpcontext.c:734 app/core/gimpcontext.c:735
-#: app/core/gimppalette.c:130 app/widgets/gimpcolorselectorpalette.c:59
+#: app/core/gimppalette.c:129 app/widgets/gimpcolorselectorpalette.c:59
 msgid "Palette"
 msgstr "Paleta"
 
 #: app/core/gimpcontext.c:741 app/core/gimpcontext.c:742
-#: app/text/gimpfont.c:604 app/tools/gimptextoptions.c:812
+#: app/text/gimpfont.c:603 app/tools/gimptextoptions.c:812
 msgid "Font"
 msgstr "Letra-tipoa"
 
@@ -13296,7 +13362,7 @@ msgstr "Errorea '%s' kargatzean"
 #: app/core/gimpdataloaderfactory.c:492 app/file-data/file-data-gbr.c:101
 #: app/file-data/file-data-gex.c:361 app/file-data/file-data-gex.c:511
 #: app/file-data/file-data-gih.c:99 app/file-data/file-data-pat.c:102
-#: app/xcf/xcf.c:437
+#: app/xcf/xcf.c:438
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "Ezin izan da '%s' ireki irakurtzeko: "
@@ -13311,7 +13377,7 @@ msgstr "Huts egin du datuak kargatzean:\n"
 "\n"
 "%s"
 
-#: app/core/gimpdrawable.c:618 app/tools/gimpscaletool.c:121
+#: app/core/gimpdrawable.c:619 app/tools/gimpscaletool.c:121
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Eskala"
@@ -13331,7 +13397,7 @@ msgctxt "undo-type"
 msgid "Equalize"
 msgstr "Ekualizatu"
 
-#: app/core/gimpdrawable-floating-selection.c:207 app/core/gimplayer.c:773
+#: app/core/gimpdrawable-floating-selection.c:207 app/core/gimplayer.c:775
 msgid "Floating Selection"
 msgstr "Hautapen mugikorra"
 
@@ -13339,7 +13405,7 @@ msgstr "Hautapen mugikorra"
 msgid "Computing alpha of unknown pixels"
 msgstr "Pixel ezezagunen alfa kalkulatzen"
 
-#: app/core/gimpdrawable-fill.c:214 app/path/gimppath.c:683
+#: app/core/gimpdrawable-fill.c:214 app/path/gimppath.c:686
 msgid "Not enough points to fill"
 msgstr "Ez dago nahikoa puntu betetzeko"
 
@@ -13376,7 +13442,7 @@ msgid "Offset Drawable"
 msgstr "Desplazatu marrazgaia"
 
 #: app/core/gimpdrawable-stroke.c:111 app/paint/gimppaintcore-stroke.c:335
-#: app/path/gimppath.c:705
+#: app/path/gimppath.c:708
 msgid "Not enough points to stroke"
 msgstr "Ez dago nahikoa puntu trazatzeko"
 
@@ -13390,17 +13456,17 @@ msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Biratu"
 
-#: app/core/gimpdrawable-transform.c:1043 app/core/gimplayer.c:434
+#: app/core/gimpdrawable-transform.c:1047 app/core/gimplayer.c:436
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Eraldatu geruza"
 
-#: app/core/gimpdrawable-transform.c:1056
+#: app/core/gimpdrawable-transform.c:1061
 msgid "Transformation"
 msgstr "Eraldatzea"
 
-#: app/core/gimpdrawablefiltermask.c:196 app/core/gimplayer.c:733
-#: app/core/gimplayer.c:2034 app/core/gimplayermask.c:294
+#: app/core/gimpdrawablefiltermask.c:196 app/core/gimplayer.c:735
+#: app/core/gimplayer.c:2038 app/core/gimplayermask.c:294
 #, c-format
 msgid "%s mask"
 msgstr "%s maskara"
@@ -13574,229 +13640,234 @@ msgstr "Saretako lehen marraren desplazamendu bertikala, zenbaki negatiboa izan 
 msgid "Offset unit"
 msgstr "Desplazamendu-unitatea"
 
-#: app/core/gimpgrouplayer.c:279
+#: app/core/gimpgrouplayer.c:280
 msgid "Layer Group"
 msgstr "Geruzen taldea"
 
-#: app/core/gimpgrouplayer.c:294
+#: app/core/gimpgrouplayer.c:295
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Aldatu geruzen taldearen izena"
 
-#: app/core/gimpgrouplayer.c:295
+#: app/core/gimpgrouplayer.c:296
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "Aldatu geruzen taldea lekuz"
 
-#: app/core/gimpgrouplayer.c:296
+#: app/core/gimpgrouplayer.c:297
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "Eskalatu geruzen taldea"
 
-#: app/core/gimpgrouplayer.c:297
+#: app/core/gimpgrouplayer.c:298
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "Aldatu geruzen taldea tamainaz"
 
-#: app/core/gimpgrouplayer.c:298
+#: app/core/gimpgrouplayer.c:299
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "Irauli geruzen taldea"
 
-#: app/core/gimpgrouplayer.c:299
+#: app/core/gimpgrouplayer.c:300
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "Biratu geruzen taldea"
 
-#: app/core/gimpgrouplayer.c:300
+#: app/core/gimpgrouplayer.c:301
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Eraldatu geruzen taldea"
 
-#: app/core/gimpimage.c:690 app/widgets/gimpsymmetryeditor.c:183
+#: app/core/gimpimage.c:691 app/widgets/gimpsymmetryeditor.c:183
 msgid "Symmetry"
 msgstr "Simetria"
 
-#: app/core/gimpimage.c:2074 app/pdb/drawable-filter-cmds.c:702
+#: app/core/gimpimage.c:2075 app/pdb/drawable-filter-cmds.c:702
 #: app/widgets/gimpdrawabletreeview-filters.c:740
 msgid "Remove filter"
 msgstr "Kendu iragazkia"
 
-#: app/core/gimpimage.c:2684
+#: app/core/gimpimage.c:2685
 msgid " (exported)"
 msgstr " (esportatuta)"
 
-#: app/core/gimpimage.c:2688
+#: app/core/gimpimage.c:2689
 msgid " (overwritten)"
 msgstr " (gainidatzita)"
 
-#: app/core/gimpimage.c:2697
+#: app/core/gimpimage.c:2698
 msgid " (imported)"
 msgstr " (inportatuta)"
 
-#: app/core/gimpimage.c:2871 app/core/gimpimage.c:2885
-#: app/core/gimpimage.c:2928
+#: app/core/gimpimage.c:2872 app/core/gimpimage.c:2886
+#: app/core/gimpimage.c:2929
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "'%s' geruza modua %s bertsioan gehitu zen"
 
-#: app/core/gimpimage.c:2949
+#: app/core/gimpimage.c:2950
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Geruza taldeen maskarak %s bertsioan gehitu ziren"
 
-#: app/core/gimpimage.c:2956
+#: app/core/gimpimage.c:2957
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Geruza taldeen maskarak %s bertsioan gehitu ziren"
 
-#: app/core/gimpimage.c:2963
+#: app/core/gimpimage.c:2964
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "Geruza taldeen posizio-blokeoak %s bertsioan gehitu ziren"
 
-#: app/core/gimpimage.c:2970
+#: app/core/gimpimage.c:2971
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "Geruza taldeen alfa kanalen blokeoak %s bertsioan gehitu ziren"
 
-#: app/core/gimpimage.c:2978 app/core/gimpimage.c:3037
+#: app/core/gimpimage.c:2979 app/core/gimpimage.c:3046
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "Ikusgaitasun-blokeoak %s bertsioan gehitu ziren"
 
-#: app/core/gimpimage.c:2989
+#: app/core/gimpimage.c:2990
 #, c-format
 msgid "Format of font information in text layer was changed in %s"
 msgstr "Testu-geruzaren letra-informazioaren formatua %s bertsioan aldatu zen"
 
-#: app/core/gimpimage.c:2997
+#: app/core/gimpimage.c:2998
 #, c-format
 msgid "Layer effects were added in %s"
 msgstr "Geruza-efektuak %s bertsioan gehitu ziren"
 
-#: app/core/gimpimage.c:3009
+#: app/core/gimpimage.c:3010
 #, c-format
 msgid "A new perceptual blending space was added in %s"
 msgstr "Pertzepziozko nahaste-espazio berria gehitu da %s bertsioan"
 
-#: app/core/gimpimage.c:3023
+#: app/core/gimpimage.c:3024
 #, c-format
 msgid "Vector layers were added in %s"
 msgstr "Geruza bektorialak %s bertsioan gehitu ziren"
 
-#: app/core/gimpimage.c:3046
+#: app/core/gimpimage.c:3032
+#, c-format
+msgid "Link layers were added in %s"
+msgstr "Geruza estekatuak %s bertsioan gehitu ziren"
+
+#: app/core/gimpimage.c:3055
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "Bide anitzen hautapena %s bertsioan gehitu zen"
 
-#: app/core/gimpimage.c:3058
+#: app/core/gimpimage.c:3067
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "Kolore-etiketak bidean biltegiratzea %s bertsioan gehitu zen"
 
-#: app/core/gimpimage.c:3065
+#: app/core/gimpimage.c:3074
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "Blokeoak bidean biltegiratzea %s bertsioan gehitu zen"
 
-#: app/core/gimpimage.c:3079
+#: app/core/gimpimage.c:3088
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Bit-sakonera handiko irudiak %s bertsioan gehitu ziren"
 
-#: app/core/gimpimage.c:3087
+#: app/core/gimpimage.c:3096
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Bit-sakonera handiko irudien kodeketa %s bertsioan konpondu zen"
 
-#: app/core/gimpimage.c:3095
+#: app/core/gimpimage.c:3104
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Barneko zlib gehitu da %s bertsioan gehitu zen"
 
-#: app/core/gimpimage.c:3112
+#: app/core/gimpimage.c:3121
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "4GB baino handiagoak diren irudi-fitxategiak %s bertsioan onartu ziren"
 
-#: app/core/gimpimage.c:3119
+#: app/core/gimpimage.c:3128
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Geruza anitzen hautapena %s bertsioan gehitu zen"
 
-#: app/core/gimpimage.c:3136
+#: app/core/gimpimage.c:3145
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "Oihalaz kanpoko gidak %s bertsioan gehitu ziren"
 
-#: app/core/gimpimage.c:3147
+#: app/core/gimpimage.c:3156
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr "Elementuen ezarpenak eta elementuen izenetan ereduak bilatzea %s bertsioan gehitu ziren"
 
-#: app/core/gimpimage.c:3153
+#: app/core/gimpimage.c:3162
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "Kanal anitzen hautapena %s bertsioan gehitu zen"
 
-#: app/core/gimpimage.c:3272
+#: app/core/gimpimage.c:3282
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Aldatu irudiaren bereizmena"
 
-#: app/core/gimpimage.c:3324
+#: app/core/gimpimage.c:3334
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Aldatu irudiaren unitatea"
 
-#: app/core/gimpimage.c:4377
+#: app/core/gimpimage.c:4387
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr "'gimp-comment' parasitoen balioztatzeak huts egin du: iruzkinak baliogabeko UTF-8 kodea du"
 
-#: app/core/gimpimage.c:4439
+#: app/core/gimpimage.c:4449
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Erantsi parasitoa irudiari"
 
-#: app/core/gimpimage.c:4484
+#: app/core/gimpimage.c:4494
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Kendu parasitoa iruditik"
 
-#: app/core/gimpimage.c:5457
+#: app/core/gimpimage.c:5467
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Gehitu geruza"
 
-#: app/core/gimpimage.c:5512 app/core/gimpimage.c:5543
+#: app/core/gimpimage.c:5522 app/core/gimpimage.c:5553
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Kendu geruza"
 
-#: app/core/gimpimage.c:5537
+#: app/core/gimpimage.c:5547
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Kendu hautapen mugikorra"
 
-#: app/core/gimpimage.c:5694
+#: app/core/gimpimage.c:5704
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Gehitu kanala"
 
-#: app/core/gimpimage.c:5724 app/core/gimpimage.c:5749
+#: app/core/gimpimage.c:5734 app/core/gimpimage.c:5759
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Kendu kanala"
 
-#: app/core/gimpimage.c:5809
+#: app/core/gimpimage.c:5819
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Gehitu bidea"
 
-#: app/core/gimpimage.c:5844 app/core/gimpimage.c:5852
+#: app/core/gimpimage.c:5854 app/core/gimpimage.c:5862
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Kendu bidea"
@@ -13872,7 +13943,7 @@ msgstr "Kolore-profilaren bihurketa"
 msgid "Colormap of Image #%d (%s)"
 msgstr "#%d (%s) irudiaren kolore-mapa"
 
-#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:909
+#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:907
 msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "Ezarri kolore-mapa"
@@ -13882,7 +13953,7 @@ msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "Kendu kolore-maparen ezarpena"
 
-#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:700
+#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:698
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "Aldatu kolore-maparen sarrera"
@@ -14078,45 +14149,45 @@ msgctxt "undo-type"
 msgid "Scale Image"
 msgstr "Eskalatu irudia"
 
-#: app/core/gimpimage-undo-push.c:1183
+#: app/core/gimpimage-undo-push.c:1204
 #, c-format
 msgid "Can't undo %s"
 msgstr "Ezin da %s desegin"
 
-#: app/core/gimpimagefile.c:836
+#: app/core/gimpimagefile.c:834
 msgid "Folder"
 msgstr "Karpeta"
 
-#: app/core/gimpimagefile.c:841
+#: app/core/gimpimagefile.c:839
 msgid "Special File"
 msgstr "Fitxategi berezia"
 
-#: app/core/gimpimagefile.c:857
+#: app/core/gimpimagefile.c:855
 msgid "Remote File"
 msgstr "Urruneko fitxategia"
 
-#: app/core/gimpimagefile.c:876
+#: app/core/gimpimagefile.c:874
 msgid "Click to create preview"
 msgstr "Egin klik aurrebista sortzeko"
 
-#: app/core/gimpimagefile.c:882
+#: app/core/gimpimagefile.c:880
 msgid "Loading preview..."
 msgstr "Aurrebista kargatzen..."
 
-#: app/core/gimpimagefile.c:888
+#: app/core/gimpimagefile.c:886
 msgid "Preview is out of date"
 msgstr "Aurrebista iraungita dago"
 
-#: app/core/gimpimagefile.c:894
+#: app/core/gimpimagefile.c:892
 msgid "Cannot create preview"
 msgstr "Ezin da aurrebistarik sortu"
 
-#: app/core/gimpimagefile.c:904
+#: app/core/gimpimagefile.c:902
 msgid "(Preview may be out of date)"
 msgstr "(Aurrebista iraungita dago)"
 
 #. pixel size
-#: app/core/gimpimagefile.c:913 app/widgets/gimpimagepropview.c:438
+#: app/core/gimpimagefile.c:911 app/widgets/gimpimagepropview.c:438
 #: app/widgets/gimpsizebox.c:429 app/widgets/gimptemplateeditor.c:734
 #, c-format
 msgid "%d × %d pixel"
@@ -14124,14 +14195,14 @@ msgid_plural "%d × %d pixels"
 msgstr[0] "%d x %d pixel"
 msgstr[1] "%d x %d pixel"
 
-#: app/core/gimpimagefile.c:936 app/display/gimpdisplayshell-title.c:394
+#: app/core/gimpimagefile.c:934 app/display/gimpdisplayshell-title.c:394
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
 msgstr[0] "Geruza %d"
 msgstr[1] "%d geruza"
 
-#: app/core/gimpimagefile.c:1011
+#: app/core/gimpimagefile.c:1009
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Ezin izan da koadro txikien '%s' fitxategia ireki: %s"
@@ -14166,7 +14237,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Ainguratu hautapen mugikorra"
 
-#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1077
+#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1079
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -14177,74 +14248,74 @@ msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "Hautapen mugikorra geruzara"
 
-#: app/core/gimplayer.c:428
+#: app/core/gimplayer.c:430
 msgctxt "undo-type"
 msgid "Rename Layer"
 msgstr "Aldatu geruzaren izena"
 
-#: app/core/gimplayer.c:429
+#: app/core/gimplayer.c:431
 msgctxt "undo-type"
 msgid "Move Layer"
 msgstr "Aldatu geruza lekuz"
 
-#: app/core/gimplayer.c:430
+#: app/core/gimplayer.c:432
 msgctxt "undo-type"
 msgid "Scale Layer"
 msgstr "Eskalatu geruza"
 
-#: app/core/gimplayer.c:431
+#: app/core/gimplayer.c:433
 msgctxt "undo-type"
 msgid "Resize Layer"
 msgstr "Aldatu geruza tamainaz"
 
-#: app/core/gimplayer.c:432
+#: app/core/gimplayer.c:434
 msgctxt "undo-type"
 msgid "Flip Layer"
 msgstr "Irauli geruza"
 
-#: app/core/gimplayer.c:433
+#: app/core/gimplayer.c:435
 msgctxt "undo-type"
 msgid "Rotate Layer"
 msgstr "Biratu geruza"
 
-#: app/core/gimplayer.c:436
+#: app/core/gimplayer.c:438
 msgctxt "undo-type"
 msgid "Reorder Layer"
 msgstr "Ordenatu berriro geruza"
 
-#: app/core/gimplayer.c:437
+#: app/core/gimplayer.c:439
 msgctxt "undo-type"
 msgid "Raise Layer"
 msgstr "Goratu geruza"
 
-#: app/core/gimplayer.c:438
+#: app/core/gimplayer.c:440
 msgctxt "undo-type"
 msgid "Raise Layer to Top"
 msgstr "Goratu geruza goienera"
 
-#: app/core/gimplayer.c:439
+#: app/core/gimplayer.c:441
 msgctxt "undo-type"
 msgid "Lower Layer"
 msgstr "Beheratu geruza"
 
-#: app/core/gimplayer.c:440
+#: app/core/gimplayer.c:442
 msgctxt "undo-type"
 msgid "Lower Layer to Bottom"
 msgstr "Beheratu geruza beherenera"
 
-#: app/core/gimplayer.c:441
+#: app/core/gimplayer.c:443
 msgid "Layer cannot be raised higher."
 msgstr "Ezin da geruza gorago igo."
 
-#: app/core/gimplayer.c:442
+#: app/core/gimplayer.c:444
 msgid "Layer cannot be lowered more."
 msgstr "Ezin da geruza gehiago jaitsi."
 
-#: app/core/gimplayer.c:777
+#: app/core/gimplayer.c:779
 msgid "Floating Mask"
 msgstr "Maskara mugikorra"
 
-#: app/core/gimplayer.c:779
+#: app/core/gimplayer.c:781
 msgid "Floating Layer"
 msgstr "Geruza mugikorra"
 
@@ -14252,7 +14323,7 @@ msgstr "Geruza mugikorra"
 #. * either a "Floating Layer" or "Floating Mask" usually. The second will
 #. * be a layer name.
 #.
-#: app/core/gimplayer.c:784
+#: app/core/gimplayer.c:786
 #, c-format
 msgid ""
 "%s\n"
@@ -14260,73 +14331,73 @@ msgid ""
 msgstr "%s\n"
 "(%s)"
 
-#: app/core/gimplayer.c:1935
+#: app/core/gimplayer.c:1939
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Ezin da geruza-maskara gehitu, geruzak dagoeneko baduelako bat."
 
-#: app/core/gimplayer.c:1946
+#: app/core/gimplayer.c:1950
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Ezin da aipatutako geruzaren neurriak ez dituen geruza-maskara gehitu."
 
-#: app/core/gimplayer.c:1952
+#: app/core/gimplayer.c:1956
 msgctxt "undo-type"
 msgid "Add Layer Masks"
 msgstr "Gehitu geruza-maskarak"
 
-#: app/core/gimplayer.c:2076
+#: app/core/gimplayer.c:2080
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Transferitu alfa maskarara"
 
-#: app/core/gimplayer.c:2243
+#: app/core/gimplayer.c:2247
 msgctxt "undo-type"
 msgid "Apply Layer Masks"
 msgstr "Aplikatu geruza-maskarak"
 
-#: app/core/gimplayer.c:2244
+#: app/core/gimplayer.c:2248
 msgctxt "undo-type"
 msgid "Delete Layer Masks"
 msgstr "Ezabatu geruza-maskarak"
 
-#: app/core/gimplayer.c:2351
+#: app/core/gimplayer.c:2355
 msgctxt "undo-type"
 msgid "Enable Layer Masks"
 msgstr "Gaitu geruza-maskarak"
 
-#: app/core/gimplayer.c:2352
+#: app/core/gimplayer.c:2356
 msgctxt "undo-type"
 msgid "Disable Layer Masks"
 msgstr "Desgaitu geruza-maskarak"
 
-#: app/core/gimplayer.c:2433
+#: app/core/gimplayer.c:2437
 msgctxt "undo-type"
 msgid "Show Layer Masks"
 msgstr "Erakutsi geruza-maskarak"
 
-#: app/core/gimplayer.c:2512
+#: app/core/gimplayer.c:2516
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Gehitu alfa kanala"
 
-#: app/core/gimplayer.c:2542
+#: app/core/gimplayer.c:2546
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Kendu alfa kanala"
 
-#: app/core/gimplayer.c:2563
+#: app/core/gimplayer.c:2567
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Geruza irudi-tamainara"
 
-#: app/core/gimplayer.c:2746
+#: app/core/gimplayer.c:2750
 msgid "Set layer's blend space"
 msgstr "Ezarri geruzaren nahaste-espazioa"
 
-#: app/core/gimplayer.c:2793
+#: app/core/gimplayer.c:2797
 msgid "Set layer's composite space"
 msgstr "Ezarri geruzaren konposizio-espazioa"
 
-#: app/core/gimplayer.c:2840
+#: app/core/gimplayer.c:2844
 msgid "Set layer's composite mode"
 msgstr "Ezarri geruzaren konposizio-modua"
 
@@ -14384,6 +14455,58 @@ msgstr "Ixteko gehieneko luzera zuzena"
 #: app/core/gimplineart.c:378
 msgid "Maximum straight length (in pixels) to close the line art"
 msgstr "Ixteko gehieneko luzera zuzena (pixeletan) lerro-marrazkia ixteko"
+
+#: app/core/gimplink.c:255
+msgid "The file got deleted"
+msgstr "Fitxategia ezabatu da"
+
+#: app/core/gimplink.c:349
+msgid "No file was set"
+msgstr "Ez da fitxategirik ezarri"
+
+#: app/core/gimplinklayer.c:189 app/core/gimplinklayer.c:1068
+msgid "Link Layer"
+msgstr "Estekatu geruza"
+
+#: app/core/gimplinklayer.c:197
+msgid "Rename Link Layer"
+msgstr "Aldatu geruza estekatuaren izena"
+
+#: app/core/gimplinklayer.c:198
+msgid "Move Link Layer"
+msgstr "Aldatu geruza estekatua lekuz"
+
+#: app/core/gimplinklayer.c:199
+msgid "Scale Link Layer"
+msgstr "Eskalatu geruza estekatua"
+
+#: app/core/gimplinklayer.c:200
+msgid "Resize Link Layer"
+msgstr "Aldatu geruza estekatuaren tamaina"
+
+#: app/core/gimplinklayer.c:201
+msgid "Flip Link Layer"
+msgstr "Irauli geruza estekatua"
+
+#: app/core/gimplinklayer.c:202
+msgid "Rotate Link Layer"
+msgstr "Biratu geruza estekatua"
+
+#: app/core/gimplinklayer.c:203 app/core/gimplinklayer.c:553
+msgid "Transform Link Layer"
+msgstr "Transformatu geruza estekatua"
+
+#: app/core/gimplinklayer.c:781
+msgid "Set layer link"
+msgstr "Ezarri geruza estekatua"
+
+#: app/core/gimplinklayer.c:838
+msgid "Discard Link"
+msgstr "Baztertu esteka"
+
+#: app/core/gimplinklayer.c:855
+msgid "Monitor Link"
+msgstr "Monitorizatu esteka"
 
 #: app/core/gimpmybrush-load.c:75
 #, c-format
@@ -15116,17 +15239,17 @@ msgid "Channel _name:"
 msgstr "Kanalaren _izena:"
 
 #: app/dialogs/channel-options-dialog.c:128
-#: app/dialogs/layer-options-dialog.c:167
+#: app/dialogs/layer-options-dialog.c:180
 msgid "Lock _pixels"
 msgstr "Blokeatu _pixelak"
 
 #: app/dialogs/channel-options-dialog.c:129
-#: app/dialogs/layer-options-dialog.c:168
+#: app/dialogs/layer-options-dialog.c:181
 msgid "Lock position and _size"
 msgstr "Blokeatu kokalekua eta _tamaina"
 
 #: app/dialogs/channel-options-dialog.c:130
-#: app/dialogs/layer-options-dialog.c:169
+#: app/dialogs/layer-options-dialog.c:182
 #: app/widgets/gimpdrawabletreeview.c:176 app/widgets/gimpitemtreeview.c:593
 msgid "Lock visibility"
 msgstr "Blokeatu ikusgaitasuna"
@@ -15481,8 +15604,8 @@ msgstr "Bilatu hedapenak"
 msgid "Search extensions matching these keywords"
 msgstr "Bilatu gako-hitz honekin datozen hedapenak"
 
-#: app/dialogs/file-open-dialog.c:140 app/dialogs/file-open-dialog.c:165
-#: app/dialogs/file-open-dialog.c:279
+#: app/dialogs/file-open-dialog.c:142 app/dialogs/file-open-dialog.c:168
+#: app/dialogs/file-open-dialog.c:286
 msgid "Open layers"
 msgstr "Ireki geruzak"
 
@@ -15647,8 +15770,8 @@ msgstr "Irudiaren propietateak"
 #: app/dialogs/image-properties-dialog.c:68 app/dialogs/module-dialog.c:113
 #: app/dialogs/welcome-dialog.c:213 app/tools/gimpcolorpickertool.c:351
 #: app/tools/gimpgradienttool-editor.c:1818 app/tools/gimpmeasuretool.c:740
-#: app/widgets/gimpcontrollerlist.c:635 app/widgets/gimpcriticaldialog.c:210
-#: app/widgets/gimpcriticaldialog.c:232 app/widgets/gimpsettingsbox.c:637
+#: app/widgets/gimpcontrollerlist.c:635 app/widgets/gimpcriticaldialog.c:220
+#: app/widgets/gimpcriticaldialog.c:242 app/widgets/gimpsettingsbox.c:637
 #: app/widgets/gimptexteditor.c:164
 msgid "_Close"
 msgstr "It_xi"
@@ -15764,64 +15887,77 @@ msgstr "Al_derantzikatu maskara"
 msgid "Please select a channel first"
 msgstr "Hautatu kanal bat aurrenik"
 
-#: app/dialogs/layer-options-dialog.c:165
+#: app/dialogs/layer-options-dialog.c:178
 msgid "Layer _name:"
 msgstr "Geruzaren i_zena:"
 
-#: app/dialogs/layer-options-dialog.c:188
+#: app/dialogs/layer-options-dialog.c:201
 #: app/widgets/gimpdeviceinfoeditor.c:376
 msgid "_Mode:"
 msgstr "_Modua:"
 
-#: app/dialogs/layer-options-dialog.c:206
+#: app/dialogs/layer-options-dialog.c:219
 msgid "_Blend space:"
 msgstr "_Nahaste-espazioa:"
 
-#: app/dialogs/layer-options-dialog.c:216
+#: app/dialogs/layer-options-dialog.c:229
 msgid "Compos_ite space:"
 msgstr "_Konposizio-espazioa:"
 
-#: app/dialogs/layer-options-dialog.c:228
+#: app/dialogs/layer-options-dialog.c:241
 msgid "Composite mo_de:"
 msgstr "Konposizio _modua:"
 
-#: app/dialogs/layer-options-dialog.c:242
+#: app/dialogs/layer-options-dialog.c:255
 msgid "_Opacity:"
 msgstr "_Opakutasuna:"
 
 #. The size labels
-#: app/dialogs/layer-options-dialog.c:255 app/tools/gimpmeasuretool.c:815
+#: app/dialogs/layer-options-dialog.c:268 app/tools/gimpmeasuretool.c:815
 msgid "Width:"
 msgstr "Zabalera:"
 
-#: app/dialogs/layer-options-dialog.c:260 app/tools/gimpmeasuretool.c:843
+#: app/dialogs/layer-options-dialog.c:273 app/tools/gimpmeasuretool.c:843
 msgid "Height:"
 msgstr "Altuera:"
 
 #. The offset labels
-#: app/dialogs/layer-options-dialog.c:312
+#: app/dialogs/layer-options-dialog.c:325
 msgid "Offset X:"
 msgstr "X desplazamendua:"
 
-#: app/dialogs/layer-options-dialog.c:317
+#: app/dialogs/layer-options-dialog.c:330
 msgid "Offset Y:"
 msgstr "Y desplazamendua:"
-
-#: app/dialogs/layer-options-dialog.c:380 app/dialogs/resize-dialog.c:510
-#: app/widgets/gimptemplateeditor.c:489
-msgid "_Fill with:"
-msgstr "_Bete honekin:"
 
 #: app/dialogs/layer-options-dialog.c:395
 #: app/widgets/gimpcolordisplayeditor.c:280
 msgid "Active Filters"
 msgstr "Iragazki aktiboak"
 
-#: app/dialogs/layer-options-dialog.c:422
+#: app/dialogs/layer-options-dialog.c:414
+msgid "Select Linked Image"
+msgstr "Hautatu geruza estekatua"
+
+#: app/dialogs/layer-options-dialog.c:424
+msgid "_Linked image:"
+msgstr "_Estekatutako irudia:"
+
+#. Absolute path checkbox.
+#: app/dialogs/layer-options-dialog.c:434
+msgid "S_tore with absolute path"
+msgstr "_Gorde bide-izen absolutuarekin"
+
+#: app/dialogs/layer-options-dialog.c:450 app/dialogs/resize-dialog.c:510
+#: app/widgets/gimptemplateeditor.c:489
+msgid "_Fill with:"
+msgstr "_Bete honekin:"
+
+#: app/dialogs/layer-options-dialog.c:473
 msgid "Lock _alpha"
 msgstr "Blokeatu _alfa"
 
-#: app/dialogs/layer-options-dialog.c:434
+#: app/dialogs/layer-options-dialog.c:485
 msgid "Set name from _text"
 msgstr "Ezarri izena _testutik"
 
@@ -18000,6 +18136,18 @@ msgstr "Blokeatu bidearen _kokalekua"
 msgid "Lock path _visibility"
 msgstr "Blokeatu bidearen _ikusgaitasuna"
 
+#: app/dialogs/vector-layer-options-dialog.c:99
+msgid "Edit Vector Layer Attributes"
+msgstr "Editatu geruza bektorialaren atributuak"
+
+#: app/dialogs/vector-layer-options-dialog.c:105
+msgid "_Apply"
+msgstr "_Aplikatu"
+
+#: app/dialogs/vector-layer-options-dialog.c:274
+msgid "Fill/Stroke Vector Layer"
+msgstr "Bete/Trazatu geruza bektoriala"
+
 #. Translators: the %s string will be the version, e.g. "3.0".
 #: app/dialogs/welcome-dialog.c:206
 #, c-format
@@ -19066,32 +19214,38 @@ msgstr "Egin klik eta arrastatu pibote-puntua mugitzeko"
 msgid "Click-Drag to shear"
 msgstr "Egin klik eta arrastatu zizailatzeko"
 
-#: app/file/file-open.c:137 app/file/file-save.c:132
-msgid "Not a regular file"
-msgstr "Ez da fitxategi arrunta"
-
-#: app/file/file-open.c:146 app/file/file-save.c:141
-msgid "Permission denied"
-msgstr "Baimena ukatuta"
-
-#: app/file/file-open.c:278
+#: app/file/file-open.c:264
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr "%s pluginak SUCCESS eman du, baina ez du irudirik itzuli"
 
-#: app/file/file-open.c:289
+#: app/file/file-open.c:275
 #, c-format
 msgid "%s plug-in could not open image"
 msgstr "%s pluginak ezin du irudia ireki"
 
-#: app/file/file-open.c:674
+#: app/file/file-open.c:689
 msgid "Image doesn't contain any layers"
 msgstr "Irudiak ez du geruzarik"
 
-#: app/file/file-open.c:732
+#: app/file/file-open.c:747
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Ezin izan da '%s' ireki: %s"
+
+#: app/file/file-open.c:835
+#, c-format
+msgid ""
+"Only platform-native file paths are supported: '%s' cannot be opened as link."
+msgstr "Plataformaren jatorrizkoak diren bide-izenak soilik onartzen dira: '%s' ezin da esteka gisa ireki."
+
+#: app/file/file-open.c:977 app/file/file-save.c:132
+msgid "Not a regular file"
+msgstr "Ez da fitxategi arrunta"
+
+#: app/file/file-open.c:986 app/file/file-save.c:141
+msgid "Permission denied"
+msgstr "Baimena ukatuta"
 
 #: app/file/file-remote.c:113
 msgid "Mounting remote volume"
@@ -20637,102 +20791,102 @@ msgctxt "source-align-mode"
 msgid "Fixed"
 msgstr "Finkoa"
 
-#: app/path/gimppath.c:232
+#: app/path/gimppath.c:233
 msgctxt "undo-type"
 msgid "Rename Path"
 msgstr "Aldatu bidearen izena"
 
-#: app/path/gimppath.c:233
+#: app/path/gimppath.c:234
 msgctxt "undo-type"
 msgid "Move Path"
 msgstr "Aldatu lekuz bidea"
 
-#: app/path/gimppath.c:234
+#: app/path/gimppath.c:235
 msgctxt "undo-type"
 msgid "Scale Path"
 msgstr "Eskalatu bidea"
 
-#: app/path/gimppath.c:235
+#: app/path/gimppath.c:236
 msgctxt "undo-type"
 msgid "Resize Path"
 msgstr "Aldatu bidearen tamaina"
 
-#: app/path/gimppath.c:236
+#: app/path/gimppath.c:237
 msgctxt "undo-type"
 msgid "Flip Path"
 msgstr "Irauli bidea"
 
-#: app/path/gimppath.c:237
+#: app/path/gimppath.c:238
 msgctxt "undo-type"
 msgid "Rotate Path"
 msgstr "Biratu bidea"
 
-#: app/path/gimppath.c:238
+#: app/path/gimppath.c:239
 msgctxt "undo-type"
 msgid "Transform Path"
 msgstr "Eraldatu bidea"
 
-#: app/path/gimppath.c:239
+#: app/path/gimppath.c:240
 msgctxt "undo-type"
 msgid "Fill Path"
 msgstr "Bete bidea"
 
-#: app/path/gimppath.c:240
+#: app/path/gimppath.c:241
 msgctxt "undo-type"
 msgid "Stroke Path"
 msgstr "Trazatu bidea"
 
-#: app/path/gimppath.c:241
+#: app/path/gimppath.c:242
 msgctxt "undo-type"
 msgid "Path to Selection"
 msgstr "Bidea hautapenera"
 
-#: app/path/gimppath.c:242
+#: app/path/gimppath.c:243
 msgctxt "undo-type"
 msgid "Reorder Path"
 msgstr "Antolatu berriro bidea"
 
-#: app/path/gimppath.c:243
+#: app/path/gimppath.c:244
 msgctxt "undo-type"
 msgid "Raise Path"
 msgstr "Igo bidea"
 
-#: app/path/gimppath.c:244
+#: app/path/gimppath.c:245
 msgctxt "undo-type"
 msgid "Raise Path to Top"
 msgstr "Igo bidea goienera"
 
-#: app/path/gimppath.c:245
+#: app/path/gimppath.c:246
 msgctxt "undo-type"
 msgid "Lower Path"
 msgstr "Jaitsi bidea"
 
-#: app/path/gimppath.c:246
+#: app/path/gimppath.c:247
 msgctxt "undo-type"
 msgid "Lower Path to Bottom"
 msgstr "Jaitsi bidea baxuenera"
 
-#: app/path/gimppath.c:247
+#: app/path/gimppath.c:248
 msgid "Path cannot be raised higher."
 msgstr "Bidea ezin da gorago igo."
 
-#: app/path/gimppath.c:248
+#: app/path/gimppath.c:249
 msgid "Path cannot be lowered more."
 msgstr "Ezin da bidea gehiago jaitsi."
 
-#: app/path/gimppath.c:463
+#: app/path/gimppath.c:464
 msgid "Move Path"
 msgstr "Aldatu lekuz bidea"
 
-#: app/path/gimppath.c:563
+#: app/path/gimppath.c:564
 msgid "Flip Path"
 msgstr "Irauli bidea"
 
-#: app/path/gimppath.c:594
+#: app/path/gimppath.c:595
 msgid "Rotate Path"
 msgstr "Biratu bidea"
 
-#: app/path/gimppath.c:624
+#: app/path/gimppath.c:627
 msgid "Transform Path"
 msgstr "Eraldatu bidea"
 
@@ -20762,6 +20916,54 @@ msgstr "Ez da biderik topatu bufferrean"
 #, c-format
 msgid "Failed to import paths from '%s': %s"
 msgstr "Ezin izan da '%s'(e)tik bidea inportatu: %s"
+
+#: app/path/gimpvectorlayer.c:160 app/tools/gimppathtool.c:833
+msgid "Vector Layer"
+msgstr "Geruza bektoriala"
+
+#: app/path/gimpvectorlayer.c:170
+msgid "Rename Vector Layer"
+msgstr "Aldatu geruza bektorialaren izena"
+
+#: app/path/gimpvectorlayer.c:171
+msgid "Move Vector Layer"
+msgstr "Aldatu geruza bektoriala lekuz"
+
+#: app/path/gimpvectorlayer.c:172
+msgid "Scale Vector Layer"
+msgstr "Eskalatu geruza bektoriala"
+
+#: app/path/gimpvectorlayer.c:173
+msgid "Resize Vector Layer"
+msgstr "Aldatu geruza bektorialaren tamaina"
+
+#: app/path/gimpvectorlayer.c:174
+msgid "Flip Vector Layer"
+msgstr "Irauli geruza bektoriala"
+
+#: app/path/gimpvectorlayer.c:175
+msgid "Rotate Vector Layer"
+msgstr "Biratu geruza bektoriala"
+
+#: app/path/gimpvectorlayer.c:176
+msgid "Transform Vector Layer"
+msgstr "Transformatu geruza bektoriala"
+
+#: app/path/gimpvectorlayer.c:526
+msgid "Discard Vector Informations"
+msgstr "Baztertu informazio bektoriala"
+
+#: app/path/gimpvectorlayer.c:650
+msgid "Discard Vector Information"
+msgstr "Baztertu informazio bektoriala"
+
+#: app/path/gimpvectorlayeroptions.c:114
+msgid "Fill Style"
+msgstr "Betegarri-estiloa"
+
+#: app/path/gimpvectorlayeroptions.c:126
+msgid "Stroke Style"
+msgstr "Trazu-estiloa"
 
 #: app/pdb/channel-cmds.c:199
 msgid "Combine Masks"
@@ -21342,6 +21544,11 @@ msgstr "Editatu testu-geruzaren atributuak"
 #: app/pdb/text-layer-cmds.c:246
 msgid "Set text layer markup"
 msgstr "Ezarri testu-geruzaren markaketa"
+
+#: app/pdb/vector-layer-cmds.c:71 app/pdb/vector-layer-cmds.c:83
+#, c-format
+msgid "Failed to create vector layer"
+msgstr "Geruza bektorial sortzeak huts egin du"
 
 #: app/plug-in/gimpenvirontable.c:329
 #, c-format
@@ -24112,10 +24319,6 @@ msgstr "Bidearen tresna: sortu eta editatu bideak"
 msgid "Pat_hs"
 msgstr "_Bideak"
 
-#: app/tools/gimppathtool.c:833
-msgid "Vector Layer"
-msgstr "Geruza bektoriala"
-
 #: app/tools/gimppenciltool.c:54
 msgid "Pencil Tool: Hard edge painting using a brush"
 msgstr "Arkatza tresna: margotu ertz gogorrekin brotxa erabiliz"
@@ -24684,23 +24887,23 @@ msgstr "Hautatu duzun geruza testu-geruza bat da, baina bestelako tresnak erabil
 "\n"
 "Geruza edita dezakezu, edo sortu testu-geruza berria bere testu-atributuak oinarritzat hartuz."
 
-#: app/tools/gimptexttool.c:2355
+#: app/tools/gimptexttool.c:2397
 msgid "Text is required."
 msgstr "Testua behar da."
 
-#: app/tools/gimptexttool.c:2358
+#: app/tools/gimptexttool.c:2400
 msgid "No image."
 msgstr "Irudirik ez."
 
-#: app/tools/gimptexttool.c:2361
+#: app/tools/gimptexttool.c:2403
 msgid "No layer."
 msgstr "Geruzarik ez."
 
-#: app/tools/gimptexttool.c:2372
+#: app/tools/gimptexttool.c:2414
 msgid "Exactly one path must be selected."
 msgstr "Bide bakar bat hautatu behar da."
 
-#: app/tools/gimptexttool-editor.c:1374
+#: app/tools/gimptexttool-editor.c:1396
 msgid "GIMP Text Editor"
 msgstr "GIMP testu-editorea"
 
@@ -25835,13 +26038,13 @@ msgstr "Kendu '%s'(e)ri esleitutako ekintza"
 msgid "Assign an action to '%s'"
 msgstr "Esleitu ekintza '%s'(r)i"
 
-#: app/widgets/gimpcontrollereditor.c:652
+#: app/widgets/gimpcontrollereditor.c:651
 #: app/widgets/gimpdeviceinfoeditor.c:1142
 #, c-format
 msgid "Select Action for Event '%s'"
 msgstr "Hautatu '%s' gertaeraren ekintza"
 
-#: app/widgets/gimpcontrollereditor.c:658
+#: app/widgets/gimpcontrollereditor.c:657
 msgid "Select Controller Event Action"
 msgstr "Hautatu kontroladorearen gertaera-ekintza"
 
@@ -26030,24 +26233,24 @@ msgstr "Saguaren gurpila"
 msgid "Mouse Wheel Events"
 msgstr "Saguaren gurpil-gertaerak"
 
-#: app/widgets/gimpcriticaldialog.c:55
+#: app/widgets/gimpcriticaldialog.c:61
 msgid "Copy Bug Information"
 msgstr "Kopiatu akatsaren informazioa"
 
-#: app/widgets/gimpcriticaldialog.c:56
+#: app/widgets/gimpcriticaldialog.c:62
 msgid "Open Bug Tracker"
 msgstr "Ireki akatsen aztarnaria"
 
-#: app/widgets/gimpcriticaldialog.c:190
+#: app/widgets/gimpcriticaldialog.c:200
 msgid "See bug details"
 msgstr "Ikus akatsaren xehetasunak"
 
-#: app/widgets/gimpcriticaldialog.c:209
+#: app/widgets/gimpcriticaldialog.c:219
 msgid "Go to _Download page"
 msgstr "Joan _deskargen orrira"
 
 #. Recommend an update.
-#: app/widgets/gimpcriticaldialog.c:214
+#: app/widgets/gimpcriticaldialog.c:224
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released on %s.\n"
@@ -26055,122 +26258,122 @@ msgid ""
 msgstr "GIMPen bertsio berria (%s) argitaratu zen %s egunean.\n"
 "Gomendagarria da eguneratzea."
 
-#: app/widgets/gimpcriticaldialog.c:220
+#: app/widgets/gimpcriticaldialog.c:230
 msgid "You are running an unsupported version!"
 msgstr "Euskarririk ez duen bertsio bat exekutatzen ari zara!"
 
-#: app/widgets/gimpcriticaldialog.c:243 app/widgets/gimpcriticaldialog.c:599
+#: app/widgets/gimpcriticaldialog.c:253 app/widgets/gimpcriticaldialog.c:655
 msgid ""
 "To help us improve GIMP, you can report the bug with these simple steps:"
 msgstr "GIMP hobetzen lagundu nahi badiguzu, akatsa jakinarazi diezagukezu honako urratsak jarraituta:"
 
-#: app/widgets/gimpcriticaldialog.c:245 app/widgets/gimpcriticaldialog.c:601
+#: app/widgets/gimpcriticaldialog.c:255 app/widgets/gimpcriticaldialog.c:657
 msgid "Copy the bug information to the clipboard by clicking: "
 msgstr "Kopiatu akatsaren informazioa arbelan, hemen klik eginda: "
 
-#: app/widgets/gimpcriticaldialog.c:247 app/widgets/gimpcriticaldialog.c:603
+#: app/widgets/gimpcriticaldialog.c:257 app/widgets/gimpcriticaldialog.c:659
 msgid "Open our bug tracker in the browser by clicking: "
 msgstr "Ireki gure akats-aztarnaria nabigatzilean, hemen klik eginda: "
 
-#: app/widgets/gimpcriticaldialog.c:249 app/widgets/gimpcriticaldialog.c:605
+#: app/widgets/gimpcriticaldialog.c:259 app/widgets/gimpcriticaldialog.c:661
 msgid "Create a login if you don't have one yet."
 msgstr "Sortu saioa hasteko erabiltzaile bat, oraindik ez baduzu."
 
-#: app/widgets/gimpcriticaldialog.c:250 app/widgets/gimpcriticaldialog.c:606
+#: app/widgets/gimpcriticaldialog.c:260 app/widgets/gimpcriticaldialog.c:662
 msgid "Paste the clipboard text in a new bug report."
 msgstr "Itsatsi arbeleko testua akats-txosten berri batean."
 
-#: app/widgets/gimpcriticaldialog.c:251 app/widgets/gimpcriticaldialog.c:607
+#: app/widgets/gimpcriticaldialog.c:261 app/widgets/gimpcriticaldialog.c:663
 msgid ""
 "Add relevant information in English in the bug report explaining what you "
 "were doing when this error occurred."
 msgstr "Gehitu informazio nabarmenena, ingelesez, akats-txostenean, errorea gertatu denean zertan ari zinen azaltzeko."
 
-#: app/widgets/gimpcriticaldialog.c:253
+#: app/widgets/gimpcriticaldialog.c:263
 msgid ""
 "This error may have left GIMP in an inconsistent state. It is advised to "
 "save your work and restart GIMP."
 msgstr "Errore honek GIMP egoera ezegonokorrean utzi ahal izan du. Gomendagarria da lana gordetzea eta GIMP berrabiaraztea."
 
-#: app/widgets/gimpcriticaldialog.c:258
+#: app/widgets/gimpcriticaldialog.c:268
 msgid ""
 "You can also close the dialog directly but reporting bugs is the best way to "
 "make your software awesome."
 msgstr "Elkarrizketa-koadroa zuzenean ixtea ere aukera dezakezu, baina akatsak jakinaraztea software hau hobetzeko modurik onena da."
 
-#: app/widgets/gimpcriticaldialog.c:267
+#: app/widgets/gimpcriticaldialog.c:277
 msgid "Copy-paste this whole debug data to report to developers"
 msgstr "Kopiatu eta itsatsi arazketa-datu horiek guztiak garatzaileei akatsaren berri emateko"
 
-#: app/widgets/gimpcriticaldialog.c:366
+#: app/widgets/gimpcriticaldialog.c:416
 msgid "The operating system is out of memory or resources."
 msgstr "Sistema eragilea memoriarik edo baliabiderik gabe dago."
 
-#: app/widgets/gimpcriticaldialog.c:369
+#: app/widgets/gimpcriticaldialog.c:419
 msgid "The specified file was not found."
 msgstr "Zehaztutako fitxategia ez da aurkitu."
 
-#: app/widgets/gimpcriticaldialog.c:372
+#: app/widgets/gimpcriticaldialog.c:422
 msgid "The specified path was not found."
 msgstr "Zehaztutako bidea ez da aurkitu."
 
-#: app/widgets/gimpcriticaldialog.c:375
+#: app/widgets/gimpcriticaldialog.c:425
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr ".exe fitxategia baliogabea da (ez da Microsoft 32ko .exe edo errorea .exe irudian)."
 
-#: app/widgets/gimpcriticaldialog.c:378
+#: app/widgets/gimpcriticaldialog.c:428
 msgid "The operating system denied access to the specified file."
 msgstr "Sistema eragileak zehaztutako fitxategirako sarbidetza debekatu egin du."
 
-#: app/widgets/gimpcriticaldialog.c:381
+#: app/widgets/gimpcriticaldialog.c:431
 msgid "The file name association is incomplete or invalid."
 msgstr "Esleitutako fitxategi-izena osatu gabea edo ez da baliozkoa."
 
-#: app/widgets/gimpcriticaldialog.c:384
+#: app/widgets/gimpcriticaldialog.c:434
 msgid "DDE transaction busy"
 msgstr "DDE transakzioa lanpetuta"
 
-#: app/widgets/gimpcriticaldialog.c:387
+#: app/widgets/gimpcriticaldialog.c:437
 msgid "The DDE transaction failed."
 msgstr "Huts egin du DDE transakzioak."
 
-#: app/widgets/gimpcriticaldialog.c:390
+#: app/widgets/gimpcriticaldialog.c:440
 msgid "The DDE transaction timed out."
 msgstr "DDE transakzioaren denbora iraungita."
 
-#: app/widgets/gimpcriticaldialog.c:393
+#: app/widgets/gimpcriticaldialog.c:443
 msgid "The specified DLL was not found."
 msgstr "Zehaztutako DLL ez da aurkitu"
 
-#: app/widgets/gimpcriticaldialog.c:396
+#: app/widgets/gimpcriticaldialog.c:446
 msgid "There is no application associated with the given file name extension."
 msgstr "Ez dago aplikaziorik emandako fitxategiaren hedapenarekin esleituta."
 
-#: app/widgets/gimpcriticaldialog.c:399
+#: app/widgets/gimpcriticaldialog.c:449
 msgid "There was not enough memory to complete the operation."
 msgstr "Ez dago nahikoa memoriarik eragiketa burutzeko."
 
-#: app/widgets/gimpcriticaldialog.c:402
+#: app/widgets/gimpcriticaldialog.c:452
 msgid "A sharing violation occurred."
 msgstr "Partekatzearen bortxaketa gertatu da."
 
-#: app/widgets/gimpcriticaldialog.c:405
+#: app/widgets/gimpcriticaldialog.c:455
 msgid "Unknown Microsoft Windows error."
 msgstr "Microsoft Windows-en errore ezezaguna."
 
-#: app/widgets/gimpcriticaldialog.c:408
+#: app/widgets/gimpcriticaldialog.c:458
 #, c-format
 msgid "Failed to open '%s': %s"
 msgstr "Huts egin du '%s' ireki: %s"
 
-#: app/widgets/gimpcriticaldialog.c:565
+#: app/widgets/gimpcriticaldialog.c:621
 #, c-format
 msgid "GIMP crashed with a fatal error: %s"
 msgstr "GIMP kraskatu egin da errore larri batekin: %s"
 
 #. First error. Let's just display it.
-#: app/widgets/gimpcriticaldialog.c:572
+#: app/widgets/gimpcriticaldialog.c:628
 #, c-format
 msgid "GIMP encountered an error: %s"
 msgstr "GIMPek errore bat aurkitu du: %s"
@@ -26178,12 +26381,12 @@ msgstr "GIMPek errore bat aurkitu du: %s"
 #. Let's not display all errors. They will be in the bug report
 #. * part anyway.
 #.
-#: app/widgets/gimpcriticaldialog.c:580
+#: app/widgets/gimpcriticaldialog.c:636
 #, c-format
 msgid "GIMP encountered several critical errors!"
 msgstr "GIMPek zenbait errore larri aurkitu ditu!"
 
-#: app/widgets/gimpcriticaldialog.c:632
+#: app/widgets/gimpcriticaldialog.c:688
 msgid "_Restart GIMP"
 msgstr "_Berrabiarazi GIMP"
 
@@ -26897,11 +27100,11 @@ msgctxt "File extension"
 msgid "Extensions"
 msgstr "Hedapenak"
 
-#: app/widgets/gimpfilleditor.c:160
+#: app/widgets/gimpfilleditor.c:161
 msgid "Fill BG Color"
 msgstr "Bete atzeko planoaren kolorea"
 
-#: app/widgets/gimpfilleditor.c:183
+#: app/widgets/gimpfilleditor.c:185
 msgid "_Antialiasing"
 msgstr "_Antialiasinga"
 
@@ -28108,49 +28311,49 @@ msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Egoera eta azalpena"
 
-#: app/xcf/xcf.c:126 app/xcf/xcf.c:182
+#: app/xcf/xcf.c:127 app/xcf/xcf.c:183
 msgid "GIMP XCF image"
 msgstr "GIMPeko XCF irudia"
 
-#: app/xcf/xcf.c:259 app/xcf/xcf.c:348
+#: app/xcf/xcf.c:260 app/xcf/xcf.c:349
 msgid "Memory Stream"
 msgstr "Memoria-korrontea"
 
-#: app/xcf/xcf.c:270
+#: app/xcf/xcf.c:271
 #, c-format
 msgid "Opening '%s'"
 msgstr "'%s' irekitzen"
 
-#: app/xcf/xcf.c:312
+#: app/xcf/xcf.c:313
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF errorea: XCF fitxategi motaren onartu gabeko %d bertsioa aurkitu da"
 
-#: app/xcf/xcf.c:371
+#: app/xcf/xcf.c:372
 #, c-format
 msgid "Saving '%s'"
 msgstr "'%s' gordetzen"
 
-#: app/xcf/xcf.c:379
+#: app/xcf/xcf.c:380
 #, c-format
 msgid "Closing '%s'"
 msgstr "'%s' ixten"
 
-#: app/xcf/xcf.c:397
+#: app/xcf/xcf.c:398
 #, c-format
 msgid "Error writing '%s': "
 msgstr "Errorera '%s' idaztean: "
 
-#: app/xcf/xcf.c:485
+#: app/xcf/xcf.c:486
 #, c-format
 msgid "Error creating '%s': "
 msgstr "Errorea '%s' sortzean: "
 
-#: app/xcf/xcf-load.c:341
+#: app/xcf/xcf-load.c:352
 msgid "Invalid image mode and precision combination."
 msgstr "Baliogabeko irudi moduaren eta zehaztasunaren konbinazioa."
 
-#: app/xcf/xcf-load.c:548
+#: app/xcf/xcf-load.c:559
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -28158,14 +28361,14 @@ msgid ""
 msgstr "'exif-data' parasito hondatua aurkitu da.\n"
 "Exif datuak ezin izan dira migratu: %s"
 
-#: app/xcf/xcf-load.c:587
+#: app/xcf/xcf-load.c:598
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
 msgstr "'gimp-metadata' parasito hondatua aurkitu da.\n"
 "XMP datuak ezin izan dira migratu."
 
-#: app/xcf/xcf-load.c:611
+#: app/xcf/xcf-load.c:622
 #, c-format
 msgid ""
 "Corrupt XMP metadata saved by an older version of GIMP could not be "
@@ -28175,31 +28378,31 @@ msgid ""
 msgstr "GIMPen bertsio zahar batek gordetako XMP metadatu hondatuak ezin izan dira bihurtu eta ez ikusiarena egingo zaie.\n"
 "Ez badakizu XMP zer den, ziur asko ez duzu behar. Jakinarazitako errorea: %s."
 
-#: app/xcf/xcf-load.c:1050
+#: app/xcf/xcf-load.c:1099
 msgid "Linked Layers"
 msgstr "Estekatutako geruzak"
 
-#: app/xcf/xcf-load.c:1060
+#: app/xcf/xcf-load.c:1109
 msgid "Linked Channels"
 msgstr "Estekatutako kanalak"
 
-#: app/xcf/xcf-load.c:1085
+#: app/xcf/xcf-load.c:1134
 msgid "Linked Paths"
 msgstr "Estekatutako bideak"
 
-#: app/xcf/xcf-load.c:1132
+#: app/xcf/xcf-load.c:1181
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 msgstr "XCF fitxategia hondatuta dago!  Ahal den neurrian kargatu arren, osatu gabe dago."
 
-#: app/xcf/xcf-load.c:1152
+#: app/xcf/xcf-load.c:1201
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr "XCF fitxategia hondatuta dago!  Ezin izan da irudiaren datuen zati bat ere berreskuratu."
 
-#: app/xcf/xcf-load.c:1310
+#: app/xcf/xcf-load.c:1359
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -28208,7 +28411,7 @@ msgstr "XCF abisua: XCF fitxategi-formatuaren 0 bertsioak\n"
 "ez ditu kolore-mapa indexatuak behar bezala gorde.\n"
 "Gris-eskalako mapa ordezkatuko da."
 
-#: app/xcf/xcf-load.c:2789
+#: app/xcf/xcf-load.c:2929
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -28218,7 +28421,7 @@ msgid ""
 msgstr "XCF abisua: %s bertsioko \"%s\" iragazkiak ez du %s propietatea. Propietateari ez ikusiarena egin zaio eta iragazkia agian ez da ongi errendatuko.\n"
 "Horrek ez luke gertatu beharko. Akats hori iragazkiaren garatzaileei jakinarazi beharko zenieke."
 
-#: app/xcf/xcf-load.c:3665
+#: app/xcf/xcf-load.c:3813
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
@@ -28364,331 +28567,331 @@ msgctxt "file-action"
 msgid "Crea_te"
 msgstr "_Sortu"
 
-#: menus/image-menu.ui.in.in:19
+#: menus/image-menu.ui.in.in:20
 msgctxt "file-action"
 msgid "Open _Recent"
 msgstr "Ire_ki azkena"
 
-#: menus/image-menu.ui.in.in:27
+#: menus/image-menu.ui.in.in:28
 msgid "_Debug"
 msgstr "A_raztu"
 
-#: menus/image-menu.ui.in.in:76
+#: menus/image-menu.ui.in.in:77
 msgctxt "edit-action"
 msgid "_Edit"
 msgstr "_Editatu"
 
-#: menus/image-menu.ui.in.in:92
+#: menus/image-menu.ui.in.in:93
 msgctxt "edit-action"
 msgid "Paste _as"
 msgstr "Itsatsi _honela"
 
-#: menus/image-menu.ui.in.in:106
+#: menus/image-menu.ui.in.in:107
 msgctxt "edit-action"
 msgid "_Buffer"
 msgstr "_Bufferra"
 
-#: menus/image-menu.ui.in.in:149
+#: menus/image-menu.ui.in.in:150
 msgctxt "select-action"
 msgid "_Select"
 msgstr "_Hautatu"
 
-#: menus/image-menu.ui.in.in:155
+#: menus/image-menu.ui.in.in:156
 msgctxt "view-action"
 msgid "_Float"
 msgstr "_Bihurtu mugikor"
 
-#: menus/image-menu.ui.in.in:182
+#: menus/image-menu.ui.in.in:183
 msgctxt "view-action"
 msgid "_View"
 msgstr "_Ikusi"
 
-#: menus/image-menu.ui.in.in:187
+#: menus/image-menu.ui.in.in:188
 msgctxt "view-action"
 msgid "_Zoom"
 msgstr "_Zooma"
 
-#: menus/image-menu.ui.in.in:212
+#: menus/image-menu.ui.in.in:213
 msgctxt "view-action"
 msgid "_Flip & Rotate"
 msgstr "_Irauli eta biratu"
 
-#: menus/image-menu.ui.in.in:236
+#: menus/image-menu.ui.in.in:237
 msgctxt "view-action"
 msgid "Move to Screen"
 msgstr "Eraman pantailara"
 
-#: menus/image-menu.ui.in.in:245
+#: menus/image-menu.ui.in.in:246
 msgctxt "view-action"
 msgid "_Color Management"
 msgstr "_Kolore-kudeaketa"
 
-#: menus/image-menu.ui.in.in:252
+#: menus/image-menu.ui.in.in:253
 msgctxt "view-action"
 msgid "Display _Rendering Intent"
 msgstr "Pantailaren e_rrendatze-saiakera"
 
-#: menus/image-menu.ui.in.in:284
+#: menus/image-menu.ui.in.in:285
 msgctxt "view-action"
 msgid "_Padding Color"
 msgstr "_Kolore betegarria"
 
-#: menus/image-menu.ui.in.in:308
+#: menus/image-menu.ui.in.in:309
 msgctxt "image-action"
 msgid "_Image"
 msgstr "_Irudia"
 
-#: menus/image-menu.ui.in.in:315
+#: menus/image-menu.ui.in.in:316
 msgctxt "image-action"
 msgid "_Mode"
 msgstr "_Modua"
 
-#: menus/image-menu.ui.in.in:321
+#: menus/image-menu.ui.in.in:322
 msgctxt "image-action"
 msgid "_Encoding"
 msgstr "_Kodeketa"
 
-#: menus/image-menu.ui.in.in:337
+#: menus/image-menu.ui.in.in:338
 msgctxt "image-action"
 msgid "Color Ma_nagement"
 msgstr "Kolore-k_udeaketa"
 
-#: menus/image-menu.ui.in.in:354
+#: menus/image-menu.ui.in.in:355
 msgctxt "image-action"
 msgid "Soft-Proofing Re_ndering Intent"
 msgstr "_Pantailako probako errendatze-saiakera"
 
-#: menus/image-menu.ui.in.in:368
+#: menus/image-menu.ui.in.in:369
 msgctxt "image-action"
 msgid "_Transform"
 msgstr "_Eraldatu"
 
-#: menus/image-menu.ui.in.in:401
+#: menus/image-menu.ui.in.in:402
 msgctxt "image-action"
 msgid "_Guides"
 msgstr "_Gidak"
 
-#: menus/image-menu.ui.in.in:409
+#: menus/image-menu.ui.in.in:410
 msgctxt "image-action"
 msgid "Meta_data"
 msgstr "Meta_datuak"
 
-#: menus/image-menu.ui.in.in:417
+#: menus/image-menu.ui.in.in:418
 msgctxt "layers-action"
 msgid "_Layer"
 msgstr "Ge_ruza"
 
-#: menus/image-menu.ui.in.in:442
+#: menus/image-menu.ui.in.in:443
 msgctxt "layers-action"
 msgid "Stac_k"
 msgstr "_Pila"
 
-#: menus/image-menu.ui.in.in:459
+#: menus/image-menu.ui.in.in:460
 msgctxt "layers-action"
 msgid "_Mask"
 msgstr "_Maskara"
 
-#: menus/image-menu.ui.in.in:481
+#: menus/image-menu.ui.in.in:482
 msgctxt "layers-action"
 msgid "Tr_ansparency"
 msgstr "_Gardentasuna"
 
-#: menus/image-menu.ui.in.in:499
+#: menus/image-menu.ui.in.in:500
 msgctxt "layers-action"
 msgid "_Transform"
 msgstr "_Eraldatu"
 
-#: menus/image-menu.ui.in.in:529
+#: menus/image-menu.ui.in.in:530
 msgctxt "image-action"
 msgid "_Colors"
 msgstr "_Koloreak"
 
-#: menus/image-menu.ui.in.in:550
+#: menus/image-menu.ui.in.in:551
 msgctxt "image-action"
 msgid "_Auto"
 msgstr "_Automatikoa"
 
-#: menus/image-menu.ui.in.in:558
+#: menus/image-menu.ui.in.in:559
 msgctxt "image-action"
 msgid "C_omponents"
 msgstr "_Osagaiak"
 
-#: menus/image-menu.ui.in.in:564
+#: menus/image-menu.ui.in.in:565
 msgctxt "image-action"
 msgid "D_esaturate"
 msgstr "D_esasetu"
 
-#: menus/image-menu.ui.in.in:571
+#: menus/image-menu.ui.in.in:572
 msgctxt "image-action"
 msgid "_Map"
 msgstr "_Mapa"
 
-#: menus/image-menu.ui.in.in:582
+#: menus/image-menu.ui.in.in:583
 msgctxt "image-action"
 msgid "_Tone Mapping"
 msgstr "_Tonuen mapatzea"
 
-#: menus/image-menu.ui.in.in:589
+#: menus/image-menu.ui.in.in:590
 msgctxt "image-action"
 msgid "I_nfo"
 msgstr "I_nformazioa"
 
-#: menus/image-menu.ui.in.in:607
+#: menus/image-menu.ui.in.in:608
 msgctxt "tools-action"
 msgid "_Tools"
 msgstr "_Tresnak"
 
-#: menus/image-menu.ui.in.in:610
+#: menus/image-menu.ui.in.in:611
 msgctxt "tools-action"
 msgid "_Selection Tools"
 msgstr "_Hautapen-tresnak"
 
-#: menus/image-menu.ui.in.in:623
+#: menus/image-menu.ui.in.in:624
 msgctxt "tools-action"
 msgid "_Paint Tools"
 msgstr "_Margotze-tresnak"
 
-#: menus/image-menu.ui.in.in:640
+#: menus/image-menu.ui.in.in:641
 msgctxt "tools-action"
 msgid "_Transform Tools"
 msgstr "_Eraldatze-tresnak"
 
-#: menus/image-menu.ui.in.in:679
+#: menus/image-menu.ui.in.in:680
 msgctxt "filters-action"
 msgid "Filte_rs"
 msgstr "Ir_agazkiak"
 
-#: menus/image-menu.ui.in.in:684
+#: menus/image-menu.ui.in.in:685
 msgctxt "filters-action"
 msgid "Recently Used"
 msgstr "Azken aldian erabilia"
 
-#: menus/image-menu.ui.in.in:693
+#: menus/image-menu.ui.in.in:694
 msgctxt "filters-action"
 msgid "_Blur"
 msgstr "_Lausotu"
 
-#: menus/image-menu.ui.in.in:708
+#: menus/image-menu.ui.in.in:709
 msgctxt "filters-action"
 msgid "En_hance"
 msgstr "_Nabarmendu"
 
-#: menus/image-menu.ui.in.in:718
+#: menus/image-menu.ui.in.in:719
 msgctxt "filters-action"
 msgid "_Distorts"
 msgstr "_Desitxuratu"
 
-#: menus/image-menu.ui.in.in:737
+#: menus/image-menu.ui.in.in:738
 msgctxt "filters-action"
 msgid "_Light and Shadow"
 msgstr "_Argia eta itzala"
 
-#: menus/image-menu.ui.in.in:752
+#: menus/image-menu.ui.in.in:753
 msgctxt "filters-action"
 msgid "_Noise"
 msgstr "_Zarata"
 
-#: menus/image-menu.ui.in.in:762
+#: menus/image-menu.ui.in.in:763
 msgctxt "filters-action"
 msgid "Edge-De_tect"
 msgstr "Detektatu e_rtzak"
 
-#: menus/image-menu.ui.in.in:771
+#: menus/image-menu.ui.in.in:772
 msgctxt "filters-action"
 msgid "_Generic"
 msgstr "_Generikoa"
 
-#: menus/image-menu.ui.in.in:782
+#: menus/image-menu.ui.in.in:783
 msgctxt "filters-action"
 msgid "C_ombine"
 msgstr "Ko_nbinatu"
 
-#: menus/image-menu.ui.in.in:785
+#: menus/image-menu.ui.in.in:786
 msgctxt "filters-action"
 msgid "_Artistic"
 msgstr "A_rtistikoa"
 
-#: menus/image-menu.ui.in.in:797
+#: menus/image-menu.ui.in.in:798
 msgctxt "filters-action"
 msgid "_Decor"
 msgstr "_Dekorazioa"
 
-#: menus/image-menu.ui.in.in:800
+#: menus/image-menu.ui.in.in:801
 msgctxt "filters-action"
 msgid "_Map"
 msgstr "_Mapa"
 
-#: menus/image-menu.ui.in.in:812
+#: menus/image-menu.ui.in.in:813
 msgctxt "filters-action"
 msgid "_Render"
 msgstr "_Errendatu"
 
-#: menus/image-menu.ui.in.in:815
+#: menus/image-menu.ui.in.in:816
 msgctxt "filters-action"
 msgid "_Fractals"
 msgstr "_Fraktalak"
 
-#: menus/image-menu.ui.in.in:818
+#: menus/image-menu.ui.in.in:819
 msgctxt "filters-action"
 msgid "N_oise"
 msgstr "_Zarata"
 
-#: menus/image-menu.ui.in.in:826
+#: menus/image-menu.ui.in.in:827
 msgctxt "filters-action"
 msgid "_Pattern"
 msgstr "_Eredua"
 
-#: menus/image-menu.ui.in.in:839
+#: menus/image-menu.ui.in.in:840
 msgctxt "filters-action"
 msgid "_Web"
 msgstr "_Weba"
 
-#: menus/image-menu.ui.in.in:845
+#: menus/image-menu.ui.in.in:846
 msgctxt "filters-action"
 msgid "An_imation"
 msgstr "An_imazioa"
 
-#: menus/image-menu.ui.in.in:848
+#: menus/image-menu.ui.in.in:849
 msgctxt "filters-action"
 msgid "De_velopment"
 msgstr "_Garapena"
 
-#: menus/image-menu.ui.in.in:850
+#: menus/image-menu.ui.in.in:851
 msgctxt "filters-action"
 msgid "Plug-In _Examples"
 msgstr "Pluginen _adibideak"
 
-#: menus/image-menu.ui.in.in:853
+#: menus/image-menu.ui.in.in:854
 msgctxt "filters-action"
 msgid "_Python-Fu"
 msgstr "_Python-Fu"
 
-#: menus/image-menu.ui.in.in:856
+#: menus/image-menu.ui.in.in:857
 msgctxt "filters-action"
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: menus/image-menu.ui.in.in:863
+#: menus/image-menu.ui.in.in:864
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "_Leihoak"
 
-#: menus/image-menu.ui.in.in:866
+#: menus/image-menu.ui.in.in:867
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "Duela gutxi _itxitako atrakagarriak"
 
-#: menus/image-menu.ui.in.in:870
+#: menus/image-menu.ui.in.in:871
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "Elkarrizketa-koadro _atrakagaiak"
 
-#: menus/image-menu.ui.in.in:902
+#: menus/image-menu.ui.in.in:903
 msgctxt "help-action"
 msgid "_User Manual"
 msgstr "_Eskuliburua"
 
-#: menus/image-menu.ui.in.in:918
+#: menus/image-menu.ui.in.in:919
 msgctxt "help-action"
 msgid "_GIMP Online"
 msgstr "Lineako _GIMP"
@@ -28861,10 +29064,6 @@ msgstr "Desegite-historiaren menua"
 #~ msgctxt "undo-type"
 #~ msgid "Apply Canvas"
 #~ msgstr "Aplikatu oihala"
-
-#~ msgctxt "undo-type"
-#~ msgid "Apply Lens"
-#~ msgstr "Aplikatu leiarrak"
 
 #~ msgctxt "undo-type"
 #~ msgid "Stretch Contrast HSV"
