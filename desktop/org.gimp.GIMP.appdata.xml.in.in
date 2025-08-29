@@ -89,7 +89,8 @@
         less-destructive layers which are the key points of upcoming GIMP 3.2.
         </p>
         <ul>
-          <li demo="toolbox:path">
+          <li demo="toolbox:path,
+                    tool-options:create-new-vector-layer-button">
           New type of layers: vector layers.
           </li>
           <li>

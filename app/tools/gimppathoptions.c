@@ -27,6 +27,7 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 #include "tools-types.h"
 
@@ -574,6 +575,7 @@ gimp_path_options_gui (GimpToolOptions *tool_options)
   options->to_selection_button = button;
 
   button = gtk_button_new_with_label (_("Create New Vector Layer"));
+  gimp_widget_set_identifier (button, "create-new-vector-layer-button");
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_sensitive (button, FALSE);
   gimp_help_set_help_data (button, NULL, NULL);
