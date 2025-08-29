@@ -149,6 +149,7 @@ app/core/gimpdrawable-levels.c
 app/core/gimpdrawable-offset.c
 app/core/gimpdrawable-stroke.c
 app/core/gimpdrawable-transform.c
+app/core/gimpdrawablefilter.c
 app/core/gimpdrawablefiltermask.c
 app/core/gimpdynamicsoutput.c
 app/core/gimpfilloptions.c

@@ -443,9 +443,8 @@ gimp_filter_tool_initialize (GimpTool     *tool,
               if (gegl_node_has_pad (filter_tool->operation, "aux"))
                 disabled_reason = _("Disabled because this filter depends on another image.");
               else
-                /* TODO: localize when string freeze is over. */
-                disabled_reason = "Disabled because GEGL Graph is unsafe.\nFor development purpose, "
-                                  "set environment variable GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT.";
+                disabled_reason = _("Disabled because GEGL Graph is unsafe.\nFor development purpose, "
+                                    "set environment variable GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT.");
 
               tooltip = g_strdup_printf ("%s\n<i>%s</i>", g_param_spec_get_blurb (param_spec), disabled_reason);
               gimp_help_set_help_data_with_markup (toggle, tooltip, NULL);

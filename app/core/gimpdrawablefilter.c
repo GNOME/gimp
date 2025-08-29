@@ -56,6 +56,8 @@
 #include "gimplist.h"
 #include "gimpprogress.h"
 
+#include "gimp-intl.h"
+
 
 enum
 {
@@ -954,9 +956,8 @@ gimp_drawable_filter_update (GimpDrawableFilter      *filter,
            * directly with bad data.
            */
           g_set_error (error, GIMP_ERROR, GIMP_FAILED,
-                       /* TODO: localize after string freeze. */
-                       "GEGL operation '%s' has been called with a "
-                       "non-existent argument name '%s' (#%d).",
+                       _("GEGL operation '%s' has been called with a "
+                         "non-existent argument name '%s' (#%d)."),
                        opname, pspec->name, i);
           break;
         }
@@ -1019,10 +1020,9 @@ gimp_drawable_filter_update (GimpDrawableFilter      *filter,
           else if (! G_TYPE_CHECK_VALUE_TYPE (new_value, G_PARAM_SPEC_VALUE_TYPE (pspec)))
             {
               g_set_error (error, GIMP_ERROR, GIMP_FAILED,
-                           /* TODO: localize after string freeze. */
-                           "GEGL operation '%s' has been called with a "
-                           "wrong value type for argument '%s' (#%d). "
-                           "Expected %s, got %s.",
+                           _("GEGL operation '%s' has been called with a "
+                             "wrong value type for argument '%s' (#%d). "
+                             "Expected %s, got %s."),
                            opname, pspec->name, i,
                            g_type_name (pspec->value_type),
                            g_type_name (G_VALUE_TYPE (new_value)));
@@ -1095,9 +1095,8 @@ gimp_drawable_filter_update (GimpDrawableFilter      *filter,
           if (! gegl_node_has_pad (node, auxinputnames[i]))
             {
               g_set_error (error, GIMP_ERROR, GIMP_FAILED,
-                           /* TODO: localize after string freeze. */
-                           "GEGL operation '%s' has been called with an "
-                           "invalid aux input name '%s'.",
+                           _("GEGL operation '%s' has been called with an "
+                             "invalid aux input name '%s'."),
                            opname, auxinputnames[i]);
               break;
             }

@@ -224,18 +224,14 @@ gimp_user_install_run (GimpUserInstall *install,
 
   if (install->migrate)
     {
-      gchar *verstring;
-
-      /* TODO: these 2 strings should be merged into one, but it was not
-       * possible to do it at implementation time, in order not to break
-       * string freeze.
-       */
-      verstring = g_strdup_printf ("%d.%d", install->old_major, install->old_minor);
       user_install_log (install,
-                        _("It seems you have used GIMP %s before.  "
+                        /* TRANSLATORS: the %d.%d replacement strings
+                         * will be a series version (e.g. 2.10). The %s
+                         * replacement will be a directory.
+                         */
+                        _("It seems you have used GIMP %d.%d before.  "
                           "GIMP will now migrate your user settings to '%s'."),
-                        verstring, dirname);
-      g_free (verstring);
+                        install->old_major, install->old_minor, dirname);
     }
   else
     {

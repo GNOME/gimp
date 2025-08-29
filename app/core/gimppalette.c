@@ -496,11 +496,7 @@ gimp_palette_restrict_format (GimpPalette *palette,
 
   if (push_undo_if_image && gimp_data_get_image (GIMP_DATA (palette)))
     gimp_image_undo_push_image_colormap (gimp_data_get_image (GIMP_DATA (palette)),
-                                         /* TODO: use localized string
-                                          * after string freeze.
-                                          */
-                                         /*C_("undo-type", "Change Colormap format restriction"));*/
-                                         "Change Colormap format restriction");
+                                         C_("undo-type", "Change Colormap format restriction"));
   palette->format = format;
 
   if (palette->format == NULL)
