@@ -4,6 +4,7 @@ import sys
 image     = Gimp.get_images()[0]
 procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
 config    = procedure.create_config()
+image.undo_disable()
 image.flatten()
 
 if image.get_width() > 1920 or image.get_height() > 1080:

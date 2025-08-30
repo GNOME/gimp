@@ -11,6 +11,7 @@ config    = procedure.create_config()
 
 def export_scaled_img(image, target_height, export_path):
   img    = image.duplicate()
+  img.undo_disable()
   layer  = img.flatten()
   width  = layer.get_width()
   height = layer.get_height()
@@ -29,6 +30,7 @@ def export_scaled_img(image, target_height, export_path):
 # See https://gitlab.gnome.org/GNOME/gimp-data/-/issues/5
 def export_blurred_img(image, target_height, export_path):
   img    = image.duplicate()
+  img.undo_disable()
   layer  = img.flatten()
   width  = layer.get_width()
   height = layer.get_height()
@@ -59,6 +61,7 @@ def export_blurred_img(image, target_height, export_path):
 
 def export_cropped_img(image, target_width, target_height, export_path):
   img        = image.duplicate()
+  img.undo_disable()
   w          = img.get_width()
   h          = img.get_height()
   img.flatten()
@@ -78,6 +81,8 @@ def export_cropped_img(image, target_width, target_height, export_path):
     sys.exit(70)
   img.delete()
 
+
+image.undo_disable()
 
 # Safe (taller than necessary) heights derived from: https://jrsoftware.org/ishelp/index.php?topic=setup_wizardimagefile
 export_scaled_img(image, 314, 'build/windows/installer/installsplash_top.scale-100.bmp')
