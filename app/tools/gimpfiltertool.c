@@ -57,12 +57,15 @@
 #include "core/gimpimage-undo-push.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
+#include "core/gimplinklayer.h"
 #include "core/gimplist.h"
 #include "core/gimppickable.h"
 #include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
 #include "core/gimpsettings.h"
 #include "core/gimptoolinfo.h"
+
+#include "path/gimpvectorlayer.h"
 
 #include "widgets/gimplayermodebox.h"
 #include "widgets/gimppropwidgets.h"
@@ -422,14 +425,17 @@ gimp_filter_tool_initialize (GimpTool     *tool,
 
           /* TODO: Once we can serialize GimpDrawable, remove so that filters with
            * aux nodes can be non-destructive */
-          if (gegl_node_has_pad (filter_tool->operation, "aux") ||
+          if (gegl_node_has_pad (filter_tool->operation, "aux")         ||
               (g_strcmp0 (operation_name, "gegl:gegl") == 0 &&
-               g_getenv ("GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT") == NULL))
+               g_getenv ("GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT") == NULL) ||
+              gimp_item_is_vector_layer (GIMP_ITEM (drawable))          ||
+              gimp_item_is_link_layer (GIMP_ITEM (drawable)))
             {
               GParamSpec  *param_spec;
               GObject     *obj = G_OBJECT (tool_info->tool_options);
               gchar       *tooltip;
               const gchar *disabled_reason;
+              gboolean     show_merge;
 
               param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (obj),
                                                          "merge-filter");
@@ -437,11 +443,17 @@ gimp_filter_tool_initialize (GimpTool     *tool,
               toggle =
                 gtk_check_button_new_with_mnemonic (g_param_spec_get_nick (param_spec));
 
-              gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), TRUE);
+              show_merge = (! gimp_item_is_vector_layer (GIMP_ITEM (drawable)) &&
+                            ! gimp_item_is_link_layer (GIMP_ITEM (drawable)));
+              gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), show_merge);
               gtk_widget_set_sensitive (toggle, FALSE);
 
               if (gegl_node_has_pad (filter_tool->operation, "aux"))
                 disabled_reason = _("Disabled because this filter depends on another image.");
+              else if (gimp_item_is_vector_layer (GIMP_ITEM (drawable)))
+                disabled_reason = _("Disabled because filters cannot be merged on vector layers.");
+              else if (gimp_item_is_link_layer (GIMP_ITEM (drawable)))
+                disabled_reason = _("Disabled because filters cannot be merged on link layers.");
               else
                 disabled_reason = _("Disabled because GEGL Graph is unsafe.\nFor development purpose, "
                                     "set environment variable GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT.");
@@ -586,8 +598,10 @@ gimp_filter_tool_control (GimpTool       *tool,
           g_free (operation_name);
         }
 
-      /* Ensure that filters applied to group layers are non-destructive */
-      if (GIMP_IS_GROUP_LAYER (drawable))
+      /* Ensure that filters applied to group, vector or link layers are non-destructive */
+      if (GIMP_IS_GROUP_LAYER (drawable)                   ||
+          gimp_item_is_vector_layer (GIMP_ITEM (drawable)) ||
+          gimp_item_is_link_layer (GIMP_ITEM (drawable)))
         non_destructive = TRUE;
 
       gimp_filter_tool_commit (filter_tool, non_destructive);
@@ -1552,6 +1566,9 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
   merge_filter = options->merge_filter;
   if (gegl_node_has_pad (filter_tool->operation, "aux"))
     merge_filter = TRUE;
+  else if (gimp_item_is_vector_layer (GIMP_ITEM (drawable)) ||
+           gimp_item_is_link_layer (GIMP_ITEM (drawable)))
+    merge_filter = FALSE;
 
   g_object_set (filter_tool->filter,
                 "to-be-merged", merge_filter,

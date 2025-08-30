@@ -931,6 +931,15 @@ gimp_link_layer_set_transform (GimpLinkLayer         *layer,
   return rendered;
 }
 
+gboolean
+gimp_item_is_link_layer (GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  return (GIMP_IS_LINK_LAYER (item) &&
+          gimp_link_layer_is_monitored (GIMP_LINK_LAYER (item)));
+}
+
 void
 gimp_link_layer_set_xcf_flags (GimpLinkLayer *layer,
                                guint32        flags)
