@@ -2221,6 +2221,7 @@ xcf_load_layer_props (XcfInfo    *info,
                                     "gimp-vector-layer-data", data,
                                     (GDestroyNotify) xcf_load_free_vector_data);
           }
+          break;
 
         case PROP_LINK_LAYER:
             {
