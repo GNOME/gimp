@@ -754,6 +754,7 @@ filters_actions_setup (GimpActionGroup *group)
   GimpProcedureActionEntry *entries;
   gint                      n_entries;
   gint                      i;
+  GList                    *actions;
   GList                    *op_classes;
   GList                    *iter;
   GStrvBuilder             *gegl_actions;
@@ -874,6 +875,40 @@ filters_actions_setup (GimpActionGroup *group)
                           (GDestroyNotify) g_strfreev);
   g_strv_builder_unref (gegl_actions);
   g_list_free (op_classes);
+
+  /* Identify all filters based on operations with an auxiliary pad in
+   * setup because of slowness on Windows. See #14781.
+   */
+  actions = gimp_action_group_list_actions (group);
+  for (iter = actions; iter; iter = iter->next)
+    {
+      GimpAction  *action = iter->data;
+      const gchar *action_name;
+
+      action_name = gimp_action_get_name (action);
+
+      if (! filters_is_non_interactive (action_name) && GIMP_IS_STRING_ACTION (action))
+        {
+          const gchar *opname;
+
+          opname = GIMP_STRING_ACTION (action)->value;
+
+          if (opname != NULL && g_strcmp0 (opname, "gegl:gegl") != 0 && gegl_has_operation (opname))
+            {
+              GeglNode *node = gegl_node_new ();
+
+              gegl_node_set (node,
+                             "operation", opname,
+                             NULL);
+
+              if (gegl_node_has_pad (node, "aux"))
+                g_object_set_data (G_OBJECT (action), "filters-action-has-pad", GINT_TO_POINTER (TRUE));
+
+              g_clear_object (&node);
+            }
+        }
+    }
+  g_list_free (actions);
 
   gimp_action_group_add_enum_actions (group, "filters-action",
                                       filters_repeat_actions,
@@ -1006,22 +1041,12 @@ filters_actions_update (GimpActionGroup *group,
               gboolean sensitive = writable;
 
               if (sensitive && force_nde)
-                {
-                  GeglNode *node = gegl_node_new ();
-
-                  gegl_node_set (node,
-                                 "operation", opname,
-                                 NULL);
-
-                  /* Operations with auxiliary inputs can only be
-                   * applied destructively. Therefore they must be
-                   * deactivated on types of layers where filters can
-                   * only be applied non-destructively.
-                   */
-                  sensitive = (! gegl_node_has_pad (node, "aux"));
-
-                  g_clear_object (&node);
-                }
+                /* Operations with auxiliary inputs can only be applied
+                 * destructively. Therefore they must be deactivated on
+                 * types of layers where filters can only be applied
+                 * non-destructively.
+                 */
+                sensitive = ! GPOINTER_TO_INT (g_object_get_data (G_OBJECT (action), "filters-action-has-pad"));
 
               SET_SENSITIVE (gimp_action_get_name (action), sensitive);
             }
