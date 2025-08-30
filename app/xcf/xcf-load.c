@@ -2224,51 +2224,62 @@ xcf_load_layer_props (XcfInfo    *info,
 
         case PROP_LINK_LAYER:
             {
-              GimpLink *link;
-              GFile    *folder;
-              gchar    *path;
-              guint32   flags;
-              GList    *selected;
-              GList    *linked;
-              gboolean  floating;
-              guint32   dimensions[2];
-
-              selected = g_list_find (info->selected_layers, *layer);
-              linked   = g_list_find (info->linked_layers, *layer);
-              floating = (info->floating_sel == *layer);
+              gchar   *path;
+              guint32  flags;
+              guint32  dimensions[2];
 
               xcf_read_int32 (info, &flags, 1);
               xcf_read_string (info, &path, 1);
               xcf_read_int32 (info, dimensions, 2);
 
-              folder = g_file_get_parent (info->file);
-              link   = gimp_link_new (info->gimp, g_file_resolve_relative_path (folder, path),
-                                      (gint) dimensions[0], (gint) dimensions[1],
-                                      FALSE, NULL, NULL);
-
-              *layer = gimp_layer_from_layer (*layer, GIMP_TYPE_LINK_LAYER,
-                                              "image", image,
-                                              NULL);
-
-              gimp_link_layer_set_link (GIMP_LINK_LAYER (*layer), link, FALSE);
-              gimp_link_layer_set_xcf_flags (GIMP_LINK_LAYER (*layer), flags);
-
-              if (selected)
+              if (path == NULL)
                 {
-                  info->selected_layers = g_list_delete_link (info->selected_layers, selected);
-                  info->selected_layers = g_list_prepend (info->selected_layers, *layer);
+                  gimp_message (info->gimp, G_OBJECT (info->progress),
+                                GIMP_MESSAGE_WARNING,
+                                "XCF Warning: invalid link in XCF file. "
+                                "The link layer \"%s\" is downgraded to a raster layer.",
+                                gimp_object_get_name (*layer));
                 }
-              if (linked)
+              else
                 {
-                  info->linked_layers = g_list_delete_link (info->linked_layers, linked);
-                  info->linked_layers = g_list_prepend (info->linked_layers, *layer);
-                }
-              if (floating)
-                info->floating_sel = *layer;
+                  GimpLink *link;
+                  GFile    *folder;
+                  GList    *selected;
+                  GList    *linked;
+                  gboolean  floating;
 
-              g_object_unref (link);
-              g_object_unref (folder);
-              g_free (path);
+                  selected = g_list_find (info->selected_layers, *layer);
+                  linked   = g_list_find (info->linked_layers, *layer);
+                  floating = (info->floating_sel == *layer);
+
+                  folder = g_file_get_parent (info->file);
+                  link   = gimp_link_new (info->gimp, g_file_resolve_relative_path (folder, path),
+                                          (gint) dimensions[0], (gint) dimensions[1],
+                                          FALSE, NULL, NULL);
+                  *layer = gimp_layer_from_layer (*layer, GIMP_TYPE_LINK_LAYER,
+                                                  "image", image,
+                                                  NULL);
+
+                  gimp_link_layer_set_link (GIMP_LINK_LAYER (*layer), link, FALSE);
+                  gimp_link_layer_set_xcf_flags (GIMP_LINK_LAYER (*layer), flags);
+
+                  if (selected)
+                    {
+                      info->selected_layers = g_list_delete_link (info->selected_layers, selected);
+                      info->selected_layers = g_list_prepend (info->selected_layers, *layer);
+                    }
+                  if (linked)
+                    {
+                      info->linked_layers = g_list_delete_link (info->linked_layers, linked);
+                      info->linked_layers = g_list_prepend (info->linked_layers, *layer);
+                    }
+                  if (floating)
+                    info->floating_sel = *layer;
+
+                  g_object_unref (link);
+                  g_object_unref (folder);
+                  g_free (path);
+                }
             }
           break;
 
