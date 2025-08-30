@@ -448,6 +448,13 @@
                         "stable-only": true,
                         "url-template": "https://github.com/mypaint/mypaint-brushes/releases/download/v$version/mypaint-brushes-$version.tar.xz"
                     }
+                },
+                {
+                    "//": "https://gitlab.gnome.org/GNOME/gimp/-/issues/14461",
+                    "type": "patch",
+                    "paths": [
+                        "patches/0001-change-surfacemap-inputs.patch"
+                    ]
                 }
             ]
         },
