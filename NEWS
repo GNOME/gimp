@@ -57,6 +57,9 @@ Tools:
   - The Paths tool has updated UI to create vector layers.
   - Text tool: bold, italic and underline can now be applied with
     commonly used shortcuts (Ctrl+b, i and u respectively).
+  - Vector and Link layers cannot be painted on, and filters cannot be
+    merged on them. They now need to be explicitly downgraded to raster
+    layers.
 
 Graphical User Interface:
 
@@ -105,6 +108,10 @@ Plug-Ins:
       implemented and removed in 2004).
   - Raw Image data plug-in dialog redesigned to be on a two-column
     layout to avoid over-high dialog.
+  - Print: in sandboxed environments (Flatpak, Snap), the print Settings
+    are now displayed as a second dialog after the portal print dialog.
+    This 2-step workflow is a work-around to the inability to tweak the
+    print dialog when the print portal is in use.
 
 API:
 
