@@ -28,6 +28,7 @@
 #include <gegl.h>
 #include <gio/gio.h>
 
+#include "libgimpbase/gimpversion-private.h"
 #include "libgimpmath/gimpmath.h"
 
 #include "gimpbasetypes.h"
@@ -41,9 +42,7 @@
 #include "libgimp/libgimp-intl.h"
 
 
-#if GIMP_CHECK_VERSION(3, 99, 0)
-#warning libgimpbase/gimpmetadata.h: rename GIMP_METADATA_SAVE_UPDATE as GIMP_METADATA_UPDATE?
-#endif
+GIMP_WARNING_API_BREAK("libgimpbase/gimpmetadata.h: rename GIMP_METADATA_SAVE_UPDATE as GIMP_METADATA_UPDATE?")
 
 /**
  * SECTION: gimpmetadata

@@ -41,6 +41,7 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include "libgimpbase/gimpversion-private.h"
 #include "libgimp/stdplugins-intl.h"
 
 
@@ -1036,6 +1037,7 @@ compose (const gchar         *compose_type,
         }
     }
 
+  GIMP_WARNING_API_BREAK("Update 'decompose-type' choices? See discussion in MR !2424.")
   /* TODO: The strings used in decompose.c's "decompose-type" do not match
    * the values of compose_type for YCbCr values. We'll need to wait until
    * the next API break to fix. For now, we can do additional checks if the
