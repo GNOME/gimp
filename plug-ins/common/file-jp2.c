@@ -1716,14 +1716,16 @@ export_image (GFile          *file,
                 "quality",         &quality,
                 "ict",             &ict,
                 "resolution",      &resolution,
-                "gimp-comment",    &comment,
 #if ((OPJ_VERSION_MAJOR == 2 && OPJ_VERSION_MINOR == 5 && OPJ_VERSION_BUILD >= 3) || \
      (OPJ_VERSION_MAJOR == 2 && OPJ_VERSION_MINOR > 5) || OPJ_VERSION_MAJOR > 2)
                 "cmyk",            &cmyk,
 #endif
                 NULL);
   if (! strcmp (gimp_procedure_get_name (procedure), EXPORT_JP2_PROC))
-    g_object_get (config, "include-comment", &save_comment, NULL);
+    g_object_get (config,
+                  "include-comment", &save_comment,
+                  "gimp-comment",    &comment,
+                  NULL);
   else
     save_comment = FALSE;
 
