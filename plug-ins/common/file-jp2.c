@@ -471,8 +471,6 @@ jp2_create_procedure (GimpPlugIn  *plug_in,
                                            FALSE,
                                            G_PARAM_READWRITE);
 #endif
-
-      gimp_export_procedure_set_support_comment (GIMP_EXPORT_PROCEDURE (procedure), TRUE);
     }
 
   return procedure;
@@ -1718,13 +1716,17 @@ export_image (GFile          *file,
                 "quality",         &quality,
                 "ict",             &ict,
                 "resolution",      &resolution,
-                "include-comment", &save_comment,
                 "gimp-comment",    &comment,
 #if ((OPJ_VERSION_MAJOR == 2 && OPJ_VERSION_MINOR == 5 && OPJ_VERSION_BUILD >= 3) || \
      (OPJ_VERSION_MAJOR == 2 && OPJ_VERSION_MINOR > 5) || OPJ_VERSION_MAJOR > 2)
                 "cmyk",            &cmyk,
 #endif
                 NULL);
+  if (! strcmp (gimp_procedure_get_name (procedure), EXPORT_JP2_PROC))
+    g_object_get (config, "include-comment", &save_comment, NULL);
+  else
+    save_comment = FALSE;
+
   compliance =
     gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
                                          "compliance");
