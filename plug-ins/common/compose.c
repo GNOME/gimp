@@ -762,17 +762,17 @@ compose_run (GimpProcedure        *procedure,
         }
     }
 
-    if (strcmp (name, RECOMPOSE_PROC) != 0)
-      {
-        compose_idx = gimp_procedure_config_get_choice_id (config, "compose-type");
+  if (strcmp (name, RECOMPOSE_PROC) != 0)
+    {
+      compose_idx = gimp_procedure_config_get_choice_id (config, "compose-type");
 
-        if (compose_idx >= 0 && compose_idx < G_N_ELEMENTS (compose_dsc))
-          {
-            g_strlcpy (composevals.compose_type,
-                       compose_dsc[compose_idx].compose_type,
-                       sizeof (composevals.compose_type));
-          }
-      }
+      if (compose_idx >= 0 && compose_idx < G_N_ELEMENTS (compose_dsc))
+        {
+          g_strlcpy (composevals.compose_type,
+                     compose_dsc[compose_idx].compose_type,
+                     sizeof (composevals.compose_type));
+        }
+    }
 
   gimp_progress_init (_("Composing"));
 
@@ -1034,6 +1034,22 @@ compose (const gchar         *compose_type,
           compose_idx = j;
           break;
         }
+    }
+
+  /* TODO: The strings used in decompose.c's "decompose-type" do not match
+   * the values of compose_type for YCbCr values. We'll need to wait until
+   * the next API break to fix. For now, we can do additional checks if the
+   * loop above fails when called for Recompose. */
+  if (compose_idx < 0)
+    {
+      if (g_ascii_strcasecmp (compose_type, "ycbcr470f") == 0)
+        compose_idx = 9;
+      else if (g_ascii_strcasecmp (compose_type, "ycbcr709f") == 0)
+        compose_idx = 10;
+      else if (g_ascii_strcasecmp (compose_type, "ycbcr470") == 0)
+        compose_idx = 7;
+      else if (g_ascii_strcasecmp (compose_type, "ycbcr709") == 0)
+        compose_idx = 8;
     }
 
   if (compose_idx < 0)
