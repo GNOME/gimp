@@ -81,9 +81,10 @@ workflow:
       - 'scheduler_failure'
   needs: []
   # Default Docker image (keep variables: DEB_VERSION: consistent with devel-docs/os-support.txt)
-  image: debian:${DEB_VERSION}
+  image: $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}
   variables:
     DEB_VERSION: "bookworm"
+    RUNNER: "x86_64_v3"
     # Common cloning procedure
     GIT_DEPTH: "1"
     GIT_SUBMODULE_STRATEGY: none
@@ -114,7 +115,6 @@ stages:
       - RUNNER: [aarch64, x86_64_v3]
   tags:
     - $RUNNER
-  image: $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}
   variables:
     CC: "clang"
     CXX: "clang++"
