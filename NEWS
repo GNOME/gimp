@@ -125,6 +125,15 @@ API:
     * gimp_context_get_paint_fade_repeat()
     * gimp_context_set_paint_fade_length()
     * gimp_context_set_paint_fade_repeat()
+    * gimp_item_id_is_vector_layer()
+    * gimp_param_spec_vector_layer()
+    * gimp_procedure_add_vector_layer_argument()
+    * gimp_procedure_add_vector_layer_aux_argument()
+    * gimp_procedure_add_vector_layer_return_value()
+    * gimp_vector_layer_discard()
+    * gimp_vector_layer_get_by_id()
+    * gimp_vector_layer_new()
+    * gimp_vector_layer_refresh()
   - GimpSizeEntry (libgimpwidget) can now parse mathematical expressions
     in their reference value spin buttons too.
   - GimpColorScales (libgimpwidget) will now set its decimals to 0 when
