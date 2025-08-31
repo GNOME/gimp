@@ -233,14 +233,14 @@ $sha256 = (Get-FileHash $INSTALLER -Algorithm SHA256 | Select-Object -ExpandProp
 Write-Output "(INFO): $INSTALLER SHA-256: $sha256"
 if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)
   {
-    [System.IO.File]::WriteAllText("$GIMP_BASE\$INSTALLER.SHA256SUMS", "$sha256 *$INSTALLER", $Utf8NoBomEncoding)
+    [System.IO.File]::WriteAllText("$PWD\$INSTALLER.SHA256SUMS", "$sha256 *$INSTALLER", $Utf8NoBomEncoding)
     #Set-Content $INSTALLER.SHA256SUMS "$sha256 *$INSTALLER" -Encoding utf8NoBOM -NoNewline
   }
 $sha512 = (Get-FileHash $INSTALLER -Algorithm SHA512 | Select-Object -ExpandProperty Hash).ToLower()
 Write-Output "(INFO): $INSTALLER SHA-512: $sha512"
 if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)
   {
-    [System.IO.File]::WriteAllText("$GIMP_BASE\$INSTALLER.SHA512SUMS", "$sha512 *$INSTALLER", $Utf8NoBomEncoding)
+    [System.IO.File]::WriteAllText("$PWD\$INSTALLER.SHA512SUMS", "$sha512 *$INSTALLER", $Utf8NoBomEncoding)
     #Set-Content $INSTALLER.SHA512SUMS "$sha512 *$INSTALLER" -Encoding utf8NoBOM -NoNewline
   }
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_trust$([char]13)$([char]27)[0K"
