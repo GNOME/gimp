@@ -14,6 +14,7 @@ def export_scaled_img(img_width, img_height, scale):
     sys.exit(70)
 
   image = v.index(1)
+  image.undo_disable()
   image.resize(img_width, img_height, (img_width-logo_dim)/2, (img_height-logo_dim)/2)
   white = Gegl.Color.new("white")
   Gimp.context_set_background(white)

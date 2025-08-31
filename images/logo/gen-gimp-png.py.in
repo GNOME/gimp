@@ -27,6 +27,7 @@ def export_relative_img(scale):
     sys.exit(70)
 
   image = v.index(1)
+  image.undo_disable()
 
   # Create tile
   if '@TILE_WIDTH@' != 'none':
@@ -67,6 +68,7 @@ def export_absolute_img(size):
     sys.exit(70)
 
   image = v.index(1)
+  image.undo_disable()
 
   if size == 44:
     procedure = Gimp.get_pdb().lookup_procedure("file-png-export")

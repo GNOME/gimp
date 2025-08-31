@@ -22,6 +22,7 @@ sizes.sort()
 
 image_size = max(sizes)
 image = Gimp.Image.new(image_size, image_size, Gimp.ImageBaseType.RGB)
+image.undo_disable()
 
 for size in sizes:
   procedure   = Gimp.get_pdb().lookup_procedure("file-svg-load")

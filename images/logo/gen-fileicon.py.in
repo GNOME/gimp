@@ -18,6 +18,7 @@ def export_img(sizes, type='none', type_param='none'):
             scale = type_param        
         image_size = max(sizes) * scale / 100
         image = Gimp.Image.new(image_size, image_size, Gimp.ImageBaseType.RGB)
+        image.undo_disable()
 
         sizes.sort()
         for size in sizes:

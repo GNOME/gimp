@@ -17,6 +17,7 @@ v = Gimp.Procedure.run(procedure, config)
 if v.index(0) != Gimp.PDBStatusType.SUCCESS:
   sys.exit(70)
 image = v.index(1)
+image.undo_disable()
 
 # 2. Loading Wilber.
 procedure = Gimp.get_pdb().lookup_procedure("file-svg-load")
