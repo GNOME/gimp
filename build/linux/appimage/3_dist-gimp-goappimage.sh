@@ -344,6 +344,9 @@ bund_usr "$UNIX_PREFIX" "share/libthai"
 conf_app LIBTHAI_DICTDIR "share/libthai"
 ### Needed for full CJK and Cyrillic support in file-pdf
 bund_usr "$UNIX_PREFIX" "share/poppler"
+### Needed for file-ps work. See: #14785
+bund_usr "$UNIX_PREFIX" "share/ghostscript/*/Resource/Init"
+conf_app GS_LIB "share/ghostscript/10*/Resource/Init"
 ### file-wmf support
 bund_usr "$UNIX_PREFIX" "share/fonts/type1/urw-base35/Nimbus*" --dest "share/libwmf/fonts"
 bund_usr "$UNIX_PREFIX" "share/fonts/type1/urw-base35/StandardSymbols*" --dest "share/libwmf/fonts"
