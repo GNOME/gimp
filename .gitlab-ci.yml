@@ -142,15 +142,16 @@ deps-debian:
   extends: .debian
   stage: dependencies
   image:
-    name: gcr.io/kaniko-project/executor:debug
+    name: moby/buildkit:rootless
     entrypoint: [""]
   variables:
+    BUILDKITD_FLAGS: --oci-worker-no-process-sandbox
     GIT_STRATEGY: none
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   script:
     - export container=docker
-    - mkdir -p /kaniko/.docker
-    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - mkdir -p ~/.docker
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > ~/.docker/config.json
     # Install deps
     - echo "FROM debian:${DEB_VERSION}" > Dockerfile
     - echo "WORKDIR $CI_PROJECT_DIR" >> Dockerfile
@@ -248,8 +249,8 @@ deps-debian:
     - echo "RUN ninja -C gegl/_build-${RUNNER}" >> Dockerfile2;
     - echo "RUN ninja -C gegl/_build-${RUNNER} install" >> Dockerfile2;
     - echo "RUN printf \"\e[0Ksection_end:`date +%s`:gegl_build\r\e[0K\n\"" >> Dockerfile2;
-    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER} --cache=true --cache-ttl=120h --image-fs-extract-retry 1 --verbosity=warn
-    - if [ -f 'Dockerfile2' ]; then /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile2 --destination build-debian-${DEB_VERSION}-${RUNNER}-temp --cache=false --no-push --verbosity=warn; fi
+    - buildctl-daemonless.sh build --frontend dockerfile.v0 --local context=$CI_PROJECT_DIR --local dockerfile=. --output type=image,"name=$CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}",push=true --export-cache type=registry,ref=$CI_REGISTRY_IMAGE/cache,mode=max,compression=gzip,push=true
+    - rm Dockerfile; mv Dockerfile2 Dockerfile; then buildctl-daemonless.sh build --frontend dockerfile.v0 --local context=$CI_PROJECT_DIR --local dockerfile=Dockerfile2 --output type=tar,dest=- | docker load; fi
   artifacts:
     paths:
       - _install-${RUNNER}/
