@@ -21,6 +21,8 @@
 
 #include <libgimp/gimp.h>
 
+#include "libgimpbase/gimpversion-private.h"
+
 #include "libscriptfu/script-fu-lib.h"
 #include "libscriptfu/script-fu-intl.h"
 
