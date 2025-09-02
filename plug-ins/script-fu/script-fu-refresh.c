@@ -26,6 +26,8 @@
 
 #include "script-fu-refresh.h"
 
+GIMP_WARNING_API_BREAK("Reminder that we should probably get rid of Script-fu scripts in favor or proper Script-fu plug-ins, "
+                       "port good scripts and get rid of obsolete ones (such as Refresh Scripts).")
 
 /* The "Refresh Scripts" menu item is not in v3.
  *
