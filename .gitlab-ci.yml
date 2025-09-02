@@ -809,6 +809,7 @@ dist-appimage-weekly:
 include:
   project: GNOME/citemplates
   file: flatpak/flatpak_ci_initiative.yml
+  ref: 42fbc2526a7680b6a4f284a210e63e3973ea6dae
 
 dist-flatpak-weekly:
   extends:
