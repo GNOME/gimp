@@ -52,8 +52,13 @@ fi
 prev_date=`git log -1 --format=%ci $PREV`
 cur_date=`git log -1 --format=%ci $CUR`
 
-IFS=_ read -r gimp prevmajor prevminor prevmicro <<<"$1"
-IFS=_ read -r gimp major minor micro <<<"$2"
+prevmajor=$(echo "$1" | cut -d'_' -f2)
+prevminor=$(echo "$1" | cut -d'_' -f3)
+prevmicro=$(echo "$1" | cut -d'_' -f4)
+
+major=$(echo "$2" | cut -d'_' -f2)
+minor=$(echo "$2" | cut -d'_' -f3)
+micro=$(echo "$2" | cut -d'_' -f4)
 
 get_latest_from_meson()
 {
