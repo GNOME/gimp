@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # release-stats.sh
 # Copyright (C) 2018-2025 Jehan
 #
@@ -86,7 +86,7 @@ count_contributors()
   if [ -n "$contributors" ]; then
     contributors=`echo "$contributors" | cut -f2`
     n_contributors=`echo "$contributors" | wc -l`
-    contributors_list="${contributors//$'\n'/, }"
+    contributors_list=`echo "$contributors" | paste -s -d, | sed 's/,/, /g'`
 
     printf "* $text" "$n_contributors" "$contributors_list."
     echo
@@ -103,7 +103,7 @@ count_data_contributors()
   if [ -n "$contributors" ]; then
     contributors=`echo "$contributors" | cut -f2`
     n_contributors=`echo "$contributors" | wc -l`
-    contributors_list="${contributors//$'\n'/, }"
+    contributors_list=`echo "$contributors" | paste -s -d, | sed 's/,/, /g'`
 
     printf "  - $text" "$n_contributors" "$contributors_list."
     echo
@@ -130,7 +130,7 @@ count_repo_contributors()
   if [ -n "$contributors" ]; then
     contributors=`echo "$contributors" | cut -f2`
     n_contributors=`echo "$contributors" | wc -l`
-    contributors_list="${contributors//$'\n'/, }"
+    contributors_list=`echo "$contributors" | paste -s -d, | sed 's/,/, /g'`
 
     if [ -z "$cur_tag" ]; then
       n_commits=`git --no-pager log --oneline --since="$prev_date" --until="$cur_date" origin/$branch | wc -l`
