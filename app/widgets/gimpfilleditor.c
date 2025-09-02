@@ -48,16 +48,24 @@ enum
 };
 
 
-static void   gimp_fill_editor_constructed  (GObject      *object);
-static void   gimp_fill_editor_finalize     (GObject      *object);
-static void   gimp_fill_editor_set_property (GObject      *object,
-                                             guint         property_id,
-                                             const GValue *value,
-                                             GParamSpec   *pspec);
-static void   gimp_fill_editor_get_property (GObject      *object,
-                                             guint         property_id,
-                                             GValue       *value,
-                                             GParamSpec   *pspec);
+static void   gimp_fill_editor_constructed  (GObject             *object);
+static void   gimp_fill_editor_finalize     (GObject             *object);
+static void   gimp_fill_editor_set_property (GObject             *object,
+                                             guint                property_id,
+                                             const GValue        *value,
+                                             GParamSpec          *pspec);
+static void   gimp_fill_editor_get_property (GObject             *object,
+                                             guint                property_id,
+                                             GValue              *value,
+                                             GParamSpec          *pspec);
+
+static void   gimp_fill_editor_color_button_clicked
+                                            (GimpColorPanel      *panel,
+                                             GimpFillEditor      *editor);
+static void   gimp_fill_editor_color_button_response
+                                            (GimpColorPanel      *panel,
+                                             GimpColorDialogState state,
+                                             GimpFillEditor      *editor);
 
 
 G_DEFINE_TYPE (GimpFillEditor, gimp_fill_editor, GTK_TYPE_BOX)
@@ -142,6 +150,13 @@ gimp_fill_editor_constructed (GObject *object)
                                         GIMP_CONTEXT (editor->options));
           gimp_enum_radio_box_add (GTK_BOX (box), color_button,
                                    GIMP_CUSTOM_STYLE_SOLID_COLOR, FALSE);
+
+          g_signal_connect_object (GIMP_COLOR_PANEL (color_button), "clicked",
+                                   G_CALLBACK (gimp_fill_editor_color_button_clicked),
+                                   editor, 0);
+          g_signal_connect_object (GIMP_COLOR_PANEL (color_button), "response",
+                                   G_CALLBACK (gimp_fill_editor_color_button_response),
+                                   editor, 0);
         }
       else
         {
@@ -264,4 +279,31 @@ gimp_fill_editor_new (GimpFillOptions *options,
                        "edit-context",     edit_context ? TRUE : FALSE,
                        "use-custom-style", use_custom_style ? TRUE : FALSE,
                        NULL);
+}
+
+static void
+gimp_fill_editor_color_button_clicked (GimpColorPanel *panel,
+                                       GimpFillEditor *editor)
+{
+  GimpFillOptions *options;
+
+  g_return_if_fail (GIMP_IS_FILL_EDITOR (editor));
+
+  options = editor->options;
+
+  gimp_fill_options_enable_color_history (options, FALSE);
+}
+
+static void
+gimp_fill_editor_color_button_response (GimpColorPanel      *panel,
+                                        GimpColorDialogState state,
+                                        GimpFillEditor      *editor)
+{
+  GimpFillOptions *options;
+
+  g_return_if_fail (GIMP_IS_FILL_EDITOR (editor));
+
+  options = editor->options;
+
+  gimp_fill_options_enable_color_history (options, TRUE);
 }

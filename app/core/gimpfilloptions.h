@@ -92,3 +92,7 @@ void              gimp_fill_options_fill_buffer      (GimpFillOptions     *optio
                                                       GeglBuffer          *buffer,
                                                       gint                 pattern_offset_x,
                                                       gint                 pattern_offset_y);
+
+void              gimp_fill_options_enable_color_history
+                                                     (GimpFillOptions     *options,
+                                                      gboolean             enable);

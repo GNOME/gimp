@@ -53,7 +53,8 @@ enum
   PROP_FEATHER,
   PROP_FEATHER_RADIUS,
   PROP_PATTERN_VIEW_TYPE,
-  PROP_PATTERN_VIEW_SIZE
+  PROP_PATTERN_VIEW_SIZE,
+  PROP_UPDATE_COLOR_HISTORY
 };
 
 
@@ -67,10 +68,12 @@ struct _GimpFillOptionsPrivate
   gboolean        feather;
   gdouble         feather_radius;
 
-  GimpViewType  pattern_view_type;
-  GimpViewSize  pattern_view_size;
+  GimpViewType    pattern_view_type;
+  GimpViewSize    pattern_view_size;
 
-  const gchar  *undo_desc;
+  gboolean        update_color_history;
+
+  const gchar    *undo_desc;
 };
 
 #define GET_PRIVATE(options) \
@@ -160,6 +163,14 @@ gimp_fill_options_class_init (GimpFillOptionsClass *klass)
                                                      GIMP_VIEW_SIZE_SMALL,
                                                      G_PARAM_CONSTRUCT |
                                                      GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_UPDATE_COLOR_HISTORY,
+                                   g_param_spec_boolean ("update-color-history",
+                                                         NULL,
+                                                         NULL,
+                                                         TRUE,
+                                                         G_PARAM_CONSTRUCT |
+                                                         GIMP_PARAM_READWRITE));
 }
 
 static void
@@ -208,6 +219,10 @@ gimp_fill_options_set_property (GObject      *object,
       private->pattern_view_size = g_value_get_int (value);
       break;
 
+    case PROP_UPDATE_COLOR_HISTORY:
+      private->update_color_history = g_value_get_boolean (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -245,6 +260,10 @@ gimp_fill_options_get_property (GObject    *object,
       break;
     case PROP_PATTERN_VIEW_SIZE:
       g_value_set_int (value, private->pattern_view_size);
+      break;
+
+    case PROP_UPDATE_COLOR_HISTORY:
+      g_value_set_boolean (value, private->update_color_history);
       break;
 
     default:
@@ -567,12 +586,16 @@ gimp_fill_options_fill_buffer (GimpFillOptions *options,
                                gint             pattern_offset_x,
                                gint             pattern_offset_y)
 {
+  GimpFillOptionsPrivate *priv;
+
   g_return_if_fail (GIMP_IS_FILL_OPTIONS (options));
   g_return_if_fail (gimp_fill_options_get_style (options) !=
                     GIMP_FILL_STYLE_PATTERN ||
                     gimp_context_get_pattern (GIMP_CONTEXT (options)) != NULL);
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GEGL_IS_BUFFER (buffer));
+
+  priv = GET_PRIVATE (options);
 
   switch (gimp_fill_options_get_style (options))
     {
@@ -581,7 +604,8 @@ gimp_fill_options_fill_buffer (GimpFillOptions *options,
         GeglColor *color;
 
         color = gimp_context_get_foreground (GIMP_CONTEXT (options));
-        gimp_palettes_add_color_history (GIMP_CONTEXT (options)->gimp, color);
+        if (priv->update_color_history)
+          gimp_palettes_add_color_history (GIMP_CONTEXT (options)->gimp, color);
 
         gimp_drawable_fill_buffer (drawable, buffer, color, NULL, 0, 0);
       }
@@ -592,7 +616,8 @@ gimp_fill_options_fill_buffer (GimpFillOptions *options,
         GeglColor *color;
 
         color = gimp_context_get_background (GIMP_CONTEXT (options));
-        gimp_palettes_add_color_history (GIMP_CONTEXT (options)->gimp, color);
+        if (priv->update_color_history)
+          gimp_palettes_add_color_history (GIMP_CONTEXT (options)->gimp, color);
 
         gimp_drawable_fill_buffer (drawable, buffer, color, NULL, 0, 0);
       }
@@ -611,4 +636,15 @@ gimp_fill_options_fill_buffer (GimpFillOptions *options,
       }
       break;
     }
+}
+
+void
+gimp_fill_options_enable_color_history (GimpFillOptions *options,
+                                        gboolean         enable)
+{
+  g_return_if_fail (GIMP_IS_FILL_OPTIONS (options));
+
+  g_object_set (options,
+                "update-color-history", enable,
+                NULL);
 }
