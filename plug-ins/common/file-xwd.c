@@ -1683,9 +1683,20 @@ load_xwd_f2_d16_b16 (GFile           *file,
           greenval = (green * 255) / maxgreen;
           for (blue = 0; blue <= maxblue; blue++)
             {
+              guint32 offset = ((red << redshift) + (green << greenshift) +
+                                (blue << blueshift)) * 3;
+
+              if (offset+2 >= maxval)
+                {
+                  g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                               _("Invalid colormap offset. Possibly corrupt image."));
+                  g_free (data);
+                  g_free (ColorMap);
+                  g_object_unref (buffer);
+                  return NULL;
+                }
               blueval = (blue * 255) / maxblue;
-              cm = ColorMap + ((red << redshift) + (green << greenshift)
-                               + (blue << blueshift)) * 3;
+              cm = ColorMap + offset;
               *(cm++) = redval;
               *(cm++) = greenval;
               *cm = blueval;
