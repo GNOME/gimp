@@ -506,7 +506,7 @@ load_image (GFile   *file,
       if (element_length >= (G_MAXUINT - 6))
         {
           g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
-                       _("'%s' has an an incorrect value for field size. Possibly corrupt image."),
+                       _("'%s' has an incorrect value for field size. Possibly corrupt image."),
                        gimp_file_get_utf8_name (file));
           g_free (dicominfo);
           fclose (dicom);
