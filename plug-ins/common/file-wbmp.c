@@ -256,6 +256,7 @@ read_image (FILE    *fd,
   GeglBuffer  *buffer;
   guchar      *dest, *temp;
   gint         i, cur_progress, max_progress;
+  size_t       n_read;
 
   /* Make a new image in GIMP */
   if ((width < 0) || (width > GIMP_MAX_IMAGE_SIZE))
@@ -280,14 +281,14 @@ read_image (FILE    *fd,
 
   gimp_image_insert_layer (image, layer, NULL, 0);
 
-  dest = g_malloc0 (width * height);
+  dest = g_malloc0 ((gsize) width * height);
 
   ypos = 0;
 
   cur_progress = 0;
   max_progress = height;
 
-  while (ReadOK (fd, &v, 1))
+  while ((n_read = ReadOK (fd, &v, 1)) != 0)
     {
       for (i = 1; (i <= 8) && (xpos < width); i++, xpos++)
         {
@@ -311,6 +312,9 @@ read_image (FILE    *fd,
       if (ypos > height - 1)
         break;
     }
+
+  if (n_read == 0)
+      g_warning (_("Read failure at position %u. Possibly corrupt image."), ypos * width + xpos);
 
   buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
