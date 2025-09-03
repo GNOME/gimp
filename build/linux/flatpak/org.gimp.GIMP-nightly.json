@@ -215,8 +215,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-25.08.0.tar.xz",
-                    "sha256": "425ed4d4515a093bdcdbbaac6876f20617451edc710df6a4fd6c45dd67eb418d",
+                    "url": "https://poppler.freedesktop.org/poppler-25.09.0.tar.xz",
+                    "sha256": "758abfe0c77108c72d654b291dfbce54964b5315a53028e3875f07ef55ff20a3",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 3686,
@@ -239,6 +239,7 @@
                 "-DENABLE_LIBOPENJPEG=openjpeg2",
                 "-DENABLE_BOOST=OFF",
                 "-DENABLE_NSS3=OFF",
+                "-DENABLE_GPGME=OFF",
                 "-DENABLE_QT5=OFF",
                 "-DENABLE_QT6=OFF"
             ],
