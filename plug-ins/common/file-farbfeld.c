@@ -261,7 +261,7 @@ load_image (GFile        *file,
   guchar      magic_number[8];
   guint32     width;
   guint32     height;
-  guint32     row_size;
+  gsize       row_size;
   const Babl *format = babl_format ("R'G'B'A u16");
   FILE       *fp;
 
@@ -282,13 +282,24 @@ load_image (GFile        *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Failed to read Farbfeld header"));
+      fclose (fp);
       return NULL;
     }
 
   /* Header information is stored in Big-Endian format */
   width = GUINT32_FROM_BE (width);
   height = GUINT32_FROM_BE (height);
-  row_size = width * sizeof (guint16) * 4;
+
+  if (width > GIMP_MAX_IMAGE_SIZE  ||
+      height > GIMP_MAX_IMAGE_SIZE ||
+      ! g_size_checked_mul (&row_size, width, (sizeof (guint16) * 4)))
+    {
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Image dimensions too large: width %d x height %d"),
+                   width, height);
+      fclose (fp);
+      return NULL;
+    }
 
   image = gimp_image_new_with_precision (width, height, GIMP_RGB,
                                          GIMP_PRECISION_U16_NON_LINEAR);
@@ -298,12 +309,19 @@ load_image (GFile        *file,
                           gimp_image_get_default_new_layer_mode (image));
   gimp_image_insert_layer (image, layer, NULL, 0);
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  pixels = g_try_malloc (row_size);
+  if (pixels == NULL)
+    {
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("There was not enough memory to complete the "
+                     "operation."));
+      fclose (fp);
+      return NULL;
+    }
 
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
   for (gint i = 0; i < height; i++)
     {
-      pixels = g_malloc (row_size);
-
       if (! fread (pixels, row_size, 1, fp))
         {
           g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
@@ -318,9 +336,8 @@ load_image (GFile        *file,
       gegl_buffer_set (buffer,
                        GEGL_RECTANGLE (0, i, width, 1), 0,
                        format, pixels, GEGL_AUTO_ROWSTRIDE);
-
-      g_free (pixels);
     }
+  g_free (pixels);
 
   fclose (fp);
   g_object_unref (buffer);
