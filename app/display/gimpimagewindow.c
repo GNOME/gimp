@@ -2125,7 +2125,7 @@ gimp_image_window_switch_page (GtkNotebook     *notebook,
                                         NULL /*new_entry_id*/,
                                         gimp_widget_get_monitor (GTK_WIDGET (window)));
     }
-  else
+  else if (private->initial_monitor != NULL)
     {
       /*  we are in construction, use the initial monitor; calling
        *  gimp_widget_get_monitor() would get us the monitor where the
