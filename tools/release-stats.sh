@@ -60,6 +60,35 @@ major=$(echo "$2" | cut -d'_' -f2)
 minor=$(echo "$2" | cut -d'_' -f3)
 micro=$(echo "$2" | cut -d'_' -f4)
 
+get_issues_mrs()
+{
+  base_url=$1
+  version="$major.$minor.$micro"
+
+  closed_issues=
+  merged_mrs=
+  milestone=$(curl "$base_url-/milestones?search_title=$version&state=all" 2>/dev/null| grep "/-/milestones/[0-9]" | head -1 | sed 's$^.*/-/milestones/\([0-9]*\)".*$\1$')
+  if [ -n "$milestone" ] && [ "$milestone" -eq "$milestone" ] 2>/dev/null; then
+    # Milestone exists and is a valid integer.
+    closed_issues=$(curl "$base_url-/milestones/$milestone" 2>/dev/null|grep 'issues.*Closed:' -A1 |tail -1)
+    merged_mrs=$(curl "$base_url-/milestones/$milestone" 2>/dev/null|grep 'merge_requests.*Merged:' -A1 |tail -1)
+  fi
+
+  echo $closed_issues $merged_mrs
+}
+
+read closed_issues merged_mrs < <(get_issues_mrs "https://gitlab.gnome.org/GNOME/gimp/")
+read ux_closed_issues ux_merged_mrs < <(get_issues_mrs "https://gitlab.gnome.org/Teams/GIMP/Design/gimp-ux/")
+
+if [ -n "$ux_closed_issues" ] || [ "$ux_closed_issues" -eq "$ux_closed_issues" ] 2>/dev/null; then
+  : # All good.
+else
+  echo "Failed to read Gitlab webpages."
+  echo "It may be the anti-bot Anubis blocking us."
+  echo "Try loading manually: https://gitlab.gnome.org/GNOME/gimp/-/milestones/"
+  exit 1
+fi
+
 get_latest_from_meson()
 {
   dep=$1
@@ -145,8 +174,8 @@ count_repo_contributors()
 
 echo "Since [GIMP $prevmajor.$prevminor.$prevmicro](TODO), in the main GIMP repository:"
 echo
-echo "* TODO reports were closed as FIXED."
-echo "* TODO merge requests were merged."
+echo "* $closed_issues reports were closed as FIXED."
+echo "* $merged_mrs merge requests were merged."
 
 # Main stats:
 contribs=`git --no-pager shortlog -s -n $PREV..$CUR`
@@ -207,7 +236,7 @@ echo
 echo "Contributions on other repositories in the GIMPverse (order is determined by"
 echo "number of commits):"
 echo
-echo "* Our UX tracker had TODO reports closed as FIXED."
+echo "* Our UX tracker had $ux_closed_issues reports closed as FIXED."
 
 babl_ver=`get_latest_from_meson babl $CUR`
 prev_babl_ver=`get_latest_from_meson babl $PREV`
