@@ -25,6 +25,9 @@ extern GimpActionFactory *global_action_factory;
 void               actions_init            (Gimp                 *gimp);
 void               actions_exit            (Gimp                 *gimp);
 
+void               actions_filter_set_aux  (const gchar          *action_name);
+gboolean           actions_filter_get_aux  (const gchar          *action_name);
+
 Gimp             * action_data_get_gimp    (gpointer              data);
 GimpContext      * action_data_get_context (gpointer              data);
 GimpImage        * action_data_get_image   (gpointer              data);

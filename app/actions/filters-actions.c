@@ -751,10 +751,10 @@ static const GimpEnumActionEntry filters_repeat_actions[] =
 void
 filters_actions_setup (GimpActionGroup *group)
 {
+  static gboolean           first_setup = TRUE;
   GimpProcedureActionEntry *entries;
   gint                      n_entries;
   gint                      i;
-  GList                    *actions;
   GList                    *op_classes;
   GList                    *iter;
   GStrvBuilder             *gegl_actions;
@@ -779,6 +779,21 @@ filters_actions_setup (GimpActionGroup *group)
                                         filters_apply_interactive_cmd_callback);
   filters_actions_set_tooltips (group, filters_interactive_actions,
                                 G_N_ELEMENTS (filters_interactive_actions));
+
+  /* XXX Hardcoded list to prevent expensive node/graph creation of a
+   * well-known list of operations.
+   * This whole code will disappear when we'll support filters with aux
+   * input non-destructively anyway.
+   */
+  if (first_setup)
+    {
+      actions_filter_set_aux ("filters-variable-blur");
+      actions_filter_set_aux ("filters-oilify");
+      actions_filter_set_aux ("filters-lens-blur");
+      actions_filter_set_aux ("filters-gaussian-blur-selective");
+      actions_filter_set_aux ("filters-displace");
+      actions_filter_set_aux ("filters-bump-map");
+    }
 
   gegl_actions = g_strv_builder_new ();
   op_classes   = gimp_gegl_get_op_classes ();
@@ -862,6 +877,23 @@ filters_actions_setup (GimpActionGroup *group)
           g_free (short_label);
         }
 
+      /* Identify third-party filters based on operations with an
+       * auxiliary pad in first setup because of slowness on Windows.
+       * See #14781.
+       */
+      if (first_setup)
+        {
+          GeglNode *node = gegl_node_new ();
+
+          gegl_node_set (node,
+                         "operation", op_class->name,
+                         NULL);
+
+          if (gegl_node_has_pad (node, "aux"))
+            actions_filter_set_aux (action_name);
+
+          g_clear_object (&node);
+        }
       g_strv_builder_add (gegl_actions, action_name);
 
       g_free (label);
@@ -875,40 +907,6 @@ filters_actions_setup (GimpActionGroup *group)
                           (GDestroyNotify) g_strfreev);
   g_strv_builder_unref (gegl_actions);
   g_list_free (op_classes);
-
-  /* Identify all filters based on operations with an auxiliary pad in
-   * setup because of slowness on Windows. See #14781.
-   */
-  actions = gimp_action_group_list_actions (group);
-  for (iter = actions; iter; iter = iter->next)
-    {
-      GimpAction  *action = iter->data;
-      const gchar *action_name;
-
-      action_name = gimp_action_get_name (action);
-
-      if (! filters_is_non_interactive (action_name) && GIMP_IS_STRING_ACTION (action))
-        {
-          const gchar *opname;
-
-          opname = GIMP_STRING_ACTION (action)->value;
-
-          if (opname != NULL && g_strcmp0 (opname, "gegl:gegl") != 0 && gegl_has_operation (opname))
-            {
-              GeglNode *node = gegl_node_new ();
-
-              gegl_node_set (node,
-                             "operation", opname,
-                             NULL);
-
-              if (gegl_node_has_pad (node, "aux"))
-                g_object_set_data (G_OBJECT (action), "filters-action-has-pad", GINT_TO_POINTER (TRUE));
-
-              g_clear_object (&node);
-            }
-        }
-    }
-  g_list_free (actions);
 
   gimp_action_group_add_enum_actions (group, "filters-action",
                                       filters_repeat_actions,
@@ -945,6 +943,8 @@ filters_actions_setup (GimpActionGroup *group)
                            group, 0);
 
   filters_actions_history_changed (group->gimp, group);
+
+  first_setup = FALSE;
 }
 
 void
@@ -1046,7 +1046,7 @@ filters_actions_update (GimpActionGroup *group,
                  * types of layers where filters can only be applied
                  * non-destructively.
                  */
-                sensitive = ! GPOINTER_TO_INT (g_object_get_data (G_OBJECT (action), "filters-action-has-pad"));
+                sensitive = ! actions_filter_get_aux (action_name);
 
               SET_SENSITIVE (gimp_action_get_name (action), sensitive);
             }

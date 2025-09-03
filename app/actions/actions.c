@@ -104,6 +104,7 @@
 /*  global variables  */
 
 GimpActionFactory *global_action_factory = NULL;
+GHashTable        *aux_filter_hash_table = NULL;
 
 
 /*  private variables  */
@@ -270,6 +271,8 @@ actions_init (Gimp *gimp)
                                         action_groups[i].icon_name,
                                         action_groups[i].setup_func,
                                         action_groups[i].update_func);
+
+  aux_filter_hash_table = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
 }
 
 void
@@ -280,6 +283,23 @@ actions_exit (Gimp *gimp)
   g_return_if_fail (global_action_factory->gimp == gimp);
 
   g_clear_object (&global_action_factory);
+  g_hash_table_unref (aux_filter_hash_table);
+}
+
+/* XXX Temporary code to store the list of filter operations with an
+ * "aux" input. This won't be necessary anymore once these filters can
+ * be applied non-destructively too in the future.
+ */
+void
+actions_filter_set_aux (const gchar *action_name)
+{
+  g_hash_table_add (aux_filter_hash_table, (gpointer) g_strdup (action_name));
+}
+
+gboolean
+actions_filter_get_aux (const gchar *action_name)
+{
+  return g_hash_table_lookup (aux_filter_hash_table, action_name) != NULL;
 }
 
 Gimp *
