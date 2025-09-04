@@ -328,7 +328,9 @@ load_image (GFile        *file,
       bitMapHeader = true_image->bitMapHeader;
       if (! bitMapHeader || ! true_image->body)
         {
-          g_message (_("ILBM contains no image data - likely a palette file"));
+          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("ILBM contains no image data - likely a palette "
+                         "file"));
           return NULL;
         }
 
@@ -354,6 +356,13 @@ load_image (GFile        *file,
       if (colorMap)
         {
           palette_size = colorMap->colorRegisterLength;
+
+          if (palette_size < 0 || palette_size > 256)
+            {
+              g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                           _("Invalid ILBM colormap size"));
+              return NULL;
+            }
 
           for (gint j = 0; j < palette_size; j++)
             {
