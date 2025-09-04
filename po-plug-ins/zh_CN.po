@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-08-31 22:57+0000\n"
-"PO-Revision-Date: 2025-09-01 07:42+0800\n"
+"POT-Creation-Date: 2025-09-04 00:14+0000\n"
+"PO-Revision-Date: 2025-09-04 10:26+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -142,7 +142,7 @@ msgstr "JavaScript（GJS）插件示例"
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2488
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2656
-#: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:455
+#: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:458
 #: plug-ins/file-psd/psd-load.c:3896 plug-ins/flame/flame.c:823
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
@@ -602,8 +602,8 @@ msgstr "百叶窗"
 #.
 #: plug-ins/common/blinds.c:260 plug-ins/common/compose.c:1230
 #: plug-ins/common/decompose.c:642 plug-ins/common/file-cel.c:475
-#: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:728
-#: plug-ins/common/file-farbfeld.c:296 plug-ins/common/file-gegl.c:446
+#: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:765
+#: plug-ins/common/file-farbfeld.c:307 plug-ins/common/file-gegl.c:446
 #: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:408
 #: plug-ins/common/file-jp2.c:1619 plug-ins/common/file-pcx.c:710
 #: plug-ins/common/file-pcx.c:718 plug-ins/common/file-pcx.c:726
@@ -612,7 +612,7 @@ msgstr "百叶窗"
 #: plug-ins/common/file-raw-data.c:820 plug-ins/common/file-raw-data.c:2004
 #: plug-ins/common/file-sunras.c:1059 plug-ins/common/file-tga.c:1103
 #: plug-ins/common/file-tim.c:402 plug-ins/common/file-tim.c:509
-#: plug-ins/common/file-wbmp.c:398 plug-ins/common/file-wbmp.c:474
+#: plug-ins/common/file-wbmp.c:398 plug-ins/common/file-wbmp.c:475
 #: plug-ins/common/file-xbm.c:887 plug-ins/common/film.c:865
 #: plug-ins/common/smooth-palette.c:301 plug-ins/common/tile.c:396
 #: plug-ins/file-bmp/bmp-load.c:809 plug-ins/file-exr/file-exr.c:302
@@ -1227,7 +1227,7 @@ msgid "Save CML Explorer Parameters"
 msgstr "保存 CML 探索器参数"
 
 #: plug-ins/common/cml-explorer.c:2210 plug-ins/common/curve-bend.c:762
-#: plug-ins/common/file-dicom.c:1541 plug-ins/common/file-farbfeld.c:355
+#: plug-ins/common/file-dicom.c:1578 plug-ins/common/file-farbfeld.c:372
 #: plug-ins/common/file-mng.c:875 plug-ins/common/file-mng.c:1225
 #: plug-ins/common/file-pcx.c:1200 plug-ins/common/file-pdf-export.c:680
 #: plug-ins/common/file-png.c:1923 plug-ins/common/file-raw-data.c:1509
@@ -1966,7 +1966,7 @@ msgid "Cannot operate on empty selections."
 msgstr "无法对空选区进行操作。"
 
 #: plug-ins/common/curve-bend.c:815 plug-ins/common/file-cel.c:330
-#: plug-ins/common/file-cel.c:382 plug-ins/common/file-dicom.c:360
+#: plug-ins/common/file-cel.c:382 plug-ins/common/file-dicom.c:361
 #: plug-ins/common/file-farbfeld.c:273 plug-ins/common/file-gif-load.c:481
 #: plug-ins/common/file-iff.c:282 plug-ins/common/file-lnk.c:200
 #: plug-ins/common/file-mng.c:1409 plug-ins/common/file-paa.c:190
@@ -2448,13 +2448,14 @@ msgstr "白色级别(_W)"
 msgid "White level"
 msgstr "白色级别"
 
-#: plug-ins/common/despeckle.c:358 plug-ins/common/file-pcx.c:702
-#: plug-ins/file-bmp/bmp-load.c:800
+#: plug-ins/common/despeckle.c:358 plug-ins/common/file-farbfeld.c:298
+#: plug-ins/common/file-pcx.c:702 plug-ins/file-bmp/bmp-load.c:800
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "图像尺寸过大：宽 %d x 高 %d"
 
-#: plug-ins/common/despeckle.c:369 plug-ins/common/web-browser.c:211
+#: plug-ins/common/despeckle.c:369 plug-ins/common/file-farbfeld.c:316
+#: plug-ins/common/web-browser.c:211
 #, c-format
 msgid "There was not enough memory to complete the operation."
 msgstr "没有足够的内存完成此操作。"
@@ -2574,7 +2575,7 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #.
 #. * Open the file for reading...
 #.
-#: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:352
+#: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:353
 #: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:473
 #: plug-ins/common/file-heif.c:1049 plug-ins/common/file-jp2.c:1375
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
@@ -2657,7 +2658,7 @@ msgstr "“%s”：读取色板数据时遇到文件尾或错误"
 #.
 #. * Open the file for writing...
 #.
-#: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:347
+#: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:364
 #: plug-ins/common/file-gif-export.c:939 plug-ins/common/file-html-table.c:360
 #: plug-ins/common/file-jp2.c:1804 plug-ins/common/file-jpegxl.c:1389
 #: plug-ins/common/file-pcx.c:1083 plug-ins/common/file-pix.c:636
@@ -2833,26 +2834,51 @@ msgstr ""
 "件格式定义在标准的第 10 章节。文件未压缩保存且 DICOM 必备标签用默认虚拟值填"
 "充。"
 
-#: plug-ins/common/file-dicom.c:386
+#: plug-ins/common/file-dicom.c:387
 #, c-format
 msgid "'%s' is not a DICOM file."
 msgstr "“%s”不是 DICOM 文件。"
 
-#: plug-ins/common/file-dicom.c:559
+#: plug-ins/common/file-dicom.c:509
+#, c-format
+msgid "'%s' has an incorrect value for field size. Possibly corrupt image."
+msgstr "“%s”具有错误的域大小数值。图像可能已损坏。"
+
+#: plug-ins/common/file-dicom.c:570
 #, c-format
 msgid "Transfer syntax %s is not supported by GIMP."
 msgstr "GIMP 不支持转移语法 %s。"
 
-#: plug-ins/common/file-dicom.c:614
+#: plug-ins/common/file-dicom.c:625
 #, c-format
 msgid "%s is not supported by GIMP in combination with samples per pixel: %d"
 msgstr "在与每像素采样组合中 GIMP 不支持 %s：%d"
 
-#: plug-ins/common/file-dicom.c:1506
+#: plug-ins/common/file-dicom.c:708
+#, c-format
+msgid "'%s' has a bpp of %d which GIMP cannot handle."
+msgstr "“%s”为 %d bpp 超出 GIMP 能处理的范围。"
+
+#: plug-ins/common/file-dicom.c:719
+#, c-format
+msgid "'%s' has a larger image size (%d x %d) than GIMP can handle."
+msgstr "“%s”的图像大小（%d x %d）超出 GIMP 能处理的范围。"
+
+#: plug-ins/common/file-dicom.c:730
+#, c-format
+msgid "'%s' has samples per pixel of %d which GIMP cannot handle."
+msgstr "“%s”为 %d 每像素采样超出 GIMP 能处理的范围。"
+
+#: plug-ins/common/file-dicom.c:741
+#, c-format
+msgid "'%s' has not enough pixel data. Possibly corrupt image."
+msgstr "“%s”不具有足够的像素数据。图像可能已损坏。"
+
+#: plug-ins/common/file-dicom.c:1543
 msgid "Cannot save images with alpha channel."
 msgstr "无法保存带有透明通道的图像。"
 
-#: plug-ins/common/file-dicom.c:1525 plug-ins/common/file-ps.c:1363
+#: plug-ins/common/file-dicom.c:1562 plug-ins/common/file-ps.c:1363
 #: plug-ins/common/file-xwd.c:688 plug-ins/file-fits/fits.c:641
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -2875,7 +2901,7 @@ msgstr "以 Farbfeld 文件格式导出图像"
 msgid "Failed to read Farbfeld header"
 msgstr "读取 Farbfeld 头部信息失败"
 
-#: plug-ins/common/file-farbfeld.c:310
+#: plug-ins/common/file-farbfeld.c:328
 #, c-format
 msgid "Premature end of Farbfeld pixel data"
 msgstr "过早的 Farbfeld 像素数据结尾"
@@ -4452,13 +4478,13 @@ msgstr "%s：无法加载所有 DCX 图像：%s\n"
 msgid "'%s' is not a PCX file"
 msgstr "“%s”不是 PCX 文件"
 
-#: plug-ins/common/file-pcx.c:672 plug-ins/common/file-wbmp.c:463
+#: plug-ins/common/file-pcx.c:672 plug-ins/common/file-wbmp.c:464
 #: plug-ins/file-bmp/bmp-load.c:606 plug-ins/file-psd/psd-load.c:572
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "不支持或无效的图像宽度：%d"
 
-#: plug-ins/common/file-pcx.c:679 plug-ins/common/file-wbmp.c:469
+#: plug-ins/common/file-pcx.c:679 plug-ins/common/file-wbmp.c:470
 #: plug-ins/file-bmp/bmp-load.c:615 plug-ins/file-psd/psd-load.c:564
 #, c-format
 msgid "Unsupported or invalid image height: %d"
@@ -6160,8 +6186,8 @@ msgstr "无法对未知的图像类型操作"
 #: plug-ins/common/file-sunras.c:1169 plug-ins/common/file-sunras.c:1264
 #: plug-ins/common/file-sunras.c:1348 plug-ins/common/file-sunras.c:1448
 #: plug-ins/common/file-xwd.c:1493 plug-ins/common/file-xwd.c:1607
-#: plug-ins/common/file-xwd.c:1778 plug-ins/common/file-xwd.c:2018
-#: plug-ins/common/file-xwd.c:2207 plug-ins/common/file-xwd.c:2483
+#: plug-ins/common/file-xwd.c:1789 plug-ins/common/file-xwd.c:2029
+#: plug-ins/common/file-xwd.c:2218 plug-ins/common/file-xwd.c:2494
 #, c-format
 msgid "EOF encountered on reading"
 msgstr "读入时遇到文件结束符"
@@ -6243,8 +6269,8 @@ msgstr "为了安全原因，该选项应仅用于信任的输入！"
 msgid "Retry without limits preventing to parse huge data?"
 msgstr "不带阻止解析巨量数据的限制来重试吗？"
 
-#: plug-ins/common/file-svg.c:558 plug-ins/file-exr/file-exr.c:378
-#: plug-ins/file-exr/file-exr.c:392
+#: plug-ins/common/file-svg.c:558 plug-ins/file-exr/file-exr.c:381
+#: plug-ins/file-exr/file-exr.c:395
 msgid "Unknown reason"
 msgstr "未知原因"
 
@@ -6454,6 +6480,11 @@ msgstr "“%s”：无效的 OTA 头部值"
 #, c-format
 msgid "'%s': Invalid dimensions %u x %u"
 msgstr "“%s”：无效尺寸 %u x %u"
+
+#: plug-ins/common/file-wbmp.c:517
+#, c-format
+msgid "Read failure at position %u. Possibly corrupt image."
+msgstr "在 %u 处读取失败。图像可能已损坏。"
 
 #: plug-ins/common/file-wmf.c:177
 msgid "Microsoft WMF file"
@@ -7005,13 +7036,18 @@ msgstr "导出“%s”时出错："
 msgid "Seek error"
 msgstr "Seek 错误"
 
-#: plug-ins/common/file-xwd.c:1858 plug-ins/common/file-xwd.c:2109
-#: plug-ins/common/file-xwd.c:2304
+#: plug-ins/common/file-xwd.c:1692
+#, c-format
+msgid "Invalid colormap offset. Possibly corrupt image."
+msgstr "无效的颜色表偏移。图像可能已损坏。"
+
+#: plug-ins/common/file-xwd.c:1869 plug-ins/common/file-xwd.c:2120
+#: plug-ins/common/file-xwd.c:2315
 #, c-format
 msgid "XWD-file %s is corrupt."
 msgstr "XWD 文件“%s”已损坏。"
 
-#: plug-ins/common/file-xwd.c:2057
+#: plug-ins/common/file-xwd.c:2068
 #, c-format
 msgid ""
 "'%s':\n"
@@ -9558,25 +9594,25 @@ msgstr "从“%s”查询图像精度出错"
 msgid "Error querying image type from '%s'"
 msgstr "从“%s”查询图像类型出错"
 
-#: plug-ins/file-exr/file-exr.c:334
+#: plug-ins/file-exr/file-exr.c:337
 #, c-format
 msgid "Error reading pixel data from '%s'"
 msgstr "从“%s”读取像素数据出错"
 
-#: plug-ins/file-exr/file-exr.c:377 plug-ins/file-exr/file-exr.c:391
+#: plug-ins/file-exr/file-exr.c:380 plug-ins/file-exr/file-exr.c:394
 #, c-format
 msgid "Failed to load metadata: %s"
 msgstr "加载元数据失败：%s"
 
-#: plug-ins/file-exr/file-exr.c:452
+#: plug-ins/file-exr/file-exr.c:455
 msgid "Import OpenEXR"
 msgstr "导入 OpenEXR"
 
-#: plug-ins/file-exr/file-exr.c:467
+#: plug-ins/file-exr/file-exr.c:470
 msgid "Unknown Channel Name"
 msgstr "未知通道名称"
 
-#: plug-ins/file-exr/file-exr.c:468
+#: plug-ins/file-exr/file-exr.c:471
 msgid ""
 "The image contains a single unknown channel.\n"
 "It has been converted to grayscale."
@@ -9584,11 +9620,11 @@ msgstr ""
 "该图像包含一个单独的未知通道。\n"
 "它已被转换为灰度模式。"
 
-#: plug-ins/file-exr/file-exr.c:471
+#: plug-ins/file-exr/file-exr.c:474
 msgid "Chroma Channels"
 msgstr "色度通道"
 
-#: plug-ins/file-exr/file-exr.c:472
+#: plug-ins/file-exr/file-exr.c:475
 msgid ""
 "OpenEXR chroma channels are not yet supported.\n"
 "They have been discarded."
