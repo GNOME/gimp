@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-02 21:05+0200\n"
-"PO-Revision-Date: 2025-09-02 21:13+0200\n"
+"PO-Revision-Date: 2025-09-04 08:37+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -8035,7 +8035,7 @@ msgstr ""
 
 #: ../plug-ins/common/sample-colorize.c:359
 msgid "Us_e subcolors"
-msgstr "Usa subcolori (_e)"
+msgstr "Us_a subcolori"
 
 #: ../plug-ins/common/sample-colorize.c:360
 msgid ""
