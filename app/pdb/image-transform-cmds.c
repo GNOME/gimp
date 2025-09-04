@@ -338,7 +338,7 @@ register_image_transform_procs (GimpPDB *pdb)
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Schumacher <schumaml@gmx.de>",
                                          "Michael Schumacher",
-                                         "2022");
+                                         "2025");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",

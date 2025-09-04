@@ -138,7 +138,7 @@ gimp_image_resize_to_layers (GimpImage *image)
  *
  * Returns: TRUE on success.
  *
- * Since: 2.99
+ * Since: 3.2
  **/
 gboolean
 gimp_image_resize_to_visible_layers (GimpImage *image)
