@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-04 00:14+0000\n"
-"PO-Revision-Date: 2025-09-04 10:26+0800\n"
+"POT-Creation-Date: 2025-09-04 09:01+0000\n"
+"PO-Revision-Date: 2025-09-04 17:30+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -604,7 +604,7 @@ msgstr "百叶窗"
 #: plug-ins/common/decompose.c:642 plug-ins/common/file-cel.c:475
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:765
 #: plug-ins/common/file-farbfeld.c:307 plug-ins/common/file-gegl.c:446
-#: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:408
+#: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:417
 #: plug-ins/common/file-jp2.c:1619 plug-ins/common/file-pcx.c:710
 #: plug-ins/common/file-pcx.c:718 plug-ins/common/file-pcx.c:726
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1082
@@ -3186,7 +3186,7 @@ msgstr "帧信息"
 msgid "local colormap"
 msgstr "局部颜色表"
 
-#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:425
+#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:434
 msgid ""
 "Non-square pixels. Image might look squashed if Dot for Dot mode is enabled."
 msgstr "非正方形像素。如果启用点对点模式则图像可能会看起来扁了。"
@@ -3821,9 +3821,15 @@ msgstr "加载 IFF 格式的文件"
 msgid "Invalid or missing ILBM image"
 msgstr "无效或缺失的 ILBM 图像"
 
-#: plug-ins/common/file-iff.c:331
+#: plug-ins/common/file-iff.c:332
+#, c-format
 msgid "ILBM contains no image data - likely a palette file"
 msgstr "ILBM 未包含图像数据——可能为色板文件"
+
+#: plug-ins/common/file-iff.c:363
+#, c-format
+msgid "Invalid ILBM colormap size"
+msgstr "无效的 ILBM 颜色表大小"
 
 #: plug-ins/common/file-jp2.c:214 plug-ins/common/file-jp2.c:309
 msgid "JPEG 2000 image"
