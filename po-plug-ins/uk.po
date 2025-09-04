@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-08-31 12:35+0000\n"
-"PO-Revision-Date: 2025-08-31 15:52+0300\n"
+"POT-Creation-Date: 2025-09-04 09:35+0000\n"
+"PO-Revision-Date: 2025-09-04 19:10+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -32,7 +32,7 @@ msgstr "Приклад додатка мовою C"
 
 #: extensions/goat-exercises/goat-exercise-c.c:148 plug-ins/common/blinds.c:200
 #: plug-ins/common/border-average.c:198 plug-ins/common/checkerboard.c:174
-#: plug-ins/common/cml-explorer.c:565 plug-ins/common/compose.c:585
+#: plug-ins/common/cml-explorer.c:565 plug-ins/common/compose.c:586
 #: plug-ins/common/contrast-retinex.c:247 plug-ins/common/crop-zealous.c:149
 #: plug-ins/common/curve-bend.c:623 plug-ins/common/decompose.c:385
 #: plug-ins/common/depth-merge.c:291 plug-ins/common/despeckle.c:235
@@ -142,7 +142,7 @@ msgstr "Приклад додатка мовою JavaScript (GJS)"
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2488
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2656
-#: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:455
+#: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:458
 #: plug-ins/file-psd/psd-load.c:3896 plug-ins/flame/flame.c:823
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
@@ -603,19 +603,19 @@ msgstr "Жалюзі"
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: plug-ins/common/blinds.c:260 plug-ins/common/compose.c:1228
+#: plug-ins/common/blinds.c:260 plug-ins/common/compose.c:1230
 #: plug-ins/common/decompose.c:642 plug-ins/common/file-cel.c:475
-#: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:728
-#: plug-ins/common/file-farbfeld.c:296 plug-ins/common/file-gegl.c:446
-#: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:408
-#: plug-ins/common/file-jp2.c:1621 plug-ins/common/file-pcx.c:710
+#: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:765
+#: plug-ins/common/file-farbfeld.c:307 plug-ins/common/file-gegl.c:446
+#: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:417
+#: plug-ins/common/file-jp2.c:1619 plug-ins/common/file-pcx.c:710
 #: plug-ins/common/file-pcx.c:718 plug-ins/common/file-pcx.c:726
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1082
 #: plug-ins/common/file-pnm.c:845 plug-ins/common/file-qoi.c:296
 #: plug-ins/common/file-raw-data.c:820 plug-ins/common/file-raw-data.c:2004
 #: plug-ins/common/file-sunras.c:1059 plug-ins/common/file-tga.c:1103
 #: plug-ins/common/file-tim.c:402 plug-ins/common/file-tim.c:509
-#: plug-ins/common/file-wbmp.c:398 plug-ins/common/file-wbmp.c:474
+#: plug-ins/common/file-wbmp.c:398 plug-ins/common/file-wbmp.c:475
 #: plug-ins/common/file-xbm.c:887 plug-ins/common/film.c:865
 #: plug-ins/common/smooth-palette.c:301 plug-ins/common/tile.c:396
 #: plug-ins/file-bmp/bmp-load.c:809 plug-ins/file-exr/file-exr.c:302
@@ -1236,7 +1236,7 @@ msgid "Save CML Explorer Parameters"
 msgstr "Збереження параметрів CML Explorer"
 
 #: plug-ins/common/cml-explorer.c:2210 plug-ins/common/curve-bend.c:762
-#: plug-ins/common/file-dicom.c:1541 plug-ins/common/file-farbfeld.c:355
+#: plug-ins/common/file-dicom.c:1578 plug-ins/common/file-farbfeld.c:372
 #: plug-ins/common/file-mng.c:875 plug-ins/common/file-mng.c:1225
 #: plug-ins/common/file-pcx.c:1200 plug-ins/common/file-pdf-export.c:680
 #: plug-ins/common/file-png.c:1923 plug-ins/common/file-raw-data.c:1509
@@ -1393,281 +1393,281 @@ msgstr "Перебудова мапи кольорів"
 #. Decompositions availables.
 #. * All the following values have to be kept in sync with those of decompose.c
 #.
-#: plug-ins/common/compose.c:208
+#: plug-ins/common/compose.c:209
 msgid "_Red:"
 msgstr "_Червоний:"
 
-#: plug-ins/common/compose.c:209
+#: plug-ins/common/compose.c:210
 msgid "_Green:"
 msgstr "_Зелений:"
 
-#: plug-ins/common/compose.c:210
+#: plug-ins/common/compose.c:211
 msgid "_Blue:"
 msgstr "С_иній:"
 
-#: plug-ins/common/compose.c:211
+#: plug-ins/common/compose.c:212
 msgid "_Alpha:"
 msgstr "_Альфа:"
 
-#: plug-ins/common/compose.c:213 plug-ins/common/compose.c:217
+#: plug-ins/common/compose.c:214 plug-ins/common/compose.c:218
 msgid "_Hue:"
 msgstr "Від_тінок"
 
-#: plug-ins/common/compose.c:214 plug-ins/common/compose.c:218
+#: plug-ins/common/compose.c:215 plug-ins/common/compose.c:219
 msgid "_Saturation:"
 msgstr "_Насиченість:"
 
-#: plug-ins/common/compose.c:215
+#: plug-ins/common/compose.c:216
 msgid "_Value:"
 msgstr "_Яскравість:"
 
-#: plug-ins/common/compose.c:219
+#: plug-ins/common/compose.c:220
 msgid "_Lightness:"
 msgstr "_Освітлення:"
 
-#: plug-ins/common/compose.c:221
+#: plug-ins/common/compose.c:222
 msgid "_Cyan:"
 msgstr "_Блакитний:"
 
-#: plug-ins/common/compose.c:222
+#: plug-ins/common/compose.c:223
 msgid "_Magenta:"
 msgstr "_Пурпурний:"
 
-#: plug-ins/common/compose.c:223
+#: plug-ins/common/compose.c:224
 msgid "_Yellow:"
 msgstr "_Жовтий:"
 
-#: plug-ins/common/compose.c:224
+#: plug-ins/common/compose.c:225
 msgid "_Black:"
 msgstr "_Чорний:"
 
-#: plug-ins/common/compose.c:226
+#: plug-ins/common/compose.c:227
 msgid "_L:"
 msgstr "_L:"
 
-#: plug-ins/common/compose.c:227
+#: plug-ins/common/compose.c:228
 msgid "_A:"
 msgstr "_A:"
 
-#: plug-ins/common/compose.c:228
+#: plug-ins/common/compose.c:229
 msgid "_B:"
 msgstr "_B:"
 
-#: plug-ins/common/compose.c:230
+#: plug-ins/common/compose.c:231
 msgid "_L"
 msgstr "_L"
 
-#: plug-ins/common/compose.c:231
+#: plug-ins/common/compose.c:232
 msgid "_C"
 msgstr "_C"
 
-#: plug-ins/common/compose.c:232
+#: plug-ins/common/compose.c:233
 msgid "_H"
 msgstr "_H"
 
-#: plug-ins/common/compose.c:234
+#: plug-ins/common/compose.c:235
 msgid "_Luma y470:"
 msgstr "_Luma y470:"
 
-#: plug-ins/common/compose.c:235
+#: plug-ins/common/compose.c:236
 msgid "_Blueness cb470:"
 msgstr "_Blueness cb470:"
 
-#: plug-ins/common/compose.c:236
+#: plug-ins/common/compose.c:237
 msgid "_Redness cr470:"
 msgstr "_Redness cr470:"
 
-#: plug-ins/common/compose.c:238
+#: plug-ins/common/compose.c:239
 msgid "_Luma y709:"
 msgstr "_Luma y709:"
 
-#: plug-ins/common/compose.c:239
+#: plug-ins/common/compose.c:240
 msgid "_Blueness cb709:"
 msgstr "_Blueness cb709:"
 
-#: plug-ins/common/compose.c:240
+#: plug-ins/common/compose.c:241
 msgid "_Redness cr709:"
 msgstr "_Redness cr709:"
 
-#: plug-ins/common/compose.c:246 plug-ins/common/compose.c:440
-#: plug-ins/common/compose.c:503 plug-ins/common/decompose.c:192
+#: plug-ins/common/compose.c:247 plug-ins/common/compose.c:441
+#: plug-ins/common/compose.c:504 plug-ins/common/decompose.c:192
 #: plug-ins/common/decompose.c:299 plug-ins/common/file-heif.c:315
 #: plug-ins/common/file-heif.c:436
 msgid "RGB"
 msgstr "RGB"
 
-#: plug-ins/common/compose.c:253 plug-ins/common/compose.c:441
-#: plug-ins/common/compose.c:504 plug-ins/common/decompose.c:193
+#: plug-ins/common/compose.c:254 plug-ins/common/compose.c:442
+#: plug-ins/common/compose.c:505 plug-ins/common/decompose.c:193
 #: plug-ins/common/decompose.c:300
 msgid "RGBA"
 msgstr "RGBA"
 
-#: plug-ins/common/compose.c:261 plug-ins/common/compose.c:442
-#: plug-ins/common/compose.c:505 plug-ins/common/decompose.c:200
+#: plug-ins/common/compose.c:262 plug-ins/common/compose.c:443
+#: plug-ins/common/compose.c:506 plug-ins/common/decompose.c:200
 #: plug-ins/common/decompose.c:302
 msgid "HSV"
 msgstr "HSV"
 
-#: plug-ins/common/compose.c:268 plug-ins/common/compose.c:443
-#: plug-ins/common/compose.c:506 plug-ins/common/decompose.c:205
+#: plug-ins/common/compose.c:269 plug-ins/common/compose.c:444
+#: plug-ins/common/compose.c:507 plug-ins/common/decompose.c:205
 #: plug-ins/common/decompose.c:303
 msgid "HSL"
 msgstr "HSL"
 
-#: plug-ins/common/compose.c:275 plug-ins/common/compose.c:444
-#: plug-ins/common/compose.c:507 plug-ins/common/decompose.c:210
+#: plug-ins/common/compose.c:276 plug-ins/common/compose.c:445
+#: plug-ins/common/compose.c:508 plug-ins/common/decompose.c:210
 #: plug-ins/common/decompose.c:304 plug-ins/common/file-jp2.c:249
 #: plug-ins/common/file-jp2.c:295
 msgid "CMYK"
 msgstr "CMYK"
 
-#: plug-ins/common/compose.c:283 plug-ins/common/compose.c:445
-#: plug-ins/common/compose.c:508 plug-ins/common/decompose.c:216
+#: plug-ins/common/compose.c:284 plug-ins/common/compose.c:446
+#: plug-ins/common/compose.c:509 plug-ins/common/decompose.c:216
 #: plug-ins/common/decompose.c:305
 msgid "LAB"
 msgstr "LAB"
 
-#: plug-ins/common/compose.c:290 plug-ins/common/compose.c:446
-#: plug-ins/common/compose.c:509 plug-ins/common/decompose.c:218
+#: plug-ins/common/compose.c:291 plug-ins/common/compose.c:447
+#: plug-ins/common/compose.c:510 plug-ins/common/decompose.c:218
 #: plug-ins/common/decompose.c:306
 msgid "LCH"
 msgstr "LCH"
 
-#: plug-ins/common/compose.c:297
+#: plug-ins/common/compose.c:298
 msgid "YCbCr_ITU_R470"
 msgstr "YCbCr_ITU_R470"
 
-#: plug-ins/common/compose.c:304
+#: plug-ins/common/compose.c:305
 msgid "YCbCr_ITU_R709"
 msgstr "YCbCr_ITU_R709"
 
-#: plug-ins/common/compose.c:311
+#: plug-ins/common/compose.c:312
 msgid "YCbCr_ITU_R470_256"
 msgstr "YCbCr_ITU_R470_256"
 
-#: plug-ins/common/compose.c:318
+#: plug-ins/common/compose.c:319
 msgid "YCbCr_ITU_R709_256"
 msgstr "YCbCr_ITU_R709_256"
 
-#: plug-ins/common/compose.c:380
+#: plug-ins/common/compose.c:381
 msgid "What to compose: "
 msgstr "Що компонувати: "
 
-#: plug-ins/common/compose.c:405
+#: plug-ins/common/compose.c:406
 msgid "C_ompose..."
 msgstr "_Зібрати..."
 
-#: plug-ins/common/compose.c:409
+#: plug-ins/common/compose.c:410
 msgid "Create an image using multiple gray images as color channels"
 msgstr ""
 "Створити нове зображення, використовуючи зображення у режимі «Градації "
 "сірого» у якості каналів"
 
-#: plug-ins/common/compose.c:411
+#: plug-ins/common/compose.c:412
 msgid "This function creates a new image from multiple gray images"
 msgstr "Ця функція створює зображення з декількох сірих зображень"
 
-#: plug-ins/common/compose.c:420
+#: plug-ins/common/compose.c:421
 msgid "Image 2"
 msgstr "Зображення 2"
 
-#: plug-ins/common/compose.c:421
+#: plug-ins/common/compose.c:422
 msgid "Second input image"
 msgstr "Друге вхідне зображення"
 
-#: plug-ins/common/compose.c:426
+#: plug-ins/common/compose.c:427
 msgid "Image 3"
 msgstr "Зображення 3"
 
-#: plug-ins/common/compose.c:427
+#: plug-ins/common/compose.c:428
 msgid "Third input image"
 msgstr "Третє вхідне зображення"
 
-#: plug-ins/common/compose.c:432
+#: plug-ins/common/compose.c:433
 msgid "Image 4"
 msgstr "Зображення 4"
 
-#: plug-ins/common/compose.c:433
+#: plug-ins/common/compose.c:434
 msgid "Fourth input image"
 msgstr "Четверте вхідне зображення"
 
-#: plug-ins/common/compose.c:438 plug-ins/common/compose.c:501
+#: plug-ins/common/compose.c:439 plug-ins/common/compose.c:502
 #: plug-ins/common/decompose.c:297
 msgid "Color _model"
 msgstr "Кольорова _модель"
 
-#: plug-ins/common/compose.c:447 plug-ins/common/compose.c:510
+#: plug-ins/common/compose.c:448 plug-ins/common/compose.c:511
 #: plug-ins/common/decompose.c:307
 msgid "YCbCr ITU R470"
 msgstr "YCbCr ITU R470"
 
-#: plug-ins/common/compose.c:448 plug-ins/common/compose.c:511
+#: plug-ins/common/compose.c:449 plug-ins/common/compose.c:512
 #: plug-ins/common/decompose.c:308
 msgid "YCbCr ITU R709"
 msgstr "YCbCr ITU R709"
 
-#: plug-ins/common/compose.c:449 plug-ins/common/compose.c:512
+#: plug-ins/common/compose.c:450 plug-ins/common/compose.c:513
 #: plug-ins/common/decompose.c:309
 msgid "YCbCr ITU R470 256"
 msgstr "YCbCr ITU R470 256"
 
-#: plug-ins/common/compose.c:450 plug-ins/common/compose.c:513
+#: plug-ins/common/compose.c:451 plug-ins/common/compose.c:514
 #: plug-ins/common/decompose.c:310
 msgid "YCbCr ITU R709 256"
 msgstr "YCbCr ITU R709 256"
 
-#: plug-ins/common/compose.c:456 plug-ins/common/compose.c:519
+#: plug-ins/common/compose.c:457 plug-ins/common/compose.c:520
 #: plug-ins/common/smooth-palette.c:158
 msgid "New image"
 msgstr "Нове зображення"
 
-#: plug-ins/common/compose.c:457 plug-ins/common/compose.c:520
+#: plug-ins/common/compose.c:458 plug-ins/common/compose.c:521
 #: plug-ins/common/smooth-palette.c:159
 msgid "Output image"
 msgstr "Зображення-результат"
 
-#: plug-ins/common/compose.c:472
+#: plug-ins/common/compose.c:473
 msgid "Compose an image from multiple drawables of gray images"
 msgstr "Скласти зображення з декількох малюнків сірих зображень"
 
-#: plug-ins/common/compose.c:474
+#: plug-ins/common/compose.c:475
 msgid ""
 "This function creates a new image from multiple drawables of gray images"
 msgstr "Ця функція створює зображення з декількох малюнків сірих зображень"
 
-#: plug-ins/common/compose.c:483
+#: plug-ins/common/compose.c:484
 msgid "Drawable 2"
 msgstr "Малюнок 2"
 
-#: plug-ins/common/compose.c:484
+#: plug-ins/common/compose.c:485
 msgid "Second input drawable"
 msgstr "Другий вхідний малюнок"
 
-#: plug-ins/common/compose.c:489
+#: plug-ins/common/compose.c:490
 msgid "Drawable 3"
 msgstr "Малюнок 3"
 
-#: plug-ins/common/compose.c:490
+#: plug-ins/common/compose.c:491
 msgid "Third input drawable"
 msgstr "Третій вхідний малюнок"
 
-#: plug-ins/common/compose.c:495
+#: plug-ins/common/compose.c:496
 msgid "Drawable 4"
 msgstr "Малюнок 4"
 
-#: plug-ins/common/compose.c:496
+#: plug-ins/common/compose.c:497
 msgid "Fourth input drawable"
 msgstr "Четвертий вхідний малюнок"
 
-#: plug-ins/common/compose.c:536
+#: plug-ins/common/compose.c:537
 msgid "R_ecompose"
 msgstr "_Возз'єднати"
 
-#: plug-ins/common/compose.c:540
+#: plug-ins/common/compose.c:541
 msgid "Recompose an image that was previously decomposed"
 msgstr "Зібрати раніше розібране на канали зображення"
 
-#: plug-ins/common/compose.c:542
+#: plug-ins/common/compose.c:543
 msgid ""
 "This function recombines the grayscale layers produced by Decompose into a "
 "single RGB or RGBA layer, and replaces the originally decomposed layer with "
@@ -1677,7 +1677,7 @@ msgstr ""
 "«Розібрати на шари» RGB або RGBA, і замінює початковий розібраний шар на "
 "результат."
 
-#: plug-ins/common/compose.c:605
+#: plug-ins/common/compose.c:606
 msgid ""
 "You can only run 'Recompose' if the active image was originally produced by "
 "'Decompose'."
@@ -1685,62 +1685,62 @@ msgstr ""
 "Функція «Зібрати» доступна лише для тих зображень, які створені за допомогою "
 "фільтра «Розібрати»."
 
-#: plug-ins/common/compose.c:636
+#: plug-ins/common/compose.c:637
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
 msgstr "Помилка сканування паразита 'decompose-data': надто мало шарів"
 
-#: plug-ins/common/compose.c:651
+#: plug-ins/common/compose.c:652
 #, c-format
 msgid "Cannot recompose: Specified source layer ID %d not found"
 msgstr ""
 "Неможливо перекомпонувати: не знайдено вказаного шару джерела із "
 "ідентифікатором %d"
 
-#: plug-ins/common/compose.c:671
+#: plug-ins/common/compose.c:672
 #, c-format
 msgid "Cannot recompose: Specified layer #%d ID %d not found"
 msgstr ""
 "Неможливо перекомпонувати: не знайдено вказаного шару %d, ідентифікатор %d"
 
-#: plug-ins/common/compose.c:700
+#: plug-ins/common/compose.c:701
 #, c-format
 msgid "Could not get layers for image %d"
 msgstr "Не вдається отримати шари зображення %d"
 
-#: plug-ins/common/compose.c:777
+#: plug-ins/common/compose.c:778
 msgid "Composing"
 msgstr "Збирання"
 
-#: plug-ins/common/compose.c:1073 plug-ins/common/compose.c:1473
+#: plug-ins/common/compose.c:1075 plug-ins/common/compose.c:1475
 msgid "At least one image is needed to compose"
 msgstr "Для збирання треба принаймні одне зображення"
 
-#: plug-ins/common/compose.c:1094
+#: plug-ins/common/compose.c:1096
 msgid "Drawables have different size"
 msgstr "Малюнки мають різні розміри"
 
-#: plug-ins/common/compose.c:1122
+#: plug-ins/common/compose.c:1124
 msgid "Images have different size"
 msgstr "Зображення мають різний розмір"
 
-#: plug-ins/common/compose.c:1140
+#: plug-ins/common/compose.c:1142
 msgid "Error in getting layer IDs"
 msgstr "Помилка отримання ідентифікатора шару"
 
-#: plug-ins/common/compose.c:1273
+#: plug-ins/common/compose.c:1275
 msgid "Compose"
 msgstr "Зібрати"
 
-#: plug-ins/common/compose.c:1288
+#: plug-ins/common/compose.c:1290
 msgid "Compose Channels"
 msgstr "Зібрати канали"
 
 #. Channel representation grid
-#: plug-ins/common/compose.c:1303
+#: plug-ins/common/compose.c:1305
 msgid "Channel Representations"
 msgstr "Представлення каналу"
 
-#: plug-ins/common/compose.c:1363
+#: plug-ins/common/compose.c:1365
 msgid "Mask value"
 msgstr "Значення маски"
 
@@ -2002,7 +2002,7 @@ msgid "Cannot operate on empty selections."
 msgstr "Неможливо виконувати дії з порожнім виділенням."
 
 #: plug-ins/common/curve-bend.c:815 plug-ins/common/file-cel.c:330
-#: plug-ins/common/file-cel.c:382 plug-ins/common/file-dicom.c:360
+#: plug-ins/common/file-cel.c:382 plug-ins/common/file-dicom.c:361
 #: plug-ins/common/file-farbfeld.c:273 plug-ins/common/file-gif-load.c:481
 #: plug-ins/common/file-iff.c:282 plug-ins/common/file-lnk.c:200
 #: plug-ins/common/file-mng.c:1409 plug-ins/common/file-paa.c:190
@@ -2487,13 +2487,14 @@ msgstr "Рівень _білого"
 msgid "White level"
 msgstr "Рівень білого"
 
-#: plug-ins/common/despeckle.c:358 plug-ins/common/file-pcx.c:702
-#: plug-ins/file-bmp/bmp-load.c:800
+#: plug-ins/common/despeckle.c:358 plug-ins/common/file-farbfeld.c:298
+#: plug-ins/common/file-pcx.c:702 plug-ins/file-bmp/bmp-load.c:800
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "Розміри зображення великі: ширина %d x висота %d"
 
-#: plug-ins/common/despeckle.c:369 plug-ins/common/web-browser.c:211
+#: plug-ins/common/despeckle.c:369 plug-ins/common/file-farbfeld.c:316
+#: plug-ins/common/web-browser.c:211
 #, c-format
 msgid "There was not enough memory to complete the operation."
 msgstr "Недостатньо пам'яті для завершення операції."
@@ -2615,9 +2616,9 @@ msgstr "Кінець файлу або помилка при читанні за
 #.
 #. * Open the file for reading...
 #.
-#: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:352
+#: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:353
 #: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:473
-#: plug-ins/common/file-heif.c:1049 plug-ins/common/file-jp2.c:1377
+#: plug-ins/common/file-heif.c:1049 plug-ins/common/file-jp2.c:1375
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
 #: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
 #: plug-ins/common/file-png.c:792 plug-ins/common/file-pnm.c:688
@@ -2700,9 +2701,9 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #.
 #. * Open the file for writing...
 #.
-#: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:347
+#: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:364
 #: plug-ins/common/file-gif-export.c:939 plug-ins/common/file-html-table.c:360
-#: plug-ins/common/file-jp2.c:1800 plug-ins/common/file-jpegxl.c:1389
+#: plug-ins/common/file-jp2.c:1804 plug-ins/common/file-jpegxl.c:1389
 #: plug-ins/common/file-pcx.c:1083 plug-ins/common/file-pix.c:636
 #: plug-ins/common/file-png.c:1915 plug-ins/common/file-pnm.c:1623
 #: plug-ins/common/file-ps.c:1368 plug-ins/common/file-qoi.c:350
@@ -2879,28 +2880,65 @@ msgstr ""
 "визначено у розділі 10 стандарту. Файли буде збережено без стискання, а "
 "супутні мітки DICOM буде заповнено типовими фіктивними значеннями."
 
-#: plug-ins/common/file-dicom.c:386
+#: plug-ins/common/file-dicom.c:387
 #, c-format
 msgid "'%s' is not a DICOM file."
 msgstr "«%s»: не DICOM файлом"
 
-#: plug-ins/common/file-dicom.c:559
+#: plug-ins/common/file-dicom.c:509
+#, c-format
+msgid "'%s' has an incorrect value for field size. Possibly corrupt image."
+msgstr ""
+"«%s» має некоректне значення розміру поля. Ймовірно, зображення пошкоджено."
+
+#: plug-ins/common/file-dicom.c:570
 #, c-format
 msgid "Transfer syntax %s is not supported by GIMP."
 msgstr "У GIMP не передбачено підтримки перехідного синтаксису %s."
 
-#: plug-ins/common/file-dicom.c:614
+#: plug-ins/common/file-dicom.c:625
 #, c-format
 msgid "%s is not supported by GIMP in combination with samples per pixel: %d"
 msgstr ""
 "Підтримки %s у GIMP не передбачено при поєднанні із кількістю фрагментів на "
 "піксель %d"
 
-#: plug-ins/common/file-dicom.c:1506
+#: plug-ins/common/file-dicom.c:708
+#, c-format
+msgid "'%s' has a bpp of %d which GIMP cannot handle."
+msgstr ""
+"«%s» використовує кількість бітів на піксель %d, з якою не може працювати"
+" GIMP."
+
+#: plug-ins/common/file-dicom.c:719
+#, c-format
+#| msgid ""
+#| "'%s':\n"
+#| "Image width is larger than GIMP can handle"
+msgid "'%s' has a larger image size (%d x %d) than GIMP can handle."
+msgstr ""
+"«%s» містить зображення більшого розміру (%d x %d), ніж може обробляти GIMP."
+
+#: plug-ins/common/file-dicom.c:730
+#, c-format
+msgid "'%s' has samples per pixel of %d which GIMP cannot handle."
+msgstr ""
+"«%s» використовує кількість семплів на піксель %d, з якою не може працювати"
+" GIMP."
+
+#: plug-ins/common/file-dicom.c:741
+#, c-format
+#| msgid "Overflow reading compressed data. Possibly corrupt file."
+msgid "'%s' has not enough pixel data. Possibly corrupt image."
+msgstr ""
+"«%s» не має достатнього обсягу даних пікселів. Ймовірно, зображення"
+" пошкоджено."
+
+#: plug-ins/common/file-dicom.c:1543
 msgid "Cannot save images with alpha channel."
 msgstr "Неможливо зберегти зображення з альфа-каналом."
 
-#: plug-ins/common/file-dicom.c:1525 plug-ins/common/file-ps.c:1363
+#: plug-ins/common/file-dicom.c:1562 plug-ins/common/file-ps.c:1363
 #: plug-ins/common/file-xwd.c:688 plug-ins/file-fits/fits.c:641
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -2923,7 +2961,7 @@ msgstr "Експортувати зображення у форматі Farbfeld
 msgid "Failed to read Farbfeld header"
 msgstr "Не вдалося прочитати заголовок Farbfeld"
 
-#: plug-ins/common/file-farbfeld.c:310
+#: plug-ins/common/file-farbfeld.c:328
 #, c-format
 msgid "Premature end of Farbfeld pixel data"
 msgstr "Передчасне закінчення піксельних даних Farbfeld"
@@ -3226,7 +3264,7 @@ msgstr "відомості щодо кадру"
 msgid "local colormap"
 msgstr "локальна мапа кольорів"
 
-#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:425
+#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:434
 msgid ""
 "Non-square pixels. Image might look squashed if Dot for Dot mode is enabled."
 msgstr ""
@@ -3877,9 +3915,18 @@ msgstr "Завантажити файл у форматі IFF"
 msgid "Invalid or missing ILBM image"
 msgstr "Некоректне або пропущене зображення ILBM"
 
-#: plug-ins/common/file-iff.c:331
+#: plug-ins/common/file-iff.c:332
+#, c-format
 msgid "ILBM contains no image data - likely a palette file"
 msgstr "В ILBM не міститься даних зображення — ймовірно, це файл палітри"
+
+#: plug-ins/common/file-iff.c:363
+#, c-format
+#| msgid ""
+#| "'%s':\n"
+#| "Invalid color map"
+msgid "Invalid ILBM colormap size"
+msgstr "Некоректний розмір карти кольорів ILBM"
 
 #: plug-ins/common/file-jp2.c:214 plug-ins/common/file-jp2.c:309
 msgid "JPEG 2000 image"
@@ -4035,96 +4082,96 @@ msgid "_Number of Resolutions"
 msgstr "_Кількість роздільностей"
 
 #. Not having color information is expected.
-#: plug-ins/common/file-jp2.c:1212
+#: plug-ins/common/file-jp2.c:1210
 msgid "Opening JPEG 2000 codestream"
 msgstr "Відкриття кодового потоку JPEG 2000"
 
 #. Unexpected, but let's be a bit flexible and ask.
-#: plug-ins/common/file-jp2.c:1215
+#: plug-ins/common/file-jp2.c:1213
 msgid "JPEG 2000 image with no color space"
 msgstr "Зображення JPEG 2000 без простору кольорів"
 
-#: plug-ins/common/file-jp2.c:1240
+#: plug-ins/common/file-jp2.c:1238
 #, c-format
 msgid "Unsupported JPEG 2000%s '%s' with %d components."
 msgstr "Непідтримуваний JPEG 2000%s «%s» з %d компонентами."
 
-#: plug-ins/common/file-jp2.c:1300 plug-ins/file-jpeg/jpeg-export.c:896
+#: plug-ins/common/file-jp2.c:1298 plug-ins/file-jpeg/jpeg-export.c:896
 #: plug-ins/file-psd/psd-export.c:2589
 #: plug-ins/file-tiff/file-tiff-export.c:1310
 msgid "No soft-proofing profile"
 msgstr "Немає профілю для проби кольорів"
 
-#: plug-ins/common/file-jp2.c:1308 plug-ins/common/file-jpegxl.c:2035
+#: plug-ins/common/file-jp2.c:1306 plug-ins/common/file-jpegxl.c:2035
 #: plug-ins/file-jpeg/jpeg-export.c:904 plug-ins/file-psd/psd-export.c:2597
 #: plug-ins/file-tiff/file-tiff-export.c:1318
 msgid "Name of the color profile used for CMYK export."
 msgstr "Назва профілю кольорів, який використано для експортування CMYK."
 
-#: plug-ins/common/file-jp2.c:1319 plug-ins/common/file-jpegxl.c:2054
+#: plug-ins/common/file-jp2.c:1317 plug-ins/common/file-jpegxl.c:2054
 #: plug-ins/file-jpeg/jpeg-export.c:915 plug-ins/file-psd/psd-export.c:2608
 #: plug-ins/file-tiff/file-tiff-export.c:1330
 #, c-format
 msgid "Profile: %s"
 msgstr "Профіль: %s"
 
-#: plug-ins/common/file-jp2.c:1385 plug-ins/common/file-wmf.c:238
+#: plug-ins/common/file-jp2.c:1383 plug-ins/common/file-wmf.c:238
 #: plug-ins/common/file-wmf.c:596
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr "Не вдається відкрити «%s» для читання."
 
-#: plug-ins/common/file-jp2.c:1394
+#: plug-ins/common/file-jp2.c:1392
 #, c-format
 msgid "Failed to initialize decoder for '%s', out of memory?"
 msgstr "Не вдалося ініціалізувати декодер для «%s». Не вистачає пам'яті?"
 
-#: plug-ins/common/file-jp2.c:1410
+#: plug-ins/common/file-jp2.c:1408
 #, c-format
 msgid "Couldn't set parameters on decoder for '%s'."
 msgstr "Не вдається встановити параметри декодера для «%s»."
 
-#: plug-ins/common/file-jp2.c:1418
+#: plug-ins/common/file-jp2.c:1416
 #, c-format
 msgid "Couldn't read JP2 header from '%s'."
 msgstr "Не вдається зчитати заголовок JP2 з «%s»"
 
-#: plug-ins/common/file-jp2.c:1426
+#: plug-ins/common/file-jp2.c:1424
 #, c-format
 msgid "Couldn't decode JP2 image in '%s'."
 msgstr "Не вдається декодувати зображення JP2 в «%s»"
 
-#: plug-ins/common/file-jp2.c:1434
+#: plug-ins/common/file-jp2.c:1432
 #, c-format
 msgid "Couldn't decompress JP2 image in '%s'."
 msgstr "Не вдається розпакувати зображення JP2 в «%s»"
 
-#: plug-ins/common/file-jp2.c:1465
+#: plug-ins/common/file-jp2.c:1463
 #, c-format
 msgid "Couldn't decode CIELAB JP2 image in '%s'."
 msgstr "Не вдається декодувати зображення CIELAB JP2 в «%s»."
 
-#: plug-ins/common/file-jp2.c:1522
+#: plug-ins/common/file-jp2.c:1520
 #, c-format
 msgid "Unknown color space in JP2 codestream '%s'."
 msgstr "Невідомий колірний простір у кодовому потоці JP2 «%s»."
 
-#: plug-ins/common/file-jp2.c:1533
+#: plug-ins/common/file-jp2.c:1531
 #, c-format
 msgid "Couldn't convert YCbCr JP2 image '%s' to RGB."
 msgstr "Неможливо перетворити зображення YCbCr JP2 «%s» в RGB."
 
-#: plug-ins/common/file-jp2.c:1543
+#: plug-ins/common/file-jp2.c:1541
 #, c-format
 msgid "Couldn't convert CMYK JP2 image in '%s' to RGB."
 msgstr "Неможливо перетворити зображення CMYK JP2 в «%s» в RGB."
 
-#: plug-ins/common/file-jp2.c:1555
+#: plug-ins/common/file-jp2.c:1553
 #, c-format
 msgid "Couldn't convert xvYCC JP2 image in '%s' to RGB."
 msgstr "Неможливо перетворити зображення xvYCC JP2 в «%s» в RGB."
 
-#: plug-ins/common/file-jp2.c:1582
+#: plug-ins/common/file-jp2.c:1580
 #, c-format
 msgid "Unsupported color space in JP2 image '%s'."
 msgstr "Невідомий колірний простір у зображенні JP2 «%s»."
@@ -4556,13 +4603,13 @@ msgstr "%s: не вдалося завантажити усі зображенн
 msgid "'%s' is not a PCX file"
 msgstr "«%s»: не є файлом PCX"
 
-#: plug-ins/common/file-pcx.c:672 plug-ins/common/file-wbmp.c:463
+#: plug-ins/common/file-pcx.c:672 plug-ins/common/file-wbmp.c:464
 #: plug-ins/file-bmp/bmp-load.c:606 plug-ins/file-psd/psd-load.c:572
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Непідтримувана ширина зображення: %d"
 
-#: plug-ins/common/file-pcx.c:679 plug-ins/common/file-wbmp.c:469
+#: plug-ins/common/file-pcx.c:679 plug-ins/common/file-wbmp.c:470
 #: plug-ins/file-bmp/bmp-load.c:615 plug-ins/file-psd/psd-load.c:564
 #, c-format
 msgid "Unsupported or invalid image height: %d"
@@ -6325,8 +6372,8 @@ msgstr "Не можна виконувати дії із зображенням�
 #: plug-ins/common/file-sunras.c:1169 plug-ins/common/file-sunras.c:1264
 #: plug-ins/common/file-sunras.c:1348 plug-ins/common/file-sunras.c:1448
 #: plug-ins/common/file-xwd.c:1493 plug-ins/common/file-xwd.c:1607
-#: plug-ins/common/file-xwd.c:1778 plug-ins/common/file-xwd.c:2018
-#: plug-ins/common/file-xwd.c:2207 plug-ins/common/file-xwd.c:2483
+#: plug-ins/common/file-xwd.c:1789 plug-ins/common/file-xwd.c:2029
+#: plug-ins/common/file-xwd.c:2218 plug-ins/common/file-xwd.c:2494
 #, c-format
 msgid "EOF encountered on reading"
 msgstr "Неочікуваний кінець файлу на зчитуванні"
@@ -6414,8 +6461,8 @@ msgid "Retry without limits preventing to parse huge data?"
 msgstr ""
 "Повторити без обмежень, які накладаються на обробку великих масивів даних?"
 
-#: plug-ins/common/file-svg.c:558 plug-ins/file-exr/file-exr.c:378
-#: plug-ins/file-exr/file-exr.c:392
+#: plug-ins/common/file-svg.c:558 plug-ins/file-exr/file-exr.c:381
+#: plug-ins/file-exr/file-exr.c:395
 msgid "Unknown reason"
 msgstr "Невідома причина"
 
@@ -6627,6 +6674,12 @@ msgstr "«%s»: некоректне значення заголовка OTA"
 #, c-format
 msgid "'%s': Invalid dimensions %u x %u"
 msgstr "«%s»: некоректні розміри, %u x %u"
+
+#: plug-ins/common/file-wbmp.c:517
+#, c-format
+#| msgid "Failed to read frame %d. Possibly corrupt animation.\n"
+msgid "Read failure at position %u. Possibly corrupt image."
+msgstr "Помилка читання на позиції %u. Ймовірно, зображення пошкоджено."
 
 #: plug-ins/common/file-wmf.c:177
 msgid "Microsoft WMF file"
@@ -7216,13 +7269,19 @@ msgstr "Помилка при експортуванні «%s»: "
 msgid "Seek error"
 msgstr "Помилка позиціювання"
 
-#: plug-ins/common/file-xwd.c:1858 plug-ins/common/file-xwd.c:2109
-#: plug-ins/common/file-xwd.c:2304
+#: plug-ins/common/file-xwd.c:1692
+#, c-format
+#| msgid "Failed to read frame %d. Possibly corrupt animation.\n"
+msgid "Invalid colormap offset. Possibly corrupt image."
+msgstr "Некоректний зсув карти кольорів. Ймовірно, зображення пошкоджено."
+
+#: plug-ins/common/file-xwd.c:1869 plug-ins/common/file-xwd.c:2120
+#: plug-ins/common/file-xwd.c:2315
 #, c-format
 msgid "XWD-file %s is corrupt."
 msgstr "Файл XWD %s пошкоджений."
 
-#: plug-ins/common/file-xwd.c:2057
+#: plug-ins/common/file-xwd.c:2068
 #, c-format
 msgid ""
 "'%s':\n"
@@ -9810,25 +9869,25 @@ msgstr "Помилка запиту точності зображення з «%
 msgid "Error querying image type from '%s'"
 msgstr "Помилка запиту типу зображення з «%s»"
 
-#: plug-ins/file-exr/file-exr.c:334
+#: plug-ins/file-exr/file-exr.c:337
 #, c-format
 msgid "Error reading pixel data from '%s'"
 msgstr "Помилка зчитування даних точок з «%s»"
 
-#: plug-ins/file-exr/file-exr.c:377 plug-ins/file-exr/file-exr.c:391
+#: plug-ins/file-exr/file-exr.c:380 plug-ins/file-exr/file-exr.c:394
 #, c-format
 msgid "Failed to load metadata: %s"
 msgstr "Не вдалося завантажити метадані: %s"
 
-#: plug-ins/file-exr/file-exr.c:452
+#: plug-ins/file-exr/file-exr.c:455
 msgid "Import OpenEXR"
 msgstr "Імпортувати OpenEXR"
 
-#: plug-ins/file-exr/file-exr.c:467
+#: plug-ins/file-exr/file-exr.c:470
 msgid "Unknown Channel Name"
 msgstr "Невідома назва каналу"
 
-#: plug-ins/file-exr/file-exr.c:468
+#: plug-ins/file-exr/file-exr.c:471
 msgid ""
 "The image contains a single unknown channel.\n"
 "It has been converted to grayscale."
@@ -9836,11 +9895,11 @@ msgstr ""
 "У файлі зображення міститься окремий невідомий канал.\n"
 "Кольори каналу перетворено на відтінки сірого."
 
-#: plug-ins/file-exr/file-exr.c:471
+#: plug-ins/file-exr/file-exr.c:474
 msgid "Chroma Channels"
 msgstr "Канали палітри"
 
-#: plug-ins/file-exr/file-exr.c:472
+#: plug-ins/file-exr/file-exr.c:475
 msgid ""
 "OpenEXR chroma channels are not yet supported.\n"
 "They have been discarded."
@@ -10862,15 +10921,15 @@ msgstr ""
 "Експортувати як файл Duotone PSD, якщо під час початкового імпортування до "
 "зображення було долучено дані простору кольорів Duotone."
 
-#: plug-ins/file-psd/psd.c:407
+#: plug-ins/file-psd/psd.c:411
 msgid "Import PSD"
 msgstr "Імпорт PSD"
 
-#: plug-ins/file-psd/psd.c:558
+#: plug-ins/file-psd/psd.c:562
 msgid "Import PSD metadata"
 msgstr "Імпорт метаданих PSD"
 
-#: plug-ins/file-psd/psd.c:562
+#: plug-ins/file-psd/psd.c:566
 msgid ""
 "Metadata fill layers are not supported and will show up as empty layers."
 msgstr ""
@@ -16553,7 +16612,6 @@ msgid "An error occurred while trying to print:"
 msgstr "При друкуванні виникла помилка:"
 
 #: plug-ins/print/print.c:457
-#| msgid "_Print..."
 msgid "_Print"
 msgstr "_Надрукувати"
 
