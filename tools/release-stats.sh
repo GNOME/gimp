@@ -77,8 +77,13 @@ get_issues_mrs()
   echo $closed_issues $merged_mrs
 }
 
-read closed_issues merged_mrs < <(get_issues_mrs "https://gitlab.gnome.org/GNOME/gimp/")
-read ux_closed_issues ux_merged_mrs < <(get_issues_mrs "https://gitlab.gnome.org/Teams/GIMP/Design/gimp-ux/")
+set -- $(get_issues_mrs "https://gitlab.gnome.org/GNOME/gimp/")
+closed_issues=$1
+merged_mrs=$2
+
+set -- $(get_issues_mrs "https://gitlab.gnome.org/Teams/GIMP/Design/gimp-ux/")
+ux_closed_issues=$1
+ux_merged_mrs=$2
 
 if [ -n "$ux_closed_issues" ] || [ "$ux_closed_issues" -eq "$ux_closed_issues" ] 2>/dev/null; then
   : # All good.
