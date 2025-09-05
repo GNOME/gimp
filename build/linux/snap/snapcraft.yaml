@@ -18,11 +18,12 @@ apps:
   gimp:
     common-id: org.gimp.GIMP
     command: usr/bin/gimp
+    command-chain: [command-chain/enable-plugins]
     desktop: usr/share/applications/gimp.desktop
     environment:
       HOME: $SNAP_REAL_HOME
-      #Internet connection and Matting Leving support on FG select
-      LD_LIBRARY_PATH: $SNAP/gnome-platform/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libproxy:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/blas:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/lapack:$LD_LIBRARY_PATH
+      #Internet connection, Matting Leving support on FG select and NPU hardware support
+      LD_LIBRARY_PATH: $SNAP/gnome-platform/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libproxy:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/blas:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/lapack:$SNAP/npu-libs:$LD_LIBRARY_PATH
       #JavaScript plug-ins support
       GI_TYPELIB_PATH: $SNAP/gnome-platform/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gjs/girepository-1.0:$GI_TYPELIB_PATH
       #AVIF, HEIC and HEJ2 plug-ins support
@@ -38,6 +39,9 @@ apps:
       - home
       - network
       - removable-media
+      - intel-npu
+      - npu-libs
+      - gimp-plugins
     extensions: [gnome]
 
 layout:
@@ -54,6 +58,19 @@ slots:
     interface: dbus
     bus: session
     name: org.gimp.GIMP.UI
+
+plugs:
+  intel-npu:
+    interface: custom-device
+    custom-device: intel-npu-device
+  npu-libs:
+    interface: content
+    content: npu-libs-2404
+    target: $SNAP/npu-libs
+  gimp-plugins:
+    interface: content
+    content: gimp-plugins
+    target: $SNAP/gimp-plugins
 
 parts:
   buildenv:
@@ -158,7 +175,7 @@ parts:
     override-stage: |
       # update gimp's plugin search path so it will pick up plugins mounted over snapd's content interface
       current_path=$(grep "# (plug-in-path" ${CRAFT_PART_INSTALL}/etc/gimp/3.0/gimprc | cut -d '"' -f2)
-      echo "(plug-in-path \"${current_path}\")" >> ${CRAFT_PART_INSTALL}/etc/gimp/3.0/gimprc
+      echo "(plug-in-path \"${current_path}:/snap/${SNAPCRAFT_PROJECT_NAME}/current/gimp-plugins\")" >> ${CRAFT_PART_INSTALL}/etc/gimp/3.0/gimprc
       craftctl default
     parse-info:
       - usr/share/metainfo/org.gimp.GIMP.appdata.xml
@@ -170,3 +187,12 @@ parts:
       for myb in $(find "$CRAFT_PRIME/usr/share/mypaint-data/2.0/brushes/Dieterle" -iname "*.myb"); do
         sed -i -e 's|surfacemap_x|gridmap_x|g' -e 's|surfacemap_y|gridmap_y|g' $myb;
       done
+
+  command-chain-plugins:
+    plugin: dump
+    source: build/linux/snap/patches/
+    override-pull: |
+      craftctl default
+      chmod +x enable-plugins
+    organize:
+      enable-plugins: command-chain/enable-plugins
