@@ -561,11 +561,12 @@ file_open_with_proc_and_display (Gimp                *gimp,
               basename = g_path_get_basename (gimp_file_get_utf8_name (file));
 
               gimp_item_rename (GIMP_ITEM (layer), basename, NULL);
-              gimp_image_undo_free (image);
-              gimp_image_clean_all (image);
 
               g_free (basename);
             }
+
+          gimp_image_undo_free (image);
+          gimp_image_clean_all (image);
         }
 
       if (gimp_create_display (image->gimp, image, gimp_unit_pixel (), 1.0,
