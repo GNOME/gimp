@@ -2,14 +2,14 @@
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # Robert Claudiu Gheorghe <rgheorghe AT writeme DOT com>, 2001.
 # Nandor Licker <lickernandor AT yahoo DOT com>, 2010-2011.
-# Cristian Secară <cristi AT secarica DOT ro>, 2008-2020.
+# Cristian Secară <cristi AT secarica DOT ro>, 2008-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2025-08-06 19:19+0000\n"
-"PO-Revision-Date: 2025-08-10 21:53+0300\n"
+"PO-Revision-Date: 2025-09-04 10:40+0300\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -884,7 +884,7 @@ msgstr "Ghidaje noi din _selecție"
 #: plug-ins/script-fu/scripts/guides-from-selection.scm:33
 msgid "Create four guides around the bounding box of the current selection"
 msgstr ""
-"Creează patru ghidaje în jurul casetei de încadrare a selecției curente"
+"Creează patru ghidaje în jurul casetei de delimitare a selecției curente"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:30
 msgid "New Guide (by _Percent)..."
