@@ -99,7 +99,7 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
     Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):${dep}_build$([char]13)$([char]27)[0K"
   }
 
-#self_build babl
+self_build babl
 self_build gegl @('build/windows/patches/0001-meson-only-generate-CodeView-.pdb-symbols-on-Windows.patch') @('-Dworkshop=true')
 
 Set-Location $GIMP_DIR
