@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-02 21:05+0200\n"
-"PO-Revision-Date: 2025-09-04 08:37+0200\n"
+"PO-Revision-Date: 2025-09-06 14:17+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -3099,7 +3099,7 @@ msgstr "(gif animata)_Usa il ritardo predefinito per tutti i fotogrammi"
 
 #: ../plug-ins/common/file-gif-export.c:240
 msgid "Use dis_posal entered above for all frames"
-msgstr "Usa le dis_posizioni inserite sopra per tutti i forogrammi"
+msgstr "Usa queste dis_posizioni per tutti i fotogrammi"
 
 #: ../plug-ins/common/file-gif-export.c:242
 msgid "(animated gif) Use specified disposal for all frames"
