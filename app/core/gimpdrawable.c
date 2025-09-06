@@ -584,7 +584,7 @@ gimp_drawable_duplicate (GimpItem *item,
 
               new_filter = gimp_drawable_filter_duplicate (new_drawable,
                                                            filter);
-              if (filter)
+              if (new_filter)
                 {
                   gimp_drawable_filter_apply (new_filter, NULL);
                   gimp_drawable_filter_commit (new_filter, TRUE, NULL, FALSE);
