@@ -8,12 +8,13 @@
 #
 # chunk = spezzone
 # brush pipe = pennelli animati
+# frame = fotogramma
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-02 21:05+0200\n"
-"PO-Revision-Date: 2025-09-06 14:17+0200\n"
+"PO-Revision-Date: 2025-09-06 14:39+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -6907,11 +6908,11 @@ msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:390
 msgid "_Auto Crop all frames"
-msgstr "_Autoritaglia tutti i quadri"
+msgstr "_Autoritaglia tutti i fotogrammi"
 
 #: ../plug-ins/common/file-xmc.c:391
 msgid "Remove the empty borders of all frames."
-msgstr "Rimuovi i bordi vuoti da tutti i quadri."
+msgstr "Rimuovi i bordi vuoti da tutti i fotogrammi."
 
 #: ../plug-ins/common/file-xmc.c:396
 msgid "Si_ze where unspecified"
@@ -6923,11 +6924,11 @@ msgstr "Dimensione quadro predefinita ove non specificata"
 
 #: ../plug-ins/common/file-xmc.c:411
 msgid "_Use default size for all frames"
-msgstr "_Usa il ritardo predefinito per tutti i quadri"
+msgstr "_Usa il ritardo predefinito per tutti i fotogrammi"
 
 #: ../plug-ins/common/file-xmc.c:412
 msgid "Use default size for all frames"
-msgstr "Usa il ritardo predefinito per tutti i quadri"
+msgstr "Usa il ritardo predefinito per tutti i fotogrammi"
 
 #: ../plug-ins/common/file-xmc.c:417
 msgid "_Delay where unspecified"
@@ -6939,11 +6940,11 @@ msgstr "Lasso di tempo predefinito in millisecondi per la resa di ogni quadro"
 
 #: ../plug-ins/common/file-xmc.c:424
 msgid "Use default delay for all _frames"
-msgstr "Usa il ritardo prede_finito per tutti i quadri"
+msgstr "Usa il ritardo predefinito per tutti i _fotogrammi"
 
 #: ../plug-ins/common/file-xmc.c:425
 msgid "Use default delay for all frames"
-msgstr "Usa il ritardo predefinito per tutti i quadri"
+msgstr "Usa il ritardo predefinito per tutti i fotogrammi"
 
 #: ../plug-ins/common/file-xmc.c:430
 msgid "C_opyright"
@@ -7028,11 +7029,9 @@ msgid ""
 "disorder the screen.\n"
 "Uncheck if you plan to edit the exported cursor using other programs."
 msgstr ""
-"Rimuove i bordi vuoti da tutti i quadri.\n"
-"Riduce la dimensione del file e può risolvere il problema di alcuni cursori "
-"di grandi dimensioni che rovinano lo schermo.\n"
-"Disabilitare se si pensa di modificare il cursore esportato usando altri "
-"programmi."
+"Rimuove i bordi vuoti da tutti i fotogrammi.\n"
+"Riduce la dimensione del file e può risolvere il problema di alcuni cursori di grandi dimensioni che rovinano lo schermo.\n"
+"Disabilitare se si pensa di modificare il cursore esportato usando altri programmi."
 
 #: ../plug-ins/common/file-xmc.c:1143
 msgid ""
@@ -7044,14 +7043,10 @@ msgid ""
 "sequence, and which sequence is used based on the value of \"gtk-cursor-"
 "theme-size\"."
 msgstr ""
-"Sceglie la dimensione nominale dei quadri.\n"
-"Se non si prevede di creare un cursore multidimensionale, o non si ha "
-"un'idea precisa, lasciarlo a \"32px\".\n"
-"La dimensione nominale non ha relazione con le reali dimensioni (larghezza o "
-"altezza).\n"
-"Viene usata solamente per determinare da quali quadri dipendano da quali "
-"sequenze di animazioni, e quale sequenza viene usata basandosi sul valore di "
-"\"gtk-cursor-theme-size\"."
+"Sceglie la dimensione nominale dei fotogrammi.\n"
+"Se non si prevede di creare un cursore multidimensionale, o non si ha un'idea precisa, lasciarlo a \"32px\".\n"
+"La dimensione nominale non ha relazione con le reali dimensioni (larghezza o altezza).\n"
+"Viene usata solamente per determinare da quali fotogrammi dipendano da quali sequenze di animazioni, e quale sequenza viene usata basandosi sul valore di \"gtk-cursor-theme-size\"."
 
 #. Begin displaying export progress
 #: ../plug-ins/common/file-xmc.c:1259
@@ -7096,9 +7091,7 @@ msgid ""
 "for X bitmap cursors.\n"
 "It might be unsupported by some environments."
 msgstr ""
-"Il cursore è stato esportato con successo ma contiene uno o più quadri la "
-"cui altezza o larghezza è più di %ipx, un valore storico di dimensioni "
-"massime per cursori bitmap X.\n"
+"Il cursore è stato esportato con successo ma contiene uno o più fotogrammi la cui altezza o larghezza è più di %ipx, un valore storico di dimensioni massime per cursori bitmap X.\n"
 "In alcuni ambienti potrebbe non essere supportato."
 
 #: ../plug-ins/common/file-xmc.c:1578
@@ -7108,12 +7101,8 @@ msgid ""
 "You can satisfy it by checking \"Replace the size of all frames...\" in the "
 "export dialog, or your cursor may not appear in GNOME settings."
 msgstr ""
-"Il cursore è stato esportato con successo ma contiene uno o più quadri la "
-"cui dimensione nominale non è supportata dalle impostazioni di GNOME.\n"
-"Si può soddisfare questo requisito selezionando l'opzione \"Rimpiazza la "
-"dimensione di tutti i quadri...\" presente nella finestra di dialogo di "
-"esportazione, altrimenti questo cursore potrebbe non apparire nelle "
-"impostazioni di GNOME."
+"Il cursore è stato esportato con successo ma contiene uno o più fotogrammi la cui dimensione nominale non è supportata dalle impostazioni di GNOME.\n"
+"Si può soddisfare questo requisito selezionando l'opzione \"Rimpiazza la dimensione di tutti i fotogrammi...\" presente nella finestra di dialogo di esportazione, altrimenti questo cursore potrebbe non apparire nelle impostazioni di GNOME."
 
 #: ../plug-ins/common/file-xmc.c:1861
 #, c-format
@@ -7122,8 +7111,7 @@ msgid ""
 "whose size is over 8 digits.\n"
 "We clamped it to %dpx. You should check the exported cursor."
 msgstr ""
-"Il cursore è stato esportato con successo ma contiene uno o più quadri la "
-"cui dimensione è più di 8 cifre.\n"
+"Il cursore è stato esportato con successo ma contiene uno o più fotogrammi la cui dimensione è più di 8 cifre.\n"
 "È stato ritagliato a %dpx. Si suggerisce di controllare il cursore esportato."
 
 #. translators: the %i is *always* 8 here
@@ -11653,7 +11641,7 @@ msgstr "Distanza massima tra fotogrammi chiave"
 
 #: ../plug-ins/file-webp/file-webp.c:236
 msgid "_Default delay between frames"
-msgstr "Ritardo pre_definito tra quadri chiave"
+msgstr "Ritardo pre_definito tra fotogrammi chiave"
 
 #: ../plug-ins/file-webp/file-webp.c:237
 msgid ""
@@ -11665,7 +11653,7 @@ msgstr ""
 
 #: ../plug-ins/file-webp/file-webp.c:243
 msgid "Use default dela_y for all frames"
-msgstr "_Usa il ritardo predefinito per tutti i quadri"
+msgstr "_Usa il ritardo predefinito per tutti i fotogrammi"
 
 #: ../plug-ins/file-webp/file-webp.c:244
 msgid "Force default delay on all frames"
@@ -11685,7 +11673,7 @@ msgstr "(nessun quadro chiave)"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:52
 msgid "(all frames are keyframes)"
-msgstr "(tutti i quadri sono quadri chiave)"
+msgstr "(tutti i fotogrammi sono fotogrammi chiave)"
 
 #: ../plug-ins/file-webp/file-webp-export.c:101
 msgid "out of memory"
