@@ -197,12 +197,12 @@ done_dll.unlink(missing_ok=True)
 ### Deps (DLLs) of the binaries in 'bin' and 'lib' dirs
 for dir in ["bin", "lib"]:
   search_dir = GIMP_DISTRIB / dir
-  print(f"Searching for dependencies of {search_dir} in {MSYSTEM_PREFIX} and {GIMP_PREFIX}")
+  print(f"Searching for dependencies of {search_dir} in {GIMP_PREFIX} and {MSYSTEM_PREFIX}")
   for ext in ("*.dll", "*.exe"):
     for dep in search_dir.rglob(ext):
       subprocess.run([
         sys.executable, f"{GIMP_SOURCE}/build/windows/2_bundle-gimp-uni_dep.py",
-        str(dep), f"{MSYSTEM_PREFIX}/", f"{GIMP_PREFIX}/",
+        str(dep), f"{GIMP_PREFIX}/", f"{MSYSTEM_PREFIX}/",
         str(GIMP_DISTRIB), "--output-dll-list", done_dll.as_posix()
       ], check=True)
 
