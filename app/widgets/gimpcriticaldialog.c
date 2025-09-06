@@ -119,6 +119,7 @@ gimp_critical_dialog_class_init (GimpCriticalDialogClass *klass)
 static void
 gimp_critical_dialog_init (GimpCriticalDialog *dialog)
 {
+  GtkWidget      *container;
   PangoAttrList  *attrs;
   PangoAttribute *attr;
 
@@ -132,7 +133,8 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
 #endif
 
   dialog->main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (dialog->main_vbox), 6);
+  container         = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+  gtk_container_set_border_width (GTK_CONTAINER (container), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       dialog->main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (dialog->main_vbox);
@@ -212,7 +214,7 @@ gimp_critical_dialog_constructed (GObject *object)
       g_signal_connect_swapped (button, "clicked",
                                 G_CALLBACK (gimp_critical_dialog_copy_info),
                                 dialog);
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 6);
       gtk_widget_show (button);
 
       gtk_dialog_add_buttons (GTK_DIALOG (dialog),
@@ -233,7 +235,7 @@ gimp_critical_dialog_constructed (GObject *object)
   else
     {
       /* Pack directly (and well visible) the bug details. */
-      gtk_box_pack_start (GTK_BOX (dialog->main_vbox), scrolled, TRUE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (dialog->main_vbox), scrolled, TRUE, TRUE, 6);
       gtk_widget_show (scrolled);
 
       gtk_dialog_add_buttons (GTK_DIALOG (dialog),
