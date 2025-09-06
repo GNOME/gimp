@@ -1,0 +1,28 @@
+From 292b0b384c72fbb7f18ef7357a0aec9596abf2fe Mon Sep 17 00:00:00 2001
+From: Kevin Backhouse <kevinbackhouse@github.com>
+Date: Sun, 24 Aug 2025 16:26:17 +0100
+Subject: [PATCH] Low quality workaround for
+ https://github.com/Exiv2/exiv2/issues/3225
+
+---
+ include/exiv2/value.hpp | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/include/exiv2/value.hpp b/include/exiv2/value.hpp
+index 8249b99617..9cb377ba70 100644
+--- a/include/exiv2/value.hpp
++++ b/include/exiv2/value.hpp
+@@ -1535,11 +1535,13 @@ template <typename T>
+ std::ostream& ValueType<T>::write(std::ostream& os) const {
+   auto end = value_.end();
+   auto i = value_.begin();
++  auto oldlocale = std::locale::global(std::locale::classic());
+   while (i != end) {
+     os << std::setprecision(15) << *i;
+     if (++i != end)
+       os << " ";
+   }
++  std::locale::global(oldlocale);
+   return os;
+ }
+ 
