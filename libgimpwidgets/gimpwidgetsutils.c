@@ -544,6 +544,7 @@ gimp_widget_track_monitor (GtkWidget      *widget,
     track_monitor_hierarchy_changed (widget, NULL, track_data);
 }
 
+#ifndef G_OS_WIN32
 static gint
 monitor_number (GdkMonitor *monitor)
 {
@@ -557,6 +558,7 @@ monitor_number (GdkMonitor *monitor)
 
   return 0;
 }
+#endif
 
 /**
  * gimp_monitor_get_color_profile:
