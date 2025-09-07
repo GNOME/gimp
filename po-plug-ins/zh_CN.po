@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-04 09:01+0000\n"
-"PO-Revision-Date: 2025-09-04 17:30+0800\n"
+"POT-Creation-Date: 2025-09-06 22:48+0000\n"
+"PO-Revision-Date: 2025-09-07 08:29+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -600,7 +600,7 @@ msgstr "百叶窗"
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: plug-ins/common/blinds.c:260 plug-ins/common/compose.c:1230
+#: plug-ins/common/blinds.c:260 plug-ins/common/compose.c:1234
 #: plug-ins/common/decompose.c:642 plug-ins/common/file-cel.c:475
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:765
 #: plug-ins/common/file-farbfeld.c:307 plug-ins/common/file-gegl.c:446
@@ -1690,36 +1690,36 @@ msgstr "无法为图像 %d 获取图层"
 msgid "Composing"
 msgstr "合成"
 
-#: plug-ins/common/compose.c:1075 plug-ins/common/compose.c:1475
+#: plug-ins/common/compose.c:1079 plug-ins/common/compose.c:1479
 msgid "At least one image is needed to compose"
 msgstr "合成至少需要一幅图像"
 
-#: plug-ins/common/compose.c:1096
+#: plug-ins/common/compose.c:1100
 msgid "Drawables have different size"
 msgstr "可绘区大小不一致"
 
-#: plug-ins/common/compose.c:1124
+#: plug-ins/common/compose.c:1128
 msgid "Images have different size"
 msgstr "图像的大小不一致"
 
-#: plug-ins/common/compose.c:1142
+#: plug-ins/common/compose.c:1146
 msgid "Error in getting layer IDs"
 msgstr "获取图层标识时出错"
 
-#: plug-ins/common/compose.c:1275
+#: plug-ins/common/compose.c:1279
 msgid "Compose"
 msgstr "合成"
 
-#: plug-ins/common/compose.c:1290
+#: plug-ins/common/compose.c:1294
 msgid "Compose Channels"
 msgstr "合成通道"
 
 #. Channel representation grid
-#: plug-ins/common/compose.c:1305
+#: plug-ins/common/compose.c:1309
 msgid "Channel Representations"
 msgstr "通道代表"
 
-#: plug-ins/common/compose.c:1365
+#: plug-ins/common/compose.c:1369
 msgid "Mask value"
 msgstr "蒙板明度"
 
@@ -2659,7 +2659,7 @@ msgstr "“%s”：读取色板数据时遇到文件尾或错误"
 #. * Open the file for writing...
 #.
 #: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:364
-#: plug-ins/common/file-gif-export.c:939 plug-ins/common/file-html-table.c:360
+#: plug-ins/common/file-gif-export.c:939 plug-ins/common/file-html-table.c:358
 #: plug-ins/common/file-jp2.c:1804 plug-ins/common/file-jpegxl.c:1389
 #: plug-ins/common/file-pcx.c:1083 plug-ins/common/file-pix.c:636
 #: plug-ins/common/file-png.c:1915 plug-ins/common/file-pnm.c:1623
@@ -2680,87 +2680,83 @@ msgstr "正在导出“%s”"
 msgid "C source code"
 msgstr "C 源代码"
 
-#: plug-ins/common/file-csource.c:125
+#: plug-ins/common/file-csource.c:125 plug-ins/common/file-csource.c:127
 msgid "Dump image data in RGB(A) format for C source"
 msgstr "为 C 源代码转存图像数据为 RGB(A) 格式"
 
-#: plug-ins/common/file-csource.c:127
-msgid "CSource cannot be run non-interactively."
-msgstr "C 源代码只能以交互模式运行。"
-
-#: plug-ins/common/file-csource.c:135
+#: plug-ins/common/file-csource.c:136
 msgid "C-Source"
 msgstr "C-源码"
 
-#: plug-ins/common/file-csource.c:149
+#: plug-ins/common/file-csource.c:150
 msgid "_Prefixed name"
 msgstr "前缀名字(_P)"
 
-#: plug-ins/common/file-csource.c:150
+#: plug-ins/common/file-csource.c:151
 msgid "Prefixed name"
 msgstr "前缀名字"
 
-#: plug-ins/common/file-csource.c:155
+#: plug-ins/common/file-csource.c:156
 msgid "Comme_nt"
 msgstr "注释(_N)"
 
-#: plug-ins/common/file-csource.c:156
+#: plug-ins/common/file-csource.c:157
 msgid "Comment"
 msgstr "注释"
 
-#: plug-ins/common/file-csource.c:164
+#: plug-ins/common/file-csource.c:165
 msgid "Save comment to _file"
 msgstr "保存注释到文件(_F)"
 
-#: plug-ins/common/file-csource.c:165
+#: plug-ins/common/file-csource.c:166
 msgid "Save comment"
 msgstr "保存注释"
 
-#: plug-ins/common/file-csource.c:170
+#: plug-ins/common/file-csource.c:171
 msgid "Use GLib types (guint_8*)"
 msgstr "使用 GLib 类型（guint8*）(_8)"
 
-#: plug-ins/common/file-csource.c:171
+#: plug-ins/common/file-csource.c:172
 msgid "Use GLib types"
 msgstr "使用 GLib 类型"
 
-#: plug-ins/common/file-csource.c:176
+#: plug-ins/common/file-csource.c:177
 msgid "Save alpha channel (RG_BA/RGB)"
 msgstr "保存透明通道（RGBA/RGB）(_B)"
 
-#: plug-ins/common/file-csource.c:177
+#: plug-ins/common/file-csource.c:178
 msgid "Save the alpha channel"
 msgstr "保存透明通道"
 
-#: plug-ins/common/file-csource.c:182
+#: plug-ins/common/file-csource.c:183
 msgid "Save as RGB565 (1_6-bit)"
 msgstr "另存为 RGB565（16 位）(_6)"
 
-#: plug-ins/common/file-csource.c:183
+#: plug-ins/common/file-csource.c:184
 msgid "Use RGB565 encoding"
 msgstr "使用 RGB565 编码"
 
-#: plug-ins/common/file-csource.c:188
+#: plug-ins/common/file-csource.c:189
 msgid "_Use macros instead of struct"
 msgstr "使用宏命令而不是结构体(_U)"
 
-#: plug-ins/common/file-csource.c:189
+#: plug-ins/common/file-csource.c:190
 msgid "Use C macros"
 msgstr "使用 C 宏命令"
 
-#: plug-ins/common/file-csource.c:194
+#: plug-ins/common/file-csource.c:195
 msgid "Use _1 bit Run-Length-Encoding"
 msgstr "使用 1 位行程长度编码(_1)"
 
-#: plug-ins/common/file-csource.c:195
+#: plug-ins/common/file-csource.c:196
 msgid "Use run-length-encoding"
 msgstr "使用行程长度编码"
 
-#: plug-ins/common/file-csource.c:200 plug-ins/pagecurl/pagecurl.c:262
+#: plug-ins/common/file-csource.c:201 plug-ins/pagecurl/pagecurl.c:262
 msgid "Opaci_ty"
 msgstr "不透明度(_T)"
 
-#: plug-ins/common/file-csource.c:201 plug-ins/pagecurl/pagecurl.c:263
+#: plug-ins/common/file-csource.c:202 plug-ins/pagecurl/pagecurl.c:263
 msgid "Opacity"
 msgstr "不透明度"
 
@@ -3784,7 +3780,7 @@ msgstr "单元格间距(_N)"
 msgid "The amount of cell spacing."
 msgstr "单元格间距的量值。"
 
-#: plug-ins/common/file-html-table.c:610
+#: plug-ins/common/file-html-table.c:608
 msgid ""
 "You are about to create a huge\n"
 "HTML file which will most likely\n"
@@ -3793,19 +3789,19 @@ msgstr ""
 "您正试图创建一个很可能让您的浏览器\n"
 "崩溃的巨大的 HTML 文件。"
 
-#: plug-ins/common/file-html-table.c:628
+#: plug-ins/common/file-html-table.c:626
 msgid "Warning"
 msgstr "警告"
 
-#: plug-ins/common/file-html-table.c:642
+#: plug-ins/common/file-html-table.c:640
 msgid "HTML Page Options"
 msgstr "HTML 页面选项"
 
-#: plug-ins/common/file-html-table.c:653
+#: plug-ins/common/file-html-table.c:651
 msgid "Table Creation Options"
 msgstr "表格创建选项"
 
-#: plug-ins/common/file-html-table.c:673
+#: plug-ins/common/file-html-table.c:671
 msgid "Table Options"
 msgstr "表格选项"
 
@@ -8691,11 +8687,11 @@ msgstr "迭代次数"
 
 #: plug-ins/common/warp.c:252
 msgid "_Dither size"
-msgstr "递色大小(_D)"
+msgstr "抖动大小(_D)"
 
 #: plug-ins/common/warp.c:253
 msgid "Random dither amount"
-msgstr "随机递色数量"
+msgstr "随机抖动数量"
 
 #: plug-ins/common/warp.c:258
 msgid "Rotatio_n angle"
@@ -16584,6 +16580,9 @@ msgstr "未发现 TWAIN 驱动，扫描不可用"
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "从扫描仪/相机传送数据"
+
+#~ msgid "CSource cannot be run non-interactively."
+#~ msgstr "C 源代码只能以交互模式运行。"
 
 #, c-format
 #~ msgid "File size: %s"
