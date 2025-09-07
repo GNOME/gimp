@@ -772,8 +772,9 @@ language_init (const gchar  *language,
     }
   else
     {
-      g_setenv ("LANGUAGE", language, TRUE);
 #ifdef G_OS_WIN32
+      gchar *lc_all;
+
       /* Adding this fixed broken localization (for some languages) on
        * Windows. See MR !1551.
        * But it turned out it broke localization of plug-ins on Linux
@@ -781,7 +782,88 @@ language_init (const gchar  *language,
        * like LANG needs to be fully qualified (region and encoding).
        */
       g_setenv ("LANG", language, TRUE);
+
+      /* This whole code is a weird hack for Windows, because of a
+       * change possibly in Windows 10 version 1903, supposed to
+       * introduce "worlwide language support", and some bugs along!
+       *
+       * This is a lot of guesswork, but from what we gathered, the
+       * LC_ALL may be in a non-UTF-8 encoding and Windows accepts some
+       * localized natural language strings for setlocale(), expecting
+       * these to be in UTF-8, not only language codes.
+       * The examples which were reported had LC_ALL coded in
+       * Windows-1252 or 1254; it looks like this info is encoded at the
+       * end of the LC_ALL anyway. So to be more robust, let's use this
+       * info, rather than hardcoding any encoding.
+       *
+       * This way, if LC_ALL is already in UTF-8, we won't try to
+       * convert it (therefore breaking the locale). Well, that's
+       * assuming that the suffix codepage will be correct.
+       *
+       * This code supports Windows-1250 to 1258 encodings only, and
+       * UTF-8 without converting, but the issue may still happen if any
+       * other codepage is used (can it happen? We don't know! Again:
+       * lots of guesswork).
+       *
+       * See:
+       * * #12626
+       * * https://developercommunity.visualstudio.com/t/setlocale-may-crash-CRT-in-some-cases/10603395
+       * * List of Windows code pages: https://learn.microsoft.com/en-us/windows/win32/intl/code-page-identifiers
+       */
+      lc_all = setlocale (LC_ALL, NULL);
+      if (lc_all != NULL)
+        {
+          gchar *dot;
+
+          dot = g_strrstr (lc_all, ".");
+          if (dot)
+            {
+              guint64  cp;
+              gchar   *endptr = NULL;
+
+              cp = g_ascii_strtoull (dot + 1, &endptr, 10);
+              if (cp >= 1250 && cp <= 1258 && endptr != NULL && *endptr == '\0')
+                {
+                  gsize   lc_all_len;
+                  gsize   bytes_read = 0;
+                  gchar  *from       = g_strdup_printf ("WINDOWS-%llu", cp);
+                  GError *error      = NULL;
+
+                  lc_all_len = dot - lc_all;
+                  lc_all = g_convert (lc_all, lc_all_len, "UTF-8", from,
+                                      &bytes_read, NULL, &error);
+
+                  if (lc_all == NULL)
+                    {
+                      g_printerr ("%s: invalid conversion of LC_ALL ('%s'): %s\n",
+                                  G_STRFUNC, setlocale (LC_ALL, NULL), error->message);
+                    }
+                  else if (bytes_read != lc_all_len)
+                    {
+                      /* This may happen with trailing partial character, which
+                       * would be acceptable with a stream, but not in our case.
+                       */
+                      g_printerr ("%s: incomplete conversion of LC_ALL ('%s'): %llu out of %llu bytes were read.\n",
+                                  G_STRFUNC, setlocale (LC_ALL, NULL), bytes_read, lc_all_len);
+                    }
+                  else
+                    {
+                      gchar *new_lc_all = g_strdup_printf ("%s.UTF-8", lc_all);
+
+                      setlocale (LC_ALL, new_lc_all);
+
+                      g_free (new_lc_all);
+                    }
+
+                  g_free (from);
+                  g_free (lc_all);
+                  g_clear_error (&error);
+                }
+            }
+        }
 #endif
+
+      g_setenv ("LANGUAGE", language, TRUE);
       setlocale (LC_ALL, ".UTF-8");
 
       actual_language = g_strdup (language);
