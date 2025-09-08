@@ -142,7 +142,6 @@ palette_import_dialog_new (GimpContext *context)
   GtkSizeGroup *size_group;
   GSList       *group = NULL;
 
-
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   gradient = gimp_context_get_gradient (context);
