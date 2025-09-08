@@ -811,6 +811,15 @@ language_init (const gchar  *language,
        * * List of Windows code pages: https://learn.microsoft.com/en-us/windows/win32/intl/code-page-identifiers
        */
       lc_all = setlocale (LC_ALL, NULL);
+
+      g_printerr ("INITIAL LOCALES:\n");
+      g_printerr ("LC_ALL='%s'\n", setlocale (LC_ALL, NULL));
+      g_printerr ("LC_COLLATE='%s'\n", setlocale (LC_COLLATE, NULL));
+      g_printerr ("LC_CTYPE='%s'\n", setlocale (LC_CTYPE, NULL));
+      g_printerr ("LC_MESSAGES='%s'\n", setlocale (LC_MESSAGES, NULL));
+      g_printerr ("LC_MONETARY='%s'\n", setlocale (LC_MONETARY, NULL));
+      g_printerr ("LC_NUMERIC='%s'\n", setlocale (LC_NUMERIC, NULL));
+      g_printerr ("LC_TIME='%s'\n", setlocale (LC_TIME, NULL));
       if (lc_all != NULL)
         {
           gchar *dot;
@@ -850,9 +859,17 @@ language_init (const gchar  *language,
                     {
                       gchar *new_lc_all = g_strdup_printf ("%s.UTF-8", lc_all);
 
+                      g_printerr ("\nSetting LC_ALL='%s'\n", new_lc_all);
                       setlocale (LC_ALL, new_lc_all);
 
                       g_free (new_lc_all);
+                      g_printerr ("LC_ALL='%s'\n", setlocale (LC_ALL, NULL));
+                      g_printerr ("LC_COLLATE='%s'\n", setlocale (LC_COLLATE, NULL));
+                      g_printerr ("LC_CTYPE='%s'\n", setlocale (LC_CTYPE, NULL));
+                      g_printerr ("LC_MESSAGES='%s'\n", setlocale (LC_MESSAGES, NULL));
+                      g_printerr ("LC_MONETARY='%s'\n", setlocale (LC_MONETARY, NULL));
+                      g_printerr ("LC_NUMERIC='%s'\n", setlocale (LC_NUMERIC, NULL));
+                      g_printerr ("LC_TIME='%s'\n", setlocale (LC_TIME, NULL));
                     }
 
                   g_free (from);
@@ -869,6 +886,14 @@ language_init (const gchar  *language,
       actual_language = g_strdup (language);
     }
 
+  g_printerr ("\nLANGUAGE: '%s'\n", language);
+  g_printerr ("LC_ALL='%s'\n", setlocale (LC_ALL, NULL));
+  g_printerr ("LC_COLLATE='%s'\n", setlocale (LC_COLLATE, NULL));
+  g_printerr ("LC_CTYPE='%s'\n", setlocale (LC_CTYPE, NULL));
+  g_printerr ("LC_MESSAGES='%s'\n", setlocale (LC_MESSAGES, NULL));
+  g_printerr ("LC_MONETARY='%s'\n", setlocale (LC_MONETARY, NULL));
+  g_printerr ("LC_NUMERIC='%s'\n", setlocale (LC_NUMERIC, NULL));
+  g_printerr ("LC_TIME='%s'\n", setlocale (LC_TIME, NULL));
   return actual_language;
 }
 
