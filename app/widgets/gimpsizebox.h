@@ -45,6 +45,7 @@ struct _GimpSizeBox
   GimpUnit     *resolution_unit;
 
   gboolean      edit_resolution;
+  gboolean      keep_print_size;
 };
 
 struct _GimpSizeBoxClass

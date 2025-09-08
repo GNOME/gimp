@@ -49,7 +49,8 @@ enum
   PROP_YRESOLUTION,
   PROP_RESOLUTION_UNIT,
   PROP_KEEP_ASPECT,
-  PROP_EDIT_RESOLUTION
+  PROP_EDIT_RESOLUTION,
+  PROP_KEEP_PRINT_SIZE
 };
 
 
@@ -63,6 +64,7 @@ struct _GimpSizeBoxPrivate
   GimpChainButton *size_chain;
   GtkWidget       *pixel_label;
   GtkWidget       *res_label;
+  GtkWidget       *print_size_button;
 };
 
 
@@ -152,6 +154,12 @@ gimp_size_box_class_init (GimpSizeBoxClass *klass)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_KEEP_PRINT_SIZE,
+                                   g_param_spec_boolean ("keep-print-size",
+                                                         _("Keep Print Size"),
+                                                         NULL,
+                                                         TRUE,
+                                                         GIMP_PARAM_READWRITE));
 }
 
 static void
@@ -245,7 +253,17 @@ gimp_size_box_constructed (GObject *object)
 
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
       gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+      gtk_widget_set_visible (hbox, TRUE);
+
+      priv->print_size_button =
+        gimp_prop_check_button_new (G_OBJECT (box), "keep-print-size",  NULL);
+      gtk_box_pack_start (GTK_BOX (hbox), priv->print_size_button, FALSE,
+                          FALSE, 0);
+      gtk_widget_set_visible (priv->print_size_button, TRUE);
+
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+      gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
+      gtk_widget_set_visible (hbox, TRUE);
 
       chain_active = ABS (box->xresolution -
                           box->yresolution) < GIMP_MIN_RESOLUTION;
@@ -263,7 +281,7 @@ gimp_size_box_constructed (GObject *object)
 
 
       gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
-      gtk_widget_show (entry);
+      gtk_widget_set_visible (entry, TRUE);
 
       children = gtk_container_get_children (GTK_CONTAINER (entry));
       for (list = children; list; list = g_list_next (list))
@@ -285,7 +303,7 @@ gimp_size_box_constructed (GObject *object)
                                  -1);
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       priv->res_label = label;
     }
@@ -335,7 +353,7 @@ gimp_size_box_set_property (GObject      *object,
 
     case PROP_XRESOLUTION:
       box->xresolution = g_value_get_double (value);
-      if (priv->size_entry)
+      if (priv->size_entry && ! box->keep_print_size)
         gimp_size_entry_set_resolution (priv->size_entry, 0,
                                         box->xresolution, TRUE);
       gimp_size_box_update_resolution (box);
@@ -343,7 +361,7 @@ gimp_size_box_set_property (GObject      *object,
 
     case PROP_YRESOLUTION:
       box->yresolution = g_value_get_double (value);
-      if (priv->size_entry)
+      if (priv->size_entry && ! box->keep_print_size)
         gimp_size_entry_set_resolution (priv->size_entry, 1,
                                         box->yresolution, TRUE);
       gimp_size_box_update_resolution (box);
@@ -361,6 +379,10 @@ gimp_size_box_set_property (GObject      *object,
 
     case PROP_EDIT_RESOLUTION:
       box->edit_resolution = g_value_get_boolean (value);
+      break;
+
+    case PROP_KEEP_PRINT_SIZE:
+      box->keep_print_size = g_value_get_boolean (value);
       break;
 
     default:
@@ -413,6 +435,10 @@ gimp_size_box_get_property (GObject    *object,
       g_value_set_boolean (value, box->edit_resolution);
       break;
 
+    case PROP_KEEP_PRINT_SIZE:
+      g_value_set_boolean (value, box->keep_print_size);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -439,7 +465,7 @@ gimp_size_box_update_resolution (GimpSizeBox *box)
 {
   GimpSizeBoxPrivate *priv = GIMP_SIZE_BOX_GET_PRIVATE (box);
 
-  if (priv->size_entry)
+  if (priv->size_entry && ! box->keep_print_size)
     {
       gimp_size_entry_set_refval (priv->size_entry, 0, box->width);
       gimp_size_entry_set_refval (priv->size_entry, 1, box->height);
