@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-08-31 09:16+0000\n"
-"PO-Revision-Date: 2025-08-31 13:29+0200\n"
+"POT-Creation-Date: 2025-09-08 06:38+0000\n"
+"PO-Revision-Date: 2025-09-08 10:28+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -373,227 +373,227 @@ msgstr ""
 "kot UTF-8, a GLib tega ne razpozna. Prosimo, da ustrezno nastavite okoljsko "
 "spremenljivko G_FILENAME_ENCODING."
 
-#: app/actions/actions.c:113 app/dialogs/dialogs.c:426
+#: app/actions/actions.c:114 app/dialogs/dialogs.c:426
 #: app/widgets/gimpbrusheditor.c:89
 msgid "Brush Editor"
 msgstr "Urejevalnik čopiča"
 
 #. initialize the list of gimp brushes
-#: app/actions/actions.c:116 app/core/gimp-data-factories.c:358
+#: app/actions/actions.c:117 app/core/gimp-data-factories.c:358
 #: app/dialogs/dialogs.c:341 app/dialogs/preferences-dialog.c:3513
 msgid "Brushes"
 msgstr "Čopiči"
 
-#: app/actions/actions.c:119 app/dialogs/dialogs.c:362
+#: app/actions/actions.c:120 app/dialogs/dialogs.c:362
 msgid "Buffers"
 msgstr "Medpomnilniki"
 
-#: app/actions/actions.c:122 app/dialogs/dialogs.c:380
+#: app/actions/actions.c:123 app/dialogs/dialogs.c:380
 #: app/propgui/gimppropgui-newsprint.c:160
 #: app/widgets/gimppickablechooser.c:292
 msgid "Channels"
 msgstr "Kanali"
 
-#: app/actions/actions.c:125 app/dialogs/convert-indexed-dialog.c:178
+#: app/actions/actions.c:126 app/dialogs/convert-indexed-dialog.c:178
 #: app/dialogs/dialogs.c:388
 msgid "Colormap"
 msgstr "Katalog barv"
 
-#: app/actions/actions.c:128
+#: app/actions/actions.c:129
 msgid "Context"
 msgstr "Kontekst"
 
-#: app/actions/actions.c:131 app/dialogs/dialogs.c:328
+#: app/actions/actions.c:132 app/dialogs/dialogs.c:328
 msgid "Pointer Information"
 msgstr "Podatki o kazalcu"
 
-#: app/actions/actions.c:134 app/dialogs/dialogs.c:332
+#: app/actions/actions.c:135 app/dialogs/dialogs.c:332
 msgid "Dashboard"
 msgstr "Nadzorna plošča"
 
-#: app/actions/actions.c:137
+#: app/actions/actions.c:138
 msgid "Debug"
 msgstr "Razhrošči"
 
-#: app/actions/actions.c:140
+#: app/actions/actions.c:141
 msgid "Dialogs"
 msgstr "Pogovorna okna"
 
-#: app/actions/actions.c:143
+#: app/actions/actions.c:144
 msgid "Dock"
 msgstr "Zasidraj"
 
-#: app/actions/actions.c:146
+#: app/actions/actions.c:147
 msgid "Dockable"
 msgstr "Sidranje omogočeno"
 
 #. Document History
-#: app/actions/actions.c:149 app/dialogs/dialogs.c:368
+#: app/actions/actions.c:150 app/dialogs/dialogs.c:368
 #: app/dialogs/preferences-dialog.c:1281
 msgid "Document History"
 msgstr "Zgodovina dokumenta"
 
-#: app/actions/actions.c:152
+#: app/actions/actions.c:153
 msgid "Drawable"
 msgstr "Risani predmet"
 
-#: app/actions/actions.c:155 app/dialogs/dialogs.c:344
+#: app/actions/actions.c:156 app/dialogs/dialogs.c:344
 msgid "Paint Dynamics"
 msgstr "Dinamika slikanja"
 
-#: app/actions/actions.c:158 app/dialogs/dialogs.c:430
+#: app/actions/actions.c:159 app/dialogs/dialogs.c:430
 #: app/widgets/gimpdynamicseditor.c:97
 msgid "Paint Dynamics Editor"
 msgstr "Urejevalnik dinamike slikanja"
 
-#: app/actions/actions.c:161
+#: app/actions/actions.c:162
 msgid "Edit"
 msgstr "Uredi"
 
-#: app/actions/actions.c:164 app/dialogs/dialogs.c:324
+#: app/actions/actions.c:165 app/dialogs/dialogs.c:324
 msgid "Error Console"
 msgstr "Konzola za napake"
 
-#: app/actions/actions.c:167
+#: app/actions/actions.c:168
 msgid "File"
 msgstr "Datoteka"
 
-#: app/actions/actions.c:170
+#: app/actions/actions.c:171
 msgid "Filters"
 msgstr "Filtri"
 
 #. initialize the list of gimp fonts
-#: app/actions/actions.c:173 app/core/gimp-data-factories.c:392
+#: app/actions/actions.c:174 app/core/gimp-data-factories.c:392
 #: app/dialogs/dialogs.c:359 app/dialogs/preferences-dialog.c:3543
 msgid "Fonts"
 msgstr "Pisave"
 
-#: app/actions/actions.c:176 app/dialogs/dialogs.c:434
+#: app/actions/actions.c:177 app/dialogs/dialogs.c:434
 #: app/widgets/gimpgradienteditor.c:296
 msgid "Gradient Editor"
 msgstr "Urejevalnik prelivov"
 
 #. initialize the list of gimp gradients
-#: app/actions/actions.c:179 app/core/gimp-data-factories.c:383
+#: app/actions/actions.c:180 app/core/gimp-data-factories.c:383
 #: app/dialogs/dialogs.c:353 app/dialogs/preferences-dialog.c:3537
 msgid "Gradients"
 msgstr "Prelivi"
 
-#: app/actions/actions.c:182 app/core/gimp-data-factories.c:399
+#: app/actions/actions.c:183 app/core/gimp-data-factories.c:399
 #: app/dialogs/dialogs.c:365 app/dialogs/preferences-dialog.c:3549
 msgid "Tool Presets"
 msgstr "Prednastavitve orodja"
 
-#: app/actions/actions.c:185 app/dialogs/dialogs.c:442
+#: app/actions/actions.c:186 app/dialogs/dialogs.c:442
 #: app/widgets/gimptoolpreseteditor.c:99
 msgid "Tool Preset Editor"
 msgstr "Urejevalnik prednastavitev orodja"
 
-#: app/actions/actions.c:188
+#: app/actions/actions.c:189
 msgid "Help"
 msgstr "Pomoč"
 
-#: app/actions/actions.c:191 app/core/gimpimage.c:604
+#: app/actions/actions.c:192 app/core/gimpimage.c:604
 msgid "Image"
 msgstr "Slika"
 
-#: app/actions/actions.c:194 app/dialogs/dialogs.c:338
+#: app/actions/actions.c:195 app/dialogs/dialogs.c:338
 #: app/widgets/gimppickablechooser.c:211
 msgid "Images"
 msgstr "Slike"
 
-#: app/actions/actions.c:197 app/dialogs/dialogs.c:376
+#: app/actions/actions.c:198 app/dialogs/dialogs.c:376
 #: app/dialogs/resize-dialog.c:171 app/widgets/gimppickablechooser.c:267
 msgid "Layers"
 msgstr "Plasti"
 
 #. initialize the list of mypaint brushes
-#: app/actions/actions.c:200 app/core/gimp-data-factories.c:368
+#: app/actions/actions.c:201 app/core/gimp-data-factories.c:368
 #: app/dialogs/dialogs.c:347 app/dialogs/preferences-dialog.c:3555
 msgid "MyPaint Brushes"
 msgstr "Čopiči MyPaint"
 
-#: app/actions/actions.c:203 app/dialogs/dialogs.c:438
+#: app/actions/actions.c:204 app/dialogs/dialogs.c:438
 #: app/widgets/gimppaletteeditor.c:157
 msgid "Palette Editor"
 msgstr "Urejevalnik palet"
 
 #. initialize the list of gimp palettes
-#: app/actions/actions.c:206 app/core/gimp-data-factories.c:378
+#: app/actions/actions.c:207 app/core/gimp-data-factories.c:378
 #: app/dialogs/dialogs.c:356 app/dialogs/preferences-dialog.c:3531
 msgid "Palettes"
 msgstr "Palete"
 
 #. initialize the list of gimp patterns
-#: app/actions/actions.c:209 app/core/gimp-data-factories.c:373
+#: app/actions/actions.c:210 app/core/gimp-data-factories.c:373
 #: app/dialogs/dialogs.c:350 app/dialogs/preferences-dialog.c:3525
 msgid "Patterns"
 msgstr "Vzorci"
 
-#: app/actions/actions.c:212 app/dialogs/preferences-dialog.c:3561
+#: app/actions/actions.c:213 app/dialogs/preferences-dialog.c:3561
 msgid "Plug-ins"
 msgstr "Vstavki"
 
 #. Quick Mask Color
-#: app/actions/actions.c:215 app/core/gimpchannel.c:363
+#: app/actions/actions.c:216 app/core/gimpchannel.c:363
 #: app/dialogs/preferences-dialog.c:1832
 msgid "Quick Mask"
 msgstr "Hitra maska"
 
-#: app/actions/actions.c:218 app/dialogs/dialogs.c:408
+#: app/actions/actions.c:219 app/dialogs/dialogs.c:408
 msgid "Sample Points"
 msgstr "Vzorčne točke"
 
-#: app/actions/actions.c:221
+#: app/actions/actions.c:222
 msgid "Select"
 msgstr "Izberi"
 
 #. initialize the template list
-#: app/actions/actions.c:224 app/core/gimp.c:857 app/dialogs/dialogs.c:371
+#: app/actions/actions.c:225 app/core/gimp.c:857 app/dialogs/dialogs.c:371
 msgid "Templates"
 msgstr "Predloge"
 
-#: app/actions/actions.c:227
+#: app/actions/actions.c:228
 msgid "Text Tool"
 msgstr "Orodje za besedilo"
 
-#: app/actions/actions.c:230
+#: app/actions/actions.c:231
 msgid "Text Editor"
 msgstr "Urejevalnik besedila"
 
-#: app/actions/actions.c:233 app/dialogs/dialogs.c:316 app/gui/gui.c:543
+#: app/actions/actions.c:234 app/dialogs/dialogs.c:316 app/gui/gui.c:543
 msgid "Tool Options"
 msgstr "Možnosti orodja"
 
-#: app/actions/actions.c:236
+#: app/actions/actions.c:237
 msgid "Tool Path"
 msgstr "Orodje Pot"
 
-#: app/actions/actions.c:239 app/widgets/gimptoolpalette.c:328
+#: app/actions/actions.c:240 app/widgets/gimptoolpalette.c:328
 msgid "Tools"
 msgstr "Orodja"
 
-#: app/actions/actions.c:242 app/dialogs/dialogs.c:384
+#: app/actions/actions.c:243 app/dialogs/dialogs.c:384
 #: app/tools/gimppathtool.c:167
 msgid "Paths"
 msgstr "Poti"
 
-#: app/actions/actions.c:245
+#: app/actions/actions.c:246
 msgid "View"
 msgstr "Pogled"
 
-#: app/actions/actions.c:248
+#: app/actions/actions.c:249
 msgid "Windows"
 msgstr "Okna"
 
 #. value description and new value shown in the status bar
-#: app/actions/actions.c:649
+#: app/actions/actions.c:669
 #, c-format
 msgid "%s: %.2f"
 msgstr "%s: %.2f"
 
 #. value description and new value shown in the status bar
-#: app/actions/actions.c:675
+#: app/actions/actions.c:695
 #, c-format
 msgid "%s: %d"
 msgstr "%s: %d"
@@ -2589,7 +2589,7 @@ msgstr ""
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
 #: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2440
 #: app/core/gimppalette.c:582 app/core/gimppalette-import.c:223
-#: app/dialogs/palette-import-dialog.c:774 app/widgets/gimpdnd-xds.c:87
+#: app/dialogs/palette-import-dialog.c:776 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "Neimenovano"
 
@@ -5084,30 +5084,30 @@ msgstr "Pokaži znova pogovorno okno nazadnje uporabljenega filtra"
 #. * which we append "..." as the standardized labelling to indicate
 #. * that this action raises a dialog.
 #.
-#: app/actions/filters-actions.c:863
+#: app/actions/filters-actions.c:879
 #, c-format
 msgid "%s..."
 msgstr "%s ..."
 
-#: app/actions/filters-actions.c:1191
+#: app/actions/filters-actions.c:1216
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "_Ponovi »%s«"
 
-#: app/actions/filters-actions.c:1192
+#: app/actions/filters-actions.c:1217
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "Ponovno po_kaži »%s«"
 
-#: app/actions/filters-actions.c:1230
+#: app/actions/filters-actions.c:1255
 msgid "Repeat Last"
 msgstr "Ponovi zadnjega"
 
-#: app/actions/filters-actions.c:1232
+#: app/actions/filters-actions.c:1257
 msgid "Re-Show Last"
 msgstr "Ponovno pokaži zadnjega"
 
-#: app/actions/filters-actions.c:1235 app/actions/filters-actions.c:1237
+#: app/actions/filters-actions.c:1260 app/actions/filters-actions.c:1262
 msgid "No last used filters"
 msgstr "Ni nazadnje uporabljenih filtrov"
 
@@ -5590,7 +5590,7 @@ msgstr "Uredi ta preliv"
 msgid "Save '%s' as POV-Ray"
 msgstr "Shrani »%s« kot žarek POV"
 
-#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:898
+#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:904
 msgctxt "help-action"
 msgid "_Help"
 msgstr "Po_moč"
@@ -10225,7 +10225,7 @@ msgctxt "windows-action"
 msgid "Switch to the previous image"
 msgstr "Preklopi na predhodnjo sliko"
 
-#: app/actions/windows-actions.c:115 menus/image-menu.ui.in.in:887
+#: app/actions/windows-actions.c:115 menus/image-menu.ui.in.in:893
 msgctxt "windows-action"
 msgid "_Tabs Position"
 msgstr "Po_ložaj zavihkov"
@@ -15010,7 +15010,7 @@ msgid "In line %d of palette file: "
 msgstr "V vrstici %d datoteke palete: "
 
 #: app/core/gimppalette-load.c:494 app/core/gimppalette-load.c:699
-#: app/core/gimppalette-load.c:1044
+#: app/core/gimppalette-load.c:1046
 #, c-format
 msgid "Could not read header from palette file '%s': "
 msgstr "Ni mogoče brati glave iz datoteke palete ‘%s’: "
@@ -15035,7 +15035,7 @@ msgid "Invalid ACB palette identifier."
 msgstr "Neveljaven identifikator palete ACB."
 
 #: app/core/gimppalette-load.c:740 app/core/gimppalette-load.c:759
-#: app/core/gimppalette-load.c:977 app/core/gimppalette-load.c:998
+#: app/core/gimppalette-load.c:979 app/core/gimppalette-load.c:1000
 #, c-format
 msgid "Invalid ACB palette name."
 msgstr "Neveljavno ime palete ACB."
@@ -15045,12 +15045,12 @@ msgstr "Neveljavno ime palete ACB."
 msgid "Invalid ACB palette suffix."
 msgstr "Neveljavna pripona palete ACB."
 
-#: app/core/gimppalette-load.c:794 app/core/gimppalette-load.c:1064
+#: app/core/gimppalette-load.c:794 app/core/gimppalette-load.c:1066
 #, c-format
 msgid "Invalid number of colors in palette."
 msgstr "Neveljavno število barv v paleti."
 
-#: app/core/gimppalette-load.c:801 app/core/gimppalette-load.c:1071
+#: app/core/gimppalette-load.c:801 app/core/gimppalette-load.c:1073
 #, c-format
 msgid "Invalid number of colors: %s."
 msgstr "Neveljavno število barv: %s."
@@ -15065,49 +15065,49 @@ msgstr "Neveljavne informacije o strani palete ACB."
 msgid "Invalid ACB palette color space."
 msgstr "Neveljaven barvni prostor palete ACB."
 
-#: app/core/gimppalette-load.c:987
+#: app/core/gimppalette-load.c:989
 msgid "Invalid ACB name size."
 msgstr "Neveljavna velikost imena ACB."
 
-#: app/core/gimppalette-load.c:1055
+#: app/core/gimppalette-load.c:1057
 #, c-format
 msgid "Invalid ASE header: %s"
 msgstr "Neveljavna glava ASE: %s"
 
-#: app/core/gimppalette-load.c:1082
+#: app/core/gimppalette-load.c:1084
 #, c-format
 msgid "Invalid ASE file: %s."
 msgstr "Neveljavna datoteka ASE: %s."
 
-#: app/core/gimppalette-load.c:1173
+#: app/core/gimppalette-load.c:1175
 #, c-format
 msgid "Invalid color components: %s."
 msgstr "Neveljavne komponente barve: %s."
 
-#: app/core/gimppalette-load.c:1185 app/core/gimppalette-load.c:1210
+#: app/core/gimppalette-load.c:1187 app/core/gimppalette-load.c:1212
 #, c-format
 msgid "Invalid ASE color entry: %s."
 msgstr "Neveljaven barvni vnos ASE: %s."
 
-#: app/core/gimppalette-load.c:1242 app/core/gimppalette-load.c:1258
-#: app/core/gimppalette-load.c:1277
+#: app/core/gimppalette-load.c:1244 app/core/gimppalette-load.c:1260
+#: app/core/gimppalette-load.c:1279
 msgid "Invalid ASE palette name."
 msgstr "Neveljavno ime palete ASE."
 
-#: app/core/gimppalette-load.c:1251
+#: app/core/gimppalette-load.c:1253
 msgid "Invalid ASE block size."
 msgstr "Neveljavna velikost bloka ASE."
 
-#: app/core/gimppalette-load.c:1267
+#: app/core/gimppalette-load.c:1269
 msgid "Invalid ASE name size."
 msgstr "Neveljavna velikost imena ASE."
 
-#: app/core/gimppalette-load.c:1396
+#: app/core/gimppalette-load.c:1398
 #, c-format
 msgid "Unable to read SBZ file"
 msgstr "Datoteke SBZ ni mogoče prebrati"
 
-#: app/core/gimppalette-load.c:1460
+#: app/core/gimppalette-load.c:1462
 #, c-format
 msgid "Unable to open SBZ file"
 msgstr "Datoteke SBZ ni mogoče odpreti"
@@ -16576,51 +16576,87 @@ msgid "Select Palette File"
 msgstr "Izberite datoteko palete"
 
 #. The "Import" frame
-#: app/dialogs/palette-import-dialog.c:295
+#: app/dialogs/palette-import-dialog.c:297
 msgid "Import Options"
 msgstr "Možnosti uvoza"
 
-#: app/dialogs/palette-import-dialog.c:309
+#: app/dialogs/palette-import-dialog.c:311
 msgid "New import"
 msgstr "Nov uvoz"
 
-#: app/dialogs/palette-import-dialog.c:311
+#: app/dialogs/palette-import-dialog.c:313
 msgid "Palette _name:"
 msgstr "_Ime palete:"
 
 #. The # of colors
-#: app/dialogs/palette-import-dialog.c:315
+#: app/dialogs/palette-import-dialog.c:317
 msgid "N_umber of colors:"
 msgstr "_Število barv:"
 
 #. The columns
-#: app/dialogs/palette-import-dialog.c:328
+#: app/dialogs/palette-import-dialog.c:330
 msgid "C_olumns:"
 msgstr "St_olpci:"
 
 #. The interval
-#: app/dialogs/palette-import-dialog.c:338
+#: app/dialogs/palette-import-dialog.c:340
 msgid "I_nterval:"
 msgstr "_Interval:"
 
 #. The "Preview" frame
-#: app/dialogs/palette-import-dialog.c:349
+#: app/dialogs/palette-import-dialog.c:351
 #: app/tools/gimpforegroundselecttool.c:1318
 msgid "Preview"
 msgstr "Predogled"
 
-#: app/dialogs/palette-import-dialog.c:367
+#: app/dialogs/palette-import-dialog.c:369
 msgid "The selected source contains no colors."
 msgstr "Izbrani vir ne vsebuje barv."
 
-#: app/dialogs/palette-import-dialog.c:452
+#: app/dialogs/palette-import-dialog.c:454
 #, c-format
 msgid "The palette was not imported: %s"
 msgstr "Paleta ni bila uvožena: %s"
 
-#: app/dialogs/palette-import-dialog.c:464
+#: app/dialogs/palette-import-dialog.c:466
 msgid "There is no palette to import."
 msgstr "Ni palete za uvoz."
+
+#: app/dialogs/palette-import-dialog.c:905
+msgid "All palette files (*.*)"
+msgstr "Vse datoteke palet (*.*)"
+
+#: app/dialogs/palette-import-dialog.c:910
+msgid "GIMP Palette (*.gpl)"
+msgstr "Paleta GIMP (*.gpl)"
+
+#: app/dialogs/palette-import-dialog.c:916
+msgid "Adobe Color Table (*.act)"
+msgstr "Barvna tabela Adobe (*.act)"
+
+#: app/dialogs/palette-import-dialog.c:922
+msgid "Adobe Color Swatch (*.aco)"
+msgstr "Barvna paleta Adobe (*.aco)"
+
+#: app/dialogs/palette-import-dialog.c:928
+msgid "Adobe Color Book (*.acb)"
+msgstr "Barvna knjiga Adobe (*.acb)"
+
+#: app/dialogs/palette-import-dialog.c:934
+msgid "Adobe Swatch Exchange (*.ase)"
+msgstr "Adobe Swatch Exchange (*.ase)"
+
+#: app/dialogs/palette-import-dialog.c:940
+msgid "Cascading Style Sheet (*.css)"
+msgstr "Slogovna predloga CSS (*.css)"
+
+#: app/dialogs/palette-import-dialog.c:946
+msgid "JASC or RIFF Palette (*.pal)"
+msgstr "Paleta JASC ali RIFF (*.pal)"
+
+#: app/dialogs/palette-import-dialog.c:952
+msgid "SwatchBooker (*.sbz)"
+msgstr "SwatchBooker (*.sbz)"
 
 #: app/dialogs/preferences-dialog.c:215
 msgid "Reset All Preferences"
@@ -19738,16 +19774,16 @@ msgstr ""
 msgid "%s plug-in could not open image"
 msgstr "Z vstavkom %s ni mogoče odpreti slike"
 
-#: app/file/file-open.c:689
+#: app/file/file-open.c:690
 msgid "Image doesn't contain any layers"
 msgstr "Slika ne vsebuje nobenih plasti"
 
-#: app/file/file-open.c:747
+#: app/file/file-open.c:748
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Odpiranje »%s« ni uspelo: %s"
 
-#: app/file/file-open.c:835
+#: app/file/file-open.c:836
 #, c-format
 msgid ""
 "Only platform-native file paths are supported: '%s' cannot be opened as link."
@@ -19755,11 +19791,11 @@ msgstr ""
 "Podprte so samo poti datotek, značilne za platforme: »%s« ni mogoče odpreti "
 "kot povezave."
 
-#: app/file/file-open.c:977 app/file/file-save.c:132
+#: app/file/file-open.c:978 app/file/file-save.c:132
 msgid "Not a regular file"
 msgstr "Ni veljavna datoteka"
 
-#: app/file/file-open.c:986 app/file/file-save.c:141
+#: app/file/file-open.c:987 app/file/file-save.c:141
 msgid "Permission denied"
 msgstr "Ni ustreznih dovoljenj"
 
@@ -27385,17 +27421,17 @@ msgid "Select fields"
 msgstr "Izberite polja"
 
 #. Tranlators: "N/A" is an abbreviation for "not available"
-#: app/widgets/gimpdashboard.c:3322
+#: app/widgets/gimpdashboard.c:3323
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "N/D"
 
-#: app/widgets/gimpdashboard.c:3331 app/widgets/gimpdashboard.c:4339
+#: app/widgets/gimpdashboard.c:3332 app/widgets/gimpdashboard.c:4340
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Da"
 
-#: app/widgets/gimpdashboard.c:3332 app/widgets/gimpdashboard.c:4340
+#: app/widgets/gimpdashboard.c:3333 app/widgets/gimpdashboard.c:4341
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Ne"
@@ -27404,7 +27440,7 @@ msgstr "Ne"
 #. * value.  The "%g" is replaced by a certain quantity, and the "/s"
 #. * is an abbreviation for "per second".
 #.
-#: app/widgets/gimpdashboard.c:3416
+#: app/widgets/gimpdashboard.c:3417
 #, c-format
 msgid "%g/s"
 msgstr "%g/s"
@@ -27415,16 +27451,16 @@ msgstr "%g/s"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: app/widgets/gimpdashboard.c:4329
+#: app/widgets/gimpdashboard.c:4330
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#: app/widgets/gimpdashboard.c:4407
+#: app/widgets/gimpdashboard.c:4408
 msgid "N/A"
 msgstr "Ni na voljo"
 
-#: app/widgets/gimpdashboard.c:4785
+#: app/widgets/gimpdashboard.c:4786
 msgid "Resolving symbol information..."
 msgstr "Razločevanje informacij simbola …"
 
@@ -28906,12 +28942,12 @@ msgstr "%s (poskusi %s, %s, %s)"
 #. * (e.g. a checkbox settings) displayed
 #. * in some dockable GUI.
 #.
-#: app/widgets/gimpwidgets-utils.c:1477
+#: app/widgets/gimpwidgets-utils.c:1480
 #, c-format
 msgid "Switch \"%s\" ON"
 msgstr "Stikalo »%s« VKLJUČENO"
 
-#: app/widgets/gimpwidgets-utils.c:1479
+#: app/widgets/gimpwidgets-utils.c:1482
 #, c-format
 msgid "Switch \"%s\" OFF"
 msgstr "Stikalo »%s« IZKLJUČENO"
@@ -28921,7 +28957,7 @@ msgstr "Stikalo »%s« IZKLJUČENO"
 #. * multi-choice settings displayed
 #. * in some dockable GUI.
 #.
-#: app/widgets/gimpwidgets-utils.c:1498
+#: app/widgets/gimpwidgets-utils.c:1501
 #, c-format
 msgid "Select \"%s\""
 msgstr "Izberi »%s«"
@@ -28929,27 +28965,27 @@ msgstr "Izberi »%s«"
 #. TRANSLATORS: %s will be a tool name, so we'll get a
 #. * final string looking like 'Activate the "Bucket fill" tool'.
 #.
-#: app/widgets/gimpwidgets-utils.c:1529
+#: app/widgets/gimpwidgets-utils.c:1532
 #, c-format
 msgid "Activate the \"%s\" tool"
 msgstr "Aktiviraj orodje »%s«"
 
-#: app/widgets/gimpwidgets-utils.c:2128
+#: app/widgets/gimpwidgets-utils.c:2131
 #, c-format
 msgid "Built-in grayscale (%s)"
 msgstr "Vgrajena sivinska (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2135
+#: app/widgets/gimpwidgets-utils.c:2138
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "Vgrajeni RGB (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2155
+#: app/widgets/gimpwidgets-utils.c:2158
 #, c-format
 msgid "Preferred grayscale (%s)"
 msgstr "Prednostna sivinska (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2164
+#: app/widgets/gimpwidgets-utils.c:2167
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "Prednostni RGB (%s)"
@@ -29431,217 +29467,217 @@ msgctxt "layers-action"
 msgid "_Layer"
 msgstr "P_last"
 
-#: menus/image-menu.ui.in.in:443
+#: menus/image-menu.ui.in.in:449
 msgctxt "layers-action"
 msgid "Stac_k"
 msgstr "S_klad"
 
-#: menus/image-menu.ui.in.in:460
+#: menus/image-menu.ui.in.in:466
 msgctxt "layers-action"
 msgid "_Mask"
 msgstr "_Maska"
 
-#: menus/image-menu.ui.in.in:482
+#: menus/image-menu.ui.in.in:488
 msgctxt "layers-action"
 msgid "Tr_ansparency"
 msgstr "Pr_osojnost"
 
-#: menus/image-menu.ui.in.in:500
+#: menus/image-menu.ui.in.in:506
 msgctxt "layers-action"
 msgid "_Transform"
 msgstr "Preo_blikuj"
 
-#: menus/image-menu.ui.in.in:530
+#: menus/image-menu.ui.in.in:536
 msgctxt "image-action"
 msgid "_Colors"
 msgstr "_Barve"
 
-#: menus/image-menu.ui.in.in:551
+#: menus/image-menu.ui.in.in:557
 msgctxt "image-action"
 msgid "_Auto"
 msgstr "_Samodejno"
 
-#: menus/image-menu.ui.in.in:559
+#: menus/image-menu.ui.in.in:565
 msgctxt "image-action"
 msgid "C_omponents"
 msgstr "_Komponente"
 
-#: menus/image-menu.ui.in.in:565
+#: menus/image-menu.ui.in.in:571
 msgctxt "image-action"
 msgid "D_esaturate"
 msgstr "Z_manjšaj nasičenost"
 
-#: menus/image-menu.ui.in.in:572
+#: menus/image-menu.ui.in.in:578
 msgctxt "image-action"
 msgid "_Map"
 msgstr "Pres_likaj "
 
-#: menus/image-menu.ui.in.in:583
+#: menus/image-menu.ui.in.in:589
 msgctxt "image-action"
 msgid "_Tone Mapping"
 msgstr "Preslikovanje _tonov"
 
-#: menus/image-menu.ui.in.in:590
+#: menus/image-menu.ui.in.in:596
 msgctxt "image-action"
 msgid "I_nfo"
 msgstr "_Podatki"
 
-#: menus/image-menu.ui.in.in:608
+#: menus/image-menu.ui.in.in:614
 msgctxt "tools-action"
 msgid "_Tools"
 msgstr "O_rodja"
 
-#: menus/image-menu.ui.in.in:611
+#: menus/image-menu.ui.in.in:617
 msgctxt "tools-action"
 msgid "_Selection Tools"
 msgstr "Orodja iz_bora"
 
-#: menus/image-menu.ui.in.in:624
+#: menus/image-menu.ui.in.in:630
 msgctxt "tools-action"
 msgid "_Paint Tools"
 msgstr "Orodja _barvanja"
 
-#: menus/image-menu.ui.in.in:641
+#: menus/image-menu.ui.in.in:647
 msgctxt "tools-action"
 msgid "_Transform Tools"
 msgstr "Orodja preo_blikovanja"
 
-#: menus/image-menu.ui.in.in:680
+#: menus/image-menu.ui.in.in:686
 msgctxt "filters-action"
 msgid "Filte_rs"
 msgstr "_Filtri"
 
-#: menus/image-menu.ui.in.in:685
+#: menus/image-menu.ui.in.in:691
 msgctxt "filters-action"
 msgid "Recently Used"
 msgstr "Nedavno uporabljeno"
 
-#: menus/image-menu.ui.in.in:694
+#: menus/image-menu.ui.in.in:700
 msgctxt "filters-action"
 msgid "_Blur"
 msgstr "Za_briši"
 
-#: menus/image-menu.ui.in.in:709
+#: menus/image-menu.ui.in.in:715
 msgctxt "filters-action"
 msgid "En_hance"
 msgstr "_Izboljšaj"
 
-#: menus/image-menu.ui.in.in:719
+#: menus/image-menu.ui.in.in:725
 msgctxt "filters-action"
 msgid "_Distorts"
 msgstr "Popa_čenja"
 
-#: menus/image-menu.ui.in.in:738
+#: menus/image-menu.ui.in.in:744
 msgctxt "filters-action"
 msgid "_Light and Shadow"
 msgstr "_Svetloba in sence"
 
-#: menus/image-menu.ui.in.in:753
+#: menus/image-menu.ui.in.in:759
 msgctxt "filters-action"
 msgid "_Noise"
 msgstr "Šu_m"
 
-#: menus/image-menu.ui.in.in:763
+#: menus/image-menu.ui.in.in:769
 msgctxt "filters-action"
 msgid "Edge-De_tect"
 msgstr "_Razpoznava robov"
 
-#: menus/image-menu.ui.in.in:772
+#: menus/image-menu.ui.in.in:778
 msgctxt "filters-action"
 msgid "_Generic"
 msgstr "Sp_lošno"
 
-#: menus/image-menu.ui.in.in:783
+#: menus/image-menu.ui.in.in:789
 msgctxt "filters-action"
 msgid "C_ombine"
 msgstr "Zdru_ži"
 
-#: menus/image-menu.ui.in.in:786
+#: menus/image-menu.ui.in.in:792
 msgctxt "filters-action"
 msgid "_Artistic"
 msgstr "_Umetniško"
 
-#: menus/image-menu.ui.in.in:798
+#: menus/image-menu.ui.in.in:804
 msgctxt "filters-action"
 msgid "_Decor"
 msgstr "O_krasitev"
 
-#: menus/image-menu.ui.in.in:801
+#: menus/image-menu.ui.in.in:807
 msgctxt "filters-action"
 msgid "_Map"
 msgstr "Pres_likaj "
 
-#: menus/image-menu.ui.in.in:813
+#: menus/image-menu.ui.in.in:819
 msgctxt "filters-action"
 msgid "_Render"
 msgstr "_Upodobi"
 
-#: menus/image-menu.ui.in.in:816
+#: menus/image-menu.ui.in.in:822
 msgctxt "filters-action"
 msgid "_Fractals"
 msgstr "_Fraktali"
 
-#: menus/image-menu.ui.in.in:819
+#: menus/image-menu.ui.in.in:825
 msgctxt "filters-action"
 msgid "N_oise"
 msgstr "_Šum"
 
-#: menus/image-menu.ui.in.in:827
+#: menus/image-menu.ui.in.in:833
 msgctxt "filters-action"
 msgid "_Pattern"
 msgstr "_Vzorec"
 
-#: menus/image-menu.ui.in.in:840
+#: menus/image-menu.ui.in.in:846
 msgctxt "filters-action"
 msgid "_Web"
 msgstr "S_plet"
 
-#: menus/image-menu.ui.in.in:846
+#: menus/image-menu.ui.in.in:852
 msgctxt "filters-action"
 msgid "An_imation"
 msgstr "An_imacija"
 
-#: menus/image-menu.ui.in.in:849
+#: menus/image-menu.ui.in.in:855
 msgctxt "filters-action"
 msgid "De_velopment"
 msgstr "Raz_voj"
 
-#: menus/image-menu.ui.in.in:851
+#: menus/image-menu.ui.in.in:857
 msgctxt "filters-action"
 msgid "Plug-In _Examples"
 msgstr "Pri_meri vstavkov"
 
-#: menus/image-menu.ui.in.in:854
+#: menus/image-menu.ui.in.in:860
 msgctxt "filters-action"
 msgid "_Python-Fu"
 msgstr "_Python-Fu"
 
-#: menus/image-menu.ui.in.in:857
+#: menus/image-menu.ui.in.in:863
 msgctxt "filters-action"
 msgid "_Script-Fu"
 msgstr "_Skript-Fu"
 
-#: menus/image-menu.ui.in.in:864
+#: menus/image-menu.ui.in.in:870
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "_Okna"
 
-#: menus/image-menu.ui.in.in:867
+#: menus/image-menu.ui.in.in:873
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "_Nedavno zaprta sidrišča"
 
-#: menus/image-menu.ui.in.in:871
+#: menus/image-menu.ui.in.in:877
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "_Sidranju prilagojena okna"
 
-#: menus/image-menu.ui.in.in:903
+#: menus/image-menu.ui.in.in:909
 msgctxt "help-action"
 msgid "_User Manual"
 msgstr "_Uporabniški vodnik"
 
-#: menus/image-menu.ui.in.in:919
+#: menus/image-menu.ui.in.in:925
 msgctxt "help-action"
 msgid "_GIMP Online"
 msgstr "_GIMP na spletu"
