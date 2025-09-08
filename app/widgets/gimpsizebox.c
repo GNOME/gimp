@@ -83,6 +83,9 @@ static void   gimp_size_box_update_size       (GimpSizeBox     *box);
 static void   gimp_size_box_update_resolution (GimpSizeBox     *box);
 static void   gimp_size_box_chain_toggled     (GimpChainButton *button,
                                                GimpSizeBox     *box);
+static void   gimp_size_box_keep_print_size   (GimpSizeBox     *box,
+                                               gboolean         resolution,
+                                               gint             resolution_field);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpSizeBox, gimp_size_box, GTK_TYPE_BOX)
@@ -220,9 +223,9 @@ gimp_size_box_constructed (GObject *object)
                                  box->xresolution,
                                  box->yresolution);
 
-  g_signal_connect (priv->size_chain, "toggled",
-                    G_CALLBACK (gimp_size_box_chain_toggled),
-                    box);
+  g_signal_connect_object (priv->size_chain, "toggled",
+                           G_CALLBACK (gimp_size_box_chain_toggled),
+                           box, 0);
 
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
   gtk_widget_show (entry);
@@ -353,18 +356,14 @@ gimp_size_box_set_property (GObject      *object,
 
     case PROP_XRESOLUTION:
       box->xresolution = g_value_get_double (value);
-      if (priv->size_entry && ! box->keep_print_size)
-        gimp_size_entry_set_resolution (priv->size_entry, 0,
-                                        box->xresolution, TRUE);
-      gimp_size_box_update_resolution (box);
+
+      gimp_size_box_keep_print_size (box, box->xresolution, 0);
       break;
 
     case PROP_YRESOLUTION:
       box->yresolution = g_value_get_double (value);
-      if (priv->size_entry && ! box->keep_print_size)
-        gimp_size_entry_set_resolution (priv->size_entry, 1,
-                                        box->yresolution, TRUE);
-      gimp_size_box_update_resolution (box);
+
+      gimp_size_box_keep_print_size (box, box->yresolution, 1);
       break;
 
     case PROP_RESOLUTION_UNIT:
@@ -427,8 +426,9 @@ gimp_size_box_get_property (GObject    *object,
       break;
 
     case PROP_KEEP_ASPECT:
-      g_value_set_boolean (value,
-                           gimp_chain_button_get_active (priv->size_chain));
+      if (priv->size_chain)
+        g_value_set_boolean (value,
+                             gimp_chain_button_get_active (priv->size_chain));
       break;
 
     case PROP_EDIT_RESOLUTION:
@@ -494,4 +494,38 @@ gimp_size_box_chain_toggled (GimpChainButton *button,
   g_object_set (box,
                 "keep-aspect", gimp_chain_button_get_active (button),
                 NULL);
+}
+
+static void
+gimp_size_box_keep_print_size (GimpSizeBox *box,
+                               gboolean     resolution,
+                               gint         resolution_field)
+{
+  GimpSizeBoxPrivate *priv;
+  gboolean            original_aspect;
+
+  g_return_if_fail (GIMP_IS_SIZE_BOX (box));
+
+  priv = GIMP_SIZE_BOX_GET_PRIVATE (box);
+
+  g_object_get (box, "keep-aspect", &original_aspect, NULL);
+
+  if (priv->size_chain)
+    g_signal_handlers_block_by_func (priv->size_chain,
+                                     gimp_size_box_chain_toggled, box);
+
+  g_object_set (box, "keep-aspect", FALSE, NULL);
+
+  if (priv->size_entry)
+    gimp_size_entry_set_resolution (priv->size_entry,
+                                    resolution_field,
+                                    resolution,
+                                    ! box->keep_print_size);
+  gimp_size_box_update_resolution (box);
+
+  g_object_set (box, "keep-aspect", original_aspect, NULL);
+
+  if (priv->size_chain)
+    g_signal_handlers_unblock_by_func (priv->size_chain,
+                                       gimp_size_box_chain_toggled, box);
 }
