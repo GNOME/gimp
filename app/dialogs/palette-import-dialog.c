@@ -125,7 +125,7 @@ static void   palette_import_image_remove         (GimpContainer  *container,
                                                    GimpImage      *image,
                                                    ImportDialog   *private);
 static void   palette_import_make_palette         (ImportDialog   *private);
-
+static void   palette_import_file_set_filters     (GtkFileChooser *file_chooser);
 
 /*  public functions  */
 
@@ -282,13 +282,15 @@ palette_import_dialog_new (GimpContext *context)
 
   /*  Palette file name entry  */
   private->file_chooser = gtk_file_chooser_button_new (_("Select Palette File"),
-                                                      GTK_FILE_CHOOSER_ACTION_OPEN);
+                                                       GTK_FILE_CHOOSER_ACTION_OPEN);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 4,
                             NULL, 0.0, 0.5, private->file_chooser, 1);
   gtk_size_group_add_widget (size_group, private->file_chooser);
 
-  g_object_unref (size_group);
+  /* Set valid palette files filters */
+  palette_import_file_set_filters (GTK_FILE_CHOOSER (private->file_chooser));
 
+  g_object_unref (size_group);
 
   /*  The "Import" frame  */
 
@@ -892,4 +894,63 @@ palette_import_make_palette (ImportDialog *private)
   gtk_widget_set_visible (private->no_colors_label,
                           ! (palette &&
                              gimp_palette_get_n_colors (palette) > 0));
+}
+
+static void
+palette_import_file_set_filters (GtkFileChooser *file_chooser)
+{
+  GtkFileFilter *filter;
+
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("All palette files (*.*)"));
+  gtk_file_filter_add_pattern (filter, "*");
+  gtk_file_chooser_add_filter (file_chooser, filter);
+
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("GIMP Palette (*.gpl)"));
+  gtk_file_filter_add_pattern (filter, "*.gpl");
+  gtk_file_filter_add_pattern (filter, "*.GPL");
+  gtk_file_chooser_add_filter (file_chooser, filter);
+
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("Adobe Color Table (*.act)"));
+  gtk_file_filter_add_pattern (filter, "*.act");
+  gtk_file_filter_add_pattern (filter, "*.ACT");
+  gtk_file_chooser_add_filter (file_chooser, filter);
+
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("Adobe Color Swatch (*.aco)"));
+  gtk_file_filter_add_pattern (filter, "*.aco");
+  gtk_file_filter_add_pattern (filter, "*.ACO");
+  gtk_file_chooser_add_filter (file_chooser, filter);
+
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("Adobe Color Book (*.acb)"));
+  gtk_file_filter_add_pattern (filter, "*.acb");
+  gtk_file_filter_add_pattern (filter, "*.ACB");
+  gtk_file_chooser_add_filter (file_chooser, filter);
+
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("Adobe Swatch Exchange (*.ase)"));
+  gtk_file_filter_add_pattern (filter, "*.ase");
+  gtk_file_filter_add_pattern (filter, "*.ASE");
+  gtk_file_chooser_add_filter (file_chooser, filter);
+
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("Cascading Style Sheet (*.css)"));
+  gtk_file_filter_add_pattern (filter, "*.css");
+  gtk_file_filter_add_pattern (filter, "*.CSS");
+  gtk_file_chooser_add_filter (file_chooser, filter);
+
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("JASC or RIFF Palette (*.pal)"));
+  gtk_file_filter_add_pattern (filter, "*.pal");
+  gtk_file_filter_add_pattern (filter, "*.PAL");
+  gtk_file_chooser_add_filter (file_chooser, filter);
+
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("SwatchBooker (*.sbz)"));
+  gtk_file_filter_add_pattern (filter, "*.sbz");
+  gtk_file_filter_add_pattern (filter, "*.SBZ");
+  gtk_file_chooser_add_filter (file_chooser, filter);
 }
