@@ -1289,9 +1289,9 @@ gimp_display_shell_scale_image_starts_to_fit (GimpDisplayShell *shell,
                                                          &new_scale_width,
                                                          &new_scale_height);
 
-      *vertically   = (current_scale_width  >  shell->disp_width &&
+      *horizontally = (current_scale_width  >  shell->disp_width &&
                        new_scale_width      <= shell->disp_width);
-      *horizontally = (current_scale_height >  shell->disp_height &&
+      *vertically   = (current_scale_height >  shell->disp_height &&
                        new_scale_height     <= shell->disp_height);
     }
 
