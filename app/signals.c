@@ -53,7 +53,9 @@ void
 gimp_init_signal_handlers (gchar **backtrace_file)
 {
   time_t   t;
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) && defined(ENABLE_RELOCATABLE_RESOURCES)
+  gchar   *bin_dir;
+  size_t   codeview_path_len;
   gchar   *codeview_path;
 #endif
   gchar   *filename;
@@ -63,11 +65,23 @@ gimp_init_signal_handlers (gchar **backtrace_file)
 #endif
 
 #ifdef G_OS_WIN32
+#ifdef ENABLE_RELOCATABLE_RESOURCES
   /* FIXME: https://github.com/jrfonseca/drmingw/issues/91 */
-  codeview_path = g_build_filename (gimp_installation_directory (),
-                                    "bin", NULL);
+  bin_dir = g_build_filename (gimp_installation_directory (), "bin", NULL);
+  codeview_path_len = strlen (g_getenv ("_NT_SYMBOL_PATH") ? g_getenv ("_NT_SYMBOL_PATH") : "") + strlen (bin_dir) + 2;
+  codeview_path = g_try_malloc (codeview_path_len);
+  if (codeview_path == NULL)
+    {
+      g_warning ("Failed to allocate memory");
+    }
+  if (g_getenv ("_NT_SYMBOL_PATH"))
+    g_snprintf (codeview_path, codeview_path_len, "%s;%s", bin_dir, g_getenv ("_NT_SYMBOL_PATH"));
+  else
+    g_snprintf (codeview_path, codeview_path_len, "%s", bin_dir);
   g_setenv ("_NT_SYMBOL_PATH", codeview_path, TRUE);
   g_free (codeview_path);
+  g_free (bin_dir);
+#endif
 
   /* This has to be the non-roaming directory (i.e., the local
      directory) as backtraces correspond to the binaries on this
