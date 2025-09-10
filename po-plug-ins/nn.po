@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-08-19 15:51+0000\n"
-"PO-Revision-Date: 2025-08-19 18:44+0200\n"
+"POT-Creation-Date: 2025-08-24 06:07+0000\n"
+"PO-Revision-Date: 2025-08-30 19:14+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -3330,10 +3330,8 @@ msgid "Too much compressed data, ignoring extra..."
 msgstr "For mykje komprimerte data. Ignorerer ekstra …"
 
 #: plug-ins/common/file-gif-load.c:1587
-#, fuzzy
-#| msgid "Save failed"
 msgid "inflate failed"
-msgstr "Mislukka lagring"
+msgstr "Utflatinga mislukka"
 
 #: plug-ins/common/file-gih.c:119
 msgid "Incremental"
@@ -11607,6 +11605,16 @@ msgstr "Ramme %d (%dms)"
 msgid "Allowed values:"
 msgstr "Tillatne verdiar:"
 
+#: plug-ins/filter-browser/filter-browser.c:420
+#, c-format
+msgid "Operation name: %s"
+msgstr "Operasjonsnamn: %s"
+
+#: plug-ins/filter-browser/filter-browser.c:433
+#, c-format
+msgid "Categories: %s"
+msgstr "Kategoriar: %s"
+
 #.
 #. *  Scales
 #.
@@ -11625,12 +11633,16 @@ msgstr "Parameter"
 msgid "Additional Information"
 msgstr "Tilleggsinformasjon"
 
+#: plug-ins/filter-browser/filter-browser.c:501
+#, c-format
+msgid "License: %s"
+msgstr "Lisens: %s"
+
 #: plug-ins/filter-browser/filter-browser.c:612
 msgid "Searching by title"
 msgstr "Søkjer på tittel"
 
 #: plug-ins/filter-browser/filter-browser.c:615
-#| msgid "Series Description"
 msgid "Searching by description"
 msgstr "Søkjer på beskriving"
 
@@ -11640,8 +11652,6 @@ msgstr "Søkjer på kategori"
 
 #: plug-ins/filter-browser/filter-browser.c:683
 #, c-format
-#| msgid "%d plug-in matches your query"
-#| msgid_plural "%d plug-ins match your query"
 msgid "%d filter matches your query"
 msgid_plural "%d filters match your query"
 msgstr[0] "%d filter passar spørjinga"
