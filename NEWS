@@ -6,6 +6,27 @@
 This is the development branch of GIMP.
 
 
+Overview of Changes from GIMP 3.1.4 to GIMP 3.2-RC1
+===================================================
+
+Graphical User Interface:
+
+  - "Monitor Linked Image" and "Discard Link Information" menu items
+    added to Layer menu when the selected layer is a link layer.
+  - Palette Import dialog now display file format filters, both to let
+    users hide irrelevant files from view and to highlight which formats
+    we support.
+
+Plug-Ins:
+
+  - Fixed vulnerabilities: ZDI-CAN-27684, ZDI-CAN-27863, ZDI-CAN-27878,
+    ZDI-CAN-27836, ZDI-CAN-27823, ZDI-CAN-27793
+
+Build:
+
+  - CI: Linux builds ported from unmaintained Kaniko to Buildah.
+
+
 Overview of Changes from GIMP 3.1.2 to GIMP 3.1.4
 =================================================
 
