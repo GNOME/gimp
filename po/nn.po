@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-08-29 08:47+0000\n"
-"PO-Revision-Date: 2025-08-30 19:04+0200\n"
+"POT-Creation-Date: 2025-09-01 14:02+0000\n"
+"PO-Revision-Date: 2025-09-10 17:21+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -2488,7 +2488,7 @@ msgstr "240 sekund"
 #: app/display/gimpdisplayshell-filter-dialog.c:87
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
-#: app/tools/gimpfiltertool.c:370 app/tools/gimpforegroundselecttool.c:333
+#: app/tools/gimpfiltertool.c:373 app/tools/gimpforegroundselecttool.c:333
 #: app/tools/gimptexttool.c:1774 app/tools/gimptransformgridtool.c:1264
 #: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
 #: app/widgets/gimpcolordialog.c:492 app/widgets/gimpcontrollereditor.c:665
@@ -2572,7 +2572,7 @@ msgstr ""
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
 #: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2440
-#: app/core/gimppalette.c:586 app/core/gimppalette-import.c:223
+#: app/core/gimppalette.c:582 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:774 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "Utan namn"
@@ -4396,672 +4396,672 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/actions/filters-actions.c:63
+#: app/actions/filters-actions.c:69
 msgctxt "filters-action"
 msgid "_Antialias"
 msgstr "_Kantutjamning"
 
-#: app/actions/filters-actions.c:68
+#: app/actions/filters-actions.c:74
 msgctxt "filters-action"
 msgid "_Color Enhance"
 msgstr "_Fargeforbetring"
 
-#: app/actions/filters-actions.c:73
+#: app/actions/filters-actions.c:79
 msgctxt "filters-action"
 msgid "L_inear Invert"
 msgstr "_Inverter lineært"
 
-#: app/actions/filters-actions.c:78
+#: app/actions/filters-actions.c:84
 msgctxt "filters-action"
 msgid "In_vert"
 msgstr "_Inverter"
 
-#: app/actions/filters-actions.c:83
+#: app/actions/filters-actions.c:89
 msgctxt "filters-action"
 msgid "_Value Invert"
 msgstr "_Inverter verdiar"
 
-#: app/actions/filters-actions.c:88
+#: app/actions/filters-actions.c:94
 msgctxt "filters-action"
 msgid "_Stretch Contrast HSV"
 msgstr "Strekk kontrast _HSV"
 
-#: app/actions/filters-actions.c:96
+#: app/actions/filters-actions.c:102
 msgctxt "filters-action"
 msgid "_Dilate"
 msgstr "_Utvid"
 
-#: app/actions/filters-actions.c:97
+#: app/actions/filters-actions.c:103
 msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "Auk lyse område i biletet"
 
-#: app/actions/filters-actions.c:112
+#: app/actions/filters-actions.c:118
 msgctxt "filters-action"
 msgid "_Erode"
 msgstr "_Eroder"
 
-#: app/actions/filters-actions.c:113
+#: app/actions/filters-actions.c:119
 msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "Auk mørke område i biletet"
 
-#: app/actions/filters-actions.c:131
+#: app/actions/filters-actions.c:137
 msgctxt "filters-action"
 msgid "_Alien Map..."
 msgstr "_Alien Map …"
 
-#: app/actions/filters-actions.c:136
+#: app/actions/filters-actions.c:142
 msgctxt "filters-action"
 msgid "_Apply Canvas..."
 msgstr "Bruk _lerret …"
 
-#: app/actions/filters-actions.c:141
+#: app/actions/filters-actions.c:147
 msgctxt "filters-action"
 msgid "Apply _Lens..."
 msgstr "L_upeeffekt …"
 
-#: app/actions/filters-actions.c:146
+#: app/actions/filters-actions.c:152
 msgctxt "filters-action"
 msgid "_Bayer Matrix..."
 msgstr "_Bayer Matrix..."
 
-#: app/actions/filters-actions.c:151
+#: app/actions/filters-actions.c:157
 msgctxt "filters-action"
 msgid "_Bloom..."
 msgstr "_Lysglød ..."
 
-#: app/actions/filters-actions.c:156
+#: app/actions/filters-actions.c:162
 msgctxt "filters-action"
 msgid "B_rightness-Contrast..."
 msgstr "_Lysstyrke-Kontrast …"
 
-#: app/actions/filters-actions.c:161
+#: app/actions/filters-actions.c:167
 msgctxt "filters-action"
 msgid "_Bump Map..."
 msgstr "_Avbilding frå kart …"
 
-#: app/actions/filters-actions.c:166
+#: app/actions/filters-actions.c:172
 msgctxt "filters-action"
 msgid "_Color to Gray..."
 msgstr "Farge til _grå …"
 
-#: app/actions/filters-actions.c:171
+#: app/actions/filters-actions.c:177
 msgctxt "filters-action"
 msgid "Ca_rtoon..."
 msgstr "Teikne_serie …"
 
-#: app/actions/filters-actions.c:176
+#: app/actions/filters-actions.c:182
 msgctxt "filters-action"
 msgid "_Channel Mixer..."
 msgstr "_Kanalmiksar …"
 
-#: app/actions/filters-actions.c:181
+#: app/actions/filters-actions.c:187
 msgctxt "filters-action"
 msgid "_Checkerboard..."
 msgstr "Sjakk_brett …"
 
-#: app/actions/filters-actions.c:186
+#: app/actions/filters-actions.c:192
 msgctxt "filters-action"
 msgid "Color _Balance..."
 msgstr "Farge_balanse …"
 
-#: app/actions/filters-actions.c:191
+#: app/actions/filters-actions.c:197
 msgctxt "filters-action"
 msgid "_Color Exchange..."
 msgstr "Byt _farge …"
 
-#: app/actions/filters-actions.c:196
+#: app/actions/filters-actions.c:202
 msgctxt "filters-action"
 msgid "Colori_ze..."
 msgstr "_Innfarging …"
 
-#: app/actions/filters-actions.c:201
+#: app/actions/filters-actions.c:207
 msgctxt "filters-action"
 msgid "Dithe_r..."
 msgstr "_Utjamning …"
 
-#: app/actions/filters-actions.c:206
+#: app/actions/filters-actions.c:212
 msgctxt "filters-action"
 msgid "_Rotate Colors..."
 msgstr "_Roter fargane …"
 
-#: app/actions/filters-actions.c:211
+#: app/actions/filters-actions.c:217
 msgctxt "filters-action"
 msgid "Color T_emperature..."
 msgstr "Farge_temperatur …"
 
-#: app/actions/filters-actions.c:216
+#: app/actions/filters-actions.c:222
 msgctxt "filters-action"
 msgid "Color to _Alpha..."
 msgstr "Farge til _alfa …"
 
-#: app/actions/filters-actions.c:221
+#: app/actions/filters-actions.c:227
 msgctxt "filters-action"
 msgid "_Extract Component..."
 msgstr "_Trekk ut komponent …"
 
-#: app/actions/filters-actions.c:226
+#: app/actions/filters-actions.c:232
 msgctxt "filters-action"
 msgid "_Convolution Matrix..."
 msgstr "_Konturutjamningsmatrise …"
 
-#: app/actions/filters-actions.c:231
+#: app/actions/filters-actions.c:237
 msgctxt "filters-action"
 msgid "_Cubism..."
 msgstr "_Kubisme …"
 
-#: app/actions/filters-actions.c:236
+#: app/actions/filters-actions.c:242
 msgctxt "filters-action"
 msgid "_Curves..."
 msgstr "_Kurver …"
 
-#: app/actions/filters-actions.c:241
+#: app/actions/filters-actions.c:247
 msgctxt "filters-action"
 msgid "_Deinterlace..."
 msgstr "_Teikna annakvar linje …"
 
-#: app/actions/filters-actions.c:246
+#: app/actions/filters-actions.c:252
 msgctxt "filters-action"
 msgid "_Desaturate..."
 msgstr "_Mindre metning …"
 
-#: app/actions/filters-actions.c:251
+#: app/actions/filters-actions.c:257
 msgctxt "filters-action"
 msgid "Difference of _Gaussians..."
 msgstr "_DoG kantfinning …"
 
-#: app/actions/filters-actions.c:256
+#: app/actions/filters-actions.c:262
 msgctxt "filters-action"
 msgid "D_iffraction Patterns..."
 msgstr "_Diffraksjonsmønster …"
 
-#: app/actions/filters-actions.c:261
+#: app/actions/filters-actions.c:267
 msgctxt "filters-action"
 msgid "_Displace..."
 msgstr "_Forskyv …"
 
-#: app/actions/filters-actions.c:266
+#: app/actions/filters-actions.c:272
 msgctxt "filters-action"
 msgid "Distance _Map..."
 msgstr "_Avstandskart …"
 
-#: app/actions/filters-actions.c:271
+#: app/actions/filters-actions.c:277
 msgctxt "filters-action"
 msgid "_Drop Shadow..."
 msgstr "_Slagskugge …"
 
-#: app/actions/filters-actions.c:276
+#: app/actions/filters-actions.c:282
 msgctxt "filters-action"
 msgid "_Edge..."
 msgstr "_Kant …"
 
-#: app/actions/filters-actions.c:281
+#: app/actions/filters-actions.c:287
 msgctxt "filters-action"
 msgid "_Laplace..."
 msgstr "_Laplace …"
 
-#: app/actions/filters-actions.c:286
+#: app/actions/filters-actions.c:292
 msgctxt "filters-action"
 msgid "_Neon..."
 msgstr "_Neon …"
 
-#: app/actions/filters-actions.c:291
+#: app/actions/filters-actions.c:297
 msgctxt "filters-action"
 msgid "_Sobel..."
 msgstr "_Sobelrelieff …"
 
-#: app/actions/filters-actions.c:296
+#: app/actions/filters-actions.c:302
 msgctxt "filters-action"
 msgid "_Emboss..."
 msgstr "_Relieff …"
 
-#: app/actions/filters-actions.c:301
+#: app/actions/filters-actions.c:307
 msgctxt "filters-action"
 msgid "En_grave..."
 msgstr "_Gravyr …"
 
-#: app/actions/filters-actions.c:306
+#: app/actions/filters-actions.c:312
 msgctxt "filters-action"
 msgid "E_xposure..."
 msgstr "_Eksponering …"
 
-#: app/actions/filters-actions.c:311
+#: app/actions/filters-actions.c:317
 msgctxt "filters-action"
 msgid "_Fattal et al. 2002..."
 msgstr "_Fattal et al. 2002..."
 
-#: app/actions/filters-actions.c:316
+#: app/actions/filters-actions.c:322
 msgctxt "filters-action"
 msgid "_Focus Blur..."
 msgstr "_Fokussløring …"
 
-#: app/actions/filters-actions.c:321
+#: app/actions/filters-actions.c:327
 msgctxt "filters-action"
 msgid "_Fractal Trace..."
 msgstr "Fraktal_spor …"
 
-#: app/actions/filters-actions.c:326
+#: app/actions/filters-actions.c:332
 msgctxt "filters-action"
 msgid "_Gaussian Blur..."
 msgstr "_Gaussisk sløring …"
 
-#: app/actions/filters-actions.c:331
+#: app/actions/filters-actions.c:337
 msgctxt "filters-action"
 msgid "_Selective Gaussian Blur..."
 msgstr "_Selektiv gaussisk sløring …"
 
-#: app/actions/filters-actions.c:336
+#: app/actions/filters-actions.c:342
 msgctxt "filters-action"
 msgid "_GEGL Graph..."
 msgstr "_GEGL-graf …"
 
-#: app/actions/filters-actions.c:341
+#: app/actions/filters-actions.c:347
 msgctxt "filters-action"
 msgid "_Grid..."
 msgstr "_Rutenett …"
 
-#: app/actions/filters-actions.c:346
+#: app/actions/filters-actions.c:352
 msgctxt "filters-action"
 msgid "_High Pass..."
 msgstr "_High Pass..."
 
-#: app/actions/filters-actions.c:351
+#: app/actions/filters-actions.c:357
 msgctxt "filters-action"
 msgid "Hue-_Chroma..."
 msgstr "Kulør-_kroma …"
 
-#: app/actions/filters-actions.c:356
+#: app/actions/filters-actions.c:362
 msgctxt "filters-action"
 msgid "Hue-_Saturation..."
 msgstr "Kulør-_metning …"
 
-#: app/actions/filters-actions.c:361
+#: app/actions/filters-actions.c:367
 msgctxt "filters-action"
 msgid "_Illusion..."
 msgstr "_Illusjon …"
 
-#: app/actions/filters-actions.c:366
+#: app/actions/filters-actions.c:372
 msgctxt "filters-action"
 msgid "_Image Gradient..."
 msgstr "_Fargeovergang for bilete …"
 
-#: app/actions/filters-actions.c:371
+#: app/actions/filters-actions.c:377
 msgctxt "filters-action"
 msgid "_Kaleidoscope..."
 msgstr "_Kaleidoskop …"
 
-#: app/actions/filters-actions.c:376
+#: app/actions/filters-actions.c:382
 msgctxt "filters-action"
 msgid "Le_ns Blur..."
 msgstr "_Linsesløring …"
 
-#: app/actions/filters-actions.c:381
+#: app/actions/filters-actions.c:387
 msgctxt "filters-action"
 msgid "Le_ns Distortion..."
 msgstr "Linse_feil …"
 
-#: app/actions/filters-actions.c:386
+#: app/actions/filters-actions.c:392
 msgctxt "filters-action"
 msgid "Lens _Flare..."
 msgstr "_Linserefleks …"
 
-#: app/actions/filters-actions.c:391
+#: app/actions/filters-actions.c:397
 msgctxt "filters-action"
 msgid "_Levels..."
 msgstr "_Nivå …"
 
-#: app/actions/filters-actions.c:396
+#: app/actions/filters-actions.c:402
 msgctxt "filters-action"
 msgid "_Linear Sinusoid..."
 msgstr "_Lineær sinusforma …"
 
-#: app/actions/filters-actions.c:401
+#: app/actions/filters-actions.c:407
 msgctxt "filters-action"
 msgid "_Little Planet..."
 msgstr "_Vesle planet …"
 
-#: app/actions/filters-actions.c:406
+#: app/actions/filters-actions.c:412
 msgctxt "filters-action"
 msgid "_Long Shadow..."
 msgstr "_Lang skugge …"
 
-#: app/actions/filters-actions.c:411
+#: app/actions/filters-actions.c:417
 msgctxt "filters-action"
 msgid "_Mantiuk 2006..."
 msgstr "_Mantiuk 2006..."
 
-#: app/actions/filters-actions.c:416
+#: app/actions/filters-actions.c:422
 msgctxt "filters-action"
 msgid "_Maze..."
 msgstr "_Labyrint …"
 
-#: app/actions/filters-actions.c:421
+#: app/actions/filters-actions.c:427
 msgctxt "filters-action"
 msgid "Mean C_urvature Blur..."
 msgstr "Gjennomsnittleg kurvatursløring …"
 
-#: app/actions/filters-actions.c:426
+#: app/actions/filters-actions.c:432
 msgctxt "filters-action"
 msgid "_Median Blur..."
 msgstr "_Mediansløring …"
 
-#: app/actions/filters-actions.c:431
+#: app/actions/filters-actions.c:437
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
 msgstr "_Monomiksar..."
 
-#: app/actions/filters-actions.c:436
+#: app/actions/filters-actions.c:442
 msgctxt "filters-action"
 msgid "_Mosaic..."
 msgstr "_Mosaikk …"
 
-#: app/actions/filters-actions.c:441
+#: app/actions/filters-actions.c:447
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
 msgstr "_Fartssløring, sirkulær …"
 
-#: app/actions/filters-actions.c:446
+#: app/actions/filters-actions.c:452
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
 msgstr "Fartssløring, _lineær …"
 
-#: app/actions/filters-actions.c:451
+#: app/actions/filters-actions.c:457
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
 msgstr "Fartssløring, _zoom …"
 
-#: app/actions/filters-actions.c:456
+#: app/actions/filters-actions.c:462
 msgctxt "filters-action"
 msgid "_Cell Noise..."
 msgstr "_Cellestøy …"
 
-#: app/actions/filters-actions.c:461
+#: app/actions/filters-actions.c:467
 msgctxt "filters-action"
 msgid "_Newsprint..."
 msgstr "_Avistrykk …"
 
-#: app/actions/filters-actions.c:466
+#: app/actions/filters-actions.c:472
 msgctxt "filters-action"
 msgid "_CIE lch Noise..."
 msgstr "_CIE-liknande støy..."
 
-#: app/actions/filters-actions.c:471
+#: app/actions/filters-actions.c:477
 msgctxt "filters-action"
 msgid "HS_V Noise..."
 msgstr "_HSV-støy …"
 
-#: app/actions/filters-actions.c:476
+#: app/actions/filters-actions.c:482
 msgctxt "filters-action"
 msgid "_Hurl..."
 msgstr "_Fargekast …"
 
-#: app/actions/filters-actions.c:481
+#: app/actions/filters-actions.c:487
 msgctxt "filters-action"
 msgid "Perlin _Noise..."
 msgstr "_Perlin-støy …"
 
-#: app/actions/filters-actions.c:486
+#: app/actions/filters-actions.c:492
 msgctxt "filters-action"
 msgid "_Pick..."
 msgstr "Fargeplu_kk …"
 
-#: app/actions/filters-actions.c:491
+#: app/actions/filters-actions.c:497
 msgctxt "filters-action"
 msgid "_RGB Noise..."
 msgstr "_RGB-støy …"
 
-#: app/actions/filters-actions.c:496
+#: app/actions/filters-actions.c:502
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
 msgstr "Støy_reduksjon …"
 
-#: app/actions/filters-actions.c:501
+#: app/actions/filters-actions.c:507
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
 msgstr "_Simplex-støy …"
 
-#: app/actions/filters-actions.c:506
+#: app/actions/filters-actions.c:512
 msgctxt "filters-action"
 msgid "_Slur..."
 msgstr "_Nedsmelting …"
 
-#: app/actions/filters-actions.c:511
+#: app/actions/filters-actions.c:517
 msgctxt "filters-action"
 msgid "_Solid Noise..."
 msgstr "_Massiv støy …"
 
-#: app/actions/filters-actions.c:516
+#: app/actions/filters-actions.c:522
 msgctxt "filters-action"
 msgid "Sp_read..."
 msgstr "_Sprei …"
 
-#: app/actions/filters-actions.c:521
+#: app/actions/filters-actions.c:527
 msgctxt "filters-action"
 msgid "_Normal Map..."
 msgstr "_Normalt kart …"
 
-#: app/actions/filters-actions.c:526
+#: app/actions/filters-actions.c:532
 msgctxt "filters-action"
 msgid "_Offset..."
 msgstr "_Forskyving …"
 
-#: app/actions/filters-actions.c:531
+#: app/actions/filters-actions.c:537
 msgctxt "filters-action"
 msgid "Oili_fy..."
 msgstr "_Oljemaling …"
 
-#: app/actions/filters-actions.c:536
+#: app/actions/filters-actions.c:542
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
 msgstr "_Panoramaprojeksjon …"
 
-#: app/actions/filters-actions.c:541
+#: app/actions/filters-actions.c:547
 msgctxt "filters-action"
 msgid "_Photocopy..."
 msgstr "_Fotokopi …"
 
-#: app/actions/filters-actions.c:546
+#: app/actions/filters-actions.c:552
 msgctxt "filters-action"
 msgid "_Pixelize..."
 msgstr "Gjer om til _pikslar …"
 
-#: app/actions/filters-actions.c:551
+#: app/actions/filters-actions.c:557
 msgctxt "filters-action"
 msgid "_Plasma..."
 msgstr "_Plasma …"
 
-#: app/actions/filters-actions.c:556
+#: app/actions/filters-actions.c:562
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
 msgstr "P_olarkoordinat …"
 
-#: app/actions/filters-actions.c:561
+#: app/actions/filters-actions.c:567
 msgctxt "filters-action"
 msgid "_Posterize..."
 msgstr "_Posterisering (plakat) …"
 
-#: app/actions/filters-actions.c:566
+#: app/actions/filters-actions.c:572
 msgctxt "filters-action"
 msgid "_Recursive Transform..."
 msgstr "_Rekursiv transformering …"
 
-#: app/actions/filters-actions.c:571
+#: app/actions/filters-actions.c:577
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
 msgstr "Fjern _raude auge …"
 
-#: app/actions/filters-actions.c:576
+#: app/actions/filters-actions.c:582
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
 msgstr "_Reinhard 2005..."
 
-#: app/actions/filters-actions.c:581
+#: app/actions/filters-actions.c:587
 msgctxt "filters-action"
 msgid "RGB _Clip..."
 msgstr "_RGB-klipp …"
 
-#: app/actions/filters-actions.c:586
+#: app/actions/filters-actions.c:592
 msgctxt "filters-action"
 msgid "_Ripple..."
 msgstr "_Krusning …"
 
-#: app/actions/filters-actions.c:591
+#: app/actions/filters-actions.c:597
 msgctxt "filters-action"
 msgid "Sat_uration..."
 msgstr "_Metning …"
 
-#: app/actions/filters-actions.c:596
+#: app/actions/filters-actions.c:602
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
 msgstr "Halvutflating …"
 
-#: app/actions/filters-actions.c:601
+#: app/actions/filters-actions.c:607
 msgctxt "filters-action"
 msgid "_Sepia..."
 msgstr "_Sepia..."
 
-#: app/actions/filters-actions.c:606
+#: app/actions/filters-actions.c:612
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
 msgstr "_Uthev skuggane …"
 
-#: app/actions/filters-actions.c:611
+#: app/actions/filters-actions.c:617
 msgctxt "filters-action"
 msgid "_Shift..."
 msgstr "_Forskyv …"
 
-#: app/actions/filters-actions.c:616
+#: app/actions/filters-actions.c:622
 msgctxt "filters-action"
 msgid "_Sinus..."
 msgstr "_Sinus …"
 
-#: app/actions/filters-actions.c:621
+#: app/actions/filters-actions.c:627
 msgctxt "filters-action"
 msgid "_Simple Linear Iterative Clustering..."
 msgstr "_Enkel lineær gjentakande gruppering …"
 
-#: app/actions/filters-actions.c:626
+#: app/actions/filters-actions.c:632
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
 msgstr "_Symmetrisk næraste nabo …"
 
-#: app/actions/filters-actions.c:631
+#: app/actions/filters-actions.c:637
 msgctxt "filters-action"
 msgid "_Softglow..."
 msgstr "_Mjukglød …"
 
-#: app/actions/filters-actions.c:636
+#: app/actions/filters-actions.c:642
 msgctxt "filters-action"
 msgid "Spheri_ze..."
 msgstr "_Sfæriser …"
 
-#: app/actions/filters-actions.c:641
+#: app/actions/filters-actions.c:647
 msgctxt "filters-action"
 msgid "S_piral..."
 msgstr "_Spiral …"
 
-#: app/actions/filters-actions.c:646
+#: app/actions/filters-actions.c:652
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "_Strekk kontrast …"
 
-#: app/actions/filters-actions.c:651
+#: app/actions/filters-actions.c:657
 msgctxt "filters-action"
 msgid "_Stress..."
 msgstr "_Stress …"
 
-#: app/actions/filters-actions.c:656
+#: app/actions/filters-actions.c:662
 msgctxt "filters-action"
 msgid "Super_nova..."
 msgstr "Super_nova …"
 
-#: app/actions/filters-actions.c:661
+#: app/actions/filters-actions.c:667
 msgctxt "filters-action"
 msgid "_Threshold..."
 msgstr "_Terskel …"
 
-#: app/actions/filters-actions.c:666
+#: app/actions/filters-actions.c:672
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "Grenseverdi for _alfa …"
 
-#: app/actions/filters-actions.c:671
+#: app/actions/filters-actions.c:677
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "Glas_fliser …"
 
-#: app/actions/filters-actions.c:676
+#: app/actions/filters-actions.c:682
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "_Papirfliser …"
 
-#: app/actions/filters-actions.c:681
+#: app/actions/filters-actions.c:687
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "_Flislegg utan fuger …"
 
-#: app/actions/filters-actions.c:686
+#: app/actions/filters-actions.c:692
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
 msgstr "_Gjer skarpare (uskarpmaske) …"
 
-#: app/actions/filters-actions.c:691
+#: app/actions/filters-actions.c:697
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "_Verdiutbreiing …"
 
-#: app/actions/filters-actions.c:696
+#: app/actions/filters-actions.c:702
 msgctxt "filters-action"
 msgid "_Variable Blur..."
 msgstr "_Variabel sløring …"
 
-#: app/actions/filters-actions.c:701
+#: app/actions/filters-actions.c:707
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "Video_degradering …"
 
-#: app/actions/filters-actions.c:706
+#: app/actions/filters-actions.c:712
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Vignettering …"
 
-#: app/actions/filters-actions.c:711
+#: app/actions/filters-actions.c:717
 msgctxt "filters-action"
 msgid "_Waterpixels..."
 msgstr "_Vasspikslar …"
 
-#: app/actions/filters-actions.c:716
+#: app/actions/filters-actions.c:722
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "Bøl_gjer …"
 
-#: app/actions/filters-actions.c:721
+#: app/actions/filters-actions.c:727
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "_Drei og knip …"
 
-#: app/actions/filters-actions.c:726
+#: app/actions/filters-actions.c:732
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "_Vind …"
 
-#: app/actions/filters-actions.c:734
+#: app/actions/filters-actions.c:740
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "_Gjenta siste"
 
-#: app/actions/filters-actions.c:736
+#: app/actions/filters-actions.c:742
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr "Køyr det sist brukte filteret med dei same innstillingane"
 
-#: app/actions/filters-actions.c:741
+#: app/actions/filters-actions.c:747
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "Vis siste _igjen"
 
-#: app/actions/filters-actions.c:742
+#: app/actions/filters-actions.c:748
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Vis dialogvindauget for det sist brukte filteret"
@@ -5070,30 +5070,30 @@ msgstr "Vis dialogvindauget for det sist brukte filteret"
 #. * which we append "..." as the standardized labelling to indicate
 #. * that this action raises a dialog.
 #.
-#: app/actions/filters-actions.c:857
+#: app/actions/filters-actions.c:864
 #, c-format
 msgid "%s..."
 msgstr "%s..."
 
-#: app/actions/filters-actions.c:1219
+#: app/actions/filters-actions.c:1216
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "_Gjenta «%s»"
 
-#: app/actions/filters-actions.c:1220
+#: app/actions/filters-actions.c:1217
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "Vis «%s» igjen"
 
-#: app/actions/filters-actions.c:1258
+#: app/actions/filters-actions.c:1255
 msgid "Repeat Last"
 msgstr "Gjenta siste"
 
-#: app/actions/filters-actions.c:1260
+#: app/actions/filters-actions.c:1257
 msgid "Re-Show Last"
 msgstr "Vis siste igjen"
 
-#: app/actions/filters-actions.c:1263 app/actions/filters-actions.c:1265
+#: app/actions/filters-actions.c:1260 app/actions/filters-actions.c:1262
 msgid "No last used filters"
 msgstr "Ingen sist brukte filter"
 
@@ -8043,7 +8043,7 @@ msgstr "Tilbakestill alle filtera"
 #: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
 #: app/dialogs/vector-layer-options-dialog.c:103
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
-#: app/tools/gimpfiltertool.c:369 app/tools/gimptransformgridtool.c:1261
+#: app/tools/gimpfiltertool.c:372 app/tools/gimptransformgridtool.c:1261
 #: app/widgets/gimpcolordialog.c:491 app/widgets/gimpcolordisplayeditor.c:326
 msgid "_Reset"
 msgstr "_Tilbakestill"
@@ -10143,7 +10143,7 @@ msgstr "Opna visinga"
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
 #: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:192
-#: app/tools/gimpfiltertool.c:371 app/widgets/gimpcolordialog.c:493
+#: app/tools/gimpfiltertool.c:374 app/widgets/gimpcolordialog.c:493
 #: app/widgets/gimpcontrollereditor.c:666
 #: app/widgets/gimpdeviceinfoeditor.c:1161 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:180 app/widgets/gimpmodifierseditor.c:689
@@ -12927,32 +12927,32 @@ msgstr ""
 msgid "Invalid AppStream metadata: Error loading image: \"%s\""
 msgstr "Ugyldige AppStream-metadata: Feil ved lasting av biletet: «%s»"
 
-#: app/core/gimpextension.c:428
+#: app/core/gimpextension.c:437
 #, c-format
 msgid "Extension AppData must be of type \"addon\", found \"%s\" instead."
 msgstr "Utvidinga AppData må vera av typen «addon», fann «%s» i staden."
 
-#: app/core/gimpextension.c:444
+#: app/core/gimpextension.c:453
 #, c-format
 msgid "Extension AppData must extend \"org.gimp.GIMP\"."
 msgstr "Utvidinga AppData må utvida «org.gimp.GIMP»."
 
-#: app/core/gimpextension.c:458
+#: app/core/gimpextension.c:467
 #, c-format
 msgid "Extension AppData id (\"%s\") and directory (\"%s\") must be the same."
 msgstr "ID (\"%s\") og mappa (\"%s\") for utvidinga AppData må vera det same."
 
-#: app/core/gimpextension.c:486
+#: app/core/gimpextension.c:495
 #, c-format
 msgid "Extension AppData must advertise a version in a <release> tag."
 msgstr "Utvidinga AppData må annonsera ein versjon i ein <release>-tagg."
 
-#: app/core/gimpextension.c:512
+#: app/core/gimpextension.c:521
 #, c-format
 msgid "Unsupported <relation> \"%s\" (type %s)."
 msgstr "Ustøtta <relation> «%s» (type %s)."
 
-#: app/core/gimpextension.c:527
+#: app/core/gimpextension.c:536
 #, c-format
 msgid ""
 "<requires><id>org.gimp.GIMP</id></requires> for version comparison is "
@@ -12961,22 +12961,22 @@ msgstr ""
 "<requires><id>org.gimp.GIMP</id></requires> for samanlikning av versjonar er "
 "obligatorisk."
 
-#: app/core/gimpextension.c:827
+#: app/core/gimpextension.c:836
 #, c-format
 msgid "'%s' is not a relative path."
 msgstr "«%s» er ikkje ein relativ bane."
 
-#: app/core/gimpextension.c:861
+#: app/core/gimpextension.c:870
 #, c-format
 msgid "'%s' is not a child of the extension."
 msgstr "«%s» er ikkje underordna utvidinga."
 
-#: app/core/gimpextension.c:875
+#: app/core/gimpextension.c:884
 #, c-format
 msgid "'%s' is not a directory."
 msgstr "«%s» er ikkje ei mappe."
 
-#: app/core/gimpextension.c:889
+#: app/core/gimpextension.c:898
 #, c-format
 msgid "'%s' is not a valid file."
 msgstr "«%s» er ikkje gyldig fil."
@@ -13069,16 +13069,20 @@ msgstr "tags-locale:nn"
 msgid "Error closing '%s': %s"
 msgstr "Feil ved lukking av «%s»: %s"
 
-#: app/core/gimp-user-install.c:235
+#. TRANSLATORS: the %d.%d replacement strings
+#. * will be a series version (e.g. 2.10). The %s
+#. * replacement will be a directory.
+#.
+#: app/core/gimp-user-install.c:232
 #, c-format
 msgid ""
-"It seems you have used GIMP %s before.  GIMP will now migrate your user "
+"It seems you have used GIMP %d.%d before.  GIMP will now migrate your user "
 "settings to '%s'."
 msgstr ""
-"Det ser ut til at du har brukt GIMP %s tidlegare. GIMP vil no flytta "
+"Det ser ut til at du har brukt GIMP %d.%d tidlegare. GIMP vil no flytta "
 "brukarinnstillingane dine til «%s»."
 
-#: app/core/gimp-user-install.c:243
+#: app/core/gimp-user-install.c:239
 #, c-format
 msgid ""
 "It appears that you are using GIMP for the first time.  GIMP will now create "
@@ -13087,17 +13091,17 @@ msgstr ""
 "Det ser ut til at dette er første gongen dy køyrer GIMP. GIMP vil difor laga "
 "ei ny mappe, «%s», og kopiera nokre filer dit."
 
-#: app/core/gimp-user-install.c:541
+#: app/core/gimp-user-install.c:537
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "Kopierer fila «%s» frå «%s» …"
 
-#: app/core/gimp-user-install.c:558 app/core/gimp-user-install.c:584
+#: app/core/gimp-user-install.c:554 app/core/gimp-user-install.c:580
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "Oppretter mappa «%s» …"
 
-#: app/core/gimp-user-install.c:569 app/core/gimp-user-install.c:595
+#: app/core/gimp-user-install.c:565 app/core/gimp-user-install.c:591
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "Kan ikkje oppretta mappa «%s»: %s"
@@ -13761,7 +13765,37 @@ msgstr "Transformeringslag"
 msgid "Transformation"
 msgstr "Transformering"
 
-#: app/core/gimpdrawablefiltermask.c:196 app/core/gimplayer.c:735
+#: app/core/gimpdrawablefilter.c:959
+#, c-format
+msgid ""
+"GEGL operation '%s' has been called with a non-existent argument name '%s' "
+"(#%d)."
+msgstr ""
+"GEGL-operasjonen «%s» er kalla opp med eit argumentnamn som ikkje finst «%s» "
+"(#%d)."
+
+#: app/core/gimpdrawablefilter.c:1023
+#, c-format
+msgid ""
+"GEGL operation '%s' has been called with a wrong value type for argument "
+"'%s' (#%d). Expected %s, got %s."
+msgstr ""
+"GEGL-operasjonen «%s» er kalla opp med feil verditype for argumentet «%s» "
+"(#%d). Venta %s, fekk %s."
+
+#: app/core/gimpdrawablefilter.c:1098
+#, c-format
+msgid ""
+"GEGL operation '%s' has been called with an invalid aux input name '%s'."
+msgstr ""
+"GEGL-operasjonen «%s» vart kalla opp med eit ugyldig namn for tillegget «%s»."
+
+#: app/core/gimpdrawablefiltermask.c:111
+#, c-format
+msgid "Cannot rename effect masks."
+msgstr "Kan ikkje gje effektmaskene nytt namn."
+
+#: app/core/gimpdrawablefiltermask.c:195 app/core/gimplayer.c:735
 #: app/core/gimplayer.c:2038 app/core/gimplayermask.c:294
 #, c-format
 msgid "%s mask"
@@ -14250,7 +14284,7 @@ msgstr "Fargeprofilkonvertering"
 msgid "Colormap of Image #%d (%s)"
 msgstr "Fargekart for biletet #%d (%s)"
 
-#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:907
+#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:903
 msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "Set fargekart"
@@ -14260,7 +14294,7 @@ msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "Set tilbake fargekartet"
 
-#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:698
+#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:694
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "Endra fargekartinnslag"
@@ -14777,7 +14811,7 @@ msgstr "Fila vart sletta"
 msgid "No file was set"
 msgstr "Inga fil sett"
 
-#: app/core/gimplinklayer.c:189 app/core/gimplinklayer.c:1068
+#: app/core/gimplinklayer.c:189 app/core/gimplinklayer.c:1077
 msgid "Link Layer"
 msgstr "Lenkjelag"
 
@@ -14830,6 +14864,11 @@ msgstr "MyPaint-penselfila er urimeleg stor, hoppar over."
 #, c-format
 msgid "Failed to deserialize MyPaint brush."
 msgstr "Klarte ikkje deserialisere MyPaint-penselen."
+
+#: app/core/gimppalette.c:499
+msgctxt "undo-type"
+msgid "Change Colormap format restriction"
+msgstr "Endra formatrestriksjonane for fargekartet"
 
 #. TRANSLATORS: the "%s" is an item title and "%u" is the number of
 #. occurrences for this item.
@@ -16291,7 +16330,7 @@ msgstr "Vel det lenkja biletet"
 
 #: app/dialogs/layer-options-dialog.c:424
 msgid "_Linked image:"
-msgstr "_Lenkja bilete"
+msgstr "_Lenkja bilete:"
 
 #. Absolute path checkbox.
 #: app/dialogs/layer-options-dialog.c:434
@@ -19049,7 +19088,7 @@ msgstr "Slepp ny bane"
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Kan ikkje endra pikslane i laggrupper."
 
-#: app/display/gimpdisplayshell-dnd.c:390 app/tools/gimpfiltertool.c:334
+#: app/display/gimpdisplayshell-dnd.c:390 app/tools/gimpfiltertool.c:337
 #: app/tools/gimppainttool.c:391 app/tools/gimptransformtool.c:738
 #: app/widgets/gimpdrawabletreeview-filters.c:579
 msgid "A selected layer is not visible."
@@ -19423,15 +19462,15 @@ msgstr "Klikk og dra for å flytta linja"
 msgid "%s to move the whole line"
 msgstr "%s for å flytta heile linja"
 
-#: app/display/gimptoolpath.c:281 app/tools/gimppathoptions.c:121
+#: app/display/gimptoolpath.c:281 app/tools/gimppathoptions.c:122
 msgid "Edit Mode"
 msgstr "Arbeidsmodus"
 
-#: app/display/gimptoolpath.c:290 app/tools/gimppathoptions.c:129
+#: app/display/gimptoolpath.c:290 app/tools/gimppathoptions.c:130
 msgid "Polygonal"
 msgstr "Polygonal"
 
-#: app/display/gimptoolpath.c:291 app/tools/gimppathoptions.c:130
+#: app/display/gimptoolpath.c:291 app/tools/gimppathoptions.c:131
 msgid "Restrict editing to polygons"
 msgstr "Avgrens redigeringa til polygon"
 
@@ -20621,7 +20660,7 @@ msgid "Turn colors into shades of gray"
 msgstr "Omformar fargane til gråtoner"
 
 #: app/operations/gimpoperationdesaturate.c:91
-#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1462
+#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1475
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
 #: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:277
@@ -20666,7 +20705,7 @@ msgstr "Byt ut delvis gjennomsikt med ein farge"
 msgid "The color"
 msgstr "Fargen"
 
-#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1425
+#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1438
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:113
 #: app/tools/gimptransformoptions.c:307
 msgid "Clipping"
@@ -23111,9 +23150,9 @@ msgid "Cannot fill multiple layers. Select only one layer."
 msgstr "Kan ikkje fylla fleire lag. Vel berre eitt lag."
 
 #: app/tools/gimpbucketfilltool.c:599 app/tools/gimpcagetool.c:231
-#: app/tools/gimpcurvestool.c:220 app/tools/gimpfiltertool.c:311
+#: app/tools/gimpcurvestool.c:220 app/tools/gimpfiltertool.c:314
 #: app/tools/gimpforegroundselecttool.c:297 app/tools/gimplevelstool.c:211
-#: app/tools/gimpoffsettool.c:191 app/tools/gimppainttool.c:299
+#: app/tools/gimpoffsettool.c:191 app/tools/gimppainttool.c:300
 #: app/tools/gimpperspectiveclonetool.c:224 app/tools/gimpthresholdtool.c:160
 #: app/tools/gimptransformgridtool.c:351
 msgid "No selected drawables."
@@ -23186,7 +23225,7 @@ msgstr "_Bur-transformering"
 msgid "Cannot modify multiple layers. Select only one layer."
 msgstr "Kan ikkje endra fleire lag. Vel berre eitt lag."
 
-#: app/tools/gimpcagetool.c:250 app/tools/gimppainttool.c:339
+#: app/tools/gimpcagetool.c:250 app/tools/gimppainttool.c:356
 #: app/tools/gimpwarptool.c:810
 msgid "The selected item's pixels are locked."
 msgstr "Pikslane i det merkte elementet er låst."
@@ -23476,7 +23515,7 @@ msgstr "Kurver"
 msgid "_Curves..."
 msgstr "_Kurver …"
 
-#: app/tools/gimpcurvestool.c:218 app/tools/gimpfiltertool.c:307
+#: app/tools/gimpcurvestool.c:218 app/tools/gimpfiltertool.c:310
 #: app/tools/gimplevelstool.c:209 app/tools/gimpoffsettool.c:189
 #: app/tools/gimpthresholdtool.c:158
 msgid "Cannot modify multiple drawables. Select only one."
@@ -23684,57 +23723,75 @@ msgstr ""
 "Viss slått på, vert filteret straks slått saman.\n"
 "Elles vert det eit redigerbart ikkje-destruktivt filter."
 
-#: app/tools/gimpfiltertool.c:322 app/tools/gimpselectiontool.c:575
+#: app/tools/gimpfiltertool.c:325 app/tools/gimpselectiontool.c:575
 #, c-format
 msgid "A selected item's pixels are locked."
 msgstr "Pikslane i det merkte elementet er låst."
 
-#: app/tools/gimpfiltertool.c:444
+#: app/tools/gimpfiltertool.c:452
 msgid "Disabled because this filter depends on another image."
 msgstr "Slått av fordi dette filteret avhenger av eit anna bilete."
 
-#: app/tools/gimpfiltertool.c:763
+#: app/tools/gimpfiltertool.c:454
+msgid "Disabled because filters cannot be merged on vector layers."
+msgstr "Slått av fordi filtera kan ikkje flettast saman med vektorlag."
+
+#: app/tools/gimpfiltertool.c:456
+msgid "Disabled because filters cannot be merged on link layers."
+msgstr "Slått av fordi filtera kan ikkje flettast saman med lenkjelag."
+
+#: app/tools/gimpfiltertool.c:458
+msgid ""
+"Disabled because GEGL Graph is unsafe.\n"
+"For development purpose, set environment variable "
+"GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT."
+msgstr ""
+"Slått av fordi GEGL-Graph er utrygg.\n"
+"For utviklingsføremål, sett miljøvariabelen "
+"GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT."
+
+#: app/tools/gimpfiltertool.c:776
 msgid "Click to switch the original and filtered sides"
 msgstr "Klikk for å byta mellom opphavlege og filtrerte sider"
 
-#: app/tools/gimpfiltertool.c:767
+#: app/tools/gimpfiltertool.c:780
 msgid "Click to switch between vertical and horizontal"
 msgstr "Klikk for å byta mellom vassrett og loddrett"
 
-#: app/tools/gimpfiltertool.c:771
+#: app/tools/gimpfiltertool.c:784
 msgid "Click to move the split guide"
 msgstr "Klikk for å flytta delelinja"
 
-#: app/tools/gimpfiltertool.c:773
+#: app/tools/gimpfiltertool.c:786
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s: byt mellom original og filtrert"
 
-#: app/tools/gimpfiltertool.c:774
+#: app/tools/gimpfiltertool.c:787
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: Byt mellom vassrett og loddrett"
 
-#: app/tools/gimpfiltertool.c:1258
+#: app/tools/gimpfiltertool.c:1271
 msgid "Edit filter"
 msgstr "Redigera filteret"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1438
+#: app/tools/gimpfiltertool.c:1451
 msgid "Blending Options"
 msgstr "Blandeinnstillingar"
 
-#: app/tools/gimpfiltertool.c:1945 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1961 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importer «%s»-innstillingane"
 
-#: app/tools/gimpfiltertool.c:1947 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1963 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Eksporter «%s»-innstillingane"
 
-#: app/tools/gimpfiltertool.c:2212
+#: app/tools/gimpfiltertool.c:2228
 #, c-format
 msgid "Editing '%s'..."
 msgstr "Redigerer «%s» …"
@@ -24774,28 +24831,32 @@ msgctxt "command"
 msgid "Paint Select"
 msgstr "Teikna utval"
 
-#: app/tools/gimppainttool.c:179
+#: app/tools/gimppainttool.c:180
 msgid "Click to paint"
 msgstr "Klikk for å teikna"
 
-#: app/tools/gimppainttool.c:180
+#: app/tools/gimppainttool.c:181
 msgid "Click to draw the line"
 msgstr "Klikk for å teikna linja"
 
-#: app/tools/gimppainttool.c:181
+#: app/tools/gimppainttool.c:182
 #, c-format
 msgid "%s to pick a color"
 msgstr "%s for å henta ein farge"
 
-#: app/tools/gimppainttool.c:308
+#: app/tools/gimppainttool.c:309
 msgid "Cannot paint on multiple layers. Select only one layer."
 msgstr "Kan ikkje teikna på fleire lag. Vel berre eitt lag."
 
-#: app/tools/gimppainttool.c:323
+#: app/tools/gimppainttool.c:324
 msgid "Cannot paint on layer groups."
 msgstr "Kan ikkje teikna på laggrupper."
 
-#: app/tools/gimppainttool.c:357
+#: app/tools/gimppainttool.c:344
+msgid "Link layers must be rasterized before they can be painted on."
+msgstr "Lenkjelaga må rasterast før du kan teikna på dei."
+
+#: app/tools/gimppainttool.c:350
 msgid "Vector layers must be rasterized before they can be painted on."
 msgstr "Vektorlaga må rasterast før du kan teikna på dei."
 
@@ -24812,15 +24873,15 @@ msgstr "Det valde teikneelementet har ingen alfakanal."
 msgid "The selected layer's alpha channel is locked."
 msgstr "Alfakanalen i det valde laget er låst."
 
-#: app/tools/gimppathoptions.c:137
+#: app/tools/gimppathoptions.c:138
 msgid "Enable Fill"
 msgstr "Slå på fyll"
 
-#: app/tools/gimppathoptions.c:143
+#: app/tools/gimppathoptions.c:144
 msgid "Enable Stroke"
 msgstr "Slå på strok"
 
-#: app/tools/gimppathoptions.c:555
+#: app/tools/gimppathoptions.c:556
 #, c-format
 msgid ""
 "Path to Selection\n"
@@ -24834,11 +24895,11 @@ msgstr ""
 "%s: Snitt"
 
 #. Create a selection from the current path
-#: app/tools/gimppathoptions.c:566
+#: app/tools/gimppathoptions.c:567
 msgid "Selection from Path"
 msgstr "Opprett utval frå bane"
 
-#: app/tools/gimppathoptions.c:576
+#: app/tools/gimppathoptions.c:577
 msgid "Create New Vector Layer"
 msgstr "Opprett eit nytt vektorlag"
 
@@ -29011,7 +29072,7 @@ msgstr ""
 "lagrar indekserte fargekart feil.\n"
 "Støtter derimot gråtonekart."
 
-#: app/xcf/xcf-load.c:2929
+#: app/xcf/xcf-load.c:2941
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -29024,7 +29085,7 @@ msgstr ""
 "Dette bør ikkje skje. Du bør rapportera problemet til utviklarane av "
 "filteret."
 
-#: app/xcf/xcf-load.c:3813
+#: app/xcf/xcf-load.c:3825
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
