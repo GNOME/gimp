@@ -495,10 +495,12 @@ else
     'GObject-2.0',
     'Pango-1.0',
   ]
-  if not platform_windows
-    libgimp_gir_includes += [ 'GioUnix-2.0' ]
-  else
-    libgimp_gir_includes += [ 'GioWin32-2.0' ]
+  if glib.version().version_compare('>=2.86')
+    if not platform_windows
+      libgimp_gir_includes += [ 'GioUnix-2.0' ]
+    else
+      libgimp_gir_includes += [ 'GioWin32-2.0' ]
+    endif
   endif
 
   gir_args = [
