@@ -1052,7 +1052,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
             if (gimp_display_shell_key_to_state (kevent->keyval) == GDK_MOD1_MASK)
               /* Make sure the picked layer is reset. */
-              shell->picked_layer = NULL;
+              g_clear_weak_pointer (&shell->picked_layer);
 
             switch (kevent->keyval)
               {
@@ -1151,7 +1151,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             statusbar = gimp_display_shell_get_statusbar (shell);
             gimp_statusbar_pop_temp (statusbar);
 
-            shell->picked_layer = NULL;
+            g_clear_weak_pointer (&shell->picked_layer);
             shell->mod_action = GIMP_MODIFIER_ACTION_NONE;
           }
         else if (shell->mod_action != GIMP_MODIFIER_ACTION_NONE &&
@@ -1767,7 +1767,7 @@ gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
                                             _("Layer picked: '%s'"),
                                             gimp_object_get_name (layer));
                 }
-              shell->picked_layer = layer;
+              g_set_weak_pointer (&shell->picked_layer, layer);
             }
         }
       break;
