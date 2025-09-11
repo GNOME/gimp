@@ -118,6 +118,13 @@ struct _GimpCoreConfig
   gchar                  *last_release_comment;
   gint                    last_revision;
 
+  gchar                  *last_message_id;
+  gchar                 **messages;
+  gchar                 **message_titles;
+  gchar                 **message_images;
+  gchar                 **message_dates;
+  gint                    n_new_messages;
+
   gchar                  *config_version;
 };
 

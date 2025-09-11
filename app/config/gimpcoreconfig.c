@@ -129,6 +129,12 @@ enum
   PROP_LAST_RELEASE_COMMENT,
   PROP_LAST_REVISION,
   PROP_LAST_KNOWN_RELEASE,
+  PROP_LAST_MESSAGE_ID,
+  PROP_MESSAGES,
+  PROP_MESSAGE_TITLES,
+  PROP_MESSAGE_IMAGES,
+  PROP_MESSAGE_DATES,
+  PROP_N_NEW_MESSAGES,
 #ifdef G_OS_WIN32
   PROP_WIN32_POINTER_INPUT_API,
 #endif
@@ -700,6 +706,43 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                         0, G_MAXINT, 0,
                         GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_LAST_MESSAGE_ID,
+                           "last-message-id",
+                           "ID of the last message from core team",
+                           LAST_KNOWN_RELEASE_BLURB,
+                           NULL,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  /* These are messages from the official GIMP team. We don't want to
+   * store these in gimprc. We only store the last message ID. Yet we
+   * want to keep these in a property for passing them through.
+   */
+  g_object_class_install_property (object_class, PROP_MESSAGES,
+                                   g_param_spec_boxed ("messages", NULL, NULL,
+                                                       G_TYPE_STRV,
+                                                       GIMP_PARAM_STATIC_STRINGS |
+                                                       GIMP_PARAM_READWRITE));
+  g_object_class_install_property (object_class, PROP_MESSAGE_TITLES,
+                                   g_param_spec_boxed ("message-titles", NULL, NULL,
+                                                       G_TYPE_STRV,
+                                                       GIMP_PARAM_STATIC_STRINGS |
+                                                       GIMP_PARAM_READWRITE));
+  g_object_class_install_property (object_class, PROP_MESSAGE_IMAGES,
+                                   g_param_spec_boxed ("message-images", NULL, NULL,
+                                                       G_TYPE_STRV,
+                                                       GIMP_PARAM_STATIC_STRINGS |
+                                                       GIMP_PARAM_READWRITE));
+  g_object_class_install_property (object_class, PROP_MESSAGE_DATES,
+                                   g_param_spec_boxed ("message-dates", NULL, NULL,
+                                                       G_TYPE_STRV,
+                                                       GIMP_PARAM_STATIC_STRINGS |
+                                                       GIMP_PARAM_READWRITE));
+  g_object_class_install_property (object_class, PROP_N_NEW_MESSAGES,
+                                   g_param_spec_int ("n-new-messages", NULL, NULL,
+                                                     0, G_MAXINT, 0,
+                                                     GIMP_PARAM_STATIC_STRINGS |
+                                                     GIMP_PARAM_READWRITE));
+
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAVE_DOCUMENT_HISTORY,
                             "save-document-history",
                             "Save document history",
@@ -857,6 +900,12 @@ gimp_core_config_init (GimpCoreConfig *config)
 
   gimp_color_set_alpha (red, 0.5);
   config->quick_mask_color = red;
+  config->last_message_id  = NULL;
+  config->messages         = NULL;
+  config->message_titles   = NULL;
+  config->message_images   = NULL;
+  config->message_dates    = NULL;
+  config->n_new_messages   = 0;
 
   config->default_image = g_object_new (GIMP_TYPE_TEMPLATE,
                                         "name",    "Default Image",
@@ -920,6 +969,12 @@ gimp_core_config_finalize (GObject *object)
   g_clear_pointer (&core_config->last_known_release,   g_free);
   g_clear_pointer (&core_config->last_release_comment, g_free);
   g_clear_pointer (&core_config->config_version,       g_free);
+
+  g_clear_pointer (&core_config->last_message_id,      g_free);
+  g_strfreev (core_config->messages);
+  g_strfreev (core_config->message_titles);
+  g_strfreev (core_config->message_images);
+  g_strfreev (core_config->message_dates);
 
   g_clear_object (&core_config->default_image);
   g_clear_object (&core_config->default_grid);
@@ -1156,6 +1211,24 @@ gimp_core_config_set_property (GObject      *object,
           if (gimp_version_cmp (version, NULL) > 0)
             g_set_str (&core_config->last_known_release, version);
         }
+      break;
+    case PROP_LAST_MESSAGE_ID:
+      g_set_str (&core_config->last_message_id, g_value_get_string (value));
+      break;
+    case PROP_MESSAGES:
+      core_config->messages = g_value_dup_boxed (value);
+      break;
+    case PROP_MESSAGE_TITLES:
+      core_config->message_titles = g_value_dup_boxed (value);
+      break;
+    case PROP_MESSAGE_IMAGES:
+      core_config->message_images = g_value_dup_boxed (value);
+      break;
+    case PROP_MESSAGE_DATES:
+      core_config->message_dates = g_value_dup_boxed (value);
+      break;
+    case PROP_N_NEW_MESSAGES:
+      core_config->n_new_messages = g_value_get_int (value);
       break;
     case PROP_CONFIG_VERSION:
       g_set_str (&core_config->config_version,
@@ -1430,6 +1503,24 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_LAST_KNOWN_RELEASE:
       g_value_set_string (value, core_config->last_known_release);
+      break;
+    case PROP_LAST_MESSAGE_ID:
+      g_value_set_string (value, core_config->last_message_id);
+      break;
+    case PROP_MESSAGES:
+      g_value_set_boxed (value, core_config->messages);
+      break;
+    case PROP_MESSAGE_TITLES:
+      g_value_set_boxed (value, core_config->message_titles);
+      break;
+    case PROP_MESSAGE_IMAGES:
+      g_value_set_boxed (value, core_config->message_images);
+      break;
+    case PROP_MESSAGE_DATES:
+      g_value_set_boxed (value, core_config->message_dates);
+      break;
+    case PROP_N_NEW_MESSAGES:
+      g_value_set_int (value, core_config->n_new_messages);
       break;
     case PROP_CONFIG_VERSION:
       g_value_set_string (value, core_config->config_version);

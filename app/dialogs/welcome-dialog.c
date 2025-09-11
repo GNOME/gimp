@@ -96,6 +96,10 @@ static void   welcome_dialog_create_creation_page    (Gimp           *gimp,
                                                       GimpConfig     *config,
                                                       GtkWidget      *welcome_dialog,
                                                       GtkWidget      *main_vbox);
+static void   welcome_dialog_create_messages_page    (Gimp           *gimp,
+                                                      GimpConfig     *config,
+                                                      GtkWidget      *welcome_dialog,
+                                                      GtkWidget      *main_vbox);
 static void   welcome_dialog_create_release_page     (Gimp           *gimp,
                                                       GtkWidget      *welcome_dialog,
                                                       GtkWidget      *main_vbox);
@@ -133,6 +137,9 @@ static void   welcome_dialog_open_image_accelerator  (GtkAccelGroup  *accel_grou
 
 static gboolean welcome_scrollable_resize            (gpointer        data);
 
+static void     welcome_dialog_messages_notified     (GimpCoreConfig   *config,
+                                                      const GParamSpec *pspec,
+                                                      GtkWidget        *dialog);
 
 static GtkWidget *welcome_dialog;
 
@@ -201,6 +208,8 @@ welcome_dialog_new (Gimp       *gimp,
   guint           accel_key;
   GdkModifierType accel_mods;
   gchar         **accels;
+
+  gchar         **messages = NULL;
 
   /* Translators: the %s string will be the version, e.g. "3.0". */
   title = g_strdup_printf (_("Welcome to GIMP %s"), GIMP_VERSION);
@@ -304,6 +313,18 @@ welcome_dialog_new (Gimp       *gimp,
   /* If dialog is set to always show on load, switch to the Create page */
   if (! show_welcome_page)
     gtk_stack_set_visible_child_name (GTK_STACK (stack), "gimp-welcome-create");
+
+  g_object_get (gimp->config, "messages", &messages, NULL);
+  g_object_set_data (G_OBJECT (dialog), "gimp", gimp);
+  g_object_set_data (G_OBJECT (dialog), "show-welcome", GINT_TO_POINTER (show_welcome_page));
+  g_object_set_data (G_OBJECT (dialog), "stack", stack);
+  if (messages && g_strv_length (messages) > 0)
+    welcome_dialog_messages_notified (gimp->config, NULL, dialog);
+  else
+    g_signal_connect (gimp->config, "notify::messages",
+                      (GCallback) welcome_dialog_messages_notified,
+                      dialog);
+  g_strfreev (messages);
 
   if (gimp_welcome_dialog_n_items > 0)
     {
@@ -963,6 +984,126 @@ welcome_dialog_create_contribute_page (Gimp       *gimp,
 }
 
 static void
+welcome_dialog_create_messages_page (Gimp       *gimp,
+                                     GimpConfig *config,
+                                     GtkWidget  *welcome_dialog,
+                                     GtkWidget  *main_vbox)
+{
+  GtkWidget   *label;
+  gchar       *markup;
+  gchar       *text;
+  gchar      **messages;
+  gchar      **titles;
+  gchar      **images;
+  gchar      **dates;
+  gint         n_new_messages;
+
+  g_object_get (config,
+                "messages",       &messages,
+                "message-titles", &titles,
+                "message-images", &images,
+                "message-dates",  &dates,
+                "n-new-messages", &n_new_messages,
+                NULL);
+
+  if (n_new_messages > 0)
+    {
+      text = g_strdup_printf (ngettext ("You have a new message from the GIMP team:",
+                                        "You have %d new messages from the GIMP team:",
+                                        n_new_messages),
+                              n_new_messages);
+      markup = g_strdup_printf ("<big><b>%s</b></big>", text);
+      label = gtk_label_new (NULL);
+      gtk_label_set_markup (GTK_LABEL (label), markup);
+      g_free (text);
+      g_free (markup);
+      gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
+      gtk_widget_set_visible (label, TRUE);
+    }
+
+  for (gint i = 0; messages[i]; i++)
+    {
+      GtkWidget *frame;
+      GtkWidget *frame_label;
+
+      if (i == n_new_messages && i != 0)
+        {
+          GtkWidget *separator;
+
+          separator = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
+          gtk_box_pack_start (GTK_BOX (main_vbox), separator, FALSE, FALSE, 0);
+          gtk_widget_set_visible (separator, TRUE);
+
+          text = g_strdup_printf ("Older messages:");
+          markup = g_strdup_printf ("<big><b>%s</b></big>", text);
+          label = gtk_label_new (NULL);
+          gtk_label_set_markup (GTK_LABEL (label), markup);
+          g_free (text);
+          g_free (markup);
+          gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
+          gtk_widget_set_visible (label, TRUE);
+        }
+
+      frame = gtk_frame_new (NULL);
+      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+      gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+      gtk_widget_set_visible (frame, TRUE);
+
+      frame_label = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 10);
+      gtk_frame_set_label_widget (GTK_FRAME (frame), frame_label);
+      gtk_widget_set_visible (frame_label, TRUE);
+
+      markup = g_strdup_printf ("<u>%s</u>", titles[i]);
+      label = gtk_label_new (NULL);
+      gtk_label_set_markup (GTK_LABEL (label), markup);
+      gtk_box_pack_start (GTK_BOX (frame_label), label, FALSE, FALSE, 0);
+      gtk_widget_set_halign (label, GTK_ALIGN_START);
+      gtk_widget_set_valign (label, GTK_ALIGN_START);
+      gtk_widget_set_visible (label, TRUE);
+      g_free (markup);
+
+      text   = g_markup_escape_text (dates[i], -1);
+      markup = g_strdup_printf ("<i>%s</i>", text);
+      label  = gtk_label_new (NULL);
+      gtk_label_set_markup (GTK_LABEL (label), markup);
+      gtk_box_pack_start (GTK_BOX (frame_label), label, FALSE, FALSE, 0);
+      gtk_widget_set_halign (label, GTK_ALIGN_CENTER);
+      gtk_widget_set_valign (label, GTK_ALIGN_START);
+      gtk_widget_set_visible (label, TRUE);
+      g_free (text);
+      g_free (markup);
+
+      /* Note: I don't use a GtkTextView on purpose because it doesn't
+       * support links in pango markup.
+       */
+      label = gtk_label_new (NULL);
+      gtk_label_set_markup (GTK_LABEL (label), messages[i]);
+      gtk_widget_set_margin_top (label, 8);
+      gtk_widget_set_margin_bottom (label, 14);
+      gtk_widget_set_margin_start (label, 8);
+      gtk_widget_set_margin_end (label, 8);
+      gtk_widget_set_halign (label, GTK_ALIGN_START);
+      gtk_widget_set_valign (label, GTK_ALIGN_START);
+      gtk_widget_set_hexpand (label, TRUE);
+      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+      gtk_label_set_line_wrap_mode (GTK_LABEL (label), PANGO_WRAP_WORD_CHAR);
+      gtk_label_set_track_visited_links (GTK_LABEL (label), TRUE);
+      gtk_label_set_max_width_chars (GTK_LABEL (label), 80);
+      gtk_label_set_width_chars (GTK_LABEL (label), 80);
+      gtk_label_set_selectable (GTK_LABEL (label), TRUE);
+      gtk_label_set_lines (GTK_LABEL (label), -1);
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+      gtk_container_add (GTK_CONTAINER (frame), label);
+      gtk_widget_set_visible (label, TRUE);
+    }
+
+  g_strfreev (messages);
+  g_strfreev (titles);
+  g_strfreev (images);
+  g_strfreev (dates);
+}
+
+static void
 welcome_dialog_create_release_page (Gimp      *gimp,
                                     GtkWidget *welcome_dialog,
                                     GtkWidget *main_vbox)
@@ -1553,4 +1694,39 @@ welcome_dialog_open_image_accelerator (GtkAccelGroup  *accel_group,
 
   if (gimp_ui_manager_activate_action (manager, "file", action_name))
     gtk_widget_destroy (welcome_dialog);
+}
+
+static void
+welcome_dialog_messages_notified (GimpCoreConfig   *config,
+                                  const GParamSpec *pspec,
+                                  GtkWidget        *dialog)
+{
+  Gimp        *gimp;
+  GtkWidget   *main_vbox;
+  GtkWidget   *prefs_box;
+  GtkWidget   *stack;
+  GtkTreeIter  top_iter;
+  gboolean     show_welcome;
+
+  g_signal_handlers_disconnect_by_func (config,
+                                        (GCallback) welcome_dialog_messages_notified,
+                                        dialog);
+
+  gimp         = g_object_get_data (G_OBJECT (dialog), "gimp");
+  prefs_box    = g_object_get_data (G_OBJECT (dialog), "prefs-box");
+  stack        = g_object_get_data (G_OBJECT (dialog), "stack");
+  show_welcome = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (dialog), "show-welcome"));
+  main_vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                       "dialog-information",
+                                       _("Team Messages"),
+                                       _("Team Messages"),
+                                       "gimp-welcome-messages",
+                                       NULL, &top_iter);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+
+  welcome_dialog_create_messages_page (gimp, GIMP_CONFIG (gimp->config), dialog, main_vbox);
+  gtk_widget_set_visible (main_vbox, TRUE);
+
+  if (pspec != NULL && config->n_new_messages > 0 && show_welcome)
+    gtk_stack_set_visible_child_name (GTK_STACK (stack), "gimp-welcome-messages");
 }

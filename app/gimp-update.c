@@ -55,6 +55,19 @@ static gboolean      gimp_update_known               (GimpCoreConfig   *config,
                                                       gint64            release_timestamp,
                                                       gint              build_revision,
                                                       const gchar      *comment);
+static gboolean      gimp_update_get_highest         (JsonParser       *parser,
+                                                      gchar           **highest_version,
+                                                      gint64           *release_timestamp,
+                                                      gint             *build_revision,
+                                                      gchar           **build_comment,
+                                                      gboolean          unstable);
+static gboolean      gimp_update_get_messages        (JsonParser       *parser,
+                                                      gchar           **top_message_id,
+                                                      gchar          ***titles,
+                                                      gchar          ***messages,
+                                                      gchar          ***images,
+                                                      gchar          ***dates,
+                                                      gint             *new_messages);
 static void          gimp_check_updates_process      (const gchar      *source,
                                                       gchar            *file_contents,
                                                       gsize             file_length,
@@ -65,6 +78,9 @@ static void          gimp_check_updates_callback     (GObject          *source,
                                                       gpointer          user_data);
 #endif /* PLATFORM_OSX */
 static void          gimp_update_about_dialog        (GimpCoreConfig   *config,
+                                                      const GParamSpec *pspec,
+                                                      gpointer          user_data);
+static void          gimp_update_welcome_dialog      (GimpCoreConfig   *config,
                                                       const GParamSpec *pspec,
                                                       gpointer          user_data);
 
@@ -327,6 +343,154 @@ gimp_update_get_highest (JsonParser  *parser,
   return (*highest_version != NULL);
 }
 
+static gboolean
+gimp_update_get_messages (JsonParser   *parser,
+                          gchar       **top_message_id,
+                          gchar      ***titles,
+                          gchar      ***messages,
+                          gchar      ***images,
+                          gchar      ***dates,
+                          gint         *new_messages)
+{
+  GStrvBuilder *titles_builder;
+  GStrvBuilder *messages_builder;
+  GStrvBuilder *images_builder;
+  GStrvBuilder *dates_builder;
+  JsonPath     *path;
+  JsonNode     *result;
+  JsonArray    *messages_array;
+  gchar        *new_top_message_id = NULL;
+  const gchar  *path_str;
+  GError       *error        = NULL;
+  gint          i;
+  gboolean      is_new_message = TRUE;
+
+  g_return_val_if_fail (top_message_id != NULL, FALSE);
+  g_return_val_if_fail (titles         != NULL, FALSE);
+  g_return_val_if_fail (messages       != NULL, FALSE);
+  g_return_val_if_fail (images         != NULL, FALSE);
+  g_return_val_if_fail (dates          != NULL, FALSE);
+  g_return_val_if_fail (new_messages   != NULL, FALSE);
+
+  *titles       = NULL;
+  *messages     = NULL;
+  *images       = NULL;
+  *dates        = NULL;
+  *new_messages = 0;
+
+  path_str = "$['MESSAGES'][*]";
+  path     = json_path_new ();
+  if (! json_path_compile (path, path_str, &error))
+    {
+      g_warning ("%s: path compilation failed: %s\n",
+                 G_STRFUNC, error->message);
+      g_clear_error (&error);
+      g_object_unref (path);
+
+      return FALSE;
+    }
+  result = json_path_match (path, json_parser_get_root (parser));
+  if (! JSON_NODE_HOLDS_ARRAY (result))
+    {
+      g_printerr ("%s: match for \"%s\" is not a JSON array.\n",
+                  G_STRFUNC, path_str);
+      g_object_unref (path);
+
+      return FALSE;
+    }
+
+  titles_builder   = g_strv_builder_new ();
+  messages_builder = g_strv_builder_new ();
+  images_builder   = g_strv_builder_new ();
+  dates_builder    = g_strv_builder_new ();
+
+  messages_array = json_node_get_array (result);
+  for (i = 0; i < (gint) json_array_get_length (messages_array); i++)
+    {
+      JsonObject *msg;
+
+      msg = json_array_get_object_element (messages_array, i);
+      if (! json_object_has_member (msg, "title")   ||
+          ! json_object_has_member (msg, "message") ||
+          ! json_object_has_member (msg, "id")      ||
+          ! json_object_has_member (msg, "date"))
+        {
+          /* JSON file data bug. */
+          g_printerr ("%s: message %d misses mandatory elements.\n",
+                      G_STRFUNC, i);
+          continue;
+        }
+      else
+        {
+          const gchar *id;
+          const gchar *date;
+          GDateTime   *datetime;
+          gchar       *str;
+
+          id = json_object_get_string_member (msg, "id");
+
+          if (*top_message_id &&
+              is_new_message  &&
+              g_strcmp0 (id, *top_message_id) == 0)
+            /* Below messages were all shown in previous runs. */
+            is_new_message = FALSE;
+
+          if (is_new_message)
+            (*new_messages)++;
+
+          date = json_object_get_string_member (msg, "date");
+          str = g_strdup_printf ("%s 00:00:00Z", date);
+          datetime = g_date_time_new_from_iso8601 (str, NULL);
+          g_free (str);
+
+          if (datetime)
+            {
+              gchar *date = g_date_time_format (datetime, "%x");
+              g_strv_builder_add (dates_builder, date);
+
+              g_free (date);
+            }
+          else
+            {
+              /* JSON file data bug. */
+              g_printerr ("%s: date for message %d not properly formatted: %s\n",
+                          G_STRFUNC, i, date);
+              continue;
+            }
+
+          if (new_top_message_id == NULL)
+            new_top_message_id = g_strdup (id);
+        }
+
+      g_strv_builder_add (titles_builder, json_object_get_string_member (msg, "title"));
+      g_strv_builder_add (messages_builder, json_object_get_string_member (msg, "message"));
+      if (json_object_has_member (msg, "image"))
+        g_strv_builder_add (images_builder, json_object_get_string_member (msg, "image"));
+      else
+        g_strv_builder_add (images_builder, "");
+    }
+
+  *titles   = g_strv_builder_end (titles_builder);
+  *messages = g_strv_builder_end (messages_builder);
+  *images   = g_strv_builder_end (images_builder);
+  *dates    = g_strv_builder_end (dates_builder);
+
+  json_node_unref (result);
+  g_object_unref (path);
+  g_strv_builder_unref (titles_builder);
+  g_strv_builder_unref (messages_builder);
+  g_strv_builder_unref (images_builder);
+  g_strv_builder_unref (dates_builder);
+
+  if (new_top_message_id)
+    {
+      g_free (*top_message_id);
+      *top_message_id = new_top_message_id;
+    }
+
+  return (g_strv_length (*titles) != 0);
+}
+
 static void
 gimp_check_updates_process (const gchar    *source,
                             gchar          *file_contents,
@@ -337,6 +501,14 @@ gimp_check_updates_process (const gchar    *source,
   gchar       *build_comment     = NULL;
   gint64       release_timestamp = 0;
   gint         build_revision    = 0;
+
+  gchar       *last_message_id   = NULL;
+  gchar      **titles            = NULL;
+  gchar      **messages          = NULL;
+  gchar      **images            = NULL;
+  gchar      **dates             = NULL;
+  gint         new_messages      = 0;
+
   GError      *error             = NULL;
   JsonParser  *parser;
 
@@ -387,8 +559,41 @@ gimp_check_updates_process (const gchar    *source,
 
   gimp_update_known (config, last_version, release_timestamp, build_revision, build_comment);
 
+  g_object_get (config,
+                "last-message-id", &last_message_id,
+                NULL);
+
+  if (gimp_update_get_messages (parser, &last_message_id,
+                                &titles, &messages, &images, &dates,
+                                &new_messages))
+    {
+      g_object_set (config,
+                    "messages",       messages,
+                    "message-titles", titles,
+                    "message-images", images,
+                    "message-dates",  dates,
+                    "n-new-messages", new_messages,
+                    NULL);
+
+      if (config->last_known_release == NULL)
+        /* Only update the last message ID if we didn't pop-up the About
+         * dialog to announce a new release. Indeed in such a case, we
+         * won't display the new message(s) and therefore the user
+         * likely won't get knowledge of it (unless they were to later
+         * open the Welcome dialog on their own.
+         */
+        g_object_set (config,
+                      "last-message-id", last_message_id,
+                      NULL);
+    }
+
   g_clear_pointer (&last_version, g_free);
   g_clear_pointer (&build_comment, g_free);
+  g_clear_pointer (&last_message_id, g_free);
+  g_strfreev (titles);
+  g_strfreev (messages);
+  g_strfreev (images);
+
   g_object_unref (parser);
   g_free (file_contents);
 }
@@ -444,6 +649,30 @@ gimp_update_about_dialog (GimpCoreConfig   *config,
       g_printerr (_("A new version of GIMP (%s) was released.\n"
                     "It is recommended to update."),
                   config->last_known_release);
+#endif
+    }
+}
+
+static void
+gimp_update_welcome_dialog (GimpCoreConfig   *config,
+                            const GParamSpec *pspec,
+                            gpointer          user_data)
+{
+#ifndef GIMP_CONSOLE_COMPILATION
+  Gimp *gimp = user_data;
+#endif
+
+  g_signal_handlers_disconnect_by_func (config,
+                                        (GCallback) gimp_update_welcome_dialog,
+                                        user_data);
+
+  if (config->last_known_release == NULL &&
+      config->n_new_messages > 0)
+    {
+#ifndef GIMP_CONSOLE_COMPILATION
+      gtk_widget_show (welcome_dialog_create (gimp, TRUE));
+#else
+      g_printerr (_("You have new messages from the GIMP team."));
 #endif
     }
 }
@@ -561,6 +790,9 @@ gimp_update_auto_check (GimpCoreConfig *config,
 
   g_signal_connect (config, "notify::last-known-release",
                     (GCallback) gimp_update_about_dialog,
+                    gimp);
+  g_signal_connect (config, "notify::n-new-messages",
+                    (GCallback) gimp_update_welcome_dialog,
                     gimp);
 
   gimp_update_check (config);
