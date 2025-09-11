@@ -441,6 +441,18 @@ gio_specific      = dependency(gio_specific_name)
 
 glib_minver       = '2.70.0'
 glib              = dependency('glib-2.0',           version: '>='+glib_minver)
+glib_version_split = glib_minver.split('.')
+glib_major = glib_version_split[0].to_int()
+glib_minor = glib_version_split[1].to_int()
+glib_min_macro = 'GLIB_VERSION_@0@_@1@'.format(glib_major, glib_minor)
+add_project_arguments('-DGLIB_VERSION_MIN_REQUIRED=' + glib_min_macro, language: 'c')
+# XXX: ideally the MIN_REQUIRED and MAX_ALLOWED should be the same
+# version but we have a bunch of GLIB_CHECK_VERSION() conditional code
+# (higher being 2.76.0). So we use this max version to avoid useless
+# warnings. We should clean up all conditional code once we bump the
+# minimum requirement.
+add_project_arguments('-DGLIB_VERSION_MAX_ALLOWED=GLIB_VERSION_2_76', language: 'c')
+
 gi                = dependency('gobject-introspection-1.0')
 
 gobject           = dependency('gobject-2.0',        version: '>='+glib_minver)
@@ -448,6 +460,12 @@ gmodule           = dependency('gmodule-no-export-2.0')
 
 gtk3_minver       = '3.24.0'
 gtk3              = dependency('gtk+-3.0',           version: '>='+gtk3_minver)
+gtk_version_split = gtk3_minver.split('.')
+gtk_major = gtk_version_split[0].to_int()
+gtk_minor = gtk_version_split[1].to_int()
+gtk_min_macro = 'GDK_VERSION_@0@_@1@'.format(gtk_major, gtk_minor)
+add_project_arguments('-DGDK_VERSION_MIN_REQUIRED=' + gtk_min_macro, language: 'c')
+add_project_arguments('-DGDK_VERSION_MAX_ALLOWED=' + gtk_min_macro, language: 'c')
 
 harfbuzz_minver   = '2.8.2'
 harfbuzz          = dependency('harfbuzz',           version: '>='+harfbuzz_minver)
