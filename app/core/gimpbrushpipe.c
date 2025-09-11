@@ -351,8 +351,10 @@ gimp_brush_pipe_set_params (GimpBrushPipe *pipe,
     {
       GimpPixPipeParams params;
 
+      G_GNUC_BEGIN_IGNORE_DEPRECATIONS
       gimp_pixpipe_params_init (&params);
       gimp_pixpipe_params_parse (paramstring, &params);
+      G_GNUC_END_IGNORE_DEPRECATIONS
 
       pipe->dimension = params.dim;
       pipe->rank      = g_new0 (gint, pipe->dimension);
@@ -384,7 +386,9 @@ gimp_brush_pipe_set_params (GimpBrushPipe *pipe,
           pipe->index[i] = 0;
         }
 
+      G_GNUC_BEGIN_IGNORE_DEPRECATIONS
       gimp_pixpipe_params_free (&params);
+      G_GNUC_END_IGNORE_DEPRECATIONS
 
       pipe->params = g_strdup (paramstring);
     }

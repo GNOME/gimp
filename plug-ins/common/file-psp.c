@@ -2263,7 +2263,9 @@ read_tube_block (FILE      *f,
   GimpParasite      *pipe_parasite;
   gchar             *parasite_text;
 
+  G_GNUC_BEGIN_IGNORE_DEPRECATIONS
   gimp_pixpipe_params_init (&params);
+  G_GNUC_END_IGNORE_DEPRECATIONS
 
   if (psp_ver_major >= 4)
     {
@@ -2331,7 +2333,9 @@ read_tube_block (FILE      *f,
                            (selection_mode == tsmPressure ? "pressure" :
                             (selection_mode == tsmVelocity ? "velocity" :
                              "default")))));
+  G_GNUC_BEGIN_IGNORE_DEPRECATIONS
   parasite_text = gimp_pixpipe_params_build (&params);
+  G_GNUC_END_IGNORE_DEPRECATIONS
 
   IFDBG(2) g_message ("parasite: %s", parasite_text);
 

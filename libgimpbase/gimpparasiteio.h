@@ -70,16 +70,20 @@ struct _GimpPixPipeParams
 };
 
 /* Initialize with dummy values */
+G_DEPRECATED
 void    gimp_pixpipe_params_init  (GimpPixPipeParams *params);
 
 /* Parse a string into a GimpPixPipeParams */
+G_DEPRECATED
 void    gimp_pixpipe_params_parse (const gchar       *parameters,
                                    GimpPixPipeParams *params);
 
 /* Build a string representation of GimpPixPipeParams */
+G_DEPRECATED
 gchar * gimp_pixpipe_params_build (GimpPixPipeParams *params) G_GNUC_MALLOC;
 
 /* Free the internal values. It does not free the struct itself. */
+G_DEPRECATED
 void    gimp_pixpipe_params_free  (GimpPixPipeParams *params);
 
 G_END_DECLS

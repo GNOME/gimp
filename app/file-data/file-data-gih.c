@@ -215,15 +215,19 @@ file_gih_pipe_to_image (Gimp          *gimp,
        * described in the header" means) -- mitch
        */
 
+      G_GNUC_BEGIN_IGNORE_DEPRECATIONS
       gimp_pixpipe_params_init (&params);
       gimp_pixpipe_params_parse (pipe->params, &params);
+      G_GNUC_END_IGNORE_DEPRECATIONS
 
       params.cellwidth  = gimp_image_get_width  (image);
       params.cellheight = gimp_image_get_height (image);
       params.cols       = 1;
       params.rows       = 1;
 
+      G_GNUC_BEGIN_IGNORE_DEPRECATIONS
       paramstring = gimp_pixpipe_params_build (&params);
+      G_GNUC_END_IGNORE_DEPRECATIONS
       if (paramstring)
         {
           parasite = gimp_parasite_new ("gimp-brush-pipe-parameters",
@@ -235,7 +239,9 @@ file_gih_pipe_to_image (Gimp          *gimp,
           g_free (paramstring);
         }
 
+      G_GNUC_BEGIN_IGNORE_DEPRECATIONS
       gimp_pixpipe_params_free (&params);
+      G_GNUC_END_IGNORE_DEPRECATIONS
     }
 
   return image;
@@ -262,8 +268,10 @@ file_gih_image_to_pipe (GimpImage   *image,
                        "spacing",   spacing,
                        NULL);
 
+  G_GNUC_BEGIN_IGNORE_DEPRECATIONS
   gimp_pixpipe_params_init (&params);
   gimp_pixpipe_params_parse (paramstring, &params);
+  G_GNUC_END_IGNORE_DEPRECATIONS
 
   image_width  = gimp_image_get_width  (image);
   image_height = gimp_image_get_height (image);
@@ -353,7 +361,9 @@ file_gih_image_to_pipe (GimpImage   *image,
 
   g_list_free (brushes);
 
+  G_GNUC_BEGIN_IGNORE_DEPRECATIONS
   gimp_pixpipe_params_free (&params);
+  G_GNUC_END_IGNORE_DEPRECATIONS
 
   gimp_brush_pipe_set_params (pipe, paramstring);
 
