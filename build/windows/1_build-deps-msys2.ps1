@@ -88,7 +88,7 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
     ## Configure and/or build
     if (-not (Test-Path _build-$env:MSYSTEM_PREFIX\build.ninja -Type Leaf))
       {
-        if ((Test-Path meson.build -Type Leaf) -not (Test-Path CMakeLists.txt -Type Leaf))
+        if ((Test-Path meson.build -Type Leaf) -and -not (Test-Path CMakeLists.txt -Type Leaf))
           {
             meson setup _build-$env:MSYSTEM_PREFIX -Dprefix="$GIMP_PREFIX" $PKGCONF_RELOCATABLE_OPTION --buildtype=debugoptimized `
                         $(if ($branch -like '-*') { "$branch" } elseif ($patches -like '-*') { "$patches" } else { "$options" });
