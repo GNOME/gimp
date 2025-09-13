@@ -91,12 +91,12 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
         if ((Test-Path meson.build -Type Leaf) -and -not (Test-Path CMakeLists.txt -Type Leaf))
           {
             meson setup _build-$env:MSYSTEM_PREFIX -Dprefix="$GIMP_PREFIX" $PKGCONF_RELOCATABLE_OPTION --buildtype=debugoptimized `
-                        $(if ($branch -like '-*') { "$branch" } elseif ($patches -like '-*') { "$patches" } else { "$options" });
+                        $(if ($branch -like '-*') { $branch } elseif ($patches -like '-*') { $patches } else { $options });
           }
         elseif (Test-Path CMakeLists.txt -Type Leaf)
           {
             cmake -G Ninja -B _build-$env:MSYSTEM_PREFIX -DCMAKE_INSTALL_PREFIX="$GIMP_PREFIX" -DCMAKE_BUILD_TYPE=RelWithDebInfo `
-                  $(if ($branch -like '-*') { "$branch" } elseif ($patches -like '-*') { "$patches" } else { "$options" });
+                  $(if ($branch -like '-*') { $branch } elseif ($patches -like '-*') { $patches } else { $options });
           }
         if ("$LASTEXITCODE" -gt '0') { exit 1 }
       }
