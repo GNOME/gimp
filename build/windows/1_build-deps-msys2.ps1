@@ -127,6 +127,7 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
 
 self_build babl
 self_build gegl @('build/windows/patches/0001-meson-only-generate-CodeView-.pdb-symbols-on-Windows.patch') @('-Dworkshop=true')
+self_build https://github.com/Exiv2/exiv2 'v0.28.7' @('https://github.com/Exiv2/exiv2/pull/3361.patch') @('-DEXIV2_ENABLE_VIDEO=OFF', '-DEXIV2_BUILD_EXIV2_COMMAND=OFF')
 
 Set-Location $GIMP_DIR
 
