@@ -118,12 +118,12 @@ gimp_get_images (void)
  *
  * Creates a new image, undisplayed, with the specified extents and
  * type. A layer should be created and added before this image is
- * displayed, or subsequent calls to gimp_display_new() with this image
- * as an argument will fail. Layers can be created using the
- * gimp_layer_new() commands. They can be added to an image using the
- * gimp_image_insert_layer() command.
+ * displayed, or subsequent calls to [ctor@Gimp.Display.new] with this
+ * image as an argument will fail. Layers can be created using the
+ * [ctor@Gimp.Layer.new] command. They can be added to an image using
+ * the [method@Gimp.Image.insert_layer] command.
  *
- * If your image's type if INDEXED, a palette must also be set with
+ * If your image's type is INDEXED, a palette must also be set with
  * [method@Gimp.Image.set_palette]. An indexed image without a palette
  * will output unexpected colors.
  *
@@ -169,8 +169,8 @@ gimp_image_new (gint              width,
  *
  * Creates a new image, undisplayed with the specified extents, type
  * and precision. Indexed images can only be created at
- * GIMP_PRECISION_U8_NON_LINEAR precision. See gimp_image_new() for
- * further details.
+ * [enum@Gimp.Precision.U8_NON_LINEAR] precision. See
+ * [ctor@Gimp.Image.new] for further details.
  *
  * Returns: (transfer none): The newly created image.
  *
@@ -813,15 +813,15 @@ gimp_image_pick_correlate_layer (GimpImage *image,
  *
  * This procedure adds the specified layer to the image at the given
  * position. If the specified parent is a valid layer group (See
- * gimp_item_is_group() and gimp_layer_group_new()) then the layer is
- * added inside the group. If the parent is 0, the layer is added
- * inside the main stack, outside of any group. The position argument
- * specifies the location of the layer inside the stack (or the group,
- * if a valid parent was supplied), starting from the top (0) and
- * increasing. If the position is specified as -1 and the parent is
- * specified as 0, then the layer is inserted above the active layer,
- * or inside the group if the active layer is a layer group. The layer
- * type must be compatible with the image base type.
+ * [method@Gimp.Item.is_group] and [ctor@Gimp.GroupLayer.new]) then the
+ * layer is added inside the group. If the parent is 0, the layer is
+ * added inside the main stack, outside of any group. The position
+ * argument specifies the location of the layer inside the stack (or
+ * the group, if a valid parent was supplied), starting from the top
+ * (0) and increasing. If the position is specified as -1 and the
+ * parent is specified as 0, then the layer is inserted above the
+ * active layer, or inside the group if the active layer is a layer
+ * group. The layer type must be compatible with the image base type.
  *
  * Returns: TRUE on success.
  **/
@@ -906,7 +906,8 @@ gimp_image_remove_layer (GimpImage *image,
  * changes affecting the layer list.
  *
  * Each call to gimp_image_freeze_layers() should be matched by a
- * corresponding call to gimp_image_thaw_layers(), undoing its effects.
+ * corresponding call to [method@Gimp.Image.thaw_layers], undoing its
+ * effects.
  *
  * Returns: TRUE on success.
  *
@@ -945,7 +946,7 @@ gimp_image_freeze_layers (GimpImage *image)
  * updates to the Layers dialog.
  *
  * This procedure should match a corresponding call to
- * gimp_image_freeze_layers().
+ * [method@Gimp.Image.freeze_layers].
  *
  * Returns: TRUE on success.
  *
@@ -1070,7 +1071,7 @@ gimp_image_remove_channel (GimpImage   *image,
  * applying changes affecting the channel list.
  *
  * Each call to gimp_image_freeze_channels() should be matched by a
- * corresponding call to gimp_image_thaw_channels(), undoing its
+ * corresponding call to [method@Gimp.Image.thaw_channels], undoing its
  * effects.
  *
  * Returns: TRUE on success.
@@ -1110,7 +1111,7 @@ gimp_image_freeze_channels (GimpImage *image)
  * updates to the Channels dialog.
  *
  * This procedure should match a corresponding call to
- * gimp_image_freeze_channels().
+ * [method@Gimp.Image.freeze_channels].
  *
  * Returns: TRUE on success.
  *
@@ -1433,7 +1434,8 @@ gimp_image_export_path_to_string (GimpImage *image,
  * changes affecting the path list.
  *
  * Each call to gimp_image_freeze_paths() should be matched by a
- * corresponding call to gimp_image_thaw_paths (), undoing its effects.
+ * corresponding call to [method@Gimp.Image.thaw_paths], undoing its
+ * effects.
  *
  * Returns: TRUE on success.
  *
@@ -1472,7 +1474,7 @@ gimp_image_freeze_paths (GimpImage *image)
  * to the Paths dialog.
  *
  * This procedure should match a corresponding call to
- * gimp_image_freeze_paths().
+ * [method@Gimp.Image.freeze_paths].
  *
  * Returns: TRUE on success.
  *
@@ -1762,8 +1764,9 @@ gimp_image_reorder_item (GimpImage *image,
  * invisible layers.
  *
  * This procedure combines the visible layers in a manner analogous to
- * merging with the CLIP_TO_IMAGE merge type. Non-visible layers are
- * discarded, and the resulting image is stripped of its alpha channel.
+ * merging with the [enum@Gimp.MergeType.CLIP_TO_IMAGE] merge type.
+ * Non-visible layers are discarded, and the resulting image is
+ * stripped of its alpha channel.
  *
  * Returns: (transfer none): The resulting layer.
  **/
@@ -1799,11 +1802,13 @@ gimp_image_flatten (GimpImage *image)
  * Merge the visible image layers into one.
  *
  * This procedure combines the visible layers into a single layer using
- * the specified merge type. A merge type of EXPAND_AS_NECESSARY
- * expands the final layer to encompass the areas of the visible
- * layers. A merge type of CLIP_TO_IMAGE clips the final layer to the
- * extents of the image. A merge type of CLIP_TO_BOTTOM_LAYER clips the
- * final layer to the size of the bottommost layer.
+ * the specified merge type. A merge type of
+ * [enum@Gimp.MergeType.EXPAND_AS_NECESSARY] expands the final layer to
+ * encompass the areas of the visible layers. A merge type of
+ * [enum@Gimp.MergeType.CLIP_TO_IMAGE] clips the final layer to the
+ * extents of the image. A merge type of
+ * [enum@Gimp.MergeType.CLIP_TO_BOTTOM_LAYER] clips the final layer to
+ * the size of the bottommost layer.
  *
  * Returns: (transfer none): The resulting layer.
  **/
@@ -1843,11 +1848,12 @@ gimp_image_merge_visible_layers (GimpImage     *image,
  *
  * This procedure combines the passed layer and the first visible layer
  * below it using the specified merge type. A merge type of
- * EXPAND_AS_NECESSARY expands the final layer to encompass the areas
- * of the visible layers. A merge type of CLIP_TO_IMAGE clips the final
- * layer to the extents of the image. A merge type of
- * CLIP_TO_BOTTOM_LAYER clips the final layer to the size of the
- * bottommost layer.
+ * [enum@Gimp.MergeType.EXPAND_AS_NECESSARY] expands the final layer to
+ * encompass the areas of the visible layers. A merge type of
+ * [enum@Gimp.MergeType.CLIP_TO_IMAGE] clips the final layer to the
+ * extents of the image. A merge type of
+ * [enum@Gimp.MergeType.CLIP_TO_BOTTOM_LAYER] clips the final layer to
+ * the size of the bottommost layer.
  *
  * Returns: (transfer none): The resulting layer.
  **/
@@ -1885,8 +1891,9 @@ gimp_image_merge_down (GimpImage     *image,
  *
  * Returns the image's colormap
  *
- * This procedure returns the image's colormap as a %GimpPalette. If
- * the image is not in Indexed color mode, %NULL is returned.
+ * This procedure returns the image's colormap as a
+ * [class@Gimp.Palette]. If the image is not in Indexed color mode,
+ * %NULL is returned.
  *
  * Returns: (transfer none): The image's colormap palette.
  *

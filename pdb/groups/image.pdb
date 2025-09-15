@@ -82,13 +82,13 @@ sub image_new {
     $help = <<'HELP';
 Creates a new image, undisplayed, with the specified extents and
 type. A layer should be created and added before this image is
-displayed, or subsequent calls to gimp_display_new() with this image
-as an argument will fail. Layers can be created using the
-gimp_layer_new() commands. They can be added to an image using the
-gimp_image_insert_layer() command.
+displayed, or subsequent calls to [ctor@Gimp.Display.new] with this
+image as an argument will fail. Layers can be created using the
+[ctor@Gimp.Layer.new] command. They can be added to an image using the
+[method@Gimp.Image.insert_layer] command.
 
 
-If your image's type if INDEXED, a palette must also be set with
+If your image's type is INDEXED, a palette must also be set with
 [method@Gimp.Image.set_palette]. An indexed image without a palette will
 output unexpected colors.
 HELP
@@ -128,7 +128,7 @@ sub image_new_with_precision {
     $help = <<'HELP';
 Creates a new image, undisplayed with the specified extents, type and
 precision. Indexed images can only be created at
-GIMP_PRECISION_U8_NON_LINEAR precision. See gimp_image_new() for
+[enum@Gimp.Precision.U8_NON_LINEAR] precision. See [ctor@Gimp.Image.new] for
 further details.
 HELP
 
@@ -740,11 +740,11 @@ sub image_merge_visible_layers {
 
     $help = <<'HELP';
 This procedure combines the visible layers into a single layer using
-the specified merge type. A merge type of EXPAND_AS_NECESSARY expands
-the final layer to encompass the areas of the visible layers. A merge
-type of CLIP_TO_IMAGE clips the final layer to the extents of the
-image. A merge type of CLIP_TO_BOTTOM_LAYER clips the final layer to
-the size of the bottommost layer.
+the specified merge type. A merge type of [enum@Gimp.MergeType.EXPAND_AS_NECESSARY]
+expands the final layer to encompass the areas of the visible layers. A merge
+type of [enum@Gimp.MergeType.CLIP_TO_IMAGE] clips the final layer to the
+extents of the image. A merge type of [enum@Gimp.MergeType.CLIP_TO_BOTTOM_LAYER]
+clips the final layer to the size of the bottommost layer.
 HELP
 
     &std_pdb_misc;
@@ -790,11 +790,11 @@ sub image_merge_down {
     $help = <<'HELP';
 This procedure combines the passed layer and the first visible layer
 below it using the specified merge type. A merge type of
-EXPAND_AS_NECESSARY expands the final layer to encompass the areas of
-the visible layers. A merge type of CLIP_TO_IMAGE clips the final
-layer to the extents of the image. A merge type of
-CLIP_TO_BOTTOM_LAYER clips the final layer to the size of the
-bottommost layer.
+[enum@Gimp.MergeType.EXPAND_AS_NECESSARY] expands the final layer to encompass
+the areas of the visible layers. A merge type of
+[enum@Gimp.MergeType.CLIP_TO_IMAGE] clips the final layer to the extents of
+the image. A merge type of [enum@Gimp.MergeType.CLIP_TO_BOTTOM_LAYER] clips
+the final layer to the size of the bottommost layer.
 HELP
 
     &larry_pdb_misc('1998');
@@ -848,8 +848,8 @@ BLURB
 
     $help = <<'HELP';
 This procedure combines the visible layers in a manner analogous to merging
-with the CLIP_TO_IMAGE merge type. Non-visible layers are discarded, and the
-resulting image is stripped of its alpha channel.
+with the [enum@Gimp.MergeType.CLIP_TO_IMAGE] merge type. Non-visible layers
+are discarded, and the resulting image is stripped of its alpha channel.
 HELP
 
     &std_pdb_misc;
@@ -884,7 +884,7 @@ sub image_insert_layer {
     $help = <<'HELP';
 This procedure adds the specified layer to the image at the given
 position. If the specified parent is a valid layer group (See
-gimp_item_is_group() and gimp_layer_group_new()) then the layer is
+[method@Gimp.Item.is_group] and [ctor@Gimp.GroupLayer.new]) then the layer is
 added inside the group. If the parent is 0, the layer is added inside
 the main stack, outside of any group. The position argument specifies
 the location of the layer inside the stack (or the group, if a valid
@@ -978,7 +978,7 @@ changes affecting the layer list.
 
 
 Each call to gimp_image_freeze_layers() should be matched by a
-corresponding call to gimp_image_thaw_layers(), undoing its
+corresponding call to [method@Gimp.Image.thaw_layers], undoing its
 effects.
 HELP
 
@@ -1014,7 +1014,7 @@ updates to the Layers dialog.
 
 
 This procedure should match a corresponding call to
-gimp_image_freeze_layers().
+[method@Gimp.Image.freeze_layers].
 HELP
 
     &ell_pdb_misc('2018', '2.10.2');
@@ -1131,7 +1131,7 @@ changes affecting the channel list.
 
 
 Each call to gimp_image_freeze_channels() should be matched by a
-corresponding call to gimp_image_thaw_channels(), undoing its
+corresponding call to [method@Gimp.Image.thaw_channels], undoing its
 effects.
 HELP
 
@@ -1167,7 +1167,7 @@ updates to the Channels dialog.
 
 
 This procedure should match a corresponding call to
-gimp_image_freeze_channels().
+[method@Gimp.Image.freeze_channels].
 HELP
 
     @inargs = (
@@ -1486,7 +1486,7 @@ changes affecting the path list.
 
 
 Each call to gimp_image_freeze_paths() should be matched by a
-corresponding call to gimp_image_thaw_paths (), undoing its
+corresponding call to [method@Gimp.Image.thaw_paths], undoing its
 effects.
 HELP
 
@@ -1522,7 +1522,7 @@ updates to the Paths dialog.
 
 
 This procedure should match a corresponding call to
-gimp_image_freeze_paths().
+[method@Gimp.Image.freeze_paths].
 HELP
 
     @inargs = (
@@ -1636,7 +1636,7 @@ sub image_get_palette {
     $blurb = "Returns the image's colormap";
 
     $help = <<'HELP';
-This procedure returns the image's colormap as a %GimpPalette.
+This procedure returns the image's colormap as a [class@Gimp.Palette].
 If the image is not in Indexed color mode, %NULL is returned.
 HELP
 
