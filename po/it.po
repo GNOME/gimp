@@ -46,7 +46,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-02 16:38+0200\n"
-"PO-Revision-Date: 2025-09-03 17:40+0200\n"
+"PO-Revision-Date: 2025-09-15 09:50+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -15933,11 +15933,11 @@ msgstr ""
 
 #: ../app/dialogs/convert-indexed-dialog.c:134
 msgid "Indexed Color Conversion"
-msgstr "Conversione a indicizzato"
+msgstr "Conversione a colori indicizzati"
 
 #: ../app/dialogs/convert-indexed-dialog.c:137
 msgid "Convert Image to Indexed Colors"
-msgstr "Converti immagine a indicizzata"
+msgstr "Converti immagine a colori indicizzati"
 
 #: ../app/dialogs/convert-indexed-dialog.c:194
 msgid "_Maximum number of colors:"
