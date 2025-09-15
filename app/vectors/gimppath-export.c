@@ -144,10 +144,9 @@ gimp_path_export (GimpImage *image,
 
   g_string_append_printf (str,
                           "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
-                          "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 20010904//EN\"\n"
-                          "              \"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">\n"
-                          "\n"
-                          "<svg xmlns=\"http://www.w3.org/2000/svg\"\n");
+                          "<svg xmlns=\"http://www.w3.org/2000/svg\"\n"
+                          "     xmlns:svg=\"http://www.w3.org/2000/svg\"\n"
+                          "     version=\"1.1\"\n");
 
   g_string_append (str, "     ");
   gimp_path_export_image_size (image, str);
