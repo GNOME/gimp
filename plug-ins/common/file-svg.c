@@ -35,6 +35,7 @@
 
 
 #define LOAD_PROC               "file-svg-load"
+#define EXPORT_PROC             "file-svg-export"
 #define PLUG_IN_BINARY          "file-svg"
 #define PLUG_IN_ROLE            "gimp-file-svg"
 #define SVG_VERSION             "2.5.0"
@@ -97,6 +98,14 @@ static GimpValueArray * svg_load             (GimpProcedure         *procedure,
                                               GimpProcedureConfig   *config,
                                               gpointer               data_from_extract,
                                               gpointer               run_data);
+static GimpValueArray * svg_export           (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GimpImage             *image,
+                                              GFile                 *file,
+                                              GimpExportOptions     *options,
+                                              GimpMetadata          *metadata,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
 
 static GimpImage         * load_image        (GFile                 *file,
                                               RsvgHandle            *handle,
@@ -104,6 +113,10 @@ static GimpImage         * load_image        (GFile                 *file,
                                               gint                   height,
                                               gdouble                resolution,
                                               GError               **error);
+static gboolean            export_image      (GFile                 *file,
+                                              GimpImage             *image,
+                                              GError               **error);
+
 static GdkPixbuf         * load_rsvg_pixbuf  (RsvgHandle            *handle,
                                               gint                   width,
                                               gint                   height,
@@ -117,6 +130,17 @@ static GimpPDBStatusType   load_dialog       (GFile                 *file,
                                               GError               **error);
 static gboolean       svg_extract_dimensions (RsvgHandle            *handle,
                                               GimpVectorLoadData    *extracted_dimensions);
+
+/* Taken from /app/path/gimppath-export.c */
+static GString * gimp_path_export            (GimpImage             *image);
+static void      gimp_path_export_image_size (GimpImage             *image,
+                                              GString               *str);
+static void      gimp_path_export_path       (GimpVectorLayer       *layer,
+                                              GString               *str);
+static gchar   * gimp_path_export_path_data  (GimpPath              *paths);
+
+static gchar   * gimp_vector_layer_get_fill_string (GimpVectorLayer       *layer);
+static gchar   * gimp_vector_layer_get_stroke_string (GimpVectorLayer       *layer);
 
 #if LIBRSVG_CHECK_VERSION(2, 46, 0)
 static GimpUnit      * svg_rsvg_to_gimp_unit (RsvgUnit               unit);
@@ -153,6 +177,7 @@ svg_query_procedures (GimpPlugIn *plug_in)
   GList *list = NULL;
 
   list = g_list_append (list, g_strdup (LOAD_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_PROC));
 
   return list;
 }
@@ -199,6 +224,40 @@ svg_create_procedure (GimpPlugIn  *plug_in,
                                                                        "import-merged", 2, _("Merge imported paths"),      NULL,
                                                                        NULL),
                                           "no-import", G_PARAM_READWRITE);
+    }
+  else if (! strcmp (name, EXPORT_PROC))
+    {
+      procedure = gimp_export_procedure_new (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             FALSE, svg_export, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "*");
+
+      gimp_procedure_set_menu_label (procedure, _("Scalable Vector Graphic"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        _("Export vector layers in SVG file format"),
+                                        _("Export vector layers in SVG file format "
+                                          "(Scalable Vector Graphic)"),
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Alex S.",
+                                      "Alex S.",
+                                      "2023");
+
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/svg+xml");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "svg");
+
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_RGB     |
+                                              GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                                              GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                              GIMP_EXPORT_CAN_HANDLE_ALPHA   |
+                                              GIMP_EXPORT_CAN_HANDLE_LAYERS,
+                                              NULL, NULL, NULL);
+
     }
 
   return procedure;
@@ -533,6 +592,33 @@ svg_load (GimpProcedure         *procedure,
   return return_vals;
 }
 
+static GimpValueArray *
+svg_export (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            GFile                *file,
+            GimpExportOptions    *options,
+            GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            gpointer              run_data)
+{
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export = GIMP_EXPORT_IGNORE;
+  GError            *error  = NULL;
+
+  gegl_init (NULL, NULL);
+
+  export = gimp_export_options_get_image (options, &image);
+
+  if (! export_image (file, image, &error))
+    status = GIMP_PDB_EXECUTION_ERROR;
+
+  if (export == GIMP_EXPORT_EXPORT)
+    gimp_image_delete (image);
+
+  return gimp_procedure_new_return_values (procedure, status, error);
+}
+
 static GimpImage *
 load_image (GFile            *file,
             RsvgHandle       *handle,
@@ -580,6 +666,55 @@ load_image (GFile            *file,
   gimp_image_undo_enable (image);
 
   return image;
+}
+
+static gboolean
+export_image (GFile         *file,
+              GimpImage     *image,
+              GError       **error)
+{
+  GOutputStream *output;
+  GString       *string;
+
+  gimp_progress_init_printf (_("Exporting '%s'"),
+                             gimp_file_get_utf8_name (file));
+
+  output = G_OUTPUT_STREAM (g_file_replace (file,
+                                            NULL, FALSE, G_FILE_CREATE_NONE,
+                                            NULL, error));
+  if (! output)
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Writing to file '%s' failed: %s"),
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
+      return FALSE;
+    }
+
+  string = gimp_path_export (image);
+
+  if (! g_output_stream_write_all (output, string->str, string->len,
+                                   NULL, NULL, error))
+    {
+      GCancellable *cancellable = g_cancellable_new ();
+
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Writing to file '%s' failed: %s"),
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
+      g_string_free (string, TRUE);
+
+      /* Cancel the overwrite initiated by g_file_replace(). */
+      g_cancellable_cancel (cancellable);
+      g_output_stream_close (output, cancellable, NULL);
+      g_object_unref (cancellable);
+      g_object_unref (output);
+
+      return FALSE;
+    }
+
+  g_string_free (string, TRUE);
+  g_object_unref (output);
+
+  return TRUE;
 }
 
 #if ! LIBRSVG_CHECK_VERSION(2, 46, 0)
@@ -877,3 +1012,256 @@ svg_destroy_surface (guchar          *pixels,
   cairo_surface_destroy (surface);
 }
 #endif
+
+/* Taken from app/path/gimppath-export.c */
+static GString *
+gimp_path_export (GimpImage *image)
+{
+  GList   *drawables;
+  GString *str = g_string_new (NULL);
+  GList   *list;
+
+  g_string_append_printf (str,
+                          "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
+                          "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 20010904//EN\"\n"
+                          "              \"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">\n"
+                          "\n"
+                          "<svg xmlns=\"http://www.w3.org/2000/svg\"\n");
+
+  g_string_append (str, "     ");
+  gimp_path_export_image_size (image, str);
+  g_string_append_c (str, '\n');
+
+  g_string_append_printf (str,
+                          "     viewBox=\"0 0 %d %d\">\n",
+                          gimp_image_get_width  (image),
+                          gimp_image_get_height (image));
+
+  drawables = gimp_image_list_layers (image);
+  for (list = g_list_reverse (drawables); list; list = list->next)
+    {
+      if (GIMP_IS_VECTOR_LAYER (list->data))
+        {
+          GimpVectorLayer *layer = GIMP_VECTOR_LAYER (list->data);
+
+          gimp_path_export_path (layer, str);
+        }
+    }
+
+  g_string_append (str, "</svg>\n");
+
+  return str;
+}
+
+static void
+gimp_path_export_image_size (GimpImage *image,
+                             GString   *str)
+{
+  GimpUnit    *unit;
+  const gchar *abbrev;
+  gchar        wbuf[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar        hbuf[G_ASCII_DTOSTR_BUF_SIZE];
+  gdouble      xres;
+  gdouble      yres;
+  gdouble      w, h;
+
+  gimp_image_get_resolution (image, &xres, &yres);
+
+  w = (gdouble) gimp_image_get_width  (image) / xres;
+  h = (gdouble) gimp_image_get_height (image) / yres;
+
+  /*  FIXME: should probably use the display unit here  */
+  unit = gimp_image_get_unit (image);
+  switch (gimp_unit_get_id (unit))
+    {
+    case GIMP_UNIT_INCH:  abbrev = "in";  break;
+    case GIMP_UNIT_MM:    abbrev = "mm";  break;
+    case GIMP_UNIT_POINT: abbrev = "pt";  break;
+    case GIMP_UNIT_PICA:  abbrev = "pc";  break;
+    default:              abbrev = "cm";
+      unit = gimp_unit_mm ();
+      w /= 10.0;
+      h /= 10.0;
+      break;
+    }
+
+  g_ascii_formatd (wbuf, sizeof (wbuf), "%g", w * gimp_unit_get_factor (unit));
+  g_ascii_formatd (hbuf, sizeof (hbuf), "%g", h * gimp_unit_get_factor (unit));
+
+  g_string_append_printf (str,
+                          "width=\"%s%s\" height=\"%s%s\"",
+                          wbuf, abbrev, hbuf, abbrev);
+}
+
+static void
+gimp_path_export_path (GimpVectorLayer *layer,
+                       GString         *str)
+{
+  GimpPath    *path;
+  const gchar *name;
+  gchar       *data;
+  gchar       *fill_string;
+  gchar       *stroke_string;
+  gdouble      stroke_width;
+  const gchar *stroke_capstyle;
+  gchar       *esc_name;
+
+  path = gimp_vector_layer_get_path (layer);
+  if (! path)
+    return;
+
+  name = gimp_item_get_name (GIMP_ITEM (path));
+  data = gimp_path_export_path_data (path);
+
+  /* Vector Layer Properties */
+  fill_string    = gimp_vector_layer_get_fill_string (layer);
+  stroke_string  = gimp_vector_layer_get_stroke_string (layer);
+  stroke_width   = gimp_vector_layer_get_stroke_width (layer);
+
+  switch (gimp_vector_layer_get_stroke_cap_style (layer))
+    {
+    case 1:
+      stroke_capstyle = "round";
+      break;
+
+    case 2:
+      stroke_capstyle = "square";
+      break;
+
+    default:
+      stroke_capstyle = "butt";
+      break;
+    }
+
+  esc_name = g_markup_escape_text (name, strlen (name));
+
+  g_string_append_printf (str,
+                          "  <path id=\"%s\"\n"
+                          "        %s %s stroke-width=\"%f\"\n"
+                          "        stroke-linecap=\"%s\"\n"
+                          "        d=\"%s\" />\n",
+                          esc_name, fill_string, stroke_string, stroke_width,
+                          stroke_capstyle, data);
+
+  g_free (fill_string);
+  g_free (stroke_string);
+  g_free (esc_name);
+  g_free (data);
+}
+
+
+#define NEWLINE "\n           "
+
+static gchar *
+gimp_path_export_path_data (GimpPath *path)
+{
+  GString  *str;
+  gsize     num_strokes;
+  gint     *strokes;
+  gint      s;
+  gchar     x_string[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar     y_string[G_ASCII_DTOSTR_BUF_SIZE];
+  gboolean  closed = FALSE;
+
+  str = g_string_new (NULL);
+
+  strokes = gimp_path_get_strokes (path, &num_strokes);
+  for (s = 0; s < num_strokes; s++)
+    {
+      GimpPathStrokeType  type;
+      gdouble            *control_points;
+      gsize               num_points;
+      gsize               num_indexes;
+
+      type = gimp_path_stroke_get_points (path, strokes[s], &num_points,
+                                          &control_points, &closed);
+
+      if (type == GIMP_PATH_STROKE_TYPE_BEZIER)
+        {
+          if (num_points >= 3)
+            {
+              g_ascii_formatd (x_string, G_ASCII_DTOSTR_BUF_SIZE,
+                               "%.2f", control_points[2]);
+              g_ascii_formatd (y_string, G_ASCII_DTOSTR_BUF_SIZE,
+                               "%.2f", control_points[3]);
+              g_string_append_printf (str, "M %s,%s", x_string, y_string);
+            }
+
+          if (num_points > 3)
+            g_string_append_printf (str, NEWLINE "C");
+
+          num_indexes = num_points / 2;
+          for (gint i = 2; i < (num_indexes + (closed ? 2 : - 1)); i++)
+            {
+              gint index = (i % num_indexes) * 2;
+
+              if (i > 2 && i % 3 == 2)
+                g_string_append_printf (str, NEWLINE " ");
+
+              g_ascii_formatd (x_string, G_ASCII_DTOSTR_BUF_SIZE,
+                               "%.2f", control_points[index]);
+              g_ascii_formatd (y_string, G_ASCII_DTOSTR_BUF_SIZE,
+                               "%.2f", control_points[index + 1]);
+              g_string_append_printf (str, " %s,%s", x_string, y_string);
+            }
+
+          if (closed && num_points > 3)
+            g_string_append_printf (str, " Z");
+        }
+    }
+
+  return g_strchomp (g_string_free (str, FALSE));
+}
+
+static gchar *
+gimp_vector_layer_get_fill_string (GimpVectorLayer *layer)
+{
+  GeglColor *fill_color;
+
+  fill_color = gimp_vector_layer_get_fill_color (layer);
+
+  if (gimp_vector_layer_get_enable_fill (layer) && fill_color)
+    {
+      gdouble  rgba[4];
+      gchar   *fill_string;
+
+      gegl_color_get_rgba (fill_color, &rgba[0], &rgba[1], &rgba[2], &rgba[3]);
+
+      fill_string = g_strdup_printf ("fill=\"rgba(%d, %d, %d, %f)\"",
+                                    (gint) (rgba[0] * 255),
+                                    (gint) (rgba[1] * 255),
+                                    (gint) (rgba[2] * 255),
+                                    rgba[3]);
+
+      return fill_string;
+    }
+
+  return g_strdup_printf ("fill=\"none\"");
+}
+
+static gchar *
+gimp_vector_layer_get_stroke_string (GimpVectorLayer *layer)
+{
+  GeglColor *stroke_color;
+
+  stroke_color = gimp_vector_layer_get_stroke_color (layer);
+
+  if (gimp_vector_layer_get_enable_stroke (layer) && stroke_color)
+    {
+      gdouble  rgba[4];
+      gchar   *stroke_string;
+
+      gegl_color_get_rgba (stroke_color, &rgba[0], &rgba[1], &rgba[2],
+                           &rgba[3]);
+
+      stroke_string = g_strdup_printf ("stroke=\"rgba(%d, %d, %d, %f)\"",
+                                       (gint) (rgba[0] * 255),
+                                       (gint) (rgba[1] * 255),
+                                       (gint) (rgba[2] * 255),
+                                       rgba[3]);
+
+      return stroke_string;
+    }
+
+  return g_strdup_printf ("stroke=\"none\"");
+}
