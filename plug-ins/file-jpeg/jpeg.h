@@ -32,15 +32,14 @@ typedef struct my_error_mgr
 {
   struct jpeg_error_mgr pub;            /* "public" fields */
 
-#ifdef __ia64__
   /* Ugh, the jmp_buf field needs to be 16-byte aligned on ia64 and some
-   * glibc/icc combinations don't guarantee this. So we pad. See bug #138357
-   * for details.
+   * glibc/icc combinations don't guarantee this.
+   * See: https://bugzilla.gnome.org/show_bug.cgi?id=138357
+   *
+   * We used to pad with a dummy variable, but I believe using the
+   * aligned attribute should be fine by now.
    */
-  long double           dummy;
-#endif
-
-  jmp_buf               setjmp_buffer;  /* for return to caller */
+  jmp_buf               setjmp_buffer __attribute__((aligned(16)));  /* for return to caller */
 } *my_error_ptr;
 
 typedef enum
