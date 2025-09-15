@@ -45,9 +45,9 @@ Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):d
 $GIMP_DIR = $PWD
 Set-Location ${GIMP_DIR}${PARENT_DIR}
 
-if (-not $env:GIMP_PREFIX)
+if (-not $GIMP_PREFIX)
   {
-    $env:GIMP_PREFIX = "$PWD\_install"
+    $GIMP_PREFIX = "$PWD\_install"
   }
 Invoke-Expression ((Get-Content $GIMP_DIR\.gitlab-ci.yml | Select-String 'win_environ\[' -Context 0,7) -replace '> ','' -replace '- ','')
 
@@ -91,14 +91,14 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
         if ((Test-Path meson.build -Type Leaf) -and -not (Test-Path CMakeLists.txt -Type Leaf))
           {
             #Add-Content meson.build "meson.add_install_script(find_program('$("$GIMP_DIR".Replace('\','/'))/build/windows/2_bundle-gimp-uni_sym.py'))"
-            meson setup _build-$env:MSYSTEM_PREFIX -Dprefix="$env:GIMP_PREFIX" $PKGCONF_RELOCATABLE_OPTION `
+            meson setup _build-$env:MSYSTEM_PREFIX -Dprefix="$GIMP_PREFIX" $PKGCONF_RELOCATABLE_OPTION `
                         -Dbuildtype=debugoptimized -Dc_args='-fansi-escape-codes -gcodeview' -Dcpp_args='-fansi-escape-codes -gcodeview' -Dc_link_args='-Wl,--pdb=' -Dcpp_link_args='-Wl,--pdb=' `
                         $(if ($branch -like '-*') { $branch } elseif ($patches -like '-*') { $patches } else { $options });
           }
         elseif (Test-Path CMakeLists.txt -Type Leaf)
           {
             Add-Content CMakeLists.txt "install(CODE `"execute_process(COMMAND `${Python3_EXECUTABLE`} $("$GIMP_DIR".Replace('\','/'))/build/windows/2_bundle-gimp-uni_sym.py`)`")"
-            cmake -G Ninja -B _build-$env:MSYSTEM_PREFIX -DCMAKE_INSTALL_PREFIX="$env:GIMP_PREFIX" `
+            cmake -G Ninja -B _build-$env:MSYSTEM_PREFIX -DCMAKE_INSTALL_PREFIX="$GIMP_PREFIX" `
                   -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_COLOR_DIAGNOSTICS=ON -DCMAKE_C_FLAGS='-gcodeview' -DCMAKE_CXX_FLAGS='-gcodeview' -DCMAKE_EXE_LINKER_FLAGS='-Wl,--pdb=' -DCMAKE_SHARED_LINKER_FLAGS='-Wl,--pdb=' -DCMAKE_MODULE_LINKER_FLAGS='-Wl,--pdb=' `
                   $(if ($branch -like '-*') { $branch } elseif ($patches -like '-*') { $patches } else { $options });
           }
