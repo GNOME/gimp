@@ -154,9 +154,6 @@ CODE
     );
 }
 
-
-# STROKE SETTINGS
-
 sub vector_layer_get_enable_stroke {
     $blurb = 'Check if stroke is enabled in the vector layer.';
 
@@ -799,8 +796,6 @@ HELP
 CODE
     );
 }
-
-# FILL SETTINGS
 
 sub vector_layer_get_enable_fill {
     $blurb = 'Check if fill is enabled in the vector layer.';
