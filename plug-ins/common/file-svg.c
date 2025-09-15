@@ -139,8 +139,8 @@ static void      gimp_path_export_path       (GimpVectorLayer       *layer,
                                               GString               *str);
 static gchar   * gimp_path_export_path_data  (GimpPath              *paths);
 
-static gchar   * gimp_vector_layer_get_fill_string (GimpVectorLayer       *layer);
-static gchar   * gimp_vector_layer_get_stroke_string (GimpVectorLayer       *layer);
+static gchar   * svg_get_color_string        (GimpVectorLayer       *layer,
+                                              const gchar           *type);
 
 #if LIBRSVG_CHECK_VERSION(2, 46, 0)
 static GimpUnit      * svg_rsvg_to_gimp_unit (RsvgUnit               unit);
@@ -1023,10 +1023,9 @@ gimp_path_export (GimpImage *image)
 
   g_string_append_printf (str,
                           "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
-                          "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 20010904//EN\"\n"
-                          "              \"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">\n"
-                          "\n"
-                          "<svg xmlns=\"http://www.w3.org/2000/svg\"\n");
+                          "<svg xmlns=\"http://www.w3.org/2000/svg\"\n"
+                          "     xmlns:svg=\"http://www.w3.org/2000/svg\"\n"
+                          "     version=\"1.1\"\n");
 
   g_string_append (str, "     ");
   gimp_path_export_image_size (image, str);
@@ -1104,32 +1103,57 @@ gimp_path_export_path (GimpVectorLayer *layer,
   gchar       *stroke_string;
   gdouble      stroke_width;
   const gchar *stroke_capstyle;
+  const gchar *stroke_joinstyle;
+  gdouble      stroke_miter_limit;
+  gdouble      stroke_dash_offset;
+  gsize        num_dashes;
+  gdouble     *stroke_dash_pattern;
   gchar       *esc_name;
 
   path = gimp_vector_layer_get_path (layer);
   if (! path)
     return;
 
-  name = gimp_item_get_name (GIMP_ITEM (path));
+  name = gimp_item_get_name (GIMP_ITEM (layer));
   data = gimp_path_export_path_data (path);
 
   /* Vector Layer Properties */
-  fill_string    = gimp_vector_layer_get_fill_string (layer);
-  stroke_string  = gimp_vector_layer_get_stroke_string (layer);
-  stroke_width   = gimp_vector_layer_get_stroke_width (layer);
+  fill_string         = svg_get_color_string (layer, "fill");
+  stroke_string       = svg_get_color_string (layer, "stroke");
+  stroke_width        = gimp_vector_layer_get_stroke_width (layer);
+  stroke_miter_limit  = gimp_vector_layer_get_stroke_miter_limit (layer);
+  stroke_dash_offset  = gimp_vector_layer_get_stroke_dash_offset (layer);
+
+  gimp_vector_layer_get_stroke_dash_pattern (layer, &num_dashes,
+                                             &stroke_dash_pattern);
 
   switch (gimp_vector_layer_get_stroke_cap_style (layer))
     {
-    case 1:
+    case GIMP_CAP_ROUND:
       stroke_capstyle = "round";
       break;
 
-    case 2:
+    case GIMP_CAP_SQUARE:
       stroke_capstyle = "square";
       break;
 
     default:
       stroke_capstyle = "butt";
+      break;
+    }
+
+  switch (gimp_vector_layer_get_stroke_join_style (layer))
+    {
+    case GIMP_JOIN_ROUND:
+      stroke_joinstyle = "round";
+      break;
+
+    case GIMP_JOIN_BEVEL:
+      stroke_joinstyle = "bevel";
+      break;
+
+    default:
+      stroke_joinstyle = "miter";
       break;
     }
 
@@ -1139,9 +1163,28 @@ gimp_path_export_path (GimpVectorLayer *layer,
                           "  <path id=\"%s\"\n"
                           "        %s %s stroke-width=\"%f\"\n"
                           "        stroke-linecap=\"%s\"\n"
-                          "        d=\"%s\" />\n",
+                          "        stroke-linejoin=\"%s\"\n"
+                          "        stroke-miterlimit=\"%f\"\n",
                           esc_name, fill_string, stroke_string, stroke_width,
-                          stroke_capstyle, data);
+                          stroke_capstyle, stroke_joinstyle,
+                          stroke_miter_limit);
+
+  if (num_dashes > 0)
+    {
+      g_string_append_printf (str,
+                              "        stroke-dashoffset=\"%f\"\n"
+                              "        stroke-dasharray=\"%f",
+                              stroke_dash_offset, stroke_dash_pattern[0]);
+
+      for (gint i = 0; i < num_dashes; i++)
+        g_string_append_printf (str, " %f", stroke_dash_pattern[i]);
+
+      g_string_append_printf (str, "\"\n");
+    }
+
+   g_string_append_printf (str,
+                           "        d=\"%s\" />\n",
+                           data);
 
   g_free (fill_string);
   g_free (stroke_string);
@@ -1184,6 +1227,8 @@ gimp_path_export_path_data (GimpPath *path)
                                "%.2f", control_points[2]);
               g_ascii_formatd (y_string, G_ASCII_DTOSTR_BUF_SIZE,
                                "%.2f", control_points[3]);
+              if (s > 0)
+                g_string_append_printf (str, NEWLINE);
               g_string_append_printf (str, "M %s,%s", x_string, y_string);
             }
 
@@ -1214,54 +1259,37 @@ gimp_path_export_path_data (GimpPath *path)
 }
 
 static gchar *
-gimp_vector_layer_get_fill_string (GimpVectorLayer *layer)
+svg_get_color_string (GimpVectorLayer *layer,
+                      const gchar     *type)
 {
-  GeglColor *fill_color;
+  GeglColor *color   = NULL;
+  gboolean   enabled = TRUE;
 
-  fill_color = gimp_vector_layer_get_fill_color (layer);
-
-  if (gimp_vector_layer_get_enable_fill (layer) && fill_color)
+  if (g_strcmp0 ("fill", type) == 0)
     {
-      gdouble  rgba[4];
-      gchar   *fill_string;
-
-      gegl_color_get_rgba (fill_color, &rgba[0], &rgba[1], &rgba[2], &rgba[3]);
-
-      fill_string = g_strdup_printf ("fill=\"rgba(%d, %d, %d, %f)\"",
-                                    (gint) (rgba[0] * 255),
-                                    (gint) (rgba[1] * 255),
-                                    (gint) (rgba[2] * 255),
-                                    rgba[3]);
-
-      return fill_string;
+      color   = gimp_vector_layer_get_fill_color (layer);
+      enabled = gimp_vector_layer_get_enable_fill (layer);
+    }
+  else
+    {
+      color   = gimp_vector_layer_get_stroke_color (layer);
+      enabled = gimp_vector_layer_get_enable_stroke (layer);
     }
 
-  return g_strdup_printf ("fill=\"none\"");
-}
-
-static gchar *
-gimp_vector_layer_get_stroke_string (GimpVectorLayer *layer)
-{
-  GeglColor *stroke_color;
-
-  stroke_color = gimp_vector_layer_get_stroke_color (layer);
-
-  if (gimp_vector_layer_get_enable_stroke (layer) && stroke_color)
+  if (enabled && color)
     {
-      gdouble  rgba[4];
-      gchar   *stroke_string;
+      gdouble  rgb[3];
+      gchar   *color_string;
 
-      gegl_color_get_rgba (stroke_color, &rgba[0], &rgba[1], &rgba[2],
-                           &rgba[3]);
+      gegl_color_get_rgba (color, &rgb[0], &rgb[1], &rgb[2], NULL);
 
-      stroke_string = g_strdup_printf ("stroke=\"rgba(%d, %d, %d, %f)\"",
-                                       (gint) (rgba[0] * 255),
-                                       (gint) (rgba[1] * 255),
-                                       (gint) (rgba[2] * 255),
-                                       rgba[3]);
+      color_string = g_strdup_printf ("%s=\"#%02X%02X%02X\"",
+                                     type, (gint) (rgb[0] * 255),
+                                     (gint) (rgb[1] * 255),
+                                     (gint) (rgb[2] * 255));
 
-      return stroke_string;
+      return color_string;
     }
 
-  return g_strdup_printf ("stroke=\"none\"");
+  return g_strdup_printf ("%s=\"none\"", type);
 }
