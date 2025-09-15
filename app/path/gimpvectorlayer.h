@@ -50,18 +50,20 @@ struct _GimpVectorLayerClass
 };
 
 
-GType             gimp_vector_layer_get_type    (void) G_GNUC_CONST;
+GType                     gimp_vector_layer_get_type    (void) G_GNUC_CONST;
 
-GimpVectorLayer * gimp_vector_layer_new         (GimpImage       *image,
-                                                 GimpPath        *path,
-                                                 GimpContext     *context);
+GimpVectorLayer         * gimp_vector_layer_new         (GimpImage       *image,
+                                                         GimpPath        *path,
+                                                         GimpContext     *context);
 
-GimpPath        * gimp_vector_layer_get_path    (GimpVectorLayer *layer);
+GimpPath                * gimp_vector_layer_get_path    (GimpVectorLayer *layer);
 
-void              gimp_vector_layer_refresh     (GimpVectorLayer *layer);
-void              gimp_vector_layer_discard     (GimpVectorLayer *layer);
+GimpVectorLayerOptions  * gimp_vector_layer_get_options (GimpVectorLayer *layer);
 
-gboolean          gimp_item_is_vector_layer     (GimpItem        *item);
+void                      gimp_vector_layer_refresh     (GimpVectorLayer *layer);
+void                      gimp_vector_layer_discard     (GimpVectorLayer *layer);
+
+gboolean                  gimp_item_is_vector_layer     (GimpItem        *item);
 
 
 #endif /* __GIMP_VECTOR_LAYER_H__ */

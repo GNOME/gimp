@@ -157,3 +157,872 @@ gimp_vector_layer_discard (GimpVectorLayer *layer)
 
   return success;
 }
+
+/**
+ * gimp_vector_layer_get_enable_fill:
+ * @layer: The vector layer.
+ *
+ * Check if fill is enabled in the vector layer.
+ *
+ * This procedure checks if fill is enabled in the specified vector
+ * layer.
+ *
+ * Returns: If the fill is enabled on the vector layer.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_vector_layer_get_enable_fill (GimpVectorLayer *layer)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean enable_fill = FALSE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTOR_LAYER, layer,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-vector-layer-get-enable-fill",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    enable_fill = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return enable_fill;
+}
+
+/**
+ * gimp_vector_layer_get_enable_stroke:
+ * @layer: The vector layer.
+ *
+ * Check if stroke is enabled in the vector layer.
+ *
+ * This procedure checks if stroke is enabled in the specified vector
+ * layer.
+ *
+ * Returns: If the stroke is enabled on the vector layer.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_vector_layer_get_enable_stroke (GimpVectorLayer *layer)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean enable_stroke = FALSE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTOR_LAYER, layer,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-vector-layer-get-enable-stroke",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    enable_stroke = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return enable_stroke;
+}
+
+/**
+ * gimp_vector_layer_get_fill_color:
+ * @layer: The vector layer.
+ *
+ * Get the color of the fill in a vector layer.
+ *
+ * This procedure returns the color of the fill in a vector layer.
+ *
+ * Returns: (transfer full): The color of the fill.
+ *
+ * Since: 2.6
+ **/
+GeglColor *
+gimp_vector_layer_get_fill_color (GimpVectorLayer *layer)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GeglColor *color = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTOR_LAYER, layer,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-vector-layer-get-fill-color",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    color = g_value_dup_object (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return color;
+}
+
+/**
+ * gimp_vector_layer_get_path:
+ * @layer: The vector layer.
+ *
+ * Gets the path from the vector layer if one is associated with it.
+ *
+ * This procedure returns the path from the vector layer if one is
+ * associated with it.
+ *
+ * Returns: (transfer none): The path associated with the vector layer.
+ *
+ * Since: 3.2
+ **/
+GimpPath *
+gimp_vector_layer_get_path (GimpVectorLayer *layer)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpPath *path = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTOR_LAYER, layer,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-vector-layer-get-path",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    path = GIMP_VALUES_GET_PATH (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return path;
+}
+
+/**
+ * gimp_vector_layer_get_stroke_cap_style:
+ * @layer: The vector layer.
+ *
+ * Get the stroke cap style of a vector layer.
+ *
+ * This procedure returns the stroke cap style in a vector layer.
+ *
+ * Returns: The stroke cap style.
+ *
+ * Since: 3.2
+ **/
+GimpCapStyle
+gimp_vector_layer_get_stroke_cap_style (GimpVectorLayer *layer)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpCapStyle cap_style = 0;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTOR_LAYER, layer,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-vector-layer-get-stroke-cap-style",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    cap_style = GIMP_VALUES_GET_ENUM (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return cap_style;
+}
+
+/**
+ * gimp_vector_layer_get_stroke_color:
+ * @layer: The vector layer.
+ *
+ * Get the color of the stroke in a vector layer.
+ *
+ * This procedure returns the color of the stroke in a vector layer.
+ *
+ * Returns: (transfer full): The color of the stroke.
+ *
+ * Since: 2.6
+ **/
+GeglColor *
+gimp_vector_layer_get_stroke_color (GimpVectorLayer *layer)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GeglColor *color = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTOR_LAYER, layer,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-vector-layer-get-stroke-color",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    color = g_value_dup_object (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return color;
+}
+
+/**
+ * gimp_vector_layer_get_stroke_dash_offset:
+ * @layer: The vector layer.
+ *
+ * Get the stroke dash offset of a vector layer.
+ *
+ * This procedure returns the stroke dash offset in a vector layer.
+ *
+ * Returns: The stroke dash offset.
+ *
+ * Since: 3.2
+ **/
+gdouble
+gimp_vector_layer_get_stroke_dash_offset (GimpVectorLayer *layer)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gdouble dash_offset = 0.0;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTOR_LAYER, layer,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-vector-layer-get-stroke-dash-offset",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    dash_offset = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return dash_offset;
+}
+
+/**
+ * gimp_vector_layer_get_stroke_dash_pattern:
+ * @layer: The vector layer.
+ * @num_dashes: (out): The number of dashes in the dash_pattern array.
+ * @dashes: (out) (array length=num_dashes) (element-type gdouble) (transfer full): The stroke dash pattern array.
+ *
+ * Get the stroke dash pattern of a vector layer.
+ *
+ * This procedure returns the stroke dash pattern in a vector layer.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_vector_layer_get_stroke_dash_pattern (GimpVectorLayer  *layer,
+                                           gsize            *num_dashes,
+                                           gdouble         **dashes)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTOR_LAYER, layer,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-vector-layer-get-stroke-dash-pattern",
+                                               args);
+  gimp_value_array_unref (args);
+
+  *num_dashes = 0;
+  *dashes = NULL;
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  if (success)
+    {
+      *dashes = GIMP_VALUES_DUP_DOUBLE_ARRAY (return_vals, 1, num_dashes);
+    }
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vector_layer_get_stroke_join_style:
+ * @layer: The vector layer.
+ *
+ * Get the stroke join style of a vector layer.
+ *
+ * This procedure returns the stroke join style in a vector layer.
+ *
+ * Returns: The stroke join style.
+ *
+ * Since: 3.2
+ **/
+GimpJoinStyle
+gimp_vector_layer_get_stroke_join_style (GimpVectorLayer *layer)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpJoinStyle join_style = 0;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTOR_LAYER, layer,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-vector-layer-get-stroke-join-style",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    join_style = GIMP_VALUES_GET_ENUM (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return join_style;
+}
+
+/**
+ * gimp_vector_layer_get_stroke_miter_limit:
+ * @layer: The vector layer.
+ *
+ * Get the stroke miter limit of a vector layer.
+ *
+ * This procedure returns the stroke miter limit in a vector layer.
+ *
+ * Returns: The stroke miter limit.
+ *
+ * Since: 3.2
+ **/
+gdouble
+gimp_vector_layer_get_stroke_miter_limit (GimpVectorLayer *layer)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gdouble miter = 0.0;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTOR_LAYER, layer,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-vector-layer-get-stroke-miter-limit",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    miter = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return miter;
+}
+
+/**
+ * gimp_vector_layer_get_stroke_width:
+ * @layer: The vector layer.
+ *
+ * Get the stroke width of a vector layer.
+ *
+ * This procedure returns the stroke width in a vector layer.
+ *
+ * Returns: The stroke width.
+ *
+ * Since: 3.2
+ **/
+gdouble
+gimp_vector_layer_get_stroke_width (GimpVectorLayer *layer)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gdouble width = 0.0;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTOR_LAYER, layer,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-vector-layer-get-stroke-width",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    width = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return width;
+}
+
+/**
+ * gimp_vector_layer_get_stroke_width_unit:
+ * @layer: The vector layer.
+ *
+ * Get the stroke width unit of a vector layer.
+ *
+ * This procedure returns the stroke width unit in a vector layer.
+ *
+ * Returns: (transfer none): The stroke width unit.
+ *
+ * Since: 3.2
+ **/
+GimpUnit *
+gimp_vector_layer_get_stroke_width_unit (GimpVectorLayer *layer)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpUnit *unit = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTOR_LAYER, layer,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-vector-layer-get-stroke-width-unit",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    unit = GIMP_VALUES_GET_UNIT (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return unit;
+}
+
+/**
+ * gimp_vector_layer_set_enable_fill:
+ * @layer: The vector layer.
+ * @enable_fill: Whether to enable the fill on the vector layer.
+ *
+ * Set whether the fill is enabled on the vector layer.
+ *
+ * This procedure sets the fill's visibility in the vector layer
+ * 'layer'.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_vector_layer_set_enable_fill (GimpVectorLayer *layer,
+                                   gboolean         enable_fill)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTOR_LAYER, layer,
+                                          G_TYPE_BOOLEAN, enable_fill,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-vector-layer-set-enable-fill",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vector_layer_set_enable_stroke:
+ * @layer: The vector layer.
+ * @enable_stroke: Whether to enable the stroke on the vector layer.
+ *
+ * Set whether the stroke is enabled on the vector layer.
+ *
+ * This procedure sets the stroke's visibility in the vector layer
+ * 'layer'.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_vector_layer_set_enable_stroke (GimpVectorLayer *layer,
+                                     gboolean         enable_stroke)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTOR_LAYER, layer,
+                                          G_TYPE_BOOLEAN, enable_stroke,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-vector-layer-set-enable-stroke",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vector_layer_set_fill_color:
+ * @layer: The vector layer.
+ * @color: The color to use for the fill.
+ *
+ * Set the color of the fill in the vector layer.
+ *
+ * This procedure sets the fill color in the vector layer 'layer'.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_vector_layer_set_fill_color (GimpVectorLayer *layer,
+                                  GeglColor       *color)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTOR_LAYER, layer,
+                                          GEGL_TYPE_COLOR, color,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-vector-layer-set-fill-color",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vector_layer_set_stroke_cap_style:
+ * @layer: The vector layer.
+ * @cap_style: The stroke cap style.
+ *
+ * Set the stroke cap style of a vector layer.
+ *
+ * This procedure sets the stroke cap style in a vector layer.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_vector_layer_set_stroke_cap_style (GimpVectorLayer *layer,
+                                        GimpCapStyle     cap_style)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTOR_LAYER, layer,
+                                          GIMP_TYPE_CAP_STYLE, cap_style,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-vector-layer-set-stroke-cap-style",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vector_layer_set_stroke_color:
+ * @layer: The vector layer.
+ * @color: The color to use for the stroke.
+ *
+ * Set the color of the stroke in the vector layer.
+ *
+ * This procedure sets the stroke color in the vector layer 'layer'.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_vector_layer_set_stroke_color (GimpVectorLayer *layer,
+                                    GeglColor       *color)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTOR_LAYER, layer,
+                                          GEGL_TYPE_COLOR, color,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-vector-layer-set-stroke-color",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vector_layer_set_stroke_dash_offset:
+ * @layer: The vector layer.
+ * @dash_offset: The stroke dash offset.
+ *
+ * Set the stroke dash offset of a vector layer.
+ *
+ * This procedure sets the stroke dash offset in a vector layer.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_vector_layer_set_stroke_dash_offset (GimpVectorLayer *layer,
+                                          gdouble          dash_offset)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTOR_LAYER, layer,
+                                          G_TYPE_DOUBLE, dash_offset,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-vector-layer-set-stroke-dash-offset",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vector_layer_set_stroke_dash_pattern:
+ * @layer: The vector layer.
+ * @num_dashes: The number of dashes in the dash pattern array.
+ * @dashes: (array length=num_dashes) (element-type gdouble): The line dash pattern setting.
+ *
+ * Set the stroke dash pattern of a vector layer.
+ *
+ * This procedure sets the stroke dash pattern in a vector layer.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_vector_layer_set_stroke_dash_pattern (GimpVectorLayer *layer,
+                                           gsize            num_dashes,
+                                           const gdouble   *dashes)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTOR_LAYER, layer,
+                                          GIMP_TYPE_DOUBLE_ARRAY, NULL,
+                                          G_TYPE_NONE);
+  gimp_value_set_double_array (gimp_value_array_index (args, 1), dashes, num_dashes);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-vector-layer-set-stroke-dash-pattern",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vector_layer_set_stroke_join_style:
+ * @layer: The vector layer.
+ * @join_style: The stroke join style.
+ *
+ * Set the stroke join style of a vector layer.
+ *
+ * This procedure sets the stroke join style in a vector layer.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_vector_layer_set_stroke_join_style (GimpVectorLayer *layer,
+                                         GimpJoinStyle    join_style)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTOR_LAYER, layer,
+                                          GIMP_TYPE_JOIN_STYLE, join_style,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-vector-layer-set-stroke-join-style",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vector_layer_set_stroke_miter_limit:
+ * @layer: The vector layer.
+ * @miter: The stroke miter limit.
+ *
+ * Set the stroke miter limit of a vector layer.
+ *
+ * This procedure sets the stroke miter limit in a vector layer.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_vector_layer_set_stroke_miter_limit (GimpVectorLayer *layer,
+                                          gdouble          miter)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTOR_LAYER, layer,
+                                          G_TYPE_DOUBLE, miter,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-vector-layer-set-stroke-miter-limit",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vector_layer_set_stroke_width:
+ * @layer: The vector layer.
+ * @width: The stroke width.
+ *
+ * Set the stroke width of a vector layer.
+ *
+ * This procedure sets the stroke width in a vector layer.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_vector_layer_set_stroke_width (GimpVectorLayer *layer,
+                                    gdouble          width)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTOR_LAYER, layer,
+                                          G_TYPE_DOUBLE, width,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-vector-layer-set-stroke-width",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vector_layer_set_stroke_width_unit:
+ * @layer: The vector layer.
+ * @unit: The stroke width unit.
+ *
+ * Set the stroke width unit of a vector layer.
+ *
+ * This procedure sets the stroke width unit in a vector layer.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_vector_layer_set_stroke_width_unit (GimpVectorLayer *layer,
+                                         GimpUnit        *unit)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTOR_LAYER, layer,
+                                          GIMP_TYPE_UNIT, unit,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-vector-layer-set-stroke-width-unit",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
