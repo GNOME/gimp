@@ -622,6 +622,25 @@ gimp_vector_layer_get_path (GimpVectorLayer *layer)
   return NULL;
 }
 
+/**
+ * gimp_vector_layer_get_options:
+ * @layer: a #GimpVectorLayer
+ *
+ * Gets the vector layer options from @layer if one is associated with it.
+ *
+  * Return value: a #GimpVectorLayerOptions or %NULL if no options are set.
+ */
+GimpVectorLayerOptions *
+gimp_vector_layer_get_options (GimpVectorLayer *layer)
+{
+  g_return_val_if_fail (GIMP_IS_VECTOR_LAYER (layer), NULL);
+
+  if (gimp_item_is_vector_layer (GIMP_ITEM (layer)))
+    return layer->options;
+
+  return NULL;
+}
+
 void
 gimp_vector_layer_refresh (GimpVectorLayer *layer)
 {
