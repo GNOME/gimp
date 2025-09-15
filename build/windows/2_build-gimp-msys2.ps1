@@ -30,10 +30,10 @@ if ($GITLAB_CI)
 
 
 # Prepare env
-if (-not $env:GIMP_PREFIX)
+if (-not $GIMP_PREFIX)
   {
     #FIXME:'gimpenv' have buggy code about Windows paths. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/12284
-    $env:GIMP_PREFIX = "$PWD\..\_install".Replace('\', '/')
+    $GIMP_PREFIX = "$PWD\..\_install".Replace('\', '/')
   }
 Invoke-Expression ((Get-Content .gitlab-ci.yml | Select-String 'win_environ\[' -Context 0,7) -replace '> ','' -replace '- ','')
 
@@ -43,7 +43,7 @@ Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0)
 if (-not (Test-Path _build-$env:MSYSTEM_PREFIX\build.ninja -Type Leaf))
   {
     #FIXME: There is no GJS for Windows. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/5891
-    meson setup _build-$env:MSYSTEM_PREFIX -Dprefix="$env:GIMP_PREFIX" $NON_RELOCATABLE_OPTION `
+    meson setup _build-$env:MSYSTEM_PREFIX -Dprefix="$GIMP_PREFIX" $NON_RELOCATABLE_OPTION `
                 $INSTALLER_OPTION $STORE_OPTION $PKGCONF_RELOCATABLE_OPTION `
                 -Denable-default-bin=enabled -Dbuild-id='org.gimp.GIMP_official';
     if ("$LASTEXITCODE" -gt '0') { exit 1 }
