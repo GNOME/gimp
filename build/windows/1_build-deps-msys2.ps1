@@ -81,7 +81,19 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
         ### This allows to add some minor patch on a dependency without having a proper new release.
         foreach ($patch in $(if ($branch -like '*.patch*') { $branch } else { $patches }))
           {
-            git apply $GIMP_DIR\$patch
+            if ("$patch" -notlike "http*")
+              {
+                git apply -v $GIMP_DIR\$patch
+              }
+            else
+              {
+                $downloaded_patch = "$PWD\$(Split-Path $patch -Leaf)"
+                #We need to use .NET directly since Invoke-WebRequest does not work with GitHub
+                Add-Type -AssemblyName System.Net.Http; $client = [System.Net.Http.HttpClient]::new();
+                $response = $client.GetAsync("$patch").Result; [System.IO.File]::WriteAllBytes("$downloaded_patch", $response.Content.ReadAsByteArrayAsync().Result)
+                git apply -v $downloaded_patch
+                Remove-item $downloaded_patch
+              }
           }
       }
 
