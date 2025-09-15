@@ -419,7 +419,7 @@ register_file_procs (GimpPDB *pdb)
                                "gimp-file-load");
   gimp_procedure_set_static_help (procedure,
                                   "Loads an image file by invoking the right load handler.",
-                                  "This procedure invokes the correct file load handler using magic if possible, and falling back on the file's extension and/or prefix if not.",
+                                  "This procedure invokes the correct file load handler using magic if possible, and falling back on the file's extension and/or prefix if not. Note that the loaded image will be marked as dirty, which can be changed by calling [method@Gimp.Image.clean_all].",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Josh MacDonald",

@@ -4658,7 +4658,7 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-is-dirty");
   gimp_procedure_set_static_help (procedure,
                                   "Checks if the image has unsaved changes.",
-                                  "This procedure checks the specified image's dirty count to see if it needs to be saved. Note that saving the image does not automatically set the dirty count to 0, you need to call 'gimp-image-clean-all' after calling a save procedure to make the image clean.",
+                                  "This procedure checks the specified image's dirty count to see if it needs to be saved. Note that saving the image does not automatically set the dirty count to 0, you need to call [method@Gimp.Image.clean_all] after calling a save procedure to make the image clean. When loading an image using e.g. [func@Gimp.file_load] the image will be marked as dirty too.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",

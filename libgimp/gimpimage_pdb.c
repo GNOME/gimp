@@ -2075,8 +2075,10 @@ gimp_image_clean_all (GimpImage *image)
  *
  * This procedure checks the specified image's dirty count to see if it
  * needs to be saved. Note that saving the image does not automatically
- * set the dirty count to 0, you need to call gimp_image_clean_all()
- * after calling a save procedure to make the image clean.
+ * set the dirty count to 0, you need to call
+ * [method@Gimp.Image.clean_all] after calling a save procedure to make
+ * the image clean. When loading an image using e.g.
+ * [func@Gimp.file_load] the image will be marked as dirty too.
  *
  * Returns: TRUE if the image has unsaved changes.
  **/

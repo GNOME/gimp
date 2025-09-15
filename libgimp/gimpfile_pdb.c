@@ -45,7 +45,8 @@
  *
  * This procedure invokes the correct file load handler using magic if
  * possible, and falling back on the file's extension and/or prefix if
- * not.
+ * not. Note that the loaded image will be marked as dirty, which can
+ * be changed by calling [method@Gimp.Image.clean_all].
  *
  * Returns: (transfer none): The output image.
  **/
