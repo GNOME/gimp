@@ -179,14 +179,18 @@ bund_usr ()
                    $(dirname $(echo /$2 | sed "s|*|no_scape|g"))"
       ;;
   esac
+  unset not_found_tpath found_tpath
   for path in $search_path; do
     expanded_path=$(echo $(echo $path | sed "s|no_scape|*|g"))
-    if [ ! -d "$expanded_path" ]; then
+    if [ "${2##*/}" = '*' ] && [ ! -d "$expanded_path" ] || grep "$(echo $expanded_path/${2##*/})" '\*'; do
+      not_found_tpath=true
       continue
+    else
+      found_tpath=true
     fi
 
     #Copy found targets from search_path to bundle dir
-    for target_path in $(find -L $expanded_path -maxdepth 1 -name ${2##*/}); do
+    for target_path in $(find -L $expanded_path -maxdepth 1 -name ${2##*/}); do    
       dest_path="$(dirname $(echo $target_path | sed -e "s|^$1/|${USR_DIR}/|" -e t -e "s|^/|${USR_DIR}/|"))"
       output_dest_path="$dest_path"
       if [ "$3" = '--dest' ] || [ "$3" = '--rename' ]; then
@@ -237,6 +241,11 @@ bund_usr ()
       fi
     done
   done
+
+  if [ "$not_found_tpath" ] && [ -z "$found_tpath" ] && [ "$3" != '--bundler' ] && [ "$5" != '--bundler' ]; then
+    printf "\033[31m(ERROR)\033[0m: None of the required paths in search_path exist.\n"
+    exit 1
+  fi
 
   #Undo the tweak done above
   cd ..
@@ -294,7 +303,7 @@ bund_usr "$UNIX_PREFIX" "lib/glib-*/gio-launch-desktop" --dest "bin"
 prep_pkg "xapps-common"
 bund_usr "$UNIX_PREFIX" "share/glib-*/schemas"
 ### Glib commonly required modules
-bund_usr "$UNIX_PREFIX" "lib/gvfs/*.so"
+#bund_usr "$UNIX_PREFIX" "lib/gvfs/*.so"
 bund_usr "$UNIX_PREFIX" "lib/gio/modules/*"
 conf_app GIO_MODULE_DIR "${LIB_DIR}/${LIB_SUBDIR}gio/modules"
 conf_app GIO_EXTRA_MODULES "" --no-expand
@@ -360,7 +369,7 @@ if [ "$GIMP_UNSTABLE" ] || [ -z "$GIMP_RELEASE" ]; then
   bund_usr "$UNIX_PREFIX" "lib/graphviz/libgvplugin_dot*"
   bund_usr "$UNIX_PREFIX" "lib/graphviz/libgvplugin_pango*"
   ### Needed for GTK inspector
-  bund_usr "$UNIX_PREFIX" "lib/libEGL*"
+  bund_usr "$UNIX_PREFIX" "lib/lidsdbEGL*"
   bund_usr "$UNIX_PREFIX" "lib/libGL*"
   bund_usr "$UNIX_PREFIX" "lib/dri*"
   #TODO: remove this on Debian Trixie (which have Mesa 24.2)
@@ -440,7 +449,7 @@ echo "usr/${LIB_DIR}/${LIB_SUBDIR}gconv
 #done
 
 ## headers and .pc files for help building filters and plug-ins
-bund_usr "$GIMP_PREFIX" "include/gimp-*"
+bund_usr "$GIMP_PREFIX" "include/gisdsmp-*"
 bund_usr "$GIMP_PREFIX" "include/babl-*"
 bund_usr "$GIMP_PREFIX" "include/gegl-*"
 bund_usr "$GIMP_PREFIX" "lib/pkgconfig/gimp*"
