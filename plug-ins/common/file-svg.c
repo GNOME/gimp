@@ -132,12 +132,16 @@ static gboolean       svg_extract_dimensions (RsvgHandle            *handle,
                                               GimpVectorLoadData    *extracted_dimensions);
 
 /* Taken from /app/path/gimppath-export.c */
-static GString * gimp_path_export            (GimpImage             *image);
-static void      gimp_path_export_image_size (GimpImage             *image,
+static GString * svg_export_file             (GimpImage             *image);
+static void      svg_export_image_size       (GimpImage             *image,
                                               GString               *str);
-static void      gimp_path_export_path       (GimpVectorLayer       *layer,
-                                              GString               *str);
-static gchar   * gimp_path_export_path_data  (GimpPath              *paths);
+static void      svg_export_group_rec        (GimpGroupLayer        *group,
+                                              GString               *str,
+                                              gchar                 *spacing);
+static void      svg_export_path             (GimpVectorLayer       *layer,
+                                              GString               *str,
+                                              gchar                 *spacing);
+static gchar   * svg_export_path_data        (GimpPath              *paths);
 
 static gchar   * svg_get_color_string        (GimpVectorLayer       *layer,
                                               const gchar           *type);
@@ -690,7 +694,7 @@ export_image (GFile         *file,
       return FALSE;
     }
 
-  string = gimp_path_export (image);
+  string = svg_export_file (image);
 
   if (! g_output_stream_write_all (output, string->str, string->len,
                                    NULL, NULL, error))
@@ -1015,7 +1019,7 @@ svg_destroy_surface (guchar          *pixels,
 
 /* Taken from app/path/gimppath-export.c */
 static GString *
-gimp_path_export (GimpImage *image)
+svg_export_file (GimpImage *image)
 {
   GList   *drawables;
   GString *str = g_string_new (NULL);
@@ -1028,7 +1032,7 @@ gimp_path_export (GimpImage *image)
                           "     version=\"1.1\"\n");
 
   g_string_append (str, "     ");
-  gimp_path_export_image_size (image, str);
+  svg_export_image_size (image, str);
   g_string_append_c (str, '\n');
 
   g_string_append_printf (str,
@@ -1043,7 +1047,13 @@ gimp_path_export (GimpImage *image)
         {
           GimpVectorLayer *layer = GIMP_VECTOR_LAYER (list->data);
 
-          gimp_path_export_path (layer, str);
+          svg_export_path (layer, str, "  ");
+        }
+      else if (gimp_item_is_group (GIMP_ITEM (list->data)))
+        {
+          g_string_append_printf (str, "  <g>\n");
+          svg_export_group_rec (GIMP_GROUP_LAYER (list->data), str, "  ");
+          g_string_append_printf (str, "  </g>\n");
         }
     }
 
@@ -1053,8 +1063,42 @@ gimp_path_export (GimpImage *image)
 }
 
 static void
-gimp_path_export_image_size (GimpImage *image,
-                             GString   *str)
+svg_export_group_rec (GimpGroupLayer *group,
+                      GString        *str,
+                      gchar          *spacing)
+{
+  GimpItem **children;
+  gint32     n_layers;
+  gchar     *extra_spacing;
+
+  extra_spacing = g_strdup_printf ("%s  ", spacing);
+
+  children = gimp_item_get_children (GIMP_ITEM (group));
+  n_layers = gimp_core_object_array_get_length ((GObject **) children);
+
+  for (gint i = 0; i < n_layers; i++)
+    {
+      if (GIMP_IS_VECTOR_LAYER (children[i]))
+        {
+          GimpVectorLayer *layer = GIMP_VECTOR_LAYER (children[i]);
+
+          svg_export_path (layer, str, extra_spacing);
+        }
+      else if (gimp_item_is_group (GIMP_ITEM (children[i])))
+        {
+          g_string_append_printf (str, "%s<g>\n", extra_spacing);
+          svg_export_group_rec (GIMP_GROUP_LAYER (children[i]), str,
+                                extra_spacing);
+          g_string_append_printf (str, "%s</g>\n", extra_spacing);
+        }
+    }
+  g_free (extra_spacing);
+  g_free (children);
+}
+
+static void
+svg_export_image_size (GimpImage *image,
+                       GString   *str)
 {
   GimpUnit    *unit;
   const gchar *abbrev;
@@ -1093,8 +1137,9 @@ gimp_path_export_image_size (GimpImage *image,
 }
 
 static void
-gimp_path_export_path (GimpVectorLayer *layer,
-                       GString         *str)
+svg_export_path (GimpVectorLayer *layer,
+                 GString         *str,
+                 gchar           *spacing)
 {
   GimpPath    *path;
   const gchar *name;
@@ -1115,7 +1160,7 @@ gimp_path_export_path (GimpVectorLayer *layer,
     return;
 
   name = gimp_item_get_name (GIMP_ITEM (layer));
-  data = gimp_path_export_path_data (path);
+  data = svg_export_path_data (path);
 
   /* Vector Layer Properties */
   fill_string         = svg_get_color_string (layer, "fill");
@@ -1160,21 +1205,28 @@ gimp_path_export_path (GimpVectorLayer *layer,
   esc_name = g_markup_escape_text (name, strlen (name));
 
   g_string_append_printf (str,
-                          "  <path id=\"%s\"\n"
-                          "        %s %s stroke-width=\"%f\"\n"
-                          "        stroke-linecap=\"%s\"\n"
-                          "        stroke-linejoin=\"%s\"\n"
-                          "        stroke-miterlimit=\"%f\"\n",
-                          esc_name, fill_string, stroke_string, stroke_width,
-                          stroke_capstyle, stroke_joinstyle,
-                          stroke_miter_limit);
+                          "%s<path id=\"%s\"\n"
+                          "%s      %s\n"
+                          "%s      %s\n"
+                          "%s      stroke-width=\"%f\"\n"
+                          "%s      stroke-linecap=\"%s\"\n"
+                          "%s      stroke-linejoin=\"%s\"\n"
+                          "%s      stroke-miterlimit=\"%f\"\n",
+                          spacing, esc_name,
+                          spacing, fill_string,
+                          spacing, stroke_string,
+                          spacing, stroke_width,
+                          spacing, stroke_capstyle,
+                          spacing, stroke_joinstyle,
+                          spacing, stroke_miter_limit);
 
   if (num_dashes > 0)
     {
       g_string_append_printf (str,
-                              "        stroke-dashoffset=\"%f\"\n"
-                              "        stroke-dasharray=\"%f",
-                              stroke_dash_offset, stroke_dash_pattern[0]);
+                              "%s      stroke-dashoffset=\"%f\"\n"
+                              "%s      stroke-dasharray=\"%f",
+                              spacing, stroke_dash_offset,
+                              spacing, stroke_dash_pattern[0]);
 
       for (gint i = 0; i < num_dashes; i++)
         g_string_append_printf (str, " %f", stroke_dash_pattern[i]);
@@ -1183,8 +1235,8 @@ gimp_path_export_path (GimpVectorLayer *layer,
     }
 
    g_string_append_printf (str,
-                           "        d=\"%s\" />\n",
-                           data);
+                           "%s      d=\"%s\" />\n",
+                           spacing, data);
 
   g_free (fill_string);
   g_free (stroke_string);
@@ -1196,7 +1248,7 @@ gimp_path_export_path (GimpVectorLayer *layer,
 #define NEWLINE "\n           "
 
 static gchar *
-gimp_path_export_path_data (GimpPath *path)
+svg_export_path_data (GimpPath *path)
 {
   GString  *str;
   gsize     num_strokes;
