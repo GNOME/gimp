@@ -88,6 +88,8 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
             else
               {
                 $downloaded_patch = "$PWD\$(Split-Path $patch -Leaf)"
+                #(We need to ensure that TLS 1.2 is enabled because of some runners)
+                [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
                 #We need to use .NET directly since Invoke-WebRequest does not work with GitHub
                 Add-Type -AssemblyName System.Net.Http; $client = [System.Net.Http.HttpClient]::new();
                 $response = $client.GetAsync("$patch").Result; [System.IO.File]::WriteAllBytes("$downloaded_patch", $response.Content.ReadAsByteArrayAsync().Result)
@@ -127,3 +129,4 @@ self_build babl
 self_build gegl @('build/windows/patches/0001-meson-only-generate-CodeView-.pdb-symbols-on-Windows.patch') @('-Dworkshop=true')
 
 Set-Location $GIMP_DIR
+
