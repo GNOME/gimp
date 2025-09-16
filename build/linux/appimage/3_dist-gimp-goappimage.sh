@@ -179,14 +179,20 @@ bund_usr ()
                    $(dirname $(echo /$2 | sed "s|*|no_scape|g"))"
       ;;
   esac
+  unset not_found_tpath found_tpath
   for path in $search_path; do
     expanded_path=$(echo $(echo $path | sed "s|no_scape|*|g"))
-    if [ ! -d "$expanded_path" ]; then
-      continue
+    if [ "$3" != '--permissive' ] && [ "$5" != '--permissive' ]; then
+      if [ "${2##*/}" = '*' ] && [ ! -d "$expanded_path" ] || [ "${2##*/}" != '*' ] && echo "$(echo $expanded_path/${2##*/})" | grep -q '\*'; then
+        not_found_tpath=true
+        continue
+      else
+        found_tpath=true
+      fi
     fi
 
     #Copy found targets from search_path to bundle dir
-    for target_path in $(find -L $expanded_path -maxdepth 1 -name ${2##*/}); do
+    for target_path in $(find -L $expanded_path -maxdepth 1 -name ${2##*/} 2>/dev/null); do
       dest_path="$(dirname $(echo $target_path | sed -e "s|^$1/|${USR_DIR}/|" -e t -e "s|^/|${USR_DIR}/|"))"
       output_dest_path="$dest_path"
       if [ "$3" = '--dest' ] || [ "$3" = '--rename' ]; then
@@ -237,6 +243,11 @@ bund_usr ()
       fi
     done
   done
+
+  if [ "$not_found_tpath" ] && [ -z "$found_tpath" ] && [ "$3" != '--bundler' ] && [ "$5" != '--bundler' ]; then
+    printf "\033[31m(ERROR)\033[0m: not found $2 in none of the search paths.\n"
+    exit 1
+  fi
 
   #Undo the tweak done above
   cd ..
@@ -330,9 +341,9 @@ lang_list=$(echo $(ls po/*.po | sed -e 's|po/||g' -e 's|.po||g' | sort) | tr '\n
 for lang in $lang_list; do
   bund_usr "$GIMP_PREFIX" share/locale/$lang/LC_MESSAGES
   # Needed for eventually used widgets, GTK inspector etc
-  bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/gtk3*.mo
+  bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/gtk3*.mo --permissive
   # For language list in text tool options
-  bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/iso_639*3.mo
+  bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/iso_639*3.mo --permissive
 done
 bund_usr "$GIMP_PREFIX" "etc/gimp"
 
