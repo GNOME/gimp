@@ -486,6 +486,7 @@ elif get_option('b_sanitize') != 'none'
 else
   have_gobject_introspection = true
   libgimp_gir_includes = [
+    'AppStream-1.0',
     'Babl-0.1',
     'cairo-1.0',
     'GdkPixbuf-2.0',
