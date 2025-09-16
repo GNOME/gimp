@@ -180,6 +180,7 @@ deps-debian:
             glib-networking
             graphviz
             graphviz-dev
+            gvfs
             iso-codes
             libaa1-dev
             libappstream-dev
