@@ -27,6 +27,8 @@ apps:
       GI_TYPELIB_PATH: $SNAP/gnome-platform/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gjs/girepository-1.0:$GI_TYPELIB_PATH
       #AVIF, HEIC and HEJ2 plug-ins support
       LIBHEIF_PLUGIN_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libheif/plugins
+      #PostScript plug-in support
+      GS_LIB: $SNAP/usr/share/ghostscript/10.02.1/Resource/Init
     slots:
       - dbus-gimp
     plugs:
