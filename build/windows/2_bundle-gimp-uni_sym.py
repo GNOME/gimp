@@ -9,6 +9,10 @@ if not os.path.isfile("build.ninja"):
   print("\033[31m(ERROR)\033[0m: Script called standalone. This script should be only called from build systems.")
   sys.exit(1)
 
+
+# This .py script should not even exist
+# Ideally meson should take care of it automatically.
+# See: https://github.com/mesonbuild/meson/issues/12977
 if os.getenv("MESON_BUILD_ROOT", False):
   with open("meson-info/intro-installed.json", "r") as f:
     build_installed = json.load(f)
@@ -21,6 +25,9 @@ if os.getenv("MESON_BUILD_ROOT", False):
           print(f"Installing {pdb_debug} to {install_dir}")
           shutil.copy2(pdb_debug, install_dir)
 
+# This 'else:' part is injected by 1_build-deps-msys2.ps1 when
+# we build some dependency that uses Cmake. Like meson,
+# it also do not auto install .pdb files by default.
 else:
   for build_root, dirs, files in os.walk(os.getcwd()):
     for file in files:
