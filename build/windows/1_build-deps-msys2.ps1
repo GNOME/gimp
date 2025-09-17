@@ -109,7 +109,7 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
               {
                 Add-Content meson.build "meson.add_install_script(find_program('$("$GIMP_DIR".Replace('\','/'))/build/windows/2_bundle-gimp-uni_sym.py'))"
               }
-            if ("$env:MSYSTEM_PREFIX" -ne 'MINGW32'):
+            if ("$env:MSYSTEM_PREFIX" -ne 'MINGW32')
               {
                 $clang_color='-fansi-escape-codes '
               }
