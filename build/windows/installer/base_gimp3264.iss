@@ -143,6 +143,7 @@
 
 ;3.1.1 Icons and other files
 #define ASSETS_DIR BUILD_DIR + "\build\windows\installer"
+#include ASSETS_DIR + "\splash-dimensions.h"
 
 ;3.1.2 Installer lang files
 [Languages]
@@ -836,7 +837,7 @@ begin
 		begin
 			Parent := WizardForm.WelcomePage;
 			Width := WizardForm.WelcomePage.ClientWidth
-			Height := 1080 * Width / 1920
+			Height := {#GIMP_SPLASH_HEIGHT} * Width / {#GIMP_SPLASH_WIDTH}
 			Left := 0;
 			Top := (WizardForm.ClientHeight - Height) / 2;
 			AutoSize := False;
