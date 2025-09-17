@@ -9,6 +9,11 @@ This is the development branch of GIMP.
 Overview of Changes from GIMP 3.1.4 to GIMP 3.2-RC1
 ===================================================
 
+Core:
+
+  - Improve Export to SVG of paths by not exporting the DTD and adding
+    an explicit SVG version.
+
 Graphical User Interface:
 
   - "Monitor Linked Image" and "Discard Link Information" menu items
@@ -22,9 +27,46 @@ Plug-Ins:
   - Fixed vulnerabilities: ZDI-CAN-27684, ZDI-CAN-27863, ZDI-CAN-27878,
     ZDI-CAN-27836, ZDI-CAN-27823, ZDI-CAN-27793
 
+API:
+
+  - The following libgimpbase API are now deprecated:
+    * gimp_pixpipe_params_init
+    * gimp_pixpipe_params_parse
+    * gimp_pixpipe_params_build
+    * gimp_pixpipe_params_free
+  - New libgimp functions:
+    * gimp_vector_layer_get_enable_fill
+    * gimp_vector_layer_get_enable_stroke
+    * gimp_vector_layer_get_fill_color
+    * gimp_vector_layer_get_path
+    * gimp_vector_layer_get_stroke_cap_style
+    * gimp_vector_layer_get_stroke_color
+    * gimp_vector_layer_get_stroke_dash_offset
+    * gimp_vector_layer_get_stroke_dash_pattern
+    * gimp_vector_layer_get_stroke_join_style
+    * gimp_vector_layer_get_stroke_miter_limit
+    * gimp_vector_layer_get_stroke_width
+    * gimp_vector_layer_get_stroke_width_unit
+    * gimp_vector_layer_set_enable_fill
+    * gimp_vector_layer_set_enable_stroke
+    * gimp_vector_layer_set_fill_color
+    * gimp_vector_layer_set_stroke_cap_style
+    * gimp_vector_layer_set_stroke_color
+    * gimp_vector_layer_set_stroke_dash_offset
+    * gimp_vector_layer_set_stroke_dash_pattern
+    * gimp_vector_layer_set_stroke_join_style
+    * gimp_vector_layer_set_stroke_miter_limit
+    * gimp_vector_layer_set_stroke_width
+    * gimp_vector_layer_set_stroke_width_unit
+
+
 Build:
 
-  - CI: Linux builds ported from unmaintained Kaniko to Buildah.
+  - CI:
+    * Linux builds ported from unmaintained Kaniko to Buildah.
+    * Colored output and .pdb support for builds of dependency using
+      CMake.
+    * Ability to apply remote patches on dependency builds.
 
 
 Overview of Changes from GIMP 3.1.2 to GIMP 3.1.4
