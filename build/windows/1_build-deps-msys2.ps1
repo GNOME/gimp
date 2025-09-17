@@ -102,7 +102,7 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
     ## Configure and/or build
     if (-not (Test-Path _build-$env:MSYSTEM_PREFIX\build.ninja -Type Leaf))
       {
-        if ((Test-Path meson.build -Type Leaf) -and -not (Test-Path CMakeLists.txt -Type Leaf))
+        if (Test-Path meson.build -Type Leaf)
           {
             #babl and GEGL already auto install .pdb but we don't know about other eventual deps
             if ("$dep" -ne 'babl' -and "$dep" -ne 'gegl')
@@ -131,7 +131,7 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
 
 self_build babl
 self_build gegl @('build/windows/patches/0001-meson-only-generate-CodeView-.pdb-symbols-on-Windows.patch') @('-Dworkshop=true')
-self_build https://github.com/Exiv2/exiv2 'v0.28.7' @('https://github.com/Exiv2/exiv2/pull/3361.patch') @('-DEXIV2_ENABLE_VIDEO=OFF', '-DEXIV2_BUILD_EXIV2_COMMAND=OFF')
+self_build https://github.com/Exiv2/exiv2 'v0.28.7' @('https://github.com/Exiv2/exiv2/pull/3361.patch') @('-Dvideo=false')
 
 Set-Location $GIMP_DIR
 
