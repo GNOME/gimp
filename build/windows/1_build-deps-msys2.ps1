@@ -109,8 +109,12 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
               {
                 Add-Content meson.build "meson.add_install_script(find_program('$("$GIMP_DIR".Replace('\','/'))/build/windows/2_bundle-gimp-uni_sym.py'))"
               }
+            if ("$env:MSYSTEM_PREFIX" -ne 'MINGW32'):
+              {
+                $clang_color='-fansi-escape-codes '
+              }
             meson setup _build-$env:MSYSTEM_PREFIX -Dprefix="$GIMP_PREFIX" $PKGCONF_RELOCATABLE_OPTION `
-                        -Dbuildtype=debugoptimized -Dc_args='-fansi-escape-codes -gcodeview' -Dcpp_args='-fansi-escape-codes -gcodeview' -Dc_link_args='-Wl,--pdb=' -Dcpp_link_args='-Wl,--pdb=' `
+                        -Dbuildtype=debugoptimized -Dc_args="${clang_color}-gcodeview" -Dcpp_args="${clang_color}-gcodeview" -Dc_link_args='-Wl,--pdb=' -Dcpp_link_args='-Wl,--pdb=' `
                         $(if ($branch -like '-*') { $branch } elseif ($patches -like '-*') { $patches } else { $options });
           }
         elseif (Test-Path CMakeLists.txt -Type Leaf)
