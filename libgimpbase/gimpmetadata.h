@@ -65,7 +65,7 @@ typedef enum
  * @GIMP_METADATA_SAVE_COMMENT:       Save the image's comment
  *                                    Since: 3.0
  * @GIMP_METADATA_SAVE_UPDATE:        Update metadata automatically
- *                                    Since: 3.1
+ *                                    Since: 3.2
  * @GIMP_METADATA_SAVE_ALL:           Save all of the above
  *
  * What kinds of metadata to save when exporting images.
