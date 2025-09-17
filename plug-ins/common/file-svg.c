@@ -132,19 +132,23 @@ static gboolean       svg_extract_dimensions (RsvgHandle            *handle,
                                               GimpVectorLoadData    *extracted_dimensions);
 
 /* Taken from /app/path/gimppath-export.c */
-static GString * svg_export_file             (GimpImage             *image);
-static void      svg_export_image_size       (GimpImage             *image,
+static GString     * svg_export_file         (GimpImage             *image);
+static void          svg_export_image_size   (GimpImage             *image,
                                               GString               *str);
-static void      svg_export_group_rec        (GimpGroupLayer        *group,
+static void          svg_export_group_rec    (GimpGroupLayer        *group,
                                               GString               *str,
                                               gchar                 *spacing);
-static void      svg_export_path             (GimpVectorLayer       *layer,
+static void          svg_export_path         (GimpVectorLayer       *layer,
                                               GString               *str,
                                               gchar                 *spacing);
-static gchar   * svg_export_path_data        (GimpPath              *paths);
+static gchar       * svg_export_path_data    (GimpPath              *paths);
+static void          svg_export_text         (GimpTextLayer         *layer,
+                                              GString               *str,
+                                              gchar                 *spacing);
 
-static gchar   * svg_get_color_string        (GimpVectorLayer       *layer,
+static gchar       * svg_get_color_string    (GimpVectorLayer       *layer,
                                               const gchar           *type);
+static gchar       * svg_get_hex_color       (GeglColor             *color);
 
 #if LIBRSVG_CHECK_VERSION(2, 46, 0)
 static GimpUnit      * svg_rsvg_to_gimp_unit (RsvgUnit               unit);
@@ -1055,6 +1059,12 @@ svg_export_file (GimpImage *image)
           svg_export_group_rec (GIMP_GROUP_LAYER (list->data), str, "  ");
           g_string_append_printf (str, "  </g>\n");
         }
+      else if (GIMP_IS_TEXT_LAYER (list->data))
+        {
+          GimpTextLayer *layer = GIMP_TEXT_LAYER (list->data);
+
+          svg_export_text (layer, str, "  ");
+        }
     }
 
   g_string_append (str, "</svg>\n");
@@ -1090,6 +1100,12 @@ svg_export_group_rec (GimpGroupLayer *group,
           svg_export_group_rec (GIMP_GROUP_LAYER (children[i]), str,
                                 extra_spacing);
           g_string_append_printf (str, "%s</g>\n", extra_spacing);
+        }
+      else if (GIMP_IS_TEXT_LAYER (children[i]))
+        {
+          GimpTextLayer *layer = GIMP_TEXT_LAYER (children[i]);
+
+          svg_export_text (layer, str, extra_spacing);
         }
     }
   g_free (extra_spacing);
@@ -1310,6 +1326,68 @@ svg_export_path_data (GimpPath *path)
   return g_strchomp (g_string_free (str, FALSE));
 }
 
+static void
+svg_export_text (GimpTextLayer *layer,
+                 GString       *str,
+                 gchar         *spacing)
+{
+  gchar                *esc_name;
+  const gchar          *name;
+  gint                  x = 0;
+  gint                  y = 0;
+  gchar                *hex_color;
+  gdouble               font_size;
+  GimpUnit             *unit;
+  const gchar          *abbrev;
+
+
+  name     = gimp_item_get_name (GIMP_ITEM (layer));
+  esc_name = g_markup_escape_text (name, strlen (name));
+
+  gimp_drawable_get_offsets (GIMP_DRAWABLE (layer), &x, &y);
+
+  hex_color = svg_get_hex_color (gimp_text_layer_get_color (layer));
+
+  g_string_append_printf (str,
+                          "%s<text id=\"%s\"\n"
+                          "%s      x=\"%d\"\n"
+                          "%s      y=\"%d\"\n"
+                          "%s      fill=\"%s\"\n",
+                          spacing, esc_name,
+                          spacing, x,
+                          spacing, y,
+                          spacing, hex_color);
+  g_free (hex_color);
+
+  /* Font style */
+  font_size = gimp_text_layer_get_font_size (layer, &unit);
+  switch (gimp_unit_get_id (unit))
+    {
+    case GIMP_UNIT_INCH:  abbrev = "in";  break;
+    case GIMP_UNIT_MM:    abbrev = "mm";  break;
+    case GIMP_UNIT_POINT: abbrev = "pt";  break;
+    case GIMP_UNIT_PICA:  abbrev = "pc";  break;
+    default:              abbrev = "px";
+    }
+
+  g_string_append_printf (str,
+                          "%s      style=\"font-size:%f%s;\">",
+                          spacing, font_size, abbrev);
+
+  /* Text */
+  if (gimp_text_layer_get_markup (layer))
+    {
+
+    }
+  else /* Plain text */
+    {
+      g_string_append_printf (str, "%s",
+                              gimp_text_layer_get_text (layer));
+    }
+
+  g_string_append_printf (str, "</text>\n");
+}
+
 static gchar *
 svg_get_color_string (GimpVectorLayer *layer,
                       const gchar     *type)
@@ -1330,18 +1408,33 @@ svg_get_color_string (GimpVectorLayer *layer,
 
   if (enabled && color)
     {
-      gdouble  rgb[3];
+      gchar   *hex_color;
       gchar   *color_string;
 
-      gegl_color_get_rgba (color, &rgb[0], &rgb[1], &rgb[2], NULL);
+      hex_color = svg_get_hex_color (color);
 
-      color_string = g_strdup_printf ("%s=\"#%02X%02X%02X\"",
-                                     type, (gint) (rgb[0] * 255),
-                                     (gint) (rgb[1] * 255),
-                                     (gint) (rgb[2] * 255));
+      color_string = g_strdup_printf ("%s=\"%s\"",
+                                      type, hex_color);
+      g_free (hex_color);
 
       return color_string;
     }
 
   return g_strdup_printf ("%s=\"none\"", type);
+}
+
+static gchar *
+svg_get_hex_color (GeglColor *color)
+{
+  gdouble  rgb[3];
+  gchar   *hex_color = NULL;
+
+  gegl_color_get_rgba (color, &rgb[0], &rgb[1], &rgb[2], NULL);
+
+  hex_color = g_strdup_printf ("#%02X%02X%02X",
+                               (gint) (rgb[0] * 255),
+                               (gint) (rgb[1] * 255),
+                               (gint) (rgb[2] * 255));
+
+  return hex_color;
 }
