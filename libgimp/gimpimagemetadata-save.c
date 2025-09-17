@@ -125,23 +125,24 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
           ! gexiv2_metadata_has_exif (g2metadata))
         *suggested_flags &= ~GIMP_METADATA_SAVE_EXIF;
 
-      g_snprintf (buffer, sizeof (buffer),
-                  "%d:%02d:%02d %02d:%02d:%02d",
-                  g_date_time_get_year (datetime),
-                  g_date_time_get_month (datetime),
-                  g_date_time_get_day_of_month (datetime),
-                  g_date_time_get_hour (datetime),
-                  g_date_time_get_minute (datetime),
-                  g_date_time_get_second (datetime));
+      datetime_buf = g_date_time_format (datetime, "%Y:%m:%d %T");
       gexiv2_metadata_try_set_tag_string (g2metadata,
                                           "Exif.Image.DateTime",
-                                          buffer, &error);
+                                          datetime_buf, &error);
       if (error)
         {
           g_warning ("%s: failed to set metadata '%s': %s\n",
                      G_STRFUNC, "Exif.Image.DateTime", error->message);
           g_clear_error (&error);
         }
+      g_clear_pointer (&datetime_buf, g_free);
+
+      /* Timezone is separate */
+      datetime_buf = g_date_time_format (datetime, "\%:z");
+      gexiv2_metadata_try_set_tag_string (g2metadata,
+                                          "Exif.Photo.OffsetTime",
+                                          datetime_buf, NULL);
+      g_clear_pointer (&datetime_buf, g_free);
 
       gexiv2_metadata_try_set_tag_string (g2metadata,
                                           "Exif.Image.Software",
