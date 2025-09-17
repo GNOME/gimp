@@ -134,7 +134,7 @@ bundle(GIMP_PREFIX, "etc/gimp")
 
 ## OTHER FEATURES AND PLUG-INS.
 ### mypaint brushes
-bundle(MSYSTEM_PREFIX, "share/mypaint-data/2.0")
+bundle(MSYSTEM_PREFIX, "share/mypaint-data/1.0")
 ### Needed for 'th' word breaking in Text tool etc
 bundle(MSYSTEM_PREFIX, "share/libthai")
 ### Needed for full CJK and Cyrillic support in file-pdf
