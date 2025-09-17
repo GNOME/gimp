@@ -111,17 +111,18 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
               }
             if ("$env:MSYSTEM_PREFIX" -ne 'MINGW32')
               {
-                $clang_color='-fansi-escape-codes '
+                $clang_opts_meson=@('-Dc_args=-"fansi-escape-codes -gcodeview"', '-Dcpp_args=-"fansi-escape-codes -gcodeview"', '-Dc_link_args="-Wl,--pdb="', '-Dcpp_link_args="-Wl,--pdb="')
+                $clang_opts_cmake=@('-DCMAKE_C_FLAGS="-gcodeview"', '-DCMAKE_CXX_FLAGS="-gcodeview"', '-DCMAKE_EXE_LINKER_FLAGS="-Wl,--pdb="', '-DCMAKE_SHARED_LINKER_FLAGS="-Wl,--pdb="', '-DCMAKE_MODULE_LINKER_FLAGS="-Wl,--pdb="')
               }
             meson setup _build-$env:MSYSTEM_PREFIX -Dprefix="$GIMP_PREFIX" $PKGCONF_RELOCATABLE_OPTION `
-                        -Dbuildtype=debugoptimized -Dc_args="${clang_color}-gcodeview" -Dcpp_args="${clang_color}-gcodeview" -Dc_link_args='-Wl,--pdb=' -Dcpp_link_args='-Wl,--pdb=' `
+                        -Dbuildtype=debugoptimized $clang_opts_meson `
                         $(if ($branch -like '-*') { $branch } elseif ($patches -like '-*') { $patches } else { $options });
           }
         elseif (Test-Path CMakeLists.txt -Type Leaf)
           {
             Add-Content CMakeLists.txt "install(CODE `"execute_process(COMMAND `${Python3_EXECUTABLE`} $("$GIMP_DIR".Replace('\','/'))/build/windows/2_bundle-gimp-uni_sym.py`)`")"
             cmake -G Ninja -B _build-$env:MSYSTEM_PREFIX -DCMAKE_INSTALL_PREFIX="$GIMP_PREFIX" `
-                  -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_COLOR_DIAGNOSTICS=ON -DCMAKE_C_FLAGS='-gcodeview' -DCMAKE_CXX_FLAGS='-gcodeview' -DCMAKE_EXE_LINKER_FLAGS='-Wl,--pdb=' -DCMAKE_SHARED_LINKER_FLAGS='-Wl,--pdb=' -DCMAKE_MODULE_LINKER_FLAGS='-Wl,--pdb=' `
+                  -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_COLOR_DIAGNOSTICS=ON $clang_opts_cmake `
                   $(if ($branch -like '-*') { $branch } elseif ($patches -like '-*') { $patches } else { $options });
           }
         if ("$LASTEXITCODE" -gt '0') { exit 1 }
