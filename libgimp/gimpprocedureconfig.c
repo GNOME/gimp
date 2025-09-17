@@ -426,6 +426,33 @@ gimp_procedure_config_save_metadata (GimpProcedureConfig *config,
             }
         }
 
+      if ((priv->metadata_flags & GIMP_METADATA_SAVE_COMMENT))
+        {
+          gchar *comment_value = NULL;
+          gint   len;
+
+          /* To be able to synchronize the comment with metadata in
+           * _gimp_image_metadata_save_finish, we need the comment value
+           * that was possibly updated in the export dialog.
+           */
+
+          g_object_get (config,
+                        "gimp-comment", &comment_value,
+                        NULL);
+          if (comment_value && (len = strlen (comment_value)) > 0)
+            {
+              GimpParasite *parasite;
+
+              parasite = gimp_parasite_new ("gimp-comment",
+                                            GIMP_PARASITE_PERSISTENT,
+                                            len + 1, comment_value);
+
+              gimp_image_attach_parasite (exported_image, parasite);
+              gimp_parasite_free (parasite);
+            }
+          g_free (comment_value);
+        }
+
       if (! _gimp_image_metadata_save_finish (exported_image,
                                               priv->mime_type,
                                               priv->metadata,

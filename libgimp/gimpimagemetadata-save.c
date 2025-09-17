@@ -106,8 +106,6 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
   if (metadata)
     {
       GDateTime      *datetime;
-      GimpParasite   *comment_parasite;
-      gchar          *comment = NULL;
       gint            image_width;
       gint            image_height;
       gdouble         xres;
@@ -121,45 +119,11 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
 
       datetime = g_date_time_new_now_local ();
 
-      comment_parasite = gimp_image_get_parasite (image, "gimp-comment");
-      if (comment_parasite)
-        {
-          guint32  parasite_size;
-
-          comment = (gchar *) gimp_parasite_get_data (comment_parasite, &parasite_size);
-          comment = g_strndup (comment, parasite_size);
-
-          gimp_parasite_free (comment_parasite);
-        }
-
       /* Exif */
 
       if (! gimp_export_exif () ||
           ! gexiv2_metadata_has_exif (g2metadata))
         *suggested_flags &= ~GIMP_METADATA_SAVE_EXIF;
-
-      if (comment)
-        {
-          gexiv2_metadata_try_set_tag_string (g2metadata,
-                                              "Exif.Photo.UserComment",
-                                              comment, &error);
-          if (error)
-            {
-              g_warning ("%s: failed to set metadata '%s': %s\n",
-                         G_STRFUNC, "Exif.Photo.UserComment", error->message);
-              g_clear_error (&error);
-            }
-
-          gexiv2_metadata_try_set_tag_string (g2metadata,
-                                              "Exif.Image.ImageDescription",
-                                              comment, &error);
-          if (error)
-            {
-              g_warning ("%s: failed to set metadata '%s': %s\n",
-                         G_STRFUNC, "Exif.Image.ImageDescription", error->message);
-              g_clear_error (&error);
-            }
-        }
 
       g_snprintf (buffer, sizeof (buffer),
                   "%d:%02d:%02d %02d:%02d:%02d",
@@ -279,7 +243,6 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
 
       g_free (datetime_buf);
       g_date_time_unref (datetime);
-      g_clear_pointer (&comment, g_free);
 
       /* EXIF Thumbnail */
 
@@ -722,7 +685,51 @@ gimp_image_metadata_save_filter (GimpImage            *image,
 
   if ((flags & GIMP_METADATA_SAVE_EXIF) && support_exif)
     {
-      gchar **exif_data = gexiv2_metadata_get_exif_tags (GEXIV2_METADATA (metadata));
+      gchar **exif_data = NULL;
+
+      if ((flags & GIMP_METADATA_SAVE_COMMENT))
+        {
+          GimpParasite *comment_parasite;
+
+          comment_parasite = gimp_image_get_parasite (image, "gimp-comment");
+          if (comment_parasite)
+            {
+              guint32  parasite_size;
+              gchar   *comment = NULL;
+
+              comment = (gchar *) gimp_parasite_get_data (comment_parasite, &parasite_size);
+              comment = g_strndup (comment, parasite_size);
+
+              gimp_parasite_free (comment_parasite);
+
+              if (comment)
+                {
+                  gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
+                                                      "Exif.Photo.UserComment",
+                                                      comment, &code_error);
+                  if (code_error)
+                    {
+                      g_warning ("%s: failed to set metadata '%s': %s\n",
+                                 G_STRFUNC, "Exif.Photo.UserComment", code_error->message);
+                      g_clear_error (&code_error);
+                    }
+
+                  gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
+                                                      "Exif.Image.ImageDescription",
+                                                      comment, &code_error);
+                  if (code_error)
+                    {
+                      g_warning ("%s: failed to set metadata '%s': %s\n",
+                                 G_STRFUNC, "Exif.Image.ImageDescription", code_error->message);
+                      g_clear_error (&code_error);
+                    }
+
+                  g_free (comment);
+                }
+            }
+        }
+
+      exif_data = gexiv2_metadata_get_exif_tags (GEXIV2_METADATA (metadata));
 
       for (i = 0; exif_data[i] != NULL; i++)
         {
