@@ -36,5 +36,7 @@ done
 if [ -f "dead_branch" ]; then
   printf "         Please delete the merged branches\n"
   exit 1
+else
+  printf '(INFO): All branches are organized.\n'
 fi
 printf "\e[0Ksection_end:`date +%s`:branch_check\r\e[0K\n"
