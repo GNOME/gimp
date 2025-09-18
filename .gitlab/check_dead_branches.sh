@@ -12,7 +12,7 @@ git branch -r | grep -v 'origin/HEAD' | grep -v "origin/$CI_COMMIT_SHA" | while 
     continue
   fi
   ## Skip recently created branches
-  if [ "$(git rev-parse "$remote_branch")" = "$(git rev-parse "$CI_COMMIT_SHA")" ]; then
+  if [ "$(git rev-parse "$remote_branch")" = "$(git rev-parse "$CI_COMMIT_SHA")" ] && [ "$branch_name" != "$CI_DEFAULT_BRANCH" ]; then
     printf "\033[33m(SKIP)\033[0m: $branch_name is identical to $CI_DEFAULT_BRANCH but no problem\n"
     continue
   fi
