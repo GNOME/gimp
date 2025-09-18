@@ -64,7 +64,7 @@ option('gi-docgen',         type: 'feature', value: 'auto', description: 'Build 
 option('linux-input',       type: 'feature', value: 'auto', description: 'Linux input event controller module')
 option('vector-icons',      type: 'boolean', value: true,   description: 'Use vector icons rather than raster ones')
 
-option('vala',              type: 'feature', value: 'auto', description: 'Build VAPI and Vala plugins')
+option('vala',              type: 'feature', value: 'disabled', description: 'Build VAPI and Vala plugins')
 option('javascript',        type: 'feature', value: 'auto', description: 'Install Javascript plug-ins')
 option('lua',               type: 'boolean', value: false,  description: 'Install Lua plug-ins (experimental)')
 
