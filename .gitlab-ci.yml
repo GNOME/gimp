@@ -695,6 +695,19 @@ clang-format:
       - fetch_origin.log
     expire_in: 2 days
 
+branches-check:
+  extends: .default
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
+  stage: analysis
+  variables:
+    GIT_DEPTH: "0"
+  script:
+    - apt-get update -qq
+    - apt-get install -qq -y --no-install-recommends git
+    - sh .gitlab/check_dead_branches.sh
+  allow_failure: true
+
 cppcheck:
   extends: .default
   rules:
