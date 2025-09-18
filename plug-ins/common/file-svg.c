@@ -1184,7 +1184,7 @@ svg_export_group_rec (GimpGroupLayer      *group,
   children = gimp_item_get_children (GIMP_ITEM (group));
   n_layers = gimp_core_object_array_get_length ((GObject **) children);
 
-  for (gint i = 0; i < n_layers; i++)
+  for (gint i = n_layers - 1; i >= 0; i--)
     {
       if (GIMP_IS_VECTOR_LAYER (children[i]))
         {
@@ -1207,7 +1207,8 @@ svg_export_group_rec (GimpGroupLayer      *group,
         }
       else if (export_rasters)
         {
-          svg_export_raster (GIMP_LAYER (children[i]), str, config, "  ");
+          svg_export_raster (GIMP_LAYER (children[i]), str, config,
+                             extra_spacing);
         }
     }
   g_free (extra_spacing);
@@ -1524,8 +1525,8 @@ svg_export_raster (GimpLayer           *layer,
       mimetype  = "image/jpeg";
     }
 
-   width  = gimp_drawable_get_width (GIMP_DRAWABLE (layer));
-   height = gimp_drawable_get_height (GIMP_DRAWABLE (layer));
+  width  = gimp_drawable_get_width (GIMP_DRAWABLE (layer));
+  height = gimp_drawable_get_height (GIMP_DRAWABLE (layer));
 
   image = gimp_item_get_image (GIMP_ITEM (layer));
   temp_image = gimp_image_new (width, height,
@@ -1537,6 +1538,7 @@ svg_export_raster (GimpLayer           *layer,
   temp_layer = gimp_layer_new_from_drawable (GIMP_DRAWABLE (layer),
                                              temp_image);
   gimp_image_insert_layer (temp_image, temp_layer, NULL, 0);
+  gimp_layer_set_offsets (temp_layer, 0, 0);
 
   include_color_profile = FALSE;
   if (gimp_image_get_color_profile (image))
