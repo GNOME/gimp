@@ -1134,28 +1134,31 @@ svg_export_file (GimpImage           *image,
   drawables = gimp_image_list_layers (image);
   for (list = g_list_reverse (drawables); list; list = list->next)
     {
-      if (GIMP_IS_VECTOR_LAYER (list->data))
+      if (gimp_item_get_visible (GIMP_ITEM (list->data)))
         {
-          GimpVectorLayer *layer = GIMP_VECTOR_LAYER (list->data);
+          if (GIMP_IS_VECTOR_LAYER (list->data))
+            {
+              GimpVectorLayer *layer = GIMP_VECTOR_LAYER (list->data);
 
-          svg_export_path (layer, str, "  ");
-        }
-      else if (gimp_item_is_group (GIMP_ITEM (list->data)))
-        {
-          g_string_append_printf (str, "  <g>\n");
-          svg_export_group_rec (GIMP_GROUP_LAYER (list->data), str, config,
-                                "  ");
-          g_string_append_printf (str, "  </g>\n");
-        }
-      else if (GIMP_IS_TEXT_LAYER (list->data))
-        {
-          GimpTextLayer *layer = GIMP_TEXT_LAYER (list->data);
+              svg_export_path (layer, str, "  ");
+            }
+          else if (gimp_item_is_group (GIMP_ITEM (list->data)))
+            {
+              g_string_append_printf (str, "  <g>\n");
+              svg_export_group_rec (GIMP_GROUP_LAYER (list->data), str, config,
+                                    "  ");
+              g_string_append_printf (str, "  </g>\n");
+            }
+          else if (GIMP_IS_TEXT_LAYER (list->data))
+            {
+              GimpTextLayer *layer = GIMP_TEXT_LAYER (list->data);
 
-          svg_export_text (layer, str, "  ");
-        }
-      else if (export_rasters)
-        {
-          svg_export_raster (GIMP_LAYER (list->data), str, config, "  ");
+              svg_export_text (layer, str, "  ");
+            }
+          else if (export_rasters)
+            {
+              svg_export_raster (GIMP_LAYER (list->data), str, config, "  ");
+            }
         }
     }
 
@@ -1186,29 +1189,32 @@ svg_export_group_rec (GimpGroupLayer      *group,
 
   for (gint i = n_layers - 1; i >= 0; i--)
     {
-      if (GIMP_IS_VECTOR_LAYER (children[i]))
+      if (gimp_item_get_visible (GIMP_ITEM (children[i])))
         {
-          GimpVectorLayer *layer = GIMP_VECTOR_LAYER (children[i]);
+          if (GIMP_IS_VECTOR_LAYER (children[i]))
+            {
+              GimpVectorLayer *layer = GIMP_VECTOR_LAYER (children[i]);
 
-          svg_export_path (layer, str, extra_spacing);
-        }
-      else if (gimp_item_is_group (GIMP_ITEM (children[i])))
-        {
-          g_string_append_printf (str, "%s<g>\n", extra_spacing);
-          svg_export_group_rec (GIMP_GROUP_LAYER (children[i]), str,
-                                config, extra_spacing);
-          g_string_append_printf (str, "%s</g>\n", extra_spacing);
-        }
-      else if (GIMP_IS_TEXT_LAYER (children[i]))
-        {
-          GimpTextLayer *layer = GIMP_TEXT_LAYER (children[i]);
+              svg_export_path (layer, str, extra_spacing);
+            }
+          else if (gimp_item_is_group (GIMP_ITEM (children[i])))
+            {
+              g_string_append_printf (str, "%s<g>\n", extra_spacing);
+              svg_export_group_rec (GIMP_GROUP_LAYER (children[i]), str,
+                                    config, extra_spacing);
+              g_string_append_printf (str, "%s</g>\n", extra_spacing);
+            }
+          else if (GIMP_IS_TEXT_LAYER (children[i]))
+            {
+              GimpTextLayer *layer = GIMP_TEXT_LAYER (children[i]);
 
-          svg_export_text (layer, str, extra_spacing);
-        }
-      else if (export_rasters)
-        {
-          svg_export_raster (GIMP_LAYER (children[i]), str, config,
-                             extra_spacing);
+              svg_export_text (layer, str, extra_spacing);
+            }
+          else if (export_rasters)
+            {
+              svg_export_raster (GIMP_LAYER (children[i]), str, config,
+                                 extra_spacing);
+            }
         }
     }
   g_free (extra_spacing);
@@ -1263,6 +1269,7 @@ svg_export_path (GimpVectorLayer *layer,
   GimpPath    *path;
   const gchar *name;
   gchar       *data;
+  gdouble      opacity;
   gchar       *fill_string;
   gchar       *stroke_string;
   gdouble      stroke_width;
@@ -1280,6 +1287,8 @@ svg_export_path (GimpVectorLayer *layer,
 
   name = gimp_item_get_name (GIMP_ITEM (layer));
   data = svg_export_path_data (path);
+
+  opacity = gimp_layer_get_opacity (GIMP_LAYER (layer)) / 100.0f;
 
   /* Vector Layer Properties */
   fill_string         = svg_get_color_string (layer, "fill");
@@ -1327,6 +1336,7 @@ svg_export_path (GimpVectorLayer *layer,
                           "%s<path id=\"%s\"\n"
                           "%s      %s\n"
                           "%s      %s\n"
+                          "%s      opacity=\"%f\"\n"
                           "%s      stroke-width=\"%f\"\n"
                           "%s      stroke-linecap=\"%s\"\n"
                           "%s      stroke-linejoin=\"%s\"\n"
@@ -1334,6 +1344,7 @@ svg_export_path (GimpVectorLayer *layer,
                           spacing, esc_name,
                           spacing, fill_string,
                           spacing, stroke_string,
+                          spacing, opacity,
                           spacing, stroke_width,
                           spacing, stroke_capstyle,
                           spacing, stroke_joinstyle,
@@ -1438,26 +1449,37 @@ svg_export_text (GimpTextLayer *layer,
   const gchar          *name;
   gint                  x = 0;
   gint                  y = 0;
+  gdouble               opacity;
   gchar                *hex_color;
   gdouble               font_size;
   GimpUnit             *unit;
   const gchar          *abbrev;
+  const gchar          *kerning;
+  GimpFont             *gimp_font;
+  PangoFontDescription *font_description;
+  PangoFontDescription *font_description2;
+  PangoFontMap         *fontmap;
+  PangoFont            *font;
+  PangoContext         *context;
 
   name     = gimp_item_get_name (GIMP_ITEM (layer));
   esc_name = g_markup_escape_text (name, strlen (name));
 
   gimp_drawable_get_offsets (GIMP_DRAWABLE (layer), &x, &y);
 
+  opacity   = gimp_layer_get_opacity (GIMP_LAYER (layer)) / 100.0f;
   hex_color = svg_get_hex_color (gimp_text_layer_get_color (layer));
 
   g_string_append_printf (str,
                           "%s<text id=\"%s\"\n"
                           "%s      x=\"%d\"\n"
                           "%s      y=\"%d\"\n"
+                          "%s      opacity=\"%f\"\n"
                           "%s      fill=\"%s\"\n",
                           spacing, esc_name,
                           spacing, x,
                           spacing, y,
+                          spacing, opacity,
                           spacing, hex_color);
   g_free (hex_color);
   g_free (esc_name);
@@ -1473,16 +1495,67 @@ svg_export_text (GimpTextLayer *layer,
     default:              abbrev = "px";
     }
 
+  kerning = gimp_text_layer_get_kerning (layer) ? "auto" : "none";
+
+  fontmap = pango_cairo_font_map_new_for_font_type (CAIRO_FONT_TYPE_FT);
+  context = pango_font_map_create_context (fontmap);
+
+  gimp_font         = gimp_text_layer_get_font (layer);
+  font_description  = gimp_font_get_pango_font_description (gimp_font);
+  font              = pango_font_map_load_font (fontmap, context,
+                                                font_description);
+  font_description2 = pango_font_describe (font);
+
   g_string_append_printf (str,
-                          "%s      style=\"font-size:%f%s;\">",
-                          spacing, font_size, abbrev);
+                          "%s      style=\"font-size:%f%s; "
+                          "font-family:%s; font-weight:%d; "
+                          "font-kerning:%s; letter-spacing:%fpx;\">",
+                          spacing, font_size, abbrev,
+                          pango_font_description_get_family (font_description2),
+                          pango_font_description_get_weight (font_description2),
+                          kerning, gimp_text_layer_get_letter_spacing (layer));
+
+  g_object_unref (font);
+  pango_font_description_free (font_description);
+  pango_font_description_free (font_description2);
+  g_object_unref (context);
+  g_object_unref (fontmap);
 
   /* Text */
   if (gimp_text_layer_get_markup (layer))
     {
+      GString *markup;
 
+      markup = g_string_new (gimp_text_layer_get_markup (layer));
+
+      g_string_replace (markup, "<markup>", "", 1);
+      g_string_replace (markup, "</markup>", "", 1);
+
+      g_string_replace (markup, "<b>",
+                        "<tspan style=\"font-weight: bold\">", 0);
+      g_string_replace (markup, "</b>", "</tspan>", 0);
+
+      g_string_replace (markup, "<i>",
+                        "<tspan style=\"font-style: italic\">", 0);
+      g_string_replace (markup, "</i>", "</tspan>", 0);
+
+      g_string_replace (markup, "<u>",
+                        "<tspan style=\"text-decoration: underline\">", 0);
+      g_string_replace (markup, "</u>", "</tspan>", 0);
+
+      g_string_replace (markup, "<s>",
+                        "<tspan style=\"text-decoration: linethrough\">", 0);
+      g_string_replace (markup, "</s>", "</tspan>", 0);
+
+      g_string_replace (markup, "<span foreground=\"", "<tspan style=\"fill:", 0);
+      g_string_replace (markup, "</span>", "</tspan>", 0);
+
+      g_string_replace (markup, "<span ", "<tspan ", 0);
+      g_string_replace (markup, "</span>", "</tspan>", 0);
+
+      g_string_append_printf (str, "%s", markup->str);
     }
-  else /* Plain text */
+  else
     {
       g_string_append_printf (str, "%s",
                               gimp_text_layer_get_text (layer));
@@ -1669,15 +1742,12 @@ svg_get_color_string (GimpVectorLayer *layer,
 static gchar *
 svg_get_hex_color (GeglColor *color)
 {
-  gdouble  rgb[3];
-  gchar   *hex_color = NULL;
+  guchar  rgb[3] = { 0, 0, 0 };
+  gchar  *hex_color = NULL;
 
-  gegl_color_get_rgba (color, &rgb[0], &rgb[1], &rgb[2], NULL);
+  gegl_color_get_pixel (color, babl_format ("R'G'B' u8"), rgb);
 
-  hex_color = g_strdup_printf ("#%02X%02X%02X",
-                               (gint) (rgb[0] * 255),
-                               (gint) (rgb[1] * 255),
-                               (gint) (rgb[2] * 255));
+  hex_color = g_strdup_printf ("#%02X%02X%02X", rgb[0], rgb[1], rgb[2]);
 
   return hex_color;
 }
