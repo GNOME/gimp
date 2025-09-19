@@ -54,6 +54,8 @@ typedef struct
   gint       height;
 } SvgLoadVals;
 
+/* TODO: Fix */
+static gint layer_id = 0;
 
 typedef struct _Svg      Svg;
 typedef struct _SvgClass SvgClass;
@@ -1267,7 +1269,7 @@ svg_export_path (GimpVectorLayer *layer,
                  gchar           *spacing)
 {
   GimpPath    *path;
-  const gchar *name;
+  gchar       *name;
   gchar       *data;
   gdouble      opacity;
   gchar       *fill_string;
@@ -1279,13 +1281,12 @@ svg_export_path (GimpVectorLayer *layer,
   gdouble      stroke_dash_offset;
   gsize        num_dashes;
   gdouble     *stroke_dash_pattern;
-  gchar       *esc_name;
 
   path = gimp_vector_layer_get_path (layer);
   if (! path)
     return;
 
-  name = gimp_item_get_name (GIMP_ITEM (layer));
+  name = g_strdup_printf ("layer%d", layer_id++);
   data = svg_export_path_data (path);
 
   opacity = gimp_layer_get_opacity (GIMP_LAYER (layer)) / 100.0f;
@@ -1330,8 +1331,6 @@ svg_export_path (GimpVectorLayer *layer,
       break;
     }
 
-  esc_name = g_markup_escape_text (name, strlen (name));
-
   g_string_append_printf (str,
                           "%s<path id=\"%s\"\n"
                           "%s      %s\n"
@@ -1341,7 +1340,7 @@ svg_export_path (GimpVectorLayer *layer,
                           "%s      stroke-linecap=\"%s\"\n"
                           "%s      stroke-linejoin=\"%s\"\n"
                           "%s      stroke-miterlimit=\"%f\"\n",
-                          spacing, esc_name,
+                          spacing, name,
                           spacing, fill_string,
                           spacing, stroke_string,
                           spacing, opacity,
@@ -1352,6 +1351,9 @@ svg_export_path (GimpVectorLayer *layer,
 
   if (num_dashes > 0)
     {
+      for (gint i = 0; i < num_dashes; i++)
+        stroke_dash_pattern[i] *= stroke_width;
+
       g_string_append_printf (str,
                               "%s      stroke-dashoffset=\"%f\"\n"
                               "%s      stroke-dasharray=\"%f",
@@ -1370,7 +1372,7 @@ svg_export_path (GimpVectorLayer *layer,
 
   g_free (fill_string);
   g_free (stroke_string);
-  g_free (esc_name);
+  g_free (name);
   g_free (data);
 }
 
@@ -1403,7 +1405,8 @@ svg_export_path_data (GimpPath *path)
 
       if (type == GIMP_PATH_STROKE_TYPE_BEZIER)
         {
-          if (num_points >= 3)
+          num_indexes = num_points / 2;
+          if (num_indexes >= 3)
             {
               g_ascii_formatd (x_string, G_ASCII_DTOSTR_BUF_SIZE,
                                "%.2f", control_points[2]);
@@ -1414,10 +1417,9 @@ svg_export_path_data (GimpPath *path)
               g_string_append_printf (str, "M %s,%s", x_string, y_string);
             }
 
-          if (num_points > 3)
+          if (num_indexes > 3)
             g_string_append_printf (str, NEWLINE "C");
 
-          num_indexes = num_points / 2;
           for (gint i = 2; i < (num_indexes + (closed ? 2 : - 1)); i++)
             {
               gint index = (i % num_indexes) * 2;
@@ -1445,8 +1447,7 @@ svg_export_text (GimpTextLayer *layer,
                  GString       *str,
                  gchar         *spacing)
 {
-  gchar                *esc_name;
-  const gchar          *name;
+  gchar                *name;
   gint                  x = 0;
   gint                  y = 0;
   gdouble               opacity;
@@ -1454,7 +1455,6 @@ svg_export_text (GimpTextLayer *layer,
   gdouble               font_size;
   GimpUnit             *unit;
   const gchar          *abbrev;
-  const gchar          *kerning;
   GimpFont             *gimp_font;
   PangoFontDescription *font_description;
   PangoFontDescription *font_description2;
@@ -1462,8 +1462,7 @@ svg_export_text (GimpTextLayer *layer,
   PangoFont            *font;
   PangoContext         *context;
 
-  name     = gimp_item_get_name (GIMP_ITEM (layer));
-  esc_name = g_markup_escape_text (name, strlen (name));
+  name = g_strdup_printf ("layer%d", layer_id++);
 
   gimp_drawable_get_offsets (GIMP_DRAWABLE (layer), &x, &y);
 
@@ -1476,13 +1475,13 @@ svg_export_text (GimpTextLayer *layer,
                           "%s      y=\"%d\"\n"
                           "%s      opacity=\"%f\"\n"
                           "%s      fill=\"%s\"\n",
-                          spacing, esc_name,
+                          spacing, name,
                           spacing, x,
                           spacing, y,
                           spacing, opacity,
                           spacing, hex_color);
   g_free (hex_color);
-  g_free (esc_name);
+  g_free (name);
 
   /* Font style */
   font_size = gimp_text_layer_get_font_size (layer, &unit);
@@ -1494,8 +1493,6 @@ svg_export_text (GimpTextLayer *layer,
     case GIMP_UNIT_PICA:  abbrev = "pc";  break;
     default:              abbrev = "px";
     }
-
-  kerning = gimp_text_layer_get_kerning (layer) ? "auto" : "none";
 
   fontmap = pango_cairo_font_map_new_for_font_type (CAIRO_FONT_TYPE_FT);
   context = pango_font_map_create_context (fontmap);
@@ -1509,11 +1506,11 @@ svg_export_text (GimpTextLayer *layer,
   g_string_append_printf (str,
                           "%s      style=\"font-size:%f%s; "
                           "font-family:%s; font-weight:%d; "
-                          "font-kerning:%s; letter-spacing:%fpx;\">",
+                          "letter-spacing:%fpx;\">",
                           spacing, font_size, abbrev,
                           pango_font_description_get_family (font_description2),
                           pango_font_description_get_weight (font_description2),
-                          kerning, gimp_text_layer_get_letter_spacing (layer));
+                          gimp_text_layer_get_letter_spacing (layer));
 
   g_object_unref (font);
   pango_font_description_free (font_description);
@@ -1570,7 +1567,7 @@ svg_export_raster (GimpLayer           *layer,
                    GimpProcedureConfig *config,
                    gchar               *spacing)
 {
-  gint format_id;
+  gint              format_id;
   GimpProcedure    *procedure;
   GimpValueArray   *return_vals = NULL;
   GimpImage        *image;
@@ -1665,20 +1662,18 @@ svg_export_raster (GimpLayer           *layer,
 
   if (temp_size > 0)
     {
-      guchar      *buf;
-      gchar       *encoded;
-      gchar       *esc_name;
-      const gchar *name;
-      gint         x;
-      gint         y;
+      guchar *buf;
+      gchar  *encoded;
+      gchar  *name;
+      gint    x;
+      gint    y;
 
       buf = g_malloc0 (temp_size);
       fread (buf, 1, temp_size, temp_fp);
 
       encoded = g_base64_encode ((const guchar *) buf, temp_size + 1);
 
-      name     = gimp_item_get_name (GIMP_ITEM (layer));
-      esc_name = g_markup_escape_text (name, strlen (name));
+      name = g_strdup_printf ("layer%d", layer_id++);
       gimp_drawable_get_offsets (GIMP_DRAWABLE (layer), &x, &y);
 
       g_string_append_printf (str,
@@ -1688,7 +1683,7 @@ svg_export_raster (GimpLayer           *layer,
                               "%s      width=\"%d\"\n"
                               "%s      height=\"%d\"\n"
                               "%s      href=\"data:%s;base64,%s\" />\n",
-                              spacing, esc_name,
+                              spacing, name,
                               spacing, x,
                               spacing, y,
                               spacing, width,
@@ -1696,7 +1691,6 @@ svg_export_raster (GimpLayer           *layer,
                               spacing, mimetype, encoded);
       g_free (encoded);
       g_free (buf);
-      g_free (esc_name);
     }
   fclose (temp_fp);
 
