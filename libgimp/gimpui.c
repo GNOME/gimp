@@ -129,6 +129,14 @@ gimp_ui_init (const gchar *prog_name)
 #endif
     }
 
+#ifdef GDK_WINDOWING_QUARTZ
+  /* Sets activation policy to prevent plugins from appearing as separate apps
+   * in Dock.
+   * Makes plugins behave as helper processes of GIMP on macOS.
+   */
+  [NSApp setActivationPolicy:NSApplicationActivationPolicyAccessory];
+#endif
+
   if (gimp_user_time ())
     {
       /* Construct a fake startup ID as we only want to pass the
