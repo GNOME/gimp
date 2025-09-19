@@ -187,6 +187,13 @@ sf_dialog_run (GimpProcedure        *procedure,
   dump_objects (config);
 #endif
 
+#ifdef GDK_WINDOWING_QUARTZ
+  /* Ensure this process doesn't appear in Dock as separate app.
+   * Set as accessory (helper) app instead of regular app.
+   */
+  [NSApp setActivationPolicy:NSApplicationActivationPolicyAccessory];
+#endif
+
   /* Create a dialog having properties (describing arguments of the procedure)
    * taken from the config.
    *
@@ -217,10 +224,6 @@ sf_dialog_run (GimpProcedure        *procedure,
     }
 
 #ifdef GDK_WINDOWING_QUARTZ
-  /* Make the Dock icon appear.
-   * The dialog does not stay in front, so user needs Dock menu item "Show."
-   */
- [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
 
   /* The user chose a plugin from gimp app, now ensure this process is active.
    * The gimp app was active, but now the plugin should be active.
@@ -271,10 +274,6 @@ script_fu_dialog_run_image_proc (
   else
     result = gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL, NULL);
 
-#ifdef GDK_WINDOWING_QUARTZ
-  /* Make dock icon go away. */
-  [NSApp setActivationPolicy:NSApplicationActivationPolicyAccessory];
-#endif
 
   return result;
 }
@@ -301,10 +300,6 @@ script_fu_dialog_run_regular_proc (GimpProcedure        *procedure,
   else
     result = gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL, NULL);
 
-#ifdef GDK_WINDOWING_QUARTZ
-  /* Make dock icon go away. */
-  [NSApp setActivationPolicy:NSApplicationActivationPolicyAccessory];
-#endif
 
   return result;
 }
