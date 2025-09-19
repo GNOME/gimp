@@ -481,48 +481,23 @@ if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags
     ## Create submission and upload .msixupload file to it
     msstore publish $OUTPUT_DIR\$MSIX_ARTIFACT -id $PRODUCT_ID -nc
 
-    ## FIXME: Update submission info. See: https://github.com/microsoft/msstore-cli/issues/70
-    ###Get changelog from Linux appdata
-    #$xmlObject = New-Object XML
-    #$xmlObject.Load("desktop\org.gimp.GIMP.appdata.xml.in.in")
-    #if ($xmlObject.component.releases.release[0].version -ne ("$GIMP_VERSION".ToLower() -replace '-','~'))
-    #  {
-    #    Write-Host "(ERROR): appdata does not match main meson file. Submission can't be done." -ForegroundColor red
-    #    exit 1
-    #  }
-    #$store_changelog = ($xmlObject.component.releases.release[0].description.SelectNodes(".//p | .//li") | ForEach-Object { $text = ($_.InnerText).Trim() -replace '\s*\r?\n\s*', ' '; if ($_.Name -eq 'li') { "- $text" } else { $text } } ) -join "`n"
-    ###Prepare submission info
-    #$jsonObject = msstore submission getListingAssets $PRODUCT_ID | Select-Object -Skip 5 | ConvertFrom-Json
-    #$jsonObject.'ReleaseNotes' = "$store_changelog"
-    #$full_jsonObject = msstore submission get $PRODUCT_ID | Select-Object -Skip 3 | ConvertFrom-Json
-    #$full_jsonObject."Listings"."en-us"."BaseListing" = ($jsonObject | ConvertTo-Json -Compress)
-    ###Fix submission info against JSON scaping hell
-    #$final_json = $full_jsonObject | ConvertTo-Json -Compress
-    #Fix excessive backslashes
-    #$final_json = $final_json -replace "\\\\",'\' -replace "\\\\",'\'
-    #Scape spaces and new lines
-    #$final_json = $final_json -replace ' ','\b' -replace '`n','\n'
-    #PowerShell converts 'BaseListing' wrongly
-    #$final_json = $final_json -replace '"{','{' -replace '}"','}'
-    #$final_json = $final_json -replace '\\"Title\\":\\"GIMP\\b\(Preview\)\\"','\"Title\":\"GIMP\b\r\n(Preview)\"'
-    #PowerShell converts 'PlatformOverrides' wrongly
-    #$final_json = $final_json -replace '""','{}'
-    #PowerShell destroys 'Genres' array
-    #$final_json = $final_json -replace '\"Genres\":\"MultimediaDesign_IllustrationAndGraphicDesign\"','"Genres":["MultimediaDesign_IllustrationAndGraphicDesign"]'
-    #PowerShell converts 'Warning' wrongly
-    #$final_json = $final_json -replace '\"@{','{"' -replace 'Code=','Code":"' -replace ';\\b','","'
-    #$final_json = $final_json -replace 'Details=','Details":"' -replace '\.}]','."}]'
-    #PowerShell destroys 'Languages' array
-    #$final_json = $final_json -replace '\"Languages\":{}','"Languages":[]'
-    #$final_json = $final_json -replace '\"Languages\":\"en-US\"','"Languages":["en-US"]'
-    #PowerShell destroys 'Capabilities' array
-    #$final_json = $final_json -replace '\"Capabilities\":{}','"Capabilities":[]'
-    #$final_json = $final_json -replace 'Capabilities\":\"','Capabilities":["' -replace '\\brunFullTrust\",','","runFullTrust"],'
-    ##Scape double quotes
-    #$final_json = $final_json -replace '"','\"'
-    #Fix excessive backslashes again
-    #$final_json = $final_json -replace "\\\\",'\' -replace "\\\\",'\'
-    #msstore submission update $PRODUCT_ID $final_json
+    ## Update submission info (if PS6 or up. See: https://github.com/microsoft/msstore-cli/issues/70)
+    if ($PSVersionTable.PSVersion.Major -ge 6)
+      {
+        $jsonObject = msstore submission get $PRODUCT_ID | ConvertFrom-Json -AsHashtable
+        ###Get changelog from Linux appdata
+        $xmlObject = New-Object XML
+        $xmlObject.Load("$PWD\desktop\org.gimp.GIMP.appdata.xml.in.in")
+        if ($xmlObject.component.releases.release[0].version -ne ("$GIMP_VERSION".ToLower() -replace '-','~'))
+          {
+            Write-Host "(ERROR): appdata does not match main meson file. Submission can't be done." -ForegroundColor red
+            exit 1
+          }
+        $store_changelog = ($xmlObject.component.releases.release[0].description.SelectNodes(".//p | .//li") | ForEach-Object { $text = ($_.InnerText).Trim() -replace '\s*\r?\n\s*', ' '; if ($_.Name -eq 'li') { "- $text" } else { $text } } ) -join "`n"
+        $jsonObject."Listings"."en-us"."BaseListing".'ReleaseNotes' = "$store_changelog"
+        ###Send submission info
+        msstore submission updateMetadata $PRODUCT_ID ($jsonObject | ConvertTo-Json -Depth 100)
+      }
 
     ## Start certification then publishing
     msstore submission publish $PRODUCT_ID
