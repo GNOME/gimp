@@ -119,8 +119,7 @@ static gboolean  tileit_dialog          (GimpProcedure       *procedure,
 
 static void      tileit_scale_update    (GimpLabelSpin       *entry,
                                          gint                *value);
-static void      tileit_config_update   (GimpLabelSpin       *entry,
-                                         GimpProcedureConfig *config);
+static void      tileit_config_update   (GimpProcedureConfig *config);
 
 static void      tileit_exp_update      (GtkWidget           *widget,
                                          gpointer             value);
@@ -654,9 +653,9 @@ tileit_dialog (GimpProcedure       *procedure,
                                    _("Number of Segments"), FALSE, FALSE);
   scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
                                                  "num-tiles", 1);
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (tileit_config_update),
-                    config);
+  g_signal_connect_object (config, "notify::num-tiles",
+                           G_CALLBACK (tileit_config_update),
+                           NULL, 0);
 
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
                                     "num-tiles-frame",
@@ -896,8 +895,7 @@ tileit_scale_update (GimpLabelSpin *scale,
 }
 
 static void
-tileit_config_update (GimpLabelSpin       *scale,
-                      GimpProcedureConfig *config)
+tileit_config_update (GimpProcedureConfig *config)
 {
   g_object_get (config,
                 "num-tiles", &itvals.numtiles,
