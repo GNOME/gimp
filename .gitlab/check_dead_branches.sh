@@ -1,6 +1,11 @@
 #!/bin/sh
 
-printf "\e[0Ksection_start:`date +%s`:branch_check[collapsed=false]\r\e[0KChecking for dead branches\n"
+repo=$(basename "$PWD")
+printf "\e[0Ksection_start:`date +%s`:${repo}_branch_check[collapsed=false]\r\e[0KChecking for dead branches on ${repo}\n"
+if [ "$repo" = gimp-data ]; then
+  export CI_DEFAULT_BRANCH='main'
+  export CI_COMMIT_SHA=$(git rev-parse HEAD)
+fi
 git branch -r | grep -v 'origin/HEAD' | grep -v "origin/$CI_DEFAULT_BRANCH" | while IFS= read remote_branch; do
   remote_branch=$(printf "%s\n" "$remote_branch" | sed 's/^ *//;s/ *$//')
   branch_name=$(printf "%s\n" "$remote_branch" | sed 's|origin/||')
@@ -39,4 +44,4 @@ if [ -f "dead_branch" ]; then
 else
   printf '(INFO): All branches are organized.\n'
 fi
-printf "\e[0Ksection_end:`date +%s`:branch_check\r\e[0K\n"
+printf "\e[0Ksection_end:`date +%s`:${repo}_branch_check\r\e[0K\n"

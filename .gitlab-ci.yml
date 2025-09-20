@@ -671,10 +671,14 @@ meson-health:
     - <<: *CI_MERGE
     - <<: *CI_COMMIT
   stage: analysis
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
   script:
     - apt-get update -qq
     - apt-get install -qq -y --no-install-recommends git shellcheck devscripts
     - sh .gitlab/run_meson_health_diff.sh
+    - cd gimp-data
+    - sh ../.gitlab/run_meson_health_diff.sh
   allow_failure: true
 
 clang-format:
@@ -702,10 +706,13 @@ branches-check:
   stage: analysis
   variables:
     GIT_DEPTH: "0"
+    GIT_SUBMODULE_STRATEGY: recursive
   script:
     - apt-get update -qq
     - apt-get install -qq -y --no-install-recommends git
     - sh .gitlab/check_dead_branches.sh
+    - cd gimp-data
+    - sh ../.gitlab/check_dead_branches.sh
   allow_failure: true
 
 cppcheck:
