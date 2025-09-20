@@ -14,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-04-10 20:57+0000\n"
-"PO-Revision-Date: 2025-04-12 08:00+0300\n"
-"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
+"POT-Creation-Date: 2025-09-20 09:10+0000\n"
+"PO-Revision-Date: 2025-09-20 17:07+0300\n"
+"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Launchpad-Export-Date: 2010-10-09 17:28+0000\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.7\n"
 
 #: plug-ins/script-fu/script-fu.c:119
 msgid "Script-Fu _Console"
@@ -134,7 +134,7 @@ msgstr "_Uygula"
 # TinyScheme burada marka ismi gibi özel isim
 #: plug-ins/script-fu/console/script-fu-console-total.c:89
 msgid "Welcome to TinyScheme"
-msgstr "TinyScheme'ya hoşgeldiniz"
+msgstr "TinySchemeʼya hoş geldiniz"
 
 #: plug-ins/script-fu/console/script-fu-console-total.c:93
 msgid "Scripting GIMP in the Scheme language"
@@ -150,7 +150,7 @@ msgstr "_Sunucuyu Başlat"
 
 #: plug-ins/script-fu/server/script-fu-server.c:956
 msgid "Listen on IP:"
-msgstr "IP'yi dinle:"
+msgstr "IPʼyi dinle:"
 
 #: plug-ins/script-fu/server/script-fu-server.c:963
 msgid "Server port:"
@@ -165,7 +165,7 @@ msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
 msgstr ""
-"127.0.0.1'den başka bir IP adresini (özellikle 0.0.0.0) dinlemek, "
+"127.0.0.1ʼden başka bir IP adresini (özellikle 0.0.0.0) dinlemek, "
 "saldırganların bu bilgisayar üzerinde istedikleri kodu uzaktan "
 "çalıştırmalarına izin verebilir."
 
@@ -221,7 +221,7 @@ msgstr "Script-Fu Dizin Seçimi"
 msgid "Error while executing %s:"
 msgstr "%s yürütülürken hata:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:417
+#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:541
 #, c-format
 msgid "Error while loading %s:"
 msgstr "%s yüklenirken hata:"
@@ -323,8 +323,8 @@ msgid ""
 "The Burn-In script needs two layers in total. A foreground layer with "
 "transparency and a background layer."
 msgstr ""
-"Burn-In betiği iki katmana gereksinir. Saydamlığa sahip önalan katmanı ve "
-"bir artalan katmanı."
+"Burn-In betiği iki katmana gereksinir. Saydamlığa sahip ön plan katmanı ve "
+"bir arka plan katmanı."
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:225
 msgid "B_urn-In..."
@@ -1134,8 +1134,8 @@ msgstr "J_ava eşlemi..."
 #: plug-ins/script-fu/scripts/palette-export.scm:426
 msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
 msgstr ""
-"Etkin paleti bir Java hashtable olarak dışa aktar java.util.Hashtable&lt;"
-"String,Color&gt;"
+"Etkin paleti bir Java hashtable olarak dışa aktar "
+"java.util.Hashtable&lt;String,Color&gt;"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:59
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:45
