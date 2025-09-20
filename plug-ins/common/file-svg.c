@@ -1596,7 +1596,7 @@ svg_export_text (GimpTextLayer *layer,
       g_string_replace (markup, "</s>", "</tspan>", 0);
 
       g_string_replace (markup, "<span foreground=\"", "<tspan style=\"fill:", 0);
-      g_string_replace (markup, "</span>", "</tspan>", 0);
+      g_string_replace (markup, "<span font=\"", "<tspan style=\"font-family:", 0);
 
       g_string_replace (markup, "<span ", "<tspan ", 0);
       g_string_replace (markup, "</span>", "</tspan>", 0);
