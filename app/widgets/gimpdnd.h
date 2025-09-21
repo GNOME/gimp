@@ -32,7 +32,7 @@
         { "XdndDirectSave0", 0, GIMP_DND_TYPE_XDS }
 
 #define GIMP_TARGET_COLOR \
-        { "application/x-color", 0, GIMP_DND_TYPE_COLOR }
+        { "application/x-geglcolor", 0, GIMP_DND_TYPE_COLOR }
 
 #define GIMP_TARGET_SVG \
         { "image/svg", 0, GIMP_DND_TYPE_SVG }
