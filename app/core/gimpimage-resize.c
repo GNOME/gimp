@@ -329,7 +329,7 @@ gimp_image_resize_to_visible_layers (GimpImage    *image,
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  list = gimp_image_get_layer_iter (image);
+  list = gimp_image_get_layer_list (image);
 
   if (! list)
     return;
