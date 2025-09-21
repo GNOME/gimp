@@ -34,9 +34,11 @@ GIMP_DISTRIB = Path(GIMP_SOURCE) / f"gimp-{Path(MSYSTEM_PREFIX).name}"
 def bundle(src_root, pattern):
   ## Search for targets in search path
   src_root = Path(src_root)
-  for src_path in src_root.glob(pattern):
-    if not src_path.exists():
-      continue
+  paths_to_bundle = list(src_root.glob(pattern))
+  if not paths_to_bundle:
+    print(f"\033[31m(ERROR)\033[0m: not found {src_root}/{pattern}")
+    sys.exit(1)
+  for src_path in paths_to_bundle:
     ## Copy found targets to bundle path
     dest_path = GIMP_DISTRIB / src_path.relative_to(src_root)
     dest_path.parent.mkdir(parents=True, exist_ok=True)
@@ -124,10 +126,11 @@ bundle(GIMP_PREFIX, "share/gimp")
 lang_array = [Path(f).stem for f in glob(str(Path(GIMP_SOURCE)/"po/*.po"))]
 for lang in lang_array:
   bundle(GIMP_PREFIX, f"share/locale/{lang}/LC_MESSAGES/*.mo")
-  if (Path(MSYSTEM_PREFIX)/f"share/locale/{lang}/LC_MESSAGES").exists():
-    # Needed for eventually used widgets, GTK inspector etc
+  # Needed for eventually used widgets, GTK inspector etc
+  if glob(f"{MSYSTEM_PREFIX}/share/locale/{lang}/LC_MESSAGES/gtk*.mo"):
     bundle(MSYSTEM_PREFIX, f"share/locale/{lang}/LC_MESSAGES/gtk*.mo")
-    # For language list in text tool options
+  # For language list in text tool options
+  if glob(f"{MSYSTEM_PREFIX}/share/locale/{lang}/LC_MESSAGES/iso_639_3.mo"):
     bundle(MSYSTEM_PREFIX, f"share/locale/{lang}/LC_MESSAGES/iso_639_3.mo")
 bundle(GIMP_PREFIX, "etc/gimp")
 
