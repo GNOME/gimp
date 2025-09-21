@@ -329,7 +329,7 @@ conf_app GTK_IM_MODULE_FILE "${LIB_DIR}/${LIB_SUBDIR}gtk-3.0/*.*.*/immodules.cac
 bund_usr "$GIMP_PREFIX" "lib/libbabl*"
 bund_usr "$GIMP_PREFIX" "lib/babl-*/*.so"
 conf_app BABL_PATH "${LIB_DIR}/${LIB_SUBDIR}babl-*"
-bund_usr "$GIMP_PREFIX" "lib/libgegl*"
+bund_usr "$GIMP_PREFIX" "lib/libgl*"
 bund_usr "$GIMP_PREFIX" "lib/gegl-*/*"
 conf_app GEGL_PATH "${LIB_DIR}/${LIB_SUBDIR}gegl-*"
 bund_usr "$GIMP_PREFIX" "lib/libgimp*"
