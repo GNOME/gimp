@@ -82,6 +82,18 @@
   </provides>
 
   <releases>
+    <release version="3.0.6" date="2025-10-04">
+      <description>
+        <p>
+        This micro release in the 3.0 series fixes some major bugs.
+        </p>
+        <ul>
+          <li>A bug in Windows prevented GIMP to work properly when the system was set to specific locales</li>
+          <li>Various usability issues have been handled</li>
+          <li>Reported instabilities and vulnerabilities were fixed</li>
+        </ul>
+      </description>
+    </release>
     <release version="3.0.4" date="2025-05-17">
       <description>
         <p>
