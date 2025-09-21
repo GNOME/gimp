@@ -482,9 +482,7 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gtk_container_add (GTK_CONTAINER (section_vbox), items_grid);
   gtk_widget_set_visible (items_grid, TRUE);
 
-  widget = gimp_prop_check_button_new (config, "align-contents", NULL);
-  widget = gimp_prop_expanding_frame_new (config, "align-layers",
-                                          NULL, widget, NULL);
+  widget = gimp_prop_check_button_new (config, "align-layers", NULL);
   gtk_grid_attach (GTK_GRID (items_grid), widget, 0, 0, 1, 1);
 
   widget = gimp_prop_check_button_new (config, "align-paths", NULL);
@@ -550,6 +548,10 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   options->priv->distr_hor_button[n++] =
     gimp_align_options_button_new (options, GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP, hbox,
                                    _("Distribute vertically with even vertical gaps"));
+
+  widget = gimp_prop_check_button_new (config, "align-contents", NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
+  gtk_widget_set_visible (widget, TRUE);
 
   g_signal_connect_object (gimp_get_user_context (GIMP_CONTEXT (options)->gimp),
                            "image-changed",
