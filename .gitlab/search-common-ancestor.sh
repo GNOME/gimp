@@ -28,7 +28,7 @@ git remote add patch-origin ${CI_MERGE_REQUEST_SOURCE_PROJECT_URL:-${CI_PROJECT_
 source_branch="${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME:-${CI_COMMIT_BRANCH}}"
 git fetch --shallow-since="$(date --date="${ancestor_horizon} days ago" +%Y-%m-%d)" patch-origin "${source_branch}" > ./fetch_origin.log 2>&1
 
-git rev-list --first-parent "upstream/${CI_MERGE_REQUEST_TARGET_BRANCH_NAME:-${CI_DEFAULT_BRANCH}}" > "temp_upstream" 2>&1
+git rev-list --first-parent "upstream/${CI_MERGE_REQUEST_TARGET_BRANCH_NAME:-gimp-3-0}" > "temp_upstream" 2>&1
 git rev-list --first-parent "patch-origin/${source_branch}" > "temp_patch-origin" 2>&1
 newest_common_ancestor_sha=$(diff --old-line-format='' --new-line-format='' "temp_upstream" "temp_patch-origin" | head -n 1)
 if [ -z "${newest_common_ancestor_sha}" ] || [ "${newest_common_ancestor_sha}" = '' ]; then
