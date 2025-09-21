@@ -182,7 +182,7 @@ bund_usr ()
   unset not_found_tpath found_tpath
   for path in $search_path; do
     expanded_path=$(echo $(echo $path | sed "s|no_scape|*|g"))
-    if [ "${2##*/}" = '*' ] && [ ! -d "$expanded_path" ] || [ "${2##*/}" != '*' ] && echo "$(echo $expanded_path/${2##*/})" | grep -q '\*'; then
+    if (echo ${2##*/} | grep -q '\*' && echo "$(echo $expanded_path/${2##*/})" | grep -q '\*') || (! echo ${2##*/} | grep -q '\*' && [ ! -e "$expanded_path/${2##*/}" ]); then
       not_found_tpath=true
       continue
     else
