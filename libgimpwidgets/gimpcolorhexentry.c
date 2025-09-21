@@ -302,7 +302,9 @@ gimp_color_hex_entry_events (GtkWidget *widget,
             if (g_ascii_strcasecmp (buffer, text) != 0)
               {
                 GeglColor *color = NULL;
-                gsize      len   = strlen (text);
+                gint       position;
+
+                position = gtk_editable_get_position (GTK_EDITABLE (widget));
 
                 if (len > 0 &&
                     ((color = gimp_color_parse_hex_substring (text, len)) ||
@@ -310,6 +312,10 @@ gimp_color_hex_entry_events (GtkWidget *widget,
                   {
                     gimp_color_hex_entry_set_color (entry, color);
                     g_object_unref (color);
+
+                    if (! check_color)
+                      gtk_editable_set_position (GTK_EDITABLE (entry),
+                                                 position);
                   }
                 else if (event->type == GDK_FOCUS_CHANGE || check_color)
                   {
