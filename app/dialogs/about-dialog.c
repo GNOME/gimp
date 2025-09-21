@@ -512,17 +512,24 @@ about_dialog_add_update (GimpAboutDialog *dialog,
 
   if (config->check_update_timestamp > 0)
     {
-      gchar *subtext;
-      gchar *time;
-
-      datetime = g_date_time_new_from_unix_local (config->check_update_timestamp);
+      gchar             *subtext;
+      gchar             *time;
 #if defined(PLATFORM_OSX)
       NSAutoreleasePool *pool         = [[NSAutoreleasePool alloc] init];
       NSDateFormatter   *formatter    = [[NSDateFormatter alloc] init];
       NSDate            *current_date = [NSDate date];
       NSString          *formatted_date;
       NSString          *formatted_time;
+#elif defined(G_OS_WIN32)
+      SYSTEMTIME         st;
+      int                date_len, time_len;
+      wchar_t           *date_buf = NULL;
+      wchar_t           *time_buf = NULL;
+#endif
 
+      datetime = g_date_time_new_from_unix_local (config->check_update_timestamp);
+
+#if defined(PLATFORM_OSX)
       formatter.locale = [NSLocale currentLocale];
 
       formatter.dateStyle = NSDateFormatterShortStyle;
@@ -546,11 +553,6 @@ about_dialog_add_update (GimpAboutDialog *dialog,
       [formatter release];
       [pool drain];
 #elif defined(G_OS_WIN32)
-      SYSTEMTIME st;
-      int        date_len, time_len;
-      wchar_t   *date_buf = NULL;
-      wchar_t   *time_buf = NULL;
-
       GetLocalTime (&st);
 
       date_len = GetDateFormatEx (LOCALE_NAME_USER_DEFAULT, 0, &st,
