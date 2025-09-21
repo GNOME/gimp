@@ -512,7 +512,7 @@ else
     '-DGIMP_MODULE_COMPILATION',
     '-DGIMP_THUMB_COMPILATION',
     '-DGIMP_WIDGETS_COMPILATION',
-    '--quiet',
+    '--verbose',
   ]
 
   libgimp_gir = gnome.generate_gir(
