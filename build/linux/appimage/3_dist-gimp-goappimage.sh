@@ -182,13 +182,11 @@ bund_usr ()
   unset not_found_tpath found_tpath
   for path in $search_path; do
     expanded_path=$(echo $(echo $path | sed "s|no_scape|*|g"))
-    if [ "$3" != '--permissive' ] && [ "$5" != '--permissive' ]; then
-      if [ "${2##*/}" = '*' ] && [ ! -d "$expanded_path" ] || [ "${2##*/}" != '*' ] && echo "$(echo $expanded_path/${2##*/})" | grep -q '\*'; then
-        not_found_tpath=true
-        continue
-      else
-        found_tpath=true
-      fi
+    if [ "${2##*/}" = '*' ] && [ ! -d "$expanded_path" ] || [ "${2##*/}" != '*' ] && echo "$(echo $expanded_path/${2##*/})" | grep -q '\*'; then
+      not_found_tpath=true
+      continue
+    else
+      found_tpath=true
     fi
 
     #Copy found targets from search_path to bundle dir
@@ -341,9 +339,13 @@ lang_list=$(echo $(ls po/*.po | sed -e 's|po/||g' -e 's|.po||g' | sort) | tr '\n
 for lang in $lang_list; do
   bund_usr "$GIMP_PREFIX" share/locale/$lang/LC_MESSAGES
   # Needed for eventually used widgets, GTK inspector etc
-  bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/gtk3*.mo --permissive
+  if ! echo "$(echo $UNIX_PREFIX/share/locale/$lang/LC_MESSAGES/gtk3*.mo)" | grep -q '\*'; then
+    bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/gtk3*.mo
+  fi
   # For language list in text tool options
-  bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/iso_639*3.mo --permissive
+  if ! echo "$(echo $UNIX_PREFIX/share/locale/$lang/LC_MESSAGES/iso_639*3.mo)" | grep -q '\*'; then 
+    bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/iso_639*3.mo
+  fi
 done
 bund_usr "$GIMP_PREFIX" "etc/gimp"
 
