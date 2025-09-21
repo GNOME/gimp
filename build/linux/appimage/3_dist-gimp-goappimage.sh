@@ -453,7 +453,7 @@ echo "usr/${LIB_DIR}/${LIB_SUBDIR}gconv
 #done
 
 ## headers and .pc files for help building filters and plug-ins
-bund_usr "$GIMP_PREFIX" "include/gimp-*"
+bund_usr "$GIMP_PREFIX" "include/gamp-*"
 bund_usr "$GIMP_PREFIX" "include/babl-*"
 bund_usr "$GIMP_PREFIX" "include/gegl-*"
 bund_usr "$GIMP_PREFIX" "lib/pkgconfig/gimp*"
