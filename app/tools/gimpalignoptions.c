@@ -377,78 +377,22 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   GtkWidget        *widget;
   GtkWidget        *section_vbox;
   GtkWidget        *items_grid;
+  GtkWidget        *vbox2;
+  GtkWidget        *align_hbox;
   GtkWidget        *hbox;
   GtkWidget        *frame;
   GtkWidget        *combo;
   gchar            *text;
   gint              n = 0;
 
-  /* Selected objects */
-  frame = gimp_frame_new (_("Targets"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  section_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_add (GTK_CONTAINER (frame), section_vbox);
-  gtk_widget_show (section_vbox);
-
-  items_grid = gtk_grid_new ();
-  gtk_container_add (GTK_CONTAINER (section_vbox), items_grid);
-  gtk_widget_show (items_grid);
-
-  widget = gimp_prop_check_button_new (config, "align-contents", NULL);
-  widget = gimp_prop_expanding_frame_new (config, "align-layers",
-                                          NULL, widget, NULL);
-  gtk_grid_attach (GTK_GRID (items_grid), widget, 0, 0, 1, 1);
-
-  widget = gimp_prop_check_button_new (config, "align-paths", NULL);
-  gtk_grid_attach (GTK_GRID (items_grid), widget, 0, 1, 1, 1);
-
-  options->priv->pivot_selector = gimp_pivot_selector_new (0.0, 0.0, 1.0, 1.0);
-  gtk_widget_set_tooltip_text (options->priv->pivot_selector,
-                               _("Set anchor point of targets"));
-  gimp_pivot_selector_set_position (GIMP_PIVOT_SELECTOR (options->priv->pivot_selector),
-                                    options->priv->pivot_x, options->priv->pivot_y);
-  gtk_grid_attach (GTK_GRID (items_grid), options->priv->pivot_selector, 1, 0, 1, 2);
-  gtk_widget_show (options->priv->pivot_selector);
-
-  g_signal_connect (options->priv->pivot_selector, "changed",
-                    G_CALLBACK (gimp_align_options_pivot_changed),
-                    options);
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  widget = gtk_image_new_from_icon_name (GIMP_ICON_CURSOR, GTK_ICON_SIZE_BUTTON);
-  gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
-  gtk_widget_show (widget);
-
-  /* TRANSLATORS: the %s strings are modifiers such as Shift, Alt or Cmd. */
-  text = g_strdup_printf (_("%s-pick target guides (%s-%s to add more)"),
-                          gimp_get_mod_string (GDK_MOD1_MASK),
-                          gimp_get_mod_string (gimp_get_extend_selection_mask ()),
-                          gimp_get_mod_string (GDK_MOD1_MASK));
-  widget = gtk_label_new (text);
-  gtk_label_set_line_wrap (GTK_LABEL (widget), TRUE);
-  gtk_label_set_line_wrap_mode (GTK_LABEL (widget), PANGO_WRAP_WORD);
-  g_free (text);
-  gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
-  gtk_widget_show (widget);
-
-  widget = gtk_label_new (NULL);
-  gtk_box_pack_start (GTK_BOX (section_vbox), widget, FALSE, FALSE, 0);
-  gtk_widget_show (widget);
-  options->priv->selected_guides_label = widget;
-
   /* Align frame */
   frame = gimp_frame_new (_("Align"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   section_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), section_vbox);
-  gtk_widget_show (section_vbox);
+  gtk_widget_set_visible (section_vbox, TRUE);
 
   /* Align frame: reference */
   combo = gimp_prop_enum_combo_box_new (config, "align-reference", 0, 0);
@@ -459,27 +403,37 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  if (options->align_reference == GIMP_ALIGN_REFERENCE_PICK)
+    gtk_widget_set_visible (hbox, TRUE);
+  else
+    gtk_widget_set_visible (hbox, FALSE);
   options->priv->reference_box = hbox;
 
   widget = gtk_image_new_from_icon_name (GIMP_ICON_CURSOR, GTK_ICON_SIZE_BUTTON);
   gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
 
   widget = gtk_label_new (_("Select the reference object"));
   gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
 
   widget = gtk_label_new (NULL);
   gtk_box_pack_start (GTK_BOX (section_vbox), widget, FALSE, FALSE, 0);
-  gtk_widget_show (widget);
   options->priv->reference_label = widget;
 
   /* Align frame: buttons */
+  align_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_pack_start (GTK_BOX (section_vbox), align_hbox, FALSE, FALSE, 0);
+  gtk_widget_set_visible (align_hbox, TRUE);
+
+  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_widget_set_valign (vbox2, GTK_ALIGN_CENTER);
+  gtk_container_add (GTK_CONTAINER (align_hbox), vbox2);
+  gtk_widget_set_visible (vbox2, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+  gtk_widget_set_visible (hbox, TRUE);
 
   n = 0;
   options->priv->align_ver_button[n++] =
@@ -495,8 +449,8 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
                                    _("Align anchor points of targets on right edge of reference"));
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+  gtk_widget_set_visible (hbox, TRUE);
 
   n = 0;
   options->priv->align_hor_button[n++] =
@@ -510,6 +464,59 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   options->priv->align_hor_button[n++] =
     gimp_align_options_button_new (options, GIMP_ALIGN_BOTTOM, hbox,
                                    _("Align anchor points of targets on bottom of reference"));
+
+  /* Anchor points square */
+  options->priv->pivot_selector = gimp_pivot_selector_new (0.0, 0.0, 1.0, 1.0);
+  gtk_widget_set_tooltip_text (options->priv->pivot_selector,
+                               _("Set anchor point of targets"));
+  gimp_pivot_selector_set_position (GIMP_PIVOT_SELECTOR (options->priv->pivot_selector),
+                                    options->priv->pivot_x, options->priv->pivot_y);
+  gtk_container_add (GTK_CONTAINER (align_hbox), options->priv->pivot_selector);
+  gtk_widget_set_visible (options->priv->pivot_selector, TRUE);
+
+  g_signal_connect (options->priv->pivot_selector, "changed",
+                    G_CALLBACK (gimp_align_options_pivot_changed),
+                    options);
+
+  items_grid = gtk_grid_new ();
+  gtk_container_add (GTK_CONTAINER (section_vbox), items_grid);
+  gtk_widget_set_visible (items_grid, TRUE);
+
+  widget = gimp_prop_check_button_new (config, "align-contents", NULL);
+  widget = gimp_prop_expanding_frame_new (config, "align-layers",
+                                          NULL, widget, NULL);
+  gtk_grid_attach (GTK_GRID (items_grid), widget, 0, 0, 1, 1);
+
+  widget = gimp_prop_check_button_new (config, "align-paths", NULL);
+  gtk_grid_attach (GTK_GRID (items_grid), widget, 0, 3, 1, 1);
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_set_visible (hbox, TRUE);
+
+  widget = gtk_image_new_from_icon_name (GIMP_ICON_CURSOR, GTK_ICON_SIZE_BUTTON);
+  gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
+  gtk_widget_set_visible (widget, TRUE);
+
+  /* TRANSLATORS: the %s strings are modifiers such as Shift, Alt or Cmd. */
+  text = g_strdup_printf (_("%s-pick target guides (%s-%s to add more)"),
+                          gimp_get_mod_string (GDK_MOD1_MASK),
+                          gimp_get_mod_string (gimp_get_extend_selection_mask ()),
+                          gimp_get_mod_string (GDK_MOD1_MASK));
+  widget = gtk_label_new (text);
+  gtk_label_set_line_wrap (GTK_LABEL (widget), TRUE);
+  gtk_label_set_line_wrap_mode (GTK_LABEL (widget), PANGO_WRAP_WORD);
+  g_free (text);
+  gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
+  gtk_widget_set_visible (widget, TRUE);
+
+  widget = gtk_label_new (NULL);
+  gtk_box_pack_start (GTK_BOX (section_vbox), widget, FALSE, FALSE, 0);
+  if (options->priv->selected_guides)
+    gtk_widget_set_visible (widget, TRUE);
+  else
+    gtk_widget_set_visible (widget, FALSE);
+  options->priv->selected_guides_label = widget;
 
   /* Distribute frame */
   frame = gimp_frame_new (_("Distribute"));
@@ -842,6 +849,7 @@ gimp_align_options_update_area (GimpAlignOptions *options)
       gtk_widget_hide (options->priv->reference_box);
     }
   gtk_label_set_markup (GTK_LABEL (options->priv->reference_label), text);
+  gtk_widget_set_visible (options->priv->reference_label, (text) ? TRUE: FALSE);
   g_free (text);
 }
 
