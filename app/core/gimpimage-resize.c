@@ -27,6 +27,7 @@
 #include "gimp.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
+#include "gimpgrouplayer.h"
 #include "gimpguide.h"
 #include "gimpimage.h"
 #include "gimpimage-guides.h"
@@ -339,34 +340,39 @@ gimp_image_resize_to_visible_layers (GimpImage    *image,
   width  = 0;
   height = 0;
 
-  /*  Respect all visible layers  */
   for (list; list; list = g_list_next (list))
     {
       item = list->data;
 
-      if (gimp_item_get_visible (item))
+      /* Consider only actual layers */
+      if (! GIMP_IS_GROUP_LAYER (item))
         {
-          /* If width and height are still 0 at this point, then
-             (re-)initialize the starting values to the visible item's
-             values */
-          if (width==0 && height==0)
+          /* Consider only visible layers  */
+          if (gimp_item_get_visible (item))
             {
-              x      = gimp_item_get_offset_x (item);
-              y      = gimp_item_get_offset_y (item);
-              width  = gimp_item_get_width  (item);
-              height = gimp_item_get_height (item);
+              /* If width and height are still 0 at this point, then
+                 (re-)initialize the starting values to the visible item's
+                 values */
+              if (width==0 && height==0)
+                {
+                  x      = gimp_item_get_offset_x (item);
+                  y      = gimp_item_get_offset_y (item);
+                  width  = gimp_item_get_width  (item);
+                  height = gimp_item_get_height (item);
+                }
+              else
+                {
+                  gimp_rectangle_union (x, y,
+                                        width, height,
+                                        gimp_item_get_offset_x (item),
+                                        gimp_item_get_offset_y (item),
+                                        gimp_item_get_width  (item),
+                                        gimp_item_get_height (item),
+                                        &x, &y,
+                                        &width, &height);
+                }
             }
-          else
-            {
-              gimp_rectangle_union (x, y,
-                                    width, height,
-                                    gimp_item_get_offset_x (item),
-                                    gimp_item_get_offset_y (item),
-                                    gimp_item_get_width  (item),
-                                    gimp_item_get_height (item),
-                                    &x, &y,
-                                    &width, &height);
-            }
+
         }
     }
 
