@@ -41,6 +41,10 @@
 
 #include "file/file-open.h"
 
+#include "menus/menus.h"
+
+#include "widgets/gimpuimanager.h"
+
 #include "gimpdbusservice.h"
 #include "gui-unique.h"
 #include "themes.h"
@@ -56,13 +60,18 @@ static HWND  proxy_window = NULL;
 
 #elif defined (GDK_WINDOWING_QUARTZ)
 
-static void gui_unique_quartz_init (Gimp *gimp);
-static void gui_unique_quartz_exit (void);
+static void     gui_unique_quartz_init         (Gimp *gimp);
+static void     gui_unique_quartz_exit         (void);
+static gboolean gui_unique_quartz_trigger_quit (gpointer data);
 
 @interface GimpAppleEventHandler : NSObject {}
 - (void) handleEvent:(NSAppleEventDescriptor *) inEvent
         andReplyWith:(NSAppleEventDescriptor *) replyEvent;
 @end
+
+@interface GimpAppDelegate : NSObject <NSApplicationDelegate>
+@end
+
 
 static Gimp                   *unique_gimp                            = NULL;
 static GimpAppleEventHandler  *event_handler                          = NULL;
@@ -339,6 +348,15 @@ gui_unique_quartz_idle_open (GFile *file)
 }
 @end
 
+@implementation GimpAppDelegate
+- (NSApplicationTerminateReply) applicationShouldTerminate:(NSApplication *) sender
+{
+    g_idle_add ((GSourceFunc) gui_unique_quartz_trigger_quit, unique_gimp);
+
+    return NSTerminateCancel;
+}
+@end
+
 static void
 gui_unique_quartz_init (Gimp *gimp)
 {
@@ -375,6 +393,13 @@ gui_unique_quartz_init (Gimp *gimp)
           andSelector: @selector (handleEvent: andReplyWith:)
         forEventClass: kCoreEventClass
            andEventID: kAEOpenDocuments];
+
+  /* When quitting the application using "Quit" from the dock's right-click menu,
+   * GIMP does not follow our standard quit procedure. Instead, macOS forces the
+   * application to close, which may result in losing unsaved changes.
+   * This delegate intercepts the applicationShouldTerminate call and uses our
+   * existing quit code, preventing macOS from handling the shutdown directly. */
+  [NSApp setDelegate:[[GimpAppDelegate alloc] init]];
 }
 
 static void
@@ -397,6 +422,17 @@ gui_unique_quartz_exit (void)
   [event_handler release];
 
   event_handler = NULL;
+}
+
+static gboolean
+gui_unique_quartz_trigger_quit (gpointer data)
+{
+  Gimp          *gimp       = (Gimp *)data;
+  GimpUIManager *ui_manager = menus_get_image_manager_singleton (gimp);
+
+  gimp_ui_manager_activate_action (ui_manager, "file", "file-quit");
+
+  return FALSE;
 }
 
 #else
