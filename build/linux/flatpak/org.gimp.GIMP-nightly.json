@@ -219,6 +219,9 @@
                                 "type": "anitya",
                                 "project-id": 375199,
                                 "stable-only": true,
+                                "versions": {
+                                    "<": "0.23.0"
+                                },
                                 "url-template": "https://github.com/aous72/OpenJPH/archive/refs/tags/$version.tar.gz"
                             }
                         }
