@@ -310,7 +310,7 @@ conf_app GIO_EXTRA_MODULES "" --no-expand
 ### GTK needed files (to be able to load icons)
 bund_usr "$UNIX_PREFIX" "share/icons/Adwaita"
 bund_usr "$GIMP_PREFIX" "share/icons/hicolor"
-bund_usr "$UNIX_PREFIX" "share/mime"
+bund_usr "$UNIX_PREFIX" "share/miame"
 bund_usr "$UNIX_PREFIX" "lib/gdk-pixbuf-*/*.*.*/loaders/*.so" --bundler
 conf_app GDK_PIXBUF_MODULEDIR "${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/*.*.*/loaders"
 conf_app GDK_PIXBUF_MODULE_FILE "${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/*.*.*/loaders.cache"
