@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Ensure the script work properly
 case $(readlink /proc/$$/exe) in
