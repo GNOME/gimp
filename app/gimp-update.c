@@ -361,9 +361,10 @@ gimp_update_get_messages (JsonParser   *parser,
   JsonArray    *messages_array;
   gchar        *new_top_message_id = NULL;
   const gchar  *path_str;
-  GError       *error        = NULL;
+  const gchar  *build_category;
+  GError       *error              = NULL;
   gint          i;
-  gboolean      is_new_message = TRUE;
+  gboolean      is_new_message     = TRUE;
 
   g_return_val_if_fail (top_message_id != NULL, FALSE);
   g_return_val_if_fail (titles         != NULL, FALSE);
@@ -404,6 +405,16 @@ gimp_update_get_messages (JsonParser   *parser,
   images_builder   = g_strv_builder_new ();
   dates_builder    = g_strv_builder_new ();
 
+#if defined(GIMP_RELEASE)
+#if defined(GIMP_UNSTABLE)
+  build_category = "devel";
+#else
+  build_category = "stable";
+#endif
+#else
+  build_category = "nightly";
+#endif
+
   messages_array = json_node_get_array (result);
   for (i = 0; i < (gint) json_array_get_length (messages_array); i++)
     {
@@ -428,6 +439,132 @@ gimp_update_get_messages (JsonParser   *parser,
           gchar       *str;
 
           id = json_object_get_string_member (msg, "id");
+
+          if (json_object_has_member (msg, "conditions"))
+            {
+              JsonArray *conditions;
+              gboolean   valid_message = FALSE;
+              gint       j;
+
+              conditions = json_object_get_array_member (msg, "conditions");
+              /* The "conditions" is a list where if one condition
+               * matches, then the message is considered valid.
+               */
+              for (j = 0; j < (gint) json_array_get_length (conditions); j++)
+                {
+                  gchar *condition;
+                  gchar *token;
+
+                  condition = g_strdup (json_array_get_string_element (conditions, j));
+                  /* The format of conditions is:
+                   * "[os]:[build-id]:[stable|devel|nightly]:[ver]"
+                   * - Any part can be replaced by "*" to mean it
+                   *   matches any value.
+                   * - Any missing section means "*" (so for instance,
+                   *   you could just have a
+                   *   "windows:org.gimp.GIMP_official" condition.
+                   * - The "[ver]" can be an exact version, e.g.
+                   *   "3.0.4", but it can also ">3.0.4" or "<=3.0.4" or
+                   *   again ">=3.0.0,<=3.0.4" for any version in between
+                   *   these. I.e. a comma-separated list of version
+                   *   comparisons.
+                   */
+                  token = strtok (condition, ":");
+
+                  if (g_strcmp0 (token, "*") == 0 ||
+                      g_strcmp0 (token, GIMP_BUILD_PLATFORM_FAMILY) == 0)
+                    {
+                      token = strtok (NULL, ":");
+                      if (token == NULL)
+                        {
+                          valid_message = TRUE;
+                          break;
+                        }
+
+                      if (g_strcmp0 (token, "*") == 0 ||
+                          g_strcmp0 (token, GIMP_BUILD_ID) == 0)
+                        {
+                          token = strtok (NULL, ":");
+                          if (token == NULL)
+                            {
+                              valid_message = TRUE;
+                              break;
+                            }
+
+                          if (g_strcmp0 (token, "*") == 0 ||
+                              g_strcmp0 (token, build_category) == 0)
+                            {
+                              gchar *vertok;
+
+                              token = strtok (NULL, ":");
+                              if (token == NULL && g_strcmp0 (token, "*") == 0)
+                                {
+                                  valid_message = TRUE;
+                                  break;
+                                }
+
+                              valid_message = TRUE;
+
+                              vertok = strtok (token, ",");
+                              while (vertok != NULL)
+                                {
+                                  if (strlen (vertok) > 2 &&
+                                      vertok[1] == '=')
+                                    {
+                                      if (vertok[0] == '>' &&
+                                          gimp_version_cmp (vertok + 2, NULL) > 0)
+                                        {
+                                          valid_message = FALSE;
+                                          break;
+                                        }
+                                      else if (vertok[0] == '<' &&
+                                          gimp_version_cmp (vertok + 2, NULL) < 0)
+                                        {
+                                          valid_message = FALSE;
+                                          break;
+                                        }
+                                    }
+                                  else if (strlen (vertok) > 1 &&
+                                           (vertok[0] == '>' || vertok[0] == '<'))
+                                    {
+                                      if (vertok[0] == '>' &&
+                                          gimp_version_cmp (vertok + 1, NULL) >= 0)
+                                        {
+                                          valid_message = FALSE;
+                                          break;
+                                        }
+                                      else if (vertok[0] == '<' &&
+                                               gimp_version_cmp (vertok + 1, NULL) <= 0)
+                                        {
+                                          valid_message = FALSE;
+                                          break;
+                                        }
+                                    }
+                                  else if (strlen (vertok) > 0 &&
+                                           gimp_version_cmp (vertok, NULL) != 0)
+                                    {
+                                      valid_message = FALSE;
+                                      break;
+                                    }
+
+                                  if (! valid_message)
+                                    break;
+
+                                  vertok = strtok (NULL, ",");
+                                }
+                            }
+                        }
+                    }
+
+                  g_free (condition);
+
+                  if (valid_message)
+                    break;
+                }
+
+              if (! valid_message)
+                continue;
+            }
 
           if (*top_message_id &&
               is_new_message  &&
