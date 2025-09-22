@@ -6,6 +6,8 @@
 # CHECK SCRIPTS RUNNED BY MESON (ALL OSes)
 printf "\e[0Ksection_start:`date +%s`:nonunix_test[collapsed=false]\r\e[0KChecking for non-Unix compatibility\n"
 diff=$(git diff -U0 --no-color --submodule=diff "${newest_common_ancestor_sha}" -- '*.build' '*.py' | grep -E '^\+[^+]' | grep -v '^Submodule ' | sed 's/^+//')
+echo "$diff"
+
 
 ## List of commonly used utilities on Unix world
 ## See the context: https://gitlab.gnome.org/GNOME/gimp/-/issues/11385
