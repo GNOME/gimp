@@ -465,7 +465,7 @@ deps-snap:
     - echo "RUN sh build/linux/snap/1_build-deps-snapcraft.sh --install-snaps" >> Dockerfile;
     # Build babl and GEGL
     - echo "FROM $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER}" > Dockerfile2;
-    - echo "RUN sh build/linux/snap/1_build-deps-snapcraft.sh" >> Dockerfile2;
+    - echo "RUN bash build/linux/snap/1_build-deps-snapcraft.sh" >> Dockerfile2;
     #FIXME: '2>&1 | grep -v STEP' since buildah is too verbose. See: https://github.com/containers/buildah/issues/6362
     - buildah build --log-level error --volume $CI_PROJECT_DIR:$CI_PROJECT_DIR:Z --file $CI_PROJECT_DIR/Dockerfile --tag $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER} --layers --cache-from $CI_REGISTRY_IMAGE/cache --cache-to $CI_REGISTRY_IMAGE/cache --cache-ttl=120h 2>&1 | grep -v STEP && buildah push --log-level error $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER} 2>&1 | grep -v STEP
     - buildah build --log-level error --volume $CI_PROJECT_DIR:$CI_PROJECT_DIR:Z --file $CI_PROJECT_DIR/Dockerfile2 --no-cache 2>&1 | grep -v STEP

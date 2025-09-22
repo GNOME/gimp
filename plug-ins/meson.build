@@ -95,7 +95,7 @@ endforeach
 
 #Dynamically created list of supported files with the plugins lists above
 MIMEtypes_output = run_command(
-  python,
+  'pwd',
   meson.current_source_dir() / 'generate_mime_ext.py',
   '--mime',
   meson.current_build_dir() / 'file_mimetypes.list',
