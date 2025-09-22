@@ -60,6 +60,7 @@ enum
 
 struct _GimpCheckExpanderPrivate
 {
+  GtkWidget  *frame_title;
   GtkWidget  *checkbox;
   GtkWidget  *expander;
 
@@ -75,6 +76,9 @@ static void     gimp_check_expander_get_property     (GObject            *object
                                                       guint               property_id,
                                                       GValue             *value,
                                                       GParamSpec         *pspec);
+
+static void     gimp_check_expander_size_allocate    (GtkWidget          *widget,
+                                                      GtkAllocation      *allocation);
 
 static gboolean gimp_check_expander_triangle_draw    (GtkWidget          *triangle,
                                                       cairo_t            *cr,
@@ -98,10 +102,13 @@ static GParamSpec *props[N_PROPS] = { NULL, };
 static void
 gimp_check_expander_class_init (GimpCheckExpanderClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->get_property = gimp_check_expander_get_property;
-  object_class->set_property = gimp_check_expander_set_property;
+  object_class->get_property  = gimp_check_expander_get_property;
+  object_class->set_property  = gimp_check_expander_set_property;
+
+  widget_class->size_allocate = gimp_check_expander_size_allocate;
 
   props[PROP_LABEL]    = g_param_spec_string  ("label", NULL, NULL,
                                                NULL,
@@ -126,40 +133,35 @@ gimp_check_expander_class_init (GimpCheckExpanderClass *klass)
 static void
 gimp_check_expander_init (GimpCheckExpander *expander)
 {
-  GtkWidget *event_box;
   GtkWidget *title;
 
   expander->priv = gimp_check_expander_get_instance_private (expander);
   expander->priv->expanded = FALSE;
 
   title = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1.0);
+  expander->priv->frame_title = title;
+  gtk_widget_set_hexpand (title, TRUE);
   gtk_frame_set_label_widget (GTK_FRAME (expander), title);
   gtk_widget_set_visible (title, TRUE);
 
   expander->priv->checkbox = gtk_check_button_new ();
   gtk_button_set_use_underline (GTK_BUTTON (expander->priv->checkbox), TRUE);
-  gtk_box_pack_start (GTK_BOX (title), expander->priv->checkbox, TRUE, TRUE, 0.0);
+  gtk_box_pack_start (GTK_BOX (title), expander->priv->checkbox, FALSE, FALSE, 0.0);
   gtk_widget_set_visible (expander->priv->checkbox, TRUE);
 
-  event_box = gtk_event_box_new ();
-  gtk_widget_set_halign (event_box, GTK_ALIGN_END);
-  gtk_widget_set_hexpand (event_box, TRUE);
-  gtk_box_pack_start (GTK_BOX (title), event_box, TRUE, TRUE, 0.0);
-  gtk_widget_show (event_box);
-
   expander->priv->expander = gtk_drawing_area_new ();
+  gtk_widget_set_hexpand (expander->priv->expander, TRUE);
   gtk_widget_set_size_request (expander->priv->expander, 12, 12);
-  gtk_container_add (GTK_CONTAINER (event_box), expander->priv->expander);
+  gtk_box_pack_start (GTK_BOX (title), expander->priv->expander, TRUE, TRUE, 0.0);
   gtk_widget_set_visible (expander->priv->expander, TRUE);
 
   g_signal_connect (G_OBJECT (expander->priv->expander), "draw",
                     G_CALLBACK (gimp_check_expander_triangle_draw),
                     expander);
-  gtk_widget_add_events (event_box, GDK_BUTTON_RELEASE_MASK);
-  g_signal_connect (G_OBJECT (event_box), "button-release-event",
+  gtk_widget_add_events (expander->priv->expander, GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
+  g_signal_connect (G_OBJECT (expander->priv->expander), "button-release-event",
                     G_CALLBACK (gimp_check_expander_triangle_clicked),
                     expander);
-
   g_signal_connect (expander->priv->checkbox, "toggled",
                     G_CALLBACK (gimp_check_expander_checked),
                     expander);
@@ -223,6 +225,25 @@ gimp_check_expander_get_property (GObject    *object,
       break;
     }
 }
+
+static void
+gimp_check_expander_size_allocate (GtkWidget     *widget,
+                                   GtkAllocation *allocation)
+{
+  GimpCheckExpander *expander = GIMP_CHECK_EXPANDER (widget);
+  GtkAllocation      title_allocation;
+
+  GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
+
+  gtk_widget_get_allocation (expander->priv->frame_title, &title_allocation);
+
+  if (title_allocation.width < allocation->width - 1)
+    {
+      title_allocation.width = allocation->width - 1;
+      gtk_widget_size_allocate (expander->priv->frame_title, &title_allocation);
+    }
+}
+
 
 /* Public functions */
 
@@ -342,20 +363,20 @@ gimp_check_expander_triangle_draw (GtkWidget         *triangle,
     {
       gdk_cairo_set_source_rgba (cr, color);
 
-      cairo_move_to (cr, (width - triangle_side) / 2.0, (height - triangle_side) / 2.0);
-      cairo_line_to (cr, (gdouble) width - (width - triangle_side) / 2.0, (height - triangle_side) / 2.0);
-      cairo_line_to (cr, width / 2.0, (gdouble) height - (height - triangle_side) / 2.0);
-      cairo_line_to (cr, (width - triangle_side) / 2.0, (height - triangle_side) / 2.0);
+      cairo_move_to (cr, width - triangle_side - 2.0, (height - triangle_side) / 2.0);
+      cairo_line_to (cr, (gdouble) width - 2.0, (height - triangle_side) / 2.0);
+      cairo_line_to (cr, width - 2.0 - triangle_side / 2.0, (gdouble) height - (height - triangle_side) / 2.0);
+      cairo_line_to (cr, width - triangle_side - 2.0, (height - triangle_side) / 2.0);
     }
   else
     {
       color->alpha /= 2;
       gdk_cairo_set_source_rgba (cr, color);
 
-      cairo_move_to (cr, 1.0, (height - triangle_side) / 2.0);
-      cairo_line_to (cr, 1.0, (gdouble) height - (height - triangle_side) / 2.0);
-      cairo_line_to (cr, (gdouble) (width - 1.0), height / 2.0);
-      cairo_line_to (cr, 1.0, (height - triangle_side) / 2.0);
+      cairo_move_to (cr, width - triangle_side - 2.0, (height - triangle_side) / 2.0);
+      cairo_line_to (cr, width - triangle_side - 2.0, (gdouble) height - (height - triangle_side) / 2.0);
+      cairo_line_to (cr, (gdouble) (width - 2.0), height / 2.0);
+      cairo_line_to (cr, width - triangle_side - 2.0, (height - triangle_side) / 2.0);
     }
 
   cairo_fill (cr);
@@ -365,7 +386,7 @@ gimp_check_expander_triangle_draw (GtkWidget         *triangle,
 }
 
 static
-gboolean gimp_check_expander_triangle_clicked (GtkWidget         *event_box,
+gboolean gimp_check_expander_triangle_clicked (GtkWidget         *triangle,
                                                GdkEventButton    *event,
                                                GimpCheckExpander *expander)
 {
