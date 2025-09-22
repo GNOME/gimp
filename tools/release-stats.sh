@@ -235,7 +235,15 @@ count_data_contributors 'icons/*.svg icons/*.png' "%d icon designers: %s"
 count_data_contributors 'cursors' "%d cursor designers: %s"
 count_data_contributors 'brushes' "%d brush designers: %s"
 count_data_contributors 'patterns' "%d pattern designers: %s"
-echo "  - TODO: splash author."
+if [ "$prevmajor" -ne "$major" ] || [ "$prevminor" -ne "$minor" ] || [ $((minor%2)) -eq 1 ]; then
+  # Micro releases don't have a splash update (expect optionally
+  # development releases).
+  if [ $((minor%2)) -eq 0 ]; then
+    echo "  - The splash image for the $major.$minor series was authored by TODO under license TODO."
+  else
+    echo "  - [OPTIONAL] This new development splash image was authored by TODO under license TODO."
+  fi
+fi
 
 echo
 echo "Contributions on other repositories in the GIMPverse (order is determined by"
