@@ -5,7 +5,7 @@
 
 # CHECK SCRIPTS RUNNED BY MESON (ALL OSes)
 printf "\e[0Ksection_start:`date +%s`:nonunix_test[collapsed=false]\r\e[0KChecking for non-Unix compatibility\n"
-diff=$(git diff -U0 --no-color "${newest_common_ancestor_sha}" -- '*.build' '*.py' | grep -E '^\+[^+]' | sed 's/^+//')
+diff=$(git diff -U0 --no-color --submodule=diff "${newest_common_ancestor_sha}" -- '*.build' '*.py' | grep -E '^\+[^+]' | grep -v '^Submodule ' | sed 's/^+//')
 
 ## List of commonly used utilities on Unix world
 ## See the context: https://gitlab.gnome.org/GNOME/gimp/-/issues/11385
@@ -168,7 +168,7 @@ printf "\e[0Ksection_end:`date +%s`:nonunix_test\r\e[0K\n"
 # 1) contain bash shebang or are called by bash;
 # 2) contain bashisms.
 printf "\e[0Ksection_start:`date +%s`:unix_test[collapsed=false]\r\e[0KChecking for Unix portability (optional)\n"
-diff=$(git diff -U0 --no-color "${newest_common_ancestor_sha}" | grep -E '^\+[^+]' | sed 's/^+//')
+diff=$(git diff -U0 --no-color --submodule=diff "${newest_common_ancestor_sha}" | grep -E '^\+[^+]' | grep -v '^Submodule ' | sed 's/^+//')
 
 ## Check shebang and external call (1)
 echo "$diff" | grep -E '^#!\s*/usr/bin/env\s+bash|^#!\s*/(usr/bin|bin)/bash(\s|$)' && found_bashism='extrinsic_bashism'

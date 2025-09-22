@@ -672,6 +672,8 @@ meson-health:
     - <<: *CI_MERGE
     - <<: *CI_COMMIT
   stage: analysis
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
   script:
     - apt-get update -qq
     - apt-get install -qq -y --no-install-recommends git shellcheck devscripts
