@@ -177,7 +177,7 @@ count_repo_contributors()
   cd - > /dev/null
 }
 
-echo "Since [GIMP $prevmajor.$prevminor.$prevmicro](TODO), in the main GIMP repository:"
+echo "Since [GIMP $prevmajor.$prevminor.$prevmicro](/release/$prevmajor.$prevminor.$prevmicro/), in the main GIMP repository:"
 echo
 echo "* $closed_issues reports were closed as FIXED."
 echo "* $merged_mrs merge requests were merged."
