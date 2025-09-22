@@ -208,7 +208,7 @@ dialogs_welcome_get (GimpDialogFactory *factory,
                      GimpUIManager     *ui_manager,
                      gint               view_size)
 {
-  return welcome_dialog_create (context->gimp, TRUE);
+  return welcome_dialog_create (context->gimp, TRUE, FALSE);
 }
 
 GtkWidget *

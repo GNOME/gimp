@@ -66,7 +66,8 @@
 
 static GtkWidget * welcome_dialog_new                (Gimp          *gimp,
                                                       GimpConfig    *config,
-                                                      gboolean       show_welcome_page);
+                                                      gboolean       show_welcome_page,
+                                                      gboolean       show_messages_page);
 static void   welcome_dialog_response                (GtkWidget     *widget,
                                                       gint           response_id,
                                                       GtkWidget     *dialog);
@@ -145,7 +146,8 @@ static GtkWidget *welcome_dialog;
 
 GtkWidget *
 welcome_dialog_create (Gimp     *gimp,
-                       gboolean  show_welcome_page)
+                       gboolean  show_welcome_page,
+                       gboolean  show_messages_page)
 {
   GimpConfig *config;
   GimpConfig *config_copy;
@@ -172,7 +174,7 @@ welcome_dialog_create (Gimp     *gimp,
                            config, 0);
 
   g_set_weak_pointer (&welcome_dialog,
-                      welcome_dialog_new (gimp, config_copy, show_welcome_page));
+                      welcome_dialog_new (gimp, config_copy, show_welcome_page, show_messages_page));
 
   g_object_set_data (G_OBJECT (welcome_dialog), "gimp", gimp);
 
@@ -190,7 +192,8 @@ welcome_dialog_create (Gimp     *gimp,
 static GtkWidget *
 welcome_dialog_new (Gimp       *gimp,
                     GimpConfig *config,
-                    gboolean    show_welcome_page)
+                    gboolean    show_welcome_page,
+                    gboolean    show_messages_page)
 {
   GtkWidget      *dialog;
   GList          *windows;
@@ -311,12 +314,13 @@ welcome_dialog_new (Gimp       *gimp,
   gtk_widget_set_visible (main_vbox, TRUE);
 
   /* If dialog is set to always show on load, switch to the Create page */
-  if (! show_welcome_page)
+  if (! show_welcome_page && ! show_messages_page)
     gtk_stack_set_visible_child_name (GTK_STACK (stack), "gimp-welcome-create");
 
   g_object_get (gimp->config, "messages", &messages, NULL);
   g_object_set_data (G_OBJECT (dialog), "gimp", gimp);
   g_object_set_data (G_OBJECT (dialog), "show-welcome", GINT_TO_POINTER (show_welcome_page));
+  g_object_set_data (G_OBJECT (dialog), "show-messages", GINT_TO_POINTER (show_messages_page));
   g_object_set_data (G_OBJECT (dialog), "stack", stack);
   if (messages && g_strv_length (messages) > 0)
     welcome_dialog_messages_notified (gimp->config, NULL, dialog);
@@ -1707,15 +1711,17 @@ welcome_dialog_messages_notified (GimpCoreConfig   *config,
   GtkWidget   *stack;
   GtkTreeIter  top_iter;
   gboolean     show_welcome;
+  gboolean     show_messages;
 
   g_signal_handlers_disconnect_by_func (config,
                                         (GCallback) welcome_dialog_messages_notified,
                                         dialog);
 
-  gimp         = g_object_get_data (G_OBJECT (dialog), "gimp");
-  prefs_box    = g_object_get_data (G_OBJECT (dialog), "prefs-box");
-  stack        = g_object_get_data (G_OBJECT (dialog), "stack");
-  show_welcome = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (dialog), "show-welcome"));
+  gimp          = g_object_get_data (G_OBJECT (dialog), "gimp");
+  prefs_box     = g_object_get_data (G_OBJECT (dialog), "prefs-box");
+  stack         = g_object_get_data (G_OBJECT (dialog), "stack");
+  show_welcome  = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (dialog), "show-welcome"));
+  show_messages = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (dialog), "show-messages"));
   main_vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
                                        "dialog-information",
                                        _("Team Messages"),
@@ -1727,6 +1733,7 @@ welcome_dialog_messages_notified (GimpCoreConfig   *config,
   welcome_dialog_create_messages_page (gimp, GIMP_CONFIG (gimp->config), dialog, main_vbox);
   gtk_widget_set_visible (main_vbox, TRUE);
 
-  if (pspec != NULL && config->n_new_messages > 0 && show_welcome)
+  if (config->n_new_messages > 0 && ((pspec != NULL && ! show_welcome) ||
+                                     (pspec == NULL && show_messages)))
     gtk_stack_set_visible_child_name (GTK_STACK (stack), "gimp-welcome-messages");
 }

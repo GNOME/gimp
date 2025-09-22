@@ -22,4 +22,5 @@
 
 
 GtkWidget * welcome_dialog_create (Gimp     *gimp,
-                                   gboolean  show_welcome_page);
+                                   gboolean  show_welcome_page,
+                                   gboolean  show_messages_page);

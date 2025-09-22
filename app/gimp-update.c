@@ -807,7 +807,7 @@ gimp_update_welcome_dialog (GimpCoreConfig   *config,
       config->n_new_messages > 0)
     {
 #ifndef GIMP_CONSOLE_COMPILATION
-      gtk_widget_show (welcome_dialog_create (gimp, TRUE));
+      gtk_widget_show (welcome_dialog_create (gimp, FALSE, TRUE));
 #else
       g_printerr (_("You have new messages from the GIMP team."));
 #endif
@@ -885,7 +885,7 @@ gimp_update_auto_check (GimpCoreConfig *config,
        * dialog to always appear on load, show the Create page on start.
        */
       if (! gimp->no_interface)
-        gtk_widget_set_visible (welcome_dialog_create (gimp, is_update),
+        gtk_widget_set_visible (welcome_dialog_create (gimp, is_update, FALSE),
                                 TRUE);
 
       /* Do not check for new updates when GIMP was just updated. */
