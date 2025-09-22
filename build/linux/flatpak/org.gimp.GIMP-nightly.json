@@ -704,8 +704,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://gitlab.com/graphviz/graphviz/-/archive/13.1.2/graphviz-13.1.2.tar.gz",
-                    "sha256": "0e79b8402e8ea13f05c0fc0e30604f1d0731cd3f60f85850cedac7e0ee420ef8",
+                    "url": "https://gitlab.com/graphviz/graphviz/-/archive/14.0.0/graphviz-14.0.0.tar.gz",
+                    "sha256": "ff40891d521a680d109d77e2c6fe172173c4b63c59c5dd526d599d7af62cf290",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 1249,
