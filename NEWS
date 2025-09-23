@@ -6,6 +6,217 @@
 This is the development branch of GIMP.
 
 
+Overview of Changes from GIMP 3.0.4 to GIMP 3.0.6
+=================================================
+
+This is a mostly bug-fix release.
+
+Core:
+
+  - Many false-positive build warnings have been cleaned out (and proper
+    issues fixed).
+  - Various crashes fixed.
+  - When creating a layer mask from the layer's alpha, but the layer has
+    no alpha, simply fill the mask with complete opacity instead of
+    a completely transparent layer.
+  - Various core infrastructure code reviewed, cleaned up, refactored
+    and improved, in drawable, layer and filter handling code, tree view
+    code, and more.
+  - GIMP_ICONS_LIKE_A_BOSS environment variable is not working anymore
+    (because "gtk-menu-images" and "gtk-button-images" have been
+    deprecated in GTK3 and removed in GTK4) and was therefore removed.
+  - Lock Content now shows as an undo step.
+  - Add alpha channel for certain transforms.
+  - Add alpha channel on filter merge, when necessary.
+  - Filters can now be applied non-destructively on channels.
+  - Improved Photoshop brush support.
+  - After deleting a palette entry, the next entry is automatically
+    selected. This allows easily deleting several entries in a row,
+    among other usage.
+  - Resize image to layers irrespective to selections.
+  - Improved in-GUI release notes' demo script language:
+    * We can now set a button value to click it:
+      "toolbox:text,
+      tool-options:outline=1,
+      tool-options:outline-direction"
+    * Color selector's module names can be used as identifiers:
+      "color-editor,color-editor:CMYK=1,color-editor:total-ink-coverage"
+  - Fixed Alpha to Selection on single layers with no transparency.
+  - Various code is slowly ported to newer code, preparing for GTK4 port
+    (in an unplanned future step):
+    * Using g_set_str() (optionally redefining it in our core code to
+      avoid bumping the GLib minimum requirement).
+    * Start using GListModel in various pieces of code, in particular
+      getting rid of more and more usage of GtkTreeView when possible
+      (as it will be deprecated with GTK4).
+    * New GimpRow class for all future row widgets.
+    * Use more of G_DECLARE_DERIVABLE_TYPE and G_DECLARE_FINAL_TYPE
+      where relevant.
+    * New GimpContainerListView using a GtkListBox.
+    * New GimpRowSeparator, GimpRowSettings, GimpRowFilter and
+      GimpRowDrawableFilter widgets.
+  - (Experimental) GEX Format was updated.
+  - Palette import:
+    * Set alpha value for image palette imports.
+    * Fix Lab & CMYK ACB palette import.
+    * Add palette format filters to import dialog, making it more
+      apparent what palette formats are supported, and giving the
+      ability to hide irrelevant files.
+  - Improved filter actions' sensitivity to make sure they are set
+    insensitive when relevant. In particular filters which cannot be run
+    non-destructively (e.g. filters with aux inputs, non-interactive
+    filters and GEGL Graph) must be insensitive when trying to run them
+    on group layers.
+  - Fix bad axis centering on zoom out.
+  - Export better SVG when exporting paths.
+
+Tools:
+
+  - Text tool: make sure the default color is only changed when the user
+    confirms the color change.
+  - Foreground Selection tool: do not create a selection when no strokes
+    has been made. In particular this removes the unnecessary delay
+    which happened when switching to another tool without actually
+    stroking anything.
+  - All Transform tools: transform boundaries for preview is now
+    multi-layers aware.
+  - (Experimental) Seamless Clone tool: made to work again, though it is
+    still too slow to get out of Playground.
+
+Graphical User Interface:
+
+  - Various improvements to window management:
+    * Keep-Above windows are set with the Utility hint.
+    * Utility windows are not made transient to a parent.
+    * Transient factory dialogs follow the active display, ensuring that
+      new image windows would not hide your toolbox and dock windows.
+  - Various CSS improvements for styling of the interface. Some theme
+    leaks were also fixed.
+  - New toggle button in Brushes and Fonts dockable, allowing brush and
+    font previews to optionally follow the color theme. For instance,
+    when using a dark theme, the brush and font previews could be drawn
+    on the theme background, using the theme foreground colors. By
+    default, these data previews are still drawn as black on white.
+  - Palette grid is now drawn with the theme's background color.
+  - Consistent naming patterns on human-facing options (first word only
+    capitalized).
+  - About dialog:
+    * We will now display the date and time of the last
+      check in a "Up to date as of <date> at <time>" string, differing
+      from the "Last checked on <date> at <time>" string. The former
+      will be used to indicate that GIMP is indeed up-to-date whereas
+      the latter when a new version was released and that you should
+      update.
+    * We now respect the system time/date format on macOS and Windows.
+  - The search popup won't pop up without an image.
+  - Better zoom step algorithm for data previews in container popup
+    (e.g. the brush popup in paint Tool Options).
+  - Disable animation in the Input Controller, Preferences and Welcome
+    dialogs for stack transition when animation are disabled in system
+    settings.
+  - Fixed crosshair hotspot on Windows (crosshair cursor for brushes was
+    offset with a non-100% display scale factor).
+  - Debug/CRITICAL dialog:
+    * Make sure it is non-modal.
+    * Follow the theme mode under Windows.
+  - While loading images, all widgets in the file dialog are made
+    insensitive, except for the Cancel button and the progress bar.
+  - Both grid and list views can now zoom via scroll and zoom gestures
+    (it used to only work in list views).
+
+Plug-ins:
+
+  - PDF export: do not draw disabled layer masks.
+  - Jigsaw: the plug-in can now draw on transparent layers.
+  - Various file format fixes and improvements: JPEG 2000 import, TIFF
+    import, DDS import, SVG import, PSP import, FITS export, ICNS
+    import, Dicom import, WBMP import, Farbfeld import, XWD import, ILBM
+    import.
+  - Sphere Designer: use spin scale instead of spin entries (the latter
+    is unusable with little horizontal space).
+  - Animation Play: frames are shown again in the playback progress bar.
+  - Vala Goat Exercise: ignoring C warning in this Vala plug-in as it is
+    generated code and we cannot control it.
+  - file-gih: brush pipe selection modes now have nice, translatable
+    names.
+  - Metadata viewer: port from GtkTreeView to GtkListBox.
+  - File Raw Data: reduce Raw Data load dialogue height by moving to a
+    2-column layout.
+  - SVG import: it is now possible to break aspect ratio with specific
+    width/height arguments, when calling the PDB procedure
+    non-interactively (from other plug-ins).
+  - Print: when run through a portal print dialog, the "Image Settings"
+    will be exposed as a secondary dialog, outputted after the portal
+    dialog, instead of a tab on the main print dialog (because it is not
+    possible to tweak the print dialog when it is created by a portal).
+    This will bring back usable workflow of printing with GIMP when run
+    in a sandbox (e.g. Flatpak or Snap).
+  - Recompose: fixed for YCbCr decomposed images.
+  - Fixed vulnerabilities: ZDI-CAN-27684, ZDI-CAN-27863, ZDI-CAN-27878,
+    ZDI-CAN-27836, ZDI-CAN-27823, ZDI-CAN-27793.
+  - C Source and HTML export can now be run non-interactively too (e.g.
+    from other plug-ins).
+  - Map Object: fix missing spin boxes.
+  - Small Tiles: fix display lag.
+
+API:
+
+  - libgimpui:
+    * new function: gimp_prop_toggle_new()
+    * updated widget default for GimpChoice in GimpProcedureDialog: when
+      the number of choices is below 3, a radio frame is used, and a
+      combo box otherwise (it used to always be a combo box).
+    * GimpExportProcedureDialog: comment text area will be made
+      (in)sensitive depending on the checked state of "Save Comment"
+      option.
+    * Use arrows for GimpSpinScale cursors.
+    * GimpColorScales: no decimal for u8 RGB color selector. This change
+      will help further distinguish between the 0...100 and 0..255 views
+      in the Color Selectors.
+    * Internal color drags now use a "application/x-geglcolor" target
+      since "application/x-color" is standard and should not be used for
+      our more powerful color formats.
+  - libgimp:
+    * new enum type: GimpTRCType
+    * gimp_file_save() sets the XCF or exported files accordingly.
+    * Metadata:
+      + Favor existing image comment instead of always loading comment
+        from metadata.
+      + Fix handling of "charset=" in comments.
+      + Better heuristic to choose the comment to export, especially
+        when it has been edited in the export dialog comment field.
+      + XMP modification date format fix and Exif.Image.DateTime
+        metadata has been modernized, also adding the timezone.
+  - PDB/libgimp:
+    * Allow nullable sample points and guide types for some
+      functions.
+    * GeglParamFilePath can now be passed across the wire.
+  - macOS: improve dock icon flashing issue.
+
+Build:
+
+  - CI scripts synced to latest `master` state.
+  - Windows file format association list is now generated at build time,
+    avoiding discrepancies.
+  - Build scripts are made POSIX-compliant for better portability across
+    platforms.
+  - New nightly Snap package.
+  - New nightly Aarch64 flatpak.
+  - Core code ported from appstream-glib to libappstream.
+  - Windows installer now uses the latest InnoSetup again.
+  - New option -Dwin-debugging=dwarf to generate DWARF symbols on
+    Windows (defaults to CodeView symbols).
+  - Compilation should work again fine with older librsvg (before the
+    Rust port).
+  - release-stats.sh script updated to generate text directly pastable
+    into our release news.
+  - CI ported from unmaintained Kaniko to Buildah.
+  - Clean out deprecation warnings on GLib and GTK/GDK based on our
+    minimum requirement of these dependencies thanks to
+    GLIB_VERSION_MIN_REQUIRED() and GLIB_VERSION_MAX_ALLOWED() macros
+    (and equivalent GDK macros).
+
+
 Overview of Changes from GIMP 3.0.2 to GIMP 3.0.4
 =================================================
 
