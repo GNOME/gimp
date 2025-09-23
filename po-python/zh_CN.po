@@ -10,15 +10,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-05-25 16:27+0000\n"
-"PO-Revision-Date: 2025-05-26 16:43+0800\n"
+"POT-Creation-Date: 2025-09-23 20:27+0000\n"
+"PO-Revision-Date: 2025-09-24 07:28+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 48.0\n"
+"X-Generator: Gtranslator 49.0\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: plug-ins/python/colorxhtml.py:78
@@ -73,6 +73,26 @@ msgstr "写入单独的 CSS 文件"
 #: plug-ins/python/colorxhtml.py:235
 msgid "Choose File"
 msgstr "选择文件"
+
+#: plug-ins/python/file-openraster.py:480
+#: plug-ins/python/file-openraster.py:481
+msgid "export an OpenRaster (.ora) file"
+msgstr "导出 OpenRaster（.ora）文件"
+
+#: plug-ins/python/file-openraster.py:483
+#: plug-ins/python/file-openraster.py:489
+msgid "OpenRaster"
+msgstr "OpenRaster"
+
+#: plug-ins/python/file-openraster.py:490
+#: plug-ins/python/file-openraster.py:491
+msgid "load an OpenRaster (.ora) file"
+msgstr "加载 OpenRaster（.ora）文件"
+
+#: plug-ins/python/file-openraster.py:500
+#: plug-ins/python/file-openraster.py:501
+msgid "loads a thumbnail from an OpenRaster (.ora) file"
+msgstr "从 OpenRaster（.ora）文件加载缩略图"
 
 #: plug-ins/python/foggify.py:119
 msgid "Add a layer of fog"
@@ -132,7 +152,6 @@ msgid "Save Gradient as CSS..."
 msgstr "将渐变保存为 CSS…"
 
 #: plug-ins/python/gradients-save-as-css.py:140
-#: plug-ins/python/palette-export-as-kpl.py:176
 #: plug-ins/python/palette-offset.py:55 plug-ins/python/palette-sort.py:354
 #: plug-ins/python/palette-to-gradient.py:145
 #: plug-ins/python/python-console/python-console.py:323
@@ -140,7 +159,6 @@ msgid "Run mode"
 msgstr "运行模式"
 
 #: plug-ins/python/gradients-save-as-css.py:141
-#: plug-ins/python/palette-export-as-kpl.py:177
 #: plug-ins/python/palette-offset.py:56 plug-ins/python/palette-sort.py:355
 #: plug-ins/python/palette-to-gradient.py:146
 #: plug-ins/python/python-console/python-console.py:324
@@ -220,47 +238,6 @@ msgstr "输出格式(_F)"
 #: plug-ins/python/histogram-export.py:235
 msgid "Output format"
 msgstr "输出格式"
-
-#: plug-ins/python/palette-export-as-kpl.py:55
-msgid "Options"
-msgstr "选项"
-
-#: plug-ins/python/palette-export-as-kpl.py:60
-msgid "_Export"
-msgstr "导出(_E)"
-
-#: plug-ins/python/palette-export-as-kpl.py:167
-#: plug-ins/python/palette-export-as-kpl.py:168
-msgid "Export palette as Krita .kpl"
-msgstr "将调色板导出为 Krita .kpl"
-
-#: plug-ins/python/palette-export-as-kpl.py:170
-msgid "_Krita palette..."
-msgstr "_Krita 调色板…"
-
-#: plug-ins/python/palette-export-as-kpl.py:180
-msgid "_Palette to export"
-msgstr "要导出的调色板(_P)"
-
-#: plug-ins/python/palette-export-as-kpl.py:184
-msgid "_File (.kpl)"
-msgstr "文件（.kpl）(_F)"
-
-#: plug-ins/python/palette-export-as-kpl.py:187
-msgid "Commen_t"
-msgstr "注释(_T)"
-
-#: plug-ins/python/palette-export-as-kpl.py:188
-msgid "Optional comment"
-msgstr "可选注释"
-
-#: plug-ins/python/palette-export-as-kpl.py:191
-msgid "Re_ad only"
-msgstr "只读(_A)"
-
-#: plug-ins/python/palette-export-as-kpl.py:192
-msgid "The palette will be locked on import"
-msgstr "该调色板将在导入时锁定"
 
 #: plug-ins/python/palette-offset.py:48
 msgid "_Offset Palette..."
@@ -1016,6 +993,36 @@ msgid ""
 "Whether to apply a long gradient to match the length of the pattern. Only "
 "applicable to some of the tools."
 msgstr "是否应用长渐变来与图案长度匹配。仅适用于部分工具。"
+
+#~ msgid "Options"
+#~ msgstr "选项"
+
+#~ msgid "_Export"
+#~ msgstr "导出(_E)"
+
+#~ msgid "Export palette as Krita .kpl"
+#~ msgstr "将调色板导出为 Krita .kpl"
+
+#~ msgid "_Krita palette..."
+#~ msgstr "_Krita 调色板…"
+
+#~ msgid "_Palette to export"
+#~ msgstr "要导出的调色板(_P)"
+
+#~ msgid "_File (.kpl)"
+#~ msgstr "文件（.kpl）(_F)"
+
+#~ msgid "Commen_t"
+#~ msgstr "注释(_T)"
+
+#~ msgid "Optional comment"
+#~ msgstr "可选注释"
+
+#~ msgid "Re_ad only"
+#~ msgstr "只读(_A)"
+
+#~ msgid "The palette will be locked on import"
+#~ msgstr "该调色板将在导入时锁定"
 
 #~ msgid "Choose CSS file..."
 #~ msgstr "选择 CSS 文件…"
