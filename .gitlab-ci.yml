@@ -402,7 +402,6 @@ deps-flatpak:
   artifacts:
     paths:
       - _build-$RUNNER.tar.zst
-      - flatpak-builder.log
       - babl-meson-log.tar
       - gegl-meson-log.tar
     expire_in: 2 hours

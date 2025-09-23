@@ -68,7 +68,7 @@ if [ "$GITLAB_CI" ]; then
   tar --zstd --xattrs -xf _build-$RUNNER.tar.zst || true
 fi
 eval $FLATPAK_BUILDER --force-clean --disable-rofiles-fuse --keep-build-dirs --build-only --stop-at=babl \
-                      "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json > flatpak-builder.log 2>&1
+                      "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
 printf "\e[0Ksection_end:`date +%s`:deps_build\r\e[0K\n"
 
 printf "\e[0Ksection_start:`date +%s`:babl_build[collapsed=true]\r\e[0KBuilding babl\n"
