@@ -21,7 +21,8 @@ requirements:
       [CC by-sa](https://creativecommons.org/licenses/by-sa/4.0/)
       [CC by](https://creativecommons.org/licenses/by/4.0/),
       [CC 0](https://creativecommons.org/publicdomain/zero/1.0/),
-      or [Free Art](https://artlibre.org/licence/lal/en/).
+      [Free Art](https://artlibre.org/licence/lal/en/) or
+      other acceptable Libre Art licenses.
 - [ ] XCF file **MUST** be provided.
 - [ ] Minimum size: full HD (splash images will be scaled down to 1/2
       of the main display when too big; but they won't be scaled up.
@@ -40,6 +41,9 @@ requirements:
   * [ ] A splash meant for a RC or stable release **MUST** also display
         the text "RC", in its own dedicated text layer containing only
         this text, and without the RC number.
+        This "RC" text layer will stay untouched during the whole RC
+        period and will be automatically removed by our build scripts on
+        the actual release.
 
 ### Update procedure
 
