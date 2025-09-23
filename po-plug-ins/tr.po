@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-17 12:17+0000\n"
-"PO-Revision-Date: 2025-09-20 08:00+0300\n"
-"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
+"POT-Creation-Date: 2025-09-22 20:44+0000\n"
+"PO-Revision-Date: 2025-09-22 16:31+0300\n"
+"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -48,7 +48,7 @@ msgstr "Cʼde eklenti örneği"
 #: plug-ins/common/qbist.c:254 plug-ins/common/sample-colorize.c:425
 #: plug-ins/common/smooth-palette.c:193 plug-ins/common/sparkle.c:301
 #: plug-ins/common/sphere-designer.c:3199 plug-ins/common/tile.c:222
-#: plug-ins/common/tile-small.c:312 plug-ins/common/van-gogh-lic.c:242
+#: plug-ins/common/tile-small.c:311 plug-ins/common/van-gogh-lic.c:242
 #: plug-ins/common/warp.c:344 plug-ins/common/wavelet-decompose.c:179
 #: plug-ins/flame/flame.c:297 plug-ins/fractal-explorer/fractal-explorer.c:427
 #: plug-ins/gfig/gfig.c:213 plug-ins/gimpressionist/gimp.c:184
@@ -2104,7 +2104,7 @@ msgstr "İki eğriyi değiştir"
 
 #. The Reset button
 #: plug-ins/common/curve-bend.c:1232 plug-ins/common/sphere-designer.c:2654
-#: plug-ins/common/tile-small.c:523 plug-ins/gimpressionist/preview.c:182
+#: plug-ins/common/tile-small.c:522 plug-ins/gimpressionist/preview.c:182
 #: plug-ins/ifs-compose/ifs-compose.c:912
 msgid "_Reset"
 msgstr "_Sıfırla"
@@ -2358,7 +2358,7 @@ msgstr "Kaynak 1"
 
 #: plug-ins/common/depth-merge.c:228
 msgid "_Depth map 1"
-msgstr "_Derin eşlem 1"
+msgstr "_Derinlik eşlemi 1"
 
 #: plug-ins/common/depth-merge.c:229
 msgid "Depth map 1"
@@ -2374,7 +2374,7 @@ msgstr "Kaynak 2"
 
 #: plug-ins/common/depth-merge.c:240
 msgid "Depth _map 2"
-msgstr "Derin _eşlem 2"
+msgstr "Derinlik _eşlemi 2"
 
 #: plug-ins/common/depth-merge.c:241
 msgid "Depth map 2"
@@ -2421,11 +2421,11 @@ msgstr "Seçim, girdi çizilebiliri ile kesişmiyor."
 
 #: plug-ins/common/depth-merge.c:364
 msgid "Depth-merging"
-msgstr "Derin birleştiriliyor"
+msgstr "Derinlik birleştirime"
 
 #: plug-ins/common/depth-merge.c:615
 msgid "Depth Merge"
-msgstr "Derin Birleştirme"
+msgstr "Derinlik Birleştirme"
 
 #: plug-ins/common/despeckle.c:171
 msgid "Des_peckle..."
@@ -2890,7 +2890,8 @@ msgstr "'%s' DICOM dosyası değil."
 #: plug-ins/common/file-dicom.c:509
 #, c-format
 msgid "'%s' has an incorrect value for field size. Possibly corrupt image."
-msgstr "'%s', alan boyutu için geçersiz değer barındırıyor. Olası bozuk görüntü."
+msgstr ""
+"'%s', alan boyutu için geçersiz değer barındırıyor. Olası bozuk görüntü."
 
 #: plug-ins/common/file-dicom.c:570
 #, c-format
@@ -4252,8 +4253,8 @@ msgid ""
 "Opens a .lnk file and if it points to an image, it asks GIMP to open the "
 "linked image."
 msgstr ""
-".lnk dosyasını açar ve bir görüntüyü imliyorsa GIMPʼten bağlantılı "
-"görüntüyü açmasını ister."
+".lnk dosyasını açar ve bir görüntüyü imliyorsa GIMPʼten bağlantılı görüntüyü "
+"açmasını ister."
 
 #: plug-ins/common/file-lnk.c:210 plug-ins/common/file-lnk.c:225
 #: plug-ins/common/file-lnk.c:234 plug-ins/common/file-lnk.c:247
@@ -4917,6 +4918,7 @@ msgstr ""
 "çalışılırken hata: %s"
 
 #: plug-ins/common/file-pix.c:582
+#, c-format
 msgid "Invalid Esm Software PIX file"
 msgstr "Geçersiz Esm Software PIX dosyası"
 
@@ -7590,7 +7592,7 @@ msgstr "Görüntüye yapboz örüntüsü ekle"
 msgid "Jigsaw puzzle look"
 msgstr "Yapboz bulmaca görünümü"
 
-#: plug-ins/common/jigsaw.c:483 plug-ins/common/tile-small.c:503
+#: plug-ins/common/jigsaw.c:483 plug-ins/common/tile-small.c:502
 msgid "_Horizontal"
 msgstr "_Yatay"
 
@@ -7598,7 +7600,7 @@ msgstr "_Yatay"
 msgid "Number of pieces going across"
 msgstr "Karşıya geçen parçaların sayısı"
 
-#: plug-ins/common/jigsaw.c:489 plug-ins/common/tile-small.c:513
+#: plug-ins/common/jigsaw.c:489 plug-ins/common/tile-small.c:512
 msgid "_Vertical"
 msgstr "_Dikey"
 
@@ -7643,6 +7645,7 @@ msgid "Assembling jigsaw"
 msgstr "Yapboz birleştiriliyor"
 
 #: plug-ins/common/jigsaw.c:791
+#, c-format
 msgid "draw_jigsaw: bad style\n"
 msgstr "draw_jigsaw: kötü biçem\n"
 
@@ -8536,7 +8539,7 @@ msgstr "Yeni _görüntü"
 msgid "Create a new image"
 msgstr "Yeni görüntü oluştur"
 
-#: plug-ins/common/tile.c:258 plug-ins/common/tile-small.c:375
+#: plug-ins/common/tile.c:258 plug-ins/common/tile-small.c:374
 msgid "Tiling"
 msgstr "Döşeme"
 
@@ -8548,57 +8551,57 @@ msgstr "Döşe"
 msgid "Tile to New Size"
 msgstr "Yeni Boyuta Döşe"
 
-#: plug-ins/common/tile-small.c:270
+#: plug-ins/common/tile-small.c:269
 msgid "_Small Tiles..."
 msgstr "_Küçük Döşemeler..."
 
-#: plug-ins/common/tile-small.c:274
+#: plug-ins/common/tile-small.c:273
 msgid "Tile image into smaller versions of the original"
 msgstr "Görüntünün küçük hallerini düzenli olarak döşer"
 
-#: plug-ins/common/tile-small.c:284
+#: plug-ins/common/tile-small.c:283
 msgid "_n²"
 msgstr "_n²"
 
-#: plug-ins/common/tile-small.c:285
+#: plug-ins/common/tile-small.c:284
 msgid "Number of tiles to make"
 msgstr "Oluşturulacak döşeme sayısı"
 
-#: plug-ins/common/tile-small.c:330
+#: plug-ins/common/tile-small.c:329
 msgid "Region selected for filter is empty."
 msgstr "Süzgeç için seçilen alan boş."
 
-#: plug-ins/common/tile-small.c:441
+#: plug-ins/common/tile-small.c:440
 msgid "Small Tiles"
 msgstr "Küçük Döşemeler"
 
 #. Area for buttons etc
 #. Flip
-#: plug-ins/common/tile-small.c:490 plug-ins/ifs-compose/ifs-compose.c:724
+#: plug-ins/common/tile-small.c:489 plug-ins/ifs-compose/ifs-compose.c:724
 msgid "Flip"
 msgstr "Çevir"
 
-#: plug-ins/common/tile-small.c:539
+#: plug-ins/common/tile-small.c:538
 msgid "A_ll tiles"
 msgstr "T_üm döşemeler"
 
-#: plug-ins/common/tile-small.c:552
+#: plug-ins/common/tile-small.c:551
 msgid "Al_ternate tiles"
 msgstr "Değ_işimli döşemeler"
 
-#: plug-ins/common/tile-small.c:565
+#: plug-ins/common/tile-small.c:564
 msgid "_Explicit tile"
 msgstr "_Seçili döşeme"
 
-#: plug-ins/common/tile-small.c:570
+#: plug-ins/common/tile-small.c:569
 msgid "Ro_w:"
 msgstr "Satı_r:"
 
-#: plug-ins/common/tile-small.c:595
+#: plug-ins/common/tile-small.c:594
 msgid "Col_umn:"
 msgstr "Süt_un:"
 
-#: plug-ins/common/tile-small.c:627
+#: plug-ins/common/tile-small.c:626
 #: plug-ins/fractal-explorer/fractal-explorer.c:1358
 #: plug-ins/gimpressionist/orientmap.c:527
 #: plug-ins/gimpressionist/presets.c:1064 plug-ins/gimpressionist/sizemap.c:400
@@ -8607,11 +8610,11 @@ msgid "_Apply"
 msgstr "_Uygula"
 
 #. Widget for selecting the Opacity
-#: plug-ins/common/tile-small.c:643
+#: plug-ins/common/tile-small.c:642
 msgid "O_pacity:"
 msgstr "_Matlık:"
 
-#: plug-ins/common/tile-small.c:654
+#: plug-ins/common/tile-small.c:653
 msgid "Number of Segments"
 msgstr "Parçaların Sayısı"
 
@@ -12995,11 +12998,11 @@ msgstr ""
 
 #: plug-ins/gimpressionist/general.c:231
 msgid "Drop shadow"
-msgstr "Gölge düşürme"
+msgstr "Gölge"
 
 #: plug-ins/gimpressionist/general.c:236
 msgid "Adds a shadow effect to each brush stroke"
-msgstr "Her fırça darbesine bir gölge etkisi ekle"
+msgstr "Her fırça darbesine gölge etkisi ekle"
 
 #: plug-ins/gimpressionist/general.c:248
 msgid "Edge darken:"
@@ -14817,7 +14820,7 @@ msgstr "Kaynak..."
 
 #: plug-ins/imagemap/imap-menu.ui:116
 msgid "Zoom To"
-msgstr "Yakınlaştır"
+msgstr "Yakınlaştırma Düzeyi"
 
 #: plug-ins/imagemap/imap-menu.ui:119
 msgid "8:1"
