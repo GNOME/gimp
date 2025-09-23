@@ -1895,7 +1895,7 @@ gimp_procedure_add_text_layer_return_value (GimpProcedure *procedure,
  *
  * Add a new #GimpVectorLayer argument to @procedure.
  *
- * Since: 3.0
+ * Since: 3.2
  **/
 void
 gimp_procedure_add_vector_layer_argument (GimpProcedure *procedure,
@@ -1921,7 +1921,7 @@ gimp_procedure_add_vector_layer_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpVectorLayer auxiliary argument to @procedure.
  *
- * Since: 3.0
+ * Since: 3.2
  **/
 void
 gimp_procedure_add_vector_layer_aux_argument (GimpProcedure *procedure,
@@ -1947,7 +1947,7 @@ gimp_procedure_add_vector_layer_aux_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpVectorLayer return value to @procedure.
  *
- * Since: 3.0
+ * Since: 3.2
  **/
 void
 gimp_procedure_add_vector_layer_return_value (GimpProcedure *procedure,
