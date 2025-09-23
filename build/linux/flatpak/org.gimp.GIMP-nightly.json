@@ -230,7 +230,7 @@
                     "builddir": true,
                     "config-opts": [
                         "-DOJPH_ENABLE_TIFF_SUPPORT=OFF",
-                        "-DOJPH_BUILD_EXECUTABLES=OFF"  
+                        "-DOJPH_BUILD_EXECUTABLES=OFF"
                     ],
                     "cleanup": [
                         "/include",
@@ -605,9 +605,9 @@
                     ]
                 }
             ],
-           "buildsystem": "cmake-ninja",
-           "builddir": true,
-           "config-opts": [
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
                 "-DUTILS=OFF",
                 "-DTESTS=OFF"
             ],
