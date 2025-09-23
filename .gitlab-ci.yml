@@ -401,7 +401,7 @@ deps-flatpak:
     - sh build/linux/flatpak/1_build-deps-flatpakbuilder.sh
   artifacts:
     paths:
-      - _build-$RUNNER.tar
+      - _build-$RUNNER.tar.zst
       - flatpak-builder.log
       - babl-meson-log.tar
       - gegl-meson-log.tar
