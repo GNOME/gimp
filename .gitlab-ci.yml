@@ -122,7 +122,7 @@ stages:
     CXX_LD: lld
   before_script:
     - export GIMP_PREFIX="${CI_PROJECT_DIR}/_install-${RUNNER}"
-  timeout: 20m
+  timeout: 30m
 
 .debian_environ: &ENVIRON
 # See: https://testing.developer.gimp.org/core/setup/build/#preparing-for-building
@@ -392,7 +392,7 @@ gimp-debian-nonreloc:
     MESON_DIST: 0
   before_script:
     - export GIMP_PREFIX="${CI_PROJECT_DIR}/_install"
-  timeout: 20m
+  timeout: 30m
 
 deps-flatpak:
   extends: .flatpak
@@ -439,7 +439,7 @@ gimp-flatpak:
   variables:
     SNAPCRAFT_BASE_VERSION: "8_core24"
     RUNNER: x86_64_v3
-  timeout: 20m
+  timeout: 30m
 
 deps-snap:
   extends: .snap
@@ -542,7 +542,7 @@ gimp-snap:
   before_script:
     # FIXME:'gimpenv' have buggy code about Windows paths. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/12284
     - $GIMP_PREFIX = "$PWD\_install-$MSYSTEM_PREFIX".Replace('\', '/')
-  timeout: 40m
+  timeout: 30m
 
 .win_environ: &WIN_ENVIRON
 # See: https://testing.developer.gimp.org/core/setup/build/windows/#prepare-for-building
