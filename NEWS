@@ -13,6 +13,14 @@ Core:
 
   - Improve Export to SVG of paths by not exporting the DTD and adding
     an explicit SVG version.
+  - macOS: "Quit" from the dock's right-click menu will now follow our
+    standard Quit procedure, by intercepting the
+    applicationShouldTerminate signal, instead of forcing the
+    application to close (hence losing unsaved changes).
+  - "Add Layer Mask" will now have an "Edit mask immediately" checkbox
+    allowing to decide whether to go into Edit Mask state or not. This
+    setting is saved across repetitive actions, as all other settings in
+    this dialog.
 
 Graphical User Interface:
 
@@ -26,6 +34,8 @@ Plug-Ins:
 
   - Fixed vulnerabilities: ZDI-CAN-27684, ZDI-CAN-27863, ZDI-CAN-27878,
     ZDI-CAN-27836, ZDI-CAN-27823, ZDI-CAN-27793
+  - macOS: improved handling of plug-in icons which were flashing in
+    macOS dock.
 
 API:
 
@@ -67,6 +77,11 @@ Build:
     * Colored output and .pdb support for builds of dependency using
       CMake.
     * Ability to apply remote patches on dependency builds.
+    * New job "branches-check" to warn about dead branches.
+  - We now build Exiv2 ourselves on Windows as a temporary workaround to
+    issue #12626.
+  - release-stats.sh script updated to generate text directly pastable
+    into our release news.
 
 
 Overview of Changes from GIMP 3.1.2 to GIMP 3.1.4
