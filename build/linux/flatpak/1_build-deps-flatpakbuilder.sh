@@ -62,6 +62,11 @@ if [ "$CI_PIPELINE_SOURCE" = 'schedule' ]; then
 fi
 ## (The deps building is too long and no complete output would be collected,
 ## even from GitLab runner messages. So, let's silent and save logs as a file.)
+if [ "$GITLAB_CI" ]; then
+  built_deps_image="quay.io/gnome_infrastructure/gnome-nightly-cache:$(uname -m)-$(echo "org.gimp.GIMP.Nightly" | tr 'A-Z' 'a-z')-master"
+  oras pull $built_deps_image && oras logout quay.io || true
+  tar --zstd --xattrs -xf _build-$RUNNER.tar.zst || true
+fi
 eval $FLATPAK_BUILDER --force-clean --disable-rofiles-fuse --keep-build-dirs --build-only --stop-at=babl \
                       "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json > flatpak-builder.log 2>&1
 printf "\e[0Ksection_end:`date +%s`:deps_build\r\e[0K\n"
@@ -82,5 +87,9 @@ if [ "$GITLAB_CI" ]; then
   printf "\e[0Ksection_end:`date +%s`:gegl_build\r\e[0K\n"
 
   ## Save built deps for 'gimp-flatpak' job
-  tar cf _build-$RUNNER.tar .flatpak-builder/
+  tar --zstd --xattrs --exclude=.flatpak-builder/rofiles -cf _build-$RUNNER.tar.zst .flatpak-builder/
+  if [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
+    cat $NIGHTLY_CACHE_ORAS_TOKEN_FILE | oras login -u "${NIGHTLY_CACHE_ORAS_USER}" --password-stdin quay.io || true
+    oras push $built_deps_image _build-$RUNNER.tar.zst && oras logout quay.io || true
+  fi
 fi
