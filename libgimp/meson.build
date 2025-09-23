@@ -575,6 +575,13 @@ else
       'gobject-2.0',
       'gtk+-3.0',
     ]
+    if glib.version().version_compare('>=2.86')
+      if not platform_windows
+        vapi_deps += [ 'gio-unix-2.0' ]
+      else
+        vapi_deps += [ 'gio-windows-2.0' ]
+      endif
+    endif
 
     libgimp_vapi = gnome.generate_vapi('gimp-' + gimp_api_version,
       sources: libgimp_gir[0],
