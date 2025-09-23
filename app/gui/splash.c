@@ -75,6 +75,12 @@ typedef struct
   /* debug timer */
   GTimer         *timer;
   gdouble         last_time;
+
+  gboolean        release_splash;
+  gboolean        alt;
+  guint           alt_timeout_id;
+  gint32          alt_x;
+  gint32          alt_y;
 } GimpSplash;
 
 static GimpSplash *splash = NULL;
@@ -87,6 +93,14 @@ static void        splash_position_layouts     (GimpSplash     *splash,
 static gboolean    splash_area_draw            (GtkWidget      *widget,
                                                 cairo_t        *cr,
                                                 GimpSplash     *splash);
+static gboolean    splash_button_event         (GtkWidget      *window,
+                                                GdkEventButton *event,
+                                                GimpSplash     *splash);
+static gboolean    splash_key_event            (GtkWidget      *window,
+                                                GdkEventKey    *event,
+                                                GimpSplash     *splash);
+static gboolean    splash_unset_alt            (GimpSplash     *splash);
+
 static void        splash_rectangle_union      (GdkRectangle   *dest,
                                                 PangoRectangle *pango_rect,
                                                 gint            offset_x,
@@ -99,7 +113,8 @@ static GdkPixbufAnimation *
                    splash_image_load           (Gimp           *gimp,
                                                 gint            max_width,
                                                 gint            max_height,
-                                                gboolean        be_verbose);
+                                                gboolean        be_verbose,
+                                                gboolean       *release_splash);
 static GdkPixbufAnimation *
                    splash_image_load_from_file (GFile          *file,
                                                 gint            max_width,
@@ -134,6 +149,7 @@ splash_create (Gimp         *gimp,
 
   GetStartupInfo (&StartupInfo);
 #endif
+  gboolean            release_splash;
 
   g_return_if_fail (splash == NULL);
   g_return_if_fail (GDK_IS_MONITOR (monitor));
@@ -169,7 +185,7 @@ splash_create (Gimp         *gimp,
       max_width  = workarea.width  / 2;
       max_height = workarea.height / 2;
     }
-  pixbuf = splash_image_load (gimp, max_width, max_height, be_verbose);
+  pixbuf = splash_image_load (gimp, max_width, max_height, be_verbose, &release_splash);
 
   if (! pixbuf)
     return;
@@ -196,6 +212,21 @@ splash_create (Gimp         *gimp,
   g_signal_connect_swapped (splash->window, "delete-event",
                             G_CALLBACK (exit),
                             GINT_TO_POINTER (0));
+
+  splash->release_splash = release_splash;
+  splash->alt            = FALSE;
+  splash->alt_x          = -1;
+  splash->alt_y          = -1;
+  splash->alt_timeout_id = 0;
+  g_signal_connect (splash->window, "button-release-event",
+                    G_CALLBACK (splash_button_event),
+                    splash);
+  g_signal_connect (splash->window, "button-press-event",
+                    G_CALLBACK (splash_button_event),
+                    splash);
+  g_signal_connect (splash->window, "key-press-event",
+                    G_CALLBACK (splash_key_event),
+                    splash);
 
   splash->width  = MIN (gdk_pixbuf_animation_get_width (pixbuf),
                         workarea.width);
@@ -280,6 +311,12 @@ splash_destroy (void)
 {
   if (! splash)
     return;
+
+  if (splash->alt_timeout_id != 0)
+    {
+      g_source_remove (splash->alt_timeout_id);
+      splash->alt_timeout_id = 0;
+    }
 
   gtk_widget_destroy (splash->window);
 
@@ -368,7 +405,84 @@ splash_area_draw (GtkWidget  *widget,
   cairo_move_to (cr, splash->lower_x, splash->lower_y);
   pango_cairo_show_layout (cr, splash->lower);
 
+  if (splash->alt && splash->release_splash)
+    {
+      GFile           *file;
+      cairo_surface_t *surface;
+      double           scale;
+
+      file = gimp_data_directory_file ("images", "sidrat.data", NULL);
+      surface = cairo_image_surface_create_from_png (g_file_peek_path (file));
+      g_object_unref (file);
+      if (cairo_surface_status (surface) != CAIRO_STATUS_SUCCESS)
+        {
+          cairo_surface_destroy (surface);
+          return FALSE;
+        }
+
+      scale = cairo_image_surface_get_width (surface) / (splash->width * 0.05);
+      scale = MAX (scale, 1.0);
+      if (splash->alt_x == -1)
+        {
+          gdouble xmax;
+          gdouble ymax;
+
+          xmax = splash->width - cairo_image_surface_get_width (surface) / scale;
+          ymax = splash->height * 3 / 4 - cairo_image_surface_get_height (surface) / scale;
+
+          splash->alt_x = g_random_int_range (0, (gint32) xmax);
+          splash->alt_y = g_random_int_range (0, (gint32) ymax);
+        }
+      cairo_surface_set_device_scale (surface, scale, scale);
+      cairo_set_source_surface (cr, surface, (double) splash->alt_x, (double) splash->alt_y);
+      cairo_paint (cr);
+
+      cairo_surface_destroy (surface);
+    }
+
   return FALSE;
+}
+
+static gboolean
+splash_button_event (GtkWidget      *window,
+                     GdkEventButton *event,
+                     GimpSplash     *splash)
+{
+  if (event->type == GDK_BUTTON_PRESS && splash->alt_timeout_id == 0)
+    {
+      splash->alt            = TRUE;
+      splash->alt_timeout_id = g_timeout_add (300, (GSourceFunc) splash_unset_alt, splash);
+      gtk_widget_queue_draw (splash->window);
+    }
+
+  return FALSE;
+}
+
+static gboolean
+splash_key_event (GtkWidget   *window,
+                  GdkEventKey *event,
+                  GimpSplash  *splash)
+{
+  if (event->type == GDK_KEY_PRESS && splash->alt_timeout_id == 0)
+    {
+      splash->alt            = TRUE;
+      splash->alt_timeout_id = g_timeout_add (300, (GSourceFunc) splash_unset_alt, splash);
+      gtk_widget_queue_draw (splash->window);
+    }
+
+  return FALSE;
+}
+
+static gboolean
+splash_unset_alt (GimpSplash *splash)
+{
+  splash->alt            = FALSE;
+  splash->alt_x          = -1;
+  splash->alt_y          = -1;
+  splash->alt_timeout_id = 0;
+  gtk_widget_queue_draw (splash->window);
+
+  return G_SOURCE_REMOVE;
 }
 
 /* area returns the union of the previous and new ink rectangles */
@@ -537,11 +651,14 @@ static GdkPixbufAnimation *
 splash_image_load (Gimp     *gimp,
                    gint      max_width,
                    gint      max_height,
-                   gboolean  be_verbose)
+                   gboolean  be_verbose,
+                   gboolean *release_splash)
 {
   GdkPixbufAnimation *animation = NULL;
   GFile              *file;
   GList              *list;
+
+  *release_splash = FALSE;
 
   /* Random image in splash extensions. */
   g_object_get (gimp->extension_manager,
@@ -580,7 +697,10 @@ splash_image_load (Gimp     *gimp,
                                            be_verbose);
   g_object_unref (file);
   if (animation)
-    return animation;
+    {
+      *release_splash = TRUE;
+      return animation;
+    }
 
   /* Random release image in installed splashes/ directory. */
   file = gimp_data_directory_file ("splashes", NULL);
