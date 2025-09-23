@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-07 18:44+0000\n"
-"PO-Revision-Date: 2025-09-02 00:18+0300\n"
+"POT-Creation-Date: 2025-09-20 15:32+0000\n"
+"PO-Revision-Date: 2025-09-20 23:28+0300\n"
 "Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -2461,22 +2461,18 @@ msgid "%d page selected"
 msgid_plural "All %d pages selected"
 msgstr[0] "%d sayfa seçildi"
 
-# Folder: Komut satırında Dizin, Arayüzde Klasör
 #: libgimpwidgets/gimppatheditor.c:199
 msgid "Add a new folder"
 msgstr "Yeni klasör ekle"
 
-# Folder: Komut satırında Dizin, Arayüzde Klasör
 #: libgimpwidgets/gimppatheditor.c:217
 msgid "Move the selected folder up"
 msgstr "Seçili klasörü yukarı taşı"
 
-# Folder: Komut satırında Dizin, Arayüzde Klasör
 #: libgimpwidgets/gimppatheditor.c:235
 msgid "Move the selected folder down"
 msgstr "Seçili klasörü aşağı taşı"
 
-# Folder: Komut satırında Dizin, Arayüzde Klasör
 #: libgimpwidgets/gimppatheditor.c:253
 msgid "Remove the selected folder from the list"
 msgstr "Seçilen klasörü listeden kaldır"
@@ -2496,7 +2492,7 @@ msgstr ""
 #. toggle button to (de)activate the instant preview
 #: libgimpwidgets/gimppreview.c:284
 msgid "_Preview"
-msgstr "Öniz_leme"
+msgstr "Ö_n İzle"
 
 #: libgimpwidgets/gimppreviewarea.c:154
 msgid "Check Size"
