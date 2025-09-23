@@ -87,9 +87,11 @@ if [ "$GITLAB_CI" ]; then
   printf "\e[0Ksection_end:`date +%s`:gegl_build\r\e[0K\n"
 
   ## Save built deps for 'gimp-flatpak' job
-  tar --zstd --xattrs --exclude=.flatpak-builder/rofiles -cf _build-$RUNNER.tar.zst .flatpak-builder/
+  
   if [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
     cat $NIGHTLY_CACHE_ORAS_TOKEN_FILE | oras login -u "${NIGHTLY_CACHE_ORAS_USER}" --password-stdin quay.io || true
+    tar --zstd --xattrs --exclude=.flatpak-builder/build/babl-1 --exclude=.flatpak-builder/build/gegl-1 -cf _build-$RUNNER.tar.zst .flatpak-builder/
     oras push $built_deps_image _build-$RUNNER.tar.zst && oras logout quay.io || true
   fi
+  rm _build-$RUNNER.tar.zst && tar --zstd --xattrs -cf _build-$RUNNER.tar.zst .flatpak-builder/
 fi
