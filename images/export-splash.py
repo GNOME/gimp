@@ -1,7 +1,41 @@
+from gi.repository import Pango
 import os
 import sys
 
-image     = Gimp.get_images()[0]
+image = Gimp.get_images()[0]
+
+def find_rc_layer(layers):
+  for layer in layers:
+    if type(layer) is Gimp.TextLayer:
+      text = layer.get_text()
+      if text is not None and text.strip() == 'RC':
+        return layer
+      else:
+        markup = layer.get_markup()
+        _, _, text, _ = Pango.parse_markup(markup, -1, '_')
+        if text.strip() == 'RC':
+          return layer
+    elif type(layer) is Gimp.GroupLayer:
+      child = find_rc_layer(layer.get_children())
+      if child is not None:
+        return child
+  return None
+
+if Gimp.MINOR_VERSION % 2 == 0 and Gimp.MICRO_VERSION % 2 == 0:
+  rc_layer = find_rc_layer(image.get_layers())
+
+  if rc_layer is None:
+    msg = 'ERROR: a text layer containing the text "RC" is mandatory for RC and stable splash images.'
+    sys.stderr.write('v' * len(msg) + '\n')
+    sys.stderr.write(f'{msg}\n')
+    sys.stderr.write('^' * len(msg) + '\n')
+    sys.exit(70)
+
+  if 'RC' not in Gimp.VERSION:
+    # This is a stable release (and not a release candidate).
+    # Drop the mandatory "RC" layer.
+    image.remove_layer(rc_layer)
+
 procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
 config    = procedure.create_config()
 image.undo_disable()
