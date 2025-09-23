@@ -281,6 +281,25 @@ gimp_item_is_vector_layer (GimpItem *item)
 }
 
 /**
+ * gimp_item_is_link_layer:
+ * @item: The item.
+ *
+ * Returns whether the item is a link layer.
+ *
+ * This procedure returns TRUE if the specified item is a link
+ * layer.
+ *
+ * Returns: TRUE if the item is a link layer, FALSE otherwise.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_item_is_link_layer (GimpItem *item)
+{
+  return gimp_item_id_is_link_layer (gimp_item_get_id (item));
+}
+
+/**
  * gimp_item_is_group_layer:
  * @item: The item.
  *

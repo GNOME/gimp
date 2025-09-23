@@ -1,0 +1,225 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# New Link Layer PDB API
+# Copyright (C) 2025 Jehan
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+
+sub link_layer_new {
+    $blurb = 'Creates a new link layer.';
+
+    $help = <<'HELP';
+This procedure creates a link layer monitoring the specified @file.
+
+
+The new layer still needs to be added to the image as this is not
+automatic. Add the new layer with the [method@Image.insert_layer]
+method.
+
+
+The arguments are kept as simple as necessary for the basic case. All
+link attributes, however, can be modified with the appropriate
+`gimp_link_layer_set_*()` procedures.
+HELP
+
+    &jehan_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'file', type => 'file',
+          desc => 'The file this link layer will monitor' }
+    );
+
+    @outargs = (
+        { name => 'layer', type => 'link_layer',
+          desc => 'The new link layer. The object belongs to libgimp and you should not free it.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (file == NULL)
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   _("Failed to create link layer"));
+
+      success = FALSE;
+    }
+
+  if (success)
+    {
+      GimpLink *link;
+
+      link = gimp_link_new (gimp, file, 0, 0, TRUE, NULL, error);
+
+      if (link == NULL)
+        {
+          success = FALSE;
+        }
+      else
+        {
+          layer = GIMP_LINK_LAYER (gimp_link_layer_new (image, link));
+
+          if (! layer)
+            {
+              g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                           _("Failed to create link layer"));
+
+              success = FALSE;
+            }
+        }
+
+      g_clear_object (&link);
+    }
+}
+CODE
+    );
+}
+
+sub link_layer_discard {
+    $blurb = 'Discard the link layer information.';
+
+    $help = <<'HELP';
+Discards the link information. This makes the layer behave like a normal layer.
+HELP
+
+    &jehan_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'link_layer',
+          desc => 'The link layer' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  gimp_link_layer_discard (layer);
+}
+CODE
+    );
+}
+
+sub link_layer_monitor {
+    $blurb = 'Retrieve the link layer information.';
+
+    $help = <<'HELP';
+Retrieve the link information. This makes the layer behave like a link
+layer after the link information has been discarded.
+
+Since the source file will be monitored again, it may change the layer's render.
+HELP
+
+    &jehan_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'link_layer',
+          desc => 'The link layer' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  gimp_link_layer_monitor (layer);
+}
+CODE
+    );
+}
+
+sub link_layer_get_file {
+    $blurb = 'Get the monitored file.';
+
+    $help = <<'HELP';
+This procedure returns the file which is being monitored.
+HELP
+
+    &jehan_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'link_layer',
+          desc => 'The link layer' }
+    );
+
+    @outargs = (
+        { name => 'file', type => 'file',
+          desc => 'The monitored file' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  file = gimp_link_get_file (gimp_link_layer_get_link (layer), NULL, NULL);
+}
+CODE
+    );
+}
+
+sub link_layer_set_file {
+    $blurb = 'Set the monitored file.';
+
+    $help = <<'HELP';
+This procedure sets the file to be monitored.
+It may change the layer's render.
+HELP
+
+    &jehan_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'link_layer',
+          desc => 'The link layer' },
+        { name => 'file', type => 'file',
+          desc => 'The file to monitor' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpLink *link = gimp_link_new (gimp, file, 0, 0, TRUE, NULL, error);
+
+  if (link)
+    {
+      gimp_link_layer_set_link (layer, link, TRUE);
+    }
+  else
+    {
+      success = FALSE;
+    }
+
+  g_clear_object (&link);
+}
+CODE
+    );
+}
+
+@headers = qw("core/gimplink.h"
+              "core/gimplinklayer.h"
+              "gimppdberror.h"
+              "gimp-intl.h");
+
+@procs = qw(link_layer_new
+            link_layer_discard
+            link_layer_monitor
+            link_layer_get_file
+            link_layer_set_file);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Link layer procedures';
+$doc_title = 'gimplinklayer';
+$doc_short_desc = 'Functions for querying and manipulating link layers.';
+$doc_long_desc = 'Functions for querying and manipulating link layers.';
+
+1;

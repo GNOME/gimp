@@ -61,6 +61,7 @@ gboolean    gimp_item_is_drawable     (GimpItem *item);
 gboolean    gimp_item_is_layer        (GimpItem *item);
 gboolean    gimp_item_is_text_layer   (GimpItem *item);
 gboolean    gimp_item_is_vector_layer (GimpItem *item);
+gboolean    gimp_item_is_link_layer   (GimpItem *item);
 gboolean    gimp_item_is_group_layer  (GimpItem *item);
 gboolean    gimp_item_is_channel      (GimpItem *item);
 gboolean    gimp_item_is_layer_mask   (GimpItem *item);

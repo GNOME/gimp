@@ -40,6 +40,7 @@
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
+#include "core/gimplinklayer.h"
 #include "core/gimppalette.h"
 #include "core/gimppattern.h"
 #include "core/gimpselection.h"

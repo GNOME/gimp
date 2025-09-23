@@ -49,6 +49,7 @@ libappinternalprocs_sources = [
   'item-cmds.c',
   'item-transform-cmds.c',
   'layer-cmds.c',
+  'link-layer-cmds.c',
   'message-cmds.c',
   'paint-tools-cmds.c',
   'palette-cmds.c',

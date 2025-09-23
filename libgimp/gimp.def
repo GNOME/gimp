@@ -601,6 +601,7 @@ EXPORTS
 	gimp_item_id_is_group_layer
 	gimp_item_id_is_layer
 	gimp_item_id_is_layer_mask
+	gimp_item_id_is_link_layer
 	gimp_item_id_is_path
 	gimp_item_id_is_selection
 	gimp_item_id_is_text_layer
@@ -612,6 +613,7 @@ EXPORTS
 	gimp_item_is_group_layer
 	gimp_item_is_layer
 	gimp_item_is_layer_mask
+	gimp_item_is_link_layer
 	gimp_item_is_path
 	gimp_item_is_selection
 	gimp_item_is_text_layer
@@ -679,6 +681,13 @@ EXPORTS
 	gimp_layer_set_offsets
 	gimp_layer_set_opacity
 	gimp_layer_set_show_mask
+	gimp_link_layer_discard
+	gimp_link_layer_get_by_id
+	gimp_link_layer_get_file
+	gimp_link_layer_get_type
+	gimp_link_layer_monitor
+	gimp_link_layer_new
+	gimp_link_layer_set_file
 	gimp_list_images
 	gimp_load_procedure_get_handles_raw
 	gimp_load_procedure_get_thumbnail_loader
@@ -725,6 +734,7 @@ EXPORTS
 	gimp_param_item_get_type
 	gimp_param_layer_get_type
 	gimp_param_layer_mask_get_type
+	gimp_param_link_layer_get_type
 	gimp_param_palette_get_type
 	gimp_param_path_get_type
 	gimp_param_pattern_get_type
@@ -747,6 +757,7 @@ EXPORTS
 	gimp_param_spec_item_none_allowed
 	gimp_param_spec_layer
 	gimp_param_spec_layer_mask
+	gimp_param_spec_link_layer
 	gimp_param_spec_palette
 	gimp_param_spec_path
 	gimp_param_spec_pattern
@@ -883,6 +894,9 @@ EXPORTS
 	gimp_procedure_add_layer_mask_aux_argument
 	gimp_procedure_add_layer_mask_return_value
 	gimp_procedure_add_layer_return_value
+	gimp_procedure_add_link_layer_argument
+	gimp_procedure_add_link_layer_aux_argument
+	gimp_procedure_add_link_layer_return_value
 	gimp_procedure_add_menu_path
 	gimp_procedure_add_palette_argument
 	gimp_procedure_add_palette_aux_argument

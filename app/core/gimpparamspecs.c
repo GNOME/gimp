@@ -36,6 +36,7 @@
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
+#include "gimplinklayer.h"
 #include "gimppalette.h"
 #include "gimpparamspecs.h"
 #include "gimppattern.h"

@@ -47,6 +47,7 @@ typedef struct _GimpGroupLayer           GimpGroupLayer;
 typedef struct _GimpLayer                GimpLayer;
 typedef struct _GimpChannel              GimpChannel;
 typedef struct _GimpLayerMask            GimpLayerMask;
+typedef struct _GimpLinkLayer            GimpLinkLayer;
 typedef struct _GimpSelection            GimpSelection;
 typedef struct _GimpTextLayer            GimpTextLayer;
 typedef struct _GimpPath                 GimpPath;

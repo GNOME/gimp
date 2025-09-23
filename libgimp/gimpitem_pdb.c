@@ -292,6 +292,46 @@ gimp_item_id_is_group_layer (gint item_id)
 }
 
 /**
+ * gimp_item_id_is_link_layer:
+ * @item_id: The item ID.
+ *
+ * Returns whether the item ID is a link layer.
+ *
+ * This procedure returns %TRUE if the specified item ID is a link
+ * layer.
+ *
+ * *Note*: in most use cases, you should not use this function. See
+ * [func@Gimp.Item.id_is_layer] for a discussion on alternatives.
+ *
+ * Returns: TRUE if the item is a text layer, FALSE otherwise.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_item_id_is_link_layer (gint item_id)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean text_layer = FALSE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_INT, item_id,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-item-id-is-link-layer",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    text_layer = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return text_layer;
+}
+
+/**
  * gimp_item_id_is_channel:
  * @item_id: The item ID.
  *
