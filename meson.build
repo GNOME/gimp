@@ -1229,7 +1229,7 @@ dbus_run_session = find_program('dbus-run-session', required: get_option('headle
 if xvfb_run.found() and dbus_run_session.found()
   conf.set('HAVE_XVFB_RUN', true)
   add_test_setup('headless',
-    exe_wrapper: find_program('build' / 'meson' / 'run_test_env.sh'),
+    exe_wrapper: find_program('tools' / 'run_test_env.sh'),
     is_default: true,
   )
 endif
@@ -1714,7 +1714,7 @@ if is_git_repository
   endif
 
   if git.found()
-    git_submodule_check = run_command(meson.project_source_root() / 'build/meson/check-gimp-data.py',
+    git_submodule_check = run_command(meson.project_source_root() / 'tools/check-gimp-data.py',
                                       check: false)
     if git_submodule_check.returncode() != 0
       submodule_warning = 'gimp-data submodule seems outdated. Possibly run from the source repository: git submodule update'

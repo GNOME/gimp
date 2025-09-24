@@ -252,7 +252,7 @@ foreach plugin : common_plugins_list
   plugin_custom_targets += custom_target('test-' + plugin_name,
                 input: [ plugin_exe ],
                 output: [ plugin_name + '.dummy' ],
-                command: [ python, meson.project_source_root() / 'build/meson/cp-plug-in-subfolder.py',
+                command: [ python, meson.project_source_root() / 'tools/cp-plug-in-subfolder.py',
                            plugin_exe, meson.current_build_dir() / 'test-plug-ins' / plugin_name,
                            '@OUTPUT@' ],
                 build_by_default: true)
