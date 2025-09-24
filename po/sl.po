@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-23 06:23+0000\n"
-"PO-Revision-Date: 2025-09-23 09:32+0200\n"
+"POT-Creation-Date: 2025-09-24 05:10+0000\n"
+"PO-Revision-Date: 2025-09-24 13:26+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -22072,7 +22072,7 @@ msgstr "Samoobreži sliko"
 msgid "Autocrop layer"
 msgstr "Samoobreži plast"
 
-#: app/pdb/image-cmds.c:2556
+#: app/pdb/image-cmds.c:2564
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -22100,6 +22100,11 @@ msgstr "2D-preoblikovanje"
 #: app/pdb/item-transform-cmds.c:898
 msgid "2D Transforming"
 msgstr "2D-preoblikovanje"
+
+#: app/pdb/link-layer-cmds.c:67 app/pdb/link-layer-cmds.c:89
+#, c-format
+msgid "Failed to create link layer"
+msgstr "Ustvarjanje povezane plasti ni uspelo"
 
 #: app/pdb/path-cmds.c:325
 msgid "Remove path stroke"
