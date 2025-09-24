@@ -3012,7 +3012,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
           /* The blending space variant corresponding to SPACE_RGB_PERCEPTUAL in <3.0
            * corresponds to R'G'B'A which is NON_LINEAR in babl. Perceptual in babl is
            * R~G~B~A, >= 3.0 the code, comments and usage matches the existing enum value
-           * as being NON_LINEAR and new layers created use the new interger value for
+           * as being NON_LINEAR and new layers created use the new integer value for
            * PERCEPTUAL.
            */
           version = MAX (23, version);
@@ -3166,7 +3166,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
 
   /* Note: user unit storage was changed in XCF 21, but we can still
    * easily save older XCF (we use the unit name for both singular and
-   * plural forms). Therefore we don't bump the XCF version unecessarily
+   * plural forms). Therefore we don't bump the XCF version unnecessarily
    * and don't add any test.
    */
 

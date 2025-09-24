@@ -271,7 +271,7 @@ gimp_brush_pipe_select_brush (GimpBrush        *brush,
           break;
 
         case PIPE_SELECT_ANGULAR:
-          /* Coords angle is already nomalized,
+          /* Coords angle is already normalized,
            * offset by 90 degrees is still needed
            * because hoses were made PS compatible*/
           ix = (gint) RINT ((1.0 - current_coords->direction + 0.25) * pipe->rank[i]) % pipe->rank[i];

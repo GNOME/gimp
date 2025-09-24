@@ -706,7 +706,7 @@ gimp_image_window_configure_event (GtkWidget         *widget,
   if (GTK_WIDGET_CLASS (parent_class)->configure_event)
     GTK_WIDGET_CLASS (parent_class)->configure_event (widget, event);
 
-  /* If the window size has changed, make sure additoinal logic is run
+  /* If the window size has changed, make sure additional logic is run
    * in the display shell's size-allocate
    */
   if (event->width  != current_width ||

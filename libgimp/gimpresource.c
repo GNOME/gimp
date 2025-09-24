@@ -36,9 +36,9 @@
  * The GimpContext holds a user's current choice of resources.
  * The GIMP core has the *resource* data.
  *
- * A resource has-a identifier.
+ * A resource has an identifier.
  * Currently the identifier is a string, sometimes called a name.
- * The identifier is unique among instances(resource datas) loaded into GIMP.
+ * The identifier is unique among instances (resource data) loaded into GIMP.
  *
  * A user can change the set of resources installed with GIMP,
  * and edit or create new resources meaning datasets.

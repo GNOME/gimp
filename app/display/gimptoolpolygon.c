@@ -558,7 +558,7 @@ gimp_tool_polygon_fit_segment (GimpToolPolygon   *polygon,
 
     dest_end = &dest_points[n_points - 1];
 
-    /* Transate to origin */
+    /* Translate to origin */
     gimp_vector2_sub (&origo_translation_offset,
                       &vector2_zero,
                       &dest_points[0]);

@@ -220,7 +220,7 @@ icon_themes_current_prefer_symbolic (Gimp *gimp)
    * override the "prefer-symbolic-icons" property, not only to avoid
    * discrepancies, but even more to avoid weird cases where we end up using
    * icons from the system icon theme while the chosen theme has the right icon
-   * (yet simply not in the prefered style). See Issue #9410.
+   * (yet simply not in the preferred style). See Issue #9410.
    */
   if (gtk_icon_theme_has_icon (icon_theme, GIMP_ICON_WILBER) &&
       ! gtk_icon_theme_has_icon (icon_theme, GIMP_ICON_WILBER "-symbolic"))

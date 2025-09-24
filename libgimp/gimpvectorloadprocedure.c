@@ -414,7 +414,7 @@ gimp_vector_load_procedure_run (GimpProcedure        *procedure,
                     "pixel-density", resolution,
                     NULL);
       /* In future, when we'll have vector layers, a vector load proc should be
-       * able to advertize when it can return a vector layer, and when so, we
+       * able to advertise when it can return a vector layer, and when so, we
        * can even bypass the dialog (by running non-interactively) and just use
        * the defaults, unless it's all bogus.
        */

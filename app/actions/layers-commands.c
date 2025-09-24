@@ -1764,7 +1764,7 @@ layers_mask_show_cmd_callback (GimpAction *action,
             {
               /* if switching "show mask" on, and any selected layer's
                * mask is already visible, bail out because that's
-               * exactly the logic we use in the ui for multile
+               * exactly the logic we use in the ui for multiple
                * visible layer masks.
                */
               return;
@@ -1815,7 +1815,7 @@ layers_mask_disable_cmd_callback (GimpAction *action,
             {
               /* if switching "disable mask" on, and any selected
                * layer's mask is already disabled, bail out because
-               * that's exactly the logic we use in the ui for multile
+               * that's exactly the logic we use in the ui for multiple
                * disabled layer masks.
                */
               return;

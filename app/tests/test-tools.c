@@ -398,7 +398,7 @@ crop_tool_can_crop (GimpTestFixture *fixture,
   gint cropped_w = 20;
   gint cropped_h = 30;
 
-  /* Fit display and pause and let it stabalize (two idlings seems to
+  /* Fit display and pause and let it stabilize (two idlings seems to
    * always be enough)
    */
   gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),

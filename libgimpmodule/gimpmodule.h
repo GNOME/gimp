@@ -141,7 +141,7 @@ typedef const GimpModuleInfo * (* GimpModuleQueryFunc)    (GTypeModule *module);
  * When this function is called, the module should register all the types
  * it implements with the passed @module.
  *
- * Returns: Whether the registration was succesfull
+ * Returns: Whether the registration was successful
  **/
 typedef gboolean               (* GimpModuleRegisterFunc) (GTypeModule *module);
 

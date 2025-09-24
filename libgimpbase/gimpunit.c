@@ -874,7 +874,7 @@ gimp_pixels_to_units (gdouble   pixels,
  * gimp_units_to_pixels:
  * @value:      value in units
  * @unit:       unit of @value
- * @resolution: resloution in DPI
+ * @resolution: resolution in DPI
  *
  * Converts a @value specified in @unit to pixels.
  *
@@ -899,7 +899,7 @@ gimp_units_to_pixels (gdouble   value,
  * gimp_units_to_points:
  * @value:      value in units
  * @unit:       unit of @value
- * @resolution: resloution in DPI
+ * @resolution: resolution in DPI
  *
  * Converts a @value specified in @unit to points.
  *

@@ -3319,7 +3319,7 @@ gimp_dashboard_field_to_string (GimpDashboard *dashboard,
   const FieldInfo      *field_info    = &group_info->fields[field];
   const VariableInfo   *variable_info = &variables[field_info->variable];
   const VariableData   *variable_data = &priv->variables[field_info->variable];
-  /* Tranlators: "N/A" is an abbreviation for "not available" */
+  /* Translators: "N/A" is an abbreviation for "not available" */
   const gchar          *str           = C_("dashboard-value", "N/A");
   gboolean              static_str    = TRUE;
   gboolean              show_limit    = TRUE;

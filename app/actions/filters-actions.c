@@ -824,7 +824,7 @@ filters_actions_setup (GimpActionGroup *group)
            * operations end up generating the same action name. Typically we
            * don't want a third-party operation called "my-op" to have the same
            * action name than "my_op" (which is to say that one will be
-           * overrided by the other).
+           * overridden by the other).
            */
           g_free (action_name);
           action_name = g_strdup_printf ("filters-%s-%d", formatted_op_name, i++);
