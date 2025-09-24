@@ -65,6 +65,7 @@ typedef enum
   LAYER_ID_VECTOR,
   LAYER_ID_GROUP,
   LAYER_ID_TEXT,
+  LAYER_ID_LINK,
   LAYER_ID_RASTER
 } LAYER_ID;
 
@@ -178,6 +179,10 @@ static void          svg_export_text         (GimpTextLayer         *layer,
 static void          svg_export_text_lines   (GimpTextLayer         *layer,
                                               GString               *str,
                                               gchar                 *text);
+static void          svg_export_link_layer   (GimpLinkLayer         *layer,
+                                              gint                   link_id,
+                                              GString               *str,
+                                              gchar                 *spacing);
 static void          svg_export_raster       (GimpLayer             *layer,
                                               gint                   raster_id,
                                               GString               *str,
@@ -1133,7 +1138,7 @@ svg_export_file (GimpImage            *image,
   GList    *drawables;
   GList    *list;
   GString  *str = g_string_new (NULL);
-  gint      layer_ids[4];
+  gint      layer_ids[5] = { 0 };
   gchar    *title;
   gboolean  export_rasters;
 
@@ -1168,7 +1173,7 @@ svg_export_file (GimpImage            *image,
     {
       if (gimp_item_get_visible (GIMP_ITEM (list->data)))
         {
-          if (GIMP_IS_VECTOR_LAYER (list->data))
+          if (gimp_item_is_vector_layer (GIMP_ITEM (list->data)))
             {
               GimpVectorLayer *layer = GIMP_VECTOR_LAYER (list->data);
 
@@ -1182,11 +1187,18 @@ svg_export_file (GimpImage            *image,
                                     str, config, "  ", error);
               g_string_append_printf (str, "  </g>\n");
             }
-          else if (GIMP_IS_TEXT_LAYER (list->data))
+          else if (gimp_item_is_text_layer (GIMP_ITEM (list->data)))
             {
               GimpTextLayer *layer = GIMP_TEXT_LAYER (list->data);
 
               svg_export_text (layer, layer_ids[LAYER_ID_TEXT]++, str, "  ");
+            }
+          else if (gimp_item_is_link_layer (GIMP_ITEM (list->data)))
+            {
+              GimpLinkLayer *layer = GIMP_LINK_LAYER (list->data);
+
+              svg_export_link_layer (layer, layer_ids[LAYER_ID_LINK]++, str,
+                                     " ");
             }
           else if (export_rasters)
             {
@@ -1228,7 +1240,7 @@ svg_export_group_rec (GimpGroupLayer       *group,
     {
       if (gimp_item_get_visible (GIMP_ITEM (children[i])))
         {
-          if (GIMP_IS_VECTOR_LAYER (children[i]))
+          if (gimp_item_is_vector_layer (GIMP_ITEM (children[i])))
             {
               GimpVectorLayer *layer = GIMP_VECTOR_LAYER (children[i]);
 
@@ -1244,12 +1256,19 @@ svg_export_group_rec (GimpGroupLayer       *group,
                                      str, config, extra_spacing, error);
               g_string_append_printf (str, "%s</g>\n", extra_spacing);
             }
-          else if (GIMP_IS_TEXT_LAYER (children[i]))
+          else if (gimp_item_is_text_layer (GIMP_ITEM (children[i])))
             {
               GimpTextLayer *layer = GIMP_TEXT_LAYER (children[i]);
 
               svg_export_text (layer, layer_ids[LAYER_ID_TEXT]++, str,
                                extra_spacing);
+            }
+          else if (gimp_item_is_link_layer (GIMP_ITEM (children[i])))
+            {
+              GimpLinkLayer *layer = GIMP_LINK_LAYER (children[i]);
+
+              svg_export_link_layer (layer, layer_ids[LAYER_ID_LINK]++, str,
+                                     extra_spacing);
             }
           else if (export_rasters)
             {
@@ -1653,6 +1672,46 @@ svg_export_text_lines (GimpTextLayer *layer,
 }
 
 static void
+svg_export_link_layer (GimpLinkLayer         *layer,
+                       gint                   link_id,
+                       GString               *str,
+                       gchar                 *spacing)
+{
+  GFile *file;
+  gchar *name;
+  gchar *path;
+  gint   width;
+  gint   height;
+  gint   x;
+  gint   y;
+
+  width  = gimp_drawable_get_width (GIMP_DRAWABLE (layer));
+  height = gimp_drawable_get_height (GIMP_DRAWABLE (layer));
+  gimp_drawable_get_offsets (GIMP_DRAWABLE (layer), &x, &y);
+
+  name = g_strdup_printf ("link%d", link_id);
+
+  file = gimp_link_layer_get_file (layer);
+  path = g_file_get_path (file);
+
+  g_string_append_printf (str,
+                          "%s<image id=\"%s\"\n"
+                          "%s      x=\"%d\"\n"
+                          "%s      y=\"%d\"\n"
+                          "%s      width=\"%d\"\n"
+                          "%s      height=\"%d\"\n"
+                          "%s      href=\"%s\" />\n",
+                          spacing, name,
+                          spacing, x,
+                          spacing, y,
+                          spacing, width,
+                          spacing, height,
+                          spacing, path);
+  g_free (name);
+  g_free (path);
+}
+
+static void
 svg_export_raster (GimpLayer            *layer,
                    gint                  raster_id,
                    GString              *str,
@@ -1789,6 +1848,7 @@ svg_export_raster (GimpLayer            *layer,
                               spacing, height,
                               spacing, mimetype, encoded);
       g_free (encoded);
+      g_free (name);
       g_free (buf);
     }
   fclose (temp_fp);
