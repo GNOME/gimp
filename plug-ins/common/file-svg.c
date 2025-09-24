@@ -147,6 +147,8 @@ static GimpPDBStatusType   load_dialog       (GFile                 *file,
 static gboolean            export_dialog     (GimpImage             *image,
                                               GimpProcedure         *procedure,
                                               GObject               *config);
+static gboolean            has_invalid_links (GimpLayer            **layers,
+                                              GimpGroupLayer        *group);
 
 static gboolean       svg_extract_dimensions (RsvgHandle            *handle,
                                               GimpVectorLoadData    *extracted_dimensions);
@@ -1075,10 +1077,28 @@ export_dialog (GimpImage     *image,
 {
   GtkWidget *dialog;
   gboolean   run;
+  gboolean   has_nonstandard_links = FALSE;
 
   dialog = gimp_export_procedure_dialog_new (GIMP_EXPORT_PROCEDURE (procedure),
                                              GIMP_PROCEDURE_CONFIG (config),
                                              image);
+
+  has_nonstandard_links = has_invalid_links (gimp_image_get_layers (image),
+                                             NULL);
+  if (has_nonstandard_links)
+    {
+      gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "link-warning",
+                                       _("The SVG format only requires viewers "
+                                         "to display image links for SVG, PNG, "
+                                         "and JPEG images.\nLink layers for "
+                                         "images in other formats may not "
+                                         "show up in all viewers."),
+                                       FALSE, FALSE);
+
+      gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "link-warning", NULL);
+    }
 
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
                                     "raster-frame", "export-raster-layers",
@@ -1092,6 +1112,44 @@ export_dialog (GimpImage     *image,
   gtk_widget_destroy (dialog);
 
   return run;
+}
+
+static gboolean
+has_invalid_links (GimpLayer      **layers,
+                   GimpGroupLayer  *group)
+{
+  GimpItem **temp_layers = (GimpItem **) layers;
+  gint32     n_layers;
+
+  if (layers == NULL)
+    temp_layers = gimp_item_get_children (GIMP_ITEM (group));
+
+  n_layers = gimp_core_object_array_get_length ((GObject **) temp_layers);
+
+  for (gint i = 0; i < n_layers; i++)
+    {
+      if (gimp_item_is_link_layer (temp_layers[i]))
+        {
+          gchar *mimetype =
+            gimp_link_layer_get_mime_type (GIMP_LINK_LAYER (temp_layers[i]));
+
+          /* The SVG specification only requires viewers to support
+             SVG, PNG, and JPEG links. If the linked layer is not one of
+             those types, we'll notify the user */
+          if (g_strcmp0 (mimetype, "image/svg+xml") != 0 &&
+              g_strcmp0 (mimetype, "image/png") != 0 &&
+              g_strcmp0 (mimetype, "image/jpeg") != 0)
+            return TRUE;
+
+        }
+      else if (gimp_item_is_group (GIMP_ITEM (temp_layers[i])))
+        {
+          if (has_invalid_links (NULL, GIMP_GROUP_LAYER (temp_layers[i])))
+            return TRUE;
+        }
+    }
+
+  return FALSE;
 }
 
 #if LIBRSVG_CHECK_VERSION(2, 46, 0)
