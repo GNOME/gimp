@@ -10,18 +10,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-24 05:10+0000\n"
-"PO-Revision-Date: 2025-09-24 13:26+0200\n"
+"POT-Creation-Date: 2025-09-24 17:18+0000\n"
+"PO-Revision-Date: 2025-09-24 19:51+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
-"%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
+"n%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
 msgid "The GIMP team"
@@ -2570,8 +2570,8 @@ msgid "Enter a description for the marker"
 msgstr "Vnesite opis oznake"
 
 #: app/actions/data-commands.c:90 app/actions/documents-commands.c:393
-#: app/actions/file-commands.c:234 app/dialogs/file-open-dialog.c:253
-#: app/dialogs/file-open-dialog.c:295
+#: app/actions/file-commands.c:234 app/dialogs/file-open-dialog.c:254
+#: app/dialogs/file-open-dialog.c:300
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
 #: app/display/gimpdisplayshell-dnd.c:646 app/widgets/gimplayertreeview.c:796
@@ -7664,7 +7664,7 @@ msgstr "Slikajte vzdolž poti z zadnjimi vrednostmi"
 #: app/actions/paths-actions.c:135
 msgctxt "paths-action"
 msgid "Co_py Paths"
-msgstr "Ko_piraj poti …"
+msgstr "Ko_piraj poti"
 
 #: app/actions/paths-actions.c:140
 msgctxt "paths-action"
@@ -10618,8 +10618,8 @@ msgstr "Barva prosojnosti po meri 2"
 #: app/config/gimprc-blurbs.h:11
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to focus"
-"\"."
+"receives the focus. This is useful for window managers using \"click to "
+"focus\"."
 msgstr ""
 "Če je omogočeno, bo slika postala aktivna, ko njeno okno dobi pozornost. To "
 "je uporabno za upravljalnike oken, ki uporabljajo »klikni za "
@@ -13831,11 +13831,11 @@ msgstr "Preoblikovanje"
 #: app/core/gimpdrawablefilter.c:959
 #, c-format
 msgid ""
-"GEGL operation '%s' has been called with a non-existent argument name '%s' (#"
-"%d)."
+"GEGL operation '%s' has been called with a non-existent argument name "
+"'%s' (#%d)."
 msgstr ""
-"Operacija GEGL »%s« je bila klicana z neobstoječim imenom argumenta »%s« (#"
-"%d)."
+"Operacija GEGL »%s« je bila klicana z neobstoječim imenom argumenta "
+"»%s« (#%d)."
 
 #: app/core/gimpdrawablefilter.c:1023
 #, c-format
@@ -14866,11 +14866,11 @@ msgstr "Največja dolžina ravnega sklenjanja"
 msgid "Maximum straight length (in pixels) to close the line art"
 msgstr "Največja ravna dolžina (v slikovnih točkah) za zapiranje črt"
 
-#: app/core/gimplink.c:255
+#: app/core/gimplink.c:256
 msgid "The file got deleted"
 msgstr "Datoteka je izbrisana"
 
-#: app/core/gimplink.c:349
+#: app/core/gimplink.c:351
 msgid "No file was set"
 msgstr "Nobena datoteka ni nastavljena"
 
@@ -16043,9 +16043,14 @@ msgid "Search extensions matching these keywords"
 msgstr "Išči razširitve, ki se ujemajo s temi ključnimi besedami"
 
 #: app/dialogs/file-open-dialog.c:142 app/dialogs/file-open-dialog.c:168
-#: app/dialogs/file-open-dialog.c:286
+#: app/dialogs/file-open-dialog.c:291
 msgid "Open layers"
 msgstr "Odpri plasti"
+
+#: app/dialogs/file-open-dialog.c:258
+#, c-format
+msgid "Opening '%s' failed."
+msgstr "Odpiranje »%s« ni uspelo."
 
 #: app/dialogs/file-open-location-dialog.c:74
 msgid "Open Location"
@@ -21955,11 +21960,11 @@ msgstr ""
 #: app/pdb/gimpprocedure.c:863
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
-"%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument "
+"'%s' (#%d). Expected %s, got %s."
 msgstr ""
-"Procedura »%s« je bila priklicana z napačno vrsto vrednosti argumenta »%s« (#"
-"%d). Pričakovano %s, prejeto %s."
+"Procedura »%s« je bila priklicana z napačno vrsto vrednosti argumenta "
+"»%s« (#%d). Pričakovano %s, prejeto %s."
 
 #: app/pdb/gimpprocedure.c:900
 #, c-format
@@ -22003,8 +22008,8 @@ msgid ""
 "Procedure '%s' returned `gimp_unit_pixel()` as GimpUnit return value #%d "
 "'%s'. This return value does not allow pixel unit."
 msgstr ""
-"Procedura »%s« je vrnila »gimp_unit_pixel()« kot vrnjeno vrednost GimpUnit #"
-"%d '%s'. Ta vrnjena vrednost ne dovoli enot slikovnih točk."
+"Procedura »%s« je vrnila »gimp_unit_pixel()« kot vrnjeno vrednost GimpUnit "
+"#%d '%s'. Ta vrnjena vrednost ne dovoli enot slikovnih točk."
 
 #: app/pdb/gimpprocedure.c:973
 #, c-format
@@ -27443,7 +27448,7 @@ msgstr "Drugi podatki"
 msgid "Select fields"
 msgstr "Izberite polja"
 
-#. Tranlators: "N/A" is an abbreviation for "not available"
+#. Translators: "N/A" is an abbreviation for "not available"
 #: app/widgets/gimpdashboard.c:3323
 msgctxt "dashboard-value"
 msgid "N/A"
