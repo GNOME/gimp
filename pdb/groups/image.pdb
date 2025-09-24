@@ -2414,6 +2414,8 @@ HELP
         code => <<'CODE'
 {
   file = gimp_image_get_any_file (image);
+  if (file)
+    g_object_ref (file);
 }
 CODE
     );
@@ -2500,6 +2502,8 @@ HELP
         code => <<'CODE'
 {
   file = gimp_image_get_file (image);
+  if (file)
+    g_object_ref (file);
 }
 CODE
     );
@@ -2534,6 +2538,8 @@ HELP
         code => <<'CODE'
 {
   file = gimp_image_get_imported_file (image);
+  if (file)
+    g_object_ref (file);
 }
 CODE
     );
@@ -2567,6 +2573,8 @@ HELP
         code => <<'CODE'
 {
   file = gimp_image_get_exported_file (image);
+  if (file)
+    g_object_ref (file);
 }
 CODE
     );

@@ -464,7 +464,7 @@ package Gimp::CodeGen::pdb;
 		     get_value_func  => '$var = g_value_get_object ($value)',
 		     dup_value_func  => '$var = GIMP_VALUES_DUP_FILE ($value)',
 		     set_value_func  => 'g_value_set_object ($value, $var)',
-		     take_value_func => 'g_value_set_object ($value, $var)' },
+		     take_value_func => 'g_value_take_object ($value, $var)' },
 
     parasite    => { name            => 'PARASITE',
 		     gtype           => 'GIMP_TYPE_PARASITE',

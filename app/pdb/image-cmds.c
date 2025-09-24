@@ -2318,13 +2318,15 @@ image_get_file_invoker (GimpProcedure         *procedure,
   if (success)
     {
       file = gimp_image_get_any_file (image);
+      if (file)
+        g_object_ref (file);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), file);
+    g_value_take_object (gimp_value_array_index (return_vals, 1), file);
 
   return return_vals;
 }
@@ -2396,13 +2398,15 @@ image_get_xcf_file_invoker (GimpProcedure         *procedure,
   if (success)
     {
       file = gimp_image_get_file (image);
+      if (file)
+        g_object_ref (file);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), file);
+    g_value_take_object (gimp_value_array_index (return_vals, 1), file);
 
   return return_vals;
 }
@@ -2425,13 +2429,15 @@ image_get_imported_file_invoker (GimpProcedure         *procedure,
   if (success)
     {
       file = gimp_image_get_imported_file (image);
+      if (file)
+        g_object_ref (file);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), file);
+    g_value_take_object (gimp_value_array_index (return_vals, 1), file);
 
   return return_vals;
 }
@@ -2454,13 +2460,15 @@ image_get_exported_file_invoker (GimpProcedure         *procedure,
   if (success)
     {
       file = gimp_image_get_exported_file (image);
+      if (file)
+        g_object_ref (file);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), file);
+    g_value_take_object (gimp_value_array_index (return_vals, 1), file);
 
   return return_vals;
 }

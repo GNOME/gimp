@@ -223,7 +223,7 @@ temp_file_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), file);
+    g_value_take_object (gimp_value_array_index (return_vals, 1), file);
 
   return return_vals;
 }
