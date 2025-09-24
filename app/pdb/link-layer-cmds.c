@@ -166,14 +166,14 @@ link_layer_get_file_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      file = gimp_link_get_file (gimp_link_layer_get_link (layer), NULL, NULL);
+      file = g_object_ref (gimp_link_get_file (gimp_link_layer_get_link (layer), NULL, NULL));
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), file);
+    g_value_take_object (gimp_value_array_index (return_vals, 1), file);
 
   return return_vals;
 }
