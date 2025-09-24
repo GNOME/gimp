@@ -139,7 +139,7 @@ file_open_image (Gimp                *gimp,
         }
     }
 
-  if (! file_open_valid_permissions (file, error))
+  if (g_file_is_native (file) && ! file_open_valid_permissions (file, error))
     return NULL;
 
   if (! file_proc)
@@ -789,7 +789,7 @@ file_open_link_image (Gimp                *gimp,
                                                           GIMP_FILE_PROCEDURE_GROUP_OPEN,
                                                           file, error);
 
-  if (! file_open_valid_permissions (file, error))
+  if (g_file_is_native (file) && ! file_open_valid_permissions (file, error))
     return NULL;
 
   if (g_file_is_native (file) && file_proc != NULL)
