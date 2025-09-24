@@ -523,7 +523,7 @@ gimp_vector_layer_removed_options_path (GimpVectorLayer *layer)
   if (layer->options)
     {
       gimp_image_undo_push_vector_layer (gimp_item_get_image (GIMP_ITEM (layer)),
-                                         _("Discard Vector Informations"),
+                                         _("Discard Vector Information"),
                                          layer, NULL);
 
       g_object_set (layer->options, "path", NULL, NULL);
