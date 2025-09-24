@@ -68,7 +68,22 @@ API:
     * gimp_vector_layer_set_stroke_miter_limit
     * gimp_vector_layer_set_stroke_width
     * gimp_vector_layer_set_stroke_width_unit
-
+    * gimp_item_is_vector_layer
+    * gimp_item_id_is_link_layer
+    * gimp_item_is_link_layer
+    * gimp_link_layer_discard
+    * gimp_link_layer_get_by_id
+    * gimp_link_layer_get_file
+    * gimp_link_layer_get_type
+    * gimp_link_layer_monitor
+    * gimp_link_layer_new
+    * gimp_link_layer_set_file
+    * gimp_param_link_layer_get_type
+    * gimp_param_spec_link_layer
+    * gimp_procedure_add_link_layer_argument
+    * gimp_procedure_add_link_layer_aux_argument
+    * gimp_procedure_add_link_layer_return_value
+  - New libgimp class: GimpLinkLayer
 
 Build:
 
@@ -82,6 +97,7 @@ Build:
     issue #12626.
   - release-stats.sh script updated to generate text directly pastable
     into our release news.
+  - Improved packages binary caching with ORAS for Flatpak.
 
 
 Overview of Changes from GIMP 3.1.2 to GIMP 3.1.4
