@@ -243,9 +243,14 @@ file_open_dialog_open_image (GtkWidget           *dialog,
 
   if (! image && status != GIMP_PDB_SUCCESS && status != GIMP_PDB_CANCEL)
     {
-      gimp_message (gimp, G_OBJECT (dialog), GIMP_MESSAGE_ERROR,
-                    _("Opening '%s' failed:\n\n%s"),
-                    gimp_file_get_utf8_name (file), error->message);
+      if (error)
+        gimp_message (gimp, G_OBJECT (dialog), GIMP_MESSAGE_ERROR,
+                      _("Opening '%s' failed:\n\n%s"),
+                      gimp_file_get_utf8_name (file), error->message);
+      else
+        gimp_message (gimp, G_OBJECT (dialog), GIMP_MESSAGE_ERROR,
+                      _("Opening '%s' failed."),
+                      gimp_file_get_utf8_name (file));
       g_clear_error (&error);
     }
 
