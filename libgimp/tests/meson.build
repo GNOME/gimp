@@ -52,7 +52,7 @@ foreach test_name : tests
   custom_target(basename + '.dummy',
                 input: [ c_test_exe ],
                 output: [ basename + '.dummy' ],
-                command: [ python, meson.project_source_root() / 'build/meson/cp-plug-in-subfolder.py',
+                command: [ python, meson.project_source_root() / 'tools/cp-plug-in-subfolder.py',
                            c_test_exe, meson.current_build_dir() / 'c-tests' / basename,
                            '@OUTPUT@' ],
                 build_by_default: true,
