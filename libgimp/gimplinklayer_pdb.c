@@ -232,3 +232,48 @@ gimp_link_layer_set_file (GimpLinkLayer *layer,
 
   return success;
 }
+
+/**
+ * gimp_link_layer_get_mime_type:
+ * @layer: The link layer.
+ *
+ * Get the mime type of the monitored file.
+ *
+ * This procedure returns the mime type of the file which is being
+ * monitored by @layer.
+ *
+ * Note that this will be the real mime type, corresponding to our
+ * format support, as returned by the [class@Gimp.LoadProcedure] which
+ * actually performs the external image file import.
+ *
+ * This function may also return %NULL in case of error (for instance
+ * if the external file doesn't exist anymore).
+ *
+ * Returns: (transfer full): The mime type of the monitored file.
+ *          The returned value must be freed with g_free().
+ *
+ * Since: 3.2
+ **/
+gchar *
+gimp_link_layer_get_mime_type (GimpLinkLayer *layer)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gchar *mimetype = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_LINK_LAYER, layer,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-link-layer-get-mime-type",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    mimetype = GIMP_VALUES_DUP_STRING (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return mimetype;
+}

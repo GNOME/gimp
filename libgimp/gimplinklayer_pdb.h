@@ -32,13 +32,14 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-GimpLinkLayer* gimp_link_layer_new      (GimpImage     *image,
-                                         GFile         *file);
-gboolean       gimp_link_layer_discard  (GimpLinkLayer *layer);
-gboolean       gimp_link_layer_monitor  (GimpLinkLayer *layer);
-GFile*         gimp_link_layer_get_file (GimpLinkLayer *layer);
-gboolean       gimp_link_layer_set_file (GimpLinkLayer *layer,
-                                         GFile         *file);
+GimpLinkLayer* gimp_link_layer_new           (GimpImage     *image,
+                                              GFile         *file);
+gboolean       gimp_link_layer_discard       (GimpLinkLayer *layer);
+gboolean       gimp_link_layer_monitor       (GimpLinkLayer *layer);
+GFile*         gimp_link_layer_get_file      (GimpLinkLayer *layer);
+gboolean       gimp_link_layer_set_file      (GimpLinkLayer *layer,
+                                              GFile         *file);
+gchar*         gimp_link_layer_get_mime_type (GimpLinkLayer *layer);
 
 
 G_END_DECLS

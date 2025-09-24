@@ -204,6 +204,42 @@ CODE
     );
 }
 
+sub link_layer_get_mime_type {
+    $blurb = 'Get the mime type of the monitored file.';
+
+    $help = <<'HELP';
+This procedure returns the mime type of the file which is being monitored by @layer.
+
+
+Note that this will be the real mime type, corresponding to our format support,
+as returned by the [class@Gimp.LoadProcedure] which actually performs the external
+image file import.
+
+
+This function may also return %NULL in case of error (for instance if the external
+file doesn't exist anymore).
+HELP
+
+    &jehan_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'link_layer',
+          desc => 'The link layer' }
+    );
+
+    @outargs = (
+        { name => 'mimetype', type => 'string',
+          desc => 'The mime type of the monitored file' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  mimetype = g_strdup (gimp_link_get_mime_type (gimp_link_layer_get_link (layer)));
+}
+CODE
+    );
+}
 @headers = qw("core/gimplink.h"
               "core/gimplinklayer.h"
               "gimppdberror.h"
@@ -213,7 +249,8 @@ CODE
             link_layer_discard
             link_layer_monitor
             link_layer_get_file
-            link_layer_set_file);
+            link_layer_set_file
+            link_layer_get_mime_type);
 
 %exports = (app => [@procs], lib => [@procs]);
 

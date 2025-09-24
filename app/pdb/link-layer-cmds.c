@@ -213,6 +213,35 @@ link_layer_set_file_invoker (GimpProcedure         *procedure,
                                            error ? *error : NULL);
 }
 
+static GimpValueArray *
+link_layer_get_mime_type_invoker (GimpProcedure         *procedure,
+                                  Gimp                  *gimp,
+                                  GimpContext           *context,
+                                  GimpProgress          *progress,
+                                  const GimpValueArray  *args,
+                                  GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpLinkLayer *layer;
+  gchar *mimetype = NULL;
+
+  layer = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      mimetype = g_strdup (gimp_link_get_mime_type (gimp_link_layer_get_link (layer)));
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_string (gimp_value_array_index (return_vals, 1), mimetype);
+
+  return return_vals;
+}
+
 void
 register_link_layer_procs (GimpPDB *pdb)
 {
@@ -359,6 +388,40 @@ register_link_layer_procs (GimpPDB *pdb)
                                                     "The file to monitor",
                                                     G_TYPE_FILE,
                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-link-layer-get-mime-type
+   */
+  procedure = gimp_procedure_new (link_layer_get_mime_type_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-link-layer-get-mime-type");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the mime type of the monitored file.",
+                                  "This procedure returns the mime type of the file which is being monitored by @layer.\n"
+                                  "\n"
+                                  "Note that this will be the real mime type, corresponding to our format support, as returned by the [class@Gimp.LoadProcedure] which actually performs the external image file import.\n"
+                                  "\n"
+                                  "This function may also return %NULL in case of error (for instance if the external file doesn't exist anymore).",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_link_layer ("layer",
+                                                           "layer",
+                                                           "The link layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("mimetype",
+                                                           "mimetype",
+                                                           "The mime type of the monitored file",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }
