@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-05-25 16:27+0000\n"
-"PO-Revision-Date: 2025-05-25 20:59+0300\n"
+"POT-Creation-Date: 2025-09-23 18:51+0000\n"
+"PO-Revision-Date: 2025-09-23 21:56+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -72,6 +72,26 @@ msgstr "Записати окремий файл CSS"
 msgid "Choose File"
 msgstr "Виберіть файл"
 
+#: plug-ins/python/file-openraster.py:480
+#: plug-ins/python/file-openraster.py:481
+msgid "export an OpenRaster (.ora) file"
+msgstr "експортувати файл OpenRaster (.ora)"
+
+#: plug-ins/python/file-openraster.py:483
+#: plug-ins/python/file-openraster.py:489
+msgid "OpenRaster"
+msgstr "OpenRaster"
+
+#: plug-ins/python/file-openraster.py:490
+#: plug-ins/python/file-openraster.py:491
+msgid "load an OpenRaster (.ora) file"
+msgstr "завантажити файл OpenRaster (.ora)"
+
+#: plug-ins/python/file-openraster.py:500
+#: plug-ins/python/file-openraster.py:501
+msgid "loads a thumbnail from an OpenRaster (.ora) file"
+msgstr "завантажує мініатюру з файла OpenRaster (.ora)"
+
 #: plug-ins/python/foggify.py:119
 msgid "Add a layer of fog"
 msgstr "Додати шар туману"
@@ -130,7 +150,6 @@ msgid "Save Gradient as CSS..."
 msgstr "Зберегти градієнт як CSS…"
 
 #: plug-ins/python/gradients-save-as-css.py:140
-#: plug-ins/python/palette-export-as-kpl.py:176
 #: plug-ins/python/palette-offset.py:55 plug-ins/python/palette-sort.py:354
 #: plug-ins/python/palette-to-gradient.py:145
 #: plug-ins/python/python-console/python-console.py:323
@@ -138,7 +157,6 @@ msgid "Run mode"
 msgstr "Режим виконання"
 
 #: plug-ins/python/gradients-save-as-css.py:141
-#: plug-ins/python/palette-export-as-kpl.py:177
 #: plug-ins/python/palette-offset.py:56 plug-ins/python/palette-sort.py:355
 #: plug-ins/python/palette-to-gradient.py:146
 #: plug-ins/python/python-console/python-console.py:324
@@ -218,50 +236,6 @@ msgstr "_Формат виводу"
 #: plug-ins/python/histogram-export.py:235
 msgid "Output format"
 msgstr "Формат виводу"
-
-#: plug-ins/python/palette-export-as-kpl.py:55
-msgid "Options"
-msgstr "Параметри"
-
-#: plug-ins/python/palette-export-as-kpl.py:60
-msgid "_Export"
-msgstr "_Експортувати"
-
-#: plug-ins/python/palette-export-as-kpl.py:167
-#: plug-ins/python/palette-export-as-kpl.py:168
-msgid "Export palette as Krita .kpl"
-msgstr "Експортувати палітру як .kpl Krita"
-
-#: plug-ins/python/palette-export-as-kpl.py:170
-#| msgid "_Sort Palette..."
-msgid "_Krita palette..."
-msgstr "Палітра _Krita…"
-
-#: plug-ins/python/palette-export-as-kpl.py:180
-#| msgid "Palette to _Gradient"
-msgid "_Palette to export"
-msgstr "_Палітра для експортування"
-
-#: plug-ins/python/palette-export-as-kpl.py:184
-#| msgid "_File..."
-msgid "_File (.kpl)"
-msgstr "_файл (.kpl)"
-
-#: plug-ins/python/palette-export-as-kpl.py:187
-msgid "Commen_t"
-msgstr "_Коментар"
-
-#: plug-ins/python/palette-export-as-kpl.py:188
-msgid "Optional comment"
-msgstr "Необов'язковий коментар"
-
-#: plug-ins/python/palette-export-as-kpl.py:191
-msgid "Re_ad only"
-msgstr "_Лише читання"
-
-#: plug-ins/python/palette-export-as-kpl.py:192
-msgid "The palette will be locked on import"
-msgstr "Палітру буде заблоковано при імпортуванні"
 
 #: plug-ins/python/palette-offset.py:48
 msgid "_Offset Palette..."
@@ -1064,6 +1038,39 @@ msgid ""
 msgstr ""
 "Визначає, чи слід застосовувати довгий градієнт для встановлення "
 "відповідності довжині візерунка. Можна застосувати лише до деяких засобів."
+
+#~ msgid "Options"
+#~ msgstr "Параметри"
+
+#~ msgid "_Export"
+#~ msgstr "_Експортувати"
+
+#~ msgid "Export palette as Krita .kpl"
+#~ msgstr "Експортувати палітру як .kpl Krita"
+
+#~| msgid "_Sort Palette..."
+#~ msgid "_Krita palette..."
+#~ msgstr "Палітра _Krita…"
+
+#~| msgid "Palette to _Gradient"
+#~ msgid "_Palette to export"
+#~ msgstr "_Палітра для експортування"
+
+#~| msgid "_File..."
+#~ msgid "_File (.kpl)"
+#~ msgstr "_файл (.kpl)"
+
+#~ msgid "Commen_t"
+#~ msgstr "_Коментар"
+
+#~ msgid "Optional comment"
+#~ msgstr "Необов'язковий коментар"
+
+#~ msgid "Re_ad only"
+#~ msgstr "_Лише читання"
+
+#~ msgid "The palette will be locked on import"
+#~ msgstr "Палітру буде заблоковано при імпортуванні"
 
 #~ msgid "Choose CSS file..."
 #~ msgstr "Виберіть файл CSS…"
