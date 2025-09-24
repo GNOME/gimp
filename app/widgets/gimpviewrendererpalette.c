@@ -161,13 +161,12 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
 
       if ((y % renderpal->cell_height) == 0)
         {
+          guchar  rgba[4];
           gint    n = 0;
           guchar *d = row;
 
           for (x = 0; x < renderer->width; x++, d += 4)
             {
-              guchar rgba[4];
-
               if ((x % renderpal->cell_width) == 0)
                 {
                   if (list && n < renderpal->columns &&
