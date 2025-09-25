@@ -361,6 +361,32 @@ libgimpui_introspectable = [
 ]
 
 
+if glib.version().version_compare('>=2.86')
+  if not platform_windows
+    gio_specific_gir = 'GioUnix-2.0'
+    gio_specific_vapi = 'gio-unix-2.0'
+  else
+    gio_specific_gir = 'GioWin32-2.0'
+    gio_specific_vapi = 'gio-windows-2.0'
+  endif
+else
+  gio_specific_gir = ''
+  gio_specific_vapi = ''
+endif
+
+libgimp_deps_table = [
+    { 'gir': 'Babl-0.1',          'vapi': 'babl-0.1',        },
+    { 'gir': 'cairo-1.0',         'vapi': 'cairo-1.0',       },
+    { 'gir': 'GdkPixbuf-2.0',     'vapi': 'gdk-pixbuf-2.0',  },
+    { 'gir': 'Gegl-0.4',          'vapi': 'gegl-0.4',        },
+    { 'gir': 'Gio-2.0',           'vapi': 'gio-2.0',         },
+    { 'gir': gio_specific_gir,    'vapi': gio_specific_vapi, },
+    { 'gir': 'GLib-2.0',          'vapi': 'glib-2.0',        },
+    { 'gir': 'GObject-2.0',       'vapi': 'gobject-2.0',     },
+    { 'gir': 'Pango-1.0',         'vapi': 'gtk+-3.0',        },
+  ]
+
+
 libgimp = library('gimp-'+ gimp_api_version,
   libgimp_sources,
   include_directories: rootInclude,
@@ -489,23 +515,12 @@ elif get_option('b_sanitize') != 'none'
   warnings += gobject_introspection_warning
 else
   have_gobject_introspection = true
-  libgimp_gir_includes = [
-    'Babl-0.1',
-    'cairo-1.0',
-    'GdkPixbuf-2.0',
-    'Gegl-0.4',
-    'Gio-2.0',
-    'GLib-2.0',
-    'GObject-2.0',
-    'Pango-1.0',
-  ]
-  if glib.version().version_compare('>=2.86')
-    if not platform_windows
-      libgimp_gir_includes += [ 'GioUnix-2.0' ]
-    else
-      libgimp_gir_includes += [ 'GioWin32-2.0' ]
+  libgimp_gir_includes = []
+  foreach dep : libgimp_deps_table
+    if dep['gir'] != ''
+      libgimp_gir_includes += [dep['gir']]
     endif
-  endif
+  endforeach
 
   gir_args = [
     '-DGIMP_COMPILATION',
@@ -569,23 +584,12 @@ else
   endif
 
   if have_vala
-    vapi_deps = [
-      'babl-0.1',
-      'cairo-1.0',
-      'gdk-pixbuf-2.0',
-      'gegl-0.4',
-      'gio-2.0',
-      'glib-2.0',
-      'gobject-2.0',
-      'gtk+-3.0',
-    ]
-    if glib.version().version_compare('>=2.86')
-      if not platform_windows
-        vapi_deps += [ 'gio-unix-2.0' ]
-      else
-        vapi_deps += [ 'gio-windows-2.0' ]
+    vapi_deps = []
+    foreach dep : libgimp_deps_table
+      if dep['vapi'] != ''
+        vapi_deps += [dep['vapi']]
       endif
-    endif
+    endforeach
 
     libgimp_vapi = gnome.generate_vapi('gimp-' + gimp_api_version,
       sources: libgimp_gir[0],
