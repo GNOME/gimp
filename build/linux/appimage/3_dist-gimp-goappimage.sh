@@ -314,6 +314,7 @@ bund_usr "$UNIX_PREFIX" "share/mime"
 bund_usr "$UNIX_PREFIX" "lib/gdk-pixbuf-*/*.*.*/loaders/*.so" --bundler
 conf_app GDK_PIXBUF_MODULEDIR "${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/*.*.*/loaders"
 conf_app GDK_PIXBUF_MODULE_FILE "${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/*.*.*/loaders.cache"
+conf_app NO_AT_BRIDGE "1" --no-expand
 ### GTK commonly required modules
 prep_pkg "libcanberra-gtk3-module"
 prep_pkg "libxapp-gtk3-module"
@@ -508,7 +509,7 @@ printf "\e[0Ksection_end:`date +%s`:${ARCH}_source\r\e[0K\n"
 
 
 # 5. CONSTRUCT .APPIMAGE
-APPIMAGETOOL_APP_NAME="GIMP-${CUSTOM_GIMP_VERSION}-${ARCH}.AppImage"
+APPIMAGETOOL_APP_NAME="GIMP-${CUSTOM_GIMP_VERSION}-${ARCH}_NOATBRIDGE.AppImage"
 printf "\e[0Ksection_start:`date +%s`:${ARCH}_making[collapsed=true]\r\e[0KSquashing $APPIMAGETOOL_APP_NAME\n"
 if [ "$GIMP_RELEASE" ] && [ -z "$GIMP_IS_RC_GIT" ]; then
   update_info="--updateinformation zsync|https://download.gimp.org/gimp/GIMP-${CHANNEL}-${ARCH}.AppImage.zsync --file-url v$GIMP_APP_VERSION/linux/$APPIMAGETOOL_APP_NAME"
