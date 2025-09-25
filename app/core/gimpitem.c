@@ -1658,6 +1658,9 @@ gimp_item_resize (GimpItem     *item,
    */
   gimp_item_start_move (item, push_undo);
 
+  if (push_undo && GIMP_IS_DRAWABLE (item))
+    gimp_drawable_enable_resize_undo (GIMP_DRAWABLE (item));
+
   g_object_freeze_notify (G_OBJECT (item));
 
   item_class->resize (item, context, fill_type,
