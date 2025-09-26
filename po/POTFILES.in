@@ -671,8 +671,6 @@ app/xcf/xcf-write.c
 
 app-tools/gimp-debug-tool.c
 
-data/tags/gimp-tags-default.xml.in
-
 menus/brush-editor-menu.ui
 menus/brushes-menu.ui
 menus/buffers-menu.ui
