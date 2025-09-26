@@ -1076,6 +1076,8 @@ export_dialog (GimpImage     *image,
                GObject       *config)
 {
   GtkWidget *dialog;
+  GtkWidget *box;
+  GtkWidget *hint = NULL;
   gboolean   run;
   gboolean   has_nonstandard_links = FALSE;
 
@@ -1083,29 +1085,36 @@ export_dialog (GimpImage     *image,
                                              GIMP_PROCEDURE_CONFIG (config),
                                              image);
 
-  has_nonstandard_links = has_invalid_links (gimp_image_get_layers (image),
-                                             NULL);
-  if (has_nonstandard_links)
-    {
-      gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "link-warning",
-                                       _("The SVG format only requires viewers "
-                                         "to display image links for SVG, PNG, "
-                                         "and JPEG images.\nLink layers for "
-                                         "images in other formats may not "
-                                         "show up in all viewers."),
-                                       FALSE, FALSE);
-
-      gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
-                                  "link-warning", NULL);
-    }
-
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
                                     "raster-frame", "export-raster-layers",
                                     FALSE, "raster-export-format");
 
-  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), "title",
-                              "raster-frame", NULL);
+  box = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                        "svg-box", "title", "raster-frame",
+                                        NULL);
+
+  has_nonstandard_links = has_invalid_links (gimp_image_get_layers (image),
+                                             NULL);
+  if (has_nonstandard_links)
+    {
+      hint =
+        g_object_new (GIMP_TYPE_HINT_BOX,
+                      "icon-name", GIMP_ICON_DIALOG_WARNING,
+                      "hint",      _("The SVG format only requires viewers to "
+                                     "display image links for SVG, PNG, and "
+                                     "JPEG images.\n"
+                                     "Your image links external image files "
+                                     "in other formats which may not show up "
+                                     "in all viewers."),
+                      NULL);
+      gtk_widget_set_visible (hint, TRUE);
+      gtk_widget_set_margin_bottom (hint, 12);
+
+      gtk_box_pack_start (GTK_BOX (box), hint, FALSE, FALSE, 0);
+      gtk_box_reorder_child (GTK_BOX (box), hint, 0);
+    }
+
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), "svg-box", NULL);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
