@@ -31,3 +31,7 @@ void              menus_remove                      (Gimp      *gimp);
 
 GimpMenuFactory * menus_get_global_menu_factory     (Gimp      *gimp);
 GimpUIManager   * menus_get_image_manager_singleton (Gimp      *gimp);
+
+#ifdef PLATFORM_OSX
+void              menus_quartz_app_menu             (Gimp      *gimp);
+#endif

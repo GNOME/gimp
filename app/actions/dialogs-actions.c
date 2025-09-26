@@ -307,13 +307,8 @@ gint n_dialogs_dockable_actions = G_N_ELEMENTS (dialogs_dockable_actions);
 static const GimpStringActionEntry dialogs_toplevel_actions[] =
 {
   { "dialogs-preferences", GIMP_ICON_PREFERENCES_SYSTEM,
-#if defined(PLATFORM_OSX)
-    NC_("dialogs-action", "_Settings..."),
-    NC_("dialogs-action", "_Settings..."),
-#else
     NC_("dialogs-action", "_Preferences"),
     NC_("dialogs-action", "_Preferences"),
-#endif
     { NULL },
     NC_("dialogs-action", "Open the preferences dialog"),
     "gimp-preferences-dialog",
@@ -360,8 +355,6 @@ static const GimpStringActionEntry dialogs_toplevel_actions[] =
   { "dialogs-about", GIMP_ICON_HELP_ABOUT,
 #if defined(G_OS_WIN32)
     NC_("dialogs-action", "About GIMP"),
-#elif defined(PLATFORM_OSX)
-    NC_("dialogs-action", "About"),
 #else /* UNIX: use GNOME HIG */
     NC_("dialogs-action", "_About"),
 #endif

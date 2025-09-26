@@ -464,12 +464,10 @@ gimp_image_window_constructed (GObject *object)
         }
     }
 
-#ifndef GDK_WINDOWING_QUARTZ
-  /* Docs says that macOS always returns FALSE but we actually want to create
-   * our custom macOS menu.
-   */
+#ifdef GDK_WINDOWING_QUARTZ
+  menus_quartz_app_menu (private->gimp);
+#else
   use_app_menu = gtk_application_prefers_app_menu (GTK_APPLICATION (private->gimp->app));
-#endif /* !GDK_WINDOWING_QUARTZ */
 
   if (use_app_menu)
     {
@@ -482,6 +480,7 @@ gimp_image_window_constructed (GObject *object)
       gtk_application_set_app_menu (GTK_APPLICATION (private->gimp->app),
                                     G_MENU_MODEL (app_menu_model));
     }
+#endif
 
   /* Create the hbox that contains docks and images */
   private->hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
