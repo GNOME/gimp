@@ -229,7 +229,7 @@ def export_ora(procedure, run_mode, image, file, options, metadata, config, data
             tmp_img.set_palette(image.get_palette())
 
         tmp_layer = Gimp.Layer.new_from_drawable (drawable, tmp_img)
-        tmp_layer.set_visible (False)
+        tmp_layer.set_offsets (0, 0)
         tmp_img.insert_layer (tmp_layer, None, 0)
 
         pdb_proc   = Gimp.get_pdb().lookup_procedure('file-png-export')
