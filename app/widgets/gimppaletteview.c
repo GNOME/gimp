@@ -222,7 +222,7 @@ gimp_palette_view_button_press (GtkWidget      *widget,
         gimp_palette_view_select_entry (view, entry);
 
       /* Usually the menu is provided by a GimpEditor.
-	   * Make sure it's also run by returning FALSE here */
+       * Make sure it's also run by returning FALSE here */
       return FALSE;
     }
   else if (bevent->button == 1)
