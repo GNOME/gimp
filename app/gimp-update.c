@@ -422,8 +422,22 @@ gimp_check_updates_callback (GObject      *source,
     {
       gchar *uri = g_file_get_uri (G_FILE (source));
 
+#ifndef GIMP_CONSOLE_COMPILATION
+#ifndef G_OS_WIN32
+      g_message ("%s: loading of %s failed: %s\n\n%s",
+                 G_STRFUNC, uri, error->message,
+                 _("Perhaps you are missing GIO backends and need "
+                   "to install GVFS?"));
+#else
+      g_message ("%s: loading of %s failed: %s\n\n%s",
+                 G_STRFUNC, uri, error->message,
+                 _("Perhaps you are missing GIO backends."));
+#endif /* G_OS_WIN32 */
+    
+#else
       g_printerr ("%s: loading of %s failed: %s\n", G_STRFUNC,
                   uri, error->message);
+#endif /* GIMP_CONSOLE_COMPILATION */
 
       g_free (uri);
       g_clear_error (&error);
