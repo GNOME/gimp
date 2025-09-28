@@ -246,12 +246,15 @@ ChangesEnvironment=yes
 AlwaysShowDirOnReadyPage=yes
 
 ;3.4.2 INSTALLER UI: uses modern Win32 "Vista" (still used today) design
-WizardStyle=modern
+WizardStyle=modern dynamic
 WizardSizePercent=100
 WizardResizable=no
 WizardImageAlphaFormat=defined
 WizardSmallImageFile={#WIZARD_SMALL_IMAGE}
+WizardSmallImageFileDynamicDark={#WIZARD_SMALL_IMAGE}
+WizardSmallImageBackColorDynamicDark=clNone
 WizardImageFile={#WIZARD_IMAGE}
+WizardImageFileDynamicDark={#WIZARD_IMAGE}
 WizardImageStretch=yes
 [LangOptions]
 DialogFontName=Segoe UI
@@ -639,6 +642,14 @@ begin
 	end;
 
 	MeasureLabel.Free;
+end;
+
+function GetThemedBgColor: TColor;
+begin
+  if IsDarkInstallMode then
+    Result := $2b2b2b
+  else
+    Result := $ffffff;
 end;
 
 #include "util_general.isi"
@@ -1037,7 +1048,9 @@ end;
 //2. LICENSE
 procedure InfoBeforeLikeLicense();
 begin
-	WizardForm.Bevel.Visible := False;
+    if not IsDarkInstallMode then begin
+	    WizardForm.Bevel.Visible := False;
+	end;
 
 	WizardForm.InfoBeforeClickLabel.Visible := False;
 	WizardForm.InfoBeforeMemo.Height := WizardForm.InfoBeforeMemo.Height + WizardForm.InfoBeforeMemo.Top - WizardForm.InfoBeforeClickLabel.Top;
@@ -1261,7 +1274,9 @@ end;
 //7.1 BEFORE INSTALL
 procedure PreparingFaceLift();
 begin
-	WizardForm.Bevel.Visible := False;
+    if not IsDarkInstallMode then begin
+	    WizardForm.Bevel.Visible := False;
+	end;
 end;
 
 //Create restore point
@@ -1672,7 +1687,9 @@ end;
 procedure InstallingFaceLift();
 var lblMessage1,lblURL,lblMessage2: TLabel; //TNewStaticText doesn't support alignment
 begin
-	WizardForm.Bevel.Visible := False;
+    if not IsDarkInstallMode then begin
+	    WizardForm.Bevel.Visible := False;
+	end;
 
 	with WizardForm.ProgressGauge do
 	begin
