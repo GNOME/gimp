@@ -246,17 +246,18 @@ ChangesEnvironment=yes
 AlwaysShowDirOnReadyPage=yes
 
 ;3.4.2 INSTALLER UI: uses modern Win32 "Vista" (still used today) design
-WizardStyle=modern
+WizardStyle=modern dynamic
 WizardSizePercent=100
-WizardResizable=no
 WizardImageAlphaFormat=defined
 WizardSmallImageFile={#WIZARD_SMALL_IMAGE}
+WizardSmallImageFileDynamicDark={#WIZARD_SMALL_IMAGE}
 WizardImageFile={#WIZARD_IMAGE}
+WizardImageFileDynamicDark={#WIZARD_IMAGE}
 WizardImageStretch=yes
+WizardKeepAspectRatio=no
 [LangOptions]
-DialogFontName=Segoe UI
-DialogFontSize=9
-WelcomeFontName=Segoe UI
+DialogFontBaseScaleHeight=13
+DialogFontBaseScaleWidth=6
 WelcomeFontSize=12
 
 ;3.4.1 INSTALLER PAGES AGAIN
@@ -1038,7 +1039,9 @@ end;
 //2. LICENSE
 procedure InfoBeforeLikeLicense();
 begin
-	WizardForm.Bevel.Visible := False;
+    if not IsDarkInstallMode then begin
+	    WizardForm.Bevel.Visible := False;
+	end;
 
 	WizardForm.InfoBeforeClickLabel.Visible := False;
 	WizardForm.InfoBeforeMemo.Height := WizardForm.InfoBeforeMemo.Height + WizardForm.InfoBeforeMemo.Top - WizardForm.InfoBeforeClickLabel.Top;
@@ -1046,39 +1049,8 @@ begin
 end;
 
 
-//3. INSTALL DIR: override Inno custom dir icon
-procedure NativeDirIcon();
-var TypRect: TRect;
-    Icon: THandle;
-	IconSize: Integer;
-begin
-    WizardForm.SelectDirBitmapImage.Visible := False;
+//3. INSTALL DIR (no customizations)
 
-	Icon := ExtractIcon(0,'imageres.dll',3)
-    with TBitmapImage.Create(WizardForm.SelectDirPage) do begin
-        Parent := WizardForm.SelectDirPage;
-	   	with Bitmap do begin
-            Left := 0;
-	        Top := 0;
-	        AutoSize := True;
-			Center := True;
-			Width := ScaleY(32);
-            Height := ScaleY(32);
-			Canvas.FillRect(TypRect);
-
-			if WizardForm.Font.PixelsPerInch >= 168 then begin          //175% scaling
-				IconSize := 64;
-			end else if WizardForm.Font.PixelsPerInch >= 144 then begin //150% scaling
-				IconSize := 48;
-			end else if WizardForm.Font.PixelsPerInch >= 120 then begin //125% scaling
-				IconSize := 32;
-			end else begin                                              //100% scaling
-				IconSize := 32;
-			end;
-			DrawIconEx(Canvas.Handle, 0, 0, Icon, IconSize, IconSize, 0, 0, DI_NORMAL);
-        end;
-    end;
-end;
 
 //4. COMPONENTS: Add panel with description on click, to the right of the list
 var
@@ -1262,7 +1234,9 @@ end;
 //7.1 BEFORE INSTALL
 procedure PreparingFaceLift();
 begin
-	WizardForm.Bevel.Visible := False;
+    if not IsDarkInstallMode then begin
+	    WizardForm.Bevel.Visible := False;
+	end;
 end;
 
 //Create restore point
@@ -1673,7 +1647,9 @@ end;
 procedure InstallingFaceLift();
 var lblMessage1,lblURL,lblMessage2: TLabel; //TNewStaticText doesn't support alignment
 begin
-	WizardForm.Bevel.Visible := False;
+    if not IsDarkInstallMode then begin
+	    WizardForm.Bevel.Visible := False;
+	end;
 
 	with WizardForm.ProgressGauge do
 	begin
@@ -1933,7 +1909,6 @@ procedure InitializeWizard();
 begin
 	UpdateWizardImages();
 	InitCustomPages();
-	NativeDirIcon();
 end;
 
 function ShouldSkipPage(pPageID: Integer): Boolean;

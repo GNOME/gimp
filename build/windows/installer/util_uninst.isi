@@ -106,7 +106,7 @@ end;
 procedure CreateMessageForm(var frmMessage: TForm; const pMessage: String);
 var lblMessage: TNewStaticText;
 begin
-	frmMessage := CreateCustomForm();
+	frmMessage := CreateCustomForm(ScaleX(256), ScaleY(128), False, True);
 	with frmMessage do
 	begin
 		BorderStyle := bsDialog;
