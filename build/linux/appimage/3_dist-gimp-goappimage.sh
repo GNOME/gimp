@@ -354,6 +354,10 @@ bund_usr "$GIMP_PREFIX" "etc/gimp"
 ## Other features and plug-ins
 ### mypaint brushes
 bund_usr "$UNIX_PREFIX" "share/mypaint-data/2.0"
+####https://salsa.debian.org/multimedia-team/mypaint-brushes/-/merge_requests/2
+for myb in $(find "$USR_DIR/share/mypaint-data/2.0/brushes/Dieterle" -iname "*.myb"); do
+  sed -i -e 's|surfacemap_x|gridmap_x|g' -e 's|surfacemap_y|gridmap_y|g' $myb;
+done
 ### Needed for 'th' word breaking in Text tool etc
 bund_usr "$UNIX_PREFIX" "share/libthai"
 conf_app LIBTHAI_DICTDIR "share/libthai"
