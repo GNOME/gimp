@@ -16,14 +16,11 @@ def export_scaled_img(img_width, img_height, scale):
   image = v.index(1)
   image.undo_disable()
   image.resize(img_width, img_height, (img_width-logo_dim)/2, (img_height-logo_dim)/2)
-  white = Gegl.Color.new("white")
-  Gimp.context_set_background(white)
-  image.flatten()
-
   procedure = Gimp.get_pdb().lookup_procedure("file-bmp-export")
   config    = procedure.create_config()
   drawables = image.get_selected_drawables()
   config.set_property("image", image)
+  config.set_property("rgb-format", "rgba-8888")
   config.set_property("file", Gio.file_new_for_path('build/windows/installer/gimp.scale-' + scale + '.bmp'))
   v = Gimp.Procedure.run(procedure, config)
   if v.index(0) != Gimp.PDBStatusType.SUCCESS:
