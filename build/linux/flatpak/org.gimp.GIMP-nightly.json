@@ -29,6 +29,7 @@
         "--filesystem=/tmp",
         "--filesystem=xdg-run/gvfs",
         "--filesystem=xdg-run/gvfsd",
+        "--unset-env=GTK_MODULES",
         "--talk-name=org.gtk.vfs.*",
         "--talk-name=org.freedesktop.FileManager1",
         "--talk-name=org.gnome.Shell.Screenshot",
