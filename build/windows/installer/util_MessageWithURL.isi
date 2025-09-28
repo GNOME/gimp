@@ -226,7 +226,7 @@ begin
 		AutoSize := True;
 		Bitmap.Width := GetSystemMetrics(SM_CXICON);
 		Bitmap.Height := GetSystemMetrics(SM_CYICON);
-		Bitmap.Canvas.Brush.Color := TPanel(Parent).Color;
+		Bitmap.Canvas.Brush.Color := GetThemedBgColor;
 		Bitmap.Canvas.FillRect(TypRect);
 		DrawIcon(Bitmap.Canvas.Handle,0,0,Icon); //draws icon scaled
 		//DrawIconEx(Bitmap.Canvas.Handle,0,0,Icon,0,0,0,0,DI_NORMAL {or DI_DEFAULTSIZE}); //draws icon without scaling
@@ -285,7 +285,7 @@ begin
 		Blank.Top := 0;
 		Blank.Right := Width;
 		Blank.Bottom := Height;
-		Bitmap.Canvas.Brush.Color := TPanel(Parent).Color;
+		Bitmap.Canvas.Brush.Color := GetThemedBgColor;
 		Bitmap.Canvas.FillRect(Blank);
 	end;
 end;
@@ -445,7 +445,7 @@ begin
 		exit;
 	end;
 
-	MessageForm := CreateCustomForm();
+	MessageForm := CreateCustomForm(ScaleX(256), ScaleY(128), False, True);
 
 	MessageForm.Caption := Title;
 	if (CancelButton = 0) or (CancelButton > GetArrayLength(ButtonText)) then //no cancel button - remove close button
