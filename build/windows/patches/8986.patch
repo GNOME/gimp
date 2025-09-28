@@ -1,0 +1,112 @@
+From f031b82d5b18db9939c9ebe8ae47f5c90bd2171f Mon Sep 17 00:00:00 2001
+From: Luca Bacci <luca.bacci982@gmail.com>
+Date: Fri, 26 Sep 2025 18:31:25 +0200
+Subject: [PATCH 1/3] GdkWin32: Remove unreachable branch
+
+We're already in the window->window_type == GDK_WINDOW_TOPLEVEL
+branch of the switch, no need to check it again
+---
+ gdk/win32/gdkwindow-win32.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/gdk/win32/gdkwindow-win32.c b/gdk/win32/gdkwindow-win32.c
+index 78cfa4ed36f..71164677515 100644
+--- a/gdk/win32/gdkwindow-win32.c
++++ b/gdk/win32/gdkwindow-win32.c
+@@ -805,10 +805,7 @@ _gdk_win32_display_create_window_impl (GdkDisplay    *display,
+       else
+ 	{
+ 	  /* MSDN: We need WS_CLIPCHILDREN and WS_CLIPSIBLINGS for GL Context Creation */
+-	  if (window->window_type == GDK_WINDOW_TOPLEVEL)
+-	    dwStyle = WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
+-	  else
+-	    dwStyle = WS_OVERLAPPED | WS_MINIMIZEBOX | WS_SYSMENU | WS_CAPTION | WS_THICKFRAME | WS_CLIPCHILDREN;
++          dwStyle = WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
+ 
+ 	  offset_x = _gdk_offset_x;
+ 	  offset_y = _gdk_offset_y;
+-- 
+GitLab
+
+
+From f2c48ad061748ed44785579bc147c6bade16cd9e Mon Sep 17 00:00:00 2001
+From: Luca Bacci <luca.bacci982@gmail.com>
+Date: Fri, 26 Sep 2025 18:44:46 +0200
+Subject: [PATCH 2/3] GdkWin32: Remove useless checks
+
+---
+ gdk/win32/gdkwindow-win32.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/gdk/win32/gdkwindow-win32.c b/gdk/win32/gdkwindow-win32.c
+index 71164677515..7545cbcc1f3 100644
+--- a/gdk/win32/gdkwindow-win32.c
++++ b/gdk/win32/gdkwindow-win32.c
+@@ -2767,8 +2767,7 @@ _gdk_win32_window_lacks_wm_decorations (GdkWindow *window)
+    */
+   has_any_decorations = FALSE;
+ 
+-  if (style & (WS_BORDER | WS_THICKFRAME | WS_CAPTION |
+-               WS_SYSMENU | WS_MAXIMIZEBOX))
++  if (style & (WS_BORDER | WS_THICKFRAME | WS_CAPTION))
+     has_any_decorations = TRUE;
+   else
+     GDK_NOTE (MISC, g_print ("Window %p (handle %p): has no decorations (style %lx)\n",
+-- 
+GitLab
+
+
+From 9ed82d27e1b2a7ed8ccbfead5094614d2e1767cb Mon Sep 17 00:00:00 2001
+From: Luca Bacci <luca.bacci982@gmail.com>
+Date: Mon, 22 Sep 2025 21:20:15 +0200
+Subject: [PATCH 3/3] GdkWin32: Avoid setting WS_MINIMIZEBOX / WS_MAXIMIZEBOX
+ for dialogs
+
+Fixes #7730
+---
+ gdk/win32/gdkwindow-win32.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/gdk/win32/gdkwindow-win32.c b/gdk/win32/gdkwindow-win32.c
+index 7545cbcc1f3..7b03ef00fed 100644
+--- a/gdk/win32/gdkwindow-win32.c
++++ b/gdk/win32/gdkwindow-win32.c
+@@ -829,6 +829,12 @@ _gdk_win32_display_create_window_impl (GdkDisplay    *display,
+       g_assert_not_reached ();
+     }
+ 
++  if (attributes_mask & GDK_WA_TYPE_HINT)
++    gdk_window_set_type_hint (window, attributes->type_hint);
++
++  if (impl->type_hint != GDK_WINDOW_TYPE_HINT_NORMAL)
++    dwStyle &= ~(WS_MINIMIZEBOX | WS_MAXIMIZEBOX);
++
+   if (window->window_type != GDK_WINDOW_CHILD)
+     {
+       rect.left = window->x * impl->window_scale;
+@@ -876,9 +882,6 @@ _gdk_win32_display_create_window_impl (GdkDisplay    *display,
+ 
+   impl->native_event_mask = GDK_STRUCTURE_MASK | event_mask;
+ 
+-  if (attributes_mask & GDK_WA_TYPE_HINT)
+-    gdk_window_set_type_hint (window, attributes->type_hint);
+-
+   if (impl->type_hint == GDK_WINDOW_TYPE_HINT_UTILITY)
+     dwExStyle |= WS_EX_TOOLWINDOW;
+ 
+@@ -2862,7 +2865,11 @@ _gdk_win32_window_update_style_bits (GdkWindow *window)
+       update_single_bit (&new_style, all, decorations & GDK_DECOR_RESIZEH, WS_THICKFRAME);
+       update_single_bit (&new_style, all, decorations & GDK_DECOR_TITLE, WS_CAPTION);
+       update_single_bit (&new_style, all, decorations & GDK_DECOR_MENU, WS_SYSMENU);
+-      update_single_bit (&new_style, all, decorations & GDK_DECOR_MAXIMIZE, WS_MAXIMIZEBOX);
++      if (impl->type_hint == GDK_WINDOW_TYPE_HINT_NORMAL)
++        {
++          update_single_bit (&new_style, all, decorations & GDK_DECOR_MINIMIZE, WS_MINIMIZEBOX);
++          update_single_bit (&new_style, all, decorations & GDK_DECOR_MAXIMIZE, WS_MAXIMIZEBOX);
++        }
+     }
+ 
+   if (needs_basic_layering)
+-- 
+GitLab
+

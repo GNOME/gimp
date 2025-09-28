@@ -143,5 +143,6 @@ if ("$env:MSYSTEM_PREFIX" -ne 'MINGW32')
   {
     self_build https://github.com/Exiv2/exiv2 "v0.28.7" @('https://github.com/Exiv2/exiv2/pull/3361.patch') @('-DCMAKE_DLL_NAME_WITH_SOVERSION=ON', '-DEXIV2_BUILD_EXIV2_COMMAND=OFF', '-DEXIV2_ENABLE_VIDEO=OFF')
   }
+self_build gtk "3.24.50" @('build/windows/patches/8986.patch')
 
 Set-Location $GIMP_DIR
