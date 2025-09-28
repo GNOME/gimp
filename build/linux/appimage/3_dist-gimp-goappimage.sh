@@ -393,7 +393,8 @@ wipe_usr ${LIB_DIR}/*.pyc
 conf_app PYTHONDONTWRITEBYTECODE "1" --no-expand
 #### JavaScript plug-ins support
 bund_usr "$UNIX_PREFIX" "bin/gjs*"
-bund_usr "$UNIX_PREFIX" "lib/gjs/girepository-1.0/Gjs*" --dest "${LIB_DIR}/${LIB_SUBDIR}girepository-1.0"
+bund_usr "$UNIX_PREFIX" "lib/gjs/girepository-*/Gjs*.typelib" --dest "${LIB_DIR}/${LIB_SUBDIR}girepository-1.0"
+bund_usr "$UNIX_PREFIX" "lib/girepository-*/GioUnix*.typelib"
 ####FIXME: lua crashes with loop: See: #11895
 #bund_usr "$UNIX_PREFIX" "bin/luajit" --rename "lua"
 #bund_usr "$UNIX_PREFIX" "lib/liblua5.1-lgi*"
