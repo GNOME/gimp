@@ -164,3 +164,7 @@ parts:
       # get gimp icon for proper desktop integration
       cp $CRAFT_STAGE/usr/share/icons/hicolor/scalable/apps/gimp.svg $CRAFT_PRIME/gimp
       craftctl default
+      #https://salsa.debian.org/multimedia-team/mypaint-brushes/-/merge_requests/2
+      for myb in $(find "$CRAFT_PRIME/usr/share/mypaint-data/2.0/brushes/Dieterle" -iname "*.myb"); do
+        sed -i -e 's|surfacemap_x|gridmap_x|g' -e 's|surfacemap_y|gridmap_y|g' $myb;
+      done
