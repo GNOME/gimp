@@ -357,7 +357,7 @@ bund_usr "$UNIX_PREFIX" "share/mypaint-data/1.0"
 bund_usr "$UNIX_PREFIX" "share/libthai"
 conf_app LIBTHAI_DICTDIR "share/libthai"
 ### Needed for file-heif work
-bund_usr "$UNIX_PREFIX" "lib/libheif/plugins"
+bund_usr "$UNIX_PREFIX" "lib/libheif/plugins/*.so"
 conf_app LIBHEIF_PLUGIN_PATH "${LIB_DIR}/${LIB_SUBDIR}libheif/plugins"
 ### Needed for full CJK and Cyrillic support in file-pdf
 bund_usr "$UNIX_PREFIX" "share/poppler"
