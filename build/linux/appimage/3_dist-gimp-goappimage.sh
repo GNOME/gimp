@@ -379,7 +379,6 @@ if [ "$GIMP_UNSTABLE" ] || [ -z "$GIMP_RELEASE" ]; then
   ### Needed for GTK inspector
   bund_usr "$UNIX_PREFIX" "lib/libEGL*"
   bund_usr "$UNIX_PREFIX" "lib/libGL*"
-  bund_usr "$UNIX_PREFIX" "lib/dri*"
 fi
 ### Debug dialog
 bund_usr "$GIMP_PREFIX" "bin/gimp-debug-tool*" --dest "libexec"
@@ -439,7 +438,6 @@ mv build/linux/appimage/AppRun.bak build/linux/appimage/AppRun
 rm $APP_DIR/*.desktop
 echo "usr/${LIB_DIR}/${LIB_SUBDIR}gconv
       usr/${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/gdk-pixbuf-query-loaders
-      usr/${LIB_DIR}/${LIB_SUBDIR}libproxy
       usr/share/doc
       usr/share/themes
       etc
