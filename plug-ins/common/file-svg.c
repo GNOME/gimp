@@ -56,6 +56,7 @@ typedef struct
 
 typedef enum
 {
+  EXPORT_FORMAT_NONE,
   EXPORT_FORMAT_PNG,
   EXPORT_FORMAT_JPEG
 } EXPORT_FORMAT;
@@ -320,18 +321,12 @@ svg_create_procedure (GimpPlugIn  *plug_in,
                                           NULL,
                                           G_PARAM_READWRITE);
 
-      gimp_procedure_add_boolean_argument (procedure, "export-raster-layers",
-                                           _("Export r_aster layers"),
-                                           _("If enabled, embed or link raster layers "
-                                             "in SVG"),
-                                           FALSE,
-                                           G_PARAM_READWRITE);
-
       gimp_procedure_add_choice_argument (procedure, "raster-export-format",
-                                          _("E_xport format"),
-                                          _("What encoding format to use for raster layers"),
-                                          gimp_choice_new_with_values ("png",  EXPORT_FORMAT_PNG,  _("PNG"),  NULL,
-                                                                       "jpeg", EXPORT_FORMAT_JPEG, _("JPEG"), NULL,
+                                          _("Em_bed raster layers as"),
+                                          NULL,
+                                          gimp_choice_new_with_values ("png",  EXPORT_FORMAT_PNG,  _("PNG"),                         NULL,
+                                                                       "jpeg", EXPORT_FORMAT_JPEG, _("JPEG"),                        NULL,
+                                                                       "none", EXPORT_FORMAT_NONE, _("Do not export raster layers"), NULL,
                                                                        NULL),
                                           "png",
                                           G_PARAM_READWRITE);
@@ -1085,13 +1080,9 @@ export_dialog (GimpImage     *image,
                                              GIMP_PROCEDURE_CONFIG (config),
                                              image);
 
-  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
-                                    "raster-frame", "export-raster-layers",
-                                    FALSE, "raster-export-format");
-
   box = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
-                                        "svg-box", "title", "raster-frame",
-                                        NULL);
+                                        "svg-box", "title",
+                                        "raster-export-format", NULL);
 
   has_nonstandard_links = has_invalid_links (gimp_image_get_layers (image),
                                              NULL);
@@ -1207,12 +1198,11 @@ svg_export_file (GimpImage            *image,
   GString  *str = g_string_new (NULL);
   gint      layer_ids[5] = { 0 };
   gchar    *title;
-  gboolean  export_rasters;
+  gint      format_id;
 
-  g_object_get (config,
-                "title",                &title,
-                "export-raster-layers", &export_rasters,
-                NULL);
+  g_object_get (config, "title", &title, NULL);
+  format_id = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                   "raster-export-format");
 
   g_string_append_printf (str,
                           "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
@@ -1267,7 +1257,7 @@ svg_export_file (GimpImage            *image,
               svg_export_link_layer (layer, layer_ids[LAYER_ID_LINK]++, str,
                                      " ");
             }
-          else if (export_rasters)
+          else if (format_id != EXPORT_FORMAT_NONE)
             {
               svg_export_raster (GIMP_LAYER (list->data),
                                  layer_ids[LAYER_ID_RASTER]++, str, config,
@@ -1292,11 +1282,10 @@ svg_export_group_rec (GimpGroupLayer       *group,
   GimpItem **children;
   gint32     n_layers;
   gchar     *extra_spacing;
-  gboolean   export_rasters;
+  gint       format_id;
 
-  g_object_get (config,
-                "export-raster-layers", &export_rasters,
-                NULL);
+  format_id = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                   "raster-export-format");
 
   extra_spacing = g_strdup_printf ("%s  ", spacing);
 
@@ -1337,7 +1326,7 @@ svg_export_group_rec (GimpGroupLayer       *group,
               svg_export_link_layer (layer, layer_ids[LAYER_ID_LINK]++, str,
                                      extra_spacing);
             }
-          else if (export_rasters)
+          else if (format_id != EXPORT_FORMAT_NONE)
             {
               svg_export_raster (GIMP_LAYER (children[i]),
                                  layer_ids[LAYER_ID_RASTER]++, str, config,
