@@ -10,18 +10,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-24 17:18+0000\n"
-"PO-Revision-Date: 2025-09-24 19:51+0200\n"
+"POT-Creation-Date: 2025-09-29 12:38+0000\n"
+"PO-Revision-Date: 2025-09-29 15:20+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
-"n%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
+"%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
 msgid "The GIMP team"
@@ -178,7 +178,15 @@ msgstr ""
 msgid "If you wanted to quit immediately instead, call GIMP with --quit."
 msgstr "Če želite namesto tega takoj prenehati, pokličite GIMP s --quit."
 
-#: app/gimp-update.c:444
+#: app/gimp-update.c:421
+msgid "Perhaps you are missing GIO backends and need to install GVFS?"
+msgstr "Morda vam manjka ogrodje GIO in morate namestiti GVFS?"
+
+#: app/gimp-update.c:426
+msgid "Perhaps you are missing GIO backends."
+msgstr "Morda vam manjka ogrodje GIO."
+
+#: app/gimp-update.c:458
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -3086,134 +3094,124 @@ msgctxt "dialogs-action"
 msgid "Open the dashboard"
 msgstr "Odpri nadzorno ploščo"
 
-#: app/actions/dialogs-actions.c:311 app/actions/dialogs-actions.c:312
-msgctxt "dialogs-action"
-msgid "_Settings..."
-msgstr "_Nastavitve …"
-
-#: app/actions/dialogs-actions.c:314 app/actions/dialogs-actions.c:315
+#: app/actions/dialogs-actions.c:310 app/actions/dialogs-actions.c:311
 msgctxt "dialogs-action"
 msgid "_Preferences"
 msgstr "_Nastavitve"
 
-#: app/actions/dialogs-actions.c:318
+#: app/actions/dialogs-actions.c:313
 msgctxt "dialogs-action"
 msgid "Open the preferences dialog"
 msgstr "Odpre pogovorno okno nastavitev"
 
-#: app/actions/dialogs-actions.c:323
+#: app/actions/dialogs-actions.c:318
 msgctxt "dialogs-action"
 msgid "_Input Devices Editor"
 msgstr "V_hodne naprave (okno)"
 
-#: app/actions/dialogs-actions.c:324
+#: app/actions/dialogs-actions.c:319
 msgctxt "dialogs-action"
 msgid "_Input Devices"
 msgstr "V_hodne naprave"
 
-#: app/actions/dialogs-actions.c:326
+#: app/actions/dialogs-actions.c:321
 msgctxt "dialogs-action"
 msgid "Open the input devices editor"
 msgstr "Odpre urejevalnik vhodnih naprav"
 
-#: app/actions/dialogs-actions.c:331
+#: app/actions/dialogs-actions.c:326
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts Editor"
 msgstr "_Tipke za bližnjico (okno)"
 
-#: app/actions/dialogs-actions.c:332
+#: app/actions/dialogs-actions.c:327
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts"
 msgstr "_Tipke za bližnjico"
 
-#: app/actions/dialogs-actions.c:334
+#: app/actions/dialogs-actions.c:329
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
 msgstr "Odpre urejevalnik tipk za bližnjice"
 
-#: app/actions/dialogs-actions.c:339
+#: app/actions/dialogs-actions.c:334
 msgctxt "dialogs-action"
 msgid "_Modules Dialog"
 msgstr "_Gradniki (okno)"
 
-#: app/actions/dialogs-actions.c:340
+#: app/actions/dialogs-actions.c:335
 msgctxt "dialogs-action"
 msgid "_Modules"
 msgstr "_Gradniki"
 
-#: app/actions/dialogs-actions.c:342
+#: app/actions/dialogs-actions.c:337
 msgctxt "dialogs-action"
 msgid "Open the module manager dialog"
 msgstr "Odpri pogovorno okno upravitelja gradnikov"
 
-#: app/actions/dialogs-actions.c:347
+#: app/actions/dialogs-actions.c:342
 msgctxt "dialogs-action"
 msgid "_Tip of the Day"
 msgstr "_Nasvet dneva"
 
-#: app/actions/dialogs-actions.c:349
+#: app/actions/dialogs-actions.c:344
 msgctxt "dialogs-action"
 msgid "Show some helpful tips on using GIMP"
 msgstr "Pokaže priročne namige pri delu s programom GIMP"
 
-#: app/actions/dialogs-actions.c:354
+#: app/actions/dialogs-actions.c:349
 msgctxt "dialogs-action"
 msgid "Welcome Dialog"
 msgstr "Pogovorno okno dobrodošlice"
 
-#: app/actions/dialogs-actions.c:356
+#: app/actions/dialogs-actions.c:351
 msgctxt "dialogs-action"
 msgid "Show information on running GIMP release"
 msgstr "Pokaži informacije o zagonu izdaje GIMP"
 
-#: app/actions/dialogs-actions.c:362 app/actions/dialogs-actions.c:369
+#: app/actions/dialogs-actions.c:357 app/actions/dialogs-actions.c:362
 msgctxt "dialogs-action"
 msgid "About GIMP"
 msgstr "O programu GIMP"
 
-#: app/actions/dialogs-actions.c:364
-msgctxt "dialogs-action"
-msgid "About"
-msgstr "O programu"
-
-#: app/actions/dialogs-actions.c:366
+#: app/actions/dialogs-actions.c:359
 msgctxt "dialogs-action"
 msgid "_About"
 msgstr "_O programu"
 
-#: app/actions/dialogs-actions.c:374
+#: app/actions/dialogs-actions.c:367
 msgctxt "dialogs-action"
 msgid "_Search and Run a Command"
 msgstr "_Najdi in zaženi ukaz"
 
-#: app/actions/dialogs-actions.c:376
+#: app/actions/dialogs-actions.c:369
 msgctxt "dialogs-action"
 msgid "Search commands by keyword, and run them"
 msgstr "Poiščite ukaze po ključnih besedah in jih zaženite"
 
-#: app/actions/dialogs-actions.c:382
+#: app/actions/dialogs-actions.c:375
 msgctxt "dialogs-action"
 msgid "Manage _Extensions"
 msgstr "Upravljaj _razširitve"
 
-#: app/actions/dialogs-actions.c:384
+#: app/actions/dialogs-actions.c:377
 msgctxt "dialogs-action"
 msgid "Manage Extensions: search, install, uninstall, update."
 msgstr "Upravljanje razširitev: iskanje, namestitev, odstranitev, posodobitev."
 
-#: app/actions/dialogs-actions.c:448
+#: app/actions/dialogs-actions.c:441
 msgid "Tool_box"
 msgstr "O_rodjarna"
 
-#: app/actions/dialogs-actions.c:449
+#: app/actions/dialogs-actions.c:442
 msgid "Raise the toolbox"
 msgstr "Privzdigni orodjarno"
 
-#: app/actions/dialogs-actions.c:453
+#: app/actions/dialogs-actions.c:446
 msgid "New Tool_box"
 msgstr "Nova o_rodjarna"
 
-#: app/actions/dialogs-actions.c:454
+#: app/actions/dialogs-actions.c:447
 msgid "Create a new toolbox"
 msgstr "Ustvari novo orodjarno"
 
@@ -10618,8 +10616,8 @@ msgstr "Barva prosojnosti po meri 2"
 #: app/config/gimprc-blurbs.h:11
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to "
-"focus\"."
+"receives the focus. This is useful for window managers using \"click to focus"
+"\"."
 msgstr ""
 "Če je omogočeno, bo slika postala aktivna, ko njeno okno dobi pozornost. To "
 "je uporabno za upravljalnike oken, ki uporabljajo »klikni za "
@@ -12908,7 +12906,7 @@ msgstr ""
 
 #: app/core/gimp-contexts.c:153 app/core/gimp-internal-data.c:338
 #: app/core/gimptooloptions.c:361 app/gui/modifiers.c:191 app/gui/session.c:449
-#: app/menus/menus.c:480 app/widgets/gimpdevices.c:226
+#: app/menus/menus.c:488 app/widgets/gimpdevices.c:226
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "Brisanje »%s« ni uspelo: %s"
@@ -13831,11 +13829,11 @@ msgstr "Preoblikovanje"
 #: app/core/gimpdrawablefilter.c:959
 #, c-format
 msgid ""
-"GEGL operation '%s' has been called with a non-existent argument name "
-"'%s' (#%d)."
+"GEGL operation '%s' has been called with a non-existent argument name '%s' (#"
+"%d)."
 msgstr ""
-"Operacija GEGL »%s« je bila klicana z neobstoječim imenom argumenta "
-"»%s« (#%d)."
+"Operacija GEGL »%s« je bila klicana z neobstoječim imenom argumenta »%s« (#"
+"%d)."
 
 #: app/core/gimpdrawablefilter.c:1023
 #, c-format
@@ -18740,12 +18738,12 @@ msgid "GIMP website"
 msgstr "Spletišče GIMP"
 
 #: app/dialogs/welcome-dialog.c:545
-msgid "Tutorials"
-msgstr "Priročniki"
-
-#: app/dialogs/welcome-dialog.c:550
 msgid "Documentation"
 msgstr "Dokumentacija"
+
+#: app/dialogs/welcome-dialog.c:550
+msgid "Community Tutorials"
+msgstr "Vadnice iz skupnosti"
 
 #. XXX: should we add API docs for plug-in developers once it's
 #. * properly set up?
@@ -21539,11 +21537,7 @@ msgstr "Zasukaj vektorsko plast"
 msgid "Transform Vector Layer"
 msgstr "Preoblikuj vektorsko plast"
 
-#: app/path/gimpvectorlayer.c:526
-msgid "Discard Vector Informations"
-msgstr "Zavrzi podatke o vektorju"
-
-#: app/path/gimpvectorlayer.c:669
+#: app/path/gimpvectorlayer.c:526 app/path/gimpvectorlayer.c:669
 msgid "Discard Vector Information"
 msgstr "Zavrzi podatke o vektorju"
 
@@ -21960,11 +21954,11 @@ msgstr ""
 #: app/pdb/gimpprocedure.c:863
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument "
-"'%s' (#%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
+"%d). Expected %s, got %s."
 msgstr ""
-"Procedura »%s« je bila priklicana z napačno vrsto vrednosti argumenta "
-"»%s« (#%d). Pričakovano %s, prejeto %s."
+"Procedura »%s« je bila priklicana z napačno vrsto vrednosti argumenta »%s« (#"
+"%d). Pričakovano %s, prejeto %s."
 
 #: app/pdb/gimpprocedure.c:900
 #, c-format
@@ -22008,8 +22002,8 @@ msgid ""
 "Procedure '%s' returned `gimp_unit_pixel()` as GimpUnit return value #%d "
 "'%s'. This return value does not allow pixel unit."
 msgstr ""
-"Procedura »%s« je vrnila »gimp_unit_pixel()« kot vrnjeno vrednost GimpUnit "
-"#%d '%s'. Ta vrnjena vrednost ne dovoli enot slikovnih točk."
+"Procedura »%s« je vrnila »gimp_unit_pixel()« kot vrnjeno vrednost GimpUnit #"
+"%d '%s'. Ta vrnjena vrednost ne dovoli enot slikovnih točk."
 
 #: app/pdb/gimpprocedure.c:973
 #, c-format

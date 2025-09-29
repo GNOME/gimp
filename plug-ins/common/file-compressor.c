@@ -550,10 +550,17 @@ load_image (const CompressorEntry  *compressor,
 
   if (image)
     {
+      GFile *xcf_file;
+
       *status = GIMP_PDB_SUCCESS;
 
-      if (! g_ascii_strcasecmp ("xcf", ext))
+      if ((xcf_file = gimp_image_get_xcf_file (image)))
+        /* Replace the temporary file with the actual source file, but
+         * only if the inner format was actually XCF.
+         */
         gimp_image_set_file (image, file);
+
+      g_clear_object (&xcf_file);
     }
   else
     {
