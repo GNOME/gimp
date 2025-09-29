@@ -12,8 +12,8 @@
 msgid ""
 msgstr "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-23 19:06+0000\n"
-"PO-Revision-Date: 2025-09-23 20:00+0100\n"
+"POT-Creation-Date: 2025-09-29 15:04+0000\n"
+"PO-Revision-Date: 2025-09-29 20:00+0100\n"
 "Last-Translator: Asier Saratsua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
@@ -149,7 +149,15 @@ msgstr "Orain GIMP atzeko planoko prozesu gisa exekutatzen ari da. Edozein momen
 msgid "If you wanted to quit immediately instead, call GIMP with --quit."
 msgstr "Berehala irten nahi baduzu, erabili GIMP --quit."
 
-#: app/gimp-update.c:452
+#: app/gimp-update.c:429
+msgid "Perhaps you are missing GIO backends and need to install GVFS?"
+msgstr "Agian GIO motorrak falta dira eta GVFS instalatu behar da?"
+
+#: app/gimp-update.c:434
+msgid "Perhaps you are missing GIO backends."
+msgstr "Agian GIO motorrak falta dituzu."
+
+#: app/gimp-update.c:466
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -4089,17 +4097,17 @@ msgstr "_Ireki..."
 #: app/actions/file-actions.c:75
 msgctxt "file-action"
 msgid "Open an image file"
-msgstr "Ireki irudiaren fitxategia"
+msgstr "Ireki irudi-fitxategia"
 
 #: app/actions/file-actions.c:80
 msgctxt "file-action"
 msgid "Op_en as Layers..."
-msgstr "I_reki geruzen gisa..."
+msgstr "Ireki _geruza gisa..."
 
 #: app/actions/file-actions.c:81
 msgctxt "file-action"
 msgid "Open an image file as layers"
-msgstr "Ireki irudia geruzen gisa"
+msgstr "Ireki irudia geruza gisa"
 
 #: app/actions/file-actions.c:86
 msgctxt "file-action"
@@ -4109,7 +4117,7 @@ msgstr "Ireki _kokalekua..."
 #: app/actions/file-actions.c:87
 msgctxt "file-action"
 msgid "Open an image file from a specified location"
-msgstr "Ireki irudiaren fitxategia kokaleku zehatz batetik"
+msgstr "Ireki irudi-fitxategia kokaleku zehatz batetik"
 
 #: app/actions/file-actions.c:92
 msgctxt "file-action"
@@ -4164,7 +4172,7 @@ msgstr "Erakutsi irudi-fitxategiaren kokalekua fitxategi-kudeatzailean"
 #: app/actions/file-actions.c:122
 msgctxt "file-action"
 msgid "_Quit"
-msgstr "I_rten"
+msgstr "Ir_ten"
 
 #: app/actions/file-actions.c:123
 msgctxt "file-action"
@@ -18010,12 +18018,12 @@ msgid "GIMP website"
 msgstr "GIMPen webgunea"
 
 #: app/dialogs/welcome-dialog.c:473
-msgid "Tutorials"
-msgstr "Tutorialak"
-
-#: app/dialogs/welcome-dialog.c:478
 msgid "Documentation"
 msgstr "Dokumentazioa"
+
+#: app/dialogs/welcome-dialog.c:478
+msgid "Community Tutorials"
+msgstr "Komunitateak sortutako tutorialak"
 
 #. XXX: should we add API docs for plug-in developers once it's
 #. * properly set up?
@@ -28256,11 +28264,11 @@ msgstr "_Sortu"
 #: menus/image-menu.ui.in.in:19
 msgctxt "file-action"
 msgid "Open _Recent"
-msgstr "Ire_ki azkena"
+msgstr "Ireki _azkena"
 
 #: menus/image-menu.ui.in.in:27
 msgid "_Debug"
-msgstr "A_raztu"
+msgstr "Ara_ztu"
 
 #: menus/image-menu.ui.in.in:76
 msgctxt "edit-action"
