@@ -468,15 +468,15 @@ welcome_dialog_create_welcome_page (Gimp      *gimp,
                     "\xf0\x9f\x8c\x90",
                     _("GIMP website"), "https://www.gimp.org/");
   welcome_add_link (GTK_GRID (grid), 0, &row,
-                    /* "graduation cap" emoticone in UTF-8. */
-                    "\xf0\x9f\x8e\x93",
-                    _("Tutorials"),
-                    "https://www.gimp.org/tutorials/");
-  welcome_add_link (GTK_GRID (grid), 0, &row,
                     /* "open book" emoticone in UTF-8. */
                     "\xf0\x9f\x93\x96",
                     _("Documentation"),
                     "https://docs.gimp.org/");
+  welcome_add_link (GTK_GRID (grid), 0, &row,
+                    /* "graduation cap" emoticone in UTF-8. */
+                    "\xf0\x9f\x8e\x93",
+                    _("Community Tutorials"),
+                    "https://www.gimp.org/tutorials/");
 
   /* XXX: should we add API docs for plug-in developers once it's
    * properly set up? */
