@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-24 14:14+0000\n"
-"PO-Revision-Date: 2025-09-24 18:56+0300\n"
+"POT-Creation-Date: 2025-09-29 19:28+0000\n"
+"PO-Revision-Date: 2025-09-29 22:51+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -182,7 +182,15 @@ msgstr ""
 "Якщо ви хочете негайно завершити роботу програми, запустіть GIMP з "
 "параметром --quit."
 
-#: app/gimp-update.c:444
+#: app/gimp-update.c:424
+msgid "Perhaps you are missing GIO backends and need to install GVFS?"
+msgstr "Можливо, не вистачає механізму GIO, і треба встановити GVFS?"
+
+#: app/gimp-update.c:429
+msgid "Perhaps you are missing GIO backends."
+msgstr "Можливо, у вас не вистачає модулів обробки GIO."
+
+#: app/gimp-update.c:466
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -2574,8 +2582,8 @@ msgid "Enter a description for the marker"
 msgstr "Введіть опис позначки"
 
 #: app/actions/data-commands.c:90 app/actions/documents-commands.c:393
-#: app/actions/file-commands.c:234 app/dialogs/file-open-dialog.c:253
-#: app/dialogs/file-open-dialog.c:295
+#: app/actions/file-commands.c:234 app/dialogs/file-open-dialog.c:254
+#: app/dialogs/file-open-dialog.c:300
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
 #: app/display/gimpdisplayshell-dnd.c:646 app/widgets/gimplayertreeview.c:796
@@ -3090,134 +3098,124 @@ msgctxt "dialogs-action"
 msgid "Open the dashboard"
 msgstr "Відкрити панель приладів"
 
-#: app/actions/dialogs-actions.c:311 app/actions/dialogs-actions.c:312
-msgctxt "dialogs-action"
-msgid "_Settings..."
-msgstr "_Параметри..."
-
-#: app/actions/dialogs-actions.c:314 app/actions/dialogs-actions.c:315
+#: app/actions/dialogs-actions.c:310 app/actions/dialogs-actions.c:311
 msgctxt "dialogs-action"
 msgid "_Preferences"
 msgstr "_Параметри"
 
-#: app/actions/dialogs-actions.c:318
+#: app/actions/dialogs-actions.c:313
 msgctxt "dialogs-action"
 msgid "Open the preferences dialog"
 msgstr "Відкрити діалог параметрів програми"
 
-#: app/actions/dialogs-actions.c:323
+#: app/actions/dialogs-actions.c:318
 msgctxt "dialogs-action"
 msgid "_Input Devices Editor"
 msgstr "Редактор пристроїв _введення"
 
-#: app/actions/dialogs-actions.c:324
+#: app/actions/dialogs-actions.c:319
 msgctxt "dialogs-action"
 msgid "_Input Devices"
 msgstr "Пристрої _вводу"
 
-#: app/actions/dialogs-actions.c:326
+#: app/actions/dialogs-actions.c:321
 msgctxt "dialogs-action"
 msgid "Open the input devices editor"
 msgstr "Відкрити редактор пристроїв вводу"
 
-#: app/actions/dialogs-actions.c:331
+#: app/actions/dialogs-actions.c:326
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts Editor"
 msgstr "Редактор _комбінацій клавіш"
 
-#: app/actions/dialogs-actions.c:332
+#: app/actions/dialogs-actions.c:327
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts"
 msgstr "_Комбінації клавіш"
 
-#: app/actions/dialogs-actions.c:334
+#: app/actions/dialogs-actions.c:329
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
 msgstr "Відкрити діалог налаштування комбінацій клавіш"
 
-#: app/actions/dialogs-actions.c:339
+#: app/actions/dialogs-actions.c:334
 msgctxt "dialogs-action"
 msgid "_Modules Dialog"
 msgstr "Вікно _модулів"
 
-#: app/actions/dialogs-actions.c:340
+#: app/actions/dialogs-actions.c:335
 msgctxt "dialogs-action"
 msgid "_Modules"
 msgstr "_Модулі"
 
-#: app/actions/dialogs-actions.c:342
+#: app/actions/dialogs-actions.c:337
 msgctxt "dialogs-action"
 msgid "Open the module manager dialog"
 msgstr "Відкрити діалог керування модулями"
 
-#: app/actions/dialogs-actions.c:347
+#: app/actions/dialogs-actions.c:342
 msgctxt "dialogs-action"
 msgid "_Tip of the Day"
 msgstr "По_рада дня"
 
-#: app/actions/dialogs-actions.c:349
+#: app/actions/dialogs-actions.c:344
 msgctxt "dialogs-action"
 msgid "Show some helpful tips on using GIMP"
 msgstr "Показати збірку корисних порід з використання GIMP"
 
-#: app/actions/dialogs-actions.c:354
+#: app/actions/dialogs-actions.c:349
 msgctxt "dialogs-action"
 msgid "Welcome Dialog"
 msgstr "Вікно вітання"
 
-#: app/actions/dialogs-actions.c:356
+#: app/actions/dialogs-actions.c:351
 msgctxt "dialogs-action"
 msgid "Show information on running GIMP release"
 msgstr "Показати відомості щодо запущеного випуску GIMP"
 
-#: app/actions/dialogs-actions.c:362 app/actions/dialogs-actions.c:369
+#: app/actions/dialogs-actions.c:357 app/actions/dialogs-actions.c:362
 msgctxt "dialogs-action"
 msgid "About GIMP"
 msgstr "Про програму GIMP"
 
-#: app/actions/dialogs-actions.c:364
-msgctxt "dialogs-action"
-msgid "About"
-msgstr "Про програму"
-
-#: app/actions/dialogs-actions.c:366
+#: app/actions/dialogs-actions.c:359
 msgctxt "dialogs-action"
 msgid "_About"
 msgstr "_Про програму"
 
-#: app/actions/dialogs-actions.c:374
+#: app/actions/dialogs-actions.c:367
 msgctxt "dialogs-action"
 msgid "_Search and Run a Command"
 msgstr "_Пошук і запуск команди"
 
-#: app/actions/dialogs-actions.c:376
+#: app/actions/dialogs-actions.c:369
 msgctxt "dialogs-action"
 msgid "Search commands by keyword, and run them"
 msgstr "Пошук команд за ключовим словом та їх запуск"
 
-#: app/actions/dialogs-actions.c:382
+#: app/actions/dialogs-actions.c:375
 msgctxt "dialogs-action"
 msgid "Manage _Extensions"
 msgstr "Керування _розширеннями"
 
-#: app/actions/dialogs-actions.c:384
+#: app/actions/dialogs-actions.c:377
 msgctxt "dialogs-action"
 msgid "Manage Extensions: search, install, uninstall, update."
 msgstr "Керування розширеннями: пошук, встановлення, вилучення, оновлення."
 
-#: app/actions/dialogs-actions.c:448
+#: app/actions/dialogs-actions.c:441
 msgid "Tool_box"
 msgstr "Панель _інструментів"
 
-#: app/actions/dialogs-actions.c:449
+#: app/actions/dialogs-actions.c:442
 msgid "Raise the toolbox"
 msgstr "Підняти вгору панель інструментів"
 
-#: app/actions/dialogs-actions.c:453
+#: app/actions/dialogs-actions.c:446
 msgid "New Tool_box"
 msgstr "Додати п_анель інструментів"
 
-#: app/actions/dialogs-actions.c:454
+#: app/actions/dialogs-actions.c:447
 msgid "Create a new toolbox"
 msgstr "Створити нову панель інструментів"
 
@@ -12956,7 +12954,7 @@ msgstr ""
 
 #: app/core/gimp-contexts.c:153 app/core/gimp-internal-data.c:338
 #: app/core/gimptooloptions.c:361 app/gui/modifiers.c:191 app/gui/session.c:449
-#: app/menus/menus.c:480 app/widgets/gimpdevices.c:226
+#: app/menus/menus.c:488 app/widgets/gimpdevices.c:226
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "Не вдалось вилучити «%s»: %s"
@@ -16103,9 +16101,15 @@ msgid "Search extensions matching these keywords"
 msgstr "Шукати розширення за цими ключовими словами"
 
 #: app/dialogs/file-open-dialog.c:142 app/dialogs/file-open-dialog.c:168
-#: app/dialogs/file-open-dialog.c:286
+#: app/dialogs/file-open-dialog.c:291
 msgid "Open layers"
 msgstr "Відкрити шари"
+
+#: app/dialogs/file-open-dialog.c:258
+#, c-format
+#| msgid "Opening '%s' failed: %s"
+msgid "Opening '%s' failed."
+msgstr "Не вдалося відкрити «%s»."
 
 #: app/dialogs/file-open-location-dialog.c:74
 msgid "Open Location"
@@ -18800,12 +18804,13 @@ msgid "GIMP website"
 msgstr "Сайт GIMP"
 
 #: app/dialogs/welcome-dialog.c:545
-msgid "Tutorials"
-msgstr "Підручники"
-
-#: app/dialogs/welcome-dialog.c:550
 msgid "Documentation"
 msgstr "Документація"
+
+#: app/dialogs/welcome-dialog.c:550
+#| msgid "Tutorials"
+msgid "Community Tutorials"
+msgstr "Підручники спільноти"
 
 #. XXX: should we add API docs for plug-in developers once it's
 #. * properly set up?
@@ -19860,26 +19865,26 @@ msgstr "Натисніть і перетягніть, щоб пересунут�
 msgid "Click-Drag to shear"
 msgstr "Натисніть і перетягніть для перекошування"
 
-#: app/file/file-open.c:264
+#: app/file/file-open.c:272
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr "Доповнення %s успішно завершило роботу, але не повернуло зображення."
 
-#: app/file/file-open.c:275
+#: app/file/file-open.c:283
 #, c-format
 msgid "%s plug-in could not open image"
 msgstr "Доповненню %s не вдалось відкрити зображення"
 
-#: app/file/file-open.c:690
+#: app/file/file-open.c:698
 msgid "Image doesn't contain any layers"
 msgstr "Зображення не містить шарів"
 
-#: app/file/file-open.c:748
+#: app/file/file-open.c:756
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Не вдалось відкрити «%s»: %s"
 
-#: app/file/file-open.c:836
+#: app/file/file-open.c:846
 #, c-format
 msgid ""
 "Only platform-native file paths are supported: '%s' cannot be opened as link."
@@ -19887,11 +19892,11 @@ msgstr ""
 "Передбачено підтримку лише рідних для платформи шляхів до файлів: «%s» не "
 "можна відкривати як посилання."
 
-#: app/file/file-open.c:978 app/file/file-save.c:132
+#: app/file/file-open.c:985 app/file/file-save.c:132
 msgid "Not a regular file"
 msgstr "Не є звичайним файлом"
 
-#: app/file/file-open.c:987 app/file/file-save.c:141
+#: app/file/file-open.c:994 app/file/file-save.c:141
 msgid "Permission denied"
 msgstr "Доступ заборонений"
 
@@ -21621,11 +21626,7 @@ msgstr "Обертати векторний шар"
 msgid "Transform Vector Layer"
 msgstr "Перетворити векторний шар"
 
-#: app/path/gimpvectorlayer.c:526
-msgid "Discard Vector Informations"
-msgstr "Відкинути дані щодо векторних елементів"
-
-#: app/path/gimpvectorlayer.c:669
+#: app/path/gimpvectorlayer.c:526 app/path/gimpvectorlayer.c:669
 msgid "Discard Vector Information"
 msgstr "Відкинути дані щодо векторних елементів"
 
@@ -22196,7 +22197,6 @@ msgstr "2D перетворення"
 
 #: app/pdb/link-layer-cmds.c:67 app/pdb/link-layer-cmds.c:89
 #, c-format
-#| msgid "Failed to create text layer"
 msgid "Failed to create link layer"
 msgstr "Не вдалось створити шар посилання"
 
@@ -27559,7 +27559,7 @@ msgstr "Різноманітні відомості"
 msgid "Select fields"
 msgstr "Виберіть поля"
 
-#. Tranlators: "N/A" is an abbreviation for "not available"
+#. Translators: "N/A" is an abbreviation for "not available"
 #: app/widgets/gimpdashboard.c:3323
 msgctxt "dashboard-value"
 msgid "N/A"
@@ -29936,6 +29936,17 @@ msgstr "Меню шаблону інструментів"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Меню журналу скасувань"
+
+#~ msgctxt "dialogs-action"
+#~ msgid "_Settings..."
+#~ msgstr "_Параметри..."
+
+#~ msgctxt "dialogs-action"
+#~ msgid "About"
+#~ msgstr "Про програму"
+
+#~ msgid "Discard Vector Informations"
+#~ msgstr "Відкинути дані щодо векторних елементів"
 
 #~ msgctxt "vector-mode"
 #~ msgid "Edit"
