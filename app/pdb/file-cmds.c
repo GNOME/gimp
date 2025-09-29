@@ -112,7 +112,16 @@ file_load_invoker (GimpProcedure         *procedure,
         {
           GimpImage *image =
             g_value_get_object (gimp_value_array_index (return_vals, 1));
-          gimp_image_set_load_proc (image, file_proc);
+
+          if (! gimp_image_get_load_proc (image))
+            /* Leave the initial load procedure if it already exists as
+             * it will give information about the source format. See
+             * similar code in file_open_image().
+             */
+            gimp_image_set_load_proc (image, file_proc);
+
+          if (! gimp_image_get_file (image))
+            gimp_image_set_imported_file (image, file);
         }
     }
 
