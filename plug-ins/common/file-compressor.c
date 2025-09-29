@@ -88,6 +88,8 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#include <archive.h>
+#include <archive_entry.h>
 #include <zlib.h>
 #include <bzlib.h>
 #include <lzma.h>
@@ -201,6 +203,9 @@ static gboolean            xz_load                  (GFile                 *infi
                                                      GFile                 *outfile);
 static gboolean            xz_export                (GFile                 *infile,
                                                      GFile                 *outfile);
+
+static gboolean            zip_load                 (GFile                 *infile,
+                                                     GFile                 *outfile);
 static goffset             get_file_info            (GFile                 *file);
 
 
@@ -267,6 +272,25 @@ static const CompressorEntry compressors[] =
     "saves files compressed with xz",
     "This procedure saves files in the xz compressed format.",
     xz_export
+  },
+
+  {
+    N_("zip archive"),
+    "application/zip",
+    "xcf.zip,xcfzip",
+    "0,string,PK\x03\x04",
+    ".xcfzip",
+    ".zip",
+
+    "file-zip-load",
+    "loads files compressed with zip",
+    "This procedure loads files in the zip compressed format.",
+    zip_load,
+
+    NULL,
+    NULL,
+    NULL,
+    NULL
   }
 };
 
@@ -297,7 +321,8 @@ compressor_query_procedures (GimpPlugIn *plug_in)
       const CompressorEntry *compressor = &compressors[i];
 
       list = g_list_append (list, g_strdup (compressor->load_proc));
-      list = g_list_append (list, g_strdup (compressor->save_proc));
+      if (compressor->save_proc)
+        list = g_list_append (list, g_strdup (compressor->save_proc));
     }
 
   return list;
@@ -329,7 +354,7 @@ compressor_create_procedure (GimpPlugIn  *plug_in,
           gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                           compressor->magic);
         }
-      else if (! strcmp (name, compressor->save_proc))
+      else if (compressor->save_proc && ! strcmp (name, compressor->save_proc))
         {
           procedure = gimp_export_procedure_new (plug_in, name,
                                                  GIMP_PDB_PROC_TYPE_PLUGIN,
@@ -387,8 +412,7 @@ compressor_load (GimpProcedure         *procedure,
   gimp_plug_in_set_pdb_error_handler (gimp_procedure_get_plug_in (procedure),
                                       GIMP_PDB_ERROR_HANDLER_PLUGIN);
 
-  image = load_image (compressor, file, run_mode,
-                      &status, &error);
+  image = load_image (compressor, file, run_mode, &status, &error);
 
   return_vals = gimp_procedure_new_return_values (procedure, status, error);
 
@@ -1015,6 +1039,69 @@ xz_export (GFile *infile,
 
   lzma_end (&strm);
   ret = TRUE;
+
+ out:
+  if (in)
+    fclose (in);
+
+  if (out)
+    fclose (out);
+
+  return ret;
+}
+
+static gboolean
+zip_load (GFile *infile,
+          GFile *outfile)
+{
+  gboolean              ret;
+  FILE                 *in;
+  FILE                 *out;
+  struct archive       *a;
+  struct archive_entry *entry;
+  gint                  r;
+
+  ret = FALSE;
+  in  = NULL;
+  out = NULL;
+
+  in = g_fopen (g_file_peek_path (infile), "rb");
+  if (!in)
+    goto out;
+
+  out = g_fopen (g_file_peek_path (outfile), "wb");
+  if (! out)
+    goto out;
+
+  if ((a = archive_read_new ()))
+    {
+      const gchar *name = gimp_file_get_utf8_name (infile);
+
+      archive_read_support_format_all (a);
+
+      r = archive_read_open_filename (a, name, 10240);
+      if (r != ARCHIVE_OK)
+        {
+          archive_read_close (a);
+
+          goto out;
+        }
+
+      if (archive_read_next_header (a, &entry) == ARCHIVE_OK)
+        {
+          r = archive_read_data_into_fd (a, fileno (out));
+
+          if (r != ARCHIVE_OK)
+            {
+              archive_read_close (a);
+
+              goto out;
+            }
+          archive_entry_free (entry);
+          ret = TRUE;
+        }
+      archive_read_close (a);
+    }
 
  out:
   if (in)
