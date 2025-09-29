@@ -29,6 +29,16 @@ Graphical User Interface:
   - Palette Import dialog now display file format filters, both to let
     users hide irrelevant files from view and to highlight which formats
     we support.
+  - The GimpColorHexEntry will now update the chosen color as you type.
+  - Use a standard, yet extended, AppMenu on macOS.
+  - Pop an error message up on startup when GIO modules to read HTTPS
+    links are not found and that we therefore fail to load the remote
+    gimp_versions.json file. With the AppImage package in particular, we
+    depend on an environment daemon which cannot be shipped in the
+    package. So the next best thing is to warn people and tell them what
+    they should install to get version checks.
+  - Welcome dialog: the "Community Tutorials" link is now shown after
+    the "Documentation" link.
 
 Plug-Ins:
 
@@ -83,6 +93,7 @@ API:
     * gimp_procedure_add_link_layer_argument
     * gimp_procedure_add_link_layer_aux_argument
     * gimp_procedure_add_link_layer_return_value
+    * gimp_link_layer_get_mime_type
   - New libgimp class: GimpLinkLayer
 
 Build:
@@ -93,11 +104,14 @@ Build:
       CMake.
     * Ability to apply remote patches on dependency builds.
     * New job "branches-check" to warn about dead branches.
+    * Our Debian jobs are now built with GCC again (the CLang builds are
+      switched to weekly scheduled jobs).
   - We now build Exiv2 ourselves on Windows as a temporary workaround to
     issue #12626.
   - release-stats.sh script updated to generate text directly pastable
     into our release news.
   - Improved packages binary caching with ORAS for Flatpak.
+  - AppImage: we now depend on Debian Trixie.
 
 
 Overview of Changes from GIMP 3.1.2 to GIMP 3.1.4
