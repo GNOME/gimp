@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-24 00:12+0000\n"
-"PO-Revision-Date: 2025-09-24 07:12+0200\n"
+"POT-Creation-Date: 2025-09-29 14:45+0000\n"
+"PO-Revision-Date: 2025-09-29 17:02+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -160,7 +160,15 @@ msgstr ""
 msgid "If you wanted to quit immediately instead, call GIMP with --quit."
 msgstr "თუ გნებავთ გასვლა დაუყოვნებლივ, გამოიძახეთ GIMP პარამეტრით --quit."
 
-#: app/gimp-update.c:452
+#: app/gimp-update.c:429
+msgid "Perhaps you are missing GIO backends and need to install GVFS?"
+msgstr "ალბათ არ გაქვთ GIO-ის უკანაბოლოები და გჭირდებათ, დააყენოთ GVFS?"
+
+#: app/gimp-update.c:434
+msgid "Perhaps you are missing GIO backends."
+msgstr "ალბათ არ გაქვთ GIO-ის უკანაბოლოები."
+
+#: app/gimp-update.c:466
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -15164,7 +15172,7 @@ msgstr "ბოლოს შემოწმების თარიღი %s %s"
 #: app/dialogs/about-dialog.c:609
 #, c-format
 msgid "Up to date as of %s at %s"
-msgstr ""
+msgstr "განახლებულია %s %s თარიღი/დროისთვის"
 
 #: app/dialogs/about-dialog.c:837
 msgid "GIMP is brought to you by"
@@ -15937,6 +15945,8 @@ msgstr "დონე: %s,  სიცოცხლეები: %s"
 #: app/dialogs/lebl-dialog.c:150
 msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
 msgstr ""
+"მარცხნივ/მარჯვნივ გადასაადგილებლად, ჰარე სასროლად, 'p' დასაპაუზებლად, 'q' "
+"გასასვლელად"
 
 #: app/dialogs/lebl-dialog.c:816
 msgid "Killer GEGLs from Outer Space"
@@ -16108,11 +16118,11 @@ msgstr "ყველა პალიტრის ფაილი (*.*)"
 
 #: app/dialogs/palette-import-dialog.c:910
 msgid "GIMP Palette (*.gpl)"
-msgstr ""
+msgstr "GIMP-ის პალიტრა (*.gpl)"
 
 #: app/dialogs/palette-import-dialog.c:916
 msgid "Adobe Color Table (*.act)"
-msgstr ""
+msgstr "Adobe-ის ფერების ცხრილი (*.act)"
 
 #: app/dialogs/palette-import-dialog.c:922
 msgid "Adobe Color Swatch (*.aco)"
@@ -18165,12 +18175,12 @@ msgid "GIMP website"
 msgstr "GIMP-ის ვებგვერდი"
 
 #: app/dialogs/welcome-dialog.c:473
-msgid "Tutorials"
-msgstr "სახელმძღვანელოები"
-
-#: app/dialogs/welcome-dialog.c:478
 msgid "Documentation"
 msgstr "დოკუმენტაცია"
+
+#: app/dialogs/welcome-dialog.c:478
+msgid "Community Tutorials"
+msgstr "მომხმარებლების ნაწერი სახელმძღვანელოები"
 
 #. XXX: should we add API docs for plug-in developers once it's
 #. * properly set up?
@@ -20601,7 +20611,7 @@ msgstr "გამეორება"
 
 #: app/paint/gimppaintoptions.c:381
 msgid "How fade is repeated as you paint"
-msgstr ""
+msgstr "როგორ მეორდება მინავლება ხატვისას"
 
 #: app/paint/gimppaintoptions.c:393 app/tools/gimpgradientoptions.c:282
 #: app/tools/gimppaintoptions-gui.c:398
