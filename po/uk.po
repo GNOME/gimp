@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-23 18:47+0000\n"
-"PO-Revision-Date: 2025-09-23 22:05+0300\n"
+"POT-Creation-Date: 2025-09-29 17:50+0000\n"
+"PO-Revision-Date: 2025-09-29 23:04+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -182,7 +182,15 @@ msgstr ""
 "Якщо ви хочете негайно завершити роботу програми, запустіть GIMP з "
 "параметром --quit."
 
-#: app/gimp-update.c:452
+#: app/gimp-update.c:429
+msgid "Perhaps you are missing GIO backends and need to install GVFS?"
+msgstr "Можливо, не вистачає механізму GIO, і треба встановити GVFS?"
+
+#: app/gimp-update.c:434
+msgid "Perhaps you are missing GIO backends."
+msgstr "Можливо, у вас не вистачає модулів обробки GIO."
+
+#: app/gimp-update.c:466
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -12909,7 +12917,6 @@ msgstr "Додаток AppData повинен вказувати версію в
 
 #: app/core/gimpextension.c:521
 #, c-format
-#| msgid "Unsupported <requires> \"%s\" (type %s)."
 msgid "Unsupported <relation> \"%s\" (type %s)."
 msgstr "Не передбачено підтримки <relation> «%s» (тип %s)."
 
@@ -13304,7 +13311,6 @@ msgstr ""
 "Критична помилка аналізу файла пензля «%s»: неузгодженість у параметрах."
 
 #: app/core/gimpbuffer.c:104
-#| msgid "Buffers"
 msgid "Buffer"
 msgstr "Буфер"
 
@@ -15091,7 +15097,6 @@ msgid "Floated Layer"
 msgstr "Рухомий шар"
 
 #: app/core/gimpsettings.c:71
-#| msgid "%s Preset"
 msgid "Preset"
 msgstr "Шаблон"
 
@@ -16438,7 +16443,6 @@ msgid "There is no palette to import."
 msgstr "Немає палітри для імпортування."
 
 #: app/dialogs/palette-import-dialog.c:905
-#| msgid "All files (*.*)"
 msgid "All palette files (*.*)"
 msgstr "усі файли палітр (*.*)"
 
@@ -18524,12 +18528,13 @@ msgid "GIMP website"
 msgstr "Сайт GIMP"
 
 #: app/dialogs/welcome-dialog.c:473
-msgid "Tutorials"
-msgstr "Підручники"
-
-#: app/dialogs/welcome-dialog.c:478
 msgid "Documentation"
 msgstr "Документація"
+
+#: app/dialogs/welcome-dialog.c:478
+#| msgid "Tutorials"
+msgid "Community Tutorials"
+msgstr "Підручники спільноти"
 
 #. XXX: should we add API docs for plug-in developers once it's
 #. * properly set up?
@@ -26470,7 +26475,6 @@ msgid "Select Controller Event Action"
 msgstr "Виберіть дію для події контролера"
 
 #: app/widgets/gimpcontrollerinfo.c:110
-#| msgid "Input Controllers"
 msgid "Input Controller"
 msgstr "Контролер вхідних подій"
 
@@ -27732,32 +27736,26 @@ msgid "Read _Online"
 msgstr "_Читати з мережі"
 
 #: app/widgets/gimphistogrameditor.c:135
-#| msgid "Mean: "
 msgid "Mean:"
 msgstr "Середнє:"
 
 #: app/widgets/gimphistogrameditor.c:136
-#| msgid "Std dev: "
 msgid "Std dev:"
 msgstr "Станд. відхилення:"
 
 #: app/widgets/gimphistogrameditor.c:137
-#| msgid "Median: "
 msgid "Median:"
 msgstr "Медіана:"
 
 #: app/widgets/gimphistogrameditor.c:138
-#| msgid "Pixels: "
 msgid "Pixels:"
 msgstr "Пікселів:"
 
 #: app/widgets/gimphistogrameditor.c:139
-#| msgid "Count: "
 msgid "Count:"
 msgstr "Кількість:"
 
 #: app/widgets/gimphistogrameditor.c:140
-#| msgid "Percentile: "
 msgid "Percentile:"
 msgstr "Відсоток:"
 
@@ -28090,8 +28088,6 @@ msgstr "Поступ"
 
 #: app/widgets/gimprow.c:620
 #, c-format
-#| msgctxt "undo-type"
-#| msgid "Rename item"
 msgid "Rename %s"
 msgstr "Перейменувати %s"
 
