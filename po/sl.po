@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-23 15:50+0000\n"
-"PO-Revision-Date: 2025-09-23 18:05+0200\n"
+"POT-Creation-Date: 2025-09-29 12:44+0000\n"
+"PO-Revision-Date: 2025-09-29 15:20+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -178,7 +178,15 @@ msgstr ""
 msgid "If you wanted to quit immediately instead, call GIMP with --quit."
 msgstr "Če želite namesto tega takoj prenehati, pokličite GIMP s --quit."
 
-#: app/gimp-update.c:452
+#: app/gimp-update.c:429
+msgid "Perhaps you are missing GIO backends and need to install GVFS?"
+msgstr "Morda vam manjka ogrodje GIO in morate namestiti GVFS?"
+
+#: app/gimp-update.c:434
+msgid "Perhaps you are missing GIO backends."
+msgstr "Morda vam manjka ogrodje GIO."
+
+#: app/gimp-update.c:466
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -18454,12 +18462,12 @@ msgid "GIMP website"
 msgstr "Spletišče GIMP"
 
 #: app/dialogs/welcome-dialog.c:473
-msgid "Tutorials"
-msgstr "Priročniki"
-
-#: app/dialogs/welcome-dialog.c:478
 msgid "Documentation"
 msgstr "Dokumentacija"
+
+#: app/dialogs/welcome-dialog.c:478
+msgid "Community Tutorials"
+msgstr "Vadnice iz skupnosti"
 
 #. XXX: should we add API docs for plug-in developers once it's
 #. * properly set up?
