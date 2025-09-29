@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-27 06:07+0000\n"
-"PO-Revision-Date: 2025-09-27 13:43+0200\n"
+"POT-Creation-Date: 2025-09-27 11:45+0000\n"
+"PO-Revision-Date: 2025-09-28 13:19+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -119,8 +119,8 @@ msgid ""
 "Copyright © 1995-%s\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
-"Copyright © 1995-%s\n"
-"Spencer Kimball, Peter Mattis and the GIMP Development Team"
+"Opphavsrett © 1995-%s\n"
+"Spencer Kimball, Peter Mattis og GIMP-utviklingsteamet"
 
 #. TRANSLATORS: do not end the license URL with a dot, because it would
 #. * be in the link. Because of technical limitations, make sure the URL
@@ -269,7 +269,7 @@ msgstr "Prosedyren som vert brukt for å køyra batch kommandoane."
 
 #: app/main.c:244
 msgid "Quit immediately after performing requested actions"
-msgstr "Avslutt straks etter å ha utført dei førespurde handlingane"
+msgstr "Avslutt straks førespurde handlingane er utførte"
 
 #: app/main.c:249
 msgid "Send messages to console instead of using a dialog"
