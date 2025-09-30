@@ -220,71 +220,71 @@ static const CompressorEntry compressors[] =
   {
     N_("gzip archive"),
     "application/x-gzip",
-    "xcf.gz,xcfgz", /* FIXME "xcf.gz,gz,xcfgz" */
+    "gz,xcf.gz,xcfgz",
     "0,string,\037\213",
     ".xcfgz",
     ".gz",
 
     "file-gz-load",
-    "loads files compressed with gzip",
-    "This procedure loads files in the gzip compressed format.",
+    N_("Loads files compressed with gzip"),
+    N_("This procedure loads files in the gzip compressed format."),
     gzip_load,
 
     "file-gz-export",
-    "saves files compressed with gzip",
-    "This procedure saves files in the gzip compressed format.",
+    N_("Exports files compressed with gzip"),
+    N_("This procedure exports files in the gzip compressed format."),
     gzip_export
   },
 
   {
     N_("bzip archive"),
     "application/x-bzip",
-    "xcf.bz2,xcfbz2", /* FIXME "xcf.bz2,bz2,xcfbz2" */
+    "bz2,xcf.bz2,xcfbz2",
     "0,string,BZh",
     ".xcfbz2",
     ".bz2",
 
     "file-bz2-load",
-    "loads files compressed with bzip2",
-    "This procedure loads files in the bzip2 compressed format.",
+    N_("Loads files compressed with bzip2"),
+    N_("This procedure loads files in the bzip2 compressed format."),
     bzip2_load,
 
     "file-bz2-export",
-    "saves files compressed with bzip2",
-    "This procedure saves files in the bzip2 compressed format.",
+    N_("Exports files compressed with bzip2"),
+    N_("This procedure exports files in the bzip2 compressed format."),
     bzip2_export
   },
 
   {
     N_("xz archive"),
     "application/x-xz",
-    "xcf.xz,xcfxz", /* FIXME "xcf.xz,xz,xcfxz" */
+    "xz,xcf.xz,xcfxz",
     "0,string,\3757zXZ\x00",
     ".xcfxz",
     ".xz",
 
     "file-xz-load",
-    "loads files compressed with xz",
-    "This procedure loads files in the xz compressed format.",
+    N_("Loads files compressed with xz"),
+    N_("This procedure loads files in the xz compressed format."),
     xz_load,
 
     "file-xz-export",
-    "saves files compressed with xz",
-    "This procedure saves files in the xz compressed format.",
+    N_("Exports files compressed with xz"),
+    N_("This procedure exports files in the xz compressed format."),
     xz_export
   },
 
   {
     N_("zip archive"),
     "application/zip",
-    "xcf.zip,xcfzip",
+    "zip,hgt.zip",
     "0,string,PK\x03\x04",
     ".xcfzip",
     ".zip",
 
     "file-zip-load",
-    "loads files compressed with zip",
-    "This procedure loads files in the zip compressed format.",
+    N_("Loads files compressed with zip"),
+    N_("This procedure loads files in the zip compressed format."),
     zip_load,
 
     NULL,
@@ -347,8 +347,8 @@ compressor_create_procedure (GimpPlugIn  *plug_in,
                                                (gpointer) compressor, NULL);
 
           gimp_procedure_set_documentation (procedure,
-                                            compressor->load_blurb,
-                                            compressor->load_help,
+                                            _(compressor->load_blurb),
+                                            _(compressor->load_help),
                                             name);
 
           gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
@@ -364,8 +364,8 @@ compressor_create_procedure (GimpPlugIn  *plug_in,
           gimp_procedure_set_image_types (procedure, "RGB*, GRAY*, INDEXED*");
 
           gimp_procedure_set_documentation (procedure,
-                                            compressor->save_blurb,
-                                            compressor->save_help,
+                                            _(compressor->save_blurb),
+                                            _(compressor->save_help),
                                             name);
         }
 
