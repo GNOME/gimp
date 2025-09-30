@@ -1083,6 +1083,7 @@ zip_load (GFile *infile,
       if (r != ARCHIVE_OK)
         {
           archive_read_close (a);
+          archive_read_free (a);
 
           goto out;
         }
@@ -1094,13 +1095,22 @@ zip_load (GFile *infile,
           if (r != ARCHIVE_OK)
             {
               archive_read_close (a);
+              archive_read_free (a);
 
               goto out;
             }
-          archive_entry_free (entry);
           ret = TRUE;
+
+          if (archive_read_next_header (a, &entry) != ARCHIVE_EOF)
+            /* Leave a chance for the load to succeed (in case the first
+             * file happens to be an image file), yet still warns. This
+             * procedure expects that the archive contains a single
+             * file.
+             */
+            g_message (_("This zip archive contains more than one file."));
         }
       archive_read_close (a);
+      archive_read_free (a);
     }
 
  out:
