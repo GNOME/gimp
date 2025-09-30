@@ -11,8 +11,6 @@ Overview of Changes from GIMP 3.1.4 to GIMP 3.2-RC1
 
 Core:
 
-  - Improve Export to SVG of paths by not exporting the DTD and adding
-    an explicit SVG version.
   - macOS: "Quit" from the dock's right-click menu will now follow our
     standard Quit procedure, by intercepting the
     applicationShouldTerminate signal, instead of forcing the
@@ -26,26 +24,13 @@ Graphical User Interface:
 
   - "Monitor Linked Image" and "Discard Link Information" menu items
     added to Layer menu when the selected layer is a link layer.
-  - Palette Import dialog now display file format filters, both to let
-    users hide irrelevant files from view and to highlight which formats
-    we support.
   - The GimpColorHexEntry will now update the chosen color as you type.
   - Use a standard, yet extended, AppMenu on macOS.
-  - Pop an error message up on startup when GIO modules to read HTTPS
-    links are not found and that we therefore fail to load the remote
-    gimp_versions.json file. With the AppImage package in particular, we
-    depend on an environment daemon which cannot be shipped in the
-    package. So the next best thing is to warn people and tell them what
-    they should install to get version checks.
-  - Welcome dialog: the "Community Tutorials" link is now shown after
-    the "Documentation" link.
 
 Plug-Ins:
 
-  - Fixed vulnerabilities: ZDI-CAN-27684, ZDI-CAN-27863, ZDI-CAN-27878,
-    ZDI-CAN-27836, ZDI-CAN-27823, ZDI-CAN-27793
-  - macOS: improved handling of plug-in icons which were flashing in
-    macOS dock.
+  - file-compressor: add zip decompression support. This allows support
+    for .hgt.zip files, as well as other formats compressed with zip.
 
 API:
 
@@ -95,23 +80,6 @@ API:
     * gimp_procedure_add_link_layer_return_value
     * gimp_link_layer_get_mime_type
   - New libgimp class: GimpLinkLayer
-
-Build:
-
-  - CI:
-    * Linux builds ported from unmaintained Kaniko to Buildah.
-    * Colored output and .pdb support for builds of dependency using
-      CMake.
-    * Ability to apply remote patches on dependency builds.
-    * New job "branches-check" to warn about dead branches.
-    * Our Debian jobs are now built with GCC again (the CLang builds are
-      switched to weekly scheduled jobs).
-  - We now build Exiv2 ourselves on Windows as a temporary workaround to
-    issue #12626.
-  - release-stats.sh script updated to generate text directly pastable
-    into our release news.
-  - Improved packages binary caching with ORAS for Flatpak.
-  - AppImage: we now depend on Debian Trixie.
 
 
 Overview of Changes from GIMP 3.1.2 to GIMP 3.1.4
