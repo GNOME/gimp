@@ -176,8 +176,8 @@ GeglBuffer *
 gimp_cairo_surface_create_buffer (cairo_surface_t *surface,
                                   const Babl      *format)
 {
-  gint width;
-  gint height;
+  GeglBuffer     *buffer;
+  GeglRectangle   extent = {0};
 
   g_return_val_if_fail (surface != NULL, NULL);
   g_return_val_if_fail (cairo_surface_get_type (surface) ==
@@ -188,14 +188,12 @@ gimp_cairo_surface_create_buffer (cairo_surface_t *surface,
 
   if (format == NULL)
     format = gimp_cairo_surface_get_format (surface);
-  width  = cairo_image_surface_get_width  (surface);
-  height = cairo_image_surface_get_height (surface);
+  extent.width  = cairo_image_surface_get_width  (surface);
+  extent.height = cairo_image_surface_get_height (surface);
 
-  return
-    gegl_buffer_linear_new_from_data (cairo_image_surface_get_data (surface),
-                                      format,
-                                      GEGL_RECTANGLE (0, 0, width, height),
-                                      cairo_image_surface_get_stride (surface),
-                                      (GDestroyNotify) cairo_surface_destroy,
-                                      cairo_surface_reference (surface));
+  buffer = gegl_buffer_new (&extent, format);
+
+  gegl_buffer_set (buffer, &extent, 0, format, cairo_image_surface_get_data (surface), cairo_image_surface_get_stride (surface));
+
+  return buffer;
 }
