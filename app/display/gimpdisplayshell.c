@@ -1511,7 +1511,16 @@ gimp_display_shell_present (GimpDisplayShell *shell)
     {
       gimp_image_window_set_active_shell (window, shell);
 
+#ifdef GDK_WINDOWING_QUARTZ
+      /* On macOS, gtk_window_present() causes focus fighting between windows
+       * during creation for multi-window settings.
+       * Just show the window without forcing focus.
+       */
+      if (! gtk_widget_get_visible (GTK_WIDGET (window)))
+        gtk_widget_show (GTK_WIDGET (window));
+#else
       gtk_window_present (GTK_WINDOW (window));
+#endif
     }
 }
 
