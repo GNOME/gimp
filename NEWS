@@ -123,6 +123,14 @@ Graphical User Interface:
     insensitive, except for the Cancel button and the progress bar.
   - Both grid and list views can now zoom via scroll and zoom gestures
     (it used to only work in list views).
+  - Pop an error message up on startup when GIO modules to read HTTPS
+    links are not found and that we therefore fail to load the remote
+    gimp_versions.json file. With the AppImage package in particular, we
+    depend on an environment daemon which cannot be shipped in the
+    package. So the next best thing is to warn people and tell them what
+    they should install to get version checks.
+  - Welcome dialog: the "Community Tutorials" link is now shown after
+    the "Documentation" link.
 
 Plug-ins:
 
@@ -210,11 +218,22 @@ Build:
     Rust port).
   - release-stats.sh script updated to generate text directly pastable
     into our release news.
-  - CI ported from unmaintained Kaniko to Buildah.
+  - CI:
+    * Linux builds ported from unmaintained Kaniko to Buildah.
+    * Colored output and .pdb support for builds of dependency using
+      CMake.
+    * Ability to apply remote patches on dependency builds.
+    * New job "branches-check" to warn about dead branches.
+    * Our Debian jobs are now built with GCC again (the CLang builds are
+      switched to weekly scheduled jobs).
   - Clean out deprecation warnings on GLib and GTK/GDK based on our
     minimum requirement of these dependencies thanks to
     GLIB_VERSION_MIN_REQUIRED() and GLIB_VERSION_MAX_ALLOWED() macros
     (and equivalent GDK macros).
+  - We now build Exiv2 ourselves on Windows as a temporary workaround to
+    issue #12626.
+  - Improved packages binary caching with ORAS for Flatpak.
+  - AppImage: we now depend on Debian Trixie.
 
 
 Overview of Changes from GIMP 3.0.2 to GIMP 3.0.4
