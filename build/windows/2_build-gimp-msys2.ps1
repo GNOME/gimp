@@ -21,11 +21,11 @@ if (-not $GITLAB_CI)
 
 
 # Install the required (pre-built) packages for babl, GEGL and GIMP (again)
-Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'MSYS_ROOT\)' -Context 0,12) -replace '> ','')
+Invoke-Expression ((($((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String '-not \$env:VCPKG_ROOT' -Context 0,26).ToString().Split("`n") | Where-Object { $_.Trim() -ne '' } | ForEach-Object { $_ -replace '> ', '' })) -join "`n"))
 
 if ($GITLAB_CI)
   {
-    Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'deps_install\[' -Context 0,6) -replace '> ','')
+    Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'deps_install\[' -Context 0,12) -replace '> ','')
   }
 
 
@@ -39,15 +39,15 @@ Invoke-Expression ((Get-Content .gitlab-ci.yml | Select-String 'win_environ\[' -
 
 # Build GIMP
 Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):gimp_build[collapsed=true]$([char]13)$([char]27)[0KBuilding GIMP"
-if (-not (Test-Path _build-$env:MSYSTEM_PREFIX\build.ninja -Type Leaf))
+if (-not (Test-Path _build-$(@($env:VCPKG_DEFAULT_TRIPLET,$env:MSYSTEM_PREFIX) | ?{$_} | select -First 1)\build.ninja -Type Leaf))
   {
     #FIXME: There is no GJS for Windows. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/5891
-    meson setup _build-$env:MSYSTEM_PREFIX -Dprefix="$GIMP_PREFIX" $NON_RELOCATABLE_OPTION `
+    meson setup _build-$(@($env:VCPKG_DEFAULT_TRIPLET,$env:MSYSTEM_PREFIX) | ?{$_} | select -First 1) -Dprefix="$GIMP_PREFIX" $NON_RELOCATABLE_OPTION `
                 $INSTALLER_OPTION $STORE_OPTION $PKGCONF_RELOCATABLE_OPTION `
                 -Denable-default-bin=enabled -Dbuild-id='org.gimp.GIMP_official';
     if ("$LASTEXITCODE" -gt '0') { exit 1 }
   }
-Set-Location _build-$env:MSYSTEM_PREFIX
+Set-Location _build-$(@($env:VCPKG_DEFAULT_TRIPLET,$env:MSYSTEM_PREFIX) | ?{$_} | select -First 1)
 ninja; if ("$LASTEXITCODE" -gt '0') { exit 1 }
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):gimp_build$([char]13)$([char]27)[0K"
 

@@ -57,7 +57,7 @@ Set-Alias iscc "$INNO_PATH\iscc.exe"
 #FIXME: Restore the condition when TWAIN 32-bit support is dropped
 #if (-not (Get-Command "python" -ErrorAction SilentlyContinue) -or "$(Get-Command "python" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source)" -like '*WindowsApps*')
 #  {
-    Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'MSYS_ROOT\)' -Context 0,12) -replace '> ','')
+    Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String '-not \$env:MSYS_ROOT' -Context 0,12) -replace '> ','')
     $env:PATH = "$env:MSYS_ROOT/$env:MSYSTEM_PREFIX/bin;$env:PATH"
 #  }
 Write-Output "(INFO): Installed Inno: $inno_version_downloaded | Installed Python: $((python --version) -replace '[^0-9.]', '')"
