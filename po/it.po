@@ -45,8 +45,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-23 16:13+0200\n"
-"PO-Revision-Date: 2025-09-23 16:09+0200\n"
+"POT-Creation-Date: 2025-10-01 12:30+0200\n"
+"PO-Revision-Date: 2025-10-01 12:37+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -124,7 +124,15 @@ msgstr ""
 msgid "If you wanted to quit immediately instead, call GIMP with --quit."
 msgstr "Se invece si desidera uscire immediatamente, chiamare GIMP con --quit."
 
-#: ../app/gimp-update.c:444
+#: ../app/gimp-update.c:424
+msgid "Perhaps you are missing GIO backends and need to install GVFS?"
+msgstr "Forse mancano i backend GIO e bisogna installare GVFS?"
+
+#: ../app/gimp-update.c:429
+msgid "Perhaps you are missing GIO backends."
+msgstr "Forse mancano i backend GIO."
+
+#: ../app/gimp-update.c:466
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -2535,8 +2543,8 @@ msgid "Enter a description for the marker"
 msgstr "Inserire una descrizione per il marcatore"
 
 #: ../app/actions/data-commands.c:90 ../app/actions/documents-commands.c:393
-#: ../app/actions/file-commands.c:234 ../app/dialogs/file-open-dialog.c:253
-#: ../app/dialogs/file-open-dialog.c:295
+#: ../app/actions/file-commands.c:234 ../app/dialogs/file-open-dialog.c:254
+#: ../app/dialogs/file-open-dialog.c:300
 #: ../app/dialogs/file-open-location-dialog.c:217
 #: ../app/dialogs/file-open-location-dialog.c:233
 #: ../app/display/gimpdisplayshell-dnd.c:646
@@ -3053,134 +3061,124 @@ msgctxt "dialogs-action"
 msgid "Open the dashboard"
 msgstr "Apri il cruscotto"
 
-#: ../app/actions/dialogs-actions.c:311 ../app/actions/dialogs-actions.c:312
-msgctxt "dialogs-action"
-msgid "_Settings..."
-msgstr "Impo_stazioni..."
-
-#: ../app/actions/dialogs-actions.c:314 ../app/actions/dialogs-actions.c:315
+#: ../app/actions/dialogs-actions.c:310 ../app/actions/dialogs-actions.c:311
 msgctxt "dialogs-action"
 msgid "_Preferences"
 msgstr "_Preferenze"
 
-#: ../app/actions/dialogs-actions.c:318
+#: ../app/actions/dialogs-actions.c:313
 msgctxt "dialogs-action"
 msgid "Open the preferences dialog"
 msgstr "Apri la finestra delle preferenze"
 
-#: ../app/actions/dialogs-actions.c:323
+#: ../app/actions/dialogs-actions.c:318
 msgctxt "dialogs-action"
 msgid "_Input Devices Editor"
 msgstr "Editor dispositivi di _ingresso"
 
-#: ../app/actions/dialogs-actions.c:324
+#: ../app/actions/dialogs-actions.c:319
 msgctxt "dialogs-action"
 msgid "_Input Devices"
 msgstr "Dispositivi di _ingresso"
 
-#: ../app/actions/dialogs-actions.c:326
+#: ../app/actions/dialogs-actions.c:321
 msgctxt "dialogs-action"
 msgid "Open the input devices editor"
 msgstr "Apri la modifica dei dispositivi d'ingresso"
 
-#: ../app/actions/dialogs-actions.c:331
+#: ../app/actions/dialogs-actions.c:326
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts Editor"
 msgstr "Editor _tasti scorciatoia"
 
-#: ../app/actions/dialogs-actions.c:332
+#: ../app/actions/dialogs-actions.c:327
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts"
 msgstr "_Tasti scorciatoia"
 
-#: ../app/actions/dialogs-actions.c:334
+#: ../app/actions/dialogs-actions.c:329
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
 msgstr "Apri la modifica dei tasti scorciatoia"
 
-#: ../app/actions/dialogs-actions.c:339
+#: ../app/actions/dialogs-actions.c:334
 msgctxt "dialogs-action"
 msgid "_Modules Dialog"
 msgstr "Finestra _moduli"
 
-#: ../app/actions/dialogs-actions.c:340
+#: ../app/actions/dialogs-actions.c:335
 msgctxt "dialogs-action"
 msgid "_Modules"
 msgstr "_Moduli"
 
-#: ../app/actions/dialogs-actions.c:342
+#: ../app/actions/dialogs-actions.c:337
 msgctxt "dialogs-action"
 msgid "Open the module manager dialog"
 msgstr "Apri finestra di gestione moduli"
 
-#: ../app/actions/dialogs-actions.c:347
+#: ../app/actions/dialogs-actions.c:342
 msgctxt "dialogs-action"
 msgid "_Tip of the Day"
 msgstr "Suggerimenti del _giorno"
 
-#: ../app/actions/dialogs-actions.c:349
+#: ../app/actions/dialogs-actions.c:344
 msgctxt "dialogs-action"
 msgid "Show some helpful tips on using GIMP"
 msgstr "Mostra alcuni utili suggerimenti sull'uso di GIMP"
 
-#: ../app/actions/dialogs-actions.c:354
+#: ../app/actions/dialogs-actions.c:349
 msgctxt "dialogs-action"
 msgid "Welcome Dialog"
 msgstr "Finestra di benvenuto"
 
-#: ../app/actions/dialogs-actions.c:356
+#: ../app/actions/dialogs-actions.c:351
 msgctxt "dialogs-action"
 msgid "Show information on running GIMP release"
 msgstr "Mostra informazioni sulla versione di GIMP in esecuzione"
 
-#: ../app/actions/dialogs-actions.c:362 ../app/actions/dialogs-actions.c:369
+#: ../app/actions/dialogs-actions.c:357 ../app/actions/dialogs-actions.c:362
 msgctxt "dialogs-action"
 msgid "About GIMP"
 msgstr "Informazioni su GIMP"
 
-#: ../app/actions/dialogs-actions.c:364
-msgctxt "dialogs-action"
-msgid "About"
-msgstr "Informazioni"
-
-#: ../app/actions/dialogs-actions.c:366
+#: ../app/actions/dialogs-actions.c:359
 msgctxt "dialogs-action"
 msgid "_About"
 msgstr "_Informazioni"
 
-#: ../app/actions/dialogs-actions.c:374
+#: ../app/actions/dialogs-actions.c:367
 msgctxt "dialogs-action"
 msgid "_Search and Run a Command"
 msgstr "Cerca ed e_segui un comando"
 
-#: ../app/actions/dialogs-actions.c:376
+#: ../app/actions/dialogs-actions.c:369
 msgctxt "dialogs-action"
 msgid "Search commands by keyword, and run them"
 msgstr "Cerca comandi per parola-chiave e li esegue"
 
-#: ../app/actions/dialogs-actions.c:382
+#: ../app/actions/dialogs-actions.c:375
 msgctxt "dialogs-action"
 msgid "Manage _Extensions"
 msgstr "Gestione _estensioni"
 
-#: ../app/actions/dialogs-actions.c:384
+#: ../app/actions/dialogs-actions.c:377
 msgctxt "dialogs-action"
 msgid "Manage Extensions: search, install, uninstall, update."
 msgstr "Gestione estensioni: cerca, installa, disinstalla, aggiorna."
 
-#: ../app/actions/dialogs-actions.c:448
+#: ../app/actions/dialogs-actions.c:441
 msgid "Tool_box"
 msgstr "Pannello strumenti"
 
-#: ../app/actions/dialogs-actions.c:449
+#: ../app/actions/dialogs-actions.c:442
 msgid "Raise the toolbox"
 msgstr "Alza il pannello strumenti"
 
-#: ../app/actions/dialogs-actions.c:453
+#: ../app/actions/dialogs-actions.c:446
 msgid "New Tool_box"
 msgstr "Nuovo pannello strum_enti"
 
-#: ../app/actions/dialogs-actions.c:454
+#: ../app/actions/dialogs-actions.c:447
 msgid "Create a new toolbox"
 msgstr "Crea un nuovo pennello strumenti"
 
@@ -12988,7 +12986,7 @@ msgstr ""
 
 #: ../app/core/gimp-contexts.c:153 ../app/core/gimp-internal-data.c:338
 #: ../app/core/gimptooloptions.c:361 ../app/gui/modifiers.c:191
-#: ../app/gui/session.c:449 ../app/menus/menus.c:480
+#: ../app/gui/session.c:449 ../app/menus/menus.c:488
 #: ../app/widgets/gimpdevices.c:226
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
@@ -14960,11 +14958,11 @@ msgstr "Lunghezza massima chiusura diritta"
 msgid "Maximum straight length (in pixels) to close the line art"
 msgstr "Lunghezza massima retta (in pixel) per chiudere il tratteggio"
 
-#: ../app/core/gimplink.c:255
+#: ../app/core/gimplink.c:256
 msgid "The file got deleted"
 msgstr "Il file è stato eliminato"
 
-#: ../app/core/gimplink.c:349
+#: ../app/core/gimplink.c:351
 msgid "No file was set"
 msgstr "Nessun file impostato"
 
@@ -16146,9 +16144,14 @@ msgid "Search extensions matching these keywords"
 msgstr "Cerca le estensioni che corrispondono a queste parole chiave"
 
 #: ../app/dialogs/file-open-dialog.c:142 ../app/dialogs/file-open-dialog.c:168
-#: ../app/dialogs/file-open-dialog.c:286
+#: ../app/dialogs/file-open-dialog.c:291
 msgid "Open layers"
 msgstr "Apri livelli"
+
+#: ../app/dialogs/file-open-dialog.c:258
+#, c-format
+msgid "Opening '%s' failed."
+msgstr "L'apertura di '%s' è fallita."
 
 #: ../app/dialogs/file-open-location-dialog.c:74
 msgid "Open Location"
@@ -18867,12 +18870,12 @@ msgid "GIMP website"
 msgstr "Il sito di GIMP"
 
 #: ../app/dialogs/welcome-dialog.c:545
-msgid "Tutorials"
-msgstr "Guide"
-
-#: ../app/dialogs/welcome-dialog.c:550
 msgid "Documentation"
 msgstr "Documentazione"
+
+#: ../app/dialogs/welcome-dialog.c:550
+msgid "Community Tutorials"
+msgstr "Guide della comunità"
 
 #. XXX: should we add API docs for plug-in developers once it's
 #. * properly set up?
@@ -19920,26 +19923,26 @@ msgstr "Clic e trascina per spostare il punto cardine"
 msgid "Click-Drag to shear"
 msgstr "Clic e trascina per inclinare"
 
-#: ../app/file/file-open.c:264
+#: ../app/file/file-open.c:272
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr "Il plug-in %s ha risposto successo ma non ha restituito un'immagine"
 
-#: ../app/file/file-open.c:275
+#: ../app/file/file-open.c:283
 #, c-format
 msgid "%s plug-in could not open image"
 msgstr "Il plug-in %s non poteva aprire l'immagine"
 
-#: ../app/file/file-open.c:690
+#: ../app/file/file-open.c:698
 msgid "Image doesn't contain any layers"
 msgstr "L'immagine non contiene nessun livello"
 
-#: ../app/file/file-open.c:748
+#: ../app/file/file-open.c:756
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "L'apertura di \"%s\" è fallita: %s"
 
-#: ../app/file/file-open.c:836
+#: ../app/file/file-open.c:846
 #, c-format
 msgid ""
 "Only platform-native file paths are supported: '%s' cannot be opened as link."
@@ -19947,11 +19950,11 @@ msgstr ""
 "Sono supportati solo i percorsi file nativi della piattaforma: '%s' non può "
 "essere aperto come collegamento."
 
-#: ../app/file/file-open.c:978 ../app/file/file-save.c:132
+#: ../app/file/file-open.c:985 ../app/file/file-save.c:132
 msgid "Not a regular file"
 msgstr "Non è un file normale"
 
-#: ../app/file/file-open.c:987 ../app/file/file-save.c:141
+#: ../app/file/file-open.c:994 ../app/file/file-save.c:141
 msgid "Permission denied"
 msgstr "Permesso negato"
 
@@ -21716,11 +21719,7 @@ msgstr "Ruota livello vettoriale"
 msgid "Transform Vector Layer"
 msgstr "Trasforma livello vettoriale"
 
-#: ../app/path/gimpvectorlayer.c:526
-msgid "Discard Vector Informations"
-msgstr "Abbandona le informazioni vettoriali"
-
-#: ../app/path/gimpvectorlayer.c:669
+#: ../app/path/gimpvectorlayer.c:526 ../app/path/gimpvectorlayer.c:669
 msgid "Discard Vector Information"
 msgstr "Abbandona le informazioni vettoriali"
 
@@ -22277,7 +22276,7 @@ msgstr "Autoritaglio immagine"
 msgid "Autocrop layer"
 msgstr "Autoritaglio livello"
 
-#: ../app/pdb/image-cmds.c:2556
+#: ../app/pdb/image-cmds.c:2564
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -22306,43 +22305,48 @@ msgstr "Trasformazione 2D"
 msgid "2D Transforming"
 msgstr "Trasformazione 2D in corso"
 
+#: ../app/pdb/link-layer-cmds.c:67 ../app/pdb/link-layer-cmds.c:89
+#, c-format
+msgid "Failed to create link layer"
+msgstr "Impossibile creare livello collegato"
+
 #: ../app/pdb/path-cmds.c:325
 msgid "Remove path stroke"
 msgstr "Rimuovi delineatura del tracciato"
 
 #: ../app/pdb/path-cmds.c:362
 msgid "Close path stroke"
-msgstr "Chiudi la delineatura del tracciato"
+msgstr "Chiudi delineatura tracciato"
 
 #: ../app/pdb/path-cmds.c:401
 msgid "Reverse path stroke"
-msgstr "Inverti delineatura del tracciato"
+msgstr "Inverti delineatura tracciato"
 
 #: ../app/pdb/path-cmds.c:446
 msgid "Translate path stroke"
-msgstr "Trasla la delineatura del tracciato"
+msgstr "Trasla delineatura tracciato"
 
 #: ../app/pdb/path-cmds.c:491
 msgid "Scale path stroke"
-msgstr "Scala la delineatura del tracciato"
+msgstr "Scala delineatura tracciato"
 
 #: ../app/pdb/path-cmds.c:538
 msgid "Rotate path stroke"
-msgstr "Ruota la delineatura del tracciato"
+msgstr "Ruota delineatura tracciato"
 
 #: ../app/pdb/path-cmds.c:583 ../app/pdb/path-cmds.c:632
 msgid "Flip path stroke"
-msgstr "Rifletti la delineatura del tracciato"
+msgstr "Rifletti delineatura tracciato"
 
 #: ../app/pdb/path-cmds.c:761 ../app/pdb/path-cmds.c:884
 #: ../app/pdb/path-cmds.c:1114
 msgid "Add path stroke"
-msgstr "Aggiungi la delineatura del tracciato"
+msgstr "Aggiungi delineatura tracciato"
 
 #: ../app/pdb/path-cmds.c:938 ../app/pdb/path-cmds.c:994
 #: ../app/pdb/path-cmds.c:1058
 msgid "Extend path stroke"
-msgstr "Estendi la delineatura del tracciato"
+msgstr "Estendi delineatura tracciato"
 
 #: ../app/pdb/pdb-cmds.c:1185 ../app/pdb/pdb-cmds.c:1227
 #, c-format
@@ -24333,7 +24337,7 @@ msgstr "Selezione sconosciuta"
 
 #: ../app/tools/gimpforegroundselecttool.c:667
 msgid "press Enter to preview."
-msgstr "premere invio l'anteprima."
+msgstr "premere invio per l'anteprima."
 
 #: ../app/tools/gimpforegroundselecttool.c:669
 msgid "press Escape to exit preview or Enter to apply."
@@ -27751,7 +27755,7 @@ msgstr "Informazioni varie"
 msgid "Select fields"
 msgstr "Seleziona campi"
 
-#. Tranlators: "N/A" is an abbreviation for "not available"
+#. Translators: "N/A" is an abbreviation for "not available"
 #: ../app/widgets/gimpdashboard.c:3323
 msgctxt "dashboard-value"
 msgid "N/A"
