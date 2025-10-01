@@ -39,6 +39,7 @@
 #include "core/gimpimageproxy.h"
 #include "core/gimpitem.h"
 #include "core/gimplineart.h"
+#include "core/gimplinklayer.h"
 #include "core/gimppickable.h"
 #include "core/gimppickable-contiguous-region.h"
 #include "core/gimpprogress.h"
@@ -49,6 +50,8 @@
 #include "gegl/gimp-gegl-nodes.h"
 
 #include "operations/layer-modes/gimp-layer-modes.h"
+
+#include "path/gimpvectorlayer.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -620,7 +623,21 @@ gimp_bucket_fill_tool_button_press (GimpTool            *tool,
       return;
     }
 
-  if (gimp_item_is_content_locked (GIMP_ITEM (drawable), &locked_item))
+  if (gimp_item_is_link_layer (GIMP_ITEM (drawable)))
+    {
+      gimp_tool_message_literal (tool, display,
+                                 _("Link layers must be rasterized "
+                                   "before they can be painted on."));
+      return;
+    }
+  else if (gimp_item_is_vector_layer (GIMP_ITEM (drawable)))
+    {
+      gimp_tool_message_literal (tool, display,
+                                 _("Vector layers must be rasterized "
+                                   "before they can be painted on."));
+      return;
+    }
+  else if (gimp_item_is_content_locked (GIMP_ITEM (drawable), &locked_item))
     {
       gimp_tool_message_literal (tool, display,
                                  _("The selected layer's pixels are locked."));
