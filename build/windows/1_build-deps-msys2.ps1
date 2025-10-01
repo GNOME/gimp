@@ -21,7 +21,21 @@ if (-not $GITLAB_CI)
 
 
 # Install the required (pre-built) packages for babl, GEGL and GIMP
-if (-not $env:MSYS_ROOT)
+if (-not $env:VCPKG_ROOT -or (Test-Path "$env:VCPKG_ROOT\vcpkg.exe" -Type Leaf))
+  {
+    $env:VCPKG_ROOT = $(@($(Resolve-Path "${PWD}\..\vcpkg" -ErrorAction SilentlyContinue),$env:VCPKG_ROOT) | ?{$_} | select -First 1)
+    if ((Test-Path "$env:VCPKG_ROOT\vcpkg.exe" -Type Leaf) -and -not "$env:VSINSTALLDIR")
+      {
+        Write-Host '(ERROR): MSVC installation not found. Please, install it then run this script from Developer PowerShell.' -ForegroundColor Red; Remove-Item env:VCPKG_ROOT
+        exit 1
+      }
+  }
+if (-not $env:VCPKG_DEFAULT_TRIPLET -and $env:VCPKG_ROOT)
+  {
+    $env:VCPKG_DEFAULT_TRIPLET = if ((Get-WmiObject Win32_ComputerSystem).SystemType -like 'ARM64*') { 'arm64-windows' } else { 'x64-windows' }
+  }
+
+if (-not $env:MSYS_ROOT -and -not (Test-Path "$env:VCPKG_ROOT\vcpkg.exe" -Type Leaf))
   {
     $env:MSYS_ROOT = $(Get-ChildItem HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall -Recurse | ForEach-Object { Get-ItemProperty $_.PSPath -ErrorAction SilentlyContinue } | Where-Object { $_.PSObject.Properties.Value -like "*The MSYS2 Developers*" } | ForEach-Object { return "$($_.InstallLocation)" }) -replace '\\','/'
     if ("$env:MSYS_ROOT" -eq '')
@@ -30,14 +44,23 @@ if (-not $env:MSYS_ROOT)
         exit 1
       }
   }
-if (-not $env:MSYSTEM_PREFIX)
+if (-not $env:MSYSTEM_PREFIX -and $env:MSYS_ROOT)
   {
     $env:MSYSTEM_PREFIX = if ((Get-WmiObject Win32_ComputerSystem).SystemType -like 'ARM64*') { 'clangarm64' } else { 'clang64' }
   }
 
-Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):deps_install[collapsed=true]$([char]13)$([char]27)[0KInstalling dependencies provided by MSYS2"
-powershell -Command { $ProgressPreference = 'SilentlyContinue'; $env:PATH="$env:MSYS_ROOT\usr\bin;$env:PATH"; pacman --noconfirm -Suy }; if ("$LASTEXITCODE" -gt '0') { exit 1 }
-powershell -Command { $ProgressPreference = 'SilentlyContinue'; $env:PATH="$env:MSYS_ROOT\usr\bin;$env:PATH"; pacman --noconfirm -S --needed $(if ($env:MSYSTEM_PREFIX -ne 'mingw32') { "$(if ($env:MSYSTEM_PREFIX -eq 'clangarm64') { 'mingw-w64-clang-aarch64' } else { 'mingw-w64-clang-x86_64' })-perl" }) (Get-Content build/windows/all-deps-uni.txt | Where-Object { $_.Trim() -ne '' -and -not $_.Trim().StartsWith('#') }).Replace('${MINGW_PACKAGE_PREFIX}',$(if ($env:MINGW_PACKAGE_PREFIX) { "$env:MINGW_PACKAGE_PREFIX" } elseif ($env:MSYSTEM_PREFIX -eq 'clangarm64') { 'mingw-w64-clang-aarch64' } else { 'mingw-w64-clang-x86_64' })).Replace(' \','') }; if ("$LASTEXITCODE" -gt '0') { exit 1 }
+Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):deps_install[collapsed=true]$([char]13)$([char]27)[0KInstalling dependencies provided by $(if ("$env:VCPKG_ROOT") {'vcpkg'} else {'MSYS2'})"
+if (Test-Path "$env:VCPKG_ROOT\vcpkg.exe" -Type Leaf)
+  {
+    & "$env:VCPKG_ROOT\vcpkg.exe" upgrade --no-dry-run
+    & "$env:VCPKG_ROOT\vcpkg.exe" install (Get-Content build/windows/all-deps-vcpkg.txt | Where-Object { $_.Trim() -ne '' -and -not $_.Trim().StartsWith('#') }).Replace(' \','')
+    $env:PKG_CONFIG="$env:VCPKG_ROOT\installed\$env:VCPKG_DEFAULT_TRIPLET\tools\pkgconf\pkgconf.exe"; $env:CC='clang-cl' 
+  }
+else
+  {
+    powershell -Command { $ProgressPreference = 'SilentlyContinue'; $env:PATH="$env:MSYS_ROOT\usr\bin;$env:PATH"; pacman --noconfirm -Suy }; if ("$LASTEXITCODE" -gt '0') { exit 1 }
+    powershell -Command { $ProgressPreference = 'SilentlyContinue'; $env:PATH="$env:MSYS_ROOT\usr\bin;$env:PATH"; pacman --noconfirm -S --needed $(if ($env:MSYSTEM_PREFIX -ne 'mingw32') { "$(if ($env:MSYSTEM_PREFIX -eq 'clangarm64') { 'mingw-w64-clang-aarch64' } else { 'mingw-w64-clang-x86_64' })-perl" }) (Get-Content build/windows/all-deps-uni.txt | Where-Object { $_.Trim() -ne '' -and -not $_.Trim().StartsWith('#') }).Replace('${MINGW_PACKAGE_PREFIX}',$(if ($env:MINGW_PACKAGE_PREFIX) { "$env:MINGW_PACKAGE_PREFIX" } elseif ($env:MSYSTEM_PREFIX -eq 'clangarm64') { 'mingw-w64-clang-aarch64' } else { 'mingw-w64-clang-x86_64' })).Replace(' \','') }; if ("$LASTEXITCODE" -gt '0') { exit 1 }
+  }
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):deps_install$([char]13)$([char]27)[0K"
 
 
@@ -100,12 +123,12 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
       }
 
     ## Configure and/or build
-    if (-not (Test-Path _build-$env:MSYSTEM_PREFIX\build.ninja -Type Leaf))
+    if (-not (Test-Path _build-$(@($env:VCPKG_DEFAULT_TRIPLET,$env:MSYSTEM_PREFIX) | ?{$_} | select -First 1)\build.ninja -Type Leaf))
       {
         if ((Test-Path meson.build -Type Leaf) -and -not (Test-Path CMakeLists.txt -Type Leaf))
           {
             #babl and GEGL already auto install .pdb but we don't know about other eventual deps
-            if ("$env:MSYSTEM_PREFIX" -ne 'MINGW32')
+            if (-not "$env:VCPKG_ROOT" -and "$env:MSYSTEM_PREFIX" -ne 'MINGW32')
               {
                 if ("$dep" -ne 'babl' -and "$dep" -ne 'gegl')
                   {
@@ -113,24 +136,24 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
                   }
                 $clang_opts_meson=@('-Dc_args=-"fansi-escape-codes -gcodeview"', '-Dcpp_args=-"fansi-escape-codes -gcodeview"', '-Dc_link_args="-Wl,--pdb="', '-Dcpp_link_args="-Wl,--pdb="')
               }
-            meson setup _build-$env:MSYSTEM_PREFIX -Dprefix="$GIMP_PREFIX" $PKGCONF_RELOCATABLE_OPTION `
+            meson setup _build-$(@($env:VCPKG_DEFAULT_TRIPLET,$env:MSYSTEM_PREFIX) | ?{$_} | select -First 1) -Dprefix="$GIMP_PREFIX" $PKGCONF_RELOCATABLE_OPTION `
                         -Dbuildtype=debugoptimized $clang_opts_meson `
                         $(if ($branch -like '-*') { $branch } elseif ($patches -like '-*') { $patches } else { $options });
           }
         elseif (Test-Path CMakeLists.txt -Type Leaf)
           {
-            if ("$env:MSYSTEM_PREFIX" -ne 'MINGW32')
+            if (-not "$env:VCPKG_ROOT" -and "$env:MSYSTEM_PREFIX" -ne 'MINGW32')
               {
                 Add-Content CMakeLists.txt "install(CODE `"execute_process(COMMAND `${Python3_EXECUTABLE`} $("$GIMP_DIR".Replace('\','/'))/build/windows/2_bundle-gimp-uni_sym.py`)`")"
                 $clang_opts_cmake=@('-DCMAKE_C_FLAGS="-gcodeview"', '-DCMAKE_CXX_FLAGS="-gcodeview"', '-DCMAKE_EXE_LINKER_FLAGS="-Wl,--pdb="', '-DCMAKE_SHARED_LINKER_FLAGS="-Wl,--pdb="', '-DCMAKE_MODULE_LINKER_FLAGS="-Wl,--pdb="')
               }
-            cmake -G Ninja -B _build-$env:MSYSTEM_PREFIX -DCMAKE_INSTALL_PREFIX="$GIMP_PREFIX" `
+            cmake -G Ninja -B _build-$(@($env:VCPKG_DEFAULT_TRIPLET,$env:MSYSTEM_PREFIX) | ?{$_} | select -First 1) -DCMAKE_INSTALL_PREFIX="$GIMP_PREFIX" `
                   -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_COLOR_DIAGNOSTICS=ON $clang_opts_cmake `
                   $(if ($branch -like '-*') { $branch } elseif ($patches -like '-*') { $patches } else { $options });
           }
         if ("$LASTEXITCODE" -gt '0') { exit 1 }
       }
-    Set-Location _build-$env:MSYSTEM_PREFIX
+    Set-Location _build-$(@($env:VCPKG_DEFAULT_TRIPLET,$env:MSYSTEM_PREFIX) | ?{$_} | select -First 1)
     ninja; if ("$LASTEXITCODE" -gt '0') { exit 1 }
     ninja install; if ("$LASTEXITCODE" -gt '0') { exit 1 }
     Set-Location ../..
@@ -138,6 +161,10 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
   }
 
 self_build babl
+if ($env:VCPKG_ROOT)
+  {
+    exit 0
+  }
 self_build gegl @('-Dworkshop=true')
 if ("$env:MSYSTEM_PREFIX" -ne 'MINGW32')
   {
