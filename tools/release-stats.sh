@@ -20,45 +20,77 @@
 ############################################
 
 #### Usage ####
-if [ "$#" -ne 2 -a "$#" -ne 1 ]; then
-    echo "Usage: $0 <GIMP_TAG_PREV> <GIMP_TAG_CUR>"
-    echo
-    echo "  GIMP_TAG_PREV: last tag release or commit (non-included in stats)"
-    echo "                 ex: GIMP_2_9_6"
-    echo "  GIMP_TAG_CUR:  current tag release or commit (included in stats); ex: GIMP_2_9_8"
-    echo "                 ex: GIMP_2_9_8."
-    echo "                 Optional. If absent, statistics up to HEAD."
-    exit 1
-fi
+read -p "GIMP version to release: " ver
 
-PREV=$1
-git --no-pager show $PREV >/dev/null 2>&1
-if [ $? -ne 0 ]; then
-  echo "First tag is unknown: $PREV"
-  exit 2
-fi
+if [ -z "$ver" ]; then
+  TAG="HEAD"
+  PREV_TAG=$(git ls-remote --tags --exit-code --refs  "https://gitlab.gnome.org/GNOME/gimp.git" |grep -o "GIMP_[0-9]*_[0-9]*_[0-9]*" | sort --version-sort | tail -1)
+  INTERMEDIATE_TAG=$PREV_TAG
 
-if [ "$#" = 2 ]; then
-  CUR=$2
-  git --no-pager show $CUR >/dev/null 2>&1
-  if [ $? -ne 0 ]; then
-    echo "Second tag is unknown: $CUR"
-    exit 2
-  fi
+  is_dev_release=1
 else
-  CUR='HEAD'
+  major=$(echo "$ver" | cut -d'.' -f1)
+  minor=$(echo "$ver" | cut -d'.' -f2)
+  micro=$(echo "$ver" | cut -d'.' -f3)
+
+  TAG=GIMP_${major}_${minor}_${micro}
+
+  git --no-pager show $TAG >/dev/null 2>&1
+  if [ $? -ne 0 ]; then
+    echo "Tag is unknown: $TAG"
+    exit 1
+  fi
+
+  is_dev_release=$((minor % 2))
+
+  if [ $((micro % 2)) -ne 0 ]; then
+    echo "Releases must have an even micro version."
+    exit 1
+  fi
+
+  # The previous tag will be in the same branch. For instance 3.0.4 is
+  # previous to 3.0.6 even if we may have released 3.1 versions
+  # in-between.
+  PREV_TAG=$(git ls-remote --tags --exit-code --refs  "https://gitlab.gnome.org/GNOME/gimp.git" |grep -o "GIMP_[0-9]*_[0-9]*_[0-9]*" | sort --version-sort | grep -B1 $TAG | head -1)
+  # The intermediate tag is the actual version we released before.
+  INTERMEDIATE_TAG=$(git ls-remote --tags --sort=taggerdate --exit-code --refs  "https://gitlab.gnome.org/GNOME/gimp.git" |grep -o "GIMP_[0-9]*_[0-9]*_[0-9]*" | grep -B1 $TAG | head -1)
 fi
 
-prev_date=`git log -1 --format=%ci $PREV`
-cur_date=`git log -1 --format=%ci $CUR`
+#if [ $is_dev_release -eq 0 ]; then
+  #read -p "Previous stable GIMP version:" ver
+#elif [ $micro -eq 0 ];
+#else
+  #read -p "Previous GIMP version:" ver
+#fi
 
-prevmajor=$(echo "$1" | cut -d'_' -f2)
-prevminor=$(echo "$1" | cut -d'_' -f3)
-prevmicro=$(echo "$1" | cut -d'_' -f4)
+prevmajor=$(echo "$PREV_TAG" | cut -d'_' -f2)
+prevminor=$(echo "$PREV_TAG" | cut -d'_' -f3)
+prevmicro=$(echo "$PREV_TAG" | cut -d'_' -f4)
 
-major=$(echo "$2" | cut -d'_' -f2)
-minor=$(echo "$2" | cut -d'_' -f3)
-micro=$(echo "$2" | cut -d'_' -f4)
+intmajor=$(echo "$INTERMEDIATE_TAG" | cut -d'_' -f2)
+intminor=$(echo "$INTERMEDIATE_TAG" | cut -d'_' -f3)
+intmicro=$(echo "$INTERMEDIATE_TAG" | cut -d'_' -f4)
+
+echo "Previous Release: $prevmajor.$prevminor.$prevmicro"
+if [ "$PREV_TAG" != "$INTERMEDIATE_TAG" ]; then
+  echo "Intermediate Release: $intmajor.$intminor.$intmicro"
+fi
+
+#if [ $((prevmicro % 2)) -ne 0 ]; then
+  #echo "Releases must have an even micro version."
+  #exit 1
+#fi
+
+#if [ $is_dev_release -eq 0 ]; then
+  #if [ $((prevminor % 2)) -ne 0 ]; then
+    #echo "$ver is not a stable version."
+    #exit 1
+  #fi
+#fi
+
+prev_date=`git log -1 --format=%ci $PREV_TAG`
+int_date=`git log -1 --format=%ci $INTERMEDIATE_TAG`
+cur_date=`git log -1 --format=%ci $TAG`
 
 get_issues_mrs()
 {
@@ -116,7 +148,7 @@ count_contributors()
   folders=$1
   text=$2
 
-  contributors=`git --no-pager shortlog -sn $PREV..$CUR -- $folders`
+  contributors=`git --no-pager shortlog -sn $PREV_TAG..$TAG -- $folders`
   if [ -n "$contributors" ]; then
     contributors=`echo "$contributors" | cut -f2`
     n_contributors=`echo "$contributors" | wc -l`
@@ -152,11 +184,16 @@ count_repo_contributors()
   text=$3
   prev_tag=$4
   cur_tag=$5
+  since_date=$6
 
   cd $repo
   git fetch origin > /dev/null 2>&1
   if [ -z "$cur_tag" ]; then
-    contributors=`git --no-pager shortlog -sn --since="$prev_date" --until="$cur_date" origin/$branch`
+    if [ -z "$since_date" ]; then
+      contributors=`git --no-pager shortlog -sn --since="$prev_date" --until="$cur_date" origin/$branch`
+    else
+      contributors=`git --no-pager shortlog -sn --since="$since_date" --until="$cur_date" origin/$branch`
+    fi
   else
     contributors=`git --no-pager shortlog -sn $prev_tag..$cur_tag`
   fi
@@ -177,15 +214,20 @@ count_repo_contributors()
   cd - > /dev/null
 }
 
+echo "Copy the below text into your release news:"
+echo
+echo "-------------------------------------------"
+echo
+
 echo "Since [GIMP $prevmajor.$prevminor.$prevmicro](/release/$prevmajor.$prevminor.$prevmicro/), in the main GIMP repository:"
 echo
 echo "* $closed_issues reports were closed as FIXED."
 echo "* $merged_mrs merge requests were merged."
 
 # Main stats:
-contribs=`git --no-pager shortlog -s -n $PREV..$CUR`
+contribs=`git --no-pager shortlog -s -n $PREV_TAG..$TAG`
 contribs_n=`printf "$contribs" | wc -l`
-commits_n=`git log --oneline $PREV..$CUR | wc -l`
+commits_n=`git log --oneline $PREV_TAG..$TAG | wc -l`
 
 echo "* $commits_n commits were pushed."
 
@@ -195,16 +237,16 @@ echo "* $commits_n commits were pushed."
 #commits_rate=$(( $commits_n / $days_n ))
 
 #echo "Start date: $prev_date - End date: $cur_date"
-#echo "Between $PREV and $CUR, $contribs_n people contributed $commits_n commits to GIMP."
+#echo "Between $PREV_TAG and $TAG, $contribs_n people contributed $commits_n commits to GIMP."
 #echo "This is an average of $commits_rate commits a day."
 #echo
-#echo "Statistics on all files:" `git diff --shortstat $PREV..$CUR 2>/dev/null`
+#echo "Statistics on all files:" `git diff --shortstat $PREV_TAG..$TAG 2>/dev/null`
 #echo
 #echo "Total contributor list:"
 #printf "$contribs"
 
 # Translation stats:
-i18n=`git --no-pager log --stat $PREV..$CUR -- po* | grep "Updated\? .* \(translation\|language\)"`
+i18n=`git --no-pager log --stat $PREV_TAG..$TAG -- po* | grep "Updated\? .* \(translation\|language\)"`
 i18n=`printf "$i18n" | sed "s/ *Updated\? \(.*\) \(translation\|language\).*/\\1/" | sort | uniq`
 i18n_n=`printf "$i18n" | wc -l`
 # It seems that if the last line has no newline, wc does not count it.
@@ -214,7 +256,7 @@ i18n_comma=`printf "$i18n" | paste -s -d, | sed 's/,/, /g'`
 
 echo "* $i18n_n translations were updated: $i18n_comma."
 
-#echo "Statistics on C files:" `git diff --shortstat $PREV..$CUR  -- "*.[ch]" 2>/dev/null`
+#echo "Statistics on C files:" `git diff --shortstat $PREV_TAG..$TAG  -- "*.[ch]" 2>/dev/null`
 
 echo
 echo "$contribs_n people contributed changes or fixes to GIMP $major.$minor.$micro codebase (order
@@ -229,7 +271,7 @@ count_contributors 'themes/*/*.css themes/*/*png' "%d theme designers: %s"
 meson_builds=`find . -name meson.build -not -path gimp-data`
 count_contributors "meson_options.txt $meson_builds .gitlab-ci.yml build" "%d build, packaging or CI contributors: %s"
 count_contributors 'data/ etc/ desktop/ menus/ docs/ devel-docs/ NEWS INSTALL.in' "%d contributors on other types of resources: %s"
-count_repo_contributors "gimp-data" main "The gimp-data submodule had %d commits by %d contributors: %s"
+count_repo_contributors "gimp-data" main "The gimp-data submodule had %d commits by %d contributors: %s" "" "" $int_date
 count_data_contributors 'images' "%d image creators: %s"
 count_data_contributors 'icons/*.svg icons/*.png' "%d icon designers: %s"
 count_data_contributors 'cursors' "%d cursor designers: %s"
@@ -251,23 +293,23 @@ echo "number of commits):"
 echo
 echo "* Our UX tracker had $ux_closed_issues reports closed as FIXED."
 
-babl_ver=`get_latest_from_meson babl $CUR`
-prev_babl_ver=`get_latest_from_meson babl $PREV`
+babl_ver=`get_latest_from_meson babl $TAG`
+prev_babl_ver=`get_latest_from_meson babl $PREV_TAG`
 if [ "$babl_ver" != "$prev_babl_ver" ]; then
   prev_tag=`get_tag_from_version BABL $prev_babl_ver`
   cur_tag=`get_tag_from_version BABL $babl_ver`
   count_repo_contributors "../babl" master "babl $babl_ver is made of %d commits by %d contributors: %s" $prev_tag $cur_tag
 fi
 
-gegl_ver=`get_latest_from_meson gegl $CUR`
-prev_gegl_ver=`get_latest_from_meson gegl $PREV`
+gegl_ver=`get_latest_from_meson gegl $TAG`
+prev_gegl_ver=`get_latest_from_meson gegl $PREV_TAG`
 if [ "$gegl_ver" != "$prev_gegl_ver" ]; then
   prev_tag=`get_tag_from_version GEGL $prev_gegl_ver`
   cur_tag=`get_tag_from_version GEGL $gegl_ver`
   count_repo_contributors "../gegl" master "GEGL $gegl_ver is made of %d commits by %d contributors: %s" $prev_tag $cur_tag
 fi
 
-count_repo_contributors "../ctx.graphics" dev "[ctx](https://ctx.graphics/) had %d commits since $prevmajor.$prevminor.$prevmicro release by %d contributors: %s"
+count_repo_contributors "../ctx.graphics" dev "[ctx](https://ctx.graphics/) had %d commits since $intmajor.$intminor.$intmicro release by %d contributors: %s"
 count_repo_contributors "../gimp-test-images" main "The \`gimp-test-images\` (unit testing repository) repository had %d commits by %d contributors: %s"
 count_repo_contributors "../gimp-macos-build" master "The \`gimp-macos-build\` (macOS packaging scripts) release had %d commits by %d contributors: %s"
 # TODO:
