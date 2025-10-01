@@ -83,6 +83,7 @@
 
   <releases>
     <release version="3.0.6" date="2025-10-04">
+      <url type="details">https://www.gimp.org/release/3.0.6/</url>
       <description>
         <p>
         This micro release in the 3.0 series fixes some major bugs.
