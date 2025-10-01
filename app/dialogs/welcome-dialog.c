@@ -1125,10 +1125,19 @@ welcome_dialog_create_release_page (Gimp      *gimp,
 
       tmp = g_strdup_printf (GIMP_VERSION);
       if (GIMP_MINOR_VERSION % 2 == 0 && ! strstr (tmp, "RC"))
-        release_link = g_strdup_printf ("https://www.gimp.org/release-notes/gimp-%d.%d.html",
-                                        GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION);
+        {
+          if (GIMP_MICRO_VERSION == 0 && ! strstr (tmp, "RC"))
+            release_link = g_strdup_printf ("https://www.gimp.org/release-notes/gimp-%d.%d.html",
+                                            GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION);
+          else
+            release_link = g_strdup_printf ("https://www.gimp.org/release/%d.%d.%d/",
+                                            GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION,
+                                            GIMP_MICRO_VERSION);
+        }
       else
-        release_link = g_strdup ("https://www.gimp.org/");
+        {
+          release_link = g_strdup ("https://www.gimp.org/");
+        }
       g_free (tmp);
 
       widget = gtk_link_button_new_with_label (release_link, _("Learn more"));
