@@ -1,6 +1,6 @@
 name: gimp
 adopt-info: gimp
-version: 3.1.3
+version: 3.0.5
 grade: devel
 base: core24
 compression: lzo
