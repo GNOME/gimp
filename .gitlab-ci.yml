@@ -532,10 +532,7 @@ gimp-snap:
         STORE_OPTION: '-Dms-store=true'
   parallel:
     matrix:
-      - RUNNER: windows-aarch64
-        MSYSTEM_PREFIX: clangarm64
-      - RUNNER: win32-ps
-        MSYSTEM_PREFIX: clang64
+      - RUNNER: [windows-aarch64, win32-ps]
   tags:
     - $RUNNER
   variables:
@@ -543,8 +540,9 @@ gimp-snap:
     #meson.build forces non-relocatable .pc. See: https://github.com/mesonbuild/meson/issues/14346
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   before_script:
+    - if (-not $env:MSYSTEM_PREFIX) { $env:MSYSTEM_PREFIX = if ((Get-WmiObject Win32_ComputerSystem).SystemType -like 'ARM64*') { 'clangarm64' } else { 'clang64' }}
     # FIXME:'gimpenv' have buggy code about Windows paths. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/12284
-    - $GIMP_PREFIX = "$PWD\_install-$MSYSTEM_PREFIX".Replace('\', '/')
+    - $GIMP_PREFIX = "$PWD\_install-$env:MSYSTEM_PREFIX".Replace('\', '/')
   timeout: 30m
 
 .win_environ: &WIN_ENVIRON
@@ -565,9 +563,9 @@ deps-win:
     - build\windows\1_build-deps-msys2.ps1
   artifacts:
     paths:
-      - _install-$MSYSTEM_PREFIX/
-      - babl/_build-$MSYSTEM_PREFIX/meson-logs/meson-log.txt
-      - gegl/_build-$MSYSTEM_PREFIX/meson-logs/meson-log.txt
+      - _install-*/
+      - babl/_build-*/meson-logs/meson-log.txt
+      - gegl/_build-*/meson-logs/meson-log.txt
     expire_in: 2 hours
 
 gimp-win:
@@ -599,12 +597,10 @@ gimp-win:
   extends: .win
   parallel:
     matrix:
-      - RUNNER: win32-ps
-        MSYSTEM_PREFIX: mingw32
+      - RUNNER: [win32-ps]
   variables:
+    MSYSTEM_PREFIX: mingw32
     MINGW_PACKAGE_PREFIX: mingw-w64-i686
-    CC: cc
-    CXX: c++
 
 deps-win-eol:
   extends: .win-eol
