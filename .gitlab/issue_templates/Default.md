@@ -25,8 +25,12 @@ either in the last stable version of GIMP or on updated development code
 
 ### Description of the bug
 
-<!--Please describe your issue with details.
-Add full (not cropped) screenshots or other files if needed.(write it after the > symbol)-->
+<!-- Please describe your issue with details. By "details" we mean:
+- "Be considerate and respectful". This is our main rule.
+  E.g. avoid negative emotional writing which only generates more upsetting
+  interactions.
+- Stay on topic by writing only one bug per report created.
+- Add full (not cropped) screenshots or other files using the clip button on GitLab. -->
 
 ### Reproduction
 
