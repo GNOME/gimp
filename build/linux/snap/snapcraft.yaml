@@ -82,6 +82,10 @@ parts:
       - -Dlibdir=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
       - -Dwith-docs=false
       - -Dgi-docgen=disabled
+      - -Db_sanitize=address,undefined
+    build-packages:
+      - libasan-dev
+      - libubsan-dev
 
   gegl:
     after:

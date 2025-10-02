@@ -758,7 +758,8 @@
             "buildsystem": "meson",
             "config-opts": [
                 "-Dwith-docs=false",
-                "-Dgi-docgen=disabled"
+                "-Dgi-docgen=disabled",
+                "-Db_sanitize=address,undefined"
             ],
             "cleanup": [
                 "/bin"
