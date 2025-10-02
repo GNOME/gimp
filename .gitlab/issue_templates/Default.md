@@ -24,7 +24,7 @@ https://gitlab.gnome.org/GNOME/gimp/-/issues/?sort=updated_desc&state=all&label_
 - "Be considerate and respectful". This is our main rule.
   E.g. avoid negative emotional writing which only generates more upsetting
   interactions.
-- Stay on topic by writting only one bug per report created.
+- Stay on topic by writing only one bug per report created.
 - Add full (not cropped) screenshots or other files using the clip button on GitLab. -->
 
 ### Reproduction
