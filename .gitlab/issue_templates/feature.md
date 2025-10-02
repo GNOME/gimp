@@ -1,4 +1,8 @@
-**Operating System:** <!--[Windows? macOS? Linux? All?] (write it after the > symbol) -->
+﻿<!-- ⚠️ IMPORTANT: READ ME! ⚠️
+This is the template for feature requests.
+For bug reports, performance issues and security reports, please switch instead to the appropriate template in the "Choose a template" list.
+
+It is important that you fill all the fields of the template. -->
 
 ### Description of the feature
 
@@ -15,3 +19,5 @@
 <!-- Explain the use cases or problems to solve.
 If you are unsure, you should first discuss with the community in the forums
 or talk with the developers on IRC: https://www.gimp.org/discuss.html -->
+
+/label ~"1. Feature"
