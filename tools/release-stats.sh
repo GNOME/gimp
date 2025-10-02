@@ -20,7 +20,7 @@
 ############################################
 
 #### Usage ####
-read -p "GIMP version to release: " ver
+printf "GIMP version to release: "; read ver
 
 if [ -z "$ver" ]; then
   TAG="HEAD"
