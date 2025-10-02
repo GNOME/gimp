@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-05-27 08:53+0000\n"
-"PO-Revision-Date: 2025-06-03 15:40+0200\n"
+"POT-Creation-Date: 2025-09-29 20:12+0000\n"
+"PO-Revision-Date: 2025-10-02 13:32+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -70,6 +70,26 @@ msgstr "Skriv ei eiga CSS-fil"
 msgid "Choose File"
 msgstr "Vel fil"
 
+#: plug-ins/python/file-openraster.py:480
+#: plug-ins/python/file-openraster.py:481
+msgid "export an OpenRaster (.ora) file"
+msgstr "eksporter ei OpenRaster-fil (.ora)"
+
+#: plug-ins/python/file-openraster.py:483
+#: plug-ins/python/file-openraster.py:489
+msgid "OpenRaster"
+msgstr "OpenRaster"
+
+#: plug-ins/python/file-openraster.py:490
+#: plug-ins/python/file-openraster.py:491
+msgid "load an OpenRaster (.ora) file"
+msgstr "last ned ei OpenRaster-fil (.ora)"
+
+#: plug-ins/python/file-openraster.py:500
+#: plug-ins/python/file-openraster.py:501
+msgid "loads a thumbnail from an OpenRaster (.ora) file"
+msgstr "lastar ein miniatyr frå ei OpenRaste-file (.ora)"
+
 #: plug-ins/python/foggify.py:119
 msgid "Add a layer of fog"
 msgstr "Legg til eit tåkelag"
@@ -128,7 +148,6 @@ msgid "Save Gradient as CSS..."
 msgstr "Lagra fargeovergangen som CSS …"
 
 #: plug-ins/python/gradients-save-as-css.py:140
-#: plug-ins/python/palette-export-as-kpl.py:176
 #: plug-ins/python/palette-offset.py:55 plug-ins/python/palette-sort.py:354
 #: plug-ins/python/palette-to-gradient.py:145
 #: plug-ins/python/python-console/python-console.py:323
@@ -136,7 +155,6 @@ msgid "Run mode"
 msgstr "Køyremodus"
 
 #: plug-ins/python/gradients-save-as-css.py:141
-#: plug-ins/python/palette-export-as-kpl.py:177
 #: plug-ins/python/palette-offset.py:56 plug-ins/python/palette-sort.py:355
 #: plug-ins/python/palette-to-gradient.py:146
 #: plug-ins/python/python-console/python-console.py:324
@@ -216,49 +234,6 @@ msgstr "_Utformat"
 #: plug-ins/python/histogram-export.py:235
 msgid "Output format"
 msgstr "Utformat"
-
-#: plug-ins/python/palette-export-as-kpl.py:55
-msgid "Options"
-msgstr "Innstillingar"
-
-#: plug-ins/python/palette-export-as-kpl.py:60
-msgid "_Export"
-msgstr "_Eksporter"
-
-#: plug-ins/python/palette-export-as-kpl.py:167
-#: plug-ins/python/palette-export-as-kpl.py:168
-msgid "Export palette as Krita .kpl"
-msgstr "Eksporter paletten som Krita .kpl"
-
-#: plug-ins/python/palette-export-as-kpl.py:170
-#| msgid "_Sort Palette..."
-msgid "_Krita palette..."
-msgstr "_Krita-palett …"
-
-#: plug-ins/python/palette-export-as-kpl.py:180
-msgid "_Palette to export"
-msgstr "Paletten som skal _eksporterast"
-
-#: plug-ins/python/palette-export-as-kpl.py:184
-#| msgid "_File..."
-msgid "_File (.kpl)"
-msgstr "_Fil (.kpl)"
-
-#: plug-ins/python/palette-export-as-kpl.py:187
-msgid "Commen_t"
-msgstr "_Merknad"
-
-#: plug-ins/python/palette-export-as-kpl.py:188
-msgid "Optional comment"
-msgstr "Valfri merknad"
-
-#: plug-ins/python/palette-export-as-kpl.py:191
-msgid "Re_ad only"
-msgstr "_Skriveverna"
-
-#: plug-ins/python/palette-export-as-kpl.py:192
-msgid "The palette will be locked on import"
-msgstr "Paletten vert låst ved import"
 
 #: plug-ins/python/palette-offset.py:48
 msgid "_Offset Palette..."
@@ -1050,6 +1025,38 @@ msgid ""
 msgstr ""
 "Om det skal brukast ein lang fargeovergang for å passa med lengda på "
 "mønsteret. Kan brukast berre på nokre av verktøya."
+
+#~ msgid "Options"
+#~ msgstr "Innstillingar"
+
+#~ msgid "_Export"
+#~ msgstr "_Eksporter"
+
+#~ msgid "Export palette as Krita .kpl"
+#~ msgstr "Eksporter paletten som Krita .kpl"
+
+#~| msgid "_Sort Palette..."
+#~ msgid "_Krita palette..."
+#~ msgstr "_Krita-palett …"
+
+#~ msgid "_Palette to export"
+#~ msgstr "Paletten som skal _eksporterast"
+
+#~| msgid "_File..."
+#~ msgid "_File (.kpl)"
+#~ msgstr "_Fil (.kpl)"
+
+#~ msgid "Commen_t"
+#~ msgstr "_Merknad"
+
+#~ msgid "Optional comment"
+#~ msgstr "Valfri merknad"
+
+#~ msgid "Re_ad only"
+#~ msgstr "_Skriveverna"
+
+#~ msgid "The palette will be locked on import"
+#~ msgstr "Paletten vert låst ved import"
 
 #~ msgid "Choose CSS file..."
 #~ msgstr "Vel CSS-fil …"
