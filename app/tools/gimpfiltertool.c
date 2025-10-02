@@ -605,9 +605,8 @@ gimp_filter_tool_control (GimpTool       *tool,
               gimp_item_is_vector_layer (GIMP_ITEM (drawable)) ||
               gimp_item_is_link_layer (GIMP_ITEM (drawable)))
             non_destructive = TRUE;
-
-          gimp_filter_tool_commit (filter_tool, non_destructive);
         }
+      gimp_filter_tool_commit (filter_tool, non_destructive);
       break;
     }
 
