@@ -409,7 +409,7 @@ winsock           = platform_windows ? cc.find_library('ws2_32') : no_dep
 mscms             = platform_windows ? cc.find_library('mscms') : no_dep
 atk_minver        = '2.4.0'
 atk               = dependency('atk',                version: '>='+atk_minver)
-babl_minver       = '0.1.114'
+babl_minver       = '0.1.116'
 babl              = dependency('babl-0.1',           version: '>='+babl_minver, required: false)
 if not babl.found()
   # babl changed its pkg-config name from 'babl' to 'babl-0.1' in version
