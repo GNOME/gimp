@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-29 19:54+0000\n"
-"PO-Revision-Date: 2025-09-29 22:59+0300\n"
+"POT-Creation-Date: 2025-10-02 00:31+0000\n"
+"PO-Revision-Date: 2025-10-02 11:21+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -2808,18 +2808,86 @@ msgstr "Непрозорість"
 msgid "gzip archive"
 msgstr "архів gzip"
 
+#: plug-ins/common/file-compressor.c:229
+msgid "Loads files compressed with gzip"
+msgstr "Завантажує файли, які стиснуто за допомогою gzip"
+
+#: plug-ins/common/file-compressor.c:230
+#| msgid ""
+#| "This plug-in loads files in the various Netpbm portable file formats."
+msgid "This procedure loads files in the gzip compressed format."
+msgstr "Ця процедура завантажує файли у стисненому форматі gzip."
+
+#: plug-ins/common/file-compressor.c:234
+msgid "Exports files compressed with gzip"
+msgstr "Експортує файли, які стиснуто за допомогою gzip"
+
+#: plug-ins/common/file-compressor.c:235
+#| msgid "Exports files in the PNM file format"
+msgid "This procedure exports files in the gzip compressed format."
+msgstr "Ця процедура експортує файли у стисненому форматі gzip."
+
 #: plug-ins/common/file-compressor.c:240
 msgid "bzip archive"
 msgstr "архів bzip"
+
+#: plug-ins/common/file-compressor.c:248
+msgid "Loads files compressed with bzip2"
+msgstr "Завантажує файли, які стиснуто за допомогою bzip2"
+
+#: plug-ins/common/file-compressor.c:249
+#| msgid ""
+#| "This plug-in loads files in the various Netpbm portable file formats."
+msgid "This procedure loads files in the bzip2 compressed format."
+msgstr "Ця процедура завантажує файли у стисненому форматі bzip2."
+
+#: plug-ins/common/file-compressor.c:253
+msgid "Exports files compressed with bzip2"
+msgstr "Експортує файли, які стиснуто за допомогою bzip2"
+
+#: plug-ins/common/file-compressor.c:254
+#| msgid ""
+#| "This plug-in loads files in the various Netpbm portable file formats."
+msgid "This procedure exports files in the bzip2 compressed format."
+msgstr "Ця процедура експортує файли у стисненому форматі bzip2."
 
 #: plug-ins/common/file-compressor.c:259
 msgid "xz archive"
 msgstr "архів xz"
 
+#: plug-ins/common/file-compressor.c:267
+msgid "Loads files compressed with xz"
+msgstr "Завантажує файли, які стиснуто за допомогою xz"
+
+#: plug-ins/common/file-compressor.c:268
+#| msgid ""
+#| "This plug-in loads files in the various Netpbm portable file formats."
+msgid "This procedure loads files in the xz compressed format."
+msgstr "Ця процедура завантажує файли у стисненому форматі xz."
+
+#: plug-ins/common/file-compressor.c:272
+#| msgid "Error reading compressed data. "
+msgid "Exports files compressed with xz"
+msgstr "Експортує файли, які стиснуто за допомогою xz"
+
+#: plug-ins/common/file-compressor.c:273
+#| msgid "Exports files in the PNM file format"
+msgid "This procedure exports files in the xz compressed format."
+msgstr "Ця процедура експортує файли у стисненому форматі xz."
+
 #: plug-ins/common/file-compressor.c:278
-#| msgid "gzip archive"
 msgid "zip archive"
 msgstr "архів zip"
+
+#: plug-ins/common/file-compressor.c:286
+msgid "Loads files compressed with zip"
+msgstr "Завантажує файли, які стиснуто за допомогою zip"
+
+#: plug-ins/common/file-compressor.c:287
+#| msgid ""
+#| "This plug-in loads files in the various Netpbm portable file formats."
+msgid "This procedure loads files in the zip compressed format."
+msgstr "Ця процедура завантажує файли у стисненому форматі zip."
 
 #: plug-ins/common/file-compressor.c:471
 msgid "No sensible file extension, saving as compressed XCF."
@@ -2833,6 +2901,15 @@ msgstr "Стиснення «%s»"
 #: plug-ins/common/file-compressor.c:529
 msgid "No sensible file extension, attempting to load with file magic."
 msgstr "Немає потрібного розширення, спроба визначення типу за вмістом файлу."
+
+#. Leave a chance for the load to succeed (in case the first
+#. * file happens to be an image file), yet still warns. This
+#. * procedure expects that the archive contains a single
+#. * file.
+#.
+#: plug-ins/common/file-compressor.c:1110
+msgid "This zip archive contains more than one file."
+msgstr "В архіві zip міститься декілька файлів."
 
 #: plug-ins/common/file-desktop-link.c:114
 msgid "Desktop Link"
