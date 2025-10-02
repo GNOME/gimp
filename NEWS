@@ -129,8 +129,11 @@ Graphical User Interface:
     depend on an environment daemon which cannot be shipped in the
     package. So the next best thing is to warn people and tell them what
     they should install to get version checks.
-  - Welcome dialog: the "Community Tutorials" link is now shown after
-    the "Documentation" link.
+  - Welcome dialog:
+    * The "Community Tutorials" link is now shown after the
+      "Documentation" link.
+    * The "Learn more" link in Release Notes tab leads to the actual
+      release news for this version.
 
 Plug-ins:
 
