@@ -374,25 +374,66 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   GObject          *config  = G_OBJECT (tool_options);
   GimpAlignOptions *options = GIMP_ALIGN_OPTIONS (tool_options);
   GtkWidget        *vbox    = gimp_tool_options_gui (tool_options);
+  GtkWidget        *vbox2;
   GtkWidget        *widget;
   GtkWidget        *section_vbox;
   GtkWidget        *items_grid;
-  GtkWidget        *vbox2;
-  GtkWidget        *align_hbox;
   GtkWidget        *hbox;
+  GtkWidget        *align_hbox;
   GtkWidget        *frame;
   GtkWidget        *combo;
   gchar            *text;
   gint              n = 0;
 
-  /* Align frame */
+  /* Selected objects */
   frame = gimp_frame_new (_("Align"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_set_visible (frame, TRUE);
+  gtk_widget_show (frame);
 
   section_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), section_vbox);
-  gtk_widget_set_visible (section_vbox, TRUE);
+  gtk_widget_show (section_vbox);
+
+  items_grid = gtk_grid_new ();
+  gtk_container_add (GTK_CONTAINER (section_vbox), items_grid);
+  gtk_widget_show (items_grid);
+
+  widget = gimp_prop_check_button_new (config, "align-layers", NULL);
+  gtk_grid_attach (GTK_GRID (items_grid), widget, 0, 0, 1, 1);
+
+  widget = gimp_prop_check_button_new (config, "align-paths", NULL);
+  gtk_grid_attach (GTK_GRID (items_grid), widget, 0, 1, 1, 1);
+
+  widget = gimp_prop_check_button_new (config, "align-contents", NULL);
+  gtk_grid_attach (GTK_GRID (items_grid), widget, 0, 2, 1, 1);
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  widget = gtk_image_new_from_icon_name (GIMP_ICON_CURSOR, GTK_ICON_SIZE_BUTTON);
+  gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
+
+  /* TRANSLATORS: the %s strings are modifiers such as Shift, Alt or Cmd. */
+  text = g_strdup_printf (_("%s-pick target guides (%s-%s to add more)"),
+                          gimp_get_mod_string (GDK_MOD1_MASK),
+                          gimp_get_mod_string (gimp_get_extend_selection_mask ()),
+                          gimp_get_mod_string (GDK_MOD1_MASK));
+  widget = gtk_label_new (text);
+  gtk_label_set_line_wrap (GTK_LABEL (widget), TRUE);
+  gtk_label_set_line_wrap_mode (GTK_LABEL (widget), PANGO_WRAP_WORD);
+  g_free (text);
+  gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
+
+  widget = gtk_label_new (NULL);
+  gtk_box_pack_start (GTK_BOX (section_vbox), widget, FALSE, FALSE, 0);
+  if (options->priv->selected_guides)
+    gtk_widget_set_visible (widget, TRUE);
+  else
+    gtk_widget_set_visible (widget, FALSE);
+  options->priv->selected_guides_label = widget;
 
   /* Align frame: reference */
   combo = gimp_prop_enum_combo_box_new (config, "align-reference", 0, 0);
@@ -411,11 +452,11 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
 
   widget = gtk_image_new_from_icon_name (GIMP_ICON_CURSOR, GTK_ICON_SIZE_BUTTON);
   gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
-  gtk_widget_set_visible (widget, TRUE);
+  gtk_widget_show (widget);
 
   widget = gtk_label_new (_("Select the reference object"));
   gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
-  gtk_widget_set_visible (widget, TRUE);
+  gtk_widget_show (widget);
 
   widget = gtk_label_new (NULL);
   gtk_box_pack_start (GTK_BOX (section_vbox), widget, FALSE, FALSE, 0);
@@ -478,44 +519,6 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
                     G_CALLBACK (gimp_align_options_pivot_changed),
                     options);
 
-  items_grid = gtk_grid_new ();
-  gtk_container_add (GTK_CONTAINER (section_vbox), items_grid);
-  gtk_widget_set_visible (items_grid, TRUE);
-
-  widget = gimp_prop_check_button_new (config, "align-layers", NULL);
-  gtk_grid_attach (GTK_GRID (items_grid), widget, 0, 0, 1, 1);
-
-  widget = gimp_prop_check_button_new (config, "align-paths", NULL);
-  gtk_grid_attach (GTK_GRID (items_grid), widget, 0, 3, 1, 1);
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_set_visible (hbox, TRUE);
-
-  widget = gtk_image_new_from_icon_name (GIMP_ICON_CURSOR, GTK_ICON_SIZE_BUTTON);
-  gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
-  gtk_widget_set_visible (widget, TRUE);
-
-  /* TRANSLATORS: the %s strings are modifiers such as Shift, Alt or Cmd. */
-  text = g_strdup_printf (_("%s-pick target guides (%s-%s to add more)"),
-                          gimp_get_mod_string (GDK_MOD1_MASK),
-                          gimp_get_mod_string (gimp_get_extend_selection_mask ()),
-                          gimp_get_mod_string (GDK_MOD1_MASK));
-  widget = gtk_label_new (text);
-  gtk_label_set_line_wrap (GTK_LABEL (widget), TRUE);
-  gtk_label_set_line_wrap_mode (GTK_LABEL (widget), PANGO_WRAP_WORD);
-  g_free (text);
-  gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
-  gtk_widget_set_visible (widget, TRUE);
-
-  widget = gtk_label_new (NULL);
-  gtk_box_pack_start (GTK_BOX (section_vbox), widget, FALSE, FALSE, 0);
-  if (options->priv->selected_guides)
-    gtk_widget_set_visible (widget, TRUE);
-  else
-    gtk_widget_set_visible (widget, FALSE);
-  options->priv->selected_guides_label = widget;
-
   /* Distribute frame */
   frame = gimp_frame_new (_("Distribute"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -548,10 +551,6 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   options->priv->distr_hor_button[n++] =
     gimp_align_options_button_new (options, GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP, hbox,
                                    _("Distribute vertically with even vertical gaps"));
-
-  widget = gimp_prop_check_button_new (config, "align-contents", NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
-  gtk_widget_set_visible (widget, TRUE);
 
   g_signal_connect_object (gimp_get_user_context (GIMP_CONTEXT (options)->gimp),
                            "image-changed",
