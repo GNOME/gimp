@@ -581,14 +581,14 @@ gimp-win:
     - build\windows\2_build-gimp-msys2.ps1
   artifacts:
     paths:
-      - gimp-$MSYSTEM_PREFIX/
-      - _build-$MSYSTEM_PREFIX/meson-logs/meson-log.txt
-      - _build-$MSYSTEM_PREFIX/done-dll.list
+      - gimp-*/
+      - _build-*/meson-logs/meson-log.txt
+      - _build-*/done-dll.list
       # Needed by dist-installer-weekly and dist-store-weekly
-      - _build-$MSYSTEM_PREFIX/config.h
-      - _build-$MSYSTEM_PREFIX/plug-ins/file_associations.list
-      - _build-$MSYSTEM_PREFIX/build/windows/installer/
-      - _build-$MSYSTEM_PREFIX/build/windows/store/
+      - _build-*/config.h
+      - _build-*/plug-ins/file_associations.list
+      - _build-*/build/windows/installer/
+      - _build-*/build/windows/store/
     expire_in: 2 days
 
 
