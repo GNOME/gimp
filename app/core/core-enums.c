@@ -55,6 +55,10 @@ gimp_alignment_type_get_type (void)
     { GIMP_ARRANGE_VFILL, "GIMP_ARRANGE_VFILL", "arrange-vfill" },
     { GIMP_DISTRIBUTE_EVEN_HORIZONTAL_GAP, "GIMP_DISTRIBUTE_EVEN_HORIZONTAL_GAP", "distribute-even-horizontal-gap" },
     { GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP, "GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP", "distribute-even-vertical-gap" },
+    { GIMP_SHIFT_FROM_TOP, "GIMP_SHIFT_FROM_TOP", "shift-from-top" },
+    { GIMP_SHIFT_FROM_BOTTOM, "GIMP_SHIFT_FROM_BOTTOM", "shift-from-bottom" },
+    { GIMP_SHIFT_FROM_LEFT, "GIMP_SHIFT_FROM_LEFT", "shift-from-left" },
+    { GIMP_SHIFT_FROM_RIGHT, "GIMP_SHIFT_FROM_RIGHT", "shift-from-right" },
     { 0, NULL, NULL }
   };
 
@@ -70,6 +74,10 @@ gimp_alignment_type_get_type (void)
     { GIMP_ARRANGE_VFILL, NC_("alignment-type", "Distribute anchor points vertically evenly"), NULL },
     { GIMP_DISTRIBUTE_EVEN_HORIZONTAL_GAP, NC_("alignment-type", "Distribute horizontally with even horizontal gaps"), NULL },
     { GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP, NC_("alignment-type", "Distribute vertically with even vertical gaps"), NULL },
+    { GIMP_SHIFT_FROM_TOP, NC_("alignment-type", "Align to the top and distribute vertically with offset"), NULL },
+    { GIMP_SHIFT_FROM_BOTTOM, NC_("alignment-type", "Align to the bottom and distribute vertically with offset"), NULL },
+    { GIMP_SHIFT_FROM_LEFT, NC_("alignment-type", "Align to the left and distribute horizontally with offset"), NULL },
+    { GIMP_SHIFT_FROM_RIGHT, NC_("alignment-type", "Align to the right and distribute horizontally with offset"), NULL },
     { 0, NULL, NULL }
   };
 

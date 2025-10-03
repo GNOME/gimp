@@ -24,4 +24,5 @@ void gimp_image_arrange_objects (GimpImage         *image,
                                  gdouble            align_y,
                                  GObject           *reference,
                                  GimpAlignmentType  reference_alignment,
-                                 gboolean           align_contents);
+                                 gboolean           align_contents,
+                                 gint               offset);

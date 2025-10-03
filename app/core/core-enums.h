@@ -52,16 +52,20 @@ GType gimp_alignment_type_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_ALIGN_LEFT,                     /*< desc="Align to the left"                                 >*/
-  GIMP_ALIGN_HCENTER,                  /*< desc="Center horizontally"                               >*/
-  GIMP_ALIGN_RIGHT,                    /*< desc="Align to the right"                                >*/
-  GIMP_ALIGN_TOP,                      /*< desc="Align to the top"                                  >*/
-  GIMP_ALIGN_VCENTER,                  /*< desc="Center vertically"                                 >*/
-  GIMP_ALIGN_BOTTOM,                   /*< desc="Align to the bottom"                               >*/
-  GIMP_ARRANGE_HFILL,                  /*< desc="Distribute anchor points horizontally evenly"      >*/
-  GIMP_ARRANGE_VFILL,                  /*< desc="Distribute anchor points vertically evenly"        >*/
-  GIMP_DISTRIBUTE_EVEN_HORIZONTAL_GAP, /*< desc="Distribute horizontally with even horizontal gaps" >*/
-  GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP,   /*< desc="Distribute vertically with even vertical gaps"     >*/
+  GIMP_ALIGN_LEFT,                     /*< desc="Align to the left"                                          >*/
+  GIMP_ALIGN_HCENTER,                  /*< desc="Center horizontally"                                        >*/
+  GIMP_ALIGN_RIGHT,                    /*< desc="Align to the right"                                         >*/
+  GIMP_ALIGN_TOP,                      /*< desc="Align to the top"                                           >*/
+  GIMP_ALIGN_VCENTER,                  /*< desc="Center vertically"                                          >*/
+  GIMP_ALIGN_BOTTOM,                   /*< desc="Align to the bottom"                                        >*/
+  GIMP_ARRANGE_HFILL,                  /*< desc="Distribute anchor points horizontally evenly"               >*/
+  GIMP_ARRANGE_VFILL,                  /*< desc="Distribute anchor points vertically evenly"                 >*/
+  GIMP_DISTRIBUTE_EVEN_HORIZONTAL_GAP, /*< desc="Distribute horizontally with even horizontal gaps"          >*/
+  GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP,   /*< desc="Distribute vertically with even vertical gaps"              >*/
+  GIMP_SHIFT_FROM_TOP,                 /*< desc="Align to the top and distribute vertically with offset"     >*/
+  GIMP_SHIFT_FROM_BOTTOM,              /*< desc="Align to the bottom and distribute vertically with offset"  >*/
+  GIMP_SHIFT_FROM_LEFT,                /*< desc="Align to the left and distribute horizontally with offset"  >*/
+  GIMP_SHIFT_FROM_RIGHT,               /*< desc="Align to the right and distribute horizontally with offset" >*/
 } GimpAlignmentType;
 
 

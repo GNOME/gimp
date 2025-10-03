@@ -125,6 +125,8 @@ gimp_image_arrange_objects (GimpImage         *image,
       if (GIMP_IS_GUIDE (reference) &&
           gimp_guide_get_orientation (GIMP_GUIDE (reference)) == GIMP_ORIENTATION_HORIZONTAL)
         return;
+    case GIMP_SHIFT_FROM_LEFT:
+    case GIMP_SHIFT_FROM_RIGHT:
 
       use_obj_x_offset = TRUE;
 
@@ -153,6 +155,8 @@ gimp_image_arrange_objects (GimpImage         *image,
       if (GIMP_IS_GUIDE (reference) &&
           gimp_guide_get_orientation (GIMP_GUIDE (reference)) == GIMP_ORIENTATION_VERTICAL)
         return;
+    case GIMP_SHIFT_FROM_TOP:
+    case GIMP_SHIFT_FROM_BOTTOM:
 
       if (align_type == GIMP_ALIGN_VCENTER)
         reference_y = 0.5;
@@ -243,6 +247,29 @@ gimp_image_arrange_objects (GimpImage         *image,
           object_list = g_list_delete_link (object_list, last_object);
           object_list = g_list_delete_link (object_list, object_list);
         }
+      else if (align_type == GIMP_SHIFT_FROM_TOP ||
+               align_type == GIMP_SHIFT_FROM_LEFT)
+        {
+          z0 = GPOINTER_TO_INT (g_object_get_data (object_list->data, "align-offset"));
+          fill_offset = offset;
+
+          /* First object won't move. */
+          object_list = g_list_delete_link (object_list, object_list);
+        }
+      else if (align_type == GIMP_SHIFT_FROM_BOTTOM ||
+               align_type == GIMP_SHIFT_FROM_RIGHT)
+        {
+          GList *last_object = g_list_last (object_list);
+
+          z0 = GPOINTER_TO_INT (g_object_get_data (last_object->data, "align-offset"));
+          fill_offset = -offset;
+
+          /* Last object won't move. */
+          object_list = g_list_delete_link (object_list, last_object);
+
+          /* Start from the end. */
+          object_list = g_list_reverse (object_list);
+        }
       else
         {
           if (reference == NULL)
@@ -296,6 +323,16 @@ gimp_image_arrange_objects (GimpImage         *image,
 
               obj_len = GPOINTER_TO_INT (g_object_get_data (target, "align-height"));
               z0 = z0 + fill_offset + obj_len;
+            }
+          else if (align_type == GIMP_SHIFT_FROM_TOP ||
+                   align_type == GIMP_SHIFT_FROM_BOTTOM)
+            {
+              ytranslate = ROUND (z0 - z1 + n * fill_offset);
+            }
+          else if (align_type == GIMP_SHIFT_FROM_LEFT ||
+                   align_type == GIMP_SHIFT_FROM_RIGHT)
+            {
+              xtranslate = ROUND (z0 - z1 + n * fill_offset);
             }
           else /* the normal computing, when we don't depend on the
                 * width or height of the reference object

@@ -44,10 +44,12 @@
 #include "gimp-intl.h"
 
 
-#define ALIGN_VER_N_BUTTONS 3
-#define ALIGN_HOR_N_BUTTONS 3
-#define DISTR_VER_N_BUTTONS 2
-#define DISTR_HOR_N_BUTTONS 2
+#define ALIGN_VER_N_BUTTONS       3
+#define ALIGN_HOR_N_BUTTONS       3
+#define DISTR_VER_N_BUTTONS       2
+#define DISTR_HOR_N_BUTTONS       2
+#define ALIGN_DISTR_VER_N_BUTTONS 2
+#define ALIGN_DISTR_HOR_N_BUTTONS 2
 
 
 enum
@@ -66,6 +68,7 @@ enum
   PROP_ALIGN_CONTENTS,
   PROP_PIVOT_X,
   PROP_PIVOT_Y,
+  PROP_SHIFT_OFFSET,
 };
 
 struct _GimpAlignOptionsPrivate
@@ -78,6 +81,7 @@ struct _GimpAlignOptionsPrivate
   gboolean   align_contents;
   gdouble    pivot_x;
   gdouble    pivot_y;
+  gint       shift_offset;
 
   GList     *selected_guides;
   GObject   *reference;
@@ -93,6 +97,8 @@ struct _GimpAlignOptionsPrivate
   GtkWidget *align_hor_button[ALIGN_HOR_N_BUTTONS];
   GtkWidget *distr_ver_button[DISTR_VER_N_BUTTONS];
   GtkWidget *distr_hor_button[DISTR_HOR_N_BUTTONS];
+  GtkWidget *offset_ver_button[ALIGN_DISTR_VER_N_BUTTONS];
+  GtkWidget *offset_hor_button[ALIGN_DISTR_HOR_N_BUTTONS];
 };
 
 
@@ -196,6 +202,13 @@ gimp_align_options_class_init (GimpAlignOptionsClass *klass)
                            NULL,
                            0.0, 1.0, 0.5,
                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_INT (object_class, PROP_SHIFT_OFFSET,
+                        "shift-offset",
+                        "Offset in pixels when shifting",
+                        NULL,
+                        -G_MAXINT, G_MAXINT, 10,
+                        GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -259,6 +272,10 @@ gimp_align_options_set_property (GObject      *object,
       options->priv->pivot_y = g_value_get_double (value);
       break;
 
+    case PROP_SHIFT_OFFSET:
+      options->priv->shift_offset = g_value_get_int (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -300,6 +317,10 @@ gimp_align_options_get_property (GObject    *object,
       g_value_set_double (value, options->priv->pivot_y);
       break;
 
+    case PROP_SHIFT_OFFSET:
+      g_value_set_int (value, options->priv->shift_offset);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -332,21 +353,25 @@ gimp_align_options_button_new (GimpAlignOptions  *options,
   switch (action)
     {
     case GIMP_ALIGN_LEFT:
+    case GIMP_SHIFT_FROM_LEFT:
       icon_name = GIMP_ICON_GRAVITY_WEST;
       break;
     case GIMP_ALIGN_HCENTER:
       icon_name = GIMP_ICON_CENTER_HORIZONTAL;
       break;
     case GIMP_ALIGN_RIGHT:
+    case GIMP_SHIFT_FROM_RIGHT:
       icon_name = GIMP_ICON_GRAVITY_EAST;
       break;
     case GIMP_ALIGN_TOP:
+    case GIMP_SHIFT_FROM_TOP:
       icon_name = GIMP_ICON_GRAVITY_NORTH;
       break;
     case GIMP_ALIGN_VCENTER:
       icon_name = GIMP_ICON_CENTER_VERTICAL;
       break;
     case GIMP_ALIGN_BOTTOM:
+    case GIMP_SHIFT_FROM_BOTTOM:
       icon_name = GIMP_ICON_GRAVITY_SOUTH;
       break;
     case GIMP_ARRANGE_HFILL:
@@ -594,6 +619,39 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
     gimp_align_options_button_new (options, GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP, hbox,
                                    _("Distribute vertically with even vertical gaps"));
 
+  /* SECTION: Shift by Offset */
+  frame = gimp_frame_new (_("Shift"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  section_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_container_add (GTK_CONTAINER (frame), section_vbox);
+  gtk_widget_show (section_vbox);
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  n = 0;
+  options->priv->offset_hor_button[n++] =
+    gimp_align_options_button_new (options, GIMP_SHIFT_FROM_LEFT, hbox,
+                                   _("Align to the left and distribute horizontally with offset"));
+  options->priv->offset_hor_button[n++] =
+    gimp_align_options_button_new (options, GIMP_SHIFT_FROM_RIGHT, hbox,
+                                   _("Align to the right and distribute horizontally with offset"));
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  n = 0;
+  options->priv->offset_ver_button[n++] =
+    gimp_align_options_button_new (options, GIMP_SHIFT_FROM_TOP, hbox,
+                                   _("Align to the top and distribute vertically with offset"));
+  options->priv->offset_ver_button[n++] =
+    gimp_align_options_button_new (options, GIMP_SHIFT_FROM_BOTTOM, hbox,
+                                   _("Align to the bottom and distribute vertically with offset"));
+
   g_signal_connect_object (gimp_get_user_context (GIMP_CONTEXT (options)->gimp),
                            "image-changed",
                            G_CALLBACK (gimp_align_options_image_changed),
@@ -601,6 +659,18 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gimp_align_options_image_changed (gimp_get_user_context (GIMP_CONTEXT (options)->gimp),
                                     gimp_context_get_image (gimp_get_user_context (GIMP_CONTEXT (options)->gimp)),
                                     options);
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  widget = gtk_label_new (_("Offset:"));
+  gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
+
+  widget = gimp_prop_spin_button_new (config, "shift-offset", 1, 20, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
 
   return vbox;
 }
@@ -727,6 +797,12 @@ gimp_align_options_align_guides (GimpAlignOptions *options)
   return options->priv->align_guides;
 }
 
+gint
+gimp_align_options_get_shift_offset (GimpAlignOptions *options)
+{
+  return options->priv->shift_offset;
+}
+
 void
 gimp_align_options_pick_guide (GimpAlignOptions *options,
                                GimpGuide        *guide,
@@ -846,6 +922,10 @@ gimp_align_options_update_area (GimpAlignOptions *options)
     gtk_widget_set_sensitive (options->priv->distr_ver_button[i], enable_ver_distr);
   for (gint i = 0; i < DISTR_HOR_N_BUTTONS; i++)
     gtk_widget_set_sensitive (options->priv->distr_hor_button[i], enable_hor_distr);
+  for (gint i = 0; i < ALIGN_DISTR_HOR_N_BUTTONS; i++)
+    gtk_widget_set_sensitive (options->priv->offset_hor_button[i], enable_hor_distr);
+  for (gint i = 0; i < ALIGN_DISTR_VER_N_BUTTONS; i++)
+    gtk_widget_set_sensitive (options->priv->offset_ver_button[i], enable_ver_distr);
 
   /* Update the guide picking widgets. */
   if (options->priv->align_guides && options->priv->selected_guides)

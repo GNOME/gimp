@@ -818,7 +818,8 @@ gimp_align_tool_align (GimpAlignTool     *align_tool,
                               align_x, align_y,
                               reference_object,
                               align_type,
-                              gimp_align_options_align_contents (options));
+                              gimp_align_options_align_contents (options),
+                              gimp_align_options_get_shift_offset (options));
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (align_tool));
 
