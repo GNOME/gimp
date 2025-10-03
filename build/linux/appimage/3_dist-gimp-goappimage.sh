@@ -385,6 +385,7 @@ fi
 bund_usr "$GIMP_PREFIX" "bin/gimp-debug-tool*" --dest "libexec"
 ### Introspected plug-ins
 bund_usr "$GIMP_PREFIX" "lib/girepository-*/*.typelib"
+bund_usr "$UNIX_PREFIX" "lib/girepository-*/*.typelib"
 conf_app GI_TYPELIB_PATH "${LIB_DIR}/${LIB_SUBDIR}girepository-*"
 #### Python plug-ins support
 bund_usr "$UNIX_PREFIX" "bin/python*"
