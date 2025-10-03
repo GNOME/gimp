@@ -156,6 +156,7 @@ if (os.getenv("GIMP_UNSTABLE") or not os.getenv("GIMP_RELEASE")) and "32" not in
   bundle(MSYSTEM_PREFIX, "bin/config6")
 ### Binaries for GObject Introspection support. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/13170
 bundle(GIMP_PREFIX, "lib/girepository-*/*.typelib")
+bundle(MSYSTEM_PREFIX, "lib/girepository-*/*.typelib")
 bundle(MSYSTEM_PREFIX, "bin/libgirepository-*.dll")
 #### Python support
 #####python.exe is needed for plug-ins output in `gimp-console*.exe`
