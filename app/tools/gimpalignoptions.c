@@ -62,6 +62,7 @@ enum
   PROP_ALIGN_REFERENCE,
   PROP_ALIGN_LAYERS,
   PROP_ALIGN_PATHS,
+  PROP_ALIGN_GUIDES,
   PROP_ALIGN_CONTENTS,
   PROP_PIVOT_X,
   PROP_PIVOT_Y,
@@ -73,6 +74,7 @@ struct _GimpAlignOptionsPrivate
 
   gboolean   align_layers;
   gboolean   align_paths;
+  gboolean   align_guides;
   gboolean   align_contents;
   gdouble    pivot_x;
   gdouble    pivot_y;
@@ -85,6 +87,7 @@ struct _GimpAlignOptionsPrivate
   GtkWidget *reference_box;
   GtkWidget *reference_label;
   GtkWidget *pivot_selector;
+  GtkWidget *anchor_label;
 
   GtkWidget *align_ver_button[ALIGN_VER_N_BUTTONS];
   GtkWidget *align_hor_button[ALIGN_HOR_N_BUTTONS];
@@ -115,6 +118,8 @@ static void   gimp_align_options_reference_removed      (GObject          *objec
                                                          GimpAlignOptions *options);
 static void   gimp_align_options_pivot_changed          (GimpPivotSelector *selector,
                                                          GimpAlignOptions  *options);
+
+static const gchar * gimp_align_options_get_anchor_text (GimpAlignOptions  *options);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpAlignOptions, gimp_align_options, GIMP_TYPE_TOOL_OPTIONS)
@@ -163,6 +168,12 @@ gimp_align_options_class_init (GimpAlignOptionsClass *klass)
                             "align-paths",
                             _("Selected paths"),
                             _("Selected paths will be aligned or distributed by the tool"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ALIGN_GUIDES,
+                            "align-guides",
+                            _("Pick guides"),
+                            _("Picked guides will be aligned or distributed by the tool"),
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ALIGN_CONTENTS,
@@ -230,6 +241,12 @@ gimp_align_options_set_property (GObject      *object,
       options->priv->align_paths = g_value_get_boolean (value);
       gimp_align_options_update_area (options);
       break;
+    case PROP_ALIGN_GUIDES:
+      options->priv->align_guides = g_value_get_boolean (value);
+      if (! options->priv->align_guides)
+        g_clear_pointer (&options->priv->selected_guides, g_list_free);
+      gimp_align_options_update_area (options);
+      break;
 
     case PROP_ALIGN_CONTENTS:
       options->priv->align_contents = g_value_get_boolean (value);
@@ -267,6 +284,9 @@ gimp_align_options_get_property (GObject    *object,
       break;
     case PROP_ALIGN_PATHS:
       g_value_set_boolean (value, options->priv->align_paths);
+      break;
+    case PROP_ALIGN_GUIDES:
+      g_value_set_boolean (value, options->priv->align_guides);
       break;
 
     case PROP_ALIGN_CONTENTS:
@@ -375,21 +395,19 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   GimpAlignOptions *options = GIMP_ALIGN_OPTIONS (tool_options);
   GtkWidget        *vbox    = gimp_tool_options_gui (tool_options);
   GtkWidget        *widget;
+  GtkWidget        *popover;
   GtkWidget        *section_vbox;
   GtkWidget        *items_grid;
+  GtkWidget        *guide_box;
   GtkWidget        *hbox;
   GtkWidget        *frame;
   GtkWidget        *combo;
   gchar            *text;
   gint              n = 0;
 
-  /* Selected objects */
-  frame = gimp_frame_new (_("Targets"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
+  /* SECTION: Objects */
   section_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_add (GTK_CONTAINER (frame), section_vbox);
+  gtk_container_add (GTK_CONTAINER (vbox), section_vbox);
   gtk_widget_show (section_vbox);
 
   items_grid = gtk_grid_new ();
@@ -404,20 +422,14 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   widget = gimp_prop_check_button_new (config, "align-paths", NULL);
   gtk_grid_attach (GTK_GRID (items_grid), widget, 0, 1, 1, 1);
 
-  options->priv->pivot_selector = gimp_pivot_selector_new (0.0, 0.0, 1.0, 1.0);
-  gtk_widget_set_tooltip_text (options->priv->pivot_selector,
-                               _("Set anchor point of targets"));
-  gimp_pivot_selector_set_position (GIMP_PIVOT_SELECTOR (options->priv->pivot_selector),
-                                    options->priv->pivot_x, options->priv->pivot_y);
-  gtk_grid_attach (GTK_GRID (items_grid), options->priv->pivot_selector, 1, 0, 1, 2);
-  gtk_widget_show (options->priv->pivot_selector);
-
-  g_signal_connect (options->priv->pivot_selector, "changed",
-                    G_CALLBACK (gimp_align_options_pivot_changed),
-                    options);
+  guide_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 1);
+  widget = gimp_prop_expanding_frame_new (config, "align-guides",
+                                          NULL, guide_box, NULL);
+  gtk_grid_attach (GTK_GRID (items_grid), widget, 0, 2, 1, 1);
+  gtk_widget_show (widget);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (guide_box), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   widget = gtk_image_new_from_icon_name (GIMP_ICON_CURSOR, GTK_ICON_SIZE_BUTTON);
@@ -437,11 +449,49 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (widget);
 
   widget = gtk_label_new (NULL);
-  gtk_box_pack_start (GTK_BOX (section_vbox), widget, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (guide_box), widget, FALSE, FALSE, 0);
   gtk_widget_show (widget);
   options->priv->selected_guides_label = widget;
 
-  /* Align frame */
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  widget = gtk_button_new_from_icon_name (GIMP_ICON_LAYER_ANCHOR, GTK_ICON_SIZE_BUTTON);
+  gtk_widget_set_tooltip_text (widget, _("Set which point in each item will be aligned or distributed"));
+  gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
+
+  /* The popup for the anchor point selection */
+  popover = gtk_popover_new (widget);
+  options->priv->pivot_selector = gimp_pivot_selector_new (0.0, 0.0, 1.0, 1.0);
+  gtk_widget_set_tooltip_text (options->priv->pivot_selector,
+                               _("Set anchor point of targets"));
+  gimp_pivot_selector_set_position (GIMP_PIVOT_SELECTOR (options->priv->pivot_selector),
+                                    options->priv->pivot_x, options->priv->pivot_y);
+  gtk_container_add (GTK_CONTAINER (popover), options->priv->pivot_selector);
+  gtk_widget_show (options->priv->pivot_selector);
+
+  g_signal_connect_swapped (widget, "clicked",
+                            G_CALLBACK (gtk_popover_popup),
+                            popover);
+
+  /* The anchor point label */
+  text = g_strdup_printf (_("Anchor point: %s"),
+                          gimp_align_options_get_anchor_text (options));
+  widget = gtk_label_new (text);
+  gtk_label_set_line_wrap (GTK_LABEL (widget), TRUE);
+  gtk_label_set_line_wrap_mode (GTK_LABEL (widget), PANGO_WRAP_WORD);
+  g_free (text);
+  gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
+  options->priv->anchor_label = widget;
+
+  g_signal_connect (options->priv->pivot_selector, "changed",
+                    G_CALLBACK (gimp_align_options_pivot_changed),
+                    options);
+
+  /* SECTION: Align */
   frame = gimp_frame_new (_("Align"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -511,7 +561,7 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
     gimp_align_options_button_new (options, GIMP_ALIGN_BOTTOM, hbox,
                                    _("Align anchor points of targets on bottom of reference"));
 
-  /* Distribute frame */
+  /* SECTION: Distribute */
   frame = gimp_frame_new (_("Distribute"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -582,7 +632,7 @@ gimp_align_options_get_objects (GimpAlignOptions *options)
           objects = g_list_concat (objects, paths);
         }
 
-      if (options->priv->selected_guides)
+      if (options->priv->align_guides && options->priv->selected_guides)
         {
           GList *guides;
 
@@ -671,11 +721,20 @@ gimp_align_options_align_contents (GimpAlignOptions *options)
   return options->priv->align_contents;
 }
 
+gboolean
+gimp_align_options_align_guides (GimpAlignOptions *options)
+{
+  return options->priv->align_guides;
+}
+
 void
 gimp_align_options_pick_guide (GimpAlignOptions *options,
                                GimpGuide        *guide,
                                gboolean          extend)
 {
+  if (! options->priv->align_guides)
+    return;
+
   if (! extend)
     g_clear_pointer (&options->priv->selected_guides, g_list_free);
 
@@ -761,8 +820,8 @@ gimp_align_options_update_area (GimpAlignOptions *options)
         n_items += g_list_length (layers);
       if (options->priv->align_paths)
         n_items += g_list_length (paths);
-
-      n_items += g_list_length (options->priv->selected_guides);
+      if (options->priv->align_guides)
+        n_items += g_list_length (options->priv->selected_guides);
     }
 
   if (n_items > 0)
@@ -789,7 +848,7 @@ gimp_align_options_update_area (GimpAlignOptions *options)
     gtk_widget_set_sensitive (options->priv->distr_hor_button[i], enable_hor_distr);
 
   /* Update the guide picking widgets. */
-  if (options->priv->selected_guides)
+  if (options->priv->align_guides && options->priv->selected_guides)
     {
       gchar *tmp_txt;
 
@@ -881,4 +940,46 @@ gimp_align_options_pivot_changed (GimpPivotSelector *selector,
                 "pivot-x", x,
                 "pivot-y", y,
                 NULL);
+
+  if (options->priv->anchor_label)
+    {
+      gchar *text;
+
+      text = g_strdup_printf (_("Anchor point: %s"),
+                              gimp_align_options_get_anchor_text (options));
+      gtk_label_set_text (GTK_LABEL (options->priv->anchor_label), text);
+      g_free (text);
+    }
+}
+
+static const gchar *
+gimp_align_options_get_anchor_text (GimpAlignOptions *options)
+{
+  if (options->priv->pivot_x == 0.0)
+    {
+      if (options->priv->pivot_y == 0.0)
+        return _("top-left");
+      else if (options->priv->pivot_y == 0.5)
+        return _("left");
+      else
+        return _("bottom-left");
+    }
+  else if (options->priv->pivot_x == 0.5)
+    {
+      if (options->priv->pivot_y == 0.0)
+        return _("top");
+      else if (options->priv->pivot_y == 0.5)
+        return _("center");
+      else
+        return _("bottom");
+    }
+  else
+    {
+      if (options->priv->pivot_y == 0.0)
+        return _("top-right");
+      else if (options->priv->pivot_y == 0.5)
+        return _("right");
+      else
+        return _("bottom-right");
+    }
 }

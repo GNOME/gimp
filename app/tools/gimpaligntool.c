@@ -191,6 +191,9 @@ gimp_align_tool_constructed (GObject *object)
   g_signal_connect_object (options, "notify::align-contents",
                            G_CALLBACK (gimp_align_tool_redraw),
                            align_tool, G_CONNECT_SWAPPED);
+  g_signal_connect_object (options, "notify::align-guides",
+                           G_CALLBACK (gimp_align_tool_redraw),
+                           align_tool, G_CONNECT_SWAPPED);
   g_signal_connect_object (gimp_get_user_context (GIMP_CONTEXT (options)->gimp),
                            "display-changed",
                            G_CALLBACK (gimp_align_tool_display_changed),
@@ -545,6 +548,7 @@ gimp_align_tool_status_update (GimpTool        *tool,
                                gboolean         proximity)
 {
   GimpAlignTool    *align_tool = GIMP_ALIGN_TOOL (tool);
+  GimpAlignOptions *options    = GIMP_ALIGN_TOOL_GET_OPTIONS (align_tool);
   gchar            *status     = NULL;
   GdkModifierType   extend_mask;
 
@@ -576,16 +580,19 @@ gimp_align_tool_status_update (GimpTool        *tool,
           break;
 
         case ALIGN_TOOL_ALIGN_IDLE:
-          status = g_strdup (_("Click on a guide to add it to objects to align, "
-                               "click anywhere else to unselect all guides"));
+          if (gimp_align_options_align_guides (options))
+            status = g_strdup (_("Click on a guide to add it to objects to align, "
+                                 "click anywhere else to unselect all guides"));
           break;
         case ALIGN_TOOL_ALIGN_PICK_GUIDE:
-          status = gimp_suggest_modifiers (_("Click to select this guide for alignment"),
-                                           extend_mask & ~state,
-                                           NULL, NULL, NULL);
+          if (gimp_align_options_align_guides (options))
+            status = gimp_suggest_modifiers (_("Click to select this guide for alignment"),
+                                             extend_mask & ~state,
+                                             NULL, NULL, NULL);
           break;
         case ALIGN_TOOL_ALIGN_ADD_GUIDE:
-          status = g_strdup (_("Click to add this guide to the list of objects to align"));
+          if (gimp_align_options_align_guides (options))
+            status = g_strdup (_("Click to add this guide to the list of objects to align"));
           break;
 
         case ALIGN_TOOL_NO_ACTION:

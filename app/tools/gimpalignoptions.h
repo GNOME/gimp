@@ -64,6 +64,7 @@ void        gimp_align_options_pick_reference    (GimpAlignOptions *options,
 GObject   * gimp_align_options_get_reference     (GimpAlignOptions *options,
                                                   gboolean          blink_if_none);
 gboolean    gimp_align_options_align_contents    (GimpAlignOptions *options);
+gboolean    gimp_align_options_align_guides      (GimpAlignOptions *options);
 
 void        gimp_align_options_pick_guide        (GimpAlignOptions *options,
                                                   GimpGuide        *guide,
