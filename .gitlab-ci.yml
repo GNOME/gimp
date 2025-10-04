@@ -541,7 +541,6 @@ gimp-snap:
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   before_script:
     - if (-not $env:MSYSTEM_PREFIX) { $env:MSYSTEM_PREFIX = if ((Get-WmiObject Win32_ComputerSystem).SystemType -like 'ARM64*') { 'clangarm64' } else { 'clang64' }}
-    # FIXME:'gimpenv' have buggy code about Windows paths. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/12284
     - $GIMP_PREFIX = "$PWD\_install-$env:MSYSTEM_PREFIX"
   timeout: 30m
 
