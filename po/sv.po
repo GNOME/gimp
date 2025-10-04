@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-23 12:11+0000\n"
-"PO-Revision-Date: 2025-09-23 18:08+0200\n"
+"POT-Creation-Date: 2025-10-02 11:34+0000\n"
+"PO-Revision-Date: 2025-10-04 01:01+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -182,7 +182,15 @@ msgstr ""
 msgid "If you wanted to quit immediately instead, call GIMP with --quit."
 msgstr "Om du i stället ville avsluta direkt, anropa GIMP med --quit."
 
-#: app/gimp-update.c:452
+#: app/gimp-update.c:432
+msgid "Perhaps you are missing GIO backends and need to install GVFS?"
+msgstr "Kanske saknar du GIO-bakändar och behöver installera GVFS?"
+
+#: app/gimp-update.c:437
+msgid "Perhaps you are missing GIO backends."
+msgstr "Kanske saknar du GIO-bakändar."
+
+#: app/gimp-update.c:474
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -2569,8 +2577,8 @@ msgid "Enter a description for the marker"
 msgstr "Ange en beskrivning för markören"
 
 #: app/actions/data-commands.c:90 app/actions/documents-commands.c:393
-#: app/actions/file-commands.c:211 app/dialogs/file-open-dialog.c:247
-#: app/dialogs/file-open-dialog.c:288
+#: app/actions/file-commands.c:211 app/dialogs/file-open-dialog.c:248
+#: app/dialogs/file-open-dialog.c:293
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
 #: app/dialogs/welcome-dialog.c:1248 app/display/gimpdisplayshell-dnd.c:646
@@ -15801,9 +15809,14 @@ msgid "Search extensions matching these keywords"
 msgstr "Sök tillägg som matchar dessa nyckelord"
 
 #: app/dialogs/file-open-dialog.c:140 app/dialogs/file-open-dialog.c:165
-#: app/dialogs/file-open-dialog.c:279
+#: app/dialogs/file-open-dialog.c:284
 msgid "Open layers"
 msgstr "Öppna lager"
+
+#: app/dialogs/file-open-dialog.c:252
+#, c-format
+msgid "Opening '%s' failed."
+msgstr "Öppnande av ”%s” misslyckades."
 
 #: app/dialogs/file-open-location-dialog.c:74
 msgid "Open Location"
@@ -18448,12 +18461,12 @@ msgid "GIMP website"
 msgstr "Webbplatsen för GIMP"
 
 #: app/dialogs/welcome-dialog.c:473
-msgid "Tutorials"
-msgstr "Handledningar"
-
-#: app/dialogs/welcome-dialog.c:478
 msgid "Documentation"
 msgstr "Dokumentation"
+
+#: app/dialogs/welcome-dialog.c:478
+msgid "Community Tutorials"
+msgstr "Handledningar från gemenskapen"
 
 #. XXX: should we add API docs for plug-in developers once it's
 #. * properly set up?
@@ -21574,7 +21587,7 @@ msgstr "Autobeskär bild"
 msgid "Autocrop layer"
 msgstr "Autobeskär lager"
 
-#: app/pdb/image-cmds.c:2556
+#: app/pdb/image-cmds.c:2564
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
