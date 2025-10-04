@@ -128,7 +128,7 @@ fs        = import('fs')
 
 cc        = meson.get_compiler('c')
 cxx       = meson.get_compiler('cpp')
-prefix    = get_option('prefix')
+prefix    = get_option('prefix').replace('\\', '/')
 buildtype = get_option('buildtype')
 exec_ver  = '-' + gimp_app_version
 
