@@ -242,7 +242,7 @@ deps-debian-nonreloc:
     - echo "RUN printf \"\e[0Ksection_start:`date +%s`:babl_build[collapsed=true]\r\e[0KBuilding babl\n\"" >> Dockerfile2;
     - echo "RUN git clone --branch \"\$([ \"$CI_COMMIT_TAG\" ] && echo \"\$(git ls-remote --tags --exit-code --refs https://gitlab.gnome.org/GNOME/babl.git | grep -oi \"BABL_[0-9]*_[0-9]*_[0-9]*\" | sort --version-sort | tail -1)\" || echo \"master\")\" --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git" babl >> Dockerfile2;
     - echo "RUN meson setup babl/_build-${RUNNER} babl -Dprefix=\"${GIMP_PREFIX}\" $PKGCONF_RELOCATABLE_OPTION" >> Dockerfile2;
-    - echo "RUN ninja -C babl/_build-${RUNNER}" >> Dockerfile2;
+    - echo "RUN ninka -C babl/_build-${RUNNER}" >> Dockerfile2;
     - echo "RUN ninja -C babl/_build-${RUNNER} install" >> Dockerfile2;
     - echo "RUN printf \"\e[0Ksection_end:`date +%s`:babl_build\r\e[0K\n\"" >> Dockerfile2;
     ## Build GEGL
