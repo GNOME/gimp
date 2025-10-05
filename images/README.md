@@ -16,21 +16,30 @@ Previous splash images can be admired in the following page: [splash images hist
 Any new splash image shipped officially with GIMP must follow these
 requirements:
 
-- [ ] The artwork must be submitted under a Libre License.
+- [ ] The artwork **MUST** be submitted under a Libre License.
       Accepted licenses:
       [CC by-sa](https://creativecommons.org/licenses/by-sa/4.0/)
       [CC by](https://creativecommons.org/licenses/by/4.0/),
       [CC 0](https://creativecommons.org/publicdomain/zero/1.0/),
       or [Free Art](https://artlibre.org/licence/lal/en/).
-- [ ] XCF file must be provided.
+- [ ] XCF file **MUST** be provided.
 - [ ] Minimum size: full HD (splash images will be scaled down to 1/2
       of the main display when too big; but they won't be scaled up.
       Therefore anything smaller than fullHD will look tiny and
       unsuited on a 4K or higher res display). Though aspect ratio is not a hard
       requirement, the common 16:9 ratio is recommended.
-- [ ] Loading text will appear in bottom quarter, either in black or in white
-      depending on the overall surrounding lightness, so image contents must be
-      adapted.
+- [ ] Loading text will appear in bottom quarter, either in black or in
+      white depending on the overall surrounding lightness, so image
+      contents must be adapted.
+- [ ] Integrated Text:
+  * [ ] The splash **MUST** contain as text the full software name "GNU
+        Image Manipulation Program" and ideally also the acronym "GIMP".
+  * [ ] The `major.minor` version **MUST** also be displayed, but never
+        the micro version (for instance "3.0" but not "3.0.0").
+  * [ ] The fonts used in all text **MUST** be under a Libre license.
+  * [ ] A splash meant for a RC or stable release **MUST** also display
+        the text "RC", in its own dedicated text layer containing only
+        this text, and without the RC number.
 
 ### Update procedure
 
