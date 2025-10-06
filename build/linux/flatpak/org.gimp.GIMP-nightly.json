@@ -706,8 +706,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://gitlab.com/graphviz/graphviz/-/archive/14.0.0/graphviz-14.0.0.tar.gz",
-                    "sha256": "ff40891d521a680d109d77e2c6fe172173c4b63c59c5dd526d599d7af62cf290",
+                    "url": "https://gitlab.com/graphviz/graphviz/-/archive/14.0.1/graphviz-14.0.1.tar.gz",
+                    "sha256": "a969b754ecd9e25cc93b2d299cc03f573ff65c5d3595350fa22678c028b8de52",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 1249,
@@ -716,15 +716,15 @@
                     }
                 }
             ],
-            "buildsystem": "autotools",
+            "buildsystem": "cmake-ninja",
             "config-opts": [
-                "--with-gdk=no",
-                "--with-gtk=no",
-                "--with-poppler=no",
-                "--with-rsvg=no",
-                "--with-webp=no",
-                "--with-x=no",
-                "--with-xlib=no"
+                "-DWITH_GDK=OFF",
+                "-DWITH_GTK=OFF",
+                "-DWITH_GHOSTSCRIPT=OFF",
+                "-DWITH_POPPLER=OFF",
+                "-DWITH_RSVG=OFF",
+                "-DWITH_WEBP=OFF",
+                "-DWITH_X=OFF"
             ],
             "cleanup": [
                 "/bin/??",
