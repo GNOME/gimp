@@ -16,6 +16,7 @@ Base rule to update the "GNU Image Manipulation Program" entry:
   which contains a base of libraries, some of which are dependencies of GIMP.
   The runtime version is determined by the `base:` snap version in snapcraft.yaml.
   It is recommended to update that key value following Ubuntu release cycle.
+  (Don't forget to notify the 3P plugins developers on https://forum.snapcraft.io/c/snapcrafters)
 
 * Other GIMP dependencies which are not available in the GNOME runtime snap
   should be listed in `build-packages:` and/or `stage-packages:` keys if
