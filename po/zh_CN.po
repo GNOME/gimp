@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-22 20:41+0000\n"
-"PO-Revision-Date: 2025-09-23 08:19+0800\n"
+"POT-Creation-Date: 2025-09-29 18:32+0000\n"
+"PO-Revision-Date: 2025-09-30 07:57+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -180,7 +180,15 @@ msgstr "GIMP 现在作为后台进程运行。您可以随时按 Ctrl-C（SIGINT
 msgid "If you wanted to quit immediately instead, call GIMP with --quit."
 msgstr "如果您想要立即退出，可以带 --quit 命令选项调用 GIMP。"
 
-#: app/gimp-update.c:444
+#: app/gimp-update.c:424
+msgid "Perhaps you are missing GIO backends and need to install GVFS?"
+msgstr "可能您缺少 GIO 后端而需要安装 GVFS？"
+
+#: app/gimp-update.c:429
+msgid "Perhaps you are missing GIO backends."
+msgstr "可能您缺少 GIO 后端。"
+
+#: app/gimp-update.c:466
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -2556,8 +2564,8 @@ msgid "Enter a description for the marker"
 msgstr "为该标记添加描述"
 
 #: app/actions/data-commands.c:90 app/actions/documents-commands.c:393
-#: app/actions/file-commands.c:234 app/dialogs/file-open-dialog.c:253
-#: app/dialogs/file-open-dialog.c:295
+#: app/actions/file-commands.c:234 app/dialogs/file-open-dialog.c:254
+#: app/dialogs/file-open-dialog.c:300
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
 #: app/display/gimpdisplayshell-dnd.c:646 app/widgets/gimplayertreeview.c:796
@@ -3072,134 +3080,124 @@ msgctxt "dialogs-action"
 msgid "Open the dashboard"
 msgstr "打开仪表盘"
 
-#: app/actions/dialogs-actions.c:311 app/actions/dialogs-actions.c:312
-msgctxt "dialogs-action"
-msgid "_Settings..."
-msgstr "设置(_S)…"
-
-#: app/actions/dialogs-actions.c:314 app/actions/dialogs-actions.c:315
+#: app/actions/dialogs-actions.c:310 app/actions/dialogs-actions.c:311
 msgctxt "dialogs-action"
 msgid "_Preferences"
 msgstr "首选项(_P)"
 
-#: app/actions/dialogs-actions.c:318
+#: app/actions/dialogs-actions.c:313
 msgctxt "dialogs-action"
 msgid "Open the preferences dialog"
 msgstr "打开首选项对话框"
 
-#: app/actions/dialogs-actions.c:323
+#: app/actions/dialogs-actions.c:318
 msgctxt "dialogs-action"
 msgid "_Input Devices Editor"
 msgstr "输入设备编辑器(_I)"
 
-#: app/actions/dialogs-actions.c:324
+#: app/actions/dialogs-actions.c:319
 msgctxt "dialogs-action"
 msgid "_Input Devices"
 msgstr "输入设备(_I)"
 
-#: app/actions/dialogs-actions.c:326
+#: app/actions/dialogs-actions.c:321
 msgctxt "dialogs-action"
 msgid "Open the input devices editor"
 msgstr "打开输入设备编辑器"
 
-#: app/actions/dialogs-actions.c:331
+#: app/actions/dialogs-actions.c:326
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts Editor"
 msgstr "键盘快捷键编辑器(_K)"
 
-#: app/actions/dialogs-actions.c:332
+#: app/actions/dialogs-actions.c:327
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts"
 msgstr "键盘快捷键(_K)"
 
-#: app/actions/dialogs-actions.c:334
+#: app/actions/dialogs-actions.c:329
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
 msgstr "打开键盘快捷键编辑器"
 
-#: app/actions/dialogs-actions.c:339
+#: app/actions/dialogs-actions.c:334
 msgctxt "dialogs-action"
 msgid "_Modules Dialog"
 msgstr "模块对话框(_M)"
 
-#: app/actions/dialogs-actions.c:340
+#: app/actions/dialogs-actions.c:335
 msgctxt "dialogs-action"
 msgid "_Modules"
 msgstr "模块(_M)"
 
-#: app/actions/dialogs-actions.c:342
+#: app/actions/dialogs-actions.c:337
 msgctxt "dialogs-action"
 msgid "Open the module manager dialog"
 msgstr "打开模块管理器对话框"
 
-#: app/actions/dialogs-actions.c:347
+#: app/actions/dialogs-actions.c:342
 msgctxt "dialogs-action"
 msgid "_Tip of the Day"
 msgstr "日积月累(_T)"
 
-#: app/actions/dialogs-actions.c:349
+#: app/actions/dialogs-actions.c:344
 msgctxt "dialogs-action"
 msgid "Show some helpful tips on using GIMP"
 msgstr "显示一些关于 GIMP 的小窍门"
 
-#: app/actions/dialogs-actions.c:354
+#: app/actions/dialogs-actions.c:349
 msgctxt "dialogs-action"
 msgid "Welcome Dialog"
 msgstr "欢迎对话框"
 
-#: app/actions/dialogs-actions.c:356
+#: app/actions/dialogs-actions.c:351
 msgctxt "dialogs-action"
 msgid "Show information on running GIMP release"
 msgstr "在正在运行的 GIMP 版本上显示信息"
 
-#: app/actions/dialogs-actions.c:362 app/actions/dialogs-actions.c:369
+#: app/actions/dialogs-actions.c:357 app/actions/dialogs-actions.c:362
 msgctxt "dialogs-action"
 msgid "About GIMP"
 msgstr "关于 GIMP"
 
-#: app/actions/dialogs-actions.c:364
-msgctxt "dialogs-action"
-msgid "About"
-msgstr "关于"
-
-#: app/actions/dialogs-actions.c:366
+#: app/actions/dialogs-actions.c:359
 msgctxt "dialogs-action"
 msgid "_About"
 msgstr "关于(_A)"
 
-#: app/actions/dialogs-actions.c:374
+#: app/actions/dialogs-actions.c:367
 msgctxt "dialogs-action"
 msgid "_Search and Run a Command"
 msgstr "搜索并运行一个命令(_S)"
 
-#: app/actions/dialogs-actions.c:376
+#: app/actions/dialogs-actions.c:369
 msgctxt "dialogs-action"
 msgid "Search commands by keyword, and run them"
 msgstr "使用关键字搜索命令，然后运行它们"
 
-#: app/actions/dialogs-actions.c:382
+#: app/actions/dialogs-actions.c:375
 msgctxt "dialogs-action"
 msgid "Manage _Extensions"
 msgstr "管理扩展(_E)"
 
-#: app/actions/dialogs-actions.c:384
+#: app/actions/dialogs-actions.c:377
 msgctxt "dialogs-action"
 msgid "Manage Extensions: search, install, uninstall, update."
 msgstr "管理扩展：搜索、安装、卸载、更新。"
 
-#: app/actions/dialogs-actions.c:448
+#: app/actions/dialogs-actions.c:441
 msgid "Tool_box"
 msgstr "工具箱(_B)"
 
-#: app/actions/dialogs-actions.c:449
+#: app/actions/dialogs-actions.c:442
 msgid "Raise the toolbox"
 msgstr "提升工具箱"
 
-#: app/actions/dialogs-actions.c:453
+#: app/actions/dialogs-actions.c:446
 msgid "New Tool_box"
 msgstr "新建工具箱(_B)"
 
-#: app/actions/dialogs-actions.c:454
+#: app/actions/dialogs-actions.c:447
 msgid "Create a new toolbox"
 msgstr "创建新工具箱"
 
@@ -12661,7 +12659,7 @@ msgstr "批处理解释程序“%s”不可用。批处理模式已禁用。"
 
 #: app/core/gimp-contexts.c:153 app/core/gimp-internal-data.c:338
 #: app/core/gimptooloptions.c:361 app/gui/modifiers.c:191 app/gui/session.c:449
-#: app/menus/menus.c:480 app/widgets/gimpdevices.c:226
+#: app/menus/menus.c:488 app/widgets/gimpdevices.c:226
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "删除“%s”失败：%s"
@@ -14567,11 +14565,11 @@ msgstr "最大直线结束长度"
 msgid "Maximum straight length (in pixels) to close the line art"
 msgstr "结束线条艺术的最大直线长度（像素）"
 
-#: app/core/gimplink.c:255
+#: app/core/gimplink.c:256
 msgid "The file got deleted"
 msgstr "该文件已被删除"
 
-#: app/core/gimplink.c:349
+#: app/core/gimplink.c:351
 msgid "No file was set"
 msgstr "未设定文件"
 
@@ -15745,9 +15743,14 @@ msgid "Search extensions matching these keywords"
 msgstr "搜索匹配这些关键词的扩展"
 
 #: app/dialogs/file-open-dialog.c:142 app/dialogs/file-open-dialog.c:168
-#: app/dialogs/file-open-dialog.c:286
+#: app/dialogs/file-open-dialog.c:291
 msgid "Open layers"
 msgstr "打开图层"
+
+#: app/dialogs/file-open-dialog.c:258
+#, c-format
+msgid "Opening '%s' failed."
+msgstr "打开“%s”失败。"
 
 #: app/dialogs/file-open-location-dialog.c:74
 msgid "Open Location"
@@ -18394,12 +18397,12 @@ msgid "GIMP website"
 msgstr "GIMP 网站"
 
 #: app/dialogs/welcome-dialog.c:545
-msgid "Tutorials"
-msgstr "教程"
-
-#: app/dialogs/welcome-dialog.c:550
 msgid "Documentation"
 msgstr "文档"
+
+#: app/dialogs/welcome-dialog.c:550
+msgid "Community Tutorials"
+msgstr "社区教程"
 
 #. XXX: should we add API docs for plug-in developers once it's
 #. * properly set up?
@@ -19416,36 +19419,36 @@ msgstr "单击并拖动以移动此中心点"
 msgid "Click-Drag to shear"
 msgstr "单击并拖动以切变"
 
-#: app/file/file-open.c:264
+#: app/file/file-open.c:272
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr "%s 插件返回的状态为成功，但没有返回图像"
 
-#: app/file/file-open.c:275
+#: app/file/file-open.c:283
 #, c-format
 msgid "%s plug-in could not open image"
 msgstr "%s 插件无法打开图像"
 
-#: app/file/file-open.c:690
+#: app/file/file-open.c:698
 msgid "Image doesn't contain any layers"
 msgstr "图像没有包含任何图层"
 
-#: app/file/file-open.c:748
+#: app/file/file-open.c:756
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "打开“%s”失败：%s"
 
-#: app/file/file-open.c:836
+#: app/file/file-open.c:846
 #, c-format
 msgid ""
 "Only platform-native file paths are supported: '%s' cannot be opened as link."
 msgstr "仅支持平台原生的文件路径：“%s”无法作为链接打开。"
 
-#: app/file/file-open.c:978 app/file/file-save.c:132
+#: app/file/file-open.c:985 app/file/file-save.c:132
 msgid "Not a regular file"
 msgstr "不是普通文件"
 
-#: app/file/file-open.c:987 app/file/file-save.c:141
+#: app/file/file-open.c:994 app/file/file-save.c:141
 msgid "Permission denied"
 msgstr "访问被拒绝"
 
@@ -21155,11 +21158,7 @@ msgstr "旋转矢量图层"
 msgid "Transform Vector Layer"
 msgstr "变换矢量图层"
 
-#: app/path/gimpvectorlayer.c:526
-msgid "Discard Vector Informations"
-msgstr "丢弃矢量信息"
-
-#: app/path/gimpvectorlayer.c:669
+#: app/path/gimpvectorlayer.c:526 app/path/gimpvectorlayer.c:669
 msgid "Discard Vector Information"
 msgstr "丢弃矢量信息"
 
@@ -21673,7 +21672,7 @@ msgstr "自动剪裁图像"
 msgid "Autocrop layer"
 msgstr "自动裁剪图层"
 
-#: app/pdb/image-cmds.c:2556
+#: app/pdb/image-cmds.c:2564
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr "图像分辨率超出范围，使用默认的分辨率替代。"
@@ -21699,6 +21698,11 @@ msgstr "2D 变换"
 #: app/pdb/item-transform-cmds.c:898
 msgid "2D Transforming"
 msgstr "2D 变换"
+
+#: app/pdb/link-layer-cmds.c:67 app/pdb/link-layer-cmds.c:89
+#, c-format
+msgid "Failed to create link layer"
+msgstr "创建链接图层失败"
 
 #: app/pdb/path-cmds.c:325
 msgid "Remove path stroke"
@@ -26948,7 +26952,7 @@ msgstr "其他杂项信息"
 msgid "Select fields"
 msgstr "选择区域"
 
-#. Tranlators: "N/A" is an abbreviation for "not available"
+#. Translators: "N/A" is an abbreviation for "not available"
 #: app/widgets/gimpdashboard.c:3323
 msgctxt "dashboard-value"
 msgid "N/A"
@@ -29291,6 +29295,17 @@ msgstr "工具预设菜单"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "撤消历史菜单"
+
+#~ msgctxt "dialogs-action"
+#~ msgid "_Settings..."
+#~ msgstr "设置(_S)…"
+
+#~ msgctxt "dialogs-action"
+#~ msgid "About"
+#~ msgstr "关于"
+
+#~ msgid "Discard Vector Informations"
+#~ msgstr "丢弃矢量信息"
 
 #~ msgctxt "vector-mode"
 #~ msgid "Edit"
