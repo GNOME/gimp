@@ -330,7 +330,7 @@ endif
 
 # DEBUG SYMBOLS
 debugging_format = 'disabled'
-if get_option('buildtype') == 'debug' or get_option('buildtype') == 'debugoptimized'
+if buildtype == 'debug' or buildtype == 'debugoptimized'
   if not platform_windows
     # DWARF symbols for GCC and LLDB on Unix
     debugging_format = 'native'
