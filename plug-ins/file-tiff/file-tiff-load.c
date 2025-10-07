@@ -706,7 +706,7 @@ load_image (GimpProcedure        *procedure,
           continue;
         }
 
-      g_printerr ("bps: %d\n", bps);
+      g_debug ("bps: %d", bps);
 
       TIFFGetFieldDefaulted (tif, TIFFTAG_SAMPLESPERPIXEL, &spp);
 
@@ -739,8 +739,8 @@ load_image (GimpProcedure        *procedure,
         }
       else
         {
-          g_printerr ("Image dimensions: %u x %u.\n",
-                      (guint32) cols, (guint32) rows);
+          g_debug ("Image dimensions: %u x %u.",
+                   (guint32) cols, (guint32) rows);
         }
 
       if (! TIFFGetField (tif, TIFFTAG_PHOTOMETRIC, &photomet))
@@ -1077,7 +1077,7 @@ load_image (GimpProcedure        *procedure,
           break;
 
         default:
-          g_printerr ("photomet: %d (%d)\n", photomet, PHOTOMETRIC_PALETTE);
+          g_debug ("photomet: %d (%d)", photomet, PHOTOMETRIC_PALETTE);
           worst_case = TRUE;
           break;
         }
@@ -1900,7 +1900,7 @@ load_rgba (TIFF        *tif,
   guint32  row;
   guint32 *buffer;
 
-  g_printerr ("%s\n", __func__);
+  g_debug ("%s", __func__);
 
   TIFFGetField (tif, TIFFTAG_IMAGEWIDTH,  &image_width);
   TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &image_height);
@@ -1965,7 +1965,7 @@ load_contiguous (TIFF         *tif,
   gint        i;
   gboolean    needs_upscale = FALSE;
 
-  g_printerr ("%s\n", __func__);
+  g_debug ("%s", __func__);
 
   TIFFGetField (tif, TIFFTAG_IMAGEWIDTH,  &image_width);
   TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &image_height);
@@ -2002,9 +2002,9 @@ load_contiguous (TIFF         *tif,
   for (i = 0; i <= extra; i++)
     bytes_per_pixel += babl_format_get_bytes_per_pixel (channel[i].format);
 
-  g_printerr ("bytes_per_pixel: %d, format: %d\n",
-              bytes_per_pixel,
-              babl_format_get_bytes_per_pixel (src_format));
+  g_debug ("bytes_per_pixel: %d, format: %d",
+           bytes_per_pixel,
+           babl_format_get_bytes_per_pixel (src_format));
 
   for (y = 0; y < image_height; y += tile_height)
     {
@@ -2142,7 +2142,7 @@ load_separate (TIFF         *tif,
   gint        i, compindex;
   gboolean    needs_upscale = FALSE;
 
-  g_printerr ("%s\n", __func__);
+  g_debug ("%s", __func__);
 
   TIFFGetField (tif, TIFFTAG_IMAGEWIDTH,  &image_width);
   TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &image_height);
@@ -2179,9 +2179,9 @@ load_separate (TIFF         *tif,
   for (i = 0; i <= extra; i++)
     bytes_per_pixel += babl_format_get_bytes_per_pixel (channel[i].format);
 
-  g_printerr ("bytes_per_pixel: %d, format: %d\n",
-              bytes_per_pixel,
-              babl_format_get_bytes_per_pixel (src_format));
+  g_debug ("bytes_per_pixel: %d, format: %d",
+           bytes_per_pixel,
+           babl_format_get_bytes_per_pixel (src_format));
 
   compindex = 0;
 
