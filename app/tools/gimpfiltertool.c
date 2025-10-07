@@ -2579,26 +2579,37 @@ gimp_filter_tool_get_drawable_area (GimpFilterTool *filter_tool,
       gimp_item_get_offset (GIMP_ITEM (drawable),
                             drawable_offset_x, drawable_offset_y);
 
-      switch (settings->region)
+      if (GIMP_IS_GROUP_LAYER (drawable) &&
+          gimp_layer_get_mode (GIMP_LAYER (drawable)) == GIMP_LAYER_MODE_PASS_THROUGH)
         {
-        case GIMP_FILTER_REGION_SELECTION:
-          if (! gimp_item_mask_intersect (GIMP_ITEM (drawable),
-                                          &drawable_area->x,
-                                          &drawable_area->y,
-                                          &drawable_area->width,
-                                          &drawable_area->height))
-            {
-              drawable_area->x      = 0;
-              drawable_area->y      = 0;
-              drawable_area->width  = 1;
-              drawable_area->height = 1;
-            }
-          break;
+          GeglRectangle rect = gimp_drawable_get_bounding_box (drawable);
 
-        case GIMP_FILTER_REGION_DRAWABLE:
-          drawable_area->width  = gimp_item_get_width  (GIMP_ITEM (drawable));
-          drawable_area->height = gimp_item_get_height (GIMP_ITEM (drawable));
-          break;
+          drawable_area->width  = rect.width;
+          drawable_area->height = rect.height;
+        }
+      else
+        {
+          switch (settings->region)
+            {
+            case GIMP_FILTER_REGION_SELECTION:
+              if (! gimp_item_mask_intersect (GIMP_ITEM (drawable),
+                                              &drawable_area->x,
+                                              &drawable_area->y,
+                                              &drawable_area->width,
+                                              &drawable_area->height))
+                {
+                  drawable_area->x      = 0;
+                  drawable_area->y      = 0;
+                  drawable_area->width  = 1;
+                  drawable_area->height = 1;
+                }
+              break;
+
+            case GIMP_FILTER_REGION_DRAWABLE:
+              drawable_area->width  = gimp_item_get_width  (GIMP_ITEM (drawable));
+              drawable_area->height = gimp_item_get_height (GIMP_ITEM (drawable));
+              break;
+            }
         }
 
       return TRUE;
