@@ -19,6 +19,16 @@ Core:
     allowing to decide whether to go into Edit Mask state or not. This
     setting is saved across repetitive actions, as all other settings in
     this dialog.
+  - Filters on pass-through group layers will no longer be limited to
+    its children layers' bounding box, but to the actual bounding box,
+    which includes all lower layers. This also implies that empty
+    pass-through group layers can have an effect which will work like
+    "adjustment layers" in other software.
+
+Tools:
+
+  - Bucket Fill tool: it will be prevented to work on non-rasterized
+    link and vector layers.
 
 Graphical User Interface:
 
@@ -80,6 +90,10 @@ API:
     * gimp_procedure_add_link_layer_return_value
     * gimp_link_layer_get_mime_type
   - New libgimp class: GimpLinkLayer
+
+Build:
+
+  - Depends on babl 0.1.116 and GEGL 0.4.64.
 
 
 Overview of Changes from GIMP 3.1.2 to GIMP 3.1.4
