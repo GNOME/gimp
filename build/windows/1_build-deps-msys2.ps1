@@ -76,7 +76,7 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
       }
     Set-Location $dep
     git pull
-    if ($branch -like "*.patch*" -or $patches)
+    if ($branch -like "*.patch*" -or $patches -like "*.patch*")
       {
         ### This allows to add some minor patch on a dependency without having a proper new release.
         foreach ($patch in $(if ($branch -like '*.patch*') { $branch } else { $patches }))
