@@ -11,6 +11,7 @@ Base rule to update the "GIMP" or "GIMP (Preview)" entry:
   with a custom pipeline valuating `GIMP_CI_MS_STORE` variable to `${REVISION}` as
   briefly explained in ["Versioning the MSIX"](#versioning-the-msix) section.
   In the process, it will be auto submitted (without changelog) to Partner Center.
+  (Any case, **please double-check on Partner Center** if everything is done.)
 
 ## Maintaining the MSIX
 
