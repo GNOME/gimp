@@ -9,6 +9,7 @@ Base rule to update the "GNU Image Manipulation Program" entry:
 
 * Regularly, a .snap will be generated at each tagged commit.
   In the process, it will be auto submitted to Snap Store.
+  (Any case, **please double-check on Snapcraft** if everything is done.)
 
 ## Maintaining the packages
 
