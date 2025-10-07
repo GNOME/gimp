@@ -93,10 +93,15 @@ gimp_image_metadata_interpret_comment (gchar        *comment,
 
               /* Fix the tag in our metadata too, that way we don't have to
                * check for this in other places. */
-              gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
-                                                  tag,
-                                                  comment,
-                                                  NULL);
+              if (comment)
+                gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
+                                                    tag,
+                                                    comment,
+                                                    NULL);
+              else
+                gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (metadata),
+                                               tag,
+                                               NULL);
             }
         }
       else
