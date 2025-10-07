@@ -131,7 +131,7 @@ gimp_image_metadata_interpret_comment (gchar        *comment,
       comment = real_comment;
     }
 
-  if (comment[0] == '\0')
+  if (comment && comment[0] == '\0')
     {
       /* Removing an empty comment.*/
       g_free (comment);
