@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-23 23:29+0000\n"
-"PO-Revision-Date: 2025-09-24 07:41+0800\n"
+"POT-Creation-Date: 2025-10-02 11:34+0000\n"
+"PO-Revision-Date: 2025-10-03 07:44+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -180,7 +180,15 @@ msgstr "GIMP 现在作为后台进程运行。您可以随时按 Ctrl-C（SIGINT
 msgid "If you wanted to quit immediately instead, call GIMP with --quit."
 msgstr "如果您想要立即退出，可以带 --quit 命令选项调用 GIMP。"
 
-#: app/gimp-update.c:452
+#: app/gimp-update.c:432
+msgid "Perhaps you are missing GIO backends and need to install GVFS?"
+msgstr "可能您缺少 GIO 后端而需要安装 GVFS？"
+
+#: app/gimp-update.c:437
+msgid "Perhaps you are missing GIO backends."
+msgstr "可能您缺少 GIO 后端。"
+
+#: app/gimp-update.c:474
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -2555,8 +2563,8 @@ msgid "Enter a description for the marker"
 msgstr "为该标记添加描述"
 
 #: app/actions/data-commands.c:90 app/actions/documents-commands.c:393
-#: app/actions/file-commands.c:211 app/dialogs/file-open-dialog.c:247
-#: app/dialogs/file-open-dialog.c:288
+#: app/actions/file-commands.c:211 app/dialogs/file-open-dialog.c:248
+#: app/dialogs/file-open-dialog.c:293
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
 #: app/dialogs/welcome-dialog.c:1248 app/display/gimpdisplayshell-dnd.c:646
@@ -15510,9 +15518,14 @@ msgid "Search extensions matching these keywords"
 msgstr "搜索匹配这些关键词的扩展"
 
 #: app/dialogs/file-open-dialog.c:140 app/dialogs/file-open-dialog.c:165
-#: app/dialogs/file-open-dialog.c:279
+#: app/dialogs/file-open-dialog.c:284
 msgid "Open layers"
 msgstr "打开图层"
+
+#: app/dialogs/file-open-dialog.c:252
+#, c-format
+msgid "Opening '%s' failed."
+msgstr "打开“%s”失败。"
 
 #: app/dialogs/file-open-location-dialog.c:74
 msgid "Open Location"
@@ -18122,12 +18135,12 @@ msgid "GIMP website"
 msgstr "GIMP 网站"
 
 #: app/dialogs/welcome-dialog.c:473
-msgid "Tutorials"
-msgstr "教程"
-
-#: app/dialogs/welcome-dialog.c:478
 msgid "Documentation"
 msgstr "文档"
+
+#: app/dialogs/welcome-dialog.c:478
+msgid "Community Tutorials"
+msgstr "社区教程"
 
 #. XXX: should we add API docs for plug-in developers once it's
 #. * properly set up?
@@ -21186,7 +21199,7 @@ msgstr "自动剪裁图像"
 msgid "Autocrop layer"
 msgstr "自动裁剪图层"
 
-#: app/pdb/image-cmds.c:2556
+#: app/pdb/image-cmds.c:2564
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr "图像分辨率超出范围，使用默认的分辨率替代。"
