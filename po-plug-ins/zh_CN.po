@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-06 22:48+0000\n"
-"PO-Revision-Date: 2025-09-07 08:29+0800\n"
+"POT-Creation-Date: 2025-10-01 23:59+0000\n"
+"PO-Revision-Date: 2025-10-03 07:39+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Gtranslator 48.0\n"
+"X-Generator: Gtranslator 49.0\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:113
 msgid "Plug-In Example in _C"
@@ -43,7 +43,7 @@ msgstr "C 语言插件示例"
 #: plug-ins/common/qbist.c:254 plug-ins/common/sample-colorize.c:425
 #: plug-ins/common/smooth-palette.c:193 plug-ins/common/sparkle.c:301
 #: plug-ins/common/sphere-designer.c:3199 plug-ins/common/tile.c:222
-#: plug-ins/common/tile-small.c:312 plug-ins/common/van-gogh-lic.c:242
+#: plug-ins/common/tile-small.c:311 plug-ins/common/van-gogh-lic.c:242
 #: plug-ins/common/warp.c:344 plug-ins/common/wavelet-decompose.c:179
 #: plug-ins/flame/flame.c:297 plug-ins/fractal-explorer/fractal-explorer.c:427
 #: plug-ins/gfig/gfig.c:213 plug-ins/gimpressionist/gimp.c:184
@@ -565,7 +565,7 @@ msgstr "段数(_N)"
 msgid "Number of segments in blinds"
 msgstr "百叶窗中的分段数量"
 
-#: plug-ins/common/blinds.c:165 plug-ins/map-object/map-object-ui.c:408
+#: plug-ins/common/blinds.c:165 plug-ins/map-object/map-object-ui.c:412
 msgid "Orient_ation"
 msgstr "方向(_A)"
 
@@ -1973,7 +1973,7 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/common/file-pcx.c:490 plug-ins/common/file-pcx.c:533
 #: plug-ins/common/file-png.c:800 plug-ins/common/file-png.c:1370
 #: plug-ins/common/file-ps.c:1158 plug-ins/common/file-ps.c:3738
-#: plug-ins/common/file-psp.c:2634 plug-ins/common/file-psp.c:2684
+#: plug-ins/common/file-psp.c:2638 plug-ins/common/file-psp.c:2688
 #: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:608
 #: plug-ins/common/file-raw-data.c:796 plug-ins/common/file-raw-data.c:1841
 #: plug-ins/common/file-seattle-filmworks.c:232
@@ -2066,7 +2066,7 @@ msgstr "交换两条曲线"
 
 #. The Reset button
 #: plug-ins/common/curve-bend.c:1232 plug-ins/common/sphere-designer.c:2654
-#: plug-ins/common/tile-small.c:523 plug-ins/gimpressionist/preview.c:182
+#: plug-ins/common/tile-small.c:522 plug-ins/gimpressionist/preview.c:182
 #: plug-ins/ifs-compose/ifs-compose.c:912
 msgid "_Reset"
 msgstr "重置(_R)"
@@ -2760,30 +2760,99 @@ msgstr "不透明度(_T)"
 msgid "Opacity"
 msgstr "不透明度"
 
-#: plug-ins/common/file-compressor.c:216
+#: plug-ins/common/file-compressor.c:221
 msgid "gzip archive"
-msgstr "gzip 存档"
+msgstr "gzip 归档"
+
+#: plug-ins/common/file-compressor.c:229
+msgid "Loads files compressed with gzip"
+msgstr "加载使用 gzip 压缩的文件"
+
+#: plug-ins/common/file-compressor.c:230
+msgid "This procedure loads files in the gzip compressed format."
+msgstr "此程序会加载 gzip 压缩格式的文件。"
+
+#: plug-ins/common/file-compressor.c:234
+msgid "Exports files compressed with gzip"
+msgstr "导出使用 gzip 压缩的文件"
 
 #: plug-ins/common/file-compressor.c:235
+msgid "This procedure exports files in the gzip compressed format."
+msgstr "此程序会导出 gzip 压缩格式的文件。"
+
+#: plug-ins/common/file-compressor.c:240
 msgid "bzip archive"
-msgstr "bzip 存档"
+msgstr "bzip 归档"
+
+#: plug-ins/common/file-compressor.c:248
+msgid "Loads files compressed with bzip2"
+msgstr "加载使用 bzip2 压缩的文件"
+
+#: plug-ins/common/file-compressor.c:249
+msgid "This procedure loads files in the bzip2 compressed format."
+msgstr "此程序会加载 bzip2 压缩格式的文件。"
+
+#: plug-ins/common/file-compressor.c:253
+msgid "Exports files compressed with bzip2"
+msgstr "导出使用 bzip2 压缩的文件"
 
 #: plug-ins/common/file-compressor.c:254
-msgid "xz archive"
-msgstr "xz 存档"
+msgid "This procedure exports files in the bzip2 compressed format."
+msgstr "此程序会导出 bzip2 压缩格式的文件。"
 
-#: plug-ins/common/file-compressor.c:447
+#: plug-ins/common/file-compressor.c:259
+msgid "xz archive"
+msgstr "xz 归档"
+
+#: plug-ins/common/file-compressor.c:267
+msgid "Loads files compressed with xz"
+msgstr "加载使用 xz 压缩的文件"
+
+#: plug-ins/common/file-compressor.c:268
+msgid "This procedure loads files in the xz compressed format."
+msgstr "此程序会加载 xz 压缩格式的文件。"
+
+#: plug-ins/common/file-compressor.c:272
+msgid "Exports files compressed with xz"
+msgstr "导出使用 xz 压缩的文件"
+
+#: plug-ins/common/file-compressor.c:273
+msgid "This procedure exports files in the xz compressed format."
+msgstr "此程序会导出 xz 压缩格式的文件。"
+
+#: plug-ins/common/file-compressor.c:278
+msgid "zip archive"
+msgstr "zip 归档"
+
+#: plug-ins/common/file-compressor.c:286
+msgid "Loads files compressed with zip"
+msgstr "加载使用 zip 压缩的文件"
+
+#: plug-ins/common/file-compressor.c:287
+msgid "This procedure loads files in the zip compressed format."
+msgstr "此程序会加载 zip 压缩格式的文件。"
+
+#: plug-ins/common/file-compressor.c:471
 msgid "No sensible file extension, saving as compressed XCF."
 msgstr "没有可感知的文件扩展名，另存为压缩的 XCF。"
 
-#: plug-ins/common/file-compressor.c:467
+#: plug-ins/common/file-compressor.c:491
 #, c-format
 msgid "Compressing '%s'"
 msgstr "正在压缩“%s”"
 
-#: plug-ins/common/file-compressor.c:505
+#: plug-ins/common/file-compressor.c:529
 msgid "No sensible file extension, attempting to load with file magic."
 msgstr "没有可感知的文件扩展名，正在尝试用文件魔法加载。"
+
+#. Leave a chance for the load to succeed (in case the first
+#. * file happens to be an image file), yet still warns. This
+#. * procedure expects that the archive contains a single
+#. * file.
+#.
+#: plug-ins/common/file-compressor.c:1110
+msgid "This zip archive contains more than one file."
+msgstr "此 zip 归档包含多个文件。"
 
 #: plug-ins/common/file-desktop-link.c:114
 msgid "Desktop Link"
@@ -3411,20 +3480,20 @@ msgstr "尺寸(_I)"
 msgid "How many dimensions the animated brush has"
 msgstr "动画笔刷具有的尺寸数量"
 
-#: plug-ins/common/file-gih.c:521
+#: plug-ins/common/file-gih.c:529
 msgid "Width Mismatch!"
 msgstr "宽度不匹配！"
 
-#: plug-ins/common/file-gih.c:522
+#: plug-ins/common/file-gih.c:530
 msgid "Height Mismatch!"
 msgstr "高度不匹配！"
 
-#: plug-ins/common/file-gih.c:569
+#: plug-ins/common/file-gih.c:577
 #, c-format
 msgid "Displays as a %d × %d grid on each layer"
 msgstr "在每个图层上显示为 %d × %d 网格"
 
-#: plug-ins/common/file-gih.c:755
+#: plug-ins/common/file-gih.c:763
 msgid "Ranks:"
 msgstr "等级："
 
@@ -3449,8 +3518,8 @@ msgid ""
 "Load image stored in HEIF format (High Efficiency Image File Format). "
 "Typical suffices for HEIF files are .heif, .heic."
 msgstr ""
-"载入以 HEIF（高效率图像文件格式）格式存储的图像。HEIF 文件典型的后缀名为 ."
-"heif、.heic。"
+"载入以 HEIF（高效率图像文件格式）格式存储的图像。HEIF 文件典型的后缀名"
+"为 .heif、.heic。"
 
 #: plug-ins/common/file-heif.c:267
 msgid "Exports HEIF images"
@@ -4807,6 +4876,7 @@ msgid ""
 msgstr "试图打开临时 JPEG 文件“%s”用于加载 Esm 软件的 pix 文件时出错：%s"
 
 #: plug-ins/common/file-pix.c:582
+#, c-format
 msgid "Invalid Esm Software PIX file"
 msgstr "无效的 Esm 软件 PIX 文件"
 
@@ -5360,7 +5430,7 @@ msgid ""
 "and height values will be used."
 msgstr "如果启用，在导出时将保持宽高比例。否则将使用指定的宽度和高度值。"
 
-#: plug-ins/common/file-ps.c:565 plug-ins/map-object/map-object-ui.c:719
+#: plug-ins/common/file-ps.c:565 plug-ins/map-object/map-object-ui.c:723
 msgid "Rotation"
 msgstr "旋转"
 
@@ -5623,97 +5693,97 @@ msgstr "读取通道信息数据块出错"
 msgid "Invalid channel type %d in channel information chunk"
 msgstr "通道信息数据块中的无效通道类型 %d"
 
-#: plug-ins/common/file-psp.c:2281 plug-ins/common/file-psp.c:2298
+#: plug-ins/common/file-psp.c:2283 plug-ins/common/file-psp.c:2300
 #, c-format
 msgid "Error reading tube data chunk"
 msgstr "读取管道数据块出错"
 
-#: plug-ins/common/file-psp.c:2385 plug-ins/common/file-psp.c:2401
+#: plug-ins/common/file-psp.c:2389 plug-ins/common/file-psp.c:2405
 #, c-format
 msgid "Error reading selection chunk"
 msgstr "读取选区块时出错"
 
-#: plug-ins/common/file-psp.c:2394
+#: plug-ins/common/file-psp.c:2398
 #, c-format
 msgid "Invalid selection chunk size"
 msgstr "无效的选区块大小"
 
-#: plug-ins/common/file-psp.c:2418
+#: plug-ins/common/file-psp.c:2422
 #, c-format
 msgid "Error reading end of selection chunk"
 msgstr "读取选区块末尾时出错"
 
-#: plug-ins/common/file-psp.c:2443
+#: plug-ins/common/file-psp.c:2447
 #, c-format
 msgid "Error reading extended block chunk header"
 msgstr "读取扩展的数据块头部信息出错"
 
-#: plug-ins/common/file-psp.c:2451
+#: plug-ins/common/file-psp.c:2455
 #, c-format
 msgid "Invalid extended block chunk header"
 msgstr "无效的扩展数据块头部信息"
 
-#: plug-ins/common/file-psp.c:2462
+#: plug-ins/common/file-psp.c:2466
 #, c-format
 msgid "Invalid extended block chunk size"
 msgstr "无效的扩展数据块大小"
 
-#: plug-ins/common/file-psp.c:2483
+#: plug-ins/common/file-psp.c:2487
 #, c-format
 msgid "Error reading extended chunk grid data"
 msgstr "读取扩展的数据块网格数据出错"
 
-#: plug-ins/common/file-psp.c:2511
+#: plug-ins/common/file-psp.c:2515
 #, c-format
 msgid "Error reading extended chunk guide data"
 msgstr "读取扩展的数据块参考线数据出错"
 
-#: plug-ins/common/file-psp.c:2529
+#: plug-ins/common/file-psp.c:2533
 #, c-format
 msgid "Invalid guide orientation"
 msgstr "无效的参考线方向"
 
-#: plug-ins/common/file-psp.c:2543
+#: plug-ins/common/file-psp.c:2547
 #, c-format
 msgid "Error reading extended block chunk"
 msgstr "读取扩展的数据块出错"
 
-#: plug-ins/common/file-psp.c:2569 plug-ins/common/file-psp.c:2581
-#: plug-ins/common/file-psp.c:2592
+#: plug-ins/common/file-psp.c:2573 plug-ins/common/file-psp.c:2585
+#: plug-ins/common/file-psp.c:2596
 #, c-format
 msgid "Error reading colorprofile chunk"
 msgstr "读取特性文件数据块时出错"
 
-#: plug-ins/common/file-psp.c:2645
+#: plug-ins/common/file-psp.c:2649
 #, c-format
 msgid "Error reading file header."
 msgstr "读取文件头部信息出错。"
 
-#: plug-ins/common/file-psp.c:2652
+#: plug-ins/common/file-psp.c:2656
 #, c-format
 msgid "Incorrect file signature."
 msgstr "错误的文件签名。"
 
-#: plug-ins/common/file-psp.c:2666
+#: plug-ins/common/file-psp.c:2670
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "不支持的 PSP 文件格式版本 %d.%d。"
 
-#: plug-ins/common/file-psp.c:2686
+#: plug-ins/common/file-psp.c:2690
 msgid "invalid block size"
 msgstr "无效的数据块大小"
 
-#: plug-ins/common/file-psp.c:2695
+#: plug-ins/common/file-psp.c:2699
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "重制通常的图像属性数据块。"
 
-#: plug-ins/common/file-psp.c:2723
+#: plug-ins/common/file-psp.c:2727
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "缺失通常的图像属性数据块。"
 
-#: plug-ins/common/file-psp.c:2848
+#: plug-ins/common/file-psp.c:2852
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "尚未实现导出功能。"
@@ -7413,7 +7483,7 @@ msgstr "给图像添加拼图玩具图案"
 msgid "Jigsaw puzzle look"
 msgstr "拼图谜题外观"
 
-#: plug-ins/common/jigsaw.c:483 plug-ins/common/tile-small.c:503
+#: plug-ins/common/jigsaw.c:483 plug-ins/common/tile-small.c:502
 msgid "_Horizontal"
 msgstr "水平(_H)"
 
@@ -7421,7 +7491,7 @@ msgstr "水平(_H)"
 msgid "Number of pieces going across"
 msgstr "横向分块数量"
 
-#: plug-ins/common/jigsaw.c:489 plug-ins/common/tile-small.c:513
+#: plug-ins/common/jigsaw.c:489 plug-ins/common/tile-small.c:512
 msgid "_Vertical"
 msgstr "竖直(_V)"
 
@@ -7466,6 +7536,7 @@ msgid "Assembling jigsaw"
 msgstr "装配拼图"
 
 #: plug-ins/common/jigsaw.c:791
+#, c-format
 msgid "draw_jigsaw: bad style\n"
 msgstr "绘制拼图：坏的样式\n"
 
@@ -8342,7 +8413,7 @@ msgstr "新建图像(_I)"
 msgid "Create a new image"
 msgstr "创建新图像"
 
-#: plug-ins/common/tile.c:258 plug-ins/common/tile-small.c:375
+#: plug-ins/common/tile.c:258 plug-ins/common/tile-small.c:374
 msgid "Tiling"
 msgstr "平铺"
 
@@ -8354,57 +8425,57 @@ msgstr "平铺"
 msgid "Tile to New Size"
 msgstr "平铺到新的大小"
 
-#: plug-ins/common/tile-small.c:270
+#: plug-ins/common/tile-small.c:269
 msgid "_Small Tiles..."
 msgstr "小图平铺(_S)…"
 
-#: plug-ins/common/tile-small.c:274
+#: plug-ins/common/tile-small.c:273
 msgid "Tile image into smaller versions of the original"
 msgstr "将图像平铺为原始图像的较小版本"
 
-#: plug-ins/common/tile-small.c:284
+#: plug-ins/common/tile-small.c:283
 msgid "_n²"
 msgstr "_n²"
 
-#: plug-ins/common/tile-small.c:285
+#: plug-ins/common/tile-small.c:284
 msgid "Number of tiles to make"
 msgstr "平铺分块的数量"
 
-#: plug-ins/common/tile-small.c:330
+#: plug-ins/common/tile-small.c:329
 msgid "Region selected for filter is empty."
 msgstr "用于滤镜的选中区域是空的。"
 
-#: plug-ins/common/tile-small.c:441
+#: plug-ins/common/tile-small.c:440
 msgid "Small Tiles"
 msgstr "小图平铺"
 
 #. Area for buttons etc
 #. Flip
-#: plug-ins/common/tile-small.c:490 plug-ins/ifs-compose/ifs-compose.c:724
+#: plug-ins/common/tile-small.c:489 plug-ins/ifs-compose/ifs-compose.c:724
 msgid "Flip"
 msgstr "翻转"
 
-#: plug-ins/common/tile-small.c:539
+#: plug-ins/common/tile-small.c:538
 msgid "A_ll tiles"
 msgstr "所有分块(_L)"
 
-#: plug-ins/common/tile-small.c:552
+#: plug-ins/common/tile-small.c:551
 msgid "Al_ternate tiles"
 msgstr "交替分块(_T)"
 
-#: plug-ins/common/tile-small.c:565
+#: plug-ins/common/tile-small.c:564
 msgid "_Explicit tile"
 msgstr "明确分块(_E)"
 
-#: plug-ins/common/tile-small.c:570
+#: plug-ins/common/tile-small.c:569
 msgid "Ro_w:"
 msgstr "行(_W)："
 
-#: plug-ins/common/tile-small.c:595
+#: plug-ins/common/tile-small.c:594
 msgid "Col_umn:"
 msgstr "列(_U)："
 
-#: plug-ins/common/tile-small.c:627
+#: plug-ins/common/tile-small.c:626
 #: plug-ins/fractal-explorer/fractal-explorer.c:1358
 #: plug-ins/gimpressionist/orientmap.c:527
 #: plug-ins/gimpressionist/presets.c:1064 plug-ins/gimpressionist/sizemap.c:400
@@ -8413,11 +8484,11 @@ msgid "_Apply"
 msgstr "应用(_A)"
 
 #. Widget for selecting the Opacity
-#: plug-ins/common/tile-small.c:643
+#: plug-ins/common/tile-small.c:642
 msgid "O_pacity:"
 msgstr "不透明度(_P)："
 
-#: plug-ins/common/tile-small.c:654
+#: plug-ins/common/tile-small.c:653
 msgid "Number of Segments"
 msgstr "段数"
 
@@ -14860,7 +14931,7 @@ msgstr "距离(_D)"
 msgid "Distance of observer from surface"
 msgstr "观察器至表面的距离"
 
-#: plug-ins/lighting/lighting-ui.c:247 plug-ins/map-object/map-object-ui.c:363
+#: plug-ins/lighting/lighting-ui.c:247 plug-ins/map-object/map-object-ui.c:367
 msgid "Recompute preview image"
 msgstr "重新计算预览图像"
 
@@ -14880,7 +14951,7 @@ msgstr "选项(_T)"
 msgid "_Light"
 msgstr "光源(_L)"
 
-#: plug-ins/lighting/lighting-ui.c:272 plug-ins/map-object/map-object-ui.c:406
+#: plug-ins/lighting/lighting-ui.c:272 plug-ins/map-object/map-object-ui.c:410
 msgid "_Material"
 msgstr "材质(_M)"
 
@@ -14892,16 +14963,16 @@ msgstr "凹凸映射(_B)"
 msgid "_Environment Map"
 msgstr "环境映射(_E)"
 
-#: plug-ins/lighting/lighting-ui.c:281 plug-ins/map-object/map-object-ui.c:419
+#: plug-ins/lighting/lighting-ui.c:281 plug-ins/map-object/map-object-ui.c:423
 msgid "General Options"
 msgstr "常规选项"
 
-#: plug-ins/lighting/lighting-ui.c:313 plug-ins/map-object/map-object-ui.c:455
+#: plug-ins/lighting/lighting-ui.c:313 plug-ins/map-object/map-object-ui.c:459
 msgid "Light Settings"
 msgstr "光源设置"
 
-#: plug-ins/lighting/lighting-ui.c:332 plug-ins/map-object/map-object-ui.c:487
-#: plug-ins/map-object/map-object-ui.c:699
+#: plug-ins/lighting/lighting-ui.c:332 plug-ins/map-object/map-object-ui.c:491
+#: plug-ins/map-object/map-object-ui.c:703
 #: plug-ins/print/print-page-layout.c:385
 msgid "Position"
 msgstr "位置"
@@ -15215,81 +15286,81 @@ msgstr "圆柱长度(_D)"
 msgid "Cylinder length"
 msgstr "圆柱体长度"
 
-#: plug-ins/map-object/map-object-ui.c:315
+#: plug-ins/map-object/map-object-ui.c:319
 msgid "Map to Object"
 msgstr "映射到物体"
 
-#: plug-ins/map-object/map-object-ui.c:351
+#: plug-ins/map-object/map-object-ui.c:355
 msgid "_Preview!"
 msgstr "预览(_P)！"
 
-#: plug-ins/map-object/map-object-ui.c:381
+#: plug-ins/map-object/map-object-ui.c:385
 msgid "Show _wireframe"
 msgstr "显示网格(_W)"
 
-#: plug-ins/map-object/map-object-ui.c:390
+#: plug-ins/map-object/map-object-ui.c:394
 msgid "Update preview _live"
 msgstr "实时更新预览(_L)"
 
-#: plug-ins/map-object/map-object-ui.c:400
+#: plug-ins/map-object/map-object-ui.c:404
 msgid "O_ptions"
 msgstr "选项(_P)"
 
-#: plug-ins/map-object/map-object-ui.c:402
+#: plug-ins/map-object/map-object-ui.c:406
 msgid "Li_ght"
 msgstr "光源(_G)"
 
-#: plug-ins/map-object/map-object-ui.c:404
+#: plug-ins/map-object/map-object-ui.c:408
 msgid "_Viewpoint"
 msgstr "观察点(_V)"
 
-#: plug-ins/map-object/map-object-ui.c:411
+#: plug-ins/map-object/map-object-ui.c:415
 msgid "Sp_here"
 msgstr "球体(_H)"
 
-#: plug-ins/map-object/map-object-ui.c:413
+#: plug-ins/map-object/map-object-ui.c:417
 msgid "_Box"
 msgstr "方盒(_B)"
 
-#: plug-ins/map-object/map-object-ui.c:415
+#: plug-ins/map-object/map-object-ui.c:419
 msgid "C_ylinder"
 msgstr "圆柱体(_Y)"
 
-#: plug-ins/map-object/map-object-ui.c:473
+#: plug-ins/map-object/map-object-ui.c:477
 msgid "Direction Vector"
 msgstr "方向矢量"
 
-#: plug-ins/map-object/map-object-ui.c:544
+#: plug-ins/map-object/map-object-ui.c:547
 msgid "Viewpoint Position"
 msgstr "观察点位置"
 
-#: plug-ins/map-object/map-object-ui.c:566
+#: plug-ins/map-object/map-object-ui.c:569
 msgid "First Axis"
 msgstr "第一个坐标轴"
 
-#: plug-ins/map-object/map-object-ui.c:586
+#: plug-ins/map-object/map-object-ui.c:589
 msgid "Second Axis"
 msgstr "第二个坐标轴"
 
-#: plug-ins/map-object/map-object-ui.c:642
+#: plug-ins/map-object/map-object-ui.c:646
 msgid "Intensity Levels"
 msgstr "强度级别"
 
-#: plug-ins/map-object/map-object-ui.c:656
+#: plug-ins/map-object/map-object-ui.c:660
 msgid "Reflectivity"
 msgstr "反射率"
 
-#: plug-ins/map-object/map-object-ui.c:759
-#: plug-ins/map-object/map-object-ui.c:859
+#: plug-ins/map-object/map-object-ui.c:763
+#: plug-ins/map-object/map-object-ui.c:863
 #: plug-ins/print/print-page-layout.c:254
 msgid "Size"
 msgstr "大小"
 
-#: plug-ins/map-object/map-object-ui.c:772
+#: plug-ins/map-object/map-object-ui.c:776
 msgid "Map Images to Box Faces"
 msgstr "将图像映射到方盒表面"
 
-#: plug-ins/map-object/map-object-ui.c:840
+#: plug-ins/map-object/map-object-ui.c:844
 msgid "Images for the Cap Faces"
 msgstr "上下底面的图像"
 
