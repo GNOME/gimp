@@ -227,8 +227,8 @@ OutputBaseFileName=gimp-{#CUSTOM_GIMP_VERSION}-setup
 OutputManifestFile=inno.log
 ArchitecturesAllowed={#ARCHS_ALLOWED}
 ArchitecturesInstallIn64BitMode={#ARCHS_INSTALLED}
-MinVersion=10.0.18362
-//keep this MinVersion consistent with build\windows\store\AppxManifest.xml and devel-docs\os-support.txt
+MinVersion=10.0
+//we can't enforce the version from devel-docs\os-support.txt because Windows Server don't always have free upgrades
 
 
 ;3.4.1 INSTALLER PAGES
