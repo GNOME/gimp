@@ -2988,6 +2988,9 @@ gimp_layer_update_effective_mode (GimpLayer *layer)
       composite_space != layer->effective_composite_space ||
       composite_mode  != layer->effective_composite_mode)
     {
+      GeglRectangle rect = GIMP_LAYER_GET_CLASS (layer)->get_bounding_box (layer);
+      GeglRectangle rect2;
+
       layer->effective_mode            = mode;
       layer->effective_blend_space     = blend_space;
       layer->effective_composite_space = composite_space;
@@ -2998,7 +3001,15 @@ gimp_layer_update_effective_mode (GimpLayer *layer)
       if (gimp_filter_peek_node (GIMP_FILTER (layer)))
         gimp_layer_update_mode_node (layer);
 
-      gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, -1, -1);
+      /* The effective mode change might be enough to shrink the
+       * effective bounding box. This may happen in particular for
+       * pass-through group layers changed to other modes. So make sure
+       * we update a box containing both the old and new boundaries.
+       */
+      rect2 = GIMP_LAYER_GET_CLASS (layer)->get_bounding_box (layer);
+      gegl_rectangle_bounding_box (&rect, &rect, &rect2);
+
+      gimp_drawable_update (GIMP_DRAWABLE (layer), rect.x, rect.y, rect.width, rect.height);
     }
 }
 
