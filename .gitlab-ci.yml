@@ -248,7 +248,7 @@ deps-debian-nonreloc:
     ## Build GEGL
     - echo "RUN printf \"\e[0Ksection_start:`date +%s`:gegl_build[collapsed=true]\r\e[0KBuilding gegl\n\"" >> Dockerfile2;
     - echo "RUN git clone --branch \"\$([ \"$CI_COMMIT_TAG\" ] && echo \"\$(git ls-remote --tags --exit-code --refs https://gitlab.gnome.org/GNOME/gegl.git | grep -oi \"GEGL_[0-9]*_[0-9]*_[0-9]*\" | sort --version-sort | tail -1)\" || echo \"master\")\" --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git" gegl >> Dockerfile2;
-    - echo "RUN meson setup gegl/_build-${RUNNER} gegl -Dprefix=\"${GIMP_PREFIX}\" $PKGCONF_RELOCATABLE_OPTION -Dworkshop=true" >> Dockerfile2;
+    - echo "RUN meson setup gegl/_build-${RUNNER} gegl -Dprefix=\"${GIMP_PREFIX}\" $PKGCONF_RELOCATABLE_OPTION" >> Dockerfile2;
     - echo "RUN ninja -C gegl/_build-${RUNNER}" >> Dockerfile2;
     - echo "RUN ninja -C gegl/_build-${RUNNER} install" >> Dockerfile2;
     - echo "RUN printf \"\e[0Ksection_end:`date +%s`:gegl_build\r\e[0K\n\"" >> Dockerfile2;
