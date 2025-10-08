@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-16 15:08+0200\n"
-"PO-Revision-Date: 2025-09-16 15:26+0200\n"
+"POT-Creation-Date: 2025-10-08 13:10+0200\n"
+"PO-Revision-Date: 2025-10-08 13:17+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -45,7 +45,7 @@ msgstr "Esempio di plugin in C"
 #: ../plug-ins/common/sample-colorize.c:425
 #: ../plug-ins/common/smooth-palette.c:193 ../plug-ins/common/sparkle.c:301
 #: ../plug-ins/common/sphere-designer.c:3199 ../plug-ins/common/tile.c:222
-#: ../plug-ins/common/tile-small.c:312 ../plug-ins/common/van-gogh-lic.c:242
+#: ../plug-ins/common/tile-small.c:311 ../plug-ins/common/van-gogh-lic.c:242
 #: ../plug-ins/common/warp.c:344 ../plug-ins/common/wavelet-decompose.c:179
 #: ../plug-ins/flame/flame.c:297
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:427
@@ -2130,7 +2130,7 @@ msgstr "Scambia le due curve"
 #. The Reset button
 #: ../plug-ins/common/curve-bend.c:1232
 #: ../plug-ins/common/sphere-designer.c:2654
-#: ../plug-ins/common/tile-small.c:523 ../plug-ins/gimpressionist/preview.c:182
+#: ../plug-ins/common/tile-small.c:522 ../plug-ins/gimpressionist/preview.c:182
 #: ../plug-ins/ifs-compose/ifs-compose.c:912
 msgid "_Reset"
 msgstr "_Reimposta"
@@ -2484,7 +2484,7 @@ msgstr "Tipo filtro"
 
 #: ../plug-ins/common/despeckle.c:195
 msgid "Median"
-msgstr "Mediana"
+msgstr "Mediano"
 
 #: ../plug-ins/common/despeckle.c:196
 #: ../plug-ins/gimpressionist/orientation.c:176
@@ -2837,32 +2837,101 @@ msgstr "Opaci_tà"
 msgid "Opacity"
 msgstr "Opacità"
 
-#: ../plug-ins/common/file-compressor.c:216
+#: ../plug-ins/common/file-compressor.c:221
 msgid "gzip archive"
 msgstr "archivio gzip"
 
+#: ../plug-ins/common/file-compressor.c:229
+msgid "Loads files compressed with gzip"
+msgstr "Carica file compressi con gzip"
+
+#: ../plug-ins/common/file-compressor.c:230
+msgid "This procedure loads files in the gzip compressed format."
+msgstr "Questa procedura carica file nel formato compresso gzip."
+
+#: ../plug-ins/common/file-compressor.c:234
+msgid "Exports files compressed with gzip"
+msgstr "Esporta file compressi con gzip"
+
 #: ../plug-ins/common/file-compressor.c:235
+msgid "This procedure exports files in the gzip compressed format."
+msgstr "Questa procedura esporta file nel formato compresso gzip."
+
+#: ../plug-ins/common/file-compressor.c:240
 msgid "bzip archive"
 msgstr "archivio bzip"
 
+#: ../plug-ins/common/file-compressor.c:248
+msgid "Loads files compressed with bzip2"
+msgstr "Carica file compressi con bzip2"
+
+#: ../plug-ins/common/file-compressor.c:249
+msgid "This procedure loads files in the bzip2 compressed format."
+msgstr "Questa procedura carica file nel formato compresso bzip2."
+
+#: ../plug-ins/common/file-compressor.c:253
+msgid "Exports files compressed with bzip2"
+msgstr "Esporta file compressi con bzip2"
+
 #: ../plug-ins/common/file-compressor.c:254
+msgid "This procedure exports files in the bzip2 compressed format."
+msgstr "Questa procedura esporta file nel formato compresso bzip2."
+
+#: ../plug-ins/common/file-compressor.c:259
 msgid "xz archive"
 msgstr "archivio xz"
 
-#: ../plug-ins/common/file-compressor.c:447
+#: ../plug-ins/common/file-compressor.c:267
+msgid "Loads files compressed with xz"
+msgstr "Carica file compressi con xz"
+
+#: ../plug-ins/common/file-compressor.c:268
+msgid "This procedure loads files in the xz compressed format."
+msgstr "Questa procedura carica file nel formato compresso xz."
+
+#: ../plug-ins/common/file-compressor.c:272
+msgid "Exports files compressed with xz"
+msgstr "Esporta file compressi con xz"
+
+#: ../plug-ins/common/file-compressor.c:273
+msgid "This procedure exports files in the xz compressed format."
+msgstr "Questa procedura esporta file nel formato compresso xz."
+
+#: ../plug-ins/common/file-compressor.c:278
+msgid "zip archive"
+msgstr "archivio zip"
+
+#: ../plug-ins/common/file-compressor.c:286
+msgid "Loads files compressed with zip"
+msgstr "Carica file compressi con zip"
+
+#: ../plug-ins/common/file-compressor.c:287
+msgid "This procedure loads files in the zip compressed format."
+msgstr "Questa procedura carica file nel formato compresso zip."
+
+#: ../plug-ins/common/file-compressor.c:471
 msgid "No sensible file extension, saving as compressed XCF."
 msgstr "Nessuna estensione plausibile, salvataggio come XCF compresso."
 
-#: ../plug-ins/common/file-compressor.c:467
+#: ../plug-ins/common/file-compressor.c:491
 #, c-format
 msgid "Compressing '%s'"
 msgstr "Compressione \"%s\""
 
-#: ../plug-ins/common/file-compressor.c:505
+#: ../plug-ins/common/file-compressor.c:529
 msgid "No sensible file extension, attempting to load with file magic."
 msgstr ""
 "Nessuna estensione plausibile, tentativo di salvataggio tramite il magic del "
 "file."
+
+#. Leave a chance for the load to succeed (in case the first
+#. * file happens to be an image file), yet still warns. This
+#. * procedure expects that the archive contains a single
+#. * file.
+#.
+#: ../plug-ins/common/file-compressor.c:1110
+msgid "This zip archive contains more than one file."
+msgstr "Questo archivio zip contiene più di un file."
 
 #: ../plug-ins/common/file-desktop-link.c:114
 msgid "Desktop Link"
@@ -2919,7 +2988,8 @@ msgstr "'%s' non è un file DICOM"
 #: ../plug-ins/common/file-dicom.c:509
 #, c-format
 msgid "'%s' has an incorrect value for field size. Possibly corrupt image."
-msgstr "'%s' ha un valore errato nella dimensione del campo. Immagine danneggiata?"
+msgstr ""
+"'%s' ha un valore errato nella dimensione del campo. Immagine danneggiata?"
 
 #: ../plug-ins/common/file-dicom.c:570
 #, c-format
@@ -7684,7 +7754,7 @@ msgstr "Aggiunge un motivo a puzzle all'immagine"
 msgid "Jigsaw puzzle look"
 msgstr "Aspetto puzzle"
 
-#: ../plug-ins/common/jigsaw.c:483 ../plug-ins/common/tile-small.c:503
+#: ../plug-ins/common/jigsaw.c:483 ../plug-ins/common/tile-small.c:502
 msgid "_Horizontal"
 msgstr "_Orizzontale"
 
@@ -7692,7 +7762,7 @@ msgstr "_Orizzontale"
 msgid "Number of pieces going across"
 msgstr "Numero di pezzi incrociati"
 
-#: ../plug-ins/common/jigsaw.c:489 ../plug-ins/common/tile-small.c:513
+#: ../plug-ins/common/jigsaw.c:489 ../plug-ins/common/tile-small.c:512
 msgid "_Vertical"
 msgstr "_Verticale"
 
@@ -8645,7 +8715,7 @@ msgstr "Nuova immagine"
 msgid "Create a new image"
 msgstr "Crea una nuova immagine"
 
-#: ../plug-ins/common/tile.c:258 ../plug-ins/common/tile-small.c:375
+#: ../plug-ins/common/tile.c:258 ../plug-ins/common/tile-small.c:374
 msgid "Tiling"
 msgstr "Affiancatura"
 
@@ -8657,58 +8727,58 @@ msgstr "Piastrella"
 msgid "Tile to New Size"
 msgstr "Affianca sino alla nuova dimensione"
 
-#: ../plug-ins/common/tile-small.c:270
+#: ../plug-ins/common/tile-small.c:269
 msgid "_Small Tiles..."
 msgstr "Pia_strelle piccole..."
 
-#: ../plug-ins/common/tile-small.c:274
+#: ../plug-ins/common/tile-small.c:273
 msgid "Tile image into smaller versions of the original"
 msgstr "Affianca l'immagine con versioni più piccole dell'originale"
 
-#: ../plug-ins/common/tile-small.c:284
+#: ../plug-ins/common/tile-small.c:283
 msgid "_n²"
 msgstr "_n²"
 
-#: ../plug-ins/common/tile-small.c:285
+#: ../plug-ins/common/tile-small.c:284
 msgid "Number of tiles to make"
 msgstr "Numero di piastrelle da creare"
 
-#: ../plug-ins/common/tile-small.c:330
+#: ../plug-ins/common/tile-small.c:329
 msgid "Region selected for filter is empty."
 msgstr "La regione selezionata per il filtro è vuota."
 
-#: ../plug-ins/common/tile-small.c:441
+#: ../plug-ins/common/tile-small.c:440
 msgid "Small Tiles"
 msgstr "Piastrelle piccole"
 
 #. Area for buttons etc
 #. Flip
-#: ../plug-ins/common/tile-small.c:490
+#: ../plug-ins/common/tile-small.c:489
 #: ../plug-ins/ifs-compose/ifs-compose.c:724
 msgid "Flip"
 msgstr "Capovolgi"
 
-#: ../plug-ins/common/tile-small.c:539
+#: ../plug-ins/common/tile-small.c:538
 msgid "A_ll tiles"
 msgstr "Tutte le piastre_lle"
 
-#: ../plug-ins/common/tile-small.c:552
+#: ../plug-ins/common/tile-small.c:551
 msgid "Al_ternate tiles"
 msgstr "Piastrelle al_terne"
 
-#: ../plug-ins/common/tile-small.c:565
+#: ../plug-ins/common/tile-small.c:564
 msgid "_Explicit tile"
 msgstr "Piastrella _esplicita"
 
-#: ../plug-ins/common/tile-small.c:570
+#: ../plug-ins/common/tile-small.c:569
 msgid "Ro_w:"
 msgstr "Ri_ga:"
 
-#: ../plug-ins/common/tile-small.c:595
+#: ../plug-ins/common/tile-small.c:594
 msgid "Col_umn:"
 msgstr "Col_onna:"
 
-#: ../plug-ins/common/tile-small.c:627
+#: ../plug-ins/common/tile-small.c:626
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1358
 #: ../plug-ins/gimpressionist/orientmap.c:527
 #: ../plug-ins/gimpressionist/presets.c:1064
@@ -8718,11 +8788,11 @@ msgid "_Apply"
 msgstr "_Applica"
 
 #. Widget for selecting the Opacity
-#: ../plug-ins/common/tile-small.c:643
+#: ../plug-ins/common/tile-small.c:642
 msgid "O_pacity:"
 msgstr "O_pacità:"
 
-#: ../plug-ins/common/tile-small.c:654
+#: ../plug-ins/common/tile-small.c:653
 msgid "Number of Segments"
 msgstr "Numero di segmenti"
 
