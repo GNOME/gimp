@@ -1012,10 +1012,10 @@ gimp_gp_param_to_value (gpointer        gimp,
   else if (GIMP_VALUE_HOLDS_DOUBLE_ARRAY (value))
     {
       gimp_value_set_double_array (value,
-                                  (const gdouble *)
-                                  param->data.d_array.data,
-                                  param->data.d_array.size /
-                                  sizeof (gdouble));
+                                   (const gdouble *)
+                                   param->data.d_array.data,
+                                   param->data.d_array.size /
+                                   sizeof (gdouble));
     }
   else if (GIMP_VALUE_HOLDS_COLOR_ARRAY (value))
     {
