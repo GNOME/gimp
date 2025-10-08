@@ -28,6 +28,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
+#include "core/gimplinklayer.h"
 #include "core/gimpprogress.h"
 #include "core/gimptoolinfo.h"
 
@@ -36,9 +37,15 @@
 #include "display/gimpdisplayshell-cursor.h"
 #include "display/gimpstatusbar.h"
 
+#include "path/gimpvectorlayer.h"
+
+#include "widgets/gimpwidgets-utils.h"
+
+#include "gimpsourcetool.h"
 #include "gimptool.h"
 #include "gimptool-progress.h"
 #include "gimptoolcontrol.h"
+#include "gimptools-utils.h"
 
 #include "gimp-log.h"
 #include "gimp-intl.h"
@@ -188,6 +195,8 @@ gimp_tool_class_init (GimpToolClass *klass)
                                                         GIMP_TYPE_TOOL_INFO,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+
+  klass->is_destructive = TRUE;
 }
 
 static void
@@ -632,6 +641,54 @@ gimp_tool_initialize (GimpTool    *tool,
   g_return_val_if_fail (GIMP_IS_TOOL (tool), FALSE);
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), FALSE);
 
+  /* Source tools are special-cased as we want to allow vector/link or
+   * pixel-locked layers to be set as sources. So we still let these be
+   * initialized but will further verify the button state in
+   * gimp_tool_button_press().
+   */
+  if (GIMP_TOOL_GET_CLASS (tool)->is_destructive && !
+      GIMP_IS_SOURCE_TOOL (tool))
+    {
+      GimpImage *image;
+      GList     *drawables;
+
+      image     = gimp_display_get_image (display);
+      drawables = gimp_image_get_selected_drawables (image);
+      for (GList *iter = drawables; iter; iter = iter->next)
+        {
+          GimpDrawable *drawable    = iter->data;
+          GimpItem     *locked_item = NULL;
+
+          if (gimp_item_is_vector_layer (GIMP_ITEM (drawable)) ||
+              gimp_item_is_link_layer (GIMP_ITEM (drawable))   ||
+              gimp_item_is_content_locked (GIMP_ITEM (drawable), &locked_item))
+            {
+              if (gimp_item_is_link_layer (GIMP_ITEM (drawable)))
+                {
+                  gimp_tool_message_literal (tool, display,
+                                             _("Link layers must be rasterized "
+                                               "before they can be painted on."));
+                }
+              else if (gimp_item_is_vector_layer (GIMP_ITEM (drawable)))
+                {
+                  gimp_tool_message_literal (tool, display,
+                                             _("Vector layers must be rasterized "
+                                               "before they can be painted on."));
+                }
+              else
+                {
+                  gimp_tool_message_literal (tool, display,
+                                             _("The selected item's pixels are locked."));
+                  gimp_tools_blink_lock_box (display->gimp, locked_item);
+                }
+
+              g_list_free (drawables);
+              return FALSE;
+            }
+        }
+      g_list_free (drawables);
+    }
+
   if (! GIMP_TOOL_GET_CLASS (tool)->initialize (tool, display, &error))
     {
       if (error)
@@ -718,6 +775,56 @@ gimp_tool_button_press (GimpTool            *tool,
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (coords != NULL);
   g_return_if_fail (GIMP_IS_DISPLAY (display));
+
+  if (GIMP_IS_SOURCE_TOOL (tool))
+    {
+      GimpImage *image;
+      GList     *drawables;
+
+      image     = gimp_display_get_image (display);
+      drawables = gimp_image_get_selected_drawables (image);
+      for (GList *iter = drawables; iter; iter = iter->next)
+        {
+          GimpDrawable *drawable    = iter->data;
+          GimpItem     *locked_item = NULL;
+
+          if (gimp_item_is_vector_layer (GIMP_ITEM (drawable)) ||
+              gimp_item_is_link_layer (GIMP_ITEM (drawable))   ||
+              gimp_item_is_content_locked (GIMP_ITEM (drawable), &locked_item))
+            {
+              gboolean constrain_only;
+
+              /* Allow vector/link or pixel-locked layers to be set as sources */
+              constrain_only = (state & gimp_get_constrain_behavior_mask () &&
+                                ! (state & gimp_get_extend_selection_mask ()));
+              if (! constrain_only)
+                {
+                  if (gimp_item_is_link_layer (GIMP_ITEM (drawable)))
+                    {
+                      gimp_tool_message_literal (tool, display,
+                                                 _("Link layers must be rasterized "
+                                                   "before they can be painted on."));
+                    }
+                  else if (gimp_item_is_vector_layer (GIMP_ITEM (drawable)))
+                    {
+                      gimp_tool_message_literal (tool, display,
+                                                 _("Vector layers must be rasterized "
+                                                   "before they can be painted on."));
+                    }
+                  else
+                    {
+                      gimp_tool_message_literal (tool, display,
+                                                 _("The selected item's pixels are locked."));
+                      gimp_tools_blink_lock_box (display->gimp, locked_item);
+                    }
+
+                  g_list_free (drawables);
+                  return;
+                }
+            }
+        }
+      g_list_free (drawables);
+    }
 
   GIMP_TOOL_GET_CLASS (tool)->button_press (tool, coords, time, state,
                                             press_type, display);

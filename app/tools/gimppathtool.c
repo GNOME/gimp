@@ -187,6 +187,7 @@ gimp_path_tool_class_init (GimpPathToolClass *klass)
   tool_class->motion         = gimp_path_tool_motion;
   tool_class->modifier_key   = gimp_path_tool_modifier_key;
   tool_class->cursor_update  = gimp_path_tool_cursor_update;
+  tool_class->is_destructive = FALSE;
 }
 
 static void

@@ -315,8 +315,7 @@ gimp_paint_tool_button_press (GimpTool            *tool,
 
   for (iter = drawables; iter; iter = iter->next)
     {
-      GimpDrawable *drawable    = iter->data;
-      GimpItem     *locked_item = NULL;
+      GimpDrawable *drawable = iter->data;
 
       if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
         {
@@ -325,41 +324,6 @@ gimp_paint_tool_button_press (GimpTool            *tool,
           g_list_free (drawables);
 
           return;
-        }
-
-      if (gimp_item_is_vector_layer (GIMP_ITEM (drawable)) ||
-          gimp_item_is_link_layer (GIMP_ITEM (drawable))   ||
-          gimp_item_is_content_locked (GIMP_ITEM (drawable), &locked_item))
-        {
-          gboolean constrain_only;
-
-          /* Allow vector/link or pixel-locaked layers to be set as sources */
-          constrain_only = (state & gimp_get_constrain_behavior_mask () &&
-                            ! (state & gimp_get_extend_selection_mask ()));
-          if (! (GIMP_IS_SOURCE_TOOL (tool) && constrain_only))
-            {
-              if (gimp_item_is_link_layer (GIMP_ITEM (drawable)))
-                {
-                  gimp_tool_message_literal (tool, display,
-                                             _("Link layers must be rasterized "
-                                               "before they can be painted on."));
-                }
-              else if (gimp_item_is_vector_layer (GIMP_ITEM (drawable)))
-                {
-                  gimp_tool_message_literal (tool, display,
-                                             _("Vector layers must be rasterized "
-                                               "before they can be painted on."));
-                }
-              else
-                {
-                  gimp_tool_message_literal (tool, display,
-                                             _("The selected item's pixels are locked."));
-                  gimp_tools_blink_lock_box (display->gimp, locked_item);
-                }
-              g_list_free (drawables);
-
-              return;
-            }
         }
 
       if (! gimp_paint_tool_check_alpha (paint_tool, drawable, display, &error))

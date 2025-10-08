@@ -242,6 +242,7 @@ gimp_text_tool_class_init (GimpTextToolClass *klass)
   tool_class->oper_update      = gimp_text_tool_oper_update;
   tool_class->cursor_update    = gimp_text_tool_cursor_update;
   tool_class->get_popup        = gimp_text_tool_get_popup;
+  tool_class->is_destructive   = FALSE;
 
   draw_tool_class->draw        = gimp_text_tool_draw;
 }

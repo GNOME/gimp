@@ -136,6 +136,7 @@ gimp_move_tool_class_init (GimpMoveToolClass *klass)
   tool_class->modifier_key   = gimp_move_tool_modifier_key;
   tool_class->oper_update    = gimp_move_tool_oper_update;
   tool_class->cursor_update  = gimp_move_tool_cursor_update;
+  tool_class->is_destructive = FALSE;
 
   draw_tool_class->draw      = gimp_move_tool_draw;
 }

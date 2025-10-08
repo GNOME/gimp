@@ -582,7 +582,6 @@ gimp_bucket_fill_tool_button_press (GimpTool            *tool,
   GimpBucketFillOptions *options     = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
   GimpGuiConfig         *config      = GIMP_GUI_CONFIG (display->gimp->config);
   GimpImage             *image       = gimp_display_get_image (display);
-  GimpItem              *locked_item = NULL;
   GList                 *drawables   = gimp_image_get_selected_drawables (image);
   GimpDrawable          *drawable;
 
@@ -620,28 +619,6 @@ gimp_bucket_fill_tool_button_press (GimpTool            *tool,
     {
       gimp_tool_message_literal (tool, display,
                                  _("The active layer is not visible."));
-      return;
-    }
-
-  if (gimp_item_is_link_layer (GIMP_ITEM (drawable)))
-    {
-      gimp_tool_message_literal (tool, display,
-                                 _("Link layers must be rasterized "
-                                   "before they can be painted on."));
-      return;
-    }
-  else if (gimp_item_is_vector_layer (GIMP_ITEM (drawable)))
-    {
-      gimp_tool_message_literal (tool, display,
-                                 _("Vector layers must be rasterized "
-                                   "before they can be painted on."));
-      return;
-    }
-  else if (gimp_item_is_content_locked (GIMP_ITEM (drawable), &locked_item))
-    {
-      gimp_tool_message_literal (tool, display,
-                                 _("The selected layer's pixels are locked."));
-      gimp_tools_blink_lock_box (display->gimp, locked_item);
       return;
     }
 

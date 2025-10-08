@@ -231,6 +231,7 @@ gimp_filter_tool_class_init (GimpFilterToolClass *klass)
   tool_class->oper_update    = gimp_filter_tool_oper_update;
   tool_class->cursor_update  = gimp_filter_tool_cursor_update;
   tool_class->options_notify = gimp_filter_tool_options_notify;
+  tool_class->is_destructive = FALSE;
 
   color_tool_class->can_pick = gimp_filter_tool_can_pick_color;
   color_tool_class->pick     = gimp_filter_tool_pick_color;
