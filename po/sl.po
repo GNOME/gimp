@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-29 12:44+0000\n"
-"PO-Revision-Date: 2025-09-29 15:20+0200\n"
+"POT-Creation-Date: 2025-10-02 11:34+0000\n"
+"PO-Revision-Date: 2025-10-02 23:24+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -178,15 +178,15 @@ msgstr ""
 msgid "If you wanted to quit immediately instead, call GIMP with --quit."
 msgstr "Če želite namesto tega takoj prenehati, pokličite GIMP s --quit."
 
-#: app/gimp-update.c:429
+#: app/gimp-update.c:432
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr "Morda vam manjka ogrodje GIO in morate namestiti GVFS?"
 
-#: app/gimp-update.c:434
+#: app/gimp-update.c:437
 msgid "Perhaps you are missing GIO backends."
 msgstr "Morda vam manjka ogrodje GIO."
 
-#: app/gimp-update.c:466
+#: app/gimp-update.c:474
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -2577,8 +2577,8 @@ msgid "Enter a description for the marker"
 msgstr "Vnesite opis oznake"
 
 #: app/actions/data-commands.c:90 app/actions/documents-commands.c:393
-#: app/actions/file-commands.c:211 app/dialogs/file-open-dialog.c:247
-#: app/dialogs/file-open-dialog.c:288
+#: app/actions/file-commands.c:211 app/dialogs/file-open-dialog.c:248
+#: app/dialogs/file-open-dialog.c:293
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
 #: app/dialogs/welcome-dialog.c:1248 app/display/gimpdisplayshell-dnd.c:646
@@ -15807,9 +15807,14 @@ msgid "Search extensions matching these keywords"
 msgstr "Išči razširitve, ki se ujemajo s temi ključnimi besedami"
 
 #: app/dialogs/file-open-dialog.c:140 app/dialogs/file-open-dialog.c:165
-#: app/dialogs/file-open-dialog.c:279
+#: app/dialogs/file-open-dialog.c:284
 msgid "Open layers"
 msgstr "Odpri plasti"
+
+#: app/dialogs/file-open-dialog.c:252
+#, c-format
+msgid "Opening '%s' failed."
+msgstr "Odpiranje »%s« ni uspelo."
 
 #: app/dialogs/file-open-location-dialog.c:74
 msgid "Open Location"
@@ -21582,7 +21587,7 @@ msgstr "Samoobreži sliko"
 msgid "Autocrop layer"
 msgstr "Samoobreži plast"
 
-#: app/pdb/image-cmds.c:2556
+#: app/pdb/image-cmds.c:2564
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
