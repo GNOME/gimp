@@ -39,6 +39,8 @@
 
 #include "path/gimpvectorlayer.h"
 
+#include "text/gimptextlayer.h"
+
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpsourcetool.h"
@@ -661,9 +663,16 @@ gimp_tool_initialize (GimpTool    *tool,
 
           if (gimp_item_is_vector_layer (GIMP_ITEM (drawable)) ||
               gimp_item_is_link_layer (GIMP_ITEM (drawable))   ||
+              gimp_item_is_text_layer (GIMP_ITEM (drawable))   ||
               gimp_item_is_content_locked (GIMP_ITEM (drawable), &locked_item))
             {
-              if (gimp_item_is_link_layer (GIMP_ITEM (drawable)))
+              if (gimp_item_is_text_layer (GIMP_ITEM (drawable)))
+                {
+                  gimp_tool_message_literal (tool, display,
+                                             _("Text layers must be rasterized "
+                                               "before they can be painted on."));
+                }
+              else if (gimp_item_is_link_layer (GIMP_ITEM (drawable)))
                 {
                   gimp_tool_message_literal (tool, display,
                                              _("Link layers must be rasterized "
@@ -790,6 +799,7 @@ gimp_tool_button_press (GimpTool            *tool,
 
           if (gimp_item_is_vector_layer (GIMP_ITEM (drawable)) ||
               gimp_item_is_link_layer (GIMP_ITEM (drawable))   ||
+              gimp_item_is_text_layer (GIMP_ITEM (drawable))   ||
               gimp_item_is_content_locked (GIMP_ITEM (drawable), &locked_item))
             {
               gboolean constrain_only;
@@ -799,7 +809,13 @@ gimp_tool_button_press (GimpTool            *tool,
                                 ! (state & gimp_get_extend_selection_mask ()));
               if (! constrain_only)
                 {
-                  if (gimp_item_is_link_layer (GIMP_ITEM (drawable)))
+                  if (gimp_item_is_text_layer (GIMP_ITEM (drawable)))
+                    {
+                      gimp_tool_message_literal (tool, display,
+                                                 _("Text layers must be rasterized "
+                                                   "before they can be painted on."));
+                    }
+                  else if (gimp_item_is_link_layer (GIMP_ITEM (drawable)))
                     {
                       gimp_tool_message_literal (tool, display,
                                                  _("Link layers must be rasterized "
