@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-29 12:38+0000\n"
-"PO-Revision-Date: 2025-09-29 15:20+0200\n"
+"POT-Creation-Date: 2025-10-08 20:31+0000\n"
+"PO-Revision-Date: 2025-10-08 23:05+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -63,13 +63,13 @@ msgid ""
 "ins and extensions to do just about anything. The advanced scripting "
 "interface allows everything from the simplest task to the most complex image "
 "manipulation procedures to be easily scripted. GIMP is available for Linux, "
-"Microsoft Windows and OS X."
+"Microsoft Windows and macOS."
 msgstr ""
-"GIMP je razširljiv. Zasnovan je tako, da ga je mogoče dopolnjevati z "
-"vtičniki in razširitvami, da zmore pravzaprav vse. Napredni vmesnik "
-"skriptanja omogoča skriptanje vsega, od najenostavnejših nalog do "
-"najkompleksnejših procedur obdelave slik. GIMP je na voljo tudi za sisteme "
-"Microsoft Windows in OS X."
+"GIMP je razširljiv. Zasnovan je tako, da ga je mogoče dopolnjevati z vstavki "
+"in razširitvami, da zmore pravzaprav vse. Napredni vmesnik skriptanja "
+"omogoča skriptanje vsega, od najenostavnejših nalog do najkompleksnejših "
+"procedur obdelave slik. GIMP je na voljo za sisteme Linux, Microsoft Windows "
+"in macOS."
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:48
 msgid ""
@@ -178,15 +178,15 @@ msgstr ""
 msgid "If you wanted to quit immediately instead, call GIMP with --quit."
 msgstr "Če želite namesto tega takoj prenehati, pokličite GIMP s --quit."
 
-#: app/gimp-update.c:421
+#: app/gimp-update.c:424
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr "Morda vam manjka ogrodje GIO in morate namestiti GVFS?"
 
-#: app/gimp-update.c:426
+#: app/gimp-update.c:429
 msgid "Perhaps you are missing GIO backends."
 msgstr "Morda vam manjka ogrodje GIO."
 
-#: app/gimp-update.c:458
+#: app/gimp-update.c:466
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -18602,7 +18602,7 @@ msgid "_Next Tip"
 msgstr "_Naslednji nasvet"
 
 #. a link to the related section in the user manual
-#: app/dialogs/tips-dialog.c:196 app/dialogs/welcome-dialog.c:1134
+#: app/dialogs/tips-dialog.c:196 app/dialogs/welcome-dialog.c:1147
 msgid "Learn more"
 msgstr "Želim izvedeti več"
 
@@ -19203,7 +19203,7 @@ msgstr "Spusti novo plast"
 msgid "Drop New Path"
 msgstr "Spusti novo pot"
 
-#: app/display/gimpdisplayshell-dnd.c:371 app/tools/gimpbucketfilltool.c:611
+#: app/display/gimpdisplayshell-dnd.c:371 app/tools/gimpbucketfilltool.c:614
 #: app/tools/gimpcagetool.c:243 app/tools/gimpgradienttool.c:276
 #: app/tools/gimpselectiontool.c:567
 #, c-format
@@ -19783,28 +19783,28 @@ msgstr "Kliknite in povlecite, da premaknete točko vrtenja."
 msgid "Click-Drag to shear"
 msgstr "Kliknite in povlecite za striženje oz. nagib"
 
-#: app/file/file-open.c:264
+#: app/file/file-open.c:272
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr ""
 "Vtičnik %s je vrnil niz SUCCESS (uspešno dokončana operacija), a ni vrnil "
 "slike"
 
-#: app/file/file-open.c:275
+#: app/file/file-open.c:283
 #, c-format
 msgid "%s plug-in could not open image"
 msgstr "Z vstavkom %s ni mogoče odpreti slike"
 
-#: app/file/file-open.c:690
+#: app/file/file-open.c:698
 msgid "Image doesn't contain any layers"
 msgstr "Slika ne vsebuje nobenih plasti"
 
-#: app/file/file-open.c:748
+#: app/file/file-open.c:756
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Odpiranje »%s« ni uspelo: %s"
 
-#: app/file/file-open.c:836
+#: app/file/file-open.c:846
 #, c-format
 msgid ""
 "Only platform-native file paths are supported: '%s' cannot be opened as link."
@@ -19812,11 +19812,11 @@ msgstr ""
 "Podprte so samo poti datotek, značilne za platforme: »%s« ni mogoče odpreti "
 "kot povezave."
 
-#: app/file/file-open.c:978 app/file/file-save.c:132
+#: app/file/file-open.c:985 app/file/file-save.c:132
 msgid "Not a regular file"
 msgstr "Ni veljavna datoteka"
 
-#: app/file/file-open.c:987 app/file/file-save.c:141
+#: app/file/file-open.c:994 app/file/file-save.c:141
 msgid "Permission denied"
 msgstr "Ni ustreznih dovoljenj"
 
@@ -20781,7 +20781,7 @@ msgid "Turn colors into shades of gray"
 msgstr "Spremeni barve v sivinske odtenke"
 
 #: app/operations/gimpoperationdesaturate.c:91
-#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1475
+#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1477
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
 #: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:277
@@ -20827,7 +20827,7 @@ msgstr "Zamenjaj delno prosojnost z barvo"
 msgid "The color"
 msgstr "Barva"
 
-#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1438
+#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1440
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:113
 #: app/tools/gimptransformoptions.c:307
 msgid "Clipping"
@@ -22844,36 +22844,6 @@ msgctxt "text-box-mode"
 msgid "Fixed"
 msgstr "Nespremenljivo"
 
-#: app/text/text-enums.c:54
-msgctxt "text-outline"
-msgid "Filled"
-msgstr "Zapolnjeno"
-
-#: app/text/text-enums.c:55
-msgctxt "text-outline"
-msgid "Outlined"
-msgstr "Orisano"
-
-#: app/text/text-enums.c:56
-msgctxt "text-outline"
-msgid "Outlined and filled"
-msgstr "Orisano in zapolnjeno"
-
-#: app/text/text-enums.c:85
-msgctxt "text-outline-direction"
-msgid "Outer"
-msgstr "Zunanji"
-
-#: app/text/text-enums.c:86
-msgctxt "text-outline-direction"
-msgid "Inner"
-msgstr "Notranji"
-
-#: app/text/text-enums.c:87
-msgctxt "text-outline-direction"
-msgid "Centered"
-msgstr "Na sredini"
-
 #: app/tools/gimpairbrushtool.c:70
 msgid "Airbrush Tool: Paint using a brush, with variable pressure"
 msgstr "Orodje barvne pršilke: barvajte s čopičem, s spremenljivim pritiskom"
@@ -23249,28 +23219,28 @@ msgstr "Sklenitev črt risbe"
 msgid "Fill borders"
 msgstr "Zapolni robove"
 
-#: app/tools/gimpbucketfilltool.c:168
+#: app/tools/gimpbucketfilltool.c:171
 msgid "Bucket Fill"
 msgstr "Zapolni s kanglico"
 
-#: app/tools/gimpbucketfilltool.c:169
+#: app/tools/gimpbucketfilltool.c:172
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
 msgstr ""
 "Orodje Zapolni s kanglico: Zapolni izbrano področje z barvo ali vzorcem"
 
-#: app/tools/gimpbucketfilltool.c:170
+#: app/tools/gimpbucketfilltool.c:173
 msgid "_Bucket Fill"
 msgstr "_Zapolni s kanglico"
 
-#: app/tools/gimpbucketfilltool.c:371
+#: app/tools/gimpbucketfilltool.c:374
 msgid "Bucket fill"
 msgstr "Zapolni s kanglico"
 
-#: app/tools/gimpbucketfilltool.c:597
+#: app/tools/gimpbucketfilltool.c:600
 msgid "Cannot fill multiple layers. Select only one layer."
 msgstr "Več plasti ni mogoče zapolniti naenkrat. Izberite samo eno plast."
 
-#: app/tools/gimpbucketfilltool.c:599 app/tools/gimpcagetool.c:231
+#: app/tools/gimpbucketfilltool.c:602 app/tools/gimpcagetool.c:231
 #: app/tools/gimpcurvestool.c:220 app/tools/gimpfiltertool.c:314
 #: app/tools/gimpforegroundselecttool.c:297 app/tools/gimplevelstool.c:211
 #: app/tools/gimpoffsettool.c:191 app/tools/gimppainttool.c:300
@@ -23279,26 +23249,36 @@ msgstr "Več plasti ni mogoče zapolniti naenkrat. Izberite samo eno plast."
 msgid "No selected drawables."
 msgstr "Noben risani predmet ni izbran."
 
-#: app/tools/gimpbucketfilltool.c:619 app/tools/gimpforegroundselecttool.c:309
+#: app/tools/gimpbucketfilltool.c:622 app/tools/gimpforegroundselecttool.c:309
 #: app/tools/gimppaintselecttool.c:380
 msgid "The active layer is not visible."
 msgstr "Aktivna plast je nevidna."
 
-#: app/tools/gimpbucketfilltool.c:626 app/tools/gimpeditselectiontool.c:1310
+#: app/tools/gimpbucketfilltool.c:629 app/tools/gimppainttool.c:344
+msgid "Link layers must be rasterized before they can be painted on."
+msgstr ""
+"Povezane plasti morajo biti rasterizirane, preden je mogoče slikati nanje."
+
+#: app/tools/gimpbucketfilltool.c:636 app/tools/gimppainttool.c:350
+msgid "Vector layers must be rasterized before they can be painted on."
+msgstr ""
+"Vektorske plasti morajo biti rasterizirane, preden je mogoče slikati nanje."
+
+#: app/tools/gimpbucketfilltool.c:643 app/tools/gimpeditselectiontool.c:1310
 #: app/tools/gimpgradienttool.c:283 app/tools/gimpmovetool.c:349
 msgid "The selected layer's pixels are locked."
 msgstr "Slikovne točke izbrane plasti so zaklenjene."
 
-#: app/tools/gimpbucketfilltool.c:635
+#: app/tools/gimpbucketfilltool.c:652
 msgid "No valid line art source selected."
 msgstr "Izbran ni noben veljaven vir črt."
 
-#: app/tools/gimpbucketfilltool.c:819 app/tools/gimpbucketfilltool.c:959
+#: app/tools/gimpbucketfilltool.c:836 app/tools/gimpbucketfilltool.c:976
 #: app/tools/gimpcolorpickertool.c:270 app/tools/gimppainttool.c:534
 msgid "Click in any image to pick the background color"
 msgstr "Kliknite v katero koli sliko, da izberete barvo ozadja"
 
-#: app/tools/gimpbucketfilltool.c:826 app/tools/gimpbucketfilltool.c:968
+#: app/tools/gimpbucketfilltool.c:843 app/tools/gimpbucketfilltool.c:985
 #: app/tools/gimpcolorpickertool.c:262 app/tools/gimppainttool.c:528
 msgid "Click in any image to pick the foreground color"
 msgstr "Kliknite v katero koli sliko, da izberete barvo ospredja"
@@ -23878,48 +23858,48 @@ msgstr ""
 "Za razvojne namene nastavite okoljsko spremenljivko "
 "GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT."
 
-#: app/tools/gimpfiltertool.c:776
+#: app/tools/gimpfiltertool.c:778
 msgid "Click to switch the original and filtered sides"
 msgstr "Kliknite za preklop med izvirno in filtrirano stranjo"
 
-#: app/tools/gimpfiltertool.c:780
+#: app/tools/gimpfiltertool.c:782
 msgid "Click to switch between vertical and horizontal"
 msgstr "Kliknite za preklop med navpičnim in vodoravnim"
 
-#: app/tools/gimpfiltertool.c:784
+#: app/tools/gimpfiltertool.c:786
 msgid "Click to move the split guide"
 msgstr "Kliknite za pomik ločitvenega vodila"
 
-#: app/tools/gimpfiltertool.c:786
+#: app/tools/gimpfiltertool.c:788
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s: preklopi izvirno in filtrirano"
 
-#: app/tools/gimpfiltertool.c:787
+#: app/tools/gimpfiltertool.c:789
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: preklopi vodoravno in navpično"
 
-#: app/tools/gimpfiltertool.c:1271
+#: app/tools/gimpfiltertool.c:1273
 msgid "Edit filter"
 msgstr "Uredi filter"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1451
+#: app/tools/gimpfiltertool.c:1453
 msgid "Blending Options"
 msgstr "Možnosti zlivanja"
 
-#: app/tools/gimpfiltertool.c:1961 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1963 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Uvozi nastavitve »%s«"
 
-#: app/tools/gimpfiltertool.c:1963 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1965 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Izvozi nastavitve »%s«"
 
-#: app/tools/gimpfiltertool.c:2228
+#: app/tools/gimpfiltertool.c:2230
 #, c-format
 msgid "Editing '%s'..."
 msgstr "Urejanje »%s« ..."
@@ -24978,16 +24958,6 @@ msgstr "Slikanje po več plasteh ni možno. Izberite samo eno plast."
 #: app/tools/gimppainttool.c:324
 msgid "Cannot paint on layer groups."
 msgstr "Na skupine plasti ni mogoče slikati."
-
-#: app/tools/gimppainttool.c:344
-msgid "Link layers must be rasterized before they can be painted on."
-msgstr ""
-"Povezane plasti morajo biti rasterizirane, preden je mogoče slikati nanje."
-
-#: app/tools/gimppainttool.c:350
-msgid "Vector layers must be rasterized before they can be painted on."
-msgstr ""
-"Vektorske plasti morajo biti rasterizirane, preden je mogoče slikati nanje."
 
 #: app/tools/gimppainttool.c:747
 #, c-format
