@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-10-02 11:34+0000\n"
-"PO-Revision-Date: 2025-10-02 23:24+0200\n"
+"POT-Creation-Date: 2025-10-08 18:09+0000\n"
+"PO-Revision-Date: 2025-10-08 23:02+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -63,13 +63,13 @@ msgid ""
 "ins and extensions to do just about anything. The advanced scripting "
 "interface allows everything from the simplest task to the most complex image "
 "manipulation procedures to be easily scripted. GIMP is available for Linux, "
-"Microsoft Windows and OS X."
+"Microsoft Windows and macOS."
 msgstr ""
-"GIMP je razširljiv. Zasnovan je tako, da ga je mogoče dopolnjevati z "
-"vtičniki in razširitvami, da zmore pravzaprav vse. Napredni vmesnik "
-"skriptanja omogoča skriptanje vsega, od najenostavnejših nalog do "
-"najkompleksnejših procedur obdelave slik. GIMP je na voljo tudi za sisteme "
-"Microsoft Windows in OS X."
+"GIMP je razširljiv. Zasnovan je tako, da ga je mogoče dopolnjevati z vstavki "
+"in razširitvami, da zmore pravzaprav vse. Napredni vmesnik skriptanja "
+"omogoča skriptanje vsega, od najenostavnejših nalog do najkompleksnejših "
+"procedur obdelave slik. GIMP je na voljo za sisteme Linux, Microsoft Windows "
+"in macOS."
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:48
 msgid ""
@@ -2581,7 +2581,7 @@ msgstr "Vnesite opis oznake"
 #: app/dialogs/file-open-dialog.c:293
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/dialogs/welcome-dialog.c:1248 app/display/gimpdisplayshell-dnd.c:646
+#: app/dialogs/welcome-dialog.c:1257 app/display/gimpdisplayshell-dnd.c:646
 #: app/widgets/gimplayertreeview.c:796 app/widgets/gimptoolbox.c:843
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
@@ -18343,7 +18343,7 @@ msgid "_Next Tip"
 msgstr "_Naslednji nasvet"
 
 #. a link to the related section in the user manual
-#: app/dialogs/tips-dialog.c:196 app/dialogs/welcome-dialog.c:1094
+#: app/dialogs/tips-dialog.c:196 app/dialogs/welcome-dialog.c:1103
 msgid "Learn more"
 msgstr "Želim izvedeti več"
 
