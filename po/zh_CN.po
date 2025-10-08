@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-29 18:32+0000\n"
-"PO-Revision-Date: 2025-09-30 07:57+0800\n"
+"POT-Creation-Date: 2025-10-08 23:18+0000\n"
+"PO-Revision-Date: 2025-10-09 07:37+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -71,11 +71,11 @@ msgid ""
 "ins and extensions to do just about anything. The advanced scripting "
 "interface allows everything from the simplest task to the most complex image "
 "manipulation procedures to be easily scripted. GIMP is available for Linux, "
-"Microsoft Windows and OS X."
+"Microsoft Windows and macOS."
 msgstr ""
 "GIMP 可扩张亦可拓展。全功能的插件和扩展使其用途广泛。无论是最简单的任务还是最"
 "复杂的图像处理过程，GIMP 的先进脚本接口都允许你将它们轻松写成脚本。GIMP 可用"
-"于 Linux、Microsoft Windows 和 OS X。"
+"于 Linux、Microsoft Windows 和 macOS。"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:48
 msgid ""
@@ -2498,9 +2498,9 @@ msgstr "240 秒"
 #: app/display/gimpdisplayshell-filter-dialog.c:87
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
-#: app/tools/gimpfiltertool.c:373 app/tools/gimpforegroundselecttool.c:333
-#: app/tools/gimptexttool.c:1774 app/tools/gimptransformgridtool.c:1264
-#: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
+#: app/tools/gimpfiltertool.c:376 app/tools/gimpforegroundselecttool.c:333
+#: app/tools/gimptexttool.c:1775 app/tools/gimptransformgridtool.c:1264
+#: app/tools/gimptransformtool.c:429 app/widgets/gimpactionview.c:621
 #: app/widgets/gimpcolordialog.c:492 app/widgets/gimpcontrollereditor.c:665
 #: app/widgets/gimpcontrollerlist.c:556 app/widgets/gimpdeviceeditor.c:463
 #: app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228
@@ -7993,7 +7993,7 @@ msgstr "重置所有滤镜"
 #: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
 #: app/dialogs/vector-layer-options-dialog.c:103
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
-#: app/tools/gimpfiltertool.c:372 app/tools/gimptransformgridtool.c:1261
+#: app/tools/gimpfiltertool.c:375 app/tools/gimptransformgridtool.c:1261
 #: app/widgets/gimpcolordialog.c:491 app/widgets/gimpcolordisplayeditor.c:326
 msgid "_Reset"
 msgstr "重置(_R)"
@@ -10083,7 +10083,7 @@ msgstr "打开显示器"
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
 #: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:192
-#: app/tools/gimpfiltertool.c:374 app/widgets/gimpcolordialog.c:493
+#: app/tools/gimpfiltertool.c:377 app/widgets/gimpcolordialog.c:493
 #: app/widgets/gimpcontrollereditor.c:666
 #: app/widgets/gimpdeviceinfoeditor.c:1161 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:180 app/widgets/gimpmodifierseditor.c:689
@@ -14316,7 +14316,7 @@ msgid "Could not open thumbnail '%s': %s"
 msgstr "无法打开缩略图“%s”：%s"
 
 #: app/core/gimpitem.c:1850 app/core/gimpitem.c:1917
-#: app/display/gimpdisplayshell-dnd.c:380 app/tools/gimptransformtool.c:729
+#: app/display/gimpdisplayshell-dnd.c:380 app/tools/gimptransformtool.c:730
 #: app/widgets/gimpdrawabletreeview-filters.c:586
 msgid "A selected layer's pixels are locked."
 msgstr "一个选中图层的像素已被锁定。"
@@ -15921,8 +15921,8 @@ msgid "Image Properties"
 msgstr "图像属性"
 
 #: app/dialogs/image-properties-dialog.c:68 app/dialogs/module-dialog.c:113
-#: app/dialogs/welcome-dialog.c:213 app/tools/gimpcolorpickertool.c:351
-#: app/tools/gimpgradienttool-editor.c:1818 app/tools/gimpmeasuretool.c:740
+#: app/dialogs/welcome-dialog.c:213 app/tools/gimpcolorpickertool.c:352
+#: app/tools/gimpgradienttool-editor.c:1818 app/tools/gimpmeasuretool.c:741
 #: app/widgets/gimpcontrollerlist.c:635 app/widgets/gimpcriticaldialog.c:220
 #: app/widgets/gimpcriticaldialog.c:242 app/widgets/gimpsettingsbox.c:637
 #: app/widgets/gimptexteditor.c:164
@@ -16070,11 +16070,11 @@ msgid "_Opacity:"
 msgstr "不透明度(_O)："
 
 #. The size labels
-#: app/dialogs/layer-options-dialog.c:268 app/tools/gimpmeasuretool.c:815
+#: app/dialogs/layer-options-dialog.c:268 app/tools/gimpmeasuretool.c:816
 msgid "Width:"
 msgstr "宽度："
 
-#: app/dialogs/layer-options-dialog.c:273 app/tools/gimpmeasuretool.c:843
+#: app/dialogs/layer-options-dialog.c:273 app/tools/gimpmeasuretool.c:844
 msgid "Height:"
 msgstr "高度："
 
@@ -18262,7 +18262,7 @@ msgid "_Next Tip"
 msgstr "后一条提示(_N)"
 
 #. a link to the related section in the user manual
-#: app/dialogs/tips-dialog.c:196 app/dialogs/welcome-dialog.c:1134
+#: app/dialogs/tips-dialog.c:196 app/dialogs/welcome-dialog.c:1147
 msgid "Learn more"
 msgstr "了解更多"
 
@@ -18842,15 +18842,15 @@ msgstr "拖放新图层"
 msgid "Drop New Path"
 msgstr "拖放新路径"
 
-#: app/display/gimpdisplayshell-dnd.c:371 app/tools/gimpbucketfilltool.c:611
+#: app/display/gimpdisplayshell-dnd.c:371 app/tools/gimpbucketfilltool.c:613
 #: app/tools/gimpcagetool.c:243 app/tools/gimpgradienttool.c:276
-#: app/tools/gimpselectiontool.c:567
+#: app/tools/gimpselectiontool.c:568
 #, c-format
 msgid "Cannot modify the pixels of layer groups."
 msgstr "不能修改图层组的像素。"
 
-#: app/display/gimpdisplayshell-dnd.c:390 app/tools/gimpfiltertool.c:337
-#: app/tools/gimppainttool.c:391 app/tools/gimptransformtool.c:738
+#: app/display/gimpdisplayshell-dnd.c:390 app/tools/gimpfiltertool.c:340
+#: app/tools/gimppainttool.c:355 app/tools/gimptransformtool.c:739
 #: app/widgets/gimpdrawabletreeview-filters.c:579
 msgid "A selected layer is not visible."
 msgstr "一个选中图层不可见。"
@@ -18919,7 +18919,7 @@ msgid "Select Rotation Angle"
 msgstr "选择旋转角度"
 
 #: app/display/gimpdisplayshell-rotate-dialog.c:152
-#: app/tools/gimpmeasuretool.c:787
+#: app/tools/gimpmeasuretool.c:788
 msgid "Angle:"
 msgstr "角度："
 
@@ -18973,9 +18973,9 @@ msgstr "（无）"
 msgid "Layer picked: '%s'"
 msgstr "拾取的图层：“%s”"
 
-#: app/display/gimpdisplayshell-utils.c:194 app/tools/gimpmeasuretool.c:618
-#: app/tools/gimpmeasuretool.c:770 app/tools/gimpmeasuretool.c:826
-#: app/tools/gimpmeasuretool.c:854
+#: app/display/gimpdisplayshell-utils.c:194 app/tools/gimpmeasuretool.c:619
+#: app/tools/gimpmeasuretool.c:771 app/tools/gimpmeasuretool.c:827
+#: app/tools/gimpmeasuretool.c:855
 msgid "pixels"
 msgstr "像素"
 
@@ -19106,7 +19106,7 @@ msgid "Click-Drag to rotate the focus"
 msgstr "单击并拖动以旋转对焦"
 
 #: app/display/gimptoolfocus.c:1149 app/display/gimptoolgyroscope.c:729
-#: app/display/gimptoolline.c:1556 app/tools/gimppainttool.c:716
+#: app/display/gimptoolline.c:1556 app/tools/gimppainttool.c:680
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s 可限定角度"
@@ -20411,7 +20411,7 @@ msgid "Turn colors into shades of gray"
 msgstr "将颜色转换为灰度色调"
 
 #: app/operations/gimpoperationdesaturate.c:91
-#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1475
+#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1485
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
 #: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:277
@@ -20456,7 +20456,7 @@ msgstr "使用颜色替换半透明部分"
 msgid "The color"
 msgstr "颜色"
 
-#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1438
+#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1448
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:113
 #: app/tools/gimptransformoptions.c:307
 msgid "Clipping"
@@ -21126,7 +21126,7 @@ msgstr "缓冲区中未找到路径"
 msgid "Failed to import paths from '%s': %s"
 msgstr "无法从“%s”导入路径：%s"
 
-#: app/path/gimpvectorlayer.c:160 app/tools/gimppathtool.c:833
+#: app/path/gimpvectorlayer.c:160 app/tools/gimppathtool.c:834
 msgid "Vector Layer"
 msgstr "矢量图层"
 
@@ -22347,7 +22347,7 @@ msgstr ""
 "有些字体无法加载：\n"
 "%s"
 
-#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1646
+#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1647
 msgid "Add Text Layer"
 msgstr "添加文字图层"
 
@@ -22434,36 +22434,6 @@ msgstr "动态"
 msgctxt "text-box-mode"
 msgid "Fixed"
 msgstr "固定"
-
-#: app/text/text-enums.c:54
-msgctxt "text-outline"
-msgid "Filled"
-msgstr "填充"
-
-#: app/text/text-enums.c:55
-msgctxt "text-outline"
-msgid "Outlined"
-msgstr "轮廓"
-
-#: app/text/text-enums.c:56
-msgctxt "text-outline"
-msgid "Outlined and filled"
-msgstr "轮廓和填充"
-
-#: app/text/text-enums.c:85
-msgctxt "text-outline-direction"
-msgid "Outer"
-msgstr "外部"
-
-#: app/text/text-enums.c:86
-msgctxt "text-outline-direction"
-msgid "Inner"
-msgstr "内部"
-
-#: app/text/text-enums.c:87
-msgctxt "text-outline-direction"
-msgid "Centered"
-msgstr "中心"
 
 #: app/tools/gimpairbrushtool.c:70
 msgid "Airbrush Tool: Paint using a brush, with variable pressure"
@@ -22613,27 +22583,27 @@ msgstr "对齐工具：对齐或整理图层和其他对象"
 msgid "_Align and Distribute"
 msgstr "对齐和分布(_A)"
 
-#: app/tools/gimpaligntool.c:529
+#: app/tools/gimpaligntool.c:530
 msgid "Arrange Objects"
 msgstr "整理对象"
 
-#: app/tools/gimpaligntool.c:560
+#: app/tools/gimpaligntool.c:561
 msgid "Click on a layer, path or guide, or Click-Drag to pick a reference"
 msgstr "在图层、路径或参考线上单击，或单击并拖动以拾取参考对象"
 
-#: app/tools/gimpaligntool.c:564
+#: app/tools/gimpaligntool.c:565
 msgid "Click to pick this layer as reference"
 msgstr "单击以拾取此图层作为参考"
 
-#: app/tools/gimpaligntool.c:567
+#: app/tools/gimpaligntool.c:568
 msgid "Click to pick this guide as reference"
 msgstr "单击以拾取此参考线作为参考"
 
-#: app/tools/gimpaligntool.c:572
+#: app/tools/gimpaligntool.c:573
 msgid "Click to pick this path as reference"
 msgstr "单击以拾取此路径作为参考"
 
-#: app/tools/gimpaligntool.c:579
+#: app/tools/gimpaligntool.c:580
 msgid ""
 "Click on a guide to add it to objects to align, click anywhere else to "
 "unselect all guides"
@@ -22641,11 +22611,11 @@ msgstr ""
 "在参考线上单击将其添加到要对齐的对象中，在其它任意地方单击可取消选择所有参考"
 "线"
 
-#: app/tools/gimpaligntool.c:583
+#: app/tools/gimpaligntool.c:584
 msgid "Click to select this guide for alignment"
 msgstr "单击以选择此参考线用于对齐"
 
-#: app/tools/gimpaligntool.c:588
+#: app/tools/gimpaligntool.c:589
 msgid "Click to add this guide to the list of objects to align"
 msgstr "单击以将此参考线添加到对齐的对象列表"
 
@@ -22826,28 +22796,28 @@ msgstr "线条艺术闭合"
 msgid "Fill borders"
 msgstr "填充边界"
 
-#: app/tools/gimpbucketfilltool.c:168
+#: app/tools/gimpbucketfilltool.c:171
 msgid "Bucket Fill"
 msgstr "油漆桶填充"
 
-#: app/tools/gimpbucketfilltool.c:169
+#: app/tools/gimpbucketfilltool.c:172
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
 msgstr "油漆桶填充工具：用一种颜色或图案填充选中区域"
 
-#: app/tools/gimpbucketfilltool.c:170
+#: app/tools/gimpbucketfilltool.c:173
 msgid "_Bucket Fill"
 msgstr "油漆桶填充(_B)"
 
-#: app/tools/gimpbucketfilltool.c:371
+#: app/tools/gimpbucketfilltool.c:374
 msgid "Bucket fill"
 msgstr "油漆桶填充"
 
-#: app/tools/gimpbucketfilltool.c:597
+#: app/tools/gimpbucketfilltool.c:599
 msgid "Cannot fill multiple layers. Select only one layer."
 msgstr "无法填充多个图层。仅选择一个图层。"
 
-#: app/tools/gimpbucketfilltool.c:599 app/tools/gimpcagetool.c:231
-#: app/tools/gimpcurvestool.c:220 app/tools/gimpfiltertool.c:314
+#: app/tools/gimpbucketfilltool.c:601 app/tools/gimpcagetool.c:231
+#: app/tools/gimpcurvestool.c:220 app/tools/gimpfiltertool.c:317
 #: app/tools/gimpforegroundselecttool.c:297 app/tools/gimplevelstool.c:211
 #: app/tools/gimpoffsettool.c:191 app/tools/gimppainttool.c:300
 #: app/tools/gimpperspectiveclonetool.c:224 app/tools/gimpthresholdtool.c:160
@@ -22855,27 +22825,22 @@ msgstr "无法填充多个图层。仅选择一个图层。"
 msgid "No selected drawables."
 msgstr "未选择可绘区。"
 
-#: app/tools/gimpbucketfilltool.c:619 app/tools/gimpforegroundselecttool.c:309
+#: app/tools/gimpbucketfilltool.c:621 app/tools/gimpforegroundselecttool.c:309
 #: app/tools/gimppaintselecttool.c:380
 msgid "The active layer is not visible."
 msgstr "激活图层不可见。"
 
-#: app/tools/gimpbucketfilltool.c:626 app/tools/gimpeditselectiontool.c:1310
-#: app/tools/gimpgradienttool.c:283 app/tools/gimpmovetool.c:349
-msgid "The selected layer's pixels are locked."
-msgstr "选中图层的像素已被锁定。"
-
-#: app/tools/gimpbucketfilltool.c:635
+#: app/tools/gimpbucketfilltool.c:629
 msgid "No valid line art source selected."
 msgstr "未选择有效的线条艺术源。"
 
-#: app/tools/gimpbucketfilltool.c:819 app/tools/gimpbucketfilltool.c:959
-#: app/tools/gimpcolorpickertool.c:270 app/tools/gimppainttool.c:534
+#: app/tools/gimpbucketfilltool.c:813 app/tools/gimpbucketfilltool.c:953
+#: app/tools/gimpcolorpickertool.c:271 app/tools/gimppainttool.c:498
 msgid "Click in any image to pick the background color"
 msgstr "在图像中任意单击可拾取背景色"
 
-#: app/tools/gimpbucketfilltool.c:826 app/tools/gimpbucketfilltool.c:968
-#: app/tools/gimpcolorpickertool.c:262 app/tools/gimppainttool.c:528
+#: app/tools/gimpbucketfilltool.c:820 app/tools/gimpbucketfilltool.c:962
+#: app/tools/gimpcolorpickertool.c:263 app/tools/gimppainttool.c:492
 msgid "Click in any image to pick the foreground color"
 msgstr "在图像中任意单击以拾取前景色"
 
@@ -22920,8 +22885,8 @@ msgstr "框架变换(_C)"
 msgid "Cannot modify multiple layers. Select only one layer."
 msgstr "无法修改多个图层。仅选择一个图层。"
 
-#: app/tools/gimpcagetool.c:250 app/tools/gimppainttool.c:356
-#: app/tools/gimpwarptool.c:810
+#: app/tools/gimpcagetool.c:250 app/tools/gimptool.c:690
+#: app/tools/gimptool.c:833 app/tools/gimpwarptool.c:810
 msgid "The selected item's pixels are locked."
 msgstr "选中项目的像素已被锁定。"
 
@@ -23051,15 +23016,15 @@ msgstr "颜色拾取工具：从图像像素中设定颜色"
 msgid "C_olor Picker"
 msgstr "颜色拾取(_O)"
 
-#: app/tools/gimpcolorpickertool.c:255
+#: app/tools/gimpcolorpickertool.c:256
 msgid "Click in any image to view its color"
 msgstr "在图像中任意单击以查看其颜色"
 
-#: app/tools/gimpcolorpickertool.c:278
+#: app/tools/gimpcolorpickertool.c:279
 msgid "Click in any image to add the color to the palette"
 msgstr "在图像中任意单击可将颜色添加到调色板"
 
-#: app/tools/gimpcolorpickertool.c:346
+#: app/tools/gimpcolorpickertool.c:347
 msgid "Color Picker Information"
 msgstr "颜色拾取信息"
 
@@ -23201,7 +23166,7 @@ msgstr "曲线"
 msgid "_Curves..."
 msgstr "曲线(_C)…"
 
-#: app/tools/gimpcurvestool.c:218 app/tools/gimpfiltertool.c:310
+#: app/tools/gimpcurvestool.c:218 app/tools/gimpfiltertool.c:313
 #: app/tools/gimplevelstool.c:209 app/tools/gimpoffsettool.c:189
 #: app/tools/gimpthresholdtool.c:158
 msgid "Cannot modify multiple drawables. Select only one."
@@ -23315,7 +23280,7 @@ msgstr "移动："
 msgid "Move Floating Selection"
 msgstr "移动浮动选区"
 
-#: app/tools/gimpeditselectiontool.c:1275 app/tools/gimpmovetool.c:293
+#: app/tools/gimpeditselectiontool.c:1275 app/tools/gimpmovetool.c:294
 msgid "There are no paths to move."
 msgstr "没有路径可移动。"
 
@@ -23323,20 +23288,25 @@ msgstr "没有路径可移动。"
 msgid "A selected path's position is locked."
 msgstr "一条选中路径的位置已被锁定。"
 
-#: app/tools/gimpeditselectiontool.c:1296 app/tools/gimpmovetool.c:338
+#: app/tools/gimpeditselectiontool.c:1296 app/tools/gimpmovetool.c:339
 msgid "There is no layer to move."
 msgstr "没有图层可移动。"
 
 #: app/tools/gimpeditselectiontool.c:1305
-#: app/tools/gimpeditselectiontool.c:1332 app/tools/gimpmovetool.c:347
+#: app/tools/gimpeditselectiontool.c:1332 app/tools/gimpmovetool.c:348
 msgid "The selected layer's position is locked."
 msgstr "选中图层的位置已被锁定。"
+
+#: app/tools/gimpeditselectiontool.c:1310 app/tools/gimpgradienttool.c:283
+#: app/tools/gimpmovetool.c:350
+msgid "The selected layer's pixels are locked."
+msgstr "选中图层的像素已被锁定。"
 
 #: app/tools/gimpeditselectiontool.c:1321
 msgid "A selected channel's position is locked."
 msgstr "一个选中通道的位置已被锁定。"
 
-#: app/tools/gimpeditselectiontool.c:1343 app/tools/gimpmovetool.c:366
+#: app/tools/gimpeditselectiontool.c:1343 app/tools/gimpmovetool.c:367
 msgid "A selected layer's position is locked."
 msgstr "一个选中图层的位置已被锁定。"
 
@@ -23407,24 +23377,28 @@ msgstr ""
 "如果启用，滤镜将立即合并。\n"
 "否则，它会成为可编辑的非破坏性滤镜。"
 
-#: app/tools/gimpfiltertool.c:325 app/tools/gimpselectiontool.c:575
+#: app/tools/gimpfiltertool.c:328 app/tools/gimpselectiontool.c:576
 #, c-format
 msgid "A selected item's pixels are locked."
 msgstr "一个选中项目的像素已被锁定。"
 
-#: app/tools/gimpfiltertool.c:452
+#: app/tools/gimpfiltertool.c:457
 msgid "Disabled because this filter depends on another image."
 msgstr "已禁用，因为该滤镜依赖于另一幅图像。"
 
-#: app/tools/gimpfiltertool.c:454
+#: app/tools/gimpfiltertool.c:459
 msgid "Disabled because filters cannot be merged on vector layers."
 msgstr "已禁用，因为滤镜无法合并到矢量图层上。"
 
-#: app/tools/gimpfiltertool.c:456
+#: app/tools/gimpfiltertool.c:461
 msgid "Disabled because filters cannot be merged on link layers."
 msgstr "已禁用，因为滤镜无法合并到链接图层上。"
 
-#: app/tools/gimpfiltertool.c:458
+#: app/tools/gimpfiltertool.c:463
+msgid "Disabled because filters cannot be merged on text layers."
+msgstr "已禁用，因为滤镜无法合并到文字图层上。"
+
+#: app/tools/gimpfiltertool.c:465
 msgid ""
 "Disabled because GEGL Graph is unsafe.\n"
 "For development purpose, set environment variable "
@@ -23433,48 +23407,48 @@ msgstr ""
 "已禁用，因为 GEGL 图表不安全。\n"
 "对于开发目的，可设置环境变量 GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT。"
 
-#: app/tools/gimpfiltertool.c:776
+#: app/tools/gimpfiltertool.c:786
 msgid "Click to switch the original and filtered sides"
 msgstr "单击以在原始图片和应用滤镜图片之间切换"
 
-#: app/tools/gimpfiltertool.c:780
+#: app/tools/gimpfiltertool.c:790
 msgid "Click to switch between vertical and horizontal"
 msgstr "单击以在竖直视图和水平视图之间切换"
 
-#: app/tools/gimpfiltertool.c:784
+#: app/tools/gimpfiltertool.c:794
 msgid "Click to move the split guide"
 msgstr "单击以移动分割参考线"
 
-#: app/tools/gimpfiltertool.c:786
+#: app/tools/gimpfiltertool.c:796
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s：切换原始图片和应用滤镜图片"
 
-#: app/tools/gimpfiltertool.c:787
+#: app/tools/gimpfiltertool.c:797
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s：切换水平视图和竖直视图"
 
-#: app/tools/gimpfiltertool.c:1271
+#: app/tools/gimpfiltertool.c:1281
 msgid "Edit filter"
 msgstr "编辑滤镜"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1451
+#: app/tools/gimpfiltertool.c:1461
 msgid "Blending Options"
 msgstr "混合选项"
 
-#: app/tools/gimpfiltertool.c:1961 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1972 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "导入“%s”设置"
 
-#: app/tools/gimpfiltertool.c:1963 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1974 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "导出“%s”设置"
 
-#: app/tools/gimpfiltertool.c:2228
+#: app/tools/gimpfiltertool.c:2239
 #, c-format
 msgid "Editing '%s'..."
 msgstr "正在编辑“%s”…"
@@ -24196,46 +24170,46 @@ msgstr "测量工具：测量距离和角度"
 msgid "_Measure"
 msgstr "测量(_M)"
 
-#: app/tools/gimpmeasuretool.c:153
+#: app/tools/gimpmeasuretool.c:154
 msgctxt "undo-type"
 msgid "Straighten"
 msgstr "校正"
 
-#: app/tools/gimpmeasuretool.c:154
+#: app/tools/gimpmeasuretool.c:155
 msgid "Straightening"
 msgstr "正在校正"
 
-#: app/tools/gimpmeasuretool.c:173
+#: app/tools/gimpmeasuretool.c:174
 msgid "Click-Drag to create a line"
 msgstr "单击并拖动以创建一条直线"
 
-#: app/tools/gimpmeasuretool.c:364
+#: app/tools/gimpmeasuretool.c:365
 #, c-format
 msgctxt "undo-type"
 msgid "Straighten by %-3.3g°"
 msgstr "校正 %-3.3g°"
 
-#: app/tools/gimpmeasuretool.c:369
+#: app/tools/gimpmeasuretool.c:370
 #, c-format
 msgctxt "undo-type"
 msgid "Straighten Horizontally by %-3.3g°"
 msgstr "水平校正 %-3.3g°"
 
-#: app/tools/gimpmeasuretool.c:374
+#: app/tools/gimpmeasuretool.c:375
 #, c-format
 msgctxt "undo-type"
 msgid "Straighten Vertically by %-3.3g°"
 msgstr "竖直校正 %-3.3g°"
 
-#: app/tools/gimpmeasuretool.c:445
+#: app/tools/gimpmeasuretool.c:446
 msgid "Add Guides"
 msgstr "添加参考线"
 
-#: app/tools/gimpmeasuretool.c:735
+#: app/tools/gimpmeasuretool.c:736
 msgid "Measure Distances and Angles"
 msgstr "测量距离和角度"
 
-#: app/tools/gimpmeasuretool.c:759
+#: app/tools/gimpmeasuretool.c:760
 msgid "Distance:"
 msgstr "距离："
 
@@ -24281,11 +24255,11 @@ msgstr "移动工具：移动图层，选区，和其他对象"
 msgid "_Move"
 msgstr "移动(_M)"
 
-#: app/tools/gimpmovetool.c:306
+#: app/tools/gimpmovetool.c:307
 msgid "All selected path's position are locked."
 msgstr "所有选中路径的位置已被锁定。"
 
-#: app/tools/gimpmovetool.c:358
+#: app/tools/gimpmovetool.c:359
 msgid "A selected channel's position or pixels are locked."
 msgstr "一个选中通道的位置或像素已被锁定。"
 
@@ -24515,28 +24489,20 @@ msgstr "%s 以拾取颜色"
 msgid "Cannot paint on multiple layers. Select only one layer."
 msgstr "无法在多个图层上绘制。仅选择一个图层。"
 
-#: app/tools/gimppainttool.c:324
+#: app/tools/gimppainttool.c:323
 msgid "Cannot paint on layer groups."
 msgstr "不能在图层组上绘画。"
 
-#: app/tools/gimppainttool.c:344
-msgid "Link layers must be rasterized before they can be painted on."
-msgstr "链接图层必须栅格化后才能在其上绘画。"
-
-#: app/tools/gimppainttool.c:350
-msgid "Vector layers must be rasterized before they can be painted on."
-msgstr "矢量图层必须栅格化后才能在其上绘画。"
-
-#: app/tools/gimppainttool.c:747
+#: app/tools/gimppainttool.c:711
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s 可画出直线"
 
-#: app/tools/gimppainttool.c:982
+#: app/tools/gimppainttool.c:946
 msgid "The selected drawable does not have an alpha channel."
 msgstr "选中可绘区没有透明通道。"
 
-#: app/tools/gimppainttool.c:993
+#: app/tools/gimppainttool.c:957
 msgid "The selected layer's alpha channel is locked."
 msgstr "选中图层的透明通道已被锁定。"
 
@@ -24861,48 +24827,48 @@ msgstr "开启选区边缘羽化"
 msgid "Mode:"
 msgstr "模式："
 
-#: app/tools/gimpselectiontool.c:326
+#: app/tools/gimpselectiontool.c:327
 msgid "Click-Drag to replace the current selection"
 msgstr "单击并拖动以替换当前选区"
 
-#: app/tools/gimpselectiontool.c:334
+#: app/tools/gimpselectiontool.c:335
 msgid "Click-Drag to create a new selection"
 msgstr "单击并拖动以创建新的选区"
 
-#: app/tools/gimpselectiontool.c:339
+#: app/tools/gimpselectiontool.c:340
 msgid "Click-Drag to add to the current selection"
 msgstr "单击并拖动以添加到当前选区"
 
-#: app/tools/gimpselectiontool.c:348
+#: app/tools/gimpselectiontool.c:349
 msgid "Click-Drag to subtract from the current selection"
 msgstr "单击并拖动以从当前选区中减去"
 
-#: app/tools/gimpselectiontool.c:357
+#: app/tools/gimpselectiontool.c:358
 msgid "Click-Drag to intersect with the current selection"
 msgstr "单击并拖动以与当前选区相交"
 
-#: app/tools/gimpselectiontool.c:367
+#: app/tools/gimpselectiontool.c:368
 msgid "Click-Drag to move the selection mask"
 msgstr "单击并拖动以移动选区蒙板"
 
-#: app/tools/gimpselectiontool.c:375
+#: app/tools/gimpselectiontool.c:376
 msgid "Click-Drag to move the selected pixels"
 msgstr "单击并拖动可移动选中像素"
 
-#: app/tools/gimpselectiontool.c:379
+#: app/tools/gimpselectiontool.c:380
 msgid "Click-Drag to move a copy of the selected pixels"
 msgstr "单击并拖动以移动选中像素的副本"
 
-#: app/tools/gimpselectiontool.c:383
+#: app/tools/gimpselectiontool.c:384
 msgid "Click to anchor the floating selection"
 msgstr "单击以固定浮动选区"
 
-#: app/tools/gimpselectiontool.c:536
+#: app/tools/gimpselectiontool.c:537
 #, c-format
 msgid "Cannot subtract from an empty selection."
 msgstr "无法从空白选区中减去。"
 
-#: app/tools/gimpselectiontool.c:547
+#: app/tools/gimpselectiontool.c:548
 #, c-format
 msgid "Cannot intersect with an empty selection."
 msgstr "无法与空白选区相交。"
@@ -25111,31 +25077,31 @@ msgstr "文字工具：创建或编辑文字图层"
 msgid "Te_xt"
 msgstr "文字(_X)"
 
-#: app/tools/gimptexttool.c:1030
+#: app/tools/gimptexttool.c:1031
 msgid "Fonts are still loading"
 msgstr "字体仍在加载中"
 
-#: app/tools/gimptexttool.c:1041
+#: app/tools/gimptexttool.c:1042
 msgid "Text box: "
 msgstr "文字框："
 
-#: app/tools/gimptexttool.c:1193
+#: app/tools/gimptexttool.c:1194
 msgid "Reshape Text Layer"
 msgstr "反栅格化文字图层"
 
-#: app/tools/gimptexttool.c:1766 app/tools/gimptexttool.c:1769
+#: app/tools/gimptexttool.c:1767 app/tools/gimptexttool.c:1770
 msgid "Confirm Text Editing"
 msgstr "确认编辑文字"
 
-#: app/tools/gimptexttool.c:1773
+#: app/tools/gimptexttool.c:1774
 msgid "Create _New Layer"
 msgstr "新建图层(_N)"
 
-#: app/tools/gimptexttool.c:1775
+#: app/tools/gimptexttool.c:1776
 msgid "_Edit"
 msgstr "编辑(_E)"
 
-#: app/tools/gimptexttool.c:1797
+#: app/tools/gimptexttool.c:1798
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -25148,19 +25114,19 @@ msgstr ""
 "\n"
 "您可以编辑此图层或者从它的文字属性创建新的文字图层。"
 
-#: app/tools/gimptexttool.c:2397
+#: app/tools/gimptexttool.c:2398
 msgid "Text is required."
 msgstr "需要文字。"
 
-#: app/tools/gimptexttool.c:2400
+#: app/tools/gimptexttool.c:2401
 msgid "No image."
 msgstr "无图像。"
 
-#: app/tools/gimptexttool.c:2403
+#: app/tools/gimptexttool.c:2404
 msgid "No layer."
 msgstr "无图层。"
 
-#: app/tools/gimptexttool.c:2414
+#: app/tools/gimptexttool.c:2415
 msgid "Exactly one path must be selected."
 msgstr "必须选择一个路径。"
 
@@ -25184,7 +25150,19 @@ msgstr "自动(_A)"
 msgid "Automatically adjust to optimal binarization threshold"
 msgstr "自动调整到最佳二值化阈值"
 
-#: app/tools/gimptool.c:1216
+#: app/tools/gimptool.c:672 app/tools/gimptool.c:815
+msgid "Text layers must be rasterized before they can be painted on."
+msgstr "文字图层必须栅格化后才能在其上绘画。"
+
+#: app/tools/gimptool.c:678 app/tools/gimptool.c:821
+msgid "Link layers must be rasterized before they can be painted on."
+msgstr "链接图层必须栅格化后才能在其上绘画。"
+
+#: app/tools/gimptool.c:684 app/tools/gimptool.c:827
+msgid "Vector layers must be rasterized before they can be painted on."
+msgstr "矢量图层必须栅格化后才能在其上绘画。"
+
+#: app/tools/gimptool.c:1339
 msgid "Can't work on an empty image, add a layer first"
 msgstr "不能在空的图像上操作，先添加图层"
 
@@ -25355,7 +25333,7 @@ msgstr "锁定"
 msgid "Lock pivot position to canvas"
 msgstr "锁定轴心位置到画布"
 
-#: app/tools/gimptransformgridtool.c:290 app/tools/gimptransformtool.c:429
+#: app/tools/gimptransformgridtool.c:290 app/tools/gimptransformtool.c:430
 msgid "_Transform"
 msgstr "变换(_T)"
 
@@ -25470,71 +25448,71 @@ msgstr "插值方法"
 msgid "Transform:"
 msgstr "变换："
 
-#: app/tools/gimptransformtool.c:108
+#: app/tools/gimptransformtool.c:109
 msgid "Transform"
 msgstr "变换"
 
-#: app/tools/gimptransformtool.c:109
+#: app/tools/gimptransformtool.c:110
 msgid "Transforming"
 msgstr "正在变换"
 
-#: app/tools/gimptransformtool.c:421
+#: app/tools/gimptransformtool.c:422
 msgid "Confirm Transformation"
 msgstr "确认变换"
 
-#: app/tools/gimptransformtool.c:441
+#: app/tools/gimptransformtool.c:442
 msgid "Transformation creates a very large item."
 msgstr "变换创建了一个非常巨大的对象。"
 
-#: app/tools/gimptransformtool.c:446
+#: app/tools/gimptransformtool.c:447
 #, c-format
 msgid ""
 "Applying the transformation will result in an item that is over %g times "
 "larger than the image."
 msgstr "应用该变换将使该对象比图像大出 %g 倍。"
 
-#: app/tools/gimptransformtool.c:454
+#: app/tools/gimptransformtool.c:455
 msgid "Transformation creates a very large image."
 msgstr "变换创建了一个非常巨大的图像。"
 
-#: app/tools/gimptransformtool.c:459
+#: app/tools/gimptransformtool.c:460
 #, c-format
 msgid "Applying the transformation will enlarge the image by a factor of %g."
 msgstr "应用该变换将按系数 %g 扩大图像。"
 
-#: app/tools/gimptransformtool.c:722
+#: app/tools/gimptransformtool.c:723
 msgid "There is no layer to transform."
 msgstr "没有图层可以变换。"
 
-#: app/tools/gimptransformtool.c:731
+#: app/tools/gimptransformtool.c:732
 msgid "A selected layer's position and size are locked."
 msgstr "一个选中图层的位置和大小已被锁定。"
 
-#: app/tools/gimptransformtool.c:745
+#: app/tools/gimptransformtool.c:746
 msgid "The selection does not intersect with a selected layer."
 msgstr "选区没有与选中图层相交。"
 
-#: app/tools/gimptransformtool.c:752
+#: app/tools/gimptransformtool.c:753
 msgid "There is no selection to transform."
 msgstr "没有选区可以变换。"
 
-#: app/tools/gimptransformtool.c:767
+#: app/tools/gimptransformtool.c:768
 msgid "There is no path to transform."
 msgstr "没有路径可以变换。"
 
-#: app/tools/gimptransformtool.c:774
+#: app/tools/gimptransformtool.c:775
 msgid "The selected path's strokes are locked."
 msgstr "选中路径的笔触已被锁定。"
 
-#: app/tools/gimptransformtool.c:776
+#: app/tools/gimptransformtool.c:777
 msgid "The selected path's position is locked."
 msgstr "选中路径的位置已被锁定。"
 
-#: app/tools/gimptransformtool.c:778
+#: app/tools/gimptransformtool.c:779
 msgid "The selected path has no strokes."
 msgstr "选中路径没有笔触。"
 
-#: app/tools/gimptransformtool.c:858
+#: app/tools/gimptransformtool.c:859
 msgid "The current transform is invalid"
 msgstr "当前变换是无效的"
 
@@ -29295,6 +29273,30 @@ msgstr "工具预设菜单"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "撤消历史菜单"
+
+#~ msgctxt "text-outline"
+#~ msgid "Filled"
+#~ msgstr "填充"
+
+#~ msgctxt "text-outline"
+#~ msgid "Outlined"
+#~ msgstr "轮廓"
+
+#~ msgctxt "text-outline"
+#~ msgid "Outlined and filled"
+#~ msgstr "轮廓和填充"
+
+#~ msgctxt "text-outline-direction"
+#~ msgid "Outer"
+#~ msgstr "外部"
+
+#~ msgctxt "text-outline-direction"
+#~ msgid "Inner"
+#~ msgstr "内部"
+
+#~ msgctxt "text-outline-direction"
+#~ msgid "Centered"
+#~ msgstr "中心"
 
 #~ msgctxt "dialogs-action"
 #~ msgid "_Settings..."
