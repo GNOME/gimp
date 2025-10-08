@@ -581,6 +581,26 @@ package Gimp::CodeGen::enums;
 		       GIMP_TEXT_JUSTIFY_CENTER => '2',
 		       GIMP_TEXT_JUSTIFY_FILL => '3' }
 	},
+    GimpTextOutline =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_TEXT_OUTLINE_NONE
+			  GIMP_TEXT_OUTLINE_STROKE_ONLY
+			  GIMP_TEXT_OUTLINE_STROKE_FILL) ],
+	  mapping => { GIMP_TEXT_OUTLINE_NONE => '0',
+		       GIMP_TEXT_OUTLINE_STROKE_ONLY => '1',
+		       GIMP_TEXT_OUTLINE_STROKE_FILL => '2' }
+	},
+    GimpTextOutlineDirection =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_TEXT_OUTLINE_DIRECTION_OUTER
+			  GIMP_TEXT_OUTLINE_DIRECTION_INNER
+			  GIMP_TEXT_OUTLINE_DIRECTION_CENTERED) ],
+	  mapping => { GIMP_TEXT_OUTLINE_DIRECTION_OUTER => '0',
+		       GIMP_TEXT_OUTLINE_DIRECTION_INNER => '1',
+		       GIMP_TEXT_OUTLINE_DIRECTION_CENTERED => '2' }
+	},
     GimpTransferMode =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
