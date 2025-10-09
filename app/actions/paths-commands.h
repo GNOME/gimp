@@ -53,6 +53,9 @@ void   paths_delete_cmd_callback               (GimpAction *action,
 void   path_to_vector_layer_cmd_callback       (GimpAction *action,
                                                 GVariant   *value,
                                                 gpointer    data);
+void   paths_merge_selected_cmd_callback       (GimpAction *action,
+                                                GVariant   *value,
+                                                gpointer    data);
 void   paths_merge_visible_cmd_callback        (GimpAction *action,
                                                 GVariant   *value,
                                                 gpointer    data);
