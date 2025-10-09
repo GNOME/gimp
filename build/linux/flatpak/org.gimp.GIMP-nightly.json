@@ -133,8 +133,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.4.0.tar.gz",
-                    "sha256": "d7b31637d7adc359f5e5a7517ba918cb5997bc1a4ae7a808ec874cdf91da93c0",
+                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.4.1.tar.gz",
+                    "sha256": "0d75aa277c33a4ed1fce2e272126f2d8dbd01adda82d7cf4fe67b99f6f7eedce",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 13289,
@@ -160,8 +160,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v3.2.1.tar.gz",
-                            "sha256": "b2c8a44c3e4695b74e9644c76f5f5480767355c6f98cde58ba0e82b4ad8c63ce",
+                            "url": "https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v3.2.2.tar.gz",
+                            "sha256": "b4275d83fb95521510e389b8d13af10298ed5bed1c8e13efd961d91b1105e462",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 223366,
@@ -212,15 +212,12 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/aous72/OpenJPH/archive/refs/tags/0.22.0.tar.gz",
-                            "sha256": "c9c6e9ec82ee8770ede41eeffe8acaab1814724c698b258c3de160dc09cb7d12",
+                            "url": "https://github.com/aous72/OpenJPH/archive/refs/tags/0.24.2.tar.gz",
+                            "sha256": "c99218752b15b5b2afca3b0e4d4f0ddf1ac19f94dbcbe11874fe492d44ed3e2d",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 375199,
                                 "stable-only": true,
-                                "versions": {
-                                    "<": "0.23.0"
-                                },
                                 "url-template": "https://github.com/aous72/OpenJPH/archive/refs/tags/$version.tar.gz"
                             }
                         }
