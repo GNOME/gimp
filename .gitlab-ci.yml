@@ -434,6 +434,7 @@ gimp-flatpak:
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Snap.*/'
       interruptible: true
     - if: '$GIMP_CI_SNAP != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_SNAP.*/'
+    - <<: *CI_RELEASE
   parallel:
     matrix:
       - RUNNER: [aarch64, x86_64_v3]

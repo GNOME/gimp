@@ -86,11 +86,12 @@ fi
 
 
 # Publish GIMP snap on Snap Store
-#if [ "$CI_COMMIT_TAG" = "$(git describe --all | sed 's|tags/||')" ]; then
-#  printf "\e[0Ksection_start:`date +%s`:${SNAP}_submission[collapsed=true]\r\e[0KPublishing snap to Snap Store\n"
-#  snapcraft upload --release=$TRACK/stable $output_dir/${SNAP}
-#  printf "\e[0Ksection_end:`date +%s`:${SNAP}_submission\r\e[0K\n"
-#fi
+# (the credentials are stored on SNAPCRAFT_STORE_CREDENTIALS protected var)
+if [ "$CI_COMMIT_TAG" = "$(git describe --all | sed 's|tags/||')" ]; then
+  printf "\e[0Ksection_start:`date +%s`:${SNAP}_submission[collapsed=true]\r\e[0KPublishing snap to Snap Store\n"
+  snapcraft upload --release=$TRACK/stable $output_dir/${SNAP}
+  printf "\e[0Ksection_end:`date +%s`:${SNAP}_submission\r\e[0K\n"
+fi
 done
 
 rm snapcraft.yaml
