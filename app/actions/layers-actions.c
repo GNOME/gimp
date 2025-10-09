@@ -196,7 +196,7 @@ static const GimpActionEntry layers_actions[] =
 
   { "layers-retrieve", GIMP_ICON_TOOL_TEXT,
     NC_("layers-action", "_Retrieve Layers Information"), NULL, { NULL },
-    NC_("layers-action", "Turn rasterized layers back into a text, link or vector layers"),
+    NC_("layers-action", "Turn rasterized layers back into text, link or vector layers"),
     layers_retrieve_cmd_callback,
     GIMP_HELP_LAYER_TEXT_DISCARD },
 
