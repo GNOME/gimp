@@ -26,6 +26,7 @@
         <item><attribute name="action">app.paths-lower</attribute></item>
         <item><attribute name="action">app.paths-duplicate</attribute></item>
         <item><attribute name="action">app.paths-delete</attribute></item>
+        <item><attribute name="action">app.paths-merge-selected</attribute></item>
         <item><attribute name="action">app.paths-merge-visible</attribute></item>
       </section>
       <section>
