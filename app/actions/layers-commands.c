@@ -1152,6 +1152,8 @@ layers_retrieve_cmd_callback (GimpAction *action,
         gimp_link_layer_monitor (GIMP_LINK_LAYER (iter->data));
       else if (GIMP_IS_TEXT_LAYER (iter->data) && ! gimp_item_is_text_layer (iter->data))
         gimp_text_layer_retrieve (GIMP_TEXT_LAYER (iter->data));
+      else if (GIMP_IS_VECTOR_LAYER (iter->data) && ! gimp_item_is_vector_layer (iter->data))
+        gimp_vector_layer_retrieve (GIMP_VECTOR_LAYER (iter->data));
     }
 
   gimp_image_undo_group_end (image);

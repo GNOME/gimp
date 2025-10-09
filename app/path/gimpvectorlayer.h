@@ -62,6 +62,7 @@ GimpVectorLayerOptions  * gimp_vector_layer_get_options (GimpVectorLayer *layer)
 
 void                      gimp_vector_layer_refresh     (GimpVectorLayer *layer);
 void                      gimp_vector_layer_discard     (GimpVectorLayer *layer);
+void                      gimp_vector_layer_retrieve    (GimpVectorLayer *layer);
 
 gboolean                  gimp_item_is_vector_layer     (GimpItem        *item);
 

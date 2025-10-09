@@ -658,28 +658,48 @@ gimp_vector_layer_refresh (GimpVectorLayer *layer)
 void
 gimp_vector_layer_discard (GimpVectorLayer *layer)
 {
+  GimpImage *image;
+
   g_return_if_fail (GIMP_IS_VECTOR_LAYER (layer));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)));
 
-  if (! layer->options)
+  if (layer->modified)
     return;
 
-  if (layer->options->path)
-    gimp_image_undo_push_vector_layer (gimp_item_get_image (GIMP_ITEM (layer)),
-                                       _("Discard Vector Information"),
-                                       layer, NULL);
+  image = gimp_item_get_image (GIMP_ITEM (layer));
 
-  g_object_set (layer, "vector-layer-options", NULL, NULL);
+  gimp_image_undo_push_vector_layer_modified (image, NULL, layer);
+  g_object_set (layer, "modified", TRUE, NULL);
 
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));
   gimp_image_flush (gimp_item_get_image (GIMP_ITEM (layer)));
 }
 
+void
+gimp_vector_layer_retrieve (GimpVectorLayer *layer)
+{
+  GimpImage *image;
+
+  g_return_if_fail (GIMP_IS_VECTOR_LAYER (layer));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)));
+
+  if (! layer->modified)
+    return;
+
+  image = gimp_item_get_image (GIMP_ITEM (layer));
+
+  gimp_image_undo_push_vector_layer_modified (image, NULL, layer);
+  gimp_image_undo_push_drawable_mod (image, NULL, GIMP_DRAWABLE (layer), TRUE);
+  g_object_set (layer, "modified", FALSE, NULL);
+
+  gimp_vector_layer_render (layer);
+  gimp_image_flush (image);
+}
+
 gboolean
 gimp_item_is_vector_layer (GimpItem *item)
 {
-  return (GIMP_IS_VECTOR_LAYER (item) &&
-          GIMP_VECTOR_LAYER (item)->options);
+  return (GIMP_IS_VECTOR_LAYER (item) && ! GIMP_VECTOR_LAYER (item)->modified);
 }
 
 
