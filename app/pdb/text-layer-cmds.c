@@ -36,6 +36,7 @@
 #include "pdb-types.h"
 
 #include "core/gimpcontext.h"
+#include "core/gimpdashpattern.h"
 #include "core/gimpimage.h"
 #include "core/gimpparamspecs.h"
 #include "text/gimpfont.h"
@@ -958,6 +959,526 @@ text_layer_set_letter_spacing_invoker (GimpProcedure         *procedure,
       gimp_text_layer_set (layer,
                            _("Set text layer attribute"),
                            "letter-spacing", letter_spacing,
+                           NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+text_layer_get_outline_invoker (GimpProcedure         *procedure,
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpTextLayer *layer;
+  gint outline = 0;
+
+  layer = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      g_object_get (gimp_text_layer_get_text (layer),
+                    "outline", &outline,
+                    NULL);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_enum (gimp_value_array_index (return_vals, 1), outline);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+text_layer_set_outline_invoker (GimpProcedure         *procedure,
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
+{
+  gboolean success = TRUE;
+  GimpTextLayer *layer;
+  gint outline;
+
+  layer = g_value_get_object (gimp_value_array_index (args, 0));
+  outline = g_value_get_enum (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      gimp_text_layer_set (layer,
+                           _("Set text layer attribute"),
+                           "outline", outline,
+                           NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+text_layer_get_outline_antialias_invoker (GimpProcedure         *procedure,
+                                          Gimp                  *gimp,
+                                          GimpContext           *context,
+                                          GimpProgress          *progress,
+                                          const GimpValueArray  *args,
+                                          GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpTextLayer *layer;
+  gboolean outline_antialias = FALSE;
+
+  layer = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+       g_object_get (gimp_text_layer_get_text (layer),
+                     "outline-antialias", &outline_antialias,
+                     NULL);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_boolean (gimp_value_array_index (return_vals, 1), outline_antialias);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+text_layer_set_outline_antialias_invoker (GimpProcedure         *procedure,
+                                          Gimp                  *gimp,
+                                          GimpContext           *context,
+                                          GimpProgress          *progress,
+                                          const GimpValueArray  *args,
+                                          GError               **error)
+{
+  gboolean success = TRUE;
+  GimpTextLayer *layer;
+  gboolean outline_antialias;
+
+  layer = g_value_get_object (gimp_value_array_index (args, 0));
+  outline_antialias = g_value_get_boolean (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      gimp_text_layer_set (layer,
+                           _("Set text layer attribute"),
+                           "outline-antialias", outline_antialias,
+                           NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+text_layer_get_outline_cap_style_invoker (GimpProcedure         *procedure,
+                                          Gimp                  *gimp,
+                                          GimpContext           *context,
+                                          GimpProgress          *progress,
+                                          const GimpValueArray  *args,
+                                          GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpTextLayer *layer;
+  gint outline_cap_style = 0;
+
+  layer = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      g_object_get (gimp_text_layer_get_text (layer),
+                    "outline-cap-style", &outline_cap_style,
+                    NULL);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_enum (gimp_value_array_index (return_vals, 1), outline_cap_style);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+text_layer_set_outline_cap_style_invoker (GimpProcedure         *procedure,
+                                          Gimp                  *gimp,
+                                          GimpContext           *context,
+                                          GimpProgress          *progress,
+                                          const GimpValueArray  *args,
+                                          GError               **error)
+{
+  gboolean success = TRUE;
+  GimpTextLayer *layer;
+  gint outline_cap_style;
+
+  layer = g_value_get_object (gimp_value_array_index (args, 0));
+  outline_cap_style = g_value_get_enum (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      gimp_text_layer_set (layer,
+                           _("Set text layer attribute"),
+                           "outline-cap-style", outline_cap_style,
+                           NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+text_layer_get_outline_color_invoker (GimpProcedure         *procedure,
+                                      Gimp                  *gimp,
+                                      GimpContext           *context,
+                                      GimpProgress          *progress,
+                                      const GimpValueArray  *args,
+                                      GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpTextLayer *layer;
+  GeglColor *color = NULL;
+
+  layer = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      color = gegl_color_duplicate (gimp_text_layer_get_text (layer)->outline_foreground);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_object (gimp_value_array_index (return_vals, 1), color);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+text_layer_set_outline_color_invoker (GimpProcedure         *procedure,
+                                      Gimp                  *gimp,
+                                      GimpContext           *context,
+                                      GimpProgress          *progress,
+                                      const GimpValueArray  *args,
+                                      GError               **error)
+{
+  gboolean success = TRUE;
+  GimpTextLayer *layer;
+  GeglColor *color;
+
+  layer = g_value_get_object (gimp_value_array_index (args, 0));
+  color = g_value_get_object (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      gimp_text_layer_set (layer,
+                           _("Set text layer attribute"),
+                           "outline-foreground", color,
+                           NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+text_layer_get_outline_dash_offset_invoker (GimpProcedure         *procedure,
+                                            Gimp                  *gimp,
+                                            GimpContext           *context,
+                                            GimpProgress          *progress,
+                                            const GimpValueArray  *args,
+                                            GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpTextLayer *layer;
+  gdouble outline_dash_offset = 0.0;
+
+  layer = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+       g_object_get (gimp_text_layer_get_text (layer),
+                     "outline-dash-offset", &outline_dash_offset,
+                     NULL);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_double (gimp_value_array_index (return_vals, 1), outline_dash_offset);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+text_layer_set_outline_dash_offset_invoker (GimpProcedure         *procedure,
+                                            Gimp                  *gimp,
+                                            GimpContext           *context,
+                                            GimpProgress          *progress,
+                                            const GimpValueArray  *args,
+                                            GError               **error)
+{
+  gboolean success = TRUE;
+  GimpTextLayer *layer;
+  gdouble outline_dash_offset;
+
+  layer = g_value_get_object (gimp_value_array_index (args, 0));
+  outline_dash_offset = g_value_get_double (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      gimp_text_layer_set (layer,
+                           _("Set text layer attribute"),
+                           "outline-dash-offset", outline_dash_offset,
+                           NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+text_layer_get_outline_direction_invoker (GimpProcedure         *procedure,
+                                          Gimp                  *gimp,
+                                          GimpContext           *context,
+                                          GimpProgress          *progress,
+                                          const GimpValueArray  *args,
+                                          GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpTextLayer *layer;
+  gint outline_direction = 0;
+
+  layer = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      g_object_get (gimp_text_layer_get_text (layer),
+                    "outline-direction", &outline_direction,
+                    NULL);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_enum (gimp_value_array_index (return_vals, 1), outline_direction);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+text_layer_set_outline_direction_invoker (GimpProcedure         *procedure,
+                                          Gimp                  *gimp,
+                                          GimpContext           *context,
+                                          GimpProgress          *progress,
+                                          const GimpValueArray  *args,
+                                          GError               **error)
+{
+  gboolean success = TRUE;
+  GimpTextLayer *layer;
+  gint outline_direction;
+
+  layer = g_value_get_object (gimp_value_array_index (args, 0));
+  outline_direction = g_value_get_enum (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      gimp_text_layer_set (layer,
+                           _("Set text layer attribute"),
+                           "outline-direction", outline_direction,
+                           NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+text_layer_get_outline_join_style_invoker (GimpProcedure         *procedure,
+                                           Gimp                  *gimp,
+                                           GimpContext           *context,
+                                           GimpProgress          *progress,
+                                           const GimpValueArray  *args,
+                                           GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpTextLayer *layer;
+  gint outline_join_style = 0;
+
+  layer = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      g_object_get (gimp_text_layer_get_text (layer),
+                    "outline-join-style", &outline_join_style,
+                    NULL);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_enum (gimp_value_array_index (return_vals, 1), outline_join_style);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+text_layer_set_outline_join_style_invoker (GimpProcedure         *procedure,
+                                           Gimp                  *gimp,
+                                           GimpContext           *context,
+                                           GimpProgress          *progress,
+                                           const GimpValueArray  *args,
+                                           GError               **error)
+{
+  gboolean success = TRUE;
+  GimpTextLayer *layer;
+  gint outline_join_style;
+
+  layer = g_value_get_object (gimp_value_array_index (args, 0));
+  outline_join_style = g_value_get_enum (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      gimp_text_layer_set (layer,
+                           _("Set text layer attribute"),
+                           "outline-join-style", outline_join_style,
+                           NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+text_layer_get_outline_miter_limit_invoker (GimpProcedure         *procedure,
+                                            Gimp                  *gimp,
+                                            GimpContext           *context,
+                                            GimpProgress          *progress,
+                                            const GimpValueArray  *args,
+                                            GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpTextLayer *layer;
+  gdouble outline_miter_limit = 0.0;
+
+  layer = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+       g_object_get (gimp_text_layer_get_text (layer),
+                     "outline-miter-limit", &outline_miter_limit,
+                     NULL);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_double (gimp_value_array_index (return_vals, 1), outline_miter_limit);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+text_layer_set_outline_miter_limit_invoker (GimpProcedure         *procedure,
+                                            Gimp                  *gimp,
+                                            GimpContext           *context,
+                                            GimpProgress          *progress,
+                                            const GimpValueArray  *args,
+                                            GError               **error)
+{
+  gboolean success = TRUE;
+  GimpTextLayer *layer;
+  gdouble outline_miter_limit;
+
+  layer = g_value_get_object (gimp_value_array_index (args, 0));
+  outline_miter_limit = g_value_get_double (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      gimp_text_layer_set (layer,
+                           _("Set text layer attribute"),
+                           "outline-miter-limit", outline_miter_limit,
+                           NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+text_layer_get_outline_width_invoker (GimpProcedure         *procedure,
+                                      Gimp                  *gimp,
+                                      GimpContext           *context,
+                                      GimpProgress          *progress,
+                                      const GimpValueArray  *args,
+                                      GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpTextLayer *layer;
+  gdouble outline_width = 0.0;
+
+  layer = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+       g_object_get (gimp_text_layer_get_text (layer),
+                     "outline-width", &outline_width,
+                     NULL);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_double (gimp_value_array_index (return_vals, 1), outline_width);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+text_layer_set_outline_width_invoker (GimpProcedure         *procedure,
+                                      Gimp                  *gimp,
+                                      GimpContext           *context,
+                                      GimpProgress          *progress,
+                                      const GimpValueArray  *args,
+                                      GError               **error)
+{
+  gboolean success = TRUE;
+  GimpTextLayer *layer;
+  gdouble outline_width;
+
+  layer = g_value_get_object (gimp_value_array_index (args, 0));
+  outline_width = g_value_get_double (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      gimp_text_layer_set (layer,
+                           _("Set text layer attribute"),
+                           "outline-width", outline_width,
                            NULL);
     }
 
@@ -1916,6 +2437,538 @@ register_text_layer_procs (GimpPDB *pdb)
                                                     "letter spacing",
                                                     "The additional letter spacing to use.",
                                                     -8192.0, 8192.0, -8192.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-text-layer-get-outline
+   */
+  procedure = gimp_procedure_new (text_layer_get_outline_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-layer-get-outline");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the outline type from a text layer.",
+                                  "This procedure returns the outline type of a text layer.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_enum ("outline",
+                                                      "outline",
+                                                      "The type of outline in the text layer",
+                                                      GIMP_TYPE_TEXT_OUTLINE,
+                                                      GIMP_TEXT_OUTLINE_NONE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-text-layer-set-outline
+   */
+  procedure = gimp_procedure_new (text_layer_set_outline_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-layer-set-outline");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the outline type for the text layer.",
+                                  "This procedure sets the type of the outline in the text layer 'layer'.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("outline",
+                                                  "outline",
+                                                  "The type of outline in the text layer",
+                                                  GIMP_TYPE_TEXT_OUTLINE,
+                                                  GIMP_TEXT_OUTLINE_NONE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-text-layer-get-outline-antialias
+   */
+  procedure = gimp_procedure_new (text_layer_get_outline_antialias_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-layer-get-outline-antialias");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the outline antialias setting from a text layer.",
+                                  "This procedure returns the antialias setting of the text outline in a text layer.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("outline-antialias",
+                                                         "outline antialias",
+                                                         "The text outline antialias setting",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-text-layer-set-outline-antialias
+   */
+  procedure = gimp_procedure_new (text_layer_set_outline_antialias_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-layer-set-outline-antialias");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the outline antialias setting from a text layer.",
+                                  "This procedure sets the text outline antialias in the text layer 'layer'.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("outline-antialias",
+                                                     "outline antialias",
+                                                     "The text outline antialias setting",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-text-layer-get-outline-cap-style
+   */
+  procedure = gimp_procedure_new (text_layer_get_outline_cap_style_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-layer-get-outline-cap-style");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the outline cap style from a text layer.",
+                                  "This procedure returns the outline cap style of a text layer.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_enum ("outline-cap-style",
+                                                      "outline cap style",
+                                                      "The cap style of the outline in the text layer",
+                                                      GIMP_TYPE_CAP_STYLE,
+                                                      GIMP_CAP_BUTT,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-text-layer-set-outline-cap-style
+   */
+  procedure = gimp_procedure_new (text_layer_set_outline_cap_style_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-layer-set-outline-cap-style");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the outline cap style for the text layer.",
+                                  "This procedure sets the cap style of the outline in the text layer 'layer'.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("outline-cap-style",
+                                                  "outline cap style",
+                                                  "The cap style of the outline in the text layer",
+                                                  GIMP_TYPE_CAP_STYLE,
+                                                  GIMP_CAP_BUTT,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-text-layer-get-outline-color
+   */
+  procedure = gimp_procedure_new (text_layer_get_outline_color_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-layer-get-outline-color");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the color of the text outline in a text layer.",
+                                  "This procedure returns the color of the text outline in a text layer.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer.",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_color ("color",
+                                                          "color",
+                                                          "The color of the text outline.",
+                                                          FALSE,
+                                                          NULL,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-text-layer-set-outline-color
+   */
+  procedure = gimp_procedure_new (text_layer_set_outline_color_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-layer-set-outline-color");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the color of the text outline in the text layer.",
+                                  "This procedure sets the outline color in the text layer 'layer'.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_color ("color",
+                                                      "color",
+                                                      "The color to use for the text outline.",
+                                                      FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-text-layer-get-outline-dash-offset
+   */
+  procedure = gimp_procedure_new (text_layer_get_outline_dash_offset_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-layer-get-outline-dash-offset");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the outline dash offset from a text layer.",
+                                  "This procedure returns the dash offset of the text outline in a text layer.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("outline-dash-offset",
+                                                        "outline dash offset",
+                                                        "The text outline dash offset",
+                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-text-layer-set-outline-dash-offset
+   */
+  procedure = gimp_procedure_new (text_layer_set_outline_dash_offset_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-layer-set-outline-dash-offset");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the outline dash offset from a text layer.",
+                                  "This procedure sets the outline dash offset in the text layer 'layer'.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("outline-dash-offset",
+                                                    "outline dash offset",
+                                                    "The text outline dash offset",
+                                                    0.0, 2000.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-text-layer-get-outline-direction
+   */
+  procedure = gimp_procedure_new (text_layer_get_outline_direction_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-layer-get-outline-direction");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the outline direction from a text layer.",
+                                  "This procedure returns the outline direction of a text layer.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_enum ("outline-direction",
+                                                      "outline direction",
+                                                      "The direction of the outline in the text layer",
+                                                      GIMP_TYPE_TEXT_OUTLINE_DIRECTION,
+                                                      GIMP_TEXT_OUTLINE_DIRECTION_OUTER,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-text-layer-set-outline-direction
+   */
+  procedure = gimp_procedure_new (text_layer_set_outline_direction_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-layer-set-outline-direction");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the outline direction for the text layer.",
+                                  "This procedure sets the direction of the outline in the text layer 'layer'.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("outline-direction",
+                                                  "outline direction",
+                                                  "The direction of the outline in the text layer",
+                                                  GIMP_TYPE_TEXT_OUTLINE_DIRECTION,
+                                                  GIMP_TEXT_OUTLINE_DIRECTION_OUTER,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-text-layer-get-outline-join-style
+   */
+  procedure = gimp_procedure_new (text_layer_get_outline_join_style_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-layer-get-outline-join-style");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the outline join style from a text layer.",
+                                  "This procedure returns the outline join style of a text layer.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_enum ("outline-join-style",
+                                                      "outline join style",
+                                                      "The join style of the outline in the text layer",
+                                                      GIMP_TYPE_JOIN_STYLE,
+                                                      GIMP_JOIN_MITER,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-text-layer-set-outline-join-style
+   */
+  procedure = gimp_procedure_new (text_layer_set_outline_join_style_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-layer-set-outline-join-style");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the outline join style for the text layer.",
+                                  "This procedure sets the join style of the outline in the text layer 'layer'.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("outline-join-style",
+                                                  "outline join style",
+                                                  "The join style of the outline in the text layer",
+                                                  GIMP_TYPE_JOIN_STYLE,
+                                                  GIMP_JOIN_MITER,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-text-layer-get-outline-miter-limit
+   */
+  procedure = gimp_procedure_new (text_layer_get_outline_miter_limit_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-layer-get-outline-miter-limit");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the outline miter limit from a text layer.",
+                                  "This procedure returns the miter limit of the text outline in a text layer.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("outline-miter-limit",
+                                                        "outline miter limit",
+                                                        "The text outline miter limit",
+                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-text-layer-set-outline-miter-limit
+   */
+  procedure = gimp_procedure_new (text_layer_set_outline_miter_limit_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-layer-set-outline-miter-limit");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the outline miter limit from a text layer.",
+                                  "This procedure sets the text outline miter limit in the text layer 'layer'.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("outline-miter-limit",
+                                                    "outline miter limit",
+                                                    "The text outline miter limit",
+                                                    0.0, 100.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-text-layer-get-outline-width
+   */
+  procedure = gimp_procedure_new (text_layer_get_outline_width_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-layer-get-outline-width");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the outline width from a text layer.",
+                                  "This procedure returns the color of the text outline in a text layer.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("outline-width",
+                                                        "outline width",
+                                                        "The text outline width",
+                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-text-layer-set-outline-width
+   */
+  procedure = gimp_procedure_new (text_layer_set_outline_width_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-layer-set-outline-width");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the outline width from a text layer.",
+                                  "This procedure sets the text outline color in the text layer 'layer'.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("outline-width",
+                                                    "outline width",
+                                                    "The text outline width",
+                                                    0.0, 8192.0, 0.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

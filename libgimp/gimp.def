@@ -1063,6 +1063,15 @@ EXPORTS
 	gimp_text_layer_get_letter_spacing
 	gimp_text_layer_get_line_spacing
 	gimp_text_layer_get_markup
+	gimp_text_layer_get_outline
+	gimp_text_layer_get_outline_antialias
+	gimp_text_layer_get_outline_cap_style
+	gimp_text_layer_get_outline_color
+	gimp_text_layer_get_outline_dash_offset
+	gimp_text_layer_get_outline_direction
+	gimp_text_layer_get_outline_join_style
+	gimp_text_layer_get_outline_miter_limit
+	gimp_text_layer_get_outline_width
 	gimp_text_layer_get_text
 	gimp_text_layer_get_type
 	gimp_text_layer_new
@@ -1080,6 +1089,15 @@ EXPORTS
 	gimp_text_layer_set_letter_spacing
 	gimp_text_layer_set_line_spacing
 	gimp_text_layer_set_markup
+	gimp_text_layer_set_outline
+	gimp_text_layer_set_outline_antialias
+	gimp_text_layer_set_outline_cap_style
+	gimp_text_layer_set_outline_color
+	gimp_text_layer_set_outline_dash_offset
+	gimp_text_layer_set_outline_direction
+	gimp_text_layer_set_outline_join_style
+	gimp_text_layer_set_outline_miter_limit
+	gimp_text_layer_set_outline_width
 	gimp_text_layer_set_text
 	gimp_thumbnail_procedure_get_type
 	gimp_thumbnail_procedure_new

@@ -967,6 +967,526 @@ CODE
     );
 }
 
+sub text_layer_get_outline {
+    $blurb = 'Get the outline type from a text layer.';
+
+    $help = <<'HELP';
+This procedure returns the outline type of a text layer.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'text_layer',
+          desc => 'The text layer' }
+    );
+
+    @outargs = (
+        { name => 'outline', type => 'enum GimpTextOutline',
+          desc => 'The type of outline in the text layer' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  g_object_get (gimp_text_layer_get_text (layer),
+                "outline", &outline,
+                NULL);
+}
+CODE
+    );
+}
+
+sub text_layer_set_outline {
+    $blurb = 'Set the outline type for the text layer.';
+
+    $help = <<'HELP';
+This procedure sets the type of the outline in the text layer 'layer'.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'text_layer',
+          desc => 'The text layer' },
+        { name => 'outline', type => 'enum GimpTextOutline',
+          desc => 'The type of outline in the text layer' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  gimp_text_layer_set (layer,
+                       _("Set text layer attribute"),
+                       "outline", outline,
+                       NULL);
+}
+CODE
+    );
+}
+
+sub text_layer_get_outline_antialias {
+    $blurb = 'Get the outline antialias setting from a text layer.';
+
+    $help = <<'HELP';
+This procedure returns the antialias setting of the text outline in a text layer.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'text_layer',
+          desc => 'The text layer' }
+    );
+
+    @outargs = (
+        { name => 'outline_antialias', type => 'boolean',
+          desc => 'The text outline antialias setting' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+   g_object_get (gimp_text_layer_get_text (layer),
+                 "outline-antialias", &outline_antialias,
+                 NULL);
+}
+CODE
+    );
+}
+
+sub text_layer_set_outline_antialias {
+    $blurb = 'Set the outline antialias setting from a text layer.';
+
+    $help = <<'HELP';
+This procedure sets the text outline antialias in the text layer 'layer'.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'text_layer',
+          desc => 'The text layer' },
+        { name => 'outline_antialias', type => 'boolean',
+          desc => 'The text outline antialias setting' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  gimp_text_layer_set (layer,
+                       _("Set text layer attribute"),
+                       "outline-antialias", outline_antialias,
+                       NULL);
+}
+CODE
+    );
+}
+
+sub text_layer_get_outline_cap_style {
+    $blurb = 'Get the outline cap style from a text layer.';
+
+    $help = <<'HELP';
+This procedure returns the outline cap style of a text layer.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'text_layer',
+          desc => 'The text layer' }
+    );
+
+    @outargs = (
+        { name => 'outline_cap_style', type => 'enum GimpCapStyle',
+          desc => 'The cap style of the outline in the text layer' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  g_object_get (gimp_text_layer_get_text (layer),
+                "outline-cap-style", &outline_cap_style,
+                NULL);
+}
+CODE
+    );
+}
+
+sub text_layer_set_outline_cap_style {
+    $blurb = 'Set the outline cap style for the text layer.';
+
+    $help = <<'HELP';
+This procedure sets the cap style of the outline in the text layer 'layer'.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'text_layer',
+          desc => 'The text layer' },
+        { name => 'outline_cap_style', type => 'enum GimpCapStyle',
+          desc => 'The cap style of the outline in the text layer' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  gimp_text_layer_set (layer,
+                       _("Set text layer attribute"),
+                       "outline-cap-style", outline_cap_style,
+                       NULL);
+}
+CODE
+    );
+}
+
+sub text_layer_get_outline_color {
+    $blurb = 'Get the color of the text outline in a text layer.';
+
+    $help = <<'HELP';
+This procedure returns the color of the text outline in a text layer.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'text_layer',
+          desc => 'The text layer.' }
+    );
+
+    @outargs = (
+        { name => 'color', type => 'geglcolor',
+          desc => 'The color of the text outline.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  color = gegl_color_duplicate (gimp_text_layer_get_text (layer)->outline_foreground);
+}
+CODE
+    );
+}
+
+sub text_layer_set_outline_color {
+    $blurb = 'Set the color of the text outline in the text layer.';
+
+    $help = <<'HELP';
+This procedure sets the outline color in the text layer 'layer'.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'text_layer',
+          desc => 'The text layer' },
+        { name => 'color', type => 'geglcolor',
+          desc => 'The color to use for the text outline.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  gimp_text_layer_set (layer,
+                       _("Set text layer attribute"),
+                       "outline-foreground", color,
+                       NULL);
+}
+CODE
+    );
+}
+
+sub text_layer_get_outline_dash_offset {
+    $blurb = 'Get the outline dash offset from a text layer.';
+
+    $help = <<'HELP';
+This procedure returns the dash offset of the text outline in a text layer.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'text_layer',
+          desc => 'The text layer' }
+    );
+
+    @outargs = (
+        { name => 'outline_dash_offset', type => 'double',
+          desc => 'The text outline dash offset' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+   g_object_get (gimp_text_layer_get_text (layer),
+                 "outline-dash-offset", &outline_dash_offset,
+                 NULL);
+}
+CODE
+    );
+}
+
+sub text_layer_set_outline_dash_offset {
+    $blurb = 'Set the outline dash offset from a text layer.';
+
+    $help = <<'HELP';
+This procedure sets the outline dash offset in the text layer 'layer'.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'text_layer',
+          desc => 'The text layer' },
+        { name => 'outline_dash_offset', type => '0.0 <= double <= 2000.0',
+          desc => 'The text outline dash offset' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  gimp_text_layer_set (layer,
+                       _("Set text layer attribute"),
+                       "outline-dash-offset", outline_dash_offset,
+                       NULL);
+}
+CODE
+    );
+}
+
+sub text_layer_get_outline_direction {
+    $blurb = 'Get the outline direction from a text layer.';
+
+    $help = <<'HELP';
+This procedure returns the outline direction of a text layer.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'text_layer',
+          desc => 'The text layer' }
+    );
+
+    @outargs = (
+        { name => 'outline_direction', type => 'enum GimpTextOutlineDirection',
+          desc => 'The direction of the outline in the text layer' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  g_object_get (gimp_text_layer_get_text (layer),
+                "outline-direction", &outline_direction,
+                NULL);
+}
+CODE
+    );
+}
+
+sub text_layer_set_outline_direction {
+    $blurb = 'Set the outline direction for the text layer.';
+
+    $help = <<'HELP';
+This procedure sets the direction of the outline in the text layer 'layer'.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'text_layer',
+          desc => 'The text layer' },
+        { name => 'outline_direction', type => 'enum GimpTextOutlineDirection',
+          desc => 'The direction of the outline in the text layer' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  gimp_text_layer_set (layer,
+                       _("Set text layer attribute"),
+                       "outline-direction", outline_direction,
+                       NULL);
+}
+CODE
+    );
+}
+
+sub text_layer_get_outline_join_style {
+    $blurb = 'Get the outline join style from a text layer.';
+
+    $help = <<'HELP';
+This procedure returns the outline join style of a text layer.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'text_layer',
+          desc => 'The text layer' }
+    );
+
+    @outargs = (
+        { name => 'outline_join_style', type => 'enum GimpJoinStyle',
+          desc => 'The join style of the outline in the text layer' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  g_object_get (gimp_text_layer_get_text (layer),
+                "outline-join-style", &outline_join_style,
+                NULL);
+}
+CODE
+    );
+}
+
+sub text_layer_set_outline_join_style {
+    $blurb = 'Set the outline join style for the text layer.';
+
+    $help = <<'HELP';
+This procedure sets the join style of the outline in the text layer 'layer'.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'text_layer',
+          desc => 'The text layer' },
+        { name => 'outline_join_style', type => 'enum GimpJoinStyle',
+          desc => 'The join style of the outline in the text layer' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  gimp_text_layer_set (layer,
+                       _("Set text layer attribute"),
+                       "outline-join-style", outline_join_style,
+                       NULL);
+}
+CODE
+    );
+}
+
+sub text_layer_get_outline_miter_limit {
+    $blurb = 'Get the outline miter limit from a text layer.';
+
+    $help = <<'HELP';
+This procedure returns the miter limit of the text outline in a text layer.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'text_layer',
+          desc => 'The text layer' }
+    );
+
+    @outargs = (
+        { name => 'outline_miter_limit', type => 'double',
+          desc => 'The text outline miter limit' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+   g_object_get (gimp_text_layer_get_text (layer),
+                 "outline-miter-limit", &outline_miter_limit,
+                 NULL);
+}
+CODE
+    );
+}
+
+sub text_layer_set_outline_miter_limit {
+    $blurb = 'Set the outline miter limit from a text layer.';
+
+    $help = <<'HELP';
+This procedure sets the text outline miter limit in the text layer 'layer'.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'text_layer',
+          desc => 'The text layer' },
+        { name => 'outline_miter_limit', type => '0.0 <= double <= 100.0',
+          desc => 'The text outline miter limit' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  gimp_text_layer_set (layer,
+                       _("Set text layer attribute"),
+                       "outline-miter-limit", outline_miter_limit,
+                       NULL);
+}
+CODE
+    );
+}
+
+sub text_layer_get_outline_width {
+    $blurb = 'Get the outline width from a text layer.';
+
+    $help = <<'HELP';
+This procedure returns the color of the text outline in a text layer.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'text_layer',
+          desc => 'The text layer' }
+    );
+
+    @outargs = (
+        { name => 'outline_width', type => 'double',
+          desc => 'The text outline width' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+   g_object_get (gimp_text_layer_get_text (layer),
+                 "outline-width", &outline_width,
+                 NULL);
+}
+CODE
+    );
+}
+
+sub text_layer_set_outline_width {
+    $blurb = 'Set the outline width from a text layer.';
+
+    $help = <<'HELP';
+This procedure sets the text outline color in the text layer 'layer'.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'text_layer',
+          desc => 'The text layer' },
+        { name => 'outline_width', type => '0.0 <= double <= 8192.0',
+          desc => 'The text outline width' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  gimp_text_layer_set (layer,
+                       _("Set text layer attribute"),
+                       "outline-width", outline_width,
+                       NULL);
+}
+CODE
+    );
+}
+
 sub text_layer_resize {
     $blurb = 'Resize the box of a text layer.';
 
@@ -1015,6 +1535,7 @@ CODE
 @headers = qw(<pango/pango.h>
               "libgimpbase/gimpbase.h"
               "core/gimpcontext.h"
+              "core/gimpdashpattern.h"
               "text/gimpfont.h"
               "text/gimptext.h"
               "text/gimptextlayer.h"
@@ -1051,6 +1572,24 @@ CODE
             text_layer_set_line_spacing
             text_layer_get_letter_spacing
             text_layer_set_letter_spacing
+            text_layer_get_outline
+            text_layer_set_outline
+            text_layer_get_outline_antialias
+            text_layer_set_outline_antialias
+            text_layer_get_outline_cap_style
+            text_layer_set_outline_cap_style
+            text_layer_get_outline_color
+            text_layer_set_outline_color
+            text_layer_get_outline_dash_offset
+            text_layer_set_outline_dash_offset
+            text_layer_get_outline_direction
+            text_layer_set_outline_direction
+            text_layer_get_outline_join_style
+            text_layer_set_outline_join_style
+            text_layer_get_outline_miter_limit
+            text_layer_set_outline_miter_limit
+            text_layer_get_outline_width
+            text_layer_set_outline_width
             text_layer_resize);
 
 %exports = (app => [@procs], lib => [@procs]);

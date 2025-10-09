@@ -1175,6 +1175,685 @@ gimp_text_layer_set_letter_spacing (GimpTextLayer *layer,
 }
 
 /**
+ * gimp_text_layer_get_outline:
+ * @layer: The text layer.
+ *
+ * Get the outline type from a text layer.
+ *
+ * This procedure returns the outline type of a text layer.
+ *
+ * Returns: The type of outline in the text layer.
+ *
+ * Since: 3.2
+ **/
+GimpTextOutline
+gimp_text_layer_get_outline (GimpTextLayer *layer)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpTextOutline outline = 0;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-text-layer-get-outline",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    outline = GIMP_VALUES_GET_ENUM (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return outline;
+}
+
+/**
+ * gimp_text_layer_set_outline:
+ * @layer: The text layer.
+ * @outline: The type of outline in the text layer.
+ *
+ * Set the outline type for the text layer.
+ *
+ * This procedure sets the type of the outline in the text layer
+ * 'layer'.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_text_layer_set_outline (GimpTextLayer   *layer,
+                             GimpTextOutline  outline)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
+                                          GIMP_TYPE_TEXT_OUTLINE, outline,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-text-layer-set-outline",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_text_layer_get_outline_antialias:
+ * @layer: The text layer.
+ *
+ * Get the outline antialias setting from a text layer.
+ *
+ * This procedure returns the antialias setting of the text outline in
+ * a text layer.
+ *
+ * Returns: The text outline antialias setting.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_text_layer_get_outline_antialias (GimpTextLayer *layer)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean outline_antialias = FALSE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-text-layer-get-outline-antialias",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    outline_antialias = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return outline_antialias;
+}
+
+/**
+ * gimp_text_layer_set_outline_antialias:
+ * @layer: The text layer.
+ * @outline_antialias: The text outline antialias setting.
+ *
+ * Set the outline antialias setting from a text layer.
+ *
+ * This procedure sets the text outline antialias in the text layer
+ * 'layer'.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_text_layer_set_outline_antialias (GimpTextLayer *layer,
+                                       gboolean       outline_antialias)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
+                                          G_TYPE_BOOLEAN, outline_antialias,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-text-layer-set-outline-antialias",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_text_layer_get_outline_cap_style:
+ * @layer: The text layer.
+ *
+ * Get the outline cap style from a text layer.
+ *
+ * This procedure returns the outline cap style of a text layer.
+ *
+ * Returns: The cap style of the outline in the text layer.
+ *
+ * Since: 3.2
+ **/
+GimpCapStyle
+gimp_text_layer_get_outline_cap_style (GimpTextLayer *layer)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpCapStyle outline_cap_style = 0;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-text-layer-get-outline-cap-style",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    outline_cap_style = GIMP_VALUES_GET_ENUM (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return outline_cap_style;
+}
+
+/**
+ * gimp_text_layer_set_outline_cap_style:
+ * @layer: The text layer.
+ * @outline_cap_style: The cap style of the outline in the text layer.
+ *
+ * Set the outline cap style for the text layer.
+ *
+ * This procedure sets the cap style of the outline in the text layer
+ * 'layer'.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_text_layer_set_outline_cap_style (GimpTextLayer *layer,
+                                       GimpCapStyle   outline_cap_style)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
+                                          GIMP_TYPE_CAP_STYLE, outline_cap_style,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-text-layer-set-outline-cap-style",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_text_layer_get_outline_color:
+ * @layer: The text layer.
+ *
+ * Get the color of the text outline in a text layer.
+ *
+ * This procedure returns the color of the text outline in a text
+ * layer.
+ *
+ * Returns: (transfer full): The color of the text outline.
+ *
+ * Since: 3.2
+ **/
+GeglColor *
+gimp_text_layer_get_outline_color (GimpTextLayer *layer)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GeglColor *color = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-text-layer-get-outline-color",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    color = g_value_dup_object (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return color;
+}
+
+/**
+ * gimp_text_layer_set_outline_color:
+ * @layer: The text layer.
+ * @color: The color to use for the text outline.
+ *
+ * Set the color of the text outline in the text layer.
+ *
+ * This procedure sets the outline color in the text layer 'layer'.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_text_layer_set_outline_color (GimpTextLayer *layer,
+                                   GeglColor     *color)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
+                                          GEGL_TYPE_COLOR, color,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-text-layer-set-outline-color",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_text_layer_get_outline_dash_offset:
+ * @layer: The text layer.
+ *
+ * Get the outline dash offset from a text layer.
+ *
+ * This procedure returns the dash offset of the text outline in a text
+ * layer.
+ *
+ * Returns: The text outline dash offset.
+ *
+ * Since: 3.2
+ **/
+gdouble
+gimp_text_layer_get_outline_dash_offset (GimpTextLayer *layer)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gdouble outline_dash_offset = 0.0;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-text-layer-get-outline-dash-offset",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    outline_dash_offset = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return outline_dash_offset;
+}
+
+/**
+ * gimp_text_layer_set_outline_dash_offset:
+ * @layer: The text layer.
+ * @outline_dash_offset: The text outline dash offset.
+ *
+ * Set the outline dash offset from a text layer.
+ *
+ * This procedure sets the outline dash offset in the text layer
+ * 'layer'.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_text_layer_set_outline_dash_offset (GimpTextLayer *layer,
+                                         gdouble        outline_dash_offset)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
+                                          G_TYPE_DOUBLE, outline_dash_offset,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-text-layer-set-outline-dash-offset",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_text_layer_get_outline_direction:
+ * @layer: The text layer.
+ *
+ * Get the outline direction from a text layer.
+ *
+ * This procedure returns the outline direction of a text layer.
+ *
+ * Returns: The direction of the outline in the text layer.
+ *
+ * Since: 3.2
+ **/
+GimpTextOutlineDirection
+gimp_text_layer_get_outline_direction (GimpTextLayer *layer)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpTextOutlineDirection outline_direction = 0;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-text-layer-get-outline-direction",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    outline_direction = GIMP_VALUES_GET_ENUM (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return outline_direction;
+}
+
+/**
+ * gimp_text_layer_set_outline_direction:
+ * @layer: The text layer.
+ * @outline_direction: The direction of the outline in the text layer.
+ *
+ * Set the outline direction for the text layer.
+ *
+ * This procedure sets the direction of the outline in the text layer
+ * 'layer'.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_text_layer_set_outline_direction (GimpTextLayer            *layer,
+                                       GimpTextOutlineDirection  outline_direction)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
+                                          GIMP_TYPE_TEXT_OUTLINE_DIRECTION, outline_direction,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-text-layer-set-outline-direction",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_text_layer_get_outline_join_style:
+ * @layer: The text layer.
+ *
+ * Get the outline join style from a text layer.
+ *
+ * This procedure returns the outline join style of a text layer.
+ *
+ * Returns: The join style of the outline in the text layer.
+ *
+ * Since: 3.2
+ **/
+GimpJoinStyle
+gimp_text_layer_get_outline_join_style (GimpTextLayer *layer)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpJoinStyle outline_join_style = 0;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-text-layer-get-outline-join-style",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    outline_join_style = GIMP_VALUES_GET_ENUM (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return outline_join_style;
+}
+
+/**
+ * gimp_text_layer_set_outline_join_style:
+ * @layer: The text layer.
+ * @outline_join_style: The join style of the outline in the text layer.
+ *
+ * Set the outline join style for the text layer.
+ *
+ * This procedure sets the join style of the outline in the text layer
+ * 'layer'.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_text_layer_set_outline_join_style (GimpTextLayer *layer,
+                                        GimpJoinStyle  outline_join_style)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
+                                          GIMP_TYPE_JOIN_STYLE, outline_join_style,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-text-layer-set-outline-join-style",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_text_layer_get_outline_miter_limit:
+ * @layer: The text layer.
+ *
+ * Get the outline miter limit from a text layer.
+ *
+ * This procedure returns the miter limit of the text outline in a text
+ * layer.
+ *
+ * Returns: The text outline miter limit.
+ *
+ * Since: 3.2
+ **/
+gdouble
+gimp_text_layer_get_outline_miter_limit (GimpTextLayer *layer)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gdouble outline_miter_limit = 0.0;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-text-layer-get-outline-miter-limit",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    outline_miter_limit = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return outline_miter_limit;
+}
+
+/**
+ * gimp_text_layer_set_outline_miter_limit:
+ * @layer: The text layer.
+ * @outline_miter_limit: The text outline miter limit.
+ *
+ * Set the outline miter limit from a text layer.
+ *
+ * This procedure sets the text outline miter limit in the text layer
+ * 'layer'.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_text_layer_set_outline_miter_limit (GimpTextLayer *layer,
+                                         gdouble        outline_miter_limit)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
+                                          G_TYPE_DOUBLE, outline_miter_limit,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-text-layer-set-outline-miter-limit",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_text_layer_get_outline_width:
+ * @layer: The text layer.
+ *
+ * Get the outline width from a text layer.
+ *
+ * This procedure returns the color of the text outline in a text
+ * layer.
+ *
+ * Returns: The text outline width.
+ *
+ * Since: 3.2
+ **/
+gdouble
+gimp_text_layer_get_outline_width (GimpTextLayer *layer)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gdouble outline_width = 0.0;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-text-layer-get-outline-width",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    outline_width = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return outline_width;
+}
+
+/**
+ * gimp_text_layer_set_outline_width:
+ * @layer: The text layer.
+ * @outline_width: The text outline width.
+ *
+ * Set the outline width from a text layer.
+ *
+ * This procedure sets the text outline color in the text layer
+ * 'layer'.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_text_layer_set_outline_width (GimpTextLayer *layer,
+                                   gdouble        outline_width)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
+                                          G_TYPE_DOUBLE, outline_width,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-text-layer-set-outline-width",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * gimp_text_layer_resize:
  * @layer: The text layer.
  * @width: The new box width in pixels.
