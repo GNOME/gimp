@@ -60,17 +60,13 @@
         <item><attribute name="action">app.layers-delete</attribute></item>
       </section>
       <section>
-        <item><attribute name="action">app.layers-link-discard</attribute></item>
-        <item><attribute name="action">app.layers-link-monitor</attribute></item>
-      </section>
-      <section>
-        <item><attribute name="action">app.layers-text-discard</attribute></item>
         <item><attribute name="action">app.layers-text-to-path</attribute></item>
         <item><attribute name="action">app.layers-text-along-path</attribute></item>
-      </section>
-      <section>
+
         <item><attribute name="action">app.layers-vector-fill-stroke</attribute></item>
-        <item><attribute name="action">app.layers-vector-discard</attribute></item>
+
+        <item><attribute name="action">app.layers-rasterize</attribute></item>
+        <item><attribute name="action">app.layers-retrieve</attribute></item>
       </section>
       <section>
         <item><attribute name="action">app.layers-resize</attribute></item>

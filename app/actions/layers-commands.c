@@ -1106,56 +1106,54 @@ layers_delete_cmd_callback (GimpAction *action,
 }
 
 void
-layers_link_discard_cmd_callback (GimpAction *action,
-                                  GVariant   *value,
-                                  gpointer    data)
+layers_rasterize_cmd_callback (GimpAction *action,
+                               GVariant   *value,
+                               gpointer    data)
 {
   GimpImage *image;
   GList     *layers;
   GList     *iter;
+
   return_if_no_layers (image, layers, data);
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_PROPERTIES,
-                               _("Discard Links"));
+                               _("Rasterize Layers"));
+
   for (iter = layers; iter; iter = iter->next)
-    if (GIMP_IS_LINK_LAYER (iter->data))
-      gimp_link_layer_discard (GIMP_LINK_LAYER (iter->data));
+    {
+      if (gimp_item_is_link_layer (iter->data))
+        gimp_link_layer_discard (GIMP_LINK_LAYER (iter->data));
+      else if (gimp_item_is_text_layer (iter->data))
+        gimp_text_layer_discard (GIMP_TEXT_LAYER (iter->data));
+      else if (gimp_item_is_vector_layer (iter->data))
+        gimp_vector_layer_discard (GIMP_VECTOR_LAYER (iter->data));
+    }
+
   gimp_image_undo_group_end (image);
 }
 
 void
-layers_link_monitor_cmd_callback (GimpAction *action,
-                                  GVariant   *value,
-                                  gpointer    data)
+layers_retrieve_cmd_callback (GimpAction *action,
+                              GVariant   *value,
+                              gpointer    data)
 {
   GimpImage *image;
   GList     *layers;
   GList     *iter;
+
   return_if_no_layers (image, layers, data);
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_PROPERTIES,
-                               _("Monitor Links"));
-  for (iter = layers; iter; iter = iter->next)
-    if (GIMP_IS_LINK_LAYER (iter->data))
-      gimp_link_layer_monitor (GIMP_LINK_LAYER (iter->data));
-  gimp_image_undo_group_end (image);
-}
+                               _("Retrieve Layers Information"));
 
-void
-layers_text_discard_cmd_callback (GimpAction *action,
-                                  GVariant   *value,
-                                  gpointer    data)
-{
-  GimpImage *image;
-  GList     *layers;
-  GList     *iter;
-  return_if_no_layers (image, layers, data);
-
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TEXT,
-                               _("Discard Text Information"));
   for (iter = layers; iter; iter = iter->next)
-    if (GIMP_IS_TEXT_LAYER (iter->data))
-      gimp_text_layer_discard (GIMP_TEXT_LAYER (iter->data));
+    {
+      if (GIMP_IS_LINK_LAYER (iter->data) && ! gimp_item_is_link_layer (iter->data))
+        gimp_link_layer_monitor (GIMP_LINK_LAYER (iter->data));
+      else if (GIMP_IS_TEXT_LAYER (iter->data) && ! gimp_item_is_text_layer (iter->data))
+        gimp_text_layer_retrieve (GIMP_TEXT_LAYER (iter->data));
+    }
+
   gimp_image_undo_group_end (image);
 }
 
@@ -2729,25 +2727,6 @@ layers_vector_fill_stroke_cmd_callback (GimpAction *action,
                                                 widget);
       gtk_widget_show (dialog);
     }
-}
-
-void
-layers_vector_discard_cmd_callback (GimpAction *action,
-                                    GVariant   *value,
-                                    gpointer    data)
-{
-  GimpImage *image;
-  GimpLayer *layer;
-  GList     *layers;
-  return_if_no_layers (image, layers, data);
-
-  if (g_list_length (layers) != 1)
-    return;
-
-  layer = layers->data;
-
-  if (GIMP_IS_VECTOR_LAYER (layer))
-    gimp_vector_layer_discard (GIMP_VECTOR_LAYER (layer));
 }
 
 static void

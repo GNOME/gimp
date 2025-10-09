@@ -28,6 +28,10 @@
 
 #include "core-types.h"
 
+#include "path/gimpvectorlayer.h"
+
+#include "text/gimptextlayer.h"
+
 #include "gimp.h"
 #include "gimp-parasites.h"
 #include "gimpchannel.h"
@@ -39,6 +43,7 @@
 #include "gimpitem.h"
 #include "gimpitem-preview.h"
 #include "gimpitemtree.h"
+#include "gimplinklayer.h"
 #include "gimplist.h"
 #include "gimpparasitelist.h"
 #include "gimpprogress.h"
@@ -2783,4 +2788,24 @@ gimp_item_is_in_set (GimpItem    *item,
     }
 
   return FALSE;
+}
+
+gboolean
+gimp_item_is_rasterizable (GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  return (gimp_item_is_text_layer (item) ||
+          gimp_item_is_link_layer (item) ||
+          gimp_item_is_vector_layer (item));
+}
+
+gboolean
+gimp_item_is_rasterized (GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  return ((GIMP_IS_TEXT_LAYER (item) && ! gimp_item_is_text_layer (item)) ||
+          (GIMP_IS_LINK_LAYER (item) && ! gimp_item_is_link_layer (item)) ||
+          (GIMP_IS_VECTOR_LAYER (item) && ! gimp_item_is_vector_layer (item)));
 }
