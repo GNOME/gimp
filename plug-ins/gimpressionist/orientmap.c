@@ -620,7 +620,7 @@ create_orientmap_dialog (GtkWidget *parent)
   g_signal_connect (tmpw, "clicked", G_CALLBACK (add_click_callback), NULL);
   gimp_help_set_help_data (tmpw, _("Add new vector"), NULL);
 
-  kill_button = tmpw = gtk_button_new_with_mnemonic ( _("_Kill"));
+  kill_button = tmpw = gtk_button_new_with_mnemonic ( _("_Delete"));
   gtk_box_pack_start (GTK_BOX (hbox), tmpw, FALSE, TRUE, 0);
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked", G_CALLBACK (delete_click_callback), NULL);
