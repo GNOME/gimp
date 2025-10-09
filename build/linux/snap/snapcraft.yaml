@@ -90,8 +90,15 @@ parts:
 
   babl:
     source: https://gitlab.gnome.org/GNOME/babl.git
-    #source-tag: BABL_0_1_114
     source-depth: 1
+    override-pull: |
+      if [ "$SNAPCRAFT_PROJECT_GRADE" = 'devel' ]; then
+        craftctl default
+      else
+        repo="https://gitlab.gnome.org/GNOME/$CRAFT_PART_NAME.git"
+        tag_branch=$(git ls-remote --exit-code --refs --sort=version:refname "$repo" "refs/tags/$(echo "$CRAFT_PART_NAME" | tr '[:lower:]' '[:upper:]')_[0-9]*_[0-9]*_[0-9]*" | tail -n 1 | sed 's|.*refs/tags/||')
+        git clone --branch "$tag_branch" --depth 1 "$repo" .
+      fi
     build-environment: *SNAP_ENVIRON
     plugin: meson
     meson-parameters:
@@ -104,8 +111,15 @@ parts:
     after:
       - babl
     source: https://gitlab.gnome.org/GNOME/gegl.git
-    #source-tag: GEGL_0_4_62
     source-depth: 1
+    override-pull: |
+      if [ "$SNAPCRAFT_PROJECT_GRADE" = 'devel' ]; then
+        craftctl default
+      else
+        repo="https://gitlab.gnome.org/GNOME/$CRAFT_PART_NAME.git"
+        tag_branch=$(git ls-remote --exit-code --refs --sort=version:refname "$repo" "refs/tags/$(echo "$CRAFT_PART_NAME" | tr '[:lower:]' '[:upper:]')_[0-9]*_[0-9]*_[0-9]*" | tail -n 1 | sed 's|.*refs/tags/||')
+        git clone --branch "$tag_branch" --depth 1 "$repo" .
+      fi
     build-environment: *SNAP_ENVIRON
     plugin: meson
     meson-parameters:
