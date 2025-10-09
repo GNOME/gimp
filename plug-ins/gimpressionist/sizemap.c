@@ -422,7 +422,7 @@ create_sizemap_dialog (GtkWidget *parent)
                       grid1, TRUE, TRUE, 0);
   gtk_widget_show (grid1);
 
-  tmpw2 = tmpw = gtk_frame_new (_("Smvectors"));
+  tmpw2 = tmpw = gtk_frame_new (_("Vectors"));
   gtk_container_set_border_width (GTK_CONTAINER (tmpw), 2);
   gtk_grid_attach (GTK_GRID (grid1), tmpw, 0, 0, 1, 1);
   gtk_widget_show (tmpw);
@@ -432,7 +432,11 @@ create_sizemap_dialog (GtkWidget *parent)
   gtk_widget_show (tmpw);
 
   tmpw = gtk_event_box_new ();
-  gimp_help_set_help_data (tmpw, _("The smvector-field. Left-click to move selected smvector, Right-click to point it towards mouse, Middle-click to add a new smvector."), NULL);
+  gimp_help_set_help_data (tmpw,
+                           _("The vector-field. "
+                             "Left-click to move selected vector, "
+                             "Right-click to point it towards mouse, "
+                             "Middle-click to add a new vector."), NULL);
   gtk_box_pack_start (GTK_BOX (hbox), tmpw, FALSE, FALSE, 0);
   tmpw2 = tmpw;
 
@@ -476,28 +480,28 @@ create_sizemap_dialog (GtkWidget *parent)
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked",
                     G_CALLBACK (smprevclick), NULL);
-  gimp_help_set_help_data (tmpw, _("Select previous smvector"), NULL);
+  gimp_help_set_help_data (tmpw, _("Select previous vector"), NULL);
 
   next_button = tmpw = gtk_button_new_with_mnemonic ("_>>");
   gtk_box_pack_start (GTK_BOX (hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked",
                     G_CALLBACK (smnextclick), NULL);
-  gimp_help_set_help_data (tmpw, _("Select next smvector"), NULL);
+  gimp_help_set_help_data (tmpw, _("Select next vector"), NULL);
 
   add_button = tmpw = gtk_button_new_with_mnemonic ( _("A_dd"));
   gtk_box_pack_start (GTK_BOX (hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked",
                     G_CALLBACK (smaddclick), NULL);
-  gimp_help_set_help_data (tmpw, _("Add new smvector"), NULL);
+  gimp_help_set_help_data (tmpw, _("Add new vector"), NULL);
 
   kill_button = tmpw = gtk_button_new_with_mnemonic (_("_Delete"));
   gtk_box_pack_start (GTK_BOX (hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked",
                     G_CALLBACK (smdeleteclick), NULL);
-  gimp_help_set_help_data (tmpw, _("Delete selected smvector"), NULL);
+  gimp_help_set_help_data (tmpw, _("Delete selected vector"), NULL);
 
   grid2 = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid2), 4);
@@ -507,7 +511,7 @@ create_sizemap_dialog (GtkWidget *parent)
   sizadjust =
     gimp_scale_entry_new (_("_Size:"), 50.0, 0.0, 100.0, 1);
   gimp_help_set_help_data (sizadjust,
-                           _("Change the angle of the selected smvector"),
+                           _("Change the angle of the selected vector"),
                            NULL);
   g_signal_connect (sizadjust, "value-changed",
                     G_CALLBACK (angsmadjmove), NULL);
@@ -518,7 +522,7 @@ create_sizemap_dialog (GtkWidget *parent)
     gimp_scale_entry_new (_("S_trength:"), 1.0, 0.1, 5.0, 1);
   gimp_label_spin_set_increments (GIMP_LABEL_SPIN (smstradjust), 0.1, 0.5);
   gimp_help_set_help_data (smstradjust,
-                           _("Change the strength of the selected smvector"),
+                           _("Change the strength of the selected vector"),
                            NULL);
   g_signal_connect (smstradjust, "value-changed",
                     G_CALLBACK (strsmadjmove), NULL);
@@ -543,7 +547,7 @@ create_sizemap_dialog (GtkWidget *parent)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), pcvals.size_voronoi);
   g_signal_connect (tmpw, "clicked",
                     G_CALLBACK (smstrexpsmadjmove), NULL);
-  gimp_help_set_help_data (tmpw, _("Voronoi-mode makes only the smvector closest to the given point have any influence"), NULL);
+  gimp_help_set_help_data (tmpw, _("Voronoi-mode makes only the vector closest to the given point have any influence"), NULL);
 
   gtk_widget_show (smwindow);
 
