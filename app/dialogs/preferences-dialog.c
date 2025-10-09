@@ -1778,17 +1778,6 @@ prefs_dialog_new (Gimp       *gimp,
                                     _("E_xpand Layers"), GIMP_ICON_TOOL_SCALE,
                                     GTK_BOX (vbox2), size_group);
 
-  /*  Move Tool */
-  vbox2 = prefs_frame_new (_("Move Tool"),
-                           GTK_CONTAINER (vbox), FALSE);
-
-  prefs_check_button_add_with_icon (object, "move-tool-changes-active",
-                                    _("Set _layer or path as active"),
-                                    GIMP_ICON_TOOL_MOVE,
-                                    GTK_BOX (vbox2), size_group);
-
-  g_clear_object (&size_group);
-
 
   /*******************/
   /*  Default Image  */

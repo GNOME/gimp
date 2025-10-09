@@ -410,14 +410,14 @@ gimp_move_tool_button_release (GimpTool              *tool,
                                GimpButtonReleaseType  release_type,
                                GimpDisplay           *display)
 {
-  GimpMoveTool  *move   = GIMP_MOVE_TOOL (tool);
-  GimpGuiConfig *config = GIMP_GUI_CONFIG (display->gimp->config);
-  GimpImage     *image  = gimp_display_get_image (display);
-  gboolean       flush  = FALSE;
+  GimpMoveTool    *move    = GIMP_MOVE_TOOL (tool);
+  GimpMoveOptions *options = GIMP_MOVE_TOOL_GET_OPTIONS (tool);
+  GimpImage       *image   = gimp_display_get_image (display);
+  gboolean         flush   = FALSE;
 
   gimp_tool_control_halt (tool->control);
 
-  if (! config->move_tool_changes_active ||
+  if (! options->move_tool_changes_active ||
       (release_type == GIMP_BUTTON_RELEASE_CANCEL))
     {
       if (move->old_selected_layers)
