@@ -72,10 +72,12 @@ printf "\e[0Ksection_end:`date +%s`:${SNAP}_making\r\e[0K\n"
 
 
 # Generate shasums for .snap
-printf "\e[0Ksection_start:`date +%s`:${SNAP}_trust[collapsed=true]\r\e[0KChecksumming ${SNAP}\n"
-printf "(INFO): ${SNAP} SHA-256: $(sha256sum ${SNAP} | cut -d ' ' -f 1)\n"
-printf "(INFO): ${SNAP} SHA-512: $(sha512sum ${SNAP} | cut -d ' ' -f 1)\n"
-printf "\e[0Ksection_end:`date +%s`:${SNAP}_trust\r\e[0K\n"
+if [ "$gimp_release" = false ] || echo "$GIMP_VERSION" | grep -q 'git'; then
+  printf "\e[0Ksection_start:`date +%s`:${SNAP}_trust[collapsed=true]\r\e[0KChecksumming ${SNAP}\n"
+  printf "(INFO): ${SNAP} SHA-256: $(sha256sum ${SNAP} | cut -d ' ' -f 1)\n"
+  printf "(INFO): ${SNAP} SHA-512: $(sha512sum ${SNAP} | cut -d ' ' -f 1)\n"
+  printf "\e[0Ksection_end:`date +%s`:${SNAP}_trust\r\e[0K\n"
+fi
 
 
 if [ "$GITLAB_CI" ]; then
