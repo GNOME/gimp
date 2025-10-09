@@ -39,5 +39,7 @@ GimpLayer   * gimp_image_flatten               (GimpImage      *image,
                                                 GimpProgress   *progress,
                                                 GError        **error);
 
+GimpPath    * gimp_image_merge_selected_paths  (GimpImage      *image,
+                                                GError        **error);
 GimpPath    * gimp_image_merge_visible_paths   (GimpImage      *image,
                                                 GError        **error);

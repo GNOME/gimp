@@ -498,6 +498,30 @@ paths_delete_cmd_callback (GimpAction *action,
 }
 
 void
+paths_merge_selected_cmd_callback (GimpAction *action,
+                                   GVariant   *value,
+                                   gpointer    data)
+{
+  GimpImage   *image;
+  GList       *paths;
+  GtkWidget   *widget;
+  GError      *error = NULL;
+  return_if_no_paths (image, paths, data);
+  return_if_no_widget (widget, data);
+
+  if (! gimp_image_merge_selected_paths (image, &error))
+    {
+      gimp_message_literal (image->gimp,
+                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                            error->message);
+      g_clear_error (&error);
+      return;
+    }
+
+  gimp_image_flush (image);
+}
+
+void
 paths_merge_visible_cmd_callback (GimpAction *action,
                                   GVariant   *value,
                                   gpointer    data)

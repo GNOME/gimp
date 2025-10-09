@@ -288,6 +288,7 @@
 #define GIMP_HELP_PATH_LOWER_TO_BOTTOM            "gimp-path-lower-to-bottom"
 #define GIMP_HELP_PATH_DUPLICATE                  "gimp-path-duplicate"
 #define GIMP_HELP_PATH_DELETE                     "gimp-path-delete"
+#define GIMP_HELP_PATH_MERGE_SELECTED             "gimp-path-merge-selected"
 #define GIMP_HELP_PATH_MERGE_VISIBLE              "gimp-path-merge-visible"
 #define GIMP_HELP_PATH_VISIBLE                    "gimp-path-visible"
 #define GIMP_HELP_PATH_LINKED                     "gimp-path-linked"
