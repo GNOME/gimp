@@ -726,6 +726,9 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
                g_strcmp0 (action_match, "view-zoom-2-1")  == 0 ||
                g_strcmp0 (action_match, "view-zoom-1-1")  == 0)
         accel_variant = TRUE;
+      /* Generalized in GIMP 3.2 (works on text, link and vector layers). */
+      else if (g_strcmp0 (action_match, "layers-text-discard") == 0)
+        new_action_name = g_strdup ("layers-rasterize");
 
       if (new_action_name == NULL)
         new_action_name = g_strdup (action_match);
@@ -833,11 +836,12 @@ user_update_post_process_menurc_over20 (gpointer user_data)
 }
 
 #define SHORTCUTSRC_UPDATE_PATTERN \
-  "\"("                            \
-  "tools-vector|"                  \
-  "dialogs-vectors|"               \
-  "layers-text-.*-vectors|"        \
-  "view-snap-to-vectors"           \
+  "\"("                       "|" \
+  "tools-vector"              "|" \
+  "dialogs-vectors"           "|" \
+  "layers-text-.*-vectors"    "|" \
+  "view-snap-to-vectors"      "|" \
+  "layers-text-discard"           \
   ")\""
 
 static gboolean
@@ -871,6 +875,11 @@ user_update_shortcutsrc (const GMatchInfo *matched_value,
     {
       /* Renamed in GIMP 3.2. */
       g_string_append (new_value, "\"view-snap-to-path\"");
+    }
+  else if (g_strcmp0 (match, "\"layers-text-discard\"") == 0)
+    {
+      /* Generalized in GIMP 3.2 (works on text, link and vector layers). */
+      g_string_append (new_value, "\"layers-rasterize\"");
     }
 
   g_free (match);

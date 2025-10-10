@@ -182,12 +182,6 @@ static const GimpActionEntry layers_actions[] =
     image_flatten_image_cmd_callback,
     GIMP_HELP_IMAGE_FLATTEN },
 
-  { "layers-link-discard", GIMP_ICON_TOOL_TEXT,
-    NC_("layers-action", "_Discard Link Information"), NULL, { NULL },
-    NC_("layers-action", "Turn this link layer into a normal layer"),
-    layers_rasterize_cmd_callback,
-    GIMP_HELP_LAYER_TEXT_DISCARD },
-
   { "layers-rasterize", GIMP_ICON_TOOL_TEXT,
     NC_("layers-action", "_Rasterize"), NULL, { NULL },
     NC_("layers-action", "Turn selected text, link or vector layers into raster layers"),
@@ -198,18 +192,6 @@ static const GimpActionEntry layers_actions[] =
     NC_("layers-action", "_Retrieve Layers Information"), NULL, { NULL },
     NC_("layers-action", "Turn rasterized layers back into text, link or vector layers"),
     layers_retrieve_cmd_callback,
-    GIMP_HELP_LAYER_TEXT_DISCARD },
-
-  { "layers-link-monitor", GIMP_ICON_TOOL_TEXT,
-    NC_("layers-action", "_Monitor Linked Image"), NULL, { NULL },
-    NC_("layers-action", "Discard any transformation and monitor the linked file again"),
-    layers_retrieve_cmd_callback,
-    GIMP_HELP_LAYER_TEXT_DISCARD },
-
-  { "layers-text-discard", GIMP_ICON_TOOL_TEXT,
-    NC_("layers-action", "_Discard Text Information"), NULL, { NULL },
-    NC_("layers-action", "Turn these text layers into normal layers"),
-    layers_rasterize_cmd_callback,
     GIMP_HELP_LAYER_TEXT_DISCARD },
 
   { "layers-text-to-path", GIMP_ICON_TOOL_TEXT,
@@ -229,12 +211,6 @@ static const GimpActionEntry layers_actions[] =
     NC_("layers-action", "Edit the fill and stroke of this vector layer"),
     layers_vector_fill_stroke_cmd_callback,
     GIMP_HELP_LAYER_VECTOR_FILL_STROKE },
-
-  { "layers-vector-discard", NULL,
-    NC_("layers-action", "Discard Vector Information"), NULL, { NULL },
-    NC_("layers-action", "Turn this vector layer into a normal layer"),
-    layers_rasterize_cmd_callback,
-    GIMP_HELP_LAYER_VECTOR_DISCARD },
 
   { "layers-resize", GIMP_ICON_OBJECT_RESIZE,
     NC_("layers-action", "Layer B_oundary Size..."), NULL, { NULL },
@@ -805,7 +781,6 @@ layers_actions_update (GimpActionGroup *group,
   gboolean       has_rasterized     = FALSE;
   gboolean       text_layer         = FALSE;
   gboolean       vector_layer       = FALSE;
-  gboolean       link_layer         = FALSE;
   gboolean       bs_mutable         = FALSE; /* At least 1 selected layers' blend space is mutable.     */
   gboolean       cs_mutable         = FALSE; /* At least 1 selected layers' composite space is mutable. */
   gboolean       cm_mutable         = FALSE; /* At least 1 selected layers' composite mode is mutable.  */
@@ -1031,7 +1006,6 @@ layers_actions_update (GimpActionGroup *group,
 
           text_layer   = gimp_item_is_text_layer (GIMP_ITEM (layer));
           vector_layer = gimp_item_is_vector_layer (GIMP_ITEM (layer));
-          link_layer   = gimp_item_is_link_layer (GIMP_ITEM (layer));
         }
     }
 
@@ -1096,15 +1070,10 @@ layers_actions_update (GimpActionGroup *group,
   SET_VISIBLE   ("layers-rasterize",         has_rasterizable);
   SET_VISIBLE   ("layers-retrieve",          has_rasterized);
 
-  SET_VISIBLE   ("layers-text-discard",      n_text_layers > 0 && !ac);
   SET_VISIBLE   ("layers-text-to-path",      n_text_layers > 0 && !ac);
   SET_VISIBLE   ("layers-text-along-path",   text_layer && !ac);
 
   SET_VISIBLE   ("layers-vector-fill-stroke", vector_layer && !ac);
-  SET_VISIBLE   ("layers-vector-discard",     vector_layer && !ac);
-
-  SET_VISIBLE   ("layers-link-discard",      link_layer && !ac);
-  SET_VISIBLE   ("layers-link-monitor",      GIMP_IS_LINK_LAYER (layer) && ! link_layer && !ac);
 
   SET_SENSITIVE ("layers-resize",          n_selected_layers == 1 && all_writable && all_movable && !ac);
   SET_SENSITIVE ("layers-resize-to-image", all_writable && all_movable && !ac);
