@@ -8,16 +8,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-07-06 11:59+0000\n"
-"PO-Revision-Date: 2025-07-06 19:28+0300\n"
+"POT-Creation-Date: 2025-10-09 18:45+0000\n"
+"PO-Revision-Date: 2025-10-09 21:50+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Lokalize 23.04.3\n"
 
 #: libgimp/gimpbrushchooser.c:134 libgimp/gimppatternchooser.c:129
@@ -227,33 +227,33 @@ msgstr "Коментар"
 msgid "Image comment"
 msgstr "Коментар до зображення"
 
-#: libgimp/gimpexportproceduredialog.c:150
+#: libgimp/gimpexportproceduredialog.c:155
 msgid "Metadata"
 msgstr "Метадані"
 
-#: libgimp/gimpexportproceduredialog.c:159
+#: libgimp/gimpexportproceduredialog.c:164
 msgid "Edit Metadata"
 msgstr "Редагувати метадані"
 
-#: libgimp/gimpexportproceduredialog.c:159
+#: libgimp/gimpexportproceduredialog.c:164
 msgid "(edit)"
 msgstr "(редагувати)"
 
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexportproceduredialog.c:436
+#: libgimp/gimpexportproceduredialog.c:460
 #, c-format
 msgid "Export Image as %s"
 msgstr "Експортувати зображення як %s"
 
-#: libgimp/gimpimagemetadata.c:124
+#: libgimp/gimpimagemetadata.c:201
 msgid "Background"
 msgstr "Тло"
 
-#: libgimp/gimpimagemetadata-save.c:770 modules/controller-midi.c:426
+#: libgimp/gimpimagemetadata-save.c:796 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
-#: libgimp/gimploadprocedure.c:273 libgimp/gimpvectorloadprocedure.c:445
+#: libgimp/gimploadprocedure.c:273 libgimp/gimpvectorloadprocedure.c:448
 #, c-format
 msgid ""
 "This file loading plug-in returned SUCCESS as a status without an image. "
@@ -364,6 +364,7 @@ msgid_plural "%d procedures"
 msgstr[0] "%d процедура"
 msgstr[1] "%d процедури"
 msgstr[2] "%d процедур"
+msgstr[3] "%d процедура"
 
 #: libgimp/gimpprocbrowserdialog.c:465
 msgid "No matches for your query"
@@ -376,13 +377,14 @@ msgid_plural "%d procedures match your query"
 msgstr[0] "%d процедура збігається із запитом"
 msgstr[1] "%d процедури збігають із запитом"
 msgstr[2] "%d процедур збігають із запитом"
+msgstr[3] "%d процедура збігається із запитом"
 
-#: libgimp/gimpprocedure.c:2162
+#: libgimp/gimpprocedure.c:2161
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Процедура «%s» не повернула жодного значення"
 
-#: libgimp/gimpprocedure.c:2368
+#: libgimp/gimpprocedure.c:2367
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -391,7 +393,7 @@ msgstr ""
 "Процедура «%s» повернула некоректний тип значення для значення результату "
 "«%s» (#%d). Очікувався %s, отримано %s."
 
-#: libgimp/gimpprocedure.c:2380
+#: libgimp/gimpprocedure.c:2379
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' "
@@ -400,7 +402,7 @@ msgstr ""
 "Процедура «%s» викликана з деяким значенням аргументу «%s» (#%d). "
 "Очікувалось %s, отримано %s."
 
-#: libgimp/gimpprocedure.c:2415
+#: libgimp/gimpprocedure.c:2414
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -409,7 +411,7 @@ msgstr ""
 "Процедура «%s» повернула «%s» як значення «%s» (#%d, тип %s). Значення "
 "знаходиться поза межами припустимого діапазону"
 
-#: libgimp/gimpprocedure.c:2429
+#: libgimp/gimpprocedure.c:2428
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -418,12 +420,12 @@ msgstr ""
 "Процедура «%s» викликана із значенням «%s» аргументу «%s» (#%d, тип %s). "
 "Значення знаходиться поза межами допустимого діапазону."
 
-#: libgimp/gimpprocedure.c:2473
+#: libgimp/gimpprocedure.c:2472
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Процедура «%s» повернула некоректний рядок UTF-8 для аргументу «%s»"
 
-#: libgimp/gimpprocedure.c:2483
+#: libgimp/gimpprocedure.c:2482
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -568,12 +570,12 @@ msgstr ""
 "розмірностей у фізичних одиницях"
 
 #: libgimp/gimpresolutionentry-private.c:144
-#: libgimp/gimpvectorloadprocedure.c:125
+#: libgimp/gimpvectorloadprocedure.c:126
 msgid "_Keep aspect ratio"
 msgstr "З_берігати пропорції"
 
 #: libgimp/gimpresolutionentry-private.c:145
-#: libgimp/gimpvectorloadprocedure.c:126
+#: libgimp/gimpvectorloadprocedure.c:127
 msgid "Force dimensions with aspect ratio"
 msgstr "Примусові розміри за пропорціями"
 
@@ -583,39 +585,39 @@ msgstr "Примусові розміри за пропорціями"
 msgid "pixels/%a"
 msgstr "точок/%a"
 
-#: libgimp/gimpvectorloadprocedure.c:111
+#: libgimp/gimpvectorloadprocedure.c:112
 msgid "_Width (pixels)"
 msgstr "_Ширина (у пікселях)"
 
-#: libgimp/gimpvectorloadprocedure.c:118
+#: libgimp/gimpvectorloadprocedure.c:119
 msgid "_Height (pixels)"
 msgstr "_Висота (у пікселях)"
 
-#: libgimp/gimpvectorloadprocedure.c:130
+#: libgimp/gimpvectorloadprocedure.c:131
 msgid "_Prefer native dimensions"
 msgstr "П_еревага природних розмірностей"
 
-#: libgimp/gimpvectorloadprocedure.c:131
+#: libgimp/gimpvectorloadprocedure.c:132
 msgid "Load and use dimensions from source file"
 msgstr "Завантажити і використати розмірності з початкового файла"
 
-#: libgimp/gimpvectorloadprocedure.c:139
+#: libgimp/gimpvectorloadprocedure.c:142
 msgid "Resolu_tion"
 msgstr "Р_оздільна здатність"
 
-#: libgimp/gimpvectorloadprocedure.c:140
+#: libgimp/gimpvectorloadprocedure.c:143
 msgid "Pixel Density: number of pixels per physical unit"
 msgstr "Густина пікселів: кількість пікселів на фізичну одиницю"
 
-#: libgimp/gimpvectorloadprocedure.c:145
+#: libgimp/gimpvectorloadprocedure.c:148
 msgid "Unit"
 msgstr "Одиниця"
 
-#: libgimp/gimpvectorloadprocedure.c:146
+#: libgimp/gimpvectorloadprocedure.c:149
 msgid "Physical unit"
 msgstr "Фізична одиниця"
 
-#: libgimp/gimpvectorloadprocedure.c:368
+#: libgimp/gimpvectorloadprocedure.c:371
 msgid ""
 "dimensions could neither be extracted nor computed from the vector image's "
 "data."
@@ -623,11 +625,11 @@ msgstr ""
 "Не вдалося ні видобути і обчислити розмірності на основі даних векторного "
 "зображення."
 
-#: libgimp/gimpvectorloadprocedure.c:373
+#: libgimp/gimpvectorloadprocedure.c:376
 msgid "Vector image loading plug-in failed: "
 msgstr "Помилка додатка завантаження векторного зображення: "
 
-#: libgimp/gimpvectorloadprocedure.c:397
+#: libgimp/gimpvectorloadprocedure.c:400
 msgid ""
 "Dimensions cannot be 0 and no native dimensions could be extracted from the "
 "vector image."
@@ -917,29 +919,21 @@ msgid "64-bit floating point"
 msgstr "64-бітове з рухомою комою"
 
 #: libgimpbase/gimpbaseenums.c:387
-#| msgctxt "convert-palette-type"
-#| msgid "Generate optimum palette"
 msgctxt "convert-palette-type"
 msgid "_Generate optimum palette"
 msgstr "З_генерувати оптимальну палітру"
 
 #: libgimpbase/gimpbaseenums.c:388
-#| msgctxt "convert-palette-type"
-#| msgid "Use web-optimized palette"
 msgctxt "convert-palette-type"
 msgid "Use _web-optimized palette"
 msgstr "Використовувати палітру _оптимізовану для тенет"
 
 #: libgimpbase/gimpbaseenums.c:389
-#| msgctxt "convert-palette-type"
-#| msgid "Use black and white (1-bit) palette"
 msgctxt "convert-palette-type"
 msgid "Use _black and white (1-bit) palette"
 msgstr "Використовувати _чорно-білу (1-бітову) палітру"
 
 #: libgimpbase/gimpbaseenums.c:390
-#| msgctxt "convert-palette-type"
-#| msgid "Use custom palette"
 msgctxt "convert-palette-type"
 msgid "Use custom _palette"
 msgstr "Використовувати власну п_алітру"
@@ -1666,76 +1660,110 @@ msgid "Filled"
 msgstr "Заповнити "
 
 #: libgimpbase/gimpbaseenums.c:1804
+#| msgctxt "text-justification"
+#| msgid "Filled"
+msgctxt "text-outline"
+msgid "Filled"
+msgstr "Заповнити"
+
+#: libgimpbase/gimpbaseenums.c:1805
+msgctxt "text-outline"
+msgid "Outlined"
+msgstr "З контуром"
+
+#: libgimpbase/gimpbaseenums.c:1806
+msgctxt "text-outline"
+msgid "Outlined and filled"
+msgstr "З контуром і заповнений"
+
+#: libgimpbase/gimpbaseenums.c:1836
+msgctxt "text-outline-direction"
+msgid "Outer"
+msgstr "Ззовні"
+
+#: libgimpbase/gimpbaseenums.c:1837
+msgctxt "text-outline-direction"
+msgid "Inner"
+msgstr "Всередині"
+
+#: libgimpbase/gimpbaseenums.c:1838
+#| msgctxt "text-justification"
+#| msgid "Centered"
+msgctxt "text-outline-direction"
+msgid "Centered"
+msgstr "За центром"
+
+#: libgimpbase/gimpbaseenums.c:1868
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Тіні"
 
-#: libgimpbase/gimpbaseenums.c:1805
+#: libgimpbase/gimpbaseenums.c:1869
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Напівтони"
 
-#: libgimpbase/gimpbaseenums.c:1806
+#: libgimpbase/gimpbaseenums.c:1870
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Світлі частини"
 
-#: libgimpbase/gimpbaseenums.c:1835
+#: libgimpbase/gimpbaseenums.c:1899
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Звичайне (вперед)"
 
-#: libgimpbase/gimpbaseenums.c:1836
+#: libgimpbase/gimpbaseenums.c:1900
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Виправне (назад)"
 
-#: libgimpbase/gimpbaseenums.c:1867
+#: libgimpbase/gimpbaseenums.c:1931
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "З полями"
 
-#: libgimpbase/gimpbaseenums.c:1868
+#: libgimpbase/gimpbaseenums.c:1932
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Без полів"
 
-#: libgimpbase/gimpbaseenums.c:1869
+#: libgimpbase/gimpbaseenums.c:1933
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "У прямокутник"
 
-#: libgimpbase/gimpbaseenums.c:1870
+#: libgimpbase/gimpbaseenums.c:1934
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Пропорційна"
 
-#: libgimpbase/gimpmetadata.c:1218
+#: libgimpbase/gimpmetadata.c:1223
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Метадані можна завантажувати лише з локальних файлів"
 
-#: libgimpbase/gimpmetadata.c:1274
+#: libgimpbase/gimpmetadata.c:1279
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Метадані можна записувати лише в локальні файли"
 
-#: libgimpbase/gimpmetadata.c:1323
+#: libgimpbase/gimpmetadata.c:1328
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Неправильний розмір даних Exif."
 
-#: libgimpbase/gimpmetadata.c:1368
+#: libgimpbase/gimpmetadata.c:1373
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Не вдалось розібрати дані Exif."
 
-#: libgimpbase/gimpmetadata.c:1420
+#: libgimpbase/gimpmetadata.c:1425
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Не вдалось розібрати дані IPTC."
 
-#: libgimpbase/gimpmetadata.c:1468
+#: libgimpbase/gimpmetadata.c:1473
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Не вдалось розібрати дані XMP."
@@ -1770,32 +1798,32 @@ msgctxt "unit-plural"
 msgid "percent"
 msgstr "відсотки"
 
-#: libgimpbase/gimputils.c:220 libgimpbase/gimputils.c:225
+#: libgimpbase/gimputils.c:222 libgimpbase/gimputils.c:227
 msgid "(invalid UTF-8 string)"
 msgstr "(неправильний рядок UTF-8)"
 
-#: libgimpbase/gimputils.c:395
+#: libgimpbase/gimputils.c:397
 msgid "File path is NULL"
 msgstr "Шлях до файлу порожній"
 
-#: libgimpbase/gimputils.c:403
+#: libgimpbase/gimputils.c:405
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "Помилка перетворення назви файлу з UTF-8 в широкі символи"
 
-#: libgimpbase/gimputils.c:411
+#: libgimpbase/gimputils.c:413
 msgid "ILCreateFromPath() failed"
 msgstr "Невдача ILCreateFromPath()"
 
-#: libgimpbase/gimputils.c:450
+#: libgimpbase/gimputils.c:452
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "Не вдалося перетворити «%s» на коректний NSURL."
 
-#: libgimpbase/gimputils.c:478
+#: libgimpbase/gimputils.c:480
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "Не вдалось з'єднатися з org.freedesktop.FileManager1: "
 
-#: libgimpbase/gimputils.c:502
+#: libgimpbase/gimputils.c:504
 msgid "Calling ShowItems failed: "
 msgstr "Невдалий виклик ShowItems: "
 
@@ -2453,13 +2481,25 @@ msgid "One page selected"
 msgstr "Вибрано одну сторінку"
 
 #: libgimpwidgets/gimppageselector.c:1026
+#, c-format
+#| msgid "One page selected"
+msgid "The page is selected"
+msgid_plural "All %d pages selected"
+msgstr[0] "Вибрано усю %d сторінку"
+msgstr[1] "Вибрано усі %d сторінки"
+msgstr[2] "Вибрано усі %d сторінок"
+msgstr[3] "Вибрано сторінку"
+
 #: libgimpwidgets/gimppageselector.c:1030
 #, c-format
+#| msgid "%d page selected"
+#| msgid_plural "All %d pages selected"
 msgid "%d page selected"
-msgid_plural "All %d pages selected"
+msgid_plural "%d pages selected"
 msgstr[0] "Вибрано %d сторінку"
 msgstr[1] "Вибрано %d сторінки"
 msgstr[2] "Вибрано %d сторінок"
+msgstr[3] "Вибрано %d сторінку"
 
 #: libgimpwidgets/gimppatheditor.c:199
 msgid "Add a new folder"
@@ -2517,8 +2557,9 @@ msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "Введення тексту у це поле обмежено %d символом"
 msgstr[1] "Введення тексту у це поле обмежено %d символами"
 msgstr[2] "Введення тексту у це поле обмежено %d символами"
+msgstr[3] "Введення тексту у це поле обмежено %d символом"
 
-#: libgimpwidgets/gimpwidgets.c:259
+#: libgimpwidgets/gimpwidgets.c:260
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -2526,16 +2567,16 @@ msgstr ""
 "Використовуйте цю кнопку для ініціалізації генератора випадкових чисел - це "
 "дозволить вам повторити дану \"випадкову\" операцію"
 
-#: libgimpwidgets/gimpwidgets.c:263
+#: libgimpwidgets/gimpwidgets.c:264
 msgid "_New Seed"
 msgstr "_Нове значення"
 
-#: libgimpwidgets/gimpwidgets.c:279
+#: libgimpwidgets/gimpwidgets.c:280
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "Ініціалізувати генератор випадкових чисел згенерованим випадковим числом"
 
-#: libgimpwidgets/gimpwidgets.c:283
+#: libgimpwidgets/gimpwidgets.c:284
 msgid "_Randomize"
 msgstr "Пере_мішати"
 
@@ -3648,6 +3689,7 @@ msgstr "Контрастність"
 #~ msgstr[0] "%d байт"
 #~ msgstr[1] "%d байти"
 #~ msgstr[2] "%d байтів"
+#~ msgstr[3] "%d байт"
 
 #~ msgid "%.2f KB"
 #~ msgstr "%.2f Кбайт"
