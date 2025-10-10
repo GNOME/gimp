@@ -1349,7 +1349,6 @@ user_install_migrate_files (GimpUserInstall *install)
                   post_process_callback = user_update_post_process_menurc_over20;
                   /* menurc becomes shortcutsrc in 3.0. */
                   new_dest              = "shortcutsrc";
-                  break;
                 }
             }
           else if (strcmp (basename, "templaterc") == 0)
