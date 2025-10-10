@@ -48,6 +48,8 @@ struct _GimpPathTool
 
   GimpToolWidget  *widget;
   GimpToolWidget  *grab_widget;
+
+  GtkWidget       *confirm_dialog;
 };
 
 struct _GimpPathToolClass

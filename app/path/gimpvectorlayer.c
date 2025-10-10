@@ -689,10 +689,14 @@ gimp_vector_layer_retrieve (GimpVectorLayer *layer)
 
   image = gimp_item_get_image (GIMP_ITEM (layer));
 
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_PROPERTIES,
+                               _("Revert Rasterize Vector Layer"));
+
   gimp_image_undo_push_vector_layer_modified (image, NULL, layer);
   gimp_image_undo_push_drawable_mod (image, NULL, GIMP_DRAWABLE (layer), TRUE);
   g_object_set (layer, "modified", FALSE, NULL);
 
+  gimp_image_undo_group_end (image);
   gimp_vector_layer_render (layer);
   gimp_image_flush (image);
 }
