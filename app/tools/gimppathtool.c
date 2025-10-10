@@ -141,7 +141,7 @@ static void     gimp_path_tool_to_selection_extended
                                                    GdkModifierType        state);
 
 static void     gimp_path_tool_create_vector_layer(GimpPathTool          *path_tool,
-						                           GtkWidget             *button);
+                                                   GtkWidget             *button);
 static void     gimp_path_tool_vector_change_notify
                                                   (GObject               *options,
                                                    const GParamSpec      *pspec,
@@ -813,7 +813,7 @@ gimp_path_tool_to_selection_extended (GimpPathTool    *path_tool,
 
 static void
 gimp_path_tool_create_vector_layer (GimpPathTool *path_tool,
-				                    GtkWidget    *button)
+                                    GtkWidget    *button)
 {
   GimpImage       *image;
   GimpVectorLayer *layer;
@@ -848,7 +848,7 @@ gimp_path_tool_create_vector_layer (GimpPathTool *path_tool,
     }
 
   layer = gimp_vector_layer_new (image, path_tool->path,
-				                 gimp_get_user_context (image->gimp));
+                                 gimp_get_user_context (image->gimp));
   path_tool->current_vector_layer = layer;
 
   gimp_image_add_layer (image,
