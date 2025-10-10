@@ -185,6 +185,7 @@ gimp_link_layer_class_init (GimpLinkLayerClass *klass)
 
   gimp_object_class->get_memsize    = gimp_link_layer_get_memsize;
 
+  /* TODO: make a custom icon "gimp-link-layer". */
   viewable_class->default_icon_name = "emblem-symbolic-link";
   viewable_class->default_name      = _("Link Layer");
 

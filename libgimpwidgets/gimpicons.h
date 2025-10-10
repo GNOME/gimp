@@ -290,10 +290,14 @@ G_BEGIN_DECLS
 #define GIMP_ICON_LAYER                     "gimp-layer"
 #define GIMP_ICON_LAYER_ANCHOR              "gimp-anchor"
 #define GIMP_ICON_LAYER_FLOATING_SELECTION  "gimp-floating-selection"
+/* TODO: create "gimp-link-layer" */
+#define GIMP_ICON_LAYER_LINK_LAYER          "emblem-symbolic-link"
 #define GIMP_ICON_LAYER_MASK                "gimp-layer-mask"
 #define GIMP_ICON_LAYER_MERGE_DOWN          "gimp-merge-down"
 #define GIMP_ICON_LAYER_TEXT_LAYER          "gimp-text-layer"
 #define GIMP_ICON_LAYER_TO_IMAGESIZE        "gimp-layer-to-imagesize"
+/* TODO: create "gimp-vector-layer" */
+#define GIMP_ICON_LAYER_VECTOR_LAYER        "gimp-tool-path"
 
 #define GIMP_ICON_LIST                      "gimp-list"
 #define GIMP_ICON_LIST_ADD                  "list-add"

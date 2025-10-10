@@ -156,7 +156,8 @@ gimp_vector_layer_class_init (GimpVectorLayerClass *klass)
 
   gimp_object_class->get_memsize    = gimp_vector_layer_get_memsize;
 
-  viewable_class->default_icon_name = "gimp-vector-layer";
+  /* TODO: make a custom icon "gimp-vector-layer". */
+  viewable_class->default_icon_name = "gimp-tool-path";
   viewable_class->default_name      = _("Vector Layer");
 
   layer_class->translate            = gimp_vector_layer_translate;
