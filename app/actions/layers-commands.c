@@ -1144,7 +1144,7 @@ layers_retrieve_cmd_callback (GimpAction *action,
   return_if_no_layers (image, layers, data);
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_PROPERTIES,
-                               _("Retrieve Layers Information"));
+                               _("Revert Rasterize"));
 
   for (iter = layers; iter; iter = iter->next)
     {
