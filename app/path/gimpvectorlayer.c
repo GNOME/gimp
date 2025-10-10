@@ -377,8 +377,8 @@ gimp_vector_layer_duplicate (GimpItem *item,
 
   if (GIMP_IS_VECTOR_LAYER (new_item))
     {
-      GimpVectorLayer        *vector_layer     = GIMP_VECTOR_LAYER (item);
-      GimpVectorLayer        *new_vector_layer = GIMP_VECTOR_LAYER (new_item);
+      GimpVectorLayer *vector_layer     = GIMP_VECTOR_LAYER (item);
+      GimpVectorLayer *new_vector_layer = GIMP_VECTOR_LAYER (new_item);
 
       if (vector_layer->options)
         {
@@ -391,7 +391,7 @@ gimp_vector_layer_duplicate (GimpItem *item,
               GimpPath *new_path;
 
               new_path = GIMP_PATH (gimp_item_duplicate (GIMP_ITEM (path),
-                                    G_TYPE_FROM_INSTANCE (GIMP_ITEM (path))));
+                                                         G_TYPE_FROM_INSTANCE (GIMP_ITEM (path))));
 
               g_object_set (new_options, "path", new_path, NULL);
             }
