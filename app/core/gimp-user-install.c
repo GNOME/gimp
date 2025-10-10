@@ -951,7 +951,8 @@ user_update_controllerrc (const GMatchInfo *matched_value,
   "\\(position [0-9]* [0-9]*\\)"         "|" \
   "\\(size [0-9]* [0-9]*\\)"             "|" \
   "\\(left-docks-width \"?[0-9]*\"?\\)"  "|" \
-  "\\(right-docks-width \"?[0-9]*\"?\\)"
+  "\\(right-docks-width \"?[0-9]*\"?\\)" "|" \
+  "\"gimp-vectors-list\""
 
 static gboolean
 user_update_sessionrc_2to3 (const GMatchInfo *matched_value,
@@ -963,7 +964,12 @@ user_update_sessionrc_2to3 (const GMatchInfo *matched_value,
 
   original = g_match_info_fetch (matched_value, 0);
 
-  if (install->scale_factor != 1 && install->scale_factor > 0)
+  if (g_strcmp0 (original, "\"gimp-vectors-list\"") == 0)
+    {
+      /* Renamed in GIMP 3.2. */
+      g_string_append (new_value, "\"gimp-path-list\"");
+    }
+  else if (install->scale_factor != 1 && install->scale_factor > 0)
     {
       /* GTK < 3.0 didn't have scale factor support. It means that any
        * size and position back then would be in real pixel size. Now
