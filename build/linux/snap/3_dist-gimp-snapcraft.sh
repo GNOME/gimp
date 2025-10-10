@@ -27,20 +27,13 @@ printf "\e[0Ksection_start:`date +%s`:snap_info\r\e[0KGetting snap global info\n
 #so taking such info from the .yaml ensures we not forget to manually update it)
 cp build/linux/snap/snapcraft.yaml .
 
-## Get info about GIMP version
-GIMP_VERSION=$(awk '/^version:/ { print $2 }' snapcraft.yaml)
-
 ## Set proper Snap name and update track
 NAME=$(awk '/^name:/ { print $2 }' snapcraft.yaml)
+TRACK=$(awk -F. '/-Dbuild-id=/ { print $NF }' snapcraft.yaml)
+
+## Get info about GIMP version
+GIMP_VERSION=$(awk '/^version:/ { print $2 }' snapcraft.yaml)
 gimp_release=$([ "$(awk '/^grade:/ { print $2 }' snapcraft.yaml)" != 'devel' ] && echo true || echo false)
-gimp_unstable=$(minor=$(echo "$GIMP_VERSION" | cut -d. -f2); [ $((minor % 2)) -ne 0 ] && echo true || echo false)
-if [ "$gimp_release" = false ] || echo "$GIMP_VERSION" | grep -q 'git'; then
-  export TRACK="experimental"
-elif [ "$gimp_release" = true ] && [ "$gimp_unstable" = true ] || echo "$GIMP_VERSION" | grep -q 'RC'; then
-  export TRACK="preview"
-else
-  export TRACK="latest"
-fi
 printf "(INFO): Name: $NAME (track: $TRACK) | Version: $GIMP_VERSION\n"
 
 ## Autodetects what archs will be packaged
