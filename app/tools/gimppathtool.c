@@ -1035,6 +1035,8 @@ gimp_path_tool_confirm_response (GimpViewableDialog *dialog,
                                  GimpPathTool       *path_tool)
 {
   GimpVectorLayer *layer = dialog->viewables ? dialog->viewables->data : NULL;
+  GimpImage       *image;
+  GimpPath        *path;
 
   gtk_widget_destroy (GTK_WIDGET (dialog));
 
@@ -1043,7 +1045,12 @@ gimp_path_tool_confirm_response (GimpViewableDialog *dialog,
       switch (response_id)
         {
         case RESPONSE_NEW:
-          gimp_path_tool_set_path (path_tool, gimp_vector_layer_get_path (layer));
+          path  = gimp_vector_layer_get_path (layer);
+          image = gimp_item_get_image (GIMP_ITEM (path));
+          path  = GIMP_PATH (gimp_item_duplicate (GIMP_ITEM (path),
+                                                  G_TYPE_FROM_INSTANCE (path)));
+          gimp_image_add_path (image, path, GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+          gimp_path_tool_set_path (path_tool, path);
           gimp_path_tool_create_vector_layer (path_tool, NULL);
           break;
 

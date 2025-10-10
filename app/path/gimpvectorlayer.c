@@ -617,10 +617,7 @@ gimp_vector_layer_get_path (GimpVectorLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_VECTOR_LAYER (layer), NULL);
 
-  if (gimp_item_is_vector_layer (GIMP_ITEM (layer)))
-    return layer->options->path;
-
-  return NULL;
+  return layer->options->path;
 }
 
 /**
