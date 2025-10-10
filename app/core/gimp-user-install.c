@@ -726,6 +726,17 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
                g_strcmp0 (action_match, "view-zoom-2-1")  == 0 ||
                g_strcmp0 (action_match, "view-zoom-1-1")  == 0)
         accel_variant = TRUE;
+      /* Various "vectors" actions renamed to "path" in 3.2. */
+      else if (g_strcmp0 (action_match, "tools-vector") == 0)
+        new_action_name = g_strdup ("tools-path");
+      else if (g_strcmp0 (action_match, "dialogs-vector") == 0)
+        new_action_name = g_strdup ("dialogs-path");
+      else if (g_strcmp0 (action_match, "layers-text-along-vectors") == 0)
+        new_action_name = g_strdup ("layers-text-along-path");
+      else if (g_strcmp0 (action_match, "layers-text-to-vectors") == 0)
+        new_action_name = g_strdup ("layers-text-to-path");
+      else if (g_strcmp0 (action_match, "view-snap-to-vectors") == 0)
+        new_action_name = g_strdup ("view-snap-to-path");
       /* Generalized in GIMP 3.2 (works on text, link and vector layers). */
       else if (g_strcmp0 (action_match, "layers-text-discard") == 0)
         new_action_name = g_strdup ("layers-rasterize");
