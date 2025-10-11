@@ -1,6 +1,5 @@
 name: gimp
 adopt-info: gimp
-version: 3.1.5
 grade: devel
 base: core24
 compression: lzo
@@ -143,6 +142,9 @@ parts:
       - gegl
     source: .
     source-type: local
+    override-pull: |
+      craftctl default
+      craftctl set version="$(awk -F"'" '/version:/ {print $2; exit}' $CRAFT_PART_SRC/meson.build)"
     build-environment: *SNAP_ENVIRON
     plugin: meson
     meson-parameters:
