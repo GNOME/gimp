@@ -1,4 +1,4 @@
-name: gimp
+name: gimp-experimental
 adopt-info: gimp
 grade: devel
 base: core24
@@ -91,7 +91,7 @@ parts:
     source: https://gitlab.gnome.org/GNOME/babl.git
     source-depth: 1
     override-pull: |
-      if [ "$SNAPCRAFT_PROJECT_GRADE" = 'devel' ]; then
+      if [ "$SNAPCRAFT_PROJECT_GRADE" != 'stable' ] && [ "$SNAPCRAFT_PROJECT_NAME" != 'gimp' ]; then
         craftctl default
       else
         repo="https://gitlab.gnome.org/GNOME/$CRAFT_PART_NAME.git"
@@ -112,7 +112,7 @@ parts:
     source: https://gitlab.gnome.org/GNOME/gegl.git
     source-depth: 1
     override-pull: |
-      if [ "$SNAPCRAFT_PROJECT_GRADE" = 'devel' ]; then
+      if [ "$SNAPCRAFT_PROJECT_GRADE" != 'stable' ] && [ "$SNAPCRAFT_PROJECT_NAME" != 'gimp' ]; then
         craftctl default
       else
         repo="https://gitlab.gnome.org/GNOME/$CRAFT_PART_NAME.git"
