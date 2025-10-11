@@ -974,8 +974,8 @@ register_vector_layer_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-vector-layer-new");
   gimp_procedure_set_static_help (procedure,
-                                  "Creates a new vector layer.",
-                                  "This procedure creates a new path layer displaying the specified @path. By default, the fill and stroke properties will be defined by the context.\n"
+                                  "Create a new vector layer.",
+                                  "This procedure creates a new vector layer displaying the specified @path. By default, the fill and stroke properties will be defined by the context.\n"
                                   "\n"
                                   "The new layer still needs to be added to the image as this is not automatic. Add the new layer with the [method@Image.insert_layer] method.\n"
                                   "\n"

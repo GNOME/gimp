@@ -19,7 +19,7 @@
 
 
 sub link_layer_new {
-    $blurb = 'Creates a new link layer.';
+    $blurb = 'Create a new link layer.';
 
     $help = <<'HELP';
 This procedure creates a link layer monitoring the specified @file.

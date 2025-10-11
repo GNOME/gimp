@@ -41,7 +41,7 @@
  * @image: The image.
  * @file: The file this link layer will monitor.
  *
- * Creates a new link layer.
+ * Create a new link layer.
  *
  * This procedure creates a link layer monitoring the specified @file.
  *

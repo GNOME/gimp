@@ -254,7 +254,7 @@ register_link_layer_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-link-layer-new");
   gimp_procedure_set_static_help (procedure,
-                                  "Creates a new link layer.",
+                                  "Create a new link layer.",
                                   "This procedure creates a link layer monitoring the specified @file.\n"
                                   "\n"
                                   "The new layer still needs to be added to the image as this is not automatic. Add the new layer with the [method@Image.insert_layer] method.\n"

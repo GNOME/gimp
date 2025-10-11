@@ -18,10 +18,10 @@
 
 
 sub vector_layer_new {
-    $blurb = 'Creates a new vector layer.';
+    $blurb = 'Create a new vector layer.';
 
     $help = <<'HELP';
-This procedure creates a new path layer displaying the specified @path. By
+This procedure creates a new vector layer displaying the specified @path. By
 default, the fill and stroke properties will be defined by the context.
 
 

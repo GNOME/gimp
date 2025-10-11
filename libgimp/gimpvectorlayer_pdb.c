@@ -41,9 +41,9 @@
  * @image: The image.
  * @path: The path to create the layer from.
  *
- * Creates a new vector layer.
+ * Create a new vector layer.
  *
- * This procedure creates a new path layer displaying the specified
+ * This procedure creates a new vector layer displaying the specified
  * @path. By default, the fill and stroke properties will be defined by
  * the context.
  *
