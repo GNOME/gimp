@@ -37,7 +37,7 @@ ls "$(echo /snap/gnome*-sdk/current/usr/lib/$(gcc -print-multiarch)/pkgconfig)"
 
 ## Versioning the snap
 
-Aside from setting the version of gimp, we also:
+Unlike the flatpak, we do not need to manually set babl, gegl or GIMP tags, just:
 
 * For a **nightly** build, set "devel" on "grade" and
   use "experimental" on build-id at gimp part "meson-parameters".

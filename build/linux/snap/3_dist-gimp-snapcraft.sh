@@ -32,7 +32,7 @@ NAME=$(awk '/^name:/ { print $2 }' snapcraft.yaml)
 TRACK=$(awk -F. '/-Dbuild-id=/ { print $NF }' snapcraft.yaml)
 
 ## Get info about GIMP version
-GIMP_VERSION=$(awk '/^version:/ { print $2 }' snapcraft.yaml)
+GIMP_VERSION=$(awk -F"'" '/version:/ {print $2; exit}' meson.build)
 gimp_release=$([ "$(awk '/^grade:/ { print $2 }' snapcraft.yaml)" != 'devel' ] && echo true || echo false)
 printf "(INFO): Name: $NAME (track: $TRACK) | Version: $GIMP_VERSION\n"
 
