@@ -438,13 +438,22 @@ main_dialog (GimpProcedure       *procedure,
                                     "options-frame",
                                     "general-options", FALSE,
                                     "general-box");
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
-                                        "depth", 1.0);
-  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin), "options-box",
-                                  "options-frame",
-                                  "antialiasing",
+
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin),
+                                  "antialias-box",
                                   "depth",
                                   "threshold",
+                                  NULL);
+  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
+                                        "depth", 1.0);
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (appwin),
+                                    "antialias-frame",
+                                    "antialiasing", FALSE,
+                                    "antialias-box");
+
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin), "options-box",
+                                  "options-frame",
+                                  "antialias-frame",
                                   NULL);
 
   g_signal_connect (config, "notify::transparent-background",
