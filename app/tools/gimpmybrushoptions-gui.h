@@ -20,6 +20,7 @@
 
 
 GtkWidget * gimp_mybrush_options_gui (GimpToolOptions *tool_options);
+gboolean gimp_mybrush_get_spectral_blending(GimpMybrush *brush);
 
 
 #endif  /*  __GIMP_MYBRUSH_OPTIONS_GUI_H__  */
